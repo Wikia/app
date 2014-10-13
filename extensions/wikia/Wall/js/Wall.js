@@ -2,11 +2,16 @@
 	'use strict';
 
 	var Wall = $.createClass(Object, {
+		bucky: window.Bucky('Wall'),
 		constructor: function (element, settings) {
+			var self = this;
+
 			if (Wall.initialized) {
 				return;
 			}
-			var self = this;
+
+			// start performance profiling
+			this.bucky.timer.start('constructor');
 
 			Wall.initialized = true;
 			this.wall = $(element);
@@ -77,6 +82,9 @@
 			// If any textarea has content make sure Reply / Post button is visible
 			$(document).ready(this.initTextareas);
 			$(window).bind('hashchange', this.proxy(this.onHashChange)).trigger('hashchange');
+
+			// stop performance profiling
+			this.bucky.timer.stop('constructor');
 		},
 
 		setUpVoteTooltips: function () {
