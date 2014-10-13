@@ -5,9 +5,11 @@ class MediaGalleryHooks {
 	/**
 	 * Add JSMessages for MediaGallery.
 	 * Note: adding them via onOasisSkinAssetGroups doens't work.
+	 * @param OutputPage $out
+	 * @param $text
 	 * @return bool
 	 */
-	static public function onOutputPageBeforeHTML() {
+	static public function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
 		wfProfileIn(__METHOD__);
 
 		if ( !empty( F::app()->wg->EnableMediaGalleryExt ) ) {
