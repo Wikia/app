@@ -407,6 +407,7 @@ $wgAutoloadClasses['ProfilerDataScribeSink'] = "{$IP}/includes/profiler/sinks/Pr
 
 // Skin loading scripts
 $wgHooks['WikiaSkinTopScripts'][] = 'SpotlightsABTestController::onWikiaSkinTopScripts';
+$wgHooks['WikiaSkinTopScripts'][] = 'WikiFactoryHub::onWikiaSkinTopScripts';
 $wgHooks['WikiaSkinTopScripts'][] = 'ReadMoreController::onWikiaSkinTopScripts';
 $wgHooks['WikiaSkinTopScripts'][] = 'Wikia\\Logger\\Hooks::onWikiaSkinTopScripts';
 

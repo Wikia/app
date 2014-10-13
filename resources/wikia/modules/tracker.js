@@ -143,6 +143,7 @@
 				'n': window.wgNamespaceNumber,
 				'u': window.trackID || window.wgTrackID || 0,
 				's': window.skin,
+				'v': window.wgWikiVertical,
 				'beacon': window.beacon_id || '',
 				'cb': Math.floor( Math.random() * 99999 )
 			};
