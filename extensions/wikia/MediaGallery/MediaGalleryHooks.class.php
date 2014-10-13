@@ -10,13 +10,9 @@ class MediaGalleryHooks {
 	 * @return bool
 	 */
 	static public function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
-		wfProfileIn(__METHOD__);
-
 		if ( !empty( F::app()->wg->EnableMediaGalleryExt ) ) {
 			JSMessages::enqueuePackage( 'MediaGallery', JSMessages::EXTERNAL );
 		}
-
-		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -27,13 +23,9 @@ class MediaGalleryHooks {
 	 * @return bool
 	 */
 	public static function onOasisSkinAssetGroups( &$assetsArray ) {
-		wfProfileIn(__METHOD__);
-
 		if ( !empty( F::app()->wg->EnableMediaGalleryExt ) ) {
 			$assetsArray[] = 'media_gallery_js';
 		}
-
-		wfProfileOut(__METHOD__);
 		return true;
 	}
 
