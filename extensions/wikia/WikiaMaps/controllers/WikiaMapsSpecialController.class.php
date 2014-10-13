@@ -177,7 +177,7 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 	 * Performs actions common for map() and mapData() - single map pages
 	 * @param $mapData
 	 */
-	private function prepareSingleMapPage( $mapData ) {
+	public function prepareSingleMapPage( $mapData ) {
 		$mapCityId = $mapData->city_id;
 		$this->setVal( 'mapCityId', $mapCityId );
 
@@ -200,7 +200,7 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 	/**
 	 * Shows an error when map is not found
 	 */
-	private function mapNotFound() {
+	public function mapNotFound() {
 		$this->setVal( 'mapFound', false );
 		$this->setVal( 'title', wfMessage( 'error' ) );
 		$this->setVal( 'messages', [
@@ -373,7 +373,11 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 		$this->setVal( 'baseUrl', self::getSpecialUrl() );
 	}
 
-	private function prepareListOfPois( $mapData ) {
+	/**
+	 * Converts map data received from API to associative array used in template
+	 * @param stdClass $mapData
+	 */
+	public function prepareListOfPois( $mapData ) {
 		$poiCategories = $mapData->poi_categories;
 		$pois = $mapData->pois;
 
