@@ -12,6 +12,69 @@ class WikiaMapsSpecialControllerTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @covers WikiaMapsSpecialController::index
+	 */
+	public function testIndex_main() {
+		$wikiaMapsSpecialControllerMock = $this->getControllerMockForIndexTest( null, null );
+
+		$wikiaMapsSpecialControllerMock->expects( $this->once() )
+			->method( 'forward' )
+			->with( 'WikiaMapsSpecial', 'main' );
+
+		$wikiaMapsSpecialControllerMock->index();
+	}
+
+	/**
+	 * @covers WikiaMapsSpecialController::index
+	 */
+	public function testIndex_map() {
+		$wikiaMapsSpecialControllerMock = $this->getControllerMockForIndexTest( 1, null );
+
+		$wikiaMapsSpecialControllerMock->expects( $this->once() )
+			->method( 'forward' )
+			->with( 'WikiaMapsSpecial', 'map' );
+
+		$wikiaMapsSpecialControllerMock->index();
+	}
+
+	/**
+	 * @covers WikiaMapsSpecialController::index
+	 */
+	public function testIndex_mapData() {
+		$wikiaMapsSpecialControllerMock = $this->getControllerMockForIndexTest( 1, '_escaped_fragment_' );
+
+		$wikiaMapsSpecialControllerMock->expects( $this->once() )
+			->method( 'forward' )
+			->with( 'WikiaMapsSpecial', 'mapData' );
+
+		$wikiaMapsSpecialControllerMock->index();
+	}
+
+	/**
+	 * @param mixed $par Value to be returned by getPar() method
+	 * @param mixed $val Value to be returned by getRequest()->getVal() method
+	 * @return PHPUnit_Framework_MockObject_MockObject|WikiaMapsSpecialController
+	 */
+	public function getControllerMockForIndexTest( $par, $val ) {
+		$wikiaMapsSpecialControllerMock = $this->getControllerMock( 'testIndex' );
+
+		$wikiaMapsSpecialControllerMock->expects( $this->once() )
+			->method( 'getPar' )
+			->will( $this->returnValue( $par ) );
+
+		$requestMock = $this->getMock( 'WikiaRequest', [ 'getVal' ], [], '', false );
+		$requestMock->expects( $this->any() )
+			->method( 'getVal' )
+			->will( $this->returnValue( $val ) );
+
+		$wikiaMapsSpecialControllerMock->expects( $this->any() )
+			->method( 'getRequest' )
+			->will( $this->returnValue( $requestMock ) );
+
+		return $wikiaMapsSpecialControllerMock;
+	}
+
+	/**
 	 * @covers WikiaMapsSpecialController::redirectIfForeignWiki
 	 */
 	public function testRedirectIfForeignWiki_not_foreign() {
@@ -105,6 +168,11 @@ class WikiaMapsSpecialControllerTest extends WikiaBaseTest {
 		$mapsSpecialControllerMock = null;
 
 		switch( $test ) {
+			case 'testIndex':
+				$mapsSpecialControllerMock = $this->getMock( 'WikiaMapsSpecialController', [ 'getPar', 'getRequest', 'forward' ], [], '', false );
+				$outputPageMock = $this->getMock( 'OutputPage', [], [], '', false );
+				$mapsSpecialControllerMock->wg->out = $outputPageMock;
+				break;
 			case 'testRedirectIfForeignWiki':
 				$mapsSpecialControllerMock = $this->getMock( 'WikiaMapsSpecialController', [ 'getWikiPageUrl' ], [], '', false );
 
@@ -131,6 +199,7 @@ class WikiaMapsSpecialControllerTest extends WikiaBaseTest {
 
 				$mapsSpecialControllerMock = $this->getMock( 'WikiaMapsSpecialController', [
 					'getModel',
+					'prepareSingleMapPage',
 					'redirectIfForeignWiki',
 					'setVal',
 					'addAsset',
@@ -155,7 +224,7 @@ class WikiaMapsSpecialControllerTest extends WikiaBaseTest {
 
 	private function getWikiaMapsMock() {
 		$wikiaMapsMock = $this->getMockBuilder('WikiaMaps')
-			->setMethods( [ 'getMapByIdFromApi', 'getMapRenderUrl', 'getMapRenderParams' ] )
+			->setMethods( [ 'getMapByIdFromApi', 'getMapDataByIdFromApi', 'getMapRenderUrl', 'getMapRenderParams' ] )
 			->disableOriginalConstructor()
 			->getMock();
 
