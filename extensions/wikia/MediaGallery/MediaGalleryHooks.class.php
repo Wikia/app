@@ -4,7 +4,7 @@ class MediaGalleryHooks {
 
 	/**
 	 * Add JSMessages for MediaGallery.
-	 * Note: adding them via onOasisSkinAssetGroups doens't work.
+	 * Note: adding them via onOasisSkinAssetGroups doesn't work.
 	 * @param OutputPage $out
 	 * @param $text
 	 * @return bool
