@@ -1,12 +1,16 @@
 @import 'extensions/wikia/Venus/styles/variables';
+// Venus mixins @import is used only for .adUnitTest and .infobox-test and has to be removed when not needed anymore
+@import 'extensions/wikia/Venus/styles/mixins';
 @import 'skins/shared/color';
 @import 'images';
 
 article {
+	padding: 0 $medium-content-padding;
 
 	header {
-		background-color: #cccccc; //only for prototype version
+		background-color: #ccc; //only for prototype version
 		margin-bottom: 40px;
+		padding: 0 $medium-grid-column-padding;
 		width: 100%;
 
 		h1 {
@@ -22,21 +26,21 @@ article {
 	.left-nav {
 		position: absolute;
 		text-align: center;
-		width: 86px;
+		width: $medium-grid-column;
 
 		ul {
 			display: inline-block;
 			list-style-type: none;
 			margin: 0;
 			padding: 0;
+		}
 
-			li {
-				background-color: $color-left-article-nav;
-				border-radius: 20px;
-				height: 38px;
-				margin-bottom: 6px;
-				width: 38px;
-			}
+		li {
+			background-color: $color-left-article-nav;
+			border-radius: 20px;
+			height: 38px;
+			margin-bottom: 6px;
+			width: 38px;
 		}
 	}
 
@@ -66,36 +70,50 @@ article {
 #mw-content-text {
 	font-size: 16px;
 	line-height: 28px;
-	margin: 0 round($medium-grid-column / 2) 0 86px;
+	margin-left: $medium-grid-column + $medium-grid-gutter;
 
-	> h2 {
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6,
+	p,
+	> div,
+	nav,
+	> ul,
+	> ol {
+		padding-left: $medium-grid-column-padding;
+		padding-right: $medium-grid-column-padding;
+	}
+
+	h2 {
 		border-bottom: 1px solid $color-page-border;
 		font-size: 27px;
-		padding-bottom: 10px;
-		margin-bottom: 30px;
+		margin-bottom: 12px;
 		margin-top: 40px;
-
+		padding-bottom: 6px;
 
 		.editsection {
 			line-height: 36px;
 		}
 	}
 
-	> h3 {
+	h3 {
 		font-size: 18px;
-		margin: 40px 0 16px 0;
+		margin: 40px 0 16px;
 
 		.editsection {
 			line-height: 27px;
 		}
 	}
 
-	> h1,
-	> h2,
-	> h3,
-	> h4,
-	> h5,
-	> h6 {
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
 		font-weight: bold;
 		overflow: hidden;
 
@@ -129,7 +147,7 @@ article {
 	blockquote {
 		border-top: 4px solid $color-text;
 		font-size: 27px;
-		margin: 0 0 40px 0px;
+		margin: 0 0 40px;
 		padding-top: 30px;
 		position: relative;
 	}
@@ -137,23 +155,87 @@ article {
 	pre {
 		white-space: normal;
 	}
+
+	ol,
+	ul {
+		padding-left: 50px;
+	}
+
+	> ol,
+	> ul {
+		margin-top: 0;
+		padding-right: 120px;
+
+		> li:first-child {
+			margin-top: 10px;
+		}
+	}
+
+	ul {
+		list-style: disc;
+	}
+
+	li {
+		margin-top: 16px;
+		padding-left: 12px;
+	}
 }
+
+/* FOR PROTOTYPE/TESTING ONLY */
+.adUnitTest,
+.infobox-test {
+	@include grid-column-width('medium', 4, -2 * $medium-grid-column-padding);
+	background-color: #ccc;
+	display: block;
+	float: right;
+	height: 250px;
+	margin: 0 $medium-grid-column-padding 20px $medium-grid-gutter + $medium-grid-column-padding;
+	padding: 10px;
+}
+
+.infobox-test {
+	clear: right;
+	height: 500px;
+}
+
+/* END FOR PROTOTYPE/TESTING ONLY */
 
 @media #{$large-up} {
 	article {
+		padding: 0 $large-content-padding;
+
 		header {
-			margin-right: 2* $large-grid-gutter + 300px;
+			margin-right: 2 * $large-grid-gutter + 300px;
 			width: auto;
+		}
+
+		.left-nav {
+			width: $large-grid-column;
 		}
 	}
 
 	#mw-content-text {
 		font-size: 18px;
 		line-height: 36px;
-		margin-right: round($large-grid-column / 2);
+		margin-left: $large-grid-column + $large-grid-gutter;
+
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6,
+		p,
+		> div,
+		nav {
+			padding-left: $large-grid-column-padding;
+			padding-right: $large-grid-column-padding;
+		}
 
 		h2 {
+			margin-bottom: 10px;
 			margin-top: 30px;
+			padding-bottom: 10px;
 		}
 
 		h3 {
@@ -165,25 +247,85 @@ article {
 		> p {
 			margin-bottom: 30px;
 		}
+
+		ol,
+		ul {
+			padding-left: 43px;
+		}
+
+		> ol,
+		> ul {
+			padding-left: 55px;
+			padding-right: 135px;
+		}
+
+		li {
+			margin-top: 18px;
+			padding-left: 13px;
+		}
+	}
+
+	.adUnitTest,
+	.infobox-test {
+		@include grid-column-width('large', 4);
+		margin: 0 0 20px $large-grid-gutter + $large-grid-column-padding;
+		padding: $large-grid-column-padding;
 	}
 }
 
 @media #{$small-only} {
-	margin-right: round($small-grid-column / 2);
-}
+	article {
+		padding: 0 $small-content-padding;
 
-/* FOR PROTOTYPE/TESTING ONLY */
-.adUnitTest, .infobox-test {
-	background-color: #ccc;
-	display: block;
-	float: right;
-	height: 250px;
-	margin: 0 $medium-grid-gutter 20px 20px;
-	padding: 10px;
-	width: 300px;
-}
+		header {
+			margin-right: 2 * $small-grid-gutter + 300px;
+		}
 
-.infobox-test {
-	clear: right;
-	height: 500px;
+		.left-nav {
+			width: $small-grid-column;
+		}
+	}
+
+	#mw-content-text {
+		margin: 0 0 0 $small-grid-column + $small-grid-gutter;
+
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6,
+		p,
+		> div,
+		nav {
+			padding-left: $small-grid-column-padding;
+			padding-right: $small-grid-column-padding;
+		}
+
+		> p {
+			margin-bottom: 30px;
+		}
+
+		ol,
+		ul {
+			padding-left: 41px;
+		}
+
+		> ol,
+		> ul {
+			padding-right: 89px;
+		}
+
+		li {
+			margin-top: 10px;
+			padding-left: 4px;
+		}
+	}
+
+	.adUnitTest,
+	.infobox-test {
+		@include grid-column-width('small', 5);
+		margin: 0 0 20px $small-grid-gutter + $small-grid-column-padding;
+		padding: $small-grid-column-padding;
+	}
 }
