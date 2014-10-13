@@ -1,33 +1,31 @@
 <?php
 
 class MediaGalleryHooks {
+
 	/**
-	 * Load JS needed to display the VideosModule at the bottom of the article content
+	 * Add JSMessages for MediaGallery.
+	 * Note: adding them via onOasisSkinAssetGroups doesn't work.
 	 * @param OutputPage $out
-	 * @param string $text
+	 * @param $text
 	 * @return bool
 	 */
 	static public function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
-		wfProfileIn(__METHOD__);
-
-		$app = F::app();
-
-		// check if extension is enabled and if we already have assets
-		if ( empty( $app->wg->EnableMediaGalleryExt ) || $app->wg->MediaGalleryAssetsLoaded ) {
-			wfProfileOut(__METHOD__);
-			return true;
+		if ( !empty( F::app()->wg->EnableMediaGalleryExt ) ) {
+			JSMessages::enqueuePackage( 'MediaGallery', JSMessages::EXTERNAL );
 		}
+		return true;
+	}
 
-		JSMessages::enqueuePackage( 'MediaGallery', JSMessages::EXTERNAL );
 
-		$scripts = AssetsManager::getInstance()->getURL( 'media_gallery_js' );
-		foreach( $scripts as $script ){
-			$out->addScript( "<script src='{$script}'></script>" );
+	/**
+	 * Adds MediaGallery JS to main Oasis asset group
+	 * @param Array $assetsArray
+	 * @return bool
+	 */
+	public static function onOasisSkinAssetGroups( &$assetsArray ) {
+		if ( !empty( F::app()->wg->EnableMediaGalleryExt ) ) {
+			$assetsArray[] = 'media_gallery_js';
 		}
-
-		$app->wg->MediaGalleryAssetsLoaded = true;
-
-		wfProfileOut(__METHOD__);
 		return true;
 	}
 
@@ -36,7 +34,7 @@ class MediaGalleryHooks {
 	 * @param array $vars
 	 * @return bool
 	 */
-	public static function onMakeGlobalVariablesScript(Array &$vars) {
+	public static function onMakeGlobalVariablesScript( Array &$vars ) {
 		$vars['wgEnableMediaGalleryExt'] = !empty( F::app()->wg->EnableMediaGalleryExt );
 		return true;
 	}
