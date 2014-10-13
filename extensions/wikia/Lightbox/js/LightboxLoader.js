@@ -26,7 +26,7 @@
 			// start with default modal options
 			id: 'LightboxModal',
 			className: 'LightboxModal',
-			width: 970, // modal adds 40px of padding to width
+			width: 970, // modal adds 40px of padding to width in case of oasis skin
 			noHeadline: true,
 			topOffset: 25,
 			height: 628,
@@ -62,7 +62,7 @@
 			}
 		},
 		videoThumbWidthThreshold: 400,
-		init: function () {
+		init: function (customSettings) {
 			var self = this,
 				$article = $('#WikiaArticle'),
 				$photos = $('#LatestPhotosModule'),
@@ -70,6 +70,8 @@
 				$footer = $('#WikiaArticleFooter'), // bottom videos module
 				$videosModule = $('.videos-module-rail'), // right rail videos module
 				$videoHomePage = $('#latest-videos-wrapper');
+
+			$.extend(self.defaults, customSettings);
 
 			// Bind click event to initiate lightbox
 			$article.add($photos).add($footer).add($videosModule)

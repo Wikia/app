@@ -1,20 +1,20 @@
-@import 'skins/shared/mixins/box-shadow';
-@import 'skins/shared/mixins/border-opacity';
 @import 'skins/shared/color';
-@import 'extensions/wikia/Venus/styles/layout';
 @import 'skins/shared/mixins/bodytext';
 @import 'skins/shared/mixins/border-opacity';
 @import 'skins/shared/mixins/box-shadow';
 @import 'skins/shared/mixins/clearfix';
-@import 'skins/shared/mixins/gradient';
 
 $modal-border-opacity: 80;
 @if $is-dark-wiki {
 	$modal-border-opacity: 60;
 }
 
-.LightboxModal {
+.lightbox-venus {
 	box-sizing: content-box;
+	left: 50%;
+	height: 628px;
+	margin-left: -510px;
+	width: 1010px;
 
 	ul, ol {
 		list-style: none;
@@ -126,7 +126,7 @@ $modal-border-opacity: 80;
 .blackout {
 	background: $color-page;
 	left: 0;
-	opacity: .8;
+	opacity: 0.8;
 	position: fixed;
 	top: 0;
 	width: 100%;

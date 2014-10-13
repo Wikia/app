@@ -82,7 +82,10 @@ $VenusConfig[ 'venus_body_js' ] = [
 
 		// Lightbox
 		'//extensions/wikia/Lightbox/js/LightboxLoader.js',
-		'//resources/wikia/libraries/mustache/jquery.mustache.js'
+		'//resources/wikia/libraries/mustache/jquery.mustache.js',
+
+		//following script initialize different modules in Venus
+		'//extensions/wikia/Venus/scripts/articleModulesLoader.js'
 	]
 ];
 
