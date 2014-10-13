@@ -363,35 +363,38 @@ class VideoHandlerController extends WikiaController {
 			$sort, $filter, $limit, $page, $providers, $category, $width, $height, $detail,
 		] ) ) );
 
-		// Retrieve video list on a cache miss
-		$videoListGetter = function() use ( $sort, $filter, $limit, $page, $providers, $category, $width, $height, $detail ) {
-			$mediaService = new \MediaQueryService();
-			$videoList = $mediaService->getVideoList( $sort, $filter, $limit, $page, $providers, $category );
-
-			// get video detail
-			if ( !empty( $detail ) ) {
-				$videoOptions = [
-					'thumbWidth' => $width,
-					'thumbHeight' => $height,
-				];
-				$helper = new \VideoHandlerHelper();
-				foreach ( $videoList as &$videoInfo ) {
-					$videoDetail = $helper->getVideoDetail( $videoInfo, $videoOptions );
-					if ( !empty( $videoDetail ) ) {
-						$videoInfo = array_merge( $videoInfo, $videoDetail );
-					}
-				}
-				unset( $videoInfo );
-			}
-
-			return $videoList;
-		};
-
-		// Retrieve the result and if not null, cache it
-		$videoList = \WikiaDataAccess::cacheWithOptions( $memcKey, $videoListGetter, [
+		$cacheOptions = [
 			'cacheTTL' => \WikiaResponse::CACHE_STANDARD,
 			'negativeCacheTTL' => 0,
-		] );
+		];
+
+		// Retrieve the result and if not null, cache it
+		$videoList = \WikiaDataAccess::cacheWithOptions(
+			$memcKey,
+			function() use ( $sort, $filter, $limit, $page, $providers, $category, $width, $height, $detail ) {
+				$mediaService = new \MediaQueryService();
+				$videoList = $mediaService->getVideoList( $sort, $filter, $limit, $page, $providers, $category );
+
+				// get video detail
+				if ( !empty( $detail ) ) {
+					$videoOptions = [
+						'thumbWidth' => $width,
+						'thumbHeight' => $height,
+					];
+					$helper = new \VideoHandlerHelper();
+					foreach ( $videoList as &$videoInfo ) {
+						$videoDetail = $helper->getVideoDetail( $videoInfo, $videoOptions );
+						if ( !empty( $videoDetail ) ) {
+							$videoInfo = array_merge( $videoInfo, $videoDetail );
+						}
+					}
+					unset( $videoInfo );
+				}
+
+				return $videoList;
+			},
+			$cacheOptions
+		);
 
 		$this->videos = $videoList;
 		$this->response->setCacheValidity( \WikiaResponse::CACHE_STANDARD );
