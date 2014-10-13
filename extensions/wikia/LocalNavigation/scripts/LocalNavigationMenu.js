@@ -38,10 +38,10 @@
 
 				if ( dropdownOffset > windowWidth ) {
 					$this.addClass('right');
-					console.log(i, secondLvlNavWidth + secondLvlNavOffset, thirdLvlWidth, windowWidth, 'right');
+					//console.log(i, secondLvlNavWidth + secondLvlNavOffset, thirdLvlWidth, windowWidth, 'right');
 				} else {
 					$this.removeClass('right');
-					console.log(i, secondLvlNavWidth + secondLvlNavOffset, thirdLvlWidth, windowWidth, 'left');
+					//console.log(i, secondLvlNavWidth + secondLvlNavOffset, thirdLvlWidth, windowWidth, 'left');
 				}
 			});
 
