@@ -1,6 +1,4 @@
-
-
-(function($) {
+define('wikia.scrollToLink', ['jquery'], function($) {
 	'use strict';
 	var offset, init, scrollTo, handleLinkTo, pushIntoHistory;
 
@@ -25,7 +23,6 @@
 			var $target = $(href);
 
 			if ($target.length) {
-				//scrollTo($target.offset().top - offset);
 				$('html, body').animate({ scrollTop: $target.offset().top - offset });
 				if (pushIntoHistory({}, document.title, window.location.pathname + href)) {
 					return true;
@@ -43,7 +40,7 @@
 		return false;
 	};
 
-	$(function(){
-		init();
-	});
-}(jQuery));
+	return {
+		init: init
+	};
+});
