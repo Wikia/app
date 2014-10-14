@@ -3,9 +3,11 @@
 
 	/* dom cache */
 	var createNewBoardButton = $('#CreateNewBoardButton'),
-		boardList = $('#ForumBoardEdit .boards');
+		boardList = $('#ForumBoardEdit .boards'),
+		bucky = window.Bucky('forum.forumboardedit');
 
 	function makeBoardModal(modalMethod, modalData, submissionMethod, submissionData) {
+		bucky.timer.start('makeBoardModal');
 		var deferred = $.Deferred();
 		$.nirvana.sendRequest({
 			controller: 'ForumSpecialController',
@@ -88,6 +90,7 @@
 						});
 					});
 				});
+				bucky.timer.stop('makeBoardModal');
 			}
 		});
 
@@ -112,6 +115,7 @@
 
 	/* boardId1 should always be before boardId2 */
 	function swapBoards(boardId1, boardId2) {
+		bucky.timer.start('swapBoards');
 		var deferred = $.Deferred();
 		$.nirvana.sendRequest({
 			controller: 'ForumExternalController',
@@ -126,6 +130,7 @@
 					// critical error message that users should not see
 					alert('Something went wrong, please reload the page and try again');
 				}
+				bucky.timer.stop('swapBoards');
 			}
 		});
 

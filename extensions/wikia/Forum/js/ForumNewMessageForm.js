@@ -1,5 +1,7 @@
 (function (window, $) {
 	'use strict';
+	var bucky = window.Bucky('forum.forumnewmessageforum');
+
 	Forum.NewMessageForm = $.createClass(Wall.settings.classBindings.newMessageForm, {
 		constructor: function () {
 			Forum.NewMessageForm.superclass.constructor.apply(this, arguments);
@@ -8,6 +10,7 @@
 			}
 		},
 		initElements: function () {
+			bucky.timer.start('initElement');
 			this.wrapper = $('#ForumNewMessage');
 			this.buttons = this.wrapper.find('.buttons');
 			this.message = this.wrapper.find('.message');
@@ -32,7 +35,7 @@
 				topicOptions.topics = [window.wgTitle];
 			}
 			this.messageTopic = this.message.find('.message-topic').messageTopic(topicOptions);
-
+			bucky.timer.stop('initElement');
 		},
 		afterPost: function (newmsg) {
 			// TODO: this is a hack. We should just be getting the ID back
@@ -45,13 +48,16 @@
 			}
 		},
 		doPostNewMessage: function (title) {
+			bucky.timer.start('doPostNewMessage');
 			var boardTitle = this.boardList.find('option:selected').val();
 			if (!this.boardList.exists()) {
 				Forum.NewMessageForm.superclass.doPostNewMessage.call(this, title);
+				bucky.timer.stop('doPostNewMessage');
 			} else if (boardTitle) {
 				this.page.title = boardTitle;
 				Forum.NewMessageForm.superclass.doPostNewMessage.call(this, title);
-			} else if (!boardTitle) {
+				bucky.timer.stop('doPostNewMessage');
+			} else {
 				this.boardListError.fadeIn('slow');
 			}
 		}
