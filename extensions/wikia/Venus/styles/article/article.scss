@@ -4,12 +4,15 @@
 @import 'skins/shared/color';
 @import 'images';
 
+$placeholder-background-color: #ccc;
+$article-items-spacing: 40px;
+
 article {
 	padding: 0 $medium-content-padding;
 
 	header {
-		background-color: #ccc; //only for prototype version
-		margin-bottom: 40px;
+		background-color: $placeholder-background-color;
+		margin-bottom: $article-items-spacing;
 		padding: 0 $medium-grid-column-padding;
 		width: 100%;
 
@@ -20,27 +23,6 @@ article {
 			margin: 0;
 			padding-bottom: 30px;
 			padding-left: 36px;
-		}
-	}
-
-	.left-nav {
-		position: absolute;
-		text-align: center;
-		width: $medium-grid-column;
-
-		ul {
-			display: inline-block;
-			list-style-type: none;
-			margin: 0;
-			padding: 0;
-		}
-
-		li {
-			background-color: $color-left-article-nav;
-			border-radius: 20px;
-			height: 38px;
-			margin-bottom: 6px;
-			width: 38px;
 		}
 	}
 
@@ -67,7 +49,28 @@ article {
 	}
 }
 
-#mw-content-text {
+.left-nav {
+	position: absolute;
+	text-align: center;
+	width: $medium-grid-column;
+
+	ul {
+		display: inline-block;
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	li {
+		background-color: $color-left-article-nav;
+		border-radius: 19px;
+		height: 38px;
+		margin-bottom: 6px;
+		width: 38px;
+	}
+}
+
+.mw-content-text {
 	font-size: 16px;
 	line-height: 28px;
 	margin-left: $medium-grid-column + $medium-grid-gutter;
@@ -91,7 +94,7 @@ article {
 		border-bottom: 1px solid $color-page-border;
 		font-size: 27px;
 		margin-bottom: 12px;
-		margin-top: 40px;
+		margin-top: $article-items-spacing;
 		padding-bottom: 6px;
 
 		.editsection {
@@ -101,7 +104,7 @@ article {
 
 	h3 {
 		font-size: 18px;
-		margin: 40px 0 16px;
+		margin: $article-items-spacing 0 16px;
 
 		.editsection {
 			line-height: 27px;
@@ -129,7 +132,7 @@ article {
 	}
 
 	> p {
-		margin-bottom: 40px;
+		margin-bottom: $article-items-spacing;
 	}
 
 	blockquote:before {
@@ -147,7 +150,7 @@ article {
 	blockquote {
 		border-top: 4px solid $color-text;
 		font-size: 27px;
-		margin: 0 0 40px;
+		margin: 0 0 $article-items-spacing;
 		padding-top: 30px;
 		position: relative;
 	}
@@ -185,7 +188,7 @@ article {
 .adUnitTest,
 .infobox-test {
 	@include grid-column-width('medium', 4, -2 * $medium-grid-column-padding);
-	background-color: #ccc;
+	background-color: $placeholder-background-color;
 	display: block;
 	float: right;
 	height: 250px;
@@ -214,7 +217,7 @@ article {
 		}
 	}
 
-	#mw-content-text {
+	.mw-content-text {
 		font-size: 18px;
 		line-height: 36px;
 		margin-left: $large-grid-column + $large-grid-gutter;
@@ -286,7 +289,7 @@ article {
 		}
 	}
 
-	#mw-content-text {
+	.mw-content-text {
 		margin: 0 0 0 $small-grid-column + $small-grid-gutter;
 
 		h1,
