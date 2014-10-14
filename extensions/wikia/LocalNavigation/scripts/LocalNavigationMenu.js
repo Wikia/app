@@ -38,10 +38,8 @@
 
 				if ( dropdownOffset > windowWidth ) {
 					$this.addClass('right');
-					//console.log(i, secondLvlNavWidth + secondLvlNavOffset, thirdLvlWidth, windowWidth, 'right');
 				} else {
 					$this.removeClass('right');
-					//console.log(i, secondLvlNavWidth + secondLvlNavOffset, thirdLvlWidth, windowWidth, 'left');
 				}
 			});
 
@@ -58,6 +56,7 @@
 
 		function openMenu() {
 			$(this).addClass('active');
+
 			closeContributeMenu();
 		}
 
@@ -160,10 +159,10 @@
 		}
 
 		function resetMenuAim() {
-			var i;
+			var i, count = menuAimCache.length;
 
-			for (i = 0; i < menuAimCache.length; i++) {
-				menuAimCache[i].reset();
+			for (i = 0; i < count; i++) {
+				menuAimCache.pop().reset();
 			}
 		}
 
