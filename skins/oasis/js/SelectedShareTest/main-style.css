@@ -1,0 +1,123 @@
+/* Main Style */
+body,html{font-size:15px;padding:0;margin:0;outline:none;overflow-x:hidden}
+
+/* Clearfix hack by Nicolas Gallagher: http://nicolasgallagher.com/micro-clearfix-hack/ */
+.clearfix:before,.clearfix:after{content:" ";display:table}
+.clearfix:after{clear:both}
+
+body {       
+	font-family: 'Lato', Calibri, Arial, sans-serif;
+	color: #89867e;
+	background: #fff;
+}
+::-moz-selection {
+       color: #13ACD9;
+}
+::selection {
+       color: #13ACD9;
+}
+a {
+	color: #333;
+	text-decoration: none;
+}
+.main,
+.header-container > header {
+	width: 100%;
+	margin: 0 auto
+}
+.main {
+	max-width: 50em;
+	min-height: 10em
+}
+
+.header-container > header {
+	text-align: center;
+	font-size: 16px;
+	padding: 4em 2em 3em 0;
+	background: #13ACD9
+}
+
+.header-container > header h1 {
+	font-size: 2.625em;
+	line-height: 1.3;
+	margin: 0;
+	font-weight: 700;
+        color:#fff
+}
+
+.header-container > header span {
+	display: block;
+	font-size: 60%;
+	color: #A6EDFF;
+	padding: 0 0 0.6em 0.1em;
+        font-weight:300;
+}
+
+.container {    
+    font-family: 'Montserrat',sans-serif;
+    font-size:20px;
+    line-height:1.8
+}
+.container > h3 {
+    font-family: 'Alegreya SC', serif;
+    font-size:42px;
+}
+.container > h3 > span {
+    font-family: 'Lato', Calibri, Arial, sans-serif;
+    font-weight:normal;
+    font-size:18px;
+    display:block
+}
+
+.demo > p {
+    font-family: 'Port Lligat Slab', serif;
+    font-size:30px;
+    line-height:normal
+}
+/*For Tables*/
+table{width:100%;border-collapse:collapse}
+tr:nth-child(odd){background:#ecfafd}
+td{padding:2em}
+td pre{color:#13ACD9}
+
+/*Helper css*/
+.mr_top_20x{margin-top:20px}
+.btn{padding:10px;border:3px solid #89867e;background-color:transparent;color:#89867e;font-weight:700;text-transform:uppercase;display:inline-block}
+.btn:hover{color:#89867e;border-style:dashed;cursor:pointer}
+.btn:active{border-style:dotted}
+.social-buttons{padding:10px 40px 10px 50px;background-color:#F4F5F7;display:inline-block}
+.w30{width:30%}
+.w50{width:50%}
+.w60{width:60%}
+.w70{width:70%}
+.fl{float:left}
+.fr{float:right}
+.ac{text-align:center}
+.al{text-align:left}
+.vl-mid{vertical-align:middle}
+.disp_inl{display:inline}
+.disp_inl_blk{display:inline-block}
+/* For Responsiveness */
+@media (min-width:32.5em) and (max-width: 61.250em) {
+    [id^="section-"] .content-wrapper{font-size:1.2em}
+    [id^="section-"] .content-wrapper>pre{display:block}
+    .demo-btn{position:relative}
+    .easing-buttons,.download-buttons{margin-top:0}
+    .fr{float:none}
+    .w30,.w60,.w70{width:100%}
+}
+@media (min-width: 32.5em) and (max-width: 38.688em) {
+.header-container>header{font-size:75%}
+.container > h3{font-size:22px}
+*,p,.demo > p,div{font-size:15px}
+}
+@media (max-width: 32.438em) {
+.header-container>header{font-size:75%}
+.container > h3{font-size:11px}
+*,p,.demo > p,div{font-size:14px}
+}
+@media screen and (max-width: 25em) {
+.header-container>header{font-size:75%}
+.container > h3{font-size:19px}
+*,p,.demo > p,div{font-size:13px}
+}

@@ -1,0 +1,16 @@
+.AddWikiTextSDObject {
+	.input-group {
+		padding: 5px 0;;
+	}
+	input[type="text"],
+	textarea {
+		width: 477px;
+	}
+	textarea {
+		height: 150px;
+		resize: none;
+	}
+	.modalToolbar {
+		clear: both;
+	}
+}

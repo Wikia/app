@@ -1,4 +1,7 @@
-@import "/skins/wikia/shared.css";
+@import "skins/wikia/shared.css";
+@import "skins/shared/mixins/clearfix";
+@import "../grid";
+@import 'extensions/wikia/MediaGallery/styles/MediaGallery.scss';
 @import "video";
 
 .wikia-gallery {

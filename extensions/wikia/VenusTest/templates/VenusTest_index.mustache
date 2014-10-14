@@ -1,0 +1,23 @@
+<div class="row">
+	<p><strong>Mustache start</strong></p>
+	{{#datas}}
+	<p>Team: {{team}}</p>
+	<p>Members: <ul>
+		{{#members}}
+		<li>{{name}}
+			<ul>
+				<li><strong>Age:</strong> {{data.age}}</li>
+				<li><strong>Gender:</strong> {{data.gender}}</li>
+				<li><strong>Food:</strong><ul>
+						{{#data.food}}
+						<li>{{.}}</li>
+						{{/food}}
+					</ul>
+				</li>
+			</ul>
+		</li>
+		{{/members}}
+	</ul></p>
+	{{/datas}}
+	<p><strong>Mustache end</strong></p>
+</div>

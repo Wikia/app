@@ -1,0 +1,18 @@
+<p>This is handlebars test {{i}}</p>
+<p>Team: {{team}}</p>
+<p>Members: <ul>
+	{{#each members}}
+	<li>{{name}}
+		<ul>
+			<li><strong>Age:</strong> {{data.age}}</li>
+			<li><strong>Gender:</strong> {{data.gender}}</li>
+			<li><strong>Food:</strong><ul>
+					{{#each data.food}}
+					<li>{{.}}</li>
+					{{/each}}
+				</ul>
+			</li>
+		</ul>
+	</li>
+	{{/each}}
+</ul></p>

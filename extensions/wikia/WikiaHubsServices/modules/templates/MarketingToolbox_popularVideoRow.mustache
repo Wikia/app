@@ -1,0 +1,29 @@
+<div class="module-box">
+	<h3 class="alternative">{{sectionNo}}.</h3>
+	<div class="module-right-box grid-4 alpha">
+		<div class="module-input-box">
+			<h4 class="video-title">{{videoTitle}}</h4>
+			<time class="timeago">{{videoTime}}</time>
+			<div class="input-group borderNone">
+				<input type="text" value="{{videoFullUrl}}" name="videoUrl[]" class="video-url-input required wikiaUrl">
+				{{#errorMsg}}
+					<p class="error error-msg">{{errorMsg}}</p>
+				{{/errorMsg}}
+			</div>
+			<input type="hidden" value="{{videoTitle}}" name="video[]" class="wmu-file-name-input required">
+		</div>
+
+		<div class="module-image-box">
+			<div class="image-placeholder video">
+				{{{videoThumbnail}}}
+			</div>
+		</div>
+
+		<div class="module-input-box buttons">
+			<input type="button" class="secondary remove" value="{{removeMsg}}" />
+		</div>
+
+		<button type="button" class="secondary navigation nav-up"><img class="chevron chevron-up" src="{{blankImgUrl}}"></button>
+		<button type="button" class="secondary navigation nav-down"><img class="chevron chevron-down" src="{{blankImgUrl}}"></button>
+	</div>
+</div>

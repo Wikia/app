@@ -1,0 +1,124 @@
+@import "skins/oasis/css/mixins/arrow";
+@import "skins/oasis/css/mixins/clearfix";
+@import "skins/oasis/css/mixins/opacity";
+@import "skins/oasis/css/core/color";
+
+.page-listings {
+	@include clearfix;
+	ul {
+		list-style: none;
+		margin: 0;
+	}
+	.page-list-pagination {
+		display: none;
+		float: right;
+		font-size: 12px;
+		.arrow {
+			cursor: pointer;
+			position: relative;
+			top: -1px;
+			&.disabled {
+				@include opacity(50);
+			}
+			&.left {
+				@include arrow(6px, $color-buttons, 'left');
+				margin-right: 8px;
+			}
+			&.right {
+				@include arrow(6px, $color-buttons, 'right');
+				margin-left: 8px;
+			}
+		}
+	}
+	.page-listing {
+		@include clearfix;
+		margin: 15px 0 0;
+	}
+	.page-list-content {
+		position: relative;
+	}
+	.page-listing-image {
+		background-color: #f0f0f0;
+		height: 90px;
+		width: 160px;
+		&.no-image {
+			background-image: url(/extensions/wikia/VideoHandlers/images/Brackets.png);	/* base64 */
+			background-position: 50px 25px;
+			background-repeat: no-repeat;
+		}
+	}
+	.page-listing-snippet {
+		margin: 0;
+	}
+	.page-listing-title {
+		margin: 5px 0 0;
+	}
+}
+
+.SeeMore {
+	border: 1px solid $color-page-border;
+	display: block;
+	margin: 20px 0 10px;
+	padding: 5px;
+	text-align: center;
+	&.toggled {
+		.see-less {
+			display: inline;
+		}
+		.see-more {
+			display: none;
+		}
+	}
+	.arrow {
+		&.down {
+			@include arrow(4px, $color-text, 'down');
+		}
+		&.up {
+			@include arrow(4px, $color-text, 'up');
+		}
+	}
+	.see-less {
+		display: none;
+	}
+}
+
+.more-info-wrapper {
+	display: none;
+}
+
+.WikiaArticle .video-page-caption {
+	@include clearfix;
+	border-bottom: solid 1px $color-headline-border;
+	margin: 10px 0 34px;
+	padding-bottom: 15px;
+	
+	.video-provider {
+		font-size: 11px;
+		line-height: 11px;
+	}
+	.video-views {
+		float: right;
+		font-size: 18px;
+		margin: 0;
+	}
+	p {
+		line-height: 20px;
+		margin: 0;
+	}
+}
+
+table.mw_metadata {
+	margin: 10px 0 0;
+}
+
+#mw-imagepage-reupload-link {
+	display: none;
+}
+
+/* monobook styling */
+.skin-monobook {
+	.page-listing .grid-1 {
+		float: left;
+		margin-right: 10px;
+	}
+}

@@ -1,0 +1,112 @@
+@import "../../../../skins/oasis/css/core/color";
+@import "../../../../skins/oasis/css/mixins/forms";
+
+#currentSettings{
+	border-left: 1px solid $color-page-border;
+	float: left;
+	margin: 20px 0 0 15px;
+	padding-left: 15px;
+	width: 400px;
+	
+	ul{
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		
+		li{
+			img{
+				border: 1px solid $color-page-border;
+				display: block;
+				height: 120px;
+				margin-left: 30px;
+				width: 120px;
+				
+				&.watermark{
+					background-color: #00396d;
+					height: 320px;
+					width: 480px;
+				}
+			}
+		}
+	}
+}
+
+#dataForm{
+	float: left;
+	margin: 20px auto;
+	
+	input{
+		&[type=submit]{
+			display: block;
+		}
+		
+		&[type=text]{
+			@include input-field;
+			height: 40px;
+			line-height: 40px;
+			margin-bottom: 15px;
+			width: 400px;
+			
+			&.error{
+				margin-bottom: 5px;
+			}
+		}
+	}
+	
+	label{
+		display: block;
+	}
+	
+	ul{
+		&.error{
+			color: $color-error;
+			font-size: smaller;
+			list-style: none;
+			margin: 0 0 10px 0;
+			padding: 0;
+		}
+	}
+}
+#allImages {
+	float: left;
+	margin-top: 100px;
+	width: 100%;
+	img {
+		width: 480px;
+		height: 320px;
+	}
+	
+	& > span {
+		display: block;
+	}
+	
+	a {
+		width: auto;
+		height: auto;
+		position: relative;
+		display: inline-block;
+		margin: 2px;
+		border: 1px solid black;
+	}
+	
+	a > div {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		color: #fff;
+		width: 100%;
+		text-align:left;
+		background-color: rgba(0, 0, 0, 0.4);
+		height: 24px;
+		z-index: 22;
+		text-decoration: none;
+	}
+	
+	div > span {
+		margin-left: 30px;
+	}
+	
+	a:hover {
+		text-decoration: none;
+	}
+}

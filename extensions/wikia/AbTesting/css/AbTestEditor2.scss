@@ -1,0 +1,87 @@
+@import "skins/shared/color";
+//@import "skins/shared/mixins/arrow";
+//@import "skins/shared/mixins/border-radius";
+
+$abTesting-color-hover: mix($color-page, $color-text, 80);
+$abTesting-color-selected: mix($color-page, $color-buttons, 90);
+$abTesting-color-details: mix($color-page, $color-buttons, 95);
+$abTesting-color-border: mix($color-page-border, $color-page, 50%);
+
+body {
+	background: black !important;
+}
+
+#AbTestEditor {
+	& > table {
+		width: 100%;
+		.status-inactive {
+			color: $color-alternate-text;
+		}
+		.status-active {
+			.column-status {
+				color: #2eaa31;
+			}
+		}
+		.exp {
+			background: $color-page;
+			cursor: pointer;
+			&:hover, &:hover td {
+				background: $abTesting-color-hover;
+			}
+			&.selected, &.selected td {
+				background: $abTesting-color-selected;
+			}
+			td { border-bottom: none; }
+		}
+	}
+}
+
+#AbTestDetails {
+	//@include border-radius-ne(10px);
+	//@include border-radius-se(10px);
+	//border: 1px solid $color-borders;
+	position: fixed;
+	width: 400px;
+	max-height: 600px;
+	overflow-y: scroll;
+	background: $abTesting-color-details;
+	display: none;
+	.title {
+		font-weight: bold;
+		font-size: 2em;
+		text-align: center;
+		padding-top: 10px;
+		padding-bottom: 5px;
+		border-bottom: 1px solid $abTesting-color-border;
+	}
+	.content {
+		padding: 5px 20px;
+	}
+	.subtle {
+		color: $color-alternate-text;
+		opacity: 0.7;
+	}
+	.actions {
+		text-align: right;
+		padding: 10px;
+		.sprite {
+			position: relative;
+			display: inline-block;
+			left: 4px;
+			top: 2px;
+		}
+	}
+	th {
+		color: $color-alternate-text;
+		text-align: right;
+		font-weight: normal;
+		vertical-align: top;
+	}
+	th:after {
+		display: inline;
+		content: ': ';
+	}
+	td {
+		font-weight: 150;
+	}
+}
