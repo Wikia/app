@@ -1,10 +1,10 @@
 define('wikia.scrollToLink', ['jquery'], function($) {
 	'use strict';
-	var offset, init, scrollTo, handleLinkTo, pushIntoHistory;
+	var offsetToScroll, init, handleLinkTo, getOffsetTop, pushIntoHistory, validateHref;
 
-	offset = 80; // height of #globalNavigation plus some additional space
+	init = function(offset) {
+		offsetToScroll = offset;
 
-	init = function() {
 		handleLinkTo(window.location.hash);
 
 		$('body').on('click', 'a', function(event){
@@ -14,17 +14,24 @@ define('wikia.scrollToLink', ['jquery'], function($) {
 		});
 	};
 
-	scrollTo = function(targetOffset) {
-		window.scrollTo(0, parseInt(targetOffset, 10));
+	getOffsetTop = function(element) {
+		return parseInt(element.getBoundingClientRect().top + window.pageYOffset - document.documentElement.clientTop, 10);
 	};
 
-	handleLinkTo = function (href) {
-		if(href.indexOf("#") === 0) {
-			var $target = $(href);
+	validateHref = function(href) {
+		return (href.indexOf("#") === 0 && href.length > 1) ? href.slice(1) : false;
+	};
 
-			if ($target.length) {
-				$('html, body').animate({ scrollTop: $target.offset().top - offset });
-				if (pushIntoHistory({}, document.title, window.location.pathname + href)) {
+	handleLinkTo = function(href) {
+		if(!!(href = validateHref(href))) {
+			var target = document.getElementById(href),
+				targetOffset;
+
+			if (!!target) {
+				targetOffset = getOffsetTop(target);
+
+				$('html, body').animate({ scrollTop: targetOffset - offsetToScroll });
+				if (pushIntoHistory({}, document.title, window.location.pathname + '#' + href)) {
 					return true;
 				}
 			}
