@@ -9,10 +9,7 @@ class WikiaMapsHooks {
 	 * @return bool
 	 */
 	public static function onOasisSkinAssetGroups( &$assetsArray ) {
-		$mapsAssets = [ 'wikia_maps_contribution_button_create_map_js' ];
-
-		$assetsArray = array_merge( $assetsArray, $mapsAssets );
-
+		$assetsArray[] = 'wikia_maps_contribution_button_create_map_js';
 		return true;
 	}
 
