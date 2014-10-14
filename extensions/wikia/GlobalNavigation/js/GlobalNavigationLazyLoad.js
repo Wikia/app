@@ -4,15 +4,17 @@ define(
 	function lazyLoad( $, nirvana, Querystring ) {
 		'use strict';
 
-		var getHubLinks, getMenuItemsDone, errorHandler, isMenuWorking, menuLoading,
-			menuLoaded, subMenuSelector;
-
-		menuLoaded = false;
-		menuLoading = false;
+		var menuLoading = false,
+			menuLoaded = false,
+			getHubLinks,
+			getMenuItemsDone,
+			errorHandler,
+			isMenuWorking,
+			subMenuSelector;
 
 		/**
-		 * Callback to handle request that come back with success (Creation of submenus)
-		 * @param  {object} menuItems JSON object with all submenu for Global Nav data
+		 * @desc callback to handle request that come back with success (Creation of submenus)
+		 * @param {Object} menuItems JSON object with all submenu for Global Nav data
 		 */
 		getMenuItemsDone = function( menuItems ) {
 			var $sections = $( $.parseHTML( menuItems ) ).removeClass( 'active' ),
@@ -22,7 +24,7 @@ define(
 
 			$( '> .active', $hubLinks ).removeClass( 'active' );
 
-			subMenuSelector = '.' + $( '> .active', $verticals ).data( 'vertical' ) + '-links';
+			subMenuSelector = '.' + $( '.active', $verticals ).data( 'vertical' ) + '-links';
 
 			$hubLinks.append( $sections );
 			$hubLinks.find( subMenuSelector ).addClass( 'active' );
