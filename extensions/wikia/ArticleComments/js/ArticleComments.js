@@ -1,32 +1,36 @@
-(function( window, $ ) {
+(function (window, $) {
+	'use strict';
 
 // This file is included on every page.
 // If we aren't on an article page, halt execution here.
 // TODO: revisit this at some point when we have dependency loading.
-if ( !window.wgIsArticle ) {
+if (!window.wgIsArticle) {
 	return;
 }
 
-var $window = $(window);
-
-var ArticleComments = {
+var $window = $(window),
+	ArticleComments = {
 	animations: {}, // Used by MiniEditor
 	processing: false,
 	mostRecentCount: 0,
 	messagesLoaded: false,
-	miniEditorEnabled: typeof window.wgEnableMiniEditorExt != 'undefined' && skin == 'oasis',
-	loadOnDemand: typeof window.wgArticleCommentsLoadOnDemand != 'undefined',
+	miniEditorEnabled: typeof window.wgEnableMiniEditorExt !== 'undefined' && skin === 'oasis',
+	loadOnDemand: typeof window.wgArticleCommentsLoadOnDemand !== 'undefined',
 	initCompleted: false,
+	actionButtons: $('#WikiaArticleComments .actionButton'),
+	bucky: window.Bucky('ArticleComments'),
 
-	init: function() {
-		var $articleComments = $('#article-comments');
-		var $articleCommFbMonit = $('#article-comm-fbMonit');
-		var $fbCommentMessage = $('#fbCommentMessage')
+	init: function () {
+		ArticleComments.bucky.timer.start('init');
+
+		var $articleComments = $('#article-comments'),
+			$articleCommFbMonit = $('#article-comm-fbMonit'),
+			$fbCommentMessage = $('#fbCommentMessage');
 
 		if (ArticleComments.miniEditorEnabled) {
 			var newcomment = $('#article-comm');
 
-			newcomment.bind('focus', function(e) {
+			newcomment.bind('focus', function (e) {
 				ArticleComments.editorInit(this);
 			});
 
@@ -35,30 +39,34 @@ var ArticleComments = {
 			}
 		}
 
-        if(window.wgDisableAnonymousEditing && !window.wgUserName){
-            $(".article-comm-reply").hide();
-        }
-        else {
+        if (window.wgDisableAnonymousEditing && !window.wgUserName){
+            $('.article-comm-reply').hide();
+        } else {
     		$articleComments.on('click', '.article-comm-edit', ArticleComments.actionProxy(ArticleComments.edit));
             $articleComments.on('click', '.article-comm-reply', ArticleComments.actionProxy(ArticleComments.reply));
-            $('#article-comm-submit').bind('click', { source: '#article-comm' }, ArticleComments.actionProxy(ArticleComments.postComment));
+            $('#article-comm-submit').bind('click',
+	            { source: '#article-comm' },
+	            ArticleComments.actionProxy(ArticleComments.postComment)
+            );
         }
 
-		$articleCommFbMonit.mouseenter(function() {
+		$articleCommFbMonit.mouseenter(function () {
 			$fbCommentMessage.fadeIn('slow');
 		});
 
-		$articleCommFbMonit.mouseleave(function() {
+		$articleCommFbMonit.mouseleave(function () {
 			$fbCommentMessage.fadeOut('slow');
 		});
 
 		ArticleComments.addHover();
 		ArticleComments.showEditLink();
 		ArticleComments.initCompleted = true;
+
+		ArticleComments.bucky.timer.stop ('init');
 	},
 
-	actionProxy: function(callback) {
-		return function(e) {
+	actionProxy: function (callback) {
+		return function (e) {
 			e.preventDefault();
 
 			// Prevent the action if MiniEditor is enabled and loading
@@ -71,14 +79,15 @@ var ArticleComments = {
 		};
 	},
 
-	showEditLink: function() {
+	showEditLink: function () {
 		//hack to display 'edit' link when slave lag caused it to be hidden
 		if (wgUserName) {
-			$('#article-comments-ul details').find('a:contains("' + wgUserName + '")').closest('details').find('.edit-link').show();
+			$('#article-comments-ul details').find('a:contains("' + wgUserName + '")')
+				.closest('details').find('.edit-link').show();
 		}
 	},
 
-	edit: function(e) {
+	edit: function (e) {
 		e.preventDefault();
 
 		if (ArticleComments.processing) {
@@ -94,6 +103,7 @@ var ArticleComments = {
 		}
 
 		function makeRequest() {
+			ArticleComments.bucky.timer.start('edit.makeRequest');
 			var commentId = e.target.id.replace(/^comment/, ''),
 				textfield = $('#article-comm-textfield-' + commentId);
 
@@ -105,7 +115,7 @@ var ArticleComments = {
 				method: 'axEdit',
 				rs: 'ArticleCommentsAjax'
 
-			}, function(json) {
+			}, function (json) {
 				if (!json.error) {
 					var buttons = $(e.target).closest('.buttons'),
 						divFormSelector = '#article-comm-div-form-' + json.id,
@@ -146,13 +156,14 @@ var ArticleComments = {
 				}
 
 				ArticleComments.processing = false;
+				ArticleComments.bucky.timer.stop('edit.makeRequest');
 			});
 		}
 
 		ArticleComments.processing = true;
 	},
 
-	cancelEdit: function(e) {
+	cancelEdit: function (e) {
 		var commentId = e.data.id;
 
 		e.preventDefault();
@@ -166,7 +177,8 @@ var ArticleComments = {
 		$('#comm-text-' + commentId).show();
 	},
 
-	saveEdit: function(e) {
+	saveEdit: function (e) {
+		ArticleComments.bucky.timer.start('saveEdit');
 		e.preventDefault();
 
 		if (ArticleComments.processing) { return; }
@@ -182,7 +194,7 @@ var ArticleComments = {
 
 			submitButton.parent().find('.info').remove();
 
-			if ($.trim(content) == '') {
+			if ($.trim(content) === '') {
 				submitButton.after($('<span>').addClass('info').html(e.data.emptyMsg));
 				return;
 			}
@@ -201,11 +213,11 @@ var ArticleComments = {
 				title: wgPageName,
 				wpArticleComment: content
 
-			}, function(json) {
+			}, function (json) {
 				throbber.css('visibility', 'hidden');
 
 				if (!json.error) {
-					if (json.commentId && json.commentId != 0) {
+					if (json.commentId && json.commentId !== 0) {
 						var comment = $('#comm-' + json.commentId),
 							saveTemplate = $(json.text);
 
@@ -226,13 +238,15 @@ var ArticleComments = {
 				textfield.removeAttr('readonly');
 
 				ArticleComments.processing = false;
+				ArticleComments.bucky.timer.stop('saveEdit');
 			});
 
 			ArticleComments.processing = true;
 		}
 	},
 
-	reply: function(e) {
+	reply: function (e) {
+		ArticleComments.bucky.timer.start('reply');
 		e.preventDefault();
 
 		if (ArticleComments.processing) { return; }
@@ -245,9 +259,8 @@ var ArticleComments = {
 			rs: 'ArticleCommentsAjax',
 			title: wgPageName
 
-		}, function(json) {
-			var comment = $('#comm-' + json.id),
-				blockquote = $('#comm-text-' + json.id).parent(),
+		}, function (json) {
+			var blockquote = $('#comm-text-' + json.id).parent(),
 				editbox = blockquote.find('.article-comm-edit-box'),
 				buttons = blockquote.find('.buttons').hide();
 
@@ -265,13 +278,13 @@ var ArticleComments = {
 				}, ArticleComments.actionProxy(ArticleComments.postComment));
 
 			// Login required
-			} else if (json.error == 2) {
+			} else if (json.error === 2) {
 				blockquote.find('.tools').after($('<span>').addClass('info').html(json.msg));
 
 			// General error. TODO: add caption
 			} else {
-				require( [ 'wikia.ui.factory' ], function( uiFactory ) {
-					uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
+				require(['wikia.ui.factory'], function (uiFactory) {
+					uiFactory.init(['modal']).then(function (uiModal) {
 						var moduleConfig = {
 							vars: {
 								id: 'general_error',
@@ -279,7 +292,7 @@ var ArticleComments = {
 								content: json.msg
 							}
 						};
-						uiModal.createComponent( moduleConfig, function ( errorModal ) {
+						uiModal.createComponent(moduleConfig, function (errorModal) {
 							errorModal.show();
 						});
 					});
@@ -289,10 +302,10 @@ var ArticleComments = {
 			var textfield = $('#article-comm-reply-textfield-' + json.id);
 			if (ArticleComments.miniEditorEnabled) {
 				ArticleComments.editorInit(textfield, {
-					editorActivated: function(event, wikiaEditor) {
+					editorActivated: function () {
 						blockquote.find('.article-comm-edit-box').show();
 					},
-					editorDeactivated: function(event, wikiaEditor) {
+					editorDeactivated: function (event, wikiaEditor) {
 						if (!wikiaEditor.getContent()) {
 							blockquote.find('.article-comm-edit-box').hide();
 							buttons.show();
@@ -305,12 +318,13 @@ var ArticleComments = {
 			}
 
 			ArticleComments.processing = false;
+			ArticleComments.bucky.timer.stop('reply');
 		});
 
 		ArticleComments.processing = true;
 	},
 
-	postComment: function(e) {
+	postComment: function (e) {
 		e.preventDefault();
 
 		if (ArticleComments.processing) { return; }
@@ -321,7 +335,7 @@ var ArticleComments = {
 			content = ArticleComments.getContent(source),
 			showall = $.getUrlVar('showall');
 
-		if ($.trim(content) == '') { return; }
+		if ($.trim(content) === '') { return; }
 
 		throbber.css('visibility', 'visible');
 		source.attr('readonly', 'readonly');
@@ -347,7 +361,8 @@ var ArticleComments = {
 		}
 
 		function makeRequest() {
-			$.postJSON(wgScript, data, function(json) {
+			ArticleComments.bucky.timer.start('postComment.makeRequest');
+			$.postJSON(wgScript, data, function (json) {
 				throbber.css('visibility', 'hidden');
 
 				if (ArticleComments.miniEditorEnabled) {
@@ -368,7 +383,7 @@ var ArticleComments = {
 						parent = $('#comm-' + parentId);
 						subcomments = parent.next();
 
-						if(!subcomments.hasClass('sub-comments')){
+						if (!subcomments.hasClass('sub-comments')){
 							parent.after(subcomments = $('<ul class="sub-comments"></ul>'));
 						}
 
@@ -385,7 +400,7 @@ var ArticleComments = {
 					//update counter
 					$('#article-comments-counter-header').html($.msg('oasis-comments-header', json.counter));
 
-					if (window.skin == 'oasis') {
+					if (window.skin === 'oasis') {
 						$('#WikiaPageHeader, #WikiaUserPagesHeader').find('.commentsbubble').html(json.counter);
 
 						if (!parentId) {
@@ -395,7 +410,9 @@ var ArticleComments = {
 								ArticleComments.mostRecentCount++;
 							}
 
-							$('#article-comments-counter-recent').html($.msg('oasis-comments-showing-most-recent', ArticleComments.mostRecentCount));
+							$('#article-comments-counter-recent').html(
+								$.msg('oasis-comments-showing-most-recent', ArticleComments.mostRecentCount)
+							);
 						}
 					}
 
@@ -414,13 +431,14 @@ var ArticleComments = {
 				$(e.target).removeAttr('disabled');
 
 				ArticleComments.processing = false;
+				ArticleComments.bucky.timer.stop('postComment.makeRequest');
 			});
 
 			ArticleComments.processing = true;
 		}
 
 		if (!ArticleComments.messagesLoaded) {
-			$.getMessages('ArticleCommentsCounter', function() {
+			$.getMessages('ArticleCommentsCounter', function () {
 				ArticleComments.messagesLoaded = true;
 				makeRequest();
 			});
@@ -429,17 +447,18 @@ var ArticleComments = {
 		}
 	},
 
-	setPage: function(e) {
+	setPage: function (e) {
+		ArticleComments.bucky.timer.start('setPage');
 		e.preventDefault();
 
-		var page = parseInt($(this).attr('page'));
-		var $commentsList = $('#article-comments-ul').addClass('loading');
+		var page = parseInt($(this).attr('page')),
+			$commentsList = $('#article-comments-ul').addClass('loading');
 
 		$.getJSON(wgScript + '?action=ajax&rs=ArticleCommentsAjax&method=axGetComments&article=' + wgArticleId, {
 			page: page,
 			order: $('#article-comm-order').attr('value')
 
-		}, function(json) {
+		}, function (json) {
 			$commentsList.removeClass('loading');
 
 			if (!json.error) {
@@ -453,23 +472,31 @@ var ArticleComments = {
 			}
 
 			ArticleComments.processing = false;
+			ArticleComments.bucky.timer.stop('setPage');
 		});
 	},
 
-	addHover: function() {
+	addHover: function () {
+		var linkSelectors = [
+			'.article-comments-pagination-link-active',
+			'#article-comments-pagination-link-prev',
+			'#article-comments-pagination-link-next'
+		];
+
 		$('.article-comments-pagination-link')
 			.bind('click', ArticleComments.setPage)
-			.not('.article-comments-pagination-link-active, #article-comments-pagination-link-prev, #article-comments-pagination-link-next')
-			.hover(function() {
+			.not(linkSelectors.join(', '))
+			.hover(function () {
 				$(this).addClass('accent');
 
-			}, function() {
+			}, function () {
 				$(this).removeClass('accent');
 			});
 	},
 
 	// Used to initialize MiniEditor
-	editorInit: function(element, events, content, edgeCases) {
+	editorInit: function (element, events, content, edgeCases) {
+		ArticleComments.bucky.timer.start('editorInit');
 		var $element = $(element),
 			wikiaEditor = $element.data('wikiaEditor');
 
@@ -482,6 +509,29 @@ var ArticleComments = {
 
 		// Check for edge cases
 		var hasEdgeCases = $.isArray(edgeCases) && edgeCases.length;
+
+		function initEditor() {
+			events = events || {};
+
+			// Wrap editorActivated with our own function
+			var editorActivated = events.editorActivated;
+			events.editorActivated = function (event, wikiaEditor) {
+				ArticleComments.actionButtons.removeClass('disabled').removeAttr('disabled');
+
+				if ($.isFunction(editorActivated)) {
+					editorActivated.apply(this, arguments);
+				}
+			};
+
+			// Initialize the editor
+			$element.miniEditor({
+				config: {
+					animations: MiniEditor.Wall.Animations,
+					mode: hasEdgeCases ? 'source' : MiniEditor.config.mode
+				},
+				events: events
+			});
+		}
 
 		// Already exists
 		if (wikiaEditor) {
@@ -499,34 +549,11 @@ var ArticleComments = {
 
 		// Needs initializing
 		} else {
-			var actionButtons = $('#WikiaArticleComments .actionButton').addClass('disabled').attr('disabled', true);
+			ArticleComments.actionButtons.addClass('disabled').attr('disabled', true);
 
 			// Set content on element before initializing to keep focus in editbox (BugId:24188).
 			if (content !== undefined) {
 				$element.val(content);
-			}
-
-			function initEditor() {
-				events = events || {};
-
-				// Wrap editorActivated with our own function
-				var editorActivated = events.editorActivated;
-				events.editorActivated = function(event, wikiaEditor) {
-					actionButtons.removeClass('disabled').removeAttr('disabled');
-
-					if ($.isFunction(editorActivated)) {
-						editorActivated.apply(this, arguments);
-					}
-				};
-
-				// Initialize the editor
-				$element.miniEditor({
-					config: {
-						animations: MiniEditor.Wall.Animations,
-						mode: hasEdgeCases ? 'source' : MiniEditor.config.mode
-					},
-					events: events
-				});
 			}
 
 			// Load assets first so we have the proper config.mode (BugId:25182)
@@ -538,21 +565,22 @@ var ArticleComments = {
 				initEditor();
 			}
 		}
+		ArticleComments.bucky.timer.stop('editorInit');
 	},
 
-	getContent: function(element) {
+	getContent: function (element) {
 		return ArticleComments.miniEditorEnabled ? element.data('wikiaEditor').getContent() : element.val();
 	},
 
-	getLoadConversionFormat: function(element) {
+	getLoadConversionFormat: function (element) {
 		return ArticleComments.miniEditorEnabled ? MiniEditor.getLoadConversionFormat(element) : '';
 	},
 
-	getSaveConversionFormat: function(element) {
+	getSaveConversionFormat: function (element) {
 		return ArticleComments.miniEditorEnabled ? MiniEditor.getSaveConversionFormat(element) : '';
 	},
 
-	scrollToElement: function(element) {
+	scrollToElement: function (element) {
 		var $element = $(element),
 			docViewTop = $window.scrollTop(),
 			docViewBottom = docViewTop + $window.height(),
@@ -569,10 +597,10 @@ var ArticleComments = {
 };
 
 if (ArticleComments.loadOnDemand) {
-	$(function() {
+	$(function () {
 
 		// NO article comment on this page lets just skip
-		if ( !$('#WikiaArticleComments').length ) {
+		if (!$('#WikiaArticleComments').length) {
 			return;
 		}
 
@@ -580,20 +608,23 @@ if (ArticleComments.loadOnDemand) {
 			hash = window.location.hash,
 			permalink = /^#comm-/.test(hash),
 			// TODO: we should be able to load it this way
-			//styleAssets.push($.getAssetManagerGroupUrl('articlecomments' + (ArticleComments.miniEditorEnabled ? '_mini_editor' : '') + '_scss'));
+			//styleAssets.push($.getAssetManagerGroupUrl(
+			// 'articlecomments' + (ArticleComments.miniEditorEnabled ? '_mini_editor' : '') + '_scss'));
 			styleAssets = [$.getSassCommonURL('skins/oasis/css/core/ArticleComments.scss')],
-			$comments = $('#WikiaArticleComments');
-
-		var belowTheFold = function() {
-			return $comments.offset().top >= ($window.scrollTop() + $window.height());
-		};
+			$comments = $('#WikiaArticleComments'),
+			belowTheFold = function () {
+				return $comments.offset().top >= ($window.scrollTop() + $window.height());
+			};
 
 		if (ArticleComments.miniEditorEnabled) {
 			styleAssets.push($.getSassCommonURL('extensions/wikia/MiniEditor/css/MiniEditor.scss'));
-			styleAssets.push($.getSassCommonURL('extensions/wikia/MiniEditor/css/ArticleComments/ArticleComments.scss'));
+			styleAssets.push($.getSassCommonURL(
+				'extensions/wikia/MiniEditor/css/ArticleComments/ArticleComments.scss')
+			);
 		}
 
-		var loadAssets = function() {
+		var loadAssets = function () {
+			ArticleComments.bucky.timer.start('loadAssets');
 			$.when(
 				$.getResources(styleAssets),
 				$.nirvana.sendRequest({
@@ -606,11 +637,11 @@ if (ArticleComments.loadOnDemand) {
 						page: $comments.data('page'),
 						skin: true
 					},
-					callback: function(response) {
+					callback: function (response) {
 						content = response;
 					}
 				})
-			).then(function() {
+			).then(function () {
 				$comments.removeClass('loading').html(content);
 
 				ArticleComments.init();
@@ -618,12 +649,13 @@ if (ArticleComments.loadOnDemand) {
 				if (permalink) {
 					ArticleComments.scrollToElement(hash);
 				}
+				ArticleComments.bucky.timer.stop('loadAssets');
 			});
 		};
 
 		// Load comments as they become visible (unless we are requesting a permalink comment)
 		if (!permalink && belowTheFold()) {
-			$window.on('scrollstop.ArticleCommentsLoadOnDemand', function(event) {
+			$window.on('scrollstop.ArticleCommentsLoadOnDemand', function () {
 				if (!belowTheFold()) {
 					$comments.addClass('loading');
 					$window.off('scrollstop.ArticleCommentsLoadOnDemand');
@@ -644,4 +676,4 @@ if (ArticleComments.loadOnDemand) {
 // Exports
 window.ArticleComments = ArticleComments;
 
-})( this, jQuery );
+})(this, jQuery);
