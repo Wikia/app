@@ -24,6 +24,7 @@ class purgeArticlePages extends Maintenance {
 		$this->mDescription = "Set wiki factory variable";
 		$this->addOption( 'dry-run', 'Dry run mode', false, false, 'd' );
 		$this->addOption( 'wikiId', 'Wiki Id', false, true, 'w' );
+		$this->addOption( 'limit', 'Page limit. Set to -1 for all pages. Default: 20K pages', false, false, 'l' );
 	}
 
 	public function execute() {
@@ -40,38 +41,68 @@ class purgeArticlePages extends Maintenance {
 			die( "Error: Cannot find dbname.\n" );
 		}
 
-		$cnt = 0;
-		$pages = $this->getAllPages( $dbname );
-		$total = count($pages);
-		foreach( $pages as $page ) {
-			$cnt++;
-			echo "Wiki $wikiId - Page $page[id] [$cnt of $total]: ";
-			$title = GlobalTitle::newFromId( $page['id'], $wikiId );
-			if ( $title instanceof GlobalTitle ) {
-				$url = $title->getFullURL();
-				$command = "curl -X PURGE '$url'";
-				echo "$command\n";
-				if ( !$this->dryRun ) {
-					$output = shell_exec( $command );
-					echo "Output: $output\n";
-				}
-				$this->success++;
-			} else {
-				echo "ERROR: Cannot find global title for $page[title]\n";
-			}
+		$pageLimit = 20000;
+		$totalLimit = $this->getOption( 'limit', $pageLimit );
+		if ( empty( $totalLimit ) || $totalLimit < -1 ) {
+			die( "Error: invalid limit.\n" );
 		}
 
-		echo "\nWiki $wikiId: Total pages: $total, Success: {$this->success}, Failed: ".( $total - $this->success )."\n\n";
+		if ( $totalLimit == -1 ) {
+			$totalLimit = $this->getTotalPages( $dbname );
+		}
+
+		$maxSet = ceil( $totalLimit / $pageLimit );
+		$limit = ( $totalLimit > $pageLimit ) ? $pageLimit : $totalLimit;
+
+		$totalPages = 0;
+		for ( $set = 1; $set <= $maxSet; $set++ ) {
+			$cnt = 0;
+			if ( $set == $maxSet ) {
+				$limit = $totalLimit - ( $pageLimit * ( $set - 1 ) );
+			}
+			$offset = ( $set - 1 ) * $pageLimit;
+			$pages = $this->getAllPages( $dbname, $limit, $offset );
+			$total = count( $pages );
+			foreach ( $pages as $page ) {
+				$cnt++;
+				echo "Wiki $wikiId - Page $page[id] [$cnt of $total, set $set of $maxSet]: ";
+				$title = GlobalTitle::newFromId( $page['id'], $wikiId );
+				if ( $title instanceof GlobalTitle ) {
+					$url = $title->getFullURL();
+					$command = "curl -X PURGE '$url'";
+					echo "$command\n";
+					if ( !$this->dryRun ) {
+						$output = shell_exec( $command );
+						echo "Output: $output\n";
+					}
+					$this->success++;
+				} else {
+					echo "ERROR: Cannot find global title for $page[title]\n";
+				}
+			}
+
+			$totalPages = $totalPages + $total;
+		}
+
+		echo "\nWiki $wikiId: Total pages: $totalPages, Success: {$this->success}, Failed: ".( $totalPages - $this->success )."\n\n";
 	}
 
-	protected function getAllPages( $dbname ) {
-		$limit = 20000;
+	/**
+	 * Get all article page
+	 * @param string $dbname
+	 * @param integer $limit
+	 * @param integer $offset
+	 * @return array $pages - list of article pages
+	 */
+	protected function getAllPages( $dbname, $limit, $offset ) {
 		$db = wfGetDB( DB_SLAVE, [], $dbname );
-		$pages = (new WikiaSQL())
+		$pages = ( new WikiaSQL() )
 			->SELECT( '*' )
 			->FROM( 'page' )
 			->WHERE( 'page_namespace' )->EQUAL_TO( NS_MAIN )
+			->ORDER_BY( 'page_id' )
 			->LIMIT( $limit )
+			->OFFSET( $offset )
 			->runLoop( $db, function( &$pages, $row ) {
 				$pages[] = [
 					'id' => $row->page_id,
@@ -81,6 +112,28 @@ class purgeArticlePages extends Maintenance {
 
 		return $pages;
 	}
+
+	/**
+	 * Get the total number of article pages
+	 * @param string $dbname
+	 * @return integer $totalPages
+	 */
+	protected function getTotalPages( $dbname ) {
+		$db = wfGetDB( DB_SLAVE, [], $dbname );
+		$totalPages = ( new WikiaSQL() )
+			->SELECT( 'count(*) cnt' )
+			->FROM( 'page' )
+			->WHERE( 'page_namespace' )->EQUAL_TO( NS_MAIN )
+			->ORDER_BY( 'page_id' )
+			->run( $db, function( $result ) {
+				$row = $result->fetchObject();
+				$cnt = empty( $row ) ? 0 : $row->cnt;
+				return $cnt;
+			});
+
+		return $totalPages;
+	}
+
 }
 
 $maintClass = "purgeArticlePages";
