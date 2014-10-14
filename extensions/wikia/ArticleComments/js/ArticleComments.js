@@ -18,7 +18,7 @@ var $window = $(window),
 	loadOnDemand: typeof window.wgArticleCommentsLoadOnDemand !== 'undefined',
 	initCompleted: false,
 	actionButtons: $('#WikiaArticleComments .actionButton'),
-	bucky: window.Bucky('ArticleComments'),
+	bucky: window.Bucky('articlecomments.articlecomments'),
 
 	init: function () {
 		ArticleComments.bucky.timer.start('init');
