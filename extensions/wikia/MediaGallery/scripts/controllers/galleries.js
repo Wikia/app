@@ -7,12 +7,13 @@ define('mediaGallery.controllers.galleries', [
 
 	/**
 	 * Define primary gallery container element. Must be called after DOM ready
-	 * @param {Object} options Options for initialization:
+	 * @param {Object} [options] Options for initialization:
 	 *  lightbox: bool - whether to pass gallery data to Lightbox
 	 *  lazyLoad: bool - whether to lazy load gallery initialization. Note: this makes gallery generation async
 	 * @constructor
 	 */
 	var GalleriesController = function (options) {
+		options = options || {};
 		this.lightbox = options.lightbox;
 		this.lazyLoad = options.lazyLoad;
 		// cache DOM objects
