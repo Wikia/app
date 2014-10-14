@@ -91,16 +91,17 @@
 		function handleOpenMenuClick(event) {
 			var $target = $(event.currentTarget);
 
-			event.preventDefault();
-			event.stopPropagation();
-
 			if (!$target.hasClass('active')) {
+				event.preventDefault();
+				event.stopPropagation();
+
 				closeOpenedMenu();
 				$target.addClass('active');
+
+				$('body').one('click', handleCloseMenuClick);
+				closeContributeMenu();
+				$openedMenu = $target;
 			}
-			$('body').one('click', handleCloseMenuClick);
-			closeContributeMenu();
-			$openedMenu = $target;
 		}
 
 		function handleCloseMenuClick(event) {
