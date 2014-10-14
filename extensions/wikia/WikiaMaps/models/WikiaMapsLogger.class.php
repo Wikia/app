@@ -71,7 +71,7 @@ class WikiaMapsLogger {
 				/** @var ManualLogEntry $logEntry */
 				$logId = $logEntry->insert();
 
-				if( self::SHOW_IN_RECENT_CHANGES === true ) {
+				if ( self::SHOW_IN_RECENT_CHANGES === true ) {
 					$logEntry->publish( $logId );
 				}
 			}
