@@ -16,38 +16,38 @@
 				require(['wikia.ui.factory'], function (uiFactory) {
 					uiFactory.init(['modal']).then(function (uiModal) {
 						var forumModalConfig = {
-								vars: {
-									id: 'EditBoardModal',
-									size: 'small',
-									content: jsonResponse.html,
-									title: jsonResponse.title,
-									buttons: [
-										{
-											vars: {
-												value: jsonResponse.submitLabel,
-												classes: ['normal', 'primary', 'submit'],
-												data: [
-													{
-														key: 'event',
-														value: 'submit'
-													}
-												]
-											}
-										},
-										{
-											vars: {
-												value: $.msg('cancel'),
-												data: [
-													{
-														key: 'event',
-														value: 'close'
-													}
-												]
-											}
+							vars: {
+								id: 'EditBoardModal',
+								size: 'small',
+								content: jsonResponse.html,
+								title: jsonResponse.title,
+								buttons: [
+									{
+										vars: {
+											value: jsonResponse.submitLabel,
+											classes: ['normal', 'primary', 'submit'],
+											data: [
+												{
+													key: 'event',
+													value: 'submit'
+												}
+											]
 										}
-									]
-								}
-							};
+									},
+									{
+										vars: {
+											value: $.msg('cancel'),
+											data: [
+												{
+													key: 'event',
+													value: 'close'
+												}
+											]
+										}
+									}
+								]
+							}
+						};
 
 						uiModal.createComponent(forumModalConfig, function (forumModal) {
 							var forumModalForm = new WikiaForm(forumModal.$element.find('.WikiaForm'));
