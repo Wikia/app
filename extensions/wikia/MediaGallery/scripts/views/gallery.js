@@ -69,10 +69,10 @@ define('mediaGallery.views.gallery', [
 
 		this.bucky.timer.start('createMedia');
 
-		$.each(throttled, function (idx, data) {
+		$.each(throttled, function (idx, model) {
 			var media = new Media({
 				$el: $('<div></div>'),
-				model: data,
+				model: model,
 				gallery: this
 			});
 			self.media.push(media);

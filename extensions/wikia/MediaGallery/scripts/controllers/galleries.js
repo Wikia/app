@@ -24,20 +24,20 @@ define('mediaGallery.controllers.galleries', [
 
 	/**
 	 * Initialize galleries and add HTML to DOM.
-	 * @param {jQuery} $elem
-	 * @param {int} idx
-	 * @param {Object} data
+	 * @param {jQuery} $wrapper Wrapper element for gallery. Contains data attributes with info for gallery
+	 * @param {int} idx Index of wrapper DOM element in gallery array
+	 * @param {Object} model All the data needed for instantiating a gallery
 	 */
-	GalleriesController.prototype.createGallery = function ($elem, idx, data) {
+	GalleriesController.prototype.createGallery = function ($wrapper, idx, model) {
 		var gallery,
 			galleryOptions = {
 				$el: $('<div></div>'),
-				$wrapper: $elem,
-				model: { media: data },
+				$wrapper: $wrapper,
+				model: { media: model },
 				index: idx,
 				// if set, pass the value, otherwise, defaults will be used.
-				origVisibleCount: $elem.data('visible-count'),
-				interval: $elem.data('expanded')
+				origVisibleCount: $wrapper.data('visible-count'),
+				interval: $wrapper.data('expanded')
 			};
 
 		// Instantiate gallery view
@@ -45,7 +45,7 @@ define('mediaGallery.controllers.galleries', [
 		gallery.init();
 
 		// Append gallery HTML to DOM and trigger event
-		$elem.append(gallery.render().$el);
+		$wrapper.append(gallery.render().$el);
 		gallery.$el.trigger('galleryInserted');
 
 		// expose gallery instances publicly
@@ -60,13 +60,13 @@ define('mediaGallery.controllers.galleries', [
 
 		$.each(this.$galleries, function (idx) {
 			var $this = $(this),
-				data = $this.data('model'),
+				model = $this.data('model'),
 				lightboxController;
 
 			// Send gallery images to Lightbox
 			if (self.lightbox) {
 				lightboxController = new LightboxController({
-					model: data
+					model: model
 				});
 				lightboxController.init();
 			}
@@ -77,12 +77,12 @@ define('mediaGallery.controllers.galleries', [
 					on: $this,
 					threshold: 200,
 					callback: function () {
-						self.createGallery($this, idx, data);
+						self.createGallery($this, idx, model);
 					}
 				});
 			} else {
 				// Load galleries immediately
-				self.createGallery($this, idx, data);
+				self.createGallery($this, idx, model);
 			}
 		});
 	};
