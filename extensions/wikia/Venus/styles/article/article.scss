@@ -6,10 +6,11 @@ article {
 
 	header {
 		background-color: #cccccc; //only for prototype version
-		height: 575px; // only for prototype version
+		float: left;
+		height: 389px; // only for prototype version
 		margin-bottom: 40px;
 		position: relative;
-		width: 100%;
+		width: 692px; //only for prototype version
 
 		h1 {
 			bottom: 0;
@@ -26,7 +27,7 @@ article {
 	}
 
 	.left-nav {
-		position: absolute;
+		float: left;
 		text-align: center;
 		width: 86px;
 
@@ -177,11 +178,6 @@ article {
 			width: 824px; // only for prototype version
 		}
 
-		.left-nav {
-			float: left;
-			position: static;
-		}
-
 		#mw-content-text {
 			font-size: 18px;
 			line-height: 36px;
@@ -207,7 +203,14 @@ article {
 	article {
 
 		header {
+			float: none;
 			height: 431px; // only for prototype version
+			width: 100%;
+		}
+
+		.left-nav {
+			float: none;
+			position: absolute;
 		}
 
 		#mw-content-text {
