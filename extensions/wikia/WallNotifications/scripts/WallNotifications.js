@@ -198,6 +198,7 @@ var WallNotifications = $.createClass(Object, {
 				//	= tray is hidden (because there are no other wikis with notifications)
 				//  = no ability to show notifications, no tray)
 				this.showFirst();
+
 				this.bucky.timer.stop('markAllAsReadRequest');
 			})
 		});
