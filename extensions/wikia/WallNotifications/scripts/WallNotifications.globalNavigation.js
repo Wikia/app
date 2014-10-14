@@ -133,9 +133,9 @@ require(
 						this.currentWikiId = firstWikiId;
 						this.wikiShown[ firstWikiId ] = true;
 						this.updateWiki( firstWikiId );
+						this.bucky.timer.stop('fetchForCurrentWiki');
 					}
 				}
-				this.bucky.timer.stop('fetchForCurrentWiki');
 			},
 
 			restoreFromCache: function() {
