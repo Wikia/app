@@ -130,7 +130,7 @@ $VenusConfig[ 'global_navigation_js' ] = [
 		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationHubsMenu.js',
 		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationSearch.js',
 		'//extensions/wikia/GlobalNavigation/js/SearchSuggestions.js',
-		'//skins/shared/js/transparent-out.js',
+		'//skins/shared/scripts/transparent-out.js',
 		'//extensions/wikia/UserLogin/js/UserLoginDropdown.globalNavigation.js',
 		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js',
 		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
