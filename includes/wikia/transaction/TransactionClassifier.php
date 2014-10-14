@@ -130,6 +130,9 @@ class TransactionClassifier {
 			case Transaction::ENTRY_POINT_NIRVANA:
 				$this->addByList( Transaction::PARAM_CONTROLLER, self::$FILTER_NIRVANA_CONTROLLERS );
 				break;
+			case Transaction::ENTRY_POINT_API_V1:
+				$this->add( Transaction::PARAM_CONTROLLER );
+				break;
 			// ajax call - action=ajax
 			case Transaction::ENTRY_POINT_AJAX:
 				$this->addByList( Transaction::PARAM_FUNCTION, self::$FILTER_AJAX_FUNCTIONS );

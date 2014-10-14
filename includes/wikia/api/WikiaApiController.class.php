@@ -61,8 +61,9 @@ class WikiaApiController extends WikiaController {
 		$accessService->checkUse( $controller.'Controller', $method );
 
 		if ( !$this->request->isInternal() ) {
+			Transaction::setEntryPoint(Transaction::ENTRY_POINT_API_V1);
 			if ($this->hideNonCommercialContent()) {
-				$this->blockIfNonCommercialOnly();				
+				$this->blockIfNonCommercialOnly();
 			}
 			$paramKeys = array_keys( $webRequest->getQueryValues() );
 			$count = count( $paramKeys );
