@@ -183,13 +183,11 @@ require(
 			},
 
 			markAllAsRead: function(e) {
-				e.preventDefault();
 				this.markAllAsReadRequest( false );
 				return false;
 			},
 
 			markAllAsReadAllWikis: function(e) {
-				e.preventDefault();
 				this.markAllAsReadRequest( 'FORCE' );
 				return false;
 			},
@@ -224,7 +222,6 @@ require(
 			},
 
 			wikiClick: function(e) {
-				e.preventDefault();
 				var wikiEl = $(e.target).closest('.notifications-for-wiki'),
 					wikiId = parseInt(wikiEl.data('wiki-id'), 10);
 

@@ -205,7 +205,6 @@ var WallNotifications = $.createClass(Object, {
 	},
 
 	markAllAsReadPrompt: function(e) {
-		e.preventDefault();
 		$('#wall-notifications-markasread-sub-opts').show();
 		$('#wall-notifications-dropdown').show();
 		var $markAsRead = $('#wall-notifications-markasread');
@@ -217,13 +216,11 @@ var WallNotifications = $.createClass(Object, {
 	},
 
 	markAllAsRead: function(e) {
-		e.preventDefault();
 		this.markAllAsReadRequest( false );
 		return false;
 	},
 
 	markAllAsReadAllWikis: function(e) {
-		e.preventDefault();
 		this.markAllAsReadRequest( 'FORCE' );
 		return false;
 	},
@@ -262,7 +259,6 @@ var WallNotifications = $.createClass(Object, {
 	},
 
 	wikiClick: function(e) {
-		e.preventDefault();
 		var wikiEl = $(e.target).closest('.notifications-for-wiki');
 		if(wikiEl.hasClass('show') ) {
 			wikiEl.removeClass('show');
