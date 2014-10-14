@@ -197,9 +197,9 @@ $(document).ready(function() {
 
 <ul>
 <?php if( $isUsernameGloballyBlocked ) { ?>
-	<li><?= wfMsg('lookupuser-username-blocked-globally', $username) ?></li>
+	<li><?= wfMessage('lookupuser-username-blocked-globally', $username)->escaped() ?></li>
 <?php } else { ?>
-	<li><?= wfMsg('lookupuser-username-not-blocked-globally') ?></li>
+	<li><?= wfMessage('lookupuser-username-not-blocked-globally')->escaped() ?></li>
 <?php }?>
 </ul>
 
