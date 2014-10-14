@@ -32,11 +32,6 @@ define(
 				mapCreated: [
 					triggerStorageEvent,
 					showPoiCategoriesModal
-				],
-				beforeClose: [
-					function() {
-						utils.onBeforeCloseModal(!wasMapAdded);
-					}
 				]
 			},
 			// modal buttons and events for them in this step
@@ -68,8 +63,7 @@ define(
 					origin: 'wikia-int-map-poi-categories',
 					cacheKey: 'wikia_interactive_maps_poi_categories'
 				}
-			},
-			wasMapAdded = false;
+			};
 
 		/**
 		 * @desc initializes and configures UI
@@ -114,7 +108,6 @@ define(
 		 */
 		function createMap() {
 			if (validateData()) {
-				wasMapAdded = true;
 				createMapRequest();
 			}
 		}
@@ -186,6 +179,7 @@ define(
 				onErrorCallback: function(response) {
 					utils.handleNirvanaException(modal, response);
 					modal.activate();
+
 				}
 			});
 		}

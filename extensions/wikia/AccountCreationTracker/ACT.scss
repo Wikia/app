@@ -1,0 +1,87 @@
+@import "../../../skins/oasis/css/core/color";
+
+// styling datatables
+
+$highlight: mix($color-buttons, $color-page, 15%);
+@if $is-dark-wiki {
+	$highlight: mix($color-buttons, $color-page, 30%);
+}
+#WikiaMainContent {
+	ul {
+		list-style: none;
+		margin: 0;
+		li {
+			margin: 0;
+		}
+	}
+	fieldset {
+		margin: 0;
+		padding: 10px;
+	}
+}
+#WikiaMainContent .dataTables_wrapper {
+	min-height: 0;
+	color: $color-text;
+	table { 
+		border: 1px solid $color-page-border;
+		border-collapse: collapse;
+		.sorting_1, .sorting_2, .sorting_3 {
+			background: mix($highlight, $color-page, 35%);
+		}
+		tr {
+			cursor: pointer;
+			td, th {
+				background: $color-page;
+				margin: 0;
+				padding: 4px;
+				border-spacing:0;
+				white-space: nowrap;
+				.timeago {
+					display: inline;
+					color: mix($color-text, $color-page, 50%);
+					white-space: nowrap;
+				}
+				.user_id, .wiki_id, .page_id {
+					display: none;
+				}
+			}
+			&:hover td {
+				background: mix($highlight, $color-page, 50%);
+			}
+			&.row_selected td {
+				background: $highlight;
+			}
+		}
+		thead tr {
+			border-bottom: 1px solid $color-page-border;
+			th {
+				min-width: 50px; 
+				background: mix($highlight, $color-page, 50%);
+				&:hover { background: $highlight; }
+				&.sorting, &.sorting_asc, &.sorting_desc { cursor: pointer; }
+			}
+		}
+	}
+	.dataTables_paginate {
+		display: inline;
+		float: none;
+		text-align: center;
+	}
+	.dataTables_processing {
+		display: block;
+		float: none;
+		position: static;
+	}
+	.dataTables_info {
+		display: inline-block;
+		margin: 0 20px;
+		float: none;
+		width: auto;
+	}
+	.wikitable { margin: 0 !important; }
+	#PagesToNukeDT tr:hover td { text-decoration:line-through; }
+}
+
+body .popover-inner {
+	padding: 10px 14px;
+}

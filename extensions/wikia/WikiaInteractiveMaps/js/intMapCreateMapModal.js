@@ -43,6 +43,9 @@ define(
 					function () {
 						utils.cleanUpError(modal);
 					}
+				],
+				beforeClose: [
+					utils.refreshIfAfterForceLogin
 				]
 			};
 

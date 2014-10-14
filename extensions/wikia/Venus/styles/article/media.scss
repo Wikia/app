@@ -1,0 +1,19 @@
+@import "skins/wikia/shared.css";
+@import "skins/shared/mixins/clearfix";
+@import "../grid";
+@import 'extensions/wikia/MediaGallery/styles/MediaGallery.scss';
+@import "video";
+
+.wikia-gallery {
+	box-sizing: initial;
+}
+
+.wikia-slideshow-images-wrapper	{
+	background-color: $color-menu-highlight;
+	border-color: $color-links;
+	color: $color-text;
+}
+
+.WikiaPhotoGalleryPreview ul {
+	list-style: none;
+}

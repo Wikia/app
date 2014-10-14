@@ -1,0 +1,30 @@
+article {
+	.infobox {
+		display: block;
+		margin: 0 round(-1 * $medium-grid-column / 2 + $medium-grid-gutter) 0 10px;
+		max-height: 730px;
+		overflow: hidden;
+		padding: 0;
+		position: relative;
+		float: right;
+		max-width: 250px;
+
+		&.open {
+			overflow: none;
+			max-height: none;
+		}
+
+		.see-more {
+			background-color: #000;
+			cursor: pointer;
+			height: 30px;
+			position: absolute;
+			top: 700px;
+			width: 100%;
+
+			&.hide {
+				display: none;
+			}
+		}
+	}
+}

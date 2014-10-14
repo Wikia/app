@@ -1,0 +1,21 @@
+$offset-x: 0;
+$offset-y: 5px;
+$blur-radius: 10px;
+$spread-radius: 0px;
+$color: #000;
+$inset: false;
+
+@mixin box-shadow($offset-x, $offset-y, $blur-radius, $color, $inset: $inset, $spread-radius: $spread-radius) {
+	@if $inset {
+		box-shadow: inset $offset-x $offset-y $blur-radius $spread-radius $color;
+		-webkit-box-shadow: inset $offset-x $offset-y $blur-radius $spread-radius $color;
+	} @else {
+		box-shadow: $offset-x $offset-y $blur-radius $spread-radius $color;
+		-webkit-box-shadow: $offset-x $offset-y $blur-radius $spread-radius $color;
+	}
+}
+
+@mixin clear-box-shadow {
+	box-shadow: none;
+	-webkit-box-shadow: none;
+}

@@ -1,0 +1,14 @@
+@mixin cursor( $type ) {
+	@if $type == 'zoom-in' {
+		cursor: -moz-zoom-in;
+		cursor: -webkit-zoom-in;
+		cursor: zoom-in;
+	}
+
+	@if $type == 'zoom-out' {
+		cursor: -moz-zoom-out;
+		cursor: -webkit-zoom-out;
+		cursor: zoom-out;
+	}
+
+}

@@ -4,41 +4,78 @@ $border-color: lighten($color-text, 30%);
 
 article {
 	.image-thumbnail img {
-		margin: 30px;
+		margin: 10px;
 	}
 
 	.thumbborder {
-		border: 1px solid $border-color;
+		border: 1px solid $color-page-border;
 	}
 
 	.article-thumb {
-		margin: 30px 0 50px;
+		margin: 30px 0;
 
 		img {
 			margin: 0;
 		}
+
+		&.show-info-icon {
+			.info-icon {
+				background-image: url('/extensions/wikia/Venus/images/info_icon.png');/* base64 */
+				display: none;
+				float: right;
+				height: 17px;
+				margin: -60px 10px 0 0;
+				position: relative;
+				width: 17px;
+			}
+
+			&:hover {
+				a.info-icon {
+					display: block;
+				}
+
+				.duration {
+					display: none;
+				}
+			}
+		}
 	}
 
-	.tleft,
-	.floatleft {
-		&.article-thumb {
-			margin-right: 30px;
-		}
+	.floatleft,
+	.tleft {
+		clear: left;
+		float: left;
+		margin: 30px 30px 30px 0;
 
-		img {
-			margin-left: 0;
+		.image-thumbnail img {
+			margin: 0;
 		}
 	}
 
-	.tright,
+	.floatright,
+	.tright {
+		clear: right;
+		float: right;
+		margin: 30px 0 30px 30px;
+
+		.image-thumbnail img {
+			margin: 0;
+		}
+	}
+
+	.center {
+		clear: both;
+		text-align: center;
+
+		.article-thumb {
+			margin-left: auto;
+			margin-right: auto;
+		}
+	}
+
+	.floatleft,
 	.floatright {
-		&.article-thumb {
-			margin-left: 30px;
-		}
-
-		img {
-			margin-right: 0;
-		}
+		position: relative;
 	}
 
 	figcaption {
@@ -49,6 +86,7 @@ article {
 		line-height: 18px;
 		margin-top: 10px;
 		padding-top: 10px;
+		text-align: left;
 
 		p {
 			margin: 0;

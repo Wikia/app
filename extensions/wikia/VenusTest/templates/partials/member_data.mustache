@@ -1,0 +1,10 @@
+<ul>
+	<li><strong>Age:</strong> {{data.age}}</li>
+	<li><strong>Gender:</strong> {{data.gender}}</li>
+	<li><strong>Food:</strong><ul>
+			{{#data.food}}
+			<li>{{.}}</li>
+			{{/data.food}}
+		</ul>
+	</li>
+</ul>

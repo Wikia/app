@@ -78,11 +78,15 @@ class MediaGalleryModel extends WikiaObject {
 			$caption = $parser->killMarkers( $caption );
 		}
 
+		$title = $file->getTitle();
+
 		return [
 			'thumbUrl' => $thumbUrl,
 			'thumbHtml' => $thumbnail,
 			'caption' => $caption,
 			'linkHref' => $file->getTitle()->getLinkURL(),
+			'title' => $title->getText(),
+			'dbKey' => $title->getDBKey(),
 		];
 	}
 

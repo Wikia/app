@@ -1,0 +1,238 @@
+@import 'skins/oasis/css/core/color';
+@import 'skins/oasis/css/core/layout';
+@import 'skins/oasis/css/mixins/box-shadow';
+@import 'skins/oasis/css/mixins/box-sizing';
+@import 'skins/oasis/css/mixins/gradient';
+@import 'skins/oasis/css/mixins/placeholder';
+@import '../mixins/divider';
+@import 'extensions/wikia/Venus/styles/variables';
+@import 'extensions/wikia/Venus/styles/mixins';
+@import 'extensions/wikia/GlobalNavigation/css/GlobalNavigationColors';
+
+.UserLoginDropdown {
+	@include grid-column-width('large', 2, $large-grid-column-padding + $large-grid-gutter + $large-content-padding);
+	background-color: $color-page;
+	border: 1px solid $nav-alternative-color;
+	color: $color-text;
+	display: none;
+	font-size: 11px;
+	left: - $large-grid-column - 1;
+	list-style: none;
+	padding: 0;
+	position: absolute;
+	top: $global-navigation-height;
+
+	&.show {
+		display: block;
+	}
+
+	.ajaxRegisterContainer {
+		background-color: $nav-active-color;
+		padding: $large-content-padding;
+
+		.ajaxRegister {
+			background-color: $dropdown-font-color;
+			color: $nav-background-color;
+			display: block;
+			font-size: 15px;
+			font-weight: bold;
+			line-height: 40px;
+			text-align: center;
+			text-transform: uppercase;
+
+			&:hover, &:active {
+				text-decoration: none;
+			}
+		}
+	}
+
+	.hide-label label {
+		display: none;
+	}
+
+	.WikiaForm {
+		padding: 0 $large-content-padding;
+
+		.forgot-password {
+			color: $dropdown-font-color;
+			font-size: 12px;
+			margin: 5px 0 20px;
+		}
+
+		.general-errors {
+			margin-top: 15px;
+		}
+
+		.input-group {
+			@include box-sizing;
+			line-height: inherit;
+			margin: 0;
+			padding: 0 10px;
+			width: 100%;
+		}
+
+		.keep-logged-in {
+			padding-top: 15px;
+			vertical-align: middle;
+		}
+
+		.login-button {
+			padding: 0;
+		}
+
+		input[type=text],
+		input[type=password] {
+			@include box-sizing;
+			@include clear-box-shadow;
+
+			@include placeholder {
+				color: $nav-alternative-color;
+				font-style: italic;
+			}
+
+			border: 0;
+			border-bottom: 1px solid $nav-alternative-color;
+			color: $nav-active-color;
+			font-size: 15px;
+			height: 40px;
+			padding: 15px 0 5px;
+			width: 100%;
+
+			&, &:focus, &:active {
+				background: none;
+				outline: none;
+			}
+		}
+
+		input[type=checkbox] {
+			margin: 0;
+		}
+
+		input.login-button[type="submit"] {
+			@include clear-linear-gradient;
+			background-color: $nav-active-color;
+			border: 0;
+			border-radius: 0;
+			color: $nav-background-color;
+			display: block;
+			font-size: 15px;
+			font-weight: bold;
+			height: 40px;
+			line-height: 40px;
+			margin-top: 25px;
+			padding: 0 $large-content-padding;
+			text-transform: uppercase;
+			width: 100%;
+		}
+
+		div {
+			padding: 0;
+		}
+
+		fieldset {
+			border: 0;
+			margin: 0;
+			padding: 0;
+			width: 100%;
+		}
+
+		label {
+			color: $nav-font-alternative-color;
+			font-size: 12px;
+			margin: 0;
+		}
+	}
+
+	.sso-login {
+		padding: $large-content-padding;
+
+		> .sso-login-divider {
+			@include divider;
+			border-color: $nav-alternative-color;
+			font-size: 12px;
+			margin-top: 0;
+			text-transform: uppercase;
+
+			> span {
+				background-color: $nav-background-color;
+			}
+		}
+
+		.wikia-button-facebook {
+			border: 0;
+			border-radius: 0;
+			color: $nav-background-color;
+			display: block;
+			font-size: 15px;
+			font-weight: bold;
+			height: 40px;
+			line-height: 40px;
+			padding: 0;
+			text-align: center;
+			text-transform: uppercase;
+
+			&, &:hover, &:active {
+				@include clear-linear-gradient;
+				background-color: $facebook-background-color;
+				text-decoration: none;
+			}
+		}
+
+		.sprite.facebook {
+			background-image: url('/skins/oasis/images/GlobalHeaderAB/fb_icon.png'); /* $wgCdnStylePath */
+			background-position: 15px bottom;
+			background-repeat: no-repeat;
+			border-right: 1px solid $facebook-button-divider-color;
+			float: left;
+			height: 40px;
+			margin: 0;
+			width: 41px;
+		}
+	}
+}
+
+@media #{$small-only} {
+	.UserLoginDropdown {
+		@include grid-column-width('small', 3, - $small-grid-column-padding + $small-content-padding);
+		left: - (2 * $small-grid-column) - 1;
+
+		.sso-login {
+			padding: $small-content-padding;
+		}
+
+		.ajaxRegisterContainer {
+			padding: $small-content-padding;
+		}
+
+		.WikiaForm {
+			padding: 0 $small-content-padding;
+
+			input.login-button[type="submit"] {
+				padding: 0 $small-content-padding;
+			}
+		}
+	}
+}
+
+@media #{$medium-only} {
+	.UserLoginDropdown {
+		@include grid-column-width('medium', 2, $medium-grid-column-padding + $medium-grid-gutter + $medium-content-padding);
+		left: - $medium-grid-column - 1;
+
+		.sso-login {
+			padding: $medium-content-padding;
+		}
+
+		.ajaxRegisterContainer {
+			padding: $medium-content-padding;
+		}
+
+		.WikiaForm {
+			padding: 0 $medium-content-padding;
+
+			input.login-button[type="submit"] {
+				padding: 0 $medium-content-padding;
+			}
+		}
+	}
+}

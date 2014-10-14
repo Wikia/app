@@ -1,0 +1,77 @@
+<?xml version='1.0'?>
+<skin version='1.1' name='Wikia' author='http://www.wikia.com/'>
+	<components>
+		<component name='controlbar'>
+			<settings>
+				<setting name='margin' value='10'/>
+				<setting name='font' value='_sans'/>
+				<setting name='fontsize' value='11'/>
+				<setting name='fontcolor' value='0xFFFFFF'/>
+				<setting name='fontstyle' value='normal'/>
+				<setting name='fontweight' value='normal'/>
+			</settings>
+			<layout>
+				<group position='left'>
+					<button name='play'/>
+				</group>
+				<group position='center'>
+					<slider name='time'/>
+				</group>
+				<group position='right'>
+					<text name='elapsed'/>
+					<divider/>
+					<text name='duration'/>
+					<divider width='2'/>
+					<button name='blank'/>
+					<slider name='volume'/>
+					<button name='fullscreen'/>
+				</group>
+			</layout>
+			<elements>
+				<element name='background' src='background.png'/>
+				<element name='blankButton' src='backgroundtransparent.png'/>
+				<element name='blankButtonOver' src='hdover.png'/>
+				<element name='capLeft' src='capleft.png'/>
+				<element name='capRight' src='capright.png'/>		
+				<element name='divider' src='slash.png'/>
+				<element name='fullscreenButton' src='fullscreen.png'/>
+				<element name='fullscreenButtonOver' src='fullscreenover.png'/>
+				<element name='normalscreenButton' src='normalscreen.png'/>
+				<element name='normalscreenButtonOver' src='normalscreenover.png'/>				
+				<element name='pauseButton' src='pause.png'/>
+				<element name='pauseButtonOver' src='pauseover.png'/>
+				<element name='playButton' src='play.png'/>
+				<element name='playButtonOver' src='playover.png'/>
+				<element name='timeSliderRail' src='timesliderrail.png'/>
+				<element name='timeSliderBuffer' src='timesliderbuffer.png'/>
+				<element name='timeSliderProgress' src='timesliderprogress.png'/>
+				<element name='timeSliderThumb' src='backgroundtransparent.png'/>
+				<element name='timeSliderCapLeft' src='timeslidercapleft.png'/>
+				<element name='timeSliderCapRight' src='timeslidercapright.png'/>
+				<element name='volumeSliderRail' src='volumesliderrail.png'/>
+				<element name='volumeSliderProgress' src='volumesliderprogress.png'/>
+				<element name='volumeSliderThumb' src='backgroundtransparent.png'/>
+			</elements>
+		</component>
+		<component name="display">
+			<settings>
+				<setting name="backgroundcolor" value="0x000000" />
+				<setting name="bufferinterval" value="5" />
+				<setting name="bufferrotation" value="3" />
+			</settings>
+			<elements>
+				<element name='playIcon' src='displayplay.png'/>
+				<element name='playIconOver' src='displayplayover.png'/>
+				<!-- Enable for 5.0 compatibility --> 
+				<element name="background" src="backgroundtransparent.png" />
+				<element name="muteIcon" src="backgroundtransparent.png" />
+				<element name="errorIcon" src="backgroundtransparent.png" />
+			</elements>
+		</component>
+		<component name='hd'>
+			<elements>
+				<element name='controlbarIcon' src='hd.png'/>
+			</elements>
+		</component>
+	</components>
+</skin>
