@@ -3,7 +3,7 @@
 class MediaGalleryHooks {
 
 	/**
-	 * Add JSMessages for MediaGallery.
+	 * Send MediaGallery i18n messages to JS.
 	 * Note: adding them via onOasisSkinAssetGroups doesn't work.
 	 * @param OutputPage $out
 	 * @param $text
@@ -39,6 +39,12 @@ class MediaGalleryHooks {
 		return true;
 	}
 
+	/**
+	 * Run when the MediaGallery feature is toggled in Labs
+	 * @param string $feature The name of the feature that is being toggled
+	 * @param bool $enabled Whether feature is now enabled or disabled
+	 * @return bool
+	 */
 	public static function afterToggleFeature( $feature, $enabled ) {
 		if ( $feature == 'wgEnableMediaGalleryExt' ) {
 			// Purge cache for all pages containing gallery tags
