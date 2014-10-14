@@ -7,14 +7,11 @@
 	// defaults to 'medium' size
 	.play-circle {
 		background-image: url('/extensions/wikia/Venus/images/play_btn.svg'); /* base64 */
-		bottom: 0;
+		bottom: 10%;
 		display: block;
 		height: 50px; // only for medium
-		left: 0;
-		margin: auto;
+		left: 7%;
 		position: absolute;
-		right: 0;
-		top: 0;
 		width: 50px; // only for medium
 	}
 
