@@ -2,7 +2,7 @@
  * JS file for Monetization Module.
  */
 
-require(['wikia.tracker'], function (Tracker) {
+require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 	'use strict';
 
 	var track;
@@ -17,15 +17,19 @@ require(['wikia.tracker'], function (Tracker) {
 			// track impression for each placement
 			$('.monetization-module').each(function() {
 				var trackCategory,
+					value,
 					type;
 
 				type = $(this).attr('class').split(' ')[1];
 				trackCategory = $(this).attr('id');
+				value = $(this).children().children().length;
 
 				track({
 					category: trackCategory,
 					label: 'module-impression',
 					action: Tracker.ACTIONS.IMPRESSION,
+					value: value,
+					geo: geo.getCountryCode(),
 					type: type
 				});
 			});
