@@ -113,9 +113,9 @@ define('mediaGallery.views.gallery', [
 
 	/**
 	 * Render sets of media.
-	 * @param {int|jQuery} count Number to be rendered. If not set, use original visible count.
+	 * @param {int|jQuery} [count] Number to be rendered. If not set, use original visible count.
 	 * If count a jQuery object, it's actually $el.
-	 * @param {jQuery} $el Element to apply loading graphic
+	 * @param {jQuery} [$el] Element to apply loading graphic
 	 * @returns {Gallery}
 	 */
 	Gallery.prototype.render = function (count, $el) {
@@ -124,7 +124,7 @@ define('mediaGallery.views.gallery', [
 			mediaCount,
 			deferredImages = [];
 
-		// for initial setup so callers can be blind to internal options
+		// For initial setup so callers can be blind to internal options. Makes it so all parameters are optional.
 		if (typeof count !== 'number') {
 			if (count instanceof jQuery) {
 				$el = count;
