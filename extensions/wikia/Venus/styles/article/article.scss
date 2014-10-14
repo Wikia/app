@@ -11,6 +11,8 @@ $placeholder-background-color: $color-left-article-nav; // only for prototype ve
 $article-items-spacing: 40px;
 
 .article {
+	overflow: hidden;
+
 	header {
 		@include grid-column-width('medium', 8, $medium-content-padding - $content-border-width);
 		float: left;

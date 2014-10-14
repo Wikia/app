@@ -71,7 +71,6 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 
 		'//extensions/wikia/Venus/scripts/isTouchScreen.js',
-		'//extensions/wikia/Venus/scripts/Venus.js',
 
 		// BackgroundChanger
 		'//extensions/wikia/Venus/scripts/BackgroundChanger.js',
@@ -87,6 +86,9 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//extensions/wikia/Lightbox/js/venusLightboxLoader.js',
 
 		'#group_bucky_js',
+
+		// different article modules
+		'//skins/shared/scripts/scrollableTables.js',
 
 		//following script initialize different modules in Venus
 		'//extensions/wikia/Venus/scripts/articleModulesLoader.js'
@@ -185,7 +187,8 @@ $VenusConfig[ 'article_scss' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'venus' ],
 	'assets' => [
-		'//extensions/wikia/Venus/styles/article/article.scss'
+		'//extensions/wikia/Venus/styles/article/article.scss',
+		'//skins/shared/styles/tables.scss'
 	]
 ];
 
