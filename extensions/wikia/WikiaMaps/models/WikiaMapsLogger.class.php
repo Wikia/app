@@ -38,11 +38,11 @@ class WikiaMapsLogger {
 		) );
 		$logEntry->setComment( $comment );
 
-		if( !empty($params) ) {
+		if ( !empty( $params ) ) {
 			// we can't allow to pass those elements
 			// more info: https://www.mediawiki.org/wiki/Manual:Logging_to_Special:Log#1.19_and_later
-			unset($params[1], $params[2], $params[3]);
-			$logEntry->setParameters($params);
+			unset( $params[1], $params[2], $params[3] );
+			$logEntry->setParameters( $params );
 		}
 
 		return $logEntry;
