@@ -1,15 +1,13 @@
 require(['wikia.scrollToLink'], function(scrollToLink) {
 	'use strict';
 
-	var offset, init;
+	var offset = 16;
 
-	offset = 16; //additional spacing
-
-	init = function() {
+	function init () {
 		var globalNavigationHeight = document.getElementById('globalNavigation').offsetHeight;
 
 		scrollToLink.init(globalNavigationHeight + offset);
-	};
+	}
 
 	if (document.readyState === 'complete' || document.readyState === 'loaded' || document.readyState === 'interactive') {
 		init();
