@@ -1,34 +1,34 @@
-(function( window, $ ) {
+(function (window, $) {
 	'use strict';
-	var showPoliciesModal = function() {
-		require( [ 'wikia.ui.factory' ], function( uiFactory ) {
-			uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
+	var showPoliciesModal = function () {
+		require(['wikia.ui.factory'], function (uiFactory) {
+			uiFactory.init(['modal']).then(function (uiModal) {
 				var modalConfig = {
-						vars: {
-							id: 'ForumPoliciesModal',
-							size: 'medium',
-							content: '<div class="ForumPolicies"><div class="WikiaArticle"></div></div>',
-							title: $.msg( 'forum-specialpage-policies' ),
-							buttons: [
-								{
-									vars: {
-										value: $.msg( 'back' ),
-										data: [
-											{
-												key: 'event',
-												value: 'close'
-											}
-										]
-									}
+					vars: {
+						id: 'ForumPoliciesModal',
+						size: 'medium',
+						content: '<div class="ForumPolicies"><div class="WikiaArticle"></div></div>',
+						title: $.msg('forum-specialpage-policies'),
+						buttons: [
+							{
+								vars: {
+									value: $.msg('back'),
+									data: [
+										{
+											key: 'event',
+											value: 'close'
+										}
+									]
 								}
-							]
-						}
-					};
+							}
+						]
+					}
+				};
 
-				if ( window.wgCanEditPolicies ) {
+				if (window.wgCanEditPolicies) {
 					modalConfig.vars.buttons.unshift({
 						vars: {
-							value: $.msg( 'forum-specialpage-policies-edit' ),
+							value: $.msg('forum-specialpage-policies-edit'),
 							data: [
 								{
 									key: 'event',
@@ -39,9 +39,9 @@
 					});
 				}
 
-				uiModal.createComponent( modalConfig, function( policiesModal ) {
+				uiModal.createComponent(modalConfig, function (policiesModal) {
 
-					policiesModal.bind( 'edit', function( event ) {
+					policiesModal.bind('edit', function (event) {
 						event.preventDefault();
 						window.location = window.wgPoliciesEditURL;
 					});
@@ -56,9 +56,9 @@
 						data: {
 							'rev': window.wgPoliciesRev
 						},
-						callback: function( data ) {
+						callback: function (data) {
 							policiesModal.activate();
-							policiesModal.$content.find( '.ForumPolicies .WikiaArticle' ).html( data.body );
+							policiesModal.$content.find('.ForumPolicies .WikiaArticle').html(data.body);
 						}
 					});
 				});
@@ -66,12 +66,12 @@
 		});
 		return false;
 	};
-		
-	$(function() {
-		$( '.policies-link' ).click( showPoliciesModal );
+
+	$(function () {
+		$('.policies-link').click(showPoliciesModal);
 	});
 
 	// Just the namespace, for now.
 	window.Forum = {};
 
-})( window, jQuery );
+})(window, jQuery);
