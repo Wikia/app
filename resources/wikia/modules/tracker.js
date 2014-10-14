@@ -144,6 +144,7 @@
 				'u': window.trackID || window.wgTrackID || 0,
 				's': window.skin,
 				'v': window.wgWikiVertical,
+				'ac': window.wgWikiCategories.join(','),
 				'beacon': window.beacon_id || '',
 				'cb': Math.floor( Math.random() * 99999 )
 			};
