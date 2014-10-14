@@ -1,17 +1,16 @@
-require(['wikia.scrollToLink'], function(scrollToLink) {
+require(['wikia.scrollToLink', 'jquery'], function(scrollToLink, $) {
 	'use strict';
 
-	var offset = 16;
+	$(function initScrollToLink() {
+		var additionalSpacing = 16,
+			offset = document.getElementById('globalNavigation').offsetHeight + additionalSpacing;
 
-	function init () {
-		var globalNavigationHeight = document.getElementById('globalNavigation').offsetHeight;
+		scrollToLink.handleLinkTo(window.location.hash, offset);
 
-		scrollToLink.init(globalNavigationHeight + offset);
-	}
-
-	if (document.readyState === 'complete' || document.readyState === 'loaded' || document.readyState === 'interactive') {
-		init();
-	} else {
-		document.addEventListener('DOMContentLoaded', init, false);
-	}
+		$('body').on('click', 'a', function scrollToLinkHandler(event) {
+			if (scrollToLink.handleLinkTo(this.getAttribute('href'), offset)) {
+				event.preventDefault();
+			}
+		});
+	});
 });
