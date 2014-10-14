@@ -85,7 +85,6 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//extensions/wikia/Lightbox/js/venusLightboxLoader.js',
 
 		// different article modules
-		'resources/wikia/libraries/jquery/floating-scrollbar/jquery.floating-scrollbar.js',
 		'//skins/shared/scripts/scrollableTables.js',
 
 		//following script initialize different modules in Venus
