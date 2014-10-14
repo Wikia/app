@@ -209,6 +209,129 @@ class WikiaMapsSpecialControllerTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @dataProvider testPrepareListOfPoisDataProvider
+	 */
+	public function testPrepareListOfPois( $mapDataArray, $expected ) {
+		$mapData = $this->mapDataArrayToObject( $mapDataArray );
+
+		$wikiaMapsSpecialControllerMock = $this->getControllerMock( 'testPrepareListOfPois' );
+
+		$wikiaMapsSpecialControllerMock->expects( $this->exactly( 2 ) )
+			->method( 'setVal' )
+			->withConsecutive(
+				[ 'notEmpty', $expected[ 'notEmpty' ] ],
+				[ 'poiCategories', $expected[ 'poiCategories' ] ]
+			);
+		$wikiaMapsSpecialControllerMock->prepareListOfPois( $mapData );
+	}
+
+	private function mapDataArrayToObject( $array ) {
+		$mapDataObj = new stdClass();
+		$mapDataObj->pois = [];
+		$mapDataObj->poi_categories = [];
+
+		foreach ( $array[ 'pois' ] as $poi ) {
+			$poiObj = new stdClass();
+			$poiObj->id = $poi[ 'id' ];
+			$poiObj->name = $poi[ 'name' ];
+			$poiObj->link = $poi[ 'link' ];
+			$poiObj->description = $poi[ 'description' ];
+			$poiObj->poi_category_id = $poi[ 'poi_category_id' ];
+
+			$mapDataObj->pois[] = $poiObj;
+		}
+
+		foreach ( $array[ 'poi_categories' ] as $poiCategory ) {
+			$poiCategoryObj = new stdClass();
+			$poiCategoryObj->id = $poiCategory[ 'id' ];
+			$poiCategoryObj->name = $poiCategory[ 'name' ];
+			$mapDataObj->poi_categories[] = $poiCategoryObj;
+		}
+
+		return $mapDataObj;
+	}
+
+	public function testPrepareListOfPoisDataProvider() {
+		return [
+			[
+				[
+					'pois' => [
+						[
+							'id' => 1,
+							'name' => 'First POI',
+							'link' => 'http://test.com',
+							'description' => 'Description',
+							'poi_category_id' => 10
+						],
+						[
+							'id' => 2,
+							'name' => 'Second POI',
+							'link' => '',
+							'description' => 'POI with default category',
+							'poi_category_id' => 1
+						],
+						[
+							'id' => 3,
+							'name' => 'Third POI',
+							'link' => '',
+							'description' => '',
+							'poi_category_id' => 11
+						]
+					],
+					'poi_categories' => [
+						[
+							'id' => 10,
+							'name' => 'First category'
+						],
+						[
+							'id' => 11,
+							'name' => 'Second category'
+						]
+					]
+				],
+				[
+					'notEmpty' => true,
+					'poiCategories' => [
+						1 => [
+							'name' => 'Other',
+							'pois' => [
+								[
+									'name' => 'Second POI',
+									'link' => '',
+									'description' => 'POI with default category'
+								]
+							],
+							'hasPois' => true
+						],
+						10 => [
+							'name' => 'First category',
+							'pois' => [
+								[
+									'name' => 'First POI',
+									'link' => 'http://test.com',
+									'description' => 'Description',
+								]
+							],
+							'hasPois' => true
+						],
+						11 => [
+							'name' => 'Second category',
+							'pois' => [
+								[
+									'name' => 'Third POI',
+									'link' => '',
+									'description' => '',
+								]
+							],
+							'hasPois' => true
+						]
+					]
+				]
+			]
+		];
+	}
+
+	/**
 	 * @param PHPUnit_Framework_MockObject_MockObject|WikiaMapsSpecialController $wikiaMapsSpecialControllerMock
 	 * @param mixed $val Value to be returned by getRequest()->getVal() method
 	 */
@@ -311,6 +434,10 @@ class WikiaMapsSpecialControllerTest extends WikiaBaseTest {
 
 				$mapsSpecialControllerMock->request = $requestMock;
 				$mapsSpecialControllerMock->response = $responseMock;
+				break;
+
+			case 'testPrepareListOfPois':
+				$mapsSpecialControllerMock = $this->getMock( 'WikiaMapsSpecialController', [ 'setVal' ], [], '', false );
 				break;
 		}
 
