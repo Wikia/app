@@ -32,7 +32,7 @@ class ExactTargetUserTasksAdderHooks extends ExactTargetUserTasksAdderBaseHooks 
 				'user_id' => $iUserId,
 				'user_name' => $sNewUsername
 			];
-			$task = $this->getUpdateUserTask();
+			$task = $this->getExactTargetUpdateUserTask();
 			$task->call( 'updateUserData', $aUserData );
 			$task->queue();
 		}
@@ -53,7 +53,7 @@ class ExactTargetUserTasksAdderHooks extends ExactTargetUserTasksAdderBaseHooks 
 				'user_id' => $user->getId(),
 				'user_editcount' => $user->getEditCount()
 			];
-			$task = $this->getUpdateUserTask();
+			$task = $this->getExactTargetUpdateUserTask();
 			$task->call( 'updateUserData', $aUserData );
 			$task->queue();
 		}
@@ -96,7 +96,7 @@ class ExactTargetUserTasksAdderHooks extends ExactTargetUserTasksAdderBaseHooks 
 		global $wgWikiaEnvironment;
 		/* Don't add task when on dev or internal */
 		if ( $wgWikiaEnvironment != WIKIA_ENV_DEV && $wgWikiaEnvironment != WIKIA_ENV_INTERNAL ) {
-			$task = $this->getUpdateUserTask();
+			$task = $this->getExactTargetUpdateUserTask();
 			$task->call( 'updateUserEmail', $user->getId(), $user->getEmail() );
 			$task->queue();
 		}
