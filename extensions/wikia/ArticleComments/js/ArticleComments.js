@@ -17,8 +17,8 @@ var $window = $(window),
 	miniEditorEnabled: typeof window.wgEnableMiniEditorExt !== 'undefined' && skin === 'oasis',
 	loadOnDemand: typeof window.wgArticleCommentsLoadOnDemand !== 'undefined',
 	initCompleted: false,
-	actionButtons: $('#WikiaArticleComments .actionButton'),
-	bucky: window.Bucky('articlecomments.articlecomments'),
+	actionButtons: $('#WikiaArticleComments').find('.actionButton'),
+	bucky: window.Bucky('ArticleComments'),
 
 	init: function () {
 		ArticleComments.bucky.timer.start('init');
@@ -30,7 +30,7 @@ var $window = $(window),
 		if (ArticleComments.miniEditorEnabled) {
 			var newcomment = $('#article-comm');
 
-			newcomment.bind('focus', function (e) {
+			newcomment.bind('focus', function () {
 				ArticleComments.editorInit(this);
 			});
 
@@ -39,16 +39,16 @@ var $window = $(window),
 			}
 		}
 
-        if (window.wgDisableAnonymousEditing && !window.wgUserName){
-            $('.article-comm-reply').hide();
-        } else {
-    		$articleComments.on('click', '.article-comm-edit', ArticleComments.actionProxy(ArticleComments.edit));
-            $articleComments.on('click', '.article-comm-reply', ArticleComments.actionProxy(ArticleComments.reply));
-            $('#article-comm-submit').bind('click',
-	            { source: '#article-comm' },
-	            ArticleComments.actionProxy(ArticleComments.postComment)
-            );
-        }
+		if (window.wgDisableAnonymousEditing && !window.wgUserName){
+			$('.article-comm-reply').hide();
+		} else {
+			$articleComments.on('click', '.article-comm-edit', ArticleComments.actionProxy(ArticleComments.edit));
+			$articleComments.on('click', '.article-comm-reply', ArticleComments.actionProxy(ArticleComments.reply));
+			$('#article-comm-submit').bind('click',
+				{ source: '#article-comm' },
+				ArticleComments.actionProxy(ArticleComments.postComment)
+			);
+		}
 
 		$articleCommFbMonit.mouseenter(function () {
 			$fbCommentMessage.fadeIn('slow');
@@ -62,7 +62,7 @@ var $window = $(window),
 		ArticleComments.showEditLink();
 		ArticleComments.initCompleted = true;
 
-		ArticleComments.bucky.timer.stop ('init');
+		ArticleComments.bucky.timer.stop('init');
 	},
 
 	actionProxy: function (callback) {
