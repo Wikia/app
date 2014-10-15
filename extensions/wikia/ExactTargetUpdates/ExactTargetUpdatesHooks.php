@@ -281,9 +281,7 @@ class ExactTargetUpdatesHooks {
 	 * @return array  An array mapping a wiki to categories
 	 */
 	private function prepareCityCatMappingParams( $iCityId ) {
-		/* @var string sIncludeDepracated Used to retrieve a full mapping of a wiki */
-		$sIncludeDepracated = 'skip';
-		$aCategories = \WikiFactory::getCategories( $iCityId, $sIncludeDepracated );
+		$aCategories = \WikiFactoryHub::getWikiCategories( $iCityId );
 
 		$aWikiCatsMappingParams = [];
 		foreach( $aCategories as $aCategory ) {

@@ -2615,15 +2615,11 @@ class WikiFactory {
 		}
 
 		// Default query using this function is to get all the new/active categories
-		$aFilter = "city_cats.cat_active = 1";
 		$aOptions = array();
+		$aFilter = "city_cats.cat_active = 1";
 
-		if ( $deprecated == 'skip' ) {
-			$aFilter = null;
-			$aOptions = array();
-		} elseif ( $deprecated ) {
+		if ( $deprecated ) {
 			$aFilter = "city_cats.cat_deprecated = 1";
-			$aOptions = array ("LIMIT" => 1);
 		}
 
 		/**
@@ -2634,7 +2630,7 @@ class WikiFactory {
 		$memkey = sprintf("%s:%d", __METHOD__, intval($city_id));
 		$cached = $oMemc->get($memkey);
 
-		if ( empty($cached) || $deprecated == 'skip' ) {
+		if ( empty($cached) ) {
 			$dbr = self::db( DB_SLAVE );
 
 			$aWhere = array(
