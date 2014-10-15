@@ -17,28 +17,31 @@ class GlobalFooterController extends WikiaController {
 	private function getGlobalFooterLinks() {
 		global $wgCityId, $wgContLang, $wgLang, $wgMemc;
 
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
 		$catId = WikiFactoryHub::getInstance()->getCategoryId( $wgCityId );
-		$memcKey = wfMemcKey(self::MEMC_KEY_GLOBAL_FOOTER_LINKS , $wgContLang->getCode(), $wgLang->getCode(), $catId);
+		$memcKey = wfMemcKey( self::MEMC_KEY_GLOBAL_FOOTER_LINKS , $wgContLang->getCode(), $wgLang->getCode(), $catId );
 
-		$globalFooterLinks = $wgMemc->get($memcKey);
-		if (!empty($globalFooterLinks)) {
+		$globalFooterLinks = $wgMemc->get( $memcKey );
+		if ( !empty( $globalFooterLinks ) ) {
 			return $globalFooterLinks;
 		}
 
-		if (is_null($globalFooterLinks = getMessageAsArray(self::MESSAGE_KEY_GLOBAL_FOOTER_LINKS . '-' . $catId))) {
-			if(is_null($globalFooterLinks = getMessageAsArray(self::MESSAGE_KEY_GLOBAL_FOOTER_LINKS))) {
+		if ( is_null( $globalFooterLinks = getMessageAsArray( self::MESSAGE_KEY_GLOBAL_FOOTER_LINKS . '-' . $catId ) ) ) {
+			if ( is_null( $globalFooterLinks = getMessageAsArray( self::MESSAGE_KEY_GLOBAL_FOOTER_LINKS ) ) ) {
 				wfProfileOut( __METHOD__ );
 				return [];
 			}
 		}
 
 		$parsedLinks = [];
-		foreach($globalFooterLinks as $link) {
-			if(strpos(trim($link), '*') === 0) {
-				$parsedLink = parseItem($link);
-				if ((strpos($parsedLink['text'], 'LICENSE') !== false) || $parsedLink['text'] == 'GFDL') {
+		foreach ( $globalFooterLinks as $link ) {
+			if ( strpos( trim( $link ), '*' ) === 0 ) {
+				$parsedLink = parseItem( $link );
+				if ( array_key_exists( 'text', $parsedLink )
+					&& ( strpos( $parsedLink['text'], 'LICENSE' ) !== false
+					|| $parsedLink['text'] == 'GFDL' )
+				) {
 					$parsedLink['isLicense'] = true;
 				} else {
 					$parsedLink['isLicense'] = false;
@@ -57,11 +60,11 @@ class GlobalFooterController extends WikiaController {
 
 		wfProfileIn( __METHOD__ );
 
-		$catInfo = HubService::getCategoryInfoForCity($wgCityId);
+		$catInfo = HubService::getCategoryInfoForCity( $wgCityId );
 
-		if (!empty($catInfo)) {
-			$catInfo->cat_link = wfMessage('oasis-corporatefooter-hub-'. $catInfo->cat_name .'-link')->text();
-			$catInfo->cat_name = wfMessage('hub-'. $catInfo->cat_name)->text();
+		if ( !empty( $catInfo ) ) {
+			$catInfo->cat_link = wfMessage( 'oasis-corporatefooter-hub-' . $catInfo->cat_name . '-link' )->text();
+			$catInfo->cat_name = wfMessage( 'hub-' . $catInfo->cat_name )->text();
 		}
 
 		wfProfileOut( __METHOD__ );
