@@ -34,10 +34,10 @@ class AsyncCacheCLI extends Maintenance {
 		$this->addOption( 'neg-ttl', 'TTL for negative responses', false, true, 'n' );
 		$this->addOption( 'regen-ttl', 'TTL for serving stale values', false, true, 'e' );
 
-		$this->addOption( 'generate-method', 'TTL for serving stale values', false, true, 'm' );
-		$this->addOption( 'generate-args', 'TTL for serving stale values', false, true, 'a' );
+		$this->addOption( 'generate-method', 'Method to regenerate value', false, true, 'm' );
+		$this->addOption( 'generate-args', 'Comma separated args for --generate-method', false, true, 'a' );
 
-		$this->addOption( 'block', 'TTL for serving stale values', false, false, 'b' );
+		$this->addOption( 'block', 'Block on value regeneratoin when cache is stale', false, false, 'b' );
 	}
 
 	public function execute() {
