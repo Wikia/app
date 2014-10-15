@@ -80,6 +80,8 @@ $wgResourceModules += array(
 			've/dm/ve.dm.WikiaCart.js',
 			've/dm/ve.dm.WikiaCartItem.js',
 			've/dm/ve.dm.WikiaMapNode.js',
+			've/dm/ve.dm.WikiaTemplateModel.js',
+			've/dm/ve.dm.WikiaTransclusionModel.js',
 
 			// ce
 			've/ce/ve.ce.WikiaMediaCaptionNode.js',

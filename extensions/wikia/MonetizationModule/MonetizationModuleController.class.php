@@ -26,10 +26,10 @@ class MonetizationModuleController extends WikiaController {
 			's_id' => $this->wg->CityId,
 			'max' => MonetizationModuleHelper::calculateNumberOfAds( $this->wg->Title->mLength ),
 			'vertical' => $helper->getWikiVertical(),
+			'cache' => $helper->getCacheVersion(),
 		];
 
 		$mcachePurge = $this->wg->request->getVal( 'mcache', false );
-
 		if ( $mcachePurge ) {
 			$params['mcache'] = $mcachePurge;
 		}

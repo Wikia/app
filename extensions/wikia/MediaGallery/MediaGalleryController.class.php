@@ -25,10 +25,11 @@ class MediaGalleryController extends WikiaController {
 		$data = $this->model->getGalleryData();
 
 		// noscript tag does not need more than 100 images
-		$this->media = array_slice( $data, 0, 100 );
+		$this->media = array_slice( $data, 0, self::MAX_EXPANDED_ITEMS );
 		$this->json = json_encode( $data );
 		$this->count = $this->model->getMediaCount();
 		$this->visibleCount = $visibleCount;
+		$this->expanded = empty( $galleryParams['expand'] ) ? 0 : self::MAX_EXPANDED_ITEMS;
 		$this->addImageButton = wfMessage('mediagallery-add-image-button')->plain();
 	}
 }
