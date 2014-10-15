@@ -225,13 +225,19 @@ class WikiaMapsSpecialControllerTest extends WikiaBaseTest {
 
 		$wfMessageMock = $this->getGlobalFunctionMock( 'wfMessage' );
 		$wfMessageMock
-			->expects( $this->once() )
-			->method ( 'wfMessage' )
-			->will   ( $this->returnValue( 'Other' ) );
+			->expects( $this->any() )
+			->method( 'wfMessage' )
+			->will( $this->returnValue( 'Other' ) );
 
 		$wikiaMapsSpecialControllerMock->prepareListOfPois( $mapData );
 	}
 
+	/**
+	 * Converts map data array (easier to type in data provider) to map data object (as it is returned from API)
+	 *
+	 * @param $array map data
+	 * @return stdClass
+	 */
 	private function mapDataArrayToObject( $array ) {
 		$mapDataObj = new stdClass();
 		$mapDataObj->pois = [];
@@ -333,6 +339,37 @@ class WikiaMapsSpecialControllerTest extends WikiaBaseTest {
 							'hasPois' => true
 						]
 					]
+				]
+			],
+			[
+				[
+					'pois' => [],
+					'poi_categories' => [
+						[
+							'id' => 10,
+							'name' => 'First category'
+						]
+					]
+				],
+				[
+					'notEmpty' => true,
+					'poiCategories' => [
+						10 => [
+							'name' => 'First category',
+							'pois' => [],
+							'hasPois' => false
+						]
+					]
+				]
+			],
+			[
+				[
+					'pois' => [],
+					'poi_categories' => []
+				],
+				[
+					'notEmpty' => false,
+					'poiCategories' => []
 				]
 			]
 		];
