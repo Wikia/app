@@ -1,6 +1,6 @@
 <?php
 
-class ExactTargetUpdatesHooksTest extends WikiaBaseTest {
+class ExactTargetUserTasksAdderHooksTest extends WikiaBaseTest {
 
 	public function testPrepareUserParams() {
 		$userMock = $this->getMockBuilder( 'User' )
@@ -61,7 +61,7 @@ class ExactTargetUpdatesHooksTest extends WikiaBaseTest {
 			->will   ( $this->returnValue( $aUserParams['user_touched'] ) );
 
 		/* Get mock object of tested class ExactTargetUpdatesHooks without mocking any methods */
-		$exactTargetUpdatesHooksMock = $this->getMock( 'ExactTargetUpdatesHooks', null );
+		$exactTargetUpdatesHooksMock = $this->getMock( 'ExactTargetUserTasksAdderBaseHooks', null );
 
 		/* Run test */
 		/* @var ExactTargetUpdatesHooks $exactTargetUpdatesHooksMock (mock of ExactTargetUpdatesHooks) */
@@ -96,7 +96,7 @@ class ExactTargetUpdatesHooksTest extends WikiaBaseTest {
 			->will( $this->returnValueMap( $returnMap ) );
 
 		/* Get mock object of tested class ExactTargetUpdatesHooks without mocking any methods */
-		$exactTargetUpdatesHooksMock = $this->getMock( 'ExactTargetUpdatesHooks', null );
+		$exactTargetUpdatesHooksMock = $this->getMock( 'ExactTargetUserTasksAdderBaseHooks', null );
 
 		/* Run test */
 		/* @var ExactTargetUpdatesHooks $exactTargetUpdatesHooksMock (mock of ExactTargetUpdatesHooks) */
@@ -122,29 +122,19 @@ class ExactTargetUpdatesHooksTest extends WikiaBaseTest {
 			->disableOriginalConstructor()
 			->getMock();
 
-		/* Mock ExactTargetAddUserTask */
-		$mockAddUserTask = $this->getMockBuilder( 'ExactTargetAddUserTask' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'call', 'queue' ] )
-			->getMock();
-		$mockAddUserTask
-			->expects( $this->never() )
-			->method( 'call' );
-		$mockAddUserTask
-			->expects( $this->never() )
-			->method( 'queue' );
-
 		/* Get mock object of tested class ExactTargetUpdatesHooks */
-		$exactTargetUpdatesHooksMock = $this->getMockBuilder( 'ExactTargetUpdatesHooks' )
+		/* @var ExactTargetUpdatesHooks $exactTargetUpdatesHooksMock (mock of ExactTargetUpdatesHooks) */
+		$exactTargetUpdatesHooksMock = $this->getMockBuilder( 'ExactTargetUserTasksAdderHooks' )
 			->setMethods( [ 'prepareUserParams' ] )
 			->getMock();
 		$exactTargetUpdatesHooksMock
 			->expects( $this->never() )
 			->method( 'prepareUserParams' );
 
-		/* Run test */
-		/* @var ExactTargetUpdatesHooks $exactTargetUpdatesHooksMock (mock of ExactTargetUpdatesHooks) */
-		$exactTargetUpdatesHooksMock->addTheUpdateAddUserTask( $userMock, $mockAddUserTask );
+		/* Run test for addTheUpdateAddUserTask method */
+		$method = new ReflectionMethod( 'ExactTargetUserTasksAdderHooks', 'addTheUpdateAddUserTask' );
+		$method->setAccessible( true );
+		$method->invoke( $exactTargetUpdatesHooksMock, $userMock );
 	}
 
 	function testShouldAddUpdateUserDataTask() {
@@ -180,15 +170,19 @@ class ExactTargetUpdatesHooksTest extends WikiaBaseTest {
 			->method( 'queue' );
 
 		/* Get mock object of tested class ExactTargetUpdatesHooks */
-		$exactTargetUpdatesHooksMock = $this->getMockBuilder( 'ExactTargetUpdatesHooks' )
-			->setMethods( [ 'prepareUserParams' ] )
+		$exactTargetUpdatesHooksMock = $this->getMockBuilder( 'ExactTargetUserTasksAdderHooks' )
+			->setMethods( [ 'prepareUserParams', 'getExactTargetUpdateUserTask' ] )
 			->getMock();
 		$exactTargetUpdatesHooksMock
 			->expects( $this->once() )
 			->method( 'prepareUserParams' );
+		$exactTargetUpdatesHooksMock
+			->expects( $this->once() )
+			->method( 'getExactTargetUpdateUserTask' )
+			->will( $this->returnValue( $mockUpdateUserTask ) );
 
 		/* Run test */
 		/* @var ExactTargetUpdatesHooks $exactTargetUpdatesHooksMock (mock of ExactTargetUpdatesHooks) */
-		$exactTargetUpdatesHooksMock->addTheUpdateUserPropertiesTask( $userMock, $mockUpdateUserTask );
+		$exactTargetUpdatesHooksMock->onUserSaveSettings( $userMock );
 	}
 }

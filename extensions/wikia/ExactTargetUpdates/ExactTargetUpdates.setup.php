@@ -44,17 +44,11 @@ $wgAutoloadClasses['ExactTargetBaseTask'] =  $dir . '/ExactTargetBaseTask.php' ;
 $wgAutoloadClasses['ExactTargetAddUserTask'] =  $dir . '/ExactTargetAddUserTask.php' ;
 $wgAutoloadClasses['ExactTargetRemoveUserTask'] =  $dir . '/ExactTargetRemoveUserTask.php' ;
 $wgAutoloadClasses['ExactTargetUpdateUserTask'] =  $dir . '/ExactTargetUpdateUserTask.php' ;
-$wgAutoloadClasses['ExactTargetUpdatesHooks'] =  $dir . '/ExactTargetUpdatesHooks.php' ;
+$wgAutoloadClasses['ExactTargetUserTasksAdderBaseHooks'] =  $dir . '/hooks/ExactTargetUserTasksAdderBase.hooks.php' ;
+$wgAutoloadClasses['ExactTargetUserTasksAdderHooks'] =  $dir . '/hooks/ExactTargetUserTasksAdder.hooks.php' ;
 $wgAutoloadClasses['ExactTargetSoapClient'] =  $dir . '/lib/exacttarget_soap_client.php' ;
 
 /**
- * @global Array The list of hooks.
- * @see http://www.mediawiki.org/wiki/Manual:$wgHooks
+ * Registering hooks
  */
-$wgHooks['ArticleSaveComplete'][] = 'ExactTargetUpdatesHooks::onArticleSaveComplete';
-$wgHooks['EditAccountClosed'][] = 'ExactTargetUpdatesHooks::onEditAccountClosed';
-$wgHooks['EditAccountEmailChanged'][] = 'ExactTargetUpdatesHooks::onEditAccountEmailChanged';
-$wgHooks['EmailChangeConfirmed'][] = 'ExactTargetUpdatesHooks::onEmailChangeConfirmed';
-$wgHooks['SignupConfirmEmailComplete'][] = 'ExactTargetUpdatesHooks::onSignupConfirmEmailComplete';
-$wgHooks['UserSaveSettings'][] = 'ExactTargetUpdatesHooks::onUserSaveSettings';
-$wgHooks['UserRename::AfterAccountRename'][] = 'ExactTargetUpdatesHooks::onAfterAccountRename';
+$wgExtensionFunctions[] = 'ExactTargetUserTasksAdderHooks::setupHooks';
