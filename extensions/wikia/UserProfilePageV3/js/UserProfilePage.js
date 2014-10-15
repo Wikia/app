@@ -132,7 +132,7 @@ var UserProfilePage = {
 								UserProfilePage.switchTab( $( this ).closest( 'li' ) );
 							});
 
-							// Synthesize a click on the tab to hide/show the right panels
+							// Simulate a click on the tab to hide/show the right panels
 							$( '[data-tab=' + tabName + '] a' ).click();
 
 							// load facebook API
@@ -242,14 +242,7 @@ var UserProfilePage = {
 	renderAvatarLightbox: function( modal ) {
 		'use strict';
 
-		var $avatarUploadInput = modal.find( '#UPPLightboxAvatar' ),
-			$avatarForm = modal.find( '#usersAvatar' ),
-			$sampleAvatars = modal.find( '.sample-avatars' );
-
-		$avatarUploadInput.change(function() {
-			UserProfilePage.saveAvatarAIM( $avatarForm );
-		});
-
+		var $sampleAvatars = modal.find( '.sample-avatars' );
 
 		$sampleAvatars.on('click', 'img', function( event ) {
 			UserProfilePage.sampleAvatarChecked( $( event.target ) );
@@ -276,51 +269,6 @@ var UserProfilePage = {
 		avatarImg.attr( 'src', image.attr( 'src' ) );
 		$modal.stopThrobbing();
 		avatarImg.show();
-	},
-
-	saveAvatarAIM: function( form ) {
-		'use strict';
-
-		var $modal = UserProfilePage.modal.$element;
-
-		$.AIM.submit( form, {
-			onStart: function() {
-				$modal.startThrobbing();
-			},
-			onComplete: function( response ) {
-				try {
-					response = JSON.parse( response );
-					var avatarImg = $modal.find( 'img.avatar' );
-					if ( response.result.success === true ) {
-						avatarImg.attr( 'src', response.result.avatar );
-						UserProfilePage.newAvatar = {
-							file: response.result.avatar,
-							source: 'uploaded',
-							userId: UserProfilePage.userId
-						};
-						UserProfilePage.wasDataChanged = true;
-						window.GlobalNotification.hide();
-					} else {
-						if ( typeof( response.result.error ) !== 'undefined' ) {
-							window.GlobalNotification.show( response.result.error, 'error' );
-						}
-					}
-					$modal.stopThrobbing();
-
-					if ( typeof( form[ 0 ] ) !== 'undefined' ) {
-						form[ 0 ].reset();
-					}
-				} catch( e ) {
-					$modal.stopThrobbing();
-					form[ 0 ].reset();
-				}
-			}
-		});
-
-		//unbind original html element handler to avoid loops
-		form.onsubmit = null;
-
-		$( form ).submit();
 	},
 
 	renderAboutMeLightbox: function( modal ) {
