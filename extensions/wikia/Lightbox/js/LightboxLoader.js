@@ -22,7 +22,7 @@
 		videoInstance: null,
 		pageAds: $('#TOP_RIGHT_BOXAD'), // if more ads start showing up over lightbox, add them here
 		reloadOnClose: false, // Means to reload the page on closing the lightbox - see VID-473
-		defaults: {
+		lightboxSettings: {
 			// start with default modal options
 			id: 'LightboxModal',
 			className: 'LightboxModal',
@@ -71,7 +71,7 @@
 				$videosModule = $('.videos-module-rail'), // right rail videos module
 				$videoHomePage = $('#latest-videos-wrapper');
 
-			$.extend(self.defaults, customSettings);
+			$.extend(self.lightboxSettings, customSettings);
 
 			// Bind click event to initiate lightbox
 			$article.add($photos).add($footer).add($videosModule)
@@ -182,7 +182,7 @@
 			LightboxLoader.pageAds.css('visibility', 'hidden');
 
 			// Display modal with default dimensions
-			openModal = $('<div>').makeModal(LightboxLoader.defaults);
+			openModal = $('<div>').makeModal(LightboxLoader.lightboxSettings);
 			openModal.find('.modalContent').startThrobbing();
 
 			lightboxParams = {
@@ -367,7 +367,7 @@
 
 			// if any of the following conditions are true, don't open the lightbox
 			return !(
-				$(window).width() < LightboxLoader.defaults.width + modalPadding || // browser is too small, like tablet
+				$(window).width() < LightboxLoader.lightboxSettings.width + modalPadding || // browser is too small, like tablet
 				$link.hasClass('link-internal') ||
 				$link.hasClass('link-external') ||
 				$thumb && $thumb.attr('data-shared-help') ||

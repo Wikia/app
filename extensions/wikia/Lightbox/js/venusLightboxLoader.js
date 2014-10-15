@@ -1,7 +1,7 @@
 /* global define */
-define('venus.lightboxLoader', ['wikia.window'], function(window){
+define('venus.lightboxLoader', ['wikia.window'], function (window) {
 	'use strict';
-	var init, lightboxSettings;
+	var lightboxSettings;
 
 	lightboxSettings = {
 		appendToBody: true,
@@ -11,9 +11,9 @@ define('venus.lightboxLoader', ['wikia.window'], function(window){
 		tabsOutsideContent: true
 	};
 
-	init = function() {
+	function init() {
 		window.LightboxLoader.init(lightboxSettings);
-	};
+	}
 
 	return {
 		init: init

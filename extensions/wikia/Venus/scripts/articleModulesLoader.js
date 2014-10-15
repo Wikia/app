@@ -1,6 +1,5 @@
 /*global require*/
-require([
-'jquery', 'venus.lightboxLoader'], function($, lightboxLoader) {
+require(['jquery', 'venus.lightboxLoader'], function($, lightboxLoader) {
 	'use strict';
 
 	$(function() {

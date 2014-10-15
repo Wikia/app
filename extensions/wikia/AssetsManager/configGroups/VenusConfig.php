@@ -39,6 +39,7 @@ $VenusConfig[ 'venus_body_js' ] = [
 
 		// jquery libs
 		'//resources/wikia/libraries/mustache/mustache.js',
+		'//resources/wikia/libraries/mustache/jquery.mustache.js',
 		'//resources/wikia/libraries/sloth/sloth.js',
 
 		// polyfills
@@ -75,6 +76,7 @@ $VenusConfig[ 'venus_body_js' ] = [
 		// BackgroundChanger
 		'//extensions/wikia/Venus/scripts/BackgroundChanger.js',
 
+		//TODO adEngine is throwing errors in console, should be fixed as part of CON-1531
 //		'#group_adengine2_js',
 
 		'//resources/wikia/modules/browserDetect.js',
@@ -82,7 +84,6 @@ $VenusConfig[ 'venus_body_js' ] = [
 
 		// Lightbox
 		'//extensions/wikia/Lightbox/js/LightboxLoader.js',
-		'//resources/wikia/libraries/mustache/jquery.mustache.js',
 		'//extensions/wikia/Lightbox/js/venusLightboxLoader.js',
 
 		//following script initialize different modules in Venus
