@@ -14,8 +14,9 @@ define('mediaGallery.views.gallery', [
 	 * Events bound to $el:
 	 *  'galleryInserted' when gallery HTML is appended to DOM. Once per gallery instance
 	 *  'mediaLoaded' when batches of images are fully loaded.
-	 * @param {Object} options
 	 * @constructor
+	 * @param {object} options
+	 * @returns {Gallery} Gallery instance
 	 */
 	Gallery = function (options) {
 		// required options
@@ -35,10 +36,13 @@ define('mediaGallery.views.gallery', [
 		this.rendered = false;
 		this.visibleCount = 0;
 		this.media = [];
+
+		return this;
 	};
 
 	/**
 	 * Set up gallery view and toggle buttons
+	 * @returns {Gallery}
 	 */
 	Gallery.prototype.init = function () {
 		this.createMedia();
@@ -47,12 +51,16 @@ define('mediaGallery.views.gallery', [
 		// set up toggle buttons
 		if (this.model.media.length > this.origVisibleCount) {
 			this.renderToggler();
+			// set element to indicate when things are loading
+			this.$loadingElement = this.$showMore;
 		}
 
 		this.track({
 			action: tracker.ACTIONS.IMPRESSION,
 			value: this.model.media.length
 		});
+
+		return this;
 	};
 
 	/**
@@ -98,9 +106,6 @@ define('mediaGallery.views.gallery', [
 			});
 		});
 
-		// After rendering the gallery and all images are loaded, append the show more/less buttons
-		this.$el.on('mediaLoaded', $.proxy(this.appendToggler, this));
-
 		// Set up tracking
 		this.$wrapper.on('click', '.media > a', function () {
 			var index = $(this).parent().index();
@@ -112,33 +117,46 @@ define('mediaGallery.views.gallery', [
 	};
 
 	/**
+	 * Render the toggle buttons. Does not include DOM insertion.
+	 */
+	Gallery.prototype.renderToggler = function () {
+		var $html, data;
+
+		data = {
+			showMore: $.msg('mediagallery-show-more'),
+			showLess: $.msg('mediagallery-show-less')
+		};
+
+		$html = $(Mustache.render(templates[togglerTemplateName], data));
+		this.$showMore = $html.find('.show')
+			.on('click', $.proxy(this.showMore, this));
+		this.$showLess = $html.find('.hide')
+			.on('click', $.proxy(this.showLess, this));
+
+		this.$toggler = $html;
+	};
+
+	/**
 	 * Render sets of media.
-	 * @param {int|jQuery} [count] Number to be rendered. If not set, use original visible count.
-	 * If count a jQuery object, it's actually $el.
-	 * @param {jQuery} [$el] Element to apply loading graphic
+	 * @param {int} [count] Number to be rendered. If not set, original visible count will be used.
 	 * @returns {Gallery}
 	 */
-	Gallery.prototype.render = function (count, $el) {
+	Gallery.prototype.render = function (count) {
 		var self = this,
 			media,
 			mediaCount,
 			deferredImages = [];
 
-		// For initial setup so callers can be blind to internal options. Makes it so all parameters are optional.
+		this.beforeRender();
+
+		// if count isn't set, assume we're starting a new gallery
 		if (typeof count !== 'number') {
-			if (count instanceof jQuery) {
-				$el = count;
-			}
 			count = this.origVisibleCount;
 		}
 
 		media = this.media.slice(this.visibleCount, this.visibleCount + count);
 		mediaCount = media.length;
 		this.bucky.timer.start('render.' + mediaCount);
-
-		if ($el) {
-			$el.startThrobbing();
-		}
 
 		$.each(media, function (idx, item) {
 			item.render();
@@ -155,38 +173,35 @@ define('mediaGallery.views.gallery', [
 
 		// wait till all images are loaded before showing any
 		$.when.apply(this, deferredImages).done(function () {
-			if ($el) {
-				$el.stopThrobbing();
-			}
 			$.each(media, function (idx, item) {
 				item.show();
 			});
 			self.bucky.timer.stop('render.' + mediaCount);
-			self.$el.trigger('mediaLoaded');
+			self.afterRender();
 		});
 
 		return this;
 	};
 
-	/**
-	 * Render the toggle buttons. Does not include DOM insertion.
-	 */
-	Gallery.prototype.renderToggler = function () {
-		var $html, data;
+	Gallery.prototype.beforeRender = function () {
+		// handle loading graphic
+		if (this.$loadingElement) {
+			this.$loadingElement.startThrobbing();
+		}
+	};
 
-		data = {
-			showMore: $.msg('mediagallery-show-more'),
-			showLess: $.msg('mediagallery-show-less')
-		};
+	Gallery.prototype.afterRender = function () {
+		// Emit event when DOM settles into place
+		this.$el.trigger('mediaLoaded');
 
-		$html = $(Mustache.render(templates[togglerTemplateName], data));
-		this.$showMore = $html.find('.show');
-		this.$showLess = $html.find('.hide');
+		// After rendering the gallery and all images are loaded,
+		// append the show more/less buttons (only happens once)
+		this.appendToggler();
 
-		this.$showMore.on('click', $.proxy(this.showMore, this));
-		this.$showLess.on('click', $.proxy(this.showLess, this));
-
-		this.$toggler = $html;
+		// handle loading graphic
+		if (this.$loadingElement) {
+			this.$loadingElement.stopThrobbing();
+		}
 	};
 
 	/**
@@ -217,7 +232,7 @@ define('mediaGallery.views.gallery', [
 			}
 		});
 
-		this.render(toRender, this.$showMore);
+		this.render(toRender);
 
 		// hide and show appropriate buttons
 		this.$showLess.removeClass('hidden');

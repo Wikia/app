@@ -14,8 +14,8 @@ define('mediaGallery.controllers.galleries', [
 	 */
 	var GalleriesController = function (options) {
 		options = options || {};
-		this.lightbox = options.lightbox;
-		this.lazyLoad = options.lazyLoad;
+		this.lightbox = options.lightbox || false;
+		this.lazyLoad = options.lazyLoad || false;
 		// cache DOM objects
 		this.$galleries = $('.media-gallery-wrapper');
 		// cache instances
@@ -41,8 +41,7 @@ define('mediaGallery.controllers.galleries', [
 			};
 
 		// Instantiate gallery view
-		gallery = new Gallery(galleryOptions);
-		gallery.init();
+		gallery = new Gallery(galleryOptions).init();
 
 		// Append gallery HTML to DOM and trigger event
 		$wrapper.append(gallery.render().$el);
