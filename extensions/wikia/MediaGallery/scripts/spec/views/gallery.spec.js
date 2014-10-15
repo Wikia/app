@@ -53,12 +53,10 @@ describe('MediaGalleries gallery', function () {
 		Media = modules['mediaGallery.views.media'](Caption, templates);
 		Gallery = modules['mediaGallery.views.gallery'](Media, templates, tracker, bucky);
 
-		instance = new Gallery(options);
-		instance.init();
+		instance = new Gallery(options).init();
 	});
 
 	it('should export a function', function () {
-		instance = new Gallery(options);
 		expect(typeof Gallery).toBe('function');
 	});
 
