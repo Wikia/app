@@ -10,6 +10,7 @@ var UserProfilePage = {
 	wasDataChanged: false,
 	forceRedirect: false,
 	reloadUrl: false,
+	bucky: window.Bucky('UserProfilePage'),
 
 	// reference to modal UI component
 	modalComponent: {},
@@ -52,6 +53,7 @@ var UserProfilePage = {
 	renderLightbox: function( tabName ) {
 		'use strict';
 
+		UserProfilePage.bucky.timer.start('renderLightbox');
 		if ( !UserProfilePage.isLightboxGenerating ) {
 			//if lightbox is generating we don't want to let user open second one
 			UserProfilePage.isLightboxGenerating = true;
@@ -151,6 +153,7 @@ var UserProfilePage = {
 							UserProfilePage.isLightboxGenerating = false;
 
 							editProfileModal.show();
+							UserProfilePage.bucky.timer.stop('renderLightbox');
 						});
 					});
 				});
@@ -318,6 +321,7 @@ var UserProfilePage = {
 	saveUserData: function() {
 		'use strict';
 
+		UserProfilePage.bucky.timer.start('saveUserData');
 		var userData = UserProfilePage.getFormData();
 
 		if ( UserProfilePage.newAvatar ) {
@@ -336,6 +340,7 @@ var UserProfilePage = {
 					UserProfilePage.userData = null;
 					UserProfilePage.wasDataChanged = false;
 					UserProfilePage.modal.trigger( 'close' );
+					UserProfilePage.bucky.timer.stop('saveUserData');
 					window.location = UserProfilePage.reloadUrl;
 
 				}
