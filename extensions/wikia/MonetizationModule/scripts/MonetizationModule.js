@@ -15,14 +15,11 @@ require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 	var MonetizationModule = {
 		init: function () {
 			// track impression for each placement
-			$('.monetization-module').each(function() {
-				var trackCategory,
-					value,
-					type;
-
-				type = $(this).attr('class').split(' ')[1];
-				trackCategory = $(this).attr('id');
-				value = $(this).children().children().length;
+			$('.monetization-module').each(function () {
+				var $this = $(this),
+					trackCategory = $this.attr('id'),
+					value = $this.children().children().length,	// check if the ad is blocked
+					type = $this.attr('class').split(' ')[1];
 
 				track({
 					category: trackCategory,
@@ -34,10 +31,10 @@ require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 				});
 			});
 
-			this.initEllipses();
-			this.initClickTrackingEcommerce();
+			this.initEllipses ();
+			this.initClickTrackingEcommerce ();
 		},
-		initEllipses: function() {
+		initEllipses: function () {
 			$(window)
 				.on('resize.monetizationmodule', function () {
 					$('.monetization-module').find('.placard a').ellipses({
@@ -46,7 +43,7 @@ require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 				})
 				.trigger('resize.monetizationmodule');
 		},
-		initClickTrackingEcommerce: function() {
+		initClickTrackingEcommerce: function () {
 			var elements = [
 				'.prod-thumb',
 				'.prod-name',
