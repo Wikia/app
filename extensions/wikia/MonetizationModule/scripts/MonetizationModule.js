@@ -31,8 +31,8 @@ require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 				});
 			});
 
-			this.initEllipses ();
-			this.initClickTrackingEcommerce ();
+			this.initEllipses();
+			this.initClickTrackingEcommerce();
 		},
 		initEllipses: function () {
 			$(window)
