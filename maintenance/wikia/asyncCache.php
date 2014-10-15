@@ -24,8 +24,6 @@ class AsyncCacheCLI extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = "A CLI interface to the AsyncCache class";
-		$this->addOption( 'test', 'Test mode; make no changes', false, false, 't' );
-		$this->addOption( 'verbose', 'Show extra debugging output', false, false, 'v' );
 
 		$this->addOption( 'get', 'Get the value of a memc key', false, true, 'g' );
 		$this->addOption( 'purge', 'Get the value of a memc key', false, true, 'p' );
@@ -37,12 +35,10 @@ class AsyncCacheCLI extends Maintenance {
 		$this->addOption( 'generate-method', 'Method to regenerate value', false, true, 'm' );
 		$this->addOption( 'generate-args', 'Comma separated args for --generate-method', false, true, 'a' );
 
-		$this->addOption( 'block', 'Block on value regeneratoin when cache is stale', false, false, 'b' );
+		$this->addOption( 'block', 'Block on value regeneration when cache is stale', false, false, 'b' );
 	}
 
 	public function execute() {
-		$this->test    = $this->hasOption( 'test' );
-		$this->verbose = $this->hasOption( 'verbose' );
 
 		if ( $this->hasOption( 'purge' ) ) {
 			$cacheKey = $this->getOption( 'purge' );
@@ -103,16 +99,6 @@ class AsyncCacheCLI extends Maintenance {
 		echo "VALUE: $value\n";
 
 		echo "\nFinished in ".( time() - $start )." secs\n";
-	}
-
-	/**
-	 * Print the message if verbose is enabled
-	 * @param $msg - The message text to echo to STDOUT
-	 */
-	private function debug( $msg ) {
-		if ( $this->verbose ) {
-			echo $msg;
-		}
 	}
 }
 
