@@ -372,12 +372,12 @@ class WikiaMapsSpecialControllerTest extends WikiaBaseTest {
 				$appMock = $this->getMock( 'WikiaApp', [ 'checkSkin' ], [], '', false );
 				$appMock->expects( $this->once() )
 					->method( 'checkSkin' )
-					->will( $this->returnValue(false) );
+					->will( $this->returnValue( false ) );
 
 				$requestMock = $this->getMock( 'WikiaRequest', [ 'getInt' ], [], '', false );
 				$requestMock->expects( $this->any() )
 					->method( 'getInt' )
-					->will( $this->returnValue(1) );
+					->will( $this->returnValue( 1 ) );
 
 				$responseMock = $this->getMock( 'WikiaResponse', [ 'addAsset', 'setTemplateEngine' ], [], '', false );
 				$responseMock->expects( $this->once() )

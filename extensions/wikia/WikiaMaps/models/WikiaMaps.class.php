@@ -164,7 +164,7 @@ class WikiaMaps extends WikiaObject {
 	}
 
 	/**
-	 * Sends requests to IntMap service to get data about a map and tiles it's connected with
+	 * Sends requests to Wikia Maps service to get data about a map and tiles it's connected with
 	 *
 	 * @param integer $mapId Map id
 	 * @param array $params additional parameters
@@ -191,6 +191,14 @@ class WikiaMaps extends WikiaObject {
 		return $map;
 	}
 
+	/**
+	 * Sends requests to Wikia Maps service to get data about a map with a list of POIs and POI categories
+	 *
+	 * @param integer $mapId Map id
+	 * @param array $params additional parameters
+	 *
+	 * @return mixed
+	 */
 	public function getMapDataByIdFromApi( $mapId,  $params = []) {
 		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP_DATA, $mapId ], $params );
 		$response = $this->sendGetRequest( $url );
