@@ -96,6 +96,7 @@ class ArticlesApiController extends WikiaApiController {
 			$app->wg->request->getBool( static::PARAMETER_EXPAND, $omitExpandParam )) {
 			return PalantirApiController::METADATA_CACHE_EXPIRATION;
 		}
+
 		return self::CLIENT_CACHE_VALIDITY;
 	}
 
@@ -116,7 +117,7 @@ class ArticlesApiController extends WikiaApiController {
 	 */
 	public function getTop() {
 		wfProfileIn( __METHOD__ );
-		$this->cors->setHeader();
+		$this->cors->setHeaders($this->response);
 
 		$namespaces = self::processNamespaces( $this->request->getArray( self::PARAMETER_NAMESPACES, null ), __METHOD__ );
 		$category = $this->request->getVal( self::PARAMETER_CATEGORY, null );
@@ -998,7 +999,7 @@ class ArticlesApiController extends WikiaApiController {
 	}
 
 	public function getAsSimpleJson() {
-		$this->cors->setHeader();
+		$this->cors->setHeaders($this->response);
 		$articleId = (int) $this->getRequest()->getInt(self::SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME, NULL);
 		if( empty($articleId) ) {
 			throw new InvalidParameterApiException( self::SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME );

@@ -9,51 +9,43 @@
  */
 class CrossOriginResourceSharingHeaderHelper {
 	const HEADER_NAME = 'Access-Control-Allow-Origin';
+	const HEADER_DELIMETER = ',';
 
-	protected $configuredHeaderValue = null;
+	protected $allowOriginValues = null;
 
-	static public function findExistingHeader( Array $headers ) {
-		foreach ( $headers as $header ) {
-			if ( preg_match( '/' . self::HEADER_NAME . '/i', $header ) ) {
-				return $header; // exists
-			}
-		}
-		return null; // not found
+	public function setAllowOrigin( $values ) {
+		$this->allowOriginValue = $values;
 	}
 
-	static public function extractHeaderValue( $header ) {
-		$value = null;
-		if ( !empty( $header ) ) {
-			$parts = explode( ":", $header );
-			if ( !empty( $parts[1] ) ) {
-				$value = trim( $parts[1] );
-			}
-		}
-		return $value;
-	}
+	/**
+	 * This method sets all configured CORS related headers
+	 *
+	 * @param WikiaResponse $response response object to set headers to
+	 * @param bool $mergeExisting
+	 */
+	public function setHeaders( WikiaResponse $response, $mergeExisting = true ) {
+		if ( !empty( $this->allowOriginValues ) ) {
+			$valuesToSet = $this->allowOriginValues;
+			$headers = $response->getHeader( self::HEADER_NAME );
+			if ( !empty( $headers ) ) {
 
-	public function setHeader() {
-		if ( !empty( $this->configuredHeaderValue ) ) {
-			$oldHeaderValue = "";
-			$header = $this->findExistingHeader( headers_list() );
-			if ( !empty( $header ) ) {
-				$oldHeaderValue = $this->extractHeaderValue( $header );
-			}
-			$values = [ ];
-			if ( !empty( $oldHeaderValue ) ) {
-				$values [] = $oldHeaderValue;
-			}
-			$values [] = $this->configuredHeaderValue;
+				if ( $mergeExisting ) {
+					$response->removeHeader( self::HEADER_NAME );
+					$valuesToSet = [ ];
+					foreach ( $headers as $header ) {
+						$valuesToSet [] = explode( self::HEADER_DELIMETER, $header['value'] );
 
-			$header = self::HEADER_NAME . ': ' . implode( ",", $values );
-			header( $header );
+					}
+				}
+			}
+			$response->setHeader( self::HEADER_NAME, implode( self::HEADER_DELIMETER, $valuesToSet ) );
 		}
 	}
 
 	public function readConfig() {
-		global $wgCORSFor3rdParties;
-		if ( !empty( $wgCORSFor3rdParties ) and is_array( $wgCORSFor3rdParties ) ) {
-			$this->configuredHeaderValue = implode( ',', $wgCORSFor3rdParties );
+		global $wgCORSAllowOrigin;
+		if ( !empty( $wgCORSAllowOrigin ) and is_array( $wgCORSAllowOrigin ) ) {
+			$this->allowOriginValues = $wgCORSAllowOrigin;
 		}
 	}
 }
