@@ -68,8 +68,10 @@ class ExactTargetRemoveUserTask extends ExactTargetBaseTask {
 
 		/* Create new DataExtensionObject that reflects user table data */
 		$oDE = new ExactTarget_DataExtensionObject();
-		/* CustomerKey is a key that indicates Wikia table reflected by DataExtension */
-		$oDE->CustomerKey = 'user';
+
+		/* Get Customer Keys specific for production or development */
+		$aCustomerKeys = ExactTargetUpdatesHelper::getCustomerKeys();
+		$oDE->CustomerKey = $aCustomerKeys['user'];
 
 		/* Prepare query keys */
 		$oDE->Keys = [ $this->wrapApiProperty( 'user_id',  $iUserId ) ];
@@ -99,8 +101,10 @@ class ExactTargetRemoveUserTask extends ExactTargetBaseTask {
 		foreach ( $aUserPropertiesNames as $sPropertyName ) {
 			/* Create new DataExtensionObject that reflects user table data */
 			$oDE = new ExactTarget_DataExtensionObject();
-			/* CustomerKey is a key that indicates Wikia table reflected by DataExtension */
-			$oDE->CustomerKey = 'user_properties';
+
+			/* Get Customer Keys specific for production or development */
+			$aCustomerKeys = ExactTargetUpdatesHelper::getCustomerKeys();
+			$oDE->CustomerKey = $aCustomerKeys['user_properties'];
 
 			/* Prepare query keys */
 			$oDE->Keys = [

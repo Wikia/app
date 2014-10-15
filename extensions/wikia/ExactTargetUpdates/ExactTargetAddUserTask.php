@@ -56,8 +56,10 @@ class ExactTargetAddUserTask extends ExactTargetBaseTask {
 		try {
 			/* Create new DataExtensionObject that reflects user table data */
 			$oDE = new ExactTarget_DataExtensionObject();
-			/* CustomerKey is a key that indicates Wikia table reflected by DataExtension */
-			$oDE->CustomerKey = 'user';
+
+			/* Get Customer Keys specific for production or development */
+			$aCustomerKeys = ExactTargetUpdatesHelper::getCustomerKeys();
+			$oDE->CustomerKey = $aCustomerKeys['user'];
 
 			$userId = $this->extractUserIdFromData( $aUserData );
 
@@ -115,9 +117,11 @@ class ExactTargetAddUserTask extends ExactTargetBaseTask {
 		$aDE = [];
 		foreach ( $aUserProperties as $sProperty => $sValue ) {
 			/* Create new DataExtensionObject that reflects user_properties table data */
-			$DE = new ExactTarget_DataExtensionObject();
-			/* CustomerKey is a key that indicates Wikia table reflected by DataExtension */
-			$DE->CustomerKey = 'user_properties';
+			$oDE = new ExactTarget_DataExtensionObject();
+
+			/* Get Customer Keys specific for production or development */
+			$aCustomerKeys = ExactTargetUpdatesHelper::getCustomerKeys();
+			$oDE->CustomerKey = $aCustomerKeys['user_properties'];
 
 			/* @var $apiProperties Array of ExactTarget_APIProperty objects */
 			$apiProperties = [];
@@ -125,8 +129,8 @@ class ExactTargetAddUserTask extends ExactTargetBaseTask {
 			$apiProperties[] = $this->wrapApiProperty( 'up_property',  $sProperty );
 			$apiProperties[] = $this->wrapApiProperty( 'up_value',  $sValue );
 
-			$DE->Properties = $apiProperties;
-			$aDE[] = $DE;
+			$oDE->Properties = $apiProperties;
+			$aDE[] = $oDE;
 		}
 		return $aDE;
 	}

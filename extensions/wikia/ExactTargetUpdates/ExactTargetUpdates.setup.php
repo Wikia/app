@@ -40,6 +40,7 @@ $wgExtensionCredits['other'][] = array(
 
 $wgExtensionMessagesFiles[ 'ExactTargetUpdates' ] = $dir . '/ExactTargetUpdates.i18n.php';
 
+$wgAutoloadClasses['ExactTargetUpdatesHelper'] = $dir . '/ExactTargetUpdatesHelper.php';
 $wgAutoloadClasses['ExactTargetBaseTask'] =  $dir . '/ExactTargetBaseTask.php' ;
 $wgAutoloadClasses['ExactTargetAddUserTask'] =  $dir . '/ExactTargetAddUserTask.php' ;
 $wgAutoloadClasses['ExactTargetRemoveUserTask'] =  $dir . '/ExactTargetRemoveUserTask.php' ;
