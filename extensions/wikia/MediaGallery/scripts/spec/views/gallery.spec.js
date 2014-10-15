@@ -41,6 +41,7 @@ describe('MediaGalleries gallery', function () {
 			$el: $('<div></div>'),
 			$wrapper: $('.media-gallery-wrapper'),
 			model: model,
+			idx: 0,
 			origVisibleCount: 1,
 			interval: 2
 		};
@@ -51,42 +52,51 @@ describe('MediaGalleries gallery', function () {
 		Caption = modules['mediaGallery.views.caption']();
 		Media = modules['mediaGallery.views.media'](Caption, templates);
 		Gallery = modules['mediaGallery.views.gallery'](Media, templates, tracker, bucky);
+
+		instance = new Gallery(options).init();
 	});
 
 	it('should export a function', function () {
-		instance = new Gallery(options);
 		expect(typeof Gallery).toBe('function');
 	});
 
 	it('should create media', function () {
-		instance = new Gallery(options);
 		expect(instance.media.length).toBe(model.media.length);
 	});
 
-	it('should render', function () {
-		instance = new Gallery(options);
+	it('should render with parameters', function () {
+		// passing values to render
 		instance.render(1);
 		expect(instance.visibleCount).toBe(1);
 		instance.render(2);
 		expect(instance.visibleCount).toBe(3);
+	});
+
+	it('should render without parameters', function () {
+		// not passing value, default interval should be used
 		instance.render();
-		expect(instance.visibleCount).toBe(3);
+		expect(instance.visibleCount).toBe(options.origVisibleCount);
 	});
 
 	it('should init toggler', function () {
+		// recreate instance with different options
 		options.origVisibleCount = 2;
 		instance = new Gallery(options);
+		instance.init();
+
 		expect(instance.$toggler).toBeDefined();
 	});
 
 	it('should not init toggler', function () {
+		// recreate instance with different options
 		options.origVisibleCount = 4;
 		instance = new Gallery(options);
+		instance.init();
+
 		expect(instance.$toggler).not.toBeDefined();
 	});
 
 	it('should show more and show less', function () {
-		instance = new Gallery(options);
 		instance.showMore();
 		expect(instance.visibleCount).toBe(options.interval);
 		spyOn(instance, 'scrollToTop');
@@ -95,7 +105,6 @@ describe('MediaGalleries gallery', function () {
 	});
 
 	it('should not error at arbitrary render count', function () {
-		instance = new Gallery(options);
 		instance.render(model.media.length + 2);
 		expect(instance.media.length).toBe(model.media.length);
 	});

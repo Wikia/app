@@ -5,7 +5,6 @@
 require([
 	'wikia.log',
 	'wikia.window',
-	'wikia.tracker',
 	'wikia.instantGlobals',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adEngine',
@@ -21,7 +20,6 @@ require([
 ], function (
 	log,
 	window,
-	tracker,
 	instantGlobals,
 	adContext,
 	adEngine,
@@ -107,13 +105,7 @@ require([
 	function startEarlyQueue() {
 		// Start ads
 		log('work on window.adslots2 according to AdConfig2', 1, module);
-		tracker.track({
-			eventName: 'liftium.init',
-			ga_category: 'init2/init',
-			ga_action: 'init',
-			ga_label: 'adengine2',
-			trackingMethod: 'ad'
-		});
+		adTracker.measureTime('adengine.init', 'queue.early').track();
 		window.adslots2 = window.adslots2 || [];
 		adEngine.run(adConfig, window.adslots2, 'queue.early');
 	}
@@ -144,18 +136,12 @@ window.AdEngine_loadLateAds = function () {
 
 	function loadLateFn() {
 		require([
-			'ext.wikia.adEngine.adConfigLate', 'ext.wikia.adEngine.adEngine', 'ext.wikia.adEngine.lateAdsQueue', 'wikia.tracker', 'wikia.log'
-		], function (adConfigLate, adEngine, lateAdsQueue, tracker, log) {
+			'ext.wikia.adEngine.adConfigLate', 'ext.wikia.adEngine.adEngine', 'ext.wikia.adEngine.lateAdsQueue', 'ext.wikia.adEngine.adTracker', 'wikia.log'
+		], function (adConfigLate, adEngine, lateAdsQueue, adTracker, log) {
 			var module = 'AdEngine_loadLateAds';
 			log('launching late ads now', 1, module);
 			log('work on lateAdsQueue according to AdConfig2Late', 1, module);
-			tracker.track({
-				eventName: 'liftium.init',
-				ga_category: 'init2/init',
-				ga_action: 'init',
-				ga_label: 'adengine2 late',
-				trackingMethod: 'ad'
-			});
+			adTracker.measureTime('adengine.init', 'queue.late').track();
 			adEngine.run(adConfigLate, lateAdsQueue, 'queue.late');
 		});
 	}
