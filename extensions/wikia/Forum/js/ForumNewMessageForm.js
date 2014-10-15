@@ -1,6 +1,8 @@
+/* global Forum, Wall */
+
 (function (window, $) {
 	'use strict';
-	var bucky = window.Bucky('forum.forumnewmessageforum');
+	var bucky = window.Bucky('ForumNewMessageForm');
 
 	Forum.NewMessageForm = $.createClass(Wall.settings.classBindings.newMessageForm, {
 		constructor: function () {
