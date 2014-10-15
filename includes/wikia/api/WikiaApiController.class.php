@@ -60,8 +60,13 @@ class WikiaApiController extends WikiaController {
 		$method = $webRequest->getVal( 'method' );
 		$accessService->checkUse( $controller.'Controller', $method );
 
+		//this is used for monitoring purposes, do not change unless you know what you are doing
+		//should set api/v1 as the transaction name
 		if ( !$this->request->isInternal() ) {
 			Transaction::setEntryPoint(Transaction::ENTRY_POINT_API_V1);
+		}
+
+		if ( !$this->request->isInternal() ) {
 			if ($this->hideNonCommercialContent()) {
 				$this->blockIfNonCommercialOnly();
 			}
