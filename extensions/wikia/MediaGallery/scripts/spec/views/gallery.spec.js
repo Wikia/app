@@ -64,16 +64,18 @@ describe('MediaGalleries gallery', function () {
 		expect(instance.media.length).toBe(model.media.length);
 	});
 
-	it('should render', function () {
+	it('should render with parameters', function () {
 		// passing values to render
 		instance.render(1);
 		expect(instance.visibleCount).toBe(1);
 		instance.render(2);
 		expect(instance.visibleCount).toBe(3);
+	});
 
+	it('should render without parameters', function () {
 		// not passing value, default interval should be used
 		instance.render();
-		expect(instance.visibleCount).toBe(4);
+		expect(instance.visibleCount).toBe(options.origVisibleCount);
 	});
 
 	it('should init toggler', function () {
