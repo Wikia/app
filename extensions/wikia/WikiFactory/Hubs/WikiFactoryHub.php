@@ -401,12 +401,6 @@ class WikiFactoryHub extends WikiaModel {
 	public function updateCategories ( $city_id, array $categories, $reason ) {
 		global $wgExternalSharedDB;
 
-		/**
-		 * @see CE-1018
-		 * Get old categories for ExactTarget update
-		 */
-		$aOldCategories = $this->getWikiCategories( $city_id );
-
 		$values = array();
 		// MySQL style multi-row insert
 		foreach ($categories as $category) {
@@ -428,7 +422,6 @@ class WikiFactoryHub extends WikiaModel {
 		$aHookParams = [
 			'city_id' => $city_id,
 			'categories_new' => $values,
-			'categories_old' => $aOldCategories,
 		];
 		wfRunHooks( 'CityCatMappingUpdated', array( $aHookParams ) );
 

@@ -6,8 +6,48 @@ class ExactTargetUpdateCityCatMappingTask extends ExactTargetBaseTask {
 		$oClient = $this->getClient();
 
 		/* Make API requests */
-		$this->deleteCityCatMappingData( $aCityCatMappingData['categories_old'], $oClient );
+		$aOldCategories = $this->retrieveOldCityCatMappingData( $aCityCatMappingData['city_id'], $oClient );
+		$this->deleteCityCatMappingData( $aOldCategories, $oClient );
 		$this->sendNewCityCatMappingData( $aCityCatMappingData['categories_new'], $oClient );
+	}
+
+	public function retrieveOldCityCatMappingData( $iCityId, $oClient ) {
+		try {
+			$aCustomerKeys = ExactTargetUpdatesHelper::getCustomerKeys();
+
+			$oRetrieveRequest = new ExactTarget_RetrieveRequest();
+			$oRetrieveRequest->ObjectType = "DataExtensionObject[{$aCustomerKeys['city_cat_mapping']}]";
+			$oRetrieveRequest->Properties = [ 'city_id', 'cat_id' ];
+
+			$oSimpleFilterPart = new ExactTarget_SimpleFilterPart();
+			$oSimpleFilterPart->Value = [ $iCityId ];
+			$oSimpleFilterPart->SimpleOperator = ExactTarget_SimpleOperators::equals;
+			$oSimpleFilterPart->Property = 'city_id';
+
+			$oRetrieveRequest->Filter = new SoapVar( $oSimpleFilterPart, SOAP_ENC_OBJECT, 'SimpleFilterPart', "http://exacttarget.com/wsdl/partnerAPI" );
+			$oRetrieveRequest->Options = null;
+
+			$oRetrieveRequestMsg = new ExactTarget_RetrieveRequestMsg();
+			$oRetrieveRequestMsg->RetrieveRequest = $oRetrieveRequest;
+
+			$oResults = $oClient->Retrieve( $oRetrieveRequestMsg );
+
+			$aOldCategories = [];
+
+			foreach ( $oResults->Results as $oResult ) {
+				$oCityId = $oResult->Properties->Property[0];
+				$oCatId = $oResult->Properties->Property[1];
+				$aOldCategories[] = [
+					'city_id' => $oCityId->Value,
+					'cat_id' => $oCatId->Value,
+				];
+			}
+
+			return $aOldCategories;
+		} catch ( Exception $e ) {
+			/* Log error */
+			$this->error( __METHOD__ . ' ExactTargetException ' . $e->getMessage() . ' ErrorCode:  ' . $e->getCode() );
+		}
 	}
 
 	public function deleteCityCatMappingData( $aOldCategories, $oClient ) {

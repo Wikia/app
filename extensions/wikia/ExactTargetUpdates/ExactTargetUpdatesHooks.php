@@ -247,8 +247,7 @@ class ExactTargetUpdatesHooks {
 
 	public function addTheUpdateCityCatMappingTask( $aParams, ExactTargetUpdateCityCatMappingTask $oTask ) {
 		if ( $this->bShouldAddTask ) {
-			$aCityCatMappingData = $this->prepareCityCatMappingParamsForUpdate( $aParams );
-			$oTask->call( 'updateCityCatMappingData', $aCityCatMappingData );
+			$oTask->call( 'updateCityCatMappingData', $aParams );
 			$oTask->queue();
 		}
 	}
@@ -294,20 +293,5 @@ class ExactTargetUpdatesHooks {
 			];
 		}
 		return $aWikiCatsMappingParams;
-	}
-
-	private function prepareCityCatMappingParamsForUpdate( $aParams ) {
-		/**
-		 * We only need city_id and cat_id mapping
-		 */
-		$aOldCategories = [];
-		foreach ( $aParams['categories_old'] as $aCategory ) {
-			$aOldCategories[] = [
-				'city_id' => $aCategory['city_id'],
-				'cat_id' => $aCategory['cat_id'],
-			];
-		}
-		$aParams['categories_old'] = $aOldCategories;
-		return $aParams;
 	}
 }
