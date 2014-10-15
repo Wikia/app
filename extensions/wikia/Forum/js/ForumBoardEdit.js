@@ -16,7 +16,7 @@
 			format: 'json',
 			data: modalData,
 			callback: function (jsonResponse) {
-				bucky.timer.start('makeBoardModalCallback');
+				bucky.timer.start('getBoardModalData');
 				require(['wikia.ui.factory'], function (uiFactory) {
 					uiFactory.init(['modal']).then(function (uiModal) {
 						var submitButton = {
@@ -89,7 +89,7 @@
 							});
 							forumModal.show();
 						});
-						bucky.timer.stop('makeBoardModalCallback');
+						bucky.timer.stop('getBoardModalData');
 					});
 				});
 			}
