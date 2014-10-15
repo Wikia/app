@@ -8,13 +8,11 @@ $placeholder-background-color: #ccc; // only for prototype version
 $article-items-spacing: 40px;
 
 article {
-//	padding: 0 $medium-content-padding - $content-border-width;
-
 	header {
 		@include grid-column-width('medium', 8, $medium-content-padding - $content-border-width);
+		@include proportional-video-height(8 * ($medium-grid-column + $medium-grid-gutter) - $medium-grid-gutter + $medium-content-padding);
 		background-color: $placeholder-background-color;
 		float: left;
-		height: 466px; // only for prototype version
 		margin-bottom: $article-items-spacing;
 		padding-left: $medium-content-padding;
 		position: relative;
@@ -27,6 +25,7 @@ article {
 			margin: 0;
 			padding: 0 $large-grid-column-padding 30px;
 			position: absolute;
+			word-break: break-all;
 		}
 	}
 
@@ -54,7 +53,7 @@ article {
 }
 
 .left-nav {
-//	float: left;
+	float: left;
 	margin-left: $medium-content-padding - $content-border-width;
 	text-align: center;
 	width: $medium-grid-column;
@@ -79,21 +78,7 @@ article {
 	font-size: 16px;
 	line-height: 28px;
 	margin: 0 $medium-content-padding - $content-border-width 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width;
-
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6,
-	p,
-	> div,
-	nav,
-	> ul,
-	> ol {
-		padding-left: $medium-grid-column-padding;
-		padding-right: $medium-grid-column-padding;
-	}
+	padding: 0 $medium-grid-column-padding;
 
 	h1, h2, h3, h4, h5, h6 {
 		overflow: hidden;
@@ -119,6 +104,21 @@ article {
 		}
 	}
 
+	h1 {
+		font-size: 36px;
+		line-height: 40px;
+
+		.editsection {
+			line-height: 40px;
+			margin-left: 40px;
+
+			&:before {
+				height: 40px;
+				width: 40px;
+			}
+		}
+	}
+
 	h2 {
 		border-bottom: 1px solid $color-page-border;
 		font-size: 27px;
@@ -139,7 +139,7 @@ article {
 	h3 {
 		font-size: 18px;
 		margin: $article-items-spacing 0 16px;
-		}
+	}
 
 	p {
 		margin-bottom: $article-items-spacing;
@@ -171,13 +171,13 @@ article {
 
 	ol,
 	ul {
-		padding-left: 50px;
+		padding-left: 41px;
 	}
 
 	> ol,
 	> ul {
 		margin-top: 0;
-		padding-right: 120px;
+		padding-right: 108px;
 
 		> li:first-child {
 			margin-top: 10px;
@@ -190,7 +190,7 @@ article {
 
 	li {
 		margin-top: 16px;
-		padding-left: 12px;
+		padding-left: 13px;
 	}
 }
 
@@ -202,7 +202,7 @@ article {
 	display: block;
 	float: right;
 	height: 250px;
-	margin: 0 $medium-grid-column-padding + $medium-content-padding - $content-border-width 20px $medium-grid-gutter + $medium-grid-column-padding - $content-border-width;
+	margin: 0 $medium-grid-column-padding + $medium-content-padding - $content-border-width 20px $medium-grid-gutter + $medium-grid-column-padding;
 	padding: 10px;
 }
 
@@ -217,6 +217,8 @@ article {
 	article {
 		header {
 			@include grid-column-width('large', 8, $large-content-padding - $content-border-width);
+			@include proportional-video-height(8 * ($large-grid-column + $large-grid-gutter) - $large-grid-gutter + $large-content-padding);
+			float: left;
 			padding-left: $large-content-padding;
 
 			h1 {
@@ -235,19 +237,7 @@ article {
 		font-size: 18px;
 		line-height: 36px;
 		margin: 0 $large-content-padding - $content-border-width 0 $large-grid-column + $large-grid-gutter + $large-content-padding - $content-border-width;
-
-		h1,
-		h2,
-		h3,
-		h4,
-		h5,
-		h6,
-		p,
-		> div,
-		nav {
-			padding-left: $large-grid-column-padding;
-			padding-right: $large-grid-column-padding;
-		}
+		padding: 0 $large-grid-column-padding;
 
 		h2 {
 			margin-bottom: 10px;
@@ -274,26 +264,27 @@ article {
 
 		> ol,
 		> ul {
-			padding-left: 55px;
-			padding-right: 135px;
+			padding-left: 44px;
+			padding-right: 123px;
 		}
 
 		li {
 			margin-top: 18px;
-			padding-left: 13px;
+			padding-left: 14px;
 		}
 	}
 
 	.adUnitTest,
 	.infobox-test {
 		@include grid-column-width('large', 4, -2 * $large-grid-column-padding);
-		margin: 0 $large-grid-column-padding + $large-content-padding - $content-border-width 20px $large-grid-gutter + $large-grid-column-padding - $content-border-width;
+		margin: 0 $large-grid-column-padding + $large-content-padding - $content-border-width 20px $large-grid-gutter + $large-grid-column-padding;
 		padding: $large-grid-column-padding;
 	}
 }
 
 @media #{$small-only} {
 	article header {
+		@include proportional-video-height($small-content-width - 2 * $content-border-width);
 		padding-left: $small-content-padding;
 		width: 100%;
 
@@ -304,25 +295,15 @@ article {
 	}
 
 	.left-nav {
+		float: none;
 		margin-left: $small-content-padding - $content-border-width;
+		position: absolute;
 		width: $small-grid-column;
 	}
 
 	.mw-content-text {
 		margin: 0 $small-content-padding - $content-border-width 0 $small-grid-column + $small-grid-gutter + $small-content-padding;
-
-		h1,
-		h2,
-		h3,
-		h4,
-		h5,
-		h6,
-		p,
-		> div,
-		nav {
-			padding-left: $small-grid-column-padding;
-			padding-right: $small-grid-column-padding;
-		}
+		padding: 0 $small-grid-column-padding;
 
 		p {
 			margin-bottom: 30px;
@@ -330,12 +311,12 @@ article {
 
 		ol,
 		ul {
-			padding-left: 41px;
+			padding-left: 33px;
 		}
 
 		> ol,
 		> ul {
-			padding-right: 89px;
+			padding-right: 81px;
 		}
 
 		li {
