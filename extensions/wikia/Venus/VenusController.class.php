@@ -51,7 +51,8 @@ class VenusController extends WikiaController {
 		$this->setHeadItems();
 		$this->setAssets();
 
-		$this->response->setVal('showCoverImage', $wgRequest->getBool('coverimage', false));
+		//TODO should be removed when cover unit is going to be implemented
+		$this->response->setVal('showCoverUnit', $wgRequest->getBool('coverunit', false));
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 

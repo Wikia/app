@@ -10,7 +10,7 @@ article {
 		margin-bottom: 40px;
 		width: 692px; //only for prototype version
 
-		&.cover-image {
+		&.cover-unit {
 			background-color: #cccccc; //only for prototype version
 			height: 389px; // only for prototype version
 			position: relative;
@@ -174,7 +174,7 @@ article {
 			float: left;
 			width: 824px; // only for prototype version
 
-			&.cover-image {
+			&.cover-unit {
 				height: 466px; // only for prototype version
 			}
 		}
@@ -207,7 +207,7 @@ article {
 			float: none;
 			width: 100%; // only for prototype version
 
-			&.cover-image {
+			&.cover-unit {
 				height: 431px; // only for prototype version
 			}
 		}
