@@ -1,3 +1,4 @@
+@import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/article/images';
 @import 'skins/shared/color';
@@ -88,14 +89,8 @@ article {
 				position: relative;
 				text-transform: uppercase;
 
-				&:before {
-					background-image: url('/extensions/wikia/Venus/images/editpen.svg'); /* base64 */
-					content: ' ';
-					display: inline-block;
-					height: 27px;
-					position: absolute;
-					right: 100%;
-					width: 27px;
+				a:before {
+					@include edit-button(27px);
 				}
 			}
 		}
@@ -108,9 +103,8 @@ article {
 				line-height: 40px;
 				margin-left: 40px;
 
-				&:before {
-					height: 40px;
-					width: 40px;
+				a:before {
+					@include edit-button(40px);
 				}
 			}
 		}
@@ -127,9 +121,8 @@ article {
 				line-height: 36px;
 				margin-left: 36px;
 
-				&:before {
-					height: 36px;
-					width: 36px;
+				a:before {
+					@include edit-button(36px);
 				}
 			}
 		}

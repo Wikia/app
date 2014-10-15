@@ -117,3 +117,13 @@
 		padding-right: $small-content-padding;
 	}
 }
+
+@mixin edit-button($radius) {
+	background-image: url('/extensions/wikia/Venus/images/editpen.svg'); /* base64 */
+	content: ' ';
+	display: inline-block;
+	height: $radius;
+	position: absolute;
+	right: 100%;
+	width: $radius;
+}
