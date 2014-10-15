@@ -26,7 +26,7 @@ class AsyncCacheCLI extends Maintenance {
 		$this->mDescription = "A CLI interface to the AsyncCache class";
 
 		$this->addOption( 'get', 'Get the value of a memc key', false, true, 'g' );
-		$this->addOption( 'purge', 'Get the value of a memc key', false, true, 'p' );
+		$this->addOption( 'purge', 'Purge the value of a memc key', false, true, 'p' );
 
 		$this->addOption( 'ttl', 'TTL for the cached value', false, true, 'l' );
 		$this->addOption( 'neg-ttl', 'TTL for negative responses', false, true, 'n' );
