@@ -1,6 +1,14 @@
 <?php
 class ExactTargetUpdateCityCatMappingTask extends ExactTargetBaseTask {
 
+	/**
+	 * Wrapper for a task updating city_cat_mapping table
+	 * It runs 3 API calls:
+	 * 1) Retrieve - to get existing categories
+	 * 2) Delete - to delete rows one by one (required by ExactTarget)
+	 * 3) Create - to add new city_id->cat_id entries
+	 * @param  array $aCityCatMappingData  An array with city_id and new cats
+	 */
 	public function updateCityCatMappingData( $aCityCatMappingData ) {
 		/* Create a Client object */
 		$oClient = $this->getClient();
@@ -11,27 +19,37 @@ class ExactTargetUpdateCityCatMappingTask extends ExactTargetBaseTask {
 		$this->sendNewCityCatMappingData( $aCityCatMappingData['categories_new'], $oClient );
 	}
 
-	public function retrieveOldCityCatMappingData( $iCityId, $oClient ) {
+	/**
+	 * Retrieve existing rows for a given city_id in city_cat_mapping table
+	 * @param  integer               $iCityId  A wiki's ID
+	 * @param  ExactTargetSoapClient $oClient  An ExactTarget's client object
+	 * @return array                           An array of arrays with city_id and cat_id mapping
+	 */
+	public function retrieveOldCityCatMappingData( $iCityId, ExactTargetSoapClient $oClient ) {
 		try {
 			$aCustomerKeys = ExactTargetUpdatesHelper::getCustomerKeys();
 
+			/* Retrieve data from city_cat_mapping... */
 			$oRetrieveRequest = new ExactTarget_RetrieveRequest();
 			$oRetrieveRequest->ObjectType = "DataExtensionObject[{$aCustomerKeys['city_cat_mapping']}]";
 			$oRetrieveRequest->Properties = [ 'city_id', 'cat_id' ];
 
+			/* ...and filter it by a given city_id. */
 			$oSimpleFilterPart = new ExactTarget_SimpleFilterPart();
 			$oSimpleFilterPart->Value = [ $iCityId ];
 			$oSimpleFilterPart->SimpleOperator = ExactTarget_SimpleOperators::equals;
 			$oSimpleFilterPart->Property = 'city_id';
 
-			$oRetrieveRequest->Filter = new SoapVar( $oSimpleFilterPart, SOAP_ENC_OBJECT, 'SimpleFilterPart', "http://exacttarget.com/wsdl/partnerAPI" );
+			$oRetrieveRequest->Filter = $this->wrapToSoapVar( $oSimpleFilterPart, 'SimpleFilterPart' );
 			$oRetrieveRequest->Options = null;
 
+			/* Wrap it all in a single object */
 			$oRetrieveRequestMsg = new ExactTarget_RetrieveRequestMsg();
 			$oRetrieveRequestMsg->RetrieveRequest = $oRetrieveRequest;
 
 			$oResults = $oClient->Retrieve( $oRetrieveRequestMsg );
 
+			/* Convert results (an object with an array of objects) to a simple array */
 			$aOldCategories = [];
 
 			foreach ( $oResults->Results as $oResult ) {
@@ -50,31 +68,42 @@ class ExactTargetUpdateCityCatMappingTask extends ExactTargetBaseTask {
 		}
 	}
 
-	public function deleteCityCatMappingData( $aOldCategories, $oClient ) {
+	/**
+	 * Sends a requests that deletes all mapping for a given wiki
+	 * @param  array                  $aOldCategories  An array retrieved in the first request
+	 * @param  ExactTargetSoapClient  $oClient  An ExactTarget's client object
+	 */
+	public function deleteCityCatMappingData( $aOldCategories, ExactTargetSoapClient $oClient ) {
 		try {
+			/* Create an array of DataExtension objects and convert them to SOAP vars */
 			$aDE = $this->prepareDataForRemoval( $aOldCategories );
-
 			$aSoapVars = $this->prepareSoapVars( $aDE );
 
+			/* Create a new DeleteRequest object */
 			$oDeleteRequest = new ExactTarget_DeleteRequest();
 			$oDeleteRequest->Objects = $aSoapVars;
 			$oDeleteRequest->Options = new ExactTarget_DeleteOptions();
 
+			/* Send a Delete request */
 			$oClient->Delete( $oDeleteRequest );
 
 			$this->info( $oClient->__getLastResponse() );
-			wfDebug( 'UpdateCatMapping ' . $oClient->__getLastResponse() . "\n\n" );
 		} catch ( SoapFault $e ) {
 			/* Log error */
 			$this->error( __METHOD__ . ' SoapFault ' . $e->getMessage() . ' ErrorCode:  ' . $e->getCode() );
 		}
 	}
 
-	public function sendNewCityCatMappingData( $aNewCategories, $oClient ) {
+	/**
+	 * Sends a request that creates new city_cat_mapping entries
+	 * @param  array                 $aNewCategories  An array of city_id and new cat_ids
+	 * @param  ExactTargetSoapClient $oClient         An ExactTarget's client object
+	 */
+	public function sendNewCityCatMappingData( $aNewCategories, ExactTargetSoapClient $oClient ) {
 		try {
 		/*
-		 * $aDE is an array to store ExactTarget_DataExtensionObject objects.
-		 * $aNewCategories can include one or more rows and we need a separate object for each.
+		 * $aDE is an array to store ExactTarget_DataExtensionObject objects
+		 * $aNewCategories can include one or more rows and we need a separate object for each
 		 */
 		$aDE = [];
 		/* Get Customer Keys specific for production or development */
@@ -94,22 +123,26 @@ class ExactTargetUpdateCityCatMappingTask extends ExactTargetBaseTask {
 			$aDE[] = $oDE;
 		}
 
+		/* Convert the $aDE array to SOAP vars and create a Create request object */
 		$oSoapVars = $this->prepareSoapVars( $aDE );
-
 		$oRequest = $this->wrapCreateRequest( $oSoapVars );
 
-		/* Send API request */
+		/* Send  a Create request */
 		$oClient->Create( $oRequest );
 
 		/* Log response */
 		$this->info( $oClient->__getLastResponse() );
-		wfDebug( 'UpdateCatMapping ' . $oClient->__getLastResponse() . "\n\n" );
 		} catch ( SoapFault $e ) {
 			/* Log error */
 			$this->error( __METHOD__ . ' SoapFault ' . $e->getMessage() . ' ErrorCode:  ' . $e->getCode() );
 		}
 	}
 
+	/**
+	 * Converts array of city_ids and cat_ids to an array of DataExtension objects
+	 * @param  array $aOldCategories  An array of arrays with city_id and cat_id as keys
+	 * @return array                  An array of DataExtension objects
+	 */
 	private function prepareDataForRemoval( $aOldCategories ) {
 		$aDE = [];
 

@@ -30,7 +30,7 @@ class ExactTargetUpdatesHooks {
 	}
 
 	/**
-	 * Runs a method for adding AddUserTask to job queue
+	 * Runs a method adding AddUserTask to job queue
 	 * Function executed on SignupConfirmEmailComplete hook
 	 * @param User $user
 	 * @return bool
@@ -42,7 +42,7 @@ class ExactTargetUpdatesHooks {
 	}
 
 	/**
-	 * Runs a method for updating user email
+	 * Runs a method updating user email
 	 * Function executed on EmailChangeConfirmed hook
 	 * @param User $user
 	 * @return bool
@@ -54,7 +54,7 @@ class ExactTargetUpdatesHooks {
 	}
 
 	/**
-	 * Runs a method for adding UpdateUserTask to job queue
+	 * Runs a method adding UpdateUserTask to job queue
 	 * Function executed on ArticleSaveComplete hook
 	 * @param WikiPage $article
 	 * @param User $user
@@ -67,7 +67,7 @@ class ExactTargetUpdatesHooks {
 	}
 
 	/**
-	 * Runs a method for adding UpdateUserPropertiesTask to job queue
+	 * Runs a method adding UpdateUserPropertiesTask to job queue
 	 * Function executed on UserSaveSettings hook
 	 * @param User $user
 	 * @return bool
@@ -79,7 +79,7 @@ class ExactTargetUpdatesHooks {
 	}
 
 	/**
-	 * Runs a method for adding an AddWikiTask to job queue.
+	 * Runs a method adding an AddWikiTask to job queue.
 	 * Executed on CreateWikiLocalJob-complete hook.
 	 * @param  array $aParams  Contains a wiki's id, url and title.
 	 * @return true
@@ -91,8 +91,8 @@ class ExactTargetUpdatesHooks {
 	}
 
 	/**
-	 * Runs a method for adding an UpdateWikiTask to job queue on change in WikiFactory.
-	 * Executed on WikiFactoryChanged hook.
+	 * Runs a method adding an UpdateWikiTask to job queue on change in WikiFactory
+	 * Executed on WikiFactoryChanged hook
 	 * @param  array $aWfVarParams  Contains a var's name, a wiki's id and a new value.
 	 * @return true
 	 */
@@ -106,12 +106,26 @@ class ExactTargetUpdatesHooks {
 		return true;
 	}
 
+	/**
+	 * Runs a method adding an UpdateWikiTask to job queue
+	 * on change in Hubs tab in WikiFactory.
+	 * Executed on WikiFactoryVerticalSet hook.
+	 * @param  array  $aParams  An array with a relevant city_id
+	 * @return true
+	 */
 	public static function onWikiFactoryVerticalSet( array $aParams ) {
 		$thisInstance = new ExactTargetUpdatesHooks();
 		$thisInstance->addTheUpdateWikiTask( $aParams['city_id'], new ExactTargetUpdateWikiTask() );
 		return true;
 	}
 
+	/**
+	 * Runs a method adding an UpdateCityCatMappingTask to job queue
+	 * on change in Hubs tab in WikiFactory.
+	 * Executed on CityCatMappingUpdated hook.
+	 * @param  array  $aParams  An array with a relevant city_id and an array of new categories
+	 * @return true
+	 */
 	public static function onCityCatMappingUpdated( array $aParams ) {
 		$thisInstance = new ExactTargetUpdatesHooks();
 		$thisInstance->addTheUpdateCityCatMappingTask( $aParams, new ExactTargetUpdateCityCatMappingTask() );

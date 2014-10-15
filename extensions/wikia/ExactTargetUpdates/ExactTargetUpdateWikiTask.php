@@ -2,6 +2,10 @@
 
 class ExactTargetUpdateWikiTask extends ExactTargetBaseTask {
 
+	/**
+	 * Wrapper for a task updating a given wiki's data
+	 * @param  array  $aWikiData  An array with fields of city_list
+	 */
 	public function updateWikiData( $aWikiData ) {
 		/* Create a Client object */
 		$oClient = $this->getClient();
@@ -10,7 +14,12 @@ class ExactTargetUpdateWikiTask extends ExactTargetBaseTask {
 		$this->updateWikiDataExtension( $aWikiData, $oClient );
 	}
 
-	public function updateWikiDataExtension( $aWikiData, $oClient ) {
+	/**
+	 * Send an Update request to a city_list table
+	 * @param  array                 $aWikiData  An array with fields of city_list
+	 * @param  ExactTargetSoapClient $oClient    An ExactTarget's client object
+	 */
+	public function updateWikiDataExtension( $aWikiData, ExactTargetSoapClient $oClient ) {
 		try {
 			/* Create new DataExtension object */
 			$oDE = new ExactTarget_DataExtensionObject();
