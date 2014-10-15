@@ -6,12 +6,19 @@
 article {
 
 	header {
-		background-color: #cccccc; //only for prototype version
 		float: left;
-		height: 389px; // only for prototype version
 		margin-bottom: 40px;
-		position: relative;
 		width: 692px; //only for prototype version
+
+		&.cover-image {
+			background-color: #cccccc; //only for prototype version
+			height: 389px; // only for prototype version
+			position: relative;
+
+			h1 {
+				position: absolute;
+			}
+		}
 
 		h1 {
 			bottom: 0;
@@ -22,7 +29,6 @@ article {
 			padding-bottom: 30px;
 			padding-left: 36px;
 			padding-right: 36px;
-			position: absolute;
 			word-break: break-all;
 		}
 	}
@@ -167,8 +173,11 @@ article {
 
 		header {
 			float: left;
-			height: 466px; // only for prototype version
 			width: 824px; // only for prototype version
+
+			&.cover-image {
+				height: 466px; // only for prototype version
+			}
 		}
 
 		#mw-content-text {
@@ -197,8 +206,11 @@ article {
 
 		header {
 			float: none;
-			height: 431px; // only for prototype version
-			width: 100%;
+			width: 100%; // only for prototype version
+
+			&.cover-image {
+				height: 431px; // only for prototype version
+			}
 		}
 
 		.left-nav {
