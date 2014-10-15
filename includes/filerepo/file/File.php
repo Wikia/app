@@ -245,6 +245,17 @@ abstract class File implements FileInterface {
 		return $this->name;
 	}
 
+	public function getLanguage() {
+		global $wgContLang;
+
+		$code = null;
+		if ( isset( $wgContLang ) ) {
+			$code = $wgContLang->getCode();
+		}
+
+		return $code;
+	}
+
 	/**
 	 * Get the file extension, e.g. "svg"
 	 *
