@@ -79,12 +79,12 @@ class WikiaForeignDBFile extends ForeignDBFile {
 		$wikiId = WikiFactory::DBtoID($wikiDbName);
 		$wikiContLang = WikiFactory::getVarValueByName('wgContLang', $wikiId);
 
-		$lang = 'en';
+		$code = null;
 		if ( $wikiContLang ) {
-			$lang = $wikiContLang->getCode();
+			$code = $wikiContLang->getCode();
 		}
 
-		return $lang;
+		return $code;
 	}
 
 	// Not everything can be transparent, because __call skips already defined methods.
