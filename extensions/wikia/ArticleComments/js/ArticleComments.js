@@ -1,3 +1,5 @@
+/* global wgAfterContentAndJS, wgArticleId, wgPageName, wgScript, wgUserName, MiniEditor, skin */
+
 (function (window, $) {
 	'use strict';
 
@@ -25,17 +27,18 @@ var $window = $(window),
 
 		var $articleComments = $('#article-comments'),
 			$articleCommFbMonit = $('#article-comm-fbMonit'),
-			$fbCommentMessage = $('#fbCommentMessage');
+			$fbCommentMessage = $('#fbCommentMessage'),
+			newComment;
 
 		if (ArticleComments.miniEditorEnabled) {
-			var newcomment = $('#article-comm');
+			newComment = $('#article-comm');
 
-			newcomment.bind('focus', function () {
+			newComment.bind('focus', function () {
 				ArticleComments.editorInit(this);
 			});
 
-			if (newcomment.is(':focus')) {
-				ArticleComments.editorInit(newcomment);
+			if (newComment.is(':focus')) {
+				ArticleComments.editorInit(newComment);
 			}
 		}
 
@@ -360,79 +363,78 @@ var $window = $(window),
 			data.showall = 1;
 		}
 
+		function requestCallback(json) {
+			ArticleComments.bucky.timer.start('postComment.requestCallback');
+			throbber.css('visibility', 'hidden');
+
+			if (ArticleComments.miniEditorEnabled) {
+				source.data('wikiaEditor').fire('editorReset');
+			} else {
+				source.val('');
+			}
+
+			if (!json.error) {
+				var parent,
+					subcomments,
+					parentId = json.parentId,
+					nodes = $(json.text);
+
+				if (parentId) {
+					//second level: reply
+					parent = $('#comm-' + parentId);
+					subcomments = parent.next();
+
+					if (!subcomments.hasClass('sub-comments')){
+						parent.after(subcomments = $('<ul class="sub-comments"></ul>'));
+					}
+
+					subcomments.append(nodes);
+
+					//remove input field and show buttons
+					parent.find('.article-comm-edit-box').hide();
+					parent.find('.buttons').show();
+				} else {
+					//first level: comment
+					nodes.prependTo('#article-comments-ul');
+				}
+
+				//update counter
+				$('#article-comments-counter-header').html($.msg('oasis-comments-header', json.counter));
+
+				if (window.skin === 'oasis') {
+					$('#WikiaPageHeader, #WikiaUserPagesHeader').find('.commentsbubble').html(json.counter);
+
+					if (!parentId) {
+						ArticleComments.mostRecentCount = ArticleComments.mostRecentCount ?
+							ArticleComments.mostRecentCount + 1 :
+							$('#article-comments-ul > li').length;
+
+						$('#article-comments-counter-recent').html(
+							$.msg('oasis-comments-showing-most-recent', ArticleComments.mostRecentCount)
+						);
+					}
+				}
+
+				//readd events
+				ArticleComments.addHover();
+				//force to show 'edit' links for owners
+				ArticleComments.showEditLink();
+				//clear error box
+				$('#article-comm-info').html('');
+			} else {
+				//fill error box
+				$('#article-comm-info').html(json.msg);
+			}
+
+			source.removeAttr('readonly');
+			$(e.target).removeAttr('disabled');
+
+			ArticleComments.processing = false;
+			ArticleComments.bucky.timer.stop('postComment.requestCallback');
+		}
+
 		function makeRequest() {
-			ArticleComments.bucky.timer.start('postComment.makeRequest');
-			$.postJSON(wgScript, data, function (json) {
-				throbber.css('visibility', 'hidden');
-
-				if (ArticleComments.miniEditorEnabled) {
-					source.data('wikiaEditor').fire('editorReset');
-
-				} else {
-					source.val('');
-				}
-
-				if (!json.error) {
-					var parent,
-						subcomments,
-						parentId = json.parentId,
-						nodes = $(json.text);
-
-					if (parentId) {
-						//second level: reply
-						parent = $('#comm-' + parentId);
-						subcomments = parent.next();
-
-						if (!subcomments.hasClass('sub-comments')){
-							parent.after(subcomments = $('<ul class="sub-comments"></ul>'));
-						}
-
-						subcomments.append(nodes);
-
-						//remove input field and show buttons
-						parent.find('.article-comm-edit-box').hide();
-						parent.find('.buttons').show();
-					} else {
-						//first level: comment
-						nodes.prependTo('#article-comments-ul');
-					}
-
-					//update counter
-					$('#article-comments-counter-header').html($.msg('oasis-comments-header', json.counter));
-
-					if (window.skin === 'oasis') {
-						$('#WikiaPageHeader, #WikiaUserPagesHeader').find('.commentsbubble').html(json.counter);
-
-						if (!parentId) {
-							if (!ArticleComments.mostRecentCount) {
-								ArticleComments.mostRecentCount = $('#article-comments-ul > li').length;
-							} else {
-								ArticleComments.mostRecentCount++;
-							}
-
-							$('#article-comments-counter-recent').html(
-								$.msg('oasis-comments-showing-most-recent', ArticleComments.mostRecentCount)
-							);
-						}
-					}
-
-					//readd events
-					ArticleComments.addHover();
-					//force to show 'edit' links for owners
-					ArticleComments.showEditLink();
-					//clear error box
-					$('#article-comm-info').html('');
-				} else {
-					//fill error box
-					$('#article-comm-info').html(json.msg);
-				}
-
-				source.removeAttr('readonly');
-				$(e.target).removeAttr('disabled');
-
-				ArticleComments.processing = false;
-				ArticleComments.bucky.timer.stop('postComment.makeRequest');
-			});
+			$.postJSON(wgScript, data, requestCallback);
 
 			ArticleComments.processing = true;
 		}
@@ -515,7 +517,7 @@ var $window = $(window),
 
 			// Wrap editorActivated with our own function
 			var editorActivated = events.editorActivated;
-			events.editorActivated = function (event, wikiaEditor) {
+			events.editorActivated = function (/* event, wikiaEditor */) {
 				ArticleComments.actionButtons.removeClass('disabled').removeAttr('disabled');
 
 				if ($.isFunction(editorActivated)) {
