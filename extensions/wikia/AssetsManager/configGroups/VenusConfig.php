@@ -79,6 +79,7 @@ $VenusConfig[ 'venus_body_js' ] = [
 
 		'//resources/wikia/modules/browserDetect.js',
 		'#group_imglzy_js',
+		'#group_bucky_js'
 	]
 ];
 
@@ -185,3 +186,14 @@ $VenusConfig['imglzy_js'] = [
 		'//extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
 	]
 ];
+
+/* extension/wikia/Bucky */
+$config['bucky_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => array(
+		'//extensions/wikia/Bucky/vendor/BuckyClient/bucky.js',
+		'//extensions/wikia/Bucky/js/bucky_init.js',
+		'//extensions/wikia/Bucky/js/bucky_metrics.js',
+	)
+);
