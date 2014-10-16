@@ -214,7 +214,7 @@ class MercuryApiController extends WikiaController {
 					$this->getTopContributorsPerArticle( $articleId )
 				),
 			'article' => $articleAsJson,
-			'adsContext' => $this->mercuryApi->getAdsContext( $title, $this->wg, $articleAsJson[ 'categories' ] ),
+			'adsContext' => $this->mercuryApi->getAdsContext( $title ),
 			'basePath' => $this->wg->Server
 		];
 

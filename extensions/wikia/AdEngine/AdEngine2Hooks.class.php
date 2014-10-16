@@ -74,9 +74,20 @@ class AdEngine2Hooks {
 	 * @return bool
 	 */
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
-		foreach ( AdEngine2Service::getTopJsVariables() as $varName => $varValue ) {
-			$vars[$varName] = $varValue;
-		}
+		$wg = F::app()->wg;
+		$title = $wg->Title;
+		$skin = RequestContext::getMain()->getSkin();
+		$skinName = $skin->getSkinName();
+
+		$adContext = ( new AdEngine2ContextService() )->getContext( $title, $skinName );
+
+		$vars['ads'] = ['context' => $adContext];
+
+		// Legacy vars:
+		$vars['adslots2'] = [];                  // Queue for ads registration
+		$vars['adDriverLastDARTCallNoAds'] = []; // Used to hop by DART ads
+		$vars['adDriver2ForcedStatus'] = [];     // 3rd party code (eg. dart collapse slot template) can force AdDriver2 to respect unusual slot status
+
 		return true;
 	}
 
