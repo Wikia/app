@@ -7,7 +7,7 @@
 	MiniEditor.Wall.EditMessageForm = $.createClass(Wall.settings.classBindings.editMessageForm, {
 		oldTitle: {},
 		oldBody: {},
-		bucky: window.Bucky('Wall.EditMessageForm'),
+		bucky: window.Bucky('MiniEditor.Wall.EditMessageForm'),
 
 		editMessage: function (e) {
 			var self, msg, body, wikiaEditor, id, bubble, animation;

@@ -4,8 +4,11 @@
 
 	MiniEditor.Wall = MiniEditor.Wall || {};
 	MiniEditor.Wall.NewMessageForm = $.createClass(Wall.settings.classBindings.newMessageForm, {
+		bucky: window.Bucky('MiniEditor.Wall.NewMessageForm'),
 		initEvents: function () {
 			var self = this;
+
+			this.bucky.timer.start('initEvents');
 
 			if (this.messageBody.is(':focus')) {
 				self.initEditor();
@@ -29,10 +32,13 @@
 			});
 
 			this.messageTitle.blur(this.proxy(this.postNewMessageBlur));
+			this.bucky.timer.stop('initEvents');
 		},
 
 		initEditor: function (event) {
 			var self = this;
+
+			this.bucky.timer.start('initEditor');
 
 			if (!this.messageBody.data('wikiaEditor')) {
 				this.messageBody.unbind('.placeholder');
@@ -57,6 +63,7 @@
 								}
 							});
 						}
+						self.bucky.timer.stop('initEditor');
 					}
 				}
 			}, event);
