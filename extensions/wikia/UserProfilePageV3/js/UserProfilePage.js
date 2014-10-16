@@ -401,6 +401,7 @@ var UserProfilePage = {
 					UserProfilePage.wasDataChanged = false;
 					UserProfilePage.modal.trigger( 'close' );
 					UserProfilePage.bucky.timer.stop('saveUserData');
+					UserProfilePage.bucky.flush();
 					window.location = UserProfilePage.reloadUrl;
 				}
 			}
