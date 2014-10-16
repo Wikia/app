@@ -81,7 +81,7 @@ article {
 	padding: 0 $medium-grid-column-padding;
 
 	h1, h2, h3, h4, h5, h6 {
-		overflow: hidden;
+//		overflow: hidden;
 
 		.editsection {
 			display: inline-block;
@@ -94,7 +94,7 @@ article {
 
 			&:before {
 				background-image: url('/extensions/wikia/Venus/images/editpen.svg'); /* base64 */
-				content: ' ';
+				content: '';
 				display: inline-block;
 				height: 27px;
 				position: absolute;
@@ -120,11 +120,20 @@ article {
 	}
 
 	h2 {
-		border-bottom: 1px solid $color-page-border;
+//		border-bottom: 1px solid $color-page-border;
 		font-size: 27px;
 		margin-bottom: 12px;
 		margin-top: $article-items-spacing;
 		padding-bottom: 6px;
+
+		&::after {
+			background-color: $color-page-border;
+			content: '';
+			display: block;
+			height: 1px;
+			margin-top: 10px; //TODO: check with mockup
+			overflow: hidden;
+		}
 
 		.editsection {
 			line-height: 36px;
@@ -218,7 +227,6 @@ article {
 		header {
 			@include grid-column-width('large', 8, $large-content-padding - $content-border-width);
 			@include proportional-video-height(8 * ($large-grid-column + $large-grid-gutter) - $large-grid-gutter + $large-content-padding);
-			float: left;
 			padding-left: $large-content-padding;
 
 			h1 {
@@ -285,6 +293,7 @@ article {
 @media #{$small-only} {
 	article header {
 		@include proportional-video-height($small-content-width - 2 * $content-border-width);
+		float: none;
 		padding-left: $small-content-padding;
 		width: 100%;
 
@@ -302,7 +311,7 @@ article {
 	}
 
 	.mw-content-text {
-		margin: 0 $small-content-padding - $content-border-width 0 $small-grid-column + $small-grid-gutter + $small-content-padding;
+		margin: 0 $small-content-padding - $content-border-width 0 $small-grid-column + $small-grid-gutter + $small-content-padding - $content-border-width;
 		padding: 0 $small-grid-column-padding;
 
 		p {

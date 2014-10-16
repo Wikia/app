@@ -1,4 +1,5 @@
 @import 'skins/shared/color';
+@import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/mixins';
 
 body {
@@ -23,7 +24,7 @@ a {
 
 .wikia-page {
 	background: $color-page;
-	border: 1px solid $color-page-border;
+	border: $content-border-width solid $color-page-border;
 	padding: $global-navigation-height 0 0;
 
 	& > header {
@@ -33,7 +34,7 @@ a {
 
 .page-width {
 	margin: 0 auto;
-	width: $large-content-width;
+	width: $medium-content-width;
 }
 
 @media #{$small-only} {
@@ -42,9 +43,9 @@ a {
 	}
 }
 
-@media #{$medium-only} {
+@media #{$large-up} {
 	.page-width {
-		width: $medium-content-width;
+		width: $large-content-width;
 	}
 }
 
