@@ -14,7 +14,8 @@ define('ext.wikia.adEngine.provider.taboola', [
 		taboolaSlotname = 'NATIVE_TABOOLA',
 		libraryLoaded = false,
 		readMoreDiv = document.getElementById('RelatedPagesModuleWrapper'),
-		context = adContext.getContext();
+		context = adContext.getContext(),
+		pageType = context.targeting.pageType;
 
 	function canHandleSlot(slot) {
 		log(['canHandleSlot', slot], 'debug', logGroup);
@@ -33,15 +34,18 @@ define('ext.wikia.adEngine.provider.taboola', [
 	}
 
 	function loadTaboola() {
+		var taboolaInit, s;
+
 		if (libraryLoaded) {
 			return;
 		}
-
+		taboolaInit = {};
+		taboolaInit[pageType] = 'auto';
 		readMoreDiv.parentNode.removeChild(readMoreDiv);
 
-		window._taboola = window._taboola || [ {article: 'auto'} ];
+		window._taboola = window._taboola || [ taboolaInit ];
 
-		var s = document.createElement('script');
+		s = document.createElement('script');
 		s.async = true;
 		s.src = 'http://cdn.taboola.com/libtrc/wikia-' + context.targeting.wikiDbName + '/loader.js';
 		document.getElementsByTagName('body')[0].appendChild(s);
@@ -57,7 +61,7 @@ define('ext.wikia.adEngine.provider.taboola', [
 		window._taboola.push({
 			mode: 'thumbnails-a',
 			container: slotname,
-			placement: 'Read More Section',
+			placement: 'Read More Section on ' + pageType,
 			target_type: 'mix'
 		});
 
