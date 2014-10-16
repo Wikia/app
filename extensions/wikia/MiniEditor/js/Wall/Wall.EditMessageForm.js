@@ -7,15 +7,21 @@
 	MiniEditor.Wall.EditMessageForm = $.createClass(Wall.settings.classBindings.editMessageForm, {
 		oldTitle: {},
 		oldBody: {},
+		bucky: window.Bucky('Wall.EditMessageForm'),
 
 		editMessage: function (e) {
-			var self = this,
-				msg = $(e.target).closest('li.message'),
-				body = msg.find('.msg-body').first(),
-				wikiaEditor = body.data('wikiaEditor'),
-				id = msg.attr('data-id'),
-				bubble = msg.find('.speech-bubble-message').first(),
-				animation = {};
+			var self, msg, body, wikiaEditor, id, bubble, animation;
+
+			// profile execution of editMessage function
+			this.bucky.timer.start('editMessage');
+
+			self = this;
+			msg = $(e.target).closest('li.message');
+			body = msg.find('.msg-body').first();
+			wikiaEditor = body.data('wikiaEditor');
+			id = msg.attr('data-id');
+			bubble = msg.find('.speech-bubble-message').first();
+			animation = {};
 
 			e.preventDefault();
 
@@ -45,8 +51,13 @@
 
 			// Initialize the editor after assets are loaded
 			function initEditor() {
-				var mode = MiniEditor.getStartupMode(body),
-					format = WikiaEditor.modeToFormat(mode);
+				var mode, format;
+
+				// profile async editor initialization
+				self.bucky.timer.start('editMessage.initEditor');
+
+				mode = MiniEditor.getStartupMode(body);
+				format = WikiaEditor.modeToFormat(mode);
 
 				// show message title textarea
 				msg.find('.msg-title').first()
@@ -81,8 +92,10 @@
 							}
 						});
 					}
+					self.bucky.timer.stop('editMessage.initEditor');
 				});
 			}
+			this.bucky.timer.start('editMessage');
 		},
 
 		getNewBody: function (msg) {
