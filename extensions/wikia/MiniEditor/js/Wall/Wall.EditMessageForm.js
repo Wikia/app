@@ -95,7 +95,7 @@
 					self.bucky.timer.stop('editMessage.initEditor');
 				});
 			}
-			this.bucky.timer.start('editMessage');
+			this.bucky.timer.stop('editMessage');
 		},
 
 		getNewBody: function (msg) {
