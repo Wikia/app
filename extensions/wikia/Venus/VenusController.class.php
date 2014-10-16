@@ -168,7 +168,7 @@ class VenusController extends WikiaController {
 	}
 
 	public function getGlobalNavigation() {
-		return $this->app->renderView('GlobalNavigation', 'Index');
+		return $this->app->renderView('GlobalNavigation', 'index');
 	}
 
 	private function getNotifications() {
@@ -184,7 +184,7 @@ class VenusController extends WikiaController {
 	}
 
 	private function getGlobalFooter() {
-		return $this->app->renderView('GlobalFooter', 'Index');
+		return $this->app->renderView('GlobalFooter', 'index');
 	}
 
 	public function getCorporateFootet() {
