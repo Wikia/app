@@ -11,10 +11,9 @@ class CrossOriginResourceSharingHeaderHelper {
 	const ALLOW_ORIGIN_HEADER_NAME = 'Access-Control-Allow-Origin';
 	const HEADER_DELIMETER = ',';
 
-	protected $allowOriginValues = null;
+	protected $allowOriginValues = [];
 
 	public function setAllowOrigin( Array $values ) {
-
 		$this->allowOriginValues = $values;
 	}
 
