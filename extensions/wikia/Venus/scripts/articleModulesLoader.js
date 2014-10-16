@@ -1,23 +1,28 @@
 /*global require*/
 require([
-'jquery', 'venus.lightboxLoader', 'scrollableTables', 'wikia.window'], function($, lightboxLoader, scrollableTables, w) {
+	'jquery', 'venus.lightboxLoader', 'scrollableTables', 'wikia.window'
+], function($, lightboxLoader, scrollableTables, win) {
 	'use strict';
+	var doc = win.document;
 
+	/**
+	 * Look for all tables on article and add or remove scrollbar if needed
+	 */
 	function scanTables() {
-		var article = document.getElementById('WikiaArticle'),
-			tables = article.getElementsByClassName('article-table');
+		var innerArticle = doc.getElementById('mw-content-text'),
+			tables = innerArticle.getElementsByClassName('article-table');
 
-		[].forEach.call(tables, scrollableTables.adjustScroll);
+		[].forEach.call(tables, function(table) {
+			scrollableTables.adjustScroll(table, innerArticle.offsetWidth);
+		});
 	}
 
-	$(function() {
-		//initialize lightbox
-		lightboxLoader.init();
-		//scan for tables in article and if table is too wide add scrollbar
-		scanTables();
+	//initialize lightbox
+	lightboxLoader.init();
+	//scan for tables in article and if table is too wide add scrollbar
+	scanTables();
 
-		$(w)
-			.on('resize', $.debounce(50, scanTables))
-			.on('wikiaTabClicked', scanTables);
-	});
+	$(win)
+		.on('resize', $.debounce(50, scanTables))
+		.on('wikiaTabClicked', scanTables);
 });

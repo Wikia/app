@@ -1,11 +1,15 @@
 /* global define */
-define('scrollableTables', ['jquery'], function($) {
+define('scrollableTables', ['wikia.window', 'wikia.dom'], function(win, dom) {
 	'use strict';
 
-	function adjustScroll(table) {
-		var scrollable = closestByClassName(table, 'table-scrollable', 3),
-			articleContent = document.getElementById('mw-content-text'),
-			isWide = table.offsetWidth > articleContent.offsetWidth;
+	/**
+	 * Add or remove scroll from table
+	 * @param {HTMLElement} table - table node.
+	 * @param {Number} articleWidth - width of article
+	 */
+	function adjustScroll(table, articleWidth) {
+		var scrollable = dom.closestByClassName(table, 'table-scrollable', 3),
+			isWide = table.offsetWidth > articleWidth;
 
 		// wrap table if not wrapped and is wide enough
 		if (isWide && !scrollable) {
@@ -13,23 +17,19 @@ define('scrollableTables', ['jquery'], function($) {
 		} else if (!isWide && scrollable) {
 			unwrap(table);
 		}
-
-		if (scrollable) {
-			$(scrollable).floatingScrollbar(isWide);
-		}
 	}
 
+	/**
+	 * Wrap provided element with two table wrappers
+	 * @param {HTMLElement} element - element to be wrapped
+	 */
 	function wrap(element) {
-		var parent, sibling, tableWrapper, tableScrollable;
+		var parent = element.parentNode,
+			sibling = element.nextSibling,
+			tableWrapper = dom.createElementWithClass('div', ['table-scrollable-wrapper', 'table-is-wide']),
+			tableScrollable = dom.createElementWithClass('div', ['table-scrollable']);
 
-		parent = element.parentNode;
-		sibling = element.nextSibling;
-		tableWrapper = document.createElement('div');
-		tableWrapper.className = 'table-scrollable-wrapper table-is-wide';
-		tableScrollable = document.createElement('div');
-		tableScrollable.className = 'table-scrollable';
 		tableWrapper.appendChild(tableScrollable);
-
 		tableScrollable.appendChild(element);
 
 		if (sibling) {
@@ -39,28 +39,19 @@ define('scrollableTables', ['jquery'], function($) {
 		}
 	}
 
+	/**
+	 * Unwrap provided element from two table wrappers
+	 * @param {HTMLElement} element - element to be unwrapped
+	 */
 	function unwrap(element) {
-		var tableWrapper, parent;
+		var tableWrapper = dom.closestByClassName(element, 'table-scrollable-wrapper', 5),
+			parent;
 
-		tableWrapper = closestByClassName(element, 'table-scrollable-wrapper');
 		if (tableWrapper) {
 			parent  = tableWrapper.parentNode;
 			parent.insertBefore(element, tableWrapper);
 			parent.removeChild(tableWrapper);
 		}
-	}
-
-	function closestByClassName(element, targetParentByClass, maxParentsCount) {
-		var nodesUp = 0,
-			maxNodesUp = maxParentsCount || 5;
-		while (element && nodesUp <= maxNodesUp) {
-			if (element.classList.contains(targetParentByClass)) {
-				return element;
-			}
-			element = element.parentNode;
-			nodesUp++;
-		}
-		return undefined;
 	}
 
 	return {
