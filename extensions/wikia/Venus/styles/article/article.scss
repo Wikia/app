@@ -1,12 +1,10 @@
-@import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/Venus/styles/variables';
-// Venus mixins @import is used only for .adUnitTest and .infobox-test and has to be removed when not needed anymore
 @import 'extensions/wikia/Venus/styles/mixins';
-@import 'extensions/wikia/Venus/styles/typography-mixins';
+@import 'extensions/wikia/Venus/styles/typographyMixins';
 @import 'extensions/wikia/Venus/styles/article/images';
 @import 'skins/shared/color';
 
-$placeholder-background-color: #ccc; // only for prototype version
+$placeholder-background-color: $color-left-article-nav; // only for prototype version
 $article-items-spacing: 40px;
 
 article {
@@ -29,7 +27,6 @@ article {
 			@include font-size-xxl;
 			bottom: 0;
 			font-weight: bold;
-			line-height: 36px;
 			margin: 0;
 			padding: 0 $medium-grid-column-padding 30px $medium-content-padding + $medium-grid-column-padding - $content-border-width;
 			word-break: break-all;
@@ -82,7 +79,6 @@ article {
 }
 
 .mw-content-text {
-	line-height: 28px;
 	margin: 0 $medium-content-padding - $content-border-width 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width;
 	padding: 0 $medium-grid-column-padding;
 
@@ -101,16 +97,12 @@ article {
 		}
 	}
 
-	h1 {
+	h1 .editsection {
 		line-height: 40px;
+		margin-left: 40px;
 
-		.editsection {
-			line-height: 40px;
-			margin-left: 40px;
-
-			a:before {
-				@include edit-button(40px);
-			}
+		a:before {
+			@include edit-button(40px);
 		}
 	}
 
@@ -237,7 +229,6 @@ article {
 	}
 
 	.mw-content-text {
-		line-height: 36px;
 		margin: 0 $large-content-padding - $content-border-width 0 $large-grid-column + $large-grid-gutter + $large-content-padding - $content-border-width;
 		padding: 0 $large-grid-column-padding;
 
