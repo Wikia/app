@@ -119,8 +119,8 @@ var UserProfilePage = {
 							var modal = editProfileModal.$element,
 								tab = modal.find( '.tabs a' );
 
-							UserProfilePage.renderAvatarLightbox( modal );
-							UserProfilePage.renderAboutMeLightbox( modal );
+							UserProfilePage.registerAvatarHandlers( modal );
+							UserProfilePage.registerAboutMeHandlers( modal );
 
 							// attach handlers to modal events
 							editProfileModal.bind( 'beforeClose',
@@ -242,7 +242,11 @@ var UserProfilePage = {
 		});
 	},
 
-	renderAvatarLightbox: function( modal ) {
+	/**
+	 * Register handlers related to the Avatar tab of the user edit modal.
+	 * @param modal
+	 */
+	registerAvatarHandlers: function( modal ) {
 		'use strict';
 
 		var $sampleAvatars = modal.find( '.sample-avatars' );
@@ -274,7 +278,11 @@ var UserProfilePage = {
 		avatarImg.show();
 	},
 
-	renderAboutMeLightbox: function( modal ) {
+	/**
+	 * Register handlers related to the About Me tab of the user edit modal.
+	 * @param modal
+	 */
+	registerAboutMeHandlers: function( modal ) {
 		'use strict';
 
 		var $fbUnsyncButton = modal.find( '#facebookUnsync' ),
