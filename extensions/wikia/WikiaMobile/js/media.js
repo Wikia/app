@@ -9,6 +9,7 @@ define('media', [
 	'modal',
 	'throbber',
 	'wikia.querystring',
+	'wikia.history',
 	require.optional( 'popover' ),
 	'track',
 	require.optional( 'share' ),
@@ -24,6 +25,7 @@ function(
 	modal,
 	throbber,
 	querystring,
+	hist,
 	popover,
 	track,
 	share,
@@ -179,14 +181,14 @@ function(
 				// after a short delay so the user will know they are on an article page
 				setTimeout(function () {
 					clickSource = 'share';
-					qs.pushState();
+					hist.pushState();
 					openModal( shrImgIdx );
 				}, 2000 );
 			} else {
 				// file specified in querystring doesn't exist on the page
 				toast.show( msg( 'wikiamobile-shared-file-not-available' ) );
 				if ( !Features.gameguides ) {
-					qs.removeVal( 'file' ).replaceState();
+					hist.replaceState(null, null, qs.removeVal( 'file' ));
 				}
 			}
 		}
@@ -314,7 +316,7 @@ function(
 
 			// update url for sharing
 			if ( !Features.gameguides ) {
-				currQS.setVal( 'file', imgTitle, true )[stateAction]();
+				hist[stateAction](null, null, currQS.setVal( 'file', imgTitle, true ));
 			}
 		} else if ( currentMedia.type == Media.types.IMAGE ){
 			var img = new Image();
@@ -354,7 +356,7 @@ function(
 
 			// update url for sharing
 			if ( !Features.gameguides ) {
-				currQS.setVal( 'file', imgTitle, true )[stateAction]();
+				hist[stateAction](null, null, currQS.setVal( 'file', imgTitle, true ));
 			}
 		} else if ( currentMedia.type ) {//custom
 			var data = {
@@ -373,7 +375,7 @@ function(
 
 			// We're showing an ad or other custom media type.  Don't support sharing.
 			if ( !Features.gameguides ) {
-				currQS.removeVal( 'file' )[stateAction]();
+				hist[stateAction](null, null, qs.removeVal( 'file' ));
 			}
 		}
 
@@ -608,7 +610,7 @@ function(
 
 				// remove file=title from URL
 				if ( !Features.gameguides ) {
-					qs.removeVal( 'file' ).replaceState();
+					hist.replaceState(null, null, qs.removeVal( 'file' ));
 				}
 				// reset tracking clickSource
 				clickSource = 'embed';
