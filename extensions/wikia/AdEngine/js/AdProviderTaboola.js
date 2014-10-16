@@ -61,7 +61,7 @@ define('ext.wikia.adEngine.provider.taboola', [
 		window._taboola.push({
 			mode: 'thumbnails-a',
 			container: slotname,
-			placement: 'Read More Section on ' + pageType,
+			placement: pageType === 'home' ? 'Homepage' : 'Read More Section on ' + pageType,
 			target_type: 'mix'
 		});
 
