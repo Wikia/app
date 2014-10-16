@@ -5,13 +5,13 @@
 	MiniEditor.Wall = MiniEditor.Wall || {};
 	MiniEditor.Wall.Animations = {
 		editorActivated: function (event, wikiaEditor) {
-			var element = wikiaEditor.getEditorElement(),
-				wrapper = wikiaEditor.getEditboxWrapper(),
-				animation = {
-					height: wikiaEditor.config.minHeight
-				},
-				hasContent,
-				textarea;
+			var element, wrapper, animation, hasContent, textarea;
+
+			element = wikiaEditor.getEditorElement();
+			wrapper = wikiaEditor.getEditboxWrapper();
+			animation = {
+				height: wikiaEditor.config.minHeight
+			};
 
 			if (wikiaEditor.ck) {
 				hasContent = wikiaEditor.getContent();
@@ -69,40 +69,43 @@
 			}
 		},
 		editorDeactivated: function (wikiaEditor) {
-			var element = wikiaEditor.getEditorElement(),
-				animation = {
-					height: this.originalHeight
-				};
+			var element, animation;
 
 			// Don't animate or hide buttons if there is content
-			if (!wikiaEditor.getContent()) {
-				this.hideButtons(function () {
-					if (wikiaEditor.ck) {
-						var wrapper = wikiaEditor.getEditboxWrapper();
+			if (wikiaEditor.getContent()) {
+				return;
+			}
 
-						// Transition back to the original textarea
-						wrapper.animate(animation, function () {
-							wrapper.hide();
-							element.show();
-						});
+			element = wikiaEditor.getEditorElement();
+			animation = {
+				height: this.originalHeight
+			};
+
+			this.hideButtons(function () {
+				if (wikiaEditor.ck) {
+					var wrapper = wikiaEditor.getEditboxWrapper();
+
+					// Transition back to the original textarea
+					wrapper.animate(animation, function () {
+						wrapper.hide();
+						element.show();
+					});
+
+				} else {
+
+					// If element isn't a textarea, we are dealing with content
+					// editing. Instead of animating we will need to do a swap.
+					if (!element.is('textarea')) {
+						wikiaEditor.getEditbox().hide();
+						element.show();
 
 					} else {
-
-						// If element isn't a textarea, we are dealing with content
-						// editing. Instead of animating we will need to do a swap.
-						if (!element.is('textarea')) {
-							wikiaEditor.getEditbox().hide();
-							element.show();
-
-						} else {
-							element.animate(animation);
-						}
+						element.animate(animation);
 					}
+				}
 
-					wikiaEditor.fire('editorAfterDeactivated');
-				});
-			}
+				wikiaEditor.fire('editorAfterDeactivated');
+			});
 		}
 	};
-
 })();
