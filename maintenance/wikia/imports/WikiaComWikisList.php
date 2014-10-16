@@ -114,7 +114,7 @@ class WikiaComWikisListImport {
 
 				if( $wikiId > 0 ) {
 					$wikiHeadline = $element[1];
-					$wikiVerticalId = HubService::getComscoreCategory($wikiId)->cat_id;
+					$wikiVerticalId = HubService::getCategoryInfoForCity($wikiId)->cat_id;
 
 					$wikiMainImageUrl = $element[4];
 					$wikiDesc = $element[5];
@@ -187,7 +187,7 @@ class WikiaComWikisListImport {
 				}
 
 				if( $wikiId > 0 ) {
-					$wikiCityVertical = HubService::getComscoreCategory($wikiId);
+					$wikiCityVertical = HubService::getCategoryInfoForCity($wikiId);
 
 					$sliderUploadedImages = (!empty($sliderUploadedImages)) ? json_encode($sliderUploadedImages) : null;
 					$this->addToVisualizationTable(
