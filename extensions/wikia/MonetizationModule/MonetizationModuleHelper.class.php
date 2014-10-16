@@ -17,14 +17,11 @@ class MonetizationModuleHelper extends WikiaModel {
 	const CACHE_TTL_MIN = 3600;
 	const CACHE_TTL_MAX = 7200;
 
-	// TODO: encapsulate in Monetization Client
-	// do not change unless monetization service changes
-	const MONETIZATION_SERVICE_CACHE_PREFIX = 'monetization';
-	const RENDERING_IN_PROCESS = 1;
+	const VAR_NAME_CACHE_VERSION = 'wgMonetizationModuleCacheVersion';
+	const VAR_NAME_API_TIMEOUT = 'wgMonetizationModuleTimeout';
 
 	const API_VERSION = 'v1';
 	const API_DISPLAY = 'display/api/';
-	const VAR_NAME_API_TIMEOUT = 'wgMonetizationModuleTimeout';
 	const IN_CONTENT_KEYWORD = '<h2>';
 
 	const FONT_COLOR_DARK_THEME = '#d5d4d4';
@@ -108,18 +105,11 @@ class MonetizationModuleHelper extends WikiaModel {
 		$log = WikiaLogger::instance();
 		$loggingParams = [ 'method' => __METHOD__, 'params' => $params ];
 
-		// this cache key must match the one set by the MonetizationService
-		// and should not use the wgCachePrefix(), wfSharedMemcKey() or wfMemcKey() methods
-		$cacheKey = self::createCacheKey( $params );
+		$cacheKey = $this->getMemcKey( $params );
 		$log->debug( "MonetizationModule: lookup with cache key: $cacheKey", $loggingParams );
 
 		$json_results = $this->wg->Memc->get( $cacheKey );
-		if ( $json_results == self::RENDERING_IN_PROCESS ) {
-			// TODO: potentially block until rendering finishes, until then return nothing
-			$log->info( "MonetizationModule: memcache hit (rendering in process).", $loggingParams );
-			wfProfileOut( __METHOD__ );
-			return false;
-		} else if ( !empty( $json_results ) ) {
+		if ( !empty( $json_results ) ) {
 			$log->info( "MonetizationModule: memcache hit.", $loggingParams );
 			wfProfileOut( __METHOD__ );
 			return $this->setThemeSettings( $json_results, $cacheKey );
@@ -204,30 +194,29 @@ class MonetizationModuleHelper extends WikiaModel {
 	}
 
 	/**
-	 * Creates the cache key for the given parameters.
-	 * Order matters - site_id:country_code:max_slots
+	 * Get memcache key
 	 * @param array $params
 	 * @return string
 	 */
-	public static function createCacheKey( array $params ) {
-		$cacheKey = self::MONETIZATION_SERVICE_CACHE_PREFIX;
+	public function getMemcKey( $params ) {
+		$geo = empty( $params['geo'] ) ? 'ROW' : $params['geo'];
+		$memcKey = wfMemcKey( 'monetization_module', $params['cache'], $geo, $params['max'] );
+		return $memcKey;
+	}
 
-		if ( !empty( $params['s_id'] ) ) {
-			$cacheKey .= ':' . $params['s_id'];
-		}
-
-		if ( !empty( $params['geo'] ) ) {
-			$cacheKey .= ':' . $params['geo'];
-		} else {
-			// set the default to be rest of world ('ROW')
-			$cacheKey .= ':ROW';
-		}
-
-		if ( isset( $params['max'] ) ) {
-			$cacheKey .= ':' . $params['max'];
-		}
-
-		return $cacheKey;
+	/**
+	 * Get cache version
+	 * @return string
+	 */
+	public function getCacheVersion() {
+		$defaultVersion = '';
+		$version = WikiFactory::getVarValueByName(
+			self::VAR_NAME_CACHE_VERSION,
+			WikiFactory::COMMUNITY_CENTRAL,
+			false,
+			$defaultVersion
+		);
+		return $version;
 	}
 
 	/**

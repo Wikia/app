@@ -4,8 +4,8 @@ define(
 		'jquery',
 		'wikia.window',
 		'wikia.querystring',
-		'wikia.intMap.config',
-		'wikia.intMap.utils'
+		'wikia.maps.config',
+		'wikia.maps.utils'
 	],
 	function ($, w, qs, config, utils) {
 		'use strict';

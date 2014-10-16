@@ -41,13 +41,30 @@ $wgSpecialPageGroups[ 'Maps' ] = 'wikia';
 
 // hooks
 $wgHooks[ 'ParserFirstCallInit' ][] = 'WikiaMapsParserTagController::parserTagInit';
-$wgHooks[ 'OutputPageBeforeHTML' ][] = 'WikiaMapsHooks::onOutputPageBeforeHTML';
 $wgHooks[ 'OasisSkinAssetGroups' ][] = 'WikiaMapsHooks::onOasisSkinAssetGroups';
 $wgHooks[ 'SkinAfterBottomScripts' ][] = 'WikiaMapsHooks::onSkinAfterBottomScripts';
 $wgHooks[ 'BeforePageDisplay' ][] = 'WikiaMapsHooks::onBeforePageDisplay';
 
 // mobile
 $wgHooks['WikiaMobileAssetsPackages'][] = 'WikiaMapsHooks::onWikiaMobileAssetsPackages';
+
+/**
+ * Register resource loader packega for parser tag
+ */
+$wgResourceModules['ext.wikia.WikiaMaps.ParserTag'] = [
+	'skinStyles' => [
+		'oasis' => [
+			'css/WikiaMapsParserTag.scss'
+		]
+	],
+	'skinScripts' => [
+		'oasis' => [
+			'js/WikiaMapsParserTag.js'
+		]
+	],
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/WikiaMaps'
+];
 
 // i18n mapping
 $wgExtensionMessagesFiles[ 'WikiaMaps' ] = $dir . 'WikiaMaps.i18n.php';
@@ -80,18 +97,4 @@ JSMessages::registerPackage( 'WikiaMapsEmbedMapCode', [
 $wgLogTypes[] = 'maps';
 $wgLogNames['maps'] = 'wikia-interactive-maps-log-name';
 $wgLogHeaders['maps'] = 'wikia-interactive-maps-log-description';
-
-$logActionsHandler = 'WikiaMapsLogger::formatLogEntry';
-
-$wgLogActionsHandlers[ 'maps/create_map' ] = $logActionsHandler;
-$wgLogActionsHandlers[ 'maps/update_map' ] = $logActionsHandler;
-$wgLogActionsHandlers[ 'maps/delete_map' ] = $logActionsHandler;
-$wgLogActionsHandlers[ 'maps/undelete_map' ] = $logActionsHandler;
-
-$wgLogActionsHandlers[ 'maps/create_pin_type' ] = $logActionsHandler;
-$wgLogActionsHandlers[ 'maps/update_pin_type' ] = $logActionsHandler;
-$wgLogActionsHandlers[ 'maps/delete_pin_type' ] = $logActionsHandler;
-
-$wgLogActionsHandlers[ 'maps/create_pin' ] = $logActionsHandler;
-$wgLogActionsHandlers[ 'maps/update_pin' ] = $logActionsHandler;
-$wgLogActionsHandlers[ 'maps/delete_pin' ] = $logActionsHandler;
+$wgLogActionsHandlers[ 'maps/*' ] = 'LogFormatter';

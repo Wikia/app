@@ -13,6 +13,7 @@ class VideosModule extends WikiaModel {
 	const LIMIT_VIDEOS = 20;
 	const LIMIT_CATEGORY_VIDEOS = 40;
 	const CACHE_TTL = 43200; // 12 hours
+	const NEGATIVE_CACHE_TTL = 300; // 5 minutes
 	const CACHE_VERSION = 3;
 
 	const STAFF_PICK_PREFIX = 'Staff_Pick_';
@@ -127,7 +128,12 @@ class VideosModule extends WikiaModel {
 				$this->addToList( $videos, $video, self::SOURCE_LOCAL );
 			}
 
-			$this->wg->Memc->set( $memcKey, $videos, self::CACHE_TTL );
+			$ttl = self::CACHE_TTL;
+			if ( empty( $videos ) ) {
+				$ttl = self::NEGATIVE_CACHE_TTL;
+				$log->info( __METHOD__ . ' zero videos', $loggingParams );
+			}
+			$this->wg->Memc->set( $memcKey, $videos, $ttl );
 		} else {
 			$log->info( __METHOD__.' memc HIT', $loggingParams );
 		}
@@ -173,7 +179,12 @@ class VideosModule extends WikiaModel {
 				$this->addToList( $videos, $video, self::SOURCE_WIKI_TOPICS );
 			}
 
-			$this->wg->Memc->set( $memcKey, $videos, self::CACHE_TTL );
+			$ttl = self::CACHE_TTL;
+			if ( empty( $videos ) ) {
+				$ttl = self::NEGATIVE_CACHE_TTL;
+				$log->info( __METHOD__ . ' zero videos', $loggingParams );
+			}
+			$this->wg->Memc->set( $memcKey, $videos, $ttl );
 		} else {
 			$log->info( __METHOD__.' memc HIT', $loggingParams );
 		}
@@ -257,7 +268,12 @@ class VideosModule extends WikiaModel {
 				$this->addToList( $videos, $video, $source );
 			}
 
-			$this->wg->Memc->set( $memcKey, $videos, self::CACHE_TTL );
+			$ttl = self::CACHE_TTL;
+			if ( empty( $videos ) ) {
+				$ttl = self::NEGATIVE_CACHE_TTL;
+				$log->info( __METHOD__ . ' zero videos', $loggingParams );
+			}
+			$this->wg->Memc->set( $memcKey, $videos, $ttl );
 		} else {
 			$log->info( __METHOD__.' memc HIT', $loggingParams );
 		}
