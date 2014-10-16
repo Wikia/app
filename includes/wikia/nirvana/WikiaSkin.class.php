@@ -192,19 +192,17 @@ abstract class WikiaSkin extends SkinTemplate {
 		global $wgAllInOne;
 		$am = AssetsManager::getInstance();
 
-		$cssLinks = '';
-		$combinedCnt = 0;
+		$cssLinks = [];
 
 		foreach ( $this->getStyles() as $s ) {
 			if ( !empty($s['url']) ) {
 				if ($wgAllInOne && $am->isSassUrl($s['url'])) {
 					$sassFiles[] = $s['url'];
-					$combinedCnt++;
 				} else {
-					$cssLinks .= $s['tag'];
+					$cssLinks[] = $s['tag'];
 				}
 			} else {
-				$cssLinks .= $s['tag'];
+				$cssLinks[] = $s['tag'];
 			}
 		}
 
@@ -214,10 +212,10 @@ abstract class WikiaSkin extends SkinTemplate {
 		// get a single URL to fetch all the required SASS files
 		$sassFilesUrl = $am->getSassesUrl($sassFiles);
 
-		wfDebug( sprintf( "%s: combined %d SASS files\n", __METHOD__, $combinedCnt ) );
+		wfDebug( sprintf( "%s: combined %d SASS files\n", __METHOD__, count($sassFiles) ) );
 
 		wfProfileOut(__METHOD__);
-		return Html::linkedStyle($sassFilesUrl ) . $cssLinks;
+		return Html::linkedStyle($sassFilesUrl ) . implode('', $cssLinks);
 	}
 
 	/*
