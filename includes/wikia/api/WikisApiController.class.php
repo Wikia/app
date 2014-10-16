@@ -34,12 +34,12 @@ class WikisApiController extends WikiaApiController {
 	/**
 	 * @var CrossOriginResourceSharingHeaderHelper
 	 */
-	private $cors;
+	protected $cors;
 
 	public function __construct(){
 		parent::__construct();
-		$cors = new CrossOriginResourceSharingHeaderHelper();
-		$cors->readConfig();
+		$this->cors = new CrossOriginResourceSharingHeaderHelper();
+		$this->cors->readConfig();
 	}
 
 	/**
