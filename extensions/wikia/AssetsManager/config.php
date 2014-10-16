@@ -1969,14 +1969,6 @@ $config['wikia_maps_special_page_scss_wikiamobile'] = [
 	]
 ];
 
-$config['wikia_maps_parser_tag_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis'],
-	'assets' => [
-		'//extensions/wikia/WikiaMaps/js/WikiaMapsParserTag.js',
-	]
-];
-
 $config['wikia_maps_contribution_button_create_map_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis'],
@@ -2049,6 +2041,7 @@ $config['media_gallery_js'] = [
 		'//extensions/wikia/MediaGallery/scripts/views/media.js',
 		'//extensions/wikia/MediaGallery/scripts/views/gallery.js',
 		'//extensions/wikia/MediaGallery/scripts/controllers/lightbox.js',
+		'//extensions/wikia/MediaGallery/scripts/controllers/galleries.js',
 		'//extensions/wikia/MediaGallery/scripts/controllers/index.js',
 	]
 ];

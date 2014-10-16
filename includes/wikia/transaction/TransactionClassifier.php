@@ -35,7 +35,7 @@ class TransactionClassifier {
 	);
 	protected static $FILTER_NIRVANA_CONTROLLERS = array(
 		'Rail',
-		'RelatedPagesApi',
+		//'RelatedPagesApi', moved to api/v1
 		'VideosModule',
 		'ArticleComments',
 		'WallNotificationsController',
@@ -129,6 +129,9 @@ class TransactionClassifier {
 			// nirvana call - wikia.php
 			case Transaction::ENTRY_POINT_NIRVANA:
 				$this->addByList( Transaction::PARAM_CONTROLLER, self::$FILTER_NIRVANA_CONTROLLERS );
+				break;
+			case Transaction::ENTRY_POINT_API_V1:
+				$this->add( Transaction::PARAM_CONTROLLER );
 				break;
 			// ajax call - action=ajax
 			case Transaction::ENTRY_POINT_AJAX:

@@ -8,15 +8,8 @@ class WikiaMapsHooks {
 	 *
 	 * @return bool
 	 */
-	public static function onOasisSkinAssetGroups( &$assetsArray ) {
-		$mapsAssets = [ 'wikia_maps_contribution_button_create_map_js' ];
-
-		if ( !self::isSpecialMapsPage() ) {
-			array_unshift( $mapsAssets, 'wikia_maps_parser_tag_js' );
-		}
-
-		$assetsArray = array_merge( $assetsArray, $mapsAssets );
-
+	public static function onOasisSkinAssetGroups( Array &$assetsArray ) {
+		$assetsArray[] = 'wikia_maps_contribution_button_create_map_js';
 		return true;
 	}
 
@@ -35,23 +28,6 @@ class WikiaMapsHooks {
 			foreach ( $scripts as $script ) {
 				$text .= Html::linkedScript( $script );
 			}
-		}
-		return true;
-	}
-
-	/**
-	 * @brief Adds the CSS asset
-	 *
-	 * @param OutputPage $out
-	 * @param string $text article HTML
-	 *
-	 * @return bool: true because it is a hook
-	 */
-	public static function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
-		global $wgEnableWikiaInteractiveMaps;
-
-		if ( !empty( $wgEnableWikiaInteractiveMaps ) && $out->isArticle() ) {
-			F::app()->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/WikiaMaps/css/WikiaMapsParserTag.scss' ) );
 		}
 		return true;
 	}
