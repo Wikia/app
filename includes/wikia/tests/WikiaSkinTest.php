@@ -15,11 +15,6 @@ class DummySkin extends \WikiaSkin {
  */
 class WikiaSkinTest extends \WikiaBaseTest {
 
-	public function setUp() {
-		parent::setUp();
-		$this->mockGlobalVariable('wgStyleVersion', 123);
-	}
-
 	private function mockOutputPage(Array $styles) {
 		$links = '';
 		foreach ($styles as $style) {
@@ -49,14 +44,14 @@ class WikiaSkinTest extends \WikiaBaseTest {
 		$this->mockOutputPage($cssFiles);
 
 		$skin = new DummySkin();
-		$combinaedStyles = $skin->getStylesWithCombinedSASS($sassFiles);
+		$combinedStyles = $skin->getStylesWithCombinedSASS($sassFiles);
 
-		$this->assertEquals(3, substr_count($combinaedStyles, '<link rel="stylesheet"'), 'There should be three CSS/SASS requests made');
-		$this->assertEquals(1, substr_count($combinaedStyles, '/__am/123/sasses/'), 'Concatenated SASS files should be requested with a single request');
-		$this->assertEquals(2, substr_count($combinaedStyles, '<link rel="stylesheet" href="/ext/'), 'CSS files should still be loaded separately');
+		$this->assertEquals(3, substr_count($combinedStyles, '<link rel="stylesheet"'), 'There should be three CSS/SASS requests made - ' . $combinedStyles);
+		$this->assertEquals(1, substr_count($combinedStyles, '/sasses/'), 'Concatenated SASS files should be requested with a single request - ' . $combinedStyles);
+		$this->assertEquals(2, substr_count($combinedStyles, '<link rel="stylesheet" href="/ext/'), 'CSS files should still be loaded separately - ' . $combinedStyles);
 
 		foreach(array_merge($cssFiles, $sassFiles) as $style) {
-			$this->assertContains($style, $combinaedStyles, 'Each CSS/SASS should be requested');
+			$this->assertContains($style, $combinedStyles, 'Each CSS/SASS should be requested - ' . $combinedStyles);
 		}
 	}
 
