@@ -35,7 +35,7 @@ class TransactionClassifier {
 	);
 	protected static $FILTER_NIRVANA_CONTROLLERS = array(
 		'Rail',
-		'RelatedPagesApi',
+		//'RelatedPagesApi', moved to api/v1
 		'VideosModule',
 		'ArticleComments',
 		'WallNotificationsController',
