@@ -198,14 +198,15 @@ $(document).ready(function() {
 <ul>
 <?php if( $isUsernameGloballyBlocked ) { ?>
 	<li><?= Linker::link(
-    GlobalTitle::newFromText( 'Phalanx', NS_SPECIAL, WikiFactory::COMMUNITY_CENTRAL ),
-    	wfMessage( 'lookupuser-username-blocked-globally' )->escaped(),
-    		[
-    			'wpBlockText' => $username,
-    			]	
-    			) ?></li>
+		GlobalTitle::newFromText( 'Phalanx', NS_SPECIAL, WikiFactory::COMMUNITY_CENTRAL ),
+		wfMessage( 'lookupuser-username-blocked-globally' )->parse(),
+		[],
+		[
+			'wpBlockText' => $username,
+		]
+	) ?></li>
 <?php } else { ?>
-	<li><?= wfMessage( 'lookupuser-username-not-blocked-globally' )->escaped() ?></li>
+	<li><?= wfMessage( 'lookupuser-username-not-blocked-globally' )->parse() ?></li>
 <?php }?>
 </ul>
 
