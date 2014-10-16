@@ -3,6 +3,16 @@
  * AdEngine II Hooks
  */
 class AdEngine2Hooks {
+	const ASSET_GROUP_CORE = 'oasis_shared_core_js';
+	const ASSET_GROUP_ADENGINE = 'adengine2_js';
+	const ASSET_GROUP_ADENGINE_RUBICON_RTP = 'adengine2_rubicon_rtp_js';
+	const ASSET_GROUP_ADENGINE_TRACKING = 'adengine2_tracking_js';
+	const ASSET_GROUP_ADENGINE_LATE = 'adengine2_late_js';
+	const ASSET_GROUP_SPOTLIGHTS = 'adengine2_spotlights_js';
+	const ASSET_GROUP_LIFTIUM = 'liftium_ads_js';
+	const ASSET_GROUP_LIFTIUM_EXTRA = 'liftium_ads_extra_js';
+	const ASSET_GROUP_TOP_INCONTENT_JS = 'adengine2_top_in_content_boxad_js';
+
 	/**
 	 * Handle URL parameters and set proper global variables early enough
 	 *
@@ -81,7 +91,7 @@ class AdEngine2Hooks {
 
 		global $wgAdDriverUseBottomLeaderboard, $wgAdDriverUseTopInContentBoxad;
 
-		$coreGroupIndex = array_search( AdEngine2Service::ASSET_GROUP_CORE, $jsAssets );
+		$coreGroupIndex = array_search( self::ASSET_GROUP_CORE, $jsAssets );
 		if ( $coreGroupIndex === false ) {
 			// Do nothing. oasis_shared_core_js must be present for ads to work
 			return true;
@@ -89,21 +99,24 @@ class AdEngine2Hooks {
 
 		if ( AdEngine2Service::areAdsInHead() ) {
 			if ( AdEngine2Service::shouldLoadLateQueue() ) {
-				array_splice( $jsAssets, $coreGroupIndex + 1, 0, AdEngine2Service::ASSET_GROUP_ADENGINE_LATE );
+				array_splice( $jsAssets, $coreGroupIndex + 1, 0, self::ASSET_GROUP_ADENGINE_LATE );
+				array_splice( $jsAssets, $coreGroupIndex + 2, 0, self::ASSET_GROUP_SPOTLIGHTS );
 			}
 			// The ASSET_GROUP_ADENGINE_LATE package was added to the blocking group
 		} else {
-			array_splice( $jsAssets, $coreGroupIndex + 1, 0, AdEngine2Service::ASSET_GROUP_ADENGINE );
+			array_splice( $jsAssets, $coreGroupIndex + 1, 0, self::ASSET_GROUP_ADENGINE );
 			if ( $wgAdDriverUseTopInContentBoxad ) {
-				array_splice( $jsAssets, $coreGroupIndex + 2, 0, AdEngine2Service::ASSET_GROUP_TOP_INCONTENT_JS );
+				array_splice( $jsAssets, $coreGroupIndex + 2, 0, self::ASSET_GROUP_TOP_INCONTENT_JS );
 			}
 			if ( AdEngine2Service::shouldLoadLateQueue() ) {
-				array_splice( $jsAssets, $coreGroupIndex + 2, 0, AdEngine2Service::ASSET_GROUP_ADENGINE_LATE );
+				array_splice( $jsAssets, $coreGroupIndex + 2, 0, self::ASSET_GROUP_ADENGINE_LATE );
+				array_splice( $jsAssets, $coreGroupIndex + 3, 0, self::ASSET_GROUP_SPOTLIGHTS );
 			}
 		}
 
 		if ( AdEngine2Service::shouldLoadLiftium() ) {
-			$jsAssets[] = AdEngine2Service::ASSET_GROUP_LIFTIUM;
+			$jsAssets[] = self::ASSET_GROUP_LIFTIUM;
+			$jsAssets[] = self::ASSET_GROUP_LIFTIUM_EXTRA;
 		}
 
 		if ( $wgAdDriverUseBottomLeaderboard === true ) {
@@ -127,19 +140,19 @@ class AdEngine2Hooks {
 		global $wgAdDriverUseTopInContentBoxad;
 
 		// Tracking should be available very early, so we can track how lookup calls (Amazon, Rubicon) perform
-		$jsAssets[] = AdEngine2Service::ASSET_GROUP_ADENGINE_TRACKING;
+		$jsAssets[] = self::ASSET_GROUP_ADENGINE_TRACKING;
 
 		if ( AdEngine2Service::areAdsInHead() ) {
 			// Add ad asset to JavaScripts loaded on top (in <head>)
-			$jsAssets[] = AdEngine2Service::ASSET_GROUP_ADENGINE;
+			$jsAssets[] = self::ASSET_GROUP_ADENGINE;
 
 			if ( $wgAdDriverUseTopInContentBoxad === true ) {
-				array_unshift( $jsAssets, AdEngine2Service::ASSET_GROUP_TOP_INCONTENT_JS );
+				array_unshift( $jsAssets, self::ASSET_GROUP_TOP_INCONTENT_JS );
 			}
 		}
 
 		if ( AnalyticsProviderRubiconRTP::isEnabled() ) {
-			$jsAssets[] = AdEngine2Service::ASSET_GROUP_ADENGINE_RUBICON_RTP;
+			$jsAssets[] = self::ASSET_GROUP_ADENGINE_RUBICON_RTP;
 		}
 
 		return true;
