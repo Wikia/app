@@ -4,31 +4,24 @@
 
 $color-table-overflow-shadow: mix( $color-page-shadow, $color-page, 50% );
 
-// RT #70017: wikitable class for skinning normal tables
-table.article-table {
+.article-table {
 	background: darken($color-page, 2%);
 	border-collapse: collapse;
-	border: 1px $color-page-border solid;
+	border: 0px none $color-page-border;;
 	clear: both;
 	color: $color-text;
 	margin: 1em 1em 1em 0;
 
 	th, td {
-		border: 1px darken($color-page, 35%) solid;
-		padding: 0.2em;
+		border-bottom: 1px $color-page-border solid;
+		padding: 6px 12px;
 	}
-	td {
-		b, strong {
-			font-weight: bold;
-		}
-		i, em {
-			font-style: italic;
-		}
-	}
-	> tr > th,  > * > tr > th {
+
+	th {
 		background: darken($color-page, 5%);
-		text-align: center;
+		text-align: left;
 	}
+
 	caption {
 		font-weight: bold;
 	}
@@ -42,9 +35,8 @@ table.article-table {
 
 		&:before {
 			@include box-shadow( -15px, 0, 20px, $color-table-overflow-shadow, true, -15px );
-			content: "";
+			content: '';
 			height: 100%;
-			pointer-events: none;
 			position: absolute;
 			right: 0;
 			width: 20px;
@@ -58,38 +50,15 @@ table.article-table {
 			margin-top: 0 !important;
 		}
 
-		// This second element is needed because of stacking order rules.
-		// Otherwise, tables with background colors will overlap the box
-		// shadow applied above.
 		.table-scrollable {
 			overflow: auto;
 		}
 	}
 }
 
-.article-table,
-.WikiaTable {
-	background: darken($color-page, 2%);
-	border-collapse: collapse;
-	border: 0px none $color-page-border;
-	margin: 1em 1em 1em 0;
-
-	th, td {
-		border-bottom: 1px $color-page-border solid;
-		padding: 6px 12px;
-	}
-	th {
-		background: darken($color-page, 5%);
-		text-align: left;
-	}
-	caption {
-		font-weight: bold;
-	}
-}
-
-// Add color theming support for MediaWiki jQuery TableSorter plugin (overwritting jquery.tablesorter.css styles)
 table.jquery-tablesorter.sortable th.headerSort .chevron {
 	border-top-color: $color-text;
+
 	&:first-child {
 		border-color: transparent transparent $color-text;
 	}
