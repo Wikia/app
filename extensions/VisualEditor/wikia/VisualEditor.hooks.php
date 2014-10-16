@@ -15,6 +15,11 @@ class VisualEditorWikiaHooks {
 			$preferences['visualeditor-betatempdisable']
 		);
 
+		// For option tracking whether a user viewed the editor preference transition dialog
+		$preferences['showVisualEditorTransitionDialog'] = array(
+			'type' => 'hidden'
+		);
+
 		return true;
 	}
 
@@ -30,6 +35,7 @@ class VisualEditorWikiaHooks {
 				've/test/dm/ve.dm.wikiaExample.js',
 				've/test/dm/ve.dm.WikiaConverter.test.js',
 				've/test/dm/ve.dm.WikiaCart.test.js',
+				've/test/dm/ve.dm.WikiaTemplateModel.test.js',
 
 				// ce
 				've/test/ce/ve.ce.wikiaExample.js',
@@ -49,9 +55,24 @@ class VisualEditorWikiaHooks {
 	 * Adds extra variables to the page config.
 	 */
 	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
-		global $wgMaxUploadSize, $wgEnableVisualEditorUI;
+		global $wgMaxUploadSize, $wgEnableVisualEditorUI, $wgEnableWikiaInteractiveMaps, $wgIntMapConfig, $wgUser;
 		$vars[ 'wgMaxUploadSize' ] = $wgMaxUploadSize;
 		$vars[ 'wgEnableVisualEditorUI' ] = !empty( $wgEnableVisualEditorUI );
+		$vars[ 'wgEnableWikiaInteractiveMaps' ] = !empty( $wgEnableWikiaInteractiveMaps );
+		if ( !empty( $wgIntMapConfig ) ) {
+			$vars[ 'interactiveMapsApiURL' ] =
+				$wgIntMapConfig[ 'protocol' ]
+				. '://'
+				. $wgIntMapConfig[ 'hostname' ]
+				. ':'
+				. $wgIntMapConfig[ 'port' ]
+				. '/api/'
+				. $wgIntMapConfig[ 'version' ];
+		}
+		// Note: even if set as integer, option value is retrieved as string
+		if ( $wgUser->getOption( 'showVisualEditorTransitionDialog' ) === '1' ) {
+			$vars['showVisualEditorTransitionDialog'] = 1;
+		}
 		return true;
 	}
 

@@ -603,7 +603,7 @@ class WikiaApp {
 	 * @param string $controllerName The name of the controller, without the 'Controller' or 'Model' suffix
 	 * @param string $methodName The name of the Controller method to call
 	 * @param array $params An array with the parameters to pass to the specified method
-	 * @param boolean whether it's an internal (PHP to PHP) or external request
+	 * @param boolean $internal whether it's an internal (PHP to PHP) or external request
 	 *
 	 * @return WikiaResponse a response object with the data produced by the method call
 	 */

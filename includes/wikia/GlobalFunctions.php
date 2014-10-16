@@ -114,6 +114,7 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 
 	// Override image server location for Wikia development environment
 	// This setting should be images.developerName.wikia-dev.com or perhaps "localhost"
+	// FIXME: This needs to be removed. It should be encapsulated in the URL generation.
 	if (!empty($wg->DevBoxImageServerOverride)) {
 		$url = preg_replace("/\/\/(.*?)wikia-dev\.com\/(.*)/", "//{$wg->DevBoxImageServerOverride}/$2", $url);
 	}
@@ -261,64 +262,6 @@ function wfShortenText( $text, $chars = 25, $useContentLanguage = false ){
 	//:... or ?... or ,... etc. etc.
 	$text = preg_replace( '/[[:punct:]]+$/', '', $text ) . $ellipsis[$key][0];
 	return $text;
-}
-
-function wfGetBreadCrumb( $cityId = 0 ) {
-	global $wgMemc, $wgSitename, $wgServer, $wgCats, $wgExternalSharedDB, $wgCityId;
-
-	$method = __METHOD__;
-
-	if( !empty( $wgCats ) ) {
-		return $wgCats;
-	}
-	if ( empty ($wgExternalSharedDB)) {
-		return $wgCats;
-	}
-
-	wfProfileIn( $method );
-	$memckey = 'cat_structure';
-	if ($cityId) $memckey[] = $cityId;
-	$wgCats = $wgMemc->get( wfMemcKey( $memckey ) );
-	if( empty( $wgCats ) ) {
-		if( $cityId == 0 ) {
-			if( $wgCityId == 0 ) {
-				wfProfileOut( $method );
-				return array();
-			} else {
-				$cityId = $wgCityId;
-			}
-		}
-
-		wfProfileIn( $method . "-fromdb" );
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-		$catId = $dbr->selectField(
-				"city_cat_mapping",
-				"cat_id",
-				array( "city_id" => $cityId ) );
-		$wgCats = array();
-		while( !empty( $catId ) ) {
-			$res = $dbr->select(
-				array( "city_cat_structure", "city_cats" ),
-				array( "cat_name", "cat_url", "cat_parent_id" ),
-				array( "city_cat_structure.cat_id=city_cats.cat_id", "city_cat_structure.cat_id={$catId}" )
-			);
-			if( $row = $dbr->fetchObject( $res ) ) {
-				$wgCats[] = array( "name" => $row->cat_name, "url" => $row->cat_url, "id" => intval( $catId ), "parentId" => intval( $row->cat_parent_id ) );
-				$catId = $row->cat_parent_id;
-			}
-		}
-		wfProfileOut( $method . "-fromdb" );
-
-		$wgCats = array_reverse( $wgCats );
-
-		$wgMemc->set( wfMemcKey( 'cat_structure' ), $wgCats, 3600 );
-	}
-	array_unshift( $wgCats, array('name' => 'Wikia', 'url' => 'http://www.wikia.com/wiki/Wikia', 'id' => 0, 'parentId' => 0 ) );
-	$lastId = intval( $wgCats[count($wgCats)-1]['id'] );
-	$wgCats[] = array( 'name' => $wgSitename, 'url' => $wgServer, 'id' => 0, 'parentId' => $lastId );
-
-	wfProfileOut( $method );
-	return $wgCats;
 }
 
 /**
@@ -498,7 +441,8 @@ function parseItem($line) {
 			if($title) {
 				if ($title->getNamespace() == NS_SPECIAL) {
 					$dbkey = $title->getDBkey();
-					$specialCanonicalName = array_shift(SpecialPageFactory::resolveAlias($dbkey));
+					$pageData = SpecialPageFactory::resolveAlias( $dbkey );
+					$specialCanonicalName = array_shift( $pageData );
 					if (!$specialCanonicalName) $specialCanonicalName = $dbkey;
 				}
 				$title = $title->fixSpecialName();
@@ -1777,9 +1721,27 @@ function wfGetCallerClassMethod( $ignoreClasses ) {
 			continue;
 		}
 
+		// skip closures
+		// e.g. "FilePageController:{closure}"
+		if ($entry['function'] === '{closure}') {
+			continue;
+		}
+
 		$method = $entry['class'] . ':' . $entry['function'];
 		break;
 	}
 
 	return $method;
+}
+
+/**
+ * Make an array whether you've got a string or array
+ * @param string|array $value
+ * @return array
+ */
+function wfReturnArray( $value ) {
+	if ( !is_array( $value ) ) {
+		$value = [ $value ];
+	}
+	return $value;
 }

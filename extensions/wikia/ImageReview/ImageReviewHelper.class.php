@@ -1,7 +1,11 @@
 <?php
 
+use \Wikia\Logger\WikiaLogger;
+
 /**
  * ImageReview Helper
+ *
+ * @author (contributing) Adam Karmiński <adamk@wikia-inc.com>
  */
 class ImageReviewHelper extends ImageReviewHelperBase {
 
@@ -12,6 +16,11 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 	 * we fetch a few icons from DB, we can skip them
 	 */
 	const LIMIT_IMAGES_FROM_DB = 24;
+
+	/**
+	 * Define a size of a thumbnail
+	 */
+	const IMAGE_REVIEW_THUMBNAIL_SIZE = 250;
 
 	static $sortOptions = array(
 		'latest first' => 0,
@@ -109,14 +118,10 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		}
 
 		if ( !empty( $deletionList ) ) {
-			$task = new ImageReviewTask();
-			$task->createTask(
-				array(
-					'page_list' => $deletionList,
-				),
-				TASK_QUEUED,
-				BatchTask::PRIORITY_HIGH
-			);
+			$task = new \Wikia\Tasks\Tasks\ImageReviewTask();
+			$task->call('delete', $deletionList);
+			$task->prioritize();
+			$task->queue();
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -254,15 +259,15 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		// get images
 		$db = $this->getDatawareDB( DB_MASTER );
 		$result = $db->query('
-			SELECT pages.page_title_lower, image_review.wiki_id, image_review.page_id, image_review.state, image_review.flags, image_review.priority
+			SELECT pages.page_title_lower, image_review.wiki_id, image_review.page_id, image_review.state, image_review.flags, image_review.priority, image_review.last_edited
 			FROM (
-				SELECT image_review.wiki_id, image_review.page_id, image_review.state, image_review.flags, image_review.priority
+				SELECT image_review.wiki_id, image_review.page_id, image_review.state, image_review.flags, image_review.priority, image_review.last_edited
 				FROM `image_review`
 				WHERE state = ' . $state . ' AND top_200 = false
 				ORDER BY ' . $this->getOrder($order) . '
 				LIMIT ' . self::LIMIT_IMAGES_FROM_DB . '
 			) as image_review
-			LEFT JOIN pages ON (image_review.wiki_id=pages.page_wikia_id) AND (image_review.page_id=pages.page_id)'
+			LEFT JOIN pages ON (image_review.wiki_id=pages.page_wikia_id) AND (image_review.page_id=pages.page_id) AND (pages.page_is_redirect=0)'
 		);
 
 		$rows = array();
@@ -309,53 +314,63 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		$db->commit();
 
 		$imageList = $invalidImages = $unusedImages = array();
-		foreach( $rows as $row) {
+		foreach ( $rows as $row ) {
 			$record = "(wiki_id = {$row->wiki_id} and page_id = {$row->page_id})";
 
-			if (count($imageList) < self::LIMIT_IMAGES) {
-				$img = ImagesService::getImageSrc( $row->wiki_id, $row->page_id );
-
-				$extension = pathinfo( strtolower( $img['page'] ), PATHINFO_EXTENSION ); // this needs to use the page index since src for SVG ends in .svg.png :/
-
-				if ( empty( $img['src'] ) && $state != ImageReviewStatuses::STATE_QUESTIONABLE && $state != ImageReviewStatuses::STATE_REJECTED ) {
-					$invalidImages[] = $record;
-				} elseif ( 'ico' == $extension ) {
-					$iconsWhere[] = $record;
-				} else {
-					$isThumb = true;
-
-					if ( empty( $img['src'] ) ) {
-						// if we don't have a thumb by this opint, we still need to display something, fall back to placeholder
-						$globalTitle = GlobalTitle::newFromId( $row->page_id, $row->wiki_id );
-						if ( is_object( $globalTitle ) ) {
-							$img['page'] = $globalTitle->getFullUrl();
-							// @TODO this should be taken from the code instead of being hardcoded
-							$img['src'] = 'http://images.wikia.com/central/images/8/8c/Wikia_image_placeholder.png';
-						} else {
-							// this should never happen
-							$invalidImages[] = $record;
-							continue;
-						}
-					}
-
-					if  ( in_array( $extension, array( 'gif', 'svg' ) ) ) {
-						$img = ImagesService::getImageOriginalUrl( $row->wiki_id, $row->page_id );
-						$isThumb = false;
-					}
-
-					$wikiRow = WikiFactory::getWikiByID( $row->wiki_id );
-
-					$imageList[] = array(
-						'wikiId' => $row->wiki_id,
-						'pageId' => $row->page_id,
-						'state' => $row->state,
-						'src' => $img['src'],
-						'url' => $img['page'],
-						'priority' => $row->priority,
-						'flags' => $row->flags,
-						'isthumb' => $isThumb,
-						'wiki_url' => isset( $wikiRow->city_url ) ? $wikiRow->city_url : '',
+			if ( count( $imageList ) < self::LIMIT_IMAGES ) {
+				$oImagePage = GlobalTitle::newFromId( $row->page_id, $row->wiki_id );
+				if ( $oImagePage instanceof GlobalTitle ) {
+					$oImageGlobalFile = new GlobalFile( $oImagePage );
+					$aImageInfo = array(
+						'src' => $oImageGlobalFile->getThumbUrl( self::IMAGE_REVIEW_THUMBNAIL_SIZE . 'px-' . $oImageGlobalFile->getName() ),
+						'page' => $oImagePage->getFullUrl(),
+						'extension' => pathinfo( strtolower( $aImageInfo['page'] ), PATHINFO_EXTENSION ), // this needs to use the page index since src for SVG ends in .svg.png :/
 					);
+					$bImageExists = $oImageGlobalFile->exists();
+
+					if ( !$bImageExists && $state != ImageReviewStatuses::STATE_INVALID_IMAGE ) {
+						$invalidImages[] = $record;
+						continue;
+					} elseif ( 'ico' == $aImageInfo['extension'] ) {
+						$iconsWhere[] = $record;
+						continue;
+					} else {
+						$isThumb = true;
+
+						if  ( in_array( $aImageInfo['extension'], array( 'gif', 'svg' ) ) ) {
+							$aImageInfo = ImagesService::getImageOriginalUrl( $row->wiki_id, $row->page_id );
+							$isThumb = false;
+						}
+
+						$wikiRow = WikiFactory::getWikiByID( $row->wiki_id );
+
+						$imageList[] = array(
+							'wikiId' => $row->wiki_id,
+							'pageId' => $row->page_id,
+							'state' => $row->state,
+							'src' => $aImageInfo['src'],
+							'url' => $aImageInfo['page'],
+							'priority' => $row->priority,
+							'flags' => $row->flags,
+							'isthumb' => $isThumb,
+							'wiki_url' => isset( $wikiRow->city_url ) ? $wikiRow->city_url : '',
+						);
+					}
+				} else {
+					/**
+					 * CE-1068
+					 * Log page_id and wiki_id for images for which GlobalTitle::newFromId returns null.
+					 */
+					WikiaLogger::instance()->error( "ImageReview : Null GlobalTitle",
+						[
+							'method' => __METHOD__,
+							'pageId' => $row->page_id,
+							'wikiId' => $row->wiki_id,
+							'lastEdited' => $row->last_edited,
+							'exception' => new Exception()
+						]
+					);
+					continue;
 				}
 			} else {
 				$unusedImages[] = $record;
@@ -363,45 +378,45 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		}
 
 		$commit = false;
-		if ( count($invalidImages) > 0 ) {
+		if ( count( $invalidImages ) > 0 ) {
 			$db->update(
 				'image_review',
 				array(
-					'state' => ImageReviewStatuses::STATE_QUESTIONABLE // changed from STATE_INVALID_IMAGE
+					'state' => ImageReviewStatuses::STATE_INVALID_IMAGE
 				),
-				array( implode(' OR ', $invalidImages) ),
+				array( implode( ' OR ', $invalidImages ) ),
 				__METHOD__
 			);
 			$commit = true;
 		}
 
-		if ( count($iconsWhere) > 0 ) {
+		if ( count( $iconsWhere ) > 0 ) {
 			$db->update(
 					'image_review',
-					array( 'state' => ImageReviewStatuses::STATE_ICO_IMAGE),
-					array( implode(' OR ', $iconsWhere) ),
+					array( 'state' => ImageReviewStatuses::STATE_ICO_IMAGE ),
+					array( implode( ' OR ', $iconsWhere ) ),
 					__METHOD__
 				   );
 			$commit = true;
 		}
 
-		if ( count($unusedImages) > 0 ) {
+		if ( count( $unusedImages ) > 0 ) {
 			$db->update(
 				'image_review',
 				array(
 					'reviewer_id = null',
 					'state' => $state
 				),
-				array( implode(' OR ', $unusedImages) ),
+				array( implode( ' OR ', $unusedImages ) ),
 				__METHOD__
 			);
 			$commit = true;
-			error_log("ImageReview : returning " . count($unusedImages) . " back to the queue");
+			error_log( "ImageReview : returning " . count($unusedImages) . " back to the queue" );
 		}
 
 		if ( $commit ) $db->commit();
 
-		error_log("ImageReview : fetched new " . count($imageList) . " images");
+		error_log( "ImageReview : fetched new " . count( $imageList ) . " images" );
 
 		wfProfileOut( __METHOD__ );
 
@@ -473,7 +488,8 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		$statesToFetch = array(
 			ImageReviewStatuses::STATE_QUESTIONABLE,
 			ImageReviewStatuses::STATE_REJECTED,
-			ImageReviewStatuses::STATE_UNREVIEWED
+			ImageReviewStatuses::STATE_UNREVIEWED,
+			ImageReviewStatuses::STATE_INVALID_IMAGE,
 		);
 		$where[] = 'state in (' . $db->makeList( $statesToFetch ) . ')';
 
@@ -497,6 +513,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			'unreviewed' => 0,
 			'questionable' => 0,
 			'rejected' => 0,
+			'invalid' => 0,
 		);
 		while( $row = $db->fetchObject($result) ) {
 			$total[$row->state] = $row->total;
@@ -510,6 +527,9 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		}
 		if ( array_key_exists( ImageReviewStatuses::STATE_REJECTED, $total ) ) {
 			$total['rejected'] = $this->wg->Lang->formatNum( $total[ImageReviewStatuses::STATE_REJECTED]);
+		}
+		if ( array_key_exists( ImageReviewStatuses::STATE_INVALID_IMAGE, $total ) ) {
+			$total['invalid'] = $this->wg->Lang->formatNum( $total[ImageReviewStatuses::STATE_INVALID_IMAGE]);
 		}
 		$this->wg->memc->set( $key, $total, 3600 /* 1h */ );
 

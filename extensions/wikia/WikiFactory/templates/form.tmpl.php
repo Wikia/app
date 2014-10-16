@@ -91,6 +91,9 @@ border: none;
     z-index: 9000;
 }
 
+#wf-category fieldset { border: 1px dotted lightgray; background: #f9f9f9; padding: 0.4em; }
+#wf-category label { display: inline-block; width: 75px; }
+
 .wf-variable-form .perror {color: #fe0000; font-weight: bold; }
 .wf-variable-form .success {color: darkgreen; font-weight: bold; }
 .wf-variable-form textarea { width: 90%; height: 8em; }
@@ -235,7 +238,9 @@ $Factory.Domain.listEvents = function(domain, key) {
 
 $Factory.Domain.add = function ( e ) {
     $Factory.Busy(1);
-    $Factory.Domain.CRUD("add", $( "#wk-domain-add" ).val(), "" );
+    var reason = $( "#wk-domain-reason" ).val();
+    var params = "&reason=" + encodeURIComponent(reason);
+    $Factory.Domain.CRUD("add", $( "#wk-domain-add" ).val(), params );
     return false;
 };
 
@@ -250,13 +255,20 @@ $Factory.Domain.change = function ( e, data ) {
     	.attr("size", 20)
     	.attr("maxlength", 255);
 
+    var reason = $("<input/>")
+		.attr('value', '')
+		.attr('type', 'text')
+		.attr('name', 'wk-change-reason')
+		.attr('size', 20)
+		.attr('id', 'wk-change-reason');
 
     var change = $("<input/>")
     	.attr('value', "Change")
     	.attr('type', "button")
     	.click(jQuery.proxy(function() {
             var newdomain = $( "#wk-change-input" ).val();
-            var params = "&newdomain="+newdomain;
+	    var reason = $( "#wk-change-reason" ).val();
+            var params = "&newdomain="+newdomain+"&reason="+encodeURIComponent(reason);
             $Factory.Domain.CRUD("change", this.domain, params);
 			return false;
 		}, this));
@@ -269,9 +281,12 @@ $Factory.Domain.change = function ( e, data ) {
 			return false;
     	});
 
+
     $("<span>New domain name: <span/>")
     	.attr("class","prompt")
 		.append(input)
+		.append('&nbsp;Reason:&nbsp;')
+		.append(reason)
 		.append(change)
 		.append(cancel)
 		.appendTo("#"+this.element);
@@ -287,11 +302,21 @@ $Factory.Domain.confirm = function(question,element,callback) {
 			}
     );
 
+    var reason = $("<input/>")
+		.attr('value', '')
+		.attr('type', 'text')
+		.attr('name', 'reason')
+		.attr('size', 20)
+		.attr('id', 'wk-remove-setmain-reason');
+
+
     var yes = $("<a>[Yes]</a>").click(callback);
 
     $("<span><span/>")
 		.html(question)
 		.attr("class","prompt")
+		.append('&nbsp;Reason:&nbsp;')
+		.append(reason)
 		.append(yes)
 		.append(cancel)
 		.appendTo("#"+element);
@@ -303,7 +328,9 @@ $Factory.Domain.remove = function ( e, data ) {
 		this.element,
 		jQuery.proxy(
 			function(e) {
-			    $Factory.Domain.CRUD("remove", this.domain, "");
+				var reason = $( "#wk-remove-setmain-reason" ).val();
+				var params = "&reason=" + encodeURIComponent(reason);
+				$Factory.Domain.CRUD("remove", this.domain, params);
 				return false;
 		}, this)
 	);
@@ -316,7 +343,9 @@ $Factory.Domain.setmain = function ( e, data ) {
 			this.element,
 			jQuery.proxy(
 				function(e) {
-				    $Factory.Domain.CRUD("setmain", this.domain, "");
+					var reason = $( "#wk-remove-setmain-reason" ).val();
+					var params = "&reason=" + encodeURIComponent(reason);
+					$Factory.Domain.CRUD("setmain", this.domain, params);
 					return false;
 			}, this)
 	);

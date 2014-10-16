@@ -31,7 +31,7 @@ ve.ui.MWLanguagesPage = function VeUiMWLanguagesPage( name, config ) {
 	// Initialization
 	this.languagesFieldset.$element.append(
 		this.$( '<span>' )
-			.text( ve.msg( 'visualeditor-dialog-meta-languages-readonlynote' ) )
+			.text( ve.msg( 'wikia-visualeditor-dialog-meta-languages-readonlynote' ) )
 	);
 	this.$element.append( this.languagesFieldset.$element );
 
@@ -85,7 +85,7 @@ ve.ui.MWLanguagesPage.prototype.onLoadLanguageData = function ( languages ) {
 			// site codes don't always represent official language codes
 			// using real language code instead of a dummy ('redirect' in ULS' terminology)
 			languages[i].safelang = $.uls.data.isRedirect( languages[i].lang ) || languages[i].lang;
-			languages[i].dir = $.uls.data.getDir( languages[i].safelang );
+			languages[i].dir = ve.init.platform.getLanguageDirection( languages[i].safelang );
 		}
 		$languagesTable
 			.append( this.$( '<tr>' )
@@ -163,10 +163,10 @@ ve.ui.MWLanguagesPage.prototype.getLocalLanguageItems = function () {
 ve.ui.MWLanguagesPage.prototype.getAllLanguageItems = function () {
 	var deferred = $.Deferred();
 	// TODO: Detect paging token if results exceed limit
-	ve.init.mw.Target.static.apiRequest( {
+	ve.init.target.constructor.static.apiRequest( {
 		'action': 'visualeditor',
 		'paction': 'getlanglinks',
-		'page': mw.config.get( 'wgTitle' )
+		'page': mw.config.get( 'wgPageName' )
 	} )
 		.done( ve.bind( this.onAllLanguageItemsSuccess, this, deferred ) )
 		.fail( ve.bind( this.onAllLanguageItemsError, this, deferred ) );

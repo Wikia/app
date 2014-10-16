@@ -2,6 +2,7 @@
 
 use Wikia\Tasks\Queues\ParsoidPurgeQueue;
 use Wikia\Tasks\Queues\ParsoidPurgePriorityQueue;
+use Wikia\Tasks\Tasks\ParsoidCacheUpdateTask;
 
 /**
  * Hooks for events that should trigger Parsoid cache updates.
@@ -42,30 +43,6 @@ class ParsoidHooks {
 	}
 
 	private static function updateTitle( Title $title, $action ) {
-		if (TaskRunner::isModern('ParsoidCacheUpdateJob')) {
-			self::updateTitleModern($title);
-			return;
-		}
-
-		if ( $title->getNamespace() == NS_FILE ) {
-			$job = new ParsoidCacheUpdateJob( $title, array(
-				'type' => 'OnDependencyChange',
-				'table' => 'imagelinks'
-			) );
-			//$job->insert();
-		} else {
-			$job = new ParsoidCacheUpdateJob( $title, array( 'type' => 'OnEdit' ) );
-			$job->insert();
-
-			$job = new ParsoidCacheUpdateJob( $title, array(
-				'type' => 'OnDependencyChange',
-				'table' => 'templatelinks'
-			) );
-			//$job->insert();
-		}
-	}
-
-	private static function updateTitleModern(Title $title) {
 		global $wgCityId;
 
 		if ( $title->getNamespace() == NS_FILE ) {

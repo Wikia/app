@@ -12,6 +12,7 @@ class SEOTweaksGlobalHooksHelperTest extends WikiaBaseTest {
 
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.16133 ms
 	 * Test if the thumbnail gets generated for article
 	 */
@@ -69,6 +70,7 @@ class SEOTweaksGlobalHooksHelperTest extends WikiaBaseTest {
 
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.14801 ms
 	 * Test if the thumbnail gets generated for article from file namespace
 	 */
@@ -120,6 +122,7 @@ class SEOTweaksGlobalHooksHelperTest extends WikiaBaseTest {
 
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.10808 ms
 	 * Test if we don't try to generate thumbnail for user pages (bugid 98881)
 	 */
@@ -156,6 +159,7 @@ class SEOTweaksGlobalHooksHelperTest extends WikiaBaseTest {
 	}
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.0735 ms
 	 * As tests above cover all the generation cases, we right now use the cached value to check the
 	 * behaviour in remaining scenarios

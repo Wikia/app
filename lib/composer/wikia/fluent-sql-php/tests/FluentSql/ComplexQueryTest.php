@@ -90,4 +90,21 @@ class ComplexQueryTest extends FluentSqlTestBase {
 
 		$this->assertEquals($expected, $actual);
 	}
+
+	public function test3() {
+		$expected = "
+			SELECT name, address
+			FROM people
+				INNER JOIN places USING (some_column)
+			WHERE name = ?
+		";
+
+		$actual = (new SQL)
+			->SELECT('name', 'address')
+			->FROM('people')
+				->JOIN('places')->USING('some_column')
+			->WHERE('name')->EQUAL_TO(5);
+
+		$this->assertEquals($expected, $actual);
+	}
 }

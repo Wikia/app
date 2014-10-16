@@ -33,14 +33,14 @@ ve.dm.TextStyleAnnotation.static.toDataElement = function ( domElements ) {
 	var nodeName = domElements[0].nodeName.toLowerCase(),
 		types = {
 			'b': 'bold',
+			'strong': 'bold',
 			'i': 'italic',
+			'em': 'italic',
 			'u': 'underline',
 			's': 'strike',
 			'small': 'small',
 			'big': 'big',
 			'span': 'span',
-			'strong': 'strong',
-			'em': 'emphasize',
 			'sup': 'superscript',
 			'sub': 'subscript',
 			'code': 'code',
@@ -69,8 +69,6 @@ ve.dm.TextStyleAnnotation.static.toDomElements = function ( dataElement, doc ) {
 			'small': 'small',
 			'big': 'big',
 			'span': 'span',
-			'strong': 'strong',
-			'emphasize': 'em',
 			'superscript': 'sup',
 			'subscript': 'sub',
 			'code': 'code'
@@ -109,7 +107,7 @@ ve.dm.TextStyleBoldAnnotation = function VeDmTextStyleBoldAnnotation( element ) 
 };
 OO.inheritClass( ve.dm.TextStyleBoldAnnotation, ve.dm.TextStyleAnnotation );
 ve.dm.TextStyleBoldAnnotation.static.name = 'textStyle/bold';
-ve.dm.TextStyleBoldAnnotation.static.matchTagNames = ['b'];
+ve.dm.TextStyleBoldAnnotation.static.matchTagNames = ['b', 'strong'];
 ve.dm.modelRegistry.register( ve.dm.TextStyleBoldAnnotation );
 
 /**
@@ -125,7 +123,7 @@ ve.dm.TextStyleItalicAnnotation = function VeDmTextStyleItalicAnnotation( elemen
 };
 OO.inheritClass( ve.dm.TextStyleItalicAnnotation, ve.dm.TextStyleAnnotation );
 ve.dm.TextStyleItalicAnnotation.static.name = 'textStyle/italic';
-ve.dm.TextStyleItalicAnnotation.static.matchTagNames = ['i'];
+ve.dm.TextStyleItalicAnnotation.static.matchTagNames = ['i', 'em'];
 ve.dm.modelRegistry.register( ve.dm.TextStyleItalicAnnotation );
 
 /**
@@ -207,38 +205,6 @@ OO.inheritClass( ve.dm.TextStyleSpanAnnotation, ve.dm.TextStyleAnnotation );
 ve.dm.TextStyleSpanAnnotation.static.name = 'textStyle/span';
 ve.dm.TextStyleSpanAnnotation.static.matchTagNames = ['span'];
 ve.dm.modelRegistry.register( ve.dm.TextStyleSpanAnnotation );
-
-/**
- * DataModel strong annotation.
- *
- * @class
- * @extends ve.dm.TextStyleAnnotation
- * @constructor
- * @param {Object} element
- */
-ve.dm.TextStyleStrongAnnotation = function VeDmTextStyleStrongAnnotation( element ) {
-	ve.dm.TextStyleAnnotation.call( this, element );
-};
-OO.inheritClass( ve.dm.TextStyleStrongAnnotation, ve.dm.TextStyleAnnotation );
-ve.dm.TextStyleStrongAnnotation.static.name = 'textStyle/strong';
-ve.dm.TextStyleStrongAnnotation.static.matchTagNames = ['strong'];
-ve.dm.modelRegistry.register( ve.dm.TextStyleStrongAnnotation );
-
-/**
- * DataModel emphasis annotation.
- *
- * @class
- * @extends ve.dm.TextStyleAnnotation
- * @constructor
- * @param {Object} element
- */
-ve.dm.TextStyleEmphasizeAnnotation = function VeDmTextStyleEmphasizeAnnotation( element ) {
-	ve.dm.TextStyleAnnotation.call( this, element );
-};
-OO.inheritClass( ve.dm.TextStyleEmphasizeAnnotation, ve.dm.TextStyleAnnotation );
-ve.dm.TextStyleEmphasizeAnnotation.static.name = 'textStyle/emphasize';
-ve.dm.TextStyleEmphasizeAnnotation.static.matchTagNames = ['em'];
-ve.dm.modelRegistry.register( ve.dm.TextStyleEmphasizeAnnotation );
 
 /**
  * DataModel super script annotation.

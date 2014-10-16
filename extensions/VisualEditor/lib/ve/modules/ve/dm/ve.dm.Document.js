@@ -241,7 +241,7 @@ ve.dm.Document.prototype.buildNodeTree = function () {
 				// Branch or leaf node opening
 				// Create a childless node
 				node = ve.dm.nodeFactory.create(
-					this.data.getType( i ), [], this.data.getData( i )
+					this.data.getType( i ), this.data.getData( i )
 				);
 				node.setDocument( doc );
 				// Put the childless node on the current inner stack
@@ -707,8 +707,8 @@ ve.dm.Document.prototype.rebuildNodes = function ( parent, index, numNodes, offs
  * @method
  * @param {Array} data Snippet of linear model data to insert
  * @param {number} offset Offset in the linear model where the caller wants to insert data
- * @returns {Object} A (possibly modified) copy of data, a (possibly modified) offset
- * and a number of elements to remove
+ * @returns {Object} A (possibly modified) copy of data, a (possibly modified) offset,
+ * and a number of elements to remove and the position of the original data in the new data
  */
 ve.dm.Document.prototype.fixupInsertion = function ( data, offset ) {
 	var
@@ -729,6 +729,10 @@ ve.dm.Document.prototype.fixupInsertion = function ( data, offset ) {
 		// not opened in data (i.e. were already in the document) are pushed onto this stack
 		// and popped off when balanced out by an opening in data
 		closingStack = [],
+
+		// Track the position of the orignal data in the fixed up data for range adjustments
+		insertedDataOffset = 0,
+		insertedDataLength = data.length,
 
 		// Pointer to this document for private methods
 		doc = this,
@@ -965,9 +969,19 @@ ve.dm.Document.prototype.fixupInsertion = function ( data, offset ) {
 			for ( j = 0; j < closings.length; j++ ) {
 				// writeElement() would update openingStack/closingStack, but we've already done
 				// that for closings
+				if ( i === 0 ) {
+					insertedDataOffset++;
+				} else {
+					insertedDataLength++;
+				}
 				newData.push( closings[j] );
 			}
 			for ( j = 0; j < openings.length; j++ ) {
+				if ( i === 0 ) {
+					insertedDataOffset++;
+				} else {
+					insertedDataLength++;
+				}
 				writeElement( openings[j], i );
 			}
 			writeElement( data[i], i );
@@ -1018,9 +1032,11 @@ ve.dm.Document.prototype.fixupInsertion = function ( data, offset ) {
 	}
 
 	return {
-		offset: offset,
-		data: newData,
-		remove: remove
+		'offset': offset,
+		'data': newData,
+		'remove': remove,
+		'insertedDataOffset': insertedDataOffset,
+		'insertedDataLength': insertedDataLength
 	};
 };
 

@@ -146,10 +146,10 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'forum-activity-module-started' => '$1 started a discussion $2',
 
 	/* Contribution/RC */
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> on the <a href="$3">$4 board</a>',
+	'forum-contributions-line' => '[[$1|$2]] on the [[$3|$4 board]]',
 
-	'forum-recentchanges-new-message' => 'on the <a href="$1">$2 Board</a>',
-	'forum-recentchanges-edit' => '(edited message)',
+	'forum-recentchanges-new-message' => 'on the [[$1|$2 Board]]',
+	'forum-recentchanges-edit' => 'edited message',
 	'forum-recentchanges-removed-thread' => 'removed thread "[[$1|$2]]" from the [[$3|$4 Board]]',
 	'forum-recentchanges-removed-reply' => 'removed reply from "[[$1|$2]]" from the [[$3|$4 Board]]',
 	'forum-recentchanges-restored-thread' => 'restored thread "[[$1|$2]]" to the [[$3|$4 Board]]',
@@ -158,7 +158,7 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'forum-recentchanges-deleted-reply' => 'deleted reply from "[[$1|$2]]" from the [[$3|$4 Board]]',
 	'forum-recentchanges-deleted-reply-title' => 'A post',
 	'forum-recentchanges-namespace-selector-message-wall' => 'Forum Board',
-	'forum-recentchanges-thread-group' => '$1 on the <a href="$2">$3 Board</a>',
+	'forum-recentchanges-thread-group' => '$1 on the [[$2|$3 Board]]',
 	'forum-recentchanges-history-link' => 'board history',
 	'forum-recentchanges-thread-history-link' => 'thread history',
 	'forum-recentchanges-closed-thread' => 'closed thread "[[$1|$2]]" from [[$3|$4]]',
@@ -358,13 +358,9 @@ Parameters:
 	'forum-activity-module-started' => 'Displays user activity in the Forum Activity module. Parameters:
 * $1 is the username
 * $2 is a translated time statement such as "20 seconds ago" or "20 hours ago" or "20 days ago"',
-	'forum-contributions-line' => "Contributions item. Parameters:
+	'forum-contributions-line' => 'Contributions item. Parameters:
 * $2 is the thread title
-* $4 is the board title
-* $5 is the timestamp
-* $6 is the diff link if applicable
-* $7 is the history link
-* $8 is N if it's a new thread",
+* $4 is the board title',
 	'forum-recentchanges-new-message' => 'The text added after the article link on recent changes entries. Parameters:
 * $2 is the board title',
 	'forum-recentchanges-edit' => 'Default edit summary text on recent changes',
@@ -396,8 +392,8 @@ Parameters:
 {{Identical|Post}}',
 	'forum-recentchanges-namespace-selector-message-wall' => 'Item in namespace dropdown on recent changes',
 	'forum-recentchanges-thread-group' => 'Grouped recent changes item. Parameters:
-* $1 is the thread title
-* $2 is link to the board on which the thread is posted
+* $1 is the thread title link
+* $2 is page name of the board on which the thread is posted
 * $3 is title of the board on which the thread is posted',
 	'forum-recentchanges-history-link' => 'Link to board history for items about removed and deleted threads on recent changes.
 {{Identical|Board history}}',
@@ -457,7 +453,6 @@ Parameters:
 	'forum-related-discussion-new-post-tooltip' => 'Text of the button that appears in the related forums module at the bottom of article pages. Parameters:
 * $1 is the title of the article',
 	'forum-related-discussion-total-replies' => 'Label showing total number of replies in a discussion.  $1 is number of replies',
-
 	'forum-related-discussion-see-more' => 'See More link to topic page',
 	'forum-confirmation-board-deleted' => 'Board delete confirmation message. $1 is board name',
 );
@@ -583,9 +578,9 @@ ___________________________________________<br />
 	'forum-related-module-heading' => 'مواضيع ذات صلة',
 	'forum-activity-module-posted' => '$1 رد على $2',
 	'forum-activity-module-started' => 'بدأ $1 نقاشًا $2',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> على <a href="$3">جدار $4</a>',
-	'forum-recentchanges-new-message' => 'على <a href="$1">$2 لوحة</a>',
-	'forum-recentchanges-edit' => '(تم تعديل الرسالة)',
+	'forum-contributions-line' => '[[$1|$2]] على [[$3|جدار $4]]',
+	'forum-recentchanges-new-message' => 'على [[$1|$2 لوحة]]',
+	'forum-recentchanges-edit' => 'تم تعديل الرسالة',
 	'forum-recentchanges-removed-thread' => 'قام بحذف النقاش "[[$1|$2]]"  من [[$3|جدار $4]]',
 	'forum-recentchanges-removed-reply' => 'حذف الرد من  "[[$1|$2]]" من [[$3|جدار $4]]',
 	'forum-recentchanges-restored-thread' => 'استعاد النقاش "[[$1|$2]]" إلى [[$3|جدار $4]]',
@@ -594,7 +589,7 @@ ___________________________________________<br />
 	'forum-recentchanges-deleted-reply' => 'حذف الرد من  "[[$1|$2]]" من [[$3|جدار $4]]',
 	'forum-recentchanges-deleted-reply-title' => 'رسالة',
 	'forum-recentchanges-namespace-selector-message-wall' => 'لوحة المنتدى',
-	'forum-recentchanges-thread-group' => '$1 على <a href="$2">لوحة $3</a>',
+	'forum-recentchanges-thread-group' => '$1 على [[$2|لوحة $3]]',
 	'forum-recentchanges-history-link' => 'تاريخ اللوحة',
 	'forum-recentchanges-thread-history-link' => 'تاريخ النقاش',
 	'forum-recentchanges-closed-thread' => 'أغلق النقاش "[[$1|$2]]" من [[$3|جدار $4]]',
@@ -639,7 +634,6 @@ ___________________________________________<br />
 	'forum-related-discussion-new-post-button' => 'ابدأ نقاشًا جديدًا',
 	'forum-related-discussion-new-post-tooltip' => 'ابدأ نقاشًا جديدًا عن $1',
 	'forum-related-discussion-total-replies' => '$1 رسائل',
-
 	'forum-related-discussion-see-more' => 'رؤية المزيد من النقاشات',
 	'forum-confirmation-board-deleted' => '"$1" قد حُذفت.',
 );
@@ -662,6 +656,7 @@ $messages['az'] = array(
 );
 
 /** Bulgarian (български)
+ * @author Agilight
  * @author DCLXVI
  */
 $messages['bg'] = array(
@@ -673,6 +668,7 @@ $messages['bg'] = array(
 
 /** Breton (brezhoneg)
  * @author Fohanno
+ * @author Gwenn-Ael
  */
 $messages['br'] = array(
 	'forum-forum-title' => 'Forom',
@@ -689,11 +685,13 @@ $messages['br'] = array(
 	'forum-board-topics' => 'Danvezioù',
 	'forum-board-thread-follow' => 'Heuliañ',
 	'forum-board-thread-following' => 'O Heuliañ',
+	'forum-board-thread-replies' => "{{PLURAL:$1|1 c'hemennad|$1 kemennadoù}}",
 	'forum-board-new-message-heading' => 'Kregiñ gant ur gaoz',
 	'forum-thread-reply-placeholder' => 'Postañ ur respont',
 	'forum-thread-reply-post' => 'Respont',
 	'forum-thread-deleted-return-to' => "Distreiñ d'an isforom $1",
 	'forum-sorting-option-newest-replies' => 'Respontoù diwezhañ',
+	'forum-sorting-option-popular-threads' => 'Gwellañ-deuet',
 	'forum-sorting-option-most-replies' => 'Ar re oberiantañ er 7 devezh diwezhañ',
 	'forum-sorting-option-newest-threads' => 'Neudennadoù nevesañ',
 	'forum-sorting-option-oldest-threads' => 'Neudennadoù koshañ',
@@ -740,8 +738,9 @@ ___________________________________________
 	'forum-related-module-heading' => 'Neudennadoù liammet',
 	'forum-activity-module-posted' => '$1 en deus postet ur respont $2',
 	'forum-activity-module-started' => '$1 en deus kroget gant ur gaoz $2',
-	'forum-recentchanges-new-message' => 'en <a href="$1">isforom $2</a>',
-	'forum-recentchanges-edit' => '(kemennadenn aozet)',
+	'forum-contributions-line' => '[[$1|$2]] e [[$3|isforom $4]]',
+	'forum-recentchanges-new-message' => 'en [[$1|isforom $2]]',
+	'forum-recentchanges-edit' => 'kemennadenn aozet',
 	'forum-recentchanges-deleted-reply-title' => 'Ur gemennadenn',
 	'forum-recentchanges-namespace-selector-message-wall' => 'Isforom',
 	'forum-recentchanges-history-link' => 'istor an isforom',
@@ -783,15 +782,26 @@ ___________________________________________
 	'forum-related-discussion-new-post-button' => 'Kregiñ gant ur gaoz',
 	'forum-related-discussion-new-post-tooltip' => 'Kregiñ gant ur gaoz nevez diwaer-benn $1',
 	'forum-related-discussion-total-replies' => '$1 kemennadenn',
-	'forum-related-discussion-zero-state-creative' => "Gallout a rit kavout kendivizoù diwar-benn kement tra a denn d'ar wiki-mañ er [[Special:Forum|Forum {{SITENAME}} !]]",
 	'forum-related-discussion-see-more' => "Gwelet muioc'h a gaozioù",
 	'forum-confirmation-board-deleted' => 'Dilamet eo bet "$1".',
 );
 
+/** Iriga Bicolano (Iriga Bicolano)
+ * @author Filipinayzd
+ */
+$messages['bto'] = array(
+	'forum-specialpage-policies-edit' => 'Balyowan',
+	'forum-mail-notification-html-greeting' => 'Unta $1,',
+	'forum-mail-notification-subject' => '$1 -- $2',
+);
+
 /** Catalan (català)
+ * @author Fitoschido
  * @author Grondin
+ * @author Unapersona
  */
 $messages['ca'] = array(
+	'forum-forum-title' => 'Fòrum',
 	'forum-active-threads' => '$1 {{PLURAL:$1|discussió activa|discussions actives}}',
 	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|discussió activa|discussions actives}} sobre: '''[[$2]]'''",
 	'forum-header-total-threads' => '<em>$1</em><span>{{PLURAL:$1|fil<br />en aquest fòrum|fils<br />en aquest fòrum}}</span>',
@@ -802,10 +812,216 @@ $messages['ca'] = array(
 	'forum-specialpage-board-lastpostby' => 'Última tramesa per',
 	'forum-specialpage-policies-edit' => 'Edita',
 	'forum-specialpage-policies' => 'Política del fòrum / FAQ',
+	'forum-policies-and-faq' => "== Polítiques del fòrum ==
+Abans de contribuir als fòrums de {{SITENAME}}, tingueu en compte algunes bones pràctiques de conducta:
+
+'''Ser agradable i tractar les persones amb respecte. '''
+: Gent de tot el món pot llegir i editar aquest wiki i els seus fòrums. Com qualsevol altre projecte col·laboratiu, no tothom estarà d'acord amb tu sempre. S'han de mantenir debats civils i de ment oberta sobre diferents opinions. Tots estem aquí perquè ens agrada el mateix tema.
+
+'''Intenta trobar debats existents en primer lloc, però no tinguis por de començar un nou fil. '''
+: Abans d'iniciar un nou fil, assegura't que no n'hi ha cap de semblant a {{SITENAME}}. Si no trobeu el que busqueu, enceta un debat nou!
+
+'''Demanar ajuda. '''
+: Hi ha alguna cosa que et costa fer? O tens alguna pregunta? Demana ajuda aquí als fòrums! Si necessites ajuda del personal de Wikia, si us plau, contacta a la [[w:c:community|Comunitat Central]] o a [[Special:Contact]].
+
+'''Diverteix-te! '''
+: La comunitat de {{SITENAME}} és feliç de tenir-te aquí. Esperem veure't sovint als fòrums!.
+
+== PMF del Fòrum==
+'''Com puc mantenir-me informat sobre debats en els quals hi estic interessat?'''
+: Amb un compte d'usuari de Wikia, pots seguir converses concretes i llavors rebre missatges de notificació (presencials o per correu electrònic) quan una discussió té més activitat. [[Special:UserSignup|Crea't un compte de Wikia]], si no en tens un!
+
+'''Com puc eliminar el vandalisme? '''
+: Si notes algun missatge spam o vandalisme en un fil, posa el ratolí sobre el text en qüestió. Veuràs un botó ''Més'' que aparèixer. Dins el menú ''Més'', trobaràs ''Eliminar''. Això et permetrà treure el comentari i, opcionalment, informar-ne als administradors.
+
+'''Què són els temes? '''
+: Els temes permeten enllaçar un fòrum de discussió amb un article de la wiki. És una altra manera per mantenir fòrums organitzats i per ajudar a les persones a trobar discussions interessants. Per exemple, un fil de fòrum etiquetat amb \"Lord Voldemort\" apareixerà a la part inferior de l'article \"Lord Voldemort\".",
+	'forum-board-title' => '$1 Junta',
+	'forum-board-topic-title' => 'Discussions sobre $1',
+	'forum-board-topics' => 'Fils de discussió',
+	'forum-board-thread-follow' => 'Segueix',
+	'forum-board-thread-following' => 'Seguint',
+	'forum-board-thread-kudos' => '$1 Felicitacions',
+	'forum-board-thread-replies' => '$1 {{PLURAL:$1|missatge|missatges}}',
 	'forum-board-new-message-heading' => 'Inicia una discussió',
+	'forum-no-board-selection-error' => '← Si us plau seleccioni un lloc per penjar el fil',
 	'forum-thread-reply-placeholder' => 'Deixar una resposta',
 	'forum-thread-reply-post' => 'Contesta',
+	'forum-thread-deleted-return-to' => 'Torna al board $1',
+	'forum-sorting-option-newest-replies' => 'Respostes més recents',
+	'forum-sorting-option-popular-threads' => 'Més popular',
+	'forum-sorting-option-most-replies' => 'Més actius en 7 dies',
+	'forum-sorting-option-newest-threads' => 'Nous fils',
+	'forum-sorting-option-oldest-threads' => 'Discussions antigues',
+	'forum-discussion-post' => 'Publicar',
+	'forum-discussion-highlight' => 'Destaca aquesta discussió',
+	'forum-discussion-placeholder-title' => 'De què vols parlar?',
+	'forum-discussion-placeholder-message' => 'Publica un missatge nou en el mur $1',
+	'forum-discussion-placeholder-message-short' => 'Penja un missatge nou',
+	'forum-notification-user1-reply-to-your' => '$1 {{GENDER:$1|ha respost}} un fil teu al mur $3',
+	'forum-notification-user2-reply-to-your' => "$1 i $2 t'han respost al mur $3",
+	'forum-notification-user3-reply-to-your' => "$1 i altres t'han respost al mur $3",
+	'forum-notification-user1-reply-to-someone' => '$1 {{GENDER:$1|ha respost}} al mur $3',
+	'forum-notification-user2-reply-to-someone' => '$1 i $2 han respost al mur $3',
+	'forum-notification-user3-reply-to-someone' => '$1 i altres han respost al mur $3',
+	'forum-notification-newmsg-on-followed-wall' => '$1 {{GENDER:$1|ha penjat}} un nou missatge al mur $2',
+	'forum-mail-notification-new-someone' => '$AUTHOR_NAME ha iniciat un fil al mur $BOARDNAME de $WIKI.',
+	'forum-mail-notification-new-your' => '$AUTHOR_NAME ha iniciat un fil al mur $BOARDNAME de $WIKI.',
+	'forum-mail-notification-reply-your' => '$AUTHOR_NAME t\'ha respost al mur $BOARDNAME de $WIKI.',
+	'forum-mail-notification-reply-his' => '$AUTHOR_NAME ha respost al mur $BOARDNAME de $WIKI.',
+	'forum-mail-notification-reply-someone' => '$AUTHOR_NAME ha respost al mur $BOARDNAME de $WIKI.',
+	'forum-mail-notification-html-greeting' => 'Hola, $1:',
+	'forum-mail-notification-html-button' => 'Veure la discussió',
+	'forum-mail-notification-subject' => '$1 -- $2',
+	'forum-mail-notification-body' => 'Hola $WATCHER,
+
+$SUBJECT
+
+$METATITLE
+
+$MESSAGE_NO_HTML
+
+-- $AUTHOR
+
+Veure la conversa: ($MESSAGE_LINK)
+
+L\'Equip de Wikia
+
+___________________________________________
+* Vés a la Comunitat Central anglesa:
+http://community.wikia.com
+* Vés a la Comunitat Central catalana: 
+http://ca.wikia.com
+* No vols rebre missatges de Wikia? Us podeu donar de baixa seguint l\'enllaç següent: http://ca.wikia.com/Special:Preferences',
+	'forum-mail-notification-body-HTML' => 'Hola $WATCHER,
+<p>$SUBJECT.</p>
+<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
+<p>$MESSAGE_HTML</p>
+<p>-- $AUTHOR_SIGNATURE<p>
+<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Veure la discussió</a></p>
+<p>L\'equip de Wikia</p>
+___________________________________________<br />
+* Vés a la Comunitat Central anglesa:
+http://community.wikia.com
+* Vés a la Comunitat Central catalana: 
+http://ca.wikia.com
+* No vols rebre missatges de Wikia? Us podeu donar de baixa seguint l\'enllaç següent: http://ca.wikia.com/Special:Preferences',
+	'forum-wiki-activity-msg' => 'A $1',
+	'forum-wiki-activity-msg-name' => 'M$1ur',
+	'forum-activity-module-heading' => 'Activitat del fòrum',
+	'forum-related-module-heading' => 'Temes relacionats',
+	'forum-activity-module-posted' => '$1 ha respost fa $2',
+	'forum-activity-module-started' => '$1 ha iniciat una discussió fa $2',
+	'forum-contributions-line' => '[[$1|$2]] al [[$3|mur $4]]',
+	'forum-recentchanges-new-message' => 'Al [[$1|mur $2]]',
+	'forum-recentchanges-edit' => 'Missatge editat',
+	'forum-recentchanges-removed-thread' => 'Retirat el fil "[[$1|$2]]" del [[$3|mur $4]]',
+	'forum-recentchanges-removed-reply' => 'Retirada la resposta "[[$1|$2]]" del [[$3|mur $4]]',
+	'forum-recentchanges-restored-thread' => 'El fil "[[$1|$2]]" del [[$3|mur $4]] s\'ha restaurat',
+	'forum-recentchanges-restored-reply' => 'La resposta "[[$1|$2]]" al [[$3|mur $4]] s\'ha restaurat',
+	'forum-recentchanges-deleted-thread' => 'El fil "[[$1|$2]]" del [[$3|mur $4]] s\'ha esborrat',
+	'forum-recentchanges-deleted-reply' => 'La resposta "[[$1|$2]]" del [[$3|mur $4]] s\'ha retirat',
+	'forum-recentchanges-deleted-reply-title' => 'Una publicació',
+	'forum-recentchanges-namespace-selector-message-wall' => 'Subfòrum',
+	'forum-recentchanges-thread-group' => '$1 al <a href="$2">mur $3</a>',
+	'forum-recentchanges-history-link' => 'Historial del mur',
+	'forum-recentchanges-thread-history-link' => 'Historial del fil',
+	'forum-recentchanges-closed-thread' => 'El fil "[[$1|$2]]" de [[$3|$4]] s\'ha tancat',
+	'forum-recentchanges-reopened-thread' => 'El fil "[[$1|$2]]" de [[$3|$4]] s\'ha reobert',
+	'forum-board-history-title' => 'Historial del Mur',
+	'forum-specialpage-oldforum-link' => 'Arxius del Fòrum',
+	'forum-admin-page-breadcrumb' => 'Gestió Administrativa del Mur',
+	'forum-admin-create-new-board-label' => 'Crear nou mur',
+	'forum-admin-create-new-board-modal-heading' => 'Crea un nou mur',
+	'forum-admin-create-new-board-title' => 'Títol del mur',
+	'forum-admin-create-new-board-description' => 'Descripció del mur',
+	'forum-admin-edit-board-modal-heading' => 'Modifica el Mur: $1',
+	'forum-admin-edit-board-title' => 'Títol del mur',
+	'forum-admin-edit-board-description' => 'Descripció del mur',
+	'forum-admin-delete-and-merge-board-modal-heading' => 'Suprimir el mur $1',
+	'forum-admin-delete-board-title' => 'Confirmeu escrivint el nom del mur que voleu suprimir:',
+	'forum-admin-merge-board-warning' => 'Els fils en aquest mur es fusionaran en un mur existent.',
+	'forum-admin-merge-board-destination' => 'Trieu una mur per fusionar:',
+	'forum-admin-delete-and-merge-button-label' => 'Elimina i trasllada',
+	'forum-admin-link-label' => 'Gestionar murs',
+	'forum-autoboard-title-1' => 'Discussió general',
+	'forum-autoboard-body-1' => 'Aquest mur és per les discussions generals sobre el wiki.',
+	'forum-autoboard-title-2' => 'Notícies i anuncis',
+	'forum-autoboard-body-2' => 'Últimes notícies i informació!',
+	'forum-autoboard-title-3' => 'Nou a $1',
+	'forum-autoboard-body-3' => "Vols compartir una cosa que només s'ha penjat en aquest wiki, o felicitar a algú per una aportació rellevant? Aquest és el lloc!",
+	'forum-autoboard-title-4' => 'Preguntes i respostes',
+	'forum-autoboard-body-4' => 'Tens una pregunta sobre el Wiki? Fes la teva pregunta aquí!',
+	'forum-autoboard-title-5' => 'Diversió i jocs',
+	'forum-autoboard-body-5' => 'Aquest mur és per converses off-topic -- un lloc per parlar amb els teus amics de $1!',
+	'forum-board-destination-empty' => '(Seleccioneu un subfòrum)',
+	'forum-board-title-validation-invalid' => 'El nom del mur conté caràcters no vàlids',
+	'forum-board-title-validation-length' => 'El nom del mur ha de ser com a mínim de 4 cràcters',
 	'forum-confirmation-board-deleted' => "S'ha suprimit “$1”.",
+);
+
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'forum-discussion-post' => 'Хаам',
+	'forum-contributions-line' => '[[$1|$2]] дакъанехь [[$3|$4]]',
+	'forum-recentchanges-new-message' => '[[$1|дакъанехь $2]]',
+	'forum-recentchanges-edit' => 'табина хаам',
+	'forum-recentchanges-deleted-reply-title' => 'Хаам',
+);
+
+/** Czech (čeština)
+ * @author Darth Daron
+ * @author H4nek
+ */
+$messages['cs'] = array(
+	'forum-forum-title' => 'Fórum',
+	'forum-active-threads' => '$1 {{PLURAL:$1|aktivní diskuze|aktivní diskuze|aktivních diskuzí}}',
+	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|aktivní diskuze|aktivní diskuze|aktivních diskuzí}} o: '''[[$2]]'''",
+	'forum-header-total-threads' => '<em>$1</em><span>{{PLURAL:$1|vlákno<br />na tomto fóru|vlákna<br />na tomto fóru|vláken<br />na tomto fóru}}</span>',
+	'forum-header-active-threads' => '<em>$1</em><span>{{PLURAL:$1|aktivní<br />diskuze|aktivní<br />diskuze|aktivních<br />diskuzí}}</span>',
+	'forum-specialpage-heading' => 'Fórum',
+	'forum-specialpage-blurb-heading' => '<span style="display:none">forum-specialpage-blurb-heading Můžete to upravit<span>',
+	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|vlákno|vlákna|vláken}}',
+	'forum-specialpage-board-posts' => '$1 {{PLURAL:$1|příspěvek|příspěvky|příspěvků}}',
+	'forum-specialpage-board-lastpostby' => 'Poslední příspěvek od',
+	'forum-specialpage-policies-edit' => 'Upravit',
+	'forum-specialpage-policies' => 'Pravidla na fóra/FAQ',
+	'forum-board-topic-title' => 'Diskuze o $1',
+	'forum-board-topics' => 'Témata',
+	'forum-board-thread-follow' => 'Sledovat',
+	'forum-board-thread-following' => 'Sledováno',
+	'forum-board-new-message-heading' => 'Začít novou diskusi',
+	'forum-thread-reply-placeholder' => 'Odpovědět',
+	'forum-thread-reply-post' => 'Odpovědět',
+	'forum-sorting-option-newest-replies' => 'Poslední odpovědi',
+	'forum-sorting-option-popular-threads' => 'Nejpopulárnější',
+	'forum-sorting-option-most-replies' => 'Nejaktivnější za 7 dní',
+	'forum-sorting-option-newest-threads' => 'Nejnovější vlákna',
+	'forum-sorting-option-oldest-threads' => 'Nejstarší vlákna',
+	'forum-discussion-post' => 'Poslat',
+	'forum-discussion-highlight' => 'Zvýraznit tuto diskuzi',
+	'forum-discussion-placeholder-title' => 'O čem chcete mluvit?',
+	'forum-discussion-placeholder-message-short' => 'Napsat novou zprávu',
+	'forum-notification-user1-reply-to-your' => '$1 {{GENDER:$1|odpověděl|odpověděla}} na vaše vlákno v subfóru $3',
+	'forum-notification-user2-reply-to-your' => '$1 a $2 odpověděli na vaše vlákno v subfóru $3',
+	'forum-notification-user3-reply-to-your' => '$1 a další odpověděli na vaše vlákno v subfóru $3',
+	'forum-notification-user1-reply-to-someone' => '$1 {{GENDER:$1|odpověděl|odpověděla}} v subfóru $3',
+	'forum-notification-user2-reply-to-someone' => '$1 a $2 odpověděli v subfóru $3',
+	'forum-notification-user3-reply-to-someone' => '$1 a další odpověděli v subfóru $3',
+	'forum-notification-newmsg-on-followed-wall' => '$1 {{GENDER:$1|napsal|napsala}} novou zprávu v subfóru $2',
+	'forum-mail-notification-html-greeting' => 'Ahoj $1,',
+	'forum-mail-notification-html-button' => 'Zobrazit konverzaci',
+	'forum-mail-notification-subject' => '$1 -- $2',
+	'forum-activity-module-heading' => 'Aktivita fóra',
+	'forum-related-module-heading' => 'Související vlákna',
+	'forum-autoboard-body-4' => 'Máte dotaz ohledně wiki nebo tématu? Ptejte se tady!',
+	'forum-autoboard-title-5' => 'Zábava a hry',
+	'forum-related-discussion-new-post-button' => 'Zahájit diskusi',
+	'forum-related-discussion-new-post-tooltip' => 'Zahájit novou diskusi o $1',
+	'forum-related-discussion-total-replies' => '$1{{PLURAL:$1|zpráva|zprávy|zpráv}}',
+	'forum-confirmation-board-deleted' => '"$1" bylo smazáno.',
 );
 
 /** German (Deutsch)
@@ -924,9 +1140,9 @@ abmelden oder deine E-Mail-Einstellungen hier ändern: http://community.wikia.co
 	'forum-related-module-heading' => 'Ähnliche Threads',
 	'forum-activity-module-posted' => '$1 hinterließ eine Antwort $2',
 	'forum-activity-module-started' => '$1 startete eine Diskussion $2',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> auf dem <a href="$3">Board $4</a>',
-	'forum-recentchanges-new-message' => 'auf dem <a href="$1">Board $2</a>',
-	'forum-recentchanges-edit' => '(Nachricht bearbeitet)',
+	'forum-contributions-line' => '[[$1|$2]] auf dem [[$3|Board $4]]',
+	'forum-recentchanges-new-message' => 'auf dem [[$1|Board $2]]',
+	'forum-recentchanges-edit' => 'Nachricht bearbeitet',
 	'forum-recentchanges-removed-thread' => 'Thread „[[$1|$2]]“ vom [[$3|Board $4]] entfernt',
 	'forum-recentchanges-removed-reply' => 'Antwort von „[[$1|$2]]“ aus dem [[$3|Board $4]] entfernt',
 	'forum-recentchanges-restored-thread' => 'Thread „[[$1|$2]]“ auf dem [[$3|Board $4]] wiederhergestellt',
@@ -935,7 +1151,7 @@ abmelden oder deine E-Mail-Einstellungen hier ändern: http://community.wikia.co
 	'forum-recentchanges-deleted-reply' => 'Antwort von „[[$1|$2]]“ vom [[$3|Board $4]] gelöscht',
 	'forum-recentchanges-deleted-reply-title' => 'Ein Beitrag',
 	'forum-recentchanges-namespace-selector-message-wall' => 'Forumboard',
-	'forum-recentchanges-thread-group' => '$1 auf dem <a href="$2">Board „$3“</a>',
+	'forum-recentchanges-thread-group' => '$1 auf dem [[$2|Board „$3“]]',
 	'forum-recentchanges-history-link' => 'Boardverlauf',
 	'forum-recentchanges-thread-history-link' => 'Threadverlauf',
 	'forum-recentchanges-closed-thread' => 'Thread „[[$1|$2]]“ von [[$3|$4]] geschlossen',
@@ -980,7 +1196,6 @@ abmelden oder deine E-Mail-Einstellungen hier ändern: http://community.wikia.co
 	'forum-related-discussion-new-post-button' => 'Eine Diskussion starten',
 	'forum-related-discussion-new-post-tooltip' => 'Eine neue Diskussion über $1 starten',
 	'forum-related-discussion-total-replies' => '$1 Nachrichten',
-
 	'forum-related-discussion-see-more' => 'Weitere Diskussionen ansehen',
 	'forum-confirmation-board-deleted' => '„$1“ wurde gelöscht.',
 );
@@ -1020,15 +1235,16 @@ Before contributing to the {{SITENAME}} Forums, please keep in mind a few best p
 
 /** Spanish (español)
  * @author Fitoschido
+ * @author Macofe
  * @author VegaDark
  * @author Vivaelcelta
  */
 $messages['es'] = array(
 	'forum-forum-title' => 'Foro',
-	'forum-active-threads' => '{{FORMATNUM:$1}} {{PLURAL:$1|Tema activo|Temas activos}}',
+	'forum-active-threads' => '$1 {{PLURAL:$1|tema activo|temas activos}}',
 	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|Tema activo|Temas activos}} sobre: '''[[$2]]'''",
-	'forum-header-total-threads' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|Tema<br /> en este foro|Temas<br /> en este foro}}</span>',
-	'forum-header-active-threads' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|Tema<br /> Activo|Temas<br /> Activos}}</span>',
+	'forum-header-total-threads' => '<em>$1</em><span>{{PLURAL:$1|tema|temas}}<br /> en este foro</span>',
+	'forum-header-active-threads' => '<em>$1</em><span>{{PLURAL:$1|Tema<br />activo|Temas<br />activos}}</span>',
 	'forum-specialpage-heading' => 'Foro',
 	'forum-specialpage-blurb-heading' => '<span style="display:none">forum-specialpage-blurb-heading Puedes editarlo<span>',
 	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|tema|temas}}',
@@ -1107,9 +1323,9 @@ ___________________________________________ <br />
 	'forum-related-module-heading' => 'Temas relacionados',
 	'forum-activity-module-posted' => '$1 publicó una respuesta $2',
 	'forum-activity-module-started' => '$1 abrió un nuevo tema $2',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> en el <a href="$3">subforo $4</a>',
-	'forum-recentchanges-new-message' => 'en el <a href="$1">subforo $2</a>',
-	'forum-recentchanges-edit' => '(mensaje editado)',
+	'forum-contributions-line' => '[[$1|$2]] en el [[$3|subforo $4]]',
+	'forum-recentchanges-new-message' => 'en el [[$1|subforo $2]]',
+	'forum-recentchanges-edit' => 'mensaje editado',
 	'forum-recentchanges-removed-thread' => 'borró el tema "[[$1|$2]]" del [[$3|subforo $4]]',
 	'forum-recentchanges-removed-reply' => 'borró una respuesta en "[[$1|$2]]" del [[$3|subforo $4]]',
 	'forum-recentchanges-restored-thread' => 'restauró el tema "[[$1|$2]]" del [[$3|subforo $4]]',
@@ -1118,7 +1334,7 @@ ___________________________________________ <br />
 	'forum-recentchanges-deleted-reply' => 'borró una respuesta en el tema "[[$1|$2]]" del [[$3|subforo $4]]',
 	'forum-recentchanges-deleted-reply-title' => 'Un mensaje',
 	'forum-recentchanges-namespace-selector-message-wall' => 'Subforo',
-	'forum-recentchanges-thread-group' => '$1 en el <a href="$2">subforo $3</a>',
+	'forum-recentchanges-thread-group' => '$1 en el [[$2|subforo $3]]',
 	'forum-recentchanges-history-link' => 'historial del subforo',
 	'forum-recentchanges-thread-history-link' => 'Historial del tema',
 	'forum-recentchanges-closed-thread' => 'cerró el tema "[[$1|$2]]" en [[$3|$4]]',
@@ -1183,6 +1399,7 @@ $messages['fa'] = array(
 	'forum-forum-title' => 'فروم',
 	'forum-specialpage-heading' => 'فروم',
 	'forum-specialpage-policies-edit' => 'ویرایش',
+	'forum-board-topics' => 'تاپیکها',
 	'forum-board-thread-follow' => 'دنبال‌کردن',
 	'forum-board-thread-following' => 'دنبال‌کردن',
 	'forum-thread-reply-placeholder' => 'ارسال پاسخ',
@@ -1303,9 +1520,9 @@ ___________________________________________<br />
 	'forum-related-module-heading' => 'Tähän liittyvät keskustelut',
 	'forum-activity-module-posted' => '$1 vastasi $2',
 	'forum-activity-module-started' => '$1 aloitti keskustelun $2',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> palstalla <a href="$3">$4</a>',
-	'forum-recentchanges-new-message' => '<a href="$1">$2 -palstalla</a>',
-	'forum-recentchanges-edit' => '(muokkasi viestiä)',
+	'forum-contributions-line' => '[[$1|$2]] palstalla [[$3|$4]]',
+	'forum-recentchanges-new-message' => '[[$1|$2 -palstalla]]',
+	'forum-recentchanges-edit' => 'muokkasi viestiä',
 	'forum-recentchanges-removed-thread' => 'poisti keskustelun "[[$1|$2]]" palstalta [[$3|$4]]',
 	'forum-recentchanges-removed-reply' => 'poisti vastauksen [[$3|$4 -palstan]] keskustelusta "[[$1|$2]]"',
 	'forum-recentchanges-restored-thread' => 'palautti keskustelun "[[$1|$2]]" [[$3|$4 -palstalle]]',
@@ -1314,7 +1531,7 @@ ___________________________________________<br />
 	'forum-recentchanges-deleted-reply' => 'poisti vastauksen [[$3|$4 -palstan]] keskustelusta "[[$1|$2]]"',
 	'forum-recentchanges-deleted-reply-title' => 'Viesti',
 	'forum-recentchanges-namespace-selector-message-wall' => 'Keskustelupalsta',
-	'forum-recentchanges-thread-group' => '$1 palstalla <a href="$2">$3</a>',
+	'forum-recentchanges-thread-group' => '$1 palstalla [[$2|$3]]',
 	'forum-recentchanges-history-link' => 'palstan historia',
 	'forum-recentchanges-thread-history-link' => 'keskusteluhistoria',
 	'forum-recentchanges-closed-thread' => 'sulki ketjun "[[$1|$2]]" palstalla [[$3|$4]]',
@@ -1359,7 +1576,6 @@ ___________________________________________<br />
 	'forum-related-discussion-new-post-button' => 'Aloita keskustelu',
 	'forum-related-discussion-new-post-tooltip' => 'Aloita uusi keskustelu aiheesta $1',
 	'forum-related-discussion-total-replies' => '$1 viestiä',
-
 	'forum-related-discussion-see-more' => 'Katso lisää keskusteluja',
 	'forum-confirmation-board-deleted' => '"$1" on poistettu.',
 );
@@ -1371,8 +1587,8 @@ ___________________________________________<br />
  */
 $messages['fr'] = array(
 	'forum-forum-title' => 'Forum',
-	'forum-active-threads' => '{{FORMATNUM:$1}} {{PLURAL:$1|Discussion active|Discussions actives}}',
-	'forum-active-threads-on-topic' => '$1 {{PLURAL:$1|Discussion active|Discussions actives}} à propos de « [[$2]] »',
+	'forum-active-threads' => '$1 {{PLURAL:$1|discussion active|discussions actives}}',
+	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|discussion active|discussions actives}} à propos de « '''[[$2]]''' »",
 	'forum-header-total-threads' => '<em>$1</em><span>{{PLURAL:$1|discussion<br />sur ce forum|discussions<br />sur ce forum}}</span>',
 	'forum-header-active-threads' => '<em>$1</em><span>{{PLURAL:$1|discussion<br />active|discussions<br />actives}}</span>',
 	'forum-specialpage-heading' => 'Forum',
@@ -1482,9 +1698,9 @@ ___________________________________________
 	'forum-related-module-heading' => 'Discussions connexes',
 	'forum-activity-module-posted' => '$1 a envoyé une réponse $2',
 	'forum-activity-module-started' => '$1 a démarré une discussion $2',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> sur le <a href="$3">sous-forum $4</a>',
-	'forum-recentchanges-new-message' => 'sur le <a href="$1">sous-forum $2</a>',
-	'forum-recentchanges-edit' => '(message modifié)',
+	'forum-contributions-line' => '[[$1|$2]] sur le [[$3|sous-forum $4]]',
+	'forum-recentchanges-new-message' => 'sur le [[$1|sous-forum $2]]',
+	'forum-recentchanges-edit' => 'message modifié',
 	'forum-recentchanges-removed-thread' => 'a retiré la discussion «&nbsp;[[$1|$2]]&nbsp;» du [[$3|sous-forum $4]]',
 	'forum-recentchanges-removed-reply' => 'a retiré une réponse à «&nbsp;[[$1|$2]]&nbsp;» sur le [[$3|sous-forum $4]]',
 	'forum-recentchanges-restored-thread' => 'a restauré la discussion «&nbsp;[[$1|$2]]&nbsp;» sur le [[$3|sous-forum $4]]',
@@ -1493,7 +1709,7 @@ ___________________________________________
 	'forum-recentchanges-deleted-reply' => 'a supprimé une réponse à «&nbsp;[[$1|$2]]&nbsp;» sur le [[$3|sous-forum $4]]',
 	'forum-recentchanges-deleted-reply-title' => 'Un message',
 	'forum-recentchanges-namespace-selector-message-wall' => 'Sous-forum',
-	'forum-recentchanges-thread-group' => '$1 sur le <a href="$2">sous-forum $3</a>',
+	'forum-recentchanges-thread-group' => '$1 sur le [[$2|sous-forum $3]]',
 	'forum-recentchanges-history-link' => 'historique du sous-forum',
 	'forum-recentchanges-thread-history-link' => 'historique de la discussion',
 	'forum-recentchanges-closed-thread' => 'a fermé la discussion «&nbsp;[[$1|$2]]&nbsp;» de [[$3|$4]]',
@@ -1538,7 +1754,6 @@ ___________________________________________
 	'forum-related-discussion-new-post-button' => 'Démarrer une discussion',
 	'forum-related-discussion-new-post-tooltip' => 'Démarrer une nouvelle discussion à propos de « $1 »',
 	'forum-related-discussion-total-replies' => '$1 messages',
-
 	'forum-related-discussion-see-more' => 'Voir plus de discussions',
 	'forum-confirmation-board-deleted' => '« $1 » a été supprimé.',
 );
@@ -1571,7 +1786,7 @@ Antes de colaborar nos foros de {{SITENAME}} teña en conta as seguintes prácti
 :Por favor, tome un momento para visitar os subforos deste wiki e ver se xa existe un debate sobre o que quere falar. Se non atopa o que busca, comeza unha nova conversa!
 
 '''Pida axuda.'''
-:Algo non se ve como debería? Ten algunha pregunta? Pida axuda aquí, no foro! Se necesita a axuda do persoal de Wikia, pode ir á nosa [[w:c:community|central da comunidade]] ou preguntar a través de [[Special:Contact|Contacto]]. 
+:Algo non se ve como debería? Ten algunha pregunta? Pida axuda aquí, no foro! Se necesita a axuda do persoal de Wikia, pode ir á nosa [[w:c:community|central da comunidade]] ou preguntar a través de [[Special:Contact|Contacto]].
 
 '''Divírtase!'''
 :A comunidade de {{SITENAME}} alégrase de que estea aquí. Queremos ver como fala sobre o tema que máis nos gusta.
@@ -1660,9 +1875,9 @@ as preferencias de correo electrónico aquí: http://community.wikia.com/Special
 	'forum-related-module-heading' => 'Fíos relacionados',
 	'forum-activity-module-posted' => '$1 publicou unha resposta $2',
 	'forum-activity-module-started' => '$1 empezou unha conversa $2',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> no <a href="$3">taboleiro "$4"</a>',
-	'forum-recentchanges-new-message' => 'no <a href="$1">taboleiro "$2"</a>',
-	'forum-recentchanges-edit' => '(mensaxe editada)',
+	'forum-contributions-line' => '[[$1|$2]] no [[$3|taboleiro "$4"]]',
+	'forum-recentchanges-new-message' => 'no [[$1|taboleiro "$2"]]',
+	'forum-recentchanges-edit' => 'mensaxe editada',
 	'forum-recentchanges-removed-thread' => 'eliminou o fío "[[$1|$2]]" do [[$3|taboleiro "$4"]]',
 	'forum-recentchanges-removed-reply' => 'eliminou a resposta "[[$1|$2]]" do [[$3|taboleiro "$4"]]',
 	'forum-recentchanges-restored-thread' => 'restaurou o fío "[[$1|$2]]" no [[$3|taboleiro "$4"]]',
@@ -1671,7 +1886,7 @@ as preferencias de correo electrónico aquí: http://community.wikia.com/Special
 	'forum-recentchanges-deleted-reply' => 'borrou a resposta "[[$1|$2]]" do [[$3|taboleiro "$4"]]',
 	'forum-recentchanges-deleted-reply-title' => 'Unha publicación',
 	'forum-recentchanges-namespace-selector-message-wall' => 'Taboleiro do foro',
-	'forum-recentchanges-thread-group' => '"$1" no <a href="$2">taboleiro "$3"</a>',
+	'forum-recentchanges-thread-group' => '"$1" no [[$2|taboleiro "$3"]]',
 	'forum-recentchanges-history-link' => 'historial do taboleiro',
 	'forum-recentchanges-thread-history-link' => 'historial do fío',
 	'forum-recentchanges-closed-thread' => 'pechou o fío "[[$1|$2]]" de [[$3|$4]]',
@@ -1716,7 +1931,6 @@ as preferencias de correo electrónico aquí: http://community.wikia.com/Special
 	'forum-related-discussion-new-post-button' => 'Comezar un debate',
 	'forum-related-discussion-new-post-tooltip' => 'Comenzar un novo debate sobre "$1"',
 	'forum-related-discussion-total-replies' => '$1 mensaxes',
-
 	'forum-related-discussion-see-more' => 'Ver máis debates',
 	'forum-confirmation-board-deleted' => 'Borrouse "$1".',
 );
@@ -1843,7 +2057,7 @@ $MESSAGE_NO_HTML
 
 ウィキア
 ___________________________________________
-* ウィキアの最新情報は ja.community.wikia.com で確認できます。	
+* ウィキアの最新情報は ja.community.wikia.com で確認できます。
 * メールの受信に関する設定は以下のページで行えます: http://ja.community.wikia.com/Special:Preferences',
 	'forum-mail-notification-body-HTML' => '$WATCHER さん、
 <p>$SUBJECT</p>
@@ -1853,7 +2067,7 @@ ___________________________________________
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">スレッドを見る</a></p>
 <p>ウィキア</p>
 ___________________________________________<br />
-* ウィキアの最新情報は ja.community.wikia.com で確認できます。<br />	
+* ウィキアの最新情報は ja.community.wikia.com で確認できます。<br />
 * メールの受信に関する設定は以下のページで行えます: http://ja.community.wikia.com/Special:Preferences',
 	'forum-wiki-activity-msg' => '-- $1',
 	'forum-wiki-activity-msg-name' => '$1板',
@@ -1861,9 +2075,9 @@ ___________________________________________<br />
 	'forum-related-module-heading' => '関連スレッド',
 	'forum-activity-module-posted' => '$1 による返信の投稿: $2',
 	'forum-activity-module-started' => '$1 によるスレッドの作成: $2',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> -- <a href="$3">$4板</a>',
-	'forum-recentchanges-new-message' => '-- <a href="$1">$2板</a>',
-	'forum-recentchanges-edit' => '(メッセージを編集)',
+	'forum-contributions-line' => '[[$1|$2]] -- [[$3|$4板]]',
+	'forum-recentchanges-new-message' => '-- [[$1|$2板]]',
+	'forum-recentchanges-edit' => 'メッセージを編集',
 	'forum-recentchanges-removed-thread' => 'が[[$3|$4板]]からスレッド「[[$1|$2]]」を除去しました',
 	'forum-recentchanges-removed-reply' => 'が[[$3|$4板]]のスレッド「[[$1|$2]]」から返信を除去しました',
 	'forum-recentchanges-restored-thread' => 'が[[$3|$4板]]にスレッド「[[$1|$2]]」を復帰しました',
@@ -1872,7 +2086,7 @@ ___________________________________________<br />
 	'forum-recentchanges-deleted-reply' => 'が[[$3|$4板]]のスレッド「[[$1|$2]]」から返信を削除しました',
 	'forum-recentchanges-deleted-reply-title' => '投稿',
 	'forum-recentchanges-namespace-selector-message-wall' => 'フォーラムの板',
-	'forum-recentchanges-thread-group' => '$1 -- <a href="$2">$3板</a>',
+	'forum-recentchanges-thread-group' => '$1 -- [[$2|$3板]]',
 	'forum-recentchanges-history-link' => '板の履歴',
 	'forum-recentchanges-thread-history-link' => 'スレッドの履歴',
 	'forum-recentchanges-closed-thread' => 'が[[$3|$4板]]のスレッド「[[$1|$2]]」を閉じました',
@@ -1917,7 +2131,6 @@ ___________________________________________<br />
 	'forum-related-discussion-new-post-button' => 'スレッドを作成',
 	'forum-related-discussion-new-post-tooltip' => '$1 に関するスレッドを作成',
 	'forum-related-discussion-total-replies' => '$1 件の投稿',
-
 	'forum-related-discussion-see-more' => 'さらにスレッドを見る',
 	'forum-confirmation-board-deleted' => '「$1」を削除しました。',
 );
@@ -1930,6 +2143,147 @@ $messages['kn'] = array(
 	'forum-thread-reply-post' => 'ಉತ್ತರಿಸಿ',
 );
 
+/** Korean (한국어)
+ * @author Miri-Nae
+ * @author 관인생략
+ */
+$messages['ko'] = array(
+	'forum-forum-title' => '포럼',
+	'forum-active-threads' => '활성화된 토론 $1개',
+	'forum-header-total-threads' => '이 포럼에는 <em>$1</em>개의<br />토론이 있습니다',
+	'forum-header-active-threads' => '활발한 토론 <em>$1</em>개가<br />있습니다',
+	'forum-specialpage-heading' => '포럼',
+	'forum-specialpage-board-threads' => '토론 $1개',
+	'forum-specialpage-board-posts' => '글 $1개',
+	'forum-specialpage-board-lastpostby' => '마지막 글 작성:',
+	'forum-specialpage-policies-edit' => '편집',
+	'forum-specialpage-policies' => '포럼 정책 및 FAQ',
+	'forum-board-title' => '$1 게시판',
+	'forum-board-topic-title' => '$1에 대한 토론',
+	'forum-board-topics' => '주제',
+	'forum-board-thread-follow' => '주시하기',
+	'forum-board-thread-following' => '주시 중',
+	'forum-board-thread-replies' => '댓글 $1개',
+	'forum-board-new-message-heading' => '토론 시작하기',
+	'forum-no-board-selection-error' => '← 글을 작성할 게시판을 선택해주세요.',
+	'forum-thread-reply-placeholder' => '댓글 달기',
+	'forum-thread-reply-post' => '댓글',
+	'forum-thread-deleted-return-to' => '$1 게시판으로 돌아가기',
+	'forum-sorting-option-newest-replies' => '가장 최근 댓글',
+	'forum-sorting-option-popular-threads' => '인기순',
+	'forum-sorting-option-most-replies' => '최근 7일 댓글순',
+	'forum-sorting-option-newest-threads' => '최근 스레드',
+	'forum-sorting-option-oldest-threads' => '오래된 스레드',
+	'forum-discussion-post' => '게시물',
+	'forum-discussion-highlight' => '이 토론 강조하기',
+	'forum-discussion-placeholder-title' => '무엇에 대해 얘기하고 싶나요?',
+	'forum-discussion-placeholder-message' => '$1 게시판에 새 글을 작성합니다',
+	'forum-discussion-placeholder-message-short' => '새로운 메시지를 작성합니다',
+	'forum-notification-user1-reply-to-your' => '$1 사용자가 $3 게시판에 있는 당신의 토론에 댓글을 남겼습니다.',
+	'forum-notification-user2-reply-to-your' => '$1 사용자와 $2 사용자가 $3 게시판에 있는 당신의 토론에 댓글을 남겼습니다.',
+	'forum-notification-user3-reply-to-your' => '$1 사용자 및 다른 사용자들이 $3 게시판에 있는 당신의 토론에 댓글을 남겼습니다.',
+	'forum-notification-user1-reply-to-someone' => '$1 사용자가 $3 게시판에 댓글을 남겼습니다.',
+	'forum-notification-user2-reply-to-someone' => '$1 사용자와 $2 사용자가 $3 게시판에 댓글을 남겼습니다.',
+	'forum-notification-user3-reply-to-someone' => '$1 사용자 및 다른 사용자들이 $3 게시판에 댓글을 남겼습니다.',
+	'forum-notification-newmsg-on-followed-wall' => '$1 사용자가 $2 게시판에 새 메시지를 남겼습니다',
+	'forum-mail-notification-new-someone' => '$AUTHOR_NAME 사용자가 $WIKI의 $BOARDNAME 게시판에 새 토론을 작성했습니다.',
+	'forum-mail-notification-new-your' => '$AUTHOR_NAME 사용자가 $WIKI의 $BOARDNAME 게시판에 새 토론을 작성했습니다.',
+	'forum-mail-notification-reply-your' => '$AUTHOR_NAME 사용자가 당신이 $WIKI의 $BOARDNAME 게시판에 작성한 토론에 댓글을 남겼습니다',
+	'forum-mail-notification-reply-his' => '$AUTHOR_NAME 사용자가 $WIKI의 $BOARDNAME 게시판에 댓글을 남겼습니다',
+	'forum-mail-notification-reply-someone' => '$AUTHOR_NAME 사용자가 $WIKI의 $BOARDNAME 게시판에 댓글을 남겼습니다',
+	'forum-mail-notification-html-greeting' => '안녕하세요, $1 사용자 님?',
+	'forum-mail-notification-html-button' => '대화 내역 보기',
+	'forum-mail-notification-subject' => '$1 -- $2',
+	'forum-mail-notification-body' => '안녕하세요, $WATCHER 사용자 님?
+
+$SUBJECT
+
+$METATITLE
+
+$MESSAGE_NO_HTML
+
+-- $AUTHOR
+
+대화를 확인하세요: ($MESSAGE_LINK)
+
+위키아 팀
+
+___________________________________________
+* 중앙 커뮤니티에서 도움을 구하세요: http://community.wikia.com
+* 알림을 받고 싶지 않으신가요? 이곳에서 알림 설정을 변경할 수 있습니다: http://community.wikia.com/Special:Preferences',
+	'forum-mail-notification-body-HTML' => '안녕하세요, $WATCHER 사용자 님?
+<p>$SUBJECT</p>
+<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
+<p>$MESSAGE_NO_HTML</p>
+<p>-- $AUTHOR</p>
+<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">대화를 확인하세요</a></p>
+<p>위키아 팀</p>
+___________________________________________<br />
+* 중앙 커뮤니티에서 도움을 구하세요: http://community.wikia.com
+* 알림을 받고 싶지 않으신가요? 이곳에서 알림 설정을 변경할 수 있습니다: http://community.wikia.com/Special:Preferences',
+	'forum-wiki-activity-msg' => '$1 게시판에서',
+	'forum-wiki-activity-msg-name' => '$1 게시판',
+	'forum-activity-module-heading' => '포럼 활동',
+	'forum-related-module-heading' => '관련 토론',
+	'forum-activity-module-posted' => '$1 사용자가 $2에 댓글을 남겼습니다',
+	'forum-activity-module-started' => '$1 사용자가 $2에 토론을 시작했습니다',
+	'forum-contributions-line' => '[[$3|$4 board]] 게시판의 [[$1|$2]]',
+	'forum-recentchanges-new-message' => '[[$1|$2 게시판]]에서',
+	'forum-recentchanges-edit' => '메시지 편집',
+	'forum-recentchanges-removed-thread' => '[[$3|$4 게시판]]의 "[[$1|$2]]" 토론 삭제',
+	'forum-recentchanges-removed-reply' => '[[$3|$4 게시판]]의 "[[$1|$2]]" 댓글 삭제',
+	'forum-recentchanges-restored-thread' => '[[$3|$4 게시판]]의 "[[$1|$2]]" 토론 복구',
+	'forum-recentchanges-restored-reply' => '[[$3|$4 게시판]]의 "[[$1|$2]]" 댓글 복구',
+	'forum-recentchanges-deleted-thread' => '[[$3|$4 게시판]]의 "[[$1|$2]]" 토론 삭제',
+	'forum-recentchanges-deleted-reply' => '[[$3|$4 게시판]]의 "[[$1|$2]]" 댓글 삭제',
+	'forum-recentchanges-deleted-reply-title' => '글',
+	'forum-recentchanges-namespace-selector-message-wall' => '포럼 게시판',
+	'forum-recentchanges-history-link' => '게시판 역사',
+	'forum-recentchanges-thread-history-link' => '토론 역사',
+	'forum-board-history-title' => '게시판 역사',
+	'forum-specialpage-oldforum-link' => '과거 포럼 보관',
+	'forum-admin-page-breadcrumb' => '관리자 게시판 관리',
+	'forum-admin-create-new-board-label' => '새 게시판 만들기',
+	'forum-admin-create-new-board-modal-heading' => '새 게시판 만들기',
+	'forum-admin-create-new-board-title' => '게시판 이름',
+	'forum-admin-create-new-board-description' => '게시판 설명',
+	'forum-admin-edit-board-modal-heading' => '게시판 편집: $1',
+	'forum-admin-edit-board-title' => '게시판 이름',
+	'forum-admin-edit-board-description' => '게시판 설명',
+	'forum-admin-delete-and-merge-board-modal-heading' => '게시판 삭제: $1',
+	'forum-admin-delete-board-title' => '삭제할 게시판의 이름을 입력하면 완전히 삭제할 수 있습니다:',
+	'forum-admin-merge-board-warning' => '이 게시판에 속한 주제는 다른 게시판에 병합될 것입니다.',
+	'forum-admin-merge-board-destination' => '병합할 게시판을 선택해주세요:',
+	'forum-admin-delete-and-merge-button-label' => '삭제 및 병합',
+	'forum-admin-link-label' => '게시판 관리',
+	'forum-autoboard-title-1' => '종합 토론',
+	'forum-autoboard-body-1' => '이 게시판은 위키에 대한 일반적인 것들을 토론할 수 있는 게시판입니다.',
+	'forum-autoboard-title-2' => '새로운 소식',
+	'forum-autoboard-body-2' => '모두에게 알릴 만한 소식이 왔어요!',
+	'forum-autoboard-title-3' => '$1 뉴스',
+	'forum-autoboard-body-3' => '방금 올라온 게시글, 혹은 누군가의 위대한 기여를 다른 사람들에게 알리고 싶나요? 그럼 이곳으로 오세요!',
+	'forum-autoboard-title-4' => '질문과 답변',
+	'forum-autoboard-body-4' => '위키에 대해 궁금한 것들은 이곳에서 물어보세요!',
+	'forum-autoboard-title-5' => '재밌게 놀아요',
+	'forum-autoboard-body-5' => '이 게시판은 특정한 주제가 없습니다 -- $1의 친구들과 즐거운 시간을 보내세요.',
+	'forum-board-destination-empty' => '(게시판을 선택해주세요)',
+	'forum-board-title-validation-invalid' => '게시판 이름에 잘못된 글자가 포함되어 있습니다',
+	'forum-board-title-validation-length' => '게시판 이름은 최소 네 글자 이상이어야 합니다',
+	'forum-board-title-validation-exists' => '같은 이름의 게시판이 이미 존재합니다',
+	'forum-board-validation-count' => '만들 수 있는 게시판 수는 $1개가 최대입니다',
+	'forum-board-description-validation-length' => '게시판에 대한 설명을 입력해주세요',
+	'forum-board-id-validation-missing' => '게시판 ID가 없습니다',
+	'forum-board-no-board-warning' => '해당 이름의 게시판을 찾을 수 없습니다. 아래는 게시판의 목록입니다.',
+	'forum-old-notification-message' => '이 포럼은 보관되었습니다',
+	'forum-old-notification-navigation-button' => '새로운 포럼을 방문해보세요',
+	'forum-related-discussion-heading' => '$1에 대한 토론',
+	'forum-related-discussion-new-post-button' => '토론 시작하기',
+	'forum-related-discussion-new-post-tooltip' => '$1에 대한 새로운 토론 시작하기',
+	'forum-related-discussion-total-replies' => '메시지 $1개',
+	'forum-related-discussion-see-more' => '더 많은 토론 보기',
+	'forum-confirmation-board-deleted' => '"$1" 게시판이 삭제되었습니다.',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
@@ -1938,13 +2292,21 @@ $messages['lb'] = array(
 	'forum-active-threads' => '{{PLURAL:$1|Eng aktiv Diskussioun|$1 aktiv Diskussiounen}}',
 	'forum-active-threads-on-topic' => "{{PLURAL:$1|Eng aktiv Diskussioun|$1 aktiv Diskussiounen}} iwwer: '''[[$2]]'''",
 	'forum-specialpage-heading' => 'Forum',
+	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|Rubrik|Rubriken}}',
 	'forum-specialpage-policies-edit' => 'Änneren',
 	'forum-board-topic-title' => 'Diskussiounen iwwer $1',
 	'forum-board-topics' => 'Themen',
+	'forum-board-thread-replies' => '$1 {{PLURAL:$1|Message|Messagen}}',
 	'forum-board-new-message-heading' => 'Eng Diskussioun ufänken',
 	'forum-thread-reply-post' => 'Äntwerten',
 	'forum-sorting-option-most-replies' => 'Am aktivsten an de leschte 7 Deeg',
+	'forum-mail-notification-html-greeting' => 'Salut $1,',
+	'forum-mail-notification-subject' => '$1 – $2',
+	'forum-activity-module-started' => '$1 huet eng Diskussioun $2 ugefaang',
+	'forum-recentchanges-edit' => 'Message geännert',
 	'forum-autoboard-title-1' => 'Allgemeng Diskussioun',
+	'forum-autoboard-title-3' => 'Nei op $1',
+	'forum-old-notification-message' => 'Dëse Forum gouf archivéiert',
 	'forum-related-discussion-heading' => 'Diskussiounen iwwer $1',
 	'forum-related-discussion-new-post-button' => 'Eng Diskussioun ufänken',
 	'forum-related-discussion-new-post-tooltip' => 'Eng nei Diskussioun iwwer $1 ufänken',
@@ -2098,9 +2460,9 @@ keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preferences',
 	'forum-related-module-heading' => 'Kiriman yang Berkaitan',
 	'forum-activity-module-posted' => '$1 telah mengirimkan jawapan $2',
 	'forum-activity-module-started' => '$1 telah memulakan perbincangan $2',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> di <a href="$3">papan $4</a>',
-	'forum-recentchanges-new-message' => 'di <a href="$1">Papan $2</a>',
-	'forum-recentchanges-edit' => '(pesanan diubah)',
+	'forum-contributions-line' => '[[$1|$2]] di [[$3|papan $4]]',
+	'forum-recentchanges-new-message' => 'di [[$1|Papan $2]]',
+	'forum-recentchanges-edit' => 'pesanan diubah',
 	'forum-recentchanges-removed-thread' => 'kiriman "[[$1|$2]]" dibuang daripada [[$3|Papan $4]]',
 	'forum-recentchanges-removed-reply' => 'jawapan daripada "[[$1|$2]]" dibuang daripada [[$3|Papan $4]]',
 	'forum-recentchanges-restored-thread' => 'kiriman "[[$1|$2]]" dipulihkan ke [[$3|Papan $4]]',
@@ -2109,7 +2471,7 @@ keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preferences',
 	'forum-recentchanges-deleted-reply' => 'jawapan daripada "[[$1|$2]]" dibuang daripada [[$3|Papan $4]]',
 	'forum-recentchanges-deleted-reply-title' => 'Satu kiriman',
 	'forum-recentchanges-namespace-selector-message-wall' => 'Papan Forum',
-	'forum-recentchanges-thread-group' => '$1 di <a href="$2">Papan $3</a>',
+	'forum-recentchanges-thread-group' => '$1 di [[$2|Papan $3]]',
 	'forum-recentchanges-history-link' => 'sejarah papan',
 	'forum-recentchanges-thread-history-link' => 'sejarah kiriman',
 	'forum-recentchanges-closed-thread' => 'kiriman "[[$1|$2]]" ditutup dari [[$3|$4]]',
@@ -2154,7 +2516,6 @@ keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preferences',
 	'forum-related-discussion-new-post-button' => 'Mulakan sebuah Perbincangan',
 	'forum-related-discussion-new-post-tooltip' => 'Memulakan perbincangan baru tentang $1',
 	'forum-related-discussion-total-replies' => '$1 pesanan',
-
 	'forum-related-discussion-see-more' => 'Lihat lebih banyak perbincangan',
 	'forum-confirmation-board-deleted' => '"$1" telah dihapuskan.',
 );
@@ -2164,6 +2525,8 @@ keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preferences',
  * @author AvatarTeam
  * @author Flightmare
  * @author Siebrand
+ * @author Sjoerddebruin
+ * @author Southparkfan
  */
 $messages['nl'] = array(
 	'forum-forum-title' => 'Forum',
@@ -2243,16 +2606,18 @@ ___________________________________________<br />
  * Vind hulp en advies op Community Central: http://community.wikia.com
  * Wilt u minder berichten ontvangen van ons? U kunt hier afmelden of uw
 e-mailvoorkeuren wijzingen: http://community.wikia.com/Special:Preferences',
+	'forum-wiki-activity-msg' => 'op de $1',
 	'forum-wiki-activity-msg-name' => 'prikbord $1',
 	'forum-activity-module-heading' => 'Forumactiviteit',
 	'forum-related-module-heading' => 'Gerelateerde onderwerpen',
 	'forum-activity-module-posted' => '$1 heeft $2 gereageerd',
 	'forum-activity-module-started' => '$1 heeft $2 een onderwerp geplaatst',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> op het <a href="$3">prikbord $4</a>',
-	'forum-recentchanges-new-message' => 'op het <a href="$1">prikbord $2</a>',
-	'forum-recentchanges-edit' => '(bericht bewerkt)',
+	'forum-contributions-line' => '[[$1|$2]] op het [[$3|prikbord $4]]',
+	'forum-recentchanges-new-message' => 'op het [[$1|prikbord $2]]',
+	'forum-recentchanges-edit' => 'bericht bewerkt',
 	'forum-recentchanges-deleted-reply-title' => 'Een bericht',
 	'forum-recentchanges-namespace-selector-message-wall' => 'Forumprikbord',
+	'forum-recentchanges-thread-history-link' => 'draadgeschiedenis',
 	'forum-admin-delete-and-merge-button-label' => 'Verwijderen en samenvoegen',
 	'forum-autoboard-title-1' => 'Algemene discussie',
 	'forum-autoboard-title-2' => 'Nieuws en Aankondigingen',
@@ -2266,7 +2631,6 @@ e-mailvoorkeuren wijzingen: http://community.wikia.com/Special:Preferences',
 	'forum-related-discussion-new-post-button' => 'Een discussie starten',
 	'forum-related-discussion-new-post-tooltip' => 'Start een nieuwe discussie over $1',
 	'forum-related-discussion-total-replies' => '{{PLURAL:$1|Eén bericht|$1 berichten}}',
-
 	'forum-related-discussion-see-more' => 'Meer discussies bekijken',
 	'forum-confirmation-board-deleted' => '"$1" is verwijderd.',
 );
@@ -2276,9 +2640,72 @@ e-mailvoorkeuren wijzingen: http://community.wikia.com/Special:Preferences',
  * @author Hulothe
  */
 $messages['oc'] = array(
+	'forum-forum-title' => 'Forum',
+	'forum-active-threads' => '$1 {{PLURAL:$1|discussion activa|discussions activas}}',
+	'forum-active-threads-on-topic' => '$1 {{PLURAL:$1|discussion activa|discussions activas}}  a prepaus de : « [[$2]] »',
+	'forum-specialpage-heading' => 'Forum',
+	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|discussion|discussions}}',
+	'forum-specialpage-board-posts' => '$1 {{PLURAL:$1|messatge|messatges}}',
 	'forum-specialpage-board-lastpostby' => 'Darrièr messatge de',
+	'forum-specialpage-policies-edit' => 'Modificar',
+	'forum-specialpage-policies' => 'Règlas del forum / FAQ',
+	'forum-board-title' => 'Sosforum $1',
+	'forum-board-topic-title' => 'Discussions a prepaus de « $1 »',
+	'forum-board-topics' => 'Subjèctes',
+	'forum-board-thread-follow' => 'Seguir',
+	'forum-board-thread-following' => 'Seguiment',
+	'forum-board-thread-kudos' => '{{PLURAL:$1|1 seleccion|$1 seleccions}}',
+	'forum-board-thread-replies' => '{{PLURAL:$1|1 messatge|$1 messatges}}',
 	'forum-board-new-message-heading' => 'Començar una discussion',
+	'forum-no-board-selection-error' => '← Seleccionatz un sosforum sul qual postar',
+	'forum-thread-reply-placeholder' => 'Mandar una responsa',
+	'forum-thread-reply-post' => 'Respondre',
+	'forum-thread-deleted-return-to' => 'Tornar al sosforum $1',
+	'forum-sorting-option-newest-replies' => 'Responsas las mai recentas',
+	'forum-sorting-option-popular-threads' => 'Los mai populars',
+	'forum-sorting-option-most-replies' => 'Los mai actius pendent los 7 darrièrs jorns',
+	'forum-sorting-option-newest-threads' => 'Fials los mai recents en primièr',
+	'forum-sorting-option-oldest-threads' => 'Fials los mai ancians en primièr',
+	'forum-discussion-post' => 'Mandar',
+	'forum-discussion-highlight' => 'Espingolar la discussion',
+	'forum-discussion-placeholder-message-short' => 'Mandar un messatge novèl',
+	'forum-notification-user1-reply-to-your' => '$1 {{GENDER:$1|a respondut}} a vòstre fial sul sosforum $3',
+	'forum-mail-notification-html-greeting' => 'Bonjorn $1,',
+	'forum-mail-notification-html-button' => 'Veire la conversacion',
+	'forum-mail-notification-subject' => '$1 -- $2',
+	'forum-wiki-activity-msg' => 'sul $1',
+	'forum-wiki-activity-msg-name' => 'sosforum $1',
+	'forum-activity-module-heading' => 'Activitat del forum',
+	'forum-related-module-heading' => 'Discussions connèxas',
 	'forum-activity-module-started' => '$1 a començat una discussion $2',
+	'forum-recentchanges-new-message' => 'sul <a href="$1">sosforum $2</a>',
+	'forum-recentchanges-edit' => '(messatge modificat)',
+	'forum-recentchanges-deleted-reply-title' => 'Un messatge',
+	'forum-recentchanges-namespace-selector-message-wall' => 'Sosforum',
+	'forum-recentchanges-thread-group' => '$1 sul <a href="$2">sosforum $3</a>',
+	'forum-recentchanges-history-link' => 'istoric del sosforum',
+	'forum-recentchanges-thread-history-link' => 'istoric de la discussion',
+	'forum-recentchanges-closed-thread' => 'a tampat la discussion «&nbsp;[[$1|$2]]&nbsp;» de [[$3|$4]]',
+	'forum-recentchanges-reopened-thread' => 'a redobèrt la discussion «&nbsp;[[$1|$2]]&nbsp;» de [[$3|$4]]',
+	'forum-board-history-title' => 'istoric del sosforum',
+	'forum-specialpage-oldforum-link' => "Archius de l'ancian forum",
+	'forum-admin-page-breadcrumb' => 'Administracion dels sosforums',
+	'forum-admin-create-new-board-label' => 'Crear un novèl sosforum',
+	'forum-admin-create-new-board-modal-heading' => 'Crear un novèl sosforum',
+	'forum-admin-create-new-board-title' => 'Títol del sosforum',
+	'forum-admin-create-new-board-description' => 'Descripcion del sosforum',
+	'forum-admin-edit-board-modal-heading' => 'Modificar sosforum : $1',
+	'forum-admin-edit-board-title' => 'Títol del sosforum',
+	'forum-admin-edit-board-description' => 'Descripcion del sosforum',
+	'forum-admin-delete-and-merge-board-modal-heading' => 'Suprimir lo sosforum : $1',
+	'forum-admin-delete-and-merge-button-label' => 'Suprimir e fusionar',
+	'forum-admin-link-label' => 'Gerir los sosforums',
+	'forum-autoboard-title-1' => 'Discussion generala',
+	'forum-autoboard-title-3' => 'Novèl sus $1',
+	'forum-autoboard-title-5' => 'Jòcs e lésers',
+	'forum-board-destination-empty' => '(Seleccionatz un sosforum)',
+	'forum-related-discussion-new-post-button' => 'Començar una discussion',
+	'forum-related-discussion-total-replies' => '$1 messatges',
 );
 
 /** Polish (polski)
@@ -2377,17 +2804,17 @@ $MESSAGE_NO_HTML
 -- $AUTHOR
 
 Przejdź do wiadomości($MESSAGE_LINK)
- 
+
 Zespół Wikii
 
 ___________________________________________
 * Znajdź pomoc w Centrum Społeczności: http://spolecznosc.wikia.com
 * Nie chcesz otrzymywać wiadomości? Możesz zmienić ustawienia tutaj: http://community.wikia.com/Special:Preferences',
 	'forum-mail-notification-body-HTML' => 'Witaj $WATCHER,
-<p>$SUBJECT.</p> 
+<p>$SUBJECT.</p>
 <p><a href="$MESSAGE_LINK">$METATITLE</a></p>
 <p>$MESSAGE_HTML</p>
-<p>-- $AUTHOR_SIGNATURE<p> 			
+<p>-- $AUTHOR_SIGNATURE<p>
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Przejdź do wiadomości</a></p>
 <p>Zespół Wikii</p>
 ___________________________________________<br />
@@ -2399,9 +2826,9 @@ ___________________________________________<br />
 	'forum-related-module-heading' => 'Podobne wątki',
 	'forum-activity-module-posted' => '$1 napisał(a) odpowiedź $2',
 	'forum-activity-module-started' => '$1 rozpoczął dyskusję $2',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> na <a href="$3">subforum $4</a>',
-	'forum-recentchanges-new-message' => 'na <a href="$1">subforum $2</a>',
-	'forum-recentchanges-edit' => '(edytowano wiadomość)',
+	'forum-contributions-line' => '[[$1|$2]] na [[$3|subforum $4]]',
+	'forum-recentchanges-new-message' => 'na [[$1|subforum $2]]',
+	'forum-recentchanges-edit' => 'edytowano wiadomość',
 	'forum-recentchanges-removed-thread' => '{{GENDER:$5|usunął|usunęła}} wątek "[[$1|$2]]" z [[$3|subforum $4]]', # Fuzzy
 	'forum-recentchanges-removed-reply' => '{{GENDER:$5|usunął|usunęła}} odpowiedź z "[[$1|$2]]" na [[$3|subforum $4]]', # Fuzzy
 	'forum-recentchanges-restored-thread' => '{{GENDER:$5|przywrócił|przywróciła}} wątek "[[$1|$2]]" na [[$3|subforum $4]]', # Fuzzy
@@ -2410,7 +2837,7 @@ ___________________________________________<br />
 	'forum-recentchanges-deleted-reply' => '{{GENDER:$5|skasował|skasowała}} odpowiedź z "[[$1|$2]]" z [[$3|subforum $4]]', # Fuzzy
 	'forum-recentchanges-deleted-reply-title' => 'Wiadomość',
 	'forum-recentchanges-namespace-selector-message-wall' => 'Subforum',
-	'forum-recentchanges-thread-group' => '$1 na <a href="$2">subforum $3</a>',
+	'forum-recentchanges-thread-group' => '$1 na [[$2|subforum $3]]',
 	'forum-recentchanges-history-link' => 'historia subforum',
 	'forum-recentchanges-thread-history-link' => 'historia wątku',
 	'forum-recentchanges-closed-thread' => '{{GENDER:$5|zamknął|zamknęła}} wątek "[[$1|$2]]" w [[$3|$4]]', # Fuzzy
@@ -2573,9 +3000,9 @@ ___________________________________________<br />
 	'forum-related-module-heading' => 'Conversas relacionadas',
 	'forum-activity-module-posted' => '$1 postou uma resposta $2',
 	'forum-activity-module-started' => '$1 começou uma discussão $2',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> no <a href="$3">quadro $4</a>',
-	'forum-recentchanges-new-message' => 'no <a href="$1"> Quadro $2</a>',
-	'forum-recentchanges-edit' => '(mensagem editada)',
+	'forum-contributions-line' => '[[$1|$2]] no [[$3|quadro $4]]',
+	'forum-recentchanges-new-message' => 'no [[$1|Quadro $2]]',
+	'forum-recentchanges-edit' => 'mensagem editada',
 	'forum-recentchanges-removed-thread' => 'conversa removida "[[$1|$2]]" no [[$3|$4 Quadro]]',
 	'forum-recentchanges-removed-reply' => 'resposta removida "[[$1|$2]]" no [[$3|$4 Quadro]]',
 	'forum-recentchanges-restored-thread' => 'conversa restaurada "[[$1|$2]]" no [[$3|$4 Quadro]]',
@@ -2584,7 +3011,7 @@ ___________________________________________<br />
 	'forum-recentchanges-deleted-reply' => 'resposta deletada "[[$1|$2]]" no [[$3|$4 Quadro]]',
 	'forum-recentchanges-deleted-reply-title' => 'Uma postagem',
 	'forum-recentchanges-namespace-selector-message-wall' => 'Quadro do Fórum',
-	'forum-recentchanges-thread-group' => '$1 no <a href="$2">$3 Quadro</a>',
+	'forum-recentchanges-thread-group' => '$1 no [[$2|$3 Quadro]]',
 	'forum-recentchanges-history-link' => 'histórico do quadro',
 	'forum-recentchanges-thread-history-link' => 'histórico da conversa',
 	'forum-recentchanges-closed-thread' => 'conversa encerrada "[[$1|$2]]" de [[$3|$4]]',
@@ -2629,7 +3056,6 @@ ___________________________________________<br />
 	'forum-related-discussion-new-post-button' => 'Comece uma Discussão',
 	'forum-related-discussion-new-post-tooltip' => 'Comece uma discussão sobre $1',
 	'forum-related-discussion-total-replies' => '$1 mensagem',
-
 	'forum-related-discussion-see-more' => 'Veja mais discussões',
 	'forum-confirmation-board-deleted' => '"$1" foi deletado.',
 );
@@ -2637,13 +3063,14 @@ ___________________________________________<br />
 /** Brazilian Portuguese (português do Brasil)
  * @author Caio1478
  * @author TheGabrielZaum
+ * @author Tuliouel
  */
 $messages['pt-br'] = array(
 	'forum-forum-title' => 'Fórum',
 	'forum-active-threads' => '$1 {{PLURAL:$1|Discussão Ativa|Discussões Ativas}}',
 	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|Discussão Ativa|Discussões Ativas}} sobre: '''[[$2]]'''",
 	'forum-header-total-threads' => '<em>$1</em><span>{{PLURAL:$1|Tópico<br />neste Fórum|Tópicos<br />neste Fórum}}</span>',
-	'forum-header-active-threads' => '<em>$1</em><span>{{PLURAL:$1|Discussão<br />Ativa|Discussões<br />Ativas}}</span>',
+	'forum-header-active-threads' => '<em>$1</em><span>{{PLURAL:$1|Ativa<br />Discussão|Ativas<br />Discussões}}</span>',
 	'forum-specialpage-heading' => 'Fórum',
 	'forum-specialpage-blurb-heading' => '<span style="display:none">forum-specialpage-blurb-heading Você pode editar isto.<span>',
 	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|tópico|tópicos}}',
@@ -2674,9 +3101,9 @@ $messages['pt-br'] = array(
 	'forum-discussion-placeholder-message-short' => 'Postar uma nova mensagem',
 	'forum-activity-module-posted' => '$1 postou uma resposta $2',
 	'forum-activity-module-started' => '$1 iniciou uma discussão $2',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> no <a href="$3">painel $4</a>',
-	'forum-recentchanges-new-message' => 'no <a href="$1">Painel $2</a>',
-	'forum-recentchanges-edit' => '(mensagem editada)',
+	'forum-contributions-line' => '[[$1|$2]] no [[$3|painel $4]]',
+	'forum-recentchanges-new-message' => 'no [[$1|Painel $2]]',
+	'forum-recentchanges-edit' => 'mensagem editada',
 	'forum-recentchanges-history-link' => 'histórico do painel',
 	'forum-recentchanges-thread-history-link' => 'histórico do tópico',
 	'forum-board-history-title' => 'histórico do painel',
@@ -2715,7 +3142,6 @@ $messages['ru'] = array(
 	'forum-header-active-threads' => '<em>$1</em><span>{{PLURAL:$1|Активное<br />обсуждение|Активные<br />обсуждения}}</span>',
 	'forum-specialpage-heading' => 'Форум',
 	'forum-specialpage-blurb-heading' => '<span style="display:none">forum-specialpage-blurb-heading Вы можете редактировать его<span>',
-	'forum-specialpage-blurb' => '',
 	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|тема|темы|тем}}',
 	'forum-specialpage-board-posts' => '$1 {{PLURAL:$1|сообщение|сообщения|сообщений}}',
 	'forum-specialpage-board-lastpostby' => 'Последнее сообщение от',
@@ -2818,9 +3244,9 @@ ___________________________________________<br />
 	'forum-related-module-heading' => 'Связанные темы',
 	'forum-activity-module-posted' => '$1 опубликовал ответ $2',
 	'forum-activity-module-started' => '$1 начал обсуждение $2',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> в разделе <a href="$3">$4</a>',
-	'forum-recentchanges-new-message' => 'в <a href="$1">разделе $2</a>',
-	'forum-recentchanges-edit' => '(отредактированное сообщение)',
+	'forum-contributions-line' => '[[$1|$2]] в разделе [[$3|$4]]',
+	'forum-recentchanges-new-message' => 'в [[$1|разделе $2]]',
+	'forum-recentchanges-edit' => 'отредактированное сообщение',
 	'forum-recentchanges-removed-thread' => 'удалена тема «[[$1|$2]]» в разделе [[$3|$4]]',
 	'forum-recentchanges-removed-reply' => 'удалён ответ «[[$1|$2]]» в разделе [[$3|$4]]',
 	'forum-recentchanges-restored-thread' => 'восстановлена тема «[[$1|$2]]» в разделе [[$3|$4]]',
@@ -2829,7 +3255,7 @@ ___________________________________________<br />
 	'forum-recentchanges-deleted-reply' => 'удалён ответ «[[$1|$2]]» в разделе [[$3|$4]]',
 	'forum-recentchanges-deleted-reply-title' => 'Сообщение',
 	'forum-recentchanges-namespace-selector-message-wall' => 'Раздел форума',
-	'forum-recentchanges-thread-group' => '$1 в <a href="$2">разделе $3</a>',
+	'forum-recentchanges-thread-group' => '$1 в [[$2|разделе $3]]',
 	'forum-recentchanges-history-link' => 'история раздела',
 	'forum-recentchanges-thread-history-link' => 'история темы',
 	'forum-recentchanges-closed-thread' => 'закрыта тема «[[$1|$2]]» в разделе [[$3|$4]]',
@@ -2874,7 +3300,6 @@ ___________________________________________<br />
 	'forum-related-discussion-new-post-button' => 'Начать обсуждение',
 	'forum-related-discussion-new-post-tooltip' => 'Начать новое обсуждение о $1',
 	'forum-related-discussion-total-replies' => '$1 {{PLURAL:$1|сообщение|сообщения|сообщений}}',
-
 	'forum-related-discussion-see-more' => 'Посмотреть другие обсуждения',
 	'forum-confirmation-board-deleted' => '«$1» был удалён.',
 );
@@ -2992,9 +3417,9 @@ ___________________________________________<br />
 	'forum-related-module-heading' => 'Relaterade trådar',
 	'forum-activity-module-posted' => '$1 svarade $2',
 	'forum-activity-module-started' => '$1 startade en diskussion $2',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> i <a href="$3">underforumet $4</a>',
-	'forum-recentchanges-new-message' => 'i <a href="$1">underforumet $2</a>',
-	'forum-recentchanges-edit' => '(redigerat meddelande)',
+	'forum-contributions-line' => '[[$1|$2]] i [[$3|underforumet $4]]',
+	'forum-recentchanges-new-message' => 'i [[$1|underforumet $2]]',
+	'forum-recentchanges-edit' => 'redigerat meddelande',
 	'forum-recentchanges-removed-thread' => 'tog bort tråden "[[$1|$2]]" från [[$3|underforumet $4]]',
 	'forum-recentchanges-removed-reply' => 'tog bort svar från "[[$1|$2]]" från [[$3|underforumet $4]]',
 	'forum-recentchanges-restored-thread' => 'återställde tråden "[[$1|$2]]" till [[$3|underforumet $4]]',
@@ -3003,7 +3428,7 @@ ___________________________________________<br />
 	'forum-recentchanges-deleted-reply' => 'raderade svar från "[[$1|$2]]" från [[$3|underforumet $4]]',
 	'forum-recentchanges-deleted-reply-title' => 'Ett inlägg',
 	'forum-recentchanges-namespace-selector-message-wall' => 'Underforum',
-	'forum-recentchanges-thread-group' => '$1 i <a href="$2">underforumet $3</a>',
+	'forum-recentchanges-thread-group' => '$1 i [[$2|underforumet $3]]',
 	'forum-recentchanges-history-link' => 'underforumshistorik',
 	'forum-recentchanges-thread-history-link' => 'trådhistorik',
 	'forum-recentchanges-closed-thread' => 'stängde tråden "[[$1|$2]]" från [[$3|$4]]',
@@ -3048,9 +3473,15 @@ ___________________________________________<br />
 	'forum-related-discussion-new-post-button' => 'Starta en diskussion',
 	'forum-related-discussion-new-post-tooltip' => 'Starta en ny diskussion om $1',
 	'forum-related-discussion-total-replies' => '$1 meddelanden',
-
 	'forum-related-discussion-see-more' => 'Se fler diskussioner',
 	'forum-confirmation-board-deleted' => '"$1" har raderats.',
+);
+
+/** Tamil (தமிழ்)
+ * @author ElangoRamanujam
+ */
+$messages['ta'] = array(
+	'forum-forum-title' => 'கருத்துக்களம்',
 );
 
 /** Telugu (తెలుగు)
@@ -3067,32 +3498,32 @@ $messages['te'] = array(
 	'forum-specialpage-board-lastpostby' => 'చివరి టపా చేసినది',
 	'forum-specialpage-policies-edit' => 'మార్చు',
 	'forum-specialpage-policies' => 'వేదిక విధానాలు / FAQ',
-	'forum-policies-and-faq' => "==వేదిక విధానాలు== 
+	'forum-policies-and-faq' => "==వేదిక విధానాలు==
 {{SITENAME}} వేదికల్లో పాల్గొనే ముందు, అక్కడి నడవడిక విషయమై కొన్ని ఉత్తమ పద్ధతులను మనసులో పెట్టుకోండి.
 
-'''చక్కగా, ప్రజల పట్ల మర్యాదగా ఉండండి.''' 
+'''చక్కగా, ప్రజల పట్ల మర్యాదగా ఉండండి.'''
 : ప్రపంచవ్యాప్తంగా ఉన్న ప్రజలు ఈ వికీలోను, ఇక్కడి వేదికల్లోనూ చదవడం రాయడం చేస్తూంటారు. సామూహిక కార్యక్రమాలన్నింటిలో లానే, ప్రతీసారీ ప్రతీ ఒక్కరూ ఏకాభిప్రాయానికి రారు. చర్చల్లో మర్యాదగా ఉండండి. భిన్నాభిప్రాయాలను స్వాగతించండి. ఒకే అంశాన్ని ఇష్టపడేవాళ్లం కాబట్టే మనందరం ఇక్కడకు చేరాం.
 
-'''ఈసరికే జరిగిన చర్చల కోసం చూడండి. అయితే కొత్త తీగను మొదలుపెట్టడానికి వెనకాడకండి.''' 
-:ఒక్క నిముషం సమయం తీసుకోండి. మీరు చర్చించదలచిన విషయంపై {{SITENAME}} వేదిక బోర్డులలో ఈసరికే ఏదైనా చర్చ జరిగిందేమో చూడండి. మీకు కావలసినది దొరక్కపోతే, వెంటనే రంగంలోకి దూకండి, కొత్త చర్చను మొదలుపెట్టండి! 
+'''ఈసరికే జరిగిన చర్చల కోసం చూడండి. అయితే కొత్త తీగను మొదలుపెట్టడానికి వెనకాడకండి.'''
+:ఒక్క నిముషం సమయం తీసుకోండి. మీరు చర్చించదలచిన విషయంపై {{SITENAME}} వేదిక బోర్డులలో ఈసరికే ఏదైనా చర్చ జరిగిందేమో చూడండి. మీకు కావలసినది దొరక్కపోతే, వెంటనే రంగంలోకి దూకండి, కొత్త చర్చను మొదలుపెట్టండి!
 
-'''సాయం అడగండి.''' 
+'''సాయం అడగండి.'''
 :ఏదైనా సరిగ్గా ఉన్నట్టు అనిపించలేదా? ఏదైనా సందేహముందా? ఇక్కడ, వేదికల్లో సాయం అడగండి! Wikia సిబ్బంది నుండి సాయం అసరమైతే, [[w:c:community|సముదాయ కేంద్రం]] లేదా [[Special:Contact]] ద్వారా సంప్రదించండి.
 
-'''పండగ చేసుకోండి!''' 
-:మీరిక్కడికి రావడం {{SITENAME}} సముదాయానికి సంతోషంగా ఉంది. మనందరం ఇష్టపడే ఈ అంశం గురించి చేసే చర్చలో మీరు పాల్గొనడం కోసం మేం ఎదురుచూస్తూంటాం. 
+'''పండగ చేసుకోండి!'''
+:మీరిక్కడికి రావడం {{SITENAME}} సముదాయానికి సంతోషంగా ఉంది. మనందరం ఇష్టపడే ఈ అంశం గురించి చేసే చర్చలో మీరు పాల్గొనడం కోసం మేం ఎదురుచూస్తూంటాం.
 
-==వేదిక FAQ== 
-'''నాకు ఆసక్తి ఉన్న చర్చల పట్ల తాజా సమాచారం ఎప్పటికప్పుడు నాకు ఎలా తెలుస్తుంది?''' 
-: Wikia వాడుకరి ఖాతా ఉంటే, మీరు ఎంచుకున్న చర్చలను అనుసరించవచ్చు. తాజాగా చర్చ ఏమైనా జరిగితే మీకు వార్తా సందేశాలు వస్తాయి (సైటులోగానీ, ఈమెయిలు ద్వారాగానీ). మీకు Wikia ఖాతా లేకపోతే, [[Special:UserSignup|ఖాతా తెరవండి]]. 
+==వేదిక FAQ==
+'''నాకు ఆసక్తి ఉన్న చర్చల పట్ల తాజా సమాచారం ఎప్పటికప్పుడు నాకు ఎలా తెలుస్తుంది?'''
+: Wikia వాడుకరి ఖాతా ఉంటే, మీరు ఎంచుకున్న చర్చలను అనుసరించవచ్చు. తాజాగా చర్చ ఏమైనా జరిగితే మీకు వార్తా సందేశాలు వస్తాయి (సైటులోగానీ, ఈమెయిలు ద్వారాగానీ). మీకు Wikia ఖాతా లేకపోతే, [[Special:UserSignup|ఖాతా తెరవండి]].
 
-'''దుశ్చర్యను తొలగించడం ఎలా?''' 
-: ఏదైనా తీగలో దుశ్చర్యగానీ, స్పాముగానీ కనిపిస్తే, సదరు పాఠ్యం మీదకు మీ మౌసును తీసుకుపోండి. \"మరింత\" అనే బొత్తాం ఒకటి కనిపిస్తుంది. \"మరింత\" మెనూలో, \"తీసివెయ్యి\" అనే లింకు కనిపిస్తుంది. దీని సాయంతో దుశ్చర్యను తీసెయ్యవచ్చు. కావాలనుకుంటే నిర్వాహకునికి సమాచారం ఇవ్వవచ్చు కూడాను. 
+'''దుశ్చర్యను తొలగించడం ఎలా?'''
+: ఏదైనా తీగలో దుశ్చర్యగానీ, స్పాముగానీ కనిపిస్తే, సదరు పాఠ్యం మీదకు మీ మౌసును తీసుకుపోండి. \"మరింత\" అనే బొత్తాం ఒకటి కనిపిస్తుంది. \"మరింత\" మెనూలో, \"తీసివెయ్యి\" అనే లింకు కనిపిస్తుంది. దీని సాయంతో దుశ్చర్యను తీసెయ్యవచ్చు. కావాలనుకుంటే నిర్వాహకునికి సమాచారం ఇవ్వవచ్చు కూడాను.
 
-'''ఈభలేలు ఏమిటి?''' 
-: ఏదైనా చర్చగానీ, జవాబుగానీ ఆసక్తికరంగా ఉన్నా, ఆలోచనాత్మకంగా ఉన్నా, ముచ్చటగొలుపుతున్నా మీ మెప్పును వెంటనే భలే ఇవ్వడం ద్వారా చెప్పెయ్యవచ్చు. వోటేసే సందర్భాల్లో కూడా అది ఉపయోగపడుతుంది. 
+'''ఈభలేలు ఏమిటి?'''
+: ఏదైనా చర్చగానీ, జవాబుగానీ ఆసక్తికరంగా ఉన్నా, ఆలోచనాత్మకంగా ఉన్నా, ముచ్చటగొలుపుతున్నా మీ మెప్పును వెంటనే భలే ఇవ్వడం ద్వారా చెప్పెయ్యవచ్చు. వోటేసే సందర్భాల్లో కూడా అది ఉపయోగపడుతుంది.
 
-'''అంశాలంటే ఏమిటి?''' 
+'''అంశాలంటే ఏమిటి?'''
 : వేదిక చర్చలను వికీ వ్యాసానికి అనుసంధించడానికి అంశాలు పనికొస్తాయి. వేదికలను ఒక పద్ధతిలో పెట్టేందుకు, ప్రజలు తమకిష్టమైన చర్చలను తేలిగ్గా కనుక్కునేలా చేసేందుకు ఇదో పద్ధతి. ఉదాహరణకు, \"ఆంధ్ర ప్రదేశ్ విభజన\" అనే అంశం కలిగిన వేదిక తీగ \"ఆంధ్ర ప్రదేశ్ విభజన\" అనే వ్యాసపు అడుగున కనిపిస్తుంది.",
 	'forum-board-title' => '$1 బోర్డు',
 	'forum-board-topic-title' => '$1 గురించి చర్చలు',
@@ -3164,9 +3595,9 @@ ___________________________________________<br />
 	'forum-related-module-heading' => 'సంబంధిత తీగలు',
 	'forum-activity-module-posted' => '$2, $1 జవాబిచ్చారు',
 	'forum-activity-module-started' => '$2 $1 ఓ చర్చను మొదలుపెట్టారు',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a>, <a href="$3">$4 బోర్డు</a>లో',
-	'forum-recentchanges-new-message' => '<a href="$1">$2 బోర్డు</a>లో',
-	'forum-recentchanges-edit' => '(సరిదిద్దిన సందేశం)',
+	'forum-contributions-line' => '[[$1|$2]], [[$3|$4 బోర్డు]]లో',
+	'forum-recentchanges-new-message' => '[[$1|$2 బోర్డు]]లో',
+	'forum-recentchanges-edit' => 'సరిదిద్దిన సందేశం',
 	'forum-recentchanges-removed-thread' => '[[$3|$4 బోర్డు]] నుండి "[[$1|$2]]" తీగ తొలగించబడింది',
 	'forum-recentchanges-removed-reply' => '[[$3|$4 బోర్డు]] నుండి "[[$1|$2]]" జవాబు తొలగించబడింది',
 	'forum-recentchanges-restored-thread' => '[[$3|$4 బోర్డు]] లోకి "[[$1|$2]]" తీగ పునస్థాపించబడింది',
@@ -3175,7 +3606,7 @@ ___________________________________________<br />
 	'forum-recentchanges-deleted-reply' => '[[$3|$4 బోర్డు]] నుండి "[[$1|$2]]" జవాబు తొలగించబడింది',
 	'forum-recentchanges-deleted-reply-title' => 'ఓ టపా',
 	'forum-recentchanges-namespace-selector-message-wall' => 'వేదిక బోర్డు',
-	'forum-recentchanges-thread-group' => '<a href="$2">$3 బోర్డు</a> లో $1',
+	'forum-recentchanges-thread-group' => '[[$2|$3 బోర్డు]] లో $1',
 	'forum-recentchanges-history-link' => 'బోర్డు చరిత్ర',
 	'forum-recentchanges-thread-history-link' => 'తీగ చరిత్ర',
 	'forum-recentchanges-closed-thread' => '[[$3|$4]] లోని తీగ "[[$1|$2]]" ముగించబడింది',
@@ -3229,6 +3660,14 @@ $messages['tr'] = array(
 	'forum-specialpage-policies' => 'Forum İlkeleri / SSS',
 );
 
+/** Tuvinian (тыва дыл)
+ * @author Agilight
+ */
+$messages['tyv'] = array(
+	'forum-forum-title' => 'Шуулган',
+	'forum-specialpage-heading' => 'Шуулган',
+);
+
 /** Ukrainian (українська)
  * @author Andriykopanytsia
  */
@@ -3240,7 +3679,6 @@ $messages['uk'] = array(
 	'forum-header-active-threads' => '<em>$1</em><span>{{PLURAL:$1|активне<br /> обговорення|активні<br /> обговорення|активних<br /> обговорень}}</span>',
 	'forum-specialpage-heading' => 'Форум',
 	'forum-specialpage-blurb-heading' => '<span style="display:none">forum-specialpage-blurb-heading Ви не можете це редагувати<span>',
-	'forum-specialpage-blurb' => 'опис форуму',
 	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|тема|теми|тем}}',
 	'forum-specialpage-board-posts' => '$1 {{PLURAL:$1|допис|дописи|дописів}}',
 	'forum-specialpage-board-lastpostby' => 'Останнє повідомлення від',
@@ -3343,9 +3781,9 @@ ___________________________________________<br />
 	'forum-related-module-heading' => 'Схожі потоки',
 	'forum-activity-module-posted' => '$1 відправив відповідь $2',
 	'forum-activity-module-started' => '$1 розпочав обговорення $2',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> на <a href="$3">стіні $4</a>',
-	'forum-recentchanges-new-message' => 'на <a href="$1">стіні $2</a>',
-	'forum-recentchanges-edit' => '(відредаговане повідомлення)',
+	'forum-contributions-line' => '[[$1|$2]] на [[$3|стіні $4]]',
+	'forum-recentchanges-new-message' => 'на [[$1|стіні $2]]',
+	'forum-recentchanges-edit' => 'відредаговане повідомлення',
 	'forum-recentchanges-removed-thread' => 'вилучено тему "[[$1|$2]]" із [[$3|стіни $4]]',
 	'forum-recentchanges-removed-reply' => 'вилучено відповідь із "[[$1|$2]]" на [[$3|стіні $4]]',
 	'forum-recentchanges-restored-thread' => 'відновлено тему "[[$1|$2]]" на [[$3|стіну $4]]',
@@ -3354,7 +3792,7 @@ ___________________________________________<br />
 	'forum-recentchanges-deleted-reply' => 'вилучено відповідь із "[[$1|$2]]" з [[$3|стіни $4]]',
 	'forum-recentchanges-deleted-reply-title' => 'Допис',
 	'forum-recentchanges-namespace-selector-message-wall' => 'Стіна форуму',
-	'forum-recentchanges-thread-group' => '$1 на <a href="$2">стіні $3</a>',
+	'forum-recentchanges-thread-group' => '$1 на [[$2|стіні $3]]',
 	'forum-recentchanges-history-link' => 'історія стіни',
 	'forum-recentchanges-thread-history-link' => 'історія тем',
 	'forum-recentchanges-closed-thread' => 'закрита тема "[[$1|$2]]" із [[$3|$4]]',
@@ -3399,13 +3837,13 @@ ___________________________________________<br />
 	'forum-related-discussion-new-post-button' => 'Розпочати обговорення',
 	'forum-related-discussion-new-post-tooltip' => 'Почати нове обговорення про $1',
 	'forum-related-discussion-total-replies' => '$1 повідомлень',
-
 	'forum-related-discussion-see-more' => 'Переглянути більше обговорень',
 	'forum-confirmation-board-deleted' => '"$1" було видалено.',
 );
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Rémy Lee
  */
 $messages['vi'] = array(
 	'forum-forum-title' => 'Diễn đàn',
@@ -3499,8 +3937,8 @@ Xem cuộc trò chuyện: ($MESSAGE_LINK)
 Đội Wikia
 
 ___________________________________________
-*Tìm trợ giúp và tư vấn trên community.wikia.com. Để nhận được sự hỗ trợ cho ngôn ngữ của bạn, truy cập vi.wikia.com
-*Muốn nhận được ít thư từ chúng tôi? Bạn có thể bỏ đăng ký hoặc thay đổi tuỳ chọn email của bạn ở đây: http://community.wikia.com/Special:Preferences',
+*Để nhận được sự hỗ trợ tư vấn cho ngôn ngữ của bạn, truy cập http://congdong.wikia.com
+*Muốn nhận được ít thư từ chúng tôi? Bạn có thể bỏ đăng ký hoặc thay đổi tuỳ chọn email của bạn ở đây: http://congdong.wikia.com/Đặc_biệt:Tùy_chọn',
 	'forum-mail-notification-body-HTML' => 'Chào $WATCHER,
 <p>$SUBJECT.</p>
 <p><a href="$MESSAGE_LINK">$METATITLE</a></p>
@@ -3509,18 +3947,17 @@ ___________________________________________
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Xem cuộc trò chuyện</a></p>
 <p>Wikia Team</p>
 ___________________________________________<br />
-*Tìm trợ giúp và tư vấn trên cộng đồng Trung tâm: http://community.wikia.com. Để nhận được sự hỗ trợ cho ngôn ngữ của bạn, truy cập vi.wikia.com
-*Muốn nhận được ít thư từ chúng tôi? Bạn có thể bỏ đăng ký hoặc thay đổi
- tuỳ chọn email của bạn ở đây: http://community.wikia.com/Special:Preferences',
+*Để nhận được sự hỗ trợ và tư vấn cho ngôn ngữ của bạn, truy cập http://congdong.wikia.com
+*Muốn nhận được ít thư từ chúng tôi? Bạn có thể bỏ đăng ký hoặc thay đổi tuỳ chọn email của bạn ở đây: http://congdong.wikia.com/Đặc_biệt:Tùy_chọn',
 	'forum-wiki-activity-msg' => 'trên $1',
 	'forum-wiki-activity-msg-name' => 'Board $1',
 	'forum-activity-module-heading' => 'Hoạt động gần đây trên diễn đàn',
 	'forum-related-module-heading' => 'Chủ đề liên quan',
 	'forum-activity-module-posted' => '$1 gửi một trả lời cách đây $2',
 	'forum-activity-module-started' => '$1 bắt đầu một cuộc thảo luận cách đây $2',
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a> trên <a href="$3">tường của $4</a>',
-	'forum-recentchanges-new-message' => 'trên các <a href="$1">Board $2</a>',
-	'forum-recentchanges-edit' => '(sửa đổi tin nhắn)',
+	'forum-contributions-line' => '[[$1|$2]] trên [[$3|tường của $4]]',
+	'forum-recentchanges-new-message' => 'trên các [[$1|Board $2]]',
+	'forum-recentchanges-edit' => 'sửa đổi tin nhắn',
 	'forum-recentchanges-removed-thread' => 'dời bỏ các chủ đề "[[$1|$2]]" từ các [[$3|Board $4]]',
 	'forum-recentchanges-removed-reply' => 'dời bỏ trả lời từ "[[$1|$2]]" từ [[$3|Board $4]]',
 	'forum-recentchanges-restored-thread' => 'khôi phục các chủ đề "[[$1|$2]]" từ [[$3|Board $4]]',
@@ -3529,7 +3966,7 @@ ___________________________________________<br />
 	'forum-recentchanges-deleted-reply' => 'dời bỏ trả lời từ "[[$1|$2]]" từ [[$3|board $4]]',
 	'forum-recentchanges-deleted-reply-title' => 'Một bài đăng',
 	'forum-recentchanges-namespace-selector-message-wall' => 'Diễn đàn Board',
-	'forum-recentchanges-thread-group' => '$1 trên các <a href="$2"> Board $3</a>',
+	'forum-recentchanges-thread-group' => '$1 trên các [[$2| Board $3]]',
 	'forum-recentchanges-history-link' => 'lịch sử board',
 	'forum-recentchanges-thread-history-link' => 'lịch sử chủ đề',
 	'forum-recentchanges-closed-thread' => 'đóng chủ đề "[[$1|$2]]" từ [[$3|$4]]',
@@ -3574,9 +4011,15 @@ ___________________________________________<br />
 	'forum-related-discussion-new-post-button' => 'Bắt đầu một cuộc thảo luận',
 	'forum-related-discussion-new-post-tooltip' => 'Bắt đầu một cuộc thảo luận mới về $1',
 	'forum-related-discussion-total-replies' => '$1 tin nhắn',
-
 	'forum-related-discussion-see-more' => 'Xem thêm các cuộc thảo luận',
 	'forum-confirmation-board-deleted' => "'''$1''' đã bị xóa.",
+);
+
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'forum-recentchanges-edit' => 'רעדאקטירטע מעלדונג',
 );
 
 /** Chinese
@@ -3719,10 +4162,10 @@ ___________________________________________<br />
 	'forum-activity-module-started' => '$1发起了话题$2',
 
 	/* Contribution/RC */
-	'forum-contributions-line' => '$5 ($6 | $7) $8 <a href="$1">$2</a>在<a href="$3">$4上</a>',
+	'forum-contributions-line' => '[[$1|$2]]在[[$3|$4上]]',
 
-	'forum-recentchanges-new-message' => '在<a href="$1">$2上</a>',
-	'forum-recentchanges-edit' => '(编辑信息)',
+	'forum-recentchanges-new-message' => '在[[$1|$2上]]',
+	'forum-recentchanges-edit' => '编辑信息',
 	'forum-recentchanges-removed-thread' => '从[[$3|$4]]移除"[[$1|$2]]"',
 	'forum-recentchanges-removed-reply' => '从[[$3|$4]]的"[[$1|$2]]"移除回复',
 	'forum-recentchanges-restored-thread' => '恢复[[$3|$4]]上的"[[$1|$2]]"',
@@ -3731,7 +4174,7 @@ ___________________________________________<br />
 	'forum-recentchanges-deleted-reply' => '删除[[$3|$4]]的"[[$1|$2]]"的相关回复',
 	'forum-recentchanges-deleted-reply-title' => '一条发布的信息',
 	'forum-recentchanges-namespace-selector-message-wall' => '论坛条目',
-	'forum-recentchanges-thread-group' => '$1在<a href="$2">$3上</a>',
+	'forum-recentchanges-thread-group' => '$1在[[$2|$3上]]',
 	'forum-recentchanges-history-link' => '条目创建历史',
 	'forum-recentchanges-thread-history-link' => '帖子创建历史',
 	'forum-recentchanges-closed-thread' => '在[[$3|$4]]上关闭帖子"[[$1|$2]]"',
@@ -3822,6 +4265,7 @@ $messages['zh-hans'] = array(
 	'forum-header-total-threads' => '<em>$1</em><span>在此论坛上<br />条帖子</span>',
 	'forum-header-active-threads' => '<em>$1</em><span>条活跃的<br />讨论</span>',
 	'forum-specialpage-heading' => '论坛',
+	'forum-specialpage-blurb-heading' => '<span style="display:none">forum-specialpage-blurb-heading 您可以编辑它<span>',
 	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|thread|threads}}',
 	'forum-specialpage-board-posts' => '$1 {{PLURAL:$1|帖子|帖子}}',
 	'forum-specialpage-board-lastpostby' => '最后发帖者',
@@ -3876,40 +4320,98 @@ $messages['zh-hans'] = array(
 	'forum-discussion-placeholder-title' => '您希望谈论些什么？',
 	'forum-discussion-placeholder-message' => '发送一条新信息至$1板面',
 	'forum-discussion-placeholder-message-short' => '创建新消息',
+	'forum-notification-user1-reply-to-your' => '$1在$3板块{{GENDER:$1|回复了}}您的帖子',
 	'forum-notification-user2-reply-to-your' => '$1和$2在$3的讨论版上回复了你',
+	'forum-notification-user3-reply-to-your' => '$1与其他用户回复了您在$3板块的帖子',
+	'forum-notification-user1-reply-to-someone' => '$1在$3板块{{GENDER:$1|作出回答}}',
 	'forum-notification-user2-reply-to-someone' => '$1和$2在$3的讨论板上做出了回复',
 	'forum-notification-user3-reply-to-someone' => '$1等人$3讨论版上做出了回复',
+	'forum-notification-newmsg-on-followed-wall' => '$1在$2板块发送了一条消息',
+	'forum-mail-notification-new-someone' => '$AUTHOR_NAME在$WIKI的$BOARDNAME板块写了一个新回复。',
+	'forum-mail-notification-new-your' => '$AUTHOR_NAME在$WIKI的$BOARDNAME板块写了一个新回复。',
+	'forum-mail-notification-reply-your' => '$AUTHOR_NAME在$WIKI的$BOARDNAME板块回复了您的帖子',
+	'forum-mail-notification-reply-his' => '$AUTHOR_NAME在$WIKI的$BOARDNAME板块作出回答',
+	'forum-mail-notification-reply-someone' => '$AUTHOR_NAME在$WIKI的$BOARDNAME板块作出回答',
 	'forum-mail-notification-html-greeting' => 'Hi $1，',
 	'forum-mail-notification-html-button' => '查看会话',
 	'forum-mail-notification-subject' => '$1——$2',
+	'forum-mail-notification-body' => '嗨！$WATCHER
+
+$SUBJECT
+
+$METATITLE
+
+$MESSAGE_NO_HTML
+
+-- $AUTHOR
+
+见对话：（$MESSAGE_LINK）
+
+Wikia团队
+
+___________________________________________
+* 在社群中心寻求帮助和建议：http://community.wikia.com
+* 希望订阅来自我们的少量信息？您可通过下面链接退订或更改您的电子邮件设置：http://community.wikia.com/Special:Preferences',
+	'forum-mail-notification-body-HTML' => '嗨！$WATCHER
+<p>$SUBJECT。</p>
+<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
+<p>$MESSAGE_HTML</p>
+<p>-- $AUTHOR_SIGNATURE<p>
+<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">见对话</a></p>
+<p>Wikia团队</p>
+___________________________________________<br />
+* 在社群中心寻求帮助和建议：http://community.wikia.com
+* 希望订阅来自我们的少量信息？您可通过下面链接退订或更改您的电子邮件设置：http://community.wikia.com/Special:Preferences',
 	'forum-wiki-activity-msg' => '在$1',
 	'forum-wiki-activity-msg-name' => '$1板面',
 	'forum-activity-module-heading' => '论坛活动',
 	'forum-related-module-heading' => '相关讨论',
 	'forum-activity-module-posted' => '$1在$2发布了一条回复',
 	'forum-activity-module-started' => '$1发起了讨论$2',
-	'forum-contributions-line' => '$5（$6|$7）$8<a href="$1">$2</a>在<a href="$3">$4板面</a>',
-	'forum-recentchanges-new-message' => '在<a href="$1">$2板面</a>',
-	'forum-recentchanges-edit' => '(编辑信息)',
+	'forum-contributions-line' => '[[$1|$2]]在[[$3|$4板面]]',
+	'forum-recentchanges-new-message' => '在[[$1|$2板面]]',
+	'forum-recentchanges-edit' => '编辑信息',
+	'forum-recentchanges-removed-thread' => '已从[[$3|$4 板块]]移除回复“[[$1|$2]]”',
+	'forum-recentchanges-removed-reply' => '从[[$3|$4板块]]的“[[$1|$2]]”移除回复',
+	'forum-recentchanges-restored-thread' => '恢复帖子“[[$1|$2]]”至[[$3|$4板块]]',
+	'forum-recentchanges-restored-reply' => '恢复在“[[$1|$2]]”的回复至[[$3|$4板块]]',
+	'forum-recentchanges-deleted-thread' => '从[[$3|$4板块]]删除帖子“[[$1|$2]]”',
+	'forum-recentchanges-deleted-reply' => '从[[$3|$4板块]]删除来自“[[$1|$2]]”的回复',
 	'forum-recentchanges-deleted-reply-title' => '一个主题',
 	'forum-recentchanges-namespace-selector-message-wall' => '论坛讨论区',
+	'forum-recentchanges-thread-group' => '$1 在[[$2|$3 板块]]',
 	'forum-recentchanges-history-link' => '板面历史',
 	'forum-recentchanges-thread-history-link' => '帖子历史',
-	'forum-board-history-title' => '委员会历史',
+	'forum-recentchanges-closed-thread' => '从[[$3|$4]]关闭帖子“[[$1|$2]]”',
+	'forum-recentchanges-reopened-thread' => '从[[$3|$4]]重启帖子“[[$1|$2]]”',
+	'forum-board-history-title' => '板面历史',
 	'forum-specialpage-oldforum-link' => '旧论坛存档',
 	'forum-admin-page-breadcrumb' => '管理员面板管理',
-	'forum-admin-create-new-board-label' => '创建新面板',
-	'forum-admin-create-new-board-modal-heading' => '创建新面板',
+	'forum-admin-create-new-board-label' => '创建新板面',
+	'forum-admin-create-new-board-modal-heading' => '创建新板面',
 	'forum-admin-create-new-board-title' => '板块标题',
 	'forum-admin-create-new-board-description' => '版块描述',
+	'forum-admin-edit-board-modal-heading' => '编辑板块：$1',
+	'forum-admin-edit-board-title' => '板块标题',
+	'forum-admin-edit-board-description' => '版块描述',
+	'forum-admin-delete-and-merge-board-modal-heading' => '删除板块：$1',
+	'forum-admin-delete-board-title' => '请输入板块名以确认您想删除：',
+	'forum-admin-merge-board-destination' => '选择板块合并至：',
 	'forum-admin-delete-and-merge-button-label' => '删除与合并',
 	'forum-admin-link-label' => '管理版块',
+	'forum-autoboard-title-1' => '一般讨论',
 	'forum-autoboard-title-2' => '新闻和公告',
 	'forum-autoboard-body-2' => '重大消息信息',
+	'forum-autoboard-title-3' => '$1上的新鲜事',
 	'forum-autoboard-title-4' => '问答',
 	'forum-autoboard-body-4' => '对这个wiki或者这个主题有问题？在这里提问！',
 	'forum-autoboard-title-5' => '娱乐与游戏',
 	'forum-board-destination-empty' => '（请选择面板）',
+	'forum-board-title-validation-length' => '板块名应至少4个字符长',
+	'forum-board-title-validation-exists' => '已存在同名板块',
+	'forum-board-validation-count' => '板块最多可以有$1个',
+	'forum-board-id-validation-missing' => '板块id丢失',
+	'forum-board-no-board-warning' => '我们找不到那个标题的板块。这里是论坛板块列表。',
 	'forum-old-notification-message' => '本论坛已存档',
 	'forum-old-notification-navigation-button' => '访问新论坛',
 	'forum-related-discussion-heading' => '关于$1的讨论',
@@ -3922,6 +4424,7 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
  */
 $messages['zh-hant'] = array(
 	'forum-forum-title' => '論壇',
@@ -4005,9 +4508,9 @@ $messages['zh-hant'] = array(
 	'forum-related-module-heading' => '相關討論',
 	'forum-activity-module-posted' => '$1在$2發布了一條回覆',
 	'forum-activity-module-started' => '$1 在$2 發起了一個討論',
-	'forum-contributions-line' => '$5（$6|$7）$8<a href="$1">$2</a>在<a href="$3">$4板面</a>',
-	'forum-recentchanges-new-message' => '在<a href="$1">$2板面</a>',
-	'forum-recentchanges-edit' => '(編輯訊息)',
+	'forum-contributions-line' => '[[$1|$2]]在[[$3|$4板面]]',
+	'forum-recentchanges-new-message' => '在[[$1|$2板面]]',
+	'forum-recentchanges-edit' => '編輯訊息',
 	'forum-recentchanges-removed-thread' => ' 從[[$3|$4 板面]]移除討論串 "[[$1|$2]]"',
 	'forum-recentchanges-removed-reply' => '從[[$3|$4 板面]]移除 "[[$1|$2]]"討論串',
 	'forum-recentchanges-restored-thread' => '將討論串 "[[$1|$2]]" 儲存到 [[$3|$4 板面]]',
@@ -4016,7 +4519,7 @@ $messages['zh-hant'] = array(
 	'forum-recentchanges-deleted-reply' => '從[[$3|$4 板面]]刪除"[[$1|$2]]"的回覆',
 	'forum-recentchanges-deleted-reply-title' => '一個主題',
 	'forum-recentchanges-namespace-selector-message-wall' => '論壇板面',
-	'forum-recentchanges-thread-group' => '位於<a href="$2">$3 板面</a>的 $1',
+	'forum-recentchanges-thread-group' => '位於[[$2|$3 板面]]的 $1',
 	'forum-recentchanges-history-link' => '板面歷史',
 	'forum-recentchanges-thread-history-link' => '討論串歷史',
 	'forum-recentchanges-closed-thread' => '關閉[[$3|$4]]的討論串 "[[$1|$2]]"',
@@ -4025,7 +4528,7 @@ $messages['zh-hant'] = array(
 	'forum-specialpage-oldforum-link' => '舊論壇存檔',
 	'forum-admin-page-breadcrumb' => '管理員板面管理',
 	'forum-admin-create-new-board-label' => '創建新板面',
-	'forum-admin-create-new-board-modal-heading' => '創建一個新的板面',
+	'forum-admin-create-new-board-modal-heading' => '建立一個新的板面',
 	'forum-admin-create-new-board-title' => '板面標題',
 	'forum-admin-create-new-board-description' => '板面描述',
 	'forum-admin-edit-board-modal-heading' => '編輯板面: $1',
@@ -4061,7 +4564,6 @@ $messages['zh-hant'] = array(
 	'forum-related-discussion-new-post-button' => '發起討論',
 	'forum-related-discussion-new-post-tooltip' => '發起關於$1的討論',
 	'forum-related-discussion-total-replies' => '$1條訊息',
-
 	'forum-related-discussion-see-more' => '參見更多討論',
 	'forum-confirmation-board-deleted' => '“$1”已被删除。',
 );

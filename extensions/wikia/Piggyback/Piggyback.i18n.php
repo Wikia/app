@@ -68,6 +68,19 @@ $messages['br'] = array(
 	'action-piggyback' => 'Kevreañ gant ur gont implijer all',
 );
 
+/** Catalan (català)
+ * @author Unapersona
+ */
+$messages['ca'] = array(
+	'piggybac-desc' => 'Permet entrar com a un altre usuari.',
+	'piggyback-otherusername' => "Una altre nom d'usuari:",
+	'piggyback-nosuchuser' => 'No hi ha cap d\'usuari amb el nom "$1".
+Les majúscules i les minúscules compten, revisa l\'escriptura!',
+	'piggyback-wronguser' => "$1 no és el teu nom d'usuari.",
+	'piggyback-loginprompt' => "Si us plau, torneu a introduir el vostre nom d'usuari i contrasenya.",
+	'action-piggyback' => 'registre a un altre usuari',
+);
+
 /** Czech (čeština)
  * @author Dontlietome7
  * @author Reaperman
@@ -161,7 +174,7 @@ Vérifiez l'orthographe.",
 	'piggyback-firstlogout' => 'Veuillez d’abord vous déconnecter de votre compte.',
 	'piggyback-itisyou' => 'Vous ne pouvez pas vous connecter de manière superposée sur votre propre compte.',
 	'piggyback-issysopto' => 'Vous ne pouvez pas vous connecter de manière superposée sur le compte d’un utilisateur ayant lui-même ce droit.',
-	'action-piggyback' => 'se connecter sous un autre compte utilisateur',
+	'action-piggyback' => 'vous connecter sous un autre compte utilisateur',
 	'log-name-piggyback' => 'Journal d’accès superposé',
 	'log-description-piggyback' => 'Ce journal est une liste des accès superposés à des comptes.',
 );
@@ -591,13 +604,19 @@ Hãy kiểm tra lại hoặc bạn có thể đăng ký tài khoản này.',
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  * @author Hzy980512
+ * @author Liuxinyu970226
  */
 $messages['zh-hans'] = array(
+	'piggybac-desc' => '允许作为其他用户登录',
 	'piggyback' => '转接',
 	'piggyback-otherusername' => '其他用户名：',
 	'piggyback-nosuchuser' => '没有名为“$1”的用户。用户名区分大小写，请再检查一遍。',
 	'piggyback-wronguser' => '$1 不是您的用户名',
 	'piggyback-loginprompt' => '请再输入一次您的用户名和密码。',
+	'piggyback-firstlogout' => '请先注销您当前的账户。',
 	'piggyback-itisyou' => '您不能转接自己。',
+	'piggyback-issysopto' => '您不能搭载已经搭载权限的用户。',
 	'action-piggyback' => '用其他账户登录',
+	'log-name-piggyback' => 'Piggyback日志',
+	'log-description-piggyback' => '此日志记录账户搭载。',
 );

@@ -1,202 +1,316 @@
-describe('AdConfig2', function(){
+/*global describe,it,expect,modules,spyOn*/
+describe('AdConfig2', function () {
+	'use strict';
 
+	// Mock factories:
+	function mockGeo(country) {
+		return {getCountryCode: function () { return country; }};
+	}
 
-	it('getProvider failsafe to Later', function() {
-		var adProviderNullMock = {name: 'NullMock'}
-			, evolveSlotConfigMock = {name: 'EvolveMock', canHandleSlot: function() {return false;}}
-			, adProviderDirectGptMock = {name:'GptMock', canHandleSlot: function() {return false;}}
-			, adProviderLaterMock = {name: 'LaterMock'}
-			, geoMock = {getCountryCode:function() {}}
-			, logMock = function() {}
-			, windowMock = {wgShowAds: true}
-			, documentMock = {}
-			, adDecoratorPageDimensionsMock = {isApplicable: function() {return false;}}
-			, abTestMock = {inGroup: function() {return false;}}
-			, adConfig;
+	function mockEvolveSlotConfig(shouldHandle) {
+		return {name: 'EvolveMock', canHandleSlot: function () { return shouldHandle; }};
+	}
 
-		adConfig = modules['ext.wikia.adEngine.adConfig'](
+	function mockGptProvider(shouldHandle) {
+		return {name: 'GptMock', canHandleSlot: function () { return shouldHandle; }};
+	}
+
+	function mockAdContext(showAds, providers) {
+		return {
+			getContext: function () {
+				return {
+					opts: {showAds: showAds},
+					providers: providers || {},
+					forceProviders: {}
+				};
+			}
+		};
+	}
+
+	function mockRtp(called, tier) {
+		return {
+			wasCalled: function () {
+				return called;
+			},
+			trackState: function () {
+				return;
+			},
+			getTier: function () {
+				return tier;
+			}
+		};
+	}
+
+	// Mocks:
+	var adDecoratorPageDimensionsMock = {isApplicable: function () { return false; }},
+		adProviderNullMock = {name: 'NullMock'},
+		adProviderLaterMock = {name: 'LaterMock'},
+		logMock = function () { return; },
+		gptSlotConfigMock = {
+			extendSlotParams: function () {
+				return;
+			}
+		},
+		rtpMock = mockRtp(),
+		rtpMockWithTier = mockRtp(true, 5),
+		rtpMockWithoutTier = mockRtp(true),
+
+	// Fixtures:
+		highValueSlot = 'TOP_LEADERBOARD',
+		lowValueSlot = 'foo';
+
+	it('getProvider failsafe to Later', function () {
+
+		var adConfig = modules['ext.wikia.adEngine.adConfig'](
 			logMock,
-			windowMock,
-			documentMock,
-			geoMock,
-			abTestMock,
+			mockGeo(),
+			mockAdContext(true),
 			adDecoratorPageDimensionsMock,
-			evolveSlotConfigMock
+			mockEvolveSlotConfig(false),
+			gptSlotConfigMock,
+			rtpMock,
 
 			// AdProviders
-			, adProviderDirectGptMock
-			, adProviderLaterMock
-			, adProviderNullMock
+			mockGptProvider(false),
+			adProviderLaterMock,
+			adProviderNullMock
 		);
 
-		expect(adConfig.getProvider(['foo'])).toBe(adProviderLaterMock, 'adProviderLaterMock');
+		expect(adConfig.getProvider([lowValueSlot])).toBe(adProviderLaterMock, 'adProviderLaterMock');
+		expect(adConfig.getProvider([highValueSlot])).toBe(adProviderLaterMock, 'adProviderLaterMock');
 	});
 
-	it('getProvider use GPT for high value slots', function() {
-		var adProviderNullMock = {name: 'NullMock'}
-			, evolveSlotConfigMock = {canHandleSlot: function() {return false;}}
-			, adProviderDirectGptMock = {name:'GptMock', canHandleSlot: function() {return true;}}
-			, adProviderLaterMock = {name: 'LaterMock', canHandleSlot: function() {return true;}}
-			, geoMock = {getCountryCode: function() {return 'hi-value-country'}}
-			, logMock = function() {}
-			, windowMock = {wgHighValueCountries: {'hi-value-country': true, 'another-hi-value-country': true}, wgShowAds: true}
-			, documentMock = {}
-			, adDecoratorPageDimensionsMock = {isApplicable: function() {return false;}}
-			, abTestMock = {inGroup: function() {return false;}}
-			, adConfig
-			, highValueSlot = 'TOP_LEADERBOARD'
-			;
+	it('getProvider use GPT for high value slots', function () {
+		var adProviderGptMock = mockGptProvider(true),
+			adConfig = modules['ext.wikia.adEngine.adConfig'](
+				logMock,
+				mockGeo(),
+				mockAdContext(true),
+				adDecoratorPageDimensionsMock,
+				mockEvolveSlotConfig(false),
+				mockGptProvider(true),
+				rtpMock,
 
-		adConfig = modules['ext.wikia.adEngine.adConfig'](
-			logMock,
-			windowMock,
-			documentMock,
-			geoMock,
-			abTestMock,
-			adDecoratorPageDimensionsMock
-			, evolveSlotConfigMock
+				// AdProviders
+				adProviderGptMock,
+				adProviderLaterMock,
+				adProviderNullMock
+			);
 
-			// AdProviders
-			, adProviderDirectGptMock
-			, adProviderLaterMock
-			, adProviderNullMock
-		);
-
-		expect(adConfig.getProvider(['foo'])).toBe(adProviderLaterMock, 'adProviderLaterMock');
-		expect(adConfig.getProvider([highValueSlot])).toBe(adProviderDirectGptMock, 'adProviderDirectGptMock');
+		expect(adConfig.getProvider([lowValueSlot])).toBe(adProviderLaterMock, 'adProviderLaterMock');
+		expect(adConfig.getProvider([highValueSlot])).toBe(adProviderGptMock, 'adProviderDirectGptMock');
 	});
 
-	it('getProvider use Evolve for NZ (only if provider accepts)', function() {
-		var adProviderNullMock = {name: 'NullMock'}
-			, evolveSlotConfig = {canHandleSlot: function() {return true;}}
-			, adProviderDirectGptMock = {name:'GptMock'}
-			, adProviderLaterMock = {name: 'LaterMock'}
-			, geoMockAU = {getCountryCode:function() {return 'NZ';}}
-			, logMock = function() {}
-			, windowMock = {wgShowAds: true}
-			, documentMock = {}
-			, adDecoratorPageDimensionsMock = {isApplicable: function() {return false;}}
-			, abTestMock = {inGroup: function() {return false;}}
-			, adConfig;
-
-		adConfig = modules['ext.wikia.adEngine.adConfig'](
+	it('getProvider use Evolve for NZ (only if provider accepts)', function () {
+		var adConfig = modules['ext.wikia.adEngine.adConfig'](
 			logMock,
-			windowMock,
-			documentMock,
-			geoMockAU,
-			abTestMock,
-			adDecoratorPageDimensionsMock
-			, evolveSlotConfig
+			mockGeo('NZ'),
+			mockAdContext(true),
+			adDecoratorPageDimensionsMock,
+			mockEvolveSlotConfig(true),
+			gptSlotConfigMock,
+			rtpMock,
 
 			// AdProviders
-			, adProviderDirectGptMock
-			, adProviderLaterMock
-			, adProviderNullMock
+			mockGptProvider(false),
+			adProviderLaterMock,
+			adProviderNullMock
 		);
 
-		expect(adConfig.getProvider(['foo'])).toBe(adProviderLaterMock, 'adProviderEvolveMock NZ');
+		expect(adConfig.getProvider([lowValueSlot])).toBe(adProviderLaterMock, 'adProviderLaterMock NZ');
+		expect(adConfig.getProvider([highValueSlot])).toBe(adProviderLaterMock, 'adProviderLaterMock NZ');
 	});
 
-	it('getProvider do not use Evolve for PL', function() {
-		var adProviderNullMock = {name: 'NullMock'}
-			, evolveSlotConfig = {canHandleSlot: function() {return true;}}
-			, adProviderDirectGptMock = {name:'GptMock', canHandleSlot: function() {return true;}}
-			, adProviderLaterMock = {name: 'LaterMock'}
-			, geoMock = {getCountryCode:function() {return 'PL';}}
-			, logMock = function() {}
-			, windowMock = {wgShowAds: true}
-			, documentMock = {}
-			, adDecoratorPageDimensionsMock = {isApplicable: function() {return false;}}
-			, abTestMock = {inGroup: function() {return false;}}
-			, adConfig
-			, highValueSlot = 'TOP_LEADERBOARD';
-
-		adConfig = modules['ext.wikia.adEngine.adConfig'](
+	it('getProvider do not use Evolve for PL', function () {
+		var adConfig = modules['ext.wikia.adEngine.adConfig'](
 			logMock,
-			windowMock,
-			documentMock,
-			geoMock,
-			abTestMock,
-			adDecoratorPageDimensionsMock
-			, evolveSlotConfig
+			mockGeo('PL'),
+			mockAdContext(true),
+			adDecoratorPageDimensionsMock,
+			mockEvolveSlotConfig(true),
+			gptSlotConfigMock,
+			rtpMock,
 
 			// AdProviders
-			, adProviderDirectGptMock
-			, adProviderLaterMock
-			, adProviderNullMock
+			mockGptProvider(true),
+			adProviderLaterMock,
+			adProviderNullMock
 		);
 
-		expect(adConfig.getProvider([highValueSlot])).not.toBe(adProviderLaterMock, 'adProviderEvolveMock');
+		expect(adConfig.getProvider([highValueSlot])).not.toBe(adProviderLaterMock, 'adProviderLaterMock');
 	});
 
-	it('getProvider do not use Evolve for NZ when it cannot handle the slot', function() {
-		var adProviderNullMock = {name: 'NullMock'}
-			, evolveSlotConfigMock = {canHandleSlot: function() {return false;}}
-			, adProviderDirectGptMock = {name:'GptMock', canHandleSlot: function() {return true;}}
-			, adProviderLaterMock = {name: 'LaterMock'}
-			, geoMock = {getCountryCode:function() {return 'NZ';}}
-			, logMock = function() {}
-			, windowMock = {wgShowAds: true}
-			, documentMock = {}
-			, adDecoratorPageDimensionsMock = {isApplicable: function() {return false;}}
-			, abTestMock = {inGroup: function() {return false;}}
-			, adConfig;
-
-		adConfig = modules['ext.wikia.adEngine.adConfig'](
+	it('getProvider do not use Evolve for NZ when it cannot handle the slot', function () {
+		var adConfig = modules['ext.wikia.adEngine.adConfig'](
 			logMock,
-			windowMock,
-			documentMock,
-			geoMock,
-			abTestMock,
-			adDecoratorPageDimensionsMock
-			, evolveSlotConfigMock
+			mockGeo('NZ'),
+			mockAdContext(true),
+			adDecoratorPageDimensionsMock,
+			mockEvolveSlotConfig(false),
+			gptSlotConfigMock,
+			rtpMock,
 
 			// AdProviders
-			, adProviderDirectGptMock
-			, adProviderLaterMock
-			, adProviderNullMock
+			mockGptProvider(true),
+			adProviderLaterMock,
+			adProviderNullMock
 		);
 
-		expect(adConfig.getProvider(['TOP_LEADERBOARD'])).not.toBe(adProviderLaterMock, 'adProviderLaterMock');
+		expect(adConfig.getProvider([highValueSlot])).not.toBe(adProviderLaterMock, 'adProviderLaterMock');
 	});
 
-	it('getProvider Null wins over all', function() {
-		var adProviderNullMock = {name: 'NullMock'}
-			, evolveSlotConfig = {canHandleSlot: function() {return true;}}
-			, adProviderDirectGptMock = {name:'GptMock', canHandleSlot: function() {return true}}
-			, adProviderLaterMock = {name: 'LaterMock', canHandleSlot: function() {return true}}
-			, geoMock = {getCountryCode: function() {return 'hi-value-country'}}
-			, logMock = function() {}
-			, windowMock = {wgHighValueCountries: {'hi-value-country': true}, wgShowAds: false}
-			, documentMock = {}
-			, adDecoratorPageDimensionsMock = {isApplicable: function() {return false;}}
-			, abTestMock = {inGroup: function() {return false;}}
-			, adConfig;
-
-		adConfig = modules['ext.wikia.adEngine.adConfig'](
+	it('getProvider return SevenOneMedia when wgAdProviderSevenOneMedia = true in HVC', function () {
+		var adConfig = modules['ext.wikia.adEngine.adConfig'](
 			logMock,
-			windowMock,
-			documentMock,
-			geoMock,
-			abTestMock,
-			adDecoratorPageDimensionsMock
-			, evolveSlotConfig
+			mockGeo(),
+			mockAdContext(true, {sevenOneMedia: true}),
+			adDecoratorPageDimensionsMock,
+			mockEvolveSlotConfig(false),
+			gptSlotConfigMock,
+			rtpMock,
 
 			// AdProviders
-			, adProviderDirectGptMock
-			, adProviderLaterMock
-			, adProviderNullMock
+			mockGptProvider(true),
+			adProviderLaterMock,
+			adProviderNullMock
 		);
+
+		expect(adConfig.getProvider([highValueSlot])).toBe(adProviderLaterMock, 'adProviderLaterMock');
+	});
+
+	it('getProvider return SevenOneMedia when wgAdProviderSevenOneMedia = true in PL', function () {
+		var adConfig = modules['ext.wikia.adEngine.adConfig'](
+			logMock,
+			mockGeo('PL'),
+			mockAdContext(true, {sevenOneMedia: true}),
+			adDecoratorPageDimensionsMock,
+			mockEvolveSlotConfig(false),
+			gptSlotConfigMock,
+			rtpMock,
+
+			// AdProviders
+			mockGptProvider(true),
+			adProviderLaterMock,
+			adProviderNullMock
+		);
+
+		expect(adConfig.getProvider([highValueSlot])).toBe(adProviderLaterMock, 'adProviderLaterMock');
+	});
+
+	it('getProvider return SevenOneMedia when wgAdProviderSevenOneMedia = true in NZ', function () {
+		var adConfig = modules['ext.wikia.adEngine.adConfig'](
+			logMock,
+			mockGeo('NZ'),
+			mockAdContext(true, {sevenOneMedia: true}),
+			adDecoratorPageDimensionsMock,
+			mockEvolveSlotConfig(true),
+			gptSlotConfigMock,
+			rtpMock,
+
+			// AdProviders
+			mockGptProvider(true),
+			adProviderLaterMock,
+			adProviderNullMock
+		);
+
+		expect(adConfig.getProvider([highValueSlot])).toBe(adProviderLaterMock, 'adProviderLaterMock');
+	});
+
+	it('getProvider Null when wgShowAds = false', function () {
+		var geoMock = mockGeo(),
+			adConfig = modules['ext.wikia.adEngine.adConfig'](
+				logMock,
+				mockGeo(),
+				mockAdContext(false),
+				adDecoratorPageDimensionsMock,
+				mockEvolveSlotConfig(true),
+				gptSlotConfigMock,
+				rtpMock,
+
+				// AdProviders
+				mockGptProvider(true),
+				adProviderLaterMock,
+				adProviderNullMock
+			);
 
 		// First check if NullProvider wins over GPT
-		expect(adConfig.getProvider(['TOP_LEADERBOARD'])).toBe(adProviderNullMock, 'adProviderNullMock wgShowAds false');
+		expect(adConfig.getProvider([highValueSlot])).toBe(adProviderNullMock, 'adProviderNullMock wgShowAds false');
 
 		// Second check if NullProvider wins over Later
-		geoMock.getCountryCode = function() {};
-		expect(adConfig.getProvider(['foo'])).toBe(adProviderNullMock, 'adProviderNullMock wgShowAds false');
+		geoMock.getCountryCode = function () { return; };
+		expect(adConfig.getProvider([lowValueSlot])).toBe(adProviderNullMock, 'adProviderNullMock wgShowAds false');
+		expect(adConfig.getProvider([highValueSlot])).toBe(adProviderNullMock, 'adProviderNullMock wgShowAds false');
 
 		// Third check if NullProvider wins over Evolve
-		geoMock.getCountryCode = function() {return 'NZ'};
-		expect(adConfig.getProvider(['TOP_LEADERBOARD'])).toBe(adProviderNullMock, 'adProviderNullMock wgShowAds false');
+		geoMock.getCountryCode = function () { return 'NZ'; };
+		expect(adConfig.getProvider([highValueSlot])).toBe(adProviderNullMock, 'adProviderNullMock wgShowAds false');
+	});
+
+	it('getProvider RTP integration -- RTP not called', function () {
+		spyOn(gptSlotConfigMock, 'extendSlotParams');
+
+		modules['ext.wikia.adEngine.adConfig'](
+			logMock,
+			mockGeo(),
+			mockAdContext(false),
+			adDecoratorPageDimensionsMock,
+			mockEvolveSlotConfig(true),
+			gptSlotConfigMock,
+			mockRtp(),
+
+			// AdProviders
+			mockGptProvider(true),
+			adProviderLaterMock,
+			adProviderNullMock
+		);
+
+		expect(gptSlotConfigMock.extendSlotParams.calls.length).toBe(0);
+	});
+
+	it('getProvider RTP integration -- RTP called without tier info', function () {
+		spyOn(gptSlotConfigMock, 'extendSlotParams');
+		spyOn(rtpMockWithoutTier, 'trackState');
+
+		modules['ext.wikia.adEngine.adConfig'](
+			logMock,
+			mockGeo(),
+			mockAdContext(false),
+			adDecoratorPageDimensionsMock,
+			mockEvolveSlotConfig(true),
+			gptSlotConfigMock,
+			rtpMockWithoutTier,
+
+			// AdProviders
+			mockGptProvider(true),
+			adProviderLaterMock,
+			adProviderNullMock
+		);
+
+		expect(gptSlotConfigMock.extendSlotParams.calls.length).toBe(0);
+		expect(rtpMockWithoutTier.trackState).toHaveBeenCalled();
+	});
+
+	it('getProvider RTP integration -- RTP called with tier info', function () {
+		spyOn(gptSlotConfigMock, 'extendSlotParams');
+		spyOn(rtpMockWithTier, 'trackState');
+
+		modules['ext.wikia.adEngine.adConfig'](
+			logMock,
+			mockGeo(),
+			mockAdContext(false),
+			adDecoratorPageDimensionsMock,
+			mockEvolveSlotConfig(true),
+			gptSlotConfigMock,
+			rtpMockWithTier,
+
+			// AdProviders
+			mockGptProvider(true),
+			adProviderLaterMock,
+			adProviderNullMock
+		);
+
+		expect(gptSlotConfigMock.extendSlotParams)
+			.toHaveBeenCalledWith('gpt', 'HOME_TOP_RIGHT_BOXAD', { 'rp_tier': 5 });
+		expect(rtpMockWithTier.trackState).toHaveBeenCalled();
 	});
 });

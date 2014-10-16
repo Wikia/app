@@ -38,14 +38,7 @@ class HubRssControllerTest extends WikiaBaseTest {
 	 * @covers  HubRssFeedSpecialController::notfound
 	 */
 	public function testNotFound() {
-		$mock = $this->getMockBuilder( 'HubRssFeedSpecialController' )
-			->disableOriginalConstructor()
-			->setMethods( ['__construct', 'setVal'] )
-			->getMock();
-
-		$mock->expects( $this->once() )
-			->method( 'setVal' )
-			->with( 'links', [] );
+		$this->mockGlobalVariable('wgHubRssFeeds', ['Hub1', 'Hub2']);
 
 		$mockTitle = $this->getMockBuilder( 'Title' )
 			->disableOriginalConstructor()
@@ -55,6 +48,18 @@ class HubRssControllerTest extends WikiaBaseTest {
 		$mockTitle->expects( $this->any() )
 			->method( 'getFullUrl' )
 			->will( $this->returnValue( 'abc' ) );
+
+		$mock = $this->getMockBuilder( 'HubRssFeedSpecialController' )
+			->disableOriginalConstructor()
+			->setMethods( ['__construct', 'setVal'] )
+			->getMock();
+
+		$mock->expects( $this->once() )
+			->method( 'setVal' )
+			->with( 'links', [
+				'abc/Hub1',
+				'abc/Hub2'
+			] );
 
 		$mock->currentTitle = $mockTitle;
 
@@ -93,7 +98,6 @@ class HubRssControllerTest extends WikiaBaseTest {
 			->with( 'HubRssFeedSpecial', 'notfound' );
 
 		$mock->currentTitle = $mockTitle;
-
 		$mock->request = $mockRequest;
 		$mock->index();
 	}

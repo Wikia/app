@@ -13,12 +13,12 @@
  * @mixins ve.dm.ResizableNode
  *
  * @constructor
- * @param {number} [length] Length of content data in document
  * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.ImageNode = function VeDmImageNode( length, element ) {
+ve.dm.ImageNode = function VeDmImageNode() {
 	// Parent constructor
-	ve.dm.LeafNode.call( this, 0, element );
+	ve.dm.LeafNode.apply( this, arguments );
+
 	// Mixin constructor
 	ve.dm.ResizableNode.call( this );
 };
@@ -71,7 +71,7 @@ ve.dm.ImageNode.prototype.createScalable = function () {
 		},
 		'minDimensions': {
 			'width': 1,
-			'height': 1,
+			'height': 1
 		}
 	} );
 };

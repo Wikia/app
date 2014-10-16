@@ -8,54 +8,62 @@
  */
 
 class TaskRunner {
+	const TASK_NOTIFY_TIMEOUT = 120; // number of seconds required before we notify flower of our job status
+
 	private $taskId;
 	private $taskList = [];
 	private $results = [];
 	private $callOrder;
 
 	private $exception;
+	private $startTime;
+	private $endTime;
 
-	function __construct($taskId, $taskList, $callOrder, $createdBy) {
+	function __construct( $wikiId, $taskId, $taskList, $callOrder, $createdBy ) {
 		$this->taskId = $taskId;
-		$this->callOrder = json_decode($callOrder, true);
+		$this->callOrder = json_decode( $callOrder, true );
+		$taskList = json_decode( $taskList, true );
 
-		$taskList = json_decode($taskList, true);
-		foreach ($taskList as $taskData) {
+		foreach ( $taskList as $taskData ) {
 			/** @var \Wikia\Tasks\Tasks\BaseTask $task */
 			$task = new $taskData['class']();
-			$task->createdBy($createdBy);
-			$task->unserialize($taskData['context'], $taskData['calls']);
+			$task
+				->taskId( $taskId )
+				->wikiId( $wikiId )
+				->createdBy( $createdBy );
+			$task->unserialize( $taskData['context'], $taskData['calls'] );
 
 			try {
 				$task->init();
-			} catch (Exception $e) {
+			} catch ( Exception $e ) {
 				$this->exception = $e;
 				break;
 			}
 
-			$this->taskList []= $task;
+			$this->taskList [] = $task;
 		}
 	}
 
 	function run() {
-		if ($this->exception) {
-			$this->results []= $this->exception;
+		$this->startTime = $this->endTime = time();
+		if ( $this->exception ) {
+			$this->results [] = $this->exception;
 			return;
 		}
 
-		foreach ($this->callOrder as $callData) {
-			list($classIndex, $callIndex) = $callData;
+		foreach ( $this->callOrder as $callData ) {
+			list( $classIndex, $callIndex ) = $callData;
 
 			/** @var \Wikia\Tasks\Tasks\BaseTask $task */
 			$task = $this->taskList[$classIndex];
-			list($method, $args) = $task->getCall($callIndex);
-			foreach ($args as $i => $arg) {
-				if (is_array($arg) || is_object($arg)) {
+			list( $method, $args ) = $task->getCall( $callIndex );
+			foreach ( $args as $i => $arg ) {
+				if ( is_array( $arg ) || is_object( $arg ) ) {
 					continue;
 				}
 
-				if (preg_match('/^#([0-9]+)$/', trim($arg), $match)) {
-					if (!isset($this->results[$match[1]])) {
+				if ( preg_match( '/^#([0-9]+)$/', trim( $arg ), $match ) ) {
+					if ( !isset( $this->results[$match[1]] ) ) {
 						throw new InvalidArgumentException;
 					}
 
@@ -63,13 +71,19 @@ class TaskRunner {
 				}
 			}
 
-			$result = $task->execute($method, $args);
-			$this->results []= $result;
+			$result = $task->execute( $method, $args );
+			$this->results [] = $result;
 
-			if ($result instanceof Exception) {
+			if ( $result instanceof Exception ) {
 				break;
 			}
 		}
+
+		$this->endTime = time();
+	}
+
+	public function runTime() {
+		return $this->endTime - $this->startTime;
 	}
 
 	public function format() {
@@ -77,8 +91,8 @@ class TaskRunner {
 			'status' => 'success',
 		];
 
-		$result = $this->results[count($this->results) - 1];
-		if ($result instanceof Exception) {
+		$result = $this->results[count( $this->results ) - 1];
+		if ( $result instanceof Exception ) {
 			$json->status = 'failure';
 			$json->reason = $result->getMessage();
 		} else {
@@ -89,20 +103,14 @@ class TaskRunner {
 	}
 
 	// TODO: remove once we are completely off old job/task systems
-	static function isLegacy($taskName) {
-		return !self::isModern($taskName);
+	static function isLegacy( $taskName ) {
+		return !self::isModern( $taskName );
 	}
 
-	static function isModern($taskName) {
-		return in_array($taskName, [
-			'BloglistDeferredPurgeJob',
-			'BlogTask',
-			'CreatePdfThumbnailsJob',
-//		'CreateWikiLocalJob',
-			'ParsoidCacheUpdateJob',
-			'PromoteImageReviewTask',
-			'UserRollback',
-			'UserRename',
-		]);
+	static function isModern( $taskName ) {
+		return in_array( $taskName, [
+			'CreateWikiLocalJob',
+//			'PromoteImageReviewTask', NOTE - this is removed in https://github.com/Wikia/app/pull/4086
+		] );
 	}
 }

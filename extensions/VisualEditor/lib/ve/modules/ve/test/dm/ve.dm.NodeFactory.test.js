@@ -26,7 +26,8 @@ ve.dm.NodeFactoryNodeStub.static.matchTagNames = [];
 
 QUnit.test( 'getChildNodeTypes', 2, function ( assert ) {
 	var factory = new ve.dm.NodeFactory();
-	assert.throws( function () {
+	assert.throws(
+		function () {
 			factory.getChildNodeTypes( 'node-factory-node-stub', 23, { 'bar': 'baz' } );
 		},
 		Error,
@@ -42,7 +43,8 @@ QUnit.test( 'getChildNodeTypes', 2, function ( assert ) {
 
 QUnit.test( 'getParentNodeTypes', 2, function ( assert ) {
 	var factory = new ve.dm.NodeFactory();
-	assert.throws( function () {
+	assert.throws(
+		function () {
 			factory.getParentNodeTypes( 'node-factory-node-stub', 23, { 'bar': 'baz' } );
 		},
 		Error,
@@ -58,7 +60,8 @@ QUnit.test( 'getParentNodeTypes', 2, function ( assert ) {
 
 QUnit.test( 'canNodeHaveChildren', 2, function ( assert ) {
 	var factory = new ve.dm.NodeFactory();
-	assert.throws( function () {
+	assert.throws(
+		function () {
 			factory.canNodeHaveChildren( 'node-factory-node-stub', 23, { 'bar': 'baz' } );
 		},
 		Error,
@@ -74,7 +77,8 @@ QUnit.test( 'canNodeHaveChildren', 2, function ( assert ) {
 
 QUnit.test( 'canNodeHaveChildrenNotContent', 2, function ( assert ) {
 	var factory = new ve.dm.NodeFactory();
-	assert.throws( function () {
+	assert.throws(
+		function () {
 			factory.canNodeHaveChildrenNotContent( 'node-factory-node-stub', 23, { 'bar': 'baz' } );
 		},
 		Error,

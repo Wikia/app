@@ -6,41 +6,44 @@
 
 		<!-- oojs-ui -->
 		<link rel=stylesheet href="../lib/oojs-ui/oojs-ui.svg.css">
-		<link rel=stylesheet href="../lib/oojs-ui/oojs-ui-apex.css">
 
 		<!-- visualEditor.standalone -->
 		<link rel=stylesheet href="../modules/ve/init/sa/styles/ve.init.sa.css">
 
+		<!-- oojs-ui-apex -->
+		<link rel=stylesheet href="../lib/oojs-ui/oojs-ui-apex.css">
+
 		<!-- visualEditor.core -->
-		<link rel=stylesheet href="../modules/ve/ce/styles/ve.ce.AlienNode.css">
-		<link rel=stylesheet href="../modules/ve/ce/styles/ve.ce.BranchNode.css">
-		<link rel=stylesheet href="../modules/ve/ce/styles/ve.ce.DocumentNode.css">
-		<link rel=stylesheet href="../modules/ve/ce/styles/ve.ce.FocusableNode.css">
-		<link rel=stylesheet href="../modules/ve/ce/styles/ve.ce.GeneratedContentNode.css">
-		<link rel=stylesheet href="../modules/ve/ce/styles/ve.ce.ImageNode.css">
-		<link rel=stylesheet href="../modules/ve/ce/styles/ve.ce.LanguageAnnotation.css">
-		<link rel=stylesheet href="../modules/ve/ce/styles/ve.ce.ProtectedNode.css">
-		<link rel=stylesheet href="../modules/ve/ce/styles/ve.ce.RelocatableNode.css">
-		<link rel=stylesheet href="../modules/ve/ce/styles/ve.ce.ResizableNode.css">
+		<link rel=stylesheet href="../modules/ve/ce/styles/nodes/ve.ce.FocusableNode.css">
+		<link rel=stylesheet href="../modules/ve/ce/styles/nodes/ve.ce.AlienNode.css">
+		<link rel=stylesheet href="../modules/ve/ce/styles/nodes/ve.ce.BranchNode.css">
+		<link rel=stylesheet href="../modules/ve/ce/styles/nodes/ve.ce.DocumentNode.css">
+		<link rel=stylesheet href="../modules/ve/ce/styles/nodes/ve.ce.GeneratedContentNode.css">
+		<link rel=stylesheet href="../modules/ve/ce/styles/nodes/ve.ce.ImageNode.css">
+		<link rel=stylesheet href="../modules/ve/ce/styles/annotations/ve.ce.LanguageAnnotation.css">
+		<link rel=stylesheet href="../modules/ve/ce/styles/nodes/ve.ce.ResizableNode.css">
+		<link rel=stylesheet href="../modules/ve/ce/styles/nodes/ve.ce.TableCellNode.css">
 		<link rel=stylesheet href="../modules/ve/ce/styles/ve.ce.Surface.css">
-		<link rel=stylesheet href="../modules/ve/ui/styles/ve.ui.CommandHelpDialog.css">
-		<link rel=stylesheet href="../modules/ve/ui/styles/ve.ui.DesktopContext.css">
-		<link rel=stylesheet href="../modules/ve/ui/styles/ve.ui.FormatTool.css">
+		<link rel=stylesheet href="../modules/ve/ui/styles/dialogs/ve.ui.ActionDialog.css">
+		<link rel=stylesheet href="../modules/ve/ui/styles/dialogs/ve.ui.CommandHelpDialog.css">
+		<link rel=stylesheet href="../modules/ve/ui/styles/tools/ve.ui.FormatTool.css">
 		<link rel=stylesheet href="../modules/ve/ui/styles/ve.ui.Inspector.css">
-		<link rel=stylesheet href="../modules/ve/ui/styles/ve.ui.LanguageInputWidget.css">
-		<link rel=stylesheet href="../modules/ve/ui/styles/ve.ui.DimensionsWidget.css">
-		<link rel=stylesheet href="../modules/ve/ui/styles/ve.ui.MediaSizeWidget.css">
-		<link rel=stylesheet href="../modules/ve/ui/styles/ve.ui.SpecialCharacterInspector.css">
+		<link rel=stylesheet href="../modules/ve/ui/styles/widgets/ve.ui.LanguageInputWidget.css">
+		<link rel=stylesheet href="../modules/ve/ui/styles/widgets/ve.ui.LanguageSearchWidget.css">
+		<link rel=stylesheet href="../modules/ve/ui/styles/widgets/ve.ui.ContextItemWidget.css">
+		<link rel=stylesheet href="../modules/ve/ui/styles/widgets/ve.ui.ContextWidget.css">
+		<link rel=stylesheet href="../modules/ve/ui/styles/widgets/ve.ui.DimensionsWidget.css">
+		<link rel=stylesheet href="../modules/ve/ui/styles/widgets/ve.ui.MediaSizeWidget.css">
+		<link rel=stylesheet href="../modules/ve/ui/styles/inspectors/ve.ui.SpecialCharacterInspector.css">
 		<link rel=stylesheet href="../modules/ve/ui/styles/ve.ui.Surface.css">
-		<link rel=stylesheet href="../modules/ve/ui/styles/ve.ui.SurfaceWidget.css">
+		<link rel=stylesheet href="../modules/ve/ui/styles/widgets/ve.ui.SurfaceWidget.css">
 		<link rel=stylesheet href="../modules/ve/ui/styles/ve.ui.Toolbar.css">
-		<link rel=stylesheet href="../modules/ve/ui/styles/ve.ui.Icons-vector.css">
+		<link rel=stylesheet href="../modules/ve/ui/styles/ve.ui.Icons.css">
 
 		<!-- visualEditor.desktop -->
+		<link rel=stylesheet href="../modules/ve/ui/styles/ve.ui.DesktopContext.css">
 		<link rel=stylesheet href="../modules/ve/ui/themes/apex/ve.ui.Inspector.css">
-
-		<!-- visualEditor.mobile -->
-		<link rel=stylesheet href="../modules/ve/ui/styles/ve.ui.MobileContext.css">
+		<link rel=stylesheet href="../modules/ve/ui/themes/apex/dialogs/ve.ui.ActionDialog.css">
 
 		<!-- example styles -->
 		<style>
@@ -97,6 +100,10 @@
 		<script src="../lib/jquery.i18n/src/languages/ru.js"></script>
 		<script src="../lib/jquery.i18n/src/languages/sl.js"></script>
 		<script src="../lib/jquery.i18n/src/languages/uk.js"></script>
+
+		<!-- jquery.uls.data -->
+		<script src="../lib/jquery.uls/src/jquery.uls.data.js"></script>
+		<script src="../lib/jquery.uls/src/jquery.uls.data.utils.js"></script>
 
 		<!-- visualEditor.base -->
 		<script src="../modules/ve/ve.js"></script>
@@ -185,11 +192,8 @@
 		<script src="../modules/ve/ce/ve.ce.BranchNode.js"></script>
 		<script src="../modules/ve/ce/ve.ce.ContentBranchNode.js"></script>
 		<script src="../modules/ve/ce/ve.ce.LeafNode.js"></script>
-		<script src="../modules/ve/ce/ve.ce.ProtectedNode.js"></script>
 		<script src="../modules/ve/ce/ve.ce.FocusableNode.js"></script>
-		<script src="../modules/ve/ce/ve.ce.RelocatableNode.js"></script>
 		<script src="../modules/ve/ce/ve.ce.ResizableNode.js"></script>
-		<script src="../modules/ve/ce/ve.ce.ClickableNode.js"></script>
 		<script src="../modules/ve/ce/ve.ce.Surface.js"></script>
 		<script src="../modules/ve/ce/ve.ce.SurfaceObserver.js"></script>
 		<script src="../modules/ve/ce/nodes/ve.ce.GeneratedContentNode.js"></script>
@@ -219,9 +223,7 @@
 		<script src="../modules/ve/ce/annotations/ve.ce.TextStyleAnnotation.js"></script>
 		<script src="../modules/ve/ui/ve.ui.js"></script>
 		<script src="../modules/ve/ui/ve.ui.Surface.js"></script>
-		<script src="../modules/ve/ui/ve.ui.DesktopSurface.js"></script>
 		<script src="../modules/ve/ui/ve.ui.Context.js"></script>
-		<script src="../modules/ve/ui/ve.ui.DesktopContext.js"></script>
 		<script src="../modules/ve/ui/ve.ui.Dialog.js"></script>
 		<script src="../modules/ve/ui/ve.ui.Inspector.js"></script>
 		<script src="../modules/ve/ui/ve.ui.WindowSet.js"></script>
@@ -237,15 +239,21 @@
 		<script src="../modules/ve/ui/ve.ui.ActionFactory.js"></script>
 		<script src="../modules/ve/ui/actions/ve.ui.AnnotationAction.js"></script>
 		<script src="../modules/ve/ui/actions/ve.ui.ContentAction.js"></script>
-		<script src="../modules/ve/ui/actions/ve.ui.DialogAction.js"></script>
 		<script src="../modules/ve/ui/actions/ve.ui.FormatAction.js"></script>
 		<script src="../modules/ve/ui/actions/ve.ui.HistoryAction.js"></script>
 		<script src="../modules/ve/ui/actions/ve.ui.IndentationAction.js"></script>
-		<script src="../modules/ve/ui/actions/ve.ui.InspectorAction.js"></script>
 		<script src="../modules/ve/ui/actions/ve.ui.ListAction.js"></script>
+		<script src="../modules/ve/ui/actions/ve.ui.WindowAction.js"></script>
+		<script src="../modules/ve/ui/dialogs/ve.ui.ActionDialog.js"></script>
+		<script src="../modules/ve/ui/dialogs/ve.ui.NodeDialog.js"></script>
 		<script src="../modules/ve/ui/dialogs/ve.ui.CommandHelpDialog.js"></script>
+		<script src="../modules/ve/ui/widgets/ve.ui.LanguageResultWidget.js"></script>
+		<script src="../modules/ve/ui/widgets/ve.ui.LanguageSearchWidget.js"></script>
+		<script src="../modules/ve/ui/dialogs/ve.ui.LanguageSearchDialog.js"></script>
 		<script src="../modules/ve/ui/widgets/ve.ui.SurfaceWidget.js"></script>
 		<script src="../modules/ve/ui/widgets/ve.ui.LinkTargetInputWidget.js"></script>
+		<script src="../modules/ve/ui/widgets/ve.ui.ContextWidget.js"></script>
+		<script src="../modules/ve/ui/widgets/ve.ui.ContextItemWidget.js"></script>
 		<script src="../modules/ve/ui/widgets/ve.ui.DimensionsWidget.js"></script>
 		<script src="../modules/ve/ui/widgets/ve.ui.MediaSizeWidget.js"></script>
 		<script src="../modules/ve/ui/tools/ve.ui.AnnotationTool.js"></script>
@@ -263,9 +271,9 @@
 		<script src="../modules/ve/ui/inspectors/ve.ui.LanguageInspector.js"></script>
 		<script src="../modules/ve/ui/inspectors/ve.ui.SpecialCharacterInspector.js"></script>
 
-		<!-- visualEditor.mobile -->
-		<script src="../modules/ve/ui/ve.ui.MobileSurface.js"></script>
-		<script src="../modules/ve/ui/ve.ui.MobileContext.js"></script>
+		<!-- visualEditor.desktop -->
+		<script src="../modules/ve/ui/ve.ui.DesktopSurface.js"></script>
+		<script src="../modules/ve/ui/ve.ui.DesktopContext.js"></script>
 
 		<script>ve.init.platform.setModulesUrl( '../modules' );</script>
 

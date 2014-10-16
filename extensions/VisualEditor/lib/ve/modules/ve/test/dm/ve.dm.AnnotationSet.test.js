@@ -75,3 +75,30 @@ QUnit.test( 'Basic usage', 32, function ( assert ) {
 	assert.equal( annotationSet3.getLength(), 1, 'set intersected with set2 has length 1' );
 	assert.equal( annotationSet3.contains( italic ), true, 'set intersected with set2 contains italic' );
 } );
+
+QUnit.test( 'Comparable', 7, function ( assert ) {
+	var annotationSet3,
+		store = new ve.dm.IndexValueStore(),
+		bold = new ve.dm.TextStyleBoldAnnotation(),
+		italic = new ve.dm.TextStyleItalicAnnotation(),
+		strong = new ve.dm.TextStyleBoldAnnotation( { 'type': 'textStyle/bold', 'attributes': { 'nodeName': 'strong' } } ),
+		underline = new ve.dm.TextStyleUnderlineAnnotation(),
+		annotationSet = new ve.dm.AnnotationSet( store, store.indexes( [ bold, italic ] ) ),
+		annotationSet2 = new ve.dm.AnnotationSet( store, store.indexes( [ strong, underline ] ) ),
+		emptySet = new ve.dm.AnnotationSet( store );
+
+	assert.equal( annotationSet.containsComparable( strong ), true, '[b,i] contains comparable strong' );
+	assert.equal( annotationSet.containsComparable( bold ), true, '[b,i] contains comparable b' );
+	assert.equal( annotationSet.containsComparable( underline ), false, '[b,i] doesn\'t contain comparable u' );
+
+	annotationSet3 = new ve.dm.AnnotationSet( store, store.indexes( [ bold ] ) );
+	assert.deepEqual( annotationSet.getComparableAnnotations( strong ), annotationSet3, '[b,i] get comparable strong returns [b]' );
+	assert.deepEqual( annotationSet.getComparableAnnotations( underline ), emptySet, '[b,i] get comparable underline returns []' );
+
+	annotationSet3 = new ve.dm.AnnotationSet( store, store.indexes( [ bold ] ) );
+	assert.deepEqual( annotationSet.getComparableAnnotationsFromSet( annotationSet2 ), annotationSet3, '[b,i] get comparable from set [strong,u] returns just [b]' );
+
+	annotationSet3 = new ve.dm.AnnotationSet( store, store.indexes( [ italic, strong ] ) );
+	assert.equal( annotationSet.compareTo( annotationSet3 ), true, '[b,i] compares to [i,strong]' );
+
+} );

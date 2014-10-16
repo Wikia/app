@@ -56,11 +56,12 @@ ve.ui.FormatTool.prototype.onSelect = function () {
 /**
  * @inheritdoc
  */
-ve.ui.FormatTool.prototype.onUpdateState = function ( nodes ) {
+ve.ui.FormatTool.prototype.onUpdateState = function ( fragment ) {
 	// Parent method
 	ve.ui.Tool.prototype.onUpdateState.apply( this, arguments );
 
 	var i, len,
+		nodes = fragment.getSelectedLeafNodes(),
 		format = this.constructor.static.format,
 		all = !!nodes.length;
 

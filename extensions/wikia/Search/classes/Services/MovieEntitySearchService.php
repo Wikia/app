@@ -9,7 +9,9 @@ class MovieEntitySearchService extends EntitySearchService {
 	const MINIMAL_MOVIE_SCORE = 1.5;
 	const MOVIE_TYPE = 'movie';
 	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
+	const EXACT_MATCH_FIELD = "movie_mv_em";
 	private static $EXCLUDED_WIKIS = [ 'uncyclopedia.wikia.com' ];
+	private static $ARTICLE_TYPES_SUPPORTED_LANGS = [ 'en', 'de', 'es' ];
 
 	protected function prepareQuery( $query ) {
 		$select = $this->getSelect();
@@ -24,7 +26,10 @@ class MovieEntitySearchService extends EntitySearchService {
 		$select->setQuery( $preparedQuery );
 		$select->setRows( static::ARTICLES_LIMIT );
 		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:' . static::ALLOWED_NAMESPACE . ')' );
-		$select->createFilterQuery( 'type' )->setQuery( '+(article_type_s:' . static::MOVIE_TYPE . ')' );
+		$select->createFilterQuery( 'lang' )->setQuery( '+(lang:' . $slang . ')' );
+		if ( in_array( strtolower( $slang ), static::$ARTICLE_TYPES_SUPPORTED_LANGS ) ) {
+			$select->createFilterQuery( 'type' )->setQuery( '+(article_type_s:' . static::MOVIE_TYPE . ' OR ' . static::EXACT_MATCH_FIELD . ':*)' );
+		}
 		if ( !empty( static::$EXCLUDED_WIKIS ) ) {
 			$excluded = [ ];
 			foreach ( static::$EXCLUDED_WIKIS as $ex ) {
@@ -38,13 +43,14 @@ class MovieEntitySearchService extends EntitySearchService {
 			'titleStrict',
 			$this->withLang( 'title', $slang ),
 			$this->withLang( 'redirect_titles_mv', $slang ),
+			static::EXACT_MATCH_FIELD . "^10",
 		] ) );
 		$dismax->setPhraseFields( implode( ' ', [
 			'titleStrict^8',
 			$this->withLang( 'title', $slang ) . '^2',
 			$this->withLang( 'redirect_titles_mv', $slang ) . '^2',
+			static::EXACT_MATCH_FIELD . "^10",
 		] ) );
-
 		return $select;
 	}
 
@@ -71,5 +77,4 @@ class MovieEntitySearchService extends EntitySearchService {
 		}
 		return $result;
 	}
-
 }

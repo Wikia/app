@@ -10,13 +10,13 @@
  *
  * @class
  * @extends ve.dm.LeafNode
+ *
  * @constructor
- * @param {number} [length] Length of content data in document; ignored and overridden to 0
  * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.MWReferenceNode = function VeDmMWReferenceNode( length, element ) {
+ve.dm.MWReferenceNode = function VeDmMWReferenceNode() {
 	// Parent constructor
-	ve.dm.LeafNode.call( this, 0, element );
+	ve.dm.LeafNode.apply( this, arguments );
 
 	// Event handlers
 	this.connect( this, {

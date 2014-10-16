@@ -22,7 +22,7 @@ ve.ce.WikiaVideoCaptionNode = function VeCeWikiaVideoCaptionNode( model, config 
 	this.$title = null;
 
 	// Parent constructor
-	ve.ce.WikiaMediaCaptionNode.call( this, model, config );
+	ve.ce.WikiaVideoCaptionNode.super.call( this, model, config );
 };
 
 /* Inheritance */
@@ -42,7 +42,7 @@ ve.ce.WikiaVideoCaptionNode.static.name = 'wikiaVideoCaption';
  * @returns {jQuery} The properly scoped jQuery object
  */
 ve.ce.WikiaVideoCaptionNode.prototype.createTitle = function () {
-	var title = new mw.Title( this.model.parent.getAttribute('resource').replace( "./", "" ) );
+	var title = new mw.Title( this.model.getParent().getFilename() );
 	// It's inside a protected node, so user can't see href/title.
 	return this.$( '<p>' )
 		.addClass( 'title ve-no-shield' )

@@ -1,8 +1,8 @@
 <?php
 
-/*
+/**
  * Maintenance script to delete video by provider
- * This is one time use script
+ *
  * @author Saipetch Kongkatong
  */
 
@@ -27,6 +27,7 @@ if ( isset( $options['help'] ) ) {
 	--limit                        number of limit in sql
 	--dry-run                      dry run
 	--quiet                        show summary result only
+	--user                         The user used to delete the videos
 	--help                         you are reading it right now\n\n" );
 }
 
@@ -35,6 +36,7 @@ $extra = isset( $options['extra'] ) ? $options['extra'] : '';
 $limit = isset( $options['limit'] ) ? $options['limit'] : '';
 $dryRun = isset( $options['dry-run'] );
 $quiet = isset( $options['quiet'] );
+$user = isset( $options['user'] ) ? $options['user'] : 'WikiaBot';
 
 if ( empty( $wgCityId ) ) {
 	die( "Error: Invalid wiki id.\n" );
@@ -54,7 +56,7 @@ if ( empty( $extra ) ) {
 
 echo "Extra condition: $extra\n";
 
-$wgUser = User::newFromName( 'WikiaBot' );
+$wgUser = User::newFromName( $user );
 $wgUser->load();
 
 $db = wfGetDB( DB_SLAVE );

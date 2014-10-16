@@ -1,4 +1,4 @@
-# Custom tags for JSDuck 4.x
+# Custom tags for JSDuck 5.x
 # See also:
 # - https://github.com/senchalabs/jsduck/wiki/Tags
 # - https://github.com/senchalabs/jsduck/wiki/Custom-tags

@@ -14,7 +14,7 @@ class WAMApiController extends WikiaApiController {
 	const DEFAULT_AVATAR_SIZE = 28;
 	const DEFAULT_WIKI_IMAGE_WIDTH = 150;
 	const DEFAULT_WIKI_ADMINS_LIMIT = 5;
-
+	const WAM_RESPONSE_CACHE_VALIDITY = 21600;
 	const MEMCACHE_VER = '1.04';
 
 	/**
@@ -100,11 +100,20 @@ class WAMApiController extends WikiaApiController {
 				return $wamIndex;
 			}
 		);
+		
+		if (!$this->request->isInternal() && empty($wamIndex['wam_index'])) {
+			$wamIndex['wam_index'] = (object)$wamIndex['wam_index'];
+		}
 
-		$this->response->setVal('wam_index', $wamIndex['wam_index']);
-		$this->response->setVal('wam_results_total', $wamIndex['wam_results_total']);
-		$this->response->setVal('wam_index_date', $wamIndex['wam_index_date']);
-		$this->response->setCacheValidity(6 * 60 * 60);
+		$this->setResponseData(
+			[
+				'wam_index' => $wamIndex[ 'wam_index' ],
+				'wam_results_total' => $wamIndex[ 'wam_results_total' ],
+				'wam_index_date' => $wamIndex[ 'wam_index_date' ]
+			],
+			[ 'urlFields' => [ 'avatarUrl', 'userPageUrl', 'userContributionsUrl' ] ],
+			self::WAM_RESPONSE_CACHE_VALIDITY
+		);
 	}
 
 	/**
@@ -116,6 +125,27 @@ class WAMApiController extends WikiaApiController {
 	 */
 	public function getMinMaxWamIndexDate() {
 		$this->response->setVal('min_max_dates', $this->getMinMaxWamIndexDateInternal());
+	}
+
+	/**
+	 * Gets language codes of the wikis that are in the WAM ranking for a given day
+	 *
+	 * @requestParam Integer $wam_day timestamp of the day for the requested list
+	 * @responseParam Array $languages list of aviable languages for the specified day
+	 */
+	public function getWAMLanguages() {
+		$wamDay = $this->request->getVal( 'wam_day', null );
+		$wamDates = $this->getMinMaxWamIndexDateInternal();
+
+		if ( empty( $wamDay ) ) {
+			$wamDay = $wamDates[ 'max_date' ];
+		} elseif ( $wamDay > $wamDates[ 'max_date' ] || $wamDay < $wamDates[ 'min_date' ] ) {
+			throw new OutOfRangeApiException( 'wam_day', $wamDates[ 'min_date' ], $wamDates[ 'max_date' ] );
+		}
+
+		$wamService = new WAMService();
+		$result = $wamService->getWAMLanguages( $wamDay );
+		$this->response->setVal( 'languages', $result );
 	}
 
 	private function getMinMaxWamIndexDateInternal() {

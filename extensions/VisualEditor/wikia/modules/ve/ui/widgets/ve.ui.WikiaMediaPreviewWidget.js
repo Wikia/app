@@ -7,7 +7,7 @@
 ve.ui.WikiaMediaPreviewWidget = function VeUiWikiaMediaPreviewWidget() {
 
 	// Parent constructor
-	OO.ui.Widget.call( this );
+	ve.ui.WikiaMediaPreviewWidget.super.call( this );
 
 	// Properties
 	this.model = null;
@@ -67,7 +67,7 @@ ve.ui.WikiaMediaPreviewWidget.prototype.onImageLoad = function () {
 /**
  * @method
  */
-ve.ui.WikiaMediaPreviewWidget.prototype.verticallyAlign = function( $element ) {
+ve.ui.WikiaMediaPreviewWidget.prototype.verticallyAlign = function ( $element ) {
 	var availableHeight = $( window ).height() - this.$titlebar.outerHeight();
 
 	// TODO: Sort of confusing to have $element and this.$element.
@@ -89,12 +89,12 @@ ve.ui.WikiaMediaPreviewWidget.prototype.verticallyAlign = function( $element ) {
  *
  * @param {string} embedCode Video embed code from ApiVideoPreview
  */
-ve.ui.WikiaMediaPreviewWidget.prototype.embedVideo = function( embedCode ) {
+ve.ui.WikiaMediaPreviewWidget.prototype.embedVideo = function ( embedCode ) {
 	this.$videoWrapper = this.$( '<div>' )
 		.addClass( 've-ui-wikiaMediaPreviewWidget-videoWrapper' )
 		.appendTo( this.$element.show() );
 
-	require( ['wikia.videoBootstrap'], ve.bind( function( VideoBootstrap ) {
+	require( ['wikia.videoBootstrap'], ve.bind( function ( VideoBootstrap ) {
 		this.videoInstance = new VideoBootstrap(
 			this.$videoWrapper[0],
 			window.JSON.parse( embedCode ),
@@ -106,13 +106,12 @@ ve.ui.WikiaMediaPreviewWidget.prototype.embedVideo = function( embedCode ) {
 	}, this ) );
 };
 
-
 /**
  * Handle video preview request promise.done
  *
  * @method
  */
-ve.ui.WikiaMediaPreviewWidget.prototype.onRequestVideoDone = function( data ) {
+ve.ui.WikiaMediaPreviewWidget.prototype.onRequestVideoDone = function ( data ) {
 	if ( data.videopreview ) {
 		this.embedVideo( data.videopreview.embedCode );
 	} else {
@@ -125,7 +124,7 @@ ve.ui.WikiaMediaPreviewWidget.prototype.onRequestVideoDone = function( data ) {
  *
  * @method
  */
-ve.ui.WikiaMediaPreviewWidget.prototype.onRequestVideoFail = function() {
+ve.ui.WikiaMediaPreviewWidget.prototype.onRequestVideoFail = function () {
 	mw.config.get( 'GlobalNotification' ).show(
 		ve.msg( 'wikia-visualeditor-notification-video-preview-not-available' ),
 		'error',
@@ -139,7 +138,7 @@ ve.ui.WikiaMediaPreviewWidget.prototype.onRequestVideoFail = function() {
  * @method
  * @param {string} title
  */
-ve.ui.WikiaMediaPreviewWidget.prototype.displayOverlay = function( title ) {
+ve.ui.WikiaMediaPreviewWidget.prototype.displayOverlay = function ( title ) {
 	this.$title.text( title );
 	this.$element.show();
 	this.$element.startThrobbing();
@@ -152,7 +151,7 @@ ve.ui.WikiaMediaPreviewWidget.prototype.displayOverlay = function( title ) {
  * @param {string} title
  * @param {string} url
  */
-ve.ui.WikiaMediaPreviewWidget.prototype.openForImage = function( title, url ) {
+ve.ui.WikiaMediaPreviewWidget.prototype.openForImage = function ( title, url ) {
 	this.displayOverlay( title );
 
 	this.maxImgHeight = Math.round( $( window ).height() * 0.95 ) - this.$titlebar.outerHeight();
@@ -179,7 +178,7 @@ ve.ui.WikiaMediaPreviewWidget.prototype.openForImage = function( title, url ) {
  * @param {string} provider
  * @param {string} videoId
  */
-ve.ui.WikiaMediaPreviewWidget.prototype.openForVideo = function( title, provider, videoId ) {
+ve.ui.WikiaMediaPreviewWidget.prototype.openForVideo = function ( title, provider, videoId ) {
 	this.displayOverlay( title );
 
 	$.ajax( {
@@ -201,7 +200,7 @@ ve.ui.WikiaMediaPreviewWidget.prototype.openForVideo = function( title, provider
  *
  * @method
  */
-ve.ui.WikiaMediaPreviewWidget.prototype.close = function() {
+ve.ui.WikiaMediaPreviewWidget.prototype.close = function () {
 	if ( this.$image ) {
 		this.$image.remove();
 		this.$image = null;
@@ -216,6 +215,6 @@ ve.ui.WikiaMediaPreviewWidget.prototype.close = function() {
  * @method
  * @returns {boolean} Preview is open
  */
-ve.ui.WikiaMediaPreviewWidget.prototype.isOpen = function() {
+ve.ui.WikiaMediaPreviewWidget.prototype.isOpen = function () {
 	return this.$element.is( ':visible' );
 };

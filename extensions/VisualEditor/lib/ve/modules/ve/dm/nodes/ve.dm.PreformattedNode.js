@@ -10,13 +10,14 @@
  *
  * @class
  * @extends ve.dm.BranchNode
+ *
  * @constructor
- * @param {ve.dm.LeafNode[]} [children] Child nodes to attach
  * @param {Object} [element] Reference to element in linear model
+ * @param {ve.dm.Node[]} [children]
  */
-ve.dm.PreformattedNode = function VeDmPreformattedNode( children, element ) {
+ve.dm.PreformattedNode = function VeDmPreformattedNode() {
 	// Parent constructor
-	ve.dm.BranchNode.call( this, children, element );
+	ve.dm.BranchNode.apply( this, arguments );
 };
 
 /* Inheritance */

@@ -62,7 +62,7 @@ OO.mixinClass( ve.ce.BranchNode, ve.BranchNode );
  */
 ve.ce.BranchNode.$inlineSlugTemplate = $( '<span>' )
 	.addClass( 've-ce-branchNode-slug ve-ce-branchNode-inlineSlug' )
-	.html( $.browser.msie ? '&nbsp;' : '&#xFEFF;' );
+	.html( '&#xFEFF;' );
 
 /**
  * Block slug template.
@@ -77,7 +77,7 @@ ve.ce.BranchNode.$blockSlugTemplate = $( '<div>' )
 	.append(
 		$( '<p>' )
 			.addClass( 've-ce-branchNode-slug ve-ce-branchNode-blockSlug' )
-			.html( $.browser.msie ? '&nbsp;' : '&#xFEFF;' )
+			.html( '&#xFEFF;' )
 	);
 
 /* Methods */

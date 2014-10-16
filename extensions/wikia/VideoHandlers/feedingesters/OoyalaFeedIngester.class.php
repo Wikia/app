@@ -120,6 +120,12 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 					$clipData["category"] = "Lifestyle";
 					$clipData["type"] = "How To";
 					$clipData["pageCategories"] = "Lifestyle, Howdini, How To";
+
+					// Genres need to be applied to categories VID-1787
+					if ( !empty( $clipData['genres'] ) ) {
+						$clipData["pageCategories"] .= ', ' . $clipData['genres'];
+					}
+
 					$ooyalaAsset = new OoyalaAsset();
 					// Make sure all Howdini assets use the Howdini ad set
 					$ooyalaAsset->setAdSet( $clipData["videoId"], F::app()->wg->OoyalaApiConfig['adSetHowdini'] );

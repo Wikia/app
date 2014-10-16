@@ -10,12 +10,16 @@
  *
  * @class
  * @extends ve.dm.LeafNode
+ *
  * @constructor
  * @param {number} [length] Length of content data in document
  */
 ve.dm.TextNode = function VeDmTextNode( length ) {
 	// Parent constructor
-	ve.dm.LeafNode.call( this, length );
+	ve.dm.LeafNode.call( this );
+
+	// TODO: length is only set on construction in tests
+	this.length = length || 0;
 };
 
 /* Inheritance */

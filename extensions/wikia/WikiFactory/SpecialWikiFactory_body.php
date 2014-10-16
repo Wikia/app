@@ -378,6 +378,29 @@ class WikiFactoryPage extends SpecialPage {
 			$vars[ 'searchTag' ] = $this->mSearchTag;
 			$vars[ 'searchTagWikiIds' ] = $this->mTagWikiIds;
 		}
+		if( $this->mTab === "hubs" ) {
+
+			$hub = WikiFactoryHub::getInstance();
+			$vars['vertical_id'] = $hub->getVerticalId( $this->mWiki->city_id );
+			$vars['verticals'] = $hub->getAllVerticals();
+
+			$wiki_old_categories = $hub->getWikiCategories ( $this->mWiki->city_id, false );
+			$wiki_new_categories = $hub->getWikiCategories( $this->mWiki->city_id, true );
+			$wiki_categories = array_merge($wiki_old_categories, $wiki_new_categories);
+
+			$wiki_cat_ids = array();
+			foreach ($wiki_categories as $cat) {
+				$wiki_cat_ids[] = $cat['cat_id'];
+			}
+			$vars['wiki_categoryids'] = $wiki_cat_ids;
+
+			$all_old_categories = $hub->getAllCategories( false );
+			$all_new_categories = $hub->getAllCategories( true );
+			$all_categories = array_replace($all_old_categories, $all_new_categories);
+
+			$vars['all_categories'] = $all_categories;
+
+		}
 		if( $this->mTab === "clog" ) {
 			$pager = new ChangeLogPager( $this->mWiki->city_id );
 			$vars[ "changelog" ] = array(
@@ -447,23 +470,15 @@ class WikiFactoryPage extends SpecialPage {
 	 * @return mixed	info when change, null when not changed
 	 */
 	private function doUpdateHubs( &$request ) {
-		$cat_id = $request->getVal( "wpWikiCategory", null );
+		$vertical_id = $request->getVal("wpWikiVertical", null);
+		$cat_ids = $request->getArray( "wpWikiCategory", null );
 		$reason = $request->getVal( "wpReason", null );
-		if( !is_null( $cat_id ) ){
-			$hub = WikiFactoryHub::getInstance();
-			$hub->setCategory( $this->mWiki->city_id, $cat_id, $reason );
-			$categories = $hub->getCategories();
+		$hub = WikiFactoryHub::getInstance();
 
-			// ugly fast fix for fb#9937 (until all the hub management is cleaned up)
-			global $wgMemc;
-			$key = sprintf("%s:%d", 'WikiFactory::getCategory', intval($this->mWiki->city_id));
-			$wgMemc->delete( $key );
+		$hub->setVertical( $this->mWiki->city_id, $vertical_id, $reason );
+		$hub->updateCategories( $this->mWiki->city_id, $cat_ids, $reason );
 
-			return Wikia::successbox( "Hub is now set to: ". $categories[ $cat_id ]['name'] );
-		}
-		else {
-			return Wikia::successbox( "Hub was not changed.");
-		}
+		return Wikia::successbox( "Vertical and Categories updated");
 	}
 
 	/**
@@ -511,6 +526,7 @@ class WikiFactoryPage extends SpecialPage {
 	private function doUpdateDomains( &$request ) {
 		$action = $request->getText( "wpAction", null );
 		$reason = $request->getText( "wpReason", wfMsg( 'wikifactory-public-status-change-default-reason' ) );
+
 		$message = "";
 		switch( $action ) {
 			case "status":
@@ -523,10 +539,10 @@ class WikiFactoryPage extends SpecialPage {
 				$protect = $request->getCheck( "wpProtected", false);
 				if ($protect) {
 					$message = "Wiki protected";
-					WikiFactory::setFlags( $this->mWiki->city_id, WikiFactory::FLAG_PROTECTED );
+					WikiFactory::setFlags( $this->mWiki->city_id, WikiFactory::FLAG_PROTECTED, false, $reason );
 				} else {
 					$message = "Wiki un-protected";
-					WikiFactory::resetFlags( $this->mWiki->city_id, WikiFactory::FLAG_PROTECTED );
+					WikiFactory::resetFlags( $this->mWiki->city_id, WikiFactory::FLAG_PROTECTED, false, $reason );
 				}
 			break;
 		}

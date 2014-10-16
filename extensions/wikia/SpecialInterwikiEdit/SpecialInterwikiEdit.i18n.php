@@ -140,7 +140,7 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
-	'interwikiedit' => 'Юкъарвикин хьажораш та йе гӀирс',
+	'interwikiedit' => 'Юкъарвикин хьажоргаш тайо гӀирс',
 	'iwedit-title' => 'Юкъарвикеш та йе гӀирс',
 	'iwedit-language-interwikis' => 'Меттанийн юкъарвикеш бен',
 	'iwedit-all-interwikis' => 'Массо юкъарвикеш',
@@ -179,12 +179,13 @@ $messages['de'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'interwikiedit' => 'Vurnkarê interwiki',
 	'iwedit-title' => 'Vurnkarê interwiki',
 	'iwedit-all-interwikis' => 'interwikiy pêro',
-	'iwedit-update' => 'Noroc resn',
+	'iwedit-update' => 'Rocane ke',
 );
 
 /** Spanish (español)
@@ -383,7 +384,7 @@ $messages['lb'] = array(
 	'iwedit-all-interwikis' => 'all Interwikien',
 	'iwedit-update' => 'Aktualiséieren',
 	'iwedit-error' => '<p>Et ass e Feeler geschitt.</p>',
-	'iwedit-success' => '<p>De Linkg gouf ugeluecht</p>',
+	'iwedit-success' => '<p>De Link gouf ugeluecht</p>',
 );
 
 /** لوری (لوری)
@@ -671,4 +672,18 @@ $messages['zh-hans'] = array(
 	'iwedit-update' => '更新',
 	'iwedit-error' => '<p>发生错误。</p>',
 	'iwedit-success' => '<p>链接创建成功。</p>',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
+ * @author LNDDYL
+ */
+$messages['zh-hant'] = array(
+	'interwikiedit' => '跨語言連結編輯器',
+	'iwedit-title' => '跨語言連結編輯器',
+	'iwedit-language-interwikis' => '只限跨語言連結',
+	'iwedit-all-interwikis' => '所有的跨語言連結',
+	'iwedit-update' => '更新',
+	'iwedit-error' => '<p>發生錯誤。</p>',
+	'iwedit-success' => '<p>連結建立成功</p>',
 );

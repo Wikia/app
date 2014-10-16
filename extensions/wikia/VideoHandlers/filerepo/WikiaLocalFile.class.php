@@ -103,7 +103,7 @@ class WikiaLocalFile extends LocalFile {
 
 	}
 
-	function  __call( $name, $arguments ){
+	function __call( $name, $arguments ){
 		if ( method_exists( $this->getLocalFileLogic(), $name ) ){
 			return call_user_func_array( array( $this->getLocalFileLogic(), $name ), $arguments );
 		} else {

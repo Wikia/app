@@ -11,13 +11,13 @@
  * @class
  * @extends ve.dm.LeafNode
  * @mixins ve.dm.MWImageNode
+ *
  * @constructor
- * @param {number} [length] Length of content data in document
  * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.MWInlineImageNode = function VeDmMWInlineImageNode( length, element ) {
+ve.dm.MWInlineImageNode = function VeDmMWInlineImageNode() {
 	// Parent constructor
-	ve.dm.LeafNode.call( this, 0, element );
+	ve.dm.LeafNode.apply( this, arguments );
 
 	// Mixin constructors
 	ve.dm.MWImageNode.call( this );
@@ -35,7 +35,7 @@ OO.mixinClass( ve.dm.MWInlineImageNode, ve.dm.MWImageNode );
 /* Static Properties */
 
 ve.dm.MWInlineImageNode.static.rdfaToType = {
-	'mw:Image': 'inline',
+	'mw:Image': 'none',
 	'mw:Image/Frameless': 'frameless'
 };
 
@@ -83,6 +83,11 @@ ve.dm.MWInlineImageNode.static.toDataElement = function ( domElements, converter
 	// Extract individual classes
 	classes = typeof classes === 'string' ? classes.trim().split( /\s+/ ) : [];
 
+	// Deal with border flag
+	if ( classes.indexOf( 'mw-image-border' ) !== -1 ) {
+		attributes.borderImage = true;
+		recognizedClasses.push( 'mw-image-border' );
+	}
 	// Vertical alignment
 	if ( classes.indexOf( 'mw-valign-middle' ) !== -1 ) {
 		attributes.valign = 'middle';
@@ -114,7 +119,7 @@ ve.dm.MWInlineImageNode.static.toDataElement = function ( domElements, converter
 
 	// Border
 	if ( classes.indexOf( 'mw-image-border' ) !== -1 ) {
-		attributes.border = true;
+		attributes.borderImage = true;
 		recognizedClasses.push( 'mw-image-border' );
 	}
 
@@ -144,7 +149,8 @@ ve.dm.MWInlineImageNode.static.toDomElements = function ( data, doc ) {
 
 	ve.setDomAttributes( img, data.attributes, [ 'src', 'width', 'height', 'resource' ] );
 
-	if ( !this.typeToRdfa ) {
+	// Checking hasOwnProperty because subclasses may implement their own rdfaToType (Wikia VE-1533).
+	if ( !this.hasOwnProperty( 'typeToRdfa' ) ) {
 		this.typeToRdfa = {};
 		for ( rdfa in this.rdfaToType ) {
 			this.typeToRdfa[this.rdfaToType[rdfa]] = rdfa;
@@ -157,7 +163,7 @@ ve.dm.MWInlineImageNode.static.toDomElements = function ( data, doc ) {
 		classes.push( 'mw-default-size' );
 	}
 
-	if ( data.attributes.border ) {
+	if ( data.attributes.borderImage ) {
 		classes.push( 'mw-image-border' );
 	}
 

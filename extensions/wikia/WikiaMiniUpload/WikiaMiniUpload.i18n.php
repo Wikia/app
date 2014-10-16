@@ -561,6 +561,7 @@ $messages['br'] = array(
 
 /** Catalan (català)
  * @author BroOk
+ * @author Fitoschido
  * @author Gemmaa
  * @author Paucabot
  */
@@ -623,7 +624,7 @@ $messages['ca'] = array(
 	'wmu-columns' => '$1 {{PLURAL:$1|columna|columnes}}',
 	'wmu-column' => 'Columnes',
 	'wmu-added-from-plc' => "Arxiu afegit mitjançant posicionador d'imatge",
-	'wmu-uploaddisabled' => 'La càrrega de fitxers està deshabilitada en aquest wiki',
+	'wmu-uploaddisabled' => 'La càrrega de fitxers està inhabilitada en aquest wiki',
 	'wmu-gallery-success' => 'Has afegit una imatge a una galeria nova. Clica abaix per a afegir més imatges o inserir una galeria',
 	'wmu-gallery-btn1' => 'Afegir una altra imatge',
 	'wmu-gallery-btn2' => 'Insereix una galeria a la pàgina',
@@ -994,14 +995,14 @@ $messages['diq'] = array(
 	'wmu-next' => "8'ê peyêni",
 	'wmu-success-placeholder' => '<h1>Muaffaq</h1>',
 	'wmu-back' => 'Peyser',
-	'wmu-imagebutton' => 'Resım deke',
+	'wmu-imagebutton' => 'Resım cı ke',
 	'wmu-hide-license-msg' => 'nuşteya lisansi bınımne',
 	'wmu-show-license-msg' => 'nuşteyê lisansi bımocne',
 	'wmu-placeholder' => 'Cayê tepıstışi',
 	'wmu-gallery' => 'Galeriye',
 	'wmu-columns' => '$1 {{PLURAL:$1|Estûn|Estûni}}',
 	'wmu-column' => 'Estûni',
-	'wmu-gallery-btn1' => 'Ju na dosya deke',
+	'wmu-gallery-btn1' => 'Zewbina resım cı ke',
 	'wmu-alignment' => 'Hiza fi',
 );
 
@@ -1027,6 +1028,7 @@ $messages['eo'] = array(
  * @author Armando-Martin
  * @author Benfutbol10
  * @author Crazymadlover
+ * @author Fitoschido
  * @author McDutchie
  * @author Peter17
  * @author Translationista
@@ -1091,7 +1093,7 @@ $messages['es'] = array(
 	'wmu-columns' => '$1 {{PLURAL:$1|columna|columnas}}',
 	'wmu-column' => 'Columnas',
 	'wmu-added-from-plc' => 'Archivo añadido mediante posicionador de imagen',
-	'wmu-uploaddisabled' => 'La subida de archivos está deshabilitada en este wiki',
+	'wmu-uploaddisabled' => 'La carga de archivos está desactivada en este wiki',
 	'wmu-gallery-success' => 'Has añadido una imagen a una nueva galería. Haga click abajo para añadir más imágenes o insertar la galería',
 	'wmu-gallery-btn1' => 'Añadir otra imagen',
 	'wmu-gallery-btn2' => 'Inserte galería en la página',
@@ -1140,6 +1142,7 @@ $messages['eu'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Alirezaaa
  * @author Ebraminio
  * @author Leyth
  * @author Mjbmr
@@ -1155,15 +1158,22 @@ $messages['fa'] = array(
 	'wmu-insert' => 'درج',
 	'wmu-name' => 'نام',
 	'wmu-license' => 'اجازه‌نامه',
+	'wmu-licensing' => 'اجازه‌نامه',
 	'wmu-size' => 'اندازه',
+	'wmu-thumbnail' => 'بندانگشتی',
 	'wmu-width' => 'پهنا',
+	'wmu-layout' => 'چیدمان',
 	'wmu-caption' => 'عنوان',
 	'wmu-link' => 'پیوند',
+	'wmu-optional' => '(اختیاری)',
+	'wmu-insert2' => 'درج پرونده',
 	'wmu-imagebutton' => 'افزودن تصویر',
 	'wmu-placeholder' => 'مکان نگه‏دار',
 	'wmu-gallery' => 'نگارخانه',
-	'wmu-added-from-plc' => 'افزودن پروندۀ جدید توسط مکان نگه‏دار تصویر',
+	'wmu-column' => 'ستون‌ها',
+	'wmu-added-from-plc' => 'افزودن پروندۀ تازه توسط مکان نگه‏دار تصویر',
 	'wmu-alignment' => 'تراز',
+	'wmu-file-not-found' => 'پرونده یافت نشد',
 );
 
 /** Finnish (suomi)
@@ -1787,13 +1797,20 @@ $messages['kn'] = array(
 
 /** Korean (한국어)
  * @author Hym411
+ * @author Miri-Nae
+ * @author Revi
  * @author 아라
  */
 $messages['ko'] = array(
 	'wmu-find' => '찾기',
 	'wmu-find-btn' => '찾기',
 	'wmu-license' => '라이선스',
+	'wmu-size' => '크기',
+	'wmu-thumbnail' => '섬네일',
+	'wmu-width' => '너비',
 	'wmu-caption' => '설명',
+	'wmu-link' => '링크',
+	'wmu-gallery' => '갤러리',
 	'wmu-added-from-plc' => '플레이스홀더를 통해 삽입된 그림',
 	'wmu-file-not-found' => '파일을 찾지 못했습니다',
 );
@@ -2564,6 +2581,7 @@ $messages['pt'] = array(
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Caio1478
+ * @author Dianakc
  * @author Giro720
  * @author JM Pessanha
  * @author Luckas
@@ -2632,7 +2650,7 @@ $messages['pt-br'] = array(
 	'wmu-gallery-success' => 'Adicionou uma imagem a uma galeria nova. Clique abaixo para adicionar mais imagens ou inserir a galeria',
 	'wmu-gallery-btn1' => 'Adicionar outra imagem',
 	'wmu-gallery-btn2' => 'Inserir galeria no artigo',
-	'wmu-no-preview' => 'Não pode adicionar imagem desde uma página em modo de antevisão',
+	'wmu-no-preview' => 'Você não pode adicionar uma imagem da página no modo de pré-visualização',
 	'wmu-no-protect' => 'Esta página está protegida, você não pode adicionar imagens a ela',
 	'wmu-no-rights' => 'Você não está autorizado a adicionar imagens nesta página',
 	'wmu-more-options' => 'Mais opções',
@@ -3119,6 +3137,13 @@ $messages['tt-cyrl'] = array(
 	'wmu-show-license-msg' => 'лицензия текстын яшерергә',
 );
 
+/** Tuvinian (тыва дыл)
+ * @author Agilight
+ */
+$messages['tyv'] = array(
+	'wmu-find' => 'Диле',
+);
+
 /** Ukrainian (українська)
  * @author A1
  * @author Andriykopanytsia
@@ -3357,7 +3382,7 @@ $messages['zh-hans'] = array(
 	'wmu-warn3' => '您需要首先确定文件名！',
 	'wmu-imagelink' => '<b>新！</b>增加图片',
 	'wmu-imagebutton' => '增加图片',
-	'wmu-license-cc' => '采用知识共享 署名-相同方式共享 3.0许可协议授权',
+	'wmu-license-cc' => '采用知识共享“署名-相同方式共享 3.0”许可协议授权',
 	'wmu-bad-extension' => '您上传的文件类型不被支持。请再试一次。',
 	'wmu-filetype-missing' => '本次上传丢失了文件扩展信息',
 	'wmu-filetype-incorrect' => '本次上传遇到了不正确的文件扩展名',

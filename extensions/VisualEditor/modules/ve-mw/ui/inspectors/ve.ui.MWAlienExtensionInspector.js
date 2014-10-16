@@ -61,48 +61,48 @@ ve.ui.MWAlienExtensionInspector.prototype.initialize = function () {
 /**
  * @inheritdoc
  */
-ve.ui.MWAlienExtensionInspector.prototype.setup = function () {
-	// Parent method
-	ve.ui.MWExtensionInspector.prototype.setup.apply( this, arguments );
+ve.ui.MWAlienExtensionInspector.prototype.getSetupProcess = function ( data ) {
+	return ve.ui.MWAlienExtensionInspector.super.prototype.getSetupProcess.call( this, data )
+		.next( function () {
+			var key, attributeInput, field,
+				attributes = this.getFragment().getSelectedNode().getAttribute( 'mw' ).attrs;
 
-	var key, attributeInput, field,
-		attributes = this.getFragment().getSelectedNode().getAttribute( 'mw' ).attrs;
-
-	if ( attributes && !ve.isEmptyObject( attributes ) ) {
-		for ( key in attributes ) {
-			attributeInput = new OO.ui.TextInputWidget( {
-				'$': this.$,
-				'value': attributes[key]
-			} );
-			this.attributeInputs[key] = attributeInput;
-			field = new OO.ui.FieldLayout(
-				attributeInput,
-				{
-					'$': this.$,
-					'align': 'left',
-					'label': key
+			if ( attributes && !ve.isEmptyObject( attributes ) ) {
+				for ( key in attributes ) {
+					attributeInput = new OO.ui.TextInputWidget( {
+						'$': this.$,
+						'value': attributes[key]
+					} );
+					this.attributeInputs[key] = attributeInput;
+					field = new OO.ui.FieldLayout(
+						attributeInput,
+						{
+							'$': this.$,
+							'align': 'left',
+							'label': key
+						}
+					);
+					this.$attributes.append( field.$element );
 				}
-			);
-			this.$attributes.append( field.$element );
-		}
-	}
+			}
+		}, this );
 };
 
 /**
  * @inheritdoc
  */
-ve.ui.MWAlienExtensionInspector.prototype.teardown = function () {
-	// Parent method
-	ve.ui.MWExtensionInspector.prototype.teardown.apply( this, arguments );
-
-	this.$attributes.empty();
-	this.attributeInputs = {};
+ve.ui.MWAlienExtensionInspector.prototype.getTeardownProcess = function ( data ) {
+	return ve.ui.MWAlienExtensionInspector.super.prototype.getTeardownProcess.call( this, data )
+		.next( function () {
+			this.$attributes.empty();
+			this.attributeInputs = {};
+		}, this );
 };
 
 /** */
 ve.ui.MWAlienExtensionInspector.prototype.updateMwData = function ( mwData ) {
 	// Parent method
-	ve.ui.MWExtensionInspector.prototype.updateMwData.call( this, mwData );
+	ve.ui.MWAlienExtensionInspector.super.prototype.updateMwData.call( this, mwData );
 
 	var key;
 
@@ -117,4 +117,4 @@ ve.ui.MWAlienExtensionInspector.prototype.updateMwData = function ( mwData ) {
 
 /* Registration */
 
-ve.ui.inspectorFactory.register( ve.ui.MWAlienExtensionInspector );
+ve.ui.windowFactory.register( ve.ui.MWAlienExtensionInspector );

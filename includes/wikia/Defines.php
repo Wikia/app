@@ -24,11 +24,6 @@ define('DB_SLAVE_BEFORE_MASTER',-100);
 define('NS_FORUM', 110);
 define('NS_FORUM_TALK', 111);
 
-
-/**
- * Defines for Wall namespace
- */
-
 /*
  * wikia page props type
  *
@@ -73,6 +68,9 @@ define( "WPP_LYRICFIND_MARKED_FOR_REMOVAL", 23 );
 
 // Video status (ie, working, deleted, private, other)
 define("WPP_VIDEO_STATUS", 24);
+
+// Palantir metadata
+define("WPP_PALANTIR_METADATA", 250);
 
 // Any types listed in this array will not have their values serialized
 // This should only be used for properties that are simple strings or integers

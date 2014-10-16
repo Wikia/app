@@ -179,6 +179,7 @@ class SEOTweaksTest extends WikiaBaseTest
 	
 	/**
 	 * @covers SEOTweaksHooksHelper::onImagePageAfterImageLinks
+	 * @group Broken
 	 */
 	public function testOnImagePageAfterImageLinksEmpties() {
 		
@@ -230,6 +231,7 @@ class SEOTweaksTest extends WikiaBaseTest
 			->method ( 'getTitle' )
 			->will   ( $this->returnValue( null ) )
 		;
+
 		$mockFileHelper
 			->staticExpects( $this->never() )
 			->method       ( 'isFileTypeVideo' )
@@ -249,6 +251,7 @@ class SEOTweaksTest extends WikiaBaseTest
 	
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.04518 ms
 	 * @covers SEOTweaksHooksHelper::onImagePageAfterImageLinks
 	 */
@@ -338,6 +341,7 @@ class SEOTweaksTest extends WikiaBaseTest
 	
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.03643 ms
 	 * @covers SEOTweaksHooksHelper::onImagePageAfterImageLinks
 	 */

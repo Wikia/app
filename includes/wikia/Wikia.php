@@ -30,12 +30,10 @@ $wgHooks['ArticleDeleteComplete']    [] = "Wikia::onArticleDeleteComplete";
 $wgHooks['ContributionsToolLinks']   [] = 'Wikia::onContributionsToolLinks';
 $wgHooks['AjaxAddScript']            [] = 'Wikia::onAjaxAddScript';
 $wgHooks['TitleGetSquidURLs']        [] = 'Wikia::onTitleGetSquidURLs';
-$wgHooks['OutputPageFavicon']        [] = 'Wikia::onOutputPageFavicon';
 
 # changes in recentchanges (MultiLookup)
 $wgHooks['RecentChange_save']        [] = "Wikia::recentChangesSave";
 $wgHooks['BeforeInitialize']         [] = "Wikia::onBeforeInitializeMemcachePurge";
-//$wgHooks['MediaWikiPerformAction']   [] = "Wikia::onPerformActionNewrelicNameTransaction"; disable to gather different newrelic statistics
 $wgHooks['SkinTemplateOutputPageBeforeExec'][] = "Wikia::onSkinTemplateOutputPageBeforeExec";
 $wgHooks['UploadVerifyFile']         [] = 'Wikia::onUploadVerifyFile';
 
@@ -71,54 +69,14 @@ $wgHooks['LocalFilePurgeThumbnailsUrls'][] = 'Wikia::onLocalFilePurgeThumbnailsU
 
 class Wikia {
 
-	const VARNISH_STAGING_HEADER = 'X-Staging';
-	const VARNISH_STAGING_PREVIEW = 'preview';
-	const VARNISH_STAGING_VERIFY = 'verify';
 	const REQUIRED_CHARS = '0123456789abcdefG';
 	const COMMUNITY_WIKI_ID = 177;
+	const FAVICON_URL_CACHE_KEY = 'favicon-v1';
 
 	private static $vars = array();
 	private static $cachedLinker;
 
 	private static $apacheHeaders = null;
-
-	/**
-	 * Return the name of staging server (or empty string for production/dev envs)
-	 * @return string
-	 */
-	public static function getStagingServerName() {
-		if ( is_null( self::$apacheHeaders ) ) {
-			self::$apacheHeaders = function_exists('apache_request_headers') ? apache_request_headers() : array();
-		}
-		if ( isset( self::$apacheHeaders[ self::VARNISH_STAGING_HEADER ] ) ) {
-			return self::$apacheHeaders[ self::VARNISH_STAGING_HEADER ];
-		}
-		return '';
-	}
-
-	/**
-	 * Check if we're running on preview server
-	 * @return bool
-	 */
-	public static function isPreviewServer() {
-		return self::getStagingServerName() === self::VARNISH_STAGING_PREVIEW;
-	}
-
-	/**
-	 * Check if we're running on verify server
-	 * @return bool
-	 */
-	public static function isVerifyServer() {
-		return self::getStagingServerName() === self::VARNISH_STAGING_VERIFY;
-	}
-
-	/**
-	 * Check if we're running in preview or verify env
-	 * @return bool
-	 */
-	public static function isStagingServer() {
-		return self::isPreviewServer() || self::isVerifyServer();
-	}
 
 	public static function setVar($key, $value) {
 		Wikia::$vars[$key] = $value;
@@ -134,6 +92,36 @@ class Wikia {
 
 	public static function unsetVar($key) {
 		unset(Wikia::$vars[$key]);
+	}
+
+	public static function getFaviconFullUrl() {
+		global $wgMemc;
+
+		$mMemcacheKey = wfMemcKey(self::FAVICON_URL_CACHE_KEY);
+		$mData = $wgMemc->get($mMemcacheKey);
+		$faviconFilename = 'Favicon.ico';
+
+		if ( empty($mData) ) {
+			$localFaviconTitle = Title::newFromText( $faviconFilename, NS_FILE );
+			#FIXME: Checking existance of Title in order to use File. #VID-1744
+			if ( $localFaviconTitle->exists() ) {
+				$localFavicon = wfFindFile( $faviconFilename );
+			}
+			if ( $localFavicon ) {
+				$favicon = $localFavicon->getURL();
+			} else {
+				$favicon = GlobalFile::newFromText( $faviconFilename, self::COMMUNITY_WIKI_ID )->getURL();
+			}
+			$wgMemc->set($mMemcacheKey, $favicon, 86400);
+		}
+
+		return $mData;
+	}
+
+	public static function invalidateFavicon() {
+		global $wgMemc;
+
+		$wgMemc->delete( wfMemcKey(self::FAVICON_URL_CACHE_KEY) );
 	}
 
 	/**
@@ -425,13 +413,10 @@ class Wikia {
 
 		$method = $sub ? $method . "-" . $sub : $method;
 		if( $wgDevelEnvironment || $wgErrorLog || $always ) {
-			if (class_exists('Wikia\\Logger\\WikiaLogger')) {
-				$method = preg_match('/-WIKIA$/', $method) ? str_replace('-WIKIA', '', $method) : $method;
-				\Wikia\Logger\WikiaLogger::instance()->debug($message, ['method' => $method]);
-			} else {
-				error_log( $method . ":{$wgDBname}/{$wgCityId}:" . $message );
-			}
+			$method = preg_match('/-WIKIA$/', $method) ? str_replace('-WIKIA', '', $method) : $method;
+			\Wikia\Logger\WikiaLogger::instance()->debug($message, ['method' => $method]);
 		}
+
 		/**
 		 * commandline = echo
 		 */
@@ -1620,7 +1605,7 @@ class Wikia {
 	 */
 	static public function onAfterInitialize($title, $article, $output, $user, WebRequest $request, $wiki) {
 		// allinone
-		global $wgResourceLoaderDebug, $wgAllInOne, $wgUseSiteJs, $wgUseSiteCss, $wgAllowUserJs, $wgAllowUserCss;
+		global $wgResourceLoaderDebug, $wgAllInOne, $wgUseSiteJs, $wgUseSiteCss, $wgAllowUserJs, $wgAllowUserCss, $wgBuckySampling;
 
 		$wgAllInOne = $request->getBool('allinone', $wgAllInOne) !== false;
 		if ($wgAllInOne === false) {
@@ -1632,6 +1617,7 @@ class Wikia {
 		$wgUseSiteCss = $request->getBool( 'usesitecss', $wgUseSiteCss ) !== false;
 		$wgAllowUserJs = $request->getBool( 'allowuserjs', $wgAllowUserJs ) !== false;
 		$wgAllowUserCss = $request->getBool( 'allowusercss', $wgAllowUserCss ) !== false;
+		$wgBuckySampling = $request->getInt( 'buckysampling', $wgBuckySampling );
 
 		return true;
 	}
@@ -1848,18 +1834,7 @@ class Wikia {
 					break;
 			}
 		}
-	}
 
-	// Hook to Construct a tag for newrelic
-	// TEMPORARLY DISABLED
-	// @deprecated
-	static public function onPerformActionNewrelicNameTransaction($output, $article, $title, User $user, $request, $wiki ) {
-		global $wgVersion;
-		if( function_exists( 'newrelic_name_transaction' ) ) {
-			$loggedin = $user->isLoggedIn() ? 'user' : 'anon';
-			$action = $wiki->getAction();
-			newrelic_name_transaction( "/action/$action/$loggedin/$wgVersion" );
-		}
 		return true;
 	}
 
@@ -2158,27 +2133,6 @@ class Wikia {
 			$backend = FileBackendGroup::singleton()->get( 'swift-backend' );
 			$fname = 'mwstore://' . $backend->getName() . "/$wgFSSwiftContainer/images/timeline/$hash";
 		}
-
-		return true;
-	}
-
-	/**
-	 * Rewrties favicon URL to point to CDN domain with a proper cache buster
-	 *
-	 * Uses ThemeDesigner's "revision" ID instead of wgStyleVersion
-	 * to properly update the favicon after the upload
-	 *
-	 * @param $favicon string favicon URL to modify
-	 * @return bool true
-	 *
-	 * @authro hyun
-	 * @authro macbre
-	 *
-	 * @see BAC-1131
-	 */
-	static function onOutputPageFavicon(&$favicon) {
-		$cb = SassUtil::getCacheBuster();
-		$favicon = wfReplaceImageServer($favicon, $cb);
 
 		return true;
 	}

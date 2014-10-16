@@ -9,5 +9,10 @@
 	"ooui-dialog-action-close": "שליסן",
 	"ooui-outline-control-move-down": "רוקן עלעמענט אראפ",
 	"ooui-outline-control-move-up": "רוקן עלעמענט ארויף",
-	"ooui-toolbar-more": "נאך"
+	"ooui-outline-control-remove": "אַראָפנעמען איינס",
+	"ooui-toolbar-more": "נאך",
+	"ooui-dialog-confirm-title": "באַשטעטיקן",
+	"ooui-dialog-confirm-default-prompt": "איר זענט זיכער?",
+	"ooui-dialog-confirm-default-ok": "יאָ",
+	"ooui-dialog-confirm-default-cancel": "אַנולירן"
 }

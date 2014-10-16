@@ -60,6 +60,7 @@ $phalanxhooks = array(
 			'AbortMove'          => 'abortMove',
 			'EditContent'        => 'editContent',
 			'CheckContent'       => 'checkContent',
+			'APIEditBeforeSave'  => 'filterAPIEditBeforeSave',
 		),
 	'PhalanxTitleBlock' =>
 		array(

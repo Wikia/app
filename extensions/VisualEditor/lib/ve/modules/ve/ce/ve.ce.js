@@ -118,144 +118,160 @@ ve.ce.getDomHash = function ( element ) {
  * @param {HTMLElement} domNode DOM node
  * @param {number} domOffset DOM offset within the DOM node
  * @returns {number} Linear model offset
+ * @throws {Error} domOffset is out of bounds
+ * @throws {Error} domNode has no ancestor with a .data( 'view' )
  */
 ve.ce.getOffset = function ( domNode, domOffset ) {
-	if ( domNode.nodeType === Node.TEXT_NODE ) {
-		return ve.ce.getOffsetFromTextNode( domNode, domOffset );
+	var node, view, offset, startNode, maxOffset, lengthSum = 0;
+
+	/**
+	 * Move to the previous "traversal node" in "traversal sequence".
+	 *
+	 * - A node is a "traversal node" if it is either a leaf node or a "view node"
+	 * - A "view node" is one that has $( n ).data( 'view' ) instanceof ve.ce.Node
+	 * - "Traversal sequence" is defined on every node (not just traversal nodes).
+	 *   It is like document order, except that each parent node appears
+	 *   in the sequence both immediately before and immediately after its child nodes.
+	 *
+	 * Important properties:
+	 * - Non-traversal nodes don't have any width in DM (e.g. bold).
+	 * - Certain traversal nodes also have no width (namely, those within an alienated node).
+	 * - Both the start and end of a (non-alienated) parent traversal node has width
+	 *   (which is one reason why traversal sequence is important).
+	 * - In VE-normalized HTML, a text node cannot be a sibling of a non-leaf view node
+	 *   (because all non-alienated text nodes are inside a ContentBranchNode).
+	 * - Traversal-consecutive non-view nodes are either all alienated or all not alienated.
+	 *
+	 * @param {Node} n Node to traverse from
+	 * @returns {Node} Previous traversal node from n
+	 * @throws {Error} domNode has no ancestor with a .data( 'view' )
+	 */
+	function traverse( n ) {
+		while ( !n.previousSibling ) {
+			n = n.parentNode;
+			if ( !n ) {
+				throw new Error( 'domNode has no ancestor with a .data( \'view\' )' );
+			}
+			if ( $( n ).data( 'view' ) instanceof ve.ce.Node ) {
+				return n;
+			}
+		}
+		n = n.previousSibling;
+		if ( $( n ).data( 'view' ) instanceof ve.ce.Node ) {
+			return n;
+		}
+		while ( n.lastChild ) {
+			n = n.lastChild;
+			if ( $( n ).data( 'view' ) instanceof ve.ce.Node ) {
+				return n;
+			}
+		}
+		return n;
+	}
+
+	// Validate domOffset
+	if ( domNode.nodeType === Node.ELEMENT_NODE ) {
+		maxOffset = domNode.childNodes.length;
 	} else {
-		return ve.ce.getOffsetFromElementNode( domNode, domOffset );
+		maxOffset = domNode.data.length;
 	}
-};
-
-/**
- * Gets the linear offset from a given text node and offset within it.
- *
- * @method
- * @param {HTMLElement} domNode DOM node
- * @param {number} domOffset DOM offset within the DOM Element
- * @returns {number} Linear model offset
- */
-ve.ce.getOffsetFromTextNode = function ( domNode, domOffset ) {
-	var $node, nodeModel, current, stack, item, offset, $item;
-
-	$node = $( domNode ).closest(
-		'.ve-ce-branchNode, .ve-ce-leafNode'
-	);
-	nodeModel = $node.data( 'view' ).getModel();
-
-	// IE sometimes puts the cursor in a text node inside ce="false". BAD!
-	if ( $node[0].contentEditable === 'false' ) {
-		return nodeModel.getOffset() + nodeModel.getOuterLength();
+	if ( domOffset < 0 || domOffset > maxOffset) {
+		throw new Error( 'domOffset is out of bounds' );
 	}
 
-	if ( !$node.hasClass( 've-ce-branchNode' ) ) {
-		return nodeModel.getOffset();
-	}
-
-	current = [$node.contents(), 0];
-	stack = [current];
-	offset = 0;
-
-	while ( stack.length > 0 ) {
-		if ( current[1] >= current[0].length ) {
-			stack.pop();
-			current = stack[ stack.length - 1 ];
-			continue;
-		}
-		item = current[0][current[1]];
-		if ( item.nodeType === Node.TEXT_NODE ) {
-			if ( item === domNode ) {
-				offset += domOffset;
-				break;
-			} else {
-				offset += item.textContent.length;
+	// Figure out what node to start traversing at (startNode)
+	if ( domNode.nodeType === Node.ELEMENT_NODE ) {
+		if ( domNode.childNodes.length === 0 ) {
+			// domNode has no children, and the offset is inside of it
+			// If domNode is a view node, return the offset inside of it
+			// Otherwise, start traversing at domNode
+			startNode = domNode;
+			view = $( startNode ).data( 'view' );
+			if ( view instanceof ve.ce.Node ) {
+				return view.getOffset() + ( view.isWrapped() ? 1 : 0 );
 			}
-		} else if ( item.nodeType === Node.ELEMENT_NODE ) {
-			$item = current[0].eq( current[1] );
-			if ( $item.hasClass( 've-ce-branchNode-slug' ) ) {
-				if ( $item.contents()[0] === domNode ) {
-					break;
-				}
-			} else if ( $item.hasClass( 've-ce-leafNode' ) ) {
-				offset += 2;
-			} else if ( $item.hasClass( 've-ce-branchNode' ) ) {
-				offset += $item.data( 'view' ).getOuterLength();
-			} else {
-				stack.push( [ $item.contents(), 0 ] );
-				current[1]++;
-				current = stack[ stack.length - 1 ];
-				continue;
+			node = startNode;
+		} else if ( domOffset === domNode.childNodes.length ) {
+			// Offset is at the end of domNode, after the last child. Set startNode to the
+			// very rightmost descendant node of domNode (i.e. the last child of the last child
+			// of the last child, etc.)
+			// However, if the last child or any of the last children we encounter on the way
+			// is a view node, return the offset after it. This will be the correct return value
+			// because non-traversal nodes don't have a DM width.
+			startNode = domNode.lastChild;
+
+			view = $( startNode ).data( 'view' );
+			if ( view instanceof ve.ce.Node ) {
+				return view.getOffset() + view.getOuterLength();
 			}
-		}
-		current[1]++;
-	}
-	return offset + nodeModel.getOffset() + ( nodeModel.isWrapped() ? 1 : 0 );
-};
-
-/**
- * Gets the linear offset from a given element node and offset within it.
- *
- * @method
- * @param {HTMLElement} domNode DOM node
- * @param {number} domOffset DOM offset within the DOM Element
- * @param {number} [direction] Which direction we are searching in (+/-1), not changed by recursive calls
- * @returns {number} Linear model offset
- */
-ve.ce.getOffsetFromElementNode = function ( domNode, domOffset, direction ) {
-	var nodeModel, node,
-		$domNode = $( domNode );
-
-	if ( $domNode.hasClass( 've-ce-branchNode-slug' ) ) {
-		if ( $domNode.prev().length ) {
-			nodeModel = $domNode.prev().data( 'view' ).getModel();
-			return nodeModel.getOffset() + nodeModel.getOuterLength();
-		}
-		if ( $domNode.next().length ) {
-			nodeModel = $domNode.next().data( 'view' ).getModel();
-			return nodeModel.getOffset();
-		}
-	}
-
-	// IE sometimes puts the cursor in a text node inside ce="false". BAD!
-	if ( !direction && !domNode.isContentEditable ) {
-		nodeModel = $domNode.closest( '.ve-ce-branchNode, .ve-ce-leafNode' ).data( 'view' ).getModel();
-		return nodeModel.getOffset() + nodeModel.getOuterLength();
-	}
-
-	if ( domOffset === 0 || domOffset === domNode.childNodes.length ) {
-		node = $domNode.data( 'view' );
-		if ( node && node instanceof ve.ce.Node ) {
-			nodeModel = $domNode.data( 'view' ).getModel();
-			if ( direction === -1 ) {
-				return nodeModel.getOffset() + nodeModel.getOuterLength();
-			} else if ( direction === 1 ) {
-				return nodeModel.getOffset();
-			} else {
-				if ( domOffset === 0 ) {
-					return nodeModel.getOffset() + ( nodeModel.isWrapped() ? 1 : 0 );
-				} else {
-					return nodeModel.getOffset() + nodeModel.getOuterLength() - ( nodeModel.isWrapped() ? 1 : 0 );
+			while ( startNode.lastChild ) {
+				startNode = startNode.lastChild;
+				view = $( startNode ).data( 'view' );
+				if ( view instanceof ve.ce.Node ) {
+					return view.getOffset() + view.getOuterLength();
 				}
 			}
+			node = startNode;
 		} else {
-			if ( domOffset === 0 ) {
-				node = $domNode.contents().first()[0];
-				direction = direction || 1;
-			} else {
-				node = $domNode.contents().last()[0];
-				direction = direction || -1;
-			}
+			// Offset is right before childNodes[domOffset]. Set startNode to this node
+			// (i.e. the node right after the offset), then traverse back once.
+			startNode = domNode.childNodes[domOffset];
+			node = traverse( startNode );
 		}
 	} else {
-		node = $domNode.contents()[ domOffset - 1 ];
-		direction = direction || -1;
+		// Text inside of a slug doesn't count
+		if ( !$( domNode.parentNode ).hasClass( 've-ce-branchNode-slug' ) ) {
+			lengthSum += domOffset;
+		}
+		startNode = domNode;
+		node = traverse( startNode );
 	}
 
-	if ( node.nodeType === Node.TEXT_NODE ) {
-		return ve.ce.getOffsetFromTextNode( node, direction > 0 ? 0 : node.length );
-	} else {
-		return ve.ce.getOffsetFromElementNode( node, direction > 0 ? 0 : node.childNodes.length, direction );
+	// Walk the traversal nodes in reverse traversal sequence, until we find a view node.
+	// Add the width of each text node we meet. (Non-text node non-view nodes can only be widthless).
+	// Later, if it transpires that we're inside an alienated node, then we will throw away all the
+	// text node lengths, because the alien's content has no DM width.
+	while ( true ) {
+		// First node that has a ve.ce.Node, stop
+		// Note that annotations have a .data( 'view' ) too, but that's a ve.ce.Annotation,
+		// not a ve.ce.Node
+		view = $( node ).data( 'view' );
+		if ( view instanceof ve.ce.Node ) {
+			break;
+		}
+
+		// Text inside of a slug doesn't count
+		if ( node.nodeType === Node.TEXT_NODE && !$( node.parentNode ).hasClass( 've-ce-branchNode-slug' ) ) {
+			lengthSum += node.data.length;
+		}
+		// else: non-text nodes that don't have a .data( 'view' ) don't exist in the DM
+		node = traverse( node );
 	}
+
+	offset = view.getOffset();
+
+	if ( $.contains( node, startNode ) ) {
+		// node is an ancestor of startNode
+		if ( !view.getModel().isContent() ) {
+			// Add 1 to take the opening into account
+			offset += view.getModel().isWrapped() ? 1 : 0;
+			offset += lengthSum;
+		}
+		// else: we're inside an alienated node: throw away all the text node lengths,
+		// because the alien's content has no DM width
+	} else {
+		// node is not an ancestor of startNode
+		// startNode comes after node, so add node's length
+		offset += view.getOuterLength();
+		if ( view.isContent() ) {
+			// view is a leaf node inside of a CBN, so we started inside of a CBN
+			// (otherwise we would have hit the CBN when entering it), so the text we summed up
+			// needs to be counted.
+			offset += lengthSum;
+		}
+	}
+
+	return offset;
 };
 
 /**

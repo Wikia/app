@@ -8,7 +8,7 @@
 
 var base = require('./karma.base.conf.js');
 
-module.exports = function(config) {
+module.exports = function (config) {
 	'use strict';
 
 	base(config);
@@ -50,6 +50,11 @@ module.exports = function(config) {
 			'resources/wikia/modules/stringhelper.js',
 			'resources/wikia/modules/thumbnailer.js',
 			'resources/wikia/modules/uniqueId.js',
+			'resources/wikia/libraries/mustache/mustache.js',
+			'resources/wikia/libraries/jquery/ellipses.js',
+
+			// Performance
+			'extensions/wikia/Bucky/js/spec/bucky.mock.js',
 
 			//UI Repo JS API
 			'resources/wikia/modules/uicomponent.js',
@@ -63,9 +68,10 @@ module.exports = function(config) {
 			//Advertisement
 			'extensions/wikia/AdEngine/js/AdConfig2.js',
 			'extensions/wikia/AdEngine/js/AdConfig2Late.js',
+			'extensions/wikia/AdEngine/js/AdConfigMobile.js',
+			'extensions/wikia/AdEngine/js/AdContext.js',
 			'extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 			'extensions/wikia/AdEngine/js/AdEngine2.js',
-			'extensions/wikia/AdEngine/js/EventDispatcher.js',
 			'extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
 			'extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
 			'extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
@@ -77,12 +83,14 @@ module.exports = function(config) {
 			'extensions/wikia/AdEngine/js/AdProviderLiftium.js',
 			'extensions/wikia/AdEngine/js/AdProviderNull.js',
 			'extensions/wikia/AdEngine/js/DartUrl.js',
+			'extensions/wikia/AdEngine/js/EventDispatcher.js',
 			'extensions/wikia/AdEngine/js/EvolveHelper.js',
 			'extensions/wikia/AdEngine/js/EvolveSlotConfig.js',
+			'extensions/wikia/AdEngine/js/GptSlotConfig.js',
 			'extensions/wikia/AdEngine/js/MessageListener.js',
+			'extensions/wikia/AdEngine/js/AdTracker.js',
 			'extensions/wikia/AdEngine/js/WikiaDartHelper.js',
 			'extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
-			'extensions/wikia/AdEngine/js/WikiaGptHop.js',
 			'extensions/wikia/AdEngine/js/WikiaGptAdDetect.js',
 
 			'extensions/wikia/AdEngine/js/spec/*.spec.js',
@@ -105,31 +113,31 @@ module.exports = function(config) {
 			/*
 			 * Common VideoPageTool Deps
 			 */
-			'extensions/wikia/VideoPageTool/js/lib/lodash/dist/lodash.underscore.js',
-			'extensions/wikia/VideoPageTool/js/lib/backbone/backbone.js',
-			'extensions/wikia/VideoPageTool/js/shared/views/switcher.js',
+			'extensions/wikia/VideoPageTool/scripts/lib/lodash/dist/lodash.underscore.js',
+			'extensions/wikia/VideoPageTool/scripts/lib/backbone/backbone.js',
+			'extensions/wikia/VideoPageTool/scripts/shared/views/switcher.js',
 
 			/*
 			 * VideoPageTool: Admin Module
 			 */
 
 			// Collections
-			'extensions/wikia/VideoPageTool/js/admin/collections/category.js',
-			'extensions/wikia/VideoPageTool/js/admin/collections/categorydata.js',
+			'extensions/wikia/VideoPageTool/scripts/admin/collections/category.js',
+			'extensions/wikia/VideoPageTool/scripts/admin/collections/categorydata.js',
 			// Views
-			'extensions/wikia/VideoPageTool/js/admin/views/autocomplete.js',
+			'extensions/wikia/VideoPageTool/scripts/admin/views/autocomplete.js',
 
 			/*
 			 * VideoPageTool: Homepage Module
 			 */
-			'extensions/wikia/VideoPageTool/js/homepage/collections/featuredslides.js',
+			'extensions/wikia/VideoPageTool/scripts/homepage/collections/featuredslides.js',
 
 			/*
 			 * VideoPageTool: Source the tests
 			 */
-			'extensions/wikia/VideoPageTool/js/spec/*.spec.js',
-			'extensions/wikia/VideoPageTool/js/spec/**/*.spec.js',
-			'extensions/wikia/VideoPageTool/js/spec/**/**/*.spec.js',
+			'extensions/wikia/VideoPageTool/scripts/spec/*.spec.js',
+			'extensions/wikia/VideoPageTool/scripts/spec/**/*.spec.js',
+			'extensions/wikia/VideoPageTool/scripts/spec/**/**/*.spec.js',
 
 			/*
 			 * Extension: VideosModule
@@ -154,7 +162,25 @@ module.exports = function(config) {
 			'resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js', // $.throttle
 			'extensions/wikia/ImageLazyLoad/js/ImgLzy.module.js',
 			'extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
-			'extensions/wikia/ImageLazyLoad/spec/*.spec.js'
+			'extensions/wikia/ImageLazyLoad/spec/*.spec.js',
+
+			// Thumbnails
+			'extensions/wikia/Thumbnails/scripts/templates.mustache.js',
+			'extensions/wikia/Thumbnails/scripts/views/titleThumbnail.js',
+			'extensions/wikia/Thumbnails/scripts/spec/*.spec.js',
+
+			// WikiaMaps
+			'extensions/wikia/WikiaMaps/js/WikiaMapsPoiCategories.js',
+			'extensions/wikia/WikiaMaps/js/models/WikiaMapsPoiCategoriesModel.js',
+			'extensions/wikia/WikiaMaps/js/WikiaMapsUtils.js',
+			'extensions/wikia/WikiaMaps/spec/*.spec.js',
+
+			// MediaGalleries
+			'extensions/wikia/MediaGallery/scripts/templates.mustache.js',
+			'extensions/wikia/MediaGallery/scripts/views/caption.js',
+			'extensions/wikia/MediaGallery/scripts/views/media.js',
+			'extensions/wikia/MediaGallery/scripts/views/gallery.js',
+			'extensions/wikia/MediaGallery/scripts/spec/**/*.spec.js'
 		]
 	});
 };

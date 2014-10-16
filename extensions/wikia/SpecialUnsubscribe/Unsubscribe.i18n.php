@@ -161,10 +161,11 @@ $messages['de'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'unsubscribe' => 'Abonin ra bıvıci',
-	'unsubscribe-confirm-legend' => 'Testiq ke',
+	'unsubscribe-confirm-legend' => 'Tesdiq ke',
 	'unsubscribe-confirm-button' => 'E, Me emel ke',
 	'unsubscribe-working-done' => 'Temamyayo',
 );
@@ -385,10 +386,10 @@ $messages['lv'] = array(
  */
 $messages['mk'] = array(
 	'unsubscribe' => 'Отпиши',
-	'unsubscribe-badaccess' => 'Нажалост, оваа страница не може да се користи директно. Стиснете на врската наведена во пораката што ви ја испративме по е-пошта.',
-	'unsubscribe-badtoken' => 'Нажалост, се појави проблем со безбедносната шифра.',
-	'unsubscribe-bademail' => 'Нажалост, се појави проблем со е-поштата.',
-	'unsubscribe-badtime' => 'Нажалост, врската истече. Врската не треба да е постара од 7 дена.',
+	'unsubscribe-badaccess' => 'За жал, оваа страница не може да се користи директно. Стиснете на врската наведена во пораката што ви ја испративме по е-пошта.',
+	'unsubscribe-badtoken' => 'За жал, се појави проблем со безбедносната шифра.',
+	'unsubscribe-bademail' => 'За жал, се појави проблем со е-поштата.',
+	'unsubscribe-badtime' => 'За жал, врската истече. Врската не треба да е постара од 7 дена.',
 	'unsubscribe-nousers' => 'Не пронајдов корисници со таа е-поштенска адреса.',
 	'unsubscribe-noconfusers' => 'Не пронајдов потврдени корисници со таа е-поштенска адреса.',
 	'unsubscribe-confirm-legend' => 'Потврди',
@@ -758,6 +759,7 @@ $messages['vi'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  * @author Hzy980512
+ * @author Liuxinyu970226
  */
 $messages['zh-hans'] = array(
 	'unsubscribe' => '取消订阅',
@@ -770,6 +772,8 @@ $messages['zh-hans'] = array(
 	'unsubscribe-confirm-legend' => '确定',
 	'unsubscribe-confirm-text' => '要利用<code>$1</code>取消订阅所有用户吗？',
 	'unsubscribe-confirm-button' => '是，我很确定',
+	'unsubscribe-working' => '为$2退订$1个账户',
+	'unsubscribe-working-problem' => '加载用户信息时出现问题：$1',
 	'unsubscribe-working-done' => '完成。',
 	'unsubscribe-preferences-toggle' => '不订阅Wikia的所有邮件（取消选定这个方块才能进入下列选项）',
 	'unsubscribe-preferences-notice' => '您的账户已禁用电邮。请访问用户配置文件选项卡以从新启用。',

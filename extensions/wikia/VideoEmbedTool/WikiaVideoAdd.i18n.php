@@ -97,6 +97,23 @@ $messages['bjn'] = array(
 	'wva-add' => 'Tambahakan',
 );
 
+/** Bengali (বাংলা)
+ * @author Aftab1995
+ */
+$messages['bn'] = array(
+	'wva-success' => 'ভিডিও পাতা [[:$1]] সফলভাবে যোগ করা হয়েছে।',
+	'wva-success-replaced' => 'ভিডিও পাতা [[:$1]] সফলভাবে প্রতিস্থাপিত হয়েছে।',
+	'wva-failure' => 'দয়া করে বৈধ প্যারামিটার সরবরাহ করুন।',
+	'wva-name' => 'ভিডিওর নাম:',
+	'wva-url' => 'ভিডিওর URL:',
+	'wva-add' => 'যোগ',
+	'wva-title' => 'দ্রুত URL থেকে ভিডিও যোগ করুন',
+	'wva-notlogged' => 'ভিডিও যোগ করতে হবে আপনাকে লগ ইন বা নিবন্ধন করা প্রয়োজন।',
+	'wva-notallowed' => 'আপনি এই উইকিতে ভিডিও যোগ করতে পারবেন না।',
+	'wva-protected' => 'এই ভিডিওটি সুরক্ষিত।',
+	'wva-thumbnail-upload-failed' => 'ভিডিও এম্বেড করতে ব্যর্থ, সঠিক থাম্বনেইল পেতে অসমর্থ',
+);
+
 /** Breton (brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
@@ -196,13 +213,14 @@ $messages['de-formal'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'wva-success' => 'Vidyo pelaya $1  vıraziyaya', # Fuzzy
 	'wva-success-replaced' => 'Vidyo pelaya $1  re ca deya.', # Fuzzy
-	'wva-name' => 'Name deke:', # Fuzzy
-	'wva-url' => 'URL deke:', # Fuzzy
-	'wva-add' => 'Deke',
+	'wva-name' => 'Nameyê videoy:',
+	'wva-url' => 'URL-adresa videoy:',
+	'wva-add' => 'Cı ke',
 	'wva-protected' => 'Na vidyoya stare deya.',
 );
 
@@ -392,13 +410,14 @@ $messages['ia'] = array(
  * @author Farras
  * @author Irwangatot
  * @author Kenrick95
+ * @author Riemogerz
  */
 $messages['id'] = array(
-	'wva-success' => 'halaman Video $1 berhasil ditambahkan.', # Fuzzy
-	'wva-success-replaced' => 'halaman Video $1 berhasil diganti.', # Fuzzy
+	'wva-success' => 'Halaman video [[:$1]] berhasil ditambahkan.',
+	'wva-success-replaced' => 'Halaman video [[:$1]] berhasil diganti.',
 	'wva-failure' => 'Harap berikan parameter yang benar.',
-	'wva-name' => 'Masukkan nama:', # Fuzzy
-	'wva-url' => 'Masukkan URL:', # Fuzzy
+	'wva-name' => 'Nama video:',
+	'wva-url' => 'URL video:',
 	'wva-add' => 'Tambahkan',
 	'wva-title' => 'Cara cepat menambah Video dari URL',
 	'wva-notlogged' => 'Anda harus login atau daftar untuk memasukkan video.',
@@ -473,8 +492,11 @@ $messages['kn'] = array(
 
 /** Korean (한국어)
  * @author Hym411
+ * @author Miri-Nae
+ * @author Revi
  */
 $messages['ko'] = array(
+	'wva-name' => '동영상 이름:',
 	'wva-url' => '동영상 URL:',
 );
 
@@ -936,11 +958,11 @@ $messages['zh-hans'] = array(
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
-	'wva-success' => '成功增加影片 [[:$1]]', # Fuzzy
-	'wva-success-replaced' => '成功替換影片 [[:$1]]', # Fuzzy
+	'wva-success' => '成功增加影片[[:$1]]',
+	'wva-success-replaced' => '成功替換影片 [[:$1]]',
 	'wva-failure' => '請提供有效的參數。',
-	'wva-name' => '影片名稱', # Fuzzy
-	'wva-url' => '影片連結：', # Fuzzy
+	'wva-name' => '影片名稱：',
+	'wva-url' => '影片連結：',
 	'wva-add' => '新增',
 	'wva-title' => '從網路快速新增影片',
 	'wva-notlogged' => '您需要登錄或註冊來插入影片。',

@@ -53,6 +53,11 @@ class Http {
 				$req->setHeader( $name, $value );
 			}
 		}
+
+		// @author macbre
+		// pass Request ID to internal requests
+		$req->setHeader( Wikia\Util\RequestId::REQUEST_HEADER_NAME, Wikia\Util\RequestId::instance()->getRequestId() );
+
 		// Wikia change - end
 		if( isset( $options['userAgent'] ) ) {
 			$req->setUserAgent( $options['userAgent'] );
@@ -65,25 +70,27 @@ class Http {
 		$status = $req->execute();
 
 		// Wikia change - @author: mech - begin
-		// log all the requests we make (except valid Phalanx calls, as we have a lot of them)
-		$caller =  wfGetCallerClassMethod( [ __CLASS__, 'Hooks' ] );
+		// log all the requests we make
+		$caller =  wfGetCallerClassMethod( [ __CLASS__, 'Hooks', 'ApiService', 'Solarium_Client', 'Solarium_Client_Adapter_Curl' ] );
 		$isOk = $status->isOK();
-		if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) && ( !$isOk || false === strpos( $caller, 'Phalanx' ) ) ) {
+		if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
 
 			$requestTime = (int)( ( microtime( true ) - $requestTime ) * 1000.0 );
+			$backendTime = $req->getResponseHeader('x-backend-response-time') ?: 0;
+
 			$params = [
 				'statusCode' => $req->getStatus(),
 				'reqMethod' => $method,
 				'reqUrl' => $url,
 				'caller' => $caller,
 				'isOk' => $isOk,
-				'requestTimeMS' => $requestTime
+				'requestTimeMS' => $requestTime,
+				'backendTimeMS' => intval( 1000 * $backendTime),
 			];
 			if ( !$isOk ) {
 				$params[ 'statusMessage' ] = $status->getMessage();
 			}
 			\Wikia\Logger\WikiaLogger::instance()->debug( 'Http request' , $params );
-
 		}
 
 		// Wikia change - @author: nAndy - begin
@@ -108,7 +115,7 @@ class Http {
 	 * @param $url
 	 * @param $timeout string
 	 * @param $options array
-	 * @return string
+	 * @return string|bool|MWHttpRequest
 	 */
 	public static function get( $url, $timeout = 'default', $options = array() ) {
 		$options['timeout'] = $timeout;
@@ -121,7 +128,7 @@ class Http {
 	 *
 	 * @param $url
 	 * @param $options array
-	 * @return string
+	 * @return string|bool|MWHttpRequest
 	 */
 	public static function post( $url, $options = array() ) {
 		return Http::request( 'POST', $url, $options );
@@ -777,6 +784,13 @@ class CurlHttpRequest extends MWHttpRequest {
 			// Wikia change - end
 		}
 
+		// Wikia change - begin
+		// remove CURLOPT_TIMEOUT if CURLOPT_TIMEOUT_MS is set
+		if ( isset( $this->curlOptions[CURLOPT_TIMEOUT_MS] ) ) {
+			unset( $this->curlOptions[CURLOPT_TIMEOUT] );
+		}
+		// Wikia change - end
+
 		$this->curlOptions[CURLOPT_HTTPHEADER] = $this->getHeaderList();
 
 		$curlHandle = curl_init( $this->url );
@@ -797,7 +811,9 @@ class CurlHttpRequest extends MWHttpRequest {
 		}
 
 		if ( false === curl_exec( $curlHandle ) ) {
-			$code = curl_error( $curlHandle );
+			// Wikia changes - begin
+			$code = curl_errno( $curlHandle );
+			// Wikia change - end
 
 			if ( isset( self::$curlMessageMap[$code] ) ) {
 				$this->status->fatal( self::$curlMessageMap[$code] );

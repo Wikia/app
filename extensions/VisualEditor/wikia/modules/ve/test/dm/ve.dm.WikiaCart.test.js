@@ -18,10 +18,10 @@ QUnit.module( 've.dm.WikiaCart', {
 
 QUnit.test( 'addItems', function ( assert ) {
 	this.cartModel.connect( this, {
-		'add': function( o ) {
+		'add': function ( o ) {
 			assert.deepEqual( o, this.items, 'Event "add" trigged with correct data' );
 		},
-		'remove': function( o ) {
+		'remove': function ( o ) {
 			assert.deepEqual( o, this.items, 'Event "remove" trigged with correct data' );
 		}
 	} );
@@ -30,14 +30,13 @@ QUnit.test( 'addItems', function ( assert ) {
 	QUnit.expect( 3 );
 } );
 
-
 QUnit.test( 'removeItems', function ( assert ) {
 	this.cartModel.addItems( this.items );
 	this.cartModel.connect( this, {
-		'add': function() {
+		'add': function () {
 			assert.ok( false );
 		},
-		'remove': function( o ) {
+		'remove': function ( o ) {
 			assert.deepEqual( o, [ this.item1 ], 'Event "remove" trigged with correct data' );
 		}
 	} );
@@ -50,10 +49,10 @@ QUnit.test( 'clearItems', function ( assert ) {
 	this.cartModel.addItems( this.items );
 	this.cartModel.removeItems( [ this.item1 ] );
 	this.cartModel.connect( this, {
-		'add': function() {
+		'add': function () {
 			assert.ok( false );
 		},
-		'remove': function( o ) {
+		'remove': function ( o ) {
 			assert.deepEqual( o, [ this.item2, this.item3 ], 'Event "remove" trigged with correct data' );
 		}
 	} );
@@ -61,4 +60,3 @@ QUnit.test( 'clearItems', function ( assert ) {
 	assert.deepEqual( this.cartModel.getItems(), [] );
 	QUnit.expect( 2 );
 } );
-

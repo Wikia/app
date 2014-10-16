@@ -51,7 +51,9 @@ class Listusers extends SpecialRedirectToSpecial {
 		 * defaults
 		 */
 		$this->mCityId = $wgCityId;
-		$this->mDefGroups = array( self::DEF_GROUP_NAME, 'bot', 'sysop', 'rollback', 'bureaucrat', 'fb-user' );
+		// VOLDEV-47
+		// remove default highlighted groups (all are now highlighted)
+		$this->mDefGroups = array();
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, self::TITLE );
 		$this->mAction = htmlspecialchars( $this->mTitle->getLocalURL() );
 		$this->mContribs = array(

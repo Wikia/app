@@ -350,9 +350,6 @@ SQL;
 	public function getRegularVideoList( $sort, $page, $useMaster = false ) {
 		wfProfileIn( __METHOD__ );
 
-		// Get the play button image to overlay on the video
-		$playButton = WikiaFileHelper::videoPlayButtonOverlay( self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT );
-
 		// Get the list of videos that haven't been swapped yet
 		$videoList = $this->getUnswappedVideoList( $sort, self::VIDEOS_PER_PAGE, $page, $useMaster );
 
@@ -374,10 +371,7 @@ SQL;
 
 			$videoDetail = $helper->getVideoDetail( $videoInfo, $this->defaultVideoOptions );
 			if ( !empty( $videoDetail ) ) {
-				$videoOverlay =  WikiaFileHelper::videoInfoOverlay( self::THUMBNAIL_WIDTH, $videoDetail['fileTitle'] );
 
-				$videoDetail['videoPlayButton'] = $playButton;
-				$videoDetail['videoOverlay'] = $videoOverlay;
 				$videoDetail['videoSuggestions'] = $suggestions;
 
 				$seeMoreLink = SpecialPage::getTitleFor( "WhatLinksHere" )->escapeLocalUrl();
@@ -536,9 +530,6 @@ SQL;
 		// Reuse code from VideoHandlerHelper
 		$helper = new VideoHandlerHelper();
 
-		// Get the play button image to overlay on the video
-		$playButton = WikiaFileHelper::videoPlayButtonOverlay( self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT );
-
 		foreach ( $videoRows as $videoInfo ) {
 			$rowTitle = preg_replace( '/^File:/', '',  $videoInfo['title'] );
 			$videoRowTitleTokenized = $this->getNormalizedTokens( $rowTitle );
@@ -589,11 +580,6 @@ SQL;
 				}
 				continue;
 			}
-
-			// get video overlay
-			$videoOverlay =  WikiaFileHelper::videoInfoOverlay( self::THUMBNAIL_WIDTH, $videoDetail['fileTitle'] );
-			$videoDetail['videoPlayButton'] = $playButton;
-			$videoDetail['videoOverlay'] = $videoOverlay;
 
 			$videos[] = $videoDetail;
 

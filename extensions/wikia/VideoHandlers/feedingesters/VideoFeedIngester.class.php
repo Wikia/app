@@ -7,11 +7,11 @@ abstract class VideoFeedIngester {
 
 	// Constants for referring to short provider names
 	const PROVIDER_SCREENPLAY = 'screenplay';
-	const PROVIDER_REALGRAVITY = 'realgravity';
 	const PROVIDER_IGN = 'ign';
 	const PROVIDER_ANYCLIP = 'anyclip';
 	const PROVIDER_OOYALA = 'ooyala';
 	const PROVIDER_IVA = 'iva';
+	const PROVIDER_CRUNCHYROLL = 'crunchyroll';
 
 	// Caching constants; all integers are seconds
 	const CACHE_KEY = 'videofeedingester-2';
@@ -27,15 +27,16 @@ abstract class VideoFeedIngester {
 	// Providers from which we ingest daily video data
 	protected static $ACTIVE_PROVIDERS = [
 		self::PROVIDER_IGN,
+		// Ooyala must come before remote assets, otherwise duplicates will sometimes be ingested. See VID-1871
 		self::PROVIDER_OOYALA,
 		self::PROVIDER_IVA,
 		self::PROVIDER_SCREENPLAY,
+		self::PROVIDER_CRUNCHYROLL,
 	];
 
 	// These providers are not ingested daily, but can be ingested from if specifically named
 	protected static $INACTIVE_PROVIDERS = [
 		self::PROVIDER_ANYCLIP,
-		self::PROVIDER_REALGRAVITY,
 	];
 
 	protected static $API_WRAPPER;
@@ -59,6 +60,11 @@ abstract class VideoFeedIngester {
 		'Entertainment' => [],
 		'Lifestyle'     => [],
 		'International' => [],
+		'Other'         => [],
+	];
+
+	protected $defaultRequestOptions = [
+		'noProxy' => true
 	];
 
 	private static $WIKI_INGESTION_DATA_FIELDS = array( 'keyphrases' );
@@ -482,7 +488,7 @@ abstract class VideoFeedIngester {
 				print ":: $line\n";
 			}
 		} else {
-			$result = $ooyalaAsset->updateMetadata( $dupAsset['embed_code'], $assetMeta );
+			$result = OoyalaAsset::updateMetadata( $dupAsset['embed_code'], $assetMeta );
 			if ( !$result ) {
 				$this->videoWarnings();
 				wfProfileOut( __METHOD__ );
@@ -646,10 +652,12 @@ abstract class VideoFeedIngester {
 
 	/**
 	 * @param $url
+	 * @param $options
 	 * @return string
 	 */
-	protected function getUrlContent( $url ) {
-		return Http::request( 'GET', $url, array( 'noProxy' => true ) );
+	protected function getUrlContent( $url, $options = array() ) {
+		$options = array_merge( $options, $this->defaultRequestOptions );
+		return Http::request( 'GET', $url, $options );
 	}
 
 	/**
@@ -686,11 +694,9 @@ abstract class VideoFeedIngester {
 		// values should not be imported. This assumption will have to
 		// change if we consider values that fall into a range, such as
 		// duration < MIN_VALUE
-		if ( is_array( static::$CLIP_TYPE_BLACKLIST ) ) {
+		if ( !empty( static::$CLIP_TYPE_BLACKLIST ) && is_array( static::$CLIP_TYPE_BLACKLIST ) ) {
 			$arrayIntersect = array_intersect( static::$CLIP_TYPE_BLACKLIST, $clipData );
-			if ( !empty( $arrayIntersect ) && $arrayIntersect == static::$CLIP_TYPE_BLACKLIST ) {
-				return true;
-			}
+			return ( !empty( $arrayIntersect ) && $arrayIntersect == static::$CLIP_TYPE_BLACKLIST );
 		}
 
 		return false;
@@ -1257,10 +1263,18 @@ abstract class VideoFeedIngester {
 	 */
 	public function videoIngested( $msg = '', $categories = [] ) {
 		if ( !empty( $msg ) ) {
+			$addedResult = false;
 			foreach ( $categories as $category ) {
 				if ( array_key_exists( $category, $this->resultIngestedVideos ) ) {
 					$this->resultIngestedVideos[$category][] = $msg;
+					$addedResult = true;
+					break;
 				}
+			}
+
+			// If this video is in some other category, make sure it still gets into the report
+			if ( !$addedResult ) {
+				$this->resultIngestedVideos['Other'][] = $msg;
 			}
 		}
 
@@ -1311,6 +1325,14 @@ abstract class VideoFeedIngester {
 	 */
 	public function getResultIngestedVideos() {
 		return $this->resultIngestedVideos;
+	}
+
+	/**
+	 * Get provider
+	 * @return string
+	 */
+	public function getProvider() {
+		return STATIC::$PROVIDER;
 	}
 
 }

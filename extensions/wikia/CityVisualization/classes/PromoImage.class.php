@@ -192,7 +192,7 @@ class PromoImage extends WikiaObject {
 		return $this;
 	}
 
-	protected function inferType($fileName, &$dbName = null){
+	static protected function inferType( $fileName, &$dbName = null ) {
 		$pattern = "/^(".self::__MAIN_IMAGE_BASE_NAME.")?(".self::__ADDITIONAL_IMAGES_BASE_NAME."-(\d)?)?,?([^.]{1,})?\.?(.*)$/i";
 		$type = self::INVALID;
 

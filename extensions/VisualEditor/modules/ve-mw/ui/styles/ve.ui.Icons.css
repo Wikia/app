@@ -1,0 +1,87 @@
+/*!
+ * VisualEditor MediaWiki UserInterface icon styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+/*csslint duplicate-background-images:false */
+
+.oo-ui-icon-alienextension {
+	/* @embed */
+	background-image: url(images/icons/alienextension.svg);
+}
+
+.oo-ui-icon-gallery {
+	/* @embed */
+	background-image: url(images/icons/gallery.svg);
+}
+
+.oo-ui-icon-image-none {
+	/* @embed */
+	background-image: url(images/icons/image-none.svg);
+}
+
+.oo-ui-icon-image-frame {
+	/* @embed */
+	background-image: url(images/icons/image-frame.svg);
+}
+
+.oo-ui-icon-image-frameless {
+	/* @embed */
+	background-image: url(images/icons/image-frameless.svg);
+}
+
+.oo-ui-icon-image-thumbnail {
+	/* @embed */
+	background-image: url(images/icons/image-thumbnail.svg);
+}
+
+.oo-ui-icon-parameter {
+	/* @embed */
+	background-image: url(images/icons/parameter.svg);
+}
+
+.oo-ui-icon-parameter-set {
+	/* @embed */
+	background-image: url(images/icons/parameter-set.svg);
+}
+
+.oo-ui-icon-reference {
+	/* @embed */
+	background-image: url(images/icons/reference.svg);
+}
+
+.oo-ui-icon-references {
+	/* @embed */
+	background-image: url(images/icons/references.svg);
+}
+
+.oo-ui-icon-ref-cite-book {
+	/* @embed */
+	background-image: url(images/icons/ref-cite-book.svg);
+}
+
+.oo-ui-icon-ref-cite-journal {
+	/* @embed */
+	background-image: url(images/icons/ref-cite-journal.svg);
+}
+
+.oo-ui-icon-ref-cite-news {
+	/* @embed */
+	background-image: url(images/icons/ref-cite-news.svg);
+}
+
+.oo-ui-icon-ref-cite-web {
+	/* @embed */
+	background-image: url(images/icons/ref-cite-web.svg);
+}
+
+.oo-ui-icon-source {
+	/* @embed */
+	background-image: url(images/icons/source.svg);
+}
+
+.oo-ui-icon-template {
+	/* @embed */
+	background-image: url(images/icons/template.svg);
+}

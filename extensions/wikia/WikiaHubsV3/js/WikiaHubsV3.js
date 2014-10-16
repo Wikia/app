@@ -23,6 +23,7 @@ define('wikia.hubs', ['wikia.window', 'jquery'], function wikiaHubs(window, $) {
 				};
 			}
 
+			$('.tooltip-icon ').tooltip();
 			$( 'body' ).on( 'click', '.modalWrapper', WikiaHubs.modalClickTrackingHandler );
 		},
 

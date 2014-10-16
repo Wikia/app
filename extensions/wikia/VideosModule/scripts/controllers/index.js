@@ -4,26 +4,38 @@
  * to leave this in there for now as we may at some point switch back to the bottom position.
  */
 require([
-	//'videosmodule.views.bottomModule',
 	'videosmodule.views.rail',
-	'videosmodule.models.videos'
-], function (/*BottomModule,*/ RailModule, VideoData) {
+	'videosmodule.models.videos',
+	'bucky'
+], function (RailModule, VideoData, bucky) {
 	'use strict';
 
-	$(function () {
+	var $rail = $('#WikiaRail');
+
+	bucky = bucky('videosmodule.controller.index');
+
+	function init() {
+		var rail;
+
+		bucky.timer.start('execution');
 		// instantiate rail view
-		$('#WikiaRail').on('afterLoad.rail', function() {
-			return new RailModule({
-				el: document.getElementById('videosModule'),
-				model: new VideoData(),
-				isFluid: false
-			});
+		rail = new RailModule({
+			$el: $('#videosModule'),
+			model: new VideoData(),
+			isFluid: false
 		});
 
-		/*
-		view = new BottomModule({
-			el: document.getElementById('RelatedPagesModuleWrapper'),
-			model: new VideoData()
-		});*/
+		rail.$el.on('initialized.videosModule', function () {
+			bucky.timer.stop('execution');
+		});
+	}
+
+	$(function () {
+		// check if right rail is loaded before initing. If it's not loaded, bind to load event.
+		if ($rail.hasClass('loaded')) {
+			init();
+		} else {
+			$rail.on('afterLoad.rail', init);
+		}
 	});
 });

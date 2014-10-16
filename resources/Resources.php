@@ -14,6 +14,9 @@ return array(
 	'user.tokens' => array( 'class' => 'ResourceLoaderUserTokensModule' ),
 	'filepage' => array( 'class' => 'ResourceLoaderFilePageModule' ),
 
+	// Scripts for the dynamic language specific data, like grammar forms.
+	'mediawiki.language.data' => array( 'class' => 'ResourceLoaderLanguageDataModule' ),
+
 	/* Skins */
 
 	'skins.chick' => array(
@@ -679,62 +682,70 @@ return array(
 	/* MediaWiki Language */
 
 	'mediawiki.language' => array(
-		'scripts' => 'resources/mediawiki.language/mediawiki.language.js',
-		'languageScripts' => array(
-			'am' => 'resources/mediawiki.language/languages/am.js',
-			'ar' => 'resources/mediawiki.language/languages/ar.js',
-			'bat-smg' => 'resources/mediawiki.language/languages/bat-smg.js',
-			'be' => 'resources/mediawiki.language/languages/be.js',
-			'be-tarask' => 'resources/mediawiki.language/languages/be-tarask.js',
-			'bh' => 'resources/mediawiki.language/languages/bh.js',
-			'bs' => 'resources/mediawiki.language/languages/bs.js',
-			'cs' => 'resources/mediawiki.language/languages/cs.js',
-			'cu' => 'resources/mediawiki.language/languages/cu.js',
-			'cy' => 'resources/mediawiki.language/languages/cy.js',
-			'dsb' => 'resources/mediawiki.language/languages/dsb.js',
-			'fr' => 'resources/mediawiki.language/languages/fr.js',
-			'ga' => 'resources/mediawiki.language/languages/ga.js',
-			'gd' => 'resources/mediawiki.language/languages/gd.js',
-			'gv' => 'resources/mediawiki.language/languages/gv.js',
-			'he' => 'resources/mediawiki.language/languages/he.js',
-			'hi' => 'resources/mediawiki.language/languages/hi.js',
-			'hr' => 'resources/mediawiki.language/languages/hr.js',
-			'hsb' => 'resources/mediawiki.language/languages/hsb.js',
-			'hy' => 'resources/mediawiki.language/languages/hy.js',
-			'ksh' => 'resources/mediawiki.language/languages/ksh.js',
-			'ln' => 'resources/mediawiki.language/languages/ln.js',
-			'lt' => 'resources/mediawiki.language/languages/lt.js',
-			'lv' => 'resources/mediawiki.language/languages/lv.js',
-			'mg' => 'resources/mediawiki.language/languages/mg.js',
-			'mk' => 'resources/mediawiki.language/languages/mk.js',
-			'mo' => 'resources/mediawiki.language/languages/mo.js',
-			'mt' => 'resources/mediawiki.language/languages/mt.js',
-			'nl' => 'resources/mediawiki.language/languages/nl.js',
-			'nso' => 'resources/mediawiki.language/languages/nso.js',
-			'pl' => 'resources/mediawiki.language/languages/pl.js',
-			'pt' => 'resources/mediawiki.language/languages/pt.js',
-			'pt-br' => 'resources/mediawiki.language/languages/pt-br.js',
-			'ro' => 'resources/mediawiki.language/languages/ro.js',
-			'ru' => 'resources/mediawiki.language/languages/ru.js',
-			'se' => 'resources/mediawiki.language/languages/se.js',
-			'sh' => 'resources/mediawiki.language/languages/sh.js',
-			'sk' => 'resources/mediawiki.language/languages/sk.js',
-			'sl' => 'resources/mediawiki.language/languages/sl.js',
-			'sma' => 'resources/mediawiki.language/languages/sma.js',
-			'sr-ec' => 'resources/mediawiki.language/languages/sr-ec.js',
-			'sr-el' => 'resources/mediawiki.language/languages/sr-el.js',
-			'sr' => 'resources/mediawiki.language/languages/sr.js',
-			'ti' => 'resources/mediawiki.language/languages/ti.js',
-			'tl' => 'resources/mediawiki.language/languages/tl.js',
-			'uk' => 'resources/mediawiki.language/languages/uk.js',
-			'wa' => 'resources/mediawiki.language/languages/wa.js',
+		'scripts' => array(
+			'resources/src/mediawiki.language/mediawiki.language.js',
+			'resources/src/mediawiki.language/mediawiki.language.numbers.js'
 		),
+		'languageScripts' => array(
+			'bs' => 'resources/src/mediawiki.language/languages/bs.js',
+			'dsb' => 'resources/src/mediawiki.language/languages/dsb.js',
+			'fi' => 'resources/src/mediawiki.language/languages/fi.js',
+			'ga' => 'resources/src/mediawiki.language/languages/ga.js',
+			'he' => 'resources/src/mediawiki.language/languages/he.js',
+			'hsb' => 'resources/src/mediawiki.language/languages/hsb.js',
+			'hu' => 'resources/src/mediawiki.language/languages/hu.js',
+			'hy' => 'resources/src/mediawiki.language/languages/hy.js',
+			'la' => 'resources/src/mediawiki.language/languages/la.js',
+			'os' => 'resources/src/mediawiki.language/languages/os.js',
+			'ru' => 'resources/src/mediawiki.language/languages/ru.js',
+			'sl' => 'resources/src/mediawiki.language/languages/sl.js',
+			'uk' => 'resources/src/mediawiki.language/languages/uk.js',
+		),
+		'dependencies' => array(
+				'mediawiki.language.data',
+				'mediawiki.cldr',
+			),
+		'targets' => array( 'desktop', 'mobile' ),
+	),
+
+	'mediawiki.cldr' => array(
+		'scripts' => 'resources/src/mediawiki.language/mediawiki.cldr.js',
+		'dependencies' => array(
+			'mediawiki.libs.pluralruleparser',
+		),
+		'targets' => array( 'desktop', 'mobile' ),
+	),
+
+	'mediawiki.libs.pluralruleparser' => array(
+		'scripts' => 'resources/src/mediawiki.libs/CLDRPluralRuleParser.js',
+		'targets' => array( 'desktop', 'mobile' ),
+	),
+
+	'mediawiki.language.init' => array(
+		'scripts' => 'resources/src/mediawiki.language/mediawiki.language.init.js',
+		'targets' => array( 'desktop', 'mobile' ),
 	),
 
 	'mediawiki.jqueryMsg' => array(
-		'dependencies' => array( 'mediawiki.language', 'mediawiki.util' ),
-		'scripts' => 'resources/mediawiki/mediawiki.jqueryMsg.js'
+		'scripts' => 'resources/src/mediawiki/mediawiki.jqueryMsg.js',
+		'dependencies' => array(
+			'mediawiki.util',
+			'mediawiki.language',
+		),
+		'targets' => array( 'desktop', 'mobile' ),
 	),
+
+	'mediawiki.language.months' => array(
+		'scripts' => 'resources/src/mediawiki.language/mediawiki.language.months.js',
+		'dependencies' => 'mediawiki.language',
+		'messages' => array_merge(
+			Language::$mMonthMsgs,
+			Language::$mMonthGenMsgs,
+			Language::$mMonthAbbrevMsgs
+		)
+	),
+
+	'mediawiki.language.names' => array( 'class' => 'ResourceLoaderLanguageNamesModule' ),
 
 	/* MediaWiki Libs */
 
@@ -835,19 +846,19 @@ return array(
 
 	/* MediaWiki Tests */
 
-        'test.sinonjs' => array(
-                'scripts' => array(
-                        'resources/sinonjs/sinon-1.9.0.js',
-                        // We want tests to work in IE, but can't include this as it
-                        // will break the placeholders in Sinon because the hack it uses
-                        // to hijack IE globals relies on running in the global scope
-                        // and in ResourceLoader this won't be running in the global scope.
-                        // Including it results (among other things) in sandboxed timers
-                        // being broken due to Date inheritance being undefined.
-                        // 'resources/sinonjs/sinon-ie-1.9.0.js',
-                ),
-                'targets' => array( 'desktop', 'mobile' ),
-        ),
+	'test.sinonjs' => array(
+		'scripts' => array(
+			'resources/sinonjs/sinon-1.9.0.js',
+			// We want tests to work in IE, but can't include this as it
+			// will break the placeholders in Sinon because the hack it uses
+			// to hijack IE globals relies on running in the global scope
+			// and in ResourceLoader this won't be running in the global scope.
+			// Including it results (among other things) in sandboxed timers
+			// being broken due to Date inheritance being undefined.
+			// 'resources/sinonjs/sinon-ie-1.9.0.js',
+		),
+		'targets' => array( 'desktop', 'mobile' ),
+	),
 
 	'mediawiki.tests.qunit.testrunner' => array(
 		'scripts' => 'tests/qunit/data/testrunner.js',

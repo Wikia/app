@@ -10,9 +10,8 @@
  *
  * @class
  * @abstract
+ *
  * @constructor
- * @param {number} [length] Length of content data in document; ignored and overridden to 0
- * @param {Object} [element] Reference to element in linear model
  */
 ve.dm.GeneratedContentNode = function VeDmGeneratedContentNode() {
 };

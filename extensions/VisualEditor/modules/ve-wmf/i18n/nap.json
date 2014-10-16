@@ -1,14 +1,14 @@
 {
-    "@metadata": {
-        "authors": [
-            "Chelin",
-            "Chrisportelli",
-            "PiRSquared17"
-        ]
-    },
-    "tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
-    "tag-visualeditor-description": "Càgnamiento fatto ausando [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
-    "tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: cuntrolla]]",
-    "visualeditor-feedback-link": "Project:VisualEditor/Cummente",
-    "visualeditor-feedback-tool": "Lascia 'nu cummento"
+	"@metadata": {
+		"authors": [
+			"Chelin",
+			"Chrisportelli",
+			"PiRSquared17"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-description": "Càgnamiento fatto ausando [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: cuntrolla]]",
+	"visualeditor-feedback-link": "Project:VisualEditor/Cummente",
+	"visualeditor-feedback-tool": "Lascia 'nu cummento"
 }

@@ -62,6 +62,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->wg->SuppressFooter = false;
 		$this->wg->SuppressAds = true;
 		$this->wg->SuppressToolbar = true;
+
+		$this->getOutput()->disallowUserJs(); // just in case...
 	}
 
 	/**
@@ -229,6 +231,14 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 		$this->returnto = $this->getReturnToFromQuery( $query );
 		$this->returntoquery = $this->getReturnToQueryFromQuery( $query );
+
+		$requestParams = $this->getRequest()->getParams();
+		if ( !empty( $requestParams[ 'registerLink' ] ) ) {
+			$this->registerLink = $requestParams[ 'registerLink' ];
+		}
+		if ( !empty( $requestParams[ 'template' ] ) ) {
+			$this->overrideTemplate( $requestParams[ 'template' ] );
+		}
 	}
 
 	public function getMainPagePartialUrl() {

@@ -15,6 +15,8 @@
 			thumbs: [], // master list of thumbnails inside carousel; purged after closing the lightbox
 			placeholderIdx: -1
 		},
+		carouselThumbWidth: 90,
+		carouselThumbHeight: 55,
 		// Modal vars
 		openModal: false, // gets replaced with dom object of open modal
 		shortScreen: false, // flag if the screen is shorter than LightboxLoader.defaults.height
@@ -206,7 +208,7 @@
 				Lightbox.openModal.removeClass('share-mode').removeClass('more-info-mode');
 				Lightbox.openModal.share.html('');
 				Lightbox.openModal.moreInfo.html('');
-			}).on('click.Lightbox', Lightbox.openModal.pin, function (evt) {
+			}).on('click.Lightbox', Lightbox.openModal.pin.selector, function (evt) {
 				// Pin the toolbar on icon click
 				var target = $(evt.target),
 					overlayActive = Lightbox.openModal.data('overlayactive'),
@@ -313,6 +315,9 @@
 			updateLightbox: function (data) {
 				Lightbox.image.getDimensions(data.imageUrl, function (dimensions) {
 
+					// render media
+					data.imageHeight = dimensions.imageHeight;
+
 					var css = {
 							height: dimensions.modalHeight
 						},
@@ -328,9 +333,6 @@
 					}
 
 					Lightbox.openModal.css(css);
-
-					// render media
-					data.imageHeight = dimensions.imageHeight;
 
 					// Hack to vertically align the image in the lightbox
 					Lightbox.openModal.media
@@ -474,9 +476,14 @@
 				Lightbox.openModal.media.html('');
 			},
 			updateLightbox: function (data) {
+				var height = LightboxLoader.defaults.height;
+				if (data.extraHeight) {
+					height += data.extraHeight;
+				}
+
 				// Set lightbox css
 				var css = {
-						height: LightboxLoader.defaults.height
+						height: height
 					},
 					// prevent race conditions from timeout
 					trackingTitle = Lightbox.current.key;
@@ -1107,6 +1114,8 @@
 						origin: 'image-lightbox',
 						callback: function () {
 							doShareEmail(addresses);
+							// see VID-473 - Reload page on lightbox close
+							LightboxLoader.reloadOnClose = true;
 						}
 					});
 				}
@@ -1157,6 +1166,11 @@
 						thumbs = article.find('.image, .lightbox').find('img').add(article.find('.thumbimage'));
 					}
 
+					// cache keys for dupe checking later
+					$.each(thumbArr, function () {
+						keys.push(this.key);
+					});
+
 					thumbs.each(function () {
 						var $thisThumb = $(this),
 							type,
@@ -1203,6 +1217,13 @@
 								thumbWrapperClass: (type === 'video') ? Lightbox.videoWrapperClass : ''
 							});
 						}
+					});
+
+					// Add cached media gallery data sent over from MediaGallery extension.
+					$(window).trigger('lightboxArticleMedia', {
+						thumbArr: thumbArr,
+						width: Lightbox.carouselThumbWidth,
+						height: Lightbox.carouselThumbHeight
 					});
 
 					// Fill articleMedia cache
@@ -1334,8 +1355,7 @@
 						var $thisThumb = $(this),
 							type = 'video',
 							title = $thisThumb.attr('data-video-name'),
-							key = $thisThumb.attr('data-video-key'),
-							playButtonSpan = Lightbox.thumbPlayButton;
+							key = $thisThumb.attr('data-video-key');
 
 						if (key) {
 							// Check for dupes
@@ -1349,7 +1369,7 @@
 								title: title,
 								key: key,
 								type: type,
-								playButtonSpan: playButtonSpan,
+								playButtonSpan: Lightbox.thumbPlayButton,
 								thumbWrapperClass: Lightbox.videoWrapperClass
 							});
 						}
@@ -1393,7 +1413,7 @@
 
 		thumbParams: function (url, type) {
 			//Get URL to a proper thumbnail
-			return Wikia.Thumbnailer.getThumbURL(url, type, 90, 55);
+			return Wikia.Thumbnailer.getThumbURL(url, type, Lightbox.carouselThumbWidth, Lightbox.carouselThumbHeight);
 		},
 
 		/**
@@ -1428,11 +1448,7 @@
 					break;
 
 				case 'videosModule':
-					if (!clickSource) {
-						clickSource = parent.hasClass('videos-module-rail') ?
-							VPS.VIDEOS_MODULE_RAIL :
-							VPS.VIDEOS_MODULE_BOTTOM;
-					}
+					clickSource = clickSource || VPS.VIDEOS_MODULE_RAIL;
 
 					carouselType = 'videosModule';
 					trackingCarouselType = 'videos-module';

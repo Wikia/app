@@ -66,7 +66,7 @@ ve.ui.HistoryTool.prototype.onUpdateState = function () {
  */
 ve.ui.HistoryTool.prototype.destroy = function () {
 	this.toolbar.getSurface().getModel().disconnect( this );
-	ve.ui.Tool.prototype.destroy.call( this );
+	ve.ui.HistoryTool.super.prototype.destroy.call( this );
 };
 
 /**

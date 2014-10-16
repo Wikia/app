@@ -371,11 +371,28 @@ $messages['it'] = array(
 	'partner-feed-achievements-leaderboard' => 'Classifica dei successi nella wiki',
 );
 
+/** Japanese (日本語)
+ * @author Barrel0116
+ * @author Plover-Y
+ */
+$messages['ja'] = array(
+	'partner-feed-recent-changes' => '最近の変更',
+	'all-blog-posts' => 'すべてのカテゴリ',
+	'feed-title-recentchanges' => '最近の更新',
+);
+
 /** Kannada (ಕನ್ನಡ)
  * @author VASANTH S.N.
  */
 $messages['kn'] = array(
 	'partner-feed-recent-changes' => 'ಇತ್ತೀಚಿನ ಬದಲಾವಣೆಗಳು',
+);
+
+/** Korean (한국어)
+ * @author 아라
+ */
+$messages['ko'] = array(
+	'feed-title-blogposts' => '최근 블로그 게시물',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
@@ -783,6 +800,13 @@ $messages['tl'] = array(
 	'feed-title-recentchanges' => 'Kamakailang mga pagbabago',
 );
 
+/** Turkish (Türkçe)
+ * @author Sucsuzz
+ */
+$messages['tr'] = array(
+	'feed-title-recentchanges' => 'Son değişiklikler',
+);
+
 /** Ukrainian (українська)
  * @author A1
  * @author Andriykopanytsia
@@ -848,6 +872,7 @@ $messages['zh-hans'] = array(
 	'partner-feed-achievements-leaderboard' => 'Wiki成就排行榜',
 	'partner-feed-earned-badges' => '最近在特定wiki获得的徽章',
 	'partner-feed-recent-changes' => '最新更改',
+	'partnerfeed' => '合作伙伴订阅',
 	'feed-title-blogposts' => '最新博客帖子',
 	'feed-title-recent-badges' => '最新徽章',
 	'feed-title-recent-images' => '最近的图片',
@@ -859,4 +884,12 @@ $messages['zh-hans'] = array(
 	'feed-title-blogcomments' => '评论 $1',
 	'feed-title-recentchanges' => '最近更改',
 	'partner-feed-error-no-blogpost-found' => '<b>错误：</b>博客文章 $1 不存在。',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author EagerLin
+ */
+$messages['zh-hant'] = array(
+	'partner-feed-recent-changes' => '近期變更',
+	'feed-title-recentchanges' => '近期變更',
 );

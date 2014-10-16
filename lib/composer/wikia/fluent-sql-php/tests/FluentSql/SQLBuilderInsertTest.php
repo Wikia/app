@@ -40,7 +40,7 @@ class SQLBuilderInsertTest extends FluentSqlTestBase {
 
 	public function testValues() {
 		$expected = "
-			INSERT INTO some_table (col1, col2, col3) VALUES ('1', '2', '3' ), ('4', '5', '6' )
+			INSERT INTO some_table (col1, col2, col3) VALUES ( '1', '2', '3' ), ( '4', '5', '6' )
 		";
 
 		$sql = (new SQL)

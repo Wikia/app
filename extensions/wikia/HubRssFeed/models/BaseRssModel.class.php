@@ -1,7 +1,10 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 abstract class BaseRssModel extends WikiaService {
 
+	const FIELD_TIMESTAMP = 'timestamp';
 	const SOURCE_HUB = 'hub';
 	const SOURCE_GENERATOR = 'generator';
 	const ENDPOINT_ASSIMPLEJSON = 'api/v1/Articles/AsSimpleJson';
@@ -26,17 +29,23 @@ abstract class BaseRssModel extends WikiaService {
 
 	public abstract function getFeedTitle();
 
-	public abstract function getFeedLanguage();
-
 	public abstract function getFeedDescription();
 
-	public function getFeedData(){
-		return $this->getLastRecordsFromDb( static::FEED_NAME, static::MAX_NUM_ITEMS_IN_FEED );
+	public static function getFeedLanguage() {
+		return static::LANGUAGE;
 	}
 
-	public function generateFeedData(){
-		$duplicates = $this->getLastDuplicatesFromDb( static::FEED_NAME );
-		$timestamp = $this->getLastFeedTimestamp( static::FEED_NAME ) + 1;
+	public static function getFeedName() {
+		return static::FEED_NAME . static::getFeedLanguage();
+	}
+
+	public function getFeedData() {
+		return $this->getLastRecordsFromDb( static::getFeedName(), static::MAX_NUM_ITEMS_IN_FEED );
+	}
+
+	public function generateFeedData() {
+		$duplicates = $this->getLastDuplicatesFromDb( static::getFeedName() );
+		$timestamp = $this->getLastFeedTimestamp( static::getFeedName() ) + 1;
 		return $this->loadData( $timestamp, $duplicates );
 	}
 
@@ -48,14 +57,22 @@ abstract class BaseRssModel extends WikiaService {
 	 */
 	public static function newFromName( $feedName ) {
 		switch ( $feedName ) {
-			case GamesRssModel::FEED_NAME:
+			case GamesRssModel::getFeedName():
 				return new GamesRssModel();
-			case TvRssModel::FEED_NAME:
+			case GamesDeHubOnlyRssModel::getFeedName():
+				return new GamesDeHubOnlyRssModel();
+			case TvRssModel::getFeedName():
 				return new TvRssModel();
-			case LifestyleHubOnlyRssModel::FEED_NAME:
+			case LifestyleHubOnlyRssModel::getFeedName():
 				return new LifestyleHubOnlyRssModel();
-			case EntertainmentHubOnlyRssModel::FEED_NAME:
+			case EntertainmentHubOnlyRssModel::getFeedName():
 				return new EntertainmentHubOnlyRssModel();
+			case EntertainmentDeHubOnlyRssModel::getFeedName():
+				return new EntertainmentDeHubOnlyRssModel();
+			case MarvelRssModel::getFeedName():
+				return new MarvelRssModel();
+			case StarWarsRssModel::getFeedName():
+				return new StarWarsRssModel();
 			default:
 				return null;
 		}
@@ -93,7 +110,7 @@ abstract class BaseRssModel extends WikiaService {
 				->SET( 'wrf_page_id', $item[ 'page_id' ] )
 				->SET( 'wrf_url', $url )
 				->SET( 'wrf_feed', $feed )
-				->SET( 'wrf_pub_date', date( self::DATETIME_FORMAT , $item[ 'timestamp' ] ) )
+				->SET( 'wrf_pub_date', date( self::DATETIME_FORMAT, $item[ 'timestamp' ] ) )
 				->SET( 'wrf_title', $item[ 'title' ] )
 				->SET( 'wrf_description', $item[ 'description' ] )
 				->SET( 'wrf_img_url', $item[ 'img' ][ 'url' ] )
@@ -219,23 +236,27 @@ abstract class BaseRssModel extends WikiaService {
 		return $wikisData;
 	}
 
+	protected function getWikiService() {
+		return new WikiService();
+	}
+
 	protected function getArticleDetail( $wikiId, $articleId ) {
-		$res = ApiService::foreignCall( WikiFactory::IDtoDB( $wikiId ),[ 'ids' => $articleId ],  self::ENDPOINT_DETAILS );
+		$res = ApiService::foreignCall( WikiFactory::IDtoDB( $wikiId ), [ 'ids' => $articleId ], self::ENDPOINT_DETAILS );
 		if ( !$res ) {
 			return [ ];
 		}
 
 		$article = $res[ 'items' ][ $articleId ];
 		if ( !$article[ 'thumbnail' ] ) {
-			$ws = new WikiService();
-			$article[ 'thumbnail' ] = $ws->getWikiWordmark( $wikiId );
+			$wikiService = $this->getWikiService();
+			$article[ 'thumbnail' ] = $wikiService->getWikiWordmark( $wikiId );
 		} else {
 			$article[ 'thumbnail' ] = ImagesService::getFileUrlFromThumbUrl( $article[ 'thumbnail' ] );
 		}
 		return [ 'img' => [
 			'url' => $article[ 'thumbnail' ],
 			'width' => $article[ 'original_dimensions' ][ 'width' ] < self::MIN_IMAGE_SIZE ? self::MIN_IMAGE_SIZE : $article[ 'original_dimensions' ][ 'width' ],
-			'height' => $article[ 'original_dimensions' ][ 'height' ] < self::MIN_IMAGE_SIZE ? self::MIN_IMAGE_SIZE : $article[ 'original_dimensions' ][ 'width' ]
+			'height' => $article[ 'original_dimensions' ][ 'height' ] < self::MIN_IMAGE_SIZE ? self::MIN_IMAGE_SIZE : $article[ 'original_dimensions' ][ 'height' ]
 		],
 			'title' => $article[ 'title' ]
 		];
@@ -273,7 +294,7 @@ abstract class BaseRssModel extends WikiaService {
 				}
 			}
 
-			if ( empty($item[ 'timestamp' ] )) {
+			if ( empty( $item[ 'timestamp' ] ) ) {
 				$item[ 'timestamp' ] = $time--;
 			}
 
@@ -285,6 +306,9 @@ abstract class BaseRssModel extends WikiaService {
 
 			$out[ $item[ 'url' ] ] = $item;
 		}
+
+		$out = $this->fixDuplicatedTimestamps( $out );
+
 		return $out;
 	}
 
@@ -301,6 +325,7 @@ abstract class BaseRssModel extends WikiaService {
 
 		foreach ( $rawData as $key => $item ) {
 			if ( array_key_exists( $item[ 'url' ], $duplicates ) ) {
+				WikiaLogger::instance()->info( __METHOD__, [ 'item' => $item ] );
 				unset( $rawData[ $key ] );
 			}
 		}
@@ -346,7 +371,7 @@ abstract class BaseRssModel extends WikiaService {
 	}
 
 	protected function getDataFromHubs( $hubId, $fromTimestamp, $duplicates = [ ] ) {
-		$model = new HubRssFeedModel( $this->getFeedLanguage() );
+		$model = new HubRssFeedModel( static::getFeedLanguage() );
 		$v3 = $model->getRealDataV3( $hubId, null, true );
 		foreach ( $v3 as $key => $item ) {
 			if ( $item[ 'timestamp' ] < $fromTimestamp ) {
@@ -369,12 +394,12 @@ abstract class BaseRssModel extends WikiaService {
 			$res = $f2->query( '' );
 			foreach ( $res as $item ) {
 				$key = $item[ 'url' ];
-				if(array_key_exists($key , $urls)){
-					$newItem = $urls[$key];
+				if ( array_key_exists( $key, $urls ) ) {
+					$newItem = $urls[ $key ];
 					$newItem[ 'wikia_id' ] = $item[ 'wid' ];
 					$newItem[ 'page_id' ] = $item[ 'pageid' ];
 					$newItem[ 'source' ] = $source;
-					$data[] = $newItem;
+					$data[ ] = $newItem;
 				}
 			}
 		}
@@ -406,10 +431,10 @@ abstract class BaseRssModel extends WikiaService {
 		return $item;
 	}
 
-	public static function getStagingPrefix(){
+	public static function getStagingPrefix() {
 		global $wgDevelEnvironment, $wgStagingEnvironment;
 
-		if( $wgDevelEnvironment ||  $wgStagingEnvironment ){
+		if ( $wgDevelEnvironment || $wgStagingEnvironment ) {
 			return 'stag_';
 		}
 
@@ -417,6 +442,79 @@ abstract class BaseRssModel extends WikiaService {
 			return 'stag_';
 		}
 		return '';
+	}
+
+	/**
+	 * Fixing array of items in such way - that items will not contain duplicated timestamps
+	 */
+	protected function fixDuplicatedTimestamps( $items ) {
+
+		if ( empty( $items ) ) {
+			$emptyArray = [ ];
+			return $emptyArray;
+		}
+
+		$uniqueTimestamps =
+			$this->countUniqueTimestampsOccurrence( $items );
+
+		if ( count( $items ) == count( $uniqueTimestamps ) ) {
+			// Number of unique timestamps == number of items
+			// This means that there is no timestamps conflicts
+			return $items;
+		}
+
+		foreach ( $items as $key => $value ) {
+			$timestamp = $value[ self::FIELD_TIMESTAMP ];
+
+			$timestampIsNotUnique =
+				$uniqueTimestamps[ $timestamp ] > 1;
+
+			if ( $timestampIsNotUnique ) {
+
+				$newTimestamp =
+					$this->findAvailableTimestamp( $timestamp, $uniqueTimestamps );
+
+				// Updating timestamp
+				$items[ $key ][ self::FIELD_TIMESTAMP ] = $newTimestamp;
+
+				// Mark new timestamp as unavailable for future searching
+				$uniqueTimestamps[ $newTimestamp ] = 1;
+
+				// decrease number of occurrences of conflicted timestamp
+				$uniqueTimestamps[ $timestamp ]--;
+			}
+		}
+
+		// Returning items without duplicating timestamps
+		return $items;
+	}
+
+	/**
+	 * Count occurrence of each unique timestamp
+	 */
+	protected function countUniqueTimestampsOccurrence( $itemsMap ) {
+		$timestampsCount = [ ];
+		foreach ( $itemsMap as $key => $value ) {
+			$timestamp = $value[ self::FIELD_TIMESTAMP ];
+
+			if ( empty( $timestampsCount[ $timestamp ] ) ) {
+				$timestampsCount[ $timestamp ] = 1;
+			} else {
+				$timestampsCount[ $timestamp ]++;
+			}
+		}
+		return $timestampsCount;
+	}
+
+	/**
+	 * Finding available timestamp (by increasing current timestamp)
+	 */
+	protected function findAvailableTimestamp( $timestamp, $uniqueTimestampsCount ) {
+		$newTimestamp = $timestamp + 1;
+		while ( !empty( $uniqueTimestampsCount[ $newTimestamp ] ) ) {
+			$newTimestamp++;
+		}
+		return $newTimestamp;
 	}
 
 }

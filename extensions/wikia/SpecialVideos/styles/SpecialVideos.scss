@@ -1,9 +1,9 @@
 @import "skins/oasis/css/core/layout";
-@import "skins/oasis/css/core/color";
-@import "skins/oasis/css/mixins/bodytext";
-@import "skins/oasis/css/mixins/box-shadow";
-@import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/gradient";
+@import "skins/shared/color";
+@import "skins/shared/mixins/bodytext";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/gradient";
 
 $placeholder-bg-img: url(/extensions/wikia/SpecialVideos/images/AddVideoIcons_Dark.png);  /* base64 */
 $placeholder-bg-color: darken($color-page, 10%);

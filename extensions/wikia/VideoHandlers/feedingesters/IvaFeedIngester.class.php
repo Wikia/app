@@ -8,7 +8,10 @@ class IvaFeedIngester extends VideoFeedIngester {
 	protected static $PROVIDER = 'iva';
 	protected static $FEED_URL = 'http://api.internetvideoarchive.com/1.0/DataService/EntertainmentPrograms?$top=$1&$skip=$2&$filter=$3&$expand=$4&$format=json&developerid=$5';
 	protected static $FEED_URL_ASSET = 'http://api.internetvideoarchive.com/1.0/DataService/VideoAssets()?$top=$1&$skip=$2&$filter=$3&$expand=$4&$format=json&developerid=$5';
-	protected static $ASSET_URL = 'http://www.videodetective.net/video.mp4?cmd=6&fmt=4&customerid=$1&videokbrate=750&publishedid=$2&e=$3';
+	protected static $ASSET_URL = 'http://www.videodetective.net/video.mp4?cmd=6&fmt=4&customerid=$1&videokbrate=$4&publishedid=$2&e=$3';
+
+	protected static $ASSET_BITRATE = 1500;
+	protected static $ASSET_BITRATE_MOBILE = 750;
 
 	private static $VIDEO_SETS = array(
 		'Wiggles' => array( 'Wiggles' ),
@@ -360,7 +363,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 		'Spin City' => array( 668757 ),
 		'Star Trek' => array( 92386 ),
 		'Star Trek, Star Trek: The Next Generation' => array( 3860 ),
-		'Star Wars, Star Wars The Clone Wars' => array( 665563, 168621 ),
+		'Star Wars, Star Wars The Clone Wars' => [ 665563, 168621, 682720 ],
 		'Storage Wars' => array( 845591 ),
 		'Storage Wars, Storage Wars: Texas' => array( 121611 ),
 		'Strikeforce' => array( 931820 ),
@@ -438,6 +441,25 @@ class IvaFeedIngester extends VideoFeedIngester {
 		'The Goodwin Games' => array( 268664 ),
 		'Deception' => array( 730834 ),
 		'The Americans' => array( 934933 ),
+		'Gotham' => [ 14924 ],
+		'Penny Dreadful' => [ 304089 ],
+		'Orphan Black' => [ 731971 ],
+		'Sleepy Hollow' => [ 326245 ],
+		'Hannibal' => [ 575155 ],
+		'Extant' => [ 941342 ],
+		'Crossbones' => [ 348355 ],
+		'Defiance' => [ 90566 ],
+		'Constantine' => [ 228617 ],
+		'Under the Dome' => [ 565426 ],
+		'State of Affairs' => [ 83930 ],
+		'Star Wars Rebels' => [ 402210 ],
+		'Adventure Time' => [ 229351 ],
+		'Star Wars Episode I: The Phantom Menace' => [ 481313 ],
+		'Return of the Jedi' => [ 2701 ],
+		'Lego Star Wars: The Empire Strikes Out' => [ 285876 ],
+		'The Empire Strikes Back' => [ 2846 ],
+		'Star Wars' => [ 3883 ],
+		'Star Wars Episode II: Attack of the Clones' => [ 862846 ],
 	);
 
 	// exclude song and movie types
@@ -465,6 +487,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 	];
 
 	const API_PAGE_SIZE = 100;
+	const MIN_RELEASE_YEAR = 2013;
 
 	/**
 	 * Import IVA content
@@ -558,7 +581,8 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 				$videoAssets = $program['VideoAssets']['results'];
 				$numVideos = count( $videoAssets );
-				print( "{$program['title']} (Series:{$clipData['series']}): ");
+				$title =  $this->getTitleFromProgram( $program );
+				print( "$title (Series:{$clipData['series']}): ");
 				$this->videoFound( $numVideos );
 
 				// add video assets
@@ -668,14 +692,22 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 		$clipData = array();
 
-		$program['title'] = empty( $program['DisplayTitle'] ) ? trim( $program['Title'] ) : trim( $program['DisplayTitle'] );
-		$program['title'] = $this->updateTitle( $program['title'] );
+		$program['title'] = $this->getTitleFromProgram( $program );
 
 		// get series
 		$clipData['series'] = empty( $videoParams['series'] ) ? $program['title'] : $videoParams['series'];
 
 		if ( isset( $program['OkToEncodeAndServe'] ) && $program['OkToEncodeAndServe'] == false ) {
 			$this->videoSkipped( "Skip: {$clipData['series']} (Publishedid:{$program['Publishedid']}) has OkToEncodeAndServe set to false.\n" );
+			wfProfileOut( __METHOD__ );
+			return false;
+		}
+
+		// skip videos released before our minimum release date
+		if ( !empty( $program['FirstReleasedYear'] ) && $program['FirstReleasedYear'] < self::MIN_RELEASE_YEAR ) {
+			$msg = "Skip: {$clipData['series']} (Publishedid:{$program['Publishedid']}) release date ";
+			$msg .= "{$program['FirstReleasedYear']} before ".self::MIN_RELEASE_YEAR."\n";
+			$this->videoSkipped( $msg );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
@@ -730,9 +762,12 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * Get clip data from asset data
+	 *
 	 * @param array $videoParams
 	 * @param array $videoAsset - asset data from API
 	 * @param array|false $clipData
+	 *
+	 * @return array|bool|false
 	 */
 	protected function getDataFromAsset( $videoParams, $videoAsset, $clipData ) {
 		wfProfileIn( __METHOD__ );
@@ -957,6 +992,12 @@ class IvaFeedIngester extends VideoFeedIngester {
 		$categories[] = $data['series'];
 		$categories[] = $data['category'];
 
+		// VID-1736 Remove video title from categories
+		$titleKey = array_search( $data['titleName'], $categories );
+		if ( $titleKey !== false ) {
+			unset( $categories[$titleKey] );
+		}
+
 		$categories = array_merge( $categories, $this->getAdditionalPageCategories( $categories ) );
 
 		// add language
@@ -991,33 +1032,46 @@ class IvaFeedIngester extends VideoFeedIngester {
 		$data['published'] = empty( $data['published'] ) ? '' : strftime( '%Y-%m-%d', $data['published'] );
 
 		if ( $generateUrl ) {
-			$url = str_replace( '$1', F::app()->wg->IvaApiConfig['AppId'], static::$ASSET_URL );
-			$url = str_replace( '$2', $data['videoId'], $url );
-
-			$expired = 1609372800; // 2020-12-31
-			$url = str_replace( '$3', $expired, $url );
-
-			$hash = $this->generateHash( $url );
-			$url .= '&h='.$hash;
-
-			$data['url'] = array(
-				'flash' => $url,
-				'iphone' => $url,
-			);
+			$data['url'] = $this->getRemoteAssetUrls( $data['videoId'] );
 		}
 
 		return $data;
 	}
 
 	/**
-	 * Generate an MD5 hash from the IVA App Key combined with the URL
-	 * @param string $url - The URL to base the hash on
-	 * @return string $hash - The MD5 hash
+	 * Get list of url for the remote asset
+	 * @param string $videoId
+	 * @return array
 	 */
-	protected function generateHash( $url ) {
-		$hash = md5( strtolower( F::app()->wg->IvaApiConfig['AppKey'].$url ) );
+	public function getRemoteAssetUrls( $videoId ) {
+		$url = str_replace( '$1', F::app()->wg->IvaApiConfig['AppId'], static::$ASSET_URL );
+		$url = str_replace( '$2', $videoId, $url );
 
-		return $hash;
+		$expired = 1609372800; // 2020-12-31
+		$url = str_replace( '$3', $expired, $url );
+
+		$urls = [
+			'flash'  => $this->generateHash( $url, self::$ASSET_BITRATE ),
+			'iphone' => $this->generateHash( $url, self::$ASSET_BITRATE_MOBILE ),
+		];
+
+		return $urls;
+	}
+
+	/**
+	 * Generate an MD5 hash from the IVA App Key combined with the URL and append to the URL
+	 *
+	 * @param string $url - The URL to base the hash on
+	 * @param $bitrate
+	 *
+	 * @return string $url - URL including hash value
+	 */
+	protected function generateHash( $url, $bitrate ) {
+		$url = str_replace( '$4', $bitrate, $url );
+		$hash = md5( strtolower( F::app()->wg->IvaApiConfig['AppKey'].$url ) );
+		$url .= '&h='.$hash;
+
+		return $url;
 	}
 
 	/**
@@ -1033,4 +1087,13 @@ class IvaFeedIngester extends VideoFeedIngester {
 		return $title;
 	}
 
+	/**
+	 * Get the title of program - Entertainment Program data from API
+	 * @param array $program
+	 * @return string
+	 */
+	protected function getTitleFromProgram( array $program ) {
+		$title = empty( $program['DisplayTitle'] ) ? $program['Title'] : $program['DisplayTitle'];
+		return $this->updateTitle( trim( $title ) );
+	}
 }

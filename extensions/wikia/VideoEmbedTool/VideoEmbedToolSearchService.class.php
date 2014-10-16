@@ -188,7 +188,8 @@ class VideoEmbedToolSearchService
 
 	/**
 	 * Correctly formats response as expected by VET, and inflates video data on each result.
-	 * @param array
+	 *
+	 * @param array $searchResponse
 	 * @return array
 	 */
 	protected function postProcessSearchResponse( array $searchResponse ) {
@@ -196,22 +197,33 @@ class VideoEmbedToolSearchService
 		$data = [];
 		$start = $config->getStart();
 		$pos = $start;
+
+		$videoOptions = [
+			'thumbWidth'   => $this->getWidth(),
+			'thumbHeight'  => $this->getHeight(),
+			'getThumbnail' => true,
+			'thumbOptions' => [
+				'forceSize'   => 'small',
+			],
+		];
+
 		foreach ( $searchResponse['items'] as $singleVideoData ) {
-			$videoTitleObject = Title::newFromText( $singleVideoData['title'], NS_FILE );
-			if ( !empty( $videoTitleObject ) ) {
-				(new WikiaFileHelper)->inflateArrayWithVideoData(
-						$singleVideoData,
-						$videoTitleObject,
-						$this->getWidth(),
-						$this->getHeight(),
-						true
+			if ( !empty( $singleVideoData['title'] ) ) {
+
+				// Get data about this video from the video wiki
+				$helper = new VideoHandlerHelper();
+				$videosDetail = $helper->getVideoDetailFromWiki(
+					F::app()->wg->WikiaVideoRepoDBName,
+					$singleVideoData['title'],
+					$videoOptions
 				);
+
 				$trimTitle = $this->getTrimTitle();
 				if ( ! empty( $trimTitle ) ) {
-					$singleVideoData['title'] = mb_substr( $singleVideoData['title'], 0, $trimTitle );
+					$videosDetail['fileTitle'] = mb_substr( $singleVideoData['title'], 0, $trimTitle );
 				}
 				$singleVideoData['pos'] = $pos++;
-				$data[] = $singleVideoData;
+				$data[] = $videosDetail;
 			}
 		}
 		return [
