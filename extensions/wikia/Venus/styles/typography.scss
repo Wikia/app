@@ -1,0 +1,38 @@
+@import 'typography-mixins';
+
+body {
+	@include font-size-m;
+	font-family: "HelveticaNeue", "Helvetica Neue", "HelveticaNeueRoman", "HelveticaNeue-Roman", "Helvetica Neue Roman", 'TeXGyreHerosRegular', "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+	font-stretch: normal;
+	font-weight: 400;
+}
+
+h1 {
+//	36px
+	@include font-size-xxl;
+//	font-size: 2.25rem;
+}
+
+h2 {
+//	27px
+	@include font-size-xl;
+//	font-size: 1.6875rem;
+}
+
+h3 {
+//	18px
+	@include font-size-l;
+//	font-size: 1.125rem;
+}
+
+@media #{$large-up} {
+	.mw-content-text {
+		font-size: 18px;
+	}
+
+	h3 {
+//		20px
+		font-size: 20px;
+//		font-size: 1.25rem;
+	}
+}

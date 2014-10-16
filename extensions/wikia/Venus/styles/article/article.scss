@@ -2,6 +2,7 @@
 @import 'extensions/wikia/Venus/styles/variables';
 // Venus mixins @import is used only for .adUnitTest and .infobox-test and has to be removed when not needed anymore
 @import 'extensions/wikia/Venus/styles/mixins';
+@import 'extensions/wikia/Venus/styles/typography-mixins';
 @import 'extensions/wikia/Venus/styles/article/images';
 @import 'skins/shared/color';
 
@@ -25,8 +26,8 @@ article {
 		}
 
 		h1 {
+			@include font-size-xxl;
 			bottom: 0;
-			font-size: 36px;
 			font-weight: bold;
 			line-height: 36px;
 			margin: 0;
@@ -81,15 +82,14 @@ article {
 }
 
 .mw-content-text {
-	font-size: 16px;
 	line-height: 28px;
 	margin: 0 $medium-content-padding - $content-border-width 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width;
 	padding: 0 $medium-grid-column-padding;
 
 	.editsection {
+		@include font-size-xxs;
 		display: inline-block;
 		float: right;
-		font-size: 12px;
 		line-height: 27px;
 		margin-left: 27px;
 		padding-left: 5px;
@@ -102,7 +102,6 @@ article {
 	}
 
 	h1 {
-		font-size: 36px;
 		line-height: 40px;
 
 		.editsection {
@@ -117,7 +116,6 @@ article {
 
 	h2 {
 //		border-bottom: 1px solid $color-page-border;
-		font-size: 27px;
 		margin-bottom: 12px;
 		margin-top: $article-items-spacing;
 		padding-bottom: 6px;
@@ -142,7 +140,6 @@ article {
 	}
 
 	h3 {
-		font-size: 18px;
 		margin: $article-items-spacing 0 16px;
 	}
 
@@ -151,8 +148,8 @@ article {
 	}
 
 	blockquote {
+		@include font-size-xl;
 		border-top: 4px solid $color-text;
-		font-size: 27px;
 		margin: 0 0 $article-items-spacing;
 		padding-top: 30px;
 		position: relative;
@@ -240,7 +237,6 @@ article {
 	}
 
 	.mw-content-text {
-		font-size: 18px;
 		line-height: 36px;
 		margin: 0 $large-content-padding - $content-border-width 0 $large-grid-column + $large-grid-gutter + $large-content-padding - $content-border-width;
 		padding: 0 $large-grid-column-padding;
@@ -251,7 +247,6 @@ article {
 		}
 
 		h3 {
-			font-size: 20px;
 			margin-bottom: 15px;
 		}
 
