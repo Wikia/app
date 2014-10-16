@@ -288,6 +288,7 @@ var UserProfilePage = {
 	saveAvatarAIM: function( form ) {
 		'use strict';
 
+		UserProfilePage.bucky.timer.start('saveAvatarAIM');
 		var $modal = UserProfilePage.modal.$element;
 
 		$.AIM.submit( form, {
@@ -316,6 +317,7 @@ var UserProfilePage = {
 
 					if ( typeof( form[ 0 ] ) !== 'undefined' ) {
 						form[ 0 ].reset();
+						UserProfilePage.bucky.timer.stop('saveAvatarAIM');
 					}
 				} catch( e ) {
 					$modal.stopThrobbing();
