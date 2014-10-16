@@ -7,7 +7,7 @@ $color-table-overflow-shadow: mix( $color-page-shadow, $color-page, 50% );
 .article-table {
 	background: darken($color-page, 2%);
 	border-collapse: collapse;
-	border: 0px none $color-page-border;;
+	border: none;
 	clear: both;
 	color: $color-text;
 	margin: 1em 1em 1em 0;

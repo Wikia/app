@@ -6,14 +6,16 @@ define('wikia.dom', ['wikia.document'], function(doc) {
 	 * Find closest element to provided one with given class
 	 * @param {Node} element - starting element
 	 * @param {String} targetParentByClass - class for parent element
-	 * @param {Number} maxParentsCount - max number of parents
+	 * @param {Number=} maxParentsCount - max number of parents, default value is 5
 	 * @returns {Node|Boolean} returns Node or false in case element not found
 	 */
 	function closestByClassName(element, targetParentByClass, maxParentsCount) {
 		var nodesUp = 0,
 			maxNodesUp = maxParentsCount || 5;
 		while (element && nodesUp <= maxNodesUp) {
-			if (element.classList.contains(targetParentByClass)) {
+			if (element.classList && element.classList.contains(targetParentByClass)) {
+				return element;
+			} else if (element.webkitMatchesSelector && element.webkitMatchesSelector('.' + targetParentByClass)) {
 				return element;
 			}
 			element = element.parentNode;
@@ -33,12 +35,12 @@ define('wikia.dom', ['wikia.document'], function(doc) {
 			classCount = classes.length,
 			i;
 
-		if (classes instanceof Array) {
-			for (i=0; i<classCount; i++) {
-				element.classList.add(classes[i]);
-			}
-		} else {
-			throw new Error('Not supported format');
+		if (!Array.isArray(classes)) {
+			throw new Error('Classes argument must be an array');
+		}
+
+		for (i=0; i<classCount; i++) {
+			element.classList.add(classes[i]);
 		}
 
 		return element;
