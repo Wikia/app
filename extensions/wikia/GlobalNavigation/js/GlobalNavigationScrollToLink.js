@@ -1,4 +1,6 @@
-require(['wikia.scrollToLink', 'wikia.window', 'venus.variables', 'jquery'], function(scrollToLink, win, vars, $) {
+require(
+	['wikia.scrollToLink', 'wikia.window', 'venus.variables', 'jquery'],
+	function(scrollToLink, win, vars, $) {
 	'use strict';
 
 	var offset = 0;

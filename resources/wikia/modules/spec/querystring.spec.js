@@ -305,7 +305,6 @@ describe("Querystring", function () {
 
 	it('is chainable', function(){
 		expect(function(){
-
 			var qs = querystring()
 				.setPath('/wiki/Wodna')
 				.setVal('action', 'purge')
@@ -330,7 +329,6 @@ describe("Querystring", function () {
 
 	it('is sanitizing href properly', function(){
 		expect(function(){
-
 			var qs = querystring();
 
 			expect(qs.sanitizeHref('#hash1')).toBe('hash1');

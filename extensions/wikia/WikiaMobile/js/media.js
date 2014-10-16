@@ -375,7 +375,7 @@ function(
 
 			// We're showing an ad or other custom media type.  Don't support sharing.
 			if ( !Features.gameguides ) {
-				hist[stateAction](null, null, qs.removeVal( 'file' ));
+				hist[stateAction](null, null, currQS.removeVal( 'file' ));
 			}
 		}
 
