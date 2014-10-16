@@ -197,7 +197,6 @@ class OasisController extends WikiaController {
 
     	// Reset (this ensures no duplication in CSS links)
 		$this->cssLinks = '';
-		$this->cssPrintLinks = '';
 
 		$sassFiles = [];
 		foreach ( $skin->getStyles() as $s ) {
@@ -210,10 +209,7 @@ class OasisController extends WikiaController {
 					}
 				}
 
-				// Print styles will be loaded separately at the bottom of the page
-				if ( stripos($tag, 'media="print"') !== false ) {
-					$this->cssPrintLinks .= $tag;
-				} elseif ($wgAllInOne && $this->assetsManager->isSassUrl($s['url'])) {
+				if ($wgAllInOne && $this->assetsManager->isSassUrl($s['url'])) {
 					$sassFiles[] = $s['url'];
 				} else {
 					$this->cssLinks .= $tag;
