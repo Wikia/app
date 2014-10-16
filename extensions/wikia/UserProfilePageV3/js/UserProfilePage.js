@@ -350,7 +350,6 @@ var UserProfilePage = {
 					UserProfilePage.modal.trigger( 'close' );
 					UserProfilePage.bucky.timer.stop('saveUserData');
 					window.location = UserProfilePage.reloadUrl;
-
 				}
 			}
 		});
