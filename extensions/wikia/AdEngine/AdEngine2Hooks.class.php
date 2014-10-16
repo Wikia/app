@@ -200,4 +200,25 @@ class AdEngine2Hooks {
 
 		return true;
 	}
+
+	public static function onSkinAfterBottomScripts(Skin $skin, &$text) {
+		// TODO: Check whether this works also on Oasis!
+		if ($skin->getSkinName() === 'venus') {
+			$text .= AdEngine2Controller::getLiftiumOptionsScript();
+			$text .= Html::inlineScript( 'Liftium.init();' )."\n";
+		}
+		return true;
+	}
+
+	public static function onVenusAssetsPackages( array &$jsHeadGroups, array &$jsBodyGroups, array &$cssGroups ) {
+		$jsHeadGroups[] = self::ASSET_GROUP_ADENGINE_TRACKING;
+		$jsHeadGroups[] = self::ASSET_GROUP_ADENGINE;
+		if ( AdEngine2Service::shouldLoadLateQueue() ) {
+			$jsBodyGroups[] = self::ASSET_GROUP_ADENGINE_LATE;
+		}
+		if ( AdEngine2Service::shouldLoadLiftium() ) {
+			$jsBodyGroups[] = self::ASSET_GROUP_LIFTIUM;
+		}
+		return true;
+	}
 }
