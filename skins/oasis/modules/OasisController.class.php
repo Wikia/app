@@ -196,40 +196,12 @@ class OasisController extends WikiaController {
 		}
 
     	// Reset (this ensures no duplication in CSS links)
-		$this->cssLinks = '';
+		$sassFiles = ['skins/oasis/css/oasis.scss'];
 
-		$sassFiles = [];
-		foreach ( $skin->getStyles() as $s ) {
-			if ( !empty($s['url']) ) {
-				$tag = $s['tag'];
-				if ( !empty( $wgAllInOne ) ) {
-					$url = $this->minifySingleAsset($s['url']);
-					if ($url !== $s['url']) {
-						$tag = str_replace($s['url'],$url,$tag);
-					}
-				}
+		$this->cssLinks = $skin->getStylesWithCombinedSASS($sassFiles);
 
-				if ($wgAllInOne && $this->assetsManager->isSassUrl($s['url'])) {
-					$sassFiles[] = $s['url'];
-				} else {
-					$this->cssLinks .= $tag;
-				}
-			} else {
-				$this->cssLinks .= $s['tag'];
-			}
-		}
-
-		$mainSassFile = 'skins/oasis/css/oasis.scss';
-		if (!empty($sassFiles)) {
-			array_unshift($sassFiles, $mainSassFile);
-			$sassFiles = $this->assetsManager->getSassFilePath($sassFiles);
-			$sassFilesUrl = $this->assetsManager->getSassesUrl($sassFiles);
-
-			$this->cssLinks = Html::linkedStyle($sassFilesUrl) . $this->cssLinks;
-			$this->bottomScripts .= Html::inlineScript("var wgSassLoadedScss = ".json_encode($sassFiles).";");
-		} else {
-			$this->cssLinks = Html::linkedStyle($this->assetsManager->getSassCommonURL($mainSassFile)) . $this->cssLinks;
-		}
+		// $sassFiles will be updated by getStylesWithCombinedSASS method will all extracted and concatenated SASS files
+		$this->bottomScripts .= Html::inlineScript("var wgSassLoadedScss = ".json_encode($sassFiles).";");
 
 		$this->headLinks = $wgOut->getHeadLinks();
 		$this->headItems = $skin->getHeadItems();
