@@ -57,7 +57,7 @@ class WikiaMapsHooks {
 	}
 
 	/**
-	 * @brief Returns true if interactive maps are enabled and the current page is Special:Maps
+	 * @brief Returns true if Wikia Maps are enabled and the current page is Special:Maps
 	 *
 	 * @return bool
 	 */
@@ -77,8 +77,8 @@ class WikiaMapsHooks {
 		global $wgTitle;
 
 		$find = [
-			WikiaInteractiveMapsController::PAGE_NAME . '/',
-			WikiaInteractiveMapsController::PAGE_NAME
+			WikiaMapsSpecialController::PAGE_NAME . '/',
+			WikiaMapsSpecialController::PAGE_NAME
 		];
 		$titleFiltered = (int) str_replace( $find, '', $wgTitle->getSubpageText() );
 
