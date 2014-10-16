@@ -1,4 +1,4 @@
-/* global MiniEditor */
+/* global MiniEditor:true */
 (function () {
 	'use strict';
 
