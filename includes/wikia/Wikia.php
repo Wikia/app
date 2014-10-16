@@ -2039,8 +2039,6 @@ class Wikia {
 
 		$sources = AssetsManager::getInstance()->getURL( $assetName, $type, $local );
 
-		#print_r([$assetName, $type, wfGetCallerClassMethod(__CLASS__)]);
-
 		foreach($sources as $src){
 			switch ( $type ) {
 				case AssetsManager::TYPE_CSS:
