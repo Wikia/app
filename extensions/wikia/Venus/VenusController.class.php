@@ -4,8 +4,11 @@ class VenusController extends WikiaController {
 	private static $bodyParametersArray = [];
 	private static $skinAssetGroups = [];
 
+	/* @var AssetsManager $assetsManager */
 	private $assetsManager;
+	/* @var QuickTemplate $skinTemplateObj */
 	private $skinTemplateObj;
+	/* @var WikiaSkin $skin */
 	private $skin;
 
 	public function init() {
@@ -103,8 +106,6 @@ class VenusController extends WikiaController {
 	}
 
 	private function setAssets() {
-		global $wgOut;
-
 		$jsHeadGroups = ['venus_head_js'];
 		$jsHeadFiles = '';
 		$jsBodyGroups = ['venus_body_js'];
@@ -139,13 +140,13 @@ class VenusController extends WikiaController {
 		}
 
 		foreach ( $this->assetsManager->getURL( $jsHeadGroups ) as $src ) {
-			if ( $this->assetsManager->checkAssetUrlForSkin( $s, $this->skin ) ) {
+			if ( $this->assetsManager->checkAssetUrlForSkin( $src, $this->skin ) ) {
 				$jsHeadFiles .= "<script src='{$src}'></script>";
 			}
 		}
 
 		foreach ( $this->assetsManager->getURL( $jsBodyGroups ) as $src ) {
-			if ( $this->assetsManager->checkAssetUrlForSkin( $s, $this->skin ) ) {
+			if ( $this->assetsManager->checkAssetUrlForSkin( $src, $this->skin ) ) {
 				$jsBodyFiles .= "<script src='{$src}'></script>";
 			}
 		}
@@ -158,7 +159,7 @@ class VenusController extends WikiaController {
 
 		//global variables from ResourceLoaderStartUpModule
 		$res = new ResourceVariablesGetter();
-		$vars = WikiaSkin::makeInlineVariablesScript($res->get());
+		$vars = WikiaSkin::makeInlineVariablesScript($res->get()); // is it used anywhere?
 
 		// set variables
 		$this->cssLinks = $cssLinks;
@@ -167,7 +168,7 @@ class VenusController extends WikiaController {
 	}
 
 	public function getGlobalNavigation() {
-		return $this->app->renderView('GlobalNavigation', 'index');
+		return $this->app->renderView('GlobalNavigation', 'Index');
 	}
 
 	private function getNotifications() {
@@ -183,7 +184,7 @@ class VenusController extends WikiaController {
 	}
 
 	private function getGlobalFooter() {
-		return $this->app->renderView('GlobalFooter', 'index');
+		return $this->app->renderView('GlobalFooter', 'Index');
 	}
 
 	public function getCorporateFootet() {
