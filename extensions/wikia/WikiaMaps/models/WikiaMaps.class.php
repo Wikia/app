@@ -4,6 +4,7 @@ class WikiaMaps extends WikiaObject {
 
 	const REAL_MAP_THUMB_EXPIRE_TIME = 86400; // 1 day
 	const ENTRY_POINT_MAP = 'map';
+	const ENTRY_POINT_MAP_DATA = 'map_data';
 	const ENTRY_POINT_RENDER = 'render';
 	const ENTRY_POINT_TILE_SET = 'tile_set';
 	const ENTRY_POINT_POI_CATEGORY = 'poi_category';
@@ -163,7 +164,7 @@ class WikiaMaps extends WikiaObject {
 	}
 
 	/**
-	 * Sends requests to IntMap service to get data about a map and tiles it's connected with
+	 * Sends requests to Wikia Maps service to get data about a map and tiles it's connected with
 	 *
 	 * @param integer $mapId Map id
 	 * @param array $params additional parameters
@@ -188,6 +189,22 @@ class WikiaMaps extends WikiaObject {
 		}
 
 		return $map;
+	}
+
+	/**
+	 * Sends requests to Wikia Maps service to get data about a map with a list of POIs and POI categories
+	 *
+	 * @param integer $mapId Map id
+	 * @param array $params additional parameters
+	 *
+	 * @return mixed
+	 */
+	public function getMapDataByIdFromApi( $mapId,  $params = []) {
+		$url = $this->buildUrl( [ self::ENTRY_POINT_MAP_DATA, $mapId ], $params );
+		$response = $this->sendGetRequest( $url );
+
+		$mapData = $response[ 'content' ];
+		return $mapData;
 	}
 
 	/**

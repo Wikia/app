@@ -12,6 +12,171 @@ class WikiaMapsSpecialControllerTest extends WikiaBaseTest {
 	}
 
 	/**
+	 * @covers WikiaMapsSpecialController::index
+	 */
+	public function testIndex_forwardToMain() {
+		$wikiaMapsSpecialControllerMock = $this->getControllerMock( 'testIndex' );
+		$this->setValToBeReturned( $wikiaMapsSpecialControllerMock, null );
+
+		$wikiaMapsSpecialControllerMock->expects( $this->once() )
+			->method( 'getPar' )
+			->will( $this->returnValue( null ) );
+
+		$wikiaMapsSpecialControllerMock->expects( $this->once() )
+			->method( 'forward' )
+			->with( 'WikiaMapsSpecial', 'main' );
+
+		$wikiaMapsSpecialControllerMock->index();
+	}
+
+	/**
+	 * @covers WikiaMapsSpecialController::index
+	 */
+	public function testIndex_forwardToMap() {
+		$wikiaMapsSpecialControllerMock = $this->getControllerMock( 'testIndex' );
+		$this->setValToBeReturned( $wikiaMapsSpecialControllerMock, null );
+
+		$wikiaMapsSpecialControllerMock->expects( $this->once() )
+			->method( 'getPar' )
+			->will( $this->returnValue( 1 ) );
+
+		$wikiaMapsSpecialControllerMock->expects( $this->once() )
+			->method( 'forward' )
+			->with( 'WikiaMapsSpecial', 'map' );
+
+		$wikiaMapsSpecialControllerMock->index();
+	}
+
+	/**
+	 * @covers WikiaMapsSpecialController::index
+	 */
+	public function testIndex_forwardToMapData() {
+		$wikiaMapsSpecialControllerMock = $this->getControllerMock( 'testIndex' );
+		$this->setValToBeReturned( $wikiaMapsSpecialControllerMock, '_escaped_fragment_' );
+
+		$wikiaMapsSpecialControllerMock->expects( $this->once() )
+			->method( 'getPar' )
+			->will( $this->returnValue( 1 ) );
+
+		$wikiaMapsSpecialControllerMock->expects( $this->once() )
+			->method( 'forward' )
+			->with( 'WikiaMapsSpecial', 'mapData' );
+
+		$wikiaMapsSpecialControllerMock->index();
+	}
+
+	/**
+	 * @covers WikiaMapsSpecialController::map
+	 */
+	public function testMap_mapNotFound() {
+		$exceptionObject = new stdClass();
+		$exceptionObject->message = 'Map not found';
+		$exceptionObject->details = 'Map with given id (1) was not found.';
+
+		$mapsModelMock = $this->getWikiaMapsMock();
+		$mapsModelMock->expects( $this->once() )
+			->method( 'getMapByIdFromApi' )
+			->will( $this->returnValue( $exceptionObject ) );
+
+		$wikiaMapsSpecialControllerMock = $this->getControllerMock( 'testMap' );
+		$wikiaMapsSpecialControllerMock->expects( $this->once() )
+			->method( 'getModel' )
+			->will( $this->returnValue( $mapsModelMock ) );
+		$wikiaMapsSpecialControllerMock->expects( $this->never() )
+			->method( 'prepareSingleMapPage' );
+		$wikiaMapsSpecialControllerMock->expects( $this->once() )
+			->method( 'mapNotFound' );
+
+		$wikiaMapsSpecialControllerMock->map();
+	}
+
+	/**
+	 * @covers WikiaMapsSpecialController::map
+	 */
+	public function testMap_mapFound() {
+		$mapMock = new stdClass();
+		$mapMock->title = 'A Unit Test Map';
+		$mapMock->map_id = 123;
+		$mapMock->city_id = self::WIKI_CITY_ID;
+		$mapMock->deleted = 0;
+
+		$mapsModelMock = $this->getWikiaMapsMock();
+		$mapsModelMock->expects( $this->once() )
+			->method( 'getMapByIdFromApi' )
+			->will( $this->returnValue( $mapMock ) );
+		$mapsModelMock->expects( $this->once() )
+			->method( 'getMapRenderUrl' );
+
+		$wikiaMapsSpecialControllerMock = $this->getControllerMock( 'testMap' );
+		$wikiaMapsSpecialControllerMock->expects( $this->once() )
+			->method( 'getModel' )
+			->will( $this->returnValue( $mapsModelMock ) );
+		$wikiaMapsSpecialControllerMock->expects( $this->once() )
+			->method( 'prepareSingleMapPage' );
+		$wikiaMapsSpecialControllerMock->expects( $this->once() )
+			->method( 'getMenuMarkup' );
+
+		$wikiaMapsSpecialControllerMock->wg->CityId = self::WIKI_CITY_ID;
+
+		$wikiaMapsSpecialControllerMock->map();
+	}
+
+	/**
+	 * @covers WikiaMapsSpecialController::mapData
+	 */
+	public function testMapData_mapNotFound() {
+		$exceptionObject = new stdClass();
+		$exceptionObject->message = 'Map not found';
+		$exceptionObject->details = 'Map with given id (1) was not found.';
+
+		$mapsModelMock = $this->getWikiaMapsMock();
+		$mapsModelMock->expects( $this->once() )
+			->method( 'getMapDataByIdFromApi' )
+			->will( $this->returnValue( $exceptionObject ) );
+
+		$wikiaMapsSpecialControllerMock = $this->getControllerMock( 'testMapData' );
+
+		$wikiaMapsSpecialControllerMock->expects( $this->once() )
+			->method( 'getModel' )
+			->will( $this->returnValue( $mapsModelMock ) );
+		$wikiaMapsSpecialControllerMock->expects( $this->never() )
+			->method( 'prepareSingleMapPage' );
+		$wikiaMapsSpecialControllerMock->expects( $this->once() )
+			->method( 'mapNotFound' );
+
+		$wikiaMapsSpecialControllerMock->mapData();
+	}
+
+	/**
+	 * @covers WikiaMapsSpecialController::mapData
+	 */
+	public function testMapData_mapFound() {
+		$mapDataMock = new stdClass();
+		$mapDataMock->title = 'A Unit Test Map';
+		$mapDataMock->map_id = 123;
+		$mapDataMock->city_id = self::WIKI_CITY_ID;
+		$mapDataMock->deleted = 0;
+
+		$mapsModelMock = $this->getWikiaMapsMock();
+		$mapsModelMock->expects( $this->once() )
+			->method( 'getMapDataByIdFromApi' )
+			->will( $this->returnValue( $mapDataMock ) );
+
+		$wikiaMapsSpecialControllerMock = $this->getControllerMock( 'testMapData' );
+		$wikiaMapsSpecialControllerMock->expects( $this->once() )
+			->method( 'getModel' )
+			->will( $this->returnValue( $mapsModelMock ) );
+		$wikiaMapsSpecialControllerMock->expects( $this->once() )
+			->method( 'prepareSingleMapPage' );
+		$wikiaMapsSpecialControllerMock->expects( $this->once() )
+			->method( 'getMenuMarkup' );
+		$wikiaMapsSpecialControllerMock->expects( $this->once() )
+			->method( 'prepareListOfPois' );
+
+		$wikiaMapsSpecialControllerMock->mapData();
+	}
+
+	/**
 	 * @covers WikiaMapsSpecialController::redirectIfForeignWiki
 	 */
 	public function testRedirectIfForeignWiki_not_foreign() {
@@ -44,57 +209,185 @@ class WikiaMapsSpecialControllerTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @covers WikiaMapsSpecialController::map
+	 * @dataProvider testPrepareListOfPoisDataProvider
 	 */
-	public function testMap_mapNotFound() {
-		$exceptionObject = new stdClass();
-		$exceptionObject->message = 'Map not found';
-		$exceptionObject->details = 'Map with given id (1) was not found.';
+	public function testPrepareListOfPois( $mapDataArray, $expected ) {
+		$mapData = $this->mapDataArrayToObject( $mapDataArray );
 
-		$mapsModelMock = $this->getWikiaMapsMock();
-		$mapsModelMock->expects( $this->once() )
-			->method( 'getMapByIdFromApi' )
-			->will( $this->returnValue( $exceptionObject ) );
+		$wikiaMapsSpecialControllerMock = $this->getControllerMock( 'testPrepareListOfPois' );
 
-		$mapsControllerMock = $this->getControllerMock( 'testMap' );
-		$mapsControllerMock->expects( $this->once() )
-			->method( 'getModel' )
-			->will( $this->returnValue( $mapsModelMock ) );
-		$mapsControllerMock->expects( $this->never() )
-			->method( 'redirectIfForeignWiki' );
+		$wikiaMapsSpecialControllerMock->expects( $this->exactly( 2 ) )
+			->method( 'setVal' )
+			->withConsecutive(
+				[ 'notEmpty', $expected[ 'notEmpty' ] ],
+				[ 'poiCategories', $expected[ 'poiCategories' ] ]
+			);
 
-		$mapsControllerMock->map();
+		$wfMessageMock = $this->getGlobalFunctionMock( 'wfMessage' );
+		$wfMessageMock
+			->expects( $this->any() )
+			->method( 'wfMessage' )
+			->will( $this->returnValue( 'Other' ) );
+
+		$wikiaMapsSpecialControllerMock->prepareListOfPois( $mapData );
 	}
 
 	/**
-	 * @covers WikiaMapsSpecialController::map
+	 * Converts map data array (easier to type in data provider) to map data object (as it is returned from API)
+	 *
+	 * @param $array map data
+	 * @return stdClass
 	 */
-	public function testMap_mapFoundNotRedirected() {
-		$mapMock = new stdClass();
-		$mapMock->title = 'A Unit Test Map';
-		$mapMock->map_id = 123;
-		$mapMock->city_id = self::WIKI_CITY_ID;
-		$mapMock->deleted = 0;
+	private function mapDataArrayToObject( $array ) {
+		$mapDataObj = new stdClass();
+		$mapDataObj->pois = [];
+		$mapDataObj->poi_categories = [];
 
-		$mapsModelMock = $this->getWikiaMapsMock();
-		$mapsModelMock->expects( $this->once() )
-			->method( 'getMapByIdFromApi' )
-			->will( $this->returnValue( $mapMock ) );
-		$mapsModelMock->expects( $this->once() )
-			->method( 'getMapRenderUrl' );
+		foreach ( $array[ 'pois' ] as $poi ) {
+			$poiObj = new stdClass();
+			$poiObj->id = $poi[ 'id' ];
+			$poiObj->name = $poi[ 'name' ];
+			$poiObj->link = $poi[ 'link' ];
+			$poiObj->description = $poi[ 'description' ];
+			$poiObj->poi_category_id = $poi[ 'poi_category_id' ];
 
-		$mapsControllerMock = $this->getControllerMock( 'testMap' );
-		$mapsControllerMock->expects( $this->once() )
-			->method( 'getModel' )
-			->will( $this->returnValue( $mapsModelMock ) );
-		$mapsControllerMock->expects( $this->once() )
-			->method( 'redirectIfForeignWiki' );
-		$mapsControllerMock->expects( $this->once() )
-			->method( 'getMenuMarkup' );
+			$mapDataObj->pois[] = $poiObj;
+		}
 
-		$mapsControllerMock->wg->CityId = self::WIKI_CITY_ID;
+		foreach ( $array[ 'poi_categories' ] as $poiCategory ) {
+			$poiCategoryObj = new stdClass();
+			$poiCategoryObj->id = $poiCategory[ 'id' ];
+			$poiCategoryObj->name = $poiCategory[ 'name' ];
+			$mapDataObj->poi_categories[] = $poiCategoryObj;
+		}
 
-		$mapsControllerMock->map();
+		return $mapDataObj;
+	}
+
+	public function testPrepareListOfPoisDataProvider() {
+		return [
+			[
+				[
+					'pois' => [
+						[
+							'id' => 1,
+							'name' => 'First POI',
+							'link' => 'http://test.com',
+							'description' => 'Description',
+							'poi_category_id' => 10
+						],
+						[
+							'id' => 2,
+							'name' => 'Second POI',
+							'link' => '',
+							'description' => 'POI with default category',
+							'poi_category_id' => 1
+						],
+						[
+							'id' => 3,
+							'name' => 'Third POI',
+							'link' => '',
+							'description' => '',
+							'poi_category_id' => 11
+						]
+					],
+					'poi_categories' => [
+						[
+							'id' => 10,
+							'name' => 'First category'
+						],
+						[
+							'id' => 11,
+							'name' => 'Second category'
+						]
+					]
+				],
+				[
+					'notEmpty' => true,
+					'poiCategories' => [
+						1 => [
+							'name' => 'Other',
+							'pois' => [
+								[
+									'name' => 'Second POI',
+									'link' => '',
+									'description' => 'POI with default category'
+								]
+							],
+							'hasPois' => true
+						],
+						10 => [
+							'name' => 'First category',
+							'pois' => [
+								[
+									'name' => 'First POI',
+									'link' => 'http://test.com',
+									'description' => 'Description',
+								]
+							],
+							'hasPois' => true
+						],
+						11 => [
+							'name' => 'Second category',
+							'pois' => [
+								[
+									'name' => 'Third POI',
+									'link' => '',
+									'description' => '',
+								]
+							],
+							'hasPois' => true
+						]
+					]
+				]
+			],
+			[
+				[
+					'pois' => [],
+					'poi_categories' => [
+						[
+							'id' => 10,
+							'name' => 'First category'
+						]
+					]
+				],
+				[
+					'notEmpty' => true,
+					'poiCategories' => [
+						10 => [
+							'name' => 'First category',
+							'pois' => [],
+							'hasPois' => false
+						]
+					]
+				]
+			],
+			[
+				[
+					'pois' => [],
+					'poi_categories' => []
+				],
+				[
+					'notEmpty' => false,
+					'poiCategories' => []
+				]
+			]
+		];
+	}
+
+	/**
+	 * @param PHPUnit_Framework_MockObject_MockObject|WikiaMapsSpecialController $wikiaMapsSpecialControllerMock
+	 * @param mixed $val Value to be returned by getRequest()->getVal() method
+	 */
+	private function setValToBeReturned( $wikiaMapsSpecialControllerMock, $val ) {
+		$requestMock = $this->getMock( 'WikiaRequest', [ 'getVal' ], [], '', false );
+		$requestMock->expects( $this->any() )
+			->method( 'getVal' )
+			->will( $this->returnValue( $val ) );
+
+		$wikiaMapsSpecialControllerMock->expects( $this->any() )
+			->method( 'getRequest' )
+			->will( $this->returnValue( $requestMock ) );
 	}
 
 	/**
@@ -105,6 +398,12 @@ class WikiaMapsSpecialControllerTest extends WikiaBaseTest {
 		$mapsSpecialControllerMock = null;
 
 		switch( $test ) {
+			case 'testIndex':
+				$mapsSpecialControllerMock = $this->getMock( 'WikiaMapsSpecialController', [ 'getPar', 'getRequest', 'forward' ], [], '', false );
+				$outputPageMock = $this->getMock( 'OutputPage', [], [], '', false );
+				$mapsSpecialControllerMock->wg->out = $outputPageMock;
+				break;
+
 			case 'testRedirectIfForeignWiki':
 				$mapsSpecialControllerMock = $this->getMock( 'WikiaMapsSpecialController', [ 'getWikiPageUrl' ], [], '', false );
 
@@ -112,16 +411,17 @@ class WikiaMapsSpecialControllerTest extends WikiaBaseTest {
 					->method( 'getWikiPageUrl' )
 					->will( $this->returnValue( self::WIKI_URL ) );
 				break;
+
 			case 'testMap':
 				$appMock = $this->getMock( 'WikiaApp', [ 'checkSkin' ], [], '', false );
 				$appMock->expects( $this->once() )
 					->method( 'checkSkin' )
-					->will( $this->returnValue(false) );
+					->will( $this->returnValue( false ) );
 
 				$requestMock = $this->getMock( 'WikiaRequest', [ 'getInt' ], [], '', false );
 				$requestMock->expects( $this->any() )
 					->method( 'getInt' )
-					->will( $this->returnValue(1) );
+					->will( $this->returnValue( 1 ) );
 
 				$responseMock = $this->getMock( 'WikiaResponse', [ 'addAsset', 'setTemplateEngine' ], [], '', false );
 				$responseMock->expects( $this->once() )
@@ -131,7 +431,8 @@ class WikiaMapsSpecialControllerTest extends WikiaBaseTest {
 
 				$mapsSpecialControllerMock = $this->getMock( 'WikiaMapsSpecialController', [
 					'getModel',
-					'redirectIfForeignWiki',
+					'prepareSingleMapPage',
+					'mapNotFound',
 					'setVal',
 					'addAsset',
 					'setTemplateEngine',
@@ -148,6 +449,40 @@ class WikiaMapsSpecialControllerTest extends WikiaBaseTest {
 				$mapsSpecialControllerMock->request = $requestMock;
 				$mapsSpecialControllerMock->response = $responseMock;
 				break;
+
+			case 'testMapData':
+				$requestMock = $this->getMock( 'WikiaRequest', [], [], '', false );
+
+				$responseMock = $this->getMock( 'WikiaResponse', [ 'addAsset', 'setTemplateEngine' ], [], '', false );
+				$responseMock->expects( $this->once() )
+					->method( 'addAsset' );
+				$responseMock->expects( $this->once() )
+					->method( 'setTemplateEngine' );
+
+				$mapsSpecialControllerMock = $this->getMock( 'WikiaMapsSpecialController', [
+					'getModel',
+					'prepareSingleMapPage',
+					'mapNotFound',
+					'prepareListOfPois',
+					'setVal',
+					'addAsset',
+					'setTemplateEngine',
+					'getMenuMarkup'
+				], [], '', false );
+
+				$mapsSpecialControllerMock->expects( $this->any() )
+					->method( 'setVal' );
+
+				$outputPageMock = $this->getMock( 'OutputPage', [], [], '', false );
+				$mapsSpecialControllerMock->wg->out = $outputPageMock;
+
+				$mapsSpecialControllerMock->request = $requestMock;
+				$mapsSpecialControllerMock->response = $responseMock;
+				break;
+
+			case 'testPrepareListOfPois':
+				$mapsSpecialControllerMock = $this->getMock( 'WikiaMapsSpecialController', [ 'setVal' ], [], '', false );
+				break;
 		}
 
 		return $mapsSpecialControllerMock;
@@ -155,7 +490,7 @@ class WikiaMapsSpecialControllerTest extends WikiaBaseTest {
 
 	private function getWikiaMapsMock() {
 		$wikiaMapsMock = $this->getMockBuilder('WikiaMaps')
-			->setMethods( [ 'getMapByIdFromApi', 'getMapRenderUrl', 'getMapRenderParams' ] )
+			->setMethods( [ 'getMapByIdFromApi', 'getMapDataByIdFromApi', 'getMapRenderUrl', 'getMapRenderParams' ] )
 			->disableOriginalConstructor()
 			->getMock();
 
@@ -165,5 +500,4 @@ class WikiaMapsSpecialControllerTest extends WikiaBaseTest {
 
 		return $wikiaMapsMock;
 	}
-
 }
