@@ -105,8 +105,57 @@ class ExactTargetUserTasksAdderHooksTest extends WikiaBaseTest {
 		$this->assertEquals( $aUserPropertiesParamsActual, $aUserPropertiesParamsExpected );
 	}
 
-	function testTaskNotCreatedOnDev() {
+
+	/**
+	 * Test that task should be created or shouldn't be created on specific environment
+	 * @dataProvider taskNotCreatedOnDevAnyProvider
+	 * @param string $sTaskClassGetterName Name of method that gets task instance
+	 * @param string $sTestedMethodName Name of method being tested
+	 * @param array $aParams List of params for method being tested
+	 * @param string $sProduction Environment name WIKIA_ENV_PROD / WIKIA_ENV_DEV
+	 * @param bool $shouldQueue whether task should be queued of not
+	 */
+	function testTaskShouldBeQueuedOrNot( $sTaskClassGetterName, $sTestedMethodName, $aParams, $sProduction, $shouldQueue ) {
+		/* Mock wgWikiaEnvironment */
+		$this->mockGlobalVariable( 'wgWikiaEnvironment', $sProduction );
+
+		/* Mock ExactTargetBaseTask
+		 * Mock just base class as it's only important to have call and queue methods available for test
+		 */
+		$mockTask = $this->getMockBuilder( 'ExactTargetBaseTask' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'call', 'queue' ] )
+			->getMock();
+		$mockTask
+			->expects( $this->exactly( (int)$shouldQueue ) )
+			->method( 'call' );
+		$mockTask
+			->expects( $this->exactly( (int)$shouldQueue ) )
+			->method( 'queue' );
+
+		/* Get mock object of tested class */
+		$exactTargetUpdatesHooksMock = $this->getMockBuilder( 'ExactTargetUserTasksAdderHooks' )
+			->setMethods( [ $sTaskClassGetterName ] )
+			->getMock();
+		$exactTargetUpdatesHooksMock
+			->method( $sTaskClassGetterName )
+			->will( $this->returnValue( $mockTask ) );
+
+		/* Use reflection and set accessibility of method as some of tested methods may be private */
+		$method = new ReflectionMethod( 'ExactTargetUserTasksAdderHooks', $sTestedMethodName );
+		$method->setAccessible( true );
+
+		/* Add mock of tested class at the begining of params array */
+		array_unshift( $aParams, $exactTargetUpdatesHooksMock );
+		/* Run tested method */
+		call_user_func_array ( [$method, 'invoke'], $aParams );
+	}
+
+	function taskNotCreatedOnDevAnyProvider() {
 		/* Define environment constants if not defined yet */
+		if ( !defined( 'WIKIA_ENV_PROD' ) ) {
+			define( WIKIA_ENV_PROD, 'test-prod') ;
+		}
 		if ( !defined( 'WIKIA_ENV_DEV' ) ) {
 			define( WIKIA_ENV_DEV, 'test-dev') ;
 		}
@@ -114,27 +163,42 @@ class ExactTargetUserTasksAdderHooksTest extends WikiaBaseTest {
 			define( WIKIA_ENV_INTERNAL, 'test-internal' );
 		}
 
-		/* Mock wgWikiaEnvironment */
-		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_DEV );
-
-		/* Mock user */
+		/* Mock User */
 		$userMock = $this->getMockBuilder( 'User' )
 			->disableOriginalConstructor()
 			->getMock();
 
-		/* Get mock object of tested class ExactTargetUpdatesHooks */
-		/* @var ExactTargetUpdatesHooks $exactTargetUpdatesHooksMock (mock of ExactTargetUpdatesHooks) */
-		$exactTargetUpdatesHooksMock = $this->getMockBuilder( 'ExactTargetUserTasksAdderHooks' )
-			->setMethods( [ 'prepareUserParams' ] )
+		/* Mock WikiPage */
+		$oArticle = $this->getMockBuilder( 'WikiPage' )
+			->disableOriginalConstructor()
 			->getMock();
-		$exactTargetUpdatesHooksMock
-			->expects( $this->never() )
-			->method( 'prepareUserParams' );
 
-		/* Run test for addTheUpdateAddUserTask method */
-		$method = new ReflectionMethod( 'ExactTargetUserTasksAdderHooks', 'addTheUpdateAddUserTask' );
-		$method->setAccessible( true );
-		$method->invoke( $exactTargetUpdatesHooksMock, $userMock );
+		return [
+			/* test onUserSaveSettings should add taks on production */
+			[ 'getExactTargetUpdateUserTask', 'onUserSaveSettings', [ $userMock ], WIKIA_ENV_PROD, 1 ],
+			/* test onUserSaveSettings shouldn't add taks on production */
+			[ 'getExactTargetUpdateUserTask', 'onUserSaveSettings', [ $userMock ], WIKIA_ENV_DEV, 0 ],
+			/* test onEmailChangeConfirmed should add taks on production */
+			[ 'getExactTargetUpdateUserTask', 'onEmailChangeConfirmed', [ $userMock ], WIKIA_ENV_PROD, 1 ],
+			/* test onEmailChangeConfirmed shouldn't add taks on production */
+			[ 'getExactTargetUpdateUserTask', 'onEmailChangeConfirmed', [ $userMock ], WIKIA_ENV_DEV, 0 ],
+			/* test onArticleSaveComplete should add taks on production */
+			[ 'getExactTargetUpdateUserTask', 'onArticleSaveComplete', [ $oArticle, $userMock ], WIKIA_ENV_PROD, 1 ],
+			/* test onArticleSaveComplete shouldn't add taks on production */
+			[ 'getExactTargetUpdateUserTask', 'onArticleSaveComplete', [ $oArticle, $userMock ], WIKIA_ENV_DEV, 0 ],
+			/* test onAfterAccountRename should add taks on production */
+			[ 'getExactTargetUpdateUserTask', 'onAfterAccountRename', [ 123, 'oldUserName', 'newUserName' ], WIKIA_ENV_PROD, 1 ],
+			/* test onAfterAccountRename shouldn't add taks on production */
+			[ 'getExactTargetUpdateUserTask', 'onAfterAccountRename', [ 123, 'oldUserName', 'newUserName' ], WIKIA_ENV_DEV, 0 ],
+			/* test onEditAccountClosed should add taks on production */
+			[ 'getExactTargetRemoveUserTask', 'onEditAccountClosed', [ $userMock ], WIKIA_ENV_PROD, 1 ],
+			/* test onEditAccountClosed shouldn't add taks on production */
+			[ 'getExactTargetRemoveUserTask', 'onEditAccountClosed', [ $userMock ], WIKIA_ENV_DEV, 0 ],
+			/* test addTheUpdateAddUserTask should add taks on production */
+			[ 'getExactTargetAddUserTask', 'addTheUpdateAddUserTask', [ $userMock ], WIKIA_ENV_PROD, 1 ],
+			/* test addTheUpdateAddUserTask shouldn't add taks on production */
+			[ 'getExactTargetAddUserTask', 'addTheUpdateAddUserTask', [ $userMock ], WIKIA_ENV_DEV, 0 ]
+		];
 	}
 
 	function testShouldAddUpdateUserDataTask() {
