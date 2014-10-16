@@ -10,6 +10,7 @@ var UserProfilePage = {
 	wasDataChanged: false,
 	forceRedirect: false,
 	reloadUrl: false,
+	bucky: window.Bucky('UserProfilePage'),
 
 	// reference to modal UI component
 	modalComponent: {},
@@ -52,6 +53,7 @@ var UserProfilePage = {
 	renderLightbox: function( tabName ) {
 		'use strict';
 
+		UserProfilePage.bucky.timer.start('renderLightbox');
 		if ( !UserProfilePage.isLightboxGenerating ) {
 			//if lightbox is generating we don't want to let user open second one
 			UserProfilePage.isLightboxGenerating = true;
@@ -117,8 +119,8 @@ var UserProfilePage = {
 							var modal = editProfileModal.$element,
 								tab = modal.find( '.tabs a' );
 
-							UserProfilePage.renderAvatarLightbox( modal );
-							UserProfilePage.renderAboutMeLightbox( modal );
+							UserProfilePage.registerAvatarHandlers( modal );
+							UserProfilePage.registerAboutMeHandlers( modal );
 
 							// attach handlers to modal events
 							editProfileModal.bind( 'beforeClose',
@@ -132,7 +134,7 @@ var UserProfilePage = {
 								UserProfilePage.switchTab( $( this ).closest( 'li' ) );
 							});
 
-							// Synthesize a click on the tab to hide/show the right panels
+							// Simulate a click on the tab to hide/show the right panels
 							$( '[data-tab=' + tabName + '] a' ).click();
 
 							// load facebook API
@@ -151,6 +153,7 @@ var UserProfilePage = {
 							UserProfilePage.isLightboxGenerating = false;
 
 							editProfileModal.show();
+							UserProfilePage.bucky.timer.stop('renderLightbox');
 						});
 					});
 				});
@@ -239,17 +242,14 @@ var UserProfilePage = {
 		});
 	},
 
-	renderAvatarLightbox: function( modal ) {
+	/**
+	 * Register handlers related to the Avatar tab of the user edit modal.
+	 * @param modal
+	 */
+	registerAvatarHandlers: function( modal ) {
 		'use strict';
 
-		var $avatarUploadInput = modal.find( '#UPPLightboxAvatar' ),
-			$avatarForm = modal.find( '#usersAvatar' ),
-			$sampleAvatars = modal.find( '.sample-avatars' );
-
-		$avatarUploadInput.change(function() {
-			UserProfilePage.saveAvatarAIM( $avatarForm );
-		});
-
+		var $sampleAvatars = modal.find( '.sample-avatars' );
 
 		$sampleAvatars.on('click', 'img', function( event ) {
 			UserProfilePage.sampleAvatarChecked( $( event.target ) );
@@ -278,52 +278,11 @@ var UserProfilePage = {
 		avatarImg.show();
 	},
 
-	saveAvatarAIM: function( form ) {
-		'use strict';
-
-		var $modal = UserProfilePage.modal.$element;
-
-		$.AIM.submit( form, {
-			onStart: function() {
-				$modal.startThrobbing();
-			},
-			onComplete: function( response ) {
-				try {
-					response = JSON.parse( response );
-					var avatarImg = $modal.find( 'img.avatar' );
-					if ( response.result.success === true ) {
-						avatarImg.attr( 'src', response.result.avatar );
-						UserProfilePage.newAvatar = {
-							file: response.result.avatar,
-							source: 'uploaded',
-							userId: UserProfilePage.userId
-						};
-						UserProfilePage.wasDataChanged = true;
-						window.GlobalNotification.hide();
-					} else {
-						if ( typeof( response.result.error ) !== 'undefined' ) {
-							window.GlobalNotification.show( response.result.error, 'error' );
-						}
-					}
-					$modal.stopThrobbing();
-
-					if ( typeof( form[ 0 ] ) !== 'undefined' ) {
-						form[ 0 ].reset();
-					}
-				} catch( e ) {
-					$modal.stopThrobbing();
-					form[ 0 ].reset();
-				}
-			}
-		});
-
-		//unbind original html element handler to avoid loops
-		form.onsubmit = null;
-
-		$( form ).submit();
-	},
-
-	renderAboutMeLightbox: function( modal ) {
+	/**
+	 * Register handlers related to the About Me tab of the user edit modal.
+	 * @param modal
+	 */
+	registerAboutMeHandlers: function( modal ) {
 		'use strict';
 
 		var $fbUnsyncButton = modal.find( '#facebookUnsync' ),
@@ -370,6 +329,7 @@ var UserProfilePage = {
 	saveUserData: function() {
 		'use strict';
 
+		UserProfilePage.bucky.timer.start('saveUserData');
 		var userData = UserProfilePage.getFormData();
 
 		if ( UserProfilePage.newAvatar ) {
@@ -388,6 +348,7 @@ var UserProfilePage = {
 					UserProfilePage.userData = null;
 					UserProfilePage.wasDataChanged = false;
 					UserProfilePage.modal.trigger( 'close' );
+					UserProfilePage.bucky.timer.stop('saveUserData');
 					window.location = UserProfilePage.reloadUrl;
 
 				}
