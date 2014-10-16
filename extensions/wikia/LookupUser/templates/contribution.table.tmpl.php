@@ -199,13 +199,13 @@ $(document).ready(function() {
 <?php if( $isUsernameGloballyBlocked ) { ?>
 	<li><?= Linker::link(
     GlobalTitle::newFromText( 'Phalanx', NS_SPECIAL, WikiFactory::COMMUNITY_CENTRAL ),
-    wfMessage( 'lookupuser-username-blocked-globally' )->escaped(),
-    [
-        'wpBlockText' => $username,
-    ]
-) ?></li>
+    	wfMessage( 'lookupuser-username-blocked-globally' )->escaped(),
+    		[
+    			'wpBlockText' => $username,
+    			]	
+    			) ?></li>
 <?php } else { ?>
-	<li><?= wfMessage('lookupuser-username-not-blocked-globally')->escaped() ?></li>
+	<li><?= wfMessage( 'lookupuser-username-not-blocked-globally' )->escaped() ?></li>
 <?php }?>
 </ul>
 
