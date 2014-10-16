@@ -48,12 +48,6 @@
 			previousThirdLvlWidth = thirdLvlWidth;
 		}
 
-		function reinitDropdownDirection() {
-			resetMenuAim();
-
-			recalculateDropdownDirection();
-		}
-
 		function openMenu() {
 			$(this).addClass('active');
 
@@ -137,6 +131,10 @@
 		function attachMenuAim() {
 			var options = {};
 
+			if (menuAimCache.length) {
+				resetMenuAim();
+			}
+
 			$localNavSecondLevel.each(function() {
 				options = getMenuAimOptions(this);
 
@@ -217,7 +215,7 @@
 				}
 			}
 
-			$window.on('resize', $.debounce(300, reinitDropdownDirection));
+			$window.on('resize', $.debounce(300, recalculateDropdownDirection));
 
 			recalculateDropdownDirection()
 		});
