@@ -38,7 +38,7 @@ class VenusController extends WikiaController {
 	}
 
 	public function index() {
-		global $wgUser, $wgTitle;
+		global $wgUser, $wgTitle, $wgRequest;
 
 		$this->title = $wgTitle->getText();
 		$this->contents = $this->skinTemplateObj->data['bodytext'];
@@ -51,6 +51,8 @@ class VenusController extends WikiaController {
 		$this->setHeadItems();
 		$this->setAssets();
 
+		//TODO should be removed when cover unit is going to be implemented
+		$this->response->setVal('showCoverUnit', $wgRequest->getBool('coverunit', false));
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 

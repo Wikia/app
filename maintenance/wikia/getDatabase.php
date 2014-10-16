@@ -10,7 +10,10 @@
  */
 
 putenv ("SERVER_ID=177");
-require_once( dirname(__FILE__)."/../commandLine.inc" );
+
+$dirName = dirname(__FILE__);
+
+require_once( $dirName . "/../commandLine.inc" );
 
 $wgDBdevboxUser = 'devbox';
 $wgDBdevboxPass = 'devbox';
@@ -177,10 +180,11 @@ if ( array_key_exists('h', $opts) || array_key_exists ('f', $opts) ) {
 	}
 
 	// update wikicities variables from production database.  This is pretty gross. :)
-	if (file_exists("../../../config/DB.php")) {
-		require_once("../../../config/DB.php");
+	if ( file_exists( $dirName . "/../../../config/DB.php" ) ) {
+		require_once( $dirName . "/../../../config/DB.php" );
 	}
-	if (isset($wgDBbackenduser) && isset($wgDBbackendpassword) && isset($wgLBFactoryConf['hostsByName']['sharedb-s1'])) {
+
+	if ( isset( $wgDBbackenduser, $wgDBbackendpassword, $wgLBFactoryConf['hostsByName']['sharedb-s1'] ) ) {
 		// prepare raw output for consumption as csv. changes " => \"; \t => ","; beginning of line => ", end of line => "
 		$prepareCsv = "sed 's/\"/\\\\\"/g;s/\\t/\",\"/g;s/^/\"/;s/$/\"/;s/\\n//g'";
 

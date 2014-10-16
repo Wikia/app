@@ -123,3 +123,13 @@
 @mixin proportional-video-height($width) {
 	height: round($width * 9 / 16);
 }
+
+@mixin edit-button($radius) {
+	background-image: url('/extensions/wikia/Venus/images/editpen.svg'); /* base64 */
+	content: ' ';
+	display: inline-block;
+	height: $radius;
+	position: absolute;
+	right: 100%;
+	width: $radius;
+}

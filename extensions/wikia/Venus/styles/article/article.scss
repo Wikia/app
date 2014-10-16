@@ -1,3 +1,4 @@
+@import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/Venus/styles/variables';
 // Venus mixins @import is used only for .adUnitTest and .infobox-test and has to be removed when not needed anymore
 @import 'extensions/wikia/Venus/styles/mixins';
@@ -10,12 +11,21 @@ $article-items-spacing: 40px;
 article {
 	header {
 		@include grid-column-width('medium', 8, $medium-content-padding - $content-border-width);
-		@include proportional-video-height(8 * ($medium-grid-column + $medium-grid-gutter) - $medium-grid-gutter + $medium-content-padding);
 		background-color: $placeholder-background-color;
 		float: left;
 		margin-bottom: $article-items-spacing;
 		padding-left: $medium-content-padding;
 		position: relative;
+
+		&.cover-unit {
+			@include proportional-video-height(8 * ($medium-grid-column + $medium-grid-gutter) - $medium-grid-gutter + $medium-content-padding);
+			background-color: $placeholder-background-color; //only for prototype version
+			position: relative;
+
+			h1 {
+				position: absolute;
+			}
+		}
 
 		h1 {
 			bottom: 0;
@@ -81,25 +91,18 @@ article {
 	padding: 0 $medium-grid-column-padding;
 
 	h1, h2, h3, h4, h5, h6 {
-//		overflow: hidden;
-
 		.editsection {
 			display: inline-block;
 			float: right;
 			font-size: 12px;
 			line-height: 27px;
+			margin-left: 27px;
 			padding-left: 5px;
 			position: relative;
 			text-transform: uppercase;
 
-			&:before {
-				background-image: url('/extensions/wikia/Venus/images/editpen.svg'); /* base64 */
-				content: '';
-				display: inline-block;
-				height: 27px;
-				position: absolute;
-				right: 100%;
-				width: 27px;
+			a:before {
+				@include edit-button(27px);
 			}
 		}
 	}
@@ -112,9 +115,8 @@ article {
 			line-height: 40px;
 			margin-left: 40px;
 
-			&:before {
-				height: 40px;
-				width: 40px;
+			a:before {
+				@include edit-button(40px);
 			}
 		}
 	}
@@ -137,10 +139,10 @@ article {
 
 		.editsection {
 			line-height: 36px;
+			margin-left: 36px;
 
-			&:before {
-				height: 36px;
-				width: 36px;
+			a:before {
+				@include edit-button(36px);
 			}
 		}
 	}
@@ -154,24 +156,24 @@ article {
 		margin-bottom: $article-items-spacing;
 	}
 
-	blockquote:before {
-		background: none repeat scroll 0 0 $color-page;
-		content: '\201c';
-		display: inline;
-		font-size: 64px;
-		height: 34px;
-		line-height: 70px;
-		padding-top: 8px;
-		position: absolute;
-		top: -33px;
-	}
-
 	blockquote {
 		border-top: 4px solid $color-text;
 		font-size: 27px;
 		margin: 0 0 $article-items-spacing;
 		padding-top: 30px;
 		position: relative;
+
+		&:before {
+			background: none repeat scroll 0 0 $color-page;
+			content: '\201c';
+			display: inline;
+			font-size: 64px;
+			height: 34px;
+			line-height: 70px;
+			padding-top: 8px;
+			position: absolute;
+			top: -33px;
+		}
 	}
 
 	pre {
@@ -226,8 +228,11 @@ article {
 	article {
 		header {
 			@include grid-column-width('large', 8, $large-content-padding - $content-border-width);
-			@include proportional-video-height(8 * ($large-grid-column + $large-grid-gutter) - $large-grid-gutter + $large-content-padding);
 			padding-left: $large-content-padding;
+
+			&.cover-unit {
+				@include proportional-video-height(8 * ($large-grid-column + $large-grid-gutter) - $large-grid-gutter + $large-content-padding);
+			}
 
 			h1 {
 				padding-left: $large-grid-column-padding;
@@ -292,14 +297,22 @@ article {
 
 @media #{$small-only} {
 	article header {
-		@include proportional-video-height($small-content-width - 2 * $content-border-width);
 		float: none;
 		padding-left: $small-content-padding;
 		width: 100%;
 
+		&.cover-unit {
+			@include proportional-video-height($small-content-width - 2 * $content-border-width);
+		}
+
 		h1 {
 			padding-left: $small-grid-column-padding;
 			padding-right: $small-grid-column-padding;
+		}
+
+		.left-nav {
+			float: none;
+			position: absolute;
 		}
 	}
 
