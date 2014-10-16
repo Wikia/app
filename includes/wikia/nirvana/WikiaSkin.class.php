@@ -183,10 +183,13 @@ abstract class WikiaSkin extends SkinTemplate {
 	 *
 	 * Additionaly, all SASS files from $sassFiles array will be loaded as well.
 	 *
+	 * Once this function ends its run $sassFiles will be updated (via a reference)
+	 * with all SASS files extracted from getStyles().
+	 *
 	 * @param array $sassFiles additional list of SASS files to load
 	 * @return string CSS links with extracted SASS files and the rest
 	 */
-	public function getStylesWithCombinedSASS(Array $sassFiles) {
+	public function getStylesWithCombinedSASS(Array &$sassFiles) {
 		wfProfileIn(__METHOD__);
 
 		global $wgAllInOne;
