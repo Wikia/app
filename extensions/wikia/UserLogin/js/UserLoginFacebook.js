@@ -37,7 +37,23 @@
 				this.loginSetup();
 
 				// load when the login dropdown is shown - see BugId:68955
-				$.loadFacebookAPI();
+				window.fbAsyncInit = function() {
+					FB.init({
+						appId      :  window.fbAppId,
+						xfbml      : true,
+						version    : 'v2.1'
+					});
+				};
+
+				(function(d, s, id){
+					var js, fjs = d.getElementsByTagName(s)[0];
+					if (d.getElementById(id)) {return;}
+					js = d.createElement(s); js.id = id;
+					js.src = "//connect.facebook.net/en_US/sdk.js";
+					fjs.parentNode.insertBefore(js, fjs);
+				}(document, 'script', 'facebook-jssdk'));
+
+//				$.loadFacebookAPI();
 
 				this.log('init');
 				this.bucky.timer.stop('init');
@@ -56,13 +72,16 @@
 
 					// @see http://developers.facebook.com/docs/reference/javascript/FB.login/
 					window.FB.login($.proxy(self.loginCallback, self), {
-						scope: 'publish_stream,email'
+						//scope: 'publish_stream,email'
 					});
 				});
 		},
 
 		// callback for FB.login
 		loginCallback: function (response) {
+console.log("IN FB LOGIN CALLBACK");
+console.log("RESPONSE:");
+console.log(response);
 			if (typeof response === 'object' && response.status) {
 				this.log(response);
 				switch (response.status) {
@@ -97,7 +116,8 @@
 
 			self = this;
 			loginCallback = this.callbacks['login-success'] || '';
-
+console.log('RESP in checkAccountCallback');
+console.log(resp);
 			// logged in using FB account, reload the page or callback
 			if (resp.loggedIn) {
 

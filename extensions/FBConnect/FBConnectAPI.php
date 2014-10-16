@@ -23,6 +23,10 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'This file is a MediaWiki extension, it is not a valid entry point' );
 }
 
+//use Facebook\FacebookSession;
+//use Facebook\FacebookRequest;
+//use Facebook\GraphUser;
+//use Facebook\FacebookRequestException;
 
 /**
  * Class FBConnectAPI
@@ -48,12 +52,20 @@ class FBConnectAPI {
 		global $fbAppId, $fbAppSecret;
 		// Construct a new Facebook object on first time access
 		if ( is_null(self::$__Facebook) && self::isConfigSetup() ) {
+			/*
 			self::$__Facebook = new Facebook3(array(
 				'appId'  =>  $fbAppId,
 				'secret' => $fbAppSecret
 			));
+*/
 
-			self::$__Facebook->api_client = new FacebookRestClient($fbAppId, $fbAppSecret, null);
+			Facebook\FacebookSession::setDefaultApplication( $fbAppId, $fbAppSecret );
+
+			self::$__Facebook = new Facebook\FacebookJavaScriptLoginHelper();
+$session = self::$__Facebook->getSession();
+gbug("SESSION: ", $session);
+
+			//self::$__Facebook->api_client = new FacebookRestClient($fbAppId, $fbAppSecret, null);
 			//Facebook( $fbAppId, $fbAppSecret );
 			if (!self::$__Facebook) {
 				error_log('Could not create facebook client.');
@@ -97,7 +109,7 @@ class FBConnectAPI {
 	 * then an ID of 0 is returned.
 	 */
 	public function user() {
-		return $this->Facebook()->getUser();
+		return $this->Facebook()->getUserId();
 	}
 
 	/**

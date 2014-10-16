@@ -83,6 +83,8 @@ $wgAutoloadClasses['FBConnectAPI']			= $dir . 'FBConnectAPI.php';
 $wgAutoloadClasses['FBConnectOpenGraphAPI'] = $dir . 'FBConnectOpenGraphAPI.php';
 $wgAutoloadClasses['Facebook3']				= $dir . 'facebook-sdk3/facebook.php';
 
+require_once $dir . 'facebook-sdk4/autoload.php';
+
 $wgAutoloadClasses['FBConnectDB'] =			$dir . 'FBConnectDB.php';
 $wgAutoloadClasses['FBConnectHooks'] =		$dir . 'FBConnectHooks.php';
 $wgAutoloadClasses['FBConnectProfilePic'] =	$dir . 'FBConnectProfilePic.php';
