@@ -177,6 +177,49 @@ abstract class WikiaSkin extends SkinTemplate {
 		return $res;
 	}
 
+	/**
+	 * This method extracts links to SASS files from $this->getStyles() method
+	 * and generates a single <link> tag to load all of them via a single HTTP request.
+	 *
+	 * Additionaly, all SASS files from $sassFiles array will be loaded as well.
+	 *
+	 * @param array $sassFiles additional list of SASS files to load
+	 * @return string CSS links with extracted SASS files and the rest
+	 */
+	public function getStylesWithCombinedSASS(Array $sassFiles) {
+		wfProfileIn(__METHOD__);
+
+		global $wgAllInOne;
+		$am = AssetsManager::getInstance();
+
+		$cssLinks = '';
+		$combinedCnt = 0;
+
+		foreach ( $this->getStyles() as $s ) {
+			if ( !empty($s['url']) ) {
+				if ($wgAllInOne && $am->isSassUrl($s['url'])) {
+					$sassFiles[] = $s['url'];
+					$combinedCnt++;
+				} else {
+					$cssLinks .= $s['tag'];
+				}
+			} else {
+				$cssLinks .= $s['tag'];
+			}
+		}
+
+		// turn an url (http://something.wikia.com/__am/sass/options/path/to/file.scss) to a local filepath
+		$sassFiles = $am->getSassFilePath($sassFiles);
+
+		// get a single URL to fetch all the required SASS files
+		$sassFilesUrl = $am->getSassesUrl($sassFiles);
+
+		wfDebug( sprintf( "%s: combined %d SASS files\n", __METHOD__, $combinedCnt ) );
+
+		wfProfileOut(__METHOD__);
+		return Html::linkedStyle($sassFilesUrl ) . $cssLinks;
+	}
+
 	/*
 	 * WikiaMobile skin has its own getTopScripts
 	 * MobileWikiaSkin::getTopScripts
