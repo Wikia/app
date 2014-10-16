@@ -14,7 +14,7 @@
 		showPreviewModal: function (format, metatitle, body, width, publishCallback) {
 			var self = this;
 
-			this.bucky.timer.start('showPreviewMoal');
+			this.bucky.timer.start('showPreviewModal');
 
 			require(['wikia.ui.factory'], function (uiFactory) {
 				uiFactory.init(['modal']).then(function (uiModal) {
@@ -67,7 +67,7 @@
 							callback: function (data) {
 								previewModal.$content.find('.WallPreview .WikiaArticle').html(data.body);
 								previewModal.activate();
-								self.bucky.timer.stop('showPreviewMoal');
+								self.bucky.timer.stop('showPreviewModal');
 							}
 						});
 					});
