@@ -86,20 +86,18 @@ article {
 	margin: 0 $medium-content-padding - $content-border-width 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width;
 	padding: 0 $medium-grid-column-padding;
 
-	h1, h2, h3, h4, h5, h6 {
-		.editsection {
-			display: inline-block;
-			float: right;
-			font-size: 12px;
-			line-height: 27px;
-			margin-left: 27px;
-			padding-left: 5px;
-			position: relative;
-			text-transform: uppercase;
+	.editsection {
+		display: inline-block;
+		float: right;
+		font-size: 12px;
+		line-height: 27px;
+		margin-left: 27px;
+		padding-left: 5px;
+		position: relative;
+		text-transform: uppercase;
 
-			a:before {
-				@include edit-button(27px);
-			}
+		a:before {
+			@include edit-button(27px);
 		}
 	}
 
