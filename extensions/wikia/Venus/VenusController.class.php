@@ -3,6 +3,7 @@
 class VenusController extends WikiaController {
 	private static $bodyParametersArray = [];
 	private static $skinAssetGroups = [];
+	private static $infobox = null;
 
 	private $assetsManager;
 	private $skinTemplateObj;
@@ -38,10 +39,12 @@ class VenusController extends WikiaController {
 	}
 
 	public function index() {
-		global $wgUser, $wgTitle;
+		global $wgUser, $wgTitle, $wgOut;
 
 		$this->title = $wgTitle->getText();
 		$this->contents = $this->skinTemplateObj->data['bodytext'];
+
+		$this->contents = $wgOut->getBeforeBodyHTML() . $this->contents;
 
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
 

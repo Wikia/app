@@ -30,6 +30,8 @@ $wgExtensionCredits['other'][] =
  */
 
 $wgAutoloadClasses['ResourceVariablesGetter'] = "includes/wikia/resourceloader/ResourceVariablesGetter.class.php";
+$wgAutoloadClasses['VenusHooks'] = __DIR__ . '/VenusHooks.class.php';
+
 
 /**
  * services
@@ -57,6 +59,7 @@ $wgAutoloadClasses['VenusController'] = __DIR__ . '/VenusController.class.php';
 /**
  * hooks
  */
+$wgHooks['ParserSectionCreate'][] = 'VenusHooks::onParserSectionCreate';
 
 
 //404 Pages
