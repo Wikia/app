@@ -190,7 +190,7 @@ $VenusConfig['imglzy_js'] = [
 /* extension/wikia/Bucky */
 $config['bucky_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
+	'skin' => [ 'venus' ],
 	'assets' => array(
 		'//extensions/wikia/Bucky/vendor/BuckyClient/bucky.js',
 		'//extensions/wikia/Bucky/js/bucky_init.js',

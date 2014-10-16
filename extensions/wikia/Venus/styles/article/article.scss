@@ -4,7 +4,7 @@
 @import 'images';
 @import 'media';
 
-article {
+.article {
 
 	header {
 		background-color: #cccccc; //only for prototype version
@@ -151,7 +151,7 @@ article {
 }
 
 @media #{$large-up} {
-	article {
+	.article {
 
 		header {
 			float: left;
@@ -181,7 +181,7 @@ article {
 }
 
 @media #{$small-only} {
-	article {
+	.article {
 
 		header {
 			float: none;

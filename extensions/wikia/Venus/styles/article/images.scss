@@ -2,7 +2,7 @@
 
 $border-color: lighten($color-text, 30%);
 
-article {
+.article {
 	.image-thumbnail img {
 		margin: 10px;
 	}
@@ -46,10 +46,6 @@ article {
 		clear: left;
 		float: left;
 		margin: 30px 30px 30px 0;
-
-		.image-thumbnail img {
-			margin: 0;
-		}
 	}
 
 	.floatright,
@@ -57,7 +53,12 @@ article {
 		clear: right;
 		float: right;
 		margin: 30px 0 30px 30px;
+	}
 
+	.floatleft,
+	.tleft,
+	.floatright,
+	.tright {
 		.image-thumbnail img {
 			margin: 0;
 		}
@@ -67,7 +68,7 @@ article {
 		clear: both;
 		text-align: center;
 
-		> * {
+		.article-thumb {
 			margin-left: auto;
 			margin-right: auto;
 		}
