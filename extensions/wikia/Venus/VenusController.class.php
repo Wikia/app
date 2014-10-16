@@ -127,17 +127,36 @@ class VenusController extends WikiaController {
 			]
 		);
 
-		foreach ( $this->assetsManager->getURL( $cssGroups ) as $s ) {
-			if ( $this->assetsManager->checkAssetUrlForSkin( $s, $this->skin ) ) {
-				$cssLinks .= "<link rel=stylesheet href='{$s}'/>";
+		// try to fetch all SASS files using a single request (CON-1487)
+		$sassFiles = [];
+
+		// SASS files requested via VenusAssetsPackages hook
+		foreach ( $this->assetsManager->getURL( $cssGroups ) as $src ) {
+			if ( $this->assetsManager->checkAssetUrlForSkin( $src, $this->skin ) ) {
+				$sassFiles[] = $src;
 			}
 		}
 
+		// SASS files requested via Wikia::addAssetsToOutput
 		if ( is_array( $styles ) ) {
 			foreach ( $styles as $s ) {
-				$cssLinks .= $s['tag'];
+				if ($this->assetsManager->isSassUrl($s['url'])) {
+					$sassFiles[] = $s['url'];
+				} else {
+					$cssLinks .= $s['tag'];
+				}
 			}
 		}
+
+		// turn an url (http://something.wikia.com/__am/sass/options/path/to/file.scss) to a local filepath
+		$sassFiles = $this->assetsManager->getSassFilePath($sassFiles);
+
+		// get a single URL to fetch all the required SASS files
+		$sassFilesUrl = $this->assetsManager->getSassesUrl($sassFiles);
+
+		$cssLinks = Html::linkedStyle($sassFilesUrl) . $cssLinks;
+
+		#print_r($cssLinks); die;
 
 		foreach ( $this->assetsManager->getURL( $jsHeadGroups ) as $src ) {
 			if ( $this->assetsManager->checkAssetUrlForSkin( $src, $this->skin ) ) {
