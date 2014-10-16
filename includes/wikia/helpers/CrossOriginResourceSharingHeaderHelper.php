@@ -8,13 +8,14 @@
  * Use with caution.
  */
 class CrossOriginResourceSharingHeaderHelper {
-	const HEADER_NAME = 'Access-Control-Allow-Origin';
+	const ALLOW_ORIGIN_HEADER_NAME = 'Access-Control-Allow-Origin';
 	const HEADER_DELIMETER = ',';
 
 	protected $allowOriginValues = null;
 
-	public function setAllowOrigin( $values ) {
-		$this->allowOriginValue = $values;
+	public function setAllowOrigin( Array $values ) {
+
+		$this->allowOriginValues = $values;
 	}
 
 	/**
@@ -26,19 +27,15 @@ class CrossOriginResourceSharingHeaderHelper {
 	public function setHeaders( WikiaResponse $response, $mergeExisting = true ) {
 		if ( !empty( $this->allowOriginValues ) ) {
 			$valuesToSet = $this->allowOriginValues;
-			$headers = $response->getHeader( self::HEADER_NAME );
-			if ( !empty( $headers ) ) {
+			$headers = $response->getHeader( self::ALLOW_ORIGIN_HEADER_NAME );
 
-				if ( $mergeExisting ) {
-					$response->removeHeader( self::HEADER_NAME );
-					$valuesToSet = [ ];
-					foreach ( $headers as $header ) {
-						$valuesToSet [] = explode( self::HEADER_DELIMETER, $header['value'] );
-
-					}
+			if ( !empty( $headers ) && $mergeExisting ) {
+				$response->removeHeader( self::ALLOW_ORIGIN_HEADER_NAME );
+				foreach ( $headers as $header ) {
+					$valuesToSet = array_merge( $valuesToSet, explode( self::HEADER_DELIMETER, $header['value'] ) );
 				}
 			}
-			$response->setHeader( self::HEADER_NAME, implode( self::HEADER_DELIMETER, $valuesToSet ) );
+			$response->setHeader( self::ALLOW_ORIGIN_HEADER_NAME, implode( self::HEADER_DELIMETER, $valuesToSet ) );
 		}
 	}
 
