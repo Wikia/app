@@ -5,9 +5,7 @@ require([
 	'use strict';
 	var doc = win.document;
 
-	/**
-	 * Look for all tables on article and add or remove scrollbar if needed
-	 */
+	/** Look for all tables on article and add or remove scrollbar if needed */
 	function scanTables() {
 		var innerArticle = doc.getElementById('mw-content-text'),
 			tables = innerArticle.getElementsByClassName('article-table');
@@ -24,5 +22,6 @@ require([
 
 	$(win)
 		.on('resize', $.debounce(50, scanTables))
+		// wikiaTabClicked event is triggered when user switches between different tabs in article
 		.on('wikiaTabClicked', scanTables);
 });

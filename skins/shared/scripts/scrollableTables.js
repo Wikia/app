@@ -44,11 +44,11 @@ define('scrollableTables', ['wikia.window', 'wikia.dom'], function(win, dom) {
 	 * @param {HTMLElement} element - element to be unwrapped
 	 */
 	function unwrap(element) {
-		var tableWrapper = dom.closestByClassName(element, 'table-scrollable-wrapper', 5),
+		var tableWrapper = dom.closestByClassName(element, 'table-scrollable-wrapper'),
 			parent;
 
 		if (tableWrapper) {
-			parent  = tableWrapper.parentNode;
+			parent = tableWrapper.parentNode;
 			parent.insertBefore(element, tableWrapper);
 			parent.removeChild(tableWrapper);
 		}
