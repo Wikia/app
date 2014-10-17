@@ -92,7 +92,7 @@ article {
 		position: relative;
 		text-transform: uppercase;
 
-		a:before {
+		a::before {
 			@include edit-button(27px);
 		}
 	}
@@ -101,13 +101,12 @@ article {
 		line-height: 40px;
 		margin-left: 40px;
 
-		a:before {
-			@include edit-button(40px);
+		a::before {
+			@include resize-edit-button(40px);
 		}
 	}
 
 	h2 {
-//		border-bottom: 1px solid $color-page-border;
 		margin-bottom: 12px;
 		margin-top: $article-items-spacing;
 		padding-bottom: 6px;
@@ -125,8 +124,8 @@ article {
 			line-height: 36px;
 			margin-left: 36px;
 
-			a:before {
-				@include edit-button(36px);
+			a::before {
+				@include resize-edit-button(36px);
 			}
 		}
 	}
@@ -304,6 +303,24 @@ article {
 	.mw-content-text {
 		margin: 0 $small-content-padding - $content-border-width 0 $small-grid-column + $small-grid-gutter + $small-content-padding - $content-border-width;
 		padding: 0 $small-grid-column-padding;
+
+		h2 {
+			display: flex;
+			// Support for Android > 4.2
+			display: -webkit-box;
+			// Support for IE10
+			display: -ms-flexbox;
+			flex-direction: row-reverse;
+			justify-content: flex-end;
+
+			.editsection {
+				float: none
+			}
+
+			.mw-headline {
+				width: 90%;
+			}
+		}
 
 		p {
 			margin-bottom: 30px;

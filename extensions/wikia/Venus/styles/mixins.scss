@@ -133,3 +133,8 @@
 	right: 100%;
 	width: $radius;
 }
+
+@mixin resize-edit-button($radius) {
+	height: $radius;
+	width: $radius;
+}
