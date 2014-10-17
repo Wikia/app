@@ -1,11 +1,15 @@
 @import 'skins/shared/modal';
 
 .lightbox-venus {
+	$width: 1010px;
+	$border-width: 5px;
+
+	border-width: $border-width;
 	box-sizing: content-box;
-	left: 50%;
 	height: 628px;
-	margin-left: -510px;
-	width: 1010px;
+	left: 50%;
+	margin-left: -($width + 2 * $border-width) / 2;
+	width: $width;
 
 	ul, ol {
 		list-style: none;
@@ -14,8 +18,8 @@
 	}
 
 	p {
-		margin:0;
-		padding:0;
+		margin: 0;
+		padding: 0;
 	}
 
 	.close:after {
@@ -34,7 +38,7 @@
 		cursor: pointer;
 		display: inline-block;
 		height: 19px;
-		opacity: 0.3;
+		opacity: .3;
 		padding: 0;
 		position: relative;
 		width: 19px;
