@@ -329,6 +329,8 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 	}
 
 	.dropdown {
+		line-height: 14px;
+
 		.second-level-row,
 		.third-level-row {
 			a {
