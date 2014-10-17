@@ -1,11 +1,15 @@
 <? foreach( $menuSections as $sections ): ?>
-<section class="<?= $sections['specialAttr'] ?>-links active">
+<div class="hub-menu-section <?= $sections['specialAttr'] ?>-links active">
 	<? foreach( $sections['children'] as $category ): ?>
-		<h2><?=$category['text']?></h2>
-		<? foreach( $category['children'] as $node ): ?>
-			<a href="<?=$node['href']?>"><?=$node['text']?></a>
-		<? endforeach ?>
+		<strong><?=$category['text']?></strong>
+		<ul>
+			<? foreach( $category['children'] as $node ): ?>
+				<li>
+					<a href="<?=$node['href']?>"><?=$node['text']?></a>
+				</li>
+			<? endforeach ?>
+		</ul>
 	<? endforeach ?>
 	<a class="more" href="<?= $sections['href']; ?>"><?= wfMessage('global-navigation-hubs-menu-more-of', $sections['text'])->parse(); ?></a>
-</section>
+</div>
 <? endforeach ?>

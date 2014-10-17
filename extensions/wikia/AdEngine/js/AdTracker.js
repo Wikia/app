@@ -40,14 +40,14 @@ define('ext.wikia.adEngine.adTracker', ['wikia.tracker', 'wikia.window'], functi
 	/**
 	 * A generic function to track an ad-related event and its timing
 	 *
-	 * @param eventName: the event name (use slashes for structure)
-	 * @param data: extra data to track as JS object (will be converted to URL-like query-string)
-	 * @param value: time in milliseconds (or empty)
-	 * @param forcedLabel: the event label, if empty, the time bucket will be used
+	 * @param {string} eventName - the event name (use slashes for structure)
+	 * @param {object} data - extra data to track as JS object (will be converted to URL-like query-string)
+	 * @param {number=} value - time in milliseconds (or empty)
+	 * @param {string=} forcedLabel - the event label, if empty, the time bucket will be used
 	 */
 	function track(eventName, data, value, forcedLabel) {
 		var category = 'ad/' + eventName,
-			action = encodeAsQueryString(data || {}),
+			action = typeof data === 'string' ? data : encodeAsQueryString(data || {}),
 			gaLabel = forcedLabel,
 			gaValue;
 
@@ -79,22 +79,29 @@ define('ext.wikia.adEngine.adTracker', ['wikia.tracker', 'wikia.window'], functi
 	 * method. When the method is called, the actual tracking happens. This allows you to separate
 	 * the time when the metric is gather from the time the metric is sent to GA
 	 *
-	 * @param eventName: String
-	 * @param data: Object
+	 * @param {string} eventName
+	 * @param {string|object} eventData
+	 * @param {string=} eventType
 	 * @returns {{track: Function}}
 	 */
-	function measureTime(eventName, data) {
-		var timeWgNowBased = window.wgNow && new Date().getTime() - window.wgNow.getTime(),
-			performance = window.performance,
-			timePerformanceBased = performance && performance.now && Math.round(performance.now());
+	function measureTime(eventName, eventData, eventType) {
+
+		var timingValue = window.wgNow && new Date().getTime() - window.wgNow.getTime();
+		eventType = eventType ? '/' + eventType : '';
 
 		return {
+			measureDiff: function (diffData, diffType) {
+				eventType = '/' + diffType;
+				eventData = diffData;
+				timingValue = window.wgNow && new Date().getTime() - window.wgNow.getTime() - timingValue;
+
+				return {
+					track: this.track
+				};
+			},
 			track: function () {
-				if (timeWgNowBased) {
-					track('timing/' + eventName + '/wgNow', data, timeWgNowBased);
-				}
-				if (timePerformanceBased) {
-					track('timing/' + eventName + '/performance', data, timePerformanceBased);
+				if (timingValue) {
+					track('timing/' + eventName + eventType, eventData, timingValue);
 				}
 			}
 		};
