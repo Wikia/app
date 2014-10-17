@@ -1,3 +1,4 @@
+@import 'extensions/wikia/Venus/styles/variables';
 @import 'skins/shared/color';
 
 $border-color: lighten($color-text, 30%);
@@ -45,14 +46,14 @@ $border-color: lighten($color-text, 30%);
 	.tleft {
 		clear: left;
 		float: left;
-		margin: 30px 30px 30px 0;
+		margin: 30px 30px 30px (-$medium-grid-column-padding);
 	}
 
 	.floatright,
 	.tright {
 		clear: right;
 		float: right;
-		margin: 30px 0 30px 30px;
+		margin: 30px (-$medium-grid-column-padding) 30px 30px;
 	}
 
 	.floatleft,
@@ -91,6 +92,34 @@ $border-color: lighten($color-text, 30%);
 
 		p {
 			margin: 0;
+		}
+	}
+}
+
+@media #{$large-up} {
+	.article {
+		.floatleft,
+		.tleft {
+			margin-left: -$medium-grid-column-padding;
+		}
+
+		.floatright,
+		.tright {
+			margin-right: -$medium-grid-column-padding;
+		}
+	}
+}
+
+@media #{$small-only} {
+	.article {
+		.floatleft,
+		.tleft {
+			margin-left: -$small-grid-column-padding;
+		}
+
+		.floatright,
+		.tright {
+			margin-right: -$small-grid-column-padding;
 		}
 	}
 }
