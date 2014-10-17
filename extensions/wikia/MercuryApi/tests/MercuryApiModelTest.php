@@ -22,6 +22,7 @@ class MercuryApiModelTest extends WikiaBaseTest {
 		$this->mockGlobalVariable('wgAdDriverForceDirectGptAd', true);
 		$this->mockGlobalVariable('wgAdDriverUseSevenOneMedia', false);
 		$this->mockGlobalVariable('wgWikiDirectedAtChildrenByStaff', true);
+		$this->mockGlobalVariable('wgCityId', 3355); // recipes
 	}
 
 	/**
@@ -62,7 +63,7 @@ class MercuryApiModelTest extends WikiaBaseTest {
 			],
 			'targeting' => [
 				'enableKruxTargeting' => true,
-				'kruxCategoryId' => 'Hi0kPhMT',
+				'kruxCategoryId' => 'HixxTik3',
 				'pageArticleId' => 10,
 				'pageCategories' => [
 					'title 1'
@@ -73,11 +74,11 @@ class MercuryApiModelTest extends WikiaBaseTest {
 				'pageType' => 'article',
 				'sevenOneMediaSub2Site' => true,
 				'skin' => 'mercury',
-				'wikiCategory' => 'ent',
+				'wikiCategory' => 'life',
 				'wikiDbName' => null,
 				'wikiDirectedAtChildren' => true,
 				'wikiLanguage' => 'en',
-				'wikiVertical' => 'Wikia',
+				'wikiVertical' => 'Lifestyle',
 			],
 			'providers' => [
 				'sevenOneMedia' => null,
