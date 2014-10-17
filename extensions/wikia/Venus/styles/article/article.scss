@@ -178,19 +178,25 @@ $article-items-spacing: 40px;
 .adUnitTest,
 .infobox-test {
 	@include grid-column-width('medium', 4, -2 * $medium-grid-column-padding);
-	background-color: $placeholder-background-color;
 	display: block;
 	float: right;
 	height: 250px;
 	margin: 0 $medium-grid-column-padding + $medium-content-padding - $content-border-width 20px $medium-grid-gutter + $medium-grid-column-padding;
-	padding: 10px;
 }
 
 .infobox-test {
+	background-color: $placeholder-background-color;
 	clear: right;
 	height: 500px;
+	padding: 10px;
 }
 
+#TOP_RIGHT_BOXAD.default-height {
+	height: 250px;
+	.hidden {
+		display: none;
+	}
+}
 /* END FOR PROTOTYPE/TESTING ONLY */
 
 @media #{$large-up} {

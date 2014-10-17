@@ -63,7 +63,8 @@ class VenusController extends WikiaController {
 		$this->topAds = $this->getTopAds();
 		$this->localNavigation = $this->getLocalNavigation();
 		$this->globalFooter = $this->getGlobalFooter();
-		$this->corporateFooter = $this->getCorporateFootet();
+		$this->corporateFooter = $this->getCorporateFootet(); // TODO: footet?
+		$this->adTopRightBoxad = $this->app->renderView('Ad', 'Index', ['slotName' => 'TOP_RIGHT_BOXAD']);
 
 		if ( WikiaPageType::isArticlePage() ) {
 			$this->leftArticleNav = $this->getLeftArticleNavigation();
