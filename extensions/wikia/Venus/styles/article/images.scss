@@ -100,12 +100,12 @@ $border-color: lighten($color-text, 30%);
 	.article {
 		.floatleft,
 		.tleft {
-			margin-left: -$medium-grid-column-padding;
+			margin-left: -$large-grid-column-padding;
 		}
 
 		.floatright,
 		.tright {
-			margin-right: -$medium-grid-column-padding;
+			margin-right: -$large-grid-column-padding;
 		}
 	}
 }
