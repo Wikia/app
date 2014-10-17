@@ -3,6 +3,7 @@
 @import 'extensions/wikia/Venus/styles/typographyMixins';
 @import 'extensions/wikia/Venus/styles/article/images';
 @import 'skins/shared/color';
+@import 'skins/shared/mixins/flexbox';
 
 $placeholder-background-color: $color-left-article-nav; // only for prototype version
 $article-items-spacing: 40px;
@@ -316,18 +317,14 @@ article {
 		padding: 0 $small-grid-column-padding;
 
 		h2 {
-			display: flex;
-			// Support for Android > 4.2
-			display: -webkit-box;
-			// Support for IE10
-			display: -ms-flexbox;
+			@include flexbox;
 			flex-direction: row-reverse;
 			justify-content: flex-end;
 			margin-left: -$small-grid-gutter;
 			margin-right: -$small-grid-gutter;
 
 			.editsection {
-				float: none
+				float: none;
 			}
 
 			.mw-headline {
