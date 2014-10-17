@@ -2,7 +2,7 @@
 describe('wikia.dom', function() {
 	'use strict';
 
-	it('Find closest element with give class', function() {
+	it('Find closest element with given class', function() {
 		var docMock = {},
 			domModule = modules['wikia.dom'](docMock),
 			tree;
