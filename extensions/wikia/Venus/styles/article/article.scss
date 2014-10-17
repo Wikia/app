@@ -180,7 +180,6 @@ $article-items-spacing: 40px;
 	@include grid-column-width('medium', 4, -2 * $medium-grid-column-padding);
 	display: block;
 	float: right;
-	height: 250px;
 	margin: 0 $medium-grid-column-padding + $medium-content-padding - $content-border-width 20px $medium-grid-gutter + $medium-grid-column-padding;
 }
 
