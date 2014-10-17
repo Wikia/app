@@ -1,20 +1,21 @@
 <?php
 
-class ExactTargetUserTasksAdderHooks extends ExactTargetUserTasksAdderBaseHooks {
+class ExactTargetUserHooks {
 
 	/**
 	 * Register all hooks that are necessary to update user data in ExactTarget
 	 */
 	public static function setupHooks() {
-		$oExactTargetUserTasksAdderHooks = new self();
+		$oExactTargetUserHooks = new self();
+		$oExactTargetUserTasksAdderHooks = $oExactTargetUserHooks->getHelper();
 
-		\Hooks::register( 'AfterAccountRename', $oExactTargetUserTasksAdderHooks );
-		\Hooks::register( 'ArticleSaveComplete', $oExactTargetUserTasksAdderHooks );
-		\Hooks::register( 'EditAccountClosed', $oExactTargetUserTasksAdderHooks );
-		\Hooks::register( 'EditAccountEmailChanged', $oExactTargetUserTasksAdderHooks );
-		\Hooks::register( 'EmailChangeConfirmed', $oExactTargetUserTasksAdderHooks );
-		\Hooks::register( 'SignupConfirmEmailComplete', $oExactTargetUserTasksAdderHooks );
-		\Hooks::register( 'UserSaveSettings', $oExactTargetUserTasksAdderHooks );
+		\Hooks::register( 'AfterAccountRename', $oExactTargetUserHooks );
+		\Hooks::register( 'ArticleSaveComplete', $oExactTargetUserHooks );
+		\Hooks::register( 'EditAccountClosed', $oExactTargetUserHooks );
+		\Hooks::register( 'EditAccountEmailChanged', $oExactTargetUserHooks );
+		\Hooks::register( 'EmailChangeConfirmed', $oExactTargetUserHooks );
+		\Hooks::register( 'SignupConfirmEmailComplete', $oExactTargetUserHooks );
+		\Hooks::register( 'UserSaveSettings', $oExactTargetUserHooks );
 	}
 
 	/**
@@ -145,5 +146,9 @@ class ExactTargetUserTasksAdderHooks extends ExactTargetUserTasksAdderBaseHooks 
 			$task->call( 'updateAddUserData', $aUserData, $aUserProperties );
 			$task->queue();
 		}
+	}
+
+	private function getHelper() {
+		return new ExactTargetUserHooks();
 	}
 }
