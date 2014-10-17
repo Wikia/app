@@ -15,6 +15,7 @@ define('wikia.dom', ['wikia.document'], function(doc) {
 		while (element && nodesUp <= maxNodesUp) {
 			if (element.classList && element.classList.contains(targetParentByClass)) {
 				return element;
+			//Support for Android 2.3
 			} else if (element.webkitMatchesSelector && element.webkitMatchesSelector('.' + targetParentByClass)) {
 				return element;
 			}
@@ -31,14 +32,14 @@ define('wikia.dom', ['wikia.document'], function(doc) {
 	 * @returns {Node}
 	 */
 	function createElementWithClass(tag, classes) {
-		var element = doc.createElement(tag),
-			classCount = classes.length,
-			i;
+		var element, classCount, i;
 
 		if (!Array.isArray(classes)) {
 			throw new Error('Classes argument must be an array');
 		}
 
+		classCount = classes.length;
+		element = doc.createElement(tag);
 		for (i=0; i<classCount; i++) {
 			element.classList.add(classes[i]);
 		}
