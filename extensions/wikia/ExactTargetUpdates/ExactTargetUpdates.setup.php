@@ -40,16 +40,17 @@ $wgExtensionCredits['other'][] = array(
 
 $wgExtensionMessagesFiles[ 'ExactTargetUpdates' ] = $dir . '/ExactTargetUpdates.i18n.php';
 
-$wgAutoloadClasses['ExactTargetUpdatesHelper'] = $dir . '/ExactTargetUpdatesHelper.php';
+$wgAutoloadClasses['ExactTargetMainHelper'] = $dir . '/ExactTargetMainHelper.php';
 $wgAutoloadClasses['ExactTargetBaseTask'] =  $dir . '/ExactTargetBaseTask.php' ;
 $wgAutoloadClasses['ExactTargetAddUserTask'] =  $dir . '/ExactTargetAddUserTask.php' ;
 $wgAutoloadClasses['ExactTargetRemoveUserTask'] =  $dir . '/ExactTargetRemoveUserTask.php' ;
 $wgAutoloadClasses['ExactTargetUpdateUserTask'] =  $dir . '/ExactTargetUpdateUserTask.php' ;
-$wgAutoloadClasses['ExactTargetUserTasksAdderBaseHooks'] =  $dir . '/hooks/ExactTargetUserTasksAdderBase.hooks.php' ;
-$wgAutoloadClasses['ExactTargetUserTasksAdderHooks'] =  $dir . '/hooks/ExactTargetUserTasksAdder.hooks.php' ;
+$wgAutoloadClasses['ExactTargetUserHooks'] =  $dir . '/hooks/ExactTargetUser.hooks.php' ;
+$wgAutoloadClasses['ExactTargetUserHooksParamsHelper'] =  $dir . '/hooks/ExactTargetUserHooksParamsHelper.php' ;
+$wgAutoloadClasses['ExactTargetUserHooksTaskInstanceHelper'] =  $dir . '/hooks/ExactTargetUserHooksTaskInstanceHelper.php' ;
 $wgAutoloadClasses['ExactTargetSoapClient'] =  $dir . '/lib/exacttarget_soap_client.php' ;
 
 /**
  * Registering hooks
  */
-$wgExtensionFunctions[] = 'ExactTargetUserTasksAdderHooks::setupHooks';
+$wgExtensionFunctions[] = 'ExactTargetUserHooks::setupHooks';

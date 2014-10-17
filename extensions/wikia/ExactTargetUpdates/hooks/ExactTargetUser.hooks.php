@@ -7,15 +7,17 @@ class ExactTargetUserHooks {
 	 */
 	public static function setupHooks() {
 		$oExactTargetUserHooks = new self();
-		$oExactTargetUserTasksAdderHooks = $oExactTargetUserHooks->getHelper();
-
-		\Hooks::register( 'AfterAccountRename', $oExactTargetUserHooks );
-		\Hooks::register( 'ArticleSaveComplete', $oExactTargetUserHooks );
-		\Hooks::register( 'EditAccountClosed', $oExactTargetUserHooks );
-		\Hooks::register( 'EditAccountEmailChanged', $oExactTargetUserHooks );
-		\Hooks::register( 'EmailChangeConfirmed', $oExactTargetUserHooks );
-		\Hooks::register( 'SignupConfirmEmailComplete', $oExactTargetUserHooks );
-		\Hooks::register( 'UserSaveSettings', $oExactTargetUserHooks );
+		$oExactTargetMainHelper = $oExactTargetUserHooks->getMainHelper();
+		/* Don't add task when on dev or internal */
+		if ( $oExactTargetMainHelper->shouldUpdate() ) {
+			\Hooks::register('AfterAccountRename', $oExactTargetUserHooks);
+			\Hooks::register('ArticleSaveComplete', $oExactTargetUserHooks);
+			\Hooks::register('EditAccountClosed', $oExactTargetUserHooks);
+			\Hooks::register('EditAccountEmailChanged', $oExactTargetUserHooks);
+			\Hooks::register('EmailChangeConfirmed', $oExactTargetUserHooks);
+			\Hooks::register('SignupConfirmEmailComplete', $oExactTargetUserHooks);
+			\Hooks::register('UserSaveSettings', $oExactTargetUserHooks);
+		}
 	}
 
 	/**
@@ -26,17 +28,17 @@ class ExactTargetUserHooks {
 	 * @return bool
 	 */
 	public function onAfterAccountRename( $iUserId, $sOldUsername, $sNewUsername ) {
-		global $wgWikiaEnvironment;
-		/* Don't add task when on dev or internal */
-		if ( $wgWikiaEnvironment != WIKIA_ENV_DEV && $wgWikiaEnvironment != WIKIA_ENV_INTERNAL ) {
-			$aUserData = [
-				'user_id' => $iUserId,
-				'user_name' => $sNewUsername
-			];
-			$task = $this->getExactTargetUpdateUserTask();
-			$task->call( 'updateUserData', $aUserData );
-			$task->queue();
-		}
+		/* Prepare params */
+		$aUserData = [
+			'user_id' => $iUserId,
+			'user_name' => $sNewUsername
+		];
+
+		/* Get and run the task */
+		$oTaskInstanceHelper = $this->getTaskInstanceHelper();
+		$task = $oTaskInstanceHelper->getExactTargetUpdateUserTask();
+		$task->call( 'updateUserData', $aUserData );
+		$task->queue();
 		return true;
 	}
 
@@ -47,17 +49,17 @@ class ExactTargetUserHooks {
 	 * @return bool
 	 */
 	public function onArticleSaveComplete( WikiPage $article, User $user ) {
-		global $wgWikiaEnvironment;
-		/* Don't add task when on dev or internal */
-		if ( $wgWikiaEnvironment != WIKIA_ENV_DEV && $wgWikiaEnvironment != WIKIA_ENV_INTERNAL ) {
-			$aUserData = [
-				'user_id' => $user->getId(),
-				'user_editcount' => $user->getEditCount()
-			];
-			$task = $this->getExactTargetUpdateUserTask();
-			$task->call( 'updateUserData', $aUserData );
-			$task->queue();
-		}
+		/* Prepare params */
+		$aUserData = [
+			'user_id' => $user->getId(),
+			'user_editcount' => $user->getEditCount()
+		];
+
+		/* Get and run the task */
+		$oTaskInstanceHelper = $this->getTaskInstanceHelper();
+		$task = $oTaskInstanceHelper->getExactTargetUpdateUserTask();
+		$task->call( 'updateUserData', $aUserData );
+		$task->queue();
 		return true;
 	}
 
@@ -67,13 +69,11 @@ class ExactTargetUserHooks {
 	 * @return bool
 	 */
 	public function onEditAccountClosed( User $oUser ) {
-		global $wgWikiaEnvironment;
-		/* Don't add task when on dev or internal */
-		if ( $wgWikiaEnvironment != WIKIA_ENV_DEV && $wgWikiaEnvironment != WIKIA_ENV_INTERNAL ) {
-			$task = $this->getExactTargetRemoveUserTask();
-			$task->call( 'removeUserData', $oUser->getId() );
-			$task->queue();
-		}
+		/* Get and run the task */
+		$oTaskInstanceHelper = $this->getTaskInstanceHelper();
+		$task = $oTaskInstanceHelper->getExactTargetRemoveUserTask();
+		$task->call( 'removeUserData', $oUser->getId() );
+		$task->queue();
 		return true;
 	}
 
@@ -94,13 +94,11 @@ class ExactTargetUserHooks {
 	 * @return bool
 	 */
 	public function onEmailChangeConfirmed( User $user ) {
-		global $wgWikiaEnvironment;
-		/* Don't add task when on dev or internal */
-		if ( $wgWikiaEnvironment != WIKIA_ENV_DEV && $wgWikiaEnvironment != WIKIA_ENV_INTERNAL ) {
-			$task = $this->getExactTargetUpdateUserTask();
-			$task->call( 'updateUserEmail', $user->getId(), $user->getEmail() );
-			$task->queue();
-		}
+		/* Get and run the task */
+		$oTaskInstanceHelper = $this->getTaskInstanceHelper();
+		$task = $oTaskInstanceHelper->getExactTargetUpdateUserTask();
+		$task->call( 'updateUserEmail', $user->getId(), $user->getEmail() );
+		$task->queue();
 		return true;
 	}
 
@@ -120,15 +118,16 @@ class ExactTargetUserHooks {
 	 * @return bool
 	 */
 	public function onUserSaveSettings( User $user ) {
-		global $wgWikiaEnvironment;
-		/* Don't add task when on dev or internal */
-		if ( $wgWikiaEnvironment != WIKIA_ENV_DEV && $wgWikiaEnvironment != WIKIA_ENV_INTERNAL ) {
-			$aUserData = $this->prepareUserParams( $user );
-			$aUserProperties = $this->prepareUserPropertiesParams( $user );
-			$task = $this->getExactTargetUpdateUserTask();
-			$task->call( 'updateUserPropertiesData', $aUserData, $aUserProperties );
-			$task->queue();
-		}
+		/* Prepare params */
+		$oParamsHelper = $this->getParamsHelper();
+		$aUserData = $oParamsHelper->prepareUserParams( $user );
+		$aUserProperties = $oParamsHelper->prepareUserPropertiesParams( $user );
+
+		/* Get and run the task */
+		$oTaskInstanceHelper = $this->getTaskInstanceHelper();
+		$task = $oTaskInstanceHelper->getExactTargetUpdateUserTask();
+		$task->call( 'updateUserPropertiesData', $aUserData, $aUserProperties );
+		$task->queue();
 		return true;
 	}
 
@@ -137,18 +136,27 @@ class ExactTargetUserHooks {
 	 * @param User $oUser
 	 */
 	private function addTheUpdateAddUserTask( User $oUser ) {
-		global $wgWikiaEnvironment;
-		/* Don't add task when on dev or internal */
-		if ($wgWikiaEnvironment != WIKIA_ENV_DEV && $wgWikiaEnvironment != WIKIA_ENV_INTERNAL) {
-			$aUserData = $this->prepareUserParams( $oUser );
-			$aUserProperties = $this->prepareUserPropertiesParams( $oUser );
-			$task = $this->getExactTargetAddUserTask();
-			$task->call( 'updateAddUserData', $aUserData, $aUserProperties );
-			$task->queue();
-		}
+		/* Prepare params */
+		$oParamsHelper = $this->getParamsHelper();
+		$aUserData = $oParamsHelper->prepareUserParams( $oUser );
+		$aUserProperties = $oParamsHelper->prepareUserPropertiesParams( $oUser );
+
+		/* Get and run the task */
+		$oTaskInstanceHelper = $this->getTaskInstanceHelper();
+		$task = $oTaskInstanceHelper->getExactTargetAddUserTask();
+		$task->call( 'updateAddUserData', $aUserData, $aUserProperties );
+		$task->queue();
 	}
 
-	private function getHelper() {
-		return new ExactTargetUserHooks();
+	private function getMainHelper() {
+		return new ExactTargetMainHelper();
+	}
+
+	private function getParamsHelper() {
+		return new ExactTargetUserHooksParamsHelper();
+	}
+
+	private function getTaskInstanceHelper() {
+		return new ExactTargetUserHooksTaskInstanceHelper();
 	}
 }
