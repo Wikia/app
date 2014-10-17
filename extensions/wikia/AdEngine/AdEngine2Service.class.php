@@ -208,11 +208,11 @@ class AdEngine2Service
 	}
 
 	/**
-	 * Get all the variables that should be exposed to JavaScript
+	 * Get variables to expose in top of HTML
 	 *
 	 * @return array
 	 */
-	private static function getJsVariables()
+	public static function getTopJsVariables()
 	{
 		global $wgCityId, $wgEnableAdsInContent, $wgEnableOpenXSPC,
 			$wgUser, $wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
@@ -319,15 +319,5 @@ class AdEngine2Service
 		$vars['adDriver2ForcedStatus'] = [];
 
 		return $vars;
-	}
-
-	/**
-	 * Get variables to expose in top of HTML
-	 *
-	 * @return array
-	 */
-	public static function getTopJsVariables()
-	{
-		return self::getJsVariables();
 	}
 }
