@@ -46,7 +46,7 @@ class WAMService extends Service {
 		$memKey = wfSharedMemcKey('datamart', 'wam', $wikiId);
 
 		$getData = function () use ($app, $wikiId) {
-			$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
+			$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
 
 			$result = $db->select(
 				array('fact_wam_scores'),
@@ -100,8 +100,8 @@ class WAMService extends Service {
 			'wam_index' => array(),
 			'wam_results_total' => 0
 		);
-		if (!empty($app->wg->StatsDBEnabled)) {
-			$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
+		if (!empty($app->wg->DatamartDB)) {
+			$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
 
 			$tables = $this->getWamIndexTables();
 			$fields = $this->getWamIndexFields();
@@ -154,7 +154,7 @@ class WAMService extends Service {
 		wfProfileIn(__METHOD__);
 
 		if (!empty($app->wg->StatsDBEnabled)) {
-			$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
+			$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
 
 			$fields = array(
 				'MAX(time_id) AS max_date',
@@ -185,7 +185,7 @@ class WAMService extends Service {
 		$memKey = wfSharedMemcKey( 'wam-languages', $date );
 
 		$getData = function () use ( $app, $date ) {
-			$db = wfGetDB( DB_SLAVE, [], $app->wg->DWStatsDB );
+			$db = wfGetDB( DB_SLAVE, [], $app->wg->DatamartDB );
 			$result = $db->select(
 				[
 					'fw1' => 'fact_wam_scores',
