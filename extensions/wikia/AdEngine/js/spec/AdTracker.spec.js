@@ -172,7 +172,7 @@ describe('ext.wikia.adEngine.adTracker', function () {
 			ga_category: 'ad/timing/test/event',
 			ga_action: 'abc=def;xyz=123',
 			ga_label: '0.5-1',
-			ga_value: 888,
+			ga_value: jasmine.any(Number),
 			trackingMethod: 'ad'
 		});
 	});
