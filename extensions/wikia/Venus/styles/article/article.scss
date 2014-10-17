@@ -108,16 +108,21 @@ article {
 
 	h2 {
 		margin-bottom: 12px;
+		margin-left: -$medium-grid-gutter;
+		margin-right: -$medium-grid-gutter;
 		margin-top: $article-items-spacing;
-		padding-bottom: 6px;
 
 		&::after {
 			background-color: $color-page-border;
 			content: '';
 			display: block;
 			height: 1px;
-			margin-top: 10px; //TODO: check with mockup
+			margin-top: 11px;
 			overflow: hidden;
+		}
+
+		.mw-headline {
+			padding-left: $medium-grid-gutter;
 		}
 
 		.editsection {
@@ -136,6 +141,7 @@ article {
 
 	p {
 		margin-bottom: $article-items-spacing;
+		margin-top: 0;
 	}
 
 	blockquote {
@@ -233,7 +239,12 @@ article {
 
 		h2 {
 			margin-bottom: 10px;
-			padding-bottom: 10px;
+			margin-left: -$large-grid-gutter;
+			margin-right: -$large-grid-gutter;
+
+			.mw-headline {
+				padding-left: $large-grid-gutter;
+			}
 		}
 
 		h3 {
@@ -312,12 +323,15 @@ article {
 			display: -ms-flexbox;
 			flex-direction: row-reverse;
 			justify-content: flex-end;
+			margin-left: -$small-grid-gutter;
+			margin-right: -$small-grid-gutter;
 
 			.editsection {
 				float: none
 			}
 
 			.mw-headline {
+				padding-left: $small-grid-gutter;
 				width: 90%;
 			}
 		}
