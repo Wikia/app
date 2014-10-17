@@ -677,7 +677,7 @@ class DataMartService extends Service {
 			->FROM('dimension_top_wikis')
 			->ORDER_BY('rank')
 			->LIMIT(200)
-			->runLoop(wfGetDB( DB_SLAVE, [], $app->wg->DatamartDB ), function(&$wikis, $row) {
+			->runLoop(wfGetDB( DB_SLAVE, [], $app->wg->DWStatsDB ), function(&$wikis, $row) {
 				$wikis[] = intval($row->wiki_id);
 			});
 
