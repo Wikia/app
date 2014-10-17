@@ -4,8 +4,11 @@ class VenusController extends WikiaController {
 	private static $bodyParametersArray = [];
 	private static $skinAssetGroups = [];
 
+	/* @var AssetsManager $assetsManager */
 	private $assetsManager;
+	/* @var QuickTemplate $skinTemplateObj */
 	private $skinTemplateObj;
+	/* @var WikiaSkin $skin */
 	private $skin;
 
 	public function init() {
@@ -104,8 +107,6 @@ class VenusController extends WikiaController {
 	}
 
 	private function setAssets() {
-		global $wgOut;
-
 		$jsHeadGroups = ['venus_head_js'];
 		$jsHeadFiles = '';
 		$jsBodyGroups = ['venus_body_js'];
@@ -113,7 +114,6 @@ class VenusController extends WikiaController {
 		$cssGroups = ['venus_css'];
 		$cssLinks = '';
 
-		$styles = $this->skin->getStyles();
 		$scripts = $this->skin->getScripts();
 
 		//let extensions manipulate the asset packages (e.g. ArticleComments,
@@ -127,26 +127,26 @@ class VenusController extends WikiaController {
 			]
 		);
 
-		foreach ( $this->assetsManager->getURL( $cssGroups ) as $s ) {
-			if ( $this->assetsManager->checkAssetUrlForSkin( $s, $this->skin ) ) {
-				$cssLinks .= "<link rel=stylesheet href='{$s}'/>";
+		// SASS files requested via VenusAssetsPackages hook
+		$sassFiles = [];
+		foreach ( $this->assetsManager->getURL( $cssGroups ) as $src ) {
+			if ( $this->assetsManager->checkAssetUrlForSkin( $src, $this->skin ) ) {
+				$sassFiles[] = $src;
 			}
 		}
 
-		if ( is_array( $styles ) ) {
-			foreach ( $styles as $s ) {
-				$cssLinks .= $s['tag'];
-			}
-		}
+		// try to fetch all SASS files using a single request (CON-1487)
+		// "WikiaSkin::getStylesWithCombinedSASS: combined 9 SASS files"
+		$cssLinks .= $this->skin->getStylesWithCombinedSASS($sassFiles);
 
 		foreach ( $this->assetsManager->getURL( $jsHeadGroups ) as $src ) {
-			if ( $this->assetsManager->checkAssetUrlForSkin( $s, $this->skin ) ) {
+			if ( $this->assetsManager->checkAssetUrlForSkin( $src, $this->skin ) ) {
 				$jsHeadFiles .= "<script src='{$src}'></script>";
 			}
 		}
 
 		foreach ( $this->assetsManager->getURL( $jsBodyGroups ) as $src ) {
-			if ( $this->assetsManager->checkAssetUrlForSkin( $s, $this->skin ) ) {
+			if ( $this->assetsManager->checkAssetUrlForSkin( $src, $this->skin ) ) {
 				$jsBodyFiles .= "<script src='{$src}'></script>";
 			}
 		}
@@ -159,7 +159,7 @@ class VenusController extends WikiaController {
 
 		//global variables from ResourceLoaderStartUpModule
 		$res = new ResourceVariablesGetter();
-		$vars = WikiaSkin::makeInlineVariablesScript($res->get());
+		$vars = WikiaSkin::makeInlineVariablesScript($res->get()); // is it used anywhere?
 
 		// set variables
 		$this->cssLinks = $cssLinks;
