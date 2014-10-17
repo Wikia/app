@@ -411,7 +411,7 @@ describe('AdConfig2Late', function () {
 		expect(adConfig.getProvider(['PREFOOTER_RIGHT_BOXAD'])).not.toBe(adProviderDirectGpt, 'adProviderDirectGpt');
 
 	});
-	it('getProvider returns Taboola US wikis when wgAdDriverUseTaboola enabled', function () {
+	it('getProvider returns Taboola US wikis on article pages when wgAdDriverUseTaboola enabled', function () {
 		var adProviderNullMock = {name: 'NullMock'},
 			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return true;}},
 			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true;}},
@@ -420,7 +420,42 @@ describe('AdConfig2Late', function () {
 			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function () {return true;}},
 			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function () {return true;}},
 			logMock = function () {},
-			windowMock = { wgIsArticle: true, wgAdDriverUseTaboola: true, wgDBname: 'darksouls' },
+			windowMock = { wikiaPageType: 'article', wgAdDriverUseTaboola: true, wgDBname: 'darksouls' },
+			instantGlobalsMock = {},
+			abTestMock = { inGroup: function () {return true;} },
+			geoMock = { getCountryCode: function () {return 'US';} },
+			adConfig;
+
+		spyOn(adProviderTaboola, 'init');
+
+		adConfig = modules['ext.wikia.adEngine.adConfigLate'](
+			logMock,
+			windowMock,
+			instantGlobalsMock,
+			geoMock,
+			adProviderEvolveMock,
+			adProviderLiftiumMock,
+			adProviderDirectGpt,
+			adProviderRemnantGpt,
+			adProviderTaboola,
+			adProviderNullMock,
+			adProviderSevenOneMedia,
+			abTestMock
+		);
+
+		expect(adConfig.getProvider(['NATIVE_TABOOLA'])).toBe(adProviderTaboola, 'adProviderTaboola');
+
+	});
+	it('getProvider returns Taboola US wikis on home pages when wgAdDriverUseTaboola enabled', function () {
+		var adProviderNullMock = {name: 'NullMock'},
+			adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return true;}},
+			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true;}},
+			adProviderRemnantGpt = {name: 'RemnantGpt', canHandleSlot: function () {return false;}},
+			adProviderTaboola = {name: 'Taboola', canHandleSlot: function () {return true;}, init: function(){}},
+			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function () {return true;}},
+			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function () {return true;}},
+			logMock = function () {},
+			windowMock = { wikiaPageType: 'home', wgAdDriverUseTaboola: true, wgDBname: 'darksouls' },
 			instantGlobalsMock = {},
 			abTestMock = { inGroup: function () {return true;} },
 			geoMock = { getCountryCode: function () {return 'US';} },

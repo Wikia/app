@@ -98,7 +98,7 @@
 	 */
 	utils = {
 		/**
-		* Returns only the elements filtered by the filterSelector
+		 * Returns only the elements filtered by the filterSelector
 		 * @param  {Array} elements - DOM elements to be filtered
 		 * @param  {String} filterSelector - selector to filter DOM elements
 		 * @return {Array} filtered DOM elements
@@ -173,9 +173,9 @@
 
 	menuAimModule = function() {
 		var DELAY, MOUSE_LOCS_TRACKED,
-		activeRow, lastDelayLoc, mouseLocs, menu, options, timeoutId,
-		activate, activationDelay, clickRow, mouseenterRow, mouseenterMenu, mouseleaveMenu, mouseleaveRow, mousemoveDocument,
-		possiblyActivate, mouseMoveTrackerOff, mouseMoveTrackerOn;
+			activeRow, lastDelayLoc, mouseLocs, menu, options, timeoutId,
+			activate, activationDelay, clickRow, mouseenterRow, mouseenterMenu, mouseleaveMenu, mouseleaveRow, mousemoveDocument,
+			possiblyActivate, mouseMoveTrackerOff, mouseMoveTrackerOn, rows;
 
 		lastDelayLoc = null;
 		timeoutId = null;
@@ -201,7 +201,7 @@
 		 * Hook up initial menu events
 		 */
 		this.init = function( menuToHandle, opts ) {
-			var i, j, rows, rowSelector;
+			var i, j, rowSelector;
 
 			menu = menuToHandle;
 			options = utils.extend(options, opts);
@@ -217,6 +217,26 @@
 				rows[i].addEventListener( "mouseenter", mouseenterRow );
 				rows[i].addEventListener( "mouseleave", mouseleaveRow );
 				rows[i].addEventListener( "click", clickRow );
+			}
+
+			return this;
+		};
+
+		/**
+		 * Unbind all events
+		 */
+		this.reset = function() {
+			var i, j;
+
+			if ( menu ) {
+				menu.removeEventListener( "mouseleave", mouseleaveMenu );
+				menu.removeEventListener( "mouseenter", mouseenterMenu );
+
+				for (i = 0, j = rows.length; i < j; ++i) {
+					rows[i].removeEventListener( "mouseenter", mouseenterRow );
+					rows[i].removeEventListener( "mouseleave", mouseleaveRow );
+					rows[i].removeEventListener( "click", clickRow );
+				}
 			}
 
 			return this;
@@ -451,4 +471,3 @@
 		return menuAim.init( menuToHandle, opts );
 	};
 })();
-

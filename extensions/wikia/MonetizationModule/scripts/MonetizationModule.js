@@ -2,7 +2,7 @@
  * JS file for Monetization Module.
  */
 
-require(['wikia.tracker'], function (Tracker) {
+require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 	'use strict';
 
 	var track;
@@ -15,17 +15,18 @@ require(['wikia.tracker'], function (Tracker) {
 	var MonetizationModule = {
 		init: function () {
 			// track impression for each placement
-			$('.monetization-module').each(function() {
-				var trackCategory,
-					type;
-
-				type = $(this).attr('class').split(' ')[1];
-				trackCategory = $(this).attr('id');
+			$('.monetization-module').each(function () {
+				var $this = $(this),
+					trackCategory = $this.attr('id'),
+					value = $this.children().children().length,	// check if the ad is blocked
+					type = $this.attr('class').split(' ')[1];
 
 				track({
 					category: trackCategory,
 					label: 'module-impression',
 					action: Tracker.ACTIONS.IMPRESSION,
+					value: value,
+					geo: geo.getCountryCode(),
 					type: type
 				});
 			});
@@ -33,7 +34,7 @@ require(['wikia.tracker'], function (Tracker) {
 			this.initEllipses();
 			this.initClickTrackingEcommerce();
 		},
-		initEllipses: function() {
+		initEllipses: function () {
 			$(window)
 				.on('resize.monetizationmodule', function () {
 					$('.monetization-module').find('.placard a').ellipses({
@@ -42,7 +43,7 @@ require(['wikia.tracker'], function (Tracker) {
 				})
 				.trigger('resize.monetizationmodule');
 		},
-		initClickTrackingEcommerce: function() {
+		initClickTrackingEcommerce: function () {
 			var elements = [
 				'.prod-thumb',
 				'.prod-name',

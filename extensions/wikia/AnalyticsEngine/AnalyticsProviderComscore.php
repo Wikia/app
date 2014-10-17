@@ -39,7 +39,7 @@ _comscore.push({ c1: "2", c2: "'.self::$PARTNER_ID.'",
 	private function getC7Value() {
 		global $wgCityId;
 
-		$catInfo = HubService::getComscoreCategory($wgCityId);
+		$catInfo = HubService::getCategoryInfoForCity($wgCityId);
 
 		return 'wikiacsid_' . strtolower($catInfo->cat_name);
 	}
