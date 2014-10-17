@@ -1225,6 +1225,7 @@
 				// Add thumbs to current lightbox cache
 				Lightbox.current.thumbs = Lightbox.current.thumbs.concat(thumbArr);
 
+				console.log('getMediaThumbs');
 				Lightbox.addThumbsToCarousel(thumbArr, backfill);
 			},
 			// Get latest photos from DOM
@@ -1280,6 +1281,7 @@
 				// Add thumbs to current lightbox cache
 				Lightbox.current.thumbs = Lightbox.current.thumbs.concat(thumbArr);
 
+				console.log('latest photos');
 				Lightbox.addThumbsToCarousel(thumbArr, backfill);
 			},
 			// Get the rest of the photos from the wiki
@@ -1316,6 +1318,7 @@
 						// only need latest photos once
 						Lightbox.includeLatestPhotos = false;
 
+						console.log('send request');
 						Lightbox.addThumbsToCarousel(thumbArr, true);
 
 						Lightbox.getMediaThumbs.backfilling = false;
@@ -1373,14 +1376,13 @@
 
 				// Add thumbs to current lightbox cache
 				Lightbox.current.thumbs = Lightbox.current.thumbs.concat(thumbArr);
-
+				console.log('videos module');
 				Lightbox.addThumbsToCarousel(thumbArr, backfill);
 			}
 		},
 		addThumbsToCarousel: function (thumbs, backfill) {
 			var carouselThumbs,
 				container = Lightbox.openModal.carouselContainer;
-
 			//load thumbs if some are provided in other case use the ones from cache
 			thumbs = !$.isEmptyObject(thumbs) ? thumbs : LightboxLoader.cache.wikiPhotos;
 
@@ -1390,6 +1392,7 @@
 				thumbs: thumbs
 			});
 
+			debugger;
 			Lightbox.openModal.carousel.append(carouselThumbs);
 
 			// if carousel is already instantiated, update settings with added thumbnails
