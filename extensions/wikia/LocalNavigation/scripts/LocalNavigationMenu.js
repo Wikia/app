@@ -1,76 +1,57 @@
-(function($) {
+(function(window, $) {
 	'use strict';
 
 	$(function(){
-		var $localNavFirstLevel, $localNavSecondLevel, $localNav, $localNavStart, $window, windowWidth,
-			$openedMenu, $openedSubmenu, localNavCache = [], alwaysReturnTrueFunc, menuAimCache = [];
+		var $localNavFirstLevel, $localNavSecondLevel, $localNav, $localNavStart, $window,
+			$openedMenu, $openedSubmenu, alwaysReturnTrueFunc, menuAimCache = [],
+			$contributeEntryPoint, previousThirdLvlWidth = 0;
 
 		$localNav = $('#localNavigation');
 		$localNavStart = $localNav.find('.first-level-menu');
 		$localNavFirstLevel = $localNavStart.find('> .local-nav-entry');
 		$localNavSecondLevel = $localNav.find('.second-level-menu');
+		$contributeEntryPoint = $('#contributeEntryPoint');
 		$window = $(window);
-		windowWidth = $window.width();
 
-		function init(){
-			var self, dropdownOffset = 0, secondLvlNavWidth = 0, secondLvlNavOffset = 0,
-				thirdLvlWidth = 0, thirdLvlMaxWidth = 0;
+		function recalculateDropdownDirection() {
+			var $this, dropdownOffset = 0, secondLvlNavWidth = 0, secondLvlNavOffset = 0,
+				thirdLvlWidth = 0, windowWidth = $window.width();
 
-			$localNavSecondLevel.each(function(){
-				self = $(this);
-				thirdLvlMaxWidth = 0;
-				secondLvlNavWidth = self.outerWidth();
-				secondLvlNavOffset = self.offset().left;
+			thirdLvlWidth = 239;
+			if (window.matchMedia("(max-width: 1024px)").matches) {
+				thirdLvlWidth = 178;
+			} else if (window.matchMedia("(min-width: 1497px)").matches) {
+				thirdLvlWidth = 270;
+			}
 
-				$('> li', self).each(function(){
-					thirdLvlWidth = $('> ul', this).outerWidth();
-					if ( thirdLvlWidth > thirdLvlMaxWidth ) {
-						thirdLvlMaxWidth = thirdLvlWidth;
-					}
-				});
+			if (thirdLvlWidth === previousThirdLvlWidth) {
+				return;
+			}
 
-				dropdownOffset = secondLvlNavWidth + secondLvlNavOffset + thirdLvlMaxWidth;
+			closeOpenedMenu();
 
-				localNavCache.push({
-					width: dropdownOffset,
-					menuElement: this
-				});
+			$localNavSecondLevel.each(function(i) {
+				$this = $(this);
+				secondLvlNavWidth = $this.outerWidth();
+				secondLvlNavOffset = $this.offset().left;
+				dropdownOffset = secondLvlNavWidth + secondLvlNavOffset + thirdLvlWidth;
 
 				if ( dropdownOffset > windowWidth ) {
-					self.addClass('right');
+					$this.addClass('right');
 				} else {
-					self.removeClass('right');
+					$this.removeClass('right');
 				}
 			});
 
 			attachMenuAim();
+
+			previousThirdLvlWidth = thirdLvlWidth;
 		}
-
-		function recalculateDropdownDirection() {
-			var i, arrayLength = localNavCache.length;
-			windowWidth = $window.width();
-
-			resetMenuAim();
-
-			if ( arrayLength ) {
-				for ( i = 0; i < arrayLength; i++ ) {
-					if ( localNavCache[i].width > windowWidth ) {
-						localNavCache[i].menuElement.classList.add('right');
-					} else {
-						localNavCache[i].menuElement.classList.remove('right');
-					}
-
-					attachMenuAimElement(localNavCache[i].menuElement);
-				}
-			} else {
-				$localNavSecondLevel = $localNav.find('.second-level-menu');
-				init();
-			}
-		}
-
 
 		function openMenu() {
 			$(this).addClass('active');
+
+			closeContributeMenu();
 		}
 
 		function closeMenu() {
@@ -85,20 +66,36 @@
 			$(row).removeClass('active');
 		}
 
+		function closeOpenedMenu() {
+			if ($openedMenu !== undefined) {
+				$openedMenu.removeClass('active');
+			}
+			$openedMenu = undefined;
+
+			closeOpenedSubmenu();
+		}
+
+		function closeOpenedSubmenu() {
+			if ($openedSubmenu !== undefined) {
+				$openedSubmenu.removeClass('active');
+			}
+			$openedSubmenu = undefined;
+		}
+
 		function handleOpenMenuClick(event) {
 			var $target = $(event.currentTarget);
 
-			event.preventDefault();
-			event.stopPropagation();
-
 			if (!$target.hasClass('active')) {
-				if ($openedMenu !== undefined) {
-					$openedMenu.removeClass('active');
-				}
+				event.preventDefault();
+				event.stopPropagation();
+
+				closeOpenedMenu();
 				$target.addClass('active');
+
+				$('body').one('click', handleCloseMenuClick);
+				closeContributeMenu();
+				$openedMenu = $target;
 			}
-			$('body').one('click', handleCloseMenuClick);
-			$openedMenu = $target;
 		}
 
 		function handleCloseMenuClick(event) {
@@ -108,6 +105,8 @@
 				$openedMenu.removeClass('active');
 				$openedMenu = undefined;
 			}
+
+			closeOpenedSubmenu();
 		}
 
 		function handleSubmenuClick(event) {
@@ -123,25 +122,24 @@
 				$target.find('a').first().attr('href') === '#'
 			) {
 				event.preventDefault();
-				if ($openedSubmenu !== undefined) {
-					$openedSubmenu.removeClass('active');
-				}
+				closeOpenedSubmenu();
 				$targetMenuItem.addClass('active');
+				$openedSubmenu = $targetMenuItem;
 			}
 		}
 
 		function attachMenuAim() {
-			var i;
+			var options = {};
 
-			for (i = 0; i < $localNavSecondLevel.length; i++) {
-				attachMenuAimElement($localNavSecondLevel[i]);
+			if (menuAimCache.length) {
+				resetMenuAim();
 			}
-		}
 
-		function attachMenuAimElement(element) {
-			var options = getMenuAimOptions(element);
+			$localNavSecondLevel.each(function() {
+				options = getMenuAimOptions(this);
 
-			menuAimCache.push(window.menuAim(element, options));
+				menuAimCache.push(window.menuAim(this, options));
+			});
 		}
 
 		function getMenuAimOptions(element) {
@@ -160,33 +158,66 @@
 		}
 
 		function resetMenuAim() {
-			var i;
+			var i, count = menuAimCache.length;
 
-			for (i = 0; i < menuAimCache.length; i++) {
-				menuAimCache[i].reset();
+			for (i = 0; i < count; i++) {
+				menuAimCache.pop().reset();
 			}
+		}
+
+		function openContributeMenu(event) {
+			if (event && event.target && $(event.target).attr('class') === 'contribute-button') {
+				event.preventDefault();
+				event.stopPropagation();
+
+				$('body').one('click', closeContributeMenu);
+			}
+
+			$contributeEntryPoint.addClass('active');
+			closeOpenedMenu();
+		}
+
+		function closeContributeMenu() {
+			$contributeEntryPoint.removeClass('active');
 		}
 
 		alwaysReturnTrueFunc = function() {
 			return true;
 		};
 
-		if (!window.Wikia.isTouchScreen()) {
-			window.delayedHover(
-				$localNavFirstLevel,
-				{
-					onActivate: openMenu,
-					onDeactivate: closeMenu,
-					activateOnClick: false
+		$(function(){
+			if (!window.Wikia.isTouchScreen()) {
+				window.delayedHover(
+					$localNavFirstLevel,
+					{
+						onActivate: openMenu,
+						onDeactivate: closeMenu,
+						activateOnClick: false
+					}
+				);
+			} else {
+				$localNavFirstLevel.click(handleOpenMenuClick);
+				$localNavSecondLevel.find('.second-level-row').click(handleSubmenuClick);
+			}
+
+			if ($contributeEntryPoint.length) {
+				if (!window.Wikia.isTouchScreen()) {
+					window.delayedHover(
+						$contributeEntryPoint.get(0),
+						{
+							onActivate: openContributeMenu,
+							onDeactivate: closeContributeMenu,
+							activateOnClick: false
+						}
+					);
+				} else {
+					$contributeEntryPoint.click(openContributeMenu);
 				}
-			);
-		} else {
-			$localNavFirstLevel.click(handleOpenMenuClick);
-			$localNavSecondLevel.find('.second-level-row').click(handleSubmenuClick);
-		}
+			}
 
-		$window.on('resize', $.debounce(300, recalculateDropdownDirection));
+			$window.on('resize', $.debounce(300, recalculateDropdownDirection));
 
-		init();
+			recalculateDropdownDirection()
+		});
 	});
-})(jQuery);
+})(window, jQuery);

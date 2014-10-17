@@ -601,7 +601,8 @@ class WikiaPhotoGallery extends ImageGallery {
 	 */
 	private function canRenderMediaGallery() {
 		// Do not render media gallery for special pages - It is only for UGC pages
-		if ( F::app()->wg->Title->getNamespace() === NS_SPECIAL ) {
+		$globalTitle = F::app()->wg->Title;
+		if ( !$globalTitle || $globalTitle->getNamespace() === NS_SPECIAL ) {
 			return false;
 		}
 

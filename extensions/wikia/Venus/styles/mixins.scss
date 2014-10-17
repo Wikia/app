@@ -61,6 +61,7 @@
 		width: round($columns-count * ($large-grid-column + $large-grid-gutter) - $large-grid-gutter + $aditional-width);
 	}
 }
+
 @mixin grid-column-max-width($breakpoint, $columns-count, $aditional-width: 0px) {
 	@if $breakpoint == small {
 		max-width: round($columns-count * ($small-grid-column + $small-grid-gutter) - $small-grid-gutter + $aditional-width);
@@ -74,6 +75,7 @@
 		max-width: round($columns-count * ($large-grid-column + $large-grid-gutter) - $large-grid-gutter + $aditional-width);
 	}
 }
+
 @mixin grid-position($breakpoint, $columns-count, $position: 'left', $aditional-width: 0px) {
 	@if $breakpoint == small {
 		#{$position}: round($columns-count * ($small-grid-column + $small-grid-gutter) - $small-grid-gutter + $aditional-width);
@@ -116,4 +118,23 @@
 		padding-left: $small-content-padding;
 		padding-right: $small-content-padding;
 	}
+}
+
+@mixin proportional-video-height($width) {
+	height: round($width * 9 / 16);
+}
+
+@mixin edit-button($radius) {
+	background-image: url('/extensions/wikia/Venus/images/editpen.svg'); /* base64 */
+	content: ' ';
+	display: inline-block;
+	height: $radius;
+	position: absolute;
+	right: 100%;
+	width: $radius;
+}
+
+@mixin resize-edit-button($radius) {
+	height: $radius;
+	width: $radius;
 }

@@ -37,7 +37,7 @@ class WikiaPageType {
 
 		$isMainPage = (
 			is_object( $title )
-			&& $title->getArticleId() === Title::newMainPage()->getArticleId()
+			&& $title->isMainPage()
 			&& $title->getArticleId() != 0 # caused problems on central due to NS_SPECIAL main page
 			&& !self::isActionPage()
 		);

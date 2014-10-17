@@ -3,8 +3,9 @@
 @import 'skins/shared/mixins/clearfix';
 @import 'skins/shared/mixins/gradient';
 @import 'skins/shared/color';
-@import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/Venus/styles/variables';
+@import 'extensions/wikia/Venus/styles/mixins';
+@import 'extensions/wikia/Venus/styles/typographyMixins';
 @import 'extensions/wikia/Venus/styles/z-index';
 
 $third-level-tint: if(lightness($color-buttons) < 50, #fff, #000);
@@ -16,8 +17,10 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 }
 
 .local-navigation {
+	@include font-size-xxs;
 	background-color: $color-page;
 	height: 80px;
+	position: relative;
 	white-space: nowrap;
 	width: 100%;
 
@@ -60,18 +63,22 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 
 		&.large {
 			font-size: 27px;
+			line-height: 31px;
 		}
 
 		&.medium {
 			font-size: 24px;
+			line-height: 28px;
 		}
 
 		&.small {
 			font-size: 20px;
+			line-height: 23px;
 		}
 	}
 
 	.dropdown {
+		background-color: $color-buttons;
 		margin: 0;
 		padding: 0;
 		position: absolute;
@@ -103,7 +110,6 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 		}
 
 		a {
-			background-color: $color-buttons;
 			display: block;
 			overflow: hidden;
 			padding: 20px;
@@ -137,8 +143,8 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 			position: relative;
 
 			> a {
+				@include font-size-s;
 				display: block;
-				font-size: 15px;
 				font-weight: bold;
 				height: 100%;
 				line-height: 45px;
@@ -247,25 +253,21 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 			&:nth-child(n + 2) a {
 				border-top: 1px solid $color-buttons;
 			}
-		}
 
-		.third-level-row {
 			a {
 				background: $third-level-color;
+				border-bottom-width: 0;
 				border-color: $color-buttons;
 				border-left-width: 5px;
 				border-right-width: 5px;
-				border-bottom-width: 0;
 				border-style: solid;
 				font-weight: normal;
 				padding: 10px;
 
+				-webkit-transform: translate3d(0, 0, 0);
+
 				&:hover {
 					background: $third-level-color-hover;
-				}
-
-				a::after {
-					text-align: left;
 				}
 
 				span {
@@ -284,14 +286,13 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 		right: 30px;
 
 		.contribute-button {
+			@include font-size-xxs;
 			background-color: $color-buttons;
 			cursor: pointer;
 			display: table-cell;
-			font-size: 12px;
 			font-weight: bold;
 			height: 40px;
-			padding: 8px 15px 8px 20px;
-			position: relative;
+			padding: 0 15px 0 20px;
 			text-transform: uppercase;
 			vertical-align: middle;
 
@@ -335,22 +336,25 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 
 				&::before {
 					content: ' ';
-					position: absolute;
-					left: auto;
-					right: 0;
-					width: 20px;
 					height: 100%;
+					left: auto;
+					position: absolute;
+					right: 0;
 					top: 0;
+					width: 20px;
 					z-index: 1;
 				}
 			}
 		}
+
 		.second-level-row a::before {
 			@include linear-gradient(transparent, left, rgba($color-buttons, 0), 0%, rgba($color-buttons, 1), 100%);
 		}
+
 		.third-level-row a::before {
 			@include linear-gradient(transparent, left, rgba($third-level-color, 0), 0%, rgba($third-level-color, 1), 100%);
 		}
+
 		.third-level-row a:hover::before {
 			@include linear-gradient(transparent, left, rgba($third-level-color-hover, 0), 0%, rgba($third-level-color-hover, 1), 100%);
 		}

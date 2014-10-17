@@ -68,7 +68,6 @@
 			margin-top: 5.6em;
 		}
 		.ve-ui-mwTemplatePage {
-			/* TODO: Wikia (ve-sprint-25): This should not be added to the DOM in the first place */
 			display: none;
 		}
 		.oo-ui-bookletLayout-stackLayout {
@@ -79,7 +78,7 @@
 
 	&.ve-ui-mwTransclusionDialog-multiple {
 		.oo-ui-bookletLayout-stackLayout {
-			/* TODO: Wikia (ve-sprint-25): Find where these css properties are being added to the element */
+			/* Layout is set programmatically by OO.ui.GridLayout. */
 			bottom: 0 !important;
 			height: auto !important;
 			top: 5.6em !important;

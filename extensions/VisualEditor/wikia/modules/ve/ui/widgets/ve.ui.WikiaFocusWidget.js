@@ -35,6 +35,7 @@ ve.ui.WikiaFocusWidget = function VeUiWikiaFocusWidget( surface ) {
 	this.$surface = surface.$element;
 	this.$pageHeaderElements = this.$( '#WikiaPageHeader' ).children( ':not( h1 )' );
 	this.$navBackground = this.$( '.WikiNav .navbackground' );
+	this.$localNavigation = this.$( '#localNavigation' );
 	this.$wikiaBarWrapper = this.$( '#WikiaBarWrapper' );
 	this.$wikiaBarCollapseWrapper = this.$( '#WikiaBarCollapseWrapper' );
 	this.$wikiaAds = this.$( '.wikia-ad, #WikiaAdInContentPlaceHolder' );
@@ -144,7 +145,11 @@ ve.ui.WikiaFocusWidget.prototype.getLayoutForArticle = function ( surfaceOffset,
 	// Handle NS_USER
 	topEdge = mw.config.get( 'wgNamespaceNumber' ) === 2 ?
 		surfaceEdges.top :
-		this.$navBackground.offset().top + this.$navBackground.height();
+		(
+			this.$navBackground.length ?
+				(this.$navBackground.offset().top + this.$navBackground.height()) :
+				(this.$localNavigation.offset().top + this.$localNavigation.height())
+		);
 
 	return {
 		'top': {

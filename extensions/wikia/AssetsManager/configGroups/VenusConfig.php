@@ -79,6 +79,7 @@ $VenusConfig[ 'venus_body_js' ] = [
 
 		'//resources/wikia/modules/browserDetect.js',
 		'#group_imglzy_js',
+		'#group_bucky_js'
 	]
 ];
 
@@ -112,7 +113,6 @@ $VenusConfig['local_navigation_js'] = [
 	'skin' => ['venus', 'oasis'],
 	'assets' => [
 		'//extensions/wikia/LocalNavigation/scripts/LocalNavigationMenu.js',
-		'//extensions/wikia/LocalNavigation/scripts/LocalNavigationContribute.js',
 		'//extensions/wikia/LocalNavigation/scripts/LocalNavigationTracking.js'
 	]
 ];
@@ -122,7 +122,8 @@ $VenusConfig[ 'global_footer_scss' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'venus' ],
 	'assets' => [
-		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.scss'
+		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.scss',
+		'//extensions/wikia/GlobalFooter/styles/GlobalFooterVenus.scss'
 	]
 ];
 
@@ -185,3 +186,4 @@ $VenusConfig['imglzy_js'] = [
 		'//extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
 	]
 ];
+

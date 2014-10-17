@@ -1,21 +1,44 @@
-@import "skins/shared/color";
+@import 'extensions/wikia/Venus/styles/variables';
+@import 'skins/shared/color';
 
 $border-color: lighten($color-text, 30%);
 
-article {
+.article {
 	.image-thumbnail img {
-		margin: 30px;
+		margin: 10px;
 	}
 
 	.thumbborder {
-		border: 1px solid $border-color;
+		border: 1px solid $color-page-border;
 	}
 
 	.article-thumb {
-		margin: 30px 0 50px;
+		margin: 30px 0;
 
 		img {
 			margin: 0;
+		}
+
+		&.show-info-icon {
+			.info-icon {
+				background-image: url('/extensions/wikia/Venus/images/info_icon.png');/* base64 */
+				display: none;
+				float: right;
+				height: 17px;
+				margin: -60px 10px 0 0;
+				position: relative;
+				width: 17px;
+			}
+
+			&:hover {
+				a.info-icon {
+					display: block;
+				}
+
+				.duration {
+					display: none;
+				}
+			}
 		}
 	}
 
@@ -23,19 +46,20 @@ article {
 	.tleft {
 		clear: left;
 		float: left;
-		margin: 30px 30px 30px 0;
-
-		.image-thumbnail img {
-			margin: 0;
-		}
+		margin: 30px 30px 30px (-$medium-grid-column-padding);
 	}
 
 	.floatright,
 	.tright {
 		clear: right;
 		float: right;
-		margin: 30px 0 30px 30px;
+		margin: 30px (-$medium-grid-column-padding) 30px 30px;
+	}
 
+	.floatleft,
+	.tleft,
+	.floatright,
+	.tright {
 		.image-thumbnail img {
 			margin: 0;
 		}
@@ -56,6 +80,11 @@ article {
 		position: relative;
 	}
 
+	.floatleft,
+	.floatright {
+		position: relative;
+	}
+
 	figcaption {
 		border-top: 4px solid $border-color;
 		color: $color-alternate-text;
@@ -64,9 +93,38 @@ article {
 		line-height: 18px;
 		margin-top: 10px;
 		padding-top: 10px;
+		text-align: left;
 
 		p {
 			margin: 0;
+		}
+	}
+}
+
+@media #{$large-up} {
+	.article {
+		.floatleft,
+		.tleft {
+			margin-left: -$medium-grid-column-padding;
+		}
+
+		.floatright,
+		.tright {
+			margin-right: -$medium-grid-column-padding;
+		}
+	}
+}
+
+@media #{$small-only} {
+	.article {
+		.floatleft,
+		.tleft {
+			margin-left: -$small-grid-column-padding;
+		}
+
+		.floatright,
+		.tright {
+			margin-right: -$small-grid-column-padding;
 		}
 	}
 }

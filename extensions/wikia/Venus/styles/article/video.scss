@@ -7,40 +7,37 @@
 	// defaults to 'medium' size
 	.play-circle {
 		background-image: url('/extensions/wikia/Venus/images/play_btn.svg'); /* base64 */
-		bottom: 0;
+		bottom: 10%;
 		display: block;
 		height: 50px; // only for medium
-		left: 0;
-		margin: auto;
+		left: 7%;
 		position: absolute;
-		right: 0;
-		top: 0;
 		width: 50px; // only for medium
 	}
 
 	&.xsmall, &.xxsmall {
-		.play-circle{
+		.play-circle {
 			height: 27px;
 			width: 27px;
 		}
 	}
 
 	&.small {
-		.play-circle{
+		.play-circle {
 			height: 35px;
 			width: 35px;
 		}
 	}
 
 	&.large {
-		.play-circle{
+		.play-circle {
 			height: 70px;
 			width: 70px;
 		}
 	}
 
 	&.xlarge {
-		.play-circle{
+		.play-circle {
 			height: 90px;
 			width: 90px;
 		}
@@ -64,14 +61,14 @@
 	}
 
 	.duration {
-		background: black;
-		border-radius: 1px 0 0 0;
+		background: #000;
+		border-radius: 1px 0 0;
 		bottom: 0;
 		color: white;
 		font-size: 11px;
 		line-height: 17px;
 		opacity: .7;
-		padding: 0px 6px;
+		padding: 0 6px;
 		position: absolute;
 		right: 0;
 	}

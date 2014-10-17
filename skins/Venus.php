@@ -31,4 +31,3 @@ class VenusTemplate extends WikiaSkinTemplate {
 		$response->render();
 	}
 }
-?>
