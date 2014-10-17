@@ -99,6 +99,8 @@ class FBConnectAPI {
 	 * Calls users.getInfo. Requests information about the user from 	.
 	 */
 	public function getUserInfo( $user = 0, $fields = null ) {
+		// This call doesn't work on the old client code and we are removing this functionality during the upgrade
+		// to the new client code.  Make the most minimal change to disable this and prevent errors
 		return null;
 
 		if ($user == 0) {
