@@ -1,6 +1,6 @@
 <?php
 
-class ExactTargetUpdateUserTask extends ExactTargetBaseTask {
+class ExactTargetUpdateUserTask {
 
 	/**
 	 * Task for updating user data in ExactTarget

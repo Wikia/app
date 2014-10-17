@@ -1,8 +1,6 @@
 <?php
 
-use Wikia\Tasks\Tasks\BaseTask;
-
-class ExactTargetBaseTask extends BaseTask {
+class ExactTargetApiHelper {
 
 	/**
 	 * Creates ExactTargetSoapClient object containing credentials to connect by API

@@ -1,6 +1,7 @@
 <?php
+use Wikia\Tasks\Tasks\BaseTask;
 
-class ExactTargetAddUserTask extends ExactTargetBaseTask {
+class ExactTargetAddUserTask extends BaseTask {
 
 	/**
 	 * Task for creating all necessary objects in ExactTarget related to newly created user
@@ -8,7 +9,8 @@ class ExactTargetAddUserTask extends ExactTargetBaseTask {
 	 * @param array $aUserProperties Array of Wikia user gobal properties
 	 */
 	public function updateAddUserData( $aUserData, $aUserProperties ) {
-		$oClient = $this->getClient();
+		$oApiHelper = $this->getApiHelper();
+		$oClient = $oApiHelper->getClient();
 		/* Remove subscriber (email address) used by touched user */
 		$oRemoveUserTask = $this->getRemoveUserTaskObject();
 		$oRemoveUserTask->removeSubscriber( $aUserData['user_id'], $oClient );
@@ -141,5 +143,9 @@ class ExactTargetAddUserTask extends ExactTargetBaseTask {
 	 */
 	protected function getRemoveUserTaskObject() {
 		return new ExactTargetRemoveUserTask();
+	}
+
+	private function getApiHelper() {
+		return new ExactTargetApiHelper();
 	}
 }
