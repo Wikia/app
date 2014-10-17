@@ -74,6 +74,19 @@ class WikiaForeignDBFile extends ForeignDBFile {
 		return $this->oLocalFileLogic;
 	}
 
+	function getLanguageCode() {
+		$wikiDbName = $this->repo->getDBName();
+		$wikiId = WikiFactory::DBtoID($wikiDbName);
+		$wikiContLang = WikiFactory::getVarValueByName('wgContLang', $wikiId);
+
+		$code = null;
+		if ( $wikiContLang ) {
+			$code = $wikiContLang->getCode();
+		}
+
+		return $code;
+	}
+
 	// Not everything can be transparent, because __call skips already defined methods.
 	// These methods work as a layer of communication between this class and SharedLogic
 
