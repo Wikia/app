@@ -26,7 +26,8 @@ describe("scrollToLink", function () {
 		querystringMock = function(){
 			return {
 				sanitizeHref: function(h) {
-					return (h.length > 0) ? h.slice(1) : '';
+					h = h.trim();
+					return (h.length > 0 && h[0] === '#') ? h.slice(1) : '';
 				}
 			}
 		},
@@ -74,35 +75,99 @@ describe("scrollToLink", function () {
 		expect(windowMock.position.y).toBe(0);
 	});
 
-	it('handles scrollTo', function() {
-		var result = false,
-			previous;
+	it('handles scrollTo for valid hashes', function() {
+		var testData = [
+				{
+					params: {
+						hash: '#hash',
+						offset: 20
+					},
+					result: {
+						success: true,
+						y: 30,
+						url: 'pathname#hash'
+					}
+				},
+				{
+					params: {
+						hash: '#hash.2',
+						offset: 5
+					},
+					result: {
+						success: true,
+						y: 15,
+						url: 'pathname#hash.2'
+					}
+				},
+				{
+					params: {
+						hash: '#hash 3',
+						offset: 100
+					},
+					result: {
+						success: true,
+						y: 110,
+						url: 'pathname#hash 3'
+					}
+				},
+				{
+					params: {
+						hash: '#hash',
+						offset: -10
+					},
+					result: {
+						success: true,
+						y: 0,
+						url: 'pathname#hash'
+					}
+				}
+			];
 
-		result = scrollToLinkApi.handleScrollTo('#hash', 20);
-		expect(result).toBe(true);
-		expect(windowMock.position.y).toBe(30);
-		expect(historyMock.state.url).toBe('pathname#hash');
+		testData.forEach(function (data) {
+			var result = scrollToLinkApi.handleScrollTo(data.params.hash, data.params.offset);
+			expect(result).toBe(data.result.success);
+			expect(windowMock.position.y).toBe(data.result.y);
+			expect(historyMock.state.url).toBe(data.result.url);
+		});
+	});
 
-		result = scrollToLinkApi.handleScrollTo('#hash2', 50);
-		expect(result).toBe(true);
-		expect(windowMock.position.y).toBe(60);
-		expect(historyMock.state.url).toBe('pathname#hash2');
+	it('handles scrollTo for invalid hashes', function() {
+		var testData = [
+			{
+				prepare: {
+					url: 'pathname#previous1',
+					y: 100
+				},
+				params: {
+					hash: 'http://some.link.example.com/link',
+					offset: 20
+				},
+				result: false
+			},
+			{
+				prepare: {
+					url: 'pathname',
+					y: 0
+				},
+				params: {
+					hash: '   #   ',
+					offset: 20
+				},
+				result: false
+			}
+		];
 
-		result = scrollToLinkApi.handleScrollTo('#hash.9', 15);
-		expect(result).toBe(true);
-		expect(windowMock.position.y).toBe(25);
-		expect(historyMock.state.url).toBe('pathname#hash.9');
+		testData.forEach(function (data) {
+			var result;
 
-		result = scrollToLinkApi.handleScrollTo('#hash 1 2 3', 17);
-		expect(result).toBe(true);
-		expect(windowMock.position.y).toBe(27);
-		expect(historyMock.state.url).toBe('pathname#hash 1 2 3');
+			historyMock.state.url = data.prepare.url;
+			windowMock.position.y = data.prepare.y;
 
-		windowMock.position.y = 5;
-		previous = historyMock.state.url;
-		result = scrollToLinkApi.handleScrollTo('#', 15);
-		expect(result).toBe(false);
-		expect(windowMock.position.y).toBe(5);
-		expect(historyMock.state.url).toBe(previous);
+			result = scrollToLinkApi.handleScrollTo(data.params.hash, data.params.offset);
+
+			expect(result).toBe(data.result);
+			expect(windowMock.position.y).toBe(data.prepare.y);
+			expect(historyMock.state.url).toBe(data.prepare.url);
+		});
 	});
 });

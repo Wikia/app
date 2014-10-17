@@ -3,7 +3,10 @@ describe("History", function () {
 
 	// mock window
 	var windowMock = {
-			document: window.document,
+			document: {
+				title: 'title'
+			},
+			location: 'location',
 			history: {
 				length: 0,
 				state: [],
@@ -17,7 +20,18 @@ describe("History", function () {
 				}
 			}
 		},
-		historyApi = modules['wikia.history'](windowMock);
+		historyApi = modules['wikia.history'](windowMock),
+		windowMockNotWorking = {
+			document: {
+				title: 'title'
+			},
+			location: 'location',
+			history: {
+				length: 0,
+				state: []
+			}
+		},
+		historyApiNotWorking = modules['wikia.history'](windowMockNotWorking);
 
 	it('registers AMD module', function() {
 		expect(historyApi).toBeDefined();
@@ -29,17 +43,66 @@ describe("History", function () {
 		expect(typeof historyApi.replaceState).toBe('function', 'replaceState');
 	});
 
-	it('works with history api', function() {
-		var histLen = windowMock.history.length;
+	it('works with history API pushState', function() {
+		var testData = [
+				{param: {test: 1}, result: true, value: 1},
+				{param: {test: 2}, result: true, value: 2}
+			],
+			histLen = windowMock.history.length;
 
-		historyApi.pushState({test: 1});
-		expect(windowMock.history.length).toBe(histLen + 1);
-		expect(windowMock.history.state[histLen].test).toBe(1);
+		testData.forEach(function (data) {
+			var result = historyApi.pushState(data.param);
 
-		histLen = windowMock.history.length;
-		historyApi.replaceState({test: 2});
-		expect(windowMock.history.length).toBe(histLen);
-		expect(windowMock.history.state[histLen-1].test).toBe(2);
+			expect(result).toBe(data.result);
+			expect(windowMock.history.length).toBe(histLen + 1);
+			expect(windowMock.history.state[histLen].test).toBe(data.value);
 
+			histLen = windowMock.history.length;
+		});
+	});
+
+	it('works with history API replaceState', function() {
+		var testData = [
+				{param: {test: 1}, result: true, value: 1},
+				{param: {test: 2}, result: true, value: 2}
+			],
+			histLen = windowMock.history.length;
+
+		testData.forEach(function (data) {
+			var result = historyApi.replaceState(data.param);
+
+			expect(result).toBe(data.result);
+			expect(windowMock.history.length).toBe(histLen);
+			expect(windowMock.history.state[histLen - 1].test).toBe(data.value);
+
+			histLen = windowMock.history.length;
+		});
+
+	});
+
+	it('fails to work without history API pushState', function(){
+		var testData = [
+				{param: {test: 1}, result: false},
+				{param: {test: 2}, result: false}
+			];
+
+		testData.forEach(function (data) {
+			var result = historyApiNotWorking.pushState(data.param);
+
+			expect(result).toBe(data.result);
+		});
+	});
+
+	it('fails to work without history API replaceState', function(){
+		var testData = [
+			{param: {test: 1}, result: false},
+			{param: {test: 2}, result: false}
+		];
+
+		testData.forEach(function (data) {
+			var result = historyApiNotWorking.replaceState(data.param);
+
+			expect(result).toBe(data.result);
+		});
 	});
 });

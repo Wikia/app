@@ -10,7 +10,10 @@ describe("Querystring", function () {
 			hash: ''
 		},
 		windowMock = {
-			document: window.document
+			document: {
+				title: 'title',
+				createElement: function() {}
+			}
 		},
 		querystring = modules['wikia.querystring'](locationMock, windowMock);
 
@@ -328,17 +331,21 @@ describe("Querystring", function () {
 	});
 
 	it('is sanitizing href properly', function(){
-		expect(function(){
-			var qs = querystring();
+		var testData = [
+				{href: '#hash0',  result: 'hash0'},
+				{href: '#hash1 ', result: 'hash1'},
+				{href: '#hash.2', result: 'hash.2'},
+				{href: '#hash 3', result: 'hash 3'},
+				{href: '#     A', result: '     A'},
+				{href: '   #   ', result: ''},
+				{href: '# ',      result: ''},
+				{href: '#',       result: ''},
+				{href: 'hash',    result: ''}
+			],
+			qs = querystring();
 
-			expect(qs.sanitizeHref('#hash1')).toBe('hash1');
-			expect(qs.sanitizeHref('#hash 1')).toBe('hash 1');
-			expect(qs.sanitizeHref('#hash.1')).toBe('hash.1');
-			expect(qs.sanitizeHref('    ')).toBe('');
-			expect(qs.sanitizeHref('#')).toBe('');
-			expect(qs.sanitizeHref('hash')).toBe('');
-			expect(qs.sanitizeHref('# hash')).toBe(' hash');
-
-		}).not.toThrow();
+		testData.forEach(function (data) {
+			expect(qs.sanitizeHref(data.href)).toBe(data.result);
+		});
 	});
 });
