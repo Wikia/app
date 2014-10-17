@@ -1,11 +1,11 @@
 /*global require*/
 require(
 	[
-		'jquery', 'JSMessages', 'wikia.window', 'wikia.log', require.optional('wikia.abTest'),
+		'jquery', 'JSMessages', 'wikia.window', 'wikia.document', 'wikia.log', require.optional('wikia.abTest'),
 		'ext.wikia.adEngine.adEngine', 'ext.wikia.adEngine.adConfigMobile',
 		'ext.wikia.adEngine.messageListener'
 	],
-	function ($, msg, window, log, abTest, adEngine, adConfigMobile, messageListener) {
+	function ($, msg, window, document, log, abTest, adEngine, adConfigMobile, messageListener) {
 		'use strict';
 
 		// Don't show ads for Sony
@@ -43,9 +43,8 @@ require(
 		adSlots.push([mobileTopLeaderBoard]);
 
 		if (window.wgArticleId) {
-			//this can wait to on load as is under the fold
-			$(window).on('load', function () {
 
+			$(document).ready(function () {
 				var i, elem;
 
 				if (infoboxAdEnabled) {
@@ -66,7 +65,9 @@ require(
 					$firstSection.before(createSlot(mobileInContent));
 					adSlots.push([mobileInContent]);
 				}
-
+			});
+			//this can wait to on load as is under the fold
+			$(window).on('load', function () {
 				if (showPreFooter) {
 					log('Loading slot: ' + mobilePreFooter, logLevel, logGroup);
 					$footer.after(createSlot(mobilePreFooter));
