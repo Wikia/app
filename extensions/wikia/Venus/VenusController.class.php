@@ -113,7 +113,6 @@ class VenusController extends WikiaController {
 		$cssGroups = ['venus_css'];
 		$cssLinks = '';
 
-		$styles = $this->skin->getStyles();
 		$scripts = $this->skin->getScripts();
 
 		//let extensions manipulate the asset packages (e.g. ArticleComments,
@@ -127,17 +126,17 @@ class VenusController extends WikiaController {
 			]
 		);
 
-		foreach ( $this->assetsManager->getURL( $cssGroups ) as $s ) {
-			if ( $this->assetsManager->checkAssetUrlForSkin( $s, $this->skin ) ) {
-				$cssLinks .= "<link rel=stylesheet href='{$s}'/>";
+		// SASS files requested via VenusAssetsPackages hook
+		$sassFiles = [];
+		foreach ( $this->assetsManager->getURL( $cssGroups ) as $src ) {
+			if ( $this->assetsManager->checkAssetUrlForSkin( $src, $this->skin ) ) {
+				$sassFiles[] = $src;
 			}
 		}
 
-		if ( is_array( $styles ) ) {
-			foreach ( $styles as $s ) {
-				$cssLinks .= $s['tag'];
-			}
-		}
+		// try to fetch all SASS files using a single request (CON-1487)
+		// "WikiaSkin::getStylesWithCombinedSASS: combined 9 SASS files"
+		$cssLinks .= $this->skin->getStylesWithCombinedSASS($sassFiles);
 
 		foreach ( $this->assetsManager->getURL( $jsHeadGroups ) as $src ) {
 			if ( $this->assetsManager->checkAssetUrlForSkin( $src, $this->skin ) ) {
