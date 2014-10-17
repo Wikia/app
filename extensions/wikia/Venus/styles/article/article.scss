@@ -78,6 +78,11 @@ $article-items-spacing: 40px;
 		}
 	}
 
+	h1, h2, h3, h4, h5, h6 {
+		min-width: 1px;
+		overflow: hidden;
+	}
+
 	h1 .editsection {
 		line-height: 40px;
 		margin-left: 40px;
@@ -88,19 +93,12 @@ $article-items-spacing: 40px;
 	}
 
 	h2 {
+		border-bottom: 1px solid $color-page-border;
 		margin-bottom: 12px;
 		margin-left: -$medium-grid-gutter;
 		margin-right: -$medium-grid-gutter;
 		margin-top: $article-items-spacing;
-
-		&::after {
-			background-color: $color-page-border;
-			content: '';
-			display: block;
-			height: 1px;
-			margin-top: 11px;
-			overflow: hidden;
-		}
+		padding-bottom: 10px;
 
 		.mw-headline {
 			padding-left: $medium-grid-gutter;
@@ -192,10 +190,13 @@ $article-items-spacing: 40px;
 
 #TOP_RIGHT_BOXAD.default-height {
 	height: 250px;
-	&.hidden, .hidden {
+
+	&.hidden,
+	.hidden {
 		display: none;
 	}
 }
+
 /* END FOR PROTOTYPE/TESTING ONLY */
 
 @media #{$large-up} {
@@ -295,19 +296,11 @@ $article-items-spacing: 40px;
 		padding: 0 $small-grid-column-padding;
 
 		h2 {
-			@include flexbox;
-			flex-direction: row-reverse;
-			justify-content: flex-end;
 			margin-left: -$small-grid-gutter;
 			margin-right: -$small-grid-gutter;
 
-			.editsection {
-				float: none;
-			}
-
 			.mw-headline {
 				padding-left: $small-grid-gutter;
-				width: 90%;
 			}
 		}
 
