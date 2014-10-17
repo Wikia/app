@@ -172,18 +172,16 @@ class AdEngine2Hooks {
 	}
 
 	public static function onSkinAfterContent( &$text ){
-		global $wgTitle, $wgAdDriverUseTaboola;
-
-		if (!$wgAdDriverUseTaboola) {
-			return true;
-		}
+		global $wgTitle;
 
 		$skin = RequestContext::getMain()->getSkin()->getSkinName();
 
-		// File pages handle their own rendering of related pages wrapper
-		if ( ( $skin === 'oasis' ) && $wgTitle->getNamespace() !== NS_FILE ) {
-			$text = $text . F::app()->renderView('Ad', 'Index', ['slotName' => 'NATIVE_TABOOLA']);
-		}
+
+		$text = '
+<div class="OUTBRAIN" data-src="' . $wgTitle->escapeFullURL() .  '" data-widget-id="' .
+			($skin == 'wikiamobile' ? 'MB_1' : 'AR_1') . '" data-ob-template="Wikia"></div>
+<script type="text/javascript" async="async" src="http://widgets.outbrain.com/outbrain.js"></script>
+' . $text;
 
 		return true;
 	}
