@@ -74,7 +74,7 @@ class WikiaForeignDBFile extends ForeignDBFile {
 		return $this->oLocalFileLogic;
 	}
 
-	function getLanguage() {
+	function getLanguageCode() {
 		$wikiDbName = $this->repo->getDBName();
 		$wikiId = WikiFactory::DBtoID($wikiDbName);
 		$wikiContLang = WikiFactory::getVarValueByName('wgContLang', $wikiId);

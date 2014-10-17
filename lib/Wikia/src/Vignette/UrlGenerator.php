@@ -175,7 +175,7 @@ class UrlGenerator {
 		$imagePath = "{$bucketPath}/{$this->getRelativeUrl()}/revision/{$this->getRevision()}";
 
 		if ( !isset( $this->query['lang'] ) ) {
-			$this->lang( $this->file->getLanguage() );
+			$this->lang( $this->file->getLanguageCode() );
 		}
 
 		if ( $this->mode != self::MODE_ORIGINAL ) {

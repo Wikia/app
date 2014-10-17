@@ -9,5 +9,5 @@ interface FileInterface {
 	public function getHashPath();
 	public function getTimestamp();
 	public function getName();
-	public function getLanguage();
+	public function getLanguageCode();
 }

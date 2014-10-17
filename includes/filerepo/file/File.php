@@ -245,7 +245,7 @@ abstract class File implements FileInterface {
 		return $this->name;
 	}
 
-	public function getLanguage() {
+	public function getLanguageCode() {
 		global $wgContLang;
 
 		$code = null;
