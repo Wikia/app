@@ -4,11 +4,13 @@
 @import 'extensions/wikia/Venus/styles/article/images';
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/flexbox';
+@import 'images';
+@import 'media';
 
 $placeholder-background-color: $color-left-article-nav; // only for prototype version
 $article-items-spacing: 40px;
 
-article {
+.article {
 	header {
 		@include grid-column-width('medium', 8, $medium-content-padding - $content-border-width);
 		float: left;
@@ -31,28 +33,6 @@ article {
 			margin: 0;
 			padding: 0 $medium-grid-column-padding 30px $medium-content-padding + $medium-grid-column-padding - $content-border-width;
 			word-break: break-all;
-		}
-	}
-
-	.floatleft,
-	.tleft {
-		clear: left;
-		float: left;
-	}
-
-	.floatright,
-	.tright {
-		clear: right;
-		float: right;
-	}
-
-	.center {
-		clear: both;
-		text-align: center;
-
-		.article-thumb {
-			margin-left: auto;
-			margin-right: auto;
 		}
 	}
 }
@@ -214,18 +194,16 @@ article {
 /* END FOR PROTOTYPE/TESTING ONLY */
 
 @media #{$large-up} {
-	article {
-		header {
-			@include grid-column-width('large', 8, $large-content-padding - $content-border-width);
+	.article header {
+		@include grid-column-width('large', 8, $large-content-padding - $content-border-width);
 
-			&.cover-unit {
-				@include proportional-video-height(8 * ($large-grid-column + $large-grid-gutter) - $large-grid-gutter + $large-content-padding);
-			}
+		&.cover-unit {
+			@include proportional-video-height(8 * ($large-grid-column + $large-grid-gutter) - $large-grid-gutter + $large-content-padding);
+		}
 
-			h1 {
-				padding-left: $large-grid-column-padding + $large-content-padding - $content-border-width;
-				padding-right: $large-grid-column-padding;
-			}
+		h1 {
+			padding-left: $large-grid-column-padding + $large-content-padding - $content-border-width;
+			padding-right: $large-grid-column-padding;
 		}
 	}
 
@@ -286,7 +264,7 @@ article {
 }
 
 @media #{$small-only} {
-	article header {
+	.article header {
 		float: none;
 		width: 100%;
 
@@ -297,11 +275,6 @@ article {
 		h1 {
 			padding-left: $small-grid-column-padding + $small-content-padding - $content-border-width;
 			padding-right: $small-grid-column-padding + $small-content-padding - $content-border-width;;
-		}
-
-		.left-nav {
-			float: none;
-			position: absolute;
 		}
 	}
 
