@@ -165,6 +165,9 @@
 						}
 					}
 				);
+
+			// wait till end of execution stack to load lightbox
+			setTimeout(LightboxLoader.loadFromURL, 0);
 		},
 
 		/**
@@ -410,9 +413,7 @@
 	$(function () {
 		if (window.wgEnableLightboxExt) {
 			LightboxLoader.init();
-			LightboxLoader.loadFromURL();
 		}
-
 	});
 
 	window.LightboxLoader = LightboxLoader;
