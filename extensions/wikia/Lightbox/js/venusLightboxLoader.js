@@ -1,4 +1,6 @@
-/* global define */
+/**
+ * Loads Lightbox in Venus skin.
+ */
 define('venus.lightboxLoader', ['wikia.window'], function (window) {
 	'use strict';
 	var lightboxSettings;
