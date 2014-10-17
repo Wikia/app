@@ -1,9 +1,14 @@
 @import 'extensions/wikia/Venus/styles/variables';
+@import 'extensions/wikia/Venus/styles/typographyMixins';
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/blackout';
 @import 'skins/shared/mixins/chevron';
 @import 'skins/shared/mixins/columns';
 @import 'GlobalNavigationColors';
+
+.global-navigation {
+	line-height: 23px;
+}
 
 .hubs-entry-point {
 	background-image: url('/extensions/wikia/GlobalNavigation/images/hubs_entry_point.svg'); /* base64 */
@@ -138,11 +143,11 @@
 		}
 
 		.label {
+			@include font-size-l;
 			background-color: $nav-background-color;
 			border-bottom: 1px solid $hubsmenu-background-color;
 			display: inline-block;
 			float: left;
-			font-size: 18px;
 			height: 62px;
 			width: 142px;
 		}
@@ -152,10 +157,10 @@
 		@include column-count(2);
 		@include column-rule(1px outset $nav-border-color);
 		@include column-gap(36px);
-
+		@include font-size-s;
 		display: none;
 		float: left;
-		font-size: 15px;
+		line-height: 17px;
 		padding-left: 22px;
 		width: 464px;
 
@@ -164,9 +169,10 @@
 		}
 
 		h2 {
+			@include font-size-s;
 			display: inline-block;
-			font-size: 15px;
 			font-weight: bold;
+			line-height: 17px;
 			margin: 0;
 			padding: 21px 0 5px;
 		}
@@ -177,11 +183,11 @@
 
 			&.more {
 				@include right-chevron();
-				position: absolute;
+				@include font-size-base;
 				bottom: 40px;
-				font-size: 16px;
 				font-weight: bold;
 				left: 278px;
+				position: absolute;
 
 				&:after {
 					margin-left: 6px;

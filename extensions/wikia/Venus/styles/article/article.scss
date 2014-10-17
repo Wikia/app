@@ -1,149 +1,138 @@
 @import 'extensions/wikia/Venus/styles/variables';
+@import 'extensions/wikia/Venus/styles/mixins';
+@import 'extensions/wikia/Venus/styles/typographyMixins';
 @import 'extensions/wikia/Venus/styles/article/images';
 @import 'skins/shared/color';
+@import 'skins/shared/mixins/flexbox';
+@import 'images';
+@import 'media';
 
-article {
+$placeholder-background-color: $color-left-article-nav; // only for prototype version
+$article-items-spacing: 40px;
 
+.article {
 	header {
-		background-color: #cccccc; //only for prototype version
+		@include grid-column-width('medium', 8, $medium-content-padding - $content-border-width);
 		float: left;
-		height: 389px; // only for prototype version
-		margin-bottom: 40px;
-		position: relative;
-		width: 692px; //only for prototype version
+		margin-bottom: $article-items-spacing;
+
+		&.cover-unit {
+			@include proportional-video-height(8 * ($medium-grid-column + $medium-grid-gutter) - $medium-grid-gutter + $medium-content-padding);
+			background-color: $placeholder-background-color; //only for prototype version
+			position: relative;
+
+			h1 {
+				position: absolute;
+			}
+		}
 
 		h1 {
+			@include font-size-xxl;
 			bottom: 0;
-			font-size: 36px;
 			font-weight: bold;
-			line-height: 36px;
 			margin: 0;
-			padding-bottom: 30px;
-			padding-left: 36px;
-			padding-right: 36px;
-			position: absolute;
+			padding: 0 $medium-grid-column-padding 30px $medium-content-padding + $medium-grid-column-padding - $content-border-width;
 			word-break: break-all;
 		}
 	}
+}
 
-	.left-nav {
-		float: left;
-		text-align: center;
-		width: 86px;
+.left-nav {
+	float: left;
+	margin-left: $medium-content-padding - $content-border-width;
+	text-align: center;
+	width: $medium-grid-column;
 
-		ul {
-			display: inline-block;
-			list-style-type: none;
-			margin: 0;
-			padding: 0;
-
-			li {
-				background-color: $color-left-article-nav;
-				border-radius: 20px;
-				height: 38px;
-				margin-bottom: 6px;
-				width: 38px;
-			}
-		}
+	ul {
+		display: inline-block;
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
 	}
 
-	.floatleft,
-	.tleft {
-		clear: left;
-		float: left;
+	li {
+		background-color: $color-left-article-nav;
+		border-radius: 19px;
+		height: 38px;
+		margin-bottom: 6px;
+		width: 38px;
 	}
+}
 
-	.floatright,
-	.tright {
-		clear: right;
+.mw-content-text {
+	margin: 0 $medium-content-padding - $content-border-width 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width;
+	padding: 0 $medium-grid-column-padding;
+
+	.editsection {
+		@include font-size-xxs;
+		display: inline-block;
 		float: right;
-	}
+		line-height: 27px;
+		margin-left: 27px;
+		padding-left: 5px;
+		position: relative;
+		text-transform: uppercase;
 
-	.center {
-		clear: both;
-		text-align: center;
-
-		.article-thumb {
-			margin-left: auto;
-			margin-right: auto;
+		a::before {
+			@include edit-button(27px);
 		}
 	}
 
-	#mw-content-text {
-		font-size: 16px;
-		line-height: 28px;
-		margin: 0 round($medium-grid-column / 2) 0 86px;
+	h1 .editsection {
+		line-height: 40px;
+		margin-left: 40px;
 
-		h1, h2, h3, h4, h5, h6 {
-			font-weight: bold;
+		a::before {
+			@include resize-edit-button(40px);
+		}
+	}
+
+	h2 {
+		margin-bottom: 12px;
+		margin-left: -$medium-grid-gutter;
+		margin-right: -$medium-grid-gutter;
+		margin-top: $article-items-spacing;
+
+		&::after {
+			background-color: $color-page-border;
+			content: '';
+			display: block;
+			height: 1px;
+			margin-top: 11px;
 			overflow: hidden;
+		}
 
-			.editsection {
-				display: inline-block;
-				float: right;
-				font-size: 12px;
-				line-height: 27px;
-				margin-left: 27px;
-				padding-left: 5px;
-				position: relative;
-				text-transform: uppercase;
+		.mw-headline {
+			padding-left: $medium-grid-gutter;
+		}
 
-				&:before {
-					background-image: url('/extensions/wikia/Venus/images/editpen.svg'); /* base64 */
-					content: ' ';
-					display: inline-block;
-					height: 27px;
-					position: absolute;
-					right: 100%;
-					width: 27px;
-				}
+		.editsection {
+			line-height: 36px;
+			margin-left: 36px;
+
+			a::before {
+				@include resize-edit-button(36px);
 			}
 		}
+	}
 
-		h1 {
-			font-size: 36px;
-			line-height: 40px;
+	h3 {
+		margin: $article-items-spacing 0 16px;
+	}
 
-			.editsection {
-				line-height: 40px;
-				margin-left: 40px;
+	p {
+		margin-bottom: $article-items-spacing;
+		margin-top: 0;
+	}
 
-				&:before {
-					height: 40px;
-					width: 40px;
-				}
-			}
-		}
+	blockquote {
+		@include font-size-xl;
+		border-top: 4px solid $color-text;
+		margin: 0 0 $article-items-spacing;
+		padding-top: 30px;
+		position: relative;
 
-		h2 {
-			border-bottom: 1px solid $color-page-border;
-			font-size: 27px;
-			padding-bottom: 10px;
-			margin-bottom: 30px;
-			margin-top: 40px;
-
-
-			.editsection {
-				line-height: 36px;
-				margin-left: 36px;
-
-				&:before {
-					height: 36px;
-					width: 36px;
-				}
-			}
-		}
-
-		h3 {
-			font-size: 18px;
-			margin: 40px 0 16px 0;
-		}
-
-		p {
-			margin-bottom: 40px;
-		}
-
-		blockquote:before {
+		&:before {
 			background: none repeat scroll 0 0 $color-page;
 			content: '\201c';
 			display: inline;
@@ -154,83 +143,193 @@ article {
 			position: absolute;
 			top: -33px;
 		}
+	}
 
-		blockquote {
-			border-top: 4px solid $color-text;
-			font-size: 27px;
-			margin: 0 0 40px 0px;
-			padding-top: 30px;
-			position: relative;
-		}
+	pre {
+		white-space: normal;
+	}
 
-		pre {
-			white-space: normal;
+	ol,
+	ul {
+		padding-left: 41px;
+	}
+
+	> ol,
+	> ul {
+		margin-top: 0;
+		padding-right: 108px;
+
+		> li:first-child {
+			margin-top: 10px;
 		}
 	}
-}
 
-@media #{$large-up} {
-	article {
-
-		header {
-			float: left;
-			height: 466px; // only for prototype version
-			width: 824px; // only for prototype version
-		}
-
-		#mw-content-text {
-			font-size: 18px;
-			line-height: 36px;
-			margin-right: round($large-grid-column / 2);
-
-			h2, h3 {
-				margin-top: 30px;
-			}
-
-			h3 {
-				font-size: 20px;
-				margin-bottom: 15px;
-			}
-
-			p {
-				margin-bottom: 30px;
-			}
-		}
+	ul {
+		list-style: disc;
 	}
-}
 
-@media #{$small-only} {
-	article {
-
-		header {
-			float: none;
-			height: 431px; // only for prototype version
-			width: 100%;
-		}
-
-		.left-nav {
-			float: none;
-			position: absolute;
-		}
-
-		#mw-content-text {
-			margin-right: round($small-grid-column / 2);
-		}
+	li {
+		margin-top: 16px;
+		padding-left: 13px;
 	}
 }
 
 /* FOR PROTOTYPE/TESTING ONLY */
-.adUnitTest, .infobox-test {
-	background-color: #ccc;
+.adUnitTest,
+.infobox-test {
+	@include grid-column-width('medium', 4, -2 * $medium-grid-column-padding);
+	background-color: $placeholder-background-color;
 	display: block;
 	float: right;
 	height: 250px;
-	margin: 0 $medium-grid-gutter 20px 20px;
+	margin: 0 $medium-grid-column-padding + $medium-content-padding - $content-border-width 20px $medium-grid-gutter + $medium-grid-column-padding;
 	padding: 10px;
-	width: 300px;
 }
 
 .infobox-test {
 	clear: right;
 	height: 500px;
+}
+
+/* END FOR PROTOTYPE/TESTING ONLY */
+
+@media #{$large-up} {
+	.article header {
+		@include grid-column-width('large', 8, $large-content-padding - $content-border-width);
+
+		&.cover-unit {
+			@include proportional-video-height(8 * ($large-grid-column + $large-grid-gutter) - $large-grid-gutter + $large-content-padding);
+		}
+
+		h1 {
+			padding-left: $large-grid-column-padding + $large-content-padding - $content-border-width;
+			padding-right: $large-grid-column-padding;
+		}
+	}
+
+	.left-nav {
+		margin-left: $large-content-padding - $content-border-width;
+		width: $large-grid-column;
+	}
+
+	.mw-content-text {
+		margin: 0 $large-content-padding - $content-border-width 0 $large-grid-column + $large-grid-gutter + $large-content-padding - $content-border-width;
+		padding: 0 $large-grid-column-padding;
+
+		h2 {
+			margin-bottom: 10px;
+			margin-left: -$large-grid-gutter;
+			margin-right: -$large-grid-gutter;
+
+			.mw-headline {
+				padding-left: $large-grid-gutter;
+			}
+		}
+
+		h3 {
+			margin-bottom: 15px;
+		}
+
+		h2, h3 {
+			margin-top: 30px;
+		}
+
+		p {
+			margin-bottom: 30px;
+		}
+
+		ol,
+		ul {
+			padding-left: 43px;
+		}
+
+		> ol,
+		> ul {
+			padding-left: 44px;
+			padding-right: 123px;
+		}
+
+		li {
+			margin-top: 18px;
+			padding-left: 14px;
+		}
+	}
+
+	.adUnitTest,
+	.infobox-test {
+		@include grid-column-width('large', 4, -2 * $large-grid-column-padding);
+		margin: 0 $large-grid-column-padding + $large-content-padding - $content-border-width 20px $large-grid-gutter + $large-grid-column-padding;
+		padding: $large-grid-column-padding;
+	}
+}
+
+@media #{$small-only} {
+	.article header {
+		float: none;
+		width: 100%;
+
+		&.cover-unit {
+			@include proportional-video-height($small-content-width - 2 * $content-border-width);
+		}
+
+		h1 {
+			padding-left: $small-grid-column-padding + $small-content-padding - $content-border-width;
+			padding-right: $small-grid-column-padding + $small-content-padding - $content-border-width;;
+		}
+	}
+
+	.left-nav {
+		float: none;
+		margin-left: $small-content-padding - $content-border-width;
+		position: absolute;
+		width: $small-grid-column;
+	}
+
+	.mw-content-text {
+		margin: 0 $small-content-padding - $content-border-width 0 $small-grid-column + $small-grid-gutter + $small-content-padding - $content-border-width;
+		padding: 0 $small-grid-column-padding;
+
+		h2 {
+			@include flexbox;
+			flex-direction: row-reverse;
+			justify-content: flex-end;
+			margin-left: -$small-grid-gutter;
+			margin-right: -$small-grid-gutter;
+
+			.editsection {
+				float: none;
+			}
+
+			.mw-headline {
+				padding-left: $small-grid-gutter;
+				width: 90%;
+			}
+		}
+
+		p {
+			margin-bottom: 30px;
+		}
+
+		ol,
+		ul {
+			padding-left: 33px;
+		}
+
+		> ol,
+		> ul {
+			padding-right: 81px;
+		}
+
+		li {
+			margin-top: 10px;
+			padding-left: 4px;
+		}
+	}
+
+	.adUnitTest,
+	.infobox-test {
+		@include grid-column-width('small', 5);
+		margin: 0 $small-content-padding - $content-border-width 20px $small-grid-gutter + $small-grid-column-padding;
+		padding: $small-grid-column-padding;
+	}
 }
