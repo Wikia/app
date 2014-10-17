@@ -1392,7 +1392,6 @@
 				thumbs: thumbs
 			});
 
-			debugger;
 			Lightbox.openModal.carousel.append(carouselThumbs);
 
 			// if carousel is already instantiated, update settings with added thumbnails
