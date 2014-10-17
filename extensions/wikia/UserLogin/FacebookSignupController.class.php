@@ -16,7 +16,6 @@ class FacebookSignupController extends WikiaController {
 	 */
 	public function index() {
 		$fbUserId = $this->getFacebookUserId();
-gbug("GOT USER ID: ", $fbUserId);
 
 		// try to get connected Wikia account
 		$user = FBConnectDB::getUser($fbUserId);
