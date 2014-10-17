@@ -20,7 +20,7 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 	@include font-size-xxs;
 	background-color: $color-page;
 	height: 80px;
-	line-height: 14px;
+	position: relative;
 	white-space: nowrap;
 	width: 100%;
 
@@ -78,6 +78,7 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 	}
 
 	.dropdown {
+		background-color: $color-buttons;
 		margin: 0;
 		padding: 0;
 		position: absolute;
@@ -109,7 +110,6 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 		}
 
 		a {
-			background-color: $color-buttons;
 			display: block;
 			overflow: hidden;
 			padding: 20px;
@@ -264,12 +264,10 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 				font-weight: normal;
 				padding: 10px;
 
+				-webkit-transform: translate3d(0, 0, 0);
+
 				&:hover {
 					background: $third-level-color-hover;
-				}
-
-				a::after {
-					text-align: left;
 				}
 
 				span {
@@ -294,8 +292,7 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 			display: table-cell;
 			font-weight: bold;
 			height: 40px;
-			padding: 8px 15px 8px 20px;
-			position: relative;
+			padding: 0 15px 0 20px;
 			text-transform: uppercase;
 			vertical-align: middle;
 

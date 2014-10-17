@@ -33,7 +33,7 @@ class WikiaMapsHooks {
 	}
 
 	/**
-	 * @brief Returns true if interactive maps are enabled and the current page is Special:Maps
+	 * @brief Returns true if Wikia Maps are enabled and the current page is Special:Maps
 	 *
 	 * @return bool
 	 */
@@ -42,6 +42,23 @@ class WikiaMapsHooks {
 
 		return !empty( $wgEnableWikiaInteractiveMaps )
 			&& $wgTitle->isSpecial( WikiaMapsSpecialController::PAGE_NAME );
+	}
+
+	/**
+	 * @brief Returns true if the current page is Special:Maps single map page
+	 *
+	 * @return bool
+	 */
+	public static function isSingleMapPage() {
+		global $wgTitle;
+
+		$find = [
+			WikiaMapsSpecialController::PAGE_NAME . '/',
+			WikiaMapsSpecialController::PAGE_NAME
+		];
+		$titleFiltered = (int) str_replace( $find, '', $wgTitle->getSubpageText() );
+
+		return $titleFiltered > 0;
 	}
 
 	/**
@@ -64,4 +81,17 @@ class WikiaMapsHooks {
 		return true;
 	}
 
+	/**
+	 * @brief Adds fragment metatag in <head> section on single maps' pages
+	 * 
+	 * @param OutputPage $out
+	 * 
+	 * @return bool true
+	 */
+	public static function onBeforePageDisplay( $out ) {
+		if ( self::isSpecialMapsPage() && self::isSingleMapPage() ) {
+			$out->addMeta( 'fragment', '!' );
+		}
+		return true;
+	}
 }

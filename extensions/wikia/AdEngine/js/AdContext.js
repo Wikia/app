@@ -47,7 +47,7 @@ define('ext.wikia.adEngine.adContext', ['wikia.window', 'wikia.document'], funct
 
 			pageArticleId: w.wgArticleId,
 			pageCategories: w.wgAdDriverUseCatParam ? w.wgCategories : [],
-			pageIsArticle: w.wgIsArticle,
+			pageIsArticle: !!w.wgArticleId,
 			pageIsHub: w.wikiaPageIsHub,
 			pageName: w.wgPageName,
 			pageType: w.wikiaPageType,

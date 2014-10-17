@@ -56,8 +56,9 @@ define('ext.wikia.adEngine.adConfigLate', [
 			onedirection: true
 		},
 		taboolaEnabled = country === 'US' &&
+			(window.wikiaPageType === 'article' || window.wikiaPageType === 'home') &&
 			taboolaEnabledWikis[window.wgDBname] &&
-			window.wgIsArticle && window.wgAdDriverUseTaboola &&
+			window.wgAdDriverUseTaboola &&
 			abTest && abTest.inGroup('NATIVE_ADS_TABOOLA', 'YES'),
 
 		dartBtfCountries = {

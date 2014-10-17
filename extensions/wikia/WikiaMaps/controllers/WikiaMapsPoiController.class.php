@@ -58,6 +58,7 @@ class WikiaMapsPoiController extends WikiaMapsBaseController {
 
 			WikiaMapsLogger::addLogEntry(
 				( $this->isUpdate() ? WikiaMapsLogger::ACTION_UPDATE_PIN : WikiaMapsLogger::ACTION_CREATE_PIN ),
+				$this->wg->User,
 				$mapId,
 				$name
 			);
@@ -84,14 +85,7 @@ class WikiaMapsPoiController extends WikiaMapsBaseController {
 
 		$results = $this->getModel()->deletePoi( $this->getData( 'poiId' ) );
 		if ( true === $results[ 'success' ] ) {
-			WikiaMapsLogger::addLogEntry(
-				WikiaMapsLogger::ACTION_DELETE_PIN,
-				$mapId,
-				$poiId,
-				[
-					$this->wg->User->getName(),
-				]
-			);
+			WikiaMapsLogger::addLogEntry( WikiaMapsLogger::ACTION_DELETE_PIN, $this->wg->User, $mapId, $poiId );
 		}
 		$this->setVal( 'results', $results );
 	}
