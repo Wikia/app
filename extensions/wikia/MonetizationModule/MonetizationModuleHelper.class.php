@@ -23,6 +23,7 @@ class MonetizationModuleHelper extends WikiaModel {
 	const API_VERSION = 'v1';
 	const API_DISPLAY = 'display/api/';
 	const IN_CONTENT_KEYWORD = '<h2>';
+	const TOC_KEYWORD = 'id="toc"';
 
 	const FONT_COLOR_DARK_THEME = '#d5d4d4';
 	const FONT_COLOR_LIGHT_THEME = '#3a3a3a';
@@ -252,16 +253,26 @@ class MonetizationModuleHelper extends WikiaModel {
 
 		if ( !empty( $monetizationUnits[self::SLOT_TYPE_IN_CONTENT] ) ) {
 			$pos1 = strpos( $body, self::IN_CONTENT_KEYWORD );
-			if ( $pos1 === false ) {
-				$body .= $monetizationUnits[self::SLOT_TYPE_IN_CONTENT];
-			} else {
+			if ( $pos1 !== false ) {
 				$pos2 = strpos( $body, self::IN_CONTENT_KEYWORD, $pos1 + strlen( self::IN_CONTENT_KEYWORD ) );
-				if ( $pos2 === false ) {
-					$body .= $monetizationUnits[self::SLOT_TYPE_IN_CONTENT];
-				} else {
-					$body = substr_replace( $body, $monetizationUnits[self::SLOT_TYPE_IN_CONTENT], $pos2, 0 );
+				if ( $pos2 !== false ) {
+					$posTOC = strpos( $body, self::TOC_KEYWORD );
+					if ( $posTOC < $pos2 ) {
+						$pos3 = strpos( $body, self::IN_CONTENT_KEYWORD, $pos2 + strlen( self::IN_CONTENT_KEYWORD ) );
+						if ( $pos3 !== false ) {
+							$body = substr_replace( $body, $monetizationUnits[self::SLOT_TYPE_IN_CONTENT], $pos3, 0 );
+							wfProfileOut( __METHOD__ );
+							return $body;
+						}
+					} else {
+						$body = substr_replace( $body, $monetizationUnits[self::SLOT_TYPE_IN_CONTENT], $pos2, 0 );
+						wfProfileOut( __METHOD__ );
+						return $body;
+					}
 				}
 			}
+
+			$body .= $monetizationUnits[self::SLOT_TYPE_IN_CONTENT];
 		}
 
 		wfProfileOut( __METHOD__ );
