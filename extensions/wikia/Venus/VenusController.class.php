@@ -38,9 +38,9 @@ class VenusController extends WikiaController {
 	}
 
 	public function index() {
-		global $wgUser, $wgTitle, $wgRequest;
+		global $wgUser;
 
-		$this->title = $wgTitle->getText();
+
 		$this->contents = $this->skinTemplateObj->data['bodytext'];
 
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
@@ -51,8 +51,6 @@ class VenusController extends WikiaController {
 		$this->setHeadItems();
 		$this->setAssets();
 
-		//TODO should be removed when cover unit is going to be implemented
-		$this->response->setVal('showCoverUnit', $wgRequest->getBool('coverunit', false));
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 
@@ -66,6 +64,7 @@ class VenusController extends WikiaController {
 
 		if ( WikiaPageType::isArticlePage() ) {
 			$this->leftArticleNav = $this->getLeftArticleNavigation();
+			$this->setVal('header', $this->app->renderView('Venus', 'header'));
 			Wikia::addAssetsToOutput( 'article_scss' );
 		}
 	}
@@ -230,6 +229,42 @@ class VenusController extends WikiaController {
 	}
 
 	public function leftArticleNavigation() {
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+	}
+
+	public function header() {
+		global $wgOut, $wgArticle, $wgSupressPageTitle, $wgSupressPageSubtitle, $wgRequest;
+
+		$title = $wgOut->getPageTitle();
+		$redirect = null;
+
+		$skin = RequestContext::getMain()->getSkin();
+
+		// render subpage info like /ArticleOne/ArticleTwo
+		$subtitle = $skin->subPageSubtitle();
+
+		// render redirect info (redirected from)
+		if ( !empty( $wgArticle->mRedirectedFrom ) ) {
+			$redirect = trim( $wgOut->getSubtitle(), '()' );
+		}
+
+		if ( !empty( $wgSupressPageTitle ) ) {
+			$title = null;
+			$subtitle = null;
+			$redirect = null;
+		}
+
+		if ( !empty(  $wgSupressPageSubtitle ) ) {
+			$subtitle = null;
+			$redirect = null;
+		}
+
+		//TODO should be removed when cover unit is going to be implemented
+		$this->response->setVal('showCoverUnit', $wgRequest->getBool('coverunit', false));
+		$this->response->setVal('title', $title);
+		$this->response->setVal('subtitle', $subtitle);
+		$this->response->setVal('redirect', $redirect);
+
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 }
