@@ -871,6 +871,7 @@ class UserProfilePageController extends WikiaController {
 	 */
 
 	public function onFacebookConnectAvatar() {
+		return true;
 		wfProfileIn(__METHOD__);
 
 		$user = $this->app->wg->User;

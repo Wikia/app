@@ -23,11 +23,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'This file is a MediaWiki extension, it is not a valid entry point' );
 }
 
-//use Facebook\FacebookSession;
-//use Facebook\FacebookRequest;
-//use Facebook\GraphUser;
-//use Facebook\FacebookRequestException;
-
 /**
  * Class FBConnectAPI
  *
@@ -51,23 +46,11 @@ class FBConnectAPI {
 	public function Facebook() {
 		global $fbAppId, $fbAppSecret;
 		// Construct a new Facebook object on first time access
-		if ( is_null(self::$__Facebook) && self::isConfigSetup() ) {
-			/*
-			self::$__Facebook = new Facebook3(array(
-				'appId'  =>  $fbAppId,
-				'secret' => $fbAppSecret
-			));
-*/
-
+		if ( is_null( self::$__Facebook ) && self::isConfigSetup() ) {
 			Facebook\FacebookSession::setDefaultApplication( $fbAppId, $fbAppSecret );
 
 			self::$__Facebook = new Facebook\FacebookJavaScriptLoginHelper();
-$session = self::$__Facebook->getSession();
-gbug("SESSION: ", $session);
-
-			//self::$__Facebook->api_client = new FacebookRestClient($fbAppId, $fbAppSecret, null);
-			//Facebook( $fbAppId, $fbAppSecret );
-			if (!self::$__Facebook) {
+			if ( !self::$__Facebook ) {
 				error_log('Could not create facebook client.');
 			}
 		}
@@ -116,10 +99,11 @@ gbug("SESSION: ", $session);
 	 * Calls users.getInfo. Requests information about the user from 	.
 	 */
 	public function getUserInfo( $user = 0, $fields = null ) {
+		return null;
+
 		if ($user == 0) {
 			$user = $this->user();
 		}
-
 
 		if ($user != 0 && !isset($userinfo[$user]) )
 		{
@@ -312,20 +296,20 @@ gbug("SESSION: ", $session);
 	 */
 
 	function logout() {
-		$this->Facebook()->destroySession();
+		//$this->Facebook()->destroySession();
 	}
 
 	/*
 	 *
 	 */
 	function verifyAccountReclamation() {
-		$sr = (int) $this->Facebook()->getUser();
+		$sr = (int) $this->Facebook()->getUserId();
 
-		if($sr == 0) {
+		if ( $sr == 0 ) {
 			return true;
 		}
 
-		$user = FBConnectDB::getUser($sr);
+		$user = FBConnectDB::getUser( $sr );
 		return $user;
 	}
 }
