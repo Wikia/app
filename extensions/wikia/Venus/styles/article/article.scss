@@ -192,7 +192,7 @@ $article-items-spacing: 40px;
 
 #TOP_RIGHT_BOXAD.default-height {
 	height: 250px;
-	.hidden {
+	&.hidden, .hidden {
 		display: none;
 	}
 }
