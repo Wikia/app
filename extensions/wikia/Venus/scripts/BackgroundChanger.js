@@ -6,7 +6,7 @@
  * @type {{load: Function}}
  */
 
-define('wikia.backgroundchanger', function()  {
+define('wikia.backgroundchanger', ['jquery'], function ($)  {
 	'use strict';
 	/**
 	 * Load background.scss with params
@@ -21,7 +21,7 @@ define('wikia.backgroundchanger', function()  {
 	 *
 	 * @param options
 	 */
-	function load(options) {
+	function load (options) {
 		var imagePreload = new Image(),
 			optionsForSass = {
 				'background-image': options.skinImage || '',
@@ -36,21 +36,22 @@ define('wikia.backgroundchanger', function()  {
 		imagePreload.src = options.skinImage;
 
 		// load CSS and apply class changes to body element after loading
-		$.getCSS(sassUrl, function() {
+		$.getCSS (sassUrl, function() {
+			var $body = $('body');
 			if (options.skinImage !== '' && options.skinImageWidth > 0 && options.skinImageHeight > 0) {
 				if ((options.backgroundFixed === undefined) || !!options.backgroundFixed) {
-					$('body').addClass('background-fixed');
+					$body.addClass('background-fixed');
 				} else {
-					$('body').removeClass('background-fixed');
+					$body.removeClass('background-fixed');
 				}
 
 				if ((options.backgroundTiled !== undefined) && !!options.backgroundTiled) {
-					$('body').removeClass('background-not-tiled');
+					$body.removeClass('background-not-tiled');
 				} else {
-					$('body').addClass('background-not-tiled');
+					$body.addClass('background-not-tiled');
 				}
 			} else {
-				$('body').removeClass('background-not-tiled background-fixed');
+				$body.removeClass('background-not-tiled background-fixed');
 			}
 		});
 	}
