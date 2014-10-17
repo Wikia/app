@@ -1383,8 +1383,6 @@
 		addThumbsToCarousel: function (thumbs, backfill) {
 			var carouselThumbs,
 				container = Lightbox.openModal.carouselContainer;
-			//load thumbs if some are provided in other case use the ones from cache
-			thumbs = !$.isEmptyObject(thumbs) ? thumbs : LightboxLoader.cache.wikiPhotos;
 
 			// render carousel
 			carouselThumbs = Lightbox.openModal.carouselTemplate.mustache({
