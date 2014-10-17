@@ -1,6 +1,5 @@
 @import '/skins/wikia/shared.css';
-@import 'skins/shared/mixins/clearfix';
-@import '../grid';
+@import '../libs/foundation.custom/components/grid.mixins';
 @import 'extensions/wikia/MediaGallery/styles/MediaGallery';
 @import 'video';
 
@@ -12,7 +11,7 @@
 	white-space: normal;
 }
 
-.wikia-slideshow-images-wrapper {
+.wikia-slideshow-images-wrapper	{
 	background-color: $color-menu-highlight;
 	border-color: $color-links;
 	color: $color-text;
