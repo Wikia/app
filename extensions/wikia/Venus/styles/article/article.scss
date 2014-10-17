@@ -198,7 +198,6 @@ $article-items-spacing: 40px;
 }
 /* END FOR PROTOTYPE/TESTING ONLY */
 
-
 @media #{$large-up} {
 	.article header {
 		@include grid-column-width('large', 8, $large-content-padding - $content-border-width);
