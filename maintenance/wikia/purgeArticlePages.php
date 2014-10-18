@@ -2,7 +2,6 @@
 
 /**
 * Maintenance script to clear varnish cache for article pages for the wiki
-* This is one time use script
 * @author Saipetch Kongkatong
 */
 
