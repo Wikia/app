@@ -292,7 +292,6 @@ class MonetizationModuleHelper extends WikiaModel {
 			WikiaLogger::instance()->info( "MonetizationModule: remove below_category ad", $loggingParams );
 		}
 
-
 		wfProfileOut( __METHOD__ );
 
 		return $body;
