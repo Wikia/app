@@ -7,8 +7,10 @@ class ExactTargetUpdateUserTask {
 	 * @param array $aUserData Selected fields from Wikia user table
 	 */
 	public function updateUserData( $aUserData ) {
-		$oClient = $this->getClient();
-		$this->updateUserDataExtension( $aUserData, $oClient );
+		$oHelper = $this->getHelper();
+		$aApiParams = $oHelper->prepareUserDataExtensionParamsForUpdate( $aUserData );
+		$oApiDataExtension = $this->getApiDataExtension();
+		$oApiDataExtension->updateRequest( $aApiParams );
 	}
 
 	/**
@@ -17,19 +19,20 @@ class ExactTargetUpdateUserTask {
 	 * @param string $iUserEmail
 	 */
 	public function updateUserEmail( $iUserId, $iUserEmail ) {
-		$oClient = $this->getClient();
-
 		/* Subscriber list contains unique emails
 		 * Assuming email may be new - try to create subscriber object using the email */
 		$addUserTask = $this->getAddUserTaskObject();
-		$addUserTask->createSubscriber( $iUserEmail, $oClient );
+		$addUserTask->createSubscriber( $iUserEmail );
 
 		/* Update email in user data extension */
 		$aUserData = [
 			'user_id' => $iUserId,
 			'user_email' => $iUserEmail
 		];
-		$this->updateUserDataExtension( $aUserData, $oClient );
+		$oHelper = $this->getHelper();
+		$aApiParams = $oHelper->prepareUserDataExtensionParamsForUpdate( $aUserData );
+		$oApiDataExtension = $this->getApiDataExtension();
+		$oApiDataExtension->updateRequest( $aApiParams );
 	}
 
 	/**
@@ -40,29 +43,6 @@ class ExactTargetUpdateUserTask {
 	public function updateUserPropertiesData( $aUserData, $aUserProperties ) {
 		$oClient = $this->getClient();
 		$this->updateUserPropertiesDataExtension( $aUserData['user_id'], $aUserProperties, $oClient );
-	}
-
-	/**
-	 * Updates DataExtension object in ExactTarget by API request that reflects Wikia user table
-	 * @param Array $aUserData Selected fields from Wikia user table
-	 */
-	public function updateUserDataExtension( $aUserData, $oClient ) {
-
-		try {
-			$oDE = $this->prepareUserDataExtensionObjectsForUpdate( $aUserData );
-			$oSoapVar = $this->wrapToSoapVar( $oDE );
-			$oRequest = $this->wrapUpdateRequest( [ $oSoapVar ] );
-
-			/* Send API update request */
-			$oClient->Update( $oRequest );
-
-			/* Log response */
-			$this->info( $oClient->__getLastResponse() );
-
-		} catch ( SoapFault $e ) {
-			/* Log error */
-			$this->error( 'SoapFault:' . $e->getMessage() . 'ErrorCode: ' . $e->getCode() );
-		}
 	}
 
 	/**
@@ -88,34 +68,7 @@ class ExactTargetUpdateUserTask {
 		}
 	}
 
-	/**
-	 * Prepares array of ExactTarget_DataExtensionObject objects for user table
-	 * that can be used to send API update
-	 * @param array $aUserData user key value array
-	 * @return ExactTarget_DataExtensionObject
-	 */
-	public function prepareUserDataExtensionObjectsForUpdate( $aUserData ) {
 
-		$userId = $this->extractUserIdFromData( $aUserData );
-		/* Create new DataExtensionObject that reflects user table data */
-		$oDE = new ExactTarget_DataExtensionObject();
-
-		/* Get Customer Keys specific for production or development */
-		$aCustomerKeys = ExactTargetUpdatesHelper::getCustomerKeys();
-		$oDE->CustomerKey = $aCustomerKeys['user'];
-
-		/* Prapare update data */
-		$apiProperties = [];
-		foreach ( $aUserData as $key => $value ) {
-			$apiProperties[] = $this->wrapApiProperty( $key,  $value );
-		}
-		$oDE->Properties = $apiProperties;
-
-		/* Prepare query keys */
-		$oDE->Keys = [ $this->wrapApiProperty( 'user_id',  $userId ) ];
-
-		return $oDE;
-	}
 
 	/**
 	 * Prepares array of ExactTarget_DataExtensionObject objects for user_properties table
@@ -156,7 +109,23 @@ class ExactTargetUpdateUserTask {
 	 * Returns an instance of ExactTargetAddUserTask class
 	 * @return ExactTargetAddUserTask
 	 */
-	protected function getAddUserTaskObject() {
+	private function getAddUserTaskObject() {
 		return new ExactTargetAddUserTask();
+	}
+
+	/**
+	 * Returns an instance of ExactTargetApiDataExtension class
+	 * @return ExactTargetApiDataExtension
+	 */
+	private function getApiDataExtension() {
+		return new ExactTargetApiDataExtension();
+	}
+
+	/**
+	 * Returns an instance of ExactTargetUserTaskHelper class
+	 * @return ExactTargetUserTaskHelper
+	 */
+	private function getHelper() {
+		return new ExactTargetUserTaskHelper();
 	}
 }
