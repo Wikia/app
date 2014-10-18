@@ -38,72 +38,16 @@ class ExactTargetUpdateUserTask {
 	/**
 	 * Task for updating user_properties data in ExactTarget
 	 * @param array $aUserData Selected fields from Wikia user table
-	 * @param array $aUserProperties Array of Wikia user gobal properties
+	 * @param array $aUserProperties Array of Wikia user gloal properties ['property_name'=>'property_value']
 	 */
 	public function updateUserPropertiesData( $aUserData, $aUserProperties ) {
-		$oClient = $this->getClient();
-		$this->updateUserPropertiesDataExtension( $aUserData['user_id'], $aUserProperties, $oClient );
-	}
-
-	/**
-	 * Creates DataExtension object in ExactTarget by API request that reflects Wikia user_properties table
-	 * @param Integer $iUserId User ID
-	 * @param Array $aUserProperties key-value array ['property_name'=>'property_value']
-	 */
-	public function updateUserPropertiesDataExtension( $iUserId, $aUserProperties, $oClient ) {
-
-		try {
-			$aDE = $this->prepareUserPropertiesDataExtensionObjectsForUpdate( $iUserId, $aUserProperties );
-			$aSoapVars = $this->prepareSoapVars( $aDE );
-			$oRequest = $this->wrapUpdateRequest( $aSoapVars );
-
-			/* Send API request */
-			$oClient->Update( $oRequest );
-
-			/* Log response */
-			$this->info( $oClient->__getLastResponse() );
-		} catch ( SoapFault $e ) {
-			/* Log error */
-			$this->error( 'SoapFault:' . $e->getMessage() . 'ErrorCode: ' . $e->getCode() );
-		}
+		$oHelper = $this->getHelper();
+		$aApiParams = $oHelper->prepareUserPropertiesDataExtensionObjectsForUpdate( $aUserData['user_id'], $aUserProperties );
+		$oApiDataExtension = $this->getApiDataExtension();
+		$oApiDataExtension->updateRequest( $aApiParams );
 	}
 
 
-
-	/**
-	 * Prepares array of ExactTarget_DataExtensionObject objects for user_properties table
-	 * that can be used to send API update
-	 * @param int $iUserId User id
-	 * @param array $aUserProperties user_properties key value array
-	 * @return array of ExactTarget_DataExtensionObject objects
-	 */
-	public function prepareUserPropertiesDataExtensionObjectsForUpdate( $iUserId, $aUserProperties ) {
-
-		$aDE = [];
-		foreach ( $aUserProperties as $sProperty => $sValue ) {
-
-			/* Create new DataExtensionObject that reflects user_properties table data */
-			$oDE = new ExactTarget_DataExtensionObject();
-
-			/* Get Customer Keys specific for production or development */
-			$aCustomerKeys = ExactTargetUpdatesHelper::getCustomerKeys();
-			$oDE->CustomerKey = $aCustomerKeys['user_properties'];
-
-			/* @var $keys Array of ExactTarget_APIProperty objects - select criteria */
-			$keys = [];
-			$keys[] = $this->wrapApiProperty( 'up_user', $iUserId );
-			$keys[] = $this->wrapApiProperty( 'up_property', $sProperty );
-			$oDE->Keys = $keys;
-
-			/* @var $aProperties Array of ExactTarget_APIProperty objects - value for update */
-			$aProperties = [];
-			$aProperties[] = $this->wrapApiProperty( 'up_value', $sValue );
-			$oDE->Properties = $aProperties;
-
-			$aDE[] = $oDE;
-		}
-		return $aDE;
-	}
 
 	/**
 	 * Returns an instance of ExactTargetAddUserTask class

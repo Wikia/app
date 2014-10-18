@@ -58,7 +58,7 @@ class ExactTargetUserTaskHelper {
 	 * Prepares array of params for ExactTarget API for creating DataExtension objects for user table
 	 * Assumes $aUserData has user_id key that will be treated as filter to update data
 	 * @param array $aUserData user key value array
-	 * @return ExactTarget_DataExtensionObject
+	 * @return array
 	 */
 	public function prepareUserDataExtensionParamsForUpdate( $aUserData ) {
 		$userId = $this->extractUserIdFromData( $aUserData );
@@ -75,6 +75,35 @@ class ExactTargetUserTaskHelper {
 				]
 			]
 		];
+		return $aApiParams;
+	}
+
+	/**
+	 * Prepares array of params for ExactTarget API for creating DataExtension objects for user table
+	 * @param int $iUserId User id
+	 * @param array $aUserProperties user_properties key value array
+	 * @return array
+	 */
+	public function prepareUserPropertiesDataExtensionObjectsForUpdate( $iUserId, $aUserProperties ) {
+
+		/* Get Customer Keys specific for production or development */
+		$aCustomerKeys = ExactTargetUpdatesHelper::getCustomerKeys();
+		$sCustomerKey = $aCustomerKeys['user_properties'];
+
+		foreach ( $aUserProperties as $sProperty => $sValue ) {
+			$aApiParams = [
+				[
+					'DataExtension' => [
+						'CustomerKey' => $sCustomerKey,
+						'Properties' => [ 'up_value' => $sValue ],
+						'Keys' => [
+							'up_user' => $iUserId,
+							'up_property' => $sProperty
+						]
+					]
+				]
+			];
+		}
 		return $aApiParams;
 	}
 }
