@@ -263,8 +263,8 @@ class MonetizationModuleHelper extends WikiaModel {
 
 		// Check for the 2nd <H2> tag
 		if ( $pos2 !== false ) {
-			$posTOC = strpos( $body, self::TOC_KEYWORD );
 			// The 2nd <H2> tag exists. Check for TOC.
+			$posTOC = strpos( $body, self::TOC_KEYWORD );
 			if ( $posTOC === false ) {
 				// TOC not exist. Insert the ad above the 2nd <H2> tag.
 				$body = substr_replace( $body, $monetizationUnits[self::SLOT_TYPE_IN_CONTENT], $pos2, 0 );
