@@ -28,7 +28,11 @@ class VenusHooks {
 			}
 
 			$content = $dom->saveHTML();
-			$infoboxes = Html::rawElement( 'div', [ 'id' => 'infoboxWrapper' ], $infoboxes );
+			$infoboxes = Html::rawElement(
+				'div',
+				[ 'id' => 'infoboxContainer', 'class' => 'infobox-container' ],
+				$infoboxes
+			);
 			$parser->getOutput()->setBeforeTextHTML($infoboxes);
 		}
 

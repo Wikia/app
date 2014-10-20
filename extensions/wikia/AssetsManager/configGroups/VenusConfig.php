@@ -75,6 +75,9 @@ $VenusConfig[ 'venus_body_js' ] = [
 		// BackgroundChanger
 		'//extensions/wikia/Venus/scripts/BackgroundChanger.js',
 
+		// Infobox
+		'//extensions/wikia/Venus/scripts/Infobox.js',
+
 		'#group_adengine2_js',
 
 		'//resources/wikia/modules/browserDetect.js',
