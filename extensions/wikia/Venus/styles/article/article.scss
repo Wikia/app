@@ -40,8 +40,8 @@ $article-items-spacing: 40px;
 }
 
 .left-nav {
-	float: left;
 	margin-left: $medium-content-padding - $content-border-width;
+	position: fixed;
 	text-align: center;
 	width: $medium-grid-column;
 
@@ -62,6 +62,7 @@ $article-items-spacing: 40px;
 }
 
 .mw-content-text {
+	clear: left;
 	margin: 0 $medium-content-padding - $content-border-width 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width;
 	padding: 0 $medium-grid-column-padding;
 
@@ -82,7 +83,6 @@ $article-items-spacing: 40px;
 
 	h1, h2, h3, h4, h5, h6 {
 		font-weight: bold;
-		min-width: 1px;
 		overflow: hidden;
 	}
 
