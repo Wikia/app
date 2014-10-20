@@ -52,6 +52,9 @@ class WikiaSearchIndexerController extends WikiaController
 			if ( !empty( $ids ) ) {
 				$this->response->setData( $service->getResponseForPageIds() );
 			}
+		} else {
+			\Wikia\Logger\WikiaLogger::instance()->error( 'WikiaSearchIndexer invoked with bad service param.',
+				[ 'serviceName' => $serviceName ] );
 		}
 	}
 	
