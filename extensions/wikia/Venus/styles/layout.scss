@@ -18,10 +18,13 @@ a {
 	}
 }
 
+.wikia-page-wrapper {
+	padding: $global-navigation-height 0 0;
+}
+
 .wikia-page {
 	background: $color-page;
 	border: $content-border-width solid $color-page-border;
-	padding: $global-navigation-height 0 0;
 
 	& > header {
 		@include grid-content-padding;

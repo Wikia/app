@@ -185,7 +185,7 @@ class VenusController extends WikiaController {
 	}
 
 	private function getTopAds() {
-		//return $this->app->renderView('Ad', 'Top');
+		return $this->app->renderView('Ad', 'Top');
 	}
 
 	private function getGlobalFooter() {
