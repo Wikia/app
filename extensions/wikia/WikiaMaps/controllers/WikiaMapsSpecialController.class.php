@@ -22,6 +22,9 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 	 * @var WikiaMaps
 	 */
 	private $mapsModel;
+	private $mapId;
+	private $mapCityId;
+	private $mapDeleted;
 
 	/**
 	 * Special page constructor
@@ -110,19 +113,19 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 		$lat = $this->request->getInt( 'lat', WikiaMapsParserTagController::DEFAULT_LATITUDE );
 		$lon = $this->request->getInt( 'lon', WikiaMapsParserTagController::DEFAULT_LONGITUDE );
 
-		$mapId = (int) $this->getPar();
-		$this->setVal( 'mapId', $mapId );
+		$this->mapId = (int) $this->getPar();
+		$this->setVal( 'mapId', $this->mapId );
 
 		$model = $this->getModel();
-		$map = $model->getMapByIdFromApi( $mapId );
+		$map = $model->getMapByIdFromApi( $this->mapId );
 
 		if ( isset( $map->title ) ) {
 			$this->prepareSingleMapPage( $map );
 
-			$params = $model->getMapRenderParams( $this->getVal( 'mapCityId' ) );
+			$params = $model->getMapRenderParams( $this->mapCityId );
 
 			$url = $model->getMapRenderUrl( [
-				$mapId,
+				$this->mapId,
 				$zoom,
 				$lat,
 				$lon
@@ -132,7 +135,7 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 				$this->setMapOnMobile();
 			} else {
 				$this->setVal( 'title', $map->title );
-				$this->setVal( 'menu', $this->getMenuMarkup( $this->getVal( 'deleted' ) ) );
+				$this->setVal( 'menu', $this->getMenuMarkup() );
 			}
 
 			$this->setVal( 'mapFound', true );
@@ -150,17 +153,17 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 	 * Single map page for Google crawler
 	 */
 	public function mapData() {
-		$mapId = (int) $this->getPar();
-		$this->setVal( 'mapId', $mapId );
+		$this->mapId = (int) $this->getPar();
+		$this->setVal( 'mapId', $this->mapId );
 
 		$model = $this->getModel();
-		$mapData = $model->getMapDataByIdFromApi( $mapId );
+		$mapData = $model->getMapDataByIdFromApi( $this->mapId );
 
 		if ( isset( $mapData->title ) ) {
 			$this->prepareSingleMapPage( $mapData );
 
 			$this->setVal( 'title', $mapData->title );
-			$this->setVal( 'menu', $this->getMenuMarkup( $this->getVal( 'deleted' ) ) );
+			$this->setVal( 'menu', $this->getMenuMarkup() );
 
 			$this->setVal( 'mapFound', true );
 
@@ -178,21 +181,21 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 	 * @param $mapData
 	 */
 	public function prepareSingleMapPage( $mapData ) {
-		$mapCityId = $mapData->city_id;
-		$this->setVal( 'mapCityId', $mapCityId );
+		$this->mapCityId = $mapData->city_id;
 
-		$this->redirectIfForeignWiki( $mapCityId, $this->getVal( 'mapId' ) );
+		$this->redirectIfForeignWiki( $this->mapCityId, $this->mapId );
 		$this->wg->out->setHTMLTitle( $mapData->title );
 
-		$deleted = $mapData->deleted == WikiaMaps::MAP_DELETED;
-		if ( $deleted && $this->app->checkSkin( 'oasis' ) ) {
+		$this->mapDeleted = $mapData->deleted == WikiaMaps::MAP_DELETED;
+
+		if ( $this->mapDeleted && $this->app->checkSkin( 'oasis' ) ) {
 			NotificationsController::addConfirmation(
 				wfMessage( 'wikia-interactive-maps-map-is-deleted' ),
 				NotificationsController::CONFIRMATION_WARN
 			);
 		}
 
-		$this->setVal( 'deleted', $deleted );
+		$this->setVal( 'deleted', $this->mapDeleted );
 	}
 
 	/**
@@ -248,17 +251,16 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 
 	/**
 	 * Renders the menu markup for the map page from mustache
-	 * @param Integer $deleted flag which tells if a map was deleted
 	 * @return string
 	 */
-	function getMenuMarkup( $deleted ) {
+	function getMenuMarkup() {
 		$actionButtonArray = [
 			'action' => [
 				'text' => wfMessage( 'wikia-interactive-maps-actions' )->escaped(),
 			],
 			'dropdown' => [],
 		];
-		if ( $deleted ) {
+		if ( $this->mapDeleted ) {
 			$actionButtonArray[ 'dropdown' ][ 'undeleteMap' ] = [
 				'text' => wfMessage( 'wikia-interactive-maps-undelete-map' )->escaped(),
 				'id' => 'undeleteMap'
