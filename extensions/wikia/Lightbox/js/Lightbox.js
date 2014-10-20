@@ -15,9 +15,11 @@
 			thumbs: [], // master list of thumbnails inside carousel; purged after closing the lightbox
 			placeholderIdx: -1
 		},
+		carouselThumbWidth: 90,
+		carouselThumbHeight: 55,
 		// Modal vars
 		openModal: false, // gets replaced with dom object of open modal
-		shortScreen: false, // flag if the screen is shorter than LightboxLoader.defaults.height
+		shortScreen: false, // flag if the screen is shorter than LightboxLoader.lightboxSettings.height
 
 		// Carousel vars
 		// overlay for thumb images
@@ -66,7 +68,7 @@
 
 			// Check screen height for future interactions
 			Lightbox.shortScreen = ($(window).height() <
-				LightboxLoader.defaults.height + LightboxLoader.defaults.topOffset + 20); // buffer by 20px
+				LightboxLoader.lightboxSettings.height + LightboxLoader.lightboxSettings.topOffset + 20); // buffer by 20px
 
 			// Add template to modal
 			Lightbox.openModal.find('.modalContent').html(LightboxLoader.templateHtml);
@@ -388,8 +390,8 @@
 					})
 					.load(function () {
 						var image = $(this),
-							topOffset = LightboxLoader.defaults.topOffset,
-							modalMinHeight = LightboxLoader.defaults.height,
+							topOffset = LightboxLoader.lightboxSettings.topOffset,
+							modalMinHeight = LightboxLoader.lightboxSettings.height,
 							windowHeight = $(window).height(),
 							modalHeight = windowHeight - topOffset * 2,
 							currentModalHeight = Lightbox.openModal.height(),
@@ -474,7 +476,7 @@
 				Lightbox.openModal.media.html('');
 			},
 			updateLightbox: function (data) {
-				var height = LightboxLoader.defaults.height;
+				var height = LightboxLoader.lightboxSettings.height;
 				if (data.extraHeight) {
 					height += data.extraHeight;
 				}
@@ -622,7 +624,7 @@
 
 				// Set lightbox css
 				var css = {
-					height: LightboxLoader.defaults.height
+					height: LightboxLoader.lightboxSettings.height
 				};
 
 				// don't change top offset if the screen is shorter than the min modal height
@@ -658,7 +660,7 @@
 			updateLightbox: function () {
 				// Set lightbox css
 				var css = {
-					height: LightboxLoader.defaults.height
+					height: LightboxLoader.lightboxSettings.height
 				};
 
 				// don't change top offset if the screen is shorter than the min modal height
@@ -677,7 +679,7 @@
 				// Display error message
 				Lightbox.openModal.media
 					.css({
-						'margin-top': (LightboxLoader.defaults.height / 2) - 14,
+						'margin-top': (LightboxLoader.lightboxSettings.height / 2) - 14,
 						'line-height': 'normal'
 					})
 					.addClass('error-lightbox')
@@ -698,7 +700,7 @@
 			}
 		},
 		getDefaultTopOffset: function () {
-			var modalHeight = LightboxLoader.defaults.height,
+			var modalHeight = LightboxLoader.lightboxSettings.height,
 				windowHeight = $(window).height(),
 				topOffset = (windowHeight - modalHeight - 10) / 2;
 
@@ -1164,6 +1166,11 @@
 						thumbs = article.find('.image, .lightbox').find('img').add(article.find('.thumbimage'));
 					}
 
+					// cache keys for dupe checking later
+					$.each(thumbArr, function () {
+						keys.push(this.key);
+					});
+
 					thumbs.each(function () {
 						var $thisThumb = $(this),
 							type,
@@ -1210,6 +1217,13 @@
 								thumbWrapperClass: (type === 'video') ? Lightbox.videoWrapperClass : ''
 							});
 						}
+					});
+
+					// Add cached media gallery data sent over from MediaGallery extension.
+					$(window).trigger('lightboxArticleMedia', {
+						thumbArr: thumbArr,
+						width: Lightbox.carouselThumbWidth,
+						height: Lightbox.carouselThumbHeight
 					});
 
 					// Fill articleMedia cache
@@ -1373,14 +1387,12 @@
 
 				// Add thumbs to current lightbox cache
 				Lightbox.current.thumbs = Lightbox.current.thumbs.concat(thumbArr);
-
 				Lightbox.addThumbsToCarousel(thumbArr, backfill);
 			}
 		},
 		addThumbsToCarousel: function (thumbs, backfill) {
 			var carouselThumbs,
 				container = Lightbox.openModal.carouselContainer;
-
 			//load thumbs if some are provided in other case use the ones from cache
 			thumbs = !$.isEmptyObject(thumbs) ? thumbs : LightboxLoader.cache.wikiPhotos;
 
@@ -1402,7 +1414,7 @@
 
 		thumbParams: function (url, type) {
 			//Get URL to a proper thumbnail
-			return Wikia.Thumbnailer.getThumbURL(url, type, 90, 55);
+			return Wikia.Thumbnailer.getThumbURL(url, type, Lightbox.carouselThumbWidth, Lightbox.carouselThumbHeight);
 		},
 
 		/**

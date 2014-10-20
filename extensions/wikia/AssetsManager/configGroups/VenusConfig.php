@@ -39,6 +39,7 @@ $VenusConfig[ 'venus_body_js' ] = [
 
 		// jquery libs
 		'//resources/wikia/libraries/mustache/mustache.js',
+		'//resources/wikia/libraries/mustache/jquery.mustache.js',
 		'//resources/wikia/libraries/sloth/sloth.js',
 
 		// polyfills
@@ -75,6 +76,7 @@ $VenusConfig[ 'venus_body_js' ] = [
 		// BackgroundChanger
 		'//extensions/wikia/Venus/scripts/BackgroundChanger.js',
 
+		//TODO adEngine is throwing errors in console, should be fixed as part of CON-1531
 //		'#group_adengine2_js',
 
 		'//resources/wikia/modules/browserDetect.js',
@@ -82,11 +84,12 @@ $VenusConfig[ 'venus_body_js' ] = [
 
 		// Lightbox
 		'//extensions/wikia/Lightbox/js/LightboxLoader.js',
-		'//resources/wikia/libraries/mustache/jquery.mustache.js',
 		'//extensions/wikia/Lightbox/js/venusLightboxLoader.js',
 
 		// different article modules
 		'//skins/shared/scripts/scrollableTables.js',
+
+		'#group_bucky_js',
 
 		//following script initialize different modules in Venus
 		'//extensions/wikia/Venus/scripts/articleModulesLoader.js'
@@ -123,7 +126,6 @@ $VenusConfig['local_navigation_js'] = [
 	'skin' => ['venus', 'oasis'],
 	'assets' => [
 		'//extensions/wikia/LocalNavigation/scripts/LocalNavigationMenu.js',
-		'//extensions/wikia/LocalNavigation/scripts/LocalNavigationContribute.js',
 		'//extensions/wikia/LocalNavigation/scripts/LocalNavigationTracking.js'
 	]
 ];
@@ -133,7 +135,8 @@ $VenusConfig[ 'global_footer_scss' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'venus' ],
 	'assets' => [
-		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.scss'
+		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.scss',
+		'//extensions/wikia/GlobalFooter/styles/GlobalFooterVenus.scss'
 	]
 ];
 
@@ -197,3 +200,4 @@ $VenusConfig['imglzy_js'] = [
 		'//extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
 	]
 ];
+

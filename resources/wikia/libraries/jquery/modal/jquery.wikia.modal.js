@@ -18,7 +18,7 @@ $.fn.extend({
 			tabsOutsideContent: false,
 			topOffset: 50,
 			escapeToClose: true
-		}, calculatedZIndex, modalWidth;
+		}, calculatedZIndex, modalWidth, mainContent;
 
 		if (options) {
 			$.extend(settings, options);
@@ -55,6 +55,7 @@ $.fn.extend({
 
 		// let's have it dynamically generated, so every newly created modal will be on top
 		var zIndex = settings.zIndex ? parseInt(settings.zIndex) : (5001101 + ($('body').children('.blackout').length) * 2);
+		calculatedZIndex = zIndex + 1;
 
 		// needed here for getModalTopOffset()
 		wrapper.data('settings', settings);
@@ -85,7 +86,7 @@ $.fn.extend({
 
 		// calculate modal width for oasis
 		if (skin === 'oasis') {
-			var mainContent;
+
 			if(settings.width !== 'auto') {
 
 				// use provided width
@@ -101,11 +102,7 @@ $.fn.extend({
 			} else {
 				modalWidth = 'auto';
 			}
-		}
 
-		calculatedZIndex = zIndex + 1;
-
-		if (skin === 'oasis') {
 			//position modal. width must be set before calculating negative left margin
 			wrapper.width(modalWidth)
 				.css({

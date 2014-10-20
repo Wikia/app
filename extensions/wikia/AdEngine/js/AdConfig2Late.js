@@ -42,6 +42,9 @@ define('ext.wikia.adEngine.adConfigLate', [
 			'TOP_BUTTON_WIDE': true,
 			'TOP_BUTTON_WIDE.force': true
 		},
+		slotsToAlwaysCallRemnantGpt = {
+			'WIKIA_BAR_BOXAD_1': true
+		},
 		ie8 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.match(/MSIE [6-8]\./),
 
 		taboolaEnabledWikis = {
@@ -53,8 +56,9 @@ define('ext.wikia.adEngine.adConfigLate', [
 			onedirection: true
 		},
 		taboolaEnabled = country === 'US' &&
+			(window.wikiaPageType === 'article' || window.wikiaPageType === 'home') &&
 			taboolaEnabledWikis[window.wgDBname] &&
-			window.wgIsArticle && window.wgAdDriverUseTaboola &&
+			window.wgAdDriverUseTaboola &&
 			abTest && abTest.inGroup('NATIVE_ADS_TABOOLA', 'YES'),
 
 		dartBtfCountries = {
@@ -133,8 +137,10 @@ define('ext.wikia.adEngine.adConfigLate', [
 			return adProviderDirectGpt;
 		}
 
-		if (window.wgAdDriverUseRemnantGpt && adProviderRemnantGpt.canHandleSlot(slotname)) {
-			return adProviderRemnantGpt;
+		if (window.wgAdDriverUseRemnantGpt || slotsToAlwaysCallRemnantGpt[slotname]) {
+			if (adProviderRemnantGpt.canHandleSlot(slotname)) {
+				return adProviderRemnantGpt;
+			}
 		}
 
 		if (adProviderLiftium.canHandleSlot(slotname) && !instantGlobals.wgSitewideDisableLiftium) {

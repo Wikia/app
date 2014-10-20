@@ -1,6 +1,7 @@
 // functions are needed
 @import 'libs/foundation.custom/functions';
 @import 'z-index';
+@import 'skins/shared/variables';
 @import 'skins/shared/color';
 
 // Base
@@ -40,6 +41,9 @@ $large-content-width: 1156px;
 $small-content-padding: 16px;
 $medium-content-padding: 19px;
 $large-content-padding: 20px;
+
+// Border separating content area from the page background
+$content-border-width: 1px;
 
 // GRID
 // column content (padding excluded) 38px, gutter and column padding 8px each, grid margin 16px

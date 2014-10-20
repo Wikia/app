@@ -1,20 +1,15 @@
-@import 'skins/shared/color';
-@import 'skins/shared/mixins/bodytext';
-@import 'skins/shared/mixins/border-opacity';
-@import 'skins/shared/mixins/box-shadow';
-@import 'skins/shared/mixins/clearfix';
-
-$modal-border-opacity: 80;
-@if $is-dark-wiki {
-	$modal-border-opacity: 60;
-}
+@import 'skins/shared/modal';
 
 .lightbox-venus {
+	$width: 1010px;
+	$border-width: 5px;
+
+	border-width: $border-width;
 	box-sizing: content-box;
-	left: 50%;
 	height: 628px;
-	margin-left: -510px;
-	width: 1010px;
+	left: 50%;
+	margin-left: -($width + 2 * $border-width) / 2;
+	width: $width;
 
 	ul, ol {
 		list-style: none;
@@ -23,125 +18,30 @@ $modal-border-opacity: 80;
 	}
 
 	p {
-		margin:0;
-		padding:0;
+		margin: 0;
+		padding: 0;
 	}
-}
 
-.modalWrapper {
-	@include box-shadow(0, 10px, 60px, mix($color-page, #000));
-	background: $color-page;
-	border-width: 5px;
-	border-style: solid;
-	@include border-opacity($color-body, $modal-border-opacity);
-	color: $color-text;
-	position: absolute;
-
-	// give option to style other header tags like an h1
-	> h1, .main-header {
-		color: $color-links;
-		font-size: 22px;
-		margin: 20px 60px 20px 20px;
+	.close:after {
+		clear: both;
+		content: ' ';
+		display: block;
+		height: 0;
 		overflow: hidden;
+		visibility: hidden;
 	}
 
-	.close {
-		@include clearfix;
-		float: right;
-		margin: 20px 20px 0 0;
-		z-index: 1;
-
-		&:after {
-			clear: both;
-			content: " ";
-			display: block;
-			height: 0;
-			overflow: hidden;
-			visibility: hidden;
-		}
-	}
-
-	a.wikia-button {
-		background-color: #25883d;
-		background-image: -moz-linear-gradient(center top , #30b04f 35%, #25883d 65%);
-		border: 1px solid #25883d;
-		border-radius: 4px;
-		color: white;
+	.wikia-chiclet-button {
+		background-image: none;
+		border: 0 none;
+		border-radius: 0;
 		cursor: pointer;
 		display: inline-block;
-		font-family: Helvetica,Arial,sans-serif;
-		font-size: 12px;
 		height: 19px;
-		line-height: 20px;
-		margin: 0;
-		padding: 0 10px;
-		text-decoration: none;
-		white-space: nowrap;
-	}
-
-	.neutral {
-		background: transparent;
-	}
-
-	.modalToolbar {
-		text-align: right;
-		background: transparent;
-		margin-top: 20px;
-
-		a {
-			margin-left: 10px;
-		}
-	}
-
-	#WikiaConfirmOk {
-		margin-left: 2px;
+		opacity: .3;
+		padding: 0;
+		position: relative;
+		width: 19px;
 	}
 }
 
-.modalContent {
-	@include clearfix;
-	@include bodytext;
-	display: block;
-	margin: 0 20px 20px 20px;
-
-	// header tags inside modal content don't need the padding
-	.main-header {
-		margin-left: 0;
-		margin-top: 0;
-	}
-
-	.MyToolsConfiguration .options-list {
-		line-height: 1;
-	}
-
-	b {
-		font-weight: bold;
-	}
-
-	i {
-		font-style: italic;
-	}
-}
-
-.blackout {
-	background: $color-page;
-	left: 0;
-	opacity: 0.8;
-	position: fixed;
-	top: 0;
-	width: 100%;
-	height: 100%;
-}
-
-.wikia-chiclet-button {
-	background-image: none;
-	border: 0 none;
-	border-radius: 0;
-	cursor: pointer;
-	display: inline-block;
-	height: 19px;
-	opacity: 0.3;
-	padding: 0;
-	position: relative;
-	width: 19px;
-}

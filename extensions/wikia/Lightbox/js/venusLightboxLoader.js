@@ -1,7 +1,9 @@
-/* global define */
-define('venus.lightboxLoader', ['wikia.window'], function(window){
+/**
+ * Loads Lightbox in Venus skin.
+ */
+define('venus.lightboxLoader', ['wikia.window'], function (win) {
 	'use strict';
-	var init, lightboxSettings;
+	var lightboxSettings;
 
 	lightboxSettings = {
 		appendToBody: true,
@@ -11,9 +13,9 @@ define('venus.lightboxLoader', ['wikia.window'], function(window){
 		tabsOutsideContent: true
 	};
 
-	init = function() {
-		window.LightboxLoader.init(lightboxSettings);
-	};
+	function init() {
+		win.LightboxLoader.init(lightboxSettings);
+	}
 
 	return {
 		init: init

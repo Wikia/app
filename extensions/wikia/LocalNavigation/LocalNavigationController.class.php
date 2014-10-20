@@ -9,25 +9,27 @@ class LocalNavigationController extends WikiaController {
 		Wikia::addAssetsToOutput( 'local_navigation_scss' );
 		Wikia::addAssetsToOutput( 'local_navigation_oasis_scss' );
 		Wikia::addAssetsToOutput( 'local_navigation_js' );
+
+		$this->setVal( 'enableContributeButton', !WikiaPageType::isWikiaHubMain() );
 	}
 
 	public function menu() {
 		$menuNodes = $this->getMenuNodes();
-		$this->response->setVal('menuNodes', $menuNodes);
+		$this->setVal('menuNodes', $menuNodes);
 	}
 
 	public function menuLevel2() {
-		$nodes = $this->request->getVal('nodes', []);
-		$this->response->setVal('nodes', $nodes);
-		$more = $this->request->getVal('more', null);
-		$this->response->setVal('more', $more);
+		$nodes = $this->getVal('nodes', []);
+		$this->setVal('nodes', $nodes);
+		$more = $this->getVal('more', null);
+		$this->setVal('more', $more);
 	}
 
 	public function menuLevel3() {
-		$nodes = $this->request->getVal('nodes', []);
-		$this->response->setVal('nodes', $nodes);
-		$more = $this->request->getVal('more', null);
-		$this->response->setVal('more', $more);
+		$nodes = $this->getVal('nodes', []);
+		$this->setVal('nodes', $nodes);
+		$more = $this->getVal('more', null);
+		$this->setVal('more', $more);
 	}
 
 	private function getMenuNodes () {
@@ -58,9 +60,9 @@ class LocalNavigationController extends WikiaController {
 
 		$mainPageURL = Title::newMainPage()->getLocalURL();
 
-		$this->response->setVal( 'mainPageURL', $mainPageURL );
-		$this->response->setVal( 'wordmarkText', $settings['wordmark-text'] );
-		$this->response->setVal( 'wordmarkFontSize', $settings['wordmark-font-size'] );
-		$this->response->setVal( 'wordmarkUrl', $wordmarkURL );
+		$this->setVal( 'mainPageURL', $mainPageURL );
+		$this->setVal( 'wordmarkText', $settings['wordmark-text'] );
+		$this->setVal( 'wordmarkFontSize', $settings['wordmark-font-size'] );
+		$this->setVal( 'wordmarkUrl', $wordmarkURL );
 	}
 }
