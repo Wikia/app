@@ -26,11 +26,6 @@ wikia-ad.hidden, .wikia-ad .hidden {
 	float: right;
 	margin: 0 $medium-grid-column-padding + $medium-content-padding - $content-border-width 20px $medium-grid-gutter + $medium-grid-column-padding;
 
-	&.hidden,
-	.hidden {
-		display: none;
-	}
-
 	&.default-height {
 		height: 250px;
 	}
