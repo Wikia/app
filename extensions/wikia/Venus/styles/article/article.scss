@@ -90,33 +90,8 @@ $article-items-spacing: 40px;
 		line-height: 40px;
 		margin-left: 40px;
 
-<<<<<<< HEAD
 		a::before {
 			@include resize-edit-button(40px);
-=======
-		h1, h2, h3, h4, h5, h6 {
-			font-weight: bold;
-
-			.editsection {
-				display: inline-block;
-				float: right;
-				font-size: 12px;
-				line-height: 27px;
-				padding-left: 5px;
-				position: relative;
-				text-transform: uppercase;
-
-				&:before {
-					background-image: url('/extensions/wikia/Venus/images/editpen.svg'); /* base64 */
-					content: ' ';
-					display: inline-block;
-					height: 27px;
-					position: absolute;
-					right: 100%;
-					width: 27px;
-				}
-			}
->>>>>>> CON-1813 CR fixes
 		}
 	}
 
