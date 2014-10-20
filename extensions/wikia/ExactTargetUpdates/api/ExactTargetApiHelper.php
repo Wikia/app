@@ -114,17 +114,17 @@ class ExactTargetApiHelper {
 			if( isset( $DE['Properties'] ) ) {
 				$aApiProperties = [];
 				foreach( $DE['Properties'] as $sKey => $sValue ) {
-					$aApiProperties[] = $oApiHelper->wrapApiProperty( $sKey, $sValue );
+					$aApiProperties[] = $this->wrapApiProperty( $sKey, $sValue );
 				}
-				$oDE->Properties = $aApiProperties
+				$oDE->Properties = $aApiProperties;
 			}
 
 			if( isset( $DE['Keys'] ) ) {
 				$aApiKeys = [];
 				foreach( $DE['Keys'] as $sKey => $sValue ) {
-					$aApiKeys[] = $oApiHelper->wrapApiProperty( $sKey, $sValue );
+					$aApiKeys[] = $this->wrapApiProperty( $sKey, $sValue );
 				}
-				$oDE->Keys = $aApiKeys
+				$oDE->Keys = $aApiKeys;
 			}
 
 			$aDE[] = $oDE;
