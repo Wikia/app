@@ -5,6 +5,10 @@
 		seeMore,
 		maxInfoboxHeight = 700;
 
+	/**
+	 * Check if infobox is heigher than maxInfoboxHeight
+	 * and add see more button
+	 */
 	function collapseInfobox() {
 		var infoboxHeight = infoboxContainer.offsetHeight;
 
@@ -14,11 +18,17 @@
 		}
 	}
 
+	/**
+	 * Expand infobox
+	 */
 	function expandInfobox() {
 		infoboxContainer.classList.remove('collapsed-infobox');
 		seeMore.classList.add('hide');
 	}
 
+	/**
+	 * Create and add see more button to infobox
+	 */
 	function addSeeMoreElement() {
 		var infobox = infoboxContainer.firstChild,
 			infoboxStyles,
@@ -27,11 +37,11 @@
 		if (infobox) {
 			infoboxStyles = window.getComputedStyle(infobox);
 			bgColor = infoboxStyles.getPropertyValue('background-color');
-			console.log(bgColor);
+
 			seeMore = document.createElement('div');
 
 			// translations needed
-			seeMore.innerHTML = 'SEE MORE';
+			seeMore.innerHTML = window.mw.msg('venus-article-infobox-see-more');
 
 			seeMore.classList.add('see-more');
 			seeMore.style.backgroundColor = bgColor;
@@ -41,5 +51,7 @@
 		}
 	}
 
-	collapseInfobox();
+	if (infoboxContainer) {
+		collapseInfobox();
+	}
 }());

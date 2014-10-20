@@ -34,6 +34,7 @@ class VenusHooks {
 				$infoboxes
 			);
 			$parser->getOutput()->setBeforeTextHTML($infoboxes);
+			$parser->getOutput()->addModules( 'ext.wikia.venus.article.infobox' );
 		}
 
 		return true;
