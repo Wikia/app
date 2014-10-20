@@ -248,7 +248,7 @@ class SpecialConnect extends SpecialPage {
 	 * preferences while the other form should have already shown the preferences form to the user.
 	 */
 	public function connectExisting(){
-		global $wgUser, $wgRequest;
+		global $wgUser;
 		wfProfileIn(__METHOD__);
 
 		$fb_ids = FBConnectDB::getFacebookIDs($wgUser);
@@ -263,21 +263,6 @@ class SpecialConnect extends SpecialPage {
 
 			FBConnectDB::addFacebookID($wgUser, $fb_id);
 
-			// Save the default user preferences.
-			global $fbEnablePushToFacebook;
-			if(!empty($fbEnablePushToFacebook)){
-				global $fbPushEventClasses;
-				if(!empty($fbPushEventClasses)){
-					$DEFAULT_ENABLE_ALL_PUSHES = true;
-					foreach($fbPushEventClasses as $pushEventClassName){
-						$pushObj = new $pushEventClassName;
-						$className = get_class();
-						$prefName = $pushObj->getUserPreferenceName();
-
-						$wgUser->setOption($prefName, ($DEFAULT_ENABLE_ALL_PUSHES?"1":"0"));
-					}
-				}
-			}
 			$wgUser->setOption("fbFromExist", "1");
 			$wgUser->saveSettings();
 
@@ -485,25 +470,6 @@ class SpecialConnect extends SpecialPage {
 				}
 			}
 
-			// Process the FBConnectPushEvent preference checkboxes if fbConnectPushEvents are enabled.
-			global $fbEnablePushToFacebook;
-			if($fbEnablePushToFacebook){
-				global $fbPushEventClasses;
-				if(!empty($fbPushEventClasses)){
-					foreach($fbPushEventClasses as $pushEventClassName){
-						$pushObj = new $pushEventClassName;
-						$className = get_class();
-						$prefName = $pushObj->getUserPreferenceName();
-
-						$user->setOption($prefName, ($wgRequest->getCheck($prefName)?"1":"0"));
-					}
-				}
-			}
-
-			// Save the prefeference for letting user select to never send anything to their newsfeed.
-			$prefName = FBConnectPushEvent::$PREF_TO_DISABLE_ALL;
-			$user->setOption($prefName, ($wgRequest->getCheck($prefName)?"1":"0"));
-
 			// Unfortunately, performs a second database lookup
 			$fbUser = new FBConnectUser($user);
 			// Update the user with settings from Facebook
@@ -602,7 +568,7 @@ class SpecialConnect extends SpecialPage {
 	 * user object is logged in.
 	 *
 	 * NOTE: This isn't used by Wikia and hasn't been tested with some of the new
-	 * code. Does it handle setting push-preferences correctly?
+	 * code.
 	 */
 	protected function attachUser($fb_user, $name, $password) {
 		global $wgOut, $wgUser;

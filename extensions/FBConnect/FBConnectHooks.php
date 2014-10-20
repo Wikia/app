@@ -638,11 +638,12 @@ HTML;
 	 * Create disconnect button and other things in pref
 	 *
 	 * @param $user User
+	 * @param $preferences Preferences
+	 * @return true
 	 */
 	static function GetPreferences( $user, &$preferences ){
 		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgBlankImgUrl;
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/FBConnect/prefs.js?{$wgStyleVersion}\"></script>\n");
-		//$prefsection = 'fbconnect-prefstext';
 
 		$id = FBConnectDB::getFacebookIDs($user, DB_MASTER);
 		if( count($id) > 0 ) {
@@ -662,17 +663,6 @@ HTML;
 				$html .= wfMsg('fbconnect-disconnect-info');
 			}
 			$html .= Xml::closeElement( "div" );
-
-			$preferences['fbconnect-prefstext' ] = array(
-					'label' => "",
-					'type' => 'info',
-					'section' => 'fbconnect-prefstext/fbconnect-event-prefstext' );
-
-			$preferences['fbconnect-push-allow-never'] = array(
-					'type' => 'toggle',
-					'label-message' => 'tog-fbconnect-push-allow-never',
-					'section' => 'fbconnect-prefstext/fbconnect-event-prefstext',
-			);
 
 			$preferences['fbconnect-connect'] = array(
 					'help' => $html,
@@ -716,7 +706,7 @@ HTML;
 			$id = FBConnectDB::getFacebookIDs($wgUser, DB_MASTER);
 			if( count($id) > 0 ) {
 				$msg =  Xml::element("img", array("id" => "fbMsgImage", "src" => $wgServer.'/skins/common/fbconnect/fbiconbig.png' ));
-				$msg .= "<p>".wfMsg('fbconnect-connect-msg', array("$1" => $pref->getFullUrl() ))."</p>";
+				$msg .= "<p>".wfMsg('fbconnect-connect-msg')."</p>";
 				/** Wikia change - starts  @author Andrzej 'nAndy' Łukaszewski */
 				wfRunHooks('FounderProgressBarOnFacebookConnect');
 				/** Wikia change - ends */
