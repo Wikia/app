@@ -35,7 +35,7 @@ class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * prepareUserPropertiesDataExtensionObjectsForUpdate should set Keys property of ExactTarget_DataExtensionObject
+	 * prepareUserPropertiesUpdateParams should set Keys property of ExactTarget_DataExtensionObject
 	 * to define API query filter for update
 	 */
 	function testShouldSetKeysProperty() {
@@ -78,7 +78,7 @@ class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 			->getMock();
 
 		/* Run tested method */
-		$aDataExtensionActual = $mockUpdateUserTask->prepareUserPropertiesDataExtensionObjectsForUpdate( $iUserId, $aUserProperties );
+		$aDataExtensionActual = $mockUpdateUserTask->prepareUserPropertiesUpdateParams( $iUserId, $aUserProperties );
 
 		/* Check assertions */
 		$this->assertEquals( sizeof( $aDataExtensionActual ), 2 );

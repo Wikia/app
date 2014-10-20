@@ -8,7 +8,7 @@ class ExactTargetUpdateUserTask {
 	 */
 	public function updateUserData( $aUserData ) {
 		$oHelper = $this->getHelper();
-		$aApiParams = $oHelper->prepareUserDataExtensionParamsForUpdate( $aUserData );
+		$aApiParams = $oHelper->prepareUserUpdateParams( $aUserData );
 		$oApiDataExtension = $this->getApiDataExtension();
 		$oApiDataExtension->updateRequest( $aApiParams );
 	}
@@ -30,7 +30,7 @@ class ExactTargetUpdateUserTask {
 			'user_email' => $iUserEmail
 		];
 		$oHelper = $this->getHelper();
-		$aApiParams = $oHelper->prepareUserDataExtensionParamsForUpdate( $aUserData );
+		$aApiParams = $oHelper->prepareUserUpdateParams( $aUserData );
 		$oApiDataExtension = $this->getApiDataExtension();
 		$oApiDataExtension->updateRequest( $aApiParams );
 	}
@@ -42,7 +42,7 @@ class ExactTargetUpdateUserTask {
 	 */
 	public function updateUserPropertiesData( $aUserData, $aUserProperties ) {
 		$oHelper = $this->getHelper();
-		$aApiParams = $oHelper->prepareUserPropertiesDataExtensionObjectsForUpdate( $aUserData['user_id'], $aUserProperties );
+		$aApiParams = $oHelper->prepareUserPropertiesUpdateParams( $aUserData['user_id'], $aUserProperties );
 		$oApiDataExtension = $this->getApiDataExtension();
 		$oApiDataExtension->updateRequest( $aApiParams );
 	}

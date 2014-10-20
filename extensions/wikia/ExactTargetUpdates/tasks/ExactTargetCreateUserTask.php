@@ -66,7 +66,7 @@ class ExactTargetCreateUserTask extends BaseTask {
 	 */
 	public function createUserPropertiesDataExtension( $iUserId, $aUserProperties ) {
 		$oHelper = $this->getHelper();
-		$aDataExtensionsParams = $oHelper->prepareUserPropertiesDataExtensionsParams( $iUserId, $aUserProperties );
+		$aDataExtensionsParams = $oHelper->prepareUserPropertiesCreateParams( $iUserId, $aUserProperties );
 		$aApiParams = $oHelper->prepareApiCreateParams( $aDataExtensionsParams, 'user_properties' );
 		$oApiDataExtension = $this->getApiDataExtension();
 		$oApiDataExtension->createRequest( $aApiParams );
