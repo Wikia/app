@@ -1,6 +1,53 @@
 /* global define */
 define('wikia.dom', ['wikia.document'], function(doc) {
 	'use strict';
+	var addToClassList, selectorMatches;
+
+	/**
+	 * Check if provided element contains given class
+	 * using classList.contains if available or webkitMatchesSelector if not.
+	 * @param {Element} element - element which is checked
+	 * @param {String} className - class which should be contained by element
+	 */
+	selectorMatches = function(element, className) {
+		var selector;
+
+		if (!!element.classList) {
+			selectorMatches = function(element, className) {
+				return element.classList.contains(className);
+			};
+		} else if(!!element.webkitMatchesSelector) {
+			selectorMatches = function(element, className) {
+				selector = '.' + className;
+				return element.webkitMatchesSelector(selector);
+			};
+		} else {
+			throw 'Browser not supported';
+		}
+		return selectorMatches(element, className);
+	};
+
+	/**
+	 * Add class to given element classes. Use classList if defined or append to className
+	 * @param {Element} element - element which should have new class added
+	 * @param {String} className - class which should be added to provided element
+	 */
+	addToClassList = function(element, className) {
+		if (!!element.classList) {
+			addToClassList = function(element, className) {
+				element.classList.add(className);
+			};
+		} else {
+			addToClassList = function(element, className) {
+				if (element.className.length > 0) {
+					element.className += ' ' + className;
+				} else {
+					element.className += className;
+				}
+			};
+		}
+		return addToClassList(element, className);
+	};
 
 	/**
 	 * Find closest element to provided one with given class
@@ -11,19 +58,16 @@ define('wikia.dom', ['wikia.document'], function(doc) {
 	 */
 	function closestByClassName(element, targetParentByClass, maxParentsCount) {
 		var nodesUp = 0,
-			maxNodesUp = maxParentsCount || 5,
-			classListSupported = element.classList,
-			webkitMatchesSelectotSupported = element.webkitMatchesSelector;
-		while (element && nodesUp <= maxNodesUp) {
-			if (classListSupported && element.classList.contains(targetParentByClass)) {
-				return element;
-			//Support for Android 2.3
-			} else if (webkitMatchesSelectotSupported && element.webkitMatchesSelector('.' + targetParentByClass)) {
+			maxNodesUp = maxParentsCount || 5;
+
+		while (!!element && nodesUp <= maxNodesUp) {
+			if (selectorMatches(element, targetParentByClass)) {
 				return element;
 			}
 			element = element.parentNode;
 			nodesUp++;
 		}
+
 		return false;
 	}
 
@@ -47,23 +91,6 @@ define('wikia.dom', ['wikia.document'], function(doc) {
 		}
 
 		return element;
-	}
-
-	/**
-	 * Add class to given element classes. Use classList if defined or append to className
-	 * @param {Element} element - element which should have new class added
-	 * @param {String} className - class which should be added to provided element
-	 */
-	function addToClassList(element, className) {
-		if (element.classList) {
-			element.classList.add(className);
-		} else {
-			if (element.className.length > 0) {
-				element.className += ' ' + className;
-			} else {
-				element.className += className;
-			}
-		}
 	}
 
 	return {
