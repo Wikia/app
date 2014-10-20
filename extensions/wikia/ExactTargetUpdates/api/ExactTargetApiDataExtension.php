@@ -3,7 +3,9 @@
 class ExactTargetApiDataExtension {
 	use Wikia\Logger;
 
-	private $Helper, $Client;
+	/* @var ExactTargetApiHelper $Helper */
+	private $Helper;
+	private $Client;
 
 	function __construct() {
 		$this->getHelper();
@@ -55,6 +57,16 @@ class ExactTargetApiDataExtension {
 		$aDE = $this->Helper->prepareDataExtensionObjects( $aApiCallParams['DataExtension'] );
 		$aSoapVars = $this->Helper->prepareSoapVars( $aDE );
 		$oRequest = $this->Helper->wrapUpdateRequest( $aSoapVars );
+
+		$oResults = $this->makeRequest( 'Update', $oRequest );
+		return $oResults;
+	}
+
+	public function updateFallbackCreateRequest( Array $aApiCallParams ) {
+		$aDE = $this->Helper->prepareDataExtensionObjects( $aApiCallParams['DataExtension'] );
+		$aSoapVars = $this->Helper->prepareSoapVars( $aDE );
+		$oUpdateOptions = $this->prepareUpdateCreateOptions();
+		$oRequest = $this->Helper->wrapUpdateRequest( $aSoapVars, $oUpdateOptions );
 
 		$oResults = $this->makeRequest( 'Update', $oRequest );
 		return $oResults;

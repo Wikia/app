@@ -69,10 +69,10 @@ class ExactTargetApiHelper {
 	}
 
 	/**
-	 * Prepares ExactTarget_UpdateOptions that says update or add if doesn't exist
+	 * Prepares ExactTarget_UpdateOptions that says update or create if doesn't exist
 	 * @return ExactTarget_UpdateOptions
 	 */
-	public function prepareUpdateAddOptions() {
+	public function prepareUpdateCreateOptions() {
 		$updateOptions = new ExactTarget_UpdateOptions();
 
 		$saveOption = new ExactTarget_SaveOption();
