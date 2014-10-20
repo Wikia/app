@@ -4,6 +4,11 @@ describe('wikia.dom', function () {
 	var tree, docMock = {},
 		domModule = modules['wikia.dom'](docMock);
 
+	/**
+	 * Create Node
+	 * @param {String} classes - classes which should be set in new node
+	 * @constructor
+	 */
 	function Node(classes) {
 		var self = this;
 		this.classList = {
@@ -16,6 +21,11 @@ describe('wikia.dom', function () {
 		this.parentNode = '';
 	}
 
+	/**
+	 * Create tree of connected nodes
+	 * @param {Number} nodesLevel - how deep should be newly created tree
+	 * @returns {Array} created tree
+	 */
 	function createTree(nodesLevel) {
 		var nodes = [];
 		for (var i = nodesLevel; i > 0; i--) {
