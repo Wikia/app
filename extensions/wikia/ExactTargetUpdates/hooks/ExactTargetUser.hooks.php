@@ -17,8 +17,8 @@ class ExactTargetUserHooks {
 		];
 
 		/* Get and run the task */
-		$oTaskInstanceHelper = $this->getTaskInstanceHelper();
-		$task = $oTaskInstanceHelper->getUpdateUserTask();
+		$oUserHelper = $this->getUserHelper();
+		$task = $oUserHelper->getUpdateUserTask();
 		$task->call( 'updateUserData', $aUserData );
 		$task->queue();
 		return true;
@@ -38,8 +38,8 @@ class ExactTargetUserHooks {
 		];
 
 		/* Get and run the task */
-		$oTaskInstanceHelper = $this->getTaskInstanceHelper();
-		$task = $oTaskInstanceHelper->getUpdateUserTask();
+		$oUserHelper = $this->getUserHelper();
+		$task = $oUserHelper->getUpdateUserTask();
 		$task->call( 'updateUserData', $aUserData );
 		$task->queue();
 		return true;
@@ -52,8 +52,8 @@ class ExactTargetUserHooks {
 	 */
 	public function onEditAccountClosed( User $oUser ) {
 		/* Get and run the task */
-		$oTaskInstanceHelper = $this->getTaskInstanceHelper();
-		$task = $oTaskInstanceHelper->getDeleteUserTask();
+		$oUserHelper = $this->getUserHelper();
+		$task = $oUserHelper->getDeleteUserTask();
 		$task->call( 'deleteUserData', $oUser->getId() );
 		$task->queue();
 		return true;
@@ -77,8 +77,8 @@ class ExactTargetUserHooks {
 	 */
 	public function onEmailChangeConfirmed( User $user ) {
 		/* Get and run the task */
-		$oTaskInstanceHelper = $this->getTaskInstanceHelper();
-		$task = $oTaskInstanceHelper->getUpdateUserTask();
+		$oUserHelper = $this->getUserHelper();
+		$task = $oUserHelper->getUpdateUserTask();
 		$task->call( 'updateUserEmail', $user->getId(), $user->getEmail() );
 		$task->queue();
 		return true;
@@ -101,13 +101,12 @@ class ExactTargetUserHooks {
 	 */
 	public function onUserSaveSettings( User $user ) {
 		/* Prepare params */
-		$oParamsHelper = $this->getParamsHelper();
-		$aUserData = $oParamsHelper->prepareUserParams( $user );
-		$aUserProperties = $oParamsHelper->prepareUserPropertiesParams( $user );
+		$oUserHelper = $this->getUserHelper();
+		$aUserData = $oUserHelper->prepareUserParams( $user );
+		$aUserProperties = $oUserHelper->prepareUserPropertiesParams( $user );
 
 		/* Get and run the task */
-		$oTaskInstanceHelper = $this->getTaskInstanceHelper();
-		$task = $oTaskInstanceHelper->getUpdateUserTask();
+		$task = $oUserHelper->getUpdateUserTask();
 		$task->call( 'updateUserPropertiesData', $aUserData, $aUserProperties );
 		$task->queue();
 		return true;
@@ -119,22 +118,18 @@ class ExactTargetUserHooks {
 	 */
 	private function addTheUpdateCreateUserTask( User $oUser ) {
 		/* Prepare params */
-		$oParamsHelper = $this->getParamsHelper();
-		$aUserData = $oParamsHelper->prepareUserParams( $oUser );
-		$aUserProperties = $oParamsHelper->prepareUserPropertiesParams( $oUser );
+		$oUserHelper = $this->getUserHelper();
+		$aUserData = $oUserHelper->prepareUserParams( $oUser );
+		$aUserProperties = $oUserHelper->prepareUserPropertiesParams( $oUser );
 
 		/* Get and run the task */
-		$oTaskInstanceHelper = $this->getTaskInstanceHelper();
-		$task = $oTaskInstanceHelper->getCreateUserTask();
+		$task = $oUserHelper->getCreateUserTask();
 		$task->call( 'updateCreateUserData', $aUserData, $aUserProperties );
 		$task->queue();
 	}
 
-	private function getParamsHelper() {
-		return new ExactTargetUserHooksParamsHelper();
+	private function getUserHelper() {
+		return new ExactTargetUserHooksHelper();
 	}
 
-	private function getTaskInstanceHelper() {
-		return new ExactTargetUserHooksTaskInstanceHelper();
-	}
 }
