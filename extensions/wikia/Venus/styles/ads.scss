@@ -1,14 +1,13 @@
 @import "mixins";
 @import "variables";
 
-.WikiaTopAds {
-	margin: 10px auto;
-	text-align: center;
-	width: 1030px;
+.hidden {
+	display: none;
 }
 
-.WikiaTopAdsInner {
-	display: inline-block;
+#TOP_LEADERBOARD {
+	margin: 10px auto;
+	text-align: center;
 }
 
 #TOP_RIGHT_BOXAD.default-height {
@@ -25,7 +24,7 @@
 }
 
 @media #{$small-only} {
-	.WikiaTopAds {
+	#TOP_LEADERBOARD {
 		width: 100%;
 	}
 
