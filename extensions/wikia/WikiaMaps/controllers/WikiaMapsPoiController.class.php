@@ -37,7 +37,7 @@ class WikiaMapsPoiController extends WikiaMapsBaseController {
 		$this->setData( 'mapId', $mapId );
 		$this->setData( 'name', $name );
 		$this->setData( 'poiCategoryId', $this->request->getInt( 'poi_category_id' ) );
-		$this->setData( 'articleTitle', $this->request->getVal( 'link_title' ), '' );
+		$this->setData( 'articleTitleOrExternalUrl', $this->request->getVal( 'link_title' ), '' );
 		$this->setData( 'lat', (float) $this->request->getVal( 'lat' ) );
 		$this->setData( 'lon', (float) $this->request->getVal( 'lon' ) );
 		$this->setData( 'description', $this->request->getVal( 'description' ) );
@@ -175,8 +175,8 @@ class WikiaMapsPoiController extends WikiaMapsBaseController {
 			throw new BadRequestApiException( wfMessage( 'wikia-interactive-maps-create-map-bad-request-error' )->plain() );
 		}
 
-		if ( ( $this->isCreate() || $this->isUpdate() ) && !$this->isValidArticleTitle() ) {
-			throw new BadRequestApiException( wfMessage( 'wikia-interactive-maps-edit-poi-wrong-article-name' )->params( $this->getData( 'articleTitle' ) )->plain() );
+		if ( ( $this->isCreate() || $this->isUpdate() ) && !$this->isValidArticleTitle() && !$this->isValidUrl( new WikiaValidatorUrl() ) ) {
+			throw new BadRequestApiException( wfMessage( 'wikia-interactive-maps-edit-poi-wrong-article-name-or-url' )->params( $this->getData( 'articleTitleOrExternalUrl' ) )->plain() );
 		}
 
 		if ( $this->isDelete() && !$this->isValidDeleteData() ) {
@@ -219,10 +219,28 @@ class WikiaMapsPoiController extends WikiaMapsBaseController {
 	 * @return bool
 	 */
 	public function isValidArticleTitle() {
-		$articleTitle = $this->getData( 'articleTitle' );
+		$articleTitle = $this->getData( 'articleTitleOrExternalUrl' );
 		$valid = false;
 
 		if ( ( !empty( $articleTitle ) && Title::newFromText( $articleTitle )->exists() ) || empty( $articleTitle ) ) {
+			$valid = true;
+		}
+
+		return $valid;
+	}
+
+	/**
+	 * Helper method for validation external URL
+	 *
+	 * @param WikiaValidator $validator an instance of WikiaValidator ie. WikiaUrlValidator
+	 *
+	 * @return bool
+	 */
+	public function isValidUrl( WikiaValidator $validator ) {
+		$externalUrl = $this->getData( 'articleTitleOrExternalUrl' );
+		$valid = false;
+
+		if ( ( !empty( $externalUrl ) && $validator->isValid( $externalUrl ) ) || empty( $externalUrl ) ) {
 			$valid = true;
 		}
 
@@ -258,23 +276,44 @@ class WikiaMapsPoiController extends WikiaMapsBaseController {
 			$poiData[ 'description' ] = $description;
 		}
 
-		$linkTitle = $this->getData( 'articleTitle', '' );
-		$photo = $this->getData( 'imageUrl' );
-		$link = '';
-		$poiData[ 'photo' ] = '';
-		if ( !empty( $linkTitle ) ) {
-			$link = $this->getArticleUrl( $linkTitle );
+		$this->appendLinkIfValidData($poiData);
+		$this->appendPhotoIfValidData($poiData);
 
-			if ( !empty( $photo ) ) {
-				// save photo only when article is chosen
-				$poiData[ 'photo' ] = $photo;
-			}
-		}
+		return $poiData;
+	}
+
+	/**
+	 * @brief Adds link, link_title and photo elements to an array if all requirements are met
+	 *
+	 * @param $poiData
+	 */
+	public function appendLinkIfValidData( &$poiData ) {
+		$linkTitle = $this->getData( 'articleTitleOrExternalUrl', '' );
+
+		// if article title or link was passed in form get an article URL for it
+		$link = ( !empty( $linkTitle ) ) ? $this->getArticleUrl( $linkTitle ) : '';
+		// if the link created was invalid it might be an external url if not empty
+		$link = ( !empty( $linkTitle ) && !$this->isValidArticleTitle() ) ? $linkTitle : $link;
+		$link = WikiaSanitizer::prepUrl( $link );
 
 		$poiData[ 'link_title' ] = $linkTitle;
 		$poiData[ 'link' ] = $link;
+	}
 
-		return $poiData;
+	/**
+	 * @brief Sends 'photo' element in an array depending on the fact if internal article has been set
+	 *
+	 * @param Array $poiData an array with POI's data
+	 */
+	public function appendPhotoIfValidData( &$poiData ) {
+		$photo = $this->getData( 'imageUrl' );
+		$isValidArticle = $this->isValidArticleTitle();
+
+		// if photo was passed and there is valid internal URL set
+		$photo = ( !empty( $photo ) && $isValidArticle ) ? $photo : '';
+		$photo = ( !$isValidArticle || empty( $poiData[ 'link' ] ) ) ? '' : $photo;
+
+		$poiData[ 'photo' ] = $photo;
 	}
 
 	/**
@@ -332,7 +371,7 @@ class WikiaMapsPoiController extends WikiaMapsBaseController {
 	 *
 	 * @return string - full article URL or empty string if article doesn't exist
 	 */
-	private function getArticleUrl( $title ) {
+	public function getArticleUrl( $title ) {
 		$article = Title::newFromText( $title );
 		$link = '';
 
