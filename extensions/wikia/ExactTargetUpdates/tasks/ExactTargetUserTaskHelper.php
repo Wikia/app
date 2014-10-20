@@ -32,11 +32,11 @@ class ExactTargetUserTaskHelper {
 	 * @param array $aUserData user key value array
 	 * @return array
 	 */
-	public function prepareUserUpdateParams( $aUserData ) {
+	public function prepareUserUpdateParams( array $aUserData ) {
 		$userId = $this->extractUserIdFromData( $aUserData );
 		/* Get Customer Keys specific for production or development */
 		$aCustomerKeys = ExactTargetUpdatesHelper::getCustomerKeys();
-		$sCustomerKey = $aCustomerKeys['user'];
+		$sCustomerKey = $aCustomerKeys[ 'user' ];
 
 		$aApiParams = [
 			[
@@ -50,8 +50,20 @@ class ExactTargetUserTaskHelper {
 		return $aApiParams;
 	}
 
-	public function prepareUserDeleteParams() {
+	public function prepareUserDeleteParams( $userId ) {
+		/* Get Customer Keys specific for production or development */
+		$aCustomerKeys = ExactTargetUpdatesHelper::getCustomerKeys();
+		$sCustomerKey = $aCustomerKeys[ 'user' ];
 
+		$aApiParams = [
+			[
+				'DataExtension' => [
+					'CustomerKey' => $sCustomerKey,
+					'Keys' => ['user_id' => $userId ]
+				]
+			]
+		];
+		return $aApiParams;
 	}
 
 	/**
@@ -82,7 +94,7 @@ class ExactTargetUserTaskHelper {
 	 * @param array $aUserProperties user_properties key value array
 	 * @return array
 	 */
-	public function prepareUserPropertiesUpdateParams( $iUserId, $aUserProperties ) {
+	public function prepareUserPropertiesUpdateParams( $iUserId, array $aUserProperties ) {
 		/* Get Customer Keys specific for production or development */
 		$aCustomerKeys = ExactTargetUpdatesHelper::getCustomerKeys();
 		$sCustomerKey = $aCustomerKeys['user_properties'];
@@ -104,8 +116,39 @@ class ExactTargetUserTaskHelper {
 		return $aApiParams;
 	}
 
-	public function prepareUserPropertiesDeleteParams() {
+	/**
+	 * Prepares array of params for ExactTarget API for removing DataExtension objects for user_properties table
+	 * @param int $iUserId id of user to be deleted
+	 * @return array
+	 */
+	public function prepareUserPropertiesDeleteParams( $iUserId ) {
+		/*
+		 * @var array $aUserPropertiesNames list of user properties sent to ExactTarget
+		 * (see ExactTargetUpdatesHooks::prepareUserPropertiesParams)
+		 */
+		$aUserProperties = [
+			'marketingallowed',
+			'unsubscribed',
+			'language'
+		];
+		/* Get Customer Keys specific for production or development */
+		$aCustomerKeys = ExactTargetUpdatesHelper::getCustomerKeys();
+		$sCustomerKey = $aCustomerKeys['user_properties'];
 
+		foreach ( $aUserProperties as $sProperty => $sValue ) {
+			$aApiParams = [
+				[
+					'DataExtension' => [
+						'CustomerKey' => $sCustomerKey,
+						'Keys' => [
+							'up_user' => $iUserId,
+							'up_property' => $sProperty
+						]
+					]
+				]
+			];
+		}
+		return $aApiParams;
 	}
 
 	/**
@@ -140,5 +183,16 @@ class ExactTargetUserTaskHelper {
 			];
 		}
 		return $aApiParams;
+	}
+
+	/**
+	 * Returns user_id element from $aUserData array and removes it from array
+	 * @param array $aUserData key value data from user table
+	 * @return int
+	 */
+	public function extractUserIdFromData( &$aUserData ) {
+		$iUserId = $aUserData[ 'user_id' ];
+		unset( $aUserData[ 'user_id' ] );
+		return $iUserId;
 	}
 }
