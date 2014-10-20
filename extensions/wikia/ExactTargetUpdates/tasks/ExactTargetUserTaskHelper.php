@@ -97,7 +97,7 @@ class ExactTargetUserTaskHelper {
 	public function prepareUserPropertiesUpdateParams( $iUserId, array $aUserProperties ) {
 		/* Get Customer Keys specific for production or development */
 		$aCustomerKeys = $this->getCustomerKeys();
-		$sCustomerKey = $aCustomerKeys['user_properties'];
+		$sCustomerKey = $aCustomerKeys[ 'user_properties' ];
 
 		foreach ( $aUserProperties as $sProperty => $sValue ) {
 			$aApiParams = [

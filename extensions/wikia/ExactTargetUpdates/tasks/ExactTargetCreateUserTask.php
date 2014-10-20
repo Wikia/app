@@ -9,16 +9,16 @@ class ExactTargetCreateUserTask extends BaseTask {
 	 * @param array $aUserData Selected fields from Wikia user table
 	 * @param array $aUserProperties Array of Wikia user gobal properties
 	 */
-	public function updateCreateUserData( $aUserData, $aUserProperties ) {
+	public function updateCreateUserData( array $aUserData, array $aUserProperties ) {
 		/* Delete subscriber (email address) used by touched user */
-		$oDeleteUserTask = $this->getDeleteUserTaskObject();
+		$oDeleteUserTask = $this->getDeleteUserTask();
 		$oDeleteUserTask->deleteSubscriber( $aUserData['user_id'] );
 		/* Create Subscriber with new email */
 		$this->createSubscriber( $aUserData['user_email'] );
 		/* Create User DataExtension with new email */
-		$this->createUserDataExtension( $aUserData );
+		$this->createUser( $aUserData );
 		/* Create User Properties DataExtension with new email */
-		$this->createUserPropertiesDataExtension( $aUserData['user_id'], $aUserProperties );
+		$this->createUserProperties( $aUserData['user_id'], $aUserProperties );
 	}
 
 	/**
@@ -52,11 +52,11 @@ class ExactTargetCreateUserTask extends BaseTask {
 	 * Creates (or updates if already exists) DataExtension object in ExactTarget by API request that reflects Wikia user table
 	 * @param Array $aUserData Selected fields from Wikia user table
 	 */
-	public function createUserDataExtension( $aUserData ) {
+	public function createUser( $aUserData ) {
 		$oHelper = $this->getHelper();
-		$aApiParams = $oHelper->prepareApiCreateParams( [ $aUserData ], 'user' );
+		$aApiParams = $oHelper->prepareUserUpdateParams( $aUserData );
 		$oApiDataExtension = $this->getApiDataExtension();
-		$oApiDataExtension->createRequest( $aApiParams );
+		$oApiDataExtension->updateFallbackCreateRequest( $aApiParams );
 	}
 
 	/**
@@ -64,12 +64,11 @@ class ExactTargetCreateUserTask extends BaseTask {
 	 * @param Integer $iUserId User ID
 	 * @param Array $aUserProperties key-value array ['property_name'=>'property_value']
 	 */
-	public function createUserPropertiesDataExtension( $iUserId, $aUserProperties ) {
+	public function createUserProperties( $iUserId, array $aUserProperties ) {
 		$oHelper = $this->getHelper();
-		$aDataExtensionsParams = $oHelper->prepareUserPropertiesCreateParams( $iUserId, $aUserProperties );
-		$aApiParams = $oHelper->prepareApiCreateParams( $aDataExtensionsParams, 'user_properties' );
+		$aApiParams = $oHelper->prepareUserPropertiesUpdateParams( $iUserId, $aUserProperties );
 		$oApiDataExtension = $this->getApiDataExtension();
-		$oApiDataExtension->createRequest( $aApiParams );
+		$oApiDataExtension->updateFallbackCreateRequest( $aApiParams );
 	}
 
 	/**
@@ -84,7 +83,7 @@ class ExactTargetCreateUserTask extends BaseTask {
 	 * Returns an instance of ExactTargetDeleteUserTask class
 	 * @return ExactTargetDeleteUserTask
 	 */
-	private function getDeleteUserTaskObject() {
+	private function getDeleteUserTask() {
 		return new ExactTargetDeleteUserTask();
 	}
 
