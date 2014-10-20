@@ -10,52 +10,50 @@ define('mediaGallery.views.caption', [], function () {
 		this.$el = options.$el;
 		this.media = options.media;
 		this.$media = this.media.$el;
-
-		// cache some css values that don't change
-		this.mediaPadding = parseFloat(this.$media.css('padding-bottom'));
-		this.captionPadding = parseFloat(this.$el.css('padding-top'));
-		this.marginTop = parseFloat(this.$el.css('margin-top'));
-
-		this.setupCaption();
 	};
 
 	/**
 	 * Bind interaction events for touch and non-touch screens
 	 */
-	Caption.prototype.setupCaption = function () {
+	Caption.prototype.init = function () {
 		var self = this;
 
+		// handle desktop
 		this.$el.hover(
-			$.proxy(this.captionHover, this),
-			$.proxy(this.captionHoverOut, this)
+			$.proxy(this.expand, this),
+			$.proxy(this.collapse, this)
 		);
 
+		// handle touch screens
 		this.$media.on('click', function () {
 			if (self.$el.hasClass('clicked')) {
-				self.captionHoverOut();
+				self.collapse();
 			} else {
 				self.$el.addClass('clicked');
-				// captionHover here is required for touch screen interactions. mouseenter (bound by
+				// expand() here is required for touch screen interactions. mouseenter (bound by
 				// hover above) is only triggered for the first click on the caption, unless the user
-				// clicks outside the caption. This ensures captionHover will be called either way.
-				self.captionHover();
+				// clicks outside the caption. This ensures expand will be called either way.
+				self.expand();
 			}
 		});
 	};
 
 	/**
-	 * Toggle top margin to slide caption up into full view.
-	 * Note: it's hard to do this animation with css b/c the new top margin value is unknown
+	 * Expand caption height so the full caption can be read.
+	 * This is done by reducing the top margin of the caption. Uses JS to cacluate and change top margin and css
+	 * with animations to do the rest.
 	 */
-	Caption.prototype.captionHover = function () {
+	Caption.prototype.expand = function () {
 		var mediaHeight = this.$media.height(),
 			contentHeight,
 			newMarginTop;
 
-		// use css to expand caption content (i.e. remove overflow restrictions)
+		this.setDimensionsCache();
+
+		// use css to expand caption content (removes overflow restrictions)
 		this.$el.addClass('hovered');
 
-		// calculate height of content plus padding of it's container
+		// calculate height of caption content plus padding of it's container
 		contentHeight = this.$el.find('.inner').outerHeight() + (2 * this.captionPadding);
 
 		// get new negative top margin but limit it to 100% of it's container
@@ -77,12 +75,23 @@ define('mediaGallery.views.caption', [], function () {
 	};
 
 	/**
-	 * Handle hover out state of captions
+	 * Set caption height back to one line
 	 */
-	Caption.prototype.captionHoverOut = function () {
+	Caption.prototype.collapse = function () {
 		this.$el
 			.removeClass('hovered scroll clicked')
 			.removeAttr('style');
+	};
+
+	/**
+	 * Cache some css values that don't change
+	 */
+	Caption.prototype.setDimensionsCache = function () {
+		if (!this.mediaPadding) {
+			this.mediaPadding = parseFloat(this.$media.css('padding-bottom'));
+			this.captionPadding = parseFloat(this.$el.css('padding-top'));
+			this.marginTop = parseFloat(this.$el.css('margin-top'));
+		}
 	};
 
 	return Caption;

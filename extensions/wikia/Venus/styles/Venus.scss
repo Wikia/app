@@ -1,20 +1,27 @@
 // reset css
-@import "libs/normalize";
+@import 'reset';
+
+// basic mediawiki styles
+@import 'mediawiki.basic.legacy.css';
+
+// basic mediawiki styles
+@import "mediawiki.basic.legacy.css";
 
 // import variables and mixins
-@import "variables";
-@import "mixins";
+@import 'variables';
+@import 'mixins';
 
 // import general styles
-@import "general";
+@import 'general';
 
-// import page layout and background
-@import "layout";
-@import "background";
+// import typography, page layout and background
+@import 'typography';
+@import 'layout';
+@import 'background';
 
 // import grid & visibility from foundation
-@import "grid";
-@import "visibility";
+@import 'grid';
+@import 'visibility';
 
-// hide "Retrived from..." print footer
+// hide 'Retrived from...' print footer
 .printfooter { display: none; }

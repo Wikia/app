@@ -1207,7 +1207,7 @@ $wgAmazonDirectTargetedBuyCountries = null;
  * Enables DART category page param for these content languages
  * "Utility" var, don't change it here.
  */
-$wgAdPageLevelCategoryLangs = [ 'en' => true ];;
+$wgAdPageLevelCategoryLangs = [ 'en' => true ];
 
 /**
  * @name $wgEnableJavaScriptErrorLogging
@@ -1232,6 +1232,12 @@ $wgAdDriverEnableRemnantGptMobile = false;
  * Enables ad engine
  */
 $wgEnableAdEngineExt = true;
+
+/**
+ * @name $wgAdDriverUseAdsAfterInfobox
+ * Enable new mobile_in_content slot after infobox placement
+ */
+$wgAdDriverUseAdsAfterInfobox = false;
 
 /**
  * @name $wgAdDriverUseTaboola
@@ -1336,6 +1342,29 @@ $wgAdDriverForceLiftiumAd = false;
  * Whether to display ads within interactive maps
  */
 $wgAdDriverEnableAdsInMaps = false;
+
+/**
+ * @name $wgAdDriverRubiconRTPConfig
+ * @example [[
+ *  'disabled' => true/false
+ *  'oz_site' => 'XX/XXX',
+ *  'oz_zone' => 'XXXXX'
+ *  'oz_ad_slot_size' => 'NNNxNNN',
+ *  'slotname' : [ 'top_leaderboard' ],
+ *  'skin' : ['oasis']
+ *  ]]
+ *
+ * Rubicon RTP configuration variable.
+ * Only set this variable through Wiki Factory on community wiki. The setting then applies globally.
+ */
+$wgAdDriverRubiconRTPConfig = null;
+
+/**
+ * @name $wgAdDriverRubiconRTPCountries
+ * List of countries RTP call will be issued.
+ * Only set this variable through Wiki Factory on community wiki. The setting then applies globally.
+ */
+$wgAdDriverRubiconRTPCountries = null;
 
 /**
  * @name $wgHighValueCountries

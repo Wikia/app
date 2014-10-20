@@ -31,6 +31,7 @@ define('ext.wikia.adEngine.adContext', ['wikia.window', 'wikia.document'], funct
 
 	setContext( w.ads ? w.ads.context : {
 		opts: {
+			adsAfterInfobox: w.wgAdDriverUseAdsAfterInfobox,
 			adsInHead: w.wgLoadAdsInHead,
 			disableLateQueue: w.wgAdEngineDisableLateQueue,
 			lateAdsAfterPageLoad: w.wgLoadLateAdsAfterPageLoad,
@@ -46,7 +47,7 @@ define('ext.wikia.adEngine.adContext', ['wikia.window', 'wikia.document'], funct
 
 			pageArticleId: w.wgArticleId,
 			pageCategories: w.wgAdDriverUseCatParam ? w.wgCategories : [],
-			pageIsArticle: w.wgIsArticle,
+			pageIsArticle: !!w.wgArticleId,
 			pageIsHub: w.wikiaPageIsHub,
 			pageName: w.wgPageName,
 			pageType: w.wikiaPageType,

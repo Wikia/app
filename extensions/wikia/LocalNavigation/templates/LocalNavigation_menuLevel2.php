@@ -8,7 +8,7 @@
 			>
 				<span><?= $node2['textEscaped']; ?></span>
 			</a>
-			<? if ( $node2['children'] ): ?>
+			<? if ( array_key_exists( 'children', $node2 ) ): ?>
 				<?= $app->renderView('LocalNavigation', 'menuLevel3', [
 					'nodes' => $node2['children'],
 					'more' => ( $node2['href'] === '#' ? null : ['href' => $node2['href'], 'text' => $node2['text']] ),

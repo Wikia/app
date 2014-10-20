@@ -3,14 +3,6 @@
 class AdEngine2Service
 {
 
-	const ASSET_GROUP_CORE = 'oasis_shared_core_js';
-	const ASSET_GROUP_ADENGINE = 'adengine2_js';
-	const ASSET_GROUP_ADENGINE_RUBICON_RTP = 'adengine2_rubicon_rtp_js';
-	const ASSET_GROUP_ADENGINE_TRACKING = 'adengine2_tracking_js';
-	const ASSET_GROUP_ADENGINE_LATE = 'adengine2_late_js';
-	const ASSET_GROUP_LIFTIUM = 'liftium_ads_js';
-	const ASSET_GROUP_TOP_INCONTENT_JS = 'adengine2_top_in_content_boxad_js';
-
 	const PAGE_TYPE_NO_ADS = 'no_ads';                   // show no ads
 	const PAGE_TYPE_MAPS = 'maps';                       // show only ads on maps
 	const PAGE_TYPE_HOMEPAGE_LOGGED = 'homepage_logged'; // show some ads (logged in users on main page)
@@ -235,7 +227,8 @@ class AdEngine2Service
 			$wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff,
 			$wgWikiDirectedAtChildrenByFounder, $wgAdEngineDisableLateQueue,
 			$wgAdDriverUseBottomLeaderboard, $wgAdDriverBottomLeaderboardImpressionCapping,
-			$wgAdDriverEnableAdsInMaps, $wgAdDriverWikiIsTop1000, $wgAdDriverUseTaboola;
+			$wgAdDriverEnableAdsInMaps, $wgAdDriverWikiIsTop1000, $wgAdDriverUseTaboola,
+			$wgAdDriverUseAdsAfterInfobox;
 
 		$vars = [];
 
@@ -249,6 +242,7 @@ class AdEngine2Service
 			'adEnginePageType' => self::getPageType(),
 
 			// Ad Driver
+			'wgAdDriverUseAdsAfterInfobox' => $wgAdDriverUseAdsAfterInfobox,
 			'wgAdDriverUseCatParam' => array_search($wgLanguageCode, $wgAdPageLevelCategoryLangs),
 			'wgAdDriverUseDartForSlotsBelowTheFold' => $wgAdDriverUseDartForSlotsBelowTheFold === null ? 'hub' : $wgAdDriverUseDartForSlotsBelowTheFold,
 			'wgAdDriverUseRemnantGpt' => $wgAdDriverUseRemnantGpt,
@@ -278,7 +272,7 @@ class AdEngine2Service
 			'wikiaPageIsCorporate' => WikiaPageType::isCorporatePage(),
 
 			// category/hub
-			'cscoreCat' => HubService::getComscoreCategory($wgCityId)->cat_name,
+			'cscoreCat' => HubService::getCategoryInfoForCity($wgCityId)->cat_name,
 
 			// Krux
 			'wgEnableKruxTargeting' => $wgEnableKruxTargeting,

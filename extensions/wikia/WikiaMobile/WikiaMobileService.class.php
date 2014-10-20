@@ -67,7 +67,6 @@ class WikiaMobileService extends WikiaService {
 		$cssLinks = '';
 		$jsBodyFiles = '';
 		$jsExtensionFiles = '';
-		$styles = $this->skin->getStyles();
 		$scripts = $this->skin->getScripts();
 
 		if ( $type == 'preview' ) {
@@ -91,23 +90,16 @@ class WikiaMobileService extends WikiaService {
 			]
 		);
 
-		if ( is_array( $this->scssPackages ) ) {
-			//force main SCSS as first to make overriding it possible
-			foreach ( $this->assetsManager->getURL( $this->scssPackages ) as $s ) {
-				//packages/assets are enqueued via an hook, let's make sure we should actually let them through
-				if ( $this->assetsManager->checkAssetUrlForSkin( $s, $this->skin ) ) {
-					//W3C standard says type attribute and quotes (for single non-URI values) not needed, let's save on output size
-					$cssLinks .= "<link rel=stylesheet href='{$s}'/>";
-				}
+		// SASS files requested via WikiaMobileAssetsPackages hook
+		$sassFiles = [];
+		foreach ( $this->assetsManager->getURL( $this->scssPackages ) as $src ) {
+			if ( $this->assetsManager->checkAssetUrlForSkin( $src, $this->skin ) ) {
+				$sassFiles[] = $src;
 			}
 		}
 
-		if ( is_array( $styles ) ) {
-			foreach ( $styles as $s ) {
-				//safe URL's as getStyles performs all the required checks
-				$cssLinks .= "<link rel=stylesheet href='{$s['url']}'/>";//this is a strict skin, getStyles returns only elements with a set URL
-			}
-		}
+		// try to fetch all SASS files using a single request (CON-1487)
+		$cssLinks .= $this->skin->getStylesWithCombinedSASS($sassFiles);
 
 		if ( is_array( $this->jsExtensionPackages ) ) {
 			//core JS in the head section, definitely safe

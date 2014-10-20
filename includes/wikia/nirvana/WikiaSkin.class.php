@@ -20,6 +20,8 @@ abstract class WikiaSkin extends SkinTemplate {
 	//@see AssetsManager::checkAssetUrlForSkin
 	protected $strictAssetUrlCheck = true;
 
+	private $assetsManager;
+
 	/**
 	 * WikiaSkin constructor
 	 *
@@ -32,6 +34,8 @@ abstract class WikiaSkin extends SkinTemplate {
 		$this->app = F::app();
 		$this->wg = $this->app->wg;
 		$this->wf = $this->app->wf;
+
+		$this->assetsManager = AssetsManager::getInstance();
 
 		/**
 		 * old skins initialize template, skinname, stylename and themename statically in the class declaration,
@@ -92,7 +96,6 @@ abstract class WikiaSkin extends SkinTemplate {
 		wfProfileIn( __METHOD__ );
 
 		$scriptTags = $this->wg->out->getScriptsOnly() . $this->wg->out->getHeadItems();
-		$am = AssetsManager::getInstance();
 		$matches = array();
 		$res = array();
 
@@ -106,7 +109,7 @@ abstract class WikiaSkin extends SkinTemplate {
 				//find the src if set
 				preg_match( '/<script[^>]+src=["\'\s]?([^"\'>\s]+)["\'\s]?[^>]*>/im', $m, $srcMatch );
 
-				if ( !empty( $srcMatch[1] ) && $am->checkAssetUrlForSkin( $srcMatch[1], $this ) ) {
+				if ( !empty( $srcMatch[1] ) && $this->assetsManager->checkAssetUrlForSkin( $srcMatch[1], $this ) ) {
 					//fix HTML::inlineScript's expansion of ampersands in the src attribute
 					$url = str_replace( '&amp;', '&', $srcMatch[1] );
 					// apply domain sharding
@@ -134,7 +137,6 @@ abstract class WikiaSkin extends SkinTemplate {
 
 		//there are a number of extension that use addScript to append link tags for stylesheets, need to include those too
 		$stylesTags = $this->wg->out->buildCssLinks(). $this->wg->out->getHeadItems() . $this->wg->out->getScriptsOnly();
-		$am = AssetsManager::getInstance();
 		$matches = array();
 		$res = array();
 
@@ -148,7 +150,7 @@ abstract class WikiaSkin extends SkinTemplate {
 				//find the src if set
 				preg_match( '/<link[^>]+href=["\'\s]?([^"\'>\s]+)["\'\s]?[^>]*>/im', $m, $hrefMatch );
 
-				if ( !empty( $hrefMatch[1] ) && $am->checkAssetUrlForSkin( $hrefMatch[1], $this ) ) {
+				if ( !empty( $hrefMatch[1] ) && $this->assetsManager->checkAssetUrlForSkin( $hrefMatch[1], $this ) ) {
 					//fix HTML::element's expansion of ampersands in the src attribute
 					// todo: do we really need this trick? I notice URLs that are not properly encoded in the head element
 					$url = str_replace( '&amp;', '&', $hrefMatch[1] );
@@ -177,6 +179,48 @@ abstract class WikiaSkin extends SkinTemplate {
 		return $res;
 	}
 
+	/**
+	 * This method extracts links to SASS files from $this->getStyles() method
+	 * and generates a single <link> tag to load all of them via a single HTTP request.
+	 *
+	 * Additionaly, all SASS files from $sassFiles array will be loaded as well.
+	 *
+	 * Once this function ends its run $sassFiles will be updated (via a reference)
+	 * with all SASS files extracted from getStyles().
+	 *
+	 * @param array $sassFiles additional list of SASS files to load
+	 * @return string CSS links with extracted SASS files and the rest
+	 */
+	public function getStylesWithCombinedSASS(Array &$sassFiles) {
+		wfProfileIn(__METHOD__);
+
+		global $wgAllInOne;
+		$cssLinks = [];
+
+		foreach ( $this->getStyles() as $s ) {
+			if ( !empty($s['url']) ) {
+				if ($wgAllInOne && $this->assetsManager->isSassUrl($s['url'])) {
+					$sassFiles[] = $s['url'];
+				} else {
+					$cssLinks[] = $s['tag'];
+				}
+			} else {
+				$cssLinks[] = $s['tag'];
+			}
+		}
+
+		// turn an url (http://something.wikia.com/__am/sass/options/path/to/file.scss) to a local filepath
+		$sassFiles = $this->assetsManager->getSassFilePath($sassFiles);
+
+		// get a single URL to fetch all the required SASS files
+		$sassFilesUrl = $this->assetsManager->getSassesUrl($sassFiles);
+
+		wfDebug( sprintf( "%s: combined %d SASS files\n", __METHOD__, count($sassFiles) ) );
+
+		wfProfileOut(__METHOD__);
+		return Html::linkedStyle($sassFilesUrl ) . implode('', $cssLinks);
+	}
+
 	/*
 	 * WikiaMobile skin has its own getTopScripts
 	 * MobileWikiaSkin::getTopScripts
@@ -186,7 +230,7 @@ abstract class WikiaSkin extends SkinTemplate {
 		$scripts = '';
 		$vars = array(
 			'Wikia' => new stdClass(),
-			'wgJqueryUrl' => AssetsManager::getInstance()->getURL( 'jquery' ),
+			'wgJqueryUrl' => $this->assetsManager->getURL( 'jquery' ),
 		);
 
 		wfrunHooks( 'WikiaSkinTopScripts', array( &$vars, &$scripts, $this ) );
