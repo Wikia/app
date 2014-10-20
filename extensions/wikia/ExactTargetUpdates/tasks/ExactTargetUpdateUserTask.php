@@ -32,7 +32,7 @@ class ExactTargetUpdateUserTask {
 		$oHelper = $this->getHelper();
 		$aApiParams = $oHelper->prepareUserUpdateParams( $aUserData );
 		$oApiDataExtension = $this->getApiDataExtension();
-		$oApiDataExtension->updateFallbackCreateRequest( $aApiParams );
+		$oApiDataExtension->updateRequest( $aApiParams );
 	}
 
 	/**
