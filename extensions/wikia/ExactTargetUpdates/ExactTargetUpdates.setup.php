@@ -33,7 +33,8 @@ $wgExtensionCredits['other'][] = array(
 	'descriptionmsg'    => 'exacttarget-updates-description',
 	'version'           => '0.1',
 	'author'            => array(
-		"Kamil Koterba <kamil@wikia-inc.com>"
+		'Kamil Koterba <kamil@wikia-inc.com>',
+		'Adam Karminski <adamk@wikia-inc.com>',
 	),
 	'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ExactTargetUpdates/'
 );
