@@ -1023,6 +1023,13 @@ $messages['cs'] = array(
 	'user-blog-url-link' => 'Blog uživatele: $1',
 );
 
+/** Welsh (Cymraeg)
+ * @author Robin Owain
+ */
+$messages['cy'] = array(
+	'createblogpage' => 'Crewch flog',
+);
+
 /** German (Deutsch)
  * @author Avatar
  * @author Das Schäfchen
@@ -1170,6 +1177,7 @@ $messages['de-formal'] = array(
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
  * @author Gorizon
+ * @author Marmase
  * @author Mirzali
  */
 $messages['diq'] = array(
@@ -1185,7 +1193,7 @@ $messages['diq'] = array(
 	'create-blog-no-login' => 'Şıma cıkewtış nêvıraşto',
 	'create-blog-categories-textinput' => 'Yew kategoriya newiye cı ke',
 	'create-blog-categories-submit' => 'Bırışe',
-	'create-blog-save' => 'Ena pele qeyd ke',
+	'create-blog-save' => 'Perer qeyd ke',
 	'create-blog-preview' => 'Verasayışi bıvin',
 	'create-blog-listing-page-title' => 'Listeyê blog de pela sernami',
 	'create-blog-listing-preview' => 'Verqayt',

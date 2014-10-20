@@ -621,6 +621,7 @@ $messages['gl'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Plover-Y
  * @author Tommy6
  */
 $messages['ja'] = array(
@@ -632,6 +633,7 @@ $messages['ja'] = array(
 	'preferences-v2-oldsig' => '現在の署名:',
 	'preferences-v2-nickname' => '新しい署名:',
 	'preferences-v2-fancysig' => '署名をウィキテキストとして扱う<br />[[{{MediaWiki:preferences-v2-fancysig-help-page-name}}|署名とは?]]',
+	'preferences-v2-fancysig-help-page-name' => 'Help:署名',
 	'prefs-appearance' => '表示',
 	'preferences-v2-date' => '日付の表示形式:',
 	'preferences-v2-time' => '時間帯:',

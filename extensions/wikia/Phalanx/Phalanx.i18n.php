@@ -488,6 +488,9 @@ Si vostè creu que es tracta d\'un error, si us plau, [[Special:Contact|contacti
 	'phalanx-stats-table-wiki-url' => 'Wiki URL',
 	'phalanx-stats-table-wiki-last-edited' => 'Última edició',
 	'phalanx-email-filter-hidden' => "Filtre d'E-mail ocult. No tens permís per veure el text.",
+	'action-phalanx' => 'utilitzar el Mecanisme de Defensa de Spam Integrat',
+	'right-phalanx' => 'Pot gestionar blocatges globals i filtres antispam',
+	'right-phalanxexempt' => 'Exempt de les regles de la falange',
 );
 
 /** Chechen (нохчийн)
@@ -1722,7 +1725,7 @@ $messages['mk'] = array(
 	'phalanx-help-type-title' => 'Овој филтер спречува создавање на страница ако нејзиниот наслов одговара на некој израз наведен на црниот список.
 
 Филтерот не спречува уредување на веќе постоечка страница.',
-	'phalanx-help-type-user' => 'Овој филтер блокира корисник (сосем исто како локален блок на МедијаВики) ако неговото име или IP-адреса одговара на некое име или IP-адреса наведена на црниот список.',
+	'phalanx-help-type-user' => 'Овој филтер блокира корисник (сосем исто како месен блок на МедијаВики) ако неговото име или IP-адреса одговара на некое име или IP-адреса наведена на црниот список.',
 	'phalanx-help-type-wiki-creation' => 'Овој филтер спречува создавање на вики ако неговото име или URL-адреса одговара на нешто од наведеното на црниот список.',
 	'phalanx-help-type-answers-question-title' => 'Овој филтер блокира создавање на прашање (страница) ако насловот одговара на некој од изразите наведени на црниот список.
 

@@ -2349,6 +2349,7 @@ $messages['pfl'] = array(
  * @author Chrumps
  * @author NexGaming
  * @author Sovq
+ * @author Vengir
  * @author Wedkarski
  * @author Woytecr
  */
@@ -2388,6 +2389,8 @@ $messages['pl'] = array(
 	'cnw-desc-tip1-creative' => 'Użyć tego miejsca, aby opowiedzieć innym o swojej wiki.',
 	'cnw-desc-tip2' => 'Wskazówka 2',
 	'cnw-desc-tip2-creative' => 'Podziel się z innymi szczegółami o Twojej wiki',
+	'cnw-desc-select-vertical' => 'Wybierz kategorię Huba',
+	'cnw-desc-select-categories' => 'Wybierz dodatkowe kategorie',
 	'cnw-desc-select-one' => 'Wybierz',
 	'cnw-desc-all-ages' => 'Czy ta wikia przeznaczona jest dla dzieci?',
 	'cnw-desc-tip-all-ages' => 'Czy to jest wiki o tematyce, którą dzieci będą zainteresowane? W celu zgodności z prawem Stanów Zjednoczonych obserwujemy wiki o tematyce kierowanej bezpośrednio do dzieci w wieku 12 lat i mniej.', # Fuzzy
@@ -2602,6 +2605,7 @@ $messages['pt'] = array(
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Caio1478
+ * @author Guilhermemau
  * @author JM Pessanha
  * @author Jefersonmoraes
  * @author Luckas
@@ -2617,7 +2621,7 @@ $messages['pt-br'] = array(
 	'cnw-title' => 'Criar uma Nova Wiki',
 	'cnw-name-wiki-headline' => 'Iniciar uma Wiki',
 	'cnw-name-wiki-creative' => 'A Wikia é o melhor lugar para criar um site e desenvolver uma comunidade em torno de um tema do seu agrado.',
-	'cnw-name-wiki-label' => 'Nome da sua wikia',
+	'cnw-name-wiki-label' => 'Nome da sua wiki',
 	'cnw-name-wiki-wiki' => 'Wikia',
 	'cnw-name-wiki-domain-label' => 'Dê um endereço à sua wikia',
 	'cnw-name-wiki-submit-error' => 'Ops! Você precisa preencher ambas as caixas acima para continuar.',
