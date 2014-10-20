@@ -21,7 +21,6 @@
 		miniEditorEnabled: typeof window.wgEnableMiniEditorExt !== 'undefined' && skin === 'oasis',
 		loadOnDemand: typeof window.wgArticleCommentsLoadOnDemand !== 'undefined',
 		initCompleted: false,
-		actionButtons: $('#WikiaArticleComments').find('.actionButton'),
 		bucky: window.Bucky('ArticleComments'),
 
 		init: function () {
@@ -34,6 +33,7 @@
 
 			// cache jQuery selector
 			this.$commentsList = $('#article-comments-ul');
+			this.$actionButtons = this.$wrapper.find('.actionButton');
 
 			if (ArticleComments.miniEditorEnabled) {
 				newComment = $('#article-comm');
@@ -531,7 +531,7 @@
 				// Wrap editorActivated with our own function
 				editorActivated = events.editorActivated;
 				events.editorActivated = function ( /* event, wikiaEditor */ ) {
-					ArticleComments.actionButtons.removeClass('disabled').removeAttr('disabled');
+					ArticleComments.$actionButtons.removeClass('disabled').removeAttr('disabled');
 
 					if ($.isFunction(editorActivated)) {
 						editorActivated.apply(this, arguments);
@@ -564,7 +564,7 @@
 
 				// Needs initializing
 			} else {
-				ArticleComments.actionButtons.addClass('disabled').attr('disabled', true);
+				ArticleComments.$actionButtons.addClass('disabled').attr('disabled', true);
 
 				// Set content on element before initializing to keep focus in editbox (BugId:24188).
 				if (content !== undefined) {
@@ -613,12 +613,12 @@
 
 	if (ArticleComments.loadOnDemand) {
 		$(function () {
-			var content, hash, permalink, styleAssets, $comments, belowTheFold, loadAssets;
+			var content, hash, permalink, styleAssets, belowTheFold, loadAssets;
 
-			$comments = $('#WikiaArticleComments');
+			ArticleComments.$wrapper = $('#WikiaArticleComments');
 
 			// NO article comment on this page lets just skip
-			if (!$comments.length) {
+			if (!ArticleComments.$wrapper.length) {
 				return;
 			}
 
@@ -629,7 +629,7 @@
 			// 'articlecomments' + (ArticleComments.miniEditorEnabled ? '_mini_editor' : '') + '_scss'));
 			styleAssets = [$.getSassCommonURL('skins/oasis/css/core/ArticleComments.scss')];
 			belowTheFold = function () {
-				return $comments.offset().top >= ($window.scrollTop() + $window.height());
+				return ArticleComments.$wrapper.offset().top >= ($window.scrollTop() + $window.height());
 			};
 
 			if (ArticleComments.miniEditorEnabled) {
@@ -649,7 +649,7 @@
 						type: 'GET',
 						data: {
 							articleId: window.wgArticleId,
-							page: $comments.data('page'),
+							page: ArticleComments.$wrapper.data('page'),
 							skin: true
 						},
 						callback: function (response) {
@@ -657,7 +657,7 @@
 						}
 					})
 				).then(function () {
-					$comments.removeClass('loading').html(content);
+					ArticleComments.$wrapper.removeClass('loading').html(content);
 
 					ArticleComments.init();
 
@@ -672,7 +672,7 @@
 			if (!permalink && belowTheFold()) {
 				$window.on('scrollstop.ArticleCommentsLoadOnDemand', function () {
 					if (!belowTheFold()) {
-						$comments.addClass('loading');
+						ArticleComments.$wrapper.addClass('loading');
 						$window.off('scrollstop.ArticleCommentsLoadOnDemand');
 						loadAssets();
 					}
