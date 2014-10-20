@@ -157,6 +157,7 @@ $article-items-spacing: 40px;
 
 	> ol,
 	> ul {
+		margin-bottom: 40px;
 		margin-top: 0;
 		padding-right: 108px;
 
@@ -165,8 +166,12 @@ $article-items-spacing: 40px;
 		}
 	}
 
+	ol {
+		list-style-type: decimal;
+	}
+
 	ul {
-		list-style: disc;
+		list-style-type: disc;
 	}
 
 	li {

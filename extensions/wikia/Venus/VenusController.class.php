@@ -146,10 +146,12 @@ class VenusController extends WikiaController {
 			}
 		}
 
+
 		foreach ( $this->assetsManager->getURL( $jsBodyGroups ) as $src ) {
-			if ( $this->assetsManager->checkAssetUrlForSkin( $src, $this->skin ) ) {
+// TODO fix double loading jses
+//			if ( $this->assetsManager->checkAssetUrlForSkin( $src, $this->skin ) ) {
 				$jsBodyFiles .= "<script src='{$src}'></script>";
-			}
+//			}
 		}
 
 		if ( is_array( $scripts ) ) {
