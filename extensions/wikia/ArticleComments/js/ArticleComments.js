@@ -615,6 +615,7 @@
 		$(function () {
 			var content, hash, permalink, styleAssets, belowTheFold, loadAssets;
 
+			// Cache jQuery selector after DOM ready
 			ArticleComments.$wrapper = $('#WikiaArticleComments');
 
 			// NO article comment on this page lets just skip
