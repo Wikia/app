@@ -35,7 +35,7 @@ class ExactTargetUserTaskHelper {
 	public function prepareUserUpdateParams( array $aUserData ) {
 		$userId = $this->extractUserIdFromData( $aUserData );
 		/* Get Customer Keys specific for production or development */
-		$aCustomerKeys = ExactTargetUpdatesHelper::getCustomerKeys();
+		$aCustomerKeys = $this->getCustomerKeys();
 		$sCustomerKey = $aCustomerKeys[ 'user' ];
 
 		$aApiParams = [
@@ -52,7 +52,7 @@ class ExactTargetUserTaskHelper {
 
 	public function prepareUserDeleteParams( $userId ) {
 		/* Get Customer Keys specific for production or development */
-		$aCustomerKeys = ExactTargetUpdatesHelper::getCustomerKeys();
+		$aCustomerKeys = $this->getCustomerKeys();
 		$sCustomerKey = $aCustomerKeys[ 'user' ];
 
 		$aApiParams = [
@@ -96,7 +96,7 @@ class ExactTargetUserTaskHelper {
 	 */
 	public function prepareUserPropertiesUpdateParams( $iUserId, array $aUserProperties ) {
 		/* Get Customer Keys specific for production or development */
-		$aCustomerKeys = ExactTargetUpdatesHelper::getCustomerKeys();
+		$aCustomerKeys = $this->getCustomerKeys();
 		$sCustomerKey = $aCustomerKeys['user_properties'];
 
 		foreach ( $aUserProperties as $sProperty => $sValue ) {
@@ -132,7 +132,7 @@ class ExactTargetUserTaskHelper {
 			'language'
 		];
 		/* Get Customer Keys specific for production or development */
-		$aCustomerKeys = ExactTargetUpdatesHelper::getCustomerKeys();
+		$aCustomerKeys = $this->getCustomerKeys();
 		$sCustomerKey = $aCustomerKeys['user_properties'];
 
 		foreach ( $aUserProperties as $sProperty => $sValue ) {
@@ -194,5 +194,26 @@ class ExactTargetUserTaskHelper {
 		$iUserId = $aUserData[ 'user_id' ];
 		unset( $aUserData[ 'user_id' ] );
 		return $iUserId;
+	}
+
+	/**
+	 * Get Customer Keys specific for production or development
+	 * CustomerKey is a key that indicates Wikia table reflected by DataExtension
+	 */
+	private function getCustomerKeys() {
+		global $wgExactTargetDevelopmentMode;
+
+		if ( $wgExactTargetDevelopmentMode ) {
+			$aCustomerKeys = [
+				'user' => 'user_dev',
+				'user_properties' => 'user_properties_dev',
+			];
+		} else {
+			$aCustomerKeys = [
+				'user' => 'user',
+				'user_properties' => 'user_properties',
+			];
+		}
+		return $aCustomerKeys;
 	}
 }
