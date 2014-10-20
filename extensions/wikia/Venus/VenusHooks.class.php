@@ -2,22 +2,26 @@
 
 class VenusHooks {
 
+	const INFOBOX_CLASS_NAME = 'infobox';
+
 	/**
 	 * Check if infobox (div element or table which has class containing 'infobox' string)
 	 * exists in first article section, and extract it from this section
 	 *
-	 * @param $parser Parser
-	 * @param $section number of section in article text
-	 * @param $content section text
-	 * @param $showEditLinks should add edit link
+	 * @param Parser $parser Parser instance
+	 * @param integer $section  number of section in article text
+	 * @param string $content reference  to section content
+	 * @param boolean $showEditLinks  should add edit link
 	 * @return bool
 	 */
 	static public function onParserSectionCreate( $parser, $section, &$content, $showEditLinks ) {
-		if ( $parser->mIsMainParse && $section == 0 && stripos($content, 'infobox') ) {
+		if ( $parser->mIsMainParse && $section == 0 && stripos($content, self::INFOBOX_CLASS_NAME) ) {
 			$infoboxes = '';
 			$dom = DOMDocument::loadHTML($content);
 			$finder = new DOMXPath($dom);
-			$nodes = $finder->query("(//div|//table)[contains(translate(@class, 'INFOBOX', 'infobox'), 'infobox')]");
+			$query = "(//div|//table)[contains(translate(@class, 'INFOBOX', " . self::INFOBOX_CLASS_NAME . "), " .
+				self::INFOBOX_CLASS_NAME . ")]";
+			$nodes = $finder->query($query);
 
 			foreach( $nodes as $node ) {
 				if ($node->hasAttribute('style')) {

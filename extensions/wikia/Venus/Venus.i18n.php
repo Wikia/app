@@ -8,7 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'venus-article-infobox-see-more' => 'SEE MORE',
+	'venus-article-infobox-see-more' => 'see more',
 
 );
 

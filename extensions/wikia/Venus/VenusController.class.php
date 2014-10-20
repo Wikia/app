@@ -3,7 +3,6 @@
 class VenusController extends WikiaController {
 	private static $bodyParametersArray = [];
 	private static $skinAssetGroups = [];
-	private static $infobox = null;
 
 	/* @var AssetsManager $assetsManager */
 	private $assetsManager;

@@ -146,8 +146,12 @@ class ParserOutput extends CacheTime {
 
 	# <Wikia>
 	public $mBeforeTextHTML = '';
-	function getBeforeTextHTML() { return $this->mBeforeTextHTML; }
-	function setBeforeTextHTML( $html ) { $this->mBeforeTextHTML = $html; }
+	function getBeforeTextHTML() {
+		return $this->mBeforeTextHTML;
+	}
+	function setBeforeTextHTML( $html ) {
+		$this->mBeforeTextHTML = $html;
+	}
 
 	public $mPerformanceStats = array();
 	function getPerformanceStats( $k )     { return @$this->mPerformanceStats[$k]; }
