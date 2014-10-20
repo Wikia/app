@@ -23,7 +23,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'This file is a MediaWiki extension, it is not a valid entry point' );
 }
 
-
 /**
  * Class FBConnectAPI
  *
@@ -32,10 +31,10 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  */
 class FBConnectAPI {
 	// Holds a static reference to our Facebook object
-	private static $__Facebook = null;
+	private static $facebookClient = null;
 
-	// Caches information about users to reduce the number of Facebook hits
-	private static $userinfo = array(array());
+	/** @var  array Caches information about users to reduce the number of Facebook hits */
+	private static $userInfoCache;
 
 	// Constructor
 	public function __construct() {
@@ -47,20 +46,16 @@ class FBConnectAPI {
 	public function Facebook() {
 		global $fbAppId, $fbAppSecret;
 		// Construct a new Facebook object on first time access
-		if ( is_null(self::$__Facebook) && self::isConfigSetup() ) {
-			self::$__Facebook = new Facebook3(array(
-				'appId'  =>  $fbAppId,
-				'secret' => $fbAppSecret
-			));
+		if ( is_null( self::$facebookClient ) && self::isConfigSetup() ) {
+			Facebook\FacebookSession::setDefaultApplication( $fbAppId, $fbAppSecret );
 
-			self::$__Facebook->api_client = new FacebookRestClient($fbAppId, $fbAppSecret, null);
-			//Facebook( $fbAppId, $fbAppSecret );
-			if (!self::$__Facebook) {
+			self::$facebookClient = new Facebook\FacebookJavaScriptLoginHelper();
+			if ( !self::$facebookClient ) {
 				error_log('Could not create facebook client.');
 			}
 		}
 
-		return self::$__Facebook;
+		return self::$facebookClient;
 	}
 
 	/**
@@ -88,7 +83,6 @@ class FBConnectAPI {
 			}
 		}
 
-
 		return $isSetup;
 	}
 
@@ -97,46 +91,81 @@ class FBConnectAPI {
 	 * then an ID of 0 is returned.
 	 */
 	public function user() {
-		return $this->Facebook()->getUser();
+		return $this->Facebook()->getUserId();
 	}
 
 	/**
-	 * Calls users.getInfo. Requests information about the user from 	.
+	 * Calls GET /me on the Facebook API
+	 *
+	 * @param int $user
+	 *
+	 * @return Facebook\GraphUser
 	 */
-	public function getUserInfo( $user = 0, $fields = null ) {
-		if ($user == 0) {
+	public function getUserInfo( $user = 0 ) {
+
+		if ( $user == 0 ) {
 			$user = $this->user();
 		}
 
-
-		if ($user != 0 && !isset($userinfo[$user]) )
-		{
+		if ( $user != 0 && !isset( self::$userInfoCache[$user] ) ) {
 			try {
-				// Query the Facebook API with the users.getInfo method
-				if( is_null($fields) || !is_array($fields) ) {
-					$fields = array('first_name', 'name', 'sex', 'timezone', 'locale',
-				                /*'profile_url',*/
-				                'username', 'proxied_email', 'contact_email');
-				}
-				$user_details = $this->Facebook()->api_client->users_getInfo($user, $fields);
-				// Cache the data in the $userinfo array
+				$userProfile = ( new \Facebook\FacebookRequest(
+					$this->Facebook()->getSession(),
+					'GET',
+					'/me'
+				) )->execute()->getGraphObject( Facebook\GraphUser::className() );
 
-				//avoid Notice: Uninitialized string offset: 0
-				self::$userinfo[$user] = !empty( $user_details[ 0 ] ) ? $user_details[ 0 ] : null;
+				self::$userInfoCache[$user] = $userProfile;
 			} catch( Exception $e ) {
-				error_log( 'Failure in the api when requesting ' . join(',', $fields) .
-				           " on uid $user: " . $e->getMessage());
+				error_log( "Failure in the api requesting '/me' on uid $user: " . $e->getMessage() );
 			}
 		}
-		return isset(self::$userinfo[$user]) ? self::$userinfo[$user] : null;
+		return self::$userInfoCache[$user];
+	}
+
+	/**
+	 * Some existing controller methods want an array of data rather than an object.  Rather than refactor all this
+	 * code (which we're going to throw away anyway) provide the array.
+	 *
+	 * @param int $user
+	 *
+	 * @return array
+	 */
+	public function getUserInfoArray( $user = 0 ) {
+		$userInfo = self::getUserInfo( $user );
+
+		$properties = [
+			'email',
+			'first_name',
+			'middle_name',
+			'last_name',
+			'gender',
+			'link',
+			'locale',
+			'name',
+			'timezone',
+			'updated_time',
+			'verified'
+		];
+		$data = [];
+
+		foreach ( $properties as $prop ) {
+			$data[ $prop ] = $userInfo->getProperty( $prop );
+		}
+
+		return $data;
 	}
 
 	/**
 	 * Returns the full name of the Facebook user.
+	 *
+	 * @param int $user
+	 *
+	 * @return string
 	 */
 	public function userName( $user = 0 ) {
-		$userinfo = $this->getUserInfo($user);
-		return $userinfo['name'];
+		$userInfo = $this->getUserInfo( $user );
+		return $userInfo->getName();
 	}
 
 	/**
@@ -167,6 +196,10 @@ class FBConnectAPI {
 
 	/**
 	 * Retrieves group membership data from Facebook.
+	 *
+	 * @param int $user
+	 *
+	 * @return array
 	 */
 	public function getGroupRights( $user = null ) {
 		global $fbUserRightsFromGroup;
@@ -250,19 +283,29 @@ class FBConnectAPI {
 	 * Returns the "public" hash of the email address (i.e., the one Facebook
 	 * gives out via their API). The hash is of the form crc32($email)_md5($email).
 	 *
-	 * @Unused (for now)
+	 * @param string $email
+	 *
+	 * @return string
 	 */
-	public function hashEmail($email) {
+	public function hashEmail( $email ) {
 		if ($email == null)
 			return '';
 		$email = trim(strtolower($email));
 		return crc32($email) . '_' . md5($email);
 	}
 
-	/*
+	/**
 	 * Publish message on facebook wall
+	 *
+	 * @param string $href
+	 * @param string $description
+	 * @param string $short
+	 * @param string $link
+	 * @param string $img
+	 *
+	 * @return int
 	 */
-	public function publishStream($href, $description, $short, $link, $img) {
+	public function publishStream( $href, $description, $short, $link, $img ) {
 		/* Wikia Change Start @author marzjan */
 		try {
 		/* Wikia Change End */
@@ -298,22 +341,40 @@ class FBConnectAPI {
 	/**
 	 * logout from FB
 	 */
-
 	function logout() {
-		$this->Facebook()->destroySession();
+		global $fbAppId;
+
+		$sessionCookieName = 'fbsr_'.$fbAppId;
+		$metaCookieName = 'fbm_'.$fbAppId;
+
+		unset( $_COOKIE[$sessionCookieName] );
+		if ( !headers_sent() ) {
+			// The base domain is stored in the metadata cookie if not we fallback
+			// to the current hostname
+			$base_domain = '.' . $_SERVER[ 'HTTP_HOST' ];
+
+			$metadata = $_COOKIE[ $metaCookieName ];
+			if ( array_key_exists( 'base_domain', $metadata ) &&
+				!empty( $metadata[ 'base_domain' ] )
+			) {
+				$base_domain = $metadata[ 'base_domain' ];
+			}
+
+			setcookie( $sessionCookieName, '', 0, '/', '.wikia-dev.com' ); //$base_domain );
+		}
 	}
 
-	/*
-	 *
+	/**
+	 * @return User|true
 	 */
 	function verifyAccountReclamation() {
-		$sr = (int) $this->Facebook()->getUser();
+		$sr = (int) $this->Facebook()->getUserId();
 
-		if($sr == 0) {
+		if ( $sr == 0 ) {
 			return true;
 		}
 
-		$user = FBConnectDB::getUser($sr);
+		$user = FBConnectDB::getUser( $sr );
 		return $user;
 	}
 }

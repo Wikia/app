@@ -22,22 +22,25 @@ class AccountNavigationController extends WikiaController {
 			'href' => $personalUrl['href']
 		);
 
-		if( in_array( $id, array( 'login', 'register' ) ) ) {
-			$attributes['rel'] = 'nofollow';
-		}
-
 		// add class attribute
 		if (isset($personalUrl['class'])){
 			$attributes['class'] = $personalUrl['class'];
 		}
 
-		// add accesskey attribute
+		// add ID specific attributes
 		switch ($id) {
 			case 'mytalk':
 				$attributes['accesskey'] = 'n';
 				break;
 			case 'login':
 				$attributes['accesskey'] = 'o';
+				$attributes['rel'] = 'nofollow';
+				break;
+			case 'register':
+				$attributes['rel'] = 'nofollow';
+				break;
+			case 'logout':
+				$attributes['onClick'] = 'UserLoginFacebook.init(); window.FB && window.FB.logout()';
 				break;
 		}
 
