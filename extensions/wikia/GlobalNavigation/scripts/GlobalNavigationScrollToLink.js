@@ -22,13 +22,13 @@ require(
 		 */
 		function initScrollToLink() {
 			// offset is negative - we want scroll BEFORE element's top offset
-			offset = -win.document.getElementById('globalNavigation').offsetHeight
-				- variables.normalTextFontSize; // also scroll a bit, so element won't be sticked to GlobalNavigation
+			offset = -(win.document.getElementById('globalNavigation').offsetHeight +
+				variables.normalTextFontSize); // also scroll a bit, so element won't be sticked to GlobalNavigation
 
 			scrollToLink.disableBrowserJump();
 
 			// setTimeout is needed here because of Chrome which sometimes scrolls to top on end of page load
-			win.setTimeout( function(){
+			win.setTimeout(function() {
 				scrollToLink.handleScrollTo(win.location.hash, offset);
 			});
 

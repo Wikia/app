@@ -22,7 +22,7 @@ define('wikia.history', ['wikia.window'], function(win) {
 	 * @param {Object} state
 	 * @param {String} title
 	 * @param {String} url
-	 * @return {Bool} return true if pushState is available on current platform
+	 * @return {Boolean} return true if pushState is available on current platform
 	 */
 	function pushState (state, title, url) {
 		if (hasHistoryFunction('pushState')) {
@@ -42,7 +42,7 @@ define('wikia.history', ['wikia.window'], function(win) {
 	 * @param {Object} state
 	 * @param {String} title
 	 * @param {String} url
-	 * @return {Bool} return true if replaceState is available on current platform
+	 * @return {Boolean} return true if replaceState is available on current platform
 	 */
 	function replaceState (state, title, url) {
 		if (hasHistoryFunction('replaceState')) {

@@ -2021,8 +2021,8 @@ $config['global_navigation_oasis_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => ['oasis'],
 	'assets' => [
-		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationOasis.scss',
-		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationSearchOasis.scss'
+		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationOasis.scss',
+		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationSearchOasis.scss'
 	]
 ];
 
