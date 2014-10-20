@@ -1,79 +1,101 @@
-define('mediaGallery.media', [], function () {
+define('mediaGallery.views.media', [
+	'mediaGallery.views.caption',
+	'mediaGallery.templates.mustache'
+], function (Caption, templates) {
 	'use strict';
 
-	function Media(options) {
+	var Media,
+		templateName = 'MediaGallery_media'; // workaround for nirvana template naming conventions and JSHint conflict
+
+	/**
+	 * Handle rendering and bindings for media items in galleries
+	 * Events bount to $el:
+	 *  'mediaInserted' when media item is inserted into DOM
+	 * @param {Object} options
+	 * @constructor
+	 */
+	Media = function (options) {
 		this.$el = options.$el;
-		this.$caption = this.$el.find('.caption');
+		this.model = options.model;
+		this.gallery = options.gallery;
 
-		// cache some css values that don't change
-		this.mediaPadding = parseFloat(this.$el.css('padding-bottom'));
-		this.captionPadding = parseFloat(this.$caption.css('padding-top'));
-		this.marginTop = parseFloat(this.$caption.css('margin-top'));
-	}
+		this.model.media = this;
+		this.rendered = false;
+		this.$loaded = $.Deferred();
 
-	Media.prototype.init = function () {
-		this.setupCaption();
-	};
-
-	Media.prototype.setupCaption = function () {
-		var self = this;
-
-		this.$caption.hover(
-			$.proxy(this.captionHover, this),
-			$.proxy(this.captionHoverOut, this)
-		);
-
-		this.$el.on('click', function () {
-			if (self.$caption.hasClass('clicked')) {
-				self.captionHoverOut();
-			} else {
-				self.$caption.addClass('clicked');
-				// captionHover here is required for touch screen interactions. mouseenter (bound by
-				// hover above) is only triggered for the first click on the caption, unless the user
-				// clicks outside the caption. This ensures captionHover will be called either way.
-				self.captionHover();
-			}
-		});
+		// Wait till element is inserted into DOM before binding caption events
+		this.$el.on('mediaInserted', $.proxy(this.onInsert, this));
 	};
 
 	/**
-	 * Toggle top margin to slide caption up into full view.
-	 * Note: it's hard to do this animation with css b/c the new top margin value is unknown
+	 * Create media html
+	 * @returns {Media}
 	 */
-	Media.prototype.captionHover = function () {
-		var self = this,
-			mediaHeight = this.$el.height(),
-			contentHeight,
-			newMarginTop;
+	Media.prototype.render = function () {
+		this.$el.addClass('media hidden fade');
+		this.$el.html(Mustache.render(templates[templateName], this.model));
+		this.rendered = true;
 
-		// use css to expand caption content (i.e. remove overflow restrictions)
-		this.$caption.addClass('hovered');
+		return this;
+	};
 
-		// calculate height of content plus padding of it's container
-		contentHeight = this.$caption.find('.inner').outerHeight() + (2 * this.captionPadding);
+	/**
+	 * Called when media element is inserted into DOM
+	 */
+	Media.prototype.onInsert = function () {
+		var self = this;
 
-		// get new negative top margin but limit it to 100% of it's container
-		// then adjust for container padding
-		newMarginTop = -1 * (Math.min(mediaHeight, contentHeight) + this.mediaPadding);
+		// trigger event when the image loads (or fails to load)
+		this.$el.find('img').on('load error', function () {
+			self.$loaded.resolve();
+		});
 
-		// handle small rounding inacuracies to avoid blips on hover of short captions
-		if (Math.abs(Math.abs(this.marginTop) - Math.abs(newMarginTop)) < 2) {
-			return;
-		}
+		this.initCaption();
+	};
 
-		// do the animation
-		this.$caption.css('marginTop', newMarginTop);
+	/**
+	 * Create caption instance
+	 */
+	Media.prototype.initCaption = function () {
+		var $caption = this.$el.find('.media-gallery-caption');
 
-		// add a scrollbar to long captions
-		if (contentHeight > mediaHeight) {
-			self.$caption.addClass('scroll');
+		if ($caption.length) {
+			this.caption = new Caption({
+				$el: $caption,
+				media: this
+			});
+			this.caption.init();
 		}
 	};
 
-	Media.prototype.captionHoverOut = function () {
-		this.$caption
-			.removeClass('hovered scroll clicked')
-			.removeAttr('style');
+	/**
+	 * Use CSS transitions to show element
+	 */
+	Media.prototype.show = function () {
+		var self = this;
+
+		this.$el.removeClass('hidden');
+		// wait till after display:block before starting transition
+		setTimeout(function () {
+			self.$el.removeClass('fade');
+		}, 0);
+	};
+
+	/**
+	 * Use CSS transitions to hide element
+	 */
+	Media.prototype.hide = function () {
+		var self = this;
+
+		if (!this.fadeDuration) {
+			// get duration of css fade and cut it in half for optimal UX
+			this.fadeDuration = parseInt(this.$el.css('transition-duration')) * 500;
+		}
+
+		this.$el.addClass('fade');
+		setTimeout(function () {
+			self.$el.addClass('hidden');
+		}, this.fadeDuration);
 	};
 
 	return Media;

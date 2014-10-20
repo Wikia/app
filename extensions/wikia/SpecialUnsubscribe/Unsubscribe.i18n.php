@@ -161,10 +161,11 @@ $messages['de'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'unsubscribe' => 'Abonin ra bıvıci',
-	'unsubscribe-confirm-legend' => 'Testiq ke',
+	'unsubscribe-confirm-legend' => 'Tesdiq ke',
 	'unsubscribe-confirm-button' => 'E, Me emel ke',
 	'unsubscribe-working-done' => 'Temamyayo',
 );

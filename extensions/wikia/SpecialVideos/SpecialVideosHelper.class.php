@@ -21,7 +21,7 @@ class SpecialVideosHelper extends WikiaModel {
 	 * @return string $description
 	 */
 	public function getMetaTagDescription() {
-		$catInfo = HubService::getComscoreCategory( $this->wg->CityId );
+		$catInfo = HubService::getCategoryInfoForCity( $this->wg->CityId );
 
 		$descriptionKey = 'specialvideos-meta-description';
 

@@ -34,6 +34,8 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 		$this->wg->SuppressAds = true;
 		$this->wg->SuppressToolbar = true;
 
+		$this->getOutput()->disallowUserJs(); // just in case...
+
 		$this->wg->Out->setPageTitle( wfMessage('wikiaconfirmemail-heading')->plain() );
 
 		$par = $this->request->getVal( 'par', '' );
@@ -165,6 +167,8 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 						$userPage = $user->getUserPage();
 						$this->wg->out->redirect( $userPage->getFullURL() );
 					}
+
+					wfRunHooks( 'EmailChangeConfirmed', array( $user ) );
 					return;
 
 				}

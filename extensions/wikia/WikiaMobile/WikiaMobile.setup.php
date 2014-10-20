@@ -139,7 +139,7 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			//ads
 			'adEnginePageType',
 			'cityShort',
-			'wgAdDriverUseEbay',
+			'wgAdDriverUseAdsAfterInfobox',
 			'wgAdDriverWikiIsTop1000',
 			'wgAdVideoTargeting',
 			'wgDartCustomKeyValues',

@@ -1,8 +1,8 @@
 <?php
 
-/*
+/**
  * Maintenance script to delete video by provider
- * This is one time use script
+ *
  * @author Saipetch Kongkatong
  */
 

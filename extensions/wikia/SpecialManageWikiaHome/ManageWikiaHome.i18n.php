@@ -382,6 +382,7 @@ $messages['bn'] = array(
 
 /** Breton (brezhoneg)
  * @author Fohanno
+ * @author Gwenn-Ael
  */
 $messages['br'] = array(
 	'managewikiahome' => 'Merañ pajenn degemer Wikia',
@@ -414,6 +415,7 @@ $messages['br'] = array(
 	'manage-wikia-home-wiki-list-official-yes' => 'Ya',
 	'manage-wikia-home-wiki-list-disabled-collection' => 'Dastumad diweredekaet',
 	'manage-wikia-home-wiki-list-all-collections' => 'An holl zastumadoù',
+	'manage-wikia-home-wiki-list-all-verticals' => 'An holl demoù',
 	'manage-wikia-home-modal-title' => 'Cheñch statud ar wiki',
 	'manage-wikia-home-modal-title-collection' => 'Aozañ ar wiki en dastumad',
 	'manage-wikia-home-modal-content-add-collection' => "Ha fellout a ra deoc'h ouzhpennañ ar wiki-mañ d'an dastumad ?",
@@ -438,6 +440,8 @@ $messages['br'] = array(
 	'manage-wikia-home-collection-add-file-button' => "Ouzhpennañ ul luc'hskeudenn",
 	'manage-wikia-home-stats-visitors-label' => 'Gweladennerien dre viz',
 	'manage-wikia-home-stats-success' => 'Hizivaet eo bet ar stadegoù !',
+	'manage-wikia-home-stats-failure' => "N'eo ket bet enrollet ar roadennoù. Reizhit ar fazioù er furmskrid, mar plij, ha klaskit en-dro.",
+	'manage-wikia-home-stats-permissions-error' => "N'eo ket bet enrollet ar roadennoù. Ha sur eo ho peus ar gwririoù rekis evit kemmañ ar furmskrid-mañ ?",
 );
 
 /** Bosnian (bosanski)
@@ -452,7 +456,9 @@ $messages['bs'] = array(
 );
 
 /** Catalan (català)
+ * @author Fitoschido
  * @author Roxas Nobody 15
+ * @author Unapersona
  */
 $messages['ca'] = array(
 	'managewikiahome' => 'Administrar',
@@ -460,6 +466,8 @@ $messages['ca'] = array(
 	'manage-wikia-home-wikis-in-slots-heading' => 'Organització de Espais',
 	'manage-wikia-home-wikis-in-slots-total' => "L'import total de Espais:$1",
 	'manage-wikia-home-visualization-wikis' => 'Wikis Corporatius amb previsualització:',
+	'manage-wikia-home-hubs-slot-error' => 'Hi ha un error al guardar. Si us plau, torna-ho a intentar.',
+	'manage-wikia-home-hubs-slot-more-links' => 'Enllaços «Més a…»',
 	'manage-wikia-home-wikis-in-slots-success' => "Espais de Nom s'ha canviat.",
 	'manage-wikia-home-collections-success' => "Les col·leccions s'han guardat.",
 	'manage-wikia-home-collections-add-success' => 'Wiki afegit correctament a la col·lecció.',
@@ -467,6 +475,9 @@ $messages['ca'] = array(
 	'manage-wikia-home-collections-add-failure-image' => '$1no acumulable a aquesta col·lecció perquè la imatge principal ha estat rebutjada.',
 	'manage-wikia-home-collections-remove-success' => 'Wiki afegit correctament a la col·lecció.',
 	'manage-wikia-home-collections-invalid-action' => 'Aquesta acció no existeix.',
+	'manage-wikia-home-marketing-invalid-width' => 'La mida de la imatge hauria de ser de $maxWidth píxels.',
+	'manage-wikia-home-marketing-invalid-height' => 'L\'alçada de la imatge hauria de ser de $maxHeight píxels.',
+	'manage-wikia-home-marketing-invalid-size' => 'La mida de la imatge hauria de ser de $maxWidth x $maxHeight px.',
 	'manage-wikia-home-verticals-proportions' => 'Nombre de wikis per vertical',
 	'manage-wikia-home-error-invalid-total-no-of-slots' => "Quantitat no vàlida de espais en total ( $1 ). Si us plau, assegureu-vos que la suma de cada centre de ranures iguals de l'import total de ranures ( $2 ).",
 	'manage-wikia-home-error-negative-slots-number-not-allowed' => 'No es permet un nombre negatiu de espais',
@@ -477,6 +488,8 @@ $messages['ca'] = array(
 	'manage-wikia-home-wiki-name-filter' => 'Comenceu a escriure el nom del wiki i la llista tindrà més curt:',
 	'manage-wikia-home-wiki-filter' => 'Filtre',
 	'manage-wikia-home-wiki-filter-reset' => 'Neteja',
+	'manage-wikia-home-wiki-list-download' => 'Descarrega una llista completa',
+	'manage-wikia-home-wiki-list-download-tooltip' => 'Valors (fitxer CSV) separats per comes amb codificació UTF-8.',
 	'manage-wikia-home-wiki-list-id' => 'Id',
 	'manage-wikia-home-wiki-list-vertical' => 'Vertical',
 	'manage-wikia-home-wiki-list-headline' => 'Nom del wiki',
@@ -523,14 +536,23 @@ $messages['ca'] = array(
 	'manage-wikia-home-collection-hero-image-tooltip' => 'Aquesta imatge ha de ser  $1 px ×  $2 px',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'Aquesta imatge ha de ser  $1 px ×  $2 px',
 	'manage-wikia-home-collection-add-file-button' => 'Afegir una foto',
+	'manage-wikia-home-stats-header' => 'Estadístiques de la pàgina corporativa',
+	'manage-wikia-home-stats-text' => 'Aquestes estadístiques es mostren en totes les pàgines corporatives sense separació segons la llengua.',
+	'manage-wikia-home-stats-visitors-label' => 'Visitants mensuals',
+	'manage-wikia-home-stats-mobile-percentage-label' => '% de visitants amb mòbil',
+	'manage-wikia-home-stats-success' => 'Guardat correctament!',
+	'manage-wikia-home-stats-failure' => "Les dades no s'han guardat. Corregiu els errors en el formulari i torneu-ho a provar.",
+	'manage-wikia-home-stats-permissions-error' => "No s'ha desat. Comprova que tinguis els drets necessaris per editar.",
 );
 
 /** Chechen (нохчийн)
  * @author Умар
  */
 $messages['ce'] = array(
+	'manage-wikia-home-hubs-slot-error' => 'Ӏалаш ечу хенахь гӀалат даьлла. Дехар до, юху а гӀорта.',
 	'manage-wikia-home-hubs-slot' => 'Слот $1',
 	'manage-wikia-home-hubs-slot-name' => 'Хабан цӀе',
+	'manage-wikia-home-marketing-invalid-size' => 'Суьртан барам хила беза $maxWidth x $maxHeight px.',
 	'manage-wikia-home-wiki-list-blocked' => 'Блоктоьхна',
 );
 
@@ -577,6 +599,10 @@ $messages['de'] = array(
 	'manage-wikia-home-collections-add-failure-image' => '$1 konnte nicht zu dieser Sammlung hinzugefügt werden, da das Hauptbild abgelehnt wurde.',
 	'manage-wikia-home-collections-remove-success' => 'Das Wiki wurde erfolgreich aus der Sammlung entfernt.',
 	'manage-wikia-home-collections-invalid-action' => 'Diese Aktion ist nicht vorhanden.',
+	'manage-wikia-home-marketing-invalid-width' => 'Das Bild sollte $maxWidth Pixel breit sein.',
+	'manage-wikia-home-marketing-invalid-height' => 'Das Bild sollte $maxHeight Pixel hoch sein.',
+	'manage-wikia-home-marketing-invalid-size' => 'Das Bild sollte $maxWidth Pixel breit und $maxHeight Pixel hoch sein.',
+	'manage-wikia-home-marketing-not-complete' => 'Um eine Marktlücke zu verwenden, müssen alle Felder ausgefüllt werden.',
 	'manage-wikia-home-verticals-proportions' => 'Anzahl der Wikis pro Vertikale',
 	'manage-wikia-home-error-invalid-total-no-of-slots' => 'Ungültige Slotgesamtsumme ($1). Bitte stelle sicher, dass die Summe jedes Hubslots der Gesamtsumme der Slots entspricht ($2).',
 	'manage-wikia-home-error-negative-slots-number-not-allowed' => 'Es sind keine negativen Slotanzahlen erlaubt',
@@ -643,6 +669,7 @@ $messages['de'] = array(
 	'manage-wikia-home-stats-total-pages-label' => 'Gesamtseiten-Fallback',
 	'manage-wikia-home-stats-success' => 'Statistiken erfolgreich aktualisiert!',
 	'manage-wikia-home-stats-failure' => 'Die Daten wurden nicht gespeichert. Bitte korrigiere Fehler im Formular und versuche es erneut.',
+	'manage-wikia-home-stats-permissions-error' => 'Die Daten wurden nicht gespeichert. Bitte stelle sicher, dass du die korrekten Rechte hast, um dieses Formular zu bearbeiten.',
 );
 
 /** Greek (Ελληνικά)
@@ -670,6 +697,7 @@ $messages['en-gb'] = array(
 /** Spanish (español)
  * @author Benfutbol10
  * @author Fitoschido
+ * @author Macofe
  * @author VegaDark
  */
 $messages['es'] = array(
@@ -693,6 +721,10 @@ $messages['es'] = array(
 	'manage-wikia-home-collections-add-failure-image' => '$1 no puede ser añadido a esta colección porque su imagen principal ha sido denegada.',
 	'manage-wikia-home-collections-remove-success' => 'Se borró satisfactoriamente el wiki de esta colección.',
 	'manage-wikia-home-collections-invalid-action' => 'Esa acción no existe.',
+	'manage-wikia-home-marketing-invalid-width' => 'El ancho de la imagen debe ser $maxWidth px.',
+	'manage-wikia-home-marketing-invalid-height' => 'La altura de la imagen debe ser $maxHeight px.',
+	'manage-wikia-home-marketing-invalid-size' => 'El tamaño de la imagen debe ser de $maxWidth × $maxHeight px.',
+	'manage-wikia-home-marketing-not-complete' => 'Para utilizar el espacio de marketing, se deben llenar todos los campos.',
 	'manage-wikia-home-verticals-proportions' => 'Número de wikis en vertical',
 	'manage-wikia-home-error-invalid-total-no-of-slots' => 'Cantidad de espacios inválidos en total ($1). Por favor asegúrate de que la suma de cada espacio de los hubs es igual al total de espacios ($2).',
 	'manage-wikia-home-error-negative-slots-number-not-allowed' => 'No se permiten números negativos de espacios',
@@ -759,6 +791,7 @@ $messages['es'] = array(
 	'manage-wikia-home-stats-total-pages-label' => 'Respaldo total de páginas',
 	'manage-wikia-home-stats-success' => '¡Estadísticas actualizadas exitosamente!',
 	'manage-wikia-home-stats-failure' => 'No se guardaron los datos. Corrige los errores del formulario e inténtalo de nuevo.',
+	'manage-wikia-home-stats-permissions-error' => 'No se guardaron los datos. Asegúrate de tener los permisos correctos para editar este formulario.',
 );
 
 /** Basque (euskara)
@@ -785,6 +818,7 @@ $messages['fa'] = array(
 	'manage-wikia-home-wiki-filter' => 'پالایه',
 	'manage-wikia-home-wiki-filter-reset' => 'پاک‌کردن',
 	'manage-wikia-home-wiki-list-id' => 'شناسه',
+	'manage-wikia-home-wiki-list-headline' => 'نام ویکی',
 	'manage-wikia-home-wiki-list-blocked' => 'مسدود شده',
 	'manage-wikia-home-wiki-list-collection' => 'مجموعه‌ها',
 	'manage-wikia-home-wiki-list-blocked-no' => 'خیر',
@@ -795,6 +829,7 @@ $messages['fa'] = array(
 	'manage-wikia-home-wiki-list-official-yes' => 'بله',
 	'manage-wikia-home-modal-button-no' => 'خیر',
 	'manage-wikia-home-modal-button-yes' => 'بله',
+	'manage-wikia-home-modal-button-okay' => 'باشد',
 	'manage-wikia-home-collections-setup-save-button' => 'ذخیره',
 	'manage-wikia-home-collections-enabled-field-label' => 'فعال',
 	'manage-wikia-home-collections-name-field-label' => 'نام مجموعه',
@@ -843,6 +878,7 @@ $messages['fo'] = array(
 
 /** French (français)
  * @author Gomoko
+ * @author Verdy p
  * @author Wyz
  */
 $messages['fr'] = array(
@@ -866,6 +902,10 @@ $messages['fr'] = array(
 	'manage-wikia-home-collections-add-failure-image' => '$1 ne peut pas être ajouté à cette collection parce que son image principale a été refusée.',
 	'manage-wikia-home-collections-remove-success' => 'Le wiki a été supprimé de cette collection avec succès.',
 	'manage-wikia-home-collections-invalid-action' => "Cette action n'existe pas.",
+	'manage-wikia-home-marketing-invalid-width' => 'La largeur de l’image devrait être de $maxWidth px.',
+	'manage-wikia-home-marketing-invalid-height' => 'La hauteur de l’image devrait être de $maxHeight px.',
+	'manage-wikia-home-marketing-invalid-size' => 'La taille de l’image devrait être de $maxWidth x $maxHeight px.',
+	'manage-wikia-home-marketing-not-complete' => 'Pour utiliser l’emplacement marketing, tous les champs doivent être remplis.',
 	'manage-wikia-home-verticals-proportions' => 'Nombre de wikis par colonne',
 	'manage-wikia-home-error-invalid-total-no-of-slots' => 'Nombre d’emplacements non valide au total ($1). Assurez-vous que la somme de chaque groupe d’emplacements équivaut au nombre total d’emplacements ($2).',
 	'manage-wikia-home-error-negative-slots-number-not-allowed' => 'Un nombre négatif d’emplacements est interdit',
@@ -878,7 +918,7 @@ $messages['fr'] = array(
 	'manage-wikia-home-wiki-filter-reset' => 'Effacer',
 	'manage-wikia-home-wiki-list-download' => 'Télécharger la liste complète',
 	'manage-wikia-home-wiki-list-download-tooltip' => 'Valeurs séparées par des virgules (fichier CSV) avec encodage UTF-8.',
-	'manage-wikia-home-wiki-list-id' => 'Id',
+	'manage-wikia-home-wiki-list-id' => 'Identifiant',
 	'manage-wikia-home-wiki-list-vertical' => 'Thème',
 	'manage-wikia-home-wiki-list-headline' => 'Nom du wiki',
 	'manage-wikia-home-wiki-list-blocked' => 'Bloqué',
@@ -932,6 +972,7 @@ $messages['fr'] = array(
 	'manage-wikia-home-stats-total-pages-label' => 'Secours du total des pages',
 	'manage-wikia-home-stats-success' => 'Statistiques bien mises à jour !',
 	'manage-wikia-home-stats-failure' => 'Les données n’ont pas été enregistrées. Veuillez corriger les erreurs dans le formulaire et réessayer.',
+	'manage-wikia-home-stats-permissions-error' => 'Les données n’ont pas été enregistrées. Veuillez vous assurer d’avoir droits requis pour modifier ce formulaire.',
 );
 
 /** Galician (galego)
@@ -1048,9 +1089,23 @@ $messages['it'] = array(
 /** Japanese (日本語)
  * @author Barrel0116
  * @author Dude1717
+ * @author Plover-Y
  */
 $messages['ja'] = array(
+	'manage-wikia-home-wiki-list-headline' => 'ウィキ名',
+	'manage-wikia-home-wiki-list-blocked' => 'ブロック済',
+	'manage-wikia-home-wiki-list-blocked-no' => 'いいえ',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'はい',
+	'manage-wikia-home-wiki-list-promoted-no' => 'いいえ',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'はい',
+	'manage-wikia-home-wiki-list-official-no' => 'いいえ',
+	'manage-wikia-home-wiki-list-official-yes' => 'はい',
+	'manage-wikia-home-modal-content-blocked-wiki-title' => 'このwikiはブロックされています',
+	'manage-wikia-home-modal-button-no' => 'いいえ',
+	'manage-wikia-home-modal-button-yes' => 'はい',
+	'manage-wikia-home-collections-setup-save-button' => '保存',
 	'manage-wikia-home-collection-add-file-button' => '画像を追加',
+	'manage-wikia-home-stats-visitors-label' => '毎月の訪問者',
 	'manage-wikia-home-stats-failure' => 'データは保存されませんでした。フォームのエラーを修正して、やり直してください。',
 );
 
@@ -1079,9 +1134,31 @@ $messages['kn'] = array(
 /** Korean (한국어)
  * @author Clockoon
  * @author Jskang
+ * @author Miri-Nae
  * @author Priviet
  */
 $messages['ko'] = array(
+	'manage-wikia-home-hubs-slot-error' => '저장하는 도중 오류가 발생했습니다. 다시 시도해주세요.',
+	'manage-wikia-home-hubs-slot-name' => '허브 이름',
+	'manage-wikia-home-hubs-slot-description' => '허브 설명',
+	'manage-wikia-home-collections-invalid-action' => '해당 동작은 존재하지 않습니다.',
+	'manage-wikia-home-wiki-filter' => '필터',
+	'manage-wikia-home-wiki-list-id' => 'ID',
+	'manage-wikia-home-wiki-list-headline' => '위키 이름',
+	'manage-wikia-home-wiki-list-blocked' => '차단됨',
+	'manage-wikia-home-wiki-list-promoted' => '홍보됨',
+	'manage-wikia-home-wiki-list-official' => '공식',
+	'manage-wikia-home-wiki-list-blocked-no' => '아니요',
+	'manage-wikia-home-wiki-list-blocked-yes' => '예',
+	'manage-wikia-home-wiki-list-promoted-no' => '아니요',
+	'manage-wikia-home-wiki-list-promoted-yes' => '예',
+	'manage-wikia-home-wiki-list-official-no' => '아니요',
+	'manage-wikia-home-wiki-list-official-yes' => '예',
+	'manage-wikia-home-modal-content-blocked-wiki-title' => '이 위키는 차단되었습니다',
+	'manage-wikia-home-modal-button-no' => '아니요',
+	'manage-wikia-home-modal-button-yes' => '예',
+	'manage-wikia-home-modal-button-okay' => '확인',
+	'manage-wikia-home-collections-setup-save-button' => '저장',
 	'manage-wikia-home-stats-visitors-label' => '월간 방문자',
 	'manage-wikia-home-stats-mobile-percentage-label' => '% 모바일 방문자',
 	'manage-wikia-home-stats-total-pages-label' => '모든 문서 대체',
@@ -1096,6 +1173,9 @@ $messages['lb'] = array(
 	'manage-wikia-home-hubs-slot' => 'Slot $1',
 	'manage-wikia-home-hubs-slot-more-links' => '"Méi op..." Linken',
 	'manage-wikia-home-hubs-slot-empty-option' => '-- Eidele Slot --',
+	'manage-wikia-home-marketing-invalid-width' => 'D\'Bild soll $maxWidth Pixel breet sinn.',
+	'manage-wikia-home-marketing-invalid-height' => 'Héicht vum Bild sollt $maxHeight Pixel sinn.',
+	'manage-wikia-home-marketing-invalid-size' => 'Gréisst vum Bild sollt $maxWidth x $maxHeight px sinn.',
 	'manage-wikia-home-change-button' => 'Änneren',
 	'manage-wikia-home-wiki-filter' => 'Filter',
 	'manage-wikia-home-wiki-filter-reset' => 'Eidel maachen',
@@ -1159,6 +1239,7 @@ $messages['ms'] = array(
 	'manage-wikia-home-visualization-wikis' => 'Wiki korporat dengan visualisasi:',
 	'manage-wikia-home-hubs-slot-heading' => 'Persediaan slot hab',
 	'manage-wikia-home-hubs-slot-success' => 'Slot hab telah disimpan.',
+	'manage-wikia-home-hubs-slot-error' => 'Terdapat ralat ketika menyimpan. Sila cuba lagi.',
 	'manage-wikia-home-hubs-slot' => 'Slot $1',
 	'manage-wikia-home-hubs-slot-name' => 'Nama hab',
 	'manage-wikia-home-hubs-slot-description' => 'Huraian hab',
@@ -1171,6 +1252,10 @@ $messages['ms'] = array(
 	'manage-wikia-home-collections-add-failure-image' => '$1 tidak boleh ditambahkan ke dalam koleksi ini kerana gambar utamanya telah ditolak.',
 	'manage-wikia-home-collections-remove-success' => 'Wiki ini berjaya digugurkan dari koleksi.',
 	'manage-wikia-home-collections-invalid-action' => 'Tindakan itu tidak wujud.',
+	'manage-wikia-home-marketing-invalid-width' => 'Lebar gambar seharusnya $maxWidth px.',
+	'manage-wikia-home-marketing-invalid-height' => 'Tinggi gambar seharusnya $maxWidth px.',
+	'manage-wikia-home-marketing-invalid-size' => 'Saiz imej seharusnya $maxWidth x $maxHeight px.',
+	'manage-wikia-home-marketing-not-complete' => 'Untuk menggunakan slot pemasaran, semua ruangan mesti diisi.',
 	'manage-wikia-home-verticals-proportions' => 'Bilangan wiki severtikal',
 	'manage-wikia-home-error-invalid-total-no-of-slots' => 'Jumlah slot tidak sah ($1). Sila pastikan jumlah slot dalam setiap hab bersamaan dengan jumlah slot ($2).',
 	'manage-wikia-home-error-negative-slots-number-not-allowed' => 'Jumlah slot negatif tidak dibenarkan',
@@ -1237,6 +1322,7 @@ $messages['ms'] = array(
 	'manage-wikia-home-stats-total-pages-label' => 'Undur Jumlah Halaman',
 	'manage-wikia-home-stats-success' => 'Statistik berjaya dikemaskinikan!',
 	'manage-wikia-home-stats-failure' => 'Data tidak tersimpan. Sila betulkan kesilapan dalam borang dan cuba lagi.',
+	'manage-wikia-home-stats-permissions-error' => 'Data tidak tersimpan. Sila pastikan anda mempunyai hak-hak yang berkenaan untuk menyunting borang ini.',
 );
 
 /** Norwegian Bokmål (norsk bokmål)
@@ -1269,6 +1355,7 @@ $messages['nb'] = array(
  * @author Bluyten
  * @author Flightmare
  * @author Siebrand
+ * @author Sjoerddebruin
  */
 $messages['nl'] = array(
 	'managewikiahome' => 'Wikia Home beheren',
@@ -1340,7 +1427,7 @@ $messages['nl'] = array(
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'Deze afbeelding hoort de volgende afmetingen te hebben: $1×$2px',
 	'manage-wikia-home-collection-add-file-button' => 'Afbeelding toevoegen',
 	'manage-wikia-home-stats-visitors-label' => 'Maandelijkse bezoekers',
-	'manage-wikia-home-stats-mobile-percentage-label' => '% Mobiele Bezoekers',
+	'manage-wikia-home-stats-mobile-percentage-label' => '% Mobiele bezoekers',
 	'manage-wikia-home-stats-success' => 'Statistieken succesvol bijgewerkt!',
 	'manage-wikia-home-stats-failure' => 'Gegevens niet opgeslagen. Corrigeer fouten in het formulier en probeer het nogmaals.',
 );
@@ -1414,6 +1501,9 @@ $messages['pl'] = array(
 	'manage-wikia-home-collections-add-failure-image' => '$1 nie może zostać dodana do kolekcji, ponieważ jej główny obraz został odrzucony.',
 	'manage-wikia-home-collections-remove-success' => 'Wiki pomyślnie usunięta z kolekcji.',
 	'manage-wikia-home-collections-invalid-action' => 'Ta opcja nie istnieje.',
+	'manage-wikia-home-marketing-invalid-width' => 'Szerokość obrazu powinna wynosić $maxWidth px.',
+	'manage-wikia-home-marketing-invalid-height' => 'Wysokość obrazu powinna wynosić $maxHeight px.',
+	'manage-wikia-home-marketing-invalid-size' => 'Rozmiar obrazu powinien wynosić $maxWidth x $maxHeight px.',
 	'manage-wikia-home-verticals-proportions' => 'Liczba wiki na vertical',
 	'manage-wikia-home-error-invalid-total-no-of-slots' => 'Niewłaściwa liczba slotów ($1). Upewnij się, ze suma slotów we wszystkich hubach równa się łącznej liczbie slotów ($2).',
 	'manage-wikia-home-error-negative-slots-number-not-allowed' => 'Ujemna ilość slotów nie jest dozwolona',
@@ -1480,6 +1570,7 @@ $messages['pl'] = array(
 	'manage-wikia-home-stats-total-pages-label' => 'Wszystkie Strony awaryjne',
 	'manage-wikia-home-stats-success' => 'Statystyki zostały pomyślnie zaktualizowane',
 	'manage-wikia-home-stats-failure' => 'Dane nie zostały zapisane. Proszę popraw błędy w formularzu i spróbuj ponownie.',
+	'manage-wikia-home-stats-permissions-error' => 'Dane nie zostały zapisane. Proszę, upewnij się, że masz odpowiednie prawa do edycji tego formularza.',
 );
 
 /** Pashto (پښتو)
@@ -1637,6 +1728,10 @@ $messages['ru'] = array(
 	'manage-wikia-home-collections-add-failure-image' => '$1 не может быть добавлен к этой коллекции, потому что его основное изображение было отклонено.',
 	'manage-wikia-home-collections-remove-success' => 'Вики успешно удалена из коллекции.',
 	'manage-wikia-home-collections-invalid-action' => 'Это действие не существует.',
+	'manage-wikia-home-marketing-invalid-width' => 'Ширина изображения должна быть $maxWidth px.',
+	'manage-wikia-home-marketing-invalid-height' => 'Высота изображения должна быть $maxHeight px.',
+	'manage-wikia-home-marketing-invalid-size' => 'Размер изображения должен быть $maxWidth x $maxHeight px.',
+	'manage-wikia-home-marketing-not-complete' => 'Для использования маркетингового слота все поля должны быть заполнены.',
 	'manage-wikia-home-verticals-proportions' => 'Количество проектов по вертикали',
 	'manage-wikia-home-error-invalid-total-no-of-slots' => 'Недопустимое общее количество слотов ($1). Пожалуйста, убедитесь, что сумма слотов каждого хаба равна общему количеству слотов ($2).',
 	'manage-wikia-home-error-negative-slots-number-not-allowed' => 'Отрицательное число слотов не допускается',
@@ -1703,6 +1798,7 @@ $messages['ru'] = array(
 	'manage-wikia-home-stats-total-pages-label' => 'Возврат для общего числа страниц',
 	'manage-wikia-home-stats-success' => 'Статистика успешно обновлена!',
 	'manage-wikia-home-stats-failure' => 'Данные не были сохранены. Пожалуйста, исправьте ошибки в форме и повторите попытку.',
+	'manage-wikia-home-stats-permissions-error' => 'Данные не были сохранены. Пожалуйста, убедитесь, что у вас есть соответствующие права для редактирования этой формы.',
 );
 
 /** Scots (Scots)
@@ -1714,6 +1810,7 @@ $messages['sco'] = array(
 
 /** Swedish (svenska)
  * @author Jopparn
+ * @author Lokal Profil
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -1725,6 +1822,7 @@ $messages['sv'] = array(
 	'manage-wikia-home-visualization-wikis' => 'Kollektiva wikis med visualisering:',
 	'manage-wikia-home-hubs-slot-heading' => 'Hubbplatsinställning',
 	'manage-wikia-home-hubs-slot-success' => 'Hubbplatser har sparats.',
+	'manage-wikia-home-hubs-slot-error' => 'Ett fel uppstod när det skulle sparas. Var god försök igen.',
 	'manage-wikia-home-hubs-slot' => 'Plats $1',
 	'manage-wikia-home-hubs-slot-name' => 'Hubbnamn',
 	'manage-wikia-home-hubs-slot-description' => 'Hubbeskrivning',
@@ -1737,6 +1835,10 @@ $messages['sv'] = array(
 	'manage-wikia-home-collections-add-failure-image' => '$1 kan inte läggas till i denna samling eftersom dess huvudbild har avvisats.',
 	'manage-wikia-home-collections-remove-success' => 'Wiki togs framgångsrikt bort från samlingen.',
 	'manage-wikia-home-collections-invalid-action' => 'Denna åtgärd finns inte.',
+	'manage-wikia-home-marketing-invalid-width' => 'Bildbredden bör vara $maxWidth px.',
+	'manage-wikia-home-marketing-invalid-height' => 'Bildhöjden bör vara $maxHeight px.',
+	'manage-wikia-home-marketing-invalid-size' => 'Bildstorleken bör vara $maxWidth x $maxHeight px.',
+	'manage-wikia-home-marketing-not-complete' => 'För att använda marknadsföringsplatser, måste alla fält fyllas i.',
 	'manage-wikia-home-verticals-proportions' => 'Antal wikis per vertikalplan',
 	'manage-wikia-home-error-invalid-total-no-of-slots' => 'Ogiltig totalt antal platser ($1). Se till att summan av varje navigationsplats är lika med totala antalet platser ($2).',
 	'manage-wikia-home-error-negative-slots-number-not-allowed' => 'Negativt antal platser tillåts inte',
@@ -1803,6 +1905,15 @@ $messages['sv'] = array(
 	'manage-wikia-home-stats-total-pages-label' => 'Reservresurs för totala sidor',
 	'manage-wikia-home-stats-success' => 'Statistiken uppdaterades!',
 	'manage-wikia-home-stats-failure' => 'Data sparades inte. Var god korrigera felen i formuläret och försök igen.',
+	'manage-wikia-home-stats-permissions-error' => 'Data sparades inte. Kontrollera att du har rätt rättigheter att redigera denna formulär.',
+);
+
+/** Tamil (தமிழ்)
+ * @author ElangoRamanujam
+ */
+$messages['ta'] = array(
+	'manage-wikia-home-modal-button-no' => 'இல்லை',
+	'manage-wikia-home-modal-button-yes' => 'ஆம்',
 );
 
 /** Telugu (తెలుగు)
@@ -1911,6 +2022,10 @@ $messages['uk'] = array(
 	'manage-wikia-home-collections-add-failure-image' => '$1 не може бути додано до цієї збірки, тому що основне  зображення було відхилено.',
 	'manage-wikia-home-collections-remove-success' => 'Вікі успішно вилучено із збірки.',
 	'manage-wikia-home-collections-invalid-action' => 'Ця дія не існує.',
+	'manage-wikia-home-marketing-invalid-width' => 'Ширина зображення повинна бути $maxWidth px.',
+	'manage-wikia-home-marketing-invalid-height' => 'Висота зображення повинна бути $maxHeight px.',
+	'manage-wikia-home-marketing-invalid-size' => 'Розмір зображення має бути $maxWidth x $maxHeight px.',
+	'manage-wikia-home-marketing-not-complete' => 'Для створення маркетингового слота усі поля повинні бути заповненими.',
 	'manage-wikia-home-verticals-proportions' => 'Число вікі на вертикалі',
 	'manage-wikia-home-error-invalid-total-no-of-slots' => 'Неприпустиме число слотів ($1). Будь ласка, переконайтеся, що сума слотів з кожного концентратора  рівна загальному числу слотів ($2).',
 	'manage-wikia-home-error-negative-slots-number-not-allowed' => "Не допускається від'ємне число слотів",
@@ -1977,6 +2092,7 @@ $messages['uk'] = array(
 	'manage-wikia-home-stats-total-pages-label' => 'Повернення для загального числа сторінок',
 	'manage-wikia-home-stats-success' => 'Успішно оновлено статистику!',
 	'manage-wikia-home-stats-failure' => 'Дані не було збережено. Виправте помилки у формі і повторіть спробу.',
+	'manage-wikia-home-stats-permissions-error' => 'Дані не було збережені. Переконайтеся, що ви маєте належні права на редагування цієї форми.',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -2010,7 +2126,10 @@ $messages['zh-hans'] = array(
 	'manage-wikia-home-hubs-slot-more-links' => '“更多...”连接',
 	'manage-wikia-home-hubs-slot-empty-option' => '-- 空插槽 --',
 	'manage-wikia-home-wikis-in-slots-success' => '数字插槽已被更改。',
+	'manage-wikia-home-collections-add-failure-image' => '$1不能加进此收藏因为它的主页已被拒绝。',
+	'manage-wikia-home-collections-remove-success' => '从收藏移除wiki成功。',
 	'manage-wikia-home-collections-invalid-action' => '此操作不存在。',
+	'manage-wikia-home-marketing-invalid-width' => '图像宽度应为$maxWidth像素。',
 	'manage-wikia-home-verticals-proportions' => '每纵列的wiki数量',
 	'manage-wikia-home-collections-validation-error' => '保存中出错，请检查您输入的内容。',
 	'manage-wikia-home-change-button' => '更改',
@@ -2065,12 +2184,15 @@ $messages['zh-hans'] = array(
 	'manage-wikia-home-stats-total-pages-label' => '总页面备选',
 	'manage-wikia-home-stats-success' => '统计更新成功！',
 	'manage-wikia-home-stats-failure' => '数据未保存。请更正表单中的错误并重试。',
+	'manage-wikia-home-stats-permissions-error' => '数据没保存。请确信您有正确的权限编辑此表单。',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
 	'managewikiahome' => '管理Wikia首頁',
 	'manage-wikia-home-wrong-rights' => '您可能已登出，或者您没有權限使用此特殊頁面。',
+	'manage-wikia-home-wiki-filter' => '篩選器',
 );

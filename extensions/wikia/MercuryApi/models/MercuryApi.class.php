@@ -245,7 +245,9 @@ class MercuryApi {
 		return $wrapper->wrap(function () use ($title, $wg, $categories) {
 
 			// This function modifies wgDartCustomKeyValues
-			(new Wikia\NLP\Entities\WikiEntitiesService)->registerLdaTopicsWithDFP();
+			if ( $wg->EnableWikiaNLPExt && $wg->EnableTopicsForDFP ) {
+				(new Wikia\NLP\Entities\WikiEntitiesService)->registerLdaTopicsWithDFP();
+			}
 
 			$requestContext = RequestContext::newExtraneousContext( $title );
 
@@ -288,7 +290,6 @@ class MercuryApi {
 					'wikiVertical' => $adEngineVariables[ 'cscoreCat' ],
 				],
 				'providers' => [
-					'ebay' => $adEngineVariables[ 'wgAdDriverUseEbay' ],
 					'sevenOneMedia' => $adEngineVariables[ 'wgAdDriverUseSevenOneMedia' ],
 					'sevenOneMediaCombinedUrl' => isset( $adEngineVariables[ 'wgAdDriverSevenOneMediaCombinedUrl' ] ) ?
 							$adEngineVariables[ 'wgAdDriverSevenOneMediaCombinedUrl' ] :

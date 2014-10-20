@@ -18,6 +18,8 @@ $wgAutoloadClasses['ApiAddMediaTemporary'] = $dir . 'ApiAddMediaTemporary.php';
 $wgAutoloadClasses['ApiAddMediaPermanent'] = $dir . 'ApiAddMediaPermanent.php';
 $wgAutoloadClasses['ApiVideoPreview'] = $dir . 'ApiVideoPreview.php';
 $wgAutoloadClasses['ApiTemplateParameters'] = $dir . 'ApiTemplateParameters.php';
+$wgAutoloadClasses['ApiTemplateSuggestions'] = $dir . 'ApiTemplateSuggestions.php';
+$wgAutoloadClasses['ApiTemplateSearch'] = $dir . 'ApiTemplateSearch.php';
 
 /* API Modules */
 
@@ -26,6 +28,8 @@ $wgAPIModules['addmediatemporary'] = 'ApiAddMediaTemporary';
 $wgAPIModules['addmediapermanent'] = 'ApiAddMediaPermanent';
 $wgAPIModules['videopreview'] = 'ApiVideoPreview';
 $wgAPIModules['templateparameters'] = 'ApiTemplateParameters';
+$wgAPIModules['templatesuggestions'] = 'ApiTemplateSuggestions';
+$wgAPIModules['templatesearch'] = 'ApiTemplateSearch';
 
 /* Resource Loader Modules */
 
@@ -76,6 +80,8 @@ $wgResourceModules += array(
 			've/dm/ve.dm.WikiaCart.js',
 			've/dm/ve.dm.WikiaCartItem.js',
 			've/dm/ve.dm.WikiaMapNode.js',
+			've/dm/ve.dm.WikiaTemplateModel.js',
+			've/dm/ve.dm.WikiaTransclusionModel.js',
 
 			// ce
 			've/ce/ve.ce.WikiaMediaCaptionNode.js',
@@ -99,13 +105,17 @@ $wgResourceModules += array(
 			've/ui/dialogs/ve.ui.WikiaSaveDialog.js',
 			've/ui/dialogs/ve.ui.WikiaSourceModeDialog.js',
 			've/ui/dialogs/ve.ui.WikiaOrientationDialog.js',
+			've/ui/dialogs/ve.ui.WikiaPreferenceDialog.js',
 			've/ui/dialogs/ve.ui.WikiaMapInsertDialog.js',
+			've/ui/dialogs/ve.ui.WikiaTemplateInsertDialog.js',
 			've/ui/dialogs/ve.ui.WikiaTransclusionDialog.js',
 			've/ui/pages/ve.ui.WikiaParameterPage.js',
+			've/ui/pages/ve.ui.WikiaTemplateGetInfoPage.js',
 			've/ui/tools/ve.ui.WikiaDialogTool.js',
 			've/ui/tools/ve.ui.WikiaHelpTool.js',
 			've/ui/tools/ve.ui.WikiaMWGalleryInspectorTool.js',
 			've/ui/tools/ve.ui.WikiaMWLinkNodeInspectorTool.js',
+			've/ui/widgets/oo.ui.ClearableTextInputWidget.js',
 			've/ui/widgets/ve.ui.WikiaCartWidget.js',
 			've/ui/widgets/ve.ui.WikiaCartItemWidget.js',
 			've/ui/widgets/ve.ui.WikiaDimensionsWidget.js',
@@ -113,6 +123,9 @@ $wgResourceModules += array(
 			've/ui/widgets/ve.ui.WikiaMediaSelectWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaOptionWidget.js',
 			've/ui/widgets/ve.ui.WikiaPhotoOptionWidget.js',
+			've/ui/widgets/ve.ui.WikiaTemplateGetInfoWidget.js',
+			've/ui/widgets/ve.ui.WikiaTemplateOptionWidget.js',
+			've/ui/widgets/ve.ui.WikiaTemplateSearchWidget.js',
 			've/ui/widgets/ve.ui.WikiaVideoOptionWidget.js',
 			've/ui/widgets/ve.ui.WikiaMapOptionWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaResultsWidget.js',
@@ -156,6 +169,7 @@ $wgResourceModules += array(
 			'wikia-visualeditor-dialog-transclusion-title',
 			'wikia-visualeditor-dialog-transclusion-filter',
 			'wikia-visualeditor-dialogbutton-transclusion-tooltip',
+			'wikia-visualeditor-dialog-transclusion-zerostate',
 			'wikia-visualeditor-savedialog-label-save',
 			'wikia-visualeditor-savedialog-label-restore',
 			'wikia-visualeditor-toolbar-savedialog',
@@ -183,6 +197,14 @@ $wgResourceModules += array(
 			'wikia-visualeditor-dialog-transclusion-get-info',
 			'wikia-visualeditor-dialog-transclusion-preview-button',
 			'wikia-visualeditor-context-transclusion-description',
+			'wikia-visualeditor-dialog-wikiatemplateinsert-search',
+			'wikia-visualeditor-wikiatemplateoptionwidget-appears',
+			'wikia-visualeditor-dialog-template-insert-title',
+			'wikia-visualeditor-dialog-preference-headline',
+			'wikia-visualeditor-dialog-preference-text',
+			'wikia-visualeditor-dialog-preference-link-help',
+			'wikia-visualeditor-dialog-preference-link-preferences',
+			'wikia-visualeditor-dialog-preference-start-button',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core.desktop',

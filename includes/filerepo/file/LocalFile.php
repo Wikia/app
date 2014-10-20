@@ -779,11 +779,9 @@ class LocalFile extends File {
 		$purgeList = array();
 		$purgeList = array( $this->getThumbUrl( ) ); # wikia change
 		foreach ( $files as $file ) {
-			# Check that the base file name is part of the thumb name
-			# This is a basic sanity check to avoid erasing unrelated directories
-			if ( strpos( $file, $this->getName() ) !== false ) {
-				$purgeList[] = "{$dir}/{$file}";
-			}
+			# Wikia change - remove all thumbnails in all formats (PLATFORM-441)
+			# e.g. PNG file can have a WebP thumbnail
+			$purgeList[] = "{$dir}/{$file}";
 		}
 
 		# Delete the thumbnails

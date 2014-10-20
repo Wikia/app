@@ -9,7 +9,7 @@ $messages['en'] = array(
 	'phalanx-type-content' => 'page content',
 	'phalanx-type-summary' => 'page summary',
 	'phalanx-type-title' => 'page title',
-	'phalanx-type-user' => 'user',
+	'phalanx-type-user' => 'username',
 	'phalanx-type-email' => 'email',
 	'phalanx-type-question-title' => 'question title',
 	'phalanx-type-recent-questions' => 'recent questions',
@@ -17,8 +17,8 @@ $messages['en'] = array(
 	'phalanx-add-block' => 'Add filter',
 	'phalanx-edit-block' => 'Save block',
 	'phalanx-label-filter' => 'Filter:',
-	'phalanx-label-reason' => 'Reason:',
-	'phalanx-label-comment' => 'Comment:',
+	'phalanx-label-reason' => 'Reason (public):',
+	'phalanx-label-comment' => 'Comment (public):',
 	'phalanx-label-expiry' => 'Expiry:',
 	'phalanx-expires' => 'Expires at $1',
 	'phalanx-expires-infinite' => 'Never expires',
@@ -156,7 +156,7 @@ Please [[Special:Contact|contact Wikia]] about the problem.<br />The blocker als
 	# groups of block types
 	'phalanx-section-type-page-edition' => 'Page edition',
 	'phalanx-section-type-account-creation' => 'Account creation',
-	'phalanx-section-type-wiki-creation' => 'Wiki creation',
+	'phalanx-section-type-wiki-creation' => 'Wiki creation SITENAME',
 	'phalanx-section-type-questions' => 'Questions',
 );
 

@@ -143,6 +143,8 @@
 				'n': window.wgNamespaceNumber,
 				'u': window.trackID || window.wgTrackID || 0,
 				's': window.skin,
+				'v': window.wgWikiVertical,
+				'ac': window.wgWikiCategories.join(','),
 				'beacon': window.beacon_id || '',
 				'cb': Math.floor( Math.random() * 99999 )
 			};
@@ -349,12 +351,7 @@
 		};
 	}
 
-	// UMD
+	// Extending Wikia.Tracker, which is also exported as the AMD module
 	extend( trackerStub, tracker( window ) );
-
-	// AMD
-	require( [ 'wikia.tracker' ], function( trackerStub ) {
-		extend( trackerStub, tracker( window ) );
-	});
 
 }(window, undefined));

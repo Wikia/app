@@ -373,8 +373,11 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author Barrel0116
+ * @author Plover-Y
  */
 $messages['ja'] = array(
+	'partner-feed-recent-changes' => '最近の変更',
+	'all-blog-posts' => 'すべてのカテゴリ',
 	'feed-title-recentchanges' => '最近の更新',
 );
 
@@ -881,4 +884,12 @@ $messages['zh-hans'] = array(
 	'feed-title-blogcomments' => '评论 $1',
 	'feed-title-recentchanges' => '最近更改',
 	'partner-feed-error-no-blogpost-found' => '<b>错误：</b>博客文章 $1 不存在。',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author EagerLin
+ */
+$messages['zh-hant'] = array(
+	'partner-feed-recent-changes' => '近期變更',
+	'feed-title-recentchanges' => '近期變更',
 );
