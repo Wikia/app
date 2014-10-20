@@ -164,7 +164,7 @@ class FBConnectAPI {
 	 * @return string
 	 */
 	public function userName( $user = 0 ) {
-		$userInfo = $this->getUserInfo($user);
+		$userInfo = $this->getUserInfo( $user );
 		return $userInfo->getName();
 	}
 
