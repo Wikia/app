@@ -143,12 +143,13 @@
 
 		//hack for safari tab index
 		focusButton: function (e) {
+			var $element, $button;
 			if (e.keyCode === 9 && !e.shiftKey) {
-				var element = $(e.target),
-					button = element.closest('.SpeechBubble')
-						.find('button#WallMessageSubmit, .save-edit, .replyButton').first();
-				if (element.attr('id') !== 'WallMessageTitle' && !element.hasClass('title')) {
-					button.focus();
+				$element = $(e.target);
+				$button = $element.closest('.SpeechBubble')
+					.find('button#WallMessageSubmit, .save-edit, .replyButton').first();
+				if ($element.attr('id') !== 'WallMessageTitle' && !$element.hasClass('title')) {
+					$button.focus();
 					e.preventDefault();
 				}
 			}
