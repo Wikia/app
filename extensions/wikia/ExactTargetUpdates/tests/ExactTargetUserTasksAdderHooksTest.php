@@ -191,9 +191,9 @@ class ExactTargetUserTasksAdderHooksTest extends WikiaBaseTest {
 			/* test onAfterAccountRename shouldn't add taks on production */
 			[ 'getExactTargetUpdateUserTask', 'onAfterAccountRename', [ 123, 'oldUserName', 'newUserName' ], WIKIA_ENV_DEV, 0 ],
 			/* test onEditAccountClosed should add taks on production */
-			[ 'getExactTargetRemoveUserTask', 'onEditAccountClosed', [ $userMock ], WIKIA_ENV_PROD, 1 ],
+			[ 'getExactTargetDeleteUserTask', 'onEditAccountClosed', [ $userMock ], WIKIA_ENV_PROD, 1 ],
 			/* test onEditAccountClosed shouldn't add taks on production */
-			[ 'getExactTargetRemoveUserTask', 'onEditAccountClosed', [ $userMock ], WIKIA_ENV_DEV, 0 ],
+			[ 'getExactTargetDeleteUserTask', 'onEditAccountClosed', [ $userMock ], WIKIA_ENV_DEV, 0 ],
 			/* test addTheUpdateCreateUserTask should add taks on production */
 			[ 'getExactTargetCreateUserTask', 'addTheUpdateCreateUserTask', [ $userMock ], WIKIA_ENV_PROD, 1 ],
 			/* test addTheUpdateCreateUserTask shouldn't add taks on production */

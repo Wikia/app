@@ -71,8 +71,8 @@ class ExactTargetUserHooks {
 	public function onEditAccountClosed( User $oUser ) {
 		/* Get and run the task */
 		$oTaskInstanceHelper = $this->getTaskInstanceHelper();
-		$task = $oTaskInstanceHelper->getRemoveUserTask();
-		$task->call( 'removeUserData', $oUser->getId() );
+		$task = $oTaskInstanceHelper->getDeleteUserTask();
+		$task->call( 'deleteUserData', $oUser->getId() );
 		$task->queue();
 		return true;
 	}

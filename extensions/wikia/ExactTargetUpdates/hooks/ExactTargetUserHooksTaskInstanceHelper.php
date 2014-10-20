@@ -18,10 +18,10 @@ class ExactTargetUserHooksTaskInstanceHelper {
 	}
 
 	/**
-	 * Returns new instance of ExactTargetRemoveUserTask
-	 * @return ExactTargetRemoveUserTask
+	 * Returns new instance of ExactTargetDeleteUserTask
+	 * @return ExactTargetDeleteUserTask
 	 */
-	public function getRemoveUserTask() {
-		return new ExactTargetRemoveUserTask();
+	public function getDeleteUserTask() {
+		return new ExactTargetDeleteUserTask();
 	}
 }

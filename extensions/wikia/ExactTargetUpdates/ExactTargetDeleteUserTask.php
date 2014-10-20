@@ -1,70 +1,70 @@
 <?php
 
-class ExactTargetRemoveUserTask extends ExactTargetBaseTask {
+class ExactTargetDeleteUserTask extends ExactTargetBaseTask {
 
 	/**
 	 * Task for removing user data in ExactTarget
 	 * @param int $iUserId Id of user to be deleted
 	 */
-	public function removeUserData( $iUserId ) {
+	public function deleteUserData( $iUserId ) {
 		$oClient = $this->getClient();
-		$this->removeSubscriber( $iUserId, $oClient );
-		$this->removeUserDataExtension( $iUserId, $oClient );
-		$this->removeUserPropertiesDataExtension( $iUserId, $oClient );
+		$this->deleteSubscriber( $iUserId, $oClient );
+		$this->deleteUserDataExtension( $iUserId, $oClient );
+		$this->deleteUserPropertiesDataExtension( $iUserId, $oClient );
 	}
 
 	/**
-	 * Removes Subscriber object in ExactTarget by API request if email is not used by other user
+	 * Deletes Subscriber object in ExactTarget by API request if email is not used by other user
 	 * @param int $iUserId
 	 * @param ExactTargetSoapClient $oClient
 	 */
-	public function removeSubscriber( $iUserId, ExactTargetSoapClient $oClient ) {
+	public function deleteSubscriber( $iUserId, ExactTargetSoapClient $oClient ) {
 		$sEmail = $this->getUserEmail( $iUserId, $oClient );
 		if ( !$this->isEmailInUse( $sEmail, $oClient, $iUserId ) ) {
-			$this->doRemoveSubscriber( $sEmail, $oClient );
+			$this->doDeleteSubscriber( $sEmail, $oClient );
 		}
 	}
 
 	/**
-	 * Sends remove request to actually remove Subscriber object in ExactTarget by API request
+	 * Sends delete request to actually delete Subscriber object in ExactTarget by API request
 	 * @param string $sUserEmail
 	 * @param ExactTargetSoapClient $oClient
 	 */
-	private function doRemoveSubscriber( string $sUserEmail, ExactTargetSoapClient $oClient ) {
+	private function doDeleteSubscriber( string $sUserEmail, ExactTargetSoapClient $oClient ) {
 		$oSubscriber = new ExactTarget_Subscriber();
 		$oSubscriber->SubscriberKey = $sUserEmail;
-		$this->performRemove( [ $oSubscriber ], $oClient, 'Subscriber' );
+		$this->performDelete( [ $oSubscriber ], $oClient, 'Subscriber' );
 	}
 
 	/**
-	 * Removes DataExtension object in ExactTarget by API request
+	 * Deletes DataExtension object in ExactTarget by API request
 	 * that reflects Wikia entry from user table
 	 * @param int $iUserId
 	 * @param ExactTargetSoapClient $oClient
 	 */
-	public function removeUserDataExtension( int $iUserId, ExactTargetSoapClient $oClient ) {
-		$oDE = $this->prepareUserDataExtensionObjectForRemove( $iUserId );
-		$this->performRemove( [ $oDE ], $oClient);
+	public function deleteUserDataExtension( int $iUserId, ExactTargetSoapClient $oClient ) {
+		$oDE = $this->prepareUserDataExtensionObjectForDelete( $iUserId );
+		$this->performDelete( [ $oDE ], $oClient);
 	}
 
 	/**
-	 * Removes DataExtension objects in ExactTarget by API request
+	 * Deletes DataExtension objects in ExactTarget by API request
 	 * that reflects Wikia entry from user_properties table
 	 * @param int $iUserId
 	 * @param ExactTargetSoapClient $oClient
 	 */
-	public function removeUserPropertiesDataExtension( int $iUserId, ExactTargetSoapClient $oClient ) {
-		$aDE = $this->prepareUserPropertiesDataExtensionObjectsForRemove( $iUserId );
-		$this->performRemove( $aDE, $oClient);
+	public function deleteUserPropertiesDataExtension( int $iUserId, ExactTargetSoapClient $oClient ) {
+		$aDE = $this->prepareUserPropertiesDataExtensionObjectsForDelete( $iUserId );
+		$this->performDelete( $aDE, $oClient);
 	}
 
 	/**
 	 * Prepares proper ExactTarget_DataExtensionObject object
-	 * for sending remove request
-	 * @param int $iUserId id of user to be removed
+	 * for sending delete request
+	 * @param int $iUserId id of user to be deleted
 	 * @return ExactTarget_DataExtensionObject
 	 */
-	public function prepareUserDataExtensionObjectForRemove( int $iUserId ) {
+	public function prepareUserDataExtensionObjectForDelete( int $iUserId ) {
 
 		/* Create new DataExtensionObject that reflects user table data */
 		$oDE = new ExactTarget_DataExtensionObject();
@@ -81,11 +81,11 @@ class ExactTargetRemoveUserTask extends ExactTargetBaseTask {
 
 	/**
 	 * Prepares array of proper ExactTarget_DataExtensionObject objects
-	 * for sending remove request with user_properties to remove
-	 * @param int $iUserId id of user to be removed
+	 * for sending delete request with user_properties to delete
+	 * @param int $iUserId id of user to be deleted
 	 * @return ExactTarget_DataExtensionObject
 	 */
-	public function prepareUserPropertiesDataExtensionObjectsForRemove( int $iUserId ) {
+	public function prepareUserPropertiesDataExtensionObjectsForDelete( int $iUserId ) {
 
 		/*
 		 * @var array $aUserPropertiesNames list of user properties sent to ExactTarget
