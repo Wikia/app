@@ -3,24 +3,6 @@
 class ExactTargetUserHooks {
 
 	/**
-	 * Register all hooks that are necessary to update user data in ExactTarget
-	 */
-	public static function setupHooks() {
-		$oExactTargetUserHooks = new self();
-		$oExactTargetMainHelper = $oExactTargetUserHooks->getMainHelper();
-		/* Don't add task when on dev or internal */
-		if ( $oExactTargetMainHelper->shouldUpdate() ) {
-			\Hooks::register('AfterAccountRename', $oExactTargetUserHooks);
-			\Hooks::register('ArticleSaveComplete', $oExactTargetUserHooks);
-			\Hooks::register('EditAccountClosed', $oExactTargetUserHooks);
-			\Hooks::register('EditAccountEmailChanged', $oExactTargetUserHooks);
-			\Hooks::register('EmailChangeConfirmed', $oExactTargetUserHooks);
-			\Hooks::register('SignupConfirmEmailComplete', $oExactTargetUserHooks);
-			\Hooks::register('UserSaveSettings', $oExactTargetUserHooks);
-		}
-	}
-
-	/**
 	 * Adds Task for updating user name to job queue
 	 * @param int $iUserId
 	 * @param string $sOldUsername
@@ -146,10 +128,6 @@ class ExactTargetUserHooks {
 		$task = $oTaskInstanceHelper->getCreateUserTask();
 		$task->call( 'updateCreateUserData', $aUserData, $aUserProperties );
 		$task->queue();
-	}
-
-	private function getMainHelper() {
-		return new ExactTargetMainHelper();
 	}
 
 	private function getParamsHelper() {
