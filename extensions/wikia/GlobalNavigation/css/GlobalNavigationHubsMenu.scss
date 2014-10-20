@@ -59,6 +59,12 @@
 		color: $nav-foreground-dark-color;
 	}
 
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
 	.hub-list {
 		float: left;
 		width: 256px;
