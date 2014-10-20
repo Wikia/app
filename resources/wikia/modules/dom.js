@@ -17,6 +17,7 @@ define('wikia.dom', ['wikia.document'], function (doc) {
 				return element.classList.contains(className);
 			};
 		} else if (!!element.webkitMatchesSelector) {
+			//Support for Android 2.3
 			selectorMatches = function (element, className) {
 				selector = '.' + className;
 				return element.webkitMatchesSelector(selector);
@@ -39,11 +40,7 @@ define('wikia.dom', ['wikia.document'], function (doc) {
 			};
 		} else {
 			addToClassList = function (element, className) {
-				if (element.className.length > 0) {
-					element.className += ' ' + className;
-				} else {
-					element.className += className;
-				}
+				element.className = element.className.split(' ').push(className).join(' ');
 			};
 		}
 		return addToClassList(element, className);
