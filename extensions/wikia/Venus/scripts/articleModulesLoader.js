@@ -15,8 +15,9 @@ require([
 		});
 	}
 
-	//initialize lightbox
+	//init lightbox
 	lightboxLoader.init();
+
 	//scan for tables in article and if table is too wide add scrollbar
 	scanTables();
 

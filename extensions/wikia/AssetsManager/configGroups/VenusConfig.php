@@ -37,6 +37,9 @@ $VenusConfig[ 'venus_body_js' ] = [
 		//tracker
 		'#group_tracker_js',
 
+		//bucky
+		'#group_bucky_js',
+
 		// jquery libs
 		'//resources/wikia/libraries/mustache/mustache.js',
 		'//resources/wikia/libraries/mustache/jquery.mustache.js',
