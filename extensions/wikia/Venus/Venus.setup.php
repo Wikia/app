@@ -70,9 +70,6 @@ $wgResourceModules['ext.wikia.venus.article.infobox'] = array(
 	'scripts' => array(
 		'scripts/Infobox.js',
 	),
-	'styles' => array(
-		'styles/article/infobox.scss',
-	),
 	'messages' => array(
 		'venus-article-infobox-see-more',
 	),
