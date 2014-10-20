@@ -36,7 +36,7 @@ class ExactTargetUserHooks {
 
 		/* Get and run the task */
 		$oTaskInstanceHelper = $this->getTaskInstanceHelper();
-		$task = $oTaskInstanceHelper->getExactTargetUpdateUserTask();
+		$task = $oTaskInstanceHelper->getUpdateUserTask();
 		$task->call( 'updateUserData', $aUserData );
 		$task->queue();
 		return true;
@@ -57,7 +57,7 @@ class ExactTargetUserHooks {
 
 		/* Get and run the task */
 		$oTaskInstanceHelper = $this->getTaskInstanceHelper();
-		$task = $oTaskInstanceHelper->getExactTargetUpdateUserTask();
+		$task = $oTaskInstanceHelper->getUpdateUserTask();
 		$task->call( 'updateUserData', $aUserData );
 		$task->queue();
 		return true;
@@ -71,7 +71,7 @@ class ExactTargetUserHooks {
 	public function onEditAccountClosed( User $oUser ) {
 		/* Get and run the task */
 		$oTaskInstanceHelper = $this->getTaskInstanceHelper();
-		$task = $oTaskInstanceHelper->getExactTargetRemoveUserTask();
+		$task = $oTaskInstanceHelper->getRemoveUserTask();
 		$task->call( 'removeUserData', $oUser->getId() );
 		$task->queue();
 		return true;
@@ -96,7 +96,7 @@ class ExactTargetUserHooks {
 	public function onEmailChangeConfirmed( User $user ) {
 		/* Get and run the task */
 		$oTaskInstanceHelper = $this->getTaskInstanceHelper();
-		$task = $oTaskInstanceHelper->getExactTargetUpdateUserTask();
+		$task = $oTaskInstanceHelper->getUpdateUserTask();
 		$task->call( 'updateUserEmail', $user->getId(), $user->getEmail() );
 		$task->queue();
 		return true;
@@ -125,7 +125,7 @@ class ExactTargetUserHooks {
 
 		/* Get and run the task */
 		$oTaskInstanceHelper = $this->getTaskInstanceHelper();
-		$task = $oTaskInstanceHelper->getExactTargetUpdateUserTask();
+		$task = $oTaskInstanceHelper->getUpdateUserTask();
 		$task->call( 'updateUserPropertiesData', $aUserData, $aUserProperties );
 		$task->queue();
 		return true;
@@ -143,7 +143,7 @@ class ExactTargetUserHooks {
 
 		/* Get and run the task */
 		$oTaskInstanceHelper = $this->getTaskInstanceHelper();
-		$task = $oTaskInstanceHelper->getExactTargetCreateUserTask();
+		$task = $oTaskInstanceHelper->getCreateUserTask();
 		$task->call( 'updateCreateUserData', $aUserData, $aUserProperties );
 		$task->queue();
 	}

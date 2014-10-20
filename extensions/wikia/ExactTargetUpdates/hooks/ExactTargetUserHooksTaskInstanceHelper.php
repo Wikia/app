@@ -5,7 +5,7 @@ class ExactTargetUserHooksTaskInstanceHelper {
 	 * Returns new instance of ExactTargetCreateUserTask
 	 * @return ExactTargetCreateUserTask
 	 */
-	public function getExactTargetCreateUserTask() {
+	public function getCreateUserTask() {
 		return new ExactTargetCreateUserTask();
 	}
 
@@ -13,7 +13,7 @@ class ExactTargetUserHooksTaskInstanceHelper {
 	 * Returns new instance of ExactTargetUpdateUserTask
 	 * @return ExactTargetUpdateUserTask
 	 */
-	public function getExactTargetUpdateUserTask() {
+	public function getUpdateUserTask() {
 		return new ExactTargetUpdateUserTask();
 	}
 
@@ -21,7 +21,7 @@ class ExactTargetUserHooksTaskInstanceHelper {
 	 * Returns new instance of ExactTargetRemoveUserTask
 	 * @return ExactTargetRemoveUserTask
 	 */
-	public function getExactTargetRemoveUserTask() {
+	public function getRemoveUserTask() {
 		return new ExactTargetRemoveUserTask();
 	}
 }
