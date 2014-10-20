@@ -1,5 +1,5 @@
 /* global define */
-define('wikia.dom', ['wikia.document'], function(doc) {
+define('wikia.dom', ['wikia.document'], function (doc) {
 	'use strict';
 	var addToClassList, selectorMatches;
 
@@ -9,15 +9,15 @@ define('wikia.dom', ['wikia.document'], function(doc) {
 	 * @param {Element} element - element which is checked
 	 * @param {String} className - class which should be contained by element
 	 */
-	selectorMatches = function(element, className) {
+	selectorMatches = function (element, className) {
 		var selector;
 
 		if (!!element.classList) {
-			selectorMatches = function(element, className) {
+			selectorMatches = function (element, className) {
 				return element.classList.contains(className);
 			};
-		} else if(!!element.webkitMatchesSelector) {
-			selectorMatches = function(element, className) {
+		} else if (!!element.webkitMatchesSelector) {
+			selectorMatches = function (element, className) {
 				selector = '.' + className;
 				return element.webkitMatchesSelector(selector);
 			};
@@ -32,13 +32,13 @@ define('wikia.dom', ['wikia.document'], function(doc) {
 	 * @param {Element} element - element which should have new class added
 	 * @param {String} className - class which should be added to provided element
 	 */
-	addToClassList = function(element, className) {
+	addToClassList = function (element, className) {
 		if (!!element.classList) {
-			addToClassList = function(element, className) {
+			addToClassList = function (element, className) {
 				element.classList.add(className);
 			};
 		} else {
-			addToClassList = function(element, className) {
+			addToClassList = function (element, className) {
 				if (element.className.length > 0) {
 					element.className += ' ' + className;
 				} else {
@@ -86,7 +86,7 @@ define('wikia.dom', ['wikia.document'], function(doc) {
 
 		classCount = classes.length;
 		element = doc.createElement(tag);
-		for (i=0; i<classCount; i++) {
+		for (i = 0; i < classCount; i++) {
 			addToClassList(element, classes[i]);
 		}
 

@@ -1,5 +1,5 @@
 /* global define */
-define('scrollableTables', ['wikia.window', 'wikia.dom'], function(win, dom) {
+define('scrollableTables', ['wikia.window', 'wikia.dom'], function (win, dom) {
 	'use strict';
 
 	/**
@@ -43,7 +43,7 @@ define('scrollableTables', ['wikia.window', 'wikia.dom'], function(win, dom) {
 	 * Unwrap provided element from two table wrappers
 	 * @param {HTMLElement} element - element to be unwrapped
 	 */
-	function unwrap(element) {
+	function unwrap(element) {
 		var tableWrapper = dom.closestByClassName(element, 'table-scrollable-wrapper'),
 			parent;
 
