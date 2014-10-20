@@ -31,7 +31,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  */
 class FBConnectAPI {
 	// Holds a static reference to our Facebook object
-	private static $__Facebook = null;
+	private static $facebookClient = null;
 
 	/** @var  array Caches information about users to reduce the number of Facebook hits */
 	private static $userInfoCache;
@@ -46,16 +46,16 @@ class FBConnectAPI {
 	public function Facebook() {
 		global $fbAppId, $fbAppSecret;
 		// Construct a new Facebook object on first time access
-		if ( is_null( self::$__Facebook ) && self::isConfigSetup() ) {
+		if ( is_null( self::$facebookClient ) && self::isConfigSetup() ) {
 			Facebook\FacebookSession::setDefaultApplication( $fbAppId, $fbAppSecret );
 
-			self::$__Facebook = new Facebook\FacebookJavaScriptLoginHelper();
-			if ( !self::$__Facebook ) {
+			self::$facebookClient = new Facebook\FacebookJavaScriptLoginHelper();
+			if ( !self::$facebookClient ) {
 				error_log('Could not create facebook client.');
 			}
 		}
 
-		return self::$__Facebook;
+		return self::$facebookClient;
 	}
 
 	/**
