@@ -1,7 +1,7 @@
 /**
  * Loads Lightbox in Venus skin.
  */
-define('venus.lightboxLoader', ['wikia.window'], function (window) {
+define('venus.lightboxLoader', ['wikia.window'], function (win) {
 	'use strict';
 	var lightboxSettings;
 
@@ -14,7 +14,7 @@ define('venus.lightboxLoader', ['wikia.window'], function (window) {
 	};
 
 	function init() {
-		window.LightboxLoader.init(lightboxSettings);
+		win.LightboxLoader.init(lightboxSettings);
 	}
 
 	return {
