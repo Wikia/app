@@ -66,6 +66,9 @@
 			var self = this,
 				$article, $photos, $comments, $footer, $videosModule, $videoHomePage;
 
+			// performance profiling
+			bucky = window.Bucky('LightboxLoader');
+
 			bucky.timer.start('init');
 
 			$article = $('#WikiaArticle');
@@ -172,6 +175,9 @@
 					}
 				);
 			bucky.timer.stop('init');
+
+			// wait till end of execution stack to load lightbox
+			setTimeout(LightboxLoader.loadFromURL, 0);
 		},
 
 		/**
@@ -421,16 +427,9 @@
 	};
 
 	$(function () {
-		if (window.wgEnableLightboxExt) {
-			// performance profiling
-			bucky = window.Bucky('LightboxLoader');
-
+		if (window.wgEnableLightboxExt && window.skin !== 'venus' ) {
 			LightboxLoader.init();
-
-			// wait till end of execution stack to load lightbox
-			setTimeout(LightboxLoader.loadFromURL, 0);
 		}
-
 	});
 
 	window.LightboxLoader = LightboxLoader;

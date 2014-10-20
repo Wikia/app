@@ -37,6 +37,9 @@ $VenusConfig[ 'venus_body_js' ] = [
 		//tracker
 		'#group_tracker_js',
 
+		//bucky
+		'#group_bucky_js',
+
 		// jquery libs
 		'//resources/wikia/libraries/mustache/mustache.js',
 		'//resources/wikia/libraries/mustache/jquery.mustache.js',
@@ -88,8 +91,6 @@ $VenusConfig[ 'venus_body_js' ] = [
 
 		// different article modules
 		'//skins/shared/scripts/scrollableTables.js',
-
-		'#group_bucky_js',
 
 		//following script initialize different modules in Venus
 		'//extensions/wikia/Venus/scripts/articleModulesLoader.js'
