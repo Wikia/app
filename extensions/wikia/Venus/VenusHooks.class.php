@@ -16,29 +16,30 @@ class VenusHooks {
 	 */
 	static public function onParserSectionCreate( $parser, $section, &$content, $showEditLinks ) {
 		if ( $parser->mIsMainParse && $section == 0 && stripos($content, self::INFOBOX_CLASS_NAME) ) {
-			$infoboxes = '';
+			$infobox = '';
 			$dom = DOMDocument::loadHTML($content);
 			$finder = new DOMXPath($dom);
-			$query = "(//div|//table)[contains(translate(@class, 'INFOBOX', " . self::INFOBOX_CLASS_NAME . "), " .
-				self::INFOBOX_CLASS_NAME . ")]";
+			$query = "((//div|//table)[contains(translate(@class, 'INFOBOX', '" . self::INFOBOX_CLASS_NAME . "'), '" .
+				self::INFOBOX_CLASS_NAME . "')])[1]";
 			$nodes = $finder->query($query);
+			$node = $nodes->item(0);
 
-			foreach( $nodes as $node ) {
+			if (!is_null($node)) {
 				if ($node->hasAttribute('style')) {
 					$node->removeAttribute('style');
 				}
-				$infoboxes .= $dom->saveHTML($node);
+				$infobox = $dom->saveHTML($node);
 				$node->parentNode->removeChild($node);
-			}
 
-			$content = $dom->saveHTML();
-			$infoboxes = Html::rawElement(
-				'div',
-				[ 'id' => 'infoboxContainer', 'class' => 'infobox-container' ],
-				$infoboxes
-			);
-			$parser->getOutput()->setBeforeTextHTML($infoboxes);
-			$parser->getOutput()->addModules( 'ext.wikia.venus.article.infobox' );
+				$content = $dom->saveHTML();
+				$infobox = Html::rawElement(
+					'div',
+					[ 'id' => 'infoboxContainer', 'class' => 'infobox-container' ],
+					$infobox
+				);
+				$parser->getOutput()->setBeforeTextHTML($infobox);
+				$parser->getOutput()->addModules( 'ext.wikia.venus.article.infobox' );
+			}
 		}
 
 		return true;
