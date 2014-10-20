@@ -177,7 +177,7 @@ class SpecialConnect extends SpecialPage {
 				case 'first':
 				case 'full':
 					// Get the username from Facebook (Note: not from the form)
-					$username = FBConnectUser::getOptionFromInfo($choice . 'name', $fb->getUserInfo());
+					$username = FBConnectUser::getOptionFromInfo( $choice . 'name', $fb->getUserInfo() );
 				case 'manual':
 					if (!isset($username) || !$this->userNameOK($username)) {
 						// Use manual name if no username is set, even if manual wasn't chosen
@@ -850,7 +850,7 @@ class SpecialConnect extends SpecialPage {
 		// Connect to the Facebook API
 		$fb = new FBConnectAPI();
 		$fb_user = $fb->user();
-		$userinfo = $fb->getUserInfo($fb_user);
+		$userInfo = $fb->getUserInfo( $fb_user );
 
 		// Keep track of when the first option visible to the user is checked
 		$checked = false;
@@ -864,7 +864,7 @@ class SpecialConnect extends SpecialPage {
 		<form id="chooseNameForm" action="' . $this->getTitle('ChooseName')->getLocalUrl() . '" method="POST">
 			<fieldset id="mw-fbconnect-choosename">
 				<legend>' . wfMsg('fbconnect-chooselegend') . '</legend>
-				<input type="hidden" name="wpEmail" value="' . FBConnectUser::getOptionFromInfo( 'email', $userinfo ) . '">
+				<input type="hidden" name="wpEmail" value="' . FBConnectUser::getOptionFromInfo( 'email', $userInfo ) . '">
 				<table>');
 		// Let them attach to an existing user if $fbConnectOnly allows it
 		if (!$fbConnectOnly) {
@@ -876,7 +876,7 @@ class SpecialConnect extends SpecialPage {
 			$updateOptions = array();
 			foreach (self::$availableUserUpdateOptions as $option) {
 				// Translate the MW parameter into a FB parameter
-				$value = FBConnectUser::getOptionFromInfo($option, $userinfo);
+				$value = FBConnectUser::getOptionFromInfo( $option, $userInfo );
 				// If no corresponding value was received from Facebook, then continue
 				if (!$value) {
 					continue;
@@ -904,7 +904,7 @@ class SpecialConnect extends SpecialPage {
 		// Add the options for nick name, first name and full name if we can get them
 		// TODO: Wikify the usernames (i.e. Full name should have an _ )
 		foreach (array('nick', 'first', 'full') as $option) {
-			$nickname = FBConnectUser::getOptionFromInfo($option . 'name', $userinfo);
+			$nickname = FBConnectUser::getOptionFromInfo( $option . 'name', $userInfo );
 			if ($nickname && $this->userNameOK($nickname)) {
 				$wgOut->addHTML('<tr><td class="mw-label"><input name="wpNameChoice" type="radio" value="' .
 					$option . ($checked ? '' : '" checked="checked') . '" id="wpNameChoice' . $option .

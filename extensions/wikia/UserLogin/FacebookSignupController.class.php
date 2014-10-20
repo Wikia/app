@@ -143,20 +143,11 @@ class FacebookSignupController extends WikiaController {
 		if ($fbUserId > 0) {
 			// call Facebook API
 			$FBApi = new FBConnectAPI();
-			$data = $FBApi->getUserInfo($this->fbUserId, array(
-				'first_name',
-				'name',
-				'sex',
-				'timezone',
-				'locale',
-				'username',
-				'contact_email',
-				'email',
-			));
+			$userInfoArray = $FBApi->getUserInfoArray( $this->fbUserId );
 
 			// BugId:24400
-			if (!empty($data)) {
-				$this->response->setData($data);
+			if ( !empty( $userInfoArray ) ) {
+				$this->response->setData( $userInfoArray );
 			}
 		}
 	}

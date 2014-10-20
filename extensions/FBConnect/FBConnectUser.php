@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright © 2010 Garrett Brown <http://www.mediawiki.org/wiki/User:Gbruin>
+ * Copyright ï¿½ 2010 Garrett Brown <http://www.mediawiki.org/wiki/User:Gbruin>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -52,13 +52,13 @@ class FBConnectUser extends User {
 		$mod = false;
 		// Connect to the Facebook API and retrieve the user's info 
 		$fb = new FBConnectAPI();
-		$userinfo = $fb->getUserInfo();
+		$userInfo = $fb->getUserInfo();
 		// Update the following options if the user's settings allow it
 		$updateOptions = array('nickname', 'fullname', 'language',
 		                       'timecorrection', 'email');
 		foreach ($updateOptions as $option) {
 			// Translate Facebook parameters into MediaWiki parameters
-			$value = self::getOptionFromInfo($option, $userinfo); 
+			$value = self::getOptionFromInfo($option, $userInfo);
 			if ($value && ($this->getOption("fbconnect-update-on-login-$option", "0") == "1")) {
 				switch ($option) {
 					case 'fullname':
@@ -77,26 +77,40 @@ class FBConnectUser extends User {
 		
 		wfProfileOut(__METHOD__);
 	}
-	
+
 	/**
 	 * Helper function for updateFromFacebook(). Takes an array of info from
 	 * Facebook, and looks up the corresponding MediaWiki parameter.
+	 *
+	 * @param string $option
+	 * @param Facebook\GraphUser $userInfo
+	 *
+	 * @return null|string
 	 */
-	static function getOptionFromInfo($option, $userinfo) {
-		// Lookup table for the names of the settings
-		$params = array('nickname'       => 'username',
-		                'fullname'       => 'name',
-		                'firstname'      => 'first_name',
-		                'gender'         => 'sex',
-		                'language'       => 'locale',
-		                'timecorrection' => 'timezone',
-		                'email'          => 'contact_email');
-		if (empty($userinfo)) {
+	static function getOptionFromInfo( $option, Facebook\GraphUser $userInfo = null ) {
+		if ( empty( $userInfo ) ) {
 			return null;
 		}
-		$value = array_key_exists($params[$option], $userinfo) ? $userinfo[$params[$option]] : '';
+
+		// Lookup table for the names of the settings
+		$params = [
+			//'nickname'       => 'username',  // No nickname in Facebook\GraphUser
+			'fullname'       => 'name',
+			'firstname'      => 'first_name',
+			'gender'         => 'gender',
+			'language'       => 'locale',
+			'timecorrection' => 'timezone',
+			'email'          => 'email'
+		];
+
+		if ( empty( $params[$option] ) ) {
+			return '';
+		}
+
+		$value = $userInfo->getProperty( $params[$option] );
+
 		// Special handling of several settings
-		switch ($option) {
+		switch ( $option ) {
 			case 'fullname':
 			case 'firstname':
 				// If real names aren't allowed, then simply ignore the parameter from Facebook
@@ -107,7 +121,7 @@ class FBConnectUser extends User {
 				break;
 			case 'gender':
 				// Unfortunately, Facebook genders are localized (but this might change)
-				if ($value != 'male' || $value != 'female') {
+				if ( $value != 'male' || $value != 'female' ) {
 					$value = '';
 				}
 				break;
@@ -119,25 +133,27 @@ class FBConnectUser extends User {
 				 * For an up-to-date list of MediaWiki languages, see:
 				 * <http://svn.wikimedia.org/svnroot/mediawiki/trunk/phase3/languages/Names.php>.
 				 */
-				if ($value == '') {
+				if ( $value == '' ) {
 					break;
 				}
 				// These regional languages get special treatment
-				$locales = array('en_PI' => 'en', # Pirate English
-				                 'en_GB' => 'en-gb', # British English
-				                 'en_UD' => 'en', # Upside Down English
-				                 'fr_CA' => 'fr', # Canadian French
-				                 'fb_LT' => 'en', # Leet Speak
-				                 'pt_BR' => 'pt-br', # Brazilian Portuguese
-				                 'zh_CN' => 'zh-cn', # Simplified Chinese
-				                 'es_ES' => 'es', # European Spanish
-				                 'zh_HK' => 'zh-hk', # Traditional Chinese (Hong Kong)
-				                 'zh_TW' => 'zh-tw'); # Traditional Chinese (Taiwan)
-				if (array_key_exists($value, $locales)) {
+				$locales = [
+					'en_PI' => 'en', # Pirate English
+					'en_GB' => 'en-gb', # British English
+					'en_UD' => 'en', # Upside Down English
+					'fr_CA' => 'fr', # Canadian French
+					'fb_LT' => 'en', # Leet Speak
+					'pt_BR' => 'pt-br', # Brazilian Portuguese
+					'zh_CN' => 'zh-cn', # Simplified Chinese
+					'es_ES' => 'es', # European Spanish
+					'zh_HK' => 'zh-hk', # Traditional Chinese (Hong Kong)
+					'zh_TW' => 'zh-tw' # Traditional Chinese (Taiwan)
+				];
+				if ( array_key_exists( $value, $locales ) ) {
 					$value = $locales[$value];
 				} else {
 					// No special regional treatment exists in MW; chop it off
-					$value = substr($value, 0, 2);
+					$value = substr( $value, 0, 2 );
 				}
 				break;
 			case 'timecorrection':
@@ -145,16 +161,6 @@ class FBConnectUser extends User {
 				// TODO: $value = TimezoneToOffset($value);
 				$value = '';
 				break;
-			case 'email':
-				// If a contact email isn't available, then use a proxied email
-				if ($value == '') {
-					// TODO: update the user's email from $userinfo['proxied_email']
-					// instead (the address must stay hidden from the user)
-					$value = '';
-				}
-				// TODO: if the user's email is updated from Facebook, then
-				// automatically authenticate the email address
-				#$user->mEmailAuthenticated = wfTimestampNow();
 		}
 		// If an appropriate value was found, return it
 		return $value == '' ? null : $value;

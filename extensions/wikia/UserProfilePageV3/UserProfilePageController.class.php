@@ -871,6 +871,7 @@ class UserProfilePageController extends WikiaController {
 	 */
 
 	public function onFacebookConnectAvatar() {
+		// Not connecting this for now
 		return true;
 		wfProfileIn(__METHOD__);
 
@@ -934,11 +935,8 @@ class UserProfilePageController extends WikiaController {
 			}
 
 			if ($fbUserId > 0) {
-				$userFbData = $fbConnectAPI->getUserInfo(
-					$fbUserId,
-					array('first_name, current_location, hometown_location, work_history, profile_url, sex, birthday_date, pic_big, website')
-				);
-				$userFbData = $this->cleanFbData($userFbData);
+				$userFbData = $fbConnectAPI->getUserInfoArray( $fbUserId );
+				$userFbData = $this->cleanFbData( $userFbData );
 
 				$result = array('success' => true, 'fbUser' => $userFbData);
 			} else {
