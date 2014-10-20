@@ -100,12 +100,12 @@ class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 			->method( 'Update' )
 			->with( $oUpdateRequest );
 
-		/* Mock ExactTargetAddUserTask */
-		$mockAddUserTask = $this->getMockBuilder( 'ExactTargetAddUserTask' )
+		/* Mock ExactTargetCreateUserTask */
+		$mockCreateUserTask = $this->getMockBuilder( 'ExactTargetCreateUserTask' )
 			->disableOriginalConstructor()
 			->setMethods( [ 'createSubscriber' ] )
 			->getMock();
-		$mockAddUserTask
+		$mockCreateUserTask
 			->expects( $this->once() )
 			->method( 'createSubscriber' );
 
@@ -113,12 +113,12 @@ class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 		/* @var ExactTargetUpdateUserTask $mockUpdateUserTask mock of ExactTargetUpdateUserTask */
 		$mockUpdateUserTask = $this->getMockBuilder( 'ExactTargetUpdateUserTask' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'getClient', 'getAddUserTaskObject' ] )
+			->setMethods( [ 'getClient', 'getCreateUserTaskObject' ] )
 			->getMock();
 		$mockUpdateUserTask
 			->expects( $this->once() )
-			->method( 'getAddUserTaskObject' )
-			->will( $this->returnValue( $mockAddUserTask ) );
+			->method( 'getCreateUserTaskObject' )
+			->will( $this->returnValue( $mockCreateUserTask ) );
 		$mockUpdateUserTask
 			->expects( $this->once() )
 			->method( 'getClient' )

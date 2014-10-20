@@ -21,8 +21,8 @@ class ExactTargetUpdateUserTask {
 	public function updateUserEmail( $iUserId, $iUserEmail ) {
 		/* Subscriber list contains unique emails
 		 * Assuming email may be new - try to create subscriber object using the email */
-		$addUserTask = $this->getAddUserTaskObject();
-		$addUserTask->createSubscriber( $iUserEmail );
+		$oCreateUserTask = $this->getCreateUserTaskObject();
+		$oCreateUserTask->createSubscriber( $iUserEmail );
 
 		/* Update email in user data extension */
 		$aUserData = [
@@ -50,11 +50,11 @@ class ExactTargetUpdateUserTask {
 
 
 	/**
-	 * Returns an instance of ExactTargetAddUserTask class
-	 * @return ExactTargetAddUserTask
+	 * Returns an instance of ExactTargetCreateUserTask class
+	 * @return ExactTargetCreateUserTask
 	 */
-	private function getAddUserTaskObject() {
-		return new ExactTargetAddUserTask();
+	private function getCreateUserTaskObject() {
+		return new ExactTargetCreateUserTask();
 	}
 
 	/**

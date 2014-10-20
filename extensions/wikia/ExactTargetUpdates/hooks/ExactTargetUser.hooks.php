@@ -83,7 +83,7 @@ class ExactTargetUserHooks {
 	 * @return bool
 	 */
 	public function onEditAccountEmailChanged( User $oUser ) {
-		$this->addTheUpdateAddUserTask( $oUser );
+		$this->addTheUpdateCreateUserTask( $oUser );
 		return true;
 	}
 
@@ -108,7 +108,7 @@ class ExactTargetUserHooks {
 	 * @return bool
 	 */
 	public function onSignupConfirmEmailComplete( User $oUser ) {
-		$this->addTheUpdateAddUserTask( $oUser );
+		$this->addTheUpdateCreateUserTask( $oUser );
 		return true;
 	}
 
@@ -135,7 +135,7 @@ class ExactTargetUserHooks {
 	 * Adds Task to job queue that updates a user or adds a user if one doesn't exist
 	 * @param User $oUser
 	 */
-	private function addTheUpdateAddUserTask( User $oUser ) {
+	private function addTheUpdateCreateUserTask( User $oUser ) {
 		/* Prepare params */
 		$oParamsHelper = $this->getParamsHelper();
 		$aUserData = $oParamsHelper->prepareUserParams( $oUser );
@@ -143,8 +143,8 @@ class ExactTargetUserHooks {
 
 		/* Get and run the task */
 		$oTaskInstanceHelper = $this->getTaskInstanceHelper();
-		$task = $oTaskInstanceHelper->getExactTargetAddUserTask();
-		$task->call( 'updateAddUserData', $aUserData, $aUserProperties );
+		$task = $oTaskInstanceHelper->getExactTargetCreateUserTask();
+		$task->call( 'updateCreateUserData', $aUserData, $aUserProperties );
 		$task->queue();
 	}
 

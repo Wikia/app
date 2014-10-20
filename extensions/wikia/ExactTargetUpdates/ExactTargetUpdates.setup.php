@@ -42,7 +42,7 @@ $wgExtensionMessagesFiles[ 'ExactTargetUpdates' ] = $dir . '/ExactTargetUpdates.
 
 $wgAutoloadClasses['ExactTargetMainHelper'] = $dir . '/ExactTargetMainHelper.php';
 $wgAutoloadClasses['ExactTargetBaseTask'] =  $dir . '/ExactTargetBaseTask.php' ;
-$wgAutoloadClasses['ExactTargetAddUserTask'] =  $dir . '/ExactTargetAddUserTask.php' ;
+$wgAutoloadClasses['ExactTargetCreateUserTask'] =  $dir . '/ExactTargetCreateUserTask.php' ;
 $wgAutoloadClasses['ExactTargetRemoveUserTask'] =  $dir . '/ExactTargetRemoveUserTask.php' ;
 $wgAutoloadClasses['ExactTargetUpdateUserTask'] =  $dir . '/ExactTargetUpdateUserTask.php' ;
 $wgAutoloadClasses['ExactTargetUserHooks'] =  $dir . '/hooks/ExactTargetUser.hooks.php' ;

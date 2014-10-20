@@ -1,7 +1,7 @@
 <?php
 use Wikia\Tasks\Tasks\BaseTask;
 
-class ExactTargetAddUserTask extends BaseTask {
+class ExactTargetCreateUserTask extends BaseTask {
 
 	/**
 	 * Control method of the task responsible for creating all necessary objects
@@ -9,7 +9,7 @@ class ExactTargetAddUserTask extends BaseTask {
 	 * @param array $aUserData Selected fields from Wikia user table
 	 * @param array $aUserProperties Array of Wikia user gobal properties
 	 */
-	public function updateAddUserData( $aUserData, $aUserProperties ) {
+	public function updateCreateUserData( $aUserData, $aUserProperties ) {
 		/* Remove subscriber (email address) used by touched user */
 		$oRemoveUserTask = $this->getRemoveUserTaskObject();
 		$oRemoveUserTask->removeSubscriber( $aUserData['user_id'] );

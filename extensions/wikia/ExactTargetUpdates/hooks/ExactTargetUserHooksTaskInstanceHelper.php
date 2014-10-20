@@ -2,11 +2,11 @@
 
 class ExactTargetUserHooksTaskInstanceHelper {
 	/**
-	 * Returns new instance of ExactTargetAddUserTask
-	 * @return ExactTargetAddUserTask
+	 * Returns new instance of ExactTargetCreateUserTask
+	 * @return ExactTargetCreateUserTask
 	 */
-	public function getExactTargetAddUserTask() {
-		return new ExactTargetAddUserTask();
+	public function getExactTargetCreateUserTask() {
+		return new ExactTargetCreateUserTask();
 	}
 
 	/**

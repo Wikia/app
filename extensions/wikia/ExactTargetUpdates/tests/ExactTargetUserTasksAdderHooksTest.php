@@ -194,10 +194,10 @@ class ExactTargetUserTasksAdderHooksTest extends WikiaBaseTest {
 			[ 'getExactTargetRemoveUserTask', 'onEditAccountClosed', [ $userMock ], WIKIA_ENV_PROD, 1 ],
 			/* test onEditAccountClosed shouldn't add taks on production */
 			[ 'getExactTargetRemoveUserTask', 'onEditAccountClosed', [ $userMock ], WIKIA_ENV_DEV, 0 ],
-			/* test addTheUpdateAddUserTask should add taks on production */
-			[ 'getExactTargetAddUserTask', 'addTheUpdateAddUserTask', [ $userMock ], WIKIA_ENV_PROD, 1 ],
-			/* test addTheUpdateAddUserTask shouldn't add taks on production */
-			[ 'getExactTargetAddUserTask', 'addTheUpdateAddUserTask', [ $userMock ], WIKIA_ENV_DEV, 0 ]
+			/* test addTheUpdateCreateUserTask should add taks on production */
+			[ 'getExactTargetCreateUserTask', 'addTheUpdateCreateUserTask', [ $userMock ], WIKIA_ENV_PROD, 1 ],
+			/* test addTheUpdateCreateUserTask shouldn't add taks on production */
+			[ 'getExactTargetCreateUserTask', 'addTheUpdateCreateUserTask', [ $userMock ], WIKIA_ENV_DEV, 0 ]
 		];
 	}
 
