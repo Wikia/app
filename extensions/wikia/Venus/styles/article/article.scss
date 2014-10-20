@@ -13,6 +13,8 @@ $placeholder-background-color: $color-left-article-nav; // only for prototype ve
 $article-items-spacing: 40px;
 
 .article {
+	overflow: hidden;
+
 	header {
 		@include grid-column-width('medium', 8, $medium-content-padding - $content-border-width);
 		float: left;
@@ -157,6 +159,7 @@ $article-items-spacing: 40px;
 
 	> ol,
 	> ul {
+		margin-bottom: 40px;
 		margin-top: 0;
 		padding-right: 108px;
 
@@ -165,8 +168,12 @@ $article-items-spacing: 40px;
 		}
 	}
 
+	ol {
+		list-style-type: decimal;
+	}
+
 	ul {
-		list-style: disc;
+		list-style-type: disc;
 	}
 
 	li {

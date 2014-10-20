@@ -37,6 +37,9 @@ $VenusConfig[ 'venus_body_js' ] = [
 		//tracker
 		'#group_tracker_js',
 
+		//bucky
+		'#group_bucky_js',
+
 		// jquery libs
 		'//resources/wikia/libraries/mustache/mustache.js',
 		'//resources/wikia/libraries/mustache/jquery.mustache.js',
@@ -71,7 +74,7 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 
 		'//extensions/wikia/Venus/scripts/isTouchScreen.js',
-		'//extensions/wikia/Venus/scripts/Venus.js',
+		'//resources/wikia/modules/dom.js',
 
 		// BackgroundChanger
 		'//extensions/wikia/Venus/scripts/BackgroundChanger.js',
@@ -86,7 +89,8 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//extensions/wikia/Lightbox/js/LightboxLoader.js',
 		'//extensions/wikia/Lightbox/js/venusLightboxLoader.js',
 
-		'#group_bucky_js',
+		// different article modules
+		'//skins/shared/scripts/scrollableTables.js',
 
 		//following script initialize different modules in Venus
 		'//extensions/wikia/Venus/scripts/articleModulesLoader.js'
@@ -162,7 +166,7 @@ $VenusConfig[ 'global_navigation_js' ] = [
 		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationHubsMenu.js',
 		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationSearch.js',
 		'//extensions/wikia/GlobalNavigation/js/SearchSuggestions.js',
-		'//skins/shared/js/transparent-out.js',
+		'//skins/shared/scripts/transparent-out.js',
 		'//extensions/wikia/UserLogin/js/UserLoginDropdown.globalNavigation.js',
 		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js',
 		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
@@ -185,7 +189,8 @@ $VenusConfig[ 'article_scss' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'venus' ],
 	'assets' => [
-		'//extensions/wikia/Venus/styles/article/article.scss'
+		'//extensions/wikia/Venus/styles/article/article.scss',
+		'//skins/shared/styles/tables.scss'
 	]
 ];
 
