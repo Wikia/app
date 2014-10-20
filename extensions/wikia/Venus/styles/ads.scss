@@ -29,15 +29,15 @@
 	}
 
 	#TOP_RIGHT_BOXAD.default-height {
-		@include grid-column-width('large', 4, -2 * $large-grid-column-padding);
-		margin: 0 $large-grid-column-padding + $large-content-padding - $content-border-width 20px $large-grid-gutter + $large-grid-column-padding;
+		@include grid-column-width('small', 5);
+		margin: 0 $small-content-padding - $content-border-width 20px $small-grid-gutter + $small-grid-column-padding;
 	}
 }
 
 
 @media #{$large-up} {
 	#TOP_RIGHT_BOXAD.default-height {
-		@include grid-column-width('small', 5);
-		margin: 0 $small-content-padding - $content-border-width 20px $small-grid-gutter + $small-grid-column-padding;
+		@include grid-column-width('large', 4, -2 * $large-grid-column-padding);
+		margin: 0 $large-grid-column-padding + $large-content-padding - $content-border-width 20px $large-grid-gutter + $large-grid-column-padding;
 	}
 }
