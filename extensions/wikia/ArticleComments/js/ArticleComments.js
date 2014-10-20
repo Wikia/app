@@ -32,6 +32,7 @@
 				$fbCommentMessage = $('#fbCommentMessage'),
 				newComment;
 
+			// cache jQuery selector
 			this.$commentsList = $('#article-comments-ul');
 
 			if (ArticleComments.miniEditorEnabled) {
@@ -51,9 +52,9 @@
 			} else {
 				$articleComments.on('click', '.article-comm-edit', ArticleComments.actionProxy(ArticleComments.edit));
 				$articleComments.on('click', '.article-comm-reply', ArticleComments.actionProxy(ArticleComments.reply));
-				$('#article-comm-submit').bind('click', {
-						source: '#article-comm'
-					},
+				$('#article-comm-submit').on(
+					'click',
+					{ source: '#article-comm' },
 					ArticleComments.actionProxy(ArticleComments.postComment)
 				);
 			}
