@@ -22,7 +22,7 @@ define('wikia.dom', ['wikia.document'], function (doc) {
 				return element.webkitMatchesSelector(selector);
 			};
 		} else {
-			throw 'Browser not supported';
+			throw new Error('Browser not supported');
 		}
 		return selectorMatches(element, className);
 	};
