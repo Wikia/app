@@ -7,23 +7,35 @@ class ExactTargetSetupHooks {
 	 */
 	public static function setupHooks() {
 		$oExactTargetUserHooks = new self();
-		/* Don't add task when on dev or internal */
-		if ( $oExactTargetUserHooks->shouldUpdate() ) {
-			$oExactTargetUserHooks->registerUserHooks();
-		}
+		$oExactTargetUserHooks->registerUserHooks();
+		$oExactTargetUserHooks->registerWikiHooks();
 	}
+
 	/**
 	 * Register all hooks that are necessary to update user data in ExactTarget
 	 */
 	public function registerUserHooks() {
-		$oUserHooks = $this->getUserHooks();
-		\Hooks::register('AfterAccountRename', $oUserHooks);
-		\Hooks::register('ArticleSaveComplete', $oUserHooks);
-		\Hooks::register('EditAccountClosed', $oUserHooks);
-		\Hooks::register('EditAccountEmailChanged', $oUserHooks);
-		\Hooks::register('EmailChangeConfirmed', $oUserHooks);
-		\Hooks::register('SignupConfirmEmailComplete', $oUserHooks);
-		\Hooks::register('UserSaveSettings', $oUserHooks);
+		/* Don't add task when on dev or internal */
+		if ( $this->shouldUpdate() ) {
+			$oUserHooks = $this->getUserHooks();
+			\Hooks::register('AfterAccountRename', $oUserHooks);
+			\Hooks::register('ArticleSaveComplete', $oUserHooks);
+			\Hooks::register('EditAccountClosed', $oUserHooks);
+			\Hooks::register('EditAccountEmailChanged', $oUserHooks);
+			\Hooks::register('EmailChangeConfirmed', $oUserHooks);
+			\Hooks::register('SignupConfirmEmailComplete', $oUserHooks);
+			\Hooks::register('UserSaveSettings', $oUserHooks);
+		}
+	}
+
+	/**
+	 * Register all hooks that are necessary to update wiki data in ExactTarget
+	 */
+	public function registerWikiHooks() {
+		/* Don't add task when on dev or internal */
+		if ( $this->shouldUpdate() ) {
+
+		}
 	}
 
 	/**
@@ -31,7 +43,7 @@ class ExactTargetSetupHooks {
 	 * You can't update on DEV and INTERNAL environment,
 	 * unless wgExactTargetDevelopmentMode is set to true.
 	 */
-	public function shouldUpdate() {
+	private function shouldUpdate() {
 		global $wgWikiaEnvironment, $wgExactTargetDevelopmentMode;
 
 		if ( ( $wgWikiaEnvironment != WIKIA_ENV_DEV && $wgWikiaEnvironment != WIKIA_ENV_INTERNAL ) || $wgExactTargetDevelopmentMode === true ) {
@@ -39,10 +51,6 @@ class ExactTargetSetupHooks {
 		}
 
 		return false;
-	}
-
-	private function getMainHelper() {
-		return new ExactTargetMainHelper();
 	}
 
 	/**
