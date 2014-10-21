@@ -71,19 +71,22 @@ class ExactTargetUserTaskHelper {
 		return $aApiParams;
 	}
 
-	public function prepareUserDeleteParams( $userId ) {
+	public function prepareUserDeleteParams( $iUserId ) {
 		/* Get Customer Keys specific for production or development */
 		$aCustomerKeys = $this->getCustomerKeys();
 		$sCustomerKey = $aCustomerKeys[ 'user' ];
 
 		$aApiParams = [
-			[
-				'DataExtension' => [
+			'DataExtension' => [
+				[
 					'CustomerKey' => $sCustomerKey,
-					'Keys' => ['user_id' => $userId ]
+					'Keys' => [
+						'user_id' => $iUserId
+					]
 				]
 			]
 		];
+
 		return $aApiParams;
 	}
 
@@ -153,16 +156,13 @@ class ExactTargetUserTaskHelper {
 		$aCustomerKeys = $this->getCustomerKeys();
 		$sCustomerKey = $aCustomerKeys['user_properties'];
 
-		foreach ( $aUserProperties as $sProperty => $sValue ) {
-			$aApiParams = [
-				[
-					'DataExtension' => [
-						'CustomerKey' => $sCustomerKey,
-						'Keys' => [
-							'up_user' => $iUserId,
-							'up_property' => $sProperty
-						]
-					]
+		$aApiParams = [ 'DataExtension' => [] ];
+		foreach ( $aUserProperties as $sProperty ) {
+			$aApiParams[ 'DataExtension' ][] = [
+				'CustomerKey' => $sCustomerKey,
+				'Keys' => [
+					'up_user' => $iUserId,
+					'up_property' => $sProperty
 				]
 			];
 		}
