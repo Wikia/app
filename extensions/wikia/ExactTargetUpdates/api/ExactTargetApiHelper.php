@@ -105,23 +105,23 @@ class ExactTargetApiHelper {
 	 * @param  array  $aObjectsParams An array of parameters of DataExtension objects'
 	 * @return array                  An array of DataExtension objects
 	 */
-	public function prepareDataExtensionObjects( $aObjects ) {
+	public function prepareDataExtensionObjects( $aObjectsParams ) {
 		$aDE = [];
-		foreach( $aObjects as $DE ) {
+		foreach( $aObjectsParams as $aObjectParams ) {
 			$oDE = new ExactTarget_DataExtensionObject();
-			$oDE->CustomerKey = $DE['CustomerKey'];
+			$oDE->CustomerKey = $aObjectParams[ 'CustomerKey' ];
 
-			if( isset( $DE['Properties'] ) ) {
+			if( isset( $aObjectParams[ 'Properties' ] ) ) {
 				$aApiProperties = [];
-				foreach( $DE['Properties'] as $sKey => $sValue ) {
+				foreach( $aObjectParams[ 'Properties' ] as $sKey => $sValue ) {
 					$aApiProperties[] = $this->wrapApiProperty( $sKey, $sValue );
 				}
 				$oDE->Properties = $aApiProperties;
 			}
 
-			if( isset( $DE['Keys'] ) ) {
+			if( isset( $aObjectParams[ 'Keys' ] ) ) {
 				$aApiKeys = [];
-				foreach( $DE['Keys'] as $sKey => $sValue ) {
+				foreach( $aObjectParams[ 'Keys' ] as $sKey => $sValue ) {
 					$aApiKeys[] = $this->wrapApiProperty( $sKey, $sValue );
 				}
 				$oDE->Keys = $aApiKeys;
