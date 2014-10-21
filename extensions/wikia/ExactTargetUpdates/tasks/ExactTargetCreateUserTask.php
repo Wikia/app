@@ -26,26 +26,8 @@ class ExactTargetCreateUserTask extends BaseTask {
 	 * @param String $sUserEmail new subscriber email address
 	 */
 	public function createSubscriber( $sUserEmail ) {
-//		try {
-//			/* ExactTarget_Subscriber */
-//			$oSubscriber = new ExactTarget_Subscriber();
-//			$oSubscriber->SubscriberKey = $sUserEmail;
-//			$oSubscriber->EmailAddress = $sUserEmail;
-//
-//			/* Create the subscriber */
-//			$oSoapVar = $this->wrapToSoapVar( $oSubscriber, 'Subscriber' );
-//			$oRequest = $this->wrapCreateRequest( [ $oSoapVar ] );
-//
-//			/* Send API request */
-//			$oClient->Create( $oRequest );
-//
-//			/* Log response */
-//			$this->info( $oClient->__getLastResponse() );
-//
-//		} catch ( SoapFault $e ) {
-//			/* Log error */
-//			$this->error( 'SoapFault:' . $e->getMessage() . 'ErrorCode: ' . $e->getCode() );
-//		}
+		$oApiDataExtension = $this->getApiSubscriber();
+		$oApiDataExtension->createRequest( $sUserEmail );
 	}
 
 	/**
@@ -77,6 +59,14 @@ class ExactTargetCreateUserTask extends BaseTask {
 	 */
 	private function getApiDataExtension() {
 		return new ExactTargetApiDataExtension();
+	}
+
+	/**
+	 * Returns an instance of ExactTargetApiSubscriber class
+	 * @return ExactTargetApiSubscriber
+	 */
+	private function getApiSubscriber() {
+		return new ExactTargetApiSubscriber();
 	}
 
 	/**
