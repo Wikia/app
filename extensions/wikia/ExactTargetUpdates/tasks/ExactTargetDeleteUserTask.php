@@ -18,7 +18,7 @@ class ExactTargetDeleteUserTask extends BaseTask {
 	 * @param int $iUserId
 	 */
 	public function deleteSubscriber( $iUserId ) {
-		$oRetrieveUserHelper = getRetrieveUserHelper();
+		$oRetrieveUserHelper = $this->getRetrieveUserHelper();
 		$sEmail = $oRetrieveUserHelper->getUserEmail( $iUserId );
 		if ( !$this->isEmailInUse( $sEmail, $iUserId ) ) {
 			$this->doDeleteSubscriber( $sEmail );
@@ -65,7 +65,7 @@ class ExactTargetDeleteUserTask extends BaseTask {
 	 * @return bool
 	 */
 	public function isEmailInUse( $sEmail, $iSkipUserId = null ) {
-		$oRetrieveUserHelper = getRetrieveUserHelper();
+		$oRetrieveUserHelper = $this->getRetrieveUserHelper();
 		/* @var stdClass $oUsersIds */
 		$oUsersIds = $oRetrieveUserHelper->retrieveUserIdsByEmail( $sEmail );
 		$iUsersCount = count( $oUsersIds->Results );
