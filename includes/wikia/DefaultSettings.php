@@ -270,6 +270,7 @@ $wgHooks          [ 'RestInPeace'                     ][] = 'Transaction::onRest
 $wgHooks          [ 'RestInPeace'                     ][] = 'ScribePurge::onRestInPeace';
 $wgAutoloadClasses[ 'Wikia\\Blogs\\BlogTask'          ] = "$IP/extensions/wikia/Blogs/BlogTask.class.php";
 $wgAutoloadClasses[ 'TemplatePageHelper'              ] = "$IP/includes/wikia/helpers/TemplatePageHelper.php";
+$wgAutoloadClasses[ 'CrossOriginResourceSharingHeaderHelper' ] = "$IP/includes/wikia/helpers/CrossOriginResourceSharingHeaderHelper.php";
 
 /**
  * Resource Loader enhancements
