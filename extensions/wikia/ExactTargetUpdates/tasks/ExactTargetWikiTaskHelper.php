@@ -10,7 +10,9 @@ class ExactTargetWikiTaskHelper {
 			'DataExtension' => [],
 		];
 
-		array_merge( $aDataExtensionsForCreate['DataExtension'], $aWikiDataExtension, $aCityCatMappingDataExtension );
+		$aDataExtensionsForCreate['DataExtension'] = array_merge( $aDataExtensionsForCreate['DataExtension'], $aWikiDataExtension, $aCityCatMappingDataExtension );
+
+//		wfDebug( "\n ExactTargetUpdates::" . __METHOD__ . " " . json_encode($aDataExtensionsForCreate) . "\n");
 
 		return $aDataExtensionsForCreate;
 	}
@@ -79,18 +81,19 @@ class ExactTargetWikiTaskHelper {
 
 		$aCustomerKeys = $this->getCustomerKeys();
 
-		$aCategories = \WikiFactoryHub::getWikiCategories( $iCityId );
+		$oWikiFactoryHub = new WikiFactoryHub();
+		$aCategories = $oWikiFactoryHub->getWikiCategories( $iCityId );
 		foreach( $aCategories as $aCategory ) {
 			$aCityCatMappingDataExtension[] = [
 				'CustomerKey' => $aCustomerKeys['city_cat_mapping'],
 				'Properties' => [
 					'city_id' => $iCityId,
-					'cat_id' => $aCategory->cat_id,
+					'cat_id' => $aCategory['cat_id'],
 				],
 			];
 		}
 
-		return $aWikiCatsMappingParams;
+		return $aCityCatMappingDataExtension;
 	}
 
 	public function prepareCityCatMappingDataExtensionForRetrieve( $iCityId ) {
