@@ -18,7 +18,8 @@ class ExactTargetDeleteUserTask extends BaseTask {
 	 * @param int $iUserId
 	 */
 	public function deleteSubscriber( $iUserId ) {
-		$sEmail = $this->getUserEmail( $iUserId );
+		$oRetrieveUserHelper = getRetrieveUserHelper();
+		$sEmail = $oRetrieveUserHelper->getUserEmail( $iUserId );
 		if ( !$this->isEmailInUse( $sEmail, $iUserId ) ) {
 			$this->doDeleteSubscriber( $sEmail );
 		}
@@ -58,37 +59,15 @@ class ExactTargetDeleteUserTask extends BaseTask {
 	}
 
 	/**
-	 * Retrieves user email from ExactTarget based on provided user ID
-	 * @param int $iUserId
-	 * @return null|string
-	 */
-	public function getUserEmail( $iUserId ) {
-		$aProperties = [ 'user_email' ];
-		$sFilterProperty = 'user_id';
-		$aFilterValues = [ $iUserId ];
-		$oHelper = $this->getHelper();
-		$aApiParams = $oHelper->prepareUserRetrieveParams( $aProperties, $sFilterProperty, $aFilterValues );
-
-		$oApiDataExtension = $this->getApiDataExtension();
-		$oEmailResult = $oApiDataExtension->retrieveRequest( $aApiParams );
-
-		if ( isset( $oEmailResult->Results->Properties->Property->Value ) ) {
-			return $oEmailResult->Results->Properties->Property->Value;
-		}
-
-		$this->notice( __METHOD__ . ' user DataExtension object not found for user_id = ' . $iUserId );
-		return null;
-	}
-
-	/**
 	 * Checks whether there are any users that has provided email
 	 * @param string $sEmail Email address to check in ExactTarget
 	 * @param int $iSkipUserId Skip this user ID when checking if email is used by any account
 	 * @return bool
 	 */
 	public function isEmailInUse( $sEmail, $iSkipUserId = null ) {
-		/* @var stdClass $oResults */
-		$oUsersIds = $this->retrieveUserIdsByEmail( $sEmail );
+		$oRetrieveUserHelper = getRetrieveUserHelper();
+		/* @var stdClass $oUsersIds */
+		$oUsersIds = $oRetrieveUserHelper->retrieveUserIdsByEmail( $sEmail );
 		$iUsersCount = count( $oUsersIds->Results );
 
 		// Email is in use when there are more than one user with email
@@ -101,38 +80,6 @@ class ExactTargetDeleteUserTask extends BaseTask {
 		}
 
 		return $ret;
-	}
-
-	/**
-	 * Retrieve from ExactTarget a list of user IDs that use provided email
-	 * @param string $sEmail
-	 * @return stdClass
-	 * e.g. many results
-	 *     stdClass Object (
-	 *         [Results] => Array of stdClass Objects
-	 *     );
-	 * e.g. one result
-	 *     stdClass Object (
-	 *         [Results] => stdClass Object (
-	 *             [Properties] => stdClass Object (
-	 *                 [Property] => stdClass Object (
-	 *                     [Name] => string
-	 *                     [Value] => int
-	 *                 )
-	 *             )
-	 *         )
-	 *      );
-	 */
-	public function retrieveUserIdsByEmail( $sEmail ) {
-		$aProperties = [ 'user_id' ];
-		$sFilterProperty = 'user_email';
-		$aFilterValues = [ $sEmail ];
-		$oHelper = $this->getHelper();
-		$aApiParams = $oHelper->prepareUserRetrieveParams( $aProperties, $sFilterProperty, $aFilterValues );
-
-		$oApiDataExtension = $this->getApiDataExtension();
-		$oIdsListResult = $oApiDataExtension->retrieveRequest( $aApiParams );
-		return $oIdsListResult;
 	}
 
 	/**
@@ -149,6 +96,14 @@ class ExactTargetDeleteUserTask extends BaseTask {
 	 */
 	private function getApiSubscriber() {
 		return new ExactTargetApiSubscriber();
+	}
+
+	/**
+	 * Returns an instance of ExactTargetRetrieveUserHelper class
+	 * @return ExactTargetRetrieveUserHelper
+	 */
+	private function getRetrieveUserHelper() {
+		return new ExactTargetRetrieveUserHelper();
 	}
 
 	/**

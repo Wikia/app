@@ -52,6 +52,7 @@ $wgAutoloadClasses['ExactTargetUserHooksHelper'] =  $dir . '/hooks/ExactTargetUs
 /* Add tasks classes */
 $wgAutoloadClasses['ExactTargetUserTaskHelper'] =  $dir . '/tasks/ExactTargetUserTaskHelper.php' ;
 $wgAutoloadClasses['ExactTargetCreateUserTask'] =  $dir . '/tasks/ExactTargetCreateUserTask.php' ;
+$wgAutoloadClasses['ExactTargetRetrieveUserHelper'] =  $dir . '/tasks/ExactTargetRetrieveUserHelper.php' ;
 $wgAutoloadClasses['ExactTargetUpdateUserTask'] =  $dir . '/tasks/ExactTargetUpdateUserTask.php' ;
 $wgAutoloadClasses['ExactTargetDeleteUserTask'] =  $dir . '/tasks/ExactTargetDeleteUserTask.php' ;
 /* Add API classes */
