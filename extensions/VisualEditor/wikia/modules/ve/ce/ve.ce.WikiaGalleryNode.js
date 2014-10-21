@@ -16,8 +16,6 @@
  * @param {Object} [config] Configuration options
  */
 ve.ce.WikiaGalleryNode = function VeCeWikiaGalleryNode( model, config ) {
-	var galleryDataModelAttr;
-
 	// Parent constructor
 	ve.ce.WikiaGalleryNode.super.call( this, model, config );
 
@@ -25,22 +23,12 @@ ve.ce.WikiaGalleryNode = function VeCeWikiaGalleryNode( model, config ) {
 	ve.ce.FocusableNode.call( this );
 
 	// Initialization
-	// TODO: Iterate through gallery images and generate this mocked data for real:
-	galleryDataModelAttr = [ {
-		'caption': '',
-		'dbKey': 'Captainwoof.jpg',
-		'linkHref': '/wiki/File:Captainwoof.jpg',
-		'thumbHtml': '<a href="/wiki/File:Captainwoof.jpg" class="image image-thumbnail"><picture><source media="(max-width: 1024px)" srcset="http://vignette.wikia-dev.com/muppet/a/a0/Captainwoof.jpg/revision/latest/fixed-aspect-ratio-down/width/384/height/384?cb=20071025105224&amp;fill=transparent&amp;format=webp" type="image/webp"><source media="(max-width: 1024px)" srcset="http://vignette.wikia-dev.com/muppet/a/a0/Captainwoof.jpg/revision/latest/fixed-aspect-ratio-down/width/384/height/384?cb=20071025105224&amp;fill=transparent"><source srcset="http://vignette.wikia-dev.com/muppet/a/a0/Captainwoof.jpg/revision/latest/fixed-aspect-ratio-down/width/480/height/480?cb=20071025105224&amp;fill=transparent&amp;format=webp" type="image/webp"><source srcset="http://vignette.wikia-dev.com/muppet/a/a0/Captainwoof.jpg/revision/latest/fixed-aspect-ratio-down/width/480/height/480?cb=20071025105224&amp;fill=transparent"><img src="http://vignette.wikia-dev.com/muppet/a/a0/Captainwoof.jpg/revision/latest/fixed-aspect-ratio-down/width/480/height/480?cb=20071025105224&amp;fill=transparent" alt="Captainwoof.jpg" class="" data-image-key="Captainwoof.jpg" data-image-name="Captainwoof.jpg"></picture></a>',
-		'thumbUrl': 'http://vignette.wikia-dev.com/muppet/a/a0/Captainwoof.jpg/revision/latest/fixed-aspect-ratio-down/width/480/height/480?cb=20071025105224&fill=transparent',
-		'title': 'Captainwoof.jpg'
-	} ];
-
 	this.$element
 		.addClass( 'media-gallery-wrapper count-' + this.model.getAttribute( 'itemCount' ) )
 		.attr( {
 			'data-visible-count': 8,
 			'data-expanded': 0,
-			'data-model': JSON.stringify( galleryDataModelAttr )
+			'data-model': JSON.stringify( this.model.getEmbedData() )
 		} );
 
 	this.$element.html('');

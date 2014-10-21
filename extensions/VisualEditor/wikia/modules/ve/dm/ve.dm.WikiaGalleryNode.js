@@ -51,6 +51,20 @@ ve.dm.WikiaGalleryNode.static.toDataElement = function ( domElements, converter 
 	return { 'type': this.name, 'attributes': attributes };
 };
 
+/* Methods */
+
+ve.dm.WikiaGalleryNode.prototype.getEmbedData = function () {
+	var i,
+		children = this.getChildren(),
+		data = [];
+
+	for ( i = 0; i < children.length; i++ ) {
+		data.push( children[0].getAttribute( 'embedData') );
+	}
+
+	return data;
+};
+
 /* Registration */
 
 ve.dm.modelRegistry.register( ve.dm.WikiaGalleryNode );
