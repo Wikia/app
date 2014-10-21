@@ -98,6 +98,10 @@ $border-color: lighten($color-text, 30%);
 			padding-top: 6px;
 			text-align: left;
 		}
+
+		.title + .caption {
+			border: 0;
+		}
 	}
 }
 
