@@ -22399,7 +22399,7 @@ $2
 	'fbconnect-click-to-connect-existing' => '이 버튼을 클릭해서 당신의 Facebook 계정을 $1에 연동하세요',
 	'fbconnect-click-to-login' => '이 버튼을 클릭하여 Facebook을 통해 이 사이트에 로그인하세요',
 	'fbconnect-connect-error-msg' => '죄송하지만 당신의 Facebook 편집 권한 없이 연동 작업을 완료할 수 없습니다. 편집 권한 설정 이후에 [[w:c:help:Help:Facebook_Connect#Sharing_with_your_Facebook_activity_feed|Facebook에 내보낼 기여]]를 선택할 수 있습니다. 다시 시도해 주세요.',
-	'fbconnect-connect-msg-sync-profile' => '축하드립니다! 회원님의 위키아 계정과 Facebook 계정이 연동되었습니다. <a href=\'$1\'>사용자 문서</a>를 Facebook과 연동해보세요.',
+	'fbconnect-connect-msg-sync-profile' => '축하드립니다! 회원님의 위키아 계정과 Facebook 계정이 연동되었습니다. <a href=\'$1\'>회원님의 위키아 프로파일</a>을 Facebook과 연동해보세요.',
 	'fbconnect-connect-msg' => '축하합니다! 당신의 위키아 계정과 Facebook 계정이 연동되었습니다.',
 	'fbconnect-connect-next' => '다음 >>',
 	'fbconnect-connect-simple' => '연동하기',
