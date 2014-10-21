@@ -18,10 +18,13 @@ a {
 	}
 }
 
+.wikia-page-wrapper {
+	padding: $global-navigation-height 0 0;
+}
+
 .wikia-page {
 	background: $color-page;
 	border: $content-border-width solid $color-page-border;
-	padding: $global-navigation-height 0 0;
 
 	& > header {
 		@include grid-content-padding;
@@ -32,6 +35,15 @@ a {
 	margin: 0 auto;
 	width: $medium-content-width;
 }
+
+.padded-content {
+	@include grid-content-padding;
+}
+
+.padded-column {
+	@include grid-column-padding;
+}
+
 
 @media #{$small-only} {
 	.page-width {
@@ -45,10 +57,8 @@ a {
 	}
 }
 
-.padded-content {
-	@include grid-content-padding;
-}
-
-.padded-column {
-	@include grid-column-padding;
+@media #{$below-small} {
+	.wikia-page-wrapper {
+		padding-top: 0;
+	}
 }

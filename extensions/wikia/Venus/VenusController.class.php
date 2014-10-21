@@ -187,7 +187,7 @@ class VenusController extends WikiaController {
 	}
 
 	private function getTopAds() {
-		//return $this->app->renderView('Ad', 'Top');
+		return $this->app->renderView('Ad', 'Index', ['slotName' => 'TOP_LEADERBOARD']);;
 	}
 
 	private function getGlobalFooter() {
