@@ -16,11 +16,14 @@ require([
 		});
 	}
 
-	//init lightbox
-	lightboxLoader.init();
-
 	//scan for tables in article and if table is too wide add scrollbar
 	scanTables();
+
+	$(function() {
+		//Lightbox initialization needs to be done after DOMReady
+		//in order to be sure that Bucky is in place
+		lightboxLoader.init();
+	});
 
 		$win
 			.on('resize', $.throttle(100, scanTables))
