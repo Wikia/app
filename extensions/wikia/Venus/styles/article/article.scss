@@ -63,7 +63,7 @@ $article-items-spacing: 40px;
 
 .mw-content-text {
 	clear: left;
-	margin: 0 $medium-content-padding - $content-border-width 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width;
+	margin: 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width;
 	padding: 0 $medium-grid-column-padding;
 
 	.editsection {
@@ -183,15 +183,12 @@ $article-items-spacing: 40px;
 /* FOR PROTOTYPE/TESTING ONLY */
 .infobox-test {
 	@include grid-column-width('medium', 4, -2 * $medium-grid-column-padding);
-	display: block;
-	float: right;
-	margin: 0 $medium-grid-column-padding + $medium-content-padding - $content-border-width 20px $medium-grid-gutter + $medium-grid-column-padding;
-}
-
-.infobox-test {
 	background-color: $placeholder-background-color;
 	clear: right;
+	display: block;
+	float: right;
 	height: 500px;
+	margin: 0 $medium-grid-column-padding + $medium-content-padding - $content-border-width 20px $medium-grid-gutter + $medium-grid-column-padding;
 	padding: 10px;
 }
 
@@ -217,7 +214,7 @@ $article-items-spacing: 40px;
 	}
 
 	.mw-content-text {
-		margin: 0 $large-content-padding - $content-border-width 0 $large-grid-column + $large-grid-gutter + $large-content-padding - $content-border-width;
+		margin: 0 $large-grid-column + $large-grid-gutter + $large-content-padding - $content-border-width;
 		padding: 0 $large-grid-column-padding;
 
 		h2 {
@@ -282,9 +279,7 @@ $article-items-spacing: 40px;
 	}
 
 	.left-nav {
-		float: none;
 		margin-left: $small-content-padding - $content-border-width;
-		position: absolute;
 		width: $small-grid-column;
 	}
 
