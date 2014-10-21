@@ -23,7 +23,10 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		isHighValueCountry,
 		leaderboardCalled = false, // save if leaderboard was called, so we know whether to call INVISIBLE slot as well
 		gptConfig,
-		gptFlushed = false;
+		gptFlushed = false,
+		countriesToAlwaysCallGpt = {
+			'UK': true
+		},
 
 	maxCallsToDART = adLogicHighValueCountry.getMaxCallsToDART(country);
 	isHighValueCountry = adLogicHighValueCountry.isHighValueCountry(country);
@@ -83,6 +86,11 @@ define('ext.wikia.adEngine.provider.directGpt', [
 	 */
 	function shouldCallDart(slotname) {
 		log(['shouldCallDart', slotname], 'debug', logGroup);
+
+		if (countriesToAlwaysCallGpt[country]) {
+			log(['shouldCallDart', slotname, country, 'skipping the logic'], 'info', logGroup);
+			return true;
+		}
 
 		var noAdLastTime = cacheStorage.get(getStorageKey('noad', slotname), now) || false,
 			numCallForSlot = cacheStorage.get(getStorageKey('calls', slotname), now) || 0;
