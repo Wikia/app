@@ -729,6 +729,7 @@ class WikiFactory {
 			}
 			wfProfileOut( __METHOD__."-citylist" );
 			$dbw->commit();
+			wfRunHooks( 'WikiFactoryChangeCommitted', array( $variable->cv_name , $city_id, $value ) );
 		}
 		catch ( DBQueryError $e ) {
 			Wikia::log( __METHOD__, "", "Database error, cannot write variable." );
