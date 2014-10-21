@@ -24,6 +24,7 @@ class MercuryApiModelTest extends WikiaBaseTest {
 		$this->mockGlobalVariable('wgDBname', 'mydbname');
 		$this->mockGlobalVariable('wgDartCustomKeyValues', 'a=b;c=d');
 		$this->mockGlobalVariable('wgAdDriverEnableRemnantGptMobile', true);
+		$this->mockGlobalVariable('wgAdPageLevelCategoryLangs', ['en']);
 	}
 
 	/**
@@ -59,6 +60,7 @@ class MercuryApiModelTest extends WikiaBaseTest {
 			],
 			'targeting' => [
 				'enableKruxTargeting' => true,
+				'enablePageCategories' => true,
 				'kruxCategoryId' => 'HixxTik3',
 				'pageArticleId' => 10,
 				'pageIsArticle' => true,
