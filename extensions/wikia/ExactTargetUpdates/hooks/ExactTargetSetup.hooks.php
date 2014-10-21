@@ -34,7 +34,11 @@ class ExactTargetSetupHooks {
 	public function registerWikiHooks() {
 		/* Don't add task when on dev or internal */
 		if ( $this->shouldUpdate() ) {
-
+			$oWikiHooks = $this->getWikiHooks();
+			\Hooks::register( 'CreateWikiLocalJob-complete', [ $oWikiHooks, 'onCreateWikiLocalJobComplete' ] );
+			\Hooks::register( 'WikiFactoryChangeCommitted', $oWikiHooks );
+			\Hooks::register( 'WikiFactoryVerticalSet', $oWikiHooks );
+			\Hooks::register( 'CityCatMappingUpdated', $oWikiHooks );
 		}
 	}
 
@@ -59,5 +63,9 @@ class ExactTargetSetupHooks {
 	 */
 	public function getUserHooks() {
 		return new ExactTargetUserHooks();
+	}
+
+	public function getWikiHooks() {
+		return new ExactTargetWikiHooks();
 	}
 }
