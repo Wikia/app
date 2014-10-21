@@ -29,7 +29,7 @@ class AdEngine2ContextService {
 					'adsInHead' => !!$wg->EnableAdsInContent,
 					'disableLateQueue' => $wg->AdEngineDisableLateQueue,
 					'lateAdsAfterPageLoad' => $adEngineService->areAdsAfterPageLoad(),
-					'pageType' => $adEngineService->getPageType(),
+					'pageType' => $adPageTypeService->getPageType(),
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 					'useDartForSlotsBelowTheFold' => $wg->AdDriverUseDartForSlotsBelowTheFold,
 					'usePostScribe' => $wg->Request->getBool( 'usepostscribe', false ),

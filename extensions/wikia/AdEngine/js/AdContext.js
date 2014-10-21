@@ -29,7 +29,7 @@ define('ext.wikia.adEngine.adContext', ['wikia.window', 'wikia.document'], funct
 		context.opts.usePostScribe = context.opts.usePostScribe || context.providers.sevenOneMedia;
 	}
 
-	setContext( w.ads ? w.ads.context : {
+	setContext(w.ads ? w.ads.context : {
 		opts: {
 			adsAfterInfobox: w.wgAdDriverUseAdsAfterInfobox,
 			adsInHead: w.wgLoadAdsInHead,

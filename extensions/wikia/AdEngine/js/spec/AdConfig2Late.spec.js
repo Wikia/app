@@ -262,7 +262,8 @@ describe('AdConfig2Late', function () {
 			logMock,
 			windowMock,
 			instantGlobalsMock,
-			geoMock, mockAdContext()	,
+			geoMock,
+			mockAdContext(),
 			adProviderEvolveMock,
 			adProviderLiftiumMock,
 			adProviderDirectGpt,
@@ -292,7 +293,8 @@ describe('AdConfig2Late', function () {
 			logMock,
 			windowMock,
 			instantGlobalsMock,
-			geoMock, mockAdContext()	,
+			geoMock,
+			mockAdContext(),
 			adProviderEvolveMock,
 			adProviderLiftiumMock,
 			adProviderDirectGpt,
@@ -448,6 +450,5 @@ describe('AdConfig2Late', function () {
 		expect(adConfig.getProvider(['NATIVE_TABOOLA'])).toBe(adProviderTaboola, 'adProviderTaboola');
 
 	});
-
 
 });

@@ -2,8 +2,6 @@
 
 class AdEngine2ContextServiceTest extends WikiaBaseTest {
 
-	private $mocks = [];
-
 	public function setUp() {
 		global $IP;
 		$this->setupFile = "$IP/extensions/wikia/AdEngine/AdEngine2.setup.php";
