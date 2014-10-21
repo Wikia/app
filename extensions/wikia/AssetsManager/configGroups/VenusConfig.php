@@ -85,6 +85,9 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//resources/wikia/modules/browserDetect.js',
 		'#group_imglzy_js',
 
+		// support for video lightbox
+		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
+
 		// Lightbox
 		'//extensions/wikia/Lightbox/js/LightboxLoader.js',
 		'//extensions/wikia/Lightbox/js/venusLightboxLoader.js',
