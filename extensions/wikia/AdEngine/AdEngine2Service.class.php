@@ -16,10 +16,10 @@ class AdEngine2Service {
 		$pageType = $adEnginePageTypeService->getPageType();
 
 		if ( $pageTypes === null ) {
-			$pageTypes = [$adEnginePageTypeService::PAGE_TYPE_ALL_ADS];
+			$pageTypes = [AdEngine2PageTypeService::PAGE_TYPE_ALL_ADS];
 		}
 
-		if ( in_array( '*', $pageTypes ) && $pageType !== $adEnginePageTypeService::PAGE_TYPE_NO_ADS ) {
+		if ( in_array( '*', $pageTypes ) && $pageType !== AdEngine2PageTypeService::PAGE_TYPE_NO_ADS ) {
 			return true;
 		}
 
