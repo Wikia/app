@@ -60,11 +60,11 @@ class ExactTargetUserTaskHelper {
 		$sCustomerKey = $aCustomerKeys[ 'user' ];
 
 		$aApiParams = [
-			[
-				'DataExtension' => [
+			'DataExtension' => [
+				[
 					'CustomerKey' => $sCustomerKey,
 					'Properties' => $aUserData,
-					'Keys' => ['user_id' => $userId ]
+					'Keys' => [ 'user_id' => $userId ]
 				]
 			]
 		];
@@ -120,17 +120,14 @@ class ExactTargetUserTaskHelper {
 		$aCustomerKeys = $this->getCustomerKeys();
 		$sCustomerKey = $aCustomerKeys[ 'user_properties' ];
 
+		$aApiParams = [ 'DataExtension' => [] ];
 		foreach ( $aUserProperties as $sProperty => $sValue ) {
-			$aApiParams = [
-				[
-					'DataExtension' => [
-						'CustomerKey' => $sCustomerKey,
-						'Properties' => [ 'up_value' => $sValue ],
-						'Keys' => [
-							'up_user' => $iUserId,
-							'up_property' => $sProperty
-						]
-					]
+			$aApiParams[ 'DataExtension' ][] = [
+				'CustomerKey' => $sCustomerKey,
+				'Properties' => [ 'up_value' => $sValue ],
+				'Keys' => [
+					'up_user' => $iUserId,
+					'up_property' => $sProperty
 				]
 			];
 		}
