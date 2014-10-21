@@ -129,8 +129,11 @@ class DivContainingHeadersVisitor extends DOMNodeVisitorBase {
 			return null;
 		}
 		$title = Title::newFromURL( $url );
-		$article = Article::newFromTitle( $title, RequestContext::getMain() );
-		return $article;
+		if( $title ) {
+			$article = Article::newFromTitle( $title, RequestContext::getMain() );
+			return $article;
+		}
+		return null;
 	}
 
 	protected function getUrlWithoutPath( $url, $baseArticlePath ) {
