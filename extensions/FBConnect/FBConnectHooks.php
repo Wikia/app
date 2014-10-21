@@ -706,7 +706,7 @@ HTML;
 			$id = FBConnectDB::getFacebookIDs($wgUser, DB_MASTER);
 			if( count($id) > 0 ) {
 				$msg =  Xml::element("img", array("id" => "fbMsgImage", "src" => $wgServer.'/skins/common/fbconnect/fbiconbig.png' ));
-				$msg .= "<p>".wfMsg('fbconnect-connect-msg')."</p>";
+				$msg .= "<p>".wfMessage( 'fbconnect-connect-msg' )->text()."</p>";
 				/** Wikia change - starts  @author Andrzej 'nAndy' Łukaszewski */
 				wfRunHooks('FounderProgressBarOnFacebookConnect');
 				/** Wikia change - ends */

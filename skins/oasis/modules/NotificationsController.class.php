@@ -323,11 +323,11 @@ class NotificationsController extends WikiaController {
 
 						global $wgEnableFacebookSync;
 						if ($wgEnableFacebookSync == true) {
-							$userURL = AvatarService::getUrl($wgUser->mName);
-							self::addConfirmation(wfMsg('fbconnect-connect-msg-sync-profile', $userURL));
+							$userURL = AvatarServiceextensions/FBConnect/FBConnectHooks.php::getUrl($wgUser->mName);
+							self::addConfirmation( wfMessage( 'fbconnect-connect-msg-sync-profile', $userURL )->text() );
 						}
 						else {
-							self::addConfirmation(wfMsg('fbconnect-connect-msg'));
+							self::addConfirmation( wfMessage( 'fbconnect-connect-msg' )->text() );
 						}
 					}
 					break;
