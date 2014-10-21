@@ -45,6 +45,9 @@ define('ext.wikia.adEngine.adConfigLate', [
 		slotsToAlwaysCallRemnantGpt = {
 			'WIKIA_BAR_BOXAD_1': true
 		},
+		countriesToAlwaysCallRemnantGpt = {
+			'UK': true
+		},
 		ie8 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.match(/MSIE [6-8]\./),
 
 		taboolaEnabledWikis = {
@@ -81,7 +84,10 @@ define('ext.wikia.adEngine.adConfigLate', [
 			);
 
 	function getProvider(slot) {
-		var slotname = slot[0];
+		var slotname = slot[0],
+			useRemnantGpt = window.wgAdDriverUseRemnantGpt ||
+				slotsToAlwaysCallRemnantGpt[slotname] ||
+				countriesToAlwaysCallRemnantGpt[country];
 
 		log('getProvider', 5, logGroup);
 		log(slot, 5, logGroup);
@@ -137,10 +143,8 @@ define('ext.wikia.adEngine.adConfigLate', [
 			return adProviderDirectGpt;
 		}
 
-		if (window.wgAdDriverUseRemnantGpt || slotsToAlwaysCallRemnantGpt[slotname]) {
-			if (adProviderRemnantGpt.canHandleSlot(slotname)) {
-				return adProviderRemnantGpt;
-			}
+		if (useRemnantGpt && adProviderRemnantGpt.canHandleSlot(slotname)) {
+			return adProviderRemnantGpt;
 		}
 
 		if (adProviderLiftium.canHandleSlot(slotname) && !instantGlobals.wgSitewideDisableLiftium) {
