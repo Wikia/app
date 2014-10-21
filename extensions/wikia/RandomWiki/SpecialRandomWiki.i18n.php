@@ -309,11 +309,12 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Giro720
+ * @author Guilhermemau
  * @author Jefersonmoraes
  */
 $messages['pt-br'] = array(
 	'randomwiki-desc' => 'Permite que os usuários explorem uma wikia aleatória',
-	'randomwiki' => 'Wikia Aleatória',
+	'randomwiki' => 'Wiki Aleatória',
 );
 
 /** Romanian (română)
@@ -347,6 +348,14 @@ $messages['ru'] = array(
  */
 $messages['sah'] = array(
 	'randomwiki' => 'Үлүбээй биики',
+);
+
+/** Slovak (slovenčina)
+ * @author Sudo77(new)
+ */
+$messages['sk'] = array(
+	'randomwiki-desc' => 'Umožňuje používateľom prejsť na náhodnú wiki',
+	'randomwiki' => 'Náhodná wiki',
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)

@@ -148,7 +148,7 @@
 		}
 	}
 
-	section {
+	.hub-menu-section {
 		@include column-count(2);
 		@include column-rule(1px outset $nav-border-color);
 		@include column-gap(36px);
@@ -163,7 +163,7 @@
 			display: block;
 		}
 
-		h2 {
+		strong {
 			display: inline-block;
 			font-size: 15px;
 			font-weight: bold;
@@ -371,7 +371,7 @@
 			}
 		}
 
-		section a.more {
+		.hub-menu-section a.more {
 			left: 324px;
 		}
 	}

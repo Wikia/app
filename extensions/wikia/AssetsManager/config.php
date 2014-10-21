@@ -36,13 +36,19 @@ $config['liftium_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/AdEngine/liftium/Liftium.js',
+	)
+);
+
+$config['liftium_ads_extra_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
 		// TODO: get rid of those:
 		'//extensions/wikia/AdEngine/liftium/Wikia.Athena.js',
 		'//extensions/wikia/AdEngine/liftium/Wikia.AQ.js',
 		'//extensions/wikia/AdEngine/liftium/Wikia.meerkat.js',
 		'//extensions/wikia/AdEngine/liftium/Wikia.ve_alternate.js',
 		'//extensions/wikia/AdEngine/liftium/AdsInContent.js'
-	),
+	)
 );
 
 $config['adengine2_js'] = array(
@@ -89,8 +95,6 @@ $config['adengine2_late_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		// ads
-		'//extensions/wikia/AdEngine/AdProviderOpenX.js',
-		'//extensions/wikia/AdEngine/LazyLoadAds.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParamsLegacy.js',
 		'//extensions/wikia/AdEngine/js/AdProviderEvolve.js',
 		'//extensions/wikia/AdEngine/js/AdProviderLiftium.js',
@@ -102,6 +106,15 @@ $config['adengine2_late_js'] = array(
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
 		// Needs to load after Krux.js, jQuery and AdEngine2.run.js
 		'//extensions/wikia/AdEngine/js/Krux.run.js',
+	),
+);
+
+$config['adengine2_spotlights_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		// ads
+		'//extensions/wikia/AdEngine/AdProviderOpenX.js',
+		'//extensions/wikia/AdEngine/LazyLoadAds.js',
 	),
 );
 
@@ -2014,6 +2027,14 @@ $config['global_navigation_oasis_scss'] = [
 	]
 ];
 
+$config[ 'local_navigation_oasis_scss' ] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/LocalNavigation/styles/LocalNavigationOasis.scss'
+	]
+];
+
 /** these packs should be loaded only if GlobalNavigation extension is disabled */
 $config['global_header_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
@@ -2031,6 +2052,7 @@ $config['global_header_js'] = [
 		'//skins/oasis/js/hoverMenu.js',
 	]
 ];
+
 
 $config['media_gallery_js'] = [
 	'type' => AssetsManager::TYPE_JS,

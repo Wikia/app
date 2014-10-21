@@ -1238,11 +1238,13 @@ Vuoi controllare quali email ricevi? Vai alle tue <a href="{{fullurl:{{ns:specia
 
 /** Japanese (日本語)
  * @author Barrel0116
+ * @author Los688
  * @author Tommy6
  */
 $messages['ja'] = array(
 	'userlogin-login-heading' => 'ログイン',
 	'userlogin-forgot-password' => 'パスワードを忘れた',
+	'userlogin-forgot-password-go-to-login' => '既にパスワードをお持ちですか？（[[Special:UserLogin|ログイン]]）',
 	'userlogin-remembermypassword' => 'ログイン状態を維持する',
 	'userlogin-error-noname' => '利用者名を入力してください。',
 	'userlogin-error-sessionfailure' => 'ログインセッションがタイムアウトしました。もう一度ログインしてください。',
@@ -1271,6 +1273,7 @@ $messages['ja'] = array(
 	'userlogin-error-mail-error' => 'メールの送信で問題が発生しました。[[Special:Contact/general|サポート]]までご連絡ください。',
 	'userlogin-password-email-sent' => '「$1」のメールアドレス宛に新しいパスワードを送信しました。',
 	'userlogin-error-unconfirmed-user' => 'メールアドレスの認証が行われていません。まずはじめにメールアドレスの認証を行ってください。',
+	'userlogin-error-confirmation-reminder-already-sent' => '認証のリマインダーをメールにて既に送信しました。',
 	'userlogin-password-page-title' => 'パスワードを変更',
 	'userlogin-oldpassword' => '古いパスワード',
 	'userlogin-newpassword' => '新しいパスワード',
@@ -1305,6 +1308,7 @@ ___________________________________________
 	'userlogin-changepassword-needlogin' => 'パスワードを変更するには$1する必要があります。',
 	'wikiamobile-sendpassword-label' => '新しいパスワードを送信',
 	'wikiamobile-facebook-connect-fail' => 'あなたの Facebook アカウントは現在ウィキアのアカウントとリンクされていません。',
+	'wikiamobile-go-to-login' => 'アカウントをお持ちですか？（[[Special:UserLogin|ログインはこちら >]]）',
 );
 
 /** Georgian (ქართული)

@@ -309,24 +309,29 @@ $messages['ca'] = array(
 	'lvs-error-permission' => 'No es pot intercanviar aquest vídeo.',
 	'lvs-error-permission-access' => 'No pots accedir a aquesta pàgina',
 	'lvs-error-invalid-page-status' => 'Vostè no pot restaurar aquest vídeo.',
+	'lvs-error-already-swapped' => "Aquest vídeo ja s'ha canviat.",
+	'lvs-error-already-kept-forever' => 'Aquest vídeo ja ha estat guardat.',
 	'lvs-posted-in-label' => 'Vídeo actual publicat a',
 	'lvs-posted-in-label-none' => 'Vídeo actual no està publicat a articles',
 	'lvs-posted-in-more' => 'més',
 	'lvs-confirm-keep-title' => 'Mantenir Vídeo',
-	'lvs-confirm-keep-message' => 'Heu seleccionat no substituir el seu vídeo actual amb un vídeo amb llicència de Wikia. Voleu continuar?', # Fuzzy
+	'lvs-confirm-keep-message' => 'Estem contínuament afegint nous vídeos amb llicència a <a href="http://video.wikia.com/" target="_blank">Wikia vídeo</a>. T\'agradaria veure vídeos relacionats amb aquest?',
 	'lvs-confirm-undo-swap-title' => 'Confirmar que vols desfer',
 	'lvs-confirm-undo-swap-message' => 'Esteu segur que voleu restaurar el vídeo original?',
 	'lvs-confirm-undo-keep-title' => 'Confirmar que vols desfer?',
 	'lvs-confirm-undo-keep-message' => 'Esteu segur que voleu afegir aquest vídeo nou a la llista?',
 	'lvs-no-matching-videos' => 'Actualment hi ha cap complement vídeos relacionats amb aquest vídeo',
-	'lvs-log-swap' => 'Canviat el vídeo de [[{{ns:File}}:<span class="notranslate" traduir="no">$1</span>]] a [[{{ns:File}}:<span class="notranslate" traduir="no">$2</span>]]', # Fuzzy
+	'lvs-log-swap' => 'Intercanviat el vídeo de [[{{ns:File}}:$1]] per [[{{ns:File}}:$2]]',
 	'lvs-log-restore' => "S'ha restaurat el vídeo canviat ([[{{ns:File}}:$1]])",
 	'lvs-log-removed-redirected-link' => "Eliminat l'enllaç redirigit",
 	'lvs-zero-state' => 'En aquest moment no disposem de cap coincidència vídeos de Wikia Vídeo per a vídeos en el seu wiki. Torna aviat!!!',
 	'lvs-history-swapped' => 'Intercanviats " $1 "amb" $2 "',
 	'lvs-history-swapped-exact' => 'Intercanviats " $1 " amb un vídeo del mateix nom',
 	'lvs-history-kept' => 'Manté "<span class="notranslate" traduir="no">$1</span>"',
+	'lvs-history-instructions' => "Per visualitzar l'historial de totes els canvis i reversions, aneu a $1.",
+	'lvs-no-monobook-support' => "Aquesta pàgina no és compatible amb Monobook. Per accedir a l'skin de Wikia, $1. Això no canviarà la seva preferència de skin",
 	'lvs-click-here' => 'feu clic aquí',
+	'lvs-new-flag' => 'Nou',
 );
 
 /** Chechen (нохчийн)
@@ -731,6 +736,7 @@ $messages['gl'] = array(
 
 /** Japanese (日本語)
  * @author Barrel0116
+ * @author Plover-Y
  * @author Tommy6
  */
 $messages['ja'] = array(
@@ -752,6 +758,7 @@ $messages['ja'] = array(
 	'lvs-undo-swap' => '元に戻す',
 	'lvs-undo-keep' => '元に戻す',
 	'lvs-click-here' => 'こちらをクリック',
+	'lvs-new-flag' => '新規',
 );
 
 /** Kannada (ಕನ್ನಡ)
@@ -1528,6 +1535,7 @@ $messages['zh-hans'] = array(
 	'lvs-log-swap' => '已将视频由[[{{ns:File}}:$1]]转换为[[{{ns:File}}:$2]]',
 	'lvs-log-restore' => '恢复已交换的视频（[[{{ns:File}}:$1]]）',
 	'lvs-log-removed-redirected-link' => '被删除的重定向链接',
+	'lvs-zero-state' => '此时我们没有在您的 wiki 找到匹配的 Wikia 视频。请稍后重试！',
 	'lvs-history-swapped' => '已将“$1”和“$2”交换',
 	'lvs-history-swapped-exact' => '已将“$1”和同名视频交换',
 	'lvs-history-kept' => '保持"$1"',

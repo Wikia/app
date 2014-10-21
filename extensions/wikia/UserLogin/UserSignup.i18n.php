@@ -3814,12 +3814,13 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Caio1478
+ * @author Guilhermemau
  * @author Jefersonmoraes
  * @author Luckas
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
-	'usersignup-page-title' => 'Junte-se à Wikia',
+	'usersignup-page-title' => 'Junte-se à comunidade Wikia',
 	'usersignup-page-title-wikiamobile' => 'Criar uma conta',
 	'usersignup-page-captcha-label' => 'Palavra Obscura',
 	'usersignup-error-invalid-user' => 'Usuário inválido. Por favor, autentique-se primeiro.',

@@ -7,9 +7,9 @@ $wgExtensionCredits[ 'specialpage' ][] = [
 		'Andrzej "nAndy" Łukaszewski',
 		'Bartłomiej "Bart" Kowalczyk',
 		'Evgeniy "aquilax" Vasilev',
+		'Igor Rogatty',
 		'Jakub "Student" Olek',
-		'Rafał Leszczyński',
-		'Igor Rogatty'
+		'Rafał Leszczyński'
 	],
 	'description' => 'Create your own maps with point of interest or add your own point of interest into a real world map',
 	'version' => 0.1
@@ -43,6 +43,7 @@ $wgSpecialPageGroups[ 'Maps' ] = 'wikia';
 $wgHooks[ 'ParserFirstCallInit' ][] = 'WikiaMapsParserTagController::parserTagInit';
 $wgHooks[ 'OasisSkinAssetGroups' ][] = 'WikiaMapsHooks::onOasisSkinAssetGroups';
 $wgHooks[ 'SkinAfterBottomScripts' ][] = 'WikiaMapsHooks::onSkinAfterBottomScripts';
+$wgHooks[ 'BeforePageDisplay' ][] = 'WikiaMapsHooks::onBeforePageDisplay';
 
 // mobile
 $wgHooks['WikiaMobileAssetsPackages'][] = 'WikiaMapsHooks::onWikiaMobileAssetsPackages';
@@ -92,22 +93,18 @@ JSMessages::registerPackage( 'WikiaMapsEmbedMapCode', [
 	'wikia-interactive-maps-embed-map-code-*'
 ] );
 
+// Rights
+$wgAvailableRights[] = 'canremovemap';
+
+// Permissions
+// canremove -- give it to users who can remove maps
+$wgGroupPermissions['*']['canremovemap'] = false;
+$wgGroupPermissions['sysop']['canremovemap'] = true;
+$wgGroupPermissions['staff']['canremovemap'] = true;
+$wgGroupPermissions['helper']['canremovemap'] = true;
+
 // Logs
 $wgLogTypes[] = 'maps';
 $wgLogNames['maps'] = 'wikia-interactive-maps-log-name';
 $wgLogHeaders['maps'] = 'wikia-interactive-maps-log-description';
-
-$logActionsHandler = 'WikiaMapsLogger::formatLogEntry';
-
-$wgLogActionsHandlers[ 'maps/create_map' ] = $logActionsHandler;
-$wgLogActionsHandlers[ 'maps/update_map' ] = $logActionsHandler;
-$wgLogActionsHandlers[ 'maps/delete_map' ] = $logActionsHandler;
-$wgLogActionsHandlers[ 'maps/undelete_map' ] = $logActionsHandler;
-
-$wgLogActionsHandlers[ 'maps/create_pin_type' ] = $logActionsHandler;
-$wgLogActionsHandlers[ 'maps/update_pin_type' ] = $logActionsHandler;
-$wgLogActionsHandlers[ 'maps/delete_pin_type' ] = $logActionsHandler;
-
-$wgLogActionsHandlers[ 'maps/create_pin' ] = $logActionsHandler;
-$wgLogActionsHandlers[ 'maps/update_pin' ] = $logActionsHandler;
-$wgLogActionsHandlers[ 'maps/delete_pin' ] = $logActionsHandler;
+$wgLogActionsHandlers[ 'maps/*' ] = 'LogFormatter';

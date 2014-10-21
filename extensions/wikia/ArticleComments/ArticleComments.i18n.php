@@ -801,6 +801,7 @@ $messages['cy'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => "Mae'r erthygl / sylw wreiddiol wedi cael ei dileu.",
 	'article-comments-empty-comment' => "Dydych chi ddim yn gallu postio sylw gwag. <a href='$1'>Dileu efallai?</a>",
+	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|Sylw|Sylwadau}}',
 	'wikiamobile-article-comments-header' => 'Sylwadau',
 	'wikiamobile-article-comments-more' => 'Darllenwch mwy',
 	'wikiamobile-article-comments-prev' => 'Darllenwch cynt',
