@@ -21,6 +21,7 @@
 		miniEditorEnabled: typeof window.wgEnableMiniEditorExt !== 'undefined' && skin === 'oasis',
 		loadOnDemand: typeof window.wgArticleCommentsLoadOnDemand !== 'undefined',
 		initCompleted: false,
+		wrapperSelector: '#WikiaArticleComments',
 		bucky: window.Bucky('ArticleComments'),
 
 		init: function () {
@@ -31,9 +32,14 @@
 				$fbCommentMessage = $('#fbCommentMessage'),
 				newComment;
 
+			// jQuery object could have been cashed before init method
+			if (!ArticleComments.$wrapper) {
+				ArticleComments.$wrapper = $(ArticleComments.wrapperSelector);
+			}
+
 			// cache jQuery selector
-			this.$commentsList = $('#article-comments-ul');
-			this.$actionButtons = this.$wrapper.find('.actionButton');
+			ArticleComments.$commentsList = $('#article-comments-ul');
+			ArticleComments.$actionButtons = ArticleComments.$wrapper.find('.actionButton');
 
 			if (ArticleComments.miniEditorEnabled) {
 				newComment = $('#article-comm');
@@ -616,7 +622,7 @@
 			var content, hash, permalink, styleAssets, belowTheFold, loadAssets;
 
 			// Cache jQuery selector after DOM ready
-			ArticleComments.$wrapper = $('#WikiaArticleComments');
+			ArticleComments.$wrapper = $(ArticleComments.wrapperSelector);
 
 			// NO article comment on this page lets just skip
 			if (!ArticleComments.$wrapper.length) {
