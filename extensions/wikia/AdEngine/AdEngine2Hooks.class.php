@@ -62,6 +62,8 @@ class AdEngine2Hooks {
 		$vars[] = 'wgHighValueCountries';
 		$vars[] = 'wgAmazonDirectTargetedBuyCountries';
 
+		$vars[] = 'wgAdDriverAlwaysCallDartInCountries';
+
 		return true;
 	}
 
