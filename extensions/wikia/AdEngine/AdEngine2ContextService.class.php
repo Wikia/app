@@ -24,6 +24,8 @@ class AdEngine2ContextService {
 				$sevenOneMediaCombinedUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sevenonemedia'], 'scripts' );
 			}
 
+			$langCode = $title->getPageLanguage()->getCode();
+
 			return [
 				'opts' => $this->filterOutEmptyItems( [
 					'adsInHead' => !!$wg->EnableAdsInContent,
@@ -37,6 +39,7 @@ class AdEngine2ContextService {
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
 					'enableKruxTargeting' => $wg->EnableKruxTargeting,
+					'enablePageCategories' => array_search($langCode, $wg->AdPageLevelCategoryLangs) !== false,
 					'kruxCategoryId' => $wikiFactoryHub->getKruxId( $wikiFactoryHub->getCategoryId( $wg->CityId ) ),
 					'pageArticleId' => $title->getArticleId(),
 					'pageIsArticle' => !!$title->getArticleId(),
@@ -49,7 +52,7 @@ class AdEngine2ContextService {
 					'wikiCustomKeyValues' => $wg->DartCustomKeyValues,
 					'wikiDbName' => $wg->DBname,
 					'wikiDirectedAtChildren' => $wg->WikiDirectedAtChildrenByFounder || $wg->WikiDirectedAtChildrenByStaff,
-					'wikiLanguage' => $title->getPageLanguage()->getCode(),
+					'wikiLanguage' => $langCode,
 					'wikiVertical' => $hubService->getCategoryInfoForCity( $wg->CityId )->cat_name,
 				] ),
 				'providers' => $this->filterOutEmptyItems( [

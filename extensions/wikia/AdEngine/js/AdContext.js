@@ -11,6 +11,18 @@ define('ext.wikia.adEngine.adContext', ['wikia.window', 'wikia.document'], funct
 		return context;
 	}
 
+	function getMercuryCategories() {
+		var categoryDict;
+
+		try {
+			categoryDict = w.Wikia.article.article.categories;
+		} catch (e) {
+			return;
+		}
+
+		return categoryDict.map(function (item) { return item.title; });
+	}
+
 	function setContext(newContext) {
 		context = newContext;
 
@@ -27,6 +39,11 @@ define('ext.wikia.adEngine.adContext', ['wikia.window', 'wikia.document'], funct
 
 		// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
 		context.opts.usePostScribe = context.opts.usePostScribe || context.providers.sevenOneMedia;
+
+		// Targeting by page categories
+		if (context.targeting.enablePageCategories) {
+			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();
+		}
 	}
 
 	setContext(w.ads ? w.ads.context : {
@@ -46,7 +63,6 @@ define('ext.wikia.adEngine.adContext', ['wikia.window', 'wikia.document'], funct
 			kruxCategoryId: w.wgKruxCategoryId,
 
 			pageArticleId: w.wgArticleId,
-			pageCategories: w.wgAdDriverUseCatParam ? w.wgCategories : [],
 			pageIsArticle: !!w.wgArticleId,
 			pageIsHub: w.wikiaPageIsHub,
 			pageName: w.wgPageName,
