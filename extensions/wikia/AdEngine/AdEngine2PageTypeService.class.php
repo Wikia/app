@@ -5,8 +5,7 @@
  *
  * Globals used: F::app()->checkSkin, F::app()->wg, WikiaPageType
  */
-class AdEngine2PageTypeService
-{
+class AdEngine2PageTypeService {
 	/**
 	 * @var WikiaGlobalRegistry
 	 */
@@ -131,8 +130,7 @@ class AdEngine2PageTypeService
 	 *
 	 * @return bool
 	 */
-	public function areAdsShowableOnPage()
-	{
+	public function areAdsShowableOnPage() {
 		return ( $this->getPageType() !== self::PAGE_TYPE_NO_ADS );
 	}
 }

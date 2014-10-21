@@ -25,8 +25,8 @@ $wgHooks['LinkEnd'][] = 'AdEngine2ExitstitialHooks::onLinkEnd';
 // i18n
 $wgExtensionMessagesFiles['AdEngine'] = __DIR__ . '/AdEngine.i18n.php';
 $wgExtensionFunctions[] = function() {
-	JSMessages::registerPackage('AdEngine', array('adengine-*'));
-};
+	JSMessages::registerPackage( 'AdEngine', array( 'adengine-*' ) );
+} ;
 
 // Register Resource Loader module for SevenOne Media files
 $wgResourceModules['wikia.ext.adengine.sevenonemedia'] = array(

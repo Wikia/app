@@ -18,7 +18,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$title->method( 'getPageLanguage' )->willReturn( $language );
 
 		if ( $type === 'mainpage' ) {
-			$title->method('isMainpage')->willReturn(true);
+			$title->method( 'isMainpage' )->willReturn( true );
 		}
 
 		if ( $type === 'search' ) {
@@ -26,7 +26,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			$title->method( 'getPrefixedDbKey' )->willReturn( 'Special:Search' );
 			$title->method( 'getNamespace' )->willReturn( -1 );
 		} else {
-			$title->method( 'getPrefixedDbKey' )->willReturn($artDbKey);
+			$title->method( 'getPrefixedDbKey' )->willReturn( $artDbKey );
 			$title->method( 'getArticleId' )->willReturn( $artId );
 		}
 
@@ -71,11 +71,11 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$customDartKvs = 'a=b;c=d';
 		$catId = WikiFactoryHub::CATEGORY_ID_LIFESTYLE;
 		$shortCat = 'shortcat';
-		$kruxId = WikiFactoryHub::getInstance()->getKruxId($catId);
+		$kruxId = WikiFactoryHub::getInstance()->getKruxId( $catId );
 		$sevenOneMediaSub2Site = 'customsub2site';
 		$expectedSevenOneMediaUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3Den%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sevenonemedia';
 
-		if ($titleMockType === 'article' || $titleMockType === 'mainpage') {
+		if ( $titleMockType === 'article' || $titleMockType === 'mainpage' ) {
 			$expectedTargeting['pageArticleId'] = $artId;
 			$expectedTargeting['pageIsArticle'] = true;
 		}
@@ -140,22 +140,22 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			],
 		];
 
-		foreach ($expectedOpts as $var => $val) {
+		foreach ( $expectedOpts as $var => $val ) {
 			$expected['opts'][$var] = $val;
 		}
 
-		foreach ($expectedTargeting as $var => $val) {
+		foreach ( $expectedTargeting as $var => $val ) {
 			$expected['targeting'][$var] = $val;
 		}
 
-		foreach ($expectedProviders as $var => $val) {
+		foreach ( $expectedProviders as $var => $val ) {
 			$expected['providers'][$var] = $val;
 		}
 
 		// Extra check for SevenOne Media URL
-		if (isset($expectedProviders['sevenOneMedia'])) {
+		if ( isset( $expectedProviders['sevenOneMedia'] ) ) {
 			$this->assertStringMatchesFormat( $expectedSevenOneMediaUrlFormat, $result['providers']['sevenOneMediaCombinedUrl'] );
-			unset($result['providers']['sevenOneMediaCombinedUrl']);
+			unset( $result['providers']['sevenOneMediaCombinedUrl'] );
 		}
 
 		$this->assertEquals( $expected, $result );

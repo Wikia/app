@@ -17,7 +17,7 @@ class AdEngine2Service
 	 * @return string
 	 */
 	public static function getPageType() {
-		return (new AdEngine2PageTypeService())->getPageType();
+		return ( new AdEngine2PageTypeService() )->getPageType();
 	}
 
 	/**
@@ -25,9 +25,8 @@ class AdEngine2Service
 	 *
 	 * @return bool
 	 */
-	public static function areAdsShowableOnPage()
-	{
-		return (new AdEngine2PageTypeService())->areAdsShowableOnPage();
+	public static function areAdsShowableOnPage() {
+		return ( new AdEngine2PageTypeService() )->areAdsShowableOnPage();
 	}
 
 	public static function shouldLoadLiftium() {
@@ -40,14 +39,12 @@ class AdEngine2Service
 		return !$wgAdEngineDisableLateQueue;
 	}
 
-	public static function areAdsInHead()
-	{
+	public static function areAdsInHead() {
 		global $wgLoadAdsInHead;
 		return $wgLoadAdsInHead;
 	}
 
-	public static function areAdsAfterPageLoad()
-	{
+	public static function areAdsAfterPageLoad() {
 		global $wgLoadLateAdsAfterPageLoad;
 		return $wgLoadLateAdsAfterPageLoad;
 	}
@@ -56,19 +53,18 @@ class AdEngine2Service
 	 * @deprecated
 	 * @return array
 	 */
-	public static function getCachedCategory()
-	{
+	public static function getCachedCategory() {
 		global $wgCityId;
 
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
 		$hub = WikiFactoryHub::getInstance();
 		$cat = array(
-			'id' => $hub->getCategoryId($wgCityId),
-			'short' => $hub->getCategoryShort($wgCityId),
+			'id' => $hub->getCategoryId( $wgCityId ),
+			'short' => $hub->getCategoryShort( $wgCityId ),
 		);
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 
 		return $cat;
 	}

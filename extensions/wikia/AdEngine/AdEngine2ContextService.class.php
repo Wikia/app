@@ -2,8 +2,7 @@
 
 use Wikia\Util\GlobalStateWrapper;
 
-class AdEngine2ContextService
-{
+class AdEngine2ContextService {
 	public function getContext( Title $title, $skinName ) {
 
 		$wrapper = new GlobalStateWrapper( [
