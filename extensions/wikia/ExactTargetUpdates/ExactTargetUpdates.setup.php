@@ -33,24 +33,35 @@ $wgExtensionCredits['other'][] = array(
 	'descriptionmsg'    => 'exacttarget-updates-description',
 	'version'           => '0.1',
 	'author'            => array(
-		"Kamil Koterba <kamil@wikia-inc.com>"
+		'Kamil Koterba <kamil@wikia-inc.com>',
+		'Adam Karminski <adamk@wikia-inc.com>',
 	),
 	'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ExactTargetUpdates/'
 );
 
 $wgExtensionMessagesFiles[ 'ExactTargetUpdates' ] = $dir . '/ExactTargetUpdates.i18n.php';
 
-$wgAutoloadClasses['ExactTargetBaseTask'] =  $dir . '/ExactTargetBaseTask.php' ;
-$wgAutoloadClasses['ExactTargetAddUserTask'] =  $dir . '/ExactTargetAddUserTask.php' ;
-$wgAutoloadClasses['ExactTargetUpdateUserTask'] =  $dir . '/ExactTargetUpdateUserTask.php' ;
-$wgAutoloadClasses['ExactTargetUpdatesHooks'] =  $dir . '/ExactTargetUpdatesHooks.php' ;
+/**
+ * Load classes
+ */
+
+/* Add hooks classes */
+$wgAutoloadClasses['ExactTargetSetupHooks'] =  $dir . '/hooks/ExactTargetSetup.hooks.php' ;
+$wgAutoloadClasses['ExactTargetUserHooks'] =  $dir . '/hooks/ExactTargetUser.hooks.php' ;
+$wgAutoloadClasses['ExactTargetUserHooksHelper'] =  $dir . '/hooks/ExactTargetUserHooksHelper.php' ;
+/* Add tasks classes */
+$wgAutoloadClasses['Wikia\ExactTarget\Tasks\ExactTargetUserTaskHelper'] =  $dir . '/tasks/ExactTargetUserTaskHelper.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\Tasks\ExactTargetCreateUserTask'] =  $dir . '/tasks/ExactTargetCreateUserTask.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\Tasks\ExactTargetRetrieveUserHelper'] =  $dir . '/tasks/ExactTargetRetrieveUserHelper.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\Tasks\ExactTargetUpdateUserTask'] =  $dir . '/tasks/ExactTargetUpdateUserTask.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\Tasks\ExactTargetDeleteUserTask'] =  $dir . '/tasks/ExactTargetDeleteUserTask.php';
+/* Add API classes */
+$wgAutoloadClasses['Wikia\ExactTarget\Api\ExactTargetApiDataExtension'] =  $dir . '/api/ExactTargetApiDataExtension.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\Api\ExactTargetApiHelper'] =  $dir . '/api/ExactTargetApiHelper.php' ;
+/* Add ExactTarget classes (the rest of ExactTarget classes are loaded internally by ExactTargetSoapClient */
 $wgAutoloadClasses['ExactTargetSoapClient'] =  $dir . '/lib/exacttarget_soap_client.php' ;
 
 /**
- * @global Array The list of hooks.
- * @see http://www.mediawiki.org/wiki/Manual:$wgHooks
+ * Registering hooks
  */
-$wgHooks['ArticleSaveComplete'][] = 'ExactTargetUpdatesHooks::onArticleSaveComplete';
-$wgHooks['EmailChangeConfirmed'][] = 'ExactTargetUpdatesHooks::onEmailChangeConfirmed';
-$wgHooks['SignupConfirmEmailComplete'][] = 'ExactTargetUpdatesHooks::onSignupConfirmEmailComplete';
-$wgHooks['UserSaveSettings'][] = 'ExactTargetUpdatesHooks::onUserSaveSettings';
+$wgExtensionFunctions[] = 'ExactTargetSetupHooks::setupHooks';

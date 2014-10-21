@@ -1,25 +1,24 @@
 <?php
+namespace Wikia\ExactTarget\Api;
 
-use Wikia\Tasks\Tasks\BaseTask;
-
-class ExactTargetBaseTask extends BaseTask {
+class ExactTargetApiHelper {
 
 	/**
-	 * Creates ExactTargetSoapClient object containing credentials to connect by API
+	 * Creates an ExactTargetSoapClient object containing credentials to connect to the API.
 	 * Note: ExactTargetSoapClient should be called before other ExactTarget classes as it triggers other classes loading
 	 * @return ExactTargetSoapClient
 	 */
 	public function getClient() {
 		global $wgExactTargetApiConfig;
 		$wsdl = $wgExactTargetApiConfig[ 'wsdl' ];
-		$oClient = new ExactTargetSoapClient( $wsdl, array( 'trace'=>1 ) );
+		$oClient = new \ExactTargetSoapClient( $wsdl, array( 'trace'=>1 ) );
 		$oClient->username = $wgExactTargetApiConfig[ 'username' ];
 		$oClient->password = $wgExactTargetApiConfig[ 'password' ];
 		return $oClient;
 	}
 
 	/**
-	 * Prepares array of SoapVar objects by looping array of objects
+	 * Prepares an array of SoapVar objects by looping over an array of objects
 	 * @param array $aObjects
 	 * @param string $objectType Type of ExactTarget object to be wrapped
 	 * @return array
@@ -34,14 +33,14 @@ class ExactTargetBaseTask extends BaseTask {
 	}
 
 	/**
-	 * Wraps ExactTarget object to SoapVar
+	 * Wraps an ExactTarget object to a SoapVar
 	 * @param $object
 	 * @param string $objectType Type of ExactTarget object to be wrapped
 	 * @return SoapVar
 	 * @link https://help.exacttarget.com/en/technical_library/web_service_guide/objects/ ExactTarget Objects types
 	 */
-	protected function wrapToSoapVar( $object, $objectType = 'DataExtensionObject' ) {
-		return new SoapVar( $object, SOAP_ENC_OBJECT, $objectType, 'http://exacttarget.com/wsdl/partnerAPI' );
+	public function wrapToSoapVar( $object, $objectType = 'DataExtensionObject' ) {
+		return new \SoapVar( $object, SOAP_ENC_OBJECT, $objectType, 'http://exacttarget.com/wsdl/partnerAPI' );
 	}
 
 	/**
@@ -50,7 +49,7 @@ class ExactTargetBaseTask extends BaseTask {
 	 * @return ExactTarget_CreateRequest
 	 */
 	public function wrapCreateRequest( $aSoapVars ) {
-		$oRequest = new ExactTarget_CreateRequest();
+		$oRequest = new \ExactTarget_CreateRequest();
 		$oRequest->Options = NULL;
 		$oRequest->Objects = $aSoapVars;
 		return $oRequest;
@@ -64,24 +63,24 @@ class ExactTargetBaseTask extends BaseTask {
 	 * @return ExactTarget_UpdateRequest
 	 */
 	public function wrapUpdateRequest( $aSoapVars, $oOptions = null ) {
-		$oRequest = new ExactTarget_UpdateRequest();
+		$oRequest = new \ExactTarget_UpdateRequest();
 		$oRequest->Options = $oOptions;
 		$oRequest->Objects = $aSoapVars;
 		return $oRequest;
 	}
 
 	/**
-	 * Prepares ExactTarget_UpdateOptions that says update or add if doesn't exist
+	 * Prepares ExactTarget_UpdateOptions that says update or create if doesn't exist
 	 * @return ExactTarget_UpdateOptions
 	 */
-	public function prepareUpdateAddOptions() {
-		$updateOptions = new ExactTarget_UpdateOptions();
+	public function prepareUpdateCreateOptions() {
+		$updateOptions = new \ExactTarget_UpdateOptions();
 
-		$saveOption = new ExactTarget_SaveOption();
+		$saveOption = new \ExactTarget_SaveOption();
 		$saveOption->PropertyName = 'DataExtensionObject';
 		$saveOption->SaveAction = ExactTarget_SaveAction::UpdateAdd;
 
-		$updateOptions->SaveOptions[] = new SoapVar( $saveOption, SOAP_ENC_OBJECT, 'SaveOption', 'http://exacttarget.com/wsdl/partnerAPI' );
+		$updateOptions->SaveOptions[] = new \SoapVar( $saveOption, SOAP_ENC_OBJECT, 'SaveOption', 'http://exacttarget.com/wsdl/partnerAPI' );
 		return $updateOptions;
 	}
 
@@ -93,25 +92,45 @@ class ExactTargetBaseTask extends BaseTask {
 	 * @param String $value Propert yvalue
 	 * @return ExactTarget_APIProperty
 	 */
-	protected function wrapApiProperty( $key, $value ) {
-		$apiProperty = new ExactTarget_APIProperty();
+
+	public function wrapApiProperty( $key, $value ) {
+		$apiProperty = new \ExactTarget_APIProperty();
 		$apiProperty->Name = $key;
 		$apiProperty->Value = $value;
 		return $apiProperty;
 	}
 
 	/**
-	 * Returns user_id element from $aUserData array and removes it from array
-	 * @param array $aUserData key value data from user table
-	 * @return int
+	 * Creates an array of DataExtension objects
+	 * based on passed parameters.
+	 * @param  array  $aObjectsParams An array of parameters of DataExtension objects'
+	 * @return array                  An array of DataExtension objects
 	 */
-	public function extractUserIdFromData( &$aUserData ) {
-		$iUserId = $aUserData[ 'user_id' ];
-		unset( $aUserData[ 'user_id' ] );
-		return $iUserId;
-	}
+	public function prepareDataExtensionObjects( $aObjectsParams ) {
+		$aDE = [];
+		foreach( $aObjectsParams as $aObjectParams ) {
+			$oDE = new \ExactTarget_DataExtensionObject();
+			$oDE->CustomerKey = $aObjectParams[ 'CustomerKey' ];
 
-	protected function getLoggerContext() {
-		return ['task' => __CLASS__];
+			if( isset( $aObjectParams[ 'Properties' ] ) ) {
+				$aApiProperties = [];
+				foreach( $aObjectParams[ 'Properties' ] as $sKey => $sValue ) {
+					$aApiProperties[] = $this->wrapApiProperty( $sKey, $sValue );
+				}
+				$oDE->Properties = $aApiProperties;
+			}
+
+			if( isset( $aObjectParams[ 'Keys' ] ) ) {
+				$aApiKeys = [];
+				foreach( $aObjectParams[ 'Keys' ] as $sKey => $sValue ) {
+					$aApiKeys[] = $this->wrapApiProperty( $sKey, $sValue );
+				}
+				$oDE->Keys = $aApiKeys;
+			}
+
+			$aDE[] = $oDE;
+		}
+		return $aDE;
 	}
+	
 }

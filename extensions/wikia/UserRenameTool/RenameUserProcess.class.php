@@ -635,7 +635,7 @@ class RenameUserProcess {
 			$this->addLog("Block with ID {$this->mPhalanxBlockId} already exists.");
 		}
 
-		$hookName = 'UserRename::AfterAccountRename';
+		$hookName = 'AfterAccountRename';
 		$this->addLog("Broadcasting hook: {$hookName}");
 		wfRunHooks($hookName, array($this->mUserId, $this->mOldUsername, $this->mNewUsername));
 
