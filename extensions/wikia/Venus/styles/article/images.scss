@@ -87,7 +87,8 @@ $border-color: lighten($color-text, 30%);
 	figcaption {
 		margin-top: 10px;
 
-		.caption {
+		.caption,
+		.title {
 			border-top: 4px solid $border-color;
 			color: $color-alternate-text;
 			font-size: 12px;
