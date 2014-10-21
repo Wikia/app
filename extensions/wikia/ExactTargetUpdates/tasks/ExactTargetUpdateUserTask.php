@@ -1,4 +1,7 @@
 <?php
+namespace Wikia\ExactTarget\Tasks;
+
+use Wikia\ExactTarget\Api\ExactTargetApiDataExtension;
 use Wikia\Tasks\Tasks\BaseTask;
 
 class ExactTargetUpdateUserTask extends BaseTask {

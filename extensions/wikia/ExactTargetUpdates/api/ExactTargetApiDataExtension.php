@@ -1,4 +1,6 @@
 <?php
+namespace Wikia\ExactTarget\Api;
+
 use Wikia\Logger\WikiaLogger;
 
 class ExactTargetApiDataExtension {
@@ -34,19 +36,19 @@ class ExactTargetApiDataExtension {
 	}
 
 	public function retrieveRequest( Array $aApiCallParams ) {
-		$oRetrieveRequest = new ExactTarget_RetrieveRequest();
+		$oRetrieveRequest = new \ExactTarget_RetrieveRequest();
 		$oRetrieveRequest->ObjectType = "DataExtensionObject[{$aApiCallParams['DataExtension']['CustomerKey']}]";
 		$oRetrieveRequest->Properties = $aApiCallParams['DataExtension']['Properties'];
 
-		$oSimpleFilterPart = new ExactTarget_SimpleFilterPart();
+		$oSimpleFilterPart = new \ExactTarget_SimpleFilterPart();
 		$oSimpleFilterPart->Value = $aApiCallParams['SimpleFilterPart']['Value'];
-		$oSimpleFilterPart->SimpleOperator = ExactTarget_SimpleOperators::equals;
+		$oSimpleFilterPart->SimpleOperator = \ExactTarget_SimpleOperators::equals;
 		$oSimpleFilterPart->Property = $aApiCallParams['SimpleFilterPart']['Property'];
 
 		$oRetrieveRequest->Filter = $this->Helper->wrapToSoapVar( $oSimpleFilterPart, 'SimpleFilterPart' );
 		$oRetrieveRequest->Options = null;
 
-		$oRetrieveRequestMsg = new ExactTarget_RetrieveRequestMsg();
+		$oRetrieveRequestMsg = new \ExactTarget_RetrieveRequestMsg();
 		$oRetrieveRequestMsg->RetrieveRequest = $oRetrieveRequest;
 
 		$oResults = $this->makeRequest( 'Retrieve', $oRetrieveRequestMsg );
@@ -76,9 +78,9 @@ class ExactTargetApiDataExtension {
 		$aDE = $this->Helper->prepareDataExtensionObjects( $aApiCallParams['DataExtension'] );
 		$aSoapVars = $this->Helper->prepareSoapVars( $aDE );
 
-		$oDeleteRequest = new ExactTarget_DeleteRequest();
+		$oDeleteRequest = new \ExactTarget_DeleteRequest();
 		$oDeleteRequest->Objects = $aSoapVars;
-		$oDeleteRequest->Options = new ExactTarget_DeleteOptions();
+		$oDeleteRequest->Options = new \ExactTarget_DeleteOptions();
 
 		$oResults = $this->makeRequest( 'Delete', $oDeleteRequest );
 		return $oResults;

@@ -50,14 +50,14 @@ $wgAutoloadClasses['ExactTargetSetupHooks'] =  $dir . '/hooks/ExactTargetSetup.h
 $wgAutoloadClasses['ExactTargetUserHooks'] =  $dir . '/hooks/ExactTargetUser.hooks.php' ;
 $wgAutoloadClasses['ExactTargetUserHooksHelper'] =  $dir . '/hooks/ExactTargetUserHooksHelper.php' ;
 /* Add tasks classes */
-$wgAutoloadClasses['ExactTargetUserTaskHelper'] =  $dir . '/tasks/ExactTargetUserTaskHelper.php' ;
-$wgAutoloadClasses['ExactTargetCreateUserTask'] =  $dir . '/tasks/ExactTargetCreateUserTask.php' ;
-$wgAutoloadClasses['ExactTargetRetrieveUserHelper'] =  $dir . '/tasks/ExactTargetRetrieveUserHelper.php' ;
-$wgAutoloadClasses['ExactTargetUpdateUserTask'] =  $dir . '/tasks/ExactTargetUpdateUserTask.php' ;
-$wgAutoloadClasses['ExactTargetDeleteUserTask'] =  $dir . '/tasks/ExactTargetDeleteUserTask.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\Tasks\ExactTargetUserTaskHelper'] =  $dir . '/tasks/ExactTargetUserTaskHelper.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\Tasks\ExactTargetCreateUserTask'] =  $dir . '/tasks/ExactTargetCreateUserTask.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\Tasks\ExactTargetRetrieveUserHelper'] =  $dir . '/tasks/ExactTargetRetrieveUserHelper.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\Tasks\ExactTargetUpdateUserTask'] =  $dir . '/tasks/ExactTargetUpdateUserTask.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\Tasks\ExactTargetDeleteUserTask'] =  $dir . '/tasks/ExactTargetDeleteUserTask.php';
 /* Add API classes */
-$wgAutoloadClasses['ExactTargetApiDataExtension'] =  $dir . '/api/ExactTargetApiDataExtension.php' ;
-$wgAutoloadClasses['ExactTargetApiHelper'] =  $dir . '/api/ExactTargetApiHelper.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\Api\ExactTargetApiDataExtension'] =  $dir . '/api/ExactTargetApiDataExtension.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\Api\ExactTargetApiHelper'] =  $dir . '/api/ExactTargetApiHelper.php' ;
 /* Add ExactTarget classes (the rest of ExactTarget classes are loaded internally by ExactTargetSoapClient */
 $wgAutoloadClasses['ExactTargetSoapClient'] =  $dir . '/lib/exacttarget_soap_client.php' ;
 

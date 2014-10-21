@@ -1,4 +1,5 @@
 <?php
+namespace Wikia\ExactTarget\Api;
 
 class ExactTargetApiHelper {
 
@@ -10,7 +11,7 @@ class ExactTargetApiHelper {
 	public function getClient() {
 		global $wgExactTargetApiConfig;
 		$wsdl = $wgExactTargetApiConfig[ 'wsdl' ];
-		$oClient = new ExactTargetSoapClient( $wsdl, array( 'trace'=>1 ) );
+		$oClient = new \ExactTargetSoapClient( $wsdl, array( 'trace'=>1 ) );
 		$oClient->username = $wgExactTargetApiConfig[ 'username' ];
 		$oClient->password = $wgExactTargetApiConfig[ 'password' ];
 		return $oClient;
@@ -39,7 +40,7 @@ class ExactTargetApiHelper {
 	 * @link https://help.exacttarget.com/en/technical_library/web_service_guide/objects/ ExactTarget Objects types
 	 */
 	public function wrapToSoapVar( $object, $objectType = 'DataExtensionObject' ) {
-		return new SoapVar( $object, SOAP_ENC_OBJECT, $objectType, 'http://exacttarget.com/wsdl/partnerAPI' );
+		return new \SoapVar( $object, SOAP_ENC_OBJECT, $objectType, 'http://exacttarget.com/wsdl/partnerAPI' );
 	}
 
 	/**
@@ -48,7 +49,7 @@ class ExactTargetApiHelper {
 	 * @return ExactTarget_CreateRequest
 	 */
 	public function wrapCreateRequest( $aSoapVars ) {
-		$oRequest = new ExactTarget_CreateRequest();
+		$oRequest = new \ExactTarget_CreateRequest();
 		$oRequest->Options = NULL;
 		$oRequest->Objects = $aSoapVars;
 		return $oRequest;
@@ -62,7 +63,7 @@ class ExactTargetApiHelper {
 	 * @return ExactTarget_UpdateRequest
 	 */
 	public function wrapUpdateRequest( $aSoapVars, $oOptions = null ) {
-		$oRequest = new ExactTarget_UpdateRequest();
+		$oRequest = new \ExactTarget_UpdateRequest();
 		$oRequest->Options = $oOptions;
 		$oRequest->Objects = $aSoapVars;
 		return $oRequest;
@@ -73,13 +74,13 @@ class ExactTargetApiHelper {
 	 * @return ExactTarget_UpdateOptions
 	 */
 	public function prepareUpdateCreateOptions() {
-		$updateOptions = new ExactTarget_UpdateOptions();
+		$updateOptions = new \ExactTarget_UpdateOptions();
 
-		$saveOption = new ExactTarget_SaveOption();
+		$saveOption = new \ExactTarget_SaveOption();
 		$saveOption->PropertyName = 'DataExtensionObject';
 		$saveOption->SaveAction = ExactTarget_SaveAction::UpdateAdd;
 
-		$updateOptions->SaveOptions[] = new SoapVar( $saveOption, SOAP_ENC_OBJECT, 'SaveOption', 'http://exacttarget.com/wsdl/partnerAPI' );
+		$updateOptions->SaveOptions[] = new \SoapVar( $saveOption, SOAP_ENC_OBJECT, 'SaveOption', 'http://exacttarget.com/wsdl/partnerAPI' );
 		return $updateOptions;
 	}
 
@@ -93,7 +94,7 @@ class ExactTargetApiHelper {
 	 */
 
 	public function wrapApiProperty( $key, $value ) {
-		$apiProperty = new ExactTarget_APIProperty();
+		$apiProperty = new \ExactTarget_APIProperty();
 		$apiProperty->Name = $key;
 		$apiProperty->Value = $value;
 		return $apiProperty;
@@ -108,7 +109,7 @@ class ExactTargetApiHelper {
 	public function prepareDataExtensionObjects( $aObjectsParams ) {
 		$aDE = [];
 		foreach( $aObjectsParams as $aObjectParams ) {
-			$oDE = new ExactTarget_DataExtensionObject();
+			$oDE = new \ExactTarget_DataExtensionObject();
 			$oDE->CustomerKey = $aObjectParams[ 'CustomerKey' ];
 
 			if( isset( $aObjectParams[ 'Properties' ] ) ) {
