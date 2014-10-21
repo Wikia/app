@@ -1,4 +1,5 @@
 <?php
+use Wikia\Tasks\Tasks\BaseTask;
 
 class ExactTargetDeleteUserTask {
 

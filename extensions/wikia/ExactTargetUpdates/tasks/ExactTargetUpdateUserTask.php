@@ -1,6 +1,7 @@
 <?php
+use Wikia\Tasks\Tasks\BaseTask;
 
-class ExactTargetUpdateUserTask {
+class ExactTargetUpdateUserTask extends BaseTask {
 
 	/**
 	 * Task for updating user data in ExactTarget
