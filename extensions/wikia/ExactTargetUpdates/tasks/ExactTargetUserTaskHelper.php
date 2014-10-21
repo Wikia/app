@@ -22,8 +22,29 @@ class ExactTargetUserTaskHelper {
 
 	}
 
-	public function prepareUserRetrieveParams() {
+	/**
+	 * Prepares array of params for ExactTarget API for retrieving DataExtension objects from user table
+	 * @param array $aProperties list of fields to retrieve
+	 * @param string $sFilterProperty name of field to filter
+	 * @param array $aFilterValues possible values to filter
+	 * @return array
+	 */
+	public function prepareUserRetrieveParams( $aProperties, $sFilterProperty, $aFilterValues ) {
+		/* Get Customer Keys specific for production or development */
+		$aCustomerKeys = $this->getCustomerKeys();
+		$sCustomerKey = $aCustomerKeys[ 'user' ];
+		$aApiParams = [
+			'DataExtension' => [
+				'CustomerKey' => $sCustomerKey,
+				'Properties' => $aProperties,
+			],
+			'SimpleFilterPart' => [
+				'Property' => $sFilterProperty,
+				'Value' => $aFilterValues
+			]
+		];
 
+		return $aApiParams;
 	}
 
 	/**

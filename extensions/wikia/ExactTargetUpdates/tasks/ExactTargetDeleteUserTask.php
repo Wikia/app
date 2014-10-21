@@ -1,6 +1,7 @@
 <?php
+use Wikia\Tasks\Tasks\BaseTask;
 
-class ExactTargetDeleteUserTask {
+class ExactTargetDeleteUserTask extends BaseTask {
 
 	/**
 	 * Task for removing user data in ExactTarget
@@ -63,11 +64,15 @@ class ExactTargetDeleteUserTask {
 	 * @return null|string
 	 */
 	public function getUserEmail( $iUserId ) {
-		$oSimpleFilterPart = $this->wrapSimpleFilterPart( 'user_id', $iUserId );
-		$oRetrieveRequest = $this->wrapRetrieveRequest( 'user', [ 'user_email' ], $oSimpleFilterPart );
-		$oRetrieveRequestMessage = $this->wrapRetrieveRequestMessage( $oRetrieveRequest );
+		$aProperties = [ 'user_email' ];
+		$sFilterProperty = 'user_id';
+		$aFilterValues = [ $iUserId ];
+		$oHelper = $this->getHelper();
+		$aApiParams = $oHelper->prepareUserRetrieveParams( $aProperties, $sFilterProperty, $aFilterValues );
 
-		$oEmailResult = $oClient->Retrieve( $oRetrieveRequestMessage );
+		$oApiDataExtension = $this->getApiDataExtension();
+		$oEmailResult = $oApiDataExtension->retrieveRequest( $aApiParams );
+
 		if ( isset( $oEmailResult->Results->Properties->Property->Value ) ) {
 			return $oEmailResult->Results->Properties->Property->Value;
 		}
