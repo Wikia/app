@@ -5,14 +5,14 @@
 	padding-left: $medium-content-padding + $medium-grid-column-padding;
 	padding-right: $medium-content-padding + $medium-grid-column-padding;
 	width: auto;
-}
 
-@media #{$large-up} {
-	padding-left: $large-content-padding + $large-grid-column-padding;
-	padding-right: $large-content-padding + $large-grid-column-padding;
-}
+	@media #{$large-up} {
+		padding-left: $large-content-padding + $large-grid-column-padding;
+		padding-right: $large-content-padding + $large-grid-column-padding;
+	}
 
-@media #{$small-only} {
-	padding-left: $small-content-padding + $small-grid-column-padding;
-	padding-right: $small-content-padding + $small-grid-column-padding;
+	@media #{$small-only} {
+		padding-left: $small-content-padding + $small-grid-column-padding;
+		padding-right: $small-content-padding + $small-grid-column-padding;
+	}
 }
