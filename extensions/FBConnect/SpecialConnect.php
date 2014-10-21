@@ -205,12 +205,6 @@ class SpecialConnect extends SpecialPage {
 				break;
 			}
 		default:
-			// Main entry point
-			#if ( $wgRequest->getText( 'returnto' ) ) {
-			#	$this->setReturnTo( $wgRequest->getText( 'returnto' ),
-			#				$wgRequest->getVal( 'returntoquery' ) );
-			#}
-
 			if($wgUser->isLoggedIn()){
 				if($fb_user){
 					// If the user has previously connected, log them in.  If they have not, then complete the connection process.
@@ -381,15 +375,6 @@ class SpecialConnect extends SpecialPage {
 				return;
 			}
 
-			/**
-			// Test to see if we are denied by $wgAuth or the user can't create an account
-			if ( !$wgAuth->autoCreate() || !$wgAuth->userExists( $userName ) ||
-										   !$wgAuth->authenticate( $userName )) {
-				$result = false;
-				return true;
-			}
-			/**/
-
 			// Run a hook to let custom forms make sure that it is okay to proceed with processing the form.
 			// This hook should only check preconditions and should not store values.  Values should be stored using the hook at the bottom of this function.
 			// Can use 'this' to call sendPage('chooseNameForm', 'SOME-ERROR-MSG-CODE-HERE') if some of the preconditions are invalid.
@@ -405,19 +390,6 @@ class SpecialConnect extends SpecialPage {
 				wfProfileOut(__METHOD__);
 				return;
 			}
-			// Let extensions abort the account creation.  If you have extensions which are expecting a Real Name or Email, you may need to disable
-			// them since these are not requirements of Facebook Connect (so users will not have them).
-			// NOTE: Currently this is commented out because it seems that most wikis might have a handful of restrictions that won't be needed on
-			// Facebook Connections.  For instance, requiring a CAPTCHA or age-verification, etc.  Having a Facebook account as a pre-requisitie removes the need for that.
-			/*
-			$abortError = '';
-			if( !wfRunHooks( 'AbortNewAccount', array( $user, &$abortError ) ) ) {
-				// Hook point to add extra creation throttles and blocks
-				wfDebug( "SpecialConnect::createUser: a hook blocked creation\n" );
-				$wgOut->showErrorPage('fbconnect-error', 'fbconnect-error-user-creation-hook-aborted', array($abortError));
-				return false;
-			}
-			*/
 
 			// Apply account-creation throttles
 			global $wgAccountCreationThrottle;
@@ -517,11 +489,6 @@ class SpecialConnect extends SpecialPage {
 		} else{
 			$u->addToDatabase();
 		}
-
-		// No passwords for FBConnect accounts
-		//if ( $wgAuth->allowPasswordChange() ) {
-		//        $u->setPassword( $this->mPassword );
-		//}
 
 		$u->setEmail( $this->mEmail );
 
