@@ -2,26 +2,6 @@
 
 class ExactTargetUserTaskHelper {
 
-	public function prepareSubscriberCreateParams() {
-
-	}
-
-	public function prepareSubscriberRetrieveParams() {
-
-	}
-
-	public function prepareSubscriberUpdateParams() {
-
-	}
-
-	public function prepareSubscriberDeleteParams() {
-
-	}
-
-	public function prepareUserCreateParams() {
-
-	}
-
 	/**
 	 * Prepares array of params for ExactTarget API for retrieving DataExtension objects from user table
 	 * @param array $aProperties list of fields to retrieve
@@ -106,10 +86,6 @@ class ExactTargetUserTaskHelper {
 			];
 		}
 		return $aDataExtensionsParams;
-	}
-
-	public function prepareUserPropertiesRetrieveParams() {
-
 	}
 
 	/**
