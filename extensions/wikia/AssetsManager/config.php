@@ -148,7 +148,7 @@ $config['oasis_noads_extensions_js'] = array(
 		'//resources/wikia/libraries/jquery/ellipses.js',
 		'//extensions/wikia/CreatePage/js/CreatePage.js',
 		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
-		'//extensions/wikia/Lightbox/js/LightboxLoader.js',
+		'//extensions/wikia/Lightbox/scripts/LightboxLoader.js',
 		'#group_imglzy_js',
 		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
 		// We allow logged in users to change login without logging out
