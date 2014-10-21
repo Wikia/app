@@ -29,9 +29,8 @@ class ExactTargetDeleteUserTask extends BaseTask {
 	 * @param string $sUserEmail
 	 */
 	private function doDeleteSubscriber( $sUserEmail ) {
-		$oSubscriber = new ExactTarget_Subscriber();
-		$oSubscriber->SubscriberKey = $sUserEmail;
-		$this->performDelete( [ $oSubscriber ], 'Subscriber' );
+		$oApiSubscriber = $this->getApiSubscriber();
+		$oApiSubscriber->deleteRequest( $sUserEmail );
 	}
 
 	/**
@@ -137,6 +136,14 @@ class ExactTargetDeleteUserTask extends BaseTask {
 	 */
 	private function getApiDataExtension() {
 		return new ExactTargetApiDataExtension();
+	}
+
+	/**
+	 * Returns an instance of ExactTargetApiSubscriber class
+	 * @return ExactTargetApiSubscriber
+	 */
+	private function getApiSubscriber() {
+		return new ExactTargetApiSubscriber();
 	}
 
 	/**
