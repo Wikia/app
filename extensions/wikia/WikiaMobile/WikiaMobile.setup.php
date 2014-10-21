@@ -149,6 +149,10 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'wikiaPageIsHub',
 			'wikiaPageType',
 
+			//vertical&categories
+			'wgWikiVertical',
+			'wgWikiCategories',
+
 			//server/wiki
 			'wgServer',
 			'wgDBname',
