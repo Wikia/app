@@ -2,11 +2,13 @@
  * VisualEditor ContentEditable WikiaGalleryNode class.
  */
 
+/* global require */
+
 /**
  * ContentEditable Wikia gallery node.
  *
  * @class
- * @extends ve.ce.MWBlockExtensionNode
+ * @extends ve.ce.BranchNode
  * @mixins ve.ce.FocusableNode
  *
  * @constructor
@@ -14,19 +16,33 @@
  * @param {Object} [config] Configuration options
  */
 ve.ce.WikiaGalleryNode = function VeCeWikiaGalleryNode( model, config ) {
+	var galleryDataModelAttr;
+
 	// Parent constructor
 	ve.ce.WikiaGalleryNode.super.call( this, model, config );
 
 	// Mixin constructors
 	ve.ce.FocusableNode.call( this );
 
-	// TODO: Add the data-model attribute with the JSON for gallery rendering
-	/*
-	<div class="media-gallery-wrapper count-1" data-visible-count="8"
-	data-model="[{&quot;thumbUrl&quot;:&quot;http:\/\/vignette1.wikia.nocookie.net\/lizlux\/4\/40\/Baby-pandas-looking-cute.jpg\/revision\/latest\/zoom-crop\/width\/480\/height\/480?cb=20140813230640&quot;,&quot;thumbHtml&quot;:&quot;\n&lt;a href=\&quot;\/wiki\/File:Baby-pandas-looking-cute.jpg\&quot;\n\tclass=\&quot;image image-thumbnail\&quot;\n\t\n\t\n\t&gt;\n\n\n\t\n\t\t&lt;picture&gt;\n\n\t\n\t&lt;source\n\t\tmedia=\&quot;(max-width: 1024px)\&quot;\n\t\tsrcset=\&quot;http:\/\/vignette4.wikia.nocookie.net\/lizlux\/4\/40\/Baby-pandas-looking-cute.jpg\/revision\/latest\/zoom-crop\/width\/384\/height\/384?cb=20140813230640&amp;amp;format=webp\&quot;\n\t\ttype=\&quot;image\/webp\&quot;&gt;\n\t&lt;source\n\t\tmedia=\&quot;(max-width: 1024px)\&quot;\n\t\tsrcset=\&quot;http:\/\/vignette2.wikia.nocookie.net\/lizlux\/4\/40\/Baby-pandas-looking-cute.jpg\/revision\/latest\/zoom-crop\/width\/384\/height\/384?cb=20140813230640\&quot;&gt;\n\n\t\n\t&lt;source\n\t\tsrcset=\&quot;http:\/\/vignette3.wikia.nocookie.net\/lizlux\/4\/40\/Baby-pandas-looking-cute.jpg\/revision\/latest\/zoom-crop\/width\/480\/height\/480?cb=20140813230640&amp;amp;format=webp\&quot;\n\t\ttype=\&quot;image\/webp\&quot;&gt;\n\t&lt;source\n\t\tsrcset=\&quot;http:\/\/vignette1.wikia.nocookie.net\/lizlux\/4\/40\/Baby-pandas-looking-cute.jpg\/revision\/latest\/zoom-crop\/width\/480\/height\/480?cb=20140813230640\&quot;&gt;\n\n\t\n\t&lt;img src=\&quot;http:\/\/vignette1.wikia.nocookie.net\/lizlux\/4\/40\/Baby-pandas-looking-cute.jpg\/revision\/latest\/zoom-crop\/width\/480\/height\/480?cb=20140813230640\&quot;\n\t alt=\&quot;Baby-pandas-looking-cute.jpg\&quot; \n\tclass=\&quot;\&quot;\n\t\n\tdata-image-key=\&quot;Baby-pandas-looking-cute.jpg\&quot;\n\tdata-image-name=\&quot;Baby-pandas-looking-cute.jpg\&quot;\n\t\n\t\n\t\n\t\n\t\n\t\n\t&gt;\n\n\n&lt;\/picture&gt;\n\n\t\n\t\n\n\t\n\n\t\n\n\n&lt;\/a&gt;\n\n&quot;,&quot;caption&quot;:&quot;Actually a tiger&quot;,&quot;linkHref&quot;:&quot;\/wiki\/File:Baby-pandas-looking-cute.jpg&quot;,&quot;title&quot;:&quot;Baby-pandas-looking-cute.jpg&quot;,&quot;dbKey&quot;:&quot;Baby-pandas-looking-cute.jpg&quot;}]" data-expanded="0"> 	<button class="add-image">Add an image</button> 	<noscript> 		 			<a href="/wiki/File:Baby-pandas-looking-cute.jpg"><img src="http://vignette1.wikia.nocookie.net/lizlux/4/40/Baby-pandas-looking-cute.jpg/revision/latest/zoom-crop/width/480/height/480?cb=20140813230640" alt="Actually a tiger"></a> 		 	</noscript> </div>
-	*/
+	// Initialization
+	// TODO: Iterate through gallery images and generate this mocked data for real:
+	galleryDataModelAttr = [ {
+		'caption': '',
+		'dbKey': 'Captainwoof.jpg',
+		'linkHref': '/wiki/File:Captainwoof.jpg',
+		'thumbHtml': '<a href="/wiki/File:Captainwoof.jpg" class="image image-thumbnail"><picture><source media="(max-width: 1024px)" srcset="http://vignette.wikia-dev.com/muppet/a/a0/Captainwoof.jpg/revision/latest/fixed-aspect-ratio-down/width/384/height/384?cb=20071025105224&amp;fill=transparent&amp;format=webp" type="image/webp"><source media="(max-width: 1024px)" srcset="http://vignette.wikia-dev.com/muppet/a/a0/Captainwoof.jpg/revision/latest/fixed-aspect-ratio-down/width/384/height/384?cb=20071025105224&amp;fill=transparent"><source srcset="http://vignette.wikia-dev.com/muppet/a/a0/Captainwoof.jpg/revision/latest/fixed-aspect-ratio-down/width/480/height/480?cb=20071025105224&amp;fill=transparent&amp;format=webp" type="image/webp"><source srcset="http://vignette.wikia-dev.com/muppet/a/a0/Captainwoof.jpg/revision/latest/fixed-aspect-ratio-down/width/480/height/480?cb=20071025105224&amp;fill=transparent"><img src="http://vignette.wikia-dev.com/muppet/a/a0/Captainwoof.jpg/revision/latest/fixed-aspect-ratio-down/width/480/height/480?cb=20071025105224&amp;fill=transparent" alt="Captainwoof.jpg" class="" data-image-key="Captainwoof.jpg" data-image-name="Captainwoof.jpg"></picture></a>',
+		'thumbUrl': 'http://vignette.wikia-dev.com/muppet/a/a0/Captainwoof.jpg/revision/latest/fixed-aspect-ratio-down/width/480/height/480?cb=20071025105224&fill=transparent',
+		'title': 'Captainwoof.jpg'
+	} ];
 
-	this.$element.addClass( 'media-gallery-wrapper' );
+	this.$element
+		.addClass( 'media-gallery-wrapper count-' + this.model.getAttribute( 'itemCount' ) )
+		.attr( {
+			'data-visible-count': 8,
+			'data-expanded': 0,
+			'data-model': JSON.stringify( galleryDataModelAttr )
+		} );
+
 	this.$element.html('');
 };
 
@@ -36,8 +52,6 @@ OO.inheritClass( ve.ce.WikiaGalleryNode, ve.ce.BranchNode );
 
 OO.mixinClass( ve.ce.WikiaGalleryNode, ve.ce.FocusableNode );
 
-OO.mixinClass( ve.ce.WikiaGalleryNode, ve.ce.GeneratedContentNode );
-
 /* Static Properties */
 
 ve.ce.WikiaGalleryNode.static.name = 'wikiaGallery';
@@ -45,6 +59,16 @@ ve.ce.WikiaGalleryNode.static.name = 'wikiaGallery';
 ve.ce.WikiaGalleryNode.static.tagName = 'div';
 
 /* Methods */
+
+ve.ce.WikiaGalleryNode.prototype.onSetup = function () {
+	require([ 'mediaGallery.controllers.galleries' ], function ( GalleriesController ) {
+		var controller = new GalleriesController({
+			lightbox: false,
+			lazyLoad: false
+		});
+		controller.init();
+	} );
+};
 
 /* Registration */
 

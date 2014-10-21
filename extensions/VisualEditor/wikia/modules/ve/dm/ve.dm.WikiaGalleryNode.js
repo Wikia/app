@@ -41,7 +41,14 @@ ve.dm.WikiaGalleryNode.static.toDomElements = function ( data, doc, converter ) 
 };
 
 ve.dm.WikiaGalleryNode.static.toDataElement = function ( domElements, converter ) {
-	return { 'type': this.name };
+	var $domElements = $( domElements[0] ),
+		dataMw = JSON.parse( $domElements.attr( 'data-mw' ) ),
+		attributes = {};
+
+	attributes.itemCount = $domElements.children( 'figure' ).length;
+	attributes.caption = dataMw.attrs.caption;
+
+	return { 'type': this.name, 'attributes': attributes };
 };
 
 /* Registration */
