@@ -214,12 +214,12 @@
 
 			//those two are needed to cancel default behaviour
 			$heroModuleUpload.on('dragenter', function () {
-				$uploadButton.addClass('upload-hover');
+				$overlay.show();
 				$heroModuleUploadMask.show();
 				return false;
 			});
 			$heroModuleUploadMask.on('dragleave', function () {
-				$uploadButton.removeClass('upload-hover');
+				$overlay.hide();
 				$heroModuleUploadMask.hide();
 			});
 			$heroModuleUploadMask.on('dragend', function () {
@@ -227,7 +227,7 @@
 			});
 
 			$heroModuleUploadMask.on('drop', function (e) {
-				$uploadButton.removeClass('upload-hover');
+				$overlay.hide();
 				$heroModuleUploadMask.hide();
 				e.preventDefault();
 				var fd = new FormData();
