@@ -1,7 +1,7 @@
 <?php
+use Wikia\Logger\WikiaLogger;
 
 class ExactTargetApiDataExtension {
-	use Wikia\Logger;
 
 	/* @var ExactTargetApiHelper $Helper */
 	private $Helper;
