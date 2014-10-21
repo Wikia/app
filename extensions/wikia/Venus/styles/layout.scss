@@ -23,7 +23,7 @@ a {
 }
 
 .wikia-page {
-	background: $color-page;
+	background: rgba($color-page, $page-opacity);
 	border: $content-border-width solid $color-page-border;
 
 	& > header {
