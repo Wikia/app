@@ -51,9 +51,13 @@ $border-color: lighten($color-text, 30%);
 
 	.floatright,
 	.tright {
-		clear: right;
 		float: right;
 		margin: 30px (-$medium-grid-column-padding) 30px 30px;
+		
+		~.floatright,
+		~.tright {
+			clear: right;
+		}
 	}
 
 	.floatleft,

@@ -11,12 +11,25 @@
 	white-space: normal;
 }
 
-.wikia-slideshow-images-wrapper	{
-	background-color: $color-menu-highlight;
-	border-color: $color-links;
-	color: $color-text;
-}
+.mw-content-text {
+	.wikia-slideshow-images-wrapper	{
+		background-color: $color-menu-highlight;
+		border-color: $color-links;
+		box-sizing: content-box;
+		color: $color-text;
 
-.WikiaPhotoGalleryPreview ul {
-	list-style: none;
+		ul {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+
+		li {
+			padding: 0;
+		}
+	}
+
+	.WikiaPhotoGalleryPreview ul {
+		list-style: none;
+	}
 }
