@@ -124,10 +124,15 @@ class ExactTargetDeleteUserTask extends BaseTask {
 	 *      );
 	 */
 	public function retrieveUserIdsByEmail( $sEmail ) {
-		$oSimpleFilterPart = $this->wrapSimpleFilterPart( 'user_email', $sEmail );
-		$oRetrieveRequest = $this->wrapRetrieveRequest( 'user', [ 'user_id' ], $oSimpleFilterPart );
-		$oRetrieveRequestMessage = $this->wrapRetrieveRequestMessage( $oRetrieveRequest );
-		return $oClient->Retrieve( $oRetrieveRequestMessage );
+		$aProperties = [ 'user_id' ];
+		$sFilterProperty = 'user_email';
+		$aFilterValues = [ $sEmail ];
+		$oHelper = $this->getHelper();
+		$aApiParams = $oHelper->prepareUserRetrieveParams( $aProperties, $sFilterProperty, $aFilterValues );
+
+		$oApiDataExtension = $this->getApiDataExtension();
+		$oIdsListResult = $oApiDataExtension->retrieveRequest( $aApiParams );
+		return $oIdsListResult;
 	}
 
 	/**
