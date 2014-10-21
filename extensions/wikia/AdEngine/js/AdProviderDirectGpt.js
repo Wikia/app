@@ -25,8 +25,9 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		gptConfig,
 		gptFlushed = false,
 		countriesToAlwaysCallGpt = {
-			'UK': true
-		},
+			'UK': true,
+			'GB': true
+		};
 
 	maxCallsToDART = adLogicHighValueCountry.getMaxCallsToDART(country);
 	isHighValueCountry = adLogicHighValueCountry.isHighValueCountry(country);
