@@ -46,7 +46,8 @@ define('ext.wikia.adEngine.adConfigLate', [
 			'WIKIA_BAR_BOXAD_1': true
 		},
 		countriesToAlwaysCallRemnantGpt = {
-			'UK': true
+			'UK': true,
+			'GB': true
 		},
 		ie8 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.match(/MSIE [6-8]\./),
 
