@@ -66,7 +66,7 @@ describe("scrollToLink", function() {
 		expect(typeof scrollToLinkApi.handleScrollTo).toBe('function', 'handleScrollTo');
 		expect(typeof scrollToLinkApi.disableBrowserJump).toBe('function', 'disableBrowserJump');
 	});
-	//
+
 	it('properly resets browser jump', function() {
 		windowMock.position.y = 10;
 		windowMock.location.hash = '#hash';

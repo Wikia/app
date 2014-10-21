@@ -8,6 +8,25 @@
 define('wikia.history', ['wikia.window'], function(win) {
 	'use strict';
 
+	// what functions are available on current browser
+	var availableFunctions = [];
+
+	/**
+	 * @desc check for support for functions from historyFunctions table
+	 */
+	function init() {
+		var historyFunctions = [
+			'pushState',
+			'replaceState'
+		];
+
+		historyFunctions.forEach (function(funcName) {
+			if (hasHistoryFunction(funcName)) {
+				availableFunctions.push(funcName);
+			}
+		});
+	}
+
 	/**
 	 * @desc Check if current platform has support for given history function or nor
 	 * @param {String} name of the function
@@ -25,7 +44,7 @@ define('wikia.history', ['wikia.window'], function(win) {
 	 * @return {Boolean} return true if pushState is available on current platform
 	 */
 	function pushState (state, title, url) {
-		if (hasHistoryFunction('pushState')) {
+		if (availableFunctions.indexOf('pushState') > -1) {
 			state = state || {};
 			title = title || win.document.title;
 			url = url || win.location;
@@ -45,7 +64,7 @@ define('wikia.history', ['wikia.window'], function(win) {
 	 * @return {Boolean} return true if replaceState is available on current platform
 	 */
 	function replaceState (state, title, url) {
-		if (hasHistoryFunction('replaceState')) {
+		if (availableFunctions.indexOf('replaceState') > -1) {
 			state = state || {};
 			title = title || win.document.title;
 			url = url || win.location;
@@ -55,6 +74,9 @@ define('wikia.history', ['wikia.window'], function(win) {
 		}
 		return false;
 	}
+
+	// initialize module
+	init();
 
 	// return interface
 	return {
