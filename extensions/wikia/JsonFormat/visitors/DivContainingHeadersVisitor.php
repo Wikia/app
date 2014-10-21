@@ -133,6 +133,7 @@ class DivContainingHeadersVisitor extends DOMNodeVisitorBase {
 			$article = Article::newFromTitle( $title, RequestContext::getMain() );
 			return $article;
 		}
+		\Wikia\Logger\WikiaLogger::instance()->info( "TabView with not existing url found.", [ "url" => $url ] );
 		return null;
 	}
 
