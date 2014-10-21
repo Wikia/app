@@ -2,7 +2,7 @@
 
 /**
 * Maintenance script to add, remove, replace page category on file page (video only)
-* This is one time use script
+*
 * @author Saipetch Kongkatong
 */
 

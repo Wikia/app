@@ -2,7 +2,7 @@
 /**
  * The AMD module to hold all the context needed for the client-side scripts to run.
  */
-define('ext.wikia.adEngine.adContext', ['wikia.window'], function (w, document) {
+define('ext.wikia.adEngine.adContext', ['wikia.window', 'wikia.document'], function (w, document) {
 	'use strict';
 
 	var context;
@@ -31,6 +31,7 @@ define('ext.wikia.adEngine.adContext', ['wikia.window'], function (w, document) 
 
 	setContext( w.ads ? w.ads.context : {
 		opts: {
+			adsAfterInfobox: w.wgAdDriverUseAdsAfterInfobox,
 			adsInHead: w.wgLoadAdsInHead,
 			disableLateQueue: w.wgAdEngineDisableLateQueue,
 			lateAdsAfterPageLoad: w.wgLoadLateAdsAfterPageLoad,
@@ -46,7 +47,7 @@ define('ext.wikia.adEngine.adContext', ['wikia.window'], function (w, document) 
 
 			pageArticleId: w.wgArticleId,
 			pageCategories: w.wgAdDriverUseCatParam ? w.wgCategories : [],
-			pageIsArticle: w.wgIsArticle,
+			pageIsArticle: !!w.wgArticleId,
 			pageIsHub: w.wikiaPageIsHub,
 			pageName: w.wgPageName,
 			pageType: w.wikiaPageType,
@@ -58,15 +59,16 @@ define('ext.wikia.adEngine.adContext', ['wikia.window'], function (w, document) 
 			wikiCustomKeyValues: w.wgDartCustomKeyValues,
 			wikiDbName: w.wgDBname,
 			wikiDirectedAtChildren: w.wgWikiDirectedAtChildren,
+			wikiIsTop1000: w.wgAdDriverWikiIsTop1000,
 			wikiLanguage: w.wgContentLanguage,
 			wikiVertical: w.cscoreCat
 		},
 
 		providers: {
-			ebay: w.wgAdDriverUseEbay,
 			sevenOneMedia: w.wgAdDriverUseSevenOneMedia,
 			sevenOneMediaCombinedUrl: w.wgAdDriverSevenOneMediaCombinedUrl,
-			remnantGptMobile: w.wgAdDriverEnableRemnantGptMobile
+			remnantGptMobile: w.wgAdDriverEnableRemnantGptMobile,
+			taboola: w.wgAdDriverUseTaboola
 		},
 
 		slots: {

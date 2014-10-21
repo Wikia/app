@@ -47,12 +47,16 @@ class WikiaSearchIndexerController extends WikiaController
 
 		$serviceName = 'Wikia\Search\IndexService\\' . $this->getVal( 'service', 'DefaultContent' );
 		$ids = explode( '|', $this->getVal( 'ids', '' ) );
-		$service = new $serviceName( $ids );
-		
-		$ids = $this->getVal( 'ids' );
-	    if ( !empty( $ids ) ) {
-	        $this->response->setData( $service->getResponseForPageIds() );
-	    }
+		if ( class_exists( $serviceName ) ) {
+			$service = new $serviceName( $ids );
+			$ids = $this->getVal( 'ids' );
+			if ( !empty( $ids ) ) {
+				$this->response->setData( $service->getResponseForPageIds() );
+			}
+		} else {
+			\Wikia\Logger\WikiaLogger::instance()->error( 'WikiaSearchIndexer invoked with bad service param.',
+				[ 'serviceName' => $serviceName ] );
+		}
 	}
 	
 	/**

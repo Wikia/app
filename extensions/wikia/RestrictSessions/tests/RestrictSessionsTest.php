@@ -12,7 +12,12 @@ class RestrictSessionsTest extends \WikiaBaseTest {
 	}
 
 	public function testUserSetCookiesIsStaff() {
-		$userMock = $this->getUserMock( true );
+		$userMock = $this->getMock( '\User', [ 'isAllowed' ] );
+
+		$userMock->expects( $this->once() )
+			->method( 'isAllowed' )
+			->with( 'restrictsession' )
+			->will( $this->returnValue( true ) );
 
 		$requestMock = $this->getMock( '\WebRequest', [ 'getIP' ] );
 
@@ -34,7 +39,12 @@ class RestrictSessionsTest extends \WikiaBaseTest {
 	}
 
 	public function testUserSetCookiesNotStaff() {
-		$userMock = $this->getUserMock( false );
+		$userMock = $this->getMock( '\User', [ 'isAllowed' ] );
+
+		$userMock->expects( $this->once() )
+			->method( 'isAllowed' )
+			->with( 'restrictsession' )
+			->will( $this->returnValue( false ) );
 
 		$requestMock = $this->getMock( '\WebRequest', [ 'getIP' ] );
 
@@ -52,7 +62,7 @@ class RestrictSessionsTest extends \WikiaBaseTest {
 	}
 
 	public function testUserLoadFromSessionIsStaffAndIPMatches() {
-		$userMock = $this->getUserMock( true );
+		$userMock = $this->getUserMock( true, false );
 
 		$requestMock = $this->getMock( '\WebRequest', [ 'getIP', 'getCookie', 'getSessionData' ] );
 
@@ -60,10 +70,14 @@ class RestrictSessionsTest extends \WikiaBaseTest {
 			->method( 'getIP' )
 			->will( $this->returnValue( '127.0.0.1' ) );
 
-		$requestMock->expects( $this->once() )
+		$requestMock->expects( $this->any() )
 			->method( 'getCookie' )
-			->with( 'UserID' )
-			->will( $this->returnValue( 1234 ) );
+			->will( $this->returnValueMap(
+				[
+					[ 'UserID', null, null, 1234 ],
+					[ 'Token', null, null, null ],
+				]
+			) );
 
 		$requestMock->expects( $this->any() )
 			->method( 'getSessionData' )
@@ -84,7 +98,7 @@ class RestrictSessionsTest extends \WikiaBaseTest {
 	}
 
 	public function testUserLoadFromSessionIsStaffAndIPDoesNotMatch() {
-		$userMock = $this->getUserMock( true );
+		$userMock = $this->getUserMock( true, false );
 
 		$requestMock = $this->getMock( '\WebRequest', [ 'getIP', 'getCookie', 'getSessionData' ] );
 
@@ -92,10 +106,14 @@ class RestrictSessionsTest extends \WikiaBaseTest {
 			->method( 'getIP' )
 			->will( $this->returnValue( '127.0.0.1' ) );
 
-		$requestMock->expects( $this->once() )
+		$requestMock->expects( $this->any() )
 			->method( 'getCookie' )
-			->with( 'UserID' )
-			->will( $this->returnValue( 1234 ) );
+			->will( $this->returnValueMap(
+				[
+					[ 'UserID', null, null, 1234 ],
+					[ 'Token', null, null, null ],
+				]
+			) );
 
 		$requestMock->expects( $this->any() )
 			->method( 'getSessionData' )
@@ -116,18 +134,23 @@ class RestrictSessionsTest extends \WikiaBaseTest {
 	}
 
 	public function testUserLoadFromSessionIsStaffAndIPNotInSession() {
-		$userMock = $this->getUserMock( true );
+		$userMock = $this->getUserMock( true, false );
 
-		$requestMock = $this->getMock( '\WebRequest', [ 'getIP', 'getCookie', 'getSessionData' ] );
+		$requestMock = $this->getMock( '\WebRequest', [ 'getIP', 'getCookie',
+			'getSessionData', 'setSessionData' ] );
 
 		$requestMock->expects( $this->once() )
 			->method( 'getIP' )
 			->will( $this->returnValue( '127.0.0.1' ) );
 
-		$requestMock->expects( $this->once() )
+		$requestMock->expects( $this->any() )
 			->method( 'getCookie' )
-			->with( 'UserID' )
-			->will( $this->returnValue( 1234 ) );
+			->will( $this->returnValueMap(
+				[
+					[ 'UserID', null, null, 1234 ],
+					[ 'Token', null, null, null ],
+				]
+			) );
 
 		$requestMock->expects( $this->any() )
 			->method( 'getSessionData' )
@@ -137,6 +160,105 @@ class RestrictSessionsTest extends \WikiaBaseTest {
 					[ RestrictSessionsHooks::IP_SESSION_KEY, null ]
 				]
 			) );
+
+		$requestMock->expects( $this->never() )
+			->method( 'setSessionData' );
+
+		$restrictSessionsMock = $this->getRestrictSessionsMock( $requestMock );
+
+		$result = null;
+
+		$restrictSessionsMock->onUserLoadFromSession( $userMock, $result );
+
+		$this->assertFalse( $result );
+	}
+
+	/**
+	 * Test that if a staff member has checked "stay logged in" and has a valid
+	 * token cookie, that the session successfully loads and the IP session data
+	 * is set.
+	 */
+	public function testUserLoadFromSessionIsStaffAndLogInRemembered() {
+		$userMock = $this->getUserMock( true, false, 'sometokenstring' );
+
+		$requestMock = $this->getMock( '\WebRequest', [ 'getIP', 'getCookie',
+			'getSessionData', 'setSessionData' ] );
+
+		$requestMock->expects( $this->once() )
+			->method( 'getIP' )
+			->will( $this->returnValue( '127.0.0.1' ) );
+
+		$requestMock->expects( $this->any() )
+			->method( 'getCookie' )
+			->will( $this->returnValueMap(
+				[
+					[ 'UserID', null, null, 1234 ],
+					[ 'Token', null, null, 'sometokenstring' ],
+				]
+			) );
+
+		$sessionData = [];
+
+		$requestMock->expects( $this->any() )
+			->method( 'getSessionData' )
+			->will( $this->returnCallback( function ( $sessionKey ) use ( &$sessionData ) {
+				if ( $sessionKey === 'wsUserID' ) {
+					return null;
+				} elseif ( $sessionKey === RestrictSessionsHooks::IP_SESSION_KEY ) {
+					return $sessionData[RestrictSessionsHooks::IP_SESSION_KEY];
+				}
+			} ) );
+
+		$requestMock->expects( $this->once() )
+			->method( 'setSessionData' )
+			->with( RestrictSessionsHooks::IP_SESSION_KEY, '127.0.0.1' )
+			->will( $this->returnCallback( function ( $sessionKey, $sessionValue ) use ( &$sessionData ) {
+				$sessionData[$sessionKey] = $sessionValue;
+			} ) );
+
+		$restrictSessionsMock = $this->getRestrictSessionsMock( $requestMock );
+
+		$result = null;
+
+		$restrictSessionsMock->onUserLoadFromSession( $userMock, $result );
+
+		$this->assertTrue( $result === null );
+	}
+
+	/**
+	 * Test that if a staff member has checked "stay logged in" but has an invalid
+	 * token cookie, that the session fails to load.
+	 */
+	public function testUserLoadFromSessionIsStaffAndLogInRememberedInvalidToken() {
+		$userMock = $this->getUserMock( true, false, 'sometokenstring' );
+
+		$requestMock = $this->getMock( '\WebRequest', [ 'getIP', 'getCookie',
+			'getSessionData', 'setSessionData' ] );
+
+		$requestMock->expects( $this->once() )
+			->method( 'getIP' )
+			->will( $this->returnValue( '127.0.0.1' ) );
+
+		$requestMock->expects( $this->any() )
+			->method( 'getCookie' )
+			->will( $this->returnValueMap(
+				[
+					[ 'UserID', null, null, 1234 ],
+					[ 'Token', null, null, 'someothertokenstring' ],
+				]
+			) );
+
+		$requestMock->expects( $this->any() )
+			->method( 'getSessionData' )
+			->will( $this->returnValueMap(
+				[
+					[ 'wsUserID', null ],
+					[ RestrictSessionsHooks::IP_SESSION_KEY, null ]
+				]
+			) );
+
+		$requestMock->expects( $this->never() )
+			->method( 'setSessionData' );
 
 		$restrictSessionsMock = $this->getRestrictSessionsMock( $requestMock );
 
@@ -148,7 +270,7 @@ class RestrictSessionsTest extends \WikiaBaseTest {
 	}
 
 	public function testUserLoadFromSessionNotStaff() {
-		$userMock = $this->getUserMock( false );
+		$userMock = $this->getUserMock( false, false );
 
 		$requestMock = $this->getMock( '\WebRequest', [ 'getIP', 'getCookie', 'getSessionData' ] );
 
@@ -174,28 +296,23 @@ class RestrictSessionsTest extends \WikiaBaseTest {
 		$this->assertTrue( $result === null );
 	}
 
-	public function testUserLoadFromSessionCookieIsStaff() {
-		$userMock = $this->getUserMock( [ true, false ] );
+	public function testUserLoadFromSessionInvalidCookieSessionIsStaff() {
+		$userMock = $this->getUserMock( true, true );
 
 		$requestMock = $this->getMock( '\WebRequest', [ 'getIP', 'getCookie', 'getSessionData' ] );
 
-		$requestMock->expects( $this->once() )
-			->method( 'getIP' )
-			->will( $this->returnValue( '127.0.0.1' ) );
+		$requestMock->expects( $this->never() )
+			->method( 'getIP' );
 
 		$requestMock->expects( $this->once() )
 			->method( 'getCookie' )
 			->with( 'UserID' )
-			->will( $this->returnValue( 1234 ) );
+			->will( $this->returnValue( null ) );
 
-		$requestMock->expects( $this->any() )
+		$requestMock->expects( $this->once() )
 			->method( 'getSessionData' )
-			->will( $this->returnValueMap(
-				[
-					[ 'wsUserID', 2345 ],
-					[ RestrictSessionsHooks::IP_SESSION_KEY, '0.0.0.0' ]
-				]
-			) );
+			->with( 'wsUserID' )
+			->will( $this->returnValue( 1234 ) );
 
 		$restrictSessionsMock = $this->getRestrictSessionsMock( $requestMock );
 
@@ -206,28 +323,50 @@ class RestrictSessionsTest extends \WikiaBaseTest {
 		$this->assertFalse( $result );
 	}
 
-	public function testUserLoadFromSessionSessionIsStaff() {
-		$userMock = $this->getUserMock( [ false, true ] );
+	public function testUserLoadFromSessionInvalidCookieUserAndNullSession() {
+		$userMock = $this->getUserMock( false, true );
 
 		$requestMock = $this->getMock( '\WebRequest', [ 'getIP', 'getCookie', 'getSessionData' ] );
 
+		$requestMock->expects( $this->never() )
+			->method( 'getIP' );
+
 		$requestMock->expects( $this->once() )
-			->method( 'getIP' )
-			->will( $this->returnValue( '127.0.0.1' ) );
+			->method( 'getCookie' )
+			->with( 'UserID' )
+			->will( $this->returnValue( 0 ) );
+
+		$requestMock->expects( $this->once() )
+			->method( 'getSessionData' )
+			->with( 'wsUserID' )
+			->will( $this->returnValue( null ) );
+
+		$restrictSessionsMock = $this->getRestrictSessionsMock( $requestMock );
+
+		$result = null;
+
+		$restrictSessionsMock->onUserLoadFromSession( $userMock, $result );
+
+		$this->assertTrue( $result === null );
+	}
+
+	public function testUserLoadFromSessionIsStaffSessionMismatch() {
+		$userMock = $this->getUserMock( true, false );
+
+		$requestMock = $this->getMock( '\WebRequest', [ 'getIP', 'getCookie', 'getSessionData' ] );
+
+		$requestMock->expects( $this->never() )
+			->method( 'getIP' );
 
 		$requestMock->expects( $this->once() )
 			->method( 'getCookie' )
 			->with( 'UserID' )
 			->will( $this->returnValue( 1234 ) );
 
-		$requestMock->expects( $this->any() )
+		$requestMock->expects( $this->once() )
 			->method( 'getSessionData' )
-			->will( $this->returnValueMap(
-				[
-					[ 'wsUserID', 2345 ],
-					[ RestrictSessionsHooks::IP_SESSION_KEY, '0.0.0.0' ]
-				]
-			) );
+			->with( 'wsUserID' )
+			->will( $this->returnValue( 2345 ) );
 
 		$restrictSessionsMock = $this->getRestrictSessionsMock( $requestMock );
 
@@ -239,7 +378,7 @@ class RestrictSessionsTest extends \WikiaBaseTest {
 	}
 
 	public function testUserLoadFromSessionIsStaffAndIPWhitelisted() {
-		$userMock = $this->getUserMock( true );
+		$userMock = $this->getUserMock( true, false );
 
 		$requestMock = $this->getMock( '\WebRequest', [ 'getIP', 'getCookie', 'getSessionData' ] );
 
@@ -247,10 +386,14 @@ class RestrictSessionsTest extends \WikiaBaseTest {
 			->method( 'getIP' )
 			->will( $this->returnValue( '127.0.0.1' ) );
 
-		$requestMock->expects( $this->once() )
+		$requestMock->expects( $this->any() )
 			->method( 'getCookie' )
-			->with( 'UserID' )
-			->will( $this->returnValue( 1234 ) );
+			->will( $this->returnValueMap(
+				[
+					[ 'UserID', null, null, 1234 ],
+					[ 'Token', null, null, null ],
+				]
+			) );
 
 		$requestMock->expects( $this->any() )
 			->method( 'getSessionData' )
@@ -273,7 +416,7 @@ class RestrictSessionsTest extends \WikiaBaseTest {
 	}
 
 	public function testUserLoadFromSessionIsStaffAndIPNotWhitelisted() {
-		$userMock = $this->getUserMock( true );
+		$userMock = $this->getUserMock( true, false );
 
 		$requestMock = $this->getMock( '\WebRequest', [ 'getIP', 'getCookie', 'getSessionData' ] );
 
@@ -281,10 +424,14 @@ class RestrictSessionsTest extends \WikiaBaseTest {
 			->method( 'getIP' )
 			->will( $this->returnValue( '127.0.0.1' ) );
 
-		$requestMock->expects( $this->once() )
+		$requestMock->expects( $this->any() )
 			->method( 'getCookie' )
-			->with( 'UserID' )
-			->will( $this->returnValue( 1234 ) );
+			->will( $this->returnValueMap(
+				[
+					[ 'UserID', null, null, 1234 ],
+					[ 'Token', null, null, null ],
+				]
+			) );
 
 		$requestMock->expects( $this->any() )
 			->method( 'getSessionData' )
@@ -307,7 +454,12 @@ class RestrictSessionsTest extends \WikiaBaseTest {
 	}
 
 	public function testUserLogoutIsStaff() {
-		$userMock = $this->getUserMock( true );
+		$userMock = $this->getMock( '\User', [ 'isAllowed' ] );
+
+		$userMock->expects( $this->once() )
+			->method( 'isAllowed' )
+			->with( 'restrictsession' )
+			->will( $this->returnValue( true ) );
 
 		$requestMock = $this->getMock( '\WebRequest', [ 'setSessionData' ] );
 
@@ -321,7 +473,12 @@ class RestrictSessionsTest extends \WikiaBaseTest {
 	}
 
 	public function testUserLogoutIsNotStaff() {
-		$userMock = $this->getUserMock( false );
+		$userMock = $this->getMock( '\User', [ 'isAllowed' ] );
+
+		$userMock->expects( $this->once() )
+			->method( 'isAllowed' )
+			->with( 'restrictsession' )
+			->will( $this->returnValue( false ) );
 
 		$requestMock = $this->getMock( '\WebRequest', [ 'setSessionData' ] );
 
@@ -358,8 +515,12 @@ class RestrictSessionsTest extends \WikiaBaseTest {
 		];
 	}
 
-	private function getUserMock( $isAllowedResult ) {
-		$userMock = $this->getMock( '\User', [ 'isAllowed' ] );
+	private function getUserMock( $isAllowedResult, $isAnon, $token = false ) {
+		$userMock = $this->getMock( '\User', [ 'isAllowed', 'isAnon', 'getToken', 'loadDefaults' ] );
+
+		$userMock->expects( $this->any() )
+			->method( 'isAnon' )
+			->will( $this->returnValue( $isAnon ) );
 
 		if ( is_array( $isAllowedResult ) ) {
 			$userMock->expects( $this->any() )
@@ -372,6 +533,18 @@ class RestrictSessionsTest extends \WikiaBaseTest {
 				->with( 'restrictsession' )
 				->will( $this->returnValue( $isAllowedResult ) );
 		}
+
+		if ( $token === false ) {
+			$userMock->expects( $this->never() )
+				->method( 'getToken' );
+		} else {
+			$userMock->expects( $this->once() )
+				->method( 'getToken' )
+				->will( $this->returnValue( $token ) );
+		}
+
+		$userMock->expects( $this->any() )
+			->method( 'loadDefaults' );
 
 		$this->mockClass( '\User', $userMock, 'newFromId' );
 

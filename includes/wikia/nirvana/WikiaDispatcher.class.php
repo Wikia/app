@@ -229,7 +229,7 @@ class WikiaDispatcher {
 
 				} else {
 					wfProfileOut($profilename);
-					$response->setException($e);					
+					$response->setException($e);
 					$response->setFormat( 'json' );
 					$response->setCode($e->getCode());
 

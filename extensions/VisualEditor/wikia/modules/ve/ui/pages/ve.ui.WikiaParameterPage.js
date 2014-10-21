@@ -5,8 +5,6 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/* global mw */
-
 /**
  * Wikia transclusion dialog template page.
  *
@@ -23,36 +21,14 @@ ve.ui.WikiaParameterPage = function VeUiWikiaParameterPage( parameter, name, con
 	ve.ui.WikiaParameterPage.super.call( this, parameter, name, config );
 
 	// Properties
-	this.template = parameter.getTemplate();
-	this.templateInfoButton = new OO.ui.ButtonWidget( {
-			'$': this.$,
-			'frameless': true,
-			'icon': 'arrow-circled',
-			'label': ve.msg( 'wikia-visualeditor-dialog-transclusion-get-info', this.template.getSpec().getLabel() ),
-			'tabIndex': -1,
-			'classes': [ 've-ui-mwParameterPage-templateInfoButton' ]
-		} )
-		.connect( this, { 'click': 'onTemplateInfoButtonClick' } );
+	this.templateGetInfoWidget = new ve.ui.WikiaTemplateGetInfoWidget( { template: parameter.getTemplate() } );
 
 	// Initialization
 	this.addButton.$element
 		.addClass( 've-ui-mwParameterPage-addButton' )
-		.after( this.templateInfoButton.$element );
+		.after( this.templateGetInfoWidget.$element );
 };
 
 /* Inheritance */
 
 OO.inheritClass( ve.ui.WikiaParameterPage, ve.ui.MWParameterPage );
-
-/* Methods */
-
-/**
- * Handles action when clicking template info button
- */
-ve.ui.WikiaParameterPage.prototype.onTemplateInfoButtonClick = function () {
-	window.open( new mw.Title( this.template.getTitle() ).getUrl() );
-	ve.track( 'wikia', {
-		'action': ve.track.actions.CLICK,
-		'label': 'dialog-template-get-info'
-	} );
-};

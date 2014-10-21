@@ -4065,8 +4065,6 @@ Wikia
 ** Proxy, wegen Vandalismus einzelner Benutzer längerfristig gesperrt',
 	'irc' => 'Echtzeit-Hilfe',
 	'its_easy' => '...einfach und kostenlos',
-	'jwplayer-ad-message' => 'Dein Video wird in XX Sekunden starten',
-	'jwplayer-agegate-message' => 'Du erfüllst nicht die Altersanforderungen für diesen Inhalt',
 	'landingpage-buttons-about-make-the-move-link' => 'http://de.wikia.com/wiki/Neuer_Look_-_%C3%9Cbergangshilfe',
 	'landingpage-buttons-about-make-the-move' => 'Tipps zum Umbau',
 	'landingpage-buttons-about-wikia-link' => 'http://de.wikia.com/wiki/Was_ist_Wikia',

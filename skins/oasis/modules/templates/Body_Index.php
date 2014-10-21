@@ -10,7 +10,11 @@
 
 <div id="ad-skin" class="wikia-ad noprint"></div>
 
-<?= $app->renderView('GlobalHeader', 'Index') ?>
+<? if ( !empty( $wg->EnableGlobalNavExt ) ): ?>
+	<?= $app->renderView('GlobalNavigation', 'index') ?>
+<? else: ?>
+	<?= $app->renderView('GlobalHeader', 'Index') ?>
+<? endif ?>
 <?= $app->renderView('Notifications', 'Confirmation') ?>
 <?= $app->renderView('Ad', 'Top') ?>
 
@@ -20,8 +24,12 @@
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
 	<div class="WikiaPageContentWrapper">
 		<?php
-			if ( empty( $wg->SuppressWikiHeader ) ) {
-				echo $app->renderView( 'WikiHeader', 'Index' );
+			if ( empty( $wg->SuppressWikiHeader )) {
+				if ( empty( $wg->EnableLocalNavExt ) ) {
+					echo $app->renderView( 'WikiHeader', 'Index' );
+				} else {
+					echo $app->renderView( 'LocalNavigation', 'Index' );
+				}
 			}
 		?>
 		<?php

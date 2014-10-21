@@ -409,6 +409,7 @@ $messages['eu'] = array(
 
 /** Persian (فارسی)
  * @author Ebraminio
+ * @author Reza1615
  * @author ZxxZxxZ
  * @author جواد
  */
@@ -417,6 +418,7 @@ $messages['fa'] = array(
 	'categoryselect-button-cancel' => 'لغو',
 	'categoryselect-button-save' => 'ذخیره‌کردن',
 	'categoryselect-category-edit' => 'ویرایش رده',
+	'categoryselect-category-remove' => 'حذف رده',
 	'categoryselect-edit-summary' => 'افزودن رده',
 	'categoryselect-tooltip-add' => 'پس از اتمام دکمه اینتر را فشار دهید', # Fuzzy
 );
@@ -717,6 +719,7 @@ $messages['kn'] = array(
 
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author Miri-Nae
  * @author 아라
  */
 $messages['ko'] = array(
@@ -737,6 +740,7 @@ $messages['ko'] = array(
 	'categoryselect-error-user-rights' => '사용자는 이 작업을 수행할 권한이 없습니다.',
 	'categoryselect-modal-category-name' => '분류의 이름 제공:',
 	'categoryselect-modal-category-sortkey' => '선택적으로 이름에 따라 "$1" 분류 문서에 이 문서를 알파벳순으로 정렬할 수 있습니다:',
+	'categoryselect-tooltip-add' => '완료되었으면 엔터, 혹은 백스페이스를 누르세요.',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)

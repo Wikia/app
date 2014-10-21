@@ -3,7 +3,7 @@
 (function (window, $) {
 	'use strict';
 
-	var LightboxLoader, LightboxTracker;
+	var LightboxLoader, LightboxTracker, bucky;
 
 	LightboxLoader = {
 		// cached thumbnail arrays and detailed info
@@ -64,19 +64,23 @@
 		videoThumbWidthThreshold: 400,
 		init: function () {
 			var self = this,
-				$article = $('#WikiaArticle'),
-				$photos = $('#LatestPhotosModule'),
-				$comments = $('#WikiaArticleComments'), // event handled with $footer
-				$footer = $('#WikiaArticleFooter'), // bottom videos module
-				$videosModule = $('.videos-module-rail'), // right rail videos module
-				$videoHomePage = $('#latest-videos-wrapper');
+				$article, $photos, $comments, $footer, $videosModule, $videoHomePage;
+
+			bucky.timer.start('init');
+
+			$article = $('#WikiaArticle');
+			$photos = $('#LatestPhotosModule');
+			$comments = $('#WikiaArticleComments'); // event handled with $footer
+			$footer = $('#WikiaArticleFooter'); // bottom videos module
+			$videosModule = $('.videos-module-rail'); // right rail videos module
+			$videoHomePage = $('#latest-videos-wrapper');
 
 			// Bind click event to initiate lightbox
 			$article.add($photos).add($footer).add($videosModule)
 				.off('.lightbox')
 				.on('click.lightbox', '.lightbox, a.image', function (e) {
 					var $this = $(this),
-						$thumb = $this.children('img').first(),
+						$thumb = $this.find('img').first(),
 						fileKey = $thumb.attr('data-image-key') || $thumb.attr('data-video-key'),
 						$parent,
 						isVideo,
@@ -131,6 +135,8 @@
 						return;
 					}
 
+					fileKey = decodeURI(fileKey);
+
 					// Display video inline, don't open lightbox
 					isVideo = $this.children('.play-circle').length;
 					if (
@@ -163,6 +169,7 @@
 						}
 					}
 				);
+			bucky.timer.stop('init');
 		},
 
 		/**
@@ -172,6 +179,9 @@
 		 */
 		loadLightbox: function (mediaTitle, trackingInfo) {
 			var openModal, lightboxParams, deferredList, resources, deferredTemplate;
+
+			bucky.timer.start('loadLightbox');
+
 			// restore inline videos to default state, because flash players overlaps with modal
 			LightboxLoader.removeInlineVideos();
 			LightboxLoader.lightboxLoading = true;
@@ -230,6 +240,7 @@
 				// LASTINDEX: index is last-index due to how deferred resolve works in mulitiple deferred objects
 				Lightbox.initialFileDetail = arguments[arguments.length - 1];
 				Lightbox.makeLightbox(lightboxParams);
+				bucky.timer.stop('loadLightbox');
 			});
 
 		},
@@ -251,6 +262,8 @@
 					var embedCode = json.videoEmbedCode,
 						inlineDiv = $('<div class="inline-video"></div>').insertAfter(target.hide()),
 						videoIndex;
+
+					target.closest('.article-thumb').addClass('inline-video-playing');
 
 					require(['wikia.videoBootstrap'], function (VideoBootstrap) {
 						self.videoInstance = new VideoBootstrap(inlineDiv[0], embedCode, clickSource);
@@ -278,7 +291,11 @@
 
 		removeInlineVideos: function () {
 			clearTimeout(LightboxTracker.inlineVideoTrackingTimeout);
-			LightboxLoader.inlineVideoLinks.show().next().remove();
+			LightboxLoader.inlineVideoLinks
+				.show()
+				.parent().removeClass('inline-video-playing') // figure tag
+				.end()
+				.next().remove(); // video player container
 		},
 
 		getMediaDetail: function (mediaParams, callback, nocache) {
@@ -287,6 +304,7 @@
 			if (!nocache && LightboxLoader.cache.details[title]) {
 				callback(LightboxLoader.cache.details[title]);
 			} else {
+				bucky.timer.start('getMediaDetail.request');
 				$.nirvana.sendRequest({
 					controller: 'Lightbox',
 					method: 'getMediaDetail',
@@ -294,6 +312,7 @@
 					format: 'json',
 					data: mediaParams,
 					callback: function (json) {
+						bucky.timer.stop('getMediaDetail.request');
 						// Don't cache videos played inline because width will be off for lightbox version bugid-42269
 						if (!nocache) {
 							LightboxLoader.cache.details[title] = json;
@@ -401,8 +420,13 @@
 
 	$(function () {
 		if (window.wgEnableLightboxExt) {
+			// performance profiling
+			bucky = window.Bucky('LightboxLoader');
+
 			LightboxLoader.init();
-			LightboxLoader.loadFromURL();
+
+			// wait till end of execution stack to load lightbox
+			setTimeout(LightboxLoader.loadFromURL, 0);
 		}
 
 	});
@@ -410,4 +434,4 @@
 	window.LightboxLoader = LightboxLoader;
 	window.LightboxTracker = LightboxTracker;
 
-})(this, jQuery);
+})(window, jQuery);

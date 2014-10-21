@@ -7,7 +7,6 @@ abstract class VideoFeedIngester {
 
 	// Constants for referring to short provider names
 	const PROVIDER_SCREENPLAY = 'screenplay';
-	const PROVIDER_REALGRAVITY = 'realgravity';
 	const PROVIDER_IGN = 'ign';
 	const PROVIDER_ANYCLIP = 'anyclip';
 	const PROVIDER_OOYALA = 'ooyala';
@@ -38,7 +37,6 @@ abstract class VideoFeedIngester {
 	// These providers are not ingested daily, but can be ingested from if specifically named
 	protected static $INACTIVE_PROVIDERS = [
 		self::PROVIDER_ANYCLIP,
-		self::PROVIDER_REALGRAVITY,
 	];
 
 	protected static $API_WRAPPER;
@@ -62,6 +60,7 @@ abstract class VideoFeedIngester {
 		'Entertainment' => [],
 		'Lifestyle'     => [],
 		'International' => [],
+		'Other'         => [],
 	];
 
 	protected $defaultRequestOptions = [
@@ -1264,10 +1263,18 @@ abstract class VideoFeedIngester {
 	 */
 	public function videoIngested( $msg = '', $categories = [] ) {
 		if ( !empty( $msg ) ) {
+			$addedResult = false;
 			foreach ( $categories as $category ) {
 				if ( array_key_exists( $category, $this->resultIngestedVideos ) ) {
 					$this->resultIngestedVideos[$category][] = $msg;
+					$addedResult = true;
+					break;
 				}
+			}
+
+			// If this video is in some other category, make sure it still gets into the report
+			if ( !$addedResult ) {
+				$this->resultIngestedVideos['Other'][] = $msg;
 			}
 		}
 

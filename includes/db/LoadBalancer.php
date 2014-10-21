@@ -444,6 +444,10 @@ class LoadBalancer {
 	public function &getConnection( $i, $groups = array(), $wiki = false ) {
 		wfProfileIn( __METHOD__ );
 
+		// Set this flag to ensure that all select operations go against master
+		// Slave lag can cause random errors during wiki creation process
+		global $wgForceMasterDatabase;
+
 		if ( $i == DB_LAST ) {
 			throw new MWException( 'Attempt to call ' . __METHOD__ . ' with deprecated server index DB_LAST' );
 		} elseif ( $i === null || $i === false ) {
@@ -455,7 +459,7 @@ class LoadBalancer {
 		}
 
 		# Query groups
-		if ( $i == DB_MASTER ) {
+		if ( $i == DB_MASTER || $wgForceMasterDatabase ) {
 			$i = $this->getWriterIndex();
 		} elseif ( !is_array( $groups ) ) {
 			$groupIndex = $this->getReaderIndex( $groups, $wiki );
@@ -491,10 +495,13 @@ class LoadBalancer {
 		// Wikia change - begin
 		// check the status of selected master
 		if ( $i == $this->getWriterIndex() ) {
-			if ( wfGetLBFactory()->getMastersPoll()->isMasterBroken( $this->mServers[0] ) ) {
+			// will return an instance of MastersPoll when LBFactory_Wikia is used
+			$mastersPoll = wfGetLBFactory()->getMastersPoll();
+
+			if ( $mastersPoll instanceof \Wikia\MastersPoll && $mastersPoll->isMasterBroken( $this->mServers[0] ) ) {
 				// handle broken master - connect to a different master
 				$clusterInfo = $this->parentInfo()['id'];
-				$newMaster = wfGetLBFactory()->getMastersPoll()->getNextMasterForSection( $clusterInfo );
+				$newMaster = $mastersPoll->getNextMasterForSection( $clusterInfo );
 
 				// replace the master in LoadBalancer config
 				if ( !empty( $newMaster ) ) {
@@ -509,8 +516,13 @@ class LoadBalancer {
 		if ( !$conn ) {
 			// Wikia change - begin
 			# master connection error handling
+			// will return an instance of MastersPoll when LBFactory_Wikia is used
+			$mastersPoll = wfGetLBFactory()->getMastersPoll();
+
 			if ( $i == $this->getWriterIndex() ) {
-				wfGetLBFactory()->getMastersPoll()->markMasterAsBroken( $this->mServers[$i] );
+				if ( $mastersPoll instanceof \Wikia\MastersPoll ) {
+					$mastersPoll->markMasterAsBroken( $this->mServers[$i] );
+				}
 			}
 			// Wikia change - end
 

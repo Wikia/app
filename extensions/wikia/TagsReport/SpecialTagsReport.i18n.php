@@ -426,11 +426,11 @@ $messages['mk'] = array(
 	'tagsreporttitle' => 'Извештај за ознаки',
 	'tagsreportselecttag' => 'Одберете ознака:',
 	'tagsreportgo' => 'Прикажи',
-	'tagsreportnotspecify' => 'Засега немате избрано ниедна специјална ознака',
+	'tagsreportnotspecify' => 'Засега немате избрано ниедна посебна ознака',
 	'tagsreportnoresults' => 'Не пронајдов ништо',
 	'tagsreportmainnspace' => 'Главна',
 	'tagsreportpages' => '(<strong>$1</strong> {{PLURAL:$1|страница|страници}})',
-	'tagsreportpagesfound' => '{{PLURAL:$1|Пронајдена е|Пронајдени се}} <strong>$1</strong> {{PLURAL:$1|страница што содржи|страници што содржат}} специјална ознака (DPL, YouTube и тн.)',
+	'tagsreportpagesfound' => '{{PLURAL:$1|Пронајдена е|Пронајдени се}} <strong>$1</strong> {{PLURAL:$1|страница што содржи|страници што содржат}} посебна ознака (DPL, YouTube и тн.)',
 	'tagsreportgenerated' => 'Создадено на $1 во $2 ч.',
 	'tagsreportpageremoved' => 'Страницата бр. $1 е отстранета',
 );

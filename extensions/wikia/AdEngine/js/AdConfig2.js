@@ -7,6 +7,8 @@ define('ext.wikia.adEngine.adConfig', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adDecoratorPageDimensions',
 	'ext.wikia.adEngine.evolveSlotConfig',
+	'ext.wikia.adEngine.gptSlotConfig',
+	require.optional('ext.wikia.adEngine.rubiconRtp'),
 
 	// adProviders
 	'ext.wikia.adEngine.provider.directGpt',
@@ -15,7 +17,6 @@ define('ext.wikia.adEngine.adConfig', [
 
 	// adSlots
 	require.optional('ext.wikia.adEngine.slot.topInContentBoxad')
-
 ], function (
 	// regular dependencies
 	log,
@@ -24,6 +25,8 @@ define('ext.wikia.adEngine.adConfig', [
 	adContext,
 	adDecoratorPageDimensions,
 	evolveSlotConfig,
+	gptSlotConfig,
+	rtp,
 
 	// adProviders
 	adProviderDirectGpt,
@@ -39,7 +42,8 @@ define('ext.wikia.adEngine.adConfig', [
 		country = geo.getCountryCode(),
 		defaultHighValueSlots,
 		highValueSlots,
-		decorators = [adDecoratorPageDimensions];
+		decorators = [adDecoratorPageDimensions],
+		rtpTier;
 
 	defaultHighValueSlots = {
 		'CORP_TOP_LEADERBOARD': true,
@@ -144,6 +148,18 @@ define('ext.wikia.adEngine.adConfig', [
 
 	if (topInContentBoxad) {
 		topInContentBoxad.init();
+	}
+
+	if (rtp && rtp.wasCalled()) {
+		rtp.trackState();
+		rtpTier = rtp.getTier();
+		if (rtpTier) {
+			// TODO: fix repetition while working on multi slot support
+			gptSlotConfig.extendSlotParams('gpt', 'HOME_TOP_RIGHT_BOXAD', { 'rp_tier': rtpTier });
+			gptSlotConfig.extendSlotParams('gpt', 'TOP_RIGHT_BOXAD', { 'rp_tier': rtpTier });
+			gptSlotConfig.extendSlotParams('gpt', 'TOP_INCONTENT_BOXAD', { 'rp_tier': rtpTier });
+			gptSlotConfig.extendSlotParams('gpt', 'CORP_TOP_RIGHT_BOXAD', { 'rp_tier': rtpTier });
+		}
 	}
 
 	return {

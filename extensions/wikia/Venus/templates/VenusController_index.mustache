@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="{{lang}}" dir="{{dir}}">
+<head>
+	<meta http-equiv="Content-Type" content="{{mimeType}}; charset={{charset}}">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+	{{{headLinks}}}
+	<title>{{pageTitle}}</title>
+	{{{cssLinks}}}
+	{{{pageCss}}}
+	{{{jsHeadScripts}}}
+	{{{headItems}}}
+</head>
+<body class="{{bodyClasses}}">
+<div id="ad-skin" class="wikia-ad noprint"></div>
+{{{globalNavigation}}}
+{{! TODO: Re-Enable when it's ready: notifications}}
+{{{topAds}}}
+<section class="wikia-page page-width">
+	{{{localNavigation}}}
+	<article class="article">
+		<header class="row">
+			<h1>{{title}}</h1>
+		</header>
+		{{{contents}}}
+	</article>
+	{{{globalFooter}}}
+	{{! TODO: Re-Enable when it's ready: corporateFooter}}
+</section>
+<!--$jsBodyFiles-->
+{{{jsBodyFiles}}}
+<!-- $bottomScriptLinks -->
+{{{bottomScriptLinks}}}
+</body>
+</html>

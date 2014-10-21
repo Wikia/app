@@ -31,6 +31,9 @@ class GlobalTitle extends Title {
 	 * others, private
 	 */
 	private $mServer = false;
+	/**
+	 * @var Language $mContLang
+	 */
 	private $mContLang = false;
 	private $mLang = false;
 	private $mArticlePath = false;
@@ -183,7 +186,7 @@ class GlobalTitle extends Title {
 	/**
 	 * Get a database connection to this object database
 	 *
-	 * @param $type Master or slave constants
+	 * @param $type string Master or slave constants
 	 * @param $groups array Query group
 	 * @return DatabaseBase
 	 */
@@ -321,7 +324,7 @@ class GlobalTitle extends Title {
 	/**
 	 * Get a date of last edit
 	 *
-	 * @return MW timestamp
+	 * @return string MW timestamp
 	 */
 	public function getLastEdit() {
 		$this->loadAll();
@@ -722,36 +725,33 @@ class GlobalTitle extends Title {
 	 *
 	 * Determine wgContLang value from WikiFactory variables
 	 *
-	 * @return Lang object
+	 * @return Language lang object
 	 */
 	private function loadContLang() {
 
 		/**
 		 * don't do this twice
 		 */
-		if( $this->mContLang ) {
+		if( $this->mContLang instanceof Language ) {
 			return $this->mContLang;
 		}
 
 		/**
 		 * maybe value from cache
 		 */
-		if( $this->mLang ) {
-			$lang = $this->mLang;
-		}
-		else {
+		if( !$this->mLang ) {
 			/**
 			 * so maybe value from database?
 			 */
-			$lang = WikiFactory::getVarValueByName( "wgLanguageCode", $this->mCityId );
-			if( !$lang ) {
+			$this->mLang = WikiFactory::getVarValueByName( "wgLanguageCode", $this->mCityId );
+			if( !$this->mLang ) {
 				/**
 				 * nope, only default language which is english
 				 */
-				$lang = "en";
+				$this->mLang = "en";
 			}
 		}
-		$this->mContLang = Language::factory( $lang );
+		$this->mContLang = Language::factory( $this->mLang );
 
 		return $this->mContLang;
 	}
@@ -820,11 +820,11 @@ class GlobalTitle extends Title {
 
 		$values = $wgMemc->get( $this->memcKey() );
 		if( is_array( $values ) ) {
-			$this->mLang = isset( $value[ "lang" ] ) ? $value[ "lang" ] : false;
+			$this->mLang = isset( $values[ "lang" ] ) ? $values[ "lang" ] : false;
 			$this->mServer = isset( $values[ "server" ] ) ? $values[ "server" ] : false;
 			$this->mArticlePath = isset( $values[ "path" ] ) ? $values[ "path" ] : false;
-			$this->mNamespaceNames = isset( $value[ "namespaces" ] ) ? $value[ "namespaces" ] : false;
-			$this->mLastEdit = isset( $value[ "lastedit" ] ) ? $value[ "lastedit" ] : false;
+			$this->mNamespaceNames = isset( $values[ "namespaces" ] ) ? $values[ "namespaces" ] : false;
+			$this->mLastEdit = isset( $values[ "lastedit" ] ) ? $values[ "lastedit" ] : false;
 
 			return true;
 		}
@@ -850,7 +850,7 @@ class GlobalTitle extends Title {
 				"namespaces" => $this->mNamespaceNames,
 				"lastedit" => $this->mLastEdit,
 			),
-			3600
+			WikiaResponse::CACHE_SHORT
 		);
 	}
 }

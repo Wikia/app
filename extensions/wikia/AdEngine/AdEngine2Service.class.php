@@ -3,12 +3,6 @@
 class AdEngine2Service
 {
 
-	const ASSET_GROUP_CORE = 'oasis_shared_core_js';
-	const ASSET_GROUP_ADENGINE = 'adengine2_js';
-	const ASSET_GROUP_ADENGINE_LATE = 'adengine2_late_js';
-	const ASSET_GROUP_LIFTIUM = 'liftium_ads_js';
-	const ASSET_GROUP_TOP_INCONTENT_JS = 'adengine2_top_in_content_boxad_js';
-
 	const PAGE_TYPE_NO_ADS = 'no_ads';                   // show no ads
 	const PAGE_TYPE_MAPS = 'maps';                       // show only ads on maps
 	const PAGE_TYPE_HOMEPAGE_LOGGED = 'homepage_logged'; // show some ads (logged in users on main page)
@@ -42,7 +36,7 @@ class AdEngine2Service
 			|| $wg->Request->getBool('noads', false)
 			|| $wg->ShowAds === false
 			|| $wg->EnableAdEngineExt === false
-			|| !F::app()->checkSkin(['oasis', 'wikiamobile'])
+			|| !F::app()->checkSkin(['oasis', 'wikiamobile', 'venus'])
 		) {
 			$pageLevel = self::PAGE_TYPE_NO_ADS;
 			return $pageLevel;
@@ -223,7 +217,7 @@ class AdEngine2Service
 		global $wgCityId, $wgEnableAdsInContent, $wgEnableOpenXSPC,
 			$wgUser, $wgEnableAdMeldAPIClient, $wgEnableAdMeldAPIClientPixels,
 			$wgOutboundScreenRedirectDelay, $wgEnableOutboundScreenExt,
-			$wgAdDriverUseSevenOneMedia, $wgAdDriverUseEbay, $wgAdDriverUseDartForSlotsBelowTheFold,
+			$wgAdDriverUseSevenOneMedia, $wgAdDriverUseDartForSlotsBelowTheFold,
 			$wgAdPageLevelCategoryLangs, $wgLanguageCode, $wgAdDriverTrackState,
 			$wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd,
 			$wgOasisResponsive, $wgOasisResponsiveLimited,
@@ -233,7 +227,8 @@ class AdEngine2Service
 			$wgDartCustomKeyValues, $wgWikiDirectedAtChildrenByStaff,
 			$wgWikiDirectedAtChildrenByFounder, $wgAdEngineDisableLateQueue,
 			$wgAdDriverUseBottomLeaderboard, $wgAdDriverBottomLeaderboardImpressionCapping,
-			$wgAdDriverEnableAdsInMaps;
+			$wgAdDriverEnableAdsInMaps, $wgAdDriverWikiIsTop1000, $wgAdDriverUseTaboola,
+			$wgAdDriverUseAdsAfterInfobox;
 
 		$vars = [];
 
@@ -247,11 +242,12 @@ class AdEngine2Service
 			'adEnginePageType' => self::getPageType(),
 
 			// Ad Driver
+			'wgAdDriverUseAdsAfterInfobox' => $wgAdDriverUseAdsAfterInfobox,
 			'wgAdDriverUseCatParam' => array_search($wgLanguageCode, $wgAdPageLevelCategoryLangs),
-			'wgAdDriverUseEbay' => $wgAdDriverUseEbay,
 			'wgAdDriverUseDartForSlotsBelowTheFold' => $wgAdDriverUseDartForSlotsBelowTheFold === null ? 'hub' : $wgAdDriverUseDartForSlotsBelowTheFold,
 			'wgAdDriverUseRemnantGpt' => $wgAdDriverUseRemnantGpt,
 			'wgAdDriverUseSevenOneMedia' => $wgAdDriverUseSevenOneMedia,
+			'wgAdDriverUseTaboola' => $wgAdDriverUseTaboola,
 			'wgAdDriverRubiconCachedOnly' => $wgAdDriverRubiconCachedOnly,
 			'wgAdDriverSevenOneMediaOverrideSub2Site' => $wgAdDriverSevenOneMediaOverrideSub2Site,
 			'wgUserShowAds' => $wgUser->getOption('showAds'),
@@ -276,16 +272,17 @@ class AdEngine2Service
 			'wikiaPageIsCorporate' => WikiaPageType::isCorporatePage(),
 
 			// category/hub
-			'cscoreCat' => HubService::getComscoreCategory($wgCityId)->cat_name,
+			'cscoreCat' => HubService::getCategoryInfoForCity($wgCityId)->cat_name,
 
 			// Krux
 			'wgEnableKruxTargeting' => $wgEnableKruxTargeting,
 			'wgUsePostScribe' => $wgRequest->getBool('usepostscribe', false),
-			'wgDartCustomKeyValues' => $wgDartCustomKeyValues,
 			'wgWikiDirectedAtChildren' => $wgWikiDirectedAtChildrenByStaff || $wgWikiDirectedAtChildrenByFounder,
 
 			// AdLogicPageParams.js, SevenOneMediaHelper.js, AnalyticsProviderQuantServe.php
 			'cityShort' => AdEngine2Service::getCachedCategory()['short'],
+			'wgDartCustomKeyValues' => $wgDartCustomKeyValues,
+			'wgAdDriverWikiIsTop1000' => $wgAdDriverWikiIsTop1000,
 
 			// intMapPontoBridge.js
 			'wgAdDriverEnableAdsInMaps' => $wgAdDriverEnableAdsInMaps,

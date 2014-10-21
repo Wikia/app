@@ -12,12 +12,14 @@ class Transaction {
 	const ENTRY_POINT_NIRVANA = 'api/nirvana';
 	const ENTRY_POINT_AJAX = 'api/ajax';
 	const ENTRY_POINT_API = 'api/api';
+	const ENTRY_POINT_API_V1 = 'api/v1';
 
 	// Parameters
 	const PARAM_ENVIRONMENT = 'env';
 	const PARAM_ENTRY_POINT = 'entry_point';
 	const PARAM_LOGGED_IN = 'logged_in';
 	const PARAM_PARSER_CACHE_USED = 'parser_cache_used';
+	const PARAM_PARSER_CACHE_DISABLED = 'parser_cache_disabled';
 	const PARAM_SIZE_CATEGORY = 'size_category';
 	const PARAM_NAMESPACE = 'namespace';
 	const PARAM_ACTION = 'action';

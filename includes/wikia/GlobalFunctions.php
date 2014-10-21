@@ -114,6 +114,7 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 
 	// Override image server location for Wikia development environment
 	// This setting should be images.developerName.wikia-dev.com or perhaps "localhost"
+	// FIXME: This needs to be removed. It should be encapsulated in the URL generation.
 	if (!empty($wg->DevBoxImageServerOverride)) {
 		$url = preg_replace("/\/\/(.*?)wikia-dev\.com\/(.*)/", "//{$wg->DevBoxImageServerOverride}/$2", $url);
 	}
@@ -1731,4 +1732,16 @@ function wfGetCallerClassMethod( $ignoreClasses ) {
 	}
 
 	return $method;
+}
+
+/**
+ * Make an array whether you've got a string or array
+ * @param string|array $value
+ * @return array
+ */
+function wfReturnArray( $value ) {
+	if ( !is_array( $value ) ) {
+		$value = [ $value ];
+	}
+	return $value;
 }

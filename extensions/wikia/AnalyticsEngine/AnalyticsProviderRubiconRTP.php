@@ -2,79 +2,92 @@
 
 class AnalyticsProviderRubiconRTP implements iAnalyticsProvider {
 
-	const OZ_SITE = '7450/11979';
-	const OZ_ZONE = '145168';
+	const RTP_CONFIG = 'wgAdDriverRubiconRTPConfig';
+	const RTP_COUNTRIES = 'wgAdDriverRubiconRTPCountries';
+
+	public static function getRtpConfig() {
+		static $config;
+
+		if ($config !== null) {
+			return $config;
+		}
+
+		$globalConfig = WikiFactory::getVarValueByName(self::RTP_CONFIG, WikiFactory::COMMUNITY_CENTRAL);
+
+		if ($globalConfig && is_array($globalConfig)) {
+			foreach ($globalConfig as $rtpConfig) {
+
+				if (isset($rtpConfig['disabled']) && $rtpConfig['disabled']) {
+					continue;
+				}
+				if (isset($rtpConfig['skin']) && !F::app()->checkSkin($rtpConfig['skin'])) {
+					continue;
+				}
+				return $config = $rtpConfig;
+			}
+		}
+
+		return $config = false;
+	}
+
+	public static function getRtpCountries() {
+		static $countries;
+
+		if ($countries) {
+			return $countries;
+		}
+
+		return $countries = WikiFactory::getVarValueByName(self::RTP_COUNTRIES, WikiFactory::COMMUNITY_CENTRAL);
+	}
 
 
 	public static function isEnabled() {
-		global $wgSitewideDisableRubiconRTP, $wgEnableAdEngineExt, $wgShowAds, $wgAdDriverUseSevenOneMedia;
+		global $wgEnableAdEngineExt, $wgShowAds, $wgAdDriverUseSevenOneMedia;
 
-		return !$wgSitewideDisableRubiconRTP
-			&& $wgEnableAdEngineExt
+		return $wgEnableAdEngineExt
 			&& $wgShowAds
 			&& AdEngine2Service::areAdsShowableOnPage()
+			&& self::getRtpCountries()
+			&& self::getRtpConfig()
 			&& !$wgAdDriverUseSevenOneMedia;
 	}
 
 	public function getSetupHtml($params = array()) {
-
 		global $wgAdDriverRubiconCachedOnly;
 
 		static $called = false;
 		$code = '';
 
-		$ozSite = json_encode(self::OZ_SITE);
-		$ozZone = json_encode(self::OZ_ZONE);
-		$ozSlotSize = json_encode('300x250');
-		$ozCachedOnly = json_encode((bool)$wgAdDriverRubiconCachedOnly);
-		$scriptUrl = json_encode('//tap-cdn.rubiconproject.com/partner/scripts/rubicon/dorothy.js?pc=' . self::OZ_SITE);
+		$rtpConfig = json_encode(self::getRtpConfig());
+		$rtpCountries = json_encode(self::getRtpCountries());
 
+		$ozCachedOnly = json_encode((bool)$wgAdDriverRubiconCachedOnly);
 
 		if (!$called && self::isEnabled()) {
 			$code = <<< SCRIPT
 <script>
-	require(['wikia.window', 'wikia.geo', 'wikia.instantGlobals'], function (window, geo, globals) {
-		if (!globals.wgSitewideDisableRubiconRTP && geo.getCountryCode() == "US" ) {
-			var s, i, config = {
-				rp_performance: {
-					Start: Math.round(new Date().getTime() - window.wgNow.getTime()),
-					End: null
-				},
-				oz_async: true,
-				oz_cached_only: {$ozCachedOnly},
-				oz_api: "valuation",
-				oz_ad_server: "dart",
-				oz_site: {$ozSite},
-				oz_zone: {$ozZone},
-				oz_ad_slot_size: {$ozSlotSize},
-				oz_callback: function(response) {
-					var tracker = window.Wikia && window.Wikia.Tracker;
+	rp_config = {$rtpConfig};
+	// Configuration through globals:
+	oz_async = true;
+	oz_cached_only = {$ozCachedOnly};
+	oz_api = rp_config.oz_api || "valuation";
+	oz_ad_server = rp_config.oz_ad_server || "dart";
+	oz_site = rp_config.oz_site;
+	oz_zone = rp_config.oz_zone;
+	oz_ad_slot_size = rp_config.oz_ad_slot_size;
 
-					rp_performance.End = Math.round(new Date().getTime() - window.wgNow.getTime());
-					for (var i in window.rp_performance) {
-						tracker.track({
-							ga_category: 'ad/performance/rubicon' + i + '/wgNow',
-							ga_action: 'oz_cached_only=' + !!window.wgAdDriverRubiconCachedOnly,
-							ga_value: rp_performance[i],
-							trackingMethod: 'ad'
-						});
-					}
-				}
-			};
+	require(['wikia.geo', 'wikia.instantGlobals', 'ext.wikia.adEngine.rubiconRtp'], function (geo, instantGlobals, rtp) {
+		var rtpCountries = {$rtpCountries}, country = geo.getCountryCode();
 
-			for(i in config) {
-				window[i] = config[i];
-			}
-
-			s = document.createElement('script');
-			s.src = {$scriptUrl};
-			s.async = true;
-			document.body.appendChild(s);
+		if (rtpCountries.indexOf(country) !== -1 && !instantGlobals.wgSitewideDisableRubiconRTP) {
+			rtp.call();
 		}
 	});
 </script>
 SCRIPT;
 		}
+
+		$called = true;
 
 		return $code;
 	}

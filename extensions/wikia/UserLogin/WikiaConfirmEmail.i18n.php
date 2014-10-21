@@ -17,6 +17,13 @@ $messages['en'] = array(
 	'wikiaconfirmemail-username' => 'Username',
 );
 
+/** Message documentation (Message documentation)
+ * @author Liuxinyu970226
+ */
+$messages['qqq'] = array(
+	'wikiaconfirmemail-username' => '{{Identical|Username}}',
+);
+
 /** Arabic (العربية)
  * @author Achraf94
  */
@@ -209,6 +216,13 @@ $messages['ia'] = array(
 	'wikiaconfirmemail-username' => 'Nomine de usator',
 );
 
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'wikiaconfirmemail-username' => '사용자 이름',
+);
+
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
@@ -334,11 +348,13 @@ $messages['pt'] = array(
 /** Brazilian Portuguese (português do Brasil)
  * @author Cainamarques
  * @author Caio1478
+ * @author Jefersonmoraes
  * @author Luckas
  */
 $messages['pt-br'] = array(
 	'wikiaconfirmemail-error-empty-code' => 'Código de confirmação vazio',
 	'wikiaconfirmemail-error-invalid-code' => 'Código de confirmação inválido',
+	'wikiaconfirmemail-error-user-not-match' => 'Opa, esse link de confirmação não corresponde com o nome de usuário que você inseriu. Verifique se você está digitando o nome de usuário correto. Se você quiser efetuar login com uma conta diferente, clique <a href="{{fullurl:{{ns:special}}:UserLogin}}"> aqui </a>',
 	'wikiaconfirmemail-login-button' => 'Confirmar e entrar',
 	'wikiaconfirmemail-heading' => 'Quase lá!',
 	'wikiaconfirmemail-subheading' => 'Entrar com seu nome de usuário e senha para que nós reconheçamos que recebeu o email.',
@@ -414,15 +430,16 @@ $messages['uk'] = array(
 );
 
 /** Vietnamese (Tiếng Việt)
+ * @author Rémy Lee
  * @author Xiao Qiao
  */
 $messages['vi'] = array(
 	'wikiaconfirmemail-error-empty-code' => 'Mã xác nhận trống',
 	'wikiaconfirmemail-error-invalid-code' => 'Mã xác nhận không hợp lệ',
-	'wikiaconfirmemail-error-user-not-match' => 'Rất tiếc, liên kết xác nhận này không phù hợp với tên người dùng bạn đã nhập.  Đảm bảo rằng bạn đang nhập đúng tên người dùng. Nếu bạn muốn đăng nhập với một tài khoản khác, nhấp vào <a href="{{fullurl:{{ns:special}}:UserLogin}}">đây</a>',
+	'wikiaconfirmemail-error-user-not-match' => 'Rất tiếc, liên kết xác nhận này không phù hợp với tên người dùng bạn đã nhập. Đảm bảo rằng bạn đang nhập đúng tên người dùng. Nếu bạn muốn đăng nhập với một tài khoản khác, nhấp vào <a href="{{fullurl:{{ns:special}}:UserLogin}}">đây</a>',
 	'wikiaconfirmemail-login-button' => 'Xác nhận và đăng nhập',
-	'wikiaconfirmemail-heading' => 'Hầu như có!',
-	'wikiaconfirmemail-subheading' => 'Đăng nhập bằng tên người dùng và mật khẩu của bạn để chúng tôi biết rằng bạn đã nhận được email.',
+	'wikiaconfirmemail-heading' => 'Hình như đã được rồi!',
+	'wikiaconfirmemail-subheading' => 'Đăng nhập bằng tên người dùng và mật khẩu của bạn để chúng tôi biết rằng bạn đã nhận được thư điện tử.',
 	'wikiaconfirmemail-username' => 'Tên người dùng',
 );
 
