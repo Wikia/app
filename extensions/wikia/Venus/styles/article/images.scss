@@ -126,5 +126,9 @@ $border-color: lighten($color-text, 30%);
 		.tright {
 			margin-right: -$small-grid-column-padding;
 		}
+
+		.wikiaPhotoGallery-slider-body {
+			margin-left: -6px;
+		}
 	}
 }
