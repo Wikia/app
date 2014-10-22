@@ -18,12 +18,8 @@ module WikiaFunctions
         returnVal = "'data:image/svg+xml;charset=utf-8;base64,#{dataString}'"
       else
         returnVal = "'#{dataString}'";
-        end
-    begin
-      Sass::Script::Parser.parse(returnVal, 0, 0)
-    rescue
-      Sass::Script::String.new(returnVal)
     end
+    Sass::Script::String.new(returnVal)
   end
 
   def get_command_line_param(paramName, defaultResult='')
