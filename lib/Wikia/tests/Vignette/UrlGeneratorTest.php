@@ -1,10 +1,11 @@
 <?php
 
 use Wikia\Vignette\UrlGenerator;
+use Wikia\Vignette\UrlConfig;
 
 class UrlGeneratorTest extends PHPUnit_Framework_TestCase {
 	public function testUrl() {
-		$config = (new \Wikia\Vignette\UrlConfig())
+		$config = (new UrlConfig())
 			->setRelativePath('a/ab/SomeFile.jpg')
 			->setBaseUrl('http://images.vignette.com')
 			->setTimestamp(12345)
@@ -36,7 +37,7 @@ class UrlGeneratorTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testOldUrl() {
-		$config = (new \Wikia\Vignette\UrlConfig())
+		$config = (new UrlConfig())
 			->setRelativePath('a/ab/SomeFile.jpg')
 			->setTimestamp(123456)
 			->setIsArchive(true)
