@@ -56,20 +56,6 @@ UserLoginAjaxForm.prototype.ajaxLogin = function() {
 	}, $.proxy(this.submitLoginHandler, this));
 };
 
-UserLoginAjaxForm.prototype.submitFbSignupHandler = function(json) {
-	'use strict';
-
-	if (json.result === 'ok') {
-		window.Wikia.Tracker.track({
-			category: 'user-sign-up',
-			trackingMethod: 'both',
-			action: window.Wikia.Tracker.ACTIONS.SUCCESS,
-			label: 'facebook-signup'
-		});
-	}
-	this.submitLoginHandler(json);
-};
-
 UserLoginAjaxForm.prototype.submitLoginHandler = function(json) {
 	$().log(json);
 	this.form.find('.error-msg').remove();

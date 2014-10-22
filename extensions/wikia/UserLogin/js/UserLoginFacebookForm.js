@@ -35,5 +35,22 @@ var UserLoginFacebookForm = $.createClass(UserLoginAjaxForm, {
 			fbfeedoptions: this.getFeedOptions().join(',')
 		},
 		$.proxy(this.submitFbSignupHandler, this));
+	},
+
+	/**
+	 * Extends login handler callback for tracking and any additional work
+	 * @param json
+	 */
+	submitFbSignupHandler: function (json) {
+		'use strict';
+		if (json.result === 'ok') {
+			window.Wikia.Tracker.track({
+				category: 'user-sign-up',
+				trackingMethod: 'both',
+				action: window.Wikia.Tracker.ACTIONS.SUCCESS,
+				label: 'facebook-signup'
+			});
+		}
+		this.submitLoginHandler(json);
 	}
 });
