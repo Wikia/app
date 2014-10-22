@@ -18,6 +18,10 @@ $article-items-spacing: 40px;
 		float: left;
 		margin-bottom: $article-items-spacing;
 
+		&:not(.cover-unit) {
+			margin-top: 60px;
+		}
+
 		&.cover-unit {
 			@include proportional-video-height(8 * ($medium-grid-column + $medium-grid-gutter) - $medium-grid-gutter + $medium-content-padding);
 			background-color: $placeholder-background-color; //only for prototype version
