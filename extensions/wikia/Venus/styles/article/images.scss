@@ -1,4 +1,5 @@
 @import 'extensions/wikia/Venus/styles/variables';
+@import 'extensions/wikia/Venus/styles/mixins';
 @import 'skins/shared/color';
 
 $border-color: lighten($color-text, 30%);
@@ -47,6 +48,10 @@ $border-color: lighten($color-text, 30%);
 		clear: left;
 		float: left;
 		margin: 30px 30px 30px (-$medium-grid-column-padding);
+
+		img {
+			float: left;
+		}
 	}
 
 	.floatright,
@@ -54,12 +59,19 @@ $border-color: lighten($color-text, 30%);
 		clear: right;
 		float: right;
 		margin: 30px (-$medium-grid-column-padding - $medium-grid-gutter - $medium-grid-column) 30px 30px;
+
+		img {
+			float: right;
+		}
 	}
 
 	.floatleft,
 	.tleft,
 	.floatright,
 	.tright {
+		@include grid-column-max-width('medium', 11);
+		overflow: hidden;
+
 		.image-thumbnail img {
 			margin: 0;
 		}
@@ -108,6 +120,13 @@ $border-color: lighten($color-text, 30%);
 @media #{$large-up} {
 	.article {
 		.floatleft,
+		.tleft,
+		.floatright,
+		.tright {
+			@include grid-column-max-width('large', 11);
+		}
+
+		.floatleft,
 		.tleft {
 			margin-left: -$large-grid-column-padding;
 		}
@@ -121,6 +140,13 @@ $border-color: lighten($color-text, 30%);
 
 @media #{$small-only} {
 	.article {
+		.floatleft,
+		.tleft,
+		.floatright,
+		.tright {
+			@include grid-column-max-width('small', 11);
+		}
+
 		.floatleft,
 		.tleft {
 			margin-left: -$small-grid-column-padding;
