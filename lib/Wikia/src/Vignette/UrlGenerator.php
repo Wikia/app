@@ -17,7 +17,7 @@ class UrlGenerator {
 	const MODE_TOP_CROP = 'top-crop';
 	const MODE_TOP_CROP_DOWN = 'top-crop-down';
 	const MODE_WINDOW_CROP = 'window-crop';
-	const MODE_WINDOW_CROP_FIXED = 'window-crop';
+	const MODE_WINDOW_CROP_FIXED = 'window-crop-fixed';
 	const MODE_ZOOM_CROP = 'zoom-crop';
 	const MODE_ZOOM_CROP_DOWN = 'zoom-crop-down';
 
