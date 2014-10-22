@@ -19,9 +19,9 @@ class VignetteRequest {
 	}
 
 	/**
-	 * create a UrlGenerator from a config hash. $config must have the following keys: timestamp, relative-path, and
-	 * language-code. optionally, it can also have is-archive, bucket, base-url, and domain-shard-count. if the
-	 * optional values aren't in the hash, they'll be generated from the current wiki environment
+	 * create a UrlGenerator from a config hash. $config must have the following keys: relative-path.
+	 * optionally, it can also have timestamp, is-archive, language-code, bucket, base-url, and domain-shard-count.
+	 * if the optional values aren't in the hash, they'll be generated from the current wiki environment
 	 *
 	 * @param $config
 	 * @return UrlGenerator
@@ -29,12 +29,12 @@ class VignetteRequest {
 	 */
 	public static function fromHash($config) {
 		$requiredKeys = [
-			'timestamp',
 			'relative-path',
-			'language-code',
 		];
 
 		$isArchive = isset($config['is-archive']) ? $config['is-archive'] : false;
+		$languageCode = isset($config['language-code']) ? $config['language-code'] : null;
+		$timestamp = isset($config['timestamp']) ? $config['timestamp'] : 0;
 
 		if (!isset($config['base-url'])) {
 			global $wgVignetteUrl;
@@ -47,8 +47,7 @@ class VignetteRequest {
 			 * regular expression because there is no variable that contains the bucket name :(
 			 */
 			global $wgUploadPath;
-			preg_match( '/http(s?):\/\/(.*?)\/(.*?)\/(.*)$/', $wgUploadPath, $matches );
-			$config['bucket'] = $matches[3];
+			$config['bucket'] = self::parseBucket($wgUploadPath);
 		}
 
 		if (!isset($config['domain-shard-count'])) {
@@ -65,13 +64,23 @@ class VignetteRequest {
 
 		$config = ( new UrlConfig() )
 			->setIsArchive( $isArchive )
-			->setTimestamp( $config['timestamp'] )
+			->setTimestamp( $timestamp )
 			->setRelativePath( $config['relative-path'] )
-			->setLanguageCode( $config['language-code'] )
+			->setLanguageCode( $languageCode )
 			->setBucket( $config['bucket'] )
 			->setBaseUrl( $config['base-url'] )
 			->setDomainShardCount( $config['domain-shard-count'] );
 
 		return new UrlGenerator($config);
+	}
+
+	public static function parseBucket($url) {
+		preg_match( '/http(s?):\/\/(.*?)\/(.*?)\/(.*)$/', $url, $matches );
+		return $matches[3];
+	}
+
+	public static function parseRelativePath($url) {
+		preg_match( '/\w\/\w\w\/(.*)$/', $url, $matches);
+		return $matches[0];
 	}
 }

@@ -25,6 +25,7 @@ class UrlGenerator {
 	const IMAGE_TYPE_IMAGES = "images";
 
 	const FORMAT_WEBP = "webp";
+	const FORMAT_JPG = "jpg";
 
 	const REVISION_LATEST = 'latest';
 
@@ -230,6 +231,10 @@ class UrlGenerator {
 	 */
 	public function webp() {
 		return $this->format(self::FORMAT_WEBP);
+	}
+
+	public function jpg() {
+		return $this->format(self::FORMAT_JPG);
 	}
 
 	public function avatar() {
