@@ -60,7 +60,7 @@ $wgAutoloadClasses['ExactTargetDeleteUserTask'] =  $dir . '/tasks/ExactTargetDel
 $wgAutoloadClasses['ExactTargetWikiTaskHelper'] =  $dir . '/tasks/ExactTargetWikiTaskHelper.php' ;
 $wgAutoloadClasses['ExactTargetCreateWikiTask'] =  $dir . '/tasks/ExactTargetCreateWikiTask.php' ;
 $wgAutoloadClasses['ExactTargetUpdateWikiTask'] =  $dir . '/tasks/ExactTargetUpdateWikiTask.php' ;
-$wgAutoloadClasses['ExactTargetUpdateCityCatMapping'] =  $dir . '/tasks/ExactTargetUpdateCityCatMapping.php' ;
+$wgAutoloadClasses['ExactTargetUpdateCityCatMappingTask'] =  $dir . '/tasks/ExactTargetUpdateCityCatMappingTask.php' ;
 /* Add API classes */
 $wgAutoloadClasses['ExactTargetApiDataExtension'] = $dir . '/api/ExactTargetApiDataExtension.php' ;
 $wgAutoloadClasses['ExactTargetApiHelper'] = $dir . '/api/ExactTargetApiHelper.php' ;

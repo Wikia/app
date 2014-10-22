@@ -48,7 +48,7 @@ class ExactTargetWikiHooks {
 	 * @return true
 	 */
 	public function onCityCatMappingUpdated( Array $aParams ) {
-		$thisInstance->addTheUpdateCityCatMappingTask( $aParams );
+		$this->addTheUpdateCityCatMappingTask( $aParams );
 		return true;
 	}
 
@@ -58,7 +58,7 @@ class ExactTargetWikiHooks {
 	 * @param  array $aParams  Contains wiki's id, url and title.
 	 * @param  ExactTargetAddWikiTask $oTask  Task object.
 	 */
-	private function addTheAddWikiTask( $aParams ) {
+	private function addTheAddWikiTask( Array $aParams ) {
 		$iCityId = $aParams['city_id'];
 		$oTask = $this->getExactTargetCreateWikiTask();
 		$oTask->call( 'sendNewWikiData', $iCityId );
@@ -82,7 +82,7 @@ class ExactTargetWikiHooks {
 	 * @param [type]                              $aParams [description]
 	 * @param ExactTargetUpdateCityCatMappingTask $oTask   [description]
 	 */
-	private function addTheUpdateCityCatMappingTask( $aParams ) {
+	private function addTheUpdateCityCatMappingTask( Array $aParams ) {
 		$oTask = $this->getExactTargetUpdateCityCatMappingTask();
 		$oTask->call( 'updateCityCatMappingData', $aParams );
 		$oTask->queue();

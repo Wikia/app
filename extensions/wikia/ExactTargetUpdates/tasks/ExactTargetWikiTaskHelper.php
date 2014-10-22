@@ -116,34 +116,41 @@ class ExactTargetWikiTaskHelper {
 	}
 
 	public function prepareCityCatMappingDataExtensionForDelete( $oResults ) {
-		$aCityCatMappingDataExtensionForDelete = [
+		$aCityCatMappingDataForDelete = [
 			'DataExtension' => [],
 		];
-
 		$aCustomerKeys = $this->getCustomerKeys();
 
-		foreach ( $oResults->Results as $oResult ) {
-			$iCityId = $oResult->Properties->Property[0];
-			$iCatId = $oResult->Properties->Property[1];
+		/* An ugly hack caused by ExactTarget's API inconsistency */
+		$aOldCategories = [];
+		if ( is_array( $oResults->Results ) ) {
+			foreach ( $oResults->Results as $oResult ) {
+				$oCityId = $oResult->Properties->Property[0];
+				$oCatId = $oResult->Properties->Property[1];
+				$aOldCategories[] = [
+					'city_id' => $oCityId->Value,
+					'cat_id' => $oCatId->Value,
+				];
+			}
+		} elseif ( is_object( $oResults->Results ) ) {
+			$aProperty = $oResults->Results->Properties->Property;
 			$aOldCategories[] = [
-				'city_id' => $oCityId->Value,
-				'cat_id' => $oCatId->Value,
+				'city_id' => $aProperty[0]->Value,
+				'cat_id' => $aProperty[1]->Value,
 			];
 		}
 
 		foreach ( $aOldCategories as $aCategory ) {
-			$aCityCatMappingDataExtensionForDelete[] = [
-				[
-					'CustomerKey' => $aCustomerKeys['city_cat_mapping'],
-					'Keys' => [
-						'city_id' => $aCategory['city_id'],
-						'cat_id' => $aCategory['cat_id'],
-					],
+			$aCityCatMappingDataForDelete['DataExtension'][] = [
+				'CustomerKey' => $aCustomerKeys['city_cat_mapping'],
+				'Keys' => [
+					'city_id' => $aCategory['city_id'],
+					'cat_id' => $aCategory['cat_id'],
 				],
 			];
 		}
 
-		return $aCityCatMappingDataExtensionForDelete;
+		return $aCityCatMappingDataForDelete;
 	}
 
 	/**
