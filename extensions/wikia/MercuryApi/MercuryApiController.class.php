@@ -227,4 +227,23 @@ class MercuryApiController extends WikiaController {
 
 		$this->response->setVal( 'data', $data );
 	}
+
+	/**
+	 * @desc Gets random article
+	 * @throws NotFoundApiException
+	 * @see RandomPage core MediaWiki class
+	 */
+	public function getRandomArticle() {
+		$randomPage = new RandomPage();
+		// Mercury doesn't support now custom content namespaces
+		$randomPage->setNamespace( NS_MAIN );
+		$title = $randomPage->getRandomTitle();
+
+		if( is_null( $title ) ) {
+			throw new NotFoundApiException();
+		}
+
+		$this->request->setVal( self::PARAM_ARTICLE_TITLE, $title->getText() );
+		$this->getArticle();
+	}
 }
