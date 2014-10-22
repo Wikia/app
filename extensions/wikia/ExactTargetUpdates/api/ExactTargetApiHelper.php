@@ -99,6 +99,30 @@ class ExactTargetApiHelper {
 		return $apiProperty;
 	}
 
+	public function makeRetrieveRequestObject( $sObjectType, Array $aProperties ) {
+		$oRetrieveRequest = new ExactTarget_RetrieveRequest();
+		$oRetrieveRequest->ObjectType = $sObjectType;
+		$oRetrieveRequest->Properties = $aProperties;
+
+		return $oRetrieveRequest;
+	}
+
+	public function makeSimpleFilterPartObject( $sProperty, $sValue ) {
+		$oSimpleFilterPart = new ExactTarget_SimpleFilterPart();
+		$oSimpleFilterPart->Value = $sValue;
+		$oSimpleFilterPart->SimpleOperator = ExactTarget_SimpleOperators::equals;
+		$oSimpleFilterPart->Property = $sProperty;
+
+		return $oSimpleFilterPart;
+	}
+
+	public function makeRetrieveRequestMsgObject( $oRetrieveRequest ) {
+		$oRetrieveRequestMsg = new ExactTarget_RetrieveRequestMsg();
+		$oRetrieveRequestMsg->RetrieveRequest = $oRetrieveRequest;
+
+		return $oRetrieveRequestMsg;
+	}
+
 	/**
 	 * Creates an array of DataExtension objects
 	 * based on passed parameters.
@@ -132,4 +156,17 @@ class ExactTargetApiHelper {
 		return $aDE;
 	}
 	
+	public function prepareSubscriberObjects( $aObjects ) {
+		$aSubscribers = [];
+
+		foreach ( $aObjects as $aSub ) {
+			$oSubscriber = new ExactTarget_Subscriber();
+			$oSubscriber->SubscriberKey = $aSub['SubscriberKey'];
+			$oSubscriber->EmailAddress = $aSub['EmailAddress'];
+			
+			$aSubscribers[] = $this->wrapToSoapVar( $oSubscriber, 'Subscriber' );
+		}
+
+		return $aSubscribers;
+	}
 }
