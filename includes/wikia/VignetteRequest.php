@@ -18,7 +18,22 @@ class VignetteRequest {
 		]);
 	}
 
+	/**
+	 * create a UrlGenerator from a config hash. $config must have the following keys: timestamp, relative-path, and
+	 * language-code. optionally, it can also have is-archive, bucket, base-url, and domain-shard-count. if the
+	 * optional values aren't in the hash, they'll be generated from the current wiki environment
+	 *
+	 * @param $config
+	 * @return UrlGenerator
+	 * @throws InvalidArgumentException
+	 */
 	public static function fromHash($config) {
+		$requiredKeys = [
+			'timestamp',
+			'relative-path',
+			'language-code',
+		];
+
 		$isArchive = isset($config['is-archive']) ? $config['is-archive'] : false;
 
 		if (!isset($config['base-url'])) {
@@ -40,12 +55,6 @@ class VignetteRequest {
 			global $wgImageServers;
 			$config['domain-shard-count'] = $wgImageServers;
 		}
-
-		$requiredKeys = [
-			'timestamp',
-			'relative-path',
-			'language-code',
-		];
 
 		foreach ($requiredKeys as $key) {
 			if (!isset($config[$key])) {
