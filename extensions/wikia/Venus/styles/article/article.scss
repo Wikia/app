@@ -178,6 +178,18 @@ $article-items-spacing: 40px;
 		margin-top: 16px;
 		padding-left: 13px;
 	}
+
+	dl {
+		margin: 16px 0;
+	}
+
+	dt {
+		font-weight: bold;
+	}
+
+	dd {
+		margin-left: $medium-grid-column - $medium-grid-column-padding;
+	}
 }
 
 /* FOR PROTOTYPE/TESTING ONLY */
@@ -254,6 +266,10 @@ $article-items-spacing: 40px;
 			margin-top: 18px;
 			padding-left: 14px;
 		}
+
+		dd {
+			margin-left: $large-grid-column - $large-grid-column-padding;
+		}
 	}
 
 	.infobox-test {
@@ -313,6 +329,10 @@ $article-items-spacing: 40px;
 		li {
 			margin-top: 10px;
 			padding-left: 4px;
+		}
+
+		dd {
+			margin-left: $small-grid-column - $small-grid-column-padding;
 		}
 	}
 
