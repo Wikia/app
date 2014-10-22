@@ -60,8 +60,8 @@
 						<div class="new-btn save-btn sg-sub">Publish</div>
 					</div>
 				</div>
-<!--				<span class="title-default-text">Wikia name can goes three lines (50 characters max)</span>-->
-<!--				<img class="title-edit-btn" src="/extensions/wikia/NjordPrototype/images/pencil.svg">-->
+				<span class="title-default-text">Wikia name can goes three lines (50 characters max)</span>
+				<img class="title-edit-btn" src="/extensions/wikia/NjordPrototype/images/pencil.svg">
 			</h1>
 
 			<!--		<div class="edit-btn new-btn">edit</div>-->

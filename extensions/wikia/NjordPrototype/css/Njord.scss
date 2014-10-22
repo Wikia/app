@@ -1,6 +1,5 @@
 .MainPageHero {
   background-color: #092140;
-  overflow: hidden;
   position: relative;
   width: 100%;
 
@@ -59,7 +58,9 @@
   .title-wrap {
     .edit-box {
       background-color: rgba(0, 0, 0, .2);
-      bottom: 0;
+      bottom: -64px;
+      display: none;
+      position: absolute;
       width: 100%;
     }
     .hero-title {
@@ -129,7 +130,7 @@
     color: #fff;
     display: flex;
     flex-direction: column;
-    margin-left: 7%;
+    margin: 5px 0 0 7%;
   }
 
   .upload-hover {
