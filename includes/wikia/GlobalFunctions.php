@@ -115,7 +115,7 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 	// Override image server location for Wikia development environment
 	// This setting should be images.developerName.wikia-dev.com or perhaps "localhost"
 	// FIXME: This needs to be removed. It should be encapsulated in the URL generation.
-	if (!empty($wg->DevBoxImageServerOverride)) {
+	if (!empty($wg->DevBoxImageServerOverride) && !$wg->EnableVignette) {
 		$url = preg_replace("/\/\/(.*?)wikia-dev\.com\/(.*)/", "//{$wg->DevBoxImageServerOverride}/$2", $url);
 	}
 
@@ -145,7 +145,7 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 			// RT#98969 if the url already has a cb value, don't add another one...
 			$cb = ($timestamp!='' && strpos($url, "__cb") === false) ? "__cb{$timestamp}/" : '';
 
-			if (!empty($wg->DevBoxImageServerOverride)) {
+			if (!empty($wg->DevBoxImageServerOverride) && !$wg->EnableVignette) {
 				// Dev boxes
 				// TODO: support domains sharding on devboxes
 				$url = str_replace('http://images.wikia.com/', sprintf("http://{$wg->DevBoxImageServerOverride}/%s", $cb), $url);
@@ -154,7 +154,7 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 				$url = str_replace('http://images.wikia.com/', sprintf("http://{$wg->ImagesDomainSharding}/%s",$serverNo, $cb), $url);
 			}
 		}
-	} else if (!empty($wg->DevBoxImageServerOverride)) {
+	} else if (!empty($wg->DevBoxImageServerOverride) && !$wg->EnableVignette) {
 		$url = str_replace('http://images.wikia.com/', "http://{$wg->DevBoxImageServerOverride}/", $url);
 	}
 
