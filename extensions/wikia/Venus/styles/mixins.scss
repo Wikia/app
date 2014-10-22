@@ -124,17 +124,30 @@
 	height: round($width * 9 / 16);
 }
 
-@mixin edit-button($radius) {
-	background-image: url(base64_string("<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" viewBox=\"0 0 31 31\" enable-background=\"new 0 0 31 31\" xml:space=\"preserve\"><path d=\"M15.5 0C6.9 0 0 6.9 0 15.5S6.9 31 15.5 31 31 24.1 31 15.5 24.1 0 15.5 0zM7.3 24.4l1.9-4.6 2.7 2.8L7.3 24.4zM13.1 21.4l-2.8-2.8 8.7-8.7 2.8 2.8L13.1 21.4zM23 11.6l-2.8-2.8 2.2-2.2 2.8 2.8L23 11.6z\" fill=\"#{$color-links}\"/></svg>", 'svg'));
-	content: ' ';
+@mixin edit-button($size) {
 	display: inline-block;
-	height: $radius;
+	font-size: $size;
+	height: $size;
 	position: absolute;
 	right: 100%;
-	width: $radius;
+	width: $size;
 }
 
-@mixin resize-edit-button($radius) {
-	height: $radius;
-	width: $radius;
+@mixin resize-edit-button($size) {
+	height: $size;
+	width: $size;
+	font-size: $size;
+}
+
+@mixin side-navigation-font($character) {
+	content: $character;
+	font-family: 'sidenavigation-font' !important;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	font-style: normal !important;
+	font-weight: normal !important;
+	font-variant: normal !important;
+	line-height: 1;
+	speak: none;
+	text-transform: none !important;
 }

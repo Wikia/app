@@ -1,0 +1,60 @@
+@charset "UTF-8";
+
+@font-face {
+	font-family: 'sidenavigation-font';
+	src: url('/extensions/wikia/Venus/styles/fonts/sidenavigation-font.eot');
+	src: url('/extensions/wikia/Venus/styles/fonts/sidenavigation-font.eot?#iefix') format('embedded-opentype'),
+		url('/extensions/wikia/Venus/styles/fonts/sidenavigation-font.woff') format('woff'),
+		url('/extensions/wikia/Venus/styles/fonts/sidenavigation-font.ttf') format('truetype'),
+		url('/extensions/wikia/Venus/styles/fonts/sidenavigation-font.svg#sidenavigation-font') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[data-icon]:before {
+	content: attr(data-icon);
+	font-family: 'sidenavigation-font' !important;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	font-style: normal !important;
+	font-weight: normal !important;
+	font-variant: normal !important;
+	line-height: 1;
+	speak: none;
+	text-transform: none !important;
+}
+
+[class^='icon-']:before,
+[class*=' icon-']:before {
+	font-family: 'sidenavigation-font' !important;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	font-style: normal !important;
+	font-weight: normal !important;
+	font-variant: normal !important;
+	line-height: 1;
+	speak: none;
+	text-transform: none !important;
+}
+
+.icon-ico-edit:before {
+	content: 'u';
+}
+.icon-ico-reedit:before {
+	content: 'v';
+}
+.icon-ico-facebook:before {
+	content: 'w';
+}
+.icon-ico-settings:before {
+	content: 'x';
+}
+.icon-ico-toc:before {
+	content: 'y';
+}
+.icon-ico-twitter:before {
+	content: 'z';
+}
+.icon-share:before {
+	content: 'A';
+}

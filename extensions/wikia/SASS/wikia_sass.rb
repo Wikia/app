@@ -1,27 +1,6 @@
 require 'sass'
-require 'base64'
 
 module WikiaFunctions
-  def base64_string(dataString, dataType)
-    assert_type dataString, :String
-
-    dataString = Base64.encode64(dataString.value).chop
-
-    case dataType.value.downcase
-      when "jpg", "jpeg"
-        returnVal = "'data:image/jpeg;base64,#{dataString}'"
-      when "png"
-        returnVal = "'data:image/png;base64,#{dataString}'"
-      when "gif"
-        returnVal = "'data:image/gif;base64,#{dataString}'"
-      when "svg"
-        returnVal = "'data:image/svg+xml;charset=utf-8;base64,#{dataString}'"
-      else
-        returnVal = "'#{dataString}'";
-    end
-    Sass::Script::String.new(returnVal)
-  end
-
   def get_command_line_param(paramName, defaultResult='')
     assert_type paramName, :String
     retVal = defaultResult.to_s
