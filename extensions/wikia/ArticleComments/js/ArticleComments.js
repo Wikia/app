@@ -32,7 +32,7 @@
 				$fbCommentMessage = $('#fbCommentMessage'),
 				newComment;
 
-			// jQuery object could have been cashed before init method
+			// jQuery object could have been cached before init method
 			if (!ArticleComments.$wrapper) {
 				ArticleComments.$wrapper = $(ArticleComments.wrapperSelector);
 			}
