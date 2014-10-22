@@ -1,3 +1,4 @@
+@import 'fonts/venus-icons';
 @import 'variables';
 
 // We use this to do clear floats
@@ -124,30 +125,14 @@
 	height: round($width * 9 / 16);
 }
 
-@mixin edit-button($size) {
+
+@mixin edit-button {
+	@include venus-icon-edit;
+
 	display: inline-block;
-	font-size: $size;
-	height: $size;
+	font-size: $font-size-xl;
+	height: $font-size-xl;
 	position: absolute;
 	right: 100%;
-	width: $size;
-}
-
-@mixin resize-edit-button($size) {
-	height: $size;
-	width: $size;
-	font-size: $size;
-}
-
-@mixin side-navigation-font($character) {
-	content: $character;
-	font-family: 'sidenavigation-font' !important;
-	-moz-osx-font-smoothing: grayscale;
-	-webkit-font-smoothing: antialiased;
-	font-style: normal !important;
-	font-weight: normal !important;
-	font-variant: normal !important;
-	line-height: 1;
-	speak: none;
-	text-transform: none !important;
+	width: $font-size-xl;
 }

@@ -1,0 +1,92 @@
+@charset "UTF-8";
+
+@font-face {
+	font-family: 'venus-icons-font';
+	src: url('/extensions/wikia/Venus/styles/fonts/venus-icons.eot'); /* $wgCdnStylePath */
+	src: url('/extensions/wikia/Venus/styles/fonts/venus-icons.eot?#iefix') format('embedded-opentype'), /* $wgCdnStylePath */
+		url('/extensions/wikia/Venus/styles/fonts/venus-icons.woff') format('woff'), /* $wgCdnStylePath */
+		url('/extensions/wikia/Venus/styles/fonts/venus-icons.ttf') format('truetype'), /* $wgCdnStylePath */
+		url('/extensions/wikia/Venus/styles/fonts/venus-icons.svg#venus-icons-font') format('svg'); /* $wgCdnStylePath */
+	font-weight: normal;
+	font-style: normal;
+}
+
+$venus-icon-toc: "\f000";
+$venus-icon-edit: "\f001";
+$venus-icon-settings: "\f002";
+$venus-icon-reedit: "\f003";
+$venus-icon-facebook: "\f004";
+$venus-icon-twitter: "\f005";
+$venus-icon-share: "\f006";
+
+@mixin venus-icons-font {
+	font-family: 'venus-icons-font' !important;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	font-style: normal !important;
+	font-weight: normal !important;
+	font-variant: normal !important;
+	line-height: inherit;
+	speak: none;
+	text-transform: none !important;
+}
+
+@mixin venus-icon($character) {
+	@include venus-icons-font;
+	content: $character;
+}
+
+[data-venus-icon]:before {
+	@include venus-icons-font;
+	content: attr(data-venus-icon);
+}
+
+@mixin venus-icon-toc {
+	@include venus-icon($venus-icon-toc);
+}
+@mixin venus-icon-edit {
+	@include venus-icon($venus-icon-edit);
+}
+@mixin venus-icon-settings {
+	@include venus-icon($venus-icon-settings);
+}
+@mixin venus-icon-reedit {
+	@include venus-icon($venus-icon-reedit);
+}
+@mixin venus-icon-facebook {
+	@include venus-icon($venus-icon-facebook);
+}
+@mixin venus-icon-twitter {
+	@include venus-icon($venus-icon-twitter);
+}
+@mixin venus-icon-share {
+	@include venus-icon($venus-icon-share);
+}
+
+
+[class^='venus-icon-']:before,
+[class*=' venus-icon-']:before {
+	@include venus-icons-font;
+}
+
+.venus-icon-toc:before {
+	content: $venus-icon-toc;
+}
+.venus-icon-edit:before {
+	content: $venus-icon-edit;
+}
+.venus-icon-settings:before {
+	content: $venus-icon-settings;
+}
+.venus-icon-reedit:before {
+	content: $venus-icon-reedit;
+}
+.venus-icon-facebook:before {
+	content: $venus-icon-facebook;
+}
+.venus-icon-twitter:before {
+	content: $venus-icon-twitter;
+}
+.venus-icon-share:before {
+	content: $venus-icon-share;
+}
