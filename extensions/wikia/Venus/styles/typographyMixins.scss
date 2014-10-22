@@ -1,5 +1,4 @@
-//This variable is used for setting width and height of edit button
-$size-xl: 27px;
+@import "extensions/wikia/Venus/styles/variables";
 
 @mixin font-size-xxs {
 	font-size: 12px;
