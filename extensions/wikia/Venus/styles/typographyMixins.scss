@@ -1,3 +1,6 @@
+//This variable is used for setting width and height of edit button
+$size-xl: 27px;
+
 @mixin font-size-xxs {
 	font-size: 12px;
 }
@@ -19,7 +22,7 @@
 }
 
 @mixin font-size-xl {
-	font-size: 27px;
+	font-size: $size-xl;
 }
 
 @mixin font-size-xxl {
