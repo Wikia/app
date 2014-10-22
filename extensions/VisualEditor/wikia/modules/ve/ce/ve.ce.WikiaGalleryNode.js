@@ -22,16 +22,14 @@ ve.ce.WikiaGalleryNode = function VeCeWikiaGalleryNode( model, config ) {
 	// Mixin constructors
 	ve.ce.FocusableNode.call( this );
 
-	// Initialization
-	this.$element
-		.addClass( 'media-gallery-wrapper count-' + this.model.getAttribute( 'itemCount' ) )
-		.attr( {
-			'data-visible-count': 8,
-			'data-expanded': 0,
-			'data-model': JSON.stringify( this.model.getEmbedData() )
-		} );
+	// Initialize
+	this.rebuild();
 
-	this.$element.html('');
+	// Events
+	this.model.connect( this, {
+		'update': 'onModelUpdate'
+	} );
+	this.connect( this, { 'childUpdate': 'onChildUpdate' } );
 };
 
 /* Inheritance */
@@ -48,14 +46,24 @@ ve.ce.WikiaGalleryNode.static.tagName = 'div';
 
 /* Methods */
 
-ve.ce.WikiaGalleryNode.prototype.onSetup = function () {
-	require([ 'mediaGallery.controllers.galleries' ], function ( GalleriesController ) {
-		var controller = new GalleriesController({
-			lightbox: false,
-			lazyLoad: false
-		});
-		controller.init();
-	} );
+ve.ce.WikiaGalleryNode.prototype.onChildUpdate = function () {
+	console.log( 've.ce.WikiaGalleryNode.prototype.onChildUpdate' );
+	setTimeout( ve.bind( this.rebuild, this ), 0 );
+	//this.rebuild();
+};
+
+ve.ce.WikiaGalleryNode.prototype.rebuild = function () {
+	var i;
+	this.$element.html( '' );
+	for( i = 0; i < this.children.length; i++ ) {
+		try {
+			this.$element.append(
+				'CHILD ' + i + ', CAPTION' + this.children[i].children[0].$element.html()
+			);
+		} catch( e ) {
+			this.$element.append('CHILD ' + i + ', NO CAPTION');
+		}
+	}
 };
 
 /* Registration */
