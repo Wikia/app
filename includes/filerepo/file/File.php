@@ -1786,7 +1786,7 @@ abstract class File {
 	 * @return \Wikia\Vignette\UrlGenerator
 	 *
 	 */
-	protected function getUrlGenerator() {
+	public function getUrlGenerator() {
 			return VignetteRequest::fromFile( $this );
 	}
 
