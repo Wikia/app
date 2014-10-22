@@ -45,7 +45,8 @@ ve.ui.MWTemplateDialog.static.modelClasses = [ ve.dm.MWTransclusionNode ];
  */
 ve.ui.MWTemplateDialog.static.bookletLayoutConfig = {
 	'continuous': true,
-	'outlined': false
+	'outlined': false,
+	'autoFocus': false
 };
 
 /* Methods */
@@ -114,7 +115,8 @@ ve.ui.MWTemplateDialog.prototype.onReplacePart = function ( removed, added ) {
 			if ( added instanceof ve.dm.MWTemplateModel && this.loaded ) {
 				// Prevent selection changes
 				this.preventReselection = true;
-				added.addPromptedParameters();
+				//added.addPromptedParameters();
+				added.addUnusedParameters();
 				this.preventReselection = false;
 				names = added.getParameterNames();
 				params = added.getParameters();
@@ -139,10 +141,10 @@ ve.ui.MWTemplateDialog.prototype.onReplacePart = function ( removed, added ) {
  * @param {ve.dm.MWParameterModel} param Added param
  */
 ve.ui.MWTemplateDialog.prototype.onAddParameter = function ( param ) {
-	var page;
+	var page, $parameterPages;
 
 	if ( param.getName() ) {
-		page = new ve.ui.MWParameterPage( param, param.getId(), { '$': this.$ } );
+		page = new ve.ui.WikiaParameterPage( param, param.getId(), { '$': this.$ } );
 	} else {
 		page = new ve.ui.MWParameterPlaceholderPage( param, param.getId(), { '$': this.$ } );
 	}
@@ -153,18 +155,22 @@ ve.ui.MWTemplateDialog.prototype.onAddParameter = function ( param ) {
 		this.onAddParameterBeforeLoad( page );
 	}
 
+	$parameterPages = this.$body.find( '.ve-ui-mwParameterPage' );
+
 	// Recalculate tab indexes
-	this.$body.find( '.ve-ui-mwParameterPage' ).each( function ( index ) {
+	$parameterPages.each( function ( index ) {
 		$( this )
 			.find( '.ve-ui-mwParameterPage-field > .oo-ui-textInputWidget > textarea' )
-				.attr( 'tabindex', index * 3 + 1 )
-			.end()
-			.find( '.ve-ui-mwParameterPage-infoButton > a' )
 				.attr( 'tabindex', index * 3 + 2 )
 			.end()
+			.find( '.ve-ui-mwParameterPage-infoButton > a' )
+				.attr( 'tabindex', index * 3 + 3 )
+			.end()
 			.find( '.ve-ui-mwParameterPage-removeButton > a' )
-				.attr( 'tabindex', index * 3 + 3 );
+				.attr( 'tabindex', index * 3 + 4 );
 	} );
+
+	this.applyButton.$button.attr( 'tabindex', $parameterPages.length * 3 + 2 );
 };
 
 /**
@@ -338,7 +344,7 @@ ve.ui.MWTemplateDialog.prototype.getSetupProcess = function ( data ) {
 
 			// Properties
 			this.loaded = false;
-			this.transclusionModel = new ve.dm.MWTransclusionModel();
+			this.transclusionModel = new ve.dm.WikiaTransclusionModel();
 
 			// Events
 			this.transclusionModel.connect( this, { 'replace': 'onReplacePart' } );
@@ -350,9 +356,9 @@ ve.ui.MWTemplateDialog.prototype.getSetupProcess = function ( data ) {
 					template = ve.dm.MWTemplateModel.newFromName(
 						this.transclusionModel, data.template
 					);
-					promise = this.transclusionModel.addPart( template ).done( function () {
-						template.addPromptedParameters();
-					} );
+					promise = this.transclusionModel.addPart( template ).done( ve.bind( function () {
+						this.initializeNewTemplateParameters();
+					}, this ) );
 				} else {
 					// New template placeholder
 					promise = this.transclusionModel.addPart(
@@ -362,13 +368,37 @@ ve.ui.MWTemplateDialog.prototype.getSetupProcess = function ( data ) {
 			} else {
 				// Load existing template
 				promise = this.transclusionModel
-					.load( ve.copy( this.selectedNode.getAttribute( 'mw' ) ) );
+					.load( ve.copy( this.selectedNode.getAttribute( 'mw' ) ) )
+					.done( ve.bind( function () {
+						this.initializeTemplateParameters();
+					}, this ) );
 			}
 			this.applyButton.setDisabled( true );
 			this.pushPending();
 			promise.always( ve.bind( this.onTransclusionReady, this ) );
 		}, this );
 };
+
+/**
+ * Initialize parameters for new template insertion
+ *
+ * @method
+ */
+ve.ui.MWTemplateDialog.prototype.initializeNewTemplateParameters = function () {
+	var i, parts = this.transclusionModel.getParts();
+	for ( i = 0; i < parts.length; i++ ) {
+		if ( parts[i] instanceof ve.dm.MWTemplateModel ) {
+			parts[i].addPromptedParameters();
+		}
+	}
+};
+
+/**
+ * Intentionally empty. This is provided for Wikia extensibility.
+ *
+ * @method
+ */
+ve.ui.MWTemplateDialog.prototype.initializeTemplateParameters = function () {};
 
 /**
  * @inheritdoc

@@ -595,17 +595,21 @@ $messages['es'] = array(
  */
 $messages['fa'] = array(
 	'wikiaquiz-title-label' => 'عنوان',
+	'wikiaquiz-moreinfoarticle-label' => 'مقاله',
 	'wikiaquiz-question-label' => 'پرسش',
 	'wikiaquiz-questions-label' => 'سوال‌ها',
 	'wikiaquiz-answers-label' => 'پاسخ‌ها',
 	'wikiaquiz-answer-label' => 'پاسخ',
 	'wikiaquiz-cancel-label' => 'لغو',
+	'wikiaquiz-publish-label' => 'انتشار',
 	'wikiaquiz-game-start-button' => 'شروع بازی',
+	'wikiaquiz-game-cadence-2' => 'تنظیم کن',
 	'wikiaquiz-game-cadence-1' => 'برو!',
 	'wikiaquiz-game-question-label' => 'سؤال',
 	'wikiaquiz-game-next-button' => 'سؤال بعدی',
 	'wikiaquiz-game-finish-button' => 'پایان',
 	'wikiaquiz-game-continue-button' => 'ادامه',
+	'wikiaquiz-game-email-valid-please' => 'لطفاً یک نشانی رایانامه‌ای معتبر وارد کنید.',
 	'wikiaquiz-game-mute' => 'صامت‌سازی',
 );
 
@@ -1042,6 +1046,7 @@ $messages['kn'] = array(
 
 /** Korean (한국어)
  * @author Infinity
+ * @author Miri-Nae
  * @author 아라
  */
 $messages['ko'] = array(
@@ -1067,7 +1072,7 @@ $messages['ko'] = array(
 	'wikiaquiz-correct-label' => '맞나요?',
 	'wikiaquiz-addnewitem-label' => '새 항목 추가',
 	'wikiaquiz-cancel-label' => '취소',
-	'wikiaquiz-publish-label' => '게시',
+	'wikiaquiz-publish-label' => '저장',
 	'wikiaquiz-error-duplicate-quiz' => '같은 이름의 퀴즈가 이미 존재합니다.',
 	'wikiaquiz-error-duplicate-question' => '같은 질문이 이미 존재합니다.',
 	'wikiaquiz-error-invalid-question' => '질문 글이 올바르지 않습니다.',

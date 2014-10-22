@@ -1,4 +1,8 @@
-.CorporateFooter  {
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/color";
+
+.global-footer  {
+	box-sizing: content-box;
 	clear: left;
 	font-size: 11px;
 	padding-bottom: 10px;
@@ -10,16 +14,41 @@
 			display: none;
 		}
 	}
-	.WikiaHubBranding {
+	.branding {
 		background: transparent;
-		left: 10px;
 		padding: 1px;
 		position: absolute;
 		top: 0;
+		&.black {
+			background: black;
+		}
 		.wordmark {
 			float: left;
 			position: relative;
 			width: 66px;
+
+			img {
+				background-color: transparent;
+				background-image: url(/extensions/wikia/GlobalFooter/images/sprite.png); /* $wgCdnStylePath */
+				background-repeat: no-repeat;
+
+				height: 16px;
+				width: 54px;
+				margin: 4px 5px 0;
+			}
+			.wordmark9 { //lifestyle
+				background-position: -159px 0px;
+			}
+			.wordmark2 { //video games
+				background-position: -53px 0px;
+			}
+			.wordmark3 { //entertainment
+				background-position: -106px 0px;
+			}
+			//"default" logo -- com logo
+			.wordmark4 {
+				background-position: 0px 0px;
+			}
 		}
 		.hub {
 			background: $color-page;
@@ -46,14 +75,11 @@
 			}
 		}
 	}
-	.HubBrandingBlackBackground {
-		background: black;
-	}
 	ul {
 		list-style: none;
+		padding-right: 8px;
 		margin: 0 0 8px 167px;
 		text-align: right;
-
 		li {
 			border-left: solid 1px $color-links;
 			display: inline-block;
@@ -63,10 +89,17 @@
 			&:first-child {
 				border: none;
 			}
+			&:last-child {
+				padding-right: 0;
+			}
 
 			a {
 				color: $color-links;
 			}
 		}
 	}
+}
+
+body.skin-oasis .global-footer .branding {
+	left: 10px;
 }

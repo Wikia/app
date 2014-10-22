@@ -5,7 +5,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global mw */
+/* global mw */
 
 ( function () {
 var hasOwn = Object.hasOwnProperty,
@@ -28,6 +28,7 @@ ve.dm.MWTransclusionModel = function VeDmMWTransclusionModel() {
 	this.uid = 0;
 	this.requests = [];
 	this.queue = [];
+	this.specCache = specCache;
 };
 
 /* Inheritance */
@@ -192,7 +193,7 @@ ve.dm.MWTransclusionModel.prototype.fetch = function () {
 		return;
 	}
 
-	var i, len, item, title, request,
+	var i, len, item, title,
 		titles = [],
 		specs = {},
 		queue = this.queue.slice();
@@ -226,60 +227,65 @@ ve.dm.MWTransclusionModel.prototype.fetch = function () {
 		return;
 	}
 
-	// Request template specs from server
-	request = ve.init.target.constructor.static.apiRequest( {
+	this.requests.push( this.fetchRequest( titles, specs, queue ) );
+};
+
+ve.dm.MWTransclusionModel.prototype.fetchRequest = function ( titles, specs, queue ) {
+	return ve.init.target.constructor.static.apiRequest( {
 		'action': 'templatedata',
 		'titles': titles.join( '|' ),
 		'lang': mw.config.get( 'wgUserLanguage' ),
 		'redirects': '1'
 	} )
-		.done( function ( data ) {
-			var i, len, id, aliasMap = [];
+		.done( ve.bind( this.fetchRequestDone, this, titles, specs ) )
+		.always( ve.bind( this.fetchRequestAlways, this, queue ) );
+};
 
-			if ( data && data.pages ) {
-				// Keep spec data on hand for future use
-				for ( id in data.pages ) {
-					specs[data.pages[id].title] = data.pages[id];
-				}
-				// Follow redirects
-				if ( data.redirects ) {
-					aliasMap = data.redirects;
-				}
-				// Follow MW's normalisation
-				if ( data.normalized ) {
-					aliasMap.push.apply( aliasMap, data.normalized );
-				}
-				// Cross-reference aliased titles.
-				for ( i = 0, len = aliasMap.length; i < len; i++ ) {
-					// Only define the alias if the target exists, otherwise
-					// we create a new property with an invalid "undefined" value.
-					if ( hasOwn.call( specs, aliasMap[i].to ) ) {
-						specs[aliasMap[i].from] = specs[aliasMap[i].to];
-					}
-				}
+ve.dm.MWTransclusionModel.prototype.fetchRequestDone = function ( titles, specs, data ) {
+	var i, len, id, title, aliasMap = [];
 
-				// Prevent asking again for templates that have no specs
-				for ( i = 0, len = titles.length; i < len; i++ ) {
-					title = titles[i];
-					if ( !specs[title] ) {
-						specs[title] = null;
-					}
-				}
-
-				ve.extendObject( specCache, specs );
+	if ( data && data.pages ) {
+		// Keep spec data on hand for future use
+		for ( id in data.pages ) {
+			specs[data.pages[id].title] = data.pages[id];
+		}
+		// Follow redirects
+		if ( data.redirects ) {
+			aliasMap = data.redirects;
+		}
+		// Follow MW's normalisation
+		if ( data.normalized ) {
+			aliasMap.push.apply( aliasMap, data.normalized );
+		}
+		// Cross-reference aliased titles.
+		for ( i = 0, len = aliasMap.length; i < len; i++ ) {
+			// Only define the alias if the target exists, otherwise
+			// we create a new property with an invalid "undefined" value.
+			if ( hasOwn.call( specs, aliasMap[i].to ) ) {
+				specs[aliasMap[i].from] = specs[aliasMap[i].to];
 			}
-		} )
-		.always( ve.bind( function () {
-			// Prune completed request
-			var index = ve.indexOf( request, this.requests );
-			if ( index !== -1 ) {
-				this.requests.splice( index, 1 );
-			}
-			// Actually add queued items
-			this.process( queue );
-		}, this ) );
+		}
 
-	this.requests.push( request );
+		// Prevent asking again for templates that have no specs
+		for ( i = 0, len = titles.length; i < len; i++ ) {
+			title = titles[i];
+			if ( !specs[title] ) {
+				specs[title] = null;
+			}
+		}
+
+		ve.extendObject( specCache, specs );
+	}
+};
+
+ve.dm.MWTransclusionModel.prototype.fetchRequestAlways = function ( queue, data, textStatus, jqXHR ) {
+	// Prune completed request
+	var index = ve.indexOf( jqXHR, this.requests );
+	if ( index !== -1 ) {
+		this.requests.splice( index, 1 );
+	}
+	// Actually add queued items
+	this.process( queue );
 };
 
 /**

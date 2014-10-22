@@ -6,13 +6,20 @@ class FounderEmailsCompleteDigestEvent extends FounderEmailsEvent {
 	}
 
 	public function enabled ( $wgCityId, $user ) {
-		if (self::isAnswersWiki())
-			return false;
+        if (self::isAnswersWiki()) {
+            return false;
+        }
 
-		if ( $user->getOption( "founderemails-complete-digest-$wgCityId" ) ) {
-				return true;
-			}
-		return false;
+        if ( $user->getOption( "founderemails-complete-digest-$wgCityId" ) ) {
+            return true;
+        }
+
+        // disable if all Wikia email disabled
+        if ( $user->getBoolOption( "unsubscribed" ) ) {
+            return false;
+        }
+
+        return false;
 	}
 
 	/**

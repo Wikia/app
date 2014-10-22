@@ -13,7 +13,6 @@ define('ext.wikia.adEngine.wikiaGptHelper', [
 	var logGroup = 'ext.wikia.adEngine.wikiaGptHelper',
 		gptLoaded = false,
 		slotQueue = [],
-		providerSlotMap = gptSlotConfig.getConfig(),
 		gptSlots = {},
 		dataAttribs = {},
 		googletag,
@@ -76,6 +75,7 @@ define('ext.wikia.adEngine.wikiaGptHelper', [
 
 	function defineSlots() {
 		var	pageLevelParams = adLogicPageParams.getPageLevelParams(),
+			providerSlotMap = gptSlotConfig.getConfig(),
 			path = '/5441/wka.' + pageLevelParams.s0 + '/' + pageLevelParams.s1 + '//' + pageLevelParams.s2,
 			slotname,
 			slotnameGpt,
@@ -104,6 +104,7 @@ define('ext.wikia.adEngine.wikiaGptHelper', [
 						slotItem = slotMap[slotname];
 
 						sizes = convertSizesToGpt(slotItem.size);
+
 						if (slotname.match(/TOP_LEADERBOARD/)) {
 							sizes = filterOutSizesBiggerThanScreenSize(sizes);
 						}
@@ -114,15 +115,13 @@ define('ext.wikia.adEngine.wikiaGptHelper', [
 						slot = googletag.defineSlot(slotPath, sizes, slotnameGpt);
 						slot.addService(pubads);
 
-						// Per-slot targeting keys
-						slotParams = {
-							pos: slotname,
-							loc: slotItem.loc,
-							src: slotMapSrc
-						};
-						for (name in slotParams) {
-							if (slotParams.hasOwnProperty(name)) {
-								value = slotParams[name];
+						delete slotItem.size;
+						slotItem.pos = slotname;
+						slotItem.src = slotMapSrc;
+
+                        for (name in slotItem) {
+							if (slotItem.hasOwnProperty(name)) {
+								value = slotItem[name];
 								if (value) {
 									log(['defineSlots', 'slot.setTargeting', name, value], 'debug', logGroup);
 									slot.setTargeting(name, value);
@@ -134,7 +133,7 @@ define('ext.wikia.adEngine.wikiaGptHelper', [
 
 						dataAttribs[slotnameGpt] = {
 							'data-gpt-page-params': JSON.stringify(pageLevelParams),
-							'data-gpt-slot-params': JSON.stringify(slotParams),
+							'data-gpt-slot-params': JSON.stringify(slotItem),
 							'data-gpt-slot-sizes': JSON.stringify(sizes)
 						};
 

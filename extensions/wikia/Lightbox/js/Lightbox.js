@@ -15,6 +15,8 @@
 			thumbs: [], // master list of thumbnails inside carousel; purged after closing the lightbox
 			placeholderIdx: -1
 		},
+		carouselThumbWidth: 90,
+		carouselThumbHeight: 55,
 		// Modal vars
 		openModal: false, // gets replaced with dom object of open modal
 		shortScreen: false, // flag if the screen is shorter than LightboxLoader.defaults.height
@@ -474,9 +476,14 @@
 				Lightbox.openModal.media.html('');
 			},
 			updateLightbox: function (data) {
+				var height = LightboxLoader.defaults.height;
+				if (data.extraHeight) {
+					height += data.extraHeight;
+				}
+
 				// Set lightbox css
 				var css = {
-						height: LightboxLoader.defaults.height
+						height: height
 					},
 					// prevent race conditions from timeout
 					trackingTitle = Lightbox.current.key;
@@ -1159,6 +1166,11 @@
 						thumbs = article.find('.image, .lightbox').find('img').add(article.find('.thumbimage'));
 					}
 
+					// cache keys for dupe checking later
+					$.each(thumbArr, function () {
+						keys.push(this.key);
+					});
+
 					thumbs.each(function () {
 						var $thisThumb = $(this),
 							type,
@@ -1205,6 +1217,13 @@
 								thumbWrapperClass: (type === 'video') ? Lightbox.videoWrapperClass : ''
 							});
 						}
+					});
+
+					// Add cached media gallery data sent over from MediaGallery extension.
+					$(window).trigger('lightboxArticleMedia', {
+						thumbArr: thumbArr,
+						width: Lightbox.carouselThumbWidth,
+						height: Lightbox.carouselThumbHeight
 					});
 
 					// Fill articleMedia cache
@@ -1394,7 +1413,7 @@
 
 		thumbParams: function (url, type) {
 			//Get URL to a proper thumbnail
-			return Wikia.Thumbnailer.getThumbURL(url, type, 90, 55);
+			return Wikia.Thumbnailer.getThumbURL(url, type, Lightbox.carouselThumbWidth, Lightbox.carouselThumbHeight);
 		},
 
 		/**

@@ -190,9 +190,11 @@ $messages['it'] = array(
 
 /** Korean (한국어)
  * @author Leehoy
+ * @author Miri-Nae
  */
 $messages['ko'] = array(
 	'campfire-page-header' => '$2의 $1',
+	'campfire-licensed-under' => '$1 라이선스에 속합니다',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

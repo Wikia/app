@@ -33,7 +33,7 @@ var NodeChatSocketWrapper = $.createClass(Observable,{
 		console.log("connecting to url: " + url);
 
 		if( this.socket ) {
-			if(this.socket.socket.connected) {
+			if(this.socket.connected) {
 				return true;
 			} else {
 				this.socket.removeAllListeners('message');

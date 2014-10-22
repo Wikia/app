@@ -21,10 +21,13 @@ $dir = dirname(__FILE__) . '/';
 //classes
 $wgAutoloadClasses['MediaGalleryController'] =  $dir . 'MediaGalleryController.class.php';
 $wgAutoloadClasses['MediaGalleryHelper'] =  $dir . 'MediaGalleryHelper.class.php';
+$wgAutoloadClasses['MediaGalleryModel'] =  $dir . 'MediaGalleryModel.class.php';
 
 // hooks
 $wgAutoloadClasses['MediaGalleryHooks'] =  $dir . 'MediaGalleryHooks.class.php';
 $wgHooks['OutputPageBeforeHTML'][] = 'MediaGalleryHooks::onOutputPageBeforeHTML';
+$wgHooks['MakeGlobalVariablesScript'][] = 'MediaGalleryHooks::onMakeGlobalVariablesScript';
+$wgHooks['WikiFeatures::afterToggleFeature'][] = 'MediaGalleryHooks::afterToggleFeature';
 
 // i18n mapping
 $wgExtensionMessagesFiles['MediaGallery'] = $dir . 'MediaGallery.i18n.php';

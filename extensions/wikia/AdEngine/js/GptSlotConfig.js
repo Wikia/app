@@ -49,7 +49,7 @@ define('ext.wikia.adEngine.gptSlotConfig', function () {
 			TOP_INCONTENT_BOXAD:        {size: '300x250', loc: 'top'},
 			TOP_LEADERBOARD:            {size: '728x90', loc: 'top'},
 			TOP_RIGHT_BOXAD:            {size: '300x250', loc: 'top'},
-			WIKIA_BAR_BOXAD_1:          {size: '300x70', loc: 'bottom'}
+			WIKIA_BAR_BOXAD_1:          {size: '320x50,320x70,320x100', loc: 'bottom'}
 		},
 		mobile_remnant: {
 			MOBILE_TOP_LEADERBOARD:     {size: '320x50,1x1'},
@@ -58,17 +58,30 @@ define('ext.wikia.adEngine.gptSlotConfig', function () {
 		}
 	};
 
+	// Return a copy of slotMap objects
 	function getConfig(src) {
 		var undef;
 
 		if (src === undef) {
-			return slotMapConfig;
+			return JSON.parse(JSON.stringify(slotMapConfig));
 		}
 
-		return slotMapConfig[src];
+		return JSON.parse(JSON.stringify(slotMapConfig[src]));
+	}
+
+	function extendSlotParams(src, slotName, params) {
+		if (!(params && slotMapConfig[src] && slotMapConfig[src][slotName])) {
+			return;
+		}
+		for (var i in params) {
+			if (params.hasOwnProperty(i)) {
+				slotMapConfig[src][slotName][i] = params[i];
+			}
+		}
 	}
 
 	return {
-		getConfig: getConfig
+		getConfig: getConfig,
+		extendSlotParams: extendSlotParams
 	};
 });
