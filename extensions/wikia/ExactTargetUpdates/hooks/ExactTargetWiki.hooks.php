@@ -19,10 +19,10 @@ class ExactTargetWikiHooks {
 	 * @param  array $aWfVarParams  Contains a var's name, a wiki's id and a new value.
 	 * @return true
 	 */
-	public function onWikiFactoryChanged( Array $aParams ) {
-		$oHelper = getHelper();
-		$aWfVariablesTrigerringUpdate = $oHelper->getWfVarsTriggeringUpdate();
-		if ( isset( $aWfVariablesTrigerringUpdate[ $aParams['cv_name'] ] ) ) {
+	public function onWikiFactoryChangeCommitted( Array $aParams ) {
+		$oHelper = $this->getHelper();
+		$aWfVariablesTriggeringUpdate = $oHelper->getWfVarsTriggeringUpdate();
+		if ( isset( $aWfVariablesTriggeringUpdate[ $aParams['cv_name'] ] ) ) {
 			$this->addTheUpdateWikiTask( $aParams['city_id'] );
 		}
 		return true;

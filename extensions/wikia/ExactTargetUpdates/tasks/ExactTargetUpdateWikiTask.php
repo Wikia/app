@@ -7,7 +7,7 @@ class ExactTargetUpdateWikiTask extends BaseTask {
 		$oHelper = $this->getHelper();
 		$oApiDataExtension = $this->getApiDataExtension();
 
-		$aDataExtensions = $oHelper->prepareWikiDataExtensionsForUpdate( $iCityId );
+		$aDataExtensions = $oHelper->prepareWikiDataExtensionForUpdate( $iCityId );
 
 		$oApiDataExtension->updateRequest( $aDataExtensions );
 	}

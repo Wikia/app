@@ -49,7 +49,7 @@ class ExactTargetWikiTaskHelper {
 		$aCustomerKeys = $this->getCustomerKeys();
 
 		$aKeys = [
-			[ 'city_id' => $iCityId ],
+			'city_id' => $iCityId,
 		];
 		
 		/* Get wikidata from master */
@@ -66,11 +66,13 @@ class ExactTargetWikiTaskHelper {
 		];
 
 		$aWikiDataExtension = [
-			[
-				'CustomerKey' => $aCustomerKeys['city_list'],
-				'Keys' => $aKeys,
-				'Properties' => $aWikiData,
-			]
+			'DataExtension' => [
+				[
+					'CustomerKey' => $aCustomerKeys['city_list'],
+					'Keys' => $aKeys,
+					'Properties' => $aWikiData,
+				],
+			],
 		];
 
 		return $aWikiDataExtension;

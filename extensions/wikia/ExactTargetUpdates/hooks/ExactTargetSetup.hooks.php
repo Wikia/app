@@ -36,9 +36,9 @@ class ExactTargetSetupHooks {
 		if ( $this->shouldUpdate() ) {
 			$oWikiHooks = $this->getWikiHooks();
 			\Hooks::register( 'CreateWikiLocalJob-complete', [ $oWikiHooks, 'onCreateWikiLocalJobComplete' ] );
-			\Hooks::register( 'WikiFactoryChangeCommitted', $oWikiHooks );
-			\Hooks::register( 'WikiFactoryVerticalSet', $oWikiHooks );
-			\Hooks::register( 'CityCatMappingUpdated', $oWikiHooks );
+			\Hooks::register( 'WikiFactoryChangeCommitted', [ $oWikiHooks, 'onWikiFactoryChangeCommitted' ] );
+			\Hooks::register( 'WikiFactoryVerticalSet', [ $oWikiHooks, 'onWikiFactoryVerticalSet' ] );
+			\Hooks::register( 'CityCatMappingUpdated', [ $oWikiHooks, 'onCityCatMappingUpdated' ] );
 		}
 	}
 
