@@ -1,7 +1,5 @@
 <?php
 
-use Wikia\Vignette\UrlGenerator;
-
 /**
  * Helper service to maintain new video logic / old video logic
  */
@@ -659,7 +657,7 @@ class WikiaFileHelper extends Service {
 	 */
 	public static function getSquaredThumbnailUrl( File $file, $dimension, $useWebP = false ) {
 		// Create a new url generator
-		$gen = ( new UrlGenerator( $file ) );
+		$gen = VignetteRequest::fromFile( $file );
 
 		// Determine if this image falls into a small image category.  We compare the area of the image with the
 		// area of the requested thumb and use self::thumbEnlargeThreshold as the threshold for enlarging
