@@ -81,7 +81,13 @@
 					$.nirvana.postJson('FacebookSignupController', 'index',
 						$.proxy(this.checkAccountCallback, this));
 					break;
-
+				case 'not_authorized':
+					// Not logged into the Wikia FB app
+					this.track({
+						action: this.actions.SUCCESS,
+						label: 'facebook-login-not-auth'
+					});
+					break;
 				default:
 					// Track FB Connect Error
 					this.track({
