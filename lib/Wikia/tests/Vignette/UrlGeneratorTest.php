@@ -3,16 +3,6 @@
 use Wikia\Vignette\UrlGenerator;
 
 class UrlGeneratorTest extends PHPUnit_Framework_TestCase {
-	public static function setUpBeforeClass() {
-		global $wgUploadPath;
-		$wgUploadPath = 'http://images.wikia.com/tests/images';
-	}
-
-	public static function tearDownAfterClass() {
-		global $wgUploadPath;
-		unset( $wgUploadPath );
-	}
-
 	public function testUrl() {
 		$file = $this->getMock( '\Wikia\Vignette\FileInterface' );
 		$file->expects( $this->any() )
@@ -27,6 +17,9 @@ class UrlGeneratorTest extends PHPUnit_Framework_TestCase {
 		$file->expects( $this->any() )
 			->method( 'getTimestamp' )
 			->will( $this->returnValue( '12345' ) );
+		$file->expects( $this->any() )
+			->method( 'getBucket' )
+			->will( $this->returnValue( 'tests' ));
 
 		$this->assertEquals(
 			'/tests/images/a/ab/SomeFile.jpg/revision/latest?cb=12345',
@@ -73,6 +66,9 @@ class UrlGeneratorTest extends PHPUnit_Framework_TestCase {
 		$file->expects( $this->any() )
 			->method( 'getArchiveTimestamp' )
 			->will( $this->returnValue( '123456' ) );
+		$file->expects( $this->any() )
+			->method( 'getBucket' )
+			->will( $this->returnValue( 'tests' ));
 
 		$this->assertEquals(
 			'/tests/images/a/ab/SomeFile.jpg/revision/123456',

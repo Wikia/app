@@ -246,8 +246,7 @@ class UrlGenerator {
 	 * @throws \Exception
 	 */
 	public function url() {
-		$bucketPath = self::bucketPath();
-		$imagePath = "{$bucketPath}/{$this->imageType}/{$this->getRelativeUrl()}/revision/{$this->getRevision()}";
+		$imagePath = "{$this->file->getBucket()}/{$this->imageType}/{$this->getRelativeUrl()}/revision/{$this->getRevision()}";
 
 		if ( !isset( $this->query['lang'] ) ) {
 			$this->lang( $this->file->getLanguageCode() );
@@ -354,16 +353,5 @@ class UrlGenerator {
 		$shard = 1 + ( $hash % ( $wgImagesServers - 1 ) );
 
 		return str_replace( '<SHARD>', $shard, $wgVignetteUrl ) . "/{$imagePath}";
-	}
-
-	/**
-	 * get the top level bucket for a given wiki. this may or may not be the same as $wgDBName. This is done via
-	 * regular expression because there is no variable that contains the bucket name :(
-	 * @return mixed
-	 */
-	private static function bucketPath() {
-		global $wgUploadPath;
-		preg_match( '/http(s?):\/\/(.*?)\/(.*?)\/(.*)$/', $wgUploadPath, $matches );
-		return $matches[3];
 	}
 }

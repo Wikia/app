@@ -257,6 +257,17 @@ abstract class File implements FileInterface {
 	}
 
 	/**
+	 * get the top level bucket for a given wiki. this may or may not be the same as $wgDBName. This is done via
+	 * regular expression because there is no variable that contains the bucket name :(
+	 * @return mixed
+	 */
+	public function getBucket() {
+		global $wgUploadPath;
+		preg_match( '/http(s?):\/\/(.*?)\/(.*?)\/(.*)$/', $wgUploadPath, $matches );
+		return $matches[3];
+	}
+
+	/**
 	 * Get the file extension, e.g. "svg"
 	 *
 	 * @return string
