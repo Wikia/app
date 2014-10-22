@@ -37,10 +37,11 @@ ve.dm.WikiaGalleryItemNode.static.getMatchRdfaTypes = function () {
 };
 
 ve.dm.WikiaGalleryItemNode.static.matchFunction = function ( element ) {
-	return $( element ).parent().attr( 'typeof' ) === 'mw:Extension/gallery';
+	return $( element ).parent().attr( 'typeof' ) === 'mw:Extension/nativeGallery';
 };
 
 ve.dm.WikiaGalleryItemNode.static.toDataElement = function ( domElements, converter ) {
+	console.log('toDataElement');
 	var $figure = $( domElements[0] ),
 	$caption = $figure.children( 'figcaption' ).eq( 0 ),
 	$image = $figure.find( 'img' ).eq(0),

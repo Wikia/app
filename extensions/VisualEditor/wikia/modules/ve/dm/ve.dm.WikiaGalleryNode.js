@@ -31,7 +31,7 @@ ve.dm.WikiaGalleryNode.static.tagName = 'div';
 ve.dm.MWBlockImageNode.static.matchTagNames = [ 'div' ];
 
 ve.dm.WikiaGalleryNode.static.getMatchRdfaTypes = function () {
-	return [ 'mw:Extension/gallery' ];
+	return [ 'mw:Extension/nativeGallery' ];
 };
 
 ve.dm.WikiaGalleryNode.static.toDomElements = function ( data, doc, converter ) {
