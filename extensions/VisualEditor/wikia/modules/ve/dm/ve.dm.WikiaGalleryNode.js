@@ -36,34 +36,14 @@ ve.dm.WikiaGalleryNode.static.getMatchRdfaTypes = function () {
 
 ve.dm.WikiaGalleryNode.static.toDomElements = function ( data, doc, converter ) {
 	var div = doc.createElement( 'div' );
-
 	return [ div ];
 };
 
 ve.dm.WikiaGalleryNode.static.toDataElement = function ( domElements, converter ) {
-	var $domElements = $( domElements[0] ),
-		dataMw = JSON.parse( $domElements.attr( 'data-mw' ) ),
-		attributes = {};
-
-	attributes.itemCount = $domElements.children( 'figure' ).length;
-	attributes.caption = dataMw.attrs.caption;
-
-	return { 'type': this.name, 'attributes': attributes };
+	return { 'type': this.name };
 };
 
 /* Methods */
-
-ve.dm.WikiaGalleryNode.prototype.getEmbedData = function () {
-	var i,
-		children = this.getChildren(),
-		data = [];
-
-	for ( i = 0; i < children.length; i++ ) {
-		data.push( children[0].getAttribute( 'embedData') );
-	}
-
-	return data;
-};
 
 /* Registration */
 
