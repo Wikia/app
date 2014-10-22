@@ -39,9 +39,6 @@ class AccountNavigationController extends WikiaController {
 			case 'login':
 				$attributes['accesskey'] = 'o';
 				break;
-			case 'logout':
-				$attributes['onClick'] = 'UserLoginFacebook.init(); typeof fbLogout === "function" && fbLogout()';
-				break;
 		}
 
 		$ret = Xml::openElement('a', $attributes);
