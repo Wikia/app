@@ -90,7 +90,7 @@ $(function() {
 		// http://abeautifulsite.net/2008/12/jquery-alert-dialogs/
 		var logout = confirm("You are logging out of both this site and Facebook.");
 		if (logout) {
-			fbLogout(function (/*response*/) {
+			fbLogout(function () {
 				window.location = window.fbLogoutURL;
 			});
 		}
@@ -187,7 +187,7 @@ function sendToConnectOnLoginForSpecificForm(formName){
 
 				// Wikia - UC-18
 				window.Wikia.Tracker.track({
-					category: 'facebook',
+					category: 'force-login-modal',
 					trackingMethod: 'both',
 					action: window.Wikia.Tracker.ACTIONS.SUCCESS,
 					label: 'facebook-login'
@@ -253,13 +253,9 @@ function fbLogout (callback) {
 		return;
 	}
 
-	var track = globalTracker.buildTrackingFunction({
-			category: 'facebook',
-			trackingMethod: 'both'
-		});
 	window.FB.logout(function () {
 		window.Wikia.Tracker.track({
-			category: 'facebook',
+			category: 'user-sign-up',
 			trackingMethod: 'both',
 			action: window.Wikia.Tracker.ACTIONS.SUCCESS,
 			label: 'facebook-logout'

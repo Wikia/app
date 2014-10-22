@@ -58,15 +58,12 @@ UserLoginAjaxForm.prototype.ajaxLogin = function() {
 
 UserLoginAjaxForm.prototype.submitFbSignupHandler = function(json) {
 	'use strict';
-	var globalTracker;
 
 	if (json.result === 'ok') {
-		globalTracker = window.Wikia.Tracker;
-
-		globalTracker.buildTrackingFunction({
-			action: globalTracker.ACTIONS.SUCCESS,
-			category: 'facebook',
+		window.Wikia.Tracker.track({
+			category: 'user-sign-up',
 			trackingMethod: 'both',
+			action: window.Wikia.Tracker.ACTIONS.SUCCESS,
 			label: 'facebook-signup'
 		});
 	}
@@ -162,6 +159,7 @@ UserLoginAjaxForm.prototype.retrieveLoginToken = function(params) {
 	params = params || {};
 	if(!this.loginToken || params['clearCache']) {
 		this.loginToken = 'retrieving';
+		// TODO: use $.nirvana.postJson
 		$.post(wgScriptPath + '/wikia.php', {
 			controller: 'UserLoginSpecial',
 			method: 'retrieveLoginToken',

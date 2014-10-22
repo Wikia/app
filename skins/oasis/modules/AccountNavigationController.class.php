@@ -38,10 +38,6 @@ class AccountNavigationController extends WikiaController {
 				break;
 			case 'login':
 				$attributes['accesskey'] = 'o';
-				$attributes['rel'] = 'nofollow';
-				break;
-			case 'register':
-				$attributes['rel'] = 'nofollow';
 				break;
 			case 'logout':
 				$attributes['onClick'] = 'UserLoginFacebook.init(); typeof fbLogout === "function" && fbLogout()';

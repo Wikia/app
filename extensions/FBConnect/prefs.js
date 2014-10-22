@@ -1,6 +1,4 @@
-/* global globalTracker */
-
-var track;
+/* global FB, wgServer, wgScript */
 
 function enableDisablePushAllow(force_enable) {
 	var inputNever = $('#fbconnect-push-allow-never');
@@ -24,14 +22,6 @@ function enableDisablePushAllow(force_enable) {
 $(function(){
 	'use strict';
 
-	// Wikia - UC-18
-	var globalTracker = window.Wikia.Tracker;
-	track = globalTracker.buildTrackingFunction({
-		category: 'facebook',
-		trackingMethod: 'both'
-	});
-	// Wikia end
-
 	$('#fbConnectDisconnect').click(function() {
 		$('#fbConnectDisconnectDone').hide();
 		$('#fbDisconnectProgress').show();
@@ -45,8 +35,10 @@ $(function(){
 				$('#fbConnectDisconnectDone').show();
 
 				// Wikia - UC-18
-				track({
-					action: globalTracker.ACTIONS.CLICK,
+				window.Wikia.Tracker.track({
+					category: 'user-sign-up',
+					trackingMethod: 'both',
+					action: window.Wikia.Tracker.ACTIONS.CLICK,
 					label: 'fb-disconnect'
 				});
 				// Wikia end
