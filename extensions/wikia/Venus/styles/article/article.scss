@@ -95,7 +95,6 @@ $article-items-spacing: 40px;
 		margin-left: 40px;
 
 		a::before {
-
 			@include resize-edit-button(40px);
 		}
 	}
