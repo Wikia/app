@@ -380,6 +380,11 @@ class WikiFactoryHub extends WikiaModel {
 		$name = $verticals[$vertical_id]['name'];
 		WikiFactory::log( WikiFactory::LOG_CATEGORY, "Vertical changed to $name. $reason", $city_id );
 
+		$aHookParams = [
+			'city_id' => $city_id,
+			'vertical_id' => $vertical_id,
+		];
+		wfRunHooks( "WikiFactoryVerticalSet", array( $aHookParams ) );
 	}
 
 	/**
