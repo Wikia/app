@@ -74,11 +74,22 @@ class VignetteRequest {
 		return new UrlGenerator($config);
 	}
 
+	/**
+	 * parse image bucket from a url. ex: http://images.wikia.com/muppet/images/a/ab/image.jpg will return "muppet"
+	 * @param $url
+	 * @return mixed
+	 */
 	public static function parseBucket($url) {
 		preg_match( '/http(s?):\/\/(.*?)\/(.*?)\/(.*)$/', $url, $matches );
 		return $matches[3];
 	}
 
+	/**
+	 * parse relative path from url. ex: http://images.wiukia.com/muppet/images/a/ab/image.jpg will
+	 * return "a/ab/image.jpg"
+	 * @param $url
+	 * @return mixed
+	 */
 	public static function parseRelativePath($url) {
 		preg_match( '/\w\/\w\w\/(.*)$/', $url, $matches);
 		return $matches[0];
