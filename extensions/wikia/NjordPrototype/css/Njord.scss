@@ -4,6 +4,16 @@
   position: relative;
   width: 100%;
 
+  .btn-bar {
+    align-items: center;
+    border: 1px solid #092140;
+    background-color: white;
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 15px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, .3);
+  }
+
   .btn-group-bottom {
     bottom: 0;
     display: flex;
@@ -46,45 +56,33 @@
     right: 0;
   }
 
-  .hero-title {
+  .title-wrap {
+    .edit-box {
+      background-color: rgba(0, 0, 0, .2);
+      bottom: 0;
+      width: 100%;
+    }
+    .hero-title {
+      display: block;
+      min-height: 44px;
+      outline: none;
+    }
     .title-edit-btn {
       height: 24px;
     }
     bottom: 2rem;
     color: #fff;
     display: inline-block;
-    font-weight: 700;
-    font-size: 54px;
-    left: 2rem;
-    line-height: 4rem;
-    margin: 0 auto;
-    padding: .25rem .5rem;
+    left: 8%;
     position: absolute;
     text-align: left;
-    width: 500px;
+    width: 400px;
   }
 
   .hero-image {
     vertical-align: bottom;
     width: 100%;
   }
-
-  .hero-description {
-    .desc-edit-btn svg path {
-      fill: #0a5fa3;
-    }
-    background: rgba(0, 0, 0, .6);
-    color: #fff;
-    display: inline-block;
-    font-weight: 500;
-    font-size: 32px;
-    left: 2rem;
-    padding: .25rem .5rem;
-    position: absolute;
-    text-align: left;
-    top: 7rem;
-  }
-
   .overlay {
     background-color: rgba(255, 255, 255, .1);
     display: none;
@@ -98,7 +96,6 @@
     }
     .overlay-text {
       color: #FFFFFF;
-      font-size: 30px;
       margin: auto;
       text-transform: uppercase;
     }
@@ -126,15 +123,13 @@
       height: 25px;
     }
     .upload-text {
-      font-size: 17px;
-      line-height: 33px;
       text-transform: uppercase;
       vertical-align: super;
     }
     color: #fff;
     display: flex;
     flex-direction: column;
-    margin-left: 2rem;
+    margin-left: 7%;
   }
 
   .upload-hover {
@@ -149,38 +144,77 @@
     width: 100%;
     z-index: 2;
   }
-
-  .new-btn.discard-btn {
-    background-color: #FFFFFF;
-    color: #092140;
-    &:hover {
-      color: #fff;
-    }
+  .zero-state {
+    height: 100%;
+    width: 100%;
   }
+}
 
+.MainPageHeroHeader {
+  .hero-description {
+    margin: auto 8%;
+  }
   .new-btn {
-    background-color: #092140;
-    color: #fff;
+    border: 1px solid #092140;
     cursor: pointer;
     display: block;
-    font-weight: bold;
-    padding: 15px 10px;
+    margin: 0 5px;
+    padding: 10px 20px;
     text-align: center;
-    text-decoration: none;
     text-transform: uppercase;
-
-    &:hover {
-      background-color: #0a5fa3;
-    }
-
     &.edit-btn {
       display: none;
     }
   }
+  .new-btn.discard-btn {
+    background-color: #FFFFFF;
+    color: #092140;
+    &:hover {
+      background-color: #0a5fa3;
+      border: 1px solid #0a5fa3;
+      color: #fff;
+    }
+  }
+  .new-btn.save-btn {
+    background-color: #092140;
+    color: #fff;
+    &:hover {
+      background-color: #0a5fa3;
+      border: 1px solid #0a5fa3;
+    }
+  }
+  .sg-main {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 28px;
+  }
+  .sg-main-small {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 26px;
+  }
 
-  .zero-state {
-    height: 100%;
-    width: 100%;
+  .sg-title {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 44px;
+  }
+
+  .sg-sub {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+
+  .sg-sub-title {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 27px;
+    font-weight: 700;
+    line-height: 32px;
   }
 }
 
