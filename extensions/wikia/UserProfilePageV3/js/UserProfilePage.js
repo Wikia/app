@@ -53,7 +53,6 @@ var UserProfilePage = {
 	renderLightbox: function( tabName ) {
 		'use strict';
 
-		UserProfilePage.bucky.timer.start('renderLightbox');
 		if ( !UserProfilePage.isLightboxGenerating ) {
 			// Start profiling
 			UserProfilePage.bucky.timer.start('renderLightboxSuccess');
