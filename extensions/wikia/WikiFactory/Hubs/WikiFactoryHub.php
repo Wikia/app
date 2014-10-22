@@ -413,6 +413,12 @@ class WikiFactoryHub extends WikiaModel {
 			$dbw->commit();
 
 			$this->clearCache( $city_id );
+
+			$aHookParams = [
+				'city_id' => $city_id,
+				'categories' => $categories,
+			];
+			wfRunHooks( 'CityCatMappingUpdated', array( $aHookParams ) );
 		}
 
 		# pretty clunky way to load all the categories just for the name, maybe refactor this?
@@ -427,7 +433,6 @@ class WikiFactoryHub extends WikiaModel {
 		}
 
 		WikiFactory::log( WikiFactory::LOG_CATEGORY, "Categories changed to $message. $reason", $city_id );
-
 	}
 
 	// Add 1 category
