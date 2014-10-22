@@ -55,6 +55,10 @@ var UserProfilePage = {
 
 		UserProfilePage.bucky.timer.start('renderLightbox');
 		if ( !UserProfilePage.isLightboxGenerating ) {
+			// Start profiling
+			UserProfilePage.bucky.timer.start('renderLightboxSuccess');
+			UserProfilePage.bucky.timer.start('renderLightboxFail');
+
 			//if lightbox is generating we don't want to let user open second one
 			UserProfilePage.isLightboxGenerating = true;
 			UserProfilePage.newAvatar = false;
@@ -153,7 +157,7 @@ var UserProfilePage = {
 							UserProfilePage.isLightboxGenerating = false;
 
 							editProfileModal.show();
-							UserProfilePage.bucky.timer.stop('renderLightbox');
+							UserProfilePage.bucky.timer.stop('renderLightboxSuccess');
 						});
 					});
 				});
@@ -184,6 +188,7 @@ var UserProfilePage = {
 
 						modal.createComponent(modalConfig, function( errorModal ) {
 							errorModal.show();
+							UserProfilePage.bucky.timer.stop('renderLightboxFail');
 						});
 					});
 				});
@@ -288,7 +293,8 @@ var UserProfilePage = {
 	saveAvatarAIM: function( form ) {
 		'use strict';
 
-		UserProfilePage.bucky.timer.start('saveAvatarAIM');
+		UserProfilePage.bucky.timer.start('saveAvatarAIMSuccess');
+		UserProfilePage.bucky.timer.start('saveAvatarAIMFail');
 		var $modal = UserProfilePage.modal.$element;
 
 		$.AIM.submit( form, {
@@ -317,11 +323,12 @@ var UserProfilePage = {
 
 					if ( typeof( form[ 0 ] ) !== 'undefined' ) {
 						form[ 0 ].reset();
-						UserProfilePage.bucky.timer.stop('saveAvatarAIM');
+						UserProfilePage.bucky.timer.stop('saveAvatarAIMSuccess');
 					}
 				} catch( e ) {
 					$modal.stopThrobbing();
 					form[ 0 ].reset();
+					UserProfilePage.bucky.timer.stop('saveAvatarAIMFail');
 				}
 			}
 		});
@@ -383,7 +390,9 @@ var UserProfilePage = {
 	saveUserData: function() {
 		'use strict';
 
-		UserProfilePage.bucky.timer.start('saveUserData');
+		UserProfilePage.bucky.timer.start('saveUserDataSuccess');
+		UserProfilePage.bucky.timer.start('saveUserDataFail');
+
 		var userData = UserProfilePage.getFormData();
 
 		if ( UserProfilePage.newAvatar ) {
@@ -398,11 +407,12 @@ var UserProfilePage = {
 			success: function( data ) {
 				if( data.status === 'error' ) {
 					window.GlobalNotification.show( data.errorMsg, 'warn' ) ;
+					UserProfilePage.bucky.timer.stop('saveUserDataFail');
 				} else {
 					UserProfilePage.userData = null;
 					UserProfilePage.wasDataChanged = false;
 					UserProfilePage.modal.trigger( 'close' );
-					UserProfilePage.bucky.timer.stop('saveUserData');
+					UserProfilePage.bucky.timer.stop('saveUserDataSuccess');
 					UserProfilePage.bucky.flush();
 					window.location = UserProfilePage.reloadUrl;
 				}
