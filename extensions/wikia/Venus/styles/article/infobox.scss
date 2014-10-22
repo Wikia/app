@@ -13,6 +13,12 @@
 		width: 100%;
 	}
 
+	img {
+		height: auto;
+		margin: 0;
+		max-width: 100%;
+	}
+
 	&.collapsed-infobox {
 		height: 740px;
 		overflow: hidden;
