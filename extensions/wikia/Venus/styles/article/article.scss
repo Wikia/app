@@ -178,6 +178,18 @@ $article-items-spacing: 40px;
 		margin-top: 16px;
 		padding-left: 13px;
 	}
+
+	dl {
+		margin: 16px 0;
+	}
+
+	dt {
+	  font-weight: bold;
+	}
+
+	dd {
+	  margin-left: 41px;
+	}
 }
 
 /* FOR PROTOTYPE/TESTING ONLY */
