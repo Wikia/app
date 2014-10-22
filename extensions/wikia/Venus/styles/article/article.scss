@@ -188,7 +188,7 @@ $article-items-spacing: 40px;
 	}
 
 	dd {
-		margin-left: $medium-grid-column - $medium-grid-column-padding;
+		margin-left: $medium-grid-column - 2 * $medium-grid-column-padding;
 	}
 }
 
@@ -268,7 +268,7 @@ $article-items-spacing: 40px;
 		}
 
 		dd {
-			margin-left: $large-grid-column - $large-grid-column-padding;
+			margin-left: $large-grid-column - 2 * $large-grid-column-padding;
 		}
 	}
 
@@ -332,7 +332,7 @@ $article-items-spacing: 40px;
 		}
 
 		dd {
-			margin-left: $small-grid-column - $small-grid-column-padding;
+			margin-left: $small-grid-column - 2 * $small-grid-column-padding;
 		}
 	}
 
