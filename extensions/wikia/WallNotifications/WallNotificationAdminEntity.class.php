@@ -22,7 +22,7 @@ class WallNotificationAdminEntity {
 			$this->data->hide_for_userid = [ $data['userIdRemoving'] => true, $data['userIdWallOwner'] => true ];
 		}
 		
-		$this->data->parent_id = $data['parentId'];
+		$this->data->parent_id = $data['parentMessageId'];
 		$this->data->reason = $data['reason'];
 		
 	}
