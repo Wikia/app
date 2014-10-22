@@ -17,10 +17,16 @@ class UrlGenerator {
 	const MODE_THUMBNAIL_DOWN = 'thumbnail-down';
 	const MODE_FIXED_ASPECT_RATIO = 'fixed-aspect-ratio';
 	const MODE_FIXED_ASPECT_RATIO_DOWN = 'fixed-aspect-ratio-down';
+	const MODE_SCALE_TO_WIDTH = 'scale-to-width';
 	const MODE_TOP_CROP = 'top-crop';
 	const MODE_TOP_CROP_DOWN = 'top-crop-down';
+	const MODE_WINDOW_CROP = 'window-crop';
+	const MODE_WINDOW_CROP_FIXED = 'window-crop';
 	const MODE_ZOOM_CROP = 'zoom-crop';
 	const MODE_ZOOM_CROP_DOWN = 'zoom-crop-down';
+
+	const IMAGE_TYPE_AVATAR = "avatars";
+	const IMAGE_TYPE_IMAGES = "images";
 
 	const FORMAT_WEBP = "webp";
 
@@ -41,6 +47,21 @@ class UrlGenerator {
 	/** @var array hash of query parameters to send to the thumbnailer */
 	private $query = [];
 
+	/** @var string one of the IMAGE_TYPE_ constants */
+	private $imageType = self::IMAGE_TYPE_IMAGES;
+
+	/** @var int for window-crop modes, where to start the window (from the left) */
+	private $xOffset = 0;
+
+	/** @var int for window-crop modes, where to start the window (from the top) */
+	private $yOffset = 0;
+
+	/** @var int for window-crop modes, the width of the window that's cropped */
+	private $windowWidth = 0;
+
+	/** @var int for window-crop modes, the height of the window that's cropped */
+	private $windowHeight = 0;
+
 	public function __construct( FileInterface $file ) {
 		$this->file = $file;
 		$this->original();
@@ -53,6 +74,26 @@ class UrlGenerator {
 
 	public function height( $height ) {
 		$this->height = $height;
+		return $this;
+	}
+
+	public function xOffset( $xOffset ) {
+		$this->xOffset = $xOffset;
+		return $this;
+	}
+
+	public function yOffset( $yOffset ) {
+		$this->yOffset = $yOffset;
+		return $this;
+	}
+
+	public function windowWidth( $width ) {
+		$this->windowWidth = $width;
+		return $this;
+	}
+
+	public function windowHeight( $height ) {
+		$this->windowHeight = $height;
 		return $this;
 	}
 
@@ -157,11 +198,46 @@ class UrlGenerator {
 	}
 
 	/**
+	 * dictate width, let height auto scale
+	 * @param null $width
+	 * @return $this
+	 */
+	public function scaleToWidth( $width=null ) {
+		$this->mode( self::MODE_SCALE_TO_WIDTH );
+
+		if ( $width != null ) {
+			$this->width($width);
+		}
+
+		return $this;
+	}
+
+	/**
+	 * crop a window into the image, scale the result to $this->width with auto height
+	 * @return $this
+	 */
+	public function windowCrop() {
+		return $this->mode( self::MODE_WINDOW_CROP );
+	}
+
+	/**
+	 * crop a window into the image, scale the result to $this->width x $this->height
+	 * @return $this
+	 */
+	public function windowCropFixed() {
+		return $this->mode( self::MODE_WINDOW_CROP_FIXED );
+	}
+
+	/**
 	 * request an image in webp format
 	 * @return $this
 	 */
 	public function webp() {
 		return $this->format( self::FORMAT_WEBP );
+	}
+
+	public function avatar() {
+		return $this->imageType( self::IMAGE_TYPE_AVATAR );
 	}
 
 	/**
@@ -171,23 +247,48 @@ class UrlGenerator {
 	 */
 	public function url() {
 		$bucketPath = self::bucketPath();
-
-		$imagePath = "{$bucketPath}/{$this->getRelativeUrl()}/revision/{$this->getRevision()}";
+		$imagePath = "{$bucketPath}/{$this->imageType}/{$this->getRelativeUrl()}/revision/{$this->getRevision()}";
 
 		if ( !isset( $this->query['lang'] ) ) {
 			$this->lang( $this->file->getLanguageCode() );
 		}
 
-		if ( $this->mode != self::MODE_ORIGINAL ) {
-			$imagePath .= "/{$this->mode}/width/{$this->width}/height/{$this->height}";
-		}
+		$imagePath .= $this->modePath();
 
 		if ( !empty( $this->query ) ) {
 			ksort( $this->query ); // ensure that the keys we use will be ordered deterministically
 			$imagePath .= '?' . http_build_query( $this->query );
 		}
 
-		return self::domainShard( $imagePath );
+		return $this->domainShard( $imagePath );
+	}
+
+	/**
+	 * @return string
+	 */
+	private function modePath() {
+		$modePath = '';
+
+		if ( $this->mode != self::MODE_ORIGINAL ) {
+			$modePath .= "/{$this->mode}";
+
+			if ( $this->mode == self::MODE_SCALE_TO_WIDTH ) {
+				$modePath .= "/{$this->width}";
+			} elseif ( $this->mode == self::MODE_WINDOW_CROP || $this->mode == self::MODE_WINDOW_CROP_FIXED ) {
+				$modePath .= "/width/{$this->width}";
+
+				if ( $this->mode == self::MODE_WINDOW_CROP_FIXED ) {
+					$modePath .= "/height/{$this->height}";
+				}
+
+				$modePath .= "/x-offset/{$this->xOffset}/y-offset/{$this->yOffset}";
+				$modePath .= "/window-width/{$this->windowWidth}/window-height/{$this->windowHeight}";
+			} else {
+				$modePath .= "/width/{$this->width}/height/{$this->height}";
+			}
+		}
+
+		return $modePath;
 	}
 
 
@@ -241,10 +342,15 @@ class UrlGenerator {
 		return $this;
 	}
 
-	private static function domainShard( $imagePath ) {
+	private function imageType( $type ) {
+		$this->imageType = $type;
+		return $this;
+	}
+
+	private function domainShard( $imagePath ) {
 		global $wgVignetteUrl, $wgImagesServers;
 
-		$hash = ord( sha1( $imagePath ) );
+		$hash = ord( sha1( $this->getRelativeUrl() ) );
 		$shard = 1 + ( $hash % ( $wgImagesServers - 1 ) );
 
 		return str_replace( '<SHARD>', $shard, $wgVignetteUrl ) . "/{$imagePath}";

@@ -29,18 +29,33 @@ class UrlGeneratorTest extends PHPUnit_Framework_TestCase {
 			->will( $this->returnValue( '12345' ) );
 
 		$this->assertEquals(
-			'/tests/a/ab/SomeFile.jpg/revision/latest?cb=12345',
+			'/tests/images/a/ab/SomeFile.jpg/revision/latest?cb=12345',
 			( new UrlGenerator( $file ) )->url()
 		);
 
 		$this->assertEquals(
-			'/tests/a/ab/SomeFile.jpg/revision/latest/thumbnail/width/50/height/75?cb=12345&fill=%23ababab',
+			'/tests/images/a/ab/SomeFile.jpg/revision/latest/thumbnail/width/50/height/75?cb=12345&fill=%23ababab',
 			( new UrlGenerator( $file ) )->width( 50 )->height( 75 )->thumbnail()->backgroundFill( '#ababab' )->url()
 		);
 
 		$this->assertEquals(
-			'/tests/a/ab/SomeFile.jpg/revision/latest/zoom-crop/width/50/height/75?cb=12345&fill=transparent',
+			'/tests/images/a/ab/SomeFile.jpg/revision/latest/zoom-crop/width/50/height/75?cb=12345&fill=transparent',
 			( new UrlGenerator( $file ) )->width( 50 )->height( 75 )->zoomCrop()->backgroundFill( 'transparent' )->url()
+		);
+
+		$this->assertEquals(
+			'/tests/images/a/ab/SomeFile.jpg/revision/latest/scale-to-width/200?cb=12345',
+			( new UrlGenerator( $file ) )->scaleToWidth( 200 )->url()
+		);
+
+		$this->assertEquals(
+			'/tests/images/a/ab/SomeFile.jpg/revision/latest/window-crop/width/200/height/100/x-offset/10/y-offset/0/window-width/200/window-height/100?cb=12345',
+			( new UrlGenerator( $file ) )->windowCropFixed()->width(200)->height(100)->xOffset(10)->windowWidth(200)->windowHeight(100)->url()
+		);
+
+		$this->assertEquals(
+			'/tests/avatars/a/ab/SomeFile.jpg/revision/latest/scale-to-width/200?cb=12345',
+			( new UrlGenerator( $file ) )->avatar()->scaleToWidth( 200 )->url()
 		);
 	}
 
@@ -60,12 +75,12 @@ class UrlGeneratorTest extends PHPUnit_Framework_TestCase {
 			->will( $this->returnValue( '123456' ) );
 
 		$this->assertEquals(
-			'/tests/a/ab/SomeFile.jpg/revision/123456',
+			'/tests/images/a/ab/SomeFile.jpg/revision/123456',
 			( new UrlGenerator( $file ) )->url()
 		);
 
 		$this->assertEquals(
-			'/tests/a/ab/SomeFile.jpg/revision/123456/thumbnail/width/50/height/75',
+			'/tests/images/a/ab/SomeFile.jpg/revision/123456/thumbnail/width/50/height/75',
 			( new UrlGenerator( $file ) )->width( 50 )->height( 75 )->thumbnail()->url()
 		);
 	}
