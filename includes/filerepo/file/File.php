@@ -1790,7 +1790,7 @@ abstract class File implements FileInterface {
 	 * @return \UrlGenerator
 	 *
 	 */
-	protected function getUrlGenerator() {
+	public function getUrlGenerator() {
 			return new UrlGenerator( $this );
 	}
 
