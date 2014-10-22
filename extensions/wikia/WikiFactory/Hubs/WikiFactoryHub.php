@@ -198,6 +198,10 @@ class WikiFactoryHub extends WikiaModel {
 	 */
 
 	public function getVerticalId( $city_id ) {
+		global $wgWikiaEnvironment;
+		if ( $wgWikiaEnvironment == WIKIA_ENV_INTERNAL ) {
+			return null;
+		}
 
 		$id = (new WikiaSQL())
 			->SELECT( "city_vertical" )
@@ -266,6 +270,10 @@ class WikiFactoryHub extends WikiaModel {
 	 * @return array of keys/values (id, name, url, short, deprecated, active)
 	 */
 	public function getWikiCategories( $city_id, $active = 1 ) {
+		global $wgWikiaEnvironment;
+		if ( $wgWikiaEnvironment == WIKIA_ENV_INTERNAL ) {
+			return [];
+		}
 
 		// query instead of lookup in AllCategories list
 		$categories = (new WikiaSQL())
