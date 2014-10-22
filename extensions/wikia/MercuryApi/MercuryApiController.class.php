@@ -229,12 +229,21 @@ class MercuryApiController extends WikiaController {
 	}
 
 	/**
+	 * @desc Returns MW RandomPage instance and for now sets namespace to NS_MAIN
+	 * @return RandomPage
+	 * @see RandomPage core MediaWiki class
+	 */
+	public function getRandomPage() {
+		return new RandomPage();
+	}
+
+	/**
 	 * @desc Gets random article
 	 * @throws NotFoundApiException
 	 * @see RandomPage core MediaWiki class
 	 */
 	public function getRandomArticle() {
-		$randomPage = new RandomPage();
+		$randomPage = $this->getRandomPage();
 		// Mercury doesn't support now custom content namespaces
 		$randomPage->setNamespace( NS_MAIN );
 		$title = $randomPage->getRandomTitle();
