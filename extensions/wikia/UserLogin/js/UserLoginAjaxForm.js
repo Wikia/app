@@ -1,4 +1,4 @@
-/*global WikiaForm:true */
+/*global WikiaForm:true, wgScriptPath */
 var UserLoginAjaxForm = function(el, options){
 	this.el = $(el);
 	this.options = options || {};
@@ -54,6 +54,23 @@ UserLoginAjaxForm.prototype.ajaxLogin = function() {
 		password: this.inputs['password'].val(),
 		keeploggedin: this.inputs['keeploggedin'].is(':checked')
 	}, $.proxy(this.submitLoginHandler, this));
+};
+
+UserLoginAjaxForm.prototype.submitFbSignupHandler = function(json) {
+	'use strict';
+	var globalTracker;
+
+	if (json.result === 'ok') {
+		globalTracker = window.Wikia.Tracker;
+
+		globalTracker.buildTrackingFunction({
+			action: globalTracker.ACTIONS.SUCCESS,
+			category: 'facebook',
+			trackingMethod: 'both',
+			label: 'facebook-signup'
+		});
+	}
+	this.submitLoginHandler(json);
 };
 
 UserLoginAjaxForm.prototype.submitLoginHandler = function(json) {
@@ -145,7 +162,6 @@ UserLoginAjaxForm.prototype.retrieveLoginToken = function(params) {
 	params = params || {};
 	if(!this.loginToken || params['clearCache']) {
 		this.loginToken = 'retrieving';
-		// TODO: use $.nirvana.postJson
 		$.post(wgScriptPath + '/wikia.php', {
 			controller: 'UserLoginSpecial',
 			method: 'retrieveLoginToken',

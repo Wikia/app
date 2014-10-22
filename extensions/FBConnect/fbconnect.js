@@ -1,3 +1,4 @@
+/*global UserLoginFacebook, FB, GlobalTriggers, wgServer, wgScript */
 /*
  * Copyright (c) 2010 Garrett Brown <http://www.mediawiki.org/wiki/User:Gbruin>
  * This program is free software; you can redistribute it and/or modify
@@ -33,6 +34,9 @@
  *     Typically this should occur sooner than MediaWiki's addOnloadHook function
  *     is called.
  */
+
+var track,
+	globalTracker = window.Wikia.Tracker;
 
 /**
  * This function is called when FB SDK is loaded using $.getScript (inline bottom script)
@@ -72,6 +76,12 @@ window.onFBloaded = function() {
 	}
 
 	window.fbAppInit = true;
+
+	// UC-18
+	track = globalTracker.buildTrackingFunction({
+		category: 'facebook',
+		trackingMethod: 'both'
+	});
 };
 
 /**
@@ -89,7 +99,7 @@ $(function() {
 		// http://abeautifulsite.net/2008/12/jquery-alert-dialogs/
 		var logout = confirm("You are logging out of both this site and Facebook.");
 		if (logout) {
-			FB.logout(function(response) {
+			fbLogout(function (/*response*/) {
 				window.location = window.fbLogoutURL;
 			});
 		}
@@ -103,7 +113,7 @@ $(function() {
 				wpCancelClicked = true;
 				window.FB.getLoginStatus(function(response){
 					if (response.status === 'connected' ) {
-						window.FB.logout(function(){
+						fbLogout(function (){
 							$('#wpCancel').click();
 						});
 					} else {
@@ -183,6 +193,14 @@ function sendToConnectOnLoginForSpecificForm(formName){
 		$('#fbConnectModalWrapper').remove();
 		$.postJSON(window.wgScript + '?action=ajax&rs=SpecialConnect::checkCreateAccount&cb='+wgStyleVersion, function(data) {
 			if(data.status == "ok") {
+
+				// Wikia - UC-18
+				track({
+					action: globalTracker.ACTIONS.SUCCESS,
+					label: 'facebook-login'
+				});
+				// Wikia end
+
 				location.reload();
 			} else {
 				window.location.href = destUrl;
@@ -229,6 +247,32 @@ function fixXFBML(id) {
 			FB.XFBML.parse(node.get(0));
 		});
 	}
+}
+
+/**
+ * Wrapper for Facebook Logout
+ * @see UC-18
+ * @param callback
+ */
+function fbLogout (callback) {
+	'use strict';
+	if (!window.FB) {
+		return;
+	}
+
+	var track = globalTracker.buildTrackingFunction({
+			category: 'facebook',
+			trackingMethod: 'both'
+		});
+	window.FB.logout(function () {
+		track({
+			action: globalTracker.ACTIONS.SUCCESS,
+			label: 'facebook-logout'
+		});
+		if (callback && typeof callback === 'function') {
+			callback();
+		}
+	});
 }
 
 // BugId:19767 - fix FBconnect button on Special:Connect

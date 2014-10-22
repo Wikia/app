@@ -69,6 +69,11 @@
 				case 'connected':
 					this.log('FB.login successful');
 
+					this.track({
+						action: this.actions.SUCCESS,
+						label: 'facebook-login'
+					});
+
 					// begin ajax call performance tracking
 					this.bucky.timer.start('loginCallbackAjax');
 
@@ -100,12 +105,6 @@
 
 			// logged in using FB account, reload the page or callback
 			if (resp.loggedIn) {
-
-				// Track FB Connect Login
-				this.track({
-					action: this.actions.SUCCESS,
-					label: 'facebook-login'
-				});
 
 				if (loginCallback && typeof loginCallback === 'function') {
 					loginCallback();

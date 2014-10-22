@@ -34,6 +34,6 @@ var UserLoginFacebookForm = $.createClass(UserLoginAjaxForm, {
 			signupToken: this.inputs.logintoken.val(),
 			fbfeedoptions: this.getFeedOptions().join(',')
 		},
-		$.proxy(this.submitLoginHandler, this));
+		$.proxy(this.submitFbSignupHandler, this));
 	}
 });
