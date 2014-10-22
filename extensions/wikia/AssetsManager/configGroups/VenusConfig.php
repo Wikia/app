@@ -92,8 +92,6 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//extensions/wikia/Lightbox/js/LightboxLoader.js',
 		'//extensions/wikia/Lightbox/js/venusLightboxLoader.js',
 
-		'#group_bucky_js',
-
 		// different article modules
 		'//skins/shared/scripts/scrollableTables.js',
 

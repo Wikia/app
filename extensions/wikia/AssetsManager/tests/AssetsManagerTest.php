@@ -81,7 +81,7 @@ class AssetsManagerTest extends WikiaBaseTest {
 				unset($counts[$k]);
 			}
 		}
-		$this->assertEquals(array(),$counts);
+		$this->assertEquals(array(),$counts, "'{$setName}' group should not contain duplicated assets");
 	}
 
 	public function duplicateAssetsDataProvider() {
