@@ -65,6 +65,10 @@ $article-items-spacing: 40px;
 	margin: 0 $medium-content-padding - $content-border-width 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width;
 	padding: 0 $medium-grid-column-padding;
 
+	&.clear-none {
+		clear: none;
+	}
+
 	.editsection {
 		@include font-size-xxs;
 		display: inline-block;

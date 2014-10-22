@@ -145,14 +145,6 @@ class ParserOutput extends CacheTime {
 	private $mPreventClickjacking = false; # Whether to emit X-Frame-Options: DENY
 
 	# <Wikia>
-	public $mBeforeTextHTML = '';
-	function getBeforeTextHTML() {
-		return $this->mBeforeTextHTML;
-	}
-	function setBeforeTextHTML( $html ) {
-		$this->mBeforeTextHTML = $html;
-	}
-
 	public $mPerformanceStats = array();
 	function getPerformanceStats( $k )     { return @$this->mPerformanceStats[$k]; }
 	function setPerformanceStats( $k, $v ) { $this->mPerformanceStats[$k] = $v; }

@@ -1,57 +1,26 @@
-(function(){
+require(['venus.infobox', 'wikia.document'], function(infoboxModule, d) {
 	'use strict';
 
-	var infoboxContainer = document.getElementById('infoboxContainer'),
-		seeMore,
-		maxInfoboxHeight = 700;
+	var infoboxContainer = d.getElementById('infoboxContainer'),
+		seeMoreButtonId = 'infoboxSeeMoreButton';
 
-	/**
-	 * Check if infobox is heigher than maxInfoboxHeight
-	 * and add see more button
-	 */
-	function collapseInfobox() {
-		var infoboxHeight = infoboxContainer.offsetHeight;
-
-		if( infoboxHeight > maxInfoboxHeight ) {
-			infoboxContainer.classList.add('collapsed-infobox');
-			addSeeMoreElement();
-		}
-	}
-
-	/**
-	 * Expand infobox
-	 */
-	function expandInfobox() {
-		infoboxContainer.classList.remove('collapsed-infobox');
-		seeMore.classList.add('hide');
-	}
-
-	/**
-	 * Create and add see more button to infobox
-	 */
-	function addSeeMoreElement() {
+	function init() {
 		var infobox = infoboxContainer.firstChild,
-			infoboxStyles,
-			bgColor;
+			articleContent = d.getElementById('mw-content-text'),
+			seeMoreButton;
 
-		if (infobox) {
-			infoboxStyles = window.getComputedStyle(infobox);
-			bgColor = infoboxStyles.getPropertyValue('background-color');
+		articleContent.classList.add('clear-none');
 
-			seeMore = document.createElement('div');
+		if(infoboxModule.isInfoboxCollapsible(infoboxContainer)) {
+			infoboxModule.collapseInfobox(infoboxContainer);
 
-			// translations needed
-			seeMore.innerHTML = window.mw.msg('venus-article-infobox-see-more');
-
-			seeMore.classList.add('see-more');
-			seeMore.style.backgroundColor = bgColor;
-			seeMore.addEventListener('click', expandInfobox);
-
-			infoboxContainer.appendChild(seeMore);
+			seeMoreButton = infoboxModule.createSeeMoreButton(infobox, seeMoreButtonId);
+			seeMoreButton.addEventListener('click', infoboxModule.expandInfobox);
+			infoboxContainer.appendChild(seeMoreButton);
 		}
 	}
 
-	if (infoboxContainer) {
-		collapseInfobox();
+	if(infoboxContainer) {
+		init();
 	}
-}());
+});

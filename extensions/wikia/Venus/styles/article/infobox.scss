@@ -1,12 +1,13 @@
 @import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/mixins';
+@import 'extensions/wikia/Venus/styles/typographyMixins';
 @import 'skins/shared/mixins/calc';
 
-#infoboxContainer {
+.infobox-container {
 	@include grid-column-width('medium', 4, -2 * $medium-grid-column-padding);
 	display: block;
 	float: right;
-	margin: 0 $medium-grid-column-padding + $medium-content-padding - $content-border-width 20px $medium-grid-gutter + $medium-grid-column-padding;
+	margin: 0 0 30px $medium-grid-gutter + $medium-grid-column-padding;
 
 	table, div {
 		width: 100%;
@@ -19,15 +20,15 @@
 	}
 
 	.see-more {
+		@include font-size-xxs;
 		border-top: 1px solid $color-page-border;
 		bottom: 0;
 		color: $color-links;
 		cursor: pointer;
-		font-size: 12px;
 		font-weight: bold;
 		height: 40px;
 		left: 0;
-		padding-top: 5px;
+		padding-top: 2px;
 		position: absolute;
 		text-align: center;
 		text-transform: uppercase;
@@ -40,27 +41,15 @@
 }
 
 @media #{$large-up} {
-	#infoboxContainer {
+	.infobox-container {
 		@include grid-column-width('large', 4, -2 * $large-grid-column-padding);
-		margin: 0 $large-grid-column-padding + $large-content-padding - $content-border-width 20px $large-grid-gutter + $large-grid-column-padding;
-		padding: $large-grid-column-padding;
-
-		.see-more {
-			@include width-calc('100% - #{2 * $large-grid-column-padding}');
-			left: $large-grid-column-padding;
-		}
+		margin-left: $large-grid-gutter + $large-grid-column-padding;
 	}
 }
 
 @media #{$small-only} {
-	#infoboxContainer {
+	.infobox-container {
 		@include grid-column-width('small', 5);
-		margin: 0 $small-content-padding - $content-border-width 20px $small-grid-gutter + $small-grid-column-padding;
-		padding: $small-grid-column-padding;
-
-		.see-more {
-			@include width-calc('100% - #{2 * $small-grid-column-padding}');
-			left: $small-grid-column-padding;
-		}
+		margin-left: $small-grid-gutter + $small-grid-column-padding;
 	}
 }

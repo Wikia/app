@@ -69,6 +69,7 @@ $wgHooks['ParserSectionCreate'][] = 'VenusHooks::onParserSectionCreate';
 $wgResourceModules['ext.wikia.venus.article.infobox'] = array(
 	'scripts' => array(
 		'scripts/Infobox.js',
+		'scripts/modules/infobox.module.js'
 	),
 	'messages' => array(
 		'venus-article-infobox-see-more',

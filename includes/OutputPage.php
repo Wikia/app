@@ -33,9 +33,8 @@ class OutputPage extends ContextSource {
 	/// Should be private - has getter and setter. Contains the HTML title
 	var $mPagetitle = '';
 
-	/// Contains all of the article content.
+	/// Contains all of the <body> content. Should be private we got set/get accessors and the append() method.
 	var $mBodytext = '';
-	var $mBeforeBodytext = '';
 
 	/**
 	 * Holds the debug lines that will be output as comments in page source if
@@ -1341,15 +1340,6 @@ class OutputPage extends ContextSource {
 	}
 
 	/**
-	 * Append $text to the before body HTML
-	 *
-	 * @param $text String: HTML
-	 */
-	public function addBeforeBodyHTML( $text ) {
-		$this->mBeforeBodytext .= $text;
-	}
-
-	/**
 	 * Shortcut for adding an Html::element via addHTML.
 	 *
 	 * @since 1.19
@@ -1376,15 +1366,6 @@ class OutputPage extends ContextSource {
 	 */
 	public function getHTML() {
 		return $this->mBodytext;
-	}
-
-	/**
-	 * Get the body HTML
-	 *
-	 * @return String: HTML
-	 */
-	public function getBeforeBodyHTML() {
-		return $this->mBeforeBodytext;
 	}
 
 	/**
@@ -1618,8 +1599,6 @@ class OutputPage extends ContextSource {
 		foreach ( (array)$parserOutput->getFileSearchOptions() as $dbk => $data ) {
 			$this->mImageTimeKeys[$dbk] = $data;
 		}
-
-		$this->addBeforeBodyHTML( $parserOutput->getBeforeTextHTML() );
 
 		// Hooks registered in the object
 		global $wgParserOutputHooks;
