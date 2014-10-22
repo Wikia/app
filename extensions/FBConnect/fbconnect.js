@@ -35,9 +35,6 @@
  *     is called.
  */
 
-var track,
-	globalTracker = window.Wikia.Tracker;
-
 /**
  * This function is called when FB SDK is loaded using $.getScript (inline bottom script)
  *
@@ -76,12 +73,6 @@ window.onFBloaded = function() {
 	}
 
 	window.fbAppInit = true;
-
-	// UC-18
-	track = globalTracker.buildTrackingFunction({
-		category: 'facebook',
-		trackingMethod: 'both'
-	});
 };
 
 /**
@@ -195,8 +186,10 @@ function sendToConnectOnLoginForSpecificForm(formName){
 			if(data.status == "ok") {
 
 				// Wikia - UC-18
-				track({
-					action: globalTracker.ACTIONS.SUCCESS,
+				window.Wikia.Tracker.track({
+					category: 'facebook',
+					trackingMethod: 'both',
+					action: window.Wikia.Tracker.ACTIONS.SUCCESS,
 					label: 'facebook-login'
 				});
 				// Wikia end
@@ -265,8 +258,10 @@ function fbLogout (callback) {
 			trackingMethod: 'both'
 		});
 	window.FB.logout(function () {
-		track({
-			action: globalTracker.ACTIONS.SUCCESS,
+		window.Wikia.Tracker.track({
+			category: 'facebook',
+			trackingMethod: 'both',
+			action: window.Wikia.Tracker.ACTIONS.SUCCESS,
 			label: 'facebook-logout'
 		});
 		if (callback && typeof callback === 'function') {
