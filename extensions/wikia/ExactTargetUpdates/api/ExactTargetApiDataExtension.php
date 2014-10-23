@@ -1,4 +1,6 @@
 <?php
+namespace Wikia\ExactTarget\Api;
+
 use Wikia\Logger\WikiaLogger;
 
 class ExactTargetApiDataExtension {
@@ -74,9 +76,9 @@ class ExactTargetApiDataExtension {
 		$aDE = $this->Helper->prepareDataExtensionObjects( $aApiCallParams['DataExtension'] );
 		$aSoapVars = $this->Helper->prepareSoapVars( $aDE );
 
-		$oDeleteRequest = new ExactTarget_DeleteRequest();
+		$oDeleteRequest = new \ExactTarget_DeleteRequest();
 		$oDeleteRequest->Objects = $aSoapVars;
-		$oDeleteRequest->Options = new ExactTarget_DeleteOptions();
+		$oDeleteRequest->Options = new \ExactTarget_DeleteOptions();
 
 		$oResults = $this->makeRequest( 'Delete', $oDeleteRequest );
 		return $oResults;

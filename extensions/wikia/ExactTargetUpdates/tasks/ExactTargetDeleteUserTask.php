@@ -1,7 +1,11 @@
 <?php
+namespace Wikia\ExactTarget\Tasks;
+
+use Wikia\ExactTarget\Api\ExactTargetApiDataExtension;
+use Wikia\ExactTarget\Api\ExactTargetApiSubscriber;
 use Wikia\Tasks\Tasks\BaseTask;
 
-class ExactTargetDeleteUserTask {
+class ExactTargetDeleteUserTask extends BaseTask {
 
 	/**
 	 * Task for removing user data in ExactTarget
@@ -18,7 +22,8 @@ class ExactTargetDeleteUserTask {
 	 * @param int $iUserId
 	 */
 	public function deleteSubscriber( $iUserId ) {
-		$sEmail = $this->getUserEmail( $iUserId );
+		$oRetrieveUserHelper = $this->getRetrieveUserHelper();
+		$sEmail = $oRetrieveUserHelper->getUserEmail( $iUserId );
 		if ( !$this->isEmailInUse( $sEmail, $iUserId ) ) {
 			$this->doDeleteSubscriber( $sEmail );
 		}
@@ -29,9 +34,8 @@ class ExactTargetDeleteUserTask {
 	 * @param string $sUserEmail
 	 */
 	private function doDeleteSubscriber( $sUserEmail ) {
-		$oSubscriber = new ExactTarget_Subscriber();
-		$oSubscriber->SubscriberKey = $sUserEmail;
-		$this->performDelete( [ $oSubscriber ], 'Subscriber' );
+		$oApiSubscriber = $this->getApiSubscriber();
+		$oApiSubscriber->deleteRequest( $sUserEmail );
 	}
 
 	/**
@@ -59,33 +63,15 @@ class ExactTargetDeleteUserTask {
 	}
 
 	/**
-	 * Retrieves user email from ExactTarget based on provided user ID
-	 * @param int $iUserId
-	 * @return null|string
-	 */
-	public function getUserEmail( $iUserId ) {
-		$oSimpleFilterPart = $this->wrapSimpleFilterPart( 'user_id', $iUserId );
-		$oRetrieveRequest = $this->wrapRetrieveRequest( 'user', [ 'user_email' ], $oSimpleFilterPart );
-		$oRetrieveRequestMessage = $this->wrapRetrieveRequestMessage( $oRetrieveRequest );
-
-		$oEmailResult = $oClient->Retrieve( $oRetrieveRequestMessage );
-		if ( isset( $oEmailResult->Results->Properties->Property->Value ) ) {
-			return $oEmailResult->Results->Properties->Property->Value;
-		}
-
-		$this->notice( __METHOD__ . ' user DataExtension object not found for user_id = ' . $iUserId );
-		return null;
-	}
-
-	/**
 	 * Checks whether there are any users that has provided email
 	 * @param string $sEmail Email address to check in ExactTarget
 	 * @param int $iSkipUserId Skip this user ID when checking if email is used by any account
 	 * @return bool
 	 */
 	public function isEmailInUse( $sEmail, $iSkipUserId = null ) {
-		/* @var stdClass $oResults */
-		$oUsersIds = $this->retrieveUserIdsByEmail( $sEmail );
+		$oRetrieveUserHelper = $this->getRetrieveUserHelper();
+		/* @var stdClass $oUsersIds */
+		$oUsersIds = $oRetrieveUserHelper->retrieveUserIdsByEmail( $sEmail );
 		$iUsersCount = count( $oUsersIds->Results );
 
 		// Email is in use when there are more than one user with email
@@ -101,38 +87,27 @@ class ExactTargetDeleteUserTask {
 	}
 
 	/**
-	 * Retrieve from ExactTarget a list of user IDs that use provided email
-	 * @param string $sEmail
-	 * @return stdClass
-	 * e.g. many results
-	 *     stdClass Object (
-	 *         [Results] => Array of stdClass Objects
-	 *     );
-	 * e.g. one result
-	 *     stdClass Object (
-	 *         [Results] => stdClass Object (
-	 *             [Properties] => stdClass Object (
-	 *                 [Property] => stdClass Object (
-	 *                     [Name] => string
-	 *                     [Value] => int
-	 *                 )
-	 *             )
-	 *         )
-	 *      );
-	 */
-	public function retrieveUserIdsByEmail( $sEmail ) {
-		$oSimpleFilterPart = $this->wrapSimpleFilterPart( 'user_email', $sEmail );
-		$oRetrieveRequest = $this->wrapRetrieveRequest( 'user', [ 'user_id' ], $oSimpleFilterPart );
-		$oRetrieveRequestMessage = $this->wrapRetrieveRequestMessage( $oRetrieveRequest );
-		return $oClient->Retrieve( $oRetrieveRequestMessage );
-	}
-
-	/**
 	 * Returns an instance of ExactTargetApiDataExtension class
 	 * @return ExactTargetApiDataExtension
 	 */
 	private function getApiDataExtension() {
 		return new ExactTargetApiDataExtension();
+	}
+
+	/**
+	 * Returns an instance of ExactTargetApiSubscriber class
+	 * @return ExactTargetApiSubscriber
+	 */
+	private function getApiSubscriber() {
+		return new ExactTargetApiSubscriber();
+	}
+
+	/**
+	 * Returns an instance of ExactTargetRetrieveUserHelper class
+	 * @return ExactTargetRetrieveUserHelper
+	 */
+	private function getRetrieveUserHelper() {
+		return new ExactTargetRetrieveUserHelper();
 	}
 
 	/**
@@ -143,3 +118,4 @@ class ExactTargetDeleteUserTask {
 		return new ExactTargetUserTaskHelper();
 	}
 }
+

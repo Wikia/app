@@ -1,6 +1,14 @@
 <?php
+<<<<<<< HEAD
 use Wikia\Tasks\Tasks\BaseTask;
 
+=======
+namespace Wikia\ExactTarget\Tasks;
+
+use Wikia\ExactTarget\Api\ExactTargetApiDataExtension;
+use Wikia\Tasks\Tasks\BaseTask;
+
+>>>>>>> CE-1019-exacttarget-update-user-part3-ext-refactoring
 class ExactTargetUpdateUserTask extends BaseTask {
 
 	/**
@@ -22,7 +30,7 @@ class ExactTargetUpdateUserTask extends BaseTask {
 	public function updateUserEmail( $iUserId, $iUserEmail ) {
 		/* Subscriber list contains unique emails
 		 * Assuming email may be new - try to create subscriber object using the email */
-		$oCreateUserTask = $this->getCreateUserTaskObject();
+		$oCreateUserTask = $this->getCreateUserTask();
 		$oCreateUserTask->createSubscriber( $iUserEmail );
 
 		/* Update email in user data extension */
@@ -54,7 +62,7 @@ class ExactTargetUpdateUserTask extends BaseTask {
 	 * Returns an instance of ExactTargetCreateUserTask class
 	 * @return ExactTargetCreateUserTask
 	 */
-	private function getCreateUserTaskObject() {
+	private function getCreateUserTask() {
 		return new ExactTargetCreateUserTask();
 	}
 

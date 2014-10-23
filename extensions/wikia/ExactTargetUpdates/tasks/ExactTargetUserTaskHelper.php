@@ -1,29 +1,31 @@
 <?php
+namespace Wikia\ExactTarget\Tasks;
 
 class ExactTargetUserTaskHelper {
 
-	public function prepareSubscriberCreateParams() {
+	/**
+	 * Prepares array of params for ExactTarget API for retrieving DataExtension objects from user table
+	 * @param array $aProperties list of fields to retrieve
+	 * @param string $sFilterProperty name of field to filter
+	 * @param array $aFilterValues possible values to filter
+	 * @return array
+	 */
+	public function prepareUserRetrieveParams( $aProperties, $sFilterProperty, $aFilterValues ) {
+		/* Get Customer Keys specific for production or development */
+		$aCustomerKeys = $this->getCustomerKeys();
+		$sCustomerKey = $aCustomerKeys[ 'user' ];
+		$aApiParams = [
+			'DataExtension' => [
+				'CustomerKey' => $sCustomerKey,
+				'Properties' => $aProperties,
+			],
+			'SimpleFilterPart' => [
+				'Property' => $sFilterProperty,
+				'Value' => $aFilterValues
+			]
+		];
 
-	}
-
-	public function prepareSubscriberRetrieveParams() {
-
-	}
-
-	public function prepareSubscriberUpdateParams() {
-
-	}
-
-	public function prepareSubscriberDeleteParams() {
-
-	}
-
-	public function prepareUserCreateParams() {
-
-	}
-
-	public function prepareUserRetrieveParams() {
-
+		return $aApiParams;
 	}
 
 	/**
@@ -39,53 +41,34 @@ class ExactTargetUserTaskHelper {
 		$sCustomerKey = $aCustomerKeys[ 'user' ];
 
 		$aApiParams = [
-			[
-				'DataExtension' => [
+			'DataExtension' => [
+				[
 					'CustomerKey' => $sCustomerKey,
 					'Properties' => $aUserData,
-					'Keys' => ['user_id' => $userId ]
+					'Keys' => [ 'user_id' => $userId ]
 				]
 			]
 		];
 		return $aApiParams;
 	}
 
-	public function prepareUserDeleteParams( $userId ) {
+	public function prepareUserDeleteParams( $iUserId ) {
 		/* Get Customer Keys specific for production or development */
 		$aCustomerKeys = $this->getCustomerKeys();
 		$sCustomerKey = $aCustomerKeys[ 'user' ];
 
 		$aApiParams = [
-			[
-				'DataExtension' => [
+			'DataExtension' => [
+				[
 					'CustomerKey' => $sCustomerKey,
-					'Keys' => ['user_id' => $userId ]
+					'Keys' => [
+						'user_id' => $iUserId
+					]
 				]
 			]
 		];
+
 		return $aApiParams;
-	}
-
-	/**
-	 * Prepares DataExtension params for prepareApiCreateParams method
-	 * @param int $iUserId
-	 * @param array $aUserProperties array of property name => value pairs
-	 * @return array
-	 */
-	public function prepareUserPropertiesCreateParams( $iUserId, array $aUserProperties ) {
-		$aDataExtensionsParams = [];
-		foreach ( $aUserProperties as $sProperty => $sValue ) {
-			$aDataExtensionsParams[] = [
-				'up_user' => $iUserId,
-				'up_property' => $sProperty,
-				'up_value' => $sValue
-			];
-		}
-		return $aDataExtensionsParams;
-	}
-
-	public function prepareUserPropertiesRetrieveParams() {
-
 	}
 
 	/**
@@ -97,19 +80,16 @@ class ExactTargetUserTaskHelper {
 	public function prepareUserPropertiesUpdateParams( $iUserId, array $aUserProperties ) {
 		/* Get Customer Keys specific for production or development */
 		$aCustomerKeys = $this->getCustomerKeys();
-		$sCustomerKey = $aCustomerKeys['user_properties'];
+		$sCustomerKey = $aCustomerKeys[ 'user_properties' ];
 
+		$aApiParams = [ 'DataExtension' => [] ];
 		foreach ( $aUserProperties as $sProperty => $sValue ) {
-			$aApiParams = [
-				[
-					'DataExtension' => [
-						'CustomerKey' => $sCustomerKey,
-						'Properties' => [ 'up_value' => $sValue ],
-						'Keys' => [
-							'up_user' => $iUserId,
-							'up_property' => $sProperty
-						]
-					]
+			$aApiParams[ 'DataExtension' ][] = [
+				'CustomerKey' => $sCustomerKey,
+				'Properties' => [ 'up_value' => $sValue ],
+				'Keys' => [
+					'up_user' => $iUserId,
+					'up_property' => $sProperty
 				]
 			];
 		}
@@ -135,50 +115,13 @@ class ExactTargetUserTaskHelper {
 		$aCustomerKeys = $this->getCustomerKeys();
 		$sCustomerKey = $aCustomerKeys['user_properties'];
 
-		foreach ( $aUserProperties as $sProperty => $sValue ) {
-			$aApiParams = [
-				[
-					'DataExtension' => [
-						'CustomerKey' => $sCustomerKey,
-						'Keys' => [
-							'up_user' => $iUserId,
-							'up_property' => $sProperty
-						]
-					]
-				]
-			];
-		}
-		return $aApiParams;
-	}
-
-	/**
-	 * Returns array of params for ExactTarget API for creating DataExtension objects
-	 * @param array $aDataExtensionsParams
-	 * @param string $sCustomerKey
-	 * @return array
-	 * e.g result params for creating two DataExtenision objects
-	 * [
-	 *   [
-	 *     'DataExtension' => [
-	 *       'CustomerKey' => 'user_properties',
-	 *       'Properties' => ['key'='value']
-	 *     ]
-	 *   ]
-	 *   [
-	 *     'DataExtension' => [
-	 *       'CustomerKey' => 'user_properties',
-	 *       'Properties' => ['key'='value']
-	 *     ]
-	 *   ]
-	 * ]
-	 */
-	public function prepareApiCreateParams( $aDataExtensionsParams, $sCustomerKey ) {
-		$aApiParams = [];
-		foreach ( $aDataExtensionsParams as $aProperties ) {
-			$aApiParams[] = [
-				'DataExtension' => [
-					'CustomerKey' => $sCustomerKey,
-					'Properties' => $aProperties
+		$aApiParams = [ 'DataExtension' => [] ];
+		foreach ( $aUserProperties as $sProperty ) {
+			$aApiParams[ 'DataExtension' ][] = [
+				'CustomerKey' => $sCustomerKey,
+				'Keys' => [
+					'up_user' => $iUserId,
+					'up_property' => $sProperty
 				]
 			];
 		}

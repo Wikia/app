@@ -28,7 +28,7 @@ class ExactTargetCreateUserTaskTest extends WikiaBaseTest {
 		/* @var ExactTargetCreateUserTask $addTaskMock mock of ExactTargetCreateUserTask class */
 		$addTaskMock = $this->getMockBuilder( 'ExactTargetCreateUserTask' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'getClient', 'getDeleteUserTaskObject', 'createUserPropertiesDataExtension', 'createUserDataExtension', 'createSubscriber' ] )
+			->setMethods( [ 'getClient', 'getDeleteUserTaskObject', 'createUserProperties', 'createUser', 'createSubscriber' ] )
 			->getMock();
 
 		$addTaskMock
@@ -47,16 +47,16 @@ class ExactTargetCreateUserTaskTest extends WikiaBaseTest {
 			->method( 'createSubscriber' )
 			->with( $aUserData['user_email'], $oSoapClient );
 
-		/* test createUserDataExtension invoke params */
+		/* test createUser invoke params */
 		$addTaskMock
 			->expects( $this->once() )
-			->method( 'createUserDataExtension' )
+			->method( 'createUser' )
 			->with( $aUserData, $oSoapClient );
 
-		/* test createUserPropertiesDataExtension invoke params */
+		/* test createUserProperties invoke params */
 		$addTaskMock
 			->expects( $this->once() )
-			->method( 'createUserPropertiesDataExtension' )
+			->method( 'createUserProperties' )
 			->with( $aUserData['user_id'], $aUserProperties, $oSoapClient );
 
 		/* Run tested method */
@@ -123,7 +123,7 @@ class ExactTargetCreateUserTaskTest extends WikiaBaseTest {
 			->will( $this->returnValue( $oRequest ) );
 
 		/* Run tested method */
-		$mockCreateUserTask->createUserPropertiesDataExtension( $iUserId, $aUserProperties, $soapClient );
+		$mockCreateUserTask->createUserProperties( $iUserId, $aUserProperties, $soapClient );
 	}
 
 	function testCreateUserDataExtensionShouldSendData() {
@@ -187,7 +187,7 @@ class ExactTargetCreateUserTaskTest extends WikiaBaseTest {
 			->will( $this->returnValue( $oRequest ) );
 
 		/* Run tested method */
-		$mockCreateUserTask->createUserDataExtension( $aUserData, $soapClient );
+		$mockCreateUserTask->createUser( $aUserData, $soapClient );
 	}
 
 	function testCreateSubscriberShouldSendData() {

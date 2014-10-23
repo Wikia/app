@@ -46,26 +46,27 @@ $wgExtensionMessagesFiles[ 'ExactTargetUpdates' ] = $dir . '/ExactTargetUpdates.
  */
 
 /* Add hooks classes */
-$wgAutoloadClasses['ExactTargetSetupHooks'] =  $dir . '/hooks/ExactTargetSetup.hooks.php' ;
-$wgAutoloadClasses['ExactTargetUserHooks'] =  $dir . '/hooks/ExactTargetUser.hooks.php' ;
-$wgAutoloadClasses['ExactTargetUserHooksHelper'] =  $dir . '/hooks/ExactTargetUserHooksHelper.php' ;
-$wgAutoloadClasses['ExactTargetWikiHooks'] =  $dir . '/hooks/ExactTargetWiki.hooks.php' ;
-$wgAutoloadClasses['ExactTargetWikiHooksHelper'] =  $dir . '/hooks/ExactTargetWikiHooksHelper.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\ExactTargetSetupHooks'] =  $dir . '/hooks/ExactTargetSetup.hooks.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\Hooks\ExactTargetUserHooks'] =  $dir . '/hooks/ExactTargetUser.hooks.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\Hooks\ExactTargetUserHooksHelper'] =  $dir . '/hooks/ExactTargetUserHooksHelper.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\Hooks\ExactTargetWikiHooks'] =  $dir . '/hooks/ExactTargetWiki.hooks.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\Hooks\ExactTargetWikiHooksHelper'] =  $dir . '/hooks/ExactTargetWikiHooksHelper.php' ;
 /* Add user-related tasks classes */
-$wgAutoloadClasses['ExactTargetUserTaskHelper'] =  $dir . '/tasks/ExactTargetUserTaskHelper.php' ;
-$wgAutoloadClasses['ExactTargetCreateUserTask'] =  $dir . '/tasks/ExactTargetCreateUserTask.php' ;
-$wgAutoloadClasses['ExactTargetUpdateUserTask'] =  $dir . '/tasks/ExactTargetUpdateUserTask.php' ;
-$wgAutoloadClasses['ExactTargetDeleteUserTask'] =  $dir . '/tasks/ExactTargetDeleteUserTask.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\Tasks\ExactTargetUserTaskHelper'] =  $dir . '/tasks/ExactTargetUserTaskHelper.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\Tasks\ExactTargetCreateUserTask'] =  $dir . '/tasks/ExactTargetCreateUserTask.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\Tasks\ExactTargetRetrieveUserHelper'] =  $dir . '/tasks/ExactTargetRetrieveUserHelper.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\Tasks\ExactTargetUpdateUserTask'] =  $dir . '/tasks/ExactTargetUpdateUserTask.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\Tasks\ExactTargetDeleteUserTask'] =  $dir . '/tasks/ExactTargetDeleteUserTask.php';
 /* Add wiki-related tasks classes */
-$wgAutoloadClasses['ExactTargetWikiTaskHelper'] =  $dir . '/tasks/ExactTargetWikiTaskHelper.php' ;
-$wgAutoloadClasses['ExactTargetCreateWikiTask'] =  $dir . '/tasks/ExactTargetCreateWikiTask.php' ;
-$wgAutoloadClasses['ExactTargetUpdateWikiTask'] =  $dir . '/tasks/ExactTargetUpdateWikiTask.php' ;
-$wgAutoloadClasses['ExactTargetUpdateCityCatMappingTask'] =  $dir . '/tasks/ExactTargetUpdateCityCatMappingTask.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\Tasks\ExactTargetWikiTaskHelper'] =  $dir . '/tasks/ExactTargetWikiTaskHelper.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\Tasks\ExactTargetCreateWikiTask'] =  $dir . '/tasks/ExactTargetCreateWikiTask.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\Tasks\ExactTargetUpdateWikiTask'] =  $dir . '/tasks/ExactTargetUpdateWikiTask.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\Tasks\ExactTargetUpdateCityCatMappingTask'] =  $dir . '/tasks/ExactTargetUpdateCityCatMappingTask.php' ;
+
 /* Add API classes */
-$wgAutoloadClasses['ExactTargetApiDataExtension'] = $dir . '/api/ExactTargetApiDataExtension.php' ;
-$wgAutoloadClasses['ExactTargetApiHelper'] = $dir . '/api/ExactTargetApiHelper.php' ;
-/* Add ExactTarget classes (the rest of ExactTarget classes are loaded internally by ExactTargetSoapClient */
-$wgAutoloadClasses['ExactTargetSoapClient'] =  $dir . '/lib/exacttarget_soap_client.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\Api\ExactTargetApiDataExtension'] =  $dir . '/api/ExactTargetApiDataExtension.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\Api\ExactTargetApiHelper'] =  $dir . '/api/ExactTargetApiHelper.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\ExactTargetSoapClient'] =  $dir . '/lib/exacttarget_soap_client.php' ;
 
 /**
  * Registering hooks
