@@ -74,6 +74,9 @@ class MercuryApiController extends WikiaController {
 	 * @return mixed
 	 */
 	private function getTopContributorsDetails( Array $ids ) {
+		if ( empty( $ids ) ) {
+			return [];
+		}
 		try {
 			return $this->sendRequest( 'UserApi', 'getDetails', [ 'ids' => implode( ',', $ids ) ] )
 				->getData()[ 'items' ];
@@ -82,7 +85,6 @@ class MercuryApiController extends WikiaController {
 			// and we want the article even if we don't have the contributors
 			return [];
 		}
-
 	}
 
 	/**
