@@ -1,4 +1,6 @@
 <?php
+namespace Wikia\ExactTarget;
+
 use Wikia\Tasks\Tasks\BaseTask;
 
 class ExactTargetUpdateCityCatMappingTask extends BaseTask {

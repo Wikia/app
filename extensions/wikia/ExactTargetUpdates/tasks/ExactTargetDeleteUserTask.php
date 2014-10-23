@@ -1,8 +1,6 @@
 <?php
-namespace Wikia\ExactTarget\Tasks;
+namespace Wikia\ExactTarget;
 
-use Wikia\ExactTarget\Api\ExactTargetApiDataExtension;
-use Wikia\ExactTarget\Api\ExactTargetApiSubscriber;
 use Wikia\Tasks\Tasks\BaseTask;
 
 class ExactTargetDeleteUserTask extends BaseTask {

@@ -1,5 +1,5 @@
 <?php
-namespace Wikia\ExactTarget\Api;
+namespace Wikia\ExactTarget;
 
 use Wikia\Logger\WikiaLogger;
 

@@ -1,4 +1,5 @@
 <?php
+namespace Wikia\ExactTarget;
 
 class ExactTargetUserHooksHelper {
 	/**

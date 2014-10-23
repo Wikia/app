@@ -1,7 +1,5 @@
 <?php
-namespace Wikia\ExactTarget\Tasks;
-
-use Wikia\ExactTarget\Api\ExactTargetApiDataExtension;
+namespace Wikia\ExactTarget;
 
 class ExactTargetRetrieveUserHelper {
 

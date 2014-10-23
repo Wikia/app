@@ -1,5 +1,5 @@
 <?php
-namespace Wikia\ExactTarget\Tasks;
+namespace Wikia\ExactTarget;
 
 class ExactTargetUserTaskHelper {
 

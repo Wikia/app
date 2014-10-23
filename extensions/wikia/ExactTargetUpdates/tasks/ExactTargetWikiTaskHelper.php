@@ -1,4 +1,5 @@
 <?php
+namespace Wikia\ExactTarget;
 
 class ExactTargetWikiTaskHelper {
 
@@ -11,8 +12,6 @@ class ExactTargetWikiTaskHelper {
 		];
 
 		$aDataExtensionsForCreate['DataExtension'] = array_merge( $aDataExtensionsForCreate['DataExtension'], $aWikiDataExtension, $aCityCatMappingDataExtension );
-
-//		wfDebug( "\n ExactTargetUpdates::" . __METHOD__ . " " . json_encode($aDataExtensionsForCreate) . "\n");
 
 		return $aDataExtensionsForCreate;
 	}

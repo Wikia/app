@@ -1,4 +1,6 @@
 <?php
+namespace Wikia\ExactTarget;
+
 use Wikia\Logger\WikiaLogger;
 
 class ExactTargetApiSubscriber {
