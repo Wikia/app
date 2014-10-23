@@ -104,19 +104,19 @@ class MercuryApi {
 	 * @return mixed
 	 */
 	public function getWikiVariables() {
-		global $wgLanguageCode,
-			   $wgCityId,
-			   $wgDBname,
-			   $wgSitename,
-			   $wgCacheBuster;
+		$wg = F::app()->wg;
 		return [
-			'cacheBuster' => (int) $wgCacheBuster,
-			'dbName' => $wgDBname,
-			'id' => (int) $wgCityId,
-			'language' => $wgLanguageCode,
-			'languageDirection' => SassUtil::isRTL() ? 'rtl' : 'ltr',
+			'cacheBuster' => (int) $wg->CacheBuster,
+			'dbName' => $wg->DBname,
+			'id' => (int) $wg->CityId,
+			'language' => [
+				'user' => $wg->Lang->getCode(),
+				'userDir' => SassUtil::isRTL() ? 'rtl' : 'ltr',
+				'content' => $wg->LanguageCode,
+				'contentDir' => $wg->ContLang->getDir()
+			],
 			'namespaces' => MWNamespace::getCanonicalNamespaces(),
-			'siteName' => $wgSitename,
+			'siteName' => $wg->Sitename,
 			'theme' => SassUtil::getOasisSettings()
 		];
 	}
