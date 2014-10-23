@@ -114,7 +114,7 @@ class MercuryApi {
 			'dbName' => $wgDBname,
 			'id' => (int) $wgCityId,
 			'language' => $wgLanguageCode,
-			'isRtlLanguage' => SassUtil::isRTL(),
+			'languageDirection' => SassUtil::isRTL() ? 'rtl' : 'ltr',
 			'namespaces' => MWNamespace::getCanonicalNamespaces(),
 			'siteName' => $wgSitename,
 			'theme' => SassUtil::getOasisSettings()
