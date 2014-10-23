@@ -77,14 +77,9 @@ class WikiaForeignDBFile extends ForeignDBFile {
 	function getLanguageCode() {
 		$wikiDbName = $this->repo->getDBName();
 		$wikiId = WikiFactory::DBtoID($wikiDbName);
-		$wikiContLang = WikiFactory::getVarValueByName('wgContLang', $wikiId);
+		$wikiUploadPath = WikiFactory::getVarValueByName('wgUploadPath', $wikiId);
 
-		$code = null;
-		if ( $wikiContLang ) {
-			$code = $wikiContLang->getCode();
-		}
-
-		return $code;
+		return VignetteRequest::parseLanguageCode( $wikiUploadPath );
 	}
 
 	// Not everything can be transparent, because __call skips already defined methods.

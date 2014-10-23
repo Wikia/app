@@ -100,7 +100,7 @@ class UrlGenerator {
 	 * @return $this
 	 */
 	public function lang($lang) {
-		if (!empty($lang) && $lang != 'en') {
+		if (!empty($lang)) {
 			$this->query['lang'] = $lang;
 		}
 

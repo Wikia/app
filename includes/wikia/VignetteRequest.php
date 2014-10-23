@@ -79,7 +79,7 @@ class VignetteRequest {
 	 * @param $url
 	 * @return mixed
 	 */
-	public static function parseBucket($url) {
+	public static function parseBucket( $url ) {
 		$bucket = null;
 
 		if ( preg_match( '/http(s?):\/\/(.*?)\/(.*?)\/(.*)$/', $url, $matches ) ) {
@@ -90,12 +90,28 @@ class VignetteRequest {
 	}
 
 	/**
+	 * parse the language code from a url. http://images.wikia.com/walkingdead/ru/images -> "ru",
+	 * http://images.wikia.com/walkingdead/images -> null
+	 * @param $url
+	 * @return null
+	 */
+	public static function parseLanguageCode( $url ) {
+		$languageCode = null;
+
+		if ( preg_match( '/http(s)?:\/\/(.*?)\/(.*?)\/(.*?\/)?images$/', $url, $matches ) && isset( $matches[4] ) ) {
+			$languageCode = rtrim($matches[4], '/');
+		}
+
+		return $languageCode;
+	}
+
+	/**
 	 * parse relative path from url. ex: http://images.wiukia.com/muppet/images/a/ab/image.jpg will
 	 * return "a/ab/image.jpg"
 	 * @param $url
 	 * @return mixed
 	 */
-	public static function parseRelativePath($url) {
+	public static function parseRelativePath( $url ) {
 		$relativePath = null;
 
 		if ( preg_match( '/\w\/\w\w\/(.*)$/', $url, $matches ) ) {
