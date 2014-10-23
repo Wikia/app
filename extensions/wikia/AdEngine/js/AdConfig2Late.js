@@ -74,10 +74,14 @@ define('ext.wikia.adEngine.adConfigLate', [
 			PREFOOTER_RIGHT_BOXAD: true
 		},
 
-		dartBtfEnabled = dartBtfCountries[country] && context.opts.useDartForSlotsBelowTheFold;
+		dartBtfEnabled = dartBtfCountries[country] && context.opts.useDartForSlotsBelowTheFold,
+
+		alwaysCallDartInCountries = instantGlobals.wgAdDriverAlwaysCallDartInCountries || [],
+		alwaysCallDart = (alwaysCallDartInCountries.indexOf(country) > -1);
 
 	function getProvider(slot) {
-		var slotname = slot[0];
+		var slotname = slot[0],
+			useRemnantGpt = alwaysCallDart || context.providers.remnantGpt || slotsToAlwaysCallRemnantGpt[slotname];
 
 		log('getProvider', 5, logGroup);
 		log(slot, 5, logGroup);
@@ -133,10 +137,8 @@ define('ext.wikia.adEngine.adConfigLate', [
 			return adProviderDirectGpt;
 		}
 
-		if (context.providers.remnantGpt || slotsToAlwaysCallRemnantGpt[slotname]) {
-			if (adProviderRemnantGpt.canHandleSlot(slotname)) {
-				return adProviderRemnantGpt;
-			}
+		if (useRemnantGpt && adProviderRemnantGpt.canHandleSlot(slotname)) {
+			return adProviderRemnantGpt;
 		}
 
 		if (adProviderLiftium.canHandleSlot(slotname) && !instantGlobals.wgSitewideDisableLiftium) {
