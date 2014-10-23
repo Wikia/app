@@ -305,8 +305,9 @@ $article-items-spacing: 40px;
 		padding: 0 $small-grid-column-padding;
 
 		h2 {
-			margin-left: -$small-grid-gutter;
-			margin-right: -$small-grid-gutter;
+			// setting negative margin is breaking layout on mobile devices
+			margin-left: 0;
+			margin-right: 0;
 
 			.mw-headline {
 				padding-left: $small-grid-gutter;
