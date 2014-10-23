@@ -58,7 +58,7 @@ class VenusController extends WikiaController {
 		$this->globalNavigation = $this->getGlobalNavigation();
 		$this->notifications = $this->getNotifications();
 		$this->topAds = $this->getTopAds();
-		$this->wikiHeader = $this->getWikiHeader();
+		$this->localNavigation = $this->getLocalNavigation();
 		$this->globalFooter = $this->getGlobalFooter();
 		$this->corporateFooter = $this->getCorporateFootet();
 	}
@@ -162,15 +162,19 @@ class VenusController extends WikiaController {
 	}
 
 	public function getGlobalNavigation() {
-		return $this->app->renderView('GlobalNavigation', 'index');
+		return class_exists('GlobalNavigationController') ?
+			$this->app->renderView('GlobalNavigation', 'index') :
+			'';
 	}
 
 	private function getNotifications() {
 		//return $this->app->renderView('Notifications', 'Confirmation');
 	}
 
-	private function getWikiHeader() {
-		//return $this->app->renderView( 'LocalHeader', 'Index' );
+	private function getLocalNavigation() {
+		return class_exists('LocalNavigationController') ?
+			$this->app->renderView('LocalNavigation', 'Index') :
+			'';
 	}
 
 	private function getTopAds() {
@@ -178,7 +182,9 @@ class VenusController extends WikiaController {
 	}
 
 	private function getGlobalFooter() {
-		return $this->app->renderView('GlobalFooter', 'index');
+		return class_exists('GlobalFooterController') ?
+			$this->app->renderView('GlobalFooter', 'index') :
+			'';
 	}
 
 	public function getCorporateFootet() {

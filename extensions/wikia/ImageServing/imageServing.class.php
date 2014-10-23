@@ -302,6 +302,7 @@ class ImageServing {
 			$this->tmpDeltaY = 0.5 - $H / $height / 2;
 		}
 
+		// FIXME: this should be replaced with a vignette thumbnail URL. See https://wikia-inc.atlassian.net/browse/PLATFORM-531.
 		$url = wfReplaceImageServer( $img->getThumbUrl( $sPrefix . $this->getCut( $width, $height ) . "-" . $img->getName().($issvg ? ".png":"") ) );
 
 		wfProfileOut( __METHOD__ );

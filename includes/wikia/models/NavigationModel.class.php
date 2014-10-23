@@ -36,9 +36,14 @@ class NavigationModel extends WikiaModel {
 	//errors
 	const ERR_MAGIC_WORD_IN_LEVEL_1 = 'Magic word at level 1';
 
-	const LEVEL_1_ITEMS_COUNT = 7;
-	const LEVEL_2_ITEMS_COUNT = 4;
-	const LEVEL_3_ITEMS_COUNT = 4;
+	const LOCALNAV_LEVEL_1_ITEMS_COUNT = 4;
+	const LOCALNAV_LEVEL_2_ITEMS_COUNT = 7;
+	const LOCALNAV_LEVEL_3_ITEMS_COUNT = 10;
+
+	const GLOBALNAV_LEVEL_1_ITEMS_COUNT = 7;
+	const GLOBALNAV_LEVEL_2_ITEMS_COUNT = 4;
+	const GLOBALNAV_LEVEL_3_ITEMS_COUNT = 4;
+
 	const MEMC_VERSION = 2;
 
 	private $menuNodes;
@@ -165,18 +170,61 @@ class NavigationModel extends WikiaModel {
 		);
 	}
 
-	public function getTree( $messageName ) {
+	public function getGlobalNavigationTree( $messageName ) {
+		return $this->getTree(
+			NavigationModel::TYPE_MESSAGE,
+			$messageName,
+			[
+				self::GLOBALNAV_LEVEL_1_ITEMS_COUNT,
+				self::GLOBALNAV_LEVEL_2_ITEMS_COUNT,
+				self::GLOBALNAV_LEVEL_3_ITEMS_COUNT
+			]
+		);
+	}
+
+	public function getLocalNavigationTree( $messageName ) {
+		return $this->getTree(
+			NavigationModel::TYPE_MESSAGE,
+			$messageName,
+			[
+				self::LOCALNAV_LEVEL_1_ITEMS_COUNT,
+				self::LOCALNAV_LEVEL_2_ITEMS_COUNT,
+				self::LOCALNAV_LEVEL_3_ITEMS_COUNT
+			],
+			true
+		);
+	}
+
+	public function getOnTheWikiNavigationTree( $variableName ) {
+		return $this->getTree(
+			NavigationModel::TYPE_VARIABLE,
+			$variableName,
+			[
+				1,
+				self::LOCALNAV_LEVEL_2_ITEMS_COUNT,
+				self::LOCALNAV_LEVEL_3_ITEMS_COUNT
+			],
+			true
+		);
+	}
+
+	private function getTreeMemcKey( /* args */ ) {
+		return $this->getMemcKey(implode('-', func_get_args() + [self::MEMC_VERSION]));
+	}
+
+	public function getTree( $type, $source, $maxChildrenAtLevel = [], $forContent = false ) {
 		$menuData = WikiaDataAccess::cache(
-			$this->getMemcKey( $messageName . '-tree-' . self::MEMC_VERSION ),
+			$this->getTreeMemcKey( $type, $source, implode($maxChildrenAtLevel, '-'), $forContent ),
 			1800,
-			function() use ( $messageName ) {
+			function() use ( $type, $source, $maxChildrenAtLevel, $forContent ) {
 				$menuData = [];
 
 				$this->menuNodes = $this->parse(
-					NavigationModel::TYPE_MESSAGE,
-					$messageName,
-					[self::LEVEL_1_ITEMS_COUNT, self::LEVEL_2_ITEMS_COUNT, self::LEVEL_3_ITEMS_COUNT],
-					1800 /* 3 hours */
+					$type,
+					$source,
+					$maxChildrenAtLevel,
+					1800 /* 3 hours */,
+					$forContent
 				);
 
 				foreach( $this->menuNodes[0]['children'] as $id ) {
@@ -209,10 +257,17 @@ class NavigationModel extends WikiaModel {
 		$node = $this->menuNodes[$index];
 		$returnValue = [
 			'text' => $node['text'],
+			'textEscaped' => htmlspecialchars( $node['text'], ENT_QUOTES | ENT_HTML5, 'UTF-8' ),
 			'href' => $node['href'],
 		];
 		if ( !empty( $node['specialAttr'] ) ) {
 			$returnValue['specialAttr'] = $node['specialAttr'];
+		}
+		if ( !empty( $node['canonicalName'] ) ) {
+			$returnValue['canonicalName'] = $node['canonicalName'];
+			$returnValue['canonicalAttr'] = 'data-canonical="' . strtolower( $node['canonicalName'] ) . '" ';
+		} else {
+			$returnValue['canonicalAttr'] = null;
 		}
 
 		if ( isset( $node['children'] ) ) {

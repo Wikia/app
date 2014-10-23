@@ -61,6 +61,13 @@ $messages['bg'] = array(
 	'mostpopularcategories' => 'Най-популярни категории',
 );
 
+/** Bengali (বাংলা)
+ * @author Aftab1995
+ */
+$messages['bn'] = array(
+	'mostpopularcategories' => 'সবচেয়ে জনপ্রিয় বিষয়শ্রেণীসমূহ',
+);
+
 /** Breton (brezhoneg)
  * @author Y-M D
  */
@@ -336,6 +343,13 @@ $messages['pt'] = array(
  */
 $messages['pt-br'] = array(
 	'mostpopularcategories' => 'Categorias mais populares',
+);
+
+/** Romanian (română)
+ * @author Minisarm
+ */
+$messages['ro'] = array(
+	'mostpopularcategories' => 'Cele mai populare categorii',
 );
 
 /** tarandíne (tarandíne)

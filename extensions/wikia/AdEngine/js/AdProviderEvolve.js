@@ -75,6 +75,7 @@ define('ext.wikia.adEngine.provider.evolve', [
 			'sect=' + sect + ';' +
 			'mtfInline=true;' +
 			'pos=' + slotname + ';' +
+			adLogicPageParamsLegacy.getEsrbKeyValue() +
 			adLogicPageParamsLegacy.getS1KeyValue() +
 			adLogicPageParamsLegacy.getCustomKeyValues() +
 			adLogicPageParamsLegacy.getKruxKeyValues();

@@ -24,6 +24,8 @@ class WikiFeaturesHelper extends WikiaModel {
 		4 => array('title' => 'Idea', 'msg' => 'wikifeatures-an-idea-for-project'),
 	);
 
+	// These numbers are totally arbitrary and not used for anything other than to exist in this array.  This mostly
+	// exists to verify that feedback from labs is for a known feature.
 	public static $feedbackAreaIDs = array (
 		'wgEnableAjaxPollExt' => 280,
 		'wgShowTopListsInCreatePage' => 199,
@@ -36,6 +38,7 @@ class WikiFeaturesHelper extends WikiaModel {
 		'wgEnableForumExt' => 259,
 		'wgEnableVisualEditorUI' => 259,
 		'wgEnableWikiaInteractiveMaps' => 260,
+		'wgEnableMediaGalleryExt' => 1,
 	);
 
 	// no need to add feature to $release_date if not require "new" flag
@@ -202,10 +205,11 @@ class WikiFeaturesHelper extends WikiaModel {
 	 * @param string $message feedback message
 	 * @param User $user user object
 	 * @param integer $feedbackCat feedback category which is defined above in $feedbackCategories property
+	 *
+	 * @return \Status
 	 */
 	public function sendFeedback( $feature, $user, $message, $category, $priority = 5 ) {
 
-		$areaId = self::$feedbackAreaIDs[$feature];
 		$title = $feature .' - '.self::$feedbackCategories[$category]['title'];
 
 		$message = <<<MSG

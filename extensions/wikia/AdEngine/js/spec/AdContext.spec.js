@@ -53,23 +53,33 @@ describe('AdContext', function () {
 	it('makes targeting.pageCategories filled with categories properly', function () {
 		var adContext;
 
-		adContext = modules['ext.wikia.adEngine.adContext']({});
-		expect(adContext.getContext().targeting.pageCategories && adContext.getContext().targeting.pageCategories.length).toBeFalsy();
-
 		adContext = modules['ext.wikia.adEngine.adContext']({
-			wgCategories: ['category1', 'category2']
+			ads: {context: {}}
 		});
 		expect(adContext.getContext().targeting.pageCategories && adContext.getContext().targeting.pageCategories.length).toBeFalsy();
 
 		adContext = modules['ext.wikia.adEngine.adContext']({
-			wgAdDriverUseCatParam: true
+			ads: {context: {}},
+			wgCategories: ['Category1', 'Category2'],
+			Wikia: {article: {article: {categories: [{title: 'Category1', url: '/wiki/Category:Category1'}, {title: 'Category2', url: '/wiki/Category:Category2'}]}}}
 		});
 		expect(adContext.getContext().targeting.pageCategories && adContext.getContext().targeting.pageCategories.length).toBeFalsy();
 
 		adContext = modules['ext.wikia.adEngine.adContext']({
-			wgCategories: ['category1', 'category2'],
-			wgAdDriverUseCatParam: true
+			ads: {context: {targeting: {enablePageCategories: true}}}
 		});
-		expect(adContext.getContext().targeting.pageCategories).toEqual(['category1', 'category2']);
+		expect(adContext.getContext().targeting.pageCategories && adContext.getContext().targeting.pageCategories.length).toBeFalsy();
+
+		adContext = modules['ext.wikia.adEngine.adContext']({
+			ads: {context: {targeting: {enablePageCategories: true}}},
+			wgCategories: ['Category1', 'Category2'],
+		});
+		expect(adContext.getContext().targeting.pageCategories).toEqual(['Category1', 'Category2']);
+
+		adContext = modules['ext.wikia.adEngine.adContext']({
+			ads: {context: {targeting: {enablePageCategories: true}}},
+			Wikia: {article: {article: {categories: [{title: 'Category1', url: '/wiki/Category:Category1'}, {title: 'Category2', url: '/wiki/Category:Category2'}]}}}
+		});
+		expect(adContext.getContext().targeting.pageCategories).toEqual(['Category1', 'Category2']);
 	});
 });

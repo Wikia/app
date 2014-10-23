@@ -4,7 +4,7 @@ class MercuryApiController extends WikiaController {
 
 	const PARAM_ARTICLE_ID = 'id';
 	const PARAM_PAGE = 'page';
-	const PARAM_ARTICLE_TITLE = "title";
+	const PARAM_ARTICLE_TITLE = 'title';
 
 	const NUMBER_CONTRIBUTORS = 6;
 	const DEFAULT_PAGE = 1;
@@ -14,6 +14,19 @@ class MercuryApiController extends WikiaController {
 	public function __construct() {
 		parent::__construct();
 		$this->mercuryApi = new MercuryApi();
+	}
+
+	/**
+	 * @desc Returns smart banner config that is stored in WF
+	 */
+	private function getSmartBannerConfig() {
+		if ( !empty( $this->wg->EnableWikiaMobileSmartBanner )
+			&& !empty( $this->wg->WikiaMobileSmartBannerConfig )
+		) {
+			return $this->wg->WikiaMobileSmartBannerConfig;
+		}
+
+		return null;
 	}
 
 	/**
@@ -124,7 +137,7 @@ class MercuryApiController extends WikiaController {
 		}
 
 		if ( empty( $title ) ) {
-			throw new NotFoundApiException( "Unable to find any article" );
+			throw new NotFoundApiException( 'Unable to find any article' );
 		}
 
 		return $title;
@@ -157,7 +170,7 @@ class MercuryApiController extends WikiaController {
 		$comments = $this->mercuryApi->processArticleComments( $commentsData );
 
 		$this->response->setVal( 'payload', $comments );
-		$this->response->setVal( 'pagesCount', $commentsData['pagesCount'] );
+		$this->response->setVal( 'pagesCount', $commentsData[ 'pagesCount' ] );
 		$this->response->setVal( 'basePath', $this->wg->Server );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
@@ -168,7 +181,19 @@ class MercuryApiController extends WikiaController {
 	 */
 	public function getWikiVariables() {
 		$wikiVariables = $this->mercuryApi->getWikiVariables();
-		$wikiVariables['navData'] = $this->getNavigationData();
+		$wikiVariables[ 'navData' ] = $this->getNavigationData();
+
+		// Used to determine GA tracking
+		if ( !empty( $this->wg->IsGASpecialWiki ) ) {
+			$wikiVariables[ 'isGASpecialWiki' ] = true;
+		}
+
+		$smartBannerConfig = $this->getSmartBannerConfig();
+
+		if ( !is_null( $smartBannerConfig ) ) {
+			$wikiVariables[ 'smartbanner' ] = $smartBannerConfig;
+		}
+
 		$this->response->setVal( 'data', $wikiVariables );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
@@ -189,13 +214,13 @@ class MercuryApiController extends WikiaController {
 					$this->getTopContributorsPerArticle( $articleId )
 				),
 			'article' => $articleAsJson,
-			'adsContext' => $this->mercuryApi->getAdsContext( $title, $this->wg, $articleAsJson[ 'categories' ] ),
+			'adsContext' => $this->mercuryApi->getAdsContext( $title ),
 			'basePath' => $this->wg->Server
 		];
 
 		$relatedPages = $this->getRelatedPages( $articleId );
 		if ( !empty( $relatedPages ) ) {
-			$data['relatedPages'] = $relatedPages;
+			$data[ 'relatedPages' ] = $relatedPages;
 		}
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
