@@ -2,15 +2,26 @@
 @import 'skins/shared/mixins/box-shadow';
 @import 'skins/shared/mixins/gradient';
 
-$color-table-overflow-shadow: mix($color-page-shadow, $color-page, 50%);
+$color-table-background: if($is-dark-wiki, lighten($color-page, 2%), darken($color-page, 2%));
+$color-table-header-background: if($is-dark-wiki, lighten($color-page, 5%), darken($color-page, 5%));
+
+$table-margin: 1em;
+
+$table-overflow-shadow-offset-x: -15px;
+$table-overflow-shadow-offset-y: 0;
+$table-overflow-shadow-blur-radius: 20px;
+$table-overflow-shadow-color: mix($color-page-shadow, $color-page, 50%);
+$table-overflow-shadow-inset: true;
+$table-overflow-shadow-spread-radius: -15px;
+
 
 .article-table {
-	background: darken($color-page, 2%);
+	background: $color-table-background;
 	border: 0;
 	border-collapse: collapse;
 	clear: both;
 	color: $color-text;
-	margin: 1em 1em 1em 0;
+	margin: $table-margin $table-margin $table-margin 0;
 
 	th, td {
 		border-bottom: 1px $color-page-border solid;
@@ -18,7 +29,7 @@ $color-table-overflow-shadow: mix($color-page-shadow, $color-page, 50%);
 	}
 
 	th {
-		background: darken($color-page, 5%);
+		background: $color-table-header-background;
 		text-align: left;
 	}
 
@@ -34,15 +45,33 @@ $color-table-overflow-shadow: mix($color-page-shadow, $color-page, 50%);
 		position: relative;
 
 		&::before {
-			@include box-shadow(-15px, 0, 20px, $color-table-overflow-shadow, true, -15px);
+			@include box-shadow(
+				$table-overflow-shadow-offset-x,
+				$table-overflow-shadow-offset-y,
+				$table-overflow-shadow-blur-radius,
+				$table-overflow-shadow-color,
+				$table-overflow-shadow-inset,
+				$table-overflow-shadow-spread-radius
+			);
 			content: '';
 			height: 100%;
 			position: absolute;
 			right: 0;
-			width: 20px;
+			width: $table-overflow-shadow-blur-radius;
 			z-index: 2;
-		}
 
+			html[dir='rtl'] & {
+				@include box-shadow(
+						-$table-overflow-shadow-offset-x,
+						$table-overflow-shadow-offset-y,
+						$table-overflow-shadow-blur-radius,
+						$table-overflow-shadow-color,
+						$table-overflow-shadow-inset,
+						$table-overflow-shadow-spread-radius
+				);
+			}
+		}
+ 
 		// Wide tables cannot be floated
 		// Must use important here to override inline styles :'(
 		table {
@@ -54,10 +83,6 @@ $color-table-overflow-shadow: mix($color-page-shadow, $color-page, 50%);
 			overflow: auto;
 		}
 	}
-}
-
-html[dir='rtl'] .article .table-is-wide::before {
-	@include box-shadow(15px, 0, 20px, $color-table-overflow-shadow, true, -15px);
 }
 
 table.jquery-tablesorter.sortable th.headerSort .chevron {
