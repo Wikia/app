@@ -229,7 +229,7 @@ class MercuryApiController extends WikiaController {
 	}
 
 	/**
-	 * @desc Returns MW RandomPage instance and for now sets namespace to NS_MAIN
+	 * @desc Returns MW RandomPage instance
 	 * @return RandomPage
 	 * @see RandomPage core MediaWiki class
 	 */
@@ -238,7 +238,7 @@ class MercuryApiController extends WikiaController {
 	}
 
 	/**
-	 * @desc Gets random article
+	 * @desc Gets random article from NS_MAIN namespace for now
 	 * @throws NotFoundApiException
 	 * @see RandomPage core MediaWiki class
 	 */
