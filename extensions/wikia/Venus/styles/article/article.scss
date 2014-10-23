@@ -30,9 +30,7 @@ $article-items-spacing: 40px;
 		}
 
 		h1 {
-			@include font-size-xxl;
 			bottom: 0;
-			font-weight: bold;
 			margin: 0;
 			padding: 0 $medium-grid-column-padding 30px $medium-content-padding + $medium-grid-column-padding - $content-border-width;
 			word-break: break-all;
@@ -71,29 +69,20 @@ $article-items-spacing: 40px;
 		@include font-size-xxs;
 		display: inline-block;
 		float: right;
-		line-height: 27px;
-		margin-left: 27px;
+		margin-left: $edit-button-size;
 		padding-left: 5px;
 		position: relative;
 		text-transform: uppercase;
 
 		a::before {
-			@include edit-button(27px);
+			@include edit-button;
+
+			color: $color-links;
 		}
 	}
 
 	h1, h2, h3, h4, h5, h6 {
-		font-weight: bold;
 		overflow: hidden;
-	}
-
-	h1 .editsection {
-		line-height: 40px;
-		margin-left: 40px;
-
-		a::before {
-			@include resize-edit-button(40px);
-		}
 	}
 
 	h2 {
@@ -106,15 +95,6 @@ $article-items-spacing: 40px;
 
 		.mw-headline {
 			padding-left: $medium-grid-gutter;
-		}
-
-		.editsection {
-			line-height: 36px;
-			margin-left: 36px;
-
-			a::before {
-				@include resize-edit-button(36px);
-			}
 		}
 	}
 
