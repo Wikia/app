@@ -245,6 +245,17 @@ abstract class File implements FileInterface {
 		return $this->name;
 	}
 
+	public function getLanguageCode() {
+		global $wgContLang;
+
+		$code = null;
+		if ( isset( $wgContLang ) ) {
+			$code = $wgContLang->getCode();
+		}
+
+		return $code;
+	}
+
 	/**
 	 * Get the file extension, e.g. "svg"
 	 *
@@ -1779,7 +1790,7 @@ abstract class File implements FileInterface {
 	 * @return \UrlGenerator
 	 *
 	 */
-	protected function getUrlGenerator() {
+	public function getUrlGenerator() {
 			return new UrlGenerator( $this );
 	}
 

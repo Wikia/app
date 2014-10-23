@@ -248,6 +248,7 @@ $messages['ja'] = array(
 	'sharedhelp-desc' => '[[w:Help:Contents|Community Central]] のページをこのウィキの {{ns:help}} 名前空間に挿入する。',
 	'sharedhelp-autotalkcreate-summary' => 'ノートページの自動作成',
 	'sharedhelp-searchprofile' => 'ヘルプページ',
+	'sharedhelp-searchprofile-tooltip' => 'ヘルプの検索',
 );
 
 /** Kannada (ಕನ್ನಡ)

@@ -394,7 +394,8 @@ $messages['qqq'] = array(
 	'wall-message-loadmore' => 'See all the messages in the thread. Parameters:
 * $1 is the number of messages.',
 	'wall-message-wall' => 'Name of the feature',
-	'wall-message-wall-shorten' => "Name of the feature when it's used with a possessive, as in John's wall",
+	'wall-message-wall-shorten' => "Name of the feature when it's used with a possessive, as in John's wall
+{{Identical|Wall}}",
 	'wall-message-unfollow' => 'stop subscribing to notifications for this thread',
 	'wall-message-undoremove' => 'undo the action that you just took.
 {{Identical|Undo}}',
@@ -418,13 +419,15 @@ $messages['qqq'] = array(
 {{Identical|Remove}}',
 	'wall-message-rev-delete' => 'Dropdown menu for staff, option to revision-delete the message',
 	'wall-message-fast-admin-delete-message' => 'Button for vstf, allow to delete without any confirmation',
-	'wall-message-quote-button' => 'Quote button on messages',
+	'wall-message-quote-button' => 'Quote button on messages
+{{Identical|Quote}}',
 	'wall-message-elseswall' => "Link to a user's wall. Parameters:
 * $1 is the username (GENDER is supported)",
 	'wall-message-no-permission' => 'Error message when a non-admin or staff tries to delete or revision-delete a message',
 	'wall-thread-removed' => 'In parentheses at the top of a removed thread page, next to the title.
 {{Identical|Removed}}',
-	'wall-thread-isnotifyeveryone' => 'In parentheses at the top of a highlighted thread page, next to the title',
+	'wall-thread-isnotifyeveryone' => 'In parentheses at the top of a highlighted thread page, next to the title
+{{Identical|Highlight}}',
 	'wall-thread-deleted' => 'In parentheses at the top of a deleted thread page, next to the title.
 {{Identical|Deleted}}',
 	'wall-thread-closed' => 'Label stating the thread is closed.
@@ -2482,6 +2485,13 @@ $messages['el'] = array(
 	'wall-votes-number-tooltip' => 'Δείτε ποιος έδωσε Kudos σε αυτό το μήνυμα',
 );
 
+/** British English (British English)
+ * @author Captaindogfish
+ */
+$messages['en-gb'] = array(
+	'wall-recentchanges-thread-group' => "$1 on [[$2|$3's wall]]",
+);
+
 /** Spanish (español)
  * @author AnakngAraw
  * @author Armando-Martin
@@ -2661,7 +2671,7 @@ El mensaje original y tu resumen aparecerá en el historial del wiki.',
 	'wall-recentchanges-deleted-reply-title' => 'Una respuesta en el muro de mensajes',
 	'wall-recentchanges-wall-created-title' => 'Creó un muro de mensajes',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Muro de mensajes',
-	'wall-recentchanges-thread-group' => '$1 en el [[$2|Muro de $3]]',
+	'wall-recentchanges-thread-group' => '$1 en el [[$2|muro de $3]]',
 	'wall-recentchanges-history-link' => 'Historial del muro',
 	'wall-recentchanges-thread-history-link' => 'Historial del tema',
 	'wall-contributions-line' => '[[$1|$2]] en el [[$3|Muro de $4]]',
@@ -3794,6 +3804,14 @@ as preferencias de correo electrónico aquí: http://community.wikia.com/Special
 	'wall-topic-edit' => 'Editar os temas',
 	'wall-topic-edit-save' => 'Gardar',
 	'wall-topic-edit-cancel' => 'Cancelar',
+);
+
+/** Hebrew (עברית)
+ * @author Guycn2
+ */
+$messages['he'] = array(
+	'wall-recentchanges-thread-group' => '$1 ב[[$2|קיר של $3]]',
+	'wall-whatlinkshere-wall-line' => '[[$1|$2]] ב[[$3|קיר של $4]]',
 );
 
 /** Hindi (हिन्दी)
@@ -6130,6 +6148,14 @@ $messages['oc'] = array(
 	'wall-votes-number' => '$1 {{PLURAL:$1|seleccion|seleccions}}',
 	'wall-topic-edit-save' => 'Enregistrar',
 	'wall-topic-edit-cancel' => 'Anullar',
+);
+
+/** Punjabi (ਪੰਜਾਬੀ)
+ * @author Babanwalia
+ */
+$messages['pa'] = array(
+	'wall-recentchanges-thread-group' => '$1 on [[$2|$3 ਦੀ ਕੰਧ]]',
+	'wall-whatlinkshere-wall-line' => '[[$3|$4 ਦੀ ਕੰਧ]] ਉੱਤੇ [[$1|$2]]',
 );
 
 /** Pälzisch (Pälzisch)
@@ -9104,6 +9130,7 @@ $messages['zh-hans'] = array(
 	'wall-thread-closed' => '已关闭',
 	'wall-default-title' => '来自$1的信息',
 	'wall-no-title-warning' => '← 您未指定任何标题',
+	'wall-desc' => '用户讨论页替换',
 	'wall-placeholder-topic' => '这是什么？',
 	'wall-placeholder-message' => '在$1的信息墙上发表新留言',
 	'wall-placeholder-reply' => '发表回复',
@@ -9177,9 +9204,18 @@ $messages['zh-hans'] = array(
 	'wn-user1-reply-other-other-wall' => '$1在$3的信息墙上回复了$2',
 	'wn-user2-reply-other-other-wall' => '$1和$2在$4的信息墙上回复了$3',
 	'wn-user1-reply-you-a-wall' => '$1回复了你的信息',
+	'wn-user2-reply-you-a-wall' => '$1和$2回复了您的消息',
+	'wn-user3-reply-you-a-wall' => '$1和其他人回复了您的消息',
+	'wn-user1-reply-self-a-wall' => '$1回复了一条消息',
+	'wn-user2-reply-self-a-wall' => '$1和$2回复了一条消息',
+	'wn-user3-reply-self-a-wall' => '$1和其他人回复了一条消息',
 	'wn-user1-reply-other-a-wall' => '$1回复了$2',
+	'wn-user2-reply-other-a-wall' => '$1和$2回复了$3的一条消息',
+	'wn-user3-reply-other-a-wall' => '$1和其他人回复了$3的一条消息',
 	'wn-newmsg-onmywall' => '$1在您的墙上留言了',
+	'wn-newmsg' => '您在$1的墙上留下了一条新信息',
 	'wn-newmsg-on-followed-wall' => '$1在$2的墙上留言了',
+	'wn-admin-thread-deleted' => '帖子从$1的墙上移除',
 	'wall-sorting-newest-threads' => '最新帖子',
 	'wall-sorting-oldest-threads' => '最旧帖子',
 	'wall-sorting-newest-replies' => '最新回复',
@@ -9241,6 +9277,11 @@ $messages['zh-hans'] = array(
 	'wall-thread-history-thread-reopened' => '$2重启了此帖子',
 	'wall-history-action-restore-reply' => '恢复回复',
 	'wall-history-action-restore-thread' => '恢复帖子',
+	'mail-notification-new-someone' => '$AUTHOR_NAME在$WIKI写了一条新信息。',
+	'mail-notification-new-your' => '$AUTHOR_NAME在$WIKI给您一条新信息。',
+	'mail-notification-reply-your' => '$AUTHOR_NAME在$WIKI回复了您的信息。',
+	'mail-notification-reply-his' => '$AUTHOR_NAME在$WIKI回复了一条信息。',
+	'mail-notification-reply-someone' => '$AUTHOR_NAME在$WIKI回复了$PARENT_AUTHOR_NAME的信息。',
 	'mail-notification-html-greeting' => '嗨！$1,',
 	'mail-notification-html-button' => '查看会话',
 	'mail-notification-body' => '嗨$WATCHER，
@@ -9296,6 +9337,7 @@ ___________________________________________<br />
  * @author Ffaarr
  * @author LNDDYL
  * @author Liflon
+ * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
 	'wall-no-title' => '無標題',
@@ -9465,7 +9507,7 @@ $messages['zh-hant'] = array(
 	'wall-recentchanges-deleted-reply-title' => '訊息牆的一則回覆',
 	'wall-recentchanges-wall-created-title' => '創建訊息牆',
 	'wall-recentchanges-namespace-selector-message-wall' => '訊息牆',
-	'wall-recentchanges-thread-group' => ' [[$2|$3的訊息牆]]上的討論 $1',
+	'wall-recentchanges-thread-group' => '[[$2|$3的訊息牆]]上的討論 $1',
 	'wall-recentchanges-history-link' => '頁面歷史',
 	'wall-recentchanges-thread-history-link' => '討論串歷史',
 	'wall-contributions-line' => "[[$1|$2]] on [[$3|$4'的訊息牆]]",

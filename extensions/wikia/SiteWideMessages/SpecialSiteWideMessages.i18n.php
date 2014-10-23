@@ -1841,6 +1841,7 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author Fryed-peach
+ * @author Los688
  * @author Plover-Y
  * @author Shirayuki
  */
@@ -1880,6 +1881,7 @@ $messages['ja'] = array(
 	'swm-link-dismiss' => 'メッセージを隠す',
 	'swm-dismiss-content' => '<p>メッセージが存在しませんでした。</p><p>%s</p>',
 	'swm-list-no-messages' => 'メッセージがありません',
+	'swm-list-table-id' => 'ID',
 	'swm-list-table-sender' => '送信者',
 	'swm-list-table-wiki' => 'ウィキ',
 	'swm-list-table-recipient' => '宛先',
@@ -1896,7 +1898,9 @@ $messages['ja'] = array(
 	'swm-error-no-such-user' => '指定された利用者が存在していません。',
 	'swm-error-empty-message' => 'メッセージを入力してください。',
 	'swm-error-empty-group' => 'グループ名を入力してください。',
+	'swm-label-mode-users-registration-hint' => '<i>日時は、次のような形式にする必要があります。2012-04-01 00:00:00</i>',
 	'swm-label-mode-users-editcount' => '編集回数',
+	'swm-label-mode-wikis-created-hint' => '<i>日時は、次のような形式にする必要があります。2012-04-01 00:00:00</i>',
 );
 
 /** Kannada (ಕನ್ನಡ)
@@ -1985,6 +1989,7 @@ $messages['ku-latn'] = array(
 );
 
 /** Luxembourgish (Lëtzebuergesch)
+ * @author Les Meloures
  * @author Robby
  */
 $messages['lb'] = array(
@@ -2016,7 +2021,7 @@ $messages['lb'] = array(
 	'swm-no' => 'Neen',
 	'swm-error-no-such-wiki' => 'Et gëtt dës Wiki net!',
 	'swm-error-no-such-user' => 'De spezifizéierte Benotzer gëtt et net.',
-	'swm-error-empty-group' => 'Gitt den Numm vum Grupp an.',
+	'swm-error-empty-group' => 'Gitt den Numm vun der Grupp an.',
 	'swm-lang-other' => 'all weider Sproochen',
 	'swm-mode-users-registration-after' => 'Nom',
 	'swm-mode-users-registration-before' => 'Virum',

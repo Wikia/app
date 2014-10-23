@@ -17,6 +17,13 @@ $messages['en'] = array(
 	'wikiaconfirmemail-username' => 'Username',
 );
 
+/** Message documentation (Message documentation)
+ * @author Liuxinyu970226
+ */
+$messages['qqq'] = array(
+	'wikiaconfirmemail-username' => '{{Identical|Username}}',
+);
+
 /** Arabic (العربية)
  * @author Achraf94
  */
