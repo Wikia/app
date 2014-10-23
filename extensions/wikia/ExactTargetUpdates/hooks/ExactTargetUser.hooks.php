@@ -31,7 +31,7 @@ class ExactTargetUserHooks {
 	 * @param User $user
 	 * @return bool
 	 */
-	public function onArticleSaveComplete( WikiPage $article, User $user ) {
+	public function onArticleSaveComplete( \WikiPage $article, \User $user ) {
 		/* Prepare params */
 		$aUserData = [
 			'user_id' => $user->getId(),
@@ -51,7 +51,7 @@ class ExactTargetUserHooks {
 	 * @param User $oUser
 	 * @return bool
 	 */
-	public function onEditAccountClosed( User $oUser ) {
+	public function onEditAccountClosed( \User $oUser ) {
 		/* Get and run the task */
 		$oUserHelper = $this->getUserHelper();
 		$task = $oUserHelper->getDeleteUserTask();
@@ -65,7 +65,7 @@ class ExactTargetUserHooks {
 	 * @param User $oUser
 	 * @return bool
 	 */
-	public function onEditAccountEmailChanged( User $oUser ) {
+	public function onEditAccountEmailChanged( \User $oUser ) {
 		$this->addTheUpdateCreateUserTask( $oUser );
 		return true;
 	}
@@ -76,7 +76,7 @@ class ExactTargetUserHooks {
 	 * @param User $user
 	 * @return bool
 	 */
-	public function onEmailChangeConfirmed( User $user ) {
+	public function onEmailChangeConfirmed( \User $user ) {
 		/* Get and run the task */
 		$oUserHelper = $this->getUserHelper();
 		$task = $oUserHelper->getUpdateUserTask();
@@ -90,7 +90,7 @@ class ExactTargetUserHooks {
 	 * @param User $oUser
 	 * @return bool
 	 */
-	public function onSignupConfirmEmailComplete( User $oUser ) {
+	public function onSignupConfirmEmailComplete( \User $oUser ) {
 		$this->addTheUpdateCreateUserTask( $oUser );
 		return true;
 	}
@@ -100,7 +100,7 @@ class ExactTargetUserHooks {
 	 * @param User $user
 	 * @return bool
 	 */
-	public function onUserSaveSettings( User $user ) {
+	public function onUserSaveSettings( \User $user ) {
 		/* Prepare params */
 		$oUserHelper = $this->getUserHelper();
 		$aUserData = $oUserHelper->prepareUserParams( $user );
@@ -117,7 +117,7 @@ class ExactTargetUserHooks {
 	 * Adds Task to job queue that updates a user or adds a user if one doesn't exist
 	 * @param User $oUser
 	 */
-	private function addTheUpdateCreateUserTask( User $oUser ) {
+	private function addTheUpdateCreateUserTask( \User $oUser ) {
 		/* Prepare params */
 		$oUserHelper = $this->getUserHelper();
 		$aUserData = $oUserHelper->prepareUserParams( $oUser );

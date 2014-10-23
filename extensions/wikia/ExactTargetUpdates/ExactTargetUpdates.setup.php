@@ -66,9 +66,9 @@ $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetUpdateCityCatMappingTask'] =  $
 /* Add API classes */
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetApiDataExtension'] =  $dir . '/api/ExactTargetApiDataExtension.php' ;
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetApiHelper'] =  $dir . '/api/ExactTargetApiHelper.php' ;
-$wgAutoloadClasses['Wikia\ExactTarget\ExactTargetSoapClient'] =  $dir . '/lib/exacttarget_soap_client.php' ;
+$wgAutoloadClasses['ExactTargetSoapClient'] =  $dir . '/lib/exacttarget_soap_client.php' ;
 
 /**
  * Registering hooks
  */
-$wgExtensionFunctions[] = 'Wikia\ExactTarget\Hooks\ExactTargetSetupHooks::setupHooks';
+$wgExtensionFunctions[] = 'Wikia\ExactTarget\ExactTargetSetupHooks::setupHooks';

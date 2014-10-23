@@ -76,10 +76,7 @@ class ExactTargetApiDataExtension {
 		$aDE = $this->Helper->prepareDataExtensionObjects( $aApiCallParams['DataExtension'] );
 		$aSoapVars = $this->Helper->prepareSoapVars( $aDE );
 
-		$oDeleteRequest = new \ExactTarget_DeleteRequest();
-		$oDeleteRequest->Objects = $aSoapVars;
-		$oDeleteRequest->Options = new \ExactTarget_DeleteOptions();
-
+		$oDeleteRequest = $this->Helper->makeDeleteRequestObject( $aSoapVars );
 		$oResults = $this->makeRequest( 'Delete', $oDeleteRequest );
 		return $oResults;
 	}

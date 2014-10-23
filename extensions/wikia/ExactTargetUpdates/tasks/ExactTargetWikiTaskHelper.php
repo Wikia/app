@@ -82,7 +82,7 @@ class ExactTargetWikiTaskHelper {
 
 		$aCustomerKeys = $this->getCustomerKeys();
 
-		$oWikiFactoryHub = new WikiFactoryHub();
+		$oWikiFactoryHub = new \WikiFactoryHub();
 		$aCategories = $oWikiFactoryHub->getWikiCategories( $iCityId );
 		foreach( $aCategories as $aCategory ) {
 			$aCityCatMappingDataExtension[] = [

@@ -78,7 +78,7 @@ class ExactTargetApiHelper {
 
 		$saveOption = new \ExactTarget_SaveOption();
 		$saveOption->PropertyName = 'DataExtensionObject';
-		$saveOption->SaveAction = ExactTarget_SaveAction::UpdateAdd;
+		$saveOption->SaveAction = \ExactTarget_SaveAction::UpdateAdd;
 
 		$updateOptions->SaveOptions[] = new \SoapVar( $saveOption, SOAP_ENC_OBJECT, 'SaveOption', 'http://exacttarget.com/wsdl/partnerAPI' );
 		return $updateOptions;
@@ -101,7 +101,7 @@ class ExactTargetApiHelper {
 	}
 
 	public function makeRetrieveRequestObject( $sObjectType, Array $aProperties ) {
-		$oRetrieveRequest = new ExactTarget_RetrieveRequest();
+		$oRetrieveRequest = new \ExactTarget_RetrieveRequest();
 		$oRetrieveRequest->ObjectType = $sObjectType;
 		$oRetrieveRequest->Properties = $aProperties;
 
@@ -109,19 +109,27 @@ class ExactTargetApiHelper {
 	}
 
 	public function makeSimpleFilterPartObject( $sProperty, $sValue ) {
-		$oSimpleFilterPart = new ExactTarget_SimpleFilterPart();
+		$oSimpleFilterPart = new \ExactTarget_SimpleFilterPart();
 		$oSimpleFilterPart->Value = $sValue;
-		$oSimpleFilterPart->SimpleOperator = ExactTarget_SimpleOperators::equals;
+		$oSimpleFilterPart->SimpleOperator = \ExactTarget_SimpleOperators::equals;
 		$oSimpleFilterPart->Property = $sProperty;
 
 		return $oSimpleFilterPart;
 	}
 
 	public function makeRetrieveRequestMsgObject( $oRetrieveRequest ) {
-		$oRetrieveRequestMsg = new ExactTarget_RetrieveRequestMsg();
+		$oRetrieveRequestMsg = new \ExactTarget_RetrieveRequestMsg();
 		$oRetrieveRequestMsg->RetrieveRequest = $oRetrieveRequest;
 
 		return $oRetrieveRequestMsg;
+	}
+
+	public function makeDeleteRequestObject( $aSoapVars ) {
+		$oDeleteRequest = new \ExactTarget_DeleteRequest();
+		$oDeleteRequest->Objects = $aSoapVars;
+		$oDeleteRequest->Options = new \ExactTarget_DeleteOptions();
+
+		return $oDeleteRequest;
 	}
 
 	/**
@@ -161,7 +169,7 @@ class ExactTargetApiHelper {
 		$aSubscribers = [];
 
 		foreach ( $aObjects as $aSub ) {
-			$oSubscriber = new ExactTarget_Subscriber();
+			$oSubscriber = new \ExactTarget_Subscriber();
 			$oSubscriber->SubscriberKey = $aSub['SubscriberKey'];
 			$oSubscriber->EmailAddress = $aSub['EmailAddress'];
 			

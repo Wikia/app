@@ -116,4 +116,3 @@ class ExactTargetDeleteUserTask extends BaseTask {
 		return new ExactTargetUserTaskHelper();
 	}
 }
-
