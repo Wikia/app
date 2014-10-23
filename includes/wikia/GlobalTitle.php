@@ -552,9 +552,15 @@ class GlobalTitle extends Title {
 	 * This is a helper function, it doesn't return GlobalTitle (to be honest, it's more like ReversedGlobalTitle)
 	 */
 	public static function explodeURL( $url ) {
-		$app = F::app();
+		global $wgDevelEnvironment;
 
 		$urlParts = parse_url( $url );
+
+		if ( $wgDevelEnvironment ){
+			$explodedServer = explode( '.', $url );
+			$url = $explodedServer[0].'.wikia.com';
+		}
+		$wikiId = WikiFactory::UrlToID( $url );
 
 		if ( isset( $urlParts['query'] ) ) {
 			parse_str( $urlParts['query'], $queryParts );
@@ -562,15 +568,9 @@ class GlobalTitle extends Title {
 		if ( isset( $queryParts['title'] ) ) {
 			$articleName = $queryParts['title'];
 		} else {
-			$articleName = preg_replace( '!^/wiki/!i', '', $urlParts['path'] );
+			$destinationWgArticlePath = WikiFactory::getVarByName('wgArticlePath', $wikiId);
+			$articleName = self::stripArticlePath($urlParts['path'], $destinationWgArticlePath );
 		}
-
-		if ( $app->wg->develEnvironment ){
-			$explodedServer = explode( '.', $url );
-			$url = $explodedServer[0].'.wikia.com';
-		}
-
-		$wikiId = WikiFactory::UrlToID( $url );
 
 		$result = array(
 			'wikiId' => $wikiId,
@@ -578,6 +578,11 @@ class GlobalTitle extends Title {
 		);
 
 		return $result;
+	}
+
+	public static function stripArticlePath($path, $articlePath) {
+		$articlePath = preg_replace( '!/\$1$!i', '', $articlePath );
+		return preg_replace( '!^' . $articlePath . '/!i', '', $path );
 	}
 
 
