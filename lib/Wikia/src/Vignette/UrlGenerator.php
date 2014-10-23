@@ -101,7 +101,7 @@ class UrlGenerator {
 	 */
 	public function pathPrefix($pathPrefix) {
 		if (!empty($pathPrefix)) {
-			$this->query['pathPrefix'] = $pathPrefix;
+			$this->query['path-prefix'] = $pathPrefix;
 		}
 
 		return $this;
@@ -249,7 +249,7 @@ class UrlGenerator {
 	public function url() {
 		$imagePath = "{$this->config->bucket()}/{$this->imageType}/{$this->config->relativePath()}/revision/{$this->getRevision()}";
 
-		if (!isset($this->query['pathPrefix'])) {
+		if (!isset($this->query['path-prefix'])) {
 			$this->pathPrefix($this->config->pathPrefix());
 		}
 
