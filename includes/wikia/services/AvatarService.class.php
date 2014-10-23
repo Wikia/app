@@ -96,6 +96,8 @@ class AvatarService extends Service {
 	 * @return String avatar's URL
 	 */
 	static function getAvatarUrl($user, $avatarSize = 20) {
+		global $wgEnableVignette;
+
 		wfProfileIn(__METHOD__);
 
 		static $avatarsCache;
@@ -122,20 +124,24 @@ class AvatarService extends Service {
 			}
 
 			$masthead = Masthead::newFromUser($user);
-			$avatarUrl = $masthead->getThumbnailPurgeUrl($avatarSize);
-
 			// use per-user cachebuster when custom avatar is used
 			$cb = !$masthead->isDefault() ? intval($user->getOption('avatar_rev')) : 0;
 
-			// Make URLs consistent and using no-cookie domain.  We need to pass a
-			// stringified zero rather than an actual zero because this function
-			// treats them differently o_O  Setting this to string zero matches
-			// the anonymous user behavior (BugId:22190)
-			$avatarUrl = wfReplaceImageServer($avatarUrl,  ($cb > 0) ? $cb : "0");
+			if ($wgEnableVignette) {
+				$avatarUrl = self::getVignetteUrl($masthead, $avatarSize, $cb);
+			} else {
+				$avatarUrl = $masthead->getThumbnailPurgeUrl($avatarSize);
 
-			// make avatars as JPG intead of PNGs / GIF but only when it will be a gain (most likely)
-			if (intval($avatarSize) > self::PERFORMANCE_JPEG_THRESHOLD) {
-				$avatarUrl = ImagesService::overrideThumbnailFormat($avatarUrl, ImagesService::EXT_JPG);
+				// Make URLs consistent and using no-cookie domain.  We need to pass a
+				// stringified zero rather than an actual zero because this function
+				// treats them differently o_O  Setting this to string zero matches
+				// the anonymous user behavior (BugId:22190)
+				$avatarUrl = wfReplaceImageServer($avatarUrl,  ($cb > 0) ? $cb : "0");
+
+				// make avatars as JPG intead of PNGs / GIF but only when it will be a gain (most likely)
+				if (intval($avatarSize) > self::PERFORMANCE_JPEG_THRESHOLD) {
+					$avatarUrl = ImagesService::overrideThumbnailFormat($avatarUrl, ImagesService::EXT_JPG);
+				}
 			}
 
 			$avatarsCache[$key] = $avatarUrl;
@@ -244,5 +250,66 @@ class AvatarService extends Service {
 
 		wfProfileOut( __METHOD__ );
 		return false;
+	}
+
+	/**
+	 * @param Masthead $masthead
+	 * @param int $width
+	 * @param $timestamp
+	 * @return \Wikia\Vignette\UrlGenerator
+	 */
+	private static function getVignetteUrl(Masthead $masthead, $width, $timestamp) {
+		$relativePath = $masthead->mUser->getOption(AVATAR_USER_OPTION_NAME);
+
+		if ($relativePath) {
+			if (strpos($relativePath, '/') !== false) { // custom avatar
+				$url = self::vignetteCustomUrl($width, $relativePath, $timestamp);
+			} else { // wikia-provided avatars
+				$hash = FileRepo::getHashPathForLevel( $relativePath, 2 );
+				$bucket = VignetteRequest::parseBucket($masthead->mDefaultPath);
+				$relativePath = $hash.$relativePath;
+				$url = self::buildVignetteUrl($width, $bucket, $relativePath, $timestamp, false);
+			}
+		} else { // default avatar
+			$legacyDefaultUrl = array_shift( $masthead->getDefaultAvatars( 'thumb/' ) );
+			$bucket = VignetteRequest::parseBucket($legacyDefaultUrl);
+			$relativePath = VignetteRequest::parseRelativePath($legacyDefaultUrl);
+			$url = self::buildVignetteUrl($width, $bucket, $relativePath, $timestamp, false);
+		}
+
+		return $url;
+	}
+
+	private static function vignetteCustomUrl($width, $relativePath, $timestamp) {
+		global $wgBlogAvatarPath;
+
+		$url = $relativePath;
+		if (strpos($relativePath, 'http://') === false) {
+			$bucket = VignetteRequest::parseBucket($wgBlogAvatarPath);
+			$relativePath = ltrim($relativePath, '/');
+			$url = self::buildVignetteUrl($width, $bucket, $relativePath, $timestamp);
+		}
+
+		return $url;
+	}
+
+	private static function buildVignetteUrl($width, $bucket, $relativePath, $timestamp, $avatarImageType=true) {
+		$config = [
+			'bucket' => $bucket,
+			'timestamp' => $timestamp,
+			'relative-path' => $relativePath,
+		];
+
+		$avatar = VignetteRequest::fromConfigMap($config)->scaleToWidth($width);
+
+		if (intval($width) > self::PERFORMANCE_JPEG_THRESHOLD) {
+			$avatar->jpg();
+		}
+
+		if ($avatarImageType) {
+			$avatar->avatar();
+		}
+
+		return $avatar->url();
 	}
 }
