@@ -46,23 +46,17 @@ $border-color: lighten($color-text, 30%);
 	.floatleft,
 	.tleft {
 		clear: left;
+		direction: ltr;
 		float: left;
 		margin: 30px 30px 30px (-$medium-grid-column-padding);
-
-		img {
-			float: left;
-		}
 	}
 
 	.floatright,
 	.tright {
 		clear: right;
+		direction: rtl;
 		float: right;
 		margin: 30px (-$medium-grid-column-padding - $medium-grid-gutter - $medium-grid-column) 30px 30px;
-
-		img {
-			float: right;
-		}
 	}
 
 	.floatleft,
@@ -97,6 +91,7 @@ $border-color: lighten($color-text, 30%);
 	}
 
 	figcaption {
+		direction: ltr;
 		margin-top: 10px;
 
 		.caption,
