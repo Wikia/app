@@ -323,6 +323,35 @@ class AssetsManager {
 		return substr($url, -5) == '.scss';
 	}
 
+	/**
+	 * determines whether a given url is for JS group
+	 *
+	 * Example: http://slot1.images1.wikia.nocookie.net/__am/1413971462/group/noexternals%3D1/monetization_module_js
+	 *
+	 * @param string $url the url to check
+	 * @return bool true if the url is a JS group, false otherwise
+	 */
+	public function isGroupUrl($url) {
+		return is_string( $url ) && ( strpos( $url, '/group/' ) !== false );
+	}
+
+	/**
+	 * Return AM group name from given URL
+	 *
+	 * If the given URL is not a valid group URL, false is returned
+	 *
+	 * @param string $url the URL to extract group name from
+	 * @return bool|false group name or false if URL is invalid
+	 */
+	public function getGroupNameFromUrl($url) {
+		if ( $this->isGroupUrl( $url ) ) {
+			$parts = explode( '/', $url );
+			return end( $parts );
+		} else {
+			return false;
+		}
+	}
+
 	public function getSassesUrl($sassList) {
 		if (!is_array($sassList)) {
 			$sassList = [$sassList];
