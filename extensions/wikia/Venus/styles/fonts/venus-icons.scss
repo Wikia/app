@@ -36,11 +36,6 @@ $venus-icon-share: "\f006";
 	content: $character;
 }
 
-[data-venus-icon]:before {
-	@include venus-icons-font;
-	content: attr(data-venus-icon);
-}
-
 @mixin venus-icon-toc {
 	@include venus-icon($venus-icon-toc);
 }
@@ -63,10 +58,13 @@ $venus-icon-share: "\f006";
 	@include venus-icon($venus-icon-share);
 }
 
-
-[class^='venus-icon-']:before,
-[class*=' venus-icon-']:before {
+.venus-icon:before,
+[data-venus-icon]:before {
 	@include venus-icons-font;
+}
+
+[data-venus-icon]:before {
+	content: attr(data-venus-icon);
 }
 
 .venus-icon-toc:before {
