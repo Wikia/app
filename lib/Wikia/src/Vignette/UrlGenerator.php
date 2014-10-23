@@ -95,13 +95,13 @@ class UrlGenerator {
 	}
 
 	/**
-	 * set an image's language
-	 * @param string $lang
+	 * set an image's path prefix
+	 * @param string $pathPrefix
 	 * @return $this
 	 */
-	public function lang($lang) {
-		if (!empty($lang)) {
-			$this->query['lang'] = $lang;
+	public function pathPrefix($pathPrefix) {
+		if (!empty($pathPrefix)) {
+			$this->query['pathPrefix'] = $pathPrefix;
 		}
 
 		return $this;
@@ -249,8 +249,8 @@ class UrlGenerator {
 	public function url() {
 		$imagePath = "{$this->config->bucket()}/{$this->imageType}/{$this->config->relativePath()}/revision/{$this->getRevision()}";
 
-		if (!isset($this->query['lang'])) {
-			$this->lang($this->config->languageCode());
+		if (!isset($this->query['pathPrefix'])) {
+			$this->pathPrefix($this->config->pathPrefix());
 		}
 
 		$imagePath .= $this->modePath();

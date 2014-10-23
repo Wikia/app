@@ -14,13 +14,13 @@ class VignetteRequest {
 			'is-archive' => $file->isOld(),
 			'timestamp' => $timestamp,
 			'relative-path' => $file->getHashPath().rawurlencode($file->getName()),
-			'language-code' => $file->getLanguageCode(),
+			'path-prefix' => $file->getPathPrefix(),
 		]);
 	}
 
 	/**
 	 * create a UrlGenerator from a config map. $config must have the following keys: relative-path.
-	 * optionally, it can also have timestamp, is-archive, language-code, bucket, base-url, and domain-shard-count.
+	 * optionally, it can also have timestamp, is-archive, path-prefix, bucket, base-url, and domain-shard-count.
 	 * if the optional values aren't in the map, they'll be generated from the current wiki environment
 	 *
 	 * @param $config
@@ -33,7 +33,7 @@ class VignetteRequest {
 		];
 
 		$isArchive = isset($config['is-archive']) ? $config['is-archive'] : false;
-		$languageCode = isset($config['language-code']) ? $config['language-code'] : null;
+		$pathPrefix = isset($config['path-prefix']) ? $config['path-prefix'] : null;
 		$timestamp = isset($config['timestamp']) ? $config['timestamp'] : 0;
 
 		if (!isset($config['base-url'])) {
@@ -66,7 +66,7 @@ class VignetteRequest {
 			->setIsArchive( $isArchive )
 			->setTimestamp( $timestamp )
 			->setRelativePath( $config['relative-path'] )
-			->setLanguageCode( $languageCode )
+			->setPathPrefix( $pathPrefix )
 			->setBucket( $config['bucket'] )
 			->setBaseUrl( $config['base-url'] )
 			->setDomainShardCount( $config['domain-shard-count'] );
@@ -90,19 +90,21 @@ class VignetteRequest {
 	}
 
 	/**
-	 * parse the language code from a url. http://images.wikia.com/walkingdead/ru/images -> "ru",
+	 * parse the path prefix from a url.
+	 * http://images.wikia.com/walkingdead/ru/images -> "ru",
 	 * http://images.wikia.com/walkingdead/images -> null
+	 * http://images.wikia.com/p__/psychusa/zh/images -> psychusa/zh
 	 * @param $url
 	 * @return null
 	 */
-	public static function parseLanguageCode( $url ) {
-		$languageCode = null;
+	public static function parsePathPrefix( $url ) {
+		$pathPrefix = null;
 
 		if ( preg_match( '/http(s)?:\/\/(.*?)\/(.*?)\/(.*?\/)?images$/', $url, $matches ) && isset( $matches[4] ) ) {
-			$languageCode = rtrim($matches[4], '/');
+			$pathPrefix = rtrim($matches[4], '/');
 		}
 
-		return $languageCode;
+		return $pathPrefix;
 	}
 
 	/**

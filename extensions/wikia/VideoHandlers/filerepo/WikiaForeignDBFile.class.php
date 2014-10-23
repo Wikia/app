@@ -74,12 +74,12 @@ class WikiaForeignDBFile extends ForeignDBFile {
 		return $this->oLocalFileLogic;
 	}
 
-	function getLanguageCode() {
+	function getPathPrefix() {
 		$wikiDbName = $this->repo->getDBName();
 		$wikiId = WikiFactory::DBtoID($wikiDbName);
 		$wikiUploadPath = WikiFactory::getVarValueByName('wgUploadPath', $wikiId);
 
-		return VignetteRequest::parseLanguageCode( $wikiUploadPath );
+		return VignetteRequest::parsePathPrefix( $wikiUploadPath );
 	}
 
 	// Not everything can be transparent, because __call skips already defined methods.
