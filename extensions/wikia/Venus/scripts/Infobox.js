@@ -15,7 +15,10 @@ require(['venus.infobox', 'wikia.document'], function(infoboxModule, d) {
 			infoboxModule.collapseInfobox(infoboxContainer);
 
 			seeMoreButton = infoboxModule.createSeeMoreButton(infobox, seeMoreButtonId);
-			seeMoreButton.addEventListener('click', infoboxModule.expandInfobox);
+			seeMoreButton.addEventListener('click', function(e) {
+				infoboxModule.expandInfobox(infoboxContainer, seeMoreButton);
+				e.preventDefault();
+			});
 			infoboxContainer.appendChild(seeMoreButton);
 		}
 	}

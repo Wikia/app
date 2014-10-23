@@ -11,9 +11,7 @@ define('venus.infobox', ['wikia.document', 'wikia.window'], function(d, w){
 	 * @returns {boolean}
 	 */
 	function isInfoboxCollapsible(container) {
-		var infoboxHeight = container.offsetHeight;
-
-		return infoboxHeight > maxInfoboxHeight;
+		return container.offsetHeight > maxInfoboxHeight;
 	}
 
 	/**
@@ -48,7 +46,7 @@ define('venus.infobox', ['wikia.document', 'wikia.window'], function(d, w){
 			bgColor;
 
 		if (infobox) {
-			seeMoreButton = d.createElement('div');
+			seeMoreButton = d.createElement('a');
 			seeMoreButton.id = id;
 			seeMoreButton.classList.add('see-more');
 
