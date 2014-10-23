@@ -1211,7 +1211,7 @@ $wgAmazonDirectTargetedBuyCountries = null;
  * Enables DART category page param for these content languages
  * "Utility" var, don't change it here.
  */
-$wgAdPageLevelCategoryLangs = [ 'en' => true ];
+$wgAdPageLevelCategoryLangs = [ 'en' ];
 
 /**
  * @name $wgEnableJavaScriptErrorLogging
@@ -1254,6 +1254,14 @@ $wgAdDriverUseTaboola = false;
  * Enables additional call to dart before Liftium
  */
 $wgAdDriverUseRemnantGpt = false;
+
+/**
+ * @name $wgAdDriverAlwaysCallDartInCountries
+ * Disables the max N calls to DART and enables Remnant GPT call in those countries.
+ * This is an instant globals, which means you set it only on community and it takes
+ * effect on all wikis within 15 minutes.
+ */
+$wgAdDriverAlwaysCallDartInCountries = [];
 
 /**
  * @name $wgAdDriverUseBottomLeaderboard

@@ -129,8 +129,13 @@ class DivContainingHeadersVisitor extends DOMNodeVisitorBase {
 			return null;
 		}
 		$title = Title::newFromURL( $url );
-		$article = Article::newFromTitle( $title, RequestContext::getMain() );
-		return $article;
+		if( $title ) {
+			$article = Article::newFromTitle( $title, RequestContext::getMain() );
+			return $article;
+		} else {
+			\Wikia\Logger\WikiaLogger::instance()->info( "TabView with not existing url found.", [ "url" => $url ] );
+			return null;
+		}
 	}
 
 	protected function getUrlWithoutPath( $url, $baseArticlePath ) {
@@ -248,7 +253,7 @@ class DivContainingHeadersVisitor extends DOMNodeVisitorBase {
 
 	/**
 	 * Extracting title from <tabview> tab
-	 * 
+	 *
 	 * @param $xpath
 	 * @param $tab
 	 * @return string

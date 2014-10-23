@@ -329,7 +329,6 @@ img.WikiaPhotoGalleryProgress {
 .WikiaPhotoGalleryEditorPage .WikiaPhotoGalleryColorPickerPopUp {
 	background-color: #fff;
 	border: solid 1px #cacaca;
-	-webkit-box-shadow: 0 0 10px 1px #aaa;
 	display: none;
 	position: absolute;
 	padding: 5px 10px;
