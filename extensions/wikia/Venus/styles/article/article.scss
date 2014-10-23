@@ -10,6 +10,7 @@
 
 $placeholder-background-color: $color-left-article-nav; // only for prototype version
 $article-items-spacing: 40px;
+$header-without-cover-unit-spacing: 60px;
 
 .article {
 	overflow: hidden;
@@ -17,14 +18,20 @@ $article-items-spacing: 40px;
 	header {
 		@include grid-column-width('medium', 8, $medium-content-padding - $content-border-width);
 		float: left;
-		margin-bottom: $article-items-spacing;
+
+		&:not(.cover-unit) {
+			margin-bottom: $header-without-cover-unit-spacing;
+			margin-top: $header-without-cover-unit-spacing;
+		}
 
 		&.cover-unit {
 			@include proportional-video-height(8 * ($medium-grid-column + $medium-grid-gutter) - $medium-grid-gutter + $medium-content-padding);
 			background-color: $placeholder-background-color; //only for prototype version
+			margin-bottom: $article-items-spacing;
 			position: relative;
 
 			h1 {
+				padding-bottom: $header-without-cover-unit-spacing / 2;
 				position: absolute;
 			}
 		}
@@ -32,7 +39,7 @@ $article-items-spacing: 40px;
 		h1 {
 			bottom: 0;
 			margin: 0;
-			padding: 0 $medium-grid-column-padding 30px $medium-content-padding + $medium-grid-column-padding - $content-border-width;
+			padding: 0 $medium-grid-column-padding 0 $medium-content-padding + $medium-grid-column-padding - $content-border-width;
 			word-break: break-all;
 		}
 	}
