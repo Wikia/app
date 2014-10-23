@@ -6741,7 +6741,7 @@ $messages['zh-hant'] = array(
 	'wikiaPhotoGallery-back' => '返回',
 	'wikiaPhotoGallery-finish' => '完成',
 	'wikiaPhotoGallery-feed-caption' => '$1, 通過 <超链接="$2">$3</a>',
-	'wikiaPhotoGallery-lightbox-caption' => '通過$1',
+	'wikiaPhotoGallery-lightbox-caption' => '透過$1',
 	'wikiaPhotoGallery-add-gallery' => '插入照片庫或幻燈片',
 	'wikiaPhotoGallery-viewmode-addphoto' => '在圖片冊中增加圖片',
 	'wikiaPhotoGallery-edit-abort' => '您所嘗試的修改被一個擴展鉤子取消',

@@ -2534,6 +2534,7 @@ $messages['ps'] = array(
  * @author Luckas
  * @author Malafaya
  * @author SandroHc
+ * @author Waldir
  */
 $messages['pt'] = array(
 	'createnewwiki-desc' => 'Assistente de criação de wikis',
@@ -2564,16 +2565,16 @@ $messages['pt'] = array(
 	'cnw-userauth-marketing-heading' => 'Não tens nenhuma conta?',
 	'cnw-userauth-marketing-body' => 'Precisas de uma conta para criar uma wiki na Wikia. Só demora um minuto para registar-te!',
 	'cnw-userauth-signup-button' => 'Regista-te',
-	'cnw-desc-headline' => 'Qual é o assunto da tua wiki?',
-	'cnw-desc-creative' => 'Descreve o teu assunto',
+	'cnw-desc-headline' => 'Qual é o assunto da tua wiki?', # Fuzzy
+	'cnw-desc-creative' => 'Descreve o teu assunto', # Fuzzy
 	'cnw-desc-placeholder' => 'Isto irá aparecer na página principal da tua wiki.',
 	'cnw-desc-tip1' => 'Sugestão',
-	'cnw-desc-tip1-creative' => 'Usa este espaço para descrever a tua wiki aos visitantes numa frase ou duas',
+	'cnw-desc-tip1-creative' => 'Usa este espaço para descrever a tua wiki aos visitantes numa frase ou duas', # Fuzzy
 	'cnw-desc-tip2' => 'Conselho',
 	'cnw-desc-tip2-creative' => 'Dá aos visitantes detalhes específicos sobre o assunto da tua wiki',
 	'cnw-desc-select-one' => 'Selecciona uma',
-	'cnw-desc-all-ages' => 'Todas as idades',
-	'cnw-desc-tip-all-ages' => 'Esta wiki é sobre um tema infantil? Para obedecer à lei dos Estados Unidos, monitorizamos as wikis sobre temas de interesse para crianças até aos 12 anos de idade.',
+	'cnw-desc-all-ages' => 'Esta wikia é dirigida a crianças?',
+	'cnw-desc-tip-all-ages' => 'Esta wikia é sobre um tema infantil? Para obedecer à lei dos Estados Unidos, monitorizamos as wikias sobre temas de interesse para crianças até aos 12 anos de idade.',
 	'cnw-desc-default-lang' => 'A tua wiki será em $1',
 	'cnw-desc-change-lang' => 'alterar',
 	'cnw-desc-lang' => 'Língua',

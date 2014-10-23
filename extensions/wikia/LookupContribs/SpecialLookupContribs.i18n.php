@@ -982,6 +982,7 @@ $messages['ko'] = array(
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => '제목',
 	'lookupcontribswikioptions' => '설정',
+	'lookupcontribslastedited' => '마지막 편집',
 	'lookupcontribsnbrresult' => '결과 수:',
 	'lookupcontribsnext' => '다음',
 	'lookupcontribsprevious' => '이전',
