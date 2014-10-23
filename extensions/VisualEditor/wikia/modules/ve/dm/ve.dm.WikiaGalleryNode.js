@@ -46,7 +46,7 @@ ve.dm.WikiaGalleryNode.static.toDataElement = function ( domElements, converter 
 		attributes = {};
 
 	attributes.itemCount = $domElements.children( 'figure' ).length;
-	attributes.caption = dataMw.attrs.caption;
+	//attributes.caption = dataMw.attrs.caption;
 
 	return { 'type': this.name, 'attributes': attributes };
 };
@@ -59,7 +59,7 @@ ve.dm.WikiaGalleryNode.prototype.getEmbedData = function () {
 		data = [];
 
 	for ( i = 0; i < children.length; i++ ) {
-		data.push( children[0].getAttribute( 'embedData') );
+		data.push( children[i].getAttribute( 'embedData') );
 	}
 
 	return data;

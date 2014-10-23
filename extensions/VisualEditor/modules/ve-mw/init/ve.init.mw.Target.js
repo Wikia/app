@@ -397,12 +397,7 @@ ve.init.mw.Target.onLoad = function ( response ) {
 		// Wikia tracking if the anoneditwarning was shown
 		window.anoneditwarning = response.visualeditor.anoneditwarning;
 
-		if ( this.pageName === "Gallery" ) {
-			this.originalHtml = "<!DOCTYPE html>\n<html prefix=\"dc: http://purl.org/dc/terms/ mw: http://mediawiki.org/rdf/\" about=\"http://muppet.christian.wikia-dev.com/wiki/Special:Redirect/revision/773751\"><head prefix=\"mwr: http://muppet.christian.wikia-dev.com/wiki/Special:Redirect/\"><meta property=\"mw:articleNamespace\" content=\"0\"/><link rel=\"dc:replaces\" resource=\"mwr:revision/0\"/><meta property=\"dc:modified\" content=\"2014-10-13T23:11:24.000Z\"/><meta about=\"mwr:user/140142\" property=\"dc:title\" content=\"BladeBronson\"/><link rel=\"dc:contributor\" resource=\"mwr:user/140142\"/><meta property=\"mw:revisionSHA1\" content=\"6961b1e6de663785843b420f77f4f7f198e5dcf4\"/><meta property=\"dc:description\" content=\"new\"/><meta property=\"mw:parsoidVersion\" content=\"0\"/><link rel=\"dc:isVersionOf\" href=\"http://muppet.christian.wikia-dev.com/wiki/Gallery\"/><title>Gallery</title><base href=\"http://muppet.christian.wikia-dev.com/wiki/Gallery\"/><link rel=\"stylesheet\" href=\"//muppet.christian.wikia-dev.com/load.php?modules=mediawiki.skinning.elements|mediawiki.skinning.content|mediawiki.skinning.interface|skins.vector.styles|site|mediawiki.skinning.content.parsoid&amp;only=styles&amp;debug=true&amp;skin=vector\"/></head><body data-parsoid='{\"dsr\":[0,29,0,0]}' lang=\"en\" class=\"mw-content-ltr mw-body-content\" dir=\"ltr\"><p data-parsoid='{\"dsr\":[0,14,0,0]}'>Before gallery</p>\n\n<div typeof=\"mw:Extension/gallery\" data-mw='{\"name\":\"gallery\",\"attrs\":{\"caption\":\"welcome\"}}'><figure class=\"mw-default-size mw-halign-none\" typeof=\"mw:Image/Thumb\"><a href=\"./File:Captainwoof.jpg\"><img resource=\"./File:Captainwoof.jpg\" src=\"//vignette.wikia-dev.com/muppet/a/a0/Captainwoof.jpg/revision/latest?cb=20071025105224\" height=\"240\" width=\"300\" /></a><figcaption>My image caption</figcaption></figure><figure class=\"mw-default-size mw-halign-none\" typeof=\"mw:Image/Thumb\"><a href=\"./File:Captainwoof.jpg\"><img resource=\"./File:Captainwoof.jpg\" src=\"//vignette.wikia-dev.com/muppet/a/a0/Captainwoof.jpg/revision/latest?cb=20071025105224\" height=\"240\" width=\"300\" /></a><figcaption (optional)>My image caption</figcaption></figure></div><p data-parsoid='{\"dsr\":[16,29,0,0]}'>After galleryasdfasdf</p></body></html>";
-		} else {
-			this.originalHtml = data.content;
-		}
-
+		this.originalHtml = data.content;
 		this.doc = ve.createDocumentFromHtml( this.originalHtml );
 
 		// Parsoid outputs a protocol-relative <base> tag, so absolutize it
