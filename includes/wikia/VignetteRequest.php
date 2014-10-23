@@ -10,7 +10,7 @@ class VignetteRequest {
 	public static function fromFile(File $file) {
 		$timestamp = $file->isOld() ? $file->getArchiveTimestamp() : $file->getTimestamp();
 
-		return self::fromHash([
+		return self::fromConfigMap([
 			'is-archive' => $file->isOld(),
 			'timestamp' => $timestamp,
 			'relative-path' => $file->getHashPath().rawurlencode($file->getName()),
@@ -19,15 +19,15 @@ class VignetteRequest {
 	}
 
 	/**
-	 * create a UrlGenerator from a config hash. $config must have the following keys: relative-path.
+	 * create a UrlGenerator from a config map. $config must have the following keys: relative-path.
 	 * optionally, it can also have timestamp, is-archive, language-code, bucket, base-url, and domain-shard-count.
-	 * if the optional values aren't in the hash, they'll be generated from the current wiki environment
+	 * if the optional values aren't in the map, they'll be generated from the current wiki environment
 	 *
 	 * @param $config
 	 * @return UrlGenerator
 	 * @throws InvalidArgumentException
 	 */
-	public static function fromHash($config) {
+	public static function fromConfigMap($config) {
 		$requiredKeys = [
 			'relative-path',
 		];
@@ -80,8 +80,13 @@ class VignetteRequest {
 	 * @return mixed
 	 */
 	public static function parseBucket($url) {
-		preg_match( '/http(s?):\/\/(.*?)\/(.*?)\/(.*)$/', $url, $matches );
-		return $matches[3];
+		$bucket = null;
+
+		if ( preg_match( '/http(s?):\/\/(.*?)\/(.*?)\/(.*)$/', $url, $matches ) ) {
+			$bucket = $matches[3];
+		}
+
+		return $bucket;
 	}
 
 	/**
@@ -91,7 +96,12 @@ class VignetteRequest {
 	 * @return mixed
 	 */
 	public static function parseRelativePath($url) {
-		preg_match( '/\w\/\w\w\/(.*)$/', $url, $matches);
-		return $matches[0];
+		$relativePath = null;
+
+		if ( preg_match( '/\w\/\w\w\/(.*)$/', $url, $matches ) ) {
+			$relativePath = $matches[0];
+		}
+
+		return $relativePath;
 	}
 }
