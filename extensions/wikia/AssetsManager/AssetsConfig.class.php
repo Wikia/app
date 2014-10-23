@@ -76,27 +76,27 @@ class AssetsConfig {
 	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
 	 */
 	private function load() {
-		wfProfileIn( __METHOD__ );
-
 		if ( empty( $this->mConfig ) ) {
+			wfProfileIn( __METHOD__ );
+
 			include( 'config.php' );
 			$this->mConfig = $config;
-		}
 
-		wfProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 
-		wfProfileIn( __METHOD__ . 'Groups' );
+			wfProfileIn( __METHOD__ . 'Groups' );
 
-		foreach ( glob ( __DIR__ . '/configGroups/*Config.php' ) as $fileName ) {
-			include_once( $fileName  );
-			$configFileName = pathinfo( $fileName )['filename'];
-			if ( !empty ( $$configFileName ) ) {
-				$configVar = $$configFileName;
-				$this->mConfig = array_merge( $this->mConfig, $configVar );
+			foreach ( glob ( __DIR__ . '/configGroups/*Config.php' ) as $fileName ) {
+				include_once( $fileName  );
+				$configFileName = pathinfo( $fileName )['filename'];
+				if ( !empty ( $$configFileName ) ) {
+					$configVar = $$configFileName;
+					$this->mConfig = array_merge( $this->mConfig, $configVar );
+				}
 			}
-		}
 
-		wfProfileOut( __METHOD__ . 'Groups' );
+			wfProfileOut( __METHOD__ . 'Groups' );
+		}
 	}
 
 	/**
