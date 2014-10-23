@@ -40,7 +40,7 @@
   }
 
   .drag-cursor {
-    cursor: ns-resize;
+    cursor: move;
   }
 
   .edit-area {
@@ -53,6 +53,15 @@
     margin: 10px;
     position: absolute;
     right: 0;
+  }
+
+  .image-window {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .image-wrap {
+    height: 100%;
   }
 
   .title-wrap {
@@ -101,6 +110,21 @@
       text-transform: uppercase;
     }
   }
+  .position-info {
+    display: none;
+    position: absolute;
+    top: 15px;
+    width: 100%;
+    .position-text {
+      background-color: #C7D1D8;
+      border-radius: 3px;
+      color: #092140;
+      margin: auto;
+      padding: 5px 10px;
+      text-transform: uppercase;
+      z-index: 1;
+    }
+  }
 
   .upload-group {
     .update-text {
@@ -141,52 +165,23 @@
   }
 }
 
-.filled-state {
-  .title-default-text {
-    display: none;
-  }
-  .desc-default-text {
-    display: none;
-  }
-  .upload-btn {
-    display: none;
-  }
-  .upload {
-    display: flex;
-    position: absolute;
-    width: 100%;
-  }
-  .upload-desc {
-    display: none;
-  }
-  .upload-group {
-    margin: 5px 0 0 8%;
-  }
-}
-.zero-state {
-  .title-text {
-    display: none;
-  }
-  .upload-wrap {
-    background-color: black;
-  }
-  .update-btn {
-    display: none;
-  }
-  .upload {
-    border: 1px dashed white;
-    display: flex;
-    height: 92%;
-    margin: 1%;
-    position: absolute;
-    text-align: center;
-    width: 98%;
-  }
-}
-
 .MainPageHeroHeader {
   .hero-description {
-    margin: auto 8%;
+    margin: 20px 8%;
+  }
+  .image-save-bar {
+    align-items: center;
+    border-bottom: 1px solid #092140;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, .25);
+    box-sizing: border-box;
+    background-color: white;
+    display: none;
+    justify-content: flex-end;
+    padding: 10px 15px 10px 8%;
+    width: 100%;
+    .save-text {
+      flex-grow: 1;
+    }
   }
   .new-btn {
     border: 1px solid #092140;
@@ -249,6 +244,65 @@
     font-size: 27px;
     font-weight: 700;
     line-height: 32px;
+  }
+//states
+  .filled-state {
+    .title-default-text {
+      display: none;
+    }
+    .desc-default-text {
+      display: none;
+    }
+    .update-btn {
+      display: inherit;
+    }
+    .upload-btn {
+      display: none;
+    }
+    .upload {
+      display: flex;
+      position: absolute;
+      width: 100%;
+    }
+    .upload-desc {
+      display: none;
+    }
+    .upload-group {
+      margin: 5px 0 0 8%;
+    }
+  }
+
+  .upload-state {
+    .position-info {
+      display: flex;
+    }
+    .upload-wrap {
+      display: none;
+    }
+    &.image-save-bar {
+      display: flex;
+    }
+  }
+
+  .zero-state {
+    .title-text {
+      display: none;
+    }
+    .upload-wrap {
+      background-color: black;
+    }
+    .update-btn {
+      display: none;
+    }
+    .upload {
+      border: 1px dashed white;
+      display: flex;
+      height: 92%;
+      margin: 1%;
+      position: absolute;
+      text-align: center;
+      width: 98%;
+    }
   }
 }
 
