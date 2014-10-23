@@ -1,0 +1,15 @@
+.gamestar-logo {
+	display: none;
+	height: 27px;
+	margin-top: -13px;
+	position: absolute;
+	right: 5px;
+	top: 50%;
+	width: 114px;
+	background: url("/extensions/wikia/GlobalNavigation/images/GameStar_logo.svg") center center no-repeat transparent; /* base64 */
+
+	@media screen and (min-width: 1300px) {
+		display: inline-block;
+	}
+}
+
