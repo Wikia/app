@@ -69,7 +69,7 @@ $article-items-spacing: 40px;
 		@include font-size-xxs;
 		display: inline-block;
 		float: right;
-		margin-left: $font-size-xl;
+		margin-left: $edit-button-size;
 		padding-left: 5px;
 		position: relative;
 		text-transform: uppercase;
