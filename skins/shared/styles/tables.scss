@@ -1,13 +1,13 @@
-@import "skins/shared/color";
-@import "skins/shared/mixins/box-shadow";
-@import "skins/shared/mixins/gradient";
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/box-shadow';
+@import 'skins/shared/mixins/gradient';
 
-$color-table-overflow-shadow: mix( $color-page-shadow, $color-page, 50% );
+$color-table-overflow-shadow: mix($color-page-shadow, $color-page, 50%);
 
 .article-table {
 	background: darken($color-page, 2%);
+	border: 0;
 	border-collapse: collapse;
-	border: none;
 	clear: both;
 	color: $color-text;
 	margin: 1em 1em 1em 0;
@@ -33,8 +33,8 @@ $color-table-overflow-shadow: mix( $color-page-shadow, $color-page, 50% );
 		margin-top: 1em;
 		position: relative;
 
-		&:before {
-			@include box-shadow( -15px, 0, 20px, $color-table-overflow-shadow, true, -15px );
+		&::before {
+			@include box-shadow(-15px, 0, 20px, $color-table-overflow-shadow, true, -15px);
 			content: '';
 			height: 100%;
 			position: absolute;
@@ -54,6 +54,10 @@ $color-table-overflow-shadow: mix( $color-page-shadow, $color-page, 50% );
 			overflow: auto;
 		}
 	}
+}
+
+html[dir='rtl'] .article .table-is-wide::before {
+	@include box-shadow(15px, 0, 20px, $color-table-overflow-shadow, true, -15px);
 }
 
 table.jquery-tablesorter.sortable th.headerSort .chevron {
