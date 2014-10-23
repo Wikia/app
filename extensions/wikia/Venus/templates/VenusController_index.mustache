@@ -14,12 +14,21 @@
 <div id="ad-skin" class="wikia-ad noprint"></div>
 {{{globalNavigation}}}
 <div class="wikia-page-wrapper">
-	{{{topAds}}}
+	<div class="top-ads">
+		<div class="ad">
+			{{{adTopLeaderboard}}}
+		</div>
+		{{{adInvisibleSkin}}}
+	</div>
 	<section class="wikia-page page-width">
 		{{{localNavigation}}}
 		<article class="article clearfix" id="WikiaArticle">
 			{{{header}}}
-			{{{adTopRightBoxad}}}
+			<div class="top-right-ad">
+				<div class="ad">
+					{{{adTopRightBoxad}}}
+				</div>
+			</div>
 			<!-- Infobox placeholder for prototyping only -->
 			<div class="infobox-test">Infobox</div>
 			{{{leftArticleNav}}}
@@ -29,6 +38,7 @@
 		{{! TODO: Re-Enable when it's ready: corporateFooter}}
 	</section>
 </div>
+{{{adsBottom}}}
 {{{jsBodyFiles}}}
 {{{bottomScriptLinks}}}
 </body>

@@ -25,6 +25,7 @@ a {
 .wikia-page {
 	background: rgba($color-page, $page-opacity);
 	border: $content-border-width solid $color-page-border;
+	position: relative;
 
 	& > header {
 		@include grid-content-padding;

@@ -154,7 +154,8 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 
 		pageHeight = document.documentElement.scrollHeight;
 
-		if (window.wgOasisResponsive) {
+		// All ads should be shown on non-responsive oasis and venus
+		if (window.wgOasisResponsive && window.skin !== 'venus') {
 			if (matchMedia) {
 				mediaQueriesMet = {};
 				for (mediaQueryIndex in mediaQueriesToCheck) {
