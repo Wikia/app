@@ -2,14 +2,18 @@
 /* @var $wikiData WikiDataModel */
 ?>
 
-<header class="MainPageHeroHeader">
+<header class="MainPageHeroHeader <?php if (isset($wikiData->imagePath)) :?>filled-state<? else : ?>zero-state<?php endif; ?>">
 		<div id="MainPageHero" class="MainPageHero">
-			<div class="zero-state">
+			<div class="upload-wrap">
 				<div class="upload">
 					<div class="upload-group">
 						<div class="upload-btn">
 							<img class="upload-icon" src="/extensions/wikia/NjordPrototype/images/addImage.svg">
 							<span class="upload-text sg-main">add an cover image</span>
+						</div>
+						<div class="update-btn">
+							<img class="upload-icon" src="/extensions/wikia/NjordPrototype/images/addImage.svg">
+							<span class="update-text sg-main">update image</span>
 						</div>
 						<input name="file" type="file" hidden/>
 						<span class="upload-desc sg-sub">or, drop an image here (1600x600px minimum)</span>
@@ -21,9 +25,12 @@
 						<span class="overlay-text sg-sub-title">drop an image here</span></div>
 				</div>
 			</div>
+			<picture>
+				<img class="hero-image" data-cropposition="<?= $wikiData->cropPosition ?>"
+					 data-fullpath="<?= $wikiData->originalImagePath ?>" src="<?= $wikiData->imagePath ?>"
+					 alt="<?= $wikiData->title ?>">
+			</picture>
 
-			<div class="filled-state">
-			</div>
 			<!--		<div class="edit-area">-->
 			<!--			<div class="overlay">-->
 			<!--				<div class="upload">-->
@@ -47,11 +54,6 @@
 			<!--				<div class="save-btn new-btn">Publish</div>-->
 			<!--			</div>-->
 			<!--		</div>-->
-			<picture>
-				<img class="hero-image" data-cropposition="<?= $wikiData->cropPosition ?>"
-					 data-fullpath="<?= $wikiData->originalImagePath ?>" src="<?= $wikiData->imagePath ?>"
-					 alt="<?= $wikiData->title ?>">
-			</picture>
 			<h1 class="title-wrap sg-title">
 				<div class="edit-box">
 					<span class="hero-title" contenteditable="true"></span>
@@ -60,6 +62,7 @@
 						<div class="new-btn save-btn sg-sub">Publish</div>
 					</div>
 				</div>
+				<span class="title-text"><?= $wikiData->title ?></span>
 				<span class="title-default-text">Wikia name can goes three lines (50 characters max)</span>
 				<img class="title-edit-btn" src="/extensions/wikia/NjordPrototype/images/pencil.svg">
 			</h1>

@@ -71,7 +71,7 @@
     .title-edit-btn {
       height: 24px;
     }
-    bottom: 2rem;
+    bottom: 6%;
     color: #fff;
     display: inline-block;
     left: 8%;
@@ -102,17 +102,11 @@
     }
   }
 
-  .upload {
-    border: 1px dashed white;
-    display: flex;
-    height: 94%;
-    margin: 1%;
-    position: absolute;
-    text-align: center;
-    width: 98%;
-  }
-
   .upload-group {
+    .update-text {
+      text-transform: uppercase;
+      vertical-align: super;
+    }
     .upload-btn {
       cursor: pointer;
       text-align: left;
@@ -145,9 +139,48 @@
     width: 100%;
     z-index: 2;
   }
-  .zero-state {
-    height: 100%;
+}
+
+.filled-state {
+  .title-default-text {
+    display: none;
+  }
+  .desc-default-text {
+    display: none;
+  }
+  .upload-btn {
+    display: none;
+  }
+  .upload {
+    display: flex;
+    position: absolute;
     width: 100%;
+  }
+  .upload-desc {
+    display: none;
+  }
+  .upload-group {
+    margin: 5px 0 0 8%;
+  }
+}
+.zero-state {
+  .title-text {
+    display: none;
+  }
+  .upload-wrap {
+    background-color: black;
+  }
+  .update-btn {
+    display: none;
+  }
+  .upload {
+    border: 1px dashed white;
+    display: flex;
+    height: 92%;
+    margin: 1%;
+    position: absolute;
+    text-align: center;
+    width: 98%;
   }
 }
 

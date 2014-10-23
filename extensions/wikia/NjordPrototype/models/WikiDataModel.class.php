@@ -15,8 +15,8 @@ class WikiDataModel {
 	const WIKI_HERO_DESCRIPTION_ID = 10003;
 	const WIKI_HERO_IMAGE_CROP_POSITION_ID = 10004;
 
-	const WIKI_HERO_IMAGE_MAX_WIDTH = 1500;
-	const WIKI_HERO_IMAGE_MAX_HEIGHT = 636;
+	const WIKI_HERO_IMAGE_MAX_WIDTH = 1600;
+	const WIKI_HERO_IMAGE_MAX_HEIGHT = 400;
 	const DEFAULT_IMAGE_CROP_POSITION = 0; // Not fully supported yet
 
 	public function __construct( $pageName ) {

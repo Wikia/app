@@ -4,7 +4,7 @@
 	$.event.props.push('dataTransfer');
 
 	var
-		HERO_ASPECT_RATIO = 212 / 500,
+		HERO_ASPECT_RATIO = 4 / 16,
 		heroData = {
 			oTitle: null,
 			oDescription: null,
