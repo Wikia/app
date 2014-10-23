@@ -69,7 +69,8 @@ $border-color: lighten($color-text, 30%);
 		clear: both;
 		text-align: center;
 
-		.article-thumb {
+		// backport the fix for centered thumbs from Oasis
+		* {
 			margin-left: auto;
 			margin-right: auto;
 		}
