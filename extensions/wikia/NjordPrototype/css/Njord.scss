@@ -50,7 +50,7 @@
     position: absolute;
     text-align: left;
     width: 400px;
-    z-index: 2;
+//    z-index: 2;
   }
 
   .hero-image {
@@ -64,7 +64,7 @@
     position: absolute;
     width: 100%;
     text-align: center;
-    z-index: 1;
+    z-index: 2;
     .overlay-flex {
       display: flex;
     }
@@ -90,9 +90,9 @@
     }
   }
 
-  .upload {
-    z-index: 2;
-  }
+//  .upload {
+//    z-index: 2;
+//  }
 
   .upload-group {
     .update-btn {

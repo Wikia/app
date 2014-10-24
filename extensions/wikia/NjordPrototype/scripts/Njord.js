@@ -173,7 +173,6 @@
 				heroData.imagepath = imagePath;
 				heroData.imagename = imageName;
 				heroData.imagechanged = true;
-				$toggleButton.show();
 				$overlay.hide();
 			} else {
 				var caretSave = target.caret();
@@ -215,6 +214,8 @@
 			if (data.isOk) {
 				$heroModuleImage.bind('load', function () {
 					$heroModule.stopThrobbing();
+					States.setState($imageElement, 'upload-state');
+					States.setState($imageSaveElement, 'upload-state');
 					$heroModule.trigger('enableDragging');
 					$heroModuleImage.unbind('load');
 				});
@@ -255,20 +256,11 @@
 			//on(load) on img buged on this jquery
 			$heroModuleImage[0].addEventListener('load', onImageLoad);
 			$heroModule.on('change', onChange).on('enableDragging', onDraggingEnabled);
-			$('.toggle-upload-btn').on('click', function () {
-				$toggleButton.hide();
-				$overlay.show();
-			});
-			$('.close-upload-btn').on('click', function () {
-				$toggleButton.show();
-				$overlay.hide();
-			});
 
 			$(window).resize(onResize);
 			initializeData();
 
 			//turn off browser image handling
-
 			$body.on('dragover', onDragDisabled).on('dragend', onDragDisabled).on('drop', onDragDisabled);
 
 			//those two are needed to cancel default behaviour

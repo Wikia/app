@@ -8,6 +8,7 @@
 			class="image-wrap <?php if ( isset( $wikiData->imagePath ) ) : ?>filled-state<? else : ?>zero-state<?php endif; ?>">
 			<div class="upload-wrap">
 				<div class="upload">
+					<div class="upload-mask"></div>
 					<div class="upload-group">
 						<div class="upload-btn">
 							<img class="upload-icon" src="/extensions/wikia/NjordPrototype/images/addImage.svg">
@@ -20,7 +21,6 @@
 						<input name="file" type="file" hidden/>
 						<span class="upload-desc sg-sub">or, drop an image here (1600x600px minimum)</span>
 					</div>
-					<div class="upload-mask"></div>
 				</div>
 				<div class="overlay">
 					<div class="overlay-flex upload">
