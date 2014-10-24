@@ -11,7 +11,7 @@ class NjordController extends WikiaController {
 		$articleWikiMarkup = '';
 		$articleTitle = $this->getRequest()->getVal( 'articleTitle' );
 		$pageTitleObj = Title::newFromText( $articleTitle );
-		if( $pageTitleObj->exists() ) {
+		if ( $pageTitleObj->exists() ) {
 			$pageArticleObj = new Article( $pageTitleObj );
 			$articleWikiMarkup = $pageArticleObj->getPage()->getText();
 		}
@@ -58,7 +58,7 @@ class NjordController extends WikiaController {
 			$mainpage = Title::newFromText( self::MAINPAGE_PAGE );
 			$subpages = $mainpage->getSubpages();
 			$current = 1;
-			while( $subpages->valid() ) {
+			while ( $subpages->valid() ) {
 				$curSub = $subpages->current();
 				if ( $current == $curSub->getSubpageText() ) {
 					$current++;
@@ -108,27 +108,27 @@ class NjordController extends WikiaController {
 	public function upload() {
 		if ( $this->getRequest()->wasPosted() ) {
 			$url = $this->getRequest()->getVal( 'url', false );
-			if ( $url ) {
-				$uploader = new UploadFromUrl();
-				$uploader->initializeFromRequest( new FauxRequest(
-					[
-						'wpUpload' => 1,
-						'wpSourceType' => 'web',
-						'wpUploadFileURL' => $url
-					],
-					true
-				) );
-				$uploader->fetchFile();
-			} else {
-				$webRequest = $this->getContext()->getRequest();
-				$uploader = new UploadFromFile();
-				$uploader->initialize( $webRequest->getFileName( 'file' ), $webRequest->getUpload( 'file' ) );
+			try {
+				if ( $url ) {
+					list( $tempPath, $EIA, $errorMessage ) = $this->uploadFromUrl( $url );
+				} else {
+					list( $tempPath, $EIA, $errorMessage ) = $this->uploadFromFile();
+				}
+			} catch ( Exception $exception ) {
+				$EIA = false;
+				$errorMessage = $exception->getMessage();
 			}
-			$stash = RepoGroup::singleton()->getLocalRepo()->getUploadStash();
-			$stashFile = $stash->stashFile( $uploader->getTempPath() );
+
 			$this->getResponse()->setFormat( 'json' );
-			$this->getResponse()->setVal( 'url', wfReplaceImageServer( $stashFile->getThumbUrl( static::THUMBNAILER_SIZE_SUFIX ) ) );
-			$this->getResponse()->setVal( 'filename', $stashFile->getFileKey() );
+			$this->getResponse()->setVal( 'isOk', $EIA );
+			if ( $EIA === true ) {
+				$stash = RepoGroup::singleton()->getLocalRepo()->getUploadStash();
+				$stashFile = $stash->stashFile( $tempPath );
+				$this->getResponse()->setVal( 'url', wfReplaceImageServer( $stashFile->getThumbUrl( static::THUMBNAILER_SIZE_SUFIX ) ) );
+				$this->getResponse()->setVal( 'filename', $stashFile->getFileKey() );
+			} else {
+				$this->getResponse()->setVal( 'errMessage', $errorMessage );
+			}
 		}
 	}
 
@@ -233,7 +233,53 @@ class NjordController extends WikiaController {
 
 		$this->getResponse()->setVal( 'success', $success );
 		$this->getResponse()->setVal( 'wikiData', $wikiDataModel );
-
 		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * @param $url
+	 * @return array
+	 */
+	public function uploadFromUrl( $url ) {
+		$uploader = new UploadFromUrl();
+		$uploader->initializeFromRequest( new FauxRequest(
+			[
+				'wpUpload' => 1,
+				'wpSourceType' => 'web',
+				'wpUploadFileURL' => $url
+			],
+			true
+		) );
+		$status = $uploader->fetchFile();
+		if ( $status->isGood() ) {
+			return [ $uploader->getTempPath(), true ];
+		} else {
+			return [ $uploader->getTempPath(), false, $this->getUploadUrlErrorMessage( $status ) ];
+		}
+	}
+
+	private function getUploadUrlErrorMessage( $status ) {
+		return "";
+	}
+
+	/**
+	 * @return array
+	 */
+	public function uploadFromFile() {
+		$webRequest = $this->getContext()->getRequest();
+		$uploader = new UploadFromFile();
+		$uploader->initialize( $webRequest->getFileName( 'file' ), $webRequest->getUpload( 'file' ) );
+		$verified = $uploader->verifyUpload();
+		if ( $verified[ 'status' ] == 0 || $verified[ 'status' ] == 10 ) {
+			return [ $uploader->getTempPath(), true ];
+		} else {
+			return [ $uploader->getTempPath(), false, $this->getUploadFileErrorMessage( $uploader,
+				$verified ) ];
+		}
+	}
+
+	public function getUploadFileErrorMessage(UploadFromFile $uploader, $verified ) {
+		$errorReadable = $uploader->getVerificationErrorCode( $verified[ 'status' ] );
+		return wfMessage( $errorReadable )->parse();
 	}
 }

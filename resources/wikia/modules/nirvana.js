@@ -66,8 +66,9 @@
 				data = {},
 				callback = attr.callback || function() {},
 				onErrorCallback = attr.onErrorCallback || function() {},
-				url;
-
+				url,
+				cType = (attr.contentType !== false),
+				pData = (attr.processData !== false);
 
 			if ( allowedFormats.indexOf( format ) === -1 ) {
 				throw 'Only Json,Jsonp and Html format are allowed';
@@ -84,6 +85,8 @@
 				dataType: format,
 				type: type,
 				data: data,
+				contentType: cType,
+				processData: pData,
 				success: callback,
 				error: onErrorCallback
 			});

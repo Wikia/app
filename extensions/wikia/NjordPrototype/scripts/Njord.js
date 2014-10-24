@@ -208,28 +208,39 @@
 			});
 		}, onDragDisabled = function () {
 			return false;
-		}, sendForm = function (formdata) {
+		},
+		onAfterSendForm = function (data) {
+			if (data.isOk) {
+				$heroModuleImage.bind('load', function () {
+					$heroModule.stopThrobbing();
+					$heroModule.trigger('enableDragging');
+					$heroModuleImage.unbind('load');
+				});
+				$heroModuleImage.attr('src', data.url);
+				$heroModule.trigger('resize');
+				$heroModule.trigger('change', [data.url, data.filename]);
+			} else {
+				//var msg = JSMessages(jQuery.nirvana, jQuery, context);
+				alert(data.errMessage);
+			}
+			$heroModule.stopThrobbing();
+		},
+		sendForm = function (formdata) {
 			$heroModule.startThrobbing();
+			$.nirvana.sendRequest({
+				controller: 'NjordController',
+				method: 'upload',
+				type: 'POST',
+				data: formdata,
+				callback: onAfterSendForm,
+				onErrorCallback: function () {
+					// TODO: handle failure
+					$heroModule.stopThrobbing();
+				},
+				processData : false,
+				contentType : false
+			});
 
-			var client = new XMLHttpRequest();
-			client.open('POST', '/wikia.php?controller=Njord&method=upload', true);
-			client.onreadystatechange = function () {
-				if (client.readyState === 4 && client.status === 200) {
-					var data = JSON.parse(client.responseText);
-
-					$heroModuleImage.bind('load', function () {
-						$heroModule.stopThrobbing();
-						$heroModule.trigger('enableDragging');
-						States.setState($imageElement, 'upload-state');
-						States.setState($imageSaveElement, 'upload-state');
-						$heroModuleImage.unbind('load');
-					});
-					$heroModuleImage.attr('src', data.url);
-					$heroModule.trigger('resize');
-					$heroModule.trigger('change', [data.url, data.filename]);
-				}
-			};
-			client.send(formdata);
 		}, initializeEditMode = function () {
 			$imageSaveBtn.on('click', saveImage);
 			$imageDiscardBtn.on('click', revertImage);
