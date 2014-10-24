@@ -210,7 +210,7 @@ function openFbLogin() {
 		return true;
 	}
 */
-	FB.login(sendToConnectOnLogin, { scope : "publish_stream" });
+	FB.login(sendToConnectOnLogin);
 }
 
 /**
