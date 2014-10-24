@@ -265,6 +265,8 @@ class SpecialConnect extends SpecialPage {
 			$this->sendPage('displaySuccessAttaching');
 		}
 
+		$this->track( 'facebook-link-existing' );
+
 		wfProfileOut(__METHOD__);
 	} // end connectExisting
 
@@ -461,6 +463,8 @@ class SpecialConnect extends SpecialPage {
 
 			$this->isNewUser = true;
 			$this->sendPage('displaySuccessLogin');
+
+			$this->track( 'facebook-signup-join-wikia' );
 		}
 
 		wfProfileOut(__METHOD__);
@@ -575,6 +579,8 @@ class SpecialConnect extends SpecialPage {
 		wfRunHooks( 'SpecialConnect::userAttached', array( &$this ) );
 
 		$this->sendPage('displaySuccessAttaching');
+
+		$this->track( 'facebook-link-existing' );
 
 		wfProfileOut(__METHOD__);
 	}
@@ -970,6 +976,22 @@ class SpecialConnect extends SpecialPage {
 
 		$response->addText( json_encode(array("status" => "ok") ));
 		return $response;
+	}
+
+	/**
+	 * Track an event with a given label with user-sign-up category
+	 * @param string $label
+	 * @param string $action optional, 'submit' by default
+	 */
+	protected function track( $label, $action = 'submit' ) {
+		global $wgDevelEnvironment;
+
+		\Track::event( 'trackingevent', [
+			'ga_action' => $action,
+			'ga_category' => 'user-sign-up',
+			'ga_label' => $label,
+			'beacon' => !empty( $wgDevelEnvironment ) ? 'ThisIsFake' : wfGetBeaconId(),
+		] );
 	}
 
 }
