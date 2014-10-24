@@ -405,6 +405,7 @@ $config['gameguides_js'] = array(
 		'//resources/wikia/modules/nirvana.js',
 		'//resources/wikia/modules/loader.js',
 		'//resources/wikia/modules/querystring.js',
+		'//resources/wikia/modules/history.js',
 		'//resources/wikia/modules/log.js',
 
 		//tracker
@@ -519,6 +520,7 @@ $config['wikiamobile_js_body_minimal'] = array(
 		'//resources/wikia/modules/location.js',
 		'//resources/wikia/modules/localStorage.js',
 		'//resources/wikia/modules/querystring.js',
+		'//resources/wikia/modules/history.js',
 		'//resources/wikia/modules/cookies.js',
 		//depends on querystring.js and cookies.js
 		'//resources/wikia/modules/log.js',
@@ -687,6 +689,7 @@ $config['mercury_ads_js'] = array(
 		'//resources/wikia/modules/document.js',
 		'//resources/wikia/modules/location.js',
 		'//resources/wikia/modules/querystring.js',
+		'//resources/wikia/modules/history.js',
 		'//resources/wikia/modules/cookies.js',
 		'//resources/wikia/modules/geo.js',
 
@@ -705,6 +708,7 @@ $config['interactivemaps_ads_js'] = array(
 		'//resources/wikia/modules/location.js',
 		'//resources/wikia/modules/log.js',
 		'//resources/wikia/modules/querystring.js',
+		'//resources/wikia/modules/history.js',
 		'//resources/wikia/modules/window.js',
 
 		// Advertisement libs
@@ -1010,6 +1014,7 @@ $config['chat_js2'] = array(
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
 
 		'//resources/wikia/modules/querystring.js',
+		'//resources/wikia/modules/history.js',
 		'//resources/wikia/modules/cookies.js',
 		//depends on querystring.js and cookies.js
 		'//resources/wikia/modules/log.js',
@@ -2020,8 +2025,8 @@ $config['global_navigation_oasis_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => ['oasis'],
 	'assets' => [
-		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationOasis.scss',
-		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationSearchOasis.scss'
+		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationOasis.scss',
+		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationSearchOasis.scss'
 	]
 ];
 
