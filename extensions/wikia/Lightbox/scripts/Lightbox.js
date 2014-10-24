@@ -1219,13 +1219,6 @@
 						}
 					});
 
-					// Add cached media gallery data sent over from MediaGallery extension.
-					$(window).trigger('lightboxArticleMedia', {
-						thumbArr: thumbArr,
-						width: Lightbox.carouselThumbWidth,
-						height: Lightbox.carouselThumbHeight
-					});
-
 					// Fill articleMedia cache
 					LightboxLoader.cache.articleMedia = thumbArr;
 
