@@ -68,11 +68,9 @@ class purgeArticlePages extends Maintenance {
 				$title = GlobalTitle::newFromId( $page['id'], $wikiId );
 				if ( $title instanceof GlobalTitle ) {
 					$url = $title->getFullURL();
-					$command = "curl -X PURGE '$url'";
-					echo "$command\n";
+					echo "$url\n";
 					if ( !$this->dryRun ) {
-						$output = shell_exec( $command );
-						echo "Output: $output\n";
+						SquidUpdate::purge( [$url] );
 					}
 					$this->success++;
 				} else {
