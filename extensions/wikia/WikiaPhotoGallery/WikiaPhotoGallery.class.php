@@ -1784,6 +1784,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				[
 					'items' => $media,
 					'gallery_params' => $this->mData['params'],
+					'parser' => $this->mParser,
 				]
 			);
 		}

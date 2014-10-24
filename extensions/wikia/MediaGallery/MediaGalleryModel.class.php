@@ -9,12 +9,18 @@ class MediaGalleryModel extends WikiaObject {
 	private $galleryData = [];
 
 	/**
+	 * @var Parser
+	 */
+	private $parser;
+
+	/**
 	 * @var int Total items in galleries
 	 */
 	private $itemCount = 0;
 
-	function __construct( array $items ) {
+	function __construct( array $items, \Parser $parser ) {
 		parent::__construct();
+		$this->parser = $parser;
 		$this->setGalleryData( $items );
 	}
 
@@ -72,7 +78,7 @@ class MediaGalleryModel extends WikiaObject {
 		$caption = '';
 		if ( !empty( $item['caption'] ) ) {
 			// parse any wikitext in caption. Logic borrowed from WikiaMobileMediaService::renderMediaGroup.
-			$parser = $this->wg->Parser;
+			$parser = $this->getParser();
 			$caption = $parser->internalParse( $item['caption'] );
 			$parser->replaceLinkHolders( $caption );
 			$caption = $parser->killMarkers( $caption );
@@ -104,6 +110,14 @@ class MediaGalleryModel extends WikiaObject {
 	 */
 	public function getGalleryData() {
 		return $this->galleryData;
+	}
+
+	/**
+	 * Get the parser object
+	 * @return \Parser
+	 */
+	protected function getParser() {
+		return $this->parser;
 	}
 }
 
