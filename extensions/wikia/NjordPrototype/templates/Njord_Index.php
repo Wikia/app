@@ -2,7 +2,7 @@
 /* @var $wikiData WikiDataModel */
 ?>
 
-<header class="MainPageHeroHeader">
+<header class="MainPageHeroHeader no-edit-state">
 	<div id="MainPageHero" class="MainPageHero">
 		<div
 			class="image-wrap <?php if ( isset( $wikiData->imagePath ) ) : ?>filled-state<? else : ?>zero-state<?php endif; ?>">

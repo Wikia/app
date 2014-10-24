@@ -50,6 +50,7 @@
     position: absolute;
     text-align: left;
     width: 400px;
+    z-index: 2;
   }
 
   .hero-image {
@@ -127,6 +128,7 @@
     left: 0;
     position: absolute;
     width: 100%;
+    z-index: 3;
   }
 }
 
@@ -211,6 +213,23 @@
     line-height: 32px;
   }
 //states
+  &.no-edit-state {
+    .MainPageHero {
+      padding-top: 25%;
+    }
+    .image-wrap {
+      height: 100%;
+      position: absolute;
+      width: 100%;
+      top: 0;
+    }
+    .title-edit-btn {
+      display: none;
+    }
+    .upload-wrap {
+      display: none;
+    }
+  }
   .edit-state {
     .edit-box {
       display: block;

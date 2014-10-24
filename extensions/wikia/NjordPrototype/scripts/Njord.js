@@ -10,10 +10,11 @@
 				'zero-state',
 				'filled-state',
 				'upload-state',
-				'edit-state'
+				'edit-state',
+				'no-edit-state'
 			],
 			clearState: function($element) {
-				$element.removeClass( this.list.join(' '));
+				$element.removeClass( this.list.join(' ') );
 			},
 			setState: function($element, $state) {
 				if (this.list.indexOf($state) >= 0) {
@@ -51,6 +52,7 @@
 		$titleText = $('.MainPageHeroHeader .title-wrap .title-text'),
 
 		$body = $('body'),
+		$heroHeader = $('.MainPageHeroHeader'),
 		$overlay = $('#MainPageHero .overlay'),
 		$heroModule = $('#MainPageHero'),
 		$heroModuleTitle = $('#MainPageHero .hero-title'),
@@ -323,6 +325,7 @@
 		};
 
 	if (window.wgUserName) {
+		States.clearState($heroHeader);
 		initializeEditMode();
 	}
 })(window, jQuery);
