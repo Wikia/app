@@ -220,8 +220,7 @@
 				$heroModule.trigger('resize');
 				$heroModule.trigger('change', [data.url, data.filename]);
 			} else {
-				//var msg = JSMessages(jQuery.nirvana, jQuery, context);
-				alert(data.errMessage);
+				$.showModal($.msg('error'), data.errMessage);
 			}
 			$heroModule.stopThrobbing();
 		},
@@ -234,7 +233,7 @@
 				data: formdata,
 				callback: onAfterSendForm,
 				onErrorCallback: function () {
-					// TODO: handle failure
+					$.showModal($.msg('error'), $.msg('unknown-error'));
 					$heroModule.stopThrobbing();
 				},
 				processData : false,
