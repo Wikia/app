@@ -40,13 +40,13 @@ define('mediaGallery.controllers.galleries', [
 				origVisibleCount: $wrapper.data('visible-count'),
 				interval: $wrapper.data('expanded')
 			};
-
 		// Instantiate gallery view
 		gallery = new Gallery(galleryOptions).init();
 
 		// Append gallery HTML to DOM and trigger event
 		$wrapper.append(gallery.render().$el);
 		gallery.$el.trigger('galleryInserted');
+		$wrapper.data('initialized', true);
 
 		// expose gallery instances publicly
 		this.galleries.push(gallery);
@@ -60,8 +60,12 @@ define('mediaGallery.controllers.galleries', [
 
 		$.each(this.$galleries, function (idx) {
 			var $this = $(this),
-				model = $this.data('model'),
+				model = JSON.parse($this.attr('data-model')),
 				lightboxController;
+
+			if ($this.data('initialized')) {
+				return;
+			}
 
 			// Send gallery images to Lightbox
 			if (self.lightbox) {

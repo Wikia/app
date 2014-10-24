@@ -48,68 +48,7 @@ ve.dm.WikiaGalleryItemNode.static.matchFunction = function ( element ) {
 
 ve.dm.WikiaGalleryItemNode.static.toDomElements = ve.dm.MWBlockImageNode.static.toDomElements;
 
-/*
-ve.dm.WikiaGalleryItemNode.static.toDomElements = function ( data, doc, converter ) {
-	var dataElement = data[0],
-		figure = doc.createElement( 'figure' ),
-		anchor = doc.createElement( 'a' ),
-		img = doc.createElement( 'img' ),
-		wrapper = doc.createElement( 'div' ),
-		classes = [],
-		captionData = data.slice( 1, -1 );
-
-	// Figure
-	classes.push( 'mw-default-size');
-	classes.push( 'mw-halign-none' );
-	figure.className = classes.join( ' ' );
-	figure.setAttribute( 'typeof', 'mw:Image/Thumb' );
-
-	// Anchor
-	anchor.setAttribute( 'href', dataElement.attributes.href );
-
-	// Image
-	img.setAttribute( 'resource', dataElement.attributes.resource );
-	img.setAttribute( 'src', dataElement.attributes.src );
-	img.setAttribute( 'height', dataElement.attributes.height );
-	img.setAttribute( 'width', dataElement.attributes.width );
-
-	figure.appendChild( anchor );
-	anchor.appendChild( img );
-
-	// Caption
-	if ( captionData.length > 2 ) {
-		converter.getDomSubtreeFromData( data.slice( 1, -1 ), wrapper );
-		while ( wrapper.firstChild ) {
-			figure.appendChild( wrapper.firstChild );
-		}
-	}
-
-	return [ figure ];
-
-	//return [ doc.createElement( 'figure' ) ];
-};
-*/
-
 ve.dm.WikiaGalleryItemNode.static.toDataElement = ve.dm.MWBlockImageNode.static.toDataElement;
-
-/*
-ve.dm.WikiaGalleryItemNode.static.toDataElement = function ( domElements, converter ) {
-	var $figure = $( domElements[0] ),
-	$caption = $figure.children( 'figcaption' ).eq( 0 ),
-	$image = $figure.find( 'img' ).eq(0),
-	attributes = {
-		'href': $figure.children( 'a' ).attr( 'href' ),
-		'resource': $image.attr( 'resource' ),
-		'src': $image.attr( 'src' ),
-		'height': $image.attr( 'height' ),
-		'width': $image.attr( 'width' )
-	};
-
-	return [ { 'type': this.name, 'attributes': attributes } ].
-		concat( converter.getDataFromDomClean( $caption[0], { 'type': 'wikiaGalleryItemCaption' } ) ).
-		concat( [ { 'type': '/' + this.name } ] );
-};
-*/
 
 /* Registration */
 

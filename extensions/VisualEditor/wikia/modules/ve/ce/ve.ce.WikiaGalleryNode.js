@@ -24,6 +24,9 @@ ve.ce.WikiaGalleryNode = function VeCeWikiaGalleryNode( model, config ) {
 
 	// Initialization
 	this.rebuild();
+
+	// Events
+	this.connect( this, { 'childUpdate': 'onChildUpdate' } );
 };
 
 /* Inheritance */
@@ -68,10 +71,14 @@ ve.ce.WikiaGalleryNode.prototype.rebuild = function () {
 			'data-visible-count': 8,
 			'data-expanded': 0,
 			'data-model': JSON.stringify( embedData )
-		} );
-	this.$element.html('');
+		} )
+		.html('');
 
-	this.runGalleryScript();
+	/*
+	 * Wikia Gallery uses data 'initialized' to know if the gallery for this element has been generated.
+	 * Because we're rebuilding, set 'initialized' to false.
+	 */
+	this.$element.data( 'initialized', false );
 };
 
 ve.ce.WikiaGalleryNode.prototype.getThumbHtml = function ( href, url, imageName ) {
@@ -101,6 +108,13 @@ ve.ce.WikiaGalleryNode.prototype.getThumbUrl = function ( imageSrc, imageName ) 
 
 ve.ce.WikiaGalleryNode.prototype.onSetup = function () {
 	this.runGalleryScript();
+};
+
+ve.ce.WikiaGalleryNode.prototype.onChildUpdate = function () {
+	setTimeout( ve.bind( function () {
+		this.rebuild();
+		this.runGalleryScript();
+	}, this ), 0 );
 };
 
 ve.ce.WikiaGalleryNode.prototype.runGalleryScript = function () {
