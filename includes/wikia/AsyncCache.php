@@ -74,7 +74,7 @@ class AsyncCache {
 	 */
 	private $staleOnMissTTL = 0;
 
-	/** @var callable|string - A function to run to generate new values */
+	/** @var callable - A function to run to generate new values */
 	private $callback;
 	/** @var array - Arguments to pass to the $callback function */
 	private $callbackParams;
@@ -174,7 +174,7 @@ class AsyncCache {
 	/**
 	 * A function to call that can regenerate the cache value
 	 *
-	 * @param callable|string $callback
+	 * @param callable $callback
 	 * @param array|null $params
 	 *
 	 * @return AsyncCache $this
