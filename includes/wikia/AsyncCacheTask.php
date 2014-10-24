@@ -45,7 +45,7 @@ class AsyncCacheTask extends BaseTask {
 			\F::app()->wg->memc->set( $key, $payload );
 		}
 
-		return \Status::newGood( $value );
+		return $value;
 	}
 }
 

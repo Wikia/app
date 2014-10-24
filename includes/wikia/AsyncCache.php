@@ -46,6 +46,14 @@ class AsyncCache {
 	// Default time for a stale cache value to live (returned while async job is running)
 	const DEFAULT_STALE_TTL = 60;
 
+	// If the
+	const UNLIMITED_TIME_REMAINING = -1;
+
+	// Behavior to take on on a miss.  We can either block and return a value immediately
+	// or return a stale value and generate a value asynchronously
+	const ON_MISS_BLOCK = 1;
+	const ON_MISS_STALE = 2;
+
 	/** @var MemcachedPhpBagOStuff - The caching client */
 	private $cache;
 
@@ -58,11 +66,8 @@ class AsyncCache {
 	/** @var int - The cached negative response value time to live */
 	private $negativeResponseTTL = 0;
 
-	/** @var  bool - Whether to generate new values synchronously */
-	private $blockOnMiss = false;
-
-	/** @var  bool - Whether to return stale values while new values are being generated asynchronously */
-	private $staleOnMiss = true;
+	/** @var int - How to behave on a miss.  Default to return a stale value */
+	private $onMiss = self::ON_MISS_STALE;
 
 	/** @var int - How long to return stale values while waiting for new values to be generated.  Zero
 	 			   means serve stale data as long as it takes to generate new data
@@ -148,8 +153,7 @@ class AsyncCache {
 	 * @return AsyncCache $this
 	 */
 	public function blockOnMiss() {
-		$this->blockOnMiss = true;
-		$this->staleOnMiss = false;
+		$this->onMiss = self::ON_MISS_BLOCK;
 		return $this;
 	}
 
@@ -162,8 +166,7 @@ class AsyncCache {
 	 * @return AsyncCache $this
 	 */
 	public function staleOnMiss( $secs = self::DEFAULT_STALE_TTL ) {
-		$this->staleOnMiss = true;
-		$this->blockOnMiss = false;
+		$this->onMiss = self::ON_MISS_STALE;
 		$this->staleOnMissTTL = $secs;
 		return $this;
 	}
@@ -172,11 +175,17 @@ class AsyncCache {
 	 * A function to call that can regenerate the cache value
 	 *
 	 * @param callable|string $callback
+	 * @param array|null $params
 	 *
 	 * @return AsyncCache $this
 	 */
-	public function callback( $callback ) {
+	public function callback( $callback, array $params = null ) {
 		$this->callback = $callback;
+
+		if ( is_array( $params ) ) {
+			$this->callbackParams = $params;
+		}
+
 		return $this;
 	}
 
@@ -232,13 +241,13 @@ class AsyncCache {
 	 */
 	public function staleTTLRemain() {
 		if ( !$this->isCacheStale() ) {
-			return -1;
+			return self::UNLIMITED_TIME_REMAINING;
 		}
 
 		if ( $this->canReturnStale() ) {
 			// If we can return stale forever, return a special remaining time
 			if ( $this->staleOnMissTTL == 0 ) {
-				return -1;
+				return self::UNLIMITED_TIME_REMAINING;
 			}
 
 			return $this->getCacheExpire() + $this->staleOnMissTTL - time();
@@ -262,7 +271,7 @@ class AsyncCache {
 	 * @param string $key
 	 */
 	public function purge( $key ) {
-		\F::app()->wg->memc->delete( $key );
+		$this->cache->delete( $key );
 	}
 
 	/**
@@ -322,7 +331,7 @@ class AsyncCache {
 
 	private function canReturnStale() {
 		// If we're always blocking on a miss, always return false
-		if ( $this->blockOnMiss ) {
+		if ( $this->onMiss == self::ON_MISS_BLOCK ) {
 			return false;
 		}
 
@@ -336,17 +345,13 @@ class AsyncCache {
 
 	private function generateValueNow() {
 		$task = new \Wikia\Cache\AsyncCacheTask();
-		$status = $task->generate(
+		$value = $task->generate(
 			$this->key,
 			$this->callback,
 			$this->callbackParams,
 			[ 'ttl' => $this->ttl, 'negativeResponseTTL' => $this->negativeResponseTTL ] );
 
-		if ( $status->isGood() ) {
-			return $status->value;
-		} else {
-			return null;
-		}
+		return $value;
 	}
 
 	private function scheduleValueGeneration() {
