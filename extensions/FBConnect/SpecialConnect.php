@@ -205,12 +205,6 @@ class SpecialConnect extends SpecialPage {
 				break;
 			}
 		default:
-			// Main entry point
-			#if ( $wgRequest->getText( 'returnto' ) ) {
-			#	$this->setReturnTo( $wgRequest->getText( 'returnto' ),
-			#				$wgRequest->getVal( 'returntoquery' ) );
-			#}
-
 			if($wgUser->isLoggedIn()){
 				if($fb_user){
 					// If the user has previously connected, log them in.  If they have not, then complete the connection process.
@@ -263,21 +257,6 @@ class SpecialConnect extends SpecialPage {
 
 			FBConnectDB::addFacebookID($wgUser, $fb_id);
 
-			// Save the default user preferences.
-			global $fbEnablePushToFacebook;
-			if(!empty($fbEnablePushToFacebook)){
-				global $fbPushEventClasses;
-				if(!empty($fbPushEventClasses)){
-					$DEFAULT_ENABLE_ALL_PUSHES = true;
-					foreach($fbPushEventClasses as $pushEventClassName){
-						$pushObj = new $pushEventClassName;
-						$className = get_class();
-						$prefName = $pushObj->getUserPreferenceName();
-
-						$wgUser->setOption($prefName, ($DEFAULT_ENABLE_ALL_PUSHES?"1":"0"));
-					}
-				}
-			}
 			$wgUser->setOption("fbFromExist", "1");
 			$wgUser->saveSettings();
 
@@ -398,15 +377,6 @@ class SpecialConnect extends SpecialPage {
 				return;
 			}
 
-			/**
-			// Test to see if we are denied by $wgAuth or the user can't create an account
-			if ( !$wgAuth->autoCreate() || !$wgAuth->userExists( $userName ) ||
-										   !$wgAuth->authenticate( $userName )) {
-				$result = false;
-				return true;
-			}
-			/**/
-
 			// Run a hook to let custom forms make sure that it is okay to proceed with processing the form.
 			// This hook should only check preconditions and should not store values.  Values should be stored using the hook at the bottom of this function.
 			// Can use 'this' to call sendPage('chooseNameForm', 'SOME-ERROR-MSG-CODE-HERE') if some of the preconditions are invalid.
@@ -422,19 +392,6 @@ class SpecialConnect extends SpecialPage {
 				wfProfileOut(__METHOD__);
 				return;
 			}
-			// Let extensions abort the account creation.  If you have extensions which are expecting a Real Name or Email, you may need to disable
-			// them since these are not requirements of Facebook Connect (so users will not have them).
-			// NOTE: Currently this is commented out because it seems that most wikis might have a handful of restrictions that won't be needed on
-			// Facebook Connections.  For instance, requiring a CAPTCHA or age-verification, etc.  Having a Facebook account as a pre-requisitie removes the need for that.
-			/*
-			$abortError = '';
-			if( !wfRunHooks( 'AbortNewAccount', array( $user, &$abortError ) ) ) {
-				// Hook point to add extra creation throttles and blocks
-				wfDebug( "SpecialConnect::createUser: a hook blocked creation\n" );
-				$wgOut->showErrorPage('fbconnect-error', 'fbconnect-error-user-creation-hook-aborted', array($abortError));
-				return false;
-			}
-			*/
 
 			// Apply account-creation throttles
 			global $wgAccountCreationThrottle;
@@ -487,25 +444,6 @@ class SpecialConnect extends SpecialPage {
 				}
 			}
 
-			// Process the FBConnectPushEvent preference checkboxes if fbConnectPushEvents are enabled.
-			global $fbEnablePushToFacebook;
-			if($fbEnablePushToFacebook){
-				global $fbPushEventClasses;
-				if(!empty($fbPushEventClasses)){
-					foreach($fbPushEventClasses as $pushEventClassName){
-						$pushObj = new $pushEventClassName;
-						$className = get_class();
-						$prefName = $pushObj->getUserPreferenceName();
-
-						$user->setOption($prefName, ($wgRequest->getCheck($prefName)?"1":"0"));
-					}
-				}
-			}
-
-			// Save the prefeference for letting user select to never send anything to their newsfeed.
-			$prefName = FBConnectPushEvent::$PREF_TO_DISABLE_ALL;
-			$user->setOption($prefName, ($wgRequest->getCheck($prefName)?"1":"0"));
-
 			// Unfortunately, performs a second database lookup
 			$fbUser = new FBConnectUser($user);
 			// Update the user with settings from Facebook
@@ -556,11 +494,6 @@ class SpecialConnect extends SpecialPage {
 			$u->addToDatabase();
 		}
 
-		// No passwords for FBConnect accounts
-		//if ( $wgAuth->allowPasswordChange() ) {
-		//        $u->setPassword( $this->mPassword );
-		//}
-
 		$u->setEmail( $this->mEmail );
 
 		if ( empty( $this->mEmail ) ) {
@@ -606,7 +539,7 @@ class SpecialConnect extends SpecialPage {
 	 * user object is logged in.
 	 *
 	 * NOTE: This isn't used by Wikia and hasn't been tested with some of the new
-	 * code. Does it handle setting push-preferences correctly?
+	 * code.
 	 */
 	protected function attachUser($fb_user, $name, $password) {
 		global $wgOut, $wgUser;

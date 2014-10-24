@@ -1,24 +1,5 @@
 /* global FB, wgServer, wgScript */
 
-function enableDisablePushAllow(force_enable) {
-	var inputNever = $('#fbconnect-push-allow-never');
-	var inputs = inputNever.closest('fieldset').find('input');
-	var input;
-	for (var i = 0; i < inputs.length; i++){
-		input = $(inputs[i]);
-
-		if(input.attr('id').indexOf('fbconnect-push-allow') || input.attr('id') != 'fbconnect-push-allow-never') {
-			if (inputNever.attr('checked') && (!force_enable)) {
-				input.attr('disabled','disabled');
-			} else {
-				input.removeAttr('disabled');
-			}
-
-		}
-	}
-}
-
-
 $(function(){
 	'use strict';
 
@@ -47,10 +28,6 @@ $(function(){
 			}
 		});
 	});
-
-	$('#fbconnect-push-allow-never').change( function() { enableDisablePushAllow(false); });
-	enableDisablePushAllow(false);
-	$('#mw-preferences-form').submit(function() { enableDisablePushAllow(true); });
 
 	// BugId:93549
 	$.loadFacebookAPI(function() {
