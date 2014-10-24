@@ -258,7 +258,7 @@ class AvatarService extends Service {
 	 * @param $timestamp
 	 * @return \Wikia\Vignette\UrlGenerator
 	 */
-	private static function getVignetteUrl( Masthead $masthead, $width, $timestamp ) {
+	public static function getVignetteUrl( Masthead $masthead, $width, $timestamp ) {
 		$relativePath = $masthead->mUser->getOption( AVATAR_USER_OPTION_NAME );
 
 		if ( $relativePath ) {
