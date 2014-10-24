@@ -89,6 +89,12 @@ class ExactTargetWikiHooks {
 		$oTask->queue();
 	}
 
+	private function addTheDeleteWikiTask( Array $aParams ) {
+		$oTask = $this->getExactTargetDeleteWikiTask();
+		$oTask->call( 'deleteWikiData', $aParams );
+		$oTask->queue();
+	}
+
 	private function getHelper() {
 		return new ExactTargetWikiHooksHelper();
 	}
@@ -103,5 +109,9 @@ class ExactTargetWikiHooks {
 
 	private function getExactTargetUpdateCityCatMappingTask() {
 		return new ExactTargetUpdateCityCatMappingTask();
+	}
+
+	private function getExactTargetDeleteWikiTask() {
+		return new ExactTargetDeleteWikiTask();
 	}
 }

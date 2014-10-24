@@ -38,7 +38,7 @@ class ExactTargetWikiTaskHelper {
 			[
 				'CustomerKey' => $aCustomerKeys['city_list'],
 				'Properties' => $aWikiData,
-			]
+			],
 		];
 
 		return $aWikiDataExtension;
@@ -70,6 +70,25 @@ class ExactTargetWikiTaskHelper {
 					'CustomerKey' => $aCustomerKeys['city_list'],
 					'Keys' => $aKeys,
 					'Properties' => $aWikiData,
+				],
+			],
+		];
+
+		return $aWikiDataExtension;
+	}
+
+	public function prepareWikiDataExtensionForDelete( $iCityId ) {
+		$aCustomerKeys = $this->getCustomerKeys();
+
+		$aKeys = [
+			'city_id' => $iCityId,
+		];
+
+		$aWikiDataExtension = [
+			'DataExtension' => [
+				[
+					'CustomerKey' => $aCustomerKeys['city_list'],
+					'Keys' => $aKeys,
 				],
 			],
 		];
