@@ -95,7 +95,7 @@ class AsyncCache {
 	private $task;
 
 	/**
-	 * @param Object $cache - An alternate caching package
+	 * @param BagOStuff $cache - An alternate caching package
 	 */
 	public function __construct( $cache = null ) {
 		$this->ttl = self::DEFAULT_TTL;
