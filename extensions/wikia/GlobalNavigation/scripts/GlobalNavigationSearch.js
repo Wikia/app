@@ -51,7 +51,10 @@ require(['jquery', 'wikia.browserDetect', 'wikia.window'], function ($, browserD
 	 * Restore scrollY to position cached inside cachedScrollY var
 	 */
 	function restoreScrollY() {
-		win.scrollTo(win.scrollX, cachedScrollY);
+		if (cachedScrollY) {
+			win.scrollTo(win.scrollX, cachedScrollY);
+		}
+		
 		$globalNav.removeClass('position-static');
 	}
 
