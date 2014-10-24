@@ -21,7 +21,7 @@ $dir = dirname(__FILE__) . '/';
 // hooks
 global $wgHooks;
 
-array_splice( $wgHooks['OutputPageBeforeHTML'], 0, 0, 'RelatedPages::onOutputPageBeforeHTML' );
+$wgHooks['BeforePageDisplay'][] = 'RelatedPages::onBeforePageDisplay';
 $wgHooks['WikiaMobileAssetsPackages'][] = 'RelatedPages::onWikiaMobileAssetsPackages';
 $wgHooks['SkinAfterContent'][] = 'RelatedPages::onSkinAfterContent';
 
