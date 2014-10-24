@@ -12,8 +12,10 @@ use Wikia\Tasks\Tasks\BaseTask;
 class AsyncCacheTask extends BaseTask {
 
 	/**
+	 * This method calls code ($func) that will generate a new value to cache and then caches it.
+	 *
 	 * @param string $key - The key to cache the result under
-	 * @param string|array|callable $func - Any value that call_user_func_array recognizes as a callable method
+	 * @param callable $func - Function to generate new value
 	 * @param array $args - The args for $func
 	 * @param $options - Any additional options send back from the caching object
 	 *
