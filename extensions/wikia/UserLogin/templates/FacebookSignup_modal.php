@@ -57,37 +57,4 @@
 			<a class="wikia-button" href="<?= htmlspecialchars($specialUserLoginUrl) ?>"><?= wfMessage('login')->escaped() ?></a>
 		</section>
 	</section>
-
-	<a href="#" class="FacebookSignupConfigHeader">
-		<img src="<?= $wg->BlankImgUrl ?>" class="chevron">
-		<span class="hide"><?= wfMessage('userlogin-facebook-hide-preferences')->escaped() ?></span>
-		<span class="show"><?= wfMessage('userlogin-facebook-show-preferences')->escaped() ?></span>
-	</a>
-
-<?php
-	// print out FB feed preferences
-	foreach ($fbFeedOptions as $option) {
-		$optionElement = array(
-			'type' => 'checkbox',
-			'name' => $option['name'],
-			'label' => $option['shortText'],
-			'attributes' => array(
-				'checked' => true
-			)
-		);
-		if ($optionElement['name'] == 'fbconnect-push-allow-never') {
-			$optionElement['attributes'] = array();
-			$optionElement['class'] = 'indented';
-		}
-		$newOptions[] = $optionElement;
-	}
-	$formFb = array(
-		'legend' => wfMessage('fbconnect-prefs-post')->escaped(),
-		'class' => 'FacebookSignupConfig',
-		'inputs' => $newOptions,
-		'method' => 'post',
-	);
-
-	echo F::app()->renderView('WikiaStyleGuideForm', 'index', array('form' => $formFb))
-?>
 </div>
