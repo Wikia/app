@@ -1,13 +1,13 @@
 define('mediaGallery.views.gallery', [
 	'mediaGallery.views.media',
+	'mediaGallery.views.toggler',
 	'mediaGallery.templates.mustache',
 	'wikia.tracker',
 	'bucky'
-], function (Media, templates, tracker, bucky) {
+], function (Media, Toggler, templates, tracker, bucky) {
 	'use strict';
 
-	var Gallery,
-		togglerTemplateName = 'MediaGallery_showMore';
+	var Gallery;
 
 	/**
 	 * Instantiate gallery view
@@ -47,13 +47,6 @@ define('mediaGallery.views.gallery', [
 	Gallery.prototype.init = function () {
 		this.createMedia();
 		this.bindEvents();
-
-		// set up toggle buttons
-		if (this.model.media.length > this.origVisibleCount) {
-			this.renderToggler();
-			// set element to indicate when things are loading
-			this.$loadingElement = this.$showMore;
-		}
 
 		this.track({
 			action: tracker.ACTIONS.IMPRESSION,
@@ -117,26 +110,6 @@ define('mediaGallery.views.gallery', [
 	};
 
 	/**
-	 * Render the toggle buttons. Does not include DOM insertion.
-	 */
-	Gallery.prototype.renderToggler = function () {
-		var $html, data;
-
-		data = {
-			showMore: $.msg('mediagallery-show-more'),
-			showLess: $.msg('mediagallery-show-less')
-		};
-
-		$html = $(Mustache.render(templates[togglerTemplateName], data));
-		this.$showMore = $html.find('.show')
-			.on('click', $.proxy(this.showMore, this));
-		this.$showLess = $html.find('.hide')
-			.on('click', $.proxy(this.showLess, this));
-
-		this.$toggler = $html;
-	};
-
-	/**
 	 * Render sets of media.
 	 * @param {int} [count] Number to be rendered. If not set, original visible count will be used.
 	 * @returns {Gallery}
@@ -191,9 +164,6 @@ define('mediaGallery.views.gallery', [
 	};
 
 	Gallery.prototype.afterRender = function () {
-		// Emit event when DOM settles into place
-		this.$el.trigger('mediaLoaded');
-
 		// After rendering the gallery and all images are loaded,
 		// append the show more/less buttons (only happens once)
 		this.appendToggler();
@@ -202,16 +172,30 @@ define('mediaGallery.views.gallery', [
 		if (this.$loadingElement) {
 			this.$loadingElement.stopThrobbing();
 		}
+
+		// Emit event when DOM settles into place
+		this.$el.trigger('mediaLoaded');
 	};
 
 	/**
 	 * Insert toggle buttons into DOM
 	 */
 	Gallery.prototype.appendToggler = function () {
-		if (this.$toggler && !this.togglerAdded) {
-			this.$wrapper.append(this.$toggler);
-			this.togglerAdded = true;
+		// make sure we have items to load and we haven't added the toggle buttons already
+		if (this.toggler || this.model.media.length <= this.origVisibleCount) {
+			return;
 		}
+
+		this.toggler = new Toggler();
+		this.$wrapper.append(this.toggler.render().$el);
+
+		this.$showMore = this.toggler.$more
+			.on('click', $.proxy(this.showMore, this));
+		this.$showLess = this.toggler.$less
+			.on('click', $.proxy(this.showLess, this));
+
+		// set element to indicate when things are loading
+		this.$loadingElement = this.$showMore;
 	};
 
 	/**
