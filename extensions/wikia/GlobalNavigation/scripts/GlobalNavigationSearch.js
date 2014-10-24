@@ -60,17 +60,16 @@ require(['jquery', 'wikia.browserDetect', 'wikia.window'], function ($, browserD
 	$(function () {
 		setFormOptions();
 
-		$selectElement.on('change keyup keydown', function () {
-			setFormOptions();
-		});
-
-		$selectElement.on('focus', function () {
-			$chevron.addClass('dark');
-		});
-
-		$selectElement.on('blur', function () {
-			$chevron.removeClass('dark');
-		});
+		$selectElement
+			.on('change keyup keydown', function () {
+				setFormOptions();
+			})
+			.on('focus', function () {
+				$chevron.addClass('dark');
+			})
+			.on('blur', function () {
+				$chevron.removeClass('dark');
+			});
 
 		if (!browserDetect.isPositionFixedSupported()) {
 			$searchInput
