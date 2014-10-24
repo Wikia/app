@@ -174,7 +174,9 @@ abstract class WikiaSkin extends SkinTemplate {
 
 		// load all remaining scripts
 		foreach ( $scripts as $script ) {
-			$scriptTags .= "<script src='{$script['url']}'></script>\n";
+			if (isset($script['url'])) {
+				$scriptTags .= "<script src='{$script['url']}'></script>\n";
+			}
 		}
 
 		wfDebug( sprintf( "%s: combined %d JS groups\n", __METHOD__, count($groups) ) );
