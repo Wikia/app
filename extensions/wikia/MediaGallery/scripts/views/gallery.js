@@ -166,7 +166,7 @@ define('mediaGallery.views.gallery', [
 	Gallery.prototype.afterRender = function () {
 		// After rendering the gallery and all images are loaded,
 		// append the show more/less buttons (only happens once)
-		this.appendToggler();
+		this.initToggler();
 
 		// handle loading graphic
 		if (this.$loadingElement) {
@@ -180,7 +180,7 @@ define('mediaGallery.views.gallery', [
 	/**
 	 * Insert toggle buttons into DOM
 	 */
-	Gallery.prototype.appendToggler = function () {
+	Gallery.prototype.initToggler = function () {
 		// make sure we have items to load and we haven't added the toggle buttons already
 		if (this.toggler || this.model.media.length <= this.origVisibleCount) {
 			return;
