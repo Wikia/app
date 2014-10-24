@@ -132,6 +132,61 @@ class NjordController extends WikiaController {
 		}
 	}
 
+	public function saveHeroTitle() {
+		$title = $this->getRequest()->getVal('title', false);
+		$success = false;
+		if ($title) {
+			$wikiDataModel = $this->getWikiData();
+			$wikiDataModel->title = $title;
+			$this->setWikiData( $wikiDataModel );
+			$success = true;
+		}
+		$this->getResponse()->setVal( 'success', $success );
+		$this->getResponse()->setVal( 'wikiData', $wikiDataModel );
+	}
+
+	public function saveHeroImage() {
+		$image = $this->getRequest()->getVal('imagename', false);
+		$cropPosition = $this->getRequest()->getVal('cropposition', false);
+		$success = false;
+		if ($image !== false && $cropPosition !== false) {
+			$wikiDataModel = $this->getWikiData();
+			$wikiDataModel->cropPosition = $cropPosition;
+
+			wfProfileIn( __METHOD__ . '::uploadStart' );
+			$stash = RepoGroup::singleton()->getLocalRepo()->getUploadStash();
+
+			$temp_file = $stash->getFile( $image );
+			$file = new LocalFile( static::HERO_IMAGE_FILENAME, RepoGroup::singleton()->getLocalRepo() );
+
+			$status = $file->upload( $temp_file->getPath(), '', '' );
+			wfProfileIn( __METHOD__ . '::uploadEnd' );
+
+			if ( $status->isOK() ) {
+				$wikiDataModel->setImageName( $file->getTitle()->getDBKey() );
+				$wikiDataModel->setImagePath( $file->getFullUrl() );
+				$this->setWikiData( $wikiDataModel );
+				//clean up stash
+				$stash->removeFile( $image );
+				$success = true;
+			}
+		}
+		$this->getResponse()->setVal( 'success', $success );
+		$this->getResponse()->setVal( 'wikiData', $wikiDataModel );
+	}
+
+	protected function getWikiData() {
+		//FIXME: use actual main page instead of default one
+		$wikiDataModel = new WikiDataModel( Title::newMainPage()->getText() );
+		$wikiDataModel->getFromProps();
+		return $wikiDataModel;
+	}
+
+	protected function setWikiData( WikiDataModel $wikiDataModel ) {
+		$wikiDataModel->storeInPage();
+		$wikiDataModel->storeInProps();
+	}
+
 	public function saveHeroData() {
 		wfProfileIn( __METHOD__ );
 

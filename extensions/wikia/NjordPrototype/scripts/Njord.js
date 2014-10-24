@@ -5,6 +5,23 @@
 
 	var
 		HERO_ASPECT_RATIO = 4 / 16,
+		States = {
+			list: [
+				'zero-state',
+				'filled-state',
+				'upload-state',
+				'edit-state'
+			],
+			clearState: function($element) {
+				$element.removeClass( this.list.join(' '));
+			},
+			setState: function($element, $state) {
+				if (this.list.indexOf($state) >= 0) {
+					this.clearState($element);
+					$element.addClass($state);
+				}
+			}
+		},
 		heroData = {
 			oTitle: null,
 			oDescription: null,
@@ -18,22 +35,116 @@
 			imagechanged: false,
 			datachanged: false
 		},
+		//hero image elements
+		$imageElement = $('.MainPageHeroHeader .image-wrap'),
+		$imageSaveElement = $('.MainPageHeroHeader .image-save-bar'),
+		$titleElement = $('.MainPageHeroHeader .title-wrap'),
+		$titleEditElement = $('.MainPageHeroHeader .title-wrap .edit-box'),
+		$descElement = $('.MainPageHeroHeader .hero-desciprion'),
+
+		$imageDiscardBtn = $('.MainPageHeroHeader .image-save-bar .discard-btn'),
+		$imageSaveBtn = $('.MainPageHeroHeader .image-save-bar .save-btn'),
+
+		$titleEditBtn = $('.MainPageHeroHeader .title-wrap .title-edit-btn'),
+		$titleSaveBtn = $('.MainPageHeroHeader .title-wrap .save-btn'),
+		$titleDiscardBtn = $('.MainPageHeroHeader .title-wrap .discard-btn'),
+		$titleText = $('.MainPageHeroHeader .title-wrap .title-text'),
+
 		$body = $('body'),
-		$discardButton = $('#MainPageHero .discard-btn'),
-		$editButton = $('#MainPageHero .edit-btn'),
-		$toggleButton = $('#MainPageHero .toggle-btn'),
-		$saveButton = $('#MainPageHero .save-btn'),
-		$uploadButton = $('#MainPageHero .upload'),
 		$overlay = $('#MainPageHero .overlay'),
 		$heroModule = $('#MainPageHero'),
 		$heroModuleTitle = $('#MainPageHero .hero-title'),
 		$heroModuleDescription = $('#MainPageHero .hero-description'),
 		$heroModuleUpload = $('#MainPageHero .upload'),
 		$heroModuleUploadMask = $('#MainPageHero .upload .upload-mask'),
-		$heroModuleButton = $('#MainPageHero .upload .upload-btn'),
+		$heroModuleAddButton = $('#MainPageHero .upload .upload-btn'),
+		$heroModuleUpdateButton = $('#MainPageHero .upload .update-btn'),
 		$heroModuleInput = $('#MainPageHero .upload input[name="file"]'),
 		$heroModuleImage = $('#MainPageHero .hero-image'),
-		$heroModuleEditArea = $('#MainPageHero .edit-area'),
+
+		saveImage = function() {
+			States.setState($imageSaveElement, 'filled-state');
+			$imageElement.startThrobbing();
+			$.nirvana.sendRequest({
+				controller: 'NjordController',
+				method: 'saveHeroImage',
+				type: 'POST',
+				data: {
+					'imagename': heroData.imagename,
+					'cropposition': heroData.cropposition
+				},
+				callback: function() {
+					$heroModuleImage.draggable({ disabled: true });
+					$heroModuleImage.removeClass('drag-cursor');
+					$heroModuleImage.attr('src', heroData.oImage = heroData.imagepath);
+					$heroModuleImage.data('fullpath', heroData.imagepath);
+					$heroModuleImage.data('cropposition', heroData.oCropposition = heroData.cropposition);
+					$imageElement.stopThrobbing();
+					States.setState($imageElement, 'filled-state');
+					States.setState($imageSaveElement, 'filled-state');
+				},
+				onErrorCallback: function () {
+					// TODO: handle failure
+					$imageElement.stopThrobbing();
+				}
+			});
+		},
+		revertImage = function() {
+			$heroModuleImage.draggable({ disabled: true });
+			$heroModuleImage.removeClass('drag-cursor');
+			$heroModuleImage.attr('src', heroData.oImage);
+			$heroModuleImage.css({top: -heroData.oCropposition * $heroModuleImage.height()});
+			$heroModuleImage.data('.hero-image', heroData.oCropposition);
+			heroData.imagepath = heroData.oImage;
+			heroData.imagename = null;
+			heroData.cropposition = heroData.oCropposition;
+			heroData.imagechanged = false;
+
+			if (heroData.oImage === "") {
+				States.setState($imageElement, 'zero-state');
+				States.setState($imageSaveElement, 'zero-state');
+			} else {
+				States.setState($imageElement, 'filled-state');
+				States.setState($imageSaveElement, 'filled-state');
+			}
+		},
+		editTitle = function() {
+			States.setState($titleElement, 'edit-state');
+			//FIXME: fix onChange event, caret at end on focus
+			$heroModuleTitle.focus();
+			$heroModuleTitle.change();
+		},
+		saveTitle = function() {
+			$titleEditElement.startThrobbing();
+			$.nirvana.sendRequest({
+				controller: 'NjordController',
+				method: 'saveHeroTitle',
+				type: 'POST',
+				data: {
+					'title': heroData.title
+				},
+				callback: function() {
+					$titleEditElement.stopThrobbing();
+					$titleText.text(heroData.oTitle = heroData.title);
+					States.setState($titleElement, 'filled-state');
+				},
+				onErrorCallback: function () {
+					// TODO: handle failure
+					$titleEditElement.stopThrobbing();
+				}
+			});
+		},
+		revertTitle = function() {
+			$heroModuleTitle.text(heroData.oTitle);
+			$titleText.text(heroData.oTitle);
+			if (heroData.oTitle === "") {
+				States.setState($titleElement, 'zero-state');
+			} else {
+				States.setState($titleElement, 'filled-state');
+			}
+		},
+		saveDescription = function() {},
+		revertDescription = function() {},
 
 		initializeData = function () {
 			heroData.title = heroData.oTitle = $heroModuleTitle.text();
@@ -62,7 +173,6 @@
 			$toggleButton.show();
 			$overlay.hide();
 			$heroModuleEditArea.hide();
-			$editButton.show();
 			$heroModuleImage.draggable({ disabled: true });
 			$heroModuleImage.removeClass('drag-cursor');
 			$heroModule.stopThrobbing();
@@ -120,22 +230,6 @@
 					$heroModule.stopThrobbing();
 				}
 			});
-		}, onEdit = function () {
-			$heroModule.startThrobbing();
-			$('.hero-title, .hero-description').each(function () {
-				$(this).attr('contenteditable', true);
-			});
-			$heroModuleEditArea.show();
-			$editButton.hide();
-			if ($heroModuleImage.attr('src') !== $heroModuleImage.data('fullpath')) {
-				$heroModuleImage.attr('src', $heroModuleImage.data('fullpath'));
-				$heroModuleImage.one('load', function () {
-					$heroModule.trigger('enableDragging')
-				});
-			} else {
-				onImageLoad();
-				$heroModule.trigger('enableDragging');
-			}
 		}, onImageLoad = function () {
 			var top = -heroData.cropposition * $heroModuleImage.height();
 			$heroModule.stopThrobbing();
@@ -176,6 +270,8 @@
 					$heroModuleImage.bind('load', function () {
 						$heroModule.stopThrobbing();
 						$heroModule.trigger('enableDragging');
+						States.setState($imageElement, 'upload-state');
+						States.setState($imageSaveElement, 'upload-state');
 						$heroModuleImage.unbind('load');
 					});
 					$heroModuleImage.attr('src', data.url);
@@ -185,7 +281,11 @@
 			};
 			client.send(formdata);
 		}, initializeEditMode = function () {
-			$editButton.show();
+			$imageSaveBtn.on('click', saveImage);
+			$imageDiscardBtn.on('click', revertImage);
+			$titleEditBtn.on('click', editTitle);
+			$titleSaveBtn.on('click', saveTitle);
+			$titleDiscardBtn.on('click', revertTitle);
 
 			$heroModuleTitle.on('focus', onFocus).on('blur keyup paste input', onInput).on('change', onChange);
 			$('.hero-description').on('focus', onFocus).on('blur keyup paste input', onInput).on('change', onChange);
@@ -193,9 +293,6 @@
 			$heroModuleImage[0].addEventListener('load', onImageLoad);
 			$heroModule.on('change', onChange).on('enableDragging', onDraggingEnabled);
 			$heroModule.on('revertedToZeroState', zeroState);
-			$editButton.on('click', onEdit);
-			$saveButton.on('click', onSave);
-			$discardButton.on('click', revertToCurrentZeroState);
 			$('.toggle-upload-btn').on('click', function () {
 				$toggleButton.hide();
 				$overlay.show();
@@ -245,7 +342,11 @@
 				}
 			});
 
-			$heroModuleButton.on('click', function () {
+			$heroModuleAddButton.on('click', function () {
+				$heroModuleInput.click();
+			});
+
+			$heroModuleUpdateButton.on('click', function () {
 				$heroModuleInput.click();
 			});
 
