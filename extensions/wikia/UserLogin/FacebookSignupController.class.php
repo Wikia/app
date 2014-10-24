@@ -18,7 +18,11 @@ class FacebookSignupController extends WikiaController {
 		$fbUserId = $this->getFacebookUserId();
 
 		// try to get connected Wikia account
-		$user = FBConnectDB::getUser($fbUserId);
+		if ( F::app()->wg->EnableFacebookClientExt ) {
+			$user = FacebookClient::getInstance()->getUserId();
+		} else {
+			$user = FBConnectDB::getUser( $fbUserId );
+		}
 
 		if ( ( $user instanceof User ) && ( $fbUserId !== 0 ) ) {
 			$this->errorMsg = '';
@@ -36,8 +40,7 @@ class FacebookSignupController extends WikiaController {
 				$this->loggedIn = true;
 				$this->userName = $user->getName();
 			}
-		}
-		else {
+		} else {
 			$modal = $this->sendRequest('FacebookSignup', 'modal')->__toString();
 
 			// no account connected - show FB sign up modal
@@ -52,19 +55,19 @@ class FacebookSignupController extends WikiaController {
 	 */
 	public function modal() {
 		// get an email from Facebook API
-		$resp = $this->sendRequest('FacebookSignup', 'getFacebookData', array(
+		$resp = $this->sendRequest( 'FacebookSignup', 'getFacebookData', [
 			'fbUserId' => $this->getFacebookUserId(),
-		));
+		] );
 
 		// BugId:24400
 		$data = $resp->getData();
-		if (empty($data)) {
+		if ( empty( $data ) ) {
 			$this->skipRendering();
 			return false;
 		}
 
-		$this->fbEmail = $resp->getVal('contact_email', false);
-		$email = $resp->getVal('email', false);
+		$this->fbEmail = $resp->getVal( 'contact_email', false );
+		$email = $resp->getVal( 'email', false );
 		// check for proxy email
 		if ( $this->fbEmail != $email ) {
 			$this->fbEmail = wfMessage( 'usersignup-facebook-proxy-email' )->escaped();
@@ -72,7 +75,7 @@ class FacebookSignupController extends WikiaController {
 
 		$this->loginToken = UserLoginHelper::getSignupToken();
 
-		$this->specialUserLoginUrl = SpecialPage::getTitleFor('UserLogin')->getLocalUrl();
+		$this->specialUserLoginUrl = SpecialPage::getTitleFor( 'UserLogin' )->getLocalUrl();
 	}
 
 	/**
@@ -135,24 +138,30 @@ class FacebookSignupController extends WikiaController {
 	 * Return Facebook account data like email, gender, real name
 	 */
 	public function getFacebookData() {
-		$fbUserId = intval($this->request->getVal('fbUserId'));
+		$fbUserId = $this->request->getVal( 'fbUserId' );
 
-		if ($fbUserId > 0) {
-			// call Facebook API
-			$FBApi = new FBConnectAPI();
-			$data = $FBApi->getUserInfo($this->fbUserId, array(
-				'first_name',
-				'name',
-				'sex',
-				'timezone',
-				'locale',
-				'username',
-				'contact_email',
-				'email',
-			));
+		if ( $fbUserId > 0 ) {
+
+			// Toggle on new/old FB client
+			if ( F::app()->wg->EnableFacebookClientExt ) {
+				$data = FacebookClient::getInstance()->getUserInfoAsArray( $fbUserId );
+			} else {
+				// call Facebook API
+				$FBApi = new FBConnectAPI();
+				$data  = $FBApi->getUserInfo( $this->fbUserId, array(
+					'first_name',
+					'name',
+					'sex',
+					'timezone',
+					'locale',
+					'username',
+					'contact_email',
+					'email',
+				) );
+			}
 
 			// BugId:24400
-			if (!empty($data)) {
+			if ( !empty( $data ) ) {
 				$this->response->setData($data);
 			}
 		}
@@ -164,8 +173,14 @@ class FacebookSignupController extends WikiaController {
 	 * If no user is logged in, then an ID of 0 is returned.
 	 */
 	private function getFacebookUserId() {
-		$fbApi = new FBConnectAPI();
-		return $fbApi->user();
+		// Toggle on new/old FB client
+		if ( F::app()->wg->EnableFacebookClientExt ) {
+			return FacebookClient::getInstance()->getUserId();
+		} else {
+			$fbApi = new FBConnectAPI();
+
+			return $fbApi->user();
+		}
 	}
 
 	/**
