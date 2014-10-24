@@ -1,5 +1,5 @@
 /* global UserLoginFacebook:true, UserLoginAjaxForm:true */
-require(['jquery'], function($){
+require(['jquery', 'GlobalNavigationiOSScrollFix'], function ($, scrollFix) {
 	'use strict';
 	var $entryPoint, $userLoginDropdown, loginAjaxForm = false;
 
@@ -8,7 +8,9 @@ require(['jquery'], function($){
 		window.transparentOut.show();
 
 		if (!loginAjaxForm) {
-			loginAjaxForm = new UserLoginAjaxForm($entryPoint, {skipFocus: true});
+			loginAjaxForm = new UserLoginAjaxForm($entryPoint, {
+				skipFocus: true
+			});
 			UserLoginFacebook.init(UserLoginFacebook.origins.DROPDOWN);
 		}
 	}
@@ -20,21 +22,23 @@ require(['jquery'], function($){
 
 	function closeMenuIfNotFocused() {
 		var id = document.activeElement.id;
-		if ( !( id === 'usernameInput' || id === 'passwordInput' ) ) {
+		if (!(id === 'usernameInput' || id === 'passwordInput')) {
 			closeMenu();
 		}
 	}
 
-	$(function(){
+	$(function () {
+		var $globalNav = $('#globalNavigation');
+
 		window.transparentOut.bindClick(closeMenu);
 
 		$entryPoint = $('#AccountNavigation');
-		$entryPoint.on('click', '.ajaxLogin', function(ev) {
+		$entryPoint.on('click', '.ajaxLogin', function (ev) {
 			ev.preventDefault();
 			ev.stopImmediatePropagation();
 
-			if ( $entryPoint.hasClass('active') ) {
-				if ( !!wgUserName ) {
+			if ($entryPoint.hasClass('active')) {
+				if (!!wgUserName) {
 					window.location = $(this).attr('href');
 				} else {
 					closeMenu();
@@ -47,10 +51,17 @@ require(['jquery'], function($){
 
 		$userLoginDropdown = $('#UserLoginDropdown');
 
+		$userLoginDropdown
+			.on('focus', '#usernameInput, #passwordInput', function () {
+				scrollFix.scrollToTop($globalNav);
+			})
+			.on('blur', '#usernameInput, #passwordInput', function () {
+				scrollFix.restoreScrollY($globalNav);
+			});
+
 		if (!window.Wikia.isTouchScreen()) {
 			window.delayedHover(
-				$entryPoint.get(0),
-				{
+				$entryPoint.get(0), {
 					checkInterval: 100,
 					maxActivationDistance: 20,
 					onActivate: openMenu,

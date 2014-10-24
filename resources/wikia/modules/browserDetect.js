@@ -38,7 +38,7 @@ define('wikia.browserDetect', ['wikia.window'], function (win) {
 	 * Issue is occurring in Safari 6 and 7 on iPads.
 	 * @returns {boolean}
 	 */
-	function isPositionFixedSupported() {
+	function isIOS7orLower() {
 		return !userAgent.match(/iPad.+OS.[6,7].\d.+like.Mac.OS.+Safari/i);
 	}
 
@@ -49,6 +49,6 @@ define('wikia.browserDetect', ['wikia.window'], function (win) {
 	return {
 		isIE: isIE,
 		isIPad: isIPad,
-		isPositionFixedSupported: isPositionFixedSupported
+		isIOS7orLower: isIOS7orLower
 	};
 });
