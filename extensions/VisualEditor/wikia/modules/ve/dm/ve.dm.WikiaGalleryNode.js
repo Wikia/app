@@ -34,19 +34,16 @@ ve.dm.WikiaGalleryNode.static.getMatchRdfaTypes = function () {
 	return [ 'mw:Extension/nativeGallery' ];
 };
 
-ve.dm.WikiaGalleryNode.static.toDomElements = function ( data, doc, converter ) {
+ve.dm.WikiaGalleryNode.static.toDomElements = function ( data, doc ) {
 	var div = doc.createElement( 'div' );
-
 	return [ div ];
 };
 
-ve.dm.WikiaGalleryNode.static.toDataElement = function ( domElements, converter ) {
+ve.dm.WikiaGalleryNode.static.toDataElement = function ( domElements ) {
 	var $domElements = $( domElements[0] ),
-		dataMw = JSON.parse( $domElements.attr( 'data-mw' ) ),
-		attributes = {};
-
-	attributes.itemCount = $domElements.children( 'figure' ).length;
-	//attributes.caption = dataMw.attrs.caption;
+		attributes = {
+			itemCount: $domElements.children( 'figure' ).length
+		};
 
 	return { 'type': this.name, 'attributes': attributes };
 };
