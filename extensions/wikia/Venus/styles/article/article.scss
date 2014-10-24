@@ -5,6 +5,7 @@
 @import 'extensions/wikia/Venus/styles/modules/throbberVenus';
 @import 'extensions/wikia/Venus/styles/typographyMixins';
 @import 'extensions/wikia/Venus/styles/variables';
+@import 'extensions/wikia/Venus/styles/z-index';
 @import 'skins/shared/color';
 @import 'skins/shared/styles/infoboxes';
 
@@ -45,6 +46,7 @@ $article-items-spacing: 40px;
 	position: fixed;
 	text-align: center;
 	width: $medium-grid-column;
+	z-index: $article-left-navigation-z-index;
 
 	ul {
 		display: inline-block;
