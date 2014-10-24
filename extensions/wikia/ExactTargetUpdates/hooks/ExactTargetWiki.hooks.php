@@ -53,6 +53,11 @@ class ExactTargetWikiHooks {
 		return true;
 	}
 
+	public function onWikiFactoryWikiClosed( Array $aParams ) {
+		$this->addTheDeleteWikiTask( $aParams );
+		return true;
+	}
+
 	/**
 	 * Adds a task to job queue that sends
 	 * a Create request to ExactTarget with data of a new wiki.

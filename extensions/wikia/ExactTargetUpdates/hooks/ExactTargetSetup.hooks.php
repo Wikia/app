@@ -40,6 +40,7 @@ class ExactTargetSetupHooks {
 			\Hooks::register( 'WikiFactoryChangeCommitted', [ $oWikiHooks, 'onWikiFactoryChangeCommitted' ] );
 			\Hooks::register( 'WikiFactoryVerticalSet', [ $oWikiHooks, 'onWikiFactoryVerticalSet' ] );
 			\Hooks::register( 'CityCatMappingUpdated', [ $oWikiHooks, 'onCityCatMappingUpdated' ] );
+			\Hooks::register( 'WikiFactoryWikiClosed', [ $oWikiHooks, 'onWikiFactoryWikiClosed' ] );
 		}
 	}
 

@@ -15,7 +15,7 @@ class ExactTargetDeleteWikiTask extends BaseTask {
 		$aCityCatMappingDataForDelete = $oHelper->prepareCityCatMappingDataExtensionForDelete( $oResults );
 		$oApiDataExtension->deleteRequest( $aCityCatMappingDataForDelete );
 
-		$aWikiDataForDelete = prepareWikiDataExtensionForDelete( $aParams['city_id'] );
+		$aWikiDataForDelete = $oHelper->prepareWikiDataExtensionForDelete( $aParams['city_id'] );
 		$oApiDataExtension->deleteRequest( $aWikiDataForDelete );
 	}
 
