@@ -1,12 +1,11 @@
 <?php
 class AvatarServiceTest extends WikiaBaseTest {
-
 	/**
 	 * @dataProvider getDefaultAvatarDataProvider
 	 * @group UsingDB
 	 */
-	public function testGetDefaultAvatar($url, $width) {
-			$this->assertStringEndsWith($url, AvatarService::getDefaultAvatar($width));
+	public function testGetDefaultAvatar( $url, $width ) {
+			$this->assertStringEndsWith( $url, AvatarService::getDefaultAvatar( $width ) );
 	}
 
 	public function getDefaultAvatarDataProvider() {
@@ -30,8 +29,8 @@ class AvatarServiceTest extends WikiaBaseTest {
 	 * @dataProvider getUrlDataProvider
 	 * @group UsingDB
 	 */
-	public function testGetUrl($url, $userName) {
-		$this->assertStringEndsWith($url, AvatarService::getUrl($userName));
+	public function testGetUrl( $url, $userName ) {
+		$this->assertStringEndsWith( $url, AvatarService::getUrl( $userName ) );
 	}
 
 	public function getUrlDataProvider() {
@@ -53,16 +52,16 @@ class AvatarServiceTest extends WikiaBaseTest {
 	 * @group UsingDB
 	 * @dataProvider getAvatarUrlDataProvider
 	 */
-	public function testGetAvatarUrl($url, $userName, $userId, $avatarSize) {
+	public function testGetAvatarUrl( $url, $userName, $userId, $avatarSize ) {
 		$user = new User();
-		$user->setId($userId);
-		$user->setName($userName);
+		$user->setId( $userId );
+		$user->setName( $userName );
 
-		if ($userId > 0) {
-			$user->setOption(AVATAR_USER_OPTION_NAME, $userId);
+		if ( $userId > 0 ) {
+			$user->setOption( AVATAR_USER_OPTION_NAME, $userId );
 		}
 
-		$this->assertStringEndsWith($url, AvatarService::getAvatarUrl($user, $avatarSize));
+		$this->assertStringEndsWith( $url, AvatarService::getAvatarUrl( $user, $avatarSize ) );
 	}
 
 	public function getAvatarUrlDataProvider() {
@@ -82,5 +81,69 @@ class AvatarServiceTest extends WikiaBaseTest {
 				'avatarSize' => 20,
 			],
 		];
+	}
+
+	function testCustomUploadedAvatar() {
+		$user = $this->getMock( 'User' );
+		$user
+			->expects( $this->any() )
+			->method( 'getOption' )
+			->will( $this->returnValue( '/a/ab/12345.png' ) );
+
+		$masthead = $this->getMock( 'Masthead', [], [$user] );
+
+		$this->assertEquals(
+			'http://vignette.wikia-dev.com/common/avatars/a/ab/12345.png/revision/latest/scale-to-width/150?cb=789&format=jpg',
+			AvatarService::getVignetteUrl( $masthead, 150, 789 )
+		);
+	}
+
+	function testCustomExternalAvatar() {
+		$user = $this->getMock( 'User' );
+		$user
+			->expects( $this->any() )
+			->method( 'getOption' )
+			->will( $this->returnValue( 'http://images.domain.com/user/nelson.jpg' ) );
+
+		$masthead = $this->getMock( 'Masthead', [], [$user] );
+
+		$this->assertEquals(
+			'http://images.domain.com/user/nelson.jpg',
+			AvatarService::getVignetteUrl( $masthead, 150, 789 )
+		);
+	}
+
+	function testWikiaAvatar() {
+		$user = $this->getMock( 'User' );
+		$user
+			->expects( $this->any() )
+			->method( 'getOption' )
+			->will( $this->returnValue( 'Fish.jpg' ) );
+
+		$masthead = $this->getMock( 'Masthead', [], [$user] );
+
+		$this->assertEquals(
+			'http://vignette.wikia-dev.com/messaging/images/f/fe/Fish.jpg/revision/latest/scale-to-width/150?cb=789&format=jpg',
+			AvatarService::getVignetteUrl( $masthead, 150, 789 )
+		);
+	}
+
+	function testDefaultAvatar() {
+		$user = $this->getMock( 'User' );
+		$user
+			->expects( $this->any() )
+			->method( 'getOption' )
+			->will( $this->returnValue( null ) );
+
+		$masthead = $this->getMock( 'Masthead', [], [$user] );
+		$masthead
+			->expects( $this->any() )
+			->method( 'getDefaultAvatars' )
+			->will( $this->returnValue( ['http://images.wikia.com/messaging/images/1/19/Avatar.jpg'] ) );
+
+		$this->assertEquals(
+			'http://vignette.wikia-dev.com/messaging/images/1/19/Avatar.jpg/revision/latest/scale-to-width/150?cb=789&format=jpg',
+			AvatarService::getVignetteUrl( $masthead, 150, 789 )
+		);
 	}
 }

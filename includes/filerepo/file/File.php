@@ -242,15 +242,9 @@ abstract class File {
 		return $this->name;
 	}
 
-	public function getLanguageCode() {
-		global $wgContLang;
-
-		$code = null;
-		if ( isset( $wgContLang ) ) {
-			$code = $wgContLang->getCode();
-		}
-
-		return $code;
+	public function getPathPrefix() {
+		global $wgUploadPath;
+		return VignetteRequest::parsePathPrefix( $wgUploadPath );
 	}
 
 	/**

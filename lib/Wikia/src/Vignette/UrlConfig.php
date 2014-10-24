@@ -14,7 +14,7 @@ class UrlConfig {
 	protected $isArchive = false;
 	protected $timestamp;
 	protected $relativePath;
-	protected $languageCode;
+	protected $pathPrefix;
 	protected $bucket;
 	protected $baseUrl;
 	protected $domainShardCount;
@@ -34,8 +34,8 @@ class UrlConfig {
 		return $this;
 	}
 
-	public function setLanguageCode($languageCode) {
-		$this->languageCode = $languageCode;
+	public function setPathPrefix($languageCode) {
+		$this->pathPrefix = $languageCode;
 		return $this;
 	}
 
@@ -66,8 +66,8 @@ class UrlConfig {
 		return $this->relativePath;
 	}
 
-	public function languageCode() {
-		return $this->languageCode;
+	public function pathPrefix() {
+		return $this->pathPrefix;
 	}
 
 	public function bucket() {
