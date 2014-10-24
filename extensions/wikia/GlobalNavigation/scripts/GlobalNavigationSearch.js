@@ -52,7 +52,9 @@ require(['jquery', 'wikia.browserDetect', 'wikia.window'], function ($, browserD
 	 */
 	function restoreScrollY() {
 		win.scrollTo(win.scrollX, cachedScrollY);
-		$globalNav.removeClass('position-static');
+		if ($globalNav.hasClass('position-static')) {
+			$globalNav.removeClass('position-static');
+		}
 	}
 
 	$(function () {
