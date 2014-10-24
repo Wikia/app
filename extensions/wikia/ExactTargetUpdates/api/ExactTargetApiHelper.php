@@ -55,6 +55,30 @@ class ExactTargetApiHelper {
 		return $oRequest;
 	}
 
+	public function wrapRetrieveRequest( $sObjectType, Array $aProperties ) {
+		$oRetrieveRequest = new \ExactTarget_RetrieveRequest();
+		$oRetrieveRequest->ObjectType = $sObjectType;
+		$oRetrieveRequest->Properties = $aProperties;
+
+		return $oRetrieveRequest;
+	}
+
+	public function wrapRetrieveRequestMsg( $oRetrieveRequest ) {
+		$oRetrieveRequestMsg = new \ExactTarget_RetrieveRequestMsg();
+		$oRetrieveRequestMsg->RetrieveRequest = $oRetrieveRequest;
+
+		return $oRetrieveRequestMsg;
+	}
+
+	public function wrapSimpleFilterPart( $sProperty, $sValue ) {
+		$oSimpleFilterPart = new \ExactTarget_SimpleFilterPart();
+		$oSimpleFilterPart->Value = $sValue;
+		$oSimpleFilterPart->SimpleOperator = \ExactTarget_SimpleOperators::equals;
+		$oSimpleFilterPart->Property = $sProperty;
+
+		return $oSimpleFilterPart;
+	}
+
 	/**
 	 * Returns ExactTarget_UpdateRequest object with soap vars set from param
 	 * @param Array $aSoapVars
@@ -67,6 +91,14 @@ class ExactTargetApiHelper {
 		$oRequest->Options = $oOptions;
 		$oRequest->Objects = $aSoapVars;
 		return $oRequest;
+	}
+
+	public function wrapDeleteRequest( $aSoapVars ) {
+		$oDeleteRequest = new \ExactTarget_DeleteRequest();
+		$oDeleteRequest->Objects = $aSoapVars;
+		$oDeleteRequest->Options = new \ExactTarget_DeleteOptions();
+
+		return $oDeleteRequest;
 	}
 
 	/**
@@ -98,38 +130,6 @@ class ExactTargetApiHelper {
 		$apiProperty->Name = $key;
 		$apiProperty->Value = $value;
 		return $apiProperty;
-	}
-
-	public function makeRetrieveRequestObject( $sObjectType, Array $aProperties ) {
-		$oRetrieveRequest = new \ExactTarget_RetrieveRequest();
-		$oRetrieveRequest->ObjectType = $sObjectType;
-		$oRetrieveRequest->Properties = $aProperties;
-
-		return $oRetrieveRequest;
-	}
-
-	public function makeSimpleFilterPartObject( $sProperty, $sValue ) {
-		$oSimpleFilterPart = new \ExactTarget_SimpleFilterPart();
-		$oSimpleFilterPart->Value = $sValue;
-		$oSimpleFilterPart->SimpleOperator = \ExactTarget_SimpleOperators::equals;
-		$oSimpleFilterPart->Property = $sProperty;
-
-		return $oSimpleFilterPart;
-	}
-
-	public function makeRetrieveRequestMsgObject( $oRetrieveRequest ) {
-		$oRetrieveRequestMsg = new \ExactTarget_RetrieveRequestMsg();
-		$oRetrieveRequestMsg->RetrieveRequest = $oRetrieveRequest;
-
-		return $oRetrieveRequestMsg;
-	}
-
-	public function makeDeleteRequestObject( $aSoapVars ) {
-		$oDeleteRequest = new \ExactTarget_DeleteRequest();
-		$oDeleteRequest->Objects = $aSoapVars;
-		$oDeleteRequest->Options = new \ExactTarget_DeleteOptions();
-
-		return $oDeleteRequest;
 	}
 
 	/**

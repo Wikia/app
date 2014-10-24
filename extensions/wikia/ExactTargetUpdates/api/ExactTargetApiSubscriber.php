@@ -29,9 +29,7 @@ class ExactTargetApiSubscriber {
 	public function createRequest( Array $aApiCallParams ) {
 		$aSubscribers = $this->Helper->prepareSubscriberObjects( $aApiCallParams );
 
-		$oRequest = new ExactTargetCreateRequest();
-		$oRequest->Options = null;
-		$oRequest->Objects = $aSubscribers;
+		$oRequest = $this->Helper->wrapCreateRequest( $aSubscribers );
 
 		$this->makeRequest( 'Create', $oRequest );
 	}
@@ -39,16 +37,16 @@ class ExactTargetApiSubscriber {
 	public function retrieveRequest( Array $aApiCallParams ) {
 		$sRetrieveObjectType = "Subscriber";
 		$aRetrieveProperties = $aApiCallParams['Subscriber']['Properties'];
-		$oRetrieveRequest = $this->Helper->makeRetrieveRequestObject( $sRetrieveObjectType, $aRetrieveProperties );
+		$oRetrieveRequest = $this->Helper->wrapRetrieveRequest( $sRetrieveObjectType, $aRetrieveProperties );
 
 		$sFilterProperty = $aApiCallParams['SimpleFilterPart']['Property'];
 		$sFilterValue = $aApiCallParams['SimpleFilterPart']['Value'];
-		$oSimpleFilterPart = $this->Helper->makeSimpleFilterPartObject( $sFilterProperty, $sFilterValue );
+		$oSimpleFilterPart = $this->Helper->wrapSimpleFilterPart( $sFilterProperty, $sFilterValue );
 
 		$oRetrieveRequest->Filter = $this->Helper->wrapToSoapVar( $oSimpleFilterPart, 'SimpleFilterPart' );
 		$oRetrieveRequest->Options = null;
 
-		$oRetrieveRequestMsg = $this->Helper->makeRetrieveRequestMsgObject( $oRetrieveRequest );
+		$oRetrieveRequestMsg = $this->Helper->wrapRetrieveRequestMsg( $oRetrieveRequest );
 
 		$oResults = $this->makeRequest( 'Retrieve', $oRetrieveRequestMsg );
 		return $oResults;
@@ -57,10 +55,8 @@ class ExactTargetApiSubscriber {
 	public function deleteRequest( Array $aApiCallParams ) {
 		$aSubscribers = $this->Helper->prepareSubscriberObjects( $aApiCallParams['Subscriber'] );
 		$aSoapVars = $this->Helper->prepareSoapVars( $aSubscribers, 'Subscriber' );
-		
-		$oDeleteRequest = new ExactTarget_DeleteRequest();
-		$oDeleteRequest->Objects = $aSoapVars;
-		$oDeleteRequest->Options = new ExactTarget_DeleteOptions();
+
+		$oDeleteRequest = $this->Helper->wrapDeleteRequest( $aSoapVars );
 
 		$oResults = $this->makeRequest( 'Delete', $oDeleteRequest );
 		return $oResults;

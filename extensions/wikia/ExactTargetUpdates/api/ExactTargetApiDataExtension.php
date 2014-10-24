@@ -38,16 +38,16 @@ class ExactTargetApiDataExtension {
 	public function retrieveRequest( Array $aApiCallParams ) {
 		$sRetrieveObjectType = "DataExtensionObject[{$aApiCallParams['DataExtension']['CustomerKey']}]";
 		$aRetrieveProperties = $aApiCallParams['DataExtension']['Properties'];
-		$oRetrieveRequest = $this->Helper->makeRetrieveRequestObject( $sRetrieveObjectType, $aRetrieveProperties );
+		$oRetrieveRequest = $this->Helper->wrapRetrieveRequest( $sRetrieveObjectType, $aRetrieveProperties );
 
 		$sFilterProperty = $aApiCallParams['SimpleFilterPart']['Property'];
 		$sFilterValue = $aApiCallParams['SimpleFilterPart']['Value'];
-		$oSimpleFilterPart = $this->Helper->makeSimpleFilterPartObject( $sFilterProperty, $sFilterValue );
+		$oSimpleFilterPart = $this->Helper->wrapSimpleFilterPart( $sFilterProperty, $sFilterValue );
 
 		$oRetrieveRequest->Filter = $this->Helper->wrapToSoapVar( $oSimpleFilterPart, 'SimpleFilterPart' );
 		$oRetrieveRequest->Options = null;
 
-		$oRetrieveRequestMsg = $this->Helper->makeRetrieveRequestMsgObject( $oRetrieveRequest );
+		$oRetrieveRequestMsg = $this->Helper->wrapRetrieveRequestMsg( $oRetrieveRequest );
 
 		$oResults = $this->makeRequest( 'Retrieve', $oRetrieveRequestMsg );
 		return $oResults;
@@ -76,7 +76,7 @@ class ExactTargetApiDataExtension {
 		$aDE = $this->Helper->prepareDataExtensionObjects( $aApiCallParams['DataExtension'] );
 		$aSoapVars = $this->Helper->prepareSoapVars( $aDE );
 
-		$oDeleteRequest = $this->Helper->makeDeleteRequestObject( $aSoapVars );
+		$oDeleteRequest = $this->Helper->wrapDeleteRequest( $aSoapVars );
 		$oResults = $this->makeRequest( 'Delete', $oDeleteRequest );
 		return $oResults;
 	}
