@@ -151,31 +151,6 @@
 			heroData.description = heroData.oDescription = $heroModuleDescription.text();
 			heroData.imagepath = heroData.oImage = $heroModuleImage.data('fullpath');
 			heroData.cropposition = heroData.oCropposition = $heroModuleImage.data('cropposition');
-		}, revertToCurrentZeroState = function () {
-			$heroModuleTitle.text(heroData.oTitle);
-			$heroModuleDescription.text(heroData.oDescription);
-			$heroModuleImage.attr('src', heroData.oImage);
-			$heroModuleImage.css({top: -heroData.oCropposition * $heroModuleImage.height()});
-			$heroModuleImage.data('.hero-image', heroData.oCropposition);
-			heroData.title = heroData.oTitle;
-			heroData.description = heroData.oDescription;
-			heroData.imagepath = heroData.oImage;
-			heroData.imagename = null;
-			heroData.cropposition = heroData.oCropposition;
-			heroData.datachanged = false;
-			heroData.imagechanged = false;
-
-			$heroModule.trigger('revertedToZeroState');
-		}, zeroState = function () {
-			$('.hero-title, .hero-description').each(function () {
-				$(this).removeAttr('contenteditable');
-			});
-			$toggleButton.show();
-			$overlay.hide();
-			$heroModuleEditArea.hide();
-			$heroModuleImage.draggable({ disabled: true });
-			$heroModuleImage.removeClass('drag-cursor');
-			$heroModule.stopThrobbing();
 		}, onFocus = function () {
 			var $this = $(this);
 			$this.data('before', $this.html());
@@ -205,31 +180,6 @@
 				target.caret(caretSave);
 			}
 			heroData.changed = true;
-		}, onDataSaved = function () {
-			$heroModuleImage.draggable({ disabled: true });
-			$heroModuleImage.removeClass('drag-cursor');
-			$heroModuleTitle.text(heroData.oTitle = heroData.title);
-			$heroModuleTitle.text(heroData.oDescription = heroData.description);
-			$heroModuleImage.attr('src', heroData.oImage = heroData.imagepath);
-			$heroModuleImage.data('fullpath', heroData.imagepath);
-			$heroModuleImage.data('cropposition', heroData.oCropposition = heroData.cropposition);
-
-			revertToCurrentZeroState();
-		}, onSave = function () {
-			$heroModule.startThrobbing();
-			$.nirvana.sendRequest({
-				controller: 'NjordController',
-				method: 'saveHeroData',
-				type: 'POST',
-				data: {
-					wikiData: heroData
-				},
-				callback: onDataSaved,
-				onErrorCallback: function () {
-					// TODO: handle failure
-					$heroModule.stopThrobbing();
-				}
-			});
 		}, onImageLoad = function () {
 			var top = -heroData.cropposition * $heroModuleImage.height();
 			$heroModule.stopThrobbing();
@@ -292,7 +242,6 @@
 			//on(load) on img buged on this jquery
 			$heroModuleImage[0].addEventListener('load', onImageLoad);
 			$heroModule.on('change', onChange).on('enableDragging', onDraggingEnabled);
-			$heroModule.on('revertedToZeroState', zeroState);
 			$('.toggle-upload-btn').on('click', function () {
 				$toggleButton.hide();
 				$overlay.show();
