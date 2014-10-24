@@ -17,7 +17,8 @@ class MediaGalleryController extends WikiaController {
 	 */
 	public function gallery() {
 		$items = $this->getVal( 'items' );
-		$this->model = new MediaGalleryModel( $items );
+		$parser = $this->getVal( 'parser', $this->wg->Parser );
+		$this->model = new MediaGalleryModel( $items, $parser );
 
 		$galleryParams = $this->getVal( 'gallery_params', [] ); // gallery tag parameters
 		$visibleCount = isset( $galleryParams['expand'] ) && $galleryParams['expand'] == 'true' ?
