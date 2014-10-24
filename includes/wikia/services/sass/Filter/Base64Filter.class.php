@@ -9,6 +9,7 @@ namespace Wikia\Sass\Filter;
  * @author Inez Korczyński <korczynski@gmail.com>
  * @author Piotr Bablok <piotr.bablok@gmail.com>
  * @author Władysław Bodzek <wladek@wikia-inc.com>
+ * @author Bartosz V. Bentkowski <v@wikia-inc.com>
  */
 class Base64Filter extends Filter {
 
@@ -33,7 +34,7 @@ class Base64Filter extends Filter {
 
 		$encoded = $this->encodeFile($fileName);
 		if ($encoded !== false) {
-			return "url({$encoded}){$matches[2]}";
+			return " url({$encoded}){$matches[2]}";
 		}
 		else {
 			throw new \Wikia\Sass\Exception("/* Base64 encoding failed: {$fileName} not found or not supported! */");
