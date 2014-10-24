@@ -6,11 +6,12 @@
 $border-color: lighten($color-text, 30%);
 $image-margin: 30px;
 
-@mixin floated-element($direction, $default-margin, $direction-margin) {
+@mixin floated-element-base($direction, $default-margin, $direction-margin) {
 	.float#{$direction},
 	.t#{$direction} {
 		clear: $direction;
 		float: $direction;
+
 		@if $direction == right {
 			margin: $default-margin $direction-margin $default-margin $default-margin;
 		} @else {
@@ -19,34 +20,24 @@ $image-margin: 30px;
 	}
 }
 
-@mixin floated-element-breakpoint($small-aditional-left-margin: 0, $small-aditional-right-margin: 0, $large-aditional-left-margin: 0, $large-aditional-right-margin: 0) {
-	$possible-sides: left, right;
-	$possible-breakpoints: small, large;
-	$breakpoint-corresponding-names: $small-only, $large-up;
-	$breakpoint-corresponding-paddings: $small-grid-column-padding, $large-grid-column-padding;
+@mixin floated-element-breakpoint-margins($breakpoint, $direction, $aditional-margin: 0) {
+	.float#{$direction},
+	.t#{$direction} {
+		margin-#{$direction}: if($breakpoint == small, -$small-grid-column-padding, -$large-grid-column-padding) + $aditional-margin;
+	}
+}
 
-	@for $i from 1 through length($possible-breakpoints) {
-		@media #{nth($breakpoint-corresponding-names, $i)} {
-			.article {
-				.floatleft,
-				.tleft,
-				.floatright,
-				.tright {
-					@include grid-column-max-width(nth($possible-breakpoints, $i), 11);
-				}
-
-				@for $j from 1 through length($possible-sides) {
-					.float#{nth($possible-sides, $j)},
-					.t#{nth($possible-sides, $j)} {
-						margin-#{nth($possible-sides, $j)}: - nth($breakpoint-corresponding-paddings, $i) +
-							if(nth($possible-breakpoints, $i) == small,
-								if(nth($possible-sides, $j) == left, $small-aditional-left-margin, $small-aditional-right-margin),
-								if(nth($possible-sides, $j) == left, $large-aditional-left-margin, $large-aditional-right-margin)
-							);
-					}
-				}
-			}
+@mixin floated-element-breakpoint($breakpoint, $aditional-left-margin: 0, $aditional-right-margin: 0) {
+	.article {
+		.floatleft,
+		.tleft,
+		.floatright,
+		.tright {
+			@include grid-column-max-width($breakpoint, 11);
 		}
+
+		@include floated-element-breakpoint-margins($breakpoint, left, $aditional-left-margin);
+		@include floated-element-breakpoint-margins($breakpoint, right, $aditional-right-margin);
 	}
 }
 
@@ -101,8 +92,8 @@ $image-margin: 30px;
 		}
 	}
 
-	@include floated-element(left, $image-margin, -$medium-grid-column-padding);
-	@include floated-element(right, $image-margin, -$medium-grid-column-padding - $medium-grid-gutter - $medium-grid-column);
+	@include floated-element-base(left, $image-margin, -$medium-grid-column-padding);
+	@include floated-element-base(right, $image-margin, -$medium-grid-column-padding - $medium-grid-gutter - $medium-grid-column);
 
 	.floatleft,
 	.floatright {
@@ -152,12 +143,17 @@ $image-margin: 30px;
 	}
 }
 
-@include floated-element-breakpoint(0, 0, 0, - $large-grid-gutter - $large-grid-column);
+@media #{$large-up} {
+	@include floated-element-breakpoint(large, left);
+	@include floated-element-breakpoint(large, right, - $large-grid-gutter - $large-grid-column);
+}
 
 @media #{$small-only} {
-	.article {
-		.wikiaPhotoGallery-slider-body {
-			margin-left: -6px;
-		}
+	@each $direction in left, right {
+		@include floated-element-breakpoint(small, $direction);
+	}
+
+	.article .wikiaPhotoGallery-slider-body {
+		margin-left: -6px;
 	}
 }
