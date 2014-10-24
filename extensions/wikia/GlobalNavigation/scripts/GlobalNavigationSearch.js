@@ -58,8 +58,6 @@ require(['jquery', 'wikia.browserDetect', 'wikia.window'], function ($, browserD
 	}
 
 	$(function () {
-		var isPositionFixedSupported = browserDetect.isPositionFixedSupported();
-
 		setFormOptions();
 
 		$selectElement.on('change keyup keydown', function () {
@@ -68,19 +66,13 @@ require(['jquery', 'wikia.browserDetect', 'wikia.window'], function ($, browserD
 
 		$selectElement.on('focus', function () {
 			$chevron.addClass('dark');
-			if (browserDetect.isPositionFixedSupported()) {
-				scrollToTop();
-			}
 		});
 
 		$selectElement.on('blur', function () {
 			$chevron.removeClass('dark');
-			if (browserDetect.isPositionFixedSupported()) {
-				restoreScrollY();
-			}
 		});
 
-		if (!isPositionFixedSupported) {
+		if (!browserDetect.isPositionFixedSupported()) {
 			$searchInput
 				.on('focus', scrollToTop)
 				.on('blur', restoreScrollY);
