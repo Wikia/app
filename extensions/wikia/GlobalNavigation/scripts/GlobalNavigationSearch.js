@@ -41,21 +41,22 @@ require(['jquery', 'wikia.browserDetect', 'wikia.window'], function ($, browserD
 	 */
 	function scrollToTop() {
 		cachedScrollY = win.scrollY;
+		$globalNav.addClass('position-static');
+	
 		setTimeout(function () {
 			win.scrollTo(win.scrollX, 0);
-			$globalNav.addClass('position-static');
-		}, 5);
+		}, 0);
 	}
 
 	/**
 	 * Restore scrollY to position cached inside cachedScrollY var
 	 */
 	function restoreScrollY() {
+		$globalNav.removeClass('position-static');
+		
 		if (cachedScrollY) {
 			win.scrollTo(win.scrollX, cachedScrollY);
 		}
-		
-		$globalNav.removeClass('position-static');
 	}
 
 	$(function () {
