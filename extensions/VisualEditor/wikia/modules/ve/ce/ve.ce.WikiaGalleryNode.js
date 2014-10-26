@@ -71,8 +71,7 @@ ve.ce.WikiaGalleryNode.prototype.rebuild = function () {
 			'data-visible-count': 8,
 			'data-expanded': 0,
 			'data-model': JSON.stringify( embedData )
-		} )
-		.html('');
+		} );
 
 	/*
 	 * Wikia Gallery uses data 'initialized' to know if the gallery for this element has been generated.
