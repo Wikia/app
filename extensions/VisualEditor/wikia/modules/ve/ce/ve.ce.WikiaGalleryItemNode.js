@@ -15,9 +15,6 @@
 ve.ce.WikiaGalleryItemNode = function VeCeWikiaGalleryItemNode( model, config ) {
 	// Parent constructor
 	ve.ce.WikiaGalleryItemNode.super.call( this, model, config );
-
-	// Events
-	this.connect( this, { 'splice': 'onSplice' } );
 };
 
 /* Inheritance */
@@ -31,10 +28,6 @@ ve.ce.WikiaGalleryItemNode.static.name = 'wikiaGalleryItem';
 ve.ce.WikiaGalleryItemNode.static.tagName = 'figure';
 
 /* Methods */
-
-ve.ce.WikiaGalleryItemNode.prototype.onSplice = function () {
-	// Intentionally empty
-};
 
 /* Registration */
 
