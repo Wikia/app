@@ -70,7 +70,7 @@ $header-without-cover-unit-spacing: 60px;
 .mw-content-text {
 	clear: left;
 	margin: 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width;
-	padding: 0 $medium-grid-column-padding;
+	padding: 0;
 
 	.editsection {
 		@include font-size-xxs;
@@ -95,14 +95,8 @@ $header-without-cover-unit-spacing: 60px;
 	h2 {
 		border-bottom: 1px solid $color-page-border;
 		margin-bottom: 12px;
-		margin-left: -$medium-grid-gutter;
-		margin-right: -$medium-grid-gutter;
 		margin-top: $article-items-spacing;
 		padding-bottom: 10px;
-
-		.mw-headline {
-			padding-left: $medium-grid-gutter;
-		}
 	}
 
 	h3 {
@@ -178,6 +172,8 @@ $header-without-cover-unit-spacing: 60px;
 	dd {
 		margin-left: $medium-grid-column - 2 * $medium-grid-column-padding;
 	}
+
+	@include indent-all-first-children($medium-grid-column-padding);
 }
 
 /* FOR PROTOTYPE/TESTING ONLY */
@@ -220,16 +216,9 @@ $header-without-cover-unit-spacing: 60px;
 
 	.mw-content-text {
 		margin: 0 $large-grid-column + $large-grid-gutter + $large-content-padding - $content-border-width;
-		padding: 0 $large-grid-column-padding;
 
 		h2 {
 			margin-bottom: 10px;
-			margin-left: -$large-grid-gutter;
-			margin-right: -$large-grid-gutter;
-
-			.mw-headline {
-				padding-left: $large-grid-gutter;
-			}
 		}
 
 		h3 {
@@ -263,6 +252,8 @@ $header-without-cover-unit-spacing: 60px;
 		dd {
 			margin-left: $large-grid-column - 2 * $large-grid-column-padding;
 		}
+
+		@include indent-all-first-children($large-grid-column-padding);
 	}
 
 	.infobox-test {
@@ -296,16 +287,6 @@ $header-without-cover-unit-spacing: 60px;
 		margin: 0 $small-content-padding - $content-border-width 0 $small-grid-column + $small-grid-gutter + $small-content-padding - $content-border-width;
 		padding: 0 $small-grid-column-padding;
 
-		h2 {
-			// setting negative margin is breaking layout on mobile devices
-			margin-left: 0;
-			margin-right: 0;
-
-			.mw-headline {
-				padding-left: $small-grid-gutter;
-			}
-		}
-
 		p {
 			margin-bottom: 30px;
 		}
@@ -328,6 +309,8 @@ $header-without-cover-unit-spacing: 60px;
 		dd {
 			margin-left: $small-grid-column - 2 * $small-grid-column-padding;
 		}
+
+		@include indent-all-first-children($small-grid-column-padding);
 	}
 
 	.infobox-test {

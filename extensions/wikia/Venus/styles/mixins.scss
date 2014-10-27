@@ -138,3 +138,10 @@ $edit-button-size: $font-size-xl;
 	right: 100%;
 	width: $edit-button-size;
 }
+
+@mixin indent-all-first-children($indent-size) {
+	> * {
+		padding-left: $indent-size;
+		padding-right: $indent-size;
+	}
+}

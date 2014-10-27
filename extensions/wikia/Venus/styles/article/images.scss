@@ -53,7 +53,7 @@ $border-color: lighten($color-text, 30%);
 	.tright {
 		clear: right;
 		float: right;
-		margin: 30px (-$medium-grid-column-padding - $medium-grid-gutter - $medium-grid-column) 30px 30px;
+		margin: 30px (- $medium-grid-gutter - $medium-grid-column) 30px 30px;
 	}
 
 	.floatleft,
@@ -115,7 +115,7 @@ $border-color: lighten($color-text, 30%);
 
 		.floatright,
 		.tright {
-			margin-right: -$large-grid-column-padding - $large-grid-gutter - $large-grid-column;
+			margin-right: - $large-grid-gutter - $large-grid-column;
 		}
 	}
 }
