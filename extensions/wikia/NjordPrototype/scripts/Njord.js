@@ -58,7 +58,7 @@
 		$heroModuleTitle = $('#MainPageHero .hero-title'),
 		$heroModuleDescription = $('#MainPageHero .hero-description'),
 		$heroModuleUpload = $('#MainPageHero .upload'),
-		$heroModuleUploadMask = $('#MainPageHero .upload .upload-mask'),
+		$heroModuleUploadMask = $('#MainPageHero .upload-mask'),
 		$heroModuleAddButton = $('#MainPageHero .upload .upload-btn'),
 		$heroModuleUpdateButton = $('#MainPageHero .upload .update-btn'),
 		$heroModuleInput = $('#MainPageHero .upload input[name="file"]'),
@@ -213,11 +213,11 @@
 		onAfterSendForm = function (data) {
 			if (data.isOk) {
 				$heroModuleImage.bind('load', function () {
-					$heroModule.stopThrobbing();
 					States.setState($imageElement, 'upload-state');
 					States.setState($imageSaveElement, 'upload-state');
 					$heroModule.trigger('enableDragging');
 					$heroModuleImage.unbind('load');
+					$heroModule.stopThrobbing();
 				});
 				$heroModuleImage.attr('src', data.url);
 				$heroModule.trigger('resize');
@@ -263,15 +263,17 @@
 			//turn off browser image handling
 			$body.on('dragover', onDragDisabled).on('dragend', onDragDisabled).on('drop', onDragDisabled);
 
-			//those two are needed to cancel default behaviour
-			$heroModuleUpload.on('dragenter', function () {
+			$heroModule.on('dragenter', function () {
+			//$heroModuleUpload.on('dragover', function () {
 				$overlay.show();
 				$heroModuleUploadMask.show();
 				return false;
 			});
-			$heroModuleUploadMask.on('dragleave', function () {
+			$heroModuleUploadMask.on('dragleave', function (e) {
 				$overlay.hide();
 				$heroModuleUploadMask.hide();
+				e.stopImmediatePropagation();
+				return false;
 			});
 			$heroModuleUploadMask.on('dragend', function () {
 				return false;
