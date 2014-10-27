@@ -71,7 +71,7 @@ class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 	 * prepareUserPropertiesUpdateParams should set Keys property of ExactTarget_DataExtensionObject
 	 * to define API query filter for update
 	 */
-	function testShouldSetKeysProperty() {
+	function _testShouldSetKeysProperty() {
 		$iUserId = 12345;
 		$aUserProperties = [
 			'property1' => 'value1',
@@ -121,7 +121,7 @@ class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider updateUserEmailProvider
 	 */
-	function testUpdateUserEmailShouldSendData( $aUserData, $oUpdateRequest ) {
+	function _testUpdateUserEmailShouldSendData( $aUserData, $oUpdateRequest ) {
 
 		/* Mock ExactTargetSoapClient */
 		$soapClient = $this->getMockBuilder( 'ExactTargetSoapClient' )
@@ -164,7 +164,7 @@ class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider updateUserDataProvider
 	 */
-	function testShouldPrepareUserDataExtensionObject( $aUserData, $oDEExpected ) {
+	function _testShouldPrepareUserDataExtensionObject( $aUserData, $oDEExpected ) {
 		$mockUpdateUserTask = $this->getMockBuilder( 'ExactTargetUpdateUserTask' )
 			->disableOriginalConstructor()
 			->setMethods( null )
@@ -179,7 +179,7 @@ class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 	 * DATA PROVIDERS
 	 */
 
-	function updateUserDataProvider() {
+	function _updateUserDataProvider() {
 		$aUserData = [
 			'user_id' => 12345,
 			'user_editcount' => 10
@@ -205,7 +205,7 @@ class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 		];
 	}
 
-	function updateUserEmailProvider() {
+	function _updateUserEmailProvider() {
 		/* Params to compare */
 		$aUserData = [
 			'user_id' => 12345,
