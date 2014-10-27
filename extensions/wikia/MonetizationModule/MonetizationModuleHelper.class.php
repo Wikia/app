@@ -287,8 +287,12 @@ class MonetizationModuleHelper extends WikiaModel {
 
 		// Hide the below_category ad if append in_content ad.
 		if ( array_key_exists( self::SLOT_TYPE_BELOW_CATEGORY, $monetizationUnits ) ) {
+			$loggingParams = [
+				'method' => __METHOD__,
+				'adUnits' => $monetizationUnits,
+				'removedSlot' => self::SLOT_TYPE_BELOW_CATEGORY,
+			];
 			unset( $monetizationUnits[self::SLOT_TYPE_BELOW_CATEGORY] );
-			$loggingParams = [ 'method' => __METHOD__, 'adUnits' => $monetizationUnits ];
 			WikiaLogger::instance()->info( "MonetizationModule: remove below_category ad", $loggingParams );
 		}
 

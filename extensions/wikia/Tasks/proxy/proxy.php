@@ -9,7 +9,7 @@ $list = escapeshellarg( $_POST['task_list'] );
 $order = escapeshellarg( $_POST['call_order'] );
 $createdBy = escapeshellarg( $_POST['created_by'] );
 
-$command = "SERVER_ID={$wikiId} php {$script} --task_id={$taskId} --task_list={$list} --call_order={$order} --created_by={$createdBy}";
+$command = "php {$script} --wiki_id={$wikiId} --task_id={$taskId} --task_list={$list} --call_order={$order} --created_by={$createdBy}";
 
 // can't use globals here, this doesn't execute within mediawiki
 if ( getenv( 'WIKIA_ENVIRONMENT' ) == 'dev' ) {

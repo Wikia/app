@@ -10,6 +10,7 @@ var UserProfilePage = {
 	wasDataChanged: false,
 	forceRedirect: false,
 	reloadUrl: false,
+	bucky: window.Bucky('UserProfilePage'),
 
 	// reference to modal UI component
 	modalComponent: {},
@@ -53,6 +54,10 @@ var UserProfilePage = {
 		'use strict';
 
 		if ( !UserProfilePage.isLightboxGenerating ) {
+			// Start profiling
+			UserProfilePage.bucky.timer.start('renderLightboxSuccess');
+			UserProfilePage.bucky.timer.start('renderLightboxFail');
+
 			//if lightbox is generating we don't want to let user open second one
 			UserProfilePage.isLightboxGenerating = true;
 			UserProfilePage.newAvatar = false;
@@ -117,8 +122,8 @@ var UserProfilePage = {
 							var modal = editProfileModal.$element,
 								tab = modal.find( '.tabs a' );
 
-							UserProfilePage.renderAvatarLightbox( modal );
-							UserProfilePage.renderAboutMeLightbox( modal );
+							UserProfilePage.registerAvatarHandlers( modal );
+							UserProfilePage.registerAboutMeHandlers( modal );
 
 							// attach handlers to modal events
 							editProfileModal.bind( 'beforeClose',
@@ -151,6 +156,7 @@ var UserProfilePage = {
 							UserProfilePage.isLightboxGenerating = false;
 
 							editProfileModal.show();
+							UserProfilePage.bucky.timer.stop('renderLightboxSuccess');
 						});
 					});
 				});
@@ -181,6 +187,7 @@ var UserProfilePage = {
 
 						modal.createComponent(modalConfig, function( errorModal ) {
 							errorModal.show();
+							UserProfilePage.bucky.timer.stop('renderLightboxFail');
 						});
 					});
 				});
@@ -239,7 +246,11 @@ var UserProfilePage = {
 		});
 	},
 
-	renderAvatarLightbox: function( modal ) {
+	/**
+	 * Register handlers related to the Avatar tab of the user edit modal.
+	 * @param modal
+	 */
+	registerAvatarHandlers: function( modal ) {
 		'use strict';
 
 		var $avatarUploadInput = modal.find( '#UPPLightboxAvatar' ),
@@ -281,6 +292,8 @@ var UserProfilePage = {
 	saveAvatarAIM: function( form ) {
 		'use strict';
 
+		UserProfilePage.bucky.timer.start('saveAvatarAIMSuccess');
+		UserProfilePage.bucky.timer.start('saveAvatarAIMFail');
 		var $modal = UserProfilePage.modal.$element;
 
 		$.AIM.submit( form, {
@@ -309,10 +322,12 @@ var UserProfilePage = {
 
 					if ( typeof( form[ 0 ] ) !== 'undefined' ) {
 						form[ 0 ].reset();
+						UserProfilePage.bucky.timer.stop('saveAvatarAIMSuccess');
 					}
 				} catch( e ) {
 					$modal.stopThrobbing();
 					form[ 0 ].reset();
+					UserProfilePage.bucky.timer.stop('saveAvatarAIMFail');
 				}
 			}
 		});
@@ -323,7 +338,11 @@ var UserProfilePage = {
 		$( form ).submit();
 	},
 
-	renderAboutMeLightbox: function( modal ) {
+	/**
+	* Register handlers related to the About Me tab of the user edit modal.
+	* @param modal
+	*/
+	registerAboutMeHandlers: function( modal ) {
 		'use strict';
 
 		var $fbUnsyncButton = modal.find( '#facebookUnsync' ),
@@ -370,6 +389,9 @@ var UserProfilePage = {
 	saveUserData: function() {
 		'use strict';
 
+		UserProfilePage.bucky.timer.start('saveUserDataSuccess');
+		UserProfilePage.bucky.timer.start('saveUserDataFail');
+
 		var userData = UserProfilePage.getFormData();
 
 		if ( UserProfilePage.newAvatar ) {
@@ -384,12 +406,14 @@ var UserProfilePage = {
 			success: function( data ) {
 				if( data.status === 'error' ) {
 					window.GlobalNotification.show( data.errorMsg, 'warn' ) ;
+					UserProfilePage.bucky.timer.stop('saveUserDataFail');
 				} else {
 					UserProfilePage.userData = null;
 					UserProfilePage.wasDataChanged = false;
 					UserProfilePage.modal.trigger( 'close' );
+					UserProfilePage.bucky.timer.stop('saveUserDataSuccess');
+					UserProfilePage.bucky.flush();
 					window.location = UserProfilePage.reloadUrl;
-
 				}
 			}
 		});

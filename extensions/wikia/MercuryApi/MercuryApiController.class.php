@@ -74,6 +74,9 @@ class MercuryApiController extends WikiaController {
 	 * @return mixed
 	 */
 	private function getTopContributorsDetails( Array $ids ) {
+		if ( empty( $ids ) ) {
+			return [];
+		}
 		try {
 			return $this->sendRequest( 'UserApi', 'getDetails', [ 'ids' => implode( ',', $ids ) ] )
 				->getData()[ 'items' ];
@@ -82,7 +85,6 @@ class MercuryApiController extends WikiaController {
 			// and we want the article even if we don't have the contributors
 			return [];
 		}
-
 	}
 
 	/**
@@ -182,6 +184,7 @@ class MercuryApiController extends WikiaController {
 	public function getWikiVariables() {
 		$wikiVariables = $this->mercuryApi->getWikiVariables();
 		$wikiVariables[ 'navData' ] = $this->getNavigationData();
+		$wikiVariables[ 'vertical' ] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )['short'];
 
 		// Used to determine GA tracking
 		if ( !empty( $this->wg->IsGASpecialWiki ) ) {
@@ -214,7 +217,7 @@ class MercuryApiController extends WikiaController {
 					$this->getTopContributorsPerArticle( $articleId )
 				),
 			'article' => $articleAsJson,
-			'adsContext' => $this->mercuryApi->getAdsContext( $title, $this->wg, $articleAsJson[ 'categories' ] ),
+			'adsContext' => $this->mercuryApi->getAdsContext( $title ),
 			'basePath' => $this->wg->Server
 		];
 
