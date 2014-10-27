@@ -1805,6 +1805,7 @@ $messages['ko'] = array(
 	'wmu-find' => '찾기',
 	'wmu-find-btn' => '찾기',
 	'wmu-license' => '라이선스',
+	'wmu-licensing' => '라이선스',
 	'wmu-size' => '크기',
 	'wmu-thumbnail' => '섬네일',
 	'wmu-width' => '너비',

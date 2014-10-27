@@ -56,7 +56,7 @@
 
 					// @see http://developers.facebook.com/docs/reference/javascript/FB.login/
 					window.FB.login($.proxy(self.loginCallback, self), {
-						scope: 'publish_stream,email'
+						scope: 'email'
 					});
 				});
 		},
@@ -69,6 +69,11 @@
 				case 'connected':
 					this.log('FB.login successful');
 
+					this.track({
+						action: this.actions.SUCCESS,
+						label: 'facebook-login'
+					});
+
 					// begin ajax call performance tracking
 					this.bucky.timer.start('loginCallbackAjax');
 
@@ -76,7 +81,13 @@
 					$.nirvana.postJson('FacebookSignupController', 'index',
 						$.proxy(this.checkAccountCallback, this));
 					break;
-
+				case 'not_authorized':
+					// Not logged into the Wikia FB app
+					this.track({
+						action: this.actions.SUCCESS,
+						label: 'facebook-login-not-auth'
+					});
+					break;
 				default:
 					// Track FB Connect Error
 					this.track({
@@ -100,12 +111,6 @@
 
 			// logged in using FB account, reload the page or callback
 			if (resp.loggedIn) {
-
-				// Track FB Connect Login
-				this.track({
-					action: this.actions.SUCCESS,
-					label: 'facebook-login'
-				});
 
 				if (loginCallback && typeof loginCallback === 'function') {
 					loginCallback();

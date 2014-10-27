@@ -31,6 +31,12 @@ class GlobalNavigationController extends WikiaController {
 
 		$this->response->setVal( 'centralUrl', $centralUrl );
 		$this->response->setVal( 'createWikiUrl', $createWikiUrl );
+
+		$isGameStarLogoEnabled = $this->isGameStarLogoEnabled();
+		$this->response->setVal( 'isGameStarLogoEnabled', $isGameStarLogoEnabled );
+		if ( $isGameStarLogoEnabled ) {
+			$this->response->addAsset( 'extensions/wikia/GlobalNavigation/css/GlobalNavigationGameStar.scss' );
+		}
 	}
 
 	public function searchIndex() {
@@ -186,4 +192,7 @@ class GlobalNavigationController extends WikiaController {
 		return SpecialPage::getTitleFor( 'Search' )->getLocalURL();
 	}
 
+	protected function isGameStarLogoEnabled() {
+		return $this->wg->contLang->getCode() == 'de';
+	}
 }

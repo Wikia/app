@@ -33,10 +33,7 @@
  * @ingroup FileAbstraction
  */
 
-use Wikia\Vignette\FileInterface;
-use Wikia\Vignette\UrlGenerator;
-
-abstract class File implements FileInterface {
+abstract class File {
 	const DELETED_FILE = 1;
 	const DELETED_COMMENT = 2;
 	const DELETED_USER = 4;
@@ -245,15 +242,9 @@ abstract class File implements FileInterface {
 		return $this->name;
 	}
 
-	public function getLanguageCode() {
-		global $wgContLang;
-
-		$code = null;
-		if ( isset( $wgContLang ) ) {
-			$code = $wgContLang->getCode();
-		}
-
-		return $code;
+	public function getPathPrefix() {
+		global $wgUploadPath;
+		return VignetteRequest::parsePathPrefix( $wgUploadPath );
 	}
 
 	/**
@@ -299,7 +290,7 @@ abstract class File implements FileInterface {
 	public function getUrl() {
 		global $wgEnableVignette;
 		if ( $wgEnableVignette ) {
-			return ( string )$this->getUrlGenerator();
+			return ( string ) $this->getUrlGenerator();
 		} else {
 			if ( !isset( $this->url ) ) {
 				$this->assertRepoDefined();
@@ -1775,8 +1766,7 @@ abstract class File implements FileInterface {
 	}
 
 	/**
-	 * This is a stub required for any children that implement the FileInterface
-	 * and return true for isOld().
+	 * get the timestamp this archived file was created. if not an archived file, this should return false
 	 *
 	 * @return false on failure, string of digits on success
 	 */
@@ -1787,11 +1777,11 @@ abstract class File implements FileInterface {
 	/**
 	 * Get the Vignette\UrlGenerator for this file.
 	 *
-	 * @return \UrlGenerator
+	 * @return \Wikia\Vignette\UrlGenerator
 	 *
 	 */
-	protected function getUrlGenerator() {
-			return new UrlGenerator( $this );
+	public function getUrlGenerator() {
+			return VignetteRequest::fromFile( $this );
 	}
 
 	/**
