@@ -119,10 +119,6 @@ module.exports = function (config) {
 			'extensions/wikia/VideoPageTool/scripts/lib/backbone/backbone.js',
 			'extensions/wikia/VideoPageTool/scripts/shared/views/switcher.js',
 
-			/*
-			 * VideoPageTool: Admin Module
-			 */
-
 			// Collections
 			'extensions/wikia/VideoPageTool/scripts/admin/collections/category.js',
 			'extensions/wikia/VideoPageTool/scripts/admin/collections/categorydata.js',
@@ -182,7 +178,11 @@ module.exports = function (config) {
 			'extensions/wikia/MediaGallery/scripts/views/caption.js',
 			'extensions/wikia/MediaGallery/scripts/views/media.js',
 			'extensions/wikia/MediaGallery/scripts/views/gallery.js',
-			'extensions/wikia/MediaGallery/scripts/spec/**/*.spec.js'
+			'extensions/wikia/MediaGallery/scripts/spec/**/*.spec.js',
+
+			// Lightbox
+			'extensions/wikia/Lightbox/scripts/spec/lightbox.spec.js'
+
 		]
 	});
 };
