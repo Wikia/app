@@ -48,6 +48,10 @@ table.wikitable {
 			right: 0;
 			width: 20px;
 			z-index: 2;
+
+			html[dir='rtl'] & {
+				@include box-shadow( 15px, 0, 20px, $color-table-overflow-shadow, true, -15px );
+			}
 		}
 
 		// Wide tables cannot be floated
