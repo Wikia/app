@@ -1,9 +1,13 @@
 /* global UserLoginFacebook:true, UserLoginAjaxForm:true */
-require(['jquery', 'GlobalNavigationiOSScrollFix'], function ($, scrollFix) {
+require(['jquery', 'GlobalNavigationiOSScrollFix', 'wikia.window'], function ($, scrollFix, win) {
 	'use strict';
-	var $entryPoint, $userLoginDropdown, loginAjaxForm = false;
+	var $entryPoint, $userLoginDropdown;
 
+	/**
+	 * Open user login dropdown by adding active class
+	 */
 	function openMenu() {
+		var loginAjaxForm = false;
 		$entryPoint.addClass('active');
 		window.transparentOut.show();
 
@@ -15,11 +19,17 @@ require(['jquery', 'GlobalNavigationiOSScrollFix'], function ($, scrollFix) {
 		}
 	}
 
+	/**
+	 * Close user login dropdown by removing active class
+	 */
 	function closeMenu() {
 		$entryPoint.removeClass('active');
 		window.transparentOut.hide();
 	}
 
+	/**
+	 * Close user login dropdown if neither user input nor password input are active
+	 */
 	function closeMenuIfNotFocused() {
 		var id = document.activeElement.id;
 		if (!(id === 'usernameInput' || id === 'passwordInput')) {
@@ -38,7 +48,7 @@ require(['jquery', 'GlobalNavigationiOSScrollFix'], function ($, scrollFix) {
 			ev.stopImmediatePropagation();
 
 			if ($entryPoint.hasClass('active')) {
-				if (!!wgUserName) {
+				if (!!win.wgUserName) {
 					window.location = $(this).attr('href');
 				} else {
 					closeMenu();

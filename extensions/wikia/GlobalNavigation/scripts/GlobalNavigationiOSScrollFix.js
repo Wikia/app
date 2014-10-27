@@ -4,6 +4,7 @@ define('GlobalNavigationiOSScrollFix', ['jquery', 'wikia.window'], function($, w
 
 	/**
 	 * Scroll window to top
+	 * @param {jQuery} $element - jQuery object on which new class should be added
 	 */
 	function scrollToTop($element) {
 		cachedScrollY = win.scrollY;
@@ -18,6 +19,7 @@ define('GlobalNavigationiOSScrollFix', ['jquery', 'wikia.window'], function($, w
 
 	/**
 	 * Restore scrollY to position cached inside cachedScrollY var
+	 * @param {jQuery} $element - jQuery object from which new class should be removed
 	 */
 	function restoreScrollY($element) {
 		$element.removeClass('position-static');

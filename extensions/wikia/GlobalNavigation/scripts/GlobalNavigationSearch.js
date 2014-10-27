@@ -25,27 +25,24 @@ require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], funct
 	 * Set options on search form
 	 */
 	function setFormOptions() {
-		var $selectedOption;
-
-		$selectedOption = $selectElement.find('option:selected');
+		var $selectedOption = $selectElement.find('option:selected');
 		$searchLabel.text($selectedOption.text());
 		$formElement.attr('action', $selectedOption.attr('data-search-url'));
 		if ($selectedOption.val() === 'global') {
-			setPropertiesOnInput(false, false);
+			setPropertiesOnInput(false);
 		} else {
-			setPropertiesOnInput(true, true);
+			setPropertiesOnInput(true);
 		}
 	}
 
 	/**
 	 * Disable or enable properties on search form
-	 * @param {boolean} langDisabled - should result lang input be disabled
-	 * @param {boolean} autocompleteEnabled - should autocomplete be enabled on search input
-	 */
-	function setPropertiesOnInput(langDisabled, autocompleteEnabled) {
-		$inputResultLang.prop('disabled', langDisabled);
+	 * @param {boolean} enable - should autocomplete be enabled and lang input disabled
+=	 */
+	function setPropertiesOnInput(enable) {
+		$inputResultLang.prop('disabled', enable);
 		if ($searchInput.data('autocomplete')) {
-			if (autocompleteEnabled) {
+			if (enable) {
 				$searchInput.data('autocomplete').enable();
 			} else {
 				$searchInput.data('autocomplete').disable();
