@@ -192,8 +192,7 @@ $VenusConfig[ 'article_scss' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'venus' ],
 	'assets' => [
-		'//extensions/wikia/Venus/styles/article/article.scss',
-		'//skins/shared/styles/tables.scss'
+		'//extensions/wikia/Venus/styles/article/article.scss'
 	]
 ];
 
