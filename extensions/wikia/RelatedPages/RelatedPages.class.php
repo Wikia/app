@@ -400,13 +400,14 @@ class RelatedPages {
 	}
 
 	/**
+	 * @param OutputPage $out
+	 * @param            $text
+	 *
 	 * Add needed messages to page and add JS assets
 	 *
-	 * @param OutputPage $out
-	 * @param Skin $skin
 	 * @return bool
 	 */
-	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
+	public static function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
 		$app = F::app();
 		$wg = $app->wg;
 		$request = $app->wg->Request;
@@ -419,7 +420,16 @@ class RelatedPages {
 				!( Wikia::isMainPage() || !empty( $title ) && !in_array( $title->getNamespace(), $wg->ContentNamespaces ) )
 				&& !$app->checkSkin( 'wikiamobile' )
 			) {
-				Wikia::addAssetsToOutput( 'relatedpages_js' );
+				if ( $app->checkSkin( 'oasis' ) ) {
+					OasisController::addSkinAssetGroup( 'relatedpages_js' );
+				}
+				else {
+					$scripts = AssetsManager::getInstance()->getURL( 'relatedpages_js' );
+
+					foreach( $scripts as $script ){
+						$wg->Out->addScript( "<script src='{$script}'></script>" );
+					}
+				}
 			}
 		}
 
