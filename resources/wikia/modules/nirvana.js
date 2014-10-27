@@ -80,16 +80,20 @@
 			}
 			url = getUrl( attr );
 
-			return $.ajax({
+			var settings = {
 				url: url,
 				dataType: format,
 				type: type,
 				data: data,
-				contentType: cType,
 				processData: pData,
 				success: callback,
 				error: onErrorCallback
-			});
+			};
+
+			if(attr.contentType === false){
+				settings.contentType = false;
+			}
+			return $.ajax(settings);
 		}
 
 		return {
