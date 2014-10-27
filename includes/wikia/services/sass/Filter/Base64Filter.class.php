@@ -9,6 +9,7 @@ namespace Wikia\Sass\Filter;
  * @author Inez Korczyński <korczynski@gmail.com>
  * @author Piotr Bablok <piotr.bablok@gmail.com>
  * @author Władysław Bodzek <wladek@wikia-inc.com>
+ * @author Bartosz V. Bentkowski <v@wikia-inc.com>
  */
 class Base64Filter extends Filter {
 
@@ -21,8 +22,7 @@ class Base64Filter extends Filter {
 	public function process( $contents ) {
 		wfProfileIn(__METHOD__);
 
-		$contents = preg_replace_callback("/([, ]url[^\n]*?)(\s*\/\*\s*base64\s*\*\/)/is",
-			array( $this, 'processMatches' ), $contents);
+		$contents = preg_replace_callback("/([, ]url[^\n]*?\))([^\n]*?)(\s*\/\*\s*base64\s*\*\/)/is", [$this, 'processMatches'], $contents);
 
 		wfProfileOut(__METHOD__);
 
@@ -34,7 +34,7 @@ class Base64Filter extends Filter {
 
 		$encoded = $this->encodeFile($fileName);
 		if ($encoded !== false) {
-			return "url({$encoded});";
+			return " url({$encoded}){$matches[2]}";
 		}
 		else {
 			throw new \Wikia\Sass\Exception("/* Base64 encoding failed: {$fileName} not found or not supported! */");
