@@ -32,8 +32,6 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//resources/wikia/modules/window.js',
 		'//resources/wikia/modules/abTest.js',
 
-		'//resources/wikia/modules/lazyqueue.js',
-
 		//tracker
 		'#group_tracker_js',
 
@@ -105,6 +103,7 @@ $VenusConfig[ 'venus_head_js' ] = [
 	'skin' => ['venus'],
 	'assets' => [
 		'#group_abtesting',
+		'//resources/wikia/modules/lazyqueue.js',
 	]
 ];
 
