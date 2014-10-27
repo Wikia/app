@@ -1,5 +1,5 @@
 <? if( $userBlocked === false && $showReplyForm): ?>
-	<li class="SpeechBubble new-reply" >
+	<li class="SpeechBubble new-reply" data-user="<? echo $username ?>">
 		<? if ( $wg->EnableMiniEditorExtForWall ):
 			echo $app->getView( 'MiniEditorController', 'Header', array(
 				'attributes' => array(
