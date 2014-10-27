@@ -1,7 +1,10 @@
 @import "mixins";
 @import "variables";
 
-.wikia-ad.hidden, .wikia-ad .hidden, .wikia-ad[id^="INVISIBLE_"], .wikia-ad iframe[width="1"][height="1"] {
+.wikia-ad.hidden,
+.wikia-ad .hidden,
+.wikia-ad[id^="INVISIBLE_"],
+.wikia-ad iframe[width="1"][height="1"] {
 	display: none !important;
 }
 
@@ -28,8 +31,8 @@
 	text-align: center;
 
 	> .ad {
-		width: 300px;
 		margin: 0 auto;
+		width: 300px;
 
 		> .default-height {
 			height: 250px;

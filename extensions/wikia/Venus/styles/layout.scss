@@ -25,7 +25,7 @@ a {
 .wikia-page {
 	background: rgba($color-page, $page-opacity);
 	border: $content-border-width solid $color-page-border;
-	position: relative;
+	position: relative; // needed for skin ads to not cover the article
 
 	& > header {
 		@include grid-content-padding;
