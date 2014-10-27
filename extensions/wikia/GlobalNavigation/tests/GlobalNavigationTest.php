@@ -21,7 +21,7 @@ class GlobalNavigationTest extends WikiaBaseTest {
 		$globalNavMock->expects( $this->any() )
 			->method( 'getCentralWikiTitleForLang' )->will( $this->returnValue( $globalTitleMock ) );
 
-		$result = $globalNavMock->getCentralUrlForLang( $lang , false );
+		$result = $globalNavMock->getCentralUrlForLang( $lang );
 		$this->assertEquals( $expectedUrl, $result, 'Wiki Central server url is different than expected' );
 	}
 
