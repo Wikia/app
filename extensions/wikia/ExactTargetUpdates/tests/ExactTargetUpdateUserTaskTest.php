@@ -121,20 +121,30 @@ class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider updateUserEmailProvider
 	 */
-	function _testUpdateUserEmailShouldSendData( $aUserData, $oUpdateRequest ) {
+	function testUpdateUserEmailShouldSendData( $aUserData, $aApiParams, $aMockCustomerKey ) {
 
-		/* Mock ExactTargetSoapClient */
-		$soapClient = $this->getMockBuilder( 'ExactTargetSoapClient' )
+		/* @var ExactTargetApiDataExtension $mockApiDataExtension mock of ExactTargetApiDataExtension */
+		$mockApiDataExtension = $this->getMockBuilder( 'Wikia\ExactTarget\Api\ExactTargetApiDataExtension' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'Update' ] )
+			->setMethods( [ 'updateRequest' ] )
 			->getMock();
-		$soapClient
+		$mockApiDataExtension
 			->expects( $this->once() )
-			->method( 'Update' )
-			->with( $oUpdateRequest );
+			->method( 'updateRequest' )
+			->with( $aApiParams );
+
+		/* @var ExactTargetUserTaskHelper $mockApiDataExtension mock of ExactTargetUserTaskHelper */
+		$mockUserHelper = $this->getMockBuilder( 'Wikia\ExactTarget\Tasks\ExactTargetUserTaskHelper' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getCustomerKeys' ] )
+			->getMock();
+		$mockUserHelper
+			->expects( $this->once() )
+			->method( 'getCustomerKeys' )
+			->will( $this->returnValue( $aMockCustomerKey ) );
 
 		/* Mock ExactTargetCreateUserTask */
-		$mockCreateUserTask = $this->getMockBuilder( 'ExactTargetCreateUserTask' )
+		$mockCreateUserTask = $this->getMockBuilder( 'Wikia\ExactTarget\Tasks\ExactTargetCreateUserTask' )
 			->disableOriginalConstructor()
 			->setMethods( [ 'createSubscriber' ] )
 			->getMock();
@@ -143,19 +153,23 @@ class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 			->method( 'createSubscriber' );
 
 		/* Mock tested class */
-		/* @var ExactTargetUpdateUserTask $mockUpdateUserTask mock of ExactTargetUpdateUserTask */
-		$mockUpdateUserTask = $this->getMockBuilder( 'ExactTargetUpdateUserTask' )
+		/* @var Wikia\ExactTarget\Tasks\ExactTargetUpdateUserTask $mockUpdateUserTask */
+		$mockUpdateUserTask = $this->getMockBuilder( 'Wikia\ExactTarget\Tasks\ExactTargetUpdateUserTask' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'getClient', 'getCreateUserTaskObject' ] )
+			->setMethods( [ 'getApiDataExtension', 'getCreateUserTask', 'getHelper' ] )
 			->getMock();
 		$mockUpdateUserTask
 			->expects( $this->once() )
-			->method( 'getCreateUserTaskObject' )
-			->will( $this->returnValue( $mockCreateUserTask ) );
+			->method( 'getApiDataExtension' )
+			->will( $this->returnValue( $mockApiDataExtension ) );
 		$mockUpdateUserTask
 			->expects( $this->once() )
-			->method( 'getClient' )
-			->will( $this->returnValue( $soapClient ) );
+			->method( 'getHelper' )
+			->will( $this->returnValue( $mockUserHelper ) );
+		$mockUpdateUserTask
+			->expects( $this->once() )
+			->method( 'getCreateUserTask' )
+			->will( $this->returnValue( $mockCreateUserTask ) );
 
 		/* Run tested method */
 		$mockUpdateUserTask->updateUserEmail( $aUserData[ 'user_id' ], $aUserData[ 'user_email' ] );
@@ -205,39 +219,34 @@ class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 		];
 	}
 
-	function _updateUserEmailProvider() {
+	function updateUserEmailProvider() {
+		$sCustomerKey = 'sample_table_name';
+
+		$aMockCustomerKey = [ 'user' => $sCustomerKey ];
+
 		/* Params to compare */
 		$aUserData = [
 			'user_id' => 12345,
 			'user_email' => 'email@email.com'
 		];
 
-		/* Prepare request object */
-		$oUpdateRequest = new ExactTarget_UpdateRequest();
+		$aApiParams = [
+			'DataExtension' => [
+				0 => [
+					'CustomerKey' => $sCustomerKey,
+					'Properties' => [
+						'user_email' => $aUserData[ 'user_email']
+					],
+					'Keys' => [
+						'user_id' => $aUserData[ 'user_id'],
+					]
+				]
+			]
+		];
 
-		$DE = new ExactTarget_DataExtensionObject();
-		$DE->CustomerKey = 'user';
-
-		/* Prepare properties */
-		$apiProperty = new ExactTarget_APIProperty();
-		$apiProperty->Name = 'user_email';
-		$apiProperty->Value = $aUserData['user_email'];
-		$DE->Properties = [ $apiProperty ];
-
-		/* Prepare keys */
-		$apiProperty = new ExactTarget_APIProperty();
-		$apiProperty->Name = 'user_id';
-		$apiProperty->Value = $aUserData['user_id'];
-		$DE->Keys = [ $apiProperty ];
-
-		$soapVar = new SoapVar( $DE, SOAP_ENC_OBJECT, 'DataExtensionObject', 'http://exacttarget.com/wsdl/partnerAPI' );
-
-		/* Prepare update-add options */
-		$oUpdateRequest->Options = null;
-		$oUpdateRequest->Objects = [ $soapVar ];
 
 		return [
-			[ $aUserData, $oUpdateRequest ]
+			[ $aUserData, $aApiParams, $aMockCustomerKey ]
 		];
 	}
 
