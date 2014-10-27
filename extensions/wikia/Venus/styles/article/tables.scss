@@ -8,7 +8,7 @@ $color-table-header-background: darken($color-page, 5%);
 $table-margin: 1em;
 $cell-padding: 6px;
 
-$table-overflow-shadow-offset-x: 15px;
+$table-overflow-shadow-offset-x: -15px;
 $table-overflow-shadow-offset-y: 0;
 $table-overflow-shadow-blur-radius: 20px;
 $table-overflow-shadow-color: mix($color-page-shadow, $color-page, 50%);
@@ -45,12 +45,12 @@ $table-overflow-shadow-inset: true;
 
 		&::before {
 			@include box-shadow(
-				-$table-overflow-shadow-offset-x,
+				$table-overflow-shadow-offset-x,
 				$table-overflow-shadow-offset-y,
 				$table-overflow-shadow-blur-radius,
 				$table-overflow-shadow-color,
 				$table-overflow-shadow-inset,
-				-$table-overflow-shadow-offset-x
+				$table-overflow-shadow-offset-x
 			);
 			content: '';
 			height: 100%;
@@ -58,17 +58,6 @@ $table-overflow-shadow-inset: true;
 			right: 0;
 			width: $table-overflow-shadow-blur-radius;
 			z-index: 2;
-
-			html[dir='rtl'] & {
-				@include box-shadow(
-						$table-overflow-shadow-offset-x,
-						$table-overflow-shadow-offset-y,
-						$table-overflow-shadow-blur-radius,
-						$table-overflow-shadow-color,
-						$table-overflow-shadow-inset,
-						-$table-overflow-shadow-offset-x
-				);
-			}
 		}
  
 		// Wide tables cannot be floated
