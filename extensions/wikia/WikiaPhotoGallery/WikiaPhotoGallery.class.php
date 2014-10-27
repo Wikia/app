@@ -616,9 +616,9 @@ class WikiaPhotoGallery extends ImageGallery {
 			return false;
 		}
 
-		// If the request comes through parse API (api.php?action=parse) do not output "new galleries"
-		// (That's because "new galleries" requires extra JS to load/render them which makes such output not very useful)
-		if ( defined( 'MW_API' ) ) {
+		// TODO: If Parsoid is the client always return "old gallery" so "alternative rendering" can work
+		// like a charm. This is meant to be deleted when "new galleries" are the only galleries. 
+		if ( strpos( $_SERVER[ 'HTTP_USER_AGENT' ], 'Parsoid' ) !== false ) {
 			return false;
 		}
 
