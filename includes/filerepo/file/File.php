@@ -1792,9 +1792,7 @@ abstract class File {
 	 */
 	protected function getVignetteThumbUrl( $params ) {
 		$thumbUrl = $this->getUrlGenerator()
-			->width( $params['width'] )
-			->height( $params['height'] )
-			->thumbnail();
+			->scaleToWidth( $params['width'] );
 
 		return ( string )$thumbUrl;
 	}
