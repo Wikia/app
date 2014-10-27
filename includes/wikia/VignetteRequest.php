@@ -43,7 +43,7 @@ class VignetteRequest {
 			$replaceThumbnail = $config['replace'];
 		} else {
 			global $wgVignetteReplaceThumbnails;
-			if ($wgVignetteReplaceThumbnails || (!empty($_GET['replace']) && (bool)$_GET['replace'])) {
+			if ($wgVignetteReplaceThumbnails || (!empty($_GET['vignetteReplaceThumbnails']) && (bool)$_GET['vignetteReplaceThumbnails'])) {
 				$replaceThumbnail = true;
 			}
 		}
