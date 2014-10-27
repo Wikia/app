@@ -2,8 +2,8 @@
 @import 'skins/shared/mixins/box-shadow';
 @import 'skins/shared/mixins/gradient';
 
-$color-table-background: if($is-dark-wiki, lighten($color-page, 2%), darken($color-page, 2%));
-$color-table-header-background: if($is-dark-wiki, lighten($color-page, 5%), darken($color-page, 5%));
+$color-table-background: darken($color-page, 2%);
+$color-table-header-background: darken($color-page, 5%);
 
 $table-margin: 1em;
 $cell-padding: 6px;
