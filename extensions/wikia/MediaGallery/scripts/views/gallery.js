@@ -1,10 +1,9 @@
 define('mediaGallery.views.gallery', [
 	'mediaGallery.views.media',
 	'mediaGallery.views.toggler',
-	'mediaGallery.templates.mustache',
 	'wikia.tracker',
 	'bucky'
-], function (Media, Toggler, templates, tracker, bucky) {
+], function (Media, Toggler, tracker, bucky) {
 	'use strict';
 
 	var Gallery;
