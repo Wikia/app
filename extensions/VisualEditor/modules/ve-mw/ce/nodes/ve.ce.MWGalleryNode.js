@@ -49,7 +49,7 @@ ve.ce.MWGalleryNode.prototype.onSetup = function () {
 /**
  * @inheritdoc
  */
-ve.ce.MWGalleryNode.prototype.doneGenerating = function ( generatedContents, config ) {
+ve.ce.MWGalleryNode.prototype.doneGenerating = function ( generatedContents ) {
 	var $generatedContents = this.$( generatedContents ),
 		alternativeRendering = $generatedContents.data( 'mw' ).alternativeRendering || null;
 	if ( alternativeRendering ) {
