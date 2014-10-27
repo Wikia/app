@@ -1,21 +1,24 @@
-describe('AdProviderDirectGpt', function(){
-
+/*global describe,it,expect,modules*/
+/*jshint maxlen:false*/
+describe('AdProviderDirectGpt', function () {
+	'use strict';
 	var adContextMock = {
 		getContext: function () {
 			return {forceProviders: {}};
 		}
 	};
 
-	it('Leaderboard works as expected in low value countries', function() {
-		var logMock = function() {},
+	it('Leaderboard works as expected in low value countries', function () {
+		var logMock = function () { return; },
 			windowMock = {},
-			geoMock = {getCountryCode: function() {}},
+			geoMock = {getCountryCode: function () { return; }},
+			instantGlobalsMock = {},
 			slotTweakerMock,
-			cacheStorageMock = {set: function() {}, get: function() {}, del: function() {}},
+			cacheStorageMock = {set: function () { return; }, get: function () { return; }, del: function () { return; }},
 			adLogicHighValueCountryMock = {},
 			adProviderDirectGpt,
 			wikiaGptMock = {
-				init: function () {}
+				init: function () { return; }
 			},
 			GptSlotConfigMock = {
 				getConfig: function () {
@@ -25,14 +28,15 @@ describe('AdProviderDirectGpt', function(){
 				}
 			};
 
-		adLogicHighValueCountryMock.isHighValueCountry = function() {return false;};
-		adLogicHighValueCountryMock.getMaxCallsToDART = function() {return 7;};
+		adLogicHighValueCountryMock.isHighValueCountry = function () { return false; };
+		adLogicHighValueCountryMock.getMaxCallsToDART = function () { return 7; };
 
 		adProviderDirectGpt = modules['ext.wikia.adEngine.provider.directGpt'](
+			cacheStorageMock,
+			geoMock,
+			instantGlobalsMock,
 			logMock,
 			windowMock,
-			geoMock,
-			cacheStorageMock,
 			adContextMock,
 			slotTweakerMock,
 			adLogicHighValueCountryMock,
@@ -43,24 +47,24 @@ describe('AdProviderDirectGpt', function(){
 		expect(adProviderDirectGpt.canHandleSlot('TOP_LEADERBOARD')).toBeFalsy('DART not called when user in low value country');
 	});
 
-
-	it('Leaderboard works as expected in high value countries in first call', function() {
+	it('Leaderboard works as expected in high value countries in first call', function () {
 		var liftiumCalled,
 			dartCalled,
-			logMock = function() {},
+			logMock = function () { return; },
 			windowMock = {},
-			geoMock = {getCountryCode: function() {}},
+			geoMock = {getCountryCode: function () { return; }},
+			instantGlobalsMock = {},
 			slotTweakerMock,
-			cacheStorageMock = {set: function() {}, get: function() {}, del: function() {}},
+			cacheStorageMock = {set: function () { return; }, get: function () { return; }, del: function () { return; }},
 			adLogicHighValueCountryMock = {},
 			adProviderDirectGpt,
 			wikiaGptMock = {
-				init: function () {},
+				init: function () { return; },
 				pushAd: function () {
 					dartCalled = true;
 				}
 			},
-			successMock = function () {},
+			successMock = function () { return; },
 			hopMock = function (extra, hopTo) { liftiumCalled = (hopTo === 'Liftium'); },
 			GptSlotConfigMock = {
 				getConfig: function () {
@@ -70,14 +74,15 @@ describe('AdProviderDirectGpt', function(){
 				}
 			};
 
-		adLogicHighValueCountryMock.isHighValueCountry = function() {return true;};
-		adLogicHighValueCountryMock.getMaxCallsToDART = function() {return 7;};
+		adLogicHighValueCountryMock.isHighValueCountry = function () { return true; };
+		adLogicHighValueCountryMock.getMaxCallsToDART = function () { return 7; };
 
 		adProviderDirectGpt = modules['ext.wikia.adEngine.provider.directGpt'](
+			cacheStorageMock,
+			geoMock,
+			instantGlobalsMock,
 			logMock,
 			windowMock,
-			geoMock,
-			cacheStorageMock,
 			adContextMock,
 			slotTweakerMock,
 			adLogicHighValueCountryMock,
@@ -92,24 +97,25 @@ describe('AdProviderDirectGpt', function(){
 		expect(dartCalled).toBeTruthy('DART called when user in high value country (and not exceeded number of DART calls)');
 	});
 
-	it('Leaderboard works as expected in high value countries in first call with hop', function() {
+	it('Leaderboard works as expected in high value countries in first call with hop', function () {
 		var liftiumCalled,
 			dartCalled,
-			logMock = function() {},
+			logMock = function () { return; },
 			windowMock = {},
-			geoMock = {getCountryCode: function() {}},
+			geoMock = {getCountryCode: function () { return; }},
+			instantGlobalsMock = {},
 			slotTweakerMock,
-			cacheStorageMock = {set: function() {}, get: function() {}, del: function() {}},
+			cacheStorageMock = {set: function () { return; }, get: function () { return; }, del: function () { return; }},
 			adLogicHighValueCountryMock = {},
 			adProviderDirectGpt,
 			wikiaGptMock = {
-				init: function () {},
+				init: function () { return; },
 				pushAd: function (slotname, success, hop) {
 					dartCalled = true;
 					hop({});
 				}
 			},
-			successMock = function () {},
+			successMock = function () { return; },
 			hopMock = function (extra, hopTo) { liftiumCalled = (hopTo === 'Liftium'); },
 			GptSlotConfigMock = {
 				getConfig: function () {
@@ -119,14 +125,15 @@ describe('AdProviderDirectGpt', function(){
 				}
 			};
 
-		adLogicHighValueCountryMock.isHighValueCountry = function() {return true;};
-		adLogicHighValueCountryMock.getMaxCallsToDART = function() {return 7;};
+		adLogicHighValueCountryMock.isHighValueCountry = function () { return true; };
+		adLogicHighValueCountryMock.getMaxCallsToDART = function () { return 7; };
 
 		adProviderDirectGpt = modules['ext.wikia.adEngine.provider.directGpt'](
+			cacheStorageMock,
+			geoMock,
+			instantGlobalsMock,
 			logMock,
 			windowMock,
-			geoMock,
-			cacheStorageMock,
 			adContextMock,
 			slotTweakerMock,
 			adLogicHighValueCountryMock,
@@ -141,10 +148,11 @@ describe('AdProviderDirectGpt', function(){
 		expect(dartCalled).toBeTruthy('DART called when user in high value country (and not exceeded number of DART calls)');
 	});
 
-	it('Leaderboard works as expected in high value countries after exceeding no ads limit', function() {
-		var logMock = function() {},
+	it('Leaderboard works as expected in high value countries after exceeding no ads limit', function () {
+		var logMock = function () { return; },
 			windowMock = {},
-			geoMock = {getCountryCode: function() {}},
+			geoMock = {getCountryCode: function () { return; }},
+			instantGlobalsMock = {},
 			slotTweakerMock,
 			callsToTopLeaderboard,
 			cacheGetMock = function(key) {
@@ -155,11 +163,11 @@ describe('AdProviderDirectGpt', function(){
 					return true;
 				}
 			},
-			cacheStorageMock = {set: function() {}, get: cacheGetMock, del: function() {}},
+			cacheStorageMock = {set: function () { return; }, get: cacheGetMock, del: function () { return; }},
 			adLogicHighValueCountryMock = {},
 			adProviderDirectGpt,
 			wikiaGptMock = {
-				init: function () {}
+				init: function () { return; }
 			},
 			GptSlotConfigMock = {
 				getConfig: function () {
@@ -169,14 +177,15 @@ describe('AdProviderDirectGpt', function(){
 				}
 			};
 
-		adLogicHighValueCountryMock.isHighValueCountry = function() {return true;};
-		adLogicHighValueCountryMock.getMaxCallsToDART = function() {return 7;};
+		adLogicHighValueCountryMock.isHighValueCountry = function () { return true; };
+		adLogicHighValueCountryMock.getMaxCallsToDART = function () { return 7; };
 
 		adProviderDirectGpt = modules['ext.wikia.adEngine.provider.directGpt'](
+			cacheStorageMock,
+			geoMock,
+			instantGlobalsMock,
 			logMock,
 			windowMock,
-			geoMock,
-			cacheStorageMock,
 			adContextMock,
 			slotTweakerMock,
 			adLogicHighValueCountryMock,
@@ -191,10 +200,63 @@ describe('AdProviderDirectGpt', function(){
 		expect(adProviderDirectGpt.canHandleSlot('TOP_LEADERBOARD')).toBeFalsy('DART can\'t handle the slot when user in high value country and exceeded number of DART calls');
 	});
 
-	it('Skin re-uses the leaderboard show/hop decision', function() {
-		var logMock = function() {},
+	it('Leaderboard works as expected in high value countries after exceeding no ads limit with wgAdDriverAlwaysCallDartInCountries set', function () {
+		var logMock = function () { return; },
 			windowMock = {},
-			geoMock = {getCountryCode: function() {}},
+			geoMock = {getCountryCode: function () { return 'xx'; }},
+			instantGlobalsMock = {wgAdDriverAlwaysCallDartInCountries: ['xx']},
+			slotTweakerMock,
+			callsToTopLeaderboard,
+			cacheGetMock = function(key) {
+				if (key === 'dart_calls_TOP_LEADERBOARD') {
+					return callsToTopLeaderboard;
+				}
+				if (key === 'dart_noad_TOP_LEADERBOARD') {
+					return true;
+				}
+			},
+			cacheStorageMock = {set: function () { return; }, get: cacheGetMock, del: function () { return; }},
+			adLogicHighValueCountryMock = {},
+			adProviderDirectGpt,
+			wikiaGptMock = {
+				init: function () { return; }
+			},
+			GptSlotConfigMock = {
+				getConfig: function () {
+					return {
+						'TOP_LEADERBOARD': {}
+					};
+				}
+			};
+
+		adLogicHighValueCountryMock.isHighValueCountry = function () { return true; };
+		adLogicHighValueCountryMock.getMaxCallsToDART = function () { return 7; };
+
+		adProviderDirectGpt = modules['ext.wikia.adEngine.provider.directGpt'](
+			cacheStorageMock,
+			geoMock,
+			instantGlobalsMock,
+			logMock,
+			windowMock,
+			adContextMock,
+			slotTweakerMock,
+			adLogicHighValueCountryMock,
+			wikiaGptMock,
+			GptSlotConfigMock
+		);
+
+		callsToTopLeaderboard = 6;
+		expect(adProviderDirectGpt.canHandleSlot('TOP_LEADERBOARD')).toBeTruthy('DART can handle the slot when user in high value country and number of DART calls is not exceeded');
+
+		callsToTopLeaderboard = 8;
+		expect(adProviderDirectGpt.canHandleSlot('TOP_LEADERBOARD')).toBeTruthy('DART can handle the slot when user in high value country and exceeded number of DART calls if wgAdDriverAlwaysCallDartInCountries set');
+	});
+
+	it('Skin re-uses the leaderboard show/hop decision', function () {
+		var logMock = function () { return; },
+			windowMock = {},
+			geoMock = {getCountryCode: function () { return; }},
+			instantGlobalsMock = {},
 			slotTweakerMock,
 			callsToTopLeaderboard,
 			callsToInvisibleSkin,
@@ -212,11 +274,11 @@ describe('AdProviderDirectGpt', function(){
 					return true;
 				}
 			},
-			cacheStorageMock = {set: function() {}, get: cacheGetMock, del: function() {}},
+			cacheStorageMock = {set: function () { return; }, get: cacheGetMock, del: function () { return; }},
 			adLogicHighValueCountryMock = {},
 			adProviderDirectGpt,
 			wikiaGptMock = {
-				init: function () {}
+				init: function () { return; }
 			},
 			GptSlotConfigMock = {
 				getConfig: function () {
@@ -227,14 +289,15 @@ describe('AdProviderDirectGpt', function(){
 				}
 			};
 
-		adLogicHighValueCountryMock.isHighValueCountry = function() {return true;};
-		adLogicHighValueCountryMock.getMaxCallsToDART = function() {return 7;};
+		adLogicHighValueCountryMock.isHighValueCountry = function () { return true; };
+		adLogicHighValueCountryMock.getMaxCallsToDART = function () { return 7; };
 
 		adProviderDirectGpt = modules['ext.wikia.adEngine.provider.directGpt'](
+			cacheStorageMock,
+			geoMock,
+			instantGlobalsMock,
 			logMock,
 			windowMock,
-			geoMock,
-			cacheStorageMock,
 			adContextMock,
 			slotTweakerMock,
 			adLogicHighValueCountryMock,

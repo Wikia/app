@@ -137,6 +137,9 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'cscoreCat',
 
 			//ads
+			'ads',
+
+			//ads legacy -- should be removed at some point
 			'adEnginePageType',
 			'cityShort',
 			'wgAdDriverUseAdsAfterInfobox',

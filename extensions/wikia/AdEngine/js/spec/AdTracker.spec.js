@@ -1,4 +1,4 @@
-/*global describe, it, expect, modules, spyOn*/
+/*global describe, it, expect, modules, spyOn, jasmine*/
 /*jshint camelcase:false*/
 describe('ext.wikia.adEngine.adTracker', function () {
 	'use strict';
@@ -258,7 +258,7 @@ describe('ext.wikia.adEngine.adTracker', function () {
 
 		expect(trackerMock.track.calls.length).toBe(1);
 
-		expect(trackerMock.track.mostRecentCall.args[0].ga_value).not.toBeLessThan(111);
+		expect(trackerMock.track.mostRecentCall.args[0].ga_value).not.toBeLessThan(110);
 		expect(trackerMock.track.mostRecentCall.args[0].ga_value).not.toBeGreaterThan(888);
 
 	});

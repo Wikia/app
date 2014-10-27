@@ -1,36 +1,32 @@
 /* jshint maxparams: false, maxlen: 150 */
 /*global define*/
 define('ext.wikia.adEngine.provider.directGpt', [
+	'wikia.cache',
+	'wikia.geo',
+	'wikia.instantGlobals',
 	'wikia.log',
 	'wikia.window',
-	'wikia.geo',
-	'wikia.cache',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.adLogicHighValueCountry',
 	'ext.wikia.adEngine.wikiaGptHelper',
 	'ext.wikia.adEngine.gptSlotConfig'
-], function (log, window, Geo, cacheStorage, adContext, slotTweaker, adLogicHighValueCountry, wikiaGpt, slotMapConfig) {
+], function (cacheStorage, Geo, instantGlobals, log, window, adContext, slotTweaker, adLogicHighValueCountry, wikiaGpt, slotMapConfig) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.directGpt',
 		srcName = 'gpt',
-		slotMap,
+		slotMap = slotMapConfig.getConfig(srcName),
 		forgetAdsShownAfterTime = 3600, // an hour
 		country = Geo.getCountryCode(),
 		now = window.wgNow || new Date(),
-		maxCallsToDART,
-		isHighValueCountry,
+		maxCallsToDART = adLogicHighValueCountry.getMaxCallsToDART(country),
+		isHighValueCountry = adLogicHighValueCountry.isHighValueCountry(country),
 		leaderboardCalled = false, // save if leaderboard was called, so we know whether to call INVISIBLE slot as well
 		gptConfig,
-		gptFlushed = false;
-
-	maxCallsToDART = adLogicHighValueCountry.getMaxCallsToDART(country);
-	isHighValueCountry = adLogicHighValueCountry.isHighValueCountry(country);
-
-	// TODO: tile is not used, keys without apostrophes
-	// GPT: only loc, pos and size keys are used
-	slotMap = slotMapConfig.getConfig(srcName);
+		gptFlushed = false,
+		alwaysCallDartInCountries = instantGlobals.wgAdDriverAlwaysCallDartInCountries || [],
+		alwaysCallDart = (alwaysCallDartInCountries.indexOf(country) > -1);
 
 	// TODO: integrate this array to slotMap if it makes sense
 	gptConfig = { // slots to use SRA with
@@ -117,6 +113,11 @@ define('ext.wikia.adEngine.provider.directGpt', [
 
 	function canHandleSlot(slotname) {
 		log(['canHandleSlot', slotname], 'debug', logGroup);
+
+		if (alwaysCallDart) {
+			log(['canHandleSlot', slotname, 'always calling DART'], 'info', logGroup);
+			return true;
+		}
 
 		if (adContext.getContext().forceProviders.directGpt && slotMap[slotname]) {
 			return true;

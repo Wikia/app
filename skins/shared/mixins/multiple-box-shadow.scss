@@ -6,5 +6,4 @@
 
 @mixin multiple-box-shadow($arguments) {
 	box-shadow: $arguments;
-	-webkit-box-shadow: $arguments;
 }
