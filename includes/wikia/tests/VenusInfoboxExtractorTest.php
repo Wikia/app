@@ -58,60 +58,62 @@ EOD;
 	/**
 	 * @dataProvider testGetInfoboxNodesDataProvider
 	 */
-	public function testGetInfoboxNodes( $content, $expectedHTML, $expected ) {
-		$nodeHtml = '';
-
+	public function testGetInfoboxNodes( $content, $expected ) {
 		$infoboxExractor = new InfoboxExtractor( $content );
-		$dom = $infoboxExractor->getDOMDocument();
 
 		$nodes = $infoboxExractor->getInfoboxNodes();
 
+		$this->assertEquals( $expected['length'], $nodes->length );
+
 		if ($nodes->length) {
 			$node = $nodes->item(0);
-			$nodeHtml = $dom->saveHTML($node);
+
+			$this->assertEquals( $expected['tagName'], $node->tagName );
+			$this->assertContains( $expected['class'], $node->getAttribute('class') );
 		}
-
-		$result = ($nodeHtml == $expectedHTML);
-
-		$this->assertEquals($expected, $result);
 	}
 
 	public function testGetInfoboxNodesDataProvider() {
 		return [
 			[
 				$this->contentInfoboxInside,
-				'<div class="infoBox">infobox</div>',
-				true
-			],
-			[
-				$this->contentInfoboxInside,
-				'<p class="infoBox">infobox</p>',
-				false
-			],
-			[
-				$this->contentInfoboxLast,
-				'<table class="other-class infobox"><tr><td>infobox</td></tr></table>',
-				true
+				[
+					'tagName' => 'div',
+					'class' => 'infoBox',
+					'length' => 1
+				]
 			],
 			[
 				$this->contentInfoboxLast,
-				'<table class="infobox"><tr><td>infobox</td></tr></table>',
-				false
+				[
+					'tagName' => 'table',
+					'class' => 'infobox',
+					'length' => 1
+				]
 			],
 			[
 				$this->contentInfoboxFirst,
-				'<div class="some-class character-infobox">infobox</div>',
-				true
+				[
+					'tagName' => 'div',
+					'class' => 'character-infobox',
+					'length' => 1
+				]
 			],
 			[
 				$this->contentNoInfobox,
-				'',
-				true
+				[
+					'tagName' => '',
+					'class' => '',
+					'length' => 0
+				]
 			],
 			[
 				$this->contentInfoboxWrongTag,
-				'',
-				true
+				[
+					'tagName' => '',
+					'class' => '',
+					'length' => 0
+				]
 			],
 		];
 	}
@@ -119,31 +121,31 @@ EOD;
 	/**
 	 * @dataProvider testClearInfoboxStylesDataProvider
 	 */
-	public function testClearInfoboxStyles( $html, $expectedHtml ) {
+	public function testClearInfoboxStyles( $html, $expected ) {
 		$infoboxExractor = new InfoboxExtractor( $html );
 		$dom = $infoboxExractor->getDOMDocument();
 
 		$infobox = $dom->documentElement->firstChild->firstChild;
 		$infobox = $infoboxExractor->clearInfoboxStyles( $infobox );
 
-		$nodeHtml = $dom->saveHTML( $infobox );
+		$styles = $infobox->getAttribute('style');
 
-		$this->assertEquals( $nodeHtml, $expectedHtml );
+		$this->assertEquals( $expected, $styles );
 	}
 
 	public function testClearInfoboxStylesDataProvider() {
 		return [
 			[
-				'<div class="some-class character-infobox" style="width:100px;height:200px;font-size:11px;">infobox</div>',
-				'<div class="some-class character-infobox" style="font-size:11px;">infobox</div>'
+				'<div class="some-class character-infobox" style="max-width:100px;height:200px;font-size:11px;">infobox</div>',
+				'font-size:11px;'
 			],
 			[
-				'<table class="infobox" style="width:100px;max-width: 200px; color:#999;height:200px;font-size:11px; min-height:100px;"><tr><td>infobox</td></tr></table>',
-				'<table class="infobox" style="color:#999;font-size:11px;"><tr><td>infobox</td></tr></table>'
+				'<table class="infobox" style="width:100px;max-width: 200px; margin-top:20px; color:#999;height:200px;font-size:11px; min-height:100px;"><tr><td>infobox</td></tr></table>',
+				'width:100px;color:#999;font-size:11px;'
 			],
 			[
 				'<div class="character-infobox" style="font-size:11px;border:1px solid blue;">infobox</div>',
-				'<div class="character-infobox" style="font-size:11px;border:1px solid blue;">infobox</div>'
+				'font-size:11px;border:1px solid blue;'
 			]
 		];
 	}
@@ -255,19 +257,19 @@ EOD;
 		return [
 			[
 				'font-size:20px; width: 200px; margin-left: 20%; border: none;',
-				'font-size:20px;margin-left: 20%;border: none;',
+				'font-size:20px;width: 200px;border: none;',
 			],
 			[
-				'height: 160px; width: 200px;',
+				'height: 160px; max-width: 200px;',
 				'',
 			],
 			[
 				'max-height: 80%; text-align: top; max-width: 400px; width: 140px; color: #000;',
-				'text-align: top;color: #000;',
+				'text-align: top;width: 140px;color: #000;',
 			],
 			[
-				'font-size:20px;margin-left: 20%;border: none;',
-				'font-size:20px;margin-left: 20%;border: none;',
+				'font-size:20px;border: none;',
+				'font-size:20px;border: none;',
 			]
 		];
 	}
