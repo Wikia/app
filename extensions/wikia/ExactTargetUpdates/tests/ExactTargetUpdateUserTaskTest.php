@@ -5,33 +5,66 @@ require_once __DIR__ . '/../lib/exacttarget_soap_client.php';
 class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 
 	function testShouldInvokeUpdateMethodWithProperParam() {
-		/* Params to compare */
-		$iUserId = 12345;
-		$aUserProperties = [];
+		$sCustomerKey = 'sample_table_name';
 
-		$oRequest = new ExactTarget_CreateRequest();
+		/* Input params */
+		$aUserData = [ 'user_id' => 12345 ];
+		$aUserProperties = [
+			'property_name' => 'property_value'
+		];
 
-		$soapClient = $this->getMockBuilder( 'ExactTargetSoapClient' )
+		/* Expected update params */
+		$aApiParams = [
+			'DataExtension' => [
+				0 => [
+					'CustomerKey' => $sCustomerKey,
+					'Properties' => [
+						'up_value' => 'property_value'
+					],
+					'Keys' => [
+						'up_user' => 12345,
+						'up_property' => 'property_name'
+					]
+				]
+			]
+		];
+
+		/* @var ExactTargetApiDataExtension $mockApiDataExtension mock of ExactTargetApiDataExtension */
+		$mockApiDataExtension = $this->getMockBuilder( 'Wikia\ExactTarget\Api\ExactTargetApiDataExtension' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'Update' ] )
+			->setMethods( [ 'updateRequest' ] )
 			->getMock();
-		$soapClient
+		$mockApiDataExtension
 			->expects( $this->once() )
-			->method( 'Update' )
-			->with( $oRequest );
+			->method( 'updateRequest' )
+			->with( $aApiParams );
+
+		/* @var ExactTargetUserTaskHelper $mockApiDataExtension mock of ExactTargetUserTaskHelper */
+		$mockUserHelper = $this->getMockBuilder( 'Wikia\ExactTarget\Tasks\ExactTargetUserTaskHelper' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'getCustomerKeys' ] )
+			->getMock();
+		$mockUserHelper
+			->expects( $this->once() )
+			->method( 'getCustomerKeys' )
+			->will( $this->returnValue([ 'user_properties' => $sCustomerKey ]) );
 
 		/* Mock tested class */
-		$mockUpdateUserTask = $this->getMockBuilder( 'ExactTargetUpdateUserTask' )
+		$mockUpdateUserTask = $this->getMockBuilder( 'Wikia\ExactTarget\Tasks\ExactTargetUpdateUserTask' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'wrapUpdateRequest', 'getClient' ] )
+			->setMethods( [ 'getApiDataExtension', 'getHelper' ] )
 			->getMock();
 		$mockUpdateUserTask
 			->expects( $this->once() )
-			->method( 'wrapUpdateRequest' )
-			->will( $this->returnValue( $oRequest ) );
+			->method( 'getApiDataExtension' )
+			->will( $this->returnValue( $mockApiDataExtension ) );
+		$mockUpdateUserTask
+			->expects( $this->once() )
+			->method( 'getHelper' )
+			->will( $this->returnValue( $mockUserHelper ) );
 
-		/* @var ExactTargetUpdateUserTask $mockUpdateUserTask */
-		$mockUpdateUserTask->updateUserPropertiesDataExtension( $iUserId, $aUserProperties, $soapClient );
+		/* @var Wikia\ExactTarget\Tasks\ExactTargetUpdateUserTask $mockUpdateUserTask */
+		$mockUpdateUserTask->updateUserPropertiesData( $aUserData, $aUserProperties );
 	}
 
 	/**

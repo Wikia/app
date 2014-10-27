@@ -143,7 +143,7 @@ class ExactTargetUserTaskHelper {
 	 * Get Customer Keys specific for production or development
 	 * CustomerKey is a key that indicates Wikia table reflected by DataExtension
 	 */
-	private function getCustomerKeys() {
+	protected function getCustomerKeys() {
 		global $wgExactTargetDevelopmentMode;
 
 		if ( $wgExactTargetDevelopmentMode ) {
