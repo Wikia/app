@@ -8,7 +8,7 @@ require(['jquery', 'GlobalNavigationiOSScrollFix', 'wikia.window'], function ($,
 	 */
 	function openMenu() {
 		$entryPoint.addClass('active');
-		window.transparentOut.show();
+		win.transparentOut.show();
 
 		if (!loginAjaxForm) {
 			loginAjaxForm = new UserLoginAjaxForm($entryPoint, {
@@ -23,7 +23,7 @@ require(['jquery', 'GlobalNavigationiOSScrollFix', 'wikia.window'], function ($,
 	 */
 	function closeMenu() {
 		$entryPoint.removeClass('active');
-		window.transparentOut.hide();
+		win.transparentOut.hide();
 	}
 
 	/**
@@ -39,7 +39,7 @@ require(['jquery', 'GlobalNavigationiOSScrollFix', 'wikia.window'], function ($,
 	$(function () {
 		var $globalNav = $('#globalNavigation');
 
-		window.transparentOut.bindClick(closeMenu);
+		win.transparentOut.bindClick(closeMenu);
 
 		$entryPoint = $('#AccountNavigation');
 		$entryPoint.on('click', '.ajaxLogin', function (ev) {
@@ -48,7 +48,7 @@ require(['jquery', 'GlobalNavigationiOSScrollFix', 'wikia.window'], function ($,
 
 			if ($entryPoint.hasClass('active')) {
 				if (!!win.wgUserName) {
-					window.location = $(this).attr('href');
+					win.location = $(this).attr('href');
 				} else {
 					closeMenu();
 				}
@@ -68,8 +68,8 @@ require(['jquery', 'GlobalNavigationiOSScrollFix', 'wikia.window'], function ($,
 				scrollFix.restoreScrollY($globalNav);
 			});
 
-		if (!window.Wikia.isTouchScreen()) {
-			window.delayedHover(
+		if (!win.Wikia.isTouchScreen()) {
+			win.delayedHover(
 				$entryPoint.get(0), {
 					checkInterval: 100,
 					maxActivationDistance: 20,
