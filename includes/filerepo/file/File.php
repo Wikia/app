@@ -242,6 +242,11 @@ abstract class File {
 		return $this->name;
 	}
 
+	public function getBucket() {
+		global $wgUploadPath;
+		return VignetteRequest::parseBucket($wgUploadPath);
+	}
+
 	public function getPathPrefix() {
 		global $wgUploadPath;
 		return VignetteRequest::parsePathPrefix( $wgUploadPath );
