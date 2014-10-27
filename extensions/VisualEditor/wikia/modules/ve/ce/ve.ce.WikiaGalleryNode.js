@@ -26,7 +26,7 @@ ve.ce.WikiaGalleryNode = function VeCeWikiaGalleryNode( model, config ) {
 	this.rebuild();
 
 	// Events
-	this.connect( this, { 'childUpdate': 'onChildUpdate' } );
+	this.model.connect( this, { 'update': 'onUpdate' } );
 };
 
 /* Inheritance */
@@ -42,6 +42,20 @@ ve.ce.WikiaGalleryNode.static.name = 'wikiaGallery';
 ve.ce.WikiaGalleryNode.static.tagName = 'div';
 
 /* Methods */
+
+/**
+ * Handle model update events.
+ *
+ * @method
+ */
+ve.ce.WikiaGalleryNode.prototype.onUpdate = function () {
+	// TODO: This is deleyad because "update" is emitted on parent before it is emitted
+	// on the child - find a better solution (maybe reverse the order of emitting events).
+	setTimeout( ve.bind( function () {
+		this.rebuild();
+		this.runGalleryScript();
+	}, this ), 0 );
+};
 
 ve.ce.WikiaGalleryNode.prototype.rebuild = function () {
 	var i, $item, imageName, href, thumbUrl, imageSrc,
@@ -66,7 +80,7 @@ ve.ce.WikiaGalleryNode.prototype.rebuild = function () {
 	}
 
 	this.$element
-		.addClass( 'media-gallery-wrapper count-' + this.model.getAttribute( 'itemCount' ) )
+		.addClass( 'media-gallery-wrapper count-' + items.length )
 		.attr( {
 			'data-visible-count': 8,
 			'data-expanded': 0,
@@ -108,13 +122,6 @@ ve.ce.WikiaGalleryNode.prototype.getThumbUrl = function ( imageSrc, imageName ) 
 
 ve.ce.WikiaGalleryNode.prototype.onSetup = function () {
 	this.runGalleryScript();
-};
-
-ve.ce.WikiaGalleryNode.prototype.onChildUpdate = function () {
-	setTimeout( ve.bind( function () {
-		this.rebuild();
-		this.runGalleryScript();
-	}, this ), 0 );
 };
 
 ve.ce.WikiaGalleryNode.prototype.runGalleryScript = function () {

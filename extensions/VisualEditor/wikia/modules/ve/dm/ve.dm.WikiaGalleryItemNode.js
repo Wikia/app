@@ -43,7 +43,7 @@ ve.dm.WikiaGalleryItemNode.static.getMatchRdfaTypes = function () {
 };
 
 ve.dm.WikiaGalleryItemNode.static.matchFunction = function ( element ) {
-	return $( element ).parent().attr( 'typeof' ) === 'mw:Extension/nativeGallery';
+	return element.parentNode.getAttribute( 'typeof' ) === 'mw:Extension/nativeGallery';
 };
 
 ve.dm.WikiaGalleryItemNode.static.toDomElements = ve.dm.MWBlockImageNode.static.toDomElements;

@@ -26,41 +26,13 @@ ve.dm.WikiaGalleryNode.static.name = 'wikiaGallery';
 
 ve.dm.WikiaGalleryNode.static.tagName = 'div';
 
-//ve.dm.WikiaGalleryNode.static.childNodeTypes = [ 'wikiaGalleryItem' ];
-
-ve.dm.MWBlockImageNode.static.matchTagNames = [ 'div' ];
+ve.dm.WikiaGalleryNode.static.matchTagNames = [ 'div' ];
 
 ve.dm.WikiaGalleryNode.static.getMatchRdfaTypes = function () {
 	return [ 'mw:Extension/nativeGallery' ];
 };
 
-ve.dm.WikiaGalleryNode.static.toDomElements = function ( data, doc ) {
-	var div = doc.createElement( 'div' );
-	return [ div ];
-};
-
-ve.dm.WikiaGalleryNode.static.toDataElement = function ( domElements ) {
-	var $domElements = $( domElements[0] ),
-		attributes = {
-			itemCount: $domElements.children( 'figure' ).length
-		};
-
-	return { 'type': this.name, 'attributes': attributes };
-};
-
 /* Methods */
-
-ve.dm.WikiaGalleryNode.prototype.getEmbedData = function () {
-	var i,
-		children = this.getChildren(),
-		data = [];
-
-	for ( i = 0; i < children.length; i++ ) {
-		data.push( children[i].getAttribute( 'embedData') );
-	}
-
-	return data;
-};
 
 /* Registration */
 
