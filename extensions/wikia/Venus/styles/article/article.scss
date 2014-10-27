@@ -11,6 +11,7 @@
 
 $placeholder-background-color: $color-left-article-nav; // only for prototype version
 $article-items-spacing: 40px;
+$header-without-cover-unit-spacing: 60px;
 
 .article {
 	overflow: hidden;
@@ -18,24 +19,28 @@ $article-items-spacing: 40px;
 	header {
 		@include grid-column-width('medium', 8, $medium-content-padding - $content-border-width);
 		float: left;
-		margin-bottom: $article-items-spacing;
+
+		&:not(.cover-unit) {
+			margin-bottom: $header-without-cover-unit-spacing;
+			margin-top: $header-without-cover-unit-spacing;
+		}
 
 		&.cover-unit {
 			@include proportional-video-height(8 * ($medium-grid-column + $medium-grid-gutter) - $medium-grid-gutter + $medium-content-padding);
 			background-color: $placeholder-background-color; //only for prototype version
+			margin-bottom: $article-items-spacing;
 			position: relative;
 
 			h1 {
+				padding-bottom: $header-without-cover-unit-spacing / 2;
 				position: absolute;
 			}
 		}
 
 		h1 {
-			@include font-size-xxl;
 			bottom: 0;
-			font-weight: bold;
 			margin: 0;
-			padding: 0 $medium-grid-column-padding 30px $medium-content-padding + $medium-grid-column-padding - $content-border-width;
+			padding: 0 $medium-grid-column-padding 0 $medium-content-padding + $medium-grid-column-padding - $content-border-width;
 			word-break: break-all;
 		}
 	}
@@ -73,29 +78,20 @@ $article-items-spacing: 40px;
 		@include font-size-xxs;
 		display: inline-block;
 		float: right;
-		line-height: 27px;
-		margin-left: 27px;
+		margin-left: $edit-button-size;
 		padding-left: 5px;
 		position: relative;
 		text-transform: uppercase;
 
 		a::before {
-			@include edit-button(27px);
+			@include edit-button;
+
+			color: $color-links;
 		}
 	}
 
 	h1, h2, h3, h4, h5, h6 {
-		font-weight: bold;
 		overflow: hidden;
-	}
-
-	h1 .editsection {
-		line-height: 40px;
-		margin-left: 40px;
-
-		a::before {
-			@include resize-edit-button(40px);
-		}
 	}
 
 	h2 {
@@ -108,15 +104,6 @@ $article-items-spacing: 40px;
 
 		.mw-headline {
 			padding-left: $medium-grid-gutter;
-		}
-
-		.editsection {
-			line-height: 36px;
-			margin-left: 36px;
-
-			a::before {
-				@include resize-edit-button(36px);
-			}
 		}
 	}
 
@@ -162,7 +149,7 @@ $article-items-spacing: 40px;
 	> ul {
 		margin-bottom: 40px;
 		margin-top: 0;
-		padding-right: 108px;
+		padding-right: round($medium-grid-column / 2) - $medium-grid-column-padding;
 
 		> li:first-child {
 			margin-top: 10px;
@@ -205,6 +192,11 @@ $article-items-spacing: 40px;
 	height: 500px;
 	margin: 0 $medium-grid-column-padding + $medium-content-padding - $content-border-width 20px $medium-grid-gutter + $medium-grid-column-padding;
 	padding: 10px;
+}
+
+/* CON-1982: use Oasis font-size in prototype phase */
+.infobox {
+	font-size: $font-size-xxs;
 }
 
 /* END FOR PROTOTYPE/TESTING ONLY */
@@ -262,7 +254,7 @@ $article-items-spacing: 40px;
 		> ol,
 		> ul {
 			padding-left: 44px;
-			padding-right: 123px;
+			padding-right: round($large-grid-column / 2) - $large-grid-column-padding;
 		}
 
 		li {
@@ -326,7 +318,7 @@ $article-items-spacing: 40px;
 
 		> ol,
 		> ul {
-			padding-right: 81px;
+			padding-right: round($small-grid-column / 2) - $small-grid-column-padding;
 		}
 
 		li {

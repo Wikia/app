@@ -121,7 +121,8 @@ $image-margin: 30px;
 		clear: both;
 		text-align: center;
 
-		.article-thumb {
+		// backport the fix for centered thumbs from Oasis
+		* {
 			margin-left: auto;
 			margin-right: auto;
 		}
