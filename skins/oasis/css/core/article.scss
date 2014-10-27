@@ -5,6 +5,8 @@
 @import 'skins/shared/mixins/gradient';
 @import 'skins/shared/mixins/infobox';
 
+@import 'skins/shared/styles/infoboxes';
+
 .WikiaArticle {
 	@extend %bodytext;
 	// Prevent content from escaping the article area
@@ -359,22 +361,6 @@
 
 		legend {
 			padding: 7px;
-		}
-	}
-
-	.infobox {
-		background-color: mix($color-page, #000, 95%);
-		border: 1px solid $color-page-border;
-		clear: right;
-		color: $color-text;
-		float: right;
-		margin-bottom: .5em;
-		margin-left: 1em;
-		padding: .2em;
-
-		&[width='100%'] {	/* fb:8918 - 100% width support */
-			float: none;
-			margin-left: 0;
 		}
 	}
 

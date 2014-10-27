@@ -58,11 +58,10 @@ class VenusController extends WikiaController {
 
 	private function setBodyModules() {
 		$this->globalNavigation = $this->getGlobalNavigation();
-		$this->notifications = $this->getNotifications();
 		$this->topAds = $this->getTopAds();
 		$this->localNavigation = $this->getLocalNavigation();
 		$this->globalFooter = $this->getGlobalFooter();
-		$this->corporateFooter = $this->getCorporateFootet(); // TODO: footet?
+		$this->corporateFooter = $this->getCorporateFooter();
 		$this->adTopRightBoxad = $this->app->renderView('Ad', 'Index', ['slotName' => 'TOP_RIGHT_BOXAD']);
 
 		if ( WikiaPageType::isArticlePage() ) {
@@ -145,10 +144,12 @@ class VenusController extends WikiaController {
 			}
 		}
 
+
 		foreach ( $this->assetsManager->getURL( $jsBodyGroups ) as $src ) {
-			if ( $this->assetsManager->checkAssetUrlForSkin( $src, $this->skin ) ) {
+// TODO fix double loading jses
+//			if ( $this->assetsManager->checkAssetUrlForSkin( $src, $this->skin ) ) {
 				$jsBodyFiles .= "<script src='{$src}'></script>";
-			}
+//			}
 		}
 
 		if ( is_array( $scripts ) ) {
@@ -173,10 +174,6 @@ class VenusController extends WikiaController {
 			'';
 	}
 
-	private function getNotifications() {
-		//return $this->app->renderView('Notifications', 'Confirmation');
-	}
-
 	private function getLocalNavigation() {
 		return class_exists('LocalNavigationController') ?
 			$this->app->renderView('LocalNavigation', 'Index') :
@@ -184,7 +181,7 @@ class VenusController extends WikiaController {
 	}
 
 	private function getTopAds() {
-		//return $this->app->renderView('Ad', 'Top');
+		return $this->app->renderView('Ad', 'Index', ['slotName' => 'TOP_LEADERBOARD']);;
 	}
 
 	private function getGlobalFooter() {
@@ -193,7 +190,7 @@ class VenusController extends WikiaController {
 			'';
 	}
 
-	public function getCorporateFootet() {
+	public function getCorporateFooter() {
 		//return $this->app->renderView('CorporateFooter', 'Index');
 	}
 

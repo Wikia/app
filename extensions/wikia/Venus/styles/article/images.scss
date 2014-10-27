@@ -21,11 +21,11 @@ $border-color: lighten($color-text, 30%);
 
 		&.show-info-icon {
 			.info-icon {
-				background-image: url('/extensions/wikia/Venus/images/info_icon.png');/* base64 */
+				background-image: url('/extensions/wikia/Venus/images/info_icon.png'); /* base64 */
 				display: none;
 				float: right;
 				height: 17px;
-				margin: -60px 10px 0 0;
+				margin: -35px 10px 0 0;
 				position: relative;
 				width: 17px;
 			}
@@ -53,7 +53,7 @@ $border-color: lighten($color-text, 30%);
 	.tright {
 		clear: right;
 		float: right;
-		margin: 30px (-$medium-grid-column-padding) 30px 30px;
+		margin: 30px (-$medium-grid-column-padding - $medium-grid-gutter - $medium-grid-column) 30px 30px;
 	}
 
 	.floatleft,
@@ -69,7 +69,8 @@ $border-color: lighten($color-text, 30%);
 		clear: both;
 		text-align: center;
 
-		.article-thumb {
+		// backport the fix for centered thumbs from Oasis
+		* {
 			margin-left: auto;
 			margin-right: auto;
 		}
@@ -80,18 +81,27 @@ $border-color: lighten($color-text, 30%);
 		position: relative;
 	}
 
-	figcaption {
-		border-top: 4px solid $border-color;
-		color: $color-alternate-text;
-		font-size: 12px;
-		font-style: italic;
-		line-height: 18px;
-		margin-top: 10px;
-		padding-top: 10px;
-		text-align: left;
+	figure {
+		line-height: 0;
+	}
 
-		p {
-			margin: 0;
+	figcaption {
+		margin-top: 10px;
+
+		.caption,
+		.title {
+			border-top: 4px solid $border-color;
+			color: $color-alternate-text;
+			font-size: 12px;
+			font-style: italic;
+			line-height: 18px;
+			margin-bottom: 0;
+			padding-top: 6px;
+			text-align: left;
+		}
+
+		.title + .caption {
+			border: 0;
 		}
 	}
 }
@@ -100,12 +110,12 @@ $border-color: lighten($color-text, 30%);
 	.article {
 		.floatleft,
 		.tleft {
-			margin-left: -$medium-grid-column-padding;
+			margin-left: -$large-grid-column-padding;
 		}
 
 		.floatright,
 		.tright {
-			margin-right: -$medium-grid-column-padding;
+			margin-right: -$large-grid-column-padding - $large-grid-gutter - $large-grid-column;
 		}
 	}
 }
@@ -120,6 +130,10 @@ $border-color: lighten($color-text, 30%);
 		.floatright,
 		.tright {
 			margin-right: -$small-grid-column-padding;
+		}
+
+		.wikiaPhotoGallery-slider-body {
+			margin-left: -6px;
 		}
 	}
 }

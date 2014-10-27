@@ -1,6 +1,7 @@
 // functions are needed
 @import 'libs/foundation.custom/functions';
 @import 'z-index';
+@import 'skins/shared/variables';
 @import 'skins/shared/color';
 
 // Base
@@ -62,3 +63,12 @@ $large-grid-column: 58px + 2 * $large-grid-column-padding;
 
 //Global Navigation
 $global-navigation-height: 56px;
+
+//Typography related variables
+$font-size-xxs: 12px;
+$font-size-xs: 14px;
+$font-size-s: 15px;
+$font-size-base: 16px;
+$font-size-l: 18px;
+$font-size-xl: 27px;
+$font-size-xxl: 36px;

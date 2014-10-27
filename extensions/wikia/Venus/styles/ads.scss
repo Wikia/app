@@ -1,0 +1,52 @@
+@import "mixins";
+@import "variables";
+
+wikia-ad.hidden, .wikia-ad .hidden {
+	display: none !important;
+}
+
+#TOP_LEADERBOARD {
+	line-height: 0;
+	margin: 10px auto;
+	text-align: center;
+
+	> div,
+	> iframe {
+		display: inline-block;
+	}
+
+	&.default-height {
+		height: 90px;
+	}
+}
+
+#TOP_RIGHT_BOXAD {
+	@include grid-column-width('medium', 4, -2 * $medium-grid-column-padding);
+	display: block;
+	float: right;
+	margin: 0 $medium-grid-column-padding + $medium-content-padding - $content-border-width 20px $medium-grid-gutter + $medium-grid-column-padding;
+	text-align: center;
+
+	&.default-height {
+		height: 250px;
+	}
+}
+
+@media #{$small-only} {
+	#TOP_LEADERBOARD {
+		width: 100%;
+	}
+
+	#TOP_RIGHT_BOXAD {
+		@include grid-column-width('small', 5);
+		margin: 0 $small-content-padding - $content-border-width 20px $small-grid-gutter + $small-grid-column-padding;
+	}
+}
+
+
+@media #{$large-up} {
+	#TOP_RIGHT_BOXAD {
+		@include grid-column-width('large', 4, -2 * $large-grid-column-padding);
+		margin: 0 $large-grid-column-padding + $large-content-padding - $content-border-width 20px $large-grid-gutter + $large-grid-column-padding;
+	}
+}

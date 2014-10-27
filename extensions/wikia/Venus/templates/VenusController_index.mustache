@@ -13,25 +13,21 @@
 <body class="{{bodyClasses}}">
 <div id="ad-skin" class="wikia-ad noprint"></div>
 {{{globalNavigation}}}
-{{! TODO: Re-Enable when it's ready: notifications}}
-{{{topAds}}}
-<section class="wikia-page page-width">
-	{{{localNavigation}}}
-	<article class="article clearfix">
-		{{{header}}}
-		<!-- Ad unit placeholder for prototyping only -->
-		<div class="adUnitTest">
+<div class="wikia-page-wrapper">
+	{{{topAds}}}
+	<section class="wikia-page page-width">
+		{{{localNavigation}}}
+		<article class="article clearfix" id="WikiaArticle">
+			{{{header}}}
 			{{{adTopRightBoxad}}}
-		</div>
-		{{{leftArticleNav}}}
-		{{{contents}}}
-	</article>
-	{{{globalFooter}}}
-	{{! TODO: Re-Enable when it's ready: corporateFooter}}
-</section>
-<!--$jsBodyFiles-->
+			{{{leftArticleNav}}}
+			{{{contents}}}
+		</article>
+		{{{globalFooter}}}
+		{{! TODO: Re-Enable when it's ready: corporateFooter}}
+	</section>
+</div>
 {{{jsBodyFiles}}}
-<!-- $bottomScriptLinks -->
 {{{bottomScriptLinks}}}
 </body>
 </html>

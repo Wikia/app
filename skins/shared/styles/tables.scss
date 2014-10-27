@@ -1,0 +1,65 @@
+@import "skins/shared/color";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/gradient";
+
+$color-table-overflow-shadow: mix( $color-page-shadow, $color-page, 50% );
+
+.article-table {
+	background: darken($color-page, 2%);
+	border-collapse: collapse;
+	border: none;
+	clear: both;
+	color: $color-text;
+	margin: 1em 1em 1em 0;
+
+	th, td {
+		border-bottom: 1px $color-page-border solid;
+		padding: 6px 12px;
+	}
+
+	th {
+		background: darken($color-page, 5%);
+		text-align: left;
+	}
+
+	caption {
+		font-weight: bold;
+	}
+}
+
+.article {
+	.table-is-wide {
+		clear: both;
+		margin-top: 1em;
+		position: relative;
+
+		&:before {
+			@include box-shadow( -15px, 0, 20px, $color-table-overflow-shadow, true, -15px );
+			content: '';
+			height: 100%;
+			position: absolute;
+			right: 0;
+			width: 20px;
+			z-index: 2;
+		}
+
+		// Wide tables cannot be floated
+		// Must use important here to override inline styles :'(
+		table {
+			float: none !important;
+			margin-top: 0 !important;
+		}
+
+		.table-scrollable {
+			overflow: auto;
+		}
+	}
+}
+
+table.jquery-tablesorter.sortable th.headerSort .chevron {
+	border-top-color: $color-text;
+
+	&:first-child {
+		border-color: transparent transparent $color-text;
+	}
+}

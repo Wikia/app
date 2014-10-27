@@ -18,7 +18,6 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 
 .local-navigation {
 	@include font-size-xxs;
-	background-color: $color-page;
 	height: 80px;
 	position: relative;
 	white-space: nowrap;
@@ -137,6 +136,7 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 		padding: 20px 0 0;
 
 		> li {
+			background-clip: padding-box;
 			display: block;
 			float: left;
 			height: 100%;
@@ -156,12 +156,12 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 			}
 
 			&.active {
-				background: $color-buttons;
-				border-color: $color-page;
+				background-color: $color-buttons;
+				border-color: transparent;
 				color: $color-button-text;
 
 				+ li {
-					border-color: $color-page;
+					border-color: transparent;
 				}
 
 				.second-level-menu {
@@ -329,6 +329,8 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 	}
 
 	.dropdown {
+		line-height: 14px;
+
 		.second-level-row,
 		.third-level-row {
 			a {

@@ -1,46 +1,54 @@
-@import 'extensions/wikia/Venus/styles/variables';
-@import 'extensions/wikia/Venus/styles/mixins';
-@import 'extensions/wikia/Venus/styles/typographyMixins';
 @import 'extensions/wikia/Venus/styles/article/images';
+@import 'extensions/wikia/Venus/styles/article/media';
+@import 'extensions/wikia/Venus/styles/article/infobox';
+@import 'extensions/wikia/Venus/styles/mixins';
+@import 'extensions/wikia/Venus/styles/modules/lightboxVenus';
+@import 'extensions/wikia/Venus/styles/modules/throbberVenus';
+@import 'extensions/wikia/Venus/styles/typographyMixins';
+@import 'extensions/wikia/Venus/styles/variables';
 @import 'skins/shared/color';
-@import 'skins/shared/mixins/flexbox';
-@import 'images';
-@import 'media';
-@import 'infobox';
+@import 'skins/shared/styles/infoboxes';
 
 $placeholder-background-color: $color-left-article-nav; // only for prototype version
 $article-items-spacing: 40px;
+$header-without-cover-unit-spacing: 60px;
 
 .article {
+	overflow: hidden;
+
 	header {
 		@include grid-column-width('medium', 8, $medium-content-padding - $content-border-width);
 		float: left;
-		margin-bottom: $article-items-spacing;
+
+		&:not(.cover-unit) {
+			margin-bottom: $header-without-cover-unit-spacing;
+			margin-top: $header-without-cover-unit-spacing;
+		}
 
 		&.cover-unit {
 			@include proportional-video-height(8 * ($medium-grid-column + $medium-grid-gutter) - $medium-grid-gutter + $medium-content-padding);
 			background-color: $placeholder-background-color; //only for prototype version
+			margin-bottom: $article-items-spacing;
 			position: relative;
 
 			h1 {
+				padding-bottom: $header-without-cover-unit-spacing / 2;
 				position: absolute;
 			}
 		}
 
 		h1 {
-			@include font-size-xxl;
 			bottom: 0;
-			font-weight: bold;
 			margin: 0;
-			padding: 0 $medium-grid-column-padding 30px $medium-content-padding + $medium-grid-column-padding - $content-border-width;
+			padding: 0 $medium-grid-column-padding 0 $medium-content-padding + $medium-grid-column-padding - $content-border-width;
 			word-break: break-all;
 		}
 	}
 }
 
 .left-nav {
-	position: fixed;
 	margin-left: $medium-content-padding - $content-border-width;
+	position: fixed;
 	text-align: center;
 	width: $medium-grid-column;
 
@@ -62,7 +70,7 @@ $article-items-spacing: 40px;
 
 .mw-content-text {
 	clear: left;
-	margin: 0 $medium-content-padding - $content-border-width 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width;
+	margin: 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width;
 	padding: 0 $medium-grid-column-padding;
 
 	&.clear-none {
@@ -73,52 +81,32 @@ $article-items-spacing: 40px;
 		@include font-size-xxs;
 		display: inline-block;
 		float: right;
-		line-height: 27px;
-		margin-left: 27px;
+		margin-left: $edit-button-size;
 		padding-left: 5px;
 		position: relative;
 		text-transform: uppercase;
 
 		a::before {
-			@include edit-button(27px);
+			@include edit-button;
+
+			color: $color-links;
 		}
 	}
 
-	h1 .editsection {
-		line-height: 40px;
-		margin-left: 40px;
-
-		a::before {
-			@include resize-edit-button(40px);
-		}
+	h1, h2, h3, h4, h5, h6 {
+		overflow: hidden;
 	}
 
 	h2 {
+		border-bottom: 1px solid $color-page-border;
 		margin-bottom: 12px;
 		margin-left: -$medium-grid-gutter;
 		margin-right: -$medium-grid-gutter;
 		margin-top: $article-items-spacing;
-
-		&::after {
-			background-color: $color-page-border;
-			content: '';
-			display: block;
-			height: 1px;
-			margin-top: 11px;
-			overflow: hidden;
-		}
+		padding-bottom: 10px;
 
 		.mw-headline {
 			padding-left: $medium-grid-gutter;
-		}
-
-		.editsection {
-			line-height: 36px;
-			margin-left: 36px;
-
-			a::before {
-				@include resize-edit-button(36px);
-			}
 		}
 	}
 
@@ -162,6 +150,7 @@ $article-items-spacing: 40px;
 
 	> ol,
 	> ul {
+		margin-bottom: 40px;
 		margin-top: 0;
 		padding-right: 108px;
 
@@ -170,38 +159,39 @@ $article-items-spacing: 40px;
 		}
 	}
 
+	ol {
+		list-style-type: decimal;
+	}
+
 	ul {
-		list-style: disc;
+		list-style-type: disc;
 	}
 
 	li {
 		margin-top: 16px;
 		padding-left: 13px;
 	}
+
+	dl {
+		margin: 16px 0;
+	}
+
+	dt {
+		font-weight: bold;
+	}
+
+	dd {
+		margin-left: $medium-grid-column - 2 * $medium-grid-column-padding;
+	}
 }
 
 /* FOR PROTOTYPE/TESTING ONLY */
-.adUnitTest,
-.infobox-test {
-	@include grid-column-width('medium', 4, -2 * $medium-grid-column-padding);
-	display: block;
-	float: right;
-	margin: 0 $medium-grid-column-padding + $medium-content-padding - $content-border-width 20px $medium-grid-gutter + $medium-grid-column-padding;
+
+/* CON-1982: use Oasis font-size in prototype phase */
+.infobox {
+	font-size: $font-size-xxs;
 }
 
-.infobox-test {
-	background-color: $placeholder-background-color;
-	clear: right;
-	height: 500px;
-	padding: 10px;
-}
-
-#TOP_RIGHT_BOXAD.default-height {
-	height: 250px;
-	&.hidden, .hidden {
-		display: none;
-	}
-}
 /* END FOR PROTOTYPE/TESTING ONLY */
 
 @media #{$large-up} {
@@ -224,7 +214,7 @@ $article-items-spacing: 40px;
 	}
 
 	.mw-content-text {
-		margin: 0 $large-content-padding - $content-border-width 0 $large-grid-column + $large-grid-gutter + $large-content-padding - $content-border-width;
+		margin: 0 $large-grid-column + $large-grid-gutter + $large-content-padding - $content-border-width;
 		padding: 0 $large-grid-column-padding;
 
 		h2 {
@@ -264,13 +254,10 @@ $article-items-spacing: 40px;
 			margin-top: 18px;
 			padding-left: 14px;
 		}
-	}
 
-	.adUnitTest,
-	.infobox-test {
-		@include grid-column-width('large', 4, -2 * $large-grid-column-padding);
-		margin: 0 $large-grid-column-padding + $large-content-padding - $content-border-width 20px $large-grid-gutter + $large-grid-column-padding;
-		padding: $large-grid-column-padding;
+		dd {
+			margin-left: $large-grid-column - 2 * $large-grid-column-padding;
+		}
 	}
 }
 
@@ -290,9 +277,7 @@ $article-items-spacing: 40px;
 	}
 
 	.left-nav {
-		float: none;
 		margin-left: $small-content-padding - $content-border-width;
-		position: absolute;
 		width: $small-grid-column;
 	}
 
@@ -301,19 +286,11 @@ $article-items-spacing: 40px;
 		padding: 0 $small-grid-column-padding;
 
 		h2 {
-			@include flexbox;
-			flex-direction: row-reverse;
-			justify-content: flex-end;
 			margin-left: -$small-grid-gutter;
 			margin-right: -$small-grid-gutter;
 
-			.editsection {
-				float: none;
-			}
-
 			.mw-headline {
 				padding-left: $small-grid-gutter;
-				width: 90%;
 			}
 		}
 
@@ -335,12 +312,9 @@ $article-items-spacing: 40px;
 			margin-top: 10px;
 			padding-left: 4px;
 		}
-	}
 
-	.adUnitTest,
-	.infobox-test {
-		@include grid-column-width('small', 5);
-		margin: 0 $small-content-padding - $content-border-width 20px $small-grid-gutter + $small-grid-column-padding;
-		padding: $small-grid-column-padding;
+		dd {
+			margin-left: $small-grid-column - 2 * $small-grid-column-padding;
+		}
 	}
 }
