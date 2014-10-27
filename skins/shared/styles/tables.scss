@@ -6,14 +6,13 @@ $color-table-background: if($is-dark-wiki, lighten($color-page, 2%), darken($col
 $color-table-header-background: if($is-dark-wiki, lighten($color-page, 5%), darken($color-page, 5%));
 
 $table-margin: 1em;
+$cell-padding: 6px;
 
-$table-overflow-shadow-offset-x: -15px;
+$table-overflow-shadow-offset-x: 15px;
 $table-overflow-shadow-offset-y: 0;
 $table-overflow-shadow-blur-radius: 20px;
 $table-overflow-shadow-color: mix($color-page-shadow, $color-page, 50%);
 $table-overflow-shadow-inset: true;
-$table-overflow-shadow-spread-radius: -15px;
-
 
 .article-table {
 	background: $color-table-background;
@@ -25,7 +24,7 @@ $table-overflow-shadow-spread-radius: -15px;
 
 	th, td {
 		border-bottom: 1px $color-page-border solid;
-		padding: 6px 12px;
+		padding: $cell-padding 2 * $cell-padding;
 	}
 
 	th {
@@ -41,17 +40,17 @@ $table-overflow-shadow-spread-radius: -15px;
 .article {
 	.table-is-wide {
 		clear: both;
-		margin-top: 1em;
+		margin-top: $table-margin;
 		position: relative;
 
 		&::before {
 			@include box-shadow(
-				$table-overflow-shadow-offset-x,
+				-$table-overflow-shadow-offset-x,
 				$table-overflow-shadow-offset-y,
 				$table-overflow-shadow-blur-radius,
 				$table-overflow-shadow-color,
 				$table-overflow-shadow-inset,
-				$table-overflow-shadow-spread-radius
+				-$table-overflow-shadow-offset-x
 			);
 			content: '';
 			height: 100%;
@@ -62,12 +61,12 @@ $table-overflow-shadow-spread-radius: -15px;
 
 			html[dir='rtl'] & {
 				@include box-shadow(
-						-$table-overflow-shadow-offset-x,
+						$table-overflow-shadow-offset-x,
 						$table-overflow-shadow-offset-y,
 						$table-overflow-shadow-blur-radius,
 						$table-overflow-shadow-color,
 						$table-overflow-shadow-inset,
-						$table-overflow-shadow-spread-radius
+						-$table-overflow-shadow-offset-x
 				);
 			}
 		}
