@@ -4,11 +4,14 @@
 
 <header class="MainPageHeroHeader no-edit-state">
 	<div id="MainPageHero" class="MainPageHero">
-		<div
-			class="image-wrap <?php if ( isset( $wikiData->imagePath ) ) : ?>filled-state<? else : ?>zero-state<?php endif; ?>">
+		<div class="image-wrap <?php if ( isset( $wikiData->imagePath ) ) : ?>filled-state<? else : ?>zero-state<?php endif; ?>">
 			<div class="upload-wrap">
 				<div class="upload">
-					<div class="upload-mask"></div>
+					<div class="upload-mask">
+						<div class="overlay-flex">
+							<span class="overlay-text sg-sub-title">drop an image here</span>
+						</div>
+					</div>
 					<div class="upload-group">
 						<div class="upload-btn">
 							<img class="upload-icon" src="/extensions/wikia/NjordPrototype/images/addImage.svg">
@@ -20,11 +23,6 @@
 						</div>
 						<input name="file" type="file" hidden/>
 						<span class="upload-desc sg-sub">or, drop an image here (1600x600px minimum)</span>
-					</div>
-				</div>
-				<div class="overlay">
-					<div class="overlay-flex upload">
-						<span class="overlay-text sg-sub-title">drop an image here</span>
 					</div>
 				</div>
 			</div>

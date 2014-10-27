@@ -50,29 +50,11 @@
     position: absolute;
     text-align: left;
     width: 400px;
-//    z-index: 2;
   }
 
   .hero-image {
     vertical-align: bottom;
     width: 100%;
-  }
-  .overlay {
-    background-color: rgba(255, 255, 255, .1);
-    display: none;
-    height: 100%;
-    position: absolute;
-    width: 100%;
-    text-align: center;
-    z-index: 2;
-    .overlay-flex {
-      display: flex;
-    }
-    .overlay-text {
-      color: #FFFFFF;
-      margin: auto;
-      text-transform: uppercase;
-    }
   }
   .position-info {
     display: none;
@@ -89,10 +71,6 @@
       z-index: 1;
     }
   }
-
-//  .upload {
-//    z-index: 2;
-//  }
 
   .upload-group {
     .update-btn {
@@ -123,12 +101,23 @@
   }
 
   .upload-mask {
+    .overlay-flex {
+      display: flex;
+      height: 100%;
+    }
+    .overlay-text {
+      color: #FFFFFF;
+      margin: auto;
+      text-transform: uppercase;
+    }
+    background-color: rgba(0,0,0,0.2);
     display: none;
-    height: 100%;
-    left: 0;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    bottom: 0px;
     position: absolute;
-    width: 100%;
-    z-index: 3;
+    z-index: 1;
   }
 }
 
