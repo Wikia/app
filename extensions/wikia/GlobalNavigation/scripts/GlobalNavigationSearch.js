@@ -6,7 +6,8 @@ require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], funct
 		$globalNav,
 		$inputResultLang,
 		$formElement,
-		$searchLabel;
+		$searchLabel,
+		autocompleteEnabled;
 
 	/**
 	 * Look up elements in global navigation's search form
@@ -38,10 +39,11 @@ require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], funct
 	/**
 	 * Disable or enable properties on search form
 	 * @param {boolean} enable - should autocomplete be enabled and lang input disabled
-=	 */
+	 */
 	function setPropertiesOnInput(enable) {
 		$inputResultLang.prop('disabled', enable);
-		if ($searchInput.data('autocomplete')) {
+		autocompleteEnabled = autocompleteEnabled || !!$searchInput.data('autocomplete');
+		if (autocompleteEnabled) {
 			if (enable) {
 				$searchInput.data('autocomplete').enable();
 			} else {
@@ -49,7 +51,6 @@ require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], funct
 			}
 		}
 	}
-
 
 	$(function () {
 		setElements();

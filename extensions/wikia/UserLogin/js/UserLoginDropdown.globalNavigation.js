@@ -1,13 +1,12 @@
 /* global UserLoginFacebook:true, UserLoginAjaxForm:true */
 require(['jquery', 'GlobalNavigationiOSScrollFix', 'wikia.window'], function ($, scrollFix, win) {
 	'use strict';
-	var $entryPoint, $userLoginDropdown;
+	var $entryPoint, $userLoginDropdown, loginAjaxForm = false;
 
 	/**
 	 * Open user login dropdown by adding active class
 	 */
 	function openMenu() {
-		var loginAjaxForm = false;
 		$entryPoint.addClass('active');
 		window.transparentOut.show();
 
