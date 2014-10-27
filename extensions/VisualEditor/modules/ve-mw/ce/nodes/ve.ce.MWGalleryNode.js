@@ -46,6 +46,18 @@ ve.ce.MWGalleryNode.prototype.onSetup = function () {
 	this.$element.find( '.gallery' ).addClass( 've-ce-noHighlight' );
 };
 
+/**
+ * @inheritdoc
+ */
+ve.ce.MWGalleryNode.prototype.doneGenerating = function ( generatedContents, config ) {
+	var $generatedContents = this.$( generatedContents ),
+		alternativeRendering = $generatedContents.data( 'mw' ).alternativeRendering || null;
+	if ( alternativeRendering ) {
+		generatedContents = [ this.$( alternativeRendering )[0] ];
+	}
+	ve.ce.MWGalleryNode.super.prototype.doneGenerating.apply( this, arguments );
+};
+
 /* Registration */
 
 ve.ce.nodeFactory.register( ve.ce.MWGalleryNode );

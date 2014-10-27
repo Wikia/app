@@ -2,6 +2,8 @@
  * VisualEditor DataModel WikiaGalleryNode class.
  */
 
+/*global mw */
+
 /**
  * DataModel Wikia gallery node.
  *
@@ -29,7 +31,11 @@ ve.dm.WikiaGalleryNode.static.tagName = 'div';
 ve.dm.WikiaGalleryNode.static.matchTagNames = [ 'div' ];
 
 ve.dm.WikiaGalleryNode.static.getMatchRdfaTypes = function () {
-	return [ 'mw:Extension/nativeGallery' ];
+	if ( mw.config.get( 'wgEnableMediaGalleryExt' ) === true ) {
+		return [ 'mw:Extension/nativeGallery' ];
+	} else {
+		return [];
+	}
 };
 
 /* Methods */
