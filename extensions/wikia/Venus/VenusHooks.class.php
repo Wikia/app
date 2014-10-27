@@ -22,7 +22,8 @@ class VenusHooks {
 
 			if (!is_null($node)) {
 				$node = $infoboxExtractor->clearInfoboxStyles( $node );
-				$infoboxContainer = $infoboxExtractor->wrapInfobox( $node, 'infoboxContainer', 'infobox-container' );
+				$infoboxWrapper = $infoboxExtractor->wrapInfobox( $node, 'infoboxWrapper', 'infobox-wrapper' );
+				$infoboxContainer = $infoboxExtractor->wrapInfobox( $infoboxWrapper, 'infoboxContainer', 'infobox-container' );
 
 				$body = $dom->documentElement->firstChild;
 				$infoboxExtractor->insertNode($body, $infoboxContainer, true );

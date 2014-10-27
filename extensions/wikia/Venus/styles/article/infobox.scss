@@ -8,6 +8,18 @@
 	display: block;
 	float: right;
 	margin: 0 0 30px $medium-grid-gutter + $medium-grid-column-padding;
+	text-align: center;
+
+	.infobox-wrapper {
+		display: inline-block;
+		position: relative;
+
+		&.collapsed-infobox {
+			height: 740px;
+			overflow: hidden;
+			position: relative;
+		}
+	}
 
 	table, div {
 		@include grid-column-max-width('medium', 4, -2 * $medium-grid-column-padding);
@@ -19,12 +31,6 @@
 		height: auto;
 		margin: 0;
 		max-width: 100%;
-	}
-
-	&.collapsed-infobox {
-		height: 740px;
-		overflow: hidden;
-		position: relative;
 	}
 
 	.see-more {
