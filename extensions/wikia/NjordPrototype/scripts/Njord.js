@@ -41,7 +41,6 @@
 		$imageSaveElement = $('.MainPageHeroHeader .image-save-bar'),
 		$titleElement = $('.MainPageHeroHeader .title-wrap'),
 		$titleEditElement = $('.MainPageHeroHeader .title-wrap .edit-box'),
-		$descElement = $('.MainPageHeroHeader .hero-desciprion'),
 
 		$imageDiscardBtn = $('.MainPageHeroHeader .image-save-bar .discard-btn'),
 		$imageSaveBtn = $('.MainPageHeroHeader .image-save-bar .save-btn'),
@@ -51,12 +50,19 @@
 		$titleDiscardBtn = $('.MainPageHeroHeader .title-wrap .discard-btn'),
 		$titleText = $('.MainPageHeroHeader .title-wrap .title-text'),
 
+		$descriptionElement = $('.MainPageHeroHeader .hero-description'),
+		$descriptionEditElement = $('.MainPageHeroHeader .hero-description .edit-box'),
+		$descriptionEditBtn = $('.MainPageHeroHeader .hero-description .edit-btn'),
+		$descriptionSaveBtn = $('.MainPageHeroHeader .hero-description .save-btn'),
+		$descriptionDiscardBtn = $('.MainPageHeroHeader .hero-description .discard-btn'),
+		$descriptionEditBoxText = $('.MainPageHeroHeader .hero-description .edit-box .edited-text'),
+		$descriptionText = $('.hero-description_text'),
+
 		$body = $('body'),
 		$heroHeader = $('.MainPageHeroHeader'),
 		$overlay = $('#MainPageHero .overlay'),
 		$heroModule = $('#MainPageHero'),
 		$heroModuleTitle = $('#MainPageHero .hero-title'),
-		$heroModuleDescription = $('#MainPageHero .hero-description'),
 		$heroModuleUpload = $('#MainPageHero .upload'),
 		$heroModuleUploadMask = $('#MainPageHero .upload-mask'),
 		$heroModuleAddButton = $('#MainPageHero .upload .upload-btn'),
@@ -179,12 +185,41 @@
 			}
 			trackMom(revertTitleFailLabel, trackerActionEdit);
 		},
-		saveDescription = function() {},
-		revertDescription = function() {},
+		saveDescription = function () {
+//			heroData.description = $descriptionEditBoxText.text();
+			$descriptionEditElement.startThrobbing();
+			$.nirvana.sendRequest({
+				controller: 'NjordController',
+				method: 'saveHeroDescription',
+				type: 'POST',
+				data: {
+					'description': heroData.description
+				},
+				callback: function () {
+					$descriptionEditElement.stopThrobbing();
+					States.setState($descriptionElement, 'filled-state');
+					$descriptionText.text(heroData.description);
+				},
+				onErrorCallback: function () {
+					// TODO: handle failure
+					$descriptionEditElement.stopThrobbing();
+				}
+			});
+		},
+		editDescription = function () {
+			States.setState($descriptionElement, 'edit-state');
+			//FIXME: fix onChange event, caret at end on focus
+			$descriptionEditBoxText.text(heroData.description);
+			$descriptionEditBoxText.focus();
+			$descriptionEditBoxText.change();
+		},
+		revertDescription = function () {
+			States.setState($descriptionElement, 'filled-state');
+		},
 
 		initializeData = function () {
 			heroData.title = heroData.oTitle = $heroModuleTitle.text();
-			heroData.description = heroData.oDescription = $heroModuleDescription.text();
+			heroData.description = heroData.oDescription = $descriptionText.text();
 			heroData.imagepath = heroData.oImage = $heroModuleImage.data('fullpath');
 			heroData.cropposition = heroData.oCropposition = $heroModuleImage.data('cropposition');
 		}, onFocus = function () {
@@ -200,9 +235,9 @@
 			return $this;
 		}, onChange = function (event, imagePath, imageName) {
 			var target = $(event.target);
-
 			heroData.title = $heroModuleTitle.text();
 			heroData.description = $heroModuleDescription.text();
+				heroData.description = $descriptionEditBoxText.text();
 			if (imagePath || imageName) {
 				heroData.imagepath = imagePath;
 				heroData.imagename = imageName;
@@ -211,7 +246,7 @@
 			} else {
 				var caretSave = target.caret();
 				$heroModuleTitle.text($heroModuleTitle.text());
-				$heroModuleDescription.text($heroModuleDescription.text());
+//				$heroModuleDescription.text($heroModuleDescription.text());
 				target.caret(caretSave);
 			}
 			heroData.changed = true;
@@ -288,10 +323,16 @@
 			$titleDiscardBtn.on('click', revertTitle);
 
 			$heroModuleTitle.on('focus', onFocus).on('blur keyup paste input', onInput).on('change', onChange);
-			$('.hero-description').on('focus', onFocus).on('blur keyup paste input', onInput).on('change', onChange);
 			//on(load) on img buged on this jquery
 			$heroModuleImage[0].addEventListener('load', onImageLoad);
 			$heroModule.on('change', onChange).on('enableDragging', onDraggingEnabled);
+
+			//hero description
+			$descriptionElement.on('focus', onFocus).on('blur keyup paste input', onInput).on('change', onChange);
+
+			$descriptionEditBtn.on('click', editDescription);
+			$descriptionDiscardBtn.on('click', revertDescription);
+			$descriptionSaveBtn.on('click', saveDescription);
 
 			$(window).resize(onResize);
 			initializeData();

@@ -145,6 +145,19 @@ class NjordController extends WikiaController {
 		$this->getResponse()->setVal( 'wikiData', $wikiDataModel );
 	}
 
+	public function saveHeroDescription() {
+		$description = $this->getRequest()->getVal('description', false);
+		$success = false;
+		$wikiDataModel = $this->getWikiData();
+		if ($description) {
+			$wikiDataModel->description = $description;
+			$this->setWikiData( $wikiDataModel );
+			$success = true;
+		}
+		$this->getResponse()->setVal( 'success', $success );
+		$this->getResponse()->setVal( 'wikiData', $wikiDataModel );
+	}
+
 	public function saveHeroImage() {
 		$image = $this->getRequest()->getVal('imagename', false);
 		$cropPosition = $this->getRequest()->getVal('cropposition', false);

@@ -130,9 +130,42 @@
 }
 
 .MainPageHeroHeader {
+  .btn-bar {
+    align-items: center;
+    border: 1px solid #092140;
+    background-color: white;
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 15px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, .3);
+  }
+
+  .edit-box {
+    background-color: rgba(0, 0, 0, .03);
+    display: none;
+    .edited-text {
+      outline: none;
+      min-height: 100px;
+      padding: 1%;
+      padding-left: 2%;
+      color: rgba(0, 0, 0, .7);
+      display: block;
+    }
+  }
+  .edit-btn {
+    cursor: pointer;
+  }
+
   .hero-description {
     margin: 20px 8%;
+    max-width: 64vw;
   }
+
+  .hero-description_text {
+    max-width: 800;
+    word-wrap: break-word;
+  }
+
   .image-save-bar {
     align-items: center;
     border-bottom: 1px solid #092140;
@@ -240,6 +273,12 @@
     .title-text {
       display: none;
     }
+    .hero-description_text {
+      display: none;
+    }
+    .edit-btn{
+      display: none;
+    }
   }
 
   .filled-state {
@@ -266,6 +305,9 @@
     }
     .upload-group {
       margin: 5px 0 0 8%;
+    }
+    .edit-btn{
+      display: inherit;
     }
   }
 

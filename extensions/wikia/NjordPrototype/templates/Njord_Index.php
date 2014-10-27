@@ -41,7 +41,6 @@
 		<h1 class="title-wrap sg-title <?php if ( isset( $wikiData->title ) ) : ?>filled-state<? else : ?>zero-state<?php endif; ?>">
 			<div class="edit-box">
 				<span class="hero-title" contenteditable="true"><?= $wikiData->title ?></span>
-
 				<div class="btn-bar">
 					<div class="new-btn discard-btn sg-sub">Discard</div>
 					<div class="new-btn save-btn sg-sub">Publish</div>
@@ -57,9 +56,23 @@
 		<div class="new-btn discard-btn sg-sub">Discard</div>
 		<div class="new-btn save-btn sg-sub">Publish</div>
 	</div>
-	<div class="hero-description sg-main <?php if ( isset( $wikiData->description ) ) : ?>filled-state<? else : ?>zero-state<?php endif; ?>"><?= $wikiData->description ?><span class="desc-default-text">Add a summary that will be used to
-			promote your page in search results and on other promotional areas. (160 characters maximum)</span>
-		<img class="title-edit-btn" src="/extensions/wikia/NjordPrototype/images/pencil_b.svg">
+	<div class="hero-description sg-main <?php if ( isset( $wikiData->description ) ) : ?>filled-state<? else : ?>zero-state<?php endif; ?>">
+		<div class="edit-box">
+			<span class="edited-text" contenteditable="true"><?= $wikiData->description ?></span>
+			<div class="btn-bar">
+				<div class="new-btn discard-btn sg-sub">Cancel</div>
+				<div class="new-btn save-btn sg-sub">Done</div>
+			</div>
+		</div>
+		<span class="hero-description_text">
+		<?php if ( isset( $wikiData->description ) ) { ?>
+			<?= $wikiData->description; ?>
+			<? } else { ?>Add a summary that will be used to
+			promote your page in search results and on other promotional areas. (160 characters maximum)
+		<? } ?>
+		</span>
+		<img class="edit-btn" src="/extensions/wikia/NjordPrototype/images/pencil_b.svg"/>
+		</span>
 	</div>
 </header>
 
