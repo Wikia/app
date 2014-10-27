@@ -817,11 +817,10 @@
 
 				if (clear) {
 					queryString.removeVal('file');
-					history.replaceState();
 				} else {
 					queryString.setVal('file', self.current.key, true);
-					history.replaceState();
 				}
+				history.replaceState(null, null, queryString);
 			});
 		},
 
