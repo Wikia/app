@@ -14,6 +14,7 @@ class VignetteRequest {
 			'is-archive' => $file->isOld(),
 			'timestamp' => $timestamp,
 			'relative-path' => $file->getHashPath().rawurlencode($file->getName()),
+			'bucket' => $file->getBucket(),
 			'path-prefix' => $file->getPathPrefix(),
 		]);
 	}
