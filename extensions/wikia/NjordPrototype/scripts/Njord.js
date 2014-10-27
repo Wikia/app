@@ -186,7 +186,6 @@
 			trackMom(revertTitleFailLabel, trackerActionEdit);
 		},
 		saveDescription = function () {
-//			heroData.description = $descriptionEditBoxText.text();
 			$descriptionEditElement.startThrobbing();
 			$.nirvana.sendRequest({
 				controller: 'NjordController',
@@ -236,8 +235,7 @@
 		}, onChange = function (event, imagePath, imageName) {
 			var target = $(event.target);
 			heroData.title = $heroModuleTitle.text();
-			heroData.description = $heroModuleDescription.text();
-				heroData.description = $descriptionEditBoxText.text();
+			heroData.description = $descriptionEditBoxText.text();
 			if (imagePath || imageName) {
 				heroData.imagepath = imagePath;
 				heroData.imagename = imageName;
