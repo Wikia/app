@@ -147,7 +147,7 @@ $header-without-cover-unit-spacing: 60px;
 	> ul {
 		margin-bottom: 40px;
 		margin-top: 0;
-		padding-right: 108px;
+		padding-right: round($medium-grid-column / 2) - $medium-grid-column-padding;
 
 		> li:first-child {
 			margin-top: 10px;
@@ -252,7 +252,7 @@ $header-without-cover-unit-spacing: 60px;
 		> ol,
 		> ul {
 			padding-left: 44px;
-			padding-right: 123px;
+			padding-right: round($large-grid-column / 2) - $large-grid-column-padding;
 		}
 
 		li {
@@ -316,7 +316,7 @@ $header-without-cover-unit-spacing: 60px;
 
 		> ol,
 		> ul {
-			padding-right: 81px;
+			padding-right: round($small-grid-column / 2) - $small-grid-column-padding;
 		}
 
 		li {
