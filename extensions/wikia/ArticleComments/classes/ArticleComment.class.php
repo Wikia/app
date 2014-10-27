@@ -468,10 +468,10 @@ class ArticleComment {
 		$id = $wikiPage->getId();
 
 		//we need to run all the hook manual :/
-		if ( wfRunHooks( 'ArticleDelete', array( &$wikiPage, &$wgUser, &$reason, &$error ) ) ) {
+		if ( wfRunHooks( 'ArticleDelete', [$wikiPage, $wgUser, $reason, $error] ) ) {
 			if( $wikiPage->doDeleteArticle( $reason, $suppress ) ) {
 				$this->mTitle->getPrefixedText();
-				wfRunHooks( 'ArticleDeleteComplete', array( &$wikiPage, &$wgUser, $reason, $id) );
+				wfRunHooks( 'ArticleDeleteComplete', [$wikiPage, $wgUser, $reason, $id] );
 				return true;
 			}
 		}
