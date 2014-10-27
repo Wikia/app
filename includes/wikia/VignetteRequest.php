@@ -36,6 +36,15 @@ class VignetteRequest {
 		$pathPrefix = isset($config['path-prefix']) ? $config['path-prefix'] : null;
 		$timestamp = isset($config['timestamp']) ? $config['timestamp'] : 0;
 
+		if (isset($config['replace'])) {
+			$replaceThumbnail = $config['replace'];
+		} else {
+			global $wgVignetteReplaceThumbnails;
+			if ($wgVignetteReplaceThumbnails || (!empty($_GET['replace']) && (bool)$_GET['replace'])) {
+				$replaceThumbnail = true;
+			}
+		}
+
 		if (!isset($config['base-url'])) {
 			global $wgVignetteUrl;
 			$config['base-url'] = $wgVignetteUrl;
@@ -64,6 +73,7 @@ class VignetteRequest {
 
 		$config = ( new UrlConfig() )
 			->setIsArchive( $isArchive )
+			->setReplaceThumbnail( $replaceThumbnail )
 			->setTimestamp( $timestamp )
 			->setRelativePath( $config['relative-path'] )
 			->setPathPrefix( $pathPrefix )
