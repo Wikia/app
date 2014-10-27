@@ -184,6 +184,7 @@ class MercuryApiController extends WikiaController {
 	public function getWikiVariables() {
 		$wikiVariables = $this->mercuryApi->getWikiVariables();
 		$wikiVariables[ 'navData' ] = $this->getNavigationData();
+		$wikiVariables[ 'vertical' ] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )['short'];
 
 		// Used to determine GA tracking
 		if ( !empty( $this->wg->IsGASpecialWiki ) ) {
