@@ -28,6 +28,8 @@ class VignetteRequest {
 	 * @throws InvalidArgumentException
 	 */
 	public static function fromConfigMap($config) {
+		$replaceThumbnail = false;
+
 		$requiredKeys = [
 			'relative-path',
 		];
