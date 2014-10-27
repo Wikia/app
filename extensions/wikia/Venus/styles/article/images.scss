@@ -6,6 +6,12 @@
 $border-color: lighten($color-text, 30%);
 $image-margin: 30px;
 
+/* Sets the initial property values for the default breakpoint.
+ *
+ * @param $direction: left or right
+ * @param $default-margin: margin [px] for all sides exept $direction-margin
+ * @param $direction-margin:  marign [px] for the side that the element is floated to
+ */
 @mixin floated-element-base($direction, $default-margin, $direction-margin) {
 	.float#{$direction},
 	.t#{$direction} {
@@ -20,6 +26,12 @@ $image-margin: 30px;
 	}
 }
 
+/* Gives the possibility to change margins on the corresponding to floated side for particular breakpoints.
+ *
+ * @param $breakpoint: small or large
+ * @param $direction: left or right
+ * @param $additional-margin: additional margin [px] for the corresponding direction
+ */
 @mixin floated-element-breakpoint-margins($breakpoint, $direction, $aditional-margin: 0) {
 	.float#{$direction},
 	.t#{$direction} {
@@ -27,6 +39,11 @@ $image-margin: 30px;
 	}
 }
 
+/* Sets the values for attributes which are breakpoint specific for floated elements.
+ *
+ * @param $breakpoint: small or large
+ * @param $additional-(left|right)-margin: additional margin [px] for the corresponding direction
+ */
 @mixin floated-element-breakpoint($breakpoint, $aditional-left-margin: 0, $aditional-right-margin: 0) {
 	.article {
 		.floatleft,
