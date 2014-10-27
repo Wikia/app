@@ -100,7 +100,13 @@
     margin: 5px 0 0 7%;
   }
 
-  .upload-mask {
+  .overlay {
+    background-color: rgba(0, 0, 0, 0.2);
+    display: none;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    z-index: 2;
     .overlay-flex {
       display: flex;
       height: 100%;
@@ -110,14 +116,16 @@
       margin: auto;
       text-transform: uppercase;
     }
-    background-color: rgba(0,0,0,0.2);
+  }
+
+  .upload-mask {
     display: none;
-    top: 0px;
-    right: 0px;
-    left: 0px;
-    bottom: 0px;
+    top: -1px;
+    right: -1px;
+    left: -1px;
+    bottom: -1px;
     position: absolute;
-    z-index: 1;
+    z-index: 3;
   }
 }
 
@@ -276,9 +284,6 @@
   .zero-state {
     .title-text {
       display: none;
-    }
-    .upload-wrap {
-      background-color: black;
     }
     .update-btn {
       display: none;
