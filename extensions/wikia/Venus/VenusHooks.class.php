@@ -13,19 +13,19 @@ class VenusHooks {
 	 */
 	static public function onParserSectionCreate( $parser, $section, &$content, $showEditLinks ) {
 		if ( self::isInfoboxInFirstSection( $parser, $section, $content ) ) {
-			$infoboxExtract = new InfoboxExtract( $content );
+			$infoboxExtractor = new InfoboxExtractor( $content );
 
-			$dom = $infoboxExtract->getDOMDocument();
+			$dom = $infoboxExtractor->getDOMDocument();
 
-			$nodes = $infoboxExtract->getInfoboxNodes();
+			$nodes = $infoboxExtractor->getInfoboxNodes();
 			$node = $nodes->item(0);
 
 			if (!is_null($node)) {
-				$node = $infoboxExtract->clearInfoboxStyles( $node );
-				$infoboxContainer = $infoboxExtract->wrapInfobox( $node, 'infoboxContainer', 'infobox-container' );
+				$node = $infoboxExtractor->clearInfoboxStyles( $node );
+				$infoboxContainer = $infoboxExtractor->wrapInfobox( $node, 'infoboxContainer', 'infobox-container' );
 
 				$body = $dom->documentElement->firstChild;
-				$infoboxExtract->insertNode($body, $infoboxContainer );
+				$infoboxExtractor->insertNode($body, $infoboxContainer, true );
 
 				$content = $dom->saveHTML();
 
@@ -45,6 +45,6 @@ class VenusHooks {
 	 * @return bool
 	 */
 	static public function isInfoboxInFirstSection( $parser, $section, $content ) {
-		return $parser->mIsMainParse && $section === 0 && stripos($content, InfoboxExtract::INFOBOX_CLASS_NAME);
+		return $parser->mIsMainParse && $section === 0 && stripos($content, InfoboxExtractor::INFOBOX_CLASS_NAME);
 	}
 }

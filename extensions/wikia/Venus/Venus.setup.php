@@ -31,7 +31,7 @@ $wgExtensionCredits['other'][] =
 
 $wgAutoloadClasses['ResourceVariablesGetter'] = 'includes/wikia/resourceloader/ResourceVariablesGetter.class.php';
 $wgAutoloadClasses['VenusHooks'] = __DIR__ . '/VenusHooks.class.php';
-$wgAutoloadClasses['InfoboxExtract'] = 'includes/wikia/InfoboxExtract.class.php';
+$wgAutoloadClasses['InfoboxExtractor'] = 'includes/wikia/InfoboxExtractor.class.php';
 
 
 /**

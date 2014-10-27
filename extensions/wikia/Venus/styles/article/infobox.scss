@@ -10,10 +10,12 @@
 	margin: 0 0 30px $medium-grid-gutter + $medium-grid-column-padding;
 
 	table, div {
-		width: 100%;
+		@include grid-column-max-width('medium', 4, -2 * $medium-grid-column-padding);
+		float: none;
+		margin: 0 auto;
 	}
 
-	img {
+	.image-thumbnail img {
 		height: auto;
 		margin: 0;
 		max-width: 100%;
@@ -35,14 +37,20 @@
 		font-weight: bold;
 		height: 40px;
 		left: 0;
+		margin: auto;
 		padding-top: 2px;
 		position: absolute;
+		right: 0;
 		text-align: center;
 		text-transform: uppercase;
 		width: 100%;
 
 		&.hide {
 			display: none;
+		}
+
+		&:hover {
+			text-decoration: none;
 		}
 	}
 }
@@ -51,6 +59,10 @@
 	.infobox-container {
 		@include grid-column-width('large', 4, -2 * $large-grid-column-padding);
 		margin-left: $large-grid-gutter + $large-grid-column-padding;
+
+		table, div {
+			@include grid-column-max-width('large', 4, -2 * $large-grid-column-padding);
+		}
 	}
 }
 
@@ -58,5 +70,9 @@
 	.infobox-container {
 		@include grid-column-width('small', 5);
 		margin-left: $small-grid-gutter + $small-grid-column-padding;
+
+		table, div {
+			@include grid-column-max-width('small', 5);
+		}
 	}
 }

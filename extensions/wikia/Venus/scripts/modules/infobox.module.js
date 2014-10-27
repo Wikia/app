@@ -1,4 +1,7 @@
-define('venus.infobox', ['wikia.document', 'wikia.window'], function(d, w){
+define('venus.infobox',
+	['wikia.document', 'wikia.window'],
+	function(d, w)
+{
 	'use strict';
 
 	var maxInfoboxHeight = 700,
@@ -43,7 +46,8 @@ define('venus.infobox', ['wikia.document', 'wikia.window'], function(d, w){
 	function createSeeMoreButton(infobox, id) {
 		var seeMoreButton,
 			infoboxStyles,
-			bgColor;
+			bgColor,
+			borderColor;
 
 		if (infobox) {
 			seeMoreButton = d.createElement('a');
@@ -54,8 +58,21 @@ define('venus.infobox', ['wikia.document', 'wikia.window'], function(d, w){
 			seeMoreButton.innerHTML = w.mw.msg('venus-article-infobox-see-more');
 
 			infoboxStyles = w.getComputedStyle(infobox);
+
 			bgColor = infoboxStyles.getPropertyValue('background-color');
-			seeMoreButton.style.backgroundColor = bgColor;
+			borderColor = infoboxStyles.getPropertyValue('border-color');
+
+			if (!borderColor.length) {
+				borderColor = infoboxStyles.getPropertyValue('border-bottom-color');
+			}
+
+			if (bgColor.length) {
+				seeMoreButton.style.backgroundColor = bgColor;
+			}
+
+			if (borderColor.length) {
+				seeMoreButton.style.border = '1px solid ' + borderColor;
+			}
 		}
 
 		return seeMoreButton;

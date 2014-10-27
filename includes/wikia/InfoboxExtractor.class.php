@@ -1,14 +1,17 @@
 <?php
-class InfoboxExtract {
+class InfoboxExtractor {
 
 	const INFOBOX_CLASS_NAME = 'infobox';
-	const INSERT_FIRST = 0;
-	const INSERT_LAST = 1;
 
 	private $domDocument;
 	static public $stylesBlacklist = [
-		'width' => 'width',
+		'float' => 'float',
 		'height' => 'height',
+		'margin' => 'margin',
+		'margin-bottom' => 'margin-bottom',
+		'margin-left' => 'margin-left',
+		'margin-right' => 'margin-right',
+		'margin-top' => 'margin-top',
 		'max-width' => 'max-width',
 		'min-width' => 'min-width',
 		'max-height' => 'max-height',
@@ -52,10 +55,10 @@ class InfoboxExtract {
 	 * @param DOMNode $node
 	 * @param int $position
 	 */
-	public function insertNode( $parent, $node, $position = self::INSERT_FIRST ) {
-		if ( $position === self::INSERT_FIRST ) {
+	public function insertNode( $parent, $node, $prepend = false ) {
+		if ( $prepend === true ) {
 			$parent->insertBefore( $node, $parent->firstChild );
-		} elseif ( $position === self::INSERT_LAST ) {
+		} else {
 			$parent->appendChild( $node );
 		}
 	}
@@ -134,6 +137,10 @@ class InfoboxExtract {
 
 		$styles = implode( ';', $stylesArray );
 
+		if ( !empty( $styles ) ) {
+			$styles .= ';';
+		}
+
 		return $styles;
 	}
 
@@ -146,11 +153,15 @@ class InfoboxExtract {
 	public function getStylesArray( $styles ) {
 		$stylesArray = [];
 
-		$styles = explode( ';', $styles );
+		if ( !empty( $styles ) ) {
+			$styles = explode( ';', $styles );
 
-		foreach ( $styles as $style ) {
-			$styleProperty = explode( ':', $style );
-			$stylesArray[trim($styleProperty[0])] = trim($style);
+			foreach ( $styles as $style ) {
+				if ( !empty( $style ) ) {
+					$styleProperty = explode( ':', $style );
+					$stylesArray[trim($styleProperty[0])] = trim($style);
+				}
+			}
 		}
 
 		return $stylesArray;
