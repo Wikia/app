@@ -48,6 +48,11 @@ define('mediaGallery.views.gallery', [
 		this.createMedia();
 		this.bindEvents();
 
+		if (this.model.media.length > this.origVisibleCount) {
+			this.toggler = new Toggler();
+			this.togglerAdded = false;
+		}
+
 		this.track({
 			action: tracker.ACTIONS.IMPRESSION,
 			value: this.model.media.length
@@ -158,44 +163,64 @@ define('mediaGallery.views.gallery', [
 
 	Gallery.prototype.beforeRender = function () {
 		// handle loading graphic
-		if (this.$loadingElement) {
-			this.$loadingElement.startThrobbing();
+		if (this.$showMore) {
+			this.$showMore.startThrobbing();
 		}
 	};
 
+	/**
+	 * Called after rendering the gallery and all images are loaded,
+	 */
 	Gallery.prototype.afterRender = function () {
-		// After rendering the gallery and all images are loaded,
-		// append the show more/less buttons (only happens once)
-		this.initToggler();
-
-		// handle loading graphic
-		if (this.$loadingElement) {
-			this.$loadingElement.stopThrobbing();
+		if (this.$showMore) {
+			this.$showMore.stopThrobbing();
 		}
+		this.updateToggler(true);
 
 		// Emit event when DOM settles into place
 		this.$el.trigger('mediaLoaded');
 	};
 
 	/**
-	 * Insert toggle buttons into DOM
+	 * Handle showing and hiding of toggler buttons. Best called after images are loaded / hidden
+	 * @param {bool} show If we just showed more images or hid more images
 	 */
-	Gallery.prototype.initToggler = function () {
+	Gallery.prototype.updateToggler = function (show) {
 		// make sure we have items to load and we haven't added the toggle buttons already
-		if (this.toggler || this.model.media.length <= this.origVisibleCount) {
+		if (!this.toggler) {
 			return;
 		}
 
-		this.toggler = new Toggler();
-		this.$wrapper.append(this.toggler.render().$el);
+		// make sure toggler's already in the DOM
+		this.appendToggler();
 
-		this.$showMore = this.toggler.$more
-			.on('click', $.proxy(this.showMore, this));
-		this.$showLess = this.toggler.$less
-			.on('click', $.proxy(this.showLess, this));
+		// hide and show appropriate buttons
+		if (show) {
+			// called after showing more images
+			this.$showLess.removeClass('hidden');
+			if (this.visibleCount >= this.model.media.length) {
+				this.$showMore.addClass('hidden');
+			}
+		} else {
+			// called after hiding overflow images
+			this.$showLess.addClass('hidden');
+			this.$showMore.removeClass('hidden');
+		}
+	};
 
-		// set element to indicate when things are loading
-		this.$loadingElement = this.$showMore;
+	/**
+	 * Insert toggle buttons into DOM if we haven't done it already
+	 */
+	Gallery.prototype.appendToggler = function () {
+		if (this.toggler && this.togglerAdded === false) {
+			this.$wrapper.append(this.toggler.render().$el);
+
+			this.$showMore = this.toggler.$more
+				.on('click', $.proxy(this.showMore, this));
+			this.$showLess = this.toggler.$less
+				.on('click', $.proxy(this.showLess, this));
+			this.togglerAdded = true;
+		}
 	};
 
 	/**
@@ -217,12 +242,6 @@ define('mediaGallery.views.gallery', [
 		});
 
 		this.render(toRender);
-
-		// hide and show appropriate buttons
-		this.$showLess.removeClass('hidden');
-		if (this.visibleCount >= this.model.media.length) {
-			this.$showMore.addClass('hidden');
-		}
 
 		this.track({
 			label: 'show-more-items',
@@ -249,8 +268,7 @@ define('mediaGallery.views.gallery', [
 		});
 
 		this.visibleCount = this.origVisibleCount;
-		this.$showLess.addClass('hidden');
-		this.$showMore.removeClass('hidden');
+		this.updateToggler(false);
 
 		this.scrollToTop();
 	};
