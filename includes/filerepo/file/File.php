@@ -772,15 +772,28 @@ abstract class File {
 	 * @return string
 	 */
 	public function createThumb( $width, $height = -1 ) {
-		$params = array( 'width' => $width );
-		if ( $height != -1 ) {
-			$params['height'] = $height;
+		global $wgEnableVignette;
+		if ( $wgEnableVignette ) {
+			$generator = $this->getUrlGenerator()->width( $width );
+
+			if ( $height != -1 ) {
+				$generator->height( $height );
+			} else {
+				$generator->height( $width );
+			}
+
+			return ( string )$generator->thumbnailDown();
+		} else {
+			$params = array( 'width' => $width );
+			if ( $height != -1 ) {
+				$params['height'] = $height;
+			}
+			$thumb = $this->transform( $params );
+			if ( is_null( $thumb ) || $thumb->isError() ) {
+				return '';
+			}
+			return $thumb->getUrl();
 		}
-		$thumb = $this->transform( $params );
-		if ( is_null( $thumb ) || $thumb->isError() ) {
-			return '';
-		}
-		return $thumb->getUrl();
 	}
 
 	/**
