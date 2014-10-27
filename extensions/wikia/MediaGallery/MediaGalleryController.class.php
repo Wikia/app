@@ -20,7 +20,8 @@ class MediaGalleryController extends WikiaController {
 		$this->model = new MediaGalleryModel( $items );
 
 		$galleryParams = $this->getVal( 'gallery_params', [] ); // gallery tag parameters
-		$visibleCount = empty( $galleryParams['expand'] ) ? self::MAX_ITEMS : self::MAX_EXPANDED_ITEMS;
+		$visibleCount = isset( $galleryParams['expand'] ) && $galleryParams['expand'] == 'true' ?
+			self::MAX_EXPANDED_ITEMS : self::MAX_ITEMS;
 
 		$data = $this->model->getGalleryData();
 
