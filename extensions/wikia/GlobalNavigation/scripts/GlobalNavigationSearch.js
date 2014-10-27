@@ -7,7 +7,7 @@ require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], funct
 		$inputResultLang,
 		$formElement,
 		$searchLabel,
-		autocompleteEnabled;
+		$autocompleteObj;
 
 	/**
 	 * Look up elements in global navigation's search form
@@ -29,6 +29,8 @@ require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], funct
 		var $selectedOption = $selectElement.find('option:selected');
 		$searchLabel.text($selectedOption.text());
 		$formElement.attr('action', $selectedOption.attr('data-search-url'));
+		//Setting reference to jQuery search autocomplete object
+		$autocompleteObj = $autocompleteObj || $searchInput.data('autocomplete');
 		if ($selectedOption.val() === 'global') {
 			setPropertiesOnInput(false);
 		} else {
@@ -42,12 +44,11 @@ require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], funct
 	 */
 	function setPropertiesOnInput(enable) {
 		$inputResultLang.prop('disabled', enable);
-		autocompleteEnabled = autocompleteEnabled || !!$searchInput.data('autocomplete');
-		if (autocompleteEnabled) {
+		if ($autocompleteObj) {
 			if (enable) {
-				$searchInput.data('autocomplete').enable();
+				$autocompleteObj.enable();
 			} else {
-				$searchInput.data('autocomplete').disable();
+				$autocompleteObj.disable();
 			}
 		}
 	}
