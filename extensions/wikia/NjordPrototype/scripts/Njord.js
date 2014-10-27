@@ -64,23 +64,23 @@
 		$heroModuleInput = $('#MainPageHero .upload input[name="file"]'),
 		$heroModuleImage = $('#MainPageHero .hero-image'),
 
-		$saveHeroImageLabel = 'SaveHeroImage',
-		$saveHeroImageFailLabel = 'SaveHeroImageFail',
-		$revertHeroImageLabel = 'RevertHeroImage',
-		$editTitleLabel = 'EditTitle',
-		$saveTitleLabel = 'SaveTitle',
-		$saveTitleFailLabel = 'SaveTitleFail',
-		$revertTitleFailLabel = 'RevertTitle',
-		$heroModuleAddButtonLabel = 'AddButton-Click',
-		$heroModuleUpdateButtonLabel = 'UpdateButton-Click',
-		$imageLoadedLabel = 'ImageLoaded',
-		$imageLoadedFailLabel = 'ImageLoadedFail',
-		$dropUrlLabel = 'DropUrl',
-		$dropFileLabel ='DropFile',
-		$trackerActionEdit = Wikia.Tracker.ACTIONS.ADD,
-		$trackerActionDrop = Wikia.Tracker.ACTIONS.HOVER,
-		$trackerActionError = Wikia.Tracker.ACTIONS.ERROR,
-		$trackerActionPost = Wikia.Tracker.ACTIONS.SUBMIT,
+		saveHeroImageLabel = 'SaveHeroImage',
+		saveHeroImageFailLabel = 'SaveHeroImageFail',
+		revertHeroImageLabel = 'RevertHeroImage',
+		editTitleLabel = 'EditTitle',
+		saveTitleLabel = 'SaveTitle',
+		saveTitleFailLabel = 'SaveTitleFail',
+		revertTitleFailLabel = 'RevertTitle',
+		heroModuleAddButtonLabel = 'AddButton-Click',
+		heroModuleUpdateButtonLabel = 'UpdateButton-Click',
+		imageLoadedLabel = 'ImageLoaded',
+		imageLoadedFailLabel = 'ImageLoadedFail',
+		dropUrlLabel = 'DropUrl',
+		dropFileLabel ='DropFile',
+		trackerActionEdit = Wikia.Tracker.ACTIONS.ADD,
+		trackerActionDrop = Wikia.Tracker.ACTIONS.HOVER,
+		trackerActionError = Wikia.Tracker.ACTIONS.ERROR,
+		trackerActionPost = Wikia.Tracker.ACTIONS.SUBMIT,
 
 		trackMom = function( trackLabel, trackAction){
 			Wikia.Tracker.track({
@@ -111,12 +111,12 @@
 					$imageElement.stopThrobbing();
 					States.setState($imageElement, 'filled-state');
 					States.setState($imageSaveElement, 'filled-state');
-					trackMom($saveHeroImageLabel, $trackerActionEdit);
+					trackMom(saveHeroImageLabel, trackerActionEdit);
 				},
 				onErrorCallback: function () {
 					// TODO: handle failure
 					$imageElement.stopThrobbing();
-					trackMom($saveHeroImageFailLabel, $trackerActionError);
+					trackMom(saveHeroImageFailLabel, trackerActionError);
 				}
 			});
 		},
@@ -138,14 +138,14 @@
 				States.setState($imageElement, 'filled-state');
 				States.setState($imageSaveElement, 'filled-state');
 			}
-			trackMom($revertHeroImageLabel, $trackerActionEdit);
+			trackMom(revertHeroImageLabel, trackerActionEdit);
 		},
 		editTitle = function() {
 			States.setState($titleElement, 'edit-state');
 			//FIXME: fix onChange event, caret at end on focus
 			$heroModuleTitle.focus();
 			$heroModuleTitle.change();
-			trackMom($editTitleLabel, $trackerActionEdit);
+			trackMom(editTitleLabel, trackerActionEdit);
 		},
 		saveTitle = function() {
 			$titleEditElement.startThrobbing();
@@ -160,12 +160,12 @@
 					$titleEditElement.stopThrobbing();
 					$titleText.text(heroData.oTitle = heroData.title);
 					States.setState($titleElement, 'filled-state');
-					trackMom($saveTitleLabel, $trackerActionEdit);
+					trackMom(saveTitleLabel, trackerActionEdit);
 				},
 				onErrorCallback: function () {
 					// TODO: handle failure
 					$titleEditElement.stopThrobbing();
-					trackMom($saveTitleFailLabel, $trackerActionError);
+					trackMom(saveTitleFailLabel, trackerActionError);
 				}
 			});
 		},
@@ -177,7 +177,7 @@
 			} else {
 				States.setState($titleElement, 'filled-state');
 			}
-			trackMom($revertTitleFailLabel, $trackerActionEdit);
+			trackMom(revertTitleFailLabel, trackerActionEdit);
 		},
 		saveDescription = function() {},
 		revertDescription = function() {},
@@ -256,9 +256,9 @@
 				$heroModuleImage.attr('src', data.url);
 				$heroModule.trigger('resize');
 				$heroModule.trigger('change', [data.url, data.filename]);
-				trackMom($imageLoadedLabel, $trackerActionPost);
+				trackMom(imageLoadedLabel, trackerActionPost);
 			} else {
-				trackMom($imageLoadedFailLabel, $trackerActionError);
+				trackMom(imageLoadedFailLabel, trackerActionError);
 				$.showModal($.msg('error'), data.errMessage);
 			}
 			$heroModule.stopThrobbing();
@@ -273,7 +273,7 @@
 				callback: onAfterSendForm,
 				onErrorCallback: function () {
 					$.showModal($.msg('error'), $.msg('unknown-error'));
-					trackMom($imageLoadedFailLabel, $trackerActionError);
+					trackMom(imageLoadedFailLabel, trackerActionError);
 					$heroModule.stopThrobbing();
 				},
 				processData : false,
@@ -321,7 +321,7 @@
 				e.preventDefault();
 				var fd = new FormData();
 				if (e.dataTransfer.files.length) {
-					trackMom($dropUrlLabel,$trackerActionDrop);
+					trackMom(dropUrlLabel,trackerActionDrop);
 					//if file is uploaded
 					fd.append('file', e.dataTransfer.files[0]);
 					sendForm(fd);
@@ -330,7 +330,7 @@
 					//if url
 					var $img = $(e.dataTransfer.getData('text/html'));
 					if (e.target.src !== $img.attr('src')) {
-						trackMom($dropFileLabel,$trackerActionDrop);
+						trackMom(dropFileLabel,trackerActionDrop);
 						fd.append('url', $img.attr('src'));
 						sendForm(fd);
 					}
@@ -339,12 +339,12 @@
 
 			$heroModuleAddButton.on('click', function () {
 				$heroModuleInput.click();
-				trackMom($heroModuleAddButtonLabel, Wikia.Tracker.ACTIONS.CLICK);
+				trackMom(heroModuleAddButtonLabel, Wikia.Tracker.ACTIONS.CLICK);
 			});
 
 			$heroModuleUpdateButton.on('click', function () {
 				$heroModuleInput.click();
-				trackMom($heroModuleUpdateButtonLabel, Wikia.Tracker.ACTIONS.CLICK);
+				trackMom(heroModuleUpdateButtonLabel, Wikia.Tracker.ACTIONS.CLICK);
 			});
 
 			$heroModuleInput.on('change', function () {
