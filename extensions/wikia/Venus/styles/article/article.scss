@@ -74,7 +74,11 @@ $header-without-cover-unit-spacing: 60px;
 	padding: 0 $medium-grid-column-padding;
 
 	&.clear-none {
-		clear: none;
+		 clear: none;
+	}
+
+	.clear-left {
+		clear: left;
 	}
 
 	.editsection {

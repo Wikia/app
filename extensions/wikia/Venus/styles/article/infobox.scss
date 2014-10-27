@@ -7,7 +7,7 @@
 	@include grid-column-width('medium', 4, -2 * $medium-grid-column-padding);
 	display: block;
 	float: right;
-	margin: 0 0 30px $medium-grid-gutter + $medium-grid-column-padding;
+	margin: 0 (-$medium-grid-column-padding - $medium-grid-gutter - $medium-grid-column) 30px $medium-grid-gutter + $medium-grid-column-padding;
 	text-align: center;
 
 	.infobox-wrapper {
@@ -65,6 +65,7 @@
 	.infobox-container {
 		@include grid-column-width('large', 4, -2 * $large-grid-column-padding);
 		margin-left: $large-grid-gutter + $large-grid-column-padding;
+		margin-right: -$large-grid-column-padding - $large-grid-gutter - $large-grid-column;
 
 		table, div {
 			@include grid-column-max-width('large', 4, -2 * $large-grid-column-padding);
@@ -76,6 +77,7 @@
 	.infobox-container {
 		@include grid-column-width('small', 5);
 		margin-left: $small-grid-gutter + $small-grid-column-padding;
+		margin-right: -$small-grid-column-padding;
 
 		table, div {
 			@include grid-column-max-width('small', 5);
