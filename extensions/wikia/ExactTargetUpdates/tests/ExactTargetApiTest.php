@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../lib/exacttarget_soap_client.php';
 
-class ExactTargetBaseTaskTest extends WikiaBaseTest {
+class ExactTargetApiTest extends WikiaBaseTest {
 
 	function testPrepareSoapVarsShouldReturnSoapVarsArray() {
 		/* Params to compare */
@@ -40,13 +40,12 @@ class ExactTargetBaseTaskTest extends WikiaBaseTest {
 		/* prepare request mock - array of SoapVars */
 		$aSoapVarsExpected = [];
 		foreach ( $aDE as $DE ) {
-
 			$soapVar = new SoapVar( $DE, SOAP_ENC_OBJECT, 'DataExtensionObject', 'http://exacttarget.com/wsdl/partnerAPI' );
 			$aSoapVarsExpected[] = $soapVar;
 		}
 
 		/* Mock tested class */
-		$baseTask = new ExactTargetBaseTask();
+		$baseTask = new \Wikia\ExactTarget\Api\ExactTargetApiHelper();
 
 		/* Run test */
 		$aSoapVarsActual = $baseTask->prepareSoapVars( $aDE, 'DataExtensionObject' );
