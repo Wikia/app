@@ -3,7 +3,6 @@
 require_once __DIR__ . '/../lib/exacttarget_soap_client.php';
 
 use Wikia\ExactTarget\Tasks\ExactTargetCreateUserTask;
-use Wikia\ExactTarget\Tasks\ExactTargetDeleteUserTask;
 
 class ExactTargetCreateUserTaskTest extends WikiaBaseTest {
 
@@ -63,7 +62,7 @@ class ExactTargetCreateUserTaskTest extends WikiaBaseTest {
 		$addTaskMock->updateCreateUserData( $aUserData, $aUserProperties );
 	}
 
-	function _testCreateUserPropertiesDataExtensionShouldSendData() {
+	function testCreateUserPropertiesDataExtensionShouldSendData() {
 		/* Params to compare */
 		$iUserId = 12345;
 		$aUserProperties = [
@@ -72,55 +71,39 @@ class ExactTargetCreateUserTaskTest extends WikiaBaseTest {
 		];
 
 		/* Prepare request object */
-		$aSoapVars = [];
+		$aApiParams = [ 'DataExtension' => [] ];
 		foreach ( $aUserProperties as $sProperty => $sValue ) {
-
-			$DE = new ExactTarget_DataExtensionObject();
-			$DE->CustomerKey = 'user_properties';
-
-			$apiPropertyUser = new ExactTarget_APIProperty();
-			$apiPropertyUser->Name = 'up_user';
-			$apiPropertyUser->Value = $iUserId;
-
-			$apiPropertyProperty = new ExactTarget_APIProperty();
-			$apiPropertyProperty->Name = 'up_property';
-			$apiPropertyProperty->Value = $sProperty;
-
-			$apiPropertyValue = new ExactTarget_APIProperty();
-			$apiPropertyValue->Name = 'up_value';
-			$apiPropertyValue->Value = $sValue;
-
-			$apiProperties = [ $apiPropertyUser, $apiPropertyProperty, $apiPropertyValue ];
-
-			$DE->Properties = $apiProperties;
-
-			$soapVar = new SoapVar( $DE, SOAP_ENC_OBJECT, 'DataExtensionObject', 'http://exacttarget.com/wsdl/partnerAPI' );
-			$aSoapVars[] = $soapVar;
+			$aApiParams[ 'DataExtension' ][] = [
+				'CustomerKey' => 'user_properties',
+				'Properties' => [ 'up_value' => $sValue ],
+				'Keys' => [
+					'up_user' => $iUserId,
+					'up_property' => $sProperty
+				]
+			];
 		}
 
-		$oRequest = new ExactTarget_CreateRequest();
-
-		$oRequest->Options = NULL;
-		$oRequest->Objects = $aSoapVars;
-
-//		$soapClient = $this->getMockBuilder( 'ExactTargetSoapClient' )
-//			->disableOriginalConstructor()
-//			->setMethods( [ 'Create' ] )
-//			->getMock();
-//		$soapClient
-//			->expects( $this->once() )
-//			->method( 'Create' )
-//			->with( $oRequest );
+		/* Mock api class */
+		/* @var ExactTargetApiDataExtension $mockCreateUserTask mock of ExactTargetApiDataExtension */
+		$mockApiDataExtension = $this->getMockBuilder( 'Wikia\ExactTarget\Api\ExactTargetApiDataExtension' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'updateFallbackCreateRequest' ] )
+			->getMock();
+		$mockApiDataExtension
+			->expects( $this->once() )
+			->method( 'updateFallbackCreateRequest' )
+			->with( $aApiParams );
 
 		/* Mock tested class */
+		/* @var ExactTargetCreateUserTask $mockCreateUserTask mock of ExactTargetCreateUserTask */
 		$mockCreateUserTask = $this->getMockBuilder( 'Wikia\ExactTarget\Tasks\ExactTargetCreateUserTask' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'wrapCreateRequest' ] )
+			->setMethods( [ 'getApiDataExtension' ] )
 			->getMock();
 		$mockCreateUserTask
 			->expects( $this->once() )
-			->method( 'wrapCreateRequest' )
-			->will( $this->returnValue( $oRequest ) );
+			->method( 'getApiDataExtension' )
+			->will( $this->returnValue( $mockApiDataExtension ) );
 
 		/* Run tested method */
 		$mockCreateUserTask->createUserProperties( $iUserId, $aUserProperties );
