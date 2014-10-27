@@ -73,26 +73,26 @@ $image-margin: 30px;
 		img {
 			margin: 0;
 		}
+	}
 
-		&.show-info-icon {
+	.show-info-icon {
+		.info-icon {
+			background-image: url('/extensions/wikia/Venus/images/info_icon.png'); /* base64 */
+			display: none;
+			float: right;
+			height: 17px;
+			margin: -35px 10px 0 0;
+			position: relative;
+			width: 17px;
+		}
+
+		&:hover {
 			.info-icon {
-				background-image: url('/extensions/wikia/Venus/images/info_icon.png'); /* base64 */
-				display: none;
-				float: right;
-				height: 17px;
-				margin: -35px 10px 0 0;
-				position: relative;
-				width: 17px;
+				display: block;
 			}
 
-			&:hover {
-				a.info-icon {
-					display: block;
-				}
-
-				.duration {
-					display: none;
-				}
+			.duration {
+				display: none;
 			}
 		}
 	}
