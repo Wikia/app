@@ -20,7 +20,7 @@
 		 *  data - (optional) additional query string params
 		 * @returns {string}
 		 */
-		function getUrl( options ) {
+		function getUrl(options) {
 			var dataParams = options.data || {},
 				format = (options.format || 'json').toLowerCase(),
 				i,
@@ -30,12 +30,12 @@
 				urlParams,
 				url = options.scriptPath || context.wgServer + context.wgScriptPath;
 
-			if ( ( typeof options.controller === 'undefined' ) || ( typeof options.method === 'undefined' ) ) {
+			if (( typeof options.controller === 'undefined' ) || ( typeof options.method === 'undefined' )) {
 				throw 'controller and method are required';
 			}
 
 			urlParams = {
-				controller: options.controller.replace( /Controller$/, '' ),
+				controller: options.controller.replace(/Controller$/, ''),
 				method: options.method
 			};
 
@@ -46,39 +46,41 @@
 			}
 
 			// Sort params to avoid creating many urls on varnish
-			if ( typeof dataParams !== 'string' ) {
-				for( key in dataParams ) {
+			if (typeof dataParams !== 'string') {
+				for (key in dataParams) {
 					sortedKeys[sortedKeys.length] = key;
 				}
 				sortedKeys.sort();
-				for( i = 0; i < sortedKeys.length; i++ ) {
+				for (i = 0; i < sortedKeys.length; i++) {
 					sortedDict[sortedKeys[i]] = dataParams[sortedKeys[i]];
 				}
-				dataParams = $.param( sortedDict );
+				dataParams = $.param(sortedDict);
 			}
 
-			return url + '/wikia.php?' + $.param( urlParams ) + '&' + dataParams;
+			return url + '/wikia.php?' + $.param(urlParams) + '&' + dataParams;
 		}
 
 		function sendRequest(attr) {
 			var type = (attr.type || 'POST').toUpperCase(),
 				format = (attr.format || 'json').toLowerCase(),
 				data = {},
-				callback = attr.callback || function() {},
-				onErrorCallback = attr.onErrorCallback || function() {},
+				callback = attr.callback || function () {
+					},
+				onErrorCallback = attr.onErrorCallback || function () {
+					},
 				url,
 				cType = (attr.contentType !== false),
 				pData = (attr.processData !== false);
 
-			if ( allowedFormats.indexOf( format ) === -1 ) {
+			if (allowedFormats.indexOf(format) === -1) {
 				throw 'Only Json,Jsonp and Html format are allowed';
 			}
 
-			if ( type === 'POST' && typeof attr.data !== 'undefined' ) {
+			if (type === 'POST' && typeof attr.data !== 'undefined') {
 				data = attr.data;
 				delete attr.data;
 			}
-			url = getUrl( attr );
+			url = getUrl(attr);
 
 			var settings = {
 				url: url,
@@ -90,8 +92,8 @@
 				error: onErrorCallback
 			};
 
-			if(attr.contentType === false){
-				settings.contentType = false;
+			if (typeof attr.contentType != 'undefined') {
+				settings.contentType = attr.contentType;
 			}
 			return $.ajax(settings);
 		}
@@ -99,8 +101,8 @@
 		return {
 			sendRequest: sendRequest,
 			getUrl: getUrl,
-			getJson: function(controller, method, data, callback, onErrorCallback) {
-				if(typeof data === 'function') {
+			getJson: function (controller, method, data, callback, onErrorCallback) {
+				if (typeof data === 'function') {
 					// callback is in data slot, shift parameters
 					onErrorCallback = callback;
 					callback = data;
@@ -116,7 +118,7 @@
 				});
 			},
 			postJson: function (controller, method, data, callback, onErrorCallback) {
-				if(typeof data === 'function') {
+				if (typeof data === 'function') {
 					// callback is in data slot, shift parameters
 					onErrorCallback = callback;
 					callback = data;
@@ -137,7 +139,7 @@
 		context.define('wikia.nirvana', ['jquery'], nirvana);
 	}
 
-	if(context.jQuery) {
+	if (context.jQuery) {
 		context.jQuery.nirvana = nirvana(context.jQuery);
 	}
 }(this));
