@@ -12,10 +12,11 @@
 		.prod-thumb img {
 			width: 70px;
 			height: 70px;
-			border: 1px solid #CCC;
+			border: 1px solid #ccc;
 			padding: 1px;
 			float: left;
 		}
+
 		.placard {
 			font-weight: bold;
 			color: $color-text;
@@ -27,30 +28,34 @@
 			overflow: visible;
 			white-space: normal;
 		}
+
 		.vendor {
 			width: 95%;
 			float: left;
-			margin: 10px 0px 0px;
-			padding: 0px 6px 0px 0px;
+			margin: 10px 0 0;
+			padding: 0 6px 0 0;
 			margin-bottom: 35px;
 		}
+
 		.vendor-logo {
 			float: left;
-			background-image: url(/extensions/wikia/MonetizationModule/images/logo_amazon.png);
+			background-image: url('/extensions/wikia/MonetizationModule/images/logo_amazon.png');
 			width: 88px;
 			height: 12px;
 			padding-top: 7px;
 			padding-bottom: 3px;
 		}
+
 		.vendor-button {
 			float: right;
-			margin: 2px 0px 0px 10px;
+			margin: 2px 0 0 10px;
 		}
+
 		.vendor-price {
 			float: right;
 			font-weight: bold;
 			font-size: 14px;
-			margin: 3px 0px 1px;
+			margin: 3px 0 1px;
 		}
 	}
 }
@@ -59,10 +64,11 @@
 .WikiaMainContent {
 	.affiliate {
 		width: 32%;
-		padding: 8px 0px 4px 6px;
+		padding: 8px 0 4px 6px;
 		float: left;
 		min-width: 200px;
 	}
+
 	div[data-mon-type=adunit] {
 		margin-top: 10px;
 		margin-bottom: 10px;
