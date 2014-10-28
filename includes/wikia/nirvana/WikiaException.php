@@ -56,7 +56,12 @@ class WikiaException extends WikiaBaseException {
 		parent::__construct( $message, $code, $previous );
 
 		if (!$wgRunningUnitTests) {
-			\Wikia\Logger\WikiaLogger::instance()->error(__CLASS__, [
+			$exceptionClass = get_class($this);
+
+			// log on devboxes to /tmp/debug.log
+			wfDebug($exceptionClass . ": {$message}\n");
+
+			\Wikia\Logger\WikiaLogger::instance()->error($exceptionClass, [
 				'err' => $message,
 				'errno' => $code,
 				'exception' => $this,
