@@ -20,4 +20,12 @@ if ( !empty( $wgEnableNjordExtOnNewWikias ) ) {
 	$wgHooks['CreateWikiLocalJob-complete'][] = 'NjordHooks::onCreateNewWikiComplete';
 }
 
+$wgAvailableRights[] = 'njordeditmode';
+
+$wgGroupPermissions['*']['njordeditmode'] = false;
+$wgGroupPermissions['staff']['njordeditmode'] = true;
+$wgGroupPermissions['sysop']['njordeditmode'] = true;
+$wgGroupPermissions['bureaucrat']['njordeditmode'] = true;
+$wgGroupPermissions['helper']['njordeditmode'] = true;
+
 NjordHooks::$templateDir = $dir . '/templates';

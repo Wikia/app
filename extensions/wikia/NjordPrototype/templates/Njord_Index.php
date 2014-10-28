@@ -1,10 +1,12 @@
 <?php
 /* @var $wikiData WikiDataModel */
+/* @var $isAllowedToEdit bool */
 ?>
 
 <header class="MainPageHeroHeader no-edit-state">
 	<div id="MainPageHero" class="MainPageHero">
 		<div class="image-wrap <?php if ( $wikiData->imageSet ) : ?>filled-state<? else : ?>zero-state<?php endif; ?>">
+			<? if ($isAllowedToEdit): ?>
 			<div class="upload-mask"></div>
 			<div class="overlay">
 				<div class="overlay-flex">
@@ -30,6 +32,7 @@
 			<div class="position-info">
 				<div class="position-text sg-main">drag to reposition this image</div>
 			</div>
+			<? endif; //isAlloweToEdit ?>
 			<div class="image-window">
 				<picture>
 					<img class="hero-image" data-cropposition="<?= $wikiData->cropPosition ?>"
@@ -48,7 +51,9 @@
 			</div>
 			<span class="title-text"><?= $wikiData->title ?></span>
 			<span class="title-default-text">Wikia name can goes three lines (50 characters max)</span>
+			<? if ($isAllowedToEdit): ?>
 			<img class="title-edit-btn" src="/extensions/wikia/NjordPrototype/images/pencil.svg">
+			<?endif;?>
 		</h1>
 	</div>
 	<div class="image-save-bar btn-bar <?php if ( $wikiData->imageSet ) : ?>filled-state<? else : ?>zero-state<?php endif; ?>">
@@ -71,7 +76,9 @@
 			promote your page in search results and on other promotional areas. (160 characters maximum)
 		<? } ?>
 		</span>
+		<? if ($isAllowedToEdit): ?>
 		<img class="edit-btn" src="/extensions/wikia/NjordPrototype/images/pencil_b.svg"/>
+		<? endif; ?>
 	</div>
 </header>
 

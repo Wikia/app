@@ -52,7 +52,9 @@ class NjordController extends WikiaController {
 			$wikiDataModel->imagePath = $wgBlankImgUrl;
 			$wikiDataModel->originalImagePath = $wgBlankImgUrl;
 		}
+		// template vars
 		$this->wikiData = $wikiDataModel;
+		$this->isAllowedToEdit = $this->wg->user->isAllowed('njordeditmode');
 	}
 
 	public function modula() {
@@ -142,11 +144,11 @@ class NjordController extends WikiaController {
 	public function saveHeroTitle() {
 		$title = $this->getRequest()->getVal('title', false);
 		$success = false;
+
 		if ($title) {
 			$wikiDataModel = $this->getWikiData();
 			$wikiDataModel->title = $title;
-			$this->setWikiData( $wikiDataModel );
-			$success = true;
+			$success = $this->setWikiData( $wikiDataModel );;
 		}
 		$this->getResponse()->setVal( 'success', $success );
 		$this->getResponse()->setVal( 'wikiData', $wikiDataModel );
@@ -158,8 +160,7 @@ class NjordController extends WikiaController {
 		$wikiDataModel = $this->getWikiData();
 		if ($description) {
 			$wikiDataModel->description = $description;
-			$this->setWikiData( $wikiDataModel );
-			$success = true;
+			$success = $this->setWikiData( $wikiDataModel );
 		}
 		$this->getResponse()->setVal( 'success', $success );
 		$this->getResponse()->setVal( 'wikiData', $wikiDataModel );
@@ -185,10 +186,9 @@ class NjordController extends WikiaController {
 			if ( $status->isOK() ) {
 				$wikiDataModel->setImageName( $file->getTitle()->getDBKey() );
 				$wikiDataModel->setImagePath( $file->getFullUrl() );
-				$this->setWikiData( $wikiDataModel );
+				$success = $this->setWikiData( $wikiDataModel );
 				//clean up stash
 				$stash->removeFile( $image );
-				$success = true;
 			}
 		}
 		$this->getResponse()->setVal( 'success', $success );
@@ -203,8 +203,14 @@ class NjordController extends WikiaController {
 	}
 
 	protected function setWikiData( WikiDataModel $wikiDataModel ) {
-		$wikiDataModel->storeInPage();
-		$wikiDataModel->storeInProps();
+		if ( $this->isAllowedToEdit = $this->wg->user->isAllowed( 'njordeditmode' ) ) {
+			$wikiDataModel->storeInPage();
+			$wikiDataModel->storeInProps();
+
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public function saveHeroData() {
@@ -234,18 +240,14 @@ class NjordController extends WikiaController {
 				$wikiDataModel->setImageName( $file->getTitle()->getDBKey() );
 				$wikiDataModel->setImagePath( $file->getFullUrl() );
 
-				$wikiDataModel->storeInPage();
-				$wikiDataModel->storeInProps();
+				$success = $this->setWikiData($wikiDataModel);
 
 				//clean up stash
 				$stash->removeFile( $imageName );
-				$success = true;
 			}
 		} else {
 			$wikiDataModel->setImageNameFromProps();
-			$wikiDataModel->storeInPage();
-			$wikiDataModel->storeInProps();
-			$success = true;
+			$success = $this->setWikiData($wikiDataModel);
 		}
 		if ( !$success ) {
 			$wikiDataModel->getFromProps();
