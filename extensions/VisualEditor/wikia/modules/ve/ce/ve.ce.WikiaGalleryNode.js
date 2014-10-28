@@ -52,9 +52,7 @@ ve.ce.WikiaGalleryNode.static.tagName = 'div';
  * @method
  */
 ve.ce.WikiaGalleryNode.prototype.onUpdate = function () {
-	setTimeout( ve.bind( function () {
-		this.rebuild();
-	}, this ), 0 );
+	this.rebuild();
 };
 
 /**
