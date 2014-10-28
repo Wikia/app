@@ -108,6 +108,12 @@ ve.ce.WikiaGalleryNode.prototype.setupGallery = function ( galleryData ) {
 			.addClass( 'count-' + galleryData.length )
 			.append( gallery.render().$el );
 
+		this.$element.on( 'mediaLoaded', ve.bind( function () {
+			if ( this.isFocused() ) {
+				this.redrawHighlights();
+			}
+		}, this ) );
+
 		// TODO: Remove after https://wikia-inc.atlassian.net/browse/VID-2112 is done
 		gallery.$el.trigger('galleryInserted');
 	}, this ) );
