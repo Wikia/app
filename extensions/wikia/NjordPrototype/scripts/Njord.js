@@ -70,6 +70,8 @@
 		$heroModuleInput = $('#MainPageHero .upload input[name="file"]'),
 		$heroModuleImage = $('#MainPageHero .hero-image'),
 
+		trackDragOnlyOncePerImage = false,
+
 		saveHeroImageLabel = 'SaveHeroImage',
 		saveHeroImageFailLabel = 'SaveHeroImageFail',
 		revertHeroImageLabel = 'RevertHeroImage',
@@ -80,6 +82,7 @@
 		saveSummaryLabel = 'SaveSummary',
 		saveSummaryFailLabel = 'SaveSummaryFail',
 		revertSummaryLabel = 'RevertSummary',
+		moveImageLabel = 'MoveImage',
 		editSummaryLabel = 'EditSummary',
 		heroModuleAddButtonLabel = 'AddButton-Click',
 		heroModuleUpdateButtonLabel = 'UpdateButton-Click',
@@ -91,6 +94,7 @@
 		trackerActionDrop = Wikia.Tracker.ACTIONS.HOVER,
 		trackerActionError = Wikia.Tracker.ACTIONS.ERROR,
 		trackerActionPost = Wikia.Tracker.ACTIONS.SUBMIT,
+		trackerActionDrag = Wikia.Tracker.ACTIONS.HOVER,
 
 		trackMom = function( trackLabel, trackAction){
 			Wikia.Tracker.track({
@@ -273,6 +277,7 @@
 				$heroModuleImage.css({top: 0});
 			}
 			$heroModule.trigger('resize');
+			trackDragOnlyOncePerImage = false;
 		}, onResize = function () {
 			$heroModule.height($heroModule.width() * HERO_ASPECT_RATIO);
 		}, onDraggingEnabled = function () {
@@ -288,6 +293,10 @@
 				containment: containment,
 				drag: function () {
 					heroData.cropposition = Math.abs($heroModuleImage.position().top) / $heroModuleImage.height();
+					if(!trackDragOnlyOncePerImage){
+						trackDragOnlyOncePerImage = true;
+						trackMom(moveImageLabel, trackerActionDrag);
+					}
 				}
 			});
 		}, onDragDisabled = function () {
@@ -376,7 +385,7 @@
 				e.preventDefault();
 				var fd = new FormData();
 				if (e.dataTransfer.files.length) {
-					trackMom(dropUrlLabel,trackerActionDrop);
+					trackMom(dropFileLabel,trackerActionDrop);
 					//if file is uploaded
 					fd.append('file', e.dataTransfer.files[0]);
 					sendForm(fd);
@@ -385,7 +394,7 @@
 					//if url
 					var $img = $(e.dataTransfer.getData('text/html'));
 					if (e.target.src !== $img.attr('src')) {
-						trackMom(dropFileLabel,trackerActionDrop);
+						trackMom(dropUrlLabel,trackerActionDrop);
 						fd.append('url', $img.attr('src'));
 						sendForm(fd);
 					}
