@@ -40,6 +40,7 @@ module.exports = function (config) {
 
 			//core modules
 			'resources/wikia/modules/aim.js',
+			'resources/wikia/modules/browserDetect.js',
 			'resources/wikia/modules/cache.js',
 			'resources/wikia/modules/cookies.js',
 			'resources/wikia/modules/geo.js',
