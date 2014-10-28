@@ -89,7 +89,7 @@ $header-without-cover-unit-spacing: 60px;
 	}
 
 	h1, h2, h3, h4, h5, h6 {
-		overflow: hidden;padding: 0 $medium-grid-column-padding 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding + $medium-grid-column-padding - $content-border-width;
+		overflow: hidden;
 	}
 
 	h2 {
