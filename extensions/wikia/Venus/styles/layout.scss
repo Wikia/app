@@ -26,6 +26,7 @@ a {
 	background: rgba($color-page, $page-opacity);
 	border: $content-border-width solid $color-page-border;
 	position: relative; // needed for skin ads to not cover the article
+	z-index: 2; // needed for video wall ads to not cover the article
 
 	& > header {
 		@include grid-content-padding;
