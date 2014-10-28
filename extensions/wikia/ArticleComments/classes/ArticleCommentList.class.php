@@ -610,7 +610,7 @@ class ArticleCommentList {
 	 *
 	 * @return true -- because it's a hook
 	 */
-	static public function articleDelete( WikiPage $wikiPage, $user, $reason, $error ) {
+	static public function articleDelete( WikiPage &$wikiPage, &$user, &$reason, &$error ) {
 		wfProfileIn( __METHOD__ );
 
 		$title = $wikiPage->getTitle();
@@ -667,7 +667,7 @@ class ArticleCommentList {
 	 *
 	 * @return boolean -- because it's a hook
 	 */
-	static public function articleDeleteComplete( WikiPage $wikiPage, $user, $reason, $id ) {
+	static public function articleDeleteComplete( WikiPage &$wikiPage, &$user, $reason, $id ) {
 		global $wgOut, $wgRC2UDPEnabled, $wgMaxCommentsToDelete, $wgCityId, $wgUser, $wgEnableMultiDeleteExt;
 		wfProfileIn( __METHOD__ );
 
