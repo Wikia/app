@@ -6,7 +6,7 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 	'wikia.log',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.adHelper'
-], function (window, document, log, slotTweaker, adHelper) {
+], function (win, doc, log, slotTweaker, adHelper) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adLogicPageDimensions',
@@ -31,7 +31,7 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		slotsOnlyWithRail = {
 			LEFT_SKYSCRAPER_3: true
 		},
-		rightRailPresent = !!document.getElementById('WikiaRail'),
+		rightRailPresent = !!doc.getElementById('WikiaRail'),
 
 		/**
 		 * Slots based on screen width
@@ -60,17 +60,17 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		matchMedia;
 
 	function matchMediaMoz(query) {
-		return window.matchMedia(query).matches;
+		return win.matchMedia(query).matches;
 	}
 
 	function matchMediaIe(query) {
-		return window.styleMedia.matchMedium(query);
+		return win.styleMedia.matchMedium(query);
 	}
 
 	// Chose proper implementation of machMedia
-	matchMedia = window.matchMedia && matchMediaMoz;
-	matchMedia = matchMedia || (window.styleMedia && window.styleMedia.matchMedium && matchMediaIe);
-	matchMedia = matchMedia || (window.media && window.media.matchMedium);
+	matchMedia = win.matchMedia && matchMediaMoz;
+	matchMedia = matchMedia || (win.styleMedia && win.styleMedia.matchMedium && matchMediaIe);
+	matchMedia = matchMedia || (win.media && win.media.matchMedium);
 
 	if (!matchMedia) {
 		log('No working matchMedia implementation found', 'user', logGroup);
@@ -152,9 +152,10 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		var slotname,
 			mediaQueryIndex;
 
-		pageHeight = document.documentElement.scrollHeight;
+		pageHeight = doc.documentElement.scrollHeight;
 
-		if (window.wgOasisResponsive) {
+		// All ads should be shown on non-responsive oasis and venus
+		if (win.wgOasisResponsive && win.skin !== 'venus') {
 			if (matchMedia) {
 				mediaQueriesMet = {};
 				for (mediaQueryIndex in mediaQueriesToCheck) {
@@ -185,10 +186,10 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 	 */
 	function init() {
 		log('init', 'debug', logGroup);
-		if (window.addEventListener) {
+		if (win.addEventListener) {
 			onResize();
-			window.addEventListener('orientationchange', adHelper.throttle(onResize, 100));
-			window.addEventListener('resize', adHelper.throttle(onResize, 100));
+			win.addEventListener('orientationchange', adHelper.throttle(onResize, 100));
+			win.addEventListener('resize', adHelper.throttle(onResize, 100));
 		} else {
 			log('No support for addEventListener. No dimension-dependent ads will be shown', 'error', logGroup);
 		}
@@ -225,7 +226,7 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 	 */
 	function hasPreFooters() {
 		log('hasPreFooters', 'debug', logGroup);
-		pageHeight = document.documentElement.scrollHeight;
+		pageHeight = doc.documentElement.scrollHeight;
 		log(['hasPreFooters', {pageHeight: pageHeight, preFootersThreshold: preFootersThreshold}], 'debug', logGroup);
 		return pageHeight > preFootersThreshold;
 	}
