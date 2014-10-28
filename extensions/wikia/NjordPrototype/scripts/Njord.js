@@ -151,6 +151,8 @@
 			trackMom(revertHeroImageLabel, trackerActionEdit);
 		},
 		editTitle = function() {
+			//turn off description editing
+			revertDescription();
 			States.setState($titleElement, 'edit-state');
 			//FIXME: fix onChange event, caret at end on focus
 			$heroModuleTitle.focus();
@@ -214,6 +216,8 @@
 			});
 		},
 		editDescription = function () {
+			//turn off title editing
+			revertTitle();
 			States.setState($descriptionElement, 'edit-state');
 			//FIXME: fix onChange event, caret at end on focus
 			$descriptionEditBoxText.text(heroData.description);
@@ -223,6 +227,7 @@
 		},
 		revertDescription = function () {
 			heroData.description = heroData.oDescription;
+			$descriptionEditBoxText.text(heroData.oDescription);
 			States.setState($descriptionElement, 'filled-state');
 			trackMom(revertSummaryLabel, trackerActionEdit);
 		},
