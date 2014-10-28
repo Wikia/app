@@ -242,6 +242,11 @@ abstract class File {
 		return $this->name;
 	}
 
+	public function getBucket() {
+		global $wgUploadPath;
+		return VignetteRequest::parseBucket($wgUploadPath);
+	}
+
 	public function getPathPrefix() {
 		global $wgUploadPath;
 		return VignetteRequest::parsePathPrefix( $wgUploadPath );
@@ -1792,9 +1797,7 @@ abstract class File {
 	 */
 	protected function getVignetteThumbUrl( $params ) {
 		$thumbUrl = $this->getUrlGenerator()
-			->width( $params['width'] )
-			->height( $params['height'] )
-			->thumbnail();
+			->scaleToWidth( $params['width'] );
 
 		return ( string )$thumbUrl;
 	}

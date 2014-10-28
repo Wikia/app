@@ -14,6 +14,7 @@ class VignetteRequest {
 			'is-archive' => $file->isOld(),
 			'timestamp' => $timestamp,
 			'relative-path' => $file->getHashPath().rawurlencode($file->getName()),
+			'bucket' => $file->getBucket(),
 			'path-prefix' => $file->getPathPrefix(),
 		]);
 	}
@@ -28,6 +29,8 @@ class VignetteRequest {
 	 * @throws InvalidArgumentException
 	 */
 	public static function fromConfigMap($config) {
+		$replaceThumbnail = false;
+
 		$requiredKeys = [
 			'relative-path',
 		];
@@ -35,6 +38,15 @@ class VignetteRequest {
 		$isArchive = isset($config['is-archive']) ? $config['is-archive'] : false;
 		$pathPrefix = isset($config['path-prefix']) ? $config['path-prefix'] : null;
 		$timestamp = isset($config['timestamp']) ? $config['timestamp'] : 0;
+
+		if (isset($config['replace'])) {
+			$replaceThumbnail = $config['replace'];
+		} else {
+			global $wgVignetteReplaceThumbnails;
+			if ($wgVignetteReplaceThumbnails || (!empty($_GET['vignetteReplaceThumbnails']) && (bool)$_GET['vignetteReplaceThumbnails'])) {
+				$replaceThumbnail = true;
+			}
+		}
 
 		if (!isset($config['base-url'])) {
 			global $wgVignetteUrl;
@@ -64,6 +76,7 @@ class VignetteRequest {
 
 		$config = ( new UrlConfig() )
 			->setIsArchive( $isArchive )
+			->setReplaceThumbnail( $replaceThumbnail )
 			->setTimestamp( $timestamp )
 			->setRelativePath( $config['relative-path'] )
 			->setPathPrefix( $pathPrefix )

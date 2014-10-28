@@ -2595,6 +2595,7 @@ Vezi [[Special:BlockList|lista de adrese IP și conturi blocate]] pentru a reviz
 'unblocked'                       => '[[User:$1|$1]] a fost deblocat',
 'unblocked-range'                 => '$1 a fost deblocat',
 'unblocked-id'                    => 'Blocarea $1 a fost eliminată',
+'unblocked-ip'                    => '[[Special:Contributions/$1|$1]] a fost deblocat.',
 'blocklist'                       => 'Utilizatori blocați',
 'ipblocklist'                     => 'Utilizatori blocați',
 'ipblocklist-legend'              => 'Găsire utilizator blocat',

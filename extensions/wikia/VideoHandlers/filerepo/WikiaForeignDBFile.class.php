@@ -74,6 +74,14 @@ class WikiaForeignDBFile extends ForeignDBFile {
 		return $this->oLocalFileLogic;
 	}
 
+	public function getBucket() {
+		$wikiDbName = $this->repo->getDBName();
+		$wikiId = WikiFactory::DBtoID( $wikiDbName );
+		$wikiUploadPath = WikiFactory::getVarValueByName( 'wgUploadPath', $wikiId );
+
+		return VignetteRequest::parseBucket( $wikiUploadPath );
+	}
+
 	function getPathPrefix() {
 		$wikiDbName = $this->repo->getDBName();
 		$wikiId = WikiFactory::DBtoID( $wikiDbName );

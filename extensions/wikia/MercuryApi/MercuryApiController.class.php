@@ -6,7 +6,7 @@ class MercuryApiController extends WikiaController {
 	const PARAM_PAGE = 'page';
 	const PARAM_ARTICLE_TITLE = 'title';
 
-	const NUMBER_CONTRIBUTORS = 6;
+	const NUMBER_CONTRIBUTORS = 5;
 	const DEFAULT_PAGE = 1;
 
 	private $mercuryApi = null;
@@ -184,6 +184,7 @@ class MercuryApiController extends WikiaController {
 	public function getWikiVariables() {
 		$wikiVariables = $this->mercuryApi->getWikiVariables();
 		$wikiVariables[ 'navData' ] = $this->getNavigationData();
+		$wikiVariables[ 'vertical' ] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )['short'];
 
 		// Used to determine GA tracking
 		if ( !empty( $this->wg->IsGASpecialWiki ) ) {
