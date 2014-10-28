@@ -358,26 +358,46 @@ class VideoHandlerController extends WikiaController {
 			$limit = self::VIDEO_LIMIT;
 		}
 
-		$mediaService = new MediaQueryService();
-		$videoList = $mediaService->getVideoList( $sort, $filter, $limit, $page, $providers, $category );
+		// Key to cache the data under in memcache
+		$memcKey = wfMemcKey( __CLASS__, __FUNCTION__, md5( serialize( [
+			$sort, $filter, $limit, $page, $providers, $category, $width, $height, $detail,
+		] ) ) );
 
-		// get video detail
-		if ( !empty( $detail ) ) {
-			$videoOptions = [
-				'thumbWidth' => $width,
-				'thumbHeight' => $height,
-			];
-			$helper = new VideoHandlerHelper();
-			foreach ( $videoList as &$videoInfo ) {
-				$videoDetail = $helper->getVideoDetail( $videoInfo, $videoOptions );
-				if ( !empty( $videoDetail ) ) {
-					$videoInfo = array_merge( $videoInfo, $videoDetail );
+		$cacheOptions = [
+			'cacheTTL' => \WikiaResponse::CACHE_STANDARD,
+			'negativeCacheTTL' => 0,
+		];
+
+		// Retrieve the result and if not null, cache it
+		$videoList = \WikiaDataAccess::cacheWithOptions(
+			$memcKey,
+			function() use ( $sort, $filter, $limit, $page, $providers, $category, $width, $height, $detail ) {
+				$mediaService = new \MediaQueryService();
+				$videoList = $mediaService->getVideoList( $sort, $filter, $limit, $page, $providers, $category );
+
+				// get video detail
+				if ( !empty( $detail ) ) {
+					$videoOptions = [
+						'thumbWidth' => $width,
+						'thumbHeight' => $height,
+					];
+					$helper = new \VideoHandlerHelper();
+					foreach ( $videoList as &$videoInfo ) {
+						$videoDetail = $helper->getVideoDetail( $videoInfo, $videoOptions );
+						if ( !empty( $videoDetail ) ) {
+							$videoInfo = array_merge( $videoInfo, $videoDetail );
+						}
+					}
+					unset( $videoInfo );
 				}
-			}
 
-		}
+				return $videoList;
+			},
+			$cacheOptions
+		);
 
 		$this->videos = $videoList;
+		$this->response->setCacheValidity( \WikiaResponse::CACHE_STANDARD );
 
 		wfProfileOut( __METHOD__ );
 	}

@@ -205,8 +205,8 @@
 				deferredList.push($.loadMustache());
 
 				resources = [
-					$.getSassCommonURL('/extensions/wikia/Lightbox/css/Lightbox.scss'),
-					window.wgExtensionsPath + '/wikia/Lightbox/js/Lightbox.js'
+					$.getSassCommonURL('/extensions/wikia/Lightbox/styles/Lightbox.scss'),
+					window.wgExtensionsPath + '/wikia/Lightbox/scripts/Lightbox.js'
 				];
 
 				deferredList.push($.getResources(resources));

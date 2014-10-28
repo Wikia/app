@@ -7,12 +7,13 @@ describe("Media module", function () {
 	var qsMock = function() {
 			return {
 				getVal: function(){},
-				removeVal: function(){
-					return {
-						replaceState: function(){}
-					};
-				}
+				removeVal: function(){},
+				toString: function(){ return ''; }
 			};
+		},
+		histMock = {
+			pushState: function(){},
+			replaceState: function(){}
 		},
 		modal = {
 			open: function(){},
@@ -49,7 +50,7 @@ describe("Media module", function () {
 
 	window.Features = {};
 
-	media = modules.media(msg, modal, null, qsMock, null,null, null, null, loader, null, null, MediaClass, toast);
+	media = modules.media(msg, modal, null, qsMock, histMock, null,null, null, null, loader, null, null, MediaClass, toast);
 
 	it('should be defined', function(){
 		expect(media).toBeDefined();

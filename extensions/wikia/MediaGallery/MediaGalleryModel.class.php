@@ -4,6 +4,12 @@ use Wikia\Logger\WikiaLogger;
 
 class MediaGalleryModel extends WikiaObject {
 	/**
+	 * Hard upper limit for the number of images per gallery
+	 * @see VID-2071
+	 */
+	const IMAGE_COUNT_LIMIT = 3000;
+
+	/**
 	 * @var array Basic data for MediaGalleries
 	 */
 	private $galleryData = [];
@@ -26,9 +32,16 @@ class MediaGalleryModel extends WikiaObject {
 
 	/**
 	 * Set basic data for galleries based on info passed in from WikiaPhotoGallery
+	 * Data exceeding the hard limit gets dropped.
+	 *
 	 * @param array $items Raw gallery data
 	 */
-	public function setGalleryData( $items ) {
+	protected function setGalleryData( array $items ) {
+		// Drop data exceeding the hard limit
+		if ( count( $items ) > self::IMAGE_COUNT_LIMIT ) {
+			$items = array_slice( $items, 0, self::IMAGE_COUNT_LIMIT, true );
+		}
+
 		$this->itemCount = count( $items );
 		$dimensionIndex = 0;
 
