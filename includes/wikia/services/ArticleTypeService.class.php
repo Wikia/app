@@ -73,8 +73,16 @@ class ArticleTypeService {
 		if ($art) {
 			$title = $art->getTitle()->getText();
 			$text = $art->getPage()->getRawText();
+			$artUrl = $art->getTitle()->getFullUrl();
+			global $wgCityId;
 			if (!empty($title) && !empty($text)) {
-				return [ 'title' => $title, 'wikiText' => $text	];
+				return [
+					'title' => $title,
+					'wikiText' => $text,
+					'pageId' => $pageId,
+					'wikiaId' => $wgCityId,
+					'wikiaUrl' => $artUrl
+				];
 			}
 		}
 		return null;
