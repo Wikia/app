@@ -197,6 +197,7 @@
 				callback: function () {
 					$descriptionEditElement.stopThrobbing();
 					States.setState($descriptionElement, 'filled-state');
+					heroData.oDescription = heroData.description;
 					$descriptionText.text(heroData.description);
 				},
 				onErrorCallback: function () {
@@ -213,6 +214,7 @@
 			$descriptionEditBoxText.change();
 		},
 		revertDescription = function () {
+			heroData.description = heroData.oDescription;
 			States.setState($descriptionElement, 'filled-state');
 		},
 
