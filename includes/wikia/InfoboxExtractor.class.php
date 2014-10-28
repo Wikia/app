@@ -3,7 +3,7 @@ class InfoboxExtractor {
 
 	const INFOBOX_CLASS_NAME = 'infobox';
 	const STYLES_SEPARATOR = ';';
-	const UTF8_ENCODING = '<meta http-equiv="content-type" content="text/html; charset=utf-8">';
+	const UTF8_ENCODING = 'UTF-8';
 
 	private $domDocument;
 	static public $stylesBlacklist = [
@@ -45,8 +45,11 @@ class InfoboxExtractor {
 			$encoding = self::UTF8_ENCODING;
 		}
 
-		$this->domDocument = new DOMDocument();
-		$this->domDocument->loadHTML( $encoding . $content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
+		$this->domDocument = new DOMDocument( '1.0', $encoding );
+		$this->domDocument->loadHTML(
+			mb_convert_encoding( $content, 'HTML-ENTITIES', $encoding ),
+			LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
+		);
 	}
 
 	public function getDOMDocument() {
@@ -173,5 +176,4 @@ class InfoboxExtractor {
 
 		return $stylesArray;
 	}
-
 } 
