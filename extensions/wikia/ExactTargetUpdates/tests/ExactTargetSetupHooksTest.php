@@ -1,6 +1,6 @@
 <?php
 
-class ExactTargetUserTasksAdderHooksTest extends WikiaBaseTest {
+class ExactTargetSetupHooksTest extends WikiaBaseTest {
 
 	/**
 	 * Determine whether update should be performed on specific environment
