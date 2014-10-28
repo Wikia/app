@@ -27,7 +27,6 @@ class VenusController extends WikiaController {
 		$this->lang = $skinVars['lang'];
 		$this->pageClass = $skinVars['pageclass'];
 		$this->skinNameClass = $skinVars['skinnameclass'];
-		$this->bottomScriptLinks = $skinVars['bottomscripts'];
 		$this->pageCss = $this->getPageCss();
 
 
@@ -114,8 +113,6 @@ class VenusController extends WikiaController {
 		$cssGroups = ['venus_css'];
 		$cssLinks = '';
 
-		$scripts = $this->skin->getScripts();
-
 		//let extensions manipulate the asset packages (e.g. ArticleComments,
 		//this is done to cut down the number or requests)
 		$this->app->runHook(
@@ -145,19 +142,9 @@ class VenusController extends WikiaController {
 			}
 		}
 
-
-		foreach ( $this->assetsManager->getURL( $jsBodyGroups ) as $src ) {
-// TODO fix double loading jses
-//			if ( $this->assetsManager->checkAssetUrlForSkin( $src, $this->skin ) ) {
-				$jsBodyFiles .= "<script src='{$src}'></script>";
-//			}
-		}
-
-		if ( is_array( $scripts ) ) {
-			foreach ( $scripts as $s ) {
-				$jsBodyFiles .= "<script src='{$s['url']}'></script>";
-			}
-		}
+		// try to fetch all AM groups in a single JS request (CON-1772)
+		// "WikiaSkin::getScriptsWithCombinedGroups: combined 8 JS groups"
+		$jsBodyFiles = $this->skin->getScriptsWithCombinedGroups($jsBodyGroups);
 
 		//global variables from ResourceLoaderStartUpModule
 		$res = new ResourceVariablesGetter();
