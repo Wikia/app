@@ -35,7 +35,6 @@ ve.ce.WikiaGalleryNode = function VeCeWikiaGalleryNode( model, config ) {
 			this.redrawHighlights();
 		}
 	}, this ) );
-
 };
 
 /* Inheritance */
