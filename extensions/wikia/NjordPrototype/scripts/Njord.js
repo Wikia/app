@@ -77,6 +77,10 @@
 		saveTitleLabel = 'SaveTitle',
 		saveTitleFailLabel = 'SaveTitleFail',
 		revertTitleFailLabel = 'RevertTitle',
+		saveSummaryLabel = 'SaveSummary',
+		saveSummaryFailLabel = 'SaveSummaryFail',
+		revertSummaryLabel = 'RevertSummary',
+		editSummaryLabel = 'EditSummary',
 		heroModuleAddButtonLabel = 'AddButton-Click',
 		heroModuleUpdateButtonLabel = 'UpdateButton-Click',
 		imageLoadedLabel = 'ImageLoaded',
@@ -199,10 +203,13 @@
 					States.setState($descriptionElement, 'filled-state');
 					heroData.oDescription = heroData.description;
 					$descriptionText.text(heroData.description);
+					trackMom(saveSummaryLabel, trackerActionPost);
 				},
 				onErrorCallback: function () {
 					// TODO: handle failure
 					$descriptionEditElement.stopThrobbing();
+					trackMom(saveSummaryFailLabel, trackerActionPost);
+					$.showModal($.msg('error'), 'Error while saving description');
 				}
 			});
 		},
@@ -212,10 +219,12 @@
 			$descriptionEditBoxText.text(heroData.description);
 			$descriptionEditBoxText.focus();
 			$descriptionEditBoxText.change();
+			trackMom(editSummaryLabel, trackerActionEdit);
 		},
 		revertDescription = function () {
 			heroData.description = heroData.oDescription;
 			States.setState($descriptionElement, 'filled-state');
+			trackMom(revertSummaryLabel, trackerActionEdit);
 		},
 
 		initializeData = function () {
