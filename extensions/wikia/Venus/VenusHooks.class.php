@@ -26,7 +26,7 @@ class VenusHooks {
 				$infoboxContainer = $infoboxExtractor->wrapInfobox( $infoboxWrapper, 'infoboxContainer', 'infobox-container' );
 
 				$body = $dom->documentElement->firstChild;
-				$infoboxExtractor->insertNode($body, $infoboxContainer, true );
+				$infoboxExtractor->insertNode( $body, $infoboxContainer, true );
 
 				$content = $dom->saveHTML();
 
