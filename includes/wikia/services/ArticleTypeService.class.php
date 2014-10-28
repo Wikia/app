@@ -69,13 +69,14 @@ class ArticleTypeService {
 	 * @return array|null
 	 */
 	private function getArticleDataByArticleId($pageId) {
+		global $wgCityId;
 		$art = Article::newFromID($pageId);
 		if ($art) {
 			$title = $art->getTitle()->getText();
 			$text = $art->getPage()->getRawText();
 			$artUrl = $art->getTitle()->getFullUrl();
-			global $wgCityId;
-			if (!empty($title) && !empty($text)) {
+			// $title and $text are mandatory for holmes
+			if ( !empty( $title ) && !empty( $text ) ) {
 				return [
 					'title' => $title,
 					'wikiText' => $text,
@@ -83,6 +84,9 @@ class ArticleTypeService {
 					'wikiaId' => $wgCityId,
 					'wikiaUrl' => $artUrl
 				];
+			} else {
+				throw new MissingFieldException( 'missing title or text: ' . $wgCityId .
+					'_' . $pageId );
 			}
 		}
 		return null;
@@ -90,4 +94,8 @@ class ArticleTypeService {
 }
 
 class ServiceUnavailableException extends Exception {
+}
+
+class MissingFieldException extends Exception {
+
 }
