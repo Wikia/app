@@ -1700,11 +1700,11 @@ class WikiaPhotoGallery extends ImageGallery {
 			$width = $file->getWidth();
 
 			if ( $adjHeight == $box['h'] ) {
-				$width = (int) ( $box['w'] * ($file->getHeight()/$box['h']) );
+				$width = $box['w'] * ($file->getHeight()/$box['h']);
 			}
 
 			if ( $adjWidth == $box['w'] ) {
-				$height = (int) ( $box['h'] * ($file->getWidth()/$box['w']) );
+				$height = $box['h'] * ($file->getWidth()/$box['w']);
 			}
 
 			$cropStr = sprintf( "%dpx-0,%d,0,%d", $adjWidth, $width, $height );
