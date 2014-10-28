@@ -49,12 +49,8 @@ ve.ce.WikiaGalleryNode.static.tagName = 'div';
  * @method
  */
 ve.ce.WikiaGalleryNode.prototype.onUpdate = function () {
-	// TODO: This is deleyad because "update" is emitted on parent before it is emitted
-	// on the child - find a better solution (maybe reverse the order of emitting events).
-	setTimeout( ve.bind( function () {
-		this.rebuild();
-		this.runGalleryScript();
-	}, this ), 0 );
+	this.rebuild();
+	this.runGalleryScript();
 };
 
 ve.ce.WikiaGalleryNode.prototype.rebuild = function () {
