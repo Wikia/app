@@ -7,6 +7,18 @@ $media-margin: 2.5px;
 	transition: none;
 }
 
+.media-gallery-caption .ve-ce-generated-wrapper {
+	display: inline;
+	margin: 0;
+	padding: 0;
+	line-height: inherit;
+}
+
+// Hide "Show more" button when gallery is displayed in VE
+.ve .media-gallery-wrapper .more {
+	display: none;
+}
+
 .media-gallery-wrapper {
 	@include grid-row();
 	margin: 0 $media-margin * -1;
