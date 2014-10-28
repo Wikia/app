@@ -44,6 +44,9 @@
       cursor: pointer;
       height: 24px;
     }
+    .title-text {
+      word-wrap: break-word;
+    }
     bottom: 6%;
     color: #fff;
     display: inline-block;
@@ -309,9 +312,6 @@
     }
     .edit-btn{
       display: inherit;
-    }
-    .title-text {
-      word-wrap: break-word;
     }
   }
 
