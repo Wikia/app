@@ -5,6 +5,7 @@
 
 .infobox-container {
 	@include grid-column-width('medium', 4, -2 * $medium-grid-column-padding);
+	clear: right;
 	display: block;
 	float: right;
 	margin: 0 (-$medium-grid-column-padding - $medium-grid-gutter - $medium-grid-column) 30px $medium-grid-gutter + $medium-grid-column-padding;
@@ -65,7 +66,7 @@
 	.infobox-container {
 		@include grid-column-width('large', 4, -2 * $large-grid-column-padding);
 		margin-left: $large-grid-gutter + $large-grid-column-padding;
-		margin-right: -$large-grid-column-padding - $large-grid-gutter - $large-grid-column;
+		margin-right: - $large-grid-gutter - $large-grid-column;
 
 		table, div {
 			@include grid-column-max-width('large', 4, -2 * $large-grid-column-padding);
