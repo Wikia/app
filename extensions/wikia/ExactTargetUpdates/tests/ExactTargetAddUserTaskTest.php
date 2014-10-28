@@ -217,5 +217,4 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 		/* Run tested method */
 		$mockAddUserTask->createSubscriber( $sUserEmail, $soapClient );
 	}
-
 }

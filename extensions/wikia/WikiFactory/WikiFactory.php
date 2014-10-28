@@ -741,6 +741,14 @@ class WikiFactory {
 			}
 			wfProfileOut( __METHOD__."-citylist" );
 			$dbw->commit();
+
+			/* New hook added after actually committing a change */
+			$aHookParams = [
+				'city_id' => $city_id,
+				'cv_name' => $variable->cv_name,
+				'cv_value' => $value,
+			];
+			wfRunHooks( 'WikiFactoryChangeCommitted', array( $aHookParams ) );
 		}
 		catch ( DBQueryError $e ) {
 			Wikia::log( __METHOD__, "", "Database error, cannot write variable." );
@@ -750,7 +758,6 @@ class WikiFactory {
 			// as result value, not DBQueryError exception
 			// throw $e;
 		}
-
 
 		self::clearCache( $city_id );
 		wfProfileOut( __METHOD__ );
@@ -2633,12 +2640,11 @@ class WikiFactory {
 		}
 
 		// Default query using this function is to get all the new/active categories
-		$aFilter = "city_cats.cat_active = 1";
 		$aOptions = array();
+		$aFilter = "city_cats.cat_active = 1";
 
 		if ( $deprecated ) {
 			$aFilter = "city_cats.cat_deprecated = 1";
-			$aOptions = array ("LIMIT" => 1);
 		}
 
 		/**
@@ -2652,14 +2658,19 @@ class WikiFactory {
 		if ( empty($cached) ) {
 			$dbr = self::db( DB_SLAVE );
 
+			$aWhere = array(
+				"city_id" => $city_id,
+				"city_cats.cat_id = city_cat_mapping.cat_id",
+			);
+
+			if ( !empty( $aFilter ) ) {
+				$aWhere[] = $aFilter;
+			}
+
 			$oRes = $dbr->select(
 				array( "city_cat_mapping", "city_cats" ),
 				array( "city_cats.cat_id as cat_id", "city_cats.cat_name as cat_name" ),
-				array(
-					"city_id" => $city_id,
-					"city_cats.cat_id = city_cat_mapping.cat_id",
-					$aFilter
-				),
+				$aWhere,
 				__METHOD__,
 				$aOptions
 			);

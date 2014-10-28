@@ -395,6 +395,14 @@ class WikiFactoryHub extends WikiaModel {
 		// I guess we should look up the name here
 		$verticals = $this->getAllVerticals();
 		$name = $verticals[$vertical_id]['name'];
+
+		/* Run hooks on change in wiki's vertical */
+		$aHookParams = [
+			'city_id' => $city_id,
+			'vertical_id' => $vertical_id,
+		];
+		wfRunHooks( 'WikiFactoryVerticalSet', array( $aHookParams ) );
+
 		WikiFactory::log( WikiFactory::LOG_CATEGORY, "Vertical changed to $name. $reason", $city_id );
 
 	}
@@ -426,6 +434,13 @@ class WikiFactoryHub extends WikiaModel {
 
 			$this->clearCache( $city_id );
 		}
+
+		/* Run hooks on city_cat_mapping change */
+		$aHookParams = [
+			'city_id' => $city_id,
+			'categories_new' => $values,
+		];
+		wfRunHooks( 'CityCatMappingUpdated', array( $aHookParams ) );
 
 		# pretty clunky way to load all the categories just for the name, maybe refactor this?
 		$this->loadCategories();

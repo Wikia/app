@@ -33,16 +33,21 @@ $wgExtensionCredits['other'][] = array(
 	'descriptionmsg'    => 'exacttarget-updates-description',
 	'version'           => '0.1',
 	'author'            => array(
-		"Kamil Koterba <kamil@wikia-inc.com>"
+		"Kamil Koterba <kamil@wikia-inc.com>",
+		'Adam Karminski <adamk@wikia-inc.com>',
 	),
 	'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ExactTargetUpdates/'
 );
 
 $wgExtensionMessagesFiles[ 'ExactTargetUpdates' ] = $dir . '/ExactTargetUpdates.i18n.php';
 
+$wgAutoloadClasses['ExactTargetUpdatesHelper'] = $dir . '/ExactTargetUpdatesHelper.php';
 $wgAutoloadClasses['ExactTargetBaseTask'] =  $dir . '/ExactTargetBaseTask.php' ;
 $wgAutoloadClasses['ExactTargetAddUserTask'] =  $dir . '/ExactTargetAddUserTask.php' ;
 $wgAutoloadClasses['ExactTargetUpdateUserTask'] =  $dir . '/ExactTargetUpdateUserTask.php' ;
+$wgAutoloadClasses['ExactTargetAddWikiTask'] =  $dir . '/ExactTargetAddWikiTask.php';
+$wgAutoloadClasses['ExactTargetUpdateWikiTask'] =  $dir . '/ExactTargetUpdateWikiTask.php';
+$wgAutoloadClasses['ExactTargetUpdateCityCatMappingTask'] = $dir . '/ExactTargetUpdateCityCatMappingTask.php';
 $wgAutoloadClasses['ExactTargetUpdatesHooks'] =  $dir . '/ExactTargetUpdatesHooks.php' ;
 $wgAutoloadClasses['ExactTargetSoapClient'] =  $dir . '/lib/exacttarget_soap_client.php' ;
 
@@ -52,5 +57,15 @@ $wgAutoloadClasses['ExactTargetSoapClient'] =  $dir . '/lib/exacttarget_soap_cli
  */
 $wgHooks['ArticleSaveComplete'][] = 'ExactTargetUpdatesHooks::onArticleSaveComplete';
 $wgHooks['EmailChangeConfirmed'][] = 'ExactTargetUpdatesHooks::onEmailChangeConfirmed';
+/* User-related hooks */
 $wgHooks['SignupConfirmEmailComplete'][] = 'ExactTargetUpdatesHooks::onSignupConfirmEmailComplete';
 $wgHooks['UserSaveSettings'][] = 'ExactTargetUpdatesHooks::onUserSaveSettings';
+/**
+ * Wiki-related hooks
+ */
+/* Create */
+$wgHooks['CreateWikiLocalJob-complete'][] = 'ExactTargetUpdatesHooks::onWikiCreation';
+/* Update */
+$wgHooks['WikiFactoryChangeCommitted'][] = 'ExactTargetUpdatesHooks::onWikiFactoryChanged';
+$wgHooks['WikiFactoryVerticalSet'][] = 'ExactTargetUpdatesHooks::onWikiFactoryVerticalSet';
+$wgHooks['CityCatMappingUpdated'][] = 'ExactTargetUpdatesHooks::onCityCatMappingUpdated';
