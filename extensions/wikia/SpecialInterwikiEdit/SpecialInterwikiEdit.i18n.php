@@ -14,13 +14,15 @@
 $messages = array();
 
 $messages['en'] = array(
-	'interwikiedit'			=> 'Interwiki Editor',
-	'iwedit-title'	 		=> 'Interwiki Editor',
-	'iwedit-language-interwikis' 	=> 'language interwikis only',
-	'iwedit-all-interwikis' 	=> 'all interwikis',
-	'iwedit-update' 		=> 'Update',
-	'iwedit-error' 			=> '<p>An error occurred.</p>',
-	'iwedit-success' 		=> '<p>Link creation successful.</p>',
+	'interwikiedit'                 => 'Interwiki Editor',
+	'iwedit-title'                  => 'Interwiki Editor',
+	'iwedit-language-interwikis'    => 'language interwikis only',
+	'iwedit-all-interwikis'         => 'all interwikis',
+	'iwedit-update'                 => 'Update',
+	'iwedit-error'                  => '<p>An error occurred.</p>',
+	'iwedit-success'                => '<p>Link creation successful.</p>',
+	'iwedit-local'                  => 'Local-only interwiki? (i.e. not global)',
+	'iwedit-trans'                  => 'Enable scary transclusion',
 );
 
 /** Message documentation (Message documentation)
