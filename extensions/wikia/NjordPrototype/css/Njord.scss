@@ -144,9 +144,10 @@
   .edit-box {
     background-color: rgba(0, 0, 0, .03);
     display: none;
+    position: relative;
     .edited-text {
       outline: none;
-      min-height: 100px;
+      min-height: 1.2em;
       padding: 1%;
       padding-left: 2%;
       color: rgba(0, 0, 0, .7);
