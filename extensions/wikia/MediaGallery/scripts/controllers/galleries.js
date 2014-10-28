@@ -60,7 +60,7 @@ define('mediaGallery.controllers.galleries', [
 
 		$.each(this.$galleries, function (idx) {
 			var $this = $(this),
-				model = JSON.parse($this.attr('data-model')),
+				model = $this.data('model'),
 				lightboxController;
 
 			if ($this.data('initialized')) {
