@@ -490,7 +490,7 @@ function wfSIWELinkWikisCommit () {
 		$ret = wfMessage( 'iwedit-error' )->text();
 	}
 
-	return XML::element( 'p', [], $ret );
+	return Xml::element( 'p', [], $ret );
 }
 
 function wfSIWEMakeInterlanguageUrl($wikiaID) {
