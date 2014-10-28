@@ -1,26 +1,13 @@
-$direction-default: ltr;
-$direction-opposite: rtl;
 $spread-radius: 0;
 $inset: false;
 
-@mixin box-shadow-direction($offset-x, $offset-y, $blur-radius, $color, $inset, $spread-radius, $direction: $direction-default) {
-
-	$direction-sign: if($direction == $direction-default, 1, -1);
-	$inset-string: if($inset, 'inset ', '');
-
-	/* @noflip */
-	-webkit-box-shadow: #{$inset-string}($direction-sign * $offset-x) $offset-y $blur-radius $spread-radius $color;
-	/* @noflip */
-	box-shadow: #{$inset-string}($direction-sign * $offset-x) $offset-y $blur-radius $spread-radius $color;
-}
-
 @mixin box-shadow($offset-x, $offset-y, $blur-radius, $color, $inset: $inset, $spread-radius: $spread-radius) {
-	@include box-shadow-direction($offset-x, $offset-y, $blur-radius, $color, $inset, $spread-radius, $direction-default);
-
-	@if $offset-x != 0 {
-		html[dir='rtl'] & {
-			@include box-shadow-direction($offset-x, $offset-y, $blur-radius, $color, $inset, $spread-radius, $direction-opposite);
-		}
+	@if $inset {
+		-webkit-box-shadow: inset $offset-x $offset-y $blur-radius $spread-radius $color;
+		box-shadow: inset $offset-x $offset-y $blur-radius $spread-radius $color;
+	} @else {
+		-webkit-box-shadow: $offset-x $offset-y $blur-radius $spread-radius $color;
+		box-shadow: $offset-x $offset-y $blur-radius $spread-radius $color;
 	}
 }
 
