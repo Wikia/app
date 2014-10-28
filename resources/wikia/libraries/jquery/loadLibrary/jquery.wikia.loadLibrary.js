@@ -117,20 +117,49 @@ $.loadGoogleMaps = function(callback) {
 };
 
 $.loadFacebookAPI = function(callback) {
-	return $.loadLibrary('Facebook API',
-		window.fbScript || '//connect.facebook.net/en_US/all.js',
-		typeof window.FB,
-		function() {
-			// always initialize FB API when SDK is loaded on-demand
-			if (window.onFBloaded) {
-				window.onFBloaded();
-			}
+
+	if (1) {
+		// v2.x functionality
+		window.fbAsyncInit = function () {
+			FB.init({
+				appId: window.fbAppId,
+				xfbml: true,
+				cookie: true,
+				version: 'v2.1'
+			});
 
 			if (typeof callback === 'function') {
 				callback();
 			}
-		}
-	);
+		};
+
+		(function (d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) {
+				return;
+			}
+			js = d.createElement(s);
+			js.id = id;
+			js.src = '//connect.facebook.net/en_US/sdk.js';
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+	} else {
+		// v1.x functionality
+		return $.loadLibrary('Facebook API',
+			window.fbScript || '//connect.facebook.net/en_US/all.js',
+			typeof window.FB,
+			function () {
+				// always initialize FB API when SDK is loaded on-demand
+				if (window.onFBloaded) {
+					window.onFBloaded();
+				}
+
+				if (typeof callback === 'function') {
+					callback();
+				}
+			}
+		);
+	}
 };
 
 $.loadGooglePlusAPI = function(callback) {

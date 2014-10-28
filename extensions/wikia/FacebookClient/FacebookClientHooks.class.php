@@ -117,31 +117,41 @@ class FacebookClientHooks {
 		$src = $wg->ExtensionsPath.'/FBConnect/prefs.js?'.$wg->StyleVersion;
 		$wg->Out->addScript("<script type=\"$type\" src=\"$src\"></script>\n");
 
+		// Determine if we're connected already or not
 		$ids = FacebookClient::getInstance()->getFacebookUserIds( $user );
 		if ( count( $ids ) > 0 ) {
-
-			$html = F::app()->renderView( 'FacebookClientController', 'preferences' );
-
-			$preferences['facebookclient-connect'] = [
-				'help' => $html,
-				'label' => '',
-				'type' => 'info',
-				'section' => 'facebookclient-prefstext/facebookclient-status-prefstext'
-			];
+			$isConnected = true;
+			$prefTab = 'facebookclient-connect';
 		} else {
-
-			// User is a MediaWiki user but isn't connected yet.  Display a message and button to connect.
-			$loginButton = '<fb:login-button id="fbPrefsConnect" onlogin="sendToConnectOnLogin()"></fb:login-button>';
-			$html = wfMessage('facebookclient-convert') . '<br/>' . $loginButton;
-			$html .= "<!-- Convert button -->\n";
-			$preferences['facebookclient-disconnect'] = [
-				'help' => $html,
-				'label' => '',
-				'type' => 'info',
-				'section' => 'facebookclient-prefstext/facebookclient-status-prefstext'
-			];
+			$isConnected = false;
+			$prefTab = 'facebookclient-disconnect';
 		}
+
+		$html = F::app()->renderView( 'FacebookClientController', 'preferences', [ 'isConnected' => $isConnected ] );
+		// Create a new tab on the preferences page
+		$preferences[$prefTab] = [
+			'help' => $html,
+			'label' => '',
+			'type' => 'info',
+			'section' => 'facebookclient-prefstext/facebookclient-status-prefstext'
+		];
+
 		return true;
 	}
 
+	/**
+	 * Adds JS needed for the user preferences page
+	 *
+	 * @param Array $assetsArray
+	 * @return bool
+	 */
+	public static function onOasisSkinAssetGroups( &$assetsArray ) {
+		$title = F::app()->wg->Title;
+
+		if ( !empty( $title ) && $title->isSpecial( 'Preferences' ) ) {
+			$assetsArray[] = 'facebook_client_preferences_js';
+		}
+
+		return true;
+	}
 }

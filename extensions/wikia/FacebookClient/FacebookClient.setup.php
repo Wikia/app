@@ -27,9 +27,10 @@ $dir = dirname( __FILE__ ) . '/';
 /**
  * classes
  */
-$wgAutoloadClasses['FacebookClient'] =  $dir. 'FacebookClient.class.php' ;
-$wgAutoloadClasses['FacebookClientController'] =  $dir. 'FacebookClientController.class.php' ;
-$wgAutoloadClasses[ 'FacebookClientLocale'] =  $dir. 'FacebookClientLocale.class.php' ;
+$wgAutoloadClasses['FacebookClient'] =  $dir . 'FacebookClient.class.php';
+$wgAutoloadClasses['FacebookClientController'] =  $dir . 'FacebookClientController.class.php';
+$wgAutoloadClasses[ 'FacebookClientLocale'] =  $dir . 'FacebookClientLocale.class.php';
+$wgAutoloadClasses[ 'FacebookMapModel'] =  $dir . 'FacebookMapModel.class.php';
 
 /**
  * hooks
@@ -39,6 +40,7 @@ $wgHooks['UserLoadFromSession'][] = 'FacebookClientHooks::UserLoadFromSession';
 $wgHooks['MakeGlobalVariablesScript'][] = 'FacebookClientHooks::MakeGlobalVariablesScript';
 $wgHooks['SkinAfterBottomScripts'][] = 'FacebookClientHooks::SkinAfterBottomScripts';
 $wgHooks['GetPreferences'][] = 'FacebookClientHooks::GetPreferences';
+$wgHooks['onOasisSkinAssetGroups'][] = 'FacebookClientHooks::onOasisSkinAssetGroups';
 
 /**
  * messages

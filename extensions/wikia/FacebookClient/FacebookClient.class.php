@@ -104,17 +104,12 @@ class FacebookClient {
 			$fbid = $this->getUserId();
 		}
 
-		// NOTE: Do not just pass this dbr into getUserByDB since that function prevents
-		// rewriting of the database name for shared tables.
-		$dbr = wfGetDB( DB_SLAVE, null, F::app()->wg->ExternalSharedDB );
-
-		$wikiaID = ( new WikiaSQL() )
-			->select( 'user_id' )
-			->from( 'user_fbconnect' )
-			->where( 'user_fbid' )->EQUAL_TO( $fbid )
-			->runLoop( $dbr, function ( &$id, $row ) {
-				$id = $row->user_id;
-			} );
+		$map = FacebookMapModel::lookupFromFacebookID( $fbid );
+		if ( empty( $map ) ) {
+			return null;
+		} else {
+			$wikiaID = $map->getWikiaUserId();
+		}
 
 		if ( $wikiaID ) {
 			global $wgExternalAuthType;
@@ -125,10 +120,10 @@ class FacebookClient {
 			if ( $wgExternalAuthType ) {
 				$user->load();
 				if ( $user->getId() == 0 ) {
-					$mExtUser = ExternalUser::newFromId( $id );
+					$mExtUser = ExternalUser::newFromId( $wikiaID );
 					if ( is_object( $mExtUser ) && ( $mExtUser->getId() != 0 ) ) {
 						$mExtUser->linkToLocal( $mExtUser->getId() );
-						$user->setId( $id );
+						$user->setId( $wikiaID );
 					}
 				}
 			}
@@ -145,9 +140,6 @@ class FacebookClient {
 	 * @return array|bool|mixed
 	 */
 	public function getFacebookUserIds( $user ) {
-		$wg = F::app()->wg;
-
-		$dbr = wfGetDB( DB_SLAVE, null, $wg->ExternalSharedDB );
 
 		// Determine if we got an ID or an object
 		if ( $user instanceof User && $user->getId() != 0 ) {
@@ -156,24 +148,14 @@ class FacebookClient {
 			$wikiaUserId = $user;
 		}
 
+		$fbid = [];
 		if ( $wikiaUserId ) {
-			$memkey = wfSharedMemcKey( "fb_user_id", $wikiaUserId );
-			$val = $wg->Memc->get( $memkey );
-			if ( is_array( $val ) ) {
-				return $val;
+			$mappings = FacebookMapModel::lookupFromWikiaID( $wikiaUserId );
+
+			foreach ( $mappings as $map ) {
+				/** @var FacebookMapModel $map */
+				$fbid[] = $map->getFacebookUserId();
 			}
-
-			$fbid = ( new WikiaSQL() )
-				->SELECT( 'user_fbid' )
-				->FROM( 'user_fbconnect' )
-				->WHERE( 'user_id' )->EQUAL_TO( $wikiaUserId )
-				->runLoop( $dbr, function ( &$ids, $row ) {
-					$ids[] = $row->user_fbid;
-				} );
-
-			$wg->Memc->set( $memkey, $fbid );
-		} else {
-			$fbid = [];
 		}
 
 		return $fbid;
@@ -204,5 +186,4 @@ class FacebookClient {
 			setcookie( $sessionCookieName, '', 0, '/', $base_domain );
 		}
 	}
-
 }

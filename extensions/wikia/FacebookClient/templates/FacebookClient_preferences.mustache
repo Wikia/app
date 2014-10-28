@@ -1,3 +1,4 @@
+{{#isConnected}}
 <div id="fbDisconnectLink">
     {{{facebookDisconnectLink}}}
 </div>
@@ -10,3 +11,8 @@
 <div style="display:none;" id="fbDisconnectDone">
     {{{facebookDisconnectInfo}}}
 </div>
+{{/isConnected}}{{^isConnected}}
+<fb:login-button id="fbPrefsConnect" onlogin="sendToConnectOnLogin()"></fb:login-button>
+{{facebookConvertMessage}}<br />
+<!-- Convert button -->
+{{/isConnected}}

@@ -15,6 +15,8 @@ $messages['en'] = [
 	'facebookclient-disconnect-done' => "Disconnecting <span id='fbConnectDisconnectDone'>... done! </span>",
 	'facebookclient-disconnect-info' => "We have emailed a new password to use with your account - you can log in with the same username as before. Hooray!",
 	'facebookclient-disconnect-info-existing' => "You can still log in using your user name and password, as usual.",
+
+	'facebookclient-unknown-error' => '',
 ];
 
 /**

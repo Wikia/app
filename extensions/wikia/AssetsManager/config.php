@@ -2056,7 +2056,6 @@ $config['global_header_js'] = [
 	]
 ];
 
-
 $config['media_gallery_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis'],
@@ -2068,5 +2067,13 @@ $config['media_gallery_js'] = [
 		'//extensions/wikia/MediaGallery/scripts/controllers/lightbox.js',
 		'//extensions/wikia/MediaGallery/scripts/controllers/galleries.js',
 		'//extensions/wikia/MediaGallery/scripts/controllers/index.js',
+	]
+];
+
+$config['facebook_client_preferences_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/FacebookClient/scripts/preferences.js',
 	]
 ];
