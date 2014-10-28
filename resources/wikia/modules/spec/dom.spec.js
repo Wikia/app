@@ -105,3 +105,57 @@ describe('wikia.dom', function () {
 		expect(classes).toEqual(['foo', 'bar']);
 	});
 });
+
+describe('wikia.dom', function () {
+	'use strict';
+
+	var container,
+		domModule = modules['wikia.dom']({}),
+		nodeList = ['h1', 'h2', 'h2', 'h3', 'h4', 'h5', 'h1'],
+		nodes = [];
+
+	/**
+	 * Create name with tagName property set
+	 * @param {String} tagName - tagName which should be set in new node
+	 * @returns {Object}
+	 * @constructor
+	 */
+	function Node(tagName) {
+		return {
+			tagName: tagName
+		};
+	}
+
+	container = {
+		children: []
+	};
+
+	for (var i = 0; i < nodeList.length; i++) {
+		nodes.push(new Node(nodeList[i]));
+	}
+
+	container.children = nodes;
+
+	it('Throw an error when wrong argument type is provided', function () {
+		expect(function () {
+			domModule.childrenByTagName('div', 'foo');
+		}).toThrow('tagList must be an array');
+	});
+
+	it('Check if correct children are returned when all of provided tag names exist in children list', function () {
+		expect(domModule.childrenByTagName(['h1', 'h2'], container)).toEqual([nodes[0], nodes[1], nodes[1], nodes[0]]);
+	});
+
+	it('Check if empty array is returned if container does not have child with provided tag name', function () {
+		expect(domModule.childrenByTagName(['foo'], container)).toEqual([]);
+	});
+
+	it('Check if correct child is returned when only one of provided tag names exist in children list', function () {
+		expect(domModule.childrenByTagName(['foo', 'h1'], container)).toEqual([nodes[0], nodes[0]]);
+	});
+
+	it('Check if empty array is returned when container does not have children', function () {
+		container.children = [];
+		expect(domModule.childrenByTagName(['foo', 'bar'], container)).toEqual([]);
+	});
+});
