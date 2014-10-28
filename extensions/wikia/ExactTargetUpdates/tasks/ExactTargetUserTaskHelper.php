@@ -71,6 +71,17 @@ class ExactTargetUserTaskHelper {
 		return $aApiParams;
 	}
 
+	public function prepareSubscriberDataForCreate( $sUserEmail ) {
+		$aApiParams = [
+			[
+				'SubscriberKey' => $sUserEmail,
+				'EmailAddress' => $sUserEmail,
+			],
+		];
+
+		return $aApiParams;
+	}
+
 	/**
 	 * Prepares array of params for ExactTarget API for creating DataExtension objects for user table
 	 * @param int $iUserId User id
@@ -148,8 +159,8 @@ class ExactTargetUserTaskHelper {
 
 		if ( $wgExactTargetDevelopmentMode ) {
 			$aCustomerKeys = [
-				'user' => 'user_dev',
-				'user_properties' => 'user_properties_dev',
+				'user' => 'user',
+				'user_properties' => 'user_properties',
 			];
 		} else {
 			$aCustomerKeys = [

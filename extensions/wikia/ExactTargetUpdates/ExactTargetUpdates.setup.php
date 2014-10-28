@@ -66,6 +66,7 @@ $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetDeleteWikiTask'] = $dir . '/tas
 
 /* Add API classes */
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetApiDataExtension'] =  $dir . '/api/ExactTargetApiDataExtension.php' ;
+$wgAutoloadClasses['Wikia\ExactTarget\ExactTargetApiSubscriber'] =  $dir . '/api/ExactTargetApiSubscriber.php' ;
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetApiHelper'] =  $dir . '/api/ExactTargetApiHelper.php' ;
 $wgAutoloadClasses['ExactTargetSoapClient'] =  $dir . '/lib/exacttarget_soap_client.php' ;
 

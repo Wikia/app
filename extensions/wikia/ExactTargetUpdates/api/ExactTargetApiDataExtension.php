@@ -65,7 +65,7 @@ class ExactTargetApiDataExtension {
 	public function updateFallbackCreateRequest( Array $aApiCallParams ) {
 		$aDE = $this->Helper->prepareDataExtensionObjects( $aApiCallParams['DataExtension'] );
 		$aSoapVars = $this->Helper->prepareSoapVars( $aDE );
-		$oUpdateOptions = $this->prepareUpdateCreateOptions();
+		$oUpdateOptions = $this->Helper->prepareUpdateCreateOptions();
 		$oRequest = $this->Helper->wrapUpdateRequest( $aSoapVars, $oUpdateOptions );
 
 		$oResults = $this->makeRequest( 'Update', $oRequest );

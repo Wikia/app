@@ -22,7 +22,7 @@ class ExactTargetRetrieveUserHelper {
 			return $oEmailResult->Results->Properties->Property->Value;
 		}
 
-		$this->notice( __METHOD__ . ' user DataExtension object not found for user_id = ' . $iUserId );
+		// $this->info( __METHOD__ . ' user DataExtension object not found for user_id = ' . $iUserId );
 		return null;
 	}
 
