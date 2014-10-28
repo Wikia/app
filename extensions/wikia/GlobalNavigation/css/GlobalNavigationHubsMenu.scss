@@ -1,7 +1,6 @@
 @import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/typographyMixins';
 @import 'skins/shared/color';
-@import 'skins/shared/mixins/blackout';
 @import 'skins/shared/mixins/chevron';
 @import 'skins/shared/mixins/columns';
 @import 'GlobalNavigationColors';
@@ -33,14 +32,6 @@
 
 	.hubs-entry-point:after {
 		border-top-color: $nav-foreground-dark-color;
-	}
-}
-
-.transparent-out {
-	@include blackout(rgba(1, 1, 1, 0));
-
-	&.visible {
-		z-index: $blackout-z-index;
 	}
 }
 
