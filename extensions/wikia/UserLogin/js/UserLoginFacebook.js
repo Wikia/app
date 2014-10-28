@@ -1,3 +1,4 @@
+/* global UserLoginModal */
 (function () {
 	'use strict';
 
@@ -58,6 +59,7 @@
 					window.FB.login($.proxy(self.loginCallback, self), {
 						scope: 'publish_stream,email'
 					});
+					UserLoginModal.$modal.trigger('close');
 				});
 		},
 
