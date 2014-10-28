@@ -1,7 +1,7 @@
 define('venus.infobox',
 	['wikia.document', 'wikia.window'],
-	function(d, w)
-{
+	function(d, w) {
+
 	'use strict';
 
 	var maxInfoboxHeight = 700,

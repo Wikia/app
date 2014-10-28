@@ -2,20 +2,21 @@
 class InfoboxExtractor {
 
 	const INFOBOX_CLASS_NAME = 'infobox';
+	const STYLES_SEPARATOR = ';';
 
 	private $domDocument;
 	static public $stylesBlacklist = [
-		'float' => 'float',
-		'height' => 'height',
-		'margin' => 'margin',
-		'margin-bottom' => 'margin-bottom',
-		'margin-left' => 'margin-left',
-		'margin-right' => 'margin-right',
-		'margin-top' => 'margin-top',
-		'max-width' => 'max-width',
-		'min-width' => 'min-width',
-		'max-height' => 'max-height',
-		'min-height' => 'min-height'
+		'float',
+		'height',
+		'margin',
+		'margin-bottom',
+		'margin-left',
+		'margin-right',
+		'margin-top',
+		'max-width',
+		'min-width',
+		'max-height',
+		'min-height'
 	];
 
 	static public $defaultQuery;
@@ -132,10 +133,11 @@ class InfoboxExtractor {
 	 */
 	public function removeBlacklistedProperties( $styles ) {
 		$stylesArray = self::getStylesArray( $styles );
+		$stylesBlacklist = array_flip(self::$stylesBlacklist);
 
-		$stylesArray = array_diff_key( $stylesArray, self::$stylesBlacklist );
+		$stylesArray = array_diff_key( $stylesArray, $stylesBlacklist );
 
-		$styles = implode( ';', $stylesArray );
+		$styles = implode( self::STYLES_SEPARATOR, $stylesArray );
 
 		if ( !empty( $styles ) ) {
 			$styles .= ';';
