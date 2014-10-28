@@ -2330,7 +2330,7 @@ Ch'a consulta la [[Special:BlockList|lista dj'IP blocà]] për rivëdde ij bloca
 'unblocked'                       => "[[User:$1|$1]] a l'é stait dësblocà",
 'unblocked-range'                 => "$1 a l'é stàit dësblocà",
 'unblocked-id'                    => "Ël blocagi $1 a l'é stait gavà via",
-'unblocked-ip'                    => '[[Special:Contributions/$1|$1]] a l'é stàit dësblocà.',
+'unblocked-ip'                    => "[[Special:Contributions/$1|$1]] a l'é stàit dësblocà.",
 'blocklist'                       => 'Utent blocà',
 'ipblocklist'                     => 'Adrësse IP e utent blocà',
 'ipblocklist-legend'              => "Trové n'utent blocà",
