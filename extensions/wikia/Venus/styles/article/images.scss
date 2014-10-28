@@ -5,6 +5,8 @@
 
 $border-color: lighten($color-text, 30%);
 $image-margin: 30px;
+$image-max-columns-small: 11;
+$image-max-columns-medium-and-large: 10;
 
 /* Sets the initial property values for the default breakpoint.
  *
@@ -44,13 +46,13 @@ $image-margin: 30px;
  * @param $breakpoint: small or large
  * @param $additional-(left|right)-margin: additional margin [px] for the corresponding direction
  */
-@mixin floated-element-breakpoint($breakpoint, $aditional-left-margin: 0, $aditional-right-margin: 0) {
+@mixin floated-element-breakpoint($breakpoint, $columns, $aditional-left-margin: 0, $aditional-right-margin: 0) {
 	.article {
 		.floatleft,
 		.tleft,
 		.floatright,
 		.tright {
-			@include grid-column-max-width($breakpoint, 11);
+			@include grid-column-max-width($breakpoint, $columns);
 		}
 
 		@include floated-element-breakpoint-margins($breakpoint, left, $aditional-left-margin);
@@ -101,7 +103,7 @@ $image-margin: 30px;
 	.tleft,
 	.floatright,
 	.tright {
-		@include grid-column-max-width('medium', 11);
+		@include grid-column-max-width('medium', $image-max-columns-medium-and-large);
 		overflow: hidden;
 
 		.image-thumbnail img {
@@ -109,8 +111,9 @@ $image-margin: 30px;
 		}
 	}
 
-	@include floated-element-base(left, $image-margin, -$medium-grid-column-padding);
-	@include floated-element-base(right, $image-margin, -$medium-grid-column-padding - $medium-grid-gutter - $medium-grid-column);
+	@each $direction in left, right {
+		@include floated-element-base($direction, $image-margin, -$medium-grid-column-padding);
+	}
 
 	.floatleft,
 	.floatright {
@@ -161,14 +164,11 @@ $image-margin: 30px;
 }
 
 @media #{$large-up} {
-	@include floated-element-breakpoint(large, left);
-	@include floated-element-breakpoint(large, right, - $large-grid-gutter - $large-grid-column);
+	@include floated-element-breakpoint(large, $image-max-columns-medium-and-large);
 }
 
 @media #{$small-only} {
-	@each $direction in left, right {
-		@include floated-element-breakpoint(small, $direction);
-	}
+	@include floated-element-breakpoint(small, $image-max-columns-small);
 
 	.article .wikiaPhotoGallery-slider-body {
 		margin-left: -6px;
