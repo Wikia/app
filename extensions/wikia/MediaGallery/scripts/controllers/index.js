@@ -7,11 +7,7 @@ require([
 	 * Convenience function for initializing the gallery elements.
 	 */
 	function newGallery() {
-		var controller = new GalleriesController({
-			lightbox: true,
-			lazyLoad: true
-		});
-		controller.init();
+		new GalleriesController().init();
 	}
 
 	// Galleries must be initialized on page-load and on preview dialog
