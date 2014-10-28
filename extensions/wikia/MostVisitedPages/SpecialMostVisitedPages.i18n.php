@@ -85,6 +85,18 @@ $messages['bg'] = array(
 	'mostvisitedpagessearchbtn' => 'търсене',
 );
 
+/** Bengali (বাংলা)
+ * @author Aftab1995
+ */
+$messages['bn'] = array(
+	'mostvisitedpages' => 'সর্বাধিক দেখা পাতাসমূহ',
+	'mostvisitedpagessearchtext' => 'নিবন্ধের নাম:',
+	'mostvisitedpagessearchbtn' => 'অনুসন্ধান',
+	'mostvisitedpageslatest' => 'সর্বশেষ $1 {{PLURAL:$1|মিনিটে}}',
+	'mostvisitedpageslatestlink' => 'সর্বশেষ দেখা পাতাসমূহ দেখুন',
+	'mostvisitedpagesalllink' => 'সর্বাধিক দেখা পাতাসমূহ দেখুন',
+);
+
 /** Breton (brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D

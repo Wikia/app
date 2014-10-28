@@ -544,6 +544,7 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Plover-Y
  * @author Tommy6
  * @author 青子守歌
  */
@@ -565,6 +566,7 @@ $messages['ja'] = array(
 	'multilookuplistwikiainfo' => 'IPアドレスが <b>$1</b> のユーザーが記事の編集を行ったことのあるウィキ',
 	'multilookupinvaliduser' => '<p class="error">IPアドレス"<b>$1</b>"は存在しません。入力したIPアドレスに誤りがないか確認してください。</p>',
 	'multilookuplastedit' => 'このIPアドレスからの最後の編集:',
+	'multilookuprecordspager' => "'''$3'''件中'''$1'''件目から'''$2'''件目を表示中",
 	'right-multilookup' => '複数ウィキにおけるユーザの情報を閲覧',
 );
 

@@ -198,7 +198,7 @@ $(document).ready(function() {
 <ul>
 <?php if( $isUsernameGloballyBlocked ) { ?>
 	<li><?= Linker::link(
-		GlobalTitle::newFromText( 'Phalanx', NS_SPECIAL, WikiFactory::COMMUNITY_CENTRAL ),
+		GlobalTitle::newFromText( 'Phalanx/test', NS_SPECIAL, WikiFactory::COMMUNITY_CENTRAL ),
 		wfMessage( 'lookupuser-username-blocked-globally' )->parse(),
 		[],
 		[

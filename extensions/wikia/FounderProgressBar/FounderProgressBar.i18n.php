@@ -1962,6 +1962,7 @@ $messages['sr-ec'] = array(
 /** Swedish (svenska)
  * @author Geitost
  * @author Grytolle
+ * @author Rotsee
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -1984,7 +1985,7 @@ $messages['sv'] = array(
 	'founderprogressbar-completion-message' => 'Grattis! Du har gjort ett fantastiskt jobb och är klar med alla uppgifter till 100 %. Din wiki är på god väg till succé, eller är till och med redan där. Fortsätt med det häftiga arbetet!',
 	'founderprogressbar-bonus-task-notice' => 'OBS: Varje bonusuppgift kan slutföras mer än en gång. Slutför så många som du behöver för att nå 100 %',
 	'founderprogressbar-page-add10-label' => 'Nå $1 {{PLURAL:$1|sida|sidor}}',
-	'founderprogressbar-page-add10-description' => 'Det bästa sättet att komma igång med din wiki är att börja lägga till sidor med information om ditt ämne. De bästa sidorna har åtminstone en paragraf eller två, och kanske länkar till andra sidor.',
+	'founderprogressbar-page-add10-description' => 'Det bästa sättet att komma igång med din wiki är att börja lägga till sidor med information om ditt ämne. De bästa sidorna innehåller åtminstone ett stycke eller två, och kanske länkar till andra sidor.',
 	'founderprogressbar-themedesigner-visit-label' => 'Anpassa ditt tema',
 	'founderprogressbar-themedesigner-visit-description' => 'Temadesignern låter dig välja ett tema för din wiki, eller skapa ditt eget tema med våra enkla verktyg. Ett anpassat tema gör verkligen din wiki unik.',
 	'founderprogressbar-mainpage-edit-label' => 'Fyll i din huvudsida',

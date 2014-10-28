@@ -510,6 +510,7 @@ $messages['ko'] = array(
 	'wikiapoll-question-label' => '질문',
 	'wikiapoll-addnewitem-label' => '새 항목 추가',
 	'wikiapoll-cancel-label' => '취소',
+	'wikiapoll-publish-label' => '저장',
 	'wikiamobile-wikiapoll-poll' => '설문 조사',
 );
 

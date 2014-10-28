@@ -4333,6 +4333,7 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author Naohiro19
+ * @author Plover-Y
  * @author Schu
  * @author Shirayuki
  * @author Tommy6
@@ -4521,6 +4522,7 @@ $messages['ja'] = array(
 	'wikistats_current_month' => '今月',
 	'wikistats_language_top' => '上位$1言語',
 	'wikistats_language_all' => 'すべての言語',
+	'wikistats_recordspager' => "'''$3'''件中'''$1'''件目から'''$2'''件目を表示中",
 	'wikistats_title' => 'タイトル',
 );
 
@@ -4820,7 +4822,7 @@ $messages['ko'] = array(
 	'wikistats_blog_comment' => '블로그 덧글',
 	'wikistats_photo_new' => '새로운 그림',
 	'wikistats_video_new' => '새로운 동영상',
-	'wikistats_content' => '콘텐츠',
+	'wikistats_content' => '내용',
 	'wikistats_content_editors' => '콘텐츠 에디터',
 	'wikistats_userns' => '사용자',
 	'wikistats_restricted_page' => '제한된 페이지.<br />
@@ -4846,7 +4848,7 @@ $messages['ko'] = array(
 	'wikistats_namespaces_blog' => '블로그 (블로그와 블로그 덧글 포함)',
 	'wikistats_namespaces_user' => '사용자 (사용자 토론 포함)',
 	'wikistats_namespaces_maintenance' => '관리 (미디어위키, 틀, 프로젝트)',
-	'wikistats_error_malformed_date' => '오류: 날짜 형식이 잘못되었습니다',
+	'wikistats_error_malformed_date' => '오류: 주어진 날짜가 잘못된 형식입니다',
 );
 
 /** Karachay-Balkar (къарачай-малкъар)
@@ -7759,6 +7761,7 @@ Precisa de estar autenticado para ver as Estatísticas da Wikia.
  * @author Aristóbulo
  * @author Caio1478
  * @author Dianakc
+ * @author Guilhermemau
  * @author Jesielt
  * @author Luckas
  * @author Luckas Blade
@@ -7772,7 +7775,7 @@ $messages['pt-br'] = array(
 	'wikistats_mainstats_info' => 'Selecione uma wiki da lista e pressione "Gerar"',
 	'wikistats_comparision' => 'Comparações',
 	'wikistats_showstats_btn' => 'Mostrar estatísticas',
-	'wikistats_wikia_information' => 'Wikia informação',
+	'wikistats_wikia_information' => 'Wiki informação',
 	'wikiastast_refresh_data' => 'Atualizar dados',
 	'wikistats_showcharts' => 'Mostrar gráficos',
 	'wikistats_export_xls' => 'Exportar para XLS',
@@ -7868,7 +7871,7 @@ $messages['pt-br'] = array(
 	'wikistats_select_statistics' => 'Selecionar estatísticas',
 	'wikistats_xls_generate' => 'Gerar',
 	'wikistats_xls_cancel' => 'Cancelar',
-	'wikistats_select_text' => 'Selecionar Wikia:',
+	'wikistats_select_text' => 'Selecionar Wiki:',
 	'wikistats_select_btn' => 'Selecionar',
 	'wikistats_records' => 'registros',
 	'wikistats_see_definitions' => 'Ver definições',

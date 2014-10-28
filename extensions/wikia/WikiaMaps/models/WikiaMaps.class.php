@@ -230,7 +230,7 @@ class WikiaMaps extends WikiaObject {
 		$params = [];
 		$params[ 'uselang' ] = $this->wg->Lang->getCode();
 
-		if( $this->shouldHideAttribution( $mapCityId ) ) {
+		if ( $this->shouldHideAttribution( $mapCityId ) ) {
 			$params[ 'hideAttr' ] = '1';
 		}
 

@@ -12,7 +12,11 @@ var GlobalNotification = {
 		// If there's already a global notification on page load, set up JS
 		GlobalNotification.dom = $('.global-notification');
 		if(GlobalNotification.dom.length) {
-			GlobalNotification.setUpClose();
+			this.setUpClose();
+
+			// temporary fix for CON-1856
+			// todo: must be removed together with global notification redesign
+			this.autoHide();
 		}
 		// Float notification (BugId:33365)
 		this.wikiaHeaderHeight = $('#WikiaHeader').height();
@@ -24,6 +28,15 @@ var GlobalNotification = {
 		'error': 'red',
 		'warn': 'yellow'
 	},
+
+	/**
+	 * @desc auto-hides global notification after 3 seconds
+	 * @todo: required for CON-1856 - temporary solution must be removed together with global notification redesign
+	 */
+	autoHide: function() {
+		window.setTimeout(this.hide, 3000);
+	},
+
 	createDom: function(element) {
 		'use strict';
 		// create and store dom

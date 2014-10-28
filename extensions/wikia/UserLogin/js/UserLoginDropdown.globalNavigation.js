@@ -1,41 +1,54 @@
 /* global UserLoginFacebook:true, UserLoginAjaxForm:true */
-require(['jquery'], function($){
+require(['jquery', 'GlobalNavigationiOSScrollFix', 'wikia.window'], function ($, scrollFix, win) {
 	'use strict';
 	var $entryPoint, $userLoginDropdown, loginAjaxForm = false;
 
+	/**
+	 * Open user login dropdown by adding active class
+	 */
 	function openMenu() {
 		$entryPoint.addClass('active');
-		window.transparentOut.show();
+		win.transparentOut.show();
 
 		if (!loginAjaxForm) {
-			loginAjaxForm = new UserLoginAjaxForm($entryPoint, {skipFocus: true});
+			loginAjaxForm = new UserLoginAjaxForm($entryPoint, {
+				skipFocus: true
+			});
 			UserLoginFacebook.init(UserLoginFacebook.origins.DROPDOWN);
 		}
 	}
 
+	/**
+	 * Close user login dropdown by removing active class
+	 */
 	function closeMenu() {
 		$entryPoint.removeClass('active');
-		window.transparentOut.hide();
+		win.transparentOut.hide();
 	}
 
+	/**
+	 * Close user login dropdown if neither user input nor password input are active
+	 */
 	function closeMenuIfNotFocused() {
 		var id = document.activeElement.id;
-		if ( !( id === 'usernameInput' || id === 'passwordInput' ) ) {
+		if (!(id === 'usernameInput' || id === 'passwordInput')) {
 			closeMenu();
 		}
 	}
 
-	$(function(){
-		window.transparentOut.bindClick(closeMenu);
+	$(function () {
+		var $globalNav = $('#globalNavigation');
+
+		win.transparentOut.bindClick(closeMenu);
 
 		$entryPoint = $('#AccountNavigation');
-		$entryPoint.on('click', '.ajaxLogin', function(ev) {
+		$entryPoint.on('click', '.ajaxLogin', function (ev) {
 			ev.preventDefault();
 			ev.stopImmediatePropagation();
 
-			if ( $entryPoint.hasClass('active') ) {
-				if ( !!wgUserName ) {
-					window.location = $(this).attr('href');
+			if ($entryPoint.hasClass('active')) {
+				if (!!win.wgUserName) {
+					win.location = $(this).attr('href');
 				} else {
 					closeMenu();
 				}
@@ -47,10 +60,17 @@ require(['jquery'], function($){
 
 		$userLoginDropdown = $('#UserLoginDropdown');
 
-		if (!window.Wikia.isTouchScreen()) {
-			window.delayedHover(
-				$entryPoint.get(0),
-				{
+		$userLoginDropdown
+			.on('focus', '#usernameInput, #passwordInput', function () {
+				scrollFix.scrollToTop($globalNav);
+			})
+			.on('blur', '#usernameInput, #passwordInput', function () {
+				scrollFix.restoreScrollY($globalNav);
+			});
+
+		if (!win.Wikia.isTouchScreen()) {
+			win.delayedHover(
+				$entryPoint.get(0), {
 					checkInterval: 100,
 					maxActivationDistance: 20,
 					onActivate: openMenu,

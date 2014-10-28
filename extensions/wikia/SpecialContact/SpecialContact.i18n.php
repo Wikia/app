@@ -894,6 +894,7 @@ Se prefere usar o correio eletrónico ou precisa de enviar ficheiros anexos, pod
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Caio1478
+ * @author Guilhermemau
  * @author Luckas
  */
 $messages['pt-br'] = array(
@@ -911,7 +912,7 @@ Se você preferir usar o e-mail regular ou ter anexos, você pode contatar-nos e
 	'specialcontact-yourmail' => 'Endereço de e-mail',
 	'specialcontact-problem' => 'Assunto',
 	'specialcontact-problemdesc' => 'Mensagem',
-	'specialcontact-mail' => 'Enviar a Wikia',
+	'specialcontact-mail' => 'Enviar para a Wikia',
 	'specialcontact-filledin' => 'Esta informação foi preenchida a partir de suas preferências de conta',
 	'specialcontact-ccme' => 'Envie-me uma cópia dessa mensagem',
 	'specialcontact-ccdisabled' => 'Erro: Valide seu endereço de e-mail para utilizar esta função',
