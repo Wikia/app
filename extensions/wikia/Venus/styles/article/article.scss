@@ -1,8 +1,9 @@
 @import 'skins/shared/color';
 @import 'skins/shared/styles/infoboxes';
-@import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/Venus/styles/typographyMixins';
+@import 'extensions/wikia/Venus/styles/variables';
+@import 'extensions/wikia/Venus/styles/z-index';
 @import 'extensions/wikia/Venus/styles/article/images';
 @import 'extensions/wikia/Venus/styles/article/media';
 @import 'extensions/wikia/Venus/styles/article/tables';
@@ -51,6 +52,7 @@ $header-without-cover-unit-spacing: 60px;
 	position: fixed;
 	text-align: center;
 	width: $medium-grid-column;
+	z-index: $article-left-navigation-z-index;
 
 	ul {
 		display: inline-block;

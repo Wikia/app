@@ -1,7 +1,62 @@
 @import 'extensions/wikia/Venus/styles/variables';
+@import 'extensions/wikia/Venus/styles/mixins';
+@import 'extensions/wikia/Venus/styles/typographyMixins';
 @import 'skins/shared/color';
 
 $border-color: lighten($color-text, 30%);
+$image-margin: 30px;
+
+/* Sets the initial property values for the default breakpoint.
+ *
+ * @param $direction: left or right
+ * @param $default-margin: margin [px] for all sides exept $direction-margin
+ * @param $direction-margin:  marign [px] for the side that the element is floated to
+ */
+@mixin floated-element-base($direction, $default-margin, $direction-margin) {
+	.float#{$direction},
+	.t#{$direction} {
+		clear: $direction;
+		float: $direction;
+
+		@if $direction == right {
+			margin: $default-margin $direction-margin $default-margin $default-margin;
+		} @else {
+			margin: $default-margin $default-margin $default-margin $direction-margin;
+		}
+	}
+}
+
+/* Gives the possibility to change margins on the corresponding to floated side for particular breakpoints.
+ *
+ * @param $breakpoint: small or large
+ * @param $direction: left or right
+ * @param $additional-margin: additional margin [px] for the corresponding direction
+ */
+@mixin floated-element-breakpoint-margins($breakpoint, $direction, $aditional-margin: 0) {
+	.float#{$direction},
+	.t#{$direction} {
+		margin-#{$direction}: if($breakpoint == small, -$small-grid-column-padding, -$large-grid-column-padding) + $aditional-margin;
+	}
+}
+
+/* Sets the values for attributes which are breakpoint specific for floated elements.
+ *
+ * @param $breakpoint: small or large
+ * @param $additional-(left|right)-margin: additional margin [px] for the corresponding direction
+ */
+@mixin floated-element-breakpoint($breakpoint, $aditional-left-margin: 0, $aditional-right-margin: 0) {
+	.article {
+		.floatleft,
+		.tleft,
+		.floatright,
+		.tright {
+			@include grid-column-max-width($breakpoint, 11);
+		}
+
+		@include floated-element-breakpoint-margins($breakpoint, left, $aditional-left-margin);
+		@include floated-element-breakpoint-margins($breakpoint, right, $aditional-right-margin);
+	}
+}
 
 .article {
 	.image-thumbnail img {
@@ -13,56 +68,53 @@ $border-color: lighten($color-text, 30%);
 	}
 
 	.article-thumb {
-		margin: 30px 0;
+		margin: $image-margin 0;
 
 		img {
 			margin: 0;
 		}
+	}
 
-		&.show-info-icon {
+	.show-info-icon {
+		.info-icon {
+			background-image: url('/extensions/wikia/Venus/images/info_icon.png'); /* base64 */
+			display: none;
+			float: right;
+			height: 17px;
+			margin: -35px 10px 0 0;
+			position: relative;
+			width: 17px;
+		}
+
+		&:hover {
 			.info-icon {
-				background-image: url('/extensions/wikia/Venus/images/info_icon.png'); /* base64 */
-				display: none;
-				float: right;
-				height: 17px;
-				margin: -35px 10px 0 0;
-				position: relative;
-				width: 17px;
+				display: block;
 			}
 
-			&:hover {
-				a.info-icon {
-					display: block;
-				}
-
-				.duration {
-					display: none;
-				}
+			.duration {
+				display: none;
 			}
 		}
-	}
-
-	.floatleft,
-	.tleft {
-		clear: left;
-		float: left;
-		margin: 30px 30px 30px (-$medium-grid-column-padding);
-	}
-
-	.floatright,
-	.tright {
-		clear: right;
-		float: right;
-		margin: 30px (-$medium-grid-column-padding - $medium-grid-gutter - $medium-grid-column) 30px 30px;
 	}
 
 	.floatleft,
 	.tleft,
 	.floatright,
 	.tright {
+		@include grid-column-max-width('medium', 11);
+		overflow: hidden;
+
 		.image-thumbnail img {
 			margin: 0;
 		}
+	}
+
+	@include floated-element-base(left, $image-margin, -$medium-grid-column-padding);
+	@include floated-element-base(right, $image-margin, -$medium-grid-column-padding - $medium-grid-gutter - $medium-grid-column);
+
+	.floatleft,
+	.floatright {
+		position: relative;
 	}
 
 	.center {
@@ -76,11 +128,6 @@ $border-color: lighten($color-text, 30%);
 		}
 	}
 
-	.floatleft,
-	.floatright {
-		position: relative;
-	}
-
 	figure {
 		line-height: 0;
 	}
@@ -90,50 +137,40 @@ $border-color: lighten($color-text, 30%);
 
 		.caption,
 		.title {
+			@include font-size-xxs;
 			border-top: 4px solid $border-color;
 			color: $color-alternate-text;
-			font-size: 12px;
-			font-style: italic;
 			line-height: 18px;
 			margin-bottom: 0;
 			padding-top: 6px;
 			text-align: left;
 		}
 
-		.title + .caption {
-			border: 0;
+		.caption {
+			font-style: italic;
+		}
+
+		.title {
+			font-weight: bold;
+
+			& + .caption {
+				border: 0;
+			}
 		}
 	}
 }
 
 @media #{$large-up} {
-	.article {
-		.floatleft,
-		.tleft {
-			margin-left: -$large-grid-column-padding;
-		}
-
-		.floatright,
-		.tright {
-			margin-right: -$large-grid-column-padding - $large-grid-gutter - $large-grid-column;
-		}
-	}
+	@include floated-element-breakpoint(large, left);
+	@include floated-element-breakpoint(large, right, - $large-grid-gutter - $large-grid-column);
 }
 
 @media #{$small-only} {
-	.article {
-		.floatleft,
-		.tleft {
-			margin-left: -$small-grid-column-padding;
-		}
+	@each $direction in left, right {
+		@include floated-element-breakpoint(small, $direction);
+	}
 
-		.floatright,
-		.tright {
-			margin-right: -$small-grid-column-padding;
-		}
-
-		.wikiaPhotoGallery-slider-body {
-			margin-left: -6px;
-		}
+	.article .wikiaPhotoGallery-slider-body {
+		margin-left: -6px;
 	}
 }
