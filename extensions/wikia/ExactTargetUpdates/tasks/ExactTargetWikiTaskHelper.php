@@ -24,14 +24,35 @@ class ExactTargetWikiTaskHelper {
 
 		$aWikiData = [
 			'city_id' => $oWiki->city_id,
+			'city_path' => $oWiki->city_path,
+			'city_dbname' => $oWiki->city_dbname,
+			'city_sitename' => $oWiki->city_sitename,
 			'city_url' => $oWiki->city_url,
 			'city_created' => $oWiki->city_created,
 			'city_founding_user' => $oWiki->city_founding_user,
+			'city_adult' => $oWiki->city_adult,
+			'city_public' => $oWiki->city_public,
+			'city_additional' => $oWiki->city_additional,
 			'city_description' => $oWiki->city_description,
 			'city_title' => $oWiki->city_title,
+			'city_founding_email' => $oWiki->city_founding_email,
 			'city_lang' => $oWiki->city_lang,
+			'city_special' => $oWiki->city_special,
+			'city_umbrella' => $oWiki->city_umbrella,
+			'city_ip' => $oWiki->city_ip,
+			'city_google_analytics' => $oWiki->city_google_analytics,
+			'city_google_search' => $oWiki->city_google_search,
+			'city_google_maps' => $oWiki->city_google_maps,
+			'city_indexed_rev' => $oWiki->city_indexed_rev,
+			'city_lastdump_timestamp' => $oWiki->city_lastdump_timestamp,
+			'city_factory_timestamp' => $oWiki->city_factory_timestamp,
+			'city_useshared' => $oWiki->city_useshared,
+			'ad_cat' => $oWiki->ad_cat,
+			'city_flags' => $oWiki->city_flags,
 			'city_cluster' => $oWiki->city_cluster,
-			'city_vertical' => $oWiki->city_vertical,
+			'city_last_timestamp' => $oWiki->city_last_timestamp,
+			'city_founding_ip' => $oWiki->city_founding_ip,
+			// 'city_vertical' => $oWiki->city_vertical,
 		];
 
 		$aWikiDataExtension = [
@@ -180,8 +201,8 @@ class ExactTargetWikiTaskHelper {
 
 		if ( $wgExactTargetDevelopmentMode ) {
 			$aCustomerKeys = [
-				'city_list' => 'city_list_dev',
-				'city_cat_mapping' => 'city_cat_mapping_dev',
+				'city_list' => 'city-list',
+				'city_cat_mapping' => 'city-cat-mapping',
 			];
 		} else {
 			$aCustomerKeys = [
