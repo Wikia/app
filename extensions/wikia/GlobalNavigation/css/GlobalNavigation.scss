@@ -1,7 +1,6 @@
 @import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/Venus/styles/typographyMixins';
-@import 'skins/shared/mixins/blackout';
 @import 'GlobalNavigationColors';
 
 .global-navigation {
@@ -65,16 +64,6 @@
 		background-image: url('/extensions/wikia/GlobalNavigation/images/wikia_logo.svg'); /* base64 */
 		background-position: center;
 		background-repeat: no-repeat;
-	}
-}
-
-// TODO move it to layout.scss when Venus is enable globally
-
-.transparent-out {
-	@include blackout(rgba(1, 1, 1, 0));
-
-	&.visible {
-		z-index: $blackout-z-index;
 	}
 }
 
