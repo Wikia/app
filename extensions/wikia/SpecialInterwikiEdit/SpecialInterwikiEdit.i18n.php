@@ -19,8 +19,8 @@ $messages['en'] = array(
 	'iwedit-language-interwikis'    => 'language interwikis only',
 	'iwedit-all-interwikis'         => 'all interwikis',
 	'iwedit-update'                 => 'Update',
-	'iwedit-error'                  => '<p>An error occurred.</p>',
-	'iwedit-success'                => '<p>Link creation successful.</p>',
+	'iwedit-error'                  => 'An error occurred.',
+	'iwedit-success'                => 'Link creation successful.',
 	'iwedit-local'                  => 'Local-only interwiki? (i.e. not global)',
 	'iwedit-trans'                  => 'Enable scary transclusion',
 );
@@ -41,8 +41,8 @@ $messages['af'] = array(
 	'iwedit-title' => 'Wysig Interwikitabel',
 	'iwedit-all-interwikis' => "alle interwiki's",
 	'iwedit-update' => 'Opdateer',
-	'iwedit-error' => "<p>'n Fout het voorgekom.</p>",
-	'iwedit-success' => '<p>Die skakel is geskep.</p>',
+	'iwedit-error' => "'n Fout het voorgekom.",
+	'iwedit-success' => 'Die skakel is geskep.',
 );
 
 /** Arabic (العربية)
@@ -55,8 +55,8 @@ $messages['ar'] = array(
 	'iwedit-language-interwikis' => 'روابط إنترويكي للغات فقط',
 	'iwedit-all-interwikis' => 'كل روابط الإنترويكي',
 	'iwedit-update' => 'حدّث',
-	'iwedit-error' => '<p>حدث خطأ.</p>',
-	'iwedit-success' => '<p>تم إنشاء رابط بنجاح.</p>',
+	'iwedit-error' => 'حدث خطأ.',
+	'iwedit-success' => 'تم إنشاء رابط بنجاح.',
 );
 
 /** Assamese (অসমীয়া)
@@ -85,8 +85,8 @@ $messages['bar'] = array(
 	'iwedit-language-interwikis' => 'netter Sprooch-Interwikis',
 	'iwedit-all-interwikis' => 'olle Interwikis',
 	'iwedit-update' => 'Aktualisiern',
-	'iwedit-error' => '<p>A Feeler is afdreen.</p>',
-	'iwedit-success' => '<p>Link-Erzeigung erfoigreich.</p>',
+	'iwedit-error' => 'A Feeler is afdreen.',
+	'iwedit-success' => 'Link-Erzeigung erfoigreich.',
 );
 
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
@@ -100,8 +100,8 @@ $messages['be-tarask'] = array(
 	'iwedit-language-interwikis' => 'толькі моўныя інтэрвікі',
 	'iwedit-all-interwikis' => 'усе інтэрвікі',
 	'iwedit-update' => 'Абнавіць',
-	'iwedit-error' => '<p>Узьнікла памылка.</p>',
-	'iwedit-success' => '<p>Спасылка створаная пасьпяхова.</p>',
+	'iwedit-error' => 'Узьнікла памылка.',
+	'iwedit-success' => 'Спасылка створаная пасьпяхова.',
 );
 
 /** Bulgarian (български)
@@ -121,8 +121,8 @@ $messages['br'] = array(
 	'iwedit-language-interwikis' => 'interwikioù yezhoù hepken',
 	'iwedit-all-interwikis' => 'An holl wikioù',
 	'iwedit-update' => 'Hizivaat',
-	'iwedit-error' => "<p>ur fazi zo c'hoarvezet</p>",
-	'iwedit-success' => '<p>Liamm krouet gant berzh.</p>',
+	'iwedit-error' => "ur fazi zo c'hoarvezet",
+	'iwedit-success' => 'Liamm krouet gant berzh.',
 );
 
 /** Catalan (català)
@@ -134,8 +134,8 @@ $messages['ca'] = array(
 	'iwedit-language-interwikis' => 'només interwikis de llengua',
 	'iwedit-all-interwikis' => 'tots els interwikis',
 	'iwedit-update' => 'Actualitzar',
-	'iwedit-error' => "<p>S'ha produït un error.</p>",
-	'iwedit-success' => "<p>Creació d'enllaç amb èxit.</p>",
+	'iwedit-error' => "S'ha produït un error.",
+	'iwedit-success' => "Creació d'enllaç amb èxit.",
 );
 
 /** Chechen (нохчийн)
@@ -147,8 +147,8 @@ $messages['ce'] = array(
 	'iwedit-language-interwikis' => 'Меттанийн юкъарвикеш бен',
 	'iwedit-all-interwikis' => 'Массо юкъарвикеш',
 	'iwedit-update' => 'Карлаяккха',
-	'iwedit-error' => '<p>ГӀалат даьлла.</p>',
-	'iwedit-success' => '<p>Хьажораг кхиамца кхоьллина.</p>',
+	'iwedit-error' => 'ГӀалат даьлла.',
+	'iwedit-success' => 'Хьажораг кхиамца кхоьллина.',
 );
 
 /** Czech (čeština)
@@ -161,8 +161,8 @@ $messages['cs'] = array(
 	'iwedit-language-interwikis' => 'pouze jazyková interwiki',
 	'iwedit-all-interwikis' => 'všechna interwiki',
 	'iwedit-update' => 'Aktualizovat',
-	'iwedit-error' => '<p>Nastala chyba.</p>',
-	'iwedit-success' => '<p>Odkaz byl úspěšně vytvořen.</p>',
+	'iwedit-error' => 'Nastala chyba.',
+	'iwedit-success' => 'Odkaz byl úspěšně vytvořen.',
 );
 
 /** German (Deutsch)
@@ -175,8 +175,8 @@ $messages['de'] = array(
 	'iwedit-language-interwikis' => 'nur Sprach-Interwikis',
 	'iwedit-all-interwikis' => 'alle Interwikis',
 	'iwedit-update' => 'Aktualisieren',
-	'iwedit-error' => '<p>Ein Fehler ist aufgetreten.</p>',
-	'iwedit-success' => '<p>Link-Erzeugung erfolgreich.</p>',
+	'iwedit-error' => 'Ein Fehler ist aufgetreten.',
+	'iwedit-success' => 'Link-Erzeugung erfolgreich.',
 );
 
 /** Zazaki (Zazaki)
@@ -200,8 +200,8 @@ $messages['es'] = array(
 	'iwedit-language-interwikis' => 'sólo interwikis de idioma',
 	'iwedit-all-interwikis' => 'todos los interwikis',
 	'iwedit-update' => 'Actualizar',
-	'iwedit-error' => '<p>Se produjo un error.</p>',
-	'iwedit-success' => '<p>El vínculo se creado correctamente.</p>',
+	'iwedit-error' => 'Se produjo un error.',
+	'iwedit-success' => 'El vínculo se creado correctamente.',
 );
 
 /** Persian (فارسی)
@@ -213,8 +213,8 @@ $messages['fa'] = array(
 	'iwedit-language-interwikis' => 'فقط میان‌ویکی‌های زبان',
 	'iwedit-all-interwikis' => 'همهٔ میان‌ویکی‌ها',
 	'iwedit-update' => 'به روز رسانی',
-	'iwedit-error' => '<p>خطایی رخ داده است.</p>',
-	'iwedit-success' => '<p>ایجاد پیوند موفق بود.</p>',
+	'iwedit-error' => 'خطایی رخ داده است.',
+	'iwedit-success' => 'ایجاد پیوند موفق بود.',
 );
 
 /** Finnish (suomi)
@@ -223,8 +223,8 @@ $messages['fa'] = array(
 $messages['fi'] = array(
 	'iwedit-title' => 'Interwiki-editori',
 	'iwedit-update' => 'Päivitä',
-	'iwedit-error' => '<p>Tapahtui virhe.</p>',
-	'iwedit-success' => '<p>Linkin luominen onnistui.</p>',
+	'iwedit-error' => 'Tapahtui virhe.',
+	'iwedit-success' => 'Linkin luominen onnistui.',
 );
 
 /** Faroese (føroyskt)
@@ -236,8 +236,8 @@ $messages['fo'] = array(
 	'iwedit-language-interwikis' => 'bert mál-interwiki leinkjur',
 	'iwedit-all-interwikis' => 'allar interwiki-leinkjur',
 	'iwedit-update' => 'Dagfør',
-	'iwedit-error' => '<p>Ein feilur hendi.</p>',
-	'iwedit-success' => '<p>Leinkja er upprættað.</p>',
+	'iwedit-error' => 'Ein feilur hendi.',
+	'iwedit-success' => 'Leinkja er upprættað.',
 );
 
 /** French (français)
@@ -250,8 +250,8 @@ $messages['fr'] = array(
 	'iwedit-language-interwikis' => 'interwikis de langues seulement',
 	'iwedit-all-interwikis' => 'tous les interwikis',
 	'iwedit-update' => 'Mettre à jour',
-	'iwedit-error' => '<p>Une erreur est survenue.</p>',
-	'iwedit-success' => '<p>Le lien a été créé avec succès.</p>',
+	'iwedit-error' => 'Une erreur est survenue.',
+	'iwedit-success' => 'Le lien a été créé avec succès.',
 );
 
 /** Galician (galego)
@@ -263,8 +263,8 @@ $messages['gl'] = array(
 	'iwedit-language-interwikis' => 'só interwikis de linguas',
 	'iwedit-all-interwikis' => 'todos os interwikis',
 	'iwedit-update' => 'Actualizar',
-	'iwedit-error' => '<p>Houbo un erro.</p>',
-	'iwedit-success' => '<p>A ligazón creouse con éxito.</p>',
+	'iwedit-error' => 'Houbo un erro.',
+	'iwedit-success' => 'A ligazón creouse con éxito.',
 );
 
 /** Hebrew (עברית)
@@ -276,8 +276,8 @@ $messages['he'] = array(
 	'iwedit-language-interwikis' => 'שפות קישורי שפה בלבד',
 	'iwedit-all-interwikis' => 'כל קישורי השפה',
 	'iwedit-update' => 'עדכון',
-	'iwedit-error' => '<p>אירעה שגיאה.</p>',
-	'iwedit-success' => '<p>יצירת קישור עברה בהצלחה.</p>',
+	'iwedit-error' => 'אירעה שגיאה.',
+	'iwedit-success' => 'יצירת קישור עברה בהצלחה.',
 );
 
 /** Hungarian (magyar)
@@ -290,8 +290,8 @@ $messages['hu'] = array(
 	'iwedit-language-interwikis' => 'csak a nyelvi wikiközi hivatkozások',
 	'iwedit-all-interwikis' => 'összes wikiközi hivatkozás',
 	'iwedit-update' => 'Frissítés',
-	'iwedit-error' => '<p>Hiba történt.</p>',
-	'iwedit-success' => '<p>A hivatkozás létrehozása sikerült.</p>',
+	'iwedit-error' => 'Hiba történt.',
+	'iwedit-success' => 'A hivatkozás létrehozása sikerült.',
 );
 
 /** Armenian (Հայերեն)
@@ -302,8 +302,8 @@ $messages['hy'] = array(
 	'iwedit-language-interwikis' => 'միայն լեզվային ինտերվիքիներ',
 	'iwedit-all-interwikis' => 'բոլոր ինտերվիքիները',
 	'iwedit-update' => 'Թարմացնել',
-	'iwedit-error' => '<p>Սխալ է տեղի ունեցել:</p>',
-	'iwedit-success' => '<p>Հղումը հաջողությամբ ստեղծված է</p>',
+	'iwedit-error' => 'Սխալ է տեղի ունեցել:',
+	'iwedit-success' => 'Հղումը հաջողությամբ ստեղծված է',
 );
 
 /** Interlingua (interlingua)
@@ -315,8 +315,8 @@ $messages['ia'] = array(
 	'iwedit-language-interwikis' => 'interwikis de linguas solmente',
 	'iwedit-all-interwikis' => 'tote le interwikis',
 	'iwedit-update' => 'Actualisar',
-	'iwedit-error' => '<p>Un error ha occurrite.</p>',
-	'iwedit-success' => '<p>Creation de ligamine succedite.</p>',
+	'iwedit-error' => 'Un error ha occurrite.',
+	'iwedit-success' => 'Creation de ligamine succedite.',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -329,8 +329,8 @@ $messages['id'] = array(
 	'iwedit-language-interwikis' => 'hanya interwiki bahasa',
 	'iwedit-all-interwikis' => 'semua interwiki',
 	'iwedit-update' => 'Perbarui',
-	'iwedit-error' => '<p>Sebuah kesalahan terjadi.</p>',
-	'iwedit-success' => '<p>Membuat pranala berhasil. </p>',
+	'iwedit-error' => 'Sebuah kesalahan terjadi.',
+	'iwedit-success' => 'Membuat pranala berhasil. ',
 );
 
 /** Italian (italiano)
@@ -348,8 +348,8 @@ $messages['ja'] = array(
 	'iwedit-language-interwikis' => '言語間インターウィキのみ',
 	'iwedit-all-interwikis' => '全てのインターウィキ',
 	'iwedit-update' => '更新',
-	'iwedit-error' => '<p>エラーが発生しました。</p>',
-	'iwedit-success' => '<p>リンクの作成に成功しました。</p>',
+	'iwedit-error' => 'エラーが発生しました。',
+	'iwedit-success' => 'リンクの作成に成功しました。',
 );
 
 /** Kazakh (Cyrillic script) (қазақша (кирил)‎)
@@ -385,8 +385,8 @@ $messages['lb'] = array(
 	'iwedit-language-interwikis' => 'nëmme Sproochen-Interwikien',
 	'iwedit-all-interwikis' => 'all Interwikien',
 	'iwedit-update' => 'Aktualiséieren',
-	'iwedit-error' => '<p>Et ass e Feeler geschitt.</p>',
-	'iwedit-success' => '<p>De Link gouf ugeluecht</p>',
+	'iwedit-error' => 'Et ass e Feeler geschitt.',
+	'iwedit-success' => 'De Link gouf ugeluecht',
 );
 
 /** لوری (لوری)
@@ -412,8 +412,8 @@ $messages['mk'] = array(
 	'iwedit-language-interwikis' => 'само јазични интервикија',
 	'iwedit-all-interwikis' => 'сите интервикија',
 	'iwedit-update' => 'Поднови',
-	'iwedit-error' => '<p>Се појави грешка.</p>',
-	'iwedit-success' => '<p>Врската е успешно создадена.</p>',
+	'iwedit-error' => 'Се појави грешка.',
+	'iwedit-success' => 'Врската е успешно создадена.',
 );
 
 /** Malay (Bahasa Melayu)
@@ -425,8 +425,8 @@ $messages['ms'] = array(
 	'iwedit-language-interwikis' => 'antara wiki bahasa sahaja',
 	'iwedit-all-interwikis' => 'semua antara wiki',
 	'iwedit-update' => 'Kemas kini',
-	'iwedit-error' => '<p>Berlakunya ralat.</p>',
-	'iwedit-success' => '<p>Pautan berjaya dicipta.</p>',
+	'iwedit-error' => 'Berlakunya ralat.',
+	'iwedit-success' => 'Pautan berjaya dicipta.',
 );
 
 /** Norwegian Bokmål (norsk bokmål)
@@ -438,8 +438,8 @@ $messages['nb'] = array(
 	'iwedit-language-interwikis' => 'kun språkinterwikier',
 	'iwedit-all-interwikis' => 'alle interwikier',
 	'iwedit-update' => 'Oppdater',
-	'iwedit-error' => '<p>En feil oppsto.</p>',
-	'iwedit-success' => '<p>Opprettet lenke.</p>',
+	'iwedit-error' => 'En feil oppsto.',
+	'iwedit-success' => 'Opprettet lenke.',
 );
 
 /** Dutch (Nederlands)
@@ -451,8 +451,8 @@ $messages['nl'] = array(
 	'iwedit-language-interwikis' => "alleen taalinterwiki's",
 	'iwedit-all-interwikis' => "alle interwiki's",
 	'iwedit-update' => 'Bijwerken',
-	'iwedit-error' => '<p>Er is een fout opgetreden.</p>',
-	'iwedit-success' => '<p>De koppeling is aangemaakt.</p>',
+	'iwedit-error' => 'Er is een fout opgetreden.',
+	'iwedit-success' => 'De koppeling is aangemaakt.',
 );
 
 /** Occitan (occitan)
@@ -464,8 +464,8 @@ $messages['oc'] = array(
 	'iwedit-language-interwikis' => 'interwikis de lengas solament',
 	'iwedit-all-interwikis' => 'totes los interwikis',
 	'iwedit-update' => 'Metre a jorn',
-	'iwedit-error' => "<p>Una error s'es producha.</p>",
-	'iwedit-success' => '<p>Lo ligam es estat creat amb succès.</p>',
+	'iwedit-error' => "Una error s'es producha.",
+	'iwedit-success' => 'Lo ligam es estat creat amb succès.',
 );
 
 /** Polish (polski)
@@ -478,8 +478,8 @@ $messages['pl'] = array(
 	'iwedit-language-interwikis' => 'tylko interwiki języków',
 	'iwedit-all-interwikis' => 'wszystkie interwiki',
 	'iwedit-update' => 'Aktualizacja',
-	'iwedit-error' => '<p>Wystąpił błąd.</p>',
-	'iwedit-success' => '<p>Utworzono link.</p>',
+	'iwedit-error' => 'Wystąpił błąd.',
+	'iwedit-success' => 'Utworzono link.',
 );
 
 /** Piedmontese (Piemontèis)
@@ -492,8 +492,8 @@ $messages['pms'] = array(
 	'iwedit-language-interwikis' => 'mach lenghe interwiki',
 	'iwedit-all-interwikis' => "tuti j'interwiki",
 	'iwedit-update' => 'Modìfica',
-	'iwedit-error' => "<p>A l'é capitaje n'eror.</p>",
-	'iwedit-success' => '<p>Creassion dël colegament andàit bin.</p>',
+	'iwedit-error' => "A l'é capitaje n'eror.",
+	'iwedit-success' => 'Creassion dël colegament andàit bin.',
 );
 
 /** Pashto (پښتو)
@@ -513,8 +513,8 @@ $messages['pt'] = array(
 	'iwedit-language-interwikis' => 'só links interlínguas',
 	'iwedit-all-interwikis' => 'todos os links interwikis',
 	'iwedit-update' => 'Atualizar',
-	'iwedit-error' => '<p>Ocorreu um erro.</p>',
-	'iwedit-success' => '<p>Os links foram criados corretamente.</p>',
+	'iwedit-error' => 'Ocorreu um erro.',
+	'iwedit-success' => 'Os links foram criados corretamente.',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -528,8 +528,8 @@ $messages['pt-br'] = array(
 	'iwedit-language-interwikis' => 'só interwikis de língua',
 	'iwedit-all-interwikis' => 'todos os interwikis',
 	'iwedit-update' => 'Atualizar',
-	'iwedit-error' => '<p>Ocorreu um erro.</p>',
-	'iwedit-success' => '<p>Criação de link com sucesso.</p>',
+	'iwedit-error' => 'Ocorreu um erro.',
+	'iwedit-success' => 'Criação de link com sucesso.',
 );
 
 /** Quechua (Runa Simi)
@@ -548,8 +548,8 @@ $messages['roa-tara'] = array(
 	'iwedit-language-interwikis' => 'sulamende lènghe de inderuicchi',
 	'iwedit-all-interwikis' => 'tutte le inderuicchi',
 	'iwedit-update' => 'Aggiorne',
-	'iwedit-error' => "<p>S'ha verificate 'n'errore.</p>",
-	'iwedit-success' => '<p>Collegamende ccrejate cu successe.</p>',
+	'iwedit-error' => "S'ha verificate 'n'errore.",
+	'iwedit-success' => 'Collegamende ccrejate cu successe.',
 );
 
 /** Russian (русский)
@@ -562,8 +562,8 @@ $messages['ru'] = array(
 	'iwedit-language-interwikis' => 'только языковые интервики',
 	'iwedit-all-interwikis' => 'все интервики',
 	'iwedit-update' => 'Обновить',
-	'iwedit-error' => '<p>Произошла ошибка.</p>',
-	'iwedit-success' => '<p>Ссылка успешно создана.</p>',
+	'iwedit-error' => 'Произошла ошибка.',
+	'iwedit-success' => 'Ссылка успешно создана.',
 );
 
 /** Sinhala (සිංහල)
@@ -586,8 +586,8 @@ $messages['sr-ec'] = array(
 	'iwedit-language-interwikis' => 'само језички међувикији',
 	'iwedit-all-interwikis' => 'сви међувикији',
 	'iwedit-update' => 'Ажурирај',
-	'iwedit-error' => '<p>Дошло је до грешке.</p>',
-	'iwedit-success' => '<p>Стварање везе је успело.</p>',
+	'iwedit-error' => 'Дошло је до грешке.',
+	'iwedit-success' => 'Стварање везе је успело.',
 );
 
 /** Swedish (svenska)
@@ -600,8 +600,8 @@ $messages['sv'] = array(
 	'iwedit-language-interwikis' => 'bara språkinterwikis',
 	'iwedit-all-interwikis' => 'alla interwikis',
 	'iwedit-update' => 'Uppdatera',
-	'iwedit-error' => '<p>Ett fel uppstod.</p>',
-	'iwedit-success' => '<p>Länk skapad.</p>',
+	'iwedit-error' => 'Ett fel uppstod.',
+	'iwedit-success' => 'Länk skapad.',
 );
 
 /** Telugu (తెలుగు)
@@ -620,8 +620,8 @@ $messages['tl'] = array(
 	'iwedit-language-interwikis' => 'mga interwiking pangwika lang',
 	'iwedit-all-interwikis' => 'lahat ng mga interwiki',
 	'iwedit-update' => 'Isapanahon',
-	'iwedit-error' => '<p>Naganap ang isang kamalian.</p>',
-	'iwedit-success' => '<p>Matagumpay ang paglikha ng kawing.</p>',
+	'iwedit-error' => 'Naganap ang isang kamalian.',
+	'iwedit-success' => 'Matagumpay ang paglikha ng kawing.',
 );
 
 /** Turkish (Türkçe)
@@ -632,8 +632,8 @@ $messages['tr'] = array(
 	'iwedit-language-interwikis' => 'sadece dil intervikileri',
 	'iwedit-all-interwikis' => 'tüm intervikiler',
 	'iwedit-update' => 'Güncelle',
-	'iwedit-error' => '<p>Bir hata oluştu.</p>',
-	'iwedit-success' => '<p>Bağlantı yaratımı başarılı</p>',
+	'iwedit-error' => 'Bir hata oluştu.',
+	'iwedit-success' => 'Bağlantı yaratımı başarılı',
 );
 
 /** Ukrainian (українська)
@@ -645,8 +645,8 @@ $messages['uk'] = array(
 	'iwedit-language-interwikis' => 'лише мовні інтервікі',
 	'iwedit-all-interwikis' => 'усі інтервікі',
 	'iwedit-update' => 'Оновити',
-	'iwedit-error' => '<p>Сталася помилка.</p>',
-	'iwedit-success' => '<p>Посилання успішно створено.</p>',
+	'iwedit-error' => 'Сталася помилка.',
+	'iwedit-success' => 'Посилання успішно створено.',
 );
 
 /** Vietnamese (Tiếng Việt)
@@ -658,8 +658,8 @@ $messages['vi'] = array(
 	'iwedit-language-interwikis' => 'ngôn ngữ interwikis chỉ',
 	'iwedit-all-interwikis' => 'Tất cả interwikis',
 	'iwedit-update' => 'Cập nhật',
-	'iwedit-error' => '<p>Lỗi đã xảy ra.</p>',
-	'iwedit-success' => '<p>Tạo liên kết thành công.</p>',
+	'iwedit-error' => 'Lỗi đã xảy ra.',
+	'iwedit-success' => 'Tạo liên kết thành công.',
 );
 
 /** Simplified Chinese (中文（简体）‎)
@@ -672,6 +672,6 @@ $messages['zh-hans'] = array(
 	'iwedit-language-interwikis' => '只有语言跨维基链接而已',
 	'iwedit-all-interwikis' => '所有跨维基链接',
 	'iwedit-update' => '更新',
-	'iwedit-error' => '<p>发生错误。</p>',
-	'iwedit-success' => '<p>链接创建成功。</p>',
+	'iwedit-error' => '发生错误。',
+	'iwedit-success' => '链接创建成功。',
 );
