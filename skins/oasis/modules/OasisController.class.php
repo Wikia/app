@@ -298,7 +298,6 @@ class OasisController extends WikiaController {
 		} else {
 			$this->displayAdminDashboard = false;
 		}
-
 		wfProfileOut(__METHOD__);
 	}
 
@@ -378,8 +377,8 @@ class OasisController extends WikiaController {
 
 		// move JS files added to OutputPage to list of files to be loaded
 		$scripts = RequestContext::getMain()->getSkin()->getScripts();
-	
-			foreach ( $scripts as $s ) {
+
+		foreach ( $scripts as $s ) {
 			//add inline scripts to jsFiles and move non-inline to the queue
 			if ( !empty( $s['url'] ) ) {
 				// FIXME: quick hack to load MW core JavaScript at the top of the page - really, please fix me!
@@ -416,6 +415,7 @@ class OasisController extends WikiaController {
 				$assetGroups[] = 'oasis_anon_js';
 			} else {
 				$assetGroups[] = 'oasis_anon_with_new_global_nav_js';
+				$assetGroups[] = 'oasis_global_navigation_js';
 			}
 		}
 
