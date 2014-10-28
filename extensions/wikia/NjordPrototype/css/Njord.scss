@@ -97,7 +97,8 @@
     color: #fff;
     display: flex;
     flex-direction: column;
-    margin: 5px 0 0 7%;
+    margin: 5px auto auto 7%;
+    z-index: 1;
   }
 
   .overlay {
@@ -304,7 +305,7 @@
       display: none;
     }
     .upload-group {
-      margin: 5px 0 0 8%;
+      margin: 5px auto auto 8%;
     }
     .edit-btn{
       display: inherit;
