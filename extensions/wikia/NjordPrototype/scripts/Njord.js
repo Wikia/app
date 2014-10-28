@@ -141,7 +141,7 @@
 			heroData.cropposition = heroData.oCropposition;
 			heroData.imagechanged = false;
 
-			if (heroData.oImage === "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7") {
+			if (heroData.oImage === wgBlankImgUrl) {
 				States.setState($imageElement, 'zero-state');
 				States.setState($imageSaveElement, 'zero-state');
 			} else {
