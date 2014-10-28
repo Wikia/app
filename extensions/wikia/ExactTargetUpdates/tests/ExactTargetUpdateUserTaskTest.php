@@ -68,57 +68,6 @@ class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * prepareUserPropertiesUpdateParams should set Keys property of ExactTarget_DataExtensionObject
-	 * to define API query filter for update
-	 */
-	function _testShouldSetKeysProperty() {
-		$iUserId = 12345;
-		$aUserProperties = [
-			'property1' => 'value1',
-			'property2' => 'value2',
-		];
-
-		/* Create new DataExtensionObject */
-		$aDataExtensionExpected = new ExactTarget_DataExtensionObject();
-		$aDataExtensionExpected->CustomerKey = 'user_properties';
-
-		$keys = [];
-		$properties = [];
-
-		$apiProperty = new ExactTarget_APIProperty();
-		$apiProperty->Name = 'up_user';
-		$apiProperty->Value = $iUserId;
-		$keys[] = $apiProperty;
-
-		$apiProperty = new ExactTarget_APIProperty();
-		$apiProperty->Name = 'up_property';
-		$apiProperty->Value = 'property1';// Property name taken from $aUserProperties above
-		$keys[] = $apiProperty;
-
-
-		$apiProperty = new ExactTarget_APIProperty();
-		$apiProperty->Name = 'up_value';
-		$apiProperty->Value = 'value1';// Value taken from $aUserProperties above
-		$properties[] = $apiProperty;
-
-		$aDataExtensionExpected->Keys = $keys;
-		$aDataExtensionExpected->Properties = $properties;// Value taken from $aUserProperties above
-
-		/* @var ExactTargetUpdateUserTask $mockUpdateUserTask */
-		$mockUpdateUserTask = $this->getMockBuilder( 'ExactTargetUpdateUserTask' )
-			->disableOriginalConstructor()
-			->setMethods( NULL )
-			->getMock();
-
-		/* Run tested method */
-		$aDataExtensionActual = $mockUpdateUserTask->prepareUserPropertiesUpdateParams( $iUserId, $aUserProperties );
-
-		/* Check assertions */
-		$this->assertEquals( sizeof( $aDataExtensionActual ), 2 );
-		$this->assertEquals( $aDataExtensionActual[ 0 ], $aDataExtensionExpected );
-	}
-
-	/**
 	 * @dataProvider updateUserEmailProvider
 	 */
 	function testUpdateUserEmailShouldSendData( $aUserData, $aApiParams, $aMockCustomerKey ) {
@@ -175,49 +124,11 @@ class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 		$mockUpdateUserTask->updateUserEmail( $aUserData[ 'user_id' ], $aUserData[ 'user_email' ] );
 	}
 
-	/**
-	 * @dataProvider updateUserDataProvider
-	 */
-	function _testShouldPrepareUserDataExtensionObject( $aUserData, $oDEExpected ) {
-		$mockUpdateUserTask = $this->getMockBuilder( 'ExactTargetUpdateUserTask' )
-			->disableOriginalConstructor()
-			->setMethods( null )
-			->getMock();
-
-		$oDEActual = $mockUpdateUserTask->prepareUserDataExtensionObjectsForUpdate( $aUserData );
-		$this->assertEquals( $oDEExpected, $oDEActual );
-	}
-
 
 	/**
 	 * DATA PROVIDERS
 	 */
 
-	function _updateUserDataProvider() {
-		$aUserData = [
-			'user_id' => 12345,
-			'user_editcount' => 10
-		];
-
-		$oDE = new ExactTarget_DataExtensionObject();
-		$oDE->CustomerKey = 'user';
-
-		/* Prepare properties */
-		$apiProperty = new ExactTarget_APIProperty();
-		$apiProperty->Name = 'user_editcount';
-		$apiProperty->Value = $aUserData['user_editcount'];
-		$oDE->Properties = [ $apiProperty ];
-
-		/* Prepare keys */
-		$apiProperty = new ExactTarget_APIProperty();
-		$apiProperty->Name = 'user_id';
-		$apiProperty->Value = $aUserData['user_id'];
-		$oDE->Keys = [ $apiProperty ];
-
-		return [
-			[ $aUserData, $oDE ]
-		];
-	}
 
 	function updateUserEmailProvider() {
 		$sCustomerKey = 'sample_table_name';
