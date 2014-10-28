@@ -32,7 +32,7 @@ $header-without-cover-unit-spacing: 60px;
 			position: relative;
 
 			h1 {
-				padding: 0 $medium-grid-column-padding $header-without-cover-unit-spacing / 2 $medium-content-padding + $medium-grid-column-padding - $content-border-width;
+				padding: 0 $medium-grid-column-padding round($header-without-cover-unit-spacing / 2) $medium-content-padding + $medium-grid-column-padding - $content-border-width;
 				position: absolute;
 			}
 		}
