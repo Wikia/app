@@ -67,7 +67,7 @@ ve.ce.WikiaGalleryNode.prototype.rebuild = function () {
 		title = mw.Title.newFromText( itemModel.getAttribute( 'resource' ).replace( /^(.+\/)*/, '' ) );
 		titleUrl = title.getUrl();
 		titleName = title.getMainText();
-		thumbUrl = ve.ce.WikiaGalleryNode.static.getThumbUrl( itemModel.getAttribute( 'src' ), titleName );
+		thumbUrl = ve.ce.WikiaGalleryNode.static.getThumbUrl( itemModel.getAttribute( 'src' ) );
 
 		galleryData.push( {
 			'title': titleName,
@@ -96,7 +96,7 @@ ve.ce.WikiaGalleryNode.prototype.setupGallery = function ( galleryData ) {
 				$wrapper: this.$element,
 				model: { media: galleryData },
 				index: -1,
-				origVisibleCount: Math.min( galleryData.length, 8 ),
+				origVisibleCount: Math.min( galleryData.length, 8 )
 			},
 			gallery = new Gallery( galleryOptions ).init();
 
@@ -113,7 +113,7 @@ ve.ce.WikiaGalleryNode.prototype.setupGallery = function ( galleryData ) {
 	}, this ) );
 };
 
-ve.ce.WikiaGalleryNode.static.getThumbUrl = function ( url, name ) {
+ve.ce.WikiaGalleryNode.static.getThumbUrl = function ( url ) {
 	var height = 480,
 		width = 480;
 	return [
