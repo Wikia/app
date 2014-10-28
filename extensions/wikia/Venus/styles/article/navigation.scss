@@ -1,0 +1,39 @@
+@import 'extensions/wikia/Venus/styles/mixins';
+@import 'extensions/wikia/Venus/styles/variables';
+@import 'skins/shared/color';
+
+.left-nav {
+	margin-left: $medium-content-padding - $content-border-width;
+	text-align: center;
+	width: $medium-grid-column;
+	position: fixed;
+
+	ul {
+		display: inline-block;
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	li {
+		background-color: $color-left-article-nav;
+		border-radius: 19px;
+		height: 38px;
+		margin-bottom: 6px;
+		width: 38px;
+	}
+}
+
+@media #{$large-up} {
+	.left-nav {
+		margin-left: $large-content-padding - $content-border-width;
+		width: $large-grid-column;
+	}
+}
+
+@media #{$small-only} {
+	.left-nav {
+		margin-left: $small-content-padding - $content-border-width;
+		width: $small-grid-column;
+	}
+}
