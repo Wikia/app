@@ -152,6 +152,7 @@ ve.dm.MWImageNode.static.getHashObject = function ( dataElement ) {
 };
 
 ve.dm.MWImageNode.static.getFilenameFromResource = function ( resource ) {
+	// Strip ./ stuff and decode URI encoding
 	var filename = resource.replace( /^(.+\/)*/, '' );
 	// Protect against decodeURIComponent() throwing exceptions
 	try {
