@@ -89,29 +89,29 @@
 
 		trackDragOnlyOncePerImage = false,
 
-		saveHeroImageLabel = 'SaveHeroImage',
-		saveHeroImageFailLabel = 'SaveHeroImageFail',
-		revertHeroImageLabel = 'RevertHeroImage',
-		editTitleLabel = 'EditTitle',
-		saveTitleLabel = 'SaveTitle',
-		saveTitleFailLabel = 'SaveTitleFail',
-		revertTitleFailLabel = 'RevertTitle',
-		saveSummaryLabel = 'SaveSummary',
-		saveSummaryFailLabel = 'SaveSummaryFail',
-		revertSummaryLabel = 'RevertSummary',
-		moveImageLabel = 'MoveImage',
-		editSummaryLabel = 'EditSummary',
-		heroModuleAddButtonLabel = 'AddButton-Click',
-		heroModuleUpdateButtonLabel = 'UpdateButton-Click',
-		imageLoadedLabel = 'ImageLoaded',
-		imageLoadedFailLabel = 'ImageLoadedFail',
-		dropUrlLabel = 'DropUrl',
-		dropFileLabel ='DropFile',
-		trackerActionEdit = Wikia.Tracker.ACTIONS.ADD,
-		trackerActionDrop = Wikia.Tracker.ACTIONS.HOVER,
+		saveHeroImageLabel = 'publish-hero-image',
+		saveHeroImageFailLabel = 'hero-image-fail',
+		revertHeroImageLabel = 'discard-hero-image',
+		editTitleLabel = 'edit-hero-title',
+		saveTitleLabel = 'publish-hero-title',
+		saveTitleFailLabel = 'hero-title-fail',
+		revertTitleFailLabel = 'discard-hero-title',
+		saveSummaryLabel = 'publish-hero-summary',
+		saveSummaryFailLabel = 'hero-summary-fail',
+		revertSummaryLabel = 'discard-hero-summary',
+		moveImageLabel = 'move-image-hero-position',
+		editSummaryLabel = 'edit-hero-summary',
+		heroModuleAddButtonLabel = 'add-hero-image',
+		heroModuleUpdateButtonLabel = 'update-hero-image',
+		imageLoadedLabel = 'hero-image-loaded',
+		imageLoadedFailLabel = 'hero-image-load-fail',
+		dropUrlLabel = 'drag-drop-hero-image',
+		dropFileLabel ='drag-drop-hero-image',
+
+		trackerActionClick = Wikia.Tracker.ACTIONS.CLICK,
 		trackerActionError = Wikia.Tracker.ACTIONS.ERROR,
-		trackerActionPost = Wikia.Tracker.ACTIONS.SUBMIT,
-		trackerActionDrag = Wikia.Tracker.ACTIONS.HOVER,
+		trackerActionSuccess = Wikia.Tracker.ACTIONS.SUCCESS,
+		trackerActionHover = Wikia.Tracker.ACTIONS.HOVER,
 
 		trackMom = function( trackLabel, trackAction){
 			Wikia.Tracker.track({
@@ -142,7 +142,7 @@
 					$imageElement.stopThrobbing();
 					States.setState($imageElement, 'filled-state');
 					States.setState($imageSaveElement, 'filled-state');
-					trackMom(saveHeroImageLabel, trackerActionEdit);
+					trackMom(saveHeroImageLabel, trackerActionClick);
 				},
 				onErrorCallback: function () {
 					// TODO: handle failure
@@ -169,7 +169,7 @@
 				States.setState($imageElement, 'filled-state');
 				States.setState($imageSaveElement, 'filled-state');
 			}
-			trackMom(revertHeroImageLabel, trackerActionEdit);
+			trackMom(revertHeroImageLabel, trackerActionClick);
 		},
 		editTitle = function() {
 			//turn off description editing
@@ -178,7 +178,7 @@
 			//FIXME: fix onChange event, caret at end on focus
 			$heroModuleTitle.focus();
 			$heroModuleTitle.change();
-			trackMom(editTitleLabel, trackerActionEdit);
+			trackMom(editTitleLabel, trackerActionClick);
 		},
 		saveTitle = function() {
 			$titleEditElement.startThrobbing();
@@ -193,7 +193,7 @@
 					$titleEditElement.stopThrobbing();
 					$titleText.text(heroData.oTitle = heroData.title);
 					States.setState($titleElement, 'filled-state');
-					trackMom(saveTitleLabel, trackerActionEdit);
+					trackMom(saveTitleLabel, trackerActionClick);
 				},
 				onErrorCallback: function () {
 					// TODO: handle failure
@@ -210,7 +210,7 @@
 			} else {
 				States.setState($titleElement, 'filled-state');
 			}
-			trackMom(revertTitleFailLabel, trackerActionEdit);
+			trackMom(revertTitleFailLabel, trackerActionClick);
 		},
 		saveDescription = function () {
 			$descriptionEditElement.startThrobbing();
@@ -226,7 +226,7 @@
 					States.setState($descriptionElement, 'filled-state');
 					heroData.oDescription = heroData.description;
 					$descriptionText.text(heroData.description);
-					trackMom(saveSummaryLabel, trackerActionPost);
+					trackMom(saveSummaryLabel, trackerActionClick);
 				},
 				onErrorCallback: function () {
 					// TODO: handle failure
@@ -245,13 +245,13 @@
 			$descriptionEditBoxText.focus();
 			$descriptionEditBoxText.change();
 			placeCaretAtEnd($descriptionEditBoxText.get(0));
-			trackMom(editSummaryLabel, trackerActionEdit);
+			trackMom(editSummaryLabel, trackerActionClick);
 		},
 		revertDescription = function () {
 			heroData.description = heroData.oDescription;
 			$descriptionEditBoxText.text(heroData.oDescription);
 			States.setState($descriptionElement, 'filled-state');
-			trackMom(revertSummaryLabel, trackerActionEdit);
+			trackMom(revertSummaryLabel, trackerActionClick);
 		},
 
 		initializeData = function () {
@@ -313,7 +313,7 @@
 					heroData.cropposition = Math.abs($heroModuleImage.position().top) / $heroModuleImage.height();
 					if(!trackDragOnlyOncePerImage){
 						trackDragOnlyOncePerImage = true;
-						trackMom(moveImageLabel, trackerActionDrag);
+						trackMom(moveImageLabel, trackerActionClick);
 					}
 				}
 			});
@@ -332,7 +332,7 @@
 				$heroModuleImage.attr('src', data.url);
 				$heroModule.trigger('resize');
 				$heroModule.trigger('change', [data.url, data.filename]);
-				trackMom(imageLoadedLabel, trackerActionPost);
+				trackMom(imageLoadedLabel, trackerActionSuccess);
 			} else {
 				trackMom(imageLoadedFailLabel, trackerActionError);
 				$.showModal($.msg('error'), data.errMessage);
@@ -403,7 +403,7 @@
 				e.preventDefault();
 				var fd = new FormData();
 				if (e.dataTransfer.files.length) {
-					trackMom(dropFileLabel,trackerActionDrop);
+					trackMom(dropFileLabel,trackerActionHover);
 					//if file is uploaded
 					fd.append('file', e.dataTransfer.files[0]);
 					sendForm(fd);
@@ -412,7 +412,7 @@
 					//if url
 					var $img = $(e.dataTransfer.getData('text/html'));
 					if (e.target.src !== $img.attr('src')) {
-						trackMom(dropUrlLabel,trackerActionDrop);
+						trackMom(dropUrlLabel,trackerActionHover);
 						fd.append('url', $img.attr('src'));
 						sendForm(fd);
 					}
@@ -421,12 +421,12 @@
 
 			$heroModuleAddButton.on('click', function () {
 				$heroModuleInput.click();
-				trackMom(heroModuleAddButtonLabel, Wikia.Tracker.ACTIONS.CLICK);
+				trackMom(heroModuleAddButtonLabel, trackerActionClick);
 			});
 
 			$heroModuleUpdateButton.on('click', function () {
 				$heroModuleInput.click();
-				trackMom(heroModuleUpdateButtonLabel, Wikia.Tracker.ACTIONS.CLICK);
+				trackMom(heroModuleUpdateButtonLabel, trackerActionClick);
 			});
 
 			$heroModuleInput.on('change', function () {
