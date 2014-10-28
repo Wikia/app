@@ -19,7 +19,7 @@ require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 				var $this = $(this),
 					trackCategory = $this.attr('id'),
 					value = $this.children().children().length,	// check if the ad is blocked
-					type = $this.attr('class').split(' ')[1];
+					type = $this.attr('data-mon-type');
 
 				track({
 					category: trackCategory,

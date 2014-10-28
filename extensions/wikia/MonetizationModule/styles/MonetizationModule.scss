@@ -63,7 +63,7 @@
 		float: left;
 		min-width: 200px;
 	}
-	.adunit {
+	div[data-mon-type=adunit] {
 		margin-top: 10px;
 		margin-bottom: 10px;
 	}
