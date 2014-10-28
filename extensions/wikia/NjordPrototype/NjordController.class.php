@@ -34,6 +34,7 @@ class NjordController extends WikiaController {
 	}
 
 	public function index() {
+		global $wgBlankImgUrl;
 		$this->wg->SuppressPageHeader = true;
 
 		$this->wg->out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/NjordPrototype/css/Njord.scss' ) );
@@ -45,6 +46,12 @@ class NjordController extends WikiaController {
 
 		$wikiDataModel = new WikiDataModel( Title::newMainPage()->getText() );
 		$wikiDataModel->getFromProps();
+		$wikiDataModel->imageSet = true;
+		if ( !isset( $wikiDataModel->imagePath ) ) {
+			$wikiDataModel->imageSet = false;
+			$wikiDataModel->imagePath = $wgBlankImgUrl;
+			$wikiDataModel->originalImagePath = $wgBlankImgUrl;
+		}
 		$this->wikiData = $wikiDataModel;
 	}
 

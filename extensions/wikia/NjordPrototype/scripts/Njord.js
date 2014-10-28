@@ -141,7 +141,7 @@
 			heroData.cropposition = heroData.oCropposition;
 			heroData.imagechanged = false;
 
-			if (heroData.oImage === "") {
+			if (heroData.oImage === wgBlankImgUrl) {
 				States.setState($imageElement, 'zero-state');
 				States.setState($imageSaveElement, 'zero-state');
 			} else {

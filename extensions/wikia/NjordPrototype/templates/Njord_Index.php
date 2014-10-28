@@ -4,7 +4,7 @@
 
 <header class="MainPageHeroHeader no-edit-state">
 	<div id="MainPageHero" class="MainPageHero">
-		<div class="image-wrap <?php if ( isset( $wikiData->imagePath ) ) : ?>filled-state<? else : ?>zero-state<?php endif; ?>">
+		<div class="image-wrap <?php if ( $wikiData->imageSet ) : ?>filled-state<? else : ?>zero-state<?php endif; ?>">
 			<div class="upload-mask"></div>
 			<div class="overlay">
 				<div class="overlay-flex">
@@ -51,7 +51,7 @@
 			<img class="title-edit-btn" src="/extensions/wikia/NjordPrototype/images/pencil.svg">
 		</h1>
 	</div>
-	<div class="image-save-bar btn-bar <?php if ( isset( $wikiData->imagePath ) ) : ?>filled-state<? else : ?>zero-state<?php endif; ?>">
+	<div class="image-save-bar btn-bar <?php if ( $wikiData->imageSet ) : ?>filled-state<? else : ?>zero-state<?php endif; ?>">
 		<span class="save-text sg-main">Your cover image will be used to promote your page in search results and on other promotional areas.</span>
 		<div class="new-btn discard-btn sg-sub">Discard</div>
 		<div class="new-btn save-btn sg-sub">Publish</div>
