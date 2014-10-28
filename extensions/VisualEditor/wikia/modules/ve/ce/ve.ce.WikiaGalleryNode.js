@@ -22,6 +22,9 @@ ve.ce.WikiaGalleryNode = function VeCeWikiaGalleryNode( model, config ) {
 	// Mixin constructors
 	ve.ce.FocusableNode.call( this );
 
+	// DOM changes
+	this.$element.addClass( 'media-gallery-wrapper' );
+
 	// Initialization
 	this.rebuild();
 
@@ -49,85 +52,88 @@ ve.ce.WikiaGalleryNode.static.tagName = 'div';
  * @method
  */
 ve.ce.WikiaGalleryNode.prototype.onUpdate = function () {
-	this.rebuild();
-	this.runGalleryScript();
+	setTimeout( ve.bind( function () {
+		this.rebuild();
+	}, this ), 0 );
 };
 
+/**
+ * @method
+ */
 ve.ce.WikiaGalleryNode.prototype.rebuild = function () {
-	var i, $item, imageName, href, thumbUrl, imageSrc,
-		items = this.getChildren(),
-		embedData = [];
+	var i, item, itemModel, galleryData = [], title, titleUrl, titleName, thumbUrl;
 
-	for ( i = 0; i < items.length; i++ ) {
-		$item = items[i].$element;
-		imageName = items[i].model.getAttribute( 'resource' ).split( ':' )[1];
-		imageSrc = items[i].model.getAttribute( 'src' );
-		href = mw.Title.newFromText( imageName ).getUrl();
-		thumbUrl = this.getThumbUrl( imageSrc, imageName );
+	for ( i = 0; i < this.children.length; i++ ) {
+		item = this.children[i];
+		itemModel = item.getModel();
+		title = mw.Title.newFromText( itemModel.getAttribute( 'resource' ).replace( /^(.+\/)*/, '' ) );
+		titleUrl = title.getUrl();
+		titleName = title.getMainText();
+		thumbUrl = ve.ce.WikiaGalleryNode.static.getThumbUrl( itemModel.getAttribute( 'src' ), titleName );
 
-		embedData.push( {
-			'caption': $item.children('figcaption').eq(0).html(),
-			'dbKey': imageName,
-			'linkHref': href,
-			'thumbHtml': this.getThumbHtml( href, thumbUrl, imageName ),
+		galleryData.push( {
+			'title': titleName,
 			'thumbUrl': thumbUrl,
-			'title': imageName
+			'thumbHtml': ve.ce.WikiaGalleryNode.static.getThumbHtml(
+					titleUrl,
+					thumbUrl,
+					titleName
+				),
+			'linkHref': titleUrl,
+			'dbKey': titleName,
+			'caption': item.children[0].getLength() > 0 ? item.children[0].$element.html() : null
 		} );
 	}
 
-	this.$element
-		.addClass( 'media-gallery-wrapper count-' + items.length )
-		.attr( {
-			'data-visible-count': 8,
-			'data-expanded': 0,
-			'data-model': JSON.stringify( embedData )
-		} )
-		.html( '' );
-
-	/*
-	 * Wikia Gallery uses data 'initialized' to know if the gallery for this element has been generated.
-	 * Because we're rebuilding, set 'initialized' to false.
-	 */
-	this.$element.data( 'initialized', false );
+	this.setupGallery( galleryData );
 };
 
-ve.ce.WikiaGalleryNode.prototype.getThumbHtml = function ( href, url, imageName ) {
-	var thumbHtmlParts = [
-		'<a href="' + href + '" class="image image-thumbnail">',
+/**
+ * @method
+ */
+ve.ce.WikiaGalleryNode.prototype.setupGallery = function ( galleryData ) {
+	require([ 'mediaGallery.views.gallery' ], ve.bind( function ( Gallery ) {
+		var galleryOptions = {
+				$el: this.$( '<div></div>' ),
+				$wrapper: this.$element,
+				model: { media: galleryData },
+				index: -1,
+				origVisibleCount: Math.min( galleryData.length, 8 ),
+			},
+			gallery = new Gallery( galleryOptions ).init();
+
+		this.$element
+			.html( '' )
+			.removeClass( function ( index, css ) {
+				return ( css.match ( /(^|\s)count-\S+/g ) || [] ).join( ' ' );
+			} )
+			.addClass( 'count-' + galleryData.length )
+			.append( gallery.render().$el );
+
+		// TODO: Remove after https://wikia-inc.atlassian.net/browse/VID-2112 is done
+		gallery.$el.trigger('galleryInserted');
+	}, this ) );
+};
+
+ve.ce.WikiaGalleryNode.static.getThumbUrl = function ( url, name ) {
+	var height = 480,
+		width = 480;
+	return [
+		url.substr( 0, url.indexOf( '/revision/' ) ),
+		'/revision/latest/zoom-crop',
+		'/width/' + width + '/height/' + height,
+		'?' + url.match( /cb=\d*/gm ) + '&fill=transparent'
+	].join( '' );
+};
+
+ve.ce.WikiaGalleryNode.static.getThumbHtml = function ( linkUrl, imageUrl, name ) {
+	return [
+		'<a href="' + linkUrl + '" class="image image-thumbnail">',
 		'<picture>',
-		'<img src="' + url + '" alt="' + imageName + '" class="" data-image-key="' + imageName + '" data-image-name="' + imageName + '">',
+		'<img src="' + imageUrl + '" alt="' + name + '" class="" data-image-key="' + name + '" data-image-name="' + name + '">',
 		'</picture>',
 		'</a>'
-	];
-
-	return thumbHtmlParts.join( '' );
-};
-
-ve.ce.WikiaGalleryNode.prototype.getThumbUrl = function ( imageSrc, imageName ) {
-	var height = 480,
-		width = 480,
-		thumbUrlParts = [
-			imageSrc.substr( 0, imageSrc.indexOf( imageName ) + imageName.length ),
-			'/revision/latest/zoom-crop',
-			'/width/' + width + '/height/' + height,
-			'?' + imageSrc.match( /cb=\d*/gm ) + '&fill=transparent'
-		];
-
-	return thumbUrlParts.join( '' );
-};
-
-ve.ce.WikiaGalleryNode.prototype.onSetup = function () {
-	this.runGalleryScript();
-};
-
-ve.ce.WikiaGalleryNode.prototype.runGalleryScript = function () {
-	require([ 'mediaGallery.controllers.galleries' ], function ( GalleriesController ) {
-		var controller = new GalleriesController({
-			lightbox: false,
-			lazyLoad: false
-		});
-		controller.init();
-	} );
+	].join( '' );
 };
 
 /* Registration */
