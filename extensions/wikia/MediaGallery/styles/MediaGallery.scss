@@ -3,6 +3,10 @@
 
 $media-margin: 2.5px;
 
+.ve .media-gallery-wrapper .media {
+	transition: none;
+}
+
 .media-gallery-wrapper {
 	@include grid-row();
 	margin: 0 $media-margin * -1;
