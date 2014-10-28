@@ -2,6 +2,23 @@
 	'use strict';
 
 	$.event.props.push('dataTransfer');
+	function placeCaretAtEnd(el) {
+		el.focus();
+		if (typeof window.getSelection != "undefined"
+			&& typeof document.createRange != "undefined") {
+			var range = document.createRange();
+			range.selectNodeContents(el);
+			range.collapse(false);
+			var sel = window.getSelection();
+			sel.removeAllRanges();
+			sel.addRange(range);
+		} else if (typeof document.body.createTextRange != "undefined") {
+			var textRange = document.body.createTextRange();
+			textRange.moveToElementText(el);
+			textRange.collapse(false);
+			textRange.select();
+		}
+	}
 
 	var
 		HERO_ASPECT_RATIO = 4 / 16,
@@ -223,6 +240,7 @@
 			$descriptionEditBoxText.text(heroData.description);
 			$descriptionEditBoxText.focus();
 			$descriptionEditBoxText.change();
+			placeCaretAtEnd($descriptionEditBoxText.get(0));
 			trackMom(editSummaryLabel, trackerActionEdit);
 		},
 		revertDescription = function () {
