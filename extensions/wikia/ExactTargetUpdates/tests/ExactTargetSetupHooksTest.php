@@ -29,6 +29,28 @@ class ExactTargetSetupHooksTest extends WikiaBaseTest {
 
 	}
 
+	/**
+	 * @dataProvider shouldCheckIfCanUpdateProvider
+	 */
+	function testShouldCheckIfCanUpdate( $methodName ) {
+		/* @var ExactTargetSetupHooks $mockApiDataExtension mock of ExactTargetSetupHooks */
+		$mockApiDataExtension = $this->getMockBuilder( 'ExactTargetSetupHooks' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'shouldUpdate' ] )
+			->getMock();
+		$mockApiDataExtension
+			->expects( $this->once() )
+			->method( 'shouldUpdate' );
+
+		$mockApiDataExtension->{$methodName}();
+	}
+
+
+	/**
+	 * DATA PROVIDERS
+	 */
+
+
 	function shouldUpdateProvider() {
 		/* Define environment constants if not defined yet */
 		if ( !defined( 'WIKIA_ENV_PROD' ) ) {
@@ -56,4 +78,10 @@ class ExactTargetSetupHooksTest extends WikiaBaseTest {
 		];
 	}
 
+	function shouldCheckIfCanUpdateProvider() {
+		return [
+			[ 'registerUserHooks' ],
+			[ 'registerWikiHooks' ]
+		];
+	}
 }

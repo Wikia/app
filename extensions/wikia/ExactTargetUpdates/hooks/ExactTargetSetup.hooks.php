@@ -43,7 +43,7 @@ class ExactTargetSetupHooks {
 	 * You can't update on DEV and INTERNAL environment,
 	 * unless wgExactTargetDevelopmentMode is set to true.
 	 */
-	private function shouldUpdate() {
+	protected  function shouldUpdate() {
 		global $wgWikiaEnvironment, $wgExactTargetDevelopmentMode;
 
 		if ( ( $wgWikiaEnvironment != WIKIA_ENV_DEV && $wgWikiaEnvironment != WIKIA_ENV_INTERNAL ) || $wgExactTargetDevelopmentMode === true ) {
