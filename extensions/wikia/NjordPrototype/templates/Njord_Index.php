@@ -60,8 +60,8 @@
 		<div class="edit-box">
 			<span class="edited-text sg-main" contenteditable="true"><?= $wikiData->description ?></span>
 			<div class="btn-bar">
-				<div class="new-btn discard-btn sg-sub">Cancel</div>
-				<div class="new-btn save-btn sg-sub">Done</div>
+				<div class="new-btn discard-btn sg-sub">Discard</div>
+				<div class="new-btn save-btn sg-sub">Publish</div>
 			</div>
 		</div>
 		<span class="hero-description_text sg-main">

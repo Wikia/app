@@ -8,9 +8,12 @@
     border: 1px solid #092140;
     background-color: white;
     display: flex;
+    display: -webkit-flex;
     justify-content: flex-end;
     padding: 10px 15px;
     box-shadow: 4px 4px 10px rgba(0, 0, 0, .3);
+    -webkit-justify-content: flex-end;
+    -webkit-align-items: center;
   }
 
   .drag-cursor {
@@ -78,6 +81,7 @@
     position: absolute;
     top: 15px;
     width: 100%;
+    z-index: 1;
     .position-text {
       background-color: #C7D1D8;
       border-radius: 3px;
@@ -85,7 +89,6 @@
       margin: auto;
       padding: 5px 10px;
       text-transform: uppercase;
-      z-index: 1;
     }
   }
 
@@ -113,9 +116,11 @@
     }
     color: #fff;
     display: flex;
+    display: -webkit-flex;
     flex-direction: column;
     margin: 5px auto auto 7%;
     z-index: 1;
+    -webkit-flex-direction: column;
   }
 
   .overlay {
@@ -127,6 +132,7 @@
     z-index: 2;
     .overlay-flex {
       display: flex;
+      display: -webkit-flex;
       height: 100%;
     }
     .overlay-text {
@@ -153,9 +159,12 @@
     border: 1px solid #092140;
     background-color: white;
     display: flex;
+    display: -webkit-flex;
     justify-content: flex-end;
     padding: 10px 15px;
     box-shadow: 4px 4px 10px rgba(0, 0, 0, .3);
+    -webkit-justify-content: flex-end;
+    -webkit-align-items: center;
   }
 
   .edit-box {
@@ -165,7 +174,6 @@
     .edited-text {
       outline: none;
       min-height: 1.2em;
-//      padding: 1%;
       display: block;
     }
   }
@@ -191,14 +199,20 @@
     justify-content: flex-end;
     padding: 10px 15px 10px 8%;
     width: 100%;
+    -webkit-justify-content: flex-end;
+    -webkit-align-items: center;
     .save-text {
+      display: block;
       flex-grow: 1;
+      width: 75%;
+      -webkit-flex-grow: 1;
     }
   }
   .new-btn {
     border: 1px solid #092140;
     cursor: pointer;
     display: block;
+    height: 20px;
     margin: 0 5px;
     padding: 10px 20px;
     text-align: center;
@@ -262,6 +276,9 @@
     .MainPageHero {
       padding-top: 25%;
     }
+    .edit-btn {
+      display: none;
+    }
     .image-wrap {
       height: 100%;
       position: absolute;
@@ -311,6 +328,7 @@
     }
     .upload {
       display: flex;
+      display: -webkit-flex;
       height: 100%;
       position: absolute;
       width: 100%;
@@ -320,6 +338,8 @@
     }
     .upload-group {
       margin: 5px auto auto 8%;
+      position: absolute;
+      z-index: 1;
     }
   }
 
@@ -329,12 +349,14 @@
     }
     .position-info {
       display: flex;
+      display: -webkit-flex;
     }
     .upload-wrap {
       display: none;
     }
     &.image-save-bar {
       display: flex;
+      display: -webkit-flex;
     }
   }
 
@@ -348,6 +370,7 @@
     .upload {
       border: 1px dashed white;
       display: flex;
+      display: -webkit-flex;
       height: 92%;
       margin: 1%;
       position: absolute;

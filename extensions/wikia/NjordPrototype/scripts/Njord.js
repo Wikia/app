@@ -18,7 +18,7 @@
 			textRange.collapse(false);
 			textRange.select();
 		}
-	}
+	};
 
 	var
 		HERO_ASPECT_RATIO = 4 / 16,
@@ -139,9 +139,9 @@
 					$heroModuleImage.attr('src', heroData.oImage = heroData.imagepath);
 					$heroModuleImage.data('fullpath', heroData.imagepath);
 					$heroModuleImage.data('cropposition', heroData.oCropposition = heroData.cropposition);
-					$imageElement.stopThrobbing();
 					States.setState($imageElement, 'filled-state');
 					States.setState($imageSaveElement, 'filled-state');
+					$imageElement.stopThrobbing();
 					trackMom(saveHeroImageLabel, trackerActionClick);
 				},
 				onErrorCallback: function () {
@@ -152,6 +152,7 @@
 			});
 		},
 		revertImage = function() {
+			$imageElement.startThrobbing();
 			$heroModuleImage.draggable({ disabled: true });
 			$heroModuleImage.removeClass('drag-cursor');
 			$heroModuleImage.attr('src', heroData.oImage);
@@ -190,9 +191,9 @@
 					'title': heroData.title
 				},
 				callback: function() {
-					$titleEditElement.stopThrobbing();
 					$titleText.text(heroData.oTitle = heroData.title);
 					States.setState($titleElement, 'filled-state');
+					$titleEditElement.stopThrobbing();
 					trackMom(saveTitleLabel, trackerActionClick);
 				},
 				onErrorCallback: function () {
@@ -222,10 +223,10 @@
 					'description': heroData.description
 				},
 				callback: function () {
-					$descriptionEditElement.stopThrobbing();
 					States.setState($descriptionElement, 'filled-state');
 					heroData.oDescription = heroData.description;
 					$descriptionText.text(heroData.description);
+					$descriptionEditElement.stopThrobbing();
 					trackMom(saveSummaryLabel, trackerActionClick);
 				},
 				onErrorCallback: function () {
@@ -288,12 +289,12 @@
 			heroData.changed = true;
 		}, onImageLoad = function () {
 			var top = -heroData.cropposition * $heroModuleImage.height();
-			$heroModule.stopThrobbing();
 			if (top + $heroModuleImage.height() >= $heroModule.height()) {
 				$heroModuleImage.css({top: top});
 			} else {
 				$heroModuleImage.css({top: 0});
 			}
+			$heroModule.stopThrobbing();
 			$heroModule.trigger('resize');
 			trackDragOnlyOncePerImage = false;
 		}, onResize = function () {
@@ -337,7 +338,6 @@
 				trackMom(imageLoadedFailLabel, trackerActionError);
 				$.showModal($.msg('error'), data.errMessage);
 			}
-			$heroModule.stopThrobbing();
 		},
 		sendForm = function (formdata) {
 			$heroModule.startThrobbing();
