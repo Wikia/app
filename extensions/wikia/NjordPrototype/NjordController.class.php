@@ -4,6 +4,7 @@ class NjordController extends WikiaController {
 
 	const HERO_IMAGE_FILENAME = 'wikia-hero-image';
 	const THUMBNAILER_SIZE_SUFIX = '1600px-0';
+	const IMG_PLACEHOLDER = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 
 	const MAINPAGE_PAGE = 'mainpage';
 
@@ -45,6 +46,12 @@ class NjordController extends WikiaController {
 
 		$wikiDataModel = new WikiDataModel( Title::newMainPage()->getText() );
 		$wikiDataModel->getFromProps();
+		$wikiDataModel->imageSet = true;
+		if ( !isset( $wikiDataModel->imagePath ) ) {
+			$wikiDataModel->imageSet = false;
+			$wikiDataModel->imagePath = self::IMG_PLACEHOLDER;
+			$wikiDataModel->originalImagePath = self::IMG_PLACEHOLDER;
+		}
 		$this->wikiData = $wikiDataModel;
 	}
 
