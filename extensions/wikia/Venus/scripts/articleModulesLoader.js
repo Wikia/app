@@ -1,10 +1,9 @@
 /*global require*/
 require([
-	'jquery', 'venus.lightboxLoader', 'scrollableTables', 'wikia.window'
-], function ($, lightboxLoader, scrollableTables, toc, win) {
+	'jquery', 'venus.lightboxLoader', 'scrollableTables', 'wikia.window', 'wikia.document'
+], function ($, lightboxLoader, scrollableTables, win, doc) {
 	'use strict';
-	var doc = win.document,
-		$win = $(win);
+	var $win = $(win);
 
 	/** Look for all tables on article and add or remove scrollbar if needed */
 	function scanTables() {

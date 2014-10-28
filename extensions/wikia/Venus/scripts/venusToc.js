@@ -1,14 +1,13 @@
 /* global define */
-define('wikia.venusToc', ['wikia.toc', 'wikia.dom'], function (toc, dom) {
+define('wikia.venusToc', ['wikia.toc', 'wikia.dom', 'wikia.document'], function (toc, dom, doc) {
 	'use strict';
-	var container;
+	var container = doc.getElementById('mw-content-text');
 
 	/**
 	 * Fetch data for TOC by calling wikia.toc.getData()
 	 */
 	function getTocStructure() {
 		var data, headers;
-		container = container || document.getElementById('mw-content-text');
 		headers = dom.childrenByTagName(['h2', 'h3'], container);
 		data = toc.getData(headers, createSection, filterHeader);
 	}
@@ -22,7 +21,7 @@ define('wikia.venusToc', ['wikia.toc', 'wikia.dom'], function (toc, dom) {
 	function createSection(header) {
 		return {
 			id: header.id,
-			name: header.innerText.trim(),
+			name: header.textContent.trim(),
 			sections: []
 		};
 	}
