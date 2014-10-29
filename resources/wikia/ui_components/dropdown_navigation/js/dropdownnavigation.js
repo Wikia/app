@@ -2,8 +2,8 @@
 
 define(
 	'wikia.dropdownNavigation',
-	['j.query', 'mustache', 'wikia.dropdownNavigation.template'],
-	function ($, mustache, template) {
+	['j.query', 'mustache', 'wikia.dropdownNavigation.templates'],
+	function ($, mustache, templates) {
 
 		/**
 		 * @desc validates dropdown naviagation options
@@ -49,7 +49,7 @@ define(
 			 * @desc adds dropdown to DOM and caches selectors
 			 */
 			function renderDropdown(params) {
-				$trigger.after(mustache(template, params));
+				$trigger.after(mustache(templates.dropdown_navigation, params));
 				$dropdown = $(params.id);
 			}
 
