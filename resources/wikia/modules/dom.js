@@ -90,37 +90,8 @@ define('wikia.dom', ['wikia.document'], function (doc) {
 		return element;
 	}
 
-	/**
-	 * Get all children for given selector with tag name which matches provided tag names list
-	 * @param tagList - list of tag names
-	 * @param container - container with tags to search
-	 * @returns {Array} - array of children which match provided tag list
-	 */
-	function childrenByTagName(tagList, container) {
-		var i,
-			childrenCount,
-			children = container.children,
-			matchedChildren = [];
-
-		if (!Array.isArray(tagList)) {
-			throw new Error('tagList must be an array');
-		}
-
-		if (!!children) {
-			childrenCount = children.length;
-		}
-
-		for (i = 0; i < childrenCount; i++) {
-			if (tagList.indexOf(children[i].tagName.toLowerCase()) > -1) {
-				matchedChildren.push(children[i]);
-			}
-		}
-		return matchedChildren;
-	}
-
 	return {
 		closestByClassName: closestByClassName,
-		createElementWithClass: createElementWithClass,
-		childrenByTagName: childrenByTagName
+		createElementWithClass: createElementWithClass
 	};
 });

@@ -1,14 +1,13 @@
 /* global define */
-define('wikia.venusToc', ['wikia.toc', 'wikia.dom', 'wikia.document'], function (toc, dom, doc) {
+define('wikia.venusToc', ['wikia.toc', 'wikia.document'], function (toc, doc) {
 	'use strict';
-	var container = doc.getElementById('mw-content-text');
 
 	/**
 	 * Fetch data for TOC by calling wikia.toc.getData()
 	 */
 	function getTocStructure() {
 		var data, headers;
-		headers = dom.childrenByTagName(['h2', 'h3'], container);
+		headers = getHeaders();
 		data = toc.getData(headers, createSection, filterHeader);
 	}
 
@@ -37,6 +36,10 @@ define('wikia.venusToc', ['wikia.toc', 'wikia.dom', 'wikia.document'], function 
 		rawHeader = header.getElementsByClassName('mw-headline');
 
 		return rawHeader.length === 0 ? false : rawHeader[0];
+	}
+
+	function getHeaders() {
+		return doc.getElementById('mw-content-text').querySelectorAll(':scope > h2, :scope > h3');
 	}
 
 	return {
