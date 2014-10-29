@@ -953,7 +953,7 @@ class WallMessage {
 		$data['reason'] = $reason;
 
 		if( $this->isMain() ) {
-			$data['parentMessageId'] = 0;
+			$data['parentId'] = 0;
 			$data['isReply'] = false;
 			$wnae = new WallNotificationAdminEntity($wikiId, $data);
 		} else {
