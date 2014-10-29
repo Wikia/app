@@ -1,3 +1,4 @@
+/* global JSSnippetsStack: true */
 /**
  * JSSnippets client-side API
  *
@@ -51,13 +52,24 @@ var JSSnippets = (function(){
 		//stack = null;
 
 		//setting length to 0 is faster and takes less memory than re-creating the array
-		window.JSSnippetsStack.length = 0;
+		JSSnippetsStack.length = 0;
+	}
+
+	/**
+	 * Override the push method of the JSSnippetsStack so we can continue to add callbacks to JSSnippetsStack
+	 * after initialization.
+	 */
+	function updatePush() {
+		JSSnippetsStack.push = function (callback) {
+			Array.prototype.push.apply(JSSnippetsStack, [callback]);
+			init();
+		};
 	}
 
 	//resolve dependencies, load them and initialize stuff
 	function init(){
-		if(window.JSSnippetsStack && window.JSSnippetsStack.length > 0){
-			stack = window.JSSnippetsStack;
+		if(window.JSSnippetsStack && JSSnippetsStack.length > 0){
+			stack = JSSnippetsStack;
 
 			// create unique list of dependencies (both static files and libraries loader functions) and callbacks
 			var dependencies = [],
@@ -168,6 +180,7 @@ var JSSnippets = (function(){
 			});
 
 			clear();
+			updatePush();
 		}
 	}
 
