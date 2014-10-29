@@ -11,7 +11,8 @@ require(['venus.infobox', 'wikia.document'], function(infoboxModule, d) {
 			seeMoreButton;
 
 		articleContent.classList.add('clear-none');
-		infoboxContainer.nextSibling.classList.add('clear-left');
+		infoboxContainer.nextElementSibling.classList.add('clear-left');
+
 
 		if(infoboxModule.isInfoboxCollapsible(infoboxWrapper)) {
 			infoboxModule.collapseInfobox(infoboxWrapper);
