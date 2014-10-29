@@ -31,7 +31,7 @@ $header-without-cover-unit-spacing: 60px;
 			position: relative;
 
 			h1 {
-				padding-bottom: $header-without-cover-unit-spacing / 2;
+				padding: 0 $medium-grid-column-padding $header-without-cover-unit-spacing / 2 $medium-content-padding + $medium-grid-column-padding - $content-border-width;
 				position: absolute;
 			}
 		}
@@ -39,7 +39,7 @@ $header-without-cover-unit-spacing: 60px;
 		h1 {
 			bottom: 0;
 			margin: 0;
-			padding: 0 $medium-grid-column-padding 0 $medium-content-padding + $medium-grid-column-padding - $content-border-width;
+			padding: 0 $medium-grid-column-padding 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding + $medium-grid-column-padding - $content-border-width;
 			word-break: break-all;
 		}
 	}
@@ -205,10 +205,14 @@ $header-without-cover-unit-spacing: 60px;
 
 		&.cover-unit {
 			@include proportional-video-height(8 * ($large-grid-column + $large-grid-gutter) - $large-grid-gutter + $large-content-padding);
+
+			h1 {
+				padding-left: $large-content-padding + $large-grid-column-padding - $content-border-width;
+			}
 		}
 
 		h1 {
-			padding-left: $large-grid-column-padding + $large-content-padding - $content-border-width;
+			padding-left: $large-grid-column + $large-grid-gutter + $large-content-padding + $large-grid-column-padding - $content-border-width;
 			padding-right: $large-grid-column-padding;
 		}
 	}
@@ -279,11 +283,15 @@ $header-without-cover-unit-spacing: 60px;
 
 		&.cover-unit {
 			@include proportional-video-height($small-content-width - 2 * $content-border-width);
+
+			h1 {
+				padding-left: $small-content-padding + $small-grid-column-padding - $content-border-width;
+			}
 		}
 
 		h1 {
-			padding-left: $small-grid-column-padding + $small-content-padding - $content-border-width;
-			padding-right: $small-grid-column-padding + $small-content-padding - $content-border-width;;
+			padding-left: $small-grid-column + $small-grid-gutter + $small-content-padding + $small-grid-column-padding - $content-border-width;
+			padding-right: $small-grid-column-padding;
 		}
 	}
 

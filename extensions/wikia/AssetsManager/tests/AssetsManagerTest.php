@@ -3,6 +3,7 @@
 class AssetsManagerTest extends WikiaBaseTest {
 
 	const SASS_FILE = '/skins/oasis/css/oasis.scss';
+	const JS_GROUP = 'oasis_jquery';
 
 	private $cb;
 	/** @var AssetsManager */
@@ -38,6 +39,16 @@ class AssetsManagerTest extends WikiaBaseTest {
 	/** @dataProvider isSassFileDataProvider */
 	public function testIsSassUrl($file, $expected) {
 		$this->assertEquals($this->instance->isSassUrl($file), $expected);
+	}
+
+	/** @dataProvider isGroupUrlDataProvider */
+	public function testIsGroupUrl($url, $expected) {
+		$this->assertEquals($this->instance->isGroupUrl($url), $expected);
+	}
+
+	/** @dataProvider getGroupNameFromUrlDataProvider */
+	public function testGetGroupNameFromUrl($url, $expected) {
+		$this->assertEquals($this->instance->getGroupNameFromUrl($url), $expected);
 	}
 
 	/**
@@ -156,6 +167,24 @@ class AssetsManagerTest extends WikiaBaseTest {
 			['path/to/unknown/file.scss', true],
 			['path/without/extension', false],
 			['normal/css/file.css', false],
+		];
+	}
+
+	public function isGroupUrlDataProvider() {
+		return [
+			[self::SASS_FILE, false],
+			['path/to/unknown/file.jpg', false],
+			[AssetsManager::getInstance()->getGroupCommonURL(self::JS_GROUP)[0], true],
+			[AssetsManager::getInstance()->getGroupsCommonURL(['foo', 'bar'])[0], false],
+		];
+	}
+
+	public function getGroupNameFromUrlDataProvider() {
+		return [
+			[self::SASS_FILE, false],
+			['path/to/unknown/file.jpg', false],
+			[AssetsManager::getInstance()->getGroupCommonURL(self::JS_GROUP)[0], self::JS_GROUP],
+			[AssetsManager::getInstance()->getGroupsCommonURL(['foo', 'bar'])[0], false],
 		];
 	}
 
