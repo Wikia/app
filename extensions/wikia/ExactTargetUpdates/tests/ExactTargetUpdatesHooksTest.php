@@ -2,6 +2,11 @@
 
 class ExactTargetUpdatesHooksTest extends WikiaBaseTest {
 
+	public function setUp() {
+		$this->setupFile = __DIR__ . '/../ExactTargetUpdates.setup.php';
+		parent::setUp();
+	}
+
 	public function testPrepareUserParams() {
 		$userMock = $this->getMockBuilder( 'User' )
 			->disableOriginalConstructor()
