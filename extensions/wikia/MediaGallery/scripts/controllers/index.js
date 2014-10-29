@@ -10,6 +10,12 @@
 		}
 
 		$wrapper = $('#' + data.id);
+		if ($wrapper.data('gallery')) {
+			console.log('gallery initialized from controller');
+			return;
+		}
+		console.log('create gallery from JSSnippets');
+
 		options = {
 			$el: $('<div></div>'),
 			$wrapper: $wrapper,

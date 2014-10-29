@@ -19,6 +19,7 @@ define('mediaGallery.views.gallery', [
 	 * @returns {Gallery} Gallery instance
 	 */
 	Gallery = function (options) {
+		console.log('init gallery');
 		// required options
 		this.$el = options.$el.addClass('media-gallery-inner');
 		this.$wrapper = options.$wrapper;
@@ -40,6 +41,8 @@ define('mediaGallery.views.gallery', [
 		this.rendered = false;
 		this.visibleCount = 0;
 		this.media = [];
+
+		this.$wrapper.data('gallery', this);
 
 		return this;
 	};
