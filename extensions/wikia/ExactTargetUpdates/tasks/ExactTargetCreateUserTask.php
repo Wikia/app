@@ -13,10 +13,10 @@ class ExactTargetCreateUserTask extends BaseTask {
 	 */
 	public function updateCreateUserData( array $aUserData, array $aUserProperties ) {
 		/* Delete subscriber (email address) used by touched user */
-		// $oDeleteUserTask = $this->getDeleteUserTask();
-		// $oDeleteUserTask->deleteSubscriber( $aUserData['user_id'] );
+		$oDeleteUserTask = $this->getDeleteUserTask();
+		$oDeleteUserTask->deleteSubscriber( $aUserData['user_id'] );
 		/* Create Subscriber with new email */
-		// $this->createSubscriber( $aUserData['user_email'] );
+		$this->createSubscriber( $aUserData['user_email'] );
 		/* Create User DataExtension with new email */
 		$this->createUser( $aUserData );
 		/* Create User Properties DataExtension with new email */
@@ -29,7 +29,7 @@ class ExactTargetCreateUserTask extends BaseTask {
 	 */
 	public function createSubscriber( $sUserEmail ) {
 		$oHelper = $this->getHelper();
-		$oApiParams = $oHelper->prepareSubscriberDataForCreate( $sUserEmail );
+		$aApiParams = $oHelper->prepareSubscriberDataForCreate( $sUserEmail );
 		$oApiDataExtension = $this->getApiSubscriber();
 		$oApiDataExtension->createRequest( $aApiParams );
 	}
