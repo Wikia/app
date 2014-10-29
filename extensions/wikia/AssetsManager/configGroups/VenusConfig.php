@@ -32,6 +32,7 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//resources/wikia/modules/thumbnailer.js',
 		'//resources/wikia/modules/window.js',
 		'//resources/wikia/modules/abTest.js',
+		'//resources/wikia/modules/stickyElement.js',
 
 		//tracker
 		'#group_tracker_js',
@@ -91,15 +92,12 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//extensions/wikia/Lightbox/scripts/LightboxLoader.js',
 		'//extensions/wikia/Lightbox/scripts/venusLightboxLoader.js',
 
-		// polyfills
-		'//extensions/wikia/Venus/scripts/stickyElement.js',
-		'//extensions/wikia/Venus/scripts/articleNavigation.js',
-
 		// different article modules
 		'//skins/shared/scripts/scrollableTables.js',
 
 		//following script initialize different modules in Venus
 		'//extensions/wikia/Venus/scripts/articleModulesLoader.js',
+		'//extensions/wikia/Venus/scripts/articleNavigation.js',
 	]
 ];
 
