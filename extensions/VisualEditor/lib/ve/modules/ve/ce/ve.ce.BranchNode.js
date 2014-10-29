@@ -326,8 +326,10 @@ ve.ce.BranchNode.prototype.getSlugAtOffset = function ( offset ) {
  */
 ve.ce.BranchNode.prototype.setLive = function ( live ) {
 	ve.ce.Node.prototype.setLive.call( this, live );
-	for ( var i = 0; i < this.children.length; i++ ) {
-		this.children[i].setLive( live );
+	if ( !this.handlesOwnRendering() ) {
+		for ( var i = 0; i < this.children.length; i++ ) {
+			this.children[i].setLive( live );
+		}
 	}
 };
 
