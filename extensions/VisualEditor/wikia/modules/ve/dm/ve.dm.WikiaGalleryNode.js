@@ -61,12 +61,12 @@ ve.dm.WikiaGalleryNode.static.toDataElement = function ( domElements ) {
 ve.dm.WikiaGalleryNode.static.toDomElements = function ( data, doc ) {
 	// Inspired by ve.dm.MWReferenceListNode
 	var el = doc.createElement( 'div' ),
-		attribs = data.attributes;
+		attribs = data.attributes,
+		mwData = attribs.mw ? ve.copy( attribs.mw ) : {},
+		originalMw = attribs.originalMw;
 
-	mwData = attribs.mw ? ve.copy( attribs.mw ) : {};
 	ve.setProp( mwData, 'attrs', 'expand', (!!attribs.expand).toString() ); /* true/false must a string */
 
-	originalMw = attribs.originalMw;
 	if ( originalMw && ve.compare( mwData, JSON.parse( originalMw ) ) ) {
 		el.setAttribute( 'data-mw', originalMw );
 	} else {
