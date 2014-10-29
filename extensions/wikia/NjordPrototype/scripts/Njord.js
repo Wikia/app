@@ -324,10 +324,11 @@
 				heroData.imagechanged = true;
 				$overlay.hide();
 			} else {
-				var caretSave = target.caret();
-				$heroModuleTitle.text($heroModuleTitle.text());
-//				$heroModuleDescription.text($heroModuleDescription.text());
-				target.caret(caretSave);
+				if (typeof target !== 'undefined' && target.caret === 'function') {
+					var caretSave = target.caret();
+					$heroModuleTitle.text($heroModuleTitle.text());
+					target.caret(caretSave);
+				}
 			}
 			heroData.changed = true;
 		}, onImageLoad = function () {
