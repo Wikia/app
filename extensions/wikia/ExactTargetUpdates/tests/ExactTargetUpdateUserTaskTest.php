@@ -4,30 +4,10 @@ require_once __DIR__ . '/../lib/exacttarget_soap_client.php';
 
 class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 
-	function testShouldInvokeUpdateMethodWithProperParam() {
-		$sCustomerKey = 'sample_table_name';
-
-		/* Input params */
-		$aUserData = [ 'user_id' => 12345 ];
-		$aUserProperties = [
-			'property_name' => 'property_value'
-		];
-
-		/* Expected update params */
-		$aApiParams = [
-			'DataExtension' => [
-				0 => [
-					'CustomerKey' => $sCustomerKey,
-					'Properties' => [
-						'up_value' => 'property_value'
-					],
-					'Keys' => [
-						'up_user' => 12345,
-						'up_property' => 'property_name'
-					]
-				]
-			]
-		];
+	/**
+	 * @dataProvider shouldInvokeUpdateMethodWithProperParamProvider
+	 */
+	function testShouldInvokeUpdateMethodWithProperParam( $aInvokeParams, $aApiParams, $aCustomerKeys, $sInvokeMethodName ) {
 
 		/* @var ExactTargetApiDataExtension $mockApiDataExtension mock of ExactTargetApiDataExtension */
 		$mockApiDataExtension = $this->getMockBuilder( 'Wikia\ExactTarget\Api\ExactTargetApiDataExtension' )
@@ -47,9 +27,10 @@ class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 		$mockUserHelper
 			->expects( $this->once() )
 			->method( 'getCustomerKeys' )
-			->will( $this->returnValue([ 'user_properties' => $sCustomerKey ]) );
+			->will( $this->returnValue( $aCustomerKeys ) );
 
 		/* Mock tested class */
+		/* @var Wikia\ExactTarget\Tasks\ExactTargetUpdateUserTask $mockUpdateUserTask */
 		$mockUpdateUserTask = $this->getMockBuilder( 'Wikia\ExactTarget\Tasks\ExactTargetUpdateUserTask' )
 			->disableOriginalConstructor()
 			->setMethods( [ 'getApiDataExtension', 'getHelper' ] )
@@ -63,8 +44,7 @@ class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 			->method( 'getHelper' )
 			->will( $this->returnValue( $mockUserHelper ) );
 
-		/* @var Wikia\ExactTarget\Tasks\ExactTargetUpdateUserTask $mockUpdateUserTask */
-		$mockUpdateUserTask->updateUserPropertiesData( $aUserData, $aUserProperties );
+		call_user_func_array( [ $mockUpdateUserTask, $sInvokeMethodName ], $aInvokeParams );
 	}
 
 	/**
@@ -130,6 +110,59 @@ class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 	 */
 
 
+	function shouldInvokeUpdateMethodWithProperParamProvider() {
+		$sCustomerKey = 'sample_table_name';
+		$aCustomerKeys = [
+			'user_properties' => $sCustomerKey,
+			'user' => $sCustomerKey
+		];
+
+		/* User properties update params */
+		$sUpdateUserPropertiesMethodName = 'updateUserPropertiesData';
+		$aUserData1 = [ 'user_id' => 12345 ];
+		$aUserProperties = [
+			'property_name' => 'property_value'
+		];
+		$aInvokeParamsUserProperties = [ $aUserData1, $aUserProperties ];
+		$aUserPropertiesApiParams = [
+			'DataExtension' => [
+				0 => [
+					'CustomerKey' => $sCustomerKey,
+					'Properties' => [
+						'up_value' => $aUserProperties[ 'property_name' ]
+					],
+					'Keys' => [
+						'up_user' => $aUserData1[ 'user_id' ],
+						'up_property' => 'property_name'
+					]
+				]
+			]
+		];
+
+		/* User update params */
+		$sUpdateUserMethodName = 'updateUserData';
+		$iUserId = 12345;
+		$aUserData2 = [
+			'user_field1' => 'value1',
+			'user_field2' => 'value2',
+		];
+		$aInvokeParamsUser = [ array_merge( $aUserData2, [ 'user_id' => $iUserId ] ) ];
+		$aUserApiParams = [
+			'DataExtension' => [
+				[
+					'CustomerKey' => $sCustomerKey,
+					'Properties' => $aUserData2,
+					'Keys' => [ 'user_id' => $iUserId ]
+				]
+			]
+		];
+
+		return [
+			[ $aInvokeParamsUserProperties, $aUserPropertiesApiParams, $aCustomerKeys, $sUpdateUserPropertiesMethodName ],
+			[ $aInvokeParamsUser, $aUserApiParams, $aCustomerKeys, $sUpdateUserMethodName ],
+		];
+	}
+
 	function updateUserEmailProvider() {
 		$sCustomerKey = 'sample_table_name';
 
@@ -154,7 +187,6 @@ class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 				]
 			]
 		];
-
 
 		return [
 			[ $aUserData, $aApiParams, $aMockCustomerKey ]
