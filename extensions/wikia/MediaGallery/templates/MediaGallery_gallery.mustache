@@ -1,9 +1,10 @@
-<div class="media-gallery-wrapper count-{{count}}" data-visible-count="{{visibleCount}}" data-model="{{json}}" data-expanded="{{expanded}}">
+<div class="media-gallery-wrapper count-{{count}}" data-visible-count="{{visibleCount}}" id="{{id}}" data-expanded="{{expanded}}">
 	<button class="add-image">{{addImageButton}}</button>
 	<noscript>
 		{{#media}}
 			<a href="{{linkHref}}"><img src="{{thumbUrl}}" alt="{{{caption}}}"></a>
 		{{/media}}
 	</noscript>
+	{{{jssnippets}}}
 </div>
 

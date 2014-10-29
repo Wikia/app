@@ -23,9 +23,9 @@ class MediaGalleryHooks {
 	 * @return bool
 	 */
 	public static function onOasisSkinAssetGroups( &$assetsArray ) {
-		if ( !empty( F::app()->wg->EnableMediaGalleryExt ) ) {
-			$assetsArray[] = 'media_gallery_js';
-		}
+//		if ( !empty( F::app()->wg->EnableMediaGalleryExt ) ) {
+//			$assetsArray[] = 'media_gallery_js';
+//		}
 		return true;
 	}
 

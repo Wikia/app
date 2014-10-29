@@ -1,16 +1,34 @@
-require([
-	'mediaGallery.controllers.galleries'
-], function (GalleriesController) {
+(function () {
 	'use strict';
 
-	/**
-	 * Convenience function for initializing the gallery elements.
-	 */
-	function newGallery() {
-		new GalleriesController().init();
-	}
+	var initMediaGallery = function (data) {
+		var gallery, $wrapper, options;
 
-	// Galleries must be initialized on page-load and on preview dialog
-	$(window).on('EditPageAfterRenderPreview', newGallery);
-	$(newGallery);
-});
+		// fix data format
+		if (typeof data.media === 'string') {
+			data.media = JSON.parse(data.media);
+		}
+
+		$wrapper = $('#' + data.id);
+		options = {
+			$el: $('<div></div>'),
+			$wrapper: $wrapper,
+			model: data,
+			index: parseInt(data.id),
+			// if set, pass the value, otherwise, defaults will be used.
+			origVisibleCount: $wrapper.data('visible-count'),
+			interval: $wrapper.data('expanded')
+		};
+
+		require(['mediaGallery.views.gallery'], function (Gallery) {
+			gallery = new Gallery(options).init();
+			// Append gallery HTML to DOM and trigger event
+			$wrapper.append(gallery.render().$el);
+			gallery.$el.trigger('galleryInserted');
+		});
+	};
+
+	window.Wikia = window.Wikia || {};
+	window.Wikia.initMediaGallery = initMediaGallery;
+
+})();

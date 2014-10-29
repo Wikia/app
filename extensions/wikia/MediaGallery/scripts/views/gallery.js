@@ -22,6 +22,10 @@ define('mediaGallery.views.gallery', [
 		// required options
 		this.$el = options.$el.addClass('media-gallery-inner');
 		this.$wrapper = options.$wrapper;
+
+		if (typeof options.model === 'string'){
+			options.model = JSON.parse(options.model);
+		}
 		this.model = options.model;
 
 		// optional settings with defaults
