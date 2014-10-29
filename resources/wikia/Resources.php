@@ -184,6 +184,16 @@ return [
 		'dependencies' => 'amd',
 	],
 
+	// libraries and jQuery plugins
+	'wikia.stickyElement' => [
+		'scripts' => 'resources/wikia/modules/stickyElement.js',
+		'dependencies' => [
+			'amd',
+			'wikia.window',
+			'wikia.document',
+		]
+	],
+
 	'wikia.handlebars' => [
 		'scripts' => 'resources/wikia/libraries/handlebars/handlebars.js',
 		'dependencies' => 'amd',
