@@ -27,6 +27,7 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//resources/wikia/modules/mw.js',
 		'//resources/wikia/modules/nirvana.js',
 		'//resources/wikia/modules/querystring.js',
+		'//resources/wikia/modules/history.js',
 		'//resources/wikia/modules/throbber.js',
 		'//resources/wikia/modules/thumbnailer.js',
 		'//resources/wikia/modules/window.js',
@@ -87,8 +88,8 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
 
 		// Lightbox
-		'//extensions/wikia/Lightbox/js/LightboxLoader.js',
-		'//extensions/wikia/Lightbox/js/venusLightboxLoader.js',
+		'//extensions/wikia/Lightbox/scripts/LightboxLoader.js',
+		'//extensions/wikia/Lightbox/scripts/venusLightboxLoader.js',
 
 		// different article modules
 		'//skins/shared/scripts/scrollableTables.js',
@@ -148,10 +149,10 @@ $VenusConfig[ 'global_navigation_scss' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'venus', 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/GlobalNavigation/css/GlobalNavigation.scss',
-		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationSearch.scss',
-		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationAccountNavigation.scss',
-		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationHubsMenu.scss',
+		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigation.scss',
+		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationSearch.scss',
+		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationAccountNavigation.scss',
+		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationHubsMenu.scss',
 		'//extensions/wikia/UserLogin/css/UserLoginDropdown.globalNavigation.scss',
 		'//extensions/wikia/WallNotifications/styles/WallNotifications.globalNavigation.scss',
 	]
@@ -163,16 +164,20 @@ $VenusConfig[ 'global_navigation_js' ] = [
 	'assets' => [
 		'//resources/wikia/libraries/menu-aim/menu-aim.js',
 		'//resources/wikia/libraries/delayed-hover/js-delayed-hover.js',
-		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationTracking.js',
-		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationLazyLoad.js',
-		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationHubsMenu.js',
-		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationSearch.js',
-		'//extensions/wikia/GlobalNavigation/js/SearchSuggestions.js',
+		'//resources/wikia/modules/scrollToLink.js',
 		'//skins/shared/scripts/transparent-out.js',
+		'//extensions/wikia/Venus/scripts/variables.js',
+		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationiOSScrollFix.js',
+		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationScrollToLink.js',
+		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationTracking.js',
+		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationLazyLoad.js',
+		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationHubsMenu.js',
+		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationSearch.js',
+		'//extensions/wikia/GlobalNavigation/scripts/SearchSuggestions.js',
 		'//extensions/wikia/UserLogin/js/UserLoginDropdown.globalNavigation.js',
 		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js',
 		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
-		'//resources/wikia/libraries/bootstrap/tooltip.js',
+		'//resources/wikia/libraries/bootstrap/tooltip.js'
 	]
 ];
 
@@ -191,8 +196,7 @@ $VenusConfig[ 'article_scss' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'venus' ],
 	'assets' => [
-		'//extensions/wikia/Venus/styles/article/article.scss',
-		'//skins/shared/styles/tables.scss'
+		'//extensions/wikia/Venus/styles/article/article.scss'
 	]
 ];
 

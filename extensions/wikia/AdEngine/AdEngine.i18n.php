@@ -128,6 +128,16 @@ $messages['cs'] = array(
 	'adengine-exitstitial-button' => 'Přeskočit tuto reklamu',
 );
 
+/** Welsh (Cymraeg)
+ * @author Robin Owain
+ */
+$messages['cy'] = array(
+	'adengine-exitstitial-title-template' => "Rydych chi'n gadael  $1 ...",
+	'adengine-exitstitial-redirecting' => "Bydd eich porwr yn eich ailgyfeirio i'r dudalen yr ydych yn gofyn amdani mewn ychydig eiliadau.",
+	'adengine-exitstitial-go-back' => 'Am fynd yn ôl?',
+	'adengine-exitstitial-button' => 'Anwybyddwch yr Hysbys yma',
+);
+
 /** German (Deutsch)
  * @author Metalhead64
  * @author Perhelion

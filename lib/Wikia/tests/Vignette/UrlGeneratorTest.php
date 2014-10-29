@@ -1,72 +1,54 @@
 <?php
 
 use Wikia\Vignette\UrlGenerator;
+use Wikia\Vignette\UrlConfig;
 
 class UrlGeneratorTest extends PHPUnit_Framework_TestCase {
-	public static function setUpBeforeClass() {
-		global $wgUploadPath;
-		$wgUploadPath = 'http://images.wikia.com/tests/images';
-	}
-
-	public static function tearDownAfterClass() {
-		global $wgUploadPath;
-		unset( $wgUploadPath );
-	}
-
 	public function testUrl() {
-		$file = $this->getMock( '\Wikia\Vignette\FileInterface' );
-		$file->expects( $this->any() )
-			->method( 'getHashPath' )
-			->will( $this->returnValue( 'a/ab/' ) );
-		$file->expects( $this->any() )
-			->method( 'getName' )
-			->will( $this->returnValue( 'SomeFile.jpg' ) );
-		$file->expects( $this->any() )
-			->method( 'isOld' )
-			->will( $this->returnValue( false ) );
-		$file->expects( $this->any() )
-			->method( 'getTimestamp' )
-			->will( $this->returnValue( '12345' ) );
+		$config = (new UrlConfig())
+			->setRelativePath('a/ab/SomeFile.jpg')
+			->setBaseUrl('http://images.vignette.com')
+			->setTimestamp(12345)
+			->setBucket('tests');
 
 		$this->assertEquals(
-			'/tests/a/ab/SomeFile.jpg/revision/latest?cb=12345',
-			( new UrlGenerator( $file ) )->url()
-		);
+			'http://images.vignette.com/tests/images/a/ab/SomeFile.jpg/revision/latest?cb=12345',
+			(new UrlGenerator($config))->url());
 
 		$this->assertEquals(
-			'/tests/a/ab/SomeFile.jpg/revision/latest/thumbnail/width/50/height/75?cb=12345&fill=%23ababab',
-			( new UrlGenerator( $file ) )->width( 50 )->height( 75 )->thumbnail()->backgroundFill( '#ababab' )->url()
-		);
+			'http://images.vignette.com/tests/images/a/ab/SomeFile.jpg/revision/latest/thumbnail/width/50/height/75?cb=12345&fill=%23ababab',
+			(new UrlGenerator($config))->width(50)->height(75)->thumbnail()->backgroundFill('#ababab')->url());
 
 		$this->assertEquals(
-			'/tests/a/ab/SomeFile.jpg/revision/latest/zoom-crop/width/50/height/75?cb=12345&fill=transparent',
-			( new UrlGenerator( $file ) )->width( 50 )->height( 75 )->zoomCrop()->backgroundFill( 'transparent' )->url()
-		);
+			'http://images.vignette.com/tests/images/a/ab/SomeFile.jpg/revision/latest/zoom-crop/width/50/height/75?cb=12345&fill=transparent',
+			(new UrlGenerator($config))->width(50)->height(75)->zoomCrop()->backgroundFill('transparent')->url());
+
+		$this->assertEquals(
+			'http://images.vignette.com/tests/images/a/ab/SomeFile.jpg/revision/latest/scale-to-width/200?cb=12345',
+			(new UrlGenerator($config))->scaleToWidth(200)->url());
+
+		$this->assertEquals(
+			'http://images.vignette.com/tests/images/a/ab/SomeFile.jpg/revision/latest/window-crop/width/200/height/100/x-offset/10/y-offset/0/window-width/200/window-height/100?cb=12345',
+			(new UrlGenerator($config))->windowCropFixed()->width(200)->height(100)->xOffset(10)->windowWidth(200)->windowHeight(100)->url());
+
+		$this->assertEquals(
+			'http://images.vignette.com/tests/avatars/a/ab/SomeFile.jpg/revision/latest/scale-to-width/200?cb=12345',
+			(new UrlGenerator($config))->avatar()->scaleToWidth(200)->url());
 	}
 
 	public function testOldUrl() {
-		$file = $this->getMock( '\Wikia\Vignette\FileInterface' );
-		$file->expects( $this->any() )
-			->method( 'getHashPath' )
-			->will( $this->returnValue( 'a/ab/' ) );
-		$file->expects( $this->any() )
-			->method( 'getName' )
-			->will( $this->returnValue( 'SomeFile.jpg' ) );
-		$file->expects( $this->any() )
-			->method( 'isOld' )
-			->will( $this->returnValue( true ) );
-		$file->expects( $this->any() )
-			->method( 'getArchiveTimestamp' )
-			->will( $this->returnValue( '123456' ) );
+		$config = (new UrlConfig())
+			->setRelativePath('a/ab/SomeFile.jpg')
+			->setTimestamp(123456)
+			->setIsArchive(true)
+			->setBucket('tests');
 
 		$this->assertEquals(
-			'/tests/a/ab/SomeFile.jpg/revision/123456',
-			( new UrlGenerator( $file ) )->url()
-		);
+			'/tests/images/a/ab/SomeFile.jpg/revision/123456',
+			(new UrlGenerator($config))->url());
 
 		$this->assertEquals(
-			'/tests/a/ab/SomeFile.jpg/revision/123456/thumbnail/width/50/height/75',
-			( new UrlGenerator( $file ) )->width( 50 )->height( 75 )->thumbnail()->url()
-		);
+			'/tests/images/a/ab/SomeFile.jpg/revision/123456/thumbnail/width/50/height/75',
+			(new UrlGenerator($config))->width(50)->height(75)->thumbnail()->url());
 	}
 }

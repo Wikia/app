@@ -1,55 +1,54 @@
-(function( window, $ ) {
+/* global Wall:true, UserLoginAjaxForm, UserLoginModal, Observable */
+(function (window, $) {
 	'use strict';
 
-	Wall.MessageForm = $.createClass( Observable, {
-		constructor: function( page, model ) {
-			Wall.MessageForm.superclass.constructor.apply( this,arguments );
+	Wall.MessageForm = $.createClass(Observable, {
+		bucky: window.Bucky('Wall.MessageForm'),
+		constructor: function (page, model) {
+			Wall.MessageForm.superclass.constructor.apply(this, arguments);
 			this.model = model;
 			this.page = page;
-			this.wall = $( '#Wall' );
+			this.wall = $('#Wall');
 		},
 
-		showPreviewModal: function( format, metatitle, body, width, publishCallback ) {
-			require( [ 'wikia.ui.factory' ], function( uiFactory ) {
-				uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
+		showPreviewModal: function (format, metatitle, body, width, publishCallback) {
+			var self = this;
+
+			this.bucky.timer.start('showPreviewModal');
+
+			require(['wikia.ui.factory'], function (uiFactory) {
+				uiFactory.init(['modal']).then(function (uiModal) {
 					var previewModalConfig = {
-							vars: {
-								id: 'WallPreviewModal',
-								size: 'medium',
-								content: '<div class="WallPreview"><div class="WikiaArticle"></div></div>',
-								title: $.msg( 'preview' ),
-								buttons: [
-									{
-										vars: {
-											value: $.msg( 'savearticle' ),
-											classes: [ 'normal', 'primary' ],
-											data: [
-												{
-													key: 'event',
-													value: 'publish'
-												}
-											]
-										}
-									},
-									{
-										vars: {
-											value: $.msg( 'back' ),
-											data: [
-												{
-													key: 'event',
-													value: 'close'
-												}
-											]
-										}
-									}
-								]
-							}
-						};
+						vars: {
+							id: 'WallPreviewModal',
+							size: 'medium',
+							content: '<div class="WallPreview"><div class="WikiaArticle"></div></div>',
+							title: $.msg('preview'),
+							buttons: [{
+								vars: {
+									value: $.msg('savearticle'),
+									classes: ['normal', 'primary'],
+									data: [{
+										key: 'event',
+										value: 'publish'
+									}]
+								}
+							}, {
+								vars: {
+									value: $.msg('back'),
+									data: [{
+										key: 'event',
+										value: 'close'
+									}]
+								}
+							}]
+						}
+					};
 
-					uiModal.createComponent( previewModalConfig, function( previewModal ) {
+					uiModal.createComponent(previewModalConfig, function (previewModal) {
 
-						previewModal.bind( 'publish', function() {
-							previewModal.trigger( 'close' );
+						previewModal.bind('publish', function () {
+							previewModal.trigger('close');
 							publishCallback();
 						});
 
@@ -65,9 +64,10 @@
 								metatitle: metatitle,
 								body: body
 							},
-							callback: function( data ) {
-								previewModal.$content.find( '.WallPreview .WikiaArticle' ).html( data.body );
+							callback: function (data) {
+								previewModal.$content.find('.WallPreview .WikiaArticle').html(data.body);
 								previewModal.activate();
+								self.bucky.timer.stop('showPreviewModal');
 							}
 						});
 					});
@@ -77,40 +77,37 @@
 			return false;
 		},
 
-		getMessageWidth: function( msg ) {
-			return msg.find( '.editarea' ).width();
+		getMessageWidth: function (msg) {
+			return msg.find('.editarea').width();
 		},
 
-		loginBeforeSubmit: function( action ) {
-
-			var UserLoginModal = window.UserLoginModal;
-
-			if( window.wgDisableAnonymousEditing  && !window.wgUserName ) {
-				UserLoginModal.show( {
+		loginBeforeSubmit: function (action) {
+			if (window.wgDisableAnonymousEditing && !window.wgUserName) {
+				UserLoginModal.show({
 					origin: 'wall-and-forum',
-					callback: this.proxy( function() {
-						action( false );
+					callback: this.proxy(function () {
+						action(false);
 						return true;
-					} )
-				} );
+					})
+				});
 			} else {
-				action( true );
+				action(true);
 				return true;
 			}
 		},
 
-		reloadAfterLogin: function() {
+		reloadAfterLogin: function () {
 			UserLoginAjaxForm.prototype.reloadPage();
 		},
 
-		getFormat: function() {
+		getFormat: function () {
 			// gets overriden if MiniEditor is enabled
 			return '';
 		},
 
-		proxy: function( func ) {
-			return $.proxy( func, this );
+		proxy: function (func) {
+			return $.proxy(func, this);
 		}
 	});
 
-})( window, jQuery );
+})(window, jQuery);

@@ -111,6 +111,8 @@ class VenusController extends WikiaController {
 	}
 
 	private function setAssets() {
+		global $wgOut;
+
 		$jsHeadGroups = ['venus_head_js'];
 		$jsHeadFiles = '';
 		$jsBodyGroups = ['venus_body_js'];
@@ -158,7 +160,7 @@ class VenusController extends WikiaController {
 		// set variables
 		$this->cssLinks = $cssLinks;
 		$this->jsBodyFiles =  $jsBodyFiles;
-		$this->jsHeadScripts = $this->skinTemplateObj->data['headscripts'] . $jsHeadFiles;
+		$this->jsHeadScripts = $wgOut->getHeadScripts() . $jsHeadFiles;
 	}
 
 	public function getGlobalNavigation() {

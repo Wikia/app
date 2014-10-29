@@ -809,6 +809,7 @@ $messages['ca'] = array(
 	'forum-specialpage-heading' => 'Fòrum',
 	'forum-specialpage-blurb-heading' => '<span style="display:none">forum-specialpage-blurb-heading Podeu editar-lo<span>',
 	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|fil|fils}}',
+	'forum-specialpage-board-posts' => '$1 {{PLURAL:$1|entrada|entrades}}',
 	'forum-specialpage-board-lastpostby' => 'Última tramesa per',
 	'forum-specialpage-policies-edit' => 'Edita',
 	'forum-specialpage-policies' => 'Política del fòrum / FAQ',
@@ -957,6 +958,18 @@ http://ca.wikia.com
 	'forum-board-destination-empty' => '(Seleccioneu un subfòrum)',
 	'forum-board-title-validation-invalid' => 'El nom del mur conté caràcters no vàlids',
 	'forum-board-title-validation-length' => 'El nom del mur ha de ser com a mínim de 4 cràcters',
+	'forum-board-title-validation-exists' => 'Ja existeix un tema amb el mateix nom',
+	'forum-board-validation-count' => 'El nombre màxim de temes és $1',
+	'forum-board-description-validation-length' => 'Si us plau, escriu una descripció per aquest tema',
+	'forum-board-id-validation-missing' => 'Falta la id del tema',
+	'forum-board-no-board-warning' => 'No hem trobat un tema amb aquest nom. Aquí hi ha la llista de temes del fòrum.',
+	'forum-old-notification-message' => 'Aquest Fòrum ha estat arxivat',
+	'forum-old-notification-navigation-button' => 'Visita el nou Fòrum',
+	'forum-related-discussion-heading' => 'Discussions sobre $1',
+	'forum-related-discussion-new-post-button' => 'Inicia una discussió',
+	'forum-related-discussion-new-post-tooltip' => 'Enceteu un debat nou sobre $1',
+	'forum-related-discussion-total-replies' => '$1 missatges',
+	'forum-related-discussion-see-more' => 'Mostra més discussions',
 	'forum-confirmation-board-deleted' => "S'ha suprimit “$1”.",
 );
 
@@ -1201,6 +1214,7 @@ abmelden oder deine E-Mail-Einstellungen hier ändern: http://community.wikia.co
 );
 
 /** British English (British English)
+ * @author Captaindogfish
  * @author Shirayuki
  */
 $messages['en-gb'] = array(
@@ -1231,6 +1245,7 @@ Before contributing to the {{SITENAME}} Forums, please keep in mind a few best p
 
 '''What are Topics?'''
 : Topics allow you to link a forum discussion with a wiki article. It's another way to keep Forums organised and to help people find interesting discussions. For example, a Forum thread tagged with \"Lord Voldemort\" will appear at the bottom of the \"Lord Voldemort\" article.",
+	'forum-recentchanges-thread-group' => '$1 on the [[$2|$3 Board]]',
 );
 
 /** Spanish (español)
@@ -1935,6 +1950,13 @@ as preferencias de correo electrónico aquí: http://community.wikia.com/Special
 	'forum-confirmation-board-deleted' => 'Borrouse "$1".',
 );
 
+/** Hebrew (עברית)
+ * @author Guycn2
+ */
+$messages['he'] = array(
+	'forum-recentchanges-thread-group' => '$1 ב[[$2|לוח של $3]]',
+);
+
 /** Hungarian (magyar)
  * @author TK-999
  */
@@ -2163,6 +2185,7 @@ $messages['ko'] = array(
 	'forum-board-topics' => '주제',
 	'forum-board-thread-follow' => '주시하기',
 	'forum-board-thread-following' => '주시 중',
+	'forum-board-thread-kudos' => '추천 $1개',
 	'forum-board-thread-replies' => '댓글 $1개',
 	'forum-board-new-message-heading' => '토론 시작하기',
 	'forum-no-board-selection-error' => '← 글을 작성할 게시판을 선택해주세요.',
@@ -2713,6 +2736,7 @@ $messages['oc'] = array(
  * @author Cotidianis
  * @author Pan Cube
  * @author Pio387
+ * @author Py64
  * @author Rzuwig
  * @author Vuh
  */
@@ -2829,7 +2853,7 @@ ___________________________________________<br />
 	'forum-contributions-line' => '[[$1|$2]] na [[$3|subforum $4]]',
 	'forum-recentchanges-new-message' => 'na [[$1|subforum $2]]',
 	'forum-recentchanges-edit' => 'edytowano wiadomość',
-	'forum-recentchanges-removed-thread' => '{{GENDER:$5|usunął|usunęła}} wątek "[[$1|$2]]" z [[$3|subforum $4]]', # Fuzzy
+	'forum-recentchanges-removed-thread' => 'usunięto wątek "[[$1|$2]]" z [[$3|tablicy użytkownika $4]]',
 	'forum-recentchanges-removed-reply' => '{{GENDER:$5|usunął|usunęła}} odpowiedź z "[[$1|$2]]" na [[$3|subforum $4]]', # Fuzzy
 	'forum-recentchanges-restored-thread' => '{{GENDER:$5|przywrócił|przywróciła}} wątek "[[$1|$2]]" na [[$3|subforum $4]]', # Fuzzy
 	'forum-recentchanges-restored-reply' => '{{GENDER:$5|przywrócił|przywróciła}} odpowiedź w "[[$1|$2]]" na [[$3|subforum $4]]', # Fuzzy
@@ -3305,6 +3329,7 @@ ___________________________________________<br />
 );
 
 /** Swedish (svenska)
+ * @author Lokal Profil
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -3428,7 +3453,7 @@ ___________________________________________<br />
 	'forum-recentchanges-deleted-reply' => 'raderade svar från "[[$1|$2]]" från [[$3|underforumet $4]]',
 	'forum-recentchanges-deleted-reply-title' => 'Ett inlägg',
 	'forum-recentchanges-namespace-selector-message-wall' => 'Underforum',
-	'forum-recentchanges-thread-group' => '$1 i [[$2|underforumet $3]]',
+	'forum-recentchanges-thread-group' => '$1 i [[$2|$3-forumet]]',
 	'forum-recentchanges-history-link' => 'underforumshistorik',
 	'forum-recentchanges-thread-history-link' => 'trådhistorik',
 	'forum-recentchanges-closed-thread' => 'stängde tråden "[[$1|$2]]" från [[$3|$4]]',

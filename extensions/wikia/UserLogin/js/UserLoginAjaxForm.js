@@ -1,4 +1,4 @@
-/*global WikiaForm:true */
+/*global WikiaForm:true, wgScriptPath */
 var UserLoginAjaxForm = function(el, options){
 	this.el = $(el);
 	this.options = options || {};
