@@ -34,7 +34,7 @@ class NjordController extends WikiaController {
 	}
 
 	public function index() {
-		global $wgBlankImgUrl;
+		global $wgTitle, $wgUser, $wgBlankImgUrl;
 		$this->wg->SuppressPageHeader = true;
 
 		$this->wg->out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/NjordPrototype/css/Njord.scss' ) );
@@ -55,6 +55,14 @@ class NjordController extends WikiaController {
 		// template vars
 		$this->wikiData = $wikiDataModel;
 		$this->isAllowedToEdit = $this->wg->user->isAllowed('njordeditmode');
+
+		//set correct editor
+		$this->editor = EditorPreference::getPrimaryEditor();
+		$editOptions = ['action' => 'edit'];
+		if ( $this->editor === EditorPreference::OPTION_EDITOR_VISUAL ) {
+			$editOptions = ['veaction' => 'edit'];
+		}
+		$this->editLink = $wgTitle->getLocalURL($editOptions);
 	}
 
 	public function modula() {
@@ -148,7 +156,7 @@ class NjordController extends WikiaController {
 		if ($title) {
 			$wikiDataModel = $this->getWikiData();
 			$wikiDataModel->title = $title;
-			$success = $this->setWikiData( $wikiDataModel );;
+			$success = $this->setWikiData( $wikiDataModel );
 		}
 		$this->getResponse()->setVal( 'success', $success );
 		$this->getResponse()->setVal( 'wikiData', $wikiDataModel );

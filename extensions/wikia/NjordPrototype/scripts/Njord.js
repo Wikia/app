@@ -87,6 +87,8 @@
 		$heroModuleInput = $('#MainPageHero .upload input[name="file"]'),
 		$heroModuleImage = $('#MainPageHero .hero-image'),
 
+		$wikiaArticle = $('#WikiaArticle'),
+
 		trackDragOnlyOncePerImage = false,
 
 		saveHeroImageLabel = 'publish-hero-image',
@@ -480,6 +482,22 @@
 					$heroModuleInput.unwrap();
 				}
 			});
+
+			var onclose = new MutationObserver(function(m) {
+				$('.MainPageHeroHeader .global-edit-wrap').show();
+				onclose.disconnect();
+			});
+			var onload = new MutationObserver(function(m) {
+				$('.MainPageHeroHeader .global-edit-wrap').hide();
+				onload.disconnect();
+				onclose.observe($wikiaArticle[0], { childList: true });
+			});
+			$('#ca-ve-edit').on('click', function() {
+				onload.observe($wikiaArticle[0], { childList: true });
+			});
+			if (window.location.search.indexOf('veaction=edit') >= 0) {
+				onload.observe($wikiaArticle[0], { childList: true });
+			}
 		};
 
 	if (window.wgUserName) {
