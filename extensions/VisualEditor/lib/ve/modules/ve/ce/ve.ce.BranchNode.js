@@ -199,9 +199,9 @@ ve.ce.BranchNode.prototype.onSplice = function ( index ) {
 						node.insertBefore( args[i].$element[j], firstChild );
 					}
 				}
-			}
-			if ( this.live !== args[i].isLive() ) {
-				args[i].setLive( this.live );
+				if ( this.live !== args[i].isLive() ) {
+					args[i].setLive( this.live );
+				}
 			}
 		}
 	}
