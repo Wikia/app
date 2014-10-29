@@ -69,13 +69,16 @@
 				<div class="new-btn save-btn sg-sub">Publish</div>
 			</div>
 		</div>
-		<span class="hero-description_text sg-main">
+		<span class="hero-description-text sg-main">
 		<?php if ( isset( $wikiData->description ) ) { ?>
 			<?= $wikiData->description; ?>
-			<? } else { ?>Add a summary that will be used to
-			promote your page in search results and on other promotional areas. (160 characters maximum)
 		<? } ?>
 		</span>
+		<?php if ( !isset ( $wikiData->description ) ) { ?>
+			<span class="hero-description-default-text sg-main"> Add a summary that will be used to
+			promote your page in search results and on other promotional areas. (160 characters maximum)
+		</span>
+		<? } ?>
 		<? if ($isAllowedToEdit): ?>
 		<img class="edit-btn" src="/extensions/wikia/NjordPrototype/images/pencil_b.svg"/>
 		<? endif; ?>

@@ -73,7 +73,7 @@
 		$descriptionSaveBtn = $('.MainPageHeroHeader .hero-description .save-btn'),
 		$descriptionDiscardBtn = $('.MainPageHeroHeader .hero-description .discard-btn'),
 		$descriptionEditBoxText = $('.MainPageHeroHeader .hero-description .edit-box .edited-text'),
-		$descriptionText = $('.hero-description_text'),
+		$descriptionText = $('.hero-description-text'),
 
 		$body = $('body'),
 		$heroHeader = $('.MainPageHeroHeader'),
@@ -241,6 +241,7 @@
 			//turn off title editing
 			revertTitle();
 			States.setState($descriptionElement, 'edit-state');
+
 			//FIXME: fix onChange event, caret at end on focus
 			$descriptionEditBoxText.text(heroData.description);
 			$descriptionEditBoxText.focus();
@@ -250,8 +251,12 @@
 		},
 		revertDescription = function () {
 			heroData.description = heroData.oDescription;
+			if (heroData.oDescription == undefined || heroData.oDescription.trim() === "") {
+				States.setState($descriptionElement, 'zero-state');
+			} else {
+				States.setState($descriptionElement, 'filled-state');
+			}
 			$descriptionEditBoxText.text(heroData.oDescription);
-			States.setState($descriptionElement, 'filled-state');
 			trackMom(revertSummaryLabel, trackerActionClick);
 		},
 

@@ -185,7 +185,7 @@
     margin: 20px 8%;
   }
 
-  .hero-description_text {
+  .hero-description-text {
     word-wrap: break-word;
   }
 
@@ -305,7 +305,10 @@
     .title-text {
       display: none;
     }
-    .hero-description_text {
+    .hero-description-text {
+      display: none;
+    }
+    .hero-description-default-text {
       display: none;
     }
     .edit-btn{
@@ -340,6 +343,12 @@
       margin: 5px auto auto 8%;
       position: absolute;
       z-index: 1;
+    }
+    .hero-description-text {
+      display: inherit;
+    }
+    .hero-description-default-text {
+      display: none;
     }
   }
 
@@ -376,6 +385,12 @@
       position: absolute;
       text-align: center;
       width: 98%;
+    }
+    .hero-description-text {
+      display: none;
+    }
+    .hero-description-default-text {
+      display: flex;
     }
   }
 }
