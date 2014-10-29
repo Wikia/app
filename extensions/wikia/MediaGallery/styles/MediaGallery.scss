@@ -3,8 +3,23 @@
 
 $media-margin: 2.5px;
 
-.ve .media-gallery-wrapper .media {
-	transition: none;
+.ve {
+	.media-gallery-wrapper {
+		.media {
+			transition: none;
+		}
+		// Hide "Show more" button when gallery is displayed in VE
+		.more {
+			display: none;
+		}
+	}
+}
+
+// In VE captions are wrapped in <p> (unlike in article view) so in order to
+// achieve same rendering effect "nautralize" styling of that <p>
+.media-gallery-caption .ve-ce-generated-wrapper {
+	display: inline;
+	margin: 0;
 }
 
 .media-gallery-wrapper {
