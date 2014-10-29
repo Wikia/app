@@ -45,6 +45,8 @@ OO.mixinClass( ve.ce.WikiaGalleryNode, ve.ce.FocusableNode );
 
 /* Static Properties */
 
+ve.ce.WikiaGalleryNode.static.handlesOwnRendering = true;
+
 ve.ce.WikiaGalleryNode.static.name = 'wikiaGallery';
 
 ve.ce.WikiaGalleryNode.static.tagName = 'div';
@@ -106,7 +108,6 @@ ve.ce.WikiaGalleryNode.prototype.setupGallery = function ( galleryData ) {
 			gallery = new Gallery( galleryOptions ).init();
 
 		this.$element
-			.html( '' )
 			.removeClass( function ( index, css ) {
 				return ( css.match ( /(^|\s)count-\S+/g ) || [] ).join( ' ' );
 			} )

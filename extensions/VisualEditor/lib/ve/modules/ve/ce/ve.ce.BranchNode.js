@@ -183,19 +183,21 @@ ve.ce.BranchNode.prototype.onSplice = function ( index ) {
 		}
 		for ( i = args.length - 1; i >= 2; i-- ) {
 			args[i].attach( this );
-			if ( index ) {
-				// DOM equivalent of $anchor.after( args[i].$element );
-				afterAnchor = $anchor[0].nextSibling;
-				parentNode = $anchor[0].parentNode;
-				for ( j = 0, length = args[i].$element.length; j < length; j++ ) {
-					parentNode.insertBefore( args[i].$element[j], afterAnchor );
-				}
-			} else {
-				// DOM equivalent of this.$element.prepend( args[j].$element );
-				node = this.$element[0];
-				firstChild = node.firstChild;
-				for ( j = args[i].$element.length - 1; j >= 0; j-- ) {
-					node.insertBefore( args[i].$element[j], firstChild );
+			if ( !this.handlesOwnRendering() ) {
+				if ( index ) {
+					// DOM equivalent of $anchor.after( args[i].$element );
+					afterAnchor = $anchor[0].nextSibling;
+					parentNode = $anchor[0].parentNode;
+					for ( j = 0, length = args[i].$element.length; j < length; j++ ) {
+						parentNode.insertBefore( args[i].$element[j], afterAnchor );
+					}
+				} else {
+					// DOM equivalent of this.$element.prepend( args[j].$element );
+					node = this.$element[0];
+					firstChild = node.firstChild;
+					for ( j = args[i].$element.length - 1; j >= 0; j-- ) {
+						node.insertBefore( args[i].$element[j], firstChild );
+					}
 				}
 			}
 			if ( this.live !== args[i].isLive() ) {
@@ -204,7 +206,9 @@ ve.ce.BranchNode.prototype.onSplice = function ( index ) {
 		}
 	}
 
-	this.setupSlugs();
+	if ( !this.handlesOwnRendering() ) {
+		this.setupSlugs();
+	}
 };
 
 /**
