@@ -140,9 +140,7 @@
 				data = attr.data;
 				delete attr.data;
 			}
-			alert('b');
 			url = $.nirvana.getUrl(attr);
-			alert('d')
 			var settings = {
 				url: url,
 				dataType: format,
@@ -157,7 +155,6 @@
 			if (typeof attr.processData != 'undefined') {
 				settings.processData = attr.processData;
 			}
-			alert('c');
 			return $.ajax(settings);
 		},
 
