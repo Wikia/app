@@ -53,10 +53,9 @@ class ExactTargetApiSubscriber {
 	}
 
 	public function deleteRequest( Array $aApiCallParams ) {
-		$aSubscribers = $this->Helper->prepareSubscriberObjects( $aApiCallParams['Subscriber'] );
-		$aSoapVars = $this->Helper->prepareSoapVars( $aSubscribers, 'Subscriber' );
+		$aSubscribers = $this->Helper->prepareSubscriberObjects( $aApiCallParams );
 
-		$oDeleteRequest = $this->Helper->wrapDeleteRequest( $aSoapVars );
+		$oDeleteRequest = $this->Helper->wrapDeleteRequest( $aSubscribers );
 
 		$oResults = $this->makeRequest( 'Delete', $oDeleteRequest );
 		return $oResults;

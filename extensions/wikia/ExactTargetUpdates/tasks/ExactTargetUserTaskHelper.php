@@ -71,7 +71,7 @@ class ExactTargetUserTaskHelper {
 		return $aApiParams;
 	}
 
-	public function prepareSubscriberDataForCreate( $sUserEmail ) {
+	public function prepareSubscriberData( $sUserEmail ) {
 		$aApiParams = [
 			[
 				'SubscriberKey' => $sUserEmail,

@@ -29,7 +29,7 @@ class ExactTargetCreateUserTask extends BaseTask {
 	 */
 	public function createSubscriber( $sUserEmail ) {
 		$oHelper = $this->getHelper();
-		$aApiParams = $oHelper->prepareSubscriberDataForCreate( $sUserEmail );
+		$aApiParams = $oHelper->prepareSubscriberData( $sUserEmail );
 		$oApiDataExtension = $this->getApiSubscriber();
 		$oApiDataExtension->createRequest( $aApiParams );
 	}

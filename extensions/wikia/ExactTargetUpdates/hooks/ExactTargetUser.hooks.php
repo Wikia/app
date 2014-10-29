@@ -70,17 +70,16 @@ class ExactTargetUserHooks {
 		return true;
 	}
 
-
 	/**
 	 * Adds Task for updating user email
 	 * @param User $user
 	 * @return bool
 	 */
-	public function onEmailChangeConfirmed( \User $user ) {
+	public function onEmailChangeConfirmed( \User $oUser ) {
 		/* Get and run the task */
 		$oUserHelper = $this->getUserHelper();
 		$task = $oUserHelper->getUpdateUserTask();
-		$task->call( 'updateUserEmail', $user->getId(), $user->getEmail() );
+		$task->call( 'updateUserEmail', $oUser->getId(), $oUser->getEmail() );
 		$task->queue();
 		return true;
 	}
