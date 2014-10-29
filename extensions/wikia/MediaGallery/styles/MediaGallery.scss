@@ -3,8 +3,13 @@
 
 $media-margin: 2.5px;
 
+.ve .media-gallery-wrapper .media {
+	transition: none;
+}
+
 .media-gallery-wrapper {
 	@include grid-row();
+	clear: both;
 	margin: 0 $media-margin * -1;
 	padding: 1px; // leave room for the image outlines
 	width: auto;
@@ -69,10 +74,6 @@ $media-margin: 2.5px;
 
 	&[class*="count-"] .media:nth-child(n) {
 		padding: $media-margin;
-	}
-
-	.media-gallery-inner {
-		clear: both;
 	}
 
 	.more {
