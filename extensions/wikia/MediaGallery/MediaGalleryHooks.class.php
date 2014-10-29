@@ -16,19 +16,6 @@ class MediaGalleryHooks {
 		return true;
 	}
 
-
-	/**
-	 * Adds MediaGallery JS to main Oasis asset group
-	 * @param Array $assetsArray
-	 * @return bool
-	 */
-	public static function onOasisSkinAssetGroups( &$assetsArray ) {
-//		if ( !empty( F::app()->wg->EnableMediaGalleryExt ) ) {
-//			$assetsArray[] = 'media_gallery_js';
-//		}
-		return true;
-	}
-
 	/**
 	 * Add extension enabled flag to JS
 	 * @param array $vars
