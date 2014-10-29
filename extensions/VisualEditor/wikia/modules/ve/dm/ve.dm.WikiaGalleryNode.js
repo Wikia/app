@@ -43,14 +43,21 @@ ve.dm.WikiaGalleryNode.static.getMatchRdfaTypes = function () {
  */
 ve.dm.WikiaGalleryNode.static.toDataElement = function ( domElements ) {
 	var mwDataJSON = domElements[0].getAttribute( 'data-mw' ),
-		mwData = mwDataJSON ? JSON.parse( mwDataJSON ) : {};
+		mwData = mwDataJSON ? JSON.parse( mwDataJSON ) : {},
+		expandValue;
+
+	if ( 'expand' in mwData.attrs ) {
+		expandValue = mwData.attrs.expand === 'true';
+	} else {
+		expandValue = undefined;
+	}
 
 	return {
 		'type': this.name,
 		'attributes': {
 			'mw': mwData,
 			'originalMw': mwDataJSON,
-			'expand': mwData.attrs.expand === 'true' /* it is a string */
+			'expand': expandValue
 		}
 	};
 };
@@ -65,7 +72,9 @@ ve.dm.WikiaGalleryNode.static.toDomElements = function ( data, doc ) {
 		mwData = attribs.mw ? ve.copy( attribs.mw ) : {},
 		originalMw = attribs.originalMw;
 
-	ve.setProp( mwData, 'attrs', 'expand', (!!attribs.expand).toString() ); /* true/false must be a string */
+	if ( attribs.expand !== undefined ) {
+		ve.setProp( mwData, 'attrs', 'expand', (!!attribs.expand).toString() );
+	}
 
 	if ( originalMw && ve.compare( mwData, JSON.parse( originalMw ) ) ) {
 		el.setAttribute( 'data-mw', originalMw );
