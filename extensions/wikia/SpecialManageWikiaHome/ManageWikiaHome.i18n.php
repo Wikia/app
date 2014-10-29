@@ -456,6 +456,7 @@ $messages['bs'] = array(
 );
 
 /** Catalan (català)
+ * @author Fitoschido
  * @author Roxas Nobody 15
  * @author Unapersona
  */
@@ -466,6 +467,7 @@ $messages['ca'] = array(
 	'manage-wikia-home-wikis-in-slots-total' => "L'import total de Espais:$1",
 	'manage-wikia-home-visualization-wikis' => 'Wikis Corporatius amb previsualització:',
 	'manage-wikia-home-hubs-slot-error' => 'Hi ha un error al guardar. Si us plau, torna-ho a intentar.',
+	'manage-wikia-home-hubs-slot-more-links' => 'Enllaços «Més a…»',
 	'manage-wikia-home-wikis-in-slots-success' => "Espais de Nom s'ha canviat.",
 	'manage-wikia-home-collections-success' => "Les col·leccions s'han guardat.",
 	'manage-wikia-home-collections-add-success' => 'Wiki afegit correctament a la col·lecció.',
@@ -487,6 +489,7 @@ $messages['ca'] = array(
 	'manage-wikia-home-wiki-filter' => 'Filtre',
 	'manage-wikia-home-wiki-filter-reset' => 'Neteja',
 	'manage-wikia-home-wiki-list-download' => 'Descarrega una llista completa',
+	'manage-wikia-home-wiki-list-download-tooltip' => 'Valors (fitxer CSV) separats per comes amb codificació UTF-8.',
 	'manage-wikia-home-wiki-list-id' => 'Id',
 	'manage-wikia-home-wiki-list-vertical' => 'Vertical',
 	'manage-wikia-home-wiki-list-headline' => 'Nom del wiki',
@@ -533,8 +536,12 @@ $messages['ca'] = array(
 	'manage-wikia-home-collection-hero-image-tooltip' => 'Aquesta imatge ha de ser  $1 px ×  $2 px',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'Aquesta imatge ha de ser  $1 px ×  $2 px',
 	'manage-wikia-home-collection-add-file-button' => 'Afegir una foto',
+	'manage-wikia-home-stats-header' => 'Estadístiques de la pàgina corporativa',
+	'manage-wikia-home-stats-text' => 'Aquestes estadístiques es mostren en totes les pàgines corporatives sense separació segons la llengua.',
 	'manage-wikia-home-stats-visitors-label' => 'Visitants mensuals',
+	'manage-wikia-home-stats-mobile-percentage-label' => '% de visitants amb mòbil',
 	'manage-wikia-home-stats-success' => 'Guardat correctament!',
+	'manage-wikia-home-stats-failure' => "Les dades no s'han guardat. Corregiu els errors en el formulari i torneu-ho a provar.",
 	'manage-wikia-home-stats-permissions-error' => "No s'ha desat. Comprova que tinguis els drets necessaris per editar.",
 );
 

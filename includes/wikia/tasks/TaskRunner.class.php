@@ -23,6 +23,7 @@ class TaskRunner {
 		$this->taskId = $taskId;
 		$this->callOrder = json_decode( $callOrder, true );
 		$taskList = json_decode( $taskList, true );
+		$createdBy = json_decode( $createdBy, true );
 
 		foreach ( $taskList as $taskData ) {
 			/** @var \Wikia\Tasks\Tasks\BaseTask $task */
@@ -30,7 +31,7 @@ class TaskRunner {
 			$task
 				->taskId( $taskId )
 				->wikiId( $wikiId )
-				->createdBy( $createdBy );
+				->createdBy( $createdBy['id'] );
 			$task->unserialize( $taskData['context'], $taskData['calls'] );
 
 			try {

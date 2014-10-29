@@ -2242,7 +2242,7 @@ Dado que hay mucha actividad, quizás quieras cambiar tus preferencias de correo
 	'founderemails-email-0-day-tips-heading' => 'Aquí hay algunos consejos útiles para comenzar:',
 	'founderemails-email-0-day-addpages-heading' => 'Añadir páginas.',
 	'founderemails-email-0-day-addpages-content' => 'Una wiki es todo acerca de compartir información sobre tu tema. Crea páginas haciendo clic en <a style="color:#2a87d5;text-decoration:none;" href="$ADDAPAGEURL">"Añadir una Página"</a> y llena más información específica sobre el tema.',
-	'founderemails-email-0-day-addpages-button' => 'Añadir una Página',
+	'founderemails-email-0-day-addpages-button' => 'Añadir una página',
 	'founderemails-email-0-day-addphotos-heading' => 'Añadir imágenes.',
 	'founderemails-email-0-day-addphotos-content' => '¡Las páginas siempre son mejores cuando tienen imágenes! Añade imágenes a tus páginas y a tu página principal. Puedes hacer clic en <a style="color:#2a87d5;text-decoration:none;" href="$ADDAPHOTOURL">"Añadir una Imagen"</a> para añadir una imagen, una galería de imágenes o una secuencia de diapositivas.',
 	'founderemails-email-0-day-addphotos-button' => 'Añadir una Imagen',
@@ -4433,6 +4433,7 @@ $EDITORTALKPAGEURL
 	'founderemails-email-user-registered-greeting' => '$USERNAMEさん、こんにちは。',
 	'founderemails-email-user-registered-headline' => 'おめでとうございます！$EDITORNAMEが$WIKINAMEに参加しました。',
 	'founderemails-email-user-registered-signature' => 'ウィキアチーム',
+	'founderemails-email-user-registered-button' => 'ようこそみなさん',
 	'founderemails-email-user-registered-body-HTML' => '$USERNAME さん、<br /><br />
 $EDITORNAME がウィキにアカウントを登録しました。<br /><br />
 トークページ:<br />
@@ -4470,11 +4471,15 @@ Wikiaからのメールをすべて受け取りたくない場合、以下をク
 	'founderemails-email-page-edited-reg-user-subject' => '$WIKINAME で新しい編集が行われました',
 	'founderemails-email-general-edit-greeting' => '$USERNAMEさん、こんにちは。',
 	'founderemails-email-general-edit-signature' => 'Wikia チーム',
+	'founderemails-email-anon-edit-greeting' => 'こんにちは、$USERNAME さん、',
 	'founderemails-email-anon-edit-signature' => 'ウィキアチーム',
 	'founderemails-answers-email-0-days-passed-subject' => 'QA Wikia へようこそ ！',
 	'founderemails-answers-email-page-edited-anon-subject' => '誰かがあなたのサイトを変更しました！',
 	'founderemails-email-lot-happening-greeting' => '$USERNAMEさん、こんにちは。',
 	'founderemails-email-lot-happening-signature' => 'ウィキアチーム',
+	'founderemails-email-0-day-heading' => 'はじめまして $USERNAMEさん、',
+	'founderemails-email-0-day-congratulations' => '$HDWIKINAME の作成おめでとうございます！',
+	'founderemails-email-0-day-tips-heading' => '始めるにあたって役立ついくつかのヒントを次に示します。',
 	'founderemails-email-0-day-addpages-heading' => 'ページを追加する。',
 	'founderemails-email-0-day-addpages-button' => 'ページを追加',
 	'founderemails-email-0-day-addphotos-heading' => '写真を追加します。',
@@ -4482,6 +4487,7 @@ Wikiaからのメールをすべて受け取りたくない場合、以下をク
 	'founderemails-email-0-day-customizetheme-heading' => 'ウィキのテーマをカスタマイズ',
 	'founderemails-email-0-day-customizetheme-button' => 'カスタマイズ',
 	'founderemails-email-0-day-wikiahelps-signature' => 'よいWiki運営を！<br />ウィキアチーム',
+	'founderemails-email-3-day-heading' => 'こんにちは $USERNAMEさん,',
 	'founderemails-email-3-day-addphotos-button' => '画像を追加',
 	'founderemails-email-views-digest-greeting' => 'こんにちは、$USERNAME さん、',
 	'founderemails-email-views-digest-signature' => 'ウィキアチーム',
@@ -9548,8 +9554,7 @@ $EDITORNAME在你的维基上注册了！何不访问一下新成员的<a href="
 需要了解一个功能如何应用？不用怕，我们一直会在您的身边！快来http://community.wikia.com问我们问题寻找帮助和忠告。
 
 继续努力！
-Wikia 队
-
+Wikia 团队
 
 
 若想查询Wikia的最新消息，请访问community.wikia.com
@@ -9683,6 +9688,7 @@ Wikia团队',
 	'founderemails-email-0-day-wikiahelps-signature' => '祝维基建设愉快！<br />Wikia团队',
 	'founderemails-email-3-day-heading' => '你好，$USERNAME，',
 	'founderemails-email-3-day-editmainpage-heading' => '美化您的主页。',
+	'founderemails-email-3-day-editmainpage-content' => '主页是当人们访问 <a href="$WIKIURL" style="color:#2a87d5;text-decoration:none;">$WIKINAME</a> 时第一个看到的页面。通过写一些您主题的详细摘要，并加入一段幻灯片、一组图册或一副图片给人们良好的第一印象吧。',
 	'founderemails-email-3-day-editmainpage-button' => '美化它',
 	'founderemails-email-3-day-addphotos-heading' => '添加更多图片。',
 	'founderemails-email-3-day-addphotos-button' => '添加照片',

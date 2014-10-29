@@ -56,9 +56,15 @@ class ReplaceImageServerTest extends WikiaBaseTest {
 	 * @dataProvider devboxDataProvider
 	 */
 	public function testForDevbox($url, $timestamp, $expected) {
-		$this->mockGlobalVariable('wgDevBoxImageServerOverride', 'images.hakarl.wikia-dev.com');
+		$devImageServer = 'images.hakarl.wikia-dev.com';
+		$this->mockGlobalVariable( 'wgDevBoxImageServerOverride', $devImageServer );
 
-		$this->assertEquals( $expected, wfReplaceImageServer( $url, $timestamp ), 'URL returned by wfReplaceImageServer should match expected one' );
+		$testURL = wfReplaceImageServer( $url, $timestamp );
+		$this->assertEquals( $expected, $testURL, 'URL returned by wfReplaceImageServer should match expected one' );
+
+		$this->mockGlobalVariable('wgEnableVignette', true);
+		$testURL = wfReplaceImageServer( $url, $timestamp );
+		$this->assertEquals( 0, preg_match( '/images\.hakarl\.wikia-dev\.com/', $testURL ), 'URL returned by wfReplaceImageServer be the original with wgEnableVignette = true' );
 	}
 
 	public function devboxDataProvider() {

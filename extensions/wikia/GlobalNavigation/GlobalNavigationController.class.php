@@ -25,17 +25,23 @@ class GlobalNavigationController extends WikiaController {
 
 		$userLang = $this->wg->Lang->getCode();
 		// Link to Wikia home page
-		$centralUrl = $this->getCentralUrlForLang( $userLang, true );
+		$centralUrl = $this->getCentralUrlForLang( $userLang );
 
 		$createWikiUrl = $this->getCreateNewWikiUrl( $userLang );
 
 		$this->response->setVal( 'centralUrl', $centralUrl );
 		$this->response->setVal( 'createWikiUrl', $createWikiUrl );
+
+		$isGameStarLogoEnabled = $this->isGameStarLogoEnabled();
+		$this->response->setVal( 'isGameStarLogoEnabled', $isGameStarLogoEnabled );
+		if ( $isGameStarLogoEnabled ) {
+			$this->response->addAsset( 'extensions/wikia/GlobalNavigation/css/GlobalNavigationGameStar.scss' );
+		}
 	}
 
 	public function searchIndex() {
 		$lang = $this->wg->Lang->getCode();
-		$centralUrl = $this->getCentralUrlForLang( $lang, false );
+		$centralUrl = $this->getCentralUrlForLang( $lang );
 		$globalSearchUrl = $this->getGlobalSearchUrl( $centralUrl, $lang );
 		$specialSearchTitle = SpecialPage::getTitleFor( 'Search' );
 		$localSearchUrl = $specialSearchTitle->getFullUrl();
@@ -124,23 +130,19 @@ class GlobalNavigationController extends WikiaController {
 	}
 
 
-	public function getCentralUrlForLang( $lang, $fullUrl ) {
-		$centralWikiExists = $this->centralWikiInLangExists( $lang );
-		if ( $centralWikiExists ) {
-			$title = $this->getCentralWikiTitleForLang( $lang );
-		} else {
-			$title = $this->getCentralWikiTitleForLang( self::DEFAULT_LANG );
-		}
+	/**
+	 * @desc gets corporate page URL for given language
+	 * @param string $lang - language
+	 * @return string - Corporate Wikia Domain for given language
+	 */
+	public function getCentralUrlForLang( $lang ) {
+		$title = $this->getCentralWikiTitleForLang(
+			$this->centralWikiInLangExists( $lang ) ?
+				$lang :
+				self::DEFAULT_LANG
+		);
 
-		if ( $fullUrl ) {
-			$url = $title->getFullURL();
-			if ( !$centralWikiExists && $lang != self::DEFAULT_LANG ) {
-				$url .= self::USE_LANG_PARAMETER . $lang;
-			}
-		} else {
-			$url = $title->getServer();
-		}
-		return $url;
+		return $title->getServer();
 	}
 
 	public function getCreateNewWikiUrl( $lang ) {
@@ -186,4 +188,7 @@ class GlobalNavigationController extends WikiaController {
 		return SpecialPage::getTitleFor( 'Search' )->getLocalURL();
 	}
 
+	protected function isGameStarLogoEnabled() {
+		return $this->wg->contLang->getCode() == 'de';
+	}
 }

@@ -5,6 +5,7 @@ require(
 
 		var WallNotifications = {
 			init: function() {
+				this.bucky = window.Bucky('WallNotifications');
 				this.updateInProgress = false; // we only want 1 update simultaneously
 				this.notificationsCache = {}; // HTML for "trays" for different Wiki ids
 				this.wikiShown = {}; // all open "trays" (Wiki Notifications) - list of Wiki ids
@@ -72,6 +73,7 @@ require(
 			},
 
 			updateCounts: function() {
+				this.bucky.timer.start('updateCounts');
 				var data,
 					callback = this.proxy(function(data) {
 					if (data.status !== true || data.html === '') {
@@ -98,6 +100,8 @@ require(
 					setTimeout( this.proxy(function() {
 						this.updateInProgress = false;
 					}), 10000 );
+
+					this.bucky.timer.stop('updateCounts');
 				});
 
 
@@ -118,6 +122,7 @@ require(
 			},
 
 			fetchForCurrentWiki: function() {
+				this.bucky.timer.start('fetchForCurrentWiki');
 				if ( this.fetchedCurrent === false ) {
 					var wikiEl = this.$wallNotifications.find('.notifications-for-wiki').first(),
 						firstWikiId = parseInt(wikiEl.data('wiki-id'), 10);
@@ -128,6 +133,7 @@ require(
 						this.currentWikiId = firstWikiId;
 						this.wikiShown[ firstWikiId ] = true;
 						this.updateWiki( firstWikiId );
+						this.bucky.timer.stop('fetchForCurrentWiki');
 					}
 				}
 			},
@@ -142,6 +148,7 @@ require(
 			},
 
 			markAllAsReadRequest: function(forceAll) {
+				this.bucky.timer.start('markAllAsReadRequest');
 				nirvana.sendRequest({
 					controller: 'WallNotificationsExternalController',
 					method: 'markAllAsRead',
@@ -165,6 +172,8 @@ require(
 						//	= tray is hidden (because there are no other wikis with notifications)
 						//  = no ability to show notifications, no tray)
 						this.showFirst();
+
+						this.bucky.timer.stop('markAllAsReadRequest');
 					})
 				});
 			},
@@ -174,13 +183,11 @@ require(
 			},
 
 			markAllAsRead: function(e) {
-				e.preventDefault();
 				this.markAllAsReadRequest( false );
 				return false;
 			},
 
 			markAllAsReadAllWikis: function(e) {
-				e.preventDefault();
 				this.markAllAsReadRequest( 'FORCE' );
 				return false;
 			},
@@ -215,7 +222,6 @@ require(
 			},
 
 			wikiClick: function(e) {
-				e.preventDefault();
 				var wikiEl = $(e.target).closest('.notifications-for-wiki'),
 					wikiId = parseInt(wikiEl.data('wiki-id'), 10);
 

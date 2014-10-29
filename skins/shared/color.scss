@@ -196,3 +196,4 @@ $color-vertical-tv-secondary: #008cce;
 
 // Venus article
 $color-article-navigation-inactive: if($is-dark-wiki, lighten(#000000, 30%), darken(#ffffff, 30%));
+$image-caption-border-color: if($is-dark-wiki, darken($color-text, 30%), lighten($color-text, 30%));

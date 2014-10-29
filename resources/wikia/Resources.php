@@ -25,6 +25,7 @@ return [
 			'wikia.mw',
 			'wikia.nirvana',
 			'wikia.querystring',
+			'wikia.history',
 			'wikia.throbber',
 			'wikia.thumbnailer',
 			'wikia.tracker',
@@ -92,6 +93,13 @@ return [
 	],
 	'wikia.querystring' => [
 		'scripts' => 'resources/wikia/modules/querystring.js',
+		'dependencies' => [
+			'amd',
+			'wikia.window',
+		],
+	],
+	'wikia.history' => [
+		'scripts' => 'resources/wikia/modules/history.js',
 		'dependencies' => [
 			'amd',
 			'wikia.window',
