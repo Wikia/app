@@ -3,7 +3,6 @@
 @import 'extensions/wikia/Venus/styles/typographyMixins';
 @import 'skins/shared/color';
 
-$border-color: lighten($color-text, 30%);
 $image-margin: 30px;
 $image-max-columns-small: 11;
 $image-max-columns-medium-and-large: 10;
@@ -141,7 +140,7 @@ $image-max-columns-medium-and-large: 10;
 		.caption,
 		.title {
 			@include font-size-xxs;
-			border-top: 4px solid $border-color;
+			border-top: 4px solid $image-caption-border-color;
 			color: $color-alternate-text;
 			line-height: 18px;
 			margin-bottom: 0;
