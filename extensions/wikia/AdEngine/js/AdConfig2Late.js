@@ -147,8 +147,12 @@ define('ext.wikia.adEngine.adConfigLate', [
 		return adProviderNull;
 	}
 
+	function getProviderList(slot) {
+		return [getProvider(slot)];
+	}
+
 	return {
-		getDecorators: function () { return; },
-		getProvider: getProvider
+		getDecorators: function () { return []; },
+		getProviderList: getProviderList
 	};
 });

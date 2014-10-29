@@ -27,11 +27,14 @@ define('ext.wikia.adEngine.adEngine', [
 	function run(adConfig, adslots, queueName) {
 		var decorators = adConfig.getDecorators();
 
+		log(['run', adslots, queueName], 'debug', logGroup);
+
 		function fillInSlot(slot) {
 			log(['fillInSlot', slot], 'debug', logGroup);
 
 			var slotname = slot[0],
-				provider = adConfig.getProvider(slot),
+				providerList = adConfig.getProviderList(slot),
+				provider = providerList[0],
 				aSlotTracker = slotTracker(provider.name, slotname, queueName);
 
 			function success(extra) {
@@ -54,12 +57,8 @@ define('ext.wikia.adEngine.adEngine', [
 			}
 		}
 
-		log('run', 'debug', logGroup);
 
-		log('initial queue', 'debug', logGroup);
-		log(adslots, 'debug', logGroup);
-
-		log('initializing LazyQueue on the queue', 7, logGroup);
+		log('initializing LazyQueue on the queue', 'debug', logGroup);
 		LazyQueue.makeQueue(adslots, decorate(fillInSlot, decorators));
 
 		log('launching queue on adslots', 'debug', logGroup);

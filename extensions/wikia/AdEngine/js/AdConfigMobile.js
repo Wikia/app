@@ -48,8 +48,12 @@ define('ext.wikia.adEngine.adConfigMobile', [
 
 	}
 
+	function getProviderList(slot) {
+		return [getProvider(slot)];
+	}
+
 	return {
 		getDecorators: function () { return []; },
-		getProvider: getProvider
+		getProviderList: getProviderList
 	};
 });

@@ -162,8 +162,12 @@ define('ext.wikia.adEngine.adConfig', [
 		}
 	}
 
+	function getProviderList(slot) {
+		return [getProvider(slot)];
+	}
+
 	return {
 		getDecorators: function () { return decorators; },
-		getProvider: getProvider
+		getProviderList: getProviderList
 	};
 });

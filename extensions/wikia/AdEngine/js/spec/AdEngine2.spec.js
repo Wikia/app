@@ -51,14 +51,14 @@ describe('AdEngine2', function(){
 		expect(queueStartCalled).toBeTruthy('Called start on the slot array provided to adEngine.run');
 	});
 
-	it('Calls AdConfig2 getProvider and then fillInSlot for slots provider in the passed array', function() {
+	it('Calls AdConfig2 getProviderList and then fillInSlot for slots provider in the passed array', function() {
 		var noop = function () {},
 			logMock = noop,
 			adConfigMock,
 			slotsMock = {start: noop},
 			lazyQueueMock,
 			slotTrackerMock = function () { return {init: noop, success: noop, hop: noop}; },
-			getProviderCalledFor = [],
+			getProviderListCalledFor = [],
 			fillInSlotCalledFor = [],
 			adEngine;
 
@@ -70,13 +70,13 @@ describe('AdEngine2', function(){
 		};
 
 		adConfigMock = {
-			getProvider: function(slot) {
-				getProviderCalledFor.push(slot[0]);
-				return {
+			getProviderList: function(slot) {
+				getProviderListCalledFor.push(slot[0]);
+				return [{
 					fillInSlot: function(slotname) {
 						fillInSlotCalledFor.push(slotname);
 					}
-				};
+				}];
 			},
 			getDecorators: noop
 		};
@@ -84,12 +84,12 @@ describe('AdEngine2', function(){
 		adEngine = modules['ext.wikia.adEngine.adEngine'](logMock, lazyQueueMock, slotTrackerMock, eventDispatcher);
 		adEngine.run(adConfigMock, slotsMock);
 
-		expect(getProviderCalledFor.length).toBe(2, 'adConfig.getProvider called 2 times');
-		expect(getProviderCalledFor[0]).toBe('slot1', 'adConfig.getProvider called for slot1');
-		expect(getProviderCalledFor[1]).toBe('slot2', 'adConfig.getProvider called for slot2');
+		expect(getProviderListCalledFor.length).toBe(2, 'adConfig.getProviderList called 2 times');
+		expect(getProviderListCalledFor[0]).toBe('slot1', 'adConfig.getProviderList called for slot1');
+		expect(getProviderListCalledFor[1]).toBe('slot2', 'adConfig.getProviderList called for slot2');
 
 		expect(fillInSlotCalledFor.length).toBe(2, 'AdProvider*.fillInSlot called 2 times');
-		expect(fillInSlotCalledFor[0]).toBe('slot1', 'adConfig.getProvider called for slot1');
-		expect(fillInSlotCalledFor[1]).toBe('slot2', 'adConfig.getProvider called for slot2');
+		expect(fillInSlotCalledFor[0]).toBe('slot1', 'adConfig.getProviderList called for slot1');
+		expect(fillInSlotCalledFor[1]).toBe('slot2', 'adConfig.getProviderList called for slot2');
 	});
 });
