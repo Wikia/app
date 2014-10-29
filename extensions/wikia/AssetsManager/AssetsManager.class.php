@@ -670,8 +670,7 @@ class AssetsManager {
 			return !$strict;
 		}
 
-		$registeredSkin = $this->mAssetsConfig->getGroupSkin( $group );
-		$check = ( is_array( $registeredSkin ) ) ? in_array( $skinName, $registeredSkin ) : $skinName === $registeredSkin;
+		$check = $this->checkIfGroupForSkin($group, $skin);
 
 		//if not strict packages with no skin registered are positive
 		if ( $strict === false ) {
@@ -680,6 +679,19 @@ class AssetsManager {
 
 		wfProfileOut( __METHOD__ );
 		return $check;
+	}
+
+	/**
+	 * Checks if given asset's group should be loaded for provided skin
+	 * @param string $group - Asset Manager group name
+	 * @param WikiaSkin $skin - Wikia Skin instance
+	 * @return bool whether group should be loaded for given skin
+	 */
+	public function checkIfGroupForSkin($group, WikiaSkin $skin) {
+		$this->loadConfig();
+		$skinName = $skin->getSkinName();
+		$registeredSkin = $this->mAssetsConfig->getGroupSkin( $group );
+		return ( is_array( $registeredSkin ) ) ? in_array( $skinName, $registeredSkin ) : $skinName === $registeredSkin;
 	}
 
 	/**

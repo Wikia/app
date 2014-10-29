@@ -412,19 +412,22 @@ class RelatedPages {
 		$wg = $app->wg;
 		$request = $app->wg->Request;
 		$title = $wg->Title;
+		$am = AssetsManager::getInstance();
+		$relatedPagesGroupName = 'relatedpages_js';
 
 		if ( $out->isArticle() && $request->getVal( 'action', 'view' ) == 'view' ) {
 			JSMessages::enqueuePackage( 'RelatedPages', JSMessages::INLINE );
 
-			if(
+			if (
 				!( Wikia::isMainPage() || !empty( $title ) && !in_array( $title->getNamespace(), $wg->ContentNamespaces ) )
 				&& !$app->checkSkin( 'wikiamobile' )
+				&& $am->checkIfGroupForSkin($relatedPagesGroupName, $out->getSkin())
 			) {
 				if ( $app->checkSkin( 'oasis' ) ) {
-					OasisController::addSkinAssetGroup( 'relatedpages_js' );
+					OasisController::addSkinAssetGroup( $relatedPagesGroupName );
 				}
 				else {
-					$scripts = AssetsManager::getInstance()->getURL( 'relatedpages_js' );
+					$scripts = $am->getURL( $relatedPagesGroupName );
 
 					foreach( $scripts as $script ){
 						$wg->Out->addScript( "<script src='{$script}'></script>" );

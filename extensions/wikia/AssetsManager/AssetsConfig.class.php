@@ -87,7 +87,7 @@ class AssetsConfig {
 			wfProfileIn( __METHOD__ . 'Groups' );
 
 			foreach ( glob ( __DIR__ . '/configGroups/*Config.php' ) as $fileName ) {
-				include_once( $fileName  );
+				include( $fileName  );
 				$configFileName = pathinfo( $fileName )['filename'];
 				if ( !empty ( $$configFileName ) ) {
 					$configVar = $$configFileName;
