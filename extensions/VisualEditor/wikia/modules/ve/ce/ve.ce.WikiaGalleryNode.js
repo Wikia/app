@@ -101,7 +101,11 @@ ve.ce.WikiaGalleryNode.prototype.setupGallery = function ( galleryData ) {
 				$wrapper: this.$element,
 				model: { media: galleryData },
 				index: -1,
-				origVisibleCount: Math.min( galleryData.length, 8 )
+				// 100 and 8 are constant for MediaGallery extension. I could export them
+				// but I'm not going to because ultimetly "client" of Gallery should not have
+				// to know about it and just pass some boolean expand parameter to get desired
+				// effect.
+				origVisibleCount: this.model.getAttribute( 'expand' ) ? 100 : 8
 			},
 			gallery = new Gallery( galleryOptions ).init();
 

@@ -38,6 +38,44 @@ ve.dm.WikiaGalleryNode.static.getMatchRdfaTypes = function () {
 	}
 };
 
+/**
+ * @inheritdoc
+ */
+ve.dm.WikiaGalleryNode.static.toDataElement = function ( domElements ) {
+	var mwDataJSON = domElements[0].getAttribute( 'data-mw' ),
+		mwData = mwDataJSON ? JSON.parse( mwDataJSON ) : {};
+
+	return {
+		'type': this.name,
+		'attributes': {
+			'mw': mwData,
+			'originalMw': mwDataJSON,
+			'expand': mwData.attrs.expand === 'true' /* it is a string */
+		}
+	};
+};
+
+/**
+ * @inheritdoc
+ */
+ve.dm.WikiaGalleryNode.static.toDomElements = function ( data, doc ) {
+	// Inspired by ve.dm.MWReferenceListNode
+	var el = doc.createElement( 'div' ),
+		attribs = data.attributes;
+
+	mwData = attribs.mw ? ve.copy( attribs.mw ) : {};
+	ve.setProp( mwData, 'attrs', 'expand', (!!attribs.expand).toString() ); /* true/false must a string */
+
+	originalMw = attribs.originalMw;
+	if ( originalMw && ve.compare( mwData, JSON.parse( originalMw ) ) ) {
+		el.setAttribute( 'data-mw', originalMw );
+	} else {
+		el.setAttribute( 'data-mw', JSON.stringify( mwData ) );
+	}
+
+	return [ el ];
+};
+
 /* Methods */
 
 /* Registration */
