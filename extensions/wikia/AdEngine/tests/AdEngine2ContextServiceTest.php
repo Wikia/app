@@ -38,8 +38,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			[ 'article', ['wgAdDriverEnableAdsInMaps'], ['enableAdsInMaps' => true] ],
 			[ 'article', ['wgAdDriverEnableRemnantGptMobile'], [], [], ['remnantGptMobile' => true] ],
 			[ 'article', ['wgAdDriverTrackState'], ['trackSlotState' => true], [] ],
-			[ 'article', ['wgAdDriverUseDartForSlotsBelowTheFold'], ['useDartForSlotsBelowTheFold' => true], [] ],
-			[ 'article', ['wgAdDriverUseRemnantGpt'], [], [], ['remnantGpt' => true] ],
 			[ 'article', ['wgAdDriverUseSevenOneMedia'], [], [], ['sevenOneMedia' => true] ],
 			[ 'article', ['wgAdDriverWikiIsTop1000'], [], ['wikiIsTop1000' => true] ],
 			[ 'article', ['wgAdEngineDisableLateQueue'], ['disableLateQueue' => true], [] ],
@@ -95,7 +93,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgAdDriverEnableAdsInMaps', false );
 		$this->mockGlobalVariable( 'wgAdDriverEnableRemnantGptMobile', false );
 		$this->mockGlobalVariable( 'wgAdDriverTrackState', false );
-		$this->mockGlobalVariable( 'wgAdDriverUseDartForSlotsBelowTheFold', false );
 		$this->mockGlobalVariable( 'wgAdDriverUseSevenOneMedia', false );
 		$this->mockGlobalVariable( 'wgAdEngineDisableLateQueue', false );
 		$this->mockGlobalVariable( 'wgLoadAdsInHead', false );

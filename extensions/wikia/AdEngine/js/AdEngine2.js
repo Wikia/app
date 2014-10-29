@@ -3,12 +3,12 @@ define('ext.wikia.adEngine.adEngine', [
 	'wikia.log',
 	'wikia.lazyqueue',
 	'ext.wikia.adEngine.slotTracker',
-	'ext.wikia.adEngine.eventDispatcher'
-], function (log, LazyQueue, slotTracker, eventDispatcher) {
+	'ext.wikia.adEngine.eventDispatcher',
+	'ext.wikia.adEngine.provider.null'
+], function (log, LazyQueue, slotTracker, eventDispatcher, adProviderNull) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.adEngine',
-		undef;
+	var logGroup = 'ext.wikia.adEngine.adEngine';
 
 	function decorate(func, decorators) {
 		log(['decorate', func, decorators], 'debug', logGroup);
@@ -29,34 +29,58 @@ define('ext.wikia.adEngine.adEngine', [
 
 		log(['run', adslots, queueName], 'debug', logGroup);
 
+		function fillInSlotUsingProvider(slotname, provider, nextProvider) {
+			log(['fillInSlotUsingProvider', provider.name, slotname], 'debug', logGroup);
+
+			var aSlotTracker = slotTracker(provider.name, slotname, queueName);
+
+			// Notify people there's the slot handled
+			eventDispatcher.trigger('ext.wikia.adEngine fillInSlot', slotname, provider);
+
+			provider.fillInSlot(slotname, function (extra) {
+				// Success callback
+				log(['success', provider.name, slotname, extra], 'debug', logGroup);
+				aSlotTracker.track('success', extra);
+			}, function (extra) {
+				// Hop callback
+				log(['hop', provider.name, slotname, extra], 'debug', logGroup);
+				aSlotTracker.track('hop', extra);
+				nextProvider();
+			});
+		}
+
 		function fillInSlot(slot) {
 			log(['fillInSlot', slot], 'debug', logGroup);
 
 			var slotname = slot[0],
-				providerList = adConfig.getProviderList(slot),
-				provider = providerList[0],
-				aSlotTracker = slotTracker(provider.name, slotname, queueName);
+				providerList = adConfig.getProviderList(slot).slice();
 
-			function success(extra) {
-				log(['success', slotname, extra], 'debug', logGroup);
-				aSlotTracker.track('success', extra);
+			log(['fillInSlot', slot, 'provider list', JSON.stringify(providerList)], 'debug', logGroup);
+
+			function noop() {
+				return;
 			}
 
-			function hop(extra, hopTo) {
-				log(['hop', slotname, extra, hopTo], 'debug', logGroup);
-				aSlotTracker.track('hop', extra);
-				if (hopTo) {
-					adslots.push([slotname, undef, hopTo]);
-				}
+			function nextProvider() {
+				var provider;
+
+				do {
+					provider = providerList.shift();
+
+					if (!provider) {
+						return fillInSlotUsingProvider(slotname, adProviderNull, noop);
+					}
+
+					if (provider.canHandleSlot(slotname)) {
+						return fillInSlotUsingProvider(slotname, provider, nextProvider);
+					}
+
+					log(['fillInSlot', slot, 'skipping provider, cannot handle slot', provider], 'debug', logGroup);
+				} while (provider);
 			}
 
-			if (eventDispatcher.trigger('ext.wikia.adEngine fillInSlot', slot, provider)) {
-				log('calling ' + provider.name + '.fillInSlot for ' + slotname, 'debug', logGroup);
-
-				provider.fillInSlot(slotname, success, hop);
-			}
+			nextProvider();
 		}
-
 
 		log('initializing LazyQueue on the queue', 'debug', logGroup);
 		LazyQueue.makeQueue(adslots, decorate(fillInSlot, decorators));

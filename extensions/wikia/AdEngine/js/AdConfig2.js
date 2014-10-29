@@ -13,7 +13,6 @@ define('ext.wikia.adEngine.adConfig', [
 	// adProviders
 	'ext.wikia.adEngine.provider.directGpt',
 	'ext.wikia.adEngine.provider.later',
-	'ext.wikia.adEngine.provider.null',
 
 	// adSlots
 	require.optional('ext.wikia.adEngine.slot.topInContentBoxad')
@@ -31,7 +30,6 @@ define('ext.wikia.adEngine.adConfig', [
 	// adProviders
 	adProviderDirectGpt,
 	adProviderLater,
-	adProviderNull,
 
 	// adSlots
 	topInContentBoxad
@@ -66,52 +64,32 @@ define('ext.wikia.adEngine.adConfig', [
 		'TOP_INCONTENT_BOXAD': true,
 		'TOP_LEADERBOARD': true,
 		'TOP_RIGHT_BOXAD': true,
-		'WIKIA_BAR_BOXAD_1': true,
 		'BOTTOM_LEADERBOARD': true,
 		'GPT_FLUSH': true
 	};
 
 	highValueSlots = defaultHighValueSlots;
 
-	function getProvider(slot) {
+	function getProviderList(slot) {
+		log(['getProvider', slot], 'info', logGroup);
+
 		var slotname = slot[0],
 			context = adContext.getContext();
 
-		log(['getProvider', slot], 'info', logGroup);
-
-		// If wgShowAds set to false, hide slots
-		if (!context.opts.showAds) {
-			return adProviderNull;
-		}
-
-		// Force providers:
-		if (slot[2] === 'Evolve') {
-			log(['getProvider', slot, 'Evolve'], 'info', logGroup);
-			return adProviderLater;
-		}
-		if (slot[2] === 'AdDriver2') {
-			log(['getProvider', slot, 'DirectGpt'], 'info', logGroup);
-			return adProviderDirectGpt;
-		}
-		if (slot[2] === 'AdDriver') {
-			log(['getProvider', slot, 'DirectGpt'], 'info', logGroup);
-			return adProviderDirectGpt;
-		}
-		if (slot[2] === 'Liftium') {
-			log(['getProvider', slot, 'Later (Liftium)'], 'info', logGroup);
-			return adProviderLater;
+		if (!adContext.getContext().opts.showAds) {
+			return [];
 		}
 
 		// Force Liftium
 		if (context.forceProviders.liftium) {
 			log(['getProvider', slot, 'Later (wgAdDriverForceLiftiumAd)'], 'info', logGroup);
-			return adProviderLater;
+			return [adProviderLater];
 		}
 
 		// Force DirectGpt
 		if (context.forceProviders.directGpt) {
 			log(['getProvider', slot, 'DirectGpt (wgAdDriverForceDirectGptAd)'], 'info', logGroup);
-			return adProviderDirectGpt;
+			return [adProviderDirectGpt];
 		}
 
 		// All SevenOne Media ads are handled in the Later queue
@@ -125,25 +103,25 @@ define('ext.wikia.adEngine.adConfig', [
 				slotname !== 'GPT_FLUSH'
 				) {
 			log(['getProvider', slot, 'Later (SevenOneMedia)'], 'info', logGroup);
-			return adProviderLater;
+			return [adProviderLater];
 		}
 
 		// Next Evolve (AU, CA, and NZ traffic)
 		if (country === 'AU' || country === 'CA' || country === 'NZ') {
 			if (evolveSlotConfig.canHandleSlot(slotname)) {
 				log(['getProvider', slot, 'Later (Evolve)'], 'info', logGroup);
-				return adProviderLater;
+				return [adProviderLater];
 			}
 		}
 
-		if (highValueSlots[slotname] && adProviderDirectGpt.canHandleSlot(slotname)) {
-			log(['getProvider', slot, 'Gpt'], 'info', logGroup);
-			return adProviderDirectGpt;
+		if (highValueSlots[slotname]) {
+			log(['getProvider', slot, 'DirectGpt->Later'], 'info', logGroup);
+			return [adProviderDirectGpt, adProviderLater];
 		}
 
 		// Non-high-value slots go to ad provider Later
 		log(['getProvider', slot, 'Later (Liftium)'], 'info', logGroup);
-		return adProviderLater;
+		return [adProviderLater];
 	}
 
 	if (topInContentBoxad) {
@@ -160,10 +138,6 @@ define('ext.wikia.adEngine.adConfig', [
 			gptSlotConfig.extendSlotParams('gpt', 'TOP_INCONTENT_BOXAD', { 'rp_tier': rtpTier });
 			gptSlotConfig.extendSlotParams('gpt', 'CORP_TOP_RIGHT_BOXAD', { 'rp_tier': rtpTier });
 		}
-	}
-
-	function getProviderList(slot) {
-		return [getProvider(slot)];
 	}
 
 	return {

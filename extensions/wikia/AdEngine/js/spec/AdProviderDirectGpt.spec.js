@@ -65,7 +65,7 @@ describe('AdProviderDirectGpt', function () {
 				}
 			},
 			successMock = function () { return; },
-			hopMock = function (extra, hopTo) { liftiumCalled = (hopTo === 'Liftium'); },
+			hopMock = function () { liftiumCalled = true; },
 			GptSlotConfigMock = {
 				getConfig: function () {
 					return {
@@ -116,7 +116,7 @@ describe('AdProviderDirectGpt', function () {
 				}
 			},
 			successMock = function () { return; },
-			hopMock = function (extra, hopTo) { liftiumCalled = (hopTo === 'Liftium'); },
+			hopMock = function (extra) { liftiumCalled = true; },
 			GptSlotConfigMock = {
 				getConfig: function () {
 					return {

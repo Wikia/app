@@ -35,7 +35,6 @@ class AdEngine2ContextService {
 					'lateAdsAfterPageLoad' => $adEngineService->areAdsAfterPageLoad(),
 					'pageType' => $adPageTypeService->getPageType(),
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
-					'useDartForSlotsBelowTheFold' => $wg->AdDriverUseDartForSlotsBelowTheFold,
 					'usePostScribe' => $wg->Request->getBool( 'usepostscribe', false ),
 					'trackSlotState' => $wg->AdDriverTrackState,
 				] ),
@@ -60,7 +59,6 @@ class AdEngine2ContextService {
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
 					'remnantGptMobile' => !!$wg->AdDriverEnableRemnantGptMobile,
-					'remnantGpt' => !!$wg->AdDriverUseRemnantGpt,
 					'sevenOneMedia' => !!$wg->AdDriverUseSevenOneMedia,
 					'sevenOneMediaCombinedUrl' => $sevenOneMediaCombinedUrl,
 					'taboola' => !!$wg->AdDriverUseTaboola,

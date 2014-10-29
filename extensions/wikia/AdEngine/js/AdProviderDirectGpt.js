@@ -170,7 +170,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 
 				// hop to Liftium
 				adInfo.method = 'hop';
-				hop(adInfo, 'Liftium');
+				hop(adInfo);
 			},
 			srcName
 		);
