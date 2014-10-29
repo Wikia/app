@@ -58,6 +58,7 @@
 		$imageSaveElement = $('.MainPageHeroHeader .image-save-bar'),
 		$titleElement = $('.MainPageHeroHeader .title-wrap'),
 		$titleEditElement = $('.MainPageHeroHeader .title-wrap .edit-box'),
+		$titleEditBoxText = $('.MainPageHeroHeader .title-wrap .edit-box .hero-title'),
 
 		$imageDiscardBtn = $('.MainPageHeroHeader .image-save-bar .discard-btn'),
 		$imageSaveBtn = $('.MainPageHeroHeader .image-save-bar .save-btn'),
@@ -217,6 +218,7 @@
 			//FIXME: fix onChange event, caret at end on focus
 			$heroModuleTitle.focus();
 			$heroModuleTitle.change();
+			placeCaretAtEnd($titleEditBoxText.get(0));
 			trackMom(editTitleLabel, trackerActionClick);
 		},
 		saveTitle = function() {
