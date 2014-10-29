@@ -36,7 +36,6 @@ class WikiFeaturesHelper extends WikiaModel {
 		'wgEnableChat' => 258,
 		'wgEnableWallExt' => 258,
 		'wgEnableForumExt' => 259,
-		'wgEnableVisualEditorUI' => 259,
 		'wgEnableWikiaInteractiveMaps' => 260,
 		'wgEnableMediaGalleryExt' => 1,
 	);
@@ -47,7 +46,6 @@ class WikiFeaturesHelper extends WikiaModel {
 		'wgShowTopListsInCreatePage' => '2012-02-12',
 		'wgEnableAchievementsExt' => '2012-02-12',
 		'wgEnableForumExt' => '2012-11-29',
-		'wgEnableVisualEditorUI' => '2013-12-04',
 		'wgEnableWikiaInteractiveMaps' => '2014-07-23',
 	);
 
@@ -98,7 +96,7 @@ class WikiFeaturesHelper extends WikiaModel {
 					'enabled' => $this->getFeatureEnabled($feature),
 					'new' => self::isNew($feature),
 					'active' => $this->wg->Lang->formatNum( $this->getNumActiveWikis( $feature ) ),
-					'imageExtension' => $feature == 'wgEnableVisualEditorUI' ? '.gif' : '.png'
+					'imageExtension' => '.png'
 				);
 			}
 		}
