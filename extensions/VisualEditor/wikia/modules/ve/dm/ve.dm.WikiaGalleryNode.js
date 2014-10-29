@@ -65,7 +65,7 @@ ve.dm.WikiaGalleryNode.static.toDomElements = function ( data, doc ) {
 		mwData = attribs.mw ? ve.copy( attribs.mw ) : {},
 		originalMw = attribs.originalMw;
 
-	ve.setProp( mwData, 'attrs', 'expand', (!!attribs.expand).toString() ); /* true/false must a string */
+	ve.setProp( mwData, 'attrs', 'expand', (!!attribs.expand).toString() ); /* true/false must be a string */
 
 	if ( originalMw && ve.compare( mwData, JSON.parse( originalMw ) ) ) {
 		el.setAttribute( 'data-mw', originalMw );
