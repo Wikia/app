@@ -4,6 +4,11 @@ require_once __DIR__ . '/../lib/exacttarget_soap_client.php';
 
 class ExactTargetApiTest extends WikiaBaseTest {
 
+	public function setUp() {
+		$this->setupFile = __DIR__ . '/../ExactTargetUpdates.setup.php';
+		parent::setUp();
+	}
+
 	function testPrepareSoapVarsShouldReturnSoapVarsArray() {
 		/* Params to compare */
 		$iUserId = 12345;

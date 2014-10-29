@@ -1,8 +1,11 @@
 <?php
 
-require_once __DIR__ . '/../lib/exacttarget_soap_client.php';
-
 class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
+
+	public function setUp() {
+		$this->setupFile = __DIR__ . '/../ExactTargetUpdates.setup.php';
+		parent::setUp();
+	}
 
 	/**
 	 * @dataProvider shouldInvokeUpdateMethodWithProperParamProvider
