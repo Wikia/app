@@ -88,8 +88,8 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
 
 		// Lightbox
-		'//extensions/wikia/Lightbox/js/LightboxLoader.js',
-		'//extensions/wikia/Lightbox/js/venusLightboxLoader.js',
+		'//extensions/wikia/Lightbox/scripts/LightboxLoader.js',
+		'//extensions/wikia/Lightbox/scripts/venusLightboxLoader.js',
 
 		// different article modules
 		'//skins/shared/scripts/scrollableTables.js',
@@ -167,6 +167,7 @@ $VenusConfig[ 'global_navigation_js' ] = [
 		'//resources/wikia/modules/scrollToLink.js',
 		'//skins/shared/scripts/transparent-out.js',
 		'//extensions/wikia/Venus/scripts/variables.js',
+		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationiOSScrollFix.js',
 		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationScrollToLink.js',
 		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationTracking.js',
 		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationLazyLoad.js',
@@ -176,8 +177,7 @@ $VenusConfig[ 'global_navigation_js' ] = [
 		'//extensions/wikia/UserLogin/js/UserLoginDropdown.globalNavigation.js',
 		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js',
 		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
-		'//resources/wikia/libraries/bootstrap/tooltip.js',
-		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationiOSScrollFix.js'
+		'//resources/wikia/libraries/bootstrap/tooltip.js'
 	]
 ];
 
