@@ -1,6 +1,6 @@
 /**
- * This is the legacy method of instantiating media galleries. After parse cache clears (around Nov. 12th) we can
- * remove this file.
+ * TODO: This is the legacy method of instantiating media galleries. After parse cache clears
+ * (around Nov. 12 2014), JSSnippets will be fully available and we can remove this file.
  */
 require(['mediaGallery.views.gallery'], function (Gallery) {
 	'use strict';
