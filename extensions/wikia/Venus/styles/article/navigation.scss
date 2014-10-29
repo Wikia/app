@@ -9,18 +9,26 @@
 	width: $medium-grid-column;
 
 	ul {
-		display: inline-block;
+		display: block;
 		list-style-type: none;
-		margin: 0;
+		margin: 0 auto;
 		padding: 0;
+		width: 38px;
 	}
 
-	li {
-		background-color: $color-article-navigation-inactive;
-		border-radius: 19px;
-		height: 38px;
+	.nav-icon {
+		@include venus-icons-font;
+
+		color: $color-article-navigation-inactive;
+		cursor: pointer;
+		display: block;
+		font-size: 38px;
+		line-height: 38px;
 		margin-bottom: 6px;
-		width: 38px;
+
+		&:hover {
+			color: $color-buttons;
+		}
 	}
 }
 
