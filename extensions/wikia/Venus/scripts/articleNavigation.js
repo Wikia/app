@@ -1,5 +1,9 @@
 $(function(){
-	window.stickyElement(document.getElementsByClassName('left-nav')[0], document.getElementById('mw-content-text'), 100);
+	window.stickyElement(
+		document.getElementsByClassName('left-nav')[0],
+		document.getElementById('mw-content-text'),
+		100
+	);
 
 	//var $el = $('.left-nav'),
 	//	offset = 0,
