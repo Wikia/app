@@ -57,7 +57,8 @@ ve.dm.WikiaGalleryNode.static.toDataElement = function ( domElements ) {
 		'attributes': {
 			'mw': mwData,
 			'originalMw': mwDataJSON,
-			'expand': expandValue
+			'expand': expandValue,
+			'originalExpand': expandValue
 		}
 	};
 };
@@ -72,8 +73,8 @@ ve.dm.WikiaGalleryNode.static.toDomElements = function ( data, doc ) {
 		mwData = attribs.mw ? ve.copy( attribs.mw ) : {},
 		originalMw = attribs.originalMw;
 
-	if ( attribs.expand !== undefined ) {
-		ve.setProp( mwData, 'attrs', 'expand', (!!attribs.expand).toString() );
+	if ( attribs.expand !== attribs.originalExpand ) {
+		ve.setProp( mwData, 'attrs', 'expand', attribs.expand ? "true" : undefined );
 	}
 
 	if ( originalMw && ve.compare( mwData, JSON.parse( originalMw ) ) ) {
