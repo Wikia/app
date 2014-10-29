@@ -4,9 +4,9 @@
 
 .left-nav {
 	margin-left: $medium-content-padding - $content-border-width;
+	position: absolute;
 	text-align: center;
 	width: $medium-grid-column;
-	position: fixed;
 
 	ul {
 		display: inline-block;

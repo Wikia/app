@@ -41,7 +41,7 @@
 
 	// module
 	var StickyElement = function() {
-		var sourceElement, alignToElement, topSticked, topFixed, switchPoint, lastY = -1;
+		var sourceElement, alignToElement, topSticked, topFixed, lastY = -1;
 
 		/**
 		 * Initialize values and hook to window events
@@ -51,11 +51,9 @@
 			alignToElement = _alignToElement;
 			topFixed = _topFixed;
 
-			window.addEventListener('wheel',  debounce(updatePosition, 10));
+			window.addEventListener('load',   updateSize);
 			window.addEventListener('scroll', debounce(updatePosition, 10));
-			window.addEventListener('resize', debounce(updateSize, 50));
-
-			console.log(_sourceElement, _alignToElement, _topFixed);
+			window.addEventListener('resize', debounce(updateSize, 10));
 
 			updateSize();
 
@@ -64,21 +62,20 @@
 
 		function updateSize () {
 			topSticked = alignToElement.offsetTop;
-			switchPoint = topSticked - topFixed;
 
 			console.log('updateSize', topSticked);
 
-			updatePosition();
+			updatePosition(true);
 		}
 
-		function updatePosition () {
-			if (win.pageYOffset === lastY) return;
+		function updatePosition (force) {
+			force = force || false;
+
+			if (!force && win.pageYOffset === lastY) return;
 
 			lastY = win.pageYOffset;
 
-			console.log('updatePosition', lastY);
-
-			if (lastY <= switchPoint) {
+			if (lastY <= topSticked) {
 				sourceElementPosition('absolute', topSticked);
 			} else {
 				sourceElementPosition('fixed', topFixed);
@@ -86,8 +83,7 @@
 		}
 
 		function sourceElementPosition (position, top) {
-			sourceElement.style.position = position;
-			sourceElement.style.top = top + 'px';
+			sourceElement.style.cssText = "position:" + position + ";top:" + top + "px;";
 		}
 
 		/**
