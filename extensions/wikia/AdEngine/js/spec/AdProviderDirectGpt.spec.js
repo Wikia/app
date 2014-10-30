@@ -4,7 +4,7 @@ describe('AdProviderDirectGpt', function () {
 	'use strict';
 	var adContextMock = {
 		getContext: function () {
-			return {forceProviders: {}};
+			return {forceProviders: {}, opts: {}};
 		}
 	};
 

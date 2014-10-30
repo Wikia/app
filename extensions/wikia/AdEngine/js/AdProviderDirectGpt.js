@@ -26,7 +26,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		gptConfig,
 		gptFlushed = false,
 		alwaysCallDartInCountries = instantGlobals.wgAdDriverAlwaysCallDartInCountries || [],
-		alwaysCallDart = (alwaysCallDartInCountries.indexOf(country) > -1);
+		alwaysCallDart = (alwaysCallDartInCountries.indexOf(country) > -1) || adContext.getContext().opts.alwaysCallDart;
 
 	// TODO: integrate this array to slotMap if it makes sense
 	gptConfig = { // slots to use SRA with

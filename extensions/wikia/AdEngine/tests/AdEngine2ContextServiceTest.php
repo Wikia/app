@@ -35,6 +35,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		return [
 			[ ],
 
+			[ 'article', ['wgAdDriverAlwaysCallDart'], ['alwaysCallDart' => true] ],
 			[ 'article', ['wgAdDriverEnableAdsInMaps'], ['enableAdsInMaps' => true] ],
 			[ 'article', ['wgAdDriverEnableRemnantGptMobile'], [], [], ['remnantGptMobile' => true] ],
 			[ 'article', ['wgAdDriverTrackState'], ['trackSlotState' => true], [] ],
@@ -89,22 +90,21 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgAdDriverSevenOneMediaOverrideSub2Site', $sevenOneMediaSub2Site );
 
 		// Flags
-
+		$this->mockGlobalVariable( 'wgAdDriverAlwaysCallDart', false );
 		$this->mockGlobalVariable( 'wgAdDriverEnableAdsInMaps', false );
 		$this->mockGlobalVariable( 'wgAdDriverEnableRemnantGptMobile', false );
 		$this->mockGlobalVariable( 'wgAdDriverTrackState', false );
 		$this->mockGlobalVariable( 'wgAdDriverUseSevenOneMedia', false );
 		$this->mockGlobalVariable( 'wgAdEngineDisableLateQueue', false );
-		$this->mockGlobalVariable( 'wgLoadAdsInHead', false );
 		$this->mockGlobalVariable( 'wgEnableAdsInContent', false );
 		$this->mockGlobalVariable( 'wgEnableKruxTargeting', false );
 		$this->mockGlobalVariable( 'wgEnableWikiaHomePageExt', false );
 		$this->mockGlobalVariable( 'wgEnableWikiaHubsV3Ext', false );
 		$this->mockGlobalVariable( 'wgLoadAdsInHead', false );
 		$this->mockGlobalVariable( 'wgLoadLateAdsAfterPageLoad', false );
-		$this->mockGlobalVariable( 'wgWikiDirectedAtChildrenByStaff', false );
 		$this->mockGlobalVariable( 'wgWikiDirectedAtChildrenByFounder', false );
-		$this->mockGlobalVariable( 'wgEnableKruxTargeting', false );
+		$this->mockGlobalVariable( 'wgWikiDirectedAtChildrenByStaff', false );
+
 
 		foreach ( $flags as $flag ) {
 			$this->mockGlobalVariable( $flag, true );

@@ -70,7 +70,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 			'WIKIA_BAR_BOXAD_1': true
 		},
 		alwaysCallDartInCountries = instantGlobals.wgAdDriverAlwaysCallDartInCountries || [],
-		alwaysCallDart = (alwaysCallDartInCountries.indexOf(country) > -1);
+		alwaysCallDart = (alwaysCallDartInCountries.indexOf(country) > -1) || context.opts.alwaysCallDart;
 
 	function getProviderList(slot) {
 		var slotname = slot[0],
