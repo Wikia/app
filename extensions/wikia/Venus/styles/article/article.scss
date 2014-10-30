@@ -89,6 +89,15 @@ $header-without-cover-unit-spacing: 60px;
 
 			color: $color-links;
 		}
+
+		// START
+		// Following lines are fix for displaying underlines on :before element in IE-8-11
+		// Source: http://stackoverflow.com/a/21902566/1607968 and http://jsfiddle.net/95C2M/
+		a { text-decoration: none; }
+		a:hover { text-decoration: underline; }
+		a:before { text-decoration: underline; display: inline-block; }
+		a:before, a:hover:before { text-decoration: none; }
+		// END
 	}
 
 	h1, h2, h3, h4, h5, h6 {
