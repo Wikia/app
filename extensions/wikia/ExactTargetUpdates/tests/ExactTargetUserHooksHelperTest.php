@@ -66,7 +66,7 @@ class ExactTargetUserHooksHelperTest extends WikiaBaseTest {
 			->will   ( $this->returnValue( $aUserParams['user_touched'] ) );
 
 		/* Get mock object of tested class ExactTargetUpdatesHooks without mocking any methods */
-		$exactTargetUpdatesHooksMock = $this->getMock( 'ExactTargetUserHooksHelper', null );
+		$exactTargetUpdatesHooksMock = $this->getMock( 'Wikia\ExactTarget\ExactTargetUserHooksHelper', null );
 
 		/* Run test */
 		/* @var ExactTargetUpdatesHooks $exactTargetUpdatesHooksMock (mock of ExactTargetUpdatesHooks) */
@@ -101,7 +101,7 @@ class ExactTargetUserHooksHelperTest extends WikiaBaseTest {
 			->will( $this->returnValueMap( $returnMap ) );
 
 		/* Get mock object of tested class ExactTargetUpdatesHooks without mocking any methods */
-		$exactTargetUpdatesHooksMock = $this->getMock( 'ExactTargetUserHooksHelper', null );
+		$exactTargetUpdatesHooksMock = $this->getMock( 'Wikia\ExactTarget\ExactTargetUserHooksHelper', null );
 
 		/* Run test */
 		/* @var ExactTargetUpdatesHooks $exactTargetUpdatesHooksMock (mock of ExactTargetUpdatesHooks) */
