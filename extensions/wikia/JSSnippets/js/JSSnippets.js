@@ -52,7 +52,7 @@ window.JSSnippets = (function () {
 	//clear the stack
 	function clear() {
 		//setting length to 0 is faster and takes less memory than re-creating the array
-		JSSnippetsStack.length = 0;
+		window.JSSnippetsStack.length = 0;
 	}
 
 	/**
@@ -60,7 +60,7 @@ window.JSSnippets = (function () {
 	 * after initialization.
 	 */
 	function updatePush() {
-		JSSnippetsStack.push = function (callback) {
+		window.JSSnippetsStack.push = function (callback) {
 			Array.prototype.push.apply(JSSnippetsStack, [callback]);
 			init();
 		};
@@ -150,6 +150,8 @@ window.JSSnippets = (function () {
 	//resolve dependencies, load them and initialize stuff
 	function init() {
 		if (!window.JSSnippetsStack || !JSSnippetsStack.length) {
+			window.JSSnippetsStack = [];
+
 			// Nothing to load but update push anyway for dynamically loaded content
 			updatePush();
 			return;
