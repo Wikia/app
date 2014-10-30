@@ -58,8 +58,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 			ladygaga: true,
 			onedirection: true
 		},
-		taboolaEnabled = country === 'US' &&
-			(targeting.pageType === 'article' || targeting.pageType === 'home') &&
+		taboolaEnabled = (targeting.pageType === 'article' || targeting.pageType === 'home') &&
 			taboolaEnabledWikis[targeting.wikiDbName] &&
 			context.providers.taboola &&
 			abTest && abTest.inGroup('NATIVE_ADS_TABOOLA', 'YES'),

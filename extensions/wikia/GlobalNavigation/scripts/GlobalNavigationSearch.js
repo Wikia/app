@@ -1,46 +1,83 @@
-(function($) {
+require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], function ($, browserDetect, scrollFix) {
 	'use strict';
-	$(function() {
-		var $inputResultLang = $('#searchInputResultLang'),
-			$formElement = $('#searchForm'),
-			$selectElement = $('#searchSelect'),
-			$searchInput = $('#searchInput'),
-			$searchLabel = $('#searchLabelInline'),
-			$chevron = $('#searchFormChevron');
+	var $selectElement,
+		$chevron,
+		$searchInput,
+		$globalNav,
+		$inputResultLang,
+		$formElement,
+		$searchLabel,
+		$autocompleteObj;
 
-		if (!$selectElement) {
-			return;
+	/**
+	 * Look up elements in global navigation's search form
+	 */
+	function setElements() {
+		$inputResultLang = $('#searchInputResultLang');
+		$formElement = $('#searchForm');
+		$searchLabel = $('#searchLabelInline');
+		$selectElement = $('#searchSelect');
+		$chevron = $('#searchFormChevron');
+		$searchInput = $('#searchInput');
+		$globalNav = $('#globalNavigation');
+	}
+
+	/**
+	 * Set options on search form
+	 */
+	function setFormOptions() {
+		var $selectedOption = $selectElement.find('option:selected');
+		$searchLabel.text($selectedOption.text());
+		$formElement.attr('action', $selectedOption.attr('data-search-url'));
+		//Setting reference to jQuery search autocomplete object
+		$autocompleteObj = $autocompleteObj || $searchInput.data('autocomplete');
+		if ($selectedOption.val() === 'global') {
+			setPropertiesOnInput(false);
+		} else {
+			setPropertiesOnInput(true);
 		}
+	}
 
-		function setFormOptions() {
-			var $selectedOption;
-
-			$selectedOption = $selectElement.find('option:selected');
-			$searchLabel.text($selectedOption.text());
-			$formElement.attr('action', $selectedOption.attr('data-search-url'));
-			if ($selectedOption.val() === 'global') {
-				$inputResultLang.prop('disabled', false);
-				if ($searchInput.data('autocomplete')) {
-					$searchInput.data('autocomplete').disable();
-				}
+	/**
+	 * Disable or enable properties on search form
+	 * @param {boolean} enable - should autocomplete be enabled and lang input disabled
+	 */
+	function setPropertiesOnInput(enable) {
+		$inputResultLang.prop('disabled', enable);
+		if ($autocompleteObj) {
+			if (enable) {
+				$autocompleteObj.enable();
 			} else {
-				$inputResultLang.prop('disabled', true);
-				if ($searchInput.data('autocomplete')) {
-					$searchInput.data('autocomplete').enable();
-				}
+				$autocompleteObj.disable();
 			}
 		}
+	}
 
-		setFormOptions();
+	$(function () {
+		setElements();
 
-		$selectElement.on('change keyup keydown', function() {
+		if ($selectElement) {
 			setFormOptions();
-		});
-		$selectElement.on('focus', function() {
-			$chevron.addClass('dark');
-		});
-		$selectElement.on('blur', function() {
-			$chevron.removeClass('dark');
-		});
+			$selectElement
+				.on('change keyup keydown', function () {
+					setFormOptions();
+				})
+				.on('focus', function () {
+					$chevron.addClass('dark');
+				})
+				.on('blur', function () {
+					$chevron.removeClass('dark');
+				});
+		}
+
+		if (!browserDetect.isIOS7orLower()) {
+			$searchInput
+				.on('focus', function () {
+					scrollFix.scrollToTop($globalNav);
+				})
+				.on('blur', function () {
+					scrollFix.restoreScrollY($globalNav);
+				});
+		}
 	});
-}(jQuery));
+});

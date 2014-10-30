@@ -242,15 +242,14 @@ abstract class File {
 		return $this->name;
 	}
 
-	public function getLanguageCode() {
-		global $wgContLang;
+	public function getBucket() {
+		global $wgUploadPath;
+		return VignetteRequest::parseBucket($wgUploadPath);
+	}
 
-		$code = null;
-		if ( isset( $wgContLang ) ) {
-			$code = $wgContLang->getCode();
-		}
-
-		return $code;
+	public function getPathPrefix() {
+		global $wgUploadPath;
+		return VignetteRequest::parsePathPrefix( $wgUploadPath );
 	}
 
 	/**
@@ -1798,9 +1797,7 @@ abstract class File {
 	 */
 	protected function getVignetteThumbUrl( $params ) {
 		$thumbUrl = $this->getUrlGenerator()
-			->width( $params['width'] )
-			->height( $params['height'] )
-			->thumbnail();
+			->scaleToWidth( $params['width'] );
 
 		return ( string )$thumbUrl;
 	}

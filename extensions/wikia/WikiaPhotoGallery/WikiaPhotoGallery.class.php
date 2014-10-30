@@ -616,6 +616,12 @@ class WikiaPhotoGallery extends ImageGallery {
 			return false;
 		}
 
+		// TODO: If Parsoid is the client always return "old gallery" so "alternative rendering" can work
+		// like a charm. This is meant to be deleted when "new galleries" are the only galleries. 
+		if ( strpos( $_SERVER[ 'HTTP_USER_AGENT' ], 'Parsoid' ) !== false ) {
+			return false;
+		}
+
 		// Don't render navigational galleries.
 		if ( $this->getParam( 'navigation' ) ) {
 			return false;
@@ -1647,15 +1653,25 @@ class WikiaPhotoGallery extends ImageGallery {
 	 * @return String
 	 */
 	public function resizeURL( File $file, array $box ) {
-		list( $adjWidth, $adjHeight ) = $this->fitWithin( $file, $box );
+		global $wgEnableVignette;
 
-		$append = '';
-		$mime = strtolower( $file->getMimeType() );
-		if ( $mime == 'image/svg+xml' || $mime == 'image/svg' ) {
-			$append = '.png';
+		list( $adjWidth, $_ ) = $this->fitWithin( $file, $box );
+
+		if ( $wgEnableVignette ) {
+			$resizeUrl = $file->getUrlGenerator()
+				->scaleToWidth( $adjWidth )
+				->url();
+		} else {
+			$append = '';
+			$mime = strtolower( $file->getMimeType() );
+			if ( $mime == 'image/svg+xml' || $mime == 'image/svg' ) {
+				$append = '.png';
+			}
+
+			$resizeUrl = wfReplaceImageServer( $file->getThumbUrl( $adjWidth . 'px-' . $file->getName() . $append ) );
 		}
 
-		return wfReplaceImageServer( $file->getThumbUrl( $adjWidth . 'px-' . $file->getName() . $append ) );
+		return $resizeUrl;
 	}
 
 	/**
@@ -1665,37 +1681,43 @@ class WikiaPhotoGallery extends ImageGallery {
 	 *
 	 * @param File $file
 	 * @param array $box
-	 * @param int $position
 	 *
 	 * @return String
 	 */
-	public function cropURL( File $file, array $box, $position = null ) {
-		list( $adjWidth, $adjHeight ) = $this->fitClosest( $file, $box );
+	private function cropURL( File $file, array $box ) {
+		global $wgEnableVignette;
 
-		$height = $file->getHeight();
-		$width = $file->getWidth();
-
-		if ( $adjHeight == $box['h'] ) {
-			$width = $box['w'] * ($file->getHeight()/$box['h']);
-		}
-
-		if ( $adjWidth == $box['w'] ) {
-			$height = $box['h'] * ($file->getWidth()/$box['w']);
-		}
-
-		if ( $position ) {
-			$cropStr = sprintf( "%dx%dx%d", $width, $height, $position );
+		if ( $wgEnableVignette ) {
+			$cropUrl = $file->getUrlGenerator()
+				->zoomCropDown()
+				->width( $box['w'] )
+				->height( $box['h'] )
+				->url();
 		} else {
+			list( $adjWidth, $adjHeight ) = $this->fitClosest( $file, $box );
+
+			$height = $file->getHeight();
+			$width = $file->getWidth();
+
+			if ( $adjHeight == $box['h'] ) {
+				$width = $box['w'] * ($file->getHeight()/$box['h']);
+			}
+
+			if ( $adjWidth == $box['w'] ) {
+				$height = $box['h'] * ($file->getWidth()/$box['w']);
+			}
+
 			$cropStr = sprintf( "%dpx-0,%d,0,%d", $adjWidth, $width, $height );
+			$append = '';
+			$mime = strtolower( $file->getMimeType() );
+			if ( $mime == 'image/svg+xml' || $mime == 'image/svg' ) {
+				$append = '.png';
+			}
+
+			$cropUrl = wfReplaceImageServer( $file->getThumbUrl( $cropStr . '-' . $file->getName() . $append ) );
 		}
 
-		$append = '';
-		$mime = strtolower( $file->getMimeType() );
-		if ( $mime == 'image/svg+xml' || $mime == 'image/svg' ) {
-			$append = '.png';
-		}
-
-		return wfReplaceImageServer( $file->getThumbUrl( $cropStr . '-' . $file->getName() . $append ) );
+		return $cropUrl;
 	}
 
 
