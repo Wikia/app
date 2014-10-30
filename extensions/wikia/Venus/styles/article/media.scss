@@ -27,10 +27,14 @@
 	}
 
 	.WikiaPhotoGalleryPreview {
-		box-sizing: initial;
+		box-sizing: content-box;
 
 		img {
 			vertical-align: middle;
+		}
+
+		h2 {
+			padding-bottom: 3px;
 		}
 	}
 
