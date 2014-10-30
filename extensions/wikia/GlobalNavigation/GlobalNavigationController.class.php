@@ -6,6 +6,11 @@ class GlobalNavigationController extends WikiaController {
 	const USE_LANG_PARAMETER = '?uselang=';
 	const CENTRAL_WIKI_SEARCH = '/wiki/Special:Search';
 
+	// how many hubs should be displayed in the menu
+	// if we do not get enough, use transparent background
+	// to fill the space (CON-1820)
+	const HUBS_COUNT = 7;
+
 	/**
 	 * @var WikiaCorporateModel
 	 */
@@ -65,6 +70,15 @@ class GlobalNavigationController extends WikiaController {
 
 	public function hubsMenu() {
 		$menuNodes = $this->getMenuNodes();
+
+		// use transparent background to fill the space
+		// when we do not get enough hubs (CON-1820)
+		while( count($menuNodes) < self::HUBS_COUNT ) {
+			$menuNodes[] = [
+				'placeholder' => true,
+			];
+		}
+
 		$this->response->setVal('menuNodes', $menuNodes);
 
 		$activeNode = $this->getActiveNode();
