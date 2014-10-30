@@ -15,14 +15,16 @@ define('wikia.stickyElement', ['wikia.window', 'wikia.document'], function stick
 	 *
 	 * @source: http://underscorejs.org/underscore.js
 	 */
-	var now = Date.now || function() {
+	var now, debounce;
+
+	now = Date.now || function() {
 		return new Date().getTime();
 	};
 
-	var debounce = function (func, wait, immediate) {
-		var timeout, args, context, timestamp, result;
+	debounce = function (func, wait, immediate) {
+		var timeout, args, context, timestamp, result, later;
 
-		var later = function() {
+		later = function() {
 			var last = now() - timestamp;
 
 			if (last < wait && last > 0) {
@@ -86,12 +88,7 @@ define('wikia.stickyElement', ['wikia.window', 'wikia.document'], function stick
 		 * Updates variables that are dependant on screen size and forces updatePosition
 		 */
 		function updateSize () {
-			// calculate changing point using real element offset
-			// source: https://github.com/jquery/jquery/blob/2.1.0/src/offset.js#L106
-			topScrollLimit = alignToElement.getBoundingClientRect().top +
-				win.pageYOffset -
-				doc.documentElement.clientTop -
-				topFixed; // minus desired offset when element is fixed
+			topScrollLimit = alignToElement.getBoundingClientRect().top - topFixed;
 
 			topSticked = alignToElement.offsetTop;
 
