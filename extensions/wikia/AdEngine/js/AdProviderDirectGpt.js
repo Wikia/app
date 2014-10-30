@@ -3,7 +3,6 @@
 define('ext.wikia.adEngine.provider.directGpt', [
 	'wikia.cache',
 	'wikia.geo',
-	'wikia.instantGlobals',
 	'wikia.log',
 	'wikia.window',
 	'ext.wikia.adEngine.adContext',
@@ -11,7 +10,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 	'ext.wikia.adEngine.adLogicHighValueCountry',
 	'ext.wikia.adEngine.wikiaGptHelper',
 	'ext.wikia.adEngine.gptSlotConfig'
-], function (cacheStorage, Geo, instantGlobals, log, window, adContext, slotTweaker, adLogicHighValueCountry, wikiaGpt, slotMapConfig) {
+], function (cacheStorage, Geo, log, window, adContext, slotTweaker, adLogicHighValueCountry, wikiaGpt, slotMapConfig) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.directGpt',
@@ -25,8 +24,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		leaderboardCalled = false, // save if leaderboard was called, so we know whether to call INVISIBLE slot as well
 		gptConfig,
 		gptFlushed = false,
-		alwaysCallDartInCountries = instantGlobals.wgAdDriverAlwaysCallDartInCountries || [],
-		alwaysCallDart = (alwaysCallDartInCountries.indexOf(country) > -1) || adContext.getContext().opts.alwaysCallDart;
+		alwaysCallDart = adContext.getContext().opts.alwaysCallDart;
 
 	// TODO: integrate this array to slotMap if it makes sense
 	gptConfig = { // slots to use SRA with

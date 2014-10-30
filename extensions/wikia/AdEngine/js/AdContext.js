@@ -2,7 +2,9 @@
 /**
  * The AMD module to hold all the context needed for the client-side scripts to run.
  */
-define('ext.wikia.adEngine.adContext', ['wikia.window', 'wikia.document'], function (w, document) {
+define('ext.wikia.adEngine.adContext', [
+	'wikia.document', 'wikia.geo', 'wikia.instantGlobals', 'wikia.window'
+], function (doc, geo, instantGlobals, w) {
 	'use strict';
 
 	var context;
@@ -33,7 +35,7 @@ define('ext.wikia.adEngine.adContext', ['wikia.window', 'wikia.document'], funct
 		context.forceProviders = context.forceProviders || {};
 
 		// Don't show ads when Sony requests the page
-		if (document && document.referrer && document.referrer.match(/info\.tvsideview\.sony\.net/)) {
+		if (doc && doc.referrer && doc.referrer.match(/info\.tvsideview\.sony\.net/)) {
 			context.opts.showAds = false;
 		}
 
@@ -43,6 +45,12 @@ define('ext.wikia.adEngine.adContext', ['wikia.window', 'wikia.document'], funct
 		// Targeting by page categories
 		if (context.targeting.enablePageCategories) {
 			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();
+		}
+
+		// Always call DART in specific countries
+		var alwaysCallDartInCountries = instantGlobals.wgAdDriverAlwaysCallDartInCountries || [];
+		if (alwaysCallDartInCountries.indexOf(geo.getCountryCode()) > -1) {
+			context.opts.alwaysCallDart = true;
 		}
 
 		// Export the context back to ads.context

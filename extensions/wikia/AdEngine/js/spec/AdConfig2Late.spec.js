@@ -82,36 +82,6 @@ describe('AdConfig2Late', function () {
 		expect(adConfig.getProviderList(['foo'])[0]).toBe(adProviderSevenOneMedia, 'adProviderSevenOneMediaMock');
 	});
 
-	it('getProvider returns RemnantGpt when instantGlobals.wgAdDriverAlwaysCallDartInCountries', function () {
-		var adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return true; }},
-			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true; }},
-			adProviderRemnantGpt = {name: 'RemnantGpt', canHandleSlot: function () {return true; }},
-			adProviderTaboola = {name: 'Taboola', canHandleSlot: function () {return true; }},
-			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function () {return true; }},
-			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function () {return true; }},
-			logMock = function () { return; },
-			windowMock = {},
-			instantGlobalsMock = { wgAdDriverAlwaysCallDartInCountries: ['XX'] },
-			geoMock = { getCountryCode: function () { return 'XX'; } },
-			adConfig;
-
-		adConfig = modules['ext.wikia.adEngine.adConfigLate'](
-			logMock,
-			windowMock,
-			instantGlobalsMock,
-			geoMock,
-			mockAdContext(),
-			adProviderEvolveMock,
-			adProviderLiftiumMock,
-			adProviderDirectGpt,
-			adProviderRemnantGpt,
-			adProviderTaboola,
-			adProviderSevenOneMedia
-		);
-
-		expect(adConfig.getProviderList(['foo'])[0]).toBe(adProviderRemnantGpt, 'adProviderRemnantGpt');
-	});
-
 	it('getProvider returns RemnantGpt when context.opts.alwaysCallDart = true', function () {
 		var adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return true; }},
 			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true; }},
@@ -320,17 +290,17 @@ describe('AdConfig2Late', function () {
 		expect(adConfig.getProviderList(['foo'])[0]).toBe(adProviderLiftiumMock, 'adProviderLiftiumMock');
 	});
 
-	it('getProvider returns DirectGpt for instantGlobals.wgAdDriverAlwaysCallDartInCountries for given slots', function () {
+	it('getProvider returns DirectGpt for context.opts.alwaysCallDart for given slots', function () {
 		var adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return true; }},
 			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true; }},
 			adProviderRemnantGpt = {name: 'RemnantGpt', canHandleSlot: function () {return false; }},
 			adProviderTaboola = {name: 'Taboola', canHandleSlot: function () {return true; }},
 			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function () {return true; }},
 			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function () {return true; }},
-			logMock = function () {},
+			logMock = function () { return; },
 			windowMock = {},
-			instantGlobalsMock = {wgAdDriverAlwaysCallDartInCountries: ['XX']},
-			geoMock = { getCountryCode: function () {return 'XX';} },
+			instantGlobalsMock = {},
+			geoMock = { getCountryCode: function () {return 'XX'; } },
 			adConfig;
 
 		adConfig = modules['ext.wikia.adEngine.adConfigLate'](
@@ -338,7 +308,7 @@ describe('AdConfig2Late', function () {
 			windowMock,
 			instantGlobalsMock,
 			geoMock,
-			mockAdContext(),
+			mockAdContext({}, {}, {alwaysCallDart: true}),
 			adProviderEvolveMock,
 			adProviderLiftiumMock,
 			adProviderDirectGpt,
