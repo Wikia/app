@@ -11,7 +11,6 @@ class AssetsManagerTest extends WikiaBaseTest {
 
 	public function setUp() {
 		parent::setUp();
-
 		$this->cb = $this->app->wg->StyleVersion;
 		$this->instance = AssetsManager::getInstance();
 	}
@@ -95,26 +94,27 @@ class AssetsManagerTest extends WikiaBaseTest {
 		$this->assertEquals( array(), $counts, "'{$setName}' group should not contain duplicated assets" );
 	}
 
-	public function testCheckIfGroupForSkin() {
-		$oasisGroup = 'wikiahomepage_js';
-		$venusGroup = 'venus_body_js';
-		$oasisAndVenusGroup = 'local_navigation_js';
-
+	/**
+	 * @dataProvider getGroupsForSkin
+	 */
+	public function testCheckIfGroupForSkin( $skin, $skinRegisteredInGroup, $expectedValue ) {
 		$wikiaSkinMock = $this->getMock( 'WikiaSkin', ['getSkinName'] );
 		$wikiaSkinMock
 			->expects( $this->any() )
 			->method( 'getSkinName' )
-			->will( $this->returnValue( 'oasis' ) );
+			->will( $this->returnValue( $skin ) );
 
 		$assetsManagerConfigMock = $this->getMock( 'AssetsConfig', ['getGroupSkin'] );
 		$assetsManagerConfigMock
 			->expects( $this->any() )
 			->method( 'getGroupSkin' )
-			->will( $this->returnValue( ['oasis'] ) );
+			->will( $this->returnValue( $skinRegisteredInGroup ) );
 
-		$this->assertEquals( $this->instance->checkIfGroupForSkin( $oasisGroup, $wikiaSkinMock ), true );
-		$this->assertEquals( $this->instance->checkIfGroupForSkin( $venusGroup, $wikiaSkinMock ), false );
-		$this->assertEquals( $this->instance->checkIfGroupForSkin( $oasisAndVenusGroup, $wikiaSkinMock ), true );
+		// This needs to be called because AssetsConfig is a private singleton inside AssetsManager class
+		$this->mockClass( 'AssetsConfig', $assetsManagerConfigMock );
+		$assetsManagerMock = $this->getMock( 'AssetsManager', null, [], '', false );
+
+		$this->assertEquals( $assetsManagerMock->checkIfGroupForSkin( 'foo', $wikiaSkinMock ), $expectedValue );
 	}
 
 	public function duplicateAssetsDataProvider() {
@@ -215,6 +215,14 @@ class AssetsManagerTest extends WikiaBaseTest {
 			[AssetsManager::getInstance()->getSassCommonURL( self::SASS_FILE ), self::SASS_FILE],
 			[self::SASS_FILE, self::SASS_FILE],
 			['http://google.com' . self::SASS_FILE, 'http://google.com' . self::SASS_FILE],
+		];
+	}
+
+	public function getGroupsForSkin() {
+		return [
+			['oasis', ['oasis'], true],
+			['oasis', ['venus'], false],
+			['oasis', ['oasis', 'venus'], true]
 		];
 	}
 }
