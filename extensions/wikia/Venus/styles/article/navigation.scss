@@ -2,6 +2,8 @@
 @import 'extensions/wikia/Venus/styles/variables';
 @import 'skins/shared/color';
 
+$article-navigation-icon-size: 38px;
+
 .article-navigation {
 	margin-left: $medium-content-padding - $content-border-width;
 	position: absolute;
@@ -13,7 +15,7 @@
 		list-style-type: none;
 		margin: 0 auto;
 		padding: 0;
-		width: 38px;
+		width: $article-navigation-icon-size;
 	}
 
 	.nav-icon {
@@ -22,8 +24,8 @@
 		color: $color-article-navigation-inactive;
 		cursor: pointer;
 		display: block;
-		font-size: 38px;
-		line-height: 38px;
+		font-size: $article-navigation-icon-size;
+		line-height: $article-navigation-icon-size;
 		margin-bottom: 6px;
 
 		&:hover {

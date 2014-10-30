@@ -86,10 +86,12 @@ define('wikia.stickyElement', ['wikia.window', 'wikia.document'], function stick
 		 * Updates variables that are dependant on screen size and forces updatePosition
 		 */
 		function updateSize () {
+			// calculate changing point using real element offset
+			// source: https://github.com/jquery/jquery/blob/2.1.0/src/offset.js#L106
 			topScrollLimit = alignToElement.getBoundingClientRect().top +
 				win.pageYOffset -
 				doc.documentElement.clientTop -
-				topFixed;
+				topFixed; // minus desired offset when element is fixed
 
 			topSticked = alignToElement.offsetTop;
 
