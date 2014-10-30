@@ -672,11 +672,6 @@ class AssetsManager {
 
 		$check = $this->checkIfGroupForSkin($group, $skin);
 
-		//if not strict packages with no skin registered are positive
-		if ( $strict === false ) {
-			$check = $check || empty( $registeredSkin );
-		}
-
 		wfProfileOut( __METHOD__ );
 		return $check;
 	}
@@ -691,7 +686,16 @@ class AssetsManager {
 		$this->loadConfig();
 		$skinName = $skin->getSkinName();
 		$registeredSkin = $this->mAssetsConfig->getGroupSkin( $group );
-		return ( is_array( $registeredSkin ) ) ? in_array( $skinName, $registeredSkin ) : $skinName === $registeredSkin;
+
+		$check = ( is_array( $registeredSkin ) ) ?
+			in_array( $skinName, $registeredSkin ) : $skinName === $registeredSkin;
+
+		//if not strict packages with no skin registered are positive
+		if ( $skin->isStrict() === false ) {
+			$check = $check || empty( $registeredSkin );
+		}
+
+		return $check;
 	}
 
 	/**

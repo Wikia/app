@@ -97,12 +97,17 @@ class AssetsManagerTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider getGroupsForSkin
 	 */
-	public function testCheckIfGroupForSkin( $skin, $skinRegisteredInGroup, $expectedValue ) {
-		$wikiaSkinMock = $this->getMock( 'WikiaSkin', ['getSkinName'] );
+	public function testCheckIfGroupForSkin( $skin, $skinRegisteredInGroup, $isSkinStrict, $expectedValue ) {
+		$wikiaSkinMock = $this->getMock( 'WikiaSkin', ['getSkinName', 'isStrict'] );
 		$wikiaSkinMock
 			->expects( $this->any() )
 			->method( 'getSkinName' )
 			->will( $this->returnValue( $skin ) );
+
+		$wikiaSkinMock
+			->expects( $this->any() )
+			->method( 'isStrict' )
+			->will( $this->returnValue( $isSkinStrict) );
 
 		$assetsManagerConfigMock = $this->getMock( 'AssetsConfig', ['getGroupSkin'] );
 		$assetsManagerConfigMock
@@ -220,9 +225,11 @@ class AssetsManagerTest extends WikiaBaseTest {
 
 	public function getGroupsForSkin() {
 		return [
-			['oasis', ['oasis'], true],
-			['oasis', ['venus'], false],
-			['oasis', ['oasis', 'venus'], true]
+			['oasis', ['oasis'], false, true],
+			['oasis', ['venus'], false, false],
+			['oasis', ['oasis', 'venus'], false, true],
+			['oasis', [], false, true],
+			['venus', [], true, false]
 		];
 	}
 }

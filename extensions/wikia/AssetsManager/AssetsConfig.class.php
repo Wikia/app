@@ -78,7 +78,6 @@ class AssetsConfig {
 	private function load() {
 		if ( empty( self::$mConfig ) ) {
 			wfProfileIn( __METHOD__ );
-
 			include( 'config.php' );
 			self::$mConfig = $config;
 
@@ -87,7 +86,7 @@ class AssetsConfig {
 			wfProfileIn( __METHOD__ . 'Groups' );
 
 			foreach ( glob ( __DIR__ . '/configGroups/*Config.php' ) as $fileName ) {
-				include( $fileName  );
+				include( $fileName );
 				$configFileName = pathinfo( $fileName )['filename'];
 				if ( !empty ( $$configFileName ) ) {
 					$configVar = $$configFileName;
