@@ -315,7 +315,7 @@ HTML;
 	}
 
 	/**
-	 * Modify the user's persinal toolbar (in the upper right).
+	 * Modify the user's personal toolbar (in the upper right).
 	 *
 	 *
 	 * @param $personal_urls

@@ -17,6 +17,11 @@ $messages['en'] = [
 	'facebookclient-disconnect-info-existing' => "You can still log in using your user name and password, as usual.",
 
 	'facebookclient-unknown-error' => '',
+
+	'facebookclient-connect-existing' => 'Connect account with Facebook',
+	'facebookclient-connect-login-legend' => 'Login to your existing account',
+	'facebookclient-connect-username-label' => 'Username:',
+	'facebookclient-connect-password-label' => 'Password:',
 ];
 
 /**

@@ -12,6 +12,31 @@ class FacebookMapModel {
 	private $lastUpdateTime;
 
 	/**
+	 * Create a new FacebookMapModel object.  If $param is given then the FB and Wikia IDs must be given
+	 *
+	 * @param array $param Values for the mapping.  Keys are:
+	 *
+	 * - self::paramFacebookUserId - Required if $param is passed.  The Facebook user ID
+	 * - self::paramWikiaUserId - Required is $param is passed.  The Wikia user ID
+	 * - self::paramUpdateTime - The time this mapping was created.
+	 *
+	 * @throws FacebookMapModelInvalidParamException
+	 */
+	public function __construct( array $param = null ) {
+		// If $param is set, both IDs must be passed
+		if ( !isset( $param[self::paramFacebookUserId], $param[self::paramWikiaUserId] ) ) {
+			throw new FacebookMapModelInvalidParamException();
+		}
+
+		$this->facebookUserId = $param[self::paramFacebookUserId];
+		$this->wikiaUserId = $param[self::paramWikiaUserId];
+
+		if ( isset( $param[self::paramUpdateTime] ) ) {
+			$this->lastUpdateTime = $param[ self::paramUpdateTime ];
+		}
+	}
+
+	/**
 	 * Lookup all mappings where the Wikia user ID is set to the given ID.  There will usually only be one
 	 * but there can be many (if they login to custom domains such as wowwiki where we have separate FB apps)
 	 *
@@ -66,18 +91,19 @@ class FacebookMapModel {
 		if ( !is_array( $mappings ) ) {
 			$data = self::loadFromDB( $params );
 
-			if ( is_array( $data ) ) {
+			if ( !is_array( $data ) ) {
 				// Return now with an empty array if its not found
 				return [];
 			}
 
 			// Construct objects to send back
 			foreach ( $data as $mapping ) {
-				$mappings[] = new FacebookMapModel( $mapping );
+				$map = new FacebookMapModel( $mapping );
+				$mappings[] = $map;
 			}
-		}
 
-		$wg->Memc->set( $memkey, $mappings );
+			$wg->Memc->set( $memkey, $mappings );
+		}
 
 		return $mappings;
 	}
@@ -184,25 +210,18 @@ class FacebookMapModel {
 			throw new FacebookMapModelInvalidDataException();
 		}
 
-		list( $column, $id ) = self::getColumnAndValue( [
-			self::paramFacebookUserId => $this->facebookUserId
-		] );
-
 		$dbw = wfGetDB( DB_MASTER, null, F::app()->wg->ExternalSharedDB );
 		( new WikiaSQL() )
 			->INSERT( 'user_fbconnect' )
-			->WHERE( $column )->EQUAL_TO( $id )
+			->SET( 'user_id', $this->wikiaUserId )
+			->SET( 'user_fbid', $this->facebookUserId )
 			->run( $dbw );
 
 		$memkey = self::generateMemKey( [
 			self::paramFacebookUserId => $this->facebookUserId
 		] );
 
-		F::app()->wg->Memc->set( $memkey, [
-			self::paramWikiaUserId => $this->wikiaUserId,
-			self::paramFacebookUserId => $this->facebookUserId,
-			self::paramUpdateTime => $this->lastUpdateTime,
-		] );
+		F::app()->wg->Memc->set( $memkey, [ $this ] );
 	}
 }
 

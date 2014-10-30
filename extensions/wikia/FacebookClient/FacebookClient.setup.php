@@ -31,6 +31,7 @@ $wgAutoloadClasses['FacebookClient'] =  $dir . 'FacebookClient.class.php';
 $wgAutoloadClasses['FacebookClientController'] =  $dir . 'FacebookClientController.class.php';
 $wgAutoloadClasses[ 'FacebookClientLocale'] =  $dir . 'FacebookClientLocale.class.php';
 $wgAutoloadClasses[ 'FacebookMapModel'] =  $dir . 'FacebookMapModel.class.php';
+$wgAutoloadClasses[ 'SpecialFacebookConnectController'] =  $dir . 'SpecialFacebookConnectController.class.php';
 
 /**
  * hooks
@@ -41,6 +42,9 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'FacebookClientHooks::MakeGlobalVariab
 $wgHooks['SkinAfterBottomScripts'][] = 'FacebookClientHooks::SkinAfterBottomScripts';
 $wgHooks['GetPreferences'][] = 'FacebookClientHooks::GetPreferences';
 $wgHooks['onOasisSkinAssetGroups'][] = 'FacebookClientHooks::onOasisSkinAssetGroups';
+
+// special pages
+$wgSpecialPages[ 'FacebookConnect' ] =  'SpecialFacebookConnectController';
 
 /**
  * messages

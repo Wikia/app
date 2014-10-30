@@ -28,7 +28,7 @@ class FacebookClientHooks {
 					$returnTo = 'returnto=' . $wg->Title->getPrefixedURL();
 
 					// Redirect to Special:Connect so the Facebook user can choose a nickname
-					$wg->Out->redirect( $skin->makeSpecialUrl( 'Connect', $returnTo ) );
+					$wg->Out->redirect( $skin->makeSpecialUrl( 'FacebookConnect', $returnTo ) );
 				}
 			}
 		}
@@ -41,7 +41,7 @@ class FacebookClientHooks {
 	private static function isOkToRedirect() {
 		$title = F::app()->wg->Title;
 
-		return !( $title->isSpecial( 'Userlogout' ) || $title->isSpecial( 'Connect' ) );
+		return !( $title->isSpecial( 'Userlogout' ) || $title->isSpecial( 'FacebookConnect' ) );
 	}
 
 	/**
