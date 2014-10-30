@@ -31,11 +31,11 @@ class ExactTargetDeleteUserTask extends BaseTask {
 
 	/**
 	 * Sends delete request to actually delete Subscriber object in ExactTarget by API request
-	 * @param string $sUserEmail
+	 * @param array $aApiParams
 	 */
-	private function doDeleteSubscriber( $sUserEmail ) {
+	private function doDeleteSubscriber( array $aApiParams ) {
 		$oApiSubscriber = $this->getApiSubscriber();
-		$oApiSubscriber->deleteRequest( $sUserEmail );
+		$oApiSubscriber->deleteRequest( $aApiParams );
 	}
 
 	/**

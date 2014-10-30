@@ -61,7 +61,7 @@ class ExactTargetCreateUserTask extends BaseTask {
 	 * Returns an instance of ExactTargetApiDataExtension class
 	 * @return ExactTargetApiDataExtension
 	 */
-	private function getApiDataExtension() {
+	protected function getApiDataExtension() {
 		return new ExactTargetApiDataExtension();
 	}
 
@@ -69,7 +69,7 @@ class ExactTargetCreateUserTask extends BaseTask {
 	 * Returns an instance of ExactTargetApiSubscriber class
 	 * @return ExactTargetApiSubscriber
 	 */
-	private function getApiSubscriber() {
+	protected function getApiSubscriber() {
 		return new ExactTargetApiSubscriber();
 	}
 
@@ -77,7 +77,7 @@ class ExactTargetCreateUserTask extends BaseTask {
 	 * Returns an instance of ExactTargetDeleteUserTask class
 	 * @return ExactTargetDeleteUserTask
 	 */
-	private function getDeleteUserTask() {
+	protected function getDeleteUserTask() {
 		return new ExactTargetDeleteUserTask();
 	}
 
