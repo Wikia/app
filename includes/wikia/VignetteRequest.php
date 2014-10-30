@@ -63,8 +63,8 @@ class VignetteRequest {
 		}
 
 		if (!isset($config['domain-shard-count'])) {
-			global $wgImageServers;
-			$config['domain-shard-count'] = $wgImageServers;
+			global $wgImagesServers;
+			$config['domain-shard-count'] = $wgImagesServers;
 		}
 
 		foreach ($requiredKeys as $key) {
