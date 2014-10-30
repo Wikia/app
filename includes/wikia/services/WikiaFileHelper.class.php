@@ -329,7 +329,7 @@ class WikiaFileHelper extends Service {
 					$data['playerAsset'] = $file->getPlayerAssetUrl();
 					$data['videoViews'] = MediaQueryService::getTotalVideoViewsByTitle( $fileTitle->getDBKey() );
 					$data['providerName'] = $file->getProviderName();
-					$data['duration'] = self::formatDuration( $file->getMetadataDuration() );
+					$data['duration'] = $file->getMetadataDuration();
 					$data['isAdded'] = self::isAdded( $file );
 					$mediaPage = self::getMediaPage( $fileTitle );
 
