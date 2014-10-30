@@ -6,7 +6,7 @@ define(
 		'wikia.maps.createMap.tileSet',
 		'wikia.maps.createMap.preview'
 	],
-	function($, w, utils, tileSet, preview) {
+	function ($, w, utils, tileSet, preview) {
 		'use strict';
 
 		// placeholder for holding reference to modal instance
@@ -61,6 +61,10 @@ define(
 				modal.$buttons = modal.$element.find('.buttons').children();
 				modal.$innerContent = modal.$content.children('#intMapInnerContent');
 				modal.$errorContainer = $('.map-modal-error');
+				$(modal.$element).on('submit', '.create-map-form', function (event) {
+					event.preventDefault();
+					modal.trigger('createMap');
+				});
 
 				utils.bindEvents(modal, events);
 
@@ -79,4 +83,3 @@ define(
 		};
 	}
 );
-
