@@ -66,10 +66,15 @@ class VenusController extends WikiaController {
 	}
 
 	private function setBodyModules() {
+		global $wgUser;
 		$this->globalNavigation = $this->getGlobalNavigation();
 		$this->localNavigation = $this->getLocalNavigation();
 		$this->globalFooter = $this->getGlobalFooter();
 		$this->corporateFooter = $this->getCorporateFooter();
+
+		if ($this->isUserLoggedIn) {
+			$this->recentWikiActivity = $this->getRecentWikiActivity();
+		}
 
 		if ( WikiaPageType::isArticlePage() ) {
 			$this->leftArticleNav = $this->getLeftArticleNavigation();
@@ -184,6 +189,10 @@ class VenusController extends WikiaController {
 
 	public function getCorporateFooter() {
 		//return $this->app->renderView('CorporateFooter', 'Index');
+	}
+
+	public function getRecentWikiActivity() {
+		return $this->app->renderView('RecentWikiActivity', 'index');
 	}
 
 	public static function addBodyParameter($parameter) {
