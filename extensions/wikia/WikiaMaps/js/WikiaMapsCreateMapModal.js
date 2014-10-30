@@ -61,7 +61,7 @@ define(
 				modal.$buttons = modal.$element.find('.buttons').children();
 				modal.$innerContent = modal.$content.children('#intMapInnerContent');
 				modal.$errorContainer = $('.map-modal-error');
-				$(modal.$element).on('submit', '.create-map-form', function (event) {
+				modal.$element.on('submit', '.create-map-form', function (event) {
 					event.preventDefault();
 					modal.trigger('createMap');
 				});
