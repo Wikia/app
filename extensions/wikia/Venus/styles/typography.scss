@@ -11,22 +11,32 @@ body {
 
 h1 {
 	@include font-size-xxl;
-	line-height: 44px;
+	@include line-height-with-edit-button(44px);
 }
 
 h2 {
 	@include font-size-xl;
-	line-height: 32px;
+	@include line-height-with-edit-button(32px);
 }
 
 h3 {
 	@include font-size-l;
-	line-height: 28px;
+	@include line-height-with-edit-button(28px);
 }
+
+h4, h5, h6 {
+	@include line-height-with-edit-button(26px);
+}
+
 
 @media #{$large-up} {
 	.mw-content-text {
 		font-size: $font-size-base-big-screen;
 		line-height: 30px;
+	}
+
+
+	h4, h5, h6 {
+		@include line-height-with-edit-button(30px);
 	}
 }
