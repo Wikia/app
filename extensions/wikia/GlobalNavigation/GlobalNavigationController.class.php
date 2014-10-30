@@ -50,11 +50,11 @@ class GlobalNavigationController extends WikiaController {
 		$globalSearchUrl = $this->getGlobalSearchUrl( $centralUrl, $lang );
 		$specialSearchTitle = SpecialPage::getTitleFor( 'Search' );
 		$localSearchUrl = $specialSearchTitle->getFullUrl();
-		$fulltext = $this->wg->User->getOption('enableGoSearch') ? 0 : 'Search';
+		$fulltext = $this->wg->User->getOption( 'enableGoSearch' ) ? 0 : 'Search';
 		$globalRequest = $this->wg->request;
 		$query = $globalRequest->getVal( 'search', $globalRequest->getVal( 'query', '' ) );
 
-		if (WikiaPageType::isCorporatePage() && !WikiaPageType::isWikiaHub()) {
+		if ( WikiaPageType::isCorporatePage() && !WikiaPageType::isWikiaHub() ) {
 			$this->response->setVal( 'disableLocalSearchOptions', true );
 			$this->response->setVal( 'defaultSearchUrl', $globalSearchUrl );
 		} else {
@@ -73,37 +73,37 @@ class GlobalNavigationController extends WikiaController {
 
 		// use transparent background to fill the space
 		// when we do not get enough hubs (CON-1820)
-		while( count($menuNodes) < self::HUBS_COUNT ) {
+		while ( count( $menuNodes ) < self::HUBS_COUNT ) {
 			$menuNodes[] = [
 				'placeholder' => true,
 			];
 		}
 
-		$this->response->setVal('menuNodes', $menuNodes);
+		$this->response->setVal( 'menuNodes', $menuNodes );
 
 		$activeNode = $this->getActiveNode();
-		$activeNodeIndex = $this->getActiveNodeIndex($menuNodes, $activeNode);
-		$this->response->setVal('activeNodeIndex', $activeNodeIndex);
+		$activeNodeIndex = $this->getActiveNodeIndex( $menuNodes, $activeNode );
+		$this->response->setVal( 'activeNodeIndex', $activeNodeIndex );
 	}
 
 	public function hubsMenuSections() {
-		$menuSections = $this->request->getVal('menuSections', []);
-		$this->response->setVal('menuSections', $menuSections);
+		$menuSections = $this->request->getVal( 'menuSections', [] );
+		$this->response->setVal( 'menuSections', $menuSections );
 	}
 
 	public function lazyLoadHubsMenu() {
 		$lazyLoadMenuNodes = $this->getMenuNodes();
 
 		$activeNode = $this->getActiveNode();
-		$activeNodeIndex = $this->getActiveNodeIndex($lazyLoadMenuNodes, $activeNode);
-		array_splice($lazyLoadMenuNodes, $activeNodeIndex, 1);
+		$activeNodeIndex = $this->getActiveNodeIndex( $lazyLoadMenuNodes, $activeNode );
+		array_splice( $lazyLoadMenuNodes, $activeNodeIndex, 1 );
 
-		$this->response->setVal('menuSections', $lazyLoadMenuNodes);
+		$this->response->setVal( 'menuSections', $lazyLoadMenuNodes );
 		$this->overrideTemplate( 'hubsMenuSections' );
 	}
 
 	private function getMenuNodes() {
-		$menuNodes = (new NavigationModel(true /* useSharedMemcKey */) )->getGlobalNavigationTree(
+		$menuNodes = ( new NavigationModel( true /* useSharedMemcKey */ ) )->getGlobalNavigationTree(
 			'global-navigation-hubs-menu'
 		);
 
@@ -133,7 +133,7 @@ class GlobalNavigationController extends WikiaController {
 		$activeNode = '';
 
 		$wikiFactoryHub = WikiFactoryHub::getInstance();
-		$verticalId = $wikiFactoryHub->getVerticalId($wgCityId);
+		$verticalId = $wikiFactoryHub->getVerticalId( $wgCityId );
 
 		$allVerticals = $wikiFactoryHub->getAllVerticals();
 		if ( isset( $allVerticals[$verticalId]['short'] ) ) {
