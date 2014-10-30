@@ -1,7 +1,11 @@
 (function () {
 	'use strict';
 
-	var initMediaGallery = function (data) {
+	/**
+	 * Function called by JSSnippets, used to instantiate galleries from anywhere.
+	 * @param {object} data
+	 */
+	function initMediaGallery(data) {
 		var gallery, $wrapper, options;
 
 		// fix data format
@@ -10,17 +14,16 @@
 		}
 
 		$wrapper = $('#' + data.id);
+
+		// make sure we haven't already instantiated this gallery
 		if ($wrapper.data('gallery')) {
-			console.log('gallery initialized from controller');
 			return;
 		}
-		console.log('create gallery from JSSnippets');
 
 		options = {
 			$el: $('<div></div>'),
 			$wrapper: $wrapper,
 			model: data,
-			index: parseInt(data.id),
 			// if set, pass the value, otherwise, defaults will be used.
 			origVisibleCount: $wrapper.data('visible-count'),
 			interval: $wrapper.data('expanded')
@@ -32,7 +35,7 @@
 			$wrapper.append(gallery.render().$el);
 			gallery.$el.trigger('galleryInserted');
 		});
-	};
+	}
 
 	window.Wikia = window.Wikia || {};
 	window.Wikia.initMediaGallery = initMediaGallery;

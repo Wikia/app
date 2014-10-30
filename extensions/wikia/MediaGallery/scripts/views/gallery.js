@@ -19,7 +19,6 @@ define('mediaGallery.views.gallery', [
 	 * @returns {Gallery} Gallery instance
 	 */
 	Gallery = function (options) {
-		console.log('init gallery');
 		// required options
 		this.$el = options.$el.addClass('media-gallery-inner');
 		this.$wrapper = options.$wrapper;
@@ -34,8 +33,8 @@ define('mediaGallery.views.gallery', [
 		this.interval = options.interval || 12;
 		this.throttleVal = options.throttleVal || 200;
 
-		// performance profiling
-		this.bucky = bucky('mediaGallery.views.gallery.' + options.index);
+		// performance profiling - send bucky a unique-ish id
+		this.bucky = bucky('mediaGallery.views.gallery.' + Math.floor(Math.random() * 1000));
 
 		// flags and state tracking
 		this.rendered = false;

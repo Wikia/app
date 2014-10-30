@@ -20,16 +20,14 @@ require(['mediaGallery.views.gallery'], function (Gallery) {
 	/**
 	 * Initialize galleries and add HTML to DOM.
 	 * @param {jQuery} $wrapper Wrapper element for gallery. Contains data attributes with info for gallery
-	 * @param {int} idx Index of wrapper DOM element in gallery array
 	 */
-	GalleriesController.prototype.createGallery = function ($wrapper, idx) {
+	GalleriesController.prototype.createGallery = function ($wrapper) {
 		var gallery,
 			model = $wrapper.data('model'),
 			galleryOptions = {
 				$el: $('<div></div>'),
 				$wrapper: $wrapper,
 				model: { media: model },
-				index: idx,
 				// if set, pass the value, otherwise, defaults will be used.
 				origVisibleCount: $wrapper.data('visible-count'),
 				interval: $wrapper.data('expanded')
@@ -52,15 +50,12 @@ require(['mediaGallery.views.gallery'], function (Gallery) {
 	GalleriesController.prototype.init = function () {
 		var self = this;
 
-		$.each(this.$galleries, function (idx) {
+		$.each(this.$galleries, function () {
 			var $this = $(this);
 
 			// make sure we have old version of HTML before instantiating gallery.
 			if ($this.data('model') && !$this.data('gallery')) {
-				console.log('create gallery from controller');
-				self.createGallery($this, idx);
-			} else {
-				console.log('gallery initialized from JSSNippets');
+				self.createGallery($this);
 			}
 		});
 		return this;
