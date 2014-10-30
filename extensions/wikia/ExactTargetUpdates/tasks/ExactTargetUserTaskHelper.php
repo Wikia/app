@@ -1,5 +1,5 @@
 <?php
-namespace Wikia\ExactTarget\Tasks;
+namespace Wikia\ExactTarget;
 
 class ExactTargetUserTaskHelper {
 
@@ -66,6 +66,17 @@ class ExactTargetUserTaskHelper {
 					]
 				]
 			]
+		];
+
+		return $aApiParams;
+	}
+
+	public function prepareSubscriberData( $sUserEmail ) {
+		$aApiParams = [
+			[
+				'SubscriberKey' => $sUserEmail,
+				'EmailAddress' => $sUserEmail,
+			],
 		];
 
 		return $aApiParams;

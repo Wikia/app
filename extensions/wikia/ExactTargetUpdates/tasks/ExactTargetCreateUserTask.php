@@ -1,8 +1,6 @@
 <?php
-namespace Wikia\ExactTarget\Tasks;
+namespace Wikia\ExactTarget;
 
-use Wikia\ExactTarget\Api\ExactTargetApiDataExtension;
-use Wikia\ExactTarget\Api\ExactTargetApiSubscriber;
 use Wikia\Tasks\Tasks\BaseTask;
 
 class ExactTargetCreateUserTask extends BaseTask {
@@ -30,8 +28,10 @@ class ExactTargetCreateUserTask extends BaseTask {
 	 * @param String $sUserEmail new subscriber email address
 	 */
 	public function createSubscriber( $sUserEmail ) {
+		$oHelper = $this->getHelper();
+		$aApiParams = $oHelper->prepareSubscriberData( $sUserEmail );
 		$oApiDataExtension = $this->getApiSubscriber();
-		$oApiDataExtension->createRequest( $sUserEmail );
+		$oApiDataExtension->createRequest( $aApiParams );
 	}
 
 	/**

@@ -1,7 +1,6 @@
 <?php
-namespace Wikia\ExactTarget\Tasks;
+namespace Wikia\ExactTarget;
 
-use Wikia\ExactTarget\Api\ExactTargetApiDataExtension;
 use Wikia\Tasks\Tasks\BaseTask;
 
 class ExactTargetUpdateUserTask extends BaseTask {
@@ -23,6 +22,9 @@ class ExactTargetUpdateUserTask extends BaseTask {
 	 * @param string $iUserEmail
 	 */
 	public function updateUserEmail( $iUserId, $iUserEmail ) {
+		/* Delete subscriber (email address) used by touched user */
+		$oDeleteUserTask = $this->getDeleteUserTask();
+		$oDeleteUserTask->deleteSubscriber( $iUserId );
 		/* Subscriber list contains unique emails
 		 * Assuming email may be new - try to create subscriber object using the email */
 		$oCreateUserTask = $this->getCreateUserTask();
@@ -51,14 +53,20 @@ class ExactTargetUpdateUserTask extends BaseTask {
 		$oApiDataExtension->updateRequest( $aApiParams );
 	}
 
-
-
 	/**
 	 * Returns an instance of ExactTargetCreateUserTask class
 	 * @return ExactTargetCreateUserTask
 	 */
 	protected function getCreateUserTask() {
 		return new ExactTargetCreateUserTask();
+	}
+
+	/**
+	 * Returns an instance of ExactTargetDeleteUserTask class
+	 * @return ExactTargetDeleteUserTask
+	 */
+	private function getDeleteUserTask() {
+		return new ExactTargetDeleteUserTask();
 	}
 
 	/**

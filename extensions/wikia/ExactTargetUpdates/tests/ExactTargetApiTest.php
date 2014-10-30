@@ -50,7 +50,7 @@ class ExactTargetApiTest extends WikiaBaseTest {
 		}
 
 		/* Mock tested class */
-		$baseTask = new \Wikia\ExactTarget\Api\ExactTargetApiHelper();
+		$baseTask = new \Wikia\ExactTarget\ExactTargetApiHelper();
 
 		/* Run test */
 		$aSoapVarsActual = $baseTask->prepareSoapVars( $aDE, 'DataExtensionObject' );

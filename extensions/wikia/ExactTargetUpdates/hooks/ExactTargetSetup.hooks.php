@@ -1,4 +1,5 @@
 <?php
+namespace Wikia\ExactTarget;
 
 class ExactTargetSetupHooks {
 
@@ -29,7 +30,12 @@ class ExactTargetSetupHooks {
 	 * Register all hooks that are necessary to update wiki data in ExactTarget
 	 */
 	public function registerWikiHooks() {
-
+		$oWikiHooks = $this->getWikiHooks();
+		\Hooks::register( 'CreateWikiLocalJob-complete', [ $oWikiHooks, 'onCreateWikiLocalJobComplete' ] );
+		\Hooks::register( 'WikiFactoryChangeCommitted', [ $oWikiHooks, 'onWikiFactoryChangeCommitted' ] );
+		\Hooks::register( 'WikiFactoryVerticalSet', [ $oWikiHooks, 'onWikiFactoryVerticalSet' ] );
+		\Hooks::register( 'CityCatMappingUpdated', [ $oWikiHooks, 'onCityCatMappingUpdated' ] );
+		\Hooks::register( 'WikiFactoryWikiClosed', [ $oWikiHooks, 'onWikiFactoryWikiClosed' ] );
 	}
 
 	/**

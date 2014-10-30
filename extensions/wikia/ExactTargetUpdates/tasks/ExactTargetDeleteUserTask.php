@@ -1,8 +1,6 @@
 <?php
-namespace Wikia\ExactTarget\Tasks;
+namespace Wikia\ExactTarget;
 
-use Wikia\ExactTarget\Api\ExactTargetApiDataExtension;
-use Wikia\ExactTarget\Api\ExactTargetApiSubscriber;
 use Wikia\Tasks\Tasks\BaseTask;
 
 class ExactTargetDeleteUserTask extends BaseTask {
@@ -25,17 +23,19 @@ class ExactTargetDeleteUserTask extends BaseTask {
 		$oRetrieveUserHelper = $this->getRetrieveUserHelper();
 		$sEmail = $oRetrieveUserHelper->getUserEmail( $iUserId );
 		if ( !$this->isEmailInUse( $sEmail, $iUserId ) ) {
-			$this->doDeleteSubscriber( $sEmail );
+			$oHelper = $this->getHelper();
+			$aApiParams = $oHelper->prepareSubscriberData( $sEmail );
+			$this->doDeleteSubscriber( $aApiParams );
 		}
 	}
 
 	/**
 	 * Sends delete request to actually delete Subscriber object in ExactTarget by API request
-	 * @param string $sUserEmail
+	 * @param array $aApiParams
 	 */
-	private function doDeleteSubscriber( $sUserEmail ) {
+	private function doDeleteSubscriber( array $aApiParams ) {
 		$oApiSubscriber = $this->getApiSubscriber();
-		$oApiSubscriber->deleteRequest( $sUserEmail );
+		$oApiSubscriber->deleteRequest( $aApiParams );
 	}
 
 	/**

@@ -3,7 +3,7 @@ namespace Wikia\ExactTarget;
 
 use Wikia\Logger\WikiaLogger;
 
-class ExactTargetApiDataExtension {
+class ExactTargetApiSubscriber {
 
 	/* @var ExactTargetApiHelper $Helper */
 	private $Helper;
@@ -27,17 +27,16 @@ class ExactTargetApiDataExtension {
 	}
 
 	public function createRequest( Array $aApiCallParams ) {
-		$aDE = $this->Helper->prepareDataExtensionObjects( $aApiCallParams['DataExtension'] );
-		$aSoapVars = $this->Helper->prepareSoapVars( $aDE );
-		$oRequest = $this->Helper->wrapCreateRequest( $aSoapVars );
+		$aSubscribers = $this->Helper->prepareSubscriberObjects( $aApiCallParams );
 
-		$oResults = $this->makeRequest( 'Create', $oRequest );
-		return $oResults;
+		$oRequest = $this->Helper->wrapCreateRequest( $aSubscribers );
+
+		$this->makeRequest( 'Create', $oRequest );
 	}
 
 	public function retrieveRequest( Array $aApiCallParams ) {
-		$sRetrieveObjectType = "DataExtensionObject[{$aApiCallParams['DataExtension']['CustomerKey']}]";
-		$aRetrieveProperties = $aApiCallParams['DataExtension']['Properties'];
+		$sRetrieveObjectType = "Subscriber";
+		$aRetrieveProperties = $aApiCallParams['Subscriber']['Properties'];
 		$oRetrieveRequest = $this->Helper->wrapRetrieveRequest( $sRetrieveObjectType, $aRetrieveProperties );
 
 		$sFilterProperty = $aApiCallParams['SimpleFilterPart']['Property'];
@@ -53,30 +52,11 @@ class ExactTargetApiDataExtension {
 		return $oResults;
 	}
 
-	public function updateRequest( Array $aApiCallParams ) {
-		$aDE = $this->Helper->prepareDataExtensionObjects( $aApiCallParams['DataExtension'] );
-		$aSoapVars = $this->Helper->prepareSoapVars( $aDE );
-		$oRequest = $this->Helper->wrapUpdateRequest( $aSoapVars );
-
-		$oResults = $this->makeRequest( 'Update', $oRequest );
-		return $oResults;
-	}
-
-	public function updateFallbackCreateRequest( Array $aApiCallParams ) {
-		$aDE = $this->Helper->prepareDataExtensionObjects( $aApiCallParams['DataExtension'] );
-		$aSoapVars = $this->Helper->prepareSoapVars( $aDE );
-		$oUpdateOptions = $this->Helper->prepareUpdateCreateOptions();
-		$oRequest = $this->Helper->wrapUpdateRequest( $aSoapVars, $oUpdateOptions );
-
-		$oResults = $this->makeRequest( 'Update', $oRequest );
-		return $oResults;
-	}
-
 	public function deleteRequest( Array $aApiCallParams ) {
-		$aDE = $this->Helper->prepareDataExtensionObjects( $aApiCallParams['DataExtension'] );
-		$aSoapVars = $this->Helper->prepareSoapVars( $aDE );
+		$aSubscribers = $this->Helper->prepareSubscriberObjects( $aApiCallParams );
 
-		$oDeleteRequest = $this->Helper->wrapDeleteRequest( $aSoapVars );
+		$oDeleteRequest = $this->Helper->wrapDeleteRequest( $aSubscribers );
+
 		$oResults = $this->makeRequest( 'Delete', $oDeleteRequest );
 		return $oResults;
 	}

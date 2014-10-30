@@ -1,5 +1,5 @@
 <?php
-namespace Wikia\ExactTarget\Api;
+namespace Wikia\ExactTarget;
 
 class ExactTargetApiHelper {
 
@@ -55,6 +55,30 @@ class ExactTargetApiHelper {
 		return $oRequest;
 	}
 
+	public function wrapRetrieveRequest( $sObjectType, Array $aProperties ) {
+		$oRetrieveRequest = new \ExactTarget_RetrieveRequest();
+		$oRetrieveRequest->ObjectType = $sObjectType;
+		$oRetrieveRequest->Properties = $aProperties;
+
+		return $oRetrieveRequest;
+	}
+
+	public function wrapRetrieveRequestMsg( $oRetrieveRequest ) {
+		$oRetrieveRequestMsg = new \ExactTarget_RetrieveRequestMsg();
+		$oRetrieveRequestMsg->RetrieveRequest = $oRetrieveRequest;
+
+		return $oRetrieveRequestMsg;
+	}
+
+	public function wrapSimpleFilterPart( $sProperty, $sValue ) {
+		$oSimpleFilterPart = new \ExactTarget_SimpleFilterPart();
+		$oSimpleFilterPart->Value = $sValue;
+		$oSimpleFilterPart->SimpleOperator = \ExactTarget_SimpleOperators::equals;
+		$oSimpleFilterPart->Property = $sProperty;
+
+		return $oSimpleFilterPart;
+	}
+
 	/**
 	 * Returns ExactTarget_UpdateRequest object with soap vars set from param
 	 * @param Array $aSoapVars
@@ -69,6 +93,14 @@ class ExactTargetApiHelper {
 		return $oRequest;
 	}
 
+	public function wrapDeleteRequest( $aSoapVars ) {
+		$oDeleteRequest = new \ExactTarget_DeleteRequest();
+		$oDeleteRequest->Objects = $aSoapVars;
+		$oDeleteRequest->Options = new \ExactTarget_DeleteOptions();
+
+		return $oDeleteRequest;
+	}
+
 	/**
 	 * Prepares ExactTarget_UpdateOptions that says update or create if doesn't exist
 	 * @return ExactTarget_UpdateOptions
@@ -78,7 +110,7 @@ class ExactTargetApiHelper {
 
 		$saveOption = new \ExactTarget_SaveOption();
 		$saveOption->PropertyName = 'DataExtensionObject';
-		$saveOption->SaveAction = ExactTarget_SaveAction::UpdateAdd;
+		$saveOption->SaveAction = \ExactTarget_SaveAction::UpdateAdd;
 
 		$updateOptions->SaveOptions[] = new \SoapVar( $saveOption, SOAP_ENC_OBJECT, 'SaveOption', 'http://exacttarget.com/wsdl/partnerAPI' );
 		return $updateOptions;
@@ -133,4 +165,17 @@ class ExactTargetApiHelper {
 		return $aDE;
 	}
 	
+	public function prepareSubscriberObjects( $aObjects ) {
+		$aSubscribers = [];
+
+		foreach ( $aObjects as $aSub ) {
+			$oSubscriber = new \ExactTarget_Subscriber();
+			$oSubscriber->SubscriberKey = $aSub['SubscriberKey'];
+			$oSubscriber->EmailAddress = $aSub['EmailAddress'];
+			
+			$aSubscribers[] = $this->wrapToSoapVar( $oSubscriber, 'Subscriber' );
+		}
+
+		return $aSubscribers;
+	}
 }

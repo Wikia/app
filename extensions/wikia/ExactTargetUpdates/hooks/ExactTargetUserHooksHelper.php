@@ -1,4 +1,5 @@
 <?php
+namespace Wikia\ExactTarget;
 
 class ExactTargetUserHooksHelper {
 	/**
@@ -6,7 +7,7 @@ class ExactTargetUserHooksHelper {
 	 * @param User $oUser
 	 * @return array
 	 */
-	public function prepareUserParams( User $oUser ) {
+	public function prepareUserParams( \User $oUser ) {
 		$aUserParams = [
 			'user_id' => $oUser->getId(),
 			'user_name' => $oUser->getName(),
@@ -25,7 +26,7 @@ class ExactTargetUserHooksHelper {
 	 * @param User $oUser
 	 * @return array
 	 */
-	public function prepareUserPropertiesParams( User $oUser ) {
+	public function prepareUserPropertiesParams( \User $oUser ) {
 		$aUserPropertiesParams = [
 			'marketingallowed' => $oUser->getOption( 'marketingallowed' ),
 			'unsubscribed' => $oUser->getOption( 'unsubscribed' ),
