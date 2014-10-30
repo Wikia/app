@@ -95,13 +95,13 @@ class UrlGenerator {
 	}
 
 	/**
-	 * set an image's language
-	 * @param string $lang
+	 * set an image's path prefix
+	 * @param string $pathPrefix
 	 * @return $this
 	 */
-	public function lang($lang) {
-		if (!empty($lang) && $lang != 'en') {
-			$this->query['lang'] = $lang;
+	public function pathPrefix($pathPrefix) {
+		if (!empty($pathPrefix)) {
+			$this->query['path-prefix'] = $pathPrefix;
 		}
 
 		return $this;
@@ -226,6 +226,16 @@ class UrlGenerator {
 	}
 
 	/**
+	 * Force the thumbnail request to replace the cached thumbnail.
+	 *
+	 * @return $this
+	 */
+	public function replaceThumbnail() {
+		$this->query['replace'] = "true";
+		return $this;
+	}
+
+	/**
 	 * request an image in webp format
 	 * @return $this
 	 */
@@ -249,8 +259,12 @@ class UrlGenerator {
 	public function url() {
 		$imagePath = "{$this->config->bucket()}/{$this->imageType}/{$this->config->relativePath()}/revision/{$this->getRevision()}";
 
-		if (!isset($this->query['lang'])) {
-			$this->lang($this->config->languageCode());
+		if (!isset($this->query['path-prefix'])) {
+			$this->pathPrefix($this->config->pathPrefix());
+		}
+
+		if (!isset($this->query['replace']) && $this->config->replaceThumbnail()) {
+			$this->replaceThumbnail();
 		}
 
 		$imagePath .= $this->modePath();

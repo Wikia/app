@@ -14,13 +14,14 @@ class VignetteRequest {
 			'is-archive' => $file->isOld(),
 			'timestamp' => $timestamp,
 			'relative-path' => $file->getHashPath().rawurlencode($file->getName()),
-			'language-code' => $file->getLanguageCode(),
+			'bucket' => $file->getBucket(),
+			'path-prefix' => $file->getPathPrefix(),
 		]);
 	}
 
 	/**
 	 * create a UrlGenerator from a config map. $config must have the following keys: relative-path.
-	 * optionally, it can also have timestamp, is-archive, language-code, bucket, base-url, and domain-shard-count.
+	 * optionally, it can also have timestamp, is-archive, path-prefix, bucket, base-url, and domain-shard-count.
 	 * if the optional values aren't in the map, they'll be generated from the current wiki environment
 	 *
 	 * @param $config
@@ -28,13 +29,24 @@ class VignetteRequest {
 	 * @throws InvalidArgumentException
 	 */
 	public static function fromConfigMap($config) {
+		$replaceThumbnail = false;
+
 		$requiredKeys = [
 			'relative-path',
 		];
 
 		$isArchive = isset($config['is-archive']) ? $config['is-archive'] : false;
-		$languageCode = isset($config['language-code']) ? $config['language-code'] : null;
+		$pathPrefix = isset($config['path-prefix']) ? $config['path-prefix'] : null;
 		$timestamp = isset($config['timestamp']) ? $config['timestamp'] : 0;
+
+		if (isset($config['replace'])) {
+			$replaceThumbnail = $config['replace'];
+		} else {
+			global $wgVignetteReplaceThumbnails;
+			if ($wgVignetteReplaceThumbnails || (!empty($_GET['vignetteReplaceThumbnails']) && (bool)$_GET['vignetteReplaceThumbnails'])) {
+				$replaceThumbnail = true;
+			}
+		}
 
 		if (!isset($config['base-url'])) {
 			global $wgVignetteUrl;
@@ -64,9 +76,10 @@ class VignetteRequest {
 
 		$config = ( new UrlConfig() )
 			->setIsArchive( $isArchive )
+			->setReplaceThumbnail( $replaceThumbnail )
 			->setTimestamp( $timestamp )
 			->setRelativePath( $config['relative-path'] )
-			->setLanguageCode( $languageCode )
+			->setPathPrefix( $pathPrefix )
 			->setBucket( $config['bucket'] )
 			->setBaseUrl( $config['base-url'] )
 			->setDomainShardCount( $config['domain-shard-count'] );
@@ -79,7 +92,7 @@ class VignetteRequest {
 	 * @param $url
 	 * @return mixed
 	 */
-	public static function parseBucket($url) {
+	public static function parseBucket( $url ) {
 		$bucket = null;
 
 		if ( preg_match( '/http(s?):\/\/(.*?)\/(.*?)\/(.*)$/', $url, $matches ) ) {
@@ -90,12 +103,30 @@ class VignetteRequest {
 	}
 
 	/**
+	 * parse the path prefix from a url.
+	 * http://images.wikia.com/walkingdead/ru/images -> "ru",
+	 * http://images.wikia.com/walkingdead/images -> null
+	 * http://images.wikia.com/p__/psychusa/zh/images -> psychusa/zh
+	 * @param $url
+	 * @return null
+	 */
+	public static function parsePathPrefix( $url ) {
+		$pathPrefix = null;
+
+		if ( preg_match( '/http(s)?:\/\/(.*?)\/(.*?)\/(.*?\/)?images$/', $url, $matches ) && isset( $matches[4] ) ) {
+			$pathPrefix = rtrim($matches[4], '/');
+		}
+
+		return $pathPrefix;
+	}
+
+	/**
 	 * parse relative path from url. ex: http://images.wiukia.com/muppet/images/a/ab/image.jpg will
 	 * return "a/ab/image.jpg"
 	 * @param $url
 	 * @return mixed
 	 */
-	public static function parseRelativePath($url) {
+	public static function parseRelativePath( $url ) {
 		$relativePath = null;
 
 		if ( preg_match( '/\w\/\w\w\/(.*)$/', $url, $matches ) ) {

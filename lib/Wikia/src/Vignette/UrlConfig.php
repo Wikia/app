@@ -12,15 +12,21 @@ namespace Wikia\Vignette;
 
 class UrlConfig {
 	protected $isArchive = false;
+	protected $replaceThumbnail = false;
 	protected $timestamp;
 	protected $relativePath;
-	protected $languageCode;
+	protected $pathPrefix;
 	protected $bucket;
 	protected $baseUrl;
 	protected $domainShardCount;
 
 	public function setIsArchive($isArchive) {
 		$this->isArchive = $isArchive;
+		return $this;
+	}
+
+	public function setReplaceThumbnail($replace) {
+		$this->replaceThumbnail = $replace;
 		return $this;
 	}
 
@@ -34,8 +40,8 @@ class UrlConfig {
 		return $this;
 	}
 
-	public function setLanguageCode($languageCode) {
-		$this->languageCode = $languageCode;
+	public function setPathPrefix($languageCode) {
+		$this->pathPrefix = $languageCode;
 		return $this;
 	}
 
@@ -58,6 +64,10 @@ class UrlConfig {
 		return $this->isArchive;
 	}
 
+	public function replaceThumbnail() {
+		return $this->replaceThumbnail;
+	}
+
 	public function timestamp() {
 		return $this->timestamp;
 	}
@@ -66,8 +76,8 @@ class UrlConfig {
 		return $this->relativePath;
 	}
 
-	public function languageCode() {
-		return $this->languageCode;
+	public function pathPrefix() {
+		return $this->pathPrefix;
 	}
 
 	public function bucket() {
