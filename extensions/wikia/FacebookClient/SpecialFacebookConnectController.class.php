@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Class SpecialFacebookConnectController
+ *
+ * This controller handles the Special:FacebookConnect page, which handles associating a FB user ID with
+ * a Wikia user ID.
+ */
 class SpecialFacebookConnectController extends WikiaSpecialPageController {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
@@ -8,40 +14,11 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 	}
 
 	/**
+	 * Handle hitting this page for the first time or after a POST of the login form
 	 *
+	 * @requestParam wpCancel
 	 */
 	public function index() {
-		/*
-
-				$this->wg->SupressPageSubtitle = true;
-
-				$scriptsStr = 'special_videos_js';
-				$stylesStr = 'special_videos_css';
-
-				$isMobile = $this->app->checkSkin( 'wikiamobile' );
-
-				if ( $isMobile ) {
-					$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
-					$scriptsStr .= '_mobile';
-					$stylesStr .= '_mobile';
-				} else {
-					$this->response->addAsset('special_videos_css_monobook');
-				}
-
-				$this->response->addAsset( $scriptsStr );
-				$this->response->addAsset( $stylesStr );
-
-				// enqueue i18n message for javascript
-				JSMessages::enqueuePackage( 'SpecialVideos', JSMessages::INLINE );
-
-				// Change the <title> attribute and the <h1> for the page
-				$this->getContext()->getOutput()->setPageTitle( wfMessage( 'specialvideos-page-title' )->text() );
-				$this->getContext()->getOutput()->setHTMLTitle( wfMessage( 'specialvideos-html-title' )->text() );
-
-				// For search engines
-				$this->getContext()->getOutput()->setRobotPolicy( "index,follow" );
-		*/
-
 		$wg = F::app()->wg;
 
 		if ( $wg->Request->wasPosted() ) {
@@ -50,15 +27,14 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 			} else {
 				$this->loginAndConnect();
 			}
-			return true;
-		}
-
-		//if ( $subpage ) {
+		} else {
 			$this->forward( __CLASS__, 'connectExisting' );
-			return true;
-		//}
+		}
 	}
 
+	/**
+	 * Run when the user has clicked the 'cancel' button on the login form
+	 */
 	protected function cancelConnect() {
 		FacebookClient::getInstance()->logout();
 		F::app()->wg->Out->showErrorPage(
@@ -67,6 +43,12 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 		);
 	}
 
+	/**
+	 * Run when the user has clicked the 'login' button on the login form
+	 *
+	 * @return bool
+	 * @throws FacebookMapModelInvalidDataException
+	 */
 	protected function loginAndConnect() {
 		$wg = F::app()->wg;
 
@@ -78,7 +60,7 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 
 		// The user must be logged into Facebook before choosing a wiki username
 		if ( !$fbUserId ) {
-			$wg->Out->showErrorPage( 'fbconnect-error', 'fbconnect-errortext' );
+			$wg->Out->showErrorPage( 'facebookclient-error', 'facebookclient-errortext' );
 			wfProfileOut(__METHOD__);
 			return true;
 		}
@@ -110,10 +92,17 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 		return true;
 	}
 
+	/**
+	 * Run when the user has successfully logged in from the login form
+	 *
+	 * @throws MWException
+	 */
 	public function successfulConnect() {
 		$wg = F::app()->wg;
 
-		// Set this so we have something to pass the hook
+		// Set this so we have something to pass the hook, though its not used since we always
+		// redirect at the end of this method.
+		// @TODO Can we pass an empty string here and not define this unused variable?
 		$inject_html = '';
 
 		// Pull this into a separate variable so we can assign it back afterward
@@ -124,7 +113,7 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 		$titleObj = Title::newFromText( $this->mReturnTo );
 		$queryStr = 'fbconnected=1&cb='.rand( 1, 10000 );
 
-		if ( $this->isInvalidRedirectOnConnect() ) {
+		if ( $this->isInvalidRedirectOnConnect( $titleObj ) ) {
 			// Don't redirect if the location is no good.  Go to the main page instead
 			$titleObj = Title::newMainPage();
 		} else {
@@ -135,7 +124,7 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 		$wg->Out->redirect( $titleObj->getFullURL( $queryStr ) );
 	}
 
-	private function isInvalidRedirectOnConnect( $title = null ) {
+	private function isInvalidRedirectOnConnect( $title ) {
 		return (
 			!$title instanceof Title ||
 			$title->isSpecial( 'Userlogout' ) ||
@@ -145,6 +134,13 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 		);
 	}
 
+	/**
+	 * This code is run when the user first reaches the Special:FacebookConnect page.  It displays
+	 * a login form.  Successful login will connect that user to their Facebook account.
+	 *
+	 * @throws MWException
+	 * @throws ReadOnlyError
+	 */
 	public function connectExisting() {
 		$wg = F::app()->wg;
 

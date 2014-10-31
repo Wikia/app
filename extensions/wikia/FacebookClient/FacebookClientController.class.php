@@ -3,13 +3,6 @@
 class FacebookClientController extends WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
-	/**
-	 *
-	 */
-	public function index() {
-
-	}
-
 	public function preferences() {
 		$this->isConnected = $this->getVal('isConnected', false);
 
@@ -31,7 +24,7 @@ class FacebookClientController extends WikiaController {
 	/**
 	 * Disconnect the user from Facebook
 	 *
-	 * @requestParam user This is a user object.  Only works for internal callss
+	 * @requestParam user This is a user object.  Only works for internal calls
 	 */
 	public function disconnectFromFB() {
 		$user = $this->getVal( 'user', null );

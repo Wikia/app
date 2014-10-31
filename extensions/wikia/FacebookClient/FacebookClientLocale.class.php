@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Class FacebookClientLocale
+ *
+ * This class maps Wikia locals to FB locals
+ */
 class FacebookClientLocale {
 
 	private static $mwLocalToFBLocale = [
@@ -115,6 +120,11 @@ class FacebookClientLocale {
 		}
 	}
 
+	/**
+	 * Returns the Facebook locale code for the current user language ($wgLang)
+	 *
+	 * @return string
+	 */
 	public static function getLocale() {
 		return self::codeToFaceBookLocale( F::app()->wg->Lang->getCode() );
 	}

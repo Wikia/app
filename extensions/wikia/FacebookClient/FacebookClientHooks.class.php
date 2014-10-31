@@ -1,9 +1,28 @@
 <?php
 
+/**
+ * Class FacebookClientHooks
+ */
 class FacebookClientHooks {
 
+	/**
+	 * This hook runs whenever a user is being created from session data.  The only time action is taken is if the
+	 * user is currently on Special:Userlogin.  In this case it will see if there is a valid Facebook user and if so
+	 * send them to the Facebook connect flow (they wouldn't have the Facebook cookies if they hadn't clicked a
+	 * Facebook login button)
+	 *
+	 * @param $user
+	 * @param $result
+	 *
+	 * @return bool
+	 */
 	public static function UserLoadFromSession( $user, &$result ) {
 		$wg = F::app()->wg;
+
+		// If we're not trying to login, don't issue the redirect this handler creates
+		if ( !$wg->Title->isSpecial( 'Userlogin' ) ) {
+			return true;
+		}
 
 		// Check to see if the user can be logged in from Facebook
 		$fb = FacebookClient::getInstance();
@@ -96,7 +115,7 @@ class FacebookClientHooks {
 	static function SkinAfterBottomScripts( $skin, &$scripts ) {
 		global $fbScript, $wgNoExternals;
 
-		if( !empty( $fbScript ) && empty( $wgNoExternals ) ) {
+		if ( !empty( $fbScript ) && empty( $wgNoExternals ) ) {
 			$scripts .= '<div id="fb-root"></div>';
 		}
 
@@ -111,11 +130,6 @@ class FacebookClientHooks {
 	 * @return bool
 	 */
 	static function GetPreferences( $user, &$preferences ) {
-		$wg = F::app()->wg;
-
-		$type = $wg->JsMimeType;
-		$src = $wg->ExtensionsPath.'/FBConnect/prefs.js?'.$wg->StyleVersion;
-		$wg->Out->addScript("<script type=\"$type\" src=\"$src\"></script>\n");
 
 		// Determine if we're connected already or not
 		$ids = FacebookClient::getInstance()->getFacebookUserIds( $user );

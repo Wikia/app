@@ -1,8 +1,13 @@
 <?php
 
+/**
+ * Class FacebookMapModel
+ *
+ * This class models the mapping between a Wikia user ID and a Facebook user ID
+ */
 class FacebookMapModel {
 
-	// Make these often used parameters constants so they can be checked by the compiler
+	// Make these often used parameters are constants so they can be checked by the compiler
 	const paramWikiaUserId = 'wikiaUserId';
 	const paramFacebookUserId = 'facebookUserId';
 	const paramUpdateTime = 'updateTime';
@@ -24,7 +29,7 @@ class FacebookMapModel {
 	 */
 	public function __construct( array $param = null ) {
 		// If $param is set, both IDs must be passed
-		if ( !isset( $param[self::paramFacebookUserId], $param[self::paramWikiaUserId] ) ) {
+		if ( $param && !isset( $param[self::paramFacebookUserId], $param[self::paramWikiaUserId] ) ) {
 			throw new FacebookMapModelInvalidParamException();
 		}
 
@@ -69,6 +74,20 @@ class FacebookMapModel {
 	 * @param int $wikiaId A Wikia User ID
 	 */
 	public static function deleteFromWikiaID( $wikiaId ) {
+		$maps = self::lookupFromWikiaID( $wikiaId );
+
+		// Delete all Facebook user ID based keys
+		/** @var FacebookMapModel $map */
+		foreach ( $maps as $map ) {
+			$memkey = self::generateMemKey( [ self::paramFacebookUserId => $map->getFacebookUserId() ] );
+			F::app()->wg->Memc->delete( $memkey );
+		}
+
+		// Delete the Wikia user ID based key
+		$memkey = self::generateMemKey( [ self::paramWikiaUserId => $wikiaId ] );
+		F::app()->wg->Memc->delete( $memkey );
+
+
 		self::deleteMapping( [ self::paramWikiaUserId => $wikiaId ] );
 	}
 
@@ -78,6 +97,16 @@ class FacebookMapModel {
 	 * @param int $facebookId A Facebook user ID
 	 */
 	public static function deleteFromFacebookID( $facebookId ) {
+		$map = self::lookupFromFacebookID( $facebookId );
+
+		// Delete the Wikia user ID based key
+		$memkey = self::generateMemKey( [ self::paramWikiaUserId => $map->getWikiaUserId() ] );
+		F::app()->wg->Memc->delete( $memkey );
+
+		// Delete this Facebook user ID based key
+		$memkey = self::generateMemKey( [ self::paramWikiaUserId => $facebookId ] );
+		F::app()->wg->Memc->delete( $memkey );
+
 		self::deleteMapping( [ self::paramFacebookUserId => $facebookId ] );
 	}
 
@@ -91,8 +120,8 @@ class FacebookMapModel {
 		if ( !is_array( $mappings ) ) {
 			$data = self::loadFromDB( $params );
 
+			// Return now with an empty array if its not found
 			if ( !is_array( $data ) ) {
-				// Return now with an empty array if its not found
 				return [];
 			}
 

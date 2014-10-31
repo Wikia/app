@@ -1,15 +1,28 @@
 <?php
 
+/**
+ * Class FacebookClient
+ *
+ * Wrapper around the Facebook SDK
+ */
 class FacebookClient {
 
-	// Only create one instance of this object per request
+	/** @var FacebookClient - Only create one instance of this object per request */
 	private static $instance;
 
 	/** @var Facebook\FacebookSignedRequestFromInputHelper  */
 	private $facebookAPI;
+	/** @var  array */
 	private $userInfoCache;
 
-	public function __construct( Facebook\FacebookSignedRequestFromInputHelper $facebookAPI = null) {
+	/**
+	 * Only called internally
+	 *
+	 * @param \Facebook\FacebookSignedRequestFromInputHelper $facebookAPI
+	 *
+	 * @throws Exception
+	 */
+	private function __construct( Facebook\FacebookSignedRequestFromInputHelper $facebookAPI = null) {
 		global $fbAppId, $fbAppSecret;
 
 		// Only hold one version of this client per request
@@ -31,6 +44,11 @@ class FacebookClient {
 		}
 	}
 
+	/**
+	 * Return an instance of the FacebookClient
+	 *
+	 * @return FacebookClient
+	 */
 	public static function getInstance() {
 		if ( empty( self::$instance ) ) {
 			self::$instance = new FacebookClient();
@@ -38,11 +56,18 @@ class FacebookClient {
 		return self::$instance;
 	}
 
+	/**
+	 * Get the Facebook user ID for the current user, if set
+	 *
+	 * @return null|string
+	 */
 	public function getUserId() {
 		return $this->facebookAPI->getUserId();
 	}
 
 	/**
+	 * Get Facebook information about the current user
+	 *
 	 * @param int $userId
 	 *
 	 * @return Facebook\GraphUser
@@ -68,6 +93,13 @@ class FacebookClient {
 		return $this->userInfoCache[$userId];
 	}
 
+	/**
+	 * Same as FacebookClient::getUserInfo but returns the data as an array rather than a Facebook\GraphUser object.
+	 *
+	 * @param int $userId
+	 *
+	 * @return array
+	 */
 	public function getUserInfoAsArray( $userId = 0 ) {
 		$userInfo = $this->getUserInfo( $userId );
 
@@ -93,11 +125,26 @@ class FacebookClient {
 		return $data;
 	}
 
+	/**
+	 * Returns the what Facebook reports as the full user name for the current user.
+	 *
+	 * @param int $user
+	 *
+	 * @return null|string
+	 */
 	public function getFullName( $user = 0 ) {
 		$userInfo = $this->getUserInfo( $user );
 		return $userInfo->getName();
 	}
 
+	/**
+	 * Returns a Wikia User object for the current (or passed) Facebook ID
+	 *
+	 * @param int $fbid [optional] A Facebook ID
+	 *
+	 * @return null|User
+	 * @throws MWException
+	 */
 	public function getWikiaUser( $fbid = null ) {
 
 		if ( empty( $fbid ) ) {
@@ -135,6 +182,9 @@ class FacebookClient {
 	}
 
 	/**
+	 * Returns all known Facebook user IDs for the current Wikia user (could be many since Wikia has more
+	 * than one Facebook app
+	 *
 	 * @param User|int $user
 	 *
 	 * @return array|bool|mixed
@@ -162,7 +212,7 @@ class FacebookClient {
 	}
 
 	/**
-	 *
+	 * Cleans up cookies related to Facebook when logging out
 	 */
 	public function logout() {
 		global $fbAppId;

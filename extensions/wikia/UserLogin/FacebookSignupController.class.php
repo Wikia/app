@@ -19,7 +19,7 @@ class FacebookSignupController extends WikiaController {
 
 		// try to get connected Wikia account
 		if ( F::app()->wg->EnableFacebookClientExt ) {
-			$user = FacebookClient::getInstance()->getUserId();
+			$user = FacebookClient::getInstance()->getWikiaUser();
 		} else {
 			$user = FBConnectDB::getUser( $fbUserId );
 		}

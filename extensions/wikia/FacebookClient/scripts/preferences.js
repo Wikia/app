@@ -6,7 +6,7 @@ $(function () {
 	$('#fbConnectDisconnect').click(function () {
 		$('#fbConnectDisconnectDone').hide();
 		$('#fbDisconnectProgress').show();
-		$.postJSON(wgServer + wgScript + '?controller=FacebookClient&method=disconnectFromFB',
+		$.postJSON(wgServer + '/wikia.php?controller=FacebookClient&method=disconnectFromFB&format=json',
 			null,
 			function (data) {
 				if (data.status === 'ok') {
