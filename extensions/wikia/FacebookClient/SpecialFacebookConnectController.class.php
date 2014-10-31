@@ -36,27 +36,6 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 		}
 	}
 
-	public function connectCurrentUser() {
-		$wg = F::app()->wg;
-
-		$fb = FacebookClient::getInstance();
-		$fbUserId = $fb->getUserId();
-
-		// The user must be logged into Facebook before choosing a wiki username
-		if ( !$fbUserId ) {
-			$wg->Out->showErrorPage( 'facebookclient-error', 'facebookclient-errortext' );
-			return true;
-		}
-
-		$map = new FacebookMapModel();
-		$map->relate( $wg->User->getId(), $fbUserId );
-		$map->save();
-
-		$this->forward( __CLASS__, 'successfulConnect' );
-
-		$this->track( 'facebook-link-existing' );
-	}
-
 	/**
 	 * Run when the user has clicked the 'cancel' button on the login form
 	 */
@@ -115,45 +94,30 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * Run when the user has successfully logged in from the login form
+	 * Connect the already logged in Wikia user to a Facebook account.  By the time they get here
+	 * they should already have logged into Facebook and have a Facebook user ID.
 	 *
-	 * @throws MWException
+	 * @throws FacebookMapModelInvalidDataException
 	 */
-	public function successfulConnect() {
+	public function connectCurrentUser() {
 		$wg = F::app()->wg;
 
-		// Set this so we have something to pass the hook, though its not used since we always
-		// redirect at the end of this method.
-		// @TODO Can we pass an empty string here and not define this unused variable?
-		$inject_html = '';
+		$fb = FacebookClient::getInstance();
+		$fbUserId = $fb->getUserId();
 
-		// Pull this into a separate variable so we can assign it back afterward
-		$user = $wg->User;
-		wfRunHooks( 'UserLoginComplete', [ &$user, &$inject_html ] );
-		$wg->User = $user;
-
-		$titleObj = Title::newFromText( $this->mReturnTo );
-		$queryStr = 'fbconnected=1&cb='.rand( 1, 10000 );
-
-		if ( $this->isInvalidRedirectOnConnect( $titleObj ) ) {
-			// Don't redirect if the location is no good.  Go to the main page instead
-			$titleObj = Title::newMainPage();
-		} else {
-			// Include the return to query string if its ok to redirect
-			$queryStr = $this->mReturnToQuery . '&' . $queryStr;
+		// The user must be logged into Facebook before choosing a wiki username
+		if ( !$fbUserId ) {
+			$wg->Out->showErrorPage( 'facebookclient-error', 'facebookclient-errortext' );
+			return true;
 		}
 
-		$wg->Out->redirect( $titleObj->getFullURL( $queryStr ) );
-	}
+		$map = new FacebookMapModel();
+		$map->relate( $wg->User->getId(), $fbUserId );
+		$map->save();
 
-	private function isInvalidRedirectOnConnect( $title ) {
-		return (
-			!$title instanceof Title ||
-			$title->isSpecial( 'Userlogout' ) ||
-			$title->isSpecial( 'Signup' ) ||
-			$title->isSpecial( 'Connect' ) ||
-			$title->isSpecial( 'FacebookConnect' )
-		);
+		$this->forward( __CLASS__, 'successfulConnect' );
+
+		$this->track( 'facebook-link-existing' );
 	}
 
 	/**
@@ -201,6 +165,54 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 		$this->passwordLabel = wfMessage( 'facebookclient-connect-password-label' )->plain();
 	}
 
+	/**
+	 * Run when the user has successfully logged in from the login form
+	 *
+	 * @throws MWException
+	 */
+	public function successfulConnect() {
+		$wg = F::app()->wg;
+
+		// Set this so we have something to pass the hook, though its not used since we always
+		// redirect at the end of this method.
+		// @TODO Can we pass an empty string here and not define this unused variable?
+		$inject_html = '';
+
+		// Pull this into a separate variable so we can assign it back afterward
+		$user = $wg->User;
+		wfRunHooks( 'UserLoginComplete', [ &$user, &$inject_html ] );
+		$wg->User = $user;
+
+		$titleObj = Title::newFromText( $this->mReturnTo );
+		$queryStr = 'fbconnected=1&cb='.rand( 1, 10000 );
+
+		if ( $this->isInvalidRedirectOnConnect( $titleObj ) ) {
+			// Don't redirect if the location is no good.  Go to the main page instead
+			$titleObj = Title::newMainPage();
+		} else {
+			// Include the return to query string if its ok to redirect
+			$queryStr = $this->mReturnToQuery . '&' . $queryStr;
+		}
+
+		$wg->Out->redirect( $titleObj->getFullURL( $queryStr ) );
+	}
+
+	private function isInvalidRedirectOnConnect( $title ) {
+		return (
+			!$title instanceof Title ||
+			$title->isSpecial( 'Userlogout' ) ||
+			$title->isSpecial( 'Signup' ) ||
+			$title->isSpecial( 'Connect' ) ||
+			$title->isSpecial( 'FacebookConnect' )
+		);
+	}
+
+	/**
+	 * An AJAX call to determine if the current user can connect to a Facebook account
+	 *
+	 * @return bool
+	 * @throws MWException
+	 */
 	public function checkCreateAccount() {
 		$wg = F::app()->wg;
 
@@ -244,7 +256,6 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 		// If we get here, we're good
 		$this->status = 'ok';
 	}
-
 
 	/**
 	 * Track an event with a given label with user-sign-up category
