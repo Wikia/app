@@ -7,16 +7,16 @@ class VignetteRequest {
 	 * @param File $file
 	 * @return UrlGenerator
 	 */
-	public static function fromFile(File $file) {
+	public static function fromFile( File $file ) {
 		$timestamp = $file->isOld() ? $file->getArchiveTimestamp() : $file->getTimestamp();
 
-		return self::fromConfigMap([
+		return self::fromConfigMap( [
 			'is-archive' => $file->isOld(),
 			'timestamp' => $timestamp,
-			'relative-path' => $file->getHashPath().rawurlencode($file->getName()),
+			'relative-path' => $file->getHashPath() . rawurlencode( $file->getName() ),
 			'bucket' => $file->getBucket(),
 			'path-prefix' => $file->getPathPrefix(),
-		]);
+		] );
 	}
 
 	/**
@@ -28,49 +28,49 @@ class VignetteRequest {
 	 * @return UrlGenerator
 	 * @throws InvalidArgumentException
 	 */
-	public static function fromConfigMap($config) {
+	public static function fromConfigMap( $config ) {
 		$replaceThumbnail = false;
 
 		$requiredKeys = [
 			'relative-path',
 		];
 
-		$isArchive = isset($config['is-archive']) ? $config['is-archive'] : false;
-		$pathPrefix = isset($config['path-prefix']) ? $config['path-prefix'] : null;
-		$timestamp = isset($config['timestamp']) ? $config['timestamp'] : 0;
+		$isArchive = isset( $config['is-archive'] ) ? $config['is-archive'] : false;
+		$pathPrefix = isset( $config['path-prefix'] ) ? $config['path-prefix'] : null;
+		$timestamp = isset( $config['timestamp'] ) ? $config['timestamp'] : 0;
 
-		if (isset($config['replace'])) {
+		if ( isset( $config['replace'] ) ) {
 			$replaceThumbnail = $config['replace'];
 		} else {
 			global $wgVignetteReplaceThumbnails;
-			if ($wgVignetteReplaceThumbnails || (!empty($_GET['vignetteReplaceThumbnails']) && (bool)$_GET['vignetteReplaceThumbnails'])) {
+			if ( $wgVignetteReplaceThumbnails || ( !empty( $_GET['vignetteReplaceThumbnails'] ) && (bool)$_GET['vignetteReplaceThumbnails'] ) ) {
 				$replaceThumbnail = true;
 			}
 		}
 
-		if (!isset($config['base-url'])) {
+		if ( !isset( $config['base-url'] ) ) {
 			global $wgVignetteUrl;
 			$config['base-url'] = $wgVignetteUrl;
 		}
 
-		if (!isset($config['bucket'])) {
+		if ( !isset( $config['bucket'] ) ) {
 			/**
 			 * get the top level bucket for a given wiki. this may or may not be the same as $wgDBName. This is done via
 			 * regular expression because there is no variable that contains the bucket name :(
 			 */
 			global $wgUploadPath;
-			$config['bucket'] = self::parseBucket($wgUploadPath);
+			$config['bucket'] = self::parseBucket( $wgUploadPath );
 		}
 
-		if (!isset($config['domain-shard-count'])) {
+		if ( !isset( $config['domain-shard-count'] ) ) {
 			global $wgImagesServers;
 			$config['domain-shard-count'] = $wgImagesServers;
 		}
 
-		foreach ($requiredKeys as $key) {
-			if (!isset($config[$key])) {
-				\Wikia\Logger\WikiaLogger::instance()->error("missing key", array_merge($config, ['missing_key' => $key]));
-				throw new InvalidArgumentException("missing key '{$key}'");
+		foreach ( $requiredKeys as $key ) {
+			if ( !isset( $config[$key] ) ) {
+				\Wikia\Logger\WikiaLogger::instance()->error( "missing key", array_merge( $config, ['missing_key' => $key] ) );
+				throw new InvalidArgumentException( "missing key '{$key}'" );
 			}
 		}
 
@@ -84,7 +84,7 @@ class VignetteRequest {
 			->setBaseUrl( $config['base-url'] )
 			->setDomainShardCount( $config['domain-shard-count'] );
 
-		return new UrlGenerator($config);
+		return new UrlGenerator( $config );
 	}
 
 	/**
@@ -114,7 +114,7 @@ class VignetteRequest {
 		$pathPrefix = null;
 
 		if ( preg_match( '/http(s)?:\/\/(.*?)\/(.*?)\/(.*?\/)?images$/', $url, $matches ) && isset( $matches[4] ) ) {
-			$pathPrefix = rtrim($matches[4], '/');
+			$pathPrefix = rtrim( $matches[4], '/' );
 		}
 
 		return $pathPrefix;
@@ -134,5 +134,25 @@ class VignetteRequest {
 		}
 
 		return $relativePath;
+	}
+
+	public static function isVignetteUrl( $url ) {
+		global $wgVignetteUrl, $wgImagesServers;
+
+		$isVignetteUrl = false;
+
+		if ( strpos( $wgVignetteUrl, '<SHARD>' ) === false ) {
+			$isVignetteUrl = strpos( $url, $wgVignetteUrl ) !== false;
+		} else {
+			for ( $i = 1; $i <= $wgImagesServers; ++$i ) {
+				$candidate = str_replace( '<SHARD>', $i, $wgVignetteUrl );
+				if ( strpos( $url, $candidate ) !== false ) {
+					$isVignetteUrl = true;
+					break;
+				}
+			}
+		}
+
+		return $isVignetteUrl;
 	}
 }
