@@ -136,6 +136,13 @@ class VignetteRequest {
 		return $relativePath;
 	}
 
+	/**
+	 * Figure out if a url is a vignette url or not. If you're using this, you should feel sad, and a task should be
+	 * filed to fix whatever code you're using to not use this function.
+	 * 
+	 * @param $url
+	 * @return bool
+	 */
 	public static function isVignetteUrl( $url ) {
 		global $wgVignetteUrl, $wgImagesServers;
 
