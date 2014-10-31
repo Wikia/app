@@ -1,4 +1,4 @@
-/* global FB, wgServer, wgScript */
+/* global FB, wgServer */
 
 $(function () {
 	'use strict';

@@ -99,6 +99,8 @@ class FacebookClientHooks {
 		// macbre: needed for channelUrl
 		$vars['fbScriptLangCode'] = FacebookClientLocale::getLocale();
 
+		$vars['wgEnableFacebookClientExt'] = F::app()->wg->EnableFacebookClientExt;
+
 		return true;
 	}
 
