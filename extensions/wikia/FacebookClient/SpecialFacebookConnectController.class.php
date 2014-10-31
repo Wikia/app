@@ -52,7 +52,7 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 	protected function loginAndConnect() {
 		$wg = F::app()->wg;
 
-		$fb = new FacebookClient();
+		$fb = FacebookClient::getInstance();
 		$fbUserId = $fb->getUserId();
 
 		$wikiaUserName = $wg->Request->getText( 'wpExistingName' );
@@ -178,6 +178,51 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 		$this->userName = $userName;
 		$this->passwordLabel = wfMessage( 'facebookclient-connect-password-label' )->plain();
 	}
+
+	public function checkCreateAccount() {
+		$wg = F::app()->wg;
+
+		$fb = FacebookClient::getInstance();
+		$fb_user = $fb->getUserId();
+
+		// Set default status of 'error'
+		$this->status = 'error';
+
+		// Error out if there's no facebook user
+		if ( empty( $fb_user ) ) {
+			return true;
+		}
+
+		// Error out if there's a user ID defined (we're looking to connect an account)
+		if ( $wg->User->getId() != 0 ) {
+			return true;
+		}
+
+		// Error out if there is a Wikia user connected to this FB user (again, looking to connect an account)
+		if ( $fb->getWikiaUser( $fb_user ) != null) {
+			return true;
+		}
+
+		// Don't do anything when we're readonly
+		if ( wfReadOnly() ) {
+			return true;
+		}
+
+		// Block those who shouldn't be creating acounts
+		if ( $wg->User->isBlockedFromCreateAccount() ) {
+			return true;
+		}
+
+		// Look for any other errors around creating accounts
+		$titleObj = SpecialPage::getTitleFor( 'FacebookConnect' );
+		if ( count( $titleObj->getUserPermissionsErrors( 'createaccount', $wg->User, true ) ) > 0 ) {
+			return true;
+		}
+
+		// If we get here, we're good
+		$this->status = 'ok';
+	}
+
 
 	/**
 	 * Track an event with a given label with user-sign-up category
