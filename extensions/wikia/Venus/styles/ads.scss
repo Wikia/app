@@ -56,4 +56,9 @@
 		@include grid-column-width('large', 4, -2 * $large-grid-column-padding);
 		margin: 0 $large-grid-column-padding + $large-content-padding - $content-border-width 20px $large-grid-gutter + $large-grid-column-padding;
 	}
+
+	// Scale the skin ads on the largest breakpoint
+	body.background-ad {
+		background-size: 1920px;
+	}
 }
