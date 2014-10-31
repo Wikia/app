@@ -1,6 +1,7 @@
 @import '/skins/wikia/shared.css';
 @import '../libs/foundation.custom/components/grid.mixins';
 @import 'extensions/wikia/MediaGallery/styles/MediaGallery';
+@import 'extensions/wikia/Venus/styles/typographyMixins';
 @import 'video';
 
 .wikia-gallery {
@@ -51,4 +52,8 @@
 		}
 	}
 
+	.wikia-slideshow-image-caption {
+		@include font-size-xs;
+		line-height: 22px;
+	}
 }
