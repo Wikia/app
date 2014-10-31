@@ -22,6 +22,10 @@
 	position: static;
 }
 
+.position-static {
+	margin-bottom: -$global-navigation-height;
+}
+
 .global-navigation-item {
 	border-left: 1px solid $nav-border-color;
 	float: left;
