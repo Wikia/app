@@ -28,8 +28,33 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 				$this->loginAndConnect();
 			}
 		} else {
-			$this->forward( __CLASS__, 'connectExisting' );
+			if ( $wg->User->isLoggedIn() ) {
+				$this->forward( __CLASS__, 'connectCurrentUser' );
+			} else {
+				$this->forward( __CLASS__, 'connectUser' );
+			}
 		}
+	}
+
+	public function connectCurrentUser() {
+		$wg = F::app()->wg;
+
+		$fb = FacebookClient::getInstance();
+		$fbUserId = $fb->getUserId();
+
+		// The user must be logged into Facebook before choosing a wiki username
+		if ( !$fbUserId ) {
+			$wg->Out->showErrorPage( 'facebookclient-error', 'facebookclient-errortext' );
+			return true;
+		}
+
+		$map = new FacebookMapModel();
+		$map->relate( $wg->User->getId(), $fbUserId );
+		$map->save();
+
+		$this->forward( __CLASS__, 'successfulConnect' );
+
+		$this->track( 'facebook-link-existing' );
 	}
 
 	/**
@@ -61,7 +86,6 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 		// The user must be logged into Facebook before choosing a wiki username
 		if ( !$fbUserId ) {
 			$wg->Out->showErrorPage( 'facebookclient-error', 'facebookclient-errortext' );
-			wfProfileOut(__METHOD__);
 			return true;
 		}
 
@@ -88,8 +112,6 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 		$this->forward( __CLASS__, 'successfulConnect' );
 
 		$this->track( 'facebook-link-existing' );
-
-		return true;
 	}
 
 	/**
@@ -141,7 +163,7 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 	 * @throws MWException
 	 * @throws ReadOnlyError
 	 */
-	public function connectExisting() {
+	public function connectUser() {
 		$wg = F::app()->wg;
 
 		$title = wfMessage('facebookclient-connect-existing')->plain();
