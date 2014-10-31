@@ -1,11 +1,30 @@
-@import 'skins/oasis/css/lib/foundation.custom/foundation.custom';
 @import 'skins/shared/mixins/background-opacity.scss';
 @import 'skins/shared/color.scss';
 
-$media-margin: .5em;
+$media-margin: 2.5px;
+
+.ve {
+	.media-gallery-wrapper {
+		.media {
+			transition: none;
+		}
+		// Hide "Show more" button when gallery is displayed in VE
+		.more {
+			display: none;
+		}
+	}
+}
+
+// In VE captions are wrapped in <p> (unlike in article view) so in order to
+// achieve same rendering effect "nautralize" styling of that <p>
+.media-gallery-caption .ve-ce-generated-wrapper {
+	display: inline;
+	margin: 0;
+}
 
 .media-gallery-wrapper {
 	@include grid-row();
+	clear: both;
 	margin: 0 $media-margin * -1;
 	padding: 1px; // leave room for the image outlines
 	width: auto;
@@ -72,10 +91,6 @@ $media-margin: .5em;
 		padding: $media-margin;
 	}
 
-	.media-gallery-inner {
-		clear: both;
-	}
-
 	.more {
 		clear: both;
 		margin-left: $media-margin * -1;
@@ -85,6 +100,7 @@ $media-margin: .5em;
 		button {
 			margin-left: $media-margin * 2;
 			outline: none;
+			position: relative;
 
 			&.hidden {
 				display: none;
@@ -102,12 +118,12 @@ $media-margin: .5em;
 	 *    - Expand caption content so it's height can be calculated by JS.
 	 */
 
-	$caption-line-height: 1.5em;
-	$caption-padding: .75em;
+	$caption-line-height: 18px;
+	$caption-padding: 9px;
 	$caption-height: ($caption-padding * 2) + $caption-line-height;
 	$caption-top-offset: -1 * ($caption-height + $media-margin);
 
-	.caption {
+	.media-gallery-caption {
 		@include background-opacity(#000, 60);
 		bottom: $media-margin;
 		color: #fff;
@@ -127,6 +143,7 @@ $media-margin: .5em;
 		}
 
 		.inner {
+			max-height: $caption-line-height;
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
@@ -134,6 +151,7 @@ $media-margin: .5em;
 
 		&.hovered {
 			.inner {
+				max-height: none;
 				white-space: normal;
 			}
 		}

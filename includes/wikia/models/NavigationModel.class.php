@@ -36,6 +36,18 @@ class NavigationModel extends WikiaModel {
 	//errors
 	const ERR_MAGIC_WORD_IN_LEVEL_1 = 'Magic word at level 1';
 
+	const LOCALNAV_LEVEL_1_ITEMS_COUNT = 4;
+	const LOCALNAV_LEVEL_2_ITEMS_COUNT = 7;
+	const LOCALNAV_LEVEL_3_ITEMS_COUNT = 10;
+
+	const GLOBALNAV_LEVEL_1_ITEMS_COUNT = 7;
+	const GLOBALNAV_LEVEL_2_ITEMS_COUNT = 4;
+	const GLOBALNAV_LEVEL_3_ITEMS_COUNT = 4;
+
+	const MEMC_VERSION = 2;
+
+	private $menuNodes;
+
 	private $biggestCategories;
 	private $lastExtraIndex = 1000;
 	private $extraWordsMap = array(
@@ -156,6 +168,119 @@ class NavigationModel extends WikiaModel {
 			'wikia' => $wikia,
 			'wiki' => $wiki
 		);
+	}
+
+	public function getGlobalNavigationTree( $messageName ) {
+		return $this->getTree(
+			NavigationModel::TYPE_MESSAGE,
+			$messageName,
+			[
+				self::GLOBALNAV_LEVEL_1_ITEMS_COUNT,
+				self::GLOBALNAV_LEVEL_2_ITEMS_COUNT,
+				self::GLOBALNAV_LEVEL_3_ITEMS_COUNT
+			]
+		);
+	}
+
+	public function getLocalNavigationTree( $messageName ) {
+		return $this->getTree(
+			NavigationModel::TYPE_MESSAGE,
+			$messageName,
+			[
+				self::LOCALNAV_LEVEL_1_ITEMS_COUNT,
+				self::LOCALNAV_LEVEL_2_ITEMS_COUNT,
+				self::LOCALNAV_LEVEL_3_ITEMS_COUNT
+			],
+			true
+		);
+	}
+
+	public function getOnTheWikiNavigationTree( $variableName ) {
+		return $this->getTree(
+			NavigationModel::TYPE_VARIABLE,
+			$variableName,
+			[
+				1,
+				self::LOCALNAV_LEVEL_2_ITEMS_COUNT,
+				self::LOCALNAV_LEVEL_3_ITEMS_COUNT
+			],
+			true
+		);
+	}
+
+	private function getTreeMemcKey( /* args */ ) {
+		return $this->getMemcKey(implode('-', func_get_args() + [self::MEMC_VERSION]));
+	}
+
+	public function getTree( $type, $source, $maxChildrenAtLevel = [], $forContent = false ) {
+		$menuData = WikiaDataAccess::cache(
+			$this->getTreeMemcKey( $type, $source, implode($maxChildrenAtLevel, '-'), $forContent ),
+			1800,
+			function() use ( $type, $source, $maxChildrenAtLevel, $forContent ) {
+				$menuData = [];
+
+				$this->menuNodes = $this->parse(
+					$type,
+					$source,
+					$maxChildrenAtLevel,
+					1800 /* 3 hours */,
+					$forContent
+				);
+
+				foreach( $this->menuNodes[0]['children'] as $id ) {
+					$menuData[] = $this->recursiveConvertMenuNodeToArray( $id );
+				}
+
+				return $menuData;
+			}
+		);
+
+		return $menuData;
+	}
+
+	/*
+	 * TODO we should refactor whole model when we remove Oasis
+	 *
+	 * This (recursive) function generates tree from menuNodes.
+	 * It basically reverts part of NavigationModel parse; changes simple array
+	 * structure to a nested tree of elements; contain text, href
+	 * and specialAttr for given menu node and all it's children nodes.
+	 * Source ticket: CON-804
+	 *
+	 * IMPORTANT: This function will be called 140 times as on 2014-06-27 - seven hubs,
+	 * four submenus for each hub, five links in each submenu.
+	 *
+	 * @param $index integer of menuitem index to generate data from
+	 * @return array tree of menu nodes for given index
+	 */
+	private function recursiveConvertMenuNodeToArray($index) {
+		$node = $this->menuNodes[$index];
+		$returnValue = [
+			'text' => $node['text'],
+			'textEscaped' => htmlspecialchars( $node['text'], ENT_QUOTES | ENT_HTML5, 'UTF-8' ),
+			'href' => $node['href'],
+		];
+		if ( !empty( $node['specialAttr'] ) ) {
+			$returnValue['specialAttr'] = $node['specialAttr'];
+		}
+		if ( !empty( $node['canonicalName'] ) ) {
+			$returnValue['canonicalName'] = $node['canonicalName'];
+			$returnValue['canonicalAttr'] = 'data-canonical="' . strtolower( $node['canonicalName'] ) . '" ';
+		} else {
+			$returnValue['canonicalAttr'] = null;
+		}
+
+		if ( isset( $node['children'] ) ) {
+			$children = [];
+
+			foreach ($node['children'] as $childId) {
+				$children[] = $this->recursiveConvertMenuNodeToArray($childId);
+			}
+
+			$returnValue['children'] = $children;
+		}
+
+		return $returnValue;
 	}
 
 	/**

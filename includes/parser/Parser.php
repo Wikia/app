@@ -488,8 +488,11 @@ class Parser {
 			// which looks much like the problematic '-'.
 			$limitReport = str_replace( array( '-', '&' ), array( '‐', '&amp;' ), $limitReport );
 
-			$text .= "\n<!-- \n$limitReport-->\n";
+			if ( !empty( $limitReport ) ) {
+				$text .= "\n<!-- \n$limitReport-->\n";
+			}
 		}
+
 		$this->mOutput->setText( $text );
 
 		$this->mRevisionId = $oldRevisionId;
@@ -5608,6 +5611,8 @@ class Parser {
 		Wikia\Logger\WikiaLogger::instance()->info(__METHOD__, [
 			'exception' => new Exception()
 		]);
+
+		Transaction::setAttribute( Transaction::PARAM_PARSER_CACHE_DISABLED, true );
 		// Wikia change - end
 	}
 

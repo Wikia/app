@@ -4,23 +4,35 @@
 /*jshint maxlen:200*/
 require([
 	'wikia.log',
-	'wikia.document',
 	'wikia.window',
-	'wikia.tracker',
 	'wikia.instantGlobals',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adEngine',
 	'ext.wikia.adEngine.adConfig',
-	'ext.wikia.adEngine.evolveSlotConfig',
 	'ext.wikia.adEngine.adLogicPageParams',
+	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.slotTracker',
-	'ext.wikia.adEngine.lateAdsQueue',
 	'ext.wikia.adEngine.adLogicHighValueCountry',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.messageListener',
 	require.optional('wikia.abTest')
-], function (log, document, window, tracker, instantGlobals, adContext, adEngine, adConfig, evolveSlotConfig, adLogicPageParams, wikiaDart, slotTracker, lateAdsQueue, adLogicHighValueCountry, slotTweaker, messageListener, abTest) {
+], function (
+	log,
+	window,
+	instantGlobals,
+	adContext,
+	adEngine,
+	adConfig,
+	adLogicPageParams,
+	adTracker,
+	wikiaDart,
+	slotTracker,
+	adLogicHighValueCountry,
+	slotTweaker,
+	messageListener,
+	abTest
+) {
 	'use strict';
 
 	var module = 'AdEngine2.run',
@@ -50,7 +62,7 @@ require([
 
 	// Register Evolve hop
 	window.evolve_hop = function (slotname) {
-		require(['ext.wikia.adEngine.provider.evolve'], function(adProviderEvolve) {
+		require(['ext.wikia.adEngine.provider.evolve'], function (adProviderEvolve) {
 			adProviderEvolve.hop(slotname);
 		});
 	};
@@ -92,15 +104,8 @@ require([
 
 	function startEarlyQueue() {
 		// Start ads
-		window.AdEngine_trackStartEarlyAds();
 		log('work on window.adslots2 according to AdConfig2', 1, module);
-		tracker.track({
-			eventName: 'liftium.init',
-			ga_category: 'init2/init',
-			ga_action: 'init',
-			ga_label: 'adengine2',
-			trackingMethod: 'ad'
-		});
+		adTracker.measureTime('adengine.init', 'queue.early').track();
 		window.adslots2 = window.adslots2 || [];
 		adEngine.run(adConfig, window.adslots2, 'queue.early');
 	}
@@ -119,6 +124,10 @@ require([
 			window.AdEngine_loadLateAds();
 		}
 	}
+
+	if (window.amzn_targs) {
+		adTracker.track('lookupSuccess/amazon', { amzn_targs: true }, 0);
+	}
 });
 
 // Load late ads now
@@ -127,19 +136,12 @@ window.AdEngine_loadLateAds = function () {
 
 	function loadLateFn() {
 		require([
-			'ext.wikia.adEngine.adConfigLate', 'ext.wikia.adEngine.adEngine', 'ext.wikia.adEngine.lateAdsQueue', 'wikia.tracker', 'wikia.log'
-		], function (adConfigLate, adEngine, lateAdsQueue, tracker, log) {
+			'ext.wikia.adEngine.adConfigLate', 'ext.wikia.adEngine.adEngine', 'ext.wikia.adEngine.lateAdsQueue', 'ext.wikia.adEngine.adTracker', 'wikia.log'
+		], function (adConfigLate, adEngine, lateAdsQueue, adTracker, log) {
 			var module = 'AdEngine_loadLateAds';
-			window.AdEngine_trackStartLateAds();
 			log('launching late ads now', 1, module);
 			log('work on lateAdsQueue according to AdConfig2Late', 1, module);
-			tracker.track({
-				eventName: 'liftium.init',
-				ga_category: 'init2/init',
-				ga_action: 'init',
-				ga_label: 'adengine2 late',
-				trackingMethod: 'ad'
-			});
+			adTracker.measureTime('adengine.init', 'queue.late').track();
 			adEngine.run(adConfigLate, lateAdsQueue, 'queue.late');
 		});
 	}
@@ -157,106 +159,4 @@ window.AdEngine_loadLateAds = function () {
 			window.wgAfterContentAndJS.push(loadLateFn);
 		}
 	});
-
-
 };
-
-// Tracking functions for ads in head metrics
-(function (window) {
-	'use strict';
-
-	function trackTime(timeTo) {
-		var wgNowBased,
-			performanceBased,
-			adsInHead = window.wgLoadAdsInHead,
-			lateAdsAfterPageLoad = window.wgLoadLateAdsAfterPageLoad;
-
-		if (window.ads && window.ads.context && window.ads.context.opts) {
-			adsInHead = ads.context.adsInHead;
-			lateAdsAfterPageLoad = ads.context.lateAdsAfterPageLoad;
-		}
-
-		if (!adsInHead && !lateAdsAfterPageLoad) {
-			return;
-		}
-
-		wgNowBased = Math.round(new Date().getTime() - window.wgNow.getTime());
-		performanceBased = window.performance && window.performance.now && Math.round(window.performance.now());
-
-		require([
-			'wikia.log',
-			'wikia.tracker',
-			'ext.wikia.adEngine.slotTracker',
-			require.optional('wikia.abTest')
-		], function (log, tracker, slotTracker, abTest) {
-			var adsInHead = abTest && abTest.getGroup('ADS_IN_HEAD'),
-				adsAfterPageLoad = abTest && abTest.getGroup('ADS_AFTER_PAGE_LOAD'),
-				experimentName = [];
-
-			if (!adsInHead && !adsAfterPageLoad) {
-				return;
-			}
-
-			if (adsInHead) {
-				experimentName.push('adsinhead=' + adsInHead);
-			}
-
-			if (adsAfterPageLoad) {
-				experimentName.push('lateadsafterload=' + adsAfterPageLoad);
-			}
-
-			log([
-				'time to: ' + timeTo,
-				experimentName.join(';'),
-				'wgNowBased: ' + wgNowBased,
-				'performanceBased: ' + performanceBased
-			], 'info', 'AdEngine_track');
-
-			tracker.track({
-				ga_category: 'ad/performance/' + timeTo + '/wgNow',
-				ga_action: experimentName.join(';'),
-				ga_label: slotTracker.getTimeBucket(wgNowBased / 1000),
-				ga_value: wgNowBased,
-				trackingMethod: 'ad'
-			});
-
-			if (performanceBased) {
-				tracker.track({
-					ga_category: 'ad/performance/' + timeTo + '/performance',
-					ga_action: experimentName.join(';'),
-					ga_label: slotTracker.getTimeBucket(performanceBased / 1000),
-					ga_value: performanceBased,
-					trackingMethod: 'ad'
-				});
-			}
-		});
-	}
-
-	// Measure time to page interactive
-	window.AdEngine_trackPageInteractive = function () {
-		trackTime('interactivePage');
-	};
-
-	// Measure time to load early queue
-	window.AdEngine_trackStartEarlyAds = function () {
-		trackTime('startEarlyAds');
-	};
-
-	// Measure time to load late queue
-	window.AdEngine_trackStartLateAds = function () {
-		trackTime('startLateAds');
-	};
-
-	if (window.rp_performance) {
-		require(['wikia.tracker'], function (tracker) {
-			var action = window.rp_valuation ? 'lookupSuccess' : 'lookupError';
-			tracker.track({
-				ga_category: 'ad/' + action + '/rubicon',
-				ga_action: 'oz_cached_only=' + !!window.wgAdDriverRubiconCachedOnly,
-				ga_value: 0,
-				trackingMethod: 'ad'
-			});
-		});
-	}
-
-}(window));

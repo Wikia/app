@@ -1,47 +1,67 @@
-// TODO: ADEN-1332-ize after ADEN-1326
-/*global define*/
+/*global define,require*/
 define('ext.wikia.adEngine.adConfigLate', [
 	// regular dependencies
 	'wikia.log',
 	'wikia.window',
 	'wikia.instantGlobals',
 	'wikia.geo',
+	'ext.wikia.adEngine.adContext',
 
 	// adProviders
 	'ext.wikia.adEngine.provider.evolve',
 	'ext.wikia.adEngine.provider.liftium',
 	'ext.wikia.adEngine.provider.directGpt',
 	'ext.wikia.adEngine.provider.remnantGpt',
+	'ext.wikia.adEngine.provider.taboola',
 	'ext.wikia.adEngine.provider.null',
 	'ext.wikia.adEngine.provider.sevenOneMedia',
-	'ext.wikia.adEngine.provider.ebay'
+	require.optional('wikia.abTest')
 ], function (
 	// regular dependencies
 	log,
 	window,
 	instantGlobals,
 	geo,
+	adContext,
 
 	// AdProviders
 	adProviderEvolve,
 	adProviderLiftium,
 	adProviderDirectGpt,
 	adProviderRemnantGpt,
+	adProviderTaboola,
 	adProviderNull,
 	adProviderSevenOneMedia, // TODO: move this to the early queue (remove jQuery dependency first)
-	adProviderEbay
+	abTest
 ) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adConfigLate',
 		country = geo.getCountryCode(),
+		context = adContext.getContext(),
+		targeting = context.targeting,
 		liftiumSlotsToShowWithSevenOneMedia = {
 			'WIKIA_BAR_BOXAD_1': true,
 			'TOP_BUTTON_WIDE': true,
 			'TOP_BUTTON_WIDE.force': true
 		},
+		slotsToAlwaysCallRemnantGpt = {
+			'WIKIA_BAR_BOXAD_1': true
+		},
 		ie8 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.match(/MSIE [6-8]\./),
-		sevenOneMediaDisabled = instantGlobals.wgSitewideDisableSevenOneMedia,
+
+		taboolaEnabledWikis = {
+			darksouls: true,
+			gameofthrones: true,
+			harrypotter: true,
+			helloproject: true,
+			ladygaga: true,
+			onedirection: true
+		},
+		taboolaEnabled = (targeting.pageType === 'article' || targeting.pageType === 'home') &&
+			taboolaEnabledWikis[targeting.wikiDbName] &&
+			context.providers.taboola &&
+			abTest && abTest.inGroup('NATIVE_ADS_TABOOLA', 'YES'),
 
 		dartBtfCountries = {
 			US: true
@@ -52,18 +72,15 @@ define('ext.wikia.adEngine.adConfigLate', [
 			PREFOOTER_LEFT_BOXAD: true,
 			PREFOOTER_RIGHT_BOXAD: true
 		},
-		dartBtfVerticals = {
-			Entertainment: true,
-			Gaming: true
-		},
 
-		dartBtfEnabled = dartBtfCountries[country] && (
-				window.wgAdDriverUseDartForSlotsBelowTheFold === true ||
-				(window.wgAdDriverUseDartForSlotsBelowTheFold && dartBtfVerticals[window.cscoreCat])
-			);
+		dartBtfEnabled = dartBtfCountries[country] && context.opts.useDartForSlotsBelowTheFold,
+
+		alwaysCallDartInCountries = instantGlobals.wgAdDriverAlwaysCallDartInCountries || [],
+		alwaysCallDart = (alwaysCallDartInCountries.indexOf(country) > -1);
 
 	function getProvider(slot) {
-		var slotname = slot[0];
+		var slotname = slot[0],
+			useRemnantGpt = alwaysCallDart || context.providers.remnantGpt || slotsToAlwaysCallRemnantGpt[slotname];
 
 		log('getProvider', 5, logGroup);
 		log(slot, 5, logGroup);
@@ -74,7 +91,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 			return adProviderEvolve;
 		}
 
-		if (slot[2] === 'Liftium' || window.wgAdDriverForceLiftiumAd) {
+		if (slot[2] === 'Liftium' || context.forceProviders.liftium) {
 			if (adProviderLiftium.canHandleSlot(slotname)) {
 				return adProviderLiftium;
 			}
@@ -83,7 +100,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 		}
 
 		// First ask SevenOne Media
-		if (window.wgAdDriverUseSevenOneMedia) {
+		if (context.providers.sevenOneMedia) {
 			if (adProviderSevenOneMedia.canHandleSlot(slotname)) {
 				if (ie8) {
 					log('SevenOneMedia not supported on IE8. Using Null provider instead', 'warn', logGroup);
@@ -110,22 +127,16 @@ define('ext.wikia.adEngine.adConfigLate', [
 			}
 		}
 
+		if (taboolaEnabled && adProviderTaboola.canHandleSlot(slotname)) {
+			return adProviderTaboola;
+		}
+
 		// DART for some slots below the fold a.k.a. coffee cup
 		if (dartBtfEnabled && dartBtfSlots[slotname] && adProviderDirectGpt.canHandleSlot(slotname)) {
 			return adProviderDirectGpt;
 		}
 
-		// Ebay integration
-		if (window.wgAdDriverUseEbay) {
-			if (slotname === 'PREFOOTER_LEFT_BOXAD') {
-				return adProviderEbay;
-			}
-			if (slotname === 'PREFOOTER_RIGHT_BOXAD') {
-				return adProviderNull;
-			}
-		}
-
-		if (window.wgAdDriverUseRemnantGpt && adProviderRemnantGpt.canHandleSlot(slotname)) {
+		if (useRemnantGpt && adProviderRemnantGpt.canHandleSlot(slotname)) {
 			return adProviderRemnantGpt;
 		}
 
@@ -137,7 +148,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 	}
 
 	return {
-		getDecorators: function () {},
+		getDecorators: function () { return; },
 		getProvider: getProvider
 	};
 });

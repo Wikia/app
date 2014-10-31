@@ -1,4 +1,4 @@
-/*global WikiaForm:true */
+/*global WikiaForm:true, wgScriptPath */
 var UserLoginAjaxForm = function(el, options){
 	this.el = $(el);
 	this.options = options || {};
@@ -28,7 +28,9 @@ UserLoginAjaxForm.prototype.init = function() {
 	// forgot password handler
 	this.forgotPasswordLink.click($.proxy(this.mailPassword, this));
 
-	this.inputs['username'].focus();
+	if ( !this.options['skipFocus'] ) {
+		this.inputs['username'].focus();
+	}
 };
 
 UserLoginAjaxForm.prototype.submitLogin = function(e) {

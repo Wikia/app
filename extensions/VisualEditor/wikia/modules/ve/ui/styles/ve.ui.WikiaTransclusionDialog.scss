@@ -8,11 +8,6 @@
 	}
 
 	.ve-ui-mwParameterPage {
-		&:last-child {
-			.ve-ui-mwParameterPage-more {
-				display: none;
-			}
-		}
 		&.oo-ui-pageLayout:last-of-type {
 			margin-bottom: 0;
 		}
@@ -30,12 +25,14 @@
 		padding: 0.75em 0.5em;
 	}
 
-	.ve-ui-wikiaTemplateGetInfoPage {
-		.oo-ui-buttonedElement.oo-ui-iconedElement .oo-ui-iconedElement-icon {
-			float: right;
-			height: 18px;
-			margin-left: 5px;
-			width: 18px;
+	.ve-ui-wikiaTemplateGetInfoWidget-templateInfoButton {
+		.oo-ui-buttonedElement-button {
+			.oo-ui-iconedElement-icon {
+				float: right;
+				height: 18px;
+				margin-left: 5px;
+				width: 18px;
+			}
 		}
 
 		.oo-ui-labeledElement-label {
@@ -59,6 +56,10 @@
 			width: 100%;
 		}
 	}
+
+	.oo-ui-buttonedElement-frameless .oo-ui-buttonedElement-button > .oo-ui-labeledElement-label {
+		color: $color-text;
+	}
 }
 
 .ve-ui-mwTemplateDialog-editFlow {
@@ -67,7 +68,6 @@
 			margin-top: 5.6em;
 		}
 		.ve-ui-mwTemplatePage {
-			/* TODO: Wikia (ve-sprint-25): This should not be added to the DOM in the first place */
 			display: none;
 		}
 		.oo-ui-bookletLayout-stackLayout {
@@ -78,7 +78,7 @@
 
 	&.ve-ui-mwTransclusionDialog-multiple {
 		.oo-ui-bookletLayout-stackLayout {
-			/* TODO: Wikia (ve-sprint-25): Find where these css properties are being added to the element */
+			/* Layout is set programmatically by OO.ui.GridLayout. */
 			bottom: 0 !important;
 			height: auto !important;
 			top: 5.6em !important;
@@ -92,6 +92,14 @@
 	&.ve-ui-wikiaTransclusionDialog-zeroState {
 		.oo-ui-gridLayout {
 			margin-top: 0;
+		}
+
+		.ve-ui-wikiaTemplateGetInfoWidget-templateInfoButton {
+			margin-top: 1em;
+
+			.oo-ui-labeledElement-label {
+				margin-left: 0;
+			}
 		}
 	}
 }

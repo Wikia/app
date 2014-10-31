@@ -217,6 +217,7 @@ $wgAutoloadClasses[ "GlobalTitle"                     ] = "$IP/includes/wikia/Gl
 $wgAutoloadClasses[ "GlobalFile"                      ] = "$IP/includes/wikia/GlobalFile.class.php";
 $wgAutoloadClasses[ "WikiFactory"                     ] = "$IP/extensions/wikia/WikiFactory/WikiFactory.php";
 $wgAutoloadClasses[ "WikiFactoryHub"                  ] = "$IP/extensions/wikia/WikiFactory/Hubs/WikiFactoryHub.php";
+$wgAutoloadClasses[ "WikiFactoryHubHooks"             ] = "$IP/extensions/wikia/WikiFactory/Hubs/WikiFactoryHubHooks.class.php";
 $wgAutoloadClasses[ 'SimplePie'                       ] = "$IP/lib/vendor/SimplePie/simplepie.inc";
 $wgAutoloadClasses[ 'MustachePHP'                     ] = "$IP/lib/vendor/mustache.php/Mustache.php";
 $wgAutoloadClasses[ 'Handlebars\\Autoloader'          ] = "$IP/lib/vendor/Handlebars/Autoloader.php";
@@ -269,6 +270,8 @@ $wgHooks          [ 'RestInPeace'                     ][] = 'Transaction::onRest
 $wgHooks          [ 'RestInPeace'                     ][] = 'ScribePurge::onRestInPeace';
 $wgAutoloadClasses[ 'Wikia\\Blogs\\BlogTask'          ] = "$IP/extensions/wikia/Blogs/BlogTask.class.php";
 $wgAutoloadClasses[ 'TemplatePageHelper'              ] = "$IP/includes/wikia/helpers/TemplatePageHelper.php";
+$wgAutoloadClasses[ 'CrossOriginResourceSharingHeaderHelper' ] = "$IP/includes/wikia/helpers/CrossOriginResourceSharingHeaderHelper.php";
+$wgAutoloadClasses[ 'VignetteRequest'                 ] = "{$IP}/includes/wikia/VignetteRequest.php";
 
 /**
  * Resource Loader enhancements
@@ -407,6 +410,7 @@ $wgAutoloadClasses['ProfilerDataScribeSink'] = "{$IP}/includes/profiler/sinks/Pr
 
 // Skin loading scripts
 $wgHooks['WikiaSkinTopScripts'][] = 'SpotlightsABTestController::onWikiaSkinTopScripts';
+$wgHooks['WikiaSkinTopScripts'][] = 'WikiFactoryHubHooks::onWikiaSkinTopScripts';
 $wgHooks['WikiaSkinTopScripts'][] = 'ReadMoreController::onWikiaSkinTopScripts';
 $wgHooks['WikiaSkinTopScripts'][] = 'Wikia\\Logger\\Hooks::onWikiaSkinTopScripts';
 
@@ -630,6 +634,7 @@ $wgSkipSkins = array(
 		'efmonaco',
 		'answers',
 		'vector',
+		'venus',
 		'campfire',
 		'wikiamobile'
 );
@@ -737,6 +742,7 @@ $wgExternalWikiaStatsDB = 'wikiastats';
 $wgSpecialsDB = 'specials';
 $wgSharedKeyPrefix = "wikicities"; // default value for shared key prefix, @see wfSharedMemcKey
 $wgWikiaMailerDB = 'wikia_mailer';
+$wgForceMasterDatabase = false;  // true only during wiki creation process
 
 $wgAutoloadClasses['LBFactory_Wikia'] = "$IP/includes/wikia/LBFactory_Wikia.php";
 $wgAutoloadClasses['Wikia\\MastersPoll'] = "$IP/includes/wikia/MastersPoll.php";
@@ -1205,7 +1211,7 @@ $wgAmazonDirectTargetedBuyCountries = null;
  * Enables DART category page param for these content languages
  * "Utility" var, don't change it here.
  */
-$wgAdPageLevelCategoryLangs = [ 'en' => true ];;
+$wgAdPageLevelCategoryLangs = [ 'en' ];
 
 /**
  * @name $wgEnableJavaScriptErrorLogging
@@ -1232,16 +1238,30 @@ $wgAdDriverEnableRemnantGptMobile = false;
 $wgEnableAdEngineExt = true;
 
 /**
- * @name $wgAdDriverUseEbay
- * Whether to enable AdProviderEbay (true) or not (false)
+ * @name $wgAdDriverUseAdsAfterInfobox
+ * Enable new mobile_in_content slot after infobox placement
  */
-$wgAdDriverUseEbay = false;
+$wgAdDriverUseAdsAfterInfobox = false;
+
+/**
+ * @name $wgAdDriverUseTaboola
+ * Whether to enable AdProviderTaboola (true) or not (false)
+ */
+$wgAdDriverUseTaboola = false;
 
 /**
  * @name $wgAdDriverUseRemnantGpt
  * Enables additional call to dart before Liftium
  */
 $wgAdDriverUseRemnantGpt = false;
+
+/**
+ * @name $wgAdDriverAlwaysCallDartInCountries
+ * Disables the max N calls to DART and enables Remnant GPT call in those countries.
+ * This is an instant globals, which means you set it only on community and it takes
+ * effect on all wikis within 15 minutes.
+ */
+$wgAdDriverAlwaysCallDartInCountries = [];
 
 /**
  * @name $wgAdDriverUseBottomLeaderboard
@@ -1309,7 +1329,7 @@ $wgAdDriverSevenOneMediaOverrideSub2Site = null;
  * Set to null for to restrict only to Entertainment vertical
  * TODO: add an internal page for the reasons
  */
-$wgAdDriverUseDartForSlotsBelowTheFold = null;
+$wgAdDriverUseDartForSlotsBelowTheFold = true;
 
 /**
  * @name $wgAdDriverTrackState
@@ -1334,6 +1354,29 @@ $wgAdDriverForceLiftiumAd = false;
  * Whether to display ads within interactive maps
  */
 $wgAdDriverEnableAdsInMaps = false;
+
+/**
+ * @name $wgAdDriverRubiconRTPConfig
+ * @example [[
+ *  'disabled' => true/false
+ *  'oz_site' => 'XX/XXX',
+ *  'oz_zone' => 'XXXXX'
+ *  'oz_ad_slot_size' => 'NNNxNNN',
+ *  'slotname' : [ 'top_leaderboard' ],
+ *  'skin' : ['oasis']
+ *  ]]
+ *
+ * Rubicon RTP configuration variable.
+ * Only set this variable through Wiki Factory on community wiki. The setting then applies globally.
+ */
+$wgAdDriverRubiconRTPConfig = null;
+
+/**
+ * @name $wgAdDriverRubiconRTPCountries
+ * List of countries RTP call will be issued.
+ * Only set this variable through Wiki Factory on community wiki. The setting then applies globally.
+ */
+$wgAdDriverRubiconRTPCountries = null;
 
 /**
  * @name $wgHighValueCountries

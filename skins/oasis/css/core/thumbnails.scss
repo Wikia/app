@@ -77,13 +77,10 @@ $color-subtle-text: mix($color-page, $color-alternate-text, 50%);
 
 	&.show-info-icon {
 		.info-icon {
-			background-image: url('/skins/oasis/images/info_icon.png');
 			display: none;
 			float: right;
-			height: 17px;
 			margin: -22px 5px 0 0;
 			position: relative; // makes icon appear above image in z axis
-			width: 17px;
 		}
 
 		&:hover {

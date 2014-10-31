@@ -61,18 +61,27 @@ class ArticlesApiController extends WikiaApiController {
 	const NEW_ARTICLES_VARNISH_CACHE_EXPIRATION = 86400; //24 hours
 	const SIMPLE_JSON_VARNISH_CACHE_EXPIRATION = 86400; //24 hours
 	const SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME = "id";
+	const SIMPLE_JSON_ARTICLE_TITLE_PARAMETER_NAME = "title";
 
 	private $imageDimensionFields = [
 		'width',
 		'height'
 	];
 
+	/**
+	 * @var CrossOriginResourceSharingHeaderHelper
+	 */
+	protected $cors;
+
 	const PARAMETER_BASE_ARTICLE_ID = 'baseArticleId';
 
 	private $excludeNamespacesFromCategoryMembersDBQuery = false;
-	
+
 	public function __construct(){
 		parent::__construct();
+		$this->cors = new CrossOriginResourceSharingHeaderHelper();
+		$this->cors->readConfig();
+
 		$this->setOutputFieldTypes(
 			[
 				"width" => self::OUTPUT_FIELD_CAST_NULLS | self::OUTPUT_FIELD_TYPE_INT,
@@ -81,6 +90,15 @@ class ArticlesApiController extends WikiaApiController {
 		);
 	}
 
+	public static function getMetadataCacheTime( $omitExpandParam = false ) {
+		$app = F::app();
+		if ( !empty( $app->wg->EnablePOIExt ) &&
+			$app->wg->request->getBool( static::PARAMETER_EXPAND, $omitExpandParam )) {
+			return PalantirApiController::METADATA_CACHE_EXPIRATION;
+		}
+
+		return self::CLIENT_CACHE_VALIDITY;
+	}
 
 	/**
 	 * Get the top articles by pageviews optionally filtering by category and/or namespaces
@@ -99,6 +117,7 @@ class ArticlesApiController extends WikiaApiController {
 	 */
 	public function getTop() {
 		wfProfileIn( __METHOD__ );
+		$this->cors->setHeaders($this->response);
 
 		$namespaces = self::processNamespaces( $this->request->getArray( self::PARAMETER_NAMESPACES, null ), __METHOD__ );
 		$category = $this->request->getVal( self::PARAMETER_CATEGORY, null );
@@ -242,7 +261,7 @@ class ArticlesApiController extends WikiaApiController {
 		$this->setResponseData(
 			[ 'basepath' => $this->wg->Server, 'items' => $collection ],
 			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
-			self::CLIENT_CACHE_VALIDITY
+			self::getMetadataCacheTime()
 		);
 
 		$batches = null;
@@ -263,21 +282,21 @@ class ArticlesApiController extends WikiaApiController {
 			$mostLinkedOutput = $this->getArticlesDetails( array_keys( $mostLinked ), $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ], true );
 		} else {
 			foreach ( $mostLinked as $item ) {
-					$title = Title::newFromText( $item['page_title'], $nameSpace );
-					if ( !empty($title) && $title instanceof Title && !$title->isMainPage() ) {
-						$mostLinkedOutput[] = [
-							'id' => $item['page_id'],
-							'title' => $item['page_title'],
-							'url' => $title->getLocalURL(),
-							'ns' => $nameSpace
-						];
-					}
+				$title = Title::newFromText( $item['page_title'], $nameSpace );
+				if ( !empty($title) && $title instanceof Title && !$title->isMainPage() ) {
+					$mostLinkedOutput[] = [
+						'id' => $item['page_id'],
+						'title' => $item['page_title'],
+						'url' => $title->getLocalURL(),
+						'ns' => $nameSpace
+					];
+				}
 			}
 		}
 		$this->setResponseData(
 			[ 'basepath' => $this->wg->Server, 'items' => $mostLinkedOutput ],
 			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
-			self::CLIENT_CACHE_VALIDITY
+			self::getMetadataCacheTime()
 		);
 	}
 
@@ -475,6 +494,17 @@ class ArticlesApiController extends WikiaApiController {
 		return $results;
 	}
 
+	/**
+	 * Resolve categor param name into internal category name (incl. redirecst)
+	 * @param $category
+	 * @return mixed|Title
+	 */
+	public static function resolveCategoryName( $category ) {
+		$category = Title::makeTitleSafe( NS_CATEGORY, str_replace( ' ', '_', $category ), false, false );
+		$category = self::followRedirect( $category );
+
+		return $category;
+	}
 
 	/**
 	 * Get Articles under a category
@@ -507,11 +537,8 @@ class ArticlesApiController extends WikiaApiController {
 		$expand = $this->request->getBool( static::PARAMETER_EXPAND, false );
 
 		if ( !empty( $category ) ) {
-			$category = Title::makeTitleSafe( NS_CATEGORY, str_replace( ' ', '_', $category ), false, false );
-
+			$category = self::resolveCategoryName( $category );
 			if ( !is_null( $category ) ) {
-				$category = self::followRedirect( $category );
-
 				if ( !empty( $namespaces ) ) {
 					foreach ( $namespaces as &$n ) {
 						if ( !is_numeric( $n ) ) {
@@ -622,7 +649,7 @@ class ArticlesApiController extends WikiaApiController {
 			$this->setResponseData(
 				$responseValues,
 				[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
-				self::CLIENT_CACHE_VALIDITY
+				self::getMetadataCacheTime()
 			);
 		} else {
 			wfProfileOut( __METHOD__ );
@@ -630,7 +657,7 @@ class ArticlesApiController extends WikiaApiController {
 		}
 
 		wfProfileOut( __METHOD__ );
-	}	
+	}
 
 	/**
 	 * Get details about one or more articles, , those in the Special namespace (NS_SPECIAL) won't produce any result
@@ -675,7 +702,7 @@ class ArticlesApiController extends WikiaApiController {
 		$this->setResponseData(
 			[ 'items' => $collection, 'basepath' => $this->wg->Server ],
 			[ 'imgFields'=> 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
-			self::CLIENT_CACHE_VALIDITY
+			self::getMetadataCacheTime( true )
 		);
 
 		$collection = null;
@@ -693,19 +720,16 @@ class ArticlesApiController extends WikiaApiController {
 
 	protected function appendMetadata( $collection ) {
 		if ( !empty( $this->wg->EnablePOIExt ) ) {
+			$helper = new QuestDetailsSolrHelper();
 			$questDetailsSearch = new QuestDetailsSearchService();
-			$result = $questDetailsSearch->newQuery()
+			$metadata = $questDetailsSearch->newQuery()
 				->withIds( array_keys( $collection ), $this->wg->CityId )
-				->metadataOnly()
 				->search();
-
-			foreach ( $collection as $key => $item ) {
-				$meta = [ ];
-				if ( !empty( $result[ $key ] ) ) {
-					$meta = $result[ $key ];
-				}
-				if( !empty( $meta ) ) {
-					$collection[ $key ] = array_merge( $collection[ $key ], [ 'metadata' => $meta ] );
+			$metadata = $helper->processMetadata( $metadata );
+			foreach ( $collection as &$item ) {
+				$key = $this->wg->CityId ."_" . $item[ "id" ];
+				if ( isset( $metadata[ $key ] ) ) {
+					$item[ "metadata" ] = $metadata[ $key ];
 				}
 			}
 		}
@@ -913,7 +937,7 @@ class ArticlesApiController extends WikiaApiController {
 	static private function getCategoryMembers( $category, $limit = 5000, $offset = '', $namespaces = '', $sort = 'sortkey', $dir = 'asc' ){
 		return WikiaDataAccess::cache(
 			self::getCacheKey( $category, self::CATEGORY_CACHE_ID, [ $limit, $offset, $namespaces, $dir ] ),
-			self::CLIENT_CACHE_VALIDITY,
+			self::getMetadataCacheTime(),
 			function() use ( $category, $limit, $offset, $namespaces, $sort, $dir ) {
 				$ids = ApiService::call(
 					array(
@@ -975,6 +999,7 @@ class ArticlesApiController extends WikiaApiController {
 	}
 
 	public function getAsSimpleJson() {
+		$this->cors->setHeaders($this->response);
 		$articleId = (int) $this->getRequest()->getInt(self::SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME, NULL);
 		if( empty($articleId) ) {
 			throw new InvalidParameterApiException( self::SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME );
@@ -993,6 +1018,76 @@ class ArticlesApiController extends WikiaApiController {
 			[ 'imgFields'=>'images', 'urlFields' => 'src' ],
 			self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION
 		);
+	}
+
+	public function getAsJson() {
+		if ( $this->wg->EnableArticleAsJsonApi ) {
+			$articleId = $this->getRequest()->getInt(self::SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME, NULL);
+			$articleTitle = $this->getRequest()->getVal(self::SIMPLE_JSON_ARTICLE_TITLE_PARAMETER_NAME, NULL);
+			$redirect = $this->request->getVal('redirect');
+
+			if ( !empty( $articleId ) && !empty( $articleTitle ) ) {
+				throw new BadRequestApiException( 'Can\'t use id and title in the same request' );
+			}
+
+			if ( empty( $articleId ) && empty( $articleTitle ) ) {
+				throw new BadRequestApiException( 'You need to pass title or id of an article' );
+			}
+
+			if ( !empty( $articleId ) ) {
+				$article = Article::newFromID( $articleId );
+			} else {
+				$title = Title::newFromText( $articleTitle, NS_MAIN );
+
+				if ( $title instanceof Title && $title->exists() ) {
+					$article = Article::newFromTitle( $title, RequestContext::getMain() );
+				}
+			}
+
+			if ( empty( $article ) ) {
+				throw new NotFoundApiException( "Unable to find any article" );
+			}
+
+			if ( $redirect !== 'no' && $article->getPage()->isRedirect() ) {
+				$article = Article::newFromTitle( $article->getPage()->followRedirect(), RequestContext::getMain() );
+			}
+
+			//Response is based on wikiamobile skin as this already removes inline style
+			//and make response smaller
+			RequestContext::getMain()->setSkin(
+				Skin::newFromKey( 'wikiamobile' )
+			);
+
+			global $wgArticleAsJson;
+			$wgArticleAsJson = true;
+
+			$parsedArticle = $article->getParserOutput();
+
+			$articleContent = json_decode( $parsedArticle->getText() );
+
+			$wgArticleAsJson = false;
+			$categories = [];
+
+			foreach(array_keys( $parsedArticle->getCategories() ) as $category) {
+				$categoryTitle = Title::newFromText( $category, NS_CATEGORY );
+
+				$categories[] = [
+					"title" => $categoryTitle->getText(),
+					"url" => $categoryTitle->getLocalURL()
+				];
+			}
+
+			$result = [
+				'content' => $articleContent->content,
+				'media' => $articleContent->media,
+				'users' => $articleContent->users,
+				'categories' => $categories,
+			];
+
+			$this->setResponseData( $result, '', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
+		} else {
+			throw new BadRequestApiException( 'This entry point is disabled' );
+		}
 	}
 
 	public function getPopular() {
@@ -1031,7 +1126,7 @@ class ArticlesApiController extends WikiaApiController {
 		$this->setResponseData(
 			[ 'items' => $popular, 'basepath' => $wgServer ],
 			[ 'imgFields' => 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
-			self::CLIENT_CACHE_VALIDITY
+			self::getMetadataCacheTime()
 		);
 
 	}
@@ -1213,6 +1308,10 @@ class ArticlesApiController extends WikiaApiController {
 	}
 
 	static private function getCacheKey( $name, $type, $params = '' ) {
+		$app = F::app();
+		if ( !empty( $app->wg->EnablePOIExt ) ) {
+			$name .= PalantirApiController::MEMC_KEY_SUFFIX;
+		}
 		if ( $params !== '' ) {
 			$params = md5( implode( '|', $params ) );
 		}

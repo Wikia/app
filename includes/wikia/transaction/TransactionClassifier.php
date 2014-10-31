@@ -31,10 +31,11 @@ class TransactionClassifier {
 		'UserSignup',
 		'Chat',
 		'Newimages',
+		'Videos',
 	);
 	protected static $FILTER_NIRVANA_CONTROLLERS = array(
 		'Rail',
-		'RelatedPagesApi',
+		//'RelatedPagesApi', moved to api/v1
 		'VideosModule',
 		'ArticleComments',
 		'WallNotificationsController',
@@ -71,6 +72,10 @@ class TransactionClassifier {
 	protected static $MAP_PARSER_CACHED_USED = array(
 		false => 'parser',
 		true => 'no_parser',
+	);
+
+	protected static $MAP_PARSER_CACHE_DISABLED = array(
+		true => 'parser_cache_disabled',
 	);
 
 
@@ -125,6 +130,9 @@ class TransactionClassifier {
 			case Transaction::ENTRY_POINT_NIRVANA:
 				$this->addByList( Transaction::PARAM_CONTROLLER, self::$FILTER_NIRVANA_CONTROLLERS );
 				break;
+			case Transaction::ENTRY_POINT_API_V1:
+				$this->add( Transaction::PARAM_CONTROLLER );
+				break;
 			// ajax call - action=ajax
 			case Transaction::ENTRY_POINT_AJAX:
 				$this->addByList( Transaction::PARAM_FUNCTION, self::$FILTER_AJAX_FUNCTIONS );
@@ -154,8 +162,12 @@ class TransactionClassifier {
 		if ( $this->add( Transaction::PARAM_SKIN ) === null ) {
 			return;
 		}
+		// add parser_cache_disabled indicator
+		if ( $this->addByMap( Transaction::PARAM_PARSER_CACHE_DISABLED, self::$MAP_PARSER_CACHE_DISABLED, null ) === true ) {
+
+		}
 		// add parser_cached_used indicator
-		if ( $this->addByMap( Transaction::PARAM_PARSER_CACHE_USED, self::$MAP_PARSER_CACHED_USED ) === null ) {
+		else if ( $this->addByMap( Transaction::PARAM_PARSER_CACHE_USED, self::$MAP_PARSER_CACHED_USED ) === null ) {
 			return;
 		}
 		// add size category
@@ -181,7 +193,9 @@ class TransactionClassifier {
 		}
 		$value = $this->attributes[$key];
 		$nameValue = $valueTransform ? $valueTransform( $value ) : $value;
-		$this->nameParts[] = $nameValue;
+		if ( !is_null( $nameValue ) ) {
+			$this->nameParts[] = $nameValue;
+		};
 		return $value;
 	}
 
@@ -212,14 +226,15 @@ class TransactionClassifier {
 	 *
 	 * @param string $key Attribute key
 	 * @param array $map Map of raw values and tokens to be included in transaction name. Non-existent items are replaced by "other"
+	 * @param string $defaulty The value to use if the key is not set
 	 * @return mixed
 	 */
-	protected function addByMap( $key, $map ) {
-		return $this->add( $key, function ( $value ) use ( $map ) {
+	protected function addByMap( $key, $map, $default = self::OTHER ) {
+		return $this->add( $key, function ( $value ) use ( $map, $default ) {
 			if ( isset( $map[$value] ) ) {
 				return $map[$value];
 			} else {
-				return self::OTHER;
+				return $default;
 			}
 		} );
 	}

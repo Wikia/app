@@ -108,7 +108,7 @@ class Hooks {
 	 * @return bool true
 	 */
 	public static function onWikiFactoryExecuteComplete( \WikiFactoryLoader $wikiFactoryLoader ) {
-		global $wgRequest, $wgDBname, $wgCityId;
+		global $wgRequest, $wgDBname, $wgCityId, $maintClass;
 
 		$fields = [];
 
@@ -142,6 +142,17 @@ class Hooks {
 
 			if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
 				$fields['referrer'] = $_SERVER['HTTP_REFERER'];
+			}
+		}
+
+		// add some context for maintenance scripts
+		if ( defined( 'RUN_MAINTENANCE_IF_MAIN' ) ) {
+			if ( isset( $_SERVER['SCRIPT_FILENAME'] ) ) {
+				$fields['maintenance_file'] = realpath( $_SERVER['SCRIPT_FILENAME'] );
+			}
+
+			if ( !empty( $maintClass ) ) {
+				$fields['maintenance_class'] = $maintClass;
 			}
 		}
 

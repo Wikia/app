@@ -366,11 +366,12 @@ $messages['bg'] = array(
 
 /** Breton (brezhoneg)
  * @author Fohanno
+ * @author Fulup
  * @author Y-M D
  */
 $messages['br'] = array(
 	'userlogin-login-heading' => 'Kevreañ',
-	'userlogin-forgot-password' => 'Ankouaet ho peus ho ker-tremen ?',
+	'userlogin-forgot-password' => "Ankouaet ho ker-tremen ganeoc'h ?",
 	'userlogin-forgot-password-button' => "Kenderc'hel",
 	'userlogin-forgot-password-go-to-login' => 'Ho ker tremen ho peus dija ? [[Special:UserLogin|Kevreañ]]',
 	'userlogin-remembermypassword' => 'Chom kevreet',
@@ -720,10 +721,16 @@ $messages['fa'] = array(
 	'userlogin-login-heading' => 'ورود به سامانه',
 	'userlogin-forgot-password' => 'گذرواژه‌تان را فراموش کردید؟',
 	'userlogin-forgot-password-button' => 'ادامه',
+	'userlogin-error-invalidemailaddress' => 'لطفاً یک نشانی رایانامه‌ای معتبر وارد کنید.',
+	'userlogin-error-invalid-username' => 'نام کاربری نادرست',
+	'userlogin-error-noemailtitle' => 'لطفاً یک نشانی رایانامه‌ای معتبر وارد کنید.',
+	'userlogin-error-resetpass_forbidden' => 'نمی‌توان گذرواژه‌ها را تغییر داد',
 	'userlogin-password-page-title' => 'تغییر گذرواژهٔ شما',
 	'userlogin-oldpassword' => 'گذرواژهٔ پیشین',
 	'userlogin-newpassword' => 'گذرواژهٔ تازه',
 	'userlogin-password-email-greeting' => 'سلام $USERNAME،',
+	'userlogin-provider-or' => 'یا',
+	'userlogin-loginreqlink' => 'به سامانه وارد شوید',
 );
 
 /** Finnish (suomi)
@@ -1231,11 +1238,13 @@ Vuoi controllare quali email ricevi? Vai alle tue <a href="{{fullurl:{{ns:specia
 
 /** Japanese (日本語)
  * @author Barrel0116
+ * @author Los688
  * @author Tommy6
  */
 $messages['ja'] = array(
 	'userlogin-login-heading' => 'ログイン',
 	'userlogin-forgot-password' => 'パスワードを忘れた',
+	'userlogin-forgot-password-go-to-login' => '既にパスワードをお持ちですか？（[[Special:UserLogin|ログイン]]）',
 	'userlogin-remembermypassword' => 'ログイン状態を維持する',
 	'userlogin-error-noname' => '利用者名を入力してください。',
 	'userlogin-error-sessionfailure' => 'ログインセッションがタイムアウトしました。もう一度ログインしてください。',
@@ -1264,6 +1273,7 @@ $messages['ja'] = array(
 	'userlogin-error-mail-error' => 'メールの送信で問題が発生しました。[[Special:Contact/general|サポート]]までご連絡ください。',
 	'userlogin-password-email-sent' => '「$1」のメールアドレス宛に新しいパスワードを送信しました。',
 	'userlogin-error-unconfirmed-user' => 'メールアドレスの認証が行われていません。まずはじめにメールアドレスの認証を行ってください。',
+	'userlogin-error-confirmation-reminder-already-sent' => '認証のリマインダーをメールにて既に送信しました。',
 	'userlogin-password-page-title' => 'パスワードを変更',
 	'userlogin-oldpassword' => '古いパスワード',
 	'userlogin-newpassword' => '新しいパスワード',
@@ -1298,6 +1308,7 @@ ___________________________________________
 	'userlogin-changepassword-needlogin' => 'パスワードを変更するには$1する必要があります。',
 	'wikiamobile-sendpassword-label' => '新しいパスワードを送信',
 	'wikiamobile-facebook-connect-fail' => 'あなたの Facebook アカウントは現在ウィキアのアカウントとリンクされていません。',
+	'wikiamobile-go-to-login' => 'アカウントをお持ちですか？（[[Special:UserLogin|ログインはこちら >]]）',
 );
 
 /** Georgian (ქართული)
@@ -1307,6 +1318,14 @@ $messages['ka'] = array(
 	'userlogin-forgot-password' => 'დაგავიწყდათ პაროლი?',
 	'userlogin-remembermypassword' => 'დამიმახსოვრე',
 	'userlogin-provider-or' => 'ან',
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'userlogin-login-heading' => '로그인',
+	'userlogin-loginreqlink' => '로그인',
 );
 
 /** Karachay-Balkar (къарачай-малкъар)
@@ -1794,7 +1813,7 @@ Chcesz zmienić ustawienia otrzymywanych powiadomień? Zajrzyj tutaj: {{fullurl:
 	'userlogin-changepassword-needlogin' => '$1, aby zmienić swoje hasło.',
 	'wikiamobile-sendpassword-label' => 'Wyślij nowe hasło',
 	'wikiamobile-facebook-connect-fail' => 'Przepraszamy, Twoje konto na Facebooku nie jest obecnie połączone z kontem na Wikii.',
-	'wikiamobile-go-to-login' => 'Masz konto? [[Specjalna: UserLogin|Zaloguj się]]', # Fuzzy
+	'wikiamobile-go-to-login' => 'Masz konto? [[Specjalna:UserLogin|Zaloguj się >]]', # Fuzzy
 );
 
 /** Piedmontese (Piemontèis)
@@ -1940,6 +1959,7 @@ $messages['pt'] = array(
  * @author Cainamarques
  * @author Caio1478
  * @author JM Pessanha
+ * @author Jefersonmoraes
  * @author Luckas
  * @author Luckas Blade
  */
@@ -1951,8 +1971,8 @@ $messages['pt-br'] = array(
 	'userlogin-remembermypassword' => 'Permanecer conectado',
 	'userlogin-error-noname' => 'Ops, por favor preencha o campo de nome de usuário.',
 	'userlogin-error-sessionfailure' => 'Sua sessão de login expirou. Por favor, faça login novamente.',
-	'userlogin-error-nosuchuser' => 'Nós não reconhecemos este nome. Não se esqueça, nomes de usuário são caso sensível.',
-	'userlogin-error-wrongpassword' => 'Ops, senha errada. Certifique-se que a tecla caps lock está desativada e tente novamente.',
+	'userlogin-error-nosuchuser' => 'Hum, nós não reconhecemos este nome. Não se esqueça que os nomes de usuários são sensíveis a maiúsculas e minúsculas.',
+	'userlogin-error-wrongpassword' => 'Opa, senha errada. Certifique-se que a tecla caps lock está desativada e tente novamente.',
 	'userlogin-error-wrongpasswordempty' => 'Ops, por favor preencha o campo de senha.',
 	'userlogin-error-resetpass_announce' => 'Parece que você usou uma senha temporária. Escolha uma nova senha aqui para continuar o login.',
 	'userlogin-error-login-throttled' => 'Você tentou entrar com a senha errada muitas vezes. Espere um pouco antes de tentar novamente.',
@@ -1965,16 +1985,16 @@ $messages['pt-br'] = array(
 	'userlogin-error-invalid-username' => 'Nome de usuário inválido',
 	'userlogin-error-userlogin-unable-info' => 'Desculpe, mas não somos capazes de registrar sua conta neste momento.',
 	'userlogin-error-user-not-allowed' => 'Esse nome de usuário não é permitido.',
-	'userlogin-error-captcha-createaccount-fail' => 'A palavra que você digitou não encontrou a palavra na caixa, tente novamente!',
-	'userlogin-error-userlogin-bad-birthday' => 'Ops, por favor preencha o dia, mês e ano.',
-	'userlogin-error-externaldberror' => 'Desculpe! Nosso site está tendo um problema. Por favor, tente novamente mais tarde.',
+	'userlogin-error-captcha-createaccount-fail' => 'A palavra que você digitou não corresponde a palavra na caixa, tente novamente!',
+	'userlogin-error-userlogin-bad-birthday' => 'Ops, por favor preencha mês, dia e ano.',
+	'userlogin-error-externaldberror' => 'Desculpe! Nosso site está tendo um problema, por favor, tente novamente mais tarde.',
 	'userlogin-error-noemailtitle' => 'Por favor, digite um endereço de e-mail válido.',
 	'userlogin-error-acct_creation_throttle_hit' => 'Desculpe, este endereço de IP criou muitas contas hoje. Por favor, tente novamente mais tarde.',
 	'userlogin-error-resetpass_forbidden' => 'Senhas não podem ser alteradas',
-	'userlogin-error-blocked-mailpassword' => 'Você não pode pedir uma nova senha porque este endereço de IP é bloqueado pela Wikia.',
-	'userlogin-error-throttled-mailpassword' => 'Já enviamos um lembrete de senha para essa conta {{PLURAL:$1|na última hora|nas últimas $1 horas}}. Por favor, verifique seu e-mail.',
-	'userlogin-error-mail-error' => 'Ops, ocorreu um problema enviando seu e-mail. Por favor, [[Special:Contact/general|contate-nos]].',
-	'userlogin-password-email-sent' => 'Nós enviamos uma nova senha para o endereço de e-mail para $1.',
+	'userlogin-error-blocked-mailpassword' => 'Você não pode pedir uma nova senha porque este endereço de IP está bloqueado pela Wikia.',
+	'userlogin-error-throttled-mailpassword' => 'Nós já enviamos um lembrete de senha para essa conta {{PLURAL:$1|na última hora|nas últimas $1 horas}}. Por favor, verifique seu e-mail.',
+	'userlogin-error-mail-error' => 'Ops, ocorreu um problema no envio do seu e-mail. Por favor [[Special:Contact/general|contate-nos]].',
+	'userlogin-password-email-sent' => 'Enviamos uma nova senha para o endereço de e-mail para $1.',
 	'userlogin-error-unconfirmed-user' => 'Desculpe, você não confirmou seu endereço de e-mail. Por favor, confirme seu endereço de e-mail primeiro.',
 	'userlogin-error-confirmation-reminder-already-sent' => 'O e-mail de confirmação já foi enviado.',
 	'userlogin-password-page-title' => 'Mude sua senha',
@@ -2015,6 +2035,7 @@ Deseja controlar quais e-mails você recebe? Vá para: {{fullurl:{{ns:special}}:
 	'userlogin-changepassword-needlogin' => 'Você precisa $1 para modificar sua senha.',
 	'wikiamobile-sendpassword-label' => 'Enviar nova senha',
 	'wikiamobile-facebook-connect-fail' => 'Desculpe, atualmente sua conta do Facebook não esta vinculada com uma conta na Wikia.',
+	'wikiamobile-go-to-login' => 'Já possui uma conta? [[Special:UserLogin|Entrar agora>]]',
 );
 
 /** tarandíne (tarandíne)
@@ -2686,59 +2707,60 @@ $messages['uz'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Rémy Lee
  * @author Xiao Qiao
  */
 $messages['vi'] = array(
 	'userlogin-login-heading' => 'Đăng nhập',
 	'userlogin-forgot-password' => 'Quên mật khẩu?',
 	'userlogin-forgot-password-button' => 'Tiếp tục',
-	'userlogin-forgot-password-go-to-login' => 'Có mật khẩu của bạn? [[Special:UserLogin|Đăng nhập]]',
+	'userlogin-forgot-password-go-to-login' => 'Đã lấy lại mật khẩu? [[Special:UserLogin|Đăng nhập]]',
 	'userlogin-remembermypassword' => 'Giữ đăng nhập',
 	'userlogin-error-noname' => 'Rất tiếc, xin vui lòng điền vào trường tên người dùng.',
 	'userlogin-error-sessionfailure' => 'Thời gian đăng nhập của bạn đã hết. Xin vui lòng đăng nhập lại.',
 	'userlogin-error-nosuchuser' => 'Rất tiếc, tên tài khoản bạn vừa mới đăng nhập chưa từng tồn tại, hãy thử lại hoặc bạn có thể đăng ký tài khoản này.',
 	'userlogin-error-wrongpassword' => 'Rất tiếc, sai mật khẩu. Hãy chắc rằng trạng thái caps lock của bạn đang tắt và thử lại.',
 	'userlogin-error-wrongpasswordempty' => 'Rất tiếc, xin vui lòng điền vào trường mật khẩu.',
-	'userlogin-error-resetpass_announce' => 'Hình như bạn đã sử dụng một mật khẩu tạm thời. Chọn một mật khẩu mới ở đây để tiếp tục đăng nhập.',
-	'userlogin-error-login-throttled' => 'Bạn đã cố đăng nhập với mật khẩu không đúng quá nhiều lần. Hãy chờ một lúc trước khi thử lại.',
+	'userlogin-error-resetpass_announce' => 'Hình như bạn đã sử dụng mật khẩu tạm thời. Chọn một mật khẩu mới ở đây để tiếp tục đăng nhập.',
+	'userlogin-error-login-throttled' => 'Bạn đang cố gắng đăng nhập với mật khẩu không đúng quá nhiều lần. Chờ một lát trước khi thử lại.',
 	'userlogin-error-login-userblocked' => 'Tên người dùng của bạn đã bị cấm và không thể được sử dụng để đăng nhập.',
 	'userlogin-error-edit-account-closed-flag' => 'Tài khoản của bạn đã bị vô hiệu hóa bởi Wikia.',
 	'userlogin-error-cantcreateaccount-text' => 'Địa chỉ IP của bạn không được phép tạo tài khoản mới.',
-	'userlogin-error-userexists' => 'Ai đó đã có tên người dùng này. Hãy thử một tên khác nhé!',
+	'userlogin-error-userexists' => 'Ai đó đã sỡ hữu tên người dùng này. Hãy thử một tên khác nhé!',
 	'userlogin-error-invalidemailaddress' => 'Xin nhập một địa chỉ thư điện tử hợp lệ.',
-	'userlogin-get-account' => 'Không có tài khoản? <a href="$1" tabindex="$2">Đăng ký</a>',
+	'userlogin-get-account' => 'Chưa có tài khoản? <a href="$1" tabindex="$2">Đăng ký</a>',
 	'userlogin-error-invalid-username' => 'Tên người dùng không hợp lệ',
 	'userlogin-error-userlogin-unable-info' => 'Xin lỗi, chúng tôi không thể ghi nhận tài khoản của bạn tại thời điểm này.',
-	'userlogin-error-user-not-allowed' => 'Tên người dùng này không được phép.',
+	'userlogin-error-user-not-allowed' => 'Tên người dùng này không được cho phép.',
 	'userlogin-error-captcha-createaccount-fail' => 'Những từ mà bạn nhập vào không khớp với từ trong hộp, thử lại!',
 	'userlogin-error-userlogin-bad-birthday' => 'Rất tiếc, xin vui lòng điền ngày, tháng và năm.',
 	'userlogin-error-externaldberror' => 'Xin lỗi! Trang web của chúng tôi hiện đang có vấn đề. Xin vui lòng thử lại sau.',
 	'userlogin-error-noemailtitle' => 'Xin nhập một địa chỉ thư điện tử hợp lệ.',
-	'userlogin-error-acct_creation_throttle_hit' => 'Xin lỗi, địa chỉ IP này đã tạo ra quá nhiều tài khoản ngày hôm nay. Xin vui lòng thử lại sau.',
+	'userlogin-error-acct_creation_throttle_hit' => 'Xin lỗi, địa chỉ IP này đã tạo ra quá nhiều tài khoản hôm nay. Xin vui lòng thử lại sau.',
 	'userlogin-error-resetpass_forbidden' => 'Mật khẩu không thể thay đổi',
-	'userlogin-error-blocked-mailpassword' => 'Bạn không thể yêu cầu một mật khẩu mới bởi vì địa chỉ IP này bị cấm bởi Wikia.',
-	'userlogin-error-throttled-mailpassword' => 'Chúng tôi đã gửi một mật khẩu nhắc nhở cho tài khoản này trong vòng {{PLURAL:$1|1 giờ|$1 giờ}} trước. Vui lòng kiểm tra email của bạn.',
-	'userlogin-error-mail-error' => 'Rất tiếc, có trục trặc khi gửi email cho bạn. Xin [[Special:Contact/general|liên hệ với chúng tôi]].',
-	'userlogin-password-email-sent' => 'Chúng tôi đã gửi mật khẩu mới đến địa chỉ email của $1.',
-	'userlogin-error-unconfirmed-user' => 'Xin lỗi, bạn chưa xác nhận địa chỉ thư điện tử của bạn. Xin vui lòng xác nhận địa chỉ thư điện tử của bạn trước tiên.',
-	'userlogin-error-confirmation-reminder-already-sent' => 'Xác nhận lời nhắc email đã được gửi.',
+	'userlogin-error-blocked-mailpassword' => 'Bạn không thể yêu cầu mật khẩu mới vì địa chỉ IP này đã bị cấm bởi Wikia.',
+	'userlogin-error-throttled-mailpassword' => 'Chúng tôi đã gửi một mật khẩu nhắc nhở cho tài khoản này trong vòng {{PLURAL:$1|1 giờ|$1 giờ}} trước. Vui lòng kiểm tra thư điện tử của bạn.',
+	'userlogin-error-mail-error' => 'Rất tiếc, đã xảy ra trục trặc khi gửi thư điện tử cho bạn. Xin [[Special:Contact/general|liên hệ với chúng tôi]].',
+	'userlogin-password-email-sent' => 'Chúng tôi đã gửi mật khẩu mới đến địa chỉ thư điện tử của $1.',
+	'userlogin-error-unconfirmed-user' => 'Xin lỗi, bạn chưa xác nhận địa chỉ thư điện tử của mình. Xin vui lòng xác nhận địa chỉ thư điện tử trước tiên.',
+	'userlogin-error-confirmation-reminder-already-sent' => 'Thư điện tử nhắc nhở xác nhận đã được gửi.',
 	'userlogin-password-page-title' => 'Đổi mật khẩu',
 	'userlogin-oldpassword' => 'Mật khẩu cũ',
 	'userlogin-newpassword' => 'Mật khẩu mới',
 	'userlogin-retypenew' => 'Gõ lại mật khẩu mới',
-	'userlogin-password-email-subject' => 'Quên mật khẩu yêu cầu',
+	'userlogin-password-email-subject' => 'Yêu cầu mật khẩu mới',
 	'userlogin-password-email-greeting' => 'Chào $USERNAME,',
 	'userlogin-password-email-content' => 'Xin vui lòng sử dụng mật khẩu tạm thời này để đăng nhập vào Wikia: "$NEWPASSWORD"
 <br /><br />
-Nếu bạn không yêu cầu mật khẩu mới, đừng lo lắng! Tài khoản của bạn vẫn an toàn và bảo mật. Bạn có thể bỏ qua email này và tiếp tục đăng nhập vào Wikia với mật khẩu hiện tại.
+Nếu bạn không yêu cầu mật khẩu mới, đừng lo lắng! Tài khoản của bạn vẫn an toàn và bảo mật. Bạn có thể bỏ qua email này và tiếp tục đăng nhập vào Wikia với mật khẩu hiện tại của mình.
 <br /><br />
-Có câu hỏi hoặc quan tâm? Vui lòng l<a href="http://community.wikia.com/wiki/Special:Contact/account-issue">liên hệ</a>. với chúng tôi.',
+Có câu hỏi hoặc quan tâm? Vui lòng <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">liên hệ</a> với chúng tôi.',
 	'userlogin-password-email-signature' => 'Cộng đồng Hỗ trợ Wikia',
 	'userlogin-password-email-body' => 'Chào $2,
 
 Xin vui lòng sử dụng mật khẩu tạm thời này để đăng nhập vào Wikia: "$3"
 
-Nếu bạn không yêu cầu mật khẩu mới, đừng lo lắng! Tài khoản của bạn vẫn an toàn và bảo mật. Bạn có thể bỏ qua email này và tiếp tục đăng nhập vào Wikia với mật khẩu hiện tại.
+Nếu bạn không yêu cầu mật khẩu mới, đừng lo lắng! Tài khoản của bạn vẫn an toàn và bảo mật. Bạn có thể bỏ qua email này và tiếp tục đăng nhập vào Wikia với mật khẩu hiện tại của mình.
 
 Có câu hỏi hoặc quan tâm? Hãy liên hệ với chúng tôi.
 
@@ -2746,21 +2768,22 @@ Cộng đồng Hỗ trợ Wikia
 
 ___________________________________________
 
-Để kiểm tra những sự kiện mới nhất trên Wikia, truy cập [http://community.wikia.com]
-Để nhận được sự hỗ trợ cho ngôn ngữ của bạn, truy cập [http://vi.wikia.com]
+Để kiểm tra những sự kiện mới nhất trên Wikia, truy cập http://community.wikia.com
+Để nhận được sự hỗ trợ cho ngôn ngữ của bạn, truy cập http://congdong.wikia.com
 Muốn kiểm soát email mà bạn nhận được? Đi đến: {{fullurl:{{ns:special}}:Tùy chọn}}',
 	'userlogin-email-footer-line1' => 'Để kiểm tra những sự kiện mới nhất trên Wikia, truy cập <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a>
-Để nhận được sự hỗ trợ cho ngôn ngữ của bạn, truy cập <a style="color:#2a87d5;text-decoration:none;" href="http://vi.wikia.com">vi.wikia.com</a>',
+Để nhận được sự hỗ trợ cho ngôn ngữ của bạn, truy cập <a style="color:#2a87d5;text-decoration:none;" href="http://congdong.wikia.com">congdong.wikia.com</a>',
 	'userlogin-email-footer-line2' => 'Muốn kiểm soát email mà bạn nhận được? Đi đến <a href="{{fullurl:{{ns:special}}:Tùy chọn}}" style="color:#2a87d5;text-decoration:none;">Tùy chọn</a>',
 	'userlogin-provider-or' => 'Hoặc',
-	'userlogin-provider-tooltip-facebook' => 'Click vào nút để đăng nhập cùng với Facebook',
-	'userlogin-provider-tooltip-facebook-signup' => 'Click vào nút để đăng ký cùng với Facebook',
+	'userlogin-provider-tooltip-facebook' => 'Nhấp vào nút để đăng nhập cùng với Facebook',
+	'userlogin-provider-tooltip-facebook-signup' => 'Nhấp vào nút để đăng ký cùng với Facebook',
 	'userlogin-facebook-show-preferences' => 'Hiển thị cập nhật Facebook tùy chọn',
 	'userlogin-facebook-hide-preferences' => 'Ẩn cập nhật Facebook tùy chọn',
 	'userlogin-loginreqlink' => 'đăng nhập',
-	'userlogin-changepassword-needlogin' => 'Bạn cần phải $1 để thay đổi mật khẩu của bạn.',
+	'userlogin-changepassword-needlogin' => 'Bạn cần phải $1 để thay đổi mật khẩu của mình.',
 	'wikiamobile-sendpassword-label' => 'Gửi mật khẩu mới',
-	'wikiamobile-facebook-connect-fail' => 'Xin lỗi, tài khoản Facebook của bạn hiện đang không được liên kết với một tài khoản Wikia.',
+	'wikiamobile-facebook-connect-fail' => 'Xin lỗi, tài khoản Facebook của bạn hiện chưa được liên kết với tài khoản Wikia.',
+	'wikiamobile-go-to-login' => 'Đã có tài khoản? [[Special:UserLogin|Đăng nhập ngay >]]',
 );
 
 /** Simplified Chinese (中文（简体）‎)
@@ -2848,6 +2871,7 @@ _______________________________________
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
  * @author Simon Shek
  * @author StephDC
  */
@@ -2873,17 +2897,17 @@ $messages['zh-hant'] = array(
 	'userlogin-error-invalid-username' => '無效的使用者名稱',
 	'userlogin-error-userlogin-unable-info' => '抱歉，我們現時不能建立你的帳號。',
 	'userlogin-error-user-not-allowed' => '此使用者名禁止使用。',
-	'userlogin-error-captcha-createaccount-fail' => '輸入的字符不匹配，請重新輸入！',
+	'userlogin-error-captcha-createaccount-fail' => '輸入的字元不匹配，請重新輸入！',
 	'userlogin-error-userlogin-bad-birthday' => '哎呀，請填寫年、月、和日。',
 	'userlogin-error-externaldberror' => '抱歉！目前系統出錯，請稍後再試。',
 	'userlogin-error-noemailtitle' => '請輸入有效的電子郵件地址。',
-	'userlogin-error-acct_creation_throttle_hit' => '抱歉，此 IP 地址今天已創建了太多帳戶。請稍後再試。',
+	'userlogin-error-acct_creation_throttle_hit' => '抱歉，此 IP 位址今天已建立了太多帳戶。請稍後再試。',
 	'userlogin-error-resetpass_forbidden' => '無法更改密碼',
 	'userlogin-error-blocked-mailpassword' => '由於您的IP位址已經被Wikia封禁，您不可以請求一個新密碼。',
 	'userlogin-error-throttled-mailpassword' => '我們已經在{{PLURAL:$1|1小時|$1小時}}前發送了此帳戶的密碼提示。請檢查您的電子郵件。',
 	'userlogin-error-mail-error' => '哎呀，在向您發送電子郵件的時候我們遇到了個問題。請[[Special:Contact/general|聯繫我們]]。',
-	'userlogin-password-email-sent' => '我們已經向帳戶 $1 發送了一封包含有該帳戶的新密碼的電子郵件。',
-	'userlogin-error-unconfirmed-user' => '抱歉，您尚未確認您的電子郵件地址。請先去確認您的電子郵件地址。',
+	'userlogin-password-email-sent' => '我們已經向帳戶 $1 傳送了一封包含有該帳戶的新密碼的電子郵件。',
+	'userlogin-error-unconfirmed-user' => '抱歉，您尚未確認您的電子郵件位址。請先去確認您的電子郵件位址。',
 	'userlogin-error-confirmation-reminder-already-sent' => '驗證提醒郵件已經發送',
 	'userlogin-password-page-title' => '更改您的密碼',
 	'userlogin-oldpassword' => '舊密碼',

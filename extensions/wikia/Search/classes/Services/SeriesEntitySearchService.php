@@ -11,7 +11,7 @@ class SeriesEntitySearchService extends EntitySearchService {
 	const SERIES_TYPE = 'tv_series';
 	const DEFAULT_SLOP = 1;
 
-	private static $ARTICLE_TYPES_SUPPORTED_LANGS = [ 'en' ];
+	private static $ARTICLE_TYPES_SUPPORTED_LANGS = [ 'en', 'de', 'es' ];
 
 	protected function prepareQuery( $query ) {
 		$select = $this->getSelect();
@@ -29,6 +29,9 @@ class SeriesEntitySearchService extends EntitySearchService {
 
 		$namespaces = $this->getNamespace() ? $this->getNamespace() : static::DEFAULT_NAMESPACE;
 		$namespaces = is_array( $namespaces ) ? $namespaces : [ $namespaces ];
+
+		$select = $this->getBlacklist()->applyFilters( $select );
+
 		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:(' . implode( ' ', $namespaces ) . '))' );
 		$select->createFilterQuery( 'main_page' )->setQuery( '-(is_main_page:true)' );
 		if ( in_array( strtolower( $slang ), static::$ARTICLE_TYPES_SUPPORTED_LANGS ) ) {

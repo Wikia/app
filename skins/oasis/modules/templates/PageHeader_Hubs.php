@@ -1,5 +1,5 @@
 <header id="WikiaPageHeader" class="WikiaPageHeader">
-	<?php if ($showSearchBox) : ?>
+	<?php if ($showSearchBox && empty( $wg->EnableGlobalNavExt ) ) : ?>
 		<section id="WikiaSearchHeader" class="WikiaSearchHeader">
 			<?=  F::app()->renderView('Search', 'Index', array('searchFormId' => 'WikiaSearch')) ?>
 		</section>

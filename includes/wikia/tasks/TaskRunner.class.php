@@ -8,23 +8,30 @@
  */
 
 class TaskRunner {
+	const TASK_NOTIFY_TIMEOUT = 120; // number of seconds required before we notify flower of our job status
+
 	private $taskId;
 	private $taskList = [];
 	private $results = [];
 	private $callOrder;
 
 	private $exception;
+	private $startTime;
+	private $endTime;
 
-	function __construct( $taskId, $taskList, $callOrder, $createdBy ) {
+	function __construct( $wikiId, $taskId, $taskList, $callOrder, $createdBy ) {
 		$this->taskId = $taskId;
 		$this->callOrder = json_decode( $callOrder, true );
 		$taskList = json_decode( $taskList, true );
+		$createdBy = json_decode( $createdBy, true );
 
 		foreach ( $taskList as $taskData ) {
 			/** @var \Wikia\Tasks\Tasks\BaseTask $task */
 			$task = new $taskData['class']();
-			$task->taskId( $taskId );
-			$task->createdBy( $createdBy );
+			$task
+				->taskId( $taskId )
+				->wikiId( $wikiId )
+				->createdBy( $createdBy['id'] );
 			$task->unserialize( $taskData['context'], $taskData['calls'] );
 
 			try {
@@ -39,6 +46,7 @@ class TaskRunner {
 	}
 
 	function run() {
+		$this->startTime = $this->endTime = time();
 		if ( $this->exception ) {
 			$this->results [] = $this->exception;
 			return;
@@ -71,6 +79,12 @@ class TaskRunner {
 				break;
 			}
 		}
+
+		$this->endTime = time();
+	}
+
+	public function runTime() {
+		return $this->endTime - $this->startTime;
 	}
 
 	public function format() {

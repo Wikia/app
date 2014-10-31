@@ -5,25 +5,34 @@
  */
 require([
 	'videosmodule.views.rail',
-	'videosmodule.models.videos'
-], function (RailModule, VideoData) {
+	'videosmodule.models.videos',
+	'bucky'
+], function (RailModule, VideoData, bucky) {
 	'use strict';
 
 	var $rail = $('#WikiaRail');
 
+	bucky = bucky('videosmodule.controller.index');
+
 	function init() {
-		return new RailModule({
-			el: document.getElementById('videosModule'),
+		var rail;
+
+		bucky.timer.start('execution');
+		// instantiate rail view
+		rail = new RailModule({
+			$el: $('#videosModule'),
 			model: new VideoData(),
 			isFluid: false
+		});
+
+		rail.$el.on('initialized.videosModule', function () {
+			bucky.timer.stop('execution');
 		});
 	}
 
 	$(function () {
-		// instantiate rail view
+		// check if right rail is loaded before initing. If it's not loaded, bind to load event.
 		if ($rail.hasClass('loaded')) {
-			// Debugging to see if there's a race condition. This fires if there's a bug. (VID-1769)
-			Wikia.syslog(Wikia.log.levels.debug, 'VideosModule', {railLoaded: true, adsShown: !!window.wgShowAds});
 			init();
 		} else {
 			$rail.on('afterLoad.rail', init);
