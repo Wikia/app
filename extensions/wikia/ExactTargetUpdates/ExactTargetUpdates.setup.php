@@ -65,6 +65,7 @@ $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetUpdateCityCatMappingTask'] =  $
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetDeleteWikiTask'] = $dir . '/tasks/ExactTargetDeleteWikiTask.php' ;
 
 /* Add API classes */
+$wgAutoloadClasses['Wikia\ExactTarget\ExactTargetApi'] =  $dir . '/api/ExactTargetApi.php' ;
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetApiDataExtension'] =  $dir . '/api/ExactTargetApiDataExtension.php' ;
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetApiSubscriber'] =  $dir . '/api/ExactTargetApiSubscriber.php' ;
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetApiHelper'] =  $dir . '/api/ExactTargetApiHelper.php' ;
