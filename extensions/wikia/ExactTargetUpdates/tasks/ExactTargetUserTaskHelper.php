@@ -13,10 +13,10 @@ class ExactTargetUserTaskHelper {
 	public function prepareUserRetrieveParams( $aProperties, $sFilterProperty, $aFilterValues ) {
 		/* Get Customer Keys specific for production or development */
 		$aCustomerKeys = $this->getCustomerKeys();
-		$sCustomerKey = $aCustomerKeys[ 'user' ];
+
 		$aApiParams = [
 			'DataExtension' => [
-				'CustomerKey' => $sCustomerKey,
+				'CustomerKey' => $aCustomerKeys[ 'user' ],
 				'Properties' => $aProperties,
 			],
 			'SimpleFilterPart' => [
@@ -73,9 +73,26 @@ class ExactTargetUserTaskHelper {
 
 	public function prepareSubscriberData( $sUserEmail ) {
 		$aApiParams = [
-			[
-				'SubscriberKey' => $sUserEmail,
-				'EmailAddress' => $sUserEmail,
+			'Subscriber' => [
+				[
+					'SubscriberKey' => $sUserEmail,
+					'EmailAddress' => $sUserEmail,
+				],
+			],
+		];
+
+		return $aApiParams;
+	}
+
+	public function prepareSubscriberDataForRetrieve( $sUserEmail ) {
+		$aApiParams = [
+			'Subscriber' => [
+				'ObjectType' => 'Subscriber',
+				'Properties' => [ 'SubscriberKey', 'EmailAddress' ],
+			],
+			'SimpleFilterPart' => [
+				'Value' => [ $sUserEmail ],
+				'Property' => 'SubscriberKey',
 			],
 		];
 
@@ -159,8 +176,8 @@ class ExactTargetUserTaskHelper {
 
 		if ( $wgExactTargetDevelopmentMode ) {
 			$aCustomerKeys = [
-				'user' => 'user_dev',
-				'user_properties' => 'user_properties_dev',
+				'user' => 'user',
+				'user_properties' => 'user_properties',
 			];
 		} else {
 			$aCustomerKeys = [

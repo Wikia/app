@@ -21,10 +21,10 @@ class ExactTargetDeleteUserTask extends BaseTask {
 	 */
 	public function deleteSubscriber( $iUserId ) {
 		$oRetrieveUserHelper = $this->getRetrieveUserHelper();
-		$sEmail = $oRetrieveUserHelper->getUserEmail( $iUserId );
-		if ( !$this->isEmailInUse( $sEmail, $iUserId ) ) {
+		$sUserEmail = $oRetrieveUserHelper->getUserEmail( $iUserId );
+		if ( !$this->isEmailInUse( $sUserEmail, $iUserId ) ) {
 			$oHelper = $this->getHelper();
-			$aApiParams = $oHelper->prepareSubscriberData( $sEmail );
+			$aApiParams = $oHelper->prepareSubscriberDataForRetrieve( $sUserEmail );
 			$this->doDeleteSubscriber( $aApiParams );
 		}
 	}

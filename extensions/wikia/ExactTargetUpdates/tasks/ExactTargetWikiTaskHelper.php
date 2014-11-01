@@ -52,7 +52,7 @@ class ExactTargetWikiTaskHelper {
 			'city_cluster' => $oWiki->city_cluster,
 			'city_last_timestamp' => $oWiki->city_last_timestamp,
 			'city_founding_ip' => $oWiki->city_founding_ip,
-			// 'city_vertical' => $oWiki->city_vertical,
+			'city_vertical' => $oWiki->city_vertical,
 		];
 
 		$aWikiDataExtension = [
@@ -142,7 +142,7 @@ class ExactTargetWikiTaskHelper {
 
 		$aCityCatMappingDataForRetrieve = [
 			'DataExtension' => [
-				'CustomerKey' => $aCustomerKeys['city_cat_mapping'],
+				'ObjectType' => "DataExtension[{$aCustomerKeys['city_cat_mapping']}]",
 				'Properties' => [ 'city_id', 'cat_id' ],
 			],
 			'SimpleFilterPart' => [
