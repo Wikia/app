@@ -146,8 +146,8 @@ class ExactTargetWikiTaskHelper {
 				'Properties' => [ 'city_id', 'cat_id' ],
 			],
 			'SimpleFilterPart' => [
-				'Value' => $iCityId,
 				'Property' => 'city_id',
+				'Value' => $iCityId,
 			],
 		];
 

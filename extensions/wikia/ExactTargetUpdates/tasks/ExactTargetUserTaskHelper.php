@@ -91,8 +91,8 @@ class ExactTargetUserTaskHelper {
 				'Properties' => [ 'SubscriberKey', 'EmailAddress' ],
 			],
 			'SimpleFilterPart' => [
-				'Value' => [ $sUserEmail ],
 				'Property' => 'SubscriberKey',
+				'Value' => [ $sUserEmail ],
 			],
 		];
 

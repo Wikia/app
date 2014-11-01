@@ -7,6 +7,7 @@ class ExactTargetApi {
 
 	/* @var ExactTargetApiHelper $helper */
 	protected $helper;
+	/* @var ExactTargetSoapClient $client */
 	protected $client;
 
 	function __construct() {
@@ -14,18 +15,31 @@ class ExactTargetApi {
 		$this->getClient();
 	}
 
+	/**
+	 * Lazy instantiation of an ExactTargetApiHelper class object
+	 * @return void
+	 */
 	private function getHelper() {
 		if ( !isset( $this->helper ) ) {
 			$this->helper = new ExactTargetApiHelper();
 		}
 	}
 
+	/**
+	 * Lazy instantiation of an ExactTargetSoapClient class object
+	 * @return void
+	 */
 	private function getClient() {
 		if ( !isset( $this->client ) ) {
 			$this->client = $this->helper->getClient();
 		}
 	}
 
+	/**
+	 * Wraps the final Create request and calls sendRequest to push it
+	 * @param  Array  $aCallObjects  An array of valid ExactTarget objects (e.g. DataExtension, Subscriber)
+	 * @return stdClass              An stdClass object with a call's results
+	 */
 	public function makeCreateRequest( Array $aCallObjects ) {
 		$aSoapVars = $this->helper->prepareSoapVars( $aCallObjects );
 		$oRequest = $this->helper->wrapCreateRequest( $aSoapVars );
@@ -33,6 +47,12 @@ class ExactTargetApi {
 		return $oResults;
 	}
 
+	/**
+	 * Wraps the final Retrieve request and calls sendRequest to push it
+	 * @param  Array  $aCallObjectParams    An array with ObjectType and Properties params
+	 * @param  Array  $aSimpleFilterParams  An array with Value and Property of a SimpleFiterPart object
+	 * @return stdClass                     An stdClass object with a call's results
+	 */
 	public function makeRetrieveRequest( Array $aCallObjectParams, Array $aSimpleFilterParams ) {
 		$oRetrieveRequest = $this->helper->wrapRetrieveRequest( $aCallObjectParams );
 		$oSimpleFilterPart = $this->helper->wrapSimpleFilterPart( $aSimpleFilterParams );
@@ -43,6 +63,11 @@ class ExactTargetApi {
 		return $oResults;
 	}
 
+	/**
+	 * Wraps the final Update request and calls sendRequest to push it
+	 * @param  Array  $aCallObjects  An array of valid ExactTarget objects (e.g. DataExtension, Subscriber)
+	 * @return stdClass              An stdClass object with a call's results
+	 */
 	public function makeUpdateRequest( Array $aCallObjects ) {
 		$aSoapVars = $this->helper->prepareSoapVars( $aCallObjects );
 		$oRequest = $this->helper->wrapUpdateRequest( $aSoapVars );
@@ -50,6 +75,12 @@ class ExactTargetApi {
 		return $oResults;
 	}
 
+	/**
+	 * Wraps the final Update request wieh a fallback to Create
+	 * and calls sendRequest to push it
+	 * @param  Array  $aCallObjects  An array of valid ExactTarget objects (e.g. DataExtension, Subscriber)
+	 * @return stdClass              An stdClass object with a call's results
+	 */
 	public function makeUpdateCreateRequest( Array $aCallObjects ) {
 		$aSoapVars = $this->helper->prepareSoapVars( $aCallObjects );
 		$oUpdateOptions = $this->helper->prepareUpdateCreateOptions();
@@ -58,6 +89,11 @@ class ExactTargetApi {
 		return $oResults;
 	}
 
+	/**
+	 * Wraps the final Delete request and calls sendRequest to push it
+	 * @param  Array  $aCallObjects  An array of valid ExactTarget objects (e.g. DataExtension, Subscriber)
+	 * @return stdClass              An stdClass object with a call's results
+	 */
 	public function makeDeleteRequest( Array $aCallObjects ) {
 		$aSoapVars = $this->helper->prepareSoapVars( $aCallObjects );
 		$oDeleteRequest = $this->helper->wrapDeleteRequest( $aSoapVars );
@@ -65,7 +101,13 @@ class ExactTargetApi {
 		return $oResults;
 	}
 
-	protected function sendRequest( $sType, $oRequestObject ) {
+	/**
+	 * Try/catch wrapper for sending API requests
+	 * @param  string $sType           Type of a request - Create|Retrieve|Update|Delete
+	 * @param  object $oRequestObject  A valid ExactTarget object for a request
+	 * @return object|false            Returns false when an Exception is caught and a Results object othwerwise.
+	 */
+	private function sendRequest( $sType, $oRequestObject ) {
 		try {
 			$oResults = $this->client->$sType( $oRequestObject );
 			WikiaLogger::instance()->info( $this->client->__getLastResponse() );
