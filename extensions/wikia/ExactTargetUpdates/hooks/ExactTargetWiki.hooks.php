@@ -21,8 +21,7 @@ class ExactTargetWikiHooks {
 	 * @return true
 	 */
 	public function onWikiFactoryChangeCommitted( Array $aParams ) {
-		$oHelper = $this->getHelper();
-		$aWfVariablesTriggeringUpdate = $oHelper->getWfVarsTriggeringUpdate();
+		$aWfVariablesTriggeringUpdate = $this->getWfVarsTriggeringUpdate();
 		if ( isset( $aWfVariablesTriggeringUpdate[ $aParams['cv_name'] ] ) ) {
 			$this->addTheUpdateWikiTask( $aParams['city_id'] );
 		}
@@ -100,8 +99,19 @@ class ExactTargetWikiHooks {
 		$oTask->queue();
 	}
 
-	private function getHelper() {
-		return new ExactTargetWikiHooksHelper();
+	/**
+	 * Returns an array where WF vars names are keys.
+	 * Change of these vars should trigger an ET's city_list table update.
+	 * @return array  An array with vars names as keys
+	 */
+	private function getWfVarsTriggeringUpdate() {
+		$aWfVarsTriggeringUpdate = [
+			'wgServer' => true,
+			'wgSitename' => true,
+			'wgLanguageCode' => true,
+			'wgDBcluster' => true,
+		];
+		return $aWfVarsTriggeringUpdate;
 	}
 
 	private function getExactTargetCreateWikiTask() {
