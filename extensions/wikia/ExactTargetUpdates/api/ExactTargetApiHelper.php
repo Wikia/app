@@ -55,10 +55,10 @@ class ExactTargetApiHelper {
 		return $oRequest;
 	}
 
-	public function wrapRetrieveRequest( $sObjectType, Array $aProperties ) {
+	public function wrapRetrieveRequest( Array $aCallObjectParams ) {
 		$oRetrieveRequest = new \ExactTarget_RetrieveRequest();
-		$oRetrieveRequest->ObjectType = $sObjectType;
-		$oRetrieveRequest->Properties = $aProperties;
+		$oRetrieveRequest->ObjectType = $aCallObjectParams['ObjectType'];
+		$oRetrieveRequest->Properties = $aCallObjectParams['Properties'];
 
 		return $oRetrieveRequest;
 	}
@@ -70,12 +70,11 @@ class ExactTargetApiHelper {
 		return $oRetrieveRequestMsg;
 	}
 
-	public function wrapSimpleFilterPart( $sProperty, $sValue ) {
+	public function wrapSimpleFilterPart( Array $aSimpleFilterParams ) {
 		$oSimpleFilterPart = new \ExactTarget_SimpleFilterPart();
-		$oSimpleFilterPart->Value = $sValue;
+		$oSimpleFilterPart->Value = $aSimpleFilterParams['Value'];
 		$oSimpleFilterPart->SimpleOperator = \ExactTarget_SimpleOperators::equals;
-		$oSimpleFilterPart->Property = $sProperty;
-
+		$oSimpleFilterPart->Property = $aSimpleFilterParams['Property'];
 		return $oSimpleFilterPart;
 	}
 
@@ -133,13 +132,13 @@ class ExactTargetApiHelper {
 	}
 
 	/**
-	 * Creates an array of DataExtension objects
-	 * based on passed parameters.
+	 * Creates an array of DataExtension objects based on passed parameters.
 	 * @param  array  $aObjectsParams An array of parameters of DataExtension objects'
 	 * @return array                  An array of DataExtension objects
 	 */
 	public function prepareDataExtensionObjects( $aObjectsParams ) {
 		$aDE = [];
+
 		foreach( $aObjectsParams as $aObjectParams ) {
 			$oDE = new \ExactTarget_DataExtensionObject();
 			$oDE->CustomerKey = $aObjectParams[ 'CustomerKey' ];
@@ -162,9 +161,10 @@ class ExactTargetApiHelper {
 
 			$aDE[] = $oDE;
 		}
+
 		return $aDE;
 	}
-	
+
 	public function prepareSubscriberObjects( $aObjects ) {
 		$aSubscribers = [];
 
@@ -172,8 +172,6 @@ class ExactTargetApiHelper {
 			$oSubscriber = new \ExactTarget_Subscriber();
 			$oSubscriber->SubscriberKey = $aSub['SubscriberKey'];
 			$oSubscriber->EmailAddress = $aSub['EmailAddress'];
-			
-			$aSubscribers[] = $this->wrapToSoapVar( $oSubscriber, 'Subscriber' );
 		}
 
 		return $aSubscribers;

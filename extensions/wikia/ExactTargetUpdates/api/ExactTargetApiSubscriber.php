@@ -5,28 +5,20 @@ class ExactTargetApiSubscriber extends ExactTargetApi {
 
 	public function createRequest( Array $aApiCallParams ) {
 		$aSubscribers = $this->helper->prepareSubscriberObjects( $aApiCallParams );
-
-		$oRequest = $this->helper->wrapCreateRequest( $aSubscribers );
-
-		$this->makeRequest( 'Create', $oRequest );
+		$oResults = $this->makeCreateRequest( $aSubscribers );
+		return $oResults;
 	}
 
 	public function retrieveRequest( Array $aApiCallParams ) {
-		$sRetrieveObjectType = "Subscriber";
-		$aRetrieveProperties = $aApiCallParams['Subscriber']['Properties'];
-
-		$oResults = parent::retrieveRequest( $aApiCallParams, $sRetrieveObjectType, $aRetrieveProperties );
-
+		$aCallObjectParams = $aApiCallParams['Subscriber'];
+		$aSimpleFilterParams = $aApiCallParams['SimpleFilterPart'];
+		$oResults = $this->makeRetrieveRequest( $aCallObjectParams, $aSimpleFilterParams );
 		return $oResults;
 	}
 
 	public function deleteRequest( Array $aApiCallParams ) {
 		$aSubscribers = $this->helper->prepareSubscriberObjects( $aApiCallParams );
-
-		$oDeleteRequest = $this->helper->wrapDeleteRequest( $aSubscribers );
-
-		$oResults = $this->makeRequest( 'Delete', $oDeleteRequest );
+		$oResults = $this->makeDeleteRequest( $aSubscribers );
 		return $oResults;
 	}
-
 }
