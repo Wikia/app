@@ -45,7 +45,7 @@ $wgExtensionCredits['other'][] = array(
 
 $wgAvailableRights[] = 'welcomeexempt';
 $wgGroupPermissions['bot']['welcomeexempt'] = true;
-
+$wgGroupPermissions['staff']['welcomeexempt'] = true;
 
 $wgExtensionMessagesFiles[ 'HAWelcome' ] = $dir . '/HAWelcome.i18n.php';
 

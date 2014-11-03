@@ -6,11 +6,9 @@ $slotTopHeight: 50px;
 
 #MOBILE_TOP_LEADERBOARD {
 	background-color: white;
-
-	margin: 0 auto;
-	text-align: center;
-
 	height: 50px;
+	margin: 0 auto;
+	width: 320px;
 
 	&.hidden, .hidden {
 		display: none;
