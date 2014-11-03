@@ -181,21 +181,21 @@ class FacebookClient {
 			return null;
 		}
 
-		$wikiId = $map->getWikiaUserId();
-		if ( !$wikiId ) {
+		$wikiUserId = $map->getWikiaUserId();
+		if ( !$wikiUserId ) {
 			return null;
 		}
 
-		$user = User::newFromId( $wikiId );
+		$user = User::newFromId( $wikiUserId );
 
-		// @TODO is this still used at Wikia?
+		// This handles the case when a user record doesn’t exist on wikicities_c3 yet and it has to be created
 		if ( F::app()->wg->ExternalAuthType ) {
 			$user->load();
 			if ( $user->getId() == 0 ) {
-				$mExtUser = ExternalUser::newFromId( $wikiId );
+				$mExtUser = ExternalUser::newFromId( $wikiUserId );
 				if ( is_object( $mExtUser ) && ( $mExtUser->getId() != 0 ) ) {
 					$mExtUser->linkToLocal( $mExtUser->getId() );
-					$user->setId( $wikiId );
+					$user->setId( $wikiUserId );
 				}
 			}
 		}
