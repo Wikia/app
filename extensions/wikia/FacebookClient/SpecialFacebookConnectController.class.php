@@ -70,8 +70,8 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 
 		$user = User::newFromName( $wikiaUserName );
 		if ( !$user || !$user->checkPassword( $wikiaPassword ) ) {
-			$wg->Request->setVal( 'errorMessage', 'facebookconnect-wrong-pass-msg' );
-			$this->forward( __CLASS__, 'connectExisting' );
+			$wg->Request->setVal( 'errorMessage', 'facebookclient-wrong-pass-msg' );
+			$this->forward( __CLASS__, 'connectUser' );
 			return true;
 		}
 

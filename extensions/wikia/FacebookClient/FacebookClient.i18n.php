@@ -29,6 +29,7 @@ $messages['en'] = [
 	'facebookclient-connect-login-legend' => 'Login to your existing account',
 	'facebookclient-connect-username-label' => 'Username:',
 	'facebookclient-connect-password-label' => 'Password:',
+	'facebookclient-wrong-pass-msg' => 'The password you have entered is incorrect',
 ];
 
 /**
