@@ -73,7 +73,11 @@ module.exports = function(config) {
 			//SpecialPromote
 			'extensions/wikia/SpecialPromote/js/spec/integration/SpecialPromote.mocks.js',
 			'extensions/wikia/SpecialPromote/js/SpecialPromote.js',
-			'extensions/wikia/SpecialPromote/js/spec/integration/SpecialPromote.spec.js'
+			'extensions/wikia/SpecialPromote/js/spec/integration/SpecialPromote.spec.js',
+
+			//venus infobox
+			'extensions/wikia/Venus/scripts/modules/infobox.module.js',
+			'extensions/wikia/Venus/scripts/modules/spec/integration/infobox.spec.js'
 		]
 	});
 };

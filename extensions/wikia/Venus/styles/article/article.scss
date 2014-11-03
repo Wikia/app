@@ -6,6 +6,7 @@
 @import 'extensions/wikia/Venus/styles/z-index';
 @import 'extensions/wikia/Venus/styles/article/images';
 @import 'extensions/wikia/Venus/styles/article/media';
+@import 'extensions/wikia/Venus/styles/article/infobox';
 @import 'extensions/wikia/Venus/styles/article/tables';
 @import 'extensions/wikia/Venus/styles/modules/lightboxVenus';
 @import 'extensions/wikia/Venus/styles/modules/throbberVenus';
@@ -84,6 +85,14 @@ $header-without-cover-unit-spacing: 60px;
 	clear: left;
 	margin: 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width;
 	padding: 0 $medium-grid-column-padding;
+
+	&.clear-none {
+		 clear: none;
+	}
+
+	.clear-left {
+		clear: left;
+	}
 
 	.editsection {
 		@include font-size-xxs;
@@ -212,16 +221,6 @@ $header-without-cover-unit-spacing: 60px;
 }
 
 /* FOR PROTOTYPE/TESTING ONLY */
-.infobox-test {
-	@include grid-column-width('medium', 4, -2 * $medium-grid-column-padding);
-	background-color: $placeholder-background-color;
-	clear: right;
-	display: block;
-	float: right;
-	height: 500px;
-	margin: 0 $medium-grid-column-padding + $medium-content-padding - $content-border-width 20px $medium-grid-gutter + $medium-grid-column-padding;
-	padding: 10px;
-}
 
 /* CON-1982: use Oasis font-size in prototype phase */
 .infobox {
@@ -304,12 +303,6 @@ $header-without-cover-unit-spacing: 60px;
 			margin-left: $large-grid-column - 2 * $large-grid-column-padding;
 		}
 	}
-
-	.infobox-test {
-		@include grid-column-width('large', 4, -2 * $large-grid-column-padding);
-		margin: 0 $large-grid-column-padding + $large-content-padding - $content-border-width 20px $large-grid-gutter + $large-grid-column-padding;
-		padding: $large-grid-column-padding;
-	}
 }
 
 @media #{$small-only} {
@@ -375,11 +368,5 @@ $header-without-cover-unit-spacing: 60px;
 		dd {
 			margin-left: $small-grid-column - 2 * $small-grid-column-padding;
 		}
-	}
-
-	.infobox-test {
-		@include grid-column-width('small', 5);
-		margin: 0 $small-content-padding - $content-border-width 20px $small-grid-gutter + $small-grid-column-padding;
-		padding: $small-grid-column-padding;
 	}
 }

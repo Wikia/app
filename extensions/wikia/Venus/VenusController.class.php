@@ -42,7 +42,6 @@ class VenusController extends WikiaController {
 	public function index() {
 		global $wgUser;
 
-
 		$this->contents = $this->skinTemplateObj->data['bodytext'];
 
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
