@@ -95,24 +95,6 @@ class ExactTargetUserTaskHelper {
 		return $aApiParams;
 	}
 
-
-	public function prepareSubscriberDataForRetrieve( $sUserEmail ) {
-		$aApiParams = [
-			'Subscriber' => [
-				[
-				'ObjectType' => 'Subscriber',
-				'Properties' => [ 'SubscriberKey', 'EmailAddress' ],
-				]
-			],
-			'SimpleFilterPart' => [
-				'Property' => 'SubscriberKey',
-				'Value' => [ $sUserEmail ],
-			],
-		];
-
-		return $aApiParams;
-	}
-
 	/**
 	 * Prepares array of params for ExactTarget API for creating DataExtension objects for user table
 	 * @param int $iUserId User id
