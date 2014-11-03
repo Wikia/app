@@ -32,8 +32,8 @@ class ExactTargetUserTaskHelper {
 	/**
 	 * Prepares array of params for ExactTarget API for creating DataExtension objects for user table
 	 * Assumes $aUserData has user_id key that will be treated as filter to update data
-	 * @param array $aUserData user key value array
-	 * @return array
+	 * @param  array $aUserData  User key value array
+	 * @return array             Array of DataExtension data arrays (nested arrays)
 	 */
 	public function prepareUserUpdateParams( array $aUserData ) {
 		$userId = $this->extractUserIdFromData( $aUserData );
@@ -53,6 +53,11 @@ class ExactTargetUserTaskHelper {
 		return $aApiParams;
 	}
 
+	/**
+	 * Prepares data for a user record removal
+	 * @param  int $iUserId  User's ID
+	 * @return array         Array of DataExtension data arrays (nested arrays)
+	 */
 	public function prepareUserDeleteParams( $iUserId ) {
 		/* Get Customer Keys specific for production or development */
 		$aCustomerKeys = $this->getCustomerKeys();
@@ -72,6 +77,11 @@ class ExactTargetUserTaskHelper {
 		return $aApiParams;
 	}
 
+	/**
+	 * Prepares Subscriber's object data
+	 * @param  string $sUserEmail  User's email
+	 * @return array               Array of Subscriber data arrays (nested arrays)
+	 */
 	public function prepareSubscriberData( $sUserEmail ) {
 		$aApiParams = [
 			'Subscriber' => [
@@ -84,6 +94,7 @@ class ExactTargetUserTaskHelper {
 
 		return $aApiParams;
 	}
+
 
 	public function prepareSubscriberDataForRetrieve( $sUserEmail ) {
 		$aApiParams = [
