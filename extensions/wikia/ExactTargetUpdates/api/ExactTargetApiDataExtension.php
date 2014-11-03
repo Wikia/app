@@ -97,7 +97,7 @@ class ExactTargetApiDataExtension extends ExactTargetApi {
 
 	/**
 	 * An entry point for DataExtension Update requests
-	 * @param  Array  $aApiCallParams  Uses the same format as the Update request (see lines 63-88)
+	 * @param  Array  $aApiCallParams  Uses the same format as the Update request (@see updateRequest())
 	 * @return stdObject|false  Returns false when an Exception happens and an stdObject otherwise
 	 */
 	public function updateFallbackCreateRequest( Array $aApiCallParams ) {

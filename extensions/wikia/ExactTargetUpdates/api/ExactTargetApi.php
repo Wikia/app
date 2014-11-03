@@ -111,7 +111,7 @@ class ExactTargetApi {
 	 * @param  object $oRequestObject  A valid ExactTarget object for a request
 	 * @return object|false            Returns false when an Exception is caught and a Results object othwerwise.
 	 */
-	private function sendRequest( $sType, $oRequestObject ) {
+	protected function sendRequest( $sType, $oRequestObject ) {
 		try {
 			$oResults = $this->client->$sType( $oRequestObject );
 			WikiaLogger::instance()->info( $this->client->__getLastResponse() );
