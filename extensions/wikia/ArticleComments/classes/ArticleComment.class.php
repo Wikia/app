@@ -462,10 +462,7 @@ class ArticleComment {
 	 * @access public
 	 */
 	public function doDeleteComment( $reason, $suppress = false ){
-		global $wgUser;
-		$error = '';
 		$wikiPage = new WikiPage( $this->mTitle );
-		$id = $wikiPage->getId();
 
 		if ( $wikiPage->doDeleteArticle( $reason, $suppress ) ) {
 			return true;
