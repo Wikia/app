@@ -1,13 +1,14 @@
 <?php
 /**
- * Sends push updates to ExactTarget.com on various hooks
- * Aim is to keep data in ExactTarget mailing tool fresh
+ * Sends push updates to ExactTarget.com on various hooks.
+ * The goal is to keep the data in ExactTarget mailing tool fresh.
  *
  * @package Wikia\extensions\ExactTargetUpdates
  *
  * @version 0.1
  *
  * @author Kamil Koterba <kamil@wikia-inc.com>
+ * @author Adam Karmiński <adamk@wikia-inc.com>
  *
  * @see https://github.com/Wikia/app/tree/dev/extensions/wikia/ExactTargetUpdates/
  */
