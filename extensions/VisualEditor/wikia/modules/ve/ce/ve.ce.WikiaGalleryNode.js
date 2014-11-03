@@ -119,14 +119,19 @@ ve.ce.WikiaGalleryNode.prototype.setupGallery = function ( galleryData ) {
 };
 
 ve.ce.WikiaGalleryNode.static.getThumbUrl = function ( url ) {
-	var height = 480,
-		width = 480;
-	return [
-		url.substr( 0, url.indexOf( '/revision/' ) ),
-		'/revision/latest/zoom-crop',
-		'/width/' + width + '/height/' + height,
-		'?' + url.match( /cb=\d*/gm ) + '&fill=transparent'
-	].join( '' );
+	var vignettePathPrefix = mw.config.get( 'VignettePathPrefix' ),
+		height = 480,
+		width = 480,
+		parts = [
+			url.substr( 0, url.indexOf( '/revision/' ) ),
+			'/revision/latest/zoom-crop',
+			'/width/' + width + '/height/' + height,
+			'?' + url.match( /cb=\d*/gm ) + '&fill=transparent'
+		];
+	if ( vignettePathPrefix ) {
+		parts.push( '&path-prefix=' + vignettePathPrefix );
+	}
+	return parts.join( '' );
 };
 
 ve.ce.WikiaGalleryNode.static.getThumbHtml = function ( linkUrl, imageUrl, name ) {
