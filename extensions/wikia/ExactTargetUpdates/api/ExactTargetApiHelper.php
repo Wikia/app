@@ -85,7 +85,7 @@ class ExactTargetApiHelper {
 	 * @param  ExactTarget_RetrieveRequest $oRetrieveRequest  A RetrieveRequest object.
 	 * @return ExactTarget_RetrieveRequestMsg object
 	 */
-	public function wrapRetrieveRequestMsg( ExactTarget_RetrieveRequest $oRetrieveRequest ) {
+	public function wrapRetrieveRequestMsg( \ExactTarget_RetrieveRequest $oRetrieveRequest ) {
 		$oRetrieveRequestMsg = new \ExactTarget_RetrieveRequestMsg();
 		$oRetrieveRequestMsg->RetrieveRequest = $oRetrieveRequest;
 		return $oRetrieveRequestMsg;

@@ -54,7 +54,7 @@ class ExactTargetApiDataExtension extends ExactTargetApi {
 	public function retrieveRequest( Array $aApiCallParams ) {
 		$aCallObjectParams = $aApiCallParams['DataExtension'];
 		$aSimpleFilterParams = $aApiCallParams['SimpleFilterPart'];
-		$oResults = makeRetrieveRequest( $aCallObjectParams, $aSimpleFilterParams );
+		$oResults = $this->makeRetrieveRequest( $aCallObjectParams, $aSimpleFilterParams );
 		return $oResults;
 	}
 
