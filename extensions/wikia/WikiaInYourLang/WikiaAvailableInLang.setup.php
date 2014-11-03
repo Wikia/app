@@ -4,13 +4,13 @@
  * in a user's native language.
  * The check is based on Geo cookie and a browser's language.
  *
- * @package Wikia\extensions\WikiaAvailableInLang
+ * @package Wikia\extensions\WikiaInYourLang
  *
  * @version 0.1
  *
  * @author Adam Karminski <adamk@wikia-inc.com>
  *
- * @see https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaAvailableInLang/
+ * @see https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaInYourLang/
  */
 
 
@@ -30,13 +30,13 @@ $dir = __DIR__;
  */
 $wgExtensionCredits['other'][] = array(
 	'path'              => __FILE__,
-	'name'              => 'WikiaAvailableInLang',
-	'descriptionmsg'    => 'wikia-available-in-lang-description',
+	'name'              => 'WikiaInYourLang',
+	'descriptionmsg'    => 'wikia-in-your-lang-description',
 	'version'           => '0.1',
 	'author'            => array(
 		'Adam Karminski <adamk@wikia-inc.com>'
 	),
-	'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaAvailableInLang/',
+	'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaInYourLang/',
 );
 
-$wgExtensionMessagesFiles[ 'WikiaAvailableInLang' ] = $dir . '/WikiaAvailableInLang.i18n.php';
+$wgExtensionMessagesFiles[ 'WikiaInYourLang' ] = $dir . '/WikiaInYourLang.i18n.php';
