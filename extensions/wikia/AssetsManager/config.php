@@ -815,6 +815,7 @@ $config['monobook_js'] = array(
 		'#group_oasis_shared_core_js',
 		'#group_oasis_jquery',
 		'#group_articlecomments_js',
+		'#group_bucky_js',
 
 		// TODO: remove dependency on YUI (see BugId:3116)
 		'//resources/wikia/libraries/yui/utilities/utilities.js',
