@@ -18,40 +18,48 @@ class FacebookClient {
 	/**
 	 * Only called internally
 	 *
-	 * @param \Facebook\FacebookSignedRequestFromInputHelper $facebookAPI
+	 * @param FacebookClientConfig $config
 	 *
 	 * @throws Exception
 	 */
-	private function __construct( Facebook\FacebookSignedRequestFromInputHelper $facebookAPI = null) {
-		global $fbAppId, $fbAppSecret;
+	private function __construct( FacebookClientConfig $config ) {
 
-		// Only hold one version of this client per request
-		if ( empty( $this->facebookAPI ) ) {
-			if ( $facebookAPI ) {
-				// Use client passed to our constructor
-				$this->facebookAPI = $facebookAPI;
-			} else {
-				// Construct our own client
+		if ( $config->hasFacebookAPI() ) {
+			// Use client passed to our constructor
+			$this->facebookAPI = $config->getFacebookAPI();
+		} else {
+			// Construct our own client
 
-				// Make sure we have the ID and secret set
-				if ( empty( $fbAppId ) || empty( $fbAppSecret ) ) {
-					throw new Exception( wfMessage( 'facebookgraphapi-not-configured' ) );
-				}
-
-				Facebook\FacebookSession::setDefaultApplication( $fbAppId, $fbAppSecret );
-				$this->facebookAPI = new Facebook\FacebookJavaScriptLoginHelper();
+			// Make sure we have the ID and secret
+			if ( !$config->hasAppID() || !$config->hasAppSecret() ) {
+				throw new Exception( wfMessage( 'facebookclient-graphapi-not-configured' ) );
 			}
+
+			Facebook\FacebookSession::setDefaultApplication( $config->getAppID(), $config->getAppSecret() );
+			$this->facebookAPI = new Facebook\FacebookJavaScriptLoginHelper();
 		}
 	}
 
 	/**
 	 * Return an instance of the FacebookClient
 	 *
+	 * @param FacebookClientConfig $config
+	 *
 	 * @return FacebookClient
 	 */
-	public static function getInstance() {
+	public static function getInstance( FacebookClientConfig $config = null ) {
+		global $fbAppId, $fbAppSecret;
+
+		// If an instance hasn't been created yet, create one
 		if ( empty( self::$instance ) ) {
-			self::$instance = new FacebookClient();
+
+			// See if an alternate config has been passed in
+			if ( empty( $config ) ) {
+				$config = ( new FacebookClientConfig() )
+					->setAppID( $fbAppId )
+					->setAppSecret( $fbAppSecret );
+			}
+			self::$instance = new FacebookClient( $config );
 		}
 		return self::$instance;
 	}
@@ -235,5 +243,61 @@ class FacebookClient {
 
 			setcookie( $sessionCookieName, '', 0, '/', $base_domain );
 		}
+	}
+}
+
+/**
+ * Class FacebookClientConfig
+ *
+ * Defines the configuration needed to create an instance of FacebookClient
+ */
+class FacebookClientConfig {
+
+	/** @var int */
+	private $appID;
+
+	/** @var string */
+	private $appSecret;
+
+	/** @var Facebook\FacebookSignedRequestFromInputHelper */
+	private $facebookAPI;
+
+	public function getAppID() {
+		return $this->appID;
+	}
+
+	public function setAppID( $id ) {
+		$this->appID = $id;
+		return $this;
+	}
+
+	public function hasAppID() {
+		return isset( $this->appID );
+	}
+
+	public function getAppSecret() {
+		return $this->appSecret;
+	}
+
+	public function setAppSecret( $secret ) {
+		$this->appSecret = $secret;
+		return $this;
+	}
+
+	public function hasAppSecret() {
+		return isset( $this->appSecret );
+	}
+
+	public function getFacebookAPI() {
+		return $this->facebookAPI;
+	}
+
+	public function setFacebookAPI( Facebook\FacebookSignedRequestFromInputHelper $facebookAPI ) {
+		$this->facebookAPI = $facebookAPI;
+		return $this;
+	}
+
+	public function hasFacebookAPI() {
+		return isset( $this->facebookAPI );
 	}
 }

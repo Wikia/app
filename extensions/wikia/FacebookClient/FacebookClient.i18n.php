@@ -7,6 +7,8 @@ $messages['en'] = [
 	// Extension name
 	'facebookclient-desc' => 'Enables users to [[Special:Connect|Connect]] with their [http://www.facebook.com Facebook] accounts.',
 
+	'facebookclient-graphapi-not-configured' => 'Facebook App ID and App secret missing from configuration.',
+
 	'prefs-facebookclient-prefstext' => 'Facebook Connect',
 	'prefs-facebookclient-status-prefstext' => 'Status',
 
