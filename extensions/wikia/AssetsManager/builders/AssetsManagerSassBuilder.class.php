@@ -13,7 +13,7 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		parent::__construct($request);
 
 		// TODO: the background image shouldn't be passed as the url - we should pass a File reference and derive ourselves
-		if (VignetteRequest::isVignetteUrl($this->mParams['background-image']) && isset($this->mParams['path-prefix'])) {
+		if (isset($this->mParams['background-image']) && VignetteRequest::isVignetteUrl($this->mParams['background-image']) && isset($this->mParams['path-prefix'])) {
 			$connector = strpos($this->mParams['background-image'], '?') === false ? '?' : '&';
 			$this->mParams['background-image'] .= "{$connector}path-prefix={$this->mParams['path-prefix']}";
 		}
