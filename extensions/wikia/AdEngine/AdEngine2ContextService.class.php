@@ -30,6 +30,7 @@ class AdEngine2ContextService {
 				'opts' => $this->filterOutEmptyItems( [
 					'adsInHead' => !!$wg->EnableAdsInContent,
 					'disableLateQueue' => $wg->AdEngineDisableLateQueue,
+					'enableAdsInMaps' => $wg->AdDriverEnableAdsInMaps,
 					'lateAdsAfterPageLoad' => $adEngineService->areAdsAfterPageLoad(),
 					'pageType' => $adPageTypeService->getPageType(),
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
