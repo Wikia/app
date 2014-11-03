@@ -54,6 +54,7 @@ class ArticleAsJson extends WikiaService {
 			$media['views'] = (int) $details['videoViews'];
 			$media['embed'] = $details['videoEmbedCode'];
 			$media['provider'] = $details['providerName'];
+			$media['duration'] = $details['duration'];
 		}
 
 		wfProfileOut( __METHOD__ );
