@@ -12,6 +12,12 @@ class AssetsManagerSassBuilder extends AssetsManagerBaseBuilder {
 		global $IP;
 		parent::__construct($request);
 
+		// TODO: the background image shouldn't be passed as the url - we should pass a File reference and derive ourselves
+		if (VignetteRequest::isVignetteUrl($this->mParams['background-image']) && isset($this->mParams['path-prefix'])) {
+			$connector = strpos($this->mParams['background-image'], '?') === false ? '?' : '&';
+			$this->mParams['background-image'] .= "{$connector}path-prefix={$this->mParams['path-prefix']}";
+		}
+
 		if (strpos($this->mOid, '..') !== false) {
 			throw new Exception('File path must not contain \'..\'.');
 		}
