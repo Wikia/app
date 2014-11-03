@@ -124,7 +124,7 @@ ve.ce.WikiaGalleryNode.prototype.setupGallery = function ( galleryData ) {
 };
 
 ve.ce.WikiaGalleryNode.static.getThumbUrl = function ( url ) {
-	var vignettePathPrefix = mw.config.get('VignettePathPrefix'),
+	var vignettePathPrefix = mw.config.get( 'VignettePathPrefix' ),
 		height = 480,
 		width = 480,
 		parts = [
