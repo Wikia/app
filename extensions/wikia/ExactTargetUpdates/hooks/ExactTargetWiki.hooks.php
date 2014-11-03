@@ -125,7 +125,7 @@ class ExactTargetWikiHooks {
 	}
 
 	/**
-	 * A simple getter for an object of ExactTargetCreateWikiTask class
+	 * A simple getter for an object of an ExactTargetCreateWikiTask class
 	 * @return  object ExactTargetCreateWikiTask
 	 */
 	private function getExactTargetCreateWikiTask() {
@@ -133,7 +133,7 @@ class ExactTargetWikiHooks {
 	}
 
 	/**
-	 * A simple getter for an object of ExactTargetUpdateWikiTask class
+	 * A simple getter for an object of an ExactTargetUpdateWikiTask class
 	 * @return  object ExactTargetUpdateWikiTask
 	 */
 	private function getExactTargetUpdateWikiTask() {
@@ -141,7 +141,7 @@ class ExactTargetWikiHooks {
 	}
 
 	/**
-	 * A simple getter for an object of ExactTargetUpdateCityCatMappingTask class
+	 * A simple getter for an object of an ExactTargetUpdateCityCatMappingTask class
 	 * @return  object ExactTargetUpdateCityCatMappingTask
 	 */
 	private function getExactTargetUpdateCityCatMappingTask() {
@@ -149,7 +149,7 @@ class ExactTargetWikiHooks {
 	}
 
 	/**
-	 * A simple getter for an object of ExactTargetDeleteWikiTask class
+	 * A simple getter for an object of an ExactTargetDeleteWikiTask class
 	 * @return  object ExactTargetDeleteWikiTask
 	 */
 	private function getExactTargetDeleteWikiTask() {
