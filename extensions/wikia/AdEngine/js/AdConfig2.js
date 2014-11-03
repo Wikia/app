@@ -70,11 +70,10 @@ define('ext.wikia.adEngine.adConfig', [
 
 	highValueSlots = defaultHighValueSlots;
 
-	function getProviderList(slot) {
-		log(['getProvider', slot], 'info', logGroup);
+	function getProviderList(slotname) {
+		log(['getProvider', slotname], 'info', logGroup);
 
-		var slotname = slot[0],
-			context = adContext.getContext();
+		var context = adContext.getContext();
 
 		if (!adContext.getContext().opts.showAds) {
 			return [];
@@ -82,13 +81,13 @@ define('ext.wikia.adEngine.adConfig', [
 
 		// Force Liftium
 		if (context.forceProviders.liftium) {
-			log(['getProvider', slot, 'Later (wgAdDriverForceLiftiumAd)'], 'info', logGroup);
+			log(['getProvider', slotname, 'Later (wgAdDriverForceLiftiumAd)'], 'info', logGroup);
 			return [adProviderLater];
 		}
 
 		// Force DirectGpt
 		if (context.forceProviders.directGpt) {
-			log(['getProvider', slot, 'DirectGpt (wgAdDriverForceDirectGptAd)'], 'info', logGroup);
+			log(['getProvider', slotname, 'DirectGpt (wgAdDriverForceDirectGptAd)'], 'info', logGroup);
 			return [adProviderDirectGpt];
 		}
 
@@ -102,25 +101,25 @@ define('ext.wikia.adEngine.adConfig', [
 				slotname !== 'WIKIA_BAR_BOXAD_1' &&
 				slotname !== 'GPT_FLUSH'
 				) {
-			log(['getProvider', slot, 'Later (SevenOneMedia)'], 'info', logGroup);
+			log(['getProvider', slotname, 'Later (SevenOneMedia)'], 'info', logGroup);
 			return [adProviderLater];
 		}
 
 		// Next Evolve (AU, CA, and NZ traffic)
 		if (country === 'AU' || country === 'CA' || country === 'NZ') {
 			if (evolveSlotConfig.canHandleSlot(slotname)) {
-				log(['getProvider', slot, 'Later (Evolve)'], 'info', logGroup);
+				log(['getProvider', slotname, 'Later (Evolve)'], 'info', logGroup);
 				return [adProviderLater];
 			}
 		}
 
 		if (highValueSlots[slotname]) {
-			log(['getProvider', slot, 'DirectGpt->Later'], 'info', logGroup);
+			log(['getProvider', slotname, 'DirectGpt->Later'], 'info', logGroup);
 			return [adProviderDirectGpt, adProviderLater];
 		}
 
 		// Non-high-value slots go to ad provider Later
-		log(['getProvider', slot, 'Later (Liftium)'], 'info', logGroup);
+		log(['getProvider', slotname, 'Later (Liftium)'], 'info', logGroup);
 		return [adProviderLater];
 	}
 

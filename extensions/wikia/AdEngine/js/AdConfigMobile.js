@@ -11,9 +11,8 @@ define('ext.wikia.adEngine.adConfigMobile', [
 		'corporate': true
 	};
 
-	function getProviderList(slot) {
-		var slotName = slot[0],
-			context = adContext.getContext();
+	function getProviderList(slotName) {
+		var context = adContext.getContext();
 
 		// If wgShowAds set to false, hide slots
 		if (!context.opts.showAds) {
@@ -23,17 +22,6 @@ define('ext.wikia.adEngine.adConfigMobile', [
 		// On pages with type other than all_ads (corporate, homepage_logged, maps), hide slots
 		// @see https://docs.google.com/a/wikia-inc.com/document/d/1Lxz0PQbERWSFvmXurvJqOjPMGB7eZR86V8tpnhGStb4/edit
 		if (!pageTypesWithAdsOnMobile[context.opts.pageType]) {
-			return [];
-		}
-
-		if (slot[2] === 'Null') {
-			return [];
-		}
-
-		if (slot[2] === 'RemnantGptMobile') {
-			if (adProviderRemnantGptMobile.canHandleSlot(slotName)) {
-				return [adProviderRemnantGptMobile];
-			}
 			return [];
 		}
 

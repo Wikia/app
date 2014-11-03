@@ -71,12 +71,11 @@ define('ext.wikia.adEngine.adConfigLate', [
 		},
 		alwaysCallDart = context.opts.alwaysCallDart;
 
-	function getProviderList(slot) {
-		var slotname = slot[0],
-			callDart = alwaysCallDart || alwaysCallDartInSlots[slotname];
+	function getProviderList(slotname) {
+		var callDart = alwaysCallDart || alwaysCallDartInSlots[slotname];
 
 		log('getProvider', 5, logGroup);
-		log(slot, 5, logGroup);
+		log(slotname, 5, logGroup);
 
 		if (context.forceProviders.liftium) {
 			return [adProviderLiftium];
@@ -84,7 +83,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 
 		// First ask SevenOne Media
 		if (context.providers.sevenOneMedia) {
-			if (!liftiumSlotsToShowWithSevenOneMedia[slot[0]]) {
+			if (!liftiumSlotsToShowWithSevenOneMedia[slotname]) {
 				if (ie8) {
 					log('SevenOneMedia not supported on IE8. No ads', 'warn', logGroup);
 					return [];
@@ -104,7 +103,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 		}
 
 		if (country === 'AU' || country === 'CA' || country === 'NZ') {
-			log(['getProvider', slot, 'Evolve'], 'info', logGroup);
+			log(['getProvider', slotname, 'Evolve'], 'info', logGroup);
 			return [adProviderEvolve, adProviderLiftium];
 		}
 

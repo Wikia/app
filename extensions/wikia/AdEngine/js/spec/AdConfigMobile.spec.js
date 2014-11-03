@@ -34,7 +34,7 @@ describe('AdConfigMobile', function () {
 			adProviderRemnantMock
 		);
 
-		expect(adConfigMobile.getProviderList(['foo'])).toEqual([adProviderDirectMock], 'GPT');
+		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderDirectMock], 'GPT');
 	});
 
 	it('getProviderList returns GPT + Remnant GPT when remnantGptMobile enabled', function () {
@@ -44,7 +44,7 @@ describe('AdConfigMobile', function () {
 			adProviderRemnantMock
 		);
 
-		expect(adConfigMobile.getProviderList(['foo'])).toEqual([adProviderDirectMock, adProviderRemnantMock], 'GPT');
+		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderDirectMock, adProviderRemnantMock], 'GPT');
 	});
 
 	it('getProviderLists returns Null when wgShowAds set to false', function () {
@@ -54,11 +54,6 @@ describe('AdConfigMobile', function () {
 			adProviderRemnantMock
 		);
 
-		// First check if NullProvider wins over Mobile GPT
-		expect(adConfigMobile.getProviderList(['foo'])).toEqual([], 'Null over GPT');
-
-		// Second check if NullProvider wins over Mobile Remnant
-		expect(adConfigMobile.getProviderList(['foo', null, 'RemnantGptMobile'])).
-			toEqual([], 'Null over RemnantGptMobile');
+		expect(adConfigMobile.getProviderList('foo')).toEqual([], 'Null over GPT');
 	});
 });
