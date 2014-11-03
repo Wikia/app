@@ -2,9 +2,8 @@
 
 define(
 	'wikia.dropdownNavigation',
-	['j.query', 'mustache', 'wikia.dropdownNavigation.templates'],
-	function ($, mustache, templates) {
-
+	['jquery', 'wikia.window', 'wikia.document', 'wikia.mustache', 'wikia.dropdownNavigation.templates'],
+	function ($, win, doc, mustache, dropdownTemplates) {
 		/**
 		 * @desc validates dropdown naviagation options
 		 * @param {Object} params
@@ -31,50 +30,67 @@ define(
 				return new DropdownNavigation(options);
 			}
 
-			var params = {
-					id: 'wikiaDropdownNav' + Math.random(),
+			var dropdownId = 'wikiaDropdownNav' + Math.floor(Math.random() * 99) + 1,
+				dropdownParams = {
+					activeClass: 'active',
+					id: dropdownId,
 					maxHeight: 400,
 					posX: 'top',
 					posY: 'right',
 					scrollX: true
 				},
-				$trigger = $(options.trigger),
-				$dropdown;
+				delayHoverParams = {
+					onActivate: show,
+					onDeactivate: hide,
+					activateOnClick: false
+				},
+				AIMParams = {
+					activate: show,
+					deactivate: hide
+				},
 
-			$.extend(params, options);
-			renderDropdown(params);
-			attachHandlers();
+				// cached DOM elements
+				trigger,
+				dropDown;
 
 			/**
 			 * @desc adds dropdown to DOM and caches selectors
 			 */
 			function renderDropdown(params) {
-				$trigger.after(mustache(templates.dropdown_navigation, params));
-				$dropdown = $(params.id);
+				trigger.appendChild(mustache.render(dropdownTemplates.dropdown_navigation, params));
 			}
 
 			/**
 			 * @desc shows dropdown
 			 */
 			function show() {
-				$dropdown.addClass('active');
+				$(dropDown).addClass(dropdownParams.activeClass);
 			}
 
 			/**
 			 * @desc hides dropdown
 			 */
 			function hide() {
-				$dropdown.addClass('active');
+				$(dropDown).removeClass(dropdownParams.activeClass);
 			}
 
 			/**
-			 * @desc attaches event handlers
+			 * @desc initialize delay hover and AIM menu
+			 * @param {Object} options - configuration options
 			 */
-			function attachHandlers() {
-				$('body')
-					.on('click', params.trigger, show)
-					.on('click', params.id + 'a', hide);
+			function init(options) {
+				$.extend(dropdownParams, options);
+
+				trigger = doc.getElementById(options.trigger);
+				renderDropdown(dropdownParams);
+				dropDown = doc.getElementById(dropdownParams.id);
+
+				this.delayedHover = dewin.delayedHover(trigger, delayHoverParams);
+				this.menuAim = win.menuAim(dropDown, AIMParams);
 			}
+
+			// initialize dropdown component
+			init(options);
 		}
 
 		return DropdownNavigation;
