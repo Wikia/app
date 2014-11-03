@@ -83,7 +83,7 @@ class FacebookClientHooks {
 		$vars['fbAppId'] = $fbAppId;
 		$vars['fbScript'] = $fbScript;
 		$vars['fbUseMarkup'] = $fbUseMarkup;
-		$vars['fbLogo'] = $fbLogo ? true : false;
+		$vars['fbLogo'] = (bool) $fbLogo;
 
 		$vars['fbLogoutURL'] = Skin::makeSpecialUrl(
 			'Userlogout',
@@ -91,7 +91,7 @@ class FacebookClientHooks {
 		);
 
 		$vals = $wg->Request->getValues();
-		if ( !empty( $vals ) && !empty( $vals['title'] ) ) {
+		if ( !empty( $vals['title'] ) ) {
 			$vars['fbReturnToTitle'] = $vals['title'];
 		}
 
