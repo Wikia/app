@@ -16,8 +16,7 @@ class ExactTargetUserTaskHelper {
 
 		$aApiParams = [
 			'DataExtension' => [
-				'ObjectType' => 'DataExtension',
-				'CustomerKey' => $aCustomerKeys[ 'user' ],
+				'ObjectType' => 'DataExtensionObject['.$aCustomerKeys[ 'user' ].']',
 				'Properties' => $aProperties,
 			],
 			'SimpleFilterPart' => [
