@@ -193,7 +193,7 @@ class ExactTargetApiHelper {
 		foreach ( $aObjectsParams as $aSub ) {
 			$oSubscriber = new \ExactTarget_Subscriber();
 			$oSubscriber->SubscriberKey = $aSub['SubscriberKey'];
-			$oSubscriber->EmailAddress = $aSub['EmailAddress'];
+			$aSubscribers[] = $oSubscriber;
 		}
 
 		return $aSubscribers;
