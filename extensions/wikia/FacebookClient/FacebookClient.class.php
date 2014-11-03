@@ -151,7 +151,7 @@ class FacebookClient {
 	}
 
 	/**
-	 * Returns the what Facebook reports as the full user name for the current user.
+	 * Returns what Facebook reports as the full user name for the current user.
 	 *
 	 * @param int $user
 	 *
