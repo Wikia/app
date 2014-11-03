@@ -179,31 +179,28 @@ class FacebookClient {
 		$map = FacebookMapModel::lookupFromFacebookID( $fbid );
 		if ( empty( $map ) ) {
 			return null;
-		} else {
-			$wikiaID = $map->getWikiaUserId();
 		}
 
-		if ( $wikiaID ) {
-			global $wgExternalAuthType;
-
-			$user = User::newFromId( $wikiaID );
-
-			// @TODO is this still used at Wikia?
-			if ( $wgExternalAuthType ) {
-				$user->load();
-				if ( $user->getId() == 0 ) {
-					$mExtUser = ExternalUser::newFromId( $wikiaID );
-					if ( is_object( $mExtUser ) && ( $mExtUser->getId() != 0 ) ) {
-						$mExtUser->linkToLocal( $mExtUser->getId() );
-						$user->setId( $wikiaID );
-					}
-				}
-			}
-
-			return $user;
-		} else {
+		$wikiId = $map->getWikiaUserId();
+		if ( !$wikiId ) {
 			return null;
 		}
+
+		$user = User::newFromId( $wikiId );
+
+		// @TODO is this still used at Wikia?
+		if ( F::app()->wg->ExternalAuthType ) {
+			$user->load();
+			if ( $user->getId() == 0 ) {
+				$mExtUser = ExternalUser::newFromId( $wikiId );
+				if ( is_object( $mExtUser ) && ( $mExtUser->getId() != 0 ) ) {
+					$mExtUser->linkToLocal( $mExtUser->getId() );
+					$user->setId( $wikiId );
+				}
+			}
+		}
+
+		return $user;
 	}
 
 	/**
