@@ -1,48 +1,70 @@
 /* global define */
-define('wikia.venusToc', ['wikia.toc', 'wikia.document'], function (toc, doc) {
-	'use strict';
+define(
+	'wikia.venusToc',
+	['wikia.document', 'wikia.toc', 'wikia.dropdownNavigation'],
+	function (doc, tocModule, DropdownNavigation) {
+		'use strict';
 
-	/**
-	 * Fetch data for TOC by calling wikia.toc.getData()
-	 */
-	function getTocStructure() {
-		var data, headers;
-		headers = getHeaders();
-		data = toc.getData(headers, createSection, filterHeader);
-	}
+		var articleWrapperId = 'mw-content-text',
+			articleHeaderClass = 'mw-headline',
+			tocHeight = 393,
+			headers = [
+				'h2',
+				'h3'
+			];
 
-	/**
-	 * Method which is passed to wikia.toc.getData.
-	 * It defines which properties TOC entry should have
-	 * @param {HTMLElement} header - header node
-	 * @returns {Object}
-	 */
-	function createSection(header) {
+		/**
+		 * @desc creates single toc data object
+		 * @param {HTMLElement} header - header node
+		 * @returns {Object}
+		 */
+		function createSection(header) {
+			return {
+				id: '#' + header.id,
+				title: header.textContent.trim(),
+				sections: []
+			};
+		}
+
+		/**
+		 * @desc checks if header is valid article headers that should be shown in TOC
+		 * @param {HTMLElement} header - header node
+		 * @returns {Boolean}
+		 */
+		function filterHeader(header) {
+			var rawHeader = header.getElementsByClassName(articleHeaderClass);
+
+			return rawHeader.length === 0 ? false : rawHeader[0];
+		}
+
+		/**
+		 * @desc gets data model for TOC
+		 * @param {Array} headers - array of headers levels (example ['h2, 'h3'])
+		 * @param {string} containerId - id of headers container
+		 */
+		function getTocData(headers, containerId) {
+			var headersSelector = headers.join(','),
+				headersCollection = doc
+					.getElementById(containerId)
+					.querySelectorAll(headersSelector);
+
+			return tocModule.getData(headersCollection, createSection, filterHeader);
+		}
+
+		/**
+		 * @desc initialize TOC
+		 * @param {String} trigger - jQuery selector for
+		 */
+		function init(trigger) {
+			return new DropdownNavigation({
+				data: getTocData(headers, articleWrapperId).sections,
+				maxHeight: tocHeight,
+				trigger: trigger
+			});
+		}
+
 		return {
-			id: header.id,
-			name: header.textContent.trim(),
-			sections: []
+			init: init
 		};
 	}
-
-	/**
-	 * Method which is passed to wikia.toc.getData.
-	 * Check if passed header should be added to TOC
-	 * @param {HTMLElement} header - header node
-	 * @returns {boolean}
-	 */
-	function filterHeader(header) {
-		var rawHeader;
-		rawHeader = header.getElementsByClassName('mw-headline');
-
-		return rawHeader.length === 0 ? false : rawHeader[0];
-	}
-
-	function getHeaders() {
-		return doc.getElementById('mw-content-text').querySelectorAll(':scope > h2, :scope > h3');
-	}
-
-	return {
-		getTocStructure: getTocStructure
-	};
-});
+);
