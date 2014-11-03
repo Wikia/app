@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 /**
  * Class FacebookClient
  *
@@ -81,11 +83,20 @@ class FacebookClient {
 	 * @return Facebook\GraphUser
 	 */
 	public function getUserInfo( $userId = 0 ) {
+		$log = WikiaLogger::instance();
+
+		// Pull the user ID from the signed FB cookie if it wasn't passed in
 		if ( $userId == 0 ) {
 			$userId = $this->getUserId();
 		}
 
-		if ( $userId != 0 && !isset( $this->userInfoCache[$userId] ) ) {
+		// If we still couldn't get a user ID, return null
+		if ( empty( $userId ) ) {
+			$log->warning( __CLASS__ . ': Could not get user ID from FB session', [ 'method' => __METHOD__ ]);
+			return null;
+		}
+
+		if ( empty( $this->userInfoCache[$userId] ) ) {
 			try {
 				$userProfile = ( new \Facebook\FacebookRequest(
 					$this->facebookAPI->getSession(),
@@ -95,9 +106,15 @@ class FacebookClient {
 
 				$this->userInfoCache[$userId] = $userProfile;
 			} catch( Exception $e ) {
-				error_log( "Failure in the api requesting '/me' on uid $userId: " . $e->getMessage() );
+				$log->error( __CLASS__ . ': Failure in the api requesting "/me"', [
+					'method' => __METHOD__,
+					'message' => $e->getMessage(),
+					'facebookUserId' => $userId,
+				]);
+				return null;
 			}
 		}
+
 		return $this->userInfoCache[$userId];
 	}
 
