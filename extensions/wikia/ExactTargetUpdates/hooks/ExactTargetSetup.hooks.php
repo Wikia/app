@@ -45,4 +45,12 @@ class ExactTargetSetupHooks {
 	public function getUserHooks() {
 		return new ExactTargetUserHooks();
 	}
+
+	/**
+	 * Returns new instance of ExactTargetWikiHooks
+	 * @return ExactTargetWikiHooks
+	 */
+	public function getWikiHooks() {
+		return new ExactTargetWikiHooks();
+	}
 }
