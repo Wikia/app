@@ -10,7 +10,7 @@ $article-navigation-icon-size: 38px;
 	text-align: center;
 	width: $medium-grid-column;
 
-	ul {
+	> ul {
 		display: block;
 		list-style-type: none;
 		margin: 0 auto;

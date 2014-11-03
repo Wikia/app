@@ -7,51 +7,8 @@
  *
  * @author Bartosz 'V.' Bentkowski
  */
-define('wikia.stickyElement', ['wikia.window', 'wikia.document'], function stickyElementModule(win, doc) {
+define('wikia.stickyElement', ['wikia.window', 'wikia.document', 'wikia.underscore'], function stickyElementModule(win, doc, _) {
 	'use strict';
-
-	/**
-	 * Debounce method taken from Underscore.js
-	 *
-	 * @source: http://underscorejs.org/underscore.js
-	 */
-	var now, debounce;
-
-	now = Date.now || function() {
-		return new Date().getTime();
-	};
-
-	debounce = function (func, wait, immediate) {
-		var timeout, args, context, timestamp, result, later;
-
-		later = function() {
-			var last = now() - timestamp;
-
-			if (last < wait && last > 0) {
-				timeout = win.setTimeout(later, wait - last);
-			} else {
-				timeout = null;
-				if (!immediate) {
-					result = func.apply(context, args);
-					if (!timeout) context = args = null;
-				}
-			}
-		};
-
-		return function() {
-			context = this;
-			args = arguments;
-			timestamp = now();
-			var callNow = immediate && !timeout;
-			if (!timeout) timeout = win.setTimeout(later, wait);
-			if (callNow) {
-				result = func.apply(context, args);
-				context = args = null;
-			}
-
-			return result;
-		};
-	};
 
 	/**
 	 * StcikyElement class
@@ -59,7 +16,7 @@ define('wikia.stickyElement', ['wikia.window', 'wikia.document'], function stick
 	 * @constructor
 	 */
 	var StickyElement = function() {
-		var sourceElement, alignToElement, topScrollLimit, topSticked, topFixed, lastY = -1;
+		var sourceElement, alignToElement, topScrollLimit, topSticked, topFixed, minWidth, lastY = -1;
 
 
 		/**
@@ -67,17 +24,19 @@ define('wikia.stickyElement', ['wikia.window', 'wikia.document'], function stick
 		 *
 		 * @param {Element} _sourceElement
 		 * @param {Element} _alignToElement
-		 * @param {Element} _topFixed
+		 * @param {Number} _topFixed
+		 * @param {Number=} _minWidth
 		 * @returns {Object} StickyElement
 		 */
-		function init (_sourceElement, _alignToElement, _topFixed) {
+		function init (_sourceElement, _alignToElement, _topFixed, _minWidth) {
 			sourceElement = _sourceElement;
 			alignToElement = _alignToElement;
 			topFixed = _topFixed;
+			minWidth = _minWidth || 0;
 
 			win.addEventListener('load',   updateSize);
-			win.addEventListener('scroll', debounce(updatePosition, 10));
-			win.addEventListener('resize', debounce(updateSize, 10));
+			win.addEventListener('scroll', _.debounce(updatePosition, 10));
+			win.addEventListener('resize', _.debounce(updateSize, 10));
 
 			updateSize();
 
@@ -111,7 +70,7 @@ define('wikia.stickyElement', ['wikia.window', 'wikia.document'], function stick
 			// return if there's nothing to update
 			if (event != undefined && currentY === lastY) return;
 
-			if (currentY <= topScrollLimit) {
+			if (currentY <= topScrollLimit || (!!minWidth && win.innerWidth < minWidth)) {
 				sourceElementPosition('absolute', topSticked);
 			} else {
 				sourceElementPosition('fixed', topFixed);

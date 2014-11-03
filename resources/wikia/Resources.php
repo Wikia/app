@@ -193,12 +193,21 @@ return [
 	],
 
 	// libraries and jQuery plugins
+	'wikia.underscore' => [
+		'scripts' => 'resources/wikia/modules/underscore.js',
+		'dependencies' => [
+			'amd',
+			'wikia.window',
+		]
+	],
+
 	'wikia.stickyElement' => [
 		'scripts' => 'resources/wikia/modules/stickyElement.js',
 		'dependencies' => [
 			'amd',
 			'wikia.window',
 			'wikia.document',
+			'wikia.underscore',
 		]
 	],
 

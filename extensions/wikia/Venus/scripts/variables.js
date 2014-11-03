@@ -9,6 +9,7 @@ define('venus.variables', function()  {
 	'use strict';
 
 	return {
-		normalTextFontSize: 12
+		normalTextFontSize: 12,
+		breakpointSmallMin: 768
 	};
 });

@@ -32,6 +32,7 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//resources/wikia/modules/thumbnailer.js',
 		'//resources/wikia/modules/window.js',
 		'//resources/wikia/modules/abTest.js',
+		'//resources/wikia/modules/underscore.js',
 		'//resources/wikia/modules/stickyElement.js',
 
 		//tracker
@@ -74,6 +75,7 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 
 		'//extensions/wikia/Venus/scripts/isTouchScreen.js',
+		'//extensions/wikia/Venus/scripts/variables.js',
 		'//resources/wikia/modules/dom.js',
 
 		// BackgroundChanger
