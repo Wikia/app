@@ -4,6 +4,7 @@
 @import 'extensions/wikia/Venus/styles/typographyMixins';
 @import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/z-index';
+@import 'extensions/wikia/Venus/styles/article/navigation';
 @import 'extensions/wikia/Venus/styles/article/images';
 @import 'extensions/wikia/Venus/styles/article/media';
 @import 'extensions/wikia/Venus/styles/article/infobox';
@@ -11,7 +12,7 @@
 @import 'extensions/wikia/Venus/styles/modules/lightboxVenus';
 @import 'extensions/wikia/Venus/styles/modules/throbberVenus';
 
-$placeholder-background-color: $color-left-article-nav; // only for prototype version
+$placeholder-background-color: $color-article-navigation-inactive; // only for prototype version
 $article-items-spacing: 40px;
 $header-without-cover-unit-spacing: 60px;
 
@@ -55,29 +56,6 @@ $header-without-cover-unit-spacing: 60px;
 				padding-bottom: round($header-without-cover-unit-spacing / 8);
 			}
 		}
-	}
-}
-
-.left-nav {
-	margin-left: $medium-content-padding - $content-border-width;
-	position: fixed;
-	text-align: center;
-	width: $medium-grid-column;
-	z-index: $article-left-navigation-z-index;
-
-	ul {
-		display: inline-block;
-		list-style-type: none;
-		margin: 0;
-		padding: 0;
-	}
-
-	li {
-		background-color: $color-left-article-nav;
-		border-radius: 19px;
-		height: 38px;
-		margin-bottom: 6px;
-		width: 38px;
 	}
 }
 
@@ -247,11 +225,6 @@ $header-without-cover-unit-spacing: 60px;
 		}
 	}
 
-	.left-nav {
-		margin-left: $large-content-padding - $content-border-width;
-		width: $large-grid-column;
-	}
-
 	.mw-content-text {
 		margin: 0 $large-grid-column + $large-grid-gutter + $large-content-padding - $content-border-width;
 		padding: 0 $large-grid-column-padding;
@@ -322,11 +295,6 @@ $header-without-cover-unit-spacing: 60px;
 			padding-left: $small-grid-column + $small-grid-gutter + $small-content-padding + $small-grid-column-padding - $content-border-width;
 			padding-right: $small-grid-column-padding;
 		}
-	}
-
-	.left-nav {
-		margin-left: $small-content-padding - $content-border-width;
-		width: $small-grid-column;
 	}
 
 	.mw-content-text {
