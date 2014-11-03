@@ -95,6 +95,23 @@ class ExactTargetUserTaskHelper {
 	}
 
 	/**
+	 * Prepares Subscriber's object data for delete
+	 * @param  string $sUserEmail  User's email
+	 * @return array               Array of Subscriber data arrays (nested arrays)
+	 */
+	public function prepareSubscriberDeleteData( $sUserEmail ) {
+		$aApiParams = [
+			'Subscriber' => [
+				[
+					'SubscriberKey' => $sUserEmail,
+				],
+			],
+		];
+
+		return $aApiParams;
+	}
+
+	/**
 	 * Prepares array of params for ExactTarget API for creating DataExtension objects for user table
 	 * @param int $iUserId User id
 	 * @param array $aUserProperties user_properties key value array
