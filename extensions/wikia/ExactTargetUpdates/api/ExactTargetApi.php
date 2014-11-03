@@ -38,10 +38,11 @@ class ExactTargetApi {
 	/**
 	 * Wraps the final Create request and calls sendRequest to push it
 	 * @param  Array  $aCallObjects  An array of valid ExactTarget objects (e.g. DataExtension, Subscriber)
+	 * @param  string $sObjectType
 	 * @return stdClass              An stdClass object with a call's results
 	 */
-	public function makeCreateRequest( Array $aCallObjects ) {
-		$aSoapVars = $this->helper->prepareSoapVars( $aCallObjects );
+	public function makeCreateRequest( Array $aCallObjects, $sObjectType = 'DataExtensionObject' ) {
+		$aSoapVars = $this->helper->prepareSoapVars( $aCallObjects, $sObjectType );
 		$oRequest = $this->helper->wrapCreateRequest( $aSoapVars );
 		$oResults = $this->sendRequest( 'Create', $oRequest );
 		return $oResults;
@@ -66,10 +67,11 @@ class ExactTargetApi {
 	/**
 	 * Wraps the final Update request and calls sendRequest to push it
 	 * @param  Array  $aCallObjects  An array of valid ExactTarget objects (e.g. DataExtension, Subscriber)
+	 * @param  string $sObjectType
 	 * @return stdClass              An stdClass object with a call's results
 	 */
-	public function makeUpdateRequest( Array $aCallObjects ) {
-		$aSoapVars = $this->helper->prepareSoapVars( $aCallObjects );
+	public function makeUpdateRequest( Array $aCallObjects, $sObjectType = 'DataExtensionObject' ) {
+		$aSoapVars = $this->helper->prepareSoapVars( $aCallObjects, $sObjectType );
 		$oRequest = $this->helper->wrapUpdateRequest( $aSoapVars );
 		$oResults = $this->sendRequest( 'Update', $oRequest );
 		return $oResults;
@@ -79,10 +81,11 @@ class ExactTargetApi {
 	 * Wraps the final Update request wieh a fallback to Create
 	 * and calls sendRequest to push it
 	 * @param  Array  $aCallObjects  An array of valid ExactTarget objects (e.g. DataExtension, Subscriber)
+	 * @param  string $sObjectType
 	 * @return stdClass              An stdClass object with a call's results
 	 */
-	public function makeUpdateCreateRequest( Array $aCallObjects ) {
-		$aSoapVars = $this->helper->prepareSoapVars( $aCallObjects );
+	public function makeUpdateCreateRequest( Array $aCallObjects, $sObjectType = 'DataExtensionObject' ) {
+		$aSoapVars = $this->helper->prepareSoapVars( $aCallObjects, $sObjectType );
 		$oUpdateOptions = $this->helper->prepareUpdateCreateOptions();
 		$oRequest = $this->helper->wrapUpdateRequest( $aSoapVars, $oUpdateOptions );
 		$oResults = $this->sendRequest( 'Update', $oRequest );
@@ -92,10 +95,11 @@ class ExactTargetApi {
 	/**
 	 * Wraps the final Delete request and calls sendRequest to push it
 	 * @param  Array  $aCallObjects  An array of valid ExactTarget objects (e.g. DataExtension, Subscriber)
+	 * @param  string $sObjectType
 	 * @return stdClass              An stdClass object with a call's results
 	 */
-	public function makeDeleteRequest( Array $aCallObjects ) {
-		$aSoapVars = $this->helper->prepareSoapVars( $aCallObjects );
+	public function makeDeleteRequest( Array $aCallObjects, $sObjectType = 'DataExtensionObject' ) {
+		$aSoapVars = $this->helper->prepareSoapVars( $aCallObjects, $sObjectType );
 		$oDeleteRequest = $this->helper->wrapDeleteRequest( $aSoapVars );
 		$oResults = $this->sendRequest( 'Delete', $oDeleteRequest );
 		return $oResults;

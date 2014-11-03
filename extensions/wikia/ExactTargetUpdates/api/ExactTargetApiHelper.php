@@ -24,8 +24,8 @@ class ExactTargetApiHelper {
 	 * @return SoapVar
 	 * @link https://help.exacttarget.com/en/technical_library/web_service_guide/objects/ ExactTarget Objects types
 	 */
-	public function wrapToSoapVar( $object, $objectType = 'DataExtensionObject' ) {
-		return new \SoapVar( $object, SOAP_ENC_OBJECT, $objectType, 'http://exacttarget.com/wsdl/partnerAPI' );
+	public function wrapToSoapVar( $oObject, $sObjectType = 'DataExtensionObject' ) {
+		return new \SoapVar( $oObject, SOAP_ENC_OBJECT, $sObjectType, 'http://exacttarget.com/wsdl/partnerAPI' );
 	}
 
 	/**
@@ -35,10 +35,10 @@ class ExactTargetApiHelper {
 	 * @return array
 	 * @link https://help.exacttarget.com/en/technical_library/web_service_guide/objects/ ExactTarget Objects types
 	 */
-	public function prepareSoapVars( $aObjects, $objectType = 'DataExtensionObject' ) {
+	public function prepareSoapVars( $aObjects, $sObjectType = 'DataExtensionObject' ) {
 		$aSoapVars = [];
 		foreach( $aObjects as $object ) {
-			$aSoapVars[] = $this->wrapToSoapVar( $object, $objectType );
+			$aSoapVars[] = $this->wrapToSoapVar( $object, $sObjectType );
 		}
 		return $aSoapVars;
 	}

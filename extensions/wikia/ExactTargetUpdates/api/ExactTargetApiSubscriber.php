@@ -19,7 +19,7 @@ class ExactTargetApiSubscriber extends ExactTargetApi {
 	 */
 	public function createRequest( Array $aApiCallParams ) {
 		$aSubscribers = $this->helper->prepareSubscriberObjects( $aApiCallParams['Subscriber'] );
-		$oResults = $this->makeCreateRequest( $aSubscribers );
+		$oResults = $this->makeCreateRequest( $aSubscribers, 'Subscriber' );
 		return $oResults;
 	}
 
@@ -39,7 +39,7 @@ class ExactTargetApiSubscriber extends ExactTargetApi {
 	 */
 	public function deleteRequest( Array $aApiCallParams ) {
 		$aSubscribers = $this->helper->prepareSubscriberObjects( $aApiCallParams['Subscriber'] );
-		$oResults = $this->makeDeleteRequest( $aSubscribers );
+		$oResults = $this->makeDeleteRequest( $aSubscribers, 'Subscriber' );
 		return $oResults;
 	}
 }
