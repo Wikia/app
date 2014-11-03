@@ -4,7 +4,7 @@ class FacebookClientController extends WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	public function preferences() {
-		$this->isConnected = $this->getVal('isConnected', false);
+		$this->isConnected = $this->getVal( 'isConnected', false );
 
 		// Settings for a connected user
 		$this->facebookDisconnectLink = wfMessage( 'facebookclient-disconnect-link' )->plain();
@@ -18,7 +18,7 @@ class FacebookClientController extends WikiaController {
 		}
 
 		// Settings for a user who is not connected yet
-		$this->facebookConvertMessage = wfMessage('facebookclient-convert')->plain();
+		$this->facebookConvertMessage = wfMessage( 'facebookclient-convert' )->plain();
 	}
 
 	/**

@@ -66,15 +66,14 @@ class FacebookClientHooks {
 	/**
 	 * Adds several Facebook Connect variables to the page:
 	 *
-	 * fbAPIKey			The application's API key (see $fbAPIKey in config.php)
-	 * fbUseMarkup		Should XFBML tags be rendered? (see $fbUseMarkup in config.php)
-	 * fbLoggedIn		(deprecated) Whether the PHP client reports the user being Connected
-	 * fbLogoutURL		(deprecated) The URL to be redirected to on a disconnect
+	 * fbAppId - Wikia's App ID
+	 * fbScript
+	 * fbUseMarkup - Should XFBML tags be rendered? (see $fbUseMarkup in config.php)
+	 * fbLogo
+	 * fbLogoutURL - (deprecated) The URL to be redirected to on a disconnect
+	 * fbReturnToTitle
+	 * fbScriptLangCode
 	 *
-	 * This hook was added in MediaWiki version 1.14. See:
-	 * http://svn.wikimedia.org/viewvc/mediawiki/trunk/phase3/includes/Skin.php?view=log&pathrev=38397
-	 * If we are not at revision 38397 or later, this function is called from BeforePageDisplay
-	 * to retain backward compatability.
 	 */
 	public static function MakeGlobalVariablesScript( &$vars ) {
 		global $fbScript, $fbAppId, $fbUseMarkup, $fbLogo;
