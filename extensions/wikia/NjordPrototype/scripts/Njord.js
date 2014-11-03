@@ -383,6 +383,7 @@
 			} else {
 				trackMom(imageLoadedFailLabel, trackerActionError);
 				$.showModal($.msg('error'), data.errMessage);
+				$heroModule.stopThrobbing();
 			}
 		},
 		sendForm = function (formdata) {
@@ -485,7 +486,7 @@
 					$heroModuleInput.unwrap();
 				}
 			});
-
+		}, initializeEditButton = function() {
 			var onclose = new MutationObserver(function(m) {
 				$('.MainPageHeroHeader .global-edit-wrap').show();
 				onclose.disconnect();
@@ -507,4 +508,5 @@
 		States.clearState($heroHeader);
 		initializeEditMode();
 	}
+	initializeEditButton();
 })(window, jQuery);
