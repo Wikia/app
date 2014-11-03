@@ -185,6 +185,7 @@ class MercuryApiController extends WikiaController {
 		$wikiVariables = $this->mercuryApi->getWikiVariables();
 		$wikiVariables[ 'navData' ] = $this->getNavigationData();
 		$wikiVariables[ 'vertical' ] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )['short'];
+		$wikiVariables[ 'basePath' ] = $this->wg->Server;
 
 		// Used to determine GA tracking
 		if ( !empty( $this->wg->IsGASpecialWiki ) ) {
@@ -217,8 +218,7 @@ class MercuryApiController extends WikiaController {
 					$this->getTopContributorsPerArticle( $articleId )
 				),
 			'article' => $articleAsJson,
-			'adsContext' => $this->mercuryApi->getAdsContext( $title ),
-			'basePath' => $this->wg->Server
+			'adsContext' => $this->mercuryApi->getAdsContext( $title )
 		];
 
 		$relatedPages = $this->getRelatedPages( $articleId );
