@@ -92,6 +92,8 @@ $VenusConfig[ 'venus_body_js' ] = [
 
 		//TOC
 		'//extensions/wikia/TOC/js/modules/toc.js',
+		'//resources/wikia/ui_components/dropdown_navigation/js/dropdownNavigation.templates.mustache.js',
+		'//resources/wikia/ui_components/dropdown_navigation/js/dropdownNavigation.js',
 		'//extensions/wikia/Venus/scripts/venusToc.js',
 
 		// different article modules
@@ -196,7 +198,8 @@ $VenusConfig[ 'article_scss' ] = [
 	'skin' => [ 'venus' ],
 	'assets' => [
 		'//extensions/wikia/Venus/styles/article/article.scss',
-		'//skins/shared/styles/tables.scss'
+		'//skins/shared/styles/tables.scss',
+		'//resources/wikia/ui_components/dropdown_navigation/css/dropdownNavigation.scss'
 	]
 ];
 
