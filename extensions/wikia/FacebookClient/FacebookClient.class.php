@@ -249,9 +249,7 @@ class FacebookClient {
 			$base_domain = '.' . $_SERVER[ 'HTTP_HOST' ];
 
 			$metadata = $_COOKIE[ $metaCookieName ];
-			if ( array_key_exists( 'base_domain', $metadata ) &&
-				!empty( $metadata[ 'base_domain' ] )
-			) {
+			if ( !empty( $metadata[ 'base_domain' ] ) ) {
 				$base_domain = $metadata[ 'base_domain' ];
 			}
 
