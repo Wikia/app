@@ -112,16 +112,23 @@ define('ext.wikia.adEngine.provider.directGpt', [
 	function canHandleSlot(slotname) {
 		log(['canHandleSlot', slotname], 'debug', logGroup);
 
+		if (!slotMap[slotname]) {
+			log(['canHandleSlot', slotname, 'no DART for this slot', false], 'info', logGroup);
+			return false;
+		}
+
 		if (alwaysCallDart) {
-			log(['canHandleSlot', slotname, 'always calling DART'], 'info', logGroup);
+			log(['canHandleSlot', slotname, 'always calling DART', true], 'info', logGroup);
 			return true;
 		}
 
-		if (adContext.getContext().forceProviders.directGpt && slotMap[slotname]) {
+		if (adContext.getContext().forceProviders.directGpt) {
+			log(['canHandleSlot', slotname, 'forced through adContext', true], 'info', logGroup);
 			return true;
 		}
 
-		if (!isHighValueCountry || !slotMap[slotname]) {
+		if (!isHighValueCountry) {
+			log(['canHandleSlot', slotname, 'no high value country', false], 'info', logGroup);
 			return false;
 		}
 
