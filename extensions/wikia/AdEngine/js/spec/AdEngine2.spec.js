@@ -7,7 +7,7 @@ describe('AdEngine2', function () {
 
 	var eventDispatcher = { trigger: function () { return true; }},
 		noop = function () { return; },
-		slotTrackerMock = function () { return {init: noop, success: noop, hop: noop}; },
+		slotTrackerMock = function () { return {track: noop}; },
 		logMock = noop,
 		adProviderNullMock = {
 			name: 'Null',
@@ -112,11 +112,11 @@ describe('AdEngine2', function () {
 		expect(fakeProvider.canHandleSlot.calls[1].args).toEqual(['slot2'], 'AdProvider*.canHandleSlot called for slot2');
 
 		expect(fakeProvider.fillInSlot.calls.length).toBe(2, 'AdProvider*.fillInSlot called 2 times');
-		expect(fakeProvider.fillInSlot.calls[0].args).toEqual(['slot1'], 'AdProvider*.fillInSlot called for slot1');
-		expect(fakeProvider.fillInSlot.calls[1].args).toEqual(['slot2'], 'AdProvider*.fillInSlot called for slot2');
+		expect(fakeProvider.fillInSlot.calls[0].args).toEqual(['slot1', jasmine.any(Function), jasmine.any(Function)], 'AdProvider*.fillInSlot called for slot1');
+		expect(fakeProvider.fillInSlot.calls[1].args).toEqual(['slot2', jasmine.any(Function), jasmine.any(Function)], 'AdProvider*.fillInSlot called for slot2');
 	});
 
-	iit('Calls AdConfig2 getProviderList canHandleSlot and not fillInSlot when canHandleSlot = false', function () {
+	it('Calls AdConfig2 getProviderList canHandleSlot and not fillInSlot when canHandleSlot = false', function () {
 		var fakeProvider = {
 				name: 'FakeProvider',
 				fillInSlot: noop,
@@ -129,7 +129,7 @@ describe('AdEngine2', function () {
 			}),
 			adEngine;
 
-		spyOn(adConfigMock, 'getProviderList').andCallThrough().andCallThrough();
+		spyOn(adConfigMock, 'getProviderList').andCallThrough();
 		spyOn(fakeProvider, 'fillInSlot');
 		spyOn(fakeProvider, 'canHandleSlot').andReturn(false);
 
@@ -145,5 +145,54 @@ describe('AdEngine2', function () {
 		expect(fakeProvider.canHandleSlot.calls[1].args).toEqual(['slot2'], 'AdProvider*.canHandleSlot called for slot2');
 
 		expect(fakeProvider.fillInSlot.calls.length).toBe(0, 'AdProvider*.fillInSlot called 0 times');
+	});
+
+	it('Calls all the provider in the chain and then Null if all of the hop', function () {
+		function callHop(slotname, success, hop) {
+			hop();
+		}
+
+		var fakeProvider1 = {
+				name: 'FakeProvider1',
+				fillInSlot: noop,
+				canHandleSlot: noop
+			},
+			fakeProvider2 = {
+				name: 'FakeProvider2',
+				fillInSlot: noop,
+				canHandleSlot: noop
+			},
+			fakeProvider3 = {
+				name: 'FakeProvider3',
+				fillInSlot: noop,
+				canHandleSlot: noop
+			},
+			fakeNullProvider = {
+				name: 'NullProvider',
+				fillInSlot: noop,
+				canHandleSlot: noop
+			},
+			adConfigMock = mockAdConfig([fakeProvider1, fakeProvider2, fakeProvider3]),
+			lazyQueueMock = mockLazyQueue(function (callback) {
+				callback(['slot1']);
+			}),
+			adEngine;
+
+		spyOn(fakeProvider1, 'fillInSlot').andCallFake(callHop);
+		spyOn(fakeProvider2, 'fillInSlot').andCallFake(callHop);
+		spyOn(fakeProvider3, 'fillInSlot').andCallFake(callHop);
+		spyOn(fakeNullProvider, 'fillInSlot');
+		spyOn(fakeProvider1, 'canHandleSlot').andReturn(true);
+		spyOn(fakeProvider2, 'canHandleSlot').andReturn(true);
+		spyOn(fakeProvider3, 'canHandleSlot').andReturn(true);
+		spyOn(fakeNullProvider, 'canHandleSlot').andReturn(true);
+
+		adEngine = modules['ext.wikia.adEngine.adEngine'](logMock, lazyQueueMock, slotTrackerMock, eventDispatcher, fakeNullProvider);
+		adEngine.run(adConfigMock, []);
+
+		expect(fakeProvider1.fillInSlot).toHaveBeenCalled();
+		expect(fakeProvider2.fillInSlot).toHaveBeenCalled();
+		expect(fakeProvider3.fillInSlot).toHaveBeenCalled();
+		expect(fakeNullProvider.fillInSlot).toHaveBeenCalled();
 	});
 });

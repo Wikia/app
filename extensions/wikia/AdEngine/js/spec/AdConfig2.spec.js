@@ -72,7 +72,7 @@ describe('AdConfig2', function () {
 			adProviderLaterMock
 		);
 
-		expect(adConfig.getProviderList([highValueSlot])).toEqual([adProviderGptMock, adProviderLaterMock], 'adProviderLaterMock');
+		expect(adConfig.getProviderList(highValueSlot)).toEqual([adProviderGptMock, adProviderLaterMock], 'adProviderLaterMock');
 	});
 
 	it('getProviderList returns [Later] for low value slots', function () {
@@ -90,7 +90,7 @@ describe('AdConfig2', function () {
 			adProviderLaterMock
 		);
 
-		expect(adConfig.getProviderList([lowValueSlot])).toEqual([adProviderLaterMock], 'adProviderLaterMock');
+		expect(adConfig.getProviderList(lowValueSlot)).toEqual([adProviderLaterMock], 'adProviderLaterMock');
 	});
 
 	it('getProviderList returns [Later] for NZ for both high and low value slots (if evolve slot config accepts)', function () {
@@ -108,8 +108,8 @@ describe('AdConfig2', function () {
 			adProviderLaterMock
 		);
 
-		expect(adConfig.getProviderList([lowValueSlot])).toEqual([adProviderLaterMock], 'adProviderLaterMock NZ');
-		expect(adConfig.getProviderList([highValueSlot])).toEqual([adProviderLaterMock], 'adProviderLaterMock NZ');
+		expect(adConfig.getProviderList(lowValueSlot)).toEqual([adProviderLaterMock], 'adProviderLaterMock NZ');
+		expect(adConfig.getProviderList(highValueSlot)).toEqual([adProviderLaterMock], 'adProviderLaterMock NZ');
 	});
 
 	it('getProviderList to return [GPT, Later] for NZ (if evolve slot config does not accept)', function () {
@@ -127,7 +127,7 @@ describe('AdConfig2', function () {
 			adProviderLaterMock
 		);
 
-		expect(adConfig.getProviderList([highValueSlot])).toEqual([adProviderGptMock, adProviderLaterMock], 'adProviderGptMock');
+		expect(adConfig.getProviderList(highValueSlot)).toEqual([adProviderGptMock, adProviderLaterMock], 'adProviderGptMock');
 	});
 
 	it('getProviderList to return [Later] when adContext.providers.sevenOneMedia = true in HVC', function () {
@@ -145,7 +145,7 @@ describe('AdConfig2', function () {
 			adProviderLaterMock
 		);
 
-		expect(adConfig.getProviderList([highValueSlot])).toEqual([adProviderLaterMock], 'adProviderLaterMock');
+		expect(adConfig.getProviderList(highValueSlot)).toEqual([adProviderLaterMock], 'adProviderLaterMock');
 	});
 
 	it('getProviderList to return [Later] when wgAdProviderSevenOneMedia = true in PL', function () {
@@ -163,7 +163,7 @@ describe('AdConfig2', function () {
 			adProviderLaterMock
 		);
 
-		expect(adConfig.getProviderList([highValueSlot])).toEqual([adProviderLaterMock], 'adProviderLaterMock');
+		expect(adConfig.getProviderList(highValueSlot)).toEqual([adProviderLaterMock], 'adProviderLaterMock');
 	});
 
 	it('getProviderList to return [Later] when wgAdProviderSevenOneMedia = true in NZ', function () {
@@ -181,7 +181,7 @@ describe('AdConfig2', function () {
 			adProviderLaterMock
 		);
 
-		expect(adConfig.getProviderList([highValueSlot])).toEqual([adProviderLaterMock], 'adProviderLaterMock');
+		expect(adConfig.getProviderList(highValueSlot)).toEqual([adProviderLaterMock], 'adProviderLaterMock');
 	});
 
 	it('getProviderList to return [] when wgShowAds = false', function () {
@@ -201,16 +201,16 @@ describe('AdConfig2', function () {
 			);
 
 		// First check if NullProvider wins over GPT
-		expect(adConfig.getProviderList([highValueSlot])).toEqual([], 'adProviderNullMock wgShowAds false');
+		expect(adConfig.getProviderList(highValueSlot)).toEqual([], 'adProviderNullMock wgShowAds false');
 
 		// Second check if NullProvider wins over Later
 		geoMock.getCountryCode = function () { return; };
-		expect(adConfig.getProviderList([lowValueSlot])).toEqual([], 'adProviderNullMock wgShowAds false');
-		expect(adConfig.getProviderList([highValueSlot])).toEqual([], 'adProviderNullMock wgShowAds false');
+		expect(adConfig.getProviderList(lowValueSlot)).toEqual([], 'adProviderNullMock wgShowAds false');
+		expect(adConfig.getProviderList(highValueSlot)).toEqual([], 'adProviderNullMock wgShowAds false');
 
 		// Third check if NullProvider wins over Evolve
 		geoMock.getCountryCode = function () { return 'NZ'; };
-		expect(adConfig.getProviderList([highValueSlot])).toEqual([], 'adProviderNullMock wgShowAds false');
+		expect(adConfig.getProviderList(highValueSlot)).toEqual([], 'adProviderNullMock wgShowAds false');
 	});
 
 	it('getProviderList RTP integration -- RTP not called', function () {
