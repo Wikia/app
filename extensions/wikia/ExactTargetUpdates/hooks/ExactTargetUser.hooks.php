@@ -128,6 +128,10 @@ class ExactTargetUserHooks {
 		$task->queue();
 	}
 
+	/**
+	 * A simple getter for an object of ExactTargetUserHooksHelper class
+	 * @return  object ExactTargetUserHooksHelper
+	 */
 	private function getUserHelper() {
 		return new ExactTargetUserHooksHelper();
 	}

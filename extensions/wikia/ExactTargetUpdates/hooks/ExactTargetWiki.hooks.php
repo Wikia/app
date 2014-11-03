@@ -6,7 +6,7 @@ class ExactTargetWikiHooks {
 	/**
 	 * Runs a method adding an AddWikiTask to job queue.
 	 * Executed on CreateWikiLocalJob-complete hook.
-	 * @param  array $aParams  Contains a wiki's id, url and title.
+	 * @param  array $aParams  Must contain a city_id key
 	 * @return true
 	 */
 	public function onCreateWikiLocalJobComplete( Array $aParams ) {
@@ -17,7 +17,7 @@ class ExactTargetWikiHooks {
 	/**
 	 * Runs a method adding an UpdateWikiTask to job queue on change in WikiFactory
 	 * Executed on WikiFactoryChanged hook
-	 * @param  array $aWfVarParams  Contains a var's name, a wiki's id and a new value.
+	 * @param  array $aParams  Must contain a city_id and a cv_name keys
 	 * @return true
 	 */
 	public function onWikiFactoryChangeCommitted( Array $aParams ) {
@@ -32,7 +32,7 @@ class ExactTargetWikiHooks {
 	 * Runs a method adding an UpdateWikiTask to job queue
 	 * on change in Hubs tab in WikiFactory.
 	 * Executed on WikiFactoryVerticalSet hook.
-	 * @param  array  $aParams  An array with a relevant city_id
+	 * @param  array  $aParams  Must contain a city_id key
 	 * @return true
 	 */
 	public function onWikiFactoryVerticalSet( Array $aParams ) {
@@ -44,7 +44,7 @@ class ExactTargetWikiHooks {
 	 * Runs a method adding an UpdateCityCatMappingTask to job queue
 	 * on change in Hubs tab in WikiFactory.
 	 * Executed on CityCatMappingUpdated hook.
-	 * @param  array  $aParams  An array with a relevant city_id and an array of new categories
+	 * @param  array  $aParams  Must contain a city_id key
 	 * @return true
 	 */
 	public function onCityCatMappingUpdated( Array $aParams ) {
@@ -52,6 +52,13 @@ class ExactTargetWikiHooks {
 		return true;
 	}
 
+	/**
+	 * Runs a method adding a DeleteWikiTask to the job queue
+	 * when a wiki is closed.
+	 * Executed on a WikiFactoryWikiClosed hook.
+	 * @param  Array  $aParams Must contain a city_id key
+	 * @return true
+	 */
 	public function onWikiFactoryWikiClosed( Array $aParams ) {
 		$this->addTheDeleteWikiTask( $aParams );
 		return true;
@@ -60,8 +67,7 @@ class ExactTargetWikiHooks {
 	/**
 	 * Adds a task to job queue that sends
 	 * a Create request to ExactTarget with data of a new wiki.
-	 * @param  array $aParams  Contains wiki's id, url and title.
-	 * @param  ExactTargetAddWikiTask $oTask  Task object.
+	 * @param  Array $aParams  Must contain a city_id key
 	 */
 	private function addTheAddWikiTask( Array $aParams ) {
 		$iCityId = $aParams['city_id'];
@@ -73,8 +79,7 @@ class ExactTargetWikiHooks {
 	/**
 	 * Adds a task to job queue that sends
 	 * an Update request to ExactTarget with a changed variable.
-	 * @param  array $aWfVarParams  Contains var's name, city_id and a new value.
-	 * @param  ExactTargetUpdateTask $oTask  Task object.
+	 * @param  int $iCityId  A wiki's id
 	 */
 	private function addTheUpdateWikiTask( $iCityId ) {
 		$oTask = $this->getExactTargetUpdateWikiTask();
@@ -83,9 +88,9 @@ class ExactTargetWikiHooks {
 	}
 
 	/**
-	 * [addTheUpdateCityCatMappingTask description]
-	 * @param [type]                              $aParams [description]
-	 * @param ExactTargetUpdateCityCatMappingTask $oTask   [description]
+	 * Adds a task to job queue that sends a request
+	 * updating city_cat_mapping table.
+	 * @param  Array $aParams  Must contain a city_id key
 	 */
 	private function addTheUpdateCityCatMappingTask( Array $aParams ) {
 		$oTask = $this->getExactTargetUpdateCityCatMappingTask();
@@ -93,6 +98,11 @@ class ExactTargetWikiHooks {
 		$oTask->queue();
 	}
 
+	/**
+	 * Adds a task to job queue that sends a request
+	 * deleting records from city_list and city_cat_mapping.
+	 * @param  Array $aParams  Must contain a city_id key
+	 */
 	private function addTheDeleteWikiTask( Array $aParams ) {
 		$oTask = $this->getExactTargetDeleteWikiTask();
 		$oTask->call( 'deleteWikiData', $aParams );
@@ -102,7 +112,7 @@ class ExactTargetWikiHooks {
 	/**
 	 * Returns an array where WF vars names are keys.
 	 * Change of these vars should trigger an ET's city_list table update.
-	 * @return array  An array with vars names as keys
+	 * @return  Array  An array with vars names as keys
 	 */
 	private function getWfVarsTriggeringUpdate() {
 		$aWfVarsTriggeringUpdate = [
@@ -114,18 +124,34 @@ class ExactTargetWikiHooks {
 		return $aWfVarsTriggeringUpdate;
 	}
 
+	/**
+	 * A simple getter for an object of ExactTargetCreateWikiTask class
+	 * @return  object ExactTargetCreateWikiTask
+	 */
 	private function getExactTargetCreateWikiTask() {
 		return new ExactTargetCreateWikiTask();
 	}
 
+	/**
+	 * A simple getter for an object of ExactTargetUpdateWikiTask class
+	 * @return  object ExactTargetUpdateWikiTask
+	 */
 	private function getExactTargetUpdateWikiTask() {
 		return new ExactTargetUpdateWikiTask();
 	}
 
+	/**
+	 * A simple getter for an object of ExactTargetUpdateCityCatMappingTask class
+	 * @return  object ExactTargetUpdateCityCatMappingTask
+	 */
 	private function getExactTargetUpdateCityCatMappingTask() {
 		return new ExactTargetUpdateCityCatMappingTask();
 	}
 
+	/**
+	 * A simple getter for an object of ExactTargetDeleteWikiTask class
+	 * @return  object ExactTargetDeleteWikiTask
+	 */
 	private function getExactTargetDeleteWikiTask() {
 		return new ExactTargetDeleteWikiTask();
 	}
