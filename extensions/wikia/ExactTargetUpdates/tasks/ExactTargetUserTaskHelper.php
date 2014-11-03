@@ -16,6 +16,7 @@ class ExactTargetUserTaskHelper {
 
 		$aApiParams = [
 			'DataExtension' => [
+				'ObjectType' => 'DataExtension',
 				'CustomerKey' => $aCustomerKeys[ 'user' ],
 				'Properties' => $aProperties,
 			],
@@ -87,8 +88,10 @@ class ExactTargetUserTaskHelper {
 	public function prepareSubscriberDataForRetrieve( $sUserEmail ) {
 		$aApiParams = [
 			'Subscriber' => [
+				[
 				'ObjectType' => 'Subscriber',
 				'Properties' => [ 'SubscriberKey', 'EmailAddress' ],
+				]
 			],
 			'SimpleFilterPart' => [
 				'Property' => 'SubscriberKey',

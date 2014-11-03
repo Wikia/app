@@ -21,19 +21,19 @@ class ExactTargetUpdateUserTask extends BaseTask {
 	 * @param int $iUserId
 	 * @param string $iUserEmail
 	 */
-	public function updateUserEmail( $iUserId, $iUserEmail ) {
+	public function updateUserEmail( $iUserId, $sUserEmail ) {
 		/* Delete subscriber (email address) used by touched user */
 		$oDeleteUserTask = $this->getDeleteUserTask();
 		$oDeleteUserTask->deleteSubscriber( $iUserId );
 		/* Subscriber list contains unique emails
 		 * Assuming email may be new - try to create subscriber object using the email */
 		$oCreateUserTask = $this->getCreateUserTask();
-		$oCreateUserTask->createSubscriber( $iUserEmail );
+		$oCreateUserTask->createSubscriber( $sUserEmail );
 
 		/* Update email in user data extension */
 		$aUserData = [
 			'user_id' => $iUserId,
-			'user_email' => $iUserEmail
+			'user_email' => $sUserEmail
 		];
 		$oHelper = $this->getHelper();
 		$aApiParams = $oHelper->prepareUserUpdateParams( $aUserData );

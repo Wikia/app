@@ -84,11 +84,20 @@ class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 			->expects( $this->once() )
 			->method( 'createSubscriber' );
 
+		/* Mock ExactTargetCreateUserTask */
+		$mockDeleteUserTask = $this->getMockBuilder( 'Wikia\ExactTarget\ExactTargetDeleteUserTask' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'deleteSubscriber' ] )
+			->getMock();
+		$mockDeleteUserTask
+			->expects( $this->once() )
+			->method( 'deleteSubscriber' );
+
 		/* Mock tested class */
 		/* @var Wikia\ExactTarget\ExactTargetUpdateUserTask $mockUpdateUserTask */
 		$mockUpdateUserTask = $this->getMockBuilder( 'Wikia\ExactTarget\ExactTargetUpdateUserTask' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'getApiDataExtension', 'getCreateUserTask', 'getHelper' ] )
+			->setMethods( [ 'getApiDataExtension', 'getCreateUserTask', 'getDeleteUserTask', 'getHelper' ] )
 			->getMock();
 		$mockUpdateUserTask
 			->expects( $this->once() )
@@ -102,6 +111,10 @@ class ExactTargetUpdateUserTaskTest extends WikiaBaseTest {
 			->expects( $this->once() )
 			->method( 'getCreateUserTask' )
 			->will( $this->returnValue( $mockCreateUserTask ) );
+		$mockUpdateUserTask
+			->expects( $this->once() )
+			->method( 'getDeleteUserTask' )
+			->will( $this->returnValue( $mockDeleteUserTask ) );
 
 		/* Run tested method */
 		$mockUpdateUserTask->updateUserEmail( $aUserData[ 'user_id' ], $aUserData[ 'user_email' ] );
