@@ -1,0 +1,45 @@
+@import 'skins/shared/color';
+
+$dropdown-width: 200px;
+
+.wikia-dropdown-nav {
+	border: 1px solid $color-page-border-subtle;
+	display: none;
+	list-style-type: none;
+	margin: 0;
+	overflow: hidden;
+	overflow-y: auto;
+	padding: 0;
+	position: absolute;
+	right: -$dropdown-width;
+	text-align: left;
+	top: 0;
+	width: $dropdown-width;
+
+	&.active {
+		display: block;
+	}
+
+	li {
+		background-color: $color-page;
+
+		&:not(:first-child) {
+			border-top: 1px solid $color-page-border-subtle;
+		}
+	}
+
+	a {
+		display: block;
+		overflow: hidden;
+		padding: 10px;
+		text-decoration: none;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+
+		&:hover,
+		&.active {
+			background-color: $color-links;
+			color: $color-page;
+		}
+	}
+}
