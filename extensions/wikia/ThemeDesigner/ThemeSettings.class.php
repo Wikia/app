@@ -309,20 +309,24 @@ class ThemeSettings {
 
 		$backgroundUrl = $this->getSettings()['background-image'];
 
-		if ( empty( $backgroundUrl ) ) {
-			return $backgroundUrl;
+		if ( !VignetteRequest::isVignetteUrl( $backgroundUrl ) ) {
+			if ( empty( $backgroundUrl ) ) {
+				return $backgroundUrl;
+			}
+
+			$backgroundPath = explode( '/images/', $backgroundUrl )[0];
+
+			if ( !empty( $wordmarkPath ) ) {
+				$backgroundUrl = str_replace(
+					$backgroundPath . '/images',
+					$wgUploadPath,
+					$backgroundUrl
+				);
+			}
+
+			$backgroundUrl = wfReplaceImageServer( $backgroundUrl, SassUtil::getCacheBuster() );
 		}
 
-		$backgroundPath = explode( '/images/', $backgroundUrl )[0];
-
-		if ( !empty( $wordmarkPath ) ) {
-			$backgroundUrl = str_replace(
-				$backgroundPath . '/images',
-				$wgUploadPath,
-				$backgroundUrl
-			);
-		}
-
-		return wfReplaceImageServer( $backgroundUrl, SassUtil::getCacheBuster() );
+		return $backgroundUrl;
 	}
 }
