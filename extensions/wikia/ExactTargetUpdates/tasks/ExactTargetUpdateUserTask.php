@@ -65,7 +65,7 @@ class ExactTargetUpdateUserTask extends BaseTask {
 	 * Returns an instance of ExactTargetDeleteUserTask class
 	 * @return ExactTargetDeleteUserTask
 	 */
-	private function getDeleteUserTask() {
+	protected function getDeleteUserTask() {
 		return new ExactTargetDeleteUserTask();
 	}
 
