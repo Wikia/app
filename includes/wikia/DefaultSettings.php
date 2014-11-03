@@ -1564,6 +1564,7 @@ $wgBuckySampling = 10;
  * List of skins where Bucky reporting should be enabled
  */
 $wgBuckyEnabledSkins = [
+	'monobook',
 	'oasis',
 	'venus',
 ];
