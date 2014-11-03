@@ -65,7 +65,11 @@ class FacebookMapModel {
 	public static function lookupFromFacebookID( $facebookId ) {
 		$mappings = self::loadWithCache( [ self::paramFacebookUserId => $facebookId ] );
 
-		return $mappings[0];
+		if ( empty( $mappings[0] ) ) {
+			return null;
+		} else {
+			return $mappings[0];
+		}
 	}
 
 	/**
