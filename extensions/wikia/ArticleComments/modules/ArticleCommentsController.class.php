@@ -172,6 +172,20 @@ class ArticleCommentsController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * Overrides the template for one comment item for the Venus skin
+	 *
+	 * @author macbre
+	 **/
+	public function executeVenusComment() {/** render Venus template**/}
+
+	/**
+	 * Overrides the template for comments list for the Venus skin
+	 *
+	 * @author macbre
+	 **/
+	public function executeVenusCommentList() {/** render Venus template**/}
+
 	private function getCommentsData(Title $title, $page, $perPage = null, $filterid = null) {
 		wfProfileIn(__METHOD__);
 
