@@ -15,7 +15,7 @@ module.exports = function (grunt) {
 			options: {
 				// define as an AMD module
 				prefix: 'define( \'wikia.dropdownNavigation.templates\', [], function() { \'use strict\'; return ',
-				postfix: '; });',
+				postfix: '; });\n',
 				verbose: true
 			}
 		}
