@@ -16,10 +16,10 @@ class MediaGalleryHooks {
 		return true;
 	}
 
-
 	/**
 	 * Adds MediaGallery JS to main Oasis asset group
 	 * @param Array $assetsArray
+	 * @todo: Remove this after parser cache has cleared (around Nov. 12 2014)
 	 * @return bool
 	 */
 	public static function onOasisSkinAssetGroups( &$assetsArray ) {

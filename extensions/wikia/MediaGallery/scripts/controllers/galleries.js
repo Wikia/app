@@ -1,6 +1,8 @@
-define('mediaGallery.controllers.galleries', [
-	'mediaGallery.views.gallery'
-], function (Gallery) {
+/**
+ * TODO: This is the legacy method of instantiating media galleries. After parse cache clears
+ * (around Nov. 12 2014), JSSnippets will be fully available and we can remove this file.
+ */
+require(['mediaGallery.views.gallery'], function (Gallery) {
 	'use strict';
 
 	/**
@@ -18,16 +20,14 @@ define('mediaGallery.controllers.galleries', [
 	/**
 	 * Initialize galleries and add HTML to DOM.
 	 * @param {jQuery} $wrapper Wrapper element for gallery. Contains data attributes with info for gallery
-	 * @param {int} idx Index of wrapper DOM element in gallery array
 	 */
-	GalleriesController.prototype.createGallery = function ($wrapper, idx) {
+	GalleriesController.prototype.createGallery = function ($wrapper) {
 		var gallery,
 			model = $wrapper.data('model'),
 			galleryOptions = {
 				$el: $('<div></div>'),
 				$wrapper: $wrapper,
 				model: { media: model },
-				index: idx,
 				// if set, pass the value, otherwise, defaults will be used.
 				origVisibleCount: $wrapper.data('visible-count'),
 				interval: $wrapper.data('expanded')
@@ -50,13 +50,18 @@ define('mediaGallery.controllers.galleries', [
 	GalleriesController.prototype.init = function () {
 		var self = this;
 
-		$.each(this.$galleries, function (idx) {
+		$.each(this.$galleries, function () {
 			var $this = $(this);
 
-			self.createGallery($this, idx);
+			// make sure we have old version of HTML before instantiating gallery.
+			if ($this.data('model') && !$this.data('gallery')) {
+				self.createGallery($this);
+			}
 		});
 		return this;
 	};
 
-	return GalleriesController;
+	$(function () {
+		new GalleriesController().init();
+	});
 });

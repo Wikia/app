@@ -17,17 +17,33 @@ class MediaGalleryController extends WikiaController {
 	 */
 	public function gallery() {
 		$items = $this->getVal( 'items' );
-		$this->model = new MediaGalleryModel( $items );
+		$parser = $this->getVal( 'parser', $this->wg->Parser );
+		$this->model = new MediaGalleryModel( $items, $parser );
 
 		$galleryParams = $this->getVal( 'gallery_params', [] ); // gallery tag parameters
 		$visibleCount = isset( $galleryParams['expand'] ) && $galleryParams['expand'] == 'true' ?
 			self::MAX_EXPANDED_ITEMS : self::MAX_ITEMS;
 
+		$uid = uniqid('media-gallery-');
+
 		$data = $this->model->getGalleryData();
+		$galleryModel = [
+			'id' => $uid,
+			'media' => json_encode( $data )
+		];
+
+		$jssnippets = JSSnippets::addToStack(
+			['media_gallery_js'],
+			[],
+			'Wikia.initMediaGallery',
+			$galleryModel
+		);
+		$this->jssnippets = $jssnippets;
 
 		// noscript tag does not need more than 100 images
 		$this->media = array_slice( $data, 0, self::MAX_EXPANDED_ITEMS );
-		$this->json = json_encode( $data );
+
+		$this->id = $uid;
 		$this->count = $this->model->getMediaCount();
 		$this->visibleCount = $visibleCount;
 		$this->expanded = empty( $galleryParams['expand'] ) ? 0 : self::MAX_EXPANDED_ITEMS;

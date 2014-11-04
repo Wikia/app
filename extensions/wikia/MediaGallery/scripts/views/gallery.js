@@ -21,6 +21,10 @@ define('mediaGallery.views.gallery', [
 		// required options
 		this.$el = options.$el.addClass('media-gallery-inner');
 		this.$wrapper = options.$wrapper;
+
+		if (typeof options.model === 'string'){
+			options.model = JSON.parse(options.model);
+		}
 		this.model = options.model;
 
 		// optional settings with defaults
@@ -28,13 +32,15 @@ define('mediaGallery.views.gallery', [
 		this.interval = options.interval || 12;
 		this.throttleVal = options.throttleVal || 200;
 
-		// performance profiling
-		this.bucky = bucky('mediaGallery.views.gallery.' + options.index);
+		// performance profiling - send bucky a unique-ish id
+		this.bucky = bucky('mediaGallery.views.gallery.' + Math.floor(Math.random() * 1000));
 
 		// flags and state tracking
 		this.rendered = false;
 		this.visibleCount = 0;
 		this.media = [];
+
+		this.$wrapper.data('gallery', this);
 
 		return this;
 	};
