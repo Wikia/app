@@ -1,37 +1,13 @@
 <?php
+namespace Wikia\ExactTarget;
 
-class ExactTargetUserTasksAdderBaseHooks {
-
-	/**
-	 * Returns new instance of ExactTargetAddUserTask
-	 * @return ExactTargetAddUserTask
-	 */
-	public function getExactTargetAddUserTask() {
-		return new ExactTargetAddUserTask();
-	}
-
-	/**
-	 * Returns new instance of ExactTargetUpdateUserTask
-	 * @return ExactTargetUpdateUserTask
-	 */
-	public function getExactTargetUpdateUserTask() {
-		return new ExactTargetUpdateUserTask();
-	}
-
-	/**
-	 * Returns new instance of ExactTargetRemoveUserTask
-	 * @return ExactTargetRemoveUserTask
-	 */
-	public function getExactTargetRemoveUserTask() {
-		return new ExactTargetRemoveUserTask();
-	}
-
+class ExactTargetUserHooksHelper {
 	/**
 	 * Prepares array of user fields needed to be passed by API
 	 * @param User $oUser
 	 * @return array
 	 */
-	public function prepareUserParams( User $oUser ) {
+	public function prepareUserParams( \User $oUser ) {
 		$aUserParams = [
 			'user_id' => $oUser->getId(),
 			'user_name' => $oUser->getName(),
@@ -50,12 +26,36 @@ class ExactTargetUserTasksAdderBaseHooks {
 	 * @param User $oUser
 	 * @return array
 	 */
-	public function prepareUserPropertiesParams( User $oUser ) {
+	public function prepareUserPropertiesParams( \User $oUser ) {
 		$aUserPropertiesParams = [
 			'marketingallowed' => $oUser->getOption( 'marketingallowed' ),
 			'unsubscribed' => $oUser->getOption( 'unsubscribed' ),
 			'language' => $oUser->getOption( 'language' )
 		];
 		return $aUserPropertiesParams;
+	}
+
+	/**
+	 * Returns new instance of ExactTargetCreateUserTask
+	 * @return ExactTargetCreateUserTask
+	 */
+	public function getCreateUserTask() {
+		return new ExactTargetCreateUserTask();
+	}
+
+	/**
+	 * Returns new instance of ExactTargetUpdateUserTask
+	 * @return ExactTargetUpdateUserTask
+	 */
+	public function getUpdateUserTask() {
+		return new ExactTargetUpdateUserTask();
+	}
+
+	/**
+	 * Returns new instance of ExactTargetDeleteUserTask
+	 * @return ExactTargetDeleteUserTask
+	 */
+	public function getDeleteUserTask() {
+		return new ExactTargetDeleteUserTask();
 	}
 }
