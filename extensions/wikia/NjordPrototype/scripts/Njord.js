@@ -495,6 +495,7 @@
 			});
 			$('#ca-ve-edit').on('click', function () {
 				onload.observe($wikiaArticle[0], {childList: true});
+				//TODO make a distinction between Visual editor and old one
 				trackHelper('edit', 'click', 'article');
 			});
 			if (window.location.search.indexOf('veaction=edit') >= 0) {
