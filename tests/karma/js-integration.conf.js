@@ -77,7 +77,11 @@ module.exports = function(config) {
 
 			//venus infobox
 			'extensions/wikia/Venus/scripts/modules/infobox.module.js',
-			'extensions/wikia/Venus/scripts/modules/spec/integration/infobox.spec.js'
+			'extensions/wikia/Venus/scripts/modules/spec/integration/infobox.spec.js',
+
+			// module insertion
+			'extensions/wikia/Venus/scripts/modules/moduleInsertion.module.js',
+			'extensions/wikia/Venus/scripts/modules/spec/integration/moduleInsertion.spec.js'
 		]
 	});
 };
