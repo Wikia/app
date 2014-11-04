@@ -6,9 +6,9 @@
 //
 // ********************************
 
-var TabView = {
+window.TabView = {
 
-	init: function(options) {
+	init: function (options) {
 
 		// new instance for each tabs on a single page
 		new TabViewClass(options);
@@ -17,9 +17,9 @@ var TabView = {
 
 };
 
-var	TabViewClass =  $.createClass(Object, {
+window.TabViewClass = $.createClass(Object, {
 
-	constructor: function(options) {
+	constructor: function (options) {
 
 		// *****************************************************
 		//
@@ -58,7 +58,7 @@ var	TabViewClass =  $.createClass(Object, {
 		tabsWrapperSelector.after(that.createContainers(that.cashedStuff.tabsWrapperId));
 
 		// attach handlers
-		$('body').on('click', eventTarget, function(event) {
+		$('body').on('click', eventTarget, function (event) {
 
 			event.preventDefault();
 
@@ -70,24 +70,26 @@ var	TabViewClass =  $.createClass(Object, {
 		this.loadContent(selectedTab.children('a'));
 
 		// show default tab container
-		$('#' + this.cashedStuff.containersWrapperId).children('[data-tab-body="' + selectedTab.attr('data-tab') + '"]').addClass('selected');
+		$('#' + this.cashedStuff.containersWrapperId)
+			.children('[data-tab-body="' + selectedTab.attr('data-tab') + '"]')
+			.addClass('selected');
 
 	},
 
 	// ****** METHOD: set data-tab attributes to tab li elements - check tab.js and Wikia UI Styleguide for details
-	setTabs: function(tabsWrapperId, tabsSelector) {
+	setTabs: function (tabsWrapperId, tabsSelector) {
 
 		var i,
 			tabsCount = tabsSelector.length;
 
-		for (i = 0; i < tabsCount; i +=1) {
+		for (i = 0; i < tabsCount; i += 1) {
 			tabsSelector.eq(i).attr('data-tab', tabsWrapperId + i);
 		}
 
 	},
 
 	// ****** METHOD: create containers for tabs content
-	createContainers: function(tabsWrapperSelector) {
+	createContainers: function (tabsWrapperSelector) {
 
 		var i,
 			dataTabIds = [], // empty array for storing tab urls
@@ -102,10 +104,11 @@ var	TabViewClass =  $.createClass(Object, {
 
 		// view object and template for mustache
 		var view = {
-			dataTabIds: dataTabIds,
-			containersWrapperId: this.cashedStuff.containersWrapperId
-		},
-			template = '<div id="{{containersWrapperId}}">{{#dataTabIds}}<div class="tabBody" data-tab-body="{{.}}"></div>{{/dataTabIds}}</div>';
+				dataTabIds: dataTabIds,
+				containersWrapperId: this.cashedStuff.containersWrapperId
+			},
+			template = '<div id="{{containersWrapperId}}">{{#dataTabIds}}' +
+				'<div class="tabBody" data-tab-body="{{.}}"></div>{{/dataTabIds}}</div>';
 
 		htmlString += Mustache.render(template, view);
 
@@ -114,7 +117,7 @@ var	TabViewClass =  $.createClass(Object, {
 	},
 
 	// ****** METHOD: load tabs content via AJAX
-	loadContent: function(tabLink) {
+	loadContent: function (tabLink) {
 
 		var tabUrl = tabLink.attr('href'),
 			dataTabId = tabLink.parent().attr('data-tab'),
@@ -125,11 +128,11 @@ var	TabViewClass =  $.createClass(Object, {
 
 			containerSelector.startThrobbing();
 
-			$.get(tabUrl, function(html) {
+			$.get(tabUrl, function (html) {
 				containerSelector.html(html).data('loaded', true).stopThrobbing();
 
 				// fire event when new article comment is/will be added to DOM
-				mw.hook( 'wikipage.content' ).fire( containerSelector );
+				mw.hook('wikipage.content').fire(containerSelector);
 			});
 		}
 
