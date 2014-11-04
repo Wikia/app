@@ -363,6 +363,13 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 		$loginCase = $loginForm->authenticateUserData();
 
+        /** PLATFORM-508 - logging for Helios project - begin */
+        \Wikia\Logger\WikiaLogger::instance()->debug(
+            'PLATFORM-508',
+            [ 'method' => __METHOD__, 'login_case' => (string) $loginCase ]
+        );
+        /** PLATFORM-508 - logging for Helios project - end */
+
 		switch ( $loginCase ) {
 			case LoginForm::SUCCESS:
 				// first check if user has confirmed email after sign up
