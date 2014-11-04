@@ -28,7 +28,8 @@ class AdEngine2ContextService {
 
 			return [
 				'opts' => $this->filterOutEmptyItems( [
-					'adsInHead' => !!$wg->EnableAdsInContent,
+					'adsInContent' => !!$wg->EnableAdsInContent,
+					'adsInHead' => !!$wg->EnableAdsInHead,
 					'disableLateQueue' => $wg->AdEngineDisableLateQueue,
 					'lateAdsAfterPageLoad' => $adEngineService->areAdsAfterPageLoad(),
 					'pageType' => $adPageTypeService->getPageType(),
