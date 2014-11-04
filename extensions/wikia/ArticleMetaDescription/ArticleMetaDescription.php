@@ -26,9 +26,6 @@ $wgExtensionCredits['other'][] = [
 
 $wgHooks['OutputPageBeforeHTML'][] = 'wfArticleMetaDescription';
 
-// Whether the description has already been added
-$wgArticleMetaDescriptionAdded = false;
-
 /**
  * @param OutputPage $out
  * @param string $text
@@ -39,10 +36,13 @@ function wfArticleMetaDescription( &$out, &$text ) {
 
 	$wg = F::app()->wg;
 
+	// Whether the description has already been added
+	static $addedToPage = false;
+
 	// The OutputPage::addParserOutput method calls the OutputPageBeforeHTML hook which can happen
 	// more than once in a request.  Make sure we don't add two <meta> tags
 	// https://wikia-inc.atlassian.net/browse/VID-2102
-	if ( $wg->ArticleMetaDescriptionAdded ) {
+	if ( $addedToPage ) {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
@@ -57,7 +57,7 @@ function wfArticleMetaDescription( &$out, &$text ) {
 
 	if ( strcmp( $sTitle, $sMainPage ) == 0 ) {
 		// we're on Main Page, check MediaWiki:Description message
-		$sMessage = wfMessage( 'Description' );
+		$sMessage = wfMessage( 'Description' )->text();
 	}
 
 	if ( ( $sMessage == null ) || wfEmptyMsg( 'Description', $sMessage ) ) {
@@ -72,7 +72,7 @@ function wfArticleMetaDescription( &$out, &$text ) {
 
 	if ( !empty( $description ) ) {
 		$out->addMeta( 'description', htmlspecialchars( $description ) );
-		$wg->ArticleMetaDescriptionAdded = true;
+		$addedToPage = true;
 	}
 
 	wfProfileOut( __METHOD__ );
