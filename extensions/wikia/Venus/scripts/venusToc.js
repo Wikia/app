@@ -19,7 +19,7 @@ define(
 		 */
 		function createSection(header) {
 			return {
-				id: '#' + header.id,
+				href: '#' + header.id,
 				title: header.textContent.trim(),
 				sections: []
 			};
