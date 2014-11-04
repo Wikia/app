@@ -16,3 +16,5 @@ $wgAutoloadClasses['RecentWikiActivityController'] =  $dir . 'RecentWikiActivity
 
 $wgExtensionMessagesFiles['RecentWikiActivity'] = $dir . 'RecentWikiActivity.i18n.php';
 // TODO add to config
+
+$wgHooks['ArticleSaveComplete'][] = 'RecentWikiActivityController::onArticleSaveComplete';
