@@ -42,8 +42,7 @@ define('ext.wikia.adEngine.adConfig', [
 		country = geo.getCountryCode(),
 		defaultHighValueSlots,
 		highValueSlots,
-		decorators = [adDecoratorPageDimensions],
-		rtpTier;
+		decorators = [adDecoratorPageDimensions];
 
 	defaultHighValueSlots = {
 		'CORP_TOP_LEADERBOARD': true,
@@ -152,14 +151,9 @@ define('ext.wikia.adEngine.adConfig', [
 
 	if (rtp && rtp.wasCalled()) {
 		rtp.trackState();
-		rtpTier = rtp.getTier();
-		if (rtpTier) {
-			// TODO: fix repetition while working on multi slot support
-			gptSlotConfig.extendSlotParams('gpt', 'HOME_TOP_RIGHT_BOXAD', { 'rp_tier': rtpTier });
-			gptSlotConfig.extendSlotParams('gpt', 'TOP_RIGHT_BOXAD', { 'rp_tier': rtpTier });
-			gptSlotConfig.extendSlotParams('gpt', 'TOP_INCONTENT_BOXAD', { 'rp_tier': rtpTier });
-			gptSlotConfig.extendSlotParams('gpt', 'CORP_TOP_RIGHT_BOXAD', { 'rp_tier': rtpTier });
-		}
+		rtp.addTierInfo(function(tier, slot) {
+			gptSlotConfig.extendSlotParams('gpt', slot, { 'rp_tier': tier });
+		});
 	}
 
 	return {
