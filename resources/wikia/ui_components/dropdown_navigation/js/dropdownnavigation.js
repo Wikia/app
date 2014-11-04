@@ -58,7 +58,7 @@ define(
 			 * @desc adds dropdown to DOM and caches selectors
 			 */
 			function renderDropdown(params) {
-				trigger.appendChild(mustache.render(dropdownTemplates.dropdown_navigation, params));
+				trigger.innerHTML += mustache.render(dropdownTemplates.dropdown_navigation, params);
 			}
 
 			/**
@@ -82,7 +82,9 @@ define(
 			function init(options) {
 				$.extend(dropdownParams, options);
 
-				trigger = doc.getElementById(options.trigger);
+				// todo: change to ID selector ones the left nav UI is done
+				trigger = doc.querySelectorAll(options.trigger)[0];
+
 				renderDropdown(dropdownParams);
 				dropDown = doc.getElementById(dropdownParams.id);
 
