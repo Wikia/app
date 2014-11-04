@@ -232,9 +232,9 @@ class ExactTargetWikiTaskHelper {
 	 * CustomerKey is a key that indicates Wikia table reflected by DataExtension
 	 */
 	private function getCustomerKeys() {
-		global $wgExactTargetDevelopmentMode;
+		global $wgDevelEnvironment;
 
-		if ( $wgExactTargetDevelopmentMode ) {
+		if ( $wgDevelEnvironment ) {
 			$aCustomerKeys = [
 				'city_list' => 'city-list',
 				'city_cat_mapping' => 'city-cat-mapping',

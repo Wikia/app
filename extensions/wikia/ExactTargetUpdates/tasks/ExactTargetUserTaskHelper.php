@@ -180,23 +180,14 @@ class ExactTargetUserTaskHelper {
 	}
 
 	/**
-	 * Get Customer Keys specific for production or development
+	 * Get Customer Keys
 	 * CustomerKey is a key that indicates Wikia table reflected by DataExtension
 	 */
 	protected function getCustomerKeys() {
-		global $wgExactTargetDevelopmentMode;
-
-		if ( $wgExactTargetDevelopmentMode ) {
-			$aCustomerKeys = [
-				'user' => 'user',
-				'user_properties' => 'user_properties',
-			];
-		} else {
-			$aCustomerKeys = [
-				'user' => 'user',
-				'user_properties' => 'user_properties',
-			];
-		}
+		$aCustomerKeys = [
+			'user' => 'user',
+			'user_properties' => 'user_properties',
+		];
 		return $aCustomerKeys;
 	}
 }
