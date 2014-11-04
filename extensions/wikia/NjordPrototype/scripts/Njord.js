@@ -124,46 +124,10 @@
 				trackingMethod: 'ga'
 			});
 		},
-		sendUglyRequest = function (attr) {
-
-			var type = (attr.type || 'POST').toUpperCase(),
-				format = (attr.format || 'json').toLowerCase(),
-				data = {},
-				callback = attr.callback || function () {
-					},
-				onErrorCallback = attr.onErrorCallback || function () {
-					},
-				url;
-			var allowedFormats = ['json', 'html', 'jsonp'];
-			if (allowedFormats.indexOf(format) === -1) {
-				throw 'Only Json,Jsonp and Html format are allowed';
-			}
-
-			if (type === 'POST' && typeof attr.data !== 'undefined') {
-				data = attr.data;
-				delete attr.data;
-			}
-			url = $.nirvana.getUrl(attr);
-			var settings = {
-				url: url,
-				dataType: format,
-				type: type,
-				data: data,
-				success: callback,
-				error: onErrorCallback
-			};
-			if (typeof attr.contentType != 'undefined') {
-				settings.contentType = attr.contentType;
-			}
-			if (typeof attr.processData != 'undefined') {
-				settings.processData = attr.processData;
-			}
-			return $.ajax(settings);
-		},
 		saveImage = function() {
 			States.setState($imageSaveElement, 'filled-state');
 			$imageElement.startThrobbing();
-			sendUglyRequest({
+			$.nirvana.sendRequest({
 				controller: 'NjordController',
 				method: 'saveHeroImage',
 				type: 'POST',
@@ -225,7 +189,7 @@
 		},
 		saveTitle = function() {
 			$titleEditElement.startThrobbing();
-			sendUglyRequest({
+			$.nirvana.sendRequest({
 				controller: 'NjordController',
 				method: 'saveHeroTitle',
 				type: 'POST',
@@ -261,7 +225,7 @@
 		},
 		saveDescription = function () {
 			$descriptionEditElement.startThrobbing();
-			sendUglyRequest({
+			$.nirvana.sendRequest({
 				controller: 'NjordController',
 				method: 'saveHeroDescription',
 				type: 'POST',
@@ -398,7 +362,7 @@
 		},
 		sendForm = function (formdata) {
 			$heroModule.startThrobbing();
-			sendUglyRequest({
+			$.nirvana.sendRequest({
 				controller: 'NjordController',
 				method: 'upload',
 				type: 'POST',
