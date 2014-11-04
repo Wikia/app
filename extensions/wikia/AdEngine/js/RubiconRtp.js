@@ -95,22 +95,6 @@ define('ext.wikia.adEngine.rubiconRtp', [
 		return rtpTier;
 	}
 
-	function addTierInfo(callback) {
-		var slots = rtpConfig.slotname, i;
-
-		if (!rtpTier) {
-			return ;
-		}
-
-		if (typeof slots === 'string') {
-			slots = [ slots ];
-		}
-
-		for ( i = 0; i < slots.length; i = i + 1 ) {
-			callback(rtpTier, slots[i]);
-		}
-	}
-
 	return {
 		call: call,
 		getConfig: function () { return rtpConfig; },
