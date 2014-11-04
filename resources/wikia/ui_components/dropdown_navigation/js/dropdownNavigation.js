@@ -4,6 +4,9 @@ define(
 	'wikia.dropdownNavigation',
 	['jquery', 'wikia.window', 'wikia.document', 'wikia.mustache', 'wikia.dropdownNavigation.templates'],
 	function ($, win, doc, mustache, dropdownTemplates) {
+		// used for setting unique id for each dropdown added to the page
+		var dropdownIndex = 0;
+
 		/**
 		 * @desc validates dropdown naviagation options
 		 * @param {Object} params
@@ -31,7 +34,7 @@ define(
 			}
 
 			var self = this,
-				dropdownId = 'wikiaDropdownNav' + Math.floor(Math.random() * 99) + 1,
+				dropdownId = 'wikiaDropdownNav' + dropdownIndex++,
 				dropdownParams = {
 					activeClass: 'active',
 					id: dropdownId,
