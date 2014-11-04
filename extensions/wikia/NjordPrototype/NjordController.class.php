@@ -36,6 +36,20 @@ class NjordController extends WikiaController {
 	public function index() {
 		global $wgTitle, $wgUser, $wgBlankImgUrl;
 		$this->wg->SuppressPageHeader = true;
+		//set correct editor
+		$this->editor = EditorPreference::getPrimaryEditor();
+		$this->name = 'edit';
+		$this->source = false;
+		if ( !$wgUser->isAllowed('edit') || !$wgUser->isLoggedIn() || $wgTitle->isNamespaceProtected( $wgUser ) ) {
+			$this->name = 'view source';
+			$this->source = true;
+			$this->editor = EditorPreference::OPTION_EDITOR_SOURCE;
+		}
+		$editOptions = [ 'action' => 'edit' ];
+		if ( $this->editor === EditorPreference::OPTION_EDITOR_VISUAL ) {
+			$editOptions = [ 'veaction' => 'edit' ];
+		}
+		$this->editLink = $wgTitle->getLocalURL( $editOptions );
 
 		$this->wg->out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/NjordPrototype/css/Njord.scss' ) );
 		$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . '/wikia/NjordPrototype/scripts/jquery-ui-1.10.4.js' );
@@ -54,15 +68,7 @@ class NjordController extends WikiaController {
 		}
 		// template vars
 		$this->wikiData = $wikiDataModel;
-		$this->isAllowedToEdit = $this->wg->user->isAllowed('njordeditmode');
-
-		//set correct editor
-		$this->editor = EditorPreference::getPrimaryEditor();
-		$editOptions = ['action' => 'edit'];
-		if ( $this->editor === EditorPreference::OPTION_EDITOR_VISUAL ) {
-			$editOptions = ['veaction' => 'edit'];
-		}
-		$this->editLink = $wgTitle->getLocalURL($editOptions);
+		$this->isAllowedToEdit = $this->wg->user->isAllowed( 'njordeditmode' );
 	}
 
 	public function modula() {
@@ -150,10 +156,10 @@ class NjordController extends WikiaController {
 	}
 
 	public function saveHeroTitle() {
-		$title = $this->getRequest()->getVal('title', false);
+		$title = $this->getRequest()->getVal( 'title', false );
 		$success = false;
 
-		if ($title) {
+		if ( $title ) {
 			$wikiDataModel = $this->getWikiData();
 			$wikiDataModel->title = $title;
 			$success = $this->setWikiData( $wikiDataModel );
@@ -163,10 +169,10 @@ class NjordController extends WikiaController {
 	}
 
 	public function saveHeroDescription() {
-		$description = $this->getRequest()->getVal('description', false);
+		$description = $this->getRequest()->getVal( 'description', false );
 		$success = false;
 		$wikiDataModel = $this->getWikiData();
-		if ($description) {
+		if ( $description ) {
 			$wikiDataModel->description = $description;
 			$success = $this->setWikiData( $wikiDataModel );
 		}
@@ -175,10 +181,10 @@ class NjordController extends WikiaController {
 	}
 
 	public function saveHeroImage() {
-		$image = $this->getRequest()->getVal('imagename', false);
-		$cropPosition = $this->getRequest()->getVal('cropposition', false);
+		$image = $this->getRequest()->getVal( 'imagename', false );
+		$cropPosition = $this->getRequest()->getVal( 'cropposition', false );
 		$success = false;
-		if ($image !== false && $cropPosition !== false) {
+		if ( $image !== false && $cropPosition !== false ) {
 			$wikiDataModel = $this->getWikiData();
 			$wikiDataModel->cropPosition = $cropPosition;
 
@@ -248,14 +254,14 @@ class NjordController extends WikiaController {
 				$wikiDataModel->setImageName( $file->getTitle()->getDBKey() );
 				$wikiDataModel->setImagePath( $file->getFullUrl() );
 
-				$success = $this->setWikiData($wikiDataModel);
+				$success = $this->setWikiData( $wikiDataModel );
 
 				//clean up stash
 				$stash->removeFile( $imageName );
 			}
 		} else {
 			$wikiDataModel->setImageNameFromProps();
-			$success = $this->setWikiData($wikiDataModel);
+			$success = $this->setWikiData( $wikiDataModel );
 		}
 		if ( !$success ) {
 			$wikiDataModel->getFromProps();
@@ -308,7 +314,7 @@ class NjordController extends WikiaController {
 		}
 	}
 
-	public function getUploadFileErrorMessage(UploadFromFile $uploader, $verified ) {
+	public function getUploadFileErrorMessage( UploadFromFile $uploader, $verified ) {
 		$errorReadable = $uploader->getVerificationErrorCode( $verified[ 'status' ] );
 		return wfMessage( $errorReadable )->parse();
 	}
