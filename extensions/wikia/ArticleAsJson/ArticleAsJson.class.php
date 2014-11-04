@@ -164,7 +164,7 @@ class ArticleAsJson extends WikiaService {
 			//because we take caption out of main parser flow
 			//we have to replace links manually
 			foreach ( self::$media as &$media ) {
-				$parser->replaceLinkHolders( $media['caption']);
+				$parser->replaceLinkHolders( $media['caption'] );
 			}
 
 			$text = json_encode( [
