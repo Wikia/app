@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 abstract class BaseRssModel extends WikiaService {
 
 	const FIELD_TIMESTAMP = 'timestamp';
@@ -323,6 +325,7 @@ abstract class BaseRssModel extends WikiaService {
 
 		foreach ( $rawData as $key => $item ) {
 			if ( array_key_exists( $item[ 'url' ], $duplicates ) ) {
+				WikiaLogger::instance()->info( __METHOD__, [ 'item' => $item ] );
 				unset( $rawData[ $key ] );
 			}
 		}

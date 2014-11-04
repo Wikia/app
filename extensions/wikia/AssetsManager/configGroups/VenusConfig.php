@@ -27,6 +27,7 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//resources/wikia/modules/mw.js',
 		'//resources/wikia/modules/nirvana.js',
 		'//resources/wikia/modules/querystring.js',
+		'//resources/wikia/modules/history.js',
 		'//resources/wikia/modules/throbber.js',
 		'//resources/wikia/modules/thumbnailer.js',
 		'//resources/wikia/modules/window.js',
@@ -95,8 +96,26 @@ $VenusConfig[ 'venus_css' ] = [
 	]
 ];
 
+/** LocalNavigation extension */
+$VenusConfig[ 'local_navigation_scss' ] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'venus', 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/LocalNavigation/styles/LocalNavigation.scss'
+	]
+];
+
+$VenusConfig['local_navigation_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['venus', 'oasis'],
+	'assets' => [
+		'//extensions/wikia/LocalNavigation/scripts/LocalNavigationMenu.js',
+		'//extensions/wikia/LocalNavigation/scripts/LocalNavigationTracking.js'
+	]
+];
+
 /** GlobalFooter extension */
-$VenusConfig[ 'global_footer_css' ] = [
+$VenusConfig[ 'global_footer_scss' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'venus' ],
 	'assets' => [
@@ -109,10 +128,10 @@ $VenusConfig[ 'global_navigation_scss' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'venus', 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/GlobalNavigation/css/GlobalNavigation.scss',
-		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationSearch.scss',
-		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationAccountNavigation.scss',
-		'//extensions/wikia/GlobalNavigation/css/GlobalNavigationHubsMenu.scss',
+		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigation.scss',
+		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationSearch.scss',
+		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationAccountNavigation.scss',
+		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationHubsMenu.scss',
 		'//extensions/wikia/UserLogin/css/UserLoginDropdown.globalNavigation.scss',
 		'//extensions/wikia/WallNotifications/styles/WallNotifications.globalNavigation.scss',
 	]
@@ -124,16 +143,20 @@ $VenusConfig[ 'global_navigation_js' ] = [
 	'assets' => [
 		'//resources/wikia/libraries/menu-aim/menu-aim.js',
 		'//resources/wikia/libraries/delayed-hover/js-delayed-hover.js',
-		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationTracking.js',
-		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationLazyLoad.js',
-		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationHubsMenu.js',
-		'//extensions/wikia/GlobalNavigation/js/GlobalNavigationSearch.js',
-		'//extensions/wikia/GlobalNavigation/js/SearchSuggestions.js',
-		'//skins/shared/js/transparent-out.js',
+		'//resources/wikia/modules/scrollToLink.js',
+		'//skins/shared/scripts/transparent-out.js',
+		'//extensions/wikia/Venus/scripts/variables.js',
+		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationScrollToLink.js',
+		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationTracking.js',
+		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationLazyLoad.js',
+		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationHubsMenu.js',
+		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationSearch.js',
+		'//extensions/wikia/GlobalNavigation/scripts/SearchSuggestions.js',
 		'//extensions/wikia/UserLogin/js/UserLoginDropdown.globalNavigation.js',
 		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js',
 		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
+		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationiOSScrollFix.js'
 	]
 ];
 
@@ -144,14 +167,5 @@ $VenusConfig[ 'global_navigation_facebook_login_js' ] = [
 		'//extensions/FBConnect/fbconnect.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
-	]
-];
-
-/** GlobalFooter extension */
-$VenusConfig[ 'global_footer_scss' ] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'venus' ],
-	'assets' => [
-		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.scss'
 	]
 ];

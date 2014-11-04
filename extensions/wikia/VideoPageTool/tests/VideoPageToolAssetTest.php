@@ -7,6 +7,7 @@
  * the appropriate DB tables.
  *
  * @group Integration
+ * @group MediaFeatures
  */
 class VideoPageToolAssetTest extends WikiaBaseTest {
 

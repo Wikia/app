@@ -210,6 +210,23 @@ class WikiFactoryHub extends WikiaModel {
 	}
 
 	/**
+	 * Similar to getWikiCategories, this gets the vertical id and metadata for one wiki
+	 * Uses the getAllVerticals() function as a helper, which is a little inefficient, but it is
+	 *   cached globally for all wikis so it should always be in cache
+	 * @param  int $city_id
+	 * @return array of "id", "name", "short", "url" mapping
+	 */
+	public function getWikiVertical( $city_id ) {
+
+		$vertical_id = $this->getVerticalId( $city_id );
+		$all_verticals = $this->getAllVerticals();
+		$vertical = $all_verticals[$vertical_id];
+		$vertical["id"] = $vertical_id;
+
+		return $vertical;
+	}
+
+	/**
 	 * getCategoryIds  This is the NEW function to use
 	 *
 	 * get list of (just) category ids for given wiki
@@ -455,39 +472,6 @@ class WikiFactoryHub extends WikiaModel {
 				->AND( 'cat_id', $category )
 			->run( $this->getSharedDB( DB_MASTER ) );
 
-	}
-
-	/**
-	 * setCategory
-	 *
-	 * remove previous value in database and insert new one
-	 *
-	 * @param integer   $city_id    identifier from city_list
-	 * @param integer   $cat_id     category identifier
-	 * @param string    $reason     optional extra reason string for logging
-	 *
-	 * @deprecated This function is deprecated.  Now that there are multiple categories, we have to add/remove them with a new interface
-	 */
-
-	public function setCategory( $city_id, $cat_id, $reason='' ) {
-		global $wgExternalSharedDB;
-		wfProfileIn( __METHOD__ );
-
-		$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-
-		$dbw->begin();
-		$dbw->delete( "city_cat_mapping", array( "city_id" => $city_id ), __METHOD__ );
-		$dbw->insert( "city_cat_mapping", array( "city_id" => $city_id, "cat_id" => $cat_id ), __METHOD__  );
-		$dbw->commit();
-
-		$this->clearCache( $city_id );
-
-		if( !empty($reason) ) {
-			$reason = " (" . (string)$reason . ")";
-		}
-		WikiFactory::log( WikiFactory::LOG_CATEGORY, "Category changed to {$categories[$cat_id]['name']}".$reason, $city_id );
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**

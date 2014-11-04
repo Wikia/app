@@ -32,7 +32,8 @@
  *
  * @ingroup FileAbstraction
  */
-abstract class File implements \Wikia\Vignette\FileInterface {
+
+abstract class File {
 	const DELETED_FILE = 1;
 	const DELETED_COMMENT = 2;
 	const DELETED_USER = 4;
@@ -241,6 +242,16 @@ abstract class File implements \Wikia\Vignette\FileInterface {
 		return $this->name;
 	}
 
+	public function getBucket() {
+		global $wgUploadPath;
+		return VignetteRequest::parseBucket($wgUploadPath);
+	}
+
+	public function getPathPrefix() {
+		global $wgUploadPath;
+		return VignetteRequest::parsePathPrefix( $wgUploadPath );
+	}
+
 	/**
 	 * Get the file extension, e.g. "svg"
 	 *
@@ -282,16 +293,22 @@ abstract class File implements \Wikia\Vignette\FileInterface {
 	 * @return string
 	 */
 	public function getUrl() {
-		if ( !isset( $this->url ) ) {
-			$this->assertRepoDefined();
-			$this->url = $this->repo->getZoneUrl( 'public' ) . '/' . $this->getUrlRel();
+		global $wgEnableVignette;
+		if ( $wgEnableVignette ) {
+			return ( string ) $this->getUrlGenerator();
+		} else {
+			if ( !isset( $this->url ) ) {
+				$this->assertRepoDefined();
+				$this->url = $this->repo->getZoneUrl( 'public' ) . '/' . $this->getUrlRel();
 
-			# start wikia change
-			$this->originalUrl = $this->url;
-			$this->url = wfReplaceImageServer( $this->url, $this->getTimestamp() ); // rewrite URL in all envirnoments (BAC-939)
-			# end wikia change
+				# start wikia change
+				$this->originalUrl = $this->url;
+				$this->url = wfReplaceImageServer( $this->url, $this->getTimestamp() ); // rewrite URL in all envirnoments (BAC-939)
+				# end wikia change
+			}
+
+			return $this->url;
 		}
-		return $this->url;
 	}
 
 	# start wikia change
@@ -800,7 +817,7 @@ abstract class File implements \Wikia\Vignette\FileInterface {
 	 * @return MediaTransformOutput|false
 	 */
 	function transform( $params, $flags = 0 ) {
-		global $wgUseSquid, $wgIgnoreImageErrors, $wgThumbnailEpoch;
+		global $wgUseSquid, $wgIgnoreImageErrors, $wgThumbnailEpoch, $wgEnableVignette;
 
 		wfProfileIn( __METHOD__ );
 		do {
@@ -828,8 +845,13 @@ abstract class File implements \Wikia\Vignette\FileInterface {
 			$this->handler->normaliseParams( $this, $normalisedParams );
 
 			$thumbName = $this->thumbName( $normalisedParams );
-			$thumbUrl = $this->getThumbUrl( $thumbName );
 			$thumbPath = $this->getThumbPath( $thumbName ); // final thumb path
+
+			if ( $wgEnableVignette ) {
+				$thumbUrl = $this->getVignetteThumbUrl( $normalisedParams );
+			} else {
+				$thumbUrl = $this->getThumbUrl( $thumbName );
+			}
 
 			if ( $this->repo ) {
 				// Defer rendering if a 404 handler is set up...
@@ -1747,4 +1769,37 @@ abstract class File implements \Wikia\Vignette\FileInterface {
 			throw new MWException( "A Title object is not set for this File.\n" );
 		}
 	}
+
+	/**
+	 * get the timestamp this archived file was created. if not an archived file, this should return false
+	 *
+	 * @return false on failure, string of digits on success
+	 */
+	public function getArchiveTimestamp() {
+		return false;
+	}
+
+	/**
+	 * Get the Vignette\UrlGenerator for this file.
+	 *
+	 * @return \Wikia\Vignette\UrlGenerator
+	 *
+	 */
+	public function getUrlGenerator() {
+			return VignetteRequest::fromFile( $this );
+	}
+
+	/**
+	 * Get the Vignette thumbnail url.
+	 *
+	 * @param array $params the normalized thumbnail generation params
+	 * @return string the url
+	 */
+	protected function getVignetteThumbUrl( $params ) {
+		$thumbUrl = $this->getUrlGenerator()
+			->scaleToWidth( $params['width'] );
+
+		return ( string )$thumbUrl;
+	}
+
 }

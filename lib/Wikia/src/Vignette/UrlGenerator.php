@@ -7,30 +7,33 @@
 
 namespace Wikia\Vignette;
 
-use Wikia\Logger\Loggable;
-
 class UrlGenerator {
-	use Loggable;
-
 	const MODE_ORIGINAL = 'original';
 	const MODE_THUMBNAIL = 'thumbnail';
 	const MODE_THUMBNAIL_DOWN = 'thumbnail-down';
 	const MODE_FIXED_ASPECT_RATIO = 'fixed-aspect-ratio';
 	const MODE_FIXED_ASPECT_RATIO_DOWN = 'fixed-aspect-ratio-down';
+	const MODE_SCALE_TO_WIDTH = 'scale-to-width';
 	const MODE_TOP_CROP = 'top-crop';
 	const MODE_TOP_CROP_DOWN = 'top-crop-down';
+	const MODE_WINDOW_CROP = 'window-crop';
+	const MODE_WINDOW_CROP_FIXED = 'window-crop-fixed';
 	const MODE_ZOOM_CROP = 'zoom-crop';
 	const MODE_ZOOM_CROP_DOWN = 'zoom-crop-down';
 
+	const IMAGE_TYPE_AVATAR = "avatars";
+	const IMAGE_TYPE_IMAGES = "images";
+
 	const FORMAT_WEBP = "webp";
+	const FORMAT_JPG = "jpg";
 
 	const REVISION_LATEST = 'latest';
 
+	/** @var UrlConfig */
+	private $config;
+
 	/** @var string mode of the image we're requesting */
 	private $mode = self::MODE_ORIGINAL;
-
-	/** @var string revision of the image we're requesting */
-	private $revision = self::REVISION_LATEST;
 
 	/** @var int width of the image, in pixels */
 	private $width = 100;
@@ -38,14 +41,26 @@ class UrlGenerator {
 	/** @var int height of the image, in pixels */
 	private $height = 100;
 
-	/** @var FileInterface file object we're requesting */
-	private $file;
-
 	/** @var array hash of query parameters to send to the thumbnailer */
 	private $query = [];
 
-	public function __construct(FileInterface $file) {
-		$this->file = $file;
+	/** @var string one of the IMAGE_TYPE_ constants */
+	private $imageType = self::IMAGE_TYPE_IMAGES;
+
+	/** @var int for window-crop modes, where to start the window (from the left) */
+	private $xOffset = 0;
+
+	/** @var int for window-crop modes, where to start the window (from the top) */
+	private $yOffset = 0;
+
+	/** @var int for window-crop modes, the width of the window that's cropped */
+	private $windowWidth = 0;
+
+	/** @var int for window-crop modes, the height of the window that's cropped */
+	private $windowHeight = 0;
+
+	public function __construct(UrlConfig $config) {
+		$this->config = $config;
 		$this->original();
 	}
 
@@ -59,24 +74,34 @@ class UrlGenerator {
 		return $this;
 	}
 
-	/**
-	 * Request a specific revision of an image
-	 * @param string $revision
-	 * @return $this
-	 */
-	public function revision($revision) {
-		$this->revision = $revision;
+	public function xOffset($xOffset) {
+		$this->xOffset = $xOffset;
+		return $this;
+	}
+
+	public function yOffset($yOffset) {
+		$this->yOffset = $yOffset;
+		return $this;
+	}
+
+	public function windowWidth($width) {
+		$this->windowWidth = $width;
+		return $this;
+	}
+
+	public function windowHeight($height) {
+		$this->windowHeight = $height;
 		return $this;
 	}
 
 	/**
-	 * set an image's language
-	 * @param string $lang
+	 * set an image's path prefix
+	 * @param string $pathPrefix
 	 * @return $this
 	 */
-	public function lang($lang) {
-		if (!empty($lang) && $lang != 'en') {
-			$this->query['lang'] = $lang;
+	public function pathPrefix($pathPrefix) {
+		if (!empty($pathPrefix)) {
+			$this->query['path-prefix'] = $pathPrefix;
 		}
 
 		return $this;
@@ -170,11 +195,60 @@ class UrlGenerator {
 	}
 
 	/**
+	 * dictate width, let height auto scale
+	 * @param null $width
+	 * @return $this
+	 */
+	public function scaleToWidth($width = null) {
+		$this->mode(self::MODE_SCALE_TO_WIDTH);
+
+		if ($width != null) {
+			$this->width($width);
+		}
+
+		return $this;
+	}
+
+	/**
+	 * crop a window into the image, scale the result to $this->width with auto height
+	 * @return $this
+	 */
+	public function windowCrop() {
+		return $this->mode(self::MODE_WINDOW_CROP);
+	}
+
+	/**
+	 * crop a window into the image, scale the result to $this->width x $this->height
+	 * @return $this
+	 */
+	public function windowCropFixed() {
+		return $this->mode(self::MODE_WINDOW_CROP_FIXED);
+	}
+
+	/**
+	 * Force the thumbnail request to replace the cached thumbnail.
+	 *
+	 * @return $this
+	 */
+	public function replaceThumbnail() {
+		$this->query['replace'] = "true";
+		return $this;
+	}
+
+	/**
 	 * request an image in webp format
 	 * @return $this
 	 */
 	public function webp() {
 		return $this->format(self::FORMAT_WEBP);
+	}
+
+	public function jpg() {
+		return $this->format(self::FORMAT_JPG);
+	}
+
+	public function avatar() {
+		return $this->imageType(self::IMAGE_TYPE_AVATAR);
 	}
 
 	/**
@@ -183,39 +257,69 @@ class UrlGenerator {
 	 * @throws \Exception
 	 */
 	public function url() {
-		$bucketPath = self::bucketPath();
-		$imagePath = "{$bucketPath}/{$this->file->getUrlRel()}/revision/{$this->revision}";
+		$imagePath = "{$this->config->bucket()}/{$this->imageType}/{$this->config->relativePath()}/revision/{$this->getRevision()}";
 
-		if (!isset($this->query['lang'])) {
-			global $wgLang;
-			$this->lang($wgLang->getCode());
+		if (!isset($this->query['path-prefix'])) {
+			$this->pathPrefix($this->config->pathPrefix());
 		}
 
-		if ($this->mode != self::MODE_ORIGINAL) {
-			$imagePath .= "/{$this->mode}/width/{$this->width}/height/{$this->height}";
+		if (!isset($this->query['replace']) && $this->config->replaceThumbnail()) {
+			$this->replaceThumbnail();
 		}
 
-		if ($this->revision == self::REVISION_LATEST) {
-			$this->query['cb'] = $this->file->getTimestamp();
-		}
+		$imagePath .= $this->modePath();
 
 		if (!empty($this->query)) {
-			$imagePath .= '?'.implode('&', array_map(function($key, $val) {
-					return "{$key}=".urlencode($val);
-				}, array_keys($this->query), $this->query));
+			ksort($this->query); // ensure that the keys we use will be ordered deterministically
+			$imagePath .= '?'.http_build_query($this->query);
 		}
 
-		return self::domainShard($imagePath);
+		return $this->domainShard($imagePath);
+	}
+
+	/**
+	 * @return string
+	 */
+	private function modePath() {
+		$modePath = '';
+
+		if ($this->mode != self::MODE_ORIGINAL) {
+			$modePath .= "/{$this->mode}";
+
+			if ($this->mode == self::MODE_SCALE_TO_WIDTH) {
+				$modePath .= "/{$this->width}";
+			} elseif ($this->mode == self::MODE_WINDOW_CROP || $this->mode == self::MODE_WINDOW_CROP_FIXED) {
+				$modePath .= "/width/{$this->width}";
+
+				if ($this->mode == self::MODE_WINDOW_CROP_FIXED) {
+					$modePath .= "/height/{$this->height}";
+				}
+
+				$modePath .= "/x-offset/{$this->xOffset}/y-offset/{$this->yOffset}";
+				$modePath .= "/window-width/{$this->windowWidth}/window-height/{$this->windowHeight}";
+			} else {
+				$modePath .= "/width/{$this->width}/height/{$this->height}";
+			}
+		}
+
+		return $modePath;
+	}
+
+
+	private function getRevision() {
+		$revision = self::REVISION_LATEST;
+
+		if ($this->config->isArchive()) {
+			$revision = $this->config->timestamp();
+		} else {
+			$this->query['cb'] = $this->config->timestamp();
+		}
+
+		return $revision;
 	}
 
 	public function __toString() {
 		return $this->url();
-	}
-
-	protected function getLoggerContext() {
-		return [
-			'file' => $this->file->getName(),
-		];
 	}
 
 	/**
@@ -234,23 +338,17 @@ class UrlGenerator {
 		return $this;
 	}
 
-	private static function domainShard($imagePath) {
-		global $wgVignetteUrl, $wgImagesServers;
-
-		$hash = ord(sha1($imagePath));
-		$shard = 1 + ($hash % ($wgImagesServers - 1));
-
-		return str_replace('<SHARD>', $shard, $wgVignetteUrl)."/{$imagePath}";
+	private function imageType($type) {
+		$this->imageType = $type;
+		return $this;
 	}
 
-	/**
-	 * get the top level bucket for a given wiki. this may or may not be the same as $wgDBName. This is done via
-	 * regular expression because there is no variable that contains the bucket name :(
-	 * @return mixed
-	 */
-	private static function bucketPath() {
-		global $wgUploadPath;
-		preg_match('/http(s?):\/\/(.*?)\/(.*?)\/(.*)$/', $wgUploadPath, $matches);
-		return $matches[3];
+	private function domainShard($imagePath) {
+		// shard based on original image, so frontends can build thumb urls from originals that might be cached in the
+		// user's browser (VE, for instance)
+		$hash = ord(sha1($this->config->relativePath()));
+		$shard = 1 + ($hash % ($this->config->domainShardCount() - 1));
+
+		return str_replace('<SHARD>', $shard, $this->config->baseUrl()) . "/{$imagePath}";
 	}
 }

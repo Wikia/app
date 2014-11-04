@@ -59,7 +59,7 @@ body { background: url(http://images2.wikia.nocookie.net/test1223/images/c/c5/An
 <?/* Article */?>
 #wikia_page { border: 0 ; margin: 0 311px 0 0; padding: 0; top: 0; }
 #article { padding: 15px 30px; }
-h1.firstHeading { background: #e9f0ff; border: 1px solid #36C; padding: 25px; line-height: normal; -moz-border-radius: 20px; -webkit-border-radius: 20px; }
+h1.firstHeading { background: #e9f0ff; border: 1px solid #36C; padding: 25px; line-height: normal; -webkit-border-radius: 20px; }
 h1.firstHeading:after { content: '?'; }
 
 <?/* Sidebar */?>

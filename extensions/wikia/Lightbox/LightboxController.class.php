@@ -11,6 +11,10 @@ class LightboxController extends WikiaController {
 
 	const THUMBNAIL_WIDTH = 90;
 	const THUMBNAIL_HEIGHT = 55;
+	/** Default lightbox width */
+	const CONTEXT_DEFAULT_WIDTH = 750;
+	/** Default lightbox height */
+	const CONTEXT_DEFAULT_HEIGHT = 415;
 	const POSTED_IN_ARTICLES = 7;
 
 	static $imageserving;
@@ -48,8 +52,8 @@ class LightboxController extends WikiaController {
 	 * thumbs = array( 'title' => image title, 'type' => [image/video], 'thumbUrl' => thumbnail link )
 	 */
 	public function getThumbImages() {
-		$count = $this->request->getVal( 'count', 20 );
-		$to = $this->request->getInt( 'to', 0 );
+		$count = $this->request->getInt( 'count', 20 );
+		$to = $this->request->getVal( 'to', 0 );
 		$includeLatestPhotos = $this->request->getVal( 'inclusive', '' );
 
 		$thumbs = array();
@@ -57,7 +61,7 @@ class LightboxController extends WikiaController {
 		if ( !empty( $to ) ) {
 			// get image list - exclude Latest Photos
 			$images = array();
-			$helper = new LightboxHelper();
+			$helper = $this->getLightboxHelper();
 			$imageList = $helper->getImageList( $count, $to );
 			extract( $imageList );
 
@@ -140,6 +144,8 @@ class LightboxController extends WikiaController {
 	 * Returns complete details about a single media (file).  JSON only, no associated template to this method.
 	 * @requestParam string fileTitle
 	 * @requestParam boolean isInline (optional) - Determines whether the media file should show inline
+	 * @requestParam int width (optional) - Context width
+	 * @requestParam int height (optional) - Context height
 	 * @responseParam string mediaType - media type.  either image or video
 	 * @responseParam string videoEmbedCode - embed html code if video
 	 * @responseParam string imageUrl - thumb image url that is hard scaled
@@ -174,24 +180,23 @@ class LightboxController extends WikiaController {
 			return;
 		}
 
-		$config = array(
+		$config = [
 			'imageMaxWidth'  => 1000,
-			'contextWidth'   => $this->request->getVal( 'width', 750 ),
-			'contextHeight'  => $this->request->getVal( 'height', 415 ),
+			'contextWidth'   => $this->request->getVal( 'width', self::CONTEXT_DEFAULT_WIDTH ),
+			'contextHeight'  => $this->request->getVal( 'height', self::CONTEXT_DEFAULT_HEIGHT ),
 			'userAvatarWidth'=> 16,
 			'isInline'       => $isInline,
-		);
+		];
 
 		// set max height if play in lightbox
 		if ( $this->request->getVal( 'width', 0 ) == 0 ) {
-			$config['maxHeight'] = 415;
+			$config['maxHeight'] = self::CONTEXT_DEFAULT_HEIGHT;
 		}
 
 		$data = WikiaFileHelper::getMediaDetail( $title, $config );
 
 		$articles = $data['articles'];
 		list( $smallerArticleList, $articleListIsSmaller ) = WikiaFileHelper::truncateArticleList( $articles, self::POSTED_IN_ARTICLES );
-		$isPostedIn = empty( $smallerArticleList ) ? false : true;	// Bool to tell mustache to print "posted in" section
 
 		// file details
 		$this->views = wfMessage( 'lightbox-video-views', $this->wg->Lang->formatNum( $data['videoViews'] ) )->parse();
@@ -207,7 +212,7 @@ class LightboxController extends WikiaController {
 		$this->userName = ( User::isIP($data['userName']) ) ? wfMessage( 'oasis-anon-user' )->plain() : $data['userName'] ;
 		$this->userPageUrl = $data['userPageUrl'];
 		$this->articles = $articles;
-		$this->isPostedIn = $isPostedIn;
+		$this->isPostedIn = !empty( $smallerArticleList ); // Bool to tell mustache to print "posted in" section
 		$this->smallerArticleList = $smallerArticleList;
 		$this->articleListIsSmaller = $articleListIsSmaller;
 		$this->providerName = $data['providerName'];
@@ -375,7 +380,7 @@ class LightboxController extends WikiaController {
 		$extra = $this->request->getVal( 'count', 0 );
 		$includeLatestPhotos = $this->request->getVal( 'inclusive', '' );
 
-		$helper = new LightboxHelper();
+		$helper = $this->getLightboxHelper();
 
 		// add Latest Photos if not exist
 		if ( $includeLatestPhotos == 'true' ) {
@@ -396,4 +401,11 @@ class LightboxController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * Get an instance of the lightbox helper
+	 * @return LightboxHelper
+	 */
+	public function getLightboxHelper() {
+		return new \LightboxHelper();
+	}
 }

@@ -55,6 +55,13 @@ $messages['be-tarask'] = array(
 	'wikiawidget' => 'Прылады Wikia',
 );
 
+/** Bengali (বাংলা)
+ * @author Aftab1995
+ */
+$messages['bn'] = array(
+	'wikiawidget' => 'উইকিয়া উইজেট',
+);
+
 /** Breton (brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D
@@ -210,6 +217,13 @@ $messages['ka'] = array(
  */
 $messages['kn'] = array(
 	'wikiawidget' => 'ವಿಕಿಯಾ ವಿಡ್ಜೆಟ್‍ಗಳು',
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'wikiawidget' => '위키아 위젯',
 );
 
 /** Karachay-Balkar (къарачай-малкъар)

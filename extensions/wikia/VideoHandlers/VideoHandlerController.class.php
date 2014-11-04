@@ -1,5 +1,7 @@
 <?php
 
+use \Wikia\Logger\WikiaLogger;
+
 /**
  * Class VideoHandlerController
  */
@@ -249,14 +251,30 @@ class VideoHandlerController extends WikiaController {
 		$fileTitleAsArray = wfReturnArray( $fileTitle );
 		$videoOptions = $this->getVideoOptionsWithDefaults( $this->getVal( 'videoOptions', [] ) );
 
-		$memcKey= wfMemcKey( __FUNCTION__, md5( serialize( [ $fileTitleAsArray, $videoOptions ] ) ) );
-		$videos = WikiaDataAccess::cache(
-			$memcKey,
-			WikiaResponse::CACHE_STANDARD,
-			function() use ( $fileTitleAsArray, $videoOptions ) {
-				return $this->getDetailsForVideoTitles( $fileTitleAsArray, $videoOptions );
+		// Key to cache the data under in memcache
+		$memcKey = wfMemcKey( __FUNCTION__, md5( serialize( [ $fileTitleAsArray, $videoOptions ] ) ) );
+
+		// How we'll get the data on a cache miss
+		$dataGenerator = function() use ( $fileTitleAsArray, $videoOptions ) {
+			$videos = $this->getDetailsForVideoTitles( $fileTitleAsArray, $videoOptions );
+
+			// Take note when we are unable to get any details for a set of videos
+			if ( empty( $videos ) ) {
+				$log = WikiaLogger::instance();
+				$log->info( __METHOD__.' empty details', [
+					'titleCount' => count( $fileTitleAsArray ),
+					'titleString' => implode( '|', $fileTitleAsArray ),
+				] );
 			}
-		);
+
+			return $videos;
+		};
+
+		// Call the generator, caching the result, or not caching if we get null from the $dataGenerator
+		$videos = WikiaDataAccess::cacheWithOptions( $memcKey, $dataGenerator, [
+			'cacheTTL' => WikiaResponse::CACHE_STANDARD,
+			'negativeCacheTTL' => 0,
+		] );
 
 		// If file title was passed in as a string, return single associative array.
 		$this->detail = ( !empty( $videos ) && $returnSingleVideo ) ? array_pop( $videos ) : $videos;
@@ -340,26 +358,46 @@ class VideoHandlerController extends WikiaController {
 			$limit = self::VIDEO_LIMIT;
 		}
 
-		$mediaService = new MediaQueryService();
-		$videoList = $mediaService->getVideoList( $sort, $filter, $limit, $page, $providers, $category );
+		// Key to cache the data under in memcache
+		$memcKey = wfMemcKey( __CLASS__, __FUNCTION__, md5( serialize( [
+			$sort, $filter, $limit, $page, $providers, $category, $width, $height, $detail,
+		] ) ) );
 
-		// get video detail
-		if ( !empty( $detail ) ) {
-			$videoOptions = [
-				'thumbWidth' => $width,
-				'thumbHeight' => $height,
-			];
-			$helper = new VideoHandlerHelper();
-			foreach ( $videoList as &$videoInfo ) {
-				$videoDetail = $helper->getVideoDetail( $videoInfo, $videoOptions );
-				if ( !empty( $videoDetail ) ) {
-					$videoInfo = array_merge( $videoInfo, $videoDetail );
+		$cacheOptions = [
+			'cacheTTL' => \WikiaResponse::CACHE_STANDARD,
+			'negativeCacheTTL' => 0,
+		];
+
+		// Retrieve the result and if not null, cache it
+		$videoList = \WikiaDataAccess::cacheWithOptions(
+			$memcKey,
+			function() use ( $sort, $filter, $limit, $page, $providers, $category, $width, $height, $detail ) {
+				$mediaService = new \MediaQueryService();
+				$videoList = $mediaService->getVideoList( $sort, $filter, $limit, $page, $providers, $category );
+
+				// get video detail
+				if ( !empty( $detail ) ) {
+					$videoOptions = [
+						'thumbWidth' => $width,
+						'thumbHeight' => $height,
+					];
+					$helper = new \VideoHandlerHelper();
+					foreach ( $videoList as &$videoInfo ) {
+						$videoDetail = $helper->getVideoDetail( $videoInfo, $videoOptions );
+						if ( !empty( $videoDetail ) ) {
+							$videoInfo = array_merge( $videoInfo, $videoDetail );
+						}
+					}
+					unset( $videoInfo );
 				}
-			}
 
-		}
+				return $videoList;
+			},
+			$cacheOptions
+		);
 
 		$this->videos = $videoList;
+		$this->response->setCacheValidity( \WikiaResponse::CACHE_STANDARD );
 
 		wfProfileOut( __METHOD__ );
 	}

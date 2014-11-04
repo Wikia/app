@@ -25,10 +25,11 @@ class ArticleTypeService {
 	/**
 	 * Returns article type for given pageId
 	 * @param int $pageId
+	 * @param string $lang
 	 * @throws ServiceUnavailableException
 	 * @return string|null
 	 */
-	public function getArticleType( $pageId ) {
+	public function getArticleType( $pageId, $lang ) {
 		if ( !$pageId ) {
 			return null;
 		}
@@ -37,6 +38,7 @@ class ArticleTypeService {
 		if ( is_null($articleData) ) {
 			return null;
 		}
+		$articleData['lang'] = $lang;
 
 		$json = json_encode( $articleData, JSON_FORCE_OBJECT );
 		$response = Http::post($this->getHolmesClassificationsEndpoint(),
@@ -67,17 +69,33 @@ class ArticleTypeService {
 	 * @return array|null
 	 */
 	private function getArticleDataByArticleId($pageId) {
+		global $wgCityId;
 		$art = Article::newFromID($pageId);
 		if ($art) {
 			$title = $art->getTitle()->getText();
 			$text = $art->getPage()->getRawText();
-			if (!empty($title) && !empty($text)) {
-				return [ 'title' => $title, 'wikiText' => $text	];
+			$artUrl = $art->getTitle()->getFullUrl();
+			// $title and $text are mandatory for holmes
+			if ( !empty( $title ) && !empty( $text ) ) {
+				return [
+					'title' => $title,
+					'wikiText' => $text,
+					'pageId' => $pageId,
+					'wikiaId' => $wgCityId,
+					'wikiaUrl' => $artUrl
+				];
+			} else {
+				throw new MissingFieldException( 'missing title or text: ' . $wgCityId .
+					'_' . $pageId );
 			}
-		} 
+		}
 		return null;
 	}
 }
 
 class ServiceUnavailableException extends Exception {
+}
+
+class MissingFieldException extends Exception {
+
 }

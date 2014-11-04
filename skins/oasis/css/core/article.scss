@@ -102,6 +102,15 @@
 
 	ol {
 		list-style: decimal;
+
+		// VOLDEV-30
+		// Indent list on special pages so the first number isn't cut off
+		// this only applies reliably to 4 digit lists
+		// which covers lists limited to 1000 and unlimited lists up to 9999
+		// but it's unlikely someone gets to 10,000+ so hopefully this will do
+		&.special {
+			margin-left: 3.2em;
+		}
 	}
 
 	ul {

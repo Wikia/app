@@ -246,7 +246,7 @@ class WikiFactory {
 	 *
 	 * @return boolean: true - added, false otherwise
 	 */
-	static public function addDomain( $city_id, $domain ) {
+	static public function addDomain( $city_id, $domain, $reason = '' ) {
 		global $wgWikicitiesReadOnly;
 
 		if ( ! self::isUsed() ) {
@@ -316,7 +316,14 @@ class WikiFactory {
 			),
 			__METHOD__
 		);
-		self::log( self::LOG_DOMAIN, "{$domain} added.",  $city_id );
+
+		$sLogMessage = "{$domain} added.";
+
+		if ( !empty( $reason ) ) {
+			$sLogMessage .= "(reason: {$reason})";
+		}
+
+		self::log( self::LOG_DOMAIN, $sLogMessage,  $city_id );
 		$dbw->commit();
 
 		/**
@@ -340,7 +347,7 @@ class WikiFactory {
 	 *
 	 * @return boolean: true - removed, false otherwise
 	 */
-	static public function removeDomain ( $city_id, $domain = null ) {
+	static public function removeDomain ( $city_id, $domain = null, $reason = null ) {
 		if ( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
@@ -361,7 +368,12 @@ class WikiFactory {
 			return false;
 		}
 
-		self::log( self::LOG_DOMAIN, "{$domain} removed.", $city_id );
+		$sLogMessage = "{$domain} removed.";
+		if ( !empty( $reason ) ) {
+			$sLogMessage .= "(reason: {$reason})";
+		}
+
+		self::log( self::LOG_DOMAIN, $sLogMessage, $city_id );
 		$dbw->commit();
 
 		self::clearDomainCache( $city_id );
@@ -381,7 +393,7 @@ class WikiFactory {
 	 *
 	 * @return boolean: true - set, false otherwise
 	 */
-	static public function setmainDomain ( $city_id, $domain = null ) {
+	static public function setmainDomain ( $city_id, $domain = null, $reason = null ) {
 		if ( ! self::isUsed() ) {
 			Wikia::log( __METHOD__, "", "WikiFactory is not used." );
 			return false;
@@ -391,7 +403,7 @@ class WikiFactory {
 			$domain = 'http://' . $domain;
 		}
 
-		$retVal = WikiFactory::setVarByName("wgServer", $city_id, $domain);
+		$retVal = WikiFactory::setVarByName("wgServer", $city_id, $domain, $reason);
 
 		self::clearDomainCache( $city_id );
 
@@ -807,7 +819,13 @@ class WikiFactory {
 					__METHOD__
 				);
 				$reason2 = ( !empty($reason) ) ? " (reason: ". (string)$reason .")" : '';
-				self::log(self::LOG_VARIABLE, sprintf("Variable %s removed%s", self::getVarById($variable_id, $wiki)->cv_name, $reason2), $wiki);
+				self::log(
+					self::LOG_VARIABLE,
+					sprintf("Variable %s removed%s",
+						self::getVarById($variable_id, $wiki)->cv_name,
+						$reason2),
+					$wiki,
+					$variable_id);
 				$dbw->commit();
 				$bStatus = true;
 				self::clearCache( $wiki );
@@ -1815,8 +1833,12 @@ class WikiFactory {
 			"city_public" => $city_public,
 			"city_last_timestamp" => wfTimestamp( TS_DB ),
 		);
+
+		$sLogMessage = "Status of wiki changed to {$city_public}.";
+
 		if ( !empty($reason) ) {
 			$update["city_additional"] = $reason;
+			$sLogMessage .= " (reason: {$reason})";
 		}
 
 		$dbw = self::db( DB_MASTER );
@@ -1826,7 +1848,8 @@ class WikiFactory {
 			array( "city_id" => $city_id ),
 			__METHOD__
 		);
-		self::log( self::LOG_STATUS, "Status of wiki changed to {$city_public}.", $city_id );
+
+		self::log( self::LOG_STATUS, $sLogMessage, $city_id );
 
 		wfProfileOut( __METHOD__ );
 
@@ -2456,7 +2479,7 @@ class WikiFactory {
 	 *
 	 * @return boolean, usually true when success
 	 */
-	static public function resetFlags( $city_id, $city_flags, $skip=false ) {
+	static public function resetFlags( $city_id, $city_flags, $skip=false, $reason = '' ) {
 		global $wgWikicitiesReadOnly;
 
 		if ( ! self::isUsed() ) {
@@ -2478,10 +2501,14 @@ class WikiFactory {
 			array( "city_id" => $city_id ),
 			__METHOD__
 		);
-		if ( $skip)
+		if ( $skip) {
 			Wikia::log( __METHOD__, "", "skip logging.");
-		else
-			self::log( self::LOG_STATUS, sprintf("Binary flags %s removed from city_flags", decbin( $city_flags ) ), $city_id );
+		} else {
+			if ( !empty( $reason ) ) {
+				$reason = " (reason: {$reason})";
+			}
+			self::log( self::LOG_STATUS, sprintf("Binary flags %s removed from city_flags.%s", decbin( $city_flags ), $reason ), $city_id );
+		}
 
 		wfProfileOut( __METHOD__ );
 
@@ -2503,7 +2530,7 @@ class WikiFactory {
 	 *
 	 * @return boolean, usually true when success
 	 */
-	static public function setFlags( $city_id, $city_flags, $skip=false ) {
+	static public function setFlags( $city_id, $city_flags, $skip=false, $reason = '' ) {
 		global $wgWikicitiesReadOnly;
 
 		if ( ! self::isUsed() ) {
@@ -2526,10 +2553,14 @@ class WikiFactory {
 			__METHOD__
 		);
 
-		if ( $skip)
+		if ( $skip) {
 			Wikia::log( __METHOD__, "", "skip logging.");
-		else
-			self::log( self::LOG_STATUS, sprintf("Binary flags %s added to city_flags", decbin( $city_flags ) ), $city_id );
+		} else {
+			if ( !empty( $reason ) ) {
+				$reason = " (reason: {$reason})";
+			}
+			self::log( self::LOG_STATUS, sprintf("Binary flags %s added to city_flags.%s", decbin( $city_flags ), $reason ), $city_id );
+		}
 
 		wfProfileOut( __METHOD__ );
 

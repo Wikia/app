@@ -1,36 +1,31 @@
-require(['mediaGallery.views.gallery'], function (Gallery) {
+require([
+	'mediaGallery.controllers.galleries'
+], function (GalleriesController) {
 	'use strict';
-	$(function () {
-		var $galleries = $('.media-gallery-wrapper'),
-			// get data from script tag in DOM
-			data = Wikia.mediaGalleryData || [];
 
-		// If there's no galleries on the page, we're done.
-		if (!data.length) {
-			return;
-		}
+	/**
+	 * Convenience function for initializing the gallery elements.
+	 */
+	function newGallery( options ) {
+		var controller,
+			settings = {
+				lightbox: true,
+				lazyLoad: true
+			};
 
-		$.each($galleries, function (idx) {
-			var $this = $(this),
-				origVisibleCount = $this.data('visible-count') || 8,
-				gallery;
+		$.extend( settings, options );
 
-			gallery = new Gallery({
-				$el: $('<div></div>'),
-				$wrapper: $this,
-				model: {
-					media: data[idx]
-				},
-				origVisibleCount: origVisibleCount
-			});
-			$this.append(gallery.render(origVisibleCount).$el);
+		controller = new GalleriesController( settings );
+		controller.init();
+	}
 
-			if (gallery.$toggler) {
-				$this.append(gallery.$toggler);
-			}
-
-			gallery.rendered = true;
-			gallery.$el.trigger('galleryInserted');
-		});
+	// Galleries must be initialized:
+	// In preview dialog
+	$(window).on('EditPageAfterRenderPreview', newGallery);
+	// After VisualEditor
+	mw.hook('postEdit').add(function() {
+		newGallery({ lazyLoad: false });
 	});
+	// On page load
+	$(newGallery);
 });

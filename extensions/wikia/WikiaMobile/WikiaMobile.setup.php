@@ -137,8 +137,12 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'cscoreCat',
 
 			//ads
+			'ads',
+
+			//ads legacy -- should be removed at some point
 			'adEnginePageType',
 			'cityShort',
+			'wgAdDriverUseAdsAfterInfobox',
 			'wgAdDriverWikiIsTop1000',
 			'wgAdVideoTargeting',
 			'wgDartCustomKeyValues',
@@ -147,6 +151,10 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'wgWikiDirectedAtChildren',
 			'wikiaPageIsHub',
 			'wikiaPageType',
+
+			//vertical&categories
+			'wgWikiVertical',
+			'wgWikiCategories',
 
 			//server/wiki
 			'wgServer',

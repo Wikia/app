@@ -560,7 +560,7 @@ class WallMessage {
 		}
 
 		$id = $this->getMessagePageId();
-		
+
 		$postFix = $this->getPageUrlPostFix();
 		$postFix = empty($postFix) ? "":('#'.$postFix);
 		$title = Title::newFromText($id, NS_USER_WALL_MESSAGE);
@@ -953,13 +953,13 @@ class WallMessage {
 		$data['reason'] = $reason;
 
 		if( $this->isMain() ) {
-			$data['parentMessageId'] = 0;
+			$data['parentId'] = 0;
 			$data['isReply'] = false;
 			$wnae = new WallNotificationAdminEntity($wikiId, $data);
 		} else {
 			$parent = $this->getTopParentObj();
 			$parent->load();
-			$data['parentMessageId'] = $parent->getId();
+			$data['parentId'] = $parent->getId();
 			$data['title'] = $parent->getMetaTitle();
 			$data['isReply'] = true;
 			$wnae = new WallNotificationAdminEntity($wikiId, $data);

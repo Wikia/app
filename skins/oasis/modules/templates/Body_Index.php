@@ -24,8 +24,12 @@
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
 	<div class="WikiaPageContentWrapper">
 		<?php
-			if ( empty( $wg->SuppressWikiHeader ) ) {
-				echo $app->renderView( 'WikiHeader', 'Index' );
+			if ( empty( $wg->SuppressWikiHeader )) {
+				if ( empty( $wg->EnableLocalNavExt ) ) {
+					echo $app->renderView( 'WikiHeader', 'Index' );
+				} else {
+					echo $app->renderView( 'LocalNavigation', 'Index' );
+				}
 			}
 		?>
 

@@ -462,19 +462,10 @@ class ArticleComment {
 	 * @access public
 	 */
 	public function doDeleteComment( $reason, $suppress = false ){
-		global $wgUser;
-		if(empty($this->mArticle)) {
-			$this->mArticle = new Article($this->mTitle, 0);
-		}
-		$error = '';
-		$id = $this->mArticle->getId();
-		//we need to run all the hook manual :/
-		if ( wfRunHooks( 'ArticleDelete', array( &$this->mArticle, &$wgUser, &$reason, &$error ) ) ) {
-			if( $this->mArticle->doDeleteArticle( $reason, $suppress ) ) {
-				$this->mTitle->getPrefixedText();
-				wfRunHooks( 'ArticleDeleteComplete', array( &$this->mArticle, &$wgUser, $reason, $id) );
-				return true;
-			}
+		$wikiPage = new WikiPage( $this->mTitle );
+
+		if ( $wikiPage->doDeleteArticle( $reason, $suppress ) ) {
+			return true;
 		}
 
 		return false;

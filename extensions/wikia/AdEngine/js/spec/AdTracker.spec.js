@@ -1,4 +1,4 @@
-/*global describe, it, expect, modules, spyOn*/
+/*global describe, it, expect, modules, spyOn, jasmine*/
 /*jshint camelcase:false*/
 describe('ext.wikia.adEngine.adTracker', function () {
 	'use strict';
@@ -158,13 +158,81 @@ describe('ext.wikia.adEngine.adTracker', function () {
 		});
 	});
 
-	it('measureTime: both performance and wgNow available', function () {
+	it('measureTime and track', function () {
 		var windowPerformanceMock = {
-				performance: {
-					now: function () {
-						return 777.7;
-					}
-				},
+				wgNow: new Date(new Date().getTime() - 888)
+			},
+			adTracker = modules['ext.wikia.adEngine.adTracker'](trackerMock, windowPerformanceMock);
+
+		spyOn(trackerMock, 'track');
+
+		adTracker.measureTime('test/event', {abc: 'def', 'xyz': 123}).track();
+
+		expect(trackerMock.track).toHaveBeenCalledWith({
+			ga_category: 'ad/timing/test/event',
+			ga_action: 'abc=def;xyz=123',
+			ga_label: '0.5-1',
+			ga_value: jasmine.any(Number),
+			trackingMethod: 'ad'
+		});
+
+		expect(trackerMock.track.mostRecentCall.args[0].ga_value).not.toBeLessThan(888);
+
+	});
+
+	it('measureTime: no track call after measure', function () {
+		var windowPerformanceMock = {
+				wgNow: new Date(new Date().getTime() - 888)
+			},
+			adTracker = modules['ext.wikia.adEngine.adTracker'](trackerMock, windowPerformanceMock);
+
+		spyOn(trackerMock, 'track');
+
+		adTracker.measureTime('test/event', {abc: 'def', 'xyz': 123});
+
+		// No tracking yet
+		expect(trackerMock.track.calls.length).toBe(0);
+	});
+
+	it('measureTime with eventType param and track', function () {
+		var windowPerformanceMock = {
+				wgNow: new Date(new Date().getTime() - 888)
+			},
+			adTracker = modules['ext.wikia.adEngine.adTracker'](trackerMock, windowPerformanceMock);
+
+		spyOn(trackerMock, 'track');
+
+		adTracker.measureTime('testEvent', {abc: 'def', 'xyz': 123}, 'start').track();
+
+		expect(trackerMock.track).toHaveBeenCalledWith({
+			ga_category: 'ad/timing/testEvent/start',
+			ga_action: 'abc=def;xyz=123',
+			ga_label: '0.5-1',
+			ga_value: jasmine.any(Number),
+			trackingMethod: 'ad'
+		});
+
+		expect(trackerMock.track.calls.length).toBe(1);
+
+		expect(trackerMock.track.mostRecentCall.args[0].ga_value).not.toBeLessThan(888);
+	});
+
+	it('measureDiff: no track call after measure', function () {
+		var windowPerformanceMock = {
+				wgNow: new Date(new Date().getTime() - 888)
+			},
+			adTracker = modules['ext.wikia.adEngine.adTracker'](trackerMock, windowPerformanceMock);
+
+		spyOn(trackerMock, 'track');
+
+		adTracker.measureTime('test/event', {abc: 'def', 'xyz': 123}).measureDiff({def: 'abc', '123': 'xyz'}, 'diff');
+
+		// No tracking yet
+		expect(trackerMock.track.calls.length).toBe(0);
+	});
+
+	it('measureTime, measureDiff and track', function () {
+		var windowPerformanceMock = {
 				wgNow: new Date(new Date().getTime() - 888)
 			},
 			timer,
@@ -174,64 +242,25 @@ describe('ext.wikia.adEngine.adTracker', function () {
 
 		timer = adTracker.measureTime('test/event', {abc: 'def', 'xyz': 123});
 
-		// No tracking yet
-		expect(trackerMock.track.calls.length).toBe(0);
+		windowPerformanceMock.wgNow = new Date(new Date().getTime() - 999);
+
+		timer = timer.measureDiff({def: 'abc', '123': 'xyz'}, 'diff');
 
 		timer.track();
+
 		expect(trackerMock.track).toHaveBeenCalledWith({
-			ga_category: 'ad/timing/test/event/performance',
-			ga_action: 'abc=def;xyz=123',
-			ga_label: '0.5-1',
-			ga_value: 778,
+			ga_category: 'ad/timing/test/event/diff',
+			ga_action: 'def=abc;123=xyz',
+			ga_label: '0-0.5',
+			ga_value: jasmine.any(Number),
 			trackingMethod: 'ad'
 		});
-		expect(trackerMock.track.calls.length).toBe(2);
-	});
 
-	it('measureTime: only performance available', function () {
-		var windowPerformanceMock = {
-				performance: {
-					now: function () {
-						return 777.7;
-					}
-				}
-			},
-			timer,
-			adTracker = modules['ext.wikia.adEngine.adTracker'](trackerMock, windowPerformanceMock);
-
-		spyOn(trackerMock, 'track');
-
-		timer = adTracker.measureTime('test/event', {abc: 'def', 'xyz': 123});
-
-		// No tracking yet
-		expect(trackerMock.track.calls.length).toBe(0);
-
-		timer.track();
-		expect(trackerMock.track).toHaveBeenCalledWith({
-			ga_category: 'ad/timing/test/event/performance',
-			ga_action: 'abc=def;xyz=123',
-			ga_label: '0.5-1',
-			ga_value: 778,
-			trackingMethod: 'ad'
-		});
 		expect(trackerMock.track.calls.length).toBe(1);
+
+		expect(trackerMock.track.mostRecentCall.args[0].ga_value).not.toBeLessThan(110);
+		expect(trackerMock.track.mostRecentCall.args[0].ga_value).not.toBeGreaterThan(888);
+
 	});
 
-	it('measureTime: only wgNow available', function () {
-		var windowPerformanceMock = {
-				wgNow: new Date(new Date().getTime() - 888)
-			},
-			timer,
-			adTracker = modules['ext.wikia.adEngine.adTracker'](trackerMock, windowPerformanceMock);
-
-		spyOn(trackerMock, 'track');
-
-		timer = adTracker.measureTime('test/event', {abc: 'def', 'xyz': 123});
-
-		// No tracking yet
-		expect(trackerMock.track.calls.length).toBe(0);
-
-		timer.track();
-		expect(trackerMock.track.calls.length).toBe(1);
-	});
 });

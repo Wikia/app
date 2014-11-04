@@ -79,14 +79,21 @@
 			}
 			url = getUrl( attr );
 
-			return $.ajax({
+			var settings = {
 				url: url,
 				dataType: format,
 				type: type,
 				data: data,
 				success: callback,
 				error: onErrorCallback
-			});
+			};
+			if ( typeof attr.contentType != 'undefined' ) {
+				settings.contentType = attr.contentType;
+			}
+			if ( typeof attr.processData != 'undefined' ) {
+				settings.processData = attr.processData;
+			}
+			return $.ajax(settings);
 		}
 
 		return {

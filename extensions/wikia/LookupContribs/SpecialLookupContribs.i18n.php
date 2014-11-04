@@ -576,6 +576,11 @@ $messages['fa'] = array(
 	'lookupcontribswikiurl' => 'نشانی اینترنتی',
 	'lookupcontribswikititle' => 'عنوان',
 	'lookupcontribswikioptions' => 'گزینه',
+	'lookupcontribsnext' => 'بعدی',
+	'lookupcontribsprevious' => 'قبلی',
+	'lookupcontribspageremoved' => 'حذف شد:',
+	'lookupcontribsrestore' => 'بازیابی',
+	'lookupcontribscontribs' => 'مشارکت‌ها',
 	'lookupcontribshist' => 'تاریخچه',
 	'lookupcontribsdiff' => 'تفاوت',
 	'lookupcontribscontent' => 'محتوا',
@@ -913,12 +918,16 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Barrel0116
  * @author Naohiro19
+ * @author Plover-Y
  * @author Tommy6
  */
 $messages['ja'] = array(
 	'lookupcontribs' => '全体の投稿記録を見る',
 	'lookupcontribstitle' => '全体の投稿履歴を見る',
+	'lookupcontribsrecentcontributions' => '$1の最近の投稿記録',
+	'lookupcontribsfinalcontributions' => '$1の最後の投稿記録',
 	'lookupcontribshelp' => 'このページでは、複数のウィキにおけるユーザーの投稿記録が閲覧できます。下にユーザー名を入力してください。',
 	'lookupcontribusernotspecify' => 'ユーザーが指定されていません',
 	'lookupcontribsselectuser' => 'ユーザー名を入力:',
@@ -928,7 +937,11 @@ $messages['ja'] = array(
 	'lookupcontribsgo' => '表示',
 	'lookupcontribslistwikiainfo' => '<b>$1</b> が記事の編集を行ったことのあるウィキ',
 	'lookupcontribsnoresultfound' => '見つかりませんでした',
+	'lookupcontribswikititle' => 'ウィキ名',
+	'lookupcontribswikioptions' => 'オプション',
 	'lookupcontribsdetails' => '詳細を見る:',
+	'lookupcontribslastedited' => '最終編集',
+	'lookupcontribsrecordspager' => "'''$3'''件中'''$1'''件目から'''$2'''件目を表示中",
 	'lookupcontribsnbrresult' => '表示件数:',
 	'lookupcontribsnext' => '次',
 	'lookupcontribsprevious' => '前',
@@ -939,6 +952,7 @@ $messages['ja'] = array(
 	'right-lookupcontribs' => '利用者のプロジェクト全体における投稿記録を見る',
 	'lookupcontribsshowpages' => '全ページ（$1名前空間）',
 	'lookupcontribscontent' => 'コンテンツ',
+	'lookupcontribsall' => 'すべて',
 );
 
 /** Kannada (ಕನ್ನಡ)
@@ -960,9 +974,23 @@ $messages['kn'] = array(
 
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author Miri-Nae
  */
 $messages['ko'] = array(
+	'lookupcontribsnoresultfound' => '결과를 찾을 수 없습니다!',
+	'lookupcontribswiki' => '위키',
+	'lookupcontribswikiurl' => 'URL',
+	'lookupcontribswikititle' => '제목',
+	'lookupcontribswikioptions' => '설정',
+	'lookupcontribslastedited' => '마지막 편집',
+	'lookupcontribsnbrresult' => '결과 수:',
+	'lookupcontribsnext' => '다음',
+	'lookupcontribsprevious' => '이전',
+	'lookupcontribspageremoved' => '삭제:',
+	'lookupcontribslog' => '기록',
 	'lookupcontribscontribs' => '기여',
+	'lookupcontribshist' => '역사',
+	'lookupcontribsdiff' => '차이',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
@@ -1030,7 +1058,7 @@ $messages['mk'] = array(
 	'lookupcontribstitle' => 'Проверка на придонеси',
 	'lookupcontribsrecentcontributions' => 'Скорешни придонеси за $1',
 	'lookupcontribsfinalcontributions' => 'Конечни придонеси за $1',
-	'lookupcontribshelp' => 'Оваа специјална страница служи за прикажување на придонесите на некој корисник на повеќе викии. За да се прикаже список, наведете корисничко име подолу.',
+	'lookupcontribshelp' => 'Оваа службена страница служи за прикажување на придонесите на некој корисник на повеќе викии. За да се прикаже список, наведете корисничко име подолу.',
 	'lookupcontribusernotspecify' => 'Немате назначено корисник',
 	'lookupcontribsselectuser' => 'Одберете корисник:',
 	'lookupcontribsselectfor' => 'Одберете за:',
@@ -1095,7 +1123,7 @@ $messages['ml'] = array(
 	'lookupcontribsrestore' => 'പുനഃസ്ഥാപിക്കുക',
 	'lookupcontribshist' => 'നാൾവഴി',
 	'lookupcontribsdiff' => 'വ്യത്യാസം',
-	'right-lookupcontribs' => 'ഉപയോക്താവിന്റെ ആഗോള തിരുത്തലുകൾ കാണുക',
+	'right-lookupcontribs' => 'ഉപയോക്താവിന്റെ ആഗോള തിരുത്തുകൾ കാണുക',
 	'lookupcontribsshowpages' => 'എല്ലാ താളുകളും ($1 നാമമേഖലകൾ)',
 	'lookupcontribscontent' => 'ഉള്ളടക്കം',
 	'lookupcontribsall' => 'എല്ലാം',
@@ -2019,6 +2047,7 @@ $messages['zh-hans'] = array(
 	'lookupcontribstitle' => '查阅维基贡献',
 	'lookupcontribsrecentcontributions' => '最近$1的贡献',
 	'lookupcontribsfinalcontributions' => '对$1的最近贡献',
+	'lookupcontribshelp' => '此特殊页面可用于显示多个wikia的用户贡献。要显示列表，请在下方提供用户名。',
 	'lookupcontribusernotspecify' => '您还没有指定一个用户',
 	'lookupcontribsselectuser' => '选择用户：',
 	'lookupcontribsselectfor' => '搜索：',

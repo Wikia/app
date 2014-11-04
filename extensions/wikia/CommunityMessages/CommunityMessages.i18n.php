@@ -224,6 +224,13 @@ $messages['ka'] = array(
 	'communitymessages-notice-msg' => '[[Special:WikiActivity|ერთი ან რამდენიმე განცხადების შინაარსი ან ტექსტი შეიცვალა]].',
 );
 
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'communitymessages-notice-msg' => '[[특수기능:WikiActivity|커뮤니티 코너가 업데이트되었습니다]].', # Fuzzy
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
@@ -387,4 +394,12 @@ $messages['vi'] = array(
 $messages['zh-hans'] = array(
 	'communitymessages-desc' => '社区信息的辅助扩展',
 	'communitymessages-notice-msg' => '[[Special:WikiActivity|社区信息已更新]]。',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'communitymessages-desc' => '社區訊息的輔助擴展功能',
+	'communitymessages-notice-msg' => '[[Special:WikiActivity|社區消息已更新]]。',
 );

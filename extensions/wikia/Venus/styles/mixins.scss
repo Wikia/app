@@ -61,7 +61,19 @@
 		width: round($columns-count * ($large-grid-column + $large-grid-gutter) - $large-grid-gutter + $aditional-width);
 	}
 }
+@mixin grid-column-max-width($breakpoint, $columns-count, $aditional-width: 0px) {
+	@if $breakpoint == small {
+		max-width: round($columns-count * ($small-grid-column + $small-grid-gutter) - $small-grid-gutter + $aditional-width);
+	}
 
+	@if $breakpoint == medium {
+		max-width: round($columns-count * ($medium-grid-column + $medium-grid-gutter) - $medium-grid-gutter + $aditional-width);
+	}
+
+	@if $breakpoint == large {
+		max-width: round($columns-count * ($large-grid-column + $large-grid-gutter) - $large-grid-gutter + $aditional-width);
+	}
+}
 @mixin grid-position($breakpoint, $columns-count, $position: 'left', $aditional-width: 0px) {
 	@if $breakpoint == small {
 		#{$position}: round($columns-count * ($small-grid-column + $small-grid-gutter) - $small-grid-gutter + $aditional-width);

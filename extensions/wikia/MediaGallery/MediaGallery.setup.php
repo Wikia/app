@@ -26,7 +26,9 @@ $wgAutoloadClasses['MediaGalleryModel'] =  $dir . 'MediaGalleryModel.class.php';
 // hooks
 $wgAutoloadClasses['MediaGalleryHooks'] =  $dir . 'MediaGalleryHooks.class.php';
 $wgHooks['OutputPageBeforeHTML'][] = 'MediaGalleryHooks::onOutputPageBeforeHTML';
+$wgHooks['OasisSkinAssetGroups'][] = 'MediaGalleryHooks::onOasisSkinAssetGroups';
 $wgHooks['MakeGlobalVariablesScript'][] = 'MediaGalleryHooks::onMakeGlobalVariablesScript';
+$wgHooks['WikiFeatures::afterToggleFeature'][] = 'MediaGalleryHooks::afterToggleFeature';
 
 // i18n mapping
 $wgExtensionMessagesFiles['MediaGallery'] = $dir . 'MediaGallery.i18n.php';

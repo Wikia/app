@@ -31,6 +31,14 @@ $messages['ar'] = array(
 	'randomwiki' => 'ويكي عشوائية',
 );
 
+/** Avaric (авар)
+ * @author Gazimagomedov
+ */
+$messages['av'] = array(
+	'randomwiki-desc' => 'ХӀалтӀизабулчагӀазе цебе ккараб вики балагьезе кумек гьабула',
+	'randomwiki' => 'Цебе ккараб вики',
+);
+
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
@@ -184,6 +192,13 @@ $messages['kn'] = array(
 	'randomwiki' => 'ಯಾದೃಚ್ಛಿಕ ವಿಕಿ',
 );
 
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'randomwiki' => '임의 위키 보기',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
@@ -294,10 +309,21 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Giro720
+ * @author Guilhermemau
+ * @author Jefersonmoraes
  */
 $messages['pt-br'] = array(
-	'randomwiki-desc' => 'Permite que os usuários explorem uma wiki aleatória',
+	'randomwiki-desc' => 'Permite que os usuários explorem uma wikia aleatória',
 	'randomwiki' => 'Wiki Aleatória',
+);
+
+/** Romanian (română)
+ * @author Hedwig
+ * @author Minisarm
+ */
+$messages['ro'] = array(
+	'randomwiki-desc' => 'Permite utilizatorilor să exploreze un wiki aleatoriu',
+	'randomwiki' => 'Wiki aleatoriu',
 );
 
 /** tarandíne (tarandíne)
@@ -322,6 +348,14 @@ $messages['ru'] = array(
  */
 $messages['sah'] = array(
 	'randomwiki' => 'Үлүбээй биики',
+);
+
+/** Slovak (slovenčina)
+ * @author Sudo77(new)
+ */
+$messages['sk'] = array(
+	'randomwiki-desc' => 'Umožňuje používateľom prejsť na náhodnú wiki',
+	'randomwiki' => 'Náhodná wiki',
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
