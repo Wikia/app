@@ -105,7 +105,6 @@ $VenusConfig[ 'venus_body_js' ] = [
 
 		//following script initialize different modules in Venus
 		'//extensions/wikia/Venus/scripts/articleModulesLoader.js',
-		'//extensions/wikia/Venus/scripts/articleNavigation.js',
 	]
 ];
 
@@ -198,6 +197,22 @@ $VenusConfig[ 'global_navigation_facebook_login_js' ] = [
 		'//extensions/FBConnect/fbconnect.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
+	]
+];
+
+$VenusConfig[ 'article_navigation_js' ] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'venus' ],
+	'assets' => [
+		'//extensions/wikia/ArticleNavigation/scripts/articleNavigation.js'
+	]
+];
+
+$VenusConfig[ 'article_navigation_scss' ] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'venus' ],
+	'assets' => [
+		'//extensions/wikia/ArticleNavigation/styles/articleNavigation.scss'
 	]
 ];
 

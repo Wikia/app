@@ -219,11 +219,7 @@ class VenusController extends WikiaController {
 	}
 
 	private function getLeftArticleNavigation() {
-		return $this->app->renderView('Venus', 'leftArticleNavigation');
-	}
-
-	public function leftArticleNavigation() {
-		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+		return $this->app->renderView('ArticleNavigation', 'index');
 	}
 
 	public function header() {
