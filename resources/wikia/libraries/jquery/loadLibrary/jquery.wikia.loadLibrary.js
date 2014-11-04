@@ -3,34 +3,35 @@
  *
  * For "internal" use only. Please use $.loadFooBar() functions in extension code.
  */
-$.loadLibrary = function(name, files, typeCheck, callback, failureFn) {
+$.loadLibrary = function (name, files, typeCheck, callback, failureFn) {
+	'use strict';
+
 	var dfd = new jQuery.Deferred();
 
 	if (typeCheck === 'undefined') {
 		$().log('loading ' + name, 'loadLibrary');
 
 		// cast single string to an array
-		files = (typeof files == 'string') ? [files] : files;
+		files = (typeof files === 'string') ? [files] : files;
 
-		$.getResources(files, function() {
+		$.getResources(files, function () {
 			$().log(name + ' loaded', 'loadLibrary');
 
-			if (typeof callback == 'function') {
+			if (typeof callback === 'function') {
 				callback();
 			}
 		},failureFn).
 			// implement promise pattern
-			then(function() {
+			then(function () {
 				dfd.resolve();
 			}).
-			fail(function() {
+			fail(function () {
 				dfd.reject();
 			});
-	}
-	else {
+	} else {
 		$().log(name + ' already loaded', 'loadLibrary');
 
-		if (typeof callback == 'function') {
+		if (typeof callback === 'function') {
 			callback();
 		}
 
@@ -45,44 +46,52 @@ $.loadLibrary = function(name, files, typeCheck, callback, failureFn) {
  */
 
 // load YUI using ResourceLoader
-$.loadYUI = function(callback) {
+$.loadYUI = function (callback) {
+	'use strict';
     return mw.loader.use('wikia.yui').done(callback);
 };
 
 // jquery.wikia.modal.js in now a part of AssetsManager package
 // @deprecated no need to lazy load it
-$.loadModalJS = function(callback) {
+$.loadModalJS = function (callback) {
+	'use strict';
 	if (typeof callback === 'function') {
 		callback();
 	}
 };
 
 // load various jQuery libraries (if not yet loaded)
-$.loadJQueryUI = function(callback) {
+$.loadJQueryUI = function (callback) {
+	'use strict';
 	return mw.loader.use('wikia.jquery.ui').done(callback);
 };
 
 // autocomplete plugin - not to be confused autocomplete feature of jQuery UI
 // @deprecated use $.ui.autocomplete
-$.loadJQueryAutocomplete = function(callback) {
+$.loadJQueryAutocomplete = function (callback) {
+	'use strict';
 	return mw.loader.use('jquery.autocomplete').done(callback);
 };
 
-$.loadJQueryAIM = function(callback) {
+$.loadJQueryAIM = function (callback) {
+	'use strict';
 	return mw.loader.use('wikia.aim').done(callback);
 };
 
-$.loadMustache = function(callback) {
+$.loadMustache = function (callback) {
+	'use strict';
 	return mw.loader.use('jquery.mustache').done(callback);
 };
 
-$.loadHandlebars = function(callback) {
+$.loadHandlebars = function (callback) {
+	'use strict';
 	return mw.loader.use('wikia.handlebars').done(callback);
 };
 
-$.loadGoogleMaps = function(callback) {
+$.loadGoogleMaps = function (callback) {
+	'use strict';
 	var dfd = new jQuery.Deferred(),
-		onLoaded = function() {
+		onLoaded = function () {
 			if (typeof callback === 'function') {
 				callback();
 			}
@@ -90,11 +99,10 @@ $.loadGoogleMaps = function(callback) {
 		};
 
 	// Google Maps API is loaded
-	if (typeof (window.google && window.google.maps) != 'undefined') {
+	if (typeof (window.google && window.google.maps) !== 'undefined') {
 		onLoaded();
-	}
-	else {
-		window.onGoogleMapsLoaded = function() {
+	} else {
+		window.onGoogleMapsLoaded = function () {
 			delete window.onGoogleMapsLoaded;
 			onLoaded();
 		};
@@ -108,7 +116,7 @@ $.loadGoogleMaps = function(callback) {
 			typeof (window.google && window.google.maps)
 		).
 		// error handling
-		fail(function() {
+		fail(function () {
 			dfd.reject();
 		});
 	}
@@ -116,24 +124,55 @@ $.loadGoogleMaps = function(callback) {
 	return dfd.promise();
 };
 
-$.loadFacebookAPI = function(callback) {
-	return $.loadLibrary('Facebook API',
-		window.fbScript || '//connect.facebook.net/en_US/all.js',
-		typeof window.FB,
-		function() {
-			// always initialize FB API when SDK is loaded on-demand
-			if (window.onFBloaded) {
-				window.onFBloaded();
-			}
+$.loadFacebookAPI = function (callback) {
+	'use strict';
+
+	if (window.wgEnableFacebookClientExt) {
+		// v2.x functionality
+		window.fbAsyncInit = function () {
+			window.FB.init({
+				appId: window.fbAppId,
+				xfbml: true,
+				cookie: true,
+				version: 'v2.1'
+			});
 
 			if (typeof callback === 'function') {
 				callback();
 			}
-		}
-	);
+		};
+
+		(function (d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) {
+				return;
+			}
+			js = d.createElement(s);
+			js.id = id;
+			js.src = '//connect.facebook.net/en_US/sdk.js';
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+	} else {
+		// v1.x functionality
+		return $.loadLibrary('Facebook API',
+			window.fbScript || '//connect.facebook.net/en_US/all.js',
+			typeof window.FB,
+			function () {
+				// always initialize FB API when SDK is loaded on-demand
+				if (window.onFBloaded) {
+					window.onFBloaded();
+				}
+
+				if (typeof callback === 'function') {
+					callback();
+				}
+			}
+		);
+	}
 };
 
-$.loadGooglePlusAPI = function(callback) {
+$.loadGooglePlusAPI = function (callback) {
+	'use strict';
 	return $.loadLibrary('Google Plus API',
 		'//apis.google.com/js/plusone.js',
 		typeof (window.gapi && window.gapi.plusone),
@@ -141,7 +180,8 @@ $.loadGooglePlusAPI = function(callback) {
 	);
 };
 
-$.loadTwitterAPI = function(callback) {
+$.loadTwitterAPI = function (callback) {
+	'use strict';
 	return $.loadLibrary('Twitter API',
 		'//platform.twitter.com/widgets.js',
 		typeof (window.twttr && window.twttr.widgets),
