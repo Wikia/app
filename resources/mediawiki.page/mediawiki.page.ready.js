@@ -1,3 +1,14 @@
+/* wikia change begin - patch from mw 1.23 (UC-68) */
+( function ( mw ) {
+	'use strict';
+
+	mw.hook( 'wikipage.content' ).add( function ( $content ) {
+		// Run jquery.makeCollapsible
+		$content.find( '.mw-collapsible' ).makeCollapsible();
+	} );
+}( mediaWiki ) );
+/* wikia change end */
+
 jQuery( document ).ready( function( $ ) {
 
 	/* Emulate placeholder if not supported by browser */
