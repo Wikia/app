@@ -1,9 +1,7 @@
 <?php
 namespace Wikia\ExactTarget;
 
-use Wikia\Tasks\Tasks\BaseTask;
-
-class ExactTargetUpdateCityCatMappingTask extends BaseTask {
+class ExactTargetUpdateCityCatMappingTask extends ExactTargetTask {
 
 	/**
 	 * Perfoms actions necessary to update a city_cat_mapping record
@@ -14,7 +12,7 @@ class ExactTargetUpdateCityCatMappingTask extends BaseTask {
 	 * @return void
 	 */
 	public function updateCityCatMappingData( Array $aParams ) {
-		$oHelper = $this->getHelper();
+		$oHelper = $this->getWikiHelper();
 		$oApiDataExtension = $this->getApiDataExtension();
 
 		$aCityCatMappingDataForRetrieve = $oHelper->prepareCityCatMappingDataExtensionForRetrieve( $aParams['city_id'] );
@@ -28,19 +26,4 @@ class ExactTargetUpdateCityCatMappingTask extends BaseTask {
 		$oApiDataExtension->createRequest( $aCityCatMappingDataForCreate );
 	}
 
-	/**
-	 * A simple getter for an object of an ExactTargetWikiTaskHelper class
-	 * @return object ExactTargetWikiTaskHelper
-	 */
-	private function getHelper() {
-		return new ExactTargetWikiTaskHelper();
-	}
-
-	/**
-	 * A simple getter for an object of an ExactTargetApiDataExtension class
-	 * @return object ExactTargetApiDataExtension
-	 */
-	private function getApiDataExtension() {
-		return new ExactTargetApiDataExtension();
-	}
 }

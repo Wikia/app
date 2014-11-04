@@ -1,16 +1,14 @@
 <?php
 namespace Wikia\ExactTarget;
 
-use Wikia\Tasks\Tasks\BaseTask;
-
-class ExactTargetUpdateUserTask extends BaseTask {
+class ExactTargetUpdateUserTask extends ExactTargetTask {
 
 	/**
 	 * Task for updating user data in ExactTarget
 	 * @param array $aUserData Selected fields from Wikia user table
 	 */
 	public function updateUserData( $aUserData ) {
-		$oHelper = $this->getHelper();
+		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareUserUpdateParams( $aUserData );
 		$oApiDataExtension = $this->getApiDataExtension();
 		$oApiDataExtension->updateRequest( $aApiParams );
@@ -35,7 +33,7 @@ class ExactTargetUpdateUserTask extends BaseTask {
 			'user_id' => $iUserId,
 			'user_email' => $sUserEmail
 		];
-		$oHelper = $this->getHelper();
+		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareUserUpdateParams( $aUserData );
 		$oApiDataExtension = $this->getApiDataExtension();
 		$oApiDataExtension->updateRequest( $aApiParams );
@@ -47,41 +45,10 @@ class ExactTargetUpdateUserTask extends BaseTask {
 	 * @param array $aUserProperties Array of Wikia user gloal properties ['property_name'=>'property_value']
 	 */
 	public function updateUserPropertiesData( $aUserData, $aUserProperties ) {
-		$oHelper = $this->getHelper();
+		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareUserPropertiesUpdateParams( $aUserData['user_id'], $aUserProperties );
 		$oApiDataExtension = $this->getApiDataExtension();
 		$oApiDataExtension->updateRequest( $aApiParams );
 	}
 
-	/**
-	 * Returns an instance of ExactTargetCreateUserTask class
-	 * @return ExactTargetCreateUserTask
-	 */
-	protected function getCreateUserTask() {
-		return new ExactTargetCreateUserTask();
-	}
-
-	/**
-	 * Returns an instance of ExactTargetDeleteUserTask class
-	 * @return ExactTargetDeleteUserTask
-	 */
-	protected function getDeleteUserTask() {
-		return new ExactTargetDeleteUserTask();
-	}
-
-	/**
-	 * Returns an instance of ExactTargetApiDataExtension class
-	 * @return ExactTargetApiDataExtension
-	 */
-	protected function getApiDataExtension() {
-		return new ExactTargetApiDataExtension();
-	}
-
-	/**
-	 * Returns an instance of ExactTargetUserTaskHelper class
-	 * @return ExactTargetUserTaskHelper
-	 */
-	protected function getHelper() {
-		return new ExactTargetUserTaskHelper();
-	}
 }

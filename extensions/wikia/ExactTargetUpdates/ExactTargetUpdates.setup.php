@@ -52,6 +52,8 @@ $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetUserHooks'] =  $dir . '/hooks/E
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetUserHooksHelper'] =  $dir . '/hooks/ExactTargetUserHooksHelper.php' ;
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetWikiHooks'] =  $dir . '/hooks/ExactTargetWiki.hooks.php' ;
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetWikiHooksHelper'] =  $dir . '/hooks/ExactTargetWikiHooksHelper.php' ;
+/* Add base task class */
+$wgAutoloadClasses['Wikia\ExactTarget\ExactTargetTask'] =  $dir . '/tasks/ExactTargetTask.php' ;
 /* Add user-related tasks classes */
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetUserTaskHelper'] =  $dir . '/tasks/ExactTargetUserTaskHelper.php' ;
 $wgAutoloadClasses['Wikia\ExactTarget\ExactTargetCreateUserTask'] =  $dir . '/tasks/ExactTargetCreateUserTask.php' ;

@@ -1,9 +1,7 @@
 <?php
 namespace Wikia\ExactTarget;
 
-use Wikia\Tasks\Tasks\BaseTask;
-
-class ExactTargetDeleteUserTask extends BaseTask {
+class ExactTargetDeleteUserTask extends ExactTargetTask {
 
 	/**
 	 * Task for removing user data in ExactTarget
@@ -23,7 +21,7 @@ class ExactTargetDeleteUserTask extends BaseTask {
 		$oRetrieveUserHelper = $this->getRetrieveUserHelper();
 		$sUserEmail = $oRetrieveUserHelper->getUserEmail( $iUserId );
 		if ( !$this->isEmailInUse( $sUserEmail, $iUserId ) ) {
-			$oHelper = $this->getHelper();
+			$oHelper = $this->getUserHelper();
 			$aApiParams = $oHelper->prepareSubscriberDeleteData( $sUserEmail );
 			$this->doDeleteSubscriber( $aApiParams );
 		}
@@ -44,7 +42,7 @@ class ExactTargetDeleteUserTask extends BaseTask {
 	 * @param int $iUserId
 	 */
 	public function deleteUser( $iUserId ) {
-		$oHelper = $this->getHelper();
+		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareUserDeleteParams( $iUserId );
 		$oApiDataExtension = $this->getApiDataExtension();
 		$oApiDataExtension->deleteRequest( $aApiParams );
@@ -56,7 +54,7 @@ class ExactTargetDeleteUserTask extends BaseTask {
 	 * @param int $iUserId
 	 */
 	public function deleteUserProperties( $iUserId ) {
-		$oHelper = $this->getHelper();
+		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareUserPropertiesDeleteParams( $iUserId );
 		$oApiDataExtension = $this->getApiDataExtension();
 		$oApiDataExtension->deleteRequest( $aApiParams );
@@ -86,35 +84,4 @@ class ExactTargetDeleteUserTask extends BaseTask {
 		return $ret;
 	}
 
-	/**
-	 * Returns an instance of ExactTargetApiDataExtension class
-	 * @return ExactTargetApiDataExtension
-	 */
-	private function getApiDataExtension() {
-		return new ExactTargetApiDataExtension();
-	}
-
-	/**
-	 * Returns an instance of ExactTargetApiSubscriber class
-	 * @return ExactTargetApiSubscriber
-	 */
-	private function getApiSubscriber() {
-		return new ExactTargetApiSubscriber();
-	}
-
-	/**
-	 * Returns an instance of ExactTargetRetrieveUserHelper class
-	 * @return ExactTargetRetrieveUserHelper
-	 */
-	private function getRetrieveUserHelper() {
-		return new ExactTargetRetrieveUserHelper();
-	}
-
-	/**
-	 * Returns an instance of ExactTargetUserTaskHelper class
-	 * @return ExactTargetUserTaskHelper
-	 */
-	private function getHelper() {
-		return new ExactTargetUserTaskHelper();
-	}
 }

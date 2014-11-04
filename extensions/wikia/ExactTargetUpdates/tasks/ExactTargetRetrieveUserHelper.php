@@ -1,7 +1,7 @@
 <?php
 namespace Wikia\ExactTarget;
 
-class ExactTargetRetrieveUserHelper {
+class ExactTargetRetrieveUserHelper extends ExactTargetTask {
 
 	/**
 	 * Retrieves user email from ExactTarget based on provided user ID
@@ -12,7 +12,7 @@ class ExactTargetRetrieveUserHelper {
 		$aProperties = [ 'user_email' ];
 		$sFilterProperty = 'user_id';
 		$aFilterValues = [ $iUserId ];
-		$oHelper = $this->getHelper();
+		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareUserRetrieveParams( $aProperties, $sFilterProperty, $aFilterValues );
 
 		$oApiDataExtension = $this->getApiDataExtension();
@@ -50,7 +50,7 @@ class ExactTargetRetrieveUserHelper {
 		$aProperties = [ 'user_id' ];
 		$sFilterProperty = 'user_email';
 		$aFilterValues = [ $sEmail ];
-		$oHelper = $this->getHelper();
+		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareUserRetrieveParams( $aProperties, $sFilterProperty, $aFilterValues );
 
 		$oApiDataExtension = $this->getApiDataExtension();
@@ -58,19 +58,4 @@ class ExactTargetRetrieveUserHelper {
 		return $oIdsListResult;
 	}
 
-	/**
-	 * Returns an instance of ExactTargetApiDataExtension class
-	 * @return ExactTargetApiDataExtension
-	 */
-	private function getApiDataExtension() {
-		return new ExactTargetApiDataExtension();
-	}
-
-	/**
-	 * Returns an instance of ExactTargetUserTaskHelper class
-	 * @return ExactTargetUserTaskHelper
-	 */
-	private function getHelper() {
-		return new ExactTargetUserTaskHelper();
-	}
 }

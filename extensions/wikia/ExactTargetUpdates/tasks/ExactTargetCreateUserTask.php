@@ -1,9 +1,7 @@
 <?php
 namespace Wikia\ExactTarget;
 
-use Wikia\Tasks\Tasks\BaseTask;
-
-class ExactTargetCreateUserTask extends BaseTask {
+class ExactTargetCreateUserTask extends ExactTargetTask {
 
 	/**
 	 * Control method of the task responsible for creating all necessary objects
@@ -28,7 +26,7 @@ class ExactTargetCreateUserTask extends BaseTask {
 	 * @param String $sUserEmail new subscriber email address
 	 */
 	public function createSubscriber( $sUserEmail ) {
-		$oHelper = $this->getHelper();
+		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareSubscriberData( $sUserEmail );
 		$oApiDataExtension = $this->getApiSubscriber();
 		$oApiDataExtension->createRequest( $aApiParams );
@@ -39,7 +37,7 @@ class ExactTargetCreateUserTask extends BaseTask {
 	 * @param Array $aUserData Selected fields from Wikia user table
 	 */
 	public function createUser( $aUserData ) {
-		$oHelper = $this->getHelper();
+		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareUserUpdateParams( $aUserData );
 		$oApiDataExtension = $this->getApiDataExtension();
 		$oApiDataExtension->updateFallbackCreateRequest( $aApiParams );
@@ -51,41 +49,11 @@ class ExactTargetCreateUserTask extends BaseTask {
 	 * @param Array $aUserProperties key-value array ['property_name'=>'property_value']
 	 */
 	public function createUserProperties( $iUserId, array $aUserProperties ) {
-		$oHelper = $this->getHelper();
+		$oHelper = $this->getUserHelper();
 		$aApiParams = $oHelper->prepareUserPropertiesUpdateParams( $iUserId, $aUserProperties );
 		$oApiDataExtension = $this->getApiDataExtension();
 		$oApiDataExtension->updateFallbackCreateRequest( $aApiParams );
 	}
 
-	/**
-	 * Returns an instance of ExactTargetApiDataExtension class
-	 * @return ExactTargetApiDataExtension
-	 */
-	protected function getApiDataExtension() {
-		return new ExactTargetApiDataExtension();
-	}
 
-	/**
-	 * Returns an instance of ExactTargetApiSubscriber class
-	 * @return ExactTargetApiSubscriber
-	 */
-	protected function getApiSubscriber() {
-		return new ExactTargetApiSubscriber();
-	}
-
-	/**
-	 * Returns an instance of ExactTargetDeleteUserTask class
-	 * @return ExactTargetDeleteUserTask
-	 */
-	protected function getDeleteUserTask() {
-		return new ExactTargetDeleteUserTask();
-	}
-
-	/**
-	 * Returns an instance of ExactTargetUserTaskHelper class
-	 * @return ExactTargetUserTaskHelper
-	 */
-	private function getHelper() {
-		return new ExactTargetUserTaskHelper();
-	}
 }

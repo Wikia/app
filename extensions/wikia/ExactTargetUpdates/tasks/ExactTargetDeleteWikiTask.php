@@ -1,9 +1,7 @@
 <?php
 namespace Wikia\ExactTarget;
 
-use Wikia\Tasks\Tasks\BaseTask;
-
-class ExactTargetDeleteWikiTask extends BaseTask {
+class ExactTargetDeleteWikiTask extends ExactTargetTask {
 
 	/**
 	 * Perfoms actions necessary to delete ExactTarget records for a wiki
@@ -14,7 +12,7 @@ class ExactTargetDeleteWikiTask extends BaseTask {
 	 * @return void
 	 */
 	public function deleteWikiData( Array $aParams ) {
-		$oHelper = $this->getHelper();
+		$oHelper = $this->getWikiHelper();
 		$oApiDataExtension = $this->getApiDataExtension();
 
 		$aCityCatMappingDataForRetrieve = $oHelper->prepareCityCatMappingDataExtensionForRetrieve( $aParams['city_id'] );
@@ -27,19 +25,4 @@ class ExactTargetDeleteWikiTask extends BaseTask {
 		$oApiDataExtension->deleteRequest( $aWikiDataForDelete );
 	}
 
-	/**
-	 * A simple getter for an object of an ExactTargetWikiTaskHelper class
-	 * @return object ExactTargetWikiTaskHelper
-	 */
-	private function getHelper() {
-		return new ExactTargetWikiTaskHelper();
-	}
-
-	/**
-	 * A simple getter for an object of an ExactTargetApiDataExtension class
-	 * @return object ExactTargetApiDataExtension
-	 */
-	private function getApiDataExtension() {
-		return new ExactTargetApiDataExtension();
-	}
 }
