@@ -11,15 +11,15 @@ class ExactTargetApi {
 	protected $client;
 
 	function __construct() {
-		$this->getHelper();
-		$this->getClient();
+		$this->setupHelper();
+		$this->setupClient();
 	}
 
 	/**
 	 * Lazy instantiation of an ExactTargetApiHelper class object
 	 * @return void
 	 */
-	private function getHelper() {
+	private function setupHelper() {
 		if ( !isset( $this->helper ) ) {
 			$this->helper = new ExactTargetApiHelper();
 		}
@@ -29,7 +29,7 @@ class ExactTargetApi {
 	 * Lazy instantiation of an ExactTargetSoapClient class object
 	 * @return void
 	 */
-	private function getClient() {
+	private function setupClient() {
 		if ( !isset( $this->client ) ) {
 			$this->client = $this->helper->getClient();
 		}
