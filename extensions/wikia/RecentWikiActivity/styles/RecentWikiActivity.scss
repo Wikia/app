@@ -13,7 +13,7 @@
 	header {
 		@include font-size-l;
 		font-weight: bold;
-		margin: 40px 0 30px!important; //TODO
+		margin: 31px 0 21px;
 	}
 
 	ul {
@@ -26,7 +26,7 @@
 	li {
 		@include font-size-xs;
 		line-height: 18px;
-		margin-bottom: 28px;
+		margin-bottom: 20px;
 	}
 
 	.recent-wiki-activity-link {
@@ -62,12 +62,20 @@
 		margin: 0 $small-content-padding - $content-border-width 20px $small-grid-gutter + $small-grid-column-padding;
 
 		li {
-			margin-bottom: 18px;
+			margin-bottom: 12px;
 		}
 	}
 
 	@media #{$large-up} {
 		@include grid-column-width('large', 4, -2 * $large-grid-column-padding);
-		margin: 0 $large-content-padding - $content-border-width 36px $large-grid-gutter + $large-grid-column-padding;
+		margin: 0 $large-grid-column-padding + $large-content-padding - $content-border-width 36px $large-grid-gutter + $large-grid-column-padding;
+
+		header {
+			margin: 40px 0 29px;
+		}
+
+		li {
+			margin-bottom: 28px;
+		}
 	}
 }
