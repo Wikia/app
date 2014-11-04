@@ -45,6 +45,18 @@ class ExactTargetBaseTask extends BaseTask {
 	}
 
 	/**
+	 * Returns ExactTarget_DeleteRequest object with soap vars set from param
+	 * @param Array $aSoapVars
+	 * @return ExactTarget_DeleteRequest
+	 */
+	public function wrapDeleteRequest( $aSoapVars ) {
+		$oRequest = new ExactTarget_DeleteRequest();
+		$oRequest->Options = new ExactTarget_DeleteOptions();
+		$oRequest->Objects = $aSoapVars;
+		return $oRequest;
+	}
+
+	/**
 	 * Returns ExactTarget_CreateRequest object with soap vars set from param
 	 * @param Array $aSoapVars
 	 * @return ExactTarget_CreateRequest

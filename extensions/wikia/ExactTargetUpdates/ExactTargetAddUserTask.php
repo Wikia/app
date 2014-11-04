@@ -7,10 +7,16 @@ class ExactTargetAddUserTask extends ExactTargetBaseTask {
 	 * @param array $aUserData Selected fields from Wikia user table
 	 * @param array $aUserProperties Array of Wikia user gobal properties
 	 */
-	public function sendNewUserData( $aUserData, $aUserProperties ) {
+	public function updateAddUserData( $aUserData, $aUserProperties ) {
 		$oClient = $this->getClient();
+		/* Remove subscriber (email address) used by touched user */
+		$oRemoveUserTask = $this->getRemoveUserTaskObject();
+		$oRemoveUserTask->removeSubscriber( $aUserData['user_id'], $oClient );
+		/* Create Subscriber with new email */
 		$this->createSubscriber( $aUserData['user_email'], $oClient );
+		/* Create User DataExtension with new email */
 		$this->createUserDataExtension( $aUserData, $oClient );
+		/* Create User Properties DataExtension with new email */
 		$this->createUserPropertiesDataExtension( $aUserData['user_id'], $aUserProperties, $oClient );
 	}
 
@@ -123,5 +129,13 @@ class ExactTargetAddUserTask extends ExactTargetBaseTask {
 			$aDE[] = $DE;
 		}
 		return $aDE;
+	}
+
+	/**
+	 * Returns an instance of ExactTargetRemoveUserTask class
+	 * @return ExactTargetRemoveUserTask
+	 */
+	protected function getRemoveUserTaskObject() {
+		return new ExactTargetRemoveUserTask();
 	}
 }

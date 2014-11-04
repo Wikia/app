@@ -42,8 +42,11 @@ $wgExtensionMessagesFiles[ 'ExactTargetUpdates' ] = $dir . '/ExactTargetUpdates.
 
 $wgAutoloadClasses['ExactTargetBaseTask'] =  $dir . '/ExactTargetBaseTask.php' ;
 $wgAutoloadClasses['ExactTargetAddUserTask'] =  $dir . '/ExactTargetAddUserTask.php' ;
+$wgAutoloadClasses['ExactTargetRemoveUserTask'] =  $dir . '/ExactTargetRemoveUserTask.php' ;
 $wgAutoloadClasses['ExactTargetUpdateUserTask'] =  $dir . '/ExactTargetUpdateUserTask.php' ;
+$wgAutoloadClasses['ExactTargetUserGroupsTask'] =  $dir . '/ExactTargetUserGroupsTask.php' ;
 $wgAutoloadClasses['ExactTargetUpdatesHooks'] =  $dir . '/ExactTargetUpdatesHooks.php' ;
+$wgAutoloadClasses['ExactTargetUpdatesUserGroupsHooks'] =  $dir . '/hooks/ExactTargetUpdatesUserGroups.hooks.php' ;
 $wgAutoloadClasses['ExactTargetSoapClient'] =  $dir . '/lib/exacttarget_soap_client.php' ;
 
 /**
@@ -51,6 +54,11 @@ $wgAutoloadClasses['ExactTargetSoapClient'] =  $dir . '/lib/exacttarget_soap_cli
  * @see http://www.mediawiki.org/wiki/Manual:$wgHooks
  */
 $wgHooks['ArticleSaveComplete'][] = 'ExactTargetUpdatesHooks::onArticleSaveComplete';
+$wgHooks['EditAccountClosed'][] = 'ExactTargetUpdatesHooks::onEditAccountClosed';
+$wgHooks['EditAccountEmailChanged'][] = 'ExactTargetUpdatesHooks::onEditAccountEmailChanged';
 $wgHooks['EmailChangeConfirmed'][] = 'ExactTargetUpdatesHooks::onEmailChangeConfirmed';
 $wgHooks['SignupConfirmEmailComplete'][] = 'ExactTargetUpdatesHooks::onSignupConfirmEmailComplete';
+$wgHooks['AfterUserAddGlobalGroup'][] = 'ExactTargetUpdatesUserGroupsHooks::onAfterUserAddGlobalGroup';
+$wgHooks['AfterUserRemoveGlobalGroup'][] = 'ExactTargetUpdatesUserGroupsHooks::onAfterUserRemoveGlobalGroup';
 $wgHooks['UserSaveSettings'][] = 'ExactTargetUpdatesHooks::onUserSaveSettings';
+$wgHooks['UserRename::AfterAccountRename'][] = 'ExactTargetUpdatesHooks::onAfterAccountRename';

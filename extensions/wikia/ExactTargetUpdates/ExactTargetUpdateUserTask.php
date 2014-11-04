@@ -5,7 +5,6 @@ class ExactTargetUpdateUserTask extends ExactTargetBaseTask {
 	/**
 	 * Task for updating user data in ExactTarget
 	 * @param array $aUserData Selected fields from Wikia user table
-	 * @param array $aUserProperties Array of Wikia user gobal properties
 	 */
 	public function updateUserData( $aUserData ) {
 		$oClient = $this->getClient();
@@ -20,7 +19,8 @@ class ExactTargetUpdateUserTask extends ExactTargetBaseTask {
 	public function updateUserEmail( $iUserId, $iUserEmail ) {
 		$oClient = $this->getClient();
 
-		/* Assuming email may be new - try create subscriber object using the email */
+		/* Subscriber list contains unique emails
+		 * Assuming email may be new - try to create subscriber object using the email */
 		$addUserTask = $this->getAddUserTaskObject();
 		$addUserTask->createSubscriber( $iUserEmail, $oClient );
 

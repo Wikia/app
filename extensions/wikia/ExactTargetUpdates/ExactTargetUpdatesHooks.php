@@ -10,7 +10,7 @@ class ExactTargetUpdatesHooks {
 	 */
 	public static function onSignupConfirmEmailComplete( User $user ) {
 		$thisInstance = new ExactTargetUpdatesHooks();
-		$thisInstance->addTheAddUserTask( $user, new ExactTargetAddUserTask() );
+		$thisInstance->addTheUpdateAddUserTask( $user, new ExactTargetAddUserTask() );
 		return true;
 	}
 
@@ -52,17 +52,55 @@ class ExactTargetUpdatesHooks {
 	}
 
 	/**
-	 * Adds AddUserTask to job queue
-	 * @param User $user
-	 * @param ExactTargetAddUserTask $task
+	 * Runs a method for adding addTheUpdateUserNameTask to job queue
+	 * Function executed on UserRename::AfterAccountRename hook
+	 * @param int $iUserId
+	 * @param string $sOldUsername
+	 * @param string $sNewUsername
+	 * @return bool
 	 */
-	public function addTheAddUserTask( User $user, ExactTargetAddUserTask $task ) {
+	public static function onAfterAccountRename( $iUserId, $sOldUsername, $sNewUsername ) {
+		$thisInstance = new ExactTargetUpdatesHooks();
+		$thisInstance->addTheUpdateUserNameTask( $iUserId, $sNewUsername, new ExactTargetUpdateUserTask() );
+		return true;
+	}
+
+	/**
+	 * Runs a method for adding addTheRemoveUserNameTask to job queue
+	 * Function executed on EditAccountClosed hook
+	 * @param User $oUser
+	 * @return bool
+	 */
+	public static function onEditAccountClosed( User $oUser ) {
+		$thisInstance = new ExactTargetUpdatesHooks();
+		$thisInstance->addTheRemoveUserTask( $oUser, new ExactTargetRemoveUserTask() );
+		return true;
+	}
+
+	/**
+	 * Runs a method for adding updateAddUserData to job queue
+	 * Function executed on EditAccountEmailChanged hook
+	 * @param User $oUser
+	 * @return bool
+	 */
+	public static function onEditAccountEmailChanged( User $oUser ) {
+		$thisInstance = new ExactTargetUpdatesHooks();
+		$thisInstance->addTheUpdateAddUserTask( $oUser, new ExactTargetAddUserTask() );
+		return true;
+	}
+
+	/**
+	 * Adds Task to job queue that updates a user or adds a user if one doesn't exist
+	 * @param User $oUser
+	 * @param ExactTargetUpdateUserTask $task
+	 */
+	public function addTheUpdateAddUserTask( User $oUser, ExactTargetAddUserTask $task ) {
 		global $wgWikiaEnvironment;
 		/* Don't add task when on dev or internal */
 		if ( $wgWikiaEnvironment != WIKIA_ENV_DEV && $wgWikiaEnvironment != WIKIA_ENV_INTERNAL ) {
-			$aUserData = $this->prepareUserParams( $user );
-			$aUserProperties = $this->prepareUserPropertiesParams( $user );
-			$task->call( 'sendNewUserData', $aUserData, $aUserProperties );
+			$aUserData = $this->prepareUserParams( $oUser );
+			$aUserProperties = $this->prepareUserPropertiesParams( $oUser );
+			$task->call( 'updateAddUserData', $aUserData, $aUserProperties );
 			$task->queue();
 		}
 	}
@@ -95,6 +133,39 @@ class ExactTargetUpdatesHooks {
 				'user_editcount' => $user->getEditCount()
 			];
 			$task->call( 'updateUserData', $aUserData );
+			$task->queue();
+		}
+	}
+
+	/**
+	 * Adds Task for updating user name to job queue
+	 * @param int $iUserId
+	 * @param string $sNewUsername
+	 * @param ExactTargetUpdateUserTask $task
+	 */
+	public function addTheUpdateUserNameTask( int $iUserId, string $sNewUsername, ExactTargetUpdateUserTask $task ) {
+		global $wgWikiaEnvironment;
+		/* Don't add task when on dev or internal */
+		if ( $wgWikiaEnvironment != WIKIA_ENV_DEV && $wgWikiaEnvironment != WIKIA_ENV_INTERNAL ) {
+			$aUserData = [
+				'user_id' => $iUserId,
+				'user_name' => $sNewUsername
+			];
+			$task->call( 'updateUserData', $aUserData );
+			$task->queue();
+		}
+	}
+
+	/**
+	 * Adds Task for removing user to job queue
+	 * @param User $oUser
+	 * @param ExactTargetRemoveUserTask $task
+	 */
+	public function addTheRemoveUserTask( User $oUser, ExactTargetRemoveUserTask $task ) {
+		global $wgWikiaEnvironment;
+		/* Don't add task when on dev or internal */
+		if ( $wgWikiaEnvironment != WIKIA_ENV_DEV && $wgWikiaEnvironment != WIKIA_ENV_INTERNAL ) {
+			$task->call( 'removeUserData', $oUser->getId() );
 			$task->queue();
 		}
 	}

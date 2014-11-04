@@ -12,7 +12,7 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 	function testSendNewUserShouldDistributeParams() {
 		/* Params to compare */
 		$aUserData = [
-			'user_id' => '12345',
+			'user_id' => 12345,
 			'user_email' => 'email@email.com'
 		];
 		$aUserProperties = [
@@ -24,17 +24,27 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 			->setMethods( [ 'Create' ] )
 			->getMock();
 
+		$oRemoveUserTask = $this->getMockBuilder( 'ExactTargetRemoveUserTask' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'removeSubscriber' ] )
+			->getMock();
+
 		/* Mock tested class /*
 		/* @var ExactTargetAddUserTask $addTaskMock mock of ExactTargetAddUserTask class */
 		$addTaskMock = $this->getMockBuilder( 'ExactTargetAddUserTask' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'getClient', 'createUserPropertiesDataExtension', 'createUserDataExtension', 'createSubscriber' ] )
+			->setMethods( [ 'getClient', 'getRemoveUserTaskObject', 'createUserPropertiesDataExtension', 'createUserDataExtension', 'createSubscriber' ] )
 			->getMock();
 
 		$addTaskMock
 			->expects( $this->once() )
 			->method( 'getClient' )
 			->will( $this->returnValue( $oSoapClient ) );
+
+		$addTaskMock
+			->expects( $this->once() )
+			->method( 'getRemoveUserTaskObject' )
+			->will( $this->returnValue( $oRemoveUserTask ) );
 
 		/* test createSubscriber invoke params */
 		$addTaskMock
@@ -55,7 +65,7 @@ class ExactTargetAddUserTaskTest extends WikiaBaseTest {
 			->with( $aUserData['user_id'], $aUserProperties, $oSoapClient );
 
 		/* Run tested method */
-		$addTaskMock->sendNewUserData( $aUserData, $aUserProperties );
+		$addTaskMock->updateAddUserData( $aUserData, $aUserProperties );
 	}
 
 	function testCreateUserPropertiesDataExtensionShouldSendData() {
