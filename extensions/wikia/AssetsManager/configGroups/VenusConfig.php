@@ -103,7 +103,6 @@ $VenusConfig[ 'venus_head_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['venus'],
 	'assets' => [
-		'#group_abtesting',
 		'//resources/wikia/modules/lazyqueue.js',
 	]
 ];
