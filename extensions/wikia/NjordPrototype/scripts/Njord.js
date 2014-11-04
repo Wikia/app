@@ -495,7 +495,7 @@
 			});
 			$('#ca-ve-edit').on('click', function () {
 				onload.observe($wikiaArticle[0], {childList: true});
-				trackHelper('article', 'click', 'edit');
+				trackHelper('edit', 'click', 'article');
 			});
 			if (window.location.search.indexOf('veaction=edit') >= 0) {
 				onload.observe($wikiaArticle[0], {childList: true});
