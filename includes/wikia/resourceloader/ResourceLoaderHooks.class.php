@@ -184,9 +184,9 @@ class ResourceLoaderHooks {
 			$pages = Wikia::renameArrayKeys($pages,$mapping);
 		}
 
-		// Wikia doesn't include Mediawiki:Common.css in Oasis
+		// Wikia doesn't include Mediawiki:Common.css in Oasis/Venus
 		// lower-case skin name is returned by getSkin()
-		if ( $skinName == 'oasis' && empty( $wgOasisLoadCommonCSS ) ) {
+		if ( in_array($skinName, ['oasis', 'venus']) && empty( $wgOasisLoadCommonCSS ) ) {
 			unset($pages['MediaWiki:Common.css']);
 		}
 
