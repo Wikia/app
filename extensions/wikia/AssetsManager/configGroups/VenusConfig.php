@@ -103,9 +103,11 @@ $VenusConfig[ 'venus_body_js' ] = [
 		// different article modules
 		'//skins/shared/scripts/scrollableTables.js',
 
+		//Article Navigation
+		'//extensions/wikia/ArticleNavigation/scripts/articleNavigation.js',
+
 		//following script initialize different modules in Venus
 		'//extensions/wikia/Venus/scripts/articleModulesLoader.js',
-		'//extensions/wikia/Venus/scripts/articleNavigation.js',
 	]
 ];
 
