@@ -160,7 +160,6 @@
 			}
 			return $.ajax(settings);
 		},
-
 		saveImage = function() {
 			States.setState($imageSaveElement, 'filled-state');
 			$imageElement.startThrobbing();
@@ -172,19 +171,23 @@
 					'imagename': heroData.imagename,
 					'cropposition': heroData.cropposition
 				},
-				callback: function() {
-					$heroModuleImage.draggable({ disabled: true });
-					$heroModuleImage.removeClass('drag-cursor');
-					$heroModuleImage.attr('src', heroData.oImage = heroData.imagepath);
-					$heroModuleImage.data('fullpath', heroData.imagepath);
-					$heroModuleImage.data('cropposition', heroData.oCropposition = heroData.cropposition);
-					States.setState($imageElement, 'filled-state');
-					States.setState($imageSaveElement, 'filled-state');
+				callback: function(data) {
+					if (data.success) {
+						$heroModuleImage.draggable({disabled: true});
+						$heroModuleImage.removeClass('drag-cursor');
+						$heroModuleImage.attr('src', heroData.oImage = heroData.imagepath);
+						$heroModuleImage.data('fullpath', heroData.imagepath);
+						$heroModuleImage.data('cropposition', heroData.oCropposition = heroData.cropposition);
+						States.setState($imageElement, 'filled-state');
+						States.setState($imageSaveElement, 'filled-state');
+					} else {
+						revertImage();
+					}
 					$imageElement.stopThrobbing();
 					trackMom(saveHeroImageLabel, trackerActionClick);
 				},
 				onErrorCallback: function () {
-					// TODO: handle failure
+					revertImage();
 					$imageElement.stopThrobbing();
 					trackMom(saveHeroImageFailLabel, trackerActionError);
 				}
@@ -215,7 +218,6 @@
 			//turn off description editing
 			revertDescription();
 			States.setState($titleElement, 'edit-state');
-			//FIXME: fix onChange event, caret at end on focus
 			$heroModuleTitle.focus();
 			$heroModuleTitle.change();
 			placeCaretAtEnd($titleEditBoxText.get(0));
@@ -230,14 +232,18 @@
 				data: {
 					'title': heroData.title
 				},
-				callback: function() {
-					$titleText.text(heroData.oTitle = heroData.title);
-					States.setState($titleElement, 'filled-state');
+				callback: function(data) {
+					if (data.success) {
+						$titleText.text(heroData.oTitle = heroData.title);
+						States.setState($titleElement, 'filled-state');
+					} else {
+						revertTitle();
+					}
 					$titleEditElement.stopThrobbing();
 					trackMom(saveTitleLabel, trackerActionClick);
 				},
 				onErrorCallback: function () {
-					// TODO: handle failure
+					revertTitle();
 					$titleEditElement.stopThrobbing();
 					trackMom(saveTitleFailLabel, trackerActionError);
 				}
@@ -262,15 +268,19 @@
 				data: {
 					'description': heroData.description
 				},
-				callback: function () {
-					States.setState($descriptionElement, 'filled-state');
-					heroData.oDescription = heroData.description;
-					$descriptionText.text(heroData.description);
+				callback: function (data) {
+					if (data.success) {
+						States.setState($descriptionElement, 'filled-state');
+						heroData.oDescription = heroData.description;
+						$descriptionText.text(heroData.description);
+					} else {
+						revertDescription();
+					}
 					$descriptionEditElement.stopThrobbing();
 					trackMom(saveSummaryLabel, trackerActionClick);
 				},
 				onErrorCallback: function () {
-					// TODO: handle failure
+					revertDescription();
 					$descriptionEditElement.stopThrobbing();
 					trackMom(saveSummaryFailLabel, trackerActionPost);
 					$.showModal($.msg('error'), 'Error while saving description');
