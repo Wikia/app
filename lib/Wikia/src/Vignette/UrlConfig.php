@@ -12,6 +12,7 @@ namespace Wikia\Vignette;
 
 class UrlConfig {
 	protected $isArchive = false;
+	protected $replaceThumbnail = false;
 	protected $timestamp;
 	protected $relativePath;
 	protected $pathPrefix;
@@ -21,6 +22,11 @@ class UrlConfig {
 
 	public function setIsArchive($isArchive) {
 		$this->isArchive = $isArchive;
+		return $this;
+	}
+
+	public function setReplaceThumbnail($replace) {
+		$this->replaceThumbnail = $replace;
 		return $this;
 	}
 
@@ -56,6 +62,10 @@ class UrlConfig {
 
 	public function isArchive() {
 		return $this->isArchive;
+	}
+
+	public function replaceThumbnail() {
+		return $this->replaceThumbnail;
 	}
 
 	public function timestamp() {

@@ -128,17 +128,7 @@ ve.dm.MWImageNode.prototype.onAttributeChange = function ( key, from, to ) {
  * @returns {string} Filename
  */
 ve.dm.MWImageNode.prototype.getFilename = function () {
-	// Strip ./ stuff and decode URI encoding
-	var resource = this.getAttribute( 'resource' ),
-		filename = resource.replace( /^(.+\/)*/, '' );
-
-	// Protect against decodeURIComponent() throwing exceptions
-	try {
-		filename = decodeURIComponent( filename );
-	} catch ( e ) {
-		ve.log( 'URI decoding exception', e );
-	}
-	return filename;
+	return ve.dm.MWImageNode.static.getFilenameFromResource( this.getAttribute( 'resource' ) );
 };
 
 /**
@@ -159,6 +149,18 @@ ve.dm.MWImageNode.static.getHashObject = function ( dataElement ) {
 		'width': dataElement.attributes.width,
 		'height': dataElement.attributes.height
 	};
+};
+
+ve.dm.MWImageNode.static.getFilenameFromResource = function ( resource ) {
+	// Strip ./ stuff and decode URI encoding
+	var filename = resource.replace( /^(.+\/)*/, '' );
+	// Protect against decodeURIComponent() throwing exceptions
+	try {
+		filename = decodeURIComponent( filename );
+	} catch ( e ) {
+		ve.log( 'URI decoding exception', e );
+	}
+	return filename;
 };
 
 /**

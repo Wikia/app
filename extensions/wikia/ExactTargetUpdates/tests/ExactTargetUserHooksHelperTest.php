@@ -1,6 +1,11 @@
 <?php
 
-class ExactTargetUpdatesHooksTest extends WikiaBaseTest {
+class ExactTargetUserHooksHelperTest extends WikiaBaseTest {
+
+	public function setUp() {
+		$this->setupFile = __DIR__ . '/../ExactTargetUpdates.setup.php';
+		parent::setUp();
+	}
 
 	public function testPrepareUserParams() {
 		$userMock = $this->getMockBuilder( 'User' )
@@ -61,7 +66,7 @@ class ExactTargetUpdatesHooksTest extends WikiaBaseTest {
 			->will   ( $this->returnValue( $aUserParams['user_touched'] ) );
 
 		/* Get mock object of tested class ExactTargetUpdatesHooks without mocking any methods */
-		$exactTargetUpdatesHooksMock = $this->getMock( 'ExactTargetUpdatesHooks', null );
+		$exactTargetUpdatesHooksMock = $this->getMock( 'Wikia\ExactTarget\ExactTargetUserHooksHelper', null );
 
 		/* Run test */
 		/* @var ExactTargetUpdatesHooks $exactTargetUpdatesHooksMock (mock of ExactTargetUpdatesHooks) */
@@ -96,99 +101,12 @@ class ExactTargetUpdatesHooksTest extends WikiaBaseTest {
 			->will( $this->returnValueMap( $returnMap ) );
 
 		/* Get mock object of tested class ExactTargetUpdatesHooks without mocking any methods */
-		$exactTargetUpdatesHooksMock = $this->getMock( 'ExactTargetUpdatesHooks', null );
+		$exactTargetUpdatesHooksMock = $this->getMock( 'Wikia\ExactTarget\ExactTargetUserHooksHelper', null );
 
 		/* Run test */
 		/* @var ExactTargetUpdatesHooks $exactTargetUpdatesHooksMock (mock of ExactTargetUpdatesHooks) */
 		$aUserPropertiesParamsActual = $exactTargetUpdatesHooksMock->prepareUserPropertiesParams( $userMock );
 
 		$this->assertEquals( $aUserPropertiesParamsActual, $aUserPropertiesParamsExpected );
-	}
-
-	function testTaskNotCreatedOnDev() {
-		/* Define environment constants if not defined yet */
-		if ( !defined( 'WIKIA_ENV_DEV' ) ) {
-			define( WIKIA_ENV_DEV, 'test-dev') ;
-		}
-		if ( !defined( 'WIKIA_ENV_INTERNAL' ) ) {
-			define( WIKIA_ENV_INTERNAL, 'test-internal' );
-		}
-
-		/* Mock wgWikiaEnvironment */
-		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_DEV );
-
-		/* Mock user */
-		$userMock = $this->getMockBuilder( 'User' )
-			->disableOriginalConstructor()
-			->getMock();
-
-		/* Mock ExactTargetAddUserTask */
-		$mockAddUserTask = $this->getMockBuilder( 'ExactTargetAddUserTask' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'call', 'queue' ] )
-			->getMock();
-		$mockAddUserTask
-			->expects( $this->never() )
-			->method( 'call' );
-		$mockAddUserTask
-			->expects( $this->never() )
-			->method( 'queue' );
-
-		/* Get mock object of tested class ExactTargetUpdatesHooks */
-		$exactTargetUpdatesHooksMock = $this->getMockBuilder( 'ExactTargetUpdatesHooks' )
-			->setMethods( [ 'prepareUserParams' ] )
-			->getMock();
-		$exactTargetUpdatesHooksMock
-			->expects( $this->never() )
-			->method( 'prepareUserParams' );
-
-		/* Run test */
-		/* @var ExactTargetUpdatesHooks $exactTargetUpdatesHooksMock (mock of ExactTargetUpdatesHooks) */
-		$exactTargetUpdatesHooksMock->addTheAddUserTask( $userMock, $mockAddUserTask );
-	}
-
-	function testShouldAddUpdateUserDataTask() {
-		/* Define environment constants if not defined yet */
-		if ( !defined( 'WIKIA_ENV_PROD' ) ) {
-			define( WIKIA_ENV_PROD, 'test-prod') ;
-		}
-		if ( !defined( 'WIKIA_ENV_DEV' ) ) {
-			define( WIKIA_ENV_DEV, 'test-dev' );
-		}
-		if ( !defined( 'WIKIA_ENV_INTERNAL' ) ) {
-			define( WIKIA_ENV_INTERNAL, 'test-internal' );
-		}
-
-		/* Mock wgWikiaEnvironment */
-		$this->mockGlobalVariable( 'wgWikiaEnvironment', WIKIA_ENV_PROD );
-
-		/* Mock user */
-		$userMock = $this->getMockBuilder( 'User' )
-			->disableOriginalConstructor()
-			->getMock();
-
-		/* Mock ExactTargetUpdateUserTask */
-		$mockUpdateUserTask = $this->getMockBuilder( 'ExactTargetUpdateUserTask' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'call', 'queue' ] )
-			->getMock();
-		$mockUpdateUserTask
-			->expects( $this->once() )
-			->method( 'call' );
-		$mockUpdateUserTask
-			->expects( $this->once() )
-			->method( 'queue' );
-
-		/* Get mock object of tested class ExactTargetUpdatesHooks */
-		$exactTargetUpdatesHooksMock = $this->getMockBuilder( 'ExactTargetUpdatesHooks' )
-			->setMethods( [ 'prepareUserParams' ] )
-			->getMock();
-		$exactTargetUpdatesHooksMock
-			->expects( $this->once() )
-			->method( 'prepareUserParams' );
-
-		/* Run test */
-		/* @var ExactTargetUpdatesHooks $exactTargetUpdatesHooksMock (mock of ExactTargetUpdatesHooks) */
-		$exactTargetUpdatesHooksMock->addTheUpdateUserPropertiesTask( $userMock, $mockUpdateUserTask );
 	}
 }

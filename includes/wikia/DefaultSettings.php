@@ -1560,6 +1560,16 @@ $wgEnableBuckyExt = true;
 $wgBuckySampling = 10;
 
 /*
+ * @name wgBuckyEnabledSkins
+ * List of skins where Bucky reporting should be enabled
+ */
+$wgBuckyEnabledSkins = [
+	'monobook',
+	'oasis',
+	'venus',
+];
+
+/*
  * @name wgXhprofUDPHost
  * Host that xhprof data should be reported to (if set to null will use $wgUDPProfilerHost)
  */

@@ -484,13 +484,13 @@ ve.dm.Node.prototype.setLength = function ( length ) {
 	var diff = length - this.length;
 	// Set new length
 	this.length = length;
+	// Emit events
+	this.emit( 'lengthChange', diff );
+	this.emit( 'update' );
 	// Adjust the parent's length
 	if ( this.parent ) {
 		this.parent.adjustLength( diff );
 	}
-	// Emit events
-	this.emit( 'lengthChange', diff );
-	this.emit( 'update' );
 };
 
 /**

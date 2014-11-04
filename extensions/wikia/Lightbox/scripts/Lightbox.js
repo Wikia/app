@@ -811,13 +811,17 @@
 
 		// Handle history API
 		updateUrlState: function (clear) {
-			var qs = window.Wikia.Querystring();
+			var self = this;
+			require(['wikia.history'], function (history) {
+				var queryString = window.Wikia.Querystring();
 
-			if (clear) {
-				qs.removeVal('file').replaceState();
-			} else {
-				qs.setVal('file', this.current.key, true).replaceState();
-			}
+				if (clear) {
+					queryString.removeVal('file');
+				} else {
+					queryString.setVal('file', self.current.key, true);
+				}
+				history.replaceState(null, null, queryString);
+			});
 		},
 
 		getShareCodes: function (mediaParams, callback) {

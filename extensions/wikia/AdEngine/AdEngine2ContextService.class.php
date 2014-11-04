@@ -58,6 +58,7 @@ class AdEngine2ContextService {
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
 					'remnantGptMobile' => !!$wg->AdDriverEnableRemnantGptMobile,
+					'remnantGpt' => !!$wg->AdDriverUseRemnantGpt,
 					'sevenOneMedia' => !!$wg->AdDriverUseSevenOneMedia,
 					'sevenOneMediaCombinedUrl' => $sevenOneMediaCombinedUrl,
 					'taboola' => !!$wg->AdDriverUseTaboola,
