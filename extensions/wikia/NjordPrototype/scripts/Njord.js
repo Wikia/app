@@ -30,10 +30,10 @@
 				'edit-state',
 				'no-edit-state'
 			],
-			clearState: function($element) {
-				$element.removeClass( this.list.join(' ') );
+			clearState: function ($element) {
+				$element.removeClass(this.list.join(' '));
 			},
-			setState: function($element, $state) {
+			setState: function ($element, $state) {
 				if (this.list.indexOf($state) >= 0) {
 					this.clearState($element);
 					$element.addClass($state);
@@ -53,7 +53,7 @@
 			imagechanged: false,
 			datachanged: false
 		},
-		//hero image elements
+	//hero image elements
 		$imageElement = $('.MainPageHeroHeader .image-wrap'),
 		$imageSaveElement = $('.MainPageHeroHeader .image-save-bar'),
 		$titleElement = $('.MainPageHeroHeader .title-wrap'),
@@ -109,22 +109,25 @@
 		imageLoadedLabel = 'hero-image-loaded',
 		imageLoadedFailLabel = 'hero-image-load-fail',
 		dropUrlLabel = 'drag-drop-hero-image',
-		dropFileLabel ='drag-drop-hero-image',
+		dropFileLabel = 'drag-drop-hero-image',
 
 		trackerActionClick = Wikia.Tracker.ACTIONS.CLICK,
 		trackerActionError = Wikia.Tracker.ACTIONS.ERROR,
 		trackerActionSuccess = Wikia.Tracker.ACTIONS.SUCCESS,
 		trackerActionHover = Wikia.Tracker.ACTIONS.HOVER,
 
-		trackMom = function( trackLabel, trackAction){
+		trackHelper = function(trackLabel, trackAction, trackCategory){
 			Wikia.Tracker.track({
 				ga_action: trackAction,
-				ga_category: 'MOM',
+				ga_category: trackCategory,
 				label: trackLabel,
 				trackingMethod: 'ga'
 			});
 		},
-		saveImage = function() {
+		trackMom = function (trackLabel, trackAction) {
+			trackHelper(trackLabel, trackAction, 'MOM');
+		},
+		saveImage = function () {
 			States.setState($imageSaveElement, 'filled-state');
 			$imageElement.startThrobbing();
 			$.nirvana.sendRequest({
@@ -135,7 +138,7 @@
 					'imagename': heroData.imagename,
 					'cropposition': heroData.cropposition
 				},
-				callback: function(data) {
+				callback: function (data) {
 					if (data.success) {
 						$heroModuleImage.draggable({disabled: true});
 						$heroModuleImage.removeClass('drag-cursor');
@@ -148,7 +151,6 @@
 						revertImage();
 					}
 					$imageElement.stopThrobbing();
-					trackMom(saveHeroImageLabel, trackerActionClick);
 				},
 				onErrorCallback: function () {
 					revertImage();
@@ -157,9 +159,9 @@
 				}
 			});
 		},
-		revertImage = function() {
+		revertImage = function () {
 			$imageElement.startThrobbing();
-			$heroModuleImage.draggable({ disabled: true });
+			$heroModuleImage.draggable({disabled: true});
 			$heroModuleImage.removeClass('drag-cursor');
 			$heroModuleImage.attr('src', heroData.oImage);
 			$heroModuleImage.css({top: -heroData.oCropposition * $heroModuleImage.height()});
@@ -176,18 +178,16 @@
 				States.setState($imageElement, 'filled-state');
 				States.setState($imageSaveElement, 'filled-state');
 			}
-			trackMom(revertHeroImageLabel, trackerActionClick);
 		},
-		editTitle = function() {
+		editTitle = function () {
 			//turn off description editing
 			revertDescription();
 			States.setState($titleElement, 'edit-state');
 			$heroModuleTitle.focus();
 			$heroModuleTitle.change();
 			placeCaretAtEnd($titleEditBoxText.get(0));
-			trackMom(editTitleLabel, trackerActionClick);
 		},
-		saveTitle = function() {
+		saveTitle = function () {
 			$titleEditElement.startThrobbing();
 			$.nirvana.sendRequest({
 				controller: 'NjordController',
@@ -196,7 +196,7 @@
 				data: {
 					'title': heroData.title
 				},
-				callback: function(data) {
+				callback: function (data) {
 					if (data.success) {
 						$titleText.text(heroData.oTitle = heroData.title);
 						States.setState($titleElement, 'filled-state');
@@ -204,7 +204,6 @@
 						revertTitle();
 					}
 					$titleEditElement.stopThrobbing();
-					trackMom(saveTitleLabel, trackerActionClick);
 				},
 				onErrorCallback: function () {
 					revertTitle();
@@ -213,7 +212,7 @@
 				}
 			});
 		},
-		revertTitle = function() {
+		revertTitle = function () {
 			$heroModuleTitle.text(heroData.oTitle);
 			$titleText.text(heroData.oTitle);
 			if (heroData.oTitle === "") {
@@ -221,7 +220,6 @@
 			} else {
 				States.setState($titleElement, 'filled-state');
 			}
-			trackMom(revertTitleFailLabel, trackerActionClick);
 		},
 		saveDescription = function () {
 			$descriptionEditElement.startThrobbing();
@@ -241,7 +239,6 @@
 						revertDescription();
 					}
 					$descriptionEditElement.stopThrobbing();
-					trackMom(saveSummaryLabel, trackerActionClick);
 				},
 				onErrorCallback: function () {
 					revertDescription();
@@ -261,7 +258,6 @@
 			$descriptionEditBoxText.focus();
 			$descriptionEditBoxText.change();
 			placeCaretAtEnd($descriptionEditBoxText.get(0));
-			trackMom(editSummaryLabel, trackerActionClick);
 		},
 		revertDescription = function () {
 			heroData.description = heroData.oDescription;
@@ -271,7 +267,6 @@
 				States.setState($descriptionElement, 'filled-state');
 			}
 			$descriptionEditBoxText.text(heroData.oDescription);
-			trackMom(revertSummaryLabel, trackerActionClick);
 		},
 
 		initializeData = function () {
@@ -332,7 +327,7 @@
 				containment: containment,
 				drag: function () {
 					heroData.cropposition = Math.abs($heroModuleImage.position().top) / $heroModuleImage.height();
-					if(!trackDragOnlyOncePerImage){
+					if (!trackDragOnlyOncePerImage) {
 						trackDragOnlyOncePerImage = true;
 						trackMom(moveImageLabel, trackerActionClick);
 					}
@@ -373,37 +368,65 @@
 					trackMom(imageLoadedFailLabel, trackerActionError);
 					$heroModule.stopThrobbing();
 				},
-				processData : false,
-				contentType : false
+				processData: false,
+				contentType: false
 			});
 
 		}, initializeEditMode = function () {
-			$imageSaveBtn.on('click', saveImage);
-			$imageDiscardBtn.on('click', revertImage);
-			$titleEditBtn.on('click', editTitle);
-			$titleSaveBtn.on('click', saveTitle);
-			$titleDiscardBtn.on('click', revertTitle);
+			$imageSaveBtn.on('click', saveImage)
+				.on('click', function () {
+					trackMom(saveHeroImageLabel, trackerActionClick);
+				});
+			$imageDiscardBtn.on('click', revertImage)
+				.on('click', function () {
+					trackMom(revertHeroImageLabel, trackerActionClick);
+				});
+			$titleEditBtn.on('click', editTitle)
+				.on('click', function () {
+					trackMom(editTitleLabel, trackerActionClick);
+				});
+			$titleSaveBtn.on('click', saveTitle)
+				.on('click', function () {
+					trackMom(saveTitleLabel, trackerActionClick);
+				});
+			$titleDiscardBtn.on('click', revertTitle)
+				.on('click', function () {
+					trackMom(revertTitleFailLabel, trackerActionClick);
+				});
 
-			$heroModuleTitle.on('focus', onFocus).on('blur keyup paste input', onInput).on('change', onChange);
+			$heroModuleTitle.on('focus', onFocus)
+				.on('blur keyup paste input', onInput)
+				.on('change', onChange);
+
 			//on(load) on img buged on this jquery
 			$heroModuleImage[0].addEventListener('load', onImageLoad);
-			$heroModule.on('change', onChange).on('enableDragging', onDraggingEnabled);
+			$heroModule.on('change', onChange)
+				.on('enableDragging', onDraggingEnabled);
 
 			//hero description
-			$descriptionElement.on('focus', onFocus).on('blur keyup paste input', onInput).on('change', onChange);
+			$descriptionElement.on('focus', onFocus)
+				.on('blur keyup paste input', onInput)
+				.on('change', onChange);
 
-			$descriptionEditBtn.on('click', editDescription);
-			$descriptionDiscardBtn.on('click', revertDescription);
-			$descriptionSaveBtn.on('click', saveDescription);
-
-			$(window).resize(onResize);
+			$descriptionEditBtn.on('click', editDescription)
+				.on('click', function () {
+					trackMom(editSummaryLabel, trackerActionClick);
+				});
+			$descriptionDiscardBtn.on('click', revertDescription)
+				.on('click', function () {
+					trackMom(revertSummaryLabel, trackerActionClick);
+				});
+			$descriptionSaveBtn.on('click', saveDescription)
+				.on('click', function () {
+					trackMom(saveSummaryLabel, trackerActionClick);
+				});
 			initializeData();
 
 			//turn off browser image handling
 			$body.on('dragover', onDragDisabled).on('dragend', onDragDisabled).on('drop', onDragDisabled);
 
 			$heroModule.on('dragenter', function () {
-			//$heroModuleUpload.on('dragover', function () {
+				//$heroModuleUpload.on('dragover', function () {
 				$overlay.show();
 				$heroModuleUploadMask.show();
 				return false;
@@ -424,7 +447,7 @@
 				e.preventDefault();
 				var fd = new FormData();
 				if (e.dataTransfer.files.length) {
-					trackMom(dropFileLabel,trackerActionHover);
+					trackMom(dropFileLabel, trackerActionHover);
 					//if file is uploaded
 					fd.append('file', e.dataTransfer.files[0]);
 					sendForm(fd);
@@ -433,7 +456,7 @@
 					//if url
 					var $img = $(e.dataTransfer.getData('text/html'));
 					if (e.target.src !== $img.attr('src')) {
-						trackMom(dropUrlLabel,trackerActionHover);
+						trackMom(dropUrlLabel, trackerActionHover);
 						fd.append('url', $img.attr('src'));
 						sendForm(fd);
 					}
@@ -460,21 +483,22 @@
 					$heroModuleInput.unwrap();
 				}
 			});
-		}, initializeEditButton = function() {
-			var onclose = new MutationObserver(function(m) {
+		}, initializeEditButton = function () {
+			var onclose = new MutationObserver(function (m) {
 				$('.MainPageHeroHeader .global-edit-wrap').show();
 				onclose.disconnect();
 			});
-			var onload = new MutationObserver(function(m) {
+			var onload = new MutationObserver(function (m) {
 				$('.MainPageHeroHeader .global-edit-wrap').hide();
 				onload.disconnect();
-				onclose.observe($wikiaArticle[0], { childList: true });
+				onclose.observe($wikiaArticle[0], {childList: true});
 			});
-			$('#ca-ve-edit').on('click', function() {
-				onload.observe($wikiaArticle[0], { childList: true });
+			$('#ca-ve-edit').on('click', function () {
+				onload.observe($wikiaArticle[0], {childList: true});
+				trackHelper('article', 'click', 'edit');
 			});
 			if (window.location.search.indexOf('veaction=edit') >= 0) {
-				onload.observe($wikiaArticle[0], { childList: true });
+				onload.observe($wikiaArticle[0], {childList: true});
 			}
 		};
 
