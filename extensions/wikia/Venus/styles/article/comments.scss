@@ -1,0 +1,9 @@
+@import 'skins/shared/color';
+@import 'extensions/wikia/Venus/styles/mixins';
+@import 'extensions/wikia/Venus/styles/typographyMixins';
+
+.WikiaArticleComments {
+	clear: left;
+	margin: 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width;
+	padding: 0 $medium-grid-column-padding;
+}
