@@ -7,7 +7,6 @@ define(
 
 		var articleWrapperId = 'mw-content-text',
 			articleHeaderClass = 'mw-headline',
-			tocHeight = 393,
 			headers = [
 				'h2',
 				'h3'
@@ -53,13 +52,12 @@ define(
 
 		/**
 		 * @desc initialize TOC
-		 * @param {String} trigger - jQuery selector for
+		 * @param {String} id -  id of the trigger element
 		 */
-		function init(trigger) {
+		function init(id) {
 			return new DropdownNavigation({
 				data: getTocData(headers, articleWrapperId).sections,
-				maxHeight: tocHeight,
-				trigger: trigger
+				trigger: id
 			});
 		}
 
