@@ -17,11 +17,11 @@ class AsyncCacheTask extends BaseTask {
 	 * @param string $key - The key to cache the result under
 	 * @param callable $func - Function to generate new value
 	 * @param array $args - The args for $func
-	 * @param $options - Any additional options send back from the caching object
+	 * @param array $options - Any additional options send back from the caching object
 	 *
 	 * @return \Status
 	 */
-	public static function generate( $key, $func, $args, $options ) {
+	public static function generate( $key, callable $func, array $args, array $options ) {
 
 		// Get TTLs to use for positive response and negative (empty) response
 		$ttl = empty( $options[ 'ttl' ] ) ? \AsyncCache::DEFAULT_TTL : $options[ 'ttl' ];

@@ -179,12 +179,9 @@ class AsyncCache {
 	 *
 	 * @return AsyncCache $this
 	 */
-	public function callback( $callback, array $params = null ) {
+	public function callback( callable $callback, array $params = null ) {
 		$this->callback = $callback;
-
-		if ( is_array( $params ) ) {
-			$this->callbackParams = $params;
-		}
+		$this->callbackParams = $params;
 
 		return $this;
 	}
