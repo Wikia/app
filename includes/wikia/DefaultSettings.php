@@ -1386,12 +1386,6 @@ $wgAdDriverRubiconRTPCountries = null;
 $wgHighValueCountries = null;
 
 /**
- * @name $wgAdVideoTargeting
- * Enables page-level video ad targeting
- */
-$wgAdVideoTargeting = true;
-
-/**
  * @name $wgAnalyticsProviderPageFair
  * Site ID for PageFair analytics provider.
  */
