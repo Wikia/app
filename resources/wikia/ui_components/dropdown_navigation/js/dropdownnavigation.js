@@ -30,7 +30,8 @@ define(
 				return new DropdownNavigation(options);
 			}
 
-			var dropdownId = 'wikiaDropdownNav' + Math.floor(Math.random() * 99) + 1,
+			var self = this,
+				dropdownId = 'wikiaDropdownNav' + Math.floor(Math.random() * 99) + 1,
 				dropdownParams = {
 					activeClass: 'active',
 					id: dropdownId,
@@ -85,8 +86,9 @@ define(
 				renderDropdown(dropdownParams);
 				dropDown = doc.getElementById(dropdownParams.id);
 
-				this.delayedHover = dewin.delayedHover(trigger, delayHoverParams);
-				this.menuAim = win.menuAim(dropDown, AIMParams);
+				// initialize UX enhancements
+				self.delayedHover = win.delayedHover(trigger, delayHoverParams);
+				self.menuAim = win.menuAim(dropDown, AIMParams);
 			}
 
 			// initialize dropdown component
