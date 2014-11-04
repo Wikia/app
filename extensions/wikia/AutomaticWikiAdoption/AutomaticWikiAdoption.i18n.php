@@ -537,6 +537,22 @@ $messages['cs'] = array(
 	'wikiadoption-welcome-header' => 'Gratulujeme! Převzal jste {{SITENAME}}!',
 );
 
+/** Welsh (Cymraeg)
+ * @author Robin Owain
+ */
+$messages['cy'] = array(
+	'wikiadoption' => 'Mabwysiadu wiki awtomatig',
+	'wikiadoption-desc' => 'Estyniad OtomaticMabwysiaduWici ar gyfer MediaWiki',
+	'wikiadoption-header' => 'Mabwysiadu y wici hwn',
+	'wikiadoption-button-adopt' => 'Ydw, rwyf eisiau mabwysiadu{{SITENAME}}!',
+	'wikiadoption-adopt-inquiry' => 'Dysgwch ragor!',
+	'wikiadoption-know-more-header' => 'Eisiau gwybod mwy?',
+	'wikiadoption-adoption-successed' => "Llongyfarchiadau! Rydych chi'n awr yn weinyddwr ar y wici hwn!",
+	'wikiadoption-adoption-failed' => 'Yr ydym yn flin. Ceisiasom rich gwneud yn weinyddwr, ond methom. Os gwelwch yn dda [http://community.wikia.com/Special:Contact cysylltwch â ni], a byddwn yn ceisio eich helpu.',
+	'wikiadoption-not-allowed' => "Ymddiheurwn! Fedrwch chi ddim mabwysiadu'r wici hwn nawr.",
+	'wikiadoption-not-enough-edits' => "Wwwwps! Mae angen dros 10 golygiad cyn y gallwch fabwysiadu'r wici yma.",
+);
+
 /** German (Deutsch)
  * @author Avatar
  * @author Claudia Hattitten

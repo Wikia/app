@@ -6,6 +6,11 @@ class GlobalNavigationController extends WikiaController {
 	const USE_LANG_PARAMETER = '?uselang=';
 	const CENTRAL_WIKI_SEARCH = '/wiki/Special:Search';
 
+	// how many hubs should be displayed in the menu
+	// if we do not get enough, use transparent background
+	// to fill the space (CON-1820)
+	const HUBS_COUNT = 7;
+
 	/**
 	 * @var WikiaCorporateModel
 	 */
@@ -25,25 +30,31 @@ class GlobalNavigationController extends WikiaController {
 
 		$userLang = $this->wg->Lang->getCode();
 		// Link to Wikia home page
-		$centralUrl = $this->getCentralUrlForLang( $userLang, true );
+		$centralUrl = $this->getCentralUrlForLang( $userLang );
 
 		$createWikiUrl = $this->getCreateNewWikiUrl( $userLang );
 
 		$this->response->setVal( 'centralUrl', $centralUrl );
 		$this->response->setVal( 'createWikiUrl', $createWikiUrl );
+
+		$isGameStarLogoEnabled = $this->isGameStarLogoEnabled();
+		$this->response->setVal( 'isGameStarLogoEnabled', $isGameStarLogoEnabled );
+		if ( $isGameStarLogoEnabled ) {
+			$this->response->addAsset( 'extensions/wikia/GlobalNavigation/css/GlobalNavigationGameStar.scss' );
+		}
 	}
 
 	public function searchIndex() {
 		$lang = $this->wg->Lang->getCode();
-		$centralUrl = $this->getCentralUrlForLang( $lang, false );
+		$centralUrl = $this->getCentralUrlForLang( $lang );
 		$globalSearchUrl = $this->getGlobalSearchUrl( $centralUrl, $lang );
 		$specialSearchTitle = SpecialPage::getTitleFor( 'Search' );
 		$localSearchUrl = $specialSearchTitle->getFullUrl();
-		$fulltext = $this->wg->User->getOption('enableGoSearch') ? 0 : 'Search';
+		$fulltext = $this->wg->User->getOption( 'enableGoSearch' ) ? 0 : 'Search';
 		$globalRequest = $this->wg->request;
 		$query = $globalRequest->getVal( 'search', $globalRequest->getVal( 'query', '' ) );
 
-		if (WikiaPageType::isCorporatePage() && !WikiaPageType::isWikiaHub()) {
+		if ( WikiaPageType::isCorporatePage() && !WikiaPageType::isWikiaHub() ) {
 			$this->response->setVal( 'disableLocalSearchOptions', true );
 			$this->response->setVal( 'defaultSearchUrl', $globalSearchUrl );
 		} else {
@@ -59,31 +70,40 @@ class GlobalNavigationController extends WikiaController {
 
 	public function hubsMenu() {
 		$menuNodes = $this->getMenuNodes();
-		$this->response->setVal('menuNodes', $menuNodes);
+
+		// use transparent background to fill the space
+		// when we do not get enough hubs (CON-1820)
+		while ( count( $menuNodes ) < self::HUBS_COUNT ) {
+			$menuNodes[] = [
+				'placeholder' => true,
+			];
+		}
+
+		$this->response->setVal( 'menuNodes', $menuNodes );
 
 		$activeNode = $this->getActiveNode();
-		$activeNodeIndex = $this->getActiveNodeIndex($menuNodes, $activeNode);
-		$this->response->setVal('activeNodeIndex', $activeNodeIndex);
+		$activeNodeIndex = $this->getActiveNodeIndex( $menuNodes, $activeNode );
+		$this->response->setVal( 'activeNodeIndex', $activeNodeIndex );
 	}
 
 	public function hubsMenuSections() {
-		$menuSections = $this->request->getVal('menuSections', []);
-		$this->response->setVal('menuSections', $menuSections);
+		$menuSections = $this->request->getVal( 'menuSections', [] );
+		$this->response->setVal( 'menuSections', $menuSections );
 	}
 
 	public function lazyLoadHubsMenu() {
 		$lazyLoadMenuNodes = $this->getMenuNodes();
 
 		$activeNode = $this->getActiveNode();
-		$activeNodeIndex = $this->getActiveNodeIndex($lazyLoadMenuNodes, $activeNode);
-		array_splice($lazyLoadMenuNodes, $activeNodeIndex, 1);
+		$activeNodeIndex = $this->getActiveNodeIndex( $lazyLoadMenuNodes, $activeNode );
+		array_splice( $lazyLoadMenuNodes, $activeNodeIndex, 1 );
 
-		$this->response->setVal('menuSections', $lazyLoadMenuNodes);
+		$this->response->setVal( 'menuSections', $lazyLoadMenuNodes );
 		$this->overrideTemplate( 'hubsMenuSections' );
 	}
 
 	private function getMenuNodes() {
-		$menuNodes = (new NavigationModel(true /* useSharedMemcKey */) )->getGlobalNavigationTree(
+		$menuNodes = ( new NavigationModel( true /* useSharedMemcKey */ ) )->getGlobalNavigationTree(
 			'global-navigation-hubs-menu'
 		);
 
@@ -113,7 +133,7 @@ class GlobalNavigationController extends WikiaController {
 		$activeNode = '';
 
 		$wikiFactoryHub = WikiFactoryHub::getInstance();
-		$verticalId = $wikiFactoryHub->getVerticalId($wgCityId);
+		$verticalId = $wikiFactoryHub->getVerticalId( $wgCityId );
 
 		$allVerticals = $wikiFactoryHub->getAllVerticals();
 		if ( isset( $allVerticals[$verticalId]['short'] ) ) {
@@ -124,23 +144,19 @@ class GlobalNavigationController extends WikiaController {
 	}
 
 
-	public function getCentralUrlForLang( $lang, $fullUrl ) {
-		$centralWikiExists = $this->centralWikiInLangExists( $lang );
-		if ( $centralWikiExists ) {
-			$title = $this->getCentralWikiTitleForLang( $lang );
-		} else {
-			$title = $this->getCentralWikiTitleForLang( self::DEFAULT_LANG );
-		}
+	/**
+	 * @desc gets corporate page URL for given language
+	 * @param string $lang - language
+	 * @return string - Corporate Wikia Domain for given language
+	 */
+	public function getCentralUrlForLang( $lang ) {
+		$title = $this->getCentralWikiTitleForLang(
+			$this->centralWikiInLangExists( $lang ) ?
+				$lang :
+				self::DEFAULT_LANG
+		);
 
-		if ( $fullUrl ) {
-			$url = $title->getFullURL();
-			if ( !$centralWikiExists && $lang != self::DEFAULT_LANG ) {
-				$url .= self::USE_LANG_PARAMETER . $lang;
-			}
-		} else {
-			$url = $title->getServer();
-		}
-		return $url;
+		return $title->getServer();
 	}
 
 	public function getCreateNewWikiUrl( $lang ) {
@@ -186,4 +202,7 @@ class GlobalNavigationController extends WikiaController {
 		return SpecialPage::getTitleFor( 'Search' )->getLocalURL();
 	}
 
+	protected function isGameStarLogoEnabled() {
+		return $this->wg->contLang->getCode() == 'de';
+	}
 }

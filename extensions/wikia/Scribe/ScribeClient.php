@@ -1,5 +1,7 @@
 <?php
 
+use \Wikia\Logger\WikiaLogger;
+
 $GLOBALS['THRIFT_ROOT'] = $IP . '/lib/vendor/scribe';
 
 include_once $GLOBALS['THRIFT_ROOT'] . '/scribe.php';
@@ -80,7 +82,7 @@ class WScribeClient {
     /**
      * Send a message to a destination
      *
-     * @param string $message
+     * @param string $message JSON encoded message
      * @return boolean
      */
     public function send ($message) {
@@ -118,6 +120,12 @@ class WScribeClient {
 				}
 
 				$this->transport->close();
+
+				WikiaLogger::instance()->info('Scribe', [
+					'cmd' => 'send',
+					'category' => $this->category,
+					'caller' => wfGetCallerClassMethod(__CLASS__)
+				]);
 			}
 			catch( TException $e ) {
 				// socket error

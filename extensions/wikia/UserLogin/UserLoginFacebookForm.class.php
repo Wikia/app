@@ -67,10 +67,5 @@ class UserLoginFacebookForm extends UserLoginForm {
 	 */
 	private function connectWithFacebook(User $user) {
 		FBConnectDB::addFacebookID($user, $this->fbUserId);
-
-		foreach($this->fbFeedOptions as $feedName) {
-			$optionName = "fbconnect-push-allow-{$feedName}";
-			$user->setOption($optionName, 1);
-		}
 	}
 }

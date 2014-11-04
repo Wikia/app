@@ -8,35 +8,6 @@ class GlobalNavigationTest extends WikiaBaseTest {
 
 	/**
 	 * @param $lang
-	 * @param $fullUrl
-	 * @param $expectedUrl
-	 * @dataProvider testGetCentralFullUrlDataProvider
-	 */
-	public function testGetCentralFullUrl( $lang, $fullUrl, $expectedUrl ) {
-		$globalTitleMock = $this->getMock( 'GlobalTitle', ['getFullURL'] );
-		$globalTitleMock->expects( $this->any() )
-			->method( 'getFullURL' )
-			->will( $this->returnValue( $fullUrl ) );
-
-		$globalNavMock = $this->getMock( 'GlobalNavigationController', ['getCentralWikiTitleForLang'] );
-		$globalNavMock->expects( $this->any() )
-			->method( 'getCentralWikiTitleForLang' )->will( $this->returnValue( $globalTitleMock ) );
-
-		$result = $globalNavMock->getCentralUrlForLang( $lang , true );
-		$this->assertEquals( $expectedUrl, $result, 'Wiki Central full url is different than expected' );
-	}
-
-	public function testGetCentralFullUrlDataProvider() {
-		return [
-			['de', 'http://de.wikia.com/Wikia', 'http://de.wikia.com/Wikia'],
-			['en', 'http://www.wikia.com/Wikia', 'http://www.wikia.com/Wikia'],
-			['it', 'http://www.wikia.com/Wikia', 'http://www.wikia.com/Wikia?uselang=it'],
-			['zh', 'http://www.wikia.com/Wikia', 'http://www.wikia.com/Wikia?uselang=zh'],
-		];
-	}
-
-	/**
-	 * @param $lang
 	 * @param $expectedUrl
 	 * @dataProvider testGetCentralServerUrlDataProvider
 	 */
@@ -50,7 +21,7 @@ class GlobalNavigationTest extends WikiaBaseTest {
 		$globalNavMock->expects( $this->any() )
 			->method( 'getCentralWikiTitleForLang' )->will( $this->returnValue( $globalTitleMock ) );
 
-		$result = $globalNavMock->getCentralUrlForLang( $lang , false );
+		$result = $globalNavMock->getCentralUrlForLang( $lang );
 		$this->assertEquals( $expectedUrl, $result, 'Wiki Central server url is different than expected' );
 	}
 

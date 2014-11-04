@@ -63,6 +63,8 @@ module.exports = function(config) {
 			'resources/wikia/libraries/mustache/jquery.mustache.js',
 			'resources/wikia/modules/nirvana.js',
 			'resources/wikia/modules/querystring.js',
+			'resources/wikia/modules/history.js',
+			'resources/wikia/modules/scrollToLink.js',
 			'resources/wikia/modules/stringhelper.js',
 			'resources/wikia/modules/thumbnailer.js',
 			'resources/wikia/modules/uniqueId.js',
@@ -71,7 +73,11 @@ module.exports = function(config) {
 			//SpecialPromote
 			'extensions/wikia/SpecialPromote/js/spec/integration/SpecialPromote.mocks.js',
 			'extensions/wikia/SpecialPromote/js/SpecialPromote.js',
-			'extensions/wikia/SpecialPromote/js/spec/integration/SpecialPromote.spec.js'
+			'extensions/wikia/SpecialPromote/js/spec/integration/SpecialPromote.spec.js',
+
+			//venus infobox
+			'extensions/wikia/Venus/scripts/modules/infobox.module.js',
+			'extensions/wikia/Venus/scripts/modules/spec/integration/infobox.spec.js'
 		]
 	});
 };

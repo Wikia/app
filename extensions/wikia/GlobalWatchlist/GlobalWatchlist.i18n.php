@@ -599,7 +599,7 @@ $messages['mk'] = array(
 	'globalwatchlist-desc' => 'Испраќа неделен преглед на набљудувани страници од сите викија по е-пошта',
 	'tog-watchlistdigest' => 'Испраќај ми Неделен преглед на набљудувани страници',
 	'tog-watchlistdigestclear' => 'Означи ги сите страници од мојот Неделен преглед како посетени',
-	'globalwatchlist-see-more' => 'Проверете ги вашите локални списоци на набљудувања за повеќе промени',
+	'globalwatchlist-see-more' => 'Проверете ги вашите месни списоци на набљудувања за повеќе промени',
 	'globalwatchlist-digest-email-subject' => 'Неделен преглед',
 	'globalwatchlist-digest-email-body' => 'Почитуван $1,
 

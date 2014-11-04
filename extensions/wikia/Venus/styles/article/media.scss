@@ -1,6 +1,7 @@
 @import '/skins/wikia/shared.css';
 @import '../libs/foundation.custom/components/grid.mixins';
 @import 'extensions/wikia/MediaGallery/styles/MediaGallery';
+@import 'extensions/wikia/Venus/styles/typographyMixins';
 @import 'video';
 
 .wikia-gallery {
@@ -27,10 +28,14 @@
 	}
 
 	.WikiaPhotoGalleryPreview {
-		box-sizing: initial;
+		box-sizing: content-box;
 
 		img {
 			vertical-align: middle;
+		}
+
+		h2 {
+			padding-bottom: 3px;
 		}
 	}
 
@@ -47,4 +52,8 @@
 		}
 	}
 
+	.wikia-slideshow-image-caption {
+		@include font-size-xs;
+		line-height: 22px;
+	}
 }

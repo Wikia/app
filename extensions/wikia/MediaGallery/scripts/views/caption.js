@@ -54,7 +54,7 @@ define('mediaGallery.views.caption', [], function () {
 		this.$el.addClass('hovered');
 
 		// calculate height of caption content plus padding of it's container
-		contentHeight = this.$el.find('.inner').outerHeight() + (2 * this.captionPadding);
+		contentHeight = this.$el.find('.inner').outerHeight(false) + (2 * this.captionPadding);
 
 		// get new negative top margin but limit it to 100% of it's container
 		// then adjust for container padding

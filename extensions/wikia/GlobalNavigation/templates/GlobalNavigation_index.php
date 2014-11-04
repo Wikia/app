@@ -13,5 +13,8 @@
 		<div class="global-navigation-item account-navigation-container">
 			<?= $app->renderView( 'GlobalNavigationAccountNavigation', 'index' ) ?>
 		</div>
+		<? if ($isGameStarLogoEnabled): ?>
+			<a class="gamestar-logo" href="http://gamestar.de/"></a>
+		<? endif; ?>
 	</div>
 </nav>

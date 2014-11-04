@@ -54,6 +54,8 @@ define('ext.wikia.adEngine.template.skin', [
 				adSkinStyle.background = 'url("' + params.skinImage + '") no-repeat top center #' + params.backgroundColor;
 			}
 
+			document.body.className += ' background-ad';
+
 			adSkinStyle.position = 'fixed';
 			adSkinStyle.height = '100%';
 			adSkinStyle.width = '100%';

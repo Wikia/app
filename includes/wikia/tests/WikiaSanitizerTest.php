@@ -30,4 +30,25 @@ class WikiaSanitizerTest extends WikiaBaseTest {
 		];
 	}
 
+	/**
+	 * @dataProvider prepUrlDataProvider
+	 */
+	public function testPrepUrl( $description, $url, $expected ) {
+		$this->assertEquals(
+			$expected,
+			WikiaSanitizer::prepUrl( $url ),
+			$description
+		);
+	}
+
+	public function prepUrlDataProvider() {
+		return [
+			[ 'an empty string', '', '' ],
+			[ 'a http:// string', 'http://', '' ],
+			[ 'an URL with www. part', 'www.wikia.com', 'http://www.wikia.com' ],
+			[ 'an URL without www. part', 'wikia.com', 'http://wikia.com' ],
+			[ 'perfectly fine URL', 'http://www.wikia.com', 'http://www.wikia.com' ],
+		];
+	}
+
 }

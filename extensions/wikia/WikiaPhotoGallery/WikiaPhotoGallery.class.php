@@ -616,6 +616,12 @@ class WikiaPhotoGallery extends ImageGallery {
 			return false;
 		}
 
+		// If the request comes through parse API (api.php?action=parse) do not output "new galleries"
+		// (That's because "new galleries" requires extra JS to load/render them which makes such output not very useful)
+		if ( defined( 'MW_API' ) ) {
+			return false;
+		}
+
 		// Don't render navigational galleries.
 		if ( $this->getParam( 'navigation' ) ) {
 			return false;

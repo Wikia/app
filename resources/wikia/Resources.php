@@ -25,6 +25,7 @@ return [
 			'wikia.mw',
 			'wikia.nirvana',
 			'wikia.querystring',
+			'wikia.history',
 			'wikia.throbber',
 			'wikia.thumbnailer',
 			'wikia.tracker',
@@ -92,6 +93,13 @@ return [
 	],
 	'wikia.querystring' => [
 		'scripts' => 'resources/wikia/modules/querystring.js',
+		'dependencies' => [
+			'amd',
+			'wikia.window',
+		],
+	],
+	'wikia.history' => [
+		'scripts' => 'resources/wikia/modules/history.js',
 		'dependencies' => [
 			'amd',
 			'wikia.window',
@@ -182,6 +190,25 @@ return [
 	'wikia.mustache' => [
 		'scripts' => 'resources/wikia/libraries/mustache/mustache.js',
 		'dependencies' => 'amd',
+	],
+
+	// libraries and jQuery plugins
+	'wikia.underscore' => [
+		'scripts' => 'resources/wikia/modules/underscore.js',
+		'dependencies' => [
+			'amd',
+			'wikia.window',
+		]
+	],
+
+	'wikia.stickyElement' => [
+		'scripts' => 'resources/wikia/modules/stickyElement.js',
+		'dependencies' => [
+			'amd',
+			'wikia.window',
+			'wikia.document',
+			'wikia.underscore',
+		]
 	],
 
 	'wikia.handlebars' => [

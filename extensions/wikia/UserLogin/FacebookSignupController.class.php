@@ -73,9 +73,6 @@ class FacebookSignupController extends WikiaController {
 		$this->loginToken = UserLoginHelper::getSignupToken();
 
 		$this->specialUserLoginUrl = SpecialPage::getTitleFor('UserLogin')->getLocalUrl();
-
-		// FB feed option checkboxes
-		$this->fbFeedOptions = FBConnectPushEvent::getPreferencesToggles();
 	}
 
 	/**

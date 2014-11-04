@@ -1,14 +1,18 @@
-@import 'extensions/wikia/Venus/styles/article/images';
-@import 'extensions/wikia/Venus/styles/article/media';
-@import 'extensions/wikia/Venus/styles/mixins';
-@import 'extensions/wikia/Venus/styles/modules/lightboxVenus';
-@import 'extensions/wikia/Venus/styles/modules/throbberVenus';
-@import 'extensions/wikia/Venus/styles/typographyMixins';
-@import 'extensions/wikia/Venus/styles/variables';
 @import 'skins/shared/color';
 @import 'skins/shared/styles/infoboxes';
+@import 'extensions/wikia/Venus/styles/mixins';
+@import 'extensions/wikia/Venus/styles/typographyMixins';
+@import 'extensions/wikia/Venus/styles/variables';
+@import 'extensions/wikia/Venus/styles/z-index';
+@import 'extensions/wikia/Venus/styles/article/navigation';
+@import 'extensions/wikia/Venus/styles/article/images';
+@import 'extensions/wikia/Venus/styles/article/media';
+@import 'extensions/wikia/Venus/styles/article/infobox';
+@import 'extensions/wikia/Venus/styles/article/tables';
+@import 'extensions/wikia/Venus/styles/modules/lightboxVenus';
+@import 'extensions/wikia/Venus/styles/modules/throbberVenus';
 
-$placeholder-background-color: $color-left-article-nav; // only for prototype version
+$placeholder-background-color: $color-article-navigation-inactive; // only for prototype version
 $article-items-spacing: 40px;
 $header-without-cover-unit-spacing: 60px;
 
@@ -19,9 +23,20 @@ $header-without-cover-unit-spacing: 60px;
 		@include grid-column-width('medium', 8, $medium-content-padding - $content-border-width);
 		float: left;
 
+		h1,
+		span {
+			margin: 0;
+			word-break: break-all;
+		}
+
 		&:not(.cover-unit) {
 			margin-bottom: $header-without-cover-unit-spacing;
 			margin-top: $header-without-cover-unit-spacing;
+
+			h1,
+			span {
+				padding: 0 $medium-grid-column-padding 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding + $medium-grid-column-padding - $content-border-width;
+			}
 		}
 
 		&.cover-unit {
@@ -30,17 +45,16 @@ $header-without-cover-unit-spacing: 60px;
 			margin-bottom: $article-items-spacing;
 			position: relative;
 
-			h1 {
-				padding: 0 $medium-grid-column-padding $header-without-cover-unit-spacing / 2 $medium-content-padding + $medium-grid-column-padding - $content-border-width;
+			h1,
+			span {
+				bottom: 0;
+				padding: 0 $medium-grid-column-padding round($header-without-cover-unit-spacing / 2) $medium-content-padding + $medium-grid-column-padding - $content-border-width;
 				position: absolute;
 			}
-		}
 
-		h1 {
-			bottom: 0;
-			margin: 0;
-			padding: 0 $medium-grid-column-padding 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding + $medium-grid-column-padding - $content-border-width;
-			word-break: break-all;
+			span {
+				padding-bottom: round($header-without-cover-unit-spacing / 8);
+			}
 		}
 	}
 }
@@ -67,14 +81,20 @@ $header-without-cover-unit-spacing: 60px;
 			width: 38px;
 		}
 	}
-
-
 }
 
 .mw-content-text {
 	clear: left;
 	margin: 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width;
 	padding: 0 $medium-grid-column-padding;
+
+	&.clear-none {
+		 clear: none;
+	}
+
+	.clear-left {
+		clear: left;
+	}
 
 	.editsection {
 		@include font-size-xxs;
@@ -90,9 +110,23 @@ $header-without-cover-unit-spacing: 60px;
 
 			color: $color-links;
 		}
+
+		// START
+		// Following lines are fix for displaying underlines on :before element in IE-8-11
+		// Source: http://stackoverflow.com/a/21902566/1607968 and http://jsfiddle.net/95C2M/
+		a { text-decoration: none; }
+		a:hover { text-decoration: underline; }
+		a:before { text-decoration: underline; display: inline-block; }
+		a:before, a:hover:before { text-decoration: none; }
+		// END
 	}
 
-	h1, h2, h3, h4, h5, h6 {
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
 		overflow: hidden;
 	}
 
@@ -106,6 +140,10 @@ $header-without-cover-unit-spacing: 60px;
 
 		.mw-headline {
 			padding-left: $medium-grid-gutter;
+		}
+
+		.editsection {
+			padding-right: $medium-grid-gutter;
 		}
 	}
 
@@ -167,7 +205,7 @@ $header-without-cover-unit-spacing: 60px;
 	}
 
 	li {
-		margin-top: 16px;
+		margin-top: 10px;
 		padding-left: 13px;
 	}
 
@@ -185,16 +223,6 @@ $header-without-cover-unit-spacing: 60px;
 }
 
 /* FOR PROTOTYPE/TESTING ONLY */
-.infobox-test {
-	@include grid-column-width('medium', 4, -2 * $medium-grid-column-padding);
-	background-color: $placeholder-background-color;
-	clear: right;
-	display: block;
-	float: right;
-	height: 500px;
-	margin: 0 $medium-grid-column-padding + $medium-content-padding - $content-border-width 20px $medium-grid-gutter + $medium-grid-column-padding;
-	padding: 10px;
-}
 
 /* CON-1982: use Oasis font-size in prototype phase */
 .infobox {
@@ -221,11 +249,6 @@ $header-without-cover-unit-spacing: 60px;
 		}
 	}
 
-	.left-nav {
-		margin-left: $large-content-padding - $content-border-width;
-		width: $large-grid-column;
-	}
-
 	.mw-content-text {
 		margin: 0 $large-grid-column + $large-grid-gutter + $large-content-padding - $content-border-width;
 		padding: 0 $large-grid-column-padding;
@@ -238,13 +261,18 @@ $header-without-cover-unit-spacing: 60px;
 			.mw-headline {
 				padding-left: $large-grid-gutter;
 			}
+
+			.editsection {
+				padding-right: $large-grid-gutter;
+			}
 		}
 
 		h3 {
 			margin-bottom: 15px;
 		}
 
-		h2, h3 {
+		h2,
+		h3 {
 			margin-top: 30px;
 		}
 
@@ -264,19 +292,13 @@ $header-without-cover-unit-spacing: 60px;
 		}
 
 		li {
-			margin-top: 18px;
+			margin-top: 14px;
 			padding-left: 14px;
 		}
 
 		dd {
 			margin-left: $large-grid-column - 2 * $large-grid-column-padding;
 		}
-	}
-
-	.infobox-test {
-		@include grid-column-width('large', 4, -2 * $large-grid-column-padding);
-		margin: 0 $large-grid-column-padding + $large-content-padding - $content-border-width 20px $large-grid-gutter + $large-grid-column-padding;
-		padding: $large-grid-column-padding;
 	}
 }
 
@@ -299,11 +321,6 @@ $header-without-cover-unit-spacing: 60px;
 		}
 	}
 
-	.left-nav {
-		margin-left: $small-content-padding - $content-border-width;
-		width: $small-grid-column;
-	}
-
 	.mw-content-text {
 		margin: 0 $small-content-padding - $content-border-width 0 $small-grid-column + $small-grid-gutter + $small-content-padding - $content-border-width;
 		padding: 0 $small-grid-column-padding;
@@ -315,6 +332,10 @@ $header-without-cover-unit-spacing: 60px;
 			.mw-headline {
 				padding-left: $small-grid-gutter;
 			}
+
+			.editsection {
+				padding-left: $small-grid-gutter;
+			}
 		}
 
 		p {
@@ -323,6 +344,7 @@ $header-without-cover-unit-spacing: 60px;
 
 		ol,
 		ul {
+			margin-top: 14px;
 			padding-left: 33px;
 		}
 
@@ -332,18 +354,11 @@ $header-without-cover-unit-spacing: 60px;
 		}
 
 		li {
-			margin-top: 10px;
 			padding-left: 4px;
 		}
 
 		dd {
 			margin-left: $small-grid-column - 2 * $small-grid-column-padding;
 		}
-	}
-
-	.infobox-test {
-		@include grid-column-width('small', 5);
-		margin: 0 $small-content-padding - $content-border-width 20px $small-grid-gutter + $small-grid-column-padding;
-		padding: $small-grid-column-padding;
 	}
 }

@@ -23,6 +23,7 @@ class MonetizationModuleHelper extends WikiaModel {
 	const API_VERSION = 'v1';
 	const API_DISPLAY = 'display/api/';
 	const IN_CONTENT_KEYWORD = '<h2>';
+	const TOC_KEYWORD = 'id="toc"';
 
 	const FONT_COLOR_DARK_THEME = '#d5d4d4';
 	const FONT_COLOR_LIGHT_THEME = '#3a3a3a';
@@ -247,21 +248,52 @@ class MonetizationModuleHelper extends WikiaModel {
 	 * @param array $monetizationUnits
 	 * @return string
 	 */
-	public static function insertIncontentUnit( $body, $monetizationUnits ) {
+	public static function insertIncontentUnit( $body, &$monetizationUnits ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( !empty( $monetizationUnits[self::SLOT_TYPE_IN_CONTENT] ) ) {
-			$pos1 = strpos( $body, self::IN_CONTENT_KEYWORD );
-			if ( $pos1 === false ) {
-				$body .= $monetizationUnits[self::SLOT_TYPE_IN_CONTENT];
+		// Check for in_content ad
+		if ( empty( $monetizationUnits[self::SLOT_TYPE_IN_CONTENT] ) ) {
+			wfProfileOut( __METHOD__ );
+			return $body;
+		}
+
+		$keywordLength = strlen( self::IN_CONTENT_KEYWORD );
+		$pos1 = strpos( $body, self::IN_CONTENT_KEYWORD );
+		$pos2 = ( $pos1 === false ) ? false : strpos( $body, self::IN_CONTENT_KEYWORD, $pos1 + $keywordLength );
+
+		// Check for the 2nd <H2> tag
+		if ( $pos2 !== false ) {
+			// The 2nd <H2> tag exists. Check for TOC.
+			$posTOC = strpos( $body, self::TOC_KEYWORD );
+			if ( $posTOC === false ) {
+				// TOC not exist. Insert the ad above the 2nd <H2> tag.
+				$body = substr_replace( $body, $monetizationUnits[self::SLOT_TYPE_IN_CONTENT], $pos2, 0 );
+				wfProfileOut( __METHOD__ );
+				return $body;
 			} else {
-				$pos2 = strpos( $body, self::IN_CONTENT_KEYWORD, $pos1 + strlen( self::IN_CONTENT_KEYWORD ) );
-				if ( $pos2 === false ) {
-					$body .= $monetizationUnits[self::SLOT_TYPE_IN_CONTENT];
-				} else {
-					$body = substr_replace( $body, $monetizationUnits[self::SLOT_TYPE_IN_CONTENT], $pos2, 0 );
+				// TOC exists. Check for the 3rd <H2> tag.
+				$pos3 = strpos( $body, self::IN_CONTENT_KEYWORD, $pos2 + $keywordLength );
+				if ( $pos3 !== false ) {
+					// The 3rd <H2> tag exists. Insert the ad above the 3rd <H2> tag.
+					$body = substr_replace( $body, $monetizationUnits[self::SLOT_TYPE_IN_CONTENT], $pos3, 0 );
+					wfProfileOut( __METHOD__ );
+					return $body;
 				}
 			}
+		}
+
+		// Otherwise, append the ad at the end of content
+		$body .= $monetizationUnits[self::SLOT_TYPE_IN_CONTENT];
+
+		// Hide the below_category ad if append in_content ad.
+		if ( array_key_exists( self::SLOT_TYPE_BELOW_CATEGORY, $monetizationUnits ) ) {
+			$loggingParams = [
+				'method' => __METHOD__,
+				'adUnits' => $monetizationUnits,
+				'removedSlot' => self::SLOT_TYPE_BELOW_CATEGORY,
+			];
+			unset( $monetizationUnits[self::SLOT_TYPE_BELOW_CATEGORY] );
+			WikiaLogger::instance()->info( "MonetizationModule: remove below_category ad", $loggingParams );
 		}
 
 		wfProfileOut( __METHOD__ );

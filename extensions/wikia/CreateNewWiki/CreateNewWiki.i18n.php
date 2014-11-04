@@ -2349,6 +2349,7 @@ $messages['pfl'] = array(
  * @author Chrumps
  * @author NexGaming
  * @author Sovq
+ * @author Vengir
  * @author Wedkarski
  * @author Woytecr
  */
@@ -2388,6 +2389,8 @@ $messages['pl'] = array(
 	'cnw-desc-tip1-creative' => 'Użyć tego miejsca, aby opowiedzieć innym o swojej wiki.',
 	'cnw-desc-tip2' => 'Wskazówka 2',
 	'cnw-desc-tip2-creative' => 'Podziel się z innymi szczegółami o Twojej wiki',
+	'cnw-desc-select-vertical' => 'Wybierz kategorię Huba',
+	'cnw-desc-select-categories' => 'Wybierz dodatkowe kategorie',
 	'cnw-desc-select-one' => 'Wybierz',
 	'cnw-desc-all-ages' => 'Czy ta wikia przeznaczona jest dla dzieci?',
 	'cnw-desc-tip-all-ages' => 'Czy to jest wiki o tematyce, którą dzieci będą zainteresowane? W celu zgodności z prawem Stanów Zjednoczonych obserwujemy wiki o tematyce kierowanej bezpośrednio do dzieci w wieku 12 lat i mniej.', # Fuzzy
@@ -2531,6 +2534,7 @@ $messages['ps'] = array(
  * @author Luckas
  * @author Malafaya
  * @author SandroHc
+ * @author Waldir
  */
 $messages['pt'] = array(
 	'createnewwiki-desc' => 'Assistente de criação de wikis',
@@ -2561,16 +2565,16 @@ $messages['pt'] = array(
 	'cnw-userauth-marketing-heading' => 'Não tens nenhuma conta?',
 	'cnw-userauth-marketing-body' => 'Precisas de uma conta para criar uma wiki na Wikia. Só demora um minuto para registar-te!',
 	'cnw-userauth-signup-button' => 'Regista-te',
-	'cnw-desc-headline' => 'Qual é o assunto da tua wiki?',
-	'cnw-desc-creative' => 'Descreve o teu assunto',
+	'cnw-desc-headline' => 'Qual é o assunto da tua wiki?', # Fuzzy
+	'cnw-desc-creative' => 'Descreve o teu assunto', # Fuzzy
 	'cnw-desc-placeholder' => 'Isto irá aparecer na página principal da tua wiki.',
 	'cnw-desc-tip1' => 'Sugestão',
-	'cnw-desc-tip1-creative' => 'Usa este espaço para descrever a tua wiki aos visitantes numa frase ou duas',
+	'cnw-desc-tip1-creative' => 'Usa este espaço para descrever a tua wiki aos visitantes numa frase ou duas', # Fuzzy
 	'cnw-desc-tip2' => 'Conselho',
 	'cnw-desc-tip2-creative' => 'Dá aos visitantes detalhes específicos sobre o assunto da tua wiki',
 	'cnw-desc-select-one' => 'Selecciona uma',
-	'cnw-desc-all-ages' => 'Todas as idades',
-	'cnw-desc-tip-all-ages' => 'Esta wiki é sobre um tema infantil? Para obedecer à lei dos Estados Unidos, monitorizamos as wikis sobre temas de interesse para crianças até aos 12 anos de idade.',
+	'cnw-desc-all-ages' => 'Esta wikia é dirigida a crianças?',
+	'cnw-desc-tip-all-ages' => 'Esta wikia é sobre um tema infantil? Para obedecer à lei dos Estados Unidos, monitorizamos as wikias sobre temas de interesse para crianças até aos 12 anos de idade.',
 	'cnw-desc-default-lang' => 'A tua wiki será em $1',
 	'cnw-desc-change-lang' => 'alterar',
 	'cnw-desc-lang' => 'Língua',
@@ -2602,6 +2606,7 @@ $messages['pt'] = array(
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Caio1478
+ * @author Guilhermemau
  * @author JM Pessanha
  * @author Jefersonmoraes
  * @author Luckas
@@ -2617,7 +2622,7 @@ $messages['pt-br'] = array(
 	'cnw-title' => 'Criar uma Nova Wiki',
 	'cnw-name-wiki-headline' => 'Iniciar uma Wiki',
 	'cnw-name-wiki-creative' => 'A Wikia é o melhor lugar para criar um site e desenvolver uma comunidade em torno de um tema do seu agrado.',
-	'cnw-name-wiki-label' => 'Nome da sua wikia',
+	'cnw-name-wiki-label' => 'Nome da sua wiki',
 	'cnw-name-wiki-wiki' => 'Wikia',
 	'cnw-name-wiki-domain-label' => 'Dê um endereço à sua wikia',
 	'cnw-name-wiki-submit-error' => 'Ops! Você precisa preencher ambas as caixas acima para continuar.',
