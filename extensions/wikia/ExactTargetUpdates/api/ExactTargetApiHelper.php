@@ -18,29 +18,29 @@ class ExactTargetApiHelper {
 	}
 
 	/**
-	 * Prepares an array of SoapVar objects by looping over an array of objects
-	 * @param array $aObjects
-	 * @param string $objectType Type of ExactTarget object to be wrapped
-	 * @return array
-	 * @link https://help.exacttarget.com/en/technical_library/web_service_guide/objects/ ExactTarget Objects types
-	 */
-	public function prepareSoapVars( $aObjects, $objectType = 'DataExtensionObject' ) {
-		$aSoapVars = [];
-		foreach( $aObjects as $object ) {
-			$aSoapVars[] = $this->wrapToSoapVar( $object, $objectType );
-		}
-		return $aSoapVars;
-	}
-
-	/**
 	 * Wraps an ExactTarget object to a SoapVar
 	 * @param $object
 	 * @param string $objectType Type of ExactTarget object to be wrapped
 	 * @return SoapVar
 	 * @link https://help.exacttarget.com/en/technical_library/web_service_guide/objects/ ExactTarget Objects types
 	 */
-	public function wrapToSoapVar( $object, $objectType = 'DataExtensionObject' ) {
-		return new \SoapVar( $object, SOAP_ENC_OBJECT, $objectType, 'http://exacttarget.com/wsdl/partnerAPI' );
+	public function wrapToSoapVar( $oObject, $sObjectType = 'DataExtensionObject' ) {
+		return new \SoapVar( $oObject, SOAP_ENC_OBJECT, $sObjectType, 'http://exacttarget.com/wsdl/partnerAPI' );
+	}
+
+	/**
+	 * Prepares an array of SoapVar objects by looping over an array of objects
+	 * @param array $aObjects
+	 * @param string $objectType Type of ExactTarget object to be wrapped
+	 * @return array
+	 * @link https://help.exacttarget.com/en/technical_library/web_service_guide/objects/ ExactTarget Objects types
+	 */
+	public function prepareSoapVars( $aObjects, $sObjectType = 'DataExtensionObject' ) {
+		$aSoapVars = [];
+		foreach( $aObjects as $object ) {
+			$aSoapVars[] = $this->wrapToSoapVar( $object, $sObjectType );
+		}
+		return $aSoapVars;
 	}
 
 	/**
@@ -55,28 +55,40 @@ class ExactTargetApiHelper {
 		return $oRequest;
 	}
 
-	public function wrapRetrieveRequest( $sObjectType, Array $aProperties ) {
+	/**
+	 * Returns a new RetrieveRequest object from prepared params
+	 * @param  Array  $aCallObjectParams    An array in the valid format (see API interfaces)
+	 * @return ExactTarget_RetrieveRequest  An ExactTarget's request object
+	 */
+	public function wrapRetrieveRequest( Array $aCallObjectParams ) {
 		$oRetrieveRequest = new \ExactTarget_RetrieveRequest();
-		$oRetrieveRequest->ObjectType = $sObjectType;
-		$oRetrieveRequest->Properties = $aProperties;
-
+		$oRetrieveRequest->ObjectType = $aCallObjectParams['ObjectType'];
+		$oRetrieveRequest->Properties = $aCallObjectParams['Properties'];
 		return $oRetrieveRequest;
 	}
 
-	public function wrapRetrieveRequestMsg( $oRetrieveRequest ) {
-		$oRetrieveRequestMsg = new \ExactTarget_RetrieveRequestMsg();
-		$oRetrieveRequestMsg->RetrieveRequest = $oRetrieveRequest;
-
-		return $oRetrieveRequestMsg;
+	/**
+	 * Returns a new SimpleFilterPart object from given parameters
+	 * @param  Array  $aSimpleFilterParams  An array with a Property and a Value to match
+	 * @return ExactTarget_SimpleFilterPart object
+	 */
+	public function wrapSimpleFilterPart( Array $aSimpleFilterParams ) {
+		$oSimpleFilterPart = new \ExactTarget_SimpleFilterPart();
+		$oSimpleFilterPart->Value = $aSimpleFilterParams['Value'];
+		$oSimpleFilterPart->SimpleOperator = \ExactTarget_SimpleOperators::equals;
+		$oSimpleFilterPart->Property = $aSimpleFilterParams['Property'];
+		return $oSimpleFilterPart;
 	}
 
-	public function wrapSimpleFilterPart( $sProperty, $sValue ) {
-		$oSimpleFilterPart = new \ExactTarget_SimpleFilterPart();
-		$oSimpleFilterPart->Value = $sValue;
-		$oSimpleFilterPart->SimpleOperator = \ExactTarget_SimpleOperators::equals;
-		$oSimpleFilterPart->Property = $sProperty;
-
-		return $oSimpleFilterPart;
+	/**
+	 * Returns a new RetrieveRequestMsg object from prepared params
+	 * @param  ExactTarget_RetrieveRequest $oRetrieveRequest  A RetrieveRequest object.
+	 * @return ExactTarget_RetrieveRequestMsg object
+	 */
+	public function wrapRetrieveRequestMsg( \ExactTarget_RetrieveRequest $oRetrieveRequest ) {
+		$oRetrieveRequestMsg = new \ExactTarget_RetrieveRequestMsg();
+		$oRetrieveRequestMsg->RetrieveRequest = $oRetrieveRequest;
+		return $oRetrieveRequestMsg;
 	}
 
 	/**
@@ -93,11 +105,15 @@ class ExactTargetApiHelper {
 		return $oRequest;
 	}
 
+	/**
+	 * Returns a new DeleteRequest object from given parameters
+	 * @param  Array  $aSimpleFilterParams  An array with a Property and a Value to match
+	 * @return ExactTarget_SimpleFilterPart object
+	 */
 	public function wrapDeleteRequest( $aSoapVars ) {
 		$oDeleteRequest = new \ExactTarget_DeleteRequest();
 		$oDeleteRequest->Objects = $aSoapVars;
 		$oDeleteRequest->Options = new \ExactTarget_DeleteOptions();
-
 		return $oDeleteRequest;
 	}
 
@@ -133,13 +149,13 @@ class ExactTargetApiHelper {
 	}
 
 	/**
-	 * Creates an array of DataExtension objects
-	 * based on passed parameters.
+	 * Creates an array of DataExtension objects based on passed parameters
 	 * @param  array  $aObjectsParams An array of parameters of DataExtension objects'
 	 * @return array                  An array of DataExtension objects
 	 */
 	public function prepareDataExtensionObjects( $aObjectsParams ) {
 		$aDE = [];
+
 		foreach( $aObjectsParams as $aObjectParams ) {
 			$oDE = new \ExactTarget_DataExtensionObject();
 			$oDE->CustomerKey = $aObjectParams[ 'CustomerKey' ];
@@ -162,18 +178,27 @@ class ExactTargetApiHelper {
 
 			$aDE[] = $oDE;
 		}
+
 		return $aDE;
 	}
-	
-	public function prepareSubscriberObjects( $aObjects ) {
+
+	/**
+	 * Creates an array of Subscriber objects based on passed parameters
+	 * @param  array  $aObjectsParams An array of parameters of Subscriber objects'
+	 * @return array                  An array of Subscriber objects
+	 */
+	public function prepareSubscriberObjects( $aObjectsParams ) {
 		$aSubscribers = [];
 
-		foreach ( $aObjects as $aSub ) {
+		foreach ( $aObjectsParams as $aSub ) {
 			$oSubscriber = new \ExactTarget_Subscriber();
-			$oSubscriber->SubscriberKey = $aSub['SubscriberKey'];
-			$oSubscriber->EmailAddress = $aSub['EmailAddress'];
-			
-			$aSubscribers[] = $this->wrapToSoapVar( $oSubscriber, 'Subscriber' );
+			if ( isset( $aSub['SubscriberKey'] ) ) {
+				$oSubscriber->SubscriberKey = $aSub['SubscriberKey'];
+			}
+			if ( isset( $aSub['EmailAddress'] ) ) {
+				$oSubscriber->EmailAddress = $aSub['EmailAddress'];
+			}
+			$aSubscribers[] = $oSubscriber;
 		}
 
 		return $aSubscribers;

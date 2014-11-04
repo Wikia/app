@@ -13,10 +13,10 @@ class ExactTargetUserTaskHelper {
 	public function prepareUserRetrieveParams( $aProperties, $sFilterProperty, $aFilterValues ) {
 		/* Get Customer Keys specific for production or development */
 		$aCustomerKeys = $this->getCustomerKeys();
-		$sCustomerKey = $aCustomerKeys[ 'user' ];
+
 		$aApiParams = [
 			'DataExtension' => [
-				'CustomerKey' => $sCustomerKey,
+				'ObjectType' => "DataExtensionObject[{$aCustomerKeys[ 'user' ]}]",
 				'Properties' => $aProperties,
 			],
 			'SimpleFilterPart' => [
@@ -31,8 +31,8 @@ class ExactTargetUserTaskHelper {
 	/**
 	 * Prepares array of params for ExactTarget API for creating DataExtension objects for user table
 	 * Assumes $aUserData has user_id key that will be treated as filter to update data
-	 * @param array $aUserData user key value array
-	 * @return array
+	 * @param  array $aUserData  User key value array
+	 * @return array             Array of DataExtension data arrays (nested arrays)
 	 */
 	public function prepareUserUpdateParams( array $aUserData ) {
 		$userId = $this->extractUserIdFromData( $aUserData );
@@ -52,6 +52,11 @@ class ExactTargetUserTaskHelper {
 		return $aApiParams;
 	}
 
+	/**
+	 * Prepares data for a user record removal
+	 * @param  int $iUserId  User's ID
+	 * @return array         Array of DataExtension data arrays (nested arrays)
+	 */
 	public function prepareUserDeleteParams( $iUserId ) {
 		/* Get Customer Keys specific for production or development */
 		$aCustomerKeys = $this->getCustomerKeys();
@@ -71,11 +76,35 @@ class ExactTargetUserTaskHelper {
 		return $aApiParams;
 	}
 
+	/**
+	 * Prepares Subscriber's object data
+	 * @param  string $sUserEmail  User's email
+	 * @return array               Array of Subscriber data arrays (nested arrays)
+	 */
 	public function prepareSubscriberData( $sUserEmail ) {
 		$aApiParams = [
-			[
-				'SubscriberKey' => $sUserEmail,
-				'EmailAddress' => $sUserEmail,
+			'Subscriber' => [
+				[
+					'SubscriberKey' => $sUserEmail,
+					'EmailAddress' => $sUserEmail,
+				],
+			],
+		];
+
+		return $aApiParams;
+	}
+
+	/**
+	 * Prepares Subscriber's object data for delete
+	 * @param  string $sUserEmail  User's email
+	 * @return array               Array of Subscriber data arrays (nested arrays)
+	 */
+	public function prepareSubscriberDeleteData( $sUserEmail ) {
+		$aApiParams = [
+			'Subscriber' => [
+				[
+					'SubscriberKey' => $sUserEmail,
+				],
 			],
 		];
 
@@ -151,23 +180,14 @@ class ExactTargetUserTaskHelper {
 	}
 
 	/**
-	 * Get Customer Keys specific for production or development
+	 * Get Customer Keys
 	 * CustomerKey is a key that indicates Wikia table reflected by DataExtension
 	 */
 	protected function getCustomerKeys() {
-		global $wgExactTargetDevelopmentMode;
-
-		if ( $wgExactTargetDevelopmentMode ) {
-			$aCustomerKeys = [
-				'user' => 'user_dev',
-				'user_properties' => 'user_properties_dev',
-			];
-		} else {
-			$aCustomerKeys = [
-				'user' => 'user',
-				'user_properties' => 'user_properties',
-			];
-		}
+		$aCustomerKeys = [
+			'user' => 'user',
+			'user_properties' => 'user_properties',
+		];
 		return $aCustomerKeys;
 	}
 }

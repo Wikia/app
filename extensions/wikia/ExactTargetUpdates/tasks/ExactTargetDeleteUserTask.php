@@ -21,10 +21,10 @@ class ExactTargetDeleteUserTask extends BaseTask {
 	 */
 	public function deleteSubscriber( $iUserId ) {
 		$oRetrieveUserHelper = $this->getRetrieveUserHelper();
-		$sEmail = $oRetrieveUserHelper->getUserEmail( $iUserId );
-		if ( !$this->isEmailInUse( $sEmail, $iUserId ) ) {
+		$sUserEmail = $oRetrieveUserHelper->getUserEmail( $iUserId );
+		if ( !$this->isEmailInUse( $sUserEmail, $iUserId ) ) {
 			$oHelper = $this->getHelper();
-			$aApiParams = $oHelper->prepareSubscriberData( $sEmail );
+			$aApiParams = $oHelper->prepareSubscriberDeleteData( $sUserEmail );
 			$this->doDeleteSubscriber( $aApiParams );
 		}
 	}
@@ -55,7 +55,7 @@ class ExactTargetDeleteUserTask extends BaseTask {
 	 * that reflects Wikia entry from user_properties table
 	 * @param int $iUserId
 	 */
-	public function deleteUserPropertiesData( $iUserId ) {
+	public function deleteUserProperties( $iUserId ) {
 		$oHelper = $this->getHelper();
 		$aApiParams = $oHelper->prepareUserPropertiesDeleteParams( $iUserId );
 		$oApiDataExtension = $this->getApiDataExtension();

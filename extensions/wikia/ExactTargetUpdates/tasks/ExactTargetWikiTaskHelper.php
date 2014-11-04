@@ -3,6 +3,11 @@ namespace Wikia\ExactTarget;
 
 class ExactTargetWikiTaskHelper {
 
+	/**
+	 * Merges tables with data for city_list and city_cat_mapping
+	 * @param  int $iCityId  A wiki's ID
+	 * @return array         An array with DataExtension objects data in a valid format
+	 */
 	public function prepareDataExtensionsForCreate( $iCityId ) {
 		$aWikiDataExtension = $this->prepareWikiDataExtensionForCreate( $iCityId );
 		$aCityCatMappingDataExtension = $this->prepareCityCatMappingDataExtensionForCreate( $iCityId );
@@ -16,6 +21,11 @@ class ExactTargetWikiTaskHelper {
 		return $aDataExtensionsForCreate;
 	}
 
+	/**
+	 * Prepares DataExtension objects data from a city_list record
+	 * @param  int $iCityId  A wiki's ID
+	 * @return array         An array with city_list DataExtension objects data in a valid format
+	 */
 	public function prepareWikiDataExtensionForCreate( $iCityId ) {
 		$aCustomerKeys = $this->getCustomerKeys();
 
@@ -52,7 +62,7 @@ class ExactTargetWikiTaskHelper {
 			'city_cluster' => $oWiki->city_cluster,
 			'city_last_timestamp' => $oWiki->city_last_timestamp,
 			'city_founding_ip' => $oWiki->city_founding_ip,
-			// 'city_vertical' => $oWiki->city_vertical,
+			'city_vertical' => $oWiki->city_vertical,
 		];
 
 		$aWikiDataExtension = [
@@ -65,6 +75,11 @@ class ExactTargetWikiTaskHelper {
 		return $aWikiDataExtension;
 	}
 
+	/**
+	 * Prepares DataExtension objects data for Update from a city_list record
+	 * @param  int $iCityId  A wiki's ID
+	 * @return array         An array with city_list DataExtension objects data in a valid format
+	 */
 	public function prepareWikiDataExtensionForUpdate( $iCityId ) {
 		$aCustomerKeys = $this->getCustomerKeys();
 
@@ -98,6 +113,11 @@ class ExactTargetWikiTaskHelper {
 		return $aWikiDataExtension;
 	}
 
+	/**
+	 * Prepares DataExtension objects data for Delete from a city_list record
+	 * @param  int $iCityId  A wiki's ID
+	 * @return array         An array with city_list DataExtension objects data in a valid format
+	 */
 	public function prepareWikiDataExtensionForDelete( $iCityId ) {
 		$aCustomerKeys = $this->getCustomerKeys();
 
@@ -117,6 +137,11 @@ class ExactTargetWikiTaskHelper {
 		return $aWikiDataExtension;
 	}
 
+	/**
+	 * Prepares DataExtension objects data from a city_cat_mapping record
+	 * @param  int $iCityId  A wiki's ID
+	 * @return array         An array with city_cat_mapping DataExtension objects data in a valid format
+	 */
 	public function prepareCityCatMappingDataExtensionForCreate( $iCityId ) {
 		$aCityCatMappingDataExtension = [];
 
@@ -137,23 +162,33 @@ class ExactTargetWikiTaskHelper {
 		return $aCityCatMappingDataExtension;
 	}
 
+	/**
+	 * Prepares DataExtension objects data for Retrieve from a city_cat_mapping record
+	 * @param  int $iCityId  A wiki's ID
+	 * @return array         An array with city_cat_mapping DataExtension objects data in a valid format
+	 */
 	public function prepareCityCatMappingDataExtensionForRetrieve( $iCityId ) {
 		$aCustomerKeys = $this->getCustomerKeys();
 
 		$aCityCatMappingDataForRetrieve = [
 			'DataExtension' => [
-				'CustomerKey' => $aCustomerKeys['city_cat_mapping'],
+				'ObjectType' => "DataExtension[{$aCustomerKeys['city_cat_mapping']}]",
 				'Properties' => [ 'city_id', 'cat_id' ],
 			],
 			'SimpleFilterPart' => [
-				'Value' => $iCityId,
 				'Property' => 'city_id',
+				'Value' => $iCityId,
 			],
 		];
 
 		return $aCityCatMappingDataForRetrieve;
 	}
 
+	/**
+	 * Prepares DataExtension objects data for Delete from a city_cat_mapping record
+	 * @param  int $iCityId  A wiki's ID
+	 * @return array         An array with city_cat_mapping DataExtension objects data in a valid format
+	 */
 	public function prepareCityCatMappingDataExtensionForDelete( $oResults ) {
 		$aCityCatMappingDataForDelete = [
 			'DataExtension' => [],
@@ -197,9 +232,9 @@ class ExactTargetWikiTaskHelper {
 	 * CustomerKey is a key that indicates Wikia table reflected by DataExtension
 	 */
 	private function getCustomerKeys() {
-		global $wgExactTargetDevelopmentMode;
+		global $wgDevelEnvironment;
 
-		if ( $wgExactTargetDevelopmentMode ) {
+		if ( $wgDevelEnvironment ) {
 			$aCustomerKeys = [
 				'city_list' => 'city-list',
 				'city_cat_mapping' => 'city-cat-mapping',

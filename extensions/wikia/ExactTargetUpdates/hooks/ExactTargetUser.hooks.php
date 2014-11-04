@@ -10,7 +10,7 @@ class ExactTargetUserHooks {
 	 * @param string $sNewUsername
 	 * @return bool
 	 */
-	public function onAfterAccountRename( $iUserId, $sOldUsername, $sNewUsername ) {
+	public function onUserRenameAfterAccountRename( $iUserId, $sOldUsername, $sNewUsername ) {
 		/* Prepare params */
 		$aUserData = [
 			'user_id' => $iUserId,
@@ -128,6 +128,10 @@ class ExactTargetUserHooks {
 		$task->queue();
 	}
 
+	/**
+	 * A simple getter for an object of ExactTargetUserHooksHelper class
+	 * @return  object ExactTargetUserHooksHelper
+	 */
 	private function getUserHelper() {
 		return new ExactTargetUserHooksHelper();
 	}

@@ -158,9 +158,11 @@ class ExactTargetCreateUserTaskTest extends WikiaBaseTest {
 		$sUserEmail = 'email@email.com';
 
 		$aApiParams = [
-			[
-				'SubscriberKey' => $sUserEmail,
-				'EmailAddress' => $sUserEmail,
+			'Subscriber' => [
+				[
+					'SubscriberKey' => $sUserEmail,
+					'EmailAddress' => $sUserEmail
+				]
 			],
 		];
 
