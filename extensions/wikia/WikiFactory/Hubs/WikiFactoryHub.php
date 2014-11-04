@@ -397,6 +397,11 @@ class WikiFactoryHub extends WikiaModel {
 		$name = $verticals[$vertical_id]['name'];
 		WikiFactory::log( WikiFactory::LOG_CATEGORY, "Vertical changed to $name. $reason", $city_id );
 
+		$aHookParams = [
+			'city_id' => $city_id,
+			'vertical_id' => $vertical_id,
+		];
+		wfRunHooks( "WikiFactoryVerticalSet", array( $aHookParams ) );
 	}
 
 	/**
@@ -425,6 +430,12 @@ class WikiFactoryHub extends WikiaModel {
 			$dbw->commit();
 
 			$this->clearCache( $city_id );
+
+			$aHookParams = [
+				'city_id' => $city_id,
+				'categories' => $categories,
+			];
+			wfRunHooks( 'CityCatMappingUpdated', array( $aHookParams ) );
 		}
 
 		# pretty clunky way to load all the categories just for the name, maybe refactor this?
@@ -439,7 +450,6 @@ class WikiFactoryHub extends WikiaModel {
 		}
 
 		WikiFactory::log( WikiFactory::LOG_CATEGORY, "Categories changed to $message. $reason", $city_id );
-
 	}
 
 	// Add 1 category
