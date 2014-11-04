@@ -17,7 +17,7 @@ require(
 		}
 
 		// initialize TOC in left navigation
-		tocModule.init('.left-nav li:first-child');
+		tocModule.init('leftNavToc');
 
 		//scan for tables in article and if table is too wide add scrollbar
 		scanTables();
