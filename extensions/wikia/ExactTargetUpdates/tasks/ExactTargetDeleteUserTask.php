@@ -55,7 +55,7 @@ class ExactTargetDeleteUserTask extends BaseTask {
 	 * that reflects Wikia entry from user_properties table
 	 * @param int $iUserId
 	 */
-	public function deleteUserPropertiesData( $iUserId ) {
+	public function deleteUserProperties( $iUserId ) {
 		$oHelper = $this->getHelper();
 		$aApiParams = $oHelper->prepareUserPropertiesDeleteParams( $iUserId );
 		$oApiDataExtension = $this->getApiDataExtension();
