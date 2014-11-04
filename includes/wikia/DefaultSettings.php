@@ -1353,7 +1353,7 @@ $wgAdDriverForceLiftiumAd = false;
  * @name $wgAdDriverEnableAdsInMaps
  * Whether to display ads within interactive maps
  */
-$wgAdDriverEnableAdsInMaps = false;
+$wgAdDriverEnableAdsInMaps = true;
 
 /**
  * @name $wgAdDriverRubiconRTPConfig
