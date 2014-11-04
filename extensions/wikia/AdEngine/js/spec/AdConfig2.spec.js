@@ -27,7 +27,7 @@ describe('AdConfig2', function () {
 		};
 	}
 
-	function mockRtp(called, tier) {
+	function mockRtp(config, called, tier) {
 		return {
 			wasCalled: function () {
 				return called;
@@ -37,6 +37,9 @@ describe('AdConfig2', function () {
 			},
 			getTier: function () {
 				return tier;
+			},
+			getConfig: function () {
+				return config;
 			}
 		};
 	}
@@ -51,9 +54,9 @@ describe('AdConfig2', function () {
 				return;
 			}
 		},
-		rtpMock = mockRtp(),
-		rtpMockWithTier = mockRtp(true, 5),
-		rtpMockWithoutTier = mockRtp(true),
+		rtpMock = mockRtp({ slotname: [ 'HOME_TOP_RIGHT_BOXAD' ] }),
+		rtpMockWithTier = mockRtp({ slotname: [ 'HOME_TOP_RIGHT_BOXAD' ] }, true, 5),
+		rtpMockWithoutTier = mockRtp({ slotname: [ 'HOME_TOP_RIGHT_BOXAD' ] }, true),
 
 	// Fixtures:
 		highValueSlot = 'TOP_LEADERBOARD',
