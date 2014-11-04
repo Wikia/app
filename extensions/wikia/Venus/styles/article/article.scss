@@ -59,30 +59,6 @@ $header-without-cover-unit-spacing: 60px;
 	}
 }
 
-.left-nav {
-	margin-left: $medium-content-padding - $content-border-width;
-	position: fixed;
-	text-align: center;
-	width: $medium-grid-column;
-	z-index: 1;
-
-	> ul {
-		display: inline-block;
-		list-style-type: none;
-		margin: 0;
-		padding: 0;
-		position: relative;
-
-		> li {
-			background-color: $color-left-article-nav;
-			border-radius: 19px;
-			height: 38px;
-			margin-bottom: 6px;
-			width: 38px;
-		}
-	}
-}
-
 .mw-content-text {
 	clear: left;
 	margin: 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width;
