@@ -1,4 +1,7 @@
 <?php
+
+use \Wikia\Cache\AsyncCache;
+
 /**
  * This service provides methods for querying for media
  */
@@ -593,10 +596,15 @@ class MediaQueryService extends WikiaService {
 
 	/**
 	 * Get memcache key for total video views
+	 * @TODO: Remove $async once EnableAsyncVideoViewCache is removed - @see VID-2103
 	 *
+	 * @param $async bool
 	 * @return string
 	 */
-	public static function getMemKeyTotalVideoViews() {
+	public static function getMemKeyTotalVideoViews( $async = false ) {
+		if ( $async ) {
+			return wfMemcKey( 'videos', 'total_video_views', 'v4', 'async' );
+		}
 		return wfMemcKey( 'videos', 'total_video_views', 'v4' );
 	}
 
@@ -611,20 +619,64 @@ class MediaQueryService extends WikiaService {
 
 		wfProfileIn( __METHOD__ );
 
+		$cacheTtl = 7200; // 2 hours for caching the result in memcache
+		$staleCacheTtl = 300; // 5m allowance for returning stale results until new cache is built
+		$asyncCacheEnabled = !empty( $app->wg->EnableAsyncVideoViewCache );
+
 		$hashTitle = md5( $title );
 		$memKeyBucket = substr( $hashTitle, 0, 2 );
-		$memKeyBase = self::getMemKeyTotalVideoViews();
-		$videoList = $app->wg->Memc->get( $memKeyBase.'-'.$memKeyBucket );
-		if ( !is_array($videoList) || !isset($videoList[$hashTitle]) ) {
-			$viewCount =  VideoInfoHelper::getTotalViewsFromTitle( $title );
-			$videoList[$hashTitle] = $viewCount;
-			$app->wg->Memc->set( $memKeyBase.'-'.$memKeyBucket, $videoList, 60*60*2 );
-		}
+		$memKeyBase = self::getMemKeyTotalVideoViews( $asyncCacheEnabled );
+		$cacheKey = $memKeyBase . '-' . $memKeyBucket;
 
-		$videoViews = $videoList[$hashTitle];
+		// @TODO: Remove EnableAsyncVideoViewCache and the else clause,
+		// after verifying the async caching solution works (@see VID-2103)
+		if ( $asyncCacheEnabled ) {
+			$videoViews = ( new AsyncCache() )
+				->key( $cacheKey )
+				->ttl( $cacheTtl )
+				->callback( [__CLASS__, 'getTotalVideoViewsByTitleFromDb'], [ $title ] )
+				->staleOnMiss( $staleCacheTtl )
+				->value();
+		} else {
+			$videoList = $app->wg->Memc->get( $cacheKey );
+			if ( !isset( $videoList[ $hashTitle ] ) ) {
+				$viewCount = VideoInfoHelper::getTotalViewsFromTitle( $title );
+				$videoList[ $hashTitle ] = $viewCount;
+				$app->wg->Memc->set( $cacheKey, $videoList, $cacheTtl );
+			}
+			$videoViews = $videoList[ $hashTitle ];
+		}
 
 		wfProfileOut( __METHOD__ );
 
 		return $videoViews;
 	}
+
+	/**
+	 * Get total video view count from DB, given video title
+	 *
+	 * @param string $title Video title
+	 * @return integer
+	 */
+	public static function getTotalVideoViewsByTitleFromDb( $title ) {
+		$db = wfGetDB( DB_SLAVE );
+
+		$totalViews = ( new WikiaSQL() )
+			->SELECT( 'views_total' )
+			->FROM( 'video_info' )
+			->WHERE( 'video_title' )->EQUAL_TO( $title )
+			->run( $db, function ( $result ) {
+					$row = $result->fetchObject( $result );
+					return $row->views_total;
+				});
+
+		Wikia\Logger\WikiaLogger::instance()->info( 'Video view query to db', [
+			'method' => __METHOD__,
+			'title' => $title,
+			'totalViews' => $totalViews,
+		] );
+
+		return $totalViews;
+	}
+
 }
