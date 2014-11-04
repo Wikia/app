@@ -167,6 +167,9 @@ define( 'wikia.preview', [
 
 				// fire an event once preview is rendered
 				$( window ).trigger( 'EditPageAfterRenderPreview', [ $article ] );
+
+				// fire event when new article comment is/will be added to DOM
+				mw.hook( 'wikipage.content' ).fire( $article );
 			}
 			//If current view is different skin, pass it to getPreviewContent
 		}, previewTypes[ currentTypeName ].skin );

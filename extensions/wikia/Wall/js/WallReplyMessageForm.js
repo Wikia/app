@@ -3,7 +3,7 @@
 Wall.ReplyMessageForm = $.createClass(Wall.MessageForm, {
 	constructor: function(page, model) {
 		Wall.ReplyMessageForm.superclass.constructor.apply(this, arguments);
-		
+
 		this.settings = {
 			reply: {
 				minFocus:100,
@@ -29,7 +29,7 @@ Wall.ReplyMessageForm = $.createClass(Wall.MessageForm, {
 		this.replyButton = '.replyButton';
 		this.replyBody = '.replyBody';
 		this.replyBodyContent = '.replyBody.content';
-		
+
 		this.replyThread = '.comments > .SpeechBubble';
 		this.replyPreviewButton = '.previewButton';
 
@@ -42,7 +42,7 @@ Wall.ReplyMessageForm = $.createClass(Wall.MessageForm, {
 	},
 
 	initEvents: function() {
-		
+
 		$(this.mainContent)
 			.on('click', this.replyPreviewButton, this.proxy(this.showPreview) )
 			.on('click', this.replyButton, this.proxy(this.replyToMessage))
@@ -51,13 +51,13 @@ Wall.ReplyMessageForm = $.createClass(Wall.MessageForm, {
 			.on('blur', this.replyBody, this.proxy(this.blur))
 			.find(this.replyBody).autoResize(this.settings.reply);
 	},
-	
+
 	focus: function(e) {
 		var textarea = $(e.target);
 		var reply = textarea.closest(this.replyWrapper);
 		reply.addClass('open');
 	},
-	
+
 	setContent: function(replyWrapper, content) {
 		if(content) {
 			replyWrapper.find(this.replyBody).val(content).addClass('content').putCursorAtEnd();
@@ -68,7 +68,7 @@ Wall.ReplyMessageForm = $.createClass(Wall.MessageForm, {
 	change: function(e) {
 		var target = $(e.target),
 			hasContent = target.val() != '';
-		
+
 		var wraper = target.closest(this.replyWrapper);
 		if (hasContent && !target.hasClass('placeholder') && !target.hasClass('content')) {
 			target.addClass('content');
@@ -118,16 +118,16 @@ Wall.ReplyMessageForm = $.createClass(Wall.MessageForm, {
 	showPreview: function(e) {
 		var target = $(e.target),
 		reply = target.closest(this.replyWrapper);
-		
+
 		this.showPreviewModal(this.getFormat(reply), '', this.getMessageBody(reply), this.getMessageWidth(reply), function() {
 			reply.find('.replyButton').click();
 		});
 	},
-	
+
 	resetEditor: function(reply) {
 		reply.find(this.replyBody).val('').trigger('blur');
 	},
-	
+
 	getMessageBody: function(reply) {
 		return reply.find(this.replyBodyContent).val();
 	},
@@ -138,7 +138,10 @@ Wall.ReplyMessageForm = $.createClass(Wall.MessageForm, {
 
 			this.enable(reply);
 			this.resetEditor(reply);
-			
+
+			// fire event when new article comment is/will be added to DOM
+			mw.hook( 'wikipage.content' ).fire( newMessage );
+
 			newMessage.insertBefore(reply).hide().fadeIn('slow').find('.timeago').timeago();
 
 			if (window.skin && window.skin != 'monobook') {
