@@ -44,6 +44,12 @@ define('ext.wikia.adEngine.adContext', ['wikia.window', 'wikia.document'], funct
 		if (context.targeting.enablePageCategories) {
 			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();
 		}
+
+		// Export the context back to ads.context
+		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
+		if (w.ads && w.ads.context) {
+			w.ads.context = context;
+		}
 	}
 
 	setContext(w.ads ? w.ads.context : {
