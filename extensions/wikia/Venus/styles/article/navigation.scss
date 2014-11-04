@@ -9,12 +9,14 @@ $article-navigation-icon-size: 38px;
 	position: absolute;
 	text-align: center;
 	width: $medium-grid-column;
+	z-index: 1;
 
 	> ul {
 		display: block;
 		list-style-type: none;
 		margin: 0 auto;
 		padding: 0;
+		position: relative;
 		width: $article-navigation-icon-size;
 	}
 
