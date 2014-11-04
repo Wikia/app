@@ -12,17 +12,17 @@
  *
  */
 
-if(!defined('MEDIAWIKI')) {
-    echo("This file is an extension to the MediaWiki software and cannot be used standalone.\n");
+if ( !defined( 'MEDIAWIKI' ) ) {
+    echo( "This file is an extension to the MediaWiki software and cannot be used standalone.\n" );
     die();
 }
 
-$wgExtensionCredits['other'][] = array(
+$wgExtensionCredits['other'][] = [
     'name' => 'ArticleMetaDescription',
     'version' => '1.1',
     'author' => '[http://www.wikia.com/wiki/User:Adi3ek Adrian \'ADi\' Wieczorek], [http://seancolombo.com Sean Colombo]',
     'description' => 'adding meta-description tag containing snippet of the Article, provided by the ArticleService'
-);
+];
 
 $wgHooks['OutputPageBeforeHTML'][] = 'wfArticleMetaDescription';
 
@@ -31,27 +31,38 @@ $wgHooks['OutputPageBeforeHTML'][] = 'wfArticleMetaDescription';
  * @param string $text
  * @return bool
  */
-function wfArticleMetaDescription(&$out, &$text) {
-	global $wgTitle;
+function wfArticleMetaDescription( &$out, &$text ) {
 	wfProfileIn( __METHOD__ );
 
+	$wg = F::app()->wg;
+
+	// Whether the description has already been added
+	static $addedToPage = false;
+
+	// The OutputPage::addParserOutput method calls the OutputPageBeforeHTML hook which can happen
+	// more than once in a request.  Make sure we don't add two <meta> tags
+	// https://wikia-inc.atlassian.net/browse/VID-2102
+	if ( $addedToPage ) {
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
 	$sMessage = null;
-	$sMainPage = wfMsgForContent('Mainpage');
-	if(strpos($sMainPage, ':') !== false) {
-	    $sTitle = $wgTitle->getFullText();
-	}
-	else {
-	    $sTitle = $wgTitle->getText();
+	$sMainPage = wfMessage( 'Mainpage' )->inContentLanguage()->text();
+	if ( strpos( $sMainPage, ':' ) !== false ) {
+	    $sTitle = $wg->Title->getFullText();
+	} else {
+	    $sTitle = $wg->Title->getText();
 	}
 
-	if(strcmp($sTitle, $sMainPage) == 0) {
+	if ( strcmp( $sTitle, $sMainPage ) == 0 ) {
 		// we're on Main Page, check MediaWiki:Description message
-		$sMessage = wfMsg("Description");
+		$sMessage = wfMessage( 'Description' )->text();
 	}
 
-	if(($sMessage == null) || wfEmptyMsg("Description", $sMessage)) {
+	if ( ( $sMessage == null ) || wfEmptyMsg( 'Description', $sMessage ) ) {
 		$DESC_LENGTH = 100;
-		$article = new Article($wgTitle);
+		$article = new Article( $wg->Title );
 		$articleService = new ArticleService( $article );
 		$description = $articleService->getTextSnippet( $DESC_LENGTH );
 	} else {
@@ -59,8 +70,9 @@ function wfArticleMetaDescription(&$out, &$text) {
 		$description = $sMessage;
 	}
 
-	if(!empty($description)) {
-		$out->addMeta('description', htmlspecialchars($description));
+	if ( !empty( $description ) ) {
+		$out->addMeta( 'description', htmlspecialchars( $description ) );
+		$addedToPage = true;
 	}
 
 	wfProfileOut( __METHOD__ );
