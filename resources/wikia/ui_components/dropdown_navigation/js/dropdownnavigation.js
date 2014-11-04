@@ -36,8 +36,6 @@ define(
 					activeClass: 'active',
 					id: dropdownId,
 					maxHeight: 400,
-					posX: 'top',
-					posY: 'right',
 					scrollX: true
 				},
 				delayHoverParams = {
@@ -45,34 +43,39 @@ define(
 					onDeactivate: hide,
 					activateOnClick: false
 				},
-				AIMParams = {
-					activate: show,
-					deactivate: hide
-				},
 
 				// cached DOM elements
-				trigger,
-				dropDown;
+				$trigger,
+				$container,
+				$dropdown;
 
 			/**
-			 * @desc adds dropdown to DOM and caches selectors
+			 * @desc adds dropdown to DOM and returns jQuery selector for it
+			 * @returns {jQuery} - jQuery selector for dropdown element
 			 */
-			function renderDropdown(params) {
-				trigger.innerHTML += mustache.render(dropdownTemplates.dropdown_navigation, params);
+			function render() {
+				return $(mustache.render(dropdownTemplates.dropdown_navigation, dropdownParams)).appendTo($container);
 			}
 
 			/**
 			 * @desc shows dropdown
 			 */
 			function show() {
-				$(dropDown).addClass(dropdownParams.activeClass);
+				$dropdown.addClass(dropdownParams.activeClass);
 			}
 
 			/**
 			 * @desc hides dropdown
 			 */
 			function hide() {
-				$(dropDown).removeClass(dropdownParams.activeClass);
+				$dropdown.removeClass(dropdownParams.activeClass);
+			}
+
+			/**
+			 * @desc sets dropdown positions
+			 */
+			function setPosition() {
+				$dropdown.css('left', $trigger.outerWidth());
 			}
 
 			/**
@@ -82,15 +85,14 @@ define(
 			function init(options) {
 				$.extend(dropdownParams, options);
 
-				// todo: change to ID selector ones the left nav UI is done
-				trigger = doc.querySelectorAll(options.trigger)[0];
+				$trigger = $('#' + options.trigger);
+				$container = $trigger.closest('li');
+				$dropdown = render();
 
-				renderDropdown(dropdownParams);
-				dropDown = doc.getElementById(dropdownParams.id);
+				setPosition();
 
 				// initialize UX enhancements
-				self.delayedHover = win.delayedHover(trigger, delayHoverParams);
-				self.menuAim = win.menuAim(dropDown, AIMParams);
+				self.delayedHover = win.delayedHover($container[0], delayHoverParams);
 			}
 
 			// initialize dropdown component
