@@ -42,7 +42,8 @@ define('ext.wikia.adEngine.adConfig', [
 		country = geo.getCountryCode(),
 		defaultHighValueSlots,
 		highValueSlots,
-		decorators = [adDecoratorPageDimensions];
+		decorators = [adDecoratorPageDimensions],
+		rtpTier, rtpSlots, i;
 
 	defaultHighValueSlots = {
 		'CORP_TOP_LEADERBOARD': true,
@@ -151,9 +152,14 @@ define('ext.wikia.adEngine.adConfig', [
 
 	if (rtp && rtp.wasCalled()) {
 		rtp.trackState();
-		rtp.addTierInfo(function(tier, slot) {
-			gptSlotConfig.extendSlotParams('gpt', slot, { 'rp_tier': tier });
-		});
+		rtpTier = rtp.getTier();
+		rtpSlots = rtp.getConfig().slotname;
+
+		if (rtpTier && rtpSlots.length) {
+			for(i = rtpSlots.length; i >= 0; i -= 1 ) {
+				gptSlotConfig.extendSlotParams('gpt', rtpSlots[i], { rp_tier: rtpTier });
+			}
+		}
 	}
 
 	return {

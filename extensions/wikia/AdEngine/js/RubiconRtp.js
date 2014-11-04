@@ -112,10 +112,9 @@ define('ext.wikia.adEngine.rubiconRtp', [
 	}
 
 	return {
-		config: rtpConfig,
 		call: call,
+		getConfig: function () { return rtpConfig; },
 		getTier: getTier,
-		addTierInfo: addTierInfo,
 		trackState: function () { trackState(); },
 		wasCalled: wasCalled
 	};
