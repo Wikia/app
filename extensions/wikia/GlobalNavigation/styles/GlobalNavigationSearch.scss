@@ -8,8 +8,8 @@
 }
 
 .search-form-wrapper {
-	@include font-size-l;
 	display: table;
+	font-size: $font-size-base-big-screen;
 	margin-bottom: 10px;
 	margin-top: 10px;
 	padding: 0 $medium-grid-gutter + $medium-grid-column-padding;

@@ -39,7 +39,7 @@ define('wikia.browserDetect', ['wikia.window'], function (win) {
 	 * @returns {boolean}
 	 */
 	function isIOS7orLower() {
-		return !userAgent.match(/iPad.+OS.[6,7].\d.+like.Mac.OS.+Safari/i);
+		return !!userAgent.match(/iPad.+OS.[6,7].\d.+like.Mac.OS.+Safari/i);
 	}
 
 	/**

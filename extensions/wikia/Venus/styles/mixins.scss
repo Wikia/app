@@ -131,7 +131,6 @@
 	font-style: normal !important;
 	font-weight: normal !important;
 	font-variant: normal !important;
-	line-height: inherit;
 	speak: none;
 	text-transform: none !important;
 }
@@ -150,8 +149,8 @@
 @mixin venus-icon-settings {
 	@include venus-icon($venus-icon-settings);
 }
-@mixin venus-icon-reedit {
-	@include venus-icon($venus-icon-reedit);
+@mixin venus-icon-reddit {
+	@include venus-icon($venus-icon-reddit);
 }
 @mixin venus-icon-facebook {
 	@include venus-icon($venus-icon-facebook);
@@ -165,6 +164,7 @@
 
 // edit button has an icon from font glyph therefore it's width & height are equal to font's size
 $edit-button-size: $font-size-xl;
+$edit-button-line-height: $font-size-xl + 4px;
 
 @mixin edit-button {
 	@include venus-icon-edit;
@@ -175,4 +175,8 @@ $edit-button-size: $font-size-xl;
 	position: absolute;
 	right: 100%;
 	width: $edit-button-size;
+}
+
+@mixin line-height-with-edit-button($value) {
+	line-height: if($value < $edit-button-line-height, $edit-button-line-height, $value);
 }

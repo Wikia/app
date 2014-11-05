@@ -32,6 +32,8 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//resources/wikia/modules/thumbnailer.js',
 		'//resources/wikia/modules/window.js',
 		'//resources/wikia/modules/abTest.js',
+		'//resources/wikia/modules/underscore.js',
+		'//resources/wikia/modules/stickyElement.js',
 
 		//tracker
 		'#group_tracker_js',
@@ -73,6 +75,7 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 
 		'//extensions/wikia/Venus/scripts/isTouchScreen.js',
+		'//extensions/wikia/Venus/scripts/variables.js',
 		'//resources/wikia/modules/dom.js',
 
 		// BackgroundChanger
@@ -91,11 +94,17 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//extensions/wikia/Lightbox/scripts/LightboxLoader.js',
 		'//extensions/wikia/Lightbox/scripts/venusLightboxLoader.js',
 
+		//TOC
+		'//extensions/wikia/TOC/js/modules/toc.js',
+		'//resources/wikia/ui_components/dropdown_navigation/js/dropdownNavigation.templates.mustache.js',
+		'//resources/wikia/ui_components/dropdown_navigation/js/dropdownNavigation.js',
+		'//extensions/wikia/Venus/scripts/venusToc.js',
+
 		// different article modules
 		'//skins/shared/scripts/scrollableTables.js',
 
 		//following script initialize different modules in Venus
-		'//extensions/wikia/Venus/scripts/articleModulesLoader.js'
+		'//extensions/wikia/Venus/scripts/articleModulesLoader.js',
 	]
 ];
 
@@ -191,12 +200,29 @@ $VenusConfig[ 'global_navigation_facebook_login_js' ] = [
 	]
 ];
 
+$VenusConfig[ 'article_navigation_js' ] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'venus' ],
+	'assets' => [
+		'//extensions/wikia/ArticleNavigation/scripts/articleNavigation.js'
+	]
+];
+
+$VenusConfig[ 'article_navigation_scss' ] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'venus' ],
+	'assets' => [
+		'//extensions/wikia/ArticleNavigation/styles/articleNavigation.scss'
+	]
+];
+
 /** Article page */
 $VenusConfig[ 'article_scss' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'venus' ],
 	'assets' => [
-		'//extensions/wikia/Venus/styles/article/article.scss'
+		'//extensions/wikia/Venus/styles/article/article.scss',
+		'//resources/wikia/ui_components/dropdown_navigation/css/dropdownNavigation.scss'
 	]
 ];
 

@@ -1,6 +1,5 @@
 @import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/mixins';
-@import 'extensions/wikia/Venus/styles/typographyMixins';
 @import 'GlobalNavigationColors';
 
 .global-navigation {
@@ -23,6 +22,10 @@
 	position: static;
 }
 
+.position-static {
+	margin-bottom: -$global-navigation-height;
+}
+
 .global-navigation-item {
 	border-left: 1px solid $nav-border-color;
 	float: left;
@@ -31,9 +34,9 @@
 }
 
 .global-navigation-link {
-	@include font-size-l;
 	color: $nav-border-color;
 	display: table-cell;
+	font-size: $font-size-base-big-screen;
 	font-weight: bold;
 	height: $global-navigation-height;
 	vertical-align: middle;

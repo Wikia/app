@@ -69,7 +69,6 @@
 
 	.hub-link {
 		background-color: $nav-background-color;
-		cursor: pointer;
 		display: block;
 		height: 62px;
 		line-height: 62px;
@@ -140,11 +139,11 @@
 		}
 
 		.label {
-			@include font-size-l;
 			background-color: $nav-background-color;
 			border-bottom: 1px solid $hubsmenu-background-color;
 			display: inline-block;
 			float: left;
+			font-size: $font-size-base-big-screen;
 			height: 62px;
 			width: 142px;
 		}

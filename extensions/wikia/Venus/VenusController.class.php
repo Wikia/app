@@ -42,7 +42,6 @@ class VenusController extends WikiaController {
 	public function index() {
 		global $wgUser;
 
-
 		$this->contents = $this->skinTemplateObj->data['bodytext'];
 
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
@@ -228,11 +227,7 @@ class VenusController extends WikiaController {
 	}
 
 	private function getLeftArticleNavigation() {
-		return $this->app->renderView('Venus', 'leftArticleNavigation');
-	}
-
-	public function leftArticleNavigation() {
-		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+		return $this->app->renderView('ArticleNavigation', 'index');
 	}
 
 	public function header() {
