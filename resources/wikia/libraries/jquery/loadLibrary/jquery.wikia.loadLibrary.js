@@ -129,6 +129,13 @@ $.loadFacebookAPI = function (callback) {
 
 	if (window.wgEnableFacebookClientExt) {
 		// v2.x functionality
+
+		// if library is already loaded, just fire the callback
+		if (window.FB && typeof callback === 'function') {
+			callback();
+			return;
+		}
+
 		window.fbAsyncInit = function () {
 			window.FB.init({
 				appId: window.fbAppId,
