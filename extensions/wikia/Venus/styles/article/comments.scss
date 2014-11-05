@@ -18,6 +18,46 @@
 		}
 	}
 
+	/* editor */
+	.session {
+		position: absolute;
+	}
+
+	.MiniEditorWrapper .toolbar {
+		margin: 10px 0;
+
+		.cke_button {
+			border-right: solid 1px #aaa; // TODO: get color
+			line-height: 44px;
+			display: inline-block;
+
+			&.RTEVideoButton {
+				border-right: none;
+			}
+
+			& > a {
+				background: transparent;
+				border: none;
+				float: none;
+				margin: 0 12px;
+				vertical-align: middle;
+			}
+		}
+	}
+
+	.actionButton {
+		@include font-size-xxs;
+		background: transparent;
+		border: solid 2px $color-buttons;
+		cursor: pointer;
+		display: table-cell;
+		font-weight: bold;
+		height: 44px;
+		padding: 0 15px 0 20px;
+		text-transform: uppercase;
+		vertical-align: middle;
+	}
+
 	/* comments */
 	.comments {
 		list-style: none;
