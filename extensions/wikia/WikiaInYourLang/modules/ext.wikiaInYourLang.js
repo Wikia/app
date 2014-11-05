@@ -21,7 +21,6 @@ require(
 		 * An array of language codes for which we want to look for a native wikia
 		 * @type {Array}
 		 */
-		$.cookie('Geo', '{"country":"ja"}');
 		var supportedLanguages = ['ja'],
 			// Get user's geographic data and a country code
 			geo = JSON.parse($.cookie('Geo')),
