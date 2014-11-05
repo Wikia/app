@@ -16,12 +16,12 @@ class WikiaInYourLangController extends WikiaController {
 			wfProfileOut( __METHOD__ );
 			return;
 		}
-
+		global $wgServer;
 		/**
 		 * wgServer value of the posting wikia
 		 * @var string
 		 */
-		$sCurrentUrl = $this->request->getVal( 'currentUrl' );
+		$sCurrentUrl = $wgServer
 		/**
 		 * The language code from a user's Geo cookie
 		 * @var string
