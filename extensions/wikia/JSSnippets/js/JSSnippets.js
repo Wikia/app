@@ -131,7 +131,7 @@ window.JSSnippets = (function () {
 	/**
 	 * Process all loader function shortcuts that are dependencies for this feature
 	 * @param {array} dependencies
-	 * @param {object }entry
+	 * @param {object} entry
 	 */
 	function pushLoaders(dependencies, entry) {
 		var loaders = entry.getLoaders(),
