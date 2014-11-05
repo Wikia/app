@@ -16,6 +16,7 @@
 }
 .MainPageHero {
   background-color: #092140;
+  max-height: 400px;
   position: relative;
   width: 100%;
 
@@ -404,7 +405,7 @@
       display: none;
     }
     .hero-description-default-text {
-      display: flex;
+      display: inline-block;
     }
   }
 }
