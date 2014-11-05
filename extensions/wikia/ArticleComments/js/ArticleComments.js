@@ -473,10 +473,11 @@
 
 			ArticleComments.$commentsList.addClass('loading');
 
-			$.getJSON(wgScript + '?action=ajax&rs=ArticleCommentsAjax&method=axGetComments&article=' + wgArticleId, {
+			$.getJSON(wgScript + '?action=ajax&rs=ArticleCommentsAjax&method=axGetComments', {
+				article: wgArticleId,
+				order: $('#article-comm-order').attr('value'),
 				page: page,
-				order: $('#article-comm-order').attr('value')
-
+				useskin: skin
 			}, function (json) {
 				ArticleComments.$commentsList.removeClass('loading');
 
