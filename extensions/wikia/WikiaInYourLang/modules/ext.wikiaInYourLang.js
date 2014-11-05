@@ -14,22 +14,28 @@
 			this.supportedLanguages = [ 'ja' ];
 
 			if ( $.inArray( this.geo, this.supportedLanguages ) !== -1 && wgContentLanguage == 'en' ) {
-				var results = this.getWikiaInUserLanguageInfo();
-
-				if ( results.wikiaExists ) {
-
-					this.displayNotification( results.wikiaSitename, results.wikiaUrl );
-				}
+				this.getNativeWikiaInfo( this );
 			}
 		},
 
-		getWikiaInUserLanguageInfo: function() {
-			var results = {
-				'wikiaExists': true,
-				'wikiaSitename': 'ナルト Wiki',
-				'wikiaUrl': 'http://ja.naruto.wikia.com/wiki/_Wiki',
-			};
-			return results;
+		getNativeWikiaInfo: function( obj ) {
+			// console.log( window.wgServer );
+			$.nirvana.sendRequest( {
+				controller: 'WikiaInYourLangController',
+				method: 'getNativeWikiaInfo',
+				data: {
+					currentUrl: wgServer,
+					targetLanguage: obj.geo
+				},
+				callback: function( results ) {
+					console.log( results );
+					if ( results.success == true ) {
+						obj.displayNotification( results.wikiaSitename, results.wikiaUrl );
+					} else {
+						alert( results.errorMsg );
+					}
+				}
+			} );
 		},
 
 		displayNotification: function( wikiaSitename, wikiaUrl ) {
