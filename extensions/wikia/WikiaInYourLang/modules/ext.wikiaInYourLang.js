@@ -10,10 +10,11 @@ require(
 	[
 		'jquery',
 		'mw',
+		'wikia.window'
 		'wikia.cache',
 		'wikia.tracker',
 	],
-	function( $, mw, cache, tracker ) {
+	function( $, w, mw, cache, tracker ) {
 		'use strict';
 
 		var wikiaInYourLang = {
@@ -77,11 +78,11 @@ require(
 			},
 
 			displayNotification: function( wikiaSitename, wikiaUrl ) {
-				var currentSitename = wgSitename,
+				var currentSitename = mw.config.get( 'wgSitename' ),
 				    linkElement = '<a href="' + wikiaUrl + '" title="' + wikiaSitename +'" id="wikia-in-your-lang-link">' + wikiaSitename + '</a>',
 				    message = mw.message( 'wikia-in-your-lang-available', currentSitename , linkElement );
 
-				GlobalNotification.show( message.plain(), 'notify' );
+				w.GlobalNotification.show( message.plain(), 'notify' );
 				return true;
 			},
 
