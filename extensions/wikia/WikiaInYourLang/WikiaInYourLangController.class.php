@@ -12,10 +12,7 @@ class WikiaInYourLangController extends WikiaController {
 	 */
 	public function getNativeWikiaInfo() {
 		wfProfileIn( __METHOD__ );
-		if ( !$this->checkRequest() ) {
-			wfProfileOut( __METHOD__ );
-			return;
-		}
+
 		global $wgServer;
 		/**
 		 * wgServer value of the posting wikia
@@ -106,17 +103,5 @@ class WikiaInYourLangController extends WikiaController {
 		} else {
 			return 0;
 		}
-	}
-
-	/**
-	 * Checks if it's the request was actually posted
-	 * @return bool
-	 */
-	private function checkRequest() {
-		if ( !$this->request->wasPosted() ) {
-			$this->response->setVal( 'success', false );
-			return false;
-		}
-		return true;
 	}
 }
