@@ -624,13 +624,12 @@ class MediaQueryService extends WikiaService {
 		$asyncCacheEnabled = !empty( $app->wg->EnableAsyncVideoViewCache );
 
 		$hashTitle = md5( $title );
-		$memKeyBucket = substr( $hashTitle, 0, 2 );
 		$memKeyBase = self::getMemKeyTotalVideoViews( $asyncCacheEnabled );
-		$cacheKey = $memKeyBase . '-' . $memKeyBucket;
 
 		// @TODO: Remove EnableAsyncVideoViewCache and the else clause,
 		// after verifying the async caching solution works (@see VID-2103)
 		if ( $asyncCacheEnabled ) {
+			$cacheKey = $memKeyBase . '-' . $hashTitle;
 			$videoViews = ( new AsyncCache() )
 				->key( $cacheKey )
 				->ttl( $cacheTtl )
@@ -638,6 +637,7 @@ class MediaQueryService extends WikiaService {
 				->staleOnMiss( $staleCacheTtl )
 				->value();
 		} else {
+			$cacheKey = $memKeyBase . '-' . substr( $hashTitle, 0, 2 );
 			$videoList = $app->wg->Memc->get( $cacheKey );
 			if ( !isset( $videoList[ $hashTitle ] ) ) {
 				$viewCount = VideoInfoHelper::getTotalViewsFromTitle( $title );
