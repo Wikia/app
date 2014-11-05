@@ -5,11 +5,8 @@
  * The check is based on Geo cookie and a browser's language.
  *
  * @package Wikia\extensions\WikiaInYourLang
- *
  * @version 0.1
- *
  * @author Adam Karminski <adamk@wikia-inc.com>
- *
  * @see https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaInYourLang/
  */
 
@@ -28,13 +25,14 @@ $wgExtensionCredits['other'][] = array(
 	'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaInYourLang/',
 );
 
+$wgExtensionMessagesFiles['WikiaInYourLang'] = __DIR__ . '/WikiaInYourLang.i18n.php';
+
 $wgAutoloadClasses['Wikia\WikiaInYourLang\WikiaInYourLangHooks'] = __DIR__ . '/WikiaInYourLang.hooks.php';
 $wgAutoloadClasses['WikiaInYourLangController'] = __DIR__ . '/WikiaInYourLangController.class.php';
 
-$wgHooks['BeforePageDisplay'][] = "Wikia\WikiaInYourLang\WikiaInYourLangHooks::onBeforePageDisplay";
-
-$wgExtensionMessagesFiles['WikiaInYourLang'] = __DIR__ . '/WikiaInYourLang.i18n.php';
-
+/**
+ * Use ResourceLoader to load the JavaScript module
+ */
 $wgResourceModules['ext.wikiaInYourLang'] = [
 	'localBasePath' => __DIR__ . '/modules',
 	'remoteExtPath' => 'wikia/WikiaInYourLang/modules',
@@ -44,5 +42,11 @@ $wgResourceModules['ext.wikiaInYourLang'] = [
 	],
 	'dependencies' => [
 		'wikia.cache',
+		'wikia.tracker',
 	],
 ];
+
+/**
+ * Add the JavaScript module to the output
+ */
+$wgHooks['BeforePageDisplay'][] = "Wikia\WikiaInYourLang\WikiaInYourLangHooks::onBeforePageDisplay";

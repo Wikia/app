@@ -2,7 +2,10 @@
  * Module that checks if a given wikia exists
  * in a user's native language (based on a Geo cookie)
  * and displays a notification with a link.
+ *
+ * Author - Adam Karmiński <adamk@wikia-inc.com>
  */
+
 require(
 	[
 		'jquery',
@@ -16,22 +19,45 @@ require(
 		var wikiaInYourLang = {
 
 			init: function() {
-				$.cookie( 'Geo', '{"country":"ja"}' );
-				this.geo = JSON.parse( $.cookie( 'Geo' ) );
-				this.targetLanguage = this.geo.country.toLowerCase();
-				this.supportedLanguages = [ 'ja' ];
 				this.currentUrl = wgServer;
 
+				/**
+				 * An array of language codes for which we want to look for a native wikia
+				 * @type {Array}
+				 */
+				this.supportedLanguages = [ 'ja' ];
+
+				// Get user's geographic data and a country code
+				this.geo = JSON.parse( $.cookie( 'Geo' ) );
+				this.targetLanguage = this.geo.country.toLowerCase();
+
+				// Check if the country code is one of the supported languages
+				// and if the content is in English
 				if ( $.inArray( this.targetLanguage, this.supportedLanguages ) !== -1 && wgContentLanguage == 'en' ) {
-					if ( cache.get( 'wikiaInYourLangShown' ) === true ) {
+
+					// Check local browser cache to see if the notification
+					// has already been shown to this user.
+					if ( cache.get( 'wikiaInYourLangShown' ) !== true ) {
+
+						// If not - set the cached info to true and show the popup
 						var ttl = 60 * 60 * 24 * 14; // Cache for 2 weeks
 						cache.set( 'wikiaInYourLangShown', true, ttl );
+
 						this.getNativeWikiaInfo( this );
 					}
 				}
 			},
 
 			getNativeWikiaInfo: function( obj ) {
+				/**
+				 * Sends a request to the WikiaInYourLangController via Nirvana.
+				 * Response consists of:
+				 * {
+				 *   success:       bool    True if a native wikia is found
+				 *   wikiaSitename: string  A wgSitename value for the wikia
+				 *   wikiaUrl:      string  A city_url valur for the wikia
+				 * }
+				 */
 				$.nirvana.sendRequest( {
 					controller: 'WikiaInYourLangController',
 					method: 'getNativeWikiaInfo',
@@ -41,6 +67,9 @@ require(
 					},
 					callback: function( results ) {
 						if ( results.success == true ) {
+
+							// Display notification and then set tracking on
+							// the text link in it
 							if ( obj.displayNotification( results.wikiaSitename, results.wikiaUrl ) ){
 								obj.setupTracking( obj.targetLanguage );
 							}
