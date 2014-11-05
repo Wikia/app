@@ -16,8 +16,6 @@ class WikiaInYourLangController extends WikiaController {
 			wfProfileOut( __METHOD__ );
 			return;
 		}
-		
-		global $wgExternalSharedDB;
 
 		/**
 		 * wgServer value of the posting wikia
@@ -30,21 +28,29 @@ class WikiaInYourLangController extends WikiaController {
 		 */
 		$sTargetLanguage = $this->request->getVal( 'targetLanguage' );
 
-		$sTargetUrl = $this->convertWikiUrl( $sCurrentUrl, $sTargetLanguage );
-		$oDB = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-		$oRes = $this->getWikiByUrl( $sTargetUrl, $oDB );
+		/**
+		 * Steps to get the native wikia's ID:
+		 * 1. Retrieve a source domain from the passed wgServer value (e.g. community.wikia.com)
+		 * 2. Concat it with the target language ( e.g. ja.community.wikia.com )
+		 * 3. Get the native wikia's ID from the city_domains table
+		 */
+		$sWikiDomain = $this->getWikiDomain( $sCurrentUrl );
+		$sNativeWikiDomain = $this->getNativeWikiDomain( $sWikiDomain, $sTargetLanguage );
+		$iNativeWikiId = $this->getWikiIdByDomain( $sNativeWikiDomain );
 
 		/**
-		 * If a wikia is found - send a response with its url and sitename
+		 * If a wikia is found - send a response with its url and sitename.
+		 * Send success=false otherwise.
 		 */
-		if ( $oRes->numRows() > 0 ) {
-			while( $oRow = $oDB->fetchObject( $oRes ) ) {
-				$this->response->setVal( 'success', true );
-				$this->response->setVal( 'wikiaUrl', $oRow->city_url );
-				$this->response->setVal( 'wikiaSitename', $oRow->city_title );
-			}
+		if ( $iNativeWikiId > 0 ) {
+			$oNativeWiki = WikiFactory::getWikiById( $iNativeWikiId );
+
+			$this->response->setVal( 'success', true );
+			$this->response->setVal( 'wikiaUrl', $oNativeWiki->city_url );
+			$this->response->setVal( 'wikiaSitename', $oNativeWiki->city_title );
 		} else {
 			$this->response->setVal( 'success', false );
+			$this->response->setVal( 'nativeID', $sNativeWikiDomain );
 		}
 
 		/**
@@ -56,34 +62,50 @@ class WikiaInYourLangController extends WikiaController {
 	}
 
 	/**
-	 * Selects a wikia from city_list by a city_url matching $sTargetUrl
-	 * @param  string        $sTargetUrl  A url of the native wikia
-	 * @param  DatabaseMysql $oDB         Shared database object
-	 * @return ResultWrapper $oRes
+	 * Retrieves a domain (host) from a full URL
+	 * @param  string $sCurrentUrl A full URL to parse
+	 * @return string              The retrieved domain
 	 */
-	private function getWikiByUrl( $sTargetUrl, DatabaseMysql $oDB ) {
-		$oRes = $oDB->select(
-			'`city_list`',
-			[ '`city_url`', '`city_title`' ],
-			[ 'city_url' => $sTargetUrl ],
-			__METHOD__,
-			[ 'LIMIT' => 1 ]
-		);
-		return $oRes;
+	private function getWikiDomain( $sCurrentUrl ) {
+		$aParsed = parse_url( $sCurrentUrl );
+		return $aParsed['host'];
 	}
 
 	/**
-	 * Converts a $wgServer value of the posting wikia to its localized version
-	 * @param  string $sCurrentUrl     The posting wikia's wgServer value
-	 * @param  string $sTargetLanguage The language code from user's Geo cookie
-	 * @return string  A localized version of the wgServer url
+	 * Concats a lang code with a domain
+	 * @param  string $sWikiDomain     A domain (host) (e.g. community.wikia.com)
+	 * @param  string $sTargetLanguage A lang code (e.g. ja)
+	 * @return string                  A native wikia URL (e.g. ja.community.wikia.com)
 	 */
-	private function convertWikiUrl( $sCurrentUrl, $sTargetLanguage ) {
-		$regExp = "/(http:\/\/)([a-z]{2}\.)?(.*)/";
-		$aRes = [];
-		preg_match( $regExp, $sCurrentUrl, $aRes );
-		$sTargetUrl = $aRes[1] . $sTargetLanguage . '.' . $aRes[3];
-		return $sTargetUrl;
+	private function getNativeWikiDomain( $sWikiDomain, $sTargetLanguage ) {
+		$sNativeWikiDomain = $sTargetLanguage . '.' . $sWikiDomain;
+		return $sNativeWikiDomain;
+	}
+
+	/**
+	 * Retrieves a wikia's ID from a database using its domain
+	 * @param  string $sWikiDomain  A domain (host) (e.g. ja.community.wikia.com)
+	 * @return int                  A wikia's ID or 0 if not found.
+	 */
+	private function getWikiIdByDomain( $sWikiDomain ) {
+		global $wgExternalSharedDB;
+
+		$oDB = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+
+		$oRes = $oDB->select(
+			'`city_domains`',
+			[ '`city_id`' ],
+			[ 'city_domain' => $sWikiDomain ],
+			__METHOD__,
+			[ 'LIMIT' => 1 ]
+		);
+
+		if ( $oRes->numRows() > 0 ) {
+			$oRow = $oDB->fetchObject( $oRes );
+			return $oRow->city_id;
+		} else {
+			return 0;
+		}
 	}
 
 	/**

@@ -66,8 +66,7 @@ require(
 						targetLanguage: obj.targetLanguage
 					},
 					callback: function( results ) {
-						if ( results.success == true ) {
-
+						if ( results.success === true ) {
 							// Display notification and then set tracking on
 							// the text link in it
 							if ( obj.displayNotification( results.wikiaSitename, results.wikiaUrl ) ){
