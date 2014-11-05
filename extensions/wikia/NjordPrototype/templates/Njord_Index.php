@@ -43,7 +43,7 @@
 		</div>
 		<h1 class="title-wrap sg-title <?php if ( isset( $wikiData->title ) ) : ?>filled-state<? else : ?>zero-state<?php endif; ?>">
 			<div class="edit-box">
-				<span class="hero-title" contenteditable="true"><?= $wikiData->title ?></span>
+				<div class="hero-title" contenteditable="true"><?= $wikiData->title ?></div>
 				<div class="btn-bar">
 					<div class="new-btn discard-btn sg-sub">Discard</div>
 					<div class="new-btn save-btn sg-sub">Publish</div>

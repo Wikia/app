@@ -66,10 +66,9 @@
       width: 100%;
     }
     .hero-title {
-      display: block;
       min-height: 44px;
       outline: none;
-      word-break: break-word;
+      word-wrap: break-word;
     }
     .title-edit-btn {
       cursor: pointer;
@@ -200,6 +199,7 @@
 
   .hero-description {
     margin: 20px 8%;
+    word-wrap: break-word;
   }
 
   .hero-description-text {

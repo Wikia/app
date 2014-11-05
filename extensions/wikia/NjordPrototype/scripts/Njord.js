@@ -274,6 +274,13 @@
 			heroData.description = heroData.oDescription = $descriptionText.text();
 			heroData.imagepath = heroData.oImage = $heroModuleImage.data('fullpath');
 			heroData.cropposition = heroData.oCropposition = $heroModuleImage.data('cropposition');
+		}, onPaste = function (e) {
+			var $this = $(this);
+			window.setTimeout(function() {
+				$this.html($this.text());
+				placeCaretAtEnd($this.get(0));
+			}, 1);
+			return $this;
 		}, onFocus = function () {
 			var $this = $(this);
 			$this.data('before', $this.html());
@@ -396,6 +403,7 @@
 
 			$heroModuleTitle.on('focus', onFocus)
 				.on('blur keyup paste input', onInput)
+				.on('paste', onPaste)
 				.on('change', onChange);
 
 			//on(load) on img buged on this jquery
