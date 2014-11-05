@@ -77,6 +77,50 @@ class ExactTargetUserTaskHelper {
 	}
 
 	/**
+	 * Prepares array of params for ExactTarget API for creating DataExtension objects for user_groups table
+	 * @param  in $iUserId  User ID
+	 * @param  array $aGroup   Array of strings (groups names)
+	 * @return array           Array of DataExtension data arrays (nested arrays)
+	 */
+	public function prepareUserGroupCreateParams( $iUserId, array $aGroup ) {
+		$aCustomerKeys = $this->getCustomerKeys();
+		$aApiParams = [ 'DataExtension' => [] ];
+		foreach ( $aGroup as $sGroup ) {
+			$aApiParams[ 'DataExtension' ][] = [
+				'CustomerKey' => $aCustomerKeys['user_groups'],
+				'Properties' => [
+					'ug_user' => $iUserId,
+					'ug_group' => $sGroup
+				]
+			];
+		}
+
+		return $aApiParams;
+	}
+
+	/**
+	 * Prepares array of params for ExactTarget API for removing DataExtension objects for user_groups table
+	 * @param  int $iUserId    User ID
+	 * @param  array $aGroup   Array of strings (groups names)
+	 * @return array           Array of DataExtension data arrays (nested arrays)
+	 */
+	public function prepareUserGroupRemoveParams( $iUserId, array $aGroup ) {
+		$aCustomerKeys = $this->getCustomerKeys();
+		$aApiParams = [ 'DataExtension' => [] ];
+		foreach ( $aGroup as $sGroup ) {
+			$aApiParams[ 'DataExtension' ][] = [
+				'CustomerKey' => $aCustomerKeys['user_groups'],
+				'Keys' => [
+					'ug_user' => $iUserId,
+					'ug_group' => $sGroup
+				]
+			];
+		}
+
+		return $aApiParams;
+	}
+
+	/**
 	 * Prepares Subscriber's object data
 	 * @param  string $sUserEmail  User's email
 	 * @return array               Array of Subscriber data arrays (nested arrays)
@@ -187,6 +231,7 @@ class ExactTargetUserTaskHelper {
 		$aCustomerKeys = [
 			'user' => 'user',
 			'user_properties' => 'user_properties',
+			'user_groups' => 'user_groups'
 		];
 		return $aCustomerKeys;
 	}
