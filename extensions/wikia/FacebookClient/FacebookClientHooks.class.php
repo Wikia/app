@@ -19,7 +19,7 @@ class FacebookClientHooks {
 	public static function UserLoadFromSession( $user, &$result ) {
 		$wg = F::app()->wg;
 
-		if ( !$wg->Title instanceof Title ) {
+		if ( $wg->CommandLineMode ) {
 			return true;
 		}
 
