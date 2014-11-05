@@ -19,7 +19,7 @@ $wgExtensionCredits['facebookclient'][] = array(
 		"Garth Webb <garth@wikia-inc.com>",
 		"Armon Rabiyan <armon@wikia-inc.com>",
 	),
-	'descriptionmsg' => 'facebookclient-desc',
+	'descriptionmsg' => 'fbconnect-desc',
 );
 
 $dir = dirname( __FILE__ ) . '/';
@@ -50,3 +50,5 @@ $wgSpecialPages[ 'FacebookConnect' ] =  'SpecialFacebookConnectController';
  * messages
  */
 $wgExtensionMessagesFiles['FacebookClient'] = $dir . 'FacebookClient.i18n.php';
+
+JSMessages::registerPackage( 'FacebookClient', ['fbconnect-logout-confirm'] );

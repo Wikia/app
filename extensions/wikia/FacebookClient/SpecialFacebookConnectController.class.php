@@ -28,6 +28,8 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 				$this->loginAndConnect();
 			}
 		} else {
+			JSMessages::enqueuePackage( 'FacebookClient', JSMessages::INLINE );
+
 			if ( $wg->User->isLoggedIn() ) {
 				$this->forward( __CLASS__, 'connectCurrentUser' );
 			} else {
@@ -42,8 +44,8 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 	protected function cancelConnect() {
 		FacebookClient::getInstance()->logout();
 		F::app()->wg->Out->showErrorPage(
-			'facebookclient-connect-cancel',
-			'facebookclient-connect-canceltext'
+			'fbconnect-connect-cancel',
+			'fbconnect-connect-canceltext'
 		);
 	}
 
@@ -64,13 +66,13 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 
 		// The user must be logged into Facebook before choosing a wiki username
 		if ( !$fbUserId ) {
-			$wg->Out->showErrorPage( 'facebookclient-error', 'facebookclient-errortext' );
+			$wg->Out->showErrorPage( 'fbconnect-error', 'fbconnect-errortext' );
 			return true;
 		}
 
 		$user = User::newFromName( $wikiaUserName );
 		if ( !$user || !$user->checkPassword( $wikiaPassword ) ) {
-			$wg->Request->setVal( 'errorMessage', 'facebookclient-wrong-pass-msg' );
+			$wg->Request->setVal( 'errorMessage', 'fbconnect-wrong-pass-msg' );
 			$this->forward( __CLASS__, 'connectUser' );
 			return true;
 		}
@@ -107,7 +109,7 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 
 		// The user must be logged into Facebook before choosing a wiki username
 		if ( !$fbUserId ) {
-			$wg->Out->showErrorPage( 'facebookclient-error', 'facebookclient-errortext' );
+			$wg->Out->showErrorPage( 'fbconnect-error', 'fbconnect-errortext' );
 			return true;
 		}
 
@@ -130,7 +132,7 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 	public function connectUser() {
 		$wg = F::app()->wg;
 
-		$title = wfMessage('facebookclient-connect-existing')->plain();
+		$title = wfMessage('fbconnect-connect-existing')->plain();
 		$this->getContext()->getOutput()->setPageTitle( $title );
 
 		$titleObj = SpecialPage::getTitleFor( 'FacebookConnect' );
@@ -158,11 +160,11 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 			$this->errorMessage = wfMessage( $errorMessage )->plain();
 		}
 		$this->formAction =  SpecialPage::getSafeTitleFor( 'FacebookConnect' )->getLocalURL();
-		$this->legendText = wfMessage( 'facebookclient-connect-login-legend' );
+		$this->legendText = wfMessage( 'fbconnect-connect-login-legend' )->text();
 
-		$this->userNameLabel = wfMessage( 'facebookclient-connect-username-label' )->plain();
+		$this->userNameLabel = wfMessage( 'fbconnect-connect-username-label' )->plain();
 		$this->userName = $userName;
-		$this->passwordLabel = wfMessage( 'facebookclient-connect-password-label' )->plain();
+		$this->passwordLabel = wfMessage( 'fbconnect-connect-password-label' )->plain();
 	}
 
 	/**
