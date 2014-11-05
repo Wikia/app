@@ -25,7 +25,7 @@
 							<span class="update-text sg-main">update image</span>
 						</div>
 						<input name="file" type="file" hidden/>
-						<span class="upload-desc sg-sub">or, drop an image here (1600x600px minimum)</span>
+						<span class="upload-desc sg-sub">or, drop an image here</span>
 					</div>
 				</div>
 			</div>
@@ -50,7 +50,7 @@
 				</div>
 			</div>
 			<span class="title-text"><?= $wikiData->title ?></span>
-			<span class="title-default-text">Wikia name can goes three lines (50 characters max)</span>
+			<span class="title-default-text">Wikia name can goes three lines</span>
 			<? if ($isAllowedToEdit): ?>
 			<img class="title-edit-btn" src="/extensions/wikia/NjordPrototype/images/pencil.svg">
 			<?endif;?>
@@ -76,7 +76,7 @@
 		</span>
 		<?php if ( !isset ( $wikiData->description ) ) { ?>
 			<span class="hero-description-default-text sg-main"> Add a summary that will be used to
-			promote your page in search results and on other promotional areas. (160 characters maximum)
+			promote your page in search results and on other promotional areas.
 		</span>
 		<? } ?>
 		<? if ($isAllowedToEdit): ?>
