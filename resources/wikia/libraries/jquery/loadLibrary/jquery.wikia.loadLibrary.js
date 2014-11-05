@@ -124,18 +124,16 @@ $.loadGoogleMaps = function (callback) {
 	return dfd.promise();
 };
 
+/**
+ * Load the facebook JS library, either v1.x or v2.x
+ * @param {function} callback Function to be called after library is loaded
+ * @returns {jQuery} Returns a jQuery promise
+ */
 $.loadFacebookAPI = function (callback) {
 	'use strict';
 
 	if (window.wgEnableFacebookClientExt) {
 		// v2.x functionality
-
-		// if library is already loaded, just fire the callback
-		if (window.FB && typeof callback === 'function') {
-			callback();
-			return;
-		}
-
 		window.fbAsyncInit = function () {
 			window.FB.init({
 				appId: window.fbAppId,
@@ -143,22 +141,17 @@ $.loadFacebookAPI = function (callback) {
 				cookie: true,
 				version: 'v2.1'
 			});
-
-			if (typeof callback === 'function') {
-				callback();
-			}
 		};
 
-		(function (d, s, id) {
-			var js, fjs = d.getElementsByTagName(s)[0];
-			if (d.getElementById(id)) {
-				return;
+		return $.loadLibrary('Facebook API',
+			window.fbScript || '//connect.facebook.net/en_US/sdk.js',
+			typeof window.FB,
+			function () {
+				if (typeof callback === 'function') {
+					callback();
+				}
 			}
-			js = d.createElement(s);
-			js.id = id;
-			js.src = '//connect.facebook.net/en_US/sdk.js';
-			fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));
+		);
 	} else {
 		// v1.x functionality
 		return $.loadLibrary('Facebook API',
@@ -170,9 +163,7 @@ $.loadFacebookAPI = function (callback) {
 					window.onFBloaded();
 				}
 
-				if (typeof callback === 'function') {
-					callback();
-				}
+				callback();
 			}
 		);
 	}
