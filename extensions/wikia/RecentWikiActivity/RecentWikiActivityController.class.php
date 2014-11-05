@@ -9,7 +9,7 @@ class RecentWikiActivityController extends WikiaController {
 		Wikia::addAssetsToOutput('//extensions/wikia/RecentWikiActivity/styles/RecentWikiActivity.scss');
 
 		$this->changeList = WikiaDataAccess::cache(
-			self::$memcKey,
+			wfMemcKey( self::$memcKey ),
 			0,
 			function() {
 				global $wgContentNamespaces, $wgLang;
@@ -46,8 +46,7 @@ class RecentWikiActivityController extends WikiaController {
 
 	static function onArticleSaveComplete(&$article, &$user, $text, $summary,
 		  $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId) {
-		global $wgMemc;
-		$wgMemc->delete( wfMemcKey( self::$memcKey ) );
+		WikiaDataAccess::cachePurge( wfMemcKey( self::$memcKey ) );
 		return true;
 	}
 }

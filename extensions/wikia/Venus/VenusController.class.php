@@ -66,7 +66,6 @@ class VenusController extends WikiaController {
 	}
 
 	private function setBodyModules() {
-		global $wgUser;
 		$this->globalNavigation = $this->getGlobalNavigation();
 		$this->localNavigation = $this->getLocalNavigation();
 		$this->globalFooter = $this->getGlobalFooter();
