@@ -156,7 +156,7 @@ define('ext.wikia.adEngine.adConfig', [
 		rtpSlots = rtp.getConfig().slotname;
 
 		if (rtpTier && rtpSlots && rtpSlots.length) {
-			for(i = rtpSlots.length; i >= 0; i -= 1 ) {
+			for(i = rtpSlots.length; i >= 0; i -= 1) {
 				gptSlotConfig.extendSlotParams('gpt', rtpSlots[i], { rp_tier: rtpTier });
 			}
 		}
