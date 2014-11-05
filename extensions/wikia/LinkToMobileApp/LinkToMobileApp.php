@@ -29,11 +29,8 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $wgHooks['BeforePageDisplay'][] = 'efLinkToMobileApp';
 
-$wgWikiaMobileAppPackageId = 'com.wikia.singlewikia';
-$wgWikiaMobileAppPackageId = 'muppet';
-
 function efLinkToMobileApp( $out ) {
-	global $wgWikiaMobileAppPackageId, $wgWikiaMobileAppPackageIdLocalPart, $wgTitle;
+	global $wgWikiaMobileAppPackageId, $wgWikiaMobileAppPackageIdLocalPart;
 
 	if ( empty( $wgLinkedWikiaMobileAppIdLocalPart ) ) {
 		$app = $wgWikiaMobileAppPackageId;
@@ -41,7 +38,7 @@ function efLinkToMobileApp( $out ) {
 		$app = $wgWikiaMobileAppPackageId . '.' . $wgWikiaMobileAppPackageIdLocalPart;
 	}
 
-	$url = parse_url( $wgTitle->getFullUrl() );
+	$url = parse_url( $out->getTitle()->getFullUrl() );
 
 	$href = 'android-app://' . $app . '/http/' . $url['host'] . $url['path'];
 
