@@ -18,7 +18,7 @@ class WikiaInYourLangController extends WikiaController {
 		 * wgServer value of the posting wikia
 		 * @var string
 		 */
-		$sCurrentUrl = $wgServer
+		$sCurrentUrl = $wgServer;
 		/**
 		 * The language code from a user's Geo cookie
 		 * @var string
