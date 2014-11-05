@@ -1,5 +1,7 @@
 <?php
 
+namespace Wikia\Cache;
+
 /**
  * Class AsyncCache
  *
@@ -105,7 +107,7 @@ class AsyncCache {
 
 		$this->callbackParams = [];
 
-		$this->cache = $cache ? $cache : F::app()->wg->Memc;
+		$this->cache = $cache ? $cache : \F::app()->wg->Memc;
 	}
 
 	/**
@@ -341,7 +343,7 @@ class AsyncCache {
 	}
 
 	private function generateValueNow() {
-		$task = new \Wikia\Cache\AsyncCacheTask();
+		$task = new AsyncCacheTask();
 		$value = $task->generate(
 			$this->key,
 			$this->callback,
@@ -352,7 +354,7 @@ class AsyncCache {
 	}
 
 	private function scheduleValueGeneration() {
-		$this->task = ( new \Wikia\Cache\AsyncCacheTask() )->wikiId( F::app()->wg->CityId );
+		$this->task = ( new AsyncCacheTask() )->wikiId( \F::app()->wg->CityId );
 		$this->task->dupCheck();
 		$this->task->call( 'generate',
 			$this->key, $this->callback, $this->callbackParams,
