@@ -32,6 +32,7 @@ $wgAutoloadClasses['FacebookClientController'] =  $dir . 'FacebookClientControll
 $wgAutoloadClasses['FacebookClientLocale'] =  $dir . 'FacebookClientLocale.class.php';
 $wgAutoloadClasses['FacebookMapModel'] =  $dir . 'FacebookMapModel.class.php';
 $wgAutoloadClasses['SpecialFacebookConnectController'] =  $dir . 'SpecialFacebookConnectController.class.php';
+$wgAutoloadClasses['FBConnectXFBML'] = $dir . 'FBConnectXFBML.php';
 
 /**
  * hooks
@@ -42,6 +43,7 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'FacebookClientHooks::MakeGlobalVariab
 $wgHooks['SkinAfterBottomScripts'][] = 'FacebookClientHooks::SkinAfterBottomScripts';
 $wgHooks['GetPreferences'][] = 'FacebookClientHooks::GetPreferences';
 $wgHooks['OasisSkinAssetGroups'][] = 'FacebookClientHooks::onOasisSkinAssetGroups';
+$wgHooks['ParserFirstCallInit'][] = 'FacebookClientHooks::setupParserHook';
 
 // special pages
 $wgSpecialPages[ 'FacebookConnect' ] =  'SpecialFacebookConnectController';
@@ -50,3 +52,12 @@ $wgSpecialPages[ 'FacebookConnect' ] =  'SpecialFacebookConnectController';
  * messages
  */
 $wgExtensionMessagesFiles['FacebookClient'] = $dir . 'FacebookClient.i18n.php';
+
+/**
+ * ResourceLoader modules
+ */
+$wgResourceModules['ext.wikia.FacebookClient.FBXML'] = array(
+	'scripts' => 'scripts/FacebookClient.FBXML.js',
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/FacebookClient',
+);
