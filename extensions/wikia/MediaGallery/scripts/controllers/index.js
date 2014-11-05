@@ -10,11 +10,7 @@ require([
 		new GalleriesController().init();
 	}
 
-	// Galleries must be initialized:
-	// In preview dialog
+	// Galleries must be initialized on page-load and on preview dialog
 	$(window).on('EditPageAfterRenderPreview', newGallery);
-	// After VisualEditor
-	mw.hook('postEdit').add(newGallery);
-	// On page load
 	$(newGallery);
 });
