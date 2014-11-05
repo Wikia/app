@@ -517,4 +517,5 @@
 	}
 	initializeEditButton();
 	$heroModule.trigger('resize');
+	$(window).resize(onResize);
 })(window, jQuery);
