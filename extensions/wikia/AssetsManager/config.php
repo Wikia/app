@@ -154,6 +154,13 @@ $config['adengine2_rubicon_rtp_js'] = array(
 	),
 );
 
+$config['adengine2_amazon_match_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/AmazonMatch.js',
+	),
+);
+
 $config['oasis_noads_extensions_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
