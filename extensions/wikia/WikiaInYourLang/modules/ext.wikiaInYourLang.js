@@ -3,58 +3,60 @@
  * in a user's native language (based on a Geo cookie)
  * and displays a notification with a link.
  */
+require(
+	[
+		'jquery',
+		'mw',
+		'wikia.cache',
+	],
+	function( $, mw, cache ) {
+		'use strict';
 
-( function( $, mw, undefined ) {
-	'use strict';
+		var wikiaInYourLang = {
 
-	var wikiaInYourLang = {
+			init: function() {
+				$.cookie( 'Geo', '{"country":"ja"}' );
+				this.geo = JSON.parse( $.cookie( 'Geo' ) );
+				this.targetLanguage = this.geo.country.toLowerCase();
+				this.supportedLanguages = [ 'ja' ];
+				this.currentUrl = wgServer;
 
-		init: function() {
-			$.cookie( 'Geo', '{"country":"ja"}' );
-			this.geo = JSON.parse( $.cookie( 'Geo' ) );
-			this.targetLanguage = this.geo.country.toLowerCase();
-			this.supportedLanguages = [ 'ja' ];
-			this.currentUrl = wgServer;
-
-			if ( $.inArray( this.targetLanguage, this.supportedLanguages ) !== -1 && wgContentLanguage == 'en' ) {
-				require( [ 'wikia.cache' ], function( cache ) {
-					if ( cache.get( 'wikiaInYourLangShown' ) !== true ) {
+				if ( $.inArray( this.targetLanguage, this.supportedLanguages ) !== -1 && wgContentLanguage == 'en' ) {
+					if ( cache.get( 'wikiaInYourLangShown' ) === true ) {
 						var ttl = 60 * 60 * 24 * 30;
 						cache.set( 'wikiaInYourLangShown', true, ttl );
-
 						this.getNativeWikiaInfo( this );
 					}
-				});
-			}
-		},
-
-		getNativeWikiaInfo: function( obj ) {
-			$.nirvana.sendRequest( {
-				controller: 'WikiaInYourLangController',
-				method: 'getNativeWikiaInfo',
-				data: {
-					currentUrl: obj.currentUrl,
-					targetLanguage: obj.targetLanguage
-				},
-				callback: function( results ) {
-					if ( results.success == true ) {
-						obj.displayNotification( results.wikiaSitename, results.wikiaUrl );
-					}
 				}
-			} );
-		},
+			},
 
-		displayNotification: function( wikiaSitename, wikiaUrl ) {
-			var currentSitename = wgSitename,
-			    linkElement = '<a href="' + wikiaUrl + '" title="' + wikiaSitename +'">' + wikiaSitename + '</a>',
-			    message = mw.message( 'wikia-in-your-lang-available', currentSitename , linkElement );
+			getNativeWikiaInfo: function( obj ) {
+				$.nirvana.sendRequest( {
+					controller: 'WikiaInYourLangController',
+					method: 'getNativeWikiaInfo',
+					data: {
+						currentUrl: obj.currentUrl,
+						targetLanguage: obj.targetLanguage
+					},
+					callback: function( results ) {
+						if ( results.success == true ) {
+							obj.displayNotification( results.wikiaSitename, results.wikiaUrl );
+						}
+					}
+				} );
+			},
 
-			GlobalNotification.show( message.plain(), 'notify' );
-		}
-	};
+			displayNotification: function( wikiaSitename, wikiaUrl ) {
+				var currentSitename = wgSitename,
+				    linkElement = '<a href="' + wikiaUrl + '" title="' + wikiaSitename +'">' + wikiaSitename + '</a>',
+				    message = mw.message( 'wikia-in-your-lang-available', currentSitename , linkElement );
 
-	$( function() {
-		wikiaInYourLang.init();
-	} );
+				GlobalNotification.show( message.plain(), 'notify' );
+			}
+		};
 
-}( jQuery, mediaWiki ) );
+		$( function() {
+			wikiaInYourLang.init();
+		} );
+	}
+);

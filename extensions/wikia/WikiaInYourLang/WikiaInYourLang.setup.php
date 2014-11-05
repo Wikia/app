@@ -42,4 +42,7 @@ $wgResourceModules['ext.wikiaInYourLang'] = [
 	'messages' => [
 		'wikia-in-your-lang-available',
 	],
+	'dependencies' => [
+		'wikia.cache',
+	],
 ];
