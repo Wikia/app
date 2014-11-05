@@ -620,7 +620,7 @@
 
 	if (ArticleComments.loadOnDemand) {
 		$(function () {
-			var content, hash, permalink, styleAssets, belowTheFold, loadAssets;
+			var content, hash, permalink, styleAssets = [], belowTheFold, loadAssets;
 
 			// Cache jQuery selector after DOM ready
 			ArticleComments.$wrapper = $(ArticleComments.wrapperSelector);
@@ -632,10 +632,18 @@
 
 			hash = window.location.hash;
 			permalink = /^#comm-/.test(hash);
-			// TODO: we should be able to load it this way
-			//styleAssets.push($.getAssetManagerGroupUrl(
-			// 'articlecomments' + (ArticleComments.miniEditorEnabled ? '_mini_editor' : '') + '_scss'));
-			styleAssets = [$.getSassCommonURL('skins/oasis/css/core/ArticleComments.scss')];
+
+			switch(window.skin) {
+				case 'venus':
+					styleAssets.push($.getSassCommonURL('extensions/wikia/Venus/styles/article/comments.scss'));
+					break;
+
+				case 'oasis':
+				default:
+					styleAssets.push($.getSassCommonURL('skins/oasis/css/core/ArticleComments.scss'));
+					break;
+			}
+
 			belowTheFold = function () {
 				return ArticleComments.$wrapper.offset().top >= ($window.scrollTop() + $window.height());
 			};
@@ -658,7 +666,7 @@
 						data: {
 							articleId: window.wgArticleId,
 							page: ArticleComments.$wrapper.data('page'),
-							skin: true
+							useskin: window.skin
 						},
 						callback: function (response) {
 							content = response;
