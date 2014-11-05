@@ -19,8 +19,6 @@ require(
 		var wikiaInYourLang = {
 
 			init: function() {
-				this.currentUrl = wgServer;
-
 				/**
 				 * An array of language codes for which we want to look for a native wikia
 				 * @type {Array}
@@ -61,8 +59,9 @@ require(
 				$.nirvana.sendRequest( {
 					controller: 'WikiaInYourLangController',
 					method: 'getNativeWikiaInfo',
+					format: 'json',
+					type: 'GET',
 					data: {
-						currentUrl: obj.currentUrl,
 						targetLanguage: obj.targetLanguage
 					},
 					callback: function( results ) {
@@ -87,18 +86,16 @@ require(
 			},
 
 			setupTracking: function( targetLanguage ) {
-				var body = $( 'body' );
-				body
-					.on('click', 'a#wikia-in-your-lang-link', function() {
-						var trackingParams = {
-							trackingMethod: 'ga',
-							category: 'wikia-in-your-lang',
-							action: tracker.ACTIONS.CLICK_LINK_TEXT,
-							label: targetLanguage + '-notification-link-click',
-						};
+				$('a#wikia-in-your-lang-link').click( function() {
+					var trackingParams = {
+						trackingMethod: 'ga',
+						category: 'wikia-in-your-lang',
+						action: tracker.ACTIONS.CLICK_LINK_TEXT,
+						label: targetLanguage + '-notification-link-click',
+					};
 
-						tracker.track( trackingParams );
-					});
+					tracker.track( trackingParams );
+				});
 			},
 		};
 
