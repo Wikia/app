@@ -75,8 +75,12 @@ require(
 
 		function displayNotification(wikiaSitename, wikiaUrl) {
 			var currentSitename = mw.config.get('wgSitename'),
-				linkElement = '<a href="' + wikiaUrl + '" title="' + wikiaSitename + '" id="wikia-in-your-lang-link">' + wikiaSitename + '</a>',
-				message = mw.message('wikia-in-your-lang-available', currentSitename, linkElement);
+				$linkElement = $('<a></a>')
+					.attr('href', wikiaUrl)
+					.attr('title', wikiaSitename)
+					.attr('id', 'wikia-in-your-lang-link')
+					.text(wikiaSitename),
+				message = mw.message('wikia-in-your-lang-available', currentSitename, $linkElement[0].outerHTML);
 
 			w.GlobalNotification.show(message.plain(), 'notify');
 		}
