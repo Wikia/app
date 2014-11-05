@@ -12,9 +12,8 @@ class WikiaInYourLangHooks {
 	 * Add JS module to the output
 	 * @return {bool} true
 	 */
-	public static function onBeforePageDisplay() {
-		global $wgOut;
-		$wgOut->addModules( 'ext.wikiaInYourLang' );
+	public static function onBeforePageDisplay( OutputPage $out ) {
+		$out->addModules( 'ext.wikiaInYourLang' );
 		return true;
 	}
 }
