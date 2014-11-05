@@ -1,8 +1,7 @@
 <?php
 /**
- * A model for the Game Guides controller
+ * A model for the Curated Content controller
  *
- * @author Federico "Lox" Lucignano
  */
 
 class CuratedContentModel{

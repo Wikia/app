@@ -3,16 +3,16 @@
 $messages = array();
 
 $messages['en'] = array(
-	'wikiaCuratedContent-desc' => 'Wikia Game Guides mobile app modules',
+	'wikiaCuratedContent-desc' => 'Wikia Curated Content mobile app modules',
 
 	//Preview page
-	'wikiaCuratedContent-preview-description' => 'This is just a preview of how pages would look like in a Wikia Game Guides application.',
+	'wikiaCuratedContent-preview-description' => 'This is just a preview of how pages would look like in a Wikia Curated Content application.',
 
 	//Content Managment tool
-	'wikiaCuratedContent-content-title' => 'Wikia Game Guides content managment tool',
+	'wikiaCuratedContent-content-title' => 'Wikia Curated Content managment tool',
 	'wikiaCuratedContent-content-category' => 'Category',
 	'wikiaCuratedContent-content-tag' => 'Category Tag (optional)',
-	'wikiaCuratedContent-content-name' => 'Game Guide Name (optional)',
+	'wikiaCuratedContent-content-name' => 'Curated Content Name (optional)',
 	'wikiaCuratedContent-content-add-tag' => 'Add Tag',
 	'wikiaCuratedContent-content-add-category' => 'Add Category',
 	'wikiaCuratedContent-content-save' => 'Save',
@@ -21,10 +21,10 @@ $messages['en'] = array(
 	'wikiaCuratedContent-content-duplicate-entry' => 'This value is duplicated',
 	'wikiaCuratedContent-content-empty-tag' => 'This tag needs some categories',
 
-	'wikiaCuratedContent-content-description-categories' => 'Add wiki "Categories" and rename them as you\'d like them to appear in Game Guides with "Game Guide Names".',
+	'wikiaCuratedContent-content-description-categories' => 'Add wiki "Categories" and rename them as you\'d like them to appear in Curated Content with "Curated Content Names".',
 	'wikiaCuratedContent-content-description-tag' => 'Does it make sense to group categories under a game series installment? Add a category "Tag," and drag and drop wiki categories under it.',
 	'wikiaCuratedContent-content-description-organize' => 'Feel free to delete or add more lines, and reorder them by dragging and dropping.',
-	'wikiaCuratedContent-content-description-no-tag' => 'Categories without tag or with empty tag will be shown as last in Game Guides.',
+	'wikiaCuratedContent-content-description-no-tag' => 'Categories without tag or with empty tag will be shown as last in Curated Content.',
 
 	//Sponsored Videos Managment Tools
 	'wikiaCuratedContent-sponsored-description-language' => 'Highlighted row is a language',
@@ -32,7 +32,7 @@ $messages['en'] = array(
 	'wikiaCuratedContent-sponsored-description-title' => 'Second input is for Video Title',
 	'wikiaCuratedContent-sponsored-description-url' => 'Third input is for Video URL',
 
-	'wikiaCuratedContent-sponsored-title' => 'Wikia Game Guides Sponsored Videos Tool',
+	'wikiaCuratedContent-sponsored-title' => 'Wikia Curated Content Sponsored Videos Tool',
 	'wikiaCuratedContent-sponsored-add-video' => 'Add video',
 	'wikiaCuratedContent-sponsored-add-language' => 'Add Language',
 
@@ -52,7 +52,7 @@ $messages['en'] = array(
 /** Message documentation (Message documentation)
  */
 $messages['qqq'] = array(
-	'wikiaCuratedContent-desc' => 'Wikia Game Guides is the name of a product, do not translate on a per-word basis',
+	'wikiaCuratedContent-desc' => 'Wikia Curated Content is the name of a product, do not translate on a per-word basis',
 
 
 	//Preview page
@@ -62,7 +62,7 @@ $messages['qqq'] = array(
 	'wikiaCuratedContent-content-title' => 'title of a page',
 	'wikiaCuratedContent-content-category' => 'table header above category inputs',
 	'wikiaCuratedContent-content-tag' => 'table header on tag inputs',
-	'wikiaCuratedContent-content-name' => 'table header on game guide name inputs',
+	'wikiaCuratedContent-content-name' => 'table header on curated Content name inputs',
 	'wikiaCuratedContent-content-add-tag' => 'message on add tag button - to add a Tag to a list',
 	'wikiaCuratedContent-content-add-category' => 'message on add category button - to add a category to a tag',
 	'wikiaCuratedContent-content-save' => 'Save button - to save list of tags and categories',
@@ -82,7 +82,7 @@ $messages['qqq'] = array(
 	'wikiaCuratedContent-sponsored-description-title' => 'Message describing a purpose and usage of the tool',
 	'wikiaCuratedContent-sponsored-description-url' => 'Message describing a purpose and usage of the tool',
 
-	'wikiaCuratedContent-sponsored-title' => 'Title of Wikia Game Guides Sponsored Videos Tool page',
+	'wikiaCuratedContent-sponsored-title' => 'Title of Wikia Curated Content Sponsored Videos Tool page',
 	'wikiaCuratedContent-sponsored-add-video' => 'Message on an add a video button',
 	'wikiaCuratedContent-sponsored-add-language' => 'Message on an add a language button',
 
@@ -110,14 +110,14 @@ $messages['ast'] = array(
  * @author Fulup
  */
 $messages['br'] = array(
-	'wikiaCuratedContent-desc' => 'Wikia Game Guides evit modulennoù arloadoù pellgomzerioù hezoug',
+	'wikiaCuratedContent-desc' => 'Wikia Curated Content evit modulennoù arloadoù pellgomzerioù hezoug',
 );
 
 /** Catalan (català)
  * @author SMP
  */
 $messages['ca'] = array(
-	'wikiaCuratedContent-desc' => "Mòduls de l'aplicació mòbil de Wikia Game Guides",
+	'wikiaCuratedContent-desc' => "Mòduls de l'aplicació mòbil de Wikia Curated Content",
 );
 
 /** Czech (česky)
@@ -139,12 +139,12 @@ $messages['cs'] = array(
  * @author Metalhead64
  */
 $messages['de'] = array(
-	'wikiaCuratedContent-desc' => 'Wikia Game Guides Mobile App Module',
+	'wikiaCuratedContent-desc' => 'Wikia Curated Content Mobile App Module',
 	'wikiaCuratedContent-preview-description' => 'Dies ist nur eine Vorschau, wie Seiten in einer Wikia-Game-Guides-Anwendung aussehen würden.',
-	'wikiaCuratedContent-content-title' => 'Inhaltsverwaltungswerkzeug für Wikia Game Guides',
+	'wikiaCuratedContent-content-title' => 'Inhaltsverwaltungswerkzeug für Wikia Curated Content',
 	'wikiaCuratedContent-content-category' => 'Kategorie',
 	'wikiaCuratedContent-content-tag' => 'Kategoriemarkierung (optional)',
-	'wikiaCuratedContent-content-name' => 'Name des Game Guides (optional)',
+	'wikiaCuratedContent-content-name' => 'Name des Curated Content (optional)',
 	'wikiaCuratedContent-content-save' => 'Speichern',
 	'wikiaCuratedContent-content-category-error' => 'Kategorie ist nicht vorhanden', # Fuzzy
 	'wikiaCuratedContent-content-duplicate-entry' => 'Dieser Wert ist doppelt',
@@ -156,8 +156,8 @@ $messages['de'] = array(
  */
 $messages['es'] = array(
 	'wikiaCuratedContent-desc' => 'Guías de Juego de Wikia para módulos de aplicaciones móviles',
-	'wikiaCuratedContent-preview-description' => 'Esto es solo una vista previa de cómo se verían las páginas en un aplicación de Wikia Game Guides.',
-	'wikiaCuratedContent-content-title' => 'Herramienta de administración de contenido de Wikia Game Guides',
+	'wikiaCuratedContent-preview-description' => 'Esto es solo una vista previa de cómo se verían las páginas en un aplicación de Wikia Curated Content.',
+	'wikiaCuratedContent-content-title' => 'Herramienta de administración de contenido de Wikia Curated Content',
 	'wikiaCuratedContent-content-category' => 'Categoría',
 	'wikiaCuratedContent-content-tag' => 'Etiqueta de categoría (opcional)',
 	'wikiaCuratedContent-content-name' => 'Nombre de la guía de juegos (opcional)',
@@ -170,7 +170,7 @@ $messages['es'] = array(
  * @author An13sa
  */
 $messages['eu'] = array(
-	'wikiaCuratedContent-desc' => 'Wikia Game Guides mugikorrerako app modukuak',
+	'wikiaCuratedContent-desc' => 'Wikia Curated Content mugikorrerako app modukuak',
 );
 
 /** Finnish (suomi)
@@ -178,7 +178,7 @@ $messages['eu'] = array(
  * @author Nedergard
  */
 $messages['fi'] = array(
-	'wikiaCuratedContent-desc' => 'Wikia Game Guides mobiilisovellus moduulit',
+	'wikiaCuratedContent-desc' => 'Wikia Curated Content mobiilisovellus moduulit',
 	'wikiaCuratedContent-content-category' => 'Luokka',
 	'wikiaCuratedContent-content-save' => 'Tallenna',
 	'wikiaCuratedContent-content-category-error' => 'Luokkaa ei ole', # Fuzzy
@@ -189,7 +189,7 @@ $messages['fi'] = array(
  * @author Wyz
  */
 $messages['fr'] = array(
-	'wikiaCuratedContent-desc' => 'Modules de l’application mobile Wikia Game Guides',
+	'wikiaCuratedContent-desc' => 'Modules de l’application mobile Wikia Curated Content',
 	'wikiaCuratedContent-preview-description' => 'Ceci est un simple aperçu de ce à quoi ressembleront les pages dans une application de guide de jeu de Wikia.',
 	'wikiaCuratedContent-content-title' => 'Outil de gestion du contenu des guides de jeu de Wikia',
 	'wikiaCuratedContent-content-category' => 'Catégorie',
@@ -204,9 +204,9 @@ $messages['fr'] = array(
  * @author Toliño
  */
 $messages['gl'] = array(
-	'wikiaCuratedContent-desc' => 'Módulos de aplicacións móbiles Wikia Game Guides',
-	'wikiaCuratedContent-preview-description' => 'Esta é só unha vista previa de como se verían as páxinas nunha aplicación de Wikia Game Guides.',
-	'wikiaCuratedContent-content-title' => 'Ferramenta de administración de contido de Wikia Game Guides',
+	'wikiaCuratedContent-desc' => 'Módulos de aplicacións móbiles Wikia Curated Content',
+	'wikiaCuratedContent-preview-description' => 'Esta é só unha vista previa de como se verían as páxinas nunha aplicación de Wikia Curated Content.',
+	'wikiaCuratedContent-content-title' => 'Ferramenta de administración de contido de Wikia Curated Content',
 	'wikiaCuratedContent-content-category' => 'Categoría',
 	'wikiaCuratedContent-content-tag' => 'Etiqueta de categoría (opcional)',
 	'wikiaCuratedContent-content-name' => 'Nome da guía do xogo (opcional)',
@@ -226,21 +226,21 @@ $messages['hu'] = array(
  * @author McDutchie
  */
 $messages['ia'] = array(
-	'wikiaCuratedContent-desc' => 'Modulos de application mobile pro Wikia Game Guides',
+	'wikiaCuratedContent-desc' => 'Modulos de application mobile pro Wikia Curated Content',
 );
 
 /** Italian (italiano)
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
  */
 $messages['it'] = array(
-	'wikiaCuratedContent-desc' => "Moduli per l'applicazione mobile Wikia Game Guides",
+	'wikiaCuratedContent-desc' => "Moduli per l'applicazione mobile Wikia Curated Content",
 );
 
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
-	'wikiaCuratedContent-desc' => 'Module för de Wikia Spellaanleidonge (<i lang="en">Wikia Game Guides</i>) ier mobile Aanwändong.',
+	'wikiaCuratedContent-desc' => 'Module för de Wikia Spellaanleidonge (<i lang="en">Wikia Curated Content</i>) ier mobile Aanwändong.',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -272,8 +272,8 @@ $messages['mk'] = array(
  */
 $messages['ms'] = array(
 	'wikiaCuratedContent-desc' => 'Modul aplikasi mudah alih Panduan Permainan Wikia',
-	'wikiaCuratedContent-preview-description' => 'Ini hanya pralihat untuk rupa halaman dalam aplikasi Wikia Game Guides.',
-	'wikiaCuratedContent-content-title' => 'Alat pengurusan kandungan Wikia Game Guides',
+	'wikiaCuratedContent-preview-description' => 'Ini hanya pralihat untuk rupa halaman dalam aplikasi Wikia Curated Content.',
+	'wikiaCuratedContent-content-title' => 'Alat pengurusan kandungan Wikia Curated Content',
 	'wikiaCuratedContent-content-category' => 'Kategori',
 	'wikiaCuratedContent-content-tag' => 'Teg Kategori (pilihan)',
 	'wikiaCuratedContent-content-name' => 'Nama Panduan Permainan (pilihan)',
@@ -302,12 +302,12 @@ $messages['nb'] = array(
  * @author Wiki13
  */
 $messages['nl'] = array(
-	'wikiaCuratedContent-desc' => 'Applicatiemodules voor mobiel voor Wikia Game Guides',
-	'wikiaCuratedContent-preview-description' => 'Dit is alleen maar een voorvertoning van hoe een pagina eruit ziet in de Wikia Game Guides.',
-	'wikiaCuratedContent-content-title' => 'Contentbeheerprogramma voor Wikia Game Guides',
+	'wikiaCuratedContent-desc' => 'Applicatiemodules voor mobiel voor Wikia Curated Content',
+	'wikiaCuratedContent-preview-description' => 'Dit is alleen maar een voorvertoning van hoe een pagina eruit ziet in de Wikia Curated Content.',
+	'wikiaCuratedContent-content-title' => 'Contentbeheerprogramma voor Wikia Curated Content',
 	'wikiaCuratedContent-content-category' => 'Categorie',
 	'wikiaCuratedContent-content-tag' => 'Categorielabel (optioneel)',
-	'wikiaCuratedContent-content-name' => 'Game Guidenaam (optioneel)',
+	'wikiaCuratedContent-content-name' => 'Curated Contentnaam (optioneel)',
 	'wikiaCuratedContent-content-add-tag' => 'Label toevoegen',
 	'wikiaCuratedContent-content-add-category' => 'Categorie toevoegen',
 	'wikiaCuratedContent-content-save' => 'Opslaan',
@@ -321,9 +321,9 @@ $messages['nl'] = array(
  * @author Sovq
  */
 $messages['pl'] = array(
-	'wikiaCuratedContent-desc' => 'Aplikacje Wikia Game Guides dla urządzeń mobilnych',
-	'wikiaCuratedContent-preview-description' => 'To jedynie podgląd tego jak strona wyglądałaby w aplikacji Wikia Game Guides.',
-	'wikiaCuratedContent-content-title' => 'Narzędzie zarządzania zawartością Wikia Game Guides',
+	'wikiaCuratedContent-desc' => 'Aplikacje Wikia Curated Content dla urządzeń mobilnych',
+	'wikiaCuratedContent-preview-description' => 'To jedynie podgląd tego jak strona wyglądałaby w aplikacji Wikia Curated Content.',
+	'wikiaCuratedContent-content-title' => 'Narzędzie zarządzania zawartością Wikia Curated Content',
 	'wikiaCuratedContent-content-category' => 'Kategoria',
 	'wikiaCuratedContent-content-tag' => 'Znacznik kategorii (opcjonalny)',
 	'wikiaCuratedContent-content-name' => 'Nazwa (opcjonalna)',
@@ -338,11 +338,11 @@ $messages['pl'] = array(
  */
 $messages['pms'] = array(
 	'wikiaCuratedContent-desc' => "Mòdoj ëd l'aplicassion mòbil Wikia Games Guides",
-	'wikiaCuratedContent-preview-description' => "Costa a l'é mach na preuva ëd com le pagine a dovrìo smijé ant n'aplicassion Wikia Game Guides.",
-	'wikiaCuratedContent-content-title' => 'Utis ëd gestion dël contnù ëd Wikia Game Guides.',
+	'wikiaCuratedContent-preview-description' => "Costa a l'é mach na preuva ëd com le pagine a dovrìo smijé ant n'aplicassion Wikia Curated Content.",
+	'wikiaCuratedContent-content-title' => 'Utis ëd gestion dël contnù ëd Wikia Curated Content.',
 	'wikiaCuratedContent-content-category' => 'Categorìa',
 	'wikiaCuratedContent-content-tag' => 'Tichëtta ëd categorìa (opsional)',
-	'wikiaCuratedContent-content-name' => 'Game Guide Name (opsional)',
+	'wikiaCuratedContent-content-name' => 'Curated Content Name (opsional)',
 	'wikiaCuratedContent-content-save' => 'Salva',
 	'wikiaCuratedContent-content-category-error' => 'La categorìa a esist pa', # Fuzzy
 	'wikiaCuratedContent-content-duplicate-entry' => "Sto valor a l'é duplicà",
@@ -374,7 +374,7 @@ $messages['pt-br'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
-	'wikiaCuratedContent-desc' => "Module de l'applicazione mobile Wikia Game Guides",
+	'wikiaCuratedContent-desc' => "Module de l'applicazione mobile Wikia Curated Content",
 );
 
 /** Russian (русский)
@@ -382,12 +382,12 @@ $messages['roa-tara'] = array(
  * @author Kuzura
  */
 $messages['ru'] = array(
-	'wikiaCuratedContent-desc' => 'Модули мобильного приложения Wikia Game Guides',
-	'wikiaCuratedContent-preview-description' => 'Это только предварительный просмотр страницы. Так она будет выглядеть в приложении Wikia Game Guides.',
-	'wikiaCuratedContent-content-title' => 'Инструмент управления содержимым Wikia Game Guides',
+	'wikiaCuratedContent-desc' => 'Модули мобильного приложения Wikia Curated Content',
+	'wikiaCuratedContent-preview-description' => 'Это только предварительный просмотр страницы. Так она будет выглядеть в приложении Wikia Curated Content.',
+	'wikiaCuratedContent-content-title' => 'Инструмент управления содержимым Wikia Curated Content',
 	'wikiaCuratedContent-content-category' => 'Категория:',
 	'wikiaCuratedContent-content-tag' => 'Тег категории (необязательно)',
-	'wikiaCuratedContent-content-name' => 'Название для Game Guide (необязательно)',
+	'wikiaCuratedContent-content-name' => 'Название для Curated Content (необязательно)',
 	'wikiaCuratedContent-content-save' => 'Сохранить',
 	'wikiaCuratedContent-content-category-error' => 'Категория не существует', # Fuzzy
 	'wikiaCuratedContent-content-duplicate-entry' => 'Это значение является дубликатом',
@@ -404,7 +404,7 @@ $messages['si'] = array(
  * @author Yerpo
  */
 $messages['sl'] = array(
-	'wikiaCuratedContent-desc' => 'Moduli za mobilno aplikacijo Wikia Game Guides',
+	'wikiaCuratedContent-desc' => 'Moduli za mobilno aplikacijo Wikia Curated Content',
 );
 
 /** Swedish (svenska)
@@ -433,7 +433,7 @@ $messages['tl'] = array(
  * @author Ajdar
  */
 $messages['tt-cyrl'] = array(
-	'wikiaCuratedContent-desc' => 'Wikia Game Guides мобиль кушымтасы өчен модульләр',
+	'wikiaCuratedContent-desc' => 'Wikia Curated Content мобиль кушымтасы өчен модульләр',
 );
 
 /** Ukrainian (українська)

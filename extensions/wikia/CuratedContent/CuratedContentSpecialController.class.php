@@ -146,7 +146,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function save(){
-		if ( !$this->wg->User->isAllowed( 'CuratedContent' ) ) {
+		if ( !$this->wg->User->isAllowed( 'curatedcontent' ) ) {
 			$this->displayRestrictionError();
 			return false;  // skip rendering
 		}

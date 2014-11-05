@@ -224,7 +224,7 @@ $(function(){
 				$form.startThrobbing();
 
 				nirvana.sendRequest({
-					controller: 'CuratedContentSpecialContent',
+					controller: 'CuratedContentSpecial',
 					method: 'save',
 					data: {
 						tags: data
@@ -284,7 +284,7 @@ $(function(){
 				$currentImage.startThrobbing();
 
 				nirvana.getJson(
-					'CuratedContentSpecialContent',
+					'CuratedContentSpecial',
 					'getImage',
 					{
 						file: imgTitle

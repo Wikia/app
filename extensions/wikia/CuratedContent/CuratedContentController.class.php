@@ -1,10 +1,7 @@
 <?php
 /**
- * Game Guides mobile app API controller
- *
- * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
+ * CuratedContent mobile app API controller
  */
-// @deprecated
 class CuratedContentController extends WikiaController {
 	const API_VERSION = 1;
 	const API_REVISION = 6;
@@ -72,116 +69,6 @@ class CuratedContentController extends WikiaController {
 		
 		$this->mModel = new CuratedContentModel();
 		$this->mPlatform = $this->request->getVal( 'os' );
-	}
-
-	/*
-	 * @brief Returns a list of recommended wikis with some data from Oasis' ThemeSettings
-	 *
-	 * @requestParam integer $limit [OPTIONAL] the maximum number of results for this call
-	 * @requestParam integer $batch [OPTIONAL] the batch of results for this call, used only when $limit is passed in
-	 *
-	 * @responseParam see CuratedContentModel::getWikiList
-	 * @see CuratedContentModel::getWikiList
-	 */
-	public function listWikis(){
-		wfProfileIn( __METHOD__ );
-
-		Wikia::log( __METHOD__, '', '', true );
-
-		$this->response->setFormat( 'json' );
-
-		$limit = $this->request->getInt( 'limit', null );
-		$batch = $this->request->getInt( 'batch', 1 );
-		$result = $this->mModel->getWikisList( $limit, $batch );
-
-		foreach( $result as $key => $value ){
-			$this->response->setVal( $key, $value );
-		}
-
-		wfProfileOut( __METHOD__ );
-	}
-
-	/*
-	 * @brief Returns a collection of data for the current wiki to use in the
-	 * per-wiki screen of the application
-	 *
-	 * @responseParam see CuratedContentModel::getWikiContents
-	 * @see CuratedContentModel::getWikiContents
-	 */
-
-	public function listWikiContents(){
-		wfProfileIn( __METHOD__ );
-
-		Wikia::log( __METHOD__, '', '', true );
-
-		$this->response->setFormat( 'json' );
-
-		$result = $this->mModel->getWikiContents();
-
-		foreach( $result as $key => $value ){
-			$this->response->setVal( $key, $value );
-		}
-
-		wfProfileOut( __METHOD__ );
-	}
-
-	/*
-	 * @brief Returns all the contents associated to a category for the current wiki
-	 *
-	 * @requestParam string $category the name of the category to fetch contents from
-	 * @requestParam integer $limit [OPTIONAL] the maximum number of results for this call
-	 * @requestParam integer $batch [OPTIONAL] the batch of results for this call, used only when $limit is passed in
-	 *
-	 * @responseParam see CuratedContentModel::getCategoryContents
-	 * @see CuratedContentModel::getCategoryContents
-	 */
-	public function listCategoryContents(){
-		wfProfileIn( __METHOD__ );
-
-		Wikia::log( __METHOD__, '', '', true );
-
-		$this->response->setFormat( 'json' );
-
-		$category = $this->getVal('category');
-
-
-		$limit = $this->request->getInt( 'limit', null );
-		$batch = $this->request->getInt( 'batch', 1 );
-		$result = $this->mModel->getCategoryContents( $category, $limit, $batch );
-
-		foreach( $result as $key => $value ){
-			$this->response->setVal( $key, $value );
-		}
-
-		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * @brief Returns the results from a local wiki search for the passed in term
-	 *
-	 * @reqeustParam string $term the term to search for
-	 * @requestParam integer $limit [OPTIONAL] the maximum number of results for this call
-	 * @requestParam integer $batch [OPTIONAL] the batch of results for this call, used only when $limit is passed in
-	 *
-	 * @responseParam see CuratedContentModel::getSearchResults
-	 * @see CuratedContentModel::getSearchResults
-	 */
-	public function search(){
-		wfProfileIn( __METHOD__ );
-
-		Wikia::log( __METHOD__, '', '', true );
-
-		$this->response->setFormat( 'json' );
-
-		$term = $this->request->getVal( 'term' );
-		$limit = $this->request->getInt( 'limit', CuratedContentModel::SEARCH_RESULTS_LIMIT );
-		$result = $this->mModel->getSearchResults( $term, $limit );
-
-		foreach( $result as $key => $value ){
-			$this->response->setVal( $key, $value );
-		}
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -264,102 +151,7 @@ class CuratedContentController extends WikiaController {
 	}
 
 	/**
-	 * @param $title Title
-	 * @param $urls String[]
-	 * @return bool
-	 */
-	static function onTitleGetSquidURLs( $title, &$urls ){
-
-		if ( !in_array( $title->getNamespace(), self::$disabledNamespaces ) ) {
-			$urls[] = self::getUrl( 'getPage', array(
-				'page' => $title->getPrefixedText()
-			) );
-		}
-
-		return true;
-	}
-
-	/**
-	 * @brief this is a function that return rendered article
-	 *
-	 * @requestParam String title of a page
-	 */
-	public function renderPage(){
-		wfProfileIn( __METHOD__ );
-
-		$titleName = $this->request->getVal( 'page' );
-
-		$html = ApiService::call(
-			array(
-				'action' => 'parse',
-				'page' => $titleName,
-				'prop' => 'text',
-				'redirects' => 1,
-				'useskin' => 'wikiamobile'
-			)
-		);
-
-		$this->response->setVal( 'globals', Skin::newFromKey( 'wikiamobile' )->getTopScripts() );
-		$this->response->setVal( 'messages', JSMessages::getPackages( array( 'CuratedContent' ) ) );
-		$this->response->setVal( 'title', Title::newFromText( $titleName )->getText() );
-		$this->response->setVal( 'html', $html['parse']['text']['*'] );
-
-		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * @brief helper function to build a CuratedContentSpecial Preview
-	 * it returns a page and all 'global' assets
-	 */
-	public function renderFullPage(){
-		global $IP;
-
-		wfProfileIn( __METHOD__ );
-
-		$resources = json_decode( file_get_contents( $IP . self::ASSETS_PATH ) );
-
-		$scripts = '';
-
-		foreach( $resources->scripts as $s ) {
-			$scripts .= $s;
-		}
-
-		//getPage sets cache for a response for 7 days
-		$page = $this->sendSelfRequest( 'getPage', [
-			'page' => $this->getVal( 'page')
-		] );
-
-		$this->response->setVal( 'html', $page->getVal( 'html' ) );
-		$this->response->setVal( 'js', $scripts );
-		$this->response->setVal( 'css', $resources->styles );
-
-		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * @brief function that returns a valid and current link to resources of GG
-	 *
-	 * @responseParam String url to current resources
-	 * @responseParam Integer cb current style version number
-	 */
-	public function getResourcesUrl(){
-		global $IP;
-
-		$this->response->setFormat( 'json' );
-		$this->cacheResponseFor( 15, self::MINUTES );
-
-		$hash = md5_file( $IP . self::ASSETS_PATH );
-
-		$this->response->setVal( 'url',
-			self::ASSETS_PATH . '?cb=' . $hash
-		);
-
-		//when apps will be updated this won't be needed anymore
-		$this->response->setVal( 'cb', $this->wg->StyleVersion );
-	}
-
-	/**
-	 * API to get data from Game Guides Content Managment Tool in json
+	 * API to get data from Curated Content Management Tool in json
 	 *
 	 * make sure that name of this function is aligned
 	 * with what is in onCuratedContentSave to purge varnish correctly
@@ -415,7 +207,7 @@ class CuratedContentController extends WikiaController {
 			6 * self::HOURS,
 			function() use ( $limit, $offset ) {
 				return ApiService::call(
-					array(
+					[
 						'action' => 'query',
 						'list' => 'allcategories',
 						'redirects' => true,
@@ -424,7 +216,7 @@ class CuratedContentController extends WikiaController {
 						'acprop' => 'id|size',
 						//We don't want empty categories to show up
 						'acmin' => 1
-					)
+					]
 				);
 			}
 		);
@@ -438,10 +230,10 @@ class CuratedContentController extends WikiaController {
 			foreach( $allCategories as $value ) {
 				if($value['size'] - $value['files'] > 0){
 
-					$ret[] = array(
+					$ret[] = [
 						'title' => $value['*'],
 						'id'=> isset( $value['pageid'] ) ? (int) $value['pageid'] : 0
-					);
+					];
 				}
 			}
 
