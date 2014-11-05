@@ -25,6 +25,5 @@ $messages['en'] = array(
  * Japanese (ja)
  */
 $messages['ja'] = array(
-	'wikia-in-your-lang-description' => 'Displays a notification if a wikia is available in a user\'s native language. The check is based on Geo cookie and a browser\'s language.',
 	'wikia-in-your-lang-available' => 'このコミュニティには日本語版 $1 もあります。そちらもチェックしてどんどん編集もしてみよう！ $2',
 );
