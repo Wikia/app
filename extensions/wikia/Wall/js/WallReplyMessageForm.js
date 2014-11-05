@@ -140,7 +140,7 @@ Wall.ReplyMessageForm = $.createClass(Wall.MessageForm, {
 			this.resetEditor(reply);
 
 			// fire event when new article comment is/will be added to DOM
-			mw.hook( 'wikipage.content' ).fire( newMessage );
+			mw.hook('wikipage.content').fire(newMessage);
 
 			newMessage.insertBefore(reply).hide().fadeIn('slow').find('.timeago').timeago();
 

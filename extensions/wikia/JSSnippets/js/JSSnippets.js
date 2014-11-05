@@ -22,6 +22,93 @@ window.JSSnippets = (function () {
 		slashRegex = new RegExp('^\\/'),
 		debugMode = window.mw && mw.config ? mw.config.get('debug') : window.debug;
 
+	/**
+	 * Resolve dependencies, load them and initialize features
+	 */
+	function init() {
+		if (!window.JSSnippetsStack || !JSSnippetsStack.length) {
+			window.JSSnippetsStack = [];
+			afterInit();
+			return;
+		}
+
+		stack = JSSnippetsStack;
+
+		// create unique list of dependencies (both static files and libraries loader functions) and callbacks
+		var dependencies = [],
+			callbacks = {},
+			options = {},
+			entry,
+			x,
+			len = stack.length;
+
+		for (x = 0; x < len; x++) {
+			entry = stack[x];
+
+			if (entry.dependencies) {
+				pushDependencies(dependencies, entry);
+			}
+
+			// get "loader" JS functions
+			if (typeof entry.getLoaders === 'function') {
+				pushLoaders(dependencies, entry);
+			}
+
+			if (dependencies.length === 0) {
+				continue;
+			}
+
+			if (typeof entry.callback === 'function') {
+				// register unique callback for each "type" of the code using JS snippets
+				callbacks[entry.id] = entry.callback;
+
+				// create a stack of options passed to each type of callback
+				options[entry.id] = options[entry.id] || [];
+
+				// push options to it
+				options[entry.id].push(entry.options);
+			}
+		}
+
+		if (dependencies.length === 0) {
+			afterInit();
+			return;
+		}
+
+		// remove duplicated dependencies
+		dependencies = unique(dependencies);
+
+		// load all dependencies in parallel and then fire all callbacks
+		require(['wikia.loader', 'wikia.log'], function (loader, log) {
+			loader.apply(
+					loader,
+					dependencies
+				).done(
+				function () {
+					try {
+						for (var id in callbacks) {
+							for (x = 0, len = options[id].length; x < len; x++) {
+								callbacks[id](options[id][x]);
+							}
+						}
+					} catch (e) {
+						log('Skipping running callback, cause: ' + e, log.levels.error);
+					}
+				}
+			);
+		});
+
+		afterInit();
+	}
+
+	/**
+	 * Handle any tasks that need to be preformed after the init method is done.
+	 */
+	function afterInit() {
+		clearStack();
+		updatePush();
+	}
+
 	// @see http://net.tutsplus.com/tutorials/javascript-ajax/javascript-from-null-utility-functions-and-debugging/
 	function unique(origArr) {
 		var newArr = [],
@@ -49,8 +136,10 @@ window.JSSnippets = (function () {
 		return newArr;
 	}
 
-	//clear the stack
-	function clear() {
+	/*
+	 * Empty the array of items to process
+	 */
+	function clearStack() {
 		//setting length to 0 is faster and takes less memory than re-creating the array
 		window.JSSnippetsStack.length = 0;
 	}
@@ -69,7 +158,7 @@ window.JSSnippets = (function () {
 	/**
 	 * Update the format of the dependency string so that it may be passed to loader() and loaded.
 	 * @param {string} dependency String representing an asset that is a dependency of a given feature
-	 * @returns {*}
+	 * @returns {string}
 	 */
 	function formatDependency(dependency) {
 		var ext;
@@ -115,9 +204,10 @@ window.JSSnippets = (function () {
 	function pushDependencies(dependencies, entry) {
 		var dependency,
 			y,
-			len;
+			len = entry.dependencies.length;
+
 		// get list of JS/CSS files to load
-		for (y = 0, len = entry.dependencies.length; y < len; y++) {
+		for (y = 0; y < len; y++) {
 			dependency = entry.dependencies[y];
 
 			if (typeof dependency === 'string' && dependency !== '') {
@@ -136,9 +226,10 @@ window.JSSnippets = (function () {
 	function pushLoaders(dependencies, entry) {
 		var loaders = entry.getLoaders(),
 			loaderFn,
-			y, len;
+			y,
+			len = loaders.length;
 
-		for (y = 0, len = loaders.length; y < len; y++) {
+		for (y = 0; y < len; y++) {
 			loaderFn = loaders[y];
 
 			if (typeof loaderFn === 'function') {
@@ -147,91 +238,12 @@ window.JSSnippets = (function () {
 		}
 	}
 
-	//resolve dependencies, load them and initialize stuff
-	function init() {
-		if (!window.JSSnippetsStack || !JSSnippetsStack.length) {
-			window.JSSnippetsStack = [];
-
-			// Nothing to load but update push anyway for dynamically loaded content
-			updatePush();
-			return;
-		}
-		stack = JSSnippetsStack;
-
-		// create unique list of dependencies (both static files and libraries loader functions) and callbacks
-		var dependencies = [],
-			callbacks = {},
-			options = {},
-			entry,
-			x, len;
-
-		for (x = 0, len = stack.length; x < len; x++) {
-			entry = stack[x];
-
-			if (entry.dependencies) {
-				pushDependencies(dependencies, entry);
-			}
-
-			// get "loader" JS functions
-			if (typeof entry.getLoaders === 'function') {
-				pushLoaders(dependencies, entry);
-			}
-
-			if (dependencies.length === 0) {
-				continue;
-			}
-
-			if (typeof entry.callback === 'function') {
-				// register unique callback for each "type" of the code using JS snippets
-				callbacks[entry.id] = entry.callback;
-
-				// create a stack of options passed to each type of callback
-				options[entry.id] = options[entry.id] || [];
-
-				// push options to it
-				options[entry.id].push(entry.options);
-			}
-		}
-
-		if (dependencies.length === 0) {
-			clear();
-			updatePush();
-			return;
-		}
-
-		// remove duplicated dependencies
-		dependencies = unique(dependencies);
-
-		// load all dependencies in parallel and then fire all callbacks
-		require(['wikia.loader', 'wikia.log'], function (loader, log) {
-			loader.apply(
-					loader,
-					dependencies
-				).done(
-				function () {
-					try {
-						for (var id in callbacks) {
-							for (x = 0, len = options[id].length; x < len; x++) {
-								callbacks[id](options[id][x]);
-							}
-						}
-					} catch (e) {
-						log('Skipping running callback, cause: ' + e, log.levels.error);
-					}
-				}
-			);
-		});
-
-		clear();
-		updatePush();
-	}
-
 	$(init);
 
 	/** @public **/
 
 	return {
 		init: init,
-		clear: clear
+		clear: clearStack
 	};
 })();

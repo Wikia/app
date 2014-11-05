@@ -137,7 +137,7 @@ Wall.EditMessageForm = $.createClass(Wall.MessageForm, {
 			$body = $('.msg-body', msg).first().html(data.body);
 
 			// fire event when new article comment is/will be added to DOM
-			mw.hook( 'wikipage.content' ).fire( $body );
+			mw.hook('wikipage.content').fire($body);
 
 			$timestamp = $bubble.find('.timestamp');
 			$editor = $timestamp.find('.username');

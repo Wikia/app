@@ -33,7 +33,7 @@
 				newComment;
 
 			// fire event when new article comment is/will be added to DOM
-			mw.hook( 'wikipage.content' ).fire( $articleComments );
+			mw.hook('wikipage.content').fire($articleComments);
 
 			// jQuery object could have been cached before init method
 			if (!ArticleComments.$wrapper) {
@@ -247,7 +247,7 @@
 							commentText.html(saveTemplateText.html()).show();
 
 							// fire event when new article comment is/will be added to DOM
-							mw.hook( 'wikipage.content' ).fire( commentText );
+							mw.hook('wikipage.content').fire(commentText);
 
 							comment.find('.edited-by').html(saveTemplate.find('.edited-by').html());
 						}
@@ -405,7 +405,7 @@
 					nodes = $(json.text);
 
 					// fire event when new article comment is/will be added to DOM
-					mw.hook( 'wikipage.content' ).fire( nodes );
+					mw.hook('wikipage.content').fire(nodes);
 
 					if (parentId) {
 						//second level: reply
