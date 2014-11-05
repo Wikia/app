@@ -10,7 +10,7 @@ $messages = array();
  */
 $messages['qqq'] = array(
 	'wikia-in-your-lang-description' => '{{desc}}',
-	'wikia-in-your-lang-available' => 'A message to show if a wikia is available in a user\'s native language.',
+	'wikia-in-your-lang-available' => 'A message to show when a wikia is available in a user\'s native language.',
 );
 
 /**
