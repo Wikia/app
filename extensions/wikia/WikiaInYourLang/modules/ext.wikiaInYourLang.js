@@ -8,8 +8,9 @@ require(
 		'jquery',
 		'mw',
 		'wikia.cache',
+		'wikia.tracker',
 	],
-	function( $, mw, cache ) {
+	function( $, mw, cache, tracker ) {
 		'use strict';
 
 		var wikiaInYourLang = {
@@ -23,7 +24,7 @@ require(
 
 				if ( $.inArray( this.targetLanguage, this.supportedLanguages ) !== -1 && wgContentLanguage == 'en' ) {
 					if ( cache.get( 'wikiaInYourLangShown' ) === true ) {
-						var ttl = 60 * 60 * 24 * 30;
+						var ttl = 60 * 60 * 24 * 14; // Cache for 2 weeks
 						cache.set( 'wikiaInYourLangShown', true, ttl );
 						this.getNativeWikiaInfo( this );
 					}
@@ -40,7 +41,9 @@ require(
 					},
 					callback: function( results ) {
 						if ( results.success == true ) {
-							obj.displayNotification( results.wikiaSitename, results.wikiaUrl );
+							if ( obj.displayNotification( results.wikiaSitename, results.wikiaUrl ) ){
+								obj.setupTracking( obj.targetLanguage );
+							}
 						}
 					}
 				} );
@@ -48,11 +51,27 @@ require(
 
 			displayNotification: function( wikiaSitename, wikiaUrl ) {
 				var currentSitename = wgSitename,
-				    linkElement = '<a href="' + wikiaUrl + '" title="' + wikiaSitename +'">' + wikiaSitename + '</a>',
+				    linkElement = '<a href="' + wikiaUrl + '" title="' + wikiaSitename +'" id="wikia-in-your-lang-link">' + wikiaSitename + '</a>',
 				    message = mw.message( 'wikia-in-your-lang-available', currentSitename , linkElement );
 
 				GlobalNotification.show( message.plain(), 'notify' );
-			}
+				return true;
+			},
+
+			setupTracking: function( targetLanguage ) {
+				var body = $( 'body' );
+				body
+					.on('click', 'a#wikia-in-your-lang-link', function() {
+						var trackingParams = {
+							trackingMethod: 'ga',
+							category: 'wikia-in-your-lang',
+							action: tracker.ACTIONS.CLICK_LINK_TEXT,
+							label: targetLanguage + '-notification-link-click',
+						};
+
+						tracker.track( trackingParams );
+					});
+			},
 		};
 
 		$( function() {
