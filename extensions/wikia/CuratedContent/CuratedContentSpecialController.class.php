@@ -1,6 +1,6 @@
 <?php
 
-class CuratedContentSpecialContentController extends WikiaSpecialPageController {
+class CuratedContentSpecialController extends WikiaSpecialPageController {
 
 	const TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 

@@ -1,12 +1,12 @@
 @font-face {
-	font-family: 'GGSerif';
-	src: local('Droid Serif'), local('DroidSerif'), url(extensions/wikia/CuratedContent/fonts/DroidSerif.ttf) format('truetype');
-	font-weight: 400;
+  font-family: 'GGSerif';
+  src: local('Droid Serif'), local('DroidSerif'), url(extensions/wikia/CuratedContent/fonts/DroidSerif.ttf) format('truetype');
+  font-weight: 400;
 }
 
 //@font-face {
 //	font-family: 'Roboto-Thin';
-//	//src: local('Roboto Thin'), local('RobotoThin'), url(extensions/wiCuratedContentides/fonts/RobotoThin.ttf), url(file:///android_asset/fonts/RobotoThin.ttf) format('truetype');
+//	//src: local('Roboto Thin'), local('RobotoThin'), url(extensions/wikia/CuratedContent/fonts/RobotoThin.ttf), url(file:///android_asset/fonts/RobotoThin.ttf) format('truetype');
 //	font-weight: 100;
 //}
 
@@ -45,282 +45,282 @@ $darkChevronsColor: $lightChevronsColor;
 $darkSectionGrey: rgb(41, 41, 41);
 
 html {
-	background-color: $darkBackgroundColor;
-	color: $darkTextColor;
+  background-color: $darkBackgroundColor;
+  color: $darkTextColor;
 
-	font-size: 1em;
+  font-size: 1em;
 
-	font-family: 'Helvetica-Light', Helvetica, 'Lucida Grande', Aria, sans-serif;
+  font-family: 'Helvetica-Light', Helvetica, 'Lucida Grande', Aria, sans-serif;
 
-	-webkit-backface-visibility: hidden;
-	-webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
 
-	&.light {
-		background-color: $lightBackgroundColor;
-		color: $lightTextColor;
-	}
+  &.light {
+    background-color: $lightBackgroundColor;
+    color: $lightTextColor;
+  }
 
-	&.serif {
-		font-family: Palatino, "GGSerif", "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
-	}
+  &.serif {
+    font-family: Palatino, "GGSerif", "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
+  }
 
-	&.full {
-		text-align: justify;
-	}
+  &.full {
+    text-align: justify;
+  }
 }
 
 #wkCurtain {
-	display: none;
+  display: none;
 }
 
 body {
-	padding: 10px 20px;
+  padding: 10px 20px;
 
-	line-height: 1.7em;
+  line-height: 1.7em;
 
-	-webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
 h1, h2, h3{
-	margin: 10px 0 0 0;
-	font-weight: 100;
+  margin: 10px 0 0 0;
+  font-weight: 100;
 }
 
 #pageName {
-	color: $darkHeaderColor;
+  color: $darkHeaderColor;
 
-	.light & {
-		color: $lightHeaderColor;
-	}
+  .light & {
+    color: $lightHeaderColor;
+  }
 
-	font-weight: 800;
-	font-size: 1.2em;
+  font-weight: 800;
+  font-size: 1.2em;
 }
 
 h2, h3, .collSec {
-	color: $darkTextColor;
+  color: $darkTextColor;
 
-	.light & {
-		color: $lightTextColor;
-	}
+  .light & {
+    color: $lightTextColor;
+  }
 }
 
 .collSec {
-	border-top: none;
+  border-top: none;
 
-	padding-bottom: 10px;
-	padding-top: 0;
+  padding-bottom: 10px;
+  padding-top: 0;
 
-	font-size: 1.1em;
-	text-transform: uppercase;
+  font-size: 1.1em;
+  text-transform: uppercase;
 
-	background-repeat: no-repeat;
-	background-position: 100% 100%;
-	background-size: 300% 1px;
-	background-image: -webkit-gradient(linear, left top, right top, color-stop( 30%, $mainGreen ), color-stop( 50%, $darkSectionGrey ));
-	background-image: -webkit-linear-gradient(left, $mainGreen 30%, $darkSectionGrey 50%);
-	background-image: linear-gradient(to right, $mainGreen 30%, $darkSectionGrey 50%);
+  background-repeat: no-repeat;
+  background-position: 100% 100%;
+  background-size: 300% 1px;
+  background-image: -webkit-gradient(linear, left top, right top, color-stop( 30%, $mainGreen ), color-stop( 50%, $darkSectionGrey ));
+  background-image: -webkit-linear-gradient(left, $mainGreen 30%, $darkSectionGrey 50%);
+  background-image: linear-gradient(to right, $mainGreen 30%, $darkSectionGrey 50%);
 
-	.light & {
-		background-image: -webkit-gradient(linear, left top, right top, color-stop( 30%, $mainGreen ), color-stop( 50%, $lightSectionGrey ));
-		background-image: -webkit-linear-gradient(left, $mainGreen 30%, $lightSectionGrey 50%);
-		background-image: linear-gradient(to right, $mainGreen 30%, $lightSectionGrey 50%);
-	}
+  .light & {
+    background-image: -webkit-gradient(linear, left top, right top, color-stop( 30%, $mainGreen ), color-stop( 50%, $lightSectionGrey ));
+    background-image: -webkit-linear-gradient(left, $mainGreen 30%, $lightSectionGrey 50%);
+    background-image: linear-gradient(to right, $mainGreen 30%, $lightSectionGrey 50%);
+  }
 
-	-webkit-transition: background-position .3s linear;
-	-webkit-transition-delay: .1s;
+  -webkit-transition: background-position .3s linear;
+  -webkit-transition-delay: .1s;
 
-	-webkit-transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 
-	font-family: inherit;
+  font-family: inherit;
 
-	&.open {
-		color: $mainGreen;
-		background-position: 0 100%;
-	}
+  &.open {
+    color: $mainGreen;
+    background-position: 0 100%;
+  }
 
-	.chev {
-		top: 6px;
-		width: 0;
-		height: 0;
-	}
+  .chev {
+    top: 6px;
+    width: 0;
+    height: 0;
+  }
 }
 
 a {
-	text-decoration: none;
-	color: $darkTextColor;
+  text-decoration: none;
+  color: $darkTextColor;
 
-	pointer-events: none;
+  pointer-events: none;
 
-	img:not(.media), span {
-		pointer-events: none;
-	}
+  img:not(.media), span {
+    pointer-events: none;
+  }
 
-	.light & {
-		color: $lightTextColor;
-	}
+  .light & {
+    color: $lightTextColor;
+  }
 
-	&:not(.external):not(.extiw):not(.disabled) {
-		color: $darkLinkColor;
-		border-bottom: 1px dotted $darkLinkColor;
+  &:not(.external):not(.extiw):not(.disabled) {
+    color: $darkLinkColor;
+    border-bottom: 1px dotted $darkLinkColor;
 
-		pointer-events: auto;
+    pointer-events: auto;
 
-		.light & {
-			color: $lightLinkColor;
-			border-bottom-color:  $lightLinkColor;
-		}
+    .light & {
+      color: $lightLinkColor;
+      border-bottom-color:  $lightLinkColor;
+    }
 
-		*:not(.media) {
-			//slow
-			//but still faster than looking for it in JS
-	CuratedContentmeGuides.js and listener on html
-			//I expect there tag a and if something is inside
-			//it passes the Ponto and go to link directly
-			pointer-events: none;
-		}
-	}
+    *:not(.media) {
+      //slow
+      //but still faster than looking for it in JS
+      //see CuratedContent.js and listener on html
+      //I expect there tag a and if something is inside
+      //it passes the Ponto and go to link directly
+      pointer-events: none;
+    }
+  }
 
-	.thumb & {
-		border-bottom: none !important;
-	}
+  .thumb & {
+    border-bottom: none !important;
+  }
 }
 
 .reference {
-	display: none;
+  display: none;
 }
 
 dd {
-	margin-left: 15px;
+  margin-left: 15px;
 }
 
 //hmmm
 #va-titleicons, #toc {
-	display: none;
+  display: none;
 }
 
 $size: 11;
 $width: 1.5;
 
 .chev {
-	position: relative;
+  position: relative;
 
-	width: 0;
-	height: 0;
-	border: $size + px solid;
-	border-color: $darkChevronsColor transparent transparent transparent;
+  width: 0;
+  height: 0;
+  border: $size + px solid;
+  border-color: $darkChevronsColor transparent transparent transparent;
 
-	-webkit-transition: -webkit-transform .3s;
-	-webkit-transition-delay: .1s;
-	-webkit-transform-origin: 50% 25%;
+  -webkit-transition: -webkit-transform .3s;
+  -webkit-transition-delay: .1s;
+  -webkit-transform-origin: 50% 25%;
 
-	.light & {
-		border-top-color: $lightChevronsColor;
+  .light & {
+    border-top-color: $lightChevronsColor;
 
-		&:after {
-			border-top-color: $lightBackgroundColor;
-		}
-	}
+    &:after {
+      border-top-color: $lightBackgroundColor;
+    }
+  }
 
-	&:after {
-		content: '';
-		position: absolute;
+  &:after {
+    content: '';
+    position: absolute;
 
-		left: ( -$size + $width ) + px;
-		top: ( -$size - .6 ) + px;
-		width: 0;
-		height: 0;
+    left: ( -$size + $width ) + px;
+    top: ( -$size - .6 ) + px;
+    width: 0;
+    height: 0;
 
-		border: ( $size - $width ) + px solid;
-		border-color: $darkBackgroundColor transparent transparent transparent;
-	}
+    border: ( $size - $width ) + px solid;
+    border-color: $darkBackgroundColor transparent transparent transparent;
+  }
 }
 
 .open .chev {
-	border-top-color: $mainGreen;
-	-webkit-transform: rotateZ(-180deg);
+  border-top-color: $mainGreen;
+  -webkit-transform: rotateZ(-180deg);
 }
 
 table {
-	font-size: 1em;
-	line-height: inherit;
-	text-align: inherit;
+  font-size: 1em;
+  line-height: inherit;
+  text-align: inherit;
 }
 
 //handling wide Tables
 .bigTable{
-	position: relative;
+  position: relative;
 
-	max-width: 100%;
-	padding: 5px;
-	margin-top: $page-padding;
+  max-width: 100%;
+  padding: 5px;
+  margin-top: $page-padding;
 
-	border-right: 1px solid $halfMainGreen;
+  border-right: 1px solid $halfMainGreen;
 
-	background-color: #222;
+  background-color: #222;
 
-	.light & {
-		background-color: $lightBackgroundColor;
-	}
+  .light & {
+    background-color: $lightBackgroundColor;
+  }
 
-	font-size: .8em;
+  font-size: .8em;
 
-	-webkit-transition: border .2s;
-	transition: border .2s;
+  -webkit-transition: border .2s;
+  transition: border .2s;
 
-	table {
-		pointer-events: none;
-	}
+  table {
+    pointer-events: none;
+  }
 
-	&.active {
-		table {
-			pointer-events: auto;
-		}
-	}
+  &.active {
+    table {
+      pointer-events: auto;
+    }
+  }
 }
 
 //if native scroll is available:
 .overflow .bigTable {
-	overflow: auto;
-	-webkit-overflow-scrolling: touch;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 //if not
 .no-overflow .bigTable {
-	overflow: hidden;
+  overflow: hidden;
 }
 
 //images
 figure {
-	-webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
 
-	.thumbcaption {
-		position: relative;
+  .thumbcaption {
+    position: relative;
 
-		background: none;
+    background: none;
 
-		white-space: normal;
-		color: $darkTextColor;
+    white-space: normal;
+    color: $darkTextColor;
 
-		.light & {
-			color: $lightTextColor;
-		}
-	}
+    .light & {
+      color: $lightTextColor;
+    }
+  }
 }
 
 .imgPlcHld, .wkSlider img, .lazy {
-	background-image: url('/extenCuratedContenta/GameGuides/images/img_placeholder_light.png'); /* base64 */
-	background-repeat: no-repeat;
-	background-position: center;
+  background-image: url('/extensions/wikia/CuratedContent/images/img_placeholder_light.png'); /* base64 */
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .lazy {
-	background-size: 50%;
-	display: none;
+  background-size: 50%;
+  display: none;
 
-	.js & {
-		display: inline;
-	}
+  .js & {
+    display: inline;
+  }
 }
 
 //this is rather long selector but at least image is transfered once
@@ -329,39 +329,39 @@ figure {
 .light .imgPlcHld,
 .light .wkSlider img,
 .light .lazy {
-	background-image: url('/eCuratedContentwikia/GameGuides/images/img_placeholder_dark.png'); /* base64 */
+  background-image: url('/extensions/wikia/CuratedContent/images/img_placeholder_dark.png'); /* base64 */
 }
 
 .galPlc.img, .galPlcHld {
-	background-repeat: no-repeat;
-	background-position: center;
+  background-repeat: no-repeat;
+  background-position: center;
 
-	&.this {
-		border: 4px solid $mainGreen;
-	}
+  &.this {
+    border: 4px solid $mainGreen;
+  }
 }
 
 #wkGalPag {
-	.dot.curr {
-		background-color: $mainGreen;
-	}
+  .dot.curr {
+    background-color: $mainGreen;
+  }
 }
 
 .wkMedGal {
-	#wkGalTgl {
-		background-image: urlCuratedContentons/wikia/GameGuides/images/gallery_green.png'); /* base64 */
-	}
+  #wkGalTgl {
+    background-image: url('/extensions/wikia/CuratedContent/images/gallery_green.png'); /* base64 */
+  }
 }
 
 table.infobox {
-	box-shadow: none;
+  box-shadow: none;
 }
 
 //don't expand sliders wider then screen
 .wkSlider {
-	max-width: 100%;
+  max-width: 100%;
 
-	figure {
-		max-width: 48%;
-	}
+  figure {
+    max-width: 48%;
+  }
 }

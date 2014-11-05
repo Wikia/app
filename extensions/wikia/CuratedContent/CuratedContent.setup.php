@@ -9,7 +9,6 @@ $dir = dirname( __FILE__ );
 $wgAutoloadClasses['CuratedContentController'] = "{$dir}/CuratedContentController.class.php";
 $wgAutoloadClasses['CuratedContentWrongAPIVersionException'] = "{$dir}/CuratedContentController.class.php";
 $wgAutoloadClasses['CuratedContentModel'] =  "{$dir}/CuratedContentModel.class.php" ;
-
 /**
  * message files
  */
@@ -25,8 +24,8 @@ $wgGroupPermissions['staff']['curatedcontentpreview'] = true;
 $wgGroupPermissions['sysop']['curatedcontentpreview'] = true;
 
 //Special Page for Content Managment Tool
-$wgAutoloadClasses[ 'CuratedContentSpecialContentController'] =  "{$dir}/CuratedContentSpecialContentController.class.php" ;
-$wgSpecialPages[ 'CuratedContent' ] =  'CuratedContentSpecialContentController';
+$wgAutoloadClasses[ 'CuratedContentSpecialController'] =  "{$dir}/CuratedContentSpecialController.class.php" ;
+$wgSpecialPages[ 'CuratedContent' ] =  'CuratedContentSpecialController';
 
 $wgGroupPermissions['*']['curatedcontent'] = false;
 $wgGroupPermissions['staff']['curatedcontent'] = true;
@@ -39,7 +38,7 @@ if ( $wgCuratedContentForAdmins ) {
 $wgGroupPermissions['*']['curatedcontent-switchforadmins'] = false;
 $wgGroupPermissions['staff']['curatedcontent-switchforadmins'] = true;
 
-JSMessages::registerPackage( 'curatedcontentmsg', [
+JSMessages::registerPackage( 'CuratedContentMsg', [
 	'wikiacuratedcontent-content-category',
 	'wikiacuratedcontent-content-tag',
 	'wikiacuratedcontent-content-name',
@@ -49,7 +48,7 @@ JSMessages::registerPackage( 'curatedcontentmsg', [
 	'wikiacuratedcontent-content-empty-tag'
 ] );
 
-JSMessages::registerPackage( 'curatedcontentsponsoredmsg', [
+JSMessages::registerPackage( 'CuratedContentSponsoredMsg', [
 	'wikiacuratedcontent-sponsored-video',
 	'wikiacuratedcontent-sponsored-language',
 	'wikiacuratedcontent-sponsored-video-title',
@@ -67,11 +66,11 @@ $wgHooks['CuratedContentSave'][] = 'CuratedContentController::onCuratedContentSa
 $wgHooks['CuratedContentSponsoredVideosSave'][] = 'CuratedContentController::onCuratedContentSponsoredSave';
 $wgHooks['TitleGetSquidURLs'][] = 'CuratedContentController::onTitleGetSquidURLs';
 //add Curated Content to WikiFeatures
-$wgHooks['WikiFeatures::onGetFeatureNormal'][] = 'CuratedContentSpecialContentController::onWikiFeatures';
-$wgHooks['WikiFeatures::onToggleFeature'][] = 'CuratedContentSpecialContentController::onWikiFeatures';
+$wgHooks['WikiFeatures::onGetFeatureNormal'][] = 'CuratedContentSpecialController::onWikiFeatures';
+$wgHooks['WikiFeatures::onToggleFeature'][] = 'CuratedContentSpecialController::onWikiFeatures';
 
 //minimal package of messages in CuratedContent
-JSMessages::registerPackage( 'curatedcontent', [
+JSMessages::registerPackage( 'CuratedContent', [
 	'wikiamobile-hide-section',
 	'wikiamobile-image-not-loaded',
 	'wikiamobile-video-not-friendly',
