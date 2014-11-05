@@ -35,6 +35,8 @@ class WikiaInYourLangController extends WikiaController {
 			$this->response->setVal( 'success', false );
 		}
 
+		$this->response->setCacheValidity( WikiaResponse::CACHE_LONG );
+
 		wfProfileOut( __METHOD__ );
 	}
 
