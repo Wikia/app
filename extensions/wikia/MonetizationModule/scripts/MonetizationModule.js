@@ -20,6 +20,10 @@ require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 					trackCategory = $this.attr('id'),
 					value = $this.children().children().length,	// check if the ad is blocked
 					type = $this.attr('data-mon-type');
+					// TODO: remove after updating the service
+					if (typeof type === 'undefined') {
+						type = $this.attr('class').split(' ')[1];
+					}
 
 				track({
 					category: trackCategory,
