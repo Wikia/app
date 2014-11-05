@@ -292,6 +292,10 @@
   }
 //states
   &.no-edit-state {
+    .MainPageHero {
+      box-sizing: border-box;
+      padding-top: 25%;
+    }
     .edit-btn {
       display: none;
     }
