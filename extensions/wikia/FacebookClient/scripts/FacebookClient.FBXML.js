@@ -12,8 +12,8 @@ $(function () {
 
 	// load api on demand
 	mw.hook('wikipage.content').add(function ($content) {
-		$.loadFacebookAPI(function () {
-			// scan the page for any new tags
+		$.when($.loadFacebookAPI()).done(function () {
+			// scan the new content for any fb tags
 			FB.XFBML.parse($content[0]);
 		});
 	});

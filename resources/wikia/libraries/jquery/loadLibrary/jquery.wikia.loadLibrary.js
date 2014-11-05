@@ -169,6 +169,14 @@ $.loadFacebookAPI = function (callback) {
 	}
 };
 
+/**
+ * Load the facebook API on every page until the upgrade to v2.x is stable and parser cache has cleared.
+ * Needed for XFBML tags to render with stale parser cache.
+ * DO NOT rely on this library always being loaded.
+ * Estimated removal date: Nov. 27 2014
+ */
+$($.loadFacebookAPI);
+
 $.loadGooglePlusAPI = function (callback) {
 	'use strict';
 	return $.loadLibrary('Google Plus API',
