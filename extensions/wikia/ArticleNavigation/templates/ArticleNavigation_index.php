@@ -17,7 +17,7 @@
 		<? foreach ($shareData as $share): ?>
 			<li data-share-type="multiple">
 				<span class="nav-icon share-<?= $share['name'] ?>" id="articleNavShare<?= $share['name_cased'] ?>">
-					<a class="share-link" href="<?= $share['full_url'] ?>" target="_blank" title="<?= $share['title'] ?>"><?= $share['icon'] ?></a>
+					<a class="share-link" href="<?= $share['full_url'] ?>" target="_blank" title="<?= $share['title'] ?>" data-share-name="<?= $share['name'];?>"><?= $share['icon'] ?></a>
 				</span>
 			</li>
 		<? endforeach; ?>
