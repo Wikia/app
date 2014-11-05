@@ -59,7 +59,9 @@
 					window.FB.login($.proxy(self.loginCallback, self), {
 						scope: 'email'
 					});
-					UserLoginModal.$modal.trigger('close');
+					if (UserLoginModal.$modal) {
+						UserLoginModal.$modal.trigger('close');
+					}
 				});
 		},
 
