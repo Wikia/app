@@ -3,9 +3,11 @@
 @import 'extensions/wikia/Venus/styles/typographyMixins';
 @import 'extensions/wikia/Venus/styles/variables';
 
+$recent-wiki-activity-background-color: mix($color-page, $color-page-opposite, 95%);
+
 .recent-wiki-activity {
 	@include grid-column-width('medium', 4, -2 * $medium-grid-column-padding);
-	background-color: $color-module-background;
+	background-color: $recent-wiki-activity-background-color;
 	float: right;
 	margin: 0 $medium-grid-column-padding + $medium-content-padding - $content-border-width 36px $medium-grid-gutter + $medium-grid-column-padding;
 	padding: 0 20px;
