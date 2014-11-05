@@ -22,23 +22,12 @@ class ArticleAsJson extends WikiaService {
 	private static function createMediaObj( $details, $imageName, $caption = "" ) {
 		wfProfileIn( __METHOD__ );
 
-		static $parserOptions = null;
-
-		if ( is_null($parserOptions ) ) {
-			$parserOptions = new ParserOptions();
-		}
-
 		$media = [
 			'type' => $details['mediaType'],
 			'url' => $details['rawImageUrl'],
 			'fileUrl' => $details['fileUrl'],
 			'title' => $imageName,
-			'caption' => ParserPool::parse(
-					$caption,
-					RequestContext::getMain()->getTitle(),
-					$parserOptions,
-					false
-				)->getText(),
+			'caption' => $caption,
 			'user' => $details['userName']
 		];
 
@@ -170,6 +159,12 @@ class ArticleAsJson extends WikiaService {
 					'userThumbUrl' => AvatarService::getAvatarUrl( $user, AvatarService::AVATAR_SIZE_MEDIUM ),
 					'userPageUrl' => $user->getUserPage()->getLocalURL()
 				] );
+			}
+
+			//because we take caption out of main parser flow
+			//we have to replace links manually
+			foreach ( self::$media as &$media ) {
+				$parser->replaceLinkHolders( $media['caption'] );
 			}
 
 			$text = json_encode( [
