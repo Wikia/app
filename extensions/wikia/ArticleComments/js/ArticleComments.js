@@ -32,6 +32,9 @@
 				$fbCommentMessage = $('#fbCommentMessage'),
 				newComment;
 
+			// fire event when new article comment is/will be added to DOM
+			mw.hook('wikipage.content').fire($articleComments);
+
 			// jQuery object could have been cached before init method
 			if (!ArticleComments.$wrapper) {
 				ArticleComments.$wrapper = $(ArticleComments.wrapperSelector);
@@ -230,7 +233,9 @@
 					if (!json.error) {
 						if (json.commentId && json.commentId !== 0) {
 							var comment = $('#comm-' + json.commentId),
-								saveTemplate = $(json.text);
+								commentText = comment.find('.article-comm-text'),
+								saveTemplate = $(json.text),
+								saveTemplateText = saveTemplate.find('.article-comm-text');
 
 							$('#article-comm-div-form-' + json.commentId).hide();
 
@@ -239,8 +244,11 @@
 							}
 
 							// Update DOM with information from saveTemplate
-							comment.find('.article-comm-text')
-								.html(saveTemplate.find('.article-comm-text').html()).show();
+							commentText.html(saveTemplateText.html()).show();
+
+							// fire event when new article comment is/will be added to DOM
+							mw.hook('wikipage.content').fire(commentText);
+
 							comment.find('.edited-by').html(saveTemplate.find('.edited-by').html());
 						}
 					} else {
@@ -395,6 +403,9 @@
 				if (!json.error) {
 					parentId = json.parentId;
 					nodes = $(json.text);
+
+					// fire event when new article comment is/will be added to DOM
+					mw.hook('wikipage.content').fire(nodes);
 
 					if (parentId) {
 						//second level: reply

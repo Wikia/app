@@ -1,17 +1,18 @@
-define('mediaGallery.controllers.galleries', [
-	'mediaGallery.views.gallery'
-], function (Gallery) {
+require(['mediaGallery.views.gallery'], function (Gallery) {
 	'use strict';
 
 	/**
 	 * Define primary gallery container element. Must be called after DOM ready
 	 * @constructor
 	 */
-	var GalleriesController = function () {
+	var GalleriesController = function (options) {
 		// cache DOM objects
-		this.$galleries = $('.media-gallery-wrapper');
+		this.$container = options.$container;
+		this.$galleries = this.$container.find('.media-gallery-wrapper');
+
 		// cache instances
 		this.galleries = [];
+
 		return this;
 	};
 
@@ -58,5 +59,7 @@ define('mediaGallery.controllers.galleries', [
 		return this;
 	};
 
-	return GalleriesController;
+	mw.hook('wikipage.content').add(function ($content) {
+		new GalleriesController({$container: $content}).init();
+	});
 });
