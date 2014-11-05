@@ -5,11 +5,11 @@ class CuratedContentSpecialContentController extends WikiaSpecialPageController 
 	const TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	public function __construct() {
-		parent::__construct( 'CuratedContentContent', '', false );
+		parent::__construct( 'CuratedContent', '', false );
 	}
 
 	public function index() {
-		if (!$this->wg->User->isAllowed( 'CuratedContentcontent' )) {
+		if (!$this->wg->User->isAllowed( 'curatedcontent' )) {
 			$this->displayRestrictionError();
 			return false;  // skip rendering
 		}
@@ -30,7 +30,7 @@ class CuratedContentSpecialContentController extends WikiaSpecialPageController 
 		$assetManager = AssetsManager::getInstance();
 
 		$styles = $assetManager->getURL([
-			'extensions/wikia/CuratedContent/css/CuratedContentContentManagmentTool.scss',
+			'extensions/wikia/CuratedContent/css/CuratedContentManagmentTool.scss',
 			'extensions/wikia/WikiaMiniUpload/css/WMU.scss'
 		]);
 
@@ -39,7 +39,7 @@ class CuratedContentSpecialContentController extends WikiaSpecialPageController 
 		}
 
 		$scripts = $assetManager->getURL([
-			'/extensions/wikia/CuratedContent/js/CuratedContentContentManagmentTool.js',
+			'/extensions/wikia/CuratedContent/js/CuratedContentManagmentTool.js',
 			'/extensions/wikia/WikiaMiniUpload/js/WMU.js'
 		]);
 
@@ -47,7 +47,7 @@ class CuratedContentSpecialContentController extends WikiaSpecialPageController 
 			$this->wg->Out->addScriptFile( $s );
 		}
 
-		JSMessages::enqueuePackage( 'CuratedContentContentMsg', JSMessages::INLINE );
+		JSMessages::enqueuePackage( 'CuratedContentMsg', JSMessages::INLINE );
 
 		$this->response->setVal( 'descriptions', [
 			wfMsg( 'wikiaCuratedContent-content-description-categories' ),
@@ -73,7 +73,7 @@ class CuratedContentSpecialContentController extends WikiaSpecialPageController 
 			'tagTemplate' => $tagTemplate
 		]);
 
-		$tags = $this->wg->WikiaCuratedContentContent;
+		$tags = $this->wg->WikiaCuratedContent;
 
 		if ( !empty( $tags ) ) {
 			$list = '';
@@ -146,7 +146,7 @@ class CuratedContentSpecialContentController extends WikiaSpecialPageController 
 	}
 
 	public function save(){
-		if ( !$this->wg->User->isAllowed( 'CuratedContentcontent' ) ) {
+		if ( !$this->wg->User->isAllowed( 'CuratedContent' ) ) {
 			$this->displayRestrictionError();
 			return false;  // skip rendering
 		}
@@ -185,11 +185,11 @@ class CuratedContentSpecialContentController extends WikiaSpecialPageController 
 			}
 		}
 
-		$status = WikiFactory::setVarByName( 'wgWikiaCuratedContentContent', $this->wg->CityId, $tags );
+		$status = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $this->wg->CityId, $tags );
 		$this->response->setVal( 'status', $status );
 
 		if ( $status ) {
-			wfRunHooks( 'CuratedContentContentSave' );
+			wfRunHooks( 'CuratedContentSave' );
 		}
 
 		return true;
@@ -227,10 +227,10 @@ class CuratedContentSpecialContentController extends WikiaSpecialPageController 
 	static public function onWikiFeatures(){
 		$wg = F::app()->wg;
 
-		if ( $wg->User->isAllowed( 'CuratedContentcontent-switchforadmins' ) ) {
+		if ( $wg->User->isAllowed( 'CuratedContent-switchforadmins' ) ) {
 			$wg->append(
 				'wgWikiFeatures',
-				'wgCuratedContentContentForAdmins',
+				'wgCuratedContentForAdmins',
 				'normal'
 			);
 		}

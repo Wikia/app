@@ -362,7 +362,7 @@ class CuratedContentController extends WikiaController {
 	 * API to get data from Game Guides Content Managment Tool in json
 	 *
 	 * make sure that name of this function is aligned
-	 * with what is in onCuratedContentContentSave to purge varnish correctly
+	 * with what is in onCuratedContentSave to purge varnish correctly
 	 *
 	 * @return {}
 	 *
@@ -376,7 +376,7 @@ class CuratedContentController extends WikiaController {
 
 		$this->response->setFormat( 'json' );
 
-		$content = $this->wg->WikiaCuratedContentContent;
+		$content = $this->wg->WikiaCuratedContent;
 
 		if ( empty( $content ) ) {
 			$this->getCategories();
@@ -541,7 +541,7 @@ class CuratedContentController extends WikiaController {
 	}
 
 	/**
-	 * @param $content Array content of a wgWikiaCuratedContentContent
+	 * @param $content Array content of a wgWikiaCuratedContent
 	 *
 	 * @responseReturn Array tags List of tags on a wiki
 	 * @responseReturn See getTagCategories
@@ -578,41 +578,12 @@ class CuratedContentController extends WikiaController {
 	 *
 	 * @return bool
 	 */
-	static function onCuratedContentContentSave(){
+	static function onCuratedContentSave(){
 		self::purgeMethod( 'getList' );
 
 		return true;
 	}
 
-	/**
-	 *
-	 */
-	function getVideos() {
-		wfProfileIn( __METHOD__ );
-
-		$this->response->setFormat( 'json' );
-		//We have full control on when this data change so lets cache it for a longer period of time
-		$this->cacheResponseFor( 120, self::DAYS );
-
-		$lang = $this->request->getVal( 'lang' , 'en' );
-
-		$languages = $this->wg->WikiaCuratedContentSponsoredVideos;
-
-		if( !empty( $languages ) ) {
-			if ( array_key_exists( $lang, $languages ) ) {
-				$this->response->setVal( 'items', $languages[$lang] );
-			} else if ( $lang == 'list' ) {
-				$this->response->setVal( 'items', array_keys( $languages ) );
-			} else {
-				throw new NotFoundApiException( 'No data found for \'' . $lang . '\' language' );
-			}
-
-		} else {
-			throw new NotFoundApiException( 'No data is available now' );
-		}
-
-		wfProfileOut( __METHOD__ );
-	}
 
 	/**
 	 * @brief Whenever data is saved in GG Sponsored Videos Tool
