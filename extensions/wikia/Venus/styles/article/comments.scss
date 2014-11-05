@@ -6,4 +6,60 @@
 	clear: left;
 	margin: 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width;
 	padding: 0 $medium-grid-column-padding;
+
+	/* heading */
+	h1 {
+		margin: 60px 0 30px 0;
+
+		span {
+			@include font-size-s; // TODO: get font-size
+			color: #aaa;
+			float: right;
+		}
+	}
+
+	/* comments */
+	.comments {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+
+		li {
+			border-bottom: solid 1px #aaa; // TODO: get color
+			padding: 20px 0;
+		}
+	}
+
+	.sub-comments {
+		list-style: none;
+		margin: 0 50px 0 0;
+		padding: 0;
+	}
+
+	/* date, reply & tools */
+	.edited-by {
+		line-height: 54px;
+		color: #aaa; // TODO: get color
+		clear: both;
+
+		/* tools */
+		.buttons {
+			display: none;
+		}
+	}
+
+	/* avatars */
+	.speech-bubble-avatar {
+		a {
+			display: inline-block;
+			line-height: 50px;
+		}
+	}
+
+	.avatar {
+		border-radius: 23px;
+		border: solid 2px red;
+		margin: 0 10px;
+		vertical-align: middle;
+	}
 }
