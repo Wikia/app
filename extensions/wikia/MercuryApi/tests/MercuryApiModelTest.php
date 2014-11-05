@@ -50,7 +50,7 @@ class MercuryApiModelTest extends WikiaBaseTest {
 
 		$expected = [
 			'opts' => [
-				'adsInHead' => true,
+				'adsInContent' => true,
 				'disableLateQueue' => true,
 				'lateAdsAfterPageLoad' => true,
 				'pageType' => 'corporate',

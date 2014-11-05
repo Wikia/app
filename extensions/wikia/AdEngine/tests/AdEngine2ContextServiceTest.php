@@ -42,6 +42,8 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			[ 'article', ['wgAdDriverUseSevenOneMedia'], [], [], ['sevenOneMedia' => true] ],
 			[ 'article', ['wgAdDriverWikiIsTop1000'], [], ['wikiIsTop1000' => true] ],
 			[ 'article', ['wgAdEngineDisableLateQueue'], ['disableLateQueue' => true], [] ],
+			[ 'article', ['wgEnableAdsInContent'], ['adsInContent' => true] ],
+			[ 'article', ['wgEnableAdsInHead'], ['adsInHead' => true] ],
 			[ 'article', ['wgEnableKruxTargeting'], [], ['enableKruxTargeting' => true] ],
 			[ 'article', ['wgEnableWikiaHomePageExt'], ['pageType' => 'corporate'], [] ],
 			[ 'article', ['wgEnableWikiaHubsV3Ext'], ['pageType' => 'corporate'], ['pageIsHub' => true] ],
@@ -93,6 +95,9 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgAdDriverUseDartForSlotsBelowTheFold', false );
 		$this->mockGlobalVariable( 'wgAdDriverUseSevenOneMedia', false );
 		$this->mockGlobalVariable( 'wgAdEngineDisableLateQueue', false );
+		$this->mockGlobalVariable( 'wgEnableAdsInHead', false );
+		$this->mockGlobalVariable( 'wgEnableAdsInContent', false );
+		$this->mockGlobalVariable( 'wgEnableKruxTargeting', false );
 		$this->mockGlobalVariable( 'wgEnableWikiaHomePageExt', false );
 		$this->mockGlobalVariable( 'wgEnableWikiaHubsV3Ext', false );
 		$this->mockGlobalVariable( 'wgLoadLateAdsAfterPageLoad', false );
@@ -116,7 +121,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 
 		$expected = [
 			'opts' => [
-				'adsInHead' => true,
 				'pageType' => 'all_ads',
 				'showAds' => true,
 			],
