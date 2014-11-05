@@ -119,7 +119,8 @@
 					convertToFormat: ArticleComments.getLoadConversionFormat($textfield),
 					id: commentId,
 					method: 'axEdit',
-					rs: 'ArticleCommentsAjax'
+					rs: 'ArticleCommentsAjax',
+					useskin: window.skin
 
 				}, function (json) {
 					if (!json.error) {
@@ -271,7 +272,8 @@
 				id: $(this).closest('li').attr('id').replace(/^comm-/, ''),
 				method: 'axReply',
 				rs: 'ArticleCommentsAjax',
-				title: wgPageName
+				title: wgPageName,
+				useskin: window.skin
 
 			}, function (json) {
 				var $blockquote = $('#comm-text-' + json.id).parent(),
@@ -368,7 +370,8 @@
 				method: 'axPost',
 				rs: 'ArticleCommentsAjax',
 				title: wgPageName,
-				wpArticleComment: content
+				wpArticleComment: content,
+				useskin: window.skin
 			};
 
 			if (e.data.parentId) {
@@ -477,7 +480,7 @@
 				article: wgArticleId,
 				order: $('#article-comm-order').attr('value'),
 				page: page,
-				useskin: skin
+				useskin: window.skin
 			}, function (json) {
 				ArticleComments.$commentsList.removeClass('loading');
 
