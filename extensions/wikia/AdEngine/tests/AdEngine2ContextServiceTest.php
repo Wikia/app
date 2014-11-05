@@ -35,6 +35,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		return [
 			[ ],
 
+			[ 'article', ['wgAdDriverEnableAdsInMaps'], ['enableAdsInMaps' => true] ],
 			[ 'article', ['wgAdDriverEnableRemnantGptMobile'], [], [], ['remnantGptMobile' => true] ],
 			[ 'article', ['wgAdDriverTrackState'], ['trackSlotState' => true], [] ],
 			[ 'article', ['wgAdDriverUseDartForSlotsBelowTheFold'], ['useDartForSlotsBelowTheFold' => true], [] ],
@@ -45,6 +46,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			[ 'article', ['wgEnableKruxTargeting'], [], ['enableKruxTargeting' => true] ],
 			[ 'article', ['wgEnableWikiaHomePageExt'], ['pageType' => 'corporate'], [] ],
 			[ 'article', ['wgEnableWikiaHubsV3Ext'], ['pageType' => 'corporate'], ['pageIsHub' => true] ],
+			[ 'article', ['wgLoadAdsInHead'], ['adsInHead' => true] ],
 			[ 'article', ['wgLoadLateAdsAfterPageLoad'], ['lateAdsAfterPageLoad' => true], [] ],
 			[ 'article', ['wgWikiDirectedAtChildrenByFounder'], [], ['wikiDirectedAtChildren' => true] ],
 			[ 'article', ['wgWikiDirectedAtChildrenByStaff'], [], ['wikiDirectedAtChildren' => true] ],
@@ -88,6 +90,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 
 		// Flags
 
+		$this->mockGlobalVariable( 'wgAdDriverEnableAdsInMaps', false );
 		$this->mockGlobalVariable( 'wgAdDriverEnableRemnantGptMobile', false );
 		$this->mockGlobalVariable( 'wgAdDriverTrackState', false );
 		$this->mockGlobalVariable( 'wgAdDriverUseDartForSlotsBelowTheFold', false );
@@ -95,6 +98,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgAdEngineDisableLateQueue', false );
 		$this->mockGlobalVariable( 'wgEnableWikiaHomePageExt', false );
 		$this->mockGlobalVariable( 'wgEnableWikiaHubsV3Ext', false );
+		$this->mockGlobalVariable( 'wgLoadAdsInHead', false );
 		$this->mockGlobalVariable( 'wgLoadLateAdsAfterPageLoad', false );
 		$this->mockGlobalVariable( 'wgWikiDirectedAtChildrenByStaff', false );
 		$this->mockGlobalVariable( 'wgWikiDirectedAtChildrenByFounder', false );
@@ -116,7 +120,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 
 		$expected = [
 			'opts' => [
-				'adsInHead' => true,
 				'pageType' => 'all_ads',
 				'showAds' => true,
 			],
