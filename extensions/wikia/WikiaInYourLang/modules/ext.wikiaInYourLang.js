@@ -10,29 +10,28 @@
 	var wikiaInYourLang = {
 
 		init: function() {
-			this.geo = $.cookie( 'Geo' );
+			$.cookie( 'Geo', '{"country":"ja"}' );
+			this.geo = JSON.parse( $.cookie( 'Geo' ) );
+			this.targetLanguage = this.geo.country.toLowerCase();
 			this.supportedLanguages = [ 'ja' ];
+			this.currentUrl = wgServer;
 
-			if ( $.inArray( this.geo, this.supportedLanguages ) !== -1 && wgContentLanguage == 'en' ) {
+			if ( $.inArray( this.targetLanguage, this.supportedLanguages ) !== -1 && wgContentLanguage == 'en' ) {
 				this.getNativeWikiaInfo( this );
 			}
 		},
 
 		getNativeWikiaInfo: function( obj ) {
-			// console.log( window.wgServer );
 			$.nirvana.sendRequest( {
 				controller: 'WikiaInYourLangController',
 				method: 'getNativeWikiaInfo',
 				data: {
-					currentUrl: wgServer,
-					targetLanguage: obj.geo
+					currentUrl: obj.currentUrl,
+					targetLanguage: obj.targetLanguage
 				},
 				callback: function( results ) {
-					console.log( results );
 					if ( results.success == true ) {
 						obj.displayNotification( results.wikiaSitename, results.wikiaUrl );
-					} else {
-						alert( results.errorMsg );
 					}
 				}
 			} );
@@ -40,10 +39,10 @@
 
 		displayNotification: function( wikiaSitename, wikiaUrl ) {
 			var currentSitename = wgSitename,
-			    linkElement = '<a href="' + wikiaUrl + '">' + wikiaSitename + '</a>',
+			    linkElement = '<a href="' + wikiaUrl + '" title="' + wikiaSitename +'">' + wikiaSitename + '</a>',
 			    message = mw.message( 'wikia-in-your-lang-available', currentSitename , linkElement );
 
-			window.GlobalNotification.show( message.plain(), 'notify' );
+			GlobalNotification.show( message.plain(), 'notify' );
 		}
 	};
 

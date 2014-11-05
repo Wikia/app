@@ -32,9 +32,7 @@ class WikiaInYourLangController extends WikiaController {
 				$this->response->setVal( 'wikiaSitename', $oRow->city_title );
 			}
 		} else {
-			$this->response->setVal( 'success', true );
-			$this->response->setVal( 'wikiaUrl', $sTargetUrl );
-			$this->response->setVal( 'wikiaSitename', 'Fake Wiki' );
+			$this->response->setVal( 'success', false );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -42,7 +40,8 @@ class WikiaInYourLangController extends WikiaController {
 
 	private function convertWikiUrl( $sCurrentUrl, $sTargetLanguage ) {
 		$regExp = "/(http:\/\/)([a-z]{2}\.)?(.*)/";
-		$aRes = preg_match( $regExp, $sWikiaUrl );
+		$aRes = [];
+		preg_match( $regExp, $sCurrentUrl, $aRes );
 		$sTargetUrl = $aRes[1] . $sTargetLanguage . '.' . $aRes[3];
 		return $sTargetUrl;
 	}
@@ -50,7 +49,6 @@ class WikiaInYourLangController extends WikiaController {
 	private function checkRequest() {
 		if ( !$this->request->wasPosted() ) {
 			$this->response->setVal( 'success', false );
-			$this->response->setVal( 'errorMsg', 'Fucking error...' );
 			return false;
 		}
 		return true;
