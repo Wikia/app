@@ -2,8 +2,7 @@
 <li id="comm-<?=$commentId?>" class="SpeechBubble <?=$rowClass?>" data-user="<?=$comment['username']?>">
 	<div class="speech-bubble-avatar">
 		<a href="<?= $comment['userurl'] ?>">
-			<?= $comment['avatar'] ?>
-			<?= $comment['username'] ?>
+			<?= $comment['avatar'] ?><?= $comment['username'] ?>
 		</a>
 	</div>
 	<blockquote class="speech-bubble-message">
