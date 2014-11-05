@@ -2,6 +2,8 @@
 
 namespace Wikia\Cache;
 
+use Wikia\Logger\WikiaLogger;
+
 /**
  * Class AsyncCache
  *
@@ -181,7 +183,7 @@ class AsyncCache {
 	 *
 	 * @return AsyncCache $this
 	 */
-	public function callback( callable $callback, array $params = null ) {
+	public function callback( $callback, array $params = null ) {
 		$this->callback = $callback;
 		$this->callbackParams = $params;
 
@@ -287,9 +289,15 @@ class AsyncCache {
 
 			// If we're stale but can wait on the fresh value, schedule a job
 			if ( $this->isCacheStale() ) {
+				$this->logInfo( 'AsyncCache HIT stale' );
+
 				$this->scheduleValueGeneration();
+			} else {
+				$this->logInfo( 'AsyncCache HIT fresh' );
 			}
 		} else {
+			$this->logInfo( 'AsyncCache MISS' );
+
 			// If we're missing or stale and can't wait for a value, generate immediately
 			$value = $this->generateValueNow();
 		}
@@ -360,5 +368,15 @@ class AsyncCache {
 			$this->key, $this->callback, $this->callbackParams,
 			[ 'ttl' => $this->ttl, 'negativeResponseTTL' => $this->negativeResponseTTL ] );
 		$this->task->queue();
+	}
+
+	private function logInfo( $mesg ) {
+		WikiaLogger::instance()->info( $mesg, [
+			'key' => $this->key,
+			'time' => time(),
+			'expires' => $this->getCacheExpire(),
+			'ttlRemain' => $this->ttlRemain(),
+			'staleTTLRemain' => $this->staleTTLRemain(),
+		] );
 	}
 }
