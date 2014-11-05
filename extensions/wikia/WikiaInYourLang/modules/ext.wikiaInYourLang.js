@@ -17,7 +17,14 @@
 			this.currentUrl = wgServer;
 
 			if ( $.inArray( this.targetLanguage, this.supportedLanguages ) !== -1 && wgContentLanguage == 'en' ) {
-				this.getNativeWikiaInfo( this );
+				require( [ 'wikia.cache' ], function( cache ) {
+					if ( cache.get( 'wikiaInYourLangShown' ) !== true ) {
+						var ttl = 60 * 60 * 24 * 30;
+						cache.set( 'wikiaInYourLangShown', true, ttl );
+
+						this.getNativeWikiaInfo( this );
+					}
+				});
 			}
 		},
 
