@@ -107,6 +107,9 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//extensions/wikia/Venus/scripts/articleModulesLoader.js',
 		'//extensions/wikia/Venus/scripts/articleNavigation.js',
 
+		// MiniEditor
+		'//extensions/wikia/MiniEditor/js/MiniEditor.js',
+
 		// ArticleComment
 		'#group_articlecomments_js',
 	]
