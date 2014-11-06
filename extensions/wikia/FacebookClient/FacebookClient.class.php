@@ -34,7 +34,7 @@ class FacebookClient {
 
 			// Make sure we have the ID and secret
 			if ( !$config->hasAppID() || !$config->hasAppSecret() ) {
-				throw new Exception( wfMessage( 'facebookclient-graphapi-not-configured' ) );
+				throw new Exception( wfMessage( 'fbconnect-graphapi-not-configured' )->text() );
 			}
 
 			Facebook\FacebookSession::setDefaultApplication( $config->getAppID(), $config->getAppSecret() );

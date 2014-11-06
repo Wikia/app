@@ -136,10 +136,10 @@ class FacebookClientHooks {
 		$ids = FacebookClient::getInstance()->getFacebookUserIds( $user );
 		if ( count( $ids ) > 0 ) {
 			$isConnected = true;
-			$prefTab = 'facebookclient-connect';
+			$prefTab = 'fbconnect-connect';
 		} else {
 			$isConnected = false;
-			$prefTab = 'facebookclient-disconnect';
+			$prefTab = 'fbconnect-disconnect';
 		}
 
 		$html = F::app()->renderView( 'FacebookClientController', 'preferences', [ 'isConnected' => $isConnected ] );
@@ -148,7 +148,7 @@ class FacebookClientHooks {
 			'help' => $html,
 			'label' => '',
 			'type' => 'info',
-			'section' => 'facebookclient-prefstext/facebookclient-status-prefstext'
+			'section' => 'fbconnect-prefstext/fbconnect-status-prefstext'
 		];
 
 		return true;
