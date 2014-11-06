@@ -28,7 +28,6 @@ abstract class VideoFeedIngester {
 	// Providers from which we ingest daily video data
 	protected static $ACTIVE_PROVIDERS = [
 		self::PROVIDER_IGN,
-		// Ooyala must come before remote assets, otherwise duplicates will sometimes be ingested. See VID-1871
 		self::PROVIDER_OOYALA,
 		self::PROVIDER_IVA,
 		self::PROVIDER_SCREENPLAY,
