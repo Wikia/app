@@ -32,7 +32,7 @@ $wgAutoloadClasses['FacebookClientController'] =  $dir . 'FacebookClientControll
 $wgAutoloadClasses['FacebookClientLocale'] =  $dir . 'FacebookClientLocale.class.php';
 $wgAutoloadClasses['FacebookMapModel'] =  $dir . 'FacebookMapModel.class.php';
 $wgAutoloadClasses['SpecialFacebookConnectController'] =  $dir . 'SpecialFacebookConnectController.class.php';
-$wgAutoloadClasses['FBConnectXFBML'] = $dir . 'FBConnectXFBML.php';
+$wgAutoloadClasses['FacebookClientXFBML'] = $dir . 'FacebookClientXFBML.php';
 
 /**
  * hooks
