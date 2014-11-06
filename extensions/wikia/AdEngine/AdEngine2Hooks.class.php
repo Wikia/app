@@ -90,6 +90,10 @@ class AdEngine2Hooks {
 		$vars['adDriverLastDARTCallNoAds'] = []; // Used to hop by DART ads
 		$vars['adDriver2ForcedStatus'] = [];     // 3rd party code (eg. dart collapse slot template) can force AdDriver2 to respect unusual slot status
 
+		if ($wg->EnableOpenXSPC) {
+			$vars['wgEnableOpenXSPC'] = $wg->EnableOpenXSPC;
+		}
+
 		return true;
 	}
 

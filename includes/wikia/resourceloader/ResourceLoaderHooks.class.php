@@ -51,7 +51,7 @@ class ResourceLoaderHooks {
 		$sources = $resourceLoader->getSources();
 
 		// staff and internal special case
-		if ( $wgCityId === null ) {
+		if ( $wgCityId === null || $wgCityId === 11 ) {
 			$resourceLoader->addSource('common',$sources['local']);
 			return true;
 		}

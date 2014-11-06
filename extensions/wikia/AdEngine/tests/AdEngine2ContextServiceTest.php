@@ -38,7 +38,9 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			[ 'article', ['wgAdDriverEnableRemnantGptMobile'], [], [], ['remnantGptMobile' => true] ],
 			[ 'article', ['wgAdDriverTrackState'], ['trackSlotState' => true], [] ],
 			[ 'article', ['wgAdDriverUseDartForSlotsBelowTheFold'], ['useDartForSlotsBelowTheFold' => true], [] ],
+			[ 'article', ['wgAdDriverUseRemnantGpt'], [], [], ['remnantGpt' => true] ],
 			[ 'article', ['wgAdDriverUseSevenOneMedia'], [], [], ['sevenOneMedia' => true] ],
+			[ 'article', ['wgAdDriverWikiIsTop1000'], [], ['wikiIsTop1000' => true] ],
 			[ 'article', ['wgAdEngineDisableLateQueue'], ['disableLateQueue' => true], [] ],
 			[ 'article', ['wgEnableKruxTargeting'], [], ['enableKruxTargeting' => true] ],
 			[ 'article', ['wgEnableWikiaHomePageExt'], ['pageType' => 'corporate'], [] ],
@@ -46,7 +48,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			[ 'article', ['wgLoadLateAdsAfterPageLoad'], ['lateAdsAfterPageLoad' => true], [] ],
 			[ 'article', ['wgWikiDirectedAtChildrenByFounder'], [], ['wikiDirectedAtChildren' => true] ],
 			[ 'article', ['wgWikiDirectedAtChildrenByStaff'], [], ['wikiDirectedAtChildren' => true] ],
-			[ 'article', ['wgAdDriverWikiIsTop1000'], [], ['wikiIsTop1000' => true] ],
 
 			[ 'mainpage', [], [], ['pageType' => 'home'] ],
 			[ 'search', [], ['pageType' => 'search'], ['pageType' => 'search', 'pageName' => 'Special:Search'] ],

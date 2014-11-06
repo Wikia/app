@@ -1,7 +1,7 @@
 var $window = $(window);
 var WallNotifications = $.createClass(Object, {
 	constructor: function() {
-		this.bucky = window.Bucky('WallNotifications');
+		this.bucky = window.Bucky && window.Bucky('WallNotifications');
 		this.isMonobook = false;
 		this.updateInProgress = false; // we only want 1 update simultaneously
 		this.notificationsCache = {}; // HTML for "trays" for different Wiki ids
@@ -83,7 +83,7 @@ var WallNotifications = $.createClass(Object, {
 	},
 
 	updateCounts: function() {
-		this.bucky.timer.start('updateCounts');
+		this.bucky && this.bucky.timer.start('updateCounts');
 		var data,
 			callback = this.proxy(function(data) {
 
@@ -112,7 +112,7 @@ var WallNotifications = $.createClass(Object, {
 				this.updateInProgress = false;
 			}), 10000 );
 
-			this.bucky.timer.stop('updateCounts');
+			this.bucky && this.bucky.timer.stop('updateCounts');
 		});
 
 		if ( this.updateInProgress == false ) {
@@ -131,7 +131,7 @@ var WallNotifications = $.createClass(Object, {
 	},
 
 	fetchForCurrentWiki: function() {
-		this.bucky.timer.start('fetchForCurrentWiki');
+		this.bucky && this.bucky.timer.start('fetchForCurrentWiki');
 		if ( this.fetchedCurrent == false ) {
 			var wikiEl = ( this.isMonobook ? $('#wall-notifications-inner') : this.$wallNotifications ).find('.notifications-for-wiki').first(),
 				firstWikiId = wikiEl.attr('data-wiki-id');
@@ -142,7 +142,7 @@ var WallNotifications = $.createClass(Object, {
 				this.currentWikiId = firstWikiId;
 				this.wikiShown[ firstWikiId ] = true;
 				this.updateWiki( firstWikiId );
-				this.bucky.timer.stop('fetchForCurrentWiki');
+				this.bucky && this.bucky.timer.stop('fetchForCurrentWiki');
 			}
 		}
 	},
@@ -174,7 +174,7 @@ var WallNotifications = $.createClass(Object, {
 	},
 
 	markAllAsReadRequest: function(forceAll) {
-		this.bucky.timer.start('markAllAsReadRequest');
+		this.bucky && this.bucky.timer.start('markAllAsReadRequest');
 		$.nirvana.sendRequest({
 			controller: 'WallNotificationsExternalController',
 			method: 'markAllAsRead',
@@ -199,7 +199,7 @@ var WallNotifications = $.createClass(Object, {
 				//  = no ability to show notifications, no tray)
 				this.showFirst();
 
-				this.bucky.timer.stop('markAllAsReadRequest');
+				this.bucky && this.bucky.timer.stop('markAllAsReadRequest');
 			})
 		});
 	},
@@ -399,5 +399,5 @@ var WallNotifications = $.createClass(Object, {
 });
 
 $(function() {
-	var wall_notifications = new WallNotifications();
+	new WallNotifications();
 });
