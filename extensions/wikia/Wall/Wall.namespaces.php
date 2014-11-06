@@ -72,9 +72,9 @@ $namespaces['it'] = array(
  * Japanese (日本語)
  */
 $namespaces['ja'] = array(
-	NS_USER_WALL			=> 'メッセージ_ウォール',
+	NS_USER_WALL			=> 'メッセージウォール',
 	NS_USER_WALL_MESSAGE		=> 'スレッド',
-	NS_USER_WALL_MESSAGE_GREETING	=> 'メッセージ_ウォール_挨拶',
+	NS_USER_WALL_MESSAGE_GREETING	=> 'メッセージウォール・グリーティング',
 );
 
 /**
@@ -138,4 +138,14 @@ $namespaces['zh'] = array(
 	NS_USER_WALL			=> '留言墙',
 	NS_USER_WALL_MESSAGE		=> '帖子',
 	NS_USER_WALL_MESSAGE_GREETING	=> '问候语',
+);
+
+/**
+ * Aliases
+ */
+$namespaceAliases = array(
+	// Japanese (日本語)
+	// VOLDEV-90
+	'メッセージ_ウォール'		=> NS_USER_WALL,
+	'メッセージ_ウォール_挨拶'	=> NS_USER_WALL_MESSAGE_GREETING,
 );

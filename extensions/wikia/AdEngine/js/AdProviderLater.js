@@ -13,8 +13,13 @@ define('ext.wikia.adEngine.provider.later', [
 		success();
 	}
 
+	function canHandleSlot() {
+		return true;
+	}
+
 	return {
 		name: 'Later',
+		canHandleSlot: canHandleSlot,
 		fillInSlot: fillInSlot
 	};
 });

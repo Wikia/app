@@ -8,7 +8,7 @@
 			<?= $app->renderView( 'GlobalNavigation', 'searchIndex' ); ?>
 		</div>
 		<div class="global-navigation-item start-wikia-container">
-			<a href="<?= htmlspecialchars( $createWikiUrl ) ?>" class="global-navigation-link start-wikia" title="<?= wfMessage( 'global-navigation-create-wiki' )->escaped(); ?>"><span><?= wfMessage( 'global-navigation-create-wiki' )->escaped(); ?></span></a>
+			<a href="<?= htmlspecialchars( $createWikiUrl ) ?>" class="global-navigation-link start-wikia" title="<?= wfMessage( 'global-navigation-create-wiki' )->escaped(); ?>"><span><?= nl2br(wfMessage( 'global-navigation-create-wiki' )->escaped()); ?></span></a>
 		</div>
 		<div class="global-navigation-item account-navigation-container">
 			<?= $app->renderView( 'GlobalNavigationAccountNavigation', 'index' ) ?>

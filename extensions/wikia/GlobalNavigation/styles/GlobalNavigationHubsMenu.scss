@@ -67,7 +67,6 @@
 
 	.hub-link {
 		background-color: $nav-background-color;
-		cursor: pointer;
 		display: block;
 		height: 62px;
 		line-height: 62px;
@@ -150,9 +149,8 @@
 
 	.hub-menu-section {
 		@include column-count(2);
-		@include column-rule(1px outset $nav-border-color);
+		@include column-rule(1px solid $nav-border-color);
 		@include column-gap(36px);
-
 		display: none;
 		float: left;
 		font-size: 15px;
@@ -163,11 +161,14 @@
 			display: block;
 		}
 
+		ul {
+			display: inline-block;
+			width: 100%;
+		}
+
 		strong {
 			display: inline-block;
-			font-size: 15px;
 			font-weight: bold;
-			margin: 0;
 			padding: 21px 0 5px;
 		}
 
@@ -177,11 +178,11 @@
 
 			&.more {
 				@include right-chevron();
-				position: absolute;
 				bottom: 40px;
 				font-size: 16px;
 				font-weight: bold;
 				left: 278px;
+				position: absolute;
 
 				&:after {
 					margin-left: 6px;

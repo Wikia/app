@@ -9,4 +9,4 @@ $dir = dirname(__FILE__) . '/';
 
 $wgAutoloadClasses['Bucky'] =  $dir . 'Bucky.class.php';
 
-$wgHooks['WikiaSkinTopScripts'][] = 'Bucky::onWikiaSkinTopScripts';
+$wgHooks['MakeGlobalVariablesScript'][] = 'Bucky::onMakeGlobalVariablesScript';

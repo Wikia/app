@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Class ImageReviewTest
+ *
+ * @group MediaFeatures
+ */
 class ImageReviewTest extends WikiaBaseTest {
 	private $fakeUrl = 'http://fake.wikia.com/wiki/Special:ImageReview';
 	private $fakeCorrectImages = array('img1', 'img2', 'img3');
