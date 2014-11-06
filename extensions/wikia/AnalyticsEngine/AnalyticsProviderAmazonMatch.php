@@ -1,11 +1,11 @@
 <?php
 
-class AnalyticsProviderAmazonDirectTargetedBuy implements iAnalyticsProvider {
+class AnalyticsProviderAmazonMatch implements iAnalyticsProvider {
 
 	public static function isEnabled() {
-		global $wgEnableAmazonDirectTargetedBuy, $wgEnableAdEngineExt, $wgShowAds, $wgAdDriverUseSevenOneMedia;
+		global $wgEnableAmazonMatch, $wgEnableAdEngineExt, $wgShowAds, $wgAdDriverUseSevenOneMedia;
 
-		return $wgEnableAmazonDirectTargetedBuy
+		return $wgEnableAmazonMatch
 			&& $wgEnableAdEngineExt
 			&& $wgShowAds
 			&& AdEngine2Service::areAdsShowableOnPage()
@@ -20,7 +20,7 @@ class AnalyticsProviderAmazonDirectTargetedBuy implements iAnalyticsProvider {
 			$code = <<< SCRIPT
 		<script>
 			require(['ext.wikia.adEngine.amazonMatch', 'wikia.geo', 'wikia.instantGlobals'], function (amazonMatch, geo, globals) {
-				if (globals.wgAmazonDirectTargetedBuyCountries && globals.wgAmazonDirectTargetedBuyCountries.indexOf(geo.getCountryCode()) > -1) {
+				if (globals.wgAmazonMatchCountries && globals.wgAmazonMatchCountries.indexOf(geo.getCountryCode()) > -1) {
 					amazonMatch.call();
 				}
 			});

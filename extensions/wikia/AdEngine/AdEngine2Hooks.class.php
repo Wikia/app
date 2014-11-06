@@ -59,7 +59,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgSitewideDisableRubiconRTP';
 
 		$vars[] = 'wgHighValueCountries';
-		$vars[] = 'wgAmazonDirectTargetedBuyCountries';
+		$vars[] = 'wgAmazonMatchCountries';
 
 		$vars[] = 'wgAdDriverAlwaysCallDartInCountries';
 
@@ -174,7 +174,7 @@ class AdEngine2Hooks {
 			$jsAssets[] = self::ASSET_GROUP_ADENGINE_RUBICON_RTP;
 		}
 
-		if ( AnalyticsProviderAmazonDirectTargetedBuy::isEnabled() ) {
+		if ( AnalyticsProviderAmazonMatch::isEnabled() ) {
 			$jsAssets[] = self::ASSET_GROUP_ADENGINE_AMAZON_MATCH;
 		}
 
