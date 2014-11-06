@@ -14,7 +14,7 @@ define('ext.wikia.adEngine.amazonMatch', [
 		amazonTiming,
 		amazonCalled = false;
 
-	function trackState() {
+	function trackState(trackEnd) {
 		log(['trackState', amazonTargs], 'debug', logGroup);
 
 		var eventName,
@@ -38,6 +38,10 @@ define('ext.wikia.adEngine.amazonMatch', [
 			eventName = 'lookupError';
 		}
 
+		if (trackEnd) {
+			eventName = 'lookupEnd';
+		}
+
 		adTracker.track(eventName + '/amazon', data || '(unknown)', 0);
 	}
 
@@ -45,6 +49,7 @@ define('ext.wikia.adEngine.amazonMatch', [
 		amazonTiming.measureDiff({}, 'end').track();
 		log(['onAmazonResponse', response], 'debug', logGroup);
 		amazonTargs = w.amzn_targs;
+		trackState(true);
 	}
 
 	function call() {
