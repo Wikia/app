@@ -21,13 +21,20 @@ class UserLoginFacebookForm extends UserLoginForm {
 		$this->fbUserId = $request->getVal('fbuserid');
 		$this->fbFeedOptions = explode(',', $request->getVal('fbfeedoptions', ''));
 
-		// get an email from Facebook API
-		$resp = F::app()->sendRequest('FacebookSignup', 'getFacebookData', array(
-			'fbUserId' => $this->fbUserId,
-		));
+		// See if we got an email address from the sign up form
+		$userEmail = $request->getVal( 'email' );
+		if ( empty( $userEmail ) ) {
+			// If not, get an email from Facebook API
+			$resp = F::app()->sendRequest( 'FacebookSignup', 'getFacebookData', array(
+				'fbUserId' => $this->fbUserId,
+			) );
+			$userEmail = $resp->getVal('email', false);
+		}
 
+gbug("GOT EMAIL : $userEmail");
 		// add an email to the request and pass it to the underlying class
-		$request->setVal('email', $resp->getVal('email', false));
+		$request->setVal( 'email', $userEmail );
+
 		// put the username and password field in the expected place for validation MAIN-1283
 		$request->setVal('userloginext01', $request->getVal('username'));
 		$request->setVal('userloginext02', $request->getVal('password'));
