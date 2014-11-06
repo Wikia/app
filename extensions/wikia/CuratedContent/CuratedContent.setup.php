@@ -39,11 +39,11 @@ $wgGroupPermissions['*']['curatedcontent-switchforadmins'] = false;
 $wgGroupPermissions['staff']['curatedcontent-switchforadmins'] = true;
 
 JSMessages::registerPackage( 'CuratedContentMsg', [
-	'wikiacuratedcontent-content-category',
+	'wikiacuratedcontent-content-item',
 	'wikiacuratedcontent-content-tag',
 	'wikiacuratedcontent-content-name',
 	'wikiacuratedcontent-content-duplicate-entry',
-	'wikiacuratedcontent-content-category-error',
+	'wikiacuratedcontent-content-item-error',
 	'wikiacuratedcontent-content-required-entry',
 	'wikiacuratedcontent-content-empty-tag'
 ] );

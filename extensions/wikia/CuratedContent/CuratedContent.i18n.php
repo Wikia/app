@@ -10,19 +10,19 @@ $messages['en'] = array(
 
 	//Content Managment tool
 	'wikiaCuratedContent-content-title' => 'Wikia Curated Content managment tool',
-	'wikiaCuratedContent-content-category' => 'Category',
-	'wikiaCuratedContent-content-tag' => 'Category Tag (optional)',
+	'wikiaCuratedContent-content-item' => 'Item',
+	'wikiaCuratedContent-content-tag' => 'Item Tag (optional)',
 	'wikiaCuratedContent-content-name' => 'Curated Content Name (optional)',
 	'wikiaCuratedContent-content-add-tag' => 'Add Tag',
-	'wikiaCuratedContent-content-add-category' => 'Add Category',
+	'wikiaCuratedContent-content-add-item' => 'Add Item',
 	'wikiaCuratedContent-content-save' => 'Save',
-	'wikiaCuratedContent-content-category-error' => 'Category does not exists or is empty',
-	'wikiaCuratedContent-content-required-entry' => 'Category is required',
+	'wikiaCuratedContent-content-item-error' => 'Item does not exists or is empty',
+	'wikiaCuratedContent-content-required-entry' => 'Item is required',
 	'wikiaCuratedContent-content-duplicate-entry' => 'This value is duplicated',
 	'wikiaCuratedContent-content-empty-tag' => 'This tag needs some categories',
 
 	'wikiaCuratedContent-content-description-categories' => 'Add wiki "Categories" and rename them as you\'d like them to appear in Curated Content with "Curated Content Names".',
-	'wikiaCuratedContent-content-description-tag' => 'Does it make sense to group categories under a game series installment? Add a category "Tag," and drag and drop wiki categories under it.',
+	'wikiaCuratedContent-content-description-tag' => 'Does it make sense to group categories under a game series installment? Add a item "Tag," and drag and drop wiki categories under it.',
 	'wikiaCuratedContent-content-description-organize' => 'Feel free to delete or add more lines, and reorder them by dragging and dropping.',
 	'wikiaCuratedContent-content-description-no-tag' => 'Categories without tag or with empty tag will be shown as last in Curated Content.',
 
@@ -60,13 +60,13 @@ $messages['qqq'] = array(
 
 	//Content Managment tool
 	'wikiaCuratedContent-content-title' => 'title of a page',
-	'wikiaCuratedContent-content-category' => 'table header above category inputs',
+	'wikiaCuratedContent-content-item' => 'table header above item inputs',
 	'wikiaCuratedContent-content-tag' => 'table header on tag inputs',
 	'wikiaCuratedContent-content-name' => 'table header on curated Content name inputs',
 	'wikiaCuratedContent-content-add-tag' => 'message on add tag button - to add a Tag to a list',
-	'wikiaCuratedContent-content-add-category' => 'message on add category button - to add a category to a tag',
+	'wikiaCuratedContent-content-add-item' => 'message on add item button - to add a item to a tag',
 	'wikiaCuratedContent-content-save' => 'Save button - to save list of tags and categories',
-	'wikiaCuratedContent-content-category-error' => 'Message shown to a user when he tries to save a category that do not exist',
+	'wikiaCuratedContent-content-item-error' => 'Message shown to a user when he tries to save a item that do not exist',
 	'wikiaCuratedContent-content-required-entry' => 'Message shown to a user next to an input that is required',
 	'wikiaCuratedContent-content-duplicate-entry' => 'Message shown to a user next to an input that has duplicated content',
 	'wikiaCuratedContent-content-empty-tag' => 'Message shown to a a user if he has not added any categories to a tag',
@@ -126,11 +126,9 @@ $messages['ca'] = array(
  */
 $messages['cs'] = array(
 	'wikiaCuratedContent-desc' => 'Moduly mobilní aplikace Wikia Herní manuály',
-	'wikiaCuratedContent-content-category' => 'Kategorie',
 	'wikiaCuratedContent-content-tag' => 'Tag', # Fuzzy
 	'wikiaCuratedContent-content-name' => 'Jméno', # Fuzzy
 	'wikiaCuratedContent-content-save' => 'Uložit',
-	'wikiaCuratedContent-content-category-error' => 'Kategorie neexistuje.', # Fuzzy
 	'wikiaCuratedContent-content-duplicate-entry' => 'Tato hodnota je duplicitní',
 );
 
@@ -142,11 +140,9 @@ $messages['de'] = array(
 	'wikiaCuratedContent-desc' => 'Wikia Curated Content Mobile App Module',
 	'wikiaCuratedContent-preview-description' => 'Dies ist nur eine Vorschau, wie Seiten in einer Wikia-Game-Guides-Anwendung aussehen würden.',
 	'wikiaCuratedContent-content-title' => 'Inhaltsverwaltungswerkzeug für Wikia Curated Content',
-	'wikiaCuratedContent-content-category' => 'Kategorie',
 	'wikiaCuratedContent-content-tag' => 'Kategoriemarkierung (optional)',
 	'wikiaCuratedContent-content-name' => 'Name des Curated Content (optional)',
 	'wikiaCuratedContent-content-save' => 'Speichern',
-	'wikiaCuratedContent-content-category-error' => 'Kategorie ist nicht vorhanden', # Fuzzy
 	'wikiaCuratedContent-content-duplicate-entry' => 'Dieser Wert ist doppelt',
 );
 
@@ -158,11 +154,9 @@ $messages['es'] = array(
 	'wikiaCuratedContent-desc' => 'Guías de Juego de Wikia para módulos de aplicaciones móviles',
 	'wikiaCuratedContent-preview-description' => 'Esto es solo una vista previa de cómo se verían las páginas en un aplicación de Wikia Curated Content.',
 	'wikiaCuratedContent-content-title' => 'Herramienta de administración de contenido de Wikia Curated Content',
-	'wikiaCuratedContent-content-category' => 'Categoría',
 	'wikiaCuratedContent-content-tag' => 'Etiqueta de categoría (opcional)',
 	'wikiaCuratedContent-content-name' => 'Nombre de la guía de juegos (opcional)',
 	'wikiaCuratedContent-content-save' => 'Guardar',
-	'wikiaCuratedContent-content-category-error' => 'No existe la categoría', # Fuzzy
 	'wikiaCuratedContent-content-duplicate-entry' => 'Este valor está duplicado',
 );
 
@@ -179,9 +173,7 @@ $messages['eu'] = array(
  */
 $messages['fi'] = array(
 	'wikiaCuratedContent-desc' => 'Wikia Curated Content mobiilisovellus moduulit',
-	'wikiaCuratedContent-content-category' => 'Luokka',
 	'wikiaCuratedContent-content-save' => 'Tallenna',
-	'wikiaCuratedContent-content-category-error' => 'Luokkaa ei ole', # Fuzzy
 );
 
 /** French (français)
@@ -192,11 +184,9 @@ $messages['fr'] = array(
 	'wikiaCuratedContent-desc' => 'Modules de l’application mobile Wikia Curated Content',
 	'wikiaCuratedContent-preview-description' => 'Ceci est un simple aperçu de ce à quoi ressembleront les pages dans une application de guide de jeu de Wikia.',
 	'wikiaCuratedContent-content-title' => 'Outil de gestion du contenu des guides de jeu de Wikia',
-	'wikiaCuratedContent-content-category' => 'Catégorie',
 	'wikiaCuratedContent-content-tag' => 'Balise de catégorie (facultative)',
 	'wikiaCuratedContent-content-name' => 'Nom du Guide de jeu (facultatif)',
 	'wikiaCuratedContent-content-save' => 'Enregistrer',
-	'wikiaCuratedContent-content-category-error' => "La catégorie n'existe pas", # Fuzzy
 	'wikiaCuratedContent-content-duplicate-entry' => 'Cette valeur est dupliquée',
 );
 
@@ -207,11 +197,9 @@ $messages['gl'] = array(
 	'wikiaCuratedContent-desc' => 'Módulos de aplicacións móbiles Wikia Curated Content',
 	'wikiaCuratedContent-preview-description' => 'Esta é só unha vista previa de como se verían as páxinas nunha aplicación de Wikia Curated Content.',
 	'wikiaCuratedContent-content-title' => 'Ferramenta de administración de contido de Wikia Curated Content',
-	'wikiaCuratedContent-content-category' => 'Categoría',
 	'wikiaCuratedContent-content-tag' => 'Etiqueta de categoría (opcional)',
 	'wikiaCuratedContent-content-name' => 'Nome da guía do xogo (opcional)',
 	'wikiaCuratedContent-content-save' => 'Gardar',
-	'wikiaCuratedContent-content-category-error' => 'A categoría non existe', # Fuzzy
 	'wikiaCuratedContent-content-duplicate-entry' => 'O valor está duplicado',
 );
 
@@ -247,9 +235,7 @@ $messages['ksh'] = array(
  * @author Robby
  */
 $messages['lb'] = array(
-	'wikiaCuratedContent-content-category' => 'Kategorie',
 	'wikiaCuratedContent-content-save' => 'Späicheren',
-	'wikiaCuratedContent-content-category-error' => 'Kategorie gëtt et net', # Fuzzy
 );
 
 /** Macedonian (македонски)
@@ -259,11 +245,9 @@ $messages['mk'] = array(
 	'wikiaCuratedContent-desc' => 'Водичи низ игри на Викија за модули на мобилни апликации',
 	'wikiaCuratedContent-preview-description' => 'Ова е само преглед на тоа како би изгледале страниците во прилоготот „Водич за игри“ на Викија',
 	'wikiaCuratedContent-content-title' => 'Алатка за раководење со содржините - Водич за игри на Викија',
-	'wikiaCuratedContent-content-category' => 'Категорија',
 	'wikiaCuratedContent-content-tag' => 'Категориска ознака (незадолжително)',
 	'wikiaCuratedContent-content-name' => 'Име на водичот за игри (незадолжително)',
 	'wikiaCuratedContent-content-save' => 'Зачувај',
-	'wikiaCuratedContent-content-category-error' => 'Категоријата не постои', # Fuzzy
 	'wikiaCuratedContent-content-duplicate-entry' => 'Оваа вредност е дуплирана',
 );
 
@@ -274,11 +258,9 @@ $messages['ms'] = array(
 	'wikiaCuratedContent-desc' => 'Modul aplikasi mudah alih Panduan Permainan Wikia',
 	'wikiaCuratedContent-preview-description' => 'Ini hanya pralihat untuk rupa halaman dalam aplikasi Wikia Curated Content.',
 	'wikiaCuratedContent-content-title' => 'Alat pengurusan kandungan Wikia Curated Content',
-	'wikiaCuratedContent-content-category' => 'Kategori',
 	'wikiaCuratedContent-content-tag' => 'Teg Kategori (pilihan)',
 	'wikiaCuratedContent-content-name' => 'Nama Panduan Permainan (pilihan)',
 	'wikiaCuratedContent-content-save' => 'Simpan',
-	'wikiaCuratedContent-content-category-error' => 'Kategori tidak wujud', # Fuzzy
 	'wikiaCuratedContent-content-duplicate-entry' => 'Nilai ini diduakan',
 );
 
@@ -289,11 +271,9 @@ $messages['nb'] = array(
 	'wikiaCuratedContent-desc' => 'Moduler for Wikias spillguide-app',
 	'wikiaCuratedContent-preview-description' => 'Dette er bare en forhåndsvisning av hvordan sider ville sett ut i en Wikia Spillguider-applikasjon.',
 	'wikiaCuratedContent-content-title' => 'Verktøy for innholdshåndtering av Wikia Spillguider',
-	'wikiaCuratedContent-content-category' => 'Kategori',
 	'wikiaCuratedContent-content-tag' => 'Kategoritagg (valgfritt)',
 	'wikiaCuratedContent-content-name' => 'Navn på Spillguide (valgfritt)',
 	'wikiaCuratedContent-content-save' => 'Lagre',
-	'wikiaCuratedContent-content-category-error' => 'Kategorien eksisterer ikke', # Fuzzy
 	'wikiaCuratedContent-content-duplicate-entry' => 'Denne verdien er duplisert',
 );
 
@@ -305,13 +285,10 @@ $messages['nl'] = array(
 	'wikiaCuratedContent-desc' => 'Applicatiemodules voor mobiel voor Wikia Curated Content',
 	'wikiaCuratedContent-preview-description' => 'Dit is alleen maar een voorvertoning van hoe een pagina eruit ziet in de Wikia Curated Content.',
 	'wikiaCuratedContent-content-title' => 'Contentbeheerprogramma voor Wikia Curated Content',
-	'wikiaCuratedContent-content-category' => 'Categorie',
 	'wikiaCuratedContent-content-tag' => 'Categorielabel (optioneel)',
 	'wikiaCuratedContent-content-name' => 'Curated Contentnaam (optioneel)',
 	'wikiaCuratedContent-content-add-tag' => 'Label toevoegen',
-	'wikiaCuratedContent-content-add-category' => 'Categorie toevoegen',
 	'wikiaCuratedContent-content-save' => 'Opslaan',
-	'wikiaCuratedContent-content-category-error' => 'De vategorie bestaat niet of is leeg.',
 	'wikiaCuratedContent-content-required-entry' => 'Een categorie is verplicht.',
 	'wikiaCuratedContent-content-duplicate-entry' => 'Deze waarde komt meerdere keren voor',
 	'wikiaCuratedContent-content-empty-tag' => 'Dit label heeft categorieën nodig',
@@ -324,11 +301,9 @@ $messages['pl'] = array(
 	'wikiaCuratedContent-desc' => 'Aplikacje Wikia Curated Content dla urządzeń mobilnych',
 	'wikiaCuratedContent-preview-description' => 'To jedynie podgląd tego jak strona wyglądałaby w aplikacji Wikia Curated Content.',
 	'wikiaCuratedContent-content-title' => 'Narzędzie zarządzania zawartością Wikia Curated Content',
-	'wikiaCuratedContent-content-category' => 'Kategoria',
 	'wikiaCuratedContent-content-tag' => 'Znacznik kategorii (opcjonalny)',
 	'wikiaCuratedContent-content-name' => 'Nazwa (opcjonalna)',
 	'wikiaCuratedContent-content-save' => 'Zapisz',
-	'wikiaCuratedContent-content-category-error' => 'Kategoria nie istnieje', # Fuzzy
 	'wikiaCuratedContent-content-duplicate-entry' => 'Ta wartość jest zduplikowana',
 );
 
@@ -340,11 +315,9 @@ $messages['pms'] = array(
 	'wikiaCuratedContent-desc' => "Mòdoj ëd l'aplicassion mòbil Wikia Games Guides",
 	'wikiaCuratedContent-preview-description' => "Costa a l'é mach na preuva ëd com le pagine a dovrìo smijé ant n'aplicassion Wikia Curated Content.",
 	'wikiaCuratedContent-content-title' => 'Utis ëd gestion dël contnù ëd Wikia Curated Content.',
-	'wikiaCuratedContent-content-category' => 'Categorìa',
 	'wikiaCuratedContent-content-tag' => 'Tichëtta ëd categorìa (opsional)',
 	'wikiaCuratedContent-content-name' => 'Curated Content Name (opsional)',
 	'wikiaCuratedContent-content-save' => 'Salva',
-	'wikiaCuratedContent-content-category-error' => 'La categorìa a esist pa', # Fuzzy
 	'wikiaCuratedContent-content-duplicate-entry' => "Sto valor a l'é duplicà",
 );
 
@@ -352,7 +325,6 @@ $messages['pms'] = array(
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
 $messages['ps'] = array(
-	'wikiaCuratedContent-content-category' => 'وېشنيزه',
 	'wikiaCuratedContent-content-save' => 'خوندي کول',
 );
 
@@ -385,11 +357,9 @@ $messages['ru'] = array(
 	'wikiaCuratedContent-desc' => 'Модули мобильного приложения Wikia Curated Content',
 	'wikiaCuratedContent-preview-description' => 'Это только предварительный просмотр страницы. Так она будет выглядеть в приложении Wikia Curated Content.',
 	'wikiaCuratedContent-content-title' => 'Инструмент управления содержимым Wikia Curated Content',
-	'wikiaCuratedContent-content-category' => 'Категория:',
 	'wikiaCuratedContent-content-tag' => 'Тег категории (необязательно)',
 	'wikiaCuratedContent-content-name' => 'Название для Curated Content (необязательно)',
 	'wikiaCuratedContent-content-save' => 'Сохранить',
-	'wikiaCuratedContent-content-category-error' => 'Категория не существует', # Fuzzy
 	'wikiaCuratedContent-content-duplicate-entry' => 'Это значение является дубликатом',
 );
 
@@ -414,11 +384,9 @@ $messages['sv'] = array(
 	'wikiaCuratedContent-desc' => 'Moduler för appen Wikia Spelguider',
 	'wikiaCuratedContent-preview-description' => 'Detta är bara en förhandsgranskning av hur sidor skulle se ut i appen Wikia Spelguider.',
 	'wikiaCuratedContent-content-title' => 'Verktyg för innehållshantering i Wikia Spelguider',
-	'wikiaCuratedContent-content-category' => 'Kategori',
 	'wikiaCuratedContent-content-tag' => 'Kategoritagg (valfri)',
 	'wikiaCuratedContent-content-name' => 'Namn på spelguiden (valfri)',
 	'wikiaCuratedContent-content-save' => 'Spara',
-	'wikiaCuratedContent-content-category-error' => 'Kategorin finns inte', # Fuzzy
 	'wikiaCuratedContent-content-duplicate-entry' => 'Detta värde är dubblerad',
 );
 
@@ -440,9 +408,7 @@ $messages['tt-cyrl'] = array(
  * @author Steve.rusyn
  */
 $messages['uk'] = array(
-	'wikiaCuratedContent-content-category' => 'Категорія',
 	'wikiaCuratedContent-content-save' => 'Зберегти',
-	'wikiaCuratedContent-content-category-error' => 'Категорія не існує', # Fuzzy
 );
 
 /** Simplified Chinese (中文（简体）‎)
@@ -451,5 +417,4 @@ $messages['uk'] = array(
  */
 $messages['zh-hans'] = array(
 	'wikiaCuratedContent-content-save' => '保存',
-	'wikiaCuratedContent-content-category-error' => '不存在该分类', # Fuzzy
 );
