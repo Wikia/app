@@ -9,13 +9,22 @@ use Wikia\Logger\WikiaLogger;
  */
 class FacebookClient {
 
+	// How long to save tokens we get from a signed cookie.  The tokens Facebook gives out are only
+	// valid 1-2 hours so lets cache for 2 hours.  If it turns out its already expired we'll check
+	// for that and grab a new token from the cookie if possible.
+	const TOKEN_TTL = 7200;
+
 	/** @var FacebookClient - Only create one instance of this object per request */
 	private static $instance;
 
 	/** @var Facebook\FacebookSignedRequestFromInputHelper  */
 	private $facebookAPI;
-	/** @var  array */
+
+	/** @var array */
 	private $userInfoCache;
+
+	/** @var Facebook\FacebookSession */
+	private $session;
 
 	/**
 	 * Only called internally
@@ -67,6 +76,77 @@ class FacebookClient {
 	}
 
 	/**
+	 * Tries to get a new FacebookSession object for the current Facebook user.  If this is the first time
+	 * this user is here, the session will be created from the signed cookies Facebook sets.  It will then
+	 * be cached in memcached for 2 hours and created from there for subsequent requests.
+	 *
+	 * @return \Facebook\FacebookSession
+	 * @throws Exception
+	 */
+	public function getSession() {
+
+		// If there's no session defined, try getting it from DB/memc
+		if ( empty( $this->session ) ) {
+			$this->getSessionFromMemcached();
+		}
+
+		// If the session is still not defined try to get it from the signed cookie
+		if ( empty( $this->session ) ) {
+			$this->getSessionFromCookie();
+		}
+
+		// If we still don't have a session then give up
+		if ( empty( $this->session ) ) {
+			throw new Exception( "Could not create Facebook session" );
+		}
+
+		return $this->session;
+	}
+
+	private function getSessionFromMemcached() {
+		$memc = F::app()->wg->memc;
+		$log = WikiaLogger::instance();
+
+		// Get the access token for this user
+		$accessToken = $memc->get( $this->getTokenMemcKey() );
+		if ( $accessToken ) {
+			// If we have an access token, create a session from that
+			$session = new \Facebook\FacebookSession( $accessToken );
+
+			try {
+				$session->validate();
+				$this->session = $session;
+			} catch ( \Exception $ex ) {
+				$log->info( 'Invalid Facebook session found', [
+					'fbUserId' => $this->getUserId(),
+					'method' => __METHOD__,
+				] );
+			}
+		}
+	}
+
+	private function getSessionFromCookie() {
+		$memc = F::app()->wg->memc;
+		$log = WikiaLogger::instance();
+
+		$session = $this->facebookAPI->getSession();
+		try {
+			$session->validate();
+			$this->session = $session;
+			$memc->set( $this->getTokenMemcKey(), $session->getAccessToken(), self::TOKEN_TTL );
+		} catch ( \Exception $ex ) {
+			$log->info( 'Invalid Facebook session found', [
+				'fbUserId' => $this->getUserId(),
+				'method' => __METHOD__,
+			] );
+		}
+	}
+
+	private function getTokenMemcKey() {
+		return wfSharedMemcKey( 'fbAccessToken', $this->getUserId() );
+	}
+
+	/**
 	 * Get the Facebook user ID for the current user, if set
 	 *
 	 * @return null|string
@@ -99,7 +179,7 @@ class FacebookClient {
 		if ( empty( $this->userInfoCache[$userId] ) ) {
 			try {
 				$userProfile = ( new \Facebook\FacebookRequest(
-					$this->facebookAPI->getSession(),
+					$this->getSession(),
 					'GET',
 					'/me'
 				) )->execute()->getGraphObject( Facebook\GraphUser::className() );
@@ -127,6 +207,9 @@ class FacebookClient {
 	 */
 	public function getUserInfoAsArray( $userId = 0 ) {
 		$userInfo = $this->getUserInfo( $userId );
+		if ( ! $userInfo instanceof Facebook\GraphUser ) {
+			return [];
+		}
 
 		$properties = [
 			'email',

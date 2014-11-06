@@ -66,11 +66,17 @@ class FacebookSignupController extends WikiaController {
 			return false;
 		}
 
-		$this->fbEmail = $resp->getVal( 'contact_email', false );
-		$email = $resp->getVal( 'email', false );
-		// check for proxy email
-		if ( $this->fbEmail != $email ) {
-			$this->fbEmail = wfMessage( 'usersignup-facebook-proxy-email' )->escaped();
+		// The new FB SDK doesn't define contact_email
+		if ( F::app()->wg->EnableFacebookClientExt ) {
+			$this->fbEmail = $resp->getVal( 'email', false );
+		} else {
+			$this->fbEmail = $resp->getVal( 'contact_email', false );
+			$email = $resp->getVal( 'email', false );
+
+			// check for proxy email
+			if ( $this->fbEmail != $email ) {
+				$this->fbEmail = wfMessage( 'usersignup-facebook-proxy-email' )->escaped();
+			}
 		}
 
 		$this->loginToken = UserLoginHelper::getSignupToken();
