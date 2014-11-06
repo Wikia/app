@@ -9,7 +9,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-		if (!$this->wg->User->isAllowed( 'curatedcontent' )) {
+		if ( !$this->wg->User->isAllowed( 'curatedcontent' ) ) {
 			$this->displayRestrictionError();
 			return false;  // skip rendering
 		}
@@ -20,30 +20,30 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$this->wg->Out->setPageTitle( $title );
 		$this->wg->Out->setHTMLTitle( $title );
 
-		$this->wg->Out->addModules([
+		$this->wg->Out->addModules( [
 			'jquery.autocomplete',
 			'jquery.ui.sortable',
 			'wikia.yui',
 			'wikia.aim'
-		]);
+		] );
 
 		$assetManager = AssetsManager::getInstance();
 
-		$styles = $assetManager->getURL([
+		$styles = $assetManager->getURL( [
 			'extensions/wikia/CuratedContent/css/CuratedContentManagmentTool.scss',
 			'extensions/wikia/WikiaMiniUpload/css/WMU.scss'
-		]);
+		] );
 
-		foreach( $styles as $s ) {
+		foreach ( $styles as $s ) {
 			$this->wg->Out->addStyle( $s );
 		}
 
-		$scripts = $assetManager->getURL([
+		$scripts = $assetManager->getURL( [
 			'/extensions/wikia/CuratedContent/js/CuratedContentManagmentTool.js',
 			'/extensions/wikia/WikiaMiniUpload/js/WMU.js'
-		]);
+		] );
 
-		foreach( $scripts as $s ) {
+		foreach ( $scripts as $s ) {
 			$this->wg->Out->addScriptFile( $s );
 		}
 
@@ -68,28 +68,28 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$categoryTemplate = $this->sendSelfRequest( 'category' )->toString();
 		$tagTemplate = $this->sendSelfRequest( 'tag' )->toString();
 
-		$this->wg->Out->addJsConfigVars([
+		$this->wg->Out->addJsConfigVars( [
 			'categoryTemplate' => $categoryTemplate,
 			'tagTemplate' => $tagTemplate
-		]);
+		] );
 
 		$tags = $this->wg->WikiaCuratedContent;
 
 		if ( !empty( $tags ) ) {
 			$list = '';
 
-			foreach( $tags as $tag ) {
+			foreach ( $tags as $tag ) {
 				$list .= $this->sendSelfRequest( 'tag', [
-					'value' => $tag['title'],
-					'image_id' => $tag['image_id']
+					'value' => $tag[ 'title' ],
+					'image_id' => $tag[ 'image_id' ]
 				] );
 
-				if ( !empty( $tag['categories'] ) ) {
-					foreach( $tag['categories'] as $category ) {
+				if ( !empty( $tag[ 'categories' ] ) ) {
+					foreach ( $tag[ 'categories' ] as $category ) {
 						$list .= $this->sendSelfRequest( 'category', [
-							'category_value' => $category['title'],
-							'name_value' => !empty( $category['label'] ) ? $category['label'] : '',
-							'image_id' => $category['image_id']
+							'category_value' => $category[ 'title' ],
+							'name_value' => !empty( $category[ 'label' ] ) ? $category[ 'label' ] : '',
+							'image_id' => $category[ 'image_id' ]
 						] );
 					}
 				}
@@ -126,7 +126,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$category = $this->request->getVal( 'category_value', '' );
 
 		$this->response->setVal( 'category_value', $category );
-		$this->response->setVal( 'name_value', $this->request->getVal('name_value'), '' );
+		$this->response->setVal( 'name_value', $this->request->getVal( 'name_value' ), '' );
 		$this->response->setVal( 'image_id', $id );
 
 
@@ -145,7 +145,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$this->response->setVal( 'name_placeholder', wfMsg( 'wikiaCuratedContent-content-name' ) );
 	}
 
-	public function save(){
+	public function save() {
 		if ( !$this->wg->User->isAllowed( 'curatedcontent' ) ) {
 			$this->displayRestrictionError();
 			return false;  // skip rendering
@@ -153,27 +153,24 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$this->response->setFormat( 'json' );
 
 		$tags = $this->request->getArray( 'tags' );
-		$err = [];
+		$err = [ ];
 
-		if( !empty( $tags ) ) {
+		if ( !empty( $tags ) ) {
 			foreach ( $tags as &$tag ) {
 
-				$tag['image_id'] = (int) $tag['image_id'];
+				$tag = $this->parseImageIdToInt( $tag );
 
-				if( !empty( $tag['categories'] ) ) {
+				if ( !empty( $tag[ 'categories' ] ) ) {
+					foreach ( $tag[ 'categories' ] as &$row ) {
+						$row = $this->parseImageIdToInt( $row );
+						$type = $this->extractType( $row[ 'title' ] );
+						$row[ 'type' ] = $type;
+						$title = $this->getTitle( $row, $type );
 
-					foreach ( $tag['categories'] as &$cat ) {
-
-						$catTitle = $cat['title'];
-
-						$cat['image_id'] = (int) $cat['image_id'];
-
-						$category = Category::newFromName( $catTitle );
-						//check if categories exists
-						if ( !( $category instanceof Category ) || $category->getPageCount() === 0 ) {
-							$err[] = $catTitle;
-						} else if ( empty( $err ) ) {
-							$cat['id'] = $category->getTitle()->getArticleID();
+						switch ( $type ) {
+							case 'category':
+								$this->getCategoryPageId( $title, $err, $row );
+								break;
 						}
 					}
 				}
@@ -194,25 +191,25 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		return true;
 	}
 
-	public function getImage( $id = 0 ){
+	public function getImage( $id = 0 ) {
 		$file = $this->request->getVal( 'file' );
 
 		$url = '';
 
-		if( !empty( $file ) ) {
+		if ( !empty( $file ) ) {
 			$img = Title::newFromText( $file );
 
-			if( !empty( $img ) && $img instanceof Title ) {
+			if ( !empty( $img ) && $img instanceof Title ) {
 				$id = $img->getArticleID();
 			}
 		}
 
-		if( $id != 0 ) {
-			$is = new ImageServing( [ $id ] , 50, 50 );
+		if ( $id != 0 ) {
+			$is = new ImageServing( [ $id ], 50, 50 );
 			$thumbnail = $is->getImages( 1 );
 
-			if( !empty( $thumbnail ) ) {
-				$url = $thumbnail[$id][0]['url'];
+			if ( !empty( $thumbnail ) ) {
+				$url = $thumbnail[ $id ][ 0 ][ 'url' ];
 			}
 		}
 
@@ -223,7 +220,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	}
 
 	//This should appear on WikiFeatures list only when GG extension is turned on and be visible only to staff
-	static public function onWikiFeatures(){
+	static public function onWikiFeatures() {
 		$wg = F::app()->wg;
 
 		if ( $wg->User->isAllowed( 'CuratedContent-switchforadmins' ) ) {
@@ -235,5 +232,53 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		}
 
 		return true;
+	}
+
+	/**
+	 * @param $row
+	 * @return mixed
+	 */
+	public function parseImageIdToInt( $row ) {
+		$row[ 'image_id' ] = (int)$row[ 'image_id' ];
+		return $row;
+	}
+
+
+	private function extractType( $title ) {
+		$type = strtolower( strstr( $title, ':', true ) );
+		$validTypes = [ 'category' ];
+		if ( in_array( $type, $validTypes ) ) {
+			return $type;
+		}
+		return false;
+	}
+
+	/**
+	 * @param $title
+	 * @param $err
+	 * @param $row
+	 */
+	private function getCategoryPageId( $title, &$err, &$row ) {
+		$catTitle = $title;
+		$category = Category::newFromName( $catTitle );
+		//check if categories exists and have any pages
+		if ( !( $category instanceof Category ) || $category->getPageCount() === 0 ) {
+			$err[ ] = $catTitle;
+		} else if ( empty( $err ) ) {
+			$row[ 'id' ] = $category->getTitle()->getArticleID();
+		}
+	}
+
+	/**
+	 * @param $row
+	 * @param $type
+	 * @return string
+	 */
+	private function getTitle( $row, $type ) {
+		$title = $row[ 'title' ];
+		if ( $type ) {
+			$title = substr( $row[ 'title' ], strlen( $type ) + 1 );
+		};
+		return $title;
 	}
 }

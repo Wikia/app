@@ -26,8 +26,8 @@ $(function(){
 					params: {
 						action: 'ajax',
 						rs: 'getLinkSuggest',
-						format: 'json',
-						ns: categoryId
+						format: 'json'
+						//ns: categoryId
 					},
 					appendTo: form,
 					onSelect: function(){
@@ -39,16 +39,16 @@ $(function(){
 							l = suggestions.length,
 							i = 0;
 
-						for(; i < l; i++) {
-							suggestion = suggestions[i];
-							//get rid of non categories suggestions
-							//and 'Category:' part of suggestion
-							if(suggestion.indexOf(categoryName) > -1) {
-								suggestions[i] = suggestion.replace(categoryName, '');
-							}else{
-								delete suggestions[i];
-							}
-						}
+						//for(; i < l; i++) {
+						//	suggestion = suggestions[i];
+						//	//get rid of non categories suggestions
+						//	//and 'Category:' part of suggestion
+						//	if(suggestion.indexOf(categoryName) > -1) {
+						//		suggestions[i] = suggestion.replace(categoryName, '');
+						//	}else{
+						//		delete suggestions[i];
+						//	}
+						//}
 
 						data.suggestions = suggestions;
 						return data;

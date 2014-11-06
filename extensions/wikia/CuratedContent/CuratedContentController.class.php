@@ -396,7 +396,6 @@ class CuratedContentController extends WikiaController {
 	 */
 	private function getTags( $content ) {
 		wfProfileIn( __METHOD__ );
-
 		$this->response->setVal(
 			'tags',
 			array_reduce(
@@ -416,7 +415,6 @@ class CuratedContentController extends WikiaController {
 
 		//there also might be some categories without TAG, lets find them as well
 		$this->getTagCategories( $content, '' );
-
 		wfProfileOut( __METHOD__ );
 	}
 

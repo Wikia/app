@@ -64,7 +64,6 @@ JSMessages::registerPackage( 'CuratedContentSponsoredMsg', [
 //hooks
 $wgHooks['CuratedContentSave'][] = 'CuratedContentController::onCuratedContentSave';
 $wgHooks['CuratedContentSponsoredVideosSave'][] = 'CuratedContentController::onCuratedContentSponsoredSave';
-$wgHooks['TitleGetSquidURLs'][] = 'CuratedContentController::onTitleGetSquidURLs';
 //add Curated Content to WikiFeatures
 $wgHooks['WikiFeatures::onGetFeatureNormal'][] = 'CuratedContentSpecialController::onWikiFeatures';
 $wgHooks['WikiFeatures::onToggleFeature'][] = 'CuratedContentSpecialController::onWikiFeatures';
