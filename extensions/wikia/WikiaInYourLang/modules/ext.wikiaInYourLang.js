@@ -86,7 +86,7 @@ require(
 		}
 
 		function setupTracking() {
-			$('a#wikia-in-your-lang-link').click(function () {
+			$('#wikia-in-your-lang-link').click(function () {
 				var trackingParams = {
 					trackingMethod: 'ga',
 					category: 'wikia-in-your-lang',
