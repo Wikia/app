@@ -11,20 +11,20 @@ require(
 		'jquery',
 		'mw',
 		'wikia.window',
+		'wikia.geo',
 		'wikia.cache',
 		'wikia.tracker',
 	],
-	function ($, mw, w, cache, tracker) {
+	function ($, mw, w, geo, cache, tracker) {
 		'use strict';
 
 		/**
 		 * An array of language codes for which we want to look for a native wikia
 		 * @type {Array}
 		 */
-		var supportedLanguages = ['ja'],
+		var supportedLanguages = ['ja', 'pl'],
 			// Get user's geographic data and a country code
-			geo = JSON.parse($.cookie('Geo')),
-			targetLanguage = geo.country.toLowerCase();
+			targetLanguage = geo.getCountryCode().toLowerCase();
 
 		function init() {
 			// Check if the country code is one of the supported languages
