@@ -36,7 +36,7 @@ require(
 				if (cache.get('wikiaInYourLangShown') !== true) {
 
 					// If not - set the cached info to true and show the popup
-					var ttl = 60 * 60 * 24 * 14; // Cache for 2 weeks
+					var ttl = 60 * 60 * 24 * 30; // Cache for a month
 					cache.set('wikiaInYourLangShown', true, ttl);
 
 					getNativeWikiaInfo();
