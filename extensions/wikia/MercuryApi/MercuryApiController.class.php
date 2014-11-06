@@ -17,13 +17,28 @@ class MercuryApiController extends WikiaController {
 	}
 
 	/**
-	 * @desc Returns smart banner config that is stored in WF
+	 * @desc Gets smart banner config from WF and cleans it up
 	 */
 	private function getSmartBannerConfig() {
 		if ( !empty( $this->wg->EnableWikiaMobileSmartBanner )
 			&& !empty( $this->wg->WikiaMobileSmartBannerConfig )
 		) {
-			return $this->wg->WikiaMobileSmartBannerConfig;
+			$smartBannerConfig = $this->wg->WikiaMobileSmartBannerConfig;
+
+			unset( $smartBannerConfig[ 'author' ] );
+
+			if ( !empty( $smartBannerConfig[ 'icon' ] ) ) {
+				$smartBannerConfig[ 'icon' ] = $this->wg->extensionsPath . $smartBannerConfig[ 'icon' ];
+			}
+
+			$meta = $smartBannerConfig[ 'meta' ];
+			unset( $smartBannerConfig[ 'meta' ] );
+			$smartBannerConfig[ 'appId' ] = [
+				'ios' => str_replace( 'app-id=', '', $meta[ 'apple-itunes-app' ] ),
+				'android' => str_replace( 'app-id=', '', $meta[ 'google-play-app' ] ),
+			];
+
+			return $smartBannerConfig;
 		}
 
 		return null;
