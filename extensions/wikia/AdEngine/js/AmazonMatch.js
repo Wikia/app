@@ -59,6 +59,7 @@ define('ext.wikia.adEngine.amazonMatch', [
 
 		try { url = encodeURIComponent(w.top.location.href); } catch(e) {}
 
+		s.id = logGroup;
 		s.async = true;
 		s.onload = onAmazonResponse;
 		s.src = '//aax.amazon-adsystem.com/e/dtb/bid?src=' + amazonId + '&u=' + url + "&cb=" + Math.round(Math.random()*10000000);
