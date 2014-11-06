@@ -29,7 +29,7 @@ class FBConnectXFBML {
 		// load Facebook's JS API on demand (BugId:68983)
 		if ($parser instanceof Parser) {
 			/* @var $parser Parser */
-			$parser->getOutput()->addModules('ext.wikia.FacebookClient.FBXML');
+			$parser->getOutput()->addModules('ext.wikia.FacebookClient.XFBML');
 		}
 
 		/* @var $parser DummyParser */

@@ -56,8 +56,8 @@ $wgExtensionMessagesFiles['FacebookClient'] = $dir . 'FacebookClient.i18n.php';
 /**
  * ResourceLoader modules
  */
-$wgResourceModules['ext.wikia.FacebookClient.FBXML'] = array(
-	'scripts' => 'scripts/FacebookClient.FBXML.js',
+$wgResourceModules['ext.wikia.FacebookClient.XFBML'] = array(
+	'scripts' => 'scripts/FacebookClient.XFBML.js',
 	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'wikia/FacebookClient',
 );

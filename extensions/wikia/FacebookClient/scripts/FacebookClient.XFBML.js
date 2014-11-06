@@ -7,12 +7,9 @@
 $(function () {
 	'use strict';
 
-	// load api on page load. todo: check if we can remove this after https://github.com/Wikia/app/pull/5237 is merged
-	$.loadFacebookAPI();
-
-	// load api on demand
+	// load api on page load and on demand
 	mw.hook('wikipage.content').add(function ($content) {
-		$.when($.loadFacebookAPI()).done(function () {
+		$.loadFacebookAPI(function () {
 			// scan the new content for any fb tags
 			FB.XFBML.parse($content[0]);
 		});
