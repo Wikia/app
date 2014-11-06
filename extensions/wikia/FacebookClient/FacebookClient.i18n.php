@@ -55,6 +55,8 @@ The Wikia Community Team',
 	'fbconnect-wikia-signup-w-facebook' => 'Sign up with Facebook',
 	'fbconnect-wikia-login-or-create' => 'Log in / Create an account',
 	'fbconnect-logout-confirm' => 'Choosing to cancel will log you out of Wikia and Facebook. Do you want to continue?',
+	'prefs-fbconnect-prefstext' => 'Facebook Connect',
+	'prefs-fbconnect-status-prefstext' => 'Status',
 ];
 
 /**
