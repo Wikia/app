@@ -43,7 +43,7 @@ define('ext.wikia.adEngine.adConfig', [
 		defaultHighValueSlots,
 		highValueSlots,
 		decorators = [adDecoratorPageDimensions],
-		rtpTier;
+		rtpTier, rtpSlots, i;
 
 	defaultHighValueSlots = {
 		'CORP_TOP_LEADERBOARD': true,
@@ -153,12 +153,12 @@ define('ext.wikia.adEngine.adConfig', [
 	if (rtp && rtp.wasCalled()) {
 		rtp.trackState();
 		rtpTier = rtp.getTier();
-		if (rtpTier) {
-			// TODO: fix repetition while working on multi slot support
-			gptSlotConfig.extendSlotParams('gpt', 'HOME_TOP_RIGHT_BOXAD', { 'rp_tier': rtpTier });
-			gptSlotConfig.extendSlotParams('gpt', 'TOP_RIGHT_BOXAD', { 'rp_tier': rtpTier });
-			gptSlotConfig.extendSlotParams('gpt', 'TOP_INCONTENT_BOXAD', { 'rp_tier': rtpTier });
-			gptSlotConfig.extendSlotParams('gpt', 'CORP_TOP_RIGHT_BOXAD', { 'rp_tier': rtpTier });
+		rtpSlots = rtp.getConfig().slotname;
+
+		if (rtpTier && rtpSlots && rtpSlots.length) {
+			for(i = rtpSlots.length; i >= 0; i -= 1) {
+				gptSlotConfig.extendSlotParams('gpt', rtpSlots[i], { rp_tier: rtpTier });
+			}
 		}
 	}
 
