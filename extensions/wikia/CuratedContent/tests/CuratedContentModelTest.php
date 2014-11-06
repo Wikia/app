@@ -32,7 +32,7 @@ CuratedContents GameGuidesModel::getResultSet
 		                      ->disableOriginalConstructor()
 		                      ->getMock();
 		
-		$mockGGModel = $this->gCuratedContentder( 'GameGuidesModel' )
+		$mockGGModel = $this->getMockBuilder( 'CuratedContentModel' )
 		                    ->disableOriginalConstructor()
 		                    ->setMethods( null )
 		                    ->getMock();
