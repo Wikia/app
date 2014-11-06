@@ -1,6 +1,7 @@
 @import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/Venus/styles/typographyMixins';
+@import 'skins/shared/color';
 @import 'skins/shared/mixins/calc';
 
 .infobox-container {
@@ -26,6 +27,58 @@
 		@include grid-column-max-width('medium', 4, -2 * $medium-grid-column-padding);
 		float: none;
 		margin: 0 auto;
+	}
+
+	/* taken from /skins/oasis/css/core/article.scss and slightly modified for Venus */
+	.wikia-infobox {
+		border: 1px $color-page-border solid;
+		border-collapse: separate;
+		margin: 0 0 16px 16px;
+		padding: 15px 8px 8px;
+		text-align: left;
+
+		%td {
+			overflow: hidden;
+			padding: 2px 3px 7px;
+			vertical-align: top;
+		}
+
+		td {
+			@extend %td;
+		}
+
+		th {
+			@extend %td;
+			font-weight: bold;
+			text-align: left;
+			width: 20%;
+
+			&.wikia-infobox-header {
+				font-size: 17px;
+				font-weight: bold;
+				margin-top: 20px;
+				padding: 5px 3px 8px;
+				text-align: left;
+			}
+
+			// sections separator
+			.wikia-infobox-section-header {
+				border-top: 1px $color-page-border solid;
+				margin-top: 7px;
+				padding-top: 20px;
+			}
+		}
+
+		.wikia-infobox-image {
+			overflow: hidden;
+			padding: 0;
+			text-align: center;
+		}
+
+		.wikia-infobox-caption {
+			font-size: 12px;
+			text-align: center;
+		}
 	}
 
 	.image-thumbnail img {
