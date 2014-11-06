@@ -7,14 +7,13 @@
  * @author Maciej Brencz
  */
 
-$wgExtensionCredits['other'][] = array(
+$wgExtensionCredits['other'][] = [
 	'name' => 'Oasis Skin',
 	'version' => '1.0',
-	'author' => array('Wikia'),
-);
+];
 
 // Messages
-$wgExtensionMessagesFiles['Oasis'] = dirname(__FILE__) . '/Oasis.i18n.php';
+$wgExtensionMessagesFiles['Oasis'] = __DIR__ . '/Oasis.i18n.php';
 
 $wgExtensionFunctions[] = 'wfOasisSetup';
 
@@ -59,7 +58,6 @@ function wfOasisSetup() {
 	$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'NotificationsController::addMessageNotification';
 
 	// misc
-	$wgHooks['UploadVerification'][] = 'Oasis_UploadVerification';
 	$wgHooks['ArticleViewHeader'][]  = 'UserPagesHeaderController::saveFacebookConnectProfile';
 	$wgHooks['ArticlePurge'][] = 'ArticleService::onArticlePurge';
 	$wgHooks['ArticleSaveComplete'][] = 'ArticleService::onArticleSaveComplete';
@@ -94,16 +92,6 @@ function wfOasisSetup() {
 	$jsMessages->enqueuePackage('Oasis-generic', JSMessages::EXTERNAL);
 }
 
-// TODO: why do we have this code here? It should be placed in ThemeDesigner
-function Oasis_UploadVerification($destName, $tempPath, &$error) {
-	$destName = strtolower($destName);
-	if($destName == 'wiki-wordmark.png' || $destName == 'wiki-background') {
-		// BugId:983
-		$error = wfMsg('themedesigner-manual-upload-error');
-		return false;
-	}
-	return true;
-}
 
 // Mapping of themename to an array of key/value pairs to send to SASS.
 // Sean says: Since SASS is used to generate the CSS files, this config is all that's needed for the themes.
