@@ -214,7 +214,7 @@ abstract class VideoFeedIngester {
 		wfProfileIn( __METHOD__ );
 
 		// See if this video is blacklisted (exact match against any data)
-		if ( $this->isBlacklistVideo( $data ) ) {
+		if ( $this->isBlacklistedVideo( $data ) ) {
 			$this->videoSkipped( "Skipping (due to \$CLIP_TYPE_BLACKLIST) '{$data['titleName']}' - {$data['description']}.\n" );
 			wfProfileOut( __METHOD__ );
 			return 0;
@@ -776,7 +776,7 @@ abstract class VideoFeedIngester {
 	 * @param array $data
 	 * @return boolean
 	 */
-	public function isBlacklistVideo( $data ) {
+	public function isBlacklistedVideo( array $data ) {
 
 		// General filter on all keywords
 		$regex = $this->getBlacklistRegex( F::app()->wg->VideoBlacklist );
