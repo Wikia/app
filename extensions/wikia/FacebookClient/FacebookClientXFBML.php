@@ -6,7 +6,7 @@
  * be incorporated into the wiki through XFBML.
  *
  * Adapted from the FBConnect MediaWiki extension.
- * @author Garrett Bruin, Sean Colombo, Liz Lee
+ * @author Garrett Bruin, Sean Colombo, Liz Lee, Garth Webb
  *
  */
 class FacebookClientXFBML {
@@ -68,7 +68,7 @@ class FacebookClientXFBML {
 		$attrs = '';
 		// The default action is to strip all event handlers and allow the tag
 		foreach ( $args as $name => $value ) {
-			// Disable all event handlers (e.g. onClick, onligin)
+			// Disable all event handlers (e.g. onClick, onLogin)
 			if ( substr( $name, 0, 2 ) == "on" ) {
 				continue;
 			}
