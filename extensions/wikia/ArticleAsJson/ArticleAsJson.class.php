@@ -136,7 +136,7 @@ class ArticleAsJson extends WikiaService {
 
 		wfProfileIn( __METHOD__ );
 		if ( $wgArticleAsJson ) {
-			$confstr .= '!ArticleAsJson:' . self::CACHE_VERSION .rand();
+			$confstr .= '!ArticleAsJson:' . self::CACHE_VERSION;
 		}
 
 		wfProfileOut( __METHOD__ );
