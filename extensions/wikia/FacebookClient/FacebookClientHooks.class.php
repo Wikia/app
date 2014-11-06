@@ -171,10 +171,7 @@ class FacebookClientHooks {
 	}
 
 	public static function setupParserHook( \Parser $parser ) {
-		$pHooks = FBConnectXFBML::availableTags();
-		foreach( $pHooks as $tag ) {
-			$parser->setHook( $tag, FBConnectXFBML::createParserHook( $tag ));
-		}
+		FacebookClientXFBML::registerHooks( $parser );
 
 		return true;
 	}
