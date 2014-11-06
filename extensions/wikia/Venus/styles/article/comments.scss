@@ -58,6 +58,12 @@
 		vertical-align: middle;
 	}
 
+	.throbber {
+		margin: 10px !important;
+		vertical-align: middle;
+		visibility: hidden;
+	}
+
 	/* comments */
 	.comments {
 		list-style: none;

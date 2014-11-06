@@ -32,6 +32,7 @@
 			<? endif ?>
 			<? if ( !$isReadOnly ): ?>
 				<div class="buttons" data-space-type="buttons">
+					<img src="<?= $ajaxicon ?>" class="throbber" />
 					<input type="submit" name="wpArticleSubmit" id="article-comm-submit" class="wikia-button actionButton" value="<?= wfMsg( 'article-comments-post' ) ?>" />
 				</div>
 			<? endif ?>
