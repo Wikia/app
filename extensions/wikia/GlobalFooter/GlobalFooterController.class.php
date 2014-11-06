@@ -14,6 +14,11 @@ class GlobalFooterController extends WikiaController {
 		$this->isCorporate = $this->hub->cat_id == self::CORPORATE_CATEGORY_ID;
 	}
 
+	public function indexVenus() {
+		$this->footer_links = $this->getGlobalFooterLinks();
+		$this->copyright = RequestContext::getMain()->getSkin()->getCopyright();
+	}
+
 	private function getGlobalFooterLinks() {
 		global $wgCityId, $wgContLang, $wgLang, $wgMemc;
 

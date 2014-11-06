@@ -177,7 +177,7 @@ class VenusController extends WikiaController {
 
 	private function getGlobalFooter() {
 		return class_exists('GlobalFooterController') ?
-			$this->app->renderView('GlobalFooter', 'index') :
+			$this->app->renderView('GlobalFooter', 'indexVenus') :
 			'';
 	}
 

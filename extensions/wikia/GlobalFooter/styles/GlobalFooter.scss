@@ -4,7 +4,6 @@
 .global-footer {
 	box-sizing: content-box;
 	clear: left;
-	font-size: 11px;
 	padding-bottom: 10px;
 
 	nav {
@@ -92,19 +91,10 @@
 
 	ul {
 		list-style: none;
-		margin: 0 0 8px 167px;
-		padding-right: 8px;
-		text-align: right;
 
 		li {
-			border-left: solid 1px $color-links;
 			display: inline-block;
-			margin-top: 8px;
 			padding: 0 8px;
-
-			&:first-child {
-				border: 0;
-			}
 
 			&:last-child {
 				padding-right: 0;

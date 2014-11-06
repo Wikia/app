@@ -1,3 +1,22 @@
-.global-footer .branding {
-	left: 10px;
+.global-footer {
+	font-size: 11px;
+
+	.branding {
+		left: 10px;
+	}
+
+	ul {
+		margin: 0 0 8px 167px;
+		padding-right: 8px;
+		text-align: right;
+
+		li {
+			border-left: solid 1px $color-links;
+			margin-top: 8px;
+
+			&:first-child {
+				border: 0;
+			}
+		}
+	}
 }

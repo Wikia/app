@@ -1,18 +1,52 @@
 @import 'extensions/wikia/Venus/styles/variables';
 
-.global-footer {
-	line-height: 12px;
-	padding-left: $medium-content-padding + $medium-grid-column-padding;
-	padding-right: $medium-content-padding + $medium-grid-column-padding;
-	width: auto;
+$color-footer-logo: $color-wikiahome-community;
+@if $is-dark-wiki {
+	$color-footer-logo: #fff;
+}
 
-	@media #{$large-up} {
-		padding-left: $large-content-padding + $large-grid-column-padding;
-		padding-right: $large-content-padding + $large-grid-column-padding;
+.global-footer {
+	border-top: 1px solid $color-page-border;
+	margin-top: 30px;
+	padding-top: 40px;
+	text-align: center;
+
+	.footer-wikia-logo {
+		display: block;
+		height:37px;
+		margin: 0 auto 40px;
+		path {
+			fill:$color-footer-logo;
+		}
 	}
 
-	@media #{$small-only} {
-		padding-left: $small-content-padding + $small-grid-column-padding;
-		padding-right: $small-content-padding + $small-grid-column-padding;
+	nav {
+		margin-top: 0;
+	}
+
+	ul.footer-links {
+		margin-bottom: 30px;
+
+		li {
+			align-items: center;
+			display: inline-flex;
+			margin-top: 0;
+			padding: 0 4px 0 0;
+
+			&::before {
+				border-left:1px solid $color-page-border;
+				content: '';
+				height: 18px;
+				padding-right: 8px;
+			}
+
+			&:first-child {
+				margin-top: 0;
+
+				&::before {
+					border: 0;
+				}
+			}
+		}
 	}
 }
