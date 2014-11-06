@@ -269,7 +269,7 @@
 			$.getJSON(wgScript, {
 				action: 'ajax',
 				article: wgArticleId,
-				id: $(this).closest('li').attr('id').replace(/^comm-/, ''),
+				id: $(this).closest('.comment').attr('id').replace(/^comm-/, ''),
 				method: 'axReply',
 				rs: 'ArticleCommentsAjax',
 				title: wgPageName,

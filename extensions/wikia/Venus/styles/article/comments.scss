@@ -45,7 +45,8 @@
 		}
 	}
 
-	.wikia-button {
+	.wikia-button,
+	.buttons .actionButton {
 		@include font-size-xxs;
 		background: transparent;
 		border: solid 2px $color-buttons;
