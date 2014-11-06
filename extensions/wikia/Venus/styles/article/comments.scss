@@ -78,6 +78,10 @@
 		blockquote {
 			margin: 0;
 		}
+
+		&.loading {
+			opacity: .7;
+		}
 	}
 
 	.sub-comments {
@@ -113,5 +117,23 @@
 		border: solid 2px red;
 		margin: 0 10px;
 		vertical-align: middle;
+	}
+
+	/* pagination */
+	.article-comments-pagination {
+		margin: 0 auto 10px;
+		text-align: center;
+		color: $color-links;
+
+		a {
+			color: $color-links;
+			padding: 2px 8px;
+			margin: 0 4px;
+
+			&.accent {
+				color: White;
+				background-color: $color-links;
+			}
+		}
 	}
 }

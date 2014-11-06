@@ -48,10 +48,16 @@
 	<? elseif ( !$commentingAllowed ): ?>
 		<p class="no-comments-allowed"><?= wfMsg( 'article-comments-comment-cannot-add' ) ?> </p>
 	<? endif ?>
+	<? if ( $countComments ): ?>
+		<div class="article-comments-pagination upper-pagination"><?= $pagination ?></div>
+	<? endif ?>
 	<?= $app->getView( 'ArticleComments', 'VenusCommentList', array(
 			'commentListRaw' => $commentListRaw,
 			'page' => $page,
 			'useMaster' => false
 		))->render()
 	?>
+	<? if ( $countComments ): ?>
+		<div class="article-comments-pagination"><?= $pagination ?></div>
+	<? endif ?>
 </div>
