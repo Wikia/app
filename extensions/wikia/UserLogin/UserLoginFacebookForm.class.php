@@ -31,7 +31,6 @@ class UserLoginFacebookForm extends UserLoginForm {
 			$userEmail = $resp->getVal('email', false);
 		}
 
-gbug("GOT EMAIL : $userEmail");
 		// add an email to the request and pass it to the underlying class
 		$request->setVal( 'email', $userEmail );
 
