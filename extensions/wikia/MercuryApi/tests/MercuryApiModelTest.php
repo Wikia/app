@@ -58,7 +58,6 @@ class MercuryApiModelTest extends WikiaBaseTest {
 				'pageType' => 'corporate',
 				'showAds' => true,
 				'trackSlotState' => true,
-				'useDartForSlotsBelowTheFold' => true,
 			],
 			'targeting' => [
 				'enableKruxTargeting' => true,

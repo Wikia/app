@@ -1250,12 +1250,6 @@ $wgAdDriverUseAdsAfterInfobox = false;
 $wgAdDriverUseTaboola = false;
 
 /**
- * @name $wgAdDriverUseRemnantGpt
- * Enables additional call to dart before Liftium
- */
-$wgAdDriverUseRemnantGpt = false;
-
-/**
  * @name $wgAdDriverAlwaysCallDartInCountries
  * Disables the max N calls to DART and enables Remnant GPT call in those countries.
  * This is an instant globals, which means you set it only on community and it takes
@@ -1322,14 +1316,6 @@ $wgAdDriverUseSevenOneMediaInLanguages = ['de'];
  * Enable override SOI_SUB2SITE with string defined in value for SevenOne Media ads
  */
 $wgAdDriverSevenOneMediaOverrideSub2Site = null;
-
-/**
- * @name $wgAdDriverUseDartForSlotsBelowTheFold
- * Whether to call DART for additional slots below the fold. Also known as "Coffee cup".
- * Set to null for to restrict only to Entertainment vertical
- * TODO: add an internal page for the reasons
- */
-$wgAdDriverUseDartForSlotsBelowTheFold = true;
 
 /**
  * @name $wgAdDriverTrackState
