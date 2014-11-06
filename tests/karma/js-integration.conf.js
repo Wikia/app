@@ -81,7 +81,7 @@ module.exports = function(config) {
 
 			// module insertion
 			'extensions/wikia/Venus/scripts/modules/moduleInsertion.module.js',
-			'extensions/wikia/Venus/scripts/modules/spec/integration/moduleInsertion.spec.js'
+			'extensions/wikia/Venus/scripts/modules/spec/integration/nodeFinder.spec.js'
 		]
 	});
 };
