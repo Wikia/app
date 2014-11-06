@@ -83,8 +83,7 @@ class ArticleComment {
 	 * @static
 	 * @access public
 	 *
-	 * @param Title $title -- Title object connected to comment
-	 *
+	 * @param Article $article object connected to comment
 	 * @return ArticleComment object
 	 */
 	static public function newFromArticle( Article $article ) {
@@ -901,6 +900,7 @@ class ArticleComment {
 
 	/**
 	 * @param Title $title
+	 * @return array
 	 */
 	public static function getSquidURLs( Title $title ) {
 		$urls = [];
@@ -926,16 +926,15 @@ class ArticleComment {
 	/**
 	 * @static
 	 * @param $status
-	 * @param $article Article
+	 * @param $article WikiPage
 	 * @param int $parentId
 	 * @return array
 	 */
-
 	static public function doAfterPost( $status, $article, $parentId = 0 ) {
 		global $wgUser, $wgDBname;
 
 		wfRunHooks( 'ArticleCommentAfterPost', array( $status, &$article ) );
-		$commentId = $article->getID();
+		$commentId = $article->getId();
 		$error = false;
 		$id = 0;
 
@@ -944,8 +943,19 @@ class ArticleComment {
 			case EditPage::AS_SUCCESS_NEW_ARTICLE:
 				$comment = ArticleComment::newFromArticle( $article );
 				$app = F::app();
+
+				if ( $app->checkSkin( 'wikiamobile' ) ) {
+					$viewName = 'WikiaMobileComment';
+				}
+				else if ( $app->checkSkin( 'venus' ) ) {
+					$viewName = 'VenusComment';
+				}
+				else {
+					$viewName = 'Comment';
+				}
+
 				$text = $app->getView( 'ArticleComments',
-					( $app->checkSkin( 'wikiamobile' ) ) ? 'WikiaMobileComment' : 'Comment',
+					$viewName,
 					array('comment' => $comment->getData(true),
 						'commentId' => $commentId,
 						'rowClass' => '',
