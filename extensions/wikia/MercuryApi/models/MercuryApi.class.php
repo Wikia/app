@@ -169,6 +169,11 @@ class MercuryApi {
 			return null;
 		}
 		$commentData = $articleComment->getData();
+		// According to `extensions/wikia/ArticleComments/classes/ArticleComment.class.php:179`
+		// no revision data means that the comment should be ignored
+		if ( $commentData  === false ) {
+			return null;
+		}
 		return [
 			'id' => $commentData['id'],
 			'text' => $commentData['text'],
