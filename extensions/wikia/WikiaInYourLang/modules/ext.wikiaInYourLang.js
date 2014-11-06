@@ -22,7 +22,7 @@ require(
 		 * An array of language codes for which we want to look for a native wikia
 		 * @type {Array}
 		 */
-		var supportedLanguages = ['ja', 'pl'],
+		var supportedLanguages = ['ja'],
 			// Get user's geographic data and a country code
 			targetLanguage = geo.getCountryCode().toLowerCase();
 
@@ -33,7 +33,7 @@ require(
 
 				// Check local browser cache to see if the notification
 				// has already been shown to this user.
-				if (cache.get('wikiaInYourLangShown') === true) {
+				if (cache.get('wikiaInYourLangShown') !== true) {
 
 					// If not - set the cached info to true and show the popup
 					var ttl = 60 * 60 * 24 * 14; // Cache for 2 weeks

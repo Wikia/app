@@ -47,7 +47,6 @@ class WikiaInYourLangController extends WikiaController {
 			$this->response->setVal( 'wikiaSitename', $oNativeWiki->city_title );
 		} else {
 			$this->response->setVal( 'success', false );
-			$this->response->setVal( 'nativeID', $sNativeWikiDomain );
 		}
 
 		/**
