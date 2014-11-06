@@ -17,6 +17,7 @@ class GlobalFooterController extends WikiaController {
 	public function indexVenus() {
 		$this->footer_links = $this->getGlobalFooterLinks();
 		$this->copyright = RequestContext::getMain()->getSkin()->getCopyright();
+		$this->vertical_class = $this->getVerticalClass();
 	}
 
 	private function getGlobalFooterLinks() {
@@ -57,13 +58,19 @@ class GlobalFooterController extends WikiaController {
 		return $parsedLinks;
 	}
 
+	private function getVerticalClass() {
+		global $wgCityId;
+		$wikiFactoryHub = new WikiFactoryHub();
+		$wikiVertical = $wikiFactoryHub->getWikiVertical( $wgCityId );
+		return "vertical-{$wikiVertical['short']}";
+	}
+
 	private function getHub() {
 		global $wgCityId;
 
 		wfProfileIn( __METHOD__ );
 
 		$catInfo = HubService::getCategoryInfoForCity($wgCityId);
-
 		if (!empty($catInfo)) {
 			$catInfo->cat_link = wfMessage('oasis-corporatefooter-hub-'. $catInfo->cat_name .'-link')->text();
 			$catInfo->cat_name = wfMessage('hub-'. $catInfo->cat_name)->text();

@@ -6,10 +6,39 @@ $color-footer-logo: $color-wikiahome-community;
 }
 
 .global-footer {
+	border-bottom: 10px solid $color-wikiahome-community;
 	border-top: 1px solid $color-page-border;
 	margin-top: 30px;
 	padding-top: 40px;
 	text-align: center;
+
+	&.vertical-books {
+		border-bottom-color: $color-vertical-books;
+	}
+
+	&.vertical-comics {
+		border-bottom-color: $color-vertical-comics;
+	}
+
+	&.vertical-games {
+		border-bottom-color: $color-vertical-games;
+	}
+
+	&.vertical-lifestyle {
+		border-bottom-color: $color-vertical-lifestyle;
+	}
+
+	&.vertical-movies {
+		border-bottom-color: $color-vertical-movies;
+	}
+
+	&.vertical-music {
+		border-bottom-color: $color-vertical-music;
+	}
+
+	&.vertical-tv {
+		border-bottom-color: $color-vertical-tv;
+	}
 
 	.footer-wikia-logo {
 		display: block;
