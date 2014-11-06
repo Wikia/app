@@ -3,13 +3,28 @@
 class ArticleNavigationController extends WikiaController {
 
 	public function index() {
+		$app = F::app();
+
 		Wikia::addAssetsToOutput( 'article_navigation_scss' );
 		Wikia::addAssetsToOutput( 'article_navigation_js' );
 
-		$this->shareData = self::shareData();
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+
+		$this->setVal('share_type', 'multiple');
+		$this->setVal('share', $app->renderView('ArticleNavigationController', 'share'));
 	}
 
-	public static function shareData() {
+	public function share() {
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+		$this->services = self::prepareShareServicesData();
+	}
+
+	/**
+	 * Prepare and normalize data from $wgArticleNavigationShareServices
+	 *
+	 * @return Array
+	 */
+	private static function prepareShareServicesData() {
 		global $wgArticleNavigationShareServices;
 
 		$services = $wgArticleNavigationShareServices;
