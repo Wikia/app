@@ -105,6 +105,11 @@ $VenusConfig[ 'venus_body_js' ] = [
 
 		//following script initialize different modules in Venus
 		'//extensions/wikia/Venus/scripts/articleModulesLoader.js',
+
+		// recommendations
+		'//extensions/wikia/Venus/scripts/modules/moduleInsertion.module.js',
+		'//extensions/wikia/Recommendations/scripts/recommendations.js',
+		'//extensions/wikia/Venus/scripts/recommendation.js',
 	]
 ];
 

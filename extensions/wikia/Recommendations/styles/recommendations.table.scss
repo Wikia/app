@@ -1,0 +1,90 @@
+@import 'extensions/wikia/Venus/styles/mixins';
+@import 'extensions/wikia/Venus/styles/variables';
+
+.slot {
+	display: table-cell;
+	height: 100%;
+	overflow: hidden;
+	padding-right: $medium-grid-gutter;
+	vertical-align: top;
+
+	.slot-content {
+		height: 100%;
+	}
+}
+
+.slot-row {
+	box-sizing: content-box;
+	display: table;
+	height: 100%;
+	padding-bottom: $medium-grid-gutter;
+	table-layout: fixed;
+
+	.slot:last-child {
+		padding-right: 0;
+	}
+}
+
+.slot-group {
+	@include grid-column-width('medium', 6);
+
+	display: table-cell;
+	overflow: hidden;
+	vertical-align: top;
+}
+
+.group-rows-2 {
+	height: 50%;
+}
+
+.slot-big {
+	@include grid-column-width('medium', 6);
+}
+
+.slot-small {
+	@include grid-column-width('medium', 3);
+}
+
+@media #{$large-up} {
+	.slot {
+		padding-right: $large-grid-gutter;
+	}
+
+	.slot-row {
+		padding-bottom: $large-grid-gutter;
+	}
+
+	.slot-big {
+		@include grid-column-width('large', 6);
+	}
+
+	.slot-small {
+		@include grid-column-width('large', 3);
+	}
+
+	.slot-group {
+		@include grid-column-width('large', 6);
+	}
+}
+
+@media #{$small-only} {
+	.slot {
+		padding-right: $small-grid-gutter;
+	}
+
+	.slot-row {
+		padding-bottom: $small-grid-gutter;
+	}
+
+	.slot-big {
+		@include grid-column-width('small', 6);
+	}
+
+	.slot-small {
+		@include grid-column-width('small', 3);
+	}
+
+	.slot-group {
+		@include grid-column-width('small', 6);
+	}
+}
