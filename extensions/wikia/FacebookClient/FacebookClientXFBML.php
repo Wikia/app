@@ -33,7 +33,7 @@ class FacebookClientXFBML {
 
 		foreach ( self::$supportedTags as $tag ) {
 			$parser->setHook( $tag, function ( $text, $args, $parser ) use ($tag) {
-				FacebookClientXFBML::parserHook( $tag, $text, $args, $parser );
+				return FacebookClientXFBML::parserHook( $tag, $text, $args, $parser );
 			});
 		}
 	}
