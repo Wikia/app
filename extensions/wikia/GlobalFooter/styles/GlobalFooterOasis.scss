@@ -17,6 +17,10 @@
 			&:first-child {
 				border: 0;
 			}
+
+			a {
+				color: $color-links;
+			}
 		}
 	}
 }

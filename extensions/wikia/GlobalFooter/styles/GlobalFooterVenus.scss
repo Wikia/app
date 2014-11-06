@@ -1,13 +1,10 @@
 @import 'extensions/wikia/Venus/styles/variables';
 
-$color-footer-logo: $color-wikiahome-community;
-@if $is-dark-wiki {
-	$color-footer-logo: #fff;
-}
-
 .global-footer {
+	background-color: #fff;
 	border-bottom: 10px solid $color-wikiahome-community;
 	border-top: 1px solid $color-page-border;
+	color: $color-text-dark;
 	margin-top: 30px;
 	padding-top: 40px;
 	text-align: center;
@@ -42,11 +39,16 @@ $color-footer-logo: $color-wikiahome-community;
 
 	.footer-wikia-logo {
 		display: block;
-		height:37px;
+		height: 37px;
 		margin: 0 auto 40px;
+
 		path {
-			fill:$color-footer-logo;
+			fill: $color-wikiahome-community;
 		}
+	}
+
+	a {
+		color: #006CB0;
 	}
 
 	nav {
@@ -63,7 +65,7 @@ $color-footer-logo: $color-wikiahome-community;
 			padding: 0 4px 0 0;
 
 			&::before {
-				border-left:1px solid $color-page-border;
+				border-left: 1px solid $color-page-border;
 				content: '';
 				height: 18px;
 				padding-right: 8px;
