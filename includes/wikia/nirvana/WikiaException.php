@@ -177,6 +177,7 @@ abstract class WikiaHttpException extends WikiaBaseException {
 		wfDebug(get_class($this). " raised from " . wfGetAllCallers(2) . "\n");
 		if (!empty($details)) {
 			$this->details = $details;
+			wfDebug(get_class($this)  . ": {$this->details}\n");
 		}
 	}
 

@@ -6,15 +6,26 @@ require([
 	/**
 	 * Convenience function for initializing the gallery elements.
 	 */
-	function newGallery() {
-		var controller = new GalleriesController({
-			lightbox: true,
-			lazyLoad: true
-		});
+	function newGallery( options ) {
+		var controller,
+			settings = {
+				lightbox: true,
+				lazyLoad: true
+			};
+
+		$.extend( settings, options );
+
+		controller = new GalleriesController( settings );
 		controller.init();
 	}
 
-	// Galleries must be initialized on page-load and on preview dialog
+	// Galleries must be initialized:
+	// In preview dialog
 	$(window).on('EditPageAfterRenderPreview', newGallery);
+	// After VisualEditor
+	mw.hook('postEdit').add(function() {
+		newGallery({ lazyLoad: false });
+	});
+	// On page load
 	$(newGallery);
 });

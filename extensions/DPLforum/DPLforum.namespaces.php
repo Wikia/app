@@ -27,3 +27,12 @@ $namespaceNames['fi'] = array(
 	NS_FORUM => 'Foorumi',
 	NS_FORUM_TALK => 'Keskustelu_foorumista',
 );
+
+// begin wikia change
+// VOLDEV-90
+/** Japanese (日本語) */
+$namespaces['ja'] = array(
+	NS_FORUM => 'フォーラム',
+	NS_FORUM_TALK => 'フォーラム・トーク',
+);
+// end wikia change

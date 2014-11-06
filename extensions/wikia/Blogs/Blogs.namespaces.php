@@ -80,10 +80,10 @@ $namespaces['it'] = array(
  * Japanese (日本語)
  */
 $namespaces['ja'] = array(
-	NS_BLOG_ARTICLE		=> 'ユーザー_ブログ',
-	NS_BLOG_ARTICLE_TALK	=> 'ユーザー_ブログ_コメント',
+	NS_BLOG_ARTICLE		=> 'ユーザーブログ',
+	NS_BLOG_ARTICLE_TALK	=> 'ユーザーブログ・コメント',
 	NS_BLOG_LISTING		=> 'ブログ',
-	NS_BLOG_LISTING_TALK	=> 'ブログ_トーク',
+	NS_BLOG_LISTING_TALK	=> 'ブログ・トーク',
 );
 
 /**
@@ -174,4 +174,15 @@ $namespaces['zh'] = array(
 	NS_BLOG_ARTICLE_TALK	=> '博客评论',
 	NS_BLOG_LISTING		=> '博客',
 	NS_BLOG_LISTING_TALK	=> '博客话题',
+);
+
+/**
+ * Aliases
+ */
+$namespaceAliases = array(
+	// Japanese (日本語)
+	// VOLDEV-90
+	'ユーザー_ブログ'		=> NS_BLOG_ARTICLE,
+	'ユーザー_ブログ_コメント'	=> NS_BLOG_ARTICLE_TALK,
+	'ブログ_トーク'		=> NS_BLOG_LISTING_TALK,
 );
