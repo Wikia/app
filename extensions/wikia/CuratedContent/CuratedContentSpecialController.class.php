@@ -184,7 +184,6 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 				return true;
 			}
 		}
-
 		$status = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $this->wg->CityId, $tags );
 		$this->response->setVal( 'status', $status );
 

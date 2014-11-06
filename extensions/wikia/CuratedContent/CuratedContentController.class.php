@@ -66,7 +66,7 @@ class CuratedContentController extends WikiaController {
 		if ( $requestedVersion != self::API_VERSION || $requestedRevision != self::API_REVISION ) {
 			throw new CuratedContentWrongAPIVersionException();
 		}
-		
+
 		$this->mModel = new CuratedContentModel();
 		$this->mPlatform = $this->request->getVal( 'os' );
 	}
@@ -163,6 +163,63 @@ class CuratedContentController extends WikiaController {
 	 * getList&tag='' - list of all members of a given tag
 	 *
 	 */
+	/**
+	 * @brief this is a function that return rendered article
+	 *
+	 * @requestParam String title of a page
+	 */
+	public function renderPage(){
+		wfProfileIn( __METHOD__ );
+
+		$titleName = $this->request->getVal( 'page' );
+
+		$html = ApiService::call(
+			array(
+				'action' => 'parse',
+				'page' => $titleName,
+				'prop' => 'text',
+				'redirects' => 1,
+				'useskin' => 'wikiamobile'
+			)
+		);
+
+		$this->response->setVal( 'globals', Skin::newFromKey( 'wikiamobile' )->getTopScripts() );
+		$this->response->setVal( 'messages', JSMessages::getPackages( array( 'CuratedContent' ) ) );
+		$this->response->setVal( 'title', Title::newFromText( $titleName )->getText() );
+		$this->response->setVal( 'html', $html['parse']['text']['*'] );
+
+		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * @brief helper function to build a CuratedContentSpecial Preview
+	 * it returns a page and all 'global' assets
+	 */
+	public function renderFullPage(){
+		global $IP;
+
+		wfProfileIn( __METHOD__ );
+
+		$resources = json_decode( file_get_contents( $IP . self::ASSETS_PATH ) );
+
+		$scripts = '';
+
+		foreach( $resources->scripts as $s ) {
+			$scripts .= $s;
+		}
+
+		//getPage sets cache for a response for 7 days
+		$page = $this->sendSelfRequest( 'getPage', [
+			'page' => $this->getVal( 'page')
+		] );
+
+		$this->response->setVal( 'html', $page->getVal( 'html' ) );
+		$this->response->setVal( 'js', $scripts );
+		$this->response->setVal( 'css', $resources->styles );
+
+		wfProfileOut( __METHOD__ );
+	}
+
 	public function getList(){
 		wfProfileIn( __METHOD__ );
 
@@ -229,11 +286,10 @@ class CuratedContentController extends WikiaController {
 
 			foreach( $allCategories as $value ) {
 				if($value['size'] - $value['files'] > 0){
-
-					$ret[] = [
-						'title' => $value['*'],
-						'id'=> isset( $value['pageid'] ) ? (int) $value['pageid'] : 0
-					];
+					$ret[ ] = $this::getJsonItem( $value[ '*' ],
+						'category',
+						isset( $value[ 'pageid' ] ) ? (int)$value[ 'pageid' ] : 0 ,
+						NS_CATEGORY);
 				}
 			}
 
@@ -347,10 +403,10 @@ class CuratedContentController extends WikiaController {
 				$content,
 				function( $ret, $item ) {
 					if( $item['title'] !== '' ) {
-						$ret[] = array(
+						$ret[] = [
 							'title' => $item['title'],
 							'id' => isset( $item['image_id'] ) ? $item['image_id'] : 0
-						);
+						];
 					}
 
 					return $ret;
@@ -362,6 +418,18 @@ class CuratedContentController extends WikiaController {
 		$this->getTagCategories( $content, '' );
 
 		wfProfileOut( __METHOD__ );
+	}
+
+
+	function getJsonItem( $titleName, $ns, $pageId, $type) {
+		$title = Title::makeTitle( $ns, $titleName );
+
+		return [
+			'title' => $title->getFullText(),
+			'type' => $type,
+			'id' => $pageId,
+			'nsId' => $ns,
+		];
 	}
 
 	/**
