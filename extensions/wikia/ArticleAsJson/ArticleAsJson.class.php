@@ -175,7 +175,7 @@ class ArticleAsJson extends WikiaService {
 			//we have to replace links manually
 			//gallery caption we parse ourselves so they are ok here
 			foreach ( self::$media as &$media ) {
-				if ( is_string( $media['caption'] ) ) {
+				if ( !empty( $media['caption'] ) && is_string( $media['caption'] ) ) {
 					$parser->replaceLinkHolders( $media['caption'] );
 				}
 			}
