@@ -80,7 +80,7 @@ abstract class VideoFeedIngester {
 	 * @param $addlCategories - Any additional categories to add
 	 * @return array - A list of category names
 	 */
-	abstract public function generateCategories( $data, $addlCategories );
+	abstract public function generateCategories( array $data, $addlCategories );
 
 	/**
 	 * Return a list of all the providers we actively ingest from
@@ -113,11 +113,8 @@ abstract class VideoFeedIngester {
 	 * @param array $data video data
 	 * @return string video name
 	 */
-	protected function generateName( $data ) {
-
-		$name = $data['titleName'];
-
-		return $name;
+	protected function generateName( array $data ) {
+		return $data['titleName'];
 	}
 
 	/**
@@ -128,7 +125,7 @@ abstract class VideoFeedIngester {
 	 * @param $errorMsg - Store any error we encounter
 	 * @return array|int - An associative array of meta data or zero on error
 	 */
-	public function generateMetadata( $data, &$errorMsg ) {
+	public function generateMetadata( array $data, &$errorMsg ) {
 		if ( empty( $data['videoId'] ) ) {
 			$errorMsg = 'no video id exists';
 			return 0;
@@ -207,7 +204,7 @@ abstract class VideoFeedIngester {
 	 * @param array $params
 	 * @return int
 	 */
-	public function createVideo( array $data, &$msg, $params = array() ) {
+	public function createVideo( array $data, &$msg, array $params = [] ) {
 
 		// See if this video is blacklisted (exact match against any data)
 		if ( $this->isBlacklistedVideo( $data ) ) {
@@ -382,7 +379,7 @@ abstract class VideoFeedIngester {
 	 * @param boolean $debug
 	 * @return integer
 	 */
-	protected function createRemoteAsset( $id, $name, $metadata, $debug ) {
+	protected function createRemoteAsset( $id, $name, array $metadata, $debug ) {
 
 		$assetData = $this->generateRemoteAssetData( $name, $metadata );
 		if ( empty( $assetData['url']['flash'] ) ) {
@@ -434,7 +431,7 @@ abstract class VideoFeedIngester {
 	 * @param array $dupAsset
 	 * @return integer
 	 */
-	protected function updateRemoteAsset( $id, $name, $metadata, $debug, $dupAsset ) {
+	protected function updateRemoteAsset( $id, $name, array $metadata, $debug, $dupAsset ) {
 
 		if ( empty( $dupAsset['embed_code'] ) ) {
 			$this->videoWarnings( "Error when updating remote asset data: empty asset embed code.\n" );
@@ -485,7 +482,7 @@ abstract class VideoFeedIngester {
 	 * @param array $data
 	 * @return array $data
 	 */
-	protected function generateRemoteAssetData( $name, $data ) {
+	protected function generateRemoteAssetData( $name, array $data ) {
 		$data['assetTitle'] = $name;
 
 		return $data;
@@ -1139,7 +1136,7 @@ abstract class VideoFeedIngester {
 	 * @param array $categories
 	 * @return array $pageCategories
 	 */
-	public function getAdditionalPageCategories( $categories ) {
+	public function getAdditionalPageCategories( array $categories ) {
 		$pageCategories = array();
 		foreach ( $categories as $category ) {
 			$addition = $this->getAdditionalPageCategory( $category );
@@ -1198,7 +1195,7 @@ abstract class VideoFeedIngester {
 	 * @param array $arr
 	 * @return array $unique
 	 */
-	public function getUniqueArray( $arr ) {
+	public function getUniqueArray( array $arr ) {
 		$lower = array_map( 'strtolower', $arr );
 		$unique = array_intersect_key( $arr, array_unique( $lower ) );
 		return array_filter( $unique );
@@ -1226,7 +1223,7 @@ abstract class VideoFeedIngester {
 	 * @param string $msg
 	 * @param array $categories
 	 */
-	public function videoIngested( $msg = '', $categories = [] ) {
+	public function videoIngested( $msg = '', array $categories = [] ) {
 		if ( !empty( $msg ) ) {
 			$addedResult = false;
 			foreach ( $categories as $category ) {
