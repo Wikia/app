@@ -12,6 +12,7 @@ abstract class VideoFeedIngester {
 	const PROVIDER_OOYALA = 'ooyala';
 	const PROVIDER_IVA = 'iva';
 	const PROVIDER_CRUNCHYROLL = 'crunchyroll';
+	const PROVIDER_MAKER_STUDIOS = 'makerstudios';
 
 	// Caching constants; all integers are seconds
 	const CACHE_KEY = 'videofeedingester-2';
@@ -32,6 +33,7 @@ abstract class VideoFeedIngester {
 		self::PROVIDER_IVA,
 		self::PROVIDER_SCREENPLAY,
 		self::PROVIDER_CRUNCHYROLL,
+		self::PROVIDER_MAKER_STUDIOS
 	];
 
 	// These providers are not ingested daily, but can be ingested from if specifically named
