@@ -1203,7 +1203,7 @@ $wgEnableAmazonMatch = true;
 
 /**
  * @name $wgAmazonMatchCountries
- * Enables AmazonMatch integration in theese countries (given AmazonMatch is also true)
+ * Enables AmazonMatch integration in these countries (given AmazonMatch is also true)
  * "Utility" var, don't change it here.
  */
 $wgAmazonMatchCountries = null;
