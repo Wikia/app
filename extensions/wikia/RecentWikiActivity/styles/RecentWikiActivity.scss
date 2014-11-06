@@ -15,7 +15,7 @@ $recent-wiki-activity-background-color: mix($color-page, $color-page-opposite, 9
 	header {
 		@include font-size-l;
 		font-weight: bold;
-		margin: 31px 0 21px;
+		margin: 31px 0 25px;
 	}
 
 	ul {
@@ -61,7 +61,7 @@ $recent-wiki-activity-background-color: mix($color-page, $color-page-opposite, 9
 
 	@media #{$small-only} {
 		@include grid-column-width('small', 5);
-		margin: 0 $small-content-padding - $content-border-width 20px $small-grid-gutter + $small-grid-column-padding;
+		margin: 0 $small-content-padding - $content-border-width 16px $small-grid-gutter + $small-grid-column-padding;
 
 		li {
 			margin-bottom: 12px;
@@ -73,7 +73,7 @@ $recent-wiki-activity-background-color: mix($color-page, $color-page-opposite, 9
 		margin: 0 $large-grid-column-padding + $large-content-padding - $content-border-width 36px $large-grid-gutter + $large-grid-column-padding;
 
 		header {
-			margin: 40px 0 29px;
+			margin: 40px 0 33px;
 		}
 
 		li {
