@@ -34,7 +34,7 @@ define(
 			}
 
 			var self = this,
-				dropdownId = 'wikiaDropdownNav' + dropdownIndex++,
+				dropdownId = options.id || 'wikiaDropdownNav' + dropdownIndex++,
 				dropdownParams = {
 					activeClass: 'active',
 					id: dropdownId,

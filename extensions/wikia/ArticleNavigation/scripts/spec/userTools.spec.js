@@ -1,5 +1,5 @@
 /*global describe, expect, it, modules*/
-describe('wikia.articleNavigationHelper', function () {
+describe('wikia.userTools', function () {
 	'use strict';
 	var toolbarCorrectItemMock = {
 			type: 'link',
@@ -22,9 +22,10 @@ describe('wikia.articleNavigationHelper', function () {
 			type: 'link',
 			'tracker-name': 'buzz',
 			href: 'fizz/buzz'
-		}, articleNavigationHelper = modules['wikia.articleNavigationHelper']();
+		},
+		userTools = modules['wikia.userTools']();
 
-	it('Only not disabled items with href and caption are returned', function() {
+	it('Only not disabled items with href and caption are returned', function () {
 		var toolbarData = [
 			toolbarCorrectItemMock,
 			toolbarDisabledItemMock,
@@ -32,9 +33,13 @@ describe('wikia.articleNavigationHelper', function () {
 			toolbarNoHrefItemMock
 		];
 
-		expect(articleNavigationHelper.extractToolbarItems(toolbarData)).toEqual([{
+		expect(userTools.extractToolbarItems(toolbarData)).toEqual([{
 			title: toolbarCorrectItemMock.caption,
-			href: toolbarCorrectItemMock.href
+			href: toolbarCorrectItemMock.href,
+			dataAttr: [{
+				'key': 'name',
+				value: 'bar'
+			}]
 		}]);
 	});
 });
