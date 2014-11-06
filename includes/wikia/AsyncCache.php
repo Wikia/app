@@ -98,10 +98,14 @@ class AsyncCache {
 	/** @var \Wikia\Cache\AsyncCacheTask - The task created to generate a new value */
 	private $task;
 
+	/** @var int - The current time.  Keeps us from calling time() over and over */
+	private $currTime;
+
 	/**
 	 * @param BagOStuff $cache - An alternate caching package
 	 */
 	public function __construct( $cache = null ) {
+		$this->currTime = time();
 		$this->ttl = self::DEFAULT_TTL;
 		$this->negativeResponseTTL = self::DEFAULT_NEGATIVE_RESPONSE_TTL;
 
@@ -221,7 +225,7 @@ class AsyncCache {
 		if ( $this->isCacheStale() ) {
 			return 0;
 		} else {
-			return $this->getCacheExpire() - time();
+			return $this->getCacheExpire() - $this->currTime;
 		}
 	}
 
@@ -231,7 +235,7 @@ class AsyncCache {
 	 * @return bool
 	 */
 	public function isCacheStale() {
-		return  time() > $this->getCacheExpire();
+		return  $this->currTime > $this->getCacheExpire();
 	}
 
 	/**
@@ -251,7 +255,7 @@ class AsyncCache {
 				return self::UNLIMITED_TIME_REMAINING;
 			}
 
-			return $this->getCacheExpire() + $this->staleOnMissTTL - time();
+			return $this->getCacheExpire() + $this->staleOnMissTTL - $this->currTime;
 		} else {
 			return 0;
 		}
@@ -347,7 +351,7 @@ class AsyncCache {
 			return true;
 		}
 
-		return time() - $this->getCacheExpire() < $this->staleOnMissTTL;
+		return $this->currTime - $this->getCacheExpire() < $this->staleOnMissTTL;
 	}
 
 	private function generateValueNow() {
@@ -373,7 +377,7 @@ class AsyncCache {
 	private function logInfo( $mesg ) {
 		WikiaLogger::instance()->info( $mesg, [
 			'key' => $this->key,
-			'time' => time(),
+			'time' => $this->currTime,
 			'expires' => $this->getCacheExpire(),
 			'ttlRemain' => $this->ttlRemain(),
 			'staleTTLRemain' => $this->staleTTLRemain(),
