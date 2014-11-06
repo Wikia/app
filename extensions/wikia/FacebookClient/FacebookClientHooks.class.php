@@ -173,4 +173,10 @@ class FacebookClientHooks {
 
 		return true;
 	}
+
+	public static function setupParserHook( \Parser $parser ) {
+		FacebookClientXFBML::registerHooks( $parser );
+
+		return true;
+	}
 }
