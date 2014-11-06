@@ -7,7 +7,7 @@ class ArticleAsJson extends WikiaService {
 		'imageMaxWidth' => false
 	];
 
-	const CACHE_VERSION = '0.0.1';
+	const CACHE_VERSION = '0.0.2';
 
 	private static function createMarker( $width = 0, $height = 0, $isGallery = false ){
 		$blankImgUrl = F::app()->wg->blankImgUrl;
@@ -19,7 +19,7 @@ class ArticleAsJson extends WikiaService {
 		return "<img src='{$blankImgUrl}' class='{$classes}' data-ref='{$id}'{$width}{$height} />";
 	}
 
-	private static function createMediaObj( $details, $imageName, $caption = "" ) {
+	private static function createMediaObj( $details, $imageName, $caption = '' ) {
 		wfProfileIn( __METHOD__ );
 
 		$media = [
@@ -70,6 +70,9 @@ class ArticleAsJson extends WikiaService {
 		wfProfileIn( __METHOD__ );
 
 		if ( $wgArticleAsJson ) {
+			$parser = ParserPool::get();
+			$parserOptions = new ParserOptions();
+			$title = F::app()->wg->Title;
 			$media = [];
 
 			foreach($data['images'] as $image) {
@@ -78,7 +81,13 @@ class ArticleAsJson extends WikiaService {
 					self::$mediaDetailConfig
 				);
 
-				$media[] = self::createMediaObj( $details, $image['name'], $image['caption'] );
+				$caption = $image['caption'];
+
+				if ( !empty( $caption ) ) {
+					$caption = $parser->parse( $caption, $title, $parserOptions, false )->getText();
+				}
+
+				$media[] = self::createMediaObj( $details, $image['name'], $caption );
 
 				self::addUserObj($details);
 			}
@@ -91,6 +100,7 @@ class ArticleAsJson extends WikiaService {
 				$out = '';
 			}
 
+			ParserPool::release( $parser );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
@@ -126,7 +136,7 @@ class ArticleAsJson extends WikiaService {
 
 		wfProfileIn( __METHOD__ );
 		if ( $wgArticleAsJson ) {
-			$confstr .= '!ArticleAsJson:' . self::CACHE_VERSION;
+			$confstr .= '!ArticleAsJson:' . self::CACHE_VERSION .rand();
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -163,8 +173,11 @@ class ArticleAsJson extends WikiaService {
 
 			//because we take caption out of main parser flow
 			//we have to replace links manually
+			//gallery caption we parse ourselves so they are ok here
 			foreach ( self::$media as &$media ) {
-				$parser->replaceLinkHolders( $media['caption'] );
+				if ( is_string( $media['caption'] ) ) {
+					$parser->replaceLinkHolders( $media['caption'] );
+				}
 			}
 
 			$text = json_encode( [
