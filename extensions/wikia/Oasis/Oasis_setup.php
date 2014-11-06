@@ -21,10 +21,8 @@ function wfOasisSetup() {
 	global $wgHooks;
 
 	// modules and services
-	$wgHooks['ArticleDeleteComplete'][] = 'PageStatsService::onArticleDeleteComplete';
 	$wgHooks['ArticleSaveComplete'][] = 'LatestActivityController::onArticleSaveComplete';
 	$wgHooks['ArticleSaveComplete'][] = 'PageHeaderController::onArticleSaveComplete';
-	$wgHooks['ArticleSaveComplete'][] = 'PageStatsService::onArticleSaveComplete';
 	$wgHooks['BlogTemplateGetResults'][] = 'BlogListingController::getResults';
 	$wgHooks['BlogsRenderBlogArticlePage'][] = 'BlogListingController::renderBlogListing';
 	$wgHooks['DoEditSectionLink'][] = 'ContentDisplayController::onDoEditSectionLink';
@@ -59,8 +57,6 @@ function wfOasisSetup() {
 
 	// misc
 	$wgHooks['ArticleViewHeader'][]  = 'UserPagesHeaderController::saveFacebookConnectProfile';
-	$wgHooks['ArticlePurge'][] = 'ArticleService::onArticlePurge';
-	$wgHooks['ArticleSaveComplete'][] = 'ArticleService::onArticleSaveComplete';
 	$wgHooks['MakeGlobalVariablesScript'][] = 'OasisController::onMakeGlobalVariablesScript';
 
 	/*
