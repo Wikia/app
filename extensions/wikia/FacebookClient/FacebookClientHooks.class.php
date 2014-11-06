@@ -19,6 +19,10 @@ class FacebookClientHooks {
 	public static function UserLoadFromSession( $user, &$result ) {
 		$wg = F::app()->wg;
 
+		if ( $wg->CommandLineMode ) {
+			return true;
+		}
+
 		// If we're not trying to login, don't issue the redirect this handler creates
 		if ( !$wg->Title->isSpecial( 'Userlogin' ) ) {
 			return true;
@@ -136,10 +140,10 @@ class FacebookClientHooks {
 		$ids = FacebookClient::getInstance()->getFacebookUserIds( $user );
 		if ( count( $ids ) > 0 ) {
 			$isConnected = true;
-			$prefTab = 'facebookclient-connect';
+			$prefTab = 'fbconnect-connect';
 		} else {
 			$isConnected = false;
-			$prefTab = 'facebookclient-disconnect';
+			$prefTab = 'fbconnect-disconnect';
 		}
 
 		$html = F::app()->renderView( 'FacebookClientController', 'preferences', [ 'isConnected' => $isConnected ] );
@@ -148,7 +152,7 @@ class FacebookClientHooks {
 			'help' => $html,
 			'label' => '',
 			'type' => 'info',
-			'section' => 'facebookclient-prefstext/facebookclient-status-prefstext'
+			'section' => 'fbconnect-prefstext/fbconnect-status-prefstext'
 		];
 
 		return true;
@@ -163,7 +167,7 @@ class FacebookClientHooks {
 	public static function onOasisSkinAssetGroups( &$assetsArray ) {
 		$title = F::app()->wg->Title;
 
-		if ( !empty( $title ) && $title->isSpecial( 'Preferences' ) ) {
+		if ( $title instanceof Title && $title->isSpecial( 'Preferences' ) ) {
 			$assetsArray[] = 'facebook_client_preferences_js';
 		}
 

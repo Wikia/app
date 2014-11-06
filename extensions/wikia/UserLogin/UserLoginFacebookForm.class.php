@@ -66,6 +66,12 @@ class UserLoginFacebookForm extends UserLoginForm {
 	 * @param User $user Wikia account
 	 */
 	private function connectWithFacebook(User $user) {
-		FBConnectDB::addFacebookID($user, $this->fbUserId);
+		if ( F::app()->wg->EnableFacebookClientExt ) {
+			$map = new FacebookMapModel();
+			$map->relate( $user->getId(), $this->fbUserId);
+			$map->save();
+		} else {
+			FBConnectDB::addFacebookID( $user, $this->fbUserId );
+		}
 	}
 }

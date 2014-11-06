@@ -19,7 +19,7 @@ $wgExtensionCredits['facebookclient'][] = array(
 		"Garth Webb <garth@wikia-inc.com>",
 		"Armon Rabiyan <armon@wikia-inc.com>",
 	),
-	'descriptionmsg' => 'facebookclient-desc',
+	'descriptionmsg' => 'fbconnect-desc',
 );
 
 $dir = dirname( __FILE__ ) . '/';
@@ -56,8 +56,11 @@ $wgExtensionMessagesFiles['FacebookClient'] = $dir . 'FacebookClient.i18n.php';
 /**
  * ResourceLoader modules
  */
-$wgResourceModules['ext.wikia.FacebookClient.XFBML'] = array(
+$wgResourceModules['ext.wikia.FacebookClient.XFBML'] = [
 	'scripts' => 'scripts/FacebookClient.XFBML.js',
 	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'wikia/FacebookClient',
-);
+];
+
+JSMessages::registerPackage( 'FacebookClient', ['fbconnect-logout-confirm'] );
+

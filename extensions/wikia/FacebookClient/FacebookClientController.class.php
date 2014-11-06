@@ -7,18 +7,18 @@ class FacebookClientController extends WikiaController {
 		$this->isConnected = $this->getVal( 'isConnected', false );
 
 		// Settings for a connected user
-		$this->facebookDisconnectLink = wfMessage( 'facebookclient-disconnect-link' )->plain();
-		$this->facebookDisconnectDone = wfMessage( 'facebookclient-disconnect-done' );
+		$this->facebookDisconnectLink = wfMessage( 'fbconnect-disconnect-link' )->plain();
+		$this->facebookDisconnectDone = wfMessage( 'fbconnect-disconnect-done' )->text();
 		$this->blankImgUrl = F::app()->wg->BlankImgUrl;
 
 		if ( F::app()->wg->User->getOption( 'fbFromExist' ) ) {
-			$this->facebookDisconnectInfo = wfMessage( 'facebookclient-disconnect-info-existing' );
+			$this->facebookDisconnectInfo = wfMessage( 'fbconnect-disconnect-info-existing' )->text();
 		} else {
-			$this->facebookDisconnectInfo = wfMessage( 'facebookclient-disconnect-info' );
+			$this->facebookDisconnectInfo = wfMessage( 'fbconnect-disconnect-info' )->text();
 		}
 
 		// Settings for a user who is not connected yet
-		$this->facebookConvertMessage = wfMessage( 'facebookclient-convert' )->plain();
+		$this->facebookConvertMessage = wfMessage( 'fbconnect-convert' )->plain();
 	}
 
 	/**
@@ -50,7 +50,7 @@ class FacebookClientController extends WikiaController {
 			$this->status = 'ok';
 		} else {
 			$this->status = 'error';
-			$this->msg = wfMessage( 'fbconnect-unknown-error' );
+			$this->msg = wfMessage( 'fbconnect-unknown-error' )->text();
 		}
 	}
 }
