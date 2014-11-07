@@ -77,12 +77,15 @@ class VignetteRequest {
 		$config = ( new UrlConfig() )
 			->setIsArchive( $isArchive )
 			->setReplaceThumbnail( $replaceThumbnail )
-			->setTimestamp( $timestamp )
 			->setRelativePath( $config['relative-path'] )
 			->setPathPrefix( $pathPrefix )
 			->setBucket( $config['bucket'] )
 			->setBaseUrl( $config['base-url'] )
 			->setDomainShardCount( $config['domain-shard-count'] );
+
+		if ( $timestamp > 0 ) {
+			$config->setTimestamp( $timestamp );
+		}
 
 		return new UrlGenerator( $config );
 	}

@@ -96,11 +96,11 @@ define('ext.wikia.adEngine.slot.bottomLeaderboard', [
 		return false;
 	}
 
-	function fillInSlotCallback(slot) {
+	function fillInSlotCallback(slotname) {
 
 		var skyscraperOffset;
 
-		if (slot[0] === 'LEFT_SKYSCRAPER_2') {
+		if (slotname === 'LEFT_SKYSCRAPER_2') {
 
 			skyscraperOffset = $('#LEFT_SKYSCRAPER_2').offset() || {};
 

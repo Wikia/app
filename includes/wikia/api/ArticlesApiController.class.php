@@ -1072,8 +1072,8 @@ class ArticlesApiController extends WikiaApiController {
 				$categoryTitle = Title::newFromText( $category, NS_CATEGORY );
 
 				$categories[] = [
-					"title" => $categoryTitle->getText(),
-					"url" => $categoryTitle->getLocalURL()
+					'title' => $categoryTitle->getText(),
+					'url' => $categoryTitle->getLocalURL()
 				];
 			}
 
