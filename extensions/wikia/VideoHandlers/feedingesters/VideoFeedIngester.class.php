@@ -45,7 +45,6 @@ abstract class VideoFeedIngester {
 	protected static $FEED_URL;
 	protected static $CLIP_TYPE_BLACKLIST = array();
 	protected static $CLIP_FILTER = array();
-	protected static $CLDR_NAMES = array();
 	protected $filterByProviderVideoId = array();
 
 	protected $resultSummary = [
@@ -514,20 +513,12 @@ abstract class VideoFeedIngester {
 	protected function validateTitle( $videoId, $name, &$msg ) {
 
 		$sanitizedName = VideoFileUploader::sanitizeTitle( $name );
-		$title = $this->titleFromText( $sanitizedName );
+		$title = Title::newFromText( $sanitizedName, NS_FILE );
 		if ( is_null( $title ) ) {
 			$msg = "article title was null: clip id $videoId. name: $name";
 			return false;
 		}
 		return true;
-	}
-
-	/**
-	 * @param $name
-	 * @return Title
-	 */
-	protected function titleFromText( $name ) {
-		return Title::newFromText( $name, NS_FILE );
 	}
 
 	/**
@@ -785,349 +776,57 @@ abstract class VideoFeedIngester {
 	}
 
 	/**
-	 * Get industry rating
+	 * Get normalized industry rating
 	 * @param string $rating
-	 * @return string $stdRating
+	 * @return string
 	 */
 	public function getIndustryRating( $rating ) {
-		$rating = trim( $rating );
-		$name = strtolower( $rating );
-		switch( $name ) {
-			case 'everyone':
-			case 'early childhood':
-				$stdRating = 'EC';
-				break;
-			case 'everyone 10 or older':
-				$stdRating = 'E10+';
-				break;
-			case 'little or no violence':
-				$stdRating = 'E';
-				break;
-			case 'teen':
-			case 'some violence':
-				$stdRating = 'T';
-				break;
-			case 'mature':
-			case 'extreme or graphic violence':
-				$stdRating = 'M';
-				break;
-			case 'adults only':
-				$stdRating = 'AO';
-				break;
-			case 'pending':
-			case 'rating pending':
-				$stdRating = '';
-				break;
-			case 'not rated':
-				$stdRating = 'NR';
-				break;
-			case 'redband':
-			case 'red band':
-				$stdRating = 'Redband';
-				break;
-			case 'greenband':
-			case 'green band':
-				$stdRating = 'Greenband';
-				break;
-			default: $stdRating = $rating;
-		}
-
-		return $stdRating;
+		return IngesterDataNormalizer::getNormalizedIndustryRating( $rating );
 	}
 
 	/**
 	 * Get age required from industry rating
 	 * @param string $rating
-	 * @return int $ageGate
+	 * @return int
 	 */
 	public function getAgeRequired( $rating ) {
-		switch( $rating ) {
-			case 'M':
-			case 'R':
-			case 'TV-MA':
-			case 'Redband':
-				$ageRequired = 17;
-				break;
-			case 'AO':
-			case 'NC-17':
-				$ageRequired = 18;
-				break;
-			default: $ageRequired = 0;
-		}
-
-		return $ageRequired;
+		return IngesterDataNormalizer::getNormalizedAgeRequired( $rating );
 	}
 
 	/**
-	 * get standard category
-	 * @param string $cat
-	 * @return string $category
-	 */
-	public function getCategory( $cat ) {
-		$cat = trim( $cat );
-		switch( strtolower( $cat ) ) {
-			case 'movie':
-			case 'movie interview':
-			case 'movie behind the scenes':
-			case 'movie sceneorsample':
-			case 'movie alternate version':
-			case 'theatrical';
-				$category = 'Movies';
-				break;
-			case 'series':
-			case 'season':
-			case 'episode':
-			case 'tv show':
-			case 'episodic interview':
-			case 'episodic behind the scenes':
-			case 'episodic sceneorsample':
-			case 'episodic alternate version':
-			case 'tv trailer':
-				$category = 'TV';
-				break;
-			case 'game':
-			case 'gaming':
-			case 'games scenerrsample':
-			case 'video game':
-				$category = 'Games';
-				break;
-			case 'movie fan-made':
-			case 'game fan-made':
-			case 'song fan-made':
-			case 'other fan-made':
-			case 'episodic fan-made':
-				$category = 'Fan-Made';
-				break;
-			case 'live event':
-			case 'live event interview':
-			case 'live event behind the scenes':
-			case 'live event sceneorsample':
-			case 'live event alternate version':
-			case 'live event fan-made':
-				$category = 'Live Event';
-				break;
-			case 'mind & body':
-			case 'personal care & style':
-				$category = 'Beauty';
-				break;
-			case 'performing arts':
-				$category = 'Arts';
-				break;
-			case 'crafts & hobbies':
-				$category = 'Crafts';
-				break;
-			case 'sports & fitness':
-			case 'health & nutrition':
-				$category = 'Health';
-				break;
-			case 'business & finance':
-				$category = 'Business';
-				break;
-			case 'first aid & safety':
-				$category = 'Safety';
-				break;
-			case 'kids':
-			case 'pets':
-			case 'parenting & family':
-				$category = 'Family';
-				break;
-			case 'careers & education':
-				$category = 'Education';
-				break;
-			case 'sex & relationships':
-				$category = 'Relationships';
-				break;
-			case 'language & reference':
-				$category = 'Reference';
-				break;
-			case 'cars & transportation':
-				$category = 'Auto';
-				break;
-			case 'holidays & celebrations':
-				$category = 'Holidays';
-				break;
-			case 'religion & spirituality':
-				$category = 'Religion';
-				break;
-			case 'none':
-			case 'not set':
-			case 'home video':
-			case 'open-ended':
-			case 'other interview':
-			case 'other behind the scenes':
-			case 'other sceneorsample':
-			case 'other alternate version':
-				$category = '';
-				break;
-			default: $category = $cat;
-		}
-
-		return $category;
-	}
-
-	/**
-	 * get standard type
-	 * @param string $type
-	 * @return string $stdType
-	 */
-	public function getStdType( $type ) {
-		$type = trim( $type );
-		switch( strtolower( $type ) ) {
-			case 'movie behind the scenes':
-			case 'episodic behind the scenes':
-			case 'other behind the scenes':
-			case 'live event behind the scenes':
-				$stdType = 'Behind the Scenes';
-				break;
-			case 'movie fan-made':
-			case 'game fan-made':
-			case 'song fan-made':
-			case 'other fan-made':
-			case 'episodic fan-made':
-			case 'live event fan-made':
-				$stdType = 'Fan-Made';
-				break;
-			case 'game':
-				$stdType = 'Games';
-				break;
-			case 'movie interview':
-			case 'episodic interview':
-			case 'other interview':
-			case 'live event interview':
-			case 'song interview':
-				$stdType = 'Interview';
-				break;
-			case 'movie':
-				$stdType = 'Movies';
-				break;
-			case 'movie sceneorsample':
-			case 'extra (clip)':
-				$stdType = 'Clip';
-				break;
-			case 'trailer':
-				$stdType = 'Trailer';
-				break;
-			case 'none':
-			case 'not set':
-			case 'song sceneorsample':
-			case 'song behind the scenes':
-			case 'movie alternate version':
-			case 'games sceneorsample':
-			case 'game alternate version':
-			case 'episodic sceneorsample':
-			case 'episodic alternate version':
-			case 'other sceneorsample':
-			case 'other alternate version':
-			case 'live event sceneorsample':
-			case 'live event alternate version':
-				$stdType = '';
-				break;
-			default: $stdType = $type;
-		}
-
-		return $stdType;
-	}
-
-	/**
-	 * get standard genre
-	 * @param string $genre
-	 * @return string $stdGenre
-	 */
-	public function getStdGenre( $genre ) {
-		$genre = trim( $genre );
-		switch( strtolower( $genre ) ) {
-			case 'parenting & family':
-				$stdGenre = 'Parenting';
-				break;
-			case 'health & nutrition':
-				$stdGenre = 'Nutrition';
-				break;
-			case 'technology':
-			case 'environment':
-			case 'food & drink':
-			case 'entertainment':
-			case 'house & garden':
-			case 'performing arts':
-			case 'crafts & hobbies':
-			case 'business & finance':
-			case 'first aid & safety':
-			case 'careers & education':
-			case 'sex & relationships':
-			case 'language & reference':
-			case 'cars & transportation':
-			case 'personal care & style':
-			case 'holidays & celebrations':
-			case 'religion & spirituality':
-			case 'games':
-			case 'music':
-			case 'other':
-			case 'comedy':
-			case 'travel':
-			case 'fashion':
-			case 'education':
-				$stdGenre = '';
-				break;
-			case 'sports & fitness':
-				$stdGenre = 'Fitness';
-				break;
-			default: $stdGenre = $genre;
-		}
-
-		return $stdGenre;
-	}
-
-	/**
-	 * get standard page category
-	 * @param string $cat
-	 * @return string $category
-	 */
-	public function getStdPageCategory( $cat ) {
-		$cat = trim( $cat );
-		switch( strtolower( $cat ) ) {
-			case 'clip':
-				$category = 'Clips';
-				break;
-			case 'trailer':
-				$category = 'Trailers';
-				break;
-			case 'game':
-			case 'gaming':
-				$category = 'Games';
-				break;
-			case 'none':
-				$category = '';
-				break;
-			default: $category = $cat;
-		}
-
-		return $category;
-	}
-
-	/**
-	 * Get additional page category
+	 * get normalized category
 	 * @param string $category
-	 * @return string $addition
+	 * @return string
 	 */
-	public function getAdditionalPageCategory( $category ) {
-		switch ( strtolower( $category ) ) {
-			case 'movies':
-			case 'tv':
-			case 'movie trailers':
-				$addition = 'Entertainment';
-				break;
-			case 'travel':
-			case 'beauty':
-			case 'fashion':
-			case 'food':
-			case 'food & drink':
-			case 'crafts':
-			case 'howto':
-				$addition = 'Lifestyle';
-				break;
-			default: $addition = '';
-		}
+	public function getCategory( $category ) {
+		return IngesterDataNormalizer::getNormalizedCategory( $category );
+	}
 
-		return $addition;
+	/**
+	 * get normalized type
+	 * @param string $type
+	 * @return string
+	 */
+	public function getType( $type ) {
+		return IngesterDataNormalizer::getNormalizedType( $type );
+	}
+
+	/**
+	 * get normalized genre
+	 * @param string $genre
+	 * @return string
+	 */
+	public function getGenre( $genre ) {
+		return IngesterDataNormalizer::getNormalizedGenre( $genre );
+	}
+
+	/**
+	 * get normalized page category
+	 * @param string $pageCategory
+	 * @return string
+	 */
+	public function getPageCategory( $pageCategory ) {
+		return IngesterDataNormalizer::getNormalizedPageCategory( $pageCategory );
 	}
 
 	/**
@@ -1148,45 +847,23 @@ abstract class VideoFeedIngester {
 	}
 
 	/**
+	 * Get additional page category
+	 * @param string $category
+	 * @return string
+	 */
+	public function getAdditionalPageCategory( $category ) {
+		return IngesterDataNormalizer::getNormalizedAdditionalPageCategory( $category );
+	}
+
+	/**
 	 * get CLDR code (return the original value if code not found)
 	 * @param string $value
 	 * @param string $type [language|country]
 	 * @param boolean $code
 	 * @return string $value
 	 */
-	public function getCldrCode( $value, $type = 'language', $code = true ) {
-		$value = trim( $value );
-		if ( !empty( $value ) ) {
-			if ( empty( self::$CLDR_NAMES ) ) {
-
-				// Initialize some variables that will be overwritten by the following include
-				$languageNames = $countryNames = [];
-
-				// include cldr extension for language code
-				include( dirname( __FILE__ ).'/../../../cldr/CldrNames/CldrNamesEn.php' );
-				self::$CLDR_NAMES = array(
-					'languageNames' => $languageNames,
-					'countryNames' => $countryNames,
-				);
-			}
-
-			// $languageNames, $countryNames comes from cldr extension
-			$paramName = ( $type == 'country' ) ? 'countryNames' : 'languageNames';
-			if ( !empty( self::$CLDR_NAMES[$paramName] ) ) {
-				if ( $code ) {
-					$code = array_search( $value, self::$CLDR_NAMES[$paramName] );
-					if ( $code != false ) {
-						$value = $code;
-					}
-				} else {
-					if ( array_key_exists( $value, self::$CLDR_NAMES[$paramName] ) ) {
-						$value = self::$CLDR_NAMES[$paramName][$value];
-					}
-				}
-			}
-		}
-
-		return $value;
+	public function getCLDRCode( $value, $type = 'language', $code = true ) {
+		return IngesterDataNormalizer::getCLDRCode( $value, $type, $code );
 	}
 
 	/**

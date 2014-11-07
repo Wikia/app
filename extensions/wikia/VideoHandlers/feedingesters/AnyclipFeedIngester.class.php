@@ -119,7 +119,7 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 
 			$elements = $item->getElementsByTagNameNS( 'http://search.yahoo.com/mrss/', 'content' );
 			if ( $elements->length > 0 ) {
-				$clipData['language'] = $this->getCldrCode( $elements->item(0)->getAttribute( 'lang' ), 'language', false );
+				$clipData['language'] = $this->getCLDRCode( $elements->item(0)->getAttribute( 'lang' ), 'language', false );
 				$clipData['duration'] = $elements->item(0)->getAttribute( 'duration' );
 			}
 

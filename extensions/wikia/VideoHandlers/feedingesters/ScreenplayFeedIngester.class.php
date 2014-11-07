@@ -318,7 +318,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 
 		// set type
 		$trailerVersion = empty( self::$TRAILER_VERSION[$clip['TrailerVersion']] ) ? '' : self::$TRAILER_VERSION[$clip['TrailerVersion']];
-		$clipData['type'] = $this->getStdType( $trailerVersion );
+		$clipData['type'] = $this->getType( $trailerVersion );
 
 		// set additional category
 		if ( empty( $clipData['addlCategories'] ) ) {
@@ -424,7 +424,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 		$categories[] = $data['name'];
 
 		if ( !empty( $data['type'] ) ) {
-			$categories[] = $this->getStdPageCategory( $data['type'] );
+			$categories[] = $this->getPageCategory( $data['type'] );
 		}
 
 		$categories = array_merge( $categories, $this->getAdditionalPageCategories( $categories ) );

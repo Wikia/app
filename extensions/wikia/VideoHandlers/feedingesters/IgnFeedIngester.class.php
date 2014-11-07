@@ -89,7 +89,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 
 			$clipData['type'] = '';
 			if ( !empty( $video['metadata']['classification'] ) ) {
-				$clipData['type'] = $this->getStdType( $video['metadata']['classification'] );
+				$clipData['type'] = $this->getType( $video['metadata']['classification'] );
 			}
 
 			$clipData['gameContent'] = $video['metadata']['gameContent'];

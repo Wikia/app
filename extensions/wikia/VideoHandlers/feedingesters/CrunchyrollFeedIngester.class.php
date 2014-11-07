@@ -343,7 +343,7 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 	 */
 	protected function convertLanguageCode( $crunchyLanguage ) {
 		$lang = explode( '-', $crunchyLanguage );
-		return $this->getCldrCode( $lang[0], 'language', false );
+		return $this->getCLDRCode( $lang[0], 'language', false );
 	}
 
 	/**
