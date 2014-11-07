@@ -151,7 +151,7 @@
 
 	.hub-menu-section {
 		@include column-count(2);
-		@include column-rule(1px outset $nav-border-color);
+		@include column-rule(1px solid $nav-border-color);
 		@include column-gap(36px);
 		@include font-size-s;
 		display: none;
@@ -162,6 +162,11 @@
 
 		&.active {
 			display: block;
+		}
+
+		ul {
+			display: inline-block;
+			width: 100%;
 		}
 
 		strong {

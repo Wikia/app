@@ -2610,6 +2610,7 @@ Przejdź do [[Special:BlockList|listy zablokowanych adresów IP]], by przejrzeć
 'unblocked'                       => '[[User:$1|$1]] {{GENDER:$1|został odblokowany|została odblokowana|został odblokowany}}.',
 'unblocked-range'                 => '$1 został odblokowany',
 'unblocked-id'                    => 'Blokada $1 została zdjęta',
+'unblocked-ip'                    => '[[Special:Contributions/$1|$1]] został odblokowany.',
 'blocklist'                       => 'Zablokowani użytkownicy',
 'ipblocklist'                     => 'Zablokowani użytkownicy',
 'ipblocklist-legend'              => 'Znajdź zablokowanego użytkownika',
