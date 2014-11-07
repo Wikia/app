@@ -80,7 +80,7 @@ module.exports = function(config) {
 			'extensions/wikia/Venus/scripts/modules/spec/integration/infobox.spec.js',
 
 			// module insertion
-			'extensions/wikia/Venus/scripts/modules/moduleInsertion.module.js',
+			'extensions/wikia/Venus/scripts/modules/nodeFinder.module.js',
 			'extensions/wikia/Venus/scripts/modules/spec/integration/nodeFinder.spec.js'
 		]
 	});
