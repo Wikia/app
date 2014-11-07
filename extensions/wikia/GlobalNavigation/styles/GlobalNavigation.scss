@@ -65,9 +65,7 @@
 	padding: 0 0 0 20px;
 
 	img {
-		background-image: url('/extensions/wikia/GlobalNavigation/images/wikia_logo.svg'); /* base64 */
-		background-position: center;
-		background-repeat: no-repeat;
+		@include wikia-logo();
 	}
 }
 
