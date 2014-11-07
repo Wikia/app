@@ -12,5 +12,6 @@ class RecommendationsController extends WikiaController {
 		 */
 		$this->linkUrl = '#';
 		$this->blankImg = $wgBlankImgUrl;
+		$this->header = wfMessage('recommendations-header')->escaped();
 	}
 }

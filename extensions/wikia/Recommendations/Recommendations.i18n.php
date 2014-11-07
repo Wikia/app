@@ -3,30 +3,10 @@
 $messages = [];
 
 $messages['en'] = [
-
-];
-
-$messages['de'] = [
-
-];
-
-$messages['fr'] = [
-
-];
-
-$messages['pl'] = [
-
-
-];
-
-$messages['es'] = [
-
-];
-
-$messages['ja'] = [
-
+	'recommendations-header' => 'Related Content'
 ];
 
 $messages['qqq'] = [
-
+	'recommendations-header' => 'Header on the top of recommendation module,
+	describing that this module contains related content.'
 ];
