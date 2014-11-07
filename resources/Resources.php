@@ -79,7 +79,7 @@ return array(
 
 	'jquery' => array(
 		// Wikia change - begin
-		'scripts' => 'resources/jquery/jquery-1.8.2.js',
+		'scripts' => 'resources/jquery/jquery-' . AssetsConfig::JQUERY_VERSION . '.js',
 		// Wikia change - end
 		'debugRaw' => false,
 	),
