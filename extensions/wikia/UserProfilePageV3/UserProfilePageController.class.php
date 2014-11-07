@@ -477,7 +477,7 @@ class UserProfilePageController extends WikiaController {
 					$user->setOption( 'avatar', $data->file );
 					break;
 				case 'uploaded':
-					$errorMsg = wfMsg( 'userprofilepage-interview-save-internal-error' );
+					$errorMsg = wfMessage( 'userprofilepage-interview-save-internal-error' )->plain();
 					$avatar = $this->saveAvatarFromUrl( $user, $data->file, $errorMsg );
 					$user->setOption( 'avatar', $avatar );
 					break;
@@ -571,7 +571,8 @@ class UserProfilePageController extends WikiaController {
 			$this->setVal('result', $result);
 
 			$avatarUrl = $thumbnail->url;
-			$avatarUrl .= ( preg_match( '/\?/', $avatarUrl ) ? '&' : '?' ).'cb=' . date( 'U' );
+			// look for an occurrence of a ? to know if we should append the query string with a ? or a &
+			$avatarUrl .= ( preg_match( '/\?/', $avatarUrl ) ? '&' : '?' ) . 'cb=' . date( 'U' );
 
 			$result = [ 'success' => true, 'avatar' => $avatarUrl ];
 			$this->setVal('result', $result);

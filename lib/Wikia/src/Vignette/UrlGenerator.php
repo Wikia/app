@@ -275,7 +275,7 @@ class UrlGenerator {
 			$queryString = http_build_query($this->query);
 
 			// Don't add a floating '?' if queryString ends up empty (e.g. if a valueless param is given)
-			$imagePath .= strlen( $queryString ) > 0 ? '?'.$queryString : '';
+			$imagePath .= empty( $queryString ) ? '' : '?'.$queryString;
 		}
 
 		return $this->domainShard($imagePath);
