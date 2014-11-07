@@ -1,7 +1,7 @@
 @import 'extensions/wikia/Venus/styles/variables';
 
 .global-footer {
-	background-color: #fff;
+	background-color: $nav-background-color;
 	border-bottom: 10px solid $color-wikiahome-community;
 	border-top: 1px solid $color-page-border;
 	color: $color-text-dark;
