@@ -7,7 +7,7 @@ class GlobalFooterController extends WikiaController {
 	const CORPORATE_CATEGORY_ID = 4;
 
 	public function index() {
-		$this->footer_links = $this->getGlobalFooterLinks();
+		$this->footerLinks = $this->getGlobalFooterLinks();
 		$this->copyright = RequestContext::getMain()->getSkin()->getCopyright();
 		$this->hub = $this->getHub();
 
@@ -15,9 +15,10 @@ class GlobalFooterController extends WikiaController {
 	}
 
 	public function indexVenus() {
-		$this->footer_links = $this->getGlobalFooterLinks();
-		$this->copyright = RequestContext::getMain()->getSkin()->getCopyright();
-		$this->vertical_short = $this->getVerticalShortName();
+		$this->response->setVal( 'centralUrl', $this->getLogoUrl() );
+		$this->response->setVal( 'copyright', RequestContext::getMain()->getSkin()->getCopyright() );
+		$this->response->setVal( 'footerLinks', $this->getGlobalFooterLinks() );
+		$this->response->setVal( 'verticalShort', $this->getVerticalShortName() );
 	}
 
 	private function getGlobalFooterLinks() {
@@ -56,6 +57,12 @@ class GlobalFooterController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 
 		return $parsedLinks;
+	}
+
+	private function getLogoUrl() {
+		$userLang = $this->wg->Lang->getCode();
+		$globalNavogation = new GlobalNavigationController();
+		return $globalNavogation->getCentralUrlForLang( $userLang );
 	}
 
 	private function getVerticalShortName() {

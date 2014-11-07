@@ -11,7 +11,7 @@
 		</div>
 		<ul>
 			<?php
-			foreach ($footer_links as $link) {
+			foreach ($footerLinks as $link) {
 				?>
 				<li>
 					<?php
