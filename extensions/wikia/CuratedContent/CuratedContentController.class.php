@@ -44,7 +44,6 @@ class CuratedContentController extends WikiaController {
 		110,
 		111,
 		// Blog
-		500,
 		501,
 		// Top List
 		700,

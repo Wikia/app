@@ -171,15 +171,30 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 							case 'category':
 								$this->getCategoryPageId( $title, $err, $row );
 								break;
+							case 'user_blog':
+								$tit = Title::newFromText( $title, 500 );
+								$row[ 'id' ] = $tit->getArticleId();
+								$row[ 'test' ] = $tit->getFullUrl();
+								break;
+							case 'file':
+								$tit = Title::newFromText( $title, 6 );
+								$mediaService = new MediaQueryService();
+								$row[ 'test' ] = $mediaService->getMediaData( $tit );
+
+
+								break;
+							case false:
+								$this->getArticlePageId( $title, $row, $err );
+								break;
 						}
 					}
 				}
 			}
+		}
 
-			if ( !empty( $err ) ) {
-				$this->response->setVal( 'error', $err );
-				return true;
-			}
+		if ( !empty( $err ) ) {
+			$this->response->setVal( 'error', $err );
+			return true;
 		}
 		$status = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $this->wg->CityId, $tags );
 		$this->response->setVal( 'status', $status );
@@ -246,7 +261,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 
 	private function extractType( $title ) {
 		$type = strtolower( strstr( $title, ':', true ) );
-		$validTypes = [ 'category' ];
+		$validTypes = [ 'category', 'user_blog', 'file' ];
 		if ( in_array( $type, $validTypes ) ) {
 			return $type;
 		}
@@ -259,11 +274,10 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	 * @param $row
 	 */
 	private function getCategoryPageId( $title, &$err, &$row ) {
-		$catTitle = $title;
-		$category = Category::newFromName( $catTitle );
+		$category = Category::newFromName( $title );
 		//check if categories exists and have any pages
 		if ( !( $category instanceof Category ) || $category->getPageCount() === 0 ) {
-			$err[ ] = $catTitle;
+			$err[ ] = $row[ 'title' ];
 		} else if ( empty( $err ) ) {
 			$row[ 'id' ] = $category->getTitle()->getArticleID();
 		}
@@ -280,5 +294,19 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			$title = substr( $row[ 'title' ], strlen( $type ) + 1 );
 		};
 		return $title;
+	}
+
+	/**
+	 * @param $title
+	 * @param $row
+	 * @param $err
+	 * @return array
+	 */
+	private function getArticlePageId( $title, &$row, &$err ) {
+		$pageId = Title::newFromText( $title )->getArticleId();
+		if ( $pageId == 0 ) {
+			$err[ ] = $row[ 'title' ];
+		}
+		$row[ 'id' ] = $pageId;
 	}
 }
