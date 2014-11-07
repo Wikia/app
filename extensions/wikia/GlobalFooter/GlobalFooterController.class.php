@@ -17,7 +17,7 @@ class GlobalFooterController extends WikiaController {
 	public function indexVenus() {
 		$this->footer_links = $this->getGlobalFooterLinks();
 		$this->copyright = RequestContext::getMain()->getSkin()->getCopyright();
-		$this->vertical_class = $this->getVerticalClass();
+		$this->vertical_short = $this->getVerticalShortName();
 	}
 
 	private function getGlobalFooterLinks() {
@@ -58,11 +58,11 @@ class GlobalFooterController extends WikiaController {
 		return $parsedLinks;
 	}
 
-	private function getVerticalClass() {
+	private function getVerticalShortName() {
 		global $wgCityId;
 		$wikiFactoryHub = new WikiFactoryHub();
 		$wikiVertical = $wikiFactoryHub->getWikiVertical( $wgCityId );
-		return "vertical-{$wikiVertical['short']}";
+		return $wikiVertical['short'];
 	}
 
 	private function getHub() {
