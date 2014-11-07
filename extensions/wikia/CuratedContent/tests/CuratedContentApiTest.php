@@ -1,6 +1,6 @@
 <?php
 
-class CuratedContentModelTest extends WikiaBaseTest {
+class CuratedContentApiTest extends WikiaBaseTest {
 
 	public function setUp() {
 		global $IP;

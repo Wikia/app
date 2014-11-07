@@ -172,12 +172,11 @@ $(function(){
 		});
 
 		function getData(li) {
-			li = $(li);
-
+			var $lia = $(li);
 			return {
-				title: li.find('.item-input').val(),
-				label: li.find('.name').val(),
-				image_id: li.find('.image').data('id') || 0
+				title: $lia.find('.item-input').val(),
+				label: $lia.find('.name').val(),
+				image_id: $lia.find('.image').data('id') || 0
 			}
 		}
 

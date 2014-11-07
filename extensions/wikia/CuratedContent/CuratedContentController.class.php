@@ -370,12 +370,12 @@ class CuratedContentController extends WikiaController {
 			}
 
 			//Use 'id' instead of image_id
-			foreach( $ret as &$value ) {
-				if ( !empty( $value['image_id'] ) ) {
-					$value['id'] = $value['image_id'];
-				}
-				unset($value['image_id']);
-			}
+//			foreach( $ret as &$value ) {
+//				if ( !empty( $value['image_id'] ) ) {
+//					$value['id'] = $value['image_id'];
+//				}
+//				unset($value['image_id']);
+//			}
 
 			$this->response->setVal( 'items', $ret );
 		} else if ( $requestTag !== '' ) {

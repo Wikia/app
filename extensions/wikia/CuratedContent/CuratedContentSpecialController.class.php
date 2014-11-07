@@ -4,6 +4,8 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 
 	const TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
+	const ARTICLE_ID_TAG = 'id';
+
 	public function __construct() {
 		parent::__construct( 'CuratedContent', '', false );
 	}
@@ -72,7 +74,6 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			'itemTemplate' => $itemTemplate,
 			'tagTemplate' => $tagTemplate
 		] );
-
 
 
 		$tags = $this->wg->WikiaCuratedContent;
@@ -194,7 +195,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		}
 
 		$this->response->setVal( 'url', $url );
-		$this->response->setVal( 'id', $id );
+		$this->response->setVal( self::ARTICLE_ID_TAG, $id );
 
 		return $url;
 	}
@@ -252,7 +253,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		if ( !( $category instanceof Category ) || $category->getPageCount() === 0 ) {
 			$err[ ] = $row[ 'title' ];
 		} else if ( empty( $err ) ) {
-			$row[ 'id' ] = $category->getTitle()->getArticleID();
+			$row[ self::ARTICLE_ID_TAG ] = $category->getTitle()->getArticleID();
 		}
 	}
 
@@ -280,7 +281,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		if ( $pageId == 0 ) {
 			$err[ ] = $row[ 'title' ];
 		}
-		$row[ 'id' ] = $pageId;
+		$row[ self::ARTICLE_ID_TAG ] = $pageId;
 	}
 
 	/**
@@ -290,7 +291,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	 */
 	private function getBlogArticleId( $title, &$row ) {
 		$tit = Title::newFromText( $title, 500 );
-		$row[ 'id' ] = $tit->getArticleId();
+		$row[ self::ARTICLE_ID_TAG ] = $tit->getArticleId();
 	}
 
 	/**
@@ -319,17 +320,23 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 								break;
 							case 'file':
 								$tit = Title::newFromText( $title, 6 );
+								$row[ self::ARTICLE_ID_TAG ] = $tit->getArticleId();
 								$mediaInfo = $mediaService->getMediaData( $tit );
-								$row[ 'test' ] = $mediaInfo;
+//								$row[ 'test' ] = $mediaInfo;
 								$fileType = $this->extractFileType( $mediaInfo[ 'type' ] );
 								switch ( $fileType ) {
 									case 'video':
 										$validType = 'video';
 										$row[ 'provider' ] = $mediaInfo [ 'meta' ][ 'provider' ];
 										$row[ 'thumbUrl' ] = $mediaInfo [ 'thumbUrl' ];
+										$row[ 'videoId' ] = $mediaInfo[ 'meta' ][ 'videoId' ];
+//										$err[ ] = $rawTitle;
 										break;
 									case 'image':
 										$validType = 'image';
+										$is = new ImageServing( $row[ 'id' ], 50, 50 );
+										$image = $is->getImages( 1 );
+										$row[ 'test2' ] = $image;
 										break;
 									case false:
 									default:
