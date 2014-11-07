@@ -50,7 +50,6 @@ class CreateWiki {
 	const DEFAULT_WIKI_TYPE    = "";
 	const DEFAULT_WIKI_LOGO    = '$wgUploadPath/b/bc/Wiki.png';
 
-
 	/**
 	 * constructor
 	 *
@@ -681,8 +680,8 @@ class CreateWiki {
 		wfDebug( __METHOD__ . ": Checking {$name} folder" );
 
 		$isExist = false; $suffix = "";
-		$prefix = strtolower( substr( $name, 0, 1 ) );
-		$dir_base = $name;
+		$dir_base = self::sanitizeS3BucketName($name);
+		$prefix = strtolower( substr( $dir_base, 0, 1 ) );
 		$dir_lang = ( isset( $language ) && $language !== "en" )
 				? "/" . strtolower( $language )
 				: "";
@@ -702,6 +701,44 @@ class CreateWiki {
 		wfDebug( __METHOD__ . ": Returning '{$dir_base}'\n" );
 		wfProfileOut( __METHOD__ );
 		return $dir_base;
+	}
+
+	/**
+	 * Sanitizes a name to be a valid S3 bucket name. It means it can contain only letters and numbers
+	 * and optionally hyphens in the middle. Maximum length is 63 characters, we're trimming it to 55
+	 * characters here as some random suffix may be added to solve duplicates.
+	 *
+	 * Note that different arguments may lead to the same results so the conflicts need to be solved
+	 * at a later stage of processing.
+	 *
+	 * @see http://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html
+	 *
+	 * @param $name string Directory name
+	 * @return string Sanitized name
+	 */
+	private static function sanitizeS3BucketName( $name ) {
+		# check if it's already valid
+		$name = mb_strtolower($name);
+		if ( preg_match( "/^[a-z0-9](:[-a-z0-9]{0,53}[a-z0-9])?\$/", $name ) ) {
+			return $name;
+		}
+
+		# replace invalid ASCII characters with their hex values
+		$s = '';
+		for ($i=0;$i<strlen($name);$i++) {
+			$c = $name[$i];
+			if ( $c >= 'a' && $c <= 'z' || $c >= '0' && $c <= '9' ) {
+				$s .= $c;
+			} else {
+				$s .= bin2hex($c);
+			}
+			if ( strlen($s) >= 55 ) {
+				break;
+			}
+		}
+		$name = substr($s,0,55);
+
+		return $name;
 	}
 
 	/**
