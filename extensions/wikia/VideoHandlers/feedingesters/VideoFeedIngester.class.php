@@ -68,7 +68,6 @@ abstract class VideoFeedIngester {
 	];
 
 	private static $WIKI_INGESTION_DATA_FIELDS = array( 'keyphrases' );
-	private static $instances = array();
 
 	abstract public function import( $content = '', $params = array() );
 
@@ -173,27 +172,6 @@ abstract class VideoFeedIngester {
 		if ( !in_array( $id, $this->filterByProviderVideoId ) ) {
 			$this->filterByProviderVideoId[] = $id;
 		}
-	}
-
-	/**
-	 * @param string $provider
-	 * @return VideoFeedIngester|null
-	 */
-	public static function getInstance( $provider = '' ) {
-		if ( empty( $provider ) ) {
-			$className = __CLASS__;
-		} else {
-			$className = ucfirst( $provider ) . 'FeedIngester';
-			if ( !class_exists( $className ) ) {
-				return null;
-			}
-		}
-
-		if ( empty( self::$instances[$className] ) ) {
-			self::$instances[$className] = new $className();
-		}
-
-		return self::$instances[$className];
 	}
 
 	/**
@@ -973,4 +951,14 @@ abstract class VideoFeedIngester {
 		return STATIC::$PROVIDER;
 	}
 
+}
+
+class FeedIngesterFactory {
+	public static function build( $provider ) {
+		$ingester = ucfirst( $provider ) . 'FeedIngester';
+		if( class_exists( $ingester ) ) {
+			return new $ingester();
+		}
+		throw new Exception("Invalid provider name: $ingester");
+	}
 }

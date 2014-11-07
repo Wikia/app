@@ -179,7 +179,7 @@ function mapMetadata( $ingester, $data ) {
 	// get category and type
 	$data['category'] = $ingester->getCategory( $data['category'] );
 	if ( !empty( $data['category'] ) && empty( $data['type']) ) {
-		$data['type'] = $ingester->getStdType( $data['category'] );
+		$data['type'] = $ingester->getType( $data['category'] );
 	}
 
 	if ( empty( $data['pagecategories'] ) ) {
@@ -335,7 +335,7 @@ if ( $iva ) {
 	$extraCond[] = "asset_type!='remote_asset'";
 }
 
-$ingester = VideoFeedIngester::getInstance( $provider );
+$ingester = FeedIngesterFactory::build( $provider );
 // get WikiFactory data
 $ingestionData = $ingester->getWikiIngestionData();
 if ( empty( $ingestionData ) ) {

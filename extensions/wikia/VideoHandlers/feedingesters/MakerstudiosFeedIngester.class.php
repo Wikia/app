@@ -102,7 +102,7 @@ class MakerstudiosFeedIngester extends VideoFeedIngester {
 		}
 	}
 
-	public function generateCategories( $data, $categories ) {
+	public function generateCategories( array $data, $categories ) {
 		return [ 'MakerStudios', 'Entertainment' ];
 	}
 

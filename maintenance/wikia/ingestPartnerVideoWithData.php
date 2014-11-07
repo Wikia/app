@@ -89,7 +89,7 @@ $providersVideoFeed = loadProviders( $provider );
 foreach ( $providersVideoFeed as $provider ) {
 	print( "Starting import for provider $provider...\n" );
 
-	$feedIngester = VideoFeedIngester::getInstance( $provider );
+	$feedIngester = FeedIngesterFactory::build( $provider );
 	$feedIngester->reupload = $reupload;
 
 	// get WikiFactory data

@@ -165,7 +165,7 @@ function mapMetadataIva( $ingester, $data, &$metadata ) {
 
 	$metadata['category'] = $ingester->getCategory( $metadata['category'] );
 	if ( !empty( $data['category'] ) ) {
-		$metadata['type'] = $ingester->getStdType( $data['category'] );
+		$metadata['type'] = $ingester->getType( $data['category'] );
 	}
 
 	// add page categories to metadata
@@ -187,7 +187,7 @@ function mapMetadataIva( $ingester, $data, &$metadata ) {
  */
 function mapMetadataIgn( $ingester, $data, &$metadata ) {
 	if ( !empty( $metadata['category'] ) ) {
-		$metadata['type'] = $ingester->getStdType( $metadata['category'] );
+		$metadata['type'] = $ingester->getType( $metadata['category'] );
 	}
 	$metadata['category'] = '';
 }
@@ -277,7 +277,7 @@ echo "Wiki: $wgCityId ($wgDBname)\n";
 echo "Provider: $provider\n";
 echo "Limit: $limit\n";
 
-$ingester = VideoFeedIngester::getInstance( $provider );
+$ingester = FeedIngesterFactory::build( $provider );
 // get WikiFactory data
 $ingestionData = $ingester->getWikiIngestionData();
 if ( empty( $ingestionData ) ) {

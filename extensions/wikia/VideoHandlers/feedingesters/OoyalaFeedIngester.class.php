@@ -171,7 +171,7 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 	 * @param array $categories
 	 * @return array $categories
 	 */
-	public function generateCategories( $data, $categories ) {
+	public function generateCategories( array $data, $categories ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( !empty( $data['name'] ) ) {
