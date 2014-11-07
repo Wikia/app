@@ -12,17 +12,6 @@
 	margin: 0 (-$medium-grid-gutter - $medium-grid-column) 30px $medium-grid-gutter + $medium-grid-column-padding;
 	text-align: center;
 
-	.infobox-wrapper {
-		display: inline-block;
-		position: relative;
-
-		&.collapsed-infobox {
-			height: 740px;
-			overflow: hidden;
-			position: relative;
-		}
-	}
-
 	table, div {
 		@include grid-column-max-width('medium', 4, -2 * $medium-grid-column-padding);
 		float: none;
@@ -30,14 +19,22 @@
 	}
 
 	/* taken from /skins/oasis/css/core/article.scss and slightly modified for Venus */
-	.wikia-infobox {
+	.infobox-wrapper {
 		@include font-size-xxs;
 		border: 1px $color-page-border solid;
 		border-collapse: separate;
+		display: inline-block;
 		line-height: $font-size-xxs * 2;
 		margin: 0 0 16px 16px;
 		padding: 15px 8px 8px;
+		position: relative;
 		text-align: left;
+
+		&.collapsed-infobox {
+			height: 740px;
+			overflow: hidden;
+			position: relative;
+		}
 
 		td,
 		th {
