@@ -320,7 +320,7 @@
 			$heroModule.trigger('resize');
 			trackDragOnlyOncePerImage = false;
 		}, onResize = function () {
-			$heroModule.height($heroModule.width() * HERO_ASPECT_RATIO);
+			$heroModule.outerHeight($heroModule.width() * HERO_ASPECT_RATIO);
 		}, onDraggingEnabled = function () {
 			var heroHeight = $heroModuleImage.height(),
 				heroModuleHeight = $heroModule.height(),
@@ -511,6 +511,7 @@
 			}
 		};
 
+	//TODO: pass actual user rights
 	if (window.wgUserName) {
 		States.clearState($heroHeader);
 		initializeEditMode();
