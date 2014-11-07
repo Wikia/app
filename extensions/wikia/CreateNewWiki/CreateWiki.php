@@ -717,10 +717,18 @@ class CreateWiki {
 	 * @return string Sanitized name
 	 */
 	private static function sanitizeS3BucketName( $name ) {
+		$RE_VALID = "/^[a-z0-9](?:[-a-z0-9]{0,53}[a-z0-9])?\$/";
 		# check if it's already valid
 		$name = mb_strtolower($name);
-		if ( preg_match( "/^[a-z0-9](:[-a-z0-9]{0,53}[a-z0-9])?\$/", $name ) ) {
+		if ( preg_match( $RE_VALID, $name ) ) {
 			return $name;
+		}
+
+		# try fixing the simplest and most popular cases
+		$check_name = str_replace(['.',' ','_','(',')'],'-',$name);
+		if ( substr($check_name,-1) == '-' ) $check_name .= '0';
+		if ( preg_match( $RE_VALID, $check_name ) ) {
+			return $check_name;
 		}
 
 		# replace invalid ASCII characters with their hex values
