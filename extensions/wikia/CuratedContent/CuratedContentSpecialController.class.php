@@ -50,7 +50,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		JSMessages::enqueuePackage( 'CuratedContentMsg', JSMessages::INLINE );
 
 		$this->response->setVal( 'descriptions', [
-			wfMsg( 'wikiaCuratedContent-content-description-categories' ),
+			wfMsg( 'wikiaCuratedContent-content-description-items' ),
 			wfMsg( 'wikiaCuratedContent-content-description-tag' ),
 			wfMsg( 'wikiaCuratedContent-content-description-organize' ),
 			wfMsg( 'wikiaCuratedContent-content-description-no-tag' )
@@ -64,14 +64,16 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$this->response->setVal( 'item_placeholder', wfMsg( 'wikiaCuratedContent-content-item' ) );
 		$this->response->setVal( 'name_placeholder', wfMsg( 'wikiaCuratedContent-content-name' ) );
 
-
-		$itemTemplate = $this->sendSelfRequest( 'item' )->toString();
+		$itemTemplate = $this->sendSelfRequest( 'category' )->toString();
 		$tagTemplate = $this->sendSelfRequest( 'tag' )->toString();
+
 
 		$this->wg->Out->addJsConfigVars( [
 			'itemTemplate' => $itemTemplate,
 			'tagTemplate' => $tagTemplate
 		] );
+
+
 
 		$tags = $this->wg->WikiaCuratedContent;
 
