@@ -67,7 +67,7 @@ class FacebookSignupController extends WikiaController {
 		}
 
 		// The new FB SDK doesn't define contact_email
-		if ( F::app()->wg->EnableFacebookClientExt ) {
+		if ( $this->wg->EnableFacebookClientExt ) {
 			$this->fbEmail = $resp->getVal( 'email', false );
 		} else {
 			$this->fbEmail = $resp->getVal( 'contact_email', false );
@@ -78,6 +78,16 @@ class FacebookSignupController extends WikiaController {
 				$this->fbEmail = wfMessage( 'usersignup-facebook-proxy-email' )->escaped();
 			}
 		}
+
+		$returnTo = $this->getReturnTo();
+		$returnToParams = 'returnto=' . $returnTo;
+		$returnToQuery = htmlspecialchars( $this->wg->request->getVal( 'returntoquery' ) );
+		if ( $returnToQuery ) {
+			$returnToParams .= '&returntoquery=' . $returnToQuery;
+		}
+		$this->queryString = $returnToParams;
+		$this->returnTo = $returnTo;
+		$this->returnToQuery = $returnToQuery;
 
 		$this->loginToken = UserLoginHelper::getSignupToken();
 
@@ -106,6 +116,15 @@ class FacebookSignupController extends WikiaController {
 				$this->response->setData($signupResponse);
 				break;
 		}
+	}
+
+	protected function getReturnTo() {
+		$returnTo = $this->wg->request->getVal( 'returnto' );
+		if ( !$returnTo ) {
+			$returnTo = $this->wg->Title->getFullUrl();
+		}
+
+		return htmlspecialchars( $returnTo );
 	}
 
 	/**

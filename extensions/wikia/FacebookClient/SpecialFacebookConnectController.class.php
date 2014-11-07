@@ -165,6 +165,9 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 		$this->userNameLabel = wfMessage( 'fbconnect-connect-username-label' )->plain();
 		$this->userName = $userName;
 		$this->passwordLabel = wfMessage( 'fbconnect-connect-password-label' )->plain();
+
+		$this->returnTo = htmlspecialchars( $wg->request->getVal( 'returnto' ) );
+		$this->returnToQuery = htmlspecialchars( $wg->request->getVal( 'returntoquery' ) );
 	}
 
 	/**
@@ -185,15 +188,16 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 		wfRunHooks( 'UserLoginComplete', [ &$user, &$inject_html ] );
 		$wg->User = $user;
 
-		$titleObj = Title::newFromText( $this->mReturnTo );
-		$queryStr = 'fbconnected=1&cb='.rand( 1, 10000 );
+		$returnTo = $wg->request->getVal( 'returnto' );
+		$returnToQuery = $wg->request->getVal( 'returntoquery' );
+		$titleObj = Title::newFromText( $returnTo );
 
 		if ( $this->isInvalidRedirectOnConnect( $titleObj ) ) {
 			// Don't redirect if the location is no good.  Go to the main page instead
 			$titleObj = Title::newMainPage();
-		} else {
+		} else if ( $returnToQuery ) {
 			// Include the return to query string if its ok to redirect
-			$queryStr = $this->mReturnToQuery . '&' . $queryStr;
+			$queryStr = $returnToQuery . '&fbconnected=1&cb=' . rand( 1, 10000 );
 		}
 
 		$wg->Out->redirect( $titleObj->getFullURL( $queryStr ) );
