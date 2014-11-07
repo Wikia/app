@@ -219,7 +219,7 @@ $VenusConfig[ 'article_navigation_scss' ] = [
 	]
 ];
 
-/** Recommendations */
+/** Video Recommendations */
 $VenusConfig[ 'video_recommendations_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'venus' ],

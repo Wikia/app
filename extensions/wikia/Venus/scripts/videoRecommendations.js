@@ -1,4 +1,4 @@
-require(['wikia.document', 'venus.nodeFinder', 'wikia.recommendations'], function(d, nodeFinder, recommendations){
+require(['wikia.document', 'venus.nodeFinder'], function(d, nodeFinder){
 	'use strict';
 
 	/**
@@ -58,19 +58,5 @@ require(['wikia.document', 'venus.nodeFinder', 'wikia.recommendations'], functio
 		}
 	}
 
-	function callback(data) {
-		var articleContainer = d.getElementById('WikiaArticle'),
-			moduleContainer = createModuleContainer('recommendations', 'recommendations');
-
-		moduleContainer.innerHTML = data;
-
-		insertModuleAsLastChild(articleContainer, moduleContainer);
-	}
-
-	function addRecommendationsModule() {
-		recommendations.loadTemplate(callback);
-	}
-
 	addVideoRecommendations();
-	addRecommendationsModule();
 });

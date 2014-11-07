@@ -66,7 +66,9 @@ $wgHooks['ParserSectionCreate'][] = 'VenusHooks::onParserSectionCreate';
 
 //404 Pages
 
-// Resources Loader module
+// Resources Loader modules
+
+
 $wgResourceModules['ext.wikia.venus.article.infobox'] = array(
 	'scripts' => array(
 		'scripts/Infobox.js',
@@ -78,3 +80,15 @@ $wgResourceModules['ext.wikia.venus.article.infobox'] = array(
 	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'wikia/Venus'
 );
+
+$wgResourceModules['ext.wikia.venus.recommendations'] = [
+	'scripts' => [
+		'extensions/wikia/Venus/scripts/venusRecommendations.js'
+	],
+	'styles' => [
+		'extensions/wikia/Venus/styles/article/recommendations.scss'
+	],
+	'dependencies' => [
+		'ext.wikia.recommendations',
+	]
+];
