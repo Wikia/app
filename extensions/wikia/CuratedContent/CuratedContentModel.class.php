@@ -12,7 +12,7 @@ class CuratedContentModel{
 	const MEMCHACHE_KEY_PREFIX = 'CuratedContent';
 	const CACHE_DURATION = 86400;//24h
 	const SEARCH_RESULTS_LIMIT = 100;
-	const CATEGORY_RESULTS_LIMIT = 0;//no limits for now
+	const ITEM_RESULTS_LIMIT = 0;//no limits for now
 
 	private $app;
 
