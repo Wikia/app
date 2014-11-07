@@ -5,7 +5,7 @@
 @import 'skins/shared/mixins/columns';
 @import 'GlobalNavigationColors';
 
-@mixin hub-icon($color, $secondary-color, $hub-name) {
+@mixin hub-background-border-icon($color, $secondary-color, $hub-name) {
 	background: linear-gradient(to right, $color 99%, $hubsmenu-background-color);
 
 	&.active {
@@ -210,35 +210,35 @@
 	}
 
 	.anime {
-		@include hub-icon($color-vertical-anime, $color-vertical-anime-secondary, 'anime');
+		@include hub-background-border-icon($color-vertical-anime, $color-vertical-anime-secondary, 'anime');
 	}
 
 	.books {
-		@include hub-icon($color-vertical-books, $color-vertical-books-secondary, 'books');
+		@include hub-background-border-icon($color-vertical-books, $color-vertical-books-secondary, 'books');
 	}
 
 	.comics {
-		@include hub-icon($color-vertical-comics, $color-vertical-comics-secondary, 'comics');
+		@include hub-background-border-icon($color-vertical-comics, $color-vertical-comics-secondary, 'comics');
 	}
 
 	.games {
-		@include hub-icon($color-vertical-games, $color-vertical-games-secondary, 'games');
+		@include hub-background-border-icon($color-vertical-games, $color-vertical-games-secondary, 'games');
 	}
 
 	.lifestyle {
-		@include hub-icon($color-vertical-lifestyle, $color-vertical-lifestyle-secondary, 'lifestyle');
+		@include hub-background-border-icon($color-vertical-lifestyle, $color-vertical-lifestyle-secondary, 'lifestyle');
 	}
 
 	.movies {
-		@include hub-icon($color-vertical-movies, $color-vertical-movies-secondary, 'movies');
+		@include hub-background-border-icon($color-vertical-movies, $color-vertical-movies-secondary, 'movies');
 	}
 
 	.music {
-		@include hub-icon($color-vertical-music, $color-vertical-music-secondary, 'music');
+		@include hub-background-border-icon($color-vertical-music, $color-vertical-music-secondary, 'music');
 	}
 
 	.tv {
-		@include hub-icon($color-vertical-tv, $color-vertical-tv-secondary, 'tv');
+		@include hub-background-border-icon($color-vertical-tv, $color-vertical-tv-secondary, 'tv');
 	}
 }
 
