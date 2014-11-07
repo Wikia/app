@@ -79,7 +79,10 @@ return array(
 
 	'jquery' => array(
 		// Wikia change - begin
-		'scripts' => 'resources/jquery/jquery-' . AssetsConfig::JQUERY_VERSION . '.js',
+		'skinScripts' => [
+			'default' => 'resources/jquery/jquery-' . AssetsConfig::JQUERY_VERSION . '.js',
+			'venus' => 'resources/jquery/jquery-2.1.1.js',
+		],
 		// Wikia change - end
 		'debugRaw' => false,
 	),
