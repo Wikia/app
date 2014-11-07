@@ -12,8 +12,9 @@ var AIC2 = {
 };
 
 AIC2.enabled = window.top === window.self
-	&& window.wgEnableAdsInContent
-	&& window.wgShowAds
+	&& (window.ads && window.ads.context && window.ads.context.opts)
+	&& window.ads.context.opts.showAds
+	&& window.ads.context.opts.adsInContent
 	&& !window.wgIsMainpage
 	&& !window.wikiaPageIsCorporate
 	&& (window.wgIsContentNamespace || window.wikiaPageType === 'search');

@@ -8,7 +8,7 @@
 
 var base = require('./karma.base.conf.js');
 
-module.exports = function(config) {
+module.exports = function (config) {
 	'use strict';
 
 	base(config);
@@ -77,7 +77,11 @@ module.exports = function(config) {
 
 			//venus infobox
 			'extensions/wikia/Venus/scripts/modules/infobox.module.js',
-			'extensions/wikia/Venus/scripts/modules/spec/integration/infobox.spec.js'
+			'extensions/wikia/Venus/scripts/modules/spec/integration/infobox.spec.js',
+
+			// Lightbox
+			'extensions/wikia/Lightbox/scripts/Lightbox.js',
+			'extensions/wikia/Lightbox/scripts/spec/integration/lightbox.spec.js'
 		]
 	});
 };

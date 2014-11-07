@@ -8,9 +8,6 @@ require(
 	function ($, msg, window, document, log, abTest, adEngine, adConfigMobile, messageListener) {
 		'use strict';
 
-		// Don't show ads for Sony
-		window.wgShowAds = window.wgShowAds && !window.document.referrer.match(/info\.tvsideview\.sony\.net/);
-
 		var minZerothSectionLength = 700,
 			minPageLength = 2000,
 			mobileTopLeaderBoard = 'MOBILE_TOP_LEADERBOARD',

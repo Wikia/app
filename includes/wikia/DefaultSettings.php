@@ -1256,12 +1256,6 @@ $wgAdDriverUseAdsAfterInfobox = false;
 $wgAdDriverUseTaboola = false;
 
 /**
- * @name $wgAdDriverUseRemnantGpt
- * Enables additional call to dart before Liftium
- */
-$wgAdDriverUseRemnantGpt = false;
-
-/**
  * @name $wgAdDriverAlwaysCallDartInCountries
  * Disables the max N calls to DART and enables Remnant GPT call in those countries.
  * This is an instant globals, which means you set it only on community and it takes
@@ -1330,14 +1324,6 @@ $wgAdDriverUseSevenOneMediaInLanguages = ['de'];
 $wgAdDriverSevenOneMediaOverrideSub2Site = null;
 
 /**
- * @name $wgAdDriverUseDartForSlotsBelowTheFold
- * Whether to call DART for additional slots below the fold. Also known as "Coffee cup".
- * Set to null for to restrict only to Entertainment vertical
- * TODO: add an internal page for the reasons
- */
-$wgAdDriverUseDartForSlotsBelowTheFold = true;
-
-/**
  * @name $wgAdDriverTrackState
  * Enables GA tracking of state for ad slots on pages
  */
@@ -1359,7 +1345,7 @@ $wgAdDriverForceLiftiumAd = false;
  * @name $wgAdDriverEnableAdsInMaps
  * Whether to display ads within interactive maps
  */
-$wgAdDriverEnableAdsInMaps = false;
+$wgAdDriverEnableAdsInMaps = true;
 
 /**
  * @name $wgAdDriverRubiconRTPConfig
@@ -1390,12 +1376,6 @@ $wgAdDriverRubiconRTPCountries = null;
  * Value set in WikiFactory for Community acts as global value. Can be overridden per wiki.
  */
 $wgHighValueCountries = null;
-
-/**
- * @name $wgAdVideoTargeting
- * Enables page-level video ad targeting
- */
-$wgAdVideoTargeting = true;
 
 /**
  * @name $wgAnalyticsProviderPageFair
@@ -1570,6 +1550,7 @@ $wgBuckySampling = 10;
  * List of skins where Bucky reporting should be enabled
  */
 $wgBuckyEnabledSkins = [
+	'monobook',
 	'oasis',
 	'venus',
 ];
