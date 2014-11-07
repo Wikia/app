@@ -28,11 +28,14 @@ var UserLoginFacebookForm = $.createClass(UserLoginAjaxForm, {
 
 	// send a request to FB controller
 	ajaxLogin: function() {
+		'use strict';
 		$.nirvana.postJson('FacebookSignupController', 'signup', {
 			username: this.inputs.username.val(),
 			password: this.inputs.password.val(),
 			signupToken: this.inputs.logintoken.val(),
-			fbfeedoptions: this.getFeedOptions().join(',')
+			fbfeedoptions: this.getFeedOptions().join(','),
+			returnto: encodeURIComponent(window.wgPageName),
+			returntoquery: encodeURIComponent(window.location.search.substring(1))
 		},
 		$.proxy(this.submitFbSignupHandler, this));
 	},
@@ -51,6 +54,8 @@ var UserLoginFacebookForm = $.createClass(UserLoginAjaxForm, {
 				label: 'facebook-signup'
 			});
 		}
+		json.returnto = encodeURIComponent(window.wgPageName);
+		json.returntoquery = encodeURIComponent(window.location.search.substring(1));
 		this.submitLoginHandler(json);
 	}
 });
