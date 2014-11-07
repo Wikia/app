@@ -1785,7 +1785,22 @@ $config['videos_module_js'] = [
 		'//extensions/wikia/VideosModule/scripts/models/videos.js',
 		'//extensions/wikia/VideosModule/scripts/views/titleThumbnail.js',
 		'//extensions/wikia/VideosModule/scripts/views/rail.js',
-		'//extensions/wikia/VideosModule/scripts/controllers/index.js',
+		'//extensions/wikia/VideosModule/scripts/controllers/rail.js',
+	]
+];
+
+$config['venus_videos_module_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['venus'],
+	'assets' => [
+		'//extensions/wikia/Thumbnails/scripts/templates.mustache.js',
+		'//extensions/wikia/Thumbnails/scripts/views/titleThumbnail.js',
+		'//extensions/wikia/VideosModule/scripts/templates.mustache.js',
+		'//extensions/wikia/VideosModule/scripts/models/videos.js',
+		'//extensions/wikia/VideosModule/scripts/views/titleThumbnail.js',
+		'//extensions/wikia/VideosModule/scripts/views/inContent.js',
+		'//extensions/wikia/VideosModule/scripts/controllers/inContent.js',
+		'//extensions/wikia/VideosModule/scripts/controllers/nodeFinder.module.js',
 	]
 ];
 

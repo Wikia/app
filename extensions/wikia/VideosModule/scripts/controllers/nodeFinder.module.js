@@ -1,4 +1,6 @@
-define('venus.nodeFinder', ['wikia.document'], function(d) {
+define('videosmodule.controllers.nodeFinder',
+	['wikia.document'],
+	function() {
 	'use strict';
 
 	/**
@@ -12,9 +14,9 @@ define('venus.nodeFinder', ['wikia.document'], function(d) {
 	function findNodeByOffsetTop(container, selector, boundaryOffsetTop) {
 		var elements = container.querySelectorAll(selector),
 			length = elements.length,
-			i = 0;
+			i;
 
-		for (i= 0; i < length; i++) {
+		for (i = 0; i < length; i++) {
 			if (elements[i].offsetTop > boundaryOffsetTop) {
 				return elements[i];
 			}
