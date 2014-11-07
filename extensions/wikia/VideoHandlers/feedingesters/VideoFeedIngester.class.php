@@ -5,15 +5,6 @@
  */
 abstract class VideoFeedIngester {
 
-	// Constants for referring to short provider names
-	const PROVIDER_SCREENPLAY = 'screenplay';
-	const PROVIDER_IGN = 'ign';
-	const PROVIDER_ANYCLIP = 'anyclip';
-	const PROVIDER_OOYALA = 'ooyala';
-	const PROVIDER_IVA = 'iva';
-	const PROVIDER_CRUNCHYROLL = 'crunchyroll';
-	const PROVIDER_MAKER_STUDIOS = 'makerstudios';
-
 	// Caching constants; all integers are seconds
 	const CACHE_KEY = 'videofeedingester-2';
 	const CACHE_EXPIRY = 3600;
@@ -24,21 +15,6 @@ abstract class VideoFeedIngester {
 
 	// Determines if a duplicate video found should be re-uploaded or ignored
 	public $reupload = false;
-
-	// Providers from which we ingest daily video data
-	protected static $ACTIVE_PROVIDERS = [
-		self::PROVIDER_IGN,
-		self::PROVIDER_OOYALA,
-		self::PROVIDER_IVA,
-		self::PROVIDER_SCREENPLAY,
-		self::PROVIDER_CRUNCHYROLL,
-		self::PROVIDER_MAKER_STUDIOS
-	];
-
-	// These providers are not ingested daily, but can be ingested from if specifically named
-	protected static $INACTIVE_PROVIDERS = [
-		self::PROVIDER_ANYCLIP,
-	];
 
 	protected static $API_WRAPPER;
 	protected static $PROVIDER;
@@ -78,31 +54,6 @@ abstract class VideoFeedIngester {
 	 * @return array - A list of category names
 	 */
 	abstract public function generateCategories( array $data, $addlCategories );
-
-	/**
-	 * Return a list of all the providers we actively ingest from
-	 * @return array
-	 */
-	public static function activeProviders() {
-		return self::$ACTIVE_PROVIDERS;
-	}
-
-	/**
-	 * Return a list of all the providers that are legal to ingest from but from whom
-	 * we do not ingest automatically.
-	 * @return array
-	 */
-	public static function inactiveProviders() {
-		return self::$INACTIVE_PROVIDERS;
-	}
-
-	/**
-	 * Return a list of all available providers
-	 * @return array
-	 */
-	public static function allProviders() {
-		return array_merge( self::$ACTIVE_PROVIDERS, self::$INACTIVE_PROVIDERS );
-	}
 
 	/**
 	 * Generate name for video.
@@ -953,12 +904,3 @@ abstract class VideoFeedIngester {
 
 }
 
-class FeedIngesterFactory {
-	public static function build( $provider ) {
-		$ingester = ucfirst( $provider ) . 'FeedIngester';
-		if( class_exists( $ingester ) ) {
-			return new $ingester();
-		}
-		throw new Exception("Invalid provider name: $ingester");
-	}
-}

@@ -335,7 +335,7 @@ if ( $iva ) {
 	$extraCond[] = "asset_type!='remote_asset'";
 }
 
-$ingester = FeedIngesterFactory::build( $provider );
+$ingester = FeedIngesterFactory::getIngester( $provider );
 // get WikiFactory data
 $ingestionData = $ingester->getWikiIngestionData();
 if ( empty( $ingestionData ) ) {

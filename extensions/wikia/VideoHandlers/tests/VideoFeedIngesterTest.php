@@ -12,10 +12,10 @@ class VideoFeedIngesterTest extends WikiaBaseTest {
 	 * See VID-1871 for more information.
 	 */
 	public function testOoyalaLoadedBeforeRemoteAssets() {
-		$providers = VideoFeedIngester::activeProviders();
-		$ooyalaIndex = array_search( VideoFeedIngester::PROVIDER_OOYALA, $providers );
-		$screenplayIndex = array_search( VideoFeedIngester::PROVIDER_SCREENPLAY, $providers );
-		$ivaIndex = array_search( VideoFeedIngester::PROVIDER_IVA, $providers );
+		$providers = FeedIngesterFactory::getActiveProviders();
+		$ooyalaIndex = array_search( FeedIngesterFactory::PROVIDER_OOYALA, $providers );
+		$screenplayIndex = array_search( FeedIngesterFactory::PROVIDER_SCREENPLAY, $providers );
+		$ivaIndex = array_search( FeedIngesterFactory::PROVIDER_IVA, $providers );
 
 		$this->assertTrue( $ooyalaIndex > $screenplayIndex, 'Ooyala should be loaded before screenplay' );
 		$this->assertTrue( $ooyalaIndex < $ivaIndex, 'Ooyala should be loaded before iva' );

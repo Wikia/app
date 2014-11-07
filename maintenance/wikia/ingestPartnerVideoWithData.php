@@ -89,7 +89,7 @@ $providersVideoFeed = loadProviders( $provider );
 foreach ( $providersVideoFeed as $provider ) {
 	print( "Starting import for provider $provider...\n" );
 
-	$feedIngester = FeedIngesterFactory::build( $provider );
+	$feedIngester = FeedIngesterFactory::getIngester( $provider );
 	$feedIngester->reupload = $reupload;
 
 	// get WikiFactory data
@@ -103,35 +103,35 @@ foreach ( $providersVideoFeed as $provider ) {
 	$file = '';
 	$startDate = $endDate = '';
 	switch ( $provider ) {
-		case VideoFeedIngester::PROVIDER_SCREENPLAY:
+		case FeedIngesterFactory::PROVIDER_SCREENPLAY:
 			// no file needed
 			$startDate = date( 'm/d/y', $startDateTS );
 			$endDate = date( 'm/d/y', $endDateTS );
 			$remoteAsset = true;
 			break;
-		case VideoFeedIngester::PROVIDER_IGN:
+		case FeedIngesterFactory::PROVIDER_IGN:
 			$startDate = date( 'Y-m-d', $startDateTS ).'T00:00:00-0800';
 			$endDate = date( 'Y-m-d', $endDateTS ).'T00:00:00-0800';
 			$file = $feedIngester->downloadFeed( $startDate, $endDate );
 			break;
-		case VideoFeedIngester::PROVIDER_ANYCLIP:
+		case FeedIngesterFactory::PROVIDER_ANYCLIP:
 			$file = $feedIngester->downloadFeed( $getAllVideos );
 			break;
-		case VideoFeedIngester::PROVIDER_OOYALA:
+		case FeedIngesterFactory::PROVIDER_OOYALA:
 			// no file needed
 			$startDate = date( 'Y-m-d', $startDateTS ).'T00:00:00Z';
 			$endDate = date( 'Y-m-d', $endDateTS ).'T00:00:00Z';
 			break;
-		case VideoFeedIngester::PROVIDER_IVA:
+		case FeedIngesterFactory::PROVIDER_IVA:
 			// no file needed
 			$startDate = date( 'Y-m-d', $startDateTS );
 			$endDate = date( 'Y-m-d', $endDateTS );
 			$remoteAsset = true;
 			break;
-		case VideoFeedIngester::PROVIDER_CRUNCHYROLL:
+		case FeedIngesterFactory::PROVIDER_CRUNCHYROLL:
 			// No file needed
 			break;
-		case VideoFeedIngester::PROVIDER_MAKER_STUDIOS:
+		case FeedIngesterFactory::PROVIDER_MAKER_STUDIOS:
 			$file = $feedIngester->downloadFeed();
 			break;
 		default:
@@ -180,8 +180,8 @@ function loadProviders ( $provider ) {
 
 	if ( empty( $provider ) ) {
 		// If no provider was specified, assume all active providers
-		$providersVideoFeed = VideoFeedIngester::activeProviders();
-	} elseif ( array_search( $provider, VideoFeedIngester::allProviders() ) !== false ) {
+		$providersVideoFeed = FeedIngesterFactory::getActiveProviders();
+	} elseif ( array_search( $provider, FeedIngesterFactory::getAllProviders() ) !== false ) {
 		// If a provider was specified, check it against the list of legal providers
 		$providersVideoFeed = [ $provider ];
 	} else {

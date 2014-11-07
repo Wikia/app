@@ -244,6 +244,7 @@ $wgAutoloadClasses[ 'CrunchyrollFeedIngester' ] = $dir . '/feedingesters/Crunchy
 $wgAutoloadClasses[ 'MakerstudiosFeedIngester' ] = $dir . '/feedingesters/MakerstudiosFeedIngester.class.php';
 
 $wgAutoloadClasses[ 'IngesterDataNormalizer' ] = $dir . '/feedingesters/IngesterDataNormalizer.class.php';
+$wgAutoloadClasses[ 'FeedIngesterFactory' ] = $dir . '/feedingesters/FeedIngesterFactory.class.php';
 
 $wgAutoloadClasses[ 'OoyalaAsset' ] = $dir . '/feedingesters/OoyalaAsset.class.php';
 

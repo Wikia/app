@@ -277,7 +277,7 @@ echo "Wiki: $wgCityId ($wgDBname)\n";
 echo "Provider: $provider\n";
 echo "Limit: $limit\n";
 
-$ingester = FeedIngesterFactory::build( $provider );
+$ingester = FeedIngesterFactory::getIngester( $provider );
 // get WikiFactory data
 $ingestionData = $ingester->getWikiIngestionData();
 if ( empty( $ingestionData ) ) {
