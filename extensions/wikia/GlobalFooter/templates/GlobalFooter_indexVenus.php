@@ -1,5 +1,5 @@
 <footer class="global-footer vertical-<?= $verticalShort ?> row">
-	<nav class="mw-content-text">
+	<nav>
 		<a href="<?= htmlspecialchars( $centralUrl ) ?>" class="footer-wikia-logo" rel="nofollow">
 			<img src="<?= $wg->BlankImgUrl ?>" height="37" width="134" alt="<?= wfMessage('venus-wikia')->escaped() ?>" title="<?= wfMessage('venus-wikia')->escaped() ?>">
 		</a>
