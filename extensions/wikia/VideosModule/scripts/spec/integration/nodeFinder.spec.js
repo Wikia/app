@@ -1,4 +1,4 @@
-describe( 'moduleInsertion', function(){
+describe('moduleInsertion', function(){
 	'use strict';
 
 	var moduleInsertion,
@@ -6,8 +6,7 @@ describe( 'moduleInsertion', function(){
 		extenderMock = document.createElement('div'),
 		h2Mock = document.createElement('h2'),
 		cloneNode,
-		id = 0;
-
+		id;
 
 	articleMock.id = 'article-content';
 	extenderMock.style.height = '200px';

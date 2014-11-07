@@ -27,15 +27,15 @@ define('videosmodule.views.inContent', [
 		var self = this;
 		this.data = this.model.fetch();
 		// Sloth is a lazy loading service that waits till an element is visible to load more content
-		sloth({
-			on: this.el,
-			threshold: 200,
-			callback: function() {
+//		sloth({
+//			on: this.el,
+//			threshold: 200,
+//			callback: function() {
 				self.data.complete(function() {
 					self.render();
 				});
-			}
-		});
+//			}
+//		});
 	};
 
 	VideoModule.prototype.render = function() {

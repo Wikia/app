@@ -1,6 +1,4 @@
-define('videosmodule.controllers.nodeFinder',
-	['wikia.document'],
-	function() {
+define('videosmodule.controllers.nodeFinder', function() {
 	'use strict';
 
 	/**
@@ -22,7 +20,7 @@ define('videosmodule.controllers.nodeFinder',
 			}
 		}
 
-		return null;
+		return container.lastChild;
 	}
 
 	return {
