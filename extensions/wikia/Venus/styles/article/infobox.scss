@@ -39,20 +39,15 @@
 		padding: 15px 8px 8px;
 		text-align: left;
 
-		%td {
+		td,
+		th {
 			overflow: hidden;
 			padding: 2px 3px 7px;
 			vertical-align: top;
 		}
 
-		td {
-			@extend %td;
-		}
-
 		th {
-			@extend %td;
 			font-weight: bold;
-			text-align: left;
 			width: 20%;
 
 			&.wikia-infobox-header {
@@ -78,7 +73,6 @@
 		}
 
 		.wikia-infobox-caption {
-			font-size: 12px;
 			text-align: center;
 		}
 	}
