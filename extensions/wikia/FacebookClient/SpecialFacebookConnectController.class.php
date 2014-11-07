@@ -197,7 +197,7 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 			$titleObj = Title::newMainPage();
 		} else if ( $returnToQuery ) {
 			// Include the return to query string if its ok to redirect
-			$queryStr = $returnToQuery . '&fbconnected=1&cb=' . rand( 1, 10000 );
+			$queryStr = urldecode( $returnToQuery ) . '&fbconnected=1&cb=' . rand( 1, 10000 );
 		}
 
 		$wg->Out->redirect( $titleObj->getFullURL( $queryStr ) );
