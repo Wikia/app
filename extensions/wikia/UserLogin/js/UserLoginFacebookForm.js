@@ -1,24 +1,19 @@
 var UserLoginFacebookForm = $.createClass(UserLoginAjaxForm, {
 
-	// extend this.inputs storing form fields
-	init: function() {
-		UserLoginFacebookForm.superclass.init.call(this);
-	},
-
 	// login token is stored in hidden field, no need to send an extra request
 	retrieveLoginToken: function() {},
 
 	// send a request to FB controller
 	ajaxLogin: function() {
 		var inputs = {
-				username: this.inputs.username.val(),
-				password: this.inputs.password.val(),
-				signupToken: this.inputs.logintoken.val(),
+			username: this.inputs.username.val(),
+			password: this.inputs.password.val(),
+			signupToken: this.inputs.logintoken.val(),
 		};
 
 		// The email box will only appear if the user has not shared their Facebook email
 		if ( this.inputs.email ) {
-			inputs['email'] = this.inputs.email.val();
+			inputs.email = this.inputs.email.val();
 		}
 
 		$.nirvana.postJson('FacebookSignupController', 'signup', inputs, $.proxy(this.submitFbSignupHandler, this));
