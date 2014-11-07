@@ -290,17 +290,16 @@ abstract class WikiaSkin extends SkinTemplate {
 	 */
 	public function getTopScripts() {
 		$scripts = '';
-		$vars = array(
+		$vars = [
 			'Wikia' => new stdClass(),
-			'wgJqueryUrl' => $this->assetsManager->getURL( 'jquery' ),
-		);
+		];
 
-		wfrunHooks( 'WikiaSkinTopScripts', array( &$vars, &$scripts, $this ) );
+		wfRunHooks( 'WikiaSkinTopScripts', array( &$vars, &$scripts, $this ) );
 
 		$scripts .= $this->renderTopShortTTLModules();
 
 		$scriptModules = array( 'amd', 'wikia.tracker.stub' );
-		wfrunHooks( 'WikiaSkinTopModules', array( &$scriptModules, $this ) );
+		wfRunHooks( 'WikiaSkinTopModules', array( &$scriptModules, $this ) );
 		if ( !empty($scriptModules) ) {
 			// Mocking mw.loader.state so the script can be loaded up high
 			// Whatever is passed to mw.loader.state is saved to window.preMwLdrSt
