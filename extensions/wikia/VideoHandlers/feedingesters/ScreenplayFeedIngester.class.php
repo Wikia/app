@@ -159,7 +159,6 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 	public function ingestVideos( $content = '', $params = array() ) {
 		wfProfileIn( __METHOD__ );
 
-		$debug = !empty( $params['debug'] );
 		$addlCategories = empty( $params['addlCategories'] ) ? array() : $params['addlCategories'];
 		$remoteAsset = !empty( $params['remoteAsset'] );
 
@@ -248,13 +247,12 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 
 				$msg = '';
 				if ( $this->isClipTypeBlacklisted( $video ) ) {
-					if ( $debug ) {
+					if ( $this->debugMode() ) {
 						$this->videoSkipped( "Skipping {$video['titleName']} ({$video['year']}) - {$video['description']}. On clip type blacklist\n" );
 					}
 				} else {
 					$createParams = [
 						'addlCategories' => $addlCategories,
-						'debug'          => $debug,
 						'remoteAsset'    => $remoteAsset,
 					];
 					$articlesCreated += $this->createVideo( $video, $msg, $createParams );

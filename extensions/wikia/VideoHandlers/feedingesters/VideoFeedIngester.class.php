@@ -47,9 +47,15 @@ abstract class VideoFeedIngester {
 
 	/** @var  IngesterDataNormalizer */
 	private $dataNormalizer;
+	private $debug;
 
-	public function __construct( $dataNormalizer ) {
+	public function __construct( $dataNormalizer, $debug = false ) {
 		$this->dataNormalizer = $dataNormalizer;
+		$this->debug = $debug;
+	}
+
+	protected function debugMode() {
+		return $this->debug;
 	}
 
 	abstract public function import( $content = '', $params = array() );
@@ -154,10 +160,9 @@ abstract class VideoFeedIngester {
 
 		$this->filterKeywords( $data['keywords'] );
 
-		$debug = !empty( $params['debug'] );
 		$remoteAsset = !empty( $params['remoteAsset'] );
 		$ignoreRecent = !empty( $params['ignorerecent'] ) ? $params['ignorerecent'] : 0;
-		if ( $debug ) {
+		if ( $this->debugMode() ) {
 			print "data after initial processing: \n";
 			foreach ( explode( "\n", var_export( $data, 1 ) ) as $line ) {
 				print ":: $line\n";
@@ -223,13 +228,13 @@ abstract class VideoFeedIngester {
 			$metadata['pageCategories'] = implode( ', ', $categories );
 			if ( !empty( $dupAssets ) ) {
 				if ( !empty( $dupAssets[0]['metadata']['sourceid'] ) && $dupAssets[0]['metadata']['sourceid'] == $id ) {
-					$result = $this->updateRemoteAsset( $id, $name, $metadata, $debug, $dupAssets[0] );
+					$result = $this->updateRemoteAsset( $id, $name, $metadata, $dupAssets[0] );
 				} else {
 					$this->videoSkipped( "Skipping {$metadata['name']} - {$metadata['description']}. SouceId not match (Id: $id).\n" );
 					return 0;
 				}
 			} else {
-				$result = $this->createRemoteAsset( $id, $name, $metadata, $debug );
+				$result = $this->createRemoteAsset( $id, $name, $metadata );
 			}
 
 			return $result;
@@ -257,7 +262,7 @@ abstract class VideoFeedIngester {
 		$videoHandlerHelper = new VideoHandlerHelper();
 		$body .= $videoHandlerHelper->addDescriptionHeader( $apiWrapper->getDescription() );
 
-		if ( $debug ) {
+		if ( $this->debugMode() ) {
 			print "Ready to create video\n";
 			print "id:          $id\n";
 			print "name:        $name\n";
@@ -310,10 +315,9 @@ abstract class VideoFeedIngester {
 	 * @param string $id
 	 * @param string $name
 	 * @param array $metadata
-	 * @param boolean $debug
 	 * @return integer
 	 */
-	protected function createRemoteAsset( $id, $name, array $metadata, $debug ) {
+	protected function createRemoteAsset( $id, $name, array $metadata ) {
 
 		$assetData = $this->generateRemoteAssetData( $name, $metadata );
 		if ( empty( $assetData['url']['flash'] ) ) {
@@ -334,7 +338,7 @@ abstract class VideoFeedIngester {
 			return 0;
 		}
 
-		if ( $debug ) {
+		if ( $this->debugMode() ) {
 			print "Ready to create remote asset\n";
 			print "id:          $id\n";
 			print "name:        $name\n";
@@ -361,11 +365,10 @@ abstract class VideoFeedIngester {
 	 * @param string $id
 	 * @param string $name
 	 * @param array $metadata
-	 * @param boolean $debug
 	 * @param array $dupAsset
 	 * @return integer
 	 */
-	protected function updateRemoteAsset( $id, $name, array $metadata, $debug, $dupAsset ) {
+	protected function updateRemoteAsset( $id, $name, array $metadata, $dupAsset ) {
 
 		if ( empty( $dupAsset['embed_code'] ) ) {
 			$this->videoWarnings( "Error when updating remote asset data: empty asset embed code.\n" );
@@ -386,7 +389,7 @@ abstract class VideoFeedIngester {
 			$assetMeta[$key] = null;
 		}
 
-		if ( $debug ) {
+		if ( $this->debugMode() ) {
 			print "Ready to update remote asset\n";
 			print "id:          $id\n";
 			print "name:        $name\n";

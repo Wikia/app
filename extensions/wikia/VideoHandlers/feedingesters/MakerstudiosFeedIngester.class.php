@@ -108,7 +108,7 @@ class MakerstudiosFeedIngester extends VideoFeedIngester {
 
 	// TODO: tie this into videoSkipped code.
 	private function debugLog( $msg ) {
-		if ( !empty( $this->params['debug'] ) ) {
+		if ( $this->debugMode() ) {
 			echo $msg . "\n";
 		}
 	}

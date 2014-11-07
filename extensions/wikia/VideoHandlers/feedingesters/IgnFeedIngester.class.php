@@ -49,7 +49,6 @@ class IgnFeedIngester extends VideoFeedIngester {
 	public function import( $content = '', $params = array() ) {
 		wfProfileIn( __METHOD__ );
 
-		$debug = !empty( $params['debug'] );
 		$ignoreRecent = empty( $params['ignorerecent'] ) ? 0 : $params['ignorerecent'];
 
 		$articlesCreated = 0;
@@ -64,7 +63,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 		foreach ( $videos as $video ) {
 			$addlCategories = empty( $params['addlCategories'] ) ? array() : $params['addlCategories'];
 
-			if ( $debug ) {
+			if ( $this->debugMode() ) {
 				print "\nraw data: \n";
 				foreach( explode( "\n", var_export( $video, 1 ) ) as $line ) {
 					print ":: $line\n";
@@ -126,7 +125,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 			$clipData['keywords'] = implode( ", ", $keywords );
 
 			$msg = '';
-			$createParams = array( 'addlCategories' => $addlCategories, 'debug' => $debug, 'ignorerecent' => $ignoreRecent );
+			$createParams = array( 'addlCategories' => $addlCategories, 'ignorerecent' => $ignoreRecent );
 			$articlesCreated += $this->createVideo( $clipData, $msg, $createParams );
 			if ( $msg ) {
 				print "ERROR: $msg\n";

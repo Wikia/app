@@ -498,14 +498,12 @@ class IvaFeedIngester extends VideoFeedIngester {
 	public function import( $content = '', $params = array() ) {
 		wfProfileIn( __METHOD__ );
 
-		$debug = !empty( $params['debug'] );
 		$remoteAsset = !empty( $params['remoteAsset'] );
 		$startDate = empty( $params['startDate'] ) ? '' : $params['startDate'];
 		$endDate = empty( $params['endDate'] ) ? '' : $params['endDate'];
 		$addlCategories = empty( $params['addlCategories'] ) ? array() : $params['addlCategories'];
 		$createParams = array(
 			'addlCategories' => $addlCategories,
-			'debug' => $debug,
 			'remoteAsset' => $remoteAsset
 		);
 

@@ -751,14 +751,6 @@ class OoyalaAsset extends WikiaModel {
 		if ( $status->isGood() ) {
 			$result = true;
 			print( "Ooyala: sent $reqPath request: \n" );
-
-			// for debugging
-			//$resp = json_decode( $req->getContent(), true );
-			//if ( !empty( $resp ) ) {
-			//	foreach( explode( "\n", var_export( $resp, true ) ) as $line ) {
-			//		print ":: $line\n";
-			//	}
-			//}
 		} else {
 			$result = false;
 			print( "ERROR: problem sending $reqPath request (".$status->getMessage().").\n" );

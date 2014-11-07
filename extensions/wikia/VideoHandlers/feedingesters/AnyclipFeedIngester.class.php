@@ -40,7 +40,6 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 		wfProfileIn( __METHOD__ );
 
 		$articlesCreated = 0;
-		$debug = !empty( $params['debug'] );
 		$addlCategories = empty( $params['addlCategories'] ) ? array() : $params['addlCategories'];
 
 		$doc = new DOMDocument( '1.0', 'UTF-8' );
@@ -144,11 +143,11 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 
 			$msg = '';
 			if ( $this->isClipTypeBlacklisted( $clipData ) ) {
-				if ( $debug ) {
+				if ( $this->debugMode() ) {
 					$this->videoSkipped( "Skipping {$clipData['titleName']} - {$clipData['description']}. On clip type blacklist\n" );
 				}
 			} else {
-				$createParams = array( 'addlCategories' => $addlCategories, 'debug' => $debug );
+				$createParams = array( 'addlCategories' => $addlCategories );
 				$articlesCreated += $this->createVideo( $clipData, $msg, $createParams );
 			}
 
