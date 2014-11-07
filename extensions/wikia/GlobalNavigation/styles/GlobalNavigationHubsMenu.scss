@@ -5,6 +5,24 @@
 @import 'skins/shared/mixins/columns';
 @import 'GlobalNavigationColors';
 
+@mixin hub-background-border-icon($color, $secondary-color, $hub-name) {
+	background: linear-gradient(to right, $color 99%, $hubsmenu-background-color);
+
+	&.active {
+		&:before {
+			background-color: $secondary-color;
+		}
+
+		&:after {
+			border-left-color: $color;
+		}
+	}
+
+	.icon {
+		background-image: url('/extensions/wikia/GlobalNavigation/images/#{$hub-name}.svg'); /* base64 */
+	}
+}
+
 .hubs-entry-point {
 	background-image: url('/extensions/wikia/GlobalNavigation/images/hubs_entry_point.svg'); /* base64 */
 	background-position: 16px center;
@@ -191,130 +209,36 @@
 		}
 	}
 
+	.anime {
+		@include hub-background-border-icon($color-vertical-anime, $color-vertical-anime-secondary, 'anime');
+	}
+
 	.books {
-		background: linear-gradient(to right, $color-vertical-books 99%, $hubsmenu-background-color);
-
-		&.active {
-			&:before {
-				background-color: $color-vertical-books-secondary;
-			}
-
-			&:after {
-				border-left-color: $color-vertical-books;
-			}
-		}
-
-		.icon {
-			background-image: url('/extensions/wikia/GlobalNavigation/images/books.svg'); /* base64 */
-		}
+		@include hub-background-border-icon($color-vertical-books, $color-vertical-books-secondary, 'books');
 	}
 
 	.comics {
-		background: linear-gradient(to right, $color-vertical-comics 99%, $hubsmenu-background-color);
-
-		&.active {
-			&:before {
-				background-color: $color-vertical-comics-secondary;
-			}
-
-			&:after {
-				border-left-color: $color-vertical-comics;
-			}
-		}
-
-		.icon {
-			background-image: url('/extensions/wikia/GlobalNavigation/images/comics.svg'); /* base64 */
-		}
+		@include hub-background-border-icon($color-vertical-comics, $color-vertical-comics-secondary, 'comics');
 	}
 
 	.games {
-		background: linear-gradient(to right, $color-vertical-games 99%, $hubsmenu-background-color);
-
-		&.active {
-			&:before {
-				background-color: $color-vertical-games-secondary;
-			}
-
-			&:after {
-				border-left-color: $color-vertical-games;
-			}
-		}
-
-		.icon {
-			background-image: url('/extensions/wikia/GlobalNavigation/images/games.svg'); /* base64 */
-		}
+		@include hub-background-border-icon($color-vertical-games, $color-vertical-games-secondary, 'games');
 	}
 
 	.lifestyle {
-		background: linear-gradient(to right, $color-vertical-lifestyle 99%, $hubsmenu-background-color);
-
-		&.active {
-			&:before {
-				background-color: $color-vertical-lifestyle-secondary;
-			}
-
-			&:after {
-				border-left-color: $color-vertical-lifestyle;
-			}
-		}
-
-		.icon {
-			background-image: url('/extensions/wikia/GlobalNavigation/images/lifestyle.svg'); /* base64 */
-		}
+		@include hub-background-border-icon($color-vertical-lifestyle, $color-vertical-lifestyle-secondary, 'lifestyle');
 	}
 
 	.movies {
-		background: linear-gradient(to right, $color-vertical-movies 99%, $hubsmenu-background-color);
-
-		&.active {
-			&:before {
-				background-color: $color-vertical-movies-secondary;
-			}
-
-			&:after {
-				border-left-color: $color-vertical-movies;
-			}
-		}
-
-		.icon {
-			background-image: url('/extensions/wikia/GlobalNavigation/images/movies.svg'); /* base64 */
-		}
+		@include hub-background-border-icon($color-vertical-movies, $color-vertical-movies-secondary, 'movies');
 	}
 
 	.music {
-		background: linear-gradient(to right, $color-vertical-music 99%, $hubsmenu-background-color);
-
-		&.active {
-			&:before {
-				background-color: $color-vertical-music-secondary;
-			}
-
-			&:after {
-				border-left-color: $color-vertical-music;
-			}
-		}
-
-		.icon {
-			background-image: url('/extensions/wikia/GlobalNavigation/images/music.svg'); /* base64 */
-		}
+		@include hub-background-border-icon($color-vertical-music, $color-vertical-music-secondary, 'music');
 	}
 
 	.tv {
-		background: linear-gradient(to right, $color-vertical-tv 99%, $hubsmenu-background-color);
-
-		&.active {
-			&:before {
-				background-color: $color-vertical-tv-secondary;
-			}
-
-			&:after {
-				border-left-color: $color-vertical-tv;
-			}
-		}
-
-		.icon {
-			background-image: url('/extensions/wikia/GlobalNavigation/images/tv.svg'); /* base64 */
-		}
+		@include hub-background-border-icon($color-vertical-tv, $color-vertical-tv-secondary, 'tv');
 	}
 }
 
