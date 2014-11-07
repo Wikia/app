@@ -22,15 +22,12 @@ class AdEngine2Hooks {
 
 		// TODO: review top and bottom vars (important for adsinhead)
 
-		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd, $wgAdDriverUseRemnantGpt,
-			   $wgLiftiumOnLoad, $wgNoExternals, $wgAdVideoTargeting, $wgEnableKruxTargeting,
+		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd,
+			   $wgLiftiumOnLoad, $wgNoExternals, $wgEnableKruxTargeting,
 			   $wgAdEngineDisableLateQueue, $wgLoadAdsInHead, $wgLoadLateAdsAfterPageLoad;
 
 		$wgNoExternals = $request->getBool( 'noexternals', $wgNoExternals );
 		$wgLiftiumOnLoad = $request->getBool( 'liftiumonload', (bool)$wgLiftiumOnLoad );
-		$wgAdVideoTargeting = $request->getBool( 'videotargetting', (bool)$wgAdVideoTargeting );
-
-		$wgAdDriverUseRemnantGpt = $request->getBool( 'gptremnant', $wgAdDriverUseRemnantGpt );
 
 		$wgAdEngineDisableLateQueue = $request->getBool( 'noremnant', $wgAdEngineDisableLateQueue );
 
@@ -89,6 +86,9 @@ class AdEngine2Hooks {
 		$vars['adslots2'] = [];                  // Queue for ads registration
 		$vars['adDriverLastDARTCallNoAds'] = []; // Used to hop by DART ads
 		$vars['adDriver2ForcedStatus'] = [];     // 3rd party code (eg. dart collapse slot template) can force AdDriver2 to respect unusual slot status
+
+		// GA vars
+		$vars['wgGaHasAds'] = isset($adContext['opts']['showAds']);
 
 		if ($wg->EnableOpenXSPC) {
 			$vars['wgEnableOpenXSPC'] = $wg->EnableOpenXSPC;

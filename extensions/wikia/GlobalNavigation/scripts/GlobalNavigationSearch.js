@@ -70,7 +70,7 @@ require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], funct
 				});
 		}
 
-		if (!browserDetect.isIOS7orLower()) {
+		if (browserDetect.isIOS7orLower()) {
 			$searchInput
 				.on('focus', function () {
 					scrollFix.scrollToTop($globalNav);

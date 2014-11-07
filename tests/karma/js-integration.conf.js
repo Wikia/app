@@ -8,7 +8,7 @@
 
 var base = require('./karma.base.conf.js');
 
-module.exports = function(config) {
+module.exports = function (config) {
 	'use strict';
 
 	base(config);
@@ -73,7 +73,12 @@ module.exports = function(config) {
 			//SpecialPromote
 			'extensions/wikia/SpecialPromote/js/spec/integration/SpecialPromote.mocks.js',
 			'extensions/wikia/SpecialPromote/js/SpecialPromote.js',
-			'extensions/wikia/SpecialPromote/js/spec/integration/SpecialPromote.spec.js'
+			'extensions/wikia/SpecialPromote/js/spec/integration/SpecialPromote.spec.js',
+
+			// Lightbox
+			'extensions/wikia/Lightbox/scripts/Lightbox.js',
+			'extensions/wikia/Lightbox/scripts/spec/integration/lightbox.spec.js'
+
 		]
 	});
 };
