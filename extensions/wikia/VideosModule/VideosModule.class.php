@@ -395,12 +395,14 @@ class VideosModule extends WikiaModel {
 	 * @param array $video
 	 * @return array
 	 */
-	protected function filterVideoDetail( $video ) {
+	protected function filterVideoDetail( Array $video ) {
 		return [
 			'title'     => $video['fileTitle'],
 			'url'       => $video['fileUrl'],
 			'thumbnail' => $video['thumbnail'],
+			'thumbUrl'  => $video['thumbUrl'],
 			'videoKey'  => $video['title'],
+			'duration'  => $video['duration'],
 			'source'    => $video['source'],
 		];
 	}
