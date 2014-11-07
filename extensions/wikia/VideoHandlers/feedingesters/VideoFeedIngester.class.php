@@ -45,6 +45,13 @@ abstract class VideoFeedIngester {
 
 	private static $WIKI_INGESTION_DATA_FIELDS = array( 'keyphrases' );
 
+	/** @var  IngesterDataNormalizer */
+	private $dataNormalizer;
+
+	public function __construct( $dataNormalizer ) {
+		$this->dataNormalizer = $dataNormalizer;
+	}
+
 	abstract public function import( $content = '', $params = array() );
 
 	/**
@@ -710,7 +717,7 @@ abstract class VideoFeedIngester {
 	 * @return string
 	 */
 	public function getIndustryRating( $rating ) {
-		return IngesterDataNormalizer::getNormalizedIndustryRating( $rating );
+		return $this->dataNormalizer->getNormalizedIndustryRating( $rating );
 	}
 
 	/**
@@ -719,7 +726,7 @@ abstract class VideoFeedIngester {
 	 * @return int
 	 */
 	public function getAgeRequired( $rating ) {
-		return IngesterDataNormalizer::getNormalizedAgeRequired( $rating );
+		return $this->dataNormalizer->getNormalizedAgeRequired( $rating );
 	}
 
 	/**
@@ -728,7 +735,7 @@ abstract class VideoFeedIngester {
 	 * @return string
 	 */
 	public function getCategory( $category ) {
-		return IngesterDataNormalizer::getNormalizedCategory( $category );
+		return $this->dataNormalizer->getNormalizedCategory( $category );
 	}
 
 	/**
@@ -737,7 +744,7 @@ abstract class VideoFeedIngester {
 	 * @return string
 	 */
 	public function getType( $type ) {
-		return IngesterDataNormalizer::getNormalizedType( $type );
+		return $this->dataNormalizer->getNormalizedType( $type );
 	}
 
 	/**
@@ -746,7 +753,7 @@ abstract class VideoFeedIngester {
 	 * @return string
 	 */
 	public function getGenre( $genre ) {
-		return IngesterDataNormalizer::getNormalizedGenre( $genre );
+		return $this->dataNormalizer->getNormalizedGenre( $genre );
 	}
 
 	/**
@@ -755,7 +762,7 @@ abstract class VideoFeedIngester {
 	 * @return string
 	 */
 	public function getPageCategory( $pageCategory ) {
-		return IngesterDataNormalizer::getNormalizedPageCategory( $pageCategory );
+		return $this->dataNormalizer->getNormalizedPageCategory( $pageCategory );
 	}
 
 	/**
@@ -781,7 +788,7 @@ abstract class VideoFeedIngester {
 	 * @return string
 	 */
 	public function getAdditionalPageCategory( $category ) {
-		return IngesterDataNormalizer::getNormalizedAdditionalPageCategory( $category );
+		return $this->dataNormalizer->getNormalizedAdditionalPageCategory( $category );
 	}
 
 	/**
@@ -792,7 +799,7 @@ abstract class VideoFeedIngester {
 	 * @return string $value
 	 */
 	public function getCLDRCode( $value, $type = 'language', $code = true ) {
-		return IngesterDataNormalizer::getCLDRCode( $value, $type, $code );
+		return $this->dataNormalizer->getCLDRCode( $value, $type, $code );
 	}
 
 	/**

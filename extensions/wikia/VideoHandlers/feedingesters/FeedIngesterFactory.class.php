@@ -52,10 +52,10 @@ class FeedIngesterFactory {
 	}
 
 
-	public static function getIngester( $provider ) {
+	public static function getIngester( $provider, $dataNormalizer ) {
 		$ingester = ucfirst( $provider ) . 'FeedIngester';
 		if( class_exists( $ingester ) ) {
-			return new $ingester();
+			return new $ingester( $dataNormalizer );
 		}
 		throw new Exception("Invalid provider name: $ingester");
 	}

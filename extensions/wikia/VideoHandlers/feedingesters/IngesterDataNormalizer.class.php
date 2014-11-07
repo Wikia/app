@@ -7,7 +7,7 @@ class IngesterDataNormalizer {
 	 * @param string $rating
 	 * @return string
 	 */
-	public static function getNormalizedIndustryRating( $rating ) {
+	public function getNormalizedIndustryRating( $rating ) {
 		$rating = trim( $rating );
 		// TODO: See if we need to preserve rating, or if we can redefine it and get rid of name
 		$name = strtolower( $rating );
@@ -59,7 +59,7 @@ class IngesterDataNormalizer {
 	 * @param string $rating
 	 * @return int
 	 */
-	public static function getNormalizedAgeRequired( $rating ) {
+	public function getNormalizedAgeRequired( $rating ) {
 		switch( $rating ) {
 			case 'M':
 			case 'R':
@@ -82,7 +82,7 @@ class IngesterDataNormalizer {
 	 * @param string $category
 	 * @return string
 	 */
-	public static function getNormalizedCategory( $category ) {
+	public function getNormalizedCategory( $category ) {
 		$category = trim( $category );
 		switch( strtolower( $category ) ) {
 			case 'movie':
@@ -189,7 +189,7 @@ class IngesterDataNormalizer {
 	 * @param string $type
 	 * @return string
 	 */
-	public static function getNormalizedType( $type ) {
+	public function getNormalizedType( $type ) {
 
 		$type = trim( $type );
 		switch( strtolower( $type ) ) {
@@ -254,7 +254,7 @@ class IngesterDataNormalizer {
 	 * @param string $genre
 	 * @return string
 	 */
-	public static function getNormalizedGenre( $genre ) {
+	public function getNormalizedGenre( $genre ) {
 		$genre = trim( $genre );
 		switch( strtolower( $genre ) ) {
 			case 'parenting & family':
@@ -303,7 +303,7 @@ class IngesterDataNormalizer {
 	 * @param string $pageCategory
 	 * @return string
 	 */
-	public static function getNormalizedPageCategory( $pageCategory ) {
+	public function getNormalizedPageCategory( $pageCategory ) {
 		$pageCategory = trim( $pageCategory );
 		switch( strtolower( $pageCategory ) ) {
 			case 'clip':
@@ -331,7 +331,7 @@ class IngesterDataNormalizer {
 	 * @param string $category
 	 * @return string
 	 */
-	public static function getNormalizedAdditionalPageCategory( $category ) {
+	public function getNormalizedAdditionalPageCategory( $category ) {
 		switch ( strtolower( $category ) ) {
 			case 'movies':
 			case 'tv':
@@ -353,7 +353,7 @@ class IngesterDataNormalizer {
 		return $additionalCategory;
 	}
 
-	public static function getCLDRCode( $value, $type, $code ) {
+	public function getCLDRCode( $value, $type, $code ) {
 		$value = trim( $value );
 		if ( !empty( $value ) ) {
 
