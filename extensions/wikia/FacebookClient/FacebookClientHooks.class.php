@@ -171,6 +171,10 @@ class FacebookClientHooks {
 			$assetsArray[] = 'facebook_client_preferences_js';
 		}
 
+		if ( $title instanceof Title && $title->isSpecial( 'FacebookConnect' ) ) {
+			$assetsArray[] = 'facebook_client_special_connect';
+		}
+
 		return true;
 	}
 

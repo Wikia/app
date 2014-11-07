@@ -81,45 +81,46 @@ window.onFBloaded = function() {
 $(function() {
 	var wpCancelClicked = false;
 
-	// Add a pretty logo to Facebook links
-	$('#pt-fbconnect,#pt-fblink,#pt-fbconvert').addClass('mw-fblink');
+//	// Add a pretty logo to Facebook links
+//	$('#pt-fbconnect,#pt-fblink,#pt-fbconvert').addClass('mw-fblink');
+//
+//	// Add the logout behavior to the "Logout of Facebook" button
+//	$('#pt-fblogout').click(function() {
+//		// TODO: Where did the fancy DHTML window go? Maybe consider jQuery Alert Dialogs:
+//		// http://abeautifulsite.net/2008/12/jquery-alert-dialogs/
+//		var logout = confirm("You are logging out of both this site and Facebook.");
+//		if (logout) {
+//			fbLogout(function () {
+//				window.location = window.fbLogoutURL;
+//			});
+//		}
+//	});
 
-	// Add the logout behavior to the "Logout of Facebook" button
-	$('#pt-fblogout').click(function() {
-		// TODO: Where did the fancy DHTML window go? Maybe consider jQuery Alert Dialogs:
-		// http://abeautifulsite.net/2008/12/jquery-alert-dialogs/
-		var logout = confirm("You are logging out of both this site and Facebook.");
-		if (logout) {
-			fbLogout(function () {
-				window.location = window.fbLogoutURL;
-			});
-		}
-	});
 
-
-	$('#wpCancel').click(function(){
-		if (!wpCancelClicked) {
-			var logout = confirm($.msg('fbconnect-logout-confirm'));
-			if (logout) {
-				wpCancelClicked = true;
-				window.FB.getLoginStatus(function(response){
-					if (response.status === 'connected' ) {
-						fbLogout(function (){
-							$('#wpCancel').click();
-						});
-					} else {
-						$('#wpCancel').click();
-					}
-				});
-			}
-			return false;
-		} else {
-			return true;
-		}
-	});
+//	$('#wpCancel').click(function(){
+//		if (!wpCancelClicked) {
+//			var logout = confirm($.msg('fbconnect-logout-confirm'));
+//			if (logout) {
+//				wpCancelClicked = true;
+//				window.FB.getLoginStatus(function(response){
+//					if (response.status === 'connected' ) {
+//						fbLogout(function (){
+//							$('#wpCancel').click();
+//						});
+//					} else {
+//						$('#wpCancel').click();
+//					}
+//				});
+//			}
+//			return false;
+//		} else {
+//			return true;
+//		}
+//	});
 
 	//window.fbAsyncInit ();
 	$("#fbconnect a").on('click', function(ev){
+		alert('clicked');
 		loginByFBConnect();
 		ev.preventDefault();
 	});
@@ -226,51 +227,51 @@ function loginByFBConnect() {
 	return false;
 }
 
-function fixXFBML(id) {
-	// BugId:19603 (IE8 specific fix)
-	if (typeof $.browser.msie != 'undefined' && typeof $.browser.version != 'undefined' && $.browser.version && $.browser.version.substring(0, $.browser.version.indexOf('.')) < 9) {
-		GlobalTriggers.bind('fbinit', function() {
-			var node = $('#' + id).parent(),
-				html = node.html();
+//function fixXFBML(id) {
+//	// BugId:19603 (IE8 specific fix)
+//	if (typeof $.browser.msie != 'undefined' && typeof $.browser.version != 'undefined' && $.browser.version && $.browser.version.substring(0, $.browser.version.indexOf('.')) < 9) {
+//		GlobalTriggers.bind('fbinit', function() {
+//			var node = $('#' + id).parent(),
+//				html = node.html();
+//
+//			// FB JS adds 'fb' namespace support in IE, regenerate FBML tags
+//			node.html('').append(html);
+//
+//			// force button to be rendered again
+//			FB.XFBML.parse(node.get(0));
+//		});
+//	}
+//}
 
-			// FB JS adds 'fb' namespace support in IE, regenerate FBML tags
-			node.html('').append(html);
+///**
+// * Wrapper for Facebook Logout
+// * @see UC-18
+// * @param callback
+// */
+//function fbLogout (callback) {
+//	'use strict';
+//	if (!window.FB) {
+//		return;
+//	}
+//
+//	window.FB.logout(function () {
+//		window.Wikia.Tracker.track({
+//			category: 'user-sign-up',
+//			trackingMethod: 'both',
+//			action: window.Wikia.Tracker.ACTIONS.SUCCESS,
+//			label: 'facebook-logout'
+//		});
+//		if (callback && typeof callback === 'function') {
+//			callback();
+//		}
+//	});
+//}
 
-			// force button to be rendered again
-			FB.XFBML.parse(node.get(0));
-		});
-	}
-}
-
-/**
- * Wrapper for Facebook Logout
- * @see UC-18
- * @param callback
- */
-function fbLogout (callback) {
-	'use strict';
-	if (!window.FB) {
-		return;
-	}
-
-	window.FB.logout(function () {
-		window.Wikia.Tracker.track({
-			category: 'user-sign-up',
-			trackingMethod: 'both',
-			action: window.Wikia.Tracker.ACTIONS.SUCCESS,
-			label: 'facebook-logout'
-		});
-		if (callback && typeof callback === 'function') {
-			callback();
-		}
-	});
-}
-
-// BugId:19767 - fix FBconnect button on Special:Connect
-$(function() {
-	if (window.wgCanonicalSpecialPageName === 'Connect') {
-		$.loadFacebookAPI( function() {
-			fixXFBML('fbSpecialConnect');
-		});
-	}
-});
+//// BugId:19767 - fix FBconnect button on Special:Connect
+//$(function() {
+//	if (window.wgCanonicalSpecialPageName === 'Connect') {
+//		$.loadFacebookAPI( function() {
+//			fixXFBML('fbSpecialConnect');
+//		});
+//	}
+//});
