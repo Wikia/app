@@ -16,7 +16,7 @@ class ArticleNavigationController extends WikiaController {
 
 	public function share() {
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
-		$this->services = self::prepareShareServicesData();
+		$this->services = $this->prepareShareServicesData();
 	}
 
 	/**
@@ -24,17 +24,23 @@ class ArticleNavigationController extends WikiaController {
 	 *
 	 * @return Array
 	 */
-	private static function prepareShareServicesData() {
+	private function prepareShareServicesData() {
 		global $wgArticleNavigationShareServices;
 
-		$services = $wgArticleNavigationShareServices;
-		$location = 'http://' . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
+		$protocol = ( !empty( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443 ) ? 'https://' : 'http://';
+		$location = $protocol . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+		$services = [];
 
-		for ($i = sizeof( $services ) - 1; $i >= 0 ; $i--) {
-			$services[$i]['full_url'] = str_replace( '$1', urlencode( $location ), $services[$i]['url'] );
-			$services[$i]['name_cased'] = ucfirst( $services[$i]['name'] );
-			if ( !array_key_exists( 'title', $services[$i] ) ) {
-				$services[$i]['title'] = $services[$i]['name_cased'];
+		foreach ($wgArticleNavigationShareServices as $service ) {
+			if ( array_key_exists( 'url', $service ) && array_key_exists( 'name', $service ) ) {
+				$service['full_url'] = str_replace( '$1', urlencode( $location ), $service['url'] );
+				$service['name_cased'] = ucfirst( $service['name'] );
+
+				if ( !array_key_exists('title', $service ) ) {
+					$service['title'] = $service['name_cased'];
+				}
+
+				$services[] = $service;
 			}
 		}
 
