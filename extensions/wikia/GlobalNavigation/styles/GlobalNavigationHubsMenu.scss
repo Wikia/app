@@ -316,6 +316,25 @@
 			background-image: url('/extensions/wikia/GlobalNavigation/images/tv.svg'); /* base64 */
 		}
 	}
+
+	.anime {
+		background: linear-gradient(to right, $color-vertical-anime 99%, $hubsmenu-background-color);
+
+		&.active {
+			&:before {
+				background-color: $color-vertical-anime-secondary;
+			}
+
+			&:after {
+				border-left-color: $color-vertical-anime;
+			}
+		}
+
+		.icon {
+			background-image: url('/extensions/wikia/GlobalNavigation/images/anime.svg'); /* base64 */
+			background-position: 22px center;
+		}
+	}
 }
 
 @media #{$small-only} {
