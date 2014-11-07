@@ -5,7 +5,7 @@ class CuratedContentModelTest extends WikiaBaseTest
 
 	public function setUp() {
 		global $IP;
-		$this->setupFile = "{$IP}/extensions/CuratedContent/CuratedContent.setup.php";
+		$this->setupFile = "{$IP}/extensions/wikia/CuratedContent/CuratedContent.setup.php";
 		parent::setUp();
 	}
 
