@@ -378,12 +378,6 @@ var UserProfilePage = {
 		$formFields.keypress( change );
 
 		UserProfilePage.toggleJoinMoreWikis();
-
-		// Make 'feed preferences' link open in a new page
-		$( '#facebookPage a' ).click(function( event ) {
-			event.preventDefault();
-			window.open( $( this ).attr( 'href' ) );
-		});
 	},
 
 	saveUserData: function() {

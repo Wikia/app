@@ -320,9 +320,6 @@ class UserProfilePageController extends WikiaController {
 				$this->setVal('avatarsDisabled', true);
 				$this->setVal('avatarsDisabledMsg', wfMessage('user-identity-avatars-maintenance')->text());
 			}
-
-			//we'll implement interview section later
-			//$this->setVal( 'interviewQuestions', $this->profilePage->getInterviewQuestions( $wikiId, false, true ) );
 		}
 
 		wfProfileOut(__METHOD__);
@@ -337,30 +334,25 @@ class UserProfilePageController extends WikiaController {
 	 * @desc Mainly passes two variables to the template: tabs, selectedTab but also if it's about tab or avatar uses private method to pass more data
 	 */
 	public function renderLightbox() {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
-		$selectedTab = $this->getVal('tab');
-		$userId = $this->getVal('userId');
-		$sessionUser = $this->wg->User;
+		$selectedTab = $this->getVal( 'tab' );
+		$userId = $this->getVal( 'userId' );
 
-		$tabs = array(
-			array('id' => 'avatar', 'name' => wfMsg('user-identity-box-avatar')),
-			array('id' => 'about', 'name' => wfMsg('user-identity-box-about-me')),
-			//array( 'id' => 'interview', 'name' => 'User Interview' ), //not yet --nAndy, 2011-06-15
-		);
+		$tabs = [
+			['id' => 'avatar', 'name' => wfMessage('user-identity-box-avatar')->plain()],
+			['id' => 'about', 'name' => wfMessage('user-identity-box-about-me')->plain()],
+		];
 
-		$this->renderAvatarLightbox($userId);
-		$this->renderAboutLightbox($userId);
+		$this->renderAvatarLightbox( $userId );
+		$this->renderAboutLightbox( $userId );
 
-		$this->setVal('tabs', $tabs);
-		$this->setVal('selectedTab', $selectedTab);
-		$this->setVal('isUserPageOwner', (($userId == $sessionUser->getId()) ? true : false));
+		$this->setVal( 'tabs', $tabs );
+		$this->setVal( 'selectedTab', $selectedTab );
 
-		$this->setVal('wgBlankImgUrl', $this->wg->BlankImgUrl);
+		$this->setVal( 'wgBlankImgUrl', $this->wg->BlankImgUrl );
 
-		$this->setVal('facebookPrefsLink', Skin::makeSpecialUrl('Preferences'));
-
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 	}
 
 	public function saveInterviewAnswers() {
@@ -395,7 +387,7 @@ class UserProfilePageController extends WikiaController {
 	}
 
 	/**
-	 * @brief Recives data from AJAX call, validates and saves new user data
+	 * @brief Receives data from AJAX call, validates and saves new user data
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
@@ -458,48 +450,47 @@ class UserProfilePageController extends WikiaController {
 	 * @param integer $userId id of user which avatar is going to be saved; taken from request if not given
 	 * @param object $data data object with source of file and url/name of avatar's file; taken from request if not given
 	 *
+	 * @return bool
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	public function saveUsersAvatar($userId = null, $data = null) {
-		wfProfileIn(__METHOD__);
+	public function saveUsersAvatar( $userId = null, $data = null ) {
+		wfProfileIn( __METHOD__ );
 
-		if (is_null($userId)) {
-			$user = User::newFromId($this->getVal('userId'));
+		if ( is_null( $userId ) ) {
+			$user = User::newFromId( $this->getVal( 'userId' ) );
 		} else {
-			$user = User::newFromId($userId);
+			$user = User::newFromId( $userId );
 		}
 
-		$isAllowed = ($this->app->wg->User->isAllowed('editprofilev3') || intval($user->getId()) === intval($this->app->wg->User->getId()));
+		$isAllowed = (
+			$this->app->wg->User->isAllowed('editprofilev3') ||
+			$user->getId() == $this->app->wg->User->getId()
+		);
 
-		if (is_null($data)) {
-			$data = json_decode($this->getVal('data'));
+		if ( is_null( $data ) ) {
+			$data = json_decode( $this->getVal( 'data' ) );
 		}
 
-		$errorMsg = wfMsg('userprofilepage-interview-save-internal-error');
-		$result = array('success' => true, 'error' => $errorMsg);
-
-		if ($isAllowed && isset($data->source) && isset($data->file)) {
-			switch ($data->source) {
+		if ( $isAllowed && isset( $data->source ) && isset( $data->file ) ) {
+			switch ( $data->source ) {
 				case 'sample':
-					$user->setOption('avatar', $data->file);
+					$user->setOption( 'avatar', $data->file );
 					break;
-				case 'facebook':
 				case 'uploaded':
-					$avatar = $this->saveAvatarFromUrl($user, $data->file, $errorMsg);
-					$user->setOption('avatar', $avatar);
+					$errorMsg = wfMsg( 'userprofilepage-interview-save-internal-error' );
+					$avatar = $this->saveAvatarFromUrl( $user, $data->file, $errorMsg );
+					$user->setOption( 'avatar', $avatar );
 					break;
 				default:
-					array('success' => false, 'error' => $errorMsg);
-					wfMsg('userprofilepage-interview-save-internal-error');
 					break;
 			}
 
 			// TODO: $user->getTouched() get be used to invalidate avatar URLs instead
-			$user->setOption('avatar_rev', date('U'));
+			$user->setOption( 'avatar_rev', date( 'U' ) );
 			$user->saveSettings();
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -507,7 +498,7 @@ class UserProfilePageController extends WikiaController {
 	 * @brief Gets avatar from url, saves it on server and resize it if needed then returns path
 	 *
 	 * @param User $user user object
-	 * @param string $url url to user's facebook avatar
+	 * @param string $url url to user's avatar
 	 * @param string $errorMsg reference to a string variable where errors messages are returned
 	 *
 	 * @return string | boolean
@@ -651,9 +642,8 @@ class UserProfilePageController extends WikiaController {
 	 * @brief Validates file upload (whenever it's regular upload or by-url upload) and sets status and errorMsg
 	 *
 	 * @param integer $errorNo variable being checked
-	 * @param string $status status depends on value of $errorNo can be returned as 'error' or 'success'
-	 * @param string $errorMsg error message for humans
 	 *
+	 * @return String
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	private function validateUpload($errorNo) {
@@ -736,7 +726,7 @@ class UserProfilePageController extends WikiaController {
 	 * to uploadFile, but instead of having the file come from the user's computer, it comes
 	 * from the supplied URL.
 	 *
-	 * @param String $url        the full URL of an image to download and apply as the user's Avatar i.e. user's facebook avatar
+	 * @param String $url        the full URL of an image to download and apply as the user's Avatar
 	 * @param array $userData    user data array; contains: user id (key: userId), full page url (fullPageUrl), user name (username)
 	 * @param String $errorMsg          optional string containing details on what went wrong if there is an UPLOAD_ERR_EXTENSION
 	 *
@@ -773,23 +763,28 @@ class UserProfilePageController extends WikiaController {
 	/**
 	 * @brief Passes more data to the template to render avatar modal box
 	 *
+	 * @param int $userId
+	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	private function renderAvatarLightbox($userId) {
-		wfProfileIn(__METHOD__);
+	private function renderAvatarLightbox( $userId ) {
+		wfProfileIn( __METHOD__ );
 
-		$user = User::newFromId($userId);
+		$user = User::newFromId( $userId );
 
-		$this->setVal('defaultAvatars', $this->getDefaultAvatars());
-		$this->setVal('isUploadsPossible', $this->wg->EnableUploads && $this->wg->User->isAllowed('upload') && empty($this->wg->AvatarsMaintenance));
+		$this->setVal( 'defaultAvatars', $this->getDefaultAvatars() );
+		$this->setVal( 'isUploadsPossible',
+			$this->wg->EnableUploads &&
+			$this->wg->User->isAllowed( 'upload' ) &&
+			empty( $this->wg->AvatarsMaintenance )
+		);
 
-		$this->setVal('avatarName', $user->getOption('avatar'));
-		$this->setVal('userId', $userId);
-		$this->setVal('avatarMaxSize', self::AVATAR_MAX_SIZE);
-		$this->setVal('avatar', AvatarService::renderAvatar($user->getName(), self::AVATAR_DEFAULT_SIZE) );
-		$this->setVal('fbAvatarConnectButton', '<fb:login-button perms="user_about_me" onlogin="UserProfilePage.fbConnectAvatar();">' . wfMsg('user-identity-box-connect-to-fb') . '</fb:login-button>');
+		$this->setVal( 'avatarName', $user->getOption( 'avatar' ) );
+		$this->setVal( 'userId', $userId );
+		$this->setVal( 'avatarMaxSize', self::AVATAR_MAX_SIZE );
+		$this->setVal( 'avatar', AvatarService::renderAvatar( $user->getName(), self::AVATAR_DEFAULT_SIZE ) );
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -829,12 +824,14 @@ class UserProfilePageController extends WikiaController {
 	/**
 	 * @brief Passes more data to the template to render about modal box
 	 *
+	 * @param int $userId
+	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	private function renderAboutLightbox($userId) {
-		wfProfileIn(__METHOD__);
+	private function renderAboutLightbox( $userId ) {
+		wfProfileIn( __METHOD__ );
 
-		$user = User::newFromId($userId);
+		$user = User::newFromId( $userId );
 
 		/**
 		 * @var $userIdentityBox UserIdentityBox
@@ -843,184 +840,20 @@ class UserProfilePageController extends WikiaController {
 
 		$userData = $userIdentityBox->getFullData();
 
-		$this->setVal('user', $userData);
-		$this->setVal('fbConnectButton', '<fb:login-button perms="user_about_me,user_birthday,user_location,user_work_history,user_website" onlogin="UserProfilePage.fbConnect();">' . wfMsg('user-identity-box-connect-to-fb') . '</fb:login-button>');
+		$this->setVal( 'user', $userData );
 
-		$this->setVal('charLimits', array(
+		$this->setVal( 'charLimits', [
 			'name' => UserIdentityBox::USER_NAME_CHAR_LIMIT,
 			'location' => UserIdentityBox::USER_LOCATION_CHAR_LIMIT,
 			'occupation' => UserIdentityBox::USER_OCCUPATION_CHAR_LIMIT,
 			'gender' => UserIdentityBox::USER_GENDER_CHAR_LIMIT,
-		));
+		] );
 
-		if (!empty($userData['birthday']['month'])) {
-			$this->setVal('days', cal_days_in_month(CAL_GREGORIAN, $userData['birthday']['month'], 2000 /* leap year */));
+		if ( !empty( $userData['birthday']['month'] ) ) {
+			$this->setVal( 'days', cal_days_in_month( CAL_GREGORIAN, $userData['birthday']['month'], 2000 /* leap year */ ) );
 		}
 
-		wfProfileOut(__METHOD__);
-	}
-
-
-
-
-	/**
-	 *
-	 * @brief create preview for avatar from FB
-	 *
-	 * @author Tomasz Odrobny
-	 */
-
-	public function onFacebookConnectAvatar() {
-		wfProfileIn(__METHOD__);
-
-		$user = $this->app->wg->User;
-
-		$result = array('success' => false, 'error' => wfMsg('userprofilepage-interview-save-internal-error'));
-		$this->setVal('result', $result);
-
-		if (!$user->isAnon()) {
-			/**
-			 * @var $fbConnectAPI FBConnectAPI
-			 */
-			$fbConnectAPI = new FBConnectAPI();
-			$fbUserId = $fbConnectAPI->user();
-
-			$userFbData = $fbConnectAPI->getUserInfo(
-				$fbUserId,
-				array('pic_big')
-			);
-
-			/**
-			 * @var $oAvatarObj Masthead
-			 */
-			$oAvatarObj = Masthead::newFromUser($user);
-			$tmpFile = '';
-			$oAvatarObj->uploadByUrlToTempFile($userFbData['pic_big'], $tmpFile);
-
-			$fileuploader = new WikiaTempFilesUpload();
-			$thumbnail = $this->storeInTempImage($tmpFile, $fileuploader);
-
-			$result = array('success' => true, 'avatar' => $thumbnail->url . '?cb=' . date('U'));
-			$this->setVal('result', $result);
-		}
-
-		wfProfileOut(__METHOD__);
-		return true;
-	}
-
-	/**
-	 * @brief Gets facebook user data from database or tries to connect via FB API and get those data then returns it as a JSON data
-	 *
-	 * @desc Checks if user is logged-in only because we decided to put facebook connect button only for owners of a profile; staff can not see the button
-	 *
-	 * @author Andrzej 'nAndy' Łukaszewski
-	 */
-	public function onFacebookConnect() {
-		wfProfileIn(__METHOD__);
-
-		$user = $this->app->wg->User;
-		//$result = array('success' => false);
-
-		if (!$user->isAnon()) {
-			/** @var $fb_ids FBConnectDB */
-			$fb_ids = FBConnectDB::getFacebookIDs($user);
-			$fbConnectAPI = new FBConnectOpenGraphAPI();
-
-			if (count($fb_ids) > 0) {
-				$fbUserId = $fb_ids[0];
-			} else {
-				$fbUserId = $fbConnectAPI->user();
-			}
-
-			if ($fbUserId > 0) {
-				$userFbData = $fbConnectAPI->getUserInfo(
-					$fbUserId,
-					array('first_name, current_location, hometown_location, work_history, profile_url, sex, birthday_date, pic_big, website')
-				);
-				$userFbData = $this->cleanFbData($userFbData);
-
-				$result = array('success' => true, 'fbUser' => $userFbData);
-			} else {
-				$result = array('success' => false, 'error' => wfMsg('user-identity-box-invalid-fb-id-error'));
-			}
-		} else {
-			$result = array('success' => false, 'error' => wfMsg('userprofilepage-interview-save-internal-error'));
-		}
-
-		$this->setVal('result', $result);
-
-		wfProfileOut(__METHOD__);
-	}
-
-	/**
-	 * @brief Clears all data recivied from Facebook so all of them are strings
-	 *
-	 * @param array $fbData facebook user data recivied from FBConnectAPI::getUserInfo()
-	 *
-	 * @return array
-	 *
-	 * @author Andrzej 'nAndy' Łukaszewski
-	 */
-	private function cleanFbData($fbData) {
-		unset($fbData['uid']);
-
-		foreach ($fbData as $key => $data) {
-			if (!is_string($data)) {
-				switch ($key) {
-					case 'work_history':
-						$fbData['work_history'] = $this->extractFbFirstField($fbData['work_history'], 'position');
-						break;
-					case 'current_location':
-						$fbData['current_location'] = $this->extractFbFirstField($fbData['current_location'], 'city');
-						break;
-				}
-			}
-		}
-
-		if (!empty($fbData['website'])) {
-			$websites = nl2br($fbData['website']);
-			$websites = explode('<br />', $websites);
-			$fbData['website'] = (isset($websites[0]) ? $websites[0] : '');
-		}
-
-		if (empty($fbData['current_location'])) {
-			$this->extractFbFirstField($fbData['hometown_location'], 'city');
-		} else {
-			unset($fbData['hometown_location']);
-		}
-
-		if (!empty($fbData['first_name'])) {
-			$fbData['name'] = $fbData['first_name'];
-			unset($fbData['first_name']);
-		}
-
-		return $fbData;
-	}
-
-	/**
-	 * @brief Searches for a string data to return
-	 *
-	 * @param array | string    $fbData data from facebook
-	 * @param string            $field of an array which we want to find and return
-	 *
-	 * @return string
-	 *
-	 * @author Andrzej 'nAndy' Łukaszewski
-	 */
-	private function extractFbFirstField($fbData, $field = null) {
-		if (is_null($field)) {
-			return '';
-		}
-
-		if (!empty($fbData[$field]) && is_string($fbData[$field])) {
-			return $fbData[$field];
-		}
-
-		if (!empty($fbData[0]) && !empty($fbData[0][$field])) {
-			return $fbData[0][$field];
-		}
-
-		return '';
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**

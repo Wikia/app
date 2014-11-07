@@ -270,8 +270,12 @@ class UrlGenerator {
 		$imagePath .= $this->modePath();
 
 		if (!empty($this->query)) {
-			ksort($this->query); // ensure that the keys we use will be ordered deterministically
-			$imagePath .= '?'.http_build_query($this->query);
+			// ensure that the keys we use will be ordered deterministically
+			ksort($this->query);
+			$queryString = http_build_query($this->query);
+
+			// Don't add a floating '?' if queryString ends up empty (e.g. if a valueless param is given)
+			$imagePath .= strlen( $queryString ) > 0 ? '?'.$queryString : '';
 		}
 
 		return $this->domainShard($imagePath);
