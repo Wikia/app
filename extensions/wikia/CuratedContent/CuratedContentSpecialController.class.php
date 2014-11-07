@@ -57,19 +57,19 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		] );
 
 		$this->response->setVal( 'addTag', wfMsg( 'wikiaCuratedContent-content-add-tag' ) );
-		$this->response->setVal( 'addCategory', wfMsg( 'wikiaCuratedContent-content-add-category' ) );
+		$this->response->setVal( 'addItem', wfMsg( 'wikiaCuratedContent-content-add-item' ) );
 		$this->response->setVal( 'save', wfMsg( 'wikiaCuratedContent-content-save' ) );
 
 		$this->response->setVal( 'tag_placeholder', wfMsg( 'wikiaCuratedContent-content-tag' ) );
-		$this->response->setVal( 'category_placeholder', wfMsg( 'wikiaCuratedContent-content-category' ) );
+		$this->response->setVal( 'item_placeholder', wfMsg( 'wikiaCuratedContent-content-item' ) );
 		$this->response->setVal( 'name_placeholder', wfMsg( 'wikiaCuratedContent-content-name' ) );
 
 
-		$categoryTemplate = $this->sendSelfRequest( 'category' )->toString();
+		$itemTemplate = $this->sendSelfRequest( 'item' )->toString();
 		$tagTemplate = $this->sendSelfRequest( 'tag' )->toString();
 
 		$this->wg->Out->addJsConfigVars( [
-			'categoryTemplate' => $categoryTemplate,
+			'itemTemplate' => $itemTemplate,
 			'tagTemplate' => $tagTemplate
 		] );
 
@@ -85,11 +85,11 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 				] );
 
 				if ( !empty( $tag[ 'categories' ] ) ) {
-					foreach ( $tag[ 'categories' ] as $category ) {
+					foreach ( $tag[ 'categories' ] as $item ) {
 						$list .= $this->sendSelfRequest( 'category', [
-							'category_value' => $category[ 'title' ],
-							'name_value' => !empty( $category[ 'label' ] ) ? $category[ 'label' ] : '',
-							'image_id' => $category[ 'image_id' ]
+							'category_value' => $item[ 'title' ],
+							'name_value' => !empty( $item[ 'label' ] ) ? $item[ 'label' ] : '',
+							'image_id' => $item[ 'image_id' ]
 						] );
 					}
 				}
@@ -98,7 +98,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			$this->response->setVal( 'list', $list );
 		} else {
 			$this->response->setVal( 'tag', $tagTemplate );
-			$this->response->setVal( 'category', $categoryTemplate );
+			$this->response->setVal( 'item', $itemTemplate );
 		}
 
 		return true;

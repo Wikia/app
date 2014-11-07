@@ -4,24 +4,24 @@ $(function(){
 		'use strict';
 
 		var d = document,
-			category = mw.config.get('categoryTemplate'),
+			item = mw.config.get('itemTemplate'),
 			tag = mw.config.get('tagTemplate'),
 			duplicateError = msg('wikiaCuratedContent-content-duplicate-entry'),
 			requiredError = msg('wikiaCuratedContent-content-required-entry'),
 			emptyTagError = msg('wikiaCuratedContent-content-empty-tag'),
-			categoryError = msg('wikiaCuratedContent-content-category-error'),
-			addCategory = d.getElementById('addCategory'),
+			itemError = msg('wikiaCuratedContent-content-item-error'),
+			addItem = d.getElementById('addItem'),
 			addTag = d.getElementById('addTag'),
 			$save = $(d.getElementById('save')),
 			form = d.getElementById('contentManagmentForm'),
 			$form = $(form),
 			ul = form.getElementsByTagName('ul')[0],
 			$ul = $(ul),
-			//it looks better if we display in input category name without Category:
+			//it looks better if we display in input item name without Item:
 			categoryId = wgNamespaceIds.category,
 			categoryName = wgFormattedNamespaces[categoryId] + ':',
 			setup = function(elem){
-				(elem || $ul.find('.cat-input')).autocomplete({
+				(elem || $ul.find('.item-input')).autocomplete({
 					serviceUrl: wgServer + wgScript,
 					params: {
 						action: 'ajax',
@@ -63,10 +63,10 @@ $(function(){
 
 				if(elem) {
 					elem.after(row);
-					cat = elem.next().find('.cat-input');
+					cat = elem.next().find('.item-input');
 				}else{
 					$ul.append(row);
-					cat = $ul.find('.cat-input:last');
+					cat = $ul.find('.item-input:last');
 				}
 
 				setup(cat);
@@ -110,7 +110,7 @@ $(function(){
 				$save.removeClass();
 
 				checkInputs($ul.find('.tag-input'), true);
-				checkInputs($ul.find('.cat-input'), true, true);
+				checkInputs($ul.find('.item-input'), true, true);
 
 				$ul.find('.tag').each(function(){
 					var $t = $(this),
@@ -148,7 +148,7 @@ $(function(){
 			.on('blur', 'input', function(){
 				var val = $.trim(this.value);
 
-				if(this.className == 'cat-input') {
+				if(this.className == 'item-input') {
 					val = val.replace(/ /g, '_');
 				}
 
@@ -157,14 +157,14 @@ $(function(){
 				checkForm();
 			})
 			.on('keypress', '.name', function(ev){
-				if(ev.keyCode === 13) addNew(category, $(this).parent());
+				if(ev.keyCode === 13) addNew(item, $(this).parent());
 			})
-			.on('keypress', '.cat-input, .tag-input', function(ev){
+			.on('keypress', '.item-input, .tag-input', function(ev){
 				if(ev.keyCode === 13) $(this).next().focus();
 			});
 
-		$(addCategory).on('click', function(){
-			addNew(category);
+		$(addItem).on('click', function(){
+			addNew(item);
 		});
 
 		$(addTag).on('click', function(){
@@ -175,7 +175,7 @@ $(function(){
 			li = $(li);
 
 			return {
-				title: li.find('.cat-input').val(),
+				title: li.find('.item-input').val(),
 				label: li.find('.name').val(),
 				image_id: li.find('.image').data('id') || 0
 			}
@@ -187,7 +187,7 @@ $(function(){
 				nonameId = 0;
 
 			if(checkForm()) {
-				$ul.find('.category:not(.tag ~ .category)').each(function(){
+				$ul.find('.item:not(.tag ~ .item)').each(function(){
 					nonames.push(getData(this));
 				});
 
@@ -234,7 +234,7 @@ $(function(){
 						if(data.error) {
 							var err = data.error,
 								i = err.length,
-								categories = $form.find('.cat-input');
+								categories = $form.find('.item-input');
 
 							while(i--){
 								//I cannot use value CSS selector as I want to use current value
@@ -244,7 +244,7 @@ $(function(){
 											.addClass('error')
 											.popover('destroy')
 											.popover({
-												content: categoryError
+												content: itemError
 											});
 
 										return false;
@@ -321,7 +321,7 @@ $(function(){
 
 					$this.removeClass('photo-remove');
 
-					loadImage(wgFormattedNamespaces[wgNamespaceIds.category] + ':' + $line.find('.cat-input').val(), true);
+					loadImage(wgFormattedNamespaces[wgNamespaceIds.category] + ':' + $line.find('.item-input').val(), true);
 				})
 				.on('click', '.photo:not(.photo-remove), .image', function(){
 					$currentImage = $(this).parent().find('.image');

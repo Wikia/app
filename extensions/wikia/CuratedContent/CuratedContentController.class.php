@@ -157,8 +157,8 @@ class CuratedContentController extends WikiaController {
 	 *
 	 * @return {}
 	 *
-	 * getList - list of tags on a wiki or list of all categories if GGCMT was not used (this will be cached)
-	 * getList&offset='' - next page of categories if no tages were given
+	 * getList - list of tags on a wiki or list of all items if GGCMT was not used (this will be cached)
+	 * getList&offset='' - next page of items if no tages were given
 	 * getList&tag='' - list of all members of a given tag
 	 *
 	 */
@@ -227,7 +227,7 @@ class CuratedContentController extends WikiaController {
 		$content = $this->wg->WikiaCuratedContent;
 
 		if ( empty( $content ) ) {
-			$this->getCategories();
+			$this->getItems();
 		} else {
 			$tag = $this->request->getVal( 'tag' );
 
@@ -244,40 +244,40 @@ class CuratedContentController extends WikiaController {
 
 	/**
 	 *
-	 * Returns list of categories on a wiki in batches by self::LIMIT
+	 * Returns list of items on a wiki in batches by self::LIMIT
 	 *
 	 * @requestParam Integer limit
 	 * @requestParam String offset
 	 *
-	 * @response categories
+	 * @response items
 	 * @response offset
 	 */
-	private function getCategories(){
+	private function getItems(){
 		wfProfileIn( __METHOD__ );
 
 		$limit = $this->request->getVal( 'limit', self::LIMIT * 2 );
 		$offset = $this->request->getVal( 'offset', '' );
 
-		$categories = WikiaDataAccess::cache(
+		$items = WikiaDataAccess::cache(
 			wfMemcKey( __METHOD__, $offset, $limit, self::NEW_API_VERSION ),
 			6 * self::HOURS,
 			function() use ( $limit, $offset ) {
 				return ApiService::call(
 					[
 						'action' => 'query',
-						'list' => 'allcategories',
+						'list' => 'allitems',
 						'redirects' => true,
 						'aclimit' => $limit,
 						'acfrom' => $offset,
 						'acprop' => 'id|size',
-						//We don't want empty categories to show up
+						//We don't want empty items to show up
 						'acmin' => 1
 					]
 				);
 			}
 		);
 
-		$allCategories = $categories['query']['allcategories'];
+		$allItems = $items['query']['allcategories'];
 
 		if ( !empty( $allCategories ) ) {
 
