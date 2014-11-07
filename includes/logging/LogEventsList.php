@@ -672,7 +672,7 @@ class LogEventsList {
 		$s = '';
 		if( $logBody ) {
 			if ( $msgKey[0] ) {
-				$s = '<div class="'.WARN_BOX_DIV_CLASS.'">';
+				$s = '<div class="'.LogEventsList::WARN_BOX_DIV_CLASS.'">';
 
 				if ( count( $msgKey ) == 1 ) {
 					$s .= wfMsgExt( $msgKey[0], array( 'parse' ) );
