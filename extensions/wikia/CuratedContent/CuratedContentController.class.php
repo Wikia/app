@@ -225,7 +225,6 @@ class CuratedContentController extends WikiaController {
 		$this->response->setFormat( 'json' );
 
 		$content = $this->wg->WikiaCuratedContent;
-
 		if ( empty( $content ) ) {
 			$this->getCategories();
 		} else {

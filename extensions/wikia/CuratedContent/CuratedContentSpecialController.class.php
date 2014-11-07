@@ -153,44 +153,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$this->response->setFormat( 'json' );
 
 		$tags = $this->request->getArray( 'tags' );
-		$err = [ ];
-
-		if ( !empty( $tags ) ) {
-			foreach ( $tags as &$tag ) {
-
-				$tag = $this->parseImageIdToInt( $tag );
-
-				if ( !empty( $tag[ 'categories' ] ) ) {
-					foreach ( $tag[ 'categories' ] as &$row ) {
-						$row = $this->parseImageIdToInt( $row );
-						$type = $this->extractType( $row[ 'title' ] );
-						$row[ 'type' ] = $type;
-						$title = $this->getTitle( $row, $type );
-
-						switch ( $type ) {
-							case 'category':
-								$this->getCategoryPageId( $title, $err, $row );
-								break;
-							case 'user_blog':
-								$tit = Title::newFromText( $title, 500 );
-								$row[ 'id' ] = $tit->getArticleId();
-								$row[ 'test' ] = $tit->getFullUrl();
-								break;
-							case 'file':
-								$tit = Title::newFromText( $title, 6 );
-								$mediaService = new MediaQueryService();
-								$row[ 'test' ] = $mediaService->getMediaData( $tit );
-
-
-								break;
-							case false:
-								$this->getArticlePageId( $title, $row, $err );
-								break;
-						}
-					}
-				}
-			}
-		}
+		$err = $this->saveLogic( $tags );
 
 		if ( !empty( $err ) ) {
 			$this->response->setVal( 'error', $err );
@@ -268,6 +231,14 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		return false;
 	}
 
+	private function extractFileType( $type ) {
+		$validTypes = [ 'video', 'image' ];
+		if ( in_array( $type, $validTypes ) ) {
+			return $type;
+		}
+		return false;
+	}
+
 	/**
 	 * @param $title
 	 * @param $err
@@ -288,10 +259,10 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	 * @param $type
 	 * @return string
 	 */
-	private function getTitle( $row, $type ) {
-		$title = $row[ 'title' ];
+	private function getTitle( $rawTitle, $type ) {
+		$title = $rawTitle;
 		if ( $type ) {
-			$title = substr( $row[ 'title' ], strlen( $type ) + 1 );
+			$title = substr( $rawTitle, strlen( $type ) + 1 );
 		};
 		return $title;
 	}
@@ -308,5 +279,75 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			$err[ ] = $row[ 'title' ];
 		}
 		$row[ 'id' ] = $pageId;
+	}
+
+	/**
+	 * @param $title
+	 * @param $row
+	 * @return array
+	 */
+	private function getBlogArticleId( $title, &$row ) {
+		$tit = Title::newFromText( $title, 500 );
+		$row[ 'id' ] = $tit->getArticleId();
+	}
+
+	/**
+	 * @param $tags
+	 * @return array
+	 */
+	private function saveLogic( &$tags ) {
+		$mediaService = new MediaQueryService();
+		$err = [ ];
+		if ( !empty( $tags ) ) {
+			foreach ( $tags as &$tag ) {
+				$tag = $this->parseImageIdToInt( $tag );
+				if ( !empty( $tag[ 'categories' ] ) ) {
+					foreach ( $tag[ 'categories' ] as &$row ) {
+						$row = $this->parseImageIdToInt( $row );
+						$rawTitle = $row[ 'title' ];
+						$type = $this->extractType( $rawTitle );
+						$title = $this->getTitle( $rawTitle, $type );
+						$validType = $type;
+						switch ( $type ) {
+							case 'category':
+								$this->getCategoryPageId( $title, $err, $row );
+								break;
+							case 'user_blog':
+								$this->getBlogArticleId( $title, $row );
+								break;
+							case 'file':
+								$tit = Title::newFromText( $title, 6 );
+								$mediaInfo = $mediaService->getMediaData( $tit );
+								$row[ 'test' ] = $mediaInfo;
+								$fileType = $this->extractFileType( $mediaInfo[ 'type' ] );
+								switch ( $fileType ) {
+									case 'video':
+										$validType = 'video';
+										$row[ 'provider' ] = $mediaInfo [ 'meta' ][ 'provider' ];
+										$row[ 'thumbUrl' ] = $mediaInfo [ 'thumbUrl' ];
+										break;
+									case 'image':
+										$validType = 'image';
+										break;
+									case false:
+									default:
+										$err[ ] = $rawTitle;
+										break;
+								}
+
+								break;
+							case false:
+								$this->getArticlePageId( $title, $row, $err );
+								break;
+							default:
+								$err[ ] = $rawTitle;
+								break;
+						}
+						$row[ 'type' ] = $validType;
+					}
+				}
+			}
+		}
+		return $err;
 	}
 }
