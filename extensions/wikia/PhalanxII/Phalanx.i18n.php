@@ -158,6 +158,8 @@ Please [[Special:Contact|contact Wikia]] about the problem.<br />The blocker als
 	'phalanx-section-type-account-creation' => 'Account creation',
 	'phalanx-section-type-wiki-creation' => 'Wiki creation',
 	'phalanx-section-type-questions' => 'Questions',
+
+	'phalanx-sp-contributions-blocked-globally' => 'This user is currently blocked across the Wikia network.',
 );
 
 /** Message documentation (Message documentation)

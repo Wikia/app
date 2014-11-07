@@ -48,6 +48,8 @@ class LogEventsList {
 	 */
 	protected $mDefaultQuery;
 
+	const WARN_BOX_DIV_CLASS = 'mw-warning-with-logexcerpt';
+
 	public function __construct( $skin, $out, $flags = 0 ) {
 		$this->skin = $skin;
 		$this->out = $out;
@@ -670,7 +672,7 @@ class LogEventsList {
 		$s = '';
 		if( $logBody ) {
 			if ( $msgKey[0] ) {
-				$s = '<div class="mw-warning-with-logexcerpt">';
+				$s = '<div class="'.WARN_BOX_DIV_CLASS.'">';
 
 				if ( count( $msgKey ) == 1 ) {
 					$s .= wfMsgExt( $msgKey[0], array( 'parse' ) );
