@@ -1,7 +1,7 @@
 /* global define */
 define('wikia.userTools', [
-	'wikia.nirvana', 'wikia.tracker', 'wikia.window', 'wikia.dropdownNavigation', 'jquery'
-], function (nirvana, tracker, win, DropdownNavigation, $) {
+	'wikia.nirvana', 'wikia.tracker', 'wikia.window', 'wikia.userToolsHelper', 'wikia.dropdownNavigation', 'jquery'
+], function (nirvana, tracker, win, userToolsHelper, dropdownNavigation, $) {
 	'use strict';
 
 	/**
@@ -17,9 +17,9 @@ define('wikia.userTools', [
 
 		$.when(userToolsPromise).done(function (toolbarData) {
 			var toolbarItems = toolbarData.data,
-				filteredItems = extractToolbarItems(toolbarItems);
+				filteredItems = userToolsHelper.extractToolbarItems(toolbarItems);
 
-			DropdownNavigation({
+			dropdownNavigation({
 				id: 'userToolsDropdown',
 				data: filteredItems,
 				trigger: 'articleNavSettings'
@@ -27,33 +27,6 @@ define('wikia.userTools', [
 
 			trackUserTools();
 		});
-	}
-
-	/**
-	 * Extract data needed for DropdownNavigation module from passed object
-	 * @param {Object} toolbarData - object which contains all data related with user tools
-	 * @returns {Array} - array with items which are acceptable by DropdownNavigation module
-	 */
-	function extractToolbarItems(toolbarData) {
-		var items = [],
-			toolbarItemsCount = toolbarData.length,
-			currentItem, i;
-
-		for (i = 0; i < toolbarItemsCount; i++) {
-			currentItem = toolbarData[i];
-			if (currentItem.type !== 'disabled' && currentItem.href && currentItem.caption) {
-				items.push({
-					title: currentItem.caption,
-					href: currentItem.href,
-					dataAttr: [{
-						key: 'name',
-						value: currentItem['tracker-name']
-					}]
-				});
-			}
-		}
-
-		return items;
 	}
 
 	/**
@@ -76,19 +49,15 @@ define('wikia.userTools', [
 			}
 
 			switch (name) {
-			case 'customize':
-			case 'follow':
-			case 'history':
-			case 'whatlinkshere':
-				{
+				case 'customize':
+				case 'follow':
+				case 'history':
+				case 'whatlinkshere':
 					label = name;
 					break;
-				}
-			default:
-				{
+				default:
 					label = 'custom';
 					break;
-				}
 			}
 
 			//add anon prefix for not logged in users
@@ -107,7 +76,6 @@ define('wikia.userTools', [
 	}
 
 	return {
-		init: init,
-		extractToolbarItems: extractToolbarItems
+		init: init
 	};
 });

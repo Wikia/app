@@ -1,5 +1,5 @@
 /*global describe, expect, it, modules*/
-describe('wikia.userTools', function () {
+describe('wikia.userToolsHelper', function () {
 	'use strict';
 	var toolbarCorrectItemMock = {
 			type: 'link',
@@ -23,7 +23,7 @@ describe('wikia.userTools', function () {
 			'tracker-name': 'buzz',
 			href: 'fizz/buzz'
 		},
-		userTools = modules['wikia.userTools']();
+		userToolsHelper = modules['wikia.userToolsHelper']();
 
 	it('Only not disabled items with href and caption are returned', function () {
 		var toolbarData = [
@@ -33,7 +33,7 @@ describe('wikia.userTools', function () {
 			toolbarNoHrefItemMock
 		];
 
-		expect(userTools.extractToolbarItems(toolbarData)).toEqual([{
+		expect(userToolsHelper.extractToolbarItems(toolbarData)).toEqual([{
 			title: toolbarCorrectItemMock.caption,
 			href: toolbarCorrectItemMock.href,
 			dataAttr: [{

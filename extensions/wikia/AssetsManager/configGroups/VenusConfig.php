@@ -205,6 +205,7 @@ $VenusConfig[ 'article_navigation_js' ] = [
 	'skin' => [ 'venus' ],
 	'assets' => [
 		'//extensions/wikia/ArticleNavigation/scripts/articleNavigation.js',
+		'//extensions/wikia/ArticleNavigation/scripts/userToolsHelper.js',
 		'//extensions/wikia/ArticleNavigation/scripts/userTools.js'
 	]
 ];
