@@ -5,10 +5,13 @@ var UserLoginFacebookForm = $.createClass(UserLoginAjaxForm, {
 
 	// send a request to FB controller
 	ajaxLogin: function() {
+		'use strict';
 		var inputs = {
 			username: this.inputs.username.val(),
 			password: this.inputs.password.val(),
 			signupToken: this.inputs.logintoken.val(),
+			returnto: encodeURIComponent(window.wgPageName),
+			returntoquery: encodeURIComponent(window.location.search.substring(1))
 		};
 
 		// The email box will only appear if the user has not shared their Facebook email
@@ -33,6 +36,8 @@ var UserLoginFacebookForm = $.createClass(UserLoginAjaxForm, {
 				label: 'facebook-signup'
 			});
 		}
+		json.returnto = encodeURIComponent(window.wgPageName);
+		json.returntoquery = encodeURIComponent(window.location.search.substring(1));
 		this.submitLoginHandler(json);
 	}
 });

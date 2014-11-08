@@ -21,6 +21,17 @@
 				'type' => 'hidden',
 				'name' => 'loginToken',
 				'value' => Sanitizer::encodeAttribute( $loginToken ),
+
+			],
+			[
+				'type' => 'hidden',
+				'name' => 'returnto',
+				'value' => $returnTo, // already encoded
+			],
+			[
+				'type' => 'hidden',
+				'name' => 'returntoquery',
+				'value' => $returnToQuery, // already encoded
 			],
 		],
 		'method' => 'post',
@@ -66,7 +77,9 @@
 		<section class="UserLoginFacebookRight">
 			<h1><?= wfMessage( 'usersignup-facebook-have-an-account-heading' )->escaped() ?></h1>
 			<p><?= wfMessage( 'usersignup-facebook-have-an-account' )->escaped() ?></p>
-			<a class="wikia-button" href="<?= htmlspecialchars( $specialUserLoginUrl ) ?>"><?= wfMessage( 'login' )->escaped() ?></a>
+			<a class="wikia-button" href="<?= htmlspecialchars( $specialUserLoginUrl )  . '?' . $queryString ?>">
+				<?= wfMessage( 'login' )->escaped() ?>
+			</a>
 		</section>
 	</section>
 </div>

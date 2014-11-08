@@ -3,9 +3,10 @@ define(
 	[
 		'wikia.window',
 		'ponto',
+		require.optional('ext.wikia.adEngine.adContext'),
 		require.optional('ext.wikia.adEngine.adLogicPageParams')
 	],
-	function (w, ponto, adParams) {
+	function (w, ponto, adContext, adParams) {
 
 	'use strict';
 
@@ -96,7 +97,7 @@ define(
 				skin: w.skin
 			};
 
-			if (w.wgAdDriverEnableAdsInMaps && adParams) {
+			if (adContext && adContext.getContext().opts.enableAdsInMaps && adParams) {
 				settings.adOpts = {
 					jsUrl: w.wgCdnRootUrl + w.wgAssetsManagerQuery.
 						replace('%1$s', 'groups').

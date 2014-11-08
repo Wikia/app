@@ -21,6 +21,7 @@ $wgHooks['SkinAfterContent'][] = 'AdEngine2Hooks::onSkinAfterContent';
 // Hooks for Exitstitial ads
 $wgHooks['LinkerMakeExternalLink'][] = 'AdEngine2ExitstitialHooks::onLinkerMakeExternalLink';
 $wgHooks['LinkEnd'][] = 'AdEngine2ExitstitialHooks::onLinkEnd';
+$wgHooks['MakeGlobalVariablesScript'][] = 'AdEngine2ExitstitialHooks::onMakeGlobalVariablesScript';
 
 // i18n
 $wgExtensionMessagesFiles['AdEngine'] = __DIR__ . '/AdEngine.i18n.php';

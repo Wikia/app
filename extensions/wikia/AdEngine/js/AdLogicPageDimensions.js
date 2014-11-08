@@ -31,7 +31,6 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		slotsOnlyWithRail = {
 			LEFT_SKYSCRAPER_3: true
 		},
-		rightRailPresent = !!document.getElementById('WikiaRail'),
 
 		/**
 		 * Slots based on screen width
@@ -58,6 +57,10 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		},
 		mediaQueriesMet,
 		matchMedia;
+
+	function isRightRailPresent() {
+		return !!document.getElementById('WikiaRail');
+	}
 
 	function matchMediaMoz(query) {
 		return window.matchMedia(query).matches;
@@ -87,11 +90,6 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 			wideEnough = false,
 			conflictingMediaQuery;
 
-		if (slotsOnlyWithRail[slotname]) {
-			if (!rightRailPresent) {
-				return false;
-			}
-		}
 		if (pageHeight) {
 			longEnough = !slotsOnlyOnLongPages[slotname] || pageHeight > slotsOnlyOnLongPages[slotname];
 		}
@@ -104,7 +102,17 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 			}
 		}
 
-		return longEnough && wideEnough;
+		if (!longEnough || !wideEnough) {
+			return false;
+		}
+
+		if (slotsOnlyWithRail[slotname]) {
+			if (!isRightRailPresent()) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/**

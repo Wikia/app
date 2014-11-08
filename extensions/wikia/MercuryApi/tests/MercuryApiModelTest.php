@@ -51,12 +51,13 @@ class MercuryApiModelTest extends WikiaBaseTest {
 		$expected = [
 			'opts' => [
 				'adsInHead' => true,
+				'adsInContent' => true,
 				'disableLateQueue' => true,
+				'enableAdsInMaps' => true,
 				'lateAdsAfterPageLoad' => true,
 				'pageType' => 'corporate',
 				'showAds' => true,
 				'trackSlotState' => true,
-				'useDartForSlotsBelowTheFold' => true,
 			],
 			'targeting' => [
 				'enableKruxTargeting' => true,
