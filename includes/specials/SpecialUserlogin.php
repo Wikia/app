@@ -504,7 +504,7 @@ class LoginForm extends SpecialPage {
 				if ( !$value ) {
 					$wgMemc->set( $key, 0, 86400 );
 				}
-				if ( $value >= $wgAccountCreationThrottle ) {
+				if ( !F::app()->wg->DevelEnvironment && $value >= $wgAccountCreationThrottle ) {
 					$this->throttleHit( $wgAccountCreationThrottle );
 					return false;
 				}

@@ -65,8 +65,12 @@
 								body: body
 							},
 							callback: function (data) {
-								previewModal.$content.find('.WallPreview .WikiaArticle').html(data.body);
+								var $content = previewModal.$content.find('.WallPreview .WikiaArticle');
+
+								$content.html(data.body);
+								mw.hook('wikipage.content').fire($content);
 								previewModal.activate();
+
 								self.bucky.timer.stop('showPreviewModal');
 							}
 						});

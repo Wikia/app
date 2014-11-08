@@ -42,7 +42,7 @@ class AsyncCacheCLI extends Maintenance {
 
 		if ( $this->hasOption( 'purge' ) ) {
 			$cacheKey = $this->getOption( 'purge' );
-			( new AsyncCache() )->purge( $cacheKey );
+			( new Wikia\Cache\AsyncCache() )->purge( $cacheKey );
 			echo "Purged '$cacheKey'\n";
 			exit(0);
 		}
@@ -67,12 +67,12 @@ class AsyncCacheCLI extends Maintenance {
 		echo "\t- Time to regenerate: $regenTTL\n";
 		echo "\t- Value regeneration method: $method(".implode(', ', $args).")\n";
 
-		$cache = ( new AsyncCache() )
+		$cache = ( new Wikia\Cache\AsyncCache() )
 			->key( $cacheKey )
 			->ttl( $ttl )
 			->negativeResponseTTL( $negTTL )
 			->staleOnMiss( $regenTTL )
-			->callback( $method )->callbackParams( $args );
+			->callback( $method, [ $args ] );
 
 		if ( $block ) {
 			$cache->blockOnMiss();
