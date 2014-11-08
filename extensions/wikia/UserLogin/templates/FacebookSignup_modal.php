@@ -21,7 +21,6 @@
 				'type' => 'hidden',
 				'name' => 'loginToken',
 				'value' => Sanitizer::encodeAttribute( $loginToken ),
-
 			],
 			[
 				'type' => 'hidden',
