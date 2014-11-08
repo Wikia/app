@@ -79,7 +79,7 @@ window.onFBloaded = function() {
  * jQuery code to be run when the DOM is ready to be manhandled.
  */
 $(function() {
-	var wpCancelClicked = false;
+//	var wpCancelClicked = false;
 
 //	// Add a pretty logo to Facebook links
 //	$('#pt-fbconnect,#pt-fblink,#pt-fbconvert').addClass('mw-fblink');
@@ -119,11 +119,11 @@ $(function() {
 //	});
 
 	//window.fbAsyncInit ();
-	$("#fbconnect a").on('click', function(ev){
-		alert('clicked');
-		loginByFBConnect();
-		ev.preventDefault();
-	});
+//	$("#fbconnect a").on('click', function(ev){
+//		alert('clicked');
+//		loginByFBConnect();
+//		ev.preventDefault();
+//	});
 
 //	if( $.getUrlVar( 'ref' ) === 'fbfeed' ) {
 //		var suffix = '',
@@ -168,64 +168,78 @@ $(function() {
  * This will redirect to Special:Connect with the returnto variables configured properly.
  */
 function sendToConnectOnLogin(){
+	alert('sendToConnectOnLogin');
 	sendToConnectOnLoginForSpecificForm("");
 }
 // Allows optional specification of a form to force on Special:Connect (such as ChooseName, ConnectExisting, or Convert).
 function sendToConnectOnLoginForSpecificForm(formName){
 	FB.getLoginStatus(function(response) {
 		if(formName != ""){
-	        formName = "/"+formName;
+			formName = "/" + formName;
 		}
-		var destUrl = wgServer + wgScript + "?title=Special:Connect" + formName + "&returnto=" + encodeURIComponent(window.fbReturnToTitle || wgPageName) + "&returntoquery=" + encodeURIComponent(window.wgPageQuery || '');
+
+		var destUrl = wgServer +
+			wgScript +
+			"?title=Special:Connect" +
+			formName +
+			"&returnto=" +
+			encodeURIComponent(window.fbReturnToTitle || wgPageName) +
+			"&returntoquery=" +
+			encodeURIComponent(window.wgPageQuery || '');
 
 		if (formName == "/ConnectExisting") {
 			window.location.href = destUrl;
 			return;
 		}
 		$('#fbConnectModalWrapper').remove();
-		$.postJSON(window.wgScript + '?action=ajax&rs=SpecialConnect::checkCreateAccount&cb='+wgStyleVersion, function(data) {
-			if(data.status == "ok") {
+		$.postJSON(
+			window.wgScript +
+				'?action=ajax&rs=SpecialConnect::checkCreateAccount&cb=' +
+				wgStyleVersion,
+			function(data) {
+				if(data.status == "ok") {
 
-				// Wikia - UC-18
-				window.Wikia.Tracker.track({
-					category: 'force-login-modal',
-					trackingMethod: 'both',
-					action: window.Wikia.Tracker.ACTIONS.SUCCESS,
-					label: 'facebook-login'
-				});
-				// Wikia end
+					// Wikia - UC-18
+					window.Wikia.Tracker.track({
+						category: 'force-login-modal',
+						trackingMethod: 'both',
+						action: window.Wikia.Tracker.ACTIONS.SUCCESS,
+						label: 'facebook-login'
+					});
+					// Wikia end
 
-				location.reload();
-			} else {
-				window.location.href = destUrl;
+					location.reload();
+				} else {
+					window.location.href = destUrl;
+				}
 			}
-		});
+		);
 	});
 }
 
 
-function openFbLogin() {
-/*
-	if (!isFbApiInit()) {
-		setTimeout(openFbLogin,300);
-		return true;
-	}
-*/
-	FB.login(sendToConnectOnLogin);
-}
+//function openFbLogin() {
+///*
+//	if (!isFbApiInit()) {
+//		setTimeout(openFbLogin,300);
+//		return true;
+//	}
+//*/
+//	FB.login(sendToConnectOnLogin);
+//}
 
 /**
  * only for user header button
  */
-function loginByFBConnect() {
-/*
-	if (!isFbApiInit()) {
-		window.fbAsyncInit();
-	}
-*/
-	openFbLogin();
-	return false;
-}
+//function loginByFBConnect() {
+///*
+//	if (!isFbApiInit()) {
+//		window.fbAsyncInit();
+//	}
+//*/
+//	openFbLogin();
+//	return false;
+//}
 
 //function fixXFBML(id) {
 //	// BugId:19603 (IE8 specific fix)

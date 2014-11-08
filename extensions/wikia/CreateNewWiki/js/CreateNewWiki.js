@@ -79,10 +79,10 @@ var WikiBuilder = {
 						UserLoginFacebook.closeSignupModal();
 					};
 				}
-				if( window.FB && window.onFBloaded ) {  // FB hax
-					onFBloaded();
-				}
-				that.transition('NameWiki', true, '+');
+				// Load facebook assets before going to the login form
+				$.loadFacebookAPI(function () {
+					that.transition('NameWiki', true, '+');
+				});
 			}
 		});
 		this.wikiDomain.keyup(function() {
@@ -224,7 +224,7 @@ var WikiBuilder = {
 
 				// unhide "duplicates"
 				if(that.hiddenDuplicate) {
-					that.hiddenDuplicate.show();	
+					that.hiddenDuplicate.show();
 				}
 
 				// hide "duplicates"
@@ -556,7 +556,7 @@ $(function() {
 		ThemeDesigner.slideByItems = 3;
 
 	} else {
-		ThemeDesigner.slideByDefaultWidth = 608;   
+		ThemeDesigner.slideByDefaultWidth = 608;
 		ThemeDesigner.slideByItems = 4;
 	}
 	ThemeDesigner.themeTabInit();

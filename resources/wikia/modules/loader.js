@@ -128,6 +128,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 				}
 			},
 			facebook: {
+				// TODO: update this to the new SDK (v2.x)
 				file: window.fbScript || '//connect.facebook.net/en_US/all.js',
 				check: function(){
 					return typeof window.FB;
