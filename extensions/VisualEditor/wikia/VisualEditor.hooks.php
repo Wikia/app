@@ -55,7 +55,7 @@ class VisualEditorWikiaHooks {
 	 * Adds extra variables to the page config.
 	 */
 	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
-		global $wgMaxUploadSize, $wgEnableVisualEditorUI, $wgEnableWikiaInteractiveMaps, $wgIntMapConfig, $wgUser;
+		global $wgMaxUploadSize, $wgEnableVisualEditorUI, $wgEnableWikiaInteractiveMaps, $wgIntMapConfig, $wgUser, $wgUploadPath;
 		$vars[ 'wgMaxUploadSize' ] = $wgMaxUploadSize;
 		$vars[ 'wgEnableVisualEditorUI' ] = !empty( $wgEnableVisualEditorUI );
 		$vars[ 'wgEnableWikiaInteractiveMaps' ] = !empty( $wgEnableWikiaInteractiveMaps );
@@ -71,8 +71,9 @@ class VisualEditorWikiaHooks {
 		}
 		// Note: even if set as integer, option value is retrieved as string
 		if ( $wgUser->getOption( 'showVisualEditorTransitionDialog' ) === '1' ) {
-			$vars['showVisualEditorTransitionDialog'] = 1;
+			$vars[ 'showVisualEditorTransitionDialog' ] = 1;
 		}
+		$vars[ 'VignettePathPrefix' ] = VignetteRequest::parsePathPrefix( $wgUploadPath );
 		return true;
 	}
 
