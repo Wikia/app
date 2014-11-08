@@ -44,11 +44,11 @@
  */
 window.onFBloaded = function() {
 	var fbAppId = window.fbAppId,
-	// macbre: fix IE issue (RT #140425)
-	// @see http://threebrothers.org/brendan/blog/facebook-connect-ie-fb_xd_fragment-iframe/
+		// macbre: fix IE issue (RT #140425)
+		// @see http://threebrothers.org/brendan/blog/facebook-connect-ie-fb_xd_fragment-iframe/
 		channelUrl = window.location.protocol + '//' +
-		             window.location.host + window.wgScriptPath +
-		             '/channel.php?lang=' + encodeURIComponent(window.fbScriptLangCode);
+			window.location.host + window.wgScriptPath +
+			'/channel.php?lang=' + encodeURIComponent(window.fbScriptLangCode);
 
 	if (window.fbAppInit) {
 		return;
@@ -126,7 +126,7 @@ $(function() {
 
 	if( $.getUrlVar( 'ref' ) === 'fbfeed' ) {
 		var suffix = '',
-			type = $.getUrlVar( 'fbtype' );
+		type = $.getUrlVar( 'fbtype' );
 		if( type !== '' ) {
 			suffix = '/' + type;
 		}
@@ -173,7 +173,7 @@ function sendToConnectOnLogin(){
 function sendToConnectOnLoginForSpecificForm(formName){
 	FB.getLoginStatus(function(response) {
 		if(formName != ""){
-			formName = "/"+formName;
+	        formName = "/"+formName;
 		}
 		var destUrl = wgServer + wgScript + "?title=Special:Connect" + formName + "&returnto=" + encodeURIComponent(window.fbReturnToTitle || wgPageName) + "&returntoquery=" + encodeURIComponent(window.wgPageQuery || '');
 
@@ -204,12 +204,12 @@ function sendToConnectOnLoginForSpecificForm(formName){
 
 
 function openFbLogin() {
-	/*
-	 if (!isFbApiInit()) {
-	 setTimeout(openFbLogin,300);
-	 return true;
-	 }
-	 */
+/*
+	if (!isFbApiInit()) {
+		setTimeout(openFbLogin,300);
+		return true;
+	}
+*/
 	FB.login(sendToConnectOnLogin);
 }
 
@@ -217,11 +217,11 @@ function openFbLogin() {
  * only for user header button
  */
 function loginByFBConnect() {
-	/*
-	 if (!isFbApiInit()) {
-	 window.fbAsyncInit();
-	 }
-	 */
+/*
+	if (!isFbApiInit()) {
+		window.fbAsyncInit();
+	}
+*/
 	openFbLogin();
 	return false;
 }
