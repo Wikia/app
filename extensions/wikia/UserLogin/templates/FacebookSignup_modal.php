@@ -3,31 +3,6 @@
 		<section class="UserLoginFacebookLeft">
 
 <?php
-	if ( trim( $fbEmail ) == '' ) {
-		$emailToolTip = '';
-		$emailInput = [
-			'type' => 'text',
-			'name' => 'email',
-			'isRequired' => true,
-			'label' => wfMessage( 'email' )->escaped(),
-		];
-	} else {
-		$emailToolTip = [
-			'type' => 'nirvana',
-			'class' => 'email',
-			'controller' => 'WikiaStyleGuideTooltipIconController',
-			'method' => 'index',
-			'params' => [
-				'text' => wfMessage('email')->escaped(),
-				'tooltipIconTitle' => wfMessage( 'usersignup-facebook-email-tooltip' )->plain(),
-			],
-		];
-		$emailInput = [
-			'type' => 'custom',
-			'output' => '<strong>' . htmlspecialchars( $fbEmail ) . '</strong>'
-		];
-	}
-
 	$form = [
 		'inputs' => [
 			[
@@ -42,8 +17,6 @@
 				'isRequired' => true,
 				'label' => wfMessage( 'yourpassword' )->escaped(),
 			],
-			$emailToolTip,
-			$emailInput,
 			[
 				'type' => 'hidden',
 				'name' => 'loginToken',
@@ -59,15 +32,41 @@
 				'name' => 'returntoquery',
 				'value' => $returnToQuery, // already encoded
 			],
-			[
-				'type' => 'nirvanaview',
-				'controller' => 'UserSignupSpecial',
-				'view' => 'submit',
-				'class' => 'submit-pane error modal-pane',
-				'params' => ['createAccountButtonLabel' => wfMessage( 'createaccount' )->escaped()]
-			],
 		],
 		'method' => 'post',
+	];
+
+	if ( trim( $fbEmail ) == '' ) {
+		$form['inputs'][] = [
+			'type' => 'text',
+			'name' => 'email',
+			'isRequired' => true,
+			'label' => wfMessage( 'email' )->escaped(),
+		];
+	} else {
+		$form['inputs'][] = [
+			'type' => 'nirvana',
+			'class' => 'email',
+			'controller' => 'WikiaStyleGuideTooltipIconController',
+			'method' => 'index',
+			'params' => [
+				'text' => wfMessage('email')->escaped(),
+				'tooltipIconTitle' => wfMessage( 'usersignup-facebook-email-tooltip' )->plain(),
+			],
+		];
+
+		$form['inputs'][] = [
+			'type' => 'custom',
+			'output' => '<strong>' . htmlspecialchars( $fbEmail ) . '</strong>'
+		];
+	}
+
+	$form['inputs'][] = [
+		'type' => 'nirvanaview',
+		'controller' => 'UserSignupSpecial',
+		'view' => 'submit',
+		'class' => 'submit-pane error modal-pane',
+		'params' => ['createAccountButtonLabel' => wfMessage( 'createaccount' )->escaped()]
 	];
 
 	echo F::app()->renderView( 'WikiaStyleGuideForm', 'index', ['form' => $form] );
