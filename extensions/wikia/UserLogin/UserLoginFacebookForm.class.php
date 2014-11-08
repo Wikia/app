@@ -15,11 +15,9 @@
 class UserLoginFacebookForm extends UserLoginForm {
 
 	private $fbUserId;
-	private $fbFeedOptions;
 
 	function __construct( WebRequest $request ) {
 		$this->fbUserId = $request->getVal( 'fbuserid' );
-		$this->fbFeedOptions = explode( ',', $request->getVal( 'fbfeedoptions', '' ) );
 
 		// See if we got an email address from the sign up form
 		$userEmail = $request->getVal( 'email' );
