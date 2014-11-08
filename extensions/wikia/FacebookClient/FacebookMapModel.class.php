@@ -195,21 +195,24 @@ class FacebookMapModel {
 		// Load all the mappings we can find for the parameters given
 		$mappings = self::loadWithCache( $params );
 
-		// Use the first mapping to purge based on the Wikia user ID
-		/** @var FacebookMapModel $firstMap */
-		$firstMap = $mappings[0];
+		// If we have a mapping use it to clear out all possible keys
+		if ( is_array( $mappings ) && count( $mappings ) > 0 ) {
+			// Use the first mapping to purge based on the Wikia user ID
+			/** @var FacebookMapModel $firstMap */
+			$firstMap = $mappings[ 0 ];
 
-		// Delete the Wikia ID based memcached keys
-		$wikiaUserId = $firstMap->getWikiaUserId();
-		$memkey = self::generateMemKey( [ self::paramWikiaUserId => $wikiaUserId ] );
-		$memc->delete( $memkey );
-
-		// Delete all facebook ID based memcached keys (can be one or more)
-		foreach ( $mappings as $map ) {
-			/** @var FacebookMapModel $map */
-			$facebookUserId = $map->getFacebookUserId();
-			$memkey = self::generateMemKey( [ self::paramFacebookUserId => $facebookUserId ] );
+			// Delete the Wikia ID based memcached keys
+			$wikiaUserId = $firstMap->getWikiaUserId();
+			$memkey = self::generateMemKey( [ self::paramWikiaUserId => $wikiaUserId ] );
 			$memc->delete( $memkey );
+
+			// Delete all facebook ID based memcached keys (can be one or more)
+			foreach ( $mappings as $map ) {
+				/** @var FacebookMapModel $map */
+				$facebookUserId = $map->getFacebookUserId();
+				$memkey = self::generateMemKey( [ self::paramFacebookUserId => $facebookUserId ] );
+				$memc->delete( $memkey );
+			}
 		}
 
 		// Determine what column to constrain on
