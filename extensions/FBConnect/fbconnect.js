@@ -125,41 +125,41 @@ $(function() {
 		ev.preventDefault();
 	});
 
-	if( $.getUrlVar( 'ref' ) === 'fbfeed' ) {
-		var suffix = '',
-		type = $.getUrlVar( 'fbtype' );
-		if( type !== '' ) {
-			suffix = '/' + type;
-		}
-	}
+//	if( $.getUrlVar( 'ref' ) === 'fbfeed' ) {
+//		var suffix = '',
+//		type = $.getUrlVar( 'fbtype' );
+//		if( type !== '' ) {
+//			suffix = '/' + type;
+//		}
+//	}
 
 
 	//Checks for visibility of Facebook Like button's hover panel and hides ads accordingly to prevent z-index problems
 	// Christian: (BugId 7297)
-	if (skin == 'oasis') {
-		var timer = null,
-			mouseIn = false,
-			FBbutton = $('#WikiaPageHeader .likes :first-child');
-
-		var poll = function() {
-			if (FBbutton.children('span').filter(':visible').length > 1) {
-			} else {
-				if (!mouseIn) {
-					clearInterval(timer);
-				}
-			}
-		};
-
-		$('#WikiaPageHeader .likes').hover(function() {
-			mouseIn = true;
-			timer = setInterval(poll, 250);
-		}, function() {
-			mouseIn = false;
-			if (FBbutton.children('span').filter(':visible').length < 2) {
-				clearInterval(timer);
-			}
-		});
-	}
+//	if (skin == 'oasis') {
+//		var timer = null,
+//			mouseIn = false,
+//			FBbutton = $('#WikiaPageHeader .likes :first-child');
+//
+//		var poll = function() {
+//			if (FBbutton.children('span').filter(':visible').length > 1) {
+//			} else {
+//				if (!mouseIn) {
+//					clearInterval(timer);
+//				}
+//			}
+//		};
+//
+//		$('#WikiaPageHeader .likes').hover(function() {
+//			mouseIn = true;
+//			timer = setInterval(poll, 250);
+//		}, function() {
+//			mouseIn = false;
+//			if (FBbutton.children('span').filter(':visible').length < 2) {
+//				clearInterval(timer);
+//			}
+//		});
+//	}
 });
 
 /**

@@ -1,9 +1,9 @@
 <div id="WikiaPageHeader" class="WikiaPageHeader WikiaPageHeaderDiffHistory">
 	<?php
 	if( !empty($isHistory) && !empty($isUserTalkArchiveModeEnabled) ) { ?>
-		<?= F::app()->renderView('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes)); ?>
+		<?= F::app()->renderView('CommentsLikes', 'Index', array('comments' => $comments)); ?>
 	<?php } ?>
-	<h1><?= !empty($displaytitle) ? $title : htmlspecialchars($title) ?></h1>
+	<h1><?= !empty($displaytitle) ? $title : htmlspecialchars($title) ?>LIZ TEST</h1>
 <?php
 	// edit button
 	if (!empty($action)) {
