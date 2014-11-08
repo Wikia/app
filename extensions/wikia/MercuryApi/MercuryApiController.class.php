@@ -27,7 +27,9 @@ class MercuryApiController extends WikiaController {
 
 			unset( $smartBannerConfig[ 'author' ] );
 
-			if ( !empty( $smartBannerConfig[ 'icon' ] ) ) {
+			if ( !empty( $smartBannerConfig[ 'icon' ] )
+				&& !isset( parse_url( $smartBannerConfig[ 'icon' ] )[ 'scheme' ] ) //it differs per wiki
+			) {
 				$smartBannerConfig[ 'icon' ] = $this->wg->extensionsPath . $smartBannerConfig[ 'icon' ];
 			}
 
@@ -210,7 +212,7 @@ class MercuryApiController extends WikiaController {
 		$smartBannerConfig = $this->getSmartBannerConfig();
 
 		if ( !is_null( $smartBannerConfig ) ) {
-			$wikiVariables[ 'smartbanner' ] = $smartBannerConfig;
+			$wikiVariables[ 'smartBanner' ] = $smartBannerConfig;
 		}
 
 		$this->response->setVal( 'data', $wikiVariables );
