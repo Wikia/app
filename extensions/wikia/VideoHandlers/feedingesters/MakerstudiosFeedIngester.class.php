@@ -28,8 +28,8 @@ class MakerstudiosFeedIngester extends VideoFeedIngester {
 	public function import( $content = '', $params = array() ) {
 		$this->setParams( $params );
 		$this->setContentAsXML( $content );
-		$this->createVideos();
 		$this->setVideosFromContent();
+		$this->createVideos();
 		return $this->numberCreatedVideos;
 	}
 

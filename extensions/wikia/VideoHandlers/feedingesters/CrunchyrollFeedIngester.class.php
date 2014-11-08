@@ -320,17 +320,16 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * generate metadata
-	 * @param array $data
 	 * @param string $errorMsg
 	 * @return array|int $metadata or 0 on error
 	 */
-	public function generateMetadata( $data, &$errorMsg ) {
-		$metadata = parent::generateMetadata( $data, $errorMsg );
+	public function generateMetadata( &$errorMsg ) {
+		$metadata = parent::generateMetadata( $errorMsg );
 		if ( empty( $metadata ) ) {
 			return 0;
 		}
 
-		$metadata['videoUrl'] = empty( $data['videoUrl'] ) ? '' : $data['videoUrl'];
+		$metadata['videoUrl'] = empty( $this->videoData['videoUrl'] ) ? '' : $this->videoData['videoUrl'];
 
 		return $metadata;
 	}

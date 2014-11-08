@@ -48,6 +48,7 @@ abstract class VideoFeedIngester {
 	/** @var  IngesterDataNormalizer */
 	private $dataNormalizer;
 	private $debug;
+	protected $videoData;
 
 	public function __construct( $dataNormalizer, $debug = false ) {
 		$this->dataNormalizer = $dataNormalizer;
@@ -71,59 +72,57 @@ abstract class VideoFeedIngester {
 	/**
 	 * Generate name for video.
 	 * Note: The name is not sanitized for use as filename or article title.
-	 * @param array $data video data
 	 * @return string video name
 	 */
-	protected function generateName( array $data ) {
-		return $data['titleName'];
+	protected function generateName() {
+		return $this->videoData['titleName'];
 	}
 
 	/**
 	 * generate the metadata we consider interesting for this video
 	 * Note: metadata is array instead of object because it's stored in the database as a serialized array,
 	 *       and serialized objects would have more version issues.
-	 * @param array $data - Video data
 	 * @param $errorMsg - Store any error we encounter
 	 * @return array|int - An associative array of meta data or zero on error
 	 */
-	public function generateMetadata( array $data, &$errorMsg ) {
-		if ( empty( $data['videoId'] ) ) {
+	public function generateMetadata( &$errorMsg ) {
+		if ( empty( $this->videoData['videoId'] ) ) {
 			$errorMsg = 'no video id exists';
 			return 0;
 		}
 
-		$metadata = array(
-			'videoId'              => $data['videoId'],
-			'altVideoId'           => isset( $data['altVideoId'] ) ? $data['altVideoId'] : '',
-			'hd'                   => isset( $data['hd'] ) ? $data['hd'] : 0,
-			'duration'             => isset( $data['duration'] ) ? $data['duration'] : '',
-			'published'            => isset( $data['published'] ) ? $data['published'] : '',
-			'thumbnail'            => isset( $data['thumbnail'] ) ? $data['thumbnail'] : '',
-			'description'          => isset( $data['description'] ) ? $data['description'] : '',
-			'name'                 => isset( $data['name'] ) ? $data['name'] : '',
-			'type'                 => isset( $data['type'] ) ? $data['type'] : '',
-			'category'             => isset( $data['category'] ) ? $data['category'] : '',
-			'keywords'             => isset( $data['keywords'] ) ? $data['keywords'] : '',
-			'industryRating'       => isset( $data['industryRating'] ) ? $data['industryRating'] : '',
-			'ageGate'              => isset( $data['ageGate'] ) ? $data['ageGate'] : 0,
-			'ageRequired'          => isset( $data['ageRequired'] ) ? $data['ageRequired'] : 0,
-			'provider'             => isset( $data['provider'] ) ? $data['provider'] : '',
-			'language'             => isset( $data['language'] ) ? $data['language'] : '',
-			'subtitle'             => isset( $data['subtitle'] ) ? $data['subtitle'] : '',
-			'genres'               => isset( $data['genres'] ) ? $data['genres'] : '',
-			'actors'               => isset( $data['actors'] ) ? $data['actors'] : '',
-			'targetCountry'        => isset( $data['targetCountry'] ) ? $data['targetCountry'] : '',
-			'series'               => isset( $data['series'] ) ? $data['series'] : '',
-			'season'               => isset( $data['season'] ) ? $data['season'] : '',
-			'episode'              => isset( $data['episode'] ) ? $data['episode'] : '',
-			'characters'           => isset( $data['characters'] ) ? $data['characters'] : '',
-			'resolution'           => isset( $data['resolution'] ) ? $data['resolution'] : '',
-			'aspectRatio'          => isset( $data['aspectRatio'] ) ? $data['aspectRatio'] : '',
-			'expirationDate'       => isset( $data['expirationDate'] ) ? $data['expirationDate'] : '',
-			'regionalRestrictions' => isset( $data['regionalRestrictions'] ) ? $data['regionalRestrictions'] : '',
-		);
+		$metaData = [
+			'videoId'              => $this->videoData['videoId'],
+			'altVideoId'           => isset( $this->videoData['altVideoId'] ) ? $this->videoData['altVideoId'] : '',
+			'hd'                   => isset( $this->videoData['hd'] ) ? $this->videoData['hd'] : 0,
+			'duration'             => isset( $this->videoData['duration'] ) ? $this->videoData['duration'] : '',
+			'published'            => isset( $this->videoData['published'] ) ? $this->videoData['published'] : '',
+			'thumbnail'            => isset( $this->videoData['thumbnail'] ) ? $this->videoData['thumbnail'] : '',
+			'description'          => isset( $this->videoData['description'] ) ? $this->videoData['description'] : '',
+			'name'                 => isset( $this->videoData['name'] ) ? $this->videoData['name'] : '',
+			'type'                 => isset( $this->videoData['type'] ) ? $this->videoData['type'] : '',
+			'category'             => isset( $this->videoData['category'] ) ? $this->videoData['category'] : '',
+			'keywords'             => isset( $this->videoData['keywords'] ) ? $this->videoData['keywords'] : '',
+			'industryRating'       => isset( $this->videoData['industryRating'] ) ? $this->videoData['industryRating'] : '',
+			'ageGate'              => isset( $this->videoData['ageGate'] ) ? $this->videoData['ageGate'] : 0,
+			'ageRequired'          => isset( $this->videoData['ageRequired'] ) ? $this->videoData['ageRequired'] : 0,
+			'provider'             => isset( $this->videoData['provider'] ) ? $this->videoData['provider'] : '',
+			'language'             => isset( $this->videoData['language'] ) ? $this->videoData['language'] : '',
+			'subtitle'             => isset( $this->videoData['subtitle'] ) ? $this->videoData['subtitle'] : '',
+			'genres'               => isset( $this->videoData['genres'] ) ? $this->videoData['genres'] : '',
+			'actors'               => isset( $this->videoData['actors'] ) ? $this->videoData['actors'] : '',
+			'targetCountry'        => isset( $this->videoData['targetCountry'] ) ? $this->videoData['targetCountry'] : '',
+			'series'               => isset( $this->videoData['series'] ) ? $this->videoData['series'] : '',
+			'season'               => isset( $this->videoData['season'] ) ? $this->videoData['season'] : '',
+			'episode'              => isset( $this->videoData['episode'] ) ? $this->videoData['episode'] : '',
+			'characters'           => isset( $this->videoData['characters'] ) ? $this->videoData['characters'] : '',
+			'resolution'           => isset( $this->videoData['resolution'] ) ? $this->videoData['resolution'] : '',
+			'aspectRatio'          => isset( $this->videoData['aspectRatio'] ) ? $this->videoData['aspectRatio'] : '',
+			'expirationDate'       => isset( $this->videoData['expirationDate'] ) ? $this->videoData['expirationDate'] : '',
+			'regionalRestrictions' => isset( $this->videoData['regionalRestrictions'] ) ? $this->videoData['regionalRestrictions'] : '',
+		];
 
-		return $metadata;
+		return $metaData;
 	}
 
 	/**
@@ -138,41 +137,58 @@ abstract class VideoFeedIngester {
 		}
 	}
 
+	protected function setVideoData( $videoData ) {
+		$this->videoData = $videoData;
+	}
+
+	// TODO fix this logic up a bit
+	public function shouldSkipVideo() {
+
+		// See if this video is blacklisted (exact match against any data)
+		if ( $this->isBlacklistedVideo() ) {
+			$this->videoSkipped( "Skipping (due to \$CLIP_TYPE_BLACKLIST) '{$this->videoData['titleName']}' - {$this->videoData['description']}.\n" );
+			return true;
+		}
+
+		// See if this video should be filtered (regex match against specific fields)
+		if ( $this->isFilteredVideo() ) {
+			$this->videoSkipped( "Skipping (due to \$CLIP_FILTER) '{$this->videoData['titleName']}' - {$this->videoData['description']}.\n" );
+			return true;
+		}
+
+		return false;
+	}
+
+	public function printInitialData() {
+		if ( $this->debugMode() ) {
+			print "data after initial processing: \n";
+			foreach ( explode( "\n", var_export( $this->videoData, 1 ) ) as $line ) {
+				print ":: $line\n";
+			}
+		}
+	}
+
 	/**
-	 * @param array $data
+	 * @param array $videoData
 	 * @param $msg
 	 * @param array $params
 	 * @return int
 	 */
-	public function createVideo( array $data, &$msg, array $params = [] ) {
+	public function createVideo( array $videoData, &$msg, array $params = [] ) {
 
-		// See if this video is blacklisted (exact match against any data)
-		if ( $this->isBlacklistedVideo( $data ) ) {
-			$this->videoSkipped( "Skipping (due to \$CLIP_TYPE_BLACKLIST) '{$data['titleName']}' - {$data['description']}.\n" );
+		$this->setVideoData( $videoData );
+		if ( $this->shouldSkipVideo() ) {
 			return 0;
 		}
-
-		// See if this video should be filtered (regex match against specific fields)
-		if ( $this->isFilteredVideo( $data ) ) {
-			$this->videoSkipped( "Skipping (due to \$CLIP_FILTER) '{$data['titleName']}' - {$data['description']}.\n" );
-			return 0;
-		}
-
-		$this->filterKeywords( $data['keywords'] );
+		$this->filterKeywords();
+		$this->printInitialData();
 
 		$remoteAsset = !empty( $params['remoteAsset'] );
 		$ignoreRecent = !empty( $params['ignorerecent'] ) ? $params['ignorerecent'] : 0;
-		if ( $this->debugMode() ) {
-			print "data after initial processing: \n";
-			foreach ( explode( "\n", var_export( $data, 1 ) ) as $line ) {
-				print ":: $line\n";
-			}
-		}
 		$addlCategories = empty( $params['addlCategories'] ) ? array() : $params['addlCategories'];
 
-		$id = $data['videoId'];
-		$name = $this->generateName( $data );
-		$metadata = $this->generateMetadata( $data, $msg );
+		$name = $this->generateName();
+		$metadata = $this->generateMetadata( $msg );
 		if ( !empty( $msg ) ) {
 			$this->videoWarnings( "Error when generating metadata.\n" );
 			var_dump( $msg );
@@ -183,22 +199,22 @@ abstract class VideoFeedIngester {
 
 		// check if the video id exists in Ooyala.
 		if ( $remoteAsset ) {
-			$dupAssets = OoyalaAsset::getAssetsBySourceId( $id, $provider );
+			$dupAssets = OoyalaAsset::getAssetsBySourceId( $this->videoData['videoId'], $provider );
 			if ( !empty( $dupAssets ) ) {
 				if ( $this->reupload === false ) {
-					$this->videoSkipped( "Skipping $name (Id: $id, $provider) - video already exists in remote assets.\n" );
+					$this->videoSkipped( "Skipping $name (Id: {$this->videoData['videoId']}, $provider) - video already exists in remote assets.\n" );
 					return 0;
 				}
 			}
 		}
 
-		$duplicates = WikiaFileHelper::findVideoDuplicates( $provider, $id, $remoteAsset );
+		$duplicates = WikiaFileHelper::findVideoDuplicates( $provider, $this->videoData['videoId'], $remoteAsset );
 		$dup_count = count( $duplicates );
 		$previousFile = null;
 		if ( $dup_count > 0 ) {
 			if ( $this->reupload === false ) {
 				// if reupload is disabled finish now
-				$this->videoSkipped( "Skipping $name (Id: $id, $provider) - video already exists and reupload is disabled.\n" );
+				$this->videoSkipped( "Skipping $name (Id: {$this->videoData['videoId']}, $provider) - video already exists and reupload is disabled.\n" );
 				return 0;
 			}
 
@@ -215,26 +231,26 @@ abstract class VideoFeedIngester {
 		}
 		$metadata['destinationTitle'] = $name;
 
-		if ( !$this->validateTitle( $id, $name, $msg ) ) {
+		if ( !$this->validateTitle( $this->videoData['videoId'], $name, $msg ) ) {
 			$this->videoWarnings( "Error: $msg\n" );
 			return 0;
 		}
 
 		// create category names to add to the new file page
-		$categories = $this->generateCategories( $data, $addlCategories );
+		$categories = $this->generateCategories( $videoData, $addlCategories );
 
 		// create remote asset (ooyala)
 		if ( $remoteAsset ) {
 			$metadata['pageCategories'] = implode( ', ', $categories );
 			if ( !empty( $dupAssets ) ) {
-				if ( !empty( $dupAssets[0]['metadata']['sourceid'] ) && $dupAssets[0]['metadata']['sourceid'] == $id ) {
-					$result = $this->updateRemoteAsset( $id, $name, $metadata, $dupAssets[0] );
+				if ( !empty( $dupAssets[0]['metadata']['sourceid'] ) && $dupAssets[0]['metadata']['sourceid'] == $this->videoData['videoId'] ) {
+					$result = $this->updateRemoteAsset( $this->videoData['videoId'], $name, $metadata, $dupAssets[0] );
 				} else {
-					$this->videoSkipped( "Skipping {$metadata['name']} - {$metadata['description']}. SouceId not match (Id: $id).\n" );
+					$this->videoSkipped( "Skipping {$metadata['name']} - {$metadata['description']}. SouceId not match (Id: {$this->videoData['videoId']}).\n" );
 					return 0;
 				}
 			} else {
-				$result = $this->createRemoteAsset( $id, $name, $metadata );
+				$result = $this->createRemoteAsset( $this->videoData['videoId'], $name, $metadata );
 			}
 
 			return $result;
@@ -253,7 +269,7 @@ abstract class VideoFeedIngester {
 
 		// prepare article body
 		/** @var ApiWrapper $apiWrapper */
-		$apiWrapper = new static::$API_WRAPPER( $id, $metadata );
+		$apiWrapper = new static::$API_WRAPPER( $this->videoData['videoId'], $metadata );
 
 		// add category
 		$body = $categoryStr."\n";
@@ -264,7 +280,7 @@ abstract class VideoFeedIngester {
 
 		if ( $this->debugMode() ) {
 			print "Ready to create video\n";
-			print "id:          $id\n";
+			print "id:          {$this->videoData['videoId']}\n";
 			print "name:        $name\n";
 			print "categories:  " . implode( ',', $categories ) . "\n";
 			print "metadata:\n";
@@ -277,7 +293,7 @@ abstract class VideoFeedIngester {
 				print ":: $line\n";
 			}
 
-			$this->videoIngested( "Ingested $name (id: $id).\n", $categories );
+			$this->videoIngested( "Ingested $name (id: {$this->videoData['videoData']}).\n", $categories );
 
 			return 1;
 		} else {
@@ -294,10 +310,10 @@ abstract class VideoFeedIngester {
 			}
 			/** @var Title $uploadedTitle */
 			$uploadedTitle = null;
-			$result = VideoFileUploader::uploadVideo( $provider, $id, $uploadedTitle, $body, false, $metadata );
+			$result = VideoFileUploader::uploadVideo( $provider, $this->videoData['videoId'], $uploadedTitle, $body, false, $metadata );
 			if ( $result->ok ) {
 				$fullUrl = WikiFactory::getLocalEnvURL( $uploadedTitle->getFullURL() );
-				$this->videoIngested( "Ingested {$uploadedTitle->getText()} from partner clip id $id. {$fullUrl}\n", $categories );
+				$this->videoIngested( "Ingested {$uploadedTitle->getText()} from partner clip id {$this->videoData['videoId']}. {$fullUrl}\n", $categories );
 
 				wfWaitForSlaves( self::THROTTLE_INTERVAL );
 				wfRunHooks( 'VideoIngestionComplete', array( $uploadedTitle, $categories ) );
@@ -606,12 +622,11 @@ abstract class VideoFeedIngester {
 	 * This would filter out videos where any data contained the word 'Daily' and any video where the
 	 * keywords contained the case insensitive string 'adult'
 	 *
-	 * @param array $clipData - The video data
 	 * @return bool - Returns true if the video should be filtered out, false otherwise
 	 */
-	protected function isFilteredVideo( array $clipData ) {
+	protected function isFilteredVideo() {
 		if ( is_array( static::$CLIP_FILTER ) ) {
-			foreach ( $clipData as $key => $value ) {
+			foreach ( $this->videoData as $key => $value ) {
 				// See if we match key explicitly or by the catchall '*'
 				$regex_list = empty( static::$CLIP_FILTER['*'] ) ? '' : static::$CLIP_FILTER['*'];
 				$regex_list = empty( static::$CLIP_FILTER[$key] ) ? $regex_list : static::$CLIP_FILTER[$key];
@@ -662,24 +677,24 @@ abstract class VideoFeedIngester {
 
 	/**
 	 * check if video is blacklisted ( titleName, description, keywords, name )
-	 * @param array $data
 	 * @return boolean
 	 */
-	public function isBlacklistedVideo( array $data ) {
+	public function isBlacklistedVideo() {
 
 		// General filter on all keywords
 		$regex = $this->getBlacklistRegex( F::app()->wg->VideoBlacklist );
 		if ( !empty( $regex ) ) {
 			$keys = array( 'titleName', 'description' );
-			if ( array_key_exists( 'keywords', $data ) ) {
+			if ( array_key_exists( 'keywords', $this->videoData ) ) {
 				$keys[] = 'keywords';
 			}
-			if ( array_key_exists( 'name', $data ) ) {
+			if ( array_key_exists( 'name', $this->videoData ) ) {
 				$keys[] = 'name';
 			}
 			foreach ( $keys as $key ) {
-				if ( preg_match( $regex, str_replace( '-', ' ', $data[$key] ) ) ) {
-					echo "Blacklisting video: ".$data['titleName'].", videoId ".$data['videoId']." (reason $key: ".$data[$key].")\n";
+				if ( preg_match( $regex, str_replace( '-', ' ', $this->videoData[$key] ) ) ) {
+					echo "Blacklisting video: ".$this->videoData['titleName'].", videoId ".$this->videoData['videoId'].
+						" (reason $key: ".$this->videoData[$key].")\n";
 					return true;
 				}
 			}
@@ -689,15 +704,14 @@ abstract class VideoFeedIngester {
 	}
 
 	/**
-	 * filter keywords
-	 * @param string $keywords (comma-separated string)
+	 * filter keywords from videoData
 	 */
-	protected function filterKeywords( &$keywords ) {
-		if ( !empty( $keywords ) ) {
+	protected function filterKeywords() {
+		if ( !empty( $this->videoData['keywords'] ) ) {
 			$regex = $this->getBlacklistRegex( F::app()->wg->VideoKeywordsBlacklist );
 			$new = array();
 			if ( !empty( $regex ) ) {
-				$old = explode( ',', $keywords );
+				$old = explode( ',', $this->videoData['keywords'] );
 				foreach ( $old as $word ) {
 					if ( preg_match( $regex, str_replace( '-', ' ', $word ) ) ) {
 						echo "Skip: blacklisted keyword $word.\n";
@@ -709,7 +723,7 @@ abstract class VideoFeedIngester {
 			}
 
 			if ( !empty( $new ) ) {
-				$keywords = implode( ',', $new );
+				$this->videoData['keywords'] = implode( ',', $new );
 			}
 		}
 	}

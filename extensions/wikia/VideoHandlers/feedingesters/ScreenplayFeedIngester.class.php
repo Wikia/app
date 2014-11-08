@@ -369,30 +369,29 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * Generate video name
-	 * @param array $data
 	 * @return string $name
 	 */
-	protected function generateName( $data ) {
+	protected function generateName() {
 		wfProfileIn( __METHOD__ );
 
-		if ( empty( $data['description'] ) ) {
+		if ( empty( $this->videoData['description'] ) ) {
 			$altDescription = '';
-			$altDescription .= empty( $data['category'] ) ? '' : $data['category'].' ';
-			$altDescription .= empty( $data['type'] ) ? '' : $data['type'].' ';
-			//$altDescription .= "({$data['videoId']})";
+			$altDescription .= empty( $this->videoData['category'] ) ? '' : $this->videoData['category'].' ';
+			$altDescription .= empty( $this->videoData['type'] ) ? '' : $this->videoData['type'].' ';
+			//$altDescription .= "({$this->videoData['videoId']})";
 			$description = $altDescription;
 		} else {
-			$description = $data['description'];
+			$description = $this->videoData['description'];
 		}
 
 		if ( startsWith( $description, 'Trailer ' ) ) {
 			// add trailer type to description
-			if ( !empty( $data['category'] ) ) {
-				$description = $data['category'] . ' ' . $description;
+			if ( !empty( $this->videoData['category'] ) ) {
+				$description = $this->videoData['category'] . ' ' . $description;
 			}
 		}
 
-		$name = sprintf( "%s - %s", $this->generateTitleName( $data ), $description );
+		$name = sprintf( "%s - %s", $this->generateTitleName( $this->videoData ), $description );
 
 		wfProfileOut( __METHOD__ );
 
@@ -448,27 +447,26 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * Generate metadata
-	 * @param array $data
 	 * @param string $errorMsg
 	 * @return array|int $metadata or 0 on error
 	 */
-	public function generateMetadata( $data, &$errorMsg ) {
+	public function generateMetadata( &$errorMsg ) {
 		//error checking
-		if ( empty( $data['stdBitrateCode'] ) ) {
-			$errorMsg = 'no supported bitrate code for video id ' . $data['videoId'];
+		if ( empty( $this->videoData['stdBitrateCode'] ) ) {
+			$errorMsg = 'no supported bitrate code for video id ' . $this->videoData['videoId'];
 			return 0;
 		}
 
-		$metadata = parent::generateMetadata( $data, $errorMsg );
+		$metadata = parent::generateMetadata( $errorMsg );
 		if ( empty( $metadata ) ) {
 			return 0;
 		}
 
-		$metadata['stdBitrateCode'] = $data['stdBitrateCode'];
-		$metadata['jpegBitrateCode'] = empty( $data['jpegBitrateCode'] ) ? '' : $data['jpegBitrateCode'];
-		$metadata['streamUrl'] = empty( $data['streamUrl'] ) ? '' : $data['streamUrl'];
-		$metadata['streamHdUrl'] = empty( $data['streamHdUrl'] ) ? '' : $data['streamHdUrl'];
-		$metadata['distributor'] = empty( $data['distributor'] ) ? '' : $data['distributor'];
+		$metadata['stdBitrateCode'] = $this->videoData['stdBitrateCode'];
+		$metadata['jpegBitrateCode'] = empty( $this->videoData['jpegBitrateCode'] ) ? '' : $this->videoData['jpegBitrateCode'];
+		$metadata['streamUrl'] = empty( $this->videoData['streamUrl'] ) ? '' : $this->videoData['streamUrl'];
+		$metadata['streamHdUrl'] = empty( $this->videoData['streamHdUrl'] ) ? '' : $this->videoData['streamHdUrl'];
+		$metadata['distributor'] = empty( $this->videoData['distributor'] ) ? '' : $this->videoData['distributor'];
 
 		return $metadata;
 	}

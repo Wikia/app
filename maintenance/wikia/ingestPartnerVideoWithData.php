@@ -90,6 +90,7 @@ foreach ( $providersVideoFeed as $provider ) {
 	print( "Starting import for provider $provider...\n" );
 
 	$dataNormalizer = new IngesterDataNormalizer();
+	/** @var VideoFeedIngester $feedIngester */
 	$feedIngester = FeedIngesterFactory::getIngester( $provider, $dataNormalizer );
 	$feedIngester->reupload = $reupload;
 
