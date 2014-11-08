@@ -74,10 +74,10 @@
 		</section>
 
 		<section class="UserLoginFacebookRight">
-			<h1><?= wfMessage( 'usersignup-facebook-have-an-account-heading' )->escaped() ?></h1>
-			<p><?= wfMessage( 'usersignup-facebook-have-an-account' )->escaped() ?></p>
+			<h1><?= wfMessage('usersignup-facebook-have-an-account-heading')->escaped() ?></h1>
+			<p><?= wfMessage('usersignup-facebook-have-an-account')->escaped() ?></p>
 			<a class="wikia-button" href="<?= htmlspecialchars( $specialUserLoginUrl )  . '?' . $queryString ?>">
-				<?= wfMessage( 'login' )->escaped() ?>
+				<?= wfMessage('login')->escaped() ?>
 			</a>
 		</section>
 	</section>
