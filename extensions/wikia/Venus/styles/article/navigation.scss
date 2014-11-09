@@ -3,13 +3,14 @@
 @import 'skins/shared/color';
 
 $article-navigation-icon-size: 38px;
+$distanceToDropdown: 20px;
+$dropdownArrowSize: 10px;
 
 .article-navigation {
 	margin-left: $medium-content-padding - $content-border-width;
 	position: absolute;
 	text-align: center;
 	width: $medium-grid-column;
-	z-index: 1;
 
 	> ul {
 		display: block;
@@ -29,10 +30,42 @@ $article-navigation-icon-size: 38px;
 		font-size: $article-navigation-icon-size;
 		line-height: $article-navigation-icon-size;
 		margin-bottom: 6px;
+		position: relative;
+	}
 
-		&:hover {
-			color: $color-buttons;
+	.active {
+		.wikia-dropdown-nav-wrapper {
+			padding-left: $distanceToDropdown;
+			top: -$dropdownArrowSize / 2;
 		}
+
+		.nav-icon {
+			&:before,
+			&:after {
+				content: "";
+				position: absolute;
+				border-top: $dropdownArrowSize solid transparent;
+				border-bottom: $dropdownArrowSize solid transparent;
+				position: absolute;
+				top: $dropdownArrowSize;
+			}
+
+			&:before {
+				border-right: $dropdownArrowSize solid $color-page-border-subtle;
+				right: -$distanceToDropdown;
+			}
+
+			&:after {
+				border-right: $dropdownArrowSize solid $color-page;
+				z-index: 1;
+				right: -$distanceToDropdown - 1px;
+			}
+		}
+	}
+
+	.active .nav-icon,
+	.nav-icon:hover {
+		color: $color-buttons;
 	}
 }
 
