@@ -2,7 +2,7 @@
 <!-- BEGIN SLOTNAME: <?= htmlspecialchars($slotName) ?> -->
 <div id="<?= htmlspecialchars($slotName) ?>" class="wikia-ad noprint default-height">
 <script>
-	window.adslots2.push(<?= json_encode([$slotName, null, 'AdEngine2']) ?>);
+	window.adslots2.push(<?= json_encode([$slotName]) ?>);
 </script>
 </div>
 <!-- END SLOTNAME: <?= htmlspecialchars($slotName) ?> -->

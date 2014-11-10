@@ -64,8 +64,10 @@
 ?>
 <?php
 // render search box
-if ( $showSearchBox && empty( $wg->EnableGlobalNavExt ) ): ?>
+
+if ($showSearchBox && !(WikiaPageType::isMainPage() && !empty( $wg->EnableNjordExt) && empty( $wg->EnableGlobalNavExt ) ) ):
+	?>
 <section id="WikiaSearchHeader" class="WikiaSearchHeader">
 	<?=  F::app()->renderView('Search', 'Index', array('searchFormId' => 'WikiaSearch')) ?>
 </section>
-<?php endif ?>
+<?php endif; ?>

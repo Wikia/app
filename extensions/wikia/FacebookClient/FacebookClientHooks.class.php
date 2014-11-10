@@ -43,16 +43,19 @@ class FacebookClientHooks {
 			$id = $mwUser ? $mwUser->getId() : 0;
 
 			// If the user doesn't exist, ask them to name their new account
-			if ( !$id && !empty( $wg->Title ) ) {
+			// Don't redirect if we're on certain special pages
+			if ( !$id && !empty( $wg->Title ) && FacebookClientHooks::isOkToRedirect() ) {
+				$skin = RequestContext::getMain()->getSkin();
 
-				// Don't redirect if we're on certain special pages
-				if ( FacebookClientHooks::isOkToRedirect() ) {
-					$skin = RequestContext::getMain()->getSkin();
-					$returnTo = 'returnto=' . $wg->Title->getPrefixedURL();
-
-					// Redirect to Special:Connect so the Facebook user can choose a nickname
-					$wg->Out->redirect( $skin->makeSpecialUrl( 'FacebookConnect', $returnTo ) );
+				$returnTo = $wg->request->getVal( 'returnto', $wg->Title->getPrefixedURL() );
+				$redirectUrl = 'returnto=' . htmlspecialchars( $returnTo );
+				$returnToQuery = $wg->request->getVal( 'returntoquery' );
+				if ( $returnToQuery ) {
+					$redirectUrl .= '&returntoquery=' . htmlspecialchars( $returnToQuery );
 				}
+
+				// Redirect to Special:Connect so the Facebook user can choose a nickname
+				$wg->Out->redirect( $skin->makeSpecialUrl( 'FacebookConnect', $redirectUrl ) );
 			}
 		}
 
