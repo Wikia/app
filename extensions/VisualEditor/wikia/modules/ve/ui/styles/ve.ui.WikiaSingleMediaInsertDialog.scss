@@ -1,0 +1,77 @@
+@import "skins/shared/mixins/transition";
+@import "skins/shared/color";
+@import "mixins/ve-icon";
+
+.ve-ui-wikiaSingleMediaDialog {
+	.oo-ui-window-body {
+		padding: 0;
+	}
+
+	.oo-ui-window-foot {
+		.oo-ui-buttonedElement {
+			float: right;
+		}
+	}
+}
+
+.ve-ui-wikiaSingleMediaQueryWidget {
+	box-shadow: 0 0 0.66em rgba(0, 0, 0, 0.25);
+	box-sizing: border-box;
+	height: 70px;
+	padding: 20px;
+	position: relative;
+	z-index: 1;
+
+	.oo-ui-textInputWidget {
+		width: 100%;
+	}
+}
+
+.ve-ui-wikiaSingleMediaDialog-mainLayout {
+	@include transition-shorthand( all 250ms ease-in-out );
+	top: 70px;
+
+	.ve-ui-wikiaSingleMediaDialog-resultsPage {
+		overflow-x: hidden;
+		position: absolute;
+		right: auto;
+		width: 552px;
+	}
+	.ve-ui-wikiaSingleMediaDialog-cartPage {
+		background: $color-ve-page-secondary;
+		left: 552px;
+		overflow-x: hidden;
+		position: absolute;
+	}
+}
+
+.ve-ui-wikiaSingleMediaDialog-policy {
+	align-items: center;
+	color: $color-alternate-text;
+	display: flex;
+	font-size: .9em;
+	height: 2.5em;
+	line-height: 1.25em;
+	margin-top: 1px;
+
+	.ve-ui-wikiaSingleMediaDialog-policyInner {
+		margin-right: 4em;
+		max-height: 2.5em;
+		overflow: hidden;
+	}
+}
+
+.ve-ui-wikiaSingleMediaDialog-cartToggle {
+	.oo-ui-buttonedElement-button {
+		border-radius: 4px;
+	}
+	.oo-ui-buttonedElement-active {
+		background: $color-alternate-text;
+	}
+}
+.ve-ui-wikiaSingleMediaDialog-cartGridButton .oo-ui-buttonedElement-active .oo-ui-iconedElement-icon {
+	@include ve-icon(cart-grid, wikia, $color-alternate-text);
+}
+.ve-ui-wikiaSingleMediaDialog-cartListButton .oo-ui-buttonedElement-active .oo-ui-iconedElement-icon {
+	@include ve-icon(cart-list, wikia, $color-alternate-text);
+}

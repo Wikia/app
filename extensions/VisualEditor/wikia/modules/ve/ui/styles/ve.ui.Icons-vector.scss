@@ -343,6 +343,12 @@
 .oo-ui-icon-arrow-circled {
 	@include ve-icon(arrow-circled, wikia);
 }
+.oo-ui-icon-cart-grid {
+	@include ve-icon(cart-grid, wikia);
+}
+.oo-ui-icon-cart-list {
+	@include ve-icon(cart-list, wikia);
+}
 
 /*
  * Specific overrides

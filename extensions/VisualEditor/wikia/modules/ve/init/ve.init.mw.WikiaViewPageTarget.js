@@ -346,4 +346,5 @@ ve.init.mw.WikiaViewPageTarget.prototype.maybeShowDialogs = function () {
 	if ( parseInt( mw.config.get( 'showVisualEditorTransitionDialog' ) ) === 1 ) {
 		this.surface.getDialogs().getWindow( 'wikiaPreference' ).open( null, null, this.surface );
 	}
+	this.surface.getDialogs().getWindow( 'wikiaSingleMedia' ).open( null, null, this.surface );
 };
