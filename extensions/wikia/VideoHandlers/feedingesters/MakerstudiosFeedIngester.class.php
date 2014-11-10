@@ -4,7 +4,6 @@ class MakerstudiosFeedIngester extends VideoFeedIngester {
 	protected static $API_WRAPPER = 'AnyclipApiWrapper';
 	protected static $PROVIDER = 'anyclip';
 	protected static $FEED_URL = 'https://devvmsapi.makerstudios.com/v1/feed/mrss/makerdemo?authorization=og9znuMr26krIdkgV0HcPg8PdOwSwZdz&allContent=true';
-	protected static $CLIP_TYPE_BLACKLIST = array();
 
 	private $content;
 	private $videos = [];

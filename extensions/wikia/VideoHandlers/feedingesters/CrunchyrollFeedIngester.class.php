@@ -6,7 +6,6 @@
 class CrunchyrollFeedIngester extends VideoFeedIngester {
 	protected static $API_WRAPPER = 'CrunchyrollApiWrapper';
 	protected static $PROVIDER = 'crunchyroll';
-	protected static $CLIP_TYPE_BLACKLIST = [];
 	protected static $FEED_URL = 'http://www.crunchyroll.com/syndication/feed?type=series';
 
 	/**

@@ -4,7 +4,6 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 	protected static $API_WRAPPER = 'AnyclipApiWrapper';
 	protected static $PROVIDER = 'anyclip';
 	protected static $FEED_URL = 'https://mrss.anyclip.com/$1.xml';
-	protected static $CLIP_TYPE_BLACKLIST = array();
 
 	public function downloadFeed( $startDate ) {
 		wfProfileIn( __METHOD__ );

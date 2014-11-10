@@ -19,7 +19,6 @@ abstract class VideoFeedIngester {
 	protected static $API_WRAPPER;
 	protected static $PROVIDER;
 	protected static $FEED_URL;
-	protected static $CLIP_TYPE_BLACKLIST = array();
 	protected static $CLIP_FILTER = array();
 	protected $filterByProviderVideoId = array();
 
@@ -146,13 +145,13 @@ abstract class VideoFeedIngester {
 
 		// See if this video is blacklisted (exact match against any data)
 		if ( $this->isBlacklistedVideo() ) {
-			$this->videoSkipped( "Skipping (due to \$CLIP_TYPE_BLACKLIST) '{$this->videoData['titleName']}' - {$this->videoData['description']}.\n" );
+			$this->videoSkipped( "Skipping (video is blacklisted) '{$this->videoData['titleName']}' - {$this->videoData['description']}.\n" );
 			return true;
 		}
 
 		// See if this video should be filtered (regex match against specific fields)
 		if ( $this->isFilteredVideo() ) {
-			$this->videoSkipped( "Skipping (due to \$CLIP_FILTER) '{$this->videoData['titleName']}' - {$this->videoData['description']}.\n" );
+			$this->videoSkipped( "Skipping (video filtered based on metadata) '{$this->videoData['titleName']}' - {$this->videoData['description']}.\n" );
 			return true;
 		}
 
@@ -590,23 +589,6 @@ abstract class VideoFeedIngester {
 		}
 
 		return $keyphraseFound;
-	}
-
-	/**
-	 * @param array $clipData
-	 * @return bool
-	 */
-	protected function isClipTypeBlacklisted( array $clipData ) {
-		// assume that a clip with properties that match exactly undesired
-		// values should not be imported. This assumption will have to
-		// change if we consider values that fall into a range, such as
-		// duration < MIN_VALUE
-		if ( !empty( static::$CLIP_TYPE_BLACKLIST ) && is_array( static::$CLIP_TYPE_BLACKLIST ) ) {
-			$arrayIntersect = array_intersect( static::$CLIP_TYPE_BLACKLIST, $clipData );
-			return ( !empty( $arrayIntersect ) && $arrayIntersect == static::$CLIP_TYPE_BLACKLIST );
-		}
-
-		return false;
 	}
 
 	/**
