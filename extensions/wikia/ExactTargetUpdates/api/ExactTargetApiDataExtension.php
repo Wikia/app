@@ -40,7 +40,7 @@ class ExactTargetApiDataExtension extends ExactTargetApi {
 	 * This array must be prepared in the following format:
 	 * 	Array (
 	 * 		'DataExtension' => [
-	 * 			'ObjectType' => "DataExtension[customer key]",
+	 * 			'ObjectType' => "DataExtensionObject[customer key]",
 	 * 			'Properties' => [ 'fieldnames', 'to', 'retrieve' ],
 	 * 		],
 	 * 		// SimpleFilterPart is an equivalent of a WHERE statement
