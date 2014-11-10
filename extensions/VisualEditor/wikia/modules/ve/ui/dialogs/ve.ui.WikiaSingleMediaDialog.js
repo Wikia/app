@@ -52,31 +52,11 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 	this.$leftSide = this.$( '<div>' )
 		.addClass( 've-ui-wikiaSingleMediaDialog-leftSide' )
 		.html('test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test');
-	this.$rightSide = this.$( '<div>' )
-		.addClass( 've-ui-wikiaSingleMediaDialog-rightSide' )
-		.html('test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test');
-	this.$cartControls = this.$( '<div>' )
-		.addClass( 've-ui-wikiaSingleMediaDialog-cartControls' );
-	this.$cartViewButtons = this.$( '<div>' )
-		.addClass( 've-ui-wikiaSingleMediaDialog-cartToggle' );
-	this.cartGridButton = new OO.ui.ButtonWidget( {
-		'$': this.$,
-		'frameless': true,
-		'icon': 'cart-grid',
-		'classes': [ 've-ui-wikiaSingleMediaDialog-cartGridButton' ]
-	} );
-	this.cartListButton = new OO.ui.ButtonWidget( {
-		'$': this.$,
-		'frameless': true,
-		'icon': 'cart-list',
-		'classes': [ 've-ui-wikiaSingleMediaDialog-cartListButton' ]
-	} );
-	this.$cartControls.append( this.$cartViewButtons.append( [
-		this.cartGridButton.$element,
-		this.cartListButton.$element
-	] ) );
+
+	this.cart = new ve.ui.WikiaSingleMediaCartWidget( { 'dialog': this } );
+
 	this.resultsPage = new OO.ui.PageLayout( 'results', { '$content': this.$leftSide } );
-	this.cartPage = new OO.ui.PageLayout( 'cart', { '$content': [ this.$cartControls, this.$rightSide ] } );
+	this.cartPage = new OO.ui.PageLayout( 'cart', { '$content': this.cart.$element } );
 
 	// Foot elements
 	this.$policy = this.$( '<div>' )
@@ -96,8 +76,7 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 	} );
 
 	// Events
-	this.cartGridButton.connect( this, { 'click': [ this.setLayout, 'grid' ] } );
-	this.cartListButton.connect( this, { 'click': [ this.setLayout, 'list' ] } );
+	this.cart.connect( this, { 'layout': 'setLayout' } );
 
 	// Initialization
 	this.resultsPage.$element.addClass( 've-ui-wikiaSingleMediaDialog-resultsPage' );
@@ -114,16 +93,18 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 	this.setLayout( 'grid' );
 };
 
-ve.ui.WikiaSingleMediaDialog.prototype.setLayout = function ( option ) {
-	if ( option === 'grid' ) {
+/*
+ * Sets layout between list and grid.
+ *
+ * @param {string} layout Either 'list' or 'grid'.
+ */
+ve.ui.WikiaSingleMediaDialog.prototype.setLayout = function ( layout ) {
+	if ( layout === 'grid' ) {
 		this.mainLayout.$element.css( 'left', 0 );
-		this.cartGridButton.setActive( true );
-		this.cartListButton.setActive( false );
-	} else if ( option === 'list' ) {
+	} else if ( layout === 'list' ) {
 		this.mainLayout.$element.css( 'left', -552 );
-		this.cartGridButton.setActive( false );
-		this.cartListButton.setActive( true );
 	}
+	this.emit( 'layout', layout );
 };
 
 /* Registration */

@@ -2,6 +2,9 @@
 @import "skins/shared/color";
 @import "mixins/ve-icon";
 
+$width-dialog: 712px;
+$width-results: 552px;
+
 .ve-ui-wikiaSingleMediaDialog {
 	.oo-ui-window-body {
 		padding: 0;
@@ -35,11 +38,11 @@
 		overflow-x: hidden;
 		position: absolute;
 		right: auto;
-		width: 552px;
+		width: $width-results;
 	}
 	.ve-ui-wikiaSingleMediaDialog-cartPage {
 		background: $color-ve-page-secondary;
-		left: 552px;
+		left: $width-results;
 		overflow-x: hidden;
 		position: absolute;
 	}
@@ -61,7 +64,24 @@
 	}
 }
 
+.ve-ui-wikiaSingleMediaCartWidget {
+	padding-top: 35px;
+}
+
+.ve-ui-wikiaSingleMediaDialog-cartControls {
+	border-bottom: 1px solid $color-page-border;
+	height: 29px;
+	padding-top: 5px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: $width-dialog;
+}
+
 .ve-ui-wikiaSingleMediaDialog-cartToggle {
+	position: absolute;
+	right: 56px;
+
 	.oo-ui-buttonedElement-button {
 		border-radius: 4px;
 	}
