@@ -197,7 +197,7 @@
 									});
 									var location = res.returnto;
 									if (res.returntoquery) {
-										location += '?' + res.returntoquery;
+										location += '?' + decodeURIComponent(res.returntoquery);
 									}
 
 									// redirect to the user page
