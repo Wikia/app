@@ -94,10 +94,6 @@ class MakerstudiosFeedIngester extends VideoFeedIngester {
 
 	private function createVideos() {
 		foreach( $this->videos as $video ) {
-			if ( $this->isClipTypeBlacklisted( $video ) ) {
-				$this->debugLog( "Skipping {$video['titleName']} - {$video['description']}. On clip type blacklist\n" );
-				continue;
-			}
 			$msg = '';
 			$this->numberCreatedVideos += $this->createVideo( $video, $msg, $this->params );
 		}

@@ -141,14 +141,8 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 			$clipData['provider'] = 'anyclip';
 
 			$msg = '';
-			if ( $this->isClipTypeBlacklisted( $clipData ) ) {
-				if ( $this->debugMode() ) {
-					$this->videoSkipped( "Skipping {$clipData['titleName']} - {$clipData['description']}. On clip type blacklist\n" );
-				}
-			} else {
-				$createParams = array( 'addlCategories' => $addlCategories );
-				$articlesCreated += $this->createVideo( $clipData, $msg, $createParams );
-			}
+			$createParams = array( 'addlCategories' => $addlCategories );
+			$articlesCreated += $this->createVideo( $clipData, $msg, $createParams );
 
 			if ( $msg ) {
 				print "ERROR: $msg\n";

@@ -245,17 +245,11 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 				unset( $video['addlCategories'] );
 
 				$msg = '';
-				if ( $this->isClipTypeBlacklisted( $video ) ) {
-					if ( $this->debugMode() ) {
-						$this->videoSkipped( "Skipping {$video['titleName']} ({$video['year']}) - {$video['description']}. On clip type blacklist\n" );
-					}
-				} else {
-					$createParams = [
-						'addlCategories' => $addlCategories,
-						'remoteAsset'    => $remoteAsset,
-					];
-					$articlesCreated += $this->createVideo( $video, $msg, $createParams );
-				}
+				$createParams = [
+					'addlCategories' => $addlCategories,
+					'remoteAsset'    => $remoteAsset,
+				];
+				$articlesCreated += $this->createVideo( $video, $msg, $createParams );
 				if ( $msg ) {
 					print "ERROR: $msg\n";
 				}
