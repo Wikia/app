@@ -112,6 +112,32 @@ class ExactTargetUserTaskHelper {
 	}
 
 	/**
+	 * Prepares array of params for ExactTarget API for updating DataExtension objects for UserID_WikiID mapping
+	 * @param int $iUserId User id
+	 * @param array $aUsersEdits array of user ids and number of contributions on wikis
+	 * @return array
+	 */
+	public function prepareUserEditsUpdateParams( array $aUsersEdits ) {
+		/* Get Customer Keys specific for production or development */
+		$aCustomerKeys = $this->getCustomerKeys();
+		$sCustomerKey = $aCustomerKeys[ 'UserID_WikiID' ];
+		$aApiParams = [ 'DataExtension' => [] ];
+		foreach ( $aUsersEdits as $iUserId => $aValues ) {
+			foreach ( $aValues as $aEditsOnWiki ) {
+				$aApiParams[ 'DataExtension' ][] = [
+					'CustomerKey' => $sCustomerKey,
+					'Properties' => [ 'contributions' => $aEditsOnWiki['contributions'] ],
+					'Keys' => [
+						'user_id' => $iUserId,
+						'wiki_id' => $aEditsOnWiki['wiki_id']
+					]
+				];
+			}
+		}
+		return $aApiParams;
+	}
+
+	/**
 	 * Prepares array of params for ExactTarget API for creating DataExtension objects for user table
 	 * @param int $iUserId User id
 	 * @param array $aUserProperties user_properties key value array
@@ -187,6 +213,7 @@ class ExactTargetUserTaskHelper {
 		$aCustomerKeys = [
 			'user' => 'user',
 			'user_properties' => 'user_properties',
+			'UserID_WikiID' => 'UserID_WikiID',
 		];
 		return $aCustomerKeys;
 	}
