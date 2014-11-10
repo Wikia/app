@@ -19,6 +19,11 @@ class FacebookClientController extends WikiaController {
 
 		// Settings for a user who is not connected yet
 		$this->facebookConvertMessage = wfMessage( 'fbconnect-convert' )->plain();
+
+		$this->facebookButton = F::app()->renderView('FacebookButton', 'index', [
+			'class' => 'sso-login-facebook',
+			'text' => wfMessage('fbconnect-wikia-signup-w-facebook')->escaped()
+		]);
 	}
 
 	/**

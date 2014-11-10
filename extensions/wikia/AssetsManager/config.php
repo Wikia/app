@@ -2087,3 +2087,21 @@ $config['facebook_client_special_connect'] = [
 		'//extensions/wikia/FacebookClient/scripts/SpecialFacebookConnect.js',
 	]
 ];
+
+// Latest Facebook extension code
+$config['facebook_client_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'monobook'],
+	'assets' => [
+		'//extensions/wikia/FacebookClient/scripts/FacebookClient.js',
+	]
+];
+
+// Deprecated Facebook code - remove when we've done a full switch to FacebookClient
+$config['fbconnect_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'monobook'],
+	'assets' => [
+		'//extensions/FBConnect/fbconnect.js',
+	]
+];

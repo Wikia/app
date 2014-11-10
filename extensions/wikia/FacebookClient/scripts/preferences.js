@@ -1,8 +1,36 @@
-/* global FB, wgServer, wgScript, wgPageName */
+/* global FB, wgServer */
 
 $(function () {
 	'use strict';
 
+	$.loadFacebookAPI();
+
+	// handle connecting to facebook
+	$('.sso-login-facebook').on('click', function (e) {
+		e.preventDefault();
+
+		$.nirvana.sendRequest({
+			controller: 'SpecialFacebookConnect',
+			method: 'checkCreateAccount',
+			callback: function (data) {
+				debugger;
+				if (data.status === 'ok') {
+					window.Wikia.Tracker.track({
+						category: 'force-login-modal',
+						trackingMethod: 'both',
+						action: window.Wikia.Tracker.ACTIONS.SUCCESS,
+						label: 'facebook-login'
+					});
+
+					location.reload();
+				} else {
+					window.location.href = destUrl;
+				}
+			}
+		});
+	});
+
+	// handle disconnecting from facebook
 	$('#fbConnectDisconnect').click(function () {
 		$('#fbConnectDisconnectDone').hide();
 		$('#fbDisconnectProgress').show();
@@ -27,40 +55,4 @@ $(function () {
 			}
 		);
 	});
-
-	// BugId:93549
-	$.loadFacebookAPI(function () {
-		FB.XFBML.parse(document.getElementById('preferences'));
-	});
 });
-
-function sendToConnectOnLogin(){
-	'use strict';
-
-	window.FB.getLoginStatus(function () {
-		var postURL,
-			destUrl = wgServer + wgScript +
-			'?title=Special:FacebookConnect' +
-			'&returnto=' + encodeURIComponent(wgPageName) +
-			'&returntoquery=' + encodeURIComponent(window.wgPageQuery || '');
-
-		$('#fbConnectModalWrapper').remove();
-
-		postURL = '/wikia.php?controller=SpecialFacebookConnect&method=checkCreateAccount&format=json';
-		$.postJSON(postURL, function (data) {
-			if (data.status === 'ok') {
-
-				window.Wikia.Tracker.track({
-					category: 'force-login-modal',
-					trackingMethod: 'both',
-					action: window.Wikia.Tracker.ACTIONS.SUCCESS,
-					label: 'facebook-login'
-				});
-
-				location.reload();
-			} else {
-				window.location.href = destUrl;
-			}
-		});
-	});
-}

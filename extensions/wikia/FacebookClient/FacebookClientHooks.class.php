@@ -162,21 +162,26 @@ class FacebookClientHooks {
 	}
 
 	/**
-	 * Adds JS needed for the user preferences page
+	 * Adds JS needed for FacebookClient code
 	 *
 	 * @param Array $assetsArray
 	 * @return bool
 	 */
-	public static function onOasisSkinAssetGroups( &$assetsArray ) {
+	public static function onSkinAssetGroups( &$assetsArray ) {
 		$title = F::app()->wg->Title;
 
+		// Special:Preferences
 		if ( $title instanceof Title && $title->isSpecial( 'Preferences' ) ) {
 			$assetsArray[] = 'facebook_client_preferences_js';
 		}
 
+		// Special:FacebookConnect
 		if ( $title instanceof Title && $title->isSpecial( 'FacebookConnect' ) ) {
 			$assetsArray[] = 'facebook_client_special_connect';
 		}
+
+		// All pages
+		$assetsArray[] = 'facebook_client_js';
 
 		return true;
 	}

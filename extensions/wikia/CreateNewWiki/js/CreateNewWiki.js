@@ -535,11 +535,6 @@ function realoadAutoCreateForm() {
 	WikiBuilder.transition('Auth', true, '+');
 }
 
-function sendToConnectOnLogin() {
-	wgPageQuery += encodeURIComponent('&fbreturn=1');
-	sendToConnectOnLoginForSpecificForm("");
-}
-
 $(function() {
 	wgAjaxPath = wgScriptPath + wgScript;
 

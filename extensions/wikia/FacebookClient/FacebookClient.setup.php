@@ -42,7 +42,8 @@ $wgHooks['UserLoadFromSession'][] = 'FacebookClientHooks::UserLoadFromSession';
 $wgHooks['MakeGlobalVariablesScript'][] = 'FacebookClientHooks::MakeGlobalVariablesScript';
 $wgHooks['SkinAfterBottomScripts'][] = 'FacebookClientHooks::SkinAfterBottomScripts';
 $wgHooks['GetPreferences'][] = 'FacebookClientHooks::GetPreferences';
-$wgHooks['OasisSkinAssetGroups'][] = 'FacebookClientHooks::onOasisSkinAssetGroups';
+$wgHooks['OasisSkinAssetGroups'][] = 'FacebookClientHooks::onSkinAssetGroups';
+$wgHooks['MonobookSkinAssetGroups'][] = 'FacebookClientHooks::onSkinAssetGroups';
 $wgHooks['ParserFirstCallInit'][] = 'FacebookClientHooks::setupParserHook';
 
 // special pages
