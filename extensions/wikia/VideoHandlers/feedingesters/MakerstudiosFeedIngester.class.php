@@ -5,10 +5,12 @@ class MakerstudiosFeedIngester extends VideoFeedIngester {
 	protected static $PROVIDER = 'anyclip';
 	protected static $FEED_URL = 'https://devvmsapi.makerstudios.com/v1/feed/mrss/makerdemo?authorization=og9znuMr26krIdkgV0HcPg8PdOwSwZdz&allContent=true';
 
+	/** @var  DOMDocument */
 	private $content;
+	/** @var  DOMElement */
+	private $currentVideo;
 	private $videos = [];
 	private $numberCreatedVideos = 0;
-	private $currentVideo;
 	private $params;
 
 	public function downloadFeed() {
@@ -102,7 +104,7 @@ class MakerstudiosFeedIngester extends VideoFeedIngester {
 	}
 
 	public function generateCategories( array $data, $categories ) {
-		return [ 'MakerStudios', 'Entertainment' ];
+		return [ 'Maker Studios' ];
 	}
 
 	// TODO: tie this into videoSkipped code.
