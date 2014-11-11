@@ -91,7 +91,7 @@ class FacebookSignupController extends WikiaController {
 
 		$this->loginToken = UserLoginHelper::getSignupToken();
 
-		$this->specialUserLoginUrl = SpecialPage::getTitleFor( 'FacebookConnect' )->getLocalUrl();
+		$this->connectUrl = SpecialPage::getTitleFor( 'FacebookConnect' )->getLocalUrl();
 	}
 
 	/**
