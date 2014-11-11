@@ -802,17 +802,6 @@ abstract class VideoFeedIngester {
 	}
 
 	/**
-	 * get unique array (case insensitive)
-	 * @param array $arr
-	 * @return array $unique
-	 */
-	public function getUniqueArray( array $arr ) {
-		$lower = array_map( 'strtolower', $arr );
-		$unique = array_intersect_key( $arr, array_unique( $lower ) );
-		return array_filter( $unique );
-	}
-
-	/**
 	 * Set summary result for video found
 	 * @param integer $num - the number of video found
 	 */

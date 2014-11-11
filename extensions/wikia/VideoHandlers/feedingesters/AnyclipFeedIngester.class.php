@@ -178,7 +178,7 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 
 		wfProfileOut( __METHOD__ );
 
-		return $this->getUniqueArray( $categories );
+		return wfGetUniqueArrayCI( $categories );
 	}
 
 	/**

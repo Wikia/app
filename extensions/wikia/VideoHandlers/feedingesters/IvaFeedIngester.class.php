@@ -850,7 +850,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 		if ( !empty( $clipData['tags'] ) ) {
 			$keywords[] = $clipData['tags'];
 		}
-		$clipData['keywords'] = implode( ', ', $this->getUniqueArray( $keywords ) );
+		$clipData['keywords'] = implode( ', ', wfGetUniqueArrayCI( $keywords ) );
 
 		wfProfileOut( __METHOD__ );
 
@@ -1012,7 +1012,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 		wfProfileOut( __METHOD__ );
 
-		return preg_replace( '/\s*,\s*/', ' ', $this->getUniqueArray( $categories ) );
+		return preg_replace( '/\s*,\s*/', ' ', wfGetUniqueArrayCI( $categories ) );
 	}
 
 	/**

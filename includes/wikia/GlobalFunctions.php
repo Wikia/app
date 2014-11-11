@@ -1746,3 +1746,14 @@ function wfReturnArray( $value ) {
 	}
 	return $value;
 }
+
+/**
+ * get unique array (case insensitive)
+ * @param array $arr
+ * @return array $unique
+ */
+function wfGetUniqueArrayCI( array $arr ) {
+	$lower = array_map( 'strtolower', $arr );
+	$unique = array_intersect_key( $arr, array_unique( $lower ) );
+	return array_filter( $unique );
+}
