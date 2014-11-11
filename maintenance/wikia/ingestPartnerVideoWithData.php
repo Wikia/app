@@ -55,12 +55,15 @@ date_sub( $defaultStart, $di );
 $userName     = isset( $options['u'] ) ? $options['u'] : 'Wikia Video Library';
 $endDateTS    = isset( $options['e'] ) ? $options['e'] : date_timestamp_get( $defaultEnd );
 $startDateTS  = isset( $options['s'] ) ? $options['s'] : date_timestamp_get( $defaultStart );
-$debug        = isset( $options['d'] );
-$reupload     = isset( $options['r'] );
 $getAllVideos = isset( $options['a'] );
 $remoteAsset  = isset( $options['ra'] );
 $showSummary  = isset( $options['summary'] );
 $provider     = empty( $args[0] ) ? '' : strtolower( $args[0] );
+
+$params = [
+	$debug => isset( $options['d'] ),
+	$reupload => isset( $options['r'] ),
+];
 
 // check if allow to upload file
 if ( $wgEnableUploads === false ) {
@@ -90,8 +93,7 @@ foreach ( $providersVideoFeed as $provider ) {
 	$dataNormalizer = new IngesterDataNormalizer();
 	$logger = new FeedIngesterLogger();
 	/** @var VideoFeedIngester $feedIngester */
-	$feedIngester = FeedIngesterFactory::getIngester( $provider, $dataNormalizer, $debug, $logger );
-	$feedIngester->reupload = $reupload;
+	$feedIngester = FeedIngesterFactory::getIngester( $provider, $dataNormalizer, $logger, $params );
 
 	// get WikiFactory data
 	$ingestionData = $feedIngester->getWikiIngestionData();

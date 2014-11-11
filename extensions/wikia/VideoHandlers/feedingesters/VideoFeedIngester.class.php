@@ -13,9 +13,6 @@ abstract class VideoFeedIngester {
 	// Names a city variable to look for additional category data.  Used in the reingestBrokenVideo.php
 	const WIKI_INGESTION_DATA_VARNAME = 'wgPartnerVideoIngestionData';
 
-	// Determines if a duplicate video found should be re-uploaded or ignored
-	public $reupload = false;
-
 	protected static $API_WRAPPER;
 	protected static $PROVIDER;
 	protected static $FEED_URL;
@@ -31,12 +28,15 @@ abstract class VideoFeedIngester {
 	/** @var  IngesterDataNormalizer */
 	private $dataNormalizer;
 	private $debug;
+	private $reupload = false; // Determines if a duplicate video found should be re-uploaded or ignored
+
 	protected $videoData;
 
-	public function __construct( $dataNormalizer, $debug = false, FeedIngesterLogger $logger ) {
+	public function __construct( $dataNormalizer, FeedIngesterLogger $logger, $params ) {
 		$this->dataNormalizer = $dataNormalizer;
-		$this->debug = $debug;
 		$this->logger = $logger;
+		$this->debug = empty( $params['debug'] );
+		$this->reupload = empty( $params['reupload'] );
 	}
 
 	protected function debugMode() {
