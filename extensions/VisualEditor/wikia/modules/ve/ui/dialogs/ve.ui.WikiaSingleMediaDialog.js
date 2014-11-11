@@ -44,19 +44,13 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 		'placeholder': 'Search for images' //TODO: i18n
 	} );
 
-	// Pages
-	this.mainLayout = new OO.ui.StackLayout( {
-		'$': this.$,
-		'continuous': true
-	} );
+	// Main panels
+	this.$main = this.$( '<div>' )
+		.addClass( 've-ui-wikiaSingleMediaDialog-main' );
 	this.$leftSide = this.$( '<div>' )
 		.addClass( 've-ui-wikiaSingleMediaDialog-leftSide' )
 		.html('test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test');
-
 	this.cart = new ve.ui.WikiaSingleMediaCartWidget( { 'dialog': this } );
-
-	this.resultsPage = new OO.ui.PageLayout( 'results', { '$content': this.$leftSide } );
-	this.cartPage = new OO.ui.PageLayout( 'cart', { '$content': this.cart.$element } );
 
 	// Foot elements
 	this.$policy = this.$( '<div>' )
@@ -79,15 +73,11 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 	this.cart.connect( this, { 'layout': 'setLayout' } );
 
 	// Initialization
-	this.resultsPage.$element.addClass( 've-ui-wikiaSingleMediaDialog-resultsPage' );
-	this.cartPage.$element.addClass( 've-ui-wikiaSingleMediaDialog-cartPage' );
-	this.mainLayout.$element.addClass( 've-ui-wikiaSingleMediaDialog-mainLayout' );
 	this.frame.$content.addClass( 've-ui-wikiaSingleMediaDialog' );
-
-	this.mainLayout.addItems( [ this.resultsPage, this.cartPage ] );
+	this.$main.append( this.$leftSide, this.cart.$element );
 
 	this.$policy.append( this.$policyInner );
-	this.$body.append( this.query.$element, this.mainLayout.$element );
+	this.$body.append( this.query.$element, this.$main );
 	this.$foot.append( this.insertButton.$element, this.cancelButton.$element, this.$policy );
 
 	this.setLayout( 'grid' );
@@ -100,9 +90,9 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
  */
 ve.ui.WikiaSingleMediaDialog.prototype.setLayout = function ( layout ) {
 	if ( layout === 'grid' ) {
-		this.mainLayout.$element.css( 'left', 0 );
+		this.$main.css( 'left', 0 );
 	} else if ( layout === 'list' ) {
-		this.mainLayout.$element.css( 'left', -552 );
+		this.$main.css( 'left', -552 );
 	}
 	this.emit( 'layout', layout );
 };
