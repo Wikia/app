@@ -180,9 +180,6 @@ class FacebookClientHooks {
 			$assetsArray[] = 'facebook_client_special_connect';
 		}
 
-		// All pages
-		$assetsArray[] = 'facebook_client_js';
-
 		return true;
 	}
 

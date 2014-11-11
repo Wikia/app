@@ -42,6 +42,7 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 	 * Run when the user has clicked the 'cancel' button on the login form
 	 */
 	protected function cancelConnect() {
+		// TODO: ask garth about this
 		FacebookClient::getInstance()->logout();
 		F::app()->wg->Out->showErrorPage(
 			'fbconnect-connect-cancel',
@@ -230,38 +231,32 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 
 		// Error out if there's no facebook user
 		if ( empty( $fb_user ) ) {
-			lizbug('empty fb user');
 			return true;
 		}
 
 		// Error out if there's a user ID defined (we're looking to connect an account)
 		if ( $wg->User->getId() != 0 ) {
-			lizbug('user get id does not = 0');
 			return true;
 		}
 
 		// Error out if there is a Wikia user connected to this FB user (again, looking to connect an account)
 		if ( $fb->getWikiaUser( $fb_user ) != null) {
-			lizbug('fb user not null');
 			return true;
 		}
 
 		// Don't do anything when we're readonly
 		if ( wfReadOnly() ) {
-			lizbug('read only');
 			return true;
 		}
 
 		// Block those who shouldn't be creating acounts
 		if ( $wg->User->isBlockedFromCreateAccount() ) {
-			lizbug('blocked');
 			return true;
 		}
 
 		// Look for any other errors around creating accounts
 		$titleObj = SpecialPage::getTitleFor( 'FacebookConnect' );
 		if ( count( $titleObj->getUserPermissionsErrors( 'createaccount', $wg->User, true ) ) > 0 ) {
-			lizbug('other error');
 			return true;
 		}
 

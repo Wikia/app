@@ -1,7 +1,7 @@
 /**
  * JS needed for Special:FacebookConnect
  */
-(function () {
+$(function () {
 	'use strict';
 
 	function SpecialPage() {
@@ -17,7 +17,7 @@
 		var self = this,
 			wpCancelClicked = false;
 
-		this.$cancel.click(function(){
+		this.$cancel.on('click', function(){
 			if (!wpCancelClicked) {
 				var logout = window.confirm($.msg('fbconnect-logout-confirm'));
 				if (logout) {
@@ -67,4 +67,4 @@
 	$.loadFacebookAPI(function () {
 		new SpecialPage().init();
 	});
-})();
+});
