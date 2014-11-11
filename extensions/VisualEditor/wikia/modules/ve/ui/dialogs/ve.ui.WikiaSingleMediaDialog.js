@@ -95,6 +95,19 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 	this.setLayout( 'grid' );
 };
 
+/**
+ * Handle closing the dialog.
+ *
+ * @method
+ * @param {string} action Which action is being performed on close.
+ */
+ve.ui.WikiaSingleMediaDialog.prototype.getTeardownProcess = function ( data ) {
+	return ve.ui.WikiaSingleMediaDialog.super.prototype.getTeardownProcess.call( this, data )
+		.first( function () {
+			this.queryInput.setValue( '' );
+		}, this );
+};
+
 /*
  * Sets layout between list and grid.
  *
