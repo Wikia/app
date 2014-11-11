@@ -46,7 +46,7 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 
 			$response = OoyalaAsset::getApiContent( $url );
 			if ( $response === false ) {
-				$this->videoErrors( "ERROR: problem downloading content.\n" );
+				$this->logger->videoErrors( "ERROR: problem downloading content.\n" );
 				wfProfileOut( __METHOD__ );
 				return 0;
 			}
@@ -54,11 +54,11 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 			$videos = empty( $response['items'] ) ? array() : $response['items'] ;
 			$nextPage = empty( $response['next_page'] ) ? '' : $response['next_page'] ;
 
-			$this->videoFound( count( $videos ) );
+			$this->logger->videoFound( count( $videos ) );
 
 			foreach ( $videos as $video ) {
 				if ( !empty( $video['time_restrictions']['start_date'] ) && strtotime( $video['time_restrictions']['start_date'] ) > $params['now'] ) {
-					$this->videoSkipped( "Skipping {$video['name']} (Id:{$video['embed_code']}). Time restriction.\n" );
+					$this->logger->videoSkipped( "Skipping {$video['name']} (Id:{$video['embed_code']}). Time restriction.\n" );
 					continue;
 				}
 
@@ -87,7 +87,7 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 				$clipData['categoryName'] = OoyalaApiWrapper::getProviderName( $video['labels'] );
 				// check for videos under '/Providers/' labels
 				if ( empty( $clipData['categoryName'] ) ) {
-					$this->videoSkipped( "Skipping {$clipData['titleName']} - {$clipData['description']}. No provider name.\n" );
+					$this->logger->videoSkipped( "Skipping {$clipData['titleName']} - {$clipData['description']}. No provider name.\n" );
 					continue;
 				}
 				$clipData['provider'] = OoyalaApiWrapper::formatProviderName( $clipData['categoryName'] );

@@ -88,8 +88,9 @@ foreach ( $providersVideoFeed as $provider ) {
 	print( "Starting import for provider $provider...\n" );
 
 	$dataNormalizer = new IngesterDataNormalizer();
+	$logger = new FeedIngesterLogger();
 	/** @var VideoFeedIngester $feedIngester */
-	$feedIngester = FeedIngesterFactory::getIngester( $provider, $dataNormalizer );
+	$feedIngester = FeedIngesterFactory::getIngester( $provider, $dataNormalizer, $debug, $logger );
 	$feedIngester->reupload = $reupload;
 
 	// get WikiFactory data
@@ -150,10 +151,10 @@ foreach ( $providersVideoFeed as $provider ) {
 
 	$numCreated = $feedIngester->import( $file, $params );
 
-	$summary[$provider] = $feedIngester->getResultSummary();
+	$summary[$provider] = $logger->getResultSummary();
 
 	// show ingested videos by vertical
-	displaySummary( $showSummary, getContentIngestedVideosByCategory( $feedIngester, $provider ), 'vertical' );
+	displaySummary( $showSummary, getContentIngestedVideosByCategory( $logger, $provider ), 'vertical' );
 
 	print "\nCreated $numCreated articles!\n\n";
 }
@@ -234,9 +235,14 @@ function getContentSummary( $summary ) {
 	return $content;
 }
 
-function getContentIngestedVideosByCategory( $ingester, $provider ) {
+/**
+ * @param FeedIngesterLogger $logger
+ * @param string $provider
+ * @return string
+ */
+function getContentIngestedVideosByCategory( $logger, $provider ) {
 	$content = "\n\nProvider: ".strtoupper( $provider )."\n";
-	foreach ( $ingester->getResultIngestedVideos() as $category => $msgs ) {
+	foreach ( $logger->getResultIngestedVideos() as $category => $msgs ) {
 		$content .= "\nCategory: $category\n";
 		if ( !empty( $msgs ) ) {
 			$content .= implode( '', $msgs );

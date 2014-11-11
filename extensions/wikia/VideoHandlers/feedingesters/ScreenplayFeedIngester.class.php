@@ -86,7 +86,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 
 		$content = $this->getUrlContent( $url, [ 'timeout' => self::TIMEOUT ] );
 		if ( $content === false  ) {
-			$this->videoErrors( "ERROR: problem downloading content.\n" );
+			$this->logger->videoErrors( "ERROR: problem downloading content.\n" );
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
@@ -172,7 +172,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 
 		foreach ( $titles as $title ) {
 			if ( empty( $title['Assets'] ) ) {
-				$this->videoSkipped();
+				$this->logger->videoSkipped();
 				continue;
 			}
 
@@ -202,19 +202,19 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 			$videos = [];
 			foreach ( $title['Assets'] as $clip ) {
 				if ( empty( $clip['EClipId'] ) ) {
-					$this->videoSkipped();
+					$this->logger->videoSkipped();
 					continue;
 				}
 
 				// If array is not empty - use only videos that exists in $this->filterByProviderVideoId array
 				if ( count( $this->filterByProviderVideoId ) > 0 && !in_array( $clip['EClipId'], $this->filterByProviderVideoId ) ) {
-					$this->videoSkipped();
+					$this->logger->videoSkipped();
 					continue;
 				}
 
 				// Skip Movie Trailers (trailer type = Home Video, Theatrical, Open-ended )
 				if ( in_array( $clip['TrailerTypeId'], self::$EXCLUDE_TRAILER_TYPE ) && $clip['TrailerVersion'] == 1 ) {
-					$this->videoSkipped();
+					$this->logger->videoSkipped();
 					continue;
 				}
 

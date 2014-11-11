@@ -18,7 +18,7 @@ class MakerstudiosFeedIngester extends VideoFeedIngester {
 		print( "Connecting to "  . self::$FEED_URL . "...\n" );
 		$content = $this->getUrlContent( self::$FEED_URL );
 		if ( !$content ) {
-			$this->videoErrors( "ERROR: problem downloading content.\n" );
+			$this->logger->videoErrors( "ERROR: problem downloading content.\n" );
 			// TODO Throw exception here
 			return 0;
 		}

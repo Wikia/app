@@ -14,7 +14,7 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 
 		$content = $this->getUrlContent( $url );
 		if ( !$content ) {
-			$this->videoErrors( "ERROR: problem downloading content.\n" );
+			$this->logger->videoErrors( "ERROR: problem downloading content.\n" );
 			wfProfileOut( __METHOD__ );
 
 			return 0;
@@ -44,7 +44,7 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 		@$doc->loadXML( $content );
 		$items = $doc->getElementsByTagName( 'item' );
 		$numItems = $items->length;
-		$this->videoFound( $numItems );
+		$this->logger->videoFound( $numItems );
 
 		for ( $i = 0; $i < $numItems; $i++ ) {
 			$item = $items->item( $i );
@@ -55,7 +55,7 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 				$clipData['titleName'] = html_entity_decode( $elements->item(0)->textContent );
 				$clipData['uniqueName'] = $clipData['titleName'];
 			} else {
-				$this->videoSkipped();
+				$this->logger->videoSkipped();
 				continue;
 			}
 
@@ -73,12 +73,12 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 			}
 
 			if ( !array_key_exists( 'videoId', $clipData ) ) {
-				$this->videoWarnings( "ERROR: videoId NOT found for {$clipData['titleName']} - {$clipData['description']}.\n" );
+				$this->logger->videoWarnings( "ERROR: videoId NOT found for {$clipData['titleName']} - {$clipData['description']}.\n" );
 				continue;
 			}
 
 			if ( empty( $clipData['videoId'] ) ) {
-				$this->videoWarnings( "ERROR: Empty videoId for {$clipData['titleName']} - {$clipData['description']}.\n" );
+				$this->logger->videoWarnings( "ERROR: Empty videoId for {$clipData['titleName']} - {$clipData['description']}.\n" );
 				continue;
 			}
 
@@ -87,7 +87,7 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 			$clipData['ageGate'] = ( $elements->length > 0 && $elements->item(0)->textContent == 'nonadult' ) ? 0 : 1;
 
 			if ( $clipData['ageGate'] ) {
-				$this->videoSkipped( "SKIP: Skipping adult video: {$clipData['titleName']} ({$clipData['videoId']}).\n" );
+				$this->logger->videoSkipped( "SKIP: Skipping adult video: {$clipData['titleName']} ({$clipData['videoId']}).\n" );
 				continue;
 			}
 

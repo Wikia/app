@@ -249,6 +249,7 @@ $wgAutoloadClasses[ 'MakerstudiosFeedIngester' ] = $dir . '/feedingesters/Makers
 
 $wgAutoloadClasses[ 'IngesterDataNormalizer' ] = $dir . '/feedingesters/IngesterDataNormalizer.class.php';
 $wgAutoloadClasses[ 'FeedIngesterFactory' ] = $dir . '/feedingesters/FeedIngesterFactory.class.php';
+$wgAutoloadClasses[ 'FeedIngesterLogger' ] = $dir . '/feedingesters/FeedIngesterLogger.class.php';
 
 $wgAutoloadClasses[ 'OoyalaAsset' ] = $dir . '/feedingesters/OoyalaAsset.class.php';
 

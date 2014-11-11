@@ -80,7 +80,7 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 		$content = $this->getUrlContent( $feedUrl );
 
 		if ( !$content ) {
-			$this->videoErrors( "ERROR: problem downloading content.\n" );
+			$this->logger->videoErrors( "ERROR: problem downloading content.\n" );
 			$content = 0;
 		}
 
@@ -152,7 +152,7 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 			@$doc->loadXML( $content );
 			$items = $doc->getElementsByTagName( 'item' );
 			$numItems = $items->length;
-			$this->videoFound( $numItems );
+			$this->logger->videoFound( $numItems );
 
 			$elements = $doc->getElementsByTagName( 'language' );
 			if ( $elements->length > 0 ) {
@@ -172,7 +172,7 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 				if ( $elements->length > 0 ) {
 					$clipData['titleName'] = $clipData['series'] . ' - ' . html_entity_decode( $elements->item( 0 )->textContent );
 				} else {
-					$this->videoSkipped();
+					$this->logger->videoSkipped();
 					continue;
 				}
 
@@ -181,13 +181,13 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 				if ( $elements->length > 0 ) {
 					$freePublishDate = strtotime( $elements->item( 0 )->textContent );
 					if ( $freePublishDate > time() ) {
-						$this->videoSkipped( "\nPremium video (title: {$clipData['titleName']})\n" );
+						$this->logger->videoSkipped( "\nPremium video (title: {$clipData['titleName']})\n" );
 						continue;
 					}
 				}
 
 				if ( WikiaFileHelper::getVideoFileFromTitle( $clipData['titleName'] ) ) {
-					$this->videoSkipped( "\nDuplicate video (title: {$clipData['titleName']})\n" );
+					$this->logger->videoSkipped( "\nDuplicate video (title: {$clipData['titleName']})\n" );
 					continue;
 				}
 
@@ -207,12 +207,12 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 				}
 
 				if ( !isset( $clipData['videoId'] ) ) {
-					$this->videoWarnings( "ERROR: videoId NOT found for {$clipData['titleName']} - {$clipData['description']}.\n" );
+					$this->logger->videoWarnings( "ERROR: videoId NOT found for {$clipData['titleName']} - {$clipData['description']}.\n" );
 					continue;
 				}
 
 				if ( empty( $clipData['videoId'] ) ) {
-					$this->videoWarnings( "ERROR: Empty videoId for {$clipData['titleName']} - {$clipData['description']}.\n" );
+					$this->logger->videoWarnings( "ERROR: Empty videoId for {$clipData['titleName']} - {$clipData['description']}.\n" );
 					continue;
 				}
 

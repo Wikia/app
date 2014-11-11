@@ -579,7 +579,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 				$numVideos = count( $videoAssets );
 				$title =  $this->getTitleFromProgram( $program );
 				print( "$title (Series:{$clipData['series']}): ");
-				$this->videoFound( $numVideos );
+				$this->logger->videoFound( $numVideos );
 
 				// add video assets
 				foreach ( $videoAssets as $videoAsset ) {
@@ -648,7 +648,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 			}
 
 			$numVideos = count( $videoAssets );
-			$this->videoFound( $numVideos );
+			$this->logger->videoFound( $numVideos );
 
 			foreach( $videoAssets as $videoAsset ) {
 				$clipData = $this->getDataFromProgram( $videoParams, $videoAsset['EntertainmentProgram'] );
@@ -694,7 +694,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 		$clipData['series'] = empty( $videoParams['series'] ) ? $program['title'] : $videoParams['series'];
 
 		if ( isset( $program['OkToEncodeAndServe'] ) && $program['OkToEncodeAndServe'] == false ) {
-			$this->videoSkipped( "Skip: {$clipData['series']} (Publishedid:{$program['Publishedid']}) has OkToEncodeAndServe set to false.\n" );
+			$this->logger->videoSkipped( "Skip: {$clipData['series']} (Publishedid:{$program['Publishedid']}) has OkToEncodeAndServe set to false.\n" );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
@@ -703,7 +703,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 		if ( !empty( $program['FirstReleasedYear'] ) && $program['FirstReleasedYear'] < self::MIN_RELEASE_YEAR ) {
 			$msg = "Skip: {$clipData['series']} (Publishedid:{$program['Publishedid']}) release date ";
 			$msg .= "{$program['FirstReleasedYear']} before ".self::MIN_RELEASE_YEAR."\n";
-			$this->videoSkipped( $msg );
+			$this->logger->videoSkipped( $msg );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
@@ -790,7 +790,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 		$clipData['videoId'] = $videoAsset['Publishedid'];
 
 		if ( !empty( $videoAsset['ExpirationDate'] ) ) {
-			$this->videoSkipped( "Skip: {$clipData['titleName']} (Id:{$clipData['videoId']}) has expiration date.\n" );
+			$this->logger->videoSkipped( "Skip: {$clipData['titleName']} (Id:{$clipData['videoId']}) has expiration date.\n" );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
@@ -962,7 +962,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 		$resp = Http::request( 'GET', $url, array( 'noProxy' => true ) );
 		if ( $resp === false ) {
-			$this->videoErrors( "ERROR: problem downloading content.\n" );
+			$this->logger->videoErrors( "ERROR: problem downloading content.\n" );
 			wfProfileOut( __METHOD__ );
 
 			return false;

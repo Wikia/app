@@ -29,7 +29,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 
 		$content = $this->getUrlContent( $url );
 		if ( !$content ) {
-			$this->videoErrors( "ERROR: problem downloading content.\n" );
+			$this->logger->videoErrors( "ERROR: problem downloading content.\n" );
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
@@ -55,7 +55,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 			$videos = [];
 		}
 
-		$this->videoFound( count( $videos ) );
+		$this->logger->videoFound( count( $videos ) );
 
 		foreach ( $videos as $video ) {
 
@@ -70,7 +70,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 
 			// If array is not empty - use only videos that exists in $this->filterByProviderVideoId array
 			if ( count( $this->filterByProviderVideoId ) > 0 && !in_array( $video['videoId'], $this->filterByProviderVideoId ) ) {
-				$this->videoSkipped();
+				$this->logger->videoSkipped();
 				continue;
 			}
 
