@@ -99,7 +99,6 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 ve.ui.WikiaSingleMediaDialog.prototype.onQueryInputKeydown =
 	OO.ui.SearchWidget.prototype.onQueryKeydown;
 
-
 /**
  * Handle closing the dialog.
  *
