@@ -147,9 +147,8 @@ ve.ui.WikiaSingleMediaDialog.prototype.onSearchNearingEnd = function () {
  * Handle query input changes.
  *
  * @method
- * @param {string} value The query input value
  */
-ve.ui.WikiaSingleMediaDialog.prototype.onQueryInputChange = function ( value ) {
+ve.ui.WikiaSingleMediaDialog.prototype.onQueryInputChange = function () {
 	this.results.clearItems();
 };
 
