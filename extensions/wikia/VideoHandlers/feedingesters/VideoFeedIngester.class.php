@@ -183,7 +183,6 @@ abstract class VideoFeedIngester {
 		$this->printInitialData();
 
 		$remoteAsset = !empty( $params['remoteAsset'] );
-		$ignoreRecent = !empty( $params['ignorerecent'] ) ? $params['ignorerecent'] : 0;
 		$addlCategories = empty( $params['addlCategories'] ) ? array() : $params['addlCategories'];
 
 		$name = $this->generateName();
@@ -209,7 +208,6 @@ abstract class VideoFeedIngester {
 
 		$duplicates = WikiaFileHelper::findVideoDuplicates( $provider, $this->videoData['videoId'], $remoteAsset );
 		$dup_count = count( $duplicates );
-		$previousFile = null;
 		if ( $dup_count > 0 ) {
 			if ( $this->reupload === false ) {
 				// if reupload is disabled finish now
@@ -221,7 +219,6 @@ abstract class VideoFeedIngester {
 			// instead of generating new one
 			$name = $duplicates[0]['img_name'];
 			echo "Video already exists, using it's old name: $name\n";
-			$previousFile = Title::newFromText( $name, NS_FILE );
 		} else {
 			// sanitize name
 			$name = VideoFileUploader::sanitizeTitle( $name );
@@ -296,17 +293,6 @@ abstract class VideoFeedIngester {
 
 			return 1;
 		} else {
-			if ( !empty( $ignoreRecent ) && !is_null( $previousFile ) ) {
-				$revId = $previousFile->getLatestRevID();
-				$revision = Revision::newFromId( $revId );
-				$time = $revision->getTimestamp();
-				$timeUnix = intval( wfTimestamp( TS_UNIX, $time ) );
-				$timeNow = intval( wfTimestamp( TS_UNIX, time() ) );
-				if ( $timeUnix + $ignoreRecent >= $timeNow ) {
-					$this->videoSkipped( "Recently uploaded, ignoring\n" );
-					return 0;
-				}
-			}
 			/** @var Title $uploadedTitle */
 			$uploadedTitle = null;
 			$result = VideoFileUploader::uploadVideo( $provider, $this->videoData['videoId'], $uploadedTitle, $body, false, $metadata );

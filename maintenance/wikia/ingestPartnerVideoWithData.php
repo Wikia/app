@@ -11,7 +11,7 @@
 
 ini_set( 'display_errors', 'stdout' );
 
-$optionsWithArgs = [ 'u', 's', 'e', 'i' ];
+$optionsWithArgs = [ 'u', 's', 'e', ];
 
 ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( 'commandLine.inc' );
@@ -31,7 +31,6 @@ Options:
   -e <date>         End date for searching videos by date (Unix timestamp)
   -d                Debug mode
   -r				Reingest videos (overwrite existing)
-  -i <time>			Do not reingest videos if they were uploaded in the last <time> seconds
   -a				get all videos
   --ra				use ooyala remote asset to ingest video
   --summary			show summary information
@@ -58,7 +57,6 @@ $endDateTS    = isset( $options['e'] ) ? $options['e'] : date_timestamp_get( $de
 $startDateTS  = isset( $options['s'] ) ? $options['s'] : date_timestamp_get( $defaultStart );
 $debug        = isset( $options['d'] );
 $reupload     = isset( $options['r'] );
-$ignoreRecent = isset( $options['i'] ) ? $options['i'] : 0;
 $getAllVideos = isset( $options['a'] );
 $remoteAsset  = isset( $options['ra'] );
 $showSummary  = isset( $options['summary'] );
@@ -143,7 +141,6 @@ foreach ( $providersVideoFeed as $provider ) {
 		'debug'        => $debug,
 		'startDate'    => $startDate,
 		'endDate'      => $endDate,
-		'ignorerecent' => $ignoreRecent,
 		'remoteAsset'  => $remoteAsset,
 	];
 

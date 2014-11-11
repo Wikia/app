@@ -48,8 +48,6 @@ class IgnFeedIngester extends VideoFeedIngester {
 	public function import( $content = '', $params = array() ) {
 		wfProfileIn( __METHOD__ );
 
-		$ignoreRecent = empty( $params['ignorerecent'] ) ? 0 : $params['ignorerecent'];
-
 		$articlesCreated = 0;
 
 		$videos = json_decode( $content, true );
@@ -123,7 +121,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 			$clipData['keywords'] = implode( ", ", $keywords );
 
 			$msg = '';
-			$createParams = array( 'addlCategories' => $addlCategories, 'ignorerecent' => $ignoreRecent );
+			$createParams = array( 'addlCategories' => $addlCategories );
 			$articlesCreated += $this->createVideo( $clipData, $msg, $createParams );
 			if ( $msg ) {
 				print "ERROR: $msg\n";
