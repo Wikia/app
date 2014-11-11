@@ -13,32 +13,23 @@ $(function () {
 	});
 
 	function loginCallback() {
-		var destUrl;
-
 		$.nirvana.sendRequest({
-			controller: 'SpecialFacebookConnect',
-			method: 'checkCreateAccount',
+			controller: 'FacebookClient',
+			method: 'connectLoggedInUser',
+			format: 'json',
 			callback: function (data) {
-				// user is already connected to FB and Wikia
 				if (data.status === 'ok') {
+
+					window.GlobalNotification.show($.msg('fbconnect-preferences-connected'), 'confirm');
+
 					window.Wikia.Tracker.track({
 						category: 'force-login-modal', // todo: this is not always correct
 						trackingMethod: 'both',
 						action: window.Wikia.Tracker.ACTIONS.SUCCESS,
 						label: 'facebook-login'
 					});
-
-					location.reload();
 				} else {
-					// send to url that will connect the accounts and then redirect to specified location
-					destUrl = wgServer +
-						wgScript +
-						'?title=Special:FacebookConnect&returnto=' +
-						encodeURIComponent(window.fbReturnToTitle || window.wgPageName) +
-						'&returntoquery=' +
-						encodeURIComponent(window.wgPageQuery || '');
-
-					window.location.href = destUrl;
+					window.GlobalNotification.show($.msg('fbconnect-preferences-connected-error'), 'error');
 				}
 			}
 		});

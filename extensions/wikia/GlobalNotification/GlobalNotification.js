@@ -1,10 +1,11 @@
 /*global WikiaFooterApp*/
 
 /*
- * GlobalNotification.show()
- * @param string content - message to be displayed
- * @param string type - 'notify' (blue), 'confirm' (green), 'error' (red), 'warn' (yellow)
-*/
+ * Handles the color-coded notification messages that generally appear at the top the screen or inside a modal.
+ * Use like:
+ * GlobalNotification.show('Some success message', 'confirm')
+ * GlobalNotification.show('Some error message', 'error', $('.myDiv'), 3000)
+ */
 
 var GlobalNotification = {
 	init: function() {
@@ -64,6 +65,13 @@ var GlobalNotification = {
 		}
 		GlobalNotification.msg = GlobalNotification.dom.find( '.msg' );
 	},
+	/**
+	 *
+	 * @param string content - message to be displayed
+	 * @param string type - 'notify' (blue), 'confirm' (green), 'error' (red), 'warn' (yellow)
+	 * @param {jQuery} [element] Element to prepend notification to
+	 * @param {number} [timeout] Optional time (in ms) after which notification will disappear.
+	 */
 	show: function(content, type, element, timeout) {
 		'use strict';
 		GlobalNotification.content = content;

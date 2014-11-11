@@ -59,7 +59,8 @@ The Wikia Community Team',
 	'prefs-fbconnect-status-prefstext' => 'Status',
 	'fbconnect-cancel' => 'Action cancelled',
 	'fbconnect-canceltext' => 'The previous action was cancelled by the user.',
-
+	'fbconnect-preferences-connected' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
+	'fbconnect-preferences-connected-error' => "We're sorry, we couldn't complete your connection. Please make sure you are logged in to your Wikia account and have given Wikia permission to connect with Facebook.",
 ];
 
 /**
@@ -100,4 +101,6 @@ $messages['qqq'] = [
 	'fbconnect-wikia-login-w-facebook' => '',
 	'fbconnect-wikia-signup-w-facebook' => '',
 	'fbconnect-logout-confirm' => 'Message shown if a user attempts to cancel process of connecting Wikia account with Facebook account. It informs the user that proceeding with this action will result in logout from Facebook and asks for confirmation.',
+	'fbconnect-preferences-connected' => 'Notifies user when they have successfully connected their facebook and wikia accounts via Special:Preferences',
+	'fbconnect-preferences-connected-error' => 'Notifies user if there was an error while trying to connect their facebook and wikia accounts via Special:Preferences',
 ];

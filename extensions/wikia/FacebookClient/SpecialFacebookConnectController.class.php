@@ -68,6 +68,7 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 		// The user must be logged into Facebook before choosing a wiki username
 		if ( !$fbUserId ) {
 			$wg->Out->showErrorPage( 'fbconnect-error', 'fbconnect-errortext' );
+			$this->skipRendering();
 			return true;
 		}
 
@@ -108,9 +109,10 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 		$fb = FacebookClient::getInstance();
 		$fbUserId = $fb->getUserId();
 
-		// The user must be logged into Facebook before choosing a wiki username
+		// The user must be logged into Facebook.
 		if ( !$fbUserId ) {
 			$wg->Out->showErrorPage( 'fbconnect-error', 'fbconnect-errortext' );
+			$this->skipRendering();
 			return true;
 		}
 
@@ -183,6 +185,7 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 		// redirect at the end of this method.
 		// @TODO Can we pass an empty string here and not define this unused variable?
 		$inject_html = '';
+		$queryStr = '';
 
 		// Pull this into a separate variable so we can assign it back afterward
 		$user = $wg->User;

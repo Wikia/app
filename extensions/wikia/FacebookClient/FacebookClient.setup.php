@@ -63,5 +63,9 @@ $wgResourceModules['ext.wikia.FacebookClient.XFBML'] = [
 	'remoteExtPath' => 'wikia/FacebookClient',
 ];
 
-JSMessages::registerPackage( 'FacebookClient', ['fbconnect-logout-confirm'] );
+JSMessages::registerPackage( 'FacebookClient', [
+	'fbconnect-logout-confirm',
+	'fbconnect-preferences-connected',
+	'fbconnect-preferences-connected-error',
+] );
 

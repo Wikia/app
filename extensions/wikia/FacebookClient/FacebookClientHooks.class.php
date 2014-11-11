@@ -158,6 +158,8 @@ class FacebookClientHooks {
 			'section' => 'fbconnect-prefstext/fbconnect-status-prefstext'
 		];
 
+		JSMessages::enqueuePackage( 'FacebookClient', JSMessages::EXTERNAL );
+
 		return true;
 	}
 
