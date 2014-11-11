@@ -10,9 +10,6 @@
  */
 
 ini_set( 'display_errors', 'stdout' );
-
-$optionsWithArgs = [ 'u', 's', 'e', ];
-
 ini_set( "include_path", dirname(__FILE__)."/.." );
 require_once( 'commandLine.inc' );
 
@@ -26,7 +23,6 @@ Import video from a partner
 Usage: php ingestPartnerVideoWithData.php [options...] <partner>
 
 Options:
-  -u <user>         Username
   -s <date>         Start date for searching videos by date (Unix timestamp)
   -e <date>         End date for searching videos by date (Unix timestamp)
   -d                Debug mode
@@ -52,7 +48,6 @@ date_add( $defaultEnd, $di );
 date_sub( $defaultStart, $di );
 
 // Read input parameters
-$userName     = isset( $options['u'] ) ? $options['u'] : 'Wikia Video Library';
 $endDateTS    = isset( $options['e'] ) ? $options['e'] : date_timestamp_get( $defaultEnd );
 $startDateTS  = isset( $options['s'] ) ? $options['s'] : date_timestamp_get( $defaultStart );
 $getAllVideos = isset( $options['a'] );
@@ -80,8 +75,8 @@ if ( $params['debug'] ) {
 	echo( "== DEBUG MODE ==\n" );
 }
 
-// Populate $wgUser
-loadUser( $userName );
+// Populate $wgUser with Wikia Video Library
+loadUser( 'Wikia Video Library' );
 
 // Determine which providers to pull from
 $providersVideoFeed = loadProviders( $provider );
@@ -171,9 +166,6 @@ function loadUser( $userName ) {
 	$wgUser = User::newFromName( $userName );
 	if ( !$wgUser ) {
 		die("Invalid username\n");
-	}
-	if ( $wgUser->isAnon() ) {
-//		$wgUser->addToDatabase();
 	}
 	$wgUser->load();
 }
