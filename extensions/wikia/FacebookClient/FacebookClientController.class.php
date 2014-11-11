@@ -46,7 +46,6 @@ class FacebookClientController extends WikiaController {
 		// confirm the signature
 		$expectedSig = hash_hmac( 'sha256', $payload, $fbAppSecret, $raw = true );
 		if ( $sig !== $expectedSig ) {
-			error_log('Bad Signed JSON signature!');
 			$log->info( 'Deauthorization callback received with invalid signature', [
 				'method' => __METHOD__,
 			] );
