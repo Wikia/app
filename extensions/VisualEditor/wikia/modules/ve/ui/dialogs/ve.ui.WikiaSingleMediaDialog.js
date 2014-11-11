@@ -38,18 +38,21 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 	// Parent method
 	ve.ui.WikiaSingleMediaDialog.super.prototype.initialize.call( this );
 
-	// Search
+	// Properties
 	this.query = new ve.ui.WikiaSingleMediaQueryWidget( {
 		'$': this.$,
 		'placeholder': ve.msg( 'visualeditor-dialog-wikiasinglemedia-search' )
 	} );
+	this.queryInput = this.query.getInput();
+	this.search = new ve.ui.WikiaMediaResultsWidget( { '$': this.$ } );
+	this.results = this.search.getResults();
 
 	// Main panels
 	this.$main = this.$( '<div>' )
 		.addClass( 've-ui-wikiaSingleMediaDialog-main' );
 	this.$leftSide = this.$( '<div>' )
 		.addClass( 've-ui-wikiaSingleMediaDialog-leftSide' )
-		.html('test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test');
+		.append( this.search.$element );
 	this.cart = new ve.ui.WikiaSingleMediaCartWidget( { 'dialog': this } );
 
 	// Foot elements
@@ -71,6 +74,12 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 
 	// Events
 	this.cart.connect( this, { 'layout': 'setLayout' } );
+	this.query.connect( this, {
+		'requestMediaDone': 'onQueryRequestMediaDone'
+	} );
+	this.search.connect( this, {
+		'nearingEnd': 'onSearchNearingEnd',
+	} );
 
 	// Initialization
 	this.frame.$content.addClass( 've-ui-wikiaSingleMediaDialog' );
@@ -95,6 +104,27 @@ ve.ui.WikiaSingleMediaDialog.prototype.setLayout = function ( layout ) {
 		this.$main.css( 'left', -552 );
 	}
 	this.emit( 'layout', layout );
+};
+
+/**
+ * Handle the resulting data from a query media request.
+ *
+ * @method
+ * @param {Object} items An object containing items to add to the search results
+ */
+ve.ui.WikiaSingleMediaDialog.prototype.onQueryRequestMediaDone = function ( items ) {
+	this.search.addItems( items );
+};
+
+/**
+ * Handle nearing the end of search results.
+ *
+ * @method
+ */
+ve.ui.WikiaSingleMediaDialog.prototype.onSearchNearingEnd = function () {
+	if ( !this.queryInput.isPending() ) {
+		this.query.requestMedia();
+	}
 };
 
 /* Registration */
