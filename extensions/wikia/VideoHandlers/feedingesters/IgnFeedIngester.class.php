@@ -45,7 +45,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 	 * @param array $params - A list of additional parameters that affect import
 	 * @return int - Returns the number of video created
 	 */
-	public function import( $content = '', $params = array() ) {
+	public function import( $content = '', array $params = [] ) {
 		wfProfileIn( __METHOD__ );
 
 		$articlesCreated = 0;
@@ -120,12 +120,8 @@ class IgnFeedIngester extends VideoFeedIngester {
 			$keywords = array_keys( $keywords );
 			$clipData['keywords'] = implode( ", ", $keywords );
 
-			$msg = '';
 			$createParams = array( 'addlCategories' => $addlCategories );
-			$articlesCreated += $this->createVideo( $clipData, $msg, $createParams );
-			if ( $msg ) {
-				print "ERROR: $msg\n";
-			}
+			$articlesCreated += $this->createVideo( $clipData, $createParams );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -135,16 +131,15 @@ class IgnFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * Create a list of category names to add to the new file page
-	 * @param array $data
 	 * @param array $categories
 	 * @return array $categories
 	 */
-	public function generateCategories( array $data, $categories ) {
+	public function generateCategories( array $categories ) {
 		wfProfileIn( __METHOD__ );
 
 		$categories[] = 'IGN';
 
-		if ( empty( $data['gameContent'] ) ) {
+		if ( empty( $this->metaData['gameContent'] ) ) {
 			$categories[] = 'IGN_entertainment';
 			$categories[] = 'Entertainment';
 		} else {
@@ -168,7 +163,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 			return 0;
 		}
 
-		$metadata['videoUrl'] = empty( $this->videoData['videoUrl'] ) ? '' : $this->videoData['videoUrl'];
+		$metadata['videoUrl'] = empty( $this->metaData['videoUrl'] ) ? '' : $this->metaData['videoUrl'];
 
 		return $metadata;
 	}

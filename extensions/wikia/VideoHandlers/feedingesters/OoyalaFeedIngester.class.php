@@ -7,7 +7,7 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 	protected static $PROVIDER = 'ooyala';
 	protected static $FEED_URL = 'https://api.ooyala.com';
 
-	public function import( $content = '', $params = array() ) {
+	public function import( $content = '', array $params = [] ) {
 		$params['now'] = time();
 
 		// by created date
@@ -33,7 +33,7 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 	 * @param array $params
 	 * @return integer $articlesCreated
 	 */
-	public function importVideos( $params = array() ) {
+	public function importVideos( $params = [] ) {
 		wfProfileIn( __METHOD__ );
 
 		$articlesCreated = 0;
@@ -128,12 +128,8 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 					$ooyalaAsset->setAdSet( $clipData["videoId"], F::app()->wg->OoyalaApiConfig['adSetHowdini'] );
 				}
 
-				$msg = '';
 				$createParams = array( 'provider' => $clipData['provider'] );
-				$articlesCreated += $this->createVideo( $clipData, $msg, $createParams );
-				if ( $msg ) {
-					print "ERROR: $msg\n";
-				}
+				$articlesCreated += $this->createVideo( $clipData, $createParams );
 			}
 		} while ( !empty( $nextPage ) );
 
@@ -164,19 +160,18 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * Create list of category names to add to the new file page
-	 * @param array $data
 	 * @param array $categories
 	 * @return array $categories
 	 */
-	public function generateCategories( array $data, $categories ) {
+	public function generateCategories( array $categories ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( !empty( $data['name'] ) ) {
-			$categories = array_merge( $categories, array_map( 'trim', explode( ',', $data['name'] ) ) );
+		if ( !empty( $this->metaData['name'] ) ) {
+			$categories = array_merge( $categories, array_map( 'trim', explode( ',', $this->metaData['name'] ) ) );
 		}
 
-		if ( !empty( $data['pageCategories'] ) ) {
-			$stdCategories = array_map( array( $this , 'getPageCategory'), explode( ',', $data['pageCategories'] ) );
+		if ( !empty( $this->metaData['pageCategories'] ) ) {
+			$stdCategories = array_map( array( $this , 'getPageCategory'), explode( ',', $this->metaData['pageCategories'] ) );
 			$categories = array_merge( $categories, $stdCategories );
 		}
 
@@ -186,8 +181,8 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 			unset( $categories[$key] );
 		}
 
-		if ( !empty( $data['categoryName'] ) ) {
-			$categories[] = $data['categoryName'];
+		if ( !empty( $this->metaData['categoryName'] ) ) {
+			$categories[] = $this->metaData['categoryName'];
 		}
 
 		$categories = array_merge( $categories, $this->getAdditionalPageCategories( $categories ) );
@@ -210,11 +205,11 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 			return 0;
 		}
 
-		$metadata['startDate'] = empty( $this->videoData['startDate'] ) ? '' :  $this->videoData['startDate'];
-		$metadata['source'] = empty( $this->videoData['source'] ) ? '' :  $this->videoData['source'];
-		$metadata['sourceId'] = empty( $this->videoData['sourceId'] ) ? '' :  $this->videoData['sourceId'];
-		$metadata['distributor'] = empty( $this->videoData['distributor'] ) ? '' :  $this->videoData['distributor'];
-		$metadata['pageCategories'] = empty( $this->videoData['pageCategories'] ) ? '' :  $this->videoData['pageCategories'];
+		$metadata['startDate'] = empty( $this->metaData['startDate'] ) ? '' :  $this->metaData['startDate'];
+		$metadata['source'] = empty( $this->metaData['source'] ) ? '' :  $this->metaData['source'];
+		$metadata['sourceId'] = empty( $this->metaData['sourceId'] ) ? '' :  $this->metaData['sourceId'];
+		$metadata['distributor'] = empty( $this->metaData['distributor'] ) ? '' :  $this->metaData['distributor'];
+		$metadata['pageCategories'] = empty( $this->metaData['pageCategories'] ) ? '' :  $this->metaData['pageCategories'];
 
 		return $metadata;
 	}

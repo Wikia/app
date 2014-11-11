@@ -35,7 +35,7 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 		return $url;
 	}
 
-	public function import( $content = '', $params = array() ) {
+	public function import( $content = '', array $params = [] ) {
 		wfProfileIn( __METHOD__ );
 
 		$articlesCreated = 0;
@@ -139,13 +139,7 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 			$clipData['hd'] = 0;
 			$clipData['provider'] = 'anyclip';
 
-			$msg = '';
-			$createParams = [];
-			$articlesCreated += $this->createVideo( $clipData, $msg, $createParams );
-
-			if ( $msg ) {
-				print "ERROR: $msg\n";
-			}
+			$articlesCreated += $this->createVideo( $clipData );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -155,22 +149,21 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * Create a list of category names to add to the new file page
-	 * @param array $data
 	 * @param array $categories
 	 * @return array $categories
 	 */
-	public function generateCategories( array $data, $categories ) {
+	public function generateCategories( array $categories ) {
 		wfProfileIn( __METHOD__ );
 
 		$categories[] = 'AnyClip';
 		$categories[] = 'Entertainment';
-		if ( stristr( $data['titleName'], 'trailer' ) ) {
+		if ( stristr( $this->metaData['titleName'], 'trailer' ) ) {
 			$categories[] = 'Trailers';
 		}
 
-		if ( !empty( $data['name'] ) ) {
-			$categories[] = $data['name'];
-			$addition = $this->getAdditionalPageCategory( $data['name'] );
+		if ( !empty( $this->metaData['name'] ) ) {
+			$categories[] = $this->metaData['name'];
+			$addition = $this->getAdditionalPageCategory( $this->metaData['name'] );
 			if ( !empty( $addition ) ) {
 				$categories[] = $addition;
 			}
@@ -192,8 +185,8 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 			return 0;
 		}
 
-		$metadata['videoUrl'] = empty( $this->videoData['videoUrl'] ) ? '' : $this->videoData['videoUrl'];
-		$metadata['uniqueName'] = empty( $this->videoData['uniqueName'] ) ? '' : $this->videoData['uniqueName'];
+		$metadata['videoUrl'] = empty( $this->metaData['videoUrl'] ) ? '' : $this->metaData['videoUrl'];
+		$metadata['uniqueName'] = empty( $this->metaData['uniqueName'] ) ? '' : $this->metaData['uniqueName'];
 
 		return $metadata;
 	}

@@ -137,7 +137,7 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 	/**
 	 * @inheritdoc
 	 */
-	public function import( $content = '', $params = [] ) {
+	public function import( $content = '', array $params = [] ) {
 		wfProfileIn( __METHOD__ );
 
 		$articlesCreated = 0;
@@ -273,12 +273,7 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 				$clipData['hd'] = 0;
 				$clipData['provider'] = 'crunchyroll';
 
-				$msg = '';
-				$articlesCreated += $this->createVideo( $clipData, $msg );
-
-				if ( $msg ) {
-					print "ERROR: $msg\n";
-				}
+				$articlesCreated += $this->createVideo( $clipData );
 			}
 		}
 
@@ -289,19 +284,18 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * Create a list of category names to add to the new file page
-	 * @param array $data
 	 * @param array $categories
 	 * @return array $categories
 	 */
-	public function generateCategories( array $data, $categories ) {
+	public function generateCategories( array $categories ) {
 		wfProfileIn( __METHOD__ );
 
 		$categories[] = 'Anime';
 		$categories[] = 'Crunchyroll';
-		$categories[] = $data['series'];
+		$categories[] = $this->metaData['series'];
 		$categories[] = 'Entertainment';
-		if ( !empty( $data['season'] ) ) {
-			$categories[] = $data['series'] . ': ' . $data['season'];
+		if ( !empty( $this->metaData['season'] ) ) {
+			$categories[] = $this->metaData['series'] . ': ' . $this->metaData['season'];
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -320,7 +314,7 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 			return 0;
 		}
 
-		$metadata['videoUrl'] = empty( $this->videoData['videoUrl'] ) ? '' : $this->videoData['videoUrl'];
+		$metadata['videoUrl'] = empty( $this->metaData['videoUrl'] ) ? '' : $this->metaData['videoUrl'];
 
 		return $metadata;
 	}

@@ -3,7 +3,7 @@
 /**
  * Class IvaFeedIngester
  */
-class IvaFeedIngester extends VideoFeedIngester {
+class IvaFeedIngester extends RemoteAssetFeedIngester {
 	protected static $API_WRAPPER = 'IvaApiWrapper';
 	protected static $PROVIDER = 'iva';
 	protected static $FEED_URL = 'http://api.internetvideoarchive.com/1.0/DataService/EntertainmentPrograms?$top=$1&$skip=$2&$filter=$3&$expand=$4&$format=json&developerid=$5';
@@ -495,15 +495,11 @@ class IvaFeedIngester extends VideoFeedIngester {
 	 * @param array $params
 	 * @return int
 	 */
-	public function import( $content = '', $params = array() ) {
+	public function import( $content = '', array $params = [] ) {
 		wfProfileIn( __METHOD__ );
 
-		$remoteAsset = !empty( $params['remoteAsset'] );
 		$startDate = empty( $params['startDate'] ) ? '' : $params['startDate'];
 		$endDate = empty( $params['endDate'] ) ? '' : $params['endDate'];
-		$createParams = array(
-			'remoteAsset' => $remoteAsset
-		);
 
 		$articlesCreated = 0;
 
@@ -516,7 +512,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 				$videoParams['videoSet'] = $value;
 				$videoParams['isPublishedId'] = ( is_numeric( $value ) );
 
-				$result = $this->ingestVideos( $createParams, $startDate, $endDate, $videoParams );
+				$result = $this->ingestVideos( $startDate, $endDate, $videoParams );
 				if ( $result === false ) {
 					wfProfileOut( __METHOD__ );
 					return 0;
@@ -528,7 +524,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 		// Ingest Movie Assets
 		$videoParams = [ 'apiType' => 'VideoAssets' ];
-		$result = $this->ingestVideosAsset( $createParams, $startDate, $endDate, $videoParams );
+		$result = $this->ingestVideosAsset( $startDate, $endDate, $videoParams );
 		if ( $result === false ) {
 			wfProfileOut( __METHOD__ );
 			return 0;
@@ -543,13 +539,12 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * Ingest videos (for EntertainmentProgram)
-	 * @param array $createParams
 	 * @param integer $startDate - Unixtime for beginning of modified-on date range
 	 * @param integer $endDate - Unixtime for ending of modified-on date range
 	 * @param array $videoParams
 	 * @return integer|false $articlesCreated - number of articles created or false
 	 */
-	protected function ingestVideos( $createParams, $startDate, $endDate, $videoParams ) {
+	protected function ingestVideos( $startDate, $endDate, $videoParams ) {
 		wfProfileIn( __METHOD__ );
 
 		$page = 0;
@@ -588,11 +583,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 						continue;
 					}
 
-					$msg = '';
-					$articlesCreated += $this->createVideo( $clipData, $msg, $createParams );
-					if ( $msg ) {
-						print "ERROR: $msg\n";
-					}
+					$articlesCreated += $this->createVideo( $clipData );
 				}
 
 				// get videos for series (24), season (26)
@@ -605,7 +596,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 					$params['videoSet'] = $program['Publishedid'];
 					$params['isPromotesPublishedId'] = true;
 
-					$result = $this->ingestVideos( $createParams, $startDate, $endDate, $params );
+					$result = $this->ingestVideos( $startDate, $endDate, $params );
 					if ( $result === false ) {
 						wfProfileOut( __METHOD__ );
 						return false;
@@ -624,13 +615,12 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * Ingest videos (for assets)
-	 * @param array $createParams
 	 * @param integer $startDate - Unixtime for beginning of modified-on date range
 	 * @param integer $endDate - Unixtime for ending of modified-on date range
 	 * @param array $videoParams
 	 * @return integer|false $articlesCreated - number of articles created or false
 	 */
-	protected function ingestVideosAsset( $createParams, $startDate, $endDate, $videoParams ) {
+	protected function ingestVideosAsset( $startDate, $endDate, $videoParams ) {
 		wfProfileIn( __METHOD__ );
 
 		$page = 0;
@@ -665,7 +655,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 				}
 
 				$msg = '';
-				$articlesCreated += $this->createVideo( $videoData, $msg, $createParams );
+				$articlesCreated += $this->createVideo( $videoData );
 				if ( $msg ) {
 					print "ERROR: $msg\n";
 				}
@@ -977,19 +967,18 @@ class IvaFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * Create a list of category names to add to the new file page
-	 * @param array $data
 	 * @param array $categories
 	 * @return array $categories
 	 */
-	public function generateCategories( array $data, $categories ) {
+	public function generateCategories( array $categories ) {
 		wfProfileIn( __METHOD__ );
 
-		$categories[] = $data['name'];
-		$categories[] = $data['series'];
-		$categories[] = $data['category'];
+		$categories[] = $this->metaData['name'];
+		$categories[] = $this->metaData['series'];
+		$categories[] = $this->metaData['category'];
 
 		// VID-1736 Remove video title from categories
-		$titleKey = array_search( $data['titleName'], $categories );
+		$titleKey = array_search( $this->metaData['titleName'], $categories );
 		if ( $titleKey !== false ) {
 			unset( $categories[$titleKey] );
 		}
@@ -997,15 +986,15 @@ class IvaFeedIngester extends VideoFeedIngester {
 		$categories = array_merge( $categories, $this->getAdditionalPageCategories( $categories ) );
 
 		// add language
-		if ( !empty( $data['language'] ) && !preg_match( "/\benglish\b/i", $data['language'] ) ) {
+		if ( !empty( $this->metaData['language'] ) && !preg_match( "/\benglish\b/i", $this->metaData['language'] ) ) {
 			$categories[] = 'International';
-			$categories[] = $data['language'];
+			$categories[] = $this->metaData['language'];
 		}
 
 		// add subtitle
-		if ( !empty( $data['subtitle'] ) && !preg_match( "/\benglish\b/i", $data['subtitle'] ) ) {
+		if ( !empty( $this->metaData['subtitle'] ) && !preg_match( "/\benglish\b/i", $this->metaData['subtitle'] ) ) {
 			$categories[] = 'International';
-			$categories[] = $data['subtitle'];
+			$categories[] = $this->metaData['subtitle'];
 		}
 
 		$categories[] = 'IVA';

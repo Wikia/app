@@ -26,7 +26,7 @@ class MakerstudiosFeedIngester extends VideoFeedIngester {
 		return $content;
 	}
 
-	public function import( $content = '', $params = array() ) {
+	public function import( $content = '', array $params = [] ) {
 		$this->setParams( $params );
 		$this->setContentAsXML( $content );
 		$this->setVideosFromContent();
@@ -95,12 +95,11 @@ class MakerstudiosFeedIngester extends VideoFeedIngester {
 
 	private function createVideos() {
 		foreach( $this->videos as $video ) {
-			$msg = '';
-			$this->numberCreatedVideos += $this->createVideo( $video, $msg, $this->params );
+			$this->numberCreatedVideos += $this->createVideo( $video );
 		}
 	}
 
-	public function generateCategories( array $data, $categories ) {
+	public function generateCategories( array $categories ) {
 		return [ 'Maker Studios' ];
 	}
 }
