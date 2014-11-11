@@ -203,6 +203,7 @@ $wgResourceModules += array(
 			'wikia-visualeditor-save-error-generic',
 			'wikia-visualeditor-dialogbutton-wikiasourcemode',
 			'wikia-visualeditor-dialog-done-button',
+			'wikia-visualeditor-dialog-cancel-button',
 			'wikia-visualeditor-dialog-transclusion-get-info',
 			'wikia-visualeditor-dialog-transclusion-preview-button',
 			'wikia-visualeditor-context-transclusion-description',
@@ -214,6 +215,9 @@ $wgResourceModules += array(
 			'wikia-visualeditor-dialog-preference-link-help',
 			'wikia-visualeditor-dialog-preference-link-preferences',
 			'wikia-visualeditor-dialog-preference-start-button',
+			'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip',
+			'visualeditor-dialog-wikiasinglemedia-title',
+			'visualeditor-dialog-wikiasinglemedia-search',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core.desktop',
