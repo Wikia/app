@@ -9,9 +9,13 @@ $(function () {
 	$('.sso-login-facebook').on('click', function (e) {
 		e.preventDefault();
 
+		window.FB.login(loginCallback);
+	});
+
+	function loginCallback() {
 		$.nirvana.sendRequest({
 			controller: 'SpecialFacebookConnect',
-			method: 'checkCreateAccount',
+			method: 'index',
 			callback: function (data) {
 				debugger;
 				if (data.status === 'ok') {
@@ -28,7 +32,7 @@ $(function () {
 				}
 			}
 		});
-	});
+	}
 
 	// handle disconnecting from facebook
 	$('#fbConnectDisconnect').click(function () {
