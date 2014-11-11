@@ -57,6 +57,9 @@ The Wikia Community Team',
 	'fbconnect-logout-confirm' => 'Choosing to cancel will log you out of Wikia and Facebook. Do you want to continue?',
 	'prefs-fbconnect-prefstext' => 'Facebook Connect',
 	'prefs-fbconnect-status-prefstext' => 'Status',
+	'fbconnect-cancel' => 'Action cancelled',
+	'fbconnect-canceltext' => 'The previous action was cancelled by the user.',
+
 ];
 
 /**
@@ -76,8 +79,8 @@ $messages['qqq'] = [
 	'fbconnect-or' => 'This is just the word "OR" in English, used to separate the Facebook Connect login option from the normal Wikia login options on the AJAX login dialog box.',
 	'fbconnect-disconnect-info-existing' => 'Confirmation message shown to users who have disconnected their account from Facebook but had a regular Wikia account.',
 	'fbconnect-connect' => '',
-	'fbconnect-connect-cancel' => '',
-	'fbconnect-connect-canceltext' => '',
+	'fbconnect-cancel' => '',
+	'fbconnect-canceltext' => '',
 	'fbconnect-connect-simple' => '',
 	'fbconnect-convert' => 'Title text above a Facebook login button.  Shown on the Facebook Connect tab of the users preferences page.',
 	'fbconnect-disconnect' => '',

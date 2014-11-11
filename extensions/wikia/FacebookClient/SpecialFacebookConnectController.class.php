@@ -23,7 +23,7 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 
 		if ( $wg->Request->wasPosted() ) {
 			if ( $wg->Request->getCheck( 'wpCancel' ) ) {
-				$this->cancelConnect();
+				$this->forward( __CLASS__, 'cancelConnect' );
 			} else {
 				$this->loginAndConnect();
 			}
@@ -41,13 +41,13 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 	/**
 	 * Run when the user has clicked the 'cancel' button on the login form
 	 */
-	protected function cancelConnect() {
-		// TODO: ask garth about this
+	public function cancelConnect() {
 		FacebookClient::getInstance()->logout();
 		F::app()->wg->Out->showErrorPage(
-			'fbconnect-connect-cancel',
-			'fbconnect-connect-canceltext'
+			'fbconnect-cancel',
+			'fbconnect-canceltext'
 		);
+		$this->skipRendering();
 	}
 
 	/**
