@@ -80,6 +80,9 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 	this.search.connect( this, {
 		'nearingEnd': 'onSearchNearingEnd'
 	} );
+	this.queryInput.connect( this, {
+		'change': 'onQueryInputChange'
+	} );
 
 	// Initialization
 	this.frame.$content.addClass( 've-ui-wikiaSingleMediaDialog' );
@@ -125,6 +128,16 @@ ve.ui.WikiaSingleMediaDialog.prototype.onSearchNearingEnd = function () {
 	if ( !this.queryInput.isPending() ) {
 		this.query.requestMedia();
 	}
+};
+
+/**
+ * Handle query input changes.
+ *
+ * @method
+ * @param {string} value The query input value
+ */
+ve.ui.WikiaSingleMediaDialog.prototype.onQueryInputChange = function ( value ) {
+	this.results.clearItems();
 };
 
 /* Registration */
