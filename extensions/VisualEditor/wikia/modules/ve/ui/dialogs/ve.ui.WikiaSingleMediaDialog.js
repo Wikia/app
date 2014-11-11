@@ -78,7 +78,7 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 		'requestMediaDone': 'onQueryRequestMediaDone'
 	} );
 	this.search.connect( this, {
-		'nearingEnd': 'onSearchNearingEnd',
+		'nearingEnd': 'onSearchNearingEnd'
 	} );
 
 	// Initialization

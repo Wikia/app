@@ -2,6 +2,8 @@
  * VisualEditor UserInterface WikiaSingleMediaQueryWidget class.
  */
 
+/*global mw */
+
 /**
  * @class
  * @extends OO.ui.Widget
