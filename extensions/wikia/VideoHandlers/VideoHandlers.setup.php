@@ -231,6 +231,10 @@ $wgAutoloadClasses['CrunchyrollApiWrapper'] =  $dir . '/apiwrappers/CrunchyrollA
 $wgAutoloadClasses['CrunchyrollVideoHandler'] =  $dir . '/handlers/CrunchyrollVideoHandler.class.php';
 $wgMediaHandlers['video/crunchyroll'] = 'CrunchyrollVideoHandler';
 
+$wgAutoloadClasses['MakerstudiosApiWrapper'] =  $dir . '/apiwrappers/MakerstudiosApiWrapper.class.php';
+$wgAutoloadClasses['MakerstudiosVideoHandler'] =  $dir . '/handlers/MakerstudiosVideoHandler.class.php';
+$wgMediaHandlers['video/makerstudios'] = 'MakerstudiosVideoHandler';
+
 /**
  * Feed ingesters
  */
