@@ -141,7 +141,6 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 		wfProfileIn( __METHOD__ );
 
 		$articlesCreated = 0;
-		$addlCategories = empty( $params['addlCategories'] ) ? [] : $params['addlCategories'];
 
 		foreach ( $this->getCollectionFeeds() as $collectionFeed ) {
 			$content = $this->downloadCollectionFeed( $collectionFeed );
@@ -275,8 +274,7 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 				$clipData['provider'] = 'crunchyroll';
 
 				$msg = '';
-				$createParams = array( 'addlCategories' => $addlCategories );
-				$articlesCreated += $this->createVideo( $clipData, $msg, $createParams );
+				$articlesCreated += $this->createVideo( $clipData, $msg );
 
 				if ( $msg ) {
 					print "ERROR: $msg\n";

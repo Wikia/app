@@ -39,7 +39,6 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 		wfProfileIn( __METHOD__ );
 
 		$articlesCreated = 0;
-		$addlCategories = empty( $params['addlCategories'] ) ? array() : $params['addlCategories'];
 
 		$doc = new DOMDocument( '1.0', 'UTF-8' );
 		@$doc->loadXML( $content );
@@ -141,7 +140,7 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 			$clipData['provider'] = 'anyclip';
 
 			$msg = '';
-			$createParams = array( 'addlCategories' => $addlCategories );
+			$createParams = [];
 			$articlesCreated += $this->createVideo( $clipData, $msg, $createParams );
 
 			if ( $msg ) {

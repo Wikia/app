@@ -60,7 +60,6 @@ class IgnFeedIngester extends VideoFeedIngester {
 		$this->videoFound( count( $videos ) );
 
 		foreach ( $videos as $video ) {
-			$addlCategories = empty( $params['addlCategories'] ) ? array() : $params['addlCategories'];
 
 			if ( $this->debugMode() ) {
 				print "\nraw data: \n";
@@ -111,7 +110,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 			$clipData['name'] = implode( ', ', $name );
 
 			// add name to page categories
-			$addlCategories = array_merge( $addlCategories, $name );
+			$addlCategories = [ $name ];
 
 			// add tags to keywords
 			$keywords = array();

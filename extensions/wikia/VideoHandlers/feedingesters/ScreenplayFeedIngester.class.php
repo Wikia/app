@@ -158,7 +158,6 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 	public function ingestVideos( $content = '', $params = array() ) {
 		wfProfileIn( __METHOD__ );
 
-		$addlCategories = empty( $params['addlCategories'] ) ? array() : $params['addlCategories'];
 		$remoteAsset = !empty( $params['remoteAsset'] );
 
 		$articlesCreated = 0;
@@ -190,8 +189,8 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 				'resolution'      => '',
 			];
 
+			$addlCategories = [];
 			if ( !empty( $params['keyphrasesCategories'] ) ) {
-				$addlCategories = array();
 				foreach ( $params['keyphrasesCategories'] as $keyphrase => $categories ) {
 					if ( $this->isKeyphraseInString( $clipData['titleName'], $keyphrase ) ) {
 						$addlCategories = array_merge( $addlCategories, $categories );

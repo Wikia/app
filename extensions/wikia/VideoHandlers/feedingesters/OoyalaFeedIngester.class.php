@@ -36,8 +36,6 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 	public function importVideos( $params = array() ) {
 		wfProfileIn( __METHOD__ );
 
-		$addlCategories = empty( $params['addlCategories'] ) ? array() : $params['addlCategories'];
-
 		$articlesCreated = 0;
 		$nextPage = '';
 
@@ -131,7 +129,7 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 				}
 
 				$msg = '';
-				$createParams = array( 'addlCategories' => $addlCategories, 'provider' => $clipData['provider'] );
+				$createParams = array( 'provider' => $clipData['provider'] );
 				$articlesCreated += $this->createVideo( $clipData, $msg, $createParams );
 				if ( $msg ) {
 					print "ERROR: $msg\n";

@@ -501,9 +501,7 @@ class IvaFeedIngester extends VideoFeedIngester {
 		$remoteAsset = !empty( $params['remoteAsset'] );
 		$startDate = empty( $params['startDate'] ) ? '' : $params['startDate'];
 		$endDate = empty( $params['endDate'] ) ? '' : $params['endDate'];
-		$addlCategories = empty( $params['addlCategories'] ) ? array() : $params['addlCategories'];
 		$createParams = array(
-			'addlCategories' => $addlCategories,
 			'remoteAsset' => $remoteAsset
 		);
 
