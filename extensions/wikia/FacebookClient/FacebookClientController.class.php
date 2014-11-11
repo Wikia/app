@@ -29,6 +29,10 @@ class FacebookClientController extends WikiaController {
 	 *
 	 * https://developers.facebook.com/docs/facebook-login/using-login-with-games/#parsingsr
 	 *
+	 * Additional general information on the callback here:
+	 *
+	 * https://developers.facebook.com/docs/facebook-login/manually-build-a-login-flow/v2.1#deauth-callback
+	 *
 	 */
 	public function deauthorizeCallback() {
 		global $fbAppSecret;
@@ -49,7 +53,7 @@ class FacebookClientController extends WikiaController {
 			$log->info( 'Deauthorization callback received with invalid signature', [
 				'method' => __METHOD__,
 			] );
-			return null;
+			return;
 		}
 
 		if ( empty( $data['user_id'] ) ) {
