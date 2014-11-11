@@ -28,9 +28,9 @@ OO.inheritClass( ve.ui.WikiaSingleMediaDialog, ve.ui.Dialog );
 
 ve.ui.WikiaSingleMediaDialog.static.name = 'wikiaSingleMedia';
 
-ve.ui.WikiaSingleMediaDialog.static.title = OO.ui.deferMsg( 'visualeditor-dialog-media-insert-title' );
+ve.ui.WikiaSingleMediaDialog.static.title = OO.ui.deferMsg( 'visualeditor-dialog-wikiasinglemedia-title' );
 
-ve.ui.WikiaSingleMediaDialog.static.icon = 'media';
+ve.ui.WikiaSingleMediaDialog.static.icon = 'gallery';
 
 /* Methods */
 
@@ -41,7 +41,7 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 	// Search
 	this.query = new ve.ui.WikiaSingleMediaQueryWidget( {
 		'$': this.$,
-		'placeholder': 'Search for images' //TODO: i18n
+		'placeholder': ve.msg( 'visualeditor-dialog-wikiasinglemedia-search' )
 	} );
 
 	// Main panels
@@ -60,12 +60,12 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 		.html('This is the image policy that has been decided on by this commmunity. Do not upload any photos of kitties or puppies because that is not what this wiki is about and it is played out anyway.');
 	this.insertButton = new OO.ui.ButtonWidget( {
 		'$': this.$,
-		'label': 'Done', //TODO: i18n
+		'label': ve.msg( 'wikia-visualeditor-dialog-done-button' ),
 		'flags': ['primary']
 	} );
 	this.cancelButton = new OO.ui.ButtonWidget( {
 		'$': this.$,
-		'label': 'Cancel', //TODO: i18n
+		'label': ve.msg( 'wikia-visualeditor-dialog-cancel-button' ),
 		'flags': ['secondary']
 	} );
 
