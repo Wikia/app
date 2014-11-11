@@ -61,8 +61,8 @@ $showSummary  = isset( $options['summary'] );
 $provider     = empty( $args[0] ) ? '' : strtolower( $args[0] );
 
 $params = [
-	$debug => isset( $options['d'] ),
-	$reupload => isset( $options['r'] ),
+	'debug' => isset( $options['d'] ),
+	'reupload' => isset( $options['r'] ),
 ];
 
 // check if allow to upload file
@@ -76,7 +76,7 @@ if ( wfReadOnly() ) {
 }
 
 // Make it clear when we're in debug mode
-if ( $debug ) {
+if ( $params['debug'] ) {
 	echo( "== DEBUG MODE ==\n" );
 }
 

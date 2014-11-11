@@ -51,7 +51,7 @@ class MakerstudiosFeedIngester extends VideoFeedIngester {
 				$videoData = $this->getCurrentVideoData();
 				$this->videos[] = $videoData;
 			} catch ( Exception $e ) {
-				// TODO Add skipping logging here
+				$this->logger->videoSkipped( "Skipping video. " . $e->getMessage() );
 			}
 		}
 	}
@@ -65,9 +65,10 @@ class MakerstudiosFeedIngester extends VideoFeedIngester {
 		$videoData['titleName'] = html_entity_decode( $this->getRequiredField( 'title' ) );
 		$videoData['videoId'] = $this->getRequiredField( 'guid' );
 		$videoData['description'] = $this->getOptionalField( 'description' );
-		$videoData['keywords'] = $this->getOptionalField( 'keywords' );
 		$videoData['thumbnail'] = $this->getOptionalField( 'thumbnail', 'url' );
+		$videoData['duration'] = $this->getOptionalField( 'content', 'duration' );
 		$videoData['published'] = strtotime( $this->getOptionalField( 'pubdate' ) );
+		$videoData['keywords'] = str_replace( ',', ', ', $this->getOptionalField( 'keywords' ) );
 		$videoData['uniqueName'] = $videoData['titleName'];
 
 		return $videoData;
@@ -78,7 +79,7 @@ class MakerstudiosFeedIngester extends VideoFeedIngester {
 		if ( $tag ) {
 			return $tag->item(0)->textContent;
 		}
-		throw new MakerStudioException();
+		throw new MakerStudioException( "Missing required field: $fieldName\n" );
 	}
 
 	private function getOptionalField( $fieldName, $attributeName = null ) {

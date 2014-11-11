@@ -27,16 +27,16 @@ abstract class VideoFeedIngester {
 
 	/** @var  IngesterDataNormalizer */
 	private $dataNormalizer;
-	private $debug;
-	private $reupload = false; // Determines if a duplicate video found should be re-uploaded or ignored
+	protected $debug;
+	protected  $reupload = false; // Determines if a duplicate video found should be re-uploaded or ignored
 
 	protected $videoData;
 
 	public function __construct( $dataNormalizer, FeedIngesterLogger $logger, $params ) {
 		$this->dataNormalizer = $dataNormalizer;
 		$this->logger = $logger;
-		$this->debug = empty( $params['debug'] );
-		$this->reupload = empty( $params['reupload'] );
+		$this->debug = !empty( $params['debug'] );
+		$this->reupload = !empty( $params['reupload'] );
 	}
 
 	protected function debugMode() {
