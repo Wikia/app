@@ -189,6 +189,7 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/Thumbnails/scripts/templates.mustache.js',
 		// handlebars - uncomment this when introducing first client-side rendered handlebars template
 		// '//resources/wikia/libraries/handlebars/handlebars.js',
+		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
 	)
 );
 
@@ -815,6 +816,7 @@ $config['monobook_js'] = array(
 		'#group_oasis_shared_core_js',
 		'#group_oasis_jquery',
 		'#group_articlecomments_js',
+		'#group_bucky_js',
 
 		// TODO: remove dependency on YUI (see BugId:3116)
 		'//resources/wikia/libraries/yui/utilities/utilities.js',
@@ -2056,7 +2058,6 @@ $config['global_header_js'] = [
 	]
 ];
 
-
 $config['media_gallery_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis'],
@@ -2064,9 +2065,17 @@ $config['media_gallery_js'] = [
 		'//extensions/wikia/MediaGallery/scripts/templates.mustache.js',
 		'//extensions/wikia/MediaGallery/scripts/views/caption.js',
 		'//extensions/wikia/MediaGallery/scripts/views/media.js',
+		'//extensions/wikia/MediaGallery/scripts/views/toggler.js',
 		'//extensions/wikia/MediaGallery/scripts/views/gallery.js',
-		'//extensions/wikia/MediaGallery/scripts/controllers/lightbox.js',
 		'//extensions/wikia/MediaGallery/scripts/controllers/galleries.js',
 		'//extensions/wikia/MediaGallery/scripts/controllers/index.js',
+	]
+];
+
+$config['facebook_client_preferences_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/FacebookClient/scripts/preferences.js',
 	]
 ];

@@ -1,3 +1,4 @@
+/* global UserLoginModal */
 (function () {
 	'use strict';
 
@@ -58,6 +59,9 @@
 					window.FB.login($.proxy(self.loginCallback, self), {
 						scope: 'email'
 					});
+					if (UserLoginModal.$modal) {
+						UserLoginModal.$modal.trigger('close');
+					}
 				});
 		},
 
@@ -78,7 +82,10 @@
 					this.bucky.timer.start('loginCallbackAjax');
 
 					// now check FB account (is it connected with Wikia account?)
-					$.nirvana.postJson('FacebookSignupController', 'index',
+					$.nirvana.postJson('FacebookSignupController', 'index', {
+							returnto: encodeURIComponent(window.wgPageName),
+							returntoquery: encodeURIComponent(window.location.search.substring(1))
+						},
 						$.proxy(this.checkAccountCallback, this));
 					break;
 				case 'not_authorized':
@@ -188,7 +195,10 @@
 										action: self.actions.SUBMIT,
 										label: 'facebook-login-modal'
 									});
-									var location = res.location;
+									var location = res.returnto;
+									if (res.returntoquery) {
+										location += '?' + res.returntoquery;
+									}
 
 									// redirect to the user page
 									if (loginCallback && typeof loginCallback === 'function') {

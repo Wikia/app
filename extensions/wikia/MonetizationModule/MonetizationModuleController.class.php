@@ -36,6 +36,11 @@ class MonetizationModuleController extends WikiaController {
 
 		$this->data = $helper->getMonetizationUnits( $params );
 
+		// check if the article page is blocked
+		if ( !empty( $this->data['blocked_pages'] ) && in_array( $this->wg->title->getArticleID(), $this->data['blocked_pages'] ) ) {
+			$this->data = '';
+		}
+
 		wfProfileOut( __METHOD__ );
 	}
 

@@ -13,7 +13,7 @@ $messages['en'] = array(
 	'phalanx-type-email' => 'email',
 	'phalanx-type-question-title' => 'question title',
 	'phalanx-type-recent-questions' => 'recent questions',
-	'phalanx-type-wiki-creation' => 'wiki creation',
+	'phalanx-type-wiki-creation' => 'SITENAME',
 	'phalanx-add-block' => 'Add filter',
 	'phalanx-edit-block' => 'Save block',
 	'phalanx-label-filter' => 'Filter:',
@@ -156,8 +156,9 @@ Please [[Special:Contact|contact Wikia]] about the problem.<br />The blocker als
 	# groups of block types
 	'phalanx-section-type-page-edition' => 'Page edition',
 	'phalanx-section-type-account-creation' => 'Account creation',
-	'phalanx-section-type-wiki-creation' => 'Wiki creation SITENAME',
+	'phalanx-section-type-wiki-creation' => 'Wiki creation',
 	'phalanx-section-type-questions' => 'Questions',
+	'phalanx-sp-contributions-blocked-globally' => 'This user is currently blocked across the Wikia network.',
 );
 
 /** Message documentation (Message documentation)
@@ -180,7 +181,8 @@ $messages['qqq'] = array(
 	'phalanx-section-type-questions' => 'Legend for fieldset grouping blocks related to Answers wiki',
 	'phalanx-expire-custom' => 'Dropdown option for choosing custom expiry time',
 	'phalanx-expire-custom-tooltip' => 'Placeholder for custom expiry time input box with value examples',
-	'phalanx-filters-intro' => 'Intro text shown in block filtering section: $1 is a link to [[Special:Log]] with Phalanx entries'
+	'phalanx-filters-intro' => 'Intro text shown in block filtering section: $1 is a link to [[Special:Log]] with Phalanx entries',
+	'phalanx-sp-contributions-blocked-globally' => 'Information that user is blocked globally displayed instead of local log extract on special page contributions'
 );
 
 /** Arabic (العربية)

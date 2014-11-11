@@ -354,6 +354,10 @@ class CloseWikiPage extends SpecialPage {
 		);
 
 		$wgOut->addHtml( $output );
+		$aHookParams = [
+			'city_id' => $wiki->city_id,
+		];
+		wfRunHooks( 'WikiFactoryWikiClosed', array( $aHookParams ) );
 		wfProfileOut( __METHOD__ );
 	}
 
