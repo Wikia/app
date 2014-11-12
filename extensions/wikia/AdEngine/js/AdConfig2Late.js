@@ -133,11 +133,15 @@ define('ext.wikia.adEngine.adConfigLate', [
 
 		// DART for some slots below the fold a.k.a. coffee cup
 		if (dartBtfEnabled && dartBtfSlots[slotname] && adProviderDirectGpt.canHandleSlot(slotname)) {
-			return adProviderDirectGpt;
+			if (!instantGlobals.wgSitewideDisableGpt) {
+				return adProviderDirectGpt;
+			}
 		}
 
 		if (useRemnantGpt && adProviderRemnantGpt.canHandleSlot(slotname)) {
-			return adProviderRemnantGpt;
+			if (!instantGlobals.wgSitewideDisableGpt) {
+				return adProviderRemnantGpt;
+			}
 		}
 
 		if (adProviderLiftium.canHandleSlot(slotname) && !instantGlobals.wgSitewideDisableLiftium) {

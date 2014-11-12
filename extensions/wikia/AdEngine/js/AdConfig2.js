@@ -3,6 +3,7 @@ define('ext.wikia.adEngine.adConfig', [
 	// regular dependencies
 	'wikia.log',
 	'wikia.geo',
+	'wikia.instantGlobals',
 
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adDecoratorPageDimensions',
@@ -21,6 +22,7 @@ define('ext.wikia.adEngine.adConfig', [
 	// regular dependencies
 	log,
 	geo,
+	instantGlobals,
 
 	adContext,
 	adDecoratorPageDimensions,
@@ -138,7 +140,9 @@ define('ext.wikia.adEngine.adConfig', [
 
 		if (highValueSlots[slotname] && adProviderDirectGpt.canHandleSlot(slotname)) {
 			log(['getProvider', slot, 'Gpt'], 'info', logGroup);
-			return adProviderDirectGpt;
+			if (!instantGlobals.wgSitewideDisableGpt) {
+				return adProviderDirectGpt;
+			}
 		}
 
 		// Non-high-value slots go to ad provider Later
