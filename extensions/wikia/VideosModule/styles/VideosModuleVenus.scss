@@ -1,0 +1,111 @@
+@import 'skins/shared/color';
+@import 'extensions/wikia/Venus/styles/mixins';
+@import 'extensions/wikia/Venus/styles/variables';
+
+.mw-content-text .videos-module {
+	@include grid-column-width(medium, 9);
+	border: 0 solid $color-page-border;
+	border-bottom-width: 1px;
+	border-top-width: 1px;
+	clear: both;
+	margin-left: -$medium-grid-column-padding;
+	margin-right: -$medium-grid-column-padding;
+
+	.thumbnails {
+		margin: 14px 0;
+		padding: 0;
+
+		// Uncomment the lines below to enable scrolling inside the video container
+//		@include grid-column-width(medium, 11);
+//		overflow: auto;
+//		white-space: nowrap;
+	}
+
+	h2 {
+		border: 0;
+		margin: 23px 0;
+		padding: 0 $medium-grid-column-padding;
+	}
+
+	li {
+		@include grid-column-width(medium, 3);
+		display: inline-block;
+		margin: 0 $medium-grid-gutter 0 0;
+		padding: 0;
+
+		&:last-child {
+			margin: 0;
+		}
+	}
+
+	img {
+		@include grid-column-width(medium, 3);
+	}
+
+	div {
+		overflow: hidden;
+		padding: 0 $medium-grid-column-padding;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+}
+
+@media #{$large-up} {
+	.mw-content-text .videos-module {
+		@include grid-column-width(large, 9);
+		margin-left: -$large-grid-column-padding;
+		margin-right: -$large-grid-column-padding;
+
+		// Uncomment the lines below if you enabled scrolling
+//		.thumbnails {
+//			@include grid-column-width(large, 11);
+//		}
+
+		h2 {
+			padding: 0 $large-grid-column-padding;
+		}
+
+		li {
+			@include grid-column-width(large, 3);
+			margin-right: $large-grid-gutter;
+		}
+
+		img {
+			@include grid-column-width(large, 3);
+		}
+
+		div {
+			padding: 0 $large-grid-column-padding;
+		}
+	}
+}
+
+@media #{$small-only} {
+	.mw-content-text .videos-module {
+		@include grid-column-width(small, 11, $small-content-padding - $content-border-width);
+		margin-left: -$small-grid-column-padding;
+		margin-right: -$small-grid-column-padding;
+
+		// Uncomment the lines below if you enabled scrolling
+//		.thumbnails {
+//			@include grid-column-width(small, 11, $small-content-padding - $content-border-width);
+//		}
+
+		h2 {
+			padding: 0 $small-grid-column-padding;
+		}
+
+		li {
+			@include grid-column-width(small, 3);
+			margin-right: $small-grid-gutter;
+		}
+
+		img {
+			@include grid-column-width(small, 3);
+		}
+
+		div {
+			padding: 0 $small-grid-column-padding;
+		}
+	}
+}

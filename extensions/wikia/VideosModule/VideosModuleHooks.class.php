@@ -75,6 +75,7 @@ class VideosModuleHooks {
 			Wikia::addAssetsToOutput( 'videos_module_js' );
 		} else {
 			Wikia::addAssetsToOutput( 'venus_videos_module_js' );
+			Wikia::addAssetsToOutput( 'venus_videos_module_scss' );
 		}
 
 		$app->wg->VideosModuleAssetsLoaded = true;
