@@ -239,6 +239,7 @@ $wgMediaHandlers['video/makerstudios'] = 'MakerstudiosVideoHandler';
  * Feed ingesters
  */
 $wgAutoloadClasses[ 'VideoFeedIngester' ] = $dir . '/feedingesters/VideoFeedIngester.class.php';
+$wgAutoloadClasses[ 'RemoteAssetFeedIngester' ] = $dir . '/feedingesters/RemoteAssetFeedIngester.class.php';
 $wgAutoloadClasses[ 'ScreenplayFeedIngester' ] = $dir . '/feedingesters/ScreenplayFeedIngester.class.php';
 $wgAutoloadClasses[ 'IgnFeedIngester' ] = $dir . '/feedingesters/IgnFeedIngester.class.php';
 $wgAutoloadClasses[ 'AnyclipFeedIngester' ] = $dir . '/feedingesters/AnyclipFeedIngester.class.php';

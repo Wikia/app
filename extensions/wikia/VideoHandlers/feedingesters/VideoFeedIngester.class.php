@@ -63,6 +63,7 @@ abstract class VideoFeedIngester {
 			$this->printInitialData( $videoData );
 			$this->setMetaData( $videoData );
 		} catch ( Exception $e ) {
+			// TODO Figure out logging for screenPlayFeedIngester::generateMetadata
 			return 0;
 		}
 

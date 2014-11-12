@@ -195,21 +195,17 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 	}
 
 	/**
-	 * generate meatadata
-	 * @param string $errorMsg
-	 * @return array|integer $metadata or zero on error
+	 * generate metadata
+	 * @param array $videoData
+	 * @return array
 	 */
-	public function generateMetadata( &$errorMsg ) {
-		$metadata = parent::generateMetadata( $errorMsg );
-		if ( empty( $metadata ) ) {
-			return 0;
-		}
-
-		$metadata['startDate'] = empty( $this->metaData['startDate'] ) ? '' :  $this->metaData['startDate'];
-		$metadata['source'] = empty( $this->metaData['source'] ) ? '' :  $this->metaData['source'];
-		$metadata['sourceId'] = empty( $this->metaData['sourceId'] ) ? '' :  $this->metaData['sourceId'];
-		$metadata['distributor'] = empty( $this->metaData['distributor'] ) ? '' :  $this->metaData['distributor'];
-		$metadata['pageCategories'] = empty( $this->metaData['pageCategories'] ) ? '' :  $this->metaData['pageCategories'];
+	public function generateMetadata( $videoData ) {
+		$metadata = parent::generateMetadata( $videoData );
+		$metadata['startDate'] = empty( $videoData['startDate'] ) ? '' :  $videoData['startDate'];
+		$metadata['source'] = empty( $videoData['source'] ) ? '' :  $videoData['source'];
+		$metadata['sourceId'] = empty( $videoData['sourceId'] ) ? '' :  $videoData['sourceId'];
+		$metadata['distributor'] = empty( $videoData['distributor'] ) ? '' :  $videoData['distributor'];
+		$metadata['pageCategories'] = empty( $videoData['pageCategories'] ) ? '' :  $videoData['pageCategories'];
 
 		return $metadata;
 	}

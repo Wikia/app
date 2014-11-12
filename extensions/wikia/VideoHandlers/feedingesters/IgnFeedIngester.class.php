@@ -153,17 +153,13 @@ class IgnFeedIngester extends VideoFeedIngester {
 	}
 
 	/**
-	 * generate meatadata
-	 * @param string $errorMsg
-	 * @return array|integer $metadata or zero on error
+	 * generate metadata
+	 * @param array $videoData
+	 * @return array
 	 */
-	public function generateMetadata( $errorMsg ) {
-		$metadata = parent::generateMetadata( $errorMsg );
-		if ( empty( $metadata ) ) {
-			return 0;
-		}
-
-		$metadata['videoUrl'] = empty( $this->metaData['videoUrl'] ) ? '' : $this->metaData['videoUrl'];
+	public function generateMetadata( array $videoData ) {
+		$metadata = parent::generateMetadata( $videoData );
+		$metadata['videoUrl'] = empty( $videoData['videoUrl'] ) ? '' : $videoData['videoUrl'];
 
 		return $metadata;
 	}

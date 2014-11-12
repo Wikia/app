@@ -1,6 +1,6 @@
 <?php
 
-class ScreenplayFeedIngester extends RemoteAssetFeedingester {
+class ScreenplayFeedIngester extends RemoteAssetFeedIngester {
 
 	const TIMEOUT = 60;
 
@@ -431,26 +431,21 @@ class ScreenplayFeedIngester extends RemoteAssetFeedingester {
 
 	/**
 	 * Generate metadata
-	 * @param string $errorMsg
-	 * @return array|int $metadata or 0 on error
+	 * @param array $videoData
+	 * @return array
+	 * @throws Exception
 	 */
-	public function generateMetadata( &$errorMsg ) {
-		//error checking
-		if ( empty( $this->metaData['stdBitrateCode'] ) ) {
-			$errorMsg = 'no supported bitrate code for video id ' . $this->metaData['videoId'];
-			return 0;
+	public function generateMetadata( $videoData ) {
+		if ( empty( $videoData['stdBitrateCode'] ) ) {
+			throw new Exception('No supported bitrate code for video id ' . $videoData['videoId']);
 		}
 
-		$metadata = parent::generateMetadata( $errorMsg );
-		if ( empty( $metadata ) ) {
-			return 0;
-		}
-
-		$metadata['stdBitrateCode'] = $this->metaData['stdBitrateCode'];
-		$metadata['jpegBitrateCode'] = empty( $this->metaData['jpegBitrateCode'] ) ? '' : $this->metaData['jpegBitrateCode'];
-		$metadata['streamUrl'] = empty( $this->metaData['streamUrl'] ) ? '' : $this->metaData['streamUrl'];
-		$metadata['streamHdUrl'] = empty( $this->metaData['streamHdUrl'] ) ? '' : $this->metaData['streamHdUrl'];
-		$metadata['distributor'] = empty( $this->metaData['distributor'] ) ? '' : $this->metaData['distributor'];
+		$metadata = parent::generateMetadata( $videoData );
+		$metadata['stdBitrateCode'] = $videoData['stdBitrateCode'];
+		$metadata['jpegBitrateCode'] = empty( $videoData['jpegBitrateCode'] ) ? '' : $videoData['jpegBitrateCode'];
+		$metadata['streamUrl'] = empty( $videoData['streamUrl'] ) ? '' : $videoData['streamUrl'];
+		$metadata['streamHdUrl'] = empty( $videoData['streamHdUrl'] ) ? '' : $videoData['streamHdUrl'];
+		$metadata['distributor'] = empty( $videoData['distributor'] ) ? '' : $videoData['distributor'];
 
 		return $metadata;
 	}
