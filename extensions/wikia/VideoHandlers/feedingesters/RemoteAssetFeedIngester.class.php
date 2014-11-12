@@ -152,7 +152,7 @@ class RemoteAssetFeedIngester extends VideoFeedIngester {
 		throw new Exception("Must be implemented by a subclass");
 	}
 
-	public function generateCategories( array $addlCategories ) {
+	public function generateCategories(array $videoData, array $addlCategories) {
 		throw new Exception("Must be implemented by a sublcass");
 	}
 

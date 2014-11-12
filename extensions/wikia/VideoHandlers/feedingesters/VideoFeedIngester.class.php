@@ -42,10 +42,11 @@ abstract class VideoFeedIngester {
 
 	/**
 	 * Create a list of category names to add to the new file page
-	 * @param $addlCategories - Any additional categories to add
+	 * @param array $videoData
+	 * @param array $addlCategories - Any additional categories to add
 	 * @return array - A list of category names
 	 */
-	abstract public function generateCategories( array $addlCategories );
+	abstract public function generateCategories(array $videoData, array $addlCategories);
 
 	/**
 	 * @param array $videoData
@@ -69,7 +70,7 @@ abstract class VideoFeedIngester {
 			return 0;
 		}
 
-		$categories = $this->generateCategories( $addlCategories );
+		$categories = $this->generateCategories( $videoData, $addlCategories);
 		return $this->saveVideo( $categories, $provider );
 	}
 

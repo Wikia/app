@@ -967,41 +967,42 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 
 	/**
 	 * Create a list of category names to add to the new file page
-	 * @param array $categories
+	 * @param array $videoData
+	 * @param array $addlCategories
 	 * @return array $categories
 	 */
-	public function generateCategories( array $categories ) {
+	public function generateCategories(array $videoData, array $addlCategories) {
 		wfProfileIn( __METHOD__ );
 
-		$categories[] = $this->metaData['name'];
-		$categories[] = $this->metaData['series'];
-		$categories[] = $this->metaData['category'];
+		$addlCategories[] = $this->metaData['name'];
+		$addlCategories[] = $this->metaData['series'];
+		$addlCategories[] = $this->metaData['category'];
 
 		// VID-1736 Remove video title from categories
-		$titleKey = array_search( $this->metaData['titleName'], $categories );
+		$titleKey = array_search( $this->metaData['titleName'], $addlCategories );
 		if ( $titleKey !== false ) {
-			unset( $categories[$titleKey] );
+			unset( $addlCategories[$titleKey] );
 		}
 
-		$categories = array_merge( $categories, $this->getAdditionalPageCategories( $categories ) );
+		$addlCategories = array_merge( $addlCategories, $this->getAdditionalPageCategories( $addlCategories ) );
 
 		// add language
 		if ( !empty( $this->metaData['language'] ) && !preg_match( "/\benglish\b/i", $this->metaData['language'] ) ) {
-			$categories[] = 'International';
-			$categories[] = $this->metaData['language'];
+			$addlCategories[] = 'International';
+			$addlCategories[] = $this->metaData['language'];
 		}
 
 		// add subtitle
 		if ( !empty( $this->metaData['subtitle'] ) && !preg_match( "/\benglish\b/i", $this->metaData['subtitle'] ) ) {
-			$categories[] = 'International';
-			$categories[] = $this->metaData['subtitle'];
+			$addlCategories[] = 'International';
+			$addlCategories[] = $this->metaData['subtitle'];
 		}
 
-		$categories[] = 'IVA';
+		$addlCategories[] = 'IVA';
 
 		wfProfileOut( __METHOD__ );
 
-		return preg_replace( '/\s*,\s*/', ' ', wfGetUniqueArrayCI( $categories ) );
+		return preg_replace( '/\s*,\s*/', ' ', wfGetUniqueArrayCI( $addlCategories ) );
 	}
 
 	/**

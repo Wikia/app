@@ -390,37 +390,38 @@ class ScreenplayFeedIngester extends RemoteAssetFeedIngester {
 
 	/**
 	 * Create a list of category names to add to the new file page
-	 * @param array $categories
+	 * @param array $videoData
+	 * @param array $addlCategories
 	 * @return array $categories
 	 */
-	public function generateCategories( array $categories ) {
+	public function generateCategories(array $videoData, array $addlCategories) {
 		wfProfileIn( __METHOD__ );
 
-		$categories[] = $this->metaData['name'];
+		$addlCategories[] = $videoData['name'];
 
-		if ( !empty( $this->metaData['type'] ) ) {
-			$categories[] = $this->getPageCategory( $this->metaData['type'] );
+		if ( !empty( $videoData['type'] ) ) {
+			$addlCategories[] = $this->getPageCategory( $videoData['type'] );
 		}
 
-		$categories = array_merge( $categories, $this->getAdditionalPageCategories( $categories ) );
+		$addlCategories = array_merge( $addlCategories, $this->getAdditionalPageCategories( $addlCategories ) );
 
 		// add language
-		if ( !empty( $this->metaData['language'] ) && !preg_match( "/\benglish\b/i", $this->metaData['language'] ) ) {
-			$categories[] = 'International';
-			$categories[] = $this->metaData['language'];
+		if ( !empty( $videoData['language'] ) && !preg_match( "/\benglish\b/i", $videoData['language'] ) ) {
+			$addlCategories[] = 'International';
+			$addlCategories[] = $videoData['language'];
 		}
 
-		if ( stripos( $this->metaData['titleName'], '(VG)' ) !== false ) {
-			$categories[] = 'Games';
+		if ( stripos( $videoData['titleName'], '(VG)' ) !== false ) {
+			$addlCategories[] = 'Games';
 		} else {
-			$categories[] = 'Entertainment';
+			$addlCategories[] = 'Entertainment';
 		}
 
-		$categories[] = 'Screenplay';
+		$addlCategories[] = 'Screenplay';
 
 		wfProfileOut( __METHOD__ );
 
-		return preg_replace( '/\s*,\s*/', ' ', wfGetUniqueArrayCI( $categories ) );
+		return preg_replace( '/\s*,\s*/', ' ', wfGetUniqueArrayCI( $addlCategories ) );
 	}
 
 	/**

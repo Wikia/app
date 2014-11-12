@@ -160,38 +160,39 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * Create list of category names to add to the new file page
-	 * @param array $categories
+	 * @param array $videoData
+	 * @param array $addlCategories
 	 * @return array $categories
 	 */
-	public function generateCategories( array $categories ) {
+	public function generateCategories(array $videoData, array $addlCategories) {
 		wfProfileIn( __METHOD__ );
 
-		if ( !empty( $this->metaData['name'] ) ) {
-			$categories = array_merge( $categories, array_map( 'trim', explode( ',', $this->metaData['name'] ) ) );
+		if ( !empty( $videoData['name'] ) ) {
+			$addlCategories = array_merge( $addlCategories, array_map( 'trim', explode( ',', $videoData['name'] ) ) );
 		}
 
-		if ( !empty( $this->metaData['pageCategories'] ) ) {
-			$stdCategories = array_map( array( $this , 'getPageCategory'), explode( ',', $this->metaData['pageCategories'] ) );
-			$categories = array_merge( $categories, $stdCategories );
+		if ( !empty( $videoData['pageCategories'] ) ) {
+			$stdCategories = array_map( array( $this , 'getPageCategory'), explode( ',', $videoData['pageCategories'] ) );
+			$addlCategories = array_merge( $addlCategories, $stdCategories );
 		}
 
 		// remove 'the' category
-		$key = array_search( 'the', array_map( 'strtolower', $categories ) );
+		$key = array_search( 'the', array_map( 'strtolower', $addlCategories ) );
 		if ( $key !== false ) {
-			unset( $categories[$key] );
+			unset( $addlCategories[$key] );
 		}
 
-		if ( !empty( $this->metaData['categoryName'] ) ) {
-			$categories[] = $this->metaData['categoryName'];
+		if ( !empty( $videoData['categoryName'] ) ) {
+			$addlCategories[] = $videoData['categoryName'];
 		}
 
-		$categories = array_merge( $categories, $this->getAdditionalPageCategories( $categories ) );
+		$addlCategories = array_merge( $addlCategories, $this->getAdditionalPageCategories( $addlCategories ) );
 
-		$categories[] = 'Ooyala';
+		$addlCategories[] = 'Ooyala';
 
 		wfProfileOut( __METHOD__ );
 
-		return wfGetUniqueArrayCI( $categories );
+		return wfGetUniqueArrayCI( $addlCategories );
 	}
 
 	/**

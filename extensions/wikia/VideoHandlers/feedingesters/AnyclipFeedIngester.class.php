@@ -149,29 +149,30 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * Create a list of category names to add to the new file page
-	 * @param array $categories
+	 * @param array $videoData
+	 * @param array $addlCategories
 	 * @return array $categories
 	 */
-	public function generateCategories( array $categories ) {
+	public function generateCategories(array $videoData, array $addlCategories) {
 		wfProfileIn( __METHOD__ );
 
-		$categories[] = 'AnyClip';
-		$categories[] = 'Entertainment';
+		$addlCategories[] = 'AnyClip';
+		$addlCategories[] = 'Entertainment';
 		if ( stristr( $this->metaData['titleName'], 'trailer' ) ) {
-			$categories[] = 'Trailers';
+			$addlCategories[] = 'Trailers';
 		}
 
 		if ( !empty( $this->metaData['name'] ) ) {
-			$categories[] = $this->metaData['name'];
+			$addlCategories[] = $this->metaData['name'];
 			$addition = $this->getAdditionalPageCategory( $this->metaData['name'] );
 			if ( !empty( $addition ) ) {
-				$categories[] = $addition;
+				$addlCategories[] = $addition;
 			}
 		}
 
 		wfProfileOut( __METHOD__ );
 
-		return wfGetUniqueArrayCI( $categories );
+		return wfGetUniqueArrayCI( $addlCategories );
 	}
 
 	/**

@@ -284,23 +284,24 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * Create a list of category names to add to the new file page
-	 * @param array $categories
+	 * @param array $videoData
+	 * @param array $addlCategories
 	 * @return array $categories
 	 */
-	public function generateCategories( array $categories ) {
+	public function generateCategories(array $videoData, array $addlCategories) {
 		wfProfileIn( __METHOD__ );
 
-		$categories[] = 'Anime';
-		$categories[] = 'Crunchyroll';
-		$categories[] = $this->metaData['series'];
-		$categories[] = 'Entertainment';
+		$addlCategories[] = 'Anime';
+		$addlCategories[] = 'Crunchyroll';
+		$addlCategories[] = $this->metaData['series'];
+		$addlCategories[] = 'Entertainment';
 		if ( !empty( $this->metaData['season'] ) ) {
-			$categories[] = $this->metaData['series'] . ': ' . $this->metaData['season'];
+			$addlCategories[] = $this->metaData['series'] . ': ' . $this->metaData['season'];
 		}
 
 		wfProfileOut( __METHOD__ );
 
-		return wfGetUniqueArrayCI( $categories );
+		return wfGetUniqueArrayCI( $addlCategories );
 	}
 
 	/**
