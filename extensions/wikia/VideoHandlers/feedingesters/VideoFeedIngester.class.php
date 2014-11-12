@@ -74,12 +74,12 @@ abstract class VideoFeedIngester {
 		$this->metaData = $this->generateMetadata( $videoData );
 	}
 
-	public function getName() {
+	public function getName( $videoData ) {
 		// Reuse name if duplicate video exists.
 		if ( !is_null( $this->duplicateAsset ) ) {
 			$name = $this->duplicateAsset['img_name'];
 		} else {
-			$name = VideoFileUploader::sanitizeTitle( $this->generateName() );
+			$name = VideoFileUploader::sanitizeTitle( $this->generateName( $videoData ) );
 			$name = $this->getUniqueName( $name );
 		}
 
@@ -291,16 +291,16 @@ abstract class VideoFeedIngester {
 			'aspectRatio'          => isset( $videoData['aspectRatio'] ) ? $videoData['aspectRatio'] : '',
 			'expirationDate'       => isset( $videoData['expirationDate'] ) ? $videoData['expirationDate'] : '',
 			'regionalRestrictions' => isset( $videoData['regionalRestrictions'] ) ? $videoData['regionalRestrictions'] : '',
-			'destinationTitle'     => $this->getName()
+			'destinationTitle'     => $this->getName( $videoData )
 		];
 
 		if ( empty( $videoData['videoId'] ) ) {
-			$this->logger->videoWarnings( "Error when generating metadata -- no video id exists\n" );
+			$this->logger->videoWarnings( "Warning: error when generating metadata -- no video id exists\n" );
 			throw new VideoFeedIngesterException();
 		}
 
 		if ( !$this->isValidDestinationTitle( $metaData['destinationTitle'] ) ) {
-			$this->logger->videoWarnings( "article title was null: clip id {$metaData['videoId']}. name: {$metaData['name']}" );
+			$this->logger->videoWarnings( "Warning: article title was null: clip id {$metaData['videoId']}. name: {$metaData['name']}\n" );
 			throw new VideoFeedIngesterException();
 		}
 
@@ -344,10 +344,11 @@ abstract class VideoFeedIngester {
 	/**
 	 * Generate name for video.
 	 * Note: The name is not sanitized for use as filename or article title.
+	 * @param array $videoData
 	 * @return string video name
 	 */
-	protected function generateName() {
-		return $this->metaData['titleName'];
+	protected function generateName( array $videoData ) {
+		return $videoData['titleName'];
 	}
 
 	/**
@@ -386,14 +387,6 @@ abstract class VideoFeedIngester {
 			$title = Title::newFromText( $name_final, NS_FILE );
 		}
 		return $name_final;
-	}
-
-	/**
-	 * Returns whether the given video title has a value title object
-	 * @return bool
-	 */
-	protected function metaDataHasValidTitle() {
-
 	}
 
 	/**
@@ -631,6 +624,14 @@ abstract class VideoFeedIngester {
 
 	protected function debugMode() {
 		return $this->debug;
+	}
+
+	public function getResultIngestedVideos() {
+		return $this->logger->getResultIngestedVideos();
+	}
+
+	public function getResultSummary() {
+		return $this->logger->getResultSummary();
 	}
 }
 

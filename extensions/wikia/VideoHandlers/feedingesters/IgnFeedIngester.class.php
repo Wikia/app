@@ -108,7 +108,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 			$clipData['name'] = implode( ', ', $name );
 
 			// add name to page categories
-			$addlCategories = [ $name ];
+			$addlCategories = $name;
 
 			// add tags to keywords
 			$keywords = array();

@@ -55,7 +55,7 @@ $remoteAsset  = isset( $options['ra'] );
 $showSummary  = isset( $options['summary'] );
 $provider     = empty( $args[0] ) ? '' : strtolower( $args[0] );
 
-$params = [
+$ingesterParams = [
 	'debug' => isset( $options['d'] ),
 	'reupload' => isset( $options['r'] ),
 ];
@@ -71,7 +71,7 @@ if ( wfReadOnly() ) {
 }
 
 // Make it clear when we're in debug mode
-if ( $params['debug'] ) {
+if ( $ingesterParams['debug'] ) {
 	echo( "== DEBUG MODE ==\n" );
 }
 
@@ -85,10 +85,8 @@ $providersVideoFeed = loadProviders( $provider );
 foreach ( $providersVideoFeed as $provider ) {
 	print( "Starting import for provider $provider...\n" );
 
-	$dataNormalizer = new IngesterDataNormalizer();
-	$logger = new FeedIngesterLogger();
 	/** @var VideoFeedIngester $feedIngester */
-	$feedIngester = FeedIngesterFactory::getIngester( $provider, $dataNormalizer, $logger, $params );
+	$feedIngester = FeedIngesterFactory::getIngester( $provider, $ingesterParams );
 
 	// get WikiFactory data
 	$ingestionData = $feedIngester->getWikiIngestionData();
@@ -105,7 +103,6 @@ foreach ( $providersVideoFeed as $provider ) {
 			// no file needed
 			$startDate = date( 'm/d/y', $startDateTS );
 			$endDate = date( 'm/d/y', $endDateTS );
-			$remoteAsset = true;
 			break;
 		case FeedIngesterFactory::PROVIDER_IGN:
 			$startDate = date( 'Y-m-d', $startDateTS ).'T00:00:00-0800';
@@ -124,7 +121,6 @@ foreach ( $providersVideoFeed as $provider ) {
 			// no file needed
 			$startDate = date( 'Y-m-d', $startDateTS );
 			$endDate = date( 'Y-m-d', $endDateTS );
-			$remoteAsset = true;
 			break;
 		case FeedIngesterFactory::PROVIDER_CRUNCHYROLL:
 			// No file needed
@@ -135,23 +131,21 @@ foreach ( $providersVideoFeed as $provider ) {
 		default:
 	}
 
-	$params = [
-		'debug'        => $debug,
+	$importParams = [
 		'startDate'    => $startDate,
 		'endDate'      => $endDate,
-		'remoteAsset'  => $remoteAsset,
 	];
 
 	if ( !empty( $ingestionData['keyphrases'] ) ) {
-		$params['keyphrasesCategories'] = $ingestionData['keyphrases'];
+		$importParams['keyphrasesCategories'] = $ingestionData['keyphrases'];
 	}
 
-	$numCreated = $feedIngester->import( $file, $params );
+	$numCreated = $feedIngester->import( $file, $importParams );
 
-	$summary[$provider] = $logger->getResultSummary();
+	$summary[$provider] = $feedIngester->getResultSummary();
 
 	// show ingested videos by vertical
-	displaySummary( $showSummary, getContentIngestedVideosByCategory( $logger, $provider ), 'vertical' );
+	displaySummary( $showSummary, getContentIngestedVideosByCategory( $feedIngester, $provider ), 'vertical' );
 
 	print "\nCreated $numCreated articles!\n\n";
 }
@@ -230,13 +224,13 @@ function getContentSummary( $summary ) {
 }
 
 /**
- * @param FeedIngesterLogger $logger
+ * @param VideoFeedIngester $feedIngester
  * @param string $provider
  * @return string
  */
-function getContentIngestedVideosByCategory( $logger, $provider ) {
+function getContentIngestedVideosByCategory( $feedIngester, $provider ) {
 	$content = "\n\nProvider: ".strtoupper( $provider )."\n";
-	foreach ( $logger->getResultIngestedVideos() as $category => $msgs ) {
+	foreach ( $feedIngester->getResultIngestedVideos() as $category => $msgs ) {
 		$content .= "\nCategory: $category\n";
 		if ( !empty( $msgs ) ) {
 			$content .= implode( '', $msgs );

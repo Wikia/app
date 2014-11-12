@@ -128,7 +128,7 @@ class ScreenplayFeedIngester extends RemoteAssetFeedingester {
 	 * @param array $params
 	 * @return integer $articlesCreated
 	 */
-	public function import( $content = '', $params = array() ) {
+	public function import( $content = '', array $params = [] ) {
 		wfProfileIn( __METHOD__ );
 
 		$articlesCreated = 0;
@@ -157,8 +157,6 @@ class ScreenplayFeedIngester extends RemoteAssetFeedingester {
 	 */
 	public function ingestVideos( $content = '', $params = [] ) {
 		wfProfileIn( __METHOD__ );
-
-		$remoteAsset = !empty( $params['remoteAsset'] );
 
 		$articlesCreated = 0;
 
@@ -356,29 +354,29 @@ class ScreenplayFeedIngester extends RemoteAssetFeedingester {
 
 	/**
 	 * Generate video name
+	 * @param array $data
 	 * @return string $name
 	 */
-	protected function generateName() {
+	protected function generateName( array $data ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( empty( $this->metaData['description'] ) ) {
+		if ( empty( $data['description'] ) ) {
 			$altDescription = '';
-			$altDescription .= empty( $this->metaData['category'] ) ? '' : $this->metaData['category'].' ';
-			$altDescription .= empty( $this->metaData['type'] ) ? '' : $this->metaData['type'].' ';
-			//$altDescription .= "({$this->metaData['videoId']})";
+			$altDescription .= empty( $data['category'] ) ? '' : $data['category'].' ';
+			$altDescription .= empty( $data['type'] ) ? '' : $data['type'].' ';
 			$description = $altDescription;
 		} else {
-			$description = $this->metaData['description'];
+			$description = $data['description'];
 		}
 
 		if ( startsWith( $description, 'Trailer ' ) ) {
 			// add trailer type to description
-			if ( !empty( $this->metaData['category'] ) ) {
-				$description = $this->metaData['category'] . ' ' . $description;
+			if ( !empty( $data['category'] ) ) {
+				$description = $data['category'] . ' ' . $description;
 			}
 		}
 
-		$name = sprintf( "%s - %s", $this->generateTitleName( $this->metaData ), $description );
+		$name = sprintf( "%s - %s", $this->generateTitleName( $data ), $description );
 
 		wfProfileOut( __METHOD__ );
 
