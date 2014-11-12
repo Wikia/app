@@ -18,7 +18,7 @@ require([
 //		bucky.timer.start('execution');
 
 		module = new Module({
-			el: nodeFinder.findNodeByOffsetTop(contentContainer, headerSelector, boundaryOffsetTop),
+			el: nodeFinder.getChildByOffsetTop(contentContainer, headerSelector, boundaryOffsetTop),
 			model: new VideoData()
 		});
 

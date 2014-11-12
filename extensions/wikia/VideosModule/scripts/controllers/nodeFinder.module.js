@@ -9,21 +9,35 @@ define('videosmodule.controllers.nodeFinder', function() {
 	 * @param {Integer} boundaryOffsetTop boundary offset top value
 	 * @returns {Node} first element after set offset top value
 	 */
-	function findNodeByOffsetTop(container, selector, boundaryOffsetTop) {
+	function getChildByOffsetTop(container, selector, boundaryOffsetTop) {
 		var elements = container.querySelectorAll(selector),
 			length = elements.length,
 			i;
 
 		for (i = 0; i < length; i++) {
 			if (elements[i].offsetTop > boundaryOffsetTop) {
-				return elements[i];
+				return elements[i].previousElementSibling;
 			}
 		}
 
-		return container.lastChild;
+		return getLastVisibleChild(container);
+	}
+
+	function getLastVisibleChild(container) {
+		var child = container.lastChild;
+
+		while (!isVisible(child)) {
+			child = child.previousElementSibling;
+		}
+
+		return child;
+	}
+
+	function isVisible(element) {
+		return element.offsetWidth > 0 && element.offsetHeight > 0;
 	}
 
 	return {
-		findNodeByOffsetTop: findNodeByOffsetTop
+		getChildByOffsetTop: getChildByOffsetTop
 	};
 });

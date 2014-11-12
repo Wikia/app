@@ -2,9 +2,8 @@ define('videosmodule.views.inContent', [
 	'sloth',
 	'videosmodule.views.titleThumbnail',
 	'wikia.mustache',
-	'videosmodule.templates.mustache',
-	'wikia.document'
-], function (sloth, TitleThumbnailView, Mustache, templates, d) {
+	'videosmodule.templates.mustache'
+], function (sloth, TitleThumbnailView, Mustache, templates) {
 	'use strict';
 
 	var videosLimit = 3;
@@ -13,6 +12,11 @@ define('videosmodule.views.inContent', [
 		// Note that this.el refers to the DOM element that the videos module should be inserted before or after,
 		// not the wrapper for the videos module. We can update this after the A/B testing is over.
 		this.el = options.el;
+
+		if (!this.el) {
+			return;
+		}
+
 		this.$el = $(options.el);
 		this.model = options.model;
 		this.articleId = window.wgArticleId;
@@ -27,15 +31,15 @@ define('videosmodule.views.inContent', [
 		var self = this;
 		this.data = this.model.fetch();
 		// Sloth is a lazy loading service that waits till an element is visible to load more content
-//		sloth({
-//			on: this.el,
-//			threshold: 200,
-//			callback: function() {
+		sloth({
+			on: this.el,
+			threshold: 200,
+			callback: function() {
 				self.data.complete(function() {
 					self.render();
 				});
-//			}
-//		});
+			}
+		});
 	};
 
 	VideoModule.prototype.render = function() {
@@ -67,7 +71,7 @@ define('videosmodule.views.inContent', [
 			$thumbnails.append(instance.$el);
 		}
 
-		this.$el.before($out);
+		this.$el.after($out);
 	};
 
 	return VideoModule;

@@ -24,13 +24,13 @@ describe('moduleInsertion', function(){
 	moduleInsertion = modules['venus.moduleInsertion'](document);
 
 	it('header should returned', function(){
-		var header = moduleInsertion.findElementByOffsetTop(articleMock, 'h2', 100);
+		var header = moduleInsertion.getChildByOffsetTop(articleMock, 'h2', 100);
 		expect(header.id).toBe('h2-0');
 
-		header = moduleInsertion.findElementByOffsetTop(articleMock, 'h2', 300);
+		header = moduleInsertion.getChildByOffsetTop(articleMock, 'h2', 300);
 		expect(header.id).toBe('h2-1');
 
-		header = moduleInsertion.findElementByOffsetTop(articleMock, 'h2', 1000);
+		header = moduleInsertion.getChildByOffsetTop(articleMock, 'h2', 1000);
 		expect(header.id).toBe('h2-4');
 	});
 });
