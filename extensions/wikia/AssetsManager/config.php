@@ -137,12 +137,11 @@ $config['adengine2_interactive_maps_js'] = array(
 	),
 );
 
-$config['adengine2_venus_ads_js'] = array(
+$config['adengine2_top_in_content_boxad_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'venus',
 	'assets' => array(
-		'//extensions/wikia/AdEngine/js/AdPlacementChecker.js',
-		'//extensions/wikia/AdEngine/js/AdSlotsVenus.js',
+		'//extensions/wikia/AdEngine/js/AdSlotTopInContentBoxad.js',
 	),
 );
 
