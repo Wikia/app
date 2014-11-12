@@ -34,6 +34,7 @@ $config['tracker_js'] = array(
 
 $config['liftium_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus', 'wikiamobile'],
 	'assets' => array(
 		'//extensions/wikia/AdEngine/liftium/Liftium.js',
 	)
@@ -41,6 +42,7 @@ $config['liftium_ads_js'] = array(
 
 $config['liftium_ads_extra_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus', 'wikiamobile'],
 	'assets' => array(
 		// TODO: get rid of those:
 		'//extensions/wikia/AdEngine/liftium/Wikia.Athena.js',
@@ -53,6 +55,7 @@ $config['liftium_ads_extra_js'] = array(
 
 $config['adengine2_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus', 'wikiamobile'],
 	'assets' => array(
 		// core
 		'//resources/wikia/modules/scriptwriter.js',
@@ -93,6 +96,7 @@ $config['adengine2_js'] = array(
 
 $config['adengine2_late_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus', 'wikiamobile'],
 	'assets' => array(
 		// ads
 		'//extensions/wikia/AdEngine/js/AdLogicPageParamsLegacy.js',
@@ -133,15 +137,18 @@ $config['adengine2_interactive_maps_js'] = array(
 	),
 );
 
-$config['adengine2_top_in_content_boxad_js'] = array(
+$config['adengine2_venus_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'venus',
 	'assets' => array(
-		'//extensions/wikia/AdEngine/js/AdSlotTopInContentBoxad.js',
+		'//extensions/wikia/AdEngine/js/AdPlacementChecker.js',
+		'//extensions/wikia/AdEngine/js/AdSlotsVenus.js',
 	),
 );
 
 $config['adengine2_tracking_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus', 'wikiamobile'],
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
 	),
@@ -1495,7 +1502,7 @@ $config['imagedrop_scss'] = array(
 /** Note: this group is also used in Oasis! */
 $config['analytics_gas_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['wikiamobile', 'venus' ],
+	'skin' => [ 'wikiamobile', 'venus' ],
 	'assets' => [
 		'//extensions/wikia/AnalyticsEngine/js/analytics_prod.js'
 	]
