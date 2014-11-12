@@ -13,6 +13,7 @@ define('wikia.recommendations', ['wikia.loader'], function(loader){
 		loader({
 			type: loader.MULTI,
 			resources: {
+				styles: 'extensions/wikia/Recommendations/styles/recommendations.scss',
 				templates: [{
 					controller: 'Recommendations',
 					method: 'index'

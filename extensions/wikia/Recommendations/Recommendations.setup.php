@@ -14,8 +14,5 @@ $wgExtensionMessagesFiles['Recommendations'] = __DIR__ . '/Recommendations.i18n.
 $wgResourceModules['ext.wikia.recommendations'] = array(
 	'scripts' => array(
 		'extensions/wikia/Recommendations/scripts/recommendations.js',
-	),
-	'styles' => array(
-		'extensions/wikia/Recommendations/styles/recommendations.scss'
 	)
 );
