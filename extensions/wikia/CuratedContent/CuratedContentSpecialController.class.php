@@ -306,11 +306,14 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 				$tag = $this->parseImageIdToInt( $tag );
 				if ( !empty( $tag[ 'categories' ] ) ) {
 					foreach ( $tag[ 'categories' ] as &$row ) {
+
 						$row = $this->parseImageIdToInt( $row );
 						$rawTitle = $row[ 'title' ];
 						$type = $this->extractType( $rawTitle );
 						$title = $this->getTitle( $rawTitle, $type );
 						$validType = $type;
+
+						if(empty($row['label'])){$row['label'] = $title;}
 						switch ( $type ) {
 							case 'category':
 								$this->getCategoryPageId( $title, $err, $row );
@@ -347,6 +350,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 								break;
 							case false:
 								$this->getArticlePageId( $title, $row, $err );
+								$validType = 'article';
 								break;
 							default:
 								$err[ ] = $rawTitle;
