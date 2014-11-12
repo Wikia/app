@@ -49,7 +49,7 @@ $global-footer-color-border: #c7d1d8;
 	.footer-wikia-logo {
 		@extend %global-footer-inline-flexbox;
 		line-height: 0; /* Get rid of uncontrollable vertical margins for inline-block */
-		margin: 0 auto 40px;
+		margin: 0 auto 35px;
 
 		img {
 			@include wikia-logo();
