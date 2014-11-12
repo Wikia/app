@@ -110,8 +110,6 @@ class OoyalaAsset extends WikiaModel {
 		$reqPath = '/v2/assets';
 
 		$url = OoyalaApiWrapper::getApi( $method, $reqPath, $params );
-		print( "Connecting to $url...\n" );
-
 		$response = self::getApiContent( $url );
 
 		$assets = [];

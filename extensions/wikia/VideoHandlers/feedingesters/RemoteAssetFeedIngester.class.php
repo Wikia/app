@@ -4,9 +4,10 @@ class RemoteAssetFeedIngester extends VideoFeedIngester {
 
 	const REMOTE_ASSET = true;
 
+	private $duplicateAsset;
+
 	public function checkIsDuplicateVideo( $videoData, $provider ) {
 		$this->checkVideoExistsOnOoyala( $videoData, $provider );
-		$this->checkVideoExistsOnWikia( $videoData, $provider );
 	}
 
 	public function checkVideoExistsOnOoyala( $videoData, $provider ) {
@@ -16,10 +17,11 @@ class RemoteAssetFeedIngester extends VideoFeedIngester {
 				$msg = "Skipping {$videoData['titleName']} (Id: {$videoData['videoId']}, $provider) - video already exists in remote assets.\n";
 				throw new FeedIngesterSkippedException( $msg );
 			}
+			$this->duplicateAsset = $dupAssets[0];
 		}
 	}
 
-	public function saveAsset( $categories ) {
+	public function saveVideo( $categories ) {
 		$this->metaData['pageCategories'] = implode( ', ', $categories );
 		if ( !empty( $this->duplicateAsset ) ) {
 			if ( !empty( $this->duplicateAsset['metadata']['sourceid'] ) && $this->duplicateAsset['metadata']['sourceid'] == $this->metaData['videoId'] ) {

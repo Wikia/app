@@ -26,10 +26,11 @@ abstract class VideoFeedIngester {
 	private static $WIKI_INGESTION_DATA_FIELDS = array( 'keyphrases' );
 
 	private $dataNormalizer;
+	protected  $logger;
 	protected $debug;
 	protected $reupload;
 	protected $metaData;
-	protected $duplicateAsset;
+	protected $oldName;
 
 	public function __construct( array $params ) {
 		$this->dataNormalizer = new IngesterDataNormalizer();
@@ -159,8 +160,8 @@ abstract class VideoFeedIngester {
 				$msg = "Skipping {$videoData['titleName']} (Id: {$videoData['videoId']}, $provider) - video already exists and reupload is disabled.\n";
 				throw new FeedIngesterSkippedException( $msg );
 			}
-			// If we found a duplicate and reupload is on, save it. We'll use it later in the ingestion process.
-			$this->duplicateAsset = $duplicates[0];
+			$this->oldName = $duplicates[0]['img_name'];
+			echo "Video already exists, using it's old name: {$this->oldName}\n";
 		}
 	}
 
@@ -260,8 +261,8 @@ abstract class VideoFeedIngester {
 
 	public function getName( $videoData ) {
 		// Reuse name if duplicate video exists.
-		if ( !is_null( $this->duplicateAsset ) ) {
-			$name = $this->duplicateAsset['img_name'];
+		if ( !is_null( $this->oldName ) ) {
+			$name = $this->oldName;
 		} else {
 			$name = VideoFileUploader::sanitizeTitle( $this->generateName( $videoData ) );
 			$name = $this->getUniqueName( $name );
@@ -279,7 +280,7 @@ abstract class VideoFeedIngester {
 		return true;
 	}
 
-	public function saveVideo( $categories, $provider ) {
+	public function saveVideo( $categories, $provider = null ) {
 		$categoryStr = $this->prepareCategoriesString( $categories );
 		$body = $this->prepareBodyString( $categoryStr );
 		if ( $this->debugMode() ) {
