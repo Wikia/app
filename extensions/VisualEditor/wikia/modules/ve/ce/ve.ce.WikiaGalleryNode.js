@@ -31,6 +31,10 @@ ve.ce.WikiaGalleryNode = function VeCeWikiaGalleryNode( model, config ) {
 	// Events
 	this.model.connect( this, { 'update': 'onUpdate' } );
 	this.$element.on( 'mediaLoaded', ve.bind( function () {
+		var focusWidget = this.surface.getSurface().getFocusWidget();
+		if ( focusWidget ) {
+			focusWidget.adjustLayout();
+		}
 		if ( this.isFocused() ) {
 			this.redrawHighlights();
 		}
