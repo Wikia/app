@@ -275,7 +275,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchCheck = function ( item ) {
 	var cartItem;
 
 	cartItem = this.cart.getItemFromData( item.title );
-debugger;
+
 	if ( cartItem ) {
 		this.cartModel.removeItems( [ cartItem.getModel() ] );
 	} else {
