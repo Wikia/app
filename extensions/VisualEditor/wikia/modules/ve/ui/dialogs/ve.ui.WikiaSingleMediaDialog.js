@@ -138,7 +138,7 @@ ve.ui.WikiaSingleMediaDialog.prototype.insertMedia = function () {
 	linmod.push( { 'type': '/alien' } );
 
 	// Gallery items
-	for( i = 0; i < this.cartModel.items.length; i++ ) {
+	for ( i = 0; i < this.cartModel.items.length; i++ ) {
 		linmod.push( {
 			'type': 'wikiaGalleryItem',
 			'attributes': {
