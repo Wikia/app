@@ -12,15 +12,18 @@ class WikiaInYourLangController extends WikiaController {
 	 */
 	public function getNativeWikiaInfo() {
 		wfProfileIn( __METHOD__ );
-
-		global $wgServer;
 		/**
-		 * wgServer value of the posting wikia
+		 * URL of the posting wikia
 		 * @var string
 		 */
-		$sCurrentUrl = $wgServer;
+		$sCurrentUrl = $this->wg->Server;
 		/**
-		 * The language code from a user's Geo cookie
+		 * Name of the posting wikia
+		 * @var string
+		 */
+		$sCurrentSitename = $this->wg->Sitename;
+		/**
+		 * The language code for the wfMessage
 		 * @var string
 		 */
 		$sTargetLanguage = $this->request->getVal( 'targetLanguage' );
@@ -42,9 +45,16 @@ class WikiaInYourLangController extends WikiaController {
 		if ( $iNativeWikiId > 0 ) {
 			$oNativeWiki = WikiFactory::getWikiById( $iNativeWikiId );
 
+			$aMessageParams = [
+				$sCurrentSitename,
+				$oNativeWiki->city_url,
+				$oNativeWiki->city_title,
+			];
+
+			$sMessage = $this->prepareMessage( $sTargetLanguage, $aMessageParams );
+
 			$this->response->setVal( 'success', true );
-			$this->response->setVal( 'wikiaUrl', $oNativeWiki->city_url );
-			$this->response->setVal( 'wikiaSitename', $oNativeWiki->city_title );
+			$this->response->setVal( 'message', $sMessage );
 		} else {
 			$this->response->setVal( 'success', false );
 		}
@@ -84,23 +94,28 @@ class WikiaInYourLangController extends WikiaController {
 	 * @return int                  A wikia's ID or 0 if not found.
 	 */
 	private function getWikiIdByDomain( $sWikiDomain ) {
-		global $wgExternalSharedDB;
+		$oDB = wfGetDB( DB_SLAVE, array(), $this->wg->ExternalSharedDB );
 
-		$oDB = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-
-		$oRes = $oDB->select(
+		$oRow = $oDB->selectRow(
 			'`city_domains`',
 			[ '`city_id`' ],
 			[ 'city_domain' => $sWikiDomain ],
-			__METHOD__,
-			[ 'LIMIT' => 1 ]
+			__METHOD__
 		);
 
-		if ( $oRes->numRows() > 0 ) {
-			$oRow = $oDB->fetchObject( $oRes );
+		if ( $oRow !== false ) {
 			return $oRow->city_id;
 		} else {
 			return 0;
 		}
+	}
+
+	private function prepareMessage( $sTargetLanguage, $aMessageParams ) {
+		$sMsg = wfMessage( 'wikia-in-your-lang-available' )
+			->params( $aMessageParams )
+			->inLanguage( $sTargetLanguage )
+			->parse();
+
+		return $sMsg;
 	}
 }
