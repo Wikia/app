@@ -1,5 +1,7 @@
 <?
-class VideoRecommendationsDataProvider extends AbstractRecommendationsDataProvider {
+namespace Wikia\Api\Recommendations\DataProviders;
+
+class Video implements IDataProvider {
 	public function get( $articleId, $limit ) {
 		// TODO
 		return [

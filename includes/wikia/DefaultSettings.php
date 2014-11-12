@@ -182,11 +182,11 @@ $wgAutoloadClasses[ 'LimitExceededApiException'] =  "{$IP}/includes/wikia/api/Ap
 $wgAutoloadClasses[ 'NotFoundApiException'] =  "{$IP}/includes/wikia/api/ApiExceptions.php" ;
 
 //Recommendations
-$wgAutoloadClasses['RecommendationApi'] = "{$IP}/includes/wikia/api/Recommendations/RecommendationApi.class.php";
-$wgAutoloadClasses['AbstractRecommendationsDataProvider'] = "{$IP}/includes/wikia/api/Recommendations/DataProviders/AbstractRecommendationsDataProvider.class.php";
-$wgAutoloadClasses['CategoryRecommendationsDataProvider'] = "{$IP}/includes/wikia/api/Recommendations/DataProviders/CategoryRecommendationsDataProvider.class.php";
-$wgAutoloadClasses['VideoRecommendationsDataProvider'] = "{$IP}/includes/wikia/api/Recommendations/DataProviders/VideoRecommendationsDataProvider.class.php";
-$wgAutoloadClasses['TopArticlesRecommendationsDataProvider'] = "{$IP}/includes/wikia/api/Recommendations/DataProviders/TopArticlesRecommendationsDataProvider.class.php";
+$wgAutoloadClasses['Wikia\\Api\\Recommendations\\Api'] = "{$IP}/includes/wikia/api/Recommendations/Api.class.php";
+$wgAutoloadClasses['Wikia\\Api\\Recommendations\\DataProviders\\IDataProvider'] = "{$IP}/includes/wikia/api/Recommendations/DataProviders/IDataProvider.interface.php";
+$wgAutoloadClasses['Wikia\\Api\\Recommendations\\DataProviders\\Category'] = "{$IP}/includes/wikia/api/Recommendations/DataProviders/Category.class.php";
+$wgAutoloadClasses['Wikia\\Api\\Recommendations\\DataProviders\\Video'] = "{$IP}/includes/wikia/api/Recommendations/DataProviders/Video.class.php";
+$wgAutoloadClasses['Wikia\\Api\\Recommendations\\DataProviders\\TopArticles'] = "{$IP}/includes/wikia/api/Recommendations/DataProviders/TopArticles.class.php";
 
 /**
  * Wikia API end

@@ -1,5 +1,7 @@
 <?
-class RecommendationApi {
+namespace Wikia\Api\Recommendations;
+
+class Api {
 	public function get( $articleId, $limit ) {
 		$out = [];
 		$dataProviders = $this->getDataProviders();
@@ -13,9 +15,9 @@ class RecommendationApi {
 
 	protected function getDataProviders() {
 		return [
-			(new VideoRecommendationsDataProvider),
-			(new TopArticlesRecommendationsDataProvider),
-			(new CategoryRecommendationsDataProvider)
+			(new DataProviders\Video),
+			(new DataProviders\TopArticles),
+			(new DataProviders\Category)
 		];
 	}
 }

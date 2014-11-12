@@ -1137,7 +1137,7 @@ class ArticlesApiController extends WikiaApiController {
 		$articleId = $this->request->getInt('article_id', null);
 		$limit = $this->request->getInt('limit', 9);
 
-		$this->items = (new RecommendationApi)->get(
+		$this->items = (new Wikia\Api\Recommendations\Api)->get(
 			$articleId,
 			$limit
 		);
