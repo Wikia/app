@@ -237,6 +237,8 @@ class DataMartService extends Service {
 			$topWikis[$row->id] = $row->pageviews;
 		});
 
+		$topWikis = array_slice($topWikis, 0, $limit, true);
+
 		wfProfileOut(__METHOD__);
 		return $topWikis;
 	}
