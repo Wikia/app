@@ -6,7 +6,7 @@ class CuratedContentSpecialPreviewController extends WikiaSpecialPageController 
 	}
 
 	public function index() {
-		if (!$this->wg->User->isAllowed( 'CuratedContentpreview' )) {
+		if (!$this->wg->User->isAllowed( 'curatedcontentpreview' )) {
 			$this->displayRestrictionError();
 			return false;  // skip rendering
 		}
