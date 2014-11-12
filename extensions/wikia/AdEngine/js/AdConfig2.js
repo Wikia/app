@@ -3,6 +3,7 @@ define('ext.wikia.adEngine.adConfig', [
 	// regular dependencies
 	'wikia.log',
 	'wikia.geo',
+	'wikia.instantGlobals',
 
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adDecoratorPageDimensions',
@@ -20,6 +21,7 @@ define('ext.wikia.adEngine.adConfig', [
 	// regular dependencies
 	log,
 	geo,
+	instantGlobals,
 
 	adContext,
 	adDecoratorPageDimensions,
@@ -41,7 +43,9 @@ define('ext.wikia.adEngine.adConfig', [
 		defaultHighValueSlots,
 		highValueSlots,
 		decorators = [adDecoratorPageDimensions],
-		rtpTier, rtpSlots, i;
+		rtpTier,
+		rtpSlots,
+		i;
 
 	defaultHighValueSlots = {
 		'CORP_TOP_LEADERBOARD': true,
@@ -114,6 +118,11 @@ define('ext.wikia.adEngine.adConfig', [
 		}
 
 		if (highValueSlots[slotname]) {
+			if (instantGlobals.wgSitewideDisableGpt) {
+				log(['getProvider', slotname, 'wgSitewideDisableGpt ON skipping DirectGPT'], 'warning', logGroup);
+				return [adProviderLater];
+			}
+
 			log(['getProvider', slotname, 'DirectGpt->Later'], 'info', logGroup);
 			return [adProviderDirectGpt, adProviderLater];
 		}
@@ -133,8 +142,8 @@ define('ext.wikia.adEngine.adConfig', [
 		rtpSlots = rtp.getConfig().slotname;
 
 		if (rtpTier && rtpSlots && rtpSlots.length) {
-			for(i = rtpSlots.length; i >= 0; i -= 1) {
-				gptSlotConfig.extendSlotParams('gpt', rtpSlots[i], { rp_tier: rtpTier });
+			for (i = rtpSlots.length; i >= 0; i -= 1) {
+				gptSlotConfig.extendSlotParams('gpt', rtpSlots[i], { 'rp_tier': rtpTier });
 			}
 		}
 	}
