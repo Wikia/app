@@ -37,7 +37,7 @@
 					window.GlobalNotification.show($.msg('fbconnect-preferences-connected'), 'confirm');
 
 					window.Wikia.Tracker.track({
-						category: 'force-login-modal', // todo: this is not always correct
+						category: 'user-sign-up',
 						trackingMethod: 'both',
 						action: window.Wikia.Tracker.ACTIONS.SUCCESS,
 						label: 'facebook-login'
