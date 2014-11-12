@@ -18,7 +18,6 @@ abstract class VideoFeedIngester {
 	protected static $PROVIDER;
 	protected static $FEED_URL;
 	protected static $CLIP_FILTER = array();
-	protected $filterByProviderVideoId = array();
 
 	protected $defaultRequestOptions = [
 		'noProxy' => true
@@ -359,18 +358,6 @@ abstract class VideoFeedIngester {
 	 */
 	protected function generateName( array $videoData ) {
 		return $videoData['titleName'];
-	}
-
-	/**
-	 *  If  $this->filterByProviderVideoId is not empty, the ingestion script will only upload the videos
-	 *  that are in the array
-	 * @param $id
-	 */
-	public function setFilter( $id ) {
-
-		if ( !in_array( $id, $this->filterByProviderVideoId ) ) {
-			$this->filterByProviderVideoId[] = $id;
-		}
 	}
 
 	/**

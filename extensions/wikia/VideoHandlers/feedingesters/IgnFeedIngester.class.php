@@ -66,14 +66,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 				}
 			}
 
-			$clipData = array();
-
-			// If array is not empty - use only videos that exists in $this->filterByProviderVideoId array
-			if ( count( $this->filterByProviderVideoId ) > 0 && !in_array( $video['videoId'], $this->filterByProviderVideoId ) ) {
-				$this->logger->videoSkipped();
-				continue;
-			}
-
+			$clipData = [];
 			$clipData['titleName'] = $video['metadata']['name'];
 			$clipData['published'] = strtotime( $video['metadata']['publishDate'] );
 			$clipData['videoId'] = $video['videoId'];

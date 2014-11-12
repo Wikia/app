@@ -204,12 +204,6 @@ class ScreenplayFeedIngester extends RemoteAssetFeedIngester {
 					continue;
 				}
 
-				// If array is not empty - use only videos that exists in $this->filterByProviderVideoId array
-				if ( count( $this->filterByProviderVideoId ) > 0 && !in_array( $clip['EClipId'], $this->filterByProviderVideoId ) ) {
-					$this->logger->videoSkipped();
-					continue;
-				}
-
 				// Skip Movie Trailers (trailer type = Home Video, Theatrical, Open-ended )
 				if ( in_array( $clip['TrailerTypeId'], self::$EXCLUDE_TRAILER_TYPE ) && $clip['TrailerVersion'] == 1 ) {
 					$this->logger->videoSkipped();
