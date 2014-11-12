@@ -1,7 +1,15 @@
 <?
 namespace Wikia\Api\Recommendations;
 
-class Api {
+class Collector {
+
+	/**
+	 * Return data from all data providers
+	 *
+	 * @param int $articleId
+	 * @param int $limit
+	 * @return array
+	 */
 	public function get( $articleId, $limit ) {
 		$out = [];
 		$dataProviders = $this->getDataProviders();
@@ -13,6 +21,11 @@ class Api {
 		return $out;
 	}
 
+	/**
+	 * Get instances of all available data providers
+	 *
+	 * @return array
+	 */
 	protected function getDataProviders() {
 		return [
 			(new DataProviders\Video),

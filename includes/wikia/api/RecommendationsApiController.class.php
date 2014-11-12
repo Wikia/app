@@ -1,6 +1,6 @@
 <?php
 
-use Wikia\Api\Recommendations\Api;
+use Wikia\Api\Recommendations\Collector;
 
 class RecommendationsApiController extends WikiaApiController {
 
@@ -16,7 +16,7 @@ class RecommendationsApiController extends WikiaApiController {
 			throw new BadRequestApiException();
 		}
 
-		$data = ( new Api )->get( $articleId, $limit );
+		$data = ( new Collector )->get( $articleId, $limit );
 		$this->setResponseData( [ 'items' => $data ], null, WikiaResponse::CACHE_STANDARD );
 	}
 }
