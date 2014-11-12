@@ -66,12 +66,3 @@
 		background-size: 1920px;
 	}
 }
-
-// A monkey-patch for Video walls plus global navigation
-#videowallplayerwrapper,
-#jpright,
-#jpleft,
-#jpgradient,
-#jpsuperheader {
-	top: $global-navigation-height;
-}
