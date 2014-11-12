@@ -7,7 +7,7 @@
  * @extends OO.ui.Widget
  *
  * @constructor
- * @param {ve.dm.WikiaCart} model Cart item
+ * @param {ve.dm.WikiaCart} model Cart
  * @param {Object} dialog Instance of parent dialog
  */
 ve.ui.WikiaSingleMediaCartWidget = function VeUiWikiaSingleMediaCartWidget( model, dialog ) {
