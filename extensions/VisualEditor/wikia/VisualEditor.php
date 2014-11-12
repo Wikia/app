@@ -143,6 +143,8 @@ $wgResourceModules += array(
 			've/ui/widgets/ve.ui.WikiaFocusWidget.js',
 			've/ui/widgets/ve.ui.WikiaCategoryInputWidget.js',
 			've/ui/widgets/ve.ui.WikiaSingleMediaCartWidget.js',
+			've/ui/widgets/ve.ui.WikiaSingleMediaCartSelectWidget.js',
+			've/ui/widgets/ve.ui.WikiaSingleMediaCartOptionWidget.js',
 			've/ui/widgets/ve.ui.WikiaSingleMediaQueryWidget.js',
 		),
 		'messages' => array(

@@ -17,10 +17,6 @@ ve.ui.WikiaSingleMediaCartWidget = function VeUiWikiaSingleMediaCartWidget( conf
 	// Properties
 	this.dialog = config.dialog;
 
-	this.$rightSide = this.$( '<div>' )
-		.addClass( 've-ui-wikiaSingleMediaDialog-rightSide' )
-		.html('test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test');
-
 	this.$cartControls = this.$( '<div>' )
 		.addClass( 've-ui-wikiaSingleMediaDialog-cartControls' );
 	this.$cartViewButtons = this.$( '<div>' )
@@ -37,10 +33,9 @@ ve.ui.WikiaSingleMediaCartWidget = function VeUiWikiaSingleMediaCartWidget( conf
 		'icon': 'cart-list',
 		'classes': [ 've-ui-wikiaSingleMediaDialog-cartListButton' ]
 	} );
-	this.$cartControls.append( this.$cartViewButtons.append( [
-		this.cartGridButton.$element,
-		this.cartListButton.$element
-	] ) );
+
+	this.cartModel = new ve.dm.WikiaCart();
+	this.cartSelect = new ve.ui.WikiaSingleMediaCartSelectWidget( this.cartModel );
 
 	// Events
 	this.dialog.connect( this, { 'layout': 'onLayout' } );
@@ -48,9 +43,17 @@ ve.ui.WikiaSingleMediaCartWidget = function VeUiWikiaSingleMediaCartWidget( conf
 	this.cartListButton.connect( this, { 'click': [ this.emit, 'layout', 'list' ] } );
 
 	// Initialization
+	this.$cartControls.append( this.$cartViewButtons.append( [
+		this.cartGridButton.$element,
+		this.cartListButton.$element
+	] ) );
 	this.$element
 		.addClass( 've-ui-wikiaSingleMediaCartWidget' )
-		.append( this.$cartControls, this.$rightSide );
+		.append( this.$cartControls, this.cartSelect.$element );
+
+	// Temp stuff
+	this.tempItem = new ve.dm.WikiaCartItem( 'Janice elton floyd.jpg', 'http://vignette.wikia-dev.com/muppet/images/3/31/Janice_elton_floyd.jpg/revision/latest?cb=20110101181243', 'photo', undefined, 'wikia' );
+	this.cartModel.addItems( [ this.tempItem, this.tempItem, this.tempItem, this.tempItem, this.tempItem ] );
 };
 
 OO.inheritClass( ve.ui.WikiaSingleMediaCartWidget, OO.ui.Widget );
