@@ -1,5 +1,9 @@
 <?php
 
+namespace Wikia\Cache;
+
+use Wikia\Logger\WikiaLogger;
+
 /**
  * Class AsyncCache
  *
@@ -94,10 +98,14 @@ class AsyncCache {
 	/** @var \Wikia\Cache\AsyncCacheTask - The task created to generate a new value */
 	private $task;
 
+	/** @var int - The current time.  Keeps us from calling time() over and over */
+	private $currTime;
+
 	/**
 	 * @param BagOStuff $cache - An alternate caching package
 	 */
 	public function __construct( $cache = null ) {
+		$this->currTime = time();
 		$this->ttl = self::DEFAULT_TTL;
 		$this->negativeResponseTTL = self::DEFAULT_NEGATIVE_RESPONSE_TTL;
 
@@ -105,7 +113,7 @@ class AsyncCache {
 
 		$this->callbackParams = [];
 
-		$this->cache = $cache ? $cache : F::app()->wg->Memc;
+		$this->cache = $cache ? $cache : \F::app()->wg->Memc;
 	}
 
 	/**
@@ -179,7 +187,7 @@ class AsyncCache {
 	 *
 	 * @return AsyncCache $this
 	 */
-	public function callback( callable $callback, array $params = null ) {
+	public function callback( $callback, array $params = null ) {
 		$this->callback = $callback;
 		$this->callbackParams = $params;
 
@@ -217,7 +225,7 @@ class AsyncCache {
 		if ( $this->isCacheStale() ) {
 			return 0;
 		} else {
-			return $this->getCacheExpire() - time();
+			return $this->getCacheExpire() - $this->currTime;
 		}
 	}
 
@@ -227,7 +235,7 @@ class AsyncCache {
 	 * @return bool
 	 */
 	public function isCacheStale() {
-		return  time() > $this->getCacheExpire();
+		return  $this->currTime > $this->getCacheExpire();
 	}
 
 	/**
@@ -247,7 +255,7 @@ class AsyncCache {
 				return self::UNLIMITED_TIME_REMAINING;
 			}
 
-			return $this->getCacheExpire() + $this->staleOnMissTTL - time();
+			return $this->getCacheExpire() + $this->staleOnMissTTL - $this->currTime;
 		} else {
 			return 0;
 		}
@@ -285,9 +293,15 @@ class AsyncCache {
 
 			// If we're stale but can wait on the fresh value, schedule a job
 			if ( $this->isCacheStale() ) {
+				$this->logInfo( 'AsyncCache HIT stale' );
+
 				$this->scheduleValueGeneration();
+			} else {
+				$this->logInfo( 'AsyncCache HIT fresh' );
 			}
 		} else {
+			$this->logInfo( 'AsyncCache MISS' );
+
 			// If we're missing or stale and can't wait for a value, generate immediately
 			$value = $this->generateValueNow();
 		}
@@ -337,11 +351,11 @@ class AsyncCache {
 			return true;
 		}
 
-		return time() - $this->getCacheExpire() < $this->staleOnMissTTL;
+		return $this->currTime - $this->getCacheExpire() < $this->staleOnMissTTL;
 	}
 
 	private function generateValueNow() {
-		$task = new \Wikia\Cache\AsyncCacheTask();
+		$task = new AsyncCacheTask();
 		$value = $task->generate(
 			$this->key,
 			$this->callback,
@@ -352,11 +366,21 @@ class AsyncCache {
 	}
 
 	private function scheduleValueGeneration() {
-		$this->task = ( new \Wikia\Cache\AsyncCacheTask() )->wikiId( F::app()->wg->CityId );
+		$this->task = ( new AsyncCacheTask() )->wikiId( \F::app()->wg->CityId );
 		$this->task->dupCheck();
 		$this->task->call( 'generate',
 			$this->key, $this->callback, $this->callbackParams,
 			[ 'ttl' => $this->ttl, 'negativeResponseTTL' => $this->negativeResponseTTL ] );
 		$this->task->queue();
+	}
+
+	private function logInfo( $mesg ) {
+		WikiaLogger::instance()->info( $mesg, [
+			'key' => $this->key,
+			'time' => $this->currTime,
+			'expires' => $this->getCacheExpire(),
+			'ttlRemain' => $this->ttlRemain(),
+			'staleTTLRemain' => $this->staleTTLRemain(),
+		] );
 	}
 }

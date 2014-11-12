@@ -85,12 +85,17 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string editToken - token for changing password
 	 */
 	public function index() {
+		$returnTo = urldecode( $this->request->getVal( 'returnto', '' ) );
+		$returnToQuery = urldecode( $this->request->getVal( 'returntoquery', '' ) );
 
 		// redirect if signup
 		$type = $this->request->getVal('type', '');
 		if ($type === 'signup' || $this->getPar() == 'signup') {
 			$title = SpecialPage::getTitleFor( 'UserSignup' );
-			$this->wg->Out->redirect( $title->getFullURL() );
+			$this->wg->Out->redirect( $title->getFullURL( [
+				['returnto' => $returnTo],
+				['returntoquery' => $returnToQuery],
+			] ) );
 			return false;
 		}
 
@@ -104,8 +109,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->password = $this->request->getVal( 'password', '' );
 		$this->keeploggedin = $this->request->getCheck( 'keeploggedin' );
 		$this->loginToken = UserLoginHelper::getLoginToken();
-		$this->returnto = htmlentities($this->request->getVal( 'returnto', '' ), ENT_QUOTES, "UTF-8");
-		$this->returntoquery = htmlentities($this->request->getVal( 'returntoquery', '' ), ENT_QUOTES, "UTF-8");
+		$this->returnto = $returnTo;
+		$this->returntoquery = $returnToQuery;
 
 		// process login
 		if ( $this->wg->request->wasPosted() ) {
