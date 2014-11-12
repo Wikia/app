@@ -18,16 +18,13 @@ require(
 	function ($, mw, w, geo, cache, tracker) {
 		'use strict';
 
-		cache.set('wikiaInYourLangRequestSent', false);
-		cache.set('wikiaInYourLangNotificationShown', false);
 		/**
 		 * An array of language codes for which we want to look for a native wikia
 		 * @type {Array}
 		 */
 		var supportedLanguages = ['ja'],
 			// Get user's geographic data and a country code
-			// targetLanguage = getTargetLanguage();
-			targetLanguage = 'ja';
+			targetLanguage = getTargetLanguage();
 
 		function init() {
 			if (targetLanguage !== false) {
@@ -45,8 +42,7 @@ require(
 		}
 
 		function getTargetLanguage() {
-			// var browserLanguage = window.navigator.language || window.navigator.userLanguage,
-			var browserLanguage = 'ja',
+			var browserLanguage = window.navigator.language || window.navigator.userLanguage,
 				geoCountryCode = geo.getCountryCode().toLowerCase();
 
 			// Check if a browser's language is one of the supported languages
@@ -82,7 +78,6 @@ require(
 					targetLanguage: targetLanguage
 				},
 				callback: function (results) {
-					console.log(results);
 					if (results.success === true) {
 						// Display notification and then set tracking on
 						// the text link in it
@@ -117,7 +112,6 @@ require(
 		}
 
 		function onNotificationClosed() {
-			debugger;
 			cache.set('wikiaInYourLangNotificationShown', true);
 		}
 
