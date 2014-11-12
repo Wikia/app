@@ -181,6 +181,13 @@ $wgAutoloadClasses[ 'InvalidParameterApiException'] =  "{$IP}/includes/wikia/api
 $wgAutoloadClasses[ 'LimitExceededApiException'] =  "{$IP}/includes/wikia/api/ApiExceptions.php" ;
 $wgAutoloadClasses[ 'NotFoundApiException'] =  "{$IP}/includes/wikia/api/ApiExceptions.php" ;
 
+//Recommendations
+$wgAutoloadClasses['RecommendationApi'] = "{$IP}/includes/wikia/api/Recommendations/RecommendationApi.class.php";
+$wgAutoloadClasses['AbstractRecommendationsDataProvider'] = "{$IP}/includes/wikia/api/Recommendations/DataProviders/AbstractRecommendationsDataProvider.class.php";
+$wgAutoloadClasses['CategoryRecommendationsDataProvider'] = "{$IP}/includes/wikia/api/Recommendations/DataProviders/CategoryRecommendationsDataProvider.class.php";
+$wgAutoloadClasses['VideoRecommendationsDataProvider'] = "{$IP}/includes/wikia/api/Recommendations/DataProviders/VideoRecommendationsDataProvider.class.php";
+$wgAutoloadClasses['TopArticlesRecommendationsDataProvider'] = "{$IP}/includes/wikia/api/Recommendations/DataProviders/TopArticlesRecommendationsDataProvider.class.php";
+
 /**
  * Wikia API end
  */
