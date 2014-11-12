@@ -76,13 +76,13 @@ define('ext.wikia.adEngine.evolveHelper', [
 			if (params.hasOwnProperty(i)) {
 				decorated = dartUrl.decorateParam(i, params[i]);
 				if (decorated) {
-					result[result.length] = decorated;
+					result.push(decorated);
 				}
 			}
 		}
 
 		if (additionalParams) {
-			result[result.length] = additionalParams;
+			result.push(additionalParams);
 		}
 
 		return result.join('');
