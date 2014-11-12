@@ -83,6 +83,7 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 	this.queryInput.connect( this, {
 		'change': 'onQueryInputChange'
 	} );
+	this.queryInput.$input.on( 'keydown', ve.bind( this.onQueryInputKeydown, this ) );
 
 	// Initialization
 	this.frame.$content.addClass( 've-ui-wikiaSingleMediaDialog' );
@@ -94,6 +95,9 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 
 	this.setLayout( 'grid' );
 };
+
+ve.ui.WikiaSingleMediaDialog.prototype.onQueryInputKeydown =
+	OO.ui.SearchWidget.prototype.onQueryKeydown;
 
 /**
  * Handle closing the dialog.
