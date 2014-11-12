@@ -4,7 +4,17 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 
 	const TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
-	const ARTICLE_ID_TAG = 'id';
+	const ARTICLE_ID_TAG = 'article_id';
+
+	const CATEGORIES_TAG = 'categories';
+
+	const STR_ARTICLE = 'article';
+
+	const STR_BLOG = 'blog';
+
+	const STR_FILE = 'file';
+
+	const STR_CATEGORY = 'category';
 
 	public function __construct() {
 		parent::__construct( 'CuratedContent', '', false );
@@ -66,7 +76,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$this->response->setVal( 'item_placeholder', wfMsg( 'wikiaCuratedContent-content-item' ) );
 		$this->response->setVal( 'name_placeholder', wfMsg( 'wikiaCuratedContent-content-name' ) );
 
-		$itemTemplate = $this->sendSelfRequest( 'category' )->toString();
+		$itemTemplate = $this->sendSelfRequest( self::STR_CATEGORY )->toString();
 		$tagTemplate = $this->sendSelfRequest( 'tag' )->toString();
 
 
@@ -87,9 +97,9 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 					'image_id' => $tag[ 'image_id' ]
 				] );
 
-				if ( !empty( $tag[ 'categories' ] ) ) {
-					foreach ( $tag[ 'categories' ] as $item ) {
-						$list .= $this->sendSelfRequest( 'category', [
+				if ( !empty( $tag[ self::CATEGORIES_TAG ] ) ) {
+					foreach ( $tag[ self::CATEGORIES_TAG ] as $item ) {
+						$list .= $this->sendSelfRequest( self::STR_CATEGORY, [
 							'item_value' => $item[ 'title' ],
 							'name_value' => !empty( $item[ 'label' ] ) ? $item[ 'label' ] : '',
 							'image_id' => $item[ 'image_id' ]
@@ -173,7 +183,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function getImage( $id = 0 ) {
-		$file = $this->request->getVal( 'file' );
+		$file = $this->request->getVal( self::STR_FILE );
 
 		$url = '';
 
@@ -216,151 +226,94 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * @param $row
-	 * @return mixed
-	 */
-	public function parseImageIdToInt( $row ) {
-		$row[ 'image_id' ] = (int)$row[ 'image_id' ];
-		return $row;
-	}
-
-
-	private function extractType( $title ) {
-		$type = strtolower( strstr( $title, ':', true ) );
-		$validTypes = [ 'category', 'user_blog', 'file' ];
-		if ( in_array( $type, $validTypes ) ) {
-			return $type;
-		}
-		return false;
-	}
-
-	private function extractFileType( $type ) {
-		$validTypes = [ 'video', 'image' ];
-		if ( in_array( $type, $validTypes ) ) {
-			return $type;
-		}
-		return false;
-	}
-
-	/**
-	 * @param $title
-	 * @param $err
-	 * @param $row
-	 */
-	private function getCategoryPageId( $title, &$err, &$row ) {
-		$category = Category::newFromName( $title );
-		//check if categories exists and have any pages
-		if ( !( $category instanceof Category ) || $category->getPageCount() === 0 ) {
-			$err[ ] = $row[ 'title' ];
-		} else if ( empty( $err ) ) {
-			$row[ self::ARTICLE_ID_TAG ] = $category->getTitle()->getArticleID();
-		}
-	}
-
-	/**
-	 * @param $row
-	 * @param $type
-	 * @return string
-	 */
-	private function getTitle( $rawTitle, $type ) {
-		$title = $rawTitle;
-		if ( $type ) {
-			$title = substr( $rawTitle, strlen( $type ) + 1 );
-		};
-		return $title;
-	}
-
-	/**
-	 * @param $title
-	 * @param $row
-	 * @param $err
-	 * @return array
-	 */
-	private function getArticlePageId( $title, &$row, &$err ) {
-		$pageId = Title::newFromText( $title )->getArticleId();
-		if ( $pageId == 0 ) {
-			$err[ ] = $row[ 'title' ];
-		}
-		$row[ self::ARTICLE_ID_TAG ] = $pageId;
-	}
-
-	/**
-	 * @param $title
-	 * @param $row
-	 * @return array
-	 */
-	private function getBlogArticleId( $title, &$row ) {
-		$tit = Title::newFromText( $title, 500 );
-		$row[ self::ARTICLE_ID_TAG ] = $tit->getArticleId();
-	}
-
-	/**
 	 * @param $tags
 	 * @return array
 	 */
 	private function saveLogic( &$tags ) {
-		$mediaService = new MediaQueryService();
 		$err = [ ];
 		if ( !empty( $tags ) ) {
 			foreach ( $tags as &$tag ) {
-				$tag = $this->parseImageIdToInt( $tag );
-				if ( !empty( $tag[ 'categories' ] ) ) {
-					foreach ( $tag[ 'categories' ] as &$row ) {
-
-						$row = $this->parseImageIdToInt( $row );
-						$rawTitle = $row[ 'title' ];
-						$type = $this->extractType( $rawTitle );
-						$title = $this->getTitle( $rawTitle, $type );
-						$validType = $type;
-
-						if(empty($row['label'])){$row['label'] = $title;}
-						switch ( $type ) {
-							case 'category':
-								$this->getCategoryPageId( $title, $err, $row );
-								break;
-							case 'user_blog':
-								$this->getBlogArticleId( $title, $row );
-								break;
-							case 'file':
-								$tit = Title::newFromText( $title, 6 );
-								$row[ self::ARTICLE_ID_TAG ] = $tit->getArticleId();
-								$mediaInfo = $mediaService->getMediaData( $tit );
-//								$row[ 'test' ] = $mediaInfo;
-								$fileType = $this->extractFileType( $mediaInfo[ 'type' ] );
-								switch ( $fileType ) {
-									case 'video':
-										$validType = 'video';
-										$row[ 'provider' ] = $mediaInfo [ 'meta' ][ 'provider' ];
-										$row[ 'thumbUrl' ] = $mediaInfo [ 'thumbUrl' ];
-										$row[ 'videoId' ] = $mediaInfo[ 'meta' ][ 'videoId' ];
-//										$err[ ] = $rawTitle;
-										break;
-									case 'image':
-										$validType = 'image';
-										$is = new ImageServing( $row[ 'id' ], 50, 50 );
-										$image = $is->getImages( 1 );
-										$row[ 'test2' ] = $image;
-										break;
-									case false:
-									default:
-										$err[ ] = $rawTitle;
-										break;
-								}
-
-								break;
-							case false:
-								$this->getArticlePageId( $title, $row, $err );
-								$validType = 'article';
-								break;
-							default:
-								$err[ ] = $rawTitle;
-								break;
+				$tag[ 'image_id' ] = (int)$tag[ 'image_id' ];
+				if ( !empty( $tag[ self::CATEGORIES_TAG ] ) ) {
+					foreach ( $tag[ self::CATEGORIES_TAG ] as &$row ) {
+						list( $articleId, $namespaceId, $type,
+							$imageUrl, $info ) = $this->getInfoFromRow(
+							$row );
+						$row[ 'article_id' ] = $articleId;
+						$row[ 'type' ] = $type;
+						$row[ 'image_url' ] = $imageUrl;
+						if ( !empty( $info ) ) {
+							$row[ 'video_info' ] = $info;
 						}
-						$row[ 'type' ] = $validType;
 					}
 				}
 			}
 		}
 		return $err;
+	}
+
+
+	private function getInfoFromRow( $row ) {
+		$title = Title::newFromText( $row[ 'title' ] );
+		if ( !empty( $title ) ) {
+			$articleId = $title->getArticleId();
+			$namespaceId = $title->getNamespace();
+			$type = $this->getType( $namespaceId );
+			if ( $type == self::STR_FILE ) {
+				list( $type, $info ) = $this->getVideoInfo( $title );
+			}
+			if ( !empty( $row[ 'image_id' ] ) ) {
+				if ( !empty( $articleId ) ) {
+					$is = new ImageServing( [ $articleId ] );
+					$thumbnail = $is->getImages( 1 );
+					if ( !empty( $thumbnail ) ) {
+						$image_url = $thumbnail[ $articleId ][ 0 ][ 'url' ];
+					}
+				}
+			}
+			return [ $articleId, $namespaceId, $type, $image_url, $info ];
+		}
+		return [ null, null, null, null, null ];
+	}
+
+	private
+	function getType( $namespaceId ) {
+		switch ( $namespaceId ) {
+			case NS_MAIN:
+				return self::STR_ARTICLE;
+				break;
+			case NS_BLOG:
+				return self::STR_BLOG;
+				break;
+			case NS_CATEGORY:
+				return self::STR_CATEGORY;
+				break;
+			case NS_FILE:
+				return self::STR_FILE;
+				break;
+			default:
+				return null;
+				break;
+		}
+	}
+
+	private
+	function getVideoInfo( $title ) {
+		$mediaService = new MediaQueryService();
+		$mediaInfo = $mediaService->getMediaData( $title );
+		if ( !empty( $mediaInfo ) ) {
+			if ( $mediaInfo[ 'type' ] === 'video' ) {
+				$type = 'video';
+				$provider = $mediaInfo [ 'meta' ][ 'provider' ];
+				$thumbUrl = $mediaInfo [ 'thumbUrl' ];
+				$videoId = $mediaInfo[ 'meta' ][ 'videoId' ];
+				return [ $type, [
+					'provider' => $provider,
+					'thumb_url' => $thumbUrl,
+					'videoId' => $videoId ]
+				];
+			}
+		}
+		return [ null, null ];
 	}
 }
