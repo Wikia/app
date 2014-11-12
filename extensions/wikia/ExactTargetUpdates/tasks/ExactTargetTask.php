@@ -55,7 +55,7 @@ class ExactTargetTask extends BaseTask {
 	}
 	/**
 	 * A simple getter for an object of an ExactTargetWikiTaskHelper class
-	 * @return object ExactTargetWikiTaskHelper
+	 * @return ExactTargetWikiTaskHelper
 	 */
 	protected function getWikiHelper() {
 		return new ExactTargetWikiTaskHelper();
