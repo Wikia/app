@@ -80,16 +80,19 @@ define(
 		 * @param {String} id -  id of the trigger element
 		 */
 		function init(id) {
-			var options = {
-				sections: getTocData(headers, articleWrapperId),
-				trigger: id
-			};
+			var options = {},
+				articleSections = getTocData(headers, articleWrapperId);
 
-			tocDropdown = new DropdownNavigation(options);
-			$triggerButton = $('#' + id);
-			$parent = $triggerButton.parent();
+			if (articleSections.length > 0) {
+				options.sections = articleSections;
+				options.trigger = id;
 
-			win.delayedHover($parent[0], delayHoverParams);
+				tocDropdown = new DropdownNavigation(options);
+				$triggerButton = $('#' + id);
+				$parent = $triggerButton.parent();
+
+				win.delayedHover($parent[0], delayHoverParams);
+			}
 		}
 
 		return {
