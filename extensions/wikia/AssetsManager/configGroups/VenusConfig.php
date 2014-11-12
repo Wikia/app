@@ -202,7 +202,8 @@ $VenusConfig[ 'article_navigation_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'venus' ],
 	'assets' => [
-		'//extensions/wikia/ArticleNavigation/scripts/articleNavigation.js'
+		'//extensions/wikia/ArticleNavigation/scripts/sticky.js',
+		'//extensions/wikia/ArticleNavigation/scripts/share.js'
 	]
 ];
 
