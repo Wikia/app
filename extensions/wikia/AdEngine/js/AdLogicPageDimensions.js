@@ -59,7 +59,7 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		matchMedia;
 
 	function isRightRailPresent() {
-		return !!document.getElementById('WikiaRail');
+		return !!doc.getElementById('WikiaRail');
 	}
 
 	function matchMediaMoz(query) {
