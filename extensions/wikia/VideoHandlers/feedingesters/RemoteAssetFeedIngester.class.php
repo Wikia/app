@@ -18,6 +18,8 @@ class RemoteAssetFeedIngester extends VideoFeedIngester {
 				throw new FeedIngesterSkippedException( $msg );
 			}
 			$this->duplicateAsset = $dupAssets[0];
+		} else {
+			$this->duplicateAsset = null;
 		}
 	}
 

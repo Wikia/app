@@ -162,6 +162,8 @@ abstract class VideoFeedIngester {
 			}
 			$this->oldName = $duplicates[0]['img_name'];
 			echo "Video already exists, using it's old name: {$this->oldName}\n";
+		} else {
+			$this->oldName = null;
 		}
 	}
 
