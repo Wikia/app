@@ -1,10 +1,12 @@
 @import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/mixins';
 
+$global-footer-color-border: #c7d1d8;
+
 .global-footer {
 	background-color: $nav-background-color;
 	border-bottom: 10px solid $color-wikiahome-community;
-	border-top: 1px solid $color-page-border;
+	border-top: 1px solid $global-footer-color-border;
 	color: $color-text-dark;
 	margin-top: 30px;
 	padding-top: 40px;
@@ -77,7 +79,7 @@
 			padding: 0 4px 0 0;
 
 			&::before {
-				border-left: 1px solid $color-page-border;
+				border-left: 1px solid $global-footer-color-border;
 				content: '';
 				height: 18px;
 				padding-right: 8px;
