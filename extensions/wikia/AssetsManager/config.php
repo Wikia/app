@@ -173,7 +173,7 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/MiniEditor/js/MiniEditor.js',
 		// needs to load after MiniEditor
 		'#group_articlecomments_js',
-		//'//extensions/FBConnect/fbconnect.js',
+
 		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
 		// This needs to load last after all common extensions, please keep this last.
 		'//skins/oasis/js/GlobalModal.js',
@@ -836,7 +836,6 @@ $config['monobook_js'] = array(
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
 		'#group_imglzy_js',
-		//'//extensions/FBConnect/fbconnect.js',
 		'//extensions/wikia/AdEngine/AdProviderOpenX.js',
 		'//extensions/wikia/AdEngine/LazyLoadAds.js',
 		'//resources/wikia/libraries/ghostwriter/gw.min.js',

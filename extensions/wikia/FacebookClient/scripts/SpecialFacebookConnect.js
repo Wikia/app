@@ -6,6 +6,7 @@ $(function () {
 
 	function SpecialPage() {
 		this.$cancel = $('#wpCancel');
+		this.cancelClicked = false;
 		return this;
 	}
 
@@ -14,35 +15,38 @@ $(function () {
 	};
 
 	SpecialPage.prototype.bindEvents = function () {
-		var self = this,
-			wpCancelClicked = false;
+		this.$cancel.on('click', this.onCancel.bind(this));
+	};
 
-		this.$cancel.on('click', function(){
-			if (!wpCancelClicked) {
-				var logout = window.confirm($.msg('fbconnect-logout-confirm'));
-				if (logout) {
-					wpCancelClicked = true;
-					window.FB.getLoginStatus(function(response){
-						if (response.status === 'connected' ) {
-							self.logOut(function (){
-								self.$cancel.click();
-							});
-						} else {
+	SpecialPage.prototype.onCancel = function () {
+		var self = this,
+			logout;
+
+		if (!this.cancelClicked) {
+			logout = window.confirm($.msg('fbconnect-logout-confirm'));
+			if (logout) {
+				self.cancelClicked = true;
+				window.FB.getLoginStatus(function (response) {
+					if (response.status === 'connected') {
+						self.logOut(function () {
 							self.$cancel.click();
-						}
-					});
-				}
-				return false;
-			} else {
-				return true;
+							self.cancelClicked = false;
+						});
+					} else {
+						self.$cancel.click();
+						self.cancelClicked = false;
+					}
+				});
 			}
-		});
+			return false;
+		} else {
+			return true;
+		}
 	};
 
 	/**
-	 * Wrapper for Facebook Logout
-	 * @see UC-18
-	 * @param callback
+	 * Wrapper for Facebook Logout so we can add tracking and a callback function
+	 * @param {function} [callback]
 	 */
 	SpecialPage.prototype.logOut = function (callback) {
 		if (!window.FB) {
