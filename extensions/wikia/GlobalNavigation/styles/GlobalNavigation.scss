@@ -4,7 +4,7 @@
 @import 'GlobalNavigationColors';
 
 .global-navigation {
-	background-color: $nav-background-color;
+	background-color: $global-wikia-background-color;
 	border-bottom: 1px solid $nav-border-color;
 	color: $nav-foreground-dark-color;
 	position: fixed;
@@ -61,7 +61,7 @@
 
 	&:hover {
 		background-color: $nav-foreground-dark-color;
-		color: $nav-background-color;
+		color: $global-wikia-background-color;
 		text-decoration: none;
 	}
 }

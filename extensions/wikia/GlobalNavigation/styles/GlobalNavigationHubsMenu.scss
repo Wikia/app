@@ -17,7 +17,7 @@
 	padding: 0 9px 0 38px;
 
 	&:after {
-		border: 5px solid $nav-background-color;
+		border: 5px solid $global-wikia-background-color;
 		border-top-color: $nav-border-color;
 		content: ' ';
 		display: inline-block;
@@ -68,14 +68,14 @@
 	}
 
 	.hub-link {
-		background-color: $nav-background-color;
+		background-color: $global-wikia-background-color;
 		display: block;
 		height: 62px;
 		line-height: 62px;
 		position: relative;
 
 		&.active {
-			color: $nav-background-color;
+			color: $global-wikia-background-color;
 			font-weight: bold;
 
 			&:before {
@@ -129,7 +129,7 @@
 			width: 102px;
 
 			&:after {
-				background-color: $nav-background-color;
+				background-color: $global-wikia-background-color;
 				content: ' ';
 				display: inline-block;
 				float: right;
@@ -139,7 +139,7 @@
 		}
 
 		.label {
-			background-color: $nav-background-color;
+			background-color: $global-wikia-background-color;
 			border-bottom: 1px solid $hubsmenu-background-color;
 			display: inline-block;
 			float: left;
