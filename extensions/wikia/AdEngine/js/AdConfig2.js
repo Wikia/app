@@ -17,7 +17,8 @@ define('ext.wikia.adEngine.adConfig', [
 	'ext.wikia.adEngine.provider.later',
 
 	// adSlots
-	require.optional('ext.wikia.adEngine.slot.topInContentBoxad')
+	require.optional('ext.wikia.adEngine.slot.topInContentBoxad'),
+	require.optional('ext.wikia.adEngine.slot.venus')
 ], function (
 	// regular dependencies
 	log,
@@ -36,7 +37,8 @@ define('ext.wikia.adEngine.adConfig', [
 	adProviderLater,
 
 	// adSlots
-	topInContentBoxad
+	topInContentBoxad,
+	venusSlots
 ) {
 	'use strict';
 
@@ -57,6 +59,8 @@ define('ext.wikia.adEngine.adConfig', [
 		'HOME_TOP_LEADERBOARD': true,
 		'HOME_TOP_RIGHT_BOXAD': true,
 		'HUB_TOP_LEADERBOARD': true,
+		'INCONTENT_BOXAD_1': true,
+		'INCONTENT_BOXAD_2': true,
 		'INVISIBLE_SKIN': true,
 		'LEFT_SKYSCRAPER_2': true,
 		'MIDDLE_RIGHT_BOXAD': true,
@@ -137,6 +141,10 @@ define('ext.wikia.adEngine.adConfig', [
 
 	if (topInContentBoxad) {
 		topInContentBoxad.init();
+	}
+
+	if (venusSlots) {
+		venusSlots.init();
 	}
 
 	if (rtp && rtp.wasCalled()) {

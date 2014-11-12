@@ -5,6 +5,7 @@
 class AdEngine2Hooks {
 	const ASSET_GROUP_CORE = 'oasis_shared_core_js';
 	const ASSET_GROUP_ADENGINE = 'adengine2_js';
+	const ASSET_GROUP_VENUS_ADS = 'adengine2_venus_ads_js';
 	const ASSET_GROUP_ADENGINE_RUBICON_RTP = 'adengine2_rubicon_rtp_js';
 	const ASSET_GROUP_ADENGINE_MOBILE = 'wikiamobile_ads_js';
 	const ASSET_GROUP_ADENGINE_TABOOLA = 'adengine2_taboola_js';
@@ -272,6 +273,8 @@ class AdEngine2Hooks {
 	public static function onVenusAssetsPackages( array &$jsHeadGroups, array &$jsBodyGroups, array &$cssGroups ) {
 		$jsHeadGroups[] = self::ASSET_GROUP_ADENGINE_TRACKING;
 		$jsHeadGroups[] = self::ASSET_GROUP_ADENGINE;
+		$jsHeadGroups[] = self::ASSET_GROUP_VENUS_ADS;
+
 		if ( AdEngine2Service::shouldLoadLateQueue() ) {
 			$jsBodyGroups[] = self::ASSET_GROUP_ADENGINE_LATE;
 		}
