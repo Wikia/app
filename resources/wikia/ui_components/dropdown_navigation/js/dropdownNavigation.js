@@ -12,9 +12,6 @@ define(
 		 * @param {Object} params
 		 */
 		function validateParams(params) {
-			if (!Array.isArray(params.data) || params.data.length < 1) {
-				throw new Error('"data" param must be non empty array');
-			}
 			if (typeof params.trigger !== 'string' || params.trigger.length < 1) {
 				throw new Error('"trigger" param must be a valid jQuery selector');
 			}
@@ -90,7 +87,12 @@ define(
 
 				$trigger = $('#' + options.trigger);
 				$container = $trigger.closest('li');
-				$dropdown = render();
+
+				$dropdown = $('#' + options.id);
+
+				if ($dropdown.length == 0) {
+					$dropdown = render();
+				}
 
 				setPosition();
 
