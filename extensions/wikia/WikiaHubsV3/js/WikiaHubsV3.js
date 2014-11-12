@@ -12,6 +12,12 @@ define('wikia.hubs', ['wikia.window', 'jquery'], function wikiaHubs(window, $) {
 				}
 			} );
 
+			// FB iFrame
+			var WikiaFrame = $( '.WikiaFrame' );
+			if ( WikiaFrame.length > 0 ) {
+				WikiaFrame.on( 'click', 'a', WikiaHubs.iframeLinkChanger );
+			}
+
 			$('.tooltip-icon ').tooltip();
 			$( 'body' ).on( 'click', '.modalWrapper', WikiaHubs.modalClickTrackingHandler );
 		},
