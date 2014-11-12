@@ -12,19 +12,6 @@ define('wikia.hubs', ['wikia.window', 'jquery'], function wikiaHubs(window, $) {
 				}
 			} );
 
-			// FB iFrame
-			var WikiaFrame = $( '.WikiaFrame' );
-			// TODO: window.onFBloaded is deprecated and will stop being called after the Facebook v2.x switchover
-			// I don't think this code ever gets called so we can probably just remove it
-			if ( WikiaFrame.length > 0 ) {
-				WikiaFrame.on( 'click', 'a', WikiaHubs.iframeLinkChanger );
-				window.onFBloaded = function() {
-					window.FB.init();
-					window.FB.XFBML.parse();
-					window.FB.Canvas.setAutoGrow();
-				};
-			}
-
 			$('.tooltip-icon ').tooltip();
 			$( 'body' ).on( 'click', '.modalWrapper', WikiaHubs.modalClickTrackingHandler );
 		},
