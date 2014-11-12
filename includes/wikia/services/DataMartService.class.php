@@ -20,6 +20,8 @@ class DataMartService extends Service {
 	const CACHE_TOP_ARTICLES = 86400;
 	const LOCK_TOP_ARTICLES = 10;
 
+	const TOP_WIKIS_FOR_HUB = 10;
+
 	/**
 	 * get pageviews
 	 * @param integer $periodId
@@ -592,6 +594,64 @@ class DataMartService extends Service {
 		$topArticles = array_slice( $topArticles, 0, $limit, true );
 		wfProfileOut( __METHOD__ );
 		return $topArticles;
+	}
+
+	public static function getTopCrossWikiArticlesByPageview( $hub, $langs, $namespaces, $limit = 200 ) {
+		//fetch the top 10 wikis on a weekly pageviews basis
+		//this has it's own cache
+		$wikis = DataMartService::getTopWikisByPageviews(
+			DataMartService::PERIOD_ID_WEEKLY,
+			self::TOP_WIKIS_FOR_HUB,
+			$langs,
+			$hub,
+			1 /* only pubic */
+		);
+
+		$wikisCount = count( $wikis );
+		$res = [];
+
+		if ( $wikisCount >= 1 ) {
+			$articlesPerWiki = ceil( $limit / $wikisCount );
+
+			//fetch $articlesPerWiki articles from each wiki
+			//see FB#73094 for performance review
+			foreach ( $wikis as $wikiId => $data ) {
+				//this has it's own cache
+				$articles = DataMartService::getTopArticlesByPageview(
+					$wikiId,
+					null,
+					$namespaces,
+					false,
+					$articlesPerWiki
+				);
+
+				if ( count( $articles ) == 0 ) {
+					continue;
+				}
+
+				$item = [
+					'wiki' => [
+						'id' => $wikiId,
+						//WF data has it's own cache
+						'name' => WikiFactory::getVarValueByName( 'wgSitename', $wikiId ),
+						'language' => WikiFactory::getVarValueByName( 'wgLanguageCode', $wikiId ),
+						'domain' => WikiFactory::getVarValueByName( 'wgServer', $wikiId )
+					],
+					'articles' => []
+				];
+
+				foreach ( $articles as $articleId => $article ) {
+					$item['articles'][] = [
+						'id' => $articleId,
+						'ns' => $article['namespace_id']
+					];
+				}
+
+				$res[] = $item;
+			}
+		}
+
+		return $res;
 	}
 
 	/**
