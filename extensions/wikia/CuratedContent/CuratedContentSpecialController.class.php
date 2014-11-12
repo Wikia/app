@@ -90,7 +90,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 				if ( !empty( $tag[ 'categories' ] ) ) {
 					foreach ( $tag[ 'categories' ] as $item ) {
 						$list .= $this->sendSelfRequest( 'category', [
-							'category_value' => $item[ 'title' ],
+							'item_value' => $item[ 'title' ],
 							'name_value' => !empty( $item[ 'label' ] ) ? $item[ 'label' ] : '',
 							'image_id' => $item[ 'image_id' ]
 						] );
@@ -126,9 +126,9 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$this->response->setTemplateEngine( self::TEMPLATE_ENGINE );
 
 		$id = $this->request->getVal( 'image_id', 0 );
-		$category = $this->request->getVal( 'category_value', '' );
+		$category = $this->request->getVal( 'item_value', '' );
 
-		$this->response->setVal( 'category_value', $category );
+		$this->response->setVal( 'item_value', $category );
 		$this->response->setVal( 'name_value', $this->request->getVal( 'name_value' ), '' );
 		$this->response->setVal( 'image_id', $id );
 
@@ -144,7 +144,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		}
 
 		$this->response->setVal( 'image_url', $this->getImage( $id ) );
-		$this->response->setVal( 'category_placeholder', wfMsg( 'wikiaCuratedContent-content-category' ) );
+		$this->response->setVal( 'item_placeholder', wfMsg( 'wikiaCuratedContent-content-item' ) );
 		$this->response->setVal( 'name_placeholder', wfMsg( 'wikiaCuratedContent-content-name' ) );
 	}
 
