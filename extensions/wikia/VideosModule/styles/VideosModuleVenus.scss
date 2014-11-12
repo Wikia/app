@@ -2,6 +2,47 @@
 @import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/Venus/styles/variables';
 
+@mixin breakpoint-dependent-sizing($breakpoint, $module-columns, $thumbnail-container-columns, $aditional-width: 0) {
+	$grid-column-padding: $medium-grid-column-padding;
+	$grid-gutter: $medium-grid-gutter;
+
+	@if $breakpoint == large {
+		$grid-column-padding: $large-grid-column-padding;
+		$grid-gutter: $large-grid-gutter;
+	} @else if $breakpoint == small {
+		$grid-column-padding: $small-grid-column-padding;
+		$grid-gutter: $small-grid-gutter;
+	}
+
+	.mw-content-text .videos-module {
+		@include grid-column-width($breakpoint, $module-columns, $aditional-width);
+		margin-left: -$grid-column-padding;
+		margin-right: -$grid-column-padding;
+
+		// Uncomment the lines below if you enabled scrolling
+//		.thumbnails {
+//			@include grid-column-width($breakpoint, $thumbnail-container-columns, $aditional-width);
+//		}
+
+		h2 {
+			padding: 0 $grid-column-padding;
+		}
+
+		li {
+			@include grid-column-width($breakpoint, 3);
+			margin-right: $grid-gutter;
+		}
+
+		img {
+			@include grid-column-width($breakpoint, 3);
+		}
+
+		div {
+			padding: 0 $grid-column-padding;
+		}
+	}
+}
+
 .mw-content-text .videos-module {
 	@include grid-column-width(medium, 9);
 	border: 0 solid $color-page-border;
@@ -51,61 +92,9 @@
 }
 
 @media #{$large-up} {
-	.mw-content-text .videos-module {
-		@include grid-column-width(large, 9);
-		margin-left: -$large-grid-column-padding;
-		margin-right: -$large-grid-column-padding;
-
-		// Uncomment the lines below if you enabled scrolling
-//		.thumbnails {
-//			@include grid-column-width(large, 11);
-//		}
-
-		h2 {
-			padding: 0 $large-grid-column-padding;
-		}
-
-		li {
-			@include grid-column-width(large, 3);
-			margin-right: $large-grid-gutter;
-		}
-
-		img {
-			@include grid-column-width(large, 3);
-		}
-
-		div {
-			padding: 0 $large-grid-column-padding;
-		}
-	}
+	@include breakpoint-dependent-sizing(large, 9, 11);
 }
 
 @media #{$small-only} {
-	.mw-content-text .videos-module {
-		@include grid-column-width(small, 11, $small-content-padding - $content-border-width);
-		margin-left: -$small-grid-column-padding;
-		margin-right: -$small-grid-column-padding;
-
-		// Uncomment the lines below if you enabled scrolling
-//		.thumbnails {
-//			@include grid-column-width(small, 11, $small-content-padding - $content-border-width);
-//		}
-
-		h2 {
-			padding: 0 $small-grid-column-padding;
-		}
-
-		li {
-			@include grid-column-width(small, 3);
-			margin-right: $small-grid-gutter;
-		}
-
-		img {
-			@include grid-column-width(small, 3);
-		}
-
-		div {
-			padding: 0 $small-grid-column-padding;
-		}
-	}
+	@include breakpoint-dependent-sizing(small, 11, 11, $small-content-padding - $content-border-width);
 }
