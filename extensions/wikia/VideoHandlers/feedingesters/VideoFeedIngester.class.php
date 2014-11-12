@@ -71,104 +71,6 @@ abstract class VideoFeedIngester {
 		return $this->saveVideo( $categories, $provider );
 	}
 
-	public function setMetaData( $videoData ) {
-		$this->metaData = $this->generateMetadata( $videoData );
-	}
-
-	public function getName( $videoData ) {
-		// Reuse name if duplicate video exists.
-		if ( !is_null( $this->duplicateAsset ) ) {
-			$name = $this->duplicateAsset['img_name'];
-		} else {
-			$name = VideoFileUploader::sanitizeTitle( $this->generateName( $videoData ) );
-			$name = $this->getUniqueName( $name );
-		}
-
-		return $name;
-	}
-
-	public function videoExistsOnWikia( $videoData, $provider ) {
-		$duplicates = WikiaFileHelper::findVideoDuplicates( $provider, $videoData['videoId'], self::REMOTE_ASSET );
-		if ( count( $duplicates ) > 0 ) {
-			if ( !$this->reupload ) {
-				// TODO make sure $this->metaData['videoTitle'] is accurate and works instead of $name
-				$this->logger->videoSkipped( "Skipping {$videoData['titleName']} (Id: {$videoData['videoId']}, $provider) - video already exists and reupload is disabled.\n" );
-			}
-			// If there exists a duplicate video and we want to reupload the video, save that duplicate asset.
-			// We'll use it later when determining the name to use for the video, and for remote asset saving.
-			$this->duplicateAsset = $duplicates[0];
-			return true;
-		}
-		return false;
-	}
-
-	public function saveVideo( $categories, $provider ) {
-		$categoryStr = $this->prepareCategoriesString( $categories );
-		$body = $this->prepareBodyString( $categoryStr );
-		if ( $this->debugMode() ) {
-			$this->printReadyToSaveData( $body, $categories );
-			$this->logger->videoIngested( "Ingested {$this->metaData['destinationTitle']} (id: {$this->metaData['videoId']}).\n", $categories );
-			return 1;
-		} else {
-			/** @var Title $uploadedTitle */
-			$uploadedTitle = null;
-			$result = VideoFileUploader::uploadVideo( $provider, $this->metaData['videoId'], $uploadedTitle, $body, false, $this->metaData );
-			if ( $result->ok ) {
-				$fullUrl = WikiFactory::getLocalEnvURL( $uploadedTitle->getFullURL() );
-				$this->logger->videoIngested( "Ingested {$uploadedTitle->getText()} from partner clip id {$this->metaData['videoId']}. {$fullUrl}\n", $categories );
-
-				wfWaitForSlaves( self::THROTTLE_INTERVAL );
-				wfRunHooks( 'VideoIngestionComplete', array( $uploadedTitle, $categories ) );
-				return 1;
-			}
-		}
-
-		$this->logger->videoWarnings();
-
-		return 0;
-	}
-
-	// prepare wiki categories string (eg [[Category:MyCategory]] )
-	public function prepareCategoriesString( $categories ) {
-		$categories[] = wfMessage( 'videohandler-category' )->inContentLanguage()->text();
-		$categories = array_unique( $categories );
-		$categoryStr = '';
-		foreach ( $categories as $categoryName ) {
-			$category = Category::newFromName( $categoryName );
-			if ( $category instanceof Category ) {
-				$categoryStr .= '[[' . $category->getTitle()->getFullText() . ']]';
-			}
-		}
-
-		return $categoryStr;
-	}
-
-	public function prepareBodyString( $categoryStr ) {
-		/** @var ApiWrapper $apiWrapper */
-		$apiWrapper = new static::$API_WRAPPER( $this->metaData['videoId'], $this->metaData );
-		$videoHandlerHelper = new VideoHandlerHelper();
-		$body = $categoryStr."\n";
-		$body .= $videoHandlerHelper->addDescriptionHeader( $apiWrapper->getDescription() );
-		return $body;
-	}
-
-	public function printReadyToSaveData( $body, $categories ) {
-		print "Ready to create video\n";
-		print "id:          {$this->metaData['videoId']}\n";
-		print "name:        {$this->metaData['destinationTitle']}\n";
-		print "categories:  " . implode( ',', $categories ) . "\n";
-		print "metadata:\n";
-		foreach ( explode( "\n", var_export( $this->metaData, 1 ) ) as $line ) {
-			print ":: $line\n";
-		}
-
-		print "body:\n";
-		foreach ( explode( "\n", $body ) as $line ) {
-			print ":: $line\n";
-		}
-
-	}
-
 	public function checkShouldSkipVideo( $videoData, $provider ) {
 		if ( $this->isBlacklistedVideo( $videoData )
 			|| $this->isFilteredVideo( $videoData )
@@ -252,6 +154,34 @@ abstract class VideoFeedIngester {
 		return $this->videoExistsOnWikia( $videoData, $provider );
 	}
 
+	public function videoExistsOnWikia( $videoData, $provider ) {
+		$duplicates = WikiaFileHelper::findVideoDuplicates( $provider, $videoData['videoId'], self::REMOTE_ASSET );
+		if ( count( $duplicates ) > 0 ) {
+			if ( !$this->reupload ) {
+				// TODO make sure $this->metaData['videoTitle'] is accurate and works instead of $name
+				$this->logger->videoSkipped( "Skipping {$videoData['titleName']} (Id: {$videoData['videoId']}, $provider) - video already exists and reupload is disabled.\n" );
+			}
+			// If there exists a duplicate video and we want to reupload the video, save that duplicate asset.
+			// We'll use it later when determining the name to use for the video, and for remote asset saving.
+			$this->duplicateAsset = $duplicates[0];
+			return true;
+		}
+		return false;
+	}
+
+	public function printInitialData( $videoData ) {
+		if ( $this->debugMode() ) {
+			print "data after initial processing: \n";
+			foreach ( explode( "\n", var_export( $videoData, 1 ) ) as $line ) {
+				print ":: $line\n";
+			}
+		}
+	}
+
+	public function setMetaData( $videoData ) {
+		$this->metaData = $this->generateMetadata( $videoData );
+	}
+
 	/**
 	 * generate the metadata we consider interesting for this video
 	 * Note: metadata is array instead of object because it's stored in the database as a serialized array,
@@ -308,15 +238,6 @@ abstract class VideoFeedIngester {
 		return $metaData;
 	}
 
-	public function isValidDestinationTitle( $destinationTitle ) {
-		$sanitizedName = VideoFileUploader::sanitizeTitle( $destinationTitle );
-		$title = Title::newFromText( $sanitizedName, NS_FILE );
-		if ( is_null( $title ) ) {
-			return false;
-		}
-		return true;
-	}
-
 	/**
 	 * filter keywords from metaData
 	 */
@@ -342,6 +263,94 @@ abstract class VideoFeedIngester {
 		}
 	}
 
+	public function getName( $videoData ) {
+		// Reuse name if duplicate video exists.
+		if ( !is_null( $this->duplicateAsset ) ) {
+			$name = $this->duplicateAsset['img_name'];
+		} else {
+			$name = VideoFileUploader::sanitizeTitle( $this->generateName( $videoData ) );
+			$name = $this->getUniqueName( $name );
+		}
+
+		return $name;
+	}
+
+	public function isValidDestinationTitle( $destinationTitle ) {
+		$sanitizedName = VideoFileUploader::sanitizeTitle( $destinationTitle );
+		$title = Title::newFromText( $sanitizedName, NS_FILE );
+		if ( is_null( $title ) ) {
+			return false;
+		}
+		return true;
+	}
+
+	public function saveVideo( $categories, $provider ) {
+		$categoryStr = $this->prepareCategoriesString( $categories );
+		$body = $this->prepareBodyString( $categoryStr );
+		if ( $this->debugMode() ) {
+			$this->printReadyToSaveData( $body, $categories );
+			$this->logger->videoIngested( "Ingested {$this->metaData['destinationTitle']} (id: {$this->metaData['videoId']}).\n", $categories );
+			return 1;
+		} else {
+			/** @var Title $uploadedTitle */
+			$uploadedTitle = null;
+			$result = VideoFileUploader::uploadVideo( $provider, $this->metaData['videoId'], $uploadedTitle, $body, false, $this->metaData );
+			if ( $result->ok ) {
+				$fullUrl = WikiFactory::getLocalEnvURL( $uploadedTitle->getFullURL() );
+				$this->logger->videoIngested( "Ingested {$uploadedTitle->getText()} from partner clip id {$this->metaData['videoId']}. {$fullUrl}\n", $categories );
+
+				wfWaitForSlaves( self::THROTTLE_INTERVAL );
+				wfRunHooks( 'VideoIngestionComplete', array( $uploadedTitle, $categories ) );
+				return 1;
+			}
+		}
+
+		$this->logger->videoWarnings();
+
+		return 0;
+	}
+
+	// prepare wiki categories string (eg [[Category:MyCategory]] )
+	public function prepareCategoriesString( $categories ) {
+		$categories[] = wfMessage( 'videohandler-category' )->inContentLanguage()->text();
+		$categories = array_unique( $categories );
+		$categoryStr = '';
+		foreach ( $categories as $categoryName ) {
+			$category = Category::newFromName( $categoryName );
+			if ( $category instanceof Category ) {
+				$categoryStr .= '[[' . $category->getTitle()->getFullText() . ']]';
+			}
+		}
+
+		return $categoryStr;
+	}
+
+	public function prepareBodyString( $categoryStr ) {
+		/** @var ApiWrapper $apiWrapper */
+		$apiWrapper = new static::$API_WRAPPER( $this->metaData['videoId'], $this->metaData );
+		$videoHandlerHelper = new VideoHandlerHelper();
+		$body = $categoryStr."\n";
+		$body .= $videoHandlerHelper->addDescriptionHeader( $apiWrapper->getDescription() );
+		return $body;
+	}
+
+	public function printReadyToSaveData( $body, $categories ) {
+		print "Ready to create video\n";
+		print "id:          {$this->metaData['videoId']}\n";
+		print "name:        {$this->metaData['destinationTitle']}\n";
+		print "categories:  " . implode( ',', $categories ) . "\n";
+		print "metadata:\n";
+		foreach ( explode( "\n", var_export( $this->metaData, 1 ) ) as $line ) {
+			print ":: $line\n";
+		}
+
+		print "body:\n";
+		foreach ( explode( "\n", $body ) as $line ) {
+			print ":: $line\n";
+		}
+
+	}
+
 	/**
 	 * Generate name for video.
 	 * Note: The name is not sanitized for use as filename or article title.
@@ -361,15 +370,6 @@ abstract class VideoFeedIngester {
 
 		if ( !in_array( $id, $this->filterByProviderVideoId ) ) {
 			$this->filterByProviderVideoId[] = $id;
-		}
-	}
-
-	public function printInitialData( $videoData ) {
-		if ( $this->debugMode() ) {
-			print "data after initial processing: \n";
-			foreach ( explode( "\n", var_export( $videoData, 1 ) ) as $line ) {
-				print ":: $line\n";
-			}
 		}
 	}
 
