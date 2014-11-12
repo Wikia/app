@@ -110,6 +110,7 @@ ve.ui.WikiaSingleMediaDialog.prototype.getTeardownProcess = function ( data ) {
 			if ( data.action === 'insert' ) {
 				this.insertMedia();
 			}
+			this.cartModel.clearItems();
 			this.queryInput.setValue( '' );
 		}, this );
 };
