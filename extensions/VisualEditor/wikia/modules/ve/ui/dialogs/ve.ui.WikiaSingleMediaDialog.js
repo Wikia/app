@@ -126,7 +126,7 @@ ve.ui.WikiaSingleMediaDialog.prototype.insertMedia = function () {
 				'name': 'gallery'
 			}
 		}
-	} )
+	} );
 
 	linmod.push( {
 		'type': 'alien',
@@ -165,7 +165,7 @@ ve.ui.WikiaSingleMediaDialog.prototype.insertMedia = function () {
 	// Gallery closing
 	linmod.push( {
 		'type': '/wikiaGallery'
-	} )
+	} );
 
 	this.fragment.collapseRangeToEnd().insertContent( linmod );
 };
