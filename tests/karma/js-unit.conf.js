@@ -14,6 +14,10 @@ module.exports = function (config) {
 	base(config);
 
 	config.set({
+		exclude: [
+			'resources/wikia/ui_components/**/Gruntfile.js',
+			'resources/wikia/ui_components/**/node_modules/**/*.js',
+		],
 		files: [
 			'tests/lib/jasmine/jasmine.async.js',
 
@@ -183,10 +187,6 @@ module.exports = function (config) {
 			'extensions/wikia/MediaGallery/scripts/views/media.js',
 			'extensions/wikia/MediaGallery/scripts/views/gallery.js',
 			'extensions/wikia/MediaGallery/scripts/spec/**/*.spec.js',
-
-			// Lightbox
-			'extensions/wikia/Lightbox/scripts/spec/lightbox.spec.js'
-
 		]
 	});
 };

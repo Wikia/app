@@ -218,6 +218,11 @@ class WikiFactoryHub extends WikiaModel {
 	 */
 	public function getWikiVertical( $city_id ) {
 
+		global $wgWikiaEnvironment;
+		if ( $wgWikiaEnvironment == WIKIA_ENV_INTERNAL ) {
+			$city_id = 11;
+		}
+
 		$vertical_id = $this->getVerticalId( $city_id );
 		$all_verticals = $this->getAllVerticals();
 		$vertical = $all_verticals[$vertical_id];
@@ -266,6 +271,11 @@ class WikiFactoryHub extends WikiaModel {
 	 * @return array of keys/values (id, name, url, short, deprecated, active)
 	 */
 	public function getWikiCategories( $city_id, $active = 1 ) {
+
+		global $wgWikiaEnvironment;
+		if ( $wgWikiaEnvironment == WIKIA_ENV_INTERNAL ) {
+			$city_id = 11;
+		}
 
 		// query instead of lookup in AllCategories list
 		$categories = (new WikiaSQL())
@@ -397,6 +407,11 @@ class WikiFactoryHub extends WikiaModel {
 		$name = $verticals[$vertical_id]['name'];
 		WikiFactory::log( WikiFactory::LOG_CATEGORY, "Vertical changed to $name. $reason", $city_id );
 
+		$aHookParams = [
+			'city_id' => $city_id,
+			'vertical_id' => $vertical_id,
+		];
+		wfRunHooks( "WikiFactoryVerticalSet", array( $aHookParams ) );
 	}
 
 	/**
@@ -425,6 +440,12 @@ class WikiFactoryHub extends WikiaModel {
 			$dbw->commit();
 
 			$this->clearCache( $city_id );
+
+			$aHookParams = [
+				'city_id' => $city_id,
+				'categories' => $categories,
+			];
+			wfRunHooks( 'CityCatMappingUpdated', array( $aHookParams ) );
 		}
 
 		# pretty clunky way to load all the categories just for the name, maybe refactor this?
@@ -439,7 +460,6 @@ class WikiFactoryHub extends WikiaModel {
 		}
 
 		WikiFactory::log( WikiFactory::LOG_CATEGORY, "Categories changed to $message. $reason", $city_id );
-
 	}
 
 	// Add 1 category

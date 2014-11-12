@@ -20,7 +20,6 @@ define('ext.wikia.adEngine.provider.evolve', [
 		ord = Math.round(Math.random() * 23456787654),
 		slotForSkin = 'INVISIBLE_SKIN',
 		hoppedSlots = {},
-		hopTo = 'Liftium',
 		iface,
 		undef;
 
@@ -194,7 +193,7 @@ define('ext.wikia.adEngine.provider.evolve', [
 					height;
 
 				if (hoppedSlots[slotname]) {
-					pHop({method: 'hop'}, hopTo);
+					pHop({method: 'hop'});
 					return;
 				}
 
@@ -214,7 +213,7 @@ define('ext.wikia.adEngine.provider.evolve', [
 
 				slotTweaker.addDefaultHeight(slotname);
 				log('Evolve did not hop, but returned 1x1 ad instead for slot ' + slotname, 1, logGroup);
-				pHop({method: '1x1'}, hopTo);
+				pHop({method: '1x1'});
 			});
 		}
 	}

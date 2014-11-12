@@ -52,6 +52,11 @@ phpunit-slow-list: prepare
 		--exclude-group=Infrastructure,Integration,Broken,Stub,Monitoring,Hack \
 		--slow-list
 
+# run tests for a specific group
+phpunit-group: prepare
+	${CMD_PHPUNIT} \
+                --group $(GROUP)
+
 #
 # JavaScript TESTS
 #
