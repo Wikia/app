@@ -1,3 +1,5 @@
+@import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/color';
 @import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/mixins';
 
@@ -72,6 +74,7 @@ $global-footer-color-border: #c7d1d8;
 	}
 
 	ul {
+		list-style: none;
 		margin: 0 0 30px;
 
 		li {
@@ -90,6 +93,10 @@ $global-footer-color-border: #c7d1d8;
 				&::before {
 					border: 0;
 				}
+			}
+
+			&:last-child {
+				padding-right: 0;
 			}
 		}
 	}
