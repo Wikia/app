@@ -15,7 +15,7 @@ class GlobalFooterController extends WikiaController {
 	}
 
 	public function indexVenus() {
-		$this->response->setVal( 'centralUrl', $this->getLogoUrl() );
+		$this->response->setVal( 'centralUrl', $this->getCentralWikiUrl() );
 		$this->response->setVal( 'copyright', RequestContext::getMain()->getSkin()->getCopyright() );
 		$this->response->setVal( 'footerLinks', $this->getGlobalFooterLinks() );
 		$this->response->setVal( 'verticalShort', $this->getVerticalShortName() );
@@ -59,7 +59,7 @@ class GlobalFooterController extends WikiaController {
 		return $parsedLinks;
 	}
 
-	private function getLogoUrl() {
+	private function getCentralWikiUrl() {
 		$userLang = $this->wg->Lang->getCode();
 		$globalNavogation = new GlobalNavigationController();
 		return $globalNavogation->getCentralUrlForLang( $userLang );
