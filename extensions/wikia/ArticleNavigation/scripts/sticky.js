@@ -14,7 +14,7 @@ require([
 		switch(typ) {
 			case 'topScrollLimit':
 			case 'topSticked':
-				if (window.matchMedia("(min-width: 1024px)").matches) {
+				if (window.matchMedia("(min-width: 1024px)").matches && $('#infoboxWrapper').length) {
 					return value + $('#WikiaArticle').find('> header').outerHeight(true);
 				}
 			// fall-through on purpose!
