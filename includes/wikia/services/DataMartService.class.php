@@ -596,7 +596,7 @@ class DataMartService extends Service {
 		return $topArticles;
 	}
 
-	public static function getTopCrossWikiArticlesByPageview( $hub, $langs, $namespaces, $limit = 200 ) {
+	public static function getTopCrossWikiArticlesByPageview( $hub, $langs, $namespaces = null, $limit = 200 ) {
 		//fetch the top 10 wikis on a weekly pageviews basis
 		//this has it's own cache
 		$wikis = DataMartService::getTopWikisByPageviews(
