@@ -53,7 +53,8 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 	this.$leftSide = this.$( '<div>' )
 		.addClass( 've-ui-wikiaSingleMediaDialog-leftSide' )
 		.append( this.search.$element );
-	this.cart = new ve.ui.WikiaSingleMediaCartWidget( { 'dialog': this } );
+	this.cartModel = new ve.dm.WikiaCart();
+	this.cart = new ve.ui.WikiaSingleMediaCartWidget( this.cartModel, this );
 
 	// Foot elements
 	this.$policy = this.$( '<div>' )
@@ -78,11 +79,13 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 		'requestMediaDone': 'onQueryRequestMediaDone'
 	} );
 	this.search.connect( this, {
-		'nearingEnd': 'onSearchNearingEnd'
+		'nearingEnd': 'onSearchNearingEnd',
+		'check': 'onSearchCheck'
 	} );
 	this.queryInput.connect( this, {
 		'change': 'onQueryInputChange'
 	} );
+	this.insertButton.connect( this, { 'click': [ 'close', { 'action': 'insert' } ] } );
 
 	// Initialization
 	this.frame.$content.addClass( 've-ui-wikiaSingleMediaDialog' );
@@ -104,8 +107,67 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 ve.ui.WikiaSingleMediaDialog.prototype.getTeardownProcess = function ( data ) {
 	return ve.ui.WikiaSingleMediaDialog.super.prototype.getTeardownProcess.call( this, data )
 		.first( function () {
+			if ( data.action === 'insert' ) {
+				this.insertMedia();
+			}
 			this.queryInput.setValue( '' );
 		}, this );
+};
+
+ve.ui.WikiaSingleMediaDialog.prototype.insertMedia = function () {
+	var i, linmod = [];
+
+	// Gallery opening
+	linmod.push( {
+		'type': 'wikiaGallery',
+		'attributes': {
+			'expand': false,
+			'mw': {
+				'name': 'gallery'
+			}
+		}
+	} )
+
+	linmod.push( {
+		'type': 'alien',
+		'attributes': {
+			'domElements': $( '<meta typeof="mw:Placeholder" data-parsoid="{&quot;src&quot;:&quot;&quot;}" />' ).toArray()
+		}
+	} );
+	linmod.push( { 'type': '/alien' } );
+
+	// Gallery items
+	for( i = 0; i < this.cartModel.items.length; i++ ) {
+		linmod.push( {
+			'type': 'wikiaGalleryItem',
+			'attributes': {
+				'type': 'thumb',
+				'align': 'none',
+				'href': './' + 'File:' + this.cartModel.items[i].title,
+				'src': this.cartModel.items[i].url,
+				'resource': './' + 'File:' + this.cartModel.items[i].title,
+				'defaultSize': true
+			}
+		} );
+		linmod.push( {
+			'type': '/wikiaGalleryItem'
+		} );
+	}
+
+	linmod.push( {
+		'type': 'alien',
+		'attributes': {
+			'domElements': $( '<meta typeof="mw:Placeholder" data-parsoid="{&quot;src&quot;:&quot;&quot;}" />' ).toArray()
+		}
+	} );
+	linmod.push( { 'type': '/alien' } );
+
+	// Gallery closing
+	linmod.push( {
+		'type': '/wikiaGallery'
+	} )
+
+	this.fragment.collapseRangeToEnd().insertContent( linmod );
 };
 
 /*
@@ -141,6 +203,19 @@ ve.ui.WikiaSingleMediaDialog.prototype.onSearchNearingEnd = function () {
 	if ( !this.queryInput.isPending() ) {
 		this.query.requestMedia();
 	}
+};
+
+/**
+ * Handle check/uncheck of items in search results.
+ *
+ * @method
+ * @param {Object} item The search result item data.
+ */
+ve.ui.WikiaSingleMediaDialog.prototype.onSearchCheck = function ( item ) {
+	this.cartModel.addItems( [ new ve.dm.WikiaImageCartItem(
+		item.title,
+		item.url
+	) ] );
 };
 
 /**

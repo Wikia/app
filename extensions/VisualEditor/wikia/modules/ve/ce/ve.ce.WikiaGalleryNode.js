@@ -70,6 +70,9 @@ ve.ce.WikiaGalleryNode.prototype.rebuild = function () {
 
 	for ( i = 0; i < this.children.length; i++ ) {
 		item = this.children[i];
+		if ( item.getType() !== 'wikiaGalleryItem' ) {
+			continue;
+		}
 		itemModel = item.getModel();
 		title = mw.Title.newFromText( ve.dm.MWImageNode.static.getFilenameFromResource( itemModel.getAttribute( 'resource' ) ) );
 		titleUrl = title.getUrl();
@@ -86,7 +89,7 @@ ve.ce.WikiaGalleryNode.prototype.rebuild = function () {
 				),
 			'linkHref': titleUrl,
 			'dbKey': titleName,
-			'caption': item.children[0].getLength() > 0 ? item.children[0].$element.html() : null
+			'caption': item.children[0] && item.children[0].getLength() > 0 ? item.children[0].$element.html() : null
 		} );
 	}
 

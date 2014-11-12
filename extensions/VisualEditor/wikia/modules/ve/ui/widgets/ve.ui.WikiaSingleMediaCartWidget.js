@@ -7,15 +7,15 @@
  * @extends OO.ui.Widget
  *
  * @constructor
- * @param {Object} config Configuration options
- * @cfg {Object} dialog Instance of parent dialog
+ * @param {ve.dm.WikiaCart} model Cart item
+ * @param {Object} dialog Instance of parent dialog
  */
-ve.ui.WikiaSingleMediaCartWidget = function VeUiWikiaSingleMediaCartWidget( config ) {
+ve.ui.WikiaSingleMediaCartWidget = function VeUiWikiaSingleMediaCartWidget( model, dialog ) {
 	// Parent constructor
-	ve.ui.WikiaSingleMediaCartWidget.super.call( this, config );
+	ve.ui.WikiaSingleMediaCartWidget.super.call( this );
 
 	// Properties
-	this.dialog = config.dialog;
+	this.dialog = dialog;
 
 	this.$cartControls = this.$( '<div>' )
 		.addClass( 've-ui-wikiaSingleMediaDialog-cartControls' );
@@ -34,7 +34,7 @@ ve.ui.WikiaSingleMediaCartWidget = function VeUiWikiaSingleMediaCartWidget( conf
 		'classes': [ 've-ui-wikiaSingleMediaDialog-cartListButton' ]
 	} );
 
-	this.cartModel = new ve.dm.WikiaCart();
+	this.cartModel = model;
 	this.cartSelect = new ve.ui.WikiaSingleMediaCartSelectWidget( this.cartModel );
 
 	// Events
@@ -50,10 +50,6 @@ ve.ui.WikiaSingleMediaCartWidget = function VeUiWikiaSingleMediaCartWidget( conf
 	this.$element
 		.addClass( 've-ui-wikiaSingleMediaCartWidget' )
 		.append( this.$cartControls, this.cartSelect.$element );
-
-	// Temp stuff
-	this.tempItem = new ve.dm.WikiaCartItem( 'Janice elton floyd.jpg', 'http://vignette.wikia-dev.com/muppet/images/3/31/Janice_elton_floyd.jpg/revision/latest?cb=20110101181243', 'photo', undefined, 'wikia' );
-	this.cartModel.addItems( [ this.tempItem, this.tempItem, this.tempItem, this.tempItem, this.tempItem ] );
 };
 
 OO.inheritClass( ve.ui.WikiaSingleMediaCartWidget, OO.ui.Widget );
