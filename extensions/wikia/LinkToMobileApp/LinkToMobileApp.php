@@ -32,7 +32,7 @@ $wgHooks['BeforePageDisplay'][] = 'efLinkToMobileApp';
 function efLinkToMobileApp( $out ) {
 	global $wgWikiaMobileAppPackageId, $wgWikiaMobileAppPackageIdLocalPart;
 
-	if ( empty( $wgLinkedWikiaMobileAppIdLocalPart ) ) {
+	if ( empty( $wgWikiaMobileAppPackageIdLocalPart ) ) {
 		$app = $wgWikiaMobileAppPackageId;
 	} else {
 		$app = $wgWikiaMobileAppPackageId . '.' . $wgWikiaMobileAppPackageIdLocalPart;
