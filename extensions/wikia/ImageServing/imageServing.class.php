@@ -313,7 +313,7 @@ class ImageServing {
 		list($top, $right, $bottom, $left) = $this->getCutParams($width, $height);
 
 		return VignetteRequest::fromFile($image)
-			->windowCropFixed()
+			->windowCrop()
 			->width($this->width)
 			->xOffset($left)
 			->yOffset($top)
