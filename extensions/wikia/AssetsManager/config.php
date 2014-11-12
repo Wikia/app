@@ -2074,9 +2074,17 @@ $config['media_gallery_js'] = [
 
 $config['facebook_client_preferences_js'] = [
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis'],
+	'skin' => ['oasis', 'monobook'],
 	'assets' => [
 		'//extensions/wikia/FacebookClient/scripts/preferences.js',
+	]
+];
+
+$config['facebook_client_preferences_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis', 'monobook'],
+	'assets' => [
+		'//extensions/wikia/FacebookClient/styles/preferences.scss',
 	]
 ];
 

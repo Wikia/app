@@ -1,18 +1,33 @@
-/* global FB, wgServer, wgScript */
-
-$(function () {
+(function () {
 	'use strict';
 
-	$.loadFacebookAPI();
+	function Preferences() {
+		this.$connect = $('#fbConnectPreferences');
+		this.$disconnect = $('#fbDisconnectPreferences');
+		this.$disconnectLink = $('#fbDisconnectLink');
+		this.$connectLink = $('.sso-login-facebook');
+		return this;
+	}
 
-	// handle connecting to facebook
-	$('.sso-login-facebook').on('click', function (e) {
+	Preferences.prototype.init = function () {
+		$.loadFacebookAPI(this.bindEvents.bind(this));
+	};
+
+	Preferences.prototype.bindEvents = function () {
+		this.$connectLink.on('click', this.connect.bind(this));
+		this.$disconnectLink.on('click', this.disconnect.bind(this));
+	};
+
+	Preferences.prototype.connect = function (e) {
 		e.preventDefault();
 
-		window.FB.login(loginCallback);
-	});
+		window.FB.login(this.loginCallback.bind(this));
+		this.toggle();
+	};
 
-	function loginCallback() {
+	Preferences.prototype.loginCallback = function () {
+		var self = this;
+
 		$.nirvana.sendRequest({
 			controller: 'FacebookClient',
 			method: 'connectLoggedInUser',
@@ -28,39 +43,49 @@ $(function () {
 						action: window.Wikia.Tracker.ACTIONS.SUCCESS,
 						label: 'facebook-login'
 					});
+					self.toggle();
 				} else {
 					window.GlobalNotification.show($.msg('fbconnect-preferences-connected-error'), 'error');
 				}
 			}
 		});
-	}
+	};
 
-	// handle disconnecting from facebook
-	$('#fbConnectDisconnect').click(function (e) {
+	Preferences.prototype.toggle = function () {
+		this.$connect
+			.add(this.$disconnect)
+			.toggleClass('hidden');
+	};
+
+	Preferences.prototype.disconnect = function (e) {
+		var self = this,
+			fbFromExisting = this.$disconnect.attr('data-fb-from-exist'),
+			disconnectMsg = fbFromExisting ? 'fbconnect-disconnect-info-existing' : 'fbconnect-disconnect-info';
+
 		e.preventDefault();
 
-		var $doneMessage = $('#fbConnectDisconnectDone').hide();
-		$('#fbDisconnectProgress').show();
-
-		$.postJSON(wgServer + '/wikia.php?controller=FacebookClient&method=disconnectFromFB&format=json',
-			null,
-			function (data) {
+		$.nirvana.sendRequest({
+			controller: 'FacebookClient',
+			method: 'disconnectFromFB',
+			format: 'json',
+			callback: function (data) {
 				if (data.status === 'ok') {
-					$('#fbDisconnectLink').hide();
-					$('#fbDisconnectProgressImg').hide();
-					$('#fbDisconnectDone').show();
-					$doneMessage.show();
-
+					window.GlobalNotification.show($.msg(disconnectMsg), 'confirm');
 					window.Wikia.Tracker.track({
 						category: 'user-sign-up',
 						trackingMethod: 'both',
 						action: window.Wikia.Tracker.ACTIONS.CLICK,
 						label: 'fb-disconnect'
 					});
+					self.toggle();
 				} else {
-					window.location.reload();
+					window.GlobalNotification.show($.msg('oasis-generic-error'), 'error');
 				}
 			}
-		);
+		});
+	};
+
+	$(function () {
+		new Preferences().init();
 	});
-});
+})();

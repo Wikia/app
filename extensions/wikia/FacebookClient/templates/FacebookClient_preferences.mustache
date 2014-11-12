@@ -1,19 +1,16 @@
-{{#isConnected}}
-<div id="fbDisconnectLink">
-    {{{facebookDisconnectLink}}}
+<div class="facebook-preferences">
+	{{! Visible when user is not yet connected }}
+	<div id="fbConnectPreferences" {{#isConnected}}class="hidden"{{/isConnected}}>
+		<p>{{facebookConvertMessage}}</p>
+		{{{facebookButton}}}
+	</div>
+
+	{{! Visible when user is already connected }}
+	<div id="fbDisconnectPreferences" {{^isConnected}}class="hidden"{{/isConnected}}>
+		<p id="fbDisconnectLink" data-fb-from-exist="{{fbFromExist}}">
+			{{{facebookDisconnectLink}}}
+		</p>
+	</div>
 </div>
 
-<div style="display:none;" id="fbDisconnectProgress">
-    {{{facebookDisconnectDone}}}
-    <img id="fbDisconnectProgressImg" src="{{blankImageUrl}}" class="sprite progress">
-</div>
 
-<div style="display:none;" id="fbDisconnectDone">
-    {{{facebookDisconnectInfo}}}
-</div>
-{{/isConnected}}
-
-{{^isConnected}}
-{{facebookConvertMessage}}<br />
-{{{facebookButton}}}
-{{/isConnected}}

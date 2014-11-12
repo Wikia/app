@@ -67,5 +67,7 @@ JSMessages::registerPackage( 'FacebookClient', [
 	'fbconnect-logout-confirm',
 	'fbconnect-preferences-connected',
 	'fbconnect-preferences-connected-error',
+	'fbconnect-disconnect-info-existing',
+	'fbconnect-disconnect-info',
 ] );
 

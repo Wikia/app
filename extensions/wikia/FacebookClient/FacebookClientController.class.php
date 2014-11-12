@@ -4,18 +4,13 @@ class FacebookClientController extends WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	public function preferences() {
+		$this->response->addAsset('facebook_client_preferences_scss');
+
 		$this->isConnected = $this->getVal( 'isConnected', false );
 
 		// Settings for a connected user
-		$this->facebookDisconnectLink = wfMessage( 'fbconnect-disconnect-link' )->plain();
-		$this->facebookDisconnectDone = wfMessage( 'fbconnect-disconnect-done' )->text();
-		$this->blankImgUrl = F::app()->wg->BlankImgUrl;
-
-		if ( F::app()->wg->User->getOption( 'fbFromExist' ) ) {
-			$this->facebookDisconnectInfo = wfMessage( 'fbconnect-disconnect-info-existing' )->text();
-		} else {
-			$this->facebookDisconnectInfo = wfMessage( 'fbconnect-disconnect-info' )->text();
-		}
+		$this->facebookDisconnectLink = wfMessage( 'fbconnect-disconnect-link' )->parse();
+		$this->fbFromExist = F::app()->wg->User->getOption( 'fbFromExist' );
 
 		// Settings for a user who is not connected yet
 		$this->facebookConvertMessage = wfMessage( 'fbconnect-convert' )->plain();
