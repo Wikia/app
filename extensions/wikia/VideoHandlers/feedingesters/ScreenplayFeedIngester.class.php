@@ -427,11 +427,11 @@ class ScreenplayFeedIngester extends RemoteAssetFeedIngester {
 	 * Generate metadata
 	 * @param array $videoData
 	 * @return array
-	 * @throws Exception
+	 * @throws FeedIngesterSkippedException
 	 */
 	public function generateMetadata( $videoData ) {
 		if ( empty( $videoData['stdBitrateCode'] ) ) {
-			throw new Exception('No supported bitrate code for video id ' . $videoData['videoId']);
+			throw new FeedIngesterSkippedException('No supported bitrate code for video id ' . $videoData['videoId']);
 		}
 
 		$metadata = parent::generateMetadata( $videoData );

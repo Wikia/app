@@ -61,8 +61,11 @@ abstract class VideoFeedIngester {
 			$this->checkShouldSkipVideo( $videoData, $provider );
 			$this->printInitialData( $videoData );
 			$this->setMetaData( $videoData );
-		} catch ( Exception $e ) {
-			// TODO Figure out logging for screenPlayFeedIngester::generateMetadata
+		} catch ( FeedIngesterSkippedException $e ) {
+			$this->logger->videoSkipped( $e->getMessage() );
+			return 0;
+		} catch ( FeedIngesterWarningException $e ) {
+			$this->logger->videoWarnings( $e->getMessage() );
 			return 0;
 		}
 
@@ -71,20 +74,17 @@ abstract class VideoFeedIngester {
 	}
 
 	public function checkShouldSkipVideo( $videoData, $provider ) {
-		if ( $this->isBlacklistedVideo( $videoData )
-			|| $this->isFilteredVideo( $videoData )
-			|| ( $this->isDuplicateVideo( $videoData, $provider ) && !$this->reupload )
-		) {
-			throw new Exception();
-		}
+		$this->checkIsBlacklistedVideo( $videoData );
+		$this->checkIsFilteredVideo( $videoData );
+		$this->checkIsDuplicateVideo( $videoData, $provider );
 	}
 
 	/**
 	 * check if video is blacklisted ( titleName, description, keywords, name )
 	 * @param array $videoData
-	 * @return boolean
+	 * @throws FeedIngesterSkippedException
 	 */
-	public function isBlacklistedVideo( array $videoData ) {
+	public function checkIsBlacklistedVideo( array $videoData ) {
 
 		// General filter on all keywords
 		$regex = $this->getBlacklistRegex( F::app()->wg->VideoBlacklist );
@@ -98,13 +98,12 @@ abstract class VideoFeedIngester {
 			}
 			foreach ( $keys as $key ) {
 				if ( preg_match( $regex, str_replace( '-', ' ', $videoData[$key] ) ) ) {
-					$this->logger->videoSkipped( "Skipping blacklisted video:".$videoData['titleName'].", videoId ".$videoData['videoId'].
-						" (reason $key: ".$videoData[$key].")\n");
-					return true;
+					$msg = "Skipping blacklisted video: {$videoData['titleName']}, videoId {$videoData['videoId']}";
+					$msg .= " (reason $key: ".$videoData[$key].")\n";
+					throw new FeedIngesterSkippedException( $msg );
 				}
 			}
 		}
-		return false;
 	}
 
 	/**
@@ -121,9 +120,9 @@ abstract class VideoFeedIngester {
 	 * keywords contained the case insensitive string 'adult'
 	 *
 	 * @param array $videoData
-	 * @return bool - Returns true if the video should be filtered out, false otherwise
+	 * @throws FeedIngesterSkippedException
 	 */
-	protected function isFilteredVideo( $videoData ) {
+	protected function checkIsFilteredVideo( $videoData ) {
 		if ( is_array( static::$CLIP_FILTER ) ) {
 			foreach ( $videoData as $key => $value ) {
 				// See if we match key explicitly or by the catchall '*'
@@ -140,32 +139,28 @@ abstract class VideoFeedIngester {
 
 				foreach ( $regex_list as $regex ) {
 					if ( preg_match( $regex, $value ) ) {
-						$this->logger->videoSkipped( "Skipping (video is filtered) '{$videoData['titleName']}' - {$videoData['description']}.\n" );
-						return true;
+						$msg = "Skipping (video is filtered) '{$videoData['titleName']}' - {$videoData['description']}.\n";
+						throw new FeedIngesterSkippedException( $msg );
 					}
 				}
 			}
 		}
-		return false;
 	}
 
-	public function isDuplicateVideo( $videoData, $provider ) {
-		return $this->videoExistsOnWikia( $videoData, $provider );
+	public function checkIsDuplicateVideo( $videoData, $provider ) {
+		$this->checkVideoExistsOnWikia( $videoData, $provider );
 	}
 
-	public function videoExistsOnWikia( $videoData, $provider ) {
+	public function checkVideoExistsOnWikia( $videoData, $provider ) {
 		$duplicates = WikiaFileHelper::findVideoDuplicates( $provider, $videoData['videoId'], self::REMOTE_ASSET );
 		if ( count( $duplicates ) > 0 ) {
 			if ( !$this->reupload ) {
-				// TODO make sure $this->metaData['videoTitle'] is accurate and works instead of $name
-				$this->logger->videoSkipped( "Skipping {$videoData['titleName']} (Id: {$videoData['videoId']}, $provider) - video already exists and reupload is disabled.\n" );
+				$msg = "Skipping {$videoData['titleName']} (Id: {$videoData['videoId']}, $provider) - video already exists and reupload is disabled.\n";
+				throw new FeedIngesterSkippedException( $msg );
 			}
-			// If there exists a duplicate video and we want to reupload the video, save that duplicate asset.
-			// We'll use it later when determining the name to use for the video, and for remote asset saving.
+			// If we found a duplicate and reupload is on, save it. We'll use it later in the ingestion process.
 			$this->duplicateAsset = $duplicates[0];
-			return true;
 		}
-		return false;
 	}
 
 	public function printInitialData( $videoData ) {
@@ -187,11 +182,11 @@ abstract class VideoFeedIngester {
 	 *       and serialized objects would have more version issues.
 	 * @param array $videoData
 	 * @return array An associative array of metadata
-	 * @throws VideoFeedIngesterException
+	 * @throws FeedIngesterWarningException
 	 */
 	public function generateMetadata( $videoData ) {
 
-		$this->filterKeywords();
+		$this->filterKeywords( $videoData['keywords'] );
 		$metaData = [
 			'videoId'              => isset( $videoData['videoId'] ) ? $videoData['videoId'] : '',
 			'altVideoId'           => isset( $videoData['altVideoId'] ) ? $videoData['altVideoId'] : '',
@@ -224,14 +219,14 @@ abstract class VideoFeedIngester {
 			'destinationTitle'     => $this->getName( $videoData )
 		];
 
-		if ( empty( $videoData['videoId'] ) ) {
-			$this->logger->videoWarnings( "Warning: error when generating metadata -- no video id exists\n" );
-			throw new VideoFeedIngesterException();
+		if ( empty( $metaData['videoId'] ) ) {
+			$msg = "Warning: error when generating metadata -- no video id exists\n";
+			throw new FeedIngesterWarningException( $msg );
 		}
 
 		if ( !$this->isValidDestinationTitle( $metaData['destinationTitle'] ) ) {
-			$this->logger->videoWarnings( "Warning: article title was null: clip id {$metaData['videoId']}. name: {$metaData['name']}\n" );
-			throw new VideoFeedIngesterException();
+			$msg = "Warning: article title was null: clip id {$metaData['videoId']}. name: {$metaData['destinationTitle']}\n";
+			throw new FeedIngesterWarningException( $msg );
 		}
 
 		return $metaData;
@@ -240,12 +235,12 @@ abstract class VideoFeedIngester {
 	/**
 	 * filter keywords from metaData
 	 */
-	protected function filterKeywords() {
-		if ( !empty( $this->metaData['keywords'] ) ) {
+	protected function filterKeywords( &$keywords ) {
+		if ( !empty( $keywords ) ) {
 			$regex = $this->getBlacklistRegex( F::app()->wg->VideoKeywordsBlacklist );
 			$new = array();
 			if ( !empty( $regex ) ) {
-				$old = explode( ',', $this->metaData['keywords'] );
+				$old = explode( ',', $keywords );
 				foreach ( $old as $word ) {
 					if ( preg_match( $regex, str_replace( '-', ' ', $word ) ) ) {
 						echo "Skip: blacklisted keyword $word.\n";
@@ -257,7 +252,7 @@ abstract class VideoFeedIngester {
 			}
 
 			if ( !empty( $new ) ) {
-				$this->metaData['keywords'] = implode( ',', $new );
+				$keywords = implode( ',', $new );
 			}
 		}
 	}
@@ -623,4 +618,5 @@ abstract class VideoFeedIngester {
 	}
 }
 
-class VideoFeedIngesterException extends Exception {}
+class FeedIngesterSkippedException extends Exception {}
+class FeedIngesterWarningException extends Exception {}

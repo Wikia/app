@@ -4,19 +4,19 @@ class RemoteAssetFeedIngester extends VideoFeedIngester {
 
 	const REMOTE_ASSET = true;
 
-	public function isDuplicateVideo( $videoData, $provider ) {
-		return $this->videoExistsOnOoyala( $videoData, $provider ) || $this->videoExistsOnWikia( $videoData, $provider );
+	public function checkIsDuplicateVideo( $videoData, $provider ) {
+		$this->checkVideoExistsOnOoyala( $videoData, $provider );
+		$this->checkVideoExistsOnWikia( $videoData, $provider );
 	}
 
-	public function videoExistsOnOoyala( $videoData, $provider ) {
+	public function checkVideoExistsOnOoyala( $videoData, $provider ) {
 		$dupAssets = OoyalaAsset::getAssetsBySourceId( $videoData['videoId'], $provider );
 		if ( !empty( $dupAssets ) ) {
 			if ( $this->reupload === false ) {
-				$this->logger->videoSkipped( "Skipping {$videoData['titleName']} (Id: {$videoData['videoId']}, $provider) - video already exists in remote assets.\n" );
+				$msg = "Skipping {$videoData['titleName']} (Id: {$videoData['videoId']}, $provider) - video already exists in remote assets.\n";
+				throw new FeedIngesterSkippedException( $msg );
 			}
-			return true;
 		}
-		return false;
 	}
 
 	public function saveAsset( $categories ) {
@@ -149,11 +149,11 @@ class RemoteAssetFeedIngester extends VideoFeedIngester {
 	}
 
 	public function import( $content = '', array $params = [] ) {
-		throw new Exception("Must implement this");
+		throw new Exception("Must be implemented by a subclass");
 	}
 
 	public function generateCategories( array $addlCategories ) {
-		throw new Exception("Must implement this");
+		throw new Exception("Must be implemented by a sublcass");
 	}
 
 }
