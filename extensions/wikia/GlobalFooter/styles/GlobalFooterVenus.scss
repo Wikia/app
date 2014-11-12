@@ -5,6 +5,7 @@
 @import 'extensions/wikia/Venus/styles/logo';
 
 $global-footer-color-border: #c7d1d8;
+$global-footer-vertical-spacing: 30px;
 
 %global-footer-inline-flexbox {
 	display: -ms-inline-flexbox;
@@ -17,8 +18,8 @@ $global-footer-color-border: #c7d1d8;
 	border-bottom: 10px solid $color-wikiahome-community;
 	border-top: 1px solid $global-footer-color-border;
 	color: $color-text-dark;
-	margin-top: 30px;
-	padding-top: 40px;
+	margin-top: $global-footer-vertical-spacing;
+	padding-top: $global-footer-vertical-spacing + 10;
 	text-align: center;
 
 	&.vertical-books {
@@ -52,31 +53,27 @@ $global-footer-color-border: #c7d1d8;
 	.wikia-logo {
 		@extend %global-footer-inline-flexbox;
 		line-height: 0; /* Get rid of uncontrollable vertical margins for inline-block */
-		margin: 0 auto 35px;
+		margin: 0 auto $global-footer-vertical-spacing + 5;
 	}
 
 	a {
 		color: $color-links-default;
 	}
 
-	nav {
-		margin: 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width;
+	ul {
+		list-style: none;
+		margin: 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width $global-footer-vertical-spacing;
 		padding: 0 $medium-grid-column-padding;
 
 		@media #{$large-up} {
-			margin: 0 $large-grid-column + $large-grid-gutter + $large-content-padding - $content-border-width;
+			margin: 0 $large-grid-column + $large-grid-gutter + $large-content-padding - $content-border-width $global-footer-vertical-spacing;
 			padding: 0 $large-grid-column-padding;
 		}
 
 		@media #{$small-only} {
-			margin: 0 $small-grid-column + $small-grid-gutter + $small-content-padding - $content-border-width;
+			margin: 0 $small-grid-column + $small-grid-gutter + $small-content-padding - $content-border-width $global-footer-vertical-spacing;
 			padding: 0 $small-grid-column-padding;
 		}
-	}
-
-	ul {
-		list-style: none;
-		margin: 0 0 30px;
 
 		li {
 			display: inline;
