@@ -22,7 +22,6 @@
 		e.preventDefault();
 
 		window.FB.login(this.loginCallback.bind(this));
-		this.toggle();
 	};
 
 	Preferences.prototype.loginCallback = function () {
