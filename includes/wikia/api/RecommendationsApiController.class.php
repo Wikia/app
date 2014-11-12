@@ -8,8 +8,10 @@ class RecommendationsApiController extends WikiaApiController {
 		$articleId = $this->request->getInt( 'id' );
 		$limit = $this->request->getInt( 'limit', 9 );
 
+		$title = Title::newFromID( $articleId );
+
 		// validate parameters
-		if ( $articleId === 0 ) {
+		if ( is_null($title) || !$title->exists() ) {
 			// TODO: message
 			throw new BadRequestApiException();
 		}
