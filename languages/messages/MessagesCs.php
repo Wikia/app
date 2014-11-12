@@ -2654,6 +2654,7 @@ Můžete si prohlédnout [[Special:BlockList|seznam zablokovaných uživatelů]]
 'unblocked' => '{{GENDER:$1|||Uživatel}} [[User:$1|$1]] {{GENDER:$1|byl odblokován|byla odblokována|byl odblokován}}',
 'unblocked-range' => '$1 bylo odblokováno',
 'unblocked-id' => 'Blok $1 byl zrušen',
+'unblocked-ip' => 'Adresa [[Special:Contributions/$1|$1]] byla odblokována.',
 'blocklist' => 'Zablokovaní uživatelé',
 'ipblocklist' => 'Zablokovaní uživatelé',
 'ipblocklist-legend' => 'Hledat zablokovaného uživatele',

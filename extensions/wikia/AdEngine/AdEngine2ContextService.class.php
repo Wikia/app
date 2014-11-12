@@ -28,12 +28,14 @@ class AdEngine2ContextService {
 
 			return [
 				'opts' => $this->filterOutEmptyItems( [
-					'adsInHead' => !!$wg->EnableAdsInContent,
+					'adsInContent' => !!$wg->EnableAdsInContent,
+					'adsInHead' => !!$wg->LoadAdsInHead,
+					'alwaysCallDart' => $wg->AdDriverAlwaysCallDart,
 					'disableLateQueue' => $wg->AdEngineDisableLateQueue,
+					'enableAdsInMaps' => $wg->AdDriverEnableAdsInMaps,
 					'lateAdsAfterPageLoad' => $adEngineService->areAdsAfterPageLoad(),
 					'pageType' => $adPageTypeService->getPageType(),
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
-					'useDartForSlotsBelowTheFold' => $wg->AdDriverUseDartForSlotsBelowTheFold,
 					'usePostScribe' => $wg->Request->getBool( 'usepostscribe', false ),
 					'trackSlotState' => $wg->AdDriverTrackState,
 				] ),

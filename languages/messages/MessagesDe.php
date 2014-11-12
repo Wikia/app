@@ -2646,6 +2646,7 @@ Zur Aufhebung der Sperre siehe die [[Special:BlockList|Liste aller aktiven Sperr
 'unblocked'                       => '[[User:$1|$1]] wurde freigegeben',
 'unblocked-range'                 => 'Sperre für $1 wurde aufgehoben',
 'unblocked-id'                    => 'Sperr-ID $1 wurde freigegeben',
+'unblocked-ip'                    => '[[Special:Contributions/$1|$1]] wurde freigegeben.',
 'blocklist'                       => 'Gesperrte Benutzer',
 'ipblocklist'                     => 'Gesperrte Benutzer',
 'ipblocklist-legend'              => 'Suche nach einem gesperrten Benutzer',

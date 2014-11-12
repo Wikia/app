@@ -75,7 +75,7 @@ $namespaces['it'] = array(
 $namespaces['ja'] = array(
 	NS_WIKIA_FORUM_BOARD		=> 'ボード',
 	NS_WIKIA_FORUM_TOPIC_BOARD	=> 'トピック',
-	NS_WIKIA_FORUM_BOARD_THREAD	=> 'ボード_スレッド',
+	NS_WIKIA_FORUM_BOARD_THREAD	=> 'ボード・スレッド',
 );
 
 /**
@@ -139,4 +139,13 @@ $namespaces['zh'] = array(
 	NS_WIKIA_FORUM_BOARD		=> '版块',
 	NS_WIKIA_FORUM_TOPIC_BOARD	=> '话题',
 	NS_WIKIA_FORUM_BOARD_THREAD	=> '版块帖子',
+);
+
+/**
+ * Aliases
+ */
+$namespaceAliases = array(
+	// Japanese (日本語)
+	// VOLDEV-90
+	'ボード_スレッド' => NS_WIKIA_FORUM_BOARD_THREAD,
 );

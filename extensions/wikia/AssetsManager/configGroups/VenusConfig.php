@@ -6,8 +6,6 @@ $VenusConfig[ 'venus_body_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['venus'],
 	'assets' => [
-		'//resources/jquery/jquery-2.1.1.min.js',
-
 		//libraries/frameworks
 // TODO: This should be loaded here, but for some reason, it's already included
 //		'//resources/wikia/libraries/modil/modil.js',
