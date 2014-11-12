@@ -11,8 +11,8 @@ $wgAutoloadClasses['RecommendationsController'] =  __DIR__ . '/RecommendationsCo
 
 $wgExtensionMessagesFiles['Recommendations'] = __DIR__ . '/Recommendations.i18n.php';
 
-$wgResourceModules['ext.wikia.recommendations'] = array(
-	'scripts' => array(
+$wgResourceModules['ext.wikia.recommendations'] = [
+	'scripts' => [
 		'extensions/wikia/Recommendations/scripts/recommendations.js',
-	)
-);
+	]
+];

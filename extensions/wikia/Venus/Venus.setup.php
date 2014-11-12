@@ -56,7 +56,7 @@ $wgAutoloadClasses['VenusController'] = __DIR__ . '/VenusController.class.php';
  * message files
  */
 $wgExtensionMessagesFiles['Venus'] = __DIR__ . '/Venus.i18n.php';
-JSMessages::registerPackage('VenusArticle', array('venus-article-*'));
+JSMessages::registerPackage('VenusArticle', [ 'venus-article-*' ]);
 
 /**
  * hooks
@@ -69,17 +69,17 @@ $wgHooks['ParserSectionCreate'][] = 'VenusHooks::onParserSectionCreate';
 // Resources Loader modules
 
 
-$wgResourceModules['ext.wikia.venus.article.infobox'] = array(
-	'scripts' => array(
+$wgResourceModules['ext.wikia.venus.article.infobox'] = [
+	'scripts' => [
 		'scripts/Infobox.js',
 		'scripts/modules/infobox.module.js'
-	),
-	'messages' => array(
+	],
+	'messages' => [
 		'venus-article-infobox-see-more',
-	),
+	],
 	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'wikia/Venus'
-);
+];
 
 $wgResourceModules['ext.wikia.venus.recommendations'] = [
 	'scripts' => [
