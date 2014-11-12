@@ -44,6 +44,10 @@
 
 .wikia-logo-container {
 	@include grid-column-width('medium', 2, $medium-content-padding);
+
+	.wikia-logo {
+		padding: 0 0 0 20px;
+	}
 }
 
 .start-wikia-container {
@@ -58,14 +62,6 @@
 		background-color: $nav-foreground-dark-color;
 		color: $nav-background-color;
 		text-decoration: none;
-	}
-}
-
-.wikia-logo {
-	padding: 0 0 0 20px;
-
-	img {
-		@include wikia-logo();
 	}
 }
 

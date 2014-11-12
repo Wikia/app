@@ -180,9 +180,3 @@ $edit-button-line-height: $font-size-xl + 4px;
 @mixin line-height-with-edit-button($value) {
 	line-height: if($value < $edit-button-line-height, $edit-button-line-height, $value);
 }
-
-@mixin wikia-logo() {
-	background-image: url('/extensions/wikia/Venus/images/wikia_logo.svg'); /* base64 */
-	background-position: center;
-	background-repeat: no-repeat;
-}
