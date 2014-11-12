@@ -3,6 +3,12 @@
 
 $global-footer-color-border: #c7d1d8;
 
+%global-footer-inline-flexbox {
+	display: -ms-inline-flexbox;
+	display: -webkit-inline-flex;
+	display: inline-flex;
+}
+
 .global-footer {
 	background-color: $nav-background-color;
 	border-bottom: 10px solid $color-wikiahome-community;
@@ -41,7 +47,7 @@ $global-footer-color-border: #c7d1d8;
 	}
 
 	.footer-wikia-logo {
-		display: inline-block;
+		@extend %global-footer-inline-flexbox;
 		line-height: 0; /* Get rid of uncontrollable vertical margins for inline-block */
 		margin: 0 auto 40px;
 
