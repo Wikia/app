@@ -106,7 +106,7 @@ class RelatedPages {
 	 *
 	 * @param int $articleId Article ID
 	 * @param int $limit limit (up to 10 - see LIMIT_MAX const)
-	 * @return array|null
+	 * @return array
 	 */
 	public function get( $articleId, $limit = 3 ) {
 		wfProfileIn( __METHOD__ );
