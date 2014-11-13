@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * Class IngesterDataNormalizer
+ *
+ * Class used to map provider specific data values to a normalized
+ * version. Eg, when it comes to a category for a video, one provider
+ * might use the term 'movie' for a clip, while another might use
+ * 'movie interview', and another might use 'theatrical'. We want
+ * to normalize all of those to just 'Movies' when we save the video
+ * onto Wikia.
+ */
 class IngesterDataNormalizer {
 
 	/**
@@ -9,7 +19,6 @@ class IngesterDataNormalizer {
 	 */
 	public function getNormalizedIndustryRating( $rating ) {
 		$rating = trim( $rating );
-		// TODO: See if we need to preserve rating, or if we can redefine it and get rid of name
 		$name = strtolower( $rating );
 		switch( $name ) {
 			case 'everyone':
@@ -353,6 +362,12 @@ class IngesterDataNormalizer {
 		return $additionalCategory;
 	}
 
+	/**
+	 * @param $value
+	 * @param $type
+	 * @param $code
+	 * @return mixed|string
+	 */
 	public function getCLDRCode( $value, $type, $code ) {
 		$value = trim( $value );
 		if ( !empty( $value ) ) {

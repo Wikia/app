@@ -41,6 +41,13 @@ abstract class VideoFeedIngester {
 		$this->reupload = !empty( $params['reupload'] );
 	}
 
+	/**
+	 * Implemented by each sublcass to handle contacting each provider's
+	 * API and preparing that data to be passed to createVideo.
+	 * @param string $content
+	 * @param array $params
+	 * @return mixed
+	 */
 	abstract public function import( $content = '', array $params = [] );
 
 	/**
@@ -51,6 +58,15 @@ abstract class VideoFeedIngester {
 	abstract public function generateCategories( array $addlCategories );
 
 	/**
+	 * During ingestion, each subclass implements it's own import method
+	 * which contacts the provider's API, marshals data, and finally passes
+	 * that data along with any additional categories we want added to the
+	 * page to this createVideo method. createVideo takes care of checking if we
+	 * should skip that video for any reason, preparing that videoData into
+	 * a more general metaData array which includes stubs for all fields we
+	 * want saved for a given video, and finally saving that video either onto
+	 * Wikia or Ooyala. See RemoteAssetFeedIngester for more info on that
+	 * distinction.
 	 * @param array $videoData
 	 * @param array $addlCategories
 	 * @return int
@@ -74,18 +90,14 @@ abstract class VideoFeedIngester {
 		return $this->saveVideo();
 	}
 
-	public function checkShouldSkipVideo() {
-		$this->checkIsBlacklistedVideo();
-		$this->checkIsFilteredVideo();
-		$this->checkIsDuplicateVideo();
-	}
-
 	public function setVideoData( $videoData ) {
 		$this->videoData = $videoData;
 	}
 
-	public function setMetaData() {
-		$this->metaData = $this->generateMetadata();
+	public function checkShouldSkipVideo() {
+		$this->checkIsBlacklistedVideo();
+		$this->checkIsFilteredVideo();
+		$this->checkIsDuplicateVideo();
 	}
 
 	/**
@@ -158,6 +170,11 @@ abstract class VideoFeedIngester {
 		$this->checkVideoExistsOnWikia();
 	}
 
+	/**
+	 * Checks if a the video already exists on Wikia. If so, and reupload is on, save the name of that
+	 * video in $this->oldName. This will be used later in the ingestion process.
+	 * @throws FeedIngesterSkippedException
+	 */
 	public function checkVideoExistsOnWikia() {
 		$duplicates = WikiaFileHelper::findVideoDuplicates( $this->videoData['provider'], $this->videoData['videoId'], static::$REMOTE_ASSET );
 		if ( count( $duplicates ) > 0 ) {
@@ -172,6 +189,12 @@ abstract class VideoFeedIngester {
 		}
 	}
 
+	/**
+	 * Print the videoData that was passed into createVideo(). This is the video
+	 * metadata prepared by each subclass during its ingestion. This videoData will
+	 * be used to populate the more general metaData array which includes all fields
+	 * we want saved for a video.
+	 */
 	public function printInitialData() {
 		if ( $this->debugMode() ) {
 			print "data after initial processing: \n";
@@ -179,6 +202,10 @@ abstract class VideoFeedIngester {
 				print ":: $line\n";
 			}
 		}
+	}
+
+	public function setMetaData() {
+		$this->metaData = $this->generateMetadata();
 	}
 
 	/**
@@ -262,6 +289,12 @@ abstract class VideoFeedIngester {
 		return $filteredKeyWords;
 	}
 
+	/**
+	 * Get the name we should use for this video. If $this->oldName exists,
+	 * we know that a duplicate of that video was found and reupload is on
+	 * so we should reuse that name. Otherwise, create a new unique name.
+	 * @return string
+	 */
 	public function getName() {
 		// Reuse name if duplicate video exists.
 		if ( !is_null( $this->oldName ) ) {
@@ -274,6 +307,11 @@ abstract class VideoFeedIngester {
 		return $name;
 	}
 
+	/**
+	 * Return if the title we plan on using to create the video is valid.
+	 * @param $destinationTitle
+	 * @return bool
+	 */
 	public function isValidDestinationTitle( $destinationTitle ) {
 		$sanitizedName = VideoFileUploader::sanitizeTitle( $destinationTitle );
 		$title = Title::newFromText( $sanitizedName, NS_FILE );
@@ -283,6 +321,20 @@ abstract class VideoFeedIngester {
 		return true;
 	}
 
+	/**
+	 * Set the page categories we want added to the video's file page into
+	 * a member variable.
+	 * @param $addlCatgories
+	 */
+	public function setPageCategories( $addlCatgories ) {
+		$this->pageCategories = $this->generateCategories( $addlCatgories );
+	}
+
+	/**
+	 * After all the video meta data and categories have been prepared, upload the video
+	 * onto Wikia.
+	 * @return int
+	 */
 	public function saveVideo() {
 		$body = $this->prepareBodyString();
 		if ( $this->debugMode() ) {
@@ -308,10 +360,16 @@ abstract class VideoFeedIngester {
 		return 0;
 	}
 
-	public function setPageCategories( $addlCatgories ) {
-		$this->pageCategories = $this->generateCategories( $addlCatgories );
-	}
-
+	/**
+	 * Prepare the string used for the article content of the file page. This includes
+	 * the category string string and description. eg:
+	 *
+	 * [[Category:Phantasy Star Nova]][[Category:IGN]][[Category:IGN games]][[Category:Games]][[Category:Videos]]
+	 *  ==Description==
+	 * Check out the character creator mode as well as the battle system in this PlayStation Vita exclusive.
+	 *
+	 * @return string
+	 */
 	public function prepareBodyString() {
 		/** @var ApiWrapper $apiWrapper */
 		$apiWrapper = new static::$API_WRAPPER( $this->metaData['videoId'], $this->metaData );
@@ -321,7 +379,10 @@ abstract class VideoFeedIngester {
 		return $body;
 	}
 
-	// prepare wiki categories string (eg [[Category:MyCategory]] )
+	/**
+	 * Prepare wiki categories string (eg [[Category:MyCategory]] )
+	 * @return string
+	 */
 	public function prepareCategoriesString() {
 		$this->pageCategories[] = wfMessage( 'videohandler-category' )->inContentLanguage()->text();
 		$this->pageCategories = array_unique( $this->pageCategories );
@@ -336,6 +397,11 @@ abstract class VideoFeedIngester {
 		return $categoryStr . "\n";
 	}
 
+	/**
+	 * Print the video meta data and categories that would be saved. Used in
+	 * debug mode.
+	 * @param $body
+	 */
 	public function printReadyToSaveData( $body ) {
 		print "Ready to create video\n";
 		print "id:          {$this->metaData['videoId']}\n";

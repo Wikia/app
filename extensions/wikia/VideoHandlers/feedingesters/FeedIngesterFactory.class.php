@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class FeedIngesterFactory
+ */
 class FeedIngesterFactory {
 
 	// Constants for referring to short provider names
@@ -52,7 +55,16 @@ class FeedIngesterFactory {
 	}
 
 
-	public static function getIngester( $provider, $params ) {
+	/**
+	 * Given a string representing a VideoFeedIngester class and an array of parameters
+	 * to pass to that class during it's construction, return an instance of that class
+	 * or throw an exception.
+	 * @param string $provider
+	 * @param array $params
+	 * @return VideoFeedIngester
+	 * @throws Exception
+	 */
+	public static function getIngester( $provider, array $params = [] ) {
 		$ingester = ucfirst( $provider ) . 'FeedIngester';
 		if( class_exists( $ingester ) ) {
 			return new $ingester( $params );

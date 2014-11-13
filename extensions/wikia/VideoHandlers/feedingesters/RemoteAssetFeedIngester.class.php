@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Class RemoteAssetFeedIngester
+ *
+ * This class is used to represent remote assets, ie, videos which we upload onto
+ * Ooyala for hosting. Most providers host videos themselves, but for special
+ * cases (currently IVA and Screenplay), we upload their videos onto Ooyala and when
+ * the OoyalaFeedIngester runs, these videos are ingested along with all of Ooyala's
+ * own content.
+ */
 class RemoteAssetFeedIngester extends VideoFeedIngester {
 
 	public static $REMOTE_ASSET = true;
@@ -11,6 +20,11 @@ class RemoteAssetFeedIngester extends VideoFeedIngester {
 		$this->checkVideoExistsOnOoyala();
 	}
 
+	/**
+	 * Checks if a the video already exists on Ooyala. If so, and reupload is on, save that
+	 * asset. This will be used later in the ingestion process.
+	 * @throws FeedIngesterSkippedException
+	 */
 	public function checkVideoExistsOnOoyala() {
 		$dupAssets = OoyalaAsset::getAssetsBySourceId( $this->videoData['videoId'], $this->videoData['provider'] );
 		if ( !empty( $dupAssets ) ) {
@@ -24,6 +38,11 @@ class RemoteAssetFeedIngester extends VideoFeedIngester {
 		}
 	}
 
+	/**
+	 * After all the video meta data and categories have been prepared, upload the video
+	 * onto Ooyala.
+	 * @return int
+	 */
 	public function saveVideo() {
 		$this->metaData['pageCategories'] = implode( ', ', $this->pageCategories );
 		if ( !empty( $this->duplicateAsset ) ) {
@@ -153,12 +172,23 @@ class RemoteAssetFeedIngester extends VideoFeedIngester {
 		return $data['assetTitle'];
 	}
 
+	/**
+	 * @param string $content
+	 * @param array $params
+	 * @return mixed
+	 * @throws Exception
+	 */
 	public function import( $content = '', array $params = [] ) {
-		throw new Exception("Must be implemented by a subclass");
+		throw new Exception( "Must be implemented by a subclass" );
 	}
 
+	/**
+	 * @param array $addlCategories
+	 * @return array|void
+	 * @throws Exception
+	 */
 	public function generateCategories( array $addlCategories ) {
-		throw new Exception("Must be implemented by a sublcass");
+		throw new Exception( "Must be implemented by a sublcass" );
 	}
 
 }

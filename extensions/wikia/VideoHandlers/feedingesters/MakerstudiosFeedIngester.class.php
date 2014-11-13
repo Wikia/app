@@ -19,7 +19,6 @@ class MakerstudiosFeedIngester extends VideoFeedIngester {
 		$content = $this->getUrlContent( self::$FEED_URL );
 		if ( !$content ) {
 			$this->logger->videoErrors( "ERROR: problem downloading content.\n" );
-			// TODO Throw exception here
 			return 0;
 		}
 
@@ -69,7 +68,6 @@ class MakerstudiosFeedIngester extends VideoFeedIngester {
 		$videoData['duration'] = $this->getOptionalField( 'content', 'duration' );
 		$videoData['published'] = strtotime( $this->getOptionalField( 'pubdate' ) );
 		$videoData['keywords'] = str_replace( ',', ', ', $this->getOptionalField( 'keywords' ) );
-		$videoData['uniqueName'] = $videoData['titleName'];
 
 		return $videoData;
 	}
