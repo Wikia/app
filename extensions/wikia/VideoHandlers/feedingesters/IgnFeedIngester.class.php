@@ -159,9 +159,10 @@ class IgnFeedIngester extends VideoFeedIngester {
 	/**
 	 * Make an HTTP request to the URL given and return the content
 	 * @param $url - URL to request
+	 * @param $options - Not actually used. Just to keep consistent method signature with base class.
 	 * @return mixed|string
 	 */
-	protected function getUrlContent( $url ) {
+	protected function getUrlContent( $url, $options = [] ) {
 		global $wgIgnApiConfig;
 		echo( "Creating request\n" );
 		$req = curl_init();

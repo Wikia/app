@@ -30,6 +30,42 @@ class VideoFeedIngesterTest extends WikiaBaseTest {
 		$feedIngester->setMetaData();
 	}
 
+	/**
+	 * @dataProvider baseFeedIngesterDataProvider
+	 * @expectedException FeedIngesterSkippedException
+	 */
+	public function testExceptionIfVideoBlacklisted( $videoData ) {
+		$feedIngester = new TestVideoFeedIngester();
+		$feedIngester->setVideoData( $videoData );
+
+		// Test if blacklist checks against title
+		$this->mockGlobalVariable( 'wgVideoBlacklist', 'Infinite' );
+		$feedIngester->checkIsBlacklistedVideo();
+
+		// Test if blacklist checks against keywords
+		$this->mockGlobalVariable( 'wgVideoBlacklist', 'trailer' );
+		$feedIngester->checkIsBlacklistedVideo();
+	}
+
+	/**
+	 * @dataProvider baseFeedIngesterDataProvider
+	 */
+	public function testBodyStringPreparedProperly( $videoData ) {
+		$feedIngester = new IgnFeedIngester();
+		$feedIngester->setVideoData( $videoData );
+		$feedIngester->setMetaData();
+		$feedIngester->setPageCategories();
+		$body = $feedIngester->prepareBodyString();
+		$expected = "[[Category:IGN]][[Category:IGN entertainment]][[Category:Entertainment]][[Category:Videos]]\n";
+		$expected .= "==Description==\n";
+		$expected .= "First trailer for the evolving sandbox of SkySaga, where players explore and shape the world around them.";
+		$this->assertEquals( $body, $expected );
+	}
+
+	/**
+	 * Data provider which can be used with either the TestVideoFeedIngester or IgnFeedIngester class.
+	 * @return array
+	 */
 	public function baseFeedIngesterDataProvider() {
 		return [
 			[
