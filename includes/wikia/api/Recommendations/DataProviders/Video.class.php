@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Wikia\Api\Recommendations\DataProviders;
 
 class Video implements IDataProvider {
