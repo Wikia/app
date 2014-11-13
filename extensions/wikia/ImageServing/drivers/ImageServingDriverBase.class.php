@@ -180,8 +180,15 @@ abstract class ImageServingDriverBase {
 	}
 
 	protected function getImageFile( $text ) {
-		$file_title = Title::newFromText( $text, NS_FILE );
-		$img = wfFindFile( $file_title );
+		global $wgDBname;
+
+		if ( $wgDBname == $this->db->getDBname() ) {
+			$file_title = Title::newFromText( $text, NS_FILE );
+			$img = wfFindFile( $file_title );
+		} else {
+			$img = GlobalFile::newFromText( $text, WikiFactory::DBtoID( $this->db->getDBname() ) );
+		}
+
 		return $img;
 	}
 
