@@ -12,7 +12,7 @@ abstract class VideoFeedIngester {
 
 	// Names a city variable to look for additional category data.  Used in the reingestBrokenVideo.php
 	const WIKI_INGESTION_DATA_VARNAME = 'wgPartnerVideoIngestionData';
-	const REMOTE_ASSET = false;
+	public static $REMOTE_ASSET = false;
 
 	protected static $API_WRAPPER;
 	protected static $PROVIDER;
@@ -159,7 +159,7 @@ abstract class VideoFeedIngester {
 	}
 
 	public function checkVideoExistsOnWikia() {
-		$duplicates = WikiaFileHelper::findVideoDuplicates( $this->videoData['provider'], $this->videoData['videoId'], self::REMOTE_ASSET );
+		$duplicates = WikiaFileHelper::findVideoDuplicates( $this->videoData['provider'], $this->videoData['videoId'], static::$REMOTE_ASSET );
 		if ( count( $duplicates ) > 0 ) {
 			if ( !$this->reupload ) {
 				$msg = "Skipping {$this->videoData['titleName']} (Id: {$this->videoData['videoId']}, $this->videoData['provider']) - video already exists and reupload is disabled.\n";

@@ -2,11 +2,12 @@
 
 class RemoteAssetFeedIngester extends VideoFeedIngester {
 
-	const REMOTE_ASSET = true;
+	public static $REMOTE_ASSET = true;
 
 	private $duplicateAsset;
 
 	public function checkIsDuplicateVideo() {
+		$this->checkVideoExistsOnWikia();
 		$this->checkVideoExistsOnOoyala();
 	}
 
@@ -24,7 +25,7 @@ class RemoteAssetFeedIngester extends VideoFeedIngester {
 	}
 
 	public function saveVideo() {
-		$this->metaData['pageCategories'] = implode( ', ', $this->metaData['pageCategories'] );
+		$this->metaData['pageCategories'] = implode( ', ', $this->pageCategories );
 		if ( !empty( $this->duplicateAsset ) ) {
 			if ( !empty( $this->duplicateAsset['metadata']['sourceid'] ) && $this->duplicateAsset['metadata']['sourceid'] == $this->metaData['videoId'] ) {
 				$result = $this->updateRemoteAsset( $this->metaData['videoId'], $this->metaData['destinationTitle'], $this->metaData, $this->duplicateAsset );
