@@ -84,11 +84,11 @@ class TopArticles implements IDataProvider {
 				[$articleId],
 				400,
 				['w' => 16, 'h' => 9],
-				wfGetDB( DB_SLAVE, [], $wikiId )
+				wfGetDB( DB_SLAVE, [], \WikiFactory::IDtoDB( $wikiId ) )
 			);
 			$images = $imageServing->getImages( 1 );
 			if ( !empty( $images[$articleId] ) ) {
-				$articleInfoExpanded['media']['url'] = $images[$articleId]['url'];
+				$articleInfoExpanded['media']['url'] = $images[$articleId][0]['url'];
 			}
 
 			$out[] = $articleInfoExpanded;
