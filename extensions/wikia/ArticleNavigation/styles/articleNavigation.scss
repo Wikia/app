@@ -3,6 +3,18 @@
 @import 'skins/shared/color';
 
 $article-navigation-icon-size: 38px;
+$distanceToDropdown: 20px;
+$dropdownArrowSize: 10px;
+
+@mixin dropdownWidth($columnWidth: $medium-grid-column * 3) {
+	.wikia-dropdown-nav-wrapper {
+		width: $columnWidth * 2;
+	}
+
+	.wikia-dropdown-nav {
+		width: $columnWidth;
+	}
+}
 
 .article-navigation {
 	margin-left: $medium-content-padding - $content-border-width;
@@ -29,10 +41,44 @@ $article-navigation-icon-size: 38px;
 		font-size: $article-navigation-icon-size;
 		line-height: $article-navigation-icon-size;
 		margin-bottom: 6px;
+		position: relative;
+	}
 
-		&:hover {
-			color: $color-buttons;
+	.wikia-dropdown-nav-wrapper {
+		box-sizing: content-box;
+		padding-left: $distanceToDropdown;
+		top: round($dropdownArrowSize / 2) * -1;
+	}
+
+	@include dropdownWidth();
+
+	.active {
+		.nav-icon {
+			&:before,
+			&:after {
+				content: "";
+				border-top: $dropdownArrowSize solid transparent;
+				border-bottom: $dropdownArrowSize solid transparent;
+				position: absolute;
+				top: $dropdownArrowSize;
+			}
+
+			&:before {
+				border-right: $dropdownArrowSize solid $color-page-border-subtle;
+				right: -$distanceToDropdown;
+			}
+
+			&:after {
+				border-right: $dropdownArrowSize solid $color-page;
+				right: -$distanceToDropdown - 1px;
+				z-index: 1;
+			}
 		}
+	}
+
+	.active .nav-icon,
+	.nav-icon:hover {
+		color: $color-buttons;
 	}
 }
 
@@ -40,6 +86,8 @@ $article-navigation-icon-size: 38px;
 	.article-navigation {
 		margin-left: $large-content-padding - $content-border-width;
 		width: $large-grid-column;
+
+		@include dropdownWidth($large-grid-column * 3);
 	}
 }
 
@@ -47,5 +95,7 @@ $article-navigation-icon-size: 38px;
 	.article-navigation {
 		margin-left: $small-content-padding - $content-border-width;
 		width: $small-grid-column;
+
+		@include dropdownWidth($small-grid-column * 2);
 	}
 }

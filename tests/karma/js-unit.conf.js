@@ -14,6 +14,10 @@ module.exports = function (config) {
 	base(config);
 
 	config.set({
+		exclude: [
+			'resources/wikia/ui_components/**/Gruntfile.js',
+			'resources/wikia/ui_components/**/node_modules/**/*.js',
+		],
 		files: [
 			'tests/lib/jasmine/jasmine.async.js',
 

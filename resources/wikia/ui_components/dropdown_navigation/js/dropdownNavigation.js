@@ -1,13 +1,20 @@
-'use strict';
-
 define(
 	'wikia.dropdownNavigation',
-	['jquery', 'wikia.window', 'wikia.document', 'wikia.mustache', 'wikia.dropdownNavigation.templates'],
-	function ($, win, doc, mustache, dropdownTemplates) {
-		// used for setting unique id for each dropdown added to the page
+	[
+		'jquery',
+		'wikia.window',
+		'wikia.dropdownNavigation.utils',
+		'wikia.mustache',
+		'wikia.dropdownNavigation.templates'
+	],
+	function ($, win, utils, mustache, templates) {
+		'use strict';
+
+		// used for generating unique ID for each dropdown rendered on a page
 		var dropdownIndex = 0;
 
 		/**
+<<<<<<< HEAD
 		 * @desc validates dropdown naviagation options
 		 * @param {Object} params
 		 */
@@ -18,64 +25,94 @@ define(
 		}
 
 		/**
+=======
+>>>>>>> CON-2046-nested-dropdown
 		 * @desc creates new instance of Dropdown Navigation
 		 * @param {Object} options - configuration options
 		 * @returns {Object} - if called without `new` returns new instance of DropdownNavigation
 		 * @constructor
 		 */
 		function DropdownNavigation(options) {
-			validateParams(options);
 
 			if (!(this instanceof DropdownNavigation)) {
 				return new DropdownNavigation(options);
 			}
 
+			utils.validateParams(options);
+
 			var self = this,
 				dropdownId = 'wikiaDropdownNav' + dropdownIndex++,
-				dropdownParams = {
+				params = {
 					activeClass: 'active',
+					$container: null,
 					id: dropdownId,
-					maxHeight: 400,
-					scrollX: true
+					maxHeight: 400
 				},
-				delayHoverParams = {
-					onActivate: show,
-					onDeactivate: hide,
-					activateOnClick: false
+				menuAIMParams = {
+					activate: showSecondLevelList,
+					deactivate: hideSecondLevelList,
+					tolerance: 85
 				},
 
 				// cached DOM elements
-				$trigger,
-				$container,
-				$dropdown;
+				$sectionsWrapper,
+				$sections,
+				$subsections;
 
 			/**
-			 * @desc adds dropdown to DOM and returns jQuery selector for it
-			 * @returns {jQuery} - jQuery selector for dropdown element
+			 * @desc sets dropdown UI to initial state
 			 */
-			function render() {
-				return $(mustache.render(dropdownTemplates.dropdown_navigation, dropdownParams)).appendTo($container);
+			this.resetUI = function () {
+				this.menuAim.resetActiveRow();
+				$sections
+					.add($subsections)
+					.removeClass(params.activeClass);
+
+				$sectionsWrapper.scrollTop(0);
+			};
+
+			/**
+			 * @desc shows subsection
+			 * @param {Element} row - dropdown "<li>" HTML element
+			 * @param {Event=} event - passed only if row was clicked
+			 */
+			function showSecondLevelList(row, event) {
+				var $row = $(row),
+					id = $row.data('id');
+
+				// handle touch interactions
+				if (event && id && !$row.hasClass(params.activeClass)) {
+					event.preventDefault();
+					event.stopPropagation();
+				}
+
+				$('#' + row.getAttribute('data-id'))
+					.add(row)
+					.addClass(params.activeClass);
 			}
 
 			/**
-			 * @desc shows dropdown
+			 * @desc hides subsection
+			 * @param {Element} row - dropdwon "<li>" HTML element
 			 */
-			function show() {
-				$dropdown.addClass(dropdownParams.activeClass);
+			function hideSecondLevelList(row) {
+				$('#' + row.getAttribute('data-id'))
+					.add(row)
+					.removeClass(params.activeClass);
 			}
 
 			/**
-			 * @desc hides dropdown
+			 * @desc creates dropdown and adds it to DOM
+			 * @param {Object} params - dropdown template params
+			 * @param {Object} templates - mustache templates
+			 * @param {jQuery} $container - dropdown container
+			 * @returns {jQuery} - dropdown element in jQuery collection
 			 */
-			function hide() {
-				$dropdown.removeClass(dropdownParams.activeClass);
-			}
+			function createDropdown(params, templates, $container) {
+				utils.createSubsectionData(params);
 
-			/**
-			 * @desc sets dropdown positions
-			 */
-			function setPosition() {
-				$dropdown.css('left', $trigger.outerWidth());
+				return $(mustache.render(templates.dropdown, params, templates)).appendTo($container);
+
 			}
 
 			/**
@@ -83,24 +120,32 @@ define(
 			 * @param {Object} options - configuration options
 			 */
 			function init(options) {
-				$.extend(dropdownParams, options);
+				var html, $dropdownTrigger, $parent, $dropdownWrapper;
 
-				$trigger = $('#' + options.trigger);
-				$container = $trigger.closest('li');
+				$.extend(params, options);
 
-				$dropdown = $('#' + options.id);
+				utils.createSubsectionData(params);
+				html = mustache.render(templates.dropdown, params, templates);
 
-				if ($dropdown.length == 0) {
-					$dropdown = render();
-				}
+				$dropdownTrigger = $('#' + params.trigger);
+				$parent = params.$container || $dropdownTrigger.closest('li');
 
-				setPosition();
+				// bind to existing markup or create new dropdown markup and add in to DOM
+				$dropdownWrapper = !params.render ?
+					$('#' + params.id) :
+					createDropdown(params, templates, $parent);
 
-				// initialize UX enhancements
-				self.delayedHover = win.delayedHover($container[0], delayHoverParams);
+				$sectionsWrapper = $dropdownWrapper.children('ul');
+				$sections = $sectionsWrapper.children();
+				$subsections = $dropdownWrapper.find('div > ul');
+
+				utils.setPosition($dropdownWrapper, $dropdownTrigger);
+
+				// initialize dropdown UX enhancements
+				self.menuAim = win.menuAim($sectionsWrapper[0], menuAIMParams);
 			}
 
-			// initialize dropdown component
+			// initialize component
 			init(options);
 		}
 

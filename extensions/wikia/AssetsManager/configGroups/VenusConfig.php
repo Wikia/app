@@ -97,6 +97,7 @@ $VenusConfig[ 'venus_body_js' ] = [
 		//TOC
 		'//extensions/wikia/TOC/js/modules/toc.js',
 		'//resources/wikia/ui_components/dropdown_navigation/js/dropdownNavigation.templates.mustache.js',
+		'//resources/wikia/ui_components/dropdown_navigation/js/dropdownNavigation.utils.js',
 		'//resources/wikia/ui_components/dropdown_navigation/js/dropdownNavigation.js',
 		'//extensions/wikia/Venus/scripts/venusToc.js',
 
