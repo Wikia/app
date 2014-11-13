@@ -257,9 +257,10 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	}
 
 
-	private function getInfoFromRow( $row ) {
+	private function getInfoFromRow( &$row ) {
 		$title = Title::newFromText( $row[ 'title' ] );
 		if ( !empty( $title ) ) {
+
 			$articleId = $title->getArticleId();
 			$namespaceId = $title->getNamespace();
 			$type = $this->getType( $namespaceId );
@@ -293,7 +294,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			case NS_MAIN:
 				return self::STR_ARTICLE;
 				break;
-			case NS_BLOG:
+			case 500:
 				return self::STR_BLOG;
 				break;
 			case NS_CATEGORY:
@@ -331,11 +332,13 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$imageTitle = null;
 		if ( $imageId == 0 ) {
 			$imageTitle = self::findFirstImageTitleFromArticle( $articleId );
-			$imageId = $imageTitle->getArticleId();
 		} else {
 			$imageTitle = Title::newFromID( $imageId );
 		}
-		$url = self::getUrlFromImageTitle( $imageTitle );
+		if ( !empty( $imageTitle ) ) {
+			$url = self::getUrlFromImageTitle( $imageTitle );
+			$imageId = $imageTitle->getArticleId();
+		}
 		return [ $imageId, $url ];
 	}
 
