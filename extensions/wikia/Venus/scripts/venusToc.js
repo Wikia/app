@@ -62,9 +62,17 @@ define(
 
 		/**
 		 * @desc shows dropdown
+		 * @param {Event=} event
 		 */
-		function show() {
+		function show(event) {
 			$parent.addClass('active');
+
+			// handle touch interactions
+			if (event) {
+				event.stopPropagation();
+			}
+
+			$('body').one('click', hide);
 		}
 
 		/**
@@ -78,20 +86,29 @@ define(
 		/**
 		 * @desc initialize TOC
 		 * @param {String} id -  id of the trigger element
+		 * @param {Boolean} isTouchScreen - true if browser suppport touch events
 		 */
-		function init(id) {
+		function init(id, isTouchScreen) {
 			var options = {},
 				articleSections = getTocData(headers, articleWrapperId);
 
+			// initialize TOC only if article has sections
 			if (articleSections.length > 0) {
 				options.sections = articleSections;
 				options.trigger = id;
 
 				tocDropdown = new DropdownNavigation(options);
+
 				$triggerButton = $('#' + id);
 				$parent = $triggerButton.parent();
 
-				win.delayedHover($parent[0], delayHoverParams);
+				if (!isTouchScreen) {
+					win.delayedHover($parent[0], delayHoverParams);
+				} else {
+					$triggerButton.on('click', show);
+				}
+
+				show();
 			}
 		}
 
