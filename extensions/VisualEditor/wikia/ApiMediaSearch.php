@@ -158,6 +158,11 @@ class ApiMediaSearch extends ApiBase {
 			if ( $item['type'] === 'video' ) {
 				$item['duration'] = $this->getDuration( $title );
 			}
+			if ( $item['type'] === 'photo' ) {
+				$file = wfFindFile( $title );
+				$item['width'] = $file->getWidth();
+				$item['height'] = $file->getHeight();
+			}
 			array_push( $items, $item );
 		}
 
