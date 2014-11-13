@@ -118,7 +118,7 @@ class RelatedPages {
 		}
 
 		// get up to self::LIMIT_MAX items and cache them
-		$data = WikiaDataAccess::cache( "RelatedPages::get::{$articleId}", WikiaResponse::CACHE_STANDARD, function() use ( $articleId ) {
+		$data = WikiaDataAccess::cache( wfMemcKey( __METHOD__, $articleId ), WikiaResponse::CACHE_STANDARD, function() use ( $articleId ) {
 			$this->setData( [] );
 			$categories = $this->getCategories( $articleId );
 
