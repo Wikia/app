@@ -19,7 +19,7 @@ class ArticleAsJson extends WikiaService {
 		return "<img src='{$blankImgUrl}' class='{$classes}' data-ref='{$id}'{$width}{$height} />";
 	}
 
-	private static function createMediaObj( $details, $imageName, $caption = '', $link = '' ) {
+	private static function createMediaObj( $details, $imageName, $caption = '', $link = null ) {
 		wfProfileIn( __METHOD__ );
 
 		$media = [
@@ -28,9 +28,12 @@ class ArticleAsJson extends WikiaService {
 			'fileUrl' => $details['fileUrl'],
 			'title' => $imageName,
 			'caption' => $caption,
-			'user' => $details['userName'],
-			'link' => $link,
+			'user' => $details['userName']
 		];
+
+		if ( is_string( $link ) && $link !== '' ) {
+			$media['link'] = $link;
+		}
 
 		if ( !empty( $details['width'] ) ) {
 			$media['width'] = (int) $details['width'];
