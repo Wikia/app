@@ -2,6 +2,9 @@
 
 class MercuryApiHooks {
 
+	const SERVICE_API_BASE = '/api/v1/';
+	const SERVICE_API_ARTICLE = 'article/';
+
 	/**
 	 * @desc Get number of user's contribution from DB
 	 *
@@ -71,6 +74,25 @@ class MercuryApiHooks {
 		$articleId = $wikiPage->getId();
 		$key = MercuryApi::getTopContributorsKey( $articleId, MercuryApiController::NUMBER_CONTRIBUTORS );
 		WikiaDataAccess::cachePurge( $key );
+		return true;
+	}
+
+	/**
+	 * @desc Add Mercury Article API urls to the purge urls list
+	 *
+	 * @param Title $title
+	 * @param array $urls
+	 * @return bool
+	 */
+	static public function onTitleGetSquidURLs( Title $title, Array &$urls ) {
+		if( $title->inNamespaces( NS_MAIN ) ) {
+			// Mercury service API for article
+			// TODO: Uncomment this once Mercury API calls are cached
+			// $urls[] = wfExpandUrl( F::app()->wg->Server . self::SERVICE_API_BASE . self::SERCICE_API_ARTICLE . $title->getPartialURL() );
+
+			// Mercury API call from service
+			$urls[] = MercuryApiController::getUrl( 'getArticle', ['title' => $title->getPartialURL()] );
+		}
 		return true;
 	}
 }

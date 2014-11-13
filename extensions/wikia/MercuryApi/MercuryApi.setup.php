@@ -29,7 +29,7 @@ $wgWikiaApiControllers[ 'MercuryApiController' ] = $dir . 'MercuryApiController.
 // Hooks
 $wgHooks[ 'ArticleSaveComplete' ][] = 'MercuryApiHooks::onArticleSaveComplete';
 $wgHooks[ 'ArticleRollbackComplete' ][] = 'MercuryApiHooks::onArticleRollbackComplete';
-
+$wgHooks['TitleGetSquidURLs'][] = 'MercuryApiHooks::onTitleGetSquidURLs';
 
 // Special pages
 $wgSpecialPages[ 'Mercury' ] = 'MercurySpecialPageController';
