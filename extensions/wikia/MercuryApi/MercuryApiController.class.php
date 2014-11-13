@@ -40,6 +40,11 @@ class MercuryApiController extends WikiaController {
 				'android' => str_replace( 'app-id=', '', $meta[ 'google-play-app' ] ),
 			];
 
+			$smartBannerConfig[ 'appSchema' ] = [
+				'ios' => $meta[ 'ios-schema' ],
+				'android' => $meta[ 'android-schema' ]
+			];
+
 			return $smartBannerConfig;
 		}
 
