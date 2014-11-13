@@ -967,19 +967,19 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 
 	/**
 	 * Create a list of category names to add to the new file page
-	 * @param array $videoData
 	 * @param array $addlCategories
+	 * @internal param array $videoData
 	 * @return array $categories
 	 */
-	public function generateCategories(array $videoData, array $addlCategories) {
+	public function generateCategories( array $addlCategories ) {
 		wfProfileIn( __METHOD__ );
 
-		$addlCategories[] = $this->metaData['name'];
-		$addlCategories[] = $this->metaData['series'];
-		$addlCategories[] = $this->metaData['category'];
+		$addlCategories[] = $this->videoData['name'];
+		$addlCategories[] = $this->videoData['series'];
+		$addlCategories[] = $this->videoData['category'];
 
 		// VID-1736 Remove video title from categories
-		$titleKey = array_search( $this->metaData['titleName'], $addlCategories );
+		$titleKey = array_search( $this->videoData['titleName'], $addlCategories );
 		if ( $titleKey !== false ) {
 			unset( $addlCategories[$titleKey] );
 		}
@@ -987,15 +987,15 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 		$addlCategories = array_merge( $addlCategories, $this->getAdditionalPageCategories( $addlCategories ) );
 
 		// add language
-		if ( !empty( $this->metaData['language'] ) && !preg_match( "/\benglish\b/i", $this->metaData['language'] ) ) {
+		if ( !empty( $this->videoData['language'] ) && !preg_match( "/\benglish\b/i", $this->videoData['language'] ) ) {
 			$addlCategories[] = 'International';
-			$addlCategories[] = $this->metaData['language'];
+			$addlCategories[] = $this->videoData['language'];
 		}
 
 		// add subtitle
-		if ( !empty( $this->metaData['subtitle'] ) && !preg_match( "/\benglish\b/i", $this->metaData['subtitle'] ) ) {
+		if ( !empty( $this->videoData['subtitle'] ) && !preg_match( "/\benglish\b/i", $this->videoData['subtitle'] ) ) {
 			$addlCategories[] = 'International';
-			$addlCategories[] = $this->metaData['subtitle'];
+			$addlCategories[] = $this->videoData['subtitle'];
 		}
 
 		$addlCategories[] = 'IVA';

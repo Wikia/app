@@ -160,19 +160,19 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * Create list of category names to add to the new file page
-	 * @param array $videoData
 	 * @param array $addlCategories
+	 * @internal param array $videoData
 	 * @return array $categories
 	 */
-	public function generateCategories(array $videoData, array $addlCategories) {
+	public function generateCategories( array $addlCategories ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( !empty( $videoData['name'] ) ) {
-			$addlCategories = array_merge( $addlCategories, array_map( 'trim', explode( ',', $videoData['name'] ) ) );
+		if ( !empty( $this->videoData['name'] ) ) {
+			$addlCategories = array_merge( $addlCategories, array_map( 'trim', explode( ',', $this->videoData['name'] ) ) );
 		}
 
-		if ( !empty( $videoData['pageCategories'] ) ) {
-			$stdCategories = array_map( array( $this , 'getPageCategory'), explode( ',', $videoData['pageCategories'] ) );
+		if ( !empty( $this->videoData['pageCategories'] ) ) {
+			$stdCategories = array_map( array( $this , 'getPageCategory'), explode( ',', $this->videoData['pageCategories'] ) );
 			$addlCategories = array_merge( $addlCategories, $stdCategories );
 		}
 
@@ -182,8 +182,8 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 			unset( $addlCategories[$key] );
 		}
 
-		if ( !empty( $videoData['categoryName'] ) ) {
-			$addlCategories[] = $videoData['categoryName'];
+		if ( !empty( $this->videoData['categoryName'] ) ) {
+			$addlCategories[] = $this->videoData['categoryName'];
 		}
 
 		$addlCategories = array_merge( $addlCategories, $this->getAdditionalPageCategories( $addlCategories ) );
@@ -197,16 +197,16 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * generate metadata
-	 * @param array $videoData
+	 * @param array $addlCategories
 	 * @return array
 	 */
-	public function generateMetadata( $videoData ) {
-		$metadata = parent::generateMetadata( $videoData );
-		$metadata['startDate'] = empty( $videoData['startDate'] ) ? '' :  $videoData['startDate'];
-		$metadata['source'] = empty( $videoData['source'] ) ? '' :  $videoData['source'];
-		$metadata['sourceId'] = empty( $videoData['sourceId'] ) ? '' :  $videoData['sourceId'];
-		$metadata['distributor'] = empty( $videoData['distributor'] ) ? '' :  $videoData['distributor'];
-		$metadata['pageCategories'] = empty( $videoData['pageCategories'] ) ? '' :  $videoData['pageCategories'];
+	public function generateMetadata( array $addlCategories ) {
+		$metadata = parent::generateMetadata( $addlCategories );
+		$metadata['startDate'] = empty( $this->videoData['startDate'] ) ? '' :  $this->videoData['startDate'];
+		$metadata['source'] = empty( $this->videoData['source'] ) ? '' :  $this->videoData['source'];
+		$metadata['sourceId'] = empty( $this->videoData['sourceId'] ) ? '' :  $this->videoData['sourceId'];
+		$metadata['distributor'] = empty( $this->videoData['distributor'] ) ? '' :  $this->videoData['distributor'];
+		$metadata['pageCategories'] = empty( $this->videoData['pageCategories'] ) ? '' :  $this->videoData['pageCategories'];
 
 		return $metadata;
 	}

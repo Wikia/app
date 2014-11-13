@@ -113,8 +113,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 			$keywords = array_keys( $keywords );
 			$clipData['keywords'] = implode( ", ", $keywords );
 
-			$createParams = array( 'addlCategories' => $addlCategories );
-			$articlesCreated += $this->createVideo( $clipData, $createParams );
+			$articlesCreated += $this->createVideo( $clipData, $addlCategories );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -124,16 +123,16 @@ class IgnFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * Create a list of category names to add to the new file page
-	 * @param array $videoData
 	 * @param array $addlCategories
+	 * @internal param array $videoData
 	 * @return array $categories
 	 */
-	public function generateCategories(array $videoData, array $addlCategories) {
+	public function generateCategories( array $addlCategories ) {
 		wfProfileIn( __METHOD__ );
 
 		$addlCategories[] = 'IGN';
 
-		if ( empty( $this->metaData['gameContent'] ) ) {
+		if ( empty( $this->videoData['gameContent'] ) ) {
 			$addlCategories[] = 'IGN_entertainment';
 			$addlCategories[] = 'Entertainment';
 		} else {
@@ -148,12 +147,12 @@ class IgnFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * generate metadata
-	 * @param array $videoData
+	 * @param array $addlCategories
 	 * @return array
 	 */
-	public function generateMetadata( array $videoData ) {
-		$metadata = parent::generateMetadata( $videoData );
-		$metadata['videoUrl'] = empty( $videoData['videoUrl'] ) ? '' : $videoData['videoUrl'];
+	public function generateMetadata( array $addlCategories ) {
+		$metadata = parent::generateMetadata( $addlCategories );
+		$metadata['videoUrl'] = empty( $this->videoData['videoUrl'] ) ? '' : $this->videoData['videoUrl'];
 
 		return $metadata;
 	}

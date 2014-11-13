@@ -149,22 +149,22 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * Create a list of category names to add to the new file page
-	 * @param array $videoData
 	 * @param array $addlCategories
+	 * @internal param array $videoData
 	 * @return array $categories
 	 */
-	public function generateCategories(array $videoData, array $addlCategories) {
+	public function generateCategories( array $addlCategories ) {
 		wfProfileIn( __METHOD__ );
 
 		$addlCategories[] = 'AnyClip';
 		$addlCategories[] = 'Entertainment';
-		if ( stristr( $this->metaData['titleName'], 'trailer' ) ) {
+		if ( stristr( $this->videoData['titleName'], 'trailer' ) ) {
 			$addlCategories[] = 'Trailers';
 		}
 
-		if ( !empty( $this->metaData['name'] ) ) {
-			$addlCategories[] = $this->metaData['name'];
-			$addition = $this->getAdditionalPageCategory( $this->metaData['name'] );
+		if ( !empty( $this->videoData['name'] ) ) {
+			$addlCategories[] = $this->videoData['name'];
+			$addition = $this->getAdditionalPageCategory( $this->videoData['name'] );
 			if ( !empty( $addition ) ) {
 				$addlCategories[] = $addition;
 			}
@@ -177,13 +177,13 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * generate metadata
-	 * @param array $videoData
+	 * @param array $addlCategories
 	 * @return array
 	 */
-	public function generateMetadata( array $videoData ) {
-		$metadata = parent::generateMetadata( $videoData );
-		$metadata['videoUrl'] = empty( $videoData['videoUrl'] ) ? '' : $videoData['videoUrl'];
-		$metadata['uniqueName'] = empty( $videoData['uniqueName'] ) ? '' : $videoData['uniqueName'];
+	public function generateMetadata( array $addlCategories ) {
+		$metadata = parent::generateMetadata( $addlCategories );
+		$metadata['videoUrl'] = empty( $this->videoData['videoUrl'] ) ? '' : $this->videoData['videoUrl'];
+		$metadata['uniqueName'] = empty( $this->videoData['uniqueName'] ) ? '' : $this->videoData['uniqueName'];
 
 		return $metadata;
 	}

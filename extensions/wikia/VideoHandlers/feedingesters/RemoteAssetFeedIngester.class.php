@@ -6,15 +6,15 @@ class RemoteAssetFeedIngester extends VideoFeedIngester {
 
 	private $duplicateAsset;
 
-	public function checkIsDuplicateVideo( $videoData, $provider ) {
-		$this->checkVideoExistsOnOoyala( $videoData, $provider );
+	public function checkIsDuplicateVideo() {
+		$this->checkVideoExistsOnOoyala();
 	}
 
-	public function checkVideoExistsOnOoyala( $videoData, $provider ) {
-		$dupAssets = OoyalaAsset::getAssetsBySourceId( $videoData['videoId'], $provider );
+	public function checkVideoExistsOnOoyala() {
+		$dupAssets = OoyalaAsset::getAssetsBySourceId( $this->videoData['videoId'], $this->videoData['provider'] );
 		if ( !empty( $dupAssets ) ) {
 			if ( $this->reupload === false ) {
-				$msg = "Skipping {$videoData['titleName']} (Id: {$videoData['videoId']}, $provider) - video already exists in remote assets.\n";
+				$msg = "Skipping {$this->videoData['titleName']} (Id: {$this->videoData['videoId']}, {$this->videoData['provider']}) - video already exists in remote assets.\n";
 				throw new FeedIngesterSkippedException( $msg );
 			}
 			$this->duplicateAsset = $dupAssets[0];
@@ -23,17 +23,17 @@ class RemoteAssetFeedIngester extends VideoFeedIngester {
 		}
 	}
 
-	public function saveVideo( $categories ) {
-		$this->metaData['pageCategories'] = implode( ', ', $categories );
+	public function saveVideo( $metaData ) {
+		$metaData['pageCategories'] = implode( ', ', $metaData['pageCategories'] );
 		if ( !empty( $this->duplicateAsset ) ) {
-			if ( !empty( $this->duplicateAsset['metadata']['sourceid'] ) && $this->duplicateAsset['metadata']['sourceid'] == $this->metaData['videoId'] ) {
-				$result = $this->updateRemoteAsset( $this->metaData['videoId'], $this->metaData['destinationTitle'], $this->metaData, $this->duplicateAsset );
+			if ( !empty( $this->duplicateAsset['metadata']['sourceid'] ) && $this->duplicateAsset['metadata']['sourceid'] == $metaData['videoId'] ) {
+				$result = $this->updateRemoteAsset( $metaData['videoId'], $metaData['destinationTitle'], $metaData, $this->duplicateAsset );
 			} else {
-				$this->logger->videoSkipped( "Skipping {$this->metaData['name']} - {$this->metaData['description']}. SouceId not match (Id: {$this->metaData['videoId']}).\n" );
+				$this->logger->videoSkipped( "Skipping {$metaData['name']} - {$metaData['description']}. SouceId not match (Id: {$metaData['videoId']}).\n" );
 				return 0;
 			}
 		} else {
-			$result = $this->createRemoteAsset( $this->metaData['videoId'], $this->metaData['destinationTitle'], $this->metaData );
+			$result = $this->createRemoteAsset( $metaData['videoId'], $metaData['destinationTitle'], $metaData );
 		}
 
 		return $result;
@@ -156,7 +156,7 @@ class RemoteAssetFeedIngester extends VideoFeedIngester {
 		throw new Exception("Must be implemented by a subclass");
 	}
 
-	public function generateCategories(array $videoData, array $addlCategories) {
+	public function generateCategories( array $addlCategories ) {
 		throw new Exception("Must be implemented by a sublcass");
 	}
 
