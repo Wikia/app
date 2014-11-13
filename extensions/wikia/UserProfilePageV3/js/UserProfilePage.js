@@ -404,7 +404,7 @@ var UserProfilePage = {
 			msg = $.msg('oasis-generic-error');
 		}
 
-		window.GlobalNotification.show(msg, 'error');
+		window.GlobalNotification.show(msg, 'error', null, 5000);
 	},
 
 	getFormData: function () {
