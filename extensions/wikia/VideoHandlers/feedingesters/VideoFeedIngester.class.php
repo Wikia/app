@@ -178,11 +178,12 @@ abstract class VideoFeedIngester {
 	public function checkVideoExistsOnWikia() {
 		$duplicates = WikiaFileHelper::findVideoDuplicates( $this->videoData['provider'], $this->videoData['videoId'], static::$REMOTE_ASSET );
 		if ( count( $duplicates ) > 0 ) {
+			$oldName = $duplicates[0]['img_name'];
 			if ( !$this->reupload ) {
-				$msg = "Skipping {$this->videoData['titleName']} (Id: {$this->videoData['videoId']}, $this->videoData['provider']) - video already exists and reupload is disabled.\n";
+				$msg = "Skipping $oldName (Id: {$this->videoData['videoId']}, {$this->videoData['provider']}) - video already exists on Wikia and reupload is disabled.\n";
 				throw new FeedIngesterSkippedException( $msg );
 			}
-			$this->oldName = $duplicates[0]['img_name'];
+			$this->oldName = $oldName;
 			echo "Video already exists, using it's old name: {$this->oldName}\n";
 		} else {
 			$this->oldName = null;

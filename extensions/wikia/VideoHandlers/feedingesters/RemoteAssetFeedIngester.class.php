@@ -29,7 +29,7 @@ class RemoteAssetFeedIngester extends VideoFeedIngester {
 		$dupAssets = OoyalaAsset::getAssetsBySourceId( $this->videoData['videoId'], $this->videoData['provider'] );
 		if ( !empty( $dupAssets ) ) {
 			if ( $this->reupload === false ) {
-				$msg = "Skipping {$this->videoData['titleName']} (Id: {$this->videoData['videoId']}, {$this->videoData['provider']}) - video already exists in remote assets.\n";
+				$msg = "Skipping {$this->videoData['titleName']} (Id: {$this->videoData['videoId']}, {$this->videoData['provider']}) - video already exists on Ooyala and reupload is disabled.\n";
 				throw new FeedIngesterSkippedException( $msg );
 			}
 			$this->duplicateAsset = $dupAssets[0];
