@@ -24,6 +24,8 @@ a {
 
 .wikia-page {
 	background: rgba($color-page, $page-opacity);
+	border: $content-border-width solid $color-page-border;
+	border-bottom: 0;
 	position: relative; // needed for skin ads to not cover the article
 	// Remove the next line when https://wikia-inc.atlassian.net/browse/ADEN-1499 is fixed
 	z-index: 2; // needed for video wall ads to not cover the article
