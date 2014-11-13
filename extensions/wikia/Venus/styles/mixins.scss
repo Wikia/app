@@ -61,7 +61,6 @@
 		width: round($columns-count * ($large-grid-column + $large-grid-gutter) - $large-grid-gutter + $aditional-width);
 	}
 }
-
 @mixin grid-column-max-width($breakpoint, $columns-count, $aditional-width: 0px) {
 	@if $breakpoint == small {
 		max-width: round($columns-count * ($small-grid-column + $small-grid-gutter) - $small-grid-gutter + $aditional-width);
@@ -75,7 +74,6 @@
 		max-width: round($columns-count * ($large-grid-column + $large-grid-gutter) - $large-grid-gutter + $aditional-width);
 	}
 }
-
 @mixin grid-position($breakpoint, $columns-count, $position: 'left', $aditional-width: 0px) {
 	@if $breakpoint == small {
 		#{$position}: round($columns-count * ($small-grid-column + $small-grid-gutter) - $small-grid-gutter + $aditional-width);
@@ -118,65 +116,4 @@
 		padding-left: $small-content-padding;
 		padding-right: $small-content-padding;
 	}
-}
-
-@mixin proportional-video-height($width) {
-	height: round($width * 9 / 16);
-}
-
-@mixin venus-icons-font {
-	font-family: 'venus-icons-font' !important;
-	-moz-osx-font-smoothing: grayscale;
-	-webkit-font-smoothing: antialiased;
-	font-style: normal !important;
-	font-weight: normal !important;
-	font-variant: normal !important;
-	speak: none;
-	text-transform: none !important;
-}
-
-@mixin venus-icon($character) {
-	@include venus-icons-font;
-	content: $character;
-}
-
-@mixin venus-icon-toc {
-	@include venus-icon($venus-icon-toc);
-}
-@mixin venus-icon-edit {
-	@include venus-icon($venus-icon-edit);
-}
-@mixin venus-icon-settings {
-	@include venus-icon($venus-icon-settings);
-}
-@mixin venus-icon-reddit {
-	@include venus-icon($venus-icon-reddit);
-}
-@mixin venus-icon-facebook {
-	@include venus-icon($venus-icon-facebook);
-}
-@mixin venus-icon-twitter {
-	@include venus-icon($venus-icon-twitter);
-}
-@mixin venus-icon-share {
-	@include venus-icon($venus-icon-share);
-}
-
-// edit button has an icon from font glyph therefore it's width & height are equal to font's size
-$edit-button-size: $font-size-xl;
-$edit-button-line-height: $font-size-xl + 4px;
-
-@mixin edit-button {
-	@include venus-icon-edit;
-
-	display: inline-block;
-	font-size: $font-size-xl;
-	height: $edit-button-size;
-	position: absolute;
-	right: 100%;
-	width: $edit-button-size;
-}
-
-@mixin line-height-with-edit-button($value) {
-	line-height: if($value < $edit-button-line-height, $edit-button-line-height, $value);
 }

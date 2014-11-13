@@ -15,10 +15,8 @@ $wgHooks['WikiaSkinTopScripts'][] = 'AdEngine2Hooks::onWikiaSkinTopScripts';
 $wgHooks['OasisSkinAssetGroupsBlocking'][] = 'AdEngine2Hooks::onOasisSkinAssetGroupsBlocking';
 $wgHooks['WikiaSkinTopModules'][] = 'AdEngine2Hooks::onWikiaSkinTopModules';
 $wgHooks['OasisSkinAssetGroups'][] = 'AdEngine2Hooks::onOasisSkinAssetGroups';
-$wgHooks['VenusAssetsPackages'][] = 'AdEngine2Hooks::onVenusAssetsPackages';
 $wgHooks['InstantGlobalsGetVariables'][] = 'AdEngine2Hooks::onInstantGlobalsGetVariables';
 $wgHooks['SkinAfterContent'][] = 'AdEngine2Hooks::onSkinAfterContent';
-$wgHooks['SkinAfterBottomScripts'][] = 'AdEngine2Hooks::onSkinAfterBottomScripts';
 
 // Hooks for Exitstitial ads
 $wgHooks['LinkerMakeExternalLink'][] = 'AdEngine2ExitstitialHooks::onLinkerMakeExternalLink';

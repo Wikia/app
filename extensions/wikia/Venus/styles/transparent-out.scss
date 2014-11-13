@@ -1,5 +1,0 @@
-@import 'skins/shared/mixins/blackout';
-
-.transparent-out {
-	@include blackout( rgba( 1, 1, 1, 0.0 ) );
-}

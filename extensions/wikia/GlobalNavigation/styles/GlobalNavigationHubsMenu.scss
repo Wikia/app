@@ -1,6 +1,6 @@
 @import 'extensions/wikia/Venus/styles/variables';
-@import 'extensions/wikia/Venus/styles/typographyMixins';
 @import 'skins/shared/color';
+@import 'skins/shared/mixins/blackout';
 @import 'skins/shared/mixins/chevron';
 @import 'skins/shared/mixins/columns';
 @import 'GlobalNavigationColors';
@@ -21,10 +21,6 @@
 	.icon {
 		background-image: url('/extensions/wikia/GlobalNavigation/images/#{$hub-name}.svg'); /* base64 */
 	}
-}
-
-.global-navigation {
-	line-height: 23px;
 }
 
 .hubs-entry-point {
@@ -53,6 +49,14 @@
 	}
 }
 
+.transparent-out {
+	@include blackout(rgba(1, 1, 1, 0));
+
+	&.visible {
+		z-index: $blackout-z-index;
+	}
+}
+
 .hubs-menu {
 	background-color: $hubsmenu-background-color;
 	border: 1px solid $nav-border-color;
@@ -66,12 +70,6 @@
 
 	a {
 		color: $nav-foreground-dark-color;
-	}
-
-	ul {
-		list-style: none;
-		margin: 0;
-		padding: 0;
 	}
 
 	.hub-list {
@@ -161,7 +159,7 @@
 			border-bottom: 1px solid $hubsmenu-background-color;
 			display: inline-block;
 			float: left;
-			font-size: $font-size-base-big-screen;
+			font-size: 18px;
 			height: 62px;
 			width: 142px;
 		}
@@ -171,10 +169,9 @@
 		@include column-count(2);
 		@include column-rule(1px solid $nav-border-color);
 		@include column-gap(36px);
-		@include font-size-s;
 		display: none;
 		float: left;
-		line-height: 17px;
+		font-size: 15px;
 		padding-left: 22px;
 		width: 464px;
 
@@ -188,11 +185,8 @@
 		}
 
 		strong {
-			@include font-size-s;
 			display: inline-block;
 			font-weight: bold;
-			line-height: 17px;
-			margin: 0;
 			padding: 21px 0 5px;
 		}
 
@@ -202,8 +196,8 @@
 
 			&.more {
 				@include right-chevron();
-				@include font-size-base;
 				bottom: 40px;
+				font-size: 16px;
 				font-weight: bold;
 				left: 278px;
 				position: absolute;

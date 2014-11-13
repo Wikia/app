@@ -44,9 +44,6 @@ linters:
   NameFormat:
     enabled: true
 
-  SelectorFormat:
-    enabled: false
-
   PlaceholderInExtend:
     enabled: true
 

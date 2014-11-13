@@ -317,9 +317,7 @@ class Factory {
 		}
 		$component->setBaseTemplatePath( $this->getComponentsBaseTemplatePath( $name ) );
 
-		if ( !empty( $componentConfig['dependencies'] ) ) {
-			$component->setAssets( array_intersect_key( $componentConfig['dependencies'], array_flip( $assetsTypes ) ) );
-		}
+		$component->setAssets( array_intersect_key( $componentConfig['dependencies'], array_flip( $assetsTypes ) ) );
 
 		if ( !empty( $componentConfig['dependencies'][self::COMPONENT_DEPENDENCY] ) ) {
 			$component->setComponentDependencies( $componentConfig['dependencies'][self::COMPONENT_DEPENDENCY] );

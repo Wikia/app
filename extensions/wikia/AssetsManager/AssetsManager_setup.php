@@ -21,9 +21,7 @@ $wgAutoloadClasses['AssetsManagerGroupBuilder'] = __DIR__.'/builders/AssetsManag
 $wgAutoloadClasses['AssetsManagerGroupsBuilder'] = __DIR__.'/builders/AssetsManagerGroupsBuilder.class.php';
 $wgAutoloadClasses['AssetsManagerSassBuilder'] = __DIR__.'/builders/AssetsManagerSassBuilder.class.php';
 $wgAutoloadClasses['AssetsManagerSassesBuilder'] = __DIR__.'/builders/AssetsManagerSassesBuilder.class.php';
-
 $wgAutoloadClasses['AssetsManagerServer'] = __DIR__.'/AssetsManagerServer.class.php';
-$wgAutoloadClasses['AssetsManagerException'] = __DIR__.'/AssetsManagerException.class.php';
 
 $wgAutoloadClasses['AssetsManagerController'] = __DIR__.'/AssetsManagerController.class.php';
 

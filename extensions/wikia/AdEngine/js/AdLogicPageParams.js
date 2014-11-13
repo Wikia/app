@@ -166,14 +166,13 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			s0: site,
 			s1: zone1,
 			s2: zone2,
-			ab: getAb(),
 			artid: targeting.pageArticleId && targeting.pageArticleId.toString(),
-			cat: getCategories(),
 			dmn: getDomain(),
 			hostpre: getHostname(),
-			skin: targeting.skin,
+			wpage: targeting.pageName && targeting.pageName.toLowerCase(),
 			lang: targeting.wikiLanguage || 'unknown',
-			wpage: targeting.pageName && targeting.pageName.toLowerCase()
+			cat: getCategories(),
+			ab: getAb()
 		};
 
 		if (options.includeRawDbName) {

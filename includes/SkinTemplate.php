@@ -490,7 +490,7 @@ class SkinTemplate extends Skin {
 			$pageLang = $title->getPageLanguage();
 			$realBodyAttribs['lang'] = $pageLang->getHtmlCode();
 			$realBodyAttribs['dir'] = $pageLang->getDir();
-			$realBodyAttribs['class'] = 'mw-content-'.$pageLang->getDir().' mw-content-text';
+			$realBodyAttribs['class'] = 'mw-content-'.$pageLang->getDir();
 		}
 
 		$out->mBodytext = Html::rawElement( 'div', $realBodyAttribs, $out->mBodytext );

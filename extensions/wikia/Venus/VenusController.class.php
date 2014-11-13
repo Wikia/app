@@ -4,11 +4,8 @@ class VenusController extends WikiaController {
 	private static $bodyParametersArray = [];
 	private static $skinAssetGroups = [];
 
-	/** @var AssetsManager $assetsManager */
 	private $assetsManager;
-	/** @var QuickTemplate $skinTemplateObj */
 	private $skinTemplateObj;
-	/** @var WikiaSkin $skin */
 	private $skin;
 
 	public function init() {
@@ -27,6 +24,7 @@ class VenusController extends WikiaController {
 		$this->lang = $skinVars['lang'];
 		$this->pageClass = $skinVars['pageclass'];
 		$this->skinNameClass = $skinVars['skinnameclass'];
+		$this->bottomScriptLinks = $skinVars['bottomscripts'];
 		$this->pageCss = $this->getPageCss();
 
 
@@ -40,14 +38,14 @@ class VenusController extends WikiaController {
 	}
 
 	public function index() {
-		global $wgUser;
+		global $wgUser, $wgTitle;
 
+		$this->title = $wgTitle->getText();
 		$this->contents = $this->skinTemplateObj->data['bodytext'];
 
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
 
 		$this->setBodyModules();
-		$this->setAds();
 
 		$this->setBodyClasses();
 		$this->setHeadItems();
@@ -56,30 +54,15 @@ class VenusController extends WikiaController {
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 
-	private function setAds() {
-		$this->adTopRightBoxad = $this->app->renderView('Ad', 'Index', ['slotName' => 'TOP_RIGHT_BOXAD']);
-		$this->adTopLeaderboard = $this->app->renderView('Ad', 'Index', ['slotName' => 'TOP_LEADERBOARD']);
-		$this->adInvisibleSkin = $this->app->renderView('Ad', 'Index', ['slotName' => 'INVISIBLE_SKIN']);
-		$this->adsBottom = $this->app->renderView('Ad', 'Index', ['slotName' => 'GPT_FLUSH']);
-		$this->adsBottom .= $this->app->renderView('Ad', 'Index', ['slotName' => 'SEVENONEMEDIA_FLUSH']);
-	}
-
 	private function setBodyModules() {
 		$this->globalNavigation = $this->getGlobalNavigation();
+		$this->notifications = $this->getNotifications();
+		$this->topAds = $this->getTopAds();
 		$this->localNavigation = $this->getLocalNavigation();
 		$this->globalFooter = $this->getGlobalFooter();
-		$this->corporateFooter = $this->getCorporateFooter();
-
-		if ($this->isUserLoggedIn) {
-			$this->recentWikiActivity = $this->getRecentWikiActivity();
-		}
-
-		if ( WikiaPageType::isArticlePage() ) {
-			$this->leftArticleNav = $this->getLeftArticleNavigation();
-			$this->setVal('header', $this->app->renderView('Venus', 'header'));
-			Wikia::addAssetsToOutput( 'article_scss' );
-		}
+		$this->corporateFooter = $this->getCorporateFootet();
 	}
+
 
 	private function setBodyClasses() {
 		// generate list of CSS classes for <body> tag
@@ -124,6 +107,9 @@ class VenusController extends WikiaController {
 		$cssGroups = ['venus_css'];
 		$cssLinks = '';
 
+		$styles = $this->skin->getStyles();
+		$scripts = $this->skin->getScripts();
+
 		//let extensions manipulate the asset packages (e.g. ArticleComments,
 		//this is done to cut down the number or requests)
 		$this->app->runHook(
@@ -135,36 +121,44 @@ class VenusController extends WikiaController {
 			]
 		);
 
-		// SASS files requested via VenusAssetsPackages hook
-		$sassFiles = [];
-		foreach ( $this->assetsManager->getURL( $cssGroups ) as $src ) {
-			if ( $this->assetsManager->checkAssetUrlForSkin( $src, $this->skin ) ) {
-				$sassFiles[] = $src;
+		foreach ( $this->assetsManager->getURL( $cssGroups ) as $s ) {
+			if ( $this->assetsManager->checkAssetUrlForSkin( $s, $this->skin ) ) {
+				$cssLinks .= "<link rel=stylesheet href='{$s}'/>";
 			}
 		}
 
-		// try to fetch all SASS files using a single request (CON-1487)
-		// "WikiaSkin::getStylesWithCombinedSASS: combined 9 SASS files"
-		$cssLinks .= $this->skin->getStylesWithCombinedSASS($sassFiles);
+		if ( is_array( $styles ) ) {
+			foreach ( $styles as $s ) {
+				$cssLinks .= $s['tag'];
+			}
+		}
 
 		foreach ( $this->assetsManager->getURL( $jsHeadGroups ) as $src ) {
-			if ( $this->assetsManager->checkAssetUrlForSkin( $src, $this->skin ) ) {
+			if ( $this->assetsManager->checkAssetUrlForSkin( $s, $this->skin ) ) {
 				$jsHeadFiles .= "<script src='{$src}'></script>";
 			}
 		}
 
-		// try to fetch all AM groups in a single JS request (CON-1772)
-		// "WikiaSkin::getScriptsWithCombinedGroups: combined 8 JS groups"
-		$jsBodyFiles = $this->skin->getScriptsWithCombinedGroups($jsBodyGroups);
+		foreach ( $this->assetsManager->getURL( $jsBodyGroups ) as $src ) {
+			if ( $this->assetsManager->checkAssetUrlForSkin( $s, $this->skin ) ) {
+				$jsBodyFiles .= "<script src='{$src}'></script>";
+			}
+		}
+
+		if ( is_array( $scripts ) ) {
+			foreach ( $scripts as $s ) {
+				$jsBodyFiles .= "<script src='{$s['url']}'></script>";
+			}
+		}
 
 		//global variables from ResourceLoaderStartUpModule
 		$res = new ResourceVariablesGetter();
-		$vars = WikiaSkin::makeInlineVariablesScript($res->get()); // is it used anywhere?
+		$vars = WikiaSkin::makeInlineVariablesScript($res->get());
 
 		// set variables
 		$this->cssLinks = $cssLinks;
 		$this->jsBodyFiles =  $jsBodyFiles;
-		$this->jsHeadScripts = $wgOut->getHeadScripts() . $jsHeadFiles;
+		$this->jsHeadScripts = $this->skinTemplateObj->data['headscripts'] . $jsHeadFiles;
 	}
 
 	public function getGlobalNavigation() {
@@ -173,10 +167,18 @@ class VenusController extends WikiaController {
 			'';
 	}
 
+	private function getNotifications() {
+		//return $this->app->renderView('Notifications', 'Confirmation');
+	}
+
 	private function getLocalNavigation() {
 		return class_exists('LocalNavigationController') ?
 			$this->app->renderView('LocalNavigation', 'Index') :
 			'';
+	}
+
+	private function getTopAds() {
+		//return $this->app->renderView('Ad', 'Top');
 	}
 
 	private function getGlobalFooter() {
@@ -185,12 +187,8 @@ class VenusController extends WikiaController {
 			'';
 	}
 
-	public function getCorporateFooter() {
+	public function getCorporateFootet() {
 		//return $this->app->renderView('CorporateFooter', 'Index');
-	}
-
-	public function getRecentWikiActivity() {
-		return $this->app->renderView('RecentWikiActivity', 'index');
 	}
 
 	public static function addBodyParameter($parameter) {
@@ -224,45 +222,5 @@ class VenusController extends WikiaController {
 		}
 
 		return $bodyClasses;
-	}
-
-	private function getLeftArticleNavigation() {
-		return $this->app->renderView('ArticleNavigation', 'index');
-	}
-
-	public function header() {
-		global $wgOut, $wgArticle, $wgSupressPageTitle, $wgSupressPageSubtitle, $wgRequest;
-
-		$title = $wgOut->getPageTitle();
-		$redirect = null;
-
-		$skin = RequestContext::getMain()->getSkin();
-
-		// render subpage info like /ArticleOne/ArticleTwo
-		$subtitle = $skin->subPageSubtitle();
-
-		// render redirect info (redirected from)
-		if ( !empty( $wgArticle->mRedirectedFrom ) ) {
-			$redirect = trim( $wgOut->getSubtitle(), '()' );
-		}
-
-		if ( !empty( $wgSupressPageTitle ) ) {
-			$title = null;
-			$subtitle = null;
-			$redirect = null;
-		}
-
-		if ( !empty(  $wgSupressPageSubtitle ) ) {
-			$subtitle = null;
-			$redirect = null;
-		}
-
-		//TODO should be removed when cover unit is going to be implemented
-		$this->response->setVal('showCoverUnit', $wgRequest->getBool('coverunit', false));
-		$this->response->setVal('title', $title);
-		$this->response->setVal('subtitle', $subtitle);
-		$this->response->setVal('redirect', $redirect);
-
-		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 }

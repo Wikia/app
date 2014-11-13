@@ -6,6 +6,8 @@ $VenusConfig[ 'venus_body_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['venus'],
 	'assets' => [
+		'//resources/jquery/jquery-2.1.1.min.js',
+
 		//libraries/frameworks
 // TODO: This should be loaded here, but for some reason, it's already included
 //		'//resources/wikia/libraries/modil/modil.js',
@@ -30,18 +32,14 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//resources/wikia/modules/thumbnailer.js',
 		'//resources/wikia/modules/window.js',
 		'//resources/wikia/modules/abTest.js',
-		'//resources/wikia/modules/underscore.js',
-		'//resources/wikia/modules/stickyElement.js',
+
+		'//resources/wikia/modules/lazyqueue.js',
 
 		//tracker
 		'#group_tracker_js',
 
-		//bucky
-		'#group_bucky_js',
-
 		// jquery libs
 		'//resources/wikia/libraries/mustache/mustache.js',
-		'//resources/wikia/libraries/mustache/jquery.mustache.js',
 		'//resources/wikia/libraries/sloth/sloth.js',
 
 		// polyfills
@@ -73,36 +71,12 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 
 		'//extensions/wikia/Venus/scripts/isTouchScreen.js',
-		'//extensions/wikia/Venus/scripts/variables.js',
-		'//resources/wikia/modules/dom.js',
+		'//extensions/wikia/Venus/scripts/Venus.js',
 
 		// BackgroundChanger
 		'//extensions/wikia/Venus/scripts/BackgroundChanger.js',
 
-		//TODO adEngine is throwing errors in console, should be fixed as part of CON-1531
-//		'#group_adengine2_js',
-
-		'//resources/wikia/modules/browserDetect.js',
-		'#group_imglzy_js',
-
-		// support for video lightbox
-		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
-
-		// Lightbox
-		'//extensions/wikia/Lightbox/scripts/LightboxLoader.js',
-		'//extensions/wikia/Lightbox/scripts/venusLightboxLoader.js',
-
-		//TOC
-		'//extensions/wikia/TOC/js/modules/toc.js',
-		'//resources/wikia/ui_components/dropdown_navigation/js/dropdownNavigation.templates.mustache.js',
-		'//resources/wikia/ui_components/dropdown_navigation/js/dropdownNavigation.js',
-		'//extensions/wikia/Venus/scripts/venusToc.js',
-
-		// different article modules
-		'//skins/shared/scripts/scrollableTables.js',
-
-		//following script initialize different modules in Venus
-		'//extensions/wikia/Venus/scripts/articleModulesLoader.js',
+		'#group_adengine2_js',
 	]
 ];
 
@@ -111,7 +85,6 @@ $VenusConfig[ 'venus_head_js' ] = [
 	'skin' => ['venus'],
 	'assets' => [
 		'#group_abtesting',
-		'//resources/wikia/modules/lazyqueue.js',
 	]
 ];
 
@@ -146,8 +119,7 @@ $VenusConfig[ 'global_footer_scss' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'venus' ],
 	'assets' => [
-		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.scss',
-		'//extensions/wikia/GlobalFooter/styles/GlobalFooterVenus.scss'
+		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.scss'
 	]
 ];
 
@@ -174,7 +146,6 @@ $VenusConfig[ 'global_navigation_js' ] = [
 		'//resources/wikia/modules/scrollToLink.js',
 		'//skins/shared/scripts/transparent-out.js',
 		'//extensions/wikia/Venus/scripts/variables.js',
-		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationiOSScrollFix.js',
 		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationScrollToLink.js',
 		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationTracking.js',
 		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationLazyLoad.js',
@@ -184,7 +155,8 @@ $VenusConfig[ 'global_navigation_js' ] = [
 		'//extensions/wikia/UserLogin/js/UserLoginDropdown.globalNavigation.js',
 		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js',
 		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
-		'//resources/wikia/libraries/bootstrap/tooltip.js'
+		'//resources/wikia/libraries/bootstrap/tooltip.js',
+		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationiOSScrollFix.js'
 	]
 ];
 
@@ -197,47 +169,3 @@ $VenusConfig[ 'global_navigation_facebook_login_js' ] = [
 		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
 	]
 ];
-
-$VenusConfig[ 'article_navigation_js' ] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'venus' ],
-	'assets' => [
-		'//extensions/wikia/ArticleNavigation/scripts/sticky.js',
-		'//extensions/wikia/ArticleNavigation/scripts/share.js'
-	]
-];
-
-$VenusConfig[ 'article_navigation_scss' ] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'venus' ],
-	'assets' => [
-		'//extensions/wikia/ArticleNavigation/styles/articleNavigation.scss'
-	]
-];
-
-/** Article page */
-$VenusConfig[ 'article_scss' ] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'venus' ],
-	'assets' => [
-		'//extensions/wikia/Venus/styles/article/article.scss',
-		'//resources/wikia/ui_components/dropdown_navigation/css/dropdownNavigation.scss'
-	]
-];
-
-$VenusConfig[ 'recent_wiki_activity_scss' ] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'venus' ],
-	'assets' => [
-		'//extensions/wikia/RecentWikiActivity/styles/RecentWikiActivity.scss',
-	]
-];
-
-$VenusConfig['imglzy_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => [
-		'//extensions/wikia/ImageLazyLoad/js/ImgLzy.module.js',
-		'//extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
-	]
-];
-

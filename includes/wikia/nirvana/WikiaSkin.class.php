@@ -10,8 +10,6 @@ abstract class WikiaSkin extends SkinTemplate {
 	const LINK_REGEX = '/(<!--\[\s*if[^>]+>\s*<link[^>]*rel=["\']?stylesheet["\']?[^>]*>\s*<!\[\s*endif[^>]+-->|<link[^>]*rel=["\']?stylesheet["\']?[^>]*>)/imsU';
 	const STYLE_REGEX = '/(<!--\[\s*if[^>]+>\s*<style[^>]*>.*<\/style>\s*<!\[\s*endif[^>]+-->|<style[^>]*>.*<\/style>)/imsU';
 
-	const SKIN_VENUS = 'venus';
-
 	protected $app = null;
 	protected $wg = null;
 	protected $wf = null;
@@ -19,8 +17,6 @@ abstract class WikiaSkin extends SkinTemplate {
 	//strict mode for checking if an asset's URL is registered for the current skin
 	//@see AssetsManager::checkAssetUrlForSkin
 	protected $strictAssetUrlCheck = true;
-
-	private $assetsManager;
 
 	/**
 	 * WikiaSkin constructor
@@ -34,8 +30,6 @@ abstract class WikiaSkin extends SkinTemplate {
 		$this->app = F::app();
 		$this->wg = $this->app->wg;
 		$this->wf = $this->app->wf;
-
-		$this->assetsManager = AssetsManager::getInstance();
 
 		/**
 		 * old skins initialize template, skinname, stylename and themename statically in the class declaration,
@@ -96,6 +90,7 @@ abstract class WikiaSkin extends SkinTemplate {
 		wfProfileIn( __METHOD__ );
 
 		$scriptTags = $this->wg->out->getScriptsOnly() . $this->wg->out->getHeadItems();
+		$am = AssetsManager::getInstance();
 		$matches = array();
 		$res = array();
 
@@ -109,7 +104,7 @@ abstract class WikiaSkin extends SkinTemplate {
 				//find the src if set
 				preg_match( '/<script[^>]+src=["\'\s]?([^"\'>\s]+)["\'\s]?[^>]*>/im', $m, $srcMatch );
 
-				if ( !empty( $srcMatch[1] ) && $this->assetsManager->checkAssetUrlForSkin( $srcMatch[1], $this ) ) {
+				if ( !empty( $srcMatch[1] ) && $am->checkAssetUrlForSkin( $srcMatch[1], $this ) ) {
 					//fix HTML::inlineScript's expansion of ampersands in the src attribute
 					$url = str_replace( '&amp;', '&', $srcMatch[1] );
 					// apply domain sharding
@@ -127,68 +122,6 @@ abstract class WikiaSkin extends SkinTemplate {
 	}
 
 	/**
-	 * This method extracts script tags from $this->getScripts() method
-	 * and generates a single <script> tag to load all required AssetsManager
-	 * groups in a single HTTP request.
-	 *
-	 * Bottom scripts are added to the end of the output.
-	 *
-	 * Additionaly, all groups from $groups array will be loaded as well.
-	 *
-	 * Once this function ends its run $groups will be updated (via a reference)
-	 * with all AM groups extracted from getScripts().
-	 *
-	 * @param array $groups additional list of AM groups to load
-	 * @return string <script> tags with extracted JS files and the rest
-	 */
-	public function getScriptsWithCombinedGroups(Array &$groups) {
-		wfProfileIn(__METHOD__);
-		$scripts = $this->getScripts();
-		$bottomScripts = $this->bottomScripts();
-
-		// extract all <script> tags that load a single AssetsManager group
-		if ( is_array( $scripts ) ) {
-			foreach ( $scripts as $idx => $script ) {
-				if ( isset( $script['url'] ) ) {
-					if ( $this->assetsManager->isGroupURL( $script['url'] ) ) {
-						$groups[] = $this->assetsManager->getGroupNameFromUrl( $script['url'] );
-						unset( $scripts[$idx] );
-					}
-
-					// remove this entry from bottom scripts as it was extracted
-					// from there by $this->getScripts() call above
-					$bottomScripts = str_replace(Html::linkedScript($script['url']) . "\n" , '', $bottomScripts);
-				}
-			}
-		}
-
-		// render script tags
-		$scriptTags = '';
-
-		// load these groups with a skin check
-		foreach ( $this->assetsManager->getURL( $groups ) as $src ) {
-			if ( $this->assetsManager->checkAssetUrlForSkin( $src, $this ) ) {
-				$scriptTags .= "<script src='{$src}'></script>\n";
-			}
-		}
-
-		// load all remaining scripts
-		foreach ( $scripts as $script ) {
-			if (isset($script['url'])) {
-				$scriptTags .= "<script src='{$script['url']}'></script>\n";
-			}
-		}
-
-		wfDebug( sprintf( "%s: combined %d JS groups\n", __METHOD__, count($groups) ) );
-
-		// append bottom scripts to the output
-		$scriptTags .= $bottomScripts;
-
-		wfProfileOut(__METHOD__);
-		return $scriptTags;
-	}
-
-	/**
 	 * Returns the link tags for stylesheets to be output for this template as an array
 	 *
 	 * @return array an array with the following format:
@@ -199,6 +132,7 @@ abstract class WikiaSkin extends SkinTemplate {
 
 		//there are a number of extension that use addScript to append link tags for stylesheets, need to include those too
 		$stylesTags = $this->wg->out->buildCssLinks(). $this->wg->out->getHeadItems() . $this->wg->out->getScriptsOnly();
+		$am = AssetsManager::getInstance();
 		$matches = array();
 		$res = array();
 
@@ -212,7 +146,7 @@ abstract class WikiaSkin extends SkinTemplate {
 				//find the src if set
 				preg_match( '/<link[^>]+href=["\'\s]?([^"\'>\s]+)["\'\s]?[^>]*>/im', $m, $hrefMatch );
 
-				if ( !empty( $hrefMatch[1] ) && $this->assetsManager->checkAssetUrlForSkin( $hrefMatch[1], $this ) ) {
+				if ( !empty( $hrefMatch[1] ) && $am->checkAssetUrlForSkin( $hrefMatch[1], $this ) ) {
 					//fix HTML::element's expansion of ampersands in the src attribute
 					// todo: do we really need this trick? I notice URLs that are not properly encoded in the head element
 					$url = str_replace( '&amp;', '&', $hrefMatch[1] );
@@ -241,48 +175,6 @@ abstract class WikiaSkin extends SkinTemplate {
 		return $res;
 	}
 
-	/**
-	 * This method extracts links to SASS files from $this->getStyles() method
-	 * and generates a single <link> tag to load all of them via a single HTTP request.
-	 *
-	 * Additionaly, all SASS files from $sassFiles array will be loaded as well.
-	 *
-	 * Once this function ends its run $sassFiles will be updated (via a reference)
-	 * with all SASS files extracted from getStyles().
-	 *
-	 * @param array $sassFiles additional list of SASS files to load
-	 * @return string CSS links with extracted SASS files and the rest
-	 */
-	public function getStylesWithCombinedSASS(Array &$sassFiles) {
-		wfProfileIn(__METHOD__);
-
-		global $wgAllInOne;
-		$cssLinks = [];
-
-		foreach ( $this->getStyles() as $s ) {
-			if ( !empty($s['url']) ) {
-				if ($wgAllInOne && $this->assetsManager->isSassUrl($s['url'])) {
-					$sassFiles[] = $s['url'];
-				} else {
-					$cssLinks[] = $s['tag'];
-				}
-			} else {
-				$cssLinks[] = $s['tag'];
-			}
-		}
-
-		// turn an url (http://something.wikia.com/__am/sass/options/path/to/file.scss) to a local filepath
-		$sassFiles = $this->assetsManager->getSassFilePath($sassFiles);
-
-		// get a single URL to fetch all the required SASS files
-		$sassFilesUrl = $this->assetsManager->getSassesUrl($sassFiles);
-
-		wfDebug( sprintf( "%s: combined %d SASS files\n", __METHOD__, count($sassFiles) ) );
-
-		wfProfileOut(__METHOD__);
-		return Html::linkedStyle($sassFilesUrl ) . implode('', $cssLinks);
-	}
-
 	/*
 	 * WikiaMobile skin has its own getTopScripts
 	 * MobileWikiaSkin::getTopScripts
@@ -290,16 +182,17 @@ abstract class WikiaSkin extends SkinTemplate {
 	 */
 	public function getTopScripts() {
 		$scripts = '';
-		$vars = [
+		$vars = array(
 			'Wikia' => new stdClass(),
-		];
+			'wgJqueryUrl' => AssetsManager::getInstance()->getURL( 'jquery' ),
+		);
 
-		wfRunHooks( 'WikiaSkinTopScripts', array( &$vars, &$scripts, $this ) );
+		wfrunHooks( 'WikiaSkinTopScripts', array( &$vars, &$scripts, $this ) );
 
 		$scripts .= $this->renderTopShortTTLModules();
 
 		$scriptModules = array( 'amd', 'wikia.tracker.stub' );
-		wfRunHooks( 'WikiaSkinTopModules', array( &$scriptModules, $this ) );
+		wfrunHooks( 'WikiaSkinTopModules', array( &$scriptModules, $this ) );
 		if ( !empty($scriptModules) ) {
 			// Mocking mw.loader.state so the script can be loaded up high
 			// Whatever is passed to mw.loader.state is saved to window.preMwLdrSt

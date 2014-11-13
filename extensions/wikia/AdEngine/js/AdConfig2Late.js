@@ -74,8 +74,6 @@ define('ext.wikia.adEngine.adConfigLate', [
 	function getProviderList(slotname) {
 		var callDart = alwaysCallDart || alwaysCallDartInSlots[slotname];
 
-		callDart = callDart && !instantGlobals.wgSitewideDisableGpt;
-
 		log('getProvider', 5, logGroup);
 		log(slotname, 5, logGroup);
 
