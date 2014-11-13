@@ -19,7 +19,7 @@ $messages['en'] = array(
 	'wikiaCuratedContent-content-item-error' => 'Item does not exists or is empty',
 	'wikiaCuratedContent-content-required-entry' => 'Item is required',
 	'wikiaCuratedContent-content-duplicate-entry' => 'This value is duplicated',
-	'wikiaCuratedContent-content-empty-tag' => 'This tag needs some items',
+	'wikiaCuratedContent-content-empty-section' => 'This section needs some items',
 
 	'wikiaCuratedContent-content-description-items' => 'Add wiki "Items" and rename them as you\'d like them to appear in Curated Content with "Curated Content Names".',
 	'wikiaCuratedContent-content-description-tag' => 'Does it make sense to group items under a game series installment? Add a item "Tag," and drag and drop wiki items under it.',
@@ -69,7 +69,7 @@ $messages['qqq'] = array(
 	'wikiaCuratedContent-content-item-error' => 'Message shown to a user when he tries to save a item that do not exist',
 	'wikiaCuratedContent-content-required-entry' => 'Message shown to a user next to an input that is required',
 	'wikiaCuratedContent-content-duplicate-entry' => 'Message shown to a user next to an input that has duplicated content',
-	'wikiaCuratedContent-content-empty-tag' => 'Message shown to a a user if he has not added any items to a tag',
+	'wikiaCuratedContent-content-empty-section' => 'Message shown to a a user if he has not added any items to a section',
 
 	'wikiaCuratedContent-content-description-items' => 'Message describing a purpose and usage of the tool',
 	'wikiaCuratedContent-content-description-tag' => 'Message describing a purpose and usage of the tool',
@@ -282,7 +282,6 @@ $messages['nl'] = array(
 	'wikiaCuratedContent-content-save' => 'Opslaan',
 	'wikiaCuratedContent-content-required-entry' => 'Een categorie is verplicht.',
 	'wikiaCuratedContent-content-duplicate-entry' => 'Deze waarde komt meerdere keren voor',
-	'wikiaCuratedContent-content-empty-tag' => 'Dit label heeft categorieën nodig',
 );
 
 /** Polish (polski)

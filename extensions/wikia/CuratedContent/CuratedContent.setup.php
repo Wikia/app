@@ -45,7 +45,7 @@ JSMessages::registerPackage( 'CuratedContentMsg', [
 	'wikiacuratedcontent-content-duplicate-entry',
 	'wikiacuratedcontent-content-item-error',
 	'wikiacuratedcontent-content-required-entry',
-	'wikiacuratedcontent-content-empty-tag'
+	'wikiacuratedcontent-content-empty-section'
 ] );
 
 JSMessages::registerPackage( 'CuratedContentSponsoredMsg', [

@@ -8,7 +8,7 @@ $(function(){
 			tag = mw.config.get('tagTemplate'),
 			duplicateError = msg('wikiaCuratedContent-content-duplicate-entry'),
 			requiredError = msg('wikiaCuratedContent-content-required-entry'),
-			emptyTagError = msg('wikiaCuratedContent-content-empty-tag'),
+			emptyTagError = msg('wikiaCuratedContent-content-empty-section'),
 			itemError = msg('wikiaCuratedContent-content-item-error'),
 			addItem = d.getElementById('addItem'),
 			addTag = d.getElementById('addTag'),
