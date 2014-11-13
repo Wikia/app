@@ -244,12 +244,21 @@ $(function () {
 								items.each(function () {
 
 									if (this.value === errTitle) {
-										$(this)
-											.addClass('error')
-											.popover('destroy')
-											.popover({
-												content: reasonMessage
-											});
+										if (errReason != 'emptyLabel') {
+											$(this)
+												.addClass('error')
+												.popover('destroy')
+												.popover({
+													content: reasonMessage
+												});
+										} else {
+											$(this).next()
+												.addClass('error')
+												.popover('destroy')
+												.popover({
+													content: reasonMessage
+												});
+										}
 
 										return false;
 									}

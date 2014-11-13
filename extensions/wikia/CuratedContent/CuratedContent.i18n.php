@@ -26,7 +26,14 @@ $messages['en'] = array(
 	'wikiaCuratedContent-content-description-organize' => 'Feel free to delete or add more lines, and reorder them by dragging and dropping.',
 	'wikiaCuratedContent-content-description-no-section' => 'Items without section or with empty section will be shown as last in Curated Content.',
 
-	//Sponsored Videos Managment Tools
+	'wikiaCuratedContent-content-articlenotfound-error' => 'Message shown to a user when he tries
+	 to save a item with no related article' ,
+	'wikiaCuratedContent-content-emptylabel-error' => 'Message shown to a user when he tries to
+	save without putting a label',
+	'wikiaCuratedContent-content-videonotsupported-error' =>'Message shown to a user when he
+	tries to save a video item that is not supported',
+	'wikiaCuratedContent-content-notsupportedtype-error' =>'Message shown to a user when he tries
+	 to save a item that have not supported type'
 
 
 );
@@ -57,6 +64,15 @@ $messages['qqq'] = array(
 	'wikiaCuratedContent-content-description-section' => 'Message describing a purpose and usage of the tool',
 	'wikiaCuratedContent-content-description-organize' => 'Message describing a purpose and usage of the tool',
 	'wikiaCuratedContent-content-description-no-section' => 'Message describing a purpose and usage of the tool',
+
+	'wikiaCuratedContent-content-articlenotfound-error' => 'Message shown to a user when he tries
+	 to save a item with no related article' ,
+	'wikiaCuratedContent-content-emptylabel-error' => 'Message shown to a user when he tries to
+	save without putting a label',
+	'wikiaCuratedContent-content-videonotsupported-error' =>'Message shown to a user when he
+	tries to save a video item that is not supported',
+	'wikiaCuratedContent-content-notsupportedtype-error' =>'Message shown to a user when he tries
+	 to save a item that have not supported type'
 
 	//Sponsored Videos Managment Tools
 
