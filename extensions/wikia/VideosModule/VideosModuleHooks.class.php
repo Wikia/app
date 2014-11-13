@@ -65,17 +65,11 @@ class VideosModuleHooks {
 
 		JSMessages::enqueuePackage( 'VideosModule', JSMessages::EXTERNAL );
 
-//		$scripts = AssetsManager::getInstance()->getURL( 'videos_module_js' );
-//
-//		foreach( $scripts as $script ){
-//			$out->addScript( "<script data-source='videos-module' src='{$script}'></script>" );
-//		}
-
-		if ( F::app()->checkSkin( ['oasis'] ) ) {
-			Wikia::addAssetsToOutput( 'videos_module_js' );
-		} else {
+		if ( $app->checkSkin( 'venus' ) ) {
 			Wikia::addAssetsToOutput( 'venus_videos_module_js' );
 			Wikia::addAssetsToOutput( 'venus_videos_module_scss' );
+		} else {
+			Wikia::addAssetsToOutput( 'videos_module_js' );
 		}
 
 		$app->wg->VideosModuleAssetsLoaded = true;

@@ -6,9 +6,10 @@ define('videosmodule.views.inContent', [
 ], function (sloth, TitleThumbnailView, Mustache, templates) {
 	'use strict';
 
-	var videosLimit = 3;
+	var VideosModule,
+		videosLimit = 3;
 
-	function VideoModule(options) {
+	VideosModule = function(options) {
 		// Note that this.el refers to the DOM element that the videos module should be inserted before or after,
 		// not the wrapper for the videos module. We can update this after the A/B testing is over.
 		this.el = options.el;
@@ -25,9 +26,9 @@ define('videosmodule.views.inContent', [
 		if (this.articleId) {
 			this.init();
 		}
-	}
+	};
 
-	VideoModule.prototype.init = function() {
+	VideosModule.prototype.init = function() {
 		var self = this;
 		this.data = this.model.fetch();
 		// Sloth is a lazy loading service that waits till an element is visible to load more content
@@ -42,7 +43,7 @@ define('videosmodule.views.inContent', [
 		});
 	};
 
-	VideoModule.prototype.render = function() {
+	VideosModule.prototype.render = function() {
 		var i,
 			$out,
 			videos = this.model.data.videos,
@@ -74,5 +75,5 @@ define('videosmodule.views.inContent', [
 		this.$el.after($out);
 	};
 
-	return VideoModule;
+	return VideosModule;
 });

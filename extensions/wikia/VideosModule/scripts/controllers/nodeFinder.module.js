@@ -3,7 +3,6 @@ define('videosmodule.controllers.nodeFinder', function() {
 
 	/**
 	 * Find first element described by selector after set offset top value.
-	 * If none such element is found, get the last visible one.
 	 *
 	 * @param {Node} container parent container
 	 * @param {String} selector selector to search
@@ -17,11 +16,11 @@ define('videosmodule.controllers.nodeFinder', function() {
 
 		for (i = 0; i < length; i++) {
 			if (elements[i].offsetTop > boundaryOffsetTop) {
-				return elements[i].previousElementSibling;
+				return elements[i];
 			}
 		}
 
-		return getLastVisibleChild(container);
+		return null;
 	}
 
 	/**
@@ -51,6 +50,7 @@ define('videosmodule.controllers.nodeFinder', function() {
 	}
 
 	return {
-		getChildByOffsetTop: getChildByOffsetTop
+		getChildByOffsetTop: getChildByOffsetTop,
+		getLastVisibleChild: getLastVisibleChild
 	};
 });

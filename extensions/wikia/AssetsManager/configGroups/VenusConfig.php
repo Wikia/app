@@ -105,9 +105,6 @@ $VenusConfig[ 'venus_body_js' ] = [
 
 		//following script initialize different modules in Venus
 		'//extensions/wikia/Venus/scripts/articleModulesLoader.js',
-
-		//recommendations
-		'#group_recommendations_js',
 	]
 ];
 
@@ -216,16 +213,6 @@ $VenusConfig[ 'article_navigation_scss' ] = [
 	'skin' => [ 'venus' ],
 	'assets' => [
 		'//extensions/wikia/ArticleNavigation/styles/articleNavigation.scss'
-	]
-];
-
-/** Recommendations */
-$VenusConfig[ 'recommendations_js' ] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'venus' ],
-	'assets' => [
-		'//extensions/wikia/Venus/scripts/modules/nodeFinder.module.js',
-		'//extensions/wikia/Venus/scripts/recommendation.js'
 	]
 ];
 

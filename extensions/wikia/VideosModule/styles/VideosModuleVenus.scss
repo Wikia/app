@@ -49,11 +49,10 @@
 	border-bottom-width: 1px;
 	border-top-width: 1px;
 	clear: both;
-	margin-left: -$medium-grid-column-padding;
-	margin-right: -$medium-grid-column-padding;
+	margin: 40px (-$medium-grid-column-padding);
 
 	.thumbnails {
-		margin: 14px 0;
+		margin: 14px 0 24px;
 		padding: 0;
 
 		// Uncomment the lines below to enable scrolling inside the video container

@@ -11,14 +11,23 @@ require([
 
 	function init() {
 		var module,
+			element,
 			contentContainer = d.getElementById('mw-content-text'),
 			headerSelector = '#mw-content-text > h2',
 			boundaryOffsetTop = 1500;
 
 //		bucky.timer.start('execution');
 
+		element = nodeFinder.getChildByOffsetTop(contentContainer, headerSelector, boundaryOffsetTop);
+
+		if (element){
+			element = element.previousElementSibling;
+		} else {
+			element = nodeFinder.getLastVisibleChild(contentContainer);
+		}
+
 		module = new Module({
-			el: nodeFinder.getChildByOffsetTop(contentContainer, headerSelector, boundaryOffsetTop),
+			el: element,
 			model: new VideoData()
 		});
 
@@ -27,5 +36,5 @@ require([
 //		});
 	}
 
-	init();
+	d.addEventListener('load', init());
 });
