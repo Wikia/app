@@ -88,7 +88,7 @@ class MercuryApiHooks {
 		if( $title->inNamespaces( NS_MAIN ) ) {
 			// Mercury service API for article
 			// TODO: Uncomment this once Mercury API calls are cached
-			// $urls[] = wfExpandUrl( F::app()->wg->Server . self::SERVICE_API_BASE . self::SERCICE_API_ARTICLE . $title->getPartialURL() );
+			// $urls[] = wfExpandUrl( F::app()->wg->Server . self::SERVICE_API_BASE . self::SERVICE_API_ARTICLE . $title->getPartialURL() );
 
 			// Mercury API call from service
 			$urls[] = MercuryApiController::getUrl( 'getArticle', ['title' => $title->getPartialURL()] );
