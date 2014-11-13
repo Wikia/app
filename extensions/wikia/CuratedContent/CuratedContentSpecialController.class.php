@@ -208,7 +208,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		}
 
 		$this->response->setVal( 'url', $url );
-		$this->response->setVal( self::ARTICLE_ID_TAG, $id );
+		$this->response->setVal( 'id', $id );
 
 		return $url;
 	}
@@ -242,13 +242,12 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 						list( $articleId,
 							$namespaceId,
 							$type,
-							$imageUrl,
 							$info,
 							$imageId ) = $this->getInfoFromRow(
 							$row );
 						$row[ 'article_id' ] = $articleId;
 						$row[ 'type' ] = $type;
-						$row[ 'image_url' ] = $imageUrl;
+//						$row[ 'image_url' ] = $imageUrl;
 						$row[ 'image_id' ] = $imageId;
 						if ( !empty( $info ) ) {
 							$row[ 'video_info' ] = $info;
@@ -268,16 +267,22 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			$namespaceId = $title->getNamespace();
 			$type = $this->getType( $namespaceId );
 			$image_id = (int)$row[ 'image_id' ];
+			$info = [ ];
 
 			if ( $type == self::STR_FILE ) {
 				list( $type, $info ) = $this->getVideoInfo( $title );
 			}
-			list( $image_url, $image_id ) = $this->findImageIfNotSet( $image_id, $articleId );
+			if ( $image_id == 0 ) {
+				$imageTitle = $this->findFirstImageTitleFromArticle( $articleId );
+				if ( !empty( $imageTitle ) ) {
+					$image_id = $imageTitle->getArticleId();
+				}
+			}
+
 			return [
 				$articleId,
 				$namespaceId,
 				$type,
-				$image_url,
 				$info,
 				$image_id
 			];
@@ -306,8 +311,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		}
 	}
 
-	private
-	function getVideoInfo( $title ) {
+	private function getVideoInfo( $title ) {
 		$mediaService = new MediaQueryService();
 		$mediaInfo = $mediaService->getMediaData( $title );
 		if ( !empty( $mediaInfo ) ) {
@@ -326,35 +330,41 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		return [ null, null ];
 	}
 
-	/**
-	 * @param $image_id
-	 * @param $articleId
-	 * @return array
-	 */
-	private function findImageIfNotSet( $image_id, $articleId ) {
-		if ( $image_id === 0 ) {
-			if ( !empty( $articleId ) ) {
-				$is = new ImageServing( [ $articleId ] );
-				$thumbnail = $is->getImages( 1 );
+	public static function findImageIfNotSet( $imageId, $articleId ) {
+		$imageTitle = null;
+		if ( $imageId == 0 ) {
+			$imageTitle = self::findFirstImageTitleFromArticle( $articleId );
+			$imageId = $imageTitle->getArticleId();
+		} else {
+			$imageTitle = Title::newFromID( $imageId );
+		}
+		$url = self::getUrlFromImageTitle( $imageTitle );
+		return [ $imageId, $url ];
+	}
 
-				if ( !empty( $thumbnail ) ) {
-					$image_name = $thumbnail[ $articleId ][ 0 ][ 'name' ];
-
-					if ( !empty( $image_name ) ) {
-						$imageTitle = Title::newFromText( $image_name, NS_FILE );
-
-						if ( !empty( $imageTitle ) ) {
-							$imageFile = wfFindFile( $imageTitle );
-
-							if ( !empty( $imageFile ) ) {
-								$image_url = $imageFile->getUrl();
-								$image_id = $imageTitle->getArticleId();
-							}
-						}
-					}
+	public static function findFirstImageTitleFromArticle( $articleId ) {
+		$imageTitle = null;
+		if ( !empty( $articleId ) ) {
+			$is = new ImageServing( [ $articleId ] );
+			$image = $is->getImages( 1 );
+			if ( !empty( $image ) ) {
+				$image_title_name = $image[ $articleId ][ 0 ][ 'name' ];
+				if ( !empty( $image_title_name ) ) {
+					$imageTitle = Title::newFromText( $image_title_name, NS_FILE );
 				}
 			}
 		}
-		return [ $image_url, $image_id ];
+		return $imageTitle;
+	}
+
+	public static function getUrlFromImageTitle( $imageTitle ) {
+		$imageUrl = null;
+		if ( !empty( $imageTitle ) ) {
+			$imageFile = wfFindFile( $imageTitle );
+			if ( !empty( $imageFile ) ) {
+				$imageUrl = $imageFile->getUrl();
+			}
+		}
+		return $imageUrl;
 	}
 }

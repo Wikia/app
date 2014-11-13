@@ -369,6 +369,16 @@ class CuratedContentController extends WikiaController {
 					throw new InvalidParameterApiException( 'sort' );
 				}
 			}
+			foreach ( $ret as &$value ) {
+
+				list( $image_url, $image_id ) =
+					CuratedContentSpecialController::findImageIfNotSet(
+						$value[ 'image_id' ],
+						$value[ 'article_id' ] );
+				$value[ 'image_id' ] = $image_id;
+				$value[ 'image_url' ] = $image_url;
+			}
+
 
 			//Use 'id' instead of image_id
 //			foreach( $ret as &$value ) {
