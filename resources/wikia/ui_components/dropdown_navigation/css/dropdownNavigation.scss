@@ -1,5 +1,6 @@
 @import 'skins/shared/mixins/arrow';
 @import 'skins/shared/color';
+@import 'extensions/wikia/Venus/styles/variables';
 
 $dropdown-width: 200px;
 $dropdown-item-padding: 10px;
@@ -8,7 +9,7 @@ $dropdown-item-padding: 10px;
 	position: absolute;
 	top: 0;
 	text-align: left;
-	width: 470px;
+	width: $dropdown-width * 2;
 	display: none;
 
 	.active > & {
@@ -18,13 +19,14 @@ $dropdown-item-padding: 10px;
 
 .wikia-dropdown-nav {
 	border: 1px solid $color-page-border-subtle;
-
+	box-sizing: border-box;
 	float: left;
 	list-style-type: none;
 	margin: 0;
 	overflow: hidden;
 	overflow-y: auto;
 	padding: 0;
+	width: $dropdown-width;
 
 	.wikia-dropdown-nav-subsections-wrapper & {
 		border-left: none;
@@ -43,7 +45,6 @@ $dropdown-item-padding: 10px;
 
 .wikia-dropdown-nav-item {
 	background-color: $color-page;
-	width: $dropdown-width;
 
 	&:not(:first-child) {
 		border-top: 1px solid $color-page-border-subtle;
