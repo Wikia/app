@@ -327,26 +327,31 @@
 			options.exit(this);
 		};
 
-		/*
+		/**
 		 * Immediately activate a row if the user clicks on it.
+		 * @param {Event} event
 		 */
-		clickRow = function() {
-			activate(this);
+		clickRow = function(event) {
+			activate(this, event);
 		};
 
 		/**
 		 * Activate a menu row.
 		 */
-		activate = function(row) {
+		activate = function(row, event) {
+			//var target = trigger.target,
+			//	row = target || trigger,
+			//	event = target ? trigger : false;
+
 			if (row == activeRow) {
 				return;
 			}
 
 			if (activeRow) {
-				options.deactivate(activeRow);
+				options.deactivate(activeRow, event);
 			}
 
-			options.activate(row);
+			options.activate(row, event);
 			activeRow = row;
 		};
 
