@@ -1131,19 +1131,6 @@ class ArticlesApiController extends WikiaApiController {
 
 	}
 
-	// TODO docblock and swagger
-	public function getRecommendations( $articleId, $limit = 9 ) {
-		// TODO input validation
-		$articleId = $this->request->getInt('article_id', null);
-		$limit = $this->request->getInt('limit', 9);
-
-		$this->items = (new Wikia\Api\Recommendations\Api)->get(
-			$articleId,
-			$limit
-		);
-	}
-
-
 	protected function expandArticlesDetails( $articles ) {
 		$articleIds = [ ];
 		$params = $this->getDetailsParams();
