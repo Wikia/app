@@ -107,13 +107,18 @@ var GlobalNotification = {
 			}
 		}
 	},
+	/**
+	 * Determine if a modal is present and visible so we can apply the notification to the modal instead of the page.
+	 * @returns {boolean}
+	 */
 	isModal: function() {
 		'use strict';
-		GlobalNotification.modal = $( '.modalWrapper, .yui-panel' );
-		if ( GlobalNotification.modal.length > 0 && GlobalNotification.modal.is( ':visible' ) ) {
-			return true;
-		}
-		return false;
+
+		// handle all types of modals since the begining of time!
+		GlobalNotification.modal = $( '.modalWrapper, .yui-panel, .modal' );
+
+		// returns false if there's no modal or it's hidden
+		return GlobalNotification.modal.is( ':visible' );
 	},
 	setUpClose: function() {
 		'use strict';

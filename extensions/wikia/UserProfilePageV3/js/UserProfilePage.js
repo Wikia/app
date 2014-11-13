@@ -24,7 +24,7 @@ var UserProfilePage = {
 		UserProfilePage.reloadUrl = $('#reloadUrl').val();
 
 		if (UserProfilePage.reloadUrl === '' || UserProfilePage.reloadUrl === false) {
-			UserProfilePage.reloadUrl = window.wgScript + '?title=' + window.wgPageName; //+ '&action=purge';
+			UserProfilePage.reloadUrl = window.wgScript + '?title=' + window.wgPageName;
 		}
 
 		$userIdentityBoxEdit.click(function (event) {
@@ -378,7 +378,7 @@ var UserProfilePage = {
 			data: 'userId=' + UserProfilePage.userId + '&data=' + JSON.stringify(userData),
 			success: function (data) {
 				if (data.status === 'error') {
-					window.GlobalNotification.show(data.errorMsg, 'warn');
+					UserProfilePage.error(data.errMsg);
 					UserProfilePage.bucky.timer.stop('saveUserDataFail');
 				} else {
 					UserProfilePage.userData = null;
@@ -388,8 +388,23 @@ var UserProfilePage = {
 					UserProfilePage.bucky.flush();
 					window.location = UserProfilePage.reloadUrl;
 				}
-			}
+			},
+			error: UserProfilePage.error
 		});
+	},
+
+	/**
+	 * Hnadle error states after ajax requests
+	 * @param {string} [msg] Optional error message to display. Otherwise, default message will be used.
+	 */
+	error: function (msg) {
+		'use strict';
+
+		if (typeof msg !== 'string') {
+			msg = $.msg('oasis-generic-error');
+		}
+
+		window.GlobalNotification.show(msg, 'error');
 	},
 
 	getFormData: function () {
