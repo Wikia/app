@@ -258,6 +258,7 @@ class FacebookMapModel {
 	 * Saves a mapping to the database
 	 *
 	 * @throws FacebookMapModelInvalidParamException
+	 * @throws FacebookMapModelInvalidDataException
 	 */
 	public function save() {
 		// Can't save if we haven't set the proper IDs on this instance
