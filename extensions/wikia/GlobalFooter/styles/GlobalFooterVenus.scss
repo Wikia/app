@@ -1,4 +1,5 @@
 @import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/flexbox';
 @import 'skins/shared/color';
 @import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/mixins';
@@ -6,12 +7,6 @@
 
 $global-footer-color-border: #c7d1d8;
 $global-footer-vertical-spacing: 30px;
-
-%global-footer-inline-flexbox {
-	display: -ms-inline-flexbox;
-	display: -webkit-inline-flex;
-	display: inline-flex;
-}
 
 .global-footer {
 	background-color: $global-wikia-background-color;
@@ -51,7 +46,7 @@ $global-footer-vertical-spacing: 30px;
 	}
 
 	.wikia-logo {
-		@extend %global-footer-inline-flexbox;
+		@include display-inline-flex();
 		line-height: 0; /* Get rid of uncontrollable vertical margins for inline-block */
 		margin: 0 auto $global-footer-vertical-spacing + 5;
 	}
