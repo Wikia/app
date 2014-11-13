@@ -13,21 +13,25 @@ class Video implements IDataProvider {
 	 * @return array recommended videos
 	 */
 	public function get( $articleId, $limit ) {
+		global $wgEnableVideosModuleExt;
+
 		$app = \F::app();
 
 		$recommendations = [];
 		// We are fetching more videos to randomize results
 		$limitForRandomize = $limit * 3;
 
-		$response = $app->sendRequest( 'VideosModuleController', 'index', [
-			'limit' => $limitForRandomize
-		]);
+		if ( !empty( $wgEnableVideosModuleExt ) ) {
+			$response = $app->sendRequest( 'VideosModuleController', 'index', [
+				'limit' => $limitForRandomize
+			]);
 
-		$videos = $response->getData();
+			$videos = $response->getData();
 
-		if ( isset( $videos[ 'videos' ] ) ) {
-			$randomVideos = $this->getRandomRecommendations( $videos['videos'], $limit );
-			$recommendations = $this->prepareData( $randomVideos );
+			if ( isset( $videos[ 'videos' ] ) ) {
+				$randomVideos = $this->getRandomRecommendations( $videos['videos'], $limit );
+				$recommendations = $this->prepareData( $randomVideos );
+			}
 		}
 
 		return $recommendations;
@@ -39,7 +43,7 @@ class Video implements IDataProvider {
 	 * @param array $videos videos data fetch from Videos Module
 	 * @return array videos data with proper structure
 	 */
-	protected function prepareData( $videos ) {
+	protected function prepareData( Array $videos ) {
 		$data = [];
 
 		foreach ( $videos as $video ) {
@@ -67,7 +71,7 @@ class Video implements IDataProvider {
 	 * @param int $limit number of videos to return
 	 * @return array limited random videos array
 	 */
-	protected function getRandomRecommendations( $videos, $limit ) {
+	protected function getRandomRecommendations( Array $videos, $limit ) {
 		$randomVideos = [];
 
 		$randomKeys = array_rand( $videos, $limit );
