@@ -5,8 +5,8 @@
  */
 class CuratedContentController extends WikiaController {
 	const API_VERSION = 1;
-	const API_REVISION = 6;
-	const API_MINOR_REVISION = 5;
+	const API_REVISION = 1;
+	const API_MINOR_REVISION = 1;
 	const APP_NAME = 'CuratedContent';
 	const SKIN_NAME = 'wikiamobile';
 	const DAYS = 86400;
@@ -25,39 +25,7 @@ class CuratedContentController extends WikiaController {
 	private $mModel = null;
 	private $mPlatform = null;
 	//Make sure this is updated as in CuratedContent.js
-	private static $disabledNamespaces = [
-		// Core MediaWiki
-		-2,
-		-1,
-		1,
-		2,
-		3,
-		4,
-		5,
-		6,
-		7,
-		10,
-		11,
-		12,
-		13,
-		15,
-		// Forum
-		110,
-		111,
-		// Blog
-		501,
-		// Top List
-		700,
-		701,
-		// Wall
-		1200,
-		1201,
-		1202,
-		// Wikia Forum
-		2000,
-		2001,
-		2002,
-	];
+
 
 	function init() {
 		$requestedVersion = $this->request->getInt( 'ver', self::API_VERSION );
@@ -447,35 +415,6 @@ class CuratedContentController extends WikiaController {
 	 */
 	static function onCuratedContentSave() {
 		self::purgeMethod( 'getList' );
-
-		return true;
-	}
-
-
-	/**
-	 * @brief Whenever data is saved in GG Sponsored Videos Tool
-	 * purge Varnish cache for it
-	 *
-	 * @return bool
-	 */
-	static function onCuratedContentSponsoredSave() {
-		$languages = array_keys( F::app()->wg->WikiaCuratedContentSponsoredVideos );
-		//Empty array is there to purge call to getVideos without any language
-		$variants = [
-			[ ],
-			[ 'lang' => 'list' ]
-		];
-
-		foreach ( $languages as $lang ) {
-			$variants[ ] = [
-				'lang' => $lang
-			];
-		}
-
-		self::purgeMethodVariants(
-			'getVideos',
-			$variants
-		);
 
 		return true;
 	}
