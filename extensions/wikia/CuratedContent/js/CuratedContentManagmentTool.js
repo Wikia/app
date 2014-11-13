@@ -21,9 +21,9 @@ $(function () {
 			$form = $(form),
 			ul = form.getElementsByTagName('ul')[0],
 			$ul = $(ul),
-			//it looks better if we display in input item name without Item:
+		//it looks better if we display in input item name without Item:
 
-			setup = function(elem){
+			setup = function (elem) {
 				(elem || $ul.find('.item-input')).autocomplete({
 					serviceUrl: wgServer + wgScript,
 					params: {
@@ -36,7 +36,7 @@ $(function () {
 					onSelect: function () {
 						$ul.find('input:focus').next().focus();
 					},
-					fnPreprocessResults: function(data){
+					fnPreprocessResults: function (data) {
 						return data;
 					},
 					deferRequestBy: 50,
@@ -98,18 +98,18 @@ $(function () {
 				checkInputs($ul.find('.section-input'), true);
 				checkInputs($ul.find('.item-input'), true, true);
 
-				$ul.find('.section').each(function(){
+				$ul.find('.section').each(function () {
 					var $t = $(this),
 						$items = $t.nextUntil('.section');
 
-					if($items.length === 0) {
+					if ($items.length === 0) {
 						$t.find('.section-input')
 							.addClass('error')
 							.popover('destroy')
 							.popover({
 								content: emptySectionError
 							});
-					}else {
+					} else {
 						checkInputs($items.find('.name'))
 					}
 				});
@@ -145,15 +145,15 @@ $(function () {
 			.on('keypress', '.name', function (ev) {
 				if (ev.keyCode === 13) addNew(item, $(this).parent());
 			})
-			.on('keypress', '.item-input, .section-input', function(ev){
-				if(ev.keyCode === 13) $(this).next().focus();
+			.on('keypress', '.item-input, .section-input', function (ev) {
+				if (ev.keyCode === 13) $(this).next().focus();
 			});
 
 		$(addItem).on('click', function () {
 			addNew(item);
 		});
 
-		$(addSection).on('click', function(){
+		$(addSection).on('click', function () {
 			addNew(section);
 		});
 
@@ -171,18 +171,18 @@ $(function () {
 				nonames = [],
 				nonameId = 0;
 
-			if(checkForm()) {
-				$ul.find('.item:not(.section ~ .item)').each(function(){
+			if (checkForm()) {
+				$ul.find('.item:not(.section ~ .item)').each(function () {
 					nonames.push(getData(this));
 				});
 
-				$ul.find('.section').each(function(){
+				$ul.find('.section').each(function () {
 					var $t = $(this),
 						name = $t.find('.section-input').val(),
 						imageId = $t.find('.image').data('id') || 0,
 						items = [];
 
-					$t.nextUntil('.section').each(function(){
+					$t.nextUntil('.section').each(function () {
 						(name ? items : nonames).push(getData(this));
 					});
 
@@ -236,7 +236,6 @@ $(function () {
 							var err = data.error,
 								i = err.length,
 								items = $form.find('.item-input');
-
 							while (i--) {
 								//I cannot use value CSS selector as I want to use current value
 								var errTitle = err[i].title;

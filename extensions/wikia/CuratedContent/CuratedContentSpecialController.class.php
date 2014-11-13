@@ -377,7 +377,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			$url = self::getUrlFromImageTitle( $imageTitle );
 			$imageId = $imageTitle->getArticleId();
 		}
-		return [ 'image_id' => $imageId, 'image_url' => $url ];
+		return [ $imageId, $url ];
 	}
 
 	public static function findFirstImageTitleFromArticle( $articleId ) {

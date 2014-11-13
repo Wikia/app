@@ -385,7 +385,7 @@ class CuratedContentController extends WikiaController {
 							'title' => $item[ 'title' ],
 							'image_id' => $imageId,
 							'image_url' => CuratedContentSpecialController::findImageIfNotSet
-							( $imageId )[ 'image_url' ] ];
+							( $imageId )[ 1 ] ];
 					}
 					return $ret;
 				}
