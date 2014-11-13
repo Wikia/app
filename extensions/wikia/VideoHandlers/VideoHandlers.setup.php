@@ -254,6 +254,8 @@ $wgAutoloadClasses[ 'FeedIngesterLogger' ] = $dir . '/feedingesters/FeedIngester
 
 $wgAutoloadClasses[ 'OoyalaAsset' ] = $dir . '/feedingesters/OoyalaAsset.class.php';
 
+$wgAutoloadClasses[ 'TestVideoFeedIngester' ] = $dir . '/tests/FeedIngesterTestClasses.class.php';
+
 $wgVideoMigrationProviderMap = array(
 	4 => 'Fivemin',
 	5 => 'Youtube',
