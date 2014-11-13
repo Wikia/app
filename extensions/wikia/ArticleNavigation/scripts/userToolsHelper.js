@@ -10,19 +10,25 @@ define('wikia.userToolsHelper', [], function() {
 	function extractToolbarItems(toolbarData) {
 		var items = [],
 			toolbarItemsCount = toolbarData.length,
-			currentItem, i;
+			currentItem, i, item;
 
 		for (i = 0; i < toolbarItemsCount; i++) {
 			currentItem = toolbarData[i];
 			if (currentItem.type !== 'disabled' && currentItem.href && currentItem.caption) {
-				items.push({
+				item = {
 					title: currentItem.caption,
 					href: currentItem.href,
 					dataAttr: [{
 						key: 'name',
 						value: currentItem['tracker-name']
 					}]
-				});
+				};
+
+				if (currentItem.type === 'customize') {
+					item.class = 'tools-customize';
+				}
+
+				items.push(item);
 			}
 		}
 

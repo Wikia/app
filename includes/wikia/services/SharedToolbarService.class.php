@@ -4,9 +4,9 @@ class SharedToolbarService extends ToolbarService {
 
 	static protected $recursiveBarrier = 0;
 
-	public function __construct( $skinName ) {
+	public function __construct() {
 		self::$recursiveBarrier++;
-		parent::__construct( $skinName );
+		parent::__construct();
 		if ( self::$recursiveBarrier <= 1 ) {
 			$this->updatePromotions();
 		}

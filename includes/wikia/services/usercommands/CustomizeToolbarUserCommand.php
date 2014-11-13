@@ -10,7 +10,7 @@
 			$this->available = !$wgUser->isAnon();
 			$this->enabled = true;
 			$this->imageSprite = 'share';
-			$this->caption = wfMsg('oasis-toolbar-customize');
+			$this->caption = wfMsg('user-tools-customize');
 			$this->linkClass = 'tools-customize';
 		}
 

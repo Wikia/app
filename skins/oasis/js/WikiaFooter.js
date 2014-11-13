@@ -197,16 +197,24 @@ var WikiaFooterApp = {
 
 			var that = this;
 
+			//Attach event listener to an event which is triggered after updating user tools
+			$('body').on('userToolsItemAdded', function(event, data) {
+				that.load(data);
+			});
+
 			require( ['wikia.fluidlayout'], function( fluidlayout ) {
 				that.handleOverflowMenu( fluidlayout.getBreakpointSmall(), 2 * fluidlayout.getAdSkinWidth(),
 					window.wgOasisResponsive ? false : fluidlayout.getBreakpointSmall() );
-			} );
+			});
 		},
 
 		openConfiguration: function( evt ) {
 			evt.preventDefault();
-			var conf = new TC.ConfigurationLoader( this );
-			conf.show();
+			require( ['wikia.toolsCustomization'], function( TC ) {
+				var conf = new TC.ToolsCustomization( this );
+				conf.show();
+				return false;
+			} );
 		},
 
 		buildOveflowItem: function () {
@@ -319,27 +327,7 @@ var WikiaFooterApp = {
 		}
 
 	} );
-
-	TC.ConfigurationLoader = $.createClass( Object, {
-
-		constructor: function( toolbar ) {
-			this.toolbar = toolbar;
-		},
-
-		show: function() {
-			$.loadLibrary( 'ToolbarCustomize',
-				window.stylepath + '/oasis/js/ToolbarCustomize.js',
-				typeof TC.Configuration,
-				$.proxy( function() {
-					var c = new TC.Configuration( this.toolbar );
-					c.show();
-				}, this )
-			);
-		}
-
-	} );
-
-} )();
+})();
 
 $( function() {
 	'use strict';

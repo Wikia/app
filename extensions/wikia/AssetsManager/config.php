@@ -339,6 +339,8 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//skins/oasis/js/tabs.js',
 		'//skins/oasis/js/SharingToolbar/SharingToolbarLoader.js',
 		'//skins/oasis/js/Tracking.js',
+
+		'//extensions/wikia/UserTools/scripts/UserTools.js',
 	)
 );
 

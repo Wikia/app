@@ -1,6 +1,6 @@
 /* global require */
 require([
-	'wikia.document', 'wikia.stickyElement', 'venus.variables', 'wikia.userTools',
+	'wikia.document', 'wikia.stickyElement', 'venus.variables', 'wikia.articleNavUserTools',
 ], function (doc, stickyElement, v, userTools) {
 	'use strict';
 
