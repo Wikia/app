@@ -8,6 +8,10 @@ class Video implements IDataProvider {
 	public function get( $articleId, $limit ) {
 		$app = \F::app();
 
+		if ( empty( $app->wg->EnableVideosModuleExt ) ) {
+			return [];
+		}
+
 		$response = $app->sendRequest( 'VideosModuleController', 'index', [
 			'limit' => $limit
 		]);
