@@ -64,6 +64,7 @@ describe('AdConfig2', function () {
 		var adConfig = modules['ext.wikia.adEngine.adConfig'](
 			logMock,
 			mockGeo(),
+			{},
 			mockAdContext(true),
 			adDecoratorPageDimensionsMock,
 			mockEvolveSlotConfig(false),
@@ -82,6 +83,7 @@ describe('AdConfig2', function () {
 		var adConfig = modules['ext.wikia.adEngine.adConfig'](
 			logMock,
 			mockGeo(),
+			{},
 			mockAdContext(true),
 			adDecoratorPageDimensionsMock,
 			mockEvolveSlotConfig(false),
@@ -100,6 +102,7 @@ describe('AdConfig2', function () {
 		var adConfig = modules['ext.wikia.adEngine.adConfig'](
 			logMock,
 			mockGeo('NZ'),
+			{},
 			mockAdContext(true),
 			adDecoratorPageDimensionsMock,
 			mockEvolveSlotConfig(true),
@@ -119,6 +122,7 @@ describe('AdConfig2', function () {
 		var adConfig = modules['ext.wikia.adEngine.adConfig'](
 			logMock,
 			mockGeo('NZ'),
+			{},
 			mockAdContext(true),
 			adDecoratorPageDimensionsMock,
 			mockEvolveSlotConfig(false),
@@ -137,6 +141,7 @@ describe('AdConfig2', function () {
 		var adConfig = modules['ext.wikia.adEngine.adConfig'](
 			logMock,
 			mockGeo(),
+			{},
 			mockAdContext(true, {sevenOneMedia: true}),
 			adDecoratorPageDimensionsMock,
 			mockEvolveSlotConfig(false),
@@ -155,6 +160,7 @@ describe('AdConfig2', function () {
 		var adConfig = modules['ext.wikia.adEngine.adConfig'](
 			logMock,
 			mockGeo('PL'),
+			{},
 			mockAdContext(true, {sevenOneMedia: true}),
 			adDecoratorPageDimensionsMock,
 			mockEvolveSlotConfig(false),
@@ -173,6 +179,7 @@ describe('AdConfig2', function () {
 		var adConfig = modules['ext.wikia.adEngine.adConfig'](
 			logMock,
 			mockGeo('NZ'),
+			{},
 			mockAdContext(true, {sevenOneMedia: true}),
 			adDecoratorPageDimensionsMock,
 			mockEvolveSlotConfig(true),
@@ -192,6 +199,7 @@ describe('AdConfig2', function () {
 			adConfig = modules['ext.wikia.adEngine.adConfig'](
 				logMock,
 				mockGeo(),
+				{},
 				mockAdContext(false),
 				adDecoratorPageDimensionsMock,
 				mockEvolveSlotConfig(true),
@@ -222,6 +230,7 @@ describe('AdConfig2', function () {
 		modules['ext.wikia.adEngine.adConfig'](
 			logMock,
 			mockGeo(),
+			{},
 			mockAdContext(false),
 			adDecoratorPageDimensionsMock,
 			mockEvolveSlotConfig(true),
@@ -243,6 +252,7 @@ describe('AdConfig2', function () {
 		modules['ext.wikia.adEngine.adConfig'](
 			logMock,
 			mockGeo(),
+			{},
 			mockAdContext(false),
 			adDecoratorPageDimensionsMock,
 			mockEvolveSlotConfig(true),
@@ -265,6 +275,7 @@ describe('AdConfig2', function () {
 		modules['ext.wikia.adEngine.adConfig'](
 			logMock,
 			mockGeo(),
+			{},
 			mockAdContext(false),
 			adDecoratorPageDimensionsMock,
 			mockEvolveSlotConfig(true),
@@ -279,5 +290,24 @@ describe('AdConfig2', function () {
 		expect(gptSlotConfigMock.extendSlotParams)
 			.toHaveBeenCalledWith('gpt', 'HOME_TOP_RIGHT_BOXAD', { 'rp_tier': 5 });
 		expect(rtpMockWithTier.trackState).toHaveBeenCalled();
+	});
+
+	it('getProviderList disaster recovery for DFP/GPT', function () {
+		var adConfig = modules['ext.wikia.adEngine.adConfig'](
+			logMock,
+			mockGeo(),
+			{ wgSitewideDisableGpt: true },
+			mockAdContext(true),
+			adDecoratorPageDimensionsMock,
+			mockEvolveSlotConfig(false),
+			gptSlotConfigMock,
+			rtpMockWithTier,
+
+			// AdProviders
+			adProviderGptMock,
+			adProviderLaterMock
+		);
+
+		expect(adConfig.getProviderList(highValueSlot)).toEqual([adProviderLaterMock], 'adProviderLaterMock');
 	});
 });
