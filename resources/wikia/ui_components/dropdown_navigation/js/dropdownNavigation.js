@@ -61,8 +61,18 @@ define(
 			/**
 			 * @desc shows subsection
 			 * @param {Element} row - dropdown "<li>" HTML element
+			 * @param {Event=} event - passed only if row was clicked
 			 */
-			function showSecondLevelList(row) {
+			function showSecondLevelList(row, event) {
+				var $row = $(row),
+					id = $row.data('id');
+
+				// handle touch interactions
+				if (event && id && !$row.hasClass(params.activeClass)) {
+					event.preventDefault();
+					event.stopPropagation();
+				}
+
 				$('#' + row.getAttribute('data-id'))
 					.add(row)
 					.addClass(params.activeClass);
