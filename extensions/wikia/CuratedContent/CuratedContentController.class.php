@@ -285,8 +285,6 @@ class CuratedContentController extends WikiaController {
 	 * @responseReturn Array|false Items or false if section was not found
 	 */
 	private function getSectionItems( $content, $requestSection ) {
-		wfProfileIn( __METHOD__ );
-
 		$ret = false;
 
 		foreach ( $content as $section ) {
@@ -296,48 +294,6 @@ class CuratedContentController extends WikiaController {
 		}
 
 		if ( !empty( $ret ) ) {
-			$sort = $this->request->getVal( 'sort' );
-
-			if ( !empty( $sort ) ) {
-				if ( $sort == 'alpha' ) {
-					usort( $ret, function ( $a, $b ) {
-						return strcasecmp( $a[ 'title' ], $b[ 'title' ] );
-					} );
-				} else if ( $sort == 'hot' ) {
-					$hot = array_keys(
-						DataMartService::getTopArticlesByPageview(
-							$this->wg->CityId,
-							array_reduce( $ret, function ( $ret, $item ) {
-								$ret[ ] = $item[ 'id' ];
-								return $ret;
-							} ),
-							null,
-							false,
-							//I need all of them basically
-							count( $ret )
-						)
-					);
-
-					$sorted = [ ];
-					$left = [ ];
-					foreach ( $ret as $value ) {
-						$key = array_search( $value[ 'id' ], $hot );
-
-						if ( $key === false ) {
-							$left[ ] = $value;
-						} else {
-							$sorted[ $key ] = $value;
-						}
-					}
-
-					ksort( $sorted );
-
-					$ret = array_merge( $sorted, $left );
-				} else {
-					wfProfileOut( __METHOD__ );
-					throw new InvalidParameterApiException( 'sort' );
-				}
-			}
 			foreach ( $ret as &$value ) {
 
 				list( $image_id, $image_url ) =
@@ -348,22 +304,10 @@ class CuratedContentController extends WikiaController {
 				$value[ 'image_url' ] = $image_url;
 			}
 
-
-			//Use 'id' instead of image_id
-//			foreach( $ret as &$value ) {
-//				if ( !empty( $value['image_id'] ) ) {
-//					$value['id'] = $value['image_id'];
-//				}
-//				unset($value['image_id']);
-//			}
-
 			$this->response->setVal( 'items', $ret );
 		} else if ( $requestSection !== '' ) {
-			wfProfileOut( __METHOD__ );
-			throw new InvalidParameterApiException( 'section' );
+			throw new CuratedContentSectionNotFoundException( $requestSection );
 		}
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -425,5 +369,11 @@ class CuratedContentController extends WikiaController {
 class CuratedContentWrongAPIVersionException extends WikiaException {
 	function __construct() {
 		parent::__construct( 'Wrong API version', 801 );
+	}
+}
+
+class CuratedContentSectionNotFoundException extends NotFoundException {
+	function __construct( $paramName ) {
+		parent::__construct( "Section: '{$paramName}' was not found" );
 	}
 }
