@@ -34,6 +34,7 @@ $config['tracker_js'] = array(
 
 $config['liftium_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus', 'wikiamobile'],
 	'assets' => array(
 		'//extensions/wikia/AdEngine/liftium/Liftium.js',
 	)
@@ -41,6 +42,7 @@ $config['liftium_ads_js'] = array(
 
 $config['liftium_ads_extra_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus', 'wikiamobile'],
 	'assets' => array(
 		// TODO: get rid of those:
 		'//extensions/wikia/AdEngine/liftium/Wikia.Athena.js',
@@ -53,6 +55,7 @@ $config['liftium_ads_extra_js'] = array(
 
 $config['adengine2_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus', 'wikiamobile'],
 	'assets' => array(
 		// core
 		'//resources/wikia/modules/scriptwriter.js',
@@ -93,6 +96,7 @@ $config['adengine2_js'] = array(
 
 $config['adengine2_late_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus', 'wikiamobile'],
 	'assets' => array(
 		// ads
 		'//extensions/wikia/AdEngine/js/AdLogicPageParamsLegacy.js',
@@ -135,6 +139,7 @@ $config['adengine2_interactive_maps_js'] = array(
 
 $config['adengine2_top_in_content_boxad_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'venus',
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/AdSlotTopInContentBoxad.js',
 	),
@@ -142,6 +147,7 @@ $config['adengine2_top_in_content_boxad_js'] = array(
 
 $config['adengine2_tracking_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus', 'wikiamobile'],
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
 	),
@@ -189,6 +195,7 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/Thumbnails/scripts/templates.mustache.js',
 		// handlebars - uncomment this when introducing first client-side rendered handlebars template
 		// '//resources/wikia/libraries/handlebars/handlebars.js',
+		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
 	)
 );
 
@@ -201,7 +208,6 @@ $config['oasis_noads_extensions_js'] = array(
 $config['oasis_blocking'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//skins/wikia/js/JqueryLoader.js',
 		'//resources/wikia/modules/lazyqueue.js',
 	)
 );
@@ -1497,7 +1503,7 @@ $config['imagedrop_scss'] = array(
 /** Note: this group is also used in Oasis! */
 $config['analytics_gas_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['wikiamobile', 'venus' ],
+	'skin' => [ 'wikiamobile', 'venus' ],
 	'assets' => [
 		'//extensions/wikia/AnalyticsEngine/js/analytics_prod.js'
 	]
@@ -2066,7 +2072,6 @@ $config['global_header_js'] = [
 	]
 ];
 
-
 $config['media_gallery_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis'],
@@ -2074,9 +2079,17 @@ $config['media_gallery_js'] = [
 		'//extensions/wikia/MediaGallery/scripts/templates.mustache.js',
 		'//extensions/wikia/MediaGallery/scripts/views/caption.js',
 		'//extensions/wikia/MediaGallery/scripts/views/media.js',
+		'//extensions/wikia/MediaGallery/scripts/views/toggler.js',
 		'//extensions/wikia/MediaGallery/scripts/views/gallery.js',
-		'//extensions/wikia/MediaGallery/scripts/controllers/lightbox.js',
 		'//extensions/wikia/MediaGallery/scripts/controllers/galleries.js',
 		'//extensions/wikia/MediaGallery/scripts/controllers/index.js',
+	]
+];
+
+$config['facebook_client_preferences_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/FacebookClient/scripts/preferences.js',
 	]
 ];

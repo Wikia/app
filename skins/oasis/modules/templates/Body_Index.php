@@ -32,7 +32,11 @@
 				}
 			}
 		?>
-
+		<?php
+		if ( !empty( $wg->EnableNjordExt) && WikiaPageType::isMainPage() ) {
+			echo $app->renderView( 'Njord', 'Index' );
+		}
+		?>
 		<?php
 			if (!empty($wg->EnableWikiAnswers)) {
 				echo $app->renderView('WikiAnswers', 'QuestionBox');
@@ -59,6 +63,11 @@
 		?>
 
 		<article id="WikiaMainContent" class="WikiaMainContent<?= !empty($isGridLayoutEnabled) ? $railModulesExist ? ' grid-4' : ' grid-6' : '' ?>">
+			<?php
+			if ( !empty( $wg->EnableMomModulesExt) && WikiaPageType::isMainPage() ) {
+				echo $app->renderView( 'Njord', 'mom' );
+			}
+			?>
 			<div id="WikiaMainContentContainer" class="WikiaMainContentContainer">
 				<?php
 					if (!empty($wg->EnableForumExt) && ForumHelper::isForum()) {

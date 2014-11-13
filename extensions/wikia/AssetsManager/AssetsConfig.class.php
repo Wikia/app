@@ -10,6 +10,8 @@
 class AssetsConfig {
 	private static /* array */ $mConfig;
 
+	const JQUERY_VERSION = '1.8.2';
+
 	public static function getSiteJS( $combine ) {
 		return array( Title::newFromText( '-' )->getFullURL( 'action=raw&smaxage=0&gen=js&useskin=oasis' ) );
 	}
@@ -61,10 +63,10 @@ class AssetsConfig {
 
 		if ( !empty( $wgUseJQueryFromCDN ) && empty( $params['noexternals'] ) ) {
 			$url = $minify
-				? '#external_http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js'
-				: '#external_http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.js';
+				? '#external_http://ajax.googleapis.com/ajax/libs/jquery/' . self::JQUERY_VERSION . '/jquery.min.js'
+				: '#external_http://ajax.googleapis.com/ajax/libs/jquery/' . self::JQUERY_VERSION . '/jquery.js';
 		} else {
-			$url = 'resources/jquery/jquery-1.8.2.js';
+			$url = 'resources/jquery/jquery-' . self::JQUERY_VERSION . '.js';
 		}
 
 		return array( $url );
@@ -79,6 +81,7 @@ class AssetsConfig {
 		if ( empty( self::$mConfig ) ) {
 			wfProfileIn( __METHOD__ );
 			include( 'config.php' );
+			/* @var $config Array */
 			self::$mConfig = $config;
 
 			wfProfileOut( __METHOD__ );

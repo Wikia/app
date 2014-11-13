@@ -33,6 +33,21 @@ $article-navigation-icon-size: 38px;
 		&:hover {
 			color: $color-buttons;
 		}
+
+		.share-link {
+			color: inherit;
+			text-decoration: none;
+		}
+	}
+	&.single-share {
+		[data-share-type=multiple] {
+			display: none;
+		}
+	}
+	&.multiple-share {
+		[data-share-type=single] {
+			display: none;
+		}
 	}
 }
 

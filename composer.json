@@ -12,6 +12,7 @@
 		"wikia/fluent-sql-php": "1.0.*",
 		"videlalvaro/php-amqplib": "2.2.*",
 		"monolog/monolog": "1.9.1",
-		"phpunit/phpunit": "4.1.*"
+		"phpunit/phpunit": "4.1.*",
+		"facebook/php-sdk-v4": "4.0.*"
 	}
 }
