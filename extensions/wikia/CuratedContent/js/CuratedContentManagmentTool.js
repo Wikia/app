@@ -1,6 +1,6 @@
 /* global wgNamespaceIds, wgFormattedNamespaces, mw, wgServer, wgScript */
-$(function(){
-	require(['wikia.window', 'jquery', 'wikia.nirvana', 'JSMessages'], function(window, $, nirvana, msg){
+$(function () {
+	require(['wikia.window', 'jquery', 'wikia.nirvana', 'JSMessages'], function (window, $, nirvana, msg) {
 		'use strict';
 
 		var d = document,
@@ -10,6 +10,10 @@ $(function(){
 			requiredError = msg('wikiaCuratedContent-content-required-entry'),
 			emptyTagError = msg('wikiaCuratedContent-content-empty-section'),
 			itemError = msg('wikiaCuratedContent-content-item-error'),
+			articleNotFoundError = msg('wikiaCuratedContent-content-articlenotfound-error'),
+			emptyLabelError = msg('wikiaCuratedContent-content-emptylabel-error'),
+			videoNotSupportedError = msg('wikiaCuratedContent-content-videonotsupported-error'),
+			notSupportedType = msg('wikiaCuratedContent-content-notsupportedtype-error'),
 			addItem = d.getElementById('addItem'),
 			addTag = d.getElementById('addTag'),
 			$save = $(d.getElementById('save')),
@@ -17,10 +21,10 @@ $(function(){
 			$form = $(form),
 			ul = form.getElementsByTagName('ul')[0],
 			$ul = $(ul),
-			//it looks better if we display in input item name without Item:
+		//it looks better if we display in input item name without Item:
 			categoryId = wgNamespaceIds.category,
 			categoryName = wgFormattedNamespaces[categoryId] + ':',
-			setup = function(elem){
+			setup = function (elem) {
 				(elem || $ul.find('.item-input')).autocomplete({
 					serviceUrl: wgServer + wgScript,
 					params: {
@@ -30,10 +34,10 @@ $(function(){
 						//ns: categoryId
 					},
 					appendTo: form,
-					onSelect: function(){
+					onSelect: function () {
 						$ul.find('input:focus').next().focus();
 					},
-					fnPreprocessResults: function(data){
+					fnPreprocessResults: function (data) {
 						var suggestions = data.suggestions,
 							suggestion,
 							l = suggestions.length,
@@ -58,13 +62,13 @@ $(function(){
 					skipBadQueries: true // BugId:4625 - always send the request even if previous one returned no suggestions
 				});
 			},
-			addNew = function(row, elem){
+			addNew = function (row, elem) {
 				var cat;
 
-				if(elem) {
+				if (elem) {
 					elem.after(row);
 					cat = elem.next().find('.item-input');
-				}else{
+				} else {
 					$ul.append(row);
 					cat = $ul.find('.item-input:last');
 				}
@@ -74,28 +78,28 @@ $(function(){
 
 				$ul.sortable('refresh');
 			},
-			checkInputs = function(elements, checkEmpty, required){
+			checkInputs = function (elements, checkEmpty, required) {
 				var names = [];
 
-				elements.each(function(){
+				elements.each(function () {
 					var val = this.value,
 						$this = $(this);
 
-					if(required && val === '') {
+					if (required && val === '') {
 						$this
 							.addClass('error')
 							.popover('destroy')
 							.popover({
 								content: requiredError
 							});
-					} else if(!~names.indexOf(val)) {
+					} else if (!~names.indexOf(val)) {
 						names.push(val);
 
 						$this
 							.removeClass('error')
 							.popover('destroy');
 
-					}else if(checkEmpty || val !== ''){
+					} else if (checkEmpty || val !== '') {
 						$this
 							.addClass('error')
 							.popover('destroy')
@@ -105,50 +109,50 @@ $(function(){
 					}
 				});
 			},
-			checkForm = function(){
+			checkForm = function () {
 
 				$save.removeClass();
 
 				checkInputs($ul.find('.tag-input'), true);
 				checkInputs($ul.find('.item-input'), true, true);
 
-				$ul.find('.tag').each(function(){
+				$ul.find('.tag').each(function () {
 					var $t = $(this),
 						$categories = $t.nextUntil('.tag');
 
-					if($categories.length === 0) {
+					if ($categories.length === 0) {
 						$t.find('.tag-input')
 							.addClass('error')
 							.popover('destroy')
 							.popover({
 								content: emptyTagError
 							});
-					}else {
+					} else {
 						checkInputs($categories.find('.name'))
 					}
 				});
 
-				if(d.getElementsByClassName('error').length > 0){
+				if (d.getElementsByClassName('error').length > 0) {
 					$save.attr('disabled', true);
 					return false;
-				}else{
+				} else {
 					$save.attr('disabled', false);
 					return true;
 				}
 			};
 
 		$form
-			.on('focus', 'input', function(){
+			.on('focus', 'input', function () {
 				checkForm();
 			})
-			.on('click', '.remove', function(){
+			.on('click', '.remove', function () {
 				ul.removeChild(this.parentElement);
 				checkForm();
 			})
-			.on('blur', 'input', function(){
+			.on('blur', 'input', function () {
 				var val = $.trim(this.value);
 
-				if(this.className == 'item-input') {
+				if (this.className == 'item-input') {
 					val = val.replace(/ /g, '_');
 				}
 
@@ -156,18 +160,18 @@ $(function(){
 
 				checkForm();
 			})
-			.on('keypress', '.name', function(ev){
-				if(ev.keyCode === 13) addNew(item, $(this).parent());
+			.on('keypress', '.name', function (ev) {
+				if (ev.keyCode === 13) addNew(item, $(this).parent());
 			})
-			.on('keypress', '.item-input, .tag-input', function(ev){
-				if(ev.keyCode === 13) $(this).next().focus();
+			.on('keypress', '.item-input, .tag-input', function (ev) {
+				if (ev.keyCode === 13) $(this).next().focus();
 			});
 
-		$(addItem).on('click', function(){
+		$(addItem).on('click', function () {
 			addNew(item);
 		});
 
-		$(addTag).on('click', function(){
+		$(addTag).on('click', function () {
 			addNew(tag);
 		});
 
@@ -180,38 +184,38 @@ $(function(){
 			}
 		}
 
-		$save.on('click', function(){
+		$save.on('click', function () {
 			var data = [],
 				nonames = [],
 				nonameId = 0;
 
-			if(checkForm()) {
-				$ul.find('.item:not(.tag ~ .item)').each(function(){
+			if (checkForm()) {
+				$ul.find('.item:not(.tag ~ .item)').each(function () {
 					nonames.push(getData(this));
 				});
 
-				$ul.find('.tag').each(function(){
+				$ul.find('.tag').each(function () {
 					var $t = $(this),
 						name = $t.find('.tag-input').val(),
 						imageId = $t.find('.image').data('id') || 0,
 						categories = [];
 
-					$t.nextUntil('.tag').each(function(){
+					$t.nextUntil('.tag').each(function () {
 						(name ? categories : nonames).push(getData(this));
 					});
 
-					if(name) {
+					if (name) {
 						data.push({
 							title: name,
 							image_id: imageId,
 							categories: categories
 						});
-					}else{
+					} else {
 						nonameId = imageId;
 					}
 				});
 
-				if(nonames.length > 0) {
+				if (nonames.length > 0) {
 					data.push({
 						title: '',
 						image_id: nonameId || 0,
@@ -229,21 +233,41 @@ $(function(){
 						tags: data
 					}
 				}).done(
-					function(data){
-						if(data.error) {
+					function (data) {
+						function getReasonMessage(errReason) {
+							if (errReason === 'articleNotFound') {
+								return articleNotFoundError;
+							}
+							if (errReason === 'emptyLabel') {
+								return emptyLabelError;
+							}
+							if (errReason === 'videoNotSupportProvider') {
+								return videoNotSupportedError;
+							}
+							if (errReason === 'notSupportedType') {
+								return notSupportedType;
+							}
+							return errReason;
+						}
+
+						if (data.error) {
 							var err = data.error,
 								i = err.length,
 								categories = $form.find('.item-input');
 
-							while(i--){
+							while (i--) {
 								//I cannot use value CSS selector as I want to use current value
-								categories.each(function(){
-									if(this.value === err[i]){
+								var errTitle = err[i].title;
+								var errReason = err[i].reason;
+								var reasonMessage = getReasonMessage(errReason);
+								categories.each(function () {
+
+									if (this.value === errTitle) {
 										$(this)
 											.addClass('error')
 											.popover('destroy')
 											.popover({
-												content: itemError
+												content: reasonMessage
 											});
 
 										return false;
@@ -254,32 +278,32 @@ $(function(){
 
 							$save.addClass('err');
 							$save.attr('disabled', true);
-						}else if(data.status){
+						} else if (data.status) {
 							$save.addClass('ok');
 						}
-				}).fail(
-					function(){
+					}).fail(
+					function () {
 						$save.addClass('err');
 					}
-				).then(function(){
+				).then(function () {
 						$form.stopThrobbing();
-				});
+					});
 			}
 		});
 
 		//be sure modules are ready to be used
-		mw.loader.using(['jquery.autocomplete', 'jquery.ui.sortable', 'wikia.aim', 'wikia.yui'], function(){
+		mw.loader.using(['jquery.autocomplete', 'jquery.ui.sortable', 'wikia.aim', 'wikia.yui'], function () {
 			var $currentImage;
 
-			function onFail(){
+			function onFail() {
 				$currentImage
-					.css( 'backgroundImage', '' )
+					.css('backgroundImage', '')
 					.removeAttr('data-id');
 
 				$currentImage.stopThrobbing();
 			}
 
-			function loadImage(imgTitle, catImage){
+			function loadImage(imgTitle, catImage) {
 				$currentImage.startThrobbing();
 
 				nirvana.getJson(
@@ -289,14 +313,15 @@ $(function(){
 						file: imgTitle
 					}
 				).done(
-					function(data){
-						if(data.url && data.id) {
-							$currentImage.css( 'backgroundImage', 'url(' + data.url + ')' )
+					function (data) {
+						if (data.url && data.id) {
+							$currentImage.css('backgroundImage', 'url(' + data.url + ')')
 
-							if(!catImage) {
+							if (!catImage) {
 								$currentImage.attr('data-id', data.id);
 								$currentImage.siblings().last().addClass('photo-remove');
-							};
+							}
+							;
 
 							$currentImage.stopThrobbing();
 						} else {
@@ -306,12 +331,12 @@ $(function(){
 				).fail(onFail);
 			}
 
-			$(window).bind('WMU_addFromSpecialPage', function(event, wmuData) {
+			$(window).bind('WMU_addFromSpecialPage', function (event, wmuData) {
 				loadImage(wmuData.imageTitle);
 			});
 
 			$form.
-				on('click', '.photo-remove', function(){
+				on('click', '.photo-remove', function () {
 					var $this = $(this),
 						$line = $this.parent();
 
@@ -322,7 +347,7 @@ $(function(){
 
 					loadImage(wgFormattedNamespaces[wgNamespaceIds.category] + ':' + $line.find('.item-input').val(), true);
 				})
-				.on('click', '.photo:not(.photo-remove), .image', function(){
+				.on('click', '.photo:not(.photo-remove), .image', function () {
 					$currentImage = $(this).parent().find('.image');
 
 					window.WMU_skipDetails = true;
@@ -337,7 +362,7 @@ $(function(){
 				cursor: 'move',
 				handle: '.drag',
 				placeholder: 'drop',
-				update: function(){
+				update: function () {
 					checkForm();
 				}
 			});

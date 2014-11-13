@@ -244,10 +244,42 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 							$row );
 						$row[ 'article_id' ] = $articleId;
 						$row[ 'type' ] = $type;
-//						$row[ 'image_url' ] = $imageUrl;
 						$row[ 'image_id' ] = $imageId;
 						if ( !empty( $info ) ) {
 							$row[ 'video_info' ] = $info;
+						}
+
+						$rowErr = [ ];
+						if ( empty( $row[ 'label' ] ) ) {
+							$rowErr [ 'title' ] = $row[ 'title' ];
+							$rowErr [ 'reason' ] = 'emptyLabel';
+						}
+
+						if ( $articleId === 0 ) {
+							$rowErr [ 'title' ] = $row[ 'title' ];
+							$rowErr [ 'reason' ] = 'articleNotFound';
+						}
+
+						if ( $type == null ) {
+							$rowErr [ 'title' ] = $row[ 'title' ];
+							$rowErr [ 'reason' ] = 'notSupportedType';
+						}
+
+						if ( $type === 'video' ) {
+							if ( empty( $info ) ) {
+								$rowErr [ 'title' ] = $row[ 'title' ];
+								$rowErr [ 'reason' ] = 'videoNotHaveInfo';
+							} else {
+								if ( $info[ 'provider' ] !== 'youtube' && $info[ 'provider' ] !==
+									'ooyala'
+								) {
+									$rowErr [ 'title' ] = $row[ 'title' ];
+									$rowErr [ 'reason' ] = 'videoNotSupportProvider';
+								}
+							}
+						}
+						if ( !empty( $rowErr ) ) {
+							$err[ ] = $rowErr;
 						}
 					}
 				}
@@ -257,7 +289,8 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	}
 
 
-	private function getInfoFromRow( &$row ) {
+	private
+	function getInfoFromRow( &$row ) {
 		$title = Title::newFromText( $row[ 'title' ] );
 		if ( !empty( $title ) ) {
 
@@ -309,7 +342,8 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		}
 	}
 
-	private function getVideoInfo( $title ) {
+	private
+	function getVideoInfo( $title ) {
 		$mediaService = new MediaQueryService();
 		$mediaInfo = $mediaService->getMediaData( $title );
 		if ( !empty( $mediaInfo ) ) {
@@ -328,7 +362,8 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		return [ null, null ];
 	}
 
-	public static function findImageIfNotSet( $imageId, $articleId ) {
+	public
+	static function findImageIfNotSet( $imageId, $articleId ) {
 		$imageTitle = null;
 		if ( $imageId == 0 ) {
 			$imageTitle = self::findFirstImageTitleFromArticle( $articleId );

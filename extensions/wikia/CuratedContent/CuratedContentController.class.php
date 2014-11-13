@@ -371,7 +371,7 @@ class CuratedContentController extends WikiaController {
 			}
 			foreach ( $ret as &$value ) {
 
-				list( $image_url, $image_id ) =
+				list( $image_id, $image_url ) =
 					CuratedContentSpecialController::findImageIfNotSet(
 						$value[ 'image_id' ],
 						$value[ 'article_id' ] );
