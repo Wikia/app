@@ -18,8 +18,7 @@ $(function(){
 			ul = form.getElementsByTagName('ul')[0],
 			$ul = $(ul),
 			//it looks better if we display in input item name without Item:
-			categoryId = wgNamespaceIds.category,
-			categoryName = wgFormattedNamespaces[categoryId] + ':',
+
 			setup = function(elem){
 				(elem || $ul.find('.item-input')).autocomplete({
 					serviceUrl: wgServer + wgScript,
@@ -34,23 +33,6 @@ $(function(){
 						$ul.find('input:focus').next().focus();
 					},
 					fnPreprocessResults: function(data){
-						var suggestions = data.suggestions,
-							suggestion,
-							l = suggestions.length,
-							i = 0;
-
-						//for(; i < l; i++) {
-						//	suggestion = suggestions[i];
-						//	//get rid of non categories suggestions
-						//	//and 'Category:' part of suggestion
-						//	if(suggestion.indexOf(categoryName) > -1) {
-						//		suggestions[i] = suggestion.replace(categoryName, '');
-						//	}else{
-						//		delete suggestions[i];
-						//	}
-						//}
-
-						data.suggestions = suggestions;
 						return data;
 					},
 					deferRequestBy: 50,
@@ -114,9 +96,9 @@ $(function(){
 
 				$ul.find('.section').each(function(){
 					var $t = $(this),
-						$categories = $t.nextUntil('.section');
+						$items = $t.nextUntil('.section');
 
-					if($categories.length === 0) {
+					if($items.length === 0) {
 						$t.find('.section-input')
 							.addClass('error')
 							.popover('destroy')
@@ -124,7 +106,7 @@ $(function(){
 								content: emptySectionError
 							});
 					}else {
-						checkInputs($categories.find('.name'))
+						checkInputs($items.find('.name'))
 					}
 				});
 
@@ -194,17 +176,17 @@ $(function(){
 					var $t = $(this),
 						name = $t.find('.section-input').val(),
 						imageId = $t.find('.image').data('id') || 0,
-						categories = [];
+						items = [];
 
 					$t.nextUntil('.section').each(function(){
-						(name ? categories : nonames).push(getData(this));
+						(name ? items : nonames).push(getData(this));
 					});
 
 					if(name) {
 						data.push({
 							title: name,
 							image_id: imageId,
-							categories: categories
+							items: items
 						});
 					}else{
 						nonameId = imageId;
@@ -215,7 +197,7 @@ $(function(){
 					data.push({
 						title: '',
 						image_id: nonameId || 0,
-						categories: nonames
+						items: nonames
 					});
 				}
 
@@ -233,11 +215,11 @@ $(function(){
 						if(data.error) {
 							var err = data.error,
 								i = err.length,
-								categories = $form.find('.item-input');
+								items = $form.find('.item-input');
 
 							while(i--){
 								//I cannot use value CSS selector as I want to use current value
-								categories.each(function(){
+								items.each(function(){
 									if(this.value === err[i]){
 										$(this)
 											.addClass('error')
