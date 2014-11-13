@@ -107,7 +107,7 @@ ve.ui.WikiaSingleMediaDialog.prototype.getSetupProcess = function ( data ) {
 		.next( function () {
 			// TODO: Ultimetly this should work without setTimeout. It seems to be fixed in the
 			// upstream so should be revisited after upstream sync.
-			setTimeout( ve.bind( function() {
+			setTimeout( ve.bind( function () {
 				this.query.input.focus().select();
 			}, this ), 100 );
 		}, this );
