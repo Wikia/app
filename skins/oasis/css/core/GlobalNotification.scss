@@ -1,13 +1,13 @@
-@import "layout";
-@import "skins/shared/mixins/box-sizing-border-box";
-@import "skins/shared/mixins/calc";
+@import 'layout';
+@import 'skins/shared/mixins/box-sizing-border-box';
+@import 'skins/shared/mixins/calc';
 
 .global-notification {
-	@include box-shadow(0px, 2px, 5px, darken($color-page,12%));
-	width: 958px;
-	padding: 8px 10px;
+	@include box-shadow(0, 2px, 5px, darken($color-page, 12%));
 	margin: 0 auto;
+	padding: 8px 10px;
 	position: relative;
+	width: 958px;
 	z-index: $zTop + 1;
 	&.confirm { // Green
 		background: #92CD8E;
@@ -73,8 +73,8 @@
 	.close {
 		float: right;
 		height: 14px;
-		width: 14px;
 		margin: 0;
+		width: 14px;
 		img {
 			height: 11px;
 			width: 12px;
@@ -92,10 +92,10 @@
 
 			// DAR-2719: Hidden global notification when window shrank
 			@media screen and (max-width: 1020px) {
-				margin: 0;
 				left: 0;
+				margin: 0;
 
-				@include calc(width, "100% - 20px");
+				@include calc(width, '100% - 20px');
 			}
 		}
 	}
@@ -145,4 +145,3 @@
 		}
 	}
 }
-
