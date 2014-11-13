@@ -46,7 +46,7 @@ require(
 				geoCountryCode = geo.getCountryCode().toLowerCase();
 
 			// Check if a browser's language is one of the supported languages
-			if (typeof (browserLanguage) == 'string' && $.inArray(browserLanguage.substr(0, 2), supportedLanguages)) {
+			if (typeof (browserLanguage) == 'string' && $.inArray(browserLanguage.substr(0, 2), supportedLanguages) !== -1) {
 				targetLanguage = browserLanguage.substr(0, 2);
 				// Check if the country code is one of the supported languages
 			} else if ($.inArray(geoCountryCode, supportedLanguages) !== -1) {
