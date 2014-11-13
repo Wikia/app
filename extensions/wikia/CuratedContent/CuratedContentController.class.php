@@ -157,9 +157,9 @@ class CuratedContentController extends WikiaController {
 	 *
 	 * @return {}
 	 *
-	 * getList - list of tags on a wiki or list of all items if GGCMT was not used (this will be cached)
-	 * getList&offset='' - next page of items if no tages were given
-	 * getList&tag='' - list of all members of a given tag
+	 * getList - list of sections on a wiki or list of all items if GGCMT was not used (this will be cached)
+	 * getList&offset='' - next page of items if no sections were given
+	 * getList&section='' - list of all members of a given section
 	 *
 	 */
 	/**
@@ -228,13 +228,13 @@ class CuratedContentController extends WikiaController {
 		if ( empty( $content ) ) {
 			$this->getItems();
 		} else {
-			$tag = $this->request->getVal( 'tag' );
+			$section = $this->request->getVal( 'section' );
 
-			if ( empty( $tag ) ) {
+			if ( empty( $section ) ) {
 				$this->cacheResponseFor( 14, self::DAYS );
-				$this->getTags( $content );
+				$this->getSections( $content );
 			} else {
-				$this->getTagCategories( $content, $tag );
+				$this->getSectionItems( $content, $section );
 			}
 		}
 
@@ -307,21 +307,21 @@ class CuratedContentController extends WikiaController {
 
 	/**
 	 *
-	 * Returns Categories under a given Tag
+	 * Returns Items under a given Section
 	 *
 	 * @param $content
-	 * @param $requestTag
+	 * @param $requestSection
 	 *
-	 * @responseReturn Array|false Categories or false if tag was not found
+	 * @responseReturn Array|false Items or false if section was not found
 	 */
-	private function getTagCategories( $content, $requestTag ){
+	private function getSectionItems( $content, $requestSection ){
 		wfProfileIn( __METHOD__ );
 
 		$ret = false;
 
-		foreach( $content as $tag ){
-			if ( $requestTag == $tag['title'] ) {
-				$ret = $tag['categories'];
+		foreach( $content as $section ){
+			if ( $requestSection == $section['title'] ) {
+				$ret = $section['categories'];
 			}
 		}
 
@@ -378,9 +378,9 @@ class CuratedContentController extends WikiaController {
 //			}
 
 			$this->response->setVal( 'items', $ret );
-		} else if ( $requestTag !== '' ) {
+		} else if ( $requestSection !== '' ) {
 			wfProfileOut( __METHOD__ );
-			throw new InvalidParameterApiException( 'tag' );
+			throw new InvalidParameterApiException( 'section' );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -389,13 +389,13 @@ class CuratedContentController extends WikiaController {
 	/**
 	 * @param $content Array content of a wgWikiaCuratedContent
 	 *
-	 * @responseReturn Array tags List of tags on a wiki
-	 * @responseReturn See getTagCategories
+	 * @responseReturn Array sections List of sections on a wiki
+	 * @responseReturn See getSectionItems
 	 */
-	private function getTags( $content ) {
+	private function getSections( $content ) {
 		wfProfileIn( __METHOD__ );
 		$this->response->setVal(
-			'tags',
+			'sections',
 			array_reduce(
 				$content,
 				function( $ret, $item ) {
@@ -411,8 +411,8 @@ class CuratedContentController extends WikiaController {
 			)
 		);
 
-		//there also might be some categories without TAG, lets find them as well
-		$this->getTagCategories( $content, '' );
+		//there also might be some categories without SECTION, lets find them as well
+		$this->getSectionItems( $content, '' );
 		wfProfileOut( __METHOD__ );
 	}
 
