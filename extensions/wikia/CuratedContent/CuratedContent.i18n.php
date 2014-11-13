@@ -106,7 +106,6 @@ $messages['ca'] = array(
  */
 $messages['cs'] = array(
 	'wikiaCuratedContent-desc' => 'Moduly mobilní aplikace Wikia Herní manuály',
-	'wikiaCuratedContent-content-name' => 'Jméno', # Fuzzy
 	'wikiaCuratedContent-content-save' => 'Uložit',
 	'wikiaCuratedContent-content-duplicate-entry' => 'Tato hodnota je duplicitní',
 );
@@ -119,7 +118,6 @@ $messages['de'] = array(
 	'wikiaCuratedContent-desc' => 'Wikia Curated Content Mobile App Module',
 	'wikiaCuratedContent-preview-description' => 'Dies ist nur eine Vorschau, wie Seiten in einer Wikia-Game-Guides-Anwendung aussehen würden.',
 	'wikiaCuratedContent-content-title' => 'Inhaltsverwaltungswerkzeug für Wikia Curated Content',
-	'wikiaCuratedContent-content-name' => 'Name des Curated Content (optional)',
 	'wikiaCuratedContent-content-save' => 'Speichern',
 	'wikiaCuratedContent-content-duplicate-entry' => 'Dieser Wert ist doppelt',
 );
@@ -132,7 +130,6 @@ $messages['es'] = array(
 	'wikiaCuratedContent-desc' => 'Guías de Juego de Wikia para módulos de aplicaciones móviles',
 	'wikiaCuratedContent-preview-description' => 'Esto es solo una vista previa de cómo se verían las páginas en un aplicación de Wikia Curated Content.',
 	'wikiaCuratedContent-content-title' => 'Herramienta de administración de contenido de Wikia Curated Content',
-	'wikiaCuratedContent-content-name' => 'Nombre de la guía de juegos (opcional)',
 	'wikiaCuratedContent-content-save' => 'Guardar',
 	'wikiaCuratedContent-content-duplicate-entry' => 'Este valor está duplicado',
 );
@@ -161,7 +158,6 @@ $messages['fr'] = array(
 	'wikiaCuratedContent-desc' => 'Modules de l’application mobile Wikia Curated Content',
 	'wikiaCuratedContent-preview-description' => 'Ceci est un simple aperçu de ce à quoi ressembleront les pages dans une application de guide de jeu de Wikia.',
 	'wikiaCuratedContent-content-title' => 'Outil de gestion du contenu des guides de jeu de Wikia',
-	'wikiaCuratedContent-content-name' => 'Nom du Guide de jeu (facultatif)',
 	'wikiaCuratedContent-content-save' => 'Enregistrer',
 	'wikiaCuratedContent-content-duplicate-entry' => 'Cette valeur est dupliquée',
 );
@@ -173,7 +169,6 @@ $messages['gl'] = array(
 	'wikiaCuratedContent-desc' => 'Módulos de aplicacións móbiles Wikia Curated Content',
 	'wikiaCuratedContent-preview-description' => 'Esta é só unha vista previa de como se verían as páxinas nunha aplicación de Wikia Curated Content.',
 	'wikiaCuratedContent-content-title' => 'Ferramenta de administración de contido de Wikia Curated Content',
-	'wikiaCuratedContent-content-name' => 'Nome da guía do xogo (opcional)',
 	'wikiaCuratedContent-content-save' => 'Gardar',
 	'wikiaCuratedContent-content-duplicate-entry' => 'O valor está duplicado',
 );
@@ -220,7 +215,6 @@ $messages['mk'] = array(
 	'wikiaCuratedContent-desc' => 'Водичи низ игри на Викија за модули на мобилни апликации',
 	'wikiaCuratedContent-preview-description' => 'Ова е само преглед на тоа како би изгледале страниците во прилоготот „Водич за игри“ на Викија',
 	'wikiaCuratedContent-content-title' => 'Алатка за раководење со содржините - Водич за игри на Викија',
-	'wikiaCuratedContent-content-name' => 'Име на водичот за игри (незадолжително)',
 	'wikiaCuratedContent-content-save' => 'Зачувај',
 	'wikiaCuratedContent-content-duplicate-entry' => 'Оваа вредност е дуплирана',
 );
@@ -232,7 +226,6 @@ $messages['ms'] = array(
 	'wikiaCuratedContent-desc' => 'Modul aplikasi mudah alih Panduan Permainan Wikia',
 	'wikiaCuratedContent-preview-description' => 'Ini hanya pralihat untuk rupa halaman dalam aplikasi Wikia Curated Content.',
 	'wikiaCuratedContent-content-title' => 'Alat pengurusan kandungan Wikia Curated Content',
-	'wikiaCuratedContent-content-name' => 'Nama Panduan Permainan (pilihan)',
 	'wikiaCuratedContent-content-save' => 'Simpan',
 	'wikiaCuratedContent-content-duplicate-entry' => 'Nilai ini diduakan',
 );
@@ -244,7 +237,6 @@ $messages['nb'] = array(
 	'wikiaCuratedContent-desc' => 'Moduler for Wikias spillguide-app',
 	'wikiaCuratedContent-preview-description' => 'Dette er bare en forhåndsvisning av hvordan sider ville sett ut i en Wikia Spillguider-applikasjon.',
 	'wikiaCuratedContent-content-title' => 'Verktøy for innholdshåndtering av Wikia Spillguider',
-	'wikiaCuratedContent-content-name' => 'Navn på Spillguide (valgfritt)',
 	'wikiaCuratedContent-content-save' => 'Lagre',
 	'wikiaCuratedContent-content-duplicate-entry' => 'Denne verdien er duplisert',
 );
@@ -257,7 +249,6 @@ $messages['nl'] = array(
 	'wikiaCuratedContent-desc' => 'Applicatiemodules voor mobiel voor Wikia Curated Content',
 	'wikiaCuratedContent-preview-description' => 'Dit is alleen maar een voorvertoning van hoe een pagina eruit ziet in de Wikia Curated Content.',
 	'wikiaCuratedContent-content-title' => 'Contentbeheerprogramma voor Wikia Curated Content',
-	'wikiaCuratedContent-content-name' => 'Curated Contentnaam (optioneel)',
 	'wikiaCuratedContent-content-save' => 'Opslaan',
 	'wikiaCuratedContent-content-required-entry' => 'Een categorie is verplicht.',
 	'wikiaCuratedContent-content-duplicate-entry' => 'Deze waarde komt meerdere keren voor',
@@ -270,7 +261,6 @@ $messages['pl'] = array(
 	'wikiaCuratedContent-desc' => 'Aplikacje Wikia Curated Content dla urządzeń mobilnych',
 	'wikiaCuratedContent-preview-description' => 'To jedynie podgląd tego jak strona wyglądałaby w aplikacji Wikia Curated Content.',
 	'wikiaCuratedContent-content-title' => 'Narzędzie zarządzania zawartością Wikia Curated Content',
-	'wikiaCuratedContent-content-name' => 'Nazwa (opcjonalna)',
 	'wikiaCuratedContent-content-save' => 'Zapisz',
 	'wikiaCuratedContent-content-duplicate-entry' => 'Ta wartość jest zduplikowana',
 );
@@ -283,7 +273,6 @@ $messages['pms'] = array(
 	'wikiaCuratedContent-desc' => "Mòdoj ëd l'aplicassion mòbil Wikia Games Guides",
 	'wikiaCuratedContent-preview-description' => "Costa a l'é mach na preuva ëd com le pagine a dovrìo smijé ant n'aplicassion Wikia Curated Content.",
 	'wikiaCuratedContent-content-title' => 'Utis ëd gestion dël contnù ëd Wikia Curated Content.',
-	'wikiaCuratedContent-content-name' => 'Curated Content Name (opsional)',
 	'wikiaCuratedContent-content-save' => 'Salva',
 	'wikiaCuratedContent-content-duplicate-entry' => "Sto valor a l'é duplicà",
 );
@@ -324,7 +313,6 @@ $messages['ru'] = array(
 	'wikiaCuratedContent-desc' => 'Модули мобильного приложения Wikia Curated Content',
 	'wikiaCuratedContent-preview-description' => 'Это только предварительный просмотр страницы. Так она будет выглядеть в приложении Wikia Curated Content.',
 	'wikiaCuratedContent-content-title' => 'Инструмент управления содержимым Wikia Curated Content',
-	'wikiaCuratedContent-content-name' => 'Название для Curated Content (необязательно)',
 	'wikiaCuratedContent-content-save' => 'Сохранить',
 	'wikiaCuratedContent-content-duplicate-entry' => 'Это значение является дубликатом',
 );
@@ -350,7 +338,6 @@ $messages['sv'] = array(
 	'wikiaCuratedContent-desc' => 'Moduler för appen Wikia Spelguider',
 	'wikiaCuratedContent-preview-description' => 'Detta är bara en förhandsgranskning av hur sidor skulle se ut i appen Wikia Spelguider.',
 	'wikiaCuratedContent-content-title' => 'Verktyg för innehållshantering i Wikia Spelguider',
-	'wikiaCuratedContent-content-name' => 'Namn på spelguiden (valfri)',
 	'wikiaCuratedContent-content-save' => 'Spara',
 	'wikiaCuratedContent-content-duplicate-entry' => 'Detta värde är dubblerad',
 );
