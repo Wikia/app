@@ -290,7 +290,7 @@ class CuratedContentController extends WikiaController {
 
 		foreach ( $content as $section ) {
 			if ( $requestSection == $section[ 'title' ] ) {
-				$ret = $section[ 'categories' ];
+				$ret = $section[ 'items' ];
 			}
 		}
 
