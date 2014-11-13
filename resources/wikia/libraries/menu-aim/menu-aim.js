@@ -339,10 +339,6 @@
 		 * Activate a menu row.
 		 */
 		activate = function(row, event) {
-			//var target = trigger.target,
-			//	row = target || trigger,
-			//	event = target ? trigger : false;
-
 			if (row == activeRow) {
 				return;
 			}
