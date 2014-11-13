@@ -90,33 +90,33 @@ class SpecialConnect extends SpecialPage {
 		$this->mReturnTo = $wgRequest->getVal( 'returnto' );
 		$this->mReturnToQuery = $wgRequest->getVal( 'returntoquery' );
 
-                /**
-                 * BugId:13709
-                 * Before the fix the logic and the usage of parse_str was wrong
-                 * which had fatal side effects.
-                 *
-                 * The goal if the block below is  to remove the fbconnected
-                 * variable from the $this->mReturnToQuery (which is supposed
-                 * to be a QUERY_STRING-like string.
-                 */
-                if ( !empty( $this->mReturnToQuery ) ) {
-                    // a temporary array
-                    $aReturnToQuery = array();
-                    // decompose the query string to the array
-                    parse_str( $this->mReturnToQuery, $aReturnToQuery );
-                    // remove unwanted elements
-                    unset( $aReturnToQuery['fbconnected'] );
+		/**
+		 * BugId:13709
+		 * Before the fix the logic and the usage of parse_str was wrong
+		 * which had fatal side effects.
+		 *
+		 * The goal if the block below is  to remove the fbconnected
+		 * variable from the $this->mReturnToQuery (which is supposed
+		 * to be a QUERY_STRING-like string.
+		 */
+		if ( !empty( $this->mReturnToQuery ) ) {
+			// a temporary array
+			$aReturnToQuery = array();
+			// decompose the query string to the array
+			parse_str( $this->mReturnToQuery, $aReturnToQuery );
+			// remove unwanted elements
+			unset( $aReturnToQuery['fbconnected'] );
 
-                    //recompose the query string
-                    foreach ( $aReturnToQuery as $k => $v ) {
-                        $aReturnToQuery[$k] = "{$k}={$v}";
-                    }
-                    // oh, parse_str implicitly urldecodes values which wasn't
-                    // mentioned in the PHP documentation.
-                    $this->mReturnToQuery = urlencode( implode( '&', $aReturnToQuery ) );
-                    // remove the temporary array
-                    unset( $aReturnToQuery );
-                }
+			//recompose the query string
+			foreach ( $aReturnToQuery as $k => $v ) {
+				$aReturnToQuery[$k] = "{$k}={$v}";
+			}
+			// oh, parse_str implicitly urldecodes values which wasn't
+			// mentioned in the PHP documentation.
+			$this->mReturnToQuery = urlencode( implode( '&', $aReturnToQuery ) );
+			// remove the temporary array
+			unset( $aReturnToQuery );
+		}
 
 		$title = Title::newFromText($this->mReturnTo);
 		if (!empty($title))

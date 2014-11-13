@@ -74,6 +74,21 @@ $dropdownArrowSize: 10px;
 				z-index: 1;
 			}
 		}
+
+		.share-link {
+			color: inherit;
+			text-decoration: none;
+		}
+	}
+	&.single-share {
+		[data-share-type=multiple] {
+			display: none;
+		}
+	}
+	&.multiple-share {
+		[data-share-type=single] {
+			display: none;
+		}
 	}
 
 	.active .nav-icon,

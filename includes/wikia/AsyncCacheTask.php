@@ -21,12 +21,12 @@ class AsyncCacheTask extends BaseTask {
 	 *
 	 * @return \Status
 	 */
-	public static function generate( $key, callable $func, array $args, array $options ) {
+	public static function generate( $key, $func, array $args, array $options ) {
 
 		// Get TTLs to use for positive response and negative (empty) response
-		$ttl = empty( $options[ 'ttl' ] ) ? \AsyncCache::DEFAULT_TTL : $options[ 'ttl' ];
+		$ttl = empty( $options[ 'ttl' ] ) ? AsyncCache::DEFAULT_TTL : $options[ 'ttl' ];
 		$negTTL = empty( $options[ 'negativeResponseTTL' ] )
-			? \AsyncCache::DEFAULT_NEGATIVE_RESPONSE_TTL
+			? AsyncCache::DEFAULT_NEGATIVE_RESPONSE_TTL
 			:  $options[ 'negativeResponseTTL' ];
 
 		// The function has the ability to determine what it considers to be a negative response since

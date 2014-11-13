@@ -70,6 +70,10 @@ class VenusController extends WikiaController {
 		$this->globalFooter = $this->getGlobalFooter();
 		$this->corporateFooter = $this->getCorporateFooter();
 
+		if ($this->isUserLoggedIn) {
+			$this->recentWikiActivity = $this->getRecentWikiActivity();
+		}
+
 		if ( WikiaPageType::isArticlePage() ) {
 			$this->leftArticleNav = $this->getLeftArticleNavigation();
 			$this->setVal('header', $this->app->renderView('Venus', 'header'));
@@ -183,6 +187,10 @@ class VenusController extends WikiaController {
 
 	public function getCorporateFooter() {
 		//return $this->app->renderView('CorporateFooter', 'Index');
+	}
+
+	public function getRecentWikiActivity() {
+		return $this->app->renderView('RecentWikiActivity', 'index');
 	}
 
 	public static function addBodyParameter($parameter) {

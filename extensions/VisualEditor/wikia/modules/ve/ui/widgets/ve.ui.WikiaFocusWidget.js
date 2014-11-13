@@ -38,7 +38,7 @@ ve.ui.WikiaFocusWidget = function VeUiWikiaFocusWidget( surface ) {
 	this.$localNavigation = this.$( '#localNavigation' );
 	this.$wikiaBarWrapper = this.$( '#WikiaBarWrapper' );
 	this.$wikiaBarCollapseWrapper = this.$( '#WikiaBarCollapseWrapper' );
-	this.$wikiaAds = this.$( '.wikia-ad, #WikiaAdInContentPlaceHolder' );
+	this.$wikiaAds = this.$( '.hide-to-edit, .hide-for-edit, .wikia-ad, #WikiaAdInContentPlaceHolder' );
 	if ( mw.config.get( 'wgEnableWikiaBarExt' ) && !mw.config.get( 'WikiaBar' ).isWikiaBarHidden() ) {
 		this.showWikiaBar = true;
 	}

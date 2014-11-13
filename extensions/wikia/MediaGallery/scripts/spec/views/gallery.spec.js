@@ -5,6 +5,7 @@ describe('MediaGalleries gallery', function () {
 	var i,
 		Gallery,
 		Media,
+		Toggler,
 		Caption,
 		templates,
 		instance,
@@ -49,9 +50,10 @@ describe('MediaGalleries gallery', function () {
 		spyOn(Mustache, 'render').andReturn('okay');
 		bucky = modules['bucky.mock'];
 		templates = modules['mediaGallery.templates.mustache'];
+		Toggler = modules['mediaGallery.views.toggler'](templates);
 		Caption = modules['mediaGallery.views.caption']();
 		Media = modules['mediaGallery.views.media'](Caption, templates);
-		Gallery = modules['mediaGallery.views.gallery'](Media, templates, tracker, bucky);
+		Gallery = modules['mediaGallery.views.gallery'](Media, Toggler, tracker, bucky);
 
 		instance = new Gallery(options).init();
 	});
@@ -84,7 +86,7 @@ describe('MediaGalleries gallery', function () {
 		instance = new Gallery(options);
 		instance.init();
 
-		expect(instance.$toggler).toBeDefined();
+		expect(instance.toggler).toBeDefined();
 	});
 
 	it('should not init toggler', function () {
@@ -93,7 +95,7 @@ describe('MediaGalleries gallery', function () {
 		instance = new Gallery(options);
 		instance.init();
 
-		expect(instance.$toggler).not.toBeDefined();
+		expect(instance.toggler).not.toBeDefined();
 	});
 
 	it('should show more and show less', function () {

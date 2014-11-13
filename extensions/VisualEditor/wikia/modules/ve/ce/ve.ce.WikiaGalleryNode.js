@@ -45,6 +45,8 @@ OO.mixinClass( ve.ce.WikiaGalleryNode, ve.ce.FocusableNode );
 
 /* Static Properties */
 
+ve.ce.WikiaGalleryNode.static.handlesOwnRendering = true;
+
 ve.ce.WikiaGalleryNode.static.name = 'wikiaGallery';
 
 ve.ce.WikiaGalleryNode.static.tagName = 'div';
@@ -101,12 +103,15 @@ ve.ce.WikiaGalleryNode.prototype.setupGallery = function ( galleryData ) {
 				$wrapper: this.$element,
 				model: { media: galleryData },
 				index: -1,
-				origVisibleCount: Math.min( galleryData.length, 8 )
+				// 100 and 8 are constant for MediaGallery extension. I could export them
+				// but I'm not going to because ultimetly "client" of Gallery should not have
+				// to know about it and just pass some boolean expand parameter to get desired
+				// effect.
+				origVisibleCount: this.model.getAttribute( 'expand' ) ? 100 : 8
 			},
 			gallery = new Gallery( galleryOptions ).init();
 
 		this.$element
-			.html( '' )
 			.removeClass( function ( index, css ) {
 				return ( css.match ( /(^|\s)count-\S+/g ) || [] ).join( ' ' );
 			} )
@@ -119,14 +124,19 @@ ve.ce.WikiaGalleryNode.prototype.setupGallery = function ( galleryData ) {
 };
 
 ve.ce.WikiaGalleryNode.static.getThumbUrl = function ( url ) {
-	var height = 480,
-		width = 480;
-	return [
-		url.substr( 0, url.indexOf( '/revision/' ) ),
-		'/revision/latest/zoom-crop',
-		'/width/' + width + '/height/' + height,
-		'?' + url.match( /cb=\d*/gm ) + '&fill=transparent'
-	].join( '' );
+	var vignettePathPrefix = mw.config.get( 'VignettePathPrefix' ),
+		height = 480,
+		width = 480,
+		parts = [
+			url.substr( 0, url.indexOf( '/revision/' ) ),
+			'/revision/latest/zoom-crop',
+			'/width/' + width + '/height/' + height,
+			'?' + url.match( /cb=\d*/gm ) + '&fill=transparent'
+		];
+	if ( vignettePathPrefix ) {
+		parts.push( '&path-prefix=' + vignettePathPrefix );
+	}
+	return parts.join( '' );
 };
 
 ve.ce.WikiaGalleryNode.static.getThumbHtml = function ( linkUrl, imageUrl, name ) {
