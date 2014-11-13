@@ -38,7 +38,7 @@
       }
     }
 
-    .tag ~ .item {
+    .section ~ .item {
       padding-left: 100px;
     }
   }
@@ -128,7 +128,7 @@
   box-shadow: 0 0 10px -4px;
 }
 
-.tag, .language{
+.section, .language{
   background-color: $color-body;
 }
 

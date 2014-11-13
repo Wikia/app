@@ -337,6 +337,28 @@ class GameGuidesController extends WikiaController {
 	}
 
 	/**
+	 * @brief function that returns a valid and current link to resources of GG
+	 *
+	 * @responseParam String url to current resources
+	 * @responseParam Integer cb current style version number
+	 */
+	public function getResourcesUrl(){
+		global $IP;
+
+		$this->response->setFormat( 'json' );
+		$this->cacheResponseFor( 15, self::MINUTES );
+
+		$hash = md5_file( $IP . self::ASSETS_PATH );
+
+		$this->response->setVal( 'url',
+			self::ASSETS_PATH . '?cb=' . $hash
+		);
+
+		//when apps will be updated this won't be needed anymore
+		$this->response->setVal( 'cb', $this->wg->StyleVersion );
+	}
+
+	/**
 	 * API to get data from Game Guides Content Managment Tool in json
 	 *
 	 * make sure that name of this function is aligned

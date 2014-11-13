@@ -5,26 +5,25 @@ $(function () {
 
 		var d = document,
 			item = mw.config.get('itemTemplate'),
-			tag = mw.config.get('tagTemplate'),
+			section = mw.config.get('sectionTemplate'),
 			duplicateError = msg('wikiaCuratedContent-content-duplicate-entry'),
 			requiredError = msg('wikiaCuratedContent-content-required-entry'),
-			emptyTagError = msg('wikiaCuratedContent-content-empty-section'),
+			emptySectionError = msg('wikiaCuratedContent-content-empty-section'),
 			itemError = msg('wikiaCuratedContent-content-item-error'),
 			articleNotFoundError = msg('wikiaCuratedContent-content-articlenotfound-error'),
 			emptyLabelError = msg('wikiaCuratedContent-content-emptylabel-error'),
 			videoNotSupportedError = msg('wikiaCuratedContent-content-videonotsupported-error'),
 			notSupportedType = msg('wikiaCuratedContent-content-notsupportedtype-error'),
 			addItem = d.getElementById('addItem'),
-			addTag = d.getElementById('addTag'),
+			addSection = d.getElementById('addSection'),
 			$save = $(d.getElementById('save')),
 			form = d.getElementById('contentManagmentForm'),
 			$form = $(form),
 			ul = form.getElementsByTagName('ul')[0],
 			$ul = $(ul),
-		//it looks better if we display in input item name without Item:
-			categoryId = wgNamespaceIds.category,
-			categoryName = wgFormattedNamespaces[categoryId] + ':',
-			setup = function (elem) {
+			//it looks better if we display in input item name without Item:
+
+			setup = function(elem){
 				(elem || $ul.find('.item-input')).autocomplete({
 					serviceUrl: wgServer + wgScript,
 					params: {
@@ -37,24 +36,7 @@ $(function () {
 					onSelect: function () {
 						$ul.find('input:focus').next().focus();
 					},
-					fnPreprocessResults: function (data) {
-						var suggestions = data.suggestions,
-							suggestion,
-							l = suggestions.length,
-							i = 0;
-
-						//for(; i < l; i++) {
-						//	suggestion = suggestions[i];
-						//	//get rid of non categories suggestions
-						//	//and 'Category:' part of suggestion
-						//	if(suggestion.indexOf(categoryName) > -1) {
-						//		suggestions[i] = suggestion.replace(categoryName, '');
-						//	}else{
-						//		delete suggestions[i];
-						//	}
-						//}
-
-						data.suggestions = suggestions;
+					fnPreprocessResults: function(data){
 						return data;
 					},
 					deferRequestBy: 50,
@@ -113,22 +95,22 @@ $(function () {
 
 				$save.removeClass();
 
-				checkInputs($ul.find('.tag-input'), true);
+				checkInputs($ul.find('.section-input'), true);
 				checkInputs($ul.find('.item-input'), true, true);
 
-				$ul.find('.tag').each(function () {
+				$ul.find('.section').each(function(){
 					var $t = $(this),
-						$categories = $t.nextUntil('.tag');
+						$items = $t.nextUntil('.section');
 
-					if ($categories.length === 0) {
-						$t.find('.tag-input')
+					if($items.length === 0) {
+						$t.find('.section-input')
 							.addClass('error')
 							.popover('destroy')
 							.popover({
-								content: emptyTagError
+								content: emptySectionError
 							});
-					} else {
-						checkInputs($categories.find('.name'))
+					}else {
+						checkInputs($items.find('.name'))
 					}
 				});
 
@@ -163,16 +145,16 @@ $(function () {
 			.on('keypress', '.name', function (ev) {
 				if (ev.keyCode === 13) addNew(item, $(this).parent());
 			})
-			.on('keypress', '.item-input, .tag-input', function (ev) {
-				if (ev.keyCode === 13) $(this).next().focus();
+			.on('keypress', '.item-input, .section-input', function(ev){
+				if(ev.keyCode === 13) $(this).next().focus();
 			});
 
 		$(addItem).on('click', function () {
 			addNew(item);
 		});
 
-		$(addTag).on('click', function () {
-			addNew(tag);
+		$(addSection).on('click', function(){
+			addNew(section);
 		});
 
 		function getData(li) {
@@ -189,26 +171,26 @@ $(function () {
 				nonames = [],
 				nonameId = 0;
 
-			if (checkForm()) {
-				$ul.find('.item:not(.tag ~ .item)').each(function () {
+			if(checkForm()) {
+				$ul.find('.item:not(.section ~ .item)').each(function(){
 					nonames.push(getData(this));
 				});
 
-				$ul.find('.tag').each(function () {
+				$ul.find('.section').each(function(){
 					var $t = $(this),
-						name = $t.find('.tag-input').val(),
+						name = $t.find('.section-input').val(),
 						imageId = $t.find('.image').data('id') || 0,
-						categories = [];
+						items = [];
 
-					$t.nextUntil('.tag').each(function () {
-						(name ? categories : nonames).push(getData(this));
+					$t.nextUntil('.section').each(function(){
+						(name ? items : nonames).push(getData(this));
 					});
 
 					if (name) {
 						data.push({
 							title: name,
 							image_id: imageId,
-							categories: categories
+							items: items
 						});
 					} else {
 						nonameId = imageId;
@@ -219,7 +201,7 @@ $(function () {
 					data.push({
 						title: '',
 						image_id: nonameId || 0,
-						categories: nonames
+						items: nonames
 					});
 				}
 
@@ -230,7 +212,7 @@ $(function () {
 					controller: 'CuratedContentSpecial',
 					method: 'save',
 					data: {
-						tags: data
+						sections: data
 					}
 				}).done(
 					function (data) {
@@ -253,14 +235,14 @@ $(function () {
 						if (data.error) {
 							var err = data.error,
 								i = err.length,
-								categories = $form.find('.item-input');
+								items = $form.find('.item-input');
 
 							while (i--) {
 								//I cannot use value CSS selector as I want to use current value
 								var errTitle = err[i].title;
 								var errReason = err[i].reason;
 								var reasonMessage = getReasonMessage(errReason);
-								categories.each(function () {
+								items.each(function () {
 
 									if (this.value === errTitle) {
 										$(this)
