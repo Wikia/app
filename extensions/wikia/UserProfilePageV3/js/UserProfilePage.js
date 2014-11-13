@@ -135,7 +135,7 @@ var UserProfilePage = {
 
 							// show a message when avatars upload is disabled (BAC-1046)
 							if (data.avatarsDisabled === true) {
-								window.GlobalNotification.show(data.avatarsDisabledMsg, 'error');
+								UserProfilePage.error(data.avatarsDisabledMsg);
 							}
 
 							UserProfilePage.isLightboxGenerating = false;
@@ -299,7 +299,7 @@ var UserProfilePage = {
 						window.GlobalNotification.hide();
 					} else {
 						if (typeof (response.result.error) !== 'undefined') {
-							window.GlobalNotification.show(response.result.error, 'error');
+							UserProfilePage.error(response.result.error);
 						}
 					}
 					$modal.stopThrobbing();
