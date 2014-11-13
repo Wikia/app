@@ -13,7 +13,7 @@ class RecommendationsApiController extends WikiaApiController {
 		// validate parameters
 		if ( is_null($title) || !$title->exists() ) {
 			// TODO: message
-			throw new BadRequestApiException();
+			throw new NotFoundApiException();
 		}
 
 		$data = ( new Collector )->get( $articleId, $limit );
