@@ -47,7 +47,7 @@ $dropdownArrowSize: 10px;
 	.wikia-dropdown-nav-wrapper {
 		box-sizing: content-box;
 		padding-left: $distanceToDropdown;
-		top: -$dropdownArrowSize / 2;
+		top: round($dropdownArrowSize / 2) * -1;
 	}
 
 	@include dropdownWidth();
@@ -57,7 +57,6 @@ $dropdownArrowSize: 10px;
 			&:before,
 			&:after {
 				content: "";
-				position: absolute;
 				border-top: $dropdownArrowSize solid transparent;
 				border-bottom: $dropdownArrowSize solid transparent;
 				position: absolute;
@@ -71,8 +70,8 @@ $dropdownArrowSize: 10px;
 
 			&:after {
 				border-right: $dropdownArrowSize solid $color-page;
-				z-index: 1;
 				right: -$distanceToDropdown - 1px;
+				z-index: 1;
 			}
 		}
 	}

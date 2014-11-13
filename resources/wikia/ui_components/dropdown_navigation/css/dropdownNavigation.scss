@@ -6,11 +6,11 @@ $dropdown-width: 200px;
 $dropdown-item-padding: 10px;
 
 .wikia-dropdown-nav-wrapper {
+	display: none;
 	position: absolute;
 	top: 0;
 	text-align: left;
 	width: $dropdown-width * 2;
-	display: none;
 
 	.active > & {
 		display: block;
