@@ -272,6 +272,8 @@ $wgAutoloadClasses[ 'Wikia\\Blogs\\BlogTask'          ] = "$IP/extensions/wikia/
 $wgAutoloadClasses[ 'TemplatePageHelper'              ] = "$IP/includes/wikia/helpers/TemplatePageHelper.php";
 $wgAutoloadClasses[ 'CrossOriginResourceSharingHeaderHelper' ] = "$IP/includes/wikia/helpers/CrossOriginResourceSharingHeaderHelper.php";
 $wgAutoloadClasses[ 'VignetteRequest'                 ] = "{$IP}/includes/wikia/VignetteRequest.php";
+$wgAutoloadClasses[ 'Wikia\\Cache\\AsyncCacheTask'    ] = "$IP/includes/wikia/AsyncCacheTask.php";
+$wgAutoloadClasses[ 'Wikia\\Cache\\AsyncCache'        ] = "$IP/includes/wikia/AsyncCache.php";
 
 /**
  * Resource Loader enhancements
@@ -295,7 +297,6 @@ $wgAutoloadClasses['ApiService']  =  $IP.'/includes/wikia/services/ApiService.cl
 $wgAutoloadClasses['ArticleService'] = $IP.'/includes/wikia/services/ArticleService.class.php';
 $wgAutoloadClasses['AvatarService'] = $IP.'/includes/wikia/services/AvatarService.class.php';
 $wgAutoloadClasses['MediaQueryService'] = $IP.'/includes/wikia/services/MediaQueryService.class.php';
-$wgHooks['ArticleEditUpdates'][] = 'MediaQueryService::onArticleEditUpdates';
 $wgAutoloadClasses['OasisService']  =  $IP.'/includes/wikia/services/OasisService.php';
 $wgAutoloadClasses['PageStatsService']  =  $IP.'/includes/wikia/services/PageStatsService.class.php';
 $wgAutoloadClasses['UserContribsProviderService'] = $IP.'/includes/wikia/services/UserContribsProviderService.class.php';
@@ -327,6 +328,13 @@ $wgAutoloadClasses['FormBuilderService']  =  $IP.'/includes/wikia/services/FormB
 $wgAutoloadClasses['LicensedWikisService']  =  $IP.'/includes/wikia/services/LicensedWikisService.class.php';
 $wgAutoloadClasses['ArticleQualityService'] = $IP.'/includes/wikia/services/ArticleQualityService.php';
 $wgAutoloadClasses['ArticleTypeService'] = $IP.'/includes/wikia/services/ArticleTypeService.class.php';
+
+// services hooks
+$wgHooks['ArticleEditUpdates'][] = 'MediaQueryService::onArticleEditUpdates';
+$wgHooks['ArticlePurge'][] = 'ArticleService::onArticlePurge';
+$wgHooks['ArticleSaveComplete'][] = 'ArticleService::onArticleSaveComplete';
+$wgHooks['ArticleDeleteComplete'][] = 'PageStatsService::onArticleDeleteComplete';
+$wgHooks['ArticleSaveComplete'][] = 'PageStatsService::onArticleSaveComplete';
 
 // data models
 $wgAutoloadClasses['WikisModel'] = "{$IP}/includes/wikia/models/WikisModel.class.php";
@@ -1250,12 +1258,6 @@ $wgAdDriverUseAdsAfterInfobox = false;
 $wgAdDriverUseTaboola = false;
 
 /**
- * @name $wgAdDriverUseRemnantGpt
- * Enables additional call to dart before Liftium
- */
-$wgAdDriverUseRemnantGpt = false;
-
-/**
  * @name $wgAdDriverAlwaysCallDartInCountries
  * Disables the max N calls to DART and enables Remnant GPT call in those countries.
  * This is an instant globals, which means you set it only on community and it takes
@@ -1324,14 +1326,6 @@ $wgAdDriverUseSevenOneMediaInLanguages = ['de'];
 $wgAdDriverSevenOneMediaOverrideSub2Site = null;
 
 /**
- * @name $wgAdDriverUseDartForSlotsBelowTheFold
- * Whether to call DART for additional slots below the fold. Also known as "Coffee cup".
- * Set to null for to restrict only to Entertainment vertical
- * TODO: add an internal page for the reasons
- */
-$wgAdDriverUseDartForSlotsBelowTheFold = true;
-
-/**
  * @name $wgAdDriverTrackState
  * Enables GA tracking of state for ad slots on pages
  */
@@ -1353,7 +1347,7 @@ $wgAdDriverForceLiftiumAd = false;
  * @name $wgAdDriverEnableAdsInMaps
  * Whether to display ads within interactive maps
  */
-$wgAdDriverEnableAdsInMaps = false;
+$wgAdDriverEnableAdsInMaps = true;
 
 /**
  * @name $wgAdDriverRubiconRTPConfig
@@ -1384,12 +1378,6 @@ $wgAdDriverRubiconRTPCountries = null;
  * Value set in WikiFactory for Community acts as global value. Can be overridden per wiki.
  */
 $wgHighValueCountries = null;
-
-/**
- * @name $wgAdVideoTargeting
- * Enables page-level video ad targeting
- */
-$wgAdVideoTargeting = true;
 
 /**
  * @name $wgAnalyticsProviderPageFair
@@ -1564,6 +1552,7 @@ $wgBuckySampling = 10;
  * List of skins where Bucky reporting should be enabled
  */
 $wgBuckyEnabledSkins = [
+	'monobook',
 	'oasis',
 	'venus',
 ];

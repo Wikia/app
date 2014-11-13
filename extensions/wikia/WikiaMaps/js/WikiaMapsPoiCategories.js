@@ -164,6 +164,10 @@ define('wikia.maps.poiCategories',
 					modal.trigger('uploadMarkerImage', event.target);
 				});
 
+				modal.$element.on('submit', '.intMapPoiCategoriesForm', function (event) {
+					event.preventDefault();
+				});
+
 				modal.show();
 			});
 		}

@@ -18,7 +18,7 @@ $header-without-cover-unit-spacing: 60px;
 .article {
 	overflow: hidden;
 
-	header {
+	> header {
 		@include grid-column-width('medium', 8, $medium-content-padding - $content-border-width);
 		float: left;
 

@@ -77,7 +77,7 @@
 			Lightbox.cacheDOM();
 
 			// Init ads in Lightbox
-			if ($('#MODAL_RECTANGLE').length && window.wgShowAds) {
+			if ($('#MODAL_RECTANGLE').length && Lightbox.ads.showAds()) {
 				Lightbox.openModal.lightbox.addClass('show-ads');
 				window.adslots2.push(['MODAL_RECTANGLE']);
 				Lightbox.ads.adModalRectangleShown = true;
@@ -563,8 +563,11 @@
 			},
 			// should user see ads?
 			showAds: function () {
+				var showAds = window.ads && window.ads.context &&
+					window.ads.context.opts && window.ads.context.opts.showAds;
+
 				return !!(
-					window.wgShowAds &&
+					showAds &&
 					(Geo.getCountryCode() === 'US' || Geo.getCountryCode() === 'GB') &&
 					$('#' + this.getSlotName()).length
 				);
@@ -1221,13 +1224,6 @@
 								thumbWrapperClass: (type === 'video') ? Lightbox.videoWrapperClass : ''
 							});
 						}
-					});
-
-					// Add cached media gallery data sent over from MediaGallery extension.
-					$(window).trigger('lightboxArticleMedia', {
-						thumbArr: thumbArr,
-						width: Lightbox.carouselThumbWidth,
-						height: Lightbox.carouselThumbHeight
 					});
 
 					// Fill articleMedia cache
