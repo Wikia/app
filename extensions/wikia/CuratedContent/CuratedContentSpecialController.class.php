@@ -6,7 +6,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 
 	const ARTICLE_ID_TAG = 'article_id';
 
-	const CATEGORIES_TAG = 'categories';
+	const ITEMS_TAG = 'items';
 
 	const STR_ARTICLE = 'article';
 
@@ -14,7 +14,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 
 	const STR_FILE = 'file';
 
-	const STR_CATEGORY = 'category';
+	const ITEM_FUNCTION_NAME = 'item';
 
 	public function __construct() {
 		parent::__construct( 'CuratedContent', '', false );
@@ -63,12 +63,12 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 
 		$this->response->setVal( 'descriptions', [
 			wfMsg( 'wikiaCuratedContent-content-description-items' ),
-			wfMsg( 'wikiaCuratedContent-content-description-tag' ),
+			wfMsg( 'wikiaCuratedContent-content-description-section' ),
 			wfMsg( 'wikiaCuratedContent-content-description-organize' ),
 			wfMsg( 'wikiaCuratedContent-content-description-no-tag' )
 		] );
 
-		$this->response->setVal( 'addTag', wfMsg( 'wikiaCuratedContent-content-add-tag' ) );
+		$this->response->setVal( 'addSection', wfMsg( 'wikiaCuratedContent-content-add-section' ) );
 		$this->response->setVal( 'addItem', wfMsg( 'wikiaCuratedContent-content-add-item' ) );
 		$this->response->setVal( 'save', wfMsg( 'wikiaCuratedContent-content-save' ) );
 
@@ -76,30 +76,30 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$this->response->setVal( 'item_placeholder', wfMsg( 'wikiaCuratedContent-content-item' ) );
 		$this->response->setVal( 'name_placeholder', wfMsg( 'wikiaCuratedContent-content-name' ) );
 
-		$itemTemplate = $this->sendSelfRequest( self::STR_CATEGORY )->toString();
-		$tagTemplate = $this->sendSelfRequest( 'tag' )->toString();
+		$itemTemplate = $this->sendSelfRequest( self::ITEM_FUNCTION_NAME )->toString();
+		$sectionTemplate = $this->sendSelfRequest( 'section' )->toString();
 
 
 		$this->wg->Out->addJsConfigVars( [
 			'itemTemplate' => $itemTemplate,
-			'tagTemplate' => $tagTemplate
+			'sectionTemplate' => $sectionTemplate
 		] );
 
 
-		$tags = $this->wg->WikiaCuratedContent;
+		$sections = $this->wg->WikiaCuratedContent;
 
-		if ( !empty( $tags ) ) {
+		if ( !empty( $sections ) ) {
 			$list = '';
 
-			foreach ( $tags as $tag ) {
-				$list .= $this->sendSelfRequest( 'tag', [
-					'value' => $tag[ 'title' ],
-					'image_id' => $tag[ 'image_id' ]
+			foreach ( $sections as $section ) {
+				$list .= $this->sendSelfRequest( 'section', [
+					'value' => $section[ 'title' ],
+					'image_id' => $section[ 'image_id' ]
 				] );
 
-				if ( !empty( $tag[ self::CATEGORIES_TAG ] ) ) {
-					foreach ( $tag[ self::CATEGORIES_TAG ] as $item ) {
-						$list .= $this->sendSelfRequest( self::STR_CATEGORY, [
+				if ( !empty( $section[ self::ITEMS_TAG ] ) ) {
+					foreach ( $section[ self::ITEMS_TAG ] as $item ) {
+						$list .= $this->sendSelfRequest( self::ITEM_FUNCTION_NAME, [
 							'item_value' => $item[ 'title' ],
 							'name_value' => !empty( $item[ 'label' ] ) ? $item[ 'label' ] : '',
 							'image_id' => $item[ 'image_id' ]
@@ -110,14 +110,14 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 
 			$this->response->setVal( 'list', $list );
 		} else {
-			$this->response->setVal( 'tag', $tagTemplate );
+			$this->response->setVal( 'section', $sectionTemplate );
 			$this->response->setVal( 'item', $itemTemplate );
 		}
 
 		return true;
 	}
 
-	public function tag() {
+	public function section() {
 		$this->response->setTemplateEngine( self::TEMPLATE_ENGINE );
 
 		$id = $this->request->getVal( 'image_id', 0 );
@@ -132,19 +132,22 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$this->response->setVal( 'section_placeholder', wfMsg( 'wikiaCuratedContent-content-section' ) );
 	}
 
-	public function category() {
+	/*
+	 * referred by ITEM_FUNCTION_NAME
+	 */
+	public function item() {
 		$this->response->setTemplateEngine( self::TEMPLATE_ENGINE );
 
 		$id = $this->request->getVal( 'image_id', 0 );
-		$category = $this->request->getVal( 'item_value', '' );
+		$item = $this->request->getVal( 'item_value', '' );
 
-		$this->response->setVal( 'item_value', $category );
+		$this->response->setVal( 'item_value', $item );
 		$this->response->setVal( 'name_value', $this->request->getVal( 'name_value' ), '' );
 		$this->response->setVal( 'image_id', $id );
 
 
-		if ( $id == 0 && $category != '' ) {
-			$cat = Title::newFromText( $category, NS_CATEGORY );
+		if ( $id == 0 && $item != '' ) {
+			$cat = Title::newFromText( $item, NS_CATEGORY );
 
 			if ( $cat instanceof Title ) {
 				$id = $cat->getArticleID();
@@ -165,14 +168,14 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		}
 		$this->response->setFormat( 'json' );
 
-		$tags = $this->request->getArray( 'tags' );
-		$err = $this->saveLogic( $tags );
+		$sections = $this->request->getArray( 'sections' );
+		$err = $this->saveLogic( $sections );
 
 		if ( !empty( $err ) ) {
 			$this->response->setVal( 'error', $err );
 			return true;
 		}
-		$status = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $this->wg->CityId, $tags );
+		$status = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $this->wg->CityId, $sections );
 		$this->response->setVal( 'status', $status );
 
 		if ( $status ) {
@@ -226,16 +229,16 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * @param $tags
+	 * @param $sections
 	 * @return array
 	 */
-	private function saveLogic( &$tags ) {
+	private function saveLogic( &$sections ) {
 		$err = [ ];
-		if ( !empty( $tags ) ) {
-			foreach ( $tags as &$tag ) {
-				$tag[ 'image_id' ] = (int)$tag[ 'image_id' ];
-				if ( !empty( $tag[ self::CATEGORIES_TAG ] ) ) {
-					foreach ( $tag[ self::CATEGORIES_TAG ] as &$row ) {
+		if ( !empty( $sections ) ) {
+			foreach ( $sections as &$section ) {
+				$section[ 'image_id' ] = (int)$section[ 'image_id' ];
+				if ( !empty( $section[ self::ITEMS_TAG ] ) ) {
+					foreach ( $section[ self::ITEMS_TAG ] as &$row ) {
 						list( $articleId,
 							$namespaceId,
 							$type,
@@ -292,7 +295,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 				return self::STR_BLOG;
 				break;
 			case NS_CATEGORY:
-				return self::STR_CATEGORY;
+				return self::ITEM_FUNCTION_NAME;
 				break;
 			case NS_FILE:
 				return self::STR_FILE;

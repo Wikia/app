@@ -226,7 +226,7 @@ class CuratedContentController extends WikiaController {
 
 		$content = $this->wg->WikiaCuratedContent;
 		if ( empty( $content ) ) {
-			$this->getItems();
+			$this->getCategories();
 		} else {
 			$section = $this->request->getVal( 'section' );
 
@@ -243,7 +243,7 @@ class CuratedContentController extends WikiaController {
 
 	/**
 	 *
-	 * Returns list of items on a wiki in batches by self::LIMIT
+	 * Returns list of categories on a wiki in batches by self::LIMIT
 	 *
 	 * @requestParam Integer limit
 	 * @requestParam String offset
@@ -251,7 +251,7 @@ class CuratedContentController extends WikiaController {
 	 * @response items
 	 * @response offset
 	 */
-	private function getItems(){
+	private function getCategories(){
 		wfProfileIn( __METHOD__ );
 
 		$limit = $this->request->getVal( 'limit', self::LIMIT * 2 );
@@ -276,7 +276,7 @@ class CuratedContentController extends WikiaController {
 			}
 		);
 
-		$allItems = $items['query']['allcategories'];
+		$allCategories = $items['query']['allcategories'];
 
 		if ( !empty( $allCategories ) ) {
 

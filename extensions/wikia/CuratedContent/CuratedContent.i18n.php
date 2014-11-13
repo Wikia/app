@@ -13,7 +13,7 @@ $messages['en'] = array(
 	'wikiaCuratedContent-content-item' => 'Item',
 	'wikiaCuratedContent-content-section' => 'Item Section (optional)',
 	'wikiaCuratedContent-content-name' => 'Curated Content Name',
-	'wikiaCuratedContent-content-add-tag' => 'Add Section',
+	'wikiaCuratedContent-content-add-section' => 'Add Section',
 	'wikiaCuratedContent-content-add-item' => 'Add Item',
 	'wikiaCuratedContent-content-save' => 'Save',
 	'wikiaCuratedContent-content-item-error' => 'Item does not exists or is empty',
@@ -22,9 +22,9 @@ $messages['en'] = array(
 	'wikiaCuratedContent-content-empty-section' => 'This section needs some items',
 
 	'wikiaCuratedContent-content-description-items' => 'Add wiki "Items" and rename them as you\'d like them to appear in Curated Content with "Curated Content Names".',
-	'wikiaCuratedContent-content-description-tag' => 'Does it make sense to group items under a game series installment? Add a item "Tag," and drag and drop wiki items under it.',
+	'wikiaCuratedContent-content-description-section' => 'Does it make sense to group items under a game series installment? Add a item "Section," and drag and drop wiki items under it.',
 	'wikiaCuratedContent-content-description-organize' => 'Feel free to delete or add more lines, and reorder them by dragging and dropping.',
-	'wikiaCuratedContent-content-description-no-tag' => 'Items without tag or with empty tag will be shown as last in Curated Content.',
+	'wikiaCuratedContent-content-description-no-section' => 'Items without section or with empty section will be shown as last in Curated Content.',
 
 	//Sponsored Videos Managment Tools
 	'wikiaCuratedContent-sponsored-description-language' => 'Highlighted row is a language',
@@ -63,18 +63,18 @@ $messages['qqq'] = array(
 	'wikiaCuratedContent-content-item' => 'table header above item inputs',
 	'wikiaCuratedContent-content-section' => 'table header on section inputs',
 	'wikiaCuratedContent-content-name' => 'table header on curated Content name inputs',
-	'wikiaCuratedContent-content-add-tag' => 'message on add tag button - to add a Tag to a list',
-	'wikiaCuratedContent-content-add-item' => 'message on add item button - to add a item to a tag',
-	'wikiaCuratedContent-content-save' => 'Save button - to save list of tags and items',
+	'wikiaCuratedContent-content-add-section' => 'message on add section button - to add a Section to a list',
+	'wikiaCuratedContent-content-add-item' => 'message on add item button - to add a item to a section',
+	'wikiaCuratedContent-content-save' => 'Save button - to save list of sections and items',
 	'wikiaCuratedContent-content-item-error' => 'Message shown to a user when he tries to save a item that do not exist',
 	'wikiaCuratedContent-content-required-entry' => 'Message shown to a user next to an input that is required',
 	'wikiaCuratedContent-content-duplicate-entry' => 'Message shown to a user next to an input that has duplicated content',
 	'wikiaCuratedContent-content-empty-section' => 'Message shown to a a user if he has not added any items to a section',
 
 	'wikiaCuratedContent-content-description-items' => 'Message describing a purpose and usage of the tool',
-	'wikiaCuratedContent-content-description-tag' => 'Message describing a purpose and usage of the tool',
+	'wikiaCuratedContent-content-description-section' => 'Message describing a purpose and usage of the tool',
 	'wikiaCuratedContent-content-description-organize' => 'Message describing a purpose and usage of the tool',
-	'wikiaCuratedContent-content-description-no-tag' => 'Message describing a purpose and usage of the tool',
+	'wikiaCuratedContent-content-description-no-section' => 'Message describing a purpose and usage of the tool',
 
 	//Sponsored Videos Managment Tools
 	'wikiaCuratedContent-sponsored-description-language' => 'Message describing a purpose and usage of a tool',
@@ -278,7 +278,6 @@ $messages['nl'] = array(
 	'wikiaCuratedContent-preview-description' => 'Dit is alleen maar een voorvertoning van hoe een pagina eruit ziet in de Wikia Curated Content.',
 	'wikiaCuratedContent-content-title' => 'Contentbeheerprogramma voor Wikia Curated Content',
 	'wikiaCuratedContent-content-name' => 'Curated Contentnaam (optioneel)',
-	'wikiaCuratedContent-content-add-tag' => 'Label toevoegen',
 	'wikiaCuratedContent-content-save' => 'Opslaan',
 	'wikiaCuratedContent-content-required-entry' => 'Een categorie is verplicht.',
 	'wikiaCuratedContent-content-duplicate-entry' => 'Deze waarde komt meerdere keren voor',

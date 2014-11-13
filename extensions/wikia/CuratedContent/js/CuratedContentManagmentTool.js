@@ -5,13 +5,13 @@ $(function(){
 
 		var d = document,
 			item = mw.config.get('itemTemplate'),
-			tag = mw.config.get('tagTemplate'),
+			section = mw.config.get('sectionTemplate'),
 			duplicateError = msg('wikiaCuratedContent-content-duplicate-entry'),
 			requiredError = msg('wikiaCuratedContent-content-required-entry'),
-			emptyTagError = msg('wikiaCuratedContent-content-empty-section'),
+			emptySectionError = msg('wikiaCuratedContent-content-empty-section'),
 			itemError = msg('wikiaCuratedContent-content-item-error'),
 			addItem = d.getElementById('addItem'),
-			addTag = d.getElementById('addTag'),
+			addSection = d.getElementById('addSection'),
 			$save = $(d.getElementById('save')),
 			form = d.getElementById('contentManagmentForm'),
 			$form = $(form),
@@ -109,19 +109,19 @@ $(function(){
 
 				$save.removeClass();
 
-				checkInputs($ul.find('.tag-input'), true);
+				checkInputs($ul.find('.section-input'), true);
 				checkInputs($ul.find('.item-input'), true, true);
 
-				$ul.find('.tag').each(function(){
+				$ul.find('.section').each(function(){
 					var $t = $(this),
-						$categories = $t.nextUntil('.tag');
+						$categories = $t.nextUntil('.section');
 
 					if($categories.length === 0) {
-						$t.find('.tag-input')
+						$t.find('.section-input')
 							.addClass('error')
 							.popover('destroy')
 							.popover({
-								content: emptyTagError
+								content: emptySectionError
 							});
 					}else {
 						checkInputs($categories.find('.name'))
@@ -159,7 +159,7 @@ $(function(){
 			.on('keypress', '.name', function(ev){
 				if(ev.keyCode === 13) addNew(item, $(this).parent());
 			})
-			.on('keypress', '.item-input, .tag-input', function(ev){
+			.on('keypress', '.item-input, .section-input', function(ev){
 				if(ev.keyCode === 13) $(this).next().focus();
 			});
 
@@ -167,8 +167,8 @@ $(function(){
 			addNew(item);
 		});
 
-		$(addTag).on('click', function(){
-			addNew(tag);
+		$(addSection).on('click', function(){
+			addNew(section);
 		});
 
 		function getData(li) {
@@ -186,17 +186,17 @@ $(function(){
 				nonameId = 0;
 
 			if(checkForm()) {
-				$ul.find('.item:not(.tag ~ .item)').each(function(){
+				$ul.find('.item:not(.section ~ .item)').each(function(){
 					nonames.push(getData(this));
 				});
 
-				$ul.find('.tag').each(function(){
+				$ul.find('.section').each(function(){
 					var $t = $(this),
-						name = $t.find('.tag-input').val(),
+						name = $t.find('.section-input').val(),
 						imageId = $t.find('.image').data('id') || 0,
 						categories = [];
 
-					$t.nextUntil('.tag').each(function(){
+					$t.nextUntil('.section').each(function(){
 						(name ? categories : nonames).push(getData(this));
 					});
 
@@ -226,7 +226,7 @@ $(function(){
 					controller: 'CuratedContentSpecial',
 					method: 'save',
 					data: {
-						tags: data
+						sections: data
 					}
 				}).done(
 					function(data){

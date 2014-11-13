@@ -55,7 +55,7 @@
 			split,
 			namespace;
 
-		if(t.tagName === 'A'){
+		if(t.sectionName === 'A'){
 			ev.preventDefault();
 
 			if(t.hasAttribute('title')) {
