@@ -42,7 +42,6 @@ class AdEngine2ContextService {
 				'targeting' => $this->filterOutEmptyItems( [
 					'enableKruxTargeting' => $wg->EnableKruxTargeting,
 					'enablePageCategories' => array_search($langCode, $wg->AdPageLevelCategoryLangs) !== false,
-					'kruxCategoryId' => $wikiFactoryHub->getKruxId( $wikiFactoryHub->getCategoryId( $wg->CityId ) ),
 					'pageArticleId' => $title->getArticleId(),
 					'pageIsArticle' => !!$title->getArticleId(),
 					'pageIsHub' => $wikiaPageType->isWikiaHub(),
