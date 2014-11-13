@@ -6,7 +6,7 @@ body {
 	color: $color-text;
 	margin: 0;
 	overflow-x: auto;
-	padding: 0 0 30px;
+	padding: 0;
 }
 
 a {
@@ -25,6 +25,7 @@ a {
 .wikia-page {
 	background: rgba($color-page, $page-opacity);
 	border: $content-border-width solid $color-page-border;
+	border-bottom: 0;
 	position: relative; // needed for skin ads to not cover the article
 
 	& > header {

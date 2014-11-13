@@ -88,7 +88,7 @@
 			list-style: none;
 
 			> a {
-				background-color: $nav-background-color;
+				background-color: $global-wikia-background-color;
 				border-top: 1px solid $nav-border-color;
 				color: $nav-foreground-bright-color;
 				display: table-cell;
@@ -100,7 +100,7 @@
 
 				&:hover {
 					background-color: $nav-foreground-bright-color;
-					color: $nav-background-color;
+					color: $global-wikia-background-color;
 				}
 			}
 

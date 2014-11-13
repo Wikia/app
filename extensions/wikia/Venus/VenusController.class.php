@@ -168,20 +168,26 @@ class VenusController extends WikiaController {
 	}
 
 	public function getGlobalNavigation() {
-		return class_exists('GlobalNavigationController') ?
+		global $wgEnableLocalNavExt;
+
+		return !empty( $wgEnableLocalNavExt ) ?
 			$this->app->renderView('GlobalNavigation', 'index') :
 			'';
 	}
 
 	private function getLocalNavigation() {
-		return class_exists('LocalNavigationController') ?
+		global $wgEnableLocalNavExt;
+
+		return !empty( $wgEnableLocalNavExt ) ?
 			$this->app->renderView('LocalNavigation', 'Index') :
 			'';
 	}
 
 	private function getGlobalFooter() {
-		return class_exists('GlobalFooterController') ?
-			$this->app->renderView('GlobalFooter', 'index') :
+		global $wgEnableGlobalFooterExt;
+
+		return !empty( $wgEnableGlobalFooterExt ) ?
+			$this->app->renderView('GlobalFooter', 'indexVenus') :
 			'';
 	}
 
