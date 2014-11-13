@@ -120,7 +120,7 @@ ve.ui.WikiaSingleMediaDialog.prototype.getTeardownProcess = function ( data ) {
 };
 
 ve.ui.WikiaSingleMediaDialog.prototype.insertMedia = function () {
-	var i, linmod = [];
+	var i, linmod = [], items = this.cartModel.getItems();
 
 	// Gallery opening
 	linmod.push( {
@@ -133,39 +133,40 @@ ve.ui.WikiaSingleMediaDialog.prototype.insertMedia = function () {
 		}
 	} );
 
-	linmod.push( {
-		'type': 'alien',
-		'attributes': {
-			'domElements': $( '<meta typeof="mw:Placeholder" data-parsoid="{&quot;src&quot;:&quot;&quot;}" />' ).toArray()
-		}
-	} );
-	linmod.push( { 'type': '/alien' } );
-
-	// Gallery items
-	for ( i = 0; i < this.cartModel.items.length; i++ ) {
+	if ( items.length > 0 ) {
 		linmod.push( {
-			'type': 'wikiaGalleryItem',
+			'type': 'alien',
 			'attributes': {
-				'type': 'thumb',
-				'align': 'none',
-				'href': './' + 'File:' + this.cartModel.items[i].title,
-				'src': this.cartModel.items[i].url,
-				'resource': './' + 'File:' + this.cartModel.items[i].title,
-				'defaultSize': true
+				'domElements': $( '<meta typeof="mw:Placeholder" data-parsoid="{&quot;src&quot;:&quot;&quot;}" />' ).toArray()
 			}
 		} );
-		linmod.push( {
-			'type': '/wikiaGalleryItem'
-		} );
-	}
+		linmod.push( { 'type': '/alien' } );
 
-	linmod.push( {
-		'type': 'alien',
-		'attributes': {
-			'domElements': $( '<meta typeof="mw:Placeholder" data-parsoid="{&quot;src&quot;:&quot;&quot;}" />' ).toArray()
+		for ( i = 0; i < items.length; i++ ) {
+			linmod.push( {
+				'type': 'wikiaGalleryItem',
+				'attributes': {
+					'type': 'thumb',
+					'align': 'none',
+					'href': './' + 'File:' + items[i].title,
+					'src': items[i].url,
+					'resource': './' + 'File:' + items[i].title,
+					'defaultSize': true
+				}
+			} );
+			linmod.push( {
+				'type': '/wikiaGalleryItem'
+			} );
 		}
-	} );
-	linmod.push( { 'type': '/alien' } );
+
+		linmod.push( {
+			'type': 'alien',
+			'attributes': {
+				'domElements': $( '<meta typeof="mw:Placeholder" data-parsoid="{&quot;src&quot;:&quot;&quot;}" />' ).toArray()
+			}
+		} );
+		linmod.push( { 'type': '/alien' } );
+	}
 
 	// Gallery closing
 	linmod.push( {
