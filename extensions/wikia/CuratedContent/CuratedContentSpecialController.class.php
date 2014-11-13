@@ -236,12 +236,17 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 				$tag[ 'image_id' ] = (int)$tag[ 'image_id' ];
 				if ( !empty( $tag[ self::CATEGORIES_TAG ] ) ) {
 					foreach ( $tag[ self::CATEGORIES_TAG ] as &$row ) {
-						list( $articleId, $namespaceId, $type,
-							$imageUrl, $info ) = $this->getInfoFromRow(
+						list( $articleId,
+							$namespaceId,
+							$type,
+							$imageUrl,
+							$info,
+							$imageId ) = $this->getInfoFromRow(
 							$row );
 						$row[ 'article_id' ] = $articleId;
 						$row[ 'type' ] = $type;
 						$row[ 'image_url' ] = $imageUrl;
+						$row[ 'image_id' ] = $imageId;
 						if ( !empty( $info ) ) {
 							$row[ 'video_info' ] = $info;
 						}
@@ -259,19 +264,20 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			$articleId = $title->getArticleId();
 			$namespaceId = $title->getNamespace();
 			$type = $this->getType( $namespaceId );
+			$image_id = (int)$row[ 'image_id' ];
+
 			if ( $type == self::STR_FILE ) {
 				list( $type, $info ) = $this->getVideoInfo( $title );
 			}
-			if ( !empty( $row[ 'image_id' ] ) ) {
-				if ( !empty( $articleId ) ) {
-					$is = new ImageServing( [ $articleId ] );
-					$thumbnail = $is->getImages( 1 );
-					if ( !empty( $thumbnail ) ) {
-						$image_url = $thumbnail[ $articleId ][ 0 ][ 'url' ];
-					}
-				}
-			}
-			return [ $articleId, $namespaceId, $type, $image_url, $info ];
+			list( $image_url, $image_id ) = $this->findImageIfNotSet( $image_id, $articleId );
+			return [
+				$articleId,
+				$namespaceId,
+				$type,
+				$image_url,
+				$info,
+				$image_id
+			];
 		}
 		return [ null, null, null, null, null ];
 	}
@@ -315,5 +321,37 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			}
 		}
 		return [ null, null ];
+	}
+
+	/**
+	 * @param $image_id
+	 * @param $articleId
+	 * @return array
+	 */
+	private function findImageIfNotSet( $image_id, $articleId ) {
+		if ( $image_id === 0 ) {
+			if ( !empty( $articleId ) ) {
+				$is = new ImageServing( [ $articleId ] );
+				$thumbnail = $is->getImages( 1 );
+
+				if ( !empty( $thumbnail ) ) {
+					$image_name = $thumbnail[ $articleId ][ 0 ][ 'name' ];
+
+					if ( !empty( $image_name ) ) {
+						$imageTitle = Title::newFromText( $image_name, NS_FILE );
+
+						if ( !empty( $imageTitle ) ) {
+							$imageFile = wfFindFile( $imageTitle );
+
+							if ( !empty( $imageFile ) ) {
+								$image_url = $imageFile->getUrl();
+								$image_id = $imageTitle->getArticleId();
+							}
+						}
+					}
+				}
+			}
+		}
+		return [ $image_url, $image_id ];
 	}
 }
