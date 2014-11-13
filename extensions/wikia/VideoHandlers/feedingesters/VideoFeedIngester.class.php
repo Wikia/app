@@ -25,13 +25,14 @@ abstract class VideoFeedIngester {
 
 	private static $WIKI_INGESTION_DATA_FIELDS = array( 'keyphrases' );
 
+	public $videoData;
+	public $metaData;
+	public $oldName;
+
 	protected $dataNormalizer;
 	protected $logger;
 	protected $debug;
 	protected $reupload;
-	protected $oldName;
-	protected $videoData;
-	protected $metaData;
 	protected $pageCategories;
 
 	public function __construct( array $params = [] ) {
