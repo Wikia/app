@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CuratedContent mobile app API controller
  */
@@ -77,11 +78,11 @@ class CuratedContentController extends WikiaController {
 	 * $this->cacheResponseFor( 1, self:HOURS )
 	 * $this->cacheResponseFor( 14, self:DAYS )
 	 */
-	private function cacheResponseFor( $factor, $period ){
-		if( isset( $period ) && isset( $factor ) ) {
+	private function cacheResponseFor( $factor, $period ) {
+		if ( isset( $period ) && isset( $factor ) ) {
 			$cacheValidityTime = $factor * $period;
 
-			$this->response->setCacheValidity($cacheValidityTime);
+			$this->response->setCacheValidity( $cacheValidityTime );
 		}
 	}
 
@@ -90,7 +91,7 @@ class CuratedContentController extends WikiaController {
 	 *
 	 * @example wikia.php?controller=CuratedContent&method=getPage&page={Title}
 	 */
-	public function getPage(){
+	public function getPage() {
 		global $wgTitle;
 
 		//This will always return json
@@ -119,9 +120,9 @@ class CuratedContentController extends WikiaController {
 					$relatedPages =
 						$this->app->sendRequest( 'RelatedPagesApi', 'getList',
 							[
-								'ids' => [$articleId]
+								'ids' => [ $articleId ]
 							]
-						)->getVal('items')[$articleId];
+						)->getVal( 'items' )[ $articleId ];
 
 					if ( !empty( $relatedPages ) ) {
 						$this->response->setVal( 'relatedPages', $relatedPages );
@@ -167,7 +168,7 @@ class CuratedContentController extends WikiaController {
 	 *
 	 * @requestParam String title of a page
 	 */
-	public function renderPage(){
+	public function renderPage() {
 		wfProfileIn( __METHOD__ );
 
 		$titleName = $this->request->getVal( 'page' );
@@ -185,7 +186,7 @@ class CuratedContentController extends WikiaController {
 		$this->response->setVal( 'globals', Skin::newFromKey( 'wikiamobile' )->getTopScripts() );
 		$this->response->setVal( 'messages', JSMessages::getPackages( array( 'CuratedContent' ) ) );
 		$this->response->setVal( 'title', Title::newFromText( $titleName )->getText() );
-		$this->response->setVal( 'html', $html['parse']['text']['*'] );
+		$this->response->setVal( 'html', $html[ 'parse' ][ 'text' ][ '*' ] );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -194,7 +195,7 @@ class CuratedContentController extends WikiaController {
 	 * @brief helper function to build a CuratedContentSpecial Preview
 	 * it returns a page and all 'global' assets
 	 */
-	public function renderFullPage(){
+	public function renderFullPage() {
 		global $IP;
 
 		wfProfileIn( __METHOD__ );
@@ -203,13 +204,13 @@ class CuratedContentController extends WikiaController {
 
 		$scripts = '';
 
-		foreach( $resources->scripts as $s ) {
+		foreach ( $resources->scripts as $s ) {
 			$scripts .= $s;
 		}
 
 		//getPage sets cache for a response for 7 days
 		$page = $this->sendSelfRequest( 'getPage', [
-			'page' => $this->getVal( 'page')
+			'page' => $this->getVal( 'page' )
 		] );
 
 		$this->response->setVal( 'html', $page->getVal( 'html' ) );
@@ -219,7 +220,7 @@ class CuratedContentController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
-	public function getList(){
+	public function getList() {
 		wfProfileIn( __METHOD__ );
 
 		$this->response->setFormat( 'json' );
@@ -251,7 +252,7 @@ class CuratedContentController extends WikiaController {
 	 * @response items
 	 * @response offset
 	 */
-	private function getItems(){
+	private function getItems() {
 		wfProfileIn( __METHOD__ );
 
 		$limit = $this->request->getVal( 'limit', self::LIMIT * 2 );
@@ -260,7 +261,7 @@ class CuratedContentController extends WikiaController {
 		$items = WikiaDataAccess::cache(
 			wfMemcKey( __METHOD__, $offset, $limit, self::NEW_API_VERSION ),
 			6 * self::HOURS,
-			function() use ( $limit, $offset ) {
+			function () use ( $limit, $offset ) {
 				return ApiService::call(
 					[
 						'action' => 'query',
@@ -276,25 +277,25 @@ class CuratedContentController extends WikiaController {
 			}
 		);
 
-		$allItems = $items['query']['allcategories'];
+		$allItems = $items[ 'query' ][ 'allcategories' ];
 
 		if ( !empty( $allCategories ) ) {
 
-			$ret = [];
+			$ret = [ ];
 
-			foreach( $allCategories as $value ) {
-				if($value['size'] - $value['files'] > 0){
+			foreach ( $allCategories as $value ) {
+				if ( $value[ 'size' ] - $value[ 'files' ] > 0 ) {
 					$ret[ ] = $this::getJsonItem( $value[ '*' ],
 						'category',
-						isset( $value[ 'pageid' ] ) ? (int)$value[ 'pageid' ] : 0 ,
-						NS_CATEGORY);
+						isset( $value[ 'pageid' ] ) ? (int)$value[ 'pageid' ] : 0,
+						NS_CATEGORY );
 				}
 			}
 
 			$this->response->setVal( 'items', $ret );
 
-			if ( !empty( $categories['query-continue'] ) ) {
-				$this->response->setVal( 'offset', $categories['query-continue']['allcategories']['acfrom'] );
+			if ( !empty( $categories[ 'query-continue' ] ) ) {
+				$this->response->setVal( 'offset', $categories[ 'query-continue' ][ 'allcategories' ][ 'acfrom' ] );
 			}
 
 		} else {
@@ -314,14 +315,14 @@ class CuratedContentController extends WikiaController {
 	 *
 	 * @responseReturn Array|false Items or false if section was not found
 	 */
-	private function getSectionItems( $content, $requestSection ){
+	private function getSectionItems( $content, $requestSection ) {
 		wfProfileIn( __METHOD__ );
 
 		$ret = false;
 
-		foreach( $content as $section ){
-			if ( $requestSection == $section['title'] ) {
-				$ret = $section['categories'];
+		foreach ( $content as $section ) {
+			if ( $requestSection == $section[ 'title' ] ) {
+				$ret = $section[ 'categories' ];
 			}
 		}
 
@@ -330,17 +331,17 @@ class CuratedContentController extends WikiaController {
 
 			if ( !empty( $sort ) ) {
 				if ( $sort == 'alpha' ) {
-					usort($ret, function( $a, $b ){
-						return strcasecmp($a['title'], $b['title']);
-					});
+					usort( $ret, function ( $a, $b ) {
+						return strcasecmp( $a[ 'title' ], $b[ 'title' ] );
+					} );
 				} else if ( $sort == 'hot' ) {
 					$hot = array_keys(
 						DataMartService::getTopArticlesByPageview(
 							$this->wg->CityId,
-							array_reduce($ret, function($ret, $item){
-								$ret[] = $item['id'];
+							array_reduce( $ret, function ( $ret, $item ) {
+								$ret[ ] = $item[ 'id' ];
 								return $ret;
-							}),
+							} ),
 							null,
 							false,
 							//I need all of them basically
@@ -348,15 +349,15 @@ class CuratedContentController extends WikiaController {
 						)
 					);
 
-					$sorted = [];
-					$left = [];
+					$sorted = [ ];
+					$left = [ ];
 					foreach ( $ret as $value ) {
-						$key = array_search( $value['id'], $hot );
+						$key = array_search( $value[ 'id' ], $hot );
 
 						if ( $key === false ) {
-							$left[] = $value;
+							$left[ ] = $value;
 						} else {
-							$sorted[$key] = $value;
+							$sorted[ $key ] = $value;
 						}
 					}
 
@@ -368,6 +369,16 @@ class CuratedContentController extends WikiaController {
 					throw new InvalidParameterApiException( 'sort' );
 				}
 			}
+			foreach ( $ret as &$value ) {
+
+				list( $image_url, $image_id ) =
+					CuratedContentSpecialController::findImageIfNotSet(
+						$value[ 'image_id' ],
+						$value[ 'article_id' ] );
+				$value[ 'image_id' ] = $image_id;
+				$value[ 'image_url' ] = $image_url;
+			}
+
 
 			//Use 'id' instead of image_id
 //			foreach( $ret as &$value ) {
@@ -398,11 +409,11 @@ class CuratedContentController extends WikiaController {
 			'sections',
 			array_reduce(
 				$content,
-				function( $ret, $item ) {
-					if( $item['title'] !== '' ) {
-						$ret[] = [
-							'title' => $item['title'],
-							'id' => isset( $item['image_id'] ) ? $item['image_id'] : 0
+				function ( $ret, $item ) {
+					if ( $item[ 'title' ] !== '' ) {
+						$ret[ ] = [
+							'title' => $item[ 'title' ],
+							'id' => isset( $item[ 'image_id' ] ) ? $item[ 'image_id' ] : 0
 						];
 					}
 
@@ -417,7 +428,7 @@ class CuratedContentController extends WikiaController {
 	}
 
 
-	function getJsonItem( $titleName, $ns, $pageId, $type) {
+	function getJsonItem( $titleName, $ns, $pageId, $type ) {
 		$title = Title::makeTitle( $ns, $titleName );
 
 		return [
@@ -434,7 +445,7 @@ class CuratedContentController extends WikiaController {
 	 *
 	 * @return bool
 	 */
-	static function onCuratedContentSave(){
+	static function onCuratedContentSave() {
 		self::purgeMethod( 'getList' );
 
 		return true;
@@ -447,16 +458,16 @@ class CuratedContentController extends WikiaController {
 	 *
 	 * @return bool
 	 */
-	static function onCuratedContentSponsoredSave(){
+	static function onCuratedContentSponsoredSave() {
 		$languages = array_keys( F::app()->wg->WikiaCuratedContentSponsoredVideos );
 		//Empty array is there to purge call to getVideos without any language
 		$variants = [
-			[],
-			['lang' => 'list']
+			[ ],
+			[ 'lang' => 'list' ]
 		];
 
 		foreach ( $languages as $lang ) {
-			$variants[] = [
+			$variants[ ] = [
 				'lang' => $lang
 			];
 		}

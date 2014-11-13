@@ -27,26 +27,8 @@ $messages['en'] = array(
 	'wikiaCuratedContent-content-description-no-tag' => 'Items without tag or with empty tag will be shown as last in Curated Content.',
 
 	//Sponsored Videos Managment Tools
-	'wikiaCuratedContent-sponsored-description-language' => 'Highlighted row is a language',
-	'wikiaCuratedContent-sponsored-description-wiki' => 'First input is for Wiki URL',
-	'wikiaCuratedContent-sponsored-description-title' => 'Second input is for Video Title',
-	'wikiaCuratedContent-sponsored-description-url' => 'Third input is for Video URL',
 
-	'wikiaCuratedContent-sponsored-title' => 'Wikia Curated Content Sponsored Videos Tool',
-	'wikiaCuratedContent-sponsored-add-video' => 'Add video',
-	'wikiaCuratedContent-sponsored-add-language' => 'Add Language',
 
-	'wikiaCuratedContent-sponsored-video-name' => 'Video URL',
-	'wikiaCuratedContent-sponsored-wiki-url' => 'Wiki URL',
-	'wikiaCuratedContent-sponsored-language' => 'Language',
-	'wikiaCuratedContent-sponsored-video-title' => 'Video Title',
-	'wikiaCuratedContent-sponsored-duplicate-entry' => 'This filed is duplicated',
-	'wikiaCuratedContent-sponsored-required-entry' => 'This field is required',
-	'wikiaCuratedContent-sponsored-empty-language' => 'Language can not be empty',
-	'wikiaCuratedContent-sponsored-orphaned-video' => 'Video has to have a language',
-	'wikiaCuratedContent-sponsored-delete-videos-are-you-sure' => 'Are you sure you want to erase everything?',
-	'wikiaCuratedContent-sponsored-video-does-not-exist' => 'This video does not exist',
-	'wikiaCuratedContent-sponsored-video-is-not-ooyala' => 'This video is not provided by Ooyala'
 );
 
 /** Message documentation (Message documentation)
@@ -77,26 +59,8 @@ $messages['qqq'] = array(
 	'wikiaCuratedContent-content-description-no-tag' => 'Message describing a purpose and usage of the tool',
 
 	//Sponsored Videos Managment Tools
-	'wikiaCuratedContent-sponsored-description-language' => 'Message describing a purpose and usage of a tool',
-	'wikiaCuratedContent-sponsored-description-wiki' => 'Message describing a purpose and usage of the tool',
-	'wikiaCuratedContent-sponsored-description-title' => 'Message describing a purpose and usage of the tool',
-	'wikiaCuratedContent-sponsored-description-url' => 'Message describing a purpose and usage of the tool',
 
-	'wikiaCuratedContent-sponsored-title' => 'Title of Wikia Curated Content Sponsored Videos Tool page',
-	'wikiaCuratedContent-sponsored-add-video' => 'Message on an add a video button',
-	'wikiaCuratedContent-sponsored-add-language' => 'Message on an add a language button',
 
-	'wikiaCuratedContent-sponsored-video-name' => 'Placeholder on an input',
-	'wikiaCuratedContent-sponsored-wiki-url' => 'Placeholder on an input',
-	'wikiaCuratedContent-sponsored-language' => 'Placeholder on an input',
-	'wikiaCuratedContent-sponsored-video-title' => 'Placeholder on an input',
-	'wikiaCuratedContent-sponsored-duplicate-entry' => 'Popup message next to an input with duplicate content',
-	'wikiaCuratedContent-sponsored-required-entry' => 'Popup message next to an input that is left empty and is required',
-	'wikiaCuratedContent-sponsored-empty-language' => 'Popup message next to an input that is empty and should be filled with a language code',
-	'wikiaCuratedContent-sponsored-orphaned-video' => 'Popup message next to a row of a video that is not assigned to any language',
-	'wikiaCuratedContent-sponsored-delete-videos-are-you-sure' => 'Popup message that asks if user is sure to delete all data',
-	'wikiaCuratedContent-sponsored-video-does-not-exist' => 'Popup message next to an input with a video that do not exist',
-	'wikiaCuratedContent-sponsored-video-is-not-ooyala' => 'Popup message next to an input with a video that is not provided by ooyala video provider'
 );
 
 /** Asturian (asturianu)
