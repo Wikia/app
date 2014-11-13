@@ -24,6 +24,7 @@ class CuratedContentController extends WikiaController {
 	 */
 	private $mModel = null;
 	private $mPlatform = null;
+
 	//Make sure this is updated as in CuratedContent.js
 
 
@@ -379,12 +380,13 @@ class CuratedContentController extends WikiaController {
 				$content,
 				function ( $ret, $item ) {
 					if ( $item[ 'title' ] !== '' ) {
+						$imageId = isset( $item[ 'image_id' ] ) ? $item[ 'image_id' ] : 0;
 						$ret[ ] = [
 							'title' => $item[ 'title' ],
-							'id' => isset( $item[ 'image_id' ] ) ? $item[ 'image_id' ] : 0
-						];
+							'image_id' => $imageId,
+							'image_url' => CuratedContentSpecialController::findImageIfNotSet
+							( $imageId )[ 'image_url' ] ];
 					}
-
 					return $ret;
 				}
 			)

@@ -366,7 +366,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	}
 
 	public
-	static function findImageIfNotSet( $imageId, $articleId ) {
+	static function findImageIfNotSet( $imageId, $articleId = 0 ) {
 		$imageTitle = null;
 		if ( $imageId == 0 ) {
 			$imageTitle = self::findFirstImageTitleFromArticle( $articleId );
@@ -377,7 +377,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			$url = self::getUrlFromImageTitle( $imageTitle );
 			$imageId = $imageTitle->getArticleId();
 		}
-		return [ $imageId, $url ];
+		return [ 'image_id' => $imageId, 'image_url' => $url ];
 	}
 
 	public static function findFirstImageTitleFromArticle( $articleId ) {
