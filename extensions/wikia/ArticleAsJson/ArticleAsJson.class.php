@@ -19,7 +19,7 @@ class ArticleAsJson extends WikiaService {
 		return "<img src='{$blankImgUrl}' class='{$classes}' data-ref='{$id}'{$width}{$height} />";
 	}
 
-	private static function createMediaObj( $details, $imageName, $caption = '' ) {
+	private static function createMediaObj( $details, $imageName, $caption = '', $link = '' ) {
 		wfProfileIn( __METHOD__ );
 
 		$media = [
@@ -28,7 +28,8 @@ class ArticleAsJson extends WikiaService {
 			'fileUrl' => $details['fileUrl'],
 			'title' => $imageName,
 			'caption' => $caption,
-			'user' => $details['userName']
+			'user' => $details['userName'],
+			'link' => $link,
 		];
 
 		if ( !empty( $details['width'] ) ) {
@@ -87,7 +88,7 @@ class ArticleAsJson extends WikiaService {
 					$caption = $parser->parse( $caption, $title, $parserOptions, false )->getText();
 				}
 
-				$media[] = self::createMediaObj( $details, $image['name'], $caption );
+				$media[] = self::createMediaObj( $details, $image['name'], $caption, $image['linkhref'] );
 
 				self::addUserObj($details);
 			}
@@ -109,7 +110,7 @@ class ArticleAsJson extends WikiaService {
 		return true;
 	}
 
-	public static function onImageBeforeProduceHTML( &$dummy,Title &$title, &$file, &$frameParams, &$handlerParams, &$time, &$res ){
+	public static function onImageBeforeProduceHTML( &$dummy, Title &$title, &$file, &$frameParams, &$handlerParams, &$time, &$res ) {
 		global $wgArticleAsJson;
 
 		wfProfileIn( __METHOD__ );
@@ -131,7 +132,7 @@ class ArticleAsJson extends WikiaService {
 		return true;
 	}
 
-	public static function onPageRenderingHash( &$confstr ){
+	public static function onPageRenderingHash( &$confstr ) {
 		global $wgArticleAsJson;
 
 		wfProfileIn( __METHOD__ );

@@ -409,11 +409,13 @@ class WikiaPhotoGallery extends ImageGallery {
 			// support captions with internal links with pipe (Foo.jpg|link=Bar|[[test|link]])
 			$caption = implode('|', $captionParts);
 
+			$linkAttributes = $this->parseLink($tp->getLocalUrl(), $tp->getText(), $link);
 			$imageItem = array(
 				'name' => $imageName,
 				'caption' => $caption,
 				'link' => $link,
 				'linktext' => $linktext,
+				'linkhref' => $linkAttributes['href'],
 				'shorttext' => $shorttext,
 				'data-caption' => Sanitizer::removeHTMLtags( $caption ),
 			);
