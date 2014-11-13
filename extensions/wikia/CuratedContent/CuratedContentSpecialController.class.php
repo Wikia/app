@@ -72,7 +72,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$this->response->setVal( 'addItem', wfMsg( 'wikiaCuratedContent-content-add-item' ) );
 		$this->response->setVal( 'save', wfMsg( 'wikiaCuratedContent-content-save' ) );
 
-		$this->response->setVal( 'tag_placeholder', wfMsg( 'wikiaCuratedContent-content-tag' ) );
+		$this->response->setVal( 'section_placeholder', wfMsg( 'wikiaCuratedContent-content-section' ) );
 		$this->response->setVal( 'item_placeholder', wfMsg( 'wikiaCuratedContent-content-item' ) );
 		$this->response->setVal( 'name_placeholder', wfMsg( 'wikiaCuratedContent-content-name' ) );
 
@@ -129,7 +129,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			$this->response->setVal( 'image_set', true );
 		}
 
-		$this->response->setVal( 'tag_placeholder', wfMsg( 'wikiaCuratedContent-content-tag' ) );
+		$this->response->setVal( 'section_placeholder', wfMsg( 'wikiaCuratedContent-content-section' ) );
 	}
 
 	public function category() {
