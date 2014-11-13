@@ -1,6 +1,5 @@
-@import '../../Venus/styles/mixins';
-@import '../../Venus/styles/variables';
-@import 'skins/shared/mixins/blackout';
+@import 'extensions/wikia/Venus/styles/variables';
+@import 'extensions/wikia/Venus/styles/mixins';
 @import 'GlobalNavigationColors';
 
 .global-navigation {
@@ -23,6 +22,10 @@
 	position: static;
 }
 
+.position-static {
+	margin-bottom: -$global-navigation-height;
+}
+
 .global-navigation-item {
 	border-left: 1px solid $nav-border-color;
 	float: left;
@@ -33,7 +36,7 @@
 .global-navigation-link {
 	color: $nav-border-color;
 	display: table-cell;
-	font-size: 18px;
+	font-size: $font-size-base-big-screen;
 	font-weight: bold;
 	height: $global-navigation-height;
 	vertical-align: middle;
@@ -68,16 +71,6 @@
 	}
 }
 
-// TODO move it to layout.scss when Venus is enable globally
-
-.transparent-out {
-	@include blackout( rgba( 1, 1, 1, 0.0 ) );
-
-	&.visible {
-		z-index: $blackout-z-index;
-	}
-}
-
 @media #{$small-only} {
 	.wikia-logo-container {
 		@include grid-column-width('small', 3, $small-content-padding);
@@ -105,7 +98,7 @@
 
 @media #{$large-up} {
 	.wikia-logo {
-		padding: 0px 7px 0px 30px
+		padding: 0 7px 0 30px;
 	}
 
 	.wikia-logo-container {
@@ -121,9 +114,5 @@
 	.global-navigation {
 		min-width: 767px;
 		position: relative;
-	}
-
-	.wikia-page {
-		padding-top: 0;
 	}
 }

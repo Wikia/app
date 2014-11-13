@@ -1,5 +1,6 @@
 @import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/mixins';
+@import 'extensions/wikia/Venus/styles/typographyMixins';
 @import 'GlobalNavigationColors';
 
 .account-navigation-container {
@@ -74,9 +75,9 @@
 
 	.user-menu {
 		@include grid-column-width('medium', 2, $medium-content-padding);
+		@include font-size-s;
 		border: 1px solid $nav-border-color;
 		display: none;
-		font-size: 15px;
 		padding: 0;
 		position: relative;
 		right: $medium-grid-column + 1px;

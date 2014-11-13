@@ -15,9 +15,10 @@ class SkinVenus extends WikiaSkin {
 
 		$wgOut->addModuleStyles( 'skins.venus' );
 
-		//non-strict checks of css/js/scss assets/packages
-		$this->strictAssetUrlCheck = false;
+		$this->strictAssetUrlCheck = true;
 	}
+
+	function setupSkinUserCss( OutputPage $out ) {}
 }
 
 
@@ -29,4 +30,3 @@ class VenusTemplate extends WikiaSkinTemplate {
 		$response->render();
 	}
 }
-?>

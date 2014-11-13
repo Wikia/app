@@ -181,6 +181,18 @@ class Parser {
 	var $mUniqPrefix;
 
 	/**
+	 * Wikia change begin
+	 *
+	 * Wikia vars
+	 */
+
+	var $mIsMainParse;	# Is main article content currently parsed
+
+	/**
+	 * Wikia change end
+	 */
+
+	/**
 	 * Constructor
 	 *
 	 * @param $conf array
@@ -4323,6 +4335,10 @@ class Parser {
 	 */
 	function formatHeadings( $text, $origText, $isMain=true ) {
 		global $wgMaxTocLevel, $wgHtml5, $wgExperimentalHtmlIds;
+
+		// Wikia change start
+		$this->mIsMainParse = $isMain;
+		// Wikia change end
 
 		# Inhibit editsection links if requested in the page
 		if ( isset( $this->mDoubleUnderscores['noeditsection'] ) ) {

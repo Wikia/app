@@ -1,6 +1,7 @@
 @import 'GlobalNavigationColors';
-@import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/Venus/styles/variables';
+@import 'extensions/wikia/Venus/styles/mixins';
+@import 'extensions/wikia/Venus/styles/typographyMixins';
 
 .search-container {
 	@include grid-column-width('medium', 7, 2 * $medium-grid-gutter);
@@ -8,7 +9,7 @@
 
 .search-form-wrapper {
 	display: table;
-	font-size: 18px;
+	font-size: $font-size-base-big-screen;
 	margin-bottom: 10px;
 	margin-top: 10px;
 	padding: 0 $medium-grid-gutter + $medium-grid-column-padding;
@@ -36,9 +37,9 @@
 	}
 
 	.autocomplete {
+		@include font-size-s;
 		background-color: $nav-background-color;
 		border: 1px solid $nav-border-color;
-		font-size: 15px;
 		line-height: 18px;
 		margin-top: 10px;
 
@@ -118,11 +119,11 @@
 	width: 100%;
 
 	.search-input {
+		@include font-size-base;
 		background-color: $nav-background-light-gray-color;
 		border: 0;
 		border-radius: 2px;
 		color: $nav-foreground-dark-color;
-		font-size: 16px;
 		font-weight: bold;
 		height: 36px;
 		padding-left: 10px;

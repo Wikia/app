@@ -195,3 +195,7 @@ $color-vertical-lifestyle-secondary: #ffad00;
 $color-vertical-movies-secondary: #09b3a6;
 $color-vertical-music-secondary: #981093;
 $color-vertical-tv-secondary: #008cce;
+
+// Venus article
+$color-article-navigation-inactive: if($is-dark-wiki, lighten(#000000, 30%), darken(#ffffff, 30%));
+$image-caption-border-color: if($is-dark-wiki, darken($color-text, 30%), lighten($color-text, 30%));
