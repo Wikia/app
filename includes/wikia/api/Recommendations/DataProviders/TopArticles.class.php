@@ -65,10 +65,9 @@ class TopArticles implements IDataProvider {
 
 		foreach ( $topArticles as $topArticleInfo ) {
 			$articleId = $topArticleInfo['articleId'];
+			$wikiId = $topArticleInfo['wikiId'];
 			$title = \GlobalTitle::newFromId( $articleId, $topArticleInfo['wikiId'] );
 
-			$imageServing = new \ImageServing( [$articleId], 400, array( 'w' => 16, 'h' => 9 ) );
-			$images = $imageServing->getImages( 1 );
 
 			$articleService->setArticleById( $articleId );
 
@@ -81,6 +80,13 @@ class TopArticles implements IDataProvider {
 				'source' => self::RECOMMENDATION_ENGINE
 			];
 
+			$imageServing = new \ImageServing(
+				[$articleId],
+				400,
+				['w' => 16, 'h' => 9],
+				wfGetDB( DB_SLAVE, [], $wikiId )
+			);
+			$images = $imageServing->getImages( 1 );
 			if ( !empty( $images[$articleId] ) ) {
 				$articleInfoExpanded['media']['url'] = $images[$articleId]['url'];
 			}
