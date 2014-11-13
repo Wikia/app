@@ -100,6 +100,20 @@ ve.ui.WikiaSingleMediaDialog.prototype.onQueryInputKeydown =
 	OO.ui.SearchWidget.prototype.onQueryKeydown;
 
 /**
+ * @inheritdoc
+ */
+ve.ui.WikiaSingleMediaDialog.prototype.getSetupProcess = function ( data ) {
+	return ve.ui.WikiaSingleMediaDialog.super.prototype.getSetupProcess.call( this, data )
+		.next( function () {
+			// TODO: Ultimetly this should work without setTimeout. It seems to be fixed in the
+			// upstream so should be revisited after upstream sync.
+			setTimeout( ve.bind( function () {
+				this.query.input.focus().select();
+			}, this ), 100 );
+		}, this );
+};
+
+/**
  * Handle closing the dialog.
  *
  * @method
