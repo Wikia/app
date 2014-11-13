@@ -23,7 +23,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	public function index() {
 		if ( !$this->wg->User->isAllowed( 'curatedcontent' ) ) {
 			$this->displayRestrictionError();
-			return false;  // skip rendering
+			return false; // skip rendering
 		}
 
 		$this->response->setTemplateEngine( self::TEMPLATE_ENGINE );
@@ -164,7 +164,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	public function save() {
 		if ( !$this->wg->User->isAllowed( 'curatedcontent' ) ) {
 			$this->displayRestrictionError();
-			return false;  // skip rendering
+			return false; // skip rendering
 		}
 		$this->response->setFormat( 'json' );
 
