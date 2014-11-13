@@ -6,13 +6,20 @@ class TopArticles implements IDataProvider {
 	const RECOMMENDATION_TYPE = 'article';
 
 	public function get( $articleId, $limit ) {
+
 		$hubName = $this->getHubName();
 		$lang = $this->getContentLang();
 
-		// TODO cache
-		$topArticles = $this->getTopArticles( $hubName, $lang, $limit );
+		$out = \WikiaDataAccess::cache(
+			\wfMemcKey('RecommendationApi', self::RECOMMENDATION_ENGINE, $hubName, $lang, $limit),
+			24 * 60 *60,
+			function () use ($hubName, $lang, $limit) {
+				$topArticles = $this->getTopArticles( $hubName, $lang, $limit );
+				return $this->getArticlesInfo( $topArticles );
+			}
+		);
 
-		return $this->getArticlesInfo( $topArticles );
+		return $out;
 	}
 
 	protected function getHubName() {
@@ -34,7 +41,7 @@ class TopArticles implements IDataProvider {
 		$results = \DataMartService::getTopCrossWikiArticlesByPageview(
 			$hubName,
 			[$lang],
-			null,
+			[NS_MAIN],
 			$limit
 		);
 
@@ -44,7 +51,7 @@ class TopArticles implements IDataProvider {
 			for ( $i = 0; $i < $articlesCount; $i++ ) {
 				$topArticles[] = [
 					'wikiId' => $wikiResult['wiki']['id'],
-					'articleId' => $wikiResult['articles'][$i]
+					'articleId' => $wikiResult['articles'][$i]['id']
 				];
 			}
 		}
