@@ -225,6 +225,14 @@ $VenusConfig[ 'article_scss' ] = [
 	]
 ];
 
+$VenusConfig[ 'recent_wiki_activity_scss' ] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'venus' ],
+	'assets' => [
+		'//extensions/wikia/RecentWikiActivity/styles/RecentWikiActivity.scss',
+	]
+];
+
 $VenusConfig['imglzy_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
