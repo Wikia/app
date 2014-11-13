@@ -218,15 +218,18 @@ ve.ui.WikiaSingleMediaDialog.prototype.onSearchNearingEnd = function () {
  */
 ve.ui.WikiaSingleMediaDialog.prototype.onSearchCheck = function ( item ) {
 	// TODO: Only model should be used here, so no cart nor cartSelect
-	var cartItem = this.cart.cartSelect.getItemFromData( item.title );
-	if ( cartItem ) {
-		this.cartModel.removeItems( [ cartItem.getModel() ] );
-	} else {
-		this.cartModel.addItems( [ new ve.dm.WikiaImageCartItem(
-			item.title,
-			item.url
-		) ] );
+	var items = this.cartModel.getItems(),
+		i;
+	for ( i = 0; i < items.length; i++ ) {
+		if ( item.title === items[i].getId() ) {
+			this.cartModel.removeItems( [ items[i] ] );
+			return;
+		}
 	}
+	this.cartModel.addItems( [ new ve.dm.WikiaImageCartItem(
+		item.title,
+		item.url
+	) ] );
 };
 
 /**
