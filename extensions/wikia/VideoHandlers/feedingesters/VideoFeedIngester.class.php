@@ -32,6 +32,7 @@ abstract class VideoFeedIngester {
 	protected $oldName;
 	protected $videoData;
 	protected $metaData;
+	protected $pageCategories;
 
 	public function __construct( array $params ) {
 		$this->dataNormalizer = new IngesterDataNormalizer();
@@ -60,7 +61,7 @@ abstract class VideoFeedIngester {
 		try {
 			$this->checkShouldSkipVideo();
 			$this->printInitialData();
-			$this->setMetaData( $addlCategories );
+			$this->setMetaData();
 		} catch ( FeedIngesterSkippedException $e ) {
 			$this->logger->videoSkipped( $e->getMessage() );
 			return 0;
@@ -69,6 +70,7 @@ abstract class VideoFeedIngester {
 			return 0;
 		}
 
+		$this->setPageCategories( $addlCategories );
 		return $this->saveVideo();
 	}
 
@@ -82,8 +84,8 @@ abstract class VideoFeedIngester {
 		$this->videoData = $videoData;
 	}
 
-	public function setMetaData( $addlCategories ) {
-		$this->metaData = $this->generateMetadata( $addlCategories );
+	public function setMetaData() {
+		$this->metaData = $this->generateMetadata();
 	}
 
 	/**
@@ -183,11 +185,10 @@ abstract class VideoFeedIngester {
 	 * generate the metadata we consider interesting for this video
 	 * Note: metadata is array instead of object because it's stored in the database as a serialized array,
 	 *       and serialized objects would have more version issues.
-	 * @param array $addlCategories
-	 * @return array An associative array of metadata
 	 * @throws FeedIngesterWarningException
+	 * @return array An associative array of metadata
 	 */
-	public function generateMetadata( $addlCategories ) {
+	public function generateMetadata() {
 
 		$this->filterKeywords( $this->videoData['keywords'] );
 		$metaData = [
@@ -220,7 +221,6 @@ abstract class VideoFeedIngester {
 			'expirationDate'       => isset( $this->videoData['expirationDate'] ) ? $this->videoData['expirationDate'] : '',
 			'regionalRestrictions' => isset( $this->videoData['regionalRestrictions'] ) ? $this->videoData['regionalRestrictions'] : '',
 			'destinationTitle'     => $this->getName(),
-			'pageCategories'      => $this->generateCategories ( $addlCategories )
 		];
 
 		if ( empty( $metaData['videoId'] ) ) {
@@ -283,11 +283,10 @@ abstract class VideoFeedIngester {
 	}
 
 	public function saveVideo() {
-		$categoryStr = $this->prepareCategoriesString();
-		$body = $this->prepareBodyString( $categoryStr );
+		$body = $this->prepareBodyString();
 		if ( $this->debugMode() ) {
 			$this->printReadyToSaveData( $body );
-			$this->logger->videoIngested( "Ingested {$this->metaData['destinationTitle']} (id: {$this->metaData['videoId']}).\n", $this->metaData['pageCategories'] );
+			$this->logger->videoIngested( "Ingested {$this->metaData['destinationTitle']} (id: {$this->metaData['videoId']}).\n", $this->pageCategories );
 			return 1;
 		} else {
 			/** @var Title $uploadedTitle */
@@ -295,10 +294,10 @@ abstract class VideoFeedIngester {
 			$result = VideoFileUploader::uploadVideo( $this->metaData['provider'], $this->metaData['videoId'], $uploadedTitle, $body, false, $this->metaData );
 			if ( $result->ok ) {
 				$fullUrl = WikiFactory::getLocalEnvURL( $uploadedTitle->getFullURL() );
-				$this->logger->videoIngested( "Ingested {$uploadedTitle->getText()} from partner clip id {$this->metaData['videoId']}. {$fullUrl}\n", $this->metaData['pageCategories'] );
+				$this->logger->videoIngested( "Ingested {$uploadedTitle->getText()} from partner clip id {$this->metaData['videoId']}. {$fullUrl}\n", $this->pageCategories );
 
 				wfWaitForSlaves( self::THROTTLE_INTERVAL );
-				wfRunHooks( 'VideoIngestionComplete', array( $uploadedTitle, $this->metaData['pageCategories'] ) );
+				wfRunHooks( 'VideoIngestionComplete', array( $uploadedTitle, $this->pageCategories ) );
 				return 1;
 			}
 		}
@@ -308,35 +307,39 @@ abstract class VideoFeedIngester {
 		return 0;
 	}
 
+	public function setPageCategories( $addlCatgories ) {
+		$this->pageCategories = $this->generateCategories( $addlCatgories );
+	}
+
+	public function prepareBodyString() {
+		/** @var ApiWrapper $apiWrapper */
+		$apiWrapper = new static::$API_WRAPPER( $this->metaData['videoId'], $this->metaData );
+		$videoHandlerHelper = new VideoHandlerHelper();
+		$body = $this->prepareCategoriesString();
+		$body .= $videoHandlerHelper->addDescriptionHeader( $apiWrapper->getDescription() );
+		return $body;
+	}
+
 	// prepare wiki categories string (eg [[Category:MyCategory]] )
 	public function prepareCategoriesString() {
-		$this->metaData['pageCategories'][] = wfMessage( 'videohandler-category' )->inContentLanguage()->text();
-		$this->metaData['pageCategories'] = array_unique( $this->metaData['pageCategories'] );
+		$this->pageCategories[] = wfMessage( 'videohandler-category' )->inContentLanguage()->text();
+		$this->pageCategories = array_unique( $this->pageCategories );
 		$categoryStr = '';
-		foreach ( $this->metaData['pageCategories'] as $categoryName ) {
+		foreach ( $this->pageCategories as $categoryName ) {
 			$category = Category::newFromName( $categoryName );
 			if ( $category instanceof Category ) {
 				$categoryStr .= '[[' . $category->getTitle()->getFullText() . ']]';
 			}
 		}
 
-		return $categoryStr;
-	}
-
-	public function prepareBodyString( $categoryStr ) {
-		/** @var ApiWrapper $apiWrapper */
-		$apiWrapper = new static::$API_WRAPPER( $this->metaData['videoId'], $this->metaData );
-		$videoHandlerHelper = new VideoHandlerHelper();
-		$body = $categoryStr."\n";
-		$body .= $videoHandlerHelper->addDescriptionHeader( $apiWrapper->getDescription() );
-		return $body;
+		return $categoryStr . "\n";
 	}
 
 	public function printReadyToSaveData( $body ) {
 		print "Ready to create video\n";
 		print "id:          {$this->metaData['videoId']}\n";
 		print "name:        {$this->metaData['destinationTitle']}\n";
-		print "categories:  " . implode( ',', $this->metaData['pageCategories'] ) . "\n";
+		print "categories:  " . implode( ',', $this->pageCategories ) . "\n";
 		print "metadata:\n";
 		foreach ( explode( "\n", var_export( $this->metaData, 1 ) ) as $line ) {
 			print ":: $line\n";

@@ -422,16 +422,15 @@ class ScreenplayFeedIngester extends RemoteAssetFeedIngester {
 
 	/**
 	 * Generate metadata
-	 * @param array $addlCategories
-	 * @return array
 	 * @throws FeedIngesterSkippedException
+	 * @return array
 	 */
-	public function generateMetadata( $addlCategories ) {
+	public function generateMetadata() {
 		if ( empty( $this->videoData['stdBitrateCode'] ) ) {
 			throw new FeedIngesterSkippedException('No supported bitrate code for video id ' . $this->videoData['videoId']);
 		}
 
-		$metadata = parent::generateMetadata( $addlCategories );
+		$metadata = parent::generateMetadata();
 		$metadata['stdBitrateCode'] = $this->videoData['stdBitrateCode'];
 		$metadata['jpegBitrateCode'] = empty( $this->videoData['jpegBitrateCode'] ) ? '' : $this->videoData['jpegBitrateCode'];
 		$metadata['streamUrl'] = empty( $this->videoData['streamUrl'] ) ? '' : $this->videoData['streamUrl'];

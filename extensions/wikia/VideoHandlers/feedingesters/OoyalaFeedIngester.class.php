@@ -128,8 +128,7 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 					$ooyalaAsset->setAdSet( $clipData["videoId"], F::app()->wg->OoyalaApiConfig['adSetHowdini'] );
 				}
 
-				$createParams = array( 'provider' => $clipData['provider'] );
-				$articlesCreated += $this->createVideo( $clipData, $createParams );
+				$articlesCreated += $this->createVideo( $clipData );
 			}
 		} while ( !empty( $nextPage ) );
 
@@ -197,11 +196,10 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * generate metadata
-	 * @param array $addlCategories
 	 * @return array
 	 */
-	public function generateMetadata( array $addlCategories ) {
-		$metadata = parent::generateMetadata( $addlCategories );
+	public function generateMetadata() {
+		$metadata = parent::generateMetadata();
 		$metadata['startDate'] = empty( $this->videoData['startDate'] ) ? '' :  $this->videoData['startDate'];
 		$metadata['source'] = empty( $this->videoData['source'] ) ? '' :  $this->videoData['source'];
 		$metadata['sourceId'] = empty( $this->videoData['sourceId'] ) ? '' :  $this->videoData['sourceId'];

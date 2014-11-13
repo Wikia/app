@@ -177,11 +177,10 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * generate metadata
-	 * @param array $addlCategories
 	 * @return array
 	 */
-	public function generateMetadata( array $addlCategories ) {
-		$metadata = parent::generateMetadata( $addlCategories );
+	public function generateMetadata() {
+		$metadata = parent::generateMetadata();
 		$metadata['videoUrl'] = empty( $this->videoData['videoUrl'] ) ? '' : $this->videoData['videoUrl'];
 		$metadata['uniqueName'] = empty( $this->videoData['uniqueName'] ) ? '' : $this->videoData['uniqueName'];
 

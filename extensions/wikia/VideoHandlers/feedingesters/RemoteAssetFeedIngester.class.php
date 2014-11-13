@@ -23,17 +23,17 @@ class RemoteAssetFeedIngester extends VideoFeedIngester {
 		}
 	}
 
-	public function saveVideo( $metaData ) {
-		$metaData['pageCategories'] = implode( ', ', $metaData['pageCategories'] );
+	public function saveVideo() {
+		$this->metaData['pageCategories'] = implode( ', ', $this->metaData['pageCategories'] );
 		if ( !empty( $this->duplicateAsset ) ) {
-			if ( !empty( $this->duplicateAsset['metadata']['sourceid'] ) && $this->duplicateAsset['metadata']['sourceid'] == $metaData['videoId'] ) {
-				$result = $this->updateRemoteAsset( $metaData['videoId'], $metaData['destinationTitle'], $metaData, $this->duplicateAsset );
+			if ( !empty( $this->duplicateAsset['metadata']['sourceid'] ) && $this->duplicateAsset['metadata']['sourceid'] == $this->metaData['videoId'] ) {
+				$result = $this->updateRemoteAsset( $this->metaData['videoId'], $this->metaData['destinationTitle'], $this->metaData, $this->duplicateAsset );
 			} else {
-				$this->logger->videoSkipped( "Skipping {$metaData['name']} - {$metaData['description']}. SouceId not match (Id: {$metaData['videoId']}).\n" );
+				$this->logger->videoSkipped( "Skipping {$this->metaData['name']} - {$this->metaData['description']}. SouceId not match (Id: {$this->metaData['videoId']}).\n" );
 				return 0;
 			}
 		} else {
-			$result = $this->createRemoteAsset( $metaData['videoId'], $metaData['destinationTitle'], $metaData );
+			$result = $this->createRemoteAsset( $this->metaData['videoId'], $this->metaData['destinationTitle'], $this->metaData );
 		}
 
 		return $result;
