@@ -18,7 +18,7 @@ a {
 	}
 
 	&.new {
-		background-color: $color-links;
+		background-color: mix($color-links, $color-page, 30%);
 		color: $color-text;
 		padding: 2px;
 	}
