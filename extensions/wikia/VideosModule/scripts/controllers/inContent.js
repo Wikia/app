@@ -1,16 +1,16 @@
 require([
 	'videosmodule.views.inContent',
-	'videosmodule.controllers.nodeFinder',
 	'videosmodule.models.videos',
+	'videosmodule.modules.nodeFinder',
 	'bucky',
 	'wikia.document'
-], function (Module, nodeFinder, VideoData, bucky, d) {
+], function (InContentModule, VideoData, nodeFinderModule, bucky, d) {
 	'use strict';
 
 //	bucky = bucky('videosmodule.controller.index');
 
 	function init() {
-		var module,
+		var inContent,
 			element,
 			contentContainer = d.getElementById('mw-content-text'),
 			headerSelector = '#mw-content-text > h2',
@@ -18,15 +18,15 @@ require([
 
 //		bucky.timer.start('execution');
 
-		element = nodeFinder.getChildByOffsetTop(contentContainer, headerSelector, boundaryOffsetTop);
+		element = nodeFinderModule.getChildByOffsetTop(contentContainer, headerSelector, boundaryOffsetTop);
 
 		if (element){
 			element = element.previousElementSibling;
 		} else {
-			element = nodeFinder.getLastVisibleChild(contentContainer);
+			element = nodeFinderModule.getLastVisibleChild(contentContainer);
 		}
 
-		module = new Module({
+		inContent = new InContentModule({
 			el: element,
 			model: new VideoData()
 		});

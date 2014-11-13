@@ -1,4 +1,4 @@
-define('videosmodule.controllers.nodeFinder', function() {
+define('videosmodule.modules.nodeFinder', function() {
 	'use strict';
 
 	/**

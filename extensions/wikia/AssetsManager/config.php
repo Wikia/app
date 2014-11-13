@@ -1789,7 +1789,7 @@ $config['videos_module_js'] = [
 	]
 ];
 
-$config['venus_videos_module_js'] = [
+$config['videos_module_venus_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['venus'],
 	'assets' => [
@@ -1800,7 +1800,7 @@ $config['venus_videos_module_js'] = [
 		'//extensions/wikia/VideosModule/scripts/views/titleThumbnail.js',
 		'//extensions/wikia/VideosModule/scripts/views/inContent.js',
 		'//extensions/wikia/VideosModule/scripts/controllers/inContent.js',
-		'//extensions/wikia/VideosModule/scripts/controllers/nodeFinder.module.js',
+		'//extensions/wikia/VideosModule/scripts/modules/nodeFinder.module.js',
 	]
 ];
 

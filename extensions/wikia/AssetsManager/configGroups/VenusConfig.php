@@ -4,7 +4,7 @@ $VenusConfig = [];
 
 $VenusConfig[ 'venus_body_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['venus'],
+	'skin' => [ 'venus' ],
 	'assets' => [
 		'//resources/jquery/jquery-2.1.1.min.js',
 
@@ -110,7 +110,7 @@ $VenusConfig[ 'venus_body_js' ] = [
 
 $VenusConfig[ 'venus_head_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['venus'],
+	'skin' => [ 'venus' ],
 	'assets' => [
 		'#group_abtesting',
 		'//resources/wikia/modules/lazyqueue.js',
@@ -119,7 +119,7 @@ $VenusConfig[ 'venus_head_js' ] = [
 
 $VenusConfig[ 'venus_css' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => ['venus'],
+	'skin' => [ 'venus' ],
 	'assets' => [
 		'//extensions/wikia/Venus/styles/Venus.scss'
 	]
@@ -134,9 +134,9 @@ $VenusConfig[ 'local_navigation_scss' ] = [
 	]
 ];
 
-$VenusConfig['local_navigation_js'] = [
+$VenusConfig[ 'local_navigation_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['venus', 'oasis'],
+	'skin' => [ 'venus', 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/LocalNavigation/scripts/LocalNavigationMenu.js',
 		'//extensions/wikia/LocalNavigation/scripts/LocalNavigationTracking.js'
@@ -163,7 +163,7 @@ $VenusConfig[ 'global_navigation_scss' ] = [
 		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationAccountNavigation.scss',
 		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationHubsMenu.scss',
 		'//extensions/wikia/UserLogin/css/UserLoginDropdown.globalNavigation.scss',
-		'//extensions/wikia/WallNotifications/styles/WallNotifications.globalNavigation.scss',
+		'//extensions/wikia/WallNotifications/styles/WallNotifications.globalNavigation.scss'
 	]
 ];
 
@@ -196,7 +196,7 @@ $VenusConfig[ 'global_navigation_facebook_login_js' ] = [
 	'assets' => [
 		'//extensions/FBConnect/fbconnect.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
-		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
+		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js'
 	]
 ];
 
@@ -217,7 +217,7 @@ $VenusConfig[ 'article_navigation_scss' ] = [
 ];
 
 /** Videos module */
-$VenusConfig[ 'venus_videos_module_scss' ] = [
+$VenusConfig[ 'videos_module_venus_scss' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'venus' ],
 	'assets' => [
@@ -235,10 +235,10 @@ $VenusConfig[ 'article_scss' ] = [
 	]
 ];
 
-$VenusConfig['imglzy_js'] = [
+$VenusConfig[ 'imglzy_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/ImageLazyLoad/js/ImgLzy.module.js',
-		'//extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
+		'//extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js'
 	]
 ];
