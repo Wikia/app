@@ -34,7 +34,7 @@ abstract class VideoFeedIngester {
 	protected $metaData;
 	protected $pageCategories;
 
-	public function __construct( array $params ) {
+	public function __construct( array $params = [] ) {
 		$this->dataNormalizer = new IngesterDataNormalizer();
 		$this->logger = new FeedIngesterLogger();
 		$this->debug = !empty( $params['debug'] );
@@ -190,7 +190,6 @@ abstract class VideoFeedIngester {
 	 */
 	public function generateMetadata() {
 
-		$this->filterKeywords( $this->videoData['keywords'] );
 		$metaData = [
 			'videoId'              => isset( $this->videoData['videoId'] ) ? $this->videoData['videoId'] : '',
 			'altVideoId'           => isset( $this->videoData['altVideoId'] ) ? $this->videoData['altVideoId'] : '',
@@ -202,7 +201,6 @@ abstract class VideoFeedIngester {
 			'name'                 => isset( $this->videoData['name'] ) ? $this->videoData['name'] : '',
 			'type'                 => isset( $this->videoData['type'] ) ? $this->videoData['type'] : '',
 			'category'             => isset( $this->videoData['category'] ) ? $this->videoData['category'] : '',
-			'keywords'             => isset( $this->videoData['keywords'] ) ? $this->videoData['keywords'] : '',
 			'industryRating'       => isset( $this->videoData['industryRating'] ) ? $this->videoData['industryRating'] : '',
 			'ageGate'              => isset( $this->videoData['ageGate'] ) ? $this->videoData['ageGate'] : 0,
 			'ageRequired'          => isset( $this->videoData['ageRequired'] ) ? $this->videoData['ageRequired'] : 0,
@@ -220,6 +218,7 @@ abstract class VideoFeedIngester {
 			'aspectRatio'          => isset( $this->videoData['aspectRatio'] ) ? $this->videoData['aspectRatio'] : '',
 			'expirationDate'       => isset( $this->videoData['expirationDate'] ) ? $this->videoData['expirationDate'] : '',
 			'regionalRestrictions' => isset( $this->videoData['regionalRestrictions'] ) ? $this->videoData['regionalRestrictions'] : '',
+			'keywords'             => $this->filterKeywords(),
 			'destinationTitle'     => $this->getName(),
 		];
 
@@ -239,12 +238,13 @@ abstract class VideoFeedIngester {
 	/**
 	 * filter keywords from metaData
 	 */
-	protected function filterKeywords( &$keywords ) {
-		if ( !empty( $keywords ) ) {
+	protected function filterKeywords() {
+		$filteredKeyWords = '';
+		if ( !empty( $this->videoData['keywords'] ) ) {
 			$regex = $this->getBlacklistRegex( F::app()->wg->VideoKeywordsBlacklist );
 			$new = array();
 			if ( !empty( $regex ) ) {
-				$old = explode( ',', $keywords );
+				$old = explode( ',', $this->videoData['keywords'] );
 				foreach ( $old as $word ) {
 					if ( preg_match( $regex, str_replace( '-', ' ', $word ) ) ) {
 						echo "Skip: blacklisted keyword $word.\n";
@@ -256,9 +256,10 @@ abstract class VideoFeedIngester {
 			}
 
 			if ( !empty( $new ) ) {
-				$keywords = implode( ',', $new );
+				$filteredKeyWords = implode( ',', $new );
 			}
 		}
+		return $filteredKeyWords;
 	}
 
 	public function getName() {
