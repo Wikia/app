@@ -404,7 +404,7 @@ var UserProfilePage = {
 			msg = $.msg('oasis-generic-error');
 		}
 
-		window.GlobalNotification.show(msg, 'error', null, 5000);
+		window.GlobalNotification.show(msg, 'error');
 	},
 
 	getFormData: function () {
@@ -617,7 +617,7 @@ var UserProfilePage = {
 					if (data.status === 'ok') {
 						window.location.reload();
 					} else {
-						window.alert(data.error);
+						UserProfilePage.error(data.error);
 					}
 				}
 			});

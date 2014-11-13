@@ -1,5 +1,3 @@
-/*global WikiaFooterApp*/
-
 /*
  * GlobalNotification.show()
  * @param string content - message to be displayed
@@ -7,6 +5,10 @@
  */
 
 var GlobalNotification = {
+
+	/**
+	 * Called once to instantiate this feature
+	 */
 	init: function () {
 		'use strict';
 		// If there's already a global notification on page load, set up JS
@@ -21,7 +23,10 @@ var GlobalNotification = {
 		// Float notification (BugId:33365)
 		this.wikiaHeaderHeight = $('#WikiaHeader').height();
 	},
-	// This is only for introspection in the browser
+
+	/**
+	 * Used for introspection in the browser, has no affect on this code
+	 */
 	options: {
 		'notify': 'blue',
 		'confirm': 'green',
@@ -38,7 +43,12 @@ var GlobalNotification = {
 		window.setTimeout(this.hide, 3000);
 	},
 
-	createDom: function (element) {
+	/**
+	 * Build the notification DOM element and attach it to the DOM
+	 * @param {object} [element] Element to prepend the notification to
+	 * @param {boolean} [isModal] Whether or not a modal is present and visible on the page
+	 */
+	createDom: function (element, isModal) {
 		'use strict';
 		// create and store dom
 		if (!GlobalNotification.dom.length) {
@@ -49,13 +59,16 @@ var GlobalNotification = {
 				.hide();
 			GlobalNotification.setUpClose();
 		}
-		// allow notification wrapper element to be passed by extension (used for YUI modal in VET)
+
+		// allow notification wrapper element to be passed by extension
 		if (element instanceof jQuery) {
 			element.prepend(GlobalNotification.dom).show();
-			// handle standard modal implementation
-		} else if (GlobalNotification.isModal()) {
+
+		// handle standard modal implementation
+		} else if (isModal) {
 			GlobalNotification.modal.prepend(GlobalNotification.dom);
-			// handle non-modal implementation
+
+		// handle non-modal implementation
 		} else {
 			if ($('.oasis-split-skin').length) {
 				$('.WikiaHeader').after(GlobalNotification.dom);
@@ -63,28 +76,58 @@ var GlobalNotification = {
 				$('.WikiaPageContentWrapper').prepend(GlobalNotification.dom);
 			}
 		}
+
 		GlobalNotification.msg = GlobalNotification.dom.find('.msg');
 	},
+
+	/**
+	 * Main entry point for this feature - shows the notification
+	 * @param {string} content
+	 * @param {string} type
+	 * @param {object} [element] jQuery element to prepend the notification to
+	 * @param {number} [timeout] How long to keep the modal open for
+	 */
 	show: function (content, type, element, timeout) {
 		'use strict';
+
+		var isModal;
 		GlobalNotification.content = content;
-		var callback = function () {
-			GlobalNotification.createDom(element);
+
+		function callback() {
+			isModal = GlobalNotification.isModal();
+
+			// Modal notifications have no close button so set a timeout
+			if (isModal && typeof timeout !== 'number') {
+				timeout = 3000;
+			}
+
+			GlobalNotification.createDom(element, isModal);
 			GlobalNotification.msg.html(GlobalNotification.content);
 			GlobalNotification.dom.removeClass('confirm, error, notify, warn').addClass(type);
+
 			// Share scroll event with WikiaFooterApp's toolbar floating (BugId:33365)
 			if (window.WikiaFooterApp) {
-				WikiaFooterApp.addScrollEvent();
+				window.WikiaFooterApp.addScrollEvent();
 			}
+
 			GlobalNotification.dom.fadeIn('slow');
+
+			// Close notification after specified amount of time
 			if (typeof timeout === 'number') {
 				setTimeout(function () {
 					GlobalNotification.hide();
 				}, timeout);
 			}
-		};
+		}
+
+		// close any existing notifications before adding a new one
 		GlobalNotification.hide(callback);
 	},
+
+	/**
+	 * Hides the notification and executes an optional callback
+	 * @param {function} [callback]
+	 */
 	hide: function (callback) {
 		'use strict';
 		if (!GlobalNotification.dom) {
@@ -108,6 +151,7 @@ var GlobalNotification = {
 			}
 		}
 	},
+
 	/**
 	 * Determine if a modal is present and visible so we can apply the notification to the modal instead of the page.
 	 * @returns {boolean}
@@ -121,11 +165,19 @@ var GlobalNotification = {
 		// returns false if there's no modal or it's hidden
 		return GlobalNotification.modal.is(':visible');
 	},
+
+	/**
+	 * Bind close event to close button
+	 */
 	setUpClose: function () {
 		'use strict';
-		GlobalNotification.dom.find('.close').click(GlobalNotification.hide);
+		GlobalNotification.dom.find('.close').on('click', GlobalNotification.hide);
 	},
-	// Called from WikiaFooter.js
+
+	/**
+	 * Hack to share the scroll event with WikiaFooter.js
+	 * @param {number} scrollTop
+	 */
 	onScroll: function (scrollTop) {
 		'use strict';
 		if (GlobalNotification.dom && GlobalNotification.dom.length) {
@@ -139,6 +191,7 @@ var GlobalNotification = {
 		}
 	}
 };
+
 $(function () {
 	'use strict';
 	GlobalNotification.init();
