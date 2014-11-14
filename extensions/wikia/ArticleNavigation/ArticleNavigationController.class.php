@@ -14,6 +14,7 @@ class ArticleNavigationController extends WikiaController {
 
 		$this->setVal('share_type', 'multiple');
 		$this->setVal('share', $app->renderView('ArticleNavigationController', 'share'));
+		$this->setVal('user_tools', json_encode($this->generateUserTools()));
 	}
 
 	private function renderEditActions() {
@@ -103,5 +104,42 @@ class ArticleNavigationController extends WikiaController {
 		}
 
 		return $services;
+	}
+
+	public function getUserTools() {
+		$this->response->setVal('data', $this->generateUserTools());
+	}
+
+	private function generateUserTools() {
+		global $wgUser;
+
+		$anonListItems = [
+			'SpecialPage:Mostpopularcategories',
+			'SpecialPage:WikiActivity',
+			'SpecialPage:NewFiles',
+			'SpecialPage:Search'
+		];
+
+		$service = new SharedToolbarService();
+
+		$data = [];
+
+		if ( $wgUser->isAnon() ) {
+			foreach ( $anonListItems as $listItem ) {
+				$data[] = $service->buildListItem( $listItem );
+			}
+		} else {
+			$data = $service->getVisibleList();
+		}
+
+		$renderedData = $service->instanceToRenderData( $service->listToInstance( $data ) );
+		if ($wgUser->isAllowed('admindashboard')) {
+			$renderedData[] = [
+				'tracker-name' => 'admin',
+				'caption' => 'Admin',
+				'href' => SpecialPage::getTitleFor('AdminDashboard')->getLocalURL()
+			];
+		}
+		return $renderedData;
 	}
 }

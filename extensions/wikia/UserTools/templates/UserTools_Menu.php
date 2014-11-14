@@ -15,7 +15,7 @@
 	<span class="arrow-icon-ctr"><span class="arrow-icon arrow-icon-single"></span></span>
 	<a href="#"><?= $item['caption']; ?></a>
 	<ul id="my-tools-menu" class="tools-menu">
-		<?= F::app()->renderView( 'Footer', 'Menu', array( 'format' => 'html', 'items' => $item['items'] ) ); ?>
+		<?= F::app()->renderView( 'UserTools', 'Menu', array( 'format' => 'html', 'items' => $item['items'] ) ); ?>
 	</ul>
 </li>
 <?php     break; ?>
@@ -32,7 +32,7 @@
 <?php case 'customize': ?>
 <li>
 	<img height="16" width="16" class="sprite gear" src="<?= $wg->BlankImgUrl; ?>">
-	<a class="tools-customize" href="#" data-name="customize"><?= wfMsg( 'oasis-toolbar-customize' ); ?></a>
+	<a class="tools-customize" href="#" data-name="customize"><?= wfMessage( 'user-tools-customize' )->text(); ?></a>
 </li>
 <?php     break; ?>
 <?php case 'devinfo': /* Temporary, BugId:5497; TODO: call getPerformanceStats in DevInfoUserCommand.php rather than here */ ?>

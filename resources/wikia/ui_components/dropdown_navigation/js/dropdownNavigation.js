@@ -14,19 +14,6 @@ define(
 		var dropdownIndex = 0;
 
 		/**
-<<<<<<< HEAD
-		 * @desc validates dropdown naviagation options
-		 * @param {Object} params
-		 */
-		function validateParams(params) {
-			if (typeof params.trigger !== 'string' || params.trigger.length < 1) {
-				throw new Error('"trigger" param must be a valid jQuery selector');
-			}
-		}
-
-		/**
-=======
->>>>>>> CON-2046-nested-dropdown
 		 * @desc creates new instance of Dropdown Navigation
 		 * @param {Object} options - configuration options
 		 * @returns {Object} - if called without `new` returns new instance of DropdownNavigation
@@ -41,11 +28,10 @@ define(
 			utils.validateParams(options);
 
 			var self = this,
-				dropdownId = 'wikiaDropdownNav' + dropdownIndex++,
 				params = {
 					activeClass: 'active',
 					$container: null,
-					id: dropdownId,
+					id: 'wikiaDropdownNav' + dropdownIndex++,
 					maxHeight: 400
 				},
 				menuAIMParams = {
