@@ -14,11 +14,18 @@ class Collector {
 	public function get( $articleId, $limit ) {
 		$out = [];
 		$dataProviders = $this->getDataProviders();
+		$dataProvidersCount = count( $dataProviders );
 		foreach ( $dataProviders as $dataProvider ) {
-			// TODO better limit :)
-			$out = array_merge( $out, $dataProvider->get($articleId, 3 ) );
+			$currentLimit = ceil( $limit / $dataProvidersCount );
+			if ( (end($dataProviders) === $dataProvider) && ($limit - count( $out ) > $currentLimit) ) {
+				$currentLimit = $limit - count( $out );
+			}
+
+			$out = array_merge( $out, $dataProvider->get($articleId, $currentLimit ) );
 		}
 
+		shuffle($out);
+		$out = array_slice($out, 0, $limit);
 		return $out;
 	}
 
@@ -30,8 +37,8 @@ class Collector {
 	protected function getDataProviders() {
 		return [
 			(new DataProviders\Video),
-			(new DataProviders\TopArticles),
-			(new DataProviders\Category)
+			(new DataProviders\Category),
+			(new DataProviders\TopArticles)
 		];
 	}
 }
