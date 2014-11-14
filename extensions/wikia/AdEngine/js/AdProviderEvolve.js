@@ -8,11 +8,9 @@ define('ext.wikia.adEngine.provider.evolve', [
 	'wikia.document',
 	'wikia.scriptwriter',
 	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.adEngine.adLogicPageParamsLegacy',
-	'ext.wikia.adEngine.krux',
 	'ext.wikia.adEngine.evolveHelper',
 	'ext.wikia.adEngine.evolveSlotConfig'
-], function (log, window, document, scriptWriter, slotTweaker, adLogicPageParamsLegacy, Krux, evolveHelper, evolveSlotConfig) {
+], function (log, window, document, scriptWriter, slotTweaker, evolveHelper, evolveSlotConfig) {
 	'use strict';
 
 	var slotMap,
@@ -38,7 +36,7 @@ define('ext.wikia.adEngine.provider.evolve', [
 	 * TODO: in future we should rely entirely on offsetHeight, so the actual ad should be loaded
 	 * in a div with no paddings and margins.
 	 *
-	 * @param {DomElement} slot
+	 * @param {Element} slot
 	 * @return {Number}
 	 */
 	function getHeight(slot) {
@@ -74,10 +72,7 @@ define('ext.wikia.adEngine.provider.evolve', [
 			'sect=' + sect + ';' +
 			'mtfInline=true;' +
 			'pos=' + slotname + ';' +
-			adLogicPageParamsLegacy.getEsrbKeyValue() +
-			adLogicPageParamsLegacy.getS1KeyValue() +
-			adLogicPageParamsLegacy.getCustomKeyValues() +
-			adLogicPageParamsLegacy.getKruxKeyValues();
+			evolveHelper.getTargeting();
 	}
 
 	function getReskinAndSilverScript(slotname) {
@@ -127,8 +122,6 @@ define('ext.wikia.adEngine.provider.evolve', [
 			'adj' + '/' +
 			'gn.wikia4.com' + '/' +
 			getKv(slotname) +
-			adLogicPageParamsLegacy.getDomainKV() +
-			adLogicPageParamsLegacy.getHostnamePrefix() +
 			'sz=' + size + ';' +
 			(dcopt ? 'dcopt=' + dcopt + ';' : '') +
 			'type=pop;type=int;' + // TODO remove?
