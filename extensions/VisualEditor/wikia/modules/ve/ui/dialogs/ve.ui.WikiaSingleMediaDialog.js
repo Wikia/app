@@ -52,7 +52,8 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 		.addClass( 've-ui-wikiaSingleMediaDialog-main' );
 	this.search = new ve.ui.WikiaMediaResultsWidget( { '$': this.$ } );
 	this.results = this.search.getResults();
-	this.cart = new ve.ui.WikiaSingleMediaCartWidget( { 'dialog': this } );
+	this.cartModel = new ve.dm.WikiaCart();
+	this.cart = new ve.ui.WikiaSingleMediaCartWidget( this.cartModel, this );
 
 	// Foot elements
 	this.$policy = this.$( '<div>' )
@@ -77,11 +78,13 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 		'requestMediaDone': 'onQueryRequestMediaDone'
 	} );
 	this.search.connect( this, {
-		'nearingEnd': 'onSearchNearingEnd'
+		'nearingEnd': 'onSearchNearingEnd',
+		'check': 'onSearchCheck'
 	} );
 	this.queryInput.connect( this, {
 		'change': 'onQueryInputChange'
 	} );
+	this.insertButton.connect( this, { 'click': [ 'close', { 'action': 'insert' } ] } );
 	this.queryInput.$input.on( 'keydown', ve.bind( this.onQueryInputKeydown, this ) );
 	this.cancelButton.connect( this, { 'click': 'onCloseButtonClick' } );
 
@@ -122,8 +125,69 @@ ve.ui.WikiaSingleMediaDialog.prototype.getSetupProcess = function ( data ) {
 ve.ui.WikiaSingleMediaDialog.prototype.getTeardownProcess = function ( data ) {
 	return ve.ui.WikiaSingleMediaDialog.super.prototype.getTeardownProcess.call( this, data )
 		.first( function () {
+			if ( data.action === 'insert' ) {
+				this.insertMedia();
+			}
+			this.cartModel.clearItems();
 			this.queryInput.setValue( '' );
 		}, this );
+};
+
+ve.ui.WikiaSingleMediaDialog.prototype.insertMedia = function () {
+	var i, linmod = [], items = this.cartModel.getItems();
+
+	// Gallery opening
+	linmod.push( {
+		'type': 'wikiaGallery',
+		'attributes': {
+			'expand': false,
+			'mw': {
+				'name': 'gallery'
+			}
+		}
+	} );
+
+	if ( items.length > 0 ) {
+		linmod.push( {
+			'type': 'alien',
+			'attributes': {
+				'domElements': $( '<meta typeof="mw:Placeholder" data-parsoid="{&quot;src&quot;:&quot;&quot;}" />' ).toArray()
+			}
+		} );
+		linmod.push( { 'type': '/alien' } );
+
+		for ( i = 0; i < items.length; i++ ) {
+			linmod.push( {
+				'type': 'wikiaGalleryItem',
+				'attributes': {
+					'type': 'thumb',
+					'align': 'none',
+					'href': './' + 'File:' + items[i].title,
+					'src': items[i].url,
+					'resource': './' + 'File:' + items[i].title,
+					'defaultSize': true
+				}
+			} );
+			linmod.push( {
+				'type': '/wikiaGalleryItem'
+			} );
+		}
+
+		linmod.push( {
+			'type': 'alien',
+			'attributes': {
+				'domElements': $( '<meta typeof="mw:Placeholder" data-parsoid="{&quot;src&quot;:&quot;&quot;}" />' ).toArray()
+			}
+		} );
+		linmod.push( { 'type': '/alien' } );
+	}
+
+	// Gallery closing
+	linmod.push( {
+		'type': '/wikiaGallery'
+	} );
+
+	this.fragment.collapseRangeToEnd().insertContent( linmod );
 };
 
 /*
@@ -167,6 +231,28 @@ ve.ui.WikiaSingleMediaDialog.prototype.onSearchNearingEnd = function () {
 	if ( !this.queryInput.isPending() ) {
 		this.query.requestMedia();
 	}
+};
+
+/**
+ * Handle check/uncheck of items in search results.
+ *
+ * @method
+ * @param {Object} item The search result item data.
+ */
+ve.ui.WikiaSingleMediaDialog.prototype.onSearchCheck = function ( item ) {
+	// TODO: Only model should be used here, so no cart nor cartSelect
+	var items = this.cartModel.getItems(),
+		i;
+	for ( i = 0; i < items.length; i++ ) {
+		if ( item.title === items[i].getId() ) {
+			this.cartModel.removeItems( [ items[i] ] );
+			return;
+		}
+	}
+	this.cartModel.addItems( [ new ve.dm.WikiaImageCartItem(
+		item.title,
+		item.url
+	) ] );
 };
 
 /**
