@@ -6,13 +6,14 @@ require(
 
 		var $win = $(win),
 			isTouchScreen = win.Wikia.isTouchScreen(),
-			$tocButton = $('#leftNavToc');
+			$tocButton = $('#articleNavToc');
 
 		/**
 		 * @desc handler that initialises TOC
 		 * @param {Event} event
 		 */
 		function initTOChandler(event) {
+			console.log('dasdadasd');
 			event.stopPropagation();
 			tocModule.init(event.target.id, isTouchScreen);
 		}

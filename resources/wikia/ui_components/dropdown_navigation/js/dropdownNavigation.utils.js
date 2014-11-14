@@ -7,7 +7,10 @@ define('wikia.dropdownNavigation.utils', function () {
 	 * @throws error if validation fail
 	 */
 	function validateParams(params) {
-		if (!Array.isArray(params.sections) || params.sections.length < 1) {
+		if (
+			!params.render === false &&
+			(!Array.isArray(params.sections) || params.sections.length < 1)
+		) {
 			throw new Error('"sections" param must be non empty array');
 		}
 		if (typeof params.trigger !== 'string' || params.trigger.length < 1) {

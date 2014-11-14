@@ -120,18 +120,15 @@ define(
 			 * @param {Object} options - configuration options
 			 */
 			function init(options) {
-				var html, $dropdownTrigger, $parent, $dropdownWrapper;
+				var $dropdownTrigger, $parent, $dropdownWrapper;
 
 				$.extend(params, options);
-
-				utils.createSubsectionData(params);
-				html = mustache.render(templates.dropdown, params, templates);
 
 				$dropdownTrigger = $('#' + params.trigger);
 				$parent = params.$container || $dropdownTrigger.closest('li');
 
 				// bind to existing markup or create new dropdown markup and add in to DOM
-				$dropdownWrapper = !params.render ?
+				$dropdownWrapper = params.render === false ?
 					$('#' + params.id) :
 					createDropdown(params, templates, $parent);
 

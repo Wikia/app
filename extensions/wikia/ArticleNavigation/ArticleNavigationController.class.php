@@ -18,7 +18,7 @@ class ArticleNavigationController extends WikiaController {
 
 	private function renderEditActions() {
 		return \MustacheService::getInstance()->render(
-			'resources/wikia/ui_components/dropdown_navigation/templates/dropdown_navigation.mustache',
+			'resources/wikia/ui_components/dropdown_navigation/templates/dropdown.mustache',
 			$this->editActionsData()
 		);
 	}
@@ -26,7 +26,6 @@ class ArticleNavigationController extends WikiaController {
 	private function editActionsData()
 	{
 		$contentActions = $this->app->getSkinTemplateObj()->data['content_actions'];
-
 		$editActions = [];
 
 		if (isset($contentActions['edit'])) {
@@ -56,7 +55,7 @@ class ArticleNavigationController extends WikiaController {
 				$data = [
 					'href' => $contentAction['href'],
 					'title' => $contentAction['text'],
-					'referenceId' => $contentAction['id'],
+					'trackingId' => $contentAction['id'],
 				];
 
 				if (isset($contentAction['rel'])) {
@@ -68,7 +67,7 @@ class ArticleNavigationController extends WikiaController {
 		}
 		return [
 			'id' => 'editActionsDropdown',
-			'data' => $actions,
+			'sections' => $actions,
 		];
 	}
 

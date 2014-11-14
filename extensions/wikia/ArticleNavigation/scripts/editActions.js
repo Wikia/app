@@ -3,18 +3,44 @@ require([
 ], function (nirvana, tracker, win, dropdownNavigation, $) {
 	'use strict';
 
+	var dropdown,
+		dropdownParams = {
+			id: 'editActionsDropdown',
+			trigger: 'articleEditActions',
+			render: false
+		},
+		delayHoverParams = {
+			onActivate: show,
+			onDeactivate: hide,
+			activateOnClick: false
+		},
+		$parent = $('#articleEditActions').parent();
+
 	/**
-	 * Initialize edit actions
+	 * @desc shows dropdown
+	 * @param {Event=} event
 	 */
-	dropdownNavigation({
-		id: 'editActionsDropdown',
-		trigger: 'articleEditActions'
-	});
+	function show(event) {
+		$parent.addClass('active');
 
-	trackEditAction();
+		// handle touch interactions
+		if (event) {
+			event.stopPropagation();
+		}
+
+		$('body').one('click', hide);
+	}
 
 	/**
-	 * All logic related with tracking edit actions
+	 * @desc hides dropdown
+	 */
+	function hide() {
+		dropdown.resetUI();
+		$parent.removeClass('active');
+	}
+
+	/**
+	 * @desc all logic related with tracking edit actions
 	 */
 	function trackEditAction() {
 		var track = tracker.buildTrackingFunction({
@@ -22,7 +48,13 @@ require([
 			trackingMethod: 'both'
 		});
 
-		$('#editActionsDropdown').on('mousedown touchstart', 'a', function (e) {
+		$('#editActionsDropdown').on('mousedown touchstart', 'a', function (event) {
+
 		});
 	}
+
+	// Initialize edit actions
+	dropdown = dropdownNavigation(dropdownParams);
+	win.delayedHover($parent[0], delayHoverParams);
+	trackEditAction();
 });
