@@ -26,7 +26,7 @@ class TopArticles implements IDataProvider {
 		$lang = $this->getContentLangCode();
 
 		$out = \WikiaDataAccess::cache(
-			\wfMemcKey('RecommendationApi', self::RECOMMENDATION_ENGINE, $hubName, $lang, $limit),
+			\wfsharedMemcKey('RecommendationApi', self::RECOMMENDATION_ENGINE, $hubName, $lang, $limit),
 			24 * 60 *60,
 			function () use ($hubName, $lang, $limit) {
 				$topArticles = $this->getTopArticles( $hubName, $lang, $limit );
