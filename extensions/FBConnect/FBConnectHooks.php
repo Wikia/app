@@ -220,10 +220,10 @@ HTML;
 	/**
 	 * Adds JS needed for FBConnect code
 	 *
-	 * @param Array $assetsArray
+	 * @param array $assetsArray
 	 * @return bool
 	 */
-	public static function onSkinAssetGroups( &$assetsArray ) {
+	public static function onSkinAssetGroups( array &$assetsArray ) {
 		// All pages
 		$assetsArray[] = 'fbconnect_js';
 
