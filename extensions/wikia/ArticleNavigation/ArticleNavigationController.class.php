@@ -65,6 +65,7 @@ class ArticleNavigationController extends WikiaController {
 				$actions[] = $data;
 			}
 		}
+
 		return [
 			'id' => 'editActionsDropdown',
 			'sections' => $actions,

@@ -3,9 +3,9 @@ require([
 ], function (nirvana, tracker, win, dropdownNavigation, $) {
 	'use strict';
 
-	var dropdown,
+	var dropdownId = 'editActionsDropdown',
 		dropdownParams = {
-			id: 'editActionsDropdown',
+			id: dropdownId,
 			trigger: 'articleEditActions',
 			render: false
 		},
@@ -14,7 +14,9 @@ require([
 			onDeactivate: hide,
 			activateOnClick: false
 		},
-		$parent = $('#articleEditActions').parent();
+		dropdown,
+		$dropdown,
+		$parent;
 
 	/**
 	 * @desc shows dropdown
@@ -41,20 +43,73 @@ require([
 
 	/**
 	 * @desc all logic related with tracking edit actions
+	 * @param {jQuery} $dropdown
 	 */
-	function trackEditAction() {
+	function trackEditAction($dropdown) {
 		var track = tracker.buildTrackingFunction({
 			action: tracker.ACTIONS.CLICK,
 			trackingMethod: 'both'
 		});
 
-		$('#editActionsDropdown').on('mousedown touchstart', 'a', function (event) {
+		$dropdown.on('mousedown touchstart', 'a', function (event) {
+			var $target = $(event.currentTarget),
+				id = $target.data('tracking-id').replace('ca-', ''),
+				label;
 
+			// Primary mouse button only
+			if (event.which !== 1) {
+				return;
+			}
+
+			if (win.veTrack) {
+				if (id === 'edit') {
+					win.veTrack({
+						action: 'other-edit-click'
+					});
+				}
+				if (id === 've-edit') {
+					win.veTrack({
+						action: 've-edit-click'
+					});
+				}
+			}
+
+			switch (id) {
+				case 'comment': {
+					label = $target.hasClass('talk') ? 'talk' : 'comment';
+					break;
+				}
+				case 'edit': {
+					label = id;
+					break;
+				}
+				case 'delete':
+				case 'history':
+				case 'move':
+				case 'protect': {
+					label = 'edit-' + id;
+					break;
+				}
+				default:
+					break;
+			}
+
+			if (label !== undefined) {
+				track({
+					browserEvent: event,
+					category: 'article',
+					label: label
+				});
+			}
 		});
 	}
 
 	// Initialize edit actions
 	dropdown = dropdownNavigation(dropdownParams);
+
+	$dropdown = $('#' + dropdownId);
+	$parent = $dropdown.parent();
+
 	win.delayedHover($parent[0], delayHoverParams);
-	trackEditAction();
+	trackEditAction($dropdown);
 });
