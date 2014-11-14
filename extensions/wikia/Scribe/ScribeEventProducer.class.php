@@ -342,12 +342,12 @@ class ScribeEventProducer {
 		foreach ( $aTop200Wikis as $aWiki ) {
 			if ( isset( $aWiki[$city_id] ) ) {
 				// city_ids are keys; return true if that one is set.
+				wfProfileOut( __METHOD__ );
 				return true;
 			}
 		}
 
 		wfProfileOut( __METHOD__ );
-
 		return false;
 	}
 
