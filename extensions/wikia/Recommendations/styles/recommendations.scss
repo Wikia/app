@@ -1,13 +1,13 @@
 @import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/Venus/styles/variables';
 
-$large-grid-slot-small-height: 264px;
+$large-grid-slot-small-height: 254px;
 $large-grid-slot-big-height: 2 * $large-grid-slot-small-height + $large-grid-gutter;
 
-$medium-grid-slot-small-height: 248px;
+$medium-grid-slot-small-height: 238px;
 $medium-grid-slot-big-height: 2 * $medium-grid-slot-small-height + $medium-grid-gutter;
 
-$small-grid-slot-small-height: 215px;
+$small-grid-slot-small-height: 205px;
 $small-grid-slot-big-height: 2 * $small-grid-slot-small-height + $small-grid-gutter;
 
 .slot {
