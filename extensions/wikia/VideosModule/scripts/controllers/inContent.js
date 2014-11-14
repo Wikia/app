@@ -2,39 +2,54 @@ require([
 	'videosmodule.views.inContent',
 	'videosmodule.models.videos',
 	'videosmodule.modules.nodeFinder',
+	'wikia.mustache',
+	'videosmodule.templates.mustache',
 	'bucky',
 	'wikia.document'
-], function (InContentModule, VideoData, nodeFinderModule, bucky, d) {
+], function (InContentModule, VideoData, nodeFinderModule, Mustache, templates, bucky, doc) {
 	'use strict';
 
-//	bucky = bucky('videosmodule.controller.index');
+	bucky = bucky('videosmodule.controller.in-content');
 
 	function init() {
 		var inContent,
-			element,
-			contentContainer = d.getElementById('mw-content-text'),
+			nearestElement,
+			previousElement,
+			placement,
+			contentContainer = doc.getElementById('mw-content-text'),
 			headerSelector = '#mw-content-text > h2',
 			boundaryOffsetTop = 1500;
 
-//		bucky.timer.start('execution');
+		bucky.timer.start('execution');
 
-		element = nodeFinderModule.getChildByOffsetTop(contentContainer, headerSelector, boundaryOffsetTop);
+		nearestElement = nodeFinderModule.getChildByOffsetTop(contentContainer, headerSelector, boundaryOffsetTop);
 
-		if (element){
-			element = element.previousElementSibling;
+		if (nearestElement){
+			previousElement = nearestElement.previousElementSibling;
+			placement = $.fn.before;
 		} else {
-			element = nodeFinderModule.getLastVisibleChild(contentContainer);
+			nearestElement = nodeFinderModule.getLastVisibleChild(contentContainer);
+			previousElement = nearestElement;
+			placement = $.fn.after;
 		}
 
 		inContent = new InContentModule({
-			el: element,
-			model: new VideoData()
+			$el: $(Mustache.render(templates.inContent, {
+				title: $.msg('videosmodule-title-default')
+			})),
+			nearestElement: nearestElement,
+			previousElement: previousElement,
+			parentElement: contentContainer,
+			placement: placement,
+			model: new VideoData(),
+			numVids: 3,
+			minNumVids: 3
 		});
 
-//		module.$el.on('initialized.videosModule', function() {
-//			bucky.timer.stop('execution');
-//		});
+		inContent.$el.on('initialized.videosModule', function() {
+			bucky.timer.stop('execution');
+		});
 	}
 
-	d.addEventListener('load', init());
+	doc.addEventListener('load', init());
 });

@@ -1,78 +1,204 @@
 define('videosmodule.views.inContent', [
 	'sloth',
 	'videosmodule.views.titleThumbnail',
-	'wikia.mustache',
-	'videosmodule.templates.mustache'
-], function (sloth, TitleThumbnailView, Mustache, templates) {
+	'wikia.tracker',
+	'wikia.log',
+	'bucky'
+], function (sloth, TitleThumbnailView, Tracker, log, bucky) {
 	'use strict';
 
-	var VideosModule,
-		videosLimit = 3;
+	var VideosModule, track;
 
-	VideosModule = function(options) {
-		// Note that this.el refers to the DOM element that the videos module should be inserted before or after,
-		// not the wrapper for the videos module. We can update this after the A/B testing is over.
-		this.el = options.el;
+	bucky = bucky('videosmodule.views.in-content');
 
-		if (!this.el) {
-			return;
-		}
+	track = Tracker.buildTrackingFunction({
+		category: 'videos-module-in-content',
+		trackingMethod: 'both',
+		action: Tracker.ACTIONS.IMPRESSION,
+		label: 'module-impression'
+	});
 
-		this.$el = $(options.el);
+	VideosModule = function (options) {
+		// this.$el is the {jQuery Object} container for the videos module
+		this.$el = options.$el;
+		this.nearestElement = options.nearestElement;
+		this.previousElement = options.previousElement;
+		this.parentElement = options.parentElement;
+		this.placement = options.placement;
 		this.model = options.model;
-		this.articleId = window.wgArticleId;
+
+		this.$thumbs = this.$el.find('.thumbnails');
+
+		// Default number of videos, this is the number of videos we'd like to display if possible
+		this.numVids = options.numVids || 5;
+		this.minNumVids = options.minNumVids || 5;
 
 		// Make sure we're on an article page
-		if (this.articleId) {
+		if (window.wgArticleId) {
 			this.init();
 		}
 	};
 
-	VideosModule.prototype.init = function() {
-		var self = this;
-		this.data = this.model.fetch();
-		// Sloth is a lazy loading service that waits till an element is visible to load more content
-		sloth({
-			on: this.el,
-			threshold: 200,
-			callback: function() {
-				self.data.complete(function() {
-					self.render();
-				});
-			}
-		});
+	VideosModule.prototype.init = function () {
+		var self = this,
+			slothTriggeringElement;
+
+		if (this.nearestElement) {
+			this.placement.call($(this.nearestElement), this.$el);
+			slothTriggeringElement = this.previousElement || this.$el[0];
+			// Sloth is a lazy loading service that waits till an element is visible to load more content
+			sloth({
+				on: slothTriggeringElement,
+				threshold: 200,
+				callback: function() {
+					self.prep();
+				}
+			});
+		} else {
+			$(this.parentElement).prepend(this.$el);
+			self.prep();
+		}
 	};
 
-	VideosModule.prototype.render = function() {
-		var i,
-			$out,
-			videos = this.model.data.videos,
-			len = videos.length,
-			instance,
-			$thumbnails;
+	VideosModule.prototype.prep = function () {
+		var self = this;
 
-		// If no videos are returned from the server, don't render anything
-		if (!len) {
+		self.$thumbs.addClass('hidden');
+		self.$el
+			.startThrobbing()
+			.removeClass('hidden');
+
+		this.model
+			.fetch()
+			.complete(function () {
+				self.videos = self.model.data.videos;
+				self.staffPickVideos = self.model.data.staffVideos;
+				self.render();
+			});
+	};
+
+	VideosModule.prototype.render = function () {
+		var self = this,
+			$imagesLoaded = $.Deferred(),
+			imgCount = 0;
+
+		bucky.timer.start('render');
+
+		if (!this.hasEnoughVideos()) {
+			bucky.timer.stop('render');
 			return;
 		}
 
-		$out = $(Mustache.render(templates.inContent, {
-			title: $.msg('videosmodule-title-default')
-		}));
+		this.addBackfill();
+		this.shuffle(this.videos);
+		this.addStaffPick();
 
-		$thumbnails = $out.find('.thumbnails');
+		this.$thumbs
+			.append(this.getThumbHtml())
+			.find('img[data-video-key]').on('load error', function () {
+				imgCount += 1;
+				if (imgCount === self.numVids) {
+					$imagesLoaded.resolve();
+				}
+			});
 
-		for (i = 0; i < videosLimit; i++) {
-			instance = new TitleThumbnailView({
+		$.when($imagesLoaded)
+			.done(function () {
+				self.$thumbs.removeClass('hidden');
+				self.$el.stopThrobbing()
+					.trigger('initialized.videosModule');
+				bucky.timer.stop('render');
+			});
+
+		// Remove tracking for Special Wikis Sampled at 100% -- VID-1800
+		if (window.wgIsGASpecialWiki !== true) {
+			track();
+		}
+	};
+
+	/**
+	 * Check if we have enough videos to show the module
+	 * @returns {boolean}
+	 */
+	VideosModule.prototype.hasEnoughVideos = function () {
+		if (this.videos.length + this.staffPickVideos.length < this.minNumVids) {
+			this.$el.addClass('hidden');
+			log(
+				'Not enough videos were returned for VideosModule.',
+				log.levels.error,
+				'VideosModule',
+				true
+			);
+			return false;
+		}
+		return true;
+	};
+
+	/**
+	 * If there are less related videos than our default amount, this.NumVids, pull additional
+	 * videos from the staffPicks videos
+	 */
+	VideosModule.prototype.addBackfill = function () {
+		var vidsNeeded;
+
+		if (this.videos.length < this.numVids) {
+			vidsNeeded = this.numVids - this.videos.length;
+			this.videos = this.videos.concat(this.staffPickVideos.splice(0, vidsNeeded));
+			this.numVids = this.videos.length;
+		}
+	};
+
+	/**
+	 * Randomize array element order in-place.
+	 * Using Fisher-Yates shuffle algorithm.
+	 * Slightly adapted from http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+	 */
+	VideosModule.prototype.shuffle = function (array) {
+		var i, j, temp;
+
+		for (i = array.length - 1; i > 0; i--) {
+			j = Math.floor(Math.random() * (i + 1));
+			temp = array[i];
+			array[i] = array[j];
+			array[j] = temp;
+		}
+		return array;
+	};
+
+	/**
+	 * If we have any staff pick videos, pick one randomly from that list and display it
+	 * in a random position in the Videos Module.
+	 */
+	VideosModule.prototype.addStaffPick = function () {
+		var VideosIndex,
+			StaffPicksIndex;
+
+		if (this.staffPickVideos.length) {
+			VideosIndex = Math.floor(Math.random() * this.numVids);
+			StaffPicksIndex = Math.floor(Math.random() * this.staffPickVideos.length);
+			this.videos[VideosIndex] = this.staffPickVideos[StaffPicksIndex];
+		}
+	};
+
+	/**
+	 * Render TitleThumbnail views and return generated HTML
+	 * @returns {Array}
+	 */
+	VideosModule.prototype.getThumbHtml = function () {
+		var i,
+			thumbHtml = [];
+
+		for (i = 0; i < this.numVids; i++) {
+			thumbHtml.push(new TitleThumbnailView({
 				el: 'li',
-				model: videos[i],
+				model: this.videos[i],
 				idx: i
-			}).render();
-
-			$thumbnails.append(instance.$el);
+			})
+				.render()
+				.$el);
 		}
 
-		this.$el.after($out);
+		return thumbHtml;
 	};
 
 	return VideosModule;

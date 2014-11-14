@@ -14,15 +14,15 @@
 		$grid-gutter: $small-grid-gutter;
 	}
 
-	.mw-content-text .videos-module {
+	.mw-content-text .videos-module-in-content {
 		@include grid-column-width($breakpoint, $module-columns, $aditional-width);
 		margin-left: -$grid-column-padding;
 		margin-right: -$grid-column-padding;
 
-		// Uncomment the lines below if you enabled scrolling
-//		.thumbnails {
-//			@include grid-column-width($breakpoint, $thumbnail-container-columns, $aditional-width);
-//		}
+		// Remove/comment the selector below if you disabled scrolling
+		.thumbnails {
+			@include grid-column-width($breakpoint, $thumbnail-container-columns, $aditional-width);
+		}
 
 		h2 {
 			padding: 0 $grid-column-padding;
@@ -43,22 +43,28 @@
 	}
 }
 
-.mw-content-text .videos-module {
+.mw-content-text .videos-module-in-content {
 	@include grid-column-width(medium, 9);
 	border: 0 solid $color-page-border;
 	border-bottom-width: 1px;
 	border-top-width: 1px;
 	clear: both;
 	margin: 40px (-$medium-grid-column-padding);
+	min-height: 281px;
+	position: relative;
+
+	&.hidden, .hidden {
+		display: none;
+	}
 
 	.thumbnails {
 		margin: 14px 0 24px;
 		padding: 0;
 
-		// Uncomment the lines below to enable scrolling inside the video container
-//		@include grid-column-width(medium, 11);
-//		overflow: auto;
-//		white-space: nowrap;
+		// Remove/comment the 3 lines below to disaable scrolling inside the video container
+		@include grid-column-width(medium, 11);
+		overflow: auto;
+		white-space: nowrap;
 	}
 
 	h2 {

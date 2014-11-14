@@ -32,7 +32,7 @@ define('videosmodule.modules.nodeFinder', function() {
 	function getLastVisibleChild(container) {
 		var child = container.lastChild;
 
-		while (!isVisible(child)) {
+		while (child && !isVisible(child)) {
 			child = child.previousElementSibling;
 		}
 
