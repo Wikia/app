@@ -59,23 +59,14 @@ define('ext.wikia.adEngine.adConfigLate', [
 			abTest && abTest.inGroup('NATIVE_ADS_TABOOLA', 'YES'),
 
 		dartDirectBtfSlots = {
-			INCONTENT_BOXAD_1: true,
-			LEFT_SKYSCRAPER_3: true,
-			PREFOOTER_LEFT_BOXAD: true,
-			PREFOOTER_RIGHT_BOXAD: true,
-			WIKIA_BAR_BOXAD_1: true
+			'INCONTENT_BOXAD_1': true,
+			'LEFT_SKYSCRAPER_3': true,
+			'PREFOOTER_LEFT_BOXAD': true,
+			'PREFOOTER_RIGHT_BOXAD': true
 		},
-
-		alwaysCallDartInSlots = {
-			'WIKIA_BAR_BOXAD_1': true
-		},
-		alwaysCallDart = context.opts.alwaysCallDart;
+		alwaysCallDart = context.opts.alwaysCallDart && !instantGlobals.wgSitewideDisableGpt;
 
 	function getProviderList(slotname) {
-		var callDart = alwaysCallDart || alwaysCallDartInSlots[slotname];
-
-		callDart = callDart && !instantGlobals.wgSitewideDisableGpt;
-
 		log('getProvider', 5, logGroup);
 		log(slotname, 5, logGroup);
 
@@ -109,7 +100,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 			return [adProviderEvolve, adProviderLiftium];
 		}
 
-		if (callDart) {
+		if (alwaysCallDart) {
 			if (dartDirectBtfSlots[slotname]) {
 				return [adProviderDirectGpt, adProviderRemnantGpt, adProviderLiftium];
 			}
