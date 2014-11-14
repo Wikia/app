@@ -61,37 +61,35 @@ class TopArticles implements IDataProvider {
 
 	protected function getArticlesInfo( $topArticles ) {
 		$out = [];
-		$articleService = new \ArticleService();
 
 		foreach ( $topArticles as $topArticleInfo ) {
 			$articleId = $topArticleInfo['articleId'];
 			$wikiId = $topArticleInfo['wikiId'];
-			$title = \GlobalTitle::newFromId( $articleId, $topArticleInfo['wikiId'] );
 
-
-			$articleService->setArticleById( $articleId );
-
-			$articleInfoExpanded = [
-				'type' => self::RECOMMENDATION_TYPE,
-				'title' => $title->getText(),
-				'url' => $title->getFullURL(),
-				'description' => $articleService->getTextSnippet(),
-				'media' => [],
-				'source' => self::RECOMMENDATION_ENGINE
+			$params = [
+				'controller' => 'ArticlesApiController',
+				'method' => 'getDetails',
+				'ids' => $articleId,
+				'width' => 400,
+				'height' => 225
 			];
 
-			$imageServing = new \ImageServing(
-				[$articleId],
-				400,
-				['w' => 16, 'h' => 9],
-				wfGetDB( DB_SLAVE, [], \WikiFactory::IDtoDB( $wikiId ) )
-			);
-			$images = $imageServing->getImages( 1 );
-			if ( !empty( $images[$articleId] ) ) {
-				$articleInfoExpanded['media']['url'] = $images[$articleId][0]['url'];
-			}
+			$response = \ApiService::foreignCall(\WikiFactory::IDtoDB( $wikiId ), $params, \ApiService::WIKIA);
 
-			$out[] = $articleInfoExpanded;
+			if ( !empty( $response['items'][$articleId] ) ) {
+				$articleDetails =  $response['items'][$articleId];
+
+				$out[] = [
+					'type' => self::RECOMMENDATION_TYPE,
+					'title' => $articleDetails['title'],
+					'url' => $response['basepath'] . $articleDetails['url'],
+					'description' => $articleDetails['abstract'],
+					'media' => [
+						'url' => $articleDetails['thumbnail']
+					],
+					'source' => self::RECOMMENDATION_ENGINE
+				];
+			}
 		}
 
 		return $out;
