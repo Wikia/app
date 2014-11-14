@@ -62,9 +62,11 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 
 		$this->response->setVal( 'descriptions', [
 			wfMsg( 'wikiacuratedcontent-content-description-items' ),
+			wfMsg( 'wikiacuratedcontent-content-description-supported-items' ),
 			wfMsg( 'wikiacuratedcontent-content-description-section' ),
 			wfMsg( 'wikiacuratedcontent-content-description-organize' ),
-			wfMsg( 'wikiacuratedcontent-content-description-no-section' )
+			wfMsg( 'wikiacuratedcontent-content-description-no-section' ),
+			wfMsg( 'wikiacuratedcontent-content-description-items-input' )
 		] );
 
 		$this->response->setVal( 'addSection', wfMsg( 'wikiacuratedcontent-content-add-section' ) );

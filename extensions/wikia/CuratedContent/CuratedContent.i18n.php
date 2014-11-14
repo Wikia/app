@@ -22,9 +22,11 @@ $messages[ 'en' ] = array(
 	'wikiacuratedcontent-content-empty-section' => 'This section needs some items',
 
 	'wikiacuratedcontent-content-description-items' => 'Add wiki "Items" and rename them as you\'d like them to appear in Curated Content with "Curated Content Names".',
-	'wikiacuratedcontent-content-description-section' => 'Does it make sense to group items under a game series installment? Add a item "Section," and drag and drop wiki items under it.',
+	'wikiacuratedcontent-content-description-supported-items' => 'Supported items are: articles, categories, blogs, videos (youtube and ooyala)',
+	'wikiacuratedcontent-content-description-section' => 'Does it make sense to group items under a game series installment? Add a "Section" and drag and drop wiki items under it.',
 	'wikiacuratedcontent-content-description-organize' => 'Feel free to delete or add more lines, and reorder them by dragging and dropping.',
 	'wikiacuratedcontent-content-description-no-section' => 'Items without section or with empty section will be shown as last in Curated Content.',
+	'wikiacuratedcontent-content-description-items-input' => 'When adding items label them (right field) and type names (left field) with following convention: article_name, categories:category_name, User_blog:username/post_name, File:video_name',
 
 	'wikiacuratedcontent-content-articlenotfound-error' => 'Message shown to a user when he tries
 	 to save a item with no related article',
@@ -61,9 +63,12 @@ $messages[ 'qqq' ] = array(
 	'wikiacuratedcontent-content-empty-section' => 'Message shown to a a user if he has not added any items to a section',
 
 	'wikiacuratedcontent-content-description-items' => 'Message describing a purpose and usage of the tool',
+	'wikiacuratedcontent-content-description-supported-items' => 'Message describing a purpose and usage of the tool',
 	'wikiacuratedcontent-content-description-section' => 'Message describing a purpose and usage of the tool',
 	'wikiacuratedcontent-content-description-organize' => 'Message describing a purpose and usage of the tool',
 	'wikiacuratedcontent-content-description-no-section' => 'Message describing a purpose and usage of the tool',
+	'wikiacuratedcontent-content-description-items-input' => 'Message describing a purpose and usage of the tool',
+
 
 	'wikiacuratedcontent-content-articlenotfound-error' => 'Message shown to a user when he tries to save a item with no related article',
 	'wikiacuratedcontent-content-emptylabel-error' => 'Message shown to a user when he tries to save without putting a label',
