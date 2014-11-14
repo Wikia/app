@@ -1131,7 +1131,6 @@ class ArticlesApiController extends WikiaApiController {
 
 	}
 
-
 	protected function expandArticlesDetails( $articles ) {
 		$articleIds = [ ];
 		$params = $this->getDetailsParams();
