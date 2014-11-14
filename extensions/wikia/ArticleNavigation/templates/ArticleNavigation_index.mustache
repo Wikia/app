@@ -4,11 +4,15 @@
 			<span class="nav-icon toc" id="articleNavToc">&#xF001;</span>
 		</li>
 		<li>
-			<span class="nav-icon edit" id="articleNavEdit">&#xF002;</span>
+			<span class="nav-icon edit" id="articleEditActions">&#xF002;</span>
+			{{{editActionsDropdown}}}
 		</li>
 		<li>
-			<span class="nav-icon settings" id="articleNavSettings">&#xF003;</span>
+			<span class="nav-icon settings" id="articleNavSettings" data-usertools="{{user_tools}}">&#xF003;</span>
 		</li>
-        {{{share}}}
+		<li>
+			<span class="nav-icon share" id="leftNavShare">&#xF006;</span>
+		</li>
+		{{{share}}}
 	</ul>
 </nav>

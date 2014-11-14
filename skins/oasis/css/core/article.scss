@@ -284,7 +284,7 @@
 	// FIXME: anyone still using gopher?
 	a.external, a[href^='gopher://'] {
 		&:after {
-			background-image: url('/skins/oasis/images/sprite.png');	/* $wgCdnStylePath */
+			background-image: url('/skins/shared/images/sprite.png');	/* $wgCdnStylePath */
 			background-position: -1198px 0;
 			background-repeat: no-repeat;
 			content: '';
