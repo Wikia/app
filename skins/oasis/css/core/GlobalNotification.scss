@@ -119,7 +119,7 @@
 
 /* end temp transistion code */
 
-.modalWrapper >.global-notification {
+.modalWrapper > .global-notification {
 	@include box-shadow(0, 0, 0, #000);
 	margin: auto;
 	width: auto;
@@ -141,7 +141,7 @@
 	}
 }
 
-.modal >.global-notification {
+.modal > .global-notification {
 	width: 100%;
 
 	.close {
