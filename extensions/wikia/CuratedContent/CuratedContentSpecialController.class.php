@@ -273,12 +273,12 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 								$rowErr [ 'title' ] = $row[ 'title' ];
 								$rowErr [ 'reason' ] = 'videoNotHaveInfo';
 							} else {
-								if ( $info[ 'provider' ] !== 'youtube' && $info[ 'provider' ] !==
-									'ooyala'
-								) {
-									$rowErr [ 'title' ] = $row[ 'title' ];
-									$rowErr [ 'reason' ] = 'videoNotSupportProvider';
-								}
+//								if ( $info[ 'provider' ] !== 'youtube' && $info[ 'provider' ] !==
+//									'ooyala'
+//								) {
+//									$rowErr [ 'title' ] = $row[ 'title' ];
+//									$rowErr [ 'reason' ] = 'videoNotSupportProvider';
+//								}
 							}
 						}
 						if ( !empty( $rowErr ) ) {
@@ -358,7 +358,8 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 				return [ $type, [
 					'provider' => $provider,
 					'thumb_url' => $thumbUrl,
-					'videoId' => $videoId ]
+					'videoId' => $videoId,
+					'test' => $mediaInfo ]
 				];
 			}
 		}
