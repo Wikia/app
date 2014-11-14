@@ -238,12 +238,8 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 				$section[ 'image_id' ] = (int)$section[ 'image_id' ];
 				if ( !empty( $section[ self::ITEMS_TAG ] ) ) {
 					foreach ( $section[ self::ITEMS_TAG ] as &$row ) {
-						list( $articleId,
-							$namespaceId,
-							$type,
-							$info,
-							$imageId ) = $this->getInfoFromRow(
-							$row );
+						list( $articleId, $namespaceId, $type, $info, $imageId ) =
+							$this->getInfoFromRow( $row );
 						$row[ 'article_id' ] = $articleId;
 						$row[ 'type' ] = $type;
 						$row[ 'image_id' ] = $imageId;
@@ -294,15 +290,22 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	function getInfoFromRow( &$row ) {
 		$title = Title::newFromText( $row[ 'title' ] );
 		if ( !empty( $title ) ) {
-
 			$articleId = $title->getArticleId();
 			$namespaceId = $title->getNamespace();
 			$type = $this->getType( $namespaceId );
 			$image_id = (int)$row[ 'image_id' ];
 			$info = [ ];
 
-			if ( $type == self::STR_FILE ) {
-				list( $type, $info ) = $this->getVideoInfo( $title );
+			switch ( $type ) {
+				case self::STR_FILE :
+					list( $type, $info ) = $this->getVideoInfo( $title );
+					break;
+				case self::STR_CATEGORY:
+					$linksTo = $title->getLinksTo();
+					if ( empty( $linksTo ) ) {
+						$type = 'emptyCategory';
+					}
+					break;
 			}
 			if ( $image_id == 0 ) {
 				$imageTitle = $this->findFirstImageTitleFromArticle( $articleId );
@@ -368,6 +371,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	static function findImageIfNotSet( $imageId, $articleId = 0 ) {
 		$imageTitle = null;
 		if ( $imageId == 0 ) {
+			$imageId = null;
 			$imageTitle = self::findFirstImageTitleFromArticle( $articleId );
 		} else {
 			$imageTitle = Title::newFromID( $imageId );
@@ -376,6 +380,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			$url = self::getUrlFromImageTitle( $imageTitle );
 			$imageId = $imageTitle->getArticleId();
 		}
+
 		return [ $imageId, $url ];
 	}
 

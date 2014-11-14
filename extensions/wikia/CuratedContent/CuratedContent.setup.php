@@ -43,10 +43,10 @@ JSMessages::registerPackage( 'CuratedContentMsg', [
 	'wikiacuratedcontent-content-required-entry',
 	'wikiacuratedcontent-content-empty-section',
 	'wikiacuratedcontent-content-item-error',
-	'wikiaCuratedContent-content-articlenotfound-error',
-	'wikiaCuratedContent-content-emptylabel-error',
-	'wikiaCuratedContent-content-videonotsupported-error',
-	'wikiaCuratedContent-content-notsupportedtype-error'
+	'wikiacuratedcontent-content-articlenotfound-error',
+	'wikiacuratedcontent-content-emptylabel-error',
+	'wikiacuratedcontent-content-videonotsupported-error',
+	'wikiacuratedcontent-content-notsupportedtype-error'
 ] );
 
 //hooks

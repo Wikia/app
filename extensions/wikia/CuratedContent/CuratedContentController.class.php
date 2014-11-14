@@ -324,7 +324,7 @@ class CuratedContentController extends WikiaController {
 				$content,
 				function ( $ret, $item ) {
 					if ( $item[ 'title' ] !== '' ) {
-						$imageId = isset( $item[ 'image_id' ] ) ? $item[ 'image_id' ] : 0;
+						$imageId = $item[ 'image_id' ] != 0 ? $item[ 'image_id' ] : null;
 						$ret[ ] = [
 							'title' => $item[ 'title' ],
 							'image_id' => $imageId,
