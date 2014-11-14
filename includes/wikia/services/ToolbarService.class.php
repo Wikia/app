@@ -6,8 +6,8 @@ abstract class ToolbarService {
 
 	protected $name = '';
 
-	public function __construct( $name ) {
-		$this->name = $name;
+	public function __construct() {
+		$this->name = 'wikia';
 	}
 
 
@@ -251,7 +251,6 @@ abstract class ToolbarService {
 		}
 
 //			$list = $this->cleanList($list);
-
 		$wgUser->setOption( $this->getToolbarOptionName(), serialize( $list ) );
 		$wgUser->saveSettings();
 		return true;

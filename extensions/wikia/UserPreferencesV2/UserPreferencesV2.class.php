@@ -410,8 +410,7 @@ class UserPreferencesV2 {
 		$storage[self::MASTHEAD_OPTIONS_STORAGE_ARRAY_KEY_NAME] = $mastheadOptions;
 
 		// customize toolbar/myToolbar
-		$skinName = RequestContext::getMain()->getSkin()->getSkinName();
-		$oasisToolbarService = new SharedToolbarService( $skinName );
+		$oasisToolbarService = new SharedToolbarService();
 		$toolbarNameInUserOptions = $oasisToolbarService->getToolbarOptionName();
 		$toolbarCurrentList = $user->getOption( $oasisToolbarService->getToolbarOptionName() );
 		$storage[self::MY_TOOLBAR_OPTIONS_STORAGE_ARRAY_KEY_NAME] = array(

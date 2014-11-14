@@ -55,6 +55,7 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//resources/wikia/libraries/jquery/store/jquery.store.js',
 		'//resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js',
 		'//resources/wikia/libraries/jquery/floating-scrollbar/jquery.floating-scrollbar.js',
+		'//resources/wikia/libraries/jquery/jquery-migrate/jquery-migrate-1.2.1.min.js',
 
 		// Wikia plugins
 		'//resources/wikia/jquery.wikia.js',
@@ -203,8 +204,12 @@ $VenusConfig[ 'article_navigation_js' ] = [
 	'skin' => [ 'venus' ],
 	'assets' => [
 		'//extensions/wikia/ArticleNavigation/scripts/articleNavigation.js',
+		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
+		'//resources/wikia/modules/uifactory.js',
+		'//resources/wikia/modules/uicomponent.js',
+		'//extensions/wikia/UserTools/scripts/UserTools.js',
 		'//extensions/wikia/ArticleNavigation/scripts/userToolsHelper.js',
-		'//extensions/wikia/ArticleNavigation/scripts/userTools.js',
+		'//extensions/wikia/ArticleNavigation/scripts/articleNavUserTools.js',
 		'//extensions/wikia/ArticleNavigation/scripts/sticky.js',
 		'//extensions/wikia/ArticleNavigation/scripts/share.js'
 	]
@@ -214,7 +219,9 @@ $VenusConfig[ 'article_navigation_scss' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'venus' ],
 	'assets' => [
-		'//extensions/wikia/ArticleNavigation/styles/articleNavigation.scss'
+		'//extensions/wikia/ArticleNavigation/styles/articleNavigation.scss',
+		'//extensions/wikia/UserTools/styles/UserTools.scss',
+		'//resources/wikia/ui_components/button/css/button_default.scss'
 	]
 ];
 

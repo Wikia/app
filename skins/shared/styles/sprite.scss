@@ -1,8 +1,8 @@
 @import "skins/shared/color";
 
-.skin-oasis .sprite {
+.skin-venus .sprite, .skin-oasis .sprite {
 	background-color: transparent;
-	background-image: url(/skins/oasis/images/sprite.png); /* $wgCdnStylePath */
+	background-image: url(/skins/shared/images/sprite.png); /* $wgCdnStylePath */
 	background-repeat: no-repeat;
 
 	//Activity Feed
@@ -286,7 +286,7 @@
 //Category Select
 .sprite-small {
 	background-color: transparent;
-	background-image: url(/skins/oasis/images/sprite.png); /* $wgCdnStylePath */
+	background-image: url(/skins/shared/images/sprite.png); /* $wgCdnStylePath */
 	background-repeat: no-repeat;
 	height: 12px;
 	width: 12px;

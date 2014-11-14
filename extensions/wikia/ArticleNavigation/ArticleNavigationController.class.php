@@ -57,7 +57,7 @@ class ArticleNavigationController extends WikiaController {
 			'SpecialPage:Search'
 		];
 
-		$service = new SharedToolbarService( 'venus' );
+		$service = new SharedToolbarService();
 
 		$data = [];
 

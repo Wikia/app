@@ -1,5 +1,5 @@
 /* global require */
-require(['wikia.userTools'], function (userTools) {
+require(['wikia.articleNavUserTools'], function (userTools) {
 	'use strict';
 
 	//Initialize user tools
