@@ -10,6 +10,7 @@ define('ext.wikia.adEngine.adConfig', [
 	'ext.wikia.adEngine.evolveSlotConfig',
 	'ext.wikia.adEngine.gptSlotConfig',
 	require.optional('ext.wikia.adEngine.rubiconRtp'),
+	require.optional('ext.wikia.adEngine.amazonMatch'),
 
 	// adProviders
 	'ext.wikia.adEngine.provider.directGpt',
@@ -28,6 +29,7 @@ define('ext.wikia.adEngine.adConfig', [
 	evolveSlotConfig,
 	gptSlotConfig,
 	rtp,
+	amazonMatch,
 
 	// adProviders
 	adProviderDirectGpt,
@@ -146,6 +148,10 @@ define('ext.wikia.adEngine.adConfig', [
 				gptSlotConfig.extendSlotParams('gpt', rtpSlots[i], { 'rp_tier': rtpTier });
 			}
 		}
+	}
+
+	if (amazonMatch && amazonMatch.wasCalled()) {
+		amazonMatch.trackState();
 	}
 
 	return {

@@ -6,6 +6,7 @@ class AdEngine2Hooks {
 	const ASSET_GROUP_CORE = 'oasis_shared_core_js';
 	const ASSET_GROUP_ADENGINE = 'adengine2_js';
 	const ASSET_GROUP_ADENGINE_RUBICON_RTP = 'adengine2_rubicon_rtp_js';
+	const ASSET_GROUP_ADENGINE_AMAZON_MATCH = 'adengine2_amazon_match_js';
 	const ASSET_GROUP_ADENGINE_TRACKING = 'adengine2_tracking_js';
 	const ASSET_GROUP_ADENGINE_LATE = 'adengine2_late_js';
 	const ASSET_GROUP_SPOTLIGHTS = 'adengine2_spotlights_js';
@@ -58,7 +59,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgSitewideDisableRubiconRTP';
 
 		$vars[] = 'wgHighValueCountries';
-		$vars[] = 'wgAmazonDirectTargetedBuyCountries';
+		$vars[] = 'wgAmazonMatchCountries';
 
 		$vars[] = 'wgAdDriverAlwaysCallDartInCountries';
 
@@ -171,6 +172,10 @@ class AdEngine2Hooks {
 
 		if ( AnalyticsProviderRubiconRTP::isEnabled() ) {
 			$jsAssets[] = self::ASSET_GROUP_ADENGINE_RUBICON_RTP;
+		}
+
+		if ( AnalyticsProviderAmazonMatch::isEnabled() ) {
+			$jsAssets[] = self::ASSET_GROUP_ADENGINE_AMAZON_MATCH;
 		}
 
 		return true;
