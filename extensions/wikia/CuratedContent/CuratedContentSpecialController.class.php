@@ -214,21 +214,6 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		return $url;
 	}
 
-	//This should appear on WikiFeatures list only when extension is turned on and be visible only to staff
-	static public function onWikiFeatures() {
-		$wg = F::app()->wg;
-
-		if ( $wg->User->isAllowed( 'curatedcontent-switchforadmins' ) ) {
-			$wg->append(
-				'wgWikiFeatures',
-				'wgCuratedContentForAdmins',
-				'normal'
-			);
-		}
-
-		return true;
-	}
-
 	/**
 	 * @param $sections
 	 * @return array

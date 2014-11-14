@@ -38,6 +38,7 @@ class WikiFeaturesHelper extends WikiaModel {
 		'wgEnableForumExt' => 259,
 		'wgEnableVisualEditorUI' => 259,
 		'wgEnableWikiaInteractiveMaps' => 260,
+		'wgEnableCuratedContentExt' => 261,
 		'wgEnableMediaGalleryExt' => 1,
 	);
 
