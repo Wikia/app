@@ -6,8 +6,6 @@ if (!defined('MEDIAWIKI')) die();
  * @author Consumer Team
  */
 
-require_once('includes/SkinTemplate.php');
-
 class SkinVenus extends WikiaSkin {
 	function __construct() {
 		global $wgOut;
@@ -16,6 +14,7 @@ class SkinVenus extends WikiaSkin {
 		$wgOut->addModuleStyles( 'skins.venus' );
 
 		$this->strictAssetUrlCheck = true;
+		$this->pushRLModulesToBottom = true;
 	}
 
 	function setupSkinUserCss( OutputPage $out ) {}

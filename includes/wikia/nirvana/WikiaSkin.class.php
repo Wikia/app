@@ -20,6 +20,10 @@ abstract class WikiaSkin extends SkinTemplate {
 	//@see AssetsManager::checkAssetUrlForSkin
 	protected $strictAssetUrlCheck = true;
 
+	//load all ResourceLoader modules at the bottom of the page
+	//@see OutputPage::getModules
+	public $pushRLModulesToBottom = false;
+
 	private $assetsManager;
 
 	/**
