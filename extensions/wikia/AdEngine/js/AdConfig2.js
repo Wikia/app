@@ -50,6 +50,7 @@ define('ext.wikia.adEngine.adConfig', [
 		i;
 
 	defaultHighValueSlots = {
+		'BOTTOM_LEADERBOARD': true,
 		'CORP_TOP_LEADERBOARD': true,
 		'CORP_TOP_RIGHT_BOXAD': true,
 		'EXIT_STITIAL_BOXAD_1': true,
@@ -70,7 +71,7 @@ define('ext.wikia.adEngine.adConfig', [
 		'TOP_INCONTENT_BOXAD': true,
 		'TOP_LEADERBOARD': true,
 		'TOP_RIGHT_BOXAD': true,
-		'BOTTOM_LEADERBOARD': true,
+		'WIKIA_BAR_BOXAD_1': true,
 		'GPT_FLUSH': true
 	};
 
