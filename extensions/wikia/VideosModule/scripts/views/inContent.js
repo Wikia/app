@@ -21,9 +21,8 @@ define('videosmodule.views.inContent', [
 	VideosModule = function (options) {
 		// this.$el is the {jQuery Object} container for the videos module
 		this.$el = options.$el;
-		this.nearestElement = options.nearestElement;
+		this.hookElement = options.hookElement;
 		this.previousElement = options.previousElement;
-		this.parentElement = options.parentElement;
 		this.placement = options.placement;
 		this.model = options.model;
 
@@ -40,22 +39,20 @@ define('videosmodule.views.inContent', [
 	};
 
 	VideosModule.prototype.init = function () {
-		var self = this,
-			slothTriggeringElement;
+		var self = this;
 
-		if (this.nearestElement) {
-			this.placement.call($(this.nearestElement), this.$el);
-			slothTriggeringElement = this.previousElement || this.$el[0];
+		this.placement.call($(this.hookElement), this.$el);
+
+		if (this.previousElement) {
 			// Sloth is a lazy loading service that waits till an element is visible to load more content
 			sloth({
-				on: slothTriggeringElement,
+				on: this.previousElement,
 				threshold: 200,
 				callback: function() {
 					self.prep();
 				}
 			});
 		} else {
-			$(this.parentElement).prepend(this.$el);
 			self.prep();
 		}
 	};

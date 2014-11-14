@@ -13,7 +13,7 @@ require([
 
 	function init() {
 		var inContent,
-			nearestElement,
+			hookElement,
 			previousElement,
 			placement,
 			contentContainer = doc.getElementById('mw-content-text'),
@@ -22,24 +22,27 @@ require([
 
 		bucky.timer.start('execution');
 
-		nearestElement = nodeFinderModule.getChildByOffsetTop(contentContainer, headerSelector, boundaryOffsetTop);
-
-		if (nearestElement){
-			previousElement = nearestElement.previousElementSibling;
+		hookElement = nodeFinderModule.getChildByOffsetTop(contentContainer, headerSelector, boundaryOffsetTop);
+		if (hookElement){
+			previousElement = hookElement.previousElementSibling;
 			placement = $.fn.before;
 		} else {
-			nearestElement = nodeFinderModule.getLastVisibleChild(contentContainer);
-			previousElement = nearestElement;
-			placement = $.fn.after;
+			hookElement = nodeFinderModule.getLastVisibleChild(contentContainer);
+			if (hookElement) {
+				previousElement = hookElement;
+				placement = $.fn.after;
+			} else {
+				hookElement = contentContainer;
+				placement = $.fn.prepend;
+			}
 		}
 
 		inContent = new InContentModule({
 			$el: $(Mustache.render(templates.inContent, {
 				title: $.msg('videosmodule-title-default')
 			})),
-			nearestElement: nearestElement,
+			hookElement: hookElement,
 			previousElement: previousElement,
-			parentElement: contentContainer,
 			placement: placement,
 			model: new VideoData(),
 			numVids: 3,
