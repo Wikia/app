@@ -98,15 +98,15 @@ define('wikia.articleNavUserTools', [
 			}
 
 			switch (name) {
-			case 'customize':
-			case 'follow':
-			case 'history':
-			case 'whatlinkshere':
-				label = name;
-				break;
-			default:
-				label = 'custom';
-				break;
+				case 'customize':
+				case 'follow':
+				case 'history':
+				case 'whatlinkshere':
+					label = name;
+					break;
+				default:
+					label = 'custom';
+					break;
 			}
 
 			//add anon prefix for not logged in users
