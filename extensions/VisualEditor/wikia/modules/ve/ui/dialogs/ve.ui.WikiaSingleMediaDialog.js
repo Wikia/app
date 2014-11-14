@@ -39,22 +39,21 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 	ve.ui.WikiaSingleMediaDialog.super.prototype.initialize.call( this );
 
 	// Properties
+	this.mode = {
+		'action': 'insert',
+		'type': 'image'
+	};
 	this.query = new ve.ui.WikiaSingleMediaQueryWidget( {
 		'$': this.$,
 		'placeholder': ve.msg( 'visualeditor-dialog-wikiasinglemedia-search' )
 	} );
 	this.queryInput = this.query.getInput();
-	this.search = new ve.ui.WikiaMediaResultsWidget( { '$': this.$ } );
-	this.results = this.search.getResults();
-
-	// Main panels
 	this.$main = this.$( '<div>' )
 		.addClass( 've-ui-wikiaSingleMediaDialog-main' );
-	this.$leftSide = this.$( '<div>' )
-		.addClass( 've-ui-wikiaSingleMediaDialog-leftSide' )
-		.append( this.search.$element );
-	this.cartModel = new ve.dm.WikiaCart();
-	this.cart = new ve.ui.WikiaSingleMediaCartWidget( this.cartModel, this );
+	this.search = new ve.ui.WikiaMediaResultsWidget( { '$': this.$ } );
+	this.results = this.search.getResults();
+        this.cartModel = new ve.dm.WikiaCart();
+        this.cart = new ve.ui.WikiaSingleMediaCartWidget( this.cartModel, this );
 
 	// Foot elements
 	this.$policy = this.$( '<div>' )
@@ -87,10 +86,11 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 	} );
 	this.insertButton.connect( this, { 'click': [ 'close', { 'action': 'insert' } ] } );
 	this.queryInput.$input.on( 'keydown', ve.bind( this.onQueryInputKeydown, this ) );
+	this.cancelButton.connect( this, { 'click': 'onCloseButtonClick' } );
 
 	// Initialization
 	this.frame.$content.addClass( 've-ui-wikiaSingleMediaDialog' );
-	this.$main.append( this.$leftSide, this.cart.$element );
+	this.$main.append( this.search.$element, this.cart.$element );
 
 	this.$policy.append( this.$policyInner );
 	this.$body.append( this.query.$element, this.$main );
@@ -101,6 +101,20 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 
 ve.ui.WikiaSingleMediaDialog.prototype.onQueryInputKeydown =
 	OO.ui.SearchWidget.prototype.onQueryKeydown;
+
+/**
+ * @inheritdoc
+ */
+ve.ui.WikiaSingleMediaDialog.prototype.getSetupProcess = function ( data ) {
+	return ve.ui.WikiaSingleMediaDialog.super.prototype.getSetupProcess.call( this, data )
+		.next( function () {
+			// TODO: Ultimetly this should work without setTimeout. It seems to be fixed in the
+			// upstream so should be revisited after upstream sync.
+			setTimeout( ve.bind( function () {
+				this.query.input.focus().select();
+			}, this ), 100 );
+		}, this );
+};
 
 /**
  * Handle closing the dialog.
@@ -187,7 +201,15 @@ ve.ui.WikiaSingleMediaDialog.prototype.setLayout = function ( layout ) {
 	} else if ( layout === 'list' ) {
 		this.$main.css( 'left', -552 );
 	}
+	this.layout = layout;
 	this.emit( 'layout', layout );
+};
+
+/*
+ * Gets value of this.layout
+ */
+ve.ui.WikiaSingleMediaDialog.prototype.getLayout = function () {
+	return this.layout;
 };
 
 /**
@@ -240,6 +262,9 @@ ve.ui.WikiaSingleMediaDialog.prototype.onSearchCheck = function ( item ) {
  */
 ve.ui.WikiaSingleMediaDialog.prototype.onQueryInputChange = function () {
 	this.results.clearItems();
+	if ( this.getLayout() === 'list' ) {
+		this.setLayout( 'grid' );
+	}
 };
 
 /* Registration */
