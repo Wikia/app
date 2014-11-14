@@ -205,4 +205,21 @@ class ArticleAsJson extends WikiaService {
 
 		return true;
 	}
+
+	/**
+	 * Remove any limit report, we don't need that in json
+	 *
+	 * @param $parser Parser
+	 * @param $report
+	 * @return bool
+	 */
+	public static function reportLimits( $parser, &$report ) {
+		global $wgArticleAsJson;
+
+		if ( $wgArticleAsJson ) {
+			$report = '';
+		}
+
+		return false;
+	}
 }
