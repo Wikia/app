@@ -59,7 +59,7 @@ class ArticleNavigationController extends WikiaController {
 				];
 
 				if (isset($contentAction['rel'])) {
-					$data['rel'] = $contentAction['rel'];
+					$data['rel'] = str_replace('ca-', '', $contentAction['rel']);
 				}
 
 				$actions[] = $data;

@@ -53,7 +53,7 @@ require([
 
 		$dropdown.on('mousedown touchstart', 'a', function (event) {
 			var $target = $(event.currentTarget),
-				id = $target.data('tracking-id').replace('ca-', ''),
+				id = $target.data('tracking-id'),
 				label;
 
 			// Primary mouse button only
