@@ -269,7 +269,7 @@ class CuratedContentController extends WikiaController {
 
 		} else {
 			wfProfileOut( __METHOD__ );
-			throw new NotFoundApiException( 'No Categories' );
+			throw new NotFoundApiException( 'No Curated Content' );
 		}
 
 		wfProfileOut( __METHOD__ );
