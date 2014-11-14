@@ -3125,6 +3125,19 @@ Vous pouvez toujours vous rendre sur l’activité du wiki pour voir les modific
 	'founderemails-pref-complete-digest-v2' => '...un compte-rendu quotidien des premières fois, modifications et vues est prêt',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'founderemails-email-user-registered-greeting' => 'Hallo $USERNAME,',
+	'founderemails-email-first-edit-greeting' => 'Hallo $USERNAME,',
+	'founderemails-email-general-edit-greeting' => 'Hallo $USERNAME,',
+	'founderemails-email-anon-edit-greeting' => 'Hallo $USERNAME,',
+	'founderemails-email-lot-happening-greeting' => 'Hallo $USERNAME,',
+	'founderemails-email-views-digest-greeting' => 'Hallo $USERNAME,',
+	'founderemails-email-complete-digest-greeting' => 'Hallo $USERNAME,',
+);
+
 /** Galician (galego)
  * @author Toliño
  */
@@ -7296,6 +7309,7 @@ A equipa da Wikia',
  * @author Caio1478
  * @author Fúlvio
  * @author JM Pessanha
+ * @author Jefersonmoraes
  * @author Luckas
  * @author Luckas Blade
  * @author TheGabrielZaum
@@ -7345,7 +7359,7 @@ Deseja controlar quais e-mails você quer receber? Vá para: http://messaging.wi
 Clique no link a seguir para cancelar sua assinatura de todos os e-mails na Wikia: $UNSUBSCRIBEURL',
 	'founderemails-email-0-days-passed-body-HTML' => 'Parabéns pela criação da <strong>$WIKINAME</strong> - você agora faz parte da comunidade Wikia!<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- A Equipe da Wikia</div>',
-	'founderemails-email-3-days-passed-subject' => 'Como vai com sua wiki?',
+	'founderemails-email-3-days-passed-subject' => 'Como vai com sua wikia?',
 	'founderemails-email-3-days-passed-body' => 'Olá $USERNAME,
 
 Nós gostaríamos de saber como vão as coisas na $WIKINAME, $WIKIURL.

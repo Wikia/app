@@ -103,6 +103,7 @@ For example, you could:
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author Liuxinyu970226
  * @author McDutchie
  * @author Shirayuki
  * @author Siebrand
@@ -122,7 +123,9 @@ $messages['qqq'] = array(
 	'myhome-feed-summary-details' => '{{Identical|Summary}}',
 	'myhome-feed-new-blog-comment-details' => '{{Identical|Comment}}',
 	'myhome-feed-new-article-comment-details' => '{{Identical|Comment}}',
+	'myhome-feed-move-details' => '{{Identical|Renamed}}',
 	'myhome-feed-redirect-details' => '{{Identical|Redirect}}',
+	'myhome-feed-inserted-category-details' => '{{Identical|Add category}}',
 	'myhome-hot-spots-number-of-editors' => '{{Identical|Editor}}',
 	'myhome-namespace-blog' => '{{Identical|Blog}}',
 	'oasis-myhome-community-corner-edit' => '{{Identical|Edit message}}',
