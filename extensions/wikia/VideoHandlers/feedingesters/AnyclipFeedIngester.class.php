@@ -150,7 +150,6 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 	/**
 	 * Create a list of category names to add to the new file page
 	 * @param array $addlCategories
-	 * @internal param array $videoData
 	 * @return array $categories
 	 */
 	public function generateCategories( array $addlCategories ) {
