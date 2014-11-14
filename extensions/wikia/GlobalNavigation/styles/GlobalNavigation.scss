@@ -1,9 +1,10 @@
 @import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/mixins';
+@import 'extensions/wikia/Venus/styles/logo';
 @import 'GlobalNavigationColors';
 
 .global-navigation {
-	background-color: $nav-background-color;
+	background-color: $global-wikia-background-color;
 	border-bottom: 1px solid $nav-border-color;
 	color: $nav-foreground-dark-color;
 	position: fixed;
@@ -44,6 +45,10 @@
 
 .wikia-logo-container {
 	@include grid-column-width('medium', 2, $medium-content-padding);
+
+	.wikia-logo {
+		padding: 0 0 0 20px;
+	}
 }
 
 .start-wikia-container {
@@ -56,18 +61,8 @@
 
 	&:hover {
 		background-color: $nav-foreground-dark-color;
-		color: $nav-background-color;
+		color: $global-wikia-background-color;
 		text-decoration: none;
-	}
-}
-
-.wikia-logo {
-	padding: 0 0 0 20px;
-
-	img {
-		background-image: url('/extensions/wikia/GlobalNavigation/images/wikia_logo.svg'); /* base64 */
-		background-position: center;
-		background-repeat: no-repeat;
 	}
 }
 

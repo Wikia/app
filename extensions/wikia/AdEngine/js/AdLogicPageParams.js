@@ -180,10 +180,6 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			params.rawDbName = dbName;
 		}
 
-		if (targeting.pageArticleId) {
-			params.pageid = zone1 + '/' + targeting.pageArticleId;
-		}
-
 		if (adLogicPageDimensions && adLogicPageDimensions.hasPreFooters()) {
 			params.hasp = 'yes';
 		} else {

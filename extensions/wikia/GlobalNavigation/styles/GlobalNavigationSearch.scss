@@ -38,7 +38,7 @@
 
 	.autocomplete {
 		@include font-size-s;
-		background-color: $nav-background-color;
+		background-color: $global-wikia-background-color;
 		border: 1px solid $nav-border-color;
 		line-height: 18px;
 		margin-top: 10px;
@@ -99,7 +99,7 @@
 		display: inline-block;
 
 		.chevron {
-			border-color: $nav-background-color;
+			border-color: $global-wikia-background-color;
 			border-top-color: $nav-border-color;
 			border-width: 5px;
 			margin-left: 2px;

@@ -6,7 +6,7 @@ body {
 	color: $color-text;
 	margin: 0;
 	overflow-x: auto;
-	padding: 0 0 30px;
+	padding: 0;
 }
 
 a {
@@ -15,6 +15,12 @@ a {
 
 	&:hover {
 		text-decoration: underline;
+	}
+
+	&.new {
+		background-color: mix($color-links, $color-page, 30%);
+		color: $color-text;
+		padding: 2px;
 	}
 }
 
@@ -25,9 +31,8 @@ a {
 .wikia-page {
 	background: rgba($color-page, $page-opacity);
 	border: $content-border-width solid $color-page-border;
+	border-bottom: 0;
 	position: relative; // needed for skin ads to not cover the article
-	// Remove the next line when https://wikia-inc.atlassian.net/browse/ADEN-1499 is fixed
-	z-index: 2; // needed for video wall ads to not cover the article
 
 	& > header {
 		@include grid-content-padding;
