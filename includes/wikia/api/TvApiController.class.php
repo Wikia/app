@@ -214,7 +214,7 @@ class TvApiController extends WikiaApiController {
 		$minQuality = $quality !== null ? $quality : self::DEFAULT_QUALITY;
 		//check exact match on series first
 		$result = $this->exactMatchOnSeries( $seriesName, $lang );
-		if ( $result == null ) {
+		if ( $result == null || $result[ 'quality' ] < $minQuality ) {
 			$result = $this->searchForSeries( $seriesName, $lang, $minQuality );
 		}
 		if ( $result !== null && $result[ 'quality' ] >= $minQuality ) {
