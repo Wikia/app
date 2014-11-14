@@ -43,7 +43,7 @@ abstract class VideoFeedIngester {
 	}
 
 	/**
-	 * Implemented by each sublcass to handle contacting each provider's
+	 * Implemented by each subclass to handle contacting each provider's
 	 * API and preparing that data to be passed to createVideo.
 	 * @param string $content
 	 * @param array $params
@@ -91,10 +91,19 @@ abstract class VideoFeedIngester {
 		return $this->saveVideo();
 	}
 
+	/**
+	 * Set the videoData passed in by a subclass into createVideo() as a member variable.
+	 * Makes it easier to validate and work with as we prepare that data to be put into
+	 * the more generalize metaData array.
+	 * @param $videoData
+	 */
 	public function setVideoData( $videoData ) {
 		$this->videoData = $videoData;
 	}
 
+	/**
+	 * Check if we should skip the video.
+	 */
 	public function checkShouldSkipVideo() {
 		$this->checkIsBlacklistedVideo();
 		$this->checkIsFilteredVideo();
@@ -167,6 +176,10 @@ abstract class VideoFeedIngester {
 		}
 	}
 
+	/**
+	 * Checks if the video is a duplicate. This is overridden by RemoteAssettFeedIngester
+	 * which checks both if the video exists on Wikia, but also if it exists on Ooyala.
+	 */
 	public function checkIsDuplicateVideo() {
 		$this->checkVideoExistsOnWikia();
 	}
@@ -206,6 +219,12 @@ abstract class VideoFeedIngester {
 		}
 	}
 
+	/**
+	 * set metaData, the generalized array which we'll use when actually saving the video,
+	 * as a member variable. Uses the generateMetadata method which marshals a base set of
+	 * information we want for each video, which is then overridden by subclasses to add
+	 * metadata which is specific to that provider.
+	 */
 	public function setMetaData() {
 		$this->metaData = $this->generateMetadata();
 	}
@@ -680,14 +699,30 @@ abstract class VideoFeedIngester {
 		return $this->dataNormalizer->getCLDRCode( $value, $type, $code );
 	}
 
+	/**
+	 * Returns if run in debug mode.
+	 * @return bool
+	 */
 	protected function debugMode() {
 		return $this->debug;
 	}
 
+	/**
+	 * Returns the results of the ingestion, broken down by category of videos
+	 * ingested. Returns an array with a count for the following categories:
+	 * Games, Entertainment, Lifestyle, International, and Other
+	 * @return array
+	 */
 	public function getResultIngestedVideos() {
 		return $this->logger->getResultIngestedVideos();
 	}
 
+	/**
+	 * Returns the results of the ingestion. This is an array which reports the
+	 * number of found, ingested, and skipped videos, as well as the number of
+	 * warnings or errors encountered.
+	 * @return array
+	 */
 	public function getResultSummary() {
 		return $this->logger->getResultSummary();
 	}

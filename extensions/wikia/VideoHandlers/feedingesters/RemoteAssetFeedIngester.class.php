@@ -15,6 +15,11 @@ class RemoteAssetFeedIngester extends VideoFeedIngester {
 
 	private $duplicateAsset;
 
+	/**
+	 * Checks if the video is a duplicate. This is overrides the FeedIngester version
+	 * which only checks if the video exists on Wikia. This version also checks if the
+	 * video exists on Ooyala.
+	 */
 	public function checkIsDuplicateVideo() {
 		$this->checkVideoExistsOnWikia();
 		$this->checkVideoExistsOnOoyala();
