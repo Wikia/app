@@ -73,7 +73,7 @@ define('wikia.articleNavUserTools', [
 
 		dropdownInstance = new DropdownNavigation({
 			id: 'userToolsDropdown',
-			data: items,
+			sections: items,
 			trigger: 'articleNavSettings'
 		});
 	}
