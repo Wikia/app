@@ -66,7 +66,7 @@ $(function () {
 
 	/**
 	 * Wrapper for Facebook Logout so we can add tracking and a callback function
-	 * @param {function} callback Function called after user is logged out of facebook
+	 * @param {function} [callback] Function called after user is logged out of facebook
 	 */
 	SpecialPage.prototype.logOut = function (callback) {
 		if (!window.FB) {
@@ -81,7 +81,9 @@ $(function () {
 				label: 'facebook-logout'
 			});
 
-			callback();
+			if (typeof callback === 'function') {
+				callback();
+			}
 		});
 	};
 

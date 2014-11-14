@@ -440,7 +440,7 @@
 				domain: window.wgCookieDomain,
 				path: window.wgCookiePath
 			});
-			if (callback) {
+			if (typeof callback === 'function') {
 				callback();
 			}
 		},
