@@ -257,6 +257,7 @@ class FacebookMapModel {
 	/**
 	 * Saves a mapping to the database
 	 *
+	 * @throws FacebookMapModelInvalidDataException
 	 * @throws FacebookMapModelInvalidParamException
 	 */
 	public function save() {
@@ -266,11 +267,15 @@ class FacebookMapModel {
 		}
 
 		$dbw = wfGetDB( DB_MASTER, null, F::app()->wg->ExternalSharedDB );
-		( new WikiaSQL() )
-			->INSERT( 'user_fbconnect' )
-			->SET( 'user_id', $this->wikiaUserId )
-			->SET( 'user_fbid', $this->facebookUserId )
-			->run( $dbw );
+		try {
+			( new WikiaSQL() )
+				->INSERT( 'user_fbconnect' )
+				->SET( 'user_id', $this->wikiaUserId )
+				->SET( 'user_fbid', $this->facebookUserId )
+				->run( $dbw );
+		} catch ( \Exception $e ) {
+			throw new FacebookMapModelInvalidDataException();
+		}
 
 		$memkey = self::generateMemKey( [
 			self::paramFacebookUserId => $this->facebookUserId
@@ -281,15 +286,22 @@ class FacebookMapModel {
 }
 
 /**
+ * Class FacebookMapModelException
+ *
+ * Generic FacebookMapModel Exception
+ */
+class FacebookMapModelException extends \Exception { }
+
+/**
  * Class FacebookMapModelInvalidParamException
  *
  * Thrown when the parameters needed for methods in the FacebookMapModel are not given or invalid
  */
-class FacebookMapModelInvalidParamException extends Exception { }
+class FacebookMapModelInvalidParamException extends FacebookMapModelException { }
 
 /**
  * Class FaceBookMapModelInvalidDataException
  *
  * Thrown when the data in a FacebookMapModel is invalid
  */
-class FacebookMapModelInvalidDataException extends Exception { }
+class FacebookMapModelInvalidDataException extends FacebookMapModelException { }
