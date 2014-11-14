@@ -16,6 +16,12 @@ a {
 	&:hover {
 		text-decoration: underline;
 	}
+
+	&.new {
+		background-color: mix($color-links, $color-page, 30%);
+		color: $color-text;
+		padding: 2px;
+	}
 }
 
 .wikia-page-wrapper {
