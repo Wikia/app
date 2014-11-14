@@ -92,7 +92,6 @@ $(function () {
 				});
 			},
 			checkForm = function () {
-
 				$save.removeClass();
 
 				checkInputs($ul.find('.section-input'), true);
@@ -137,16 +136,21 @@ $(function () {
 				if (this.className == 'item-input') {
 					val = val.replace(/ /g, '_');
 				}
-
 				this.value = val;
 
 				checkForm();
 			})
 			.on('keypress', '.name', function (ev) {
-				if (ev.keyCode === 13) addNew(item, $(this).parent());
+				if (ev.keyCode === 13) {
+					addNew(item, $(this).parent());
+				}
 			})
 			.on('keypress', '.item-input, .section-input', function (ev) {
-				if (ev.keyCode === 13) $(this).next().focus();
+				if (ev.keyCode === 13) {
+					$(this).next().focus();
+				}
+			}).keydown(function(ev){
+				setTimeout(checkForm, 0);
 			});
 
 		$(addItem).on('click', function () {
