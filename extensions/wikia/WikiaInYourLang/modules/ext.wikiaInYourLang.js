@@ -134,6 +134,6 @@ require(
 			tracker.track(trackingParams);
 		}
 
-		init();
+		$(init);
 	}
 );
