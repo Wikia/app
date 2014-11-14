@@ -596,6 +596,43 @@ class DataMartService extends Service {
 		return $topArticles;
 	}
 
+	/**
+	 * Get most popular cross wiki articles based on pageviews in last week.
+	 * Unfortunately according to performance reasons we need to fetch most popular wikis
+	 * and then fetch most popular articles on those wikis.
+	 *
+	 * @param string $hub
+	 * @param string $langs
+	 * @param array|null $namespaces
+	 * @param int $limit
+	 * @return array of wikis with articles. Format:
+	 * [
+	 *   [
+	 *     'wiki' => [
+	 *       'id' => 1030786,
+	 *       'name' => 'Wiki name',
+	 *       'language' => 'language code',
+	 *       'domain' => 'Full url',
+	 *     ],
+	 *     'articles' => [
+	 *        ['id' => 1, 'ns' => 0],
+	 *        ['id' => 2, 'ns' => -1]
+	 *      ]
+	 *   ],
+	 *   [
+	 *     'wiki' => [
+	 *       'id' => 1030786,
+	 *       'name' => 'Wiki name',
+	 *       'language' => 'language code',
+	 *       'domain' => 'Full url',
+	 *     ],
+	 *     'articles' => [
+	 *        ['id' => 1, 'ns' => 0],
+	 *        ['id' => 2, 'ns' => -1]
+	 *      ]
+	 *   ],
+	 * ]
+	 */
 	public static function getTopCrossWikiArticlesByPageview( $hub, $langs, $namespaces = null, $limit = 200 ) {
 		//fetch the top 10 wikis on a weekly pageviews basis
 		//this has it's own cache

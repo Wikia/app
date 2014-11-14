@@ -1,14 +1,28 @@
 <?
 namespace Wikia\Api\Recommendations\DataProviders;
 
+/**
+ * Collects recommendations for current wiki.
+ * This class was suppose to get most popular cross wiki articles by pageviews in last week,
+ * unfortunately because of performance reasons it gets most popular wikis
+ * and then most popular articles on those wikis
+ *
+ * Class TopArticles
+ * @package Wikia\Api\Recommendations\DataProviders
+ */
 class TopArticles implements IDataProvider {
 	const RECOMMENDATION_ENGINE = 'Top articles';
 	const RECOMMENDATION_TYPE = 'article';
 
+	/**
+	 * @param int $articleId
+	 * @param int $limit
+	 * @return array of articles with details
+	 */
 	public function get( $articleId, $limit ) {
 
 		$hubName = $this->getHubName();
-		$lang = $this->getContentLang();
+		$lang = $this->getContentLangCode();
 
 		$out = \WikiaDataAccess::cache(
 			\wfMemcKey('RecommendationApi', self::RECOMMENDATION_ENGINE, $hubName, $lang, $limit),
@@ -22,6 +36,11 @@ class TopArticles implements IDataProvider {
 		return $out;
 	}
 
+	/**
+	 * Get wiki HubName - the old one
+	 *
+	 * @return string
+	 */
 	protected function getHubName() {
 		global $wgCityId;
 
@@ -29,18 +48,35 @@ class TopArticles implements IDataProvider {
 		return \WikiFactoryHub::getInstance()->getCategoryName( $wgCityId );
 	}
 
-	protected function getContentLang() {
+	/**
+	 * Get wiki content lang code
+	 *
+	 * @return string
+	 */
+	protected function getContentLangCode() {
 		global $wgContLang;
 
 		return $wgContLang->getCode();
 	}
 
-	protected function getTopArticles( $hubName, $lang, $limit ) {
+	/**
+	 * Get most popular cross wiki articles
+	 *
+	 * @param string $hubName
+	 * @param string $langCode
+	 * @param int $limit
+	 * @return array of articles - format
+	 * [
+	 *   ['wikiId' => 1, 'articleId' => 2],
+	 *   ['wikiId' => 2, 'articleId' => 3],
+	 * ]
+	 */
+	protected function getTopArticles( $hubName, $langCode, $limit ) {
 		$topArticles = [];
 
 		$results = \DataMartService::getTopCrossWikiArticlesByPageview(
 			$hubName,
-			[$lang],
+			[$langCode],
 			[NS_MAIN],
 			$limit
 		);
@@ -59,6 +95,20 @@ class TopArticles implements IDataProvider {
 		return array_slice( $topArticles, 0, $limit );
 	}
 
+	/**
+	 * @param array $topArticles - output from getTopArticles
+	 * @return array of article details. Format:
+	 * [
+	 *   'type' => self::RECOMMENDATION_TYPE,
+	 *   'title' => $articleDetails['title'],
+	 *   'url' => $response['basepath'] . $articleDetails['url'],
+	 *   'description' => $articleDetails['abstract'],
+	 *   'media' => [
+	 *     'url' => $articleDetails['thumbnail']
+	 *   ],
+	 *   'source' => self::RECOMMENDATION_ENGINE
+	 * ]
+	 */
 	protected function getArticlesInfo( $topArticles ) {
 		$out = [];
 
