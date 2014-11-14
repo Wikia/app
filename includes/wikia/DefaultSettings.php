@@ -272,6 +272,8 @@ $wgAutoloadClasses[ 'Wikia\\Blogs\\BlogTask'          ] = "$IP/extensions/wikia/
 $wgAutoloadClasses[ 'TemplatePageHelper'              ] = "$IP/includes/wikia/helpers/TemplatePageHelper.php";
 $wgAutoloadClasses[ 'CrossOriginResourceSharingHeaderHelper' ] = "$IP/includes/wikia/helpers/CrossOriginResourceSharingHeaderHelper.php";
 $wgAutoloadClasses[ 'VignetteRequest'                 ] = "{$IP}/includes/wikia/VignetteRequest.php";
+$wgAutoloadClasses[ 'Wikia\\Cache\\AsyncCacheTask'    ] = "$IP/includes/wikia/AsyncCacheTask.php";
+$wgAutoloadClasses[ 'Wikia\\Cache\\AsyncCache'        ] = "$IP/includes/wikia/AsyncCache.php";
 
 /**
  * Resource Loader enhancements
@@ -1250,12 +1252,6 @@ $wgAdDriverUseAdsAfterInfobox = false;
 $wgAdDriverUseTaboola = false;
 
 /**
- * @name $wgAdDriverUseRemnantGpt
- * Enables additional call to dart before Liftium
- */
-$wgAdDriverUseRemnantGpt = false;
-
-/**
  * @name $wgAdDriverAlwaysCallDartInCountries
  * Disables the max N calls to DART and enables Remnant GPT call in those countries.
  * This is an instant globals, which means you set it only on community and it takes
@@ -1282,32 +1278,59 @@ $wgAdDriverUseTopInContentBoxad = true;
 $wgAdDriverBottomLeaderboardImpressionCapping = [2, 4, 6];
 
 /**
- * @name $wgSitewideDisableLiftium
- * @link http://one.wikia-inc.com/wiki/Ads/Disaster_recovery
- * Disable Liftium sitewide in case a disaster happens (it's an instant global).
+ * @name $wgSitewideDisableGpt
+ * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableGpt
+ *
+ * Disable all GPT (DART) ads sitewide in case a disaster happens.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
  */
-$wgSitewideDisableLiftium = false;
-
-/**
- * @name $wgSitewideDisableSevenOneMedia
- * @link http://one.wikia-inc.com/wiki/Ads/Disaster_recovery
- * Disable SevenOneMedia sitewide in case a disaster happens (it's an instant global).
- */
-$wgSitewideDisableSevenOneMedia = false;
+$wgSitewideDisableGpt = false;
 
 /**
  * @name $wgSitewideDisableIVW2
- * @link http://one.wikia-inc.com/wiki/Ads/Disaster_recovery
- * Disable IVW2 Analytics pixel sitewide in case a disaster happens (it's an instant global).
+ * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableIVW2
+ *
+ * Disable IVW2 Analytics pixel sitewide in case a disaster happens.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
  */
 $wgSitewideDisableIVW2 = false;
 
 /**
+ * @name $wgSitewideDisableLiftium
+ * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableLiftium
+ *
+ * Disable Liftium sitewide in case a disaster happens.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ */
+$wgSitewideDisableLiftium = false;
+
+/**
  * @name $wgSitewideDisableRubiconRTP
- * @link http://one.wikia-inc.com/wiki/Ads/Disaster_recovery
- * Disable Rubicon RTP Analytics pixel sitewide in case a disaster happens (it's an instant global).
+ * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableRubiconRTP
+ *
+ * Disable Rubicon RTP Analytics pixel sitewide in case a disaster happens.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
  */
 $wgSitewideDisableRubiconRTP = false;
+
+/**
+ * @name $wgSitewideDisableSevenOneMedia
+ * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableSevenOneMedia
+ *
+ * Disable SevenOneMedia sitewide in case a disaster happens.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ */
+$wgSitewideDisableSevenOneMedia = false;
 
 /**
  * @name $wgAdDriverUseSevenOneMedia
@@ -1322,14 +1345,6 @@ $wgAdDriverUseSevenOneMediaInLanguages = ['de'];
  * Enable override SOI_SUB2SITE with string defined in value for SevenOne Media ads
  */
 $wgAdDriverSevenOneMediaOverrideSub2Site = null;
-
-/**
- * @name $wgAdDriverUseDartForSlotsBelowTheFold
- * Whether to call DART for additional slots below the fold. Also known as "Coffee cup".
- * Set to null for to restrict only to Entertainment vertical
- * TODO: add an internal page for the reasons
- */
-$wgAdDriverUseDartForSlotsBelowTheFold = true;
 
 /**
  * @name $wgAdDriverTrackState
@@ -1353,7 +1368,7 @@ $wgAdDriverForceLiftiumAd = false;
  * @name $wgAdDriverEnableAdsInMaps
  * Whether to display ads within interactive maps
  */
-$wgAdDriverEnableAdsInMaps = false;
+$wgAdDriverEnableAdsInMaps = true;
 
 /**
  * @name $wgAdDriverRubiconRTPConfig
@@ -1384,12 +1399,6 @@ $wgAdDriverRubiconRTPCountries = null;
  * Value set in WikiFactory for Community acts as global value. Can be overridden per wiki.
  */
 $wgHighValueCountries = null;
-
-/**
- * @name $wgAdVideoTargeting
- * Enables page-level video ad targeting
- */
-$wgAdVideoTargeting = true;
 
 /**
  * @name $wgAnalyticsProviderPageFair

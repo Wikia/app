@@ -79,7 +79,6 @@ module.exports = function (config) {
 			'extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
 			'extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
 			'extensions/wikia/AdEngine/js/AdLogicPageParams.js',
-			'extensions/wikia/AdEngine/js/AdLogicPageParamsLegacy.js',
 			'extensions/wikia/AdEngine/js/AdProviderDirectGpt.js',
 			'extensions/wikia/AdEngine/js/AdProviderEvolve.js',
 			'extensions/wikia/AdEngine/js/AdProviderLater.js',
@@ -178,12 +177,9 @@ module.exports = function (config) {
 			'extensions/wikia/MediaGallery/scripts/templates.mustache.js',
 			'extensions/wikia/MediaGallery/scripts/views/caption.js',
 			'extensions/wikia/MediaGallery/scripts/views/media.js',
+			'extensions/wikia/MediaGallery/scripts/views/toggler.js',
 			'extensions/wikia/MediaGallery/scripts/views/gallery.js',
 			'extensions/wikia/MediaGallery/scripts/spec/**/*.spec.js',
-
-			// Lightbox
-			'extensions/wikia/Lightbox/scripts/spec/lightbox.spec.js'
-
 		]
 	});
 };
