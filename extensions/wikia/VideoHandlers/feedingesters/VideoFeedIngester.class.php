@@ -334,7 +334,7 @@ abstract class VideoFeedIngester {
 	public function isValidDestinationTitle( $destinationTitle ) {
 		$sanitizedName = VideoFileUploader::sanitizeTitle( $destinationTitle );
 		$title = Title::newFromText( $sanitizedName, NS_FILE );
-		return is_null( $title );
+		return !is_null( $title );
 	}
 
 	/**
