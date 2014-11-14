@@ -8,6 +8,8 @@
  *
  * @class
  * @constructor
+ * @param {String} title Image title
+ * @param {String} url Url to the image thumbnail
  */
 ve.dm.WikiaImageCartItem = function VeDmWikiaImageCartItem( title, url ) {
 	this.title = title;

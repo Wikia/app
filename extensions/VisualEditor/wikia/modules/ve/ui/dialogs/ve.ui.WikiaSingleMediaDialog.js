@@ -52,8 +52,8 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 		.addClass( 've-ui-wikiaSingleMediaDialog-main' );
 	this.search = new ve.ui.WikiaMediaResultsWidget( { '$': this.$ } );
 	this.results = this.search.getResults();
-        this.cartModel = new ve.dm.WikiaCart();
-        this.cart = new ve.ui.WikiaSingleMediaCartWidget( this.cartModel, this );
+	this.cartModel = new ve.dm.WikiaCart();
+	this.cart = new ve.ui.WikiaSingleMediaCartWidget( this.cartModel, this );
 
 	// Foot elements
 	this.$policy = this.$( '<div>' )
