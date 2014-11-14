@@ -4,9 +4,23 @@ require(
 	function (win, doc, $, lightboxLoader, scrollableTables, tocModule) {
 		'use strict';
 
-		var $win = $(win);
+		var $win = $(win),
+			isTouchScreen = win.Wikia.isTouchScreen(),
+			$tocButton = $('#articleNavToc');
 
-		/** Look for all tables on article and add or remove scrollbar if needed */
+		/**
+		 * @desc handler that initialises TOC
+		 * @param {Event} event
+		 */
+		function initTOChandler(event) {
+			console.log('dasdadasd');
+			event.stopPropagation();
+			tocModule.init(event.target.id, isTouchScreen);
+		}
+
+		/**
+		 * @desc Look for all tables on article and add or remove scrollbar if needed
+		 */
 		function scanTables() {
 			var innerArticle = doc.getElementById('mw-content-text'),
 				tables = innerArticle.getElementsByClassName('article-table');
@@ -16,16 +30,15 @@ require(
 			});
 		}
 
-		// initialize TOC in left navigation
-		// Right now it is commented out because it is breaking pages when headers are not present
-//		tocModule.init('leftNavToc');
-
 		//scan for tables in article and if table is too wide add scrollbar
 		scanTables();
 		$win
 			.on('resize', $.throttle(100, scanTables))
 			// wikiaTabClicked event is triggered when user switches between different tabs in article
 			.on('wikiaTabClicked', scanTables);
+
+		// initialize TOC in left navigation on first hover / click (touch device)
+		$tocButton.one(isTouchScreen ? 'click' : 'mouseenter', initTOChandler);
 
 		$(function () {
 			//Lightbox initialization needs to be done after DOMReady
