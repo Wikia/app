@@ -7,12 +7,12 @@ class IgnFeedIngester extends VideoFeedIngester {
 	protected static $API_WRAPPER = 'IgnApiWrapper';
 	protected static $PROVIDER = 'ign';
 	protected static $FEED_URL = 'http://apis.ign.com/partners/v3/wikia?fromDate=$1&toDate=$2&app_id=$3&app_key=$4';
-	protected static $CLIP_FILTER = array(
-		'*' => array(
+	protected static $CLIP_FILTER = [
+		'*' => [
 			'/IGN Daily/i',
 			'/IGN Weekly/i',
-		),
-	);
+		]
+	];
 
 	/**
 	 * Given a start date and an end date, download the set of matching videos from IGN
@@ -93,7 +93,8 @@ class IgnFeedIngester extends VideoFeedIngester {
 			$clipData['ageGate'] = empty( $clipData['ageRequired'] ) ? 0 : 1;
 
 			// get name
-			$name = array();
+
+			$name = [];
 			foreach ( $video['objectRelations'] as $obj ) {
 				$name[$obj['objectName']] = true;
 			}
@@ -104,7 +105,7 @@ class IgnFeedIngester extends VideoFeedIngester {
 			$addlCategories = $name;
 
 			// add tags to keywords
-			$keywords = array();
+			$keywords = [];
 			foreach ( $video['tags'] as $obj ) {
 				if ( array_key_exists( 'slug', $obj ) ) {
 					$keywords[$obj['slug']] = true;

@@ -120,14 +120,14 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 				$clipData['duration'] = $elements->item(0)->getAttribute( 'duration' );
 			}
 
-			$genres = array();
+			$genres = [];
 			$elements = $item->getElementsByTagName( 'genre' );
 			foreach ( $elements as $element ) {
 				$genres[] = $element->textContent;
 			}
 			$clipData['genres'] = implode( ', ', $genres );
 
-			$actors = array();
+			$actors = [];
 			$elements = $item->getElementsByTagNameNS( 'http://search.yahoo.com/mrss/', 'credit' );
 			foreach ( $elements as $element ) {
 				if ( $element->getAttribute( 'role' ) == 'actor' ) {
@@ -195,7 +195,7 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 		wfProfileIn( __METHOD__ );
 
 		$url = AnyclipApiWrapper::getApi( $code );
-		$response = Http::request( 'GET', $url, array( 'noProxy' => true ) );
+		$response = Http::request( 'GET', $url, [ 'noProxy' => true ] );
 		if ( $response !== false ) {
 			$content = json_decode( $response, true );
 

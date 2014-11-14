@@ -11,18 +11,18 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 		$params['now'] = time();
 
 		// by created date
-		$params['cond'] = array(
+		$params['cond'] = [
 			"created_at >= '$params[startDate]'",
 			"created_at < '$params[endDate]'",
-		);
+		];
 		$articlesCreated = $this->importVideos( $params );
 
 		// by time restrictions
-		$params['cond'] = array(
+		$params['cond'] = [
 			"created_at < '$params[startDate]'",
 			"time_restrictions.start_date >= '$params[startDate]'",
 			"time_restrictions.start_date < '".gmdate( 'Y-m-d H:i:s', $params['now'] )."'",
-		);
+		];
 		$articlesCreated += $this->importVideos( $params );
 
 		return $articlesCreated;
@@ -51,7 +51,7 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 				return 0;
 			}
 
-			$videos = empty( $response['items'] ) ? array() : $response['items'] ;
+			$videos = empty( $response['items'] ) ? [] : $response['items'] ;
 			$nextPage = empty( $response['next_page'] ) ? '' : $response['next_page'] ;
 
 			$this->logger->videoFound( count( $videos ) );
@@ -62,7 +62,7 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 					continue;
 				}
 
-				$clipData = array();
+				$clipData = [];
 				$clipData['titleName'] = trim( $video['name'] );
 				$clipData['videoId'] = $video['embed_code'];
 				$clipData['thumbnail'] = $video['preview_image_url'];

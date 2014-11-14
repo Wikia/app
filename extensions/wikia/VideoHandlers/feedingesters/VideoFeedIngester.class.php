@@ -17,13 +17,13 @@ abstract class VideoFeedIngester {
 	protected static $API_WRAPPER;
 	protected static $PROVIDER;
 	protected static $FEED_URL;
-	protected static $CLIP_FILTER = array();
+	protected static $CLIP_FILTER = [];
 
 	protected $defaultRequestOptions = [
 		'noProxy' => true
 	];
 
-	private static $WIKI_INGESTION_DATA_FIELDS = array( 'keyphrases' );
+	private static $WIKI_INGESTION_DATA_FIELDS = [ 'keyphrases' ];
 
 	public $videoData;
 	public $metaData;
@@ -119,7 +119,7 @@ abstract class VideoFeedIngester {
 		// General filter on all keywords
 		$regex = $this->getBlacklistRegex( F::app()->wg->VideoBlacklist );
 		if ( !empty( $regex ) ) {
-			$keys = array( 'titleName', 'description' );
+			$keys = [ 'titleName', 'description' ];
 			if ( array_key_exists( 'keywords', $this->videoData ) ) {
 				$keys[] = 'keywords';
 			}
@@ -142,9 +142,9 @@ abstract class VideoFeedIngester {
 	 * Set the $CLIP_FILTER static associative array in the child class to match a particular key or
 	 * use '*' to match any key, e.g.:
 	 *
-	 *     $CLIP_FILTER = array( '*'        => '/Daily/',
-	 *                           'keywords' => '/Adult/i',
-	 *                         )
+	 *     $CLIP_FILTER = [ '*'        => '/Daily/',
+	 *                     'keywords' => '/Adult/i',
+	 *                    ]
 	 *
 	 * This would filter out videos where any data contained the word 'Daily' and any video where the
 	 * keywords contained the case insensitive string 'adult'
@@ -164,7 +164,7 @@ abstract class VideoFeedIngester {
 				}
 
 				// This can be a single regex or a list of regexes
-				$regex_list = is_array( $regex_list ) ? $regex_list : array( $regex_list );
+				$regex_list = is_array( $regex_list ) ? $regex_list : [ $regex_list ];
 
 				foreach ( $regex_list as $regex ) {
 					if ( preg_match( $regex, $value ) ) {
@@ -288,7 +288,7 @@ abstract class VideoFeedIngester {
 		$filteredKeyWords = '';
 		if ( !empty( $this->videoData['keywords'] ) ) {
 			$regex = $this->getBlacklistRegex( F::app()->wg->VideoKeywordsBlacklist );
-			$new = array();
+			$new = [];
 			if ( !empty( $regex ) ) {
 				$old = explode( ',', $this->videoData['keywords'] );
 				foreach ( $old as $word ) {
@@ -369,7 +369,7 @@ abstract class VideoFeedIngester {
 				$this->logger->videoIngested( "Ingested {$uploadedTitle->getText()} from partner clip id {$this->metaData['videoId']}. {$fullUrl}\n", $this->pageCategories );
 
 				wfWaitForSlaves( self::THROTTLE_INTERVAL );
-				wfRunHooks( 'VideoIngestionComplete', array( $uploadedTitle, $this->pageCategories ) );
+				wfRunHooks( 'VideoIngestionComplete', [ $uploadedTitle, $this->pageCategories ] );
 				return 1;
 			}
 		}
@@ -469,7 +469,7 @@ abstract class VideoFeedIngester {
 	 */
 	public function getWikiIngestionData() {
 
-		$data = array();
+		$data = [];
 
 		// merge data from datasource into a data structure keyed by
 		// partner API search keywords. Value is an array of categories
@@ -506,21 +506,21 @@ abstract class VideoFeedIngester {
 			return $aWikis;
 		}
 
-		$aWikis = array();
+		$aWikis = [];
 
 		// fetch data from DB
 		// note: as of 2011/11, this function is referred to by only one
 		// calling function, a script that is run once per day. No need
 		// to memcache result yet.
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 
-		$aTables = array(
+		$aTables = [
 			'city_variables',
 			'city_variables_pool',
 			'city_list',
-		);
+		];
 		$varName = mysql_real_escape_string( self::WIKI_INGESTION_DATA_VARNAME );
-		$aWhere = array( 'city_id = cv_city_id', 'cv_id = cv_variable_id' );
+		$aWhere = [ 'city_id = cv_city_id', 'cv_id = cv_variable_id' ];
 
 		$aWhere[] = "cv_value is not null";
 
@@ -529,10 +529,10 @@ abstract class VideoFeedIngester {
 
 		$oRes = $dbr->select(
 			$aTables,
-			array( 'city_id', 'cv_value' ),
+			[ 'city_id', 'cv_value' ],
 			$aWhere,
 			__METHOD__,
-			array( 'ORDER BY' => 'city_sitename' )
+			[ 'ORDER BY' => 'city_sitename' ]
 		);
 
 		while ( $oRow = $dbr->fetchObject( $oRes ) ) {
@@ -550,7 +550,7 @@ abstract class VideoFeedIngester {
 	 * @param $options
 	 * @return string
 	 */
-	protected function getUrlContent( $url, $options = array() ) {
+	protected function getUrlContent( $url, $options = [] ) {
 		$options = array_merge( $options, $this->defaultRequestOptions );
 		return Http::request( 'GET', $url, $options );
 	}
@@ -589,7 +589,7 @@ abstract class VideoFeedIngester {
 		$regex = null;
 		if ( $keywords ) {
 			$keywords = explode( ',', $keywords );
-			$blacklist = array();
+			$blacklist = [];
 			foreach ( $keywords as $word ) {
 				$word = preg_replace( "/[^A-Za-z0-9' ]/", "", trim( $word ) );
 				if ( $word ) {
@@ -666,7 +666,7 @@ abstract class VideoFeedIngester {
 	 * @return array $pageCategories
 	 */
 	public function getAdditionalPageCategories( array $categories ) {
-		$pageCategories = array();
+		$pageCategories = [];
 		foreach ( $categories as $category ) {
 			$addition = $this->getAdditionalPageCategory( $category );
 			if ( !empty( $addition ) ) {

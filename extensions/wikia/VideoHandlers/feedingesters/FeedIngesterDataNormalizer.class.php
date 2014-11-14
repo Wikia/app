@@ -377,10 +377,10 @@ class FeedIngesterDataNormalizer {
 
 			// include cldr extension for language code
 			include( dirname( __FILE__ ).'/../../../cldr/CldrNames/CldrNamesEn.php' );
-			$cldrNames = array(
+			$cldrNames = [
 				'languageNames' => $languageNames,
 				'countryNames' => $countryNames,
-			);
+			];
 
 			// $languageNames, $countryNames comes from cldr extension
 			$paramName = ( $type == 'country' ) ? 'countryNames' : 'languageNames';
