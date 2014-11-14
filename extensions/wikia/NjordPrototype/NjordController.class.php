@@ -35,6 +35,11 @@ class NjordController extends WikiaController {
 
 	public function index() {
 		global $wgTitle, $wgUser, $wgBlankImgUrl;
+		$wikiDataModel = new WikiDataModel( Title::newMainPage()->getText() );
+		$wikiDataModel->getFromProps();
+		if ( $wikiDataModel->isEmpty() ) {
+			return $this->skipRendering();
+		}
 		$this->wg->SuppressPageHeader = true;
 		//set correct editor
 		$this->editor = EditorPreference::getPrimaryEditor();
