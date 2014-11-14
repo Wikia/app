@@ -16,9 +16,6 @@ class AddMissingCommentsIndex extends Maintenance {
 	const TABLE_NAME = 'comments_index';
 	const INDEX_NAME = 'last_touched';
 
-	/* time counter */
-	private $time = 0;
-
 	/**
 	 * Set script options
 	 */
