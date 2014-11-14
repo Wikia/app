@@ -47,6 +47,7 @@ class ScribeEventProducer {
 		$this->setArchive( $archive );
 		$this->setLanguage();
 		$this->setCategory();
+		$this->setIsTop200( $this->app->wg->CityId );
 	}
 
 	public function buildEditPackage( $oPage, $oUser, $oRevision = null, $revision_id = null ) {
@@ -296,10 +297,6 @@ class ScribeEventProducer {
 		$this->mParams['isRedirect'] = intval( $is_redirect );
 	}
 
-	public function setIsLocalFile ( $is_local_file ) {
-		$this->mParams['isLocalFile'] = intval( $is_local_file );
-	}
-
 	public function setIP ( $ip ) {
 		$this->mParams['userIp'] = $ip;
 	}
@@ -316,39 +313,8 @@ class ScribeEventProducer {
 		$this->mParams['eventTS'] = $ts;
 	}
 
-	public function setIsTop200( $city_id ) {
-		$this->mParams['isTop200'] = $this->isTop200( $city_id );
-	}
-
-	/**
-	 * Checks if a given wikia is in the top 200 in terms of pageviews
-	 * @param  int     $city_id
-	 * @return boolean
-	 */
-	public function isTop200( $city_id ) {
-		wfProfileIn( __METHOD__ );
-
-		$sCacheKey = wfSharedMemcKey( __CLASS__, __METHOD__ );
-
-		// Check in memcache before using DataMartService
-		if ( !is_null( $wgMemc->get( $sCacheKey ) ) ) {
-			$aTop200Wikis = $wgMemc->get( $sCacheKey );
-		} else {
-			$aTop200Wikis = DataMartService::getTopWikisByPageviews( DataMartService::PERIOD_ID_MONTHLY );
-			$wgMemc->set( $sCacheKey, $aTop200Wikis, \WikiaResponse::CACHE_LONG );
-		}
-
-		// getTopWikisByPageviews returns an array of arrays
-		foreach ( $aTop200Wikis as $aWiki ) {
-			if ( isset( $aWiki[$city_id] ) ) {
-				// city_ids are keys; return true if that one is set.
-				wfProfileOut( __METHOD__ );
-				return true;
-			}
-		}
-
-		wfProfileOut( __METHOD__ );
-		return false;
+	public function setIsLocalFile ( $is_local_file ) {
+		$this->mParams['isLocalFile'] = intval( $is_local_file );
 	}
 
 	public function setMediaType ( $oTitle ) {
@@ -415,7 +381,6 @@ class ScribeEventProducer {
 		$this->mParams['languageId'] = WikiFactory::LangCodeToId($lang_code);
 	}
 
-
 	public function setCategory() {
 		//This field is called categoryId but getCategory returns an object with cat_id and cat_name fields
 		$this->mParams['categoryId'] = WikiFactory::getCategory( $this->app->wg->CityId );
@@ -427,6 +392,41 @@ class ScribeEventProducer {
 		// And when categories are updated:
 		//$this->mParams['categories'] = WikiFactory::getCategories( $this->app->wg->CityId );
 
+	}
+
+	public function setIsTop200( $city_id ) {
+		$this->mParams['isTop200'] = $this->isTop200( $city_id );
+	}
+
+	/**
+	 * Checks if a given wikia is in the top 200 in terms of pageviews
+	 * @param  int     $city_id
+	 * @return boolean
+	 */
+	public function isTop200( $city_id ) {
+		wfProfileIn( __METHOD__ );
+
+		$sCacheKey = wfSharedMemcKey( __CLASS__, __METHOD__ );
+
+		// Check in memcache before using DataMartService
+		if ( !is_null( $wgMemc->get( $sCacheKey ) ) ) {
+			$aTop200Wikis = $wgMemc->get( $sCacheKey );
+		} else {
+			$aTop200Wikis = DataMartService::getTopWikisByPageviews( DataMartService::PERIOD_ID_MONTHLY );
+			$wgMemc->set( $sCacheKey, $aTop200Wikis, \WikiaResponse::CACHE_LONG );
+		}
+
+		// getTopWikisByPageviews returns an array of arrays
+		foreach ( $aTop200Wikis as $aWiki ) {
+			if ( isset( $aWiki[$city_id] ) ) {
+				// city_ids are keys; return true if that one is set.
+				wfProfileOut( __METHOD__ );
+				return true;
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return false;
 	}
 
 	public function sendLog() {
