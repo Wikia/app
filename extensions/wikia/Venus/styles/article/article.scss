@@ -134,9 +134,10 @@ $header-without-cover-unit-spacing: 60px;
 	blockquote {
 		@include font-size-xl;
 		border-top: 4px solid $color-text;
-		margin: 0 0 $article-items-spacing;
+		margin: 0 0 $article-items-spacing*2;
 		padding-top: 30px;
 		position: relative;
+		top: $article-items-spacing;
 
 		&:before {
 			background: none repeat scroll 0 0 $color-page;
