@@ -4,7 +4,7 @@ class FacebookClientController extends WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	public function preferences() {
-		$this->response->addAsset('facebook_client_preferences_scss');
+		$this->response->addAsset( 'facebook_client_preferences_scss' );
 
 		$this->isConnected = $this->getVal( 'isConnected', false );
 
@@ -15,10 +15,10 @@ class FacebookClientController extends WikiaController {
 		// Settings for a user who is not connected yet
 		$this->facebookConvertMessage = wfMessage( 'fbconnect-convert' )->plain();
 
-		$this->facebookButton = F::app()->renderView('FacebookButton', 'index', [
+		$this->facebookButton = F::app()->renderView( 'FacebookButton', 'index', [
 			'class' => 'sso-login-facebook',
-			'text' => wfMessage('fbconnect-wikia-signup-w-facebook')->escaped()
-		]);
+			'text' => wfMessage( 'fbconnect-wikia-signup-w-facebook' )->escaped()
+		] );
 	}
 
 	/**

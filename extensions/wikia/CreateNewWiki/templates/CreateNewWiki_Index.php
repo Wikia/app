@@ -46,10 +46,10 @@
 								<option value="<?=$sLang?>" <?=$selected?>><?=$sLang?>: <?=$aLanguages[$sLang]?></option>
 							<? endforeach ?>
 						</optgroup>
-					<?php endif ?>
+					<? endif ?>
 
-					<optgroup label="<?= wfMessage('autocreatewiki-language-all')->escaped() ?>">
 					<? if (!empty($aLanguages) && is_array($aLanguages)) : ?>
+						<optgroup label="<?= wfMessage('autocreatewiki-language-all')->escaped() ?>">
 						<? ksort($aLanguages);
 						foreach ($aLanguages as $sLang => $sLangName) :
 							$selected = "";
@@ -71,7 +71,7 @@
 			</form>
 		</li>
 
-		<? if( !$isUserLoggedIn || !$isUserEmailConfirmed ): ?>
+		<? if ( !$isUserLoggedIn || !$isUserEmailConfirmed ): ?>
 		<li id="UserAuth" class="step">
 			<h2 class="headline"><?= wfMessage('cnw-userauth-headline')->escaped() ?></h2>
 			<p class="creative"><?= wfMessage('cnw-userauth-creative')->escaped() ?></p>
