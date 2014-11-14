@@ -6,15 +6,14 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 
 	const ARTICLE_ID_TAG = 'article_id';
 
-	const ITEMS_TAG = 'items';
-
 	const STR_ARTICLE = 'article';
-
 	const STR_BLOG = 'blog';
-
 	const STR_FILE = 'file';
+	const STR_CATEGORY = 'category';
 
+	const ITEMS_TAG = 'items';
 	const ITEM_FUNCTION_NAME = 'item';
+
 
 	public function __construct() {
 		parent::__construct( 'CuratedContent', '', false );
@@ -28,7 +27,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 
 		$this->response->setTemplateEngine( self::TEMPLATE_ENGINE );
 
-		$title = wfMsg( 'wikiaCuratedContent-content-title' );
+		$title = wfMsg( 'wikiacuratedcontent-content-title' );
 		$this->wg->Out->setPageTitle( $title );
 		$this->wg->Out->setHTMLTitle( $title );
 
@@ -62,19 +61,19 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		JSMessages::enqueuePackage( 'CuratedContentMsg', JSMessages::INLINE );
 
 		$this->response->setVal( 'descriptions', [
-			wfMsg( 'wikiaCuratedContent-content-description-items' ),
-			wfMsg( 'wikiaCuratedContent-content-description-section' ),
-			wfMsg( 'wikiaCuratedContent-content-description-organize' ),
-			wfMsg( 'wikiaCuratedContent-content-description-no-section' )
+			wfMsg( 'wikiacuratedcontent-content-description-items' ),
+			wfMsg( 'wikiacuratedcontent-content-description-section' ),
+			wfMsg( 'wikiacuratedcontent-content-description-organize' ),
+			wfMsg( 'wikiacuratedcontent-content-description-no-section' )
 		] );
 
-		$this->response->setVal( 'addSection', wfMsg( 'wikiaCuratedContent-content-add-section' ) );
-		$this->response->setVal( 'addItem', wfMsg( 'wikiaCuratedContent-content-add-item' ) );
-		$this->response->setVal( 'save', wfMsg( 'wikiaCuratedContent-content-save' ) );
+		$this->response->setVal( 'addSection', wfMsg( 'wikiacuratedcontent-content-add-section' ) );
+		$this->response->setVal( 'addItem', wfMsg( 'wikiacuratedcontent-content-add-item' ) );
+		$this->response->setVal( 'save', wfMsg( 'wikiacuratedcontent-content-save' ) );
 
-		$this->response->setVal( 'section_placeholder', wfMsg( 'wikiaCuratedContent-content-section' ) );
-		$this->response->setVal( 'item_placeholder', wfMsg( 'wikiaCuratedContent-content-item' ) );
-		$this->response->setVal( 'name_placeholder', wfMsg( 'wikiaCuratedContent-content-name' ) );
+		$this->response->setVal( 'section_placeholder', wfMsg( 'wikiacuratedcontent-content-section' ) );
+		$this->response->setVal( 'item_placeholder', wfMsg( 'wikiacuratedcontent-content-item' ) );
+		$this->response->setVal( 'name_placeholder', wfMsg( 'wikiacuratedcontent-content-name' ) );
 
 		$itemTemplate = $this->sendSelfRequest( self::ITEM_FUNCTION_NAME )->toString();
 		$sectionTemplate = $this->sendSelfRequest( 'section' )->toString();
@@ -129,7 +128,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			$this->response->setVal( 'image_set', true );
 		}
 
-		$this->response->setVal( 'section_placeholder', wfMsg( 'wikiaCuratedContent-content-section' ) );
+		$this->response->setVal( 'section_placeholder', wfMsg( 'wikiacuratedcontent-content-section' ) );
 	}
 
 	/*
@@ -157,8 +156,8 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		}
 
 		$this->response->setVal( 'image_url', $this->getImage( $id ) );
-		$this->response->setVal( 'item_placeholder', wfMsg( 'wikiaCuratedContent-content-item' ) );
-		$this->response->setVal( 'name_placeholder', wfMsg( 'wikiaCuratedContent-content-name' ) );
+		$this->response->setVal( 'item_placeholder', wfMsg( 'wikiacuratedcontent-content-item' ) );
+		$this->response->setVal( 'name_placeholder', wfMsg( 'wikiacuratedcontent-content-name' ) );
 	}
 
 	public function save() {
@@ -258,7 +257,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 							$rowErr [ 'reason' ] = 'emptyLabel';
 						}
 
-						if ( $articleId === 0 ) {
+						if ( $this->needArticleType( $type ) && $articleId === 0 ) {
 							$rowErr [ 'title' ] = $row[ 'title' ];
 							$rowErr [ 'reason' ] = 'articleNotFound';
 						}
@@ -333,7 +332,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 				return self::STR_BLOG;
 				break;
 			case NS_CATEGORY:
-				return self::ITEM_FUNCTION_NAME;
+				return self::STR_CATEGORY;
 				break;
 			case NS_FILE:
 				return self::STR_FILE;
@@ -404,5 +403,9 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			}
 		}
 		return $imageUrl;
+	}
+
+	private function needArticleType( $type ) {
+		return $type != self::STR_CATEGORY;
 	}
 }

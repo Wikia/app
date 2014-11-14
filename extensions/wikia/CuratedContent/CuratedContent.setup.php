@@ -45,7 +45,12 @@ JSMessages::registerPackage( 'CuratedContentMsg', [
 	'wikiacuratedcontent-content-duplicate-entry',
 	'wikiacuratedcontent-content-item-error',
 	'wikiacuratedcontent-content-required-entry',
-	'wikiacuratedcontent-content-empty-section'
+	'wikiacuratedcontent-content-empty-section',
+
+	'wikiacuratedcontent-content-articlenotfound-error',
+	'wikiacuratedcontent-content-emptylabel-error',
+	'wikiacuratedcontent-content-videonotsupported-error',
+	'wikiacuratedcontent-content-notsupportedtype-error'
 ] );
 
 JSMessages::registerPackage( 'CuratedContentSponsoredMsg', [
