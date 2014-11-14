@@ -255,7 +255,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 							$rowErr [ 'reason' ] = 'emptyLabel';
 						}
 
-						if ( $this->needArticleType( $type ) && $articleId === 0 ) {
+						if ( $this->needsArticleId( $type ) && $articleId === 0 ) {
 							$rowErr [ 'title' ] = $row[ 'title' ];
 							$rowErr [ 'reason' ] = 'articleNotFound';
 						}
@@ -302,10 +302,14 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 				case self::STR_FILE :
 					list( $type, $info ) = $this->getVideoInfo( $title );
 					break;
+
 				case self::STR_CATEGORY:
-					$linksTo = $title->getLinksTo();
-					if ( empty( $linksTo ) ) {
-						$type = 'emptyCategory';
+					$category = Category::newFromTitle( $title );
+					if ( !empty( $category ) ) {
+						$count = $category->getPageCount();
+						if ( empty( $count ) ) {
+							$type = 'emptyCategory';
+						}
 					}
 					break;
 			}
@@ -412,7 +416,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		return $imageUrl;
 	}
 
-	private function needArticleType( $type ) {
+	private function needsArticleId( $type ) {
 		return $type != self::STR_CATEGORY;
 	}
 }
