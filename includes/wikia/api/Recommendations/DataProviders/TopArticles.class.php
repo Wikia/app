@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Wikia\Api\Recommendations\DataProviders;
 
 /**
