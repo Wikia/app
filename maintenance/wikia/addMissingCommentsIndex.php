@@ -6,8 +6,7 @@
  * @ingroup Maintenance
  */
 
-$dir = dirname( __FILE__ );
-require_once( $dir . '/../Maintenance.php' );
+require_once( __DIR__ . '/../Maintenance.php' );
 
 /**
  * Maintenance script class
@@ -25,7 +24,6 @@ class AddMissingCommentsIndex extends Maintenance {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->addOption( 'wiki', 'Run script for Wikis (comma separated list of Wikis)' );
 		$this->mDescription = 'Add missing `comments_index` table index';
 	}
 
@@ -37,45 +35,15 @@ class AddMissingCommentsIndex extends Maintenance {
 	}
 
 	public function execute() {
-		global $wgExternalSharedDB;
-
-		$this->output( 'Processing started... ' . PHP_EOL );
-		$this->time = time();
-
-		$wikiList = $this->getOption( 'wiki', '' );
-
-		$db = $this->getDB( DB_SLAVE, [], $wgExternalSharedDB );
-		$where = [];
-		if ( !empty( $wikiList  ) ) {
-			$where[ 'city_list.city_id' ] = explode( ',', $wikiList );
-		}
-
-		$res = $db->select(
-			[ 'city_list'],
-			[ 'city_list.city_id', 'city_list.city_dbname' ],
-			$where,
-			'AddMissingCommentsIndex',
-			[ 'ORDER BY' => 'city_id' ]
-		);
-
-		while ( $row = $res->fetchObject() ) {
-			$dbname = $row->city_dbname;
-			try {
-				$dbh = $this->getDB( DB_MASTER, [], $dbname );
-			} catch (DBConnectionError $e) {
-				$this->output( $e->error . PHP_EOL);
-				continue;
+		$dbh = $this->getDB( DB_MASTER );
+		$this->output( 'Checking "' . $dbh->getDBname() . '" ...' );
+		if ( !$dbh->indexExists( self::TABLE_NAME, self::INDEX_NAME ) ) {
+			if ( $this->addMissingIndex( $dbh ) ) {
+				$this->output( ' UPDATED' );
 			}
-			$this->output( "Checking \"{$dbname}\" ({$row->city_id})..." );
-			if ( !$dbh->indexExists( self::TABLE_NAME, self::INDEX_NAME ) ) {
-				if ( $this->addMissingIndex( $dbh ) ) {
-					$this->output( ' UPDATED' );
-				}
-			}
-			$dbh->close();
-			$this->output( ' done ' .PHP_EOL );
 		}
-		$this->output( "Done in " . Wikia::timeDuration( time() - $this->time ) . PHP_EOL );
+		$dbh->close();
+		$this->output( ' done ' .PHP_EOL );
 	}
 }
 
