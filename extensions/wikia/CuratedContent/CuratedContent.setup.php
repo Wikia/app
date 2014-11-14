@@ -39,31 +39,14 @@ $wgGroupPermissions['*']['curatedcontent-switchforadmins'] = false;
 $wgGroupPermissions['staff']['curatedcontent-switchforadmins'] = true;
 
 JSMessages::registerPackage( 'CuratedContentMsg', [
-	'wikiacuratedcontent-content-item',
-	'wikiacuratedcontent-content-section',
-	'wikiacuratedcontent-content-name',
 	'wikiacuratedcontent-content-duplicate-entry',
-	'wikiacuratedcontent-content-item-error',
 	'wikiacuratedcontent-content-required-entry',
 	'wikiacuratedcontent-content-empty-section',
-
-	'wikiacuratedcontent-content-articlenotfound-error',
-	'wikiacuratedcontent-content-emptylabel-error',
-	'wikiacuratedcontent-content-videonotsupported-error',
-	'wikiacuratedcontent-content-notsupportedtype-error'
-] );
-
-JSMessages::registerPackage( 'CuratedContentSponsoredMsg', [
-	'wikiacuratedcontent-sponsored-video',
-	'wikiacuratedcontent-sponsored-language',
-	'wikiacuratedcontent-sponsored-video-title',
-	'wikiacuratedcontent-sponsored-duplicate-entry',
-	'wikiacuratedcontent-sponsored-required-entry',
-	'wikiacuratedcontent-sponsored-empty-language',
-	'wikiacuratedcontent-sponsored-orphaned-video',
-	'wikiacuratedcontent-sponsored-delete-videos-are-you-sure',
-	'wikiacuratedcontent-sponsored-video-does-not-exist',
-	'wikiacuratedcontent-sponsored-video-is-not-ooyala'
+	'wikiacuratedcontent-content-item-error',
+	'wikiaCuratedContent-content-articlenotfound-error',
+	'wikiaCuratedContent-content-emptylabel-error',
+	'wikiaCuratedContent-content-videonotsupported-error',
+	'wikiaCuratedContent-content-notsupportedtype-error'
 ] );
 
 //hooks
