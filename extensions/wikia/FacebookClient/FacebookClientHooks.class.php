@@ -9,7 +9,6 @@ class FacebookClientHooks {
 	 *
 	 * fbAppId - Wikia's App ID
 	 * fbScript
-	 * fbUseMarkup - Should XFBML tags be rendered? (see $fbUseMarkup in config.php)
 	 * fbLogo
 	 * fbLogoutURL - (deprecated) The URL to be redirected to on a disconnect
 	 * fbReturnToTitle
@@ -17,13 +16,12 @@ class FacebookClientHooks {
 	 *
 	 */
 	public static function MakeGlobalVariablesScript( &$vars ) {
-		global $fbScript, $fbAppId, $fbUseMarkup, $fbLogo;
+		global $fbScript, $fbAppId, $fbLogo;
 		$wg = F::app()->wg;
 
 		$thisurl = $wg->Title->getPrefixedURL();
 		$vars['fbAppId'] = $fbAppId;
 		$vars['fbScript'] = $fbScript;
-		$vars['fbUseMarkup'] = $fbUseMarkup;
 		$vars['fbLogo'] = (bool) $fbLogo;
 
 		$vars['fbLogoutURL'] = Skin::makeSpecialUrl(
