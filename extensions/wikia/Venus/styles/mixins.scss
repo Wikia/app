@@ -1,5 +1,24 @@
 @import 'variables';
 
+@function calculate-columns-width($breakpoint, $columns-count, $aditional-width: 0px) {
+	$width: 0;
+
+	@if $breakpoint == small {
+		$width: round($columns-count * ($small-grid-column + $small-grid-gutter) - $small-grid-gutter + $aditional-width);
+	}
+
+	@if $breakpoint == medium {
+		$width: round($columns-count * ($medium-grid-column + $medium-grid-gutter) - $medium-grid-gutter + $aditional-width);
+	}
+
+	@if $breakpoint == large {
+		$width: round($columns-count * ($large-grid-column + $large-grid-gutter) - $large-grid-gutter + $aditional-width);
+	}
+
+	@return $width;
+}
+
+
 // We use this to do clear floats
 @mixin clearfix {
 	&:before, &:after { content: ' '; display: table; }
@@ -49,45 +68,15 @@
 // calculate column width in pixels for different screen sizes
 // $breakpoint: one of 'small', 'medium', 'large'
 @mixin grid-column-width($breakpoint, $columns-count, $aditional-width: 0px) {
-	@if $breakpoint == small {
-		width: round($columns-count * ($small-grid-column + $small-grid-gutter) - $small-grid-gutter + $aditional-width);
-	}
-
-	@if $breakpoint == medium {
-		width: round($columns-count * ($medium-grid-column + $medium-grid-gutter) - $medium-grid-gutter + $aditional-width);
-	}
-
-	@if $breakpoint == large {
-		width: round($columns-count * ($large-grid-column + $large-grid-gutter) - $large-grid-gutter + $aditional-width);
-	}
+	width: calculate-columns-width($breakpoint, $columns-count, $aditional-width);
 }
 
 @mixin grid-column-max-width($breakpoint, $columns-count, $aditional-width: 0px) {
-	@if $breakpoint == small {
-		max-width: round($columns-count * ($small-grid-column + $small-grid-gutter) - $small-grid-gutter + $aditional-width);
-	}
-
-	@if $breakpoint == medium {
-		max-width: round($columns-count * ($medium-grid-column + $medium-grid-gutter) - $medium-grid-gutter + $aditional-width);
-	}
-
-	@if $breakpoint == large {
-		max-width: round($columns-count * ($large-grid-column + $large-grid-gutter) - $large-grid-gutter + $aditional-width);
-	}
+	max-width: calculate-columns-width($breakpoint, $columns-count, $aditional-width);
 }
 
 @mixin grid-position($breakpoint, $columns-count, $position: 'left', $aditional-width: 0px) {
-	@if $breakpoint == small {
-		#{$position}: round($columns-count * ($small-grid-column + $small-grid-gutter) - $small-grid-gutter + $aditional-width);
-	}
-
-	@if $breakpoint == medium {
-		#{$position}: round($columns-count * ($medium-grid-column + $medium-grid-gutter) - $medium-grid-gutter + $aditional-width);
-	}
-
-	@if $breakpoint == large {
-		#{$position}: round($columns-count * ($large-grid-column + $large-grid-gutter) - $large-grid-gutter + $aditional-width);
-	}
+	#{$position}: calculate-columns-width($breakpoint, $columns-count, $aditional-width);
 }
 
 @mixin grid-column-padding() {
@@ -120,8 +109,12 @@
 	}
 }
 
-@mixin proportional-video-height($width) {
+@mixin proportional-media-height($width) {
 	height: round($width * 9 / 16);
+}
+
+@mixin proportional-grid-media-height($breakpoint, $columns-count, $aditional-width: 0px) {
+	@include proportional-media-height(calculate-columns-width($breakpoint, $columns-count, $aditional-width));
 }
 
 @mixin venus-icons-font {
