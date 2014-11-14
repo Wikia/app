@@ -975,6 +975,22 @@ $messages['fr'] = array(
 	'manage-wikia-home-stats-permissions-error' => 'Les données n’ont pas été enregistrées. Veuillez vous assurer d’avoir droits requis pour modifier ce formulaire.',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'manage-wikia-home-wiki-list-id' => 'Id',
+	'manage-wikia-home-wiki-list-blocked-no' => 'Nee',
+	'manage-wikia-home-wiki-list-blocked-yes' => 'Ja',
+	'manage-wikia-home-wiki-list-promoted-no' => 'Nee',
+	'manage-wikia-home-wiki-list-promoted-yes' => 'Ja',
+	'manage-wikia-home-wiki-list-official-no' => 'Nee',
+	'manage-wikia-home-wiki-list-official-yes' => 'Ja',
+	'manage-wikia-home-modal-button-no' => 'Nee',
+	'manage-wikia-home-modal-button-yes' => 'Ja',
+	'manage-wikia-home-modal-button-okay' => 'OK',
+);
+
 /** Galician (galego)
  * @author Toliño
  */

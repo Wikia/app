@@ -95,7 +95,6 @@ $config['adengine2_late_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		// ads
-		'//extensions/wikia/AdEngine/js/AdLogicPageParamsLegacy.js',
 		'//extensions/wikia/AdEngine/js/AdProviderEvolve.js',
 		'//extensions/wikia/AdEngine/js/AdProviderLiftium.js',
 		'//extensions/wikia/AdEngine/js/AdProviderSevenOneMedia.js',
@@ -151,6 +150,13 @@ $config['adengine2_rubicon_rtp_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/RubiconRtp.js',
+	),
+);
+
+$config['adengine2_amazon_match_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/AmazonMatch.js',
 	),
 );
 
@@ -815,8 +821,8 @@ $config['monobook_js'] = array(
 	'assets' => array(
 		'#group_oasis_shared_core_js',
 		'#group_oasis_jquery',
-		'#group_articlecomments_js',
 		'#group_bucky_js',
+		'#group_articlecomments_js',
 
 		// TODO: remove dependency on YUI (see BugId:3116)
 		'//resources/wikia/libraries/yui/utilities/utilities.js',

@@ -1204,17 +1204,17 @@ $wgWikiaHubsFileRepoPath = 'http://corp.wikia.com/';
 $wgWikiaHubsFileRepoDirectory = '/images/c/corp/images';
 
 /**
- * @name $wgEnableAmazonDirectTargetedBuy
- * Enables AmazonDirectTargetedBuy integration
+ * @name $wgEnableAmazonMatch
+ * Enables AmazonMatch integration
  */
-$wgEnableAmazonDirectTargetedBuy = true;
+$wgEnableAmazonMatch = true;
 
 /**
- * @name $wgAmazonDirectTargetedBuyCountries
- * Enables AmazonDirectTargetedBuy integration in theese countries (given AmazonDirectTargetedBuy is also true)
+ * @name $wgAmazonMatchCountries
+ * Enables AmazonMatch integration in these countries (given AmazonMatch is also true)
  * "Utility" var, don't change it here.
  */
-$wgAmazonDirectTargetedBuyCountries = null;
+$wgAmazonMatchCountries = null;
 
 /**
  * @name $wgAdPageLevelCategoryLangs
@@ -1286,32 +1286,59 @@ $wgAdDriverUseTopInContentBoxad = true;
 $wgAdDriverBottomLeaderboardImpressionCapping = [2, 4, 6];
 
 /**
- * @name $wgSitewideDisableLiftium
- * @link http://one.wikia-inc.com/wiki/Ads/Disaster_recovery
- * Disable Liftium sitewide in case a disaster happens (it's an instant global).
+ * @name $wgSitewideDisableGpt
+ * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableGpt
+ *
+ * Disable all GPT (DART) ads sitewide in case a disaster happens.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
  */
-$wgSitewideDisableLiftium = false;
-
-/**
- * @name $wgSitewideDisableSevenOneMedia
- * @link http://one.wikia-inc.com/wiki/Ads/Disaster_recovery
- * Disable SevenOneMedia sitewide in case a disaster happens (it's an instant global).
- */
-$wgSitewideDisableSevenOneMedia = false;
+$wgSitewideDisableGpt = false;
 
 /**
  * @name $wgSitewideDisableIVW2
- * @link http://one.wikia-inc.com/wiki/Ads/Disaster_recovery
- * Disable IVW2 Analytics pixel sitewide in case a disaster happens (it's an instant global).
+ * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableIVW2
+ *
+ * Disable IVW2 Analytics pixel sitewide in case a disaster happens.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
  */
 $wgSitewideDisableIVW2 = false;
 
 /**
+ * @name $wgSitewideDisableLiftium
+ * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableLiftium
+ *
+ * Disable Liftium sitewide in case a disaster happens.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ */
+$wgSitewideDisableLiftium = false;
+
+/**
  * @name $wgSitewideDisableRubiconRTP
- * @link http://one.wikia-inc.com/wiki/Ads/Disaster_recovery
- * Disable Rubicon RTP Analytics pixel sitewide in case a disaster happens (it's an instant global).
+ * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableRubiconRTP
+ *
+ * Disable Rubicon RTP Analytics pixel sitewide in case a disaster happens.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
  */
 $wgSitewideDisableRubiconRTP = false;
+
+/**
+ * @name $wgSitewideDisableSevenOneMedia
+ * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableSevenOneMedia
+ *
+ * Disable SevenOneMedia sitewide in case a disaster happens.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ */
+$wgSitewideDisableSevenOneMedia = false;
 
 /**
  * @name $wgAdDriverUseSevenOneMedia
