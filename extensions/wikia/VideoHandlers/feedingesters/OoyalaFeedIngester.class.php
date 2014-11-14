@@ -199,11 +199,11 @@ class OoyalaFeedIngester extends VideoFeedIngester {
 	 */
 	public function generateMetadata() {
 		$metadata = parent::generateMetadata();
-		$metadata['startDate'] = empty( $this->videoData['startDate'] ) ? '' :  $this->videoData['startDate'];
-		$metadata['source'] = empty( $this->videoData['source'] ) ? '' :  $this->videoData['source'];
-		$metadata['sourceId'] = empty( $this->videoData['sourceId'] ) ? '' :  $this->videoData['sourceId'];
-		$metadata['distributor'] = empty( $this->videoData['distributor'] ) ? '' :  $this->videoData['distributor'];
-		$metadata['pageCategories'] = empty( $this->videoData['pageCategories'] ) ? '' :  $this->videoData['pageCategories'];
+		$metadata['startDate'] = $this->getVideoData( 'startData' );
+		$metadata['source'] = $this->getVideoData( 'source' );
+		$metadata['sourceId'] = $this->getVideoData( 'sourceId' );
+		$metadata['distributor'] = $this->getVideoData( 'distributor' );
+		$metadata['pageCategories'] = $this->getVideoData( 'pageCategories' );
 
 		return $metadata;
 	}

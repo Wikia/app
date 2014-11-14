@@ -430,11 +430,11 @@ class ScreenplayFeedIngester extends RemoteAssetFeedIngester {
 		}
 
 		$metadata = parent::generateMetadata();
-		$metadata['stdBitrateCode'] = $this->videoData['stdBitrateCode'];
-		$metadata['jpegBitrateCode'] = empty( $this->videoData['jpegBitrateCode'] ) ? '' : $this->videoData['jpegBitrateCode'];
-		$metadata['streamUrl'] = empty( $this->videoData['streamUrl'] ) ? '' : $this->videoData['streamUrl'];
-		$metadata['streamHdUrl'] = empty( $this->videoData['streamHdUrl'] ) ? '' : $this->videoData['streamHdUrl'];
-		$metadata['distributor'] = empty( $this->videoData['distributor'] ) ? '' : $this->videoData['distributor'];
+		$metadata['stdBitrateCode'] = $this->getVideoData( 'stdBitrateCode' );
+		$metadata['jpegBitrateCode'] = $this->getVideoData( 'jpegBitrateCode' );
+		$metadata['streamUrl'] = $this->getVideoData( 'streamUrl' );
+		$metadata['streamHdUrl'] = $this->getVideoData( 'streamHdUrl' );
+		$metadata['distributor'] = $this->getVideoData( 'distributor' );
 
 		return $metadata;
 	}

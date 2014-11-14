@@ -309,7 +309,7 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 	 */
 	public function generateMetadata() {
 		$metadata = parent::generateMetadata();
-		$metadata['videoUrl'] = empty( $this->videoData['videoUrl'] ) ? '' : $this->videoData['videoUrl'];
+		$metadata['videoUrl'] = $this->getVideoData( 'videoUrl' );
 
 		return $metadata;
 	}

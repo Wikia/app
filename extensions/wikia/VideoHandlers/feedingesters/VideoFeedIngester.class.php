@@ -230,7 +230,8 @@ abstract class VideoFeedIngester {
 	}
 
 	/**
-	 * generate the metadata we consider interesting for this video
+	 * generate the metadata we consider interesting for this video. This comes from videoData which was passed
+	 * in by each subclass during the ingestion process to createVideo.
 	 * Note: metadata is array instead of object because it's stored in the database as a serialized array,
 	 *       and serialized objects would have more version issues.
 	 * @throws FeedIngesterWarningException
@@ -238,37 +239,24 @@ abstract class VideoFeedIngester {
 	 */
 	public function generateMetadata() {
 
-		$metaData = [
-			'videoId'              => isset( $this->videoData['videoId'] ) ? $this->videoData['videoId'] : '',
-			'altVideoId'           => isset( $this->videoData['altVideoId'] ) ? $this->videoData['altVideoId'] : '',
-			'hd'                   => isset( $this->videoData['hd'] ) ? $this->videoData['hd'] : 0,
-			'duration'             => isset( $this->videoData['duration'] ) ? $this->videoData['duration'] : '',
-			'published'            => isset( $this->videoData['published'] ) ? $this->videoData['published'] : '',
-			'thumbnail'            => isset( $this->videoData['thumbnail'] ) ? $this->videoData['thumbnail'] : '',
-			'description'          => isset( $this->videoData['description'] ) ? $this->videoData['description'] : '',
-			'name'                 => isset( $this->videoData['name'] ) ? $this->videoData['name'] : '',
-			'type'                 => isset( $this->videoData['type'] ) ? $this->videoData['type'] : '',
-			'category'             => isset( $this->videoData['category'] ) ? $this->videoData['category'] : '',
-			'industryRating'       => isset( $this->videoData['industryRating'] ) ? $this->videoData['industryRating'] : '',
-			'ageGate'              => isset( $this->videoData['ageGate'] ) ? $this->videoData['ageGate'] : 0,
-			'ageRequired'          => isset( $this->videoData['ageRequired'] ) ? $this->videoData['ageRequired'] : 0,
-			'provider'             => isset( $this->videoData['provider'] ) ? $this->videoData['provider'] : '',
-			'language'             => isset( $this->videoData['language'] ) ? $this->videoData['language'] : '',
-			'subtitle'             => isset( $this->videoData['subtitle'] ) ? $this->videoData['subtitle'] : '',
-			'genres'               => isset( $this->videoData['genres'] ) ? $this->videoData['genres'] : '',
-			'actors'               => isset( $this->videoData['actors'] ) ? $this->videoData['actors'] : '',
-			'targetCountry'        => isset( $this->videoData['targetCountry'] ) ? $this->videoData['targetCountry'] : '',
-			'series'               => isset( $this->videoData['series'] ) ? $this->videoData['series'] : '',
-			'season'               => isset( $this->videoData['season'] ) ? $this->videoData['season'] : '',
-			'episode'              => isset( $this->videoData['episode'] ) ? $this->videoData['episode'] : '',
-			'characters'           => isset( $this->videoData['characters'] ) ? $this->videoData['characters'] : '',
-			'resolution'           => isset( $this->videoData['resolution'] ) ? $this->videoData['resolution'] : '',
-			'aspectRatio'          => isset( $this->videoData['aspectRatio'] ) ? $this->videoData['aspectRatio'] : '',
-			'expirationDate'       => isset( $this->videoData['expirationDate'] ) ? $this->videoData['expirationDate'] : '',
-			'regionalRestrictions' => isset( $this->videoData['regionalRestrictions'] ) ? $this->videoData['regionalRestrictions'] : '',
-			'keywords'             => $this->filterKeywords(),
-			'destinationTitle'     => $this->getName(),
+		// Default keys we want to check for. If a key from $valueOrEmptyString can't be found in $this->videoData
+		// set it's value to '' in metaData. Same for $valueOrZero but set it's value to 0 in metaData instead.
+		$valueOrEmptyString = [
+			'videoId', 'altVideoId', 'duration', 'published', 'thumbnail', 'description', 'name', 'type', 'category',
+			'industryRating', 'provider', 'language', 'subtitle', 'genres', 'actors', 'targetCountry', 'series',
+			'season', 'episode', 'characters', 'resolution', 'aspectRatio', 'expirationDate', 'regionalRestrictions'
 		];
+		$valueOrZero = [ 'hd', 'ageRequired', 'ageGate' ];
+
+		$metaData = [];
+		foreach( $valueOrEmptyString as $key ) {
+			$metaData[$key] = $this->getVideoData( $key );
+		}
+		foreach( $valueOrZero as $key ) {
+			$metaData[$key] = $this->getVideoData( $key, 0 );
+		}
+		$metaData['keywords'] = $this->filterKeywords();
+		$metaData['destinationTitle'] = $this->getName();
 
 		if ( empty( $metaData['videoId'] ) ) {
 			$msg = "Warning: error when generating metadata -- no video id exists\n";
@@ -281,6 +269,16 @@ abstract class VideoFeedIngester {
 		}
 
 		return $metaData;
+	}
+
+	/**
+	 * Get value of $this->videoData[$key] if it's set, otherwise return $default.
+	 * @param $key
+	 * @param $default
+	 * @return mixed
+	 */
+	protected function getVideoData( $key, $default = '' ) {
+		return isset( $this->videoData[$key] ) ? $this->videoData[$key] : $default;
 	}
 
 	/**
