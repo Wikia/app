@@ -634,6 +634,8 @@ class DataMartService extends Service {
 	 * ]
 	 */
 	public static function getTopCrossWikiArticlesByPageview( $hub, $langs, $namespaces = null, $limit = 200 ) {
+		wfProfileIn( __METHOD__ );
+
 		//fetch the top 10 wikis on a weekly pageviews basis
 		//this has it's own cache
 		$wikis = DataMartService::getTopWikisByPageviews(
@@ -688,6 +690,7 @@ class DataMartService extends Service {
 			}
 		}
 
+		wfProfileOut( __METHOD__ );
 		return $res;
 	}
 

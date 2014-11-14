@@ -20,6 +20,7 @@ class TopArticles implements IDataProvider {
 	 * @return array of articles with details
 	 */
 	public function get( $articleId, $limit ) {
+		wfProfileIn( __METHOD__ );
 
 		$hubName = $this->getHubName();
 		$lang = $this->getContentLangCode();
@@ -33,6 +34,7 @@ class TopArticles implements IDataProvider {
 			}
 		);
 
+		wfProfileOut( __METHOD__ );
 		return $out;
 	}
 
@@ -72,6 +74,8 @@ class TopArticles implements IDataProvider {
 	 * ]
 	 */
 	protected function getTopArticles( $hubName, $langCode, $limit ) {
+		wfProfileIn( __METHOD__ );
+
 		$topArticles = [];
 
 		$results = \DataMartService::getTopCrossWikiArticlesByPageview(
@@ -92,6 +96,7 @@ class TopArticles implements IDataProvider {
 			}
 		}
 
+		wfProfileOut( __METHOD__ );
 		return array_slice( $topArticles, 0, $limit );
 	}
 
@@ -110,6 +115,8 @@ class TopArticles implements IDataProvider {
 	 * ]
 	 */
 	protected function getArticlesInfo( $topArticles ) {
+		wfProfileIn( __METHOD__ );
+
 		$out = [];
 
 		foreach ( $topArticles as $topArticleInfo ) {
@@ -142,6 +149,7 @@ class TopArticles implements IDataProvider {
 			}
 		}
 
+		wfProfileOut( __METHOD__ );
 		return $out;
 	}
 }
