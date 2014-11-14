@@ -6,6 +6,17 @@
 
 var GlobalNotification = {
 
+	defaultTimeout: 3000,
+	/**
+	 * Used for introspection in the browser, has no affect on this code
+	 */
+	options: {
+		'notify': 'blue',
+		'confirm': 'green',
+		'error': 'red',
+		'warn': 'yellow'
+	},
+
 	/**
 	 * Called once to instantiate this feature
 	 */
@@ -25,22 +36,12 @@ var GlobalNotification = {
 	},
 
 	/**
-	 * Used for introspection in the browser, has no affect on this code
-	 */
-	options: {
-		'notify': 'blue',
-		'confirm': 'green',
-		'error': 'red',
-		'warn': 'yellow'
-	},
-
-	/**
 	 * @desc auto-hides global notification after 3 seconds
 	 * @todo: required for CON-1856 - temporary solution must be removed together with global notification redesign
 	 */
 	autoHide: function () {
 		'use strict';
-		window.setTimeout(this.hide, 3000);
+		window.setTimeout(this.hide, this.defaultTimeout);
 	},
 
 	/**
@@ -98,7 +99,7 @@ var GlobalNotification = {
 
 			// Modal notifications have no close button so set a timeout
 			if (isModal && typeof timeout !== 'number') {
-				timeout = 3000;
+				timeout = GlobalNotification.defaultTimeout;
 			}
 
 			GlobalNotification.createDom(element, isModal);
