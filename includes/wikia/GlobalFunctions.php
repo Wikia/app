@@ -1748,7 +1748,9 @@ function wfReturnArray( $value ) {
 }
 
 /**
- * get unique array (case insensitive)
+ * Get unique array (case insensitive). This works because array_unique preserves
+ * the numeric array indices and then array_intersect_key compares these indices
+ * and not the values themselves. Implemention could probably be improved.
  * @param array $arr
  * @return array $unique
  */

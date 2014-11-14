@@ -10,7 +10,7 @@ class MakerstudiosApiWrapper extends IngestionApiWrapper {
 	}
 
 	public function getThumbnailUrl() {
-		if (!empty($this->metadata['thumbnail'])) {
+		if ( !empty( $this->metadata['thumbnail'] ) ) {
 			return $this->metadata['thumbnail'];
 		}
 		return '';

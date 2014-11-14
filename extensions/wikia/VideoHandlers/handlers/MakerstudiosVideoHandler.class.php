@@ -15,11 +15,11 @@ class MakerstudiosVideoHandler extends VideoHandler {
 		$html = <<< EOF
 <iframe class='videoplayer' src='$url' $sizeString style='border:0; overflow:hidden;' allowfullscreen seamless scrolling='no'></iframe>;
 EOF;
-		return array(
+		return [
 			'html'	=> $html,
 			'width' => $width,
 			'height' => $height,
-		);
+		];
 	}
 
 }

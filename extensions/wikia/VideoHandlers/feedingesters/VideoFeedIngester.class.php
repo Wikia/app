@@ -252,7 +252,7 @@ abstract class VideoFeedIngester {
 		foreach( $valueOrEmptyString as $key ) {
 			$metaData[$key] = $this->getVideoData( $key );
 		}
-		foreach( $valueOrZero as $key ) {
+		foreach ( $valueOrZero as $key ) {
 			$metaData[$key] = $this->getVideoData( $key, 0 );
 		}
 		$metaData['keywords'] = $this->filterKeywords();
