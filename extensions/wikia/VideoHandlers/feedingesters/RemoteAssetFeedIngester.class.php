@@ -9,7 +9,7 @@
  * the OoyalaFeedIngester runs, these videos are ingested along with all of Ooyala's
  * own content.
  */
-class RemoteAssetFeedIngester extends VideoFeedIngester {
+abstract class RemoteAssetFeedIngester extends VideoFeedIngester {
 
 	public static $REMOTE_ASSET = true;
 
@@ -52,13 +52,13 @@ class RemoteAssetFeedIngester extends VideoFeedIngester {
 		$this->metaData['pageCategories'] = implode( ', ', $this->pageCategories );
 		if ( !empty( $this->duplicateAsset ) ) {
 			if ( !empty( $this->duplicateAsset['metadata']['sourceid'] ) && $this->duplicateAsset['metadata']['sourceid'] == $this->metaData['videoId'] ) {
-				$result = $this->updateRemoteAsset( $this->metaData['videoId'], $this->metaData['destinationTitle'], $this->metaData, $this->duplicateAsset );
+				$result = $this->updateRemoteAsset();
 			} else {
 				$this->logger->videoSkipped( "Skipping {$this->metaData['name']} - {$this->metaData['description']}. SouceId not match (Id: {$this->metaData['videoId']}).\n" );
 				return 0;
 			}
 		} else {
-			$result = $this->createRemoteAsset( $this->metaData['videoId'], $this->metaData['destinationTitle'], $this->metaData );
+			$result = $this->createRemoteAsset();
 		}
 
 		return $result;
@@ -66,116 +66,104 @@ class RemoteAssetFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * Create remote asset
-	 * @param string $id
-	 * @param string $name
-	 * @param array $metadata
 	 * @return integer
 	 */
-	protected function createRemoteAsset( $id, $name, array $metadata ) {
+	protected function createRemoteAsset() {
 
-		$assetData = $this->generateRemoteAssetData( $name, $metadata );
-		if ( empty( $assetData['url']['flash'] ) ) {
+		$this->prepareMetaDataForOoyala();
+		if ( empty( $this->metaData['url']['flash'] ) ) {
 			$this->logger->videoWarnings( "Error when generating remote asset data: empty asset url.\n" );
 			return 0;
 		}
 
-		if ( empty( $assetData['duration'] ) || $assetData['duration'] < 0 ) {
-			$this->logger->videoWarnings( "Error when generating remote asset data: invalid duration ($assetData[duration]).\n" );
+		if ( empty( $this->metaData['duration'] ) || $this->metaData['duration'] < 0 ) {
+			$this->logger->videoWarnings( "Error when generating remote asset data: invalid duration ($this->metaData[duration]).\n" );
 			return 0;
 		}
 
 		// check if video title exists
 		$ooyalaAsset = new OoyalaAsset();
-		$isExist = $ooyalaAsset->isTitleExist( $assetData['assetTitle'], $assetData['provider'] );
+		$isExist = $ooyalaAsset->isTitleExist( $this->metaData['assetTitle'], $this->metaData['provider'] );
 		if ( $isExist ) {
-			$this->logger->videoSkipped( "SKIP: Uploading Asset: $name ($assetData[provider]). Video already exists in remote assets.\n" );
+			$this->logger->videoSkipped( "SKIP: Uploading Asset: {$this->metaData['destinationTitle']} ($this->metaData[provider]). Video already exists in remote assets.\n" );
 			return 0;
 		}
 
 		if ( $this->debugMode() ) {
 			print "Ready to create remote asset\n";
-			print "id:          $id\n";
-			print "name:        $name\n";
+			print "id:          {$this->metaData['videoId']}\n";
+			print "name:        {$this->metaData['destinationTitle']}\n";
 			print "assetdata:\n";
-			foreach ( explode( "\n", var_export( $assetData, TRUE ) ) as $line ) {
+			foreach ( explode( "\n", var_export( $this->metaData, TRUE ) ) as $line ) {
 				print ":: $line\n";
 			}
 		} else {
-			$result = $ooyalaAsset->addRemoteAsset( $assetData );
+			$result = $ooyalaAsset->addRemoteAsset( $this->metaData );
 			if ( !$result ) {
 				$this->logger->videoWarnings();
 				return 0;
 			}
 		}
 
-		$categories = empty( $metadata['pageCategories'] ) ? [] : explode( ", ", $metadata['pageCategories'] );
-		$this->logger->videoIngested( "Uploaded remote asset: $name (id: $id)\n", $categories );
+		$categories = empty( $this->metaData['pageCategories'] ) ? [] : explode( ", ", $this->metaData['pageCategories'] );
+		$this->logger->videoIngested( "Uploaded remote asset: {$this->metaData['destinationTitle']} (id: {$this->metaData['videoId']})\n", $categories );
 
 		return 1;
 	}
 
 	/**
 	 * Update remote asset (metadata only)
-	 * @param string $id
-	 * @param string $name
-	 * @param array $metadata
-	 * @param array $dupAsset
 	 * @return integer
 	 */
-	protected function updateRemoteAsset( $id, $name, array $metadata, $dupAsset ) {
+	protected function updateRemoteAsset() {
 
-		if ( empty( $dupAsset['embed_code'] ) ) {
+		if ( empty( $this->duplicateAsset['embed_code'] ) ) {
 			$this->logger->videoWarnings( "Error when updating remote asset data: empty asset embed code.\n" );
 			return 0;
 		}
 
-		$assetData = $this->generateRemoteAssetData( $dupAsset['name'], $metadata, false );
-
+		$this->prepareMetaDataForOoyala( $generateUrl = false );
 		$ooyalaAsset = new OoyalaAsset();
-		$assetMeta = $ooyalaAsset->getAssetMetadata( $assetData );
+		$assetMeta = $ooyalaAsset->getAssetMetadata( $this->metaData );
 
 		// set reupload
 		$assetMeta['reupload'] = 1;
 
 		// remove unwanted data
-		$emptyMetaKeys = array_diff( array_keys( $dupAsset['metadata'] ), array_keys( $assetMeta ) );
+		$emptyMetaKeys = array_diff( array_keys( $this->duplicateAsset['metadata'] ), array_keys( $assetMeta ) );
 		foreach ( $emptyMetaKeys as $key ) {
 			$assetMeta[$key] = null;
 		}
 
 		if ( $this->debugMode() ) {
 			print "Ready to update remote asset\n";
-			print "id:          $id\n";
-			print "name:        $name\n";
-			print "embed code:  $dupAsset[embed_code]\n";
-			print "asset name:  $dupAsset[name]\n";
+			print "id:          {$this->metaData['videoId']}\n";
+			print "name:        {$this->metaData['destinationTitle']}\n";
+			print "embed code:  {$this->duplicateAsset['embed_code']}\n";
+			print "asset name:  {$this->duplicateAsset['name']}\n";
 			print "metadata:\n";
 			foreach ( explode( "\n", var_export( $assetMeta, TRUE ) ) as $line ) {
 				print ":: $line\n";
 			}
 		} else {
-			$result = OoyalaAsset::updateMetadata( $dupAsset['embed_code'], $assetMeta );
+			$result = OoyalaAsset::updateMetadata( $this->duplicateAsset['embed_code'], $assetMeta );
 			if ( !$result ) {
 				$this->logger->videoWarnings();
 				return 0;
 			}
 		}
 
-		$categories = empty( $metadata['pageCategories'] ) ? [] : explode( ", ", $metadata['pageCategories'] );
-		$this->logger->videoIngested( "Uploaded remote asset: $name (id: $id)\n", $categories );
+		$categories = empty( $this->metaData['pageCategories'] ) ? [] : explode( ", ", $this->metaData['pageCategories'] );
+		$this->logger->videoIngested( "Uploaded remote asset: {$this->metaData['destinationTitle']} (id: {$this->metaData['videoId']})\n", $categories );
 
 		return 1;
 	}
 
 	/**
-	 * Generate remote asset data
-	 * @param string $name
-	 * @param array $data
-	 * @return array $data
+	 * Prepate metaData for ingestion onto Ooyala
+	 * @param boolean $generateUrl
 	 */
-	protected function generateRemoteAssetData( $name, array $data ) {
-		return $data['assetTitle'];
-	}
+	abstract protected function prepareMetaDataForOoyala( $generateUrl = false );
 
 	/**
 	 * @param string $content

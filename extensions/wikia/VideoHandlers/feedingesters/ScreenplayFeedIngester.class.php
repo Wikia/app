@@ -406,7 +406,7 @@ class ScreenplayFeedIngester extends RemoteAssetFeedIngester {
 			$addlCategories[] = $this->videoData['language'];
 		}
 
-		if ( stripos( $this->videoData['titleName'], '(VG)' ) !== false ) {
+		if ( preg_match( '\(VG\)', $this->videoData['titleName'] ) !== false ) {
 			$addlCategories[] = 'Games';
 		} else {
 			$addlCategories[] = 'Entertainment';
@@ -441,25 +441,20 @@ class ScreenplayFeedIngester extends RemoteAssetFeedIngester {
 
 	/**
 	 * Massage some video metadata and generate URLs to this video's assets
-	 * @param string $name
-	 * @param array $data
 	 * @param boolean $generateUrl
-	 * @return array $data
 	 */
-	public function generateRemoteAssetData( $name, $data, $generateUrl = true ) {
-		$data['assetTitle'] = $name;
-		$data['duration'] = $data['duration'] * 1000;
-		$data['published'] = empty( $data['published'] ) ? '' : strftime( '%Y-%m-%d', $data['published'] );
+	public function prepareMetaDataForOoyala( $generateUrl = true ) {
+		$this->metaData['assetTitle'] = $this->metaData['destinationTitle'];
+		$this->metaData['duration'] = $this->metaData['duration'] * 1000;
+		$this->metaData['published'] = empty( $this->metaData['published'] ) ? '' : strftime( '%Y-%m-%d', $this->metaData['published'] );
 
 		if ( $generateUrl ) {
-			$url = empty( $data['streamUrl'] ) ? $data['streamHdUrl'] : $data['streamUrl'];
-			$data['url'] = [
+			$url = empty( $this->metaData['streamUrl'] ) ? $this->metaData['streamHdUrl'] : $this->metaData['streamUrl'];
+			$this->metaData['url'] = [
 				'flash' => $url,
 				'iphone' => $url,
 			];
 		}
-
-		return $data;
 	}
 
 }

@@ -157,7 +157,7 @@ class AnyclipFeedIngester extends VideoFeedIngester {
 
 		$addlCategories[] = 'AnyClip';
 		$addlCategories[] = 'Entertainment';
-		if ( stristr( $this->videoData['titleName'], 'trailer' ) ) {
+		if ( preg_match( '/trailer/', $this->videoData['titleName'] ) ) {
 			$addlCategories[] = 'Trailers';
 		}
 

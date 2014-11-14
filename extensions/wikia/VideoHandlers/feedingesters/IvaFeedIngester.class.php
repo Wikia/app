@@ -973,9 +973,9 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 	public function generateCategories( array $addlCategories ) {
 		wfProfileIn( __METHOD__ );
 
-		$addlCategories[] = $this->videoData['name'];
-		$addlCategories[] = $this->videoData['series'];
-		$addlCategories[] = $this->videoData['category'];
+		$addlCategories[] = $this->getVideoData('name');
+		$addlCategories[] = $this->getVideoData('series');
+		$addlCategories[] = $this->getVideoData('category');
 
 		// VID-1736 Remove video title from categories
 		$titleKey = array_search( $this->videoData['titleName'], $addlCategories );
@@ -1006,31 +1006,25 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 
 	/**
 	 * Massage some video metadata and generate URLs to this video's assets
-	 * @param string $name
-	 * @param array $data
 	 * @param boolean $generateUrl
-	 * @return array $data
 	 */
-	protected function generateRemoteAssetData( $name, $data, $generateUrl = true ) {
-		$data['assetTitle'] = $name;
-		$data['duration'] = $data['duration'] * 1000;
-		$data['published'] = empty( $data['published'] ) ? '' : strftime( '%Y-%m-%d', $data['published'] );
+	protected function prepareMetaDataForOoyala( $generateUrl = true ) {
+		$this->metaData['assetTitle'] = $this->metaData['destinationTitle'];
+		$this->metaData['duration'] = $this->metaData['duration'] * 1000;
+		$this->metaData['published'] = empty( $this->metaData['published'] ) ? '' : strftime( '%Y-%m-%d', $this->metaData['published'] );
 
 		if ( $generateUrl ) {
-			$data['url'] = $this->getRemoteAssetUrls( $data['videoId'] );
+			$this->metaData['url'] = $this->getRemoteAssetUrls();
 		}
-
-		return $data;
 	}
 
 	/**
 	 * Get list of url for the remote asset
-	 * @param string $videoId
 	 * @return array
 	 */
-	public function getRemoteAssetUrls( $videoId ) {
+	public function getRemoteAssetUrls() {
 		$url = str_replace( '$1', F::app()->wg->IvaApiConfig['AppId'], static::$ASSET_URL );
-		$url = str_replace( '$2', $videoId, $url );
+		$url = str_replace( '$2', $this->videoData['videoId'], $url );
 
 		$expired = 1609372800; // 2020-12-31
 		$url = str_replace( '$3', $expired, $url );

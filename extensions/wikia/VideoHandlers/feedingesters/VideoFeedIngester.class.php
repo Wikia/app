@@ -155,18 +155,18 @@ abstract class VideoFeedIngester {
 		if ( is_array( static::$CLIP_FILTER ) ) {
 			foreach ( $this->videoData as $key => $value ) {
 				// See if we match key explicitly or by the catchall '*'
-				$regex_list = empty( static::$CLIP_FILTER['*'] ) ? '' : static::$CLIP_FILTER['*'];
-				$regex_list = empty( static::$CLIP_FILTER[$key] ) ? $regex_list : static::$CLIP_FILTER[$key];
+				$regexList = empty( static::$CLIP_FILTER['*'] ) ? '' : static::$CLIP_FILTER['*'];
+				$regexList = empty( static::$CLIP_FILTER[$key] ) ? $regexList : static::$CLIP_FILTER[$key];
 
 				// If we don't have  regex at this point, skip this bit of clip data
-				if ( empty( $regex_list ) ) {
+				if ( empty( $regexList ) ) {
 					continue;
 				}
 
 				// This can be a single regex or a list of regexes
-				$regex_list = is_array( $regex_list ) ? $regex_list : [ $regex_list ];
+				$regexList = is_array( $regexList ) ? $regexList : [ $regexList ];
 
-				foreach ( $regex_list as $regex ) {
+				foreach ( $regexList as $regex ) {
 					if ( preg_match( $regex, $value ) ) {
 						$msg = "Skipping (video is filtered) '{$this->videoData['titleName']}' - {$this->videoData['description']}.\n";
 						throw new FeedIngesterSkippedException( $msg );
@@ -334,10 +334,7 @@ abstract class VideoFeedIngester {
 	public function isValidDestinationTitle( $destinationTitle ) {
 		$sanitizedName = VideoFileUploader::sanitizeTitle( $destinationTitle );
 		$title = Title::newFromText( $sanitizedName, NS_FILE );
-		if ( is_null( $title ) ) {
-			return false;
-		}
-		return true;
+		return is_null( $title );
 	}
 
 	/**
@@ -452,16 +449,16 @@ abstract class VideoFeedIngester {
 	 * @return string
 	 */
 	protected function getUniqueName( $name ) {
-		$name_final = $name;
+		$nameFinal = $name;
 		$i = 2;
 		// is this name available?
-		$title = Title::newFromText( $name_final, NS_FILE );
+		$title = Title::newFromText( $nameFinal, NS_FILE );
 		while ( $title && $title->exists() ) {
-			$name_final = $name . ' ' . $i;
+			$nameFinal = $name . ' ' . $i;
 			$i++;
-			$title = Title::newFromText( $name_final, NS_FILE );
+			$title = Title::newFromText( $nameFinal, NS_FILE );
 		}
-		return $name_final;
+		return $nameFinal;
 	}
 
 	/**
