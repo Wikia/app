@@ -12,7 +12,7 @@
 @import 'extensions/wikia/Venus/styles/modules/throbberVenus';
 
 $placeholder-background-color: $color-article-navigation-inactive; // only for prototype version
-$article-items-spacing: 40px;
+$article-items-spacing: 30px;
 $header-without-cover-unit-spacing: 60px;
 
 .article {
@@ -246,15 +246,6 @@ $header-without-cover-unit-spacing: 60px;
 			margin-bottom: 15px;
 		}
 
-		h2,
-		h3 {
-			margin-top: 30px;
-		}
-
-		p {
-			margin-bottom: 30px;
-		}
-
 		ol,
 		ul {
 			padding-left: 43px;
@@ -311,10 +302,6 @@ $header-without-cover-unit-spacing: 60px;
 			.editsection {
 				padding-left: $small-grid-gutter;
 			}
-		}
-
-		p {
-			margin-bottom: 30px;
 		}
 
 		ol,
