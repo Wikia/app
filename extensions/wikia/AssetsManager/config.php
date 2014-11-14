@@ -1447,7 +1447,7 @@ $config['wikiasearch_scss_wikiamobile'] = array(
 
 /** Places **/
 $config['places_js'] = array(
-	'skin' => array( 'oasis', 'monobook', 'wikiamobile' ),
+	'skin' => array( 'oasis', 'monobook', 'wikiamobile', 'venus' ),
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 			'//extensions/wikia/Places/js/Places.js'
@@ -1456,7 +1456,7 @@ $config['places_js'] = array(
 
 $config['places_css'] = array(
 	'type' => AssetsManager::TYPE_CSS,
-	'skin' => array( 'oasis', 'monobook', 'wikiamobile' ),
+	'skin' => array( 'oasis', 'monobook', 'wikiamobile', 'venus' ),
 	'assets' => array(
 			'//extensions/wikia/Places/css/Places.css',
 	)
