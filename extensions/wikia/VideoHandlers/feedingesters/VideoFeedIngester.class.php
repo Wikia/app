@@ -36,7 +36,7 @@ abstract class VideoFeedIngester {
 	protected $pageCategories;
 
 	public function __construct( array $params = [] ) {
-		$this->dataNormalizer = new IngesterDataNormalizer();
+		$this->dataNormalizer = new FeedIngesterDataNormalizer();
 		$this->logger = new FeedIngesterLogger();
 		$this->debug = !empty( $params['debug'] );
 		$this->reupload = !empty( $params['reupload'] );

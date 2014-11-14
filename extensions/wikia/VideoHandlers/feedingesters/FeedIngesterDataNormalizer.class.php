@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class IngesterDataNormalizer
+ * Class FeedIngesterDataNormalizer
  *
  * Class used to map provider specific data values to a normalized
  * version. Eg, when it comes to a category for a video, one provider
@@ -10,7 +10,7 @@
  * to normalize all of those to just 'Movies' when we save the video
  * onto Wikia.
  */
-class IngesterDataNormalizer {
+class FeedIngesterDataNormalizer {
 
 	/**
 	 * Get normalized industry rating

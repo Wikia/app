@@ -247,14 +247,14 @@ $wgAutoloadClasses[ 'OoyalaFeedIngester' ] = $dir . '/feedingesters/OoyalaFeedIn
 $wgAutoloadClasses[ 'IvaFeedIngester' ] = $dir . '/feedingesters/IvaFeedIngester.class.php';
 $wgAutoloadClasses[ 'CrunchyrollFeedIngester' ] = $dir . '/feedingesters/CrunchyrollFeedIngester.class.php';
 $wgAutoloadClasses[ 'MakerstudiosFeedIngester' ] = $dir . '/feedingesters/MakerstudiosFeedIngester.class.php';
+$wgAutoloadClasses[ 'TestVideoFeedIngester' ] = $dir . '/tests/TestVideoFeedIngester.class.php';
 
-$wgAutoloadClasses[ 'IngesterDataNormalizer' ] = $dir . '/feedingesters/IngesterDataNormalizer.class.php';
+$wgAutoloadClasses[ 'FeedIngesterDataNormalizer' ] = $dir . '/feedingesters/FeedIngesterDataNormalizer.class.php.php';
 $wgAutoloadClasses[ 'FeedIngesterFactory' ] = $dir . '/feedingesters/FeedIngesterFactory.class.php';
 $wgAutoloadClasses[ 'FeedIngesterLogger' ] = $dir . '/feedingesters/FeedIngesterLogger.class.php';
 
 $wgAutoloadClasses[ 'OoyalaAsset' ] = $dir . '/feedingesters/OoyalaAsset.class.php';
 
-$wgAutoloadClasses[ 'TestVideoFeedIngester' ] = $dir . '/tests/FeedIngesterTestClasses.class.php';
 
 $wgVideoMigrationProviderMap = array(
 	4 => 'Fivemin',
