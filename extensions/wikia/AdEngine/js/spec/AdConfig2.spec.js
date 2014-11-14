@@ -319,6 +319,7 @@ describe('AdConfig2', function () {
 			mockEvolveSlotConfig(false),
 			gptSlotConfigMock,
 			rtpMockWithTier,
+			amazonMock,
 
 			// AdProviders
 			adProviderGptMock,
