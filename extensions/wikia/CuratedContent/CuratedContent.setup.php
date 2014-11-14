@@ -30,10 +30,8 @@ $wgSpecialPages[ 'CuratedContent' ] =  'CuratedContentSpecialController';
 $wgGroupPermissions['*']['curatedcontent'] = false;
 $wgGroupPermissions['staff']['curatedcontent'] = true;
 $wgGroupPermissions['helper']['curatedcontent'] = true;
+$wgGroupPermissions['sysop']['curatedcontent'] = true;
 
-if ( $wgCuratedContentForAdmins ) {
-	$wgGroupPermissions['sysop']['curatedcontent'] = true;
-}
 
 $wgGroupPermissions['*']['curatedcontent-switchforadmins'] = false;
 $wgGroupPermissions['staff']['curatedcontent-switchforadmins'] = true;
@@ -51,9 +49,6 @@ JSMessages::registerPackage( 'CuratedContentMsg', [
 
 //hooks
 $wgHooks['CuratedContentSave'][] = 'CuratedContentController::onCuratedContentSave';
-//add Curated Content to WikiFeatures
-$wgHooks['WikiFeatures::onGetFeatureNormal'][] = 'CuratedContentSpecialController::onWikiFeatures';
-$wgHooks['WikiFeatures::onToggleFeature'][] = 'CuratedContentSpecialController::onWikiFeatures';
 
 //minimal package of messages in CuratedContent
 JSMessages::registerPackage( 'CuratedContent', [

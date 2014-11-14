@@ -101,6 +101,10 @@ $messages['en'] = array(
 	'wikifeatures-feature-heading-wgGameGuidesContentForAdmins' => 'Game Guides Content',
 	'wikifeatures-feature-description-wgGameGuidesContentForAdmins' => 'Use the Special:GameGuidesContent page of your wiki to manage which categories appear in the [[w:c:community:Help:Game Guides|Game Guides]] mobile app. Expand your potential audience!',
 
+	// CuratedContent
+	'wikifeatures-feature-heading-wgEnableCuratedContentExt' => 'Curated Content',
+	'wikifeatures-feature-description-wgEnableCuratedContentExt' => 'Use the Special:CuratedContent page of your wiki to manage content which appear in the mobile app. Expand your potential audience!',
+
 	// Empty lab message
 	'wikifeatures-feature-heading-emptylabs' => 'Looks like the lab is taking a break',
 	'wikifeatures-feature-description-emptylabs' => 'Our tech scientists are hard at work bubbling up new features for you to try out. Look for more labs here soon!',
