@@ -37,7 +37,7 @@ require(
 					cache.set('wikiaInYourLangRequestSent', true, ttl);
 
 					getNativeWikiaInfo();
-				} else if (typeof (cache.get(targetLanguage + 'WikiaInYourLangMessage')) == 'string') {
+				} else if (typeof cache.get(targetLanguage + 'WikiaInYourLangMessage') === 'string') {
 					displayNotification(cache.get(targetLanguage + 'WikiaInYourLangMessage'));
 				}
 			}
@@ -48,7 +48,7 @@ require(
 				geoCountryCode = geo.getCountryCode().toLowerCase();
 
 			// Check if a browser's language is one of the supported languages
-			if (typeof (browserLanguage) == 'string' && $.inArray(browserLanguage.substr(0, 2), supportedLanguages) !== -1) {
+			if (typeof browserLanguage === 'string' && $.inArray(browserLanguage.substr(0, 2), supportedLanguages) !== -1) {
 				targetLanguage = browserLanguage.substr(0, 2);
 				// Check if the country code is one of the supported languages
 			} else if ($.inArray(geoCountryCode, supportedLanguages) !== -1) {
