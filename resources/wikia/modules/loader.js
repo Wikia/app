@@ -56,9 +56,9 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 				if (type === 'groups'){
 					path = path.join(',');
 				} else {
-					while (path[i]) {
+					for (i = 0; i < path.length ; i++) {
 						url = path[i];
-						path[i++] = getUrl(url, type, params);
+						path[i] = getUrl(url, type, params);
 					}
 
 					return path;
@@ -107,7 +107,7 @@ define('wikia.loader', ['wikia.window', require.optional('mw'), 'wikia.nirvana',
 				} else if (element.onload === null) {
 					// If onload is available, use it
 					element.onload = success;
-					element.onerror = errorFunction();
+					element.onerror = errorFunction;
 				}
 
 				log('[' + type + '] ' + url, log.levels.info, 'loader');
