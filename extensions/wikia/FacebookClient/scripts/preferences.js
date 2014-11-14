@@ -2,8 +2,8 @@
 	'use strict';
 
 	function Preferences() {
-		this.$connect = $('#fbConnectPreferences');
-		this.$disconnect = $('#fbDisconnectPreferences');
+		this.$connectWrapper = $('#fbConnectPreferences');
+		this.$disconnectWrapper = $('#fbDisconnectPreferences');
 		this.$disconnectLink = $('#fbDisconnectLink');
 		this.$connectLink = $('.sso-login-facebook');
 		return this;
@@ -51,14 +51,14 @@
 	};
 
 	Preferences.prototype.toggle = function () {
-		this.$connect
-			.add(this.$disconnect)
+		this.$connectWrapper
+			.add(this.$disconnectWrapper)
 			.toggleClass('hidden');
 	};
 
 	Preferences.prototype.disconnect = function (e) {
 		var self = this,
-			fbFromExisting = this.$disconnect.attr('data-fb-from-exist'),
+			fbFromExisting = this.$disconnectWrapper.attr('data-fb-from-exist'),
 			disconnectMsg = fbFromExisting ? 'fbconnect-disconnect-info-existing' : 'fbconnect-disconnect-info';
 
 		e.preventDefault();
