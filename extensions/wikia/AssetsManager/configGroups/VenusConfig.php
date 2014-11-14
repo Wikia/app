@@ -111,7 +111,6 @@ $VenusConfig[ 'venus_head_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['venus'],
 	'assets' => [
-		'#group_abtesting',
 		'//resources/wikia/modules/lazyqueue.js',
 	]
 ];
@@ -147,7 +146,6 @@ $VenusConfig[ 'global_footer_scss' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'venus' ],
 	'assets' => [
-		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.scss',
 		'//extensions/wikia/GlobalFooter/styles/GlobalFooterVenus.scss'
 	]
 ];
