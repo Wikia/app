@@ -211,8 +211,7 @@ var WikiaFooterApp = {
 		openConfiguration: function( evt ) {
 			evt.preventDefault();
 			require( ['wikia.toolsCustomization'], function( TC ) {
-				var conf = new TC.ToolsCustomization( this );
-				conf.show();
+				new TC.ToolsCustomization( this).show();
 				return false;
 			} );
 		},

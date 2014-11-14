@@ -10,7 +10,7 @@
 			$this->available = !$wgUser->isAnon();
 			$this->enabled = true;
 			$this->imageSprite = 'share';
-			$this->caption = wfMsg('user-tools-customize');
+			$this->caption = wfMessage('user-tools-customize')->text();
 			$this->linkClass = 'tools-customize';
 		}
 

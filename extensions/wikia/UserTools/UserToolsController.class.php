@@ -3,17 +3,14 @@
 class UserToolsController extends WikiaController {
 
 	static protected $toolbarService = null;
-	protected $skinName = '';
 
 	public function Toolbar() {
-		$this->skinName = RequestContext::getMain()->getSkin()->getSkinName();
 		$service = $this->getToolbarService();
 		$toolbar = $service->listToInstance( $service->getVisibleList() );
 		$this->response->setVal( 'toolbar', $service->instanceToRenderData( $toolbar ) );
 	}
 
 	public function executeToolbarSave( $params ) {
-		$this->skinName = RequestContext::getMain()->getSkin()->getSkinName();
 		$status = false;
 		$service = $this->getToolbarService();
 		if ( isset( $params['toolbar'] ) && is_array( $params['toolbar'] ) ) {
@@ -43,8 +40,6 @@ class UserToolsController extends WikiaController {
 	}
 
 	public function ToolbarConfiguration() {
-		$this->skinName = RequestContext::getMain()->getSkin()->getSkinName();
-
 		$this->response->setVal(
 			'configurationHtml',
 			F::app()->renderView( 'UserTools', 'ToolbarConfigurationPopup', array( 'format' => 'html' ) )

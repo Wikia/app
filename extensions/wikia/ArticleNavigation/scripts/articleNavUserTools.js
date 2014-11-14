@@ -1,8 +1,9 @@
 /* global define */
 define('wikia.articleNavUserTools', [
 	'wikia.nirvana', 'wikia.tracker', 'wikia.window', 'wikia.userToolsHelper', 'wikia.dropdownNavigation', 'jquery', 'wikia.toolsCustomization'
-], function (nirvana, tracker, win, userToolsHelper, dropdownNavigation, $, TC) {
+], function (nirvana, tracker, win, userToolsHelper, DropdownNavigation, $, TC) {
 	'use strict';
+	var dropdownInstance;
 
 	/**
 	 * Initialize user tools
@@ -11,16 +12,16 @@ define('wikia.articleNavUserTools', [
 		var userToolsPromise = getDropdownData(),
 			userToolsPromiseAfterChanges;
 
+		$.when(userToolsPromise).done(function (toolbarData) {
+			loadDropdown(toolbarData);
+		});
+
 		$('body').on('userToolsItemAdded', function () {
 			userToolsPromiseAfterChanges = getDropdownData();
 
 			$.when(userToolsPromiseAfterChanges).done(function (toolbarData) {
 				loadDropdown(toolbarData);
 			});
-		});
-
-		$.when(userToolsPromise).done(function (toolbarData) {
-			loadDropdown(toolbarData);
 		});
 	}
 
@@ -42,8 +43,7 @@ define('wikia.articleNavUserTools', [
 	 */
 	function enableCustomizeModal() {
 		$('#userToolsDropdown').find('.tools-customize').on('click', function () {
-			var conf = new TC.ToolsCustomization(this);
-			conf.show();
+			new TC.ToolsCustomization(this).show();
 			return false;
 		});
 	}
@@ -71,7 +71,7 @@ define('wikia.articleNavUserTools', [
 			$userToolsDropdown.remove();
 		}
 
-		dropdownNavigation({
+		dropdownInstance = new DropdownNavigation({
 			id: 'userToolsDropdown',
 			data: items,
 			trigger: 'articleNavSettings'

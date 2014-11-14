@@ -2,15 +2,15 @@
 define('wikia.toolsCustomization', ['wikia.window', 'wikia.browserDetect', 'jquery', 'wikia.ui.factory'], function(win, browserDetect, $, uiFactory) {
 	'use strict';
 
-		window.ToolbarCustomize = window.ToolbarCustomize || {};
+		win.ToolbarCustomize = win.ToolbarCustomize || {};
 
-		var TC = window.ToolbarCustomize,
+		var TC = win.ToolbarCustomize,
 			isIPad = false,
-			wgBlankImgUrl = window.wgBlankImgUrl;
+			wgBlankImgUrl = win.wgBlankImgUrl;
 
 			isIPad = browserDetect.isIPad();
 
-		TC.OptionsTree = $.createClass( window.Observable, {
+		TC.OptionsTree = $.createClass( win.Observable, {
 
 			constructor: function( el ) {
 				TC.OptionsTree.superclass.constructor.call( this );
@@ -173,7 +173,7 @@ define('wikia.toolsCustomization', ['wikia.window', 'wikia.browserDetect', 'jque
 			}
 		} );
 
-		TC.OptionLinks = $.createClass( window.Observable, {
+		TC.OptionLinks = $.createClass( win.Observable, {
 
 			constructor: function( el ) {
 				TC.OptionLinks.superclass.constructor.call( this );
@@ -279,7 +279,7 @@ define('wikia.toolsCustomization', ['wikia.window', 'wikia.browserDetect', 'jque
 			},
 
 			onLoadFailure: function( req, textStatus, errorThrown ) {
-				window.GlobalNotification.show( errorThrown, 'error' );
+				win.GlobalNotification.show( errorThrown, 'error' );
 			},
 
 			checkLoad: function() {
@@ -518,7 +518,7 @@ define('wikia.toolsCustomization', ['wikia.window', 'wikia.browserDetect', 'jque
 					controller: 'UserTools',
 					method: 'ToolbarSave',
 					data: {
-						title: window.wgPageName,
+						title: win.wgPageName,
 						toolbar: toolbar
 					},
 					callback: $.proxy( function( data, status ) {
@@ -533,13 +533,13 @@ define('wikia.toolsCustomization', ['wikia.window', 'wikia.browserDetect', 'jque
 					$('body').trigger('userToolsItemAdded', [data.toolbar]);
 					this.modal.trigger( 'close' );
 				} else {
-					window.GlobalNotification.show( status, 'error' );
+					win.GlobalNotification.show( status, 'error' );
 				}
 			}
 
 		} );
 
-		window.ToolbarCustomize = TC;
+		win.ToolbarCustomize = TC;
 
 	return {
 		ToolsCustomization: TC.Configuration
