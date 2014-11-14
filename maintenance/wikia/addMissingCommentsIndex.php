@@ -14,8 +14,6 @@ require_once( $dir . '/../Maintenance.php' );
  */
 class AddMissingCommentsIndex extends Maintenance {
 
-	const BATCH_LIMIT = 100;
-
 	const TABLE_NAME = 'comments_index';
 	const INDEX_NAME = 'last_touched';
 
@@ -57,7 +55,7 @@ class AddMissingCommentsIndex extends Maintenance {
 			[ 'city_list.city_id', 'city_list.city_dbname' ],
 			$where,
 			'AddMissingCommentsIndex',
-			[ 'ORDER BY' => 'city_id', 'LIMIT' => self::BATCH_LIMIT ]
+			[ 'ORDER BY' => 'city_id' ]
 		);
 
 		while ( $row = $res->fetchObject() ) {
@@ -69,8 +67,7 @@ class AddMissingCommentsIndex extends Maintenance {
 				continue;
 			}
 			$this->output( "Checking \"{$dbname}\" ({$row->city_id})..." );
-			if ( $dbh->tableExists( self::TABLE_NAME, __METHOD__ )
-				&& !$dbh->indexExists( self::TABLE_NAME, self::INDEX_NAME ) ) {
+			if ( !$dbh->indexExists( self::TABLE_NAME, self::INDEX_NAME ) ) {
 				if ( $this->addMissingIndex( $dbh ) ) {
 					$this->output( ' UPDATED' );
 				}
