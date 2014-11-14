@@ -1,8 +1,8 @@
 /* global define */
 define(
 	'wikia.venusToc',
-	['jquery', 'wikia.window', 'wikia.toc', 'wikia.dropdownNavigation'],
-	function ($, win, tocModule, DropdownNavigation) {
+	['jquery', 'wikia.window', 'wikia.toc', 'wikia.dropdownNavigation', 'wikia.tracker'],
+	function ($, win, tocModule, DropdownNavigation, tracker) {
 		'use strict';
 
 		var articleWrapperId = 'mw-content-text',
@@ -90,7 +90,11 @@ define(
 		 */
 		function init(id, isTouchScreen) {
 			var options = {},
-				articleSections = getTocData(headers, articleWrapperId);
+				articleSections = getTocData(headers, articleWrapperId),
+				track = tracker.buildTrackingFunction({
+					action: tracker.ACTIONS.CLICK,
+					trackingMethod: 'both'
+				});
 
 			// initialize TOC only if article has sections
 			if (articleSections.length > 0) {
@@ -101,6 +105,29 @@ define(
 
 				$triggerButton = $('#' + id);
 				$parent = $triggerButton.parent();
+
+				// required for backword compatibility with oasis tracking
+				$parent.on('mousedown touchstart', 'a', function (event) {
+					var label,
+						el = $(event.currentTarget);
+
+					// Primary mouse button only
+					if (event.which !== 1) {
+						return;
+					}
+
+					if (el.prop('className') === '') {
+						label = 'link-internal';
+					}
+
+					if (label !== undefined) {
+						track({
+							browserEvent: event,
+							category: 'article',
+							label: label
+						});
+					}
+				});
 
 				if (!isTouchScreen) {
 					win.delayedHover($parent[0], delayHoverParams);
