@@ -28,7 +28,7 @@ OO.inheritClass( ve.ui.WikiaSingleMediaDialog, ve.ui.Dialog );
 
 ve.ui.WikiaSingleMediaDialog.static.name = 'wikiaSingleMedia';
 
-ve.ui.WikiaSingleMediaDialog.static.title = OO.ui.deferMsg( 'visualeditor-dialog-wikiasinglemedia-title' );
+ve.ui.WikiaSingleMediaDialog.static.title = OO.ui.deferMsg( 'wikia-visualeditor-dialog-wikiasinglemedia-title' );
 
 ve.ui.WikiaSingleMediaDialog.static.icon = 'gallery';
 
@@ -45,7 +45,7 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 	};
 	this.query = new ve.ui.WikiaSingleMediaQueryWidget( {
 		'$': this.$,
-		'placeholder': ve.msg( 'visualeditor-dialog-wikiasinglemedia-search' )
+		'placeholder': ve.msg( 'wikia-visualeditor-dialog-wikiasinglemedia-search' )
 	} );
 	this.queryInput = this.query.getInput();
 	this.$main = this.$( '<div>' )
