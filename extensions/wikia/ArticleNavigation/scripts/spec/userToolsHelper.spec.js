@@ -33,7 +33,7 @@ describe('wikia.userToolsHelper', function () {
 			toolbarNoHrefItemMock
 		];
 
-		expect(userToolsHelper.extractToolbarItems(toolbarData)).toEqual([{
+		expect(userToolsHelper.extractUserToolsItems(toolbarData)).toEqual([{
 			title: toolbarCorrectItemMock.caption,
 			href: toolbarCorrectItemMock.href,
 			dataAttr: [{

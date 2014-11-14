@@ -7,7 +7,7 @@ define('wikia.userToolsHelper', [], function() {
 	 * @param {Object} toolbarData - object which contains all data related with user tools
 	 * @returns {Array} - array with items which are acceptable by DropdownNavigation module
 	 */
-	function extractToolbarItems(toolbarData) {
+	function extractUserToolsItems(toolbarData) {
 		var items = [],
 			toolbarItemsCount = toolbarData.length,
 			currentItem, i, item;
@@ -36,7 +36,7 @@ define('wikia.userToolsHelper', [], function() {
 	}
 
 	return {
-		extractToolbarItems: extractToolbarItems
+		extractUserToolsItems: extractUserToolsItems
 	};
 
 });

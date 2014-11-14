@@ -12,6 +12,7 @@ class ArticleNavigationController extends WikiaController {
 
 		$this->setVal('share_type', 'multiple');
 		$this->setVal('share', $app->renderView('ArticleNavigationController', 'share'));
+		$this->setVal('user_tools', json_encode($this->generateUserTools()));
 	}
 
 	public function share() {
@@ -48,6 +49,10 @@ class ArticleNavigationController extends WikiaController {
 	}
 
 	public function getUserTools() {
+		$this->response->setVal('data', $this->generateUserTools());
+	}
+
+	private function generateUserTools() {
 		global $wgUser;
 
 		$anonListItems = [
@@ -77,6 +82,6 @@ class ArticleNavigationController extends WikiaController {
 				'href' => SpecialPage::getTitleFor('AdminDashboard')->getLocalURL()
 			];
 		}
-		$this->response->setVal( 'data',  $renderedData);
+		return $renderedData;
 	}
 }

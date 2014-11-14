@@ -9,29 +9,26 @@ define('wikia.articleNavUserTools', [
 	 * Initialize user tools
 	 */
 	function init() {
-		var userToolsPromise = getDropdownData(),
-			userToolsPromiseAfterChanges;
-
-		$.when(userToolsPromise).done(function (toolbarData) {
-			loadDropdown(toolbarData);
-		});
+		var userToolsPromiseAfterChanges,
+			initialUserTools = $('#articleNavSettings').data('usertools');
+			loadDropdown(initialUserTools);
 
 		$('body').on('userToolsItemAdded', function () {
 			userToolsPromiseAfterChanges = getDropdownData();
 
-			$.when(userToolsPromiseAfterChanges).done(function (toolbarData) {
-				loadDropdown(toolbarData);
+			$.when(userToolsPromiseAfterChanges).done(function (userToolsData) {
+				var userToolsItems = userToolsData.data;
+				loadDropdown(userToolsItems);
 			});
 		});
 	}
 
 	/**
 	 * Create dropdown, add tracking to it and enable customization
-	 * @param {Object} toolbarData - data returned by controller based on which dropdown is built
+	 * @param {Object} userToolsItems - data returned by controller based on which dropdown is built
 	 */
-	function loadDropdown(toolbarData) {
-		var toolbarItems = toolbarData.data,
-			filteredItems = userToolsHelper.extractToolbarItems(toolbarItems);
+	function loadDropdown(userToolsItems) {
+		var filteredItems = userToolsHelper.extractUserToolsItems(userToolsItems);
 
 		createDropdown(filteredItems);
 		trackUserTools();
@@ -57,7 +54,10 @@ define('wikia.articleNavUserTools', [
 			controller: 'ArticleNavigation',
 			method: 'getUserTools',
 			format: 'json',
-			type: 'GET'
+			type: 'GET',
+			data: {
+				'title': win.wgTitle
+			}
 		});
 	}
 
