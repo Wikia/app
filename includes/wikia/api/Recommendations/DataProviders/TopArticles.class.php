@@ -142,7 +142,7 @@ class TopArticles implements IDataProvider {
 					'url' => $response['basepath'] . $articleDetails['url'],
 					'description' => $articleDetails['abstract'],
 					'media' => [
-						'url' => $articleDetails['thumbnail']
+						'thumbUrl' => $articleDetails['thumbnail']
 					],
 					'source' => self::RECOMMENDATION_ENGINE
 				];
