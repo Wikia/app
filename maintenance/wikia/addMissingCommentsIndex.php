@@ -72,6 +72,7 @@ class AddMissingCommentsIndex extends Maintenance {
 					$this->output( ' UPDATED' );
 				}
 			}
+			$dbh->close();
 			$this->output( ' done ' .PHP_EOL );
 		}
 		$this->output( "Done in " . Wikia::timeDuration( time() - $this->time ) . PHP_EOL );
