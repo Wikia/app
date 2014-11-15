@@ -1,17 +1,20 @@
 /* global define */
 define('wikia.articleNavUserTools', [
-	'wikia.nirvana', 'wikia.tracker', 'wikia.window', 'wikia.userToolsHelper', 'wikia.dropdownNavigation', 'jquery', 'wikia.toolsCustomization'
-], function (nirvana, tracker, win, userToolsHelper, DropdownNavigation, $, TC) {
+	'wikia.nirvana', 'wikia.tracker', 'wikia.window', 'wikia.dropdownNavigation', 'jquery', 'wikia.toolsCustomization'
+], function (nirvana, tracker, win, DropdownNavigation, $, TC) {
 	'use strict';
-	var dropdownInstance;
+	var dropdownInstance, entryPoint;
 
 	/**
 	 * Initialize user tools
 	 */
 	function init() {
 		var userToolsPromiseAfterChanges,
-			initialUserTools = $('#articleNavSettings').data('usertools');
-			loadDropdown(initialUserTools);
+			$articleNavSettings = $('#articleNavSettings'),
+			initialUserTools = $articleNavSettings.data('usertools');
+
+		entryPoint = $articleNavSettings.closest('li');
+		loadDropdown(initialUserTools);
 
 		$('body').on('userToolsItemAdded', function () {
 			userToolsPromiseAfterChanges = getDropdownData();
@@ -21,6 +24,16 @@ define('wikia.articleNavUserTools', [
 				loadDropdown(userToolsItems);
 			});
 		});
+
+		if (!win.Wikia.isTouchScreen()) {
+			win.delayedHover(entryPoint[0], {
+				onActivate: show,
+				onDeactivate: hide,
+				activateOnClick: false
+			});
+		} else {
+			entryPoint.on('click', show);
+		}
 	}
 
 	/**
@@ -28,9 +41,7 @@ define('wikia.articleNavUserTools', [
 	 * @param {Object} userToolsItems - data returned by controller based on which dropdown is built
 	 */
 	function loadDropdown(userToolsItems) {
-		var filteredItems = userToolsHelper.extractUserToolsItems(userToolsItems);
-
-		createDropdown(filteredItems);
+		createDropdown(userToolsItems);
 		trackUserTools();
 		enableCustomizeModal();
 	}
@@ -122,6 +133,29 @@ define('wikia.articleNavUserTools', [
 				});
 			}
 		});
+	}
+
+	/**
+	 * @desc shows dropdown
+	 * @param {Event=} event
+	 */
+	function show(event) {
+		entryPoint.addClass('active');
+
+		// handle touch interactions
+		if (event) {
+			event.stopPropagation();
+		}
+
+		$('body').one('click', hide);
+	}
+
+	/**
+	 * @desc hides dropdown
+	 */
+	function hide() {
+		dropdownInstance.resetUI();
+		entryPoint.removeClass('active');
 	}
 
 	return {

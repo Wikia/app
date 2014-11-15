@@ -210,7 +210,6 @@ $VenusConfig[ 'article_navigation_js' ] = [
 		'//resources/wikia/modules/uifactory.js',
 		'//resources/wikia/modules/uicomponent.js',
 		'//extensions/wikia/UserTools/scripts/UserTools.js',
-		'//extensions/wikia/ArticleNavigation/scripts/userToolsHelper.js',
 		'//extensions/wikia/ArticleNavigation/scripts/articleNavUserTools.js',
 		'//extensions/wikia/ArticleNavigation/scripts/editActions.js',
 		'//extensions/wikia/ArticleNavigation/scripts/sticky.js',

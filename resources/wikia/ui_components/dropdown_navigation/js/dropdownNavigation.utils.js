@@ -46,7 +46,7 @@ define('wikia.dropdownNavigation.utils', function () {
 		for (i = 0; i < length; i++) {
 			item = data.sections[i];
 
-			if (item.sections.length > 0) {
+			if (item.sections && item.sections.length > 0) {
 				data.subsections.push(createReferenceId(item, i, data.id));
 			}
 		}

@@ -2,6 +2,16 @@
 
 class ArticleNavigationController extends WikiaController {
 
+	/**
+	 * @var ArticleNavigationHelper
+	 */
+	private $helper;
+
+	public function __construct() {
+		parent::__construct();
+		$this->helper = new ArticleNavigationHelper();
+	}
+
 	public function index() {
 		$app = F::app();
 
@@ -14,7 +24,7 @@ class ArticleNavigationController extends WikiaController {
 
 		$this->setVal('share_type', 'multiple');
 		$this->setVal('share', $app->renderView('ArticleNavigationController', 'share'));
-		$this->setVal('user_tools', json_encode($this->generateUserTools()));
+		$this->setVal('user_tools', json_encode($this->helper->extractDropdownData($this->generateUserTools())));
 	}
 
 	private function renderEditActions() {
@@ -107,7 +117,9 @@ class ArticleNavigationController extends WikiaController {
 	}
 
 	public function getUserTools() {
-		$this->response->setVal('data', $this->generateUserTools());
+		$this->response->setVal(
+			'data', $this->helper->extractDropdownData($this->generateUserTools())
+		);
 	}
 
 	private function generateUserTools() {
@@ -116,8 +128,7 @@ class ArticleNavigationController extends WikiaController {
 		$anonListItems = [
 			'SpecialPage:Mostpopularcategories',
 			'SpecialPage:WikiActivity',
-			'SpecialPage:NewFiles',
-			'SpecialPage:Search'
+			'SpecialPage:NewFiles'
 		];
 
 		$service = new SharedToolbarService();
