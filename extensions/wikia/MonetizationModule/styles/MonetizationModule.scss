@@ -2,15 +2,66 @@
 @import 'skins/oasis/css/core/layout';
 
 .monetization-module {
+	clear: left;
+
 	.ad-header {
-		clear: both;
 		color: $color-alternate-text;
 		font-size: 10px;
 		font-weight: normal;
 		margin-bottom: 6px;
+		padding-left: 10px;
 		text-align: left;
 		text-transform: uppercase;
 	}
+
+	.ad-responsive {
+		height: 90px;
+		width: 728px;
+	}
+
+	.ad-responsive-ic {
+		height: 90px;
+		width: 468px;
+	}
+
+	@media(min-width: 1024px) {
+		.ad-responsive-ic {
+			height: 100px;
+			width: 320px;
+		}
+
+		.ad-responsive {
+			height: 90px;
+			width: 690px;
+		}
+	}
+
+	@media(min-width: 1440px) {
+		.ad-responsive-ic {
+			height: 90px;
+			width: 468px;
+		}
+
+		.ad-responsive {
+			height: 90px;
+			width: 728px;
+		}
+	}
+
+	@media(min-width: 1665px) {
+		.ad-responsive-ic {
+			height: 90px;
+			width: 690px;
+		}
+	}
+
+	@media(min-width: 1700px) {
+		.ad-responsive-ic {
+			height: 90px;
+			width: 728px;
+		}
+	}
+
 
 	h1 {
 		display: block;
@@ -67,15 +118,6 @@
 			font-weight: bold;
 			margin: 3px 0 1px;
 		}
-	}
-}
-
-#monetization-adunit-in_content {
-	@media(min-width: 1024px) {
-		display: none;
-	}
-	@media(min-width: 1440px) {
-		display: block;
 	}
 }
 
