@@ -214,7 +214,7 @@ class ScreenplayFeedIngester extends RemoteAssetFeedIngester {
 				if ( array_key_exists( $clip['EClipId'], $videos ) ) {
 					$videos[$clip['EClipId']] = $this->getClipData( $clip, $videos[$clip['EClipId']] );
 				} else {
-					$this->logger->setResultSummary( 'found' );
+					$this->logger->printAndSetResultSummary( 'found' );
 					$clipData['addlCategories'] = $addlCategories;
 					$videos[$clip['EClipId']] = $this->getClipData( $clip, $clipData );
 				}

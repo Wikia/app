@@ -24,7 +24,7 @@ class FeedIngesterLogger {
 	 */
 	public function videoFound( $num ) {
 		$msg = "Found $num videos.\n";
-		$this->setResultSummary( 'found', $msg, $num );
+		$this->printAndSetResultSummary( 'found', $msg, $num );
 	}
 
 	/**
@@ -32,7 +32,7 @@ class FeedIngesterLogger {
 	 * @param string $msg
 	 */
 	public function videoSkipped( $msg = '' ) {
-		$this->setResultSummary( 'skipped', $msg );
+		$this->printAndSetResultSummary( 'skipped', $msg );
 	}
 
 	/**
@@ -58,7 +58,7 @@ class FeedIngesterLogger {
 		}
 
 		$msg .= "\n";
-		$this->setResultSummary( 'ingested', $msg );
+		$this->printAndSetResultSummary( 'ingested', $msg );
 	}
 
 	/**
@@ -66,7 +66,7 @@ class FeedIngesterLogger {
 	 * @param string $msg
 	 */
 	public function videoWarnings( $msg = '' ) {
-		$this->setResultSummary( 'warnings', $msg );
+		$this->printAndSetResultSummary( 'warnings', $msg );
 	}
 
 	/**
@@ -74,7 +74,7 @@ class FeedIngesterLogger {
 	 * @param string $msg
 	 */
 	public function videoErrors( $msg = '' ) {
-		$this->setResultSummary( 'errors', $msg );
+		$this->printAndSetResultSummary( 'errors', $msg );
 	}
 
 	/**
@@ -83,7 +83,7 @@ class FeedIngesterLogger {
 	 * @param string $msg
 	 * @param integer $num
 	 */
-	public function setResultSummary( $field, $msg = '', $num = 1 ) {
+	public function printAndSetResultSummary( $field, $msg = '', $num = 1 ) {
 		if ( !empty( $msg ) ) {
 			echo $msg;
 		}
