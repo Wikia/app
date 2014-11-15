@@ -194,7 +194,8 @@ abstract class VideoFeedIngester {
 		if ( count( $duplicates ) > 0 ) {
 			$oldName = $duplicates[0]['img_name'];
 			if ( !$this->reupload ) {
-				$msg = "Skipping $oldName (Id: {$this->videoData['videoId']}, {$this->videoData['provider']}) - video already exists on Wikia and reupload is disabled.\n";
+				$msg = "Skipping $oldName (Id: {$this->videoData['videoId']}, {$this->videoData['provider']}) - ";
+				$msg .= "video already exists on Wikia and reupload is disabled.\n";
 				throw new FeedIngesterSkippedException( $msg );
 			}
 			$this->oldName = $oldName;
@@ -355,7 +356,8 @@ abstract class VideoFeedIngester {
 		$body = $this->prepareBodyString();
 		if ( $this->debugMode() ) {
 			$this->printReadyToSaveData( $body );
-			$this->logger->videoIngested( "Ingested {$this->metaData['destinationTitle']} (id: {$this->metaData['videoId']}).\n", $this->pageCategories );
+			$msg = "Ingested {$this->metaData['destinationTitle']} (id: {$this->metaData['videoId']}).\n";
+			$this->logger->videoIngested( $msg, $this->pageCategories );
 			return 1;
 		} else {
 			/** @var Title $uploadedTitle */
@@ -363,7 +365,8 @@ abstract class VideoFeedIngester {
 			$result = VideoFileUploader::uploadVideo( $this->metaData['provider'], $this->metaData['videoId'], $uploadedTitle, $body, false, $this->metaData );
 			if ( $result->ok ) {
 				$fullUrl = WikiFactory::getLocalEnvURL( $uploadedTitle->getFullURL() );
-				$this->logger->videoIngested( "Ingested {$uploadedTitle->getText()} from partner clip id {$this->metaData['videoId']}. {$fullUrl}\n", $this->pageCategories );
+				$msg = "Ingested {$uploadedTitle->getText()} from partner clip id {$this->metaData['videoId']}. $fullUrl\n";
+				$this->logger->videoIngested( $msg, $this->pageCategories );
 
 				wfWaitForSlaves( self::THROTTLE_INTERVAL );
 				wfRunHooks( 'VideoIngestionComplete', [ $uploadedTitle, $this->pageCategories ] );

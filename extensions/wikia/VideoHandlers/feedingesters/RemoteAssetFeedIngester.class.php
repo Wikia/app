@@ -34,7 +34,8 @@ abstract class RemoteAssetFeedIngester extends VideoFeedIngester {
 		$dupAssets = OoyalaAsset::getAssetsBySourceId( $this->videoData['videoId'], $this->videoData['provider'] );
 		if ( !empty( $dupAssets ) ) {
 			if ( $this->reupload === false ) {
-				$msg = "Skipping {$this->videoData['titleName']} (Id: {$this->videoData['videoId']}, {$this->videoData['provider']}) - video already exists on Ooyala and reupload is disabled.\n";
+				$msg = "Skipping {$this->videoData['titleName']} (Id: {$this->videoData['videoId']}, ";
+				$msg .= "{$this->videoData['provider']}) - video already exists on Ooyala and reupload is disabled.\n";
 				throw new FeedIngesterSkippedException( $msg );
 			}
 			$this->duplicateAsset = $dupAssets[0];
@@ -51,10 +52,13 @@ abstract class RemoteAssetFeedIngester extends VideoFeedIngester {
 	public function saveVideo() {
 		$this->metaData['pageCategories'] = implode( ', ', $this->pageCategories );
 		if ( !empty( $this->duplicateAsset ) ) {
-			if ( !empty( $this->duplicateAsset['metadata']['sourceid'] ) && $this->duplicateAsset['metadata']['sourceid'] == $this->metaData['videoId'] ) {
+			if ( !empty( $this->duplicateAsset['metadata']['sourceid'] )
+				&& $this->duplicateAsset['metadata']['sourceid'] == $this->metaData['videoId'] ) {
 				$result = $this->updateRemoteAsset();
 			} else {
-				$this->logger->videoSkipped( "Skipping {$this->metaData['name']} - {$this->metaData['description']}. SouceId not match (Id: {$this->metaData['videoId']}).\n" );
+				$msg = "Skipping {$this->metaData['name']} - {$this->metaData['description']}. ";
+				$msg .= " SourceId not match (Id: {$this->metaData['videoId']}).\n";
+				$this->logger->videoSkipped( $msg );
 				return 0;
 			}
 		} else {
@@ -77,7 +81,8 @@ abstract class RemoteAssetFeedIngester extends VideoFeedIngester {
 		}
 
 		if ( empty( $this->metaData['duration'] ) || $this->metaData['duration'] < 0 ) {
-			$this->logger->videoWarnings( "Error when generating remote asset data: invalid duration ($this->metaData[duration]).\n" );
+			$msg = "Error when generating remote asset data: invalid duration ($this->metaData[duration]).\n";
+			$this->logger->videoWarnings( $msg );
 			return 0;
 		}
 
@@ -85,7 +90,9 @@ abstract class RemoteAssetFeedIngester extends VideoFeedIngester {
 		$ooyalaAsset = new OoyalaAsset();
 		$isExist = $ooyalaAsset->isTitleExist( $this->metaData['assetTitle'], $this->metaData['provider'] );
 		if ( $isExist ) {
-			$this->logger->videoSkipped( "SKIP: Uploading Asset: {$this->metaData['destinationTitle']} ($this->metaData[provider]). Video already exists in remote assets.\n" );
+			$msg = "SKIP: Uploading Asset: {$this->metaData['destinationTitle']} ($this->metaData[provider]). ";
+			$msg .= "Video already exists in remote assets.\n";
+			$this->logger->videoSkipped( $msg );
 			return 0;
 		}
 
@@ -106,7 +113,8 @@ abstract class RemoteAssetFeedIngester extends VideoFeedIngester {
 		}
 
 		$categories = empty( $this->metaData['pageCategories'] ) ? [] : explode( ", ", $this->metaData['pageCategories'] );
-		$this->logger->videoIngested( "Uploaded remote asset: {$this->metaData['destinationTitle']} (id: {$this->metaData['videoId']})\n", $categories );
+		$msg = "Uploaded remote asset: {$this->metaData['destinationTitle']} (id: {$this->metaData['videoId']})\n";
+		$this->logger->videoIngested( $msg, $categories );
 
 		return 1;
 	}
@@ -154,7 +162,8 @@ abstract class RemoteAssetFeedIngester extends VideoFeedIngester {
 		}
 
 		$categories = empty( $this->metaData['pageCategories'] ) ? [] : explode( ", ", $this->metaData['pageCategories'] );
-		$this->logger->videoIngested( "Uploaded remote asset: {$this->metaData['destinationTitle']} (id: {$this->metaData['videoId']})\n", $categories );
+		$msg = "Uploaded remote asset: {$this->metaData['destinationTitle']} (id: {$this->metaData['videoId']})\n";
+		$this->logger->videoIngested( $msg, $categories );
 
 		return 1;
 	}
