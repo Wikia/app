@@ -23,6 +23,11 @@ class FeedIngesterFactory {
 		self::PROVIDER_CRUNCHYROLL,
 	];
 
+	/**
+	 * Make constructor private to avoid direct instantiation of this class.
+	 */
+	private function __construct() {}
+
 	// These providers are not ingested daily, but can be ingested from if specifically named
 	protected static $INACTIVE_PROVIDERS = [
 		self::PROVIDER_ANYCLIP,

@@ -341,10 +341,10 @@ abstract class VideoFeedIngester {
 	/**
 	 * Set the page categories we want added to the video's file page into
 	 * a member variable.
-	 * @param array $addlCatgories
+	 * @param array $addlCategories
 	 */
-	public function setPageCategories( array $addlCatgories =[] ) {
-		$this->pageCategories = $this->generateCategories( $addlCatgories );
+	public function setPageCategories( array $addlCategories =[] ) {
+		$this->pageCategories = $this->generateCategories( $addlCategories );
 	}
 
 	/**
