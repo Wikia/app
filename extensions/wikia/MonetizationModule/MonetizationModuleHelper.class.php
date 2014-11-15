@@ -185,6 +185,8 @@ class MonetizationModuleHelper extends WikiaModel {
 				}
 			}
 
+			// TODO: remove this after updating the service
+			$adUnits = str_replace( self::KEYWORD_THEME_SETTINGS_OLD, $adSettings, $adUnits );
 			$adUnits = str_replace( self::KEYWORD_THEME_SETTINGS, $adSettings, $adUnits );
 
 			// set cache
