@@ -3,26 +3,28 @@
 @import 'extensions/wikia/Venus/styles/variables';
 
 @mixin breakpoint-dependent-sizing($breakpoint, $module-columns, $thumbnail-container-columns, $aditional-width: 0) {
-	$grid-column-padding: $medium-grid-column-padding;
-	$grid-gutter: $medium-grid-gutter;
+	$grid-column-padding: $large-grid-column-padding;
+	$grid-gutter: $large-grid-gutter;
+	$module-min-height: 302px;
+	$thumbnail-margin-right: $grid-gutter + floor(.5 * ($large-grid-column + $large-grid-column-padding)); // Remove this line when enabling sliders.
 
-	@if $breakpoint == large {
-		$grid-column-padding: $large-grid-column-padding;
-		$grid-gutter: $large-grid-gutter;
-	} @else if $breakpoint == small {
+	@if $breakpoint == small {
 		$grid-column-padding: $small-grid-column-padding;
 		$grid-gutter: $small-grid-gutter;
+		$module-min-height: 244px;
+		$thumbnail-margin-right: 2 * $grid-gutter + $small-grid-column; // Remove this line when enabling sliders.
 	}
 
 	.mw-content-text .videos-module-in-content {
 		@include grid-column-width($breakpoint, $module-columns, $aditional-width);
 		margin-left: -$grid-column-padding;
 		margin-right: -$grid-column-padding;
+		min-height: $module-min-height;
 
-		// Remove/comment the selector below if you disabled scrolling
-		.thumbnails {
-			@include grid-column-width($breakpoint, $thumbnail-container-columns, $aditional-width);
-		}
+		// Uncomment the selector below if you enabled scrolling
+//		.thumbnails {
+//			@include grid-column-width($breakpoint, $thumbnail-container-columns, $aditional-width);
+//		}
 
 		h2 {
 			padding: 0 $grid-column-padding;
@@ -30,7 +32,8 @@
 
 		li {
 			@include grid-column-width($breakpoint, 3);
-			margin-right: $grid-gutter;
+			margin-right: $thumbnail-margin-right;
+//			margin-right: $grid-gutter; // Uncomment this line when enabling sliders and remove the line above.
 		}
 
 		img {
@@ -44,7 +47,8 @@
 }
 
 .mw-content-text .videos-module-in-content {
-	@include grid-column-width(medium, 9);
+	@include grid-column-width(medium, 10);
+//	@include grid-column-width(medium, 9); // Uncomment this line when enabling sliders and remove the line above.
 	border: 0 solid $color-page-border;
 	border-bottom-width: 1px;
 	border-top-width: 1px;
@@ -61,10 +65,10 @@
 		margin: 14px 0 24px;
 		padding: 0;
 
-		// Remove/comment the 3 lines below to disaable scrolling inside the video container
-		@include grid-column-width(medium, 11);
-		overflow: auto;
-		white-space: nowrap;
+		// Uncomment the 3 lines below to enable scrolling inside the video container (and change the order to alphabetical).
+//		@include grid-column-width(medium, 11);
+//		overflow: auto;
+//		white-space: nowrap;
 	}
 
 	h2 {
@@ -76,7 +80,8 @@
 	li {
 		@include grid-column-width(medium, 3);
 		display: inline-block;
-		margin: 0 $medium-grid-gutter 0 0;
+		margin: 0 $medium-grid-gutter + floor(.5 * ($medium-grid-column + $medium-grid-column-padding)) 0 0;
+//		margin: 0 $medium-grid-gutter 0 0; // Uncomment this line when enabling sliders and remove the line above.
 		padding: 0;
 
 		&:last-child {
@@ -97,9 +102,11 @@
 }
 
 @media #{$large-up} {
-	@include breakpoint-dependent-sizing(large, 9, 11);
+	@include breakpoint-dependent-sizing(large, 10, 10);
+//	@include breakpoint-dependent-sizing(large, 9, 11); // Uncomment this line when enabling sliders and remove the line above.
 }
 
 @media #{$small-only} {
-	@include breakpoint-dependent-sizing(small, 11, 11, $small-content-padding - $content-border-width);
+	@include breakpoint-dependent-sizing(small, 11, 11);
+//	@include breakpoint-dependent-sizing(small, 11, 11, $small-content-padding - $content-border-width); // Uncomment this line when enabling sliders and remove the line above.
 }
