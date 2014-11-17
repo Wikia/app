@@ -119,7 +119,7 @@
 
 	/**
 	 * Load the facebook JS library, either v1.x or v2.x
-	 * @param {function} callback Function to be called after library is loaded
+	 * @param {function} [callback] Function to be called after library is loaded
 	 * @returns {jQuery} Returns a jQuery promise
 	 */
 	$.loadFacebookAPI = function (callback) {
@@ -133,6 +133,7 @@
 	/**
 	 * Load the Facebook v1.x sdk
 	 * @private
+	 * @param {function} [callback] Function to be called after library is loaded
 	 * @todo Remove this once we've finished the upgrade to v2.x
 	 */
 	function loadFacebookV1(callback) {
@@ -156,6 +157,7 @@
 	/**
 	 * Load the Facebook v2.x sdk
 	 * @private
+	 * @param {function} [callback] Function to be called after library is loaded
 	 * @todo This will be the public $.loadFacebookAPI function when we're done with the migration
 	 */
 	function loadFacebookV2(callback) {

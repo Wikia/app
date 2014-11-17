@@ -41,7 +41,8 @@ $wgAutoloadClasses['FacebookClientHooks'] =  $dir . 'FacebookClientHooks.class.p
 $wgHooks['MakeGlobalVariablesScript'][] = 'FacebookClientHooks::MakeGlobalVariablesScript';
 $wgHooks['SkinAfterBottomScripts'][] = 'FacebookClientHooks::SkinAfterBottomScripts';
 $wgHooks['GetPreferences'][] = 'FacebookClientHooks::GetPreferences';
-$wgHooks['OasisSkinAssetGroups'][] = 'FacebookClientHooks::onOasisSkinAssetGroups';
+$wgHooks['OasisSkinAssetGroups'][] = 'FacebookClientHooks::onSkinAssetGroups';
+$wgHooks['MonobookSkinAssetGroups'][] = 'FacebookClientHooks::onSkinAssetGroups';
 $wgHooks['ParserFirstCallInit'][] = 'FacebookClientHooks::setupParserHook';
 
 // special pages
@@ -61,5 +62,11 @@ $wgResourceModules['ext.wikia.FacebookClient.XFBML'] = [
 	'remoteExtPath' => 'wikia/FacebookClient',
 ];
 
-JSMessages::registerPackage( 'FacebookClient', ['fbconnect-logout-confirm'] );
+JSMessages::registerPackage( 'FacebookClient', [
+	'fbconnect-logout-confirm',
+	'fbconnect-preferences-connected',
+	'fbconnect-preferences-connected-error',
+	'fbconnect-disconnect-info-existing',
+	'fbconnect-disconnect-info',
+] );
 
