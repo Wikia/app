@@ -15,45 +15,45 @@ var UserProfilePage = {
 	// reference to modal UI component
 	modalComponent: {},
 
-	init: function() {
+	init: function () {
 		'use strict';
 
-		var $userIdentityBoxEdit = $( '#userIdentityBoxEdit' );
+		var $userIdentityBoxEdit = $('#userIdentityBoxEdit');
 
-		UserProfilePage.userId = $( '#user' ).val();
-		UserProfilePage.reloadUrl = $( '#reloadUrl' ).val();
+		UserProfilePage.userId = $('#user').val();
+		UserProfilePage.reloadUrl = $('#reloadUrl').val();
 
-		if ( UserProfilePage.reloadUrl === '' || UserProfilePage.reloadUrl === false ) {
-			UserProfilePage.reloadUrl = window.wgScript + '?title=' + window.wgPageName; //+ '&action=purge';
+		if (UserProfilePage.reloadUrl === '' || UserProfilePage.reloadUrl === false) {
+			UserProfilePage.reloadUrl = window.wgScript + '?title=' + window.wgPageName;
 		}
 
-		$userIdentityBoxEdit.click(function( event ) {
+		$userIdentityBoxEdit.click(function (event) {
 			event.preventDefault();
-			UserProfilePage.renderLightbox( 'about' );
+			UserProfilePage.renderLightbox('about');
 		});
 
-		$( '#UserAvatarRemove' ).click(function( event ) {
+		$('#UserAvatarRemove').click(function (event) {
 			event.preventDefault();
-			UserProfilePage.removeAvatar( $( event.target ).attr( 'data-name' ),
-				$( event.target ).attr( 'data-confirm' ) );
+			UserProfilePage.removeAvatar($(event.target).attr('data-name'),
+				$(event.target).attr('data-confirm'));
 		});
 
-		$( '#userAvatarEdit' ).click(function( event ) {
+		$('#userAvatarEdit').click(function (event) {
 			event.preventDefault();
-			UserProfilePage.renderLightbox( 'avatar' );
+			UserProfilePage.renderLightbox('avatar');
 		});
 
 		// for touch devices (without hover state) make sure that Edit is always
 		// visible
-		if ( Wikia.isTouchScreen() ) {
+		if (Wikia.isTouchScreen()) {
 			$userIdentityBoxEdit.show();
 		}
 	},
 
-	renderLightbox: function( tabName ) {
+	renderLightbox: function (tabName) {
 		'use strict';
 
-		if ( !UserProfilePage.isLightboxGenerating ) {
+		if (!UserProfilePage.isLightboxGenerating) {
 			// Start profiling
 			UserProfilePage.bucky.timer.start('renderLightboxSuccess');
 			UserProfilePage.bucky.timer.start('renderLightboxFail');
@@ -63,86 +63,79 @@ var UserProfilePage = {
 			UserProfilePage.newAvatar = false;
 
 			$.when(
-				$.getJSON( this.ajaxEntryPoint, {
+				$.getJSON(this.ajaxEntryPoint, {
 					method: 'getLightboxData',
 					tab: tabName,
 					userId: UserProfilePage.userId,
-					rand: Math.floor( Math.random()*100001 ) // is cache buster really needed here?
+					rand: Math.floor(Math.random() * 100001) // is cache buster really needed here?
 				}),
-				$.getMessages( [ 'UserProfilePageV3' ] ),
-				$.getResources( [
-					$.getSassCommonURL( '/extensions/wikia/UserProfilePageV3/css/UserProfilePage_modal.scss' )
-				] )
-			).done(function( getJSONResponse ) {
-				var data = getJSONResponse[ 0 ];
+				$.getMessages(['UserProfilePageV3']),
+				$.getResources([
+					$.getSassCommonURL('/extensions/wikia/UserProfilePageV3/css/UserProfilePage_modal.scss')
+				])
+			).done(function (getJSONResponse) {
+				var data = getJSONResponse[0];
 
-				require( [ 'wikia.ui.factory' ], function( uiFactory ) {
-					uiFactory.init( [ 'modal' ] ).then(function( modal ) {
+				require(['wikia.ui.factory'], function (uiFactory) {
+					uiFactory.init(['modal']).then(function (modal) {
 
 						// set reference to modal UI component for easy creation of confirmation modal
 						UserProfilePage.modalComponent = modal;
 
-						var id = $( data.body ).attr( 'id' ) + 'Wrapper',
+						var id = $(data.body).attr('id') + 'Wrapper',
 							modalConfig = {
 								vars: {
 									id: id,
 									content: data.body,
 									size: 'medium',
-									title: $.msg( 'userprofilepage-edit-modal-header' ),
-									buttons: [
-										{
-											vars: {
-												value: $.msg( 'user-identity-box-avatar-save' ),
-												classes: [ 'normal', 'primary' ],
-												data: [
-													{
-														key: 'event',
-														value: 'save'
-													}
-												]
-											}
-										},
-										{
-											vars: {
-												value: $.msg( 'user-identity-box-avatar-cancel' ),
-												data: [
-													{
-														key: 'event',
-														value: 'close'
-													}
-												]
-											}
+									title: $.msg('userprofilepage-edit-modal-header'),
+									buttons: [{
+										vars: {
+											value: $.msg('user-identity-box-avatar-save'),
+											classes: ['normal', 'primary'],
+											data: [{
+												key: 'event',
+												value: 'save'
+											}]
 										}
-									]
+									}, {
+										vars: {
+											value: $.msg('user-identity-box-avatar-cancel'),
+											data: [{
+												key: 'event',
+												value: 'close'
+											}]
+										}
+									}]
 								}
 							};
-						modal.createComponent( modalConfig, function( editProfileModal ) {
+						modal.createComponent(modalConfig, function (editProfileModal) {
 							UserProfilePage.modal = editProfileModal;
 
 							var modal = editProfileModal.$element,
-								tab = modal.find( '.tabs a' );
+								tab = modal.find('.tabs a');
 
-							UserProfilePage.registerAvatarHandlers( modal );
-							UserProfilePage.registerAboutMeHandlers( modal );
+							UserProfilePage.registerAvatarHandlers(modal);
+							UserProfilePage.registerAboutMeHandlers(modal);
 
 							// attach handlers to modal events
-							editProfileModal.bind( 'beforeClose',
-								$.proxy( UserProfilePage.beforeClose, UserProfilePage ) );
-							editProfileModal.bind( 'save',
-								$.proxy( UserProfilePage.saveUserData, UserProfilePage ) );
+							editProfileModal.bind('beforeClose',
+								$.proxy(UserProfilePage.beforeClose, UserProfilePage));
+							editProfileModal.bind('save',
+								$.proxy(UserProfilePage.saveUserData, UserProfilePage));
 
 							// adding handler for tab switching
-							tab.click(function( event ) {
+							tab.click(function (event) {
 								event.preventDefault();
-								UserProfilePage.switchTab( $( this ).closest( 'li' ) );
+								UserProfilePage.switchTab($(this).closest('li'));
 							});
 
 							// Synthesize a click on the tab to hide/show the right panels
-							$( '[data-tab=' + tabName + '] a' ).click();
+							$('[data-tab=' + tabName + '] a').click();
 
 							// show a message when avatars upload is disabled (BAC-1046)
-							if ( data.avatarsDisabled === true ) {
-								window.GlobalNotification.show( data.avatarsDisabledMsg, 'error' );
+							if (data.avatarsDisabled === true) {
+								UserProfilePage.error(data.avatarsDisabledMsg);
 							}
 
 							UserProfilePage.isLightboxGenerating = false;
@@ -152,32 +145,32 @@ var UserProfilePage = {
 						});
 					});
 				});
-			}).fail(function( data ) {
+			}).fail(function (data) {
 
-				console.log( data );
+				console.log(data);
 
 				var message = '',
 					response = '';
 
-				if( data.responseText ) {
-					response = JSON.parse( data.responseText );
+				if (data.responseText) {
+					response = JSON.parse(data.responseText);
 					message = response.exception.message;
 				} else {
 					message = data.error;
 				}
 
-				require( [ 'wikia.ui.factory' ], function( uiFactory ) {
-					uiFactory.init( [ 'modal' ] ).then(function( modal ) {
+				require(['wikia.ui.factory'], function (uiFactory) {
+					uiFactory.init(['modal']).then(function (modal) {
 						var modalConfig = {
 							vars: {
 								id: 'UPPModalError',
 								content: message,
 								size: 'small',
-								title: $.msg( 'userprofilepage-edit-modal-error' )
+								title: $.msg('userprofilepage-edit-modal-error')
 							}
 						};
 
-						modal.createComponent(modalConfig, function( errorModal ) {
+						modal.createComponent(modalConfig, function (errorModal) {
 							errorModal.show();
 							UserProfilePage.bucky.timer.stop('renderLightboxFail');
 						});
@@ -196,16 +189,16 @@ var UserProfilePage = {
 	 * @returns {promise|*}
 	 */
 
-	beforeClose: function() {
+	beforeClose: function () {
 		'use strict';
 
 		var deferred = new $.Deferred();
 
-		if( UserProfilePage.wasDataChanged === true ) {
-			if( $( '#UPPLightboxCloseWrapper' ).length === 0 ) {
-				setTimeout(function() {
+		if (UserProfilePage.wasDataChanged === true) {
+			if ($('#UPPLightboxCloseWrapper').length === 0) {
+				setTimeout(function () {
 					UserProfilePage.displayClosingPopup();
-				}, 50 );
+				}, 50);
 			}
 			deferred.reject();
 		} else {
@@ -215,22 +208,22 @@ var UserProfilePage = {
 		return deferred.promise();
 	},
 
-	switchTab: function( tab ) {
+	switchTab: function (tab) {
 		'use strict';
 
 		// Move 'selected' class to the right tab
-		var tabs = tab.closest( 'ul' ),
-			tabName = tab.data( 'tab' );
+		var tabs = tab.closest('ul'),
+			tabName = tab.data('tab');
 
-		tabs.children( 'li' ).each( function() {
-			$( this ).removeClass( 'selected' );
+		tabs.children('li').each(function () {
+			$(this).removeClass('selected');
 		});
-		tab.addClass( 'selected' );
+		tab.addClass('selected');
 
 		// Show correct tab content
-		$( '.tab-content > li' ).each(function() {
-			var currentItem = $( this );
-			if( currentItem.attr( 'class' ) === tabName ) {
+		$('.tab-content > li').each(function () {
+			var currentItem = $(this);
+			if (currentItem.attr('class') === tabName) {
 				currentItem.show();
 			} else {
 				currentItem.hide();
@@ -240,64 +233,63 @@ var UserProfilePage = {
 
 	/**
 	 * Register handlers related to the Avatar tab of the user edit modal.
-	 * @param modal
+	 * @param {object} modal UI component modal
 	 */
-	registerAvatarHandlers: function( modal ) {
+	registerAvatarHandlers: function (modal) {
 		'use strict';
 
-		var $avatarUploadInput = modal.find( '#UPPLightboxAvatar' ),
-			$avatarForm = modal.find( '#usersAvatar' ),
-			$sampleAvatars = modal.find( '.sample-avatars' );
+		var $avatarUploadInput = modal.find('#UPPLightboxAvatar'),
+			$avatarForm = modal.find('#usersAvatar'),
+			$sampleAvatars = modal.find('.sample-avatars');
 
-		$avatarUploadInput.change(function() {
-			UserProfilePage.saveAvatarAIM( $avatarForm );
+		$avatarUploadInput.change(function () {
+			UserProfilePage.saveAvatarAIM($avatarForm);
 		});
 
-
-		$sampleAvatars.on('click', 'img', function( event ) {
-			UserProfilePage.sampleAvatarChecked( $( event.target ) );
+		$sampleAvatars.on('click', 'img', function (event) {
+			UserProfilePage.sampleAvatarChecked($(event.target));
 		});
 	},
 
-	sampleAvatarChecked: function( img ) {
+	sampleAvatarChecked: function (img) {
 		'use strict';
 
-		var image = $( img ),
+		var image = $(img),
 			$modal = UserProfilePage.modal.$element,
-			avatarImg = $modal.find( 'img.avatar' );
+			avatarImg = $modal.find('img.avatar');
 
-		$modal.find( 'img.avatar' ).hide();
+		$modal.find('img.avatar').hide();
 		$modal.startThrobbing();
 
 		UserProfilePage.newAvatar = {
-			file: image.attr( 'class' ),
+			file: image.attr('class'),
 			source: 'sample',
 			userId: UserProfilePage.userId
 		};
 		UserProfilePage.wasDataChanged = true;
 
-		avatarImg.attr( 'src', image.attr( 'src' ) );
+		avatarImg.attr('src', image.attr('src'));
 		$modal.stopThrobbing();
 		avatarImg.show();
 	},
 
-	saveAvatarAIM: function( form ) {
+	saveAvatarAIM: function (form) {
 		'use strict';
 
 		UserProfilePage.bucky.timer.start('saveAvatarAIMSuccess');
 		UserProfilePage.bucky.timer.start('saveAvatarAIMFail');
 		var $modal = UserProfilePage.modal.$element;
 
-		$.AIM.submit( form, {
-			onStart: function() {
+		$.AIM.submit(form, {
+			onStart: function () {
 				$modal.startThrobbing();
 			},
-			onComplete: function( response ) {
+			onComplete: function (response) {
 				try {
-					response = JSON.parse( response );
-					var avatarImg = $modal.find( 'img.avatar' );
-					if ( response.result.success === true ) {
-						avatarImg.attr( 'src', response.result.avatar );
+					response = JSON.parse(response);
+					var avatarImg = $modal.find('img.avatar');
+					if (response.result.success === true) {
+						avatarImg.attr('src', response.result.avatar);
 						UserProfilePage.newAvatar = {
 							file: response.result.avatar,
 							source: 'uploaded',
@@ -306,19 +298,19 @@ var UserProfilePage = {
 						UserProfilePage.wasDataChanged = true;
 						window.GlobalNotification.hide();
 					} else {
-						if ( typeof( response.result.error ) !== 'undefined' ) {
-							window.GlobalNotification.show( response.result.error, 'error' );
+						if (typeof (response.result.error) !== 'undefined') {
+							UserProfilePage.error(response.result.error);
 						}
 					}
 					$modal.stopThrobbing();
 
-					if ( typeof( form[ 0 ] ) !== 'undefined' ) {
-						form[ 0 ].reset();
+					if (typeof (form[0]) !== 'undefined') {
+						form[0].reset();
 						UserProfilePage.bucky.timer.stop('saveAvatarAIMSuccess');
 					}
-				} catch( e ) {
+				} catch (e) {
 					$modal.stopThrobbing();
-					form[ 0 ].reset();
+					form[0].reset();
 					UserProfilePage.bucky.timer.stop('saveAvatarAIMFail');
 				}
 			}
@@ -327,47 +319,47 @@ var UserProfilePage = {
 		//unbind original html element handler to avoid loops
 		form.onsubmit = null;
 
-		$( form ).submit();
+		$(form).submit();
 	},
 
 	/**
-	* Register handlers related to the About Me tab of the user edit modal.
-	* @param modal
-	*/
-	registerAboutMeHandlers: function( modal ) {
+	 * Register handlers related to the About Me tab of the user edit modal.
+	 * @param {object} modal UI component modal
+	 */
+	registerAboutMeHandlers: function (modal) {
 		'use strict';
 
-		var $monthSelectBox = modal.find( '#userBDayMonth' ),
-			$daySelectBox = modal.find( '#userBDayDay' ),
-			$formFields = modal.find( 'input[type="text"], select' ),
+		var $monthSelectBox = modal.find('#userBDayMonth'),
+			$daySelectBox = modal.find('#userBDayDay'),
+			$formFields = modal.find('input[type="text"], select'),
 
-			change = function() {
-			UserProfilePage.wasDataChanged = true;
-		};
+			change = function () {
+				UserProfilePage.wasDataChanged = true;
+			};
 
-		$monthSelectBox.change(function() {
+		$monthSelectBox.change(function () {
 			UserProfilePage.refillBDayDaySelectbox({
 				month: $monthSelectBox,
 				day: $daySelectBox
 			});
 		});
 
-		$( '.favorite-wikis' ).on( 'click', '.delete', function() {
-			UserProfilePage.hideFavWiki( $( this ).closest( 'li' ).data( 'wiki-id' ) );
+		$('.favorite-wikis').on('click', '.delete', function () {
+			UserProfilePage.hideFavWiki($(this).closest('li').data('wiki-id'));
 		});
 
-		modal.find( '.favorite-wikis-refresh' ).click(function( event ) {
+		modal.find('.favorite-wikis-refresh').click(function (event) {
 			event.preventDefault();
 			UserProfilePage.refreshFavWikis();
 		});
 
-		$formFields.change( change ) ;
-		$formFields.keypress( change );
+		$formFields.change(change);
+		$formFields.keypress(change);
 
 		UserProfilePage.toggleJoinMoreWikis();
 	},
 
-	saveUserData: function() {
+	saveUserData: function () {
 		'use strict';
 
 		UserProfilePage.bucky.timer.start('saveUserDataSuccess');
@@ -375,7 +367,7 @@ var UserProfilePage = {
 
 		var userData = UserProfilePage.getFormData();
 
-		if ( UserProfilePage.newAvatar ) {
+		if (UserProfilePage.newAvatar) {
 			userData.avatarData = UserProfilePage.newAvatar;
 		}
 
@@ -383,95 +375,109 @@ var UserProfilePage = {
 			type: 'POST',
 			url: this.ajaxEntryPoint + '&method=saveUserData',
 			dataType: 'json',
-			data: 'userId=' + UserProfilePage.userId + '&data=' + JSON.stringify( userData ),
-			success: function( data ) {
-				if( data.status === 'error' ) {
-					window.GlobalNotification.show( data.errorMsg, 'warn' ) ;
+			data: 'userId=' + UserProfilePage.userId + '&data=' + JSON.stringify(userData),
+			success: function (data) {
+				if (data.status === 'error') {
+					UserProfilePage.error(data.errMsg);
 					UserProfilePage.bucky.timer.stop('saveUserDataFail');
 				} else {
 					UserProfilePage.userData = null;
 					UserProfilePage.wasDataChanged = false;
-					UserProfilePage.modal.trigger( 'close' );
+					UserProfilePage.modal.trigger('close');
 					UserProfilePage.bucky.timer.stop('saveUserDataSuccess');
 					UserProfilePage.bucky.flush();
 					window.location = UserProfilePage.reloadUrl;
 				}
-			}
+			},
+			error: UserProfilePage.error
 		});
 	},
 
-	getFormData: function() {
+	/**
+	 * Hnadle error states after ajax requests
+	 * @param {string} [msg] Optional error message to display. Otherwise, default message will be used.
+	 */
+	error: function (msg) {
+		'use strict';
+
+		if (typeof msg !== 'string') {
+			msg = $.msg('oasis-generic-error');
+		}
+
+		window.GlobalNotification.show(msg, 'error');
+	},
+
+	getFormData: function () {
 		'use strict';
 
 		var userData = {
-			name: null,
-			location: null,
-			occupation: null,
-			gender: null,
-			website: null,
-			twitter: null,
-			year: null,
-			month: null,
-			day: null
-		},
+				name: null,
+				location: null,
+				occupation: null,
+				gender: null,
+				website: null,
+				twitter: null,
+				year: null,
+				month: null,
+				day: null
+			},
 			i,
 			userDataItem;
 
-
-		for( i in userData ) {
-			userDataItem = $( document.userData[ i ] ).val();
-			if( typeof( userDataItem ) !== 'undefined' ) {
-				userData[ i ] = userDataItem;
+		for (i in userData) {
+			userDataItem = $(document.userData[i]).val();
+			if (typeof (userDataItem) !== 'undefined') {
+				userData[i] = userDataItem;
 			}
 		}
-		if ( document.userData.hideEditsWikis.checked ) {
+		if (document.userData.hideEditsWikis.checked) {
 			userData.hideEditsWikis = 1;
 		}
 
 		return userData;
 	},
 
-	refillBDayDaySelectbox: function( selectboxes ) {
+	refillBDayDaySelectbox: function (selectboxes) {
 		'use strict';
 
-		selectboxes.day.html( '' );
+		selectboxes.day.html('');
 		var options = '',
-			daysInMonth = [ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ],
+			daysInMonth = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
 			selectedMonth = selectboxes.month.val(),
 			i;
 
-		for ( i = 1; i <= daysInMonth[ selectedMonth - 1 ]; i++ ) {
-			options += '<option value="'+ i + '">' + i + '</option>';
+		for (i = 1; i <= daysInMonth[selectedMonth - 1]; i++) {
+			options += '<option value="' + i + '">' + i + '</option>';
 		}
 		options = '<option value="0">--</option>' + options;
 
-		selectboxes.day.html( options );
+		selectboxes.day.html(options);
 	},
 
-	hideFavWiki: function( wikiId ) {
+	hideFavWiki: function (wikiId) {
 		'use strict';
 
 		var $modal = UserProfilePage.modal.$element;
 
-		if ( wikiId >= 0 ) {
-			$modal.find( '.favorite-wikis [data-wiki-id="' + wikiId + '"]' )
-				.fadeOut( 'fast' , function() {
-					$( this ).remove();
-					$.postJSON( UserProfilePage.ajaxEntryPoint, {
+		if (wikiId >= 0) {
+			$modal.find('.favorite-wikis [data-wiki-id="' + wikiId + '"]')
+				.fadeOut('fast', function () {
+					$(this).remove();
+					$.postJSON(UserProfilePage.ajaxEntryPoint, {
 						method: 'onHideWiki',
 						userId: UserProfilePage.userId,
 						wikiId: wikiId,
 						cb: window.wgStyleVersion
-					}, function( data ) {
-						if ( data.result.success === true ) {
+					}, function (data) {
+						if (data.result.success === true) {
 							// add the next wiki
-							$.each( data.result.wikis, function( index, value ) {
-								if ( $modal.find( '.favorite-wikis [data-wiki-id="' + value.id + '"]' ).length === 0 ) {
+							$.each(data.result.wikis, function (index, value) {
+								if ($modal.find('.favorite-wikis [data-wiki-id="' + value.id + '"]').length === 0) {
 									//found the wiki to add. now do it.
-									$modal.find( '.join-more-wikis' )
-										.before( '<li data-wiki-id="' + value.id + '"><span>' + value.wikiName +
+									$modal.find('.join-more-wikis')
+										.before('<li data-wiki-id="' + value.id + '"><span>' + value.wikiName +
 											'</span> <img src="' + window.wgBlankImgUrl +
-											'" class="sprite-small delete"></li>' );
+											'" class="sprite-small delete"></li>');
 
 								}
 							});
@@ -481,46 +487,46 @@ var UserProfilePage = {
 				});
 		} else {
 			// basically it shouldn't happen but i imagine it can happen during development
-			$().log( 'Unexpected error wikiId <= 0' );
+			$().log('Unexpected error wikiId <= 0');
 		}
 	},
 
-	refreshFavWikis: function() {
+	refreshFavWikis: function () {
 		'use strict';
 
-		$.postJSON( this.ajaxEntryPoint, {
+		$.postJSON(this.ajaxEntryPoint, {
 			method: 'onRefreshFavWikis',
 			userId: UserProfilePage.userId,
 			cb: window.wgStyleVersion
-		}, function( data ) {
-			if ( data.result.success === true ) {
-				var favWikisList = UserProfilePage.modal.$element.find( '.favorite-wikis' ),
+		}, function (data) {
+			if (data.result.success === true) {
+				var favWikisList = UserProfilePage.modal.$element.find('.favorite-wikis'),
 					favWikis = '',
 					i;
 
 				// empty the list
-				favWikisList.children().not( '.join-more-wikis' ).remove();
+				favWikisList.children().not('.join-more-wikis').remove();
 
 				// add items
-				for ( i in data.result.wikis ) {
-					favWikis += '<li data-wiki-id="' + data.result.wikis[ i ].id  + '"><span>' +
-						data.result.wikis[ i ].wikiName + '</span> <img src="' + window.wgBlankImgUrl +
+				for (i in data.result.wikis) {
+					favWikis += '<li data-wiki-id="' + data.result.wikis[i].id + '"><span>' +
+						data.result.wikis[i].wikiName + '</span> <img src="' + window.wgBlankImgUrl +
 						'" class="sprite-small delete"></li>';
 				}
-				favWikisList.prepend( favWikis );
+				favWikisList.prepend(favWikis);
 
 				UserProfilePage.toggleJoinMoreWikis();
 			}
 		});
 	},
 
-	toggleJoinMoreWikis: function() {
+	toggleJoinMoreWikis: function () {
 		'use strict';
 
 		var $modal = UserProfilePage.modal.$element,
 			minNumOfJoinedWikis = 4,
-			joinMoreWikis = $modal.find( '.join-more-wikis' );
-		if ( $modal.find( '.favorite-wikis' ).children().not( '.join-more-wikis' ).length === minNumOfJoinedWikis ) {
+			joinMoreWikis = $modal.find('.join-more-wikis');
+		if ($modal.find('.favorite-wikis').children().not('.join-more-wikis').length === minNumOfJoinedWikis) {
 			joinMoreWikis.hide();
 		} else {
 			joinMoreWikis.show();
@@ -531,71 +537,61 @@ var UserProfilePage = {
 	 * Display confirmation modal when trying to close edit profile modal with unsaved changes
 	 */
 
-	displayClosingPopup: function() {
+	displayClosingPopup: function () {
 		'use strict';
 
-		$.getJSON( this.ajaxEntryPoint, {
+		$.getJSON(this.ajaxEntryPoint, {
 			method: 'getClosingModal',
 			userId: UserProfilePage.userId,
-			rand: Math.floor( Math.random() * 100001 )
-		}, function( data ) {
-			var id = $( data.body ).attr( 'id' ) + 'Wrapper',
+			rand: Math.floor(Math.random() * 100001)
+		}, function (data) {
+			var id = $(data.body).attr('id') + 'Wrapper',
 				modalConfig = {
-				vars: {
-					id: id,
-					content: data.body,
-					size: 'medium',
-					title: $.msg( 'userprofilepage-closing-popup-header' ),
-					buttons: [
-						{
+					vars: {
+						id: id,
+						content: data.body,
+						size: 'medium',
+						title: $.msg('userprofilepage-closing-popup-header'),
+						buttons: [{
 							vars: {
-								value: $.msg( 'userprofilepage-closing-popup-save-and-quit' ),
-								classes: [ 'normal', 'primary' ],
-								data: [
-									{
-										key: 'event',
-										value: 'save'
-									}
-								]
+								value: $.msg('userprofilepage-closing-popup-save-and-quit'),
+								classes: ['normal', 'primary'],
+								data: [{
+									key: 'event',
+									value: 'save'
+								}]
 							}
-						},
-						{
+						}, {
 							vars: {
-								value: $.msg( 'userprofilepage-closing-popup-discard-and-quit' ),
-								data: [
-									{
-										key: 'event',
-										value: 'quit'
-									}
-								]
+								value: $.msg('userprofilepage-closing-popup-discard-and-quit'),
+								data: [{
+									key: 'event',
+									value: 'quit'
+								}]
 							}
-						},
-						{
+						}, {
 							vars: {
-								value: $.msg( 'userprofilepage-closing-popup-cancel' ),
-								data: [
-									{
-										key: 'event',
-										value: 'close'
-									}
-								]
+								value: $.msg('userprofilepage-closing-popup-cancel'),
+								data: [{
+									key: 'event',
+									value: 'close'
+								}]
 							}
-						}
-					]
-				}
-			};
+						}]
+					}
+				};
 
-			UserProfilePage.modalComponent.createComponent( modalConfig, function( confirmationModal ) {
+			UserProfilePage.modalComponent.createComponent(modalConfig, function (confirmationModal) {
 
 				// attaching handlers to button events
-				confirmationModal.bind( 'save', function() {
-					confirmationModal.trigger( 'close' );
+				confirmationModal.bind('save', function () {
+					confirmationModal.trigger('close');
 					UserProfilePage.saveUserData();
 				});
-				confirmationModal.bind( 'quit', function() {
+				confirmationModal.bind('quit', function () {
 					UserProfilePage.wasDataChanged = false;
-					UserProfilePage.modal.trigger( 'close' );
-					confirmationModal.trigger( 'close' );
+					UserProfilePage.modal.trigger('close');
+					confirmationModal.trigger('close');
 				});
 
 				confirmationModal.show();
@@ -604,12 +600,12 @@ var UserProfilePage = {
 		});
 	},
 
-	removeAvatar: function( name, question ) {
+	removeAvatar: function (name, question) {
 		'use strict';
 
-		var answer = window.confirm( question );
+		var answer = window.confirm(question);
 
-		if ( answer ) {
+		if (answer) {
 			$.nirvana.sendRequest({
 				controller: 'UserProfilePage',
 				method: 'removeavatar',
@@ -617,11 +613,11 @@ var UserProfilePage = {
 				data: {
 					avUser: name
 				},
-				callback: function( data ) {
-					if ( data.status === 'ok' ) {
+				callback: function (data) {
+					if (data.status === 'ok') {
 						window.location.reload();
 					} else {
-						window.alert( data.error );
+						UserProfilePage.error(data.error);
 					}
 				}
 			});
@@ -629,7 +625,7 @@ var UserProfilePage = {
 	}
 };
 
-$( function() {
+$(function () {
 	'use strict';
 	UserProfilePage.init();
 });

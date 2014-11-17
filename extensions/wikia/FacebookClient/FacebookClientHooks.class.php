@@ -4,78 +4,11 @@
  * Class FacebookClientHooks
  */
 class FacebookClientHooks {
-
-	/**
-	 * This hook runs whenever a user is being created from session data.  The only time action is taken is if the
-	 * user is currently on Special:Userlogin.  In this case it will see if there is a valid Facebook user and if so
-	 * send them to the Facebook connect flow (they wouldn't have the Facebook cookies if they hadn't clicked a
-	 * Facebook login button)
-	 *
-	 * @param $user
-	 * @param $result
-	 *
-	 * @return bool
-	 */
-	public static function UserLoadFromSession( $user, &$result ) {
-		$wg = F::app()->wg;
-
-		if ( $wg->CommandLineMode ) {
-			return true;
-		}
-
-		// If we're not trying to login, don't issue the redirect this handler creates
-		if ( !$wg->Title->isSpecial( 'Userlogin' ) ) {
-			return true;
-		}
-
-		// Check to see if the user can be logged in from Facebook
-		$fb = FacebookClient::getInstance();
-		$fbId = $fb->getUserId();
-
-		// Check to see if the user can be loaded from the session
-		$localId = isset( $_COOKIE[ $wg->CookiePrefix.'UserID' ] )
-			? intval( $_COOKIE[ $wg->CookiePrefix.'UserID' ] )
-			: ( isset( $_SESSION[ 'wsUserID' ] ) ? $_SESSION[ 'wsUserID' ] : 0 );
-
-		if ( $fbId && !$localId ) {
-			// Look up the MW ID of the Facebook user
-			$mwUser = $fb->getWikiaUser( $fbId );
-			$id = $mwUser ? $mwUser->getId() : 0;
-
-			// If the user doesn't exist, ask them to name their new account
-			// Don't redirect if we're on certain special pages
-			if ( !$id && !empty( $wg->Title ) && FacebookClientHooks::isOkToRedirect() ) {
-				$skin = RequestContext::getMain()->getSkin();
-
-				$returnTo = $wg->request->getVal( 'returnto', $wg->Title->getPrefixedURL() );
-				$redirectUrl = 'returnto=' . htmlspecialchars( $returnTo );
-				$returnToQuery = $wg->request->getVal( 'returntoquery' );
-				if ( $returnToQuery ) {
-					$redirectUrl .= '&returntoquery=' . htmlspecialchars( $returnToQuery );
-				}
-
-				// Redirect to Special:Connect so the Facebook user can choose a nickname
-				$wg->Out->redirect( $skin->makeSpecialUrl( 'FacebookConnect', $redirectUrl ) );
-			}
-		}
-
-		// Case: Not logged into Facebook or the wiki
-		// Case: Logged into Facebook, logged into the wiki
-		return true;
-	}
-
-	private static function isOkToRedirect() {
-		$title = F::app()->wg->Title;
-
-		return !( $title->isSpecial( 'Userlogout' ) || $title->isSpecial( 'FacebookConnect' ) );
-	}
-
 	/**
 	 * Adds several Facebook Connect variables to the page:
 	 *
 	 * fbAppId - Wikia's App ID
 	 * fbScript
-	 * fbUseMarkup - Should XFBML tags be rendered? (see $fbUseMarkup in config.php)
 	 * fbLogo
 	 * fbLogoutURL - (deprecated) The URL to be redirected to on a disconnect
 	 * fbReturnToTitle
@@ -83,13 +16,12 @@ class FacebookClientHooks {
 	 *
 	 */
 	public static function MakeGlobalVariablesScript( &$vars ) {
-		global $fbScript, $fbAppId, $fbUseMarkup, $fbLogo;
+		global $fbScript, $fbAppId, $fbLogo;
 		$wg = F::app()->wg;
 
 		$thisurl = $wg->Title->getPrefixedURL();
 		$vars['fbAppId'] = $fbAppId;
 		$vars['fbScript'] = $fbScript;
-		$vars['fbUseMarkup'] = $fbUseMarkup;
 		$vars['fbLogo'] = (bool) $fbLogo;
 
 		$vars['fbLogoutURL'] = Skin::makeSpecialUrl(

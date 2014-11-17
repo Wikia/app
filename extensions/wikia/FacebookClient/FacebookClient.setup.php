@@ -38,7 +38,6 @@ $wgAutoloadClasses['FacebookClientXFBML'] = $dir . 'FacebookClientXFBML.php';
  * hooks
  */
 $wgAutoloadClasses['FacebookClientHooks'] =  $dir . 'FacebookClientHooks.class.php';
-$wgHooks['UserLoadFromSession'][] = 'FacebookClientHooks::UserLoadFromSession';
 $wgHooks['MakeGlobalVariablesScript'][] = 'FacebookClientHooks::MakeGlobalVariablesScript';
 $wgHooks['SkinAfterBottomScripts'][] = 'FacebookClientHooks::SkinAfterBottomScripts';
 $wgHooks['GetPreferences'][] = 'FacebookClientHooks::GetPreferences';
