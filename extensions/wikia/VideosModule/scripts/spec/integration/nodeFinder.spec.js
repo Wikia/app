@@ -5,11 +5,17 @@ describe('nodeFinder', function(){
 		articleMock = document.createElement('div'),
 		extenderMock = document.createElement('div'),
 		h2Mock = document.createElement('h2'),
+		noscriptMock = document.createElement('noscript'),
+		hiddenMock = document.createElement('div'),
+		zeroHeightMock = document.createElement('div'),
+		textNode = document.createTextNode('foo'),
 		cloneNode,
 		id;
 
 	articleMock.id = 'article-content';
 	extenderMock.style.height = '200px';
+	hiddenMock.style.visibility = 'hidden';
+	zeroHeightMock.style.height = '0';
 
 	for(id = 0; id < 10; id ++) {
 		cloneNode = extenderMock.cloneNode();
@@ -18,6 +24,11 @@ describe('nodeFinder', function(){
 		cloneNode = h2Mock.cloneNode();
 		articleMock.appendChild(cloneNode);
 	}
+
+	articleMock.appendChild(noscriptMock);
+	articleMock.appendChild(hiddenMock);
+	articleMock.appendChild(zeroHeightMock);
+	articleMock.appendChild(textNode);
 
 	document.body.appendChild(articleMock);
 
