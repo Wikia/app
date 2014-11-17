@@ -381,7 +381,7 @@ class AsyncCache {
 			'expires' => $this->getCacheExpire(),
 			'ttlRemain' => $this->ttlRemain(),
 			'staleTTLRemain' => $this->staleTTLRemain(),
-			'postTTL' => $this->currTime - $this->ttl,
+			'pastTTL' => $this->currTime - $this->ttl,
 		] );
 	}
 }
