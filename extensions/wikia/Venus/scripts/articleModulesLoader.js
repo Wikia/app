@@ -13,7 +13,6 @@ require(
 		 * @param {Event} event
 		 */
 		function initTOChandler(event) {
-			console.log('dasdadasd');
 			event.stopPropagation();
 			tocModule.init(event.target.id, isTouchScreen);
 		}
