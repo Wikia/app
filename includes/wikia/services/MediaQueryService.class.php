@@ -621,7 +621,7 @@ class MediaQueryService extends WikiaService {
 
 		$cacheTtl = 7200; // 2 hours for caching the result in memcache
 		// 24hr allowance for returning stale results until new cache is built
-		// Adjusted to increase the caching benefit for infrequently views videos
+		// Adjusted to increase the caching benefit for infrequently viewed videos
 		$staleCacheTtl = 86400;
 		$asyncCacheEnabled = !empty( $app->wg->EnableAsyncVideoViewCache );
 
