@@ -58,6 +58,10 @@ $small-grid-slot-big-height: 2 * $small-grid-slot-small-height + $small-grid-gut
 			width: 100%;
 		}
 
+		.slot-description {
+			padding: 10px;
+		}
+
 		h4 {
 			margin-bottom: 5px;
 		}
