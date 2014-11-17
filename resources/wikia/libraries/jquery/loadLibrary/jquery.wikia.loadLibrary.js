@@ -120,9 +120,15 @@
 	/**
 	 * Load the facebook JS library, either v1.x or v2.x
 	 * @param {function} [callback] Function to be called after library is loaded
-	 * @returns {jQuery} Returns a jQuery promise
+	 * @returns {jQuery|null} Returns a jQuery promise or nothing if execution is cut short.
 	 */
 	$.loadFacebookAPI = function (callback) {
+		// don't load external library if noexternals is in the querystring
+		var params = window.Wikia.Querystring().getVals();
+		if (params.noexternals) {
+			return null;
+		}
+
 		if (window.wgEnableFacebookClientExt) {
 			return loadFacebookV2(callback);
 		} else {
