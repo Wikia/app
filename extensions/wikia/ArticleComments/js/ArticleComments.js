@@ -629,6 +629,26 @@
 					scrollTop: elementTop
 				}, 1);
 			}
+		},
+
+		showMoreComments: function() {
+			var $nodesToHide = this.$wrapper.find('.comments').children().slice(3),
+				$pagination = $('.article-comments-pagination', this.$wrapper),
+				showMoreButton = this.$wrapper.find('.comments-show-more');
+
+			// hide the comments
+			$nodesToHide.hide();
+			$pagination.hide();
+
+			// ... and show the button
+			showMoreButton.css('display', 'block');
+
+			showMoreButton.click(function() {
+				$nodesToHide.show();
+				$pagination.show();
+
+				showMoreButton.hide();
+			});
 		}
 	};
 
@@ -694,6 +714,12 @@
 					if (permalink) {
 						ArticleComments.scrollToElement(hash);
 					}
+
+					// "Show more comments" button for Venus
+					if (!permalink && window.skin === 'venus') {
+						ArticleComments.showMoreComments();
+					}
+
 					ArticleComments.bucky.timer.stop('loadAssets');
 				});
 			};

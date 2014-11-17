@@ -1,3 +1,4 @@
+@import 'skins/shared/mixins/arrow';
 @import 'skins/shared/color';
 @import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/Venus/styles/typographyMixins';
@@ -131,7 +132,6 @@
 
 	.avatar {
 		border-radius: 25px;
-		border: solid 2px red;
 		margin: 0 10px;
 		vertical-align: middle;
 	}
@@ -151,6 +151,28 @@
 				color: White;
 				background-color: $color-links;
 			}
+		}
+	}
+
+	.comments-show-more {
+		@include font-size-xxs;
+
+		background-color: $color-buttons;
+		border: none;
+		cursor: pointer;
+		display: none;
+		font-weight: bold;
+		height: 40px;
+		margin: 20px auto 60px;
+		padding: 0 15px 0 20px;
+		text-transform: uppercase;
+		vertical-align: middle;
+
+		&::after {
+			@include arrow(5px, rgba($color-button-text, .5));
+			content: ' ';
+			display: inline-block;
+			margin: -2px 0 0 15px;
 		}
 	}
 }

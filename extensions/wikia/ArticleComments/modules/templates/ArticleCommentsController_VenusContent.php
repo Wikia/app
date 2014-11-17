@@ -57,6 +57,7 @@
 			'useMaster' => false
 		))->render()
 	?>
+		<button class="comments-show-more"><?= wfMessage('article-comments-show-more')->plain() ?></button>
 	<? if ( $countComments ): ?>
 		<div class="article-comments-pagination"><?= $pagination ?></div>
 	<? endif ?>

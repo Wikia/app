@@ -38,6 +38,7 @@ $messages['en'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'The parent article / parent comment has been deleted.',
 	'article-comments-empty-comment' => "You can't post an empty comment. <a href='$1'>Delete it instead?</a>",
+	'article-comments-show-more' => 'Show more comments',
 
 	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|Comment|Comments}}',
 	'wikiamobile-article-comments-header' => 'Comments',
@@ -113,6 +114,7 @@ Parameters:
 	'article-comments-toc-item' => '{{Identical|Comment}}',
 	'article-comments-reply' => '{{Identical|Reply}}',
 	'article-comments-next-page' => '{{Identical|Next}}',
+	'article-comments-show-more' => 'Label for the button that shows more comments',
 	'wikiamobile-article-comments-counter' => 'Number of comments + word Comments to display in WM page header',
 	'wikiamobile-article-comments-header' => "The header of the Comments section shown in Wikia's mobile skin.
 {{Identical|Comment}}",
