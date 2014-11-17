@@ -181,6 +181,14 @@ $wgAutoloadClasses[ 'InvalidParameterApiException'] =  "{$IP}/includes/wikia/api
 $wgAutoloadClasses[ 'LimitExceededApiException'] =  "{$IP}/includes/wikia/api/ApiExceptions.php" ;
 $wgAutoloadClasses[ 'NotFoundApiException'] =  "{$IP}/includes/wikia/api/ApiExceptions.php" ;
 
+//Recommendations
+$wgAutoloadClasses['Wikia\\Api\\Recommendations\\Collector'] = "{$IP}/includes/wikia/api/Recommendations/Collector.class.php";
+$wgAutoloadClasses['Wikia\\Api\\Recommendations\\DataProviders\\IDataProvider'] = "{$IP}/includes/wikia/api/Recommendations/DataProviders/IDataProvider.interface.php";
+$wgAutoloadClasses['Wikia\\Api\\Recommendations\\DataProviders\\Category'] = "{$IP}/includes/wikia/api/Recommendations/DataProviders/Category.class.php";
+$wgAutoloadClasses['Wikia\\Api\\Recommendations\\DataProviders\\Video'] = "{$IP}/includes/wikia/api/Recommendations/DataProviders/Video.class.php";
+$wgAutoloadClasses['Wikia\\Api\\Recommendations\\DataProviders\\TopArticles'] = "{$IP}/includes/wikia/api/Recommendations/DataProviders/TopArticles.class.php";
+$wgAutoloadClasses['RecommendationsApiController'] = "{$IP}/includes/wikia/api/RecommendationsApiController.class.php";
+$wgWikiaApiControllers['RecommendationsApiController'] = "{$IP}/includes/wikia/api/RecommendationsApiController.class.php";
 /**
  * Wikia API end
  */
@@ -1202,17 +1210,17 @@ $wgWikiaHubsFileRepoPath = 'http://corp.wikia.com/';
 $wgWikiaHubsFileRepoDirectory = '/images/c/corp/images';
 
 /**
- * @name $wgEnableAmazonDirectTargetedBuy
- * Enables AmazonDirectTargetedBuy integration
+ * @name $wgEnableAmazonMatch
+ * Enables AmazonMatch integration
  */
-$wgEnableAmazonDirectTargetedBuy = true;
+$wgEnableAmazonMatch = true;
 
 /**
- * @name $wgAmazonDirectTargetedBuyCountries
- * Enables AmazonDirectTargetedBuy integration in theese countries (given AmazonDirectTargetedBuy is also true)
+ * @name $wgAmazonMatchCountries
+ * Enables AmazonMatch integration in these countries (given AmazonMatch is also true)
  * "Utility" var, don't change it here.
  */
-$wgAmazonDirectTargetedBuyCountries = null;
+$wgAmazonMatchCountries = null;
 
 /**
  * @name $wgAdPageLevelCategoryLangs

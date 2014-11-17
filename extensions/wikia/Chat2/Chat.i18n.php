@@ -1354,6 +1354,15 @@ $messages['fr'] = array(
 	'chat-status-away' => 'Absent',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'chat-ban-modal-label-reason' => 'Reden',
+	'chat-ban-modal-button-cancel' => 'Annulearje',
+	'chat-ban-option-list' => '2 oeren:2 hours,1 dei:1 day,3 dagen:3 days,1 wike:1 week,2 wiken:2 weeks,1 moanne:1 month,3 moannen:3 months,6 moannen:6 months,1 jier:1 year,ûnbeheind:infinite',
+);
+
 /** Galician (galego)
  * @author Toliño
  */

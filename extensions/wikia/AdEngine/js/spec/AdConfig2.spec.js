@@ -51,6 +51,12 @@ describe('AdConfig2', function () {
 				return;
 			}
 		},
+		amazonMock = {
+			wasCalled: function () {
+				return false;
+			},
+			call: function() {}
+		},
 		rtpMock = mockRtp({ slotname: [ 'HOME_TOP_RIGHT_BOXAD' ] }),
 		rtpMockWithTier = mockRtp({ slotname: [ 'HOME_TOP_RIGHT_BOXAD' ] }, true, 5),
 		rtpMockWithoutTier = mockRtp({ slotname: [ 'HOME_TOP_RIGHT_BOXAD' ] }, true),
@@ -70,6 +76,7 @@ describe('AdConfig2', function () {
 			mockEvolveSlotConfig(false),
 			gptSlotConfigMock,
 			rtpMock,
+			amazonMock,
 
 			// AdProviders
 			adProviderGptMock,
@@ -89,6 +96,7 @@ describe('AdConfig2', function () {
 			mockEvolveSlotConfig(false),
 			gptSlotConfigMock,
 			rtpMock,
+			amazonMock,
 
 			// AdProviders
 			adProviderGptMock,
@@ -108,6 +116,7 @@ describe('AdConfig2', function () {
 			mockEvolveSlotConfig(true),
 			gptSlotConfigMock,
 			rtpMock,
+			amazonMock,
 
 			// AdProviders
 			adProviderGptMock,
@@ -128,6 +137,7 @@ describe('AdConfig2', function () {
 			mockEvolveSlotConfig(false),
 			gptSlotConfigMock,
 			rtpMock,
+			amazonMock,
 
 			// AdProviders
 			adProviderGptMock,
@@ -147,6 +157,7 @@ describe('AdConfig2', function () {
 			mockEvolveSlotConfig(false),
 			gptSlotConfigMock,
 			rtpMock,
+			amazonMock,
 
 			// AdProviders
 			adProviderGptMock,
@@ -166,6 +177,7 @@ describe('AdConfig2', function () {
 			mockEvolveSlotConfig(false),
 			gptSlotConfigMock,
 			rtpMock,
+			amazonMock,
 
 			// AdProviders
 			adProviderGptMock,
@@ -185,6 +197,7 @@ describe('AdConfig2', function () {
 			mockEvolveSlotConfig(true),
 			gptSlotConfigMock,
 			rtpMock,
+			amazonMock,
 
 			// AdProviders
 			adProviderGptMock,
@@ -205,6 +218,7 @@ describe('AdConfig2', function () {
 				mockEvolveSlotConfig(true),
 				gptSlotConfigMock,
 				rtpMock,
+				amazonMock,
 
 				// AdProviders
 				adProviderGptMock,
@@ -236,6 +250,7 @@ describe('AdConfig2', function () {
 			mockEvolveSlotConfig(true),
 			gptSlotConfigMock,
 			mockRtp(),
+			amazonMock,
 
 			// AdProviders
 			adProviderGptMock,
@@ -258,6 +273,7 @@ describe('AdConfig2', function () {
 			mockEvolveSlotConfig(true),
 			gptSlotConfigMock,
 			rtpMockWithoutTier,
+			amazonMock,
 
 			// AdProviders
 			adProviderGptMock,
@@ -281,6 +297,7 @@ describe('AdConfig2', function () {
 			mockEvolveSlotConfig(true),
 			gptSlotConfigMock,
 			rtpMockWithTier,
+			amazonMock,
 
 			// AdProviders
 			adProviderGptMock,
@@ -302,6 +319,7 @@ describe('AdConfig2', function () {
 			mockEvolveSlotConfig(false),
 			gptSlotConfigMock,
 			rtpMockWithTier,
+			amazonMock,
 
 			// AdProviders
 			adProviderGptMock,
