@@ -134,6 +134,7 @@ $header-without-cover-unit-spacing: 60px;
 	blockquote {
 		@include font-size-xl;
 		border-top: 4px solid $color-text;
+		clear: both;
 		margin: 0 0 $article-items-spacing*2;
 		padding-top: 30px;
 		position: relative;
