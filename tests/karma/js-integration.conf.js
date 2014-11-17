@@ -79,6 +79,10 @@ module.exports = function (config) {
 			'extensions/wikia/Venus/scripts/modules/infobox.module.js',
 			'extensions/wikia/Venus/scripts/modules/spec/integration/infobox.spec.js',
 
+			// module insertion
+			'extensions/wikia/Venus/scripts/modules/nodeFinder.module.js',
+			'extensions/wikia/Venus/scripts/modules/spec/integration/nodeFinder.spec.js',
+
 			// Lightbox
 			'extensions/wikia/Lightbox/scripts/Lightbox.js',
 			'extensions/wikia/Lightbox/scripts/spec/integration/lightbox.spec.js'
