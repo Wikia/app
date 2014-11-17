@@ -113,7 +113,11 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 	//WikiaMobile skin
 	'wikiamobile-sendpassword-label' => 'Send new password',
 	'wikiamobile-facebook-connect-fail' => 'Sorry, your Facebook account is not currently linked with a Wikia account.',
-	'wikiamobile-go-to-login' => 'Have an account? [[Special:UserLogin|Log in now >]]'
+	'wikiamobile-go-to-login' => 'Have an account? [[Special:UserLogin|Log in now >]]',
+
+	// logged in view
+	'userlogin-logged-in-title' => 'Welcome to {{SITENAME}}, $1!',
+	'userlogin-logged-in-message' => "You're logged in. Head over to the [[$1|homepage]] to see the latest or check out your [[$2|profile]].",
 );
 
 /** Message documentation (Message documentation)
@@ -575,7 +579,7 @@ $messages['de'] = array(
 	'userlogin-password-email-greeting' => 'Hallo $USERNAME,',
 	'userlogin-password-email-content' => 'Gib dieses temporäre Passwort an, um dich bei Wikia anzumelden: "$NEWPASSWORD"
 <br /><br />
-Falls du kein neues Passwort beantragt hast, kannst du diese E-Mail ignorieren und weiterhin dein altes Passwort verwenden. Keine Sorge! Dein Benutzerkonto ist immer noch sicher. 
+Falls du kein neues Passwort beantragt hast, kannst du diese E-Mail ignorieren und weiterhin dein altes Passwort verwenden. Keine Sorge! Dein Benutzerkonto ist immer noch sicher.
 <br /><br />
 Bei Fragen oder Bedenken kannst du uns jederzeit <a href="http://community.wikia.com/wiki/Special:Contact/account-issue">kontaktieren</a>.',
 	'userlogin-password-email-signature' => 'Wikia Community Support',
@@ -583,7 +587,7 @@ Bei Fragen oder Bedenken kannst du uns jederzeit <a href="http://community.wikia
 
 gib dieses temporäre Passwort an, um dich bei Wikia anzumelden: "$3"
 
-Falls du kein neues Passwort beantragt hast kannst du diese E-Mail ignorieren und weiterhin dein altes Passwort verwenden. Keine Sorge! Dein Benutzerkonto ist immernoch sicher. 
+Falls du kein neues Passwort beantragt hast kannst du diese E-Mail ignorieren und weiterhin dein altes Passwort verwenden. Keine Sorge! Dein Benutzerkonto ist immernoch sicher.
 
 Bei Fragen oder Bedenken kannst du uns jederzeit kontaktieren: http://community.wikia.com/wiki/Special:Contact/account-issue
 
@@ -1619,7 +1623,7 @@ $messages['nb'] = array(
 	'userlogin-password-email-greeting' => 'Hei $USERNAME,',
 	'userlogin-password-email-content' => 'Vennligst bruk dette midlertidige passordet for å logge inn i Wikia: «$NEWPASSWORD»
 <br /><br />
-Hvis du ikke har bedt om et nytt passord, ikke vær bekymret! Kontoen din er trygg og sikker. Du kan ignorere denne e-posten og fortsette å logge inn i Wikia med det gamle passordet ditt. 
+Hvis du ikke har bedt om et nytt passord, ikke vær bekymret! Kontoen din er trygg og sikker. Du kan ignorere denne e-posten og fortsette å logge inn i Wikia med det gamle passordet ditt.
 <br /><br />
 Spørsmål eller bekymringer? Kontakt oss gjerne.', # Fuzzy
 	'userlogin-password-email-signature' => 'Wikia fellesskapssupport',
