@@ -218,8 +218,10 @@ class ArticleAsJson extends WikiaService {
 
 		if ( $wgArticleAsJson ) {
 			$report = '';
+
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 }
