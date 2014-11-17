@@ -2,6 +2,12 @@
 
 class ArticleNavigationHelper {
 
+	public function onOverwriteTOC( &$title, &$toc ) {
+		$toc = '';
+
+		return true;
+	}
+
 	public function extractDropdownData( $items ) {
 		$dropdownItems = [];
 		foreach ( $items as $item ) {

@@ -16,3 +16,6 @@ $wgExtensionCredits[ 'specialpage' ][] = [
 // controller classes
 $wgAutoloadClasses[ 'ArticleNavigationController' ] =  __DIR__ . '/ArticleNavigationController.class.php';
 $wgAutoloadClasses[ 'ArticleNavigationHelper' ] =  __DIR__ . '/ArticleNavigationHelper.class.php';
+
+//hooks
+$wgHooks['Linker::overwriteTOC'][] = 'ArticleNavigationHelper::onOverwriteTOC';
