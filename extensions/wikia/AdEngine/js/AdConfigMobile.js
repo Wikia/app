@@ -1,20 +1,33 @@
-/*global define*/
+/*global define,require*/
 define('ext.wikia.adEngine.adConfigMobile', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.directGptMobile',
 	'ext.wikia.adEngine.provider.remnantGptMobile',
-	'ext.wikia.adEngine.provider.taboola'
-], function (adContext, adProviderDirectGptMobile, adProviderRemnantGptMobile, adProviderTaboola) {
+	'ext.wikia.adEngine.provider.taboola',
+	require.optional('wikia.abTest')
+], function (adContext, adProviderDirectGptMobile, adProviderRemnantGptMobile, adProviderTaboola, abTest) {
 	'use strict';
 
-	var pageTypesWithAdsOnMobile = {
+	var context = adContext.getContext(),
+		targeting = context.targeting,
+		pageTypesWithAdsOnMobile = {
 			'all_ads': true,
 			'corporate': true
 		},
-		taboolaEnabled = true;
+		taboolaEnabledWikis = {
+			darksouls: true,
+			gameofthrones: true,
+			harrypotter: true,
+			helloproject: true,
+			ladygaga: true,
+			onedirection: true
+		},
+		taboolaEnabled = (targeting.pageType === 'article' || targeting.pageType === 'home') &&
+			taboolaEnabledWikis[targeting.wikiDbName] &&
+			context.providers.taboola &&
+			abTest && abTest.inGroup('NATIVE_ADS_TABOOLA', 'YES');
 
 	function getProviderList(slotName) {
-		var context = adContext.getContext();
 
 		// If wgShowAds set to false, hide slots
 		if (!context.opts.showAds) {
