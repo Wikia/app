@@ -144,11 +144,13 @@ class ArticleNavigationController extends WikiaController {
 		}
 
 		$renderedData = $service->instanceToRenderData( $service->listToInstance( $data ) );
+
 		if ($wgUser->isAllowed('admindashboard')) {
 			$renderedData[] = [
 				'tracker-name' => 'admin',
 				'caption' => 'Admin',
-				'href' => SpecialPage::getTitleFor('AdminDashboard')->getLocalURL()
+				'href' => SpecialPage::getTitleFor('AdminDashboard')->getLocalURL(),
+				'type' => 'link'
 			];
 		}
 		return $renderedData;
