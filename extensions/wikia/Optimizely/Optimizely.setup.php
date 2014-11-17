@@ -22,3 +22,4 @@ $wgAutoloadClasses[ 'OptimizelyController' ] = $dir . '/OptimizelyController.cla
 // hooks
 $wgHooks[ 'WikiaSkinTopScripts' ][] = 'Optimizely::onWikiaSkinTopScripts';
 $wgHooks[ 'OasisSkinAssetGroupsBlocking' ][] = 'Optimizely::onOasisSkinAssetGroupsBlocking';
+$wgHooks[ 'VenusAssetsPackages' ][] = 'Optimizely::onVenusAssetsPackages';

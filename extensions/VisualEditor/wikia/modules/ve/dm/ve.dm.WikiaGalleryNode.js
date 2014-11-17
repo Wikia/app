@@ -38,6 +38,54 @@ ve.dm.WikiaGalleryNode.static.getMatchRdfaTypes = function () {
 	}
 };
 
+/**
+ * @inheritdoc
+ */
+ve.dm.WikiaGalleryNode.static.toDataElement = function ( domElements ) {
+	var mwDataJSON = domElements[0].getAttribute( 'data-mw' ),
+		mwData = mwDataJSON ? JSON.parse( mwDataJSON ) : {},
+		expandValue;
+
+	if ( 'expand' in mwData.attrs ) {
+		expandValue = mwData.attrs.expand === 'true';
+	} else {
+		expandValue = undefined;
+	}
+
+	return {
+		'type': this.name,
+		'attributes': {
+			'mw': mwData,
+			'originalMw': mwDataJSON,
+			'expand': expandValue,
+			'originalExpand': expandValue
+		}
+	};
+};
+
+/**
+ * @inheritdoc
+ */
+ve.dm.WikiaGalleryNode.static.toDomElements = function ( data, doc ) {
+	// Inspired by ve.dm.MWReferenceListNode
+	var el = doc.createElement( 'div' ),
+		attribs = data.attributes,
+		mwData = attribs.mw ? ve.copy( attribs.mw ) : {},
+		originalMw = attribs.originalMw;
+
+	if ( attribs.expand !== attribs.originalExpand ) {
+		ve.setProp( mwData, 'attrs', 'expand', attribs.expand ? 'true' : undefined );
+	}
+
+	if ( originalMw && ve.compare( mwData, JSON.parse( originalMw ) ) ) {
+		el.setAttribute( 'data-mw', originalMw );
+	} else {
+		el.setAttribute( 'data-mw', JSON.stringify( mwData ) );
+	}
+
+	return [ el ];
+};
+
 /* Methods */
 
 /* Registration */

@@ -1,9 +1,11 @@
+$color-links-default: #006CB0;
+
 // Main Color Variables //
 $color-body: get_command_line_param("color-body", #BACDD8); // default: light blue
 $color-body-middle: get_command_line_param("color-body-middle", $color-body); // default: same as color-body
 $color-page: get_command_line_param("color-page", #FFF); // default: white
-$color-buttons: get_command_line_param("color-buttons", #006CB0); // default: blue
-$color-links: get_command_line_param("color-links", #006CB0); // default: blue
+$color-buttons: get_command_line_param("color-buttons", $color-links-default); // default: blue
+$color-links: get_command_line_param("color-links", $color-links-default); // default: blue
 $color-header: get_command_line_param("color-header", #3A5766); // default: blue
 $background-image: get_command_line_param("background-image", "http://images1.wikia.nocookie.net/__cb21710/common/skins/oasis/images/themes/oasis.png"); // TODO: USE THE wgCdnStylePath VAR INSTEAD OF HARDCODING.
 $page-opacity: get_command_line_param("page-opacity", 100) / 100;	// default: 1
@@ -179,6 +181,7 @@ $color-diff-context: darken($color-page, 5%);
 // Vertical colors
 $color-vertical-books: #ff7f26;
 $color-vertical-comics: #ff5400;
+$color-vertical-anime: #ff5400;
 $color-vertical-games: #94d11f;
 $color-vertical-lifestyle: #ffd000;
 $color-vertical-movies: #09d3bf;
@@ -188,6 +191,7 @@ $color-vertical-tv: #00b7e0;
 
 $color-vertical-books-secondary: #e76400;
 $color-vertical-comics-secondary: #e1390b;
+$color-vertical-anime-secondary: #e1390b;
 $color-vertical-games-secondary: #76bf06;
 $color-vertical-lifestyle-secondary: #ffad00;
 $color-vertical-movies-secondary: #09b3a6;

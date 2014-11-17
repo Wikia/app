@@ -69,6 +69,11 @@ class VenusController extends WikiaController {
 		$this->localNavigation = $this->getLocalNavigation();
 		$this->globalFooter = $this->getGlobalFooter();
 		$this->corporateFooter = $this->getCorporateFooter();
+		$this->launchRecommendationsModule();
+
+		if ($this->isUserLoggedIn) {
+			$this->recentWikiActivity = $this->getRecentWikiActivity();
+		}
 
 		if ( WikiaPageType::isArticlePage() ) {
 			$this->leftArticleNav = $this->getLeftArticleNavigation();
@@ -164,25 +169,44 @@ class VenusController extends WikiaController {
 	}
 
 	public function getGlobalNavigation() {
-		return class_exists('GlobalNavigationController') ?
+		global $wgEnableGlobalNavExt;
+
+		return !empty( $wgEnableGlobalNavExt ) ?
 			$this->app->renderView('GlobalNavigation', 'index') :
 			'';
 	}
 
 	private function getLocalNavigation() {
-		return class_exists('LocalNavigationController') ?
+		global $wgEnableLocalNavExt;
+
+		return !empty( $wgEnableLocalNavExt ) ?
 			$this->app->renderView('LocalNavigation', 'Index') :
 			'';
 	}
 
 	private function getGlobalFooter() {
-		return class_exists('GlobalFooterController') ?
-			$this->app->renderView('GlobalFooter', 'index') :
+		global $wgEnableGlobalFooterExt;
+
+		return !empty( $wgEnableGlobalFooterExt ) ?
+			$this->app->renderView('GlobalFooter', 'indexVenus') :
 			'';
 	}
 
 	public function getCorporateFooter() {
 		//return $this->app->renderView('CorporateFooter', 'Index');
+		return '';
+	}
+
+	public function launchRecommendationsModule() {
+		global $wgEnableRecommendationsExt, $wgOut;
+
+		if ( !empty( $wgEnableRecommendationsExt ) ) {
+			$wgOut->addModules( 'ext.wikia.venus.recommendations' );
+		}
+	}
+
+	public function getRecentWikiActivity() {
+		return $this->app->renderView('RecentWikiActivity', 'index');
 	}
 
 	public static function addBodyParameter($parameter) {
