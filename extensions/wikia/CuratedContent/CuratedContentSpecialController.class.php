@@ -27,7 +27,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 
 		$this->response->setTemplateEngine( self::TEMPLATE_ENGINE );
 
-		$title = wfMsg( 'wikiacuratedcontent-content-title' );
+		$title = wfMessage( 'wikiacuratedcontent-content-title' );
 		$this->wg->Out->setPageTitle( $title );
 		$this->wg->Out->setHTMLTitle( $title );
 
@@ -61,21 +61,21 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		JSMessages::enqueuePackage( 'CuratedContentMsg', JSMessages::INLINE );
 
 		$this->response->setVal( 'descriptions', [
-			wfMsg( 'wikiacuratedcontent-content-description-items' ),
-			wfMsg( 'wikiacuratedcontent-content-description-supported-items' ),
-			wfMsg( 'wikiacuratedcontent-content-description-section' ),
-			wfMsg( 'wikiacuratedcontent-content-description-organize' ),
-			wfMsg( 'wikiacuratedcontent-content-description-no-section' ),
-			wfMsg( 'wikiacuratedcontent-content-description-items-input' )
+			wfMessage( 'wikiacuratedcontent-content-description-items' ),
+			wfMessage( 'wikiacuratedcontent-content-description-supported-items' ),
+			wfMessage( 'wikiacuratedcontent-content-description-section' ),
+			wfMessage( 'wikiacuratedcontent-content-description-organize' ),
+			wfMessage( 'wikiacuratedcontent-content-description-no-section' ),
+			wfMessage( 'wikiacuratedcontent-content-description-items-input' )
 		] );
 
-		$this->response->setVal( 'addSection', wfMsg( 'wikiacuratedcontent-content-add-section' ) );
-		$this->response->setVal( 'addItem', wfMsg( 'wikiacuratedcontent-content-add-item' ) );
-		$this->response->setVal( 'save', wfMsg( 'wikiacuratedcontent-content-save' ) );
+		$this->response->setVal( 'addSection', wfMessage( 'wikiacuratedcontent-content-add-section' ) );
+		$this->response->setVal( 'addItem', wfMessage( 'wikiacuratedcontent-content-add-item' ) );
+		$this->response->setVal( 'save', wfMessage( 'wikiacuratedcontent-content-save' ) );
 
-		$this->response->setVal( 'section_placeholder', wfMsg( 'wikiacuratedcontent-content-section' ) );
-		$this->response->setVal( 'item_placeholder', wfMsg( 'wikiacuratedcontent-content-item' ) );
-		$this->response->setVal( 'name_placeholder', wfMsg( 'wikiacuratedcontent-content-name' ) );
+		$this->response->setVal( 'section_placeholder', wfMessage( 'wikiacuratedcontent-content-section' ) );
+		$this->response->setVal( 'item_placeholder', wfMessage( 'wikiacuratedcontent-content-item' ) );
+		$this->response->setVal( 'name_placeholder', wfMessage( 'wikiacuratedcontent-content-name' ) );
 
 		$itemTemplate = $this->sendSelfRequest( self::ITEM_FUNCTION_NAME )->toString();
 		$sectionTemplate = $this->sendSelfRequest( 'section' )->toString();
@@ -130,7 +130,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			$this->response->setVal( 'image_set', true );
 		}
 
-		$this->response->setVal( 'section_placeholder', wfMsg( 'wikiacuratedcontent-content-section' ) );
+		$this->response->setVal( 'section_placeholder', wfMessage( 'wikiacuratedcontent-content-section' ) );
 	}
 
 	/*
@@ -158,8 +158,8 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		}
 
 		$this->response->setVal( 'image_url', $this->getImage( $id ) );
-		$this->response->setVal( 'item_placeholder', wfMsg( 'wikiacuratedcontent-content-item' ) );
-		$this->response->setVal( 'name_placeholder', wfMsg( 'wikiacuratedcontent-content-name' ) );
+		$this->response->setVal( 'item_placeholder', wfMessage( 'wikiacuratedcontent-content-item' ) );
+		$this->response->setVal( 'name_placeholder', wfMessage( 'wikiacuratedcontent-content-name' ) );
 	}
 
 	public function save() {
@@ -224,57 +224,77 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			foreach ( $sections as &$section ) {
 				$section[ 'image_id' ] = (int)$section[ 'image_id' ];
 				if ( !empty( $section[ self::ITEMS_TAG ] ) ) {
-					foreach ( $section[ self::ITEMS_TAG ] as &$row ) {
-						list( $articleId, $namespaceId, $type, $info, $imageId ) =
-							$this->getInfoFromRow( $row );
-						$row[ 'article_id' ] = $articleId;
-						$row[ 'type' ] = $type;
-						$row[ 'image_id' ] = $imageId;
-						if ( !empty( $info ) ) {
-							$row[ 'video_info' ] = $info;
-						}
-
-						$rowErr = [ ];
-						if ( empty( $row[ 'label' ] ) ) {
-							$rowErr [ 'title' ] = $row[ 'title' ];
-							$rowErr [ 'reason' ] = 'emptyLabel';
-						}
-
-						if ( $this->needsArticleId( $type ) && $articleId === 0 ) {
-							$rowErr [ 'title' ] = $row[ 'title' ];
-							$rowErr [ 'reason' ] = 'articleNotFound';
-						}
-
-						if ( $type == null ) {
-							$rowErr [ 'title' ] = $row[ 'title' ];
-							$rowErr [ 'reason' ] = 'notSupportedType';
-						}
-
-						if ( $type === 'video' ) {
-							if ( empty( $info ) ) {
-								$rowErr [ 'title' ] = $row[ 'title' ];
-								$rowErr [ 'reason' ] = 'videoNotHaveInfo';
-							} else {
-								if ( $info[ 'provider' ] !== 'youtube' && !startsWith( $info[ 'provider' ], 'ooyala' )
-								) {
-									$rowErr [ 'title' ] = $row[ 'title' ];
-									$rowErr [ 'reason' ] = 'videoNotSupportProvider';
-								}
-							}
-						}
-						if ( !empty( $rowErr ) ) {
-							$err[ ] = $rowErr;
-						}
+					$sectionErr = $this->processSection( $section );
+					if ( !empty( $sectionErr ) ) {
+						$err = array_merge( $err, $sectionErr );
 					}
 				}
+
 			}
 		}
 		return $err;
 	}
 
+	/**
+	 * @param $section
+	 */
+	private function processSection( &$section ) {
+		$sectionErr = [ ];
+		foreach ( $section[ self::ITEMS_TAG ] as &$row ) {
+			list( $articleId, $namespaceId, $type, $info, $imageId ) = $this->getInfoFromRow( $row );
+			$row[ 'article_id' ] = $articleId;
+			$row[ 'type' ] = $type;
+			$row[ 'image_id' ] = $imageId;
+			if ( !empty( $info ) ) {
+				$row[ 'video_info' ] = $info;
+			}
+			$rowErr = $this->checkForErrors( $row, $type, $articleId, $info );
+			if ( !empty( $rowErr ) ) {
+				$sectionErr[ ] = $rowErr;
+			}
+		}
+		return $sectionErr;
+	}
 
-	private
-	function getInfoFromRow( &$row ) {
+	/**
+	 * @param $row
+	 * @param $type
+	 * @param $articleId
+	 * @param $info
+	 * @return array
+	 */
+	private function checkForErrors( $row, $type, $articleId, $info ) {
+		$rowErr = [ ];
+		if ( empty( $row[ 'label' ] ) ) {
+			$rowErr [ 'title' ] = $row[ 'title' ];
+			$rowErr [ 'reason' ] = 'emptyLabel';
+		}
+
+		if ( $this->needsArticleId( $type ) && $articleId === 0 ) {
+			$rowErr [ 'title' ] = $row[ 'title' ];
+			$rowErr [ 'reason' ] = 'articleNotFound';
+		}
+
+		if ( $type == null ) {
+			$rowErr [ 'title' ] = $row[ 'title' ];
+			$rowErr [ 'reason' ] = 'notSupportedType';
+		}
+
+		if ( $type === 'video' ) {
+			if ( empty( $info ) ) {
+				$rowErr [ 'title' ] = $row[ 'title' ];
+				$rowErr [ 'reason' ] = 'videoNotHaveInfo';
+			} else {
+				if ( $this->isSupportedProviders( $info ) ) {
+					$rowErr [ 'title' ] = $row[ 'title' ];
+					$rowErr [ 'reason' ] = 'videoNotSupportProvider';
+				}
+			}
+		}
+		return $rowErr;
+	}
+
+	private function getInfoFromRow( &$row ) {
 		$title = Title::newFromText( $row[ 'title' ] );
 		if ( !empty( $title ) ) {
 			$articleId = $title->getArticleId();
@@ -298,7 +318,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 					}
 					break;
 			}
-			if ( $image_id == 0 ) {
+			if ( $image_id === 0 ) {
 				$imageTitle = $this->findFirstImageTitleFromArticle( $articleId );
 				if ( !empty( $imageTitle ) ) {
 					$image_id = $imageTitle->getArticleId();
@@ -316,13 +336,12 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		return [ null, null, null, null, null ];
 	}
 
-	private
-	function getType( $namespaceId ) {
+	private function getType( $namespaceId ) {
 		switch ( $namespaceId ) {
 			case NS_MAIN:
 				return self::STR_ARTICLE;
 				break;
-			case 500:
+			case NS_BLOG_ARTICLE:
 				return self::STR_BLOG;
 				break;
 			case NS_CATEGORY:
@@ -337,8 +356,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		}
 	}
 
-	private
-	function getVideoInfo( $title ) {
+	private function getVideoInfo( $title ) {
 		$mediaService = new MediaQueryService();
 		$mediaInfo = $mediaService->getMediaData( $title );
 		if ( !empty( $mediaInfo ) ) {
@@ -358,8 +376,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		return [ null, null ];
 	}
 
-	public
-	static function findImageIfNotSet( $imageId, $articleId = 0 ) {
+	public static function findImageIfNotSet( $imageId, $articleId = 0 ) {
 		$imageTitle = null;
 		if ( $imageId == 0 ) {
 			$imageId = null;
@@ -399,6 +416,15 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			}
 		}
 		return $imageUrl;
+	}
+
+	/**
+	 * @param $info
+	 * @return bool
+	 */
+	private function isSupportedProviders( $info ) {
+		$test = $info[ 'provider' ] !== 'youtube' && !startsWith( $info[ 'provider' ], 'ooyala' );
+		return $test;
 	}
 
 	private function needsArticleId( $type ) {
