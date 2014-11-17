@@ -78,6 +78,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 * Shown for both Special:UserLogin and Special:UserSignup when visited logged in.
 	 */
 	public function loggedIn() {
+		// don't show "special page" text
 		$this->wg->SupressPageSubtitle = true;
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
