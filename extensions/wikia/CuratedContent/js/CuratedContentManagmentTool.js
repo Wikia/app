@@ -172,8 +172,7 @@ $(function () {
 
 		$save.on('click', function () {
 			var data = [],
-				nonames = [],
-				nonameId = 0;
+				nonames = [];
 
 			if (checkForm()) {
 				$ul.find('.item:not(.section ~ .item)').each(function () {
@@ -187,7 +186,7 @@ $(function () {
 						items = [];
 
 					$t.nextUntil('.section').each(function () {
-						(name ? items : nonames).push(getData(this));
+						items.push(getData(this));
 					});
 
 					if (name) {
@@ -197,21 +196,14 @@ $(function () {
 							items: items
 						});
 					} else {
-						nonameId = imageId;
+						data.push({
+							title: '',
+							image_id: imageId,
+							items: items.concat(nonames) //append orphaned entries at the end of no name category
+						});
+						nonames = []; // we already added orphans so lets remove them from existence
 					}
 				});
-
-				if (nonames.length > 0) {
-					data.push({
-						title: '',
-						image_id: nonameId || 0,
-						items: nonames
-					});
-				}
-
-				$save.removeClass();
-				$form.startThrobbing();
-
 				nirvana.sendRequest({
 					controller: 'CuratedContentSpecial',
 					method: 'save',
