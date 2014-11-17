@@ -1,6 +1,4 @@
 <?php
-//use Wikia\Api\Recommendations\Collector;
-
 class CollectorTest extends WikiaBaseTest {
 
 	const ARTICLE_ID = 50;
