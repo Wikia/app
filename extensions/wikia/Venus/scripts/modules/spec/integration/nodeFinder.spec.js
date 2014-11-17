@@ -1,4 +1,4 @@
-describe( 'moduleInsertion', function(){
+describe( 'nodeFinder', function(){
 	'use strict';
 
 	var nodeFinder,
