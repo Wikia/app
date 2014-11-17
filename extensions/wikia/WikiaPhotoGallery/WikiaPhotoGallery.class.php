@@ -409,16 +409,22 @@ class WikiaPhotoGallery extends ImageGallery {
 			// support captions with internal links with pipe (Foo.jpg|link=Bar|[[test|link]])
 			$caption = implode('|', $captionParts);
 
-			$linkAttributes = $this->parseLink($tp->getLocalUrl(), $tp->getText(), $link);
 			$imageItem = array(
 				'name' => $imageName,
 				'caption' => $caption,
 				'link' => $link,
 				'linktext' => $linktext,
-				'linkhref' => $linkAttributes['href'],
 				'shorttext' => $shorttext,
 				'data-caption' => Sanitizer::removeHTMLtags( $caption ),
 			);
+
+			// Get article link if it exists. If the href attribute is identical to the local
+			// file URL, then there is no article URL.
+			$localUrl = $tp->getLocalUrl();
+			$linkAttributes = $this->parseLink($localUrl, $tp->getText(), $link);
+			if ($linkAttributes['href'] !== $localUrl) {
+				$imageItem['linkhref'] = $linkAttributes['href'];
+			}
 
 			// store list of images from inner content of tag (to be used by front-end)
 			$this->mData['images'][] = $imageItem;
