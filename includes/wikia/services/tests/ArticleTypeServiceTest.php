@@ -68,21 +68,21 @@ class ArticleTypeServiceTest extends WikiaBaseTest {
 
 	private function mockArticle($articleId, $articleTitle, $articleWikiText) {
 		$title = $this->getMockBuilder("Title")->disableOriginalConstructor()->getMock();
-		$title->expects($this->once())
+		$title->expects($this->any())
 			->method("getText")->will($this->returnValue($articleTitle));
 
 		$page = $this->getMockBuilder("WikiPage")->disableOriginalConstructor()->getMock();
-		$page->expects($this->once())
+		$page->expects($this->any())
 			->method("getRawText")->will($this->returnValue($articleWikiText));
 
 		$article = $this->getMockBuilder("Article")->disableOriginalConstructor()->getMock();
-		$article->expects($this->once())
+		$article->expects($this->any())
 			->method("getTitle")->will($this->returnValue($title));
-		$article->expects($this->once())
+		$article->expects($this->any())
 			->method("getPage")->will($this->returnValue($page));
 
 		$articleFactoryMock = $this->getStaticMethodMock("Article", "newFromID");
-		$articleFactoryMock->expects($this->once())
+		$articleFactoryMock->expects($this->any())
 			->method("newFromID")
 			->with($articleId)
 			->will($this->returnValue($article));

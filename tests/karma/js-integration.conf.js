@@ -8,7 +8,7 @@
 
 var base = require('./karma.base.conf.js');
 
-module.exports = function(config) {
+module.exports = function (config) {
 	'use strict';
 
 	base(config);
@@ -81,7 +81,11 @@ module.exports = function(config) {
 
 			// nodeFinder
 			'extensions/wikia/VideosModule/scripts/modules/nodeFinder.module.js',
-			'extensions/wikia/VideosModule/scripts/spec/integration/nodeFinder.spec.js'
+			'extensions/wikia/VideosModule/scripts/spec/integration/nodeFinder.spec.js',
+
+			// Lightbox
+			'extensions/wikia/Lightbox/scripts/Lightbox.js',
+			'extensions/wikia/Lightbox/scripts/spec/integration/lightbox.spec.js'
 		]
 	});
 };

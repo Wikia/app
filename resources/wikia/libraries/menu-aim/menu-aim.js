@@ -385,7 +385,7 @@
 
 			upperLeft = {
 				x: offset.left,
-				y: offset.top + window.scrollY - options.tolerance
+				y: offset.top + window.pageYOffset - options.tolerance
 			};
 			upperRight = {
 				x: offset.left + menu.offsetWidth,
@@ -393,7 +393,7 @@
 			};
 			lowerLeft = {
 				x: offset.left,
-				y: offset.top + window.scrollY + menu.offsetHeight + options.tolerance
+				y: offset.top + window.pageYOffset + menu.offsetHeight + options.tolerance
 			};
 			lowerRight = {
 				x: offset.left + menu.offsetWidth,

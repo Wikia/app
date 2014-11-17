@@ -9,7 +9,7 @@
 define('wikia.underscore', ['wikia.window'], function underscoreModule(win) {
 	'use strict';
 
-	var now, debounce;
+	var now, debounce, extend, noop, isObject, identity;
 
 	now = Date.now || function() {
 		return new Date().getTime();
@@ -47,11 +47,41 @@ define('wikia.underscore', ['wikia.window'], function underscoreModule(win) {
 		};
 	};
 
+	// Is a given variable an object?
+	isObject = function(obj) {
+		var type = typeof obj;
+		return type === 'function' || type === 'object' && !!obj;
+	};
+
+	// Extend a given object with all the properties in passed-in object(s).
+	extend = function(obj) {
+		if (!isObject(obj)) return obj;
+		var source, prop;
+		for (var i = 1, length = arguments.length; i < length; i++) {
+			source = arguments[i];
+			for (prop in source) {
+				obj[prop] = source[prop];
+			}
+		}
+		return obj;
+	};
+
+	noop = function(){};
+
+	// Keep the identity function around for default iteratees.
+	identity = function(value) {
+		return value;
+	};
+
 	/**
 	 * return API to spawn new instances of StickyElement
 	 */
 	return {
 		now: now,
-		debounce: debounce
+		debounce: debounce,
+		extend: extend,
+		noop: noop,
+		identity: identity,
+		isObject: isObject
 	}
 });

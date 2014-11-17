@@ -17,7 +17,8 @@ require(
 		}
 
 		// initialize TOC in left navigation
-		tocModule.init('leftNavToc');
+		// Right now it is commented out because it is breaking pages when headers are not present
+//		tocModule.init('leftNavToc');
 
 		//scan for tables in article and if table is too wide add scrollbar
 		scanTables();

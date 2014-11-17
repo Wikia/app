@@ -7,7 +7,9 @@
  *
  * @author Bartosz 'V.' Bentkowski
  */
-define('wikia.stickyElement', ['wikia.window', 'wikia.document', 'wikia.underscore'], function stickyElementModule(win, doc, _) {
+define('wikia.stickyElement', [
+	'wikia.window', 'wikia.document', 'wikia.underscore'
+], function stickyElementModule(win, doc, _) {
 	'use strict';
 
 	/**
@@ -16,23 +18,26 @@ define('wikia.stickyElement', ['wikia.window', 'wikia.document', 'wikia.undersco
 	 * @constructor
 	 */
 	var StickyElement = function() {
-		var sourceElement, alignToElement, topScrollLimit, topSticked, topFixed, minWidth, lastY = -1;
+		var options, topScrollLimit, topSticked, lastY = -1;
 
 
 		/**
 		 * Constructor for StickyElement class
 		 *
-		 * @param {Element} _sourceElement
-		 * @param {Element} _alignToElement
-		 * @param {Number} _topFixed
-		 * @param {Number=} _minWidth
+		 * @param {JSON} userOptions
+		 *  sourceElement
+		 *  alignToElement
+		 *  topFixed
+		 *  minWidth (defaults to 0)
+		 *  [adjustFunc]
 		 * @returns {Object} StickyElement
 		 */
-		function init (_sourceElement, _alignToElement, _topFixed, _minWidth) {
-			sourceElement = _sourceElement;
-			alignToElement = _alignToElement;
-			topFixed = _topFixed;
-			minWidth = _minWidth || 0;
+		function init (userOptions) {
+			var defaultOptions = {
+				minWidth: 0,
+				adjustFunc: _.identity
+			};
+			options = _.extend(defaultOptions, userOptions);
 
 			win.addEventListener('load',   updateSize);
 			win.addEventListener('scroll', _.debounce(updatePosition, 10));
@@ -49,12 +54,17 @@ define('wikia.stickyElement', ['wikia.window', 'wikia.document', 'wikia.undersco
 		function updateSize () {
 			// calculate changing point using real element offset
 			// source: https://github.com/jquery/jquery/blob/2.1.0/src/offset.js#L106
-			topScrollLimit = alignToElement.getBoundingClientRect().top +
+			topScrollLimit = options.alignToElement.getBoundingClientRect().top +
 				win.pageYOffset -
 				doc.documentElement.clientTop -
-				topFixed; // minus desired offset when element is fixed
+				options.topFixed; // minus desired offset when element is fixed
 
-			topSticked = alignToElement.offsetTop;
+			topSticked = options.alignToElement.offsetTop;
+
+			topScrollLimit = options.adjustFunc(topScrollLimit, 'topScrollLimit');
+			topSticked = options.adjustFunc(topSticked, 'topSticked');
+
+			lastY = -1;
 
 			updatePosition();
 		}
@@ -70,10 +80,10 @@ define('wikia.stickyElement', ['wikia.window', 'wikia.document', 'wikia.undersco
 			// return if there's nothing to update
 			if (event != undefined && currentY === lastY) return;
 
-			if (currentY <= topScrollLimit || (!!minWidth && win.innerWidth < minWidth)) {
+			if (currentY <= topScrollLimit || (!!options.minWidth && win.innerWidth < options.minWidth)) {
 				sourceElementPosition('absolute', topSticked);
 			} else {
-				sourceElementPosition('fixed', topFixed);
+				sourceElementPosition('fixed', options.topFixed);
 			}
 
 			lastY = currentY;
@@ -86,7 +96,7 @@ define('wikia.stickyElement', ['wikia.window', 'wikia.document', 'wikia.undersco
 		 * @param {Number} top
 		 */
 		function sourceElementPosition (position, top) {
-			sourceElement.style.cssText = "position:" + position + ";top:" + top + "px;";
+			options.sourceElement.style.cssText = "position:" + position + ";top:" + top + "px;";
 		}
 
 		/**

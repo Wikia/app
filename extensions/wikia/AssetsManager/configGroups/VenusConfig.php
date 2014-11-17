@@ -6,8 +6,6 @@ $VenusConfig[ 'venus_body_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'venus' ],
 	'assets' => [
-		'//resources/jquery/jquery-2.1.1.min.js',
-
 		//libraries/frameworks
 // TODO: This should be loaded here, but for some reason, it's already included
 //		'//resources/wikia/libraries/modil/modil.js',
@@ -112,7 +110,6 @@ $VenusConfig[ 'venus_head_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'venus' ],
 	'assets' => [
-		'#group_abtesting',
 		'//resources/wikia/modules/lazyqueue.js',
 	]
 ];
@@ -148,7 +145,6 @@ $VenusConfig[ 'global_footer_scss' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'venus' ],
 	'assets' => [
-		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.scss',
 		'//extensions/wikia/GlobalFooter/styles/GlobalFooterVenus.scss'
 	]
 ];
@@ -204,7 +200,8 @@ $VenusConfig[ 'article_navigation_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'venus' ],
 	'assets' => [
-		'//extensions/wikia/ArticleNavigation/scripts/articleNavigation.js'
+		'//extensions/wikia/ArticleNavigation/scripts/sticky.js',
+		'//extensions/wikia/ArticleNavigation/scripts/share.js'
 	]
 ];
 
@@ -235,7 +232,15 @@ $VenusConfig[ 'article_scss' ] = [
 	]
 ];
 
-$VenusConfig[ 'imglzy_js' ] = [
+$VenusConfig[ 'recent_wiki_activity_scss' ] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'venus' ],
+	'assets' => [
+		'//extensions/wikia/RecentWikiActivity/styles/RecentWikiActivity.scss',
+	]
+];
+
+$VenusConfig['imglzy_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/ImageLazyLoad/js/ImgLzy.module.js',

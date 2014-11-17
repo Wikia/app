@@ -1,18 +1,96 @@
+@import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/flexbox';
+@import 'skins/shared/color';
 @import 'extensions/wikia/Venus/styles/variables';
+@import 'extensions/wikia/Venus/styles/mixins';
+@import 'extensions/wikia/Venus/styles/logo';
+
+$global-footer-color-border: #c7d1d8;
+$global-footer-vertical-spacing: 30px;
 
 .global-footer {
-	line-height: 12px;
-	padding-left: $medium-content-padding + $medium-grid-column-padding;
-	padding-right: $medium-content-padding + $medium-grid-column-padding;
-	width: auto;
+	background-color: $global-wikia-background-color;
+	border-bottom: 10px solid $color-wikiahome-community;
+	border-top: 1px solid $global-footer-color-border;
+	color: $color-text-dark;
+	margin-top: $global-footer-vertical-spacing;
+	padding-top: $global-footer-vertical-spacing + 10;
+	text-align: center;
 
-	@media #{$large-up} {
-		padding-left: $large-content-padding + $large-grid-column-padding;
-		padding-right: $large-content-padding + $large-grid-column-padding;
+	&.vertical-books {
+		border-bottom-color: $color-vertical-books;
 	}
 
-	@media #{$small-only} {
-		padding-left: $small-content-padding + $small-grid-column-padding;
-		padding-right: $small-content-padding + $small-grid-column-padding;
+	&.vertical-comics {
+		border-bottom-color: $color-vertical-comics;
+	}
+
+	&.vertical-games {
+		border-bottom-color: $color-vertical-games;
+	}
+
+	&.vertical-lifestyle {
+		border-bottom-color: $color-vertical-lifestyle;
+	}
+
+	&.vertical-movies {
+		border-bottom-color: $color-vertical-movies;
+	}
+
+	&.vertical-music {
+		border-bottom-color: $color-vertical-music;
+	}
+
+	&.vertical-tv {
+		border-bottom-color: $color-vertical-tv;
+	}
+
+	.wikia-logo {
+		@include display-inline-flex();
+		line-height: 0; /* Get rid of uncontrollable vertical margins for inline-block */
+		margin: 0 auto $global-footer-vertical-spacing + 5;
+	}
+
+	a {
+		color: $color-links-default;
+	}
+
+	ul {
+		list-style: none;
+		margin: 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width $global-footer-vertical-spacing;
+		padding: 0 $medium-grid-column-padding;
+
+		@media #{$large-up} {
+			margin: 0 $large-grid-column + $large-grid-gutter + $large-content-padding - $content-border-width $global-footer-vertical-spacing;
+			padding: 0 $large-grid-column-padding;
+		}
+
+		@media #{$small-only} {
+			margin: 0 $small-grid-column + $small-grid-gutter + $small-content-padding - $content-border-width $global-footer-vertical-spacing;
+			padding: 0 $small-grid-column-padding;
+		}
+
+		li {
+			display: inline;
+			margin-top: 0;
+			padding: 0 4px 0 0;
+			&::before {
+				border-left: 1px solid $global-footer-color-border;
+				content: '';
+				height: 18px;
+				padding-right: 8px;
+			}
+
+			&:first-child {
+
+				&::before {
+					border: 0;
+				}
+			}
+
+			&:last-child {
+				padding-right: 0;
+			}
+		}
 	}
 }

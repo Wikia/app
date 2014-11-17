@@ -7,7 +7,7 @@ class ArticleAsJson extends WikiaService {
 		'imageMaxWidth' => false
 	];
 
-	const CACHE_VERSION = '0.0.1';
+	const CACHE_VERSION = '0.0.2';
 
 	private static function createMarker( $width = 0, $height = 0, $isGallery = false ){
 		$blankImgUrl = F::app()->wg->blankImgUrl;
@@ -19,28 +19,21 @@ class ArticleAsJson extends WikiaService {
 		return "<img src='{$blankImgUrl}' class='{$classes}' data-ref='{$id}'{$width}{$height} />";
 	}
 
-	private static function createMediaObj( $details, $imageName, $caption = "" ) {
+	private static function createMediaObj( $details, $imageName, $caption = '', $link = null ) {
 		wfProfileIn( __METHOD__ );
-
-		static $parserOptions = null;
-
-		if ( is_null($parserOptions ) ) {
-			$parserOptions = new ParserOptions();
-		}
 
 		$media = [
 			'type' => $details['mediaType'],
 			'url' => $details['rawImageUrl'],
 			'fileUrl' => $details['fileUrl'],
 			'title' => $imageName,
-			'caption' => ParserPool::parse(
-					$caption,
-					RequestContext::getMain()->getTitle(),
-					$parserOptions,
-					false
-				)->getText(),
+			'caption' => $caption,
 			'user' => $details['userName']
 		];
+
+		if ( is_string( $link ) && $link !== '' ) {
+			$media['link'] = $link;
+		}
 
 		if ( !empty( $details['width'] ) ) {
 			$media['width'] = (int) $details['width'];
@@ -54,6 +47,7 @@ class ArticleAsJson extends WikiaService {
 			$media['views'] = (int) $details['videoViews'];
 			$media['embed'] = $details['videoEmbedCode'];
 			$media['provider'] = $details['providerName'];
+			$media['duration'] = $details['duration'];
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -80,6 +74,9 @@ class ArticleAsJson extends WikiaService {
 		wfProfileIn( __METHOD__ );
 
 		if ( $wgArticleAsJson ) {
+			$parser = ParserPool::get();
+			$parserOptions = new ParserOptions();
+			$title = F::app()->wg->Title;
 			$media = [];
 
 			foreach($data['images'] as $image) {
@@ -88,7 +85,13 @@ class ArticleAsJson extends WikiaService {
 					self::$mediaDetailConfig
 				);
 
-				$media[] = self::createMediaObj( $details, $image['name'], $image['caption'] );
+				$caption = $image['caption'];
+
+				if ( !empty( $caption ) ) {
+					$caption = $parser->parse( $caption, $title, $parserOptions, false )->getText();
+				}
+
+				$media[] = self::createMediaObj( $details, $image['name'], $caption, $image['linkhref'] );
 
 				self::addUserObj($details);
 			}
@@ -101,6 +104,7 @@ class ArticleAsJson extends WikiaService {
 				$out = '';
 			}
 
+			ParserPool::release( $parser );
 			wfProfileOut( __METHOD__ );
 			return false;
 		}
@@ -109,7 +113,7 @@ class ArticleAsJson extends WikiaService {
 		return true;
 	}
 
-	public static function onImageBeforeProduceHTML( &$dummy,Title &$title, &$file, &$frameParams, &$handlerParams, &$time, &$res ){
+	public static function onImageBeforeProduceHTML( &$dummy, Title &$title, &$file, &$frameParams, &$handlerParams, &$time, &$res ) {
 		global $wgArticleAsJson;
 
 		wfProfileIn( __METHOD__ );
@@ -131,7 +135,7 @@ class ArticleAsJson extends WikiaService {
 		return true;
 	}
 
-	public static function onPageRenderingHash( &$confstr ){
+	public static function onPageRenderingHash( &$confstr ) {
 		global $wgArticleAsJson;
 
 		wfProfileIn( __METHOD__ );
@@ -169,6 +173,15 @@ class ArticleAsJson extends WikiaService {
 					'userThumbUrl' => AvatarService::getAvatarUrl( $user, AvatarService::AVATAR_SIZE_MEDIUM ),
 					'userPageUrl' => $user->getUserPage()->getLocalURL()
 				] );
+			}
+
+			//because we take caption out of main parser flow
+			//we have to replace links manually
+			//gallery caption we parse ourselves so they are ok here
+			foreach ( self::$media as &$media ) {
+				if ( !empty( $media['caption'] ) && is_string( $media['caption'] ) ) {
+					$parser->replaceLinkHolders( $media['caption'] );
+				}
 			}
 
 			$text = json_encode( [

@@ -12,20 +12,20 @@
 @import 'extensions/wikia/Venus/styles/modules/throbberVenus';
 
 $placeholder-background-color: $color-article-navigation-inactive; // only for prototype version
-$article-items-spacing: 40px;
+$article-items-spacing: 30px;
 $header-without-cover-unit-spacing: 60px;
 
 .article {
 	overflow: hidden;
 
-	header {
+	> header {
 		@include grid-column-width('medium', 8, $medium-content-padding - $content-border-width);
 		float: left;
 
 		h1,
 		span {
 			margin: 0;
-			word-break: break-all;
+			word-wrap: break-word;
 		}
 
 		&:not(.cover-unit) {
@@ -39,7 +39,7 @@ $header-without-cover-unit-spacing: 60px;
 		}
 
 		&.cover-unit {
-			@include proportional-video-height(8 * ($medium-grid-column + $medium-grid-gutter) - $medium-grid-gutter + $medium-content-padding);
+			@include proportional-grid-media-height('medium', 8, $medium-content-padding);
 			background-color: $placeholder-background-color; //only for prototype version
 			margin-bottom: $article-items-spacing;
 			position: relative;
@@ -211,7 +211,7 @@ $header-without-cover-unit-spacing: 60px;
 		@include grid-column-width('large', 8, $large-content-padding - $content-border-width);
 
 		&.cover-unit {
-			@include proportional-video-height(8 * ($large-grid-column + $large-grid-gutter) - $large-grid-gutter + $large-content-padding);
+			@include proportional-grid-media-height('large', 8, $large-content-padding);
 
 			h1 {
 				padding-left: $large-content-padding + $large-grid-column-padding - $content-border-width;
@@ -246,15 +246,6 @@ $header-without-cover-unit-spacing: 60px;
 			margin-bottom: 15px;
 		}
 
-		h2,
-		h3 {
-			margin-top: 30px;
-		}
-
-		p {
-			margin-bottom: 30px;
-		}
-
 		ol,
 		ul {
 			padding-left: 43px;
@@ -283,7 +274,7 @@ $header-without-cover-unit-spacing: 60px;
 		width: 100%;
 
 		&.cover-unit {
-			@include proportional-video-height($small-content-width - 2 * $content-border-width);
+			@include proportional-media-height($small-content-width - 2 * $content-border-width);
 
 			h1 {
 				padding-left: $small-content-padding + $small-grid-column-padding - $content-border-width;
@@ -311,10 +302,6 @@ $header-without-cover-unit-spacing: 60px;
 			.editsection {
 				padding-left: $small-grid-gutter;
 			}
-		}
-
-		p {
-			margin-bottom: 30px;
 		}
 
 		ol,
