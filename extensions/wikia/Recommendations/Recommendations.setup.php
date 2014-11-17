@@ -16,3 +16,7 @@ $wgResourceModules['ext.wikia.recommendations'] = [
 		'extensions/wikia/Recommendations/scripts/recommendations.js',
 	]
 ];
+
+JSMessages::registerPackage( 'Recommendations', [
+	'recommendations-header',
+] );

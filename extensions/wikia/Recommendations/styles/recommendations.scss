@@ -1,3 +1,4 @@
+@import 'skins/shared/color';
 @import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/Venus/styles/variables';
 
@@ -10,34 +11,44 @@ $medium-grid-slot-big-height: 2 * $medium-grid-slot-small-height + $medium-grid-
 $small-grid-slot-small-height: 205px;
 $small-grid-slot-big-height: 2 * $small-grid-slot-small-height + $small-grid-gutter;
 
-.content-recommendations {
+.recommendations {
+	@include clearfix;
+
+	background-color: #eef1f3;
+	padding: $medium-content-padding - $content-border-width;
+
+	a {
+		text-decoration: none;
+	}
+
 	.slot {
+		background-color: #fff; // TODO color
 		float: left;
 		overflow: hidden;
 		margin: 0 $medium-grid-gutter $medium-grid-gutter 0;
-	}
 
-	.slot-row {
-		@include clearfix;
+		h4 {
+			color: $color-links;
+			line-height: 18px;
+			margin: 0;
+		}
 
-		.slot:last-child {
+		p {
+			color: $color-text;
 			margin: 0;
 		}
 	}
 
-	.slot-group {
-		@include grid-column-width('medium', 6);
-
-		float: left;
-	}
-
 	.slot-image-placeholder {
+		background-color: #ccc;
 		display: block;
+		overflow: hidden;
 	}
 
 	.slot-small {
 		@include grid-column-width('medium', 3);
 
+		border-bottom: 8px solid #fff; // TODO color
 		font-size: $font-size-xs;
 		height: $medium-grid-slot-small-height;
 
@@ -45,11 +56,20 @@ $small-grid-slot-big-height: 2 * $small-grid-slot-small-height + $small-grid-gut
 			@include proportional-grid-media-height('medium', 3);
 			width: 100%;
 		}
+
+		h4 {
+			margin-bottom: 5px;
+		}
+
+		p {
+			line-height: 20px;
+		}
 	}
 
 	.slot-big {
 		@include grid-column-width('medium', 6);
 
+		border-bottom: 20px solid #fff; // TODO
 		font-size: $font-size-base;
 		height: $medium-grid-slot-big-height;
 
@@ -57,38 +77,28 @@ $small-grid-slot-big-height: 2 * $small-grid-slot-small-height + $small-grid-gut
 			@include proportional-grid-media-height('medium', 6);
 			width: 100%;
 		}
-	}
 
-	@media #{$large-up} {
-		.slot {
-			margin: 0 $large-grid-gutter $large-grid-gutter 0;
+		.slot-description {
+			padding: 20px;
 		}
 
-		.slot-small {
-			@include grid-column-width('large', 3);
-
-			height: $large-grid-slot-small-height;
-
-			.slot-image-placeholder {
-				@include proportional-grid-media-height('large', 3);
-			}
+		h4 {
+			font-weight: normal;
+			margin-bottom: 6px;
 		}
 
-		.slot-big {
-			@include grid-column-width('large', 6);
-
-			height: $large-grid-slot-big-height;
-			.slot-image-placeholder {
-				@include proportional-grid-media-height('large', 6);
-			}
-		}
-
-		.slot-group {
-			@include grid-column-width('large', 6);
+		p {
+			line-height: 24px;
 		}
 	}
 
-	@media #{$small-only} {
+
+}
+
+@media #{$small-only} {
+	.recommendations {
+		padding: $small-content-padding - $content-border-width;
+
 		.slot {
 			margin: 0 $small-grid-gutter $small-grid-gutter 0;
 		}
@@ -112,9 +122,33 @@ $small-grid-slot-big-height: 2 * $small-grid-slot-small-height + $small-grid-gut
 				@include proportional-grid-media-height('small', 6);
 			}
 		}
+	}
+}
+@media #{$large-up} {
+	.recommendations {
+		padding: $large-content-padding - $content-border-width;
 
-		.slot-group {
-			@include grid-column-width('small', 6);
+		.slot {
+			margin: 0 $large-grid-gutter $large-grid-gutter 0;
+		}
+
+		.slot-small {
+			@include grid-column-width('large', 3);
+
+			height: $large-grid-slot-small-height;
+
+			.slot-image-placeholder {
+				@include proportional-grid-media-height('large', 3);
+			}
+		}
+
+		.slot-big {
+			@include grid-column-width('large', 6);
+
+			height: $large-grid-slot-big-height;
+			.slot-image-placeholder {
+				@include proportional-grid-media-height('large', 6);
+			}
 		}
 	}
 }
