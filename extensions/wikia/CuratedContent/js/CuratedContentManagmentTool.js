@@ -9,7 +9,7 @@ $(function () {
 			duplicateError = msg('wikiacuratedcontent-content-duplicate-entry'),
 			requiredError = msg('wikiacuratedcontent-content-required-entry'),
 			emptySectionError = msg('wikiacuratedcontent-content-empty-section'),
-			itemError = msg('wikiacuratedcontent-content-item-error'),
+			orphanError = msg('wikiacuratedcontent-content-orphaned-error'),
 			articleNotFoundError = msg('wikiacuratedcontent-content-articlenotfound-error'),
 			emptyLabelError = msg('wikiacuratedcontent-content-emptylabel-error'),
 			videoNotSupportedError = msg('wikiacuratedcontent-content-videonotsupported-error'),
@@ -97,6 +97,18 @@ $(function () {
 				checkInputs($ul.find('.section-input'), true);
 				checkInputs($ul.find('.item-input'), true, true);
 
+				// validate orphans
+				$ul.find('.section ~ .item.error').removeClass('error');
+
+				$ul.find('.item:not(.section ~ .item)').each(function () {
+					var $t = $(this);
+					$t.addClass('error')
+							.popover('destroy')
+							.popover({
+								content: orphanError
+							});
+				});
+
 				$ul.find('.section').each(function () {
 					var $t = $(this),
 						$items = $t.nextUntil('.section');
@@ -172,18 +184,25 @@ $(function () {
 
 		$save.on('click', function () {
 			var data = [],
-				nonames = [];
+				orphans = [];
 
 			if (checkForm()) {
 				$ul.find('.item:not(.section ~ .item)').each(function () {
-					nonames.push(getData(this));
+					orphans.push(getData(this));
 				});
 
 				$ul.find('.section').each(function () {
 					var $t = $(this),
-						name = $t.find('.section-input').val(),
-						imageId = $t.find('.image').data('id') || 0,
-						items = [];
+							name = $t.find('.section-input').val(),
+							imageId = $t.find('.image').data('id') || 0,
+							items = [];
+
+					if (orphans.length > 0){
+					// adopts the orphans to the top of topmost section
+					// since that what probably orphaned them in the first place
+						items = orphans;
+						orphans = [];
+					}
 
 					$t.nextUntil('.section').each(function () {
 						items.push(getData(this));
@@ -199,9 +218,8 @@ $(function () {
 						data.push({
 							title: '',
 							image_id: imageId,
-							items: items.concat(nonames) //append orphaned entries at the end of no name category
+							items: items
 						});
-						nonames = []; // we already added orphans so lets remove them from existence
 					}
 				});
 				nirvana.sendRequest({

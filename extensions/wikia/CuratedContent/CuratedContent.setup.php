@@ -40,7 +40,7 @@ JSMessages::registerPackage( 'CuratedContentMsg', [
 	'wikiacuratedcontent-content-duplicate-entry',
 	'wikiacuratedcontent-content-required-entry',
 	'wikiacuratedcontent-content-empty-section',
-	'wikiacuratedcontent-content-item-error',
+	'wikiacuratedcontent-content-orphaned-error',
 	'wikiacuratedcontent-content-articlenotfound-error',
 	'wikiacuratedcontent-content-emptylabel-error',
 	'wikiacuratedcontent-content-videonotsupported-error',
