@@ -4,8 +4,8 @@
 @import 'extensions/wikia/Venus/styles/typographyMixins';
 
 .WikiaArticleComments {
-	clear: left;
-	margin: 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width;
+	clear: both;
+	margin: 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width 60px;
 	padding: 0 $medium-grid-column-padding;
 
 	/* heading */

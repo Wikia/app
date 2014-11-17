@@ -636,6 +636,11 @@
 				$pagination = $('.article-comments-pagination', this.$wrapper),
 				showMoreButton = this.$wrapper.find('.comments-show-more');
 
+			// there's no comments, do nothing
+			if ($nodesToHide.length === 0) {
+				return;
+			}
+
 			// hide the comments
 			$nodesToHide.hide();
 			$pagination.hide();

@@ -39,7 +39,6 @@ $messages['en'] = array(
 	'article-comments-delete-reason' => 'The parent article / parent comment has been deleted.',
 	'article-comments-empty-comment' => "You can't post an empty comment. <a href='$1'>Delete it instead?</a>",
 	'article-comments-show-more' => 'Show more comments',
-
 	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|Comment|Comments}}',
 	'wikiamobile-article-comments-header' => 'Comments',
 	'wikiamobile-article-comments-more' => 'Load more',
@@ -3046,6 +3045,7 @@ $messages['pl'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'Główny artykuł / komentarz został usunięty',
 	'article-comments-empty-comment' => "Nie możesz zapisać pustego komentarza <a href='$1'>Usunąć?</a>",
+	'article-comments-show-more' => 'Załaduj więcej komentarzy',
 	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|Komentarz|Komentarze}}',
 	'wikiamobile-article-comments-header' => 'Komentarze',
 	'wikiamobile-article-comments-more' => 'Załaduj więcej',
