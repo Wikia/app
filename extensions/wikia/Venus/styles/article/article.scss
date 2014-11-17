@@ -133,12 +133,10 @@ $header-without-cover-unit-spacing: 60px;
 
 	blockquote {
 		@include font-size-xl;
-		border-top: 4px solid $color-text;
-		clear: both;
-		margin: 0 0 $article-items-spacing*2;
+		margin: 0 0 $article-items-spacing;
+		overflow: hidden;
 		padding-top: 30px;
 		position: relative;
-		top: $article-items-spacing;
 
 		&:before {
 			background: none repeat scroll 0 0 $color-page;
@@ -149,7 +147,17 @@ $header-without-cover-unit-spacing: 60px;
 			line-height: 70px;
 			padding-top: 8px;
 			position: absolute;
-			top: -33px;
+			top: -20px;
+		}
+
+		&:after {
+			border-top: 4px solid $color-text;
+			content: ' ';
+			left: 0;
+			margin-left: 25px;
+			position: absolute;
+			top: 10px;
+			width: 100%;
 		}
 	}
 
