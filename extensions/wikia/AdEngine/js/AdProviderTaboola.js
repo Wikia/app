@@ -15,6 +15,7 @@ define('ext.wikia.adEngine.provider.taboola', [
 		libraryLoaded = false,
 		readMoreDiv = document.getElementById('RelatedPagesModuleWrapper'),
 		context = adContext.getContext(),
+		isMobile = context.targeting.skin === 'wikiamobile',
 		pageType = context.targeting.pageType;
 
 	function canHandleSlot(slot) {
@@ -26,6 +27,10 @@ define('ext.wikia.adEngine.provider.taboola', [
 		}
 
 		if (!readMoreDiv) {
+			readMoreDiv = document.getElementById('RelatedPagesModuleWrapper');
+		}
+
+		if (!readMoreDiv) {
 			log(['canHandleSlot', slot, 'No "read more" section, disabling'], 'error', logGroup);
 			return false;
 		}
@@ -34,20 +39,30 @@ define('ext.wikia.adEngine.provider.taboola', [
 	}
 
 	function loadTaboola() {
-		var taboolaInit, s;
+		var taboolaInit, s,
+			url = 'http://cdn.taboola.com/libtrc/wikia-network/loader.js';
 
 		if (libraryLoaded) {
 			return;
 		}
+
+		if (!isMobile) {
+			url = 'http://cdn.taboola.com/libtrc/wikia-' + context.targeting.wikiDbName + '/loader.js';
+		}
+
 		taboolaInit = {};
 		taboolaInit[pageType] = 'auto';
 		readMoreDiv.parentNode.removeChild(readMoreDiv);
 
 		window._taboola = window._taboola || [ taboolaInit ];
 
+		if (isMobile) {
+			window._taboola.push({flush: true});
+		}
+
 		s = document.createElement('script');
 		s.async = true;
-		s.src = 'http://cdn.taboola.com/libtrc/wikia-' + context.targeting.wikiDbName + '/loader.js';
+		s.src = url;
 		document.getElementsByTagName('body')[0].appendChild(s);
 
 		libraryLoaded = true;
@@ -59,9 +74,9 @@ define('ext.wikia.adEngine.provider.taboola', [
 		loadTaboola();
 
 		window._taboola.push({
-			mode: 'thumbnails-a',
+			mode: isMobile ? 'thumbnails-b' : 'thumbnails-a',
 			container: slotname,
-			placement: pageType === 'home' ? 'Homepage' : 'Read More Section on ' + pageType,
+			placement: ['Read More on', pageType, '@', (isMobile ? 'mobile' : 'desktop')].join(' '),
 			target_type: 'mix'
 		});
 

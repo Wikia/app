@@ -2,14 +2,16 @@
 define('ext.wikia.adEngine.adConfigMobile', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.directGptMobile',
-	'ext.wikia.adEngine.provider.remnantGptMobile'
-], function (adContext, adProviderDirectGptMobile, adProviderRemnantGptMobile) {
+	'ext.wikia.adEngine.provider.remnantGptMobile',
+	'ext.wikia.adEngine.provider.taboola'
+], function (adContext, adProviderDirectGptMobile, adProviderRemnantGptMobile, adProviderTaboola) {
 	'use strict';
 
 	var pageTypesWithAdsOnMobile = {
-		'all_ads': true,
-		'corporate': true
-	};
+			'all_ads': true,
+			'corporate': true
+		},
+		taboolaEnabled = true;
 
 	function getProviderList(slotName) {
 		var context = adContext.getContext();
@@ -23,6 +25,10 @@ define('ext.wikia.adEngine.adConfigMobile', [
 		// @see https://docs.google.com/a/wikia-inc.com/document/d/1Lxz0PQbERWSFvmXurvJqOjPMGB7eZR86V8tpnhGStb4/edit
 		if (!pageTypesWithAdsOnMobile[context.opts.pageType]) {
 			return [];
+		}
+
+		if (taboolaEnabled && adProviderTaboola.canHandleSlot(slotName) ) {
+			return [adProviderTaboola];
 		}
 
 		if (context.providers.remnantGptMobile) {

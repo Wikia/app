@@ -268,10 +268,10 @@ class WikiaMobileService extends WikiaService {
 	public function index() {
 		wfProfileIn( __METHOD__ );
 
+		$this->handleAds();
 		$this->handleMessages();
 		$this->handleSmartBanner();
 		$this->handleContent();
-		$this->handleAds();
 		$this->handleToc();
 		$this->handleAssets();
 		$this->handleTracking();

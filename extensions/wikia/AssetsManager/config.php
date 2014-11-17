@@ -76,7 +76,6 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdProviderLater.js',
 		'//extensions/wikia/AdEngine/js/AdProviderNull.js',
 		'//extensions/wikia/AdEngine/js/AdProviderRemnantGpt.js',
-		'//extensions/wikia/AdEngine/js/AdProviderTaboola.js',
 		'//extensions/wikia/AdEngine/js/AdTemplateSkin.js',
 		'//extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
 		'//extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
@@ -122,6 +121,14 @@ $config['adengine2_bottom_leaderboard_js'] = array(
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/AdSlotBottomLeaderboard.js',
 		'//extensions/wikia/AdEngine/js/AdSlotBottomLeaderboard.run.js',
+	),
+);
+
+$config['adengine2_taboola_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis', 'venus', 'wikiamobile' ],
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/AdProviderTaboola.js',
 	),
 );
 
