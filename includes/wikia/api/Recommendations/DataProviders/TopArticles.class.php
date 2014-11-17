@@ -33,7 +33,7 @@ class TopArticles implements IDataProvider {
 		$out = \WikiaDataAccess::cache(
 			\wfsharedMemcKey( 'RecommendationApi', self::RECOMMENDATION_ENGINE, $hubName, $lang ),
 			\WikiaResponse::CACHE_STANDARD,
-			function () use ($hubName, $lang) {
+			function () use ( $hubName, $lang ) {
 				$topArticles = $this->getTopArticles( $hubName, $lang);
 				return $this->getArticlesInfo( $topArticles );
 			}
@@ -91,7 +91,7 @@ class TopArticles implements IDataProvider {
 			[NS_MAIN]
 		);
 
-		$articlesCount = ceil( self::MAX_LIMIT / count($results) );
+		$articlesCount = ceil( self::MAX_LIMIT / count( $results ) );
 
 		foreach ( $results as $wikiResult ) {
 			for ( $i = 0; $i < $articlesCount; $i++ ) {
@@ -137,7 +137,7 @@ class TopArticles implements IDataProvider {
 				'height' => 225
 			];
 
-			$response = \ApiService::foreignCall(\WikiFactory::IDtoDB( $wikiId ), $params, \ApiService::WIKIA);
+			$response = \ApiService::foreignCall( \WikiFactory::IDtoDB( $wikiId ), $params, \ApiService::WIKIA );
 
 			if ( !empty( $response['items'][$articleId] ) ) {
 				$articleDetails =  $response['items'][$articleId];
