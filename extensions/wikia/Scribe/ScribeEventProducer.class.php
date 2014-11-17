@@ -47,7 +47,6 @@ class ScribeEventProducer {
 		$this->setArchive( $archive );
 		$this->setLanguage();
 		$this->setCategory();
-		$this->setIsTop200( $this->app->wg->CityId );
 	}
 
 	public function buildEditPackage( $oPage, $oUser, $oRevision = null, $revision_id = null ) {
@@ -110,6 +109,7 @@ class ScribeEventProducer {
 		$this->setMediaType( $oTitle );
 		$this->setMediaLinks( $oPage );
 		$this->setTotalWords( str_word_count( $rev_text ) );
+		$this->setIsTop200( $this->app->wg->CityId );
 
 		$t = microtime(true);
 		$micro = sprintf("%06d",($t - floor($t)) * 1000000);
@@ -320,7 +320,7 @@ class ScribeEventProducer {
 	public function setMediaType ( $oTitle ) {
 		wfProfileIn( __METHOD__ );
 
-		$this->setIsLocalFile( false );
+		$bIsLocalFile = false;
 
 		$result = 0;
 		$page_namespace = $oTitle->getNamespace();
@@ -330,7 +330,7 @@ class ScribeEventProducer {
 			$oLocalFile = RepoGroup::singleton()->getLocalRepo()->newFile( $oTitle );
 
 			if ( $oLocalFile instanceof LocalFile ) {
-				$this->setIsLocalFile( true );
+				$bIsLocalFile = true;
 				$mediaType = $oLocalFile->getMediaType();
 			}
 			if ( empty($mediaType) ) {
@@ -349,6 +349,8 @@ class ScribeEventProducer {
 				default 									: $result = 1; break;
 			}
 		}
+
+		$this->setIsLocalFile( $bIsLocalFile );
 
 		$this->mParams['mediaType'] = $result;
 		wfProfileOut( __METHOD__ );
@@ -409,11 +411,11 @@ class ScribeEventProducer {
 		$sCacheKey = wfSharedMemcKey( __CLASS__, __METHOD__ );
 
 		// Check in memcache before using DataMartService
-		if ( !is_null( $wgMemc->get( $sCacheKey ) ) ) {
-			$aTop200Wikis = $wgMemc->get( $sCacheKey );
+		if ( !is_null( $this->app->wg->Memc->get( $sCacheKey ) ) ) {
+			$aTop200Wikis = $this->app->wg->Memc->get( $sCacheKey );
 		} else {
 			$aTop200Wikis = DataMartService::getTopWikisByPageviews( DataMartService::PERIOD_ID_MONTHLY );
-			$wgMemc->set( $sCacheKey, $aTop200Wikis, \WikiaResponse::CACHE_LONG );
+			$this->app->wg->Memc->set( $sCacheKey, $aTop200Wikis, \WikiaResponse::CACHE_LONG );
 		}
 
 		// getTopWikisByPageviews returns an array of arrays
