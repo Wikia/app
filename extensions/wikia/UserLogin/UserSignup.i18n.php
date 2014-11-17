@@ -243,6 +243,8 @@ To check out the latest happenings on Wikia, visit http://community.wikia.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-confirmation-reminder-email_body-HTML' => '',
 	'usersignup-facebook-problem' => 'There was a problem communicating with Facebook. Please try again later.',
+	'usersignup-logged-in-title' => 'Welcome to {{SITENAME}}, $1!',
+	'usersignup-logged-in-message' => "You're logged in. Head over to the [[$1|homepage]] to see the latest or check out your [[$2|profile]].",
 );
 
 /** Message documentation (Message documentation)
@@ -2377,7 +2379,7 @@ ___________________________________________
 	'usersignup-reconfirmation-email_subject' => 'ウィキアのメールアドレス設定変更に関する認証',
 	'usersignup-reconfirmation-email-greeting' => '$USERNAME さん、',
 	'usersignup-reconfirmation-email-content' => 'ウィキアで変更したメールアドレスを認証するには以下のリンクをクリックしてください。 <br /><br />
-<a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a><br /><br /> 
+<a style="color:#2C85D5;" href="$CONFIRMURL">$CONFIRMURL</a><br /><br />
 認証が完了するまでは、変更前のメールアドレスでメールを受け取り続けられます。',
 	'usersignup-reconfirmation-email-signature' => 'ウィキアサポートチーム',
 	'usersignup-reconfirmation-email_body' => '$2 さん、
@@ -4500,7 +4502,7 @@ Mayroong libu-libong mga wiki sa Wikia, maghanap ng marami pang mga wiki na maka
 
 Pumunta sa $EXPLOREWIKISURL
 
-Nais ang marami pang kabatiran? Hanapin ang payo, mga sagot, at ang pamayanan ng Wikia doon sa Lunduyan ng Pamayanan (http://www.community.wikia.com). 
+Nais ang marami pang kabatiran? Hanapin ang payo, mga sagot, at ang pamayanan ng Wikia doon sa Lunduyan ng Pamayanan (http://www.community.wikia.com).
 Maligayang pamamatnugot!
 
 Ang Pangkat ng Wikia

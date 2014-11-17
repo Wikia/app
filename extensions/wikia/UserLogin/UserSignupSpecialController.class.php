@@ -23,6 +23,14 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->userLoginHelper = (new UserLoginHelper);
 	}
 
+	public function index() {
+		if ( $this->wg->User->isLoggedIn() ) {
+			$this->forward( __CLASS__, 'loggedIn' );
+		} else {
+			$this->forward( __CLASS__, 'signupForm' );
+		}
+	}
+
 	/**
 	 * @brief serves standalone signup page on GET.  if POSTed, parameters will be required.
 	 * @details
@@ -44,7 +52,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string msg - result message
 	 * @responseParam string errParam - error param
 	 */
-	public function index() {
+	public function signupForm () {
 		$this->wg->Out->setPageTitle(wfMessage('usersignup-page-title')->plain());
 		$this->response->addAsset('extensions/wikia/UserLogin/css/UserSignup.scss');
 
@@ -115,6 +123,25 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			}
 
 		}
+	}
+
+	public function loggedIn() {
+		$this->wg->SupressPageSubtitle = true;
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+
+		$userName = $this->wg->user->getName();
+		$mainPage = Title::newMainPage()->getText();
+		$userPage = Title::newFromText( $userName, NS_USER )->getFullText();
+
+		$title = wfMessage( 'usersignup-logged-in-title' )
+			->params( $userName )
+			->text();
+		$message = wfMessage( 'usersignup-logged-in-message' )
+			->params( $mainPage, $userPage )
+			->parse();
+
+		$this->wg->Out->setPageTitle($title);
+		$this->message = $message;
 	}
 
 	public function captcha() {

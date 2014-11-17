@@ -66,6 +66,14 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->getOutput()->disallowUserJs(); // just in case...
 	}
 
+	public function index() {
+		if ( $this->wg->User->isLoggedIn() ) {
+			$this->forward( 'UserSignupSpecialController', 'loggedIn' );
+		} else {
+			$this->forward( __CLASS__, 'loginForm' );
+		}
+	}
+
 	/**
 	 * @brief serves standalone login page on GET.  if POSTed, parameters will be required.
 	 * @details
@@ -84,7 +92,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string errParam - error param
 	 * @responseParam string editToken - token for changing password
 	 */
-	public function index() {
+	public function loginForm() {
 		$returnTo = urldecode( $this->request->getVal( 'returnto', '' ) );
 		$returnToQuery = urldecode( $this->request->getVal( 'returntoquery', '' ) );
 
