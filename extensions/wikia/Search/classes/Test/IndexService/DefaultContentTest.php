@@ -7,6 +7,8 @@ use Wikia\Search\Test\BaseTest, Wikia\Search\IndexService\DefaultContent, Reflec
 /**
  * Tests the Default Content service, which is pretty thorny
  * @author relwell
+ *
+ * @group Broken
  */
 class DefaultContentTest extends BaseTest
 {
@@ -226,7 +228,8 @@ class DefaultContentTest extends BaseTest
 				'iscontent' => 'true',
 				'is_main_page' => 'false',
 				'outbound_links_txt' => [ '123_321|hey', '123_456|ho' ],
-				'nolang_txt' => [ 'foo' ]
+				'nolang_txt' => [ 'foo' ],
+				'snippet_s' => 'this is my html'
 				];
 		$this->assertEquals(
 				$expectedResult,

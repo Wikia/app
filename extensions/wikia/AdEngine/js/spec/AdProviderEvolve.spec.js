@@ -9,18 +9,16 @@ describe('AdProviderEvolve', function(){
 // instead of window.AdEngine2.hop('TOP_LEADERBOARD');
 	it('sanitizeSlotname', function() {
 		var  logMock = function() {}
-			, adLogicPageParamsLegacyMock
 			, scriptWriterMock
 			, windowMock = { wgInsideUnitTest: true }
 			, documentMock
-			, kruxMock
 			, evolveHelperMock = {}
 			, adProviderEvolve
 			, evolveSlotConfig = modules['ext.wikia.adEngine.evolveSlotConfig'](logMock)
 			;
 
 		adProviderEvolve = modules['ext.wikia.adEngine.provider.evolve'](
-			logMock, windowMock, documentMock, scriptWriterMock, slotTweakerMock, adLogicPageParamsLegacyMock, kruxMock, evolveHelperMock, evolveSlotConfig
+			logMock, windowMock, documentMock, scriptWriterMock, slotTweakerMock, evolveHelperMock, evolveSlotConfig
 		);
 
 		expect(adProviderEvolve.sanitizeSlotname('foo')).toBe('', 'foo');
@@ -30,17 +28,13 @@ describe('AdProviderEvolve', function(){
 
 	it('getUrl', function() {
 		var logMock = function() {}
-			, adLogicPageParamsLegacyMock = {
-				getDomainKV: function() {return 'dmn=mock;';},
-				getHostnamePrefix: function() {return 'hostpre=mock;';},
-				getCustomKeyValues: function() {return '';},
-				getKruxKeyValues: function() {return '';}
-			}
 			, scriptWriterMock
 			, windowMock = {wgInsideUnitTest: true, location: {hostname: 'mock'}}
 			, documentMock
-			, kruxMock = {}
-			, evolveHelperMock = {getSect: function() {return 'randomsection';}}
+			, evolveHelperMock = {
+				getSect: function() {return 'randomsection';},
+				getTargeting: function() {return 'dmn=mock;hostpre=mock;esrb=teen;s1=_somedb;'; }
+			}
 			, adProviderEvolve
 			, expected
 			, actual
@@ -48,14 +42,13 @@ describe('AdProviderEvolve', function(){
 			;
 
 		adProviderEvolve = modules['ext.wikia.adEngine.provider.evolve'](
-			logMock, windowMock, documentMock, scriptWriterMock, slotTweakerMock, adLogicPageParamsLegacyMock, kruxMock, evolveHelperMock, evolveSlotConfig
+			logMock, windowMock, documentMock, scriptWriterMock, slotTweakerMock, evolveHelperMock, evolveSlotConfig
 		);
 
-		windowMock.wgDBname = 'somedb';
 		windowMock.wgDartCustomKeyValues = null;
 		windowMock.cscoreCat = null;
 
-		expected = 'http://n4403ad.doubleclick.net/adj/gn.wikia4.com/randomsection;sect=randomsection;mtfInline=true;pos=TOP_LEADERBOARD;s1=_somedb;dmn=mock;hostpre=mock;sz=728x90;dcopt=ist;type=pop;type=int;tile=1;ord=1234567890?';
+		expected = 'http://n4403ad.doubleclick.net/adj/gn.wikia4.com/randomsection;sect=randomsection;mtfInline=true;pos=TOP_LEADERBOARD;dmn=mock;hostpre=mock;esrb=teen;s1=_somedb;sz=728x90;dcopt=ist;type=pop;type=int;tile=1;ord=1234567890?';
 		expected = expected.replace(/;ord=[0-9]+\?$/, ''); // ord is random cb
 
 		actual = adProviderEvolve.getUrl('TOP_LEADERBOARD');
@@ -63,29 +56,29 @@ describe('AdProviderEvolve', function(){
 
 		expect(actual).toBe(expected, 'TOP_LEADERBOARD');
 
-		expected = 'http://n4403ad.doubleclick.net/adj/gn.wikia4.com/randomsection;sect=randomsection;mtfInline=true;pos=TOP_RIGHT_BOXAD;s1=_somedb;dmn=mock;hostpre=mock;sz=300x250,300x600;type=pop;type=int;tile=2;ord=1234567890?';
+		expected = 'http://n4403ad.doubleclick.net/adj/gn.wikia4.com/randomsection;sect=randomsection;mtfInline=true;pos=TOP_RIGHT_BOXAD;dmn=mock;hostpre=mock;esrb=teen;s1=_somedb;sz=300x250,300x600;type=pop;type=int;tile=2;ord=1234567890?';
 		expected = expected.replace(/;ord=[0-9]+\?$/, ''); // ord is random cb
 
 		actual = adProviderEvolve.getUrl('TOP_RIGHT_BOXAD');
 		actual = actual.replace(/;ord=[0-9]+\?$/, ''); // ord is random cb
 
 		expect(actual).toBe(expected, 'TOP_RIGHT_BOXAD');
+		// http://n4403ad.doubleclick.net/adj/gn.wikia4.com/randomsection;sect=randomsection;mtfInline=true;pos=TOP_RIGHT_BOXAD;dmn=mock;hostpre=mock;esrb=teen;s1=_somedb;sz=300x250,300x600;type=pop;type=int;tile=2
+		// http://n4403ad.doubleclick.net/adj/gn.wikia4.com/randomsection;sect=randomsection;mtfInline=true;pos=TOP_RIGHT_BOXAD;esrb=teen;s1=_somedb;dmn=mock;hostpre=mock;sz=300x250,300x600;type=pop;type=int;tile=2
 	});
 
 	it('Evolve canHandleSlot AU', function() {
 		var logMock = function() {}
-			, adLogicPageParamsLegacyMock
 			, scriptWriterMock
 			, documentMock
 			, windowMock = {wgInsideUnitTest: true}
-			, kruxMock = {}
 			, evolveHelperMock = {}
 			, adProviderEvolve
 			, evolveSlotConfig = modules['ext.wikia.adEngine.evolveSlotConfig'](logMock)
 			;
 
 		adProviderEvolve = modules['ext.wikia.adEngine.provider.evolve'](
-			logMock, windowMock, documentMock, scriptWriterMock, slotTweakerMock, adLogicPageParamsLegacyMock, kruxMock, evolveHelperMock, evolveSlotConfig
+			logMock, windowMock, documentMock, scriptWriterMock, slotTweakerMock, evolveHelperMock, evolveSlotConfig
 		);
 
 		expect(adProviderEvolve.canHandleSlot(['TOP_LEADERBOARD'])).toBeTruthy('TOP_LEADERBOARD');

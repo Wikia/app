@@ -38,6 +38,7 @@ ve.ui.MWCategoryInputWidget = function VeUiMWCategoryInputWidget( categoryWidget
 	// Initialization
 	this.$element.addClass( 've-ui-mwCategoryInputWidget' );
 	this.lookupMenu.$element.addClass( 've-ui-mwCategoryInputWidget-menu' );
+	this.categoryRedirects = [];
 };
 
 /* Inheritance */
@@ -55,28 +56,13 @@ OO.mixinClass( ve.ui.MWCategoryInputWidget, OO.ui.LookupInputWidget );
  * @returns {jqXHR} AJAX object without success or fail handlers attached
  */
 ve.ui.MWCategoryInputWidget.prototype.getLookupRequest = function () {
-	var propsJqXhr,
-		searchJqXhr = ve.init.mw.Target.static.apiRequest( {
-			'action': 'opensearch',
-			'search': this.categoryPrefix + this.value,
-			'suggest': ''
-		} );
-
-	return searchJqXhr.then( function ( data ) {
-		propsJqXhr = ve.init.mw.Target.static.apiRequest( {
-			'action': 'query',
-			'prop': 'pageprops',
-			'titles': ( data[1] || [] ).join( '|' ),
-			'ppprop': 'hiddencat'
-		} );
-		return propsJqXhr;
-	} ).promise( { abort: function () {
-		searchJqXhr.abort();
-
-		if ( propsJqXhr ) {
-			propsJqXhr.abort();
-		}
-	} } );
+	return ve.init.target.constructor.static.apiRequest( {
+		'action': 'query',
+		'list': 'allcategories',
+		'acprefix': this.value,
+		'acprop': 'hidden',
+		'redirects': ''
+	} );
 };
 
 /**
@@ -86,15 +72,28 @@ ve.ui.MWCategoryInputWidget.prototype.getLookupRequest = function () {
  * @param {Mixed} data Response from server
  */
 ve.ui.MWCategoryInputWidget.prototype.getLookupCacheItemFromData = function ( data ) {
-	var categoryWidget = this.categoryWidget, result = {};
-	if ( data.query && data.query.pages ) {
-		$.each( data.query.pages, function ( pageId, pageInfo ) {
-			var title = mw.Title.newFromText( pageInfo.title );
+	var categoryInputWidget = this, result = {};
+	if ( data.query && data.query.allcategories ) {
+		$.each( data.query.allcategories, function () {
+			var title = mw.Title.newFromText( this['*'] );
 			if ( title ) {
-				result[title.getMainText()] = !!( pageInfo.pageprops && pageInfo.pageprops.hiddencat !== undefined );
-				categoryWidget.categoryHiddenStatus[pageInfo.title] = result[title.getMainText()];
+				result[title.getMainText()] = this.hasOwnProperty( 'hidden' );
+				categoryInputWidget.categoryWidget.categoryHiddenStatus[this['*']] = result[title.getMainText()];
 			} else {
-				mw.log.warning( '"' + pageInfo.title + '" is an invalid title!' );
+				mw.log.warning( '"' + this['*'] + '" is an invalid title!' );
+			}
+		} );
+	}
+	if ( data.query && data.query.redirects ) {
+		$.each( data.query.redirects, function ( index, redirectInfo ) {
+			var foundIdentical = false;
+			$.each( categoryInputWidget.categoryRedirects, function ( index, existingRedirectInfo ) {
+				if ( existingRedirectInfo.from === redirectInfo.from && existingRedirectInfo.to === redirectInfo.to ) {
+					foundIdentical = true;
+				}
+			} );
+			if ( !foundIdentical ) {
+				categoryInputWidget.categoryRedirects.push( redirectInfo );
 			}
 		} );
 	}
@@ -119,7 +118,20 @@ ve.ui.MWCategoryInputWidget.prototype.getLookupMenuItemsFromData = function ( da
 		category = this.getCategoryItemFromValue( this.value ),
 		existingCategories = this.categoryWidget.getCategories(),
 		matchingCategories = [],
-		hiddenCategories = [];
+		hiddenCategories = [],
+		redirectStorage = {},
+		itemTitle,
+		searchForQueryWithinRedirectInfo = function ( element ) {
+			return element.lastIndexOf( new mw.Title( 'Category:' + category.value ).getPrefixedText(), 0 ) === 0;
+		};
+
+	$.each( this.categoryRedirects, function () {
+		if ( redirectStorage.hasOwnProperty( this.to ) && redirectStorage[this.to].indexOf( this.from ) === -1 ) {
+			redirectStorage[this.to].push( this.from );
+		} else {
+			redirectStorage[this.to] = [this.from];
+		}
+	} );
 
 	$.each( data, function ( title, hiddenStatus ) {
 		if ( hiddenStatus ) {
@@ -130,6 +142,8 @@ ve.ui.MWCategoryInputWidget.prototype.getLookupMenuItemsFromData = function ( da
 	} );
 
 	// Existing categories
+	// This is deliberately not checking the last existingCategories entry so we don't show it under
+	// "Move this category here" etc. That is done below.
 	for ( i = 0, len = existingCategories.length - 1; i < len; i++ ) {
 		item = existingCategories[i];
 		// Verify that item starts with category.value
@@ -140,14 +154,26 @@ ve.ui.MWCategoryInputWidget.prototype.getLookupMenuItemsFromData = function ( da
 			existingCategoryItems.push( item );
 		}
 	}
+	// Now check the last one. Don't add to existingCategoryItems but do make it a match
+	if ( existingCategories[existingCategories.length - 1] === category.value ) {
+		exactMatch = true;
+	}
+
 	// Matching categories
 	for ( i = 0, len = matchingCategories.length; i < len; i++ ) {
 		item = matchingCategories[i];
+		itemTitle = new mw.Title( 'Category:' + item ).getPrefixedText();
 		if (
 			ve.indexOf( item, existingCategories ) === -1 &&
-			item.lastIndexOf( category.value, 0 ) === 0
+			item.lastIndexOf( category.value, 0 ) === 0 || (
+				redirectStorage[itemTitle] !== undefined &&
+				$.grep( redirectStorage[itemTitle], searchForQueryWithinRedirectInfo ).length
+			)
 		) {
-			if ( item === category.value ) {
+			if ( ( item === category.value ) || (
+				redirectStorage[itemTitle] !== undefined &&
+				redirectStorage[itemTitle].indexOf( new mw.Title( 'Category:' + category.value ).getPrefixedText() ) !== -1
+			) ) {
 				exactMatch = true;
 			}
 			matchingCategoryItems.push( item );
@@ -156,16 +182,24 @@ ve.ui.MWCategoryInputWidget.prototype.getLookupMenuItemsFromData = function ( da
 	// Hidden categories
 	for ( i = 0, len = hiddenCategories.length; i < len; i++ ) {
 		item = hiddenCategories[i];
+		itemTitle = new mw.Title( 'Category:' + item ).getPrefixedText();
 		if (
 			ve.indexOf( item, existingCategories ) === -1 &&
-			item.lastIndexOf( category.value, 0 ) === 0
+			item.lastIndexOf( category.value, 0 ) === 0 || (
+				redirectStorage[itemTitle] !== undefined &&
+				$.grep( redirectStorage[itemTitle], searchForQueryWithinRedirectInfo ).length
+			)
 		) {
-			if ( item === category.value ) {
+			if ( ( item === category.value ) || (
+				redirectStorage[itemTitle] !== undefined &&
+				redirectStorage[itemTitle].indexOf( new mw.Title( 'Category:' + category.value ).getPrefixedText() ) !== -1
+			) ) {
 				exactMatch = true;
 			}
 			hiddenCategoryItems.push( item );
 		}
 	}
+
 	// New category
 	if ( !exactMatch ) {
 		newCategoryItems.push( category.value );
@@ -196,7 +230,7 @@ ve.ui.MWCategoryInputWidget.prototype.getLookupMenuItemsFromData = function ( da
 		) );
 		for ( i = 0, len = matchingCategoryItems.length; i < len; i++ ) {
 			item = matchingCategoryItems[i];
-			items.push( new OO.ui.MenuItemWidget( item, { '$': menu$, 'label': item } ) );
+			items.push( this.getMenuItemWidgetFromCategoryName( item, menu$ ) );
 		}
 	}
 	if ( hiddenCategoryItems.length ) {
@@ -205,11 +239,39 @@ ve.ui.MWCategoryInputWidget.prototype.getLookupMenuItemsFromData = function ( da
 		) );
 		for ( i = 0, len = hiddenCategoryItems.length; i < len; i++ ) {
 			item = hiddenCategoryItems[i];
-			items.push( new OO.ui.MenuItemWidget( item, { '$': menu$, 'label': item } ) );
+			items.push( this.getMenuItemWidgetFromCategoryName( item, menu$ ) );
 		}
 	}
 
 	return items;
+};
+
+/**
+ * Get a OO.ui.MenuSectionItemWidget object for a given category name.
+ * Deals with redirects.
+ *
+ * @method
+ * @param {string} item Category name
+ * @param {jQuery} menu$ Lookup menu jQuery
+ * @returns {OO.ui.MenuSectionItemWidget} Menu item
+ */
+ve.ui.MWCategoryInputWidget.prototype.getMenuItemWidgetFromCategoryName = function ( item, menu$ ) {
+	var itemTitle = new mw.Title( 'Category:' + item ).getPrefixedText(),
+		redirectInfo = $.grep( this.categoryRedirects, function ( redirectInfo ) {
+			return redirectInfo.to === itemTitle;
+		} );
+	if ( redirectInfo.length ) {
+		return new OO.ui.MenuItemWidget( item, {
+			'$': menu$,
+			'autoFitLabel': false,
+			'label': this.$( '<span>' )
+				.text( new mw.Title( redirectInfo[0].from ).getMainText() )
+				.append( '<br>↳ ' )
+				.append( $( '<span>' ).text( new mw.Title( item ).getMainText() ) )
+		} );
+	} else {
+		return new OO.ui.MenuItemWidget( item, { '$': menu$, 'label': item } );
+	}
 };
 
 /**

@@ -19,6 +19,11 @@
 ve.ui.MWParameterPage = function VeUiMWParameterPage( parameter, name, config ) {
 	var paramName = parameter.getName();
 
+	// Configuration initialization
+	config = ve.extendObject( {
+		'scrollable': false
+	}, config );
+
 	// Parent constructor
 	OO.ui.PageLayout.call( this, name, config );
 
@@ -26,13 +31,12 @@ ve.ui.MWParameterPage = function VeUiMWParameterPage( parameter, name, config ) 
 	this.parameter = parameter;
 	this.spec = parameter.getTemplate().getSpec();
 	this.defaultValue = this.spec.getParameterDefaultValue( paramName );
+	this.$info = this.$( '<div>' );
+	this.$actions = this.$( '<div>' );
 	this.$label = this.$( '<div>' );
 	this.$field = this.$( '<div>' );
-	this.$actions = this.$( '<div>' );
-	this.$indicators = this.$( '<div>' );
-	this.$info = this.$( '<div>' );
-	this.$description = this.$( '<div>' );
 	this.$more = this.$( '<div>' );
+	this.$description = this.$( '<div>' );
 	this.valueInput = new OO.ui.TextInputWidget( {
 			'$': this.$,
 			'multiline': true,
@@ -41,14 +45,25 @@ ve.ui.MWParameterPage = function VeUiMWParameterPage( parameter, name, config ) 
 		} )
 		.setValue( this.parameter.getValue() )
 		.connect( this, { 'change': 'onValueInputChange' } );
+	if ( this.parameter.isRequired() ) {
+		this.valueInput.$input.prop( 'required', true );
+	}
+
 	this.removeButton = new OO.ui.ButtonWidget( {
 			'$': this.$,
 			'frameless': true,
 			'icon': 'remove',
 			'title': ve.msg( 'visualeditor-dialog-transclusion-remove-param' ),
-			'tabIndex': -1
+			'classes': [ 've-ui-mwParameterPage-removeButton' ]
 		} )
 		.connect( this, { 'click': 'onRemoveButtonClick' } );
+	this.infoButton = new OO.ui.PopupButtonWidget( {
+			'$': this.$,
+			'frameless': true,
+			'icon': 'info',
+			'title': ve.msg( 'visualeditor-dialog-transclusion-param-info' ),
+			'classes': [ 've-ui-mwParameterPage-infoButton' ]
+		} );
 	this.addButton = new OO.ui.ButtonWidget( {
 			'$': this.$,
 			'frameless': true,
@@ -57,9 +72,11 @@ ve.ui.MWParameterPage = function VeUiMWParameterPage( parameter, name, config ) 
 			'tabIndex': -1
 		} )
 		.connect( this, { 'click': 'onAddButtonClick' } );
-	this.requiredIndicator = new OO.ui.IndicatorWidget( { '$': this.$ } );
+	this.statusIndicator = new OO.ui.IndicatorWidget( {
+		'$': this.$,
+		'classes': [ 've-ui-mwParameterPage-statusIndicator' ]
+	} );
 
-	// TODO: Use spec.deprecation
 	// TODO: Use spec.type
 
 	// Events
@@ -67,37 +84,68 @@ ve.ui.MWParameterPage = function VeUiMWParameterPage( parameter, name, config ) 
 	this.$description.on( 'click', ve.bind( this.onDescriptionClick, this ) );
 
 	// Initialization
+	this.$info
+		.addClass( 've-ui-mwParameterPage-info' )
+		.append( this.$label, this.statusIndicator.$element );
+	this.$actions
+		.addClass( 've-ui-mwParameterPage-actions' )
+		.append( this.infoButton.$element, this.removeButton.$element );
 	this.$label
 		.addClass( 've-ui-mwParameterPage-label' )
 		.text( this.spec.getParameterLabel( paramName ) );
-	this.$actions
-		.addClass( 've-ui-mwParameterPage-actions' )
-		.append( this.removeButton.$element );
-	this.$indicators
-		.addClass( 've-ui-mwParameterPage-indicators' )
-		.append( this.requiredIndicator.$element );
-	this.$description
-		.addClass( 've-ui-mwParameterPage-description' )
-		.text( this.spec.getParameterDescription( paramName ) || '' );
-	this.$info
-		.addClass( 've-ui-mwParameterPage-info' )
-		.append( this.$description );
 	this.$field
 		.addClass( 've-ui-mwParameterPage-field' )
-		.append( this.valueInput.$element, this.$indicators, this.$actions, this.$info );
+		.append(
+			this.valueInput.$element
+		);
 	this.$more
 		.addClass( 've-ui-mwParameterPage-more' )
 		.append( this.addButton.$element );
 	this.$element
 		.addClass( 've-ui-mwParameterPage' )
-		.append( this.$label, this.$field, this.$more );
+		.append( this.$info, this.$actions, this.$field, this.$more );
+	this.$description
+		.addClass( 've-ui-mwParameterPage-description' )
+		.append( this.$( '<p>' ).text( this.spec.getParameterDescription( paramName ) || '' ) );
 
 	if ( this.parameter.isRequired() ) {
-		this.requiredIndicator
+		this.statusIndicator
 			.setIndicator( 'required' )
 			.setIndicatorTitle(
 				ve.msg( 'visualeditor-dialog-transclusion-required-parameter' )
 			);
+		this.$description.append(
+			this.$( '<p>' )
+				.addClass( 've-ui-mwParameterPage-description-required' )
+				.text(
+					ve.msg( 'visualeditor-dialog-transclusion-required-parameter-description' )
+				)
+		);
+	} else if ( this.parameter.isDeprecated() ) {
+		this.statusIndicator
+			.setIndicator( 'alert' )
+			.setIndicatorTitle(
+				ve.msg( 'visualeditor-dialog-transclusion-deprecated-parameter' )
+			);
+		this.$description.append(
+			this.$( '<p>' )
+				.addClass( 've-ui-mwParameterPage-description-deprecated' )
+				.text(
+					ve.msg(
+						'visualeditor-dialog-transclusion-deprecated-parameter-description',
+						this.spec.getParameterDeprecationDescription( paramName )
+					)
+				)
+		);
+	}
+	if ( this.$description.text().trim() === '' ) {
+		this.infoButton
+			.setDisabled( true )
+			.setTitle(
+				ve.msg( 'visualeditor-dialog-transclusion-param-info-missing' )
+			);
+	} else {
+		this.infoButton.getPopup().$body.append( this.$description );
 	}
 };
 
@@ -134,11 +182,6 @@ ve.ui.MWParameterPage.prototype.onLabelClick = function () {
 	this.valueInput.simulateLabelClick();
 };
 
-ve.ui.MWParameterPage.prototype.onDescriptionClick = function () {
-	this.valueInput.simulateLabelClick();
-	this.$description.toggleClass( 've-ui-mwParameterPage-description-all' );
-};
-
 /**
  * @inheritdoc
  */
@@ -160,6 +203,13 @@ ve.ui.MWParameterPage.prototype.setOutlineItem = function ( outlineItem ) {
 				.setIndicator( 'required' )
 				.setIndicatorTitle(
 					ve.msg( 'visualeditor-dialog-transclusion-required-parameter' )
+				);
+		}
+		if ( this.parameter.isDeprecated() ) {
+			this.outlineItem
+				.setIndicator( 'alert' )
+				.setIndicatorTitle(
+					ve.msg( 'visualeditor-dialog-transclusion-deprecated-parameter' )
 				);
 		}
 	}

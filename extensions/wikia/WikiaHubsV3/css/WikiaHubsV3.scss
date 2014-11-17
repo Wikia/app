@@ -1,8 +1,8 @@
-@import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/gradient";
-@import "../../../../skins/oasis/css/mixins/box-sizing";
-@import "Colors";
+@import "skins/shared/color";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/box-sizing";
+@import "WikiaHubsColors";
 @import 'Explore';
 @import 'HubsPopularVideos';
 @import 'FeaturedVideo';
@@ -10,6 +10,7 @@
 @import 'CorporateFooter';
 @import 'SponsoredBox';
 @import 'WamScore';
+@import 'WikiaStats';
 
 $wikiahubs-line-height: 16px;
 

@@ -555,3 +555,10 @@ $messages['zh-hans'] = array(
 	'ircgate-username' => '用户名：',
 	'ircgate-channel' => '频道：',
 );
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Liuxinyu970226
+ */
+$messages['zh-hant'] = array(
+	'ircgate-username' => '使用者名稱：',
+);

@@ -106,6 +106,7 @@ ve.dm.MWTemplateSpecModel.prototype.getDefaultParameterSpec = function ( name ) 
 		'aliases': [],
 		'name': name,
 		'required': false,
+		'suggested': false,
 		'deprecated': false
 	};
 };
@@ -257,6 +258,16 @@ ve.dm.MWTemplateSpecModel.prototype.isParameterRequired = function ( name ) {
 };
 
 /**
+ * Check if parameter is suggsted.
+ *
+ * @param {string} name Parameter name
+ * @returns {boolean} Parameter is suggested
+ */
+ve.dm.MWTemplateSpecModel.prototype.isParameterSuggested = function ( name ) {
+	return !!this.params[name].suggested;
+};
+
+/**
  * Check if parameter is deprecated.
  *
  * @param {string} name Parameter name
@@ -270,10 +281,12 @@ ve.dm.MWTemplateSpecModel.prototype.isParameterDeprecated = function ( name ) {
  * Get parameter deprecation description.
  *
  * @param {string} name Parameter name
- * @returns {string} Explaining of why parameter is deprecated, empty if parameter is not deprecated
+ * @returns {string} Explaining of why parameter is deprecated, empty if parameter is either not
+ *   deprecated or no description has been specified
  */
 ve.dm.MWTemplateSpecModel.prototype.getParameterDeprecationDescription = function ( name ) {
-	return this.params[name].deprecated || '';
+	return typeof this.params[name].deprecated === 'string' ?
+		this.params[name].deprecated : '';
 };
 
 /**
@@ -301,4 +314,13 @@ ve.dm.MWTemplateSpecModel.prototype.getParameterNames = function () {
  */
 ve.dm.MWTemplateSpecModel.prototype.getParameterSets = function () {
 	return this.sets;
+};
+
+/**
+ * Get template
+ *
+ * @returns VeDmMWTemplateModel
+ */
+ ve.dm.MWTemplateSpecModel.prototype.getTemplate = function () {
+	return this.template;
 };

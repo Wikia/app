@@ -246,24 +246,14 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * @param $inputParams array
 	 * @throws Exception
 	 */
-	protected function mockGlobalFunction( $functionName, $returnValue, $callsNum = null, $inputParams = null ) {
-		// sanity check to prevent deprecated way of using this function
-		if ( !function_exists($functionName) && function_exists('wf'.ucfirst($functionName)) ) {
-			throw new Exception("You have to specify full global function name including 'wf' prefix");
-		}
-
-		if ( func_num_args() > 2 ) {
-			throw new Exception("You are using deprecated version of mockGlobalFunction");
-		}
+	protected function mockGlobalFunction( $functionName, $returnValue ) {
 
 		list( $namespace, $baseName ) = WikiaMockProxy::parseGlobalFunctionName( $functionName );
 
 		$mock = $this->getGlobalFunctionMock( $functionName );
-		$expect = $mock->expects( $callsNum !== null ? $this->exactly( $callsNum ) : $this->any() )
-			->method( $baseName );
-		if ( $inputParams !== null ) {
-			$expect = call_user_func_array( array( $expect, 'with' ), $inputParams );
-		}
+		$expect = $mock->expects( $this->any() )
+						->method( $baseName );
+
 		$expect->will( $this->returnValue( $returnValue ) );
 
 		$this->getMockProxy()->getGlobalFunction($functionName)
@@ -400,17 +390,6 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 */
 	protected function getCurrentInvocation() {
 		return WikiaMockProxyAction::currentInvocation();
-	}
-
-	/**
-	 * @deprecated
-	 */
-	protected function mockApp() {
-		// noop
-	}
-
-	protected function proxyClass() {
-		return call_user_func_array( array( $this, 'mockClass' ), func_get_args() );
 	}
 
 	private function unsetGlobals() {

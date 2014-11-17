@@ -1,9 +1,8 @@
-@clean @ie6-bug  @ie7-bug  @ie8-bug @ie9-bug @ie10-bug @test2.wikipedia.org
+@chrome @clean @firefox @login @test2.wikipedia.org
 Feature: VisualEditor
 
-  @login
   Scenario: Basic edit
-    Given I am at my user page
+    Given I go to the "Anonymous Edit Test" page with content "Anonymous Edit Test"
     When I edit the page with Editing with
       And I see the IP warning signs
       And I click Save page

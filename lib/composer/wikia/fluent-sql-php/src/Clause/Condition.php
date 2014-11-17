@@ -17,7 +17,7 @@ class Condition implements ClauseInterface {
 	const EQUAL = "=";
 	const GREATER_THAN = ">";
 	const GREATER_THAN_OR_EQUAL = ">=";
-	const NOT_EQUAL = "!=";
+	const NOT_EQUAL = "<>";
 	const IN = "IN";
 	const NOT_IN = "NOT IN";
 	const EXISTS = "EXISTS";

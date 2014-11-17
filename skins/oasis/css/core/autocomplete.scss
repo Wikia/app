@@ -1,7 +1,7 @@
-@import "color";
+@import "skins/shared/color";
 @import "layout";
-@import "../mixins/box-shadow";
-@import "../mixins/menus";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/menus";
 
 // Styles for the jQuery Autocomplete plugin
 .autocomplete {
@@ -31,5 +31,9 @@
 	}
 	.selected {
 		background-color: $color-menu-highlight;
+	}
+
+	strong {
+		font-weight: bold;
 	}
 }

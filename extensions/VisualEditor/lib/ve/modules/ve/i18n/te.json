@@ -8,7 +8,8 @@
 			"Veeven",
 			"Visdaviva",
 			"மதனாஹரன்",
-			"రహ్మానుద్దీన్"
+			"రహ్మానుద్దీన్",
+			"Kiranmayee"
 		]
 	},
 	"visualeditor": "విజువల్ ఎడిటర్",
@@ -35,10 +36,11 @@
 	"visualeditor-inspector-close-tooltip": "మూసివేయి",
 	"visualeditor-inspector-remove-tooltip": "తొలగించు",
 	"visualeditor-languageinspector-title": "భాష",
+	"visualeditor-languageinspector-widget-changelang": "భాషను మార్చు",
 	"visualeditor-languageinspector-widget-label-direction": "దిశ",
 	"visualeditor-languageinspector-widget-label-langcode": "భాష సంకేతం",
 	"visualeditor-languageinspector-widget-label-language": "భాష",
-	"visualeditor-linkinspector-title": "అధిలంకె",
+	"visualeditor-linkinspector-title": "లంకె",
 	"visualeditor-listbutton-bullet-tooltip": "బిందు జాబితా",
 	"visualeditor-listbutton-number-tooltip": "సంఖ్యా జాబితా",
 	"visualeditor-toolbar-insert": "చొప్పించు"

@@ -15,7 +15,7 @@ QUnit.test( 'charRangeArrayRegexp', function ( assert ) {
 		[[0xFFFF], '\\uffff', 'highest BMP character'],
 		[
 			[0x005F, [0x203F, 0x2040], 0x2054, [0xFE33, 0xFE34],
-				[0xFE4D, 0xFE4F], 0xFF3F],
+			[0xFE4D, 0xFE4F], 0xFF3F],
 			'[\\u005f\\u203f-\\u2040\\u2054\\ufe33-\\ufe34\\ufe4d-\\ufe4f\\uff3f]',
 			'multiple BMP ranges (= ExtendNumLet from wordbreak rules)'
 		],
@@ -80,7 +80,8 @@ QUnit.test( 'charRangeArrayRegexp', function ( assert ) {
 				[0x200E, 0x200F], [0x202A, 0x202E], [0x2060, 0x2064],
 				[0x206A, 0x206F], 0xFEFF, [0xFFF9, 0xFFFB],
 				0x110BD, [0x1D173, 0x1D17A],
-				0xE0001, [0xE0020, 0xE007F]],
+				0xE0001, [0xE0020, 0xE007F]
+			],
 			// TODO: could compact
 			'[\\u00ad\\u0600-\\u0604\\u06dd\\u070f' +
 				'\\u200e-\\u200f\\u202a-\\u202e\\u2060-\\u2064' +

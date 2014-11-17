@@ -24,9 +24,9 @@ OO.inheritClass( ve.dm.MWHiddenCategoryMetaItem, ve.dm.MetaItem );
 
 /* Static Properties */
 
-ve.dm.MWHiddenCategoryMetaItem.static.name = 'mwNoGallery';
+ve.dm.MWHiddenCategoryMetaItem.static.name = 'mwHiddenCategory';
 
-ve.dm.MWHiddenCategoryMetaItem.static.group = 'mwNoGallery';
+ve.dm.MWHiddenCategoryMetaItem.static.group = 'mwHiddenCategory';
 
 ve.dm.MWHiddenCategoryMetaItem.static.matchTagNames = [ 'meta' ];
 

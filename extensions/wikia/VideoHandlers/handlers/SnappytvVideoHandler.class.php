@@ -7,7 +7,8 @@ class SnappytvVideoHandler extends VideoHandler {
 	protected static $providerDetailUrlTemplate = 'http://www.snappytv.com/snap/$1';
 	protected static $providerHomeUrl = 'http://www.snappytv.com/';
 
-	public function getEmbed( $articleId, $width, $autoplay = false, $isAjax = false, $postOnload = false ) {
+	public function getEmbed( $width, array $options = [] ) {
+		$autoplay = !empty( $options['autoplay'] );
 		$height = $this->getHeight( $width );
 		$autoPlayStr = $autoplay ? 1 : 0 ;
 

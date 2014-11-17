@@ -7,7 +7,4 @@
 	<? else: ?>
 		<h2><?= $heading ?></h2>
 	<?php endif; ?>
-	<p><?= $creative ?></p>
-	<h4><?= $moreheading ?></h4>
-	<?= $morelist ?>
 </section>

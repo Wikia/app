@@ -95,7 +95,7 @@ $messages['az'] = array(
 $messages['br'] = array(
 	'places' => 'Lakaat war ar wiki-mañ',
 	'places-in-category' => "Lec'hioù er rummad $1",
-	'places-on-map' => '{{PLURAL:$1|$1 plas|$1 plas}} war ar gartenn-mañ', # Fuzzy
+	'places-on-map' => '{{PLURAL:$1|$1 plas|$1 a blasoù}} war ar gartenn-mañ',
 	'places-toolbar-button-tooltip' => "Klikit evit ouzhpennañ ur valizenn douaroniel d'ar bajenn-mañ",
 	'places-toolbar-button-address' => "Pourchasit ar chomlec'h da implijout da valizenn douaroniel evit ar bajenn-mañ, mar plij",
 	'places-editor-search' => 'Klask',
@@ -374,12 +374,30 @@ $messages['it'] = array(
 	'places-geolocation-modal-error-title' => 'Errore',
 );
 
+/** Japanese (日本語)
+ * @author Barrel0116
+ * @author Plover-Y
+ */
+$messages['ja'] = array(
+	'places-editor-search' => '検索',
+	'places-geolocation-modal-error-title' => 'エラー',
+);
+
 /** Kannada (ಕನ್ನಡ)
  * @author VASANTH S.N.
  */
 $messages['kn'] = array(
 	'places-editor-search' => 'ಹುಡುಕು',
 	'places-geolocation-modal-error-title' => 'ದೋಷ',
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'places-editor-search' => '검색',
+	'places-geolocation-modal-error-title' => '오류',
+	'places-geolocation-modal-not-available' => '이런! 이 기능은 아직 모바일 환경에서만 이용할 수 있습니다.<br /><br />이 기능을 이용하고 싶으시면 모바일을 통해 접속해 주세요.',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
@@ -790,6 +808,19 @@ $messages['uk'] = array(
 	'places-updated-geolocation' => 'Додати геомітку на цю сторінку',
 	'places-category-switch' => 'Вимкнути додавання геоміток',
 	'places-category-switch-off' => 'Увімкнути додавання геоміток',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Baonguyen21022003
+ */
+$messages['vi'] = array(
+	'places' => 'Địa điễm trên wiki này',
+	'places-geolocation-button-label' => 'Thêm địa điểm',
+	'places-geolocation-modal-add-title' => 'Thêm địa điểm',
+	'places-geolocation-modal-error-title' => 'Lỗi',
+	'places-geolocation-modal-error' => 'Đã có lỗi trong khi cố gắng để xác định vị trí của bạn:<br />$1',
+	'places-geolocation-modal-not-available' => 'Rất tiếc! Tính năng này là hiện chỉ trên thiết bị di động.<br /><br />Bạn muốn cho nó thử? Chỉ cần truy cập trang này bằng cách sử dụng điện thoại di động của sự lựa chọn.',
+	'places-error-no-article' => 'Bạn phải chỉ định một trang',
 );
 
 /** Walloon (walon)

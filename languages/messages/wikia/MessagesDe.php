@@ -65,11 +65,6 @@ Auf dieser Spezialseite kannst Du die '''letzten Änderungen''' in diesem Wiki n
 	'addnewtalksection-link' => 'Neuen Abschnitt beginnen',
 
 	# Hubs
-	'oasis-corporatefooter-hub-Entertainment-link' => 'http://de.wikia.com/Entertainment',
-	'oasis-corporatefooter-hub-Videospiele-link' => 'http://de.wikia.com/Videospiele',
-	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://de.wikia.com/Lifestyle',
-	'oasis-corporatefooter-hub-Wikia' => 'Wikia',
-	'oasis-corporatefooter-hub-Food_and_Drink' => 'Essen und Trinken',
 	'hub-Entertainment' => 'Entertainment',
 	'hub-Gaming' => 'Videospiele',
 	'hub-Videospiele' => 'Videospiele',
@@ -165,15 +160,4 @@ Auf dieser Spezialseite kannst Du die '''letzten Änderungen''' in diesem Wiki n
 ***w:c:de.community:Spezial:Forum|Community-Forum
 ***w:c:de|Mehr...
 ",
-
-	// Global footer
-	'shared-Oasis-footer-wikia-links' => "*http://de.wikia.com/wiki/%C3%9Cber_Wikia|Über Wikia
-*http://de.community.wikia.com|Community-Wiki
-*http://de.wikia.com/Stellen|Stellenangebote
-*http://www.wikia.com/Advertising|Auf Wikia werben
-*http://api.wikia.com/API|API
-*Special:Contact|Kontakt
-*http://de.wikia.com/Nutzungsbedingungen|Nutzungsbedingungen<nowiki> <span style=\"color: #f00;\">(geändert)</span></nowiki>
-*http://de.wikia.com/Datenschutz|Datenschutz
-*_LICENSE_",
 ));

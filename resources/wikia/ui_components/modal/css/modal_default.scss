@@ -1,12 +1,12 @@
-@import "skins/oasis/css/core/color";
+@import "skins/shared/color";
 @import "skins/oasis/css/core/responsive-variables";
-@import "skins/oasis/css/mixins/transition";
-@import "skins/oasis/css/mixins/blackout";
-@import "skins/oasis/css/mixins/box-sizing-border-box";
-@import "skins/oasis/css/mixins/box-shadow";
-@import "skins/oasis/css/mixins/flexbox";
-@import "skins/oasis/css/mixins/calc";
-@import "skins/oasis/css/mixins/image-replacement";
+@import "skins/shared/mixins/transition";
+@import "skins/shared/mixins/blackout";
+@import "skins/shared/mixins/box-sizing-border-box";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/flexbox";
+@import "skins/shared/mixins/calc";
+@import "skins/shared/mixins/image-replacement";
 
 $close-image: '/resources/wikia/ui_components/modal/images/close-dark.svg';
 $modal-secondary-color: darken( $color-page, 10% );
@@ -168,7 +168,7 @@ $large-modal-margin: 50px;
 	}
 
 	> .small,
-	.medium {
+	> .medium {
 		left: 50%;
 		position: fixed;
 		top: 5%;
@@ -216,6 +216,10 @@ body.with-blackout {
 		&:before {
 			height: 100%;
 		}
+	}
+
+	.global-navigation {
+		position: static;
 	}
 
 	.WikiaSiteWrapper {

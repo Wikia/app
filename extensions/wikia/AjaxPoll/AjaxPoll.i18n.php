@@ -30,11 +30,12 @@ $messages['af'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Kuwaity26
  */
 $messages['ar'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp;من مجموع التصويتات',
-	'ajaxpoll-thankyou' => 'شكرا لتصويتك!',
-	'ajaxpoll-error' => 'كانت هناك مشكلة مع تجهيز صوتك ، يرجى المحاولة مرة أخرى.',
+	'ajaxpoll-thankyou' => 'شكرًا لتصويتك!',
+	'ajaxpoll-error' => 'حدثت مشكلة في تجهيز صوتك، يرجى المحاولة مرة أخرى.',
 	'ajaxpoll-summary' => 'تم إنشاء هذا التصويت في $1 على $2، و حتى الآن صوت $3 شخصا.',
 	'ajaxpoll-submit' => 'تصويت!',
 	'ajaxpoll-closed' => 'تم إغلاق التصويت الآن. استمتع بالنتائج.',
@@ -119,7 +120,10 @@ $messages['bg'] = array(
  * @author Tauhid16
  */
 $messages['bn'] = array(
+	'ajaxpoll-percentVotes' => 'সব ভোটের $1%',
 	'ajaxpoll-thankyou' => 'আপনার ভোটের জন্য ধন্যবাদ!',
+	'ajaxpoll-error' => 'আপনার ভোট প্রক্রিয়াকরণের সময় একটি সমস্যা হয়েছিল, দয়া করে আবার চেষ্টা করুন।',
+	'ajaxpoll-summary' => 'এই জরিপ $1 তারিখে $2-এ তৈরি করা হয়েছে, এবং এখন পর্যন্ত $3 জন ব্যক্তি ভোট দিয়েছেন।',
 	'ajaxpoll-submit' => 'ভোট!',
 	'ajaxpoll-closed' => 'জরিপ বন্ধ করা হয়েছে। ফল উপোভোগ করুন।',
 	'ajaxpoll-submitting' => 'দয়া করে অপেক্ষা করুন, আপনার ভোট দেয়া হচ্ছে....',
@@ -145,6 +149,13 @@ $messages['br'] = array(
 	'ajaxpoll-submit' => 'Votiñ !',
 	'ajaxpoll-closed' => "Serret eo ar sontadeg bremañ. Keñverit an disoc'hoù.",
 	'ajaxpoll-submitting' => 'Gortozit mar plij, emeur o kas ho vot...',
+);
+
+/** Iriga Bicolano (Iriga Bicolano)
+ * @author Filipinayzd
+ */
+$messages['bto'] = array(
+	'ajaxpoll-submit' => 'Bumoto!',
 );
 
 /** Catalan (català)
@@ -257,6 +268,7 @@ $messages['eo'] = array(
 /** Spanish (español)
  * @author Bola
  * @author Fitoschido
+ * @author Macofe
  */
 $messages['es'] = array(
 	'ajaxpoll-percentVotes' => '$1%&nbsp; de todos los votos',
@@ -264,7 +276,7 @@ $messages['es'] = array(
 	'ajaxpoll-error' => 'Hubo un problema al procesar tu voto, por favor, inténtalo de nuevo.',
 	'ajaxpoll-summary' => 'La encuesta fue creada el $1 $2, y hasta ahora $3 personas votaron.',
 	'ajaxpoll-submit' => '¡Vota!',
-	'ajaxpoll-closed' => 'La encuesta se cerrará ahora. Disfruta de los resultados.',
+	'ajaxpoll-closed' => 'La encuesta está cerrada. Disfruta de los resultados.',
 	'ajaxpoll-submitting' => 'Se está enviando tu voto, espera un momento…',
 );
 
@@ -496,9 +508,11 @@ $messages['kn'] = array(
 
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author Miri-Nae
  * @author 아라
  */
 $messages['ko'] = array(
+	'ajaxpoll-percentVotes' => '전체 투표 중 $1%',
 	'ajaxpoll-thankyou' => '투표해 주셔서 감사합니다!',
 	'ajaxpoll-error' => '투표를 처리하는 도중 문제가 발생했습니다. 다시 시도하세요.',
 	'ajaxpoll-summary' => '이 설문 조사는 $2 $1에 만들어졌으며 지금까지 $3명이 투표했습니다.',
@@ -864,6 +878,7 @@ $messages['sr-ec'] = array(
 );
 
 /** Swedish (svenska)
+ * @author Jopparn
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -873,7 +888,7 @@ $messages['sv'] = array(
 	'ajaxpoll-error' => 'Det uppstod ett problem med bearbetningen av din röst, var god försök igen.',
 	'ajaxpoll-summary' => 'Röstningen skapades den $2 kl. $1, och hittills har $3 personer röstat.',
 	'ajaxpoll-submit' => 'Rösta!',
-	'ajaxpoll-closed' => 'Röstningen är nu stängd. Njut av resultaten.',
+	'ajaxpoll-closed' => 'Omröstningen är nu stängd. Njut av resultaten.',
 	'ajaxpoll-submitting' => 'Vänta medan din röst skickas in...',
 );
 

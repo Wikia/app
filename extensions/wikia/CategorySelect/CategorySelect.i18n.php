@@ -269,6 +269,7 @@ $messages['ckb'] = array(
  * @author Chmee2
  * @author Darth Daron
  * @author Dontlietome7
+ * @author H4nek
  */
 $messages['cs'] = array(
 	'categoryselect-desc' => 'Poskytuje rozhraní pro správu kategorií v článku bez úprav celého článku',
@@ -284,7 +285,7 @@ $messages['cs'] = array(
 	'categoryselect-error-db-locked' => 'Databáze je uzamčena.',
 	'categoryselect-error-duplicate-category-name' => 'Kategorie "$1" již existuje.',
 	'categoryselect-error-edit-abort' => 'Změna, o kterou jste se pokusili, byla zrušena rozšířením.', # Fuzzy
-	'categoryselect-error-empty-category-name' => 'Zadejte název kategorie (část před |)', # Fuzzy
+	'categoryselect-error-empty-category-name' => 'Uveďte prosím název kategorie.',
 	'categoryselect-error-user-rights' => 'Chyba uživatelských práv.', # Fuzzy
 	'categoryselect-modal-category-name' => 'Uveďte název kategorie:', # Fuzzy
 	'categoryselect-modal-category-sortkey' => 'Abecedně seřadit tento článek na stránce kategorie „$1" pod názvem:', # Fuzzy
@@ -408,6 +409,7 @@ $messages['eu'] = array(
 
 /** Persian (فارسی)
  * @author Ebraminio
+ * @author Reza1615
  * @author ZxxZxxZ
  * @author جواد
  */
@@ -416,6 +418,7 @@ $messages['fa'] = array(
 	'categoryselect-button-cancel' => 'لغو',
 	'categoryselect-button-save' => 'ذخیره‌کردن',
 	'categoryselect-category-edit' => 'ویرایش رده',
+	'categoryselect-category-remove' => 'حذف رده',
 	'categoryselect-edit-summary' => 'افزودن رده',
 	'categoryselect-tooltip-add' => 'پس از اتمام دکمه اینتر را فشار دهید', # Fuzzy
 );
@@ -594,6 +597,7 @@ $messages['ia'] = array(
  * @author Aldnonymous
  * @author C5st4wr6ch
  * @author Irwangatot
+ * @author Riemogerz
  */
 $messages['id'] = array(
 	'categoryselect-desc' => 'Menyediakan sebuah antarmuka untuk mengelola kategori dalam artikel tanpa mengedit seluruh artikel.',
@@ -607,13 +611,14 @@ $messages['id'] = array(
 	'categoryselect-error-article-doesnt-exist' => 'Halaman [id=$1] tidak ada.',
 	'categoryselect-error-db-locked' => 'Basis data dikunci.',
 	'categoryselect-error-duplicate-category-name' => 'Kategori "$1" sudah ada.',
-	'categoryselect-error-edit-abort' => 'Perubahan yang coba Anda lakukan dibatalkan oleh suatu ekstensi kaitan.', # Fuzzy
+	'categoryselect-error-edit-abort' => 'Perubahan yang Anda coba dibatalkan oleh suatu kaitan ekstensi.',
 	'categoryselect-error-empty-category-name' => 'Silakan berikan nama kategori.',
 	'categoryselect-error-user-rights' => 'Pengguna tidak memiliki izin untuk melakukan aksi ini.',
 	'categoryselect-modal-category-name' => 'Menyediakan nama kategori:',
-	'categoryselect-modal-category-sortkey' => 'Penyusunan artikel ini menurut abjad pada kategori "$1" dengan nama:', # Fuzzy
+	'categoryselect-modal-category-sortkey' => 'Opsional, Anda dapat menyusun sesuai abjad pada kategori "$1" dengan nama:',
 	'categoryselect-tooltip-add' => 'Tekan tombol Masuk atau Kembali ketika sudah selesai.',
 	'tog-disablecategoryselect' => 'Nonaktifkan Kategori Tagging( hanya berlaku jika modus visual telah dinonaktifkan)',
+	'tog-disablecategoryselect-v2' => "Menonaktifkan modul kategori (hanya berlaku jika ''visual mode editing'' dinonaktifkan)",
 );
 
 /** Igbo (Igbo)
@@ -686,11 +691,13 @@ $messages['ja'] = array(
 /** Georgian (ქართული)
  * @author DevaMK
  * @author GeorgeBarnick
+ * @author Otogi
  */
 $messages['ka'] = array(
 	'categoryselect-button-add' => 'დაამატე კატეგორია',
 	'categoryselect-button-cancel' => 'გაუქმება',
 	'categoryselect-button-save' => 'შენახვა',
+	'categoryselect-category-remove' => 'კატეგორიის წაშლა',
 );
 
 /** Kannada (ಕನ್ನಡ)
@@ -712,6 +719,7 @@ $messages['kn'] = array(
 
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author Miri-Nae
  * @author 아라
  */
 $messages['ko'] = array(
@@ -732,6 +740,7 @@ $messages['ko'] = array(
 	'categoryselect-error-user-rights' => '사용자는 이 작업을 수행할 권한이 없습니다.',
 	'categoryselect-modal-category-name' => '분류의 이름 제공:',
 	'categoryselect-modal-category-sortkey' => '선택적으로 이름에 따라 "$1" 분류 문서에 이 문서를 알파벳순으로 정렬할 수 있습니다:',
+	'categoryselect-tooltip-add' => '완료되었으면 엔터, 혹은 백스페이스를 누르세요.',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
@@ -1275,12 +1284,20 @@ $messages['tly'] = array(
 
 /** Turkish (Türkçe)
  * @author Gizemb
+ * @author Sayginer
+ * @author Sucsuzz
  * @author Suelnur
  */
 $messages['tr'] = array(
 	'categoryselect-button-add' => 'Kategori ekle',
 	'categoryselect-button-cancel' => 'İptal',
 	'categoryselect-button-save' => 'Kaydet',
+	'categoryselect-category-add' => 'Kategori ekle...',
+	'categoryselect-category-edit' => 'Kategori düzenle',
+	'categoryselect-category-remove' => 'Kategori kaldır',
+	'categoryselect-error-empty-category-name' => 'Lütfen bir kategori adı girin.',
+	'categoryselect-error-user-rights' => 'Kullanıcının bu eylemi gerçekleştirmek için izni yok.',
+	'categoryselect-modal-category-name' => 'Kategorinin adını girin:',
 );
 
 /** Tatar (Cyrillic script) (татарча)

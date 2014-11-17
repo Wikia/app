@@ -24,5 +24,7 @@ ve.ui.MWGalleryInspectorTool.static.icon = 'gallery';
 ve.ui.MWGalleryInspectorTool.static.title =
 	OO.ui.deferMsg( 'visualeditor-mwgalleryinspector-title' );
 ve.ui.MWGalleryInspectorTool.static.modelClasses = [ ve.dm.MWGalleryNode ];
+ve.ui.MWGalleryInspectorTool.static.autoAddToGroup = false;
+ve.ui.MWGalleryInspectorTool.static.autoAddToCatchall = false;
 ve.ui.MWGalleryInspectorTool.static.commandName = 'gallery';
 ve.ui.toolFactory.register( ve.ui.MWGalleryInspectorTool );

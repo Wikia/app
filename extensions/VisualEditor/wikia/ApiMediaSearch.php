@@ -78,6 +78,16 @@ class ApiMediaSearch extends ApiBase {
 		return $image->getFullUrl();
 	}
 
+	/**
+	 * Gets the duration of a video.
+	 * @param string $title
+	 * @return int Number of seconds
+	 */
+	protected function getDuration( $title ) {
+		$file = WikiaFileHelper::getVideoFileFromTitle( $title );
+		return $file ? round( $file->getMetadataDuration() ) : 0;
+	}
+
 	public function getResults( $query, $limit, $batch, $video, $photo, $mixed ) {
 		$results = [];
 		if ( $video && $photo ) {
@@ -145,6 +155,9 @@ class ApiMediaSearch extends ApiBase {
 				'type' => $this->getType( $title ),
 				'url' => $this->getUrl( $title )
 			];
+			if ( $item['type'] === 'video' ) {
+				$item['duration'] = $this->getDuration( $title );
+			}
 			array_push( $items, $item );
 		}
 

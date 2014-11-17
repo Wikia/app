@@ -1,12 +1,12 @@
 // core
-@import "color";
+@import "skins/shared/color";
 
 // mixins
-@import "../mixins/box-sizing-border-box";
-@import "../mixins/calc";
-@import "../mixins/gradient";
-@import "../mixins/clearfix";
-@import "../mixins/menus";
+@import "skins/shared/mixins/box-sizing-border-box";
+@import "skins/shared/mixins/calc";
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/menus";
 
 // rename item modal styles
 .toolbar-edit-rename-item {

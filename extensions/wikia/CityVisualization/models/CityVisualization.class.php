@@ -124,7 +124,7 @@ class CityVisualization extends WikiaModel {
 
 		$mdb = wfGetDB(DB_MASTER, array(), $app->wg->ExternalSharedDB);
 
-		$category = HubService::getComscoreCategory($cityId);
+		$category = HubService::getCategoryInfoForCity($cityId);
 
 		$table = self::CITY_VISUALIZATION_TABLE_NAME;
 		$data = array(
@@ -454,8 +454,8 @@ class CityVisualization extends WikiaModel {
 		return wfSharedMemcKey('single_wiki_data_visualization', self::CITY_VISUALIZATION_MEMC_VERSION, $corporateWikiId, $wikiId, $langCode, __METHOD__);
 	}
 
-	public function getWikiImageNamesCacheKey($wikiId, $langCode) {
-		return $this->getVisualizationElementMemcKey('wiki_data_visualization_image_names', $wikiId, $langCode);
+	public function getWikiImageNamesCacheKey($wikiId, $langCode, $filter) {
+		return $this->getVisualizationElementMemcKey("wiki_data_visualization_image_names:filter{$filter}", $wikiId, $langCode);
 	}
 
 	public function getVisualizationElementMemcKey($prefix, $wikiId, $langCode) {
@@ -594,7 +594,7 @@ class CityVisualization extends WikiaModel {
 	public function getWikiImageNames($wikiId, $langCode, $filter = ImageReviewStatuses::STATE_APPROVED) {
 		wfProfileIn(__METHOD__);
 
-		$memKey = $this->getWikiImageNamesCacheKey($wikiId, $langCode);
+		$memKey = $this->getWikiImageNamesCacheKey($wikiId, $langCode, $filter);
 		$wikiImageNames = $this->wg->Memc->get($memKey);
 
 		if (empty($wikiImageNames)) {
@@ -828,8 +828,7 @@ class CityVisualization extends WikiaModel {
 	 */
 	public function getVisualizationWikisData() {
 		$corporateSites = $this->getCorporateSitesList();
-		$this->addLangToCorporateSites($corporateSites);
-		return $this->cleanVisualizationWikisArray($corporateSites);
+		return $this->getWikiaHomePageHelper()->cleanWikisDataArray($corporateSites);
 	}
 
 	/**
@@ -849,41 +848,6 @@ class CityVisualization extends WikiaModel {
 	public function isCorporateLang($langCode) {
 		$corpWikis = $this->getVisualizationWikisData();
 		return isset($corpWikis[$langCode]);
-	}
-
-	/**
-	 * @param Array $sites reference to an array with lists from WikiFactory::getListOfWikisWithVar()
-	 */
-	protected function addLangToCorporateSites(&$sites) {
-		foreach($sites as $wikiId => $wiki) {
-			$lang = WikiFactory::getVarByName('wgLanguageCode', $wikiId);
-			$lang = unserialize($lang->cv_value);
-
-			if( !empty($lang) ) {
-				$sites[$wikiId]['lang'] = $lang;
-			}
-		}
-	}
-
-	/**
-	 * @param Array $sites lists of wikis from WikiFactory::getListOfWikisWithVar()
-	 * @return array
-	 */
-	protected function cleanVisualizationWikisArray($sites) {
-		$results = array();
-
-		foreach($sites as $wikiId => $wiki) {
-			$lang = $wiki['lang'];
-			$results[$lang] = array(
-				'wikiId' => $wikiId,
-				'wikiTitle' => $wiki['t'],
-				'url' => $wiki['u'],
-				'db' => $wiki['d'],
-				'lang' => $lang
-			);
-		}
-
-		return $results;
 	}
 
 	public function getWikisCountForStaffTool($opt) {

@@ -5,10 +5,13 @@ class VideosModuleController extends WikiaController {
 
 	/**
 	 * VideosModule
-	 * Returns videos to populate the Videos Module. First try and get premium videos
-	 * related to the article page. If that's not enough add premium videos related
-	 * to the local wiki. Finally, if still more or needed, get trending premium
-	 * videos related to the vertical of the wiki.
+	 * Returns videos to populate the Videos Module. First check if
+	 * local videos are being requested from the front-end (this is not
+	 * yet in use but will be used for A/B testing down the line). If not,
+	 * check if there are categories associated with this wiki for the
+	 * Videos Module and pull premium videos from those categories. Finally, if
+	 * neither of those first conditions are true, search for premium
+	 * videos related to the wiki.
 	 * @requestParam integer limit - number of videos shown in the module
 	 * @requestParam string local [true/false] - show local content
 	 * @requestParam string sort [recent/trend] - how to sort the results
@@ -24,24 +27,25 @@ class VideosModuleController extends WikiaController {
 		$numRequired = $this->request->getVal( 'limit', VideosModule::LIMIT_VIDEOS );
 		$localContent = ( $this->request->getVal( 'local' ) == 'true' );
 		$sort = $this->request->getVal( 'sort', 'trend' );
+		$userRegion = $this->request->getVal( 'userRegion', VideosModule::DEFAULT_REGION );
 
-		$module = new VideosModule();
+		$module = new VideosModule( $userRegion );
+		$staffVideos = $module->getStaffPicks();
 		if ( $localContent ) {
 			$videos = $module->getLocalVideos( $numRequired, $sort );
-		} else {
+		} elseif ( !empty( $this->wg->VideosModuleCategories )  ) {
 			$videos = $module->getVideosByCategory();
-			if ( empty( $videos ) ) {
-				$videos = $module->getWikiRelatedVideosTopics( $numRequired );
-			}
+		} else {
+			$videos = $module->getWikiRelatedVideosTopics( $numRequired );
 		}
 
 		$this->result = "ok";
 		$this->msg = '';
 		$this->videos = $videos;
-		$this->staffVideos = $module->getStaffPicks();
+		$this->staffVideos = $staffVideos;
 
 		// set cache
-		$this->response->setCacheValidity( 600 );
+		$this->response->setCacheValidity( VideosModule::CACHE_TTL );
 
 		wfProfileOut( __METHOD__ );
 	}

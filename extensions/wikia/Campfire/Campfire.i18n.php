@@ -173,9 +173,11 @@ $messages['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author C5st4wr6ch
+ * @author Riemogerz
  */
 $messages['id'] = array(
 	'campfire-page-header' => '$1 dari $2',
+	'campfire-licensed-under' => 'Lisensi di bawah $1',
 );
 
 /** Italian (italiano)
@@ -188,9 +190,11 @@ $messages['it'] = array(
 
 /** Korean (한국어)
  * @author Leehoy
+ * @author Miri-Nae
  */
 $messages['ko'] = array(
 	'campfire-page-header' => '$2의 $1',
+	'campfire-licensed-under' => '$1 라이선스에 속합니다',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

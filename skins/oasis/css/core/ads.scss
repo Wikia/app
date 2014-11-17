@@ -1,10 +1,11 @@
-@import "color";
+@import "skins/shared/color";
 @import "layout";
-@import "../mixins/clearfix";
-@import "../mixins/gradient";
+@import "responsive-variables";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/gradient";
 
 /** Hide invisible slots and 1x1 iframes **/
-.wikia-ad[id^="INVISIBLE_"], .wikia-ad iframe[width="1"][height="1"] {
+.wikia-ad[id^="INVISIBLE_"], .wikia-ad iframe[width="1"][height="1"], .wikia-ad > .hidden {
 	display: none;
 }
 
@@ -82,6 +83,17 @@
 .home-top-right-ads {
 	float: right;
 }
+
+.home-top-right-ads.top-right-ads-in-content {
+  display: none;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+.home-top-right-ads.hidden {
+  display: none;
+}
+
 #HOME_TOP_RIGHT_BOXAD {
 	margin-bottom: 10px;
 	position: relative;
@@ -245,7 +257,7 @@ body >a >img[src$="noad.gif"] {
 	}
 }
 
-#WIKIA_BAR_BOXAD_2 {
+#BOTTOM_LEADERBOARD {
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -254,5 +266,28 @@ body >a >img[src$="noad.gif"] {
 
   & > div {
     display: inline-block;
+  }
+}
+
+#NATIVE_TABOOLA {
+  max-width: 700px;
+}
+
+.wikia-ad-interactive-map {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 320px;
+  height: 50px;
+
+  & > iframe {
+    width: 320px;
+    height: 50px;
+  }
+}
+
+@media screen and (max-width: $breakpoint-small) {
+  .home-top-right-ads.top-right-ads-in-content {
+    display: block;
   }
 }

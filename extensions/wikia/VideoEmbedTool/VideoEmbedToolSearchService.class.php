@@ -188,7 +188,8 @@ class VideoEmbedToolSearchService
 
 	/**
 	 * Correctly formats response as expected by VET, and inflates video data on each result.
-	 * @param array
+	 *
+	 * @param array $searchResponse
 	 * @return array
 	 */
 	protected function postProcessSearchResponse( array $searchResponse ) {
@@ -196,28 +197,49 @@ class VideoEmbedToolSearchService
 		$data = [];
 		$start = $config->getStart();
 		$pos = $start;
-		foreach ( $searchResponse['items'] as $singleVideoData ) {
-			$videoTitleObject = Title::newFromText( $singleVideoData['title'], NS_FILE );
-			if ( !empty( $videoTitleObject ) ) {
-				(new WikiaFileHelper)->inflateArrayWithVideoData(
-						$singleVideoData,
-						$videoTitleObject,
-						$this->getWidth(),
-						$this->getHeight(),
-						true
-				);
-				$trimTitle = $this->getTrimTitle();
-				if ( ! empty( $trimTitle ) ) {
-					$singleVideoData['title'] = mb_substr( $singleVideoData['title'], 0, $trimTitle );
-				}
-				$singleVideoData['pos'] = $pos++;
-				$data[] = $singleVideoData;
-			}
+
+		$videoOptions = [
+			'thumbWidth'   => $this->getWidth(),
+			'thumbHeight'  => $this->getHeight(),
+			'getThumbnail' => true,
+			'thumbOptions' => [
+				'forceSize'   => 'small',
+			],
+		];
+
+		// Choose the correct database
+		if ( $this->getSearchType() === 'local' ) {
+			$dbName = F::app()->wg->DBname;
+		} else {
+			$dbName = F::app()->wg->WikiaVideoRepoDBName;
 		}
+
+		$helper = new VideoHandlerHelper();
+
+		foreach ( $searchResponse['items'] as $singleVideoData ) {
+			if ( empty( $singleVideoData['title'] ) ) {
+				continue;
+			}
+
+			// Get data about this video from the video wiki
+			$videosDetail = $helper->getVideoDetailFromWiki(
+				$dbName,
+				$singleVideoData['title'],
+				$videoOptions
+			);
+
+			$trimTitle = $this->getTrimTitle();
+			if ( ! empty( $trimTitle ) ) {
+				$videosDetail['fileTitle'] = mb_substr( $singleVideoData['title'], 0, $trimTitle );
+			}
+			$singleVideoData['pos'] = $pos++;
+			$data[] = $videosDetail;
+		}
+
 		return [
-				'totalItemCount' => $searchResponse['total'],
-				'nextStartFrom' => $start + $config->getLimit(),
-				'items' => $data
+			'totalItemCount' => $searchResponse['total'],
+			'nextStartFrom' => $start + $config->getLimit(),
+			'items' => $data,
 		];
 	}
 

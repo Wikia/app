@@ -67,15 +67,8 @@ require_once $dir . 'config.php';
 require_once $dir . 'facebook-client/facebook.php';
 
 $wgExtensionFunctions[] = 'FBConnect::init';
-if(!empty($fbEnablePushToFacebook)){
-	// Need to include it explicitly instead of autoload since it has initialization code of its own.
-	// This should be done after FBConnect::init is added to wgExtensionFunctions so that FBConnect
-	// gets fully initialized first.
-	require_once $dir . 'FBConnectPushEvent.php';
-}
 
 $wgExtensionMessagesFiles['FBConnect'] =	$dir . 'FBConnect.i18n.php';
-$wgExtensionMessagesFiles['FBPushEvents'] = $dir . 'pushEvents/FBPushEvents.i18n.php';
 $wgExtensionMessagesFiles['FBConnectLanguage'] = $dir . 'FBConnectLanguage.i18n.php';
 $wgExtensionAliasesFiles['FBConnect'] =		$dir . 'FBConnect.alias.php';
 
@@ -168,6 +161,11 @@ class FBConnect {
 				$wgHooks[$hookName][] = "FBConnectHooks::$hookName";
 			}
 		}
+
+		/* Wikia change begin */
+		$wgHooks['OasisSkinAssetGroups'][] = 'FBConnectHooks::onSkinAssetGroups';
+		$wgHooks['MonobookSkinAssetGroups'][] = 'FBConnectHooks::onSkinAssetGroups';
+		/* Wikia change end */
 
 		// Allow configurable over-riding of the onLogin handler.
 		global $fbOnLoginJsOverride;

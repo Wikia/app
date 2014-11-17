@@ -247,7 +247,10 @@ class ArticleComment {
 
 		$parser->ac_metadata = [];
 
-		$head = $parser->parse( $rawtext, $this->mTitle, ParserOptions::newFromContext( RequestContext::getMain() ) );
+		// VOLDEV-68: Remove broken section edit links
+		$opts = ParserOptions::newFromContext( RequestContext::getMain() );
+		$opts->setEditSection( false );
+		$head = $parser->parse( $rawtext, $this->mTitle, $opts );
 
 		$this->mText = wfFixMalformedHTML( $head->getText() );
 
@@ -459,19 +462,10 @@ class ArticleComment {
 	 * @access public
 	 */
 	public function doDeleteComment( $reason, $suppress = false ){
-		global $wgUser;
-		if(empty($this->mArticle)) {
-			$this->mArticle = new Article($this->mTitle, 0);
-		}
-		$error = '';
-		$id = $this->mArticle->getId();
-		//we need to run all the hook manual :/
-		if ( wfRunHooks( 'ArticleDelete', array( &$this->mArticle, &$wgUser, &$reason, &$error ) ) ) {
-			if( $this->mArticle->doDeleteArticle( $reason, $suppress ) ) {
-				$this->mTitle->getPrefixedText();
-				wfRunHooks( 'ArticleDeleteComplete', array( &$this->mArticle, &$wgUser, $reason, $id) );
-				return true;
-			}
+		$wikiPage = new WikiPage( $this->mTitle );
+
+		if ( $wikiPage->doDeleteArticle( $reason, $suppress ) ) {
+			return true;
 		}
 
 		return false;
@@ -1124,8 +1118,11 @@ class ArticleComment {
 
 		$taskParams['page'] = $oCommentTitle->getFullText();
 		$taskParams['newpage'] = $newCommentTitle->getFullText();
-		$thisTask = new MultiMoveTask( $taskParams );
-		$submit_id = $thisTask->submitForm();
+
+		$task = new \Wikia\Tasks\Tasks\MultiTask();
+		$task->call('move', $taskParams);
+		$submit_id = $task->queue();
+
 		Wikia::log( __METHOD__, 'deletecomment', "Added move task ($submit_id) for {$taskParams['page']} page" );
 
 		wfProfileOut( __METHOD__ );

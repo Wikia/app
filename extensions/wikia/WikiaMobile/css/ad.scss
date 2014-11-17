@@ -6,11 +6,9 @@ $slotTopHeight: 50px;
 
 #MOBILE_TOP_LEADERBOARD {
 	background-color: white;
-
-	margin: 0 auto;
-	text-align: center;
-
 	height: 50px;
+	margin: 0 auto;
+	width: 320px;
 
 	&.hidden, .hidden {
 		display: none;
@@ -56,4 +54,28 @@ $slotTopHeight: 50px;
 		font-size: 9px;
 		color: $ad-label-color;
 	}
+}
+
+#mw-content-text div.wikia-ad-interactive-map,
+.int-map-mobile-map-page #mw-content-text > div.wikia-interactive-map-wrapper > div.wikia-ad-interactive-map {
+	height: 50px;
+	margin: 0 auto 15px;
+	width: 320px;
+
+	& > iframe {
+		border: none;
+		height: 50px;
+		left: auto;
+		margin: 0;
+		padding: 0;
+		position: relative;
+		top: auto;
+		width: 320px;
+		z-index: 10;
+	}
+}
+
+.int-map-mobile-map-page #mw-content-text > div.wikia-interactive-map-wrapper > div.wikia-ad-interactive-map {
+	height: 60px;
+	padding-top: 10px;
 }

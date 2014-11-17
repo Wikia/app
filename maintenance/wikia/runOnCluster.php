@@ -12,7 +12,8 @@
  *                    --class SOME_CLASS \
  *                    --method SOME_METHOD \
  *                    [--test] \
- *                    [--verbose]
+ *                    [--verbose] \
+ *                    [--dbname DBNAME]
  *
  *
  * DESCRIPTION
@@ -55,9 +56,12 @@
  *
  *  --method : [REQUIRED] A method name : The method in the class given to run on each wiki.
  *
- *    --test : [OPTIONAL] : A flag to run in test mode.  Your class::method must support this.
+ *  --dbname : [OPTIONAL] If given the code will only be run against this dbname.  The --cluster argument must be
+ *                        correct for this dbname; runOnCluster will not figure it out for you.
  *
- * --verbose : [OPTIONAL] : A flag to output more verbose messages.
+ *    --test : [OPTIONAL] A flag to run in test mode.  Your class::method must support this.
+ *
+ * --verbose : [OPTIONAL] A flag to output more verbose messages.
  */
 
 // Eliminate the need to set this on the command line
@@ -96,7 +100,7 @@ class RunOnCluster extends Maintenance {
 		$this->addOption( 'class', 'The class with code to run', false, true, 'l' );
 		$this->addOption( 'method', 'Which method to run', false, true, 'm' );
 		$this->addOption( 'file' , 'File containing code to run', false, true, 'f' );
-		$this->addOption( 'dbname' , 'File containing code to run', false, true, 'i' );
+		$this->addOption( 'dbname' , 'A single dbname to run against', false, true, 'i' );
 	}
 
 	/**
@@ -181,7 +185,7 @@ class RunOnCluster extends Maintenance {
 		foreach ( $clusterWikis as $cityId => $dbname ) {
 			// Catch connection errors and log them
 			try {
-				$result = $this->db->query( "use `$dbname`" );
+				$result = $this->db->selectDB( $dbname );
 			} catch ( Exception $e ) {
 				fwrite( STDERR, "ERROR: ".$e->getMessage()."\n" );
 			}

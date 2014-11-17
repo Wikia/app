@@ -22,13 +22,66 @@ class ApiVisualEditor extends ApiBase {
 		}
 	}
 
-	protected function getHTML( $title, $parserParams ) {
+	protected function requestParsoid( $method, $title, $params ) {
 		global $wgVisualEditorParsoidURL,
-			$wgVisualEditorParsoidPrefix,
 			$wgVisualEditorParsoidTimeout,
-			$wgVisualEditorParsoidForwardCookies,
-			$wgDevelEnvironment;
+			$wgVisualEditorParsoidForwardCookies;
 
+		$url = $wgVisualEditorParsoidURL . '/' .
+			urlencode( $this->getApiSource() ) . '/' .
+			urlencode( $title->getPrefixedDBkey() );
+
+		$data = array_merge(
+			$this->getProxyConf(),
+			array(
+				'method' => $method,
+				'timeout' => $wgVisualEditorParsoidTimeout,
+			)
+		);
+
+		if ( $method === 'POST' ) {
+			$data['postData'] = $params;
+		} else {
+			$url = wfAppendQuery( $url, $params );
+		}
+
+		$req = MWHttpRequest::factory( $url, $data );
+		// Forward cookies, but only if configured to do so and if there are read restrictions
+		if ( $wgVisualEditorParsoidForwardCookies && !User::isEveryoneAllowed( 'read' ) ) {
+			$req->setHeader( 'Cookie', $this->getRequest()->getHeader( 'Cookie' ) );
+		}
+		$status = $req->execute();
+		if ( $status->isOK() ) {
+			// Pass thru performance data from Parsoid to the client, unless the response was
+			// served directly from Varnish, in  which case discard the value of the XPP header
+			// and use it to declare the cache hit instead.
+			$xCache = $req->getResponseHeader( 'X-Cache' );
+			if ( is_string( $xCache ) && strpos( $xCache, 'hit' ) !== false ) {
+				$xpp = 'cached-response=true';
+			} else {
+				$xpp = $req->getResponseHeader( 'X-Parsoid-Performance' );
+			}
+			if ( $xpp !== null ) {
+				$resp = $this->getRequest()->response();
+				$resp->header( 'X-Parsoid-Performance: ' . $xpp );
+			}
+		} elseif ( $status->isGood() ) {
+			$this->dieUsage( $req->getContent(), 'parsoidserver-http-' . $req->getStatus() );
+		} elseif ( $errors = $status->getErrorsByType( 'error' ) ) {
+			$error = $errors[0];
+			$code = $error['message'];
+			if ( count( $error['params'] ) ) {
+				$message = $error['params'][0];
+			} else {
+				$message = 'MWHttpRequest error';
+			}
+			$this->dieUsage( $message, 'parsoidserver-' . $code );
+		}
+		// TODO pass through X-Parsoid-Performance header, merge with getHTML above
+		return $req->getContent();
+	}
+
+	protected function getHTML( $title, $parserParams ) {
 		$restoring = false;
 
 		if ( $title->exists() ) {
@@ -50,52 +103,7 @@ class ApiVisualEditor extends ApiBase {
 			$restoring = $revision && !$revision->isCurrent();
 			$oldid = $parserParams['oldid'];
 
-			$req = MWHttpRequest::factory( wfAppendQuery(
-					$wgVisualEditorParsoidURL . '/' . urlencode( $this->getApiSource() ) .
-						'/' . wfUrlencode( $title->getPrefixedDBkey() ),
-					$parserParams
-				),
-				array_merge(
-					$this->getProxyConf(),
-					array(
-						'method'  => 'GET',
-						'timeout' => $wgVisualEditorParsoidTimeout,
-					)
-				)
-			);
-			// Forward cookies, but only if configured to do so and if there are read restrictions
-			if ( $wgVisualEditorParsoidForwardCookies && !User::isEveryoneAllowed( 'read' ) ) {
-				$req->setHeader( 'Cookie', $this->getRequest()->getHeader( 'Cookie' ) );
-			}
-			$status = $req->execute();
-
-			if ( $status->isOK() ) {
-				$content = $req->getContent();
-				// Pass thru performance data from Parsoid to the client, unless the response was
-				// served directly from Varnish, in  which case discard the value of the XPP header
-				// and use it to declare the cache hit instead.
-				$xCache = $req->getResponseHeader( 'X-Cache' );
-				if ( is_string( $xCache ) && strpos( $xCache, 'hit' ) !== false ) {
-					$xpp = 'cached-response=true';
-				} else {
-					$xpp = $req->getResponseHeader( 'X-Parsoid-Performance' );
-				}
-				if ( $xpp !== null ) {
-					$resp = $this->getRequest()->response();
-					$resp->header( 'X-Parsoid-Performance: ' . $xpp );
-				}
-			} elseif ( $status->isGood() ) {
-				$this->dieUsage( $req->getContent(), 'parsoidserver-http-'.$req->getStatus() );
-			} elseif ( $errors = $status->getErrorsByType( 'error' ) ) {
-				$error = $errors[0];
-				$code = $error['message'];
-				if ( count( $error['params'] ) ) {
-					$message = $error['params'][0];
-				} else {
-					$message = 'MWHttpRequest error';
-				}
-				$this->dieUsage( $message, 'parsoidserver-'.$code );
-			}
+			$content = $this->requestParsoid( 'GET', $title, $parserParams );
 
 			if ( $content === false ) {
 				return false;
@@ -136,12 +144,6 @@ class ApiVisualEditor extends ApiBase {
 	}
 
 	protected function postHTML( $title, $html, $parserParams ) {
-		global $wgVisualEditorParsoidURL,
-			$wgVisualEditorParsoidPrefix,
-			$wgVisualEditorParsoidTimeout,
-			$wgVisualEditorParsoidForwardCookies,
-			$wgDevelEnvironment;
-
 		$postData = array( 'content' => $html );
 		if ( isset( $parserParams['oldwt'] ) ) {
 			$postData['oldwt'] = $parserParams['oldwt'];
@@ -151,30 +153,16 @@ class ApiVisualEditor extends ApiBase {
 			}
 			$postData['oldid'] = $parserParams['oldid'];
 		}
+		return $this->requestParsoid( 'POST', $title, $postData );
+	}
 
-		$req = MWHttpRequest::factory(
-			$wgVisualEditorParsoidURL . '/' . urlencode( $this->getApiSource() ) .
-				'/' . wfUrlencode( $title->getPrefixedDBkey() ),
-			array_merge(
-				$this->getProxyConf(),
-				array(
-					'method' => 'POST',
-					'postData' => $postData,
-					'timeout' => $wgVisualEditorParsoidTimeout,
-				)
+	protected function parseWikitextFragment( $title, $wikitext ) {
+		return $this->requestParsoid( 'POST', $title,
+			array(
+				'wt' => $wikitext,
+				'body' => 1,
 			)
 		);
-		// Forward cookies, but only if configured to do so and if there are read restrictions
-		if ( $wgVisualEditorParsoidForwardCookies && !User::isEveryoneAllowed( 'read' ) ) {
-			$req->setHeader( 'Cookie', $this->getRequest()->getHeader( 'Cookie' ) );
-		}
-		$status = $req->execute();
-		if ( !$status->isOK() ) {
-			// TODO proper error handling, merge with getHTML above
-			return false;
-		}
-		// TODO pass through X-Parsoid-Performance header, merge with getHTML above
-		return $req->getContent();
 	}
 
 	protected function parseWikitext( $title ) {
@@ -211,29 +199,6 @@ class ApiVisualEditor extends ApiBase {
 			'basetimestamp' => $timestamp,
 			'starttimestamp' => wfTimestampNow()
 		);
-	}
-
-	protected function parseWikitextFragment( $wikitext, $title = null ) {
-		$apiParams = array(
-			'action' => 'parse',
-			'title' => $title,
-			'prop' => 'text',
-			'disablepp' => true,
-			'pst' => true,
-			'text' => $wikitext
-		);
-		$api = new ApiMain(
-			new DerivativeRequest(
-				$this->getRequest(),
-				$apiParams,
-				false // was posted?
-			),
-			true // enable write?
-		);
-
-		$api->execute();
-		$result = $api->getResultData();
-		return isset( $result['parse']['text']['*'] ) ? $result['parse']['text']['*'] : false;
 	}
 
 	protected function diffWikitext( $title, $wikitext ) {
@@ -298,7 +263,7 @@ class ApiVisualEditor extends ApiBase {
 			return false;
 		}
 		$langlinks = $result['query']['pages'][$title->getArticleID()]['langlinks'];
-		$langnames = Language::fetchLanguageNames();
+		$langnames = Language::getLanguageNames();
 		foreach ( $langlinks as $i => $lang ) {
 			$langlinks[$i]['langname'] = $langnames[$langlinks[$i]['lang']];
 		}
@@ -338,6 +303,7 @@ class ApiVisualEditor extends ApiBase {
 
 		switch ( $params['paction'] ) {
 			case 'parsewt':
+				// FIXME: Perhaps requestParsoid method should be used here
 				$postData = array(
 					'wt' => $params['wikitext']
 				);
@@ -360,13 +326,17 @@ class ApiVisualEditor extends ApiBase {
 				// Dirty hack to provide the correct context for edit notices
 				global $wgTitle; // FIXME NOOOOOOOOES
 				$wgTitle = $page;
+				RequestContext::getMain()->setTitle( $page );
 				// TODO: In MW 1.19.7 method getEditNotices does not exist so for now fallback to just an empty
 				// but in future figure out what's the proper backward compatibility solution.
 				// #back-compat
 				// $notices = $page->getEditNotices();
 				$notices = array();
-				if ( $user->isAnon() ) {
-					$notices[] = $this->msg( 'anoneditwarning' )->parseAsBlock();
+				$anoneditwarning = false;
+				$anoneditwarningMessage = $this->msg( 'VisualEditor-anoneditwarning' );
+				if ( $user->isAnon() && $anoneditwarningMessage->exists() ) {
+					$notices[] = $anoneditwarningMessage->parseAsBlock();
+					$anoneditwarning = true;
 				}
 				if ( $parsed && $parsed['restoring'] ) {
 					$notices[] = $this->msg( 'editingold' )->parseAsBlock();
@@ -386,20 +356,39 @@ class ApiVisualEditor extends ApiBase {
 					}
 				}
 
-				// Page protected from editing
-				if ( $page->getNamespace() != NS_MEDIAWIKI && $page->isProtected( 'edit' ) ) {
-					# Is the title semi-protected?
-					if ( $page->isSemiProtected() ) {
-						$noticeMsg = 'semiprotectedpagewarning';
-					} else {
-						# Then it must be protected based on static groups (regular)
-						$noticeMsg = 'protectedpagewarning';
+				// Look at protection status to set up notices + surface class(es)
+				$protectedClasses = array();
+				if ( MWNamespace::getRestrictionLevels( $page->getNamespace() ) !== array( '' ) ) {
+					// Page protected from editing
+					if ( $page->isProtected( 'edit' ) ) {
+						# Is the title semi-protected?
+						if ( $page->isSemiProtected() ) {
+							$protectedClasses[] = 'mw-textarea-sprotected';
+
+							$noticeMsg = 'semiprotectedpagewarning';
+						} else {
+							$protectedClasses[] = 'mw-textarea-protected';
+
+							# Then it must be protected based on static groups (regular)
+							$noticeMsg = 'protectedpagewarning';
+						}
+						$notices[] = $this->msg( $noticeMsg )->parseAsBlock();
 					}
 
-					// Note: getLastLogEntry() uses ApiBase::getContext(), which is not supported by current version
-					//$notices[] = $this->msg( $noticeMsg )->parseAsBlock() .
-					//	$this->getLastLogEntry( $page, 'protect' );
-					$notices[] = $this->msg( $noticeMsg )->parseAsBlock();
+					// Deal with cascading edit protection
+					list( $sources, $restrictions ) = $page->getCascadeProtectionSources();
+					if ( isset( $restrictions['edit'] ) ) {
+						$protectedClasses[] = ' mw-textarea-cprotected';
+
+						$notice = $this->msg( 'cascadeprotectedwarning' )->parseAsBlock() . '<ul>';
+						// Unfortunately there's no nice way to get only the pages which cause
+						// editing to be restricted
+						foreach ( $sources as $source ) {
+							$notice .= "<li>" . Linker::link( $source ) . "</li>";
+						}
+						$notice .= '</ul>';
+						$notices[] = $notice;
+					}
 				}
 
 				// Show notice when editing user / user talk page of a user that doesn't exist
@@ -417,6 +406,22 @@ class ApiVisualEditor extends ApiBase {
 						$notices[] = "<div class=\"mw-userpage-userdoesnotexist error\">\n" .
 							$this->msg( 'userpage-userdoesnotexist', wfEscapeWikiText( $targetUsername ) ) .
 							"\n</div>";
+					}
+					// Some upstream code is deleted from here, more information:
+					// https://github.com/Wikia/app/commit/d54b481d3f6e5b092b212a2c98b2cb5452bee26c
+					// https://github.com/Wikia/app/commit/681e7437078206460f7c0cb1837095e656d8ba85
+				}
+
+				if ( class_exists( 'GlobalBlocking' ) ) {
+					$error = GlobalBlocking::getUserBlockErrors(
+						$user,
+						$this->getRequest()->getIP()
+					);
+					if ( count( $error ) ) {
+						$notices[] = call_user_func_array(
+							array( $this, 'msg' ),
+							$error
+						)->parseAsBlock();
 					}
 				}
 
@@ -458,6 +463,8 @@ class ApiVisualEditor extends ApiBase {
 							'notices' => $notices,
 							'checkboxes' => $checkboxes,
 							'links' => $links,
+							'protectedClasses' => implode( ' ', $protectedClasses ),
+							'anoneditwarning' => $anoneditwarning
 						),
 						$parsed['result']
 					);
@@ -465,9 +472,9 @@ class ApiVisualEditor extends ApiBase {
 				break;
 
 			case 'parsefragment':
-				$content = $this->parseWikitextFragment( $params['wikitext'], $page->getText() );
+				$content = $this->parseWikitextFragment( $page, $params['wikitext'] );
 				if ( $content === false ) {
-					$this->dieUsage( 'Error querying MediaWiki API', 'parsoidserver' );
+					$this->dieUsage( 'Error contacting the Parsoid server', 'parsoidserver' );
 				} else {
 					$result = array(
 						'result' => 'success',

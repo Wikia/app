@@ -2392,8 +2392,15 @@ class WikiPage extends Page {
 
 		# Images
 		if ( $title->getNamespace() == NS_FILE ) {
-			$update = new HTMLCacheUpdate( $title, 'imagelinks' );
-			$update->doUpdate();
+			// Wikia Change Start @author Scott Rabin (srabin@wikia-inc.com)
+			global $wgCityId;
+
+			$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
+				->wikiId( $wgCityId )
+				->title( $title );
+			$task->call( 'purge', 'imagelinks' );
+			$task->queue();
+			// Wikia Change End
 		}
 
 		# User talk pages
@@ -2415,12 +2422,17 @@ class WikiPage extends Page {
 	 * @todo:  verify that $title is always a Title object (and never false or null), add Title hint to parameter $title
 	 */
 	public static function onArticleEdit( $title ) {
-		// Invalidate caches of articles which include this page
-		DeferredUpdates::addHTMLCacheUpdate( $title, 'templatelinks' );
+		// Wikia Change Start @author Scott Rabin (srabin@wikia-inc.com)
+		global $wgCityId;
 
-
-		// Invalidate the caches of all pages which redirect here
-		DeferredUpdates::addHTMLCacheUpdate( $title, 'redirect' );
+		$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
+			->wikiId( $wgCityId )
+			->title( $title );
+		// Invalidate caches of articles which include this page and those
+		// that redirect to it
+		$task->call( 'purge', ['templatelinks', 'redirect'] );
+		$task->queue();
+		// Wikia Change End
 
 		# Purge squid for this page only
 		$title->purgeSquid();
@@ -2994,6 +3006,10 @@ class PoolWorkArticleView extends PoolCounterWork {
 
 		# <Wikia>
 		$this->parserOutput->setPerformanceStats( 'time', $time );
+		Transaction::addEvent( Transaction::EVENT_ARTICLE_PARSE, array(
+			'real' => $time,
+			'article' => $this->page->getTitle()->getPrefixedDBkey(),
+		));
 		# </Wikia>
 
 		# Timing hack

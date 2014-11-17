@@ -15,7 +15,7 @@
  * @param {ve.ui.Surface} surface
  * @param {Object} [config] Configuration options
  */
-ve.ui.MWTocWidget = function VeUiMWTocWidget ( surface, config ) {
+ve.ui.MWTocWidget = function VeUiMWTocWidget( surface, config ) {
 	// Parent constructor
 	OO.ui.Widget.call( this, config );
 

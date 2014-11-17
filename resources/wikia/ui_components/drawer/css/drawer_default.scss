@@ -1,9 +1,9 @@
-@import "skins/oasis/css/core/color.scss";
+@import "skins/shared/color.scss";
 @import "skins/oasis/css/core/layout.scss";
-@import "skins/oasis/css/mixins/blackout.scss";
-@import "skins/oasis/css/mixins/box-shadow.scss";
-@import "skins/oasis/css/mixins/box-sizing.scss";
-@import "skins/oasis/css/mixins/transition.scss";
+@import "skins/shared/mixins/blackout.scss";
+@import "skins/shared/mixins/box-shadow.scss";
+@import "skins/shared/mixins/box-sizing.scss";
+@import "skins/shared/mixins/transition.scss";
 
 $drawer-background-color: #fff;
 $drawer-base-z-index: $zTop + 10;

@@ -24,6 +24,7 @@ class SelectTest extends BaseTest
 	
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.10945 ms
 	 * @covers Wikia\Search\Query\Select::getSanitizedQuery
 	 */

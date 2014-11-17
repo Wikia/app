@@ -4,13 +4,13 @@
  * @author Liz Lee
  */
 @import "skins/oasis/css/core/WikiaSlider";
-@import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/mixins/gradient";
-@import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../skins/oasis/css/mixins/box-sizing-border-box";
-@import "../../../../skins/oasis/css/mixins/clearfix";
-@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "skins/shared/color";
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/box-sizing-border-box";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/box-shadow";
 
 $color-inactive-button: darken($color-secondary-button, 50%);
 @if lightness($color-page) < 50 {

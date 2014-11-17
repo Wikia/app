@@ -16,7 +16,7 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		/**
 		 * Slots based on page length
 		 */
-		preFootersThreshold = 2400,
+		preFootersThreshold = 1500,
 		slotsOnlyOnLongPages = {
 			LEFT_SKYSCRAPER_2: 2400,
 			LEFT_SKYSCRAPER_3: 4000,
@@ -31,7 +31,6 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		slotsOnlyWithRail = {
 			LEFT_SKYSCRAPER_3: true
 		},
-		rightRailPresent = !!document.getElementById('WikiaRail'),
 
 		/**
 		 * Slots based on screen width
@@ -40,11 +39,13 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		 * @see skins/oasis/css/core/responsive-background.scss
 		 */
 		mediaQueriesToCheck = {
+			twoColumns: 'screen and (min-width: 1024px)',
 			oneColumn: 'screen and (max-width: 1023px)',
 			noTopButton: 'screen and (max-width: 1030px)',
 			noSkins: 'screen and (max-width: 1260px)'
 		},
 		slotsToHideOnMediaQuery = {
+			TOP_INCONTENT_BOXAD: 'twoColumns',
 			TOP_BUTTON_WIDE: 'noTopButton',
 			'TOP_BUTTON_WIDE.force': 'noTopButton',
 			TOP_RIGHT_BOXAD: 'oneColumn',
@@ -56,6 +57,10 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		},
 		mediaQueriesMet,
 		matchMedia;
+
+	function isRightRailPresent() {
+		return !!document.getElementById('WikiaRail');
+	}
 
 	function matchMediaMoz(query) {
 		return window.matchMedia(query).matches;
@@ -85,11 +90,6 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 			wideEnough = false,
 			conflictingMediaQuery;
 
-		if (slotsOnlyWithRail[slotname]) {
-			if (!rightRailPresent) {
-				return false;
-			}
-		}
 		if (pageHeight) {
 			longEnough = !slotsOnlyOnLongPages[slotname] || pageHeight > slotsOnlyOnLongPages[slotname];
 		}
@@ -102,7 +102,17 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 			}
 		}
 
-		return longEnough && wideEnough;
+		if (!longEnough || !wideEnough) {
+			return false;
+		}
+
+		if (slotsOnlyWithRail[slotname]) {
+			if (!isRightRailPresent()) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/**
@@ -185,6 +195,7 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		log('init', 'debug', logGroup);
 		if (window.addEventListener) {
 			onResize();
+			window.addEventListener('orientationchange', adHelper.throttle(onResize, 100));
 			window.addEventListener('resize', adHelper.throttle(onResize, 100));
 		} else {
 			log('No support for addEventListener. No dimension-dependent ads will be shown', 'error', logGroup);

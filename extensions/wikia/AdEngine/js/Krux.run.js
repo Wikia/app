@@ -1,14 +1,43 @@
 /*global require*/
 /*jshint camelcase:false*/
 require([
-	'wikia.window', 'wikia.log', 'wikia.scriptwriter', 'ext.wikia.adEngine.krux', 'jquery'
-], function (window, log, scriptWriter, Krux, $) {
+	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.krux',
+	'jquery',
+	'wikia.log',
+	'wikia.scriptwriter',
+	'wikia.window',
+	require.optional('wikia.abTest')
+], function (adContext, Krux, $, log, scriptWriter, window, abTest) {
 	'use strict';
-	if (window.wgEnableKruxTargeting) {
+
+	var skinSites = {
+		oasis: 'JU3_GW1b',
+		wikiamobile: 'JTKzTN3f'
+	};
+
+	if (adContext.getContext().targeting.enableKruxTargeting) {
 		$(window).load(function () {
 			scriptWriter.callLater(function () {
-				log('Loading Krux code', 8, 'Krux.run.js');
-				Krux.load(window.wgKruxCategoryId);
+				var targeting = adContext.getContext().targeting,
+					useSkinSites = abTest && abTest.inGroup('KRUX_SKIN_SITES', 'YES'),
+					skinSiteId = skinSites[targeting.skin],
+					catSiteId = targeting.kruxCategoryId,
+					siteId;
+
+				if (useSkinSites) {
+					siteId = skinSiteId;
+				} else {
+					siteId = catSiteId;
+				}
+
+				log('Loading Krux code', 'debug', 'Krux.run.js');
+
+				if (siteId) {
+					Krux.load(siteId);
+				} else {
+					log('No Krux site id', 'error', 'Krux.run.js', true);
+				}
 			});
 		});
 	}

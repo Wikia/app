@@ -259,7 +259,7 @@ class VideoHandlerHelper extends WikiaModel {
 
 		/** @var Title $title */
 		$title = $videoInfo['title'];
-		/** @var LocalFile $file */
+		/** @var LocalFile|WikiaLocalFileShared $file */
 		$file = WikiaFileHelper::getVideoFileFromTitle( $title );
 
 		if ( $file ) {
@@ -300,22 +300,23 @@ class VideoHandlerHelper extends WikiaModel {
 
 			// video details
 			$videoDetail = array(
-				'title' => $title->getDBKey(),
-				'fileTitle'     => $title->getText(),
-				'description'   => $this->getVideoDescription( $file ), // The description from the File page
-				'fileUrl'       => $title->getFullURL(),
-				'thumbUrl'      => $thumbUrl,
-				'userName'      => $userName,
-				'userUrl'       => $userUrl,
-				'truncatedList' => $truncatedList,
-				'isTruncated'   => $isTruncated,
-				'timestamp'     => empty( $videoInfo['addedAt'] ) ? '' : $videoInfo['addedAt'],
-				'duration'      => $file->getMetadataDuration(),
-				'viewsTotal'    => empty( $videoInfo['viewsTotal'] ) ? 0 : $videoInfo['viewsTotal'],
-				'provider'      => $file->getProviderName(),
-				'embedUrl'      => $file->getHandler()->getEmbedUrl(),
-				'videoId'       => $file->getVideoId(),
-				'thumbnail'     => $thumbnail,
+				'title'                => $title->getDBKey(),
+				'fileTitle'            => $title->getText(),
+				'description'          => $this->getVideoDescription( $file ), // The description from the File page
+				'fileUrl'              => $title->getFullURL(),
+				'thumbUrl'             => $thumbUrl,
+				'userName'             => $userName,
+				'userUrl'              => $userUrl,
+				'truncatedList'        => $truncatedList,
+				'isTruncated'          => $isTruncated,
+				'timestamp'            => empty( $videoInfo['addedAt'] ) ? '' : $videoInfo['addedAt'],
+				'duration'             => (float) $file->getMetadataDuration(),
+				'viewsTotal'           => empty( $videoInfo['viewsTotal'] ) ? 0 : $videoInfo['viewsTotal'],
+				'provider'             => $file->getProviderName(),
+				'embedUrl'             => $file->getHandler()->getEmbedUrl(),
+				'videoId'              => $file->getVideoId(),
+				'thumbnail'            => $thumbnail,
+				'regionalRestrictions' => $file->getRegionalRestrictions()
 			);
 		} else {
 			Wikia::Log( __METHOD__, false, "No file found for '".$videoInfo['title']."'" );
@@ -407,12 +408,15 @@ class VideoHandlerHelper extends WikiaModel {
 	}
 
 	/**
-	 * Reset the video thumbnail to its original image as defined by the video provider
+	 * Reset the video thumbnail to its original image as defined by the video provider.
 	 * @param File $file The video file to reset
 	 * @param string|null $thumbnailUrl
+	 * @param int $delayIndex Corresponds to a delay for a job to be queued up if we aren't
+	 * able to reset the thumbnail. This index corresponds to a class constant kept in the
+	 * ApiWrapper classes.
 	 * @return FileRepoStatus The status of the publish operation
 	 */
-	public function resetVideoThumb( File $file, $thumbnailUrl = null ) {
+	public function resetVideoThumb( File $file, $thumbnailUrl = null, $delayIndex = 0 ) {
 		$mime = $file->getMimeType();
 		list(, $provider) = explode('/', $mime);
 		$videoId = $file->getVideoId();
@@ -426,7 +430,7 @@ class VideoHandlerHelper extends WikiaModel {
 			$thumbnailUrl = $oUploader->getApiWrapper()->getThumbnailUrl();
 		}
 
-		$result = $oUploader->resetThumbnail( $file, $thumbnailUrl );
+		$result = $oUploader->resetThumbnail( $file, $thumbnailUrl, $delayIndex );
 
 		if ( $result->isGood() ) {
 			// update data and clear cache

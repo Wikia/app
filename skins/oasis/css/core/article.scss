@@ -1,8 +1,9 @@
-@import 'color';
+@import 'skins/shared/color';
 @import 'layout';
 @import '../placeholders/bodytext';
-@import '../mixins/clearfix';
-@import '../mixins/gradient';
+@import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/gradient';
+@import 'skins/shared/mixins/infobox';
 
 .WikiaArticle {
 	@extend %bodytext;
@@ -101,6 +102,15 @@
 
 	ol {
 		list-style: decimal;
+
+		// VOLDEV-30
+		// Indent list on special pages so the first number isn't cut off
+		// this only applies reliably to 4 digit lists
+		// which covers lists limited to 1000 and unlimited lists up to 9999
+		// but it's unlikely someone gets to 10,000+ so hopefully this will do
+		&.special {
+			margin-left: 3.2em;
+		}
 	}
 
 	ul {
@@ -179,14 +189,12 @@
 		text-align: left;
 	}
 
-	// TODO: look into removing this with VID-1551
 	.tright {
 		clear: right;
 		float: right;
 		margin: 0 0 16px 16px;
 	}
 
-	// TODO: look into removing this with VID-1551
 	.tleft {
 		clear: left;
 		float: left;
@@ -541,6 +549,15 @@
 	.wikia-infobox-caption {
 		font-size: 12px;
 		text-align: center;
+	}
+}
+
+.WikiaArticle {
+	#{$infoboxes} {
+		.article-thumb, .article-thumb.tright, .article-thumb.tleft {
+			float: none;
+			margin: 0 auto;
+		}
 	}
 }
 

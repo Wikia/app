@@ -15,17 +15,15 @@ $wgExtensionCredits['other'][] = array(
 	'author' => 'Inez Korczyński'
 );
 
-$dir = dirname(__FILE__).'/';
+$wgAutoloadClasses['AssetsManagerBaseBuilder'] = __DIR__.'/builders/AssetsManagerBaseBuilder.class.php';
+$wgAutoloadClasses['AssetsManagerOneBuilder'] = __DIR__.'/builders/AssetsManagerOneBuilder.class.php';
+$wgAutoloadClasses['AssetsManagerGroupBuilder'] = __DIR__.'/builders/AssetsManagerGroupBuilder.class.php';
+$wgAutoloadClasses['AssetsManagerGroupsBuilder'] = __DIR__.'/builders/AssetsManagerGroupsBuilder.class.php';
+$wgAutoloadClasses['AssetsManagerSassBuilder'] = __DIR__.'/builders/AssetsManagerSassBuilder.class.php';
+$wgAutoloadClasses['AssetsManagerSassesBuilder'] = __DIR__.'/builders/AssetsManagerSassesBuilder.class.php';
+$wgAutoloadClasses['AssetsManagerServer'] = __DIR__.'/AssetsManagerServer.class.php';
 
-$wgAutoloadClasses['AssetsManagerBaseBuilder'] = $dir.'builders/AssetsManagerBaseBuilder.class.php';
-$wgAutoloadClasses['AssetsManagerOneBuilder'] = $dir.'builders/AssetsManagerOneBuilder.class.php';
-$wgAutoloadClasses['AssetsManagerGroupBuilder'] = $dir.'builders/AssetsManagerGroupBuilder.class.php';
-$wgAutoloadClasses['AssetsManagerGroupsBuilder'] = $dir.'builders/AssetsManagerGroupsBuilder.class.php';
-$wgAutoloadClasses['AssetsManagerSassBuilder'] = $dir.'builders/AssetsManagerSassBuilder.class.php';
-$wgAutoloadClasses['AssetsManagerSassesBuilder'] = $dir.'builders/AssetsManagerSassesBuilder.class.php';
-$wgAutoloadClasses['AssetsManagerServer'] = $dir.'AssetsManagerServer.class.php';
-
-$wgAutoloadClasses['AssetsManagerController'] = $dir.'AssetsManagerController.class.php';
+$wgAutoloadClasses['AssetsManagerController'] = __DIR__.'/AssetsManagerController.class.php';
 
 $wgAjaxExportList[] = 'AssetsManagerEntryPoint';
 $wgHooks['MakeGlobalVariablesScript'][] = 'AssetsManager::onMakeGlobalVariablesScript';
@@ -46,5 +44,7 @@ function onUserGetRights( $user, &$aRights ) {
 function AssetsManagerEntryPoint() {
 	global $wgRequest;
 	AssetsManagerServer::serve($wgRequest);
+
+	wfRunHooks('RestInPeace');
 	exit();
 }

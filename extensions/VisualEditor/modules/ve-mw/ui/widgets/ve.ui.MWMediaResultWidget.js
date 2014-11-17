@@ -78,9 +78,11 @@ ve.ui.MWMediaResultWidget.prototype.buildThumbnail = function () {
 		$thumb = $back.add( $front );
 
 	// Preload image
-	$image
-		.load( ve.bind( this.onThumbnailLoad, this ) )
-		.error( ve.bind( this.onThumbnailError, this ) );
+	$image.on( {
+		'load': ve.bind( this.onThumbnailLoad, this ),
+		'error': ve.bind( this.onThumbnailError, this )
+	} );
+
 	image.src = info.thumburl;
 
 	$thumb.addClass( 've-ui-mwMediaResultWidget-thumbnail' );

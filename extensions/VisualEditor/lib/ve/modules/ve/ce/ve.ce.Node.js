@@ -62,14 +62,39 @@ ve.ce.Node.static.splitOnEnter = false;
 ve.ce.Node.static.isFocusable = false;
 
 /**
- * Command to execute when Enter is pressed while this node is selected. If ve.ce.ClickableNode
- * is mixed in, this is also the command that will be executed when the node is double-clicked.
+ * Command to execute when Enter is pressed while this node is selected, or when the node is double-clicked.
  *
  * @static
  * @property {string|null}
  * @inheritable
  */
 ve.ce.Node.static.primaryCommandName = null;
+
+/**
+ * Whether this node handles its own rendering
+ *
+ * If false, ve.ce.Branchnode onSplice method will append this node's child elements to its element.
+ * If true, this node must handle rendering its children.
+ *
+ * @static
+ * @property {boolean}
+ * @inheritable
+ */
+ ve.ce.Node.static.handlesOwnRendering = false;
+
+/* Static Methods */
+
+/**
+ * Get a plain text description.
+ *
+ * @static
+ * @inheritable
+ * @param {ve.dm.Node} node Node model
+ * @returns {string} Description of node
+ */
+ve.ce.Node.static.getDescription = function () {
+	return '';
+};
 
 /* Methods */
 
@@ -172,6 +197,15 @@ ve.ce.Node.prototype.isFocusable = function () {
 };
 
 /**
+ * Check if the node renders its own children
+ *
+ * @returns {boolean} Node renders its own children
+ */
+ve.ce.Node.prototype.handlesOwnRendering = function () {
+	return this.constructor.static.handlesOwnRendering;
+};
+
+/**
  * Check if the node can have a slug before it.
  *
  * TODO: Figure out a way to remove the hard-coding for text nodes here.
@@ -246,37 +280,4 @@ ve.ce.Node.prototype.destroy = function () {
 /** */
 ve.ce.Node.prototype.getModelHtmlDocument = function () {
 	return this.model.getDocument() && this.model.getDocument().getHtmlDocument();
-};
-
-/**
- * Gets the height of the contents of a node.
- *
- * If a node contains floated descendants, 'clearfix' will cause the node to expand to contain the floats.
- * However, if the element is beside a float, 'clearfix' will cause the node to expand to the height of the
- * floated node beside it.
- * To avoid this, the node will both 'clearfix' and clear floats.
- * If the node contains fluid content, clearing floats may widen and shorten the contents of the node. In this case,
- * it is preferred to use the original, taller height.
- *
- * @returns {number} Height of node contents
- */
-ve.ce.Node.prototype.getContentsHeight = function () {
-	var clearedHeight
-		height = this.$element.height(),
-		clear = this.$element.css( 'clear' ),
-		clearfix = this.$element.hasClass( 'clearfix' );
-
-	if ( !clearfix ) {
-		this.$element.addClass( 'clearfix' );
-	}
-	this.$element.css( 'clear', 'both' );
-
-	clearedHeight = this.$element.height();
-
-	if ( !clearfix ) {
-		this.$element.removeClass( 'clearfix' );
-	}
-	this.$element.css( 'clear', clear );
-
-	return Math.max( height, clearedHeight );
 };

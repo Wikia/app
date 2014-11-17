@@ -24,12 +24,12 @@ function runIndentationChangeTest( assert, range, method, expectedSelection, exp
 	indentationAction[method]();
 
 	assert.deepEqual( surface.getModel().getDocument().getFullData(), data, msg + ': data models match' );
-	assert.deepEqual( surface.getModel().getSelection(), expectedSelection, msg + ': selections match' );
+	assert.equalRange( surface.getModel().getSelection(), expectedSelection, msg + ': selections match' );
 
 	surface.getModel().undo();
 
 	assert.deepEqual( surface.getModel().getDocument().getFullData(), originalData, msg + ' (undo): data models match' );
-	assert.deepEqual( surface.getModel().getSelection(), range, msg + ' (undo): selections match' );
+	assert.equalRange( surface.getModel().getSelection(), range, msg + ' (undo): selections match' );
 
 	surface.destroy();
 }

@@ -331,6 +331,9 @@ abstract class ApiWrapper {
 		if ( empty( $metadata['expirationDate'] ) ) {
 			$metadata['expirationDate'] = $this->getVideoExpirationDate();
 		}
+		if ( empty( $metadata['regionalRestrictions'] ) ) {
+			$metadata['regionalRestrictions'] = $this->getRegionalRestrictions();
+		}
 		if ( !isset($metadata['title']) ) {
 			$metadata['title'] = $this->getTitle();
 		}
@@ -344,7 +347,7 @@ abstract class ApiWrapper {
 	}
 
 	/**
-	 * get metadata value
+	 * Get metadata value
 	 * @param string $name
 	 * @param string $defaultValue
 	 * @return type
@@ -417,7 +420,7 @@ abstract class ApiWrapper {
 	}
 
 	/**
-	 * get age required
+	 * Get age required
 	 * @return integer
 	 */
 	protected function getAgeRequired() {
@@ -425,7 +428,7 @@ abstract class ApiWrapper {
 	}
 
 	/**
-	 * get language
+	 * Get language
 	 * @return string
 	 */
 	protected function getLanguage() {
@@ -433,7 +436,7 @@ abstract class ApiWrapper {
 	}
 
 	/**
-	 * get subtitle
+	 * Get subtitle
 	 * @return string
 	 */
 	protected function getSubtitle() {
@@ -441,7 +444,7 @@ abstract class ApiWrapper {
 	}
 
 	/**
-	 * get genres
+	 * Get genres
 	 * @return string
 	 */
 	protected function getGenres() {
@@ -449,7 +452,7 @@ abstract class ApiWrapper {
 	}
 
 	/**
-	 * get actors
+	 * Get actors
 	 * @return string
 	 */
 	protected function getActors() {
@@ -457,7 +460,7 @@ abstract class ApiWrapper {
 	}
 
 	/**
-	 * get expiration date
+	 * Get expiration date
 	 * @return string
 	 */
 	protected function getVideoExpirationDate() {
@@ -465,7 +468,15 @@ abstract class ApiWrapper {
 	}
 
 	/**
-	 * get target country
+	 * Get regional restrictions
+	 * @return string
+	 */
+	protected function getRegionalRestrictions() {
+		return '';
+	}
+
+	/**
+	 * Get target country
 	 * @return string
 	 */
 	protected function getTargetCountry() {
@@ -473,7 +484,7 @@ abstract class ApiWrapper {
 	}
 
 	/**
-	 * get series
+	 * Get series
 	 * @return string
 	 */
 	protected function getSeries() {
@@ -481,7 +492,7 @@ abstract class ApiWrapper {
 	}
 
 	/**
-	 * get season
+	 * Get season
 	 * @return string
 	 */
 	protected function getSeason() {
@@ -489,7 +500,7 @@ abstract class ApiWrapper {
 	}
 
 	/**
-	 * get episode
+	 * Get episode
 	 * @return string
 	 */
 	protected function getEpisode() {
@@ -497,7 +508,7 @@ abstract class ApiWrapper {
 	}
 
 	/**
-	 * get resolution
+	 * Get resolution
 	 * @return string
 	 */
 	protected function getResolution() {
@@ -505,7 +516,7 @@ abstract class ApiWrapper {
 	}
 
 	/**
-	 * get characters
+	 * Get characters
 	 * @return string
 	 */
 	protected function getCharacters() {
@@ -513,7 +524,7 @@ abstract class ApiWrapper {
 	}
 
 	/**
-	 * get video type
+	 * Get video type
 	 * @return string
 	 */
 	protected function getVideoType() {
@@ -521,7 +532,7 @@ abstract class ApiWrapper {
 	}
 
 	/**
-	 * get video name
+	 * Get video name
 	 * @return string
 	 */
 	protected function getVideoName() {
@@ -529,7 +540,7 @@ abstract class ApiWrapper {
 	}
 
 	/**
-	 * check if valid permisions
+	 * Check if valid permisions
 	 * @return boolean
 	 */
 	protected static function isAllowed() {
@@ -545,6 +556,27 @@ abstract class ApiWrapper {
 		return true;
 	}
 
+	/**
+	 * Get content for the url
+	 * @param string $url
+	 * @return mixed
+	 */
+	protected static function getUrlContent( $url ) {
+		wfProfileIn( __METHOD__ );
+
+		$req = MWHttpRequest::factory( $url, [ 'noProxy' => true ] );
+		$status = $req->execute();
+		if ( $status->isGood() ) {
+			$result = json_decode( $req->getContent(), true );
+		} else {
+			$result = false;
+			print( "ERROR: problem downloading content (".$status->getMessage().").\n" );
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return $result;
+	}
 }
 
 class EmptyResponseException extends Exception {
@@ -647,7 +679,7 @@ abstract class IngestionApiWrapper extends PseudoApiWrapper {
 	}
 
 	/**
-	 * get video published
+	 * Get video published
 	 * @return string
 	 */
 	protected function getVideoPublished(){
@@ -655,7 +687,7 @@ abstract class IngestionApiWrapper extends PseudoApiWrapper {
 	}
 
 	/**
-	 * get category
+	 * Get category
 	 * @return string
 	 */
 	protected function getVideoCategory() {
@@ -663,7 +695,7 @@ abstract class IngestionApiWrapper extends PseudoApiWrapper {
 	}
 
 	/**
-	 * get description
+	 * Get description
 	 * @return string
 	 */
 	protected function getOriginalDescription() {
@@ -671,7 +703,7 @@ abstract class IngestionApiWrapper extends PseudoApiWrapper {
 	}
 
 	/**
-	 * is hd video
+	 * Is hd video
 	 * @return boolean
 	 */
 	protected function isHdAvailable() {
@@ -688,7 +720,7 @@ abstract class IngestionApiWrapper extends PseudoApiWrapper {
 	}
 
 	/**
-	 * get duration
+	 * Get duration
 	 * @return string
 	 */
 	protected function getVideoDuration() {
@@ -696,7 +728,7 @@ abstract class IngestionApiWrapper extends PseudoApiWrapper {
 	}
 
 	/**
-	 * get altVideoId
+	 * Get altVideoId
 	 * @return string
 	 */
 	protected function getAltVideoId() {
@@ -724,7 +756,7 @@ abstract class IngestionApiWrapper extends PseudoApiWrapper {
 	}
 
 	/**
-	 * get age required
+	 * Get age required
 	 * @return integer
 	 */
 	protected function getAgeRequired() {
@@ -732,7 +764,7 @@ abstract class IngestionApiWrapper extends PseudoApiWrapper {
 	}
 
 	/**
-	 * get language
+	 * Get language
 	 * @return string
 	 */
 	protected function getLanguage() {
@@ -740,7 +772,7 @@ abstract class IngestionApiWrapper extends PseudoApiWrapper {
 	}
 
 	/**
-	 * get subtitle
+	 * Get subtitle
 	 * @return string
 	 */
 	protected function getSubtitle() {
@@ -748,7 +780,7 @@ abstract class IngestionApiWrapper extends PseudoApiWrapper {
 	}
 
 	/**
-	 * get genres
+	 * Get genres
 	 * @return string
 	 */
 	protected function getGenres() {
@@ -756,7 +788,7 @@ abstract class IngestionApiWrapper extends PseudoApiWrapper {
 	}
 
 	/*
-	 * get actors
+	 * Get actors
 	 * @return string
 	 */
 	protected function getActors() {
@@ -764,7 +796,7 @@ abstract class IngestionApiWrapper extends PseudoApiWrapper {
 	}
 
 	/**
-	 * get expiration date
+	 * Get expiration date
 	 * @return string
 	 */
 	protected function getVideoExpirationDate() {
@@ -772,7 +804,15 @@ abstract class IngestionApiWrapper extends PseudoApiWrapper {
 	}
 
 	/**
-	 * get target country
+	 * Get regional restrictions
+	 * @return string
+	 */
+	protected function getRegionalRestrictions() {
+		return $this->getMetaValue( 'regionalRestrictions' );
+	}
+
+	/**
+	 * Get target country
 	 * @return string
 	 */
 	protected function getTargetCountry() {
@@ -780,7 +820,7 @@ abstract class IngestionApiWrapper extends PseudoApiWrapper {
 	}
 
 	/**
-	 * get series
+	 * Get series
 	 * @return string
 	 */
 	protected function getSeries() {
@@ -788,7 +828,7 @@ abstract class IngestionApiWrapper extends PseudoApiWrapper {
 	}
 
 	/**
-	 * get season
+	 * Get season
 	 * @return string
 	 */
 	protected function getSeason() {
@@ -796,7 +836,7 @@ abstract class IngestionApiWrapper extends PseudoApiWrapper {
 	}
 
 	/**
-	 * get episode
+	 * Get episode
 	 * @return string
 	 */
 	protected function getEpisode() {
@@ -804,7 +844,7 @@ abstract class IngestionApiWrapper extends PseudoApiWrapper {
 	}
 
 	/**
-	 * get resolution
+	 * Get resolution
 	 * @return string
 	 */
 	protected function getResolution() {
@@ -812,7 +852,7 @@ abstract class IngestionApiWrapper extends PseudoApiWrapper {
 	}
 
 	/**
-	 * get characters
+	 * Get characters
 	 * @return string
 	 */
 	protected function getCharacters() {
@@ -820,7 +860,7 @@ abstract class IngestionApiWrapper extends PseudoApiWrapper {
 	}
 
 	/**
-	 * get video type
+	 * Get video type
 	 * @return string
 	 */
 	protected function getVideoType() {
@@ -828,7 +868,7 @@ abstract class IngestionApiWrapper extends PseudoApiWrapper {
 	}
 
 	/**
-	 * get video name
+	 * Get video name
 	 * @return string
 	 */
 	protected function getVideoName() {

@@ -36,12 +36,12 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window'], function ($, log
 			logger('initialized');
 		},
 
-		relativeTop: function (e) {
-			return e.offset().top - e.parents('.scroller').offset().top;
+		relativeTop: function ($el) {
+			return $el.offset().top - $el.parents('.scroller').offset().top;
 		},
 
-		absTop: function (e) {
-			return e.offset().top;
+		absTop: function ($el) {
+			return $el.offset().top;
 		},
 
 		checkWebPSupport: function () {
@@ -49,7 +49,8 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window'], function ($, log
 
 			// @see http://stackoverflow.com/a/5573422
 			var webP = new Image();
-			webP.src = 'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA';
+			webP.src = 'data:image/webp;' +
+				'base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA';
 			webP.onload = webP.onerror = $.proxy(function () {
 				this.browserSupportsWebP = webP.height === 2;
 
@@ -76,48 +77,48 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window'], function ($, log
 			var self = this;
 
 			self.cache = [];
-			$('img.lzy').each(function (idx) {
+			$('img.lzy').each(function () {
 				var $el = $(this),
-					relativeTo = self.$scroller.find(this),
+					$relativeTo = self.$scroller.find(this),
 					topCalc, top;
 
-				if (relativeTo.length !== 0) {
-					relativeTo = relativeTo.parents('.scroller');
+				if ($relativeTo.length) {
+					$relativeTo = $relativeTo.parents('.scroller');
 					topCalc = self.relativeTop;
 				} else {
-					relativeTo = $(window);
+					$relativeTo = $(window);
 					topCalc = self.absTop;
 				}
 
 				top = topCalc($el);
-				self.cache[idx] = {
+				self.cache.push({
 					el: this,
-					jq: $el,
+					$el: $el,
 					topCalc: topCalc,
 					top: top,
 					bottom: $el.height() + top,
-					parent: relativeTo
-				};
+					$parent: $relativeTo
+				});
 			});
 		},
 
 		verifyCache: function () {
-			if (this.cache.length === 0) {
+			if (!this.cache.length) {
 				return;
 			}
 			// make sure that position of elements in the cache didn't change
-			var lastidx = this.cache.length - 1,
-				randidx = Math.floor(Math.random() * lastidx),
-				checkidx = [lastidx, randidx],
+			var lastIdx = this.cache.length - 1,
+				randIdx = Math.floor(Math.random() * lastIdx),
+				checkIdx = [lastIdx, randIdx],
 				changed = false,
 				i,
 				idx,
 				pos,
 				diff;
-			for (i in checkidx) {
-				idx = checkidx[i];
+			for (i in checkIdx) {
+				idx = checkIdx[i];
 				if (idx in this.cache) {
-					pos = this.cache[idx].topCalc(this.cache[idx].jq);
+					pos = this.cache[idx].topCalc(this.cache[idx].$el);
 					diff = Math.abs(pos - this.cache[idx].top);
 
 					if (diff > 5) {
@@ -144,12 +145,12 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window'], function ($, log
 		},
 
 		parentVisible: function (item) {
-			if (item.parent[0] === window) {
+			if (item.$parent[0] === window) {
 				return true;
 			}
 
 			var fold = $(window).scrollTop() + $(window).height(),
-				parentTop = item.parent.offset().top;
+				parentTop = item.$parent.offset().top;
 
 			return fold > parentTop;
 		},
@@ -162,7 +163,6 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window'], function ($, log
 			},
 				scrollTop,
 				scrollSpeed,
-				lastScrollTop,
 				scrollBottom,
 				idx,
 				inViewport,
@@ -171,28 +171,26 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window'], function ($, log
 
 			for (idx in this.cache) {
 				cacheItem = this.cache[idx];
-				scrollTop = cacheItem.parent.scrollTop();
-				lastScrollTop = cacheItem.parent.data('lastScrollTop') || 0;
-				scrollSpeed = Math.min(Math.abs(scrollTop - lastScrollTop), 1000) * 3 + 200;
-				scrollBottom = scrollTop + cacheItem.parent.height() + scrollSpeed;
+				scrollTop = cacheItem.$parent.scrollTop();
+				scrollSpeed = Math.min(scrollTop, 1000) * 3 + 200;
+				scrollBottom = scrollTop + cacheItem.$parent.height() + scrollSpeed;
 				scrollTop = scrollTop - scrollSpeed;
 
-				cacheItem.parent.data('lastScrollTop', lastScrollTop);
 				inViewport = (scrollTop < cacheItem.top && scrollBottom > cacheItem.top) ||
 					(scrollTop < cacheItem.bottom && scrollBottom > cacheItem.bottom);
 
-				if (inViewport && this.parentVisible(cacheItem) && cacheItem.jq.is(':visible')) {
-					cacheItem.jq.addClass('lzyTrns');
+				if (inViewport && this.parentVisible(cacheItem)) {
+					cacheItem.$el.addClass('lzyTrns');
 					cacheItem.el.onload = onload;
-					imgSrc = this.rewriteURLForWebP( cacheItem.jq.data( 'src' ) );
-					if ( imgSrc ) {
+					imgSrc = this.rewriteURLForWebP(cacheItem.$el.data('src'));
+					if (imgSrc) {
 						cacheItem.el.src = imgSrc;
 					}
 					// Hack for IE: cached images aren't firing onload
-					if ( cacheItem.el.complete ) {
+					if (cacheItem.el.complete) {
 						cacheItem.el.onload();
 					}
-					cacheItem.jq.removeClass( 'lzy' );
+					cacheItem.$el.removeClass('lzy');
 					delete this.cache[idx];
 				}
 			}

@@ -14,7 +14,6 @@ class FollowModel {
 		NS_MEDIAWIKI => 'wikiafollowedpages-special-heading-mediawiki',
 		NS_FORUM => 'wikiafollowedpages-special-heading-forum',
 		NS_FILE => 'wikiafollowedpages-special-heading-media',
-		NS_VIDEO => 'wikiafollowedpages-special-heading-media',
 		NS_USER_WALL => 'wikiafollowedpages-special-heading-wall',
 	];
 

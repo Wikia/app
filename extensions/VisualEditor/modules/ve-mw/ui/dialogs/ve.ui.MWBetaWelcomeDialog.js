@@ -11,22 +11,19 @@
  * Dialog for inserting MediaWiki media objects.
  *
  * @class
- * @extends ve.ui.Dialog
+ * @extends ve.ui.ActionDialog
  *
  * @constructor
  * @param {Object} [config] Configuration options
  */
 ve.ui.MWBetaWelcomeDialog = function VeUiMWBetaWelcomeDialog( config ) {
-	// Configuration initialization
-	config = ve.extendObject( { 'size': 'medium', 'footless': false }, config );
-
 	// Parent constructor
-	ve.ui.Dialog.call( this, config );
+	ve.ui.MWBetaWelcomeDialog.super.call( this, config );
 };
 
 /* Inheritance */
 
-OO.inheritClass( ve.ui.MWBetaWelcomeDialog, ve.ui.Dialog );
+OO.inheritClass( ve.ui.MWBetaWelcomeDialog, ve.ui.ActionDialog );
 
 /* Static Properties */
 
@@ -40,13 +37,18 @@ ve.ui.MWBetaWelcomeDialog.static.icon = 'help';
 /* Methods */
 
 /**
- * Get the title of the window.
- *
- * Send the MediaWiki username along with the message for {{GENDER:}} i18n support
- * @returns {string} Window title
+ * @inheritdoc
  */
 ve.ui.MWBetaWelcomeDialog.prototype.getTitle = function () {
+	// Send the MediaWiki username along with the message for {{GENDER:}} i18n support
 	return ve.msg( this.constructor.static.title, mw.user );
+};
+
+/**
+ * @inheritdoc
+ */
+ve.ui.MWBetaWelcomeDialog.prototype.getApplyButtonLabel = function () {
+	return ve.msg( 'visualeditor-dialog-beta-welcome-action-continue' );
 };
 
 /**
@@ -54,31 +56,21 @@ ve.ui.MWBetaWelcomeDialog.prototype.getTitle = function () {
  */
 ve.ui.MWBetaWelcomeDialog.prototype.initialize = function () {
 	// Parent method
-	ve.ui.Dialog.prototype.initialize.call( this );
+	ve.ui.MWBetaWelcomeDialog.super.prototype.initialize.call( this );
 
 	// Properties
-	this.contentLayout = new OO.ui.PanelLayout( {
+	this.contentPanel = new OO.ui.PanelLayout( {
 		'$': this.$,
 		'scrollable': true,
-		'padded': true
+		'padded': true,
+		'classes': [ 've-ui-mwBetaWelcomeDialog-content' ],
+		'text': ve.msg( 'visualeditor-dialog-beta-welcome-content', $( '#ca-edit' ).text() )
 	} );
-	this.continueButton = new OO.ui.ButtonWidget( {
-		'$': this.$,
-		'label': ve.msg( 'visualeditor-dialog-beta-welcome-action-continue' ),
-		'flags': ['primary']
-	} );
-
-	// Events
-	this.continueButton.connect( this, { 'click': [ 'close', { 'action': 'close' } ] } );
 
 	// Initialization
-	this.contentLayout.$element
-		.addClass( 've-ui-mwBetaWelcomeDialog-content' )
-		.text( ve.msg( 'visualeditor-dialog-beta-welcome-content', $( '#ca-edit' ).text() ) );
-	this.$body.append( this.contentLayout.$element );
-	this.$foot.append( this.continueButton.$element );
+	this.panels.addItems( [ this.contentPanel ] );
 };
 
 /* Registration */
 
-ve.ui.dialogFactory.register( ve.ui.MWBetaWelcomeDialog );
+ve.ui.windowFactory.register( ve.ui.MWBetaWelcomeDialog );

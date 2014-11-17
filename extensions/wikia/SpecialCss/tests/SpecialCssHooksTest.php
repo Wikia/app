@@ -107,16 +107,10 @@ class SpecialCssHooksTest extends WikiaBaseTest {
 	 * @dataProvider testGetCategoriesFromWikitextDataProvider
 	 */
 	public function testGetCategoriesFromWikitext($mockedResultsFromCategorySelect, $categorySelectEnabled, $expected, $assertionMessage) {
-		/** @var $specialCssHooksMock PHPUnit_Framework_MockObject_MockObject */
-		$specialCssHooksMock = $this->getMockClass( 'SpecialCssHooks', [ 'getCategoriesFromCategorySelect' ] );
-		$specialCssHooksMock::staticExpects( $this->any() )
-			->method( 'getCategoriesFromCategorySelect' )
-			->will( $this->returnValue( $mockedResultsFromCategorySelect ) );
-
+		$this->mockStaticMethod('SpecialCssHooks', 'getCategoriesFromCategorySelect', $mockedResultsFromCategorySelect);
 		$this->mockGlobalVariable( 'wgEnableCategorySelectExt', $categorySelectEnabled );
 
-		/** @var $specialCssHooksMock SpecialCssHooks */
-		$this->assertEquals( $expected, $specialCssHooksMock::getCategoriesFromWikitext( 'wikitext' ), $assertionMessage );
+		$this->assertEquals( $expected, SpecialCssHooks::getCategoriesFromWikitext( 'wikitext' ), $assertionMessage );
 	}
 
 	public function testGetCategoriesFromWikitextDataProvider() {

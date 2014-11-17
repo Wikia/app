@@ -22,6 +22,14 @@ $messages['ar'] = array(
 	'centralhelpsearch-placeholder' => 'مساعدة على البحث...',
 );
 
+/** Asturian (asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'centralhelpsearch-desc' => "Permite la inclusión d'un formulariu pa guetar na Ayuda Central de la Comunidá",
+	'centralhelpsearch-placeholder' => 'Guetar na Ayuda...',
+);
+
 /** Azerbaijani (azərbaycanca)
  * @author AZISS
  */
@@ -149,11 +157,25 @@ $messages['it'] = array(
 	'centralhelpsearch-placeholder' => 'Cerca aiuto&hellip;',
 );
 
+/** Japanese (日本語)
+ * @author Plover-Y
+ */
+$messages['ja'] = array(
+	'centralhelpsearch-placeholder' => 'ヘルプを検索...',
+);
+
 /** Kannada (ಕನ್ನಡ)
  * @author VASANTH S.N.
  */
 $messages['kn'] = array(
 	'centralhelpsearch-placeholder' => 'ಸಹಾಯವನ್ನು ಹುಡುಕಿ...',
+);
+
+/** Korean (한국어)
+ * @author 관인생략
+ */
+$messages['ko'] = array(
+	'centralhelpsearch-placeholder' => '검색 도움말...',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

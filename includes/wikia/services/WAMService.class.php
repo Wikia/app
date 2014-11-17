@@ -8,6 +8,7 @@ class WAMService extends Service {
 
 	const WAM_DEFAULT_ITEM_LIMIT_PER_PAGE = 20;
 	const WAM_BLACKLIST_EXT_VAR_NAME = 'wgEnableContentWarningExt';
+	const CACHE_DURATION = 86400; /* 24 hours */
 
 	protected static $verticalNames = [
 		WikiFactoryHub::CATEGORY_ID_GAMING => 'Gaming',
@@ -38,14 +39,13 @@ class WAMService extends Service {
 	 * @param int $wikiId
 	 * @return number
 	 */
-	public static function getCurrentWamScoreForWiki ($wikiId) {
-		$app = F::app();
+	public function getCurrentWamScoreForWiki ($wikiId) {
 		wfProfileIn(__METHOD__);
 
 		$memKey = wfSharedMemcKey('datamart', 'wam', $wikiId);
 
-		$getData = function () use ($app, $wikiId) {
-			$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
+		$getData = function () use ($wikiId) {
+			$db = $this->getDB();
 
 			$result = $db->select(
 				array('fact_wam_scores'),
@@ -65,7 +65,7 @@ class WAMService extends Service {
 			return ($row = $db->fetchObject($result)) ? $row->wam : 0;
 		};
 
-		$wamScore = WikiaDataAccess::cacheWithLock($memKey, 86400 /* 24 hours */, $getData);
+		$wamScore = WikiaDataAccess::cacheWithLock($memKey, self::CACHE_DURATION, $getData);
 		wfProfileOut(__METHOD__);
 		return $wamScore;
 	}
@@ -92,51 +92,49 @@ class WAMService extends Service {
 			? strtotime('00:00 -1 day', $inputOptions['previousTimestamp'])
 			: $inputOptions['currentTimestamp'] - 60 * 60 * 24;
 
-		$app = F::app();
 		wfProfileIn(__METHOD__);
 
 		$wamIndex = array(
 			'wam_index' => array(),
 			'wam_results_total' => 0
 		);
-		if (!empty($app->wg->StatsDBEnabled)) {
-			$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
 
-			$tables = $this->getWamIndexTables();
-			$fields = $this->getWamIndexFields();
-			$countFields = $this->getWamIndexCountFields();
-			$conds = $this->getWamIndexConditions($inputOptions, $db);
-			$options = $this->getWamIndexOptions($inputOptions);
-			$join_conds = $this->getWamIndexJoinConditions($inputOptions);
+		$db = $this->getDB();
 
-			$result = $db->select(
-				$tables,
-				$fields,
-				$conds,
-				__METHOD__,
-				$options,
-				$join_conds
-			);
+		$tables = $this->getWamIndexTables();
+		$fields = $this->getWamIndexFields();
+		$countFields = $this->getWamIndexCountFields();
+		$conds = $this->getWamIndexConditions($inputOptions, $db);
+		$options = $this->getWamIndexOptions($inputOptions);
+		$join_conds = $this->getWamIndexJoinConditions($inputOptions);
 
-			$resultCount = $db->select(
-				$tables,
-				$countFields,
-				$conds,
-				__METHOD__,
-				array(),
-				$join_conds
-			);
+		$result = $db->select(
+			$tables,
+			$fields,
+			$conds,
+			__METHOD__,
+			$options,
+			$join_conds
+		);
 
-			/* @var $db DatabaseMysql */
-			while ($row = $db->fetchObject($result)) {
-				$row = (array)$row;
-				$row['hub_id'] = $this->getVerticalId($row['hub_name']);
-				$wamIndex['wam_index'][$row['wiki_id']] = $row;
-			}
-			$count = $resultCount->fetchObject();
-			$wamIndex['wam_results_total'] = $count->wam_results_total;
-			$wamIndex['wam_index_date'] = $inputOptions['currentTimestamp'];
+		$resultCount = $db->select(
+			$tables,
+			$countFields,
+			$conds,
+			__METHOD__,
+			array(),
+			$join_conds
+		);
+
+		/* @var $db DatabaseMysql */
+		while ($row = $db->fetchObject($result)) {
+			$row = (array)$row;
+			$row['hub_id'] = $this->getVerticalId($row['hub_name']);
+			$wamIndex['wam_index'][$row['wiki_id']] = $row;
 		}
+		$count = $resultCount->fetchObject();
+		$wamIndex['wam_results_total'] = $count->wam_results_total;
+		$wamIndex['wam_index_date'] = $inputOptions['currentTimestamp'];
 
 		wfProfileOut(__METHOD__);
 
@@ -149,31 +147,61 @@ class WAMService extends Service {
 			'min_date' => null
 		);
 
-		$app = F::app();
 		wfProfileIn(__METHOD__);
 
-		if (!empty($app->wg->StatsDBEnabled)) {
-			$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
+		$db = $this->getDB();
 
-			$fields = array(
-				'MAX(time_id) AS max_date',
-				'MIN(time_id) AS min_date'
-			);
+		$fields = array(
+			'MAX(time_id) AS max_date',
+			'MIN(time_id) AS min_date'
+		);
 
-			$result = $db->select(
-				'fact_wam_scores',
-				$fields
-			);
+		$result = $db->select(
+			'fact_wam_scores',
+			$fields
+		);
 
-			$row = $db->fetchRow($result);
+		$row = $db->fetchRow($result);
 
-			$dates['max_date'] = strtotime('+1 day', strtotime($row['max_date']));
-			$dates['min_date'] = strtotime('+1 day', strtotime($row['min_date']));
-		}
+		$dates['max_date'] = strtotime('+1 day', strtotime($row['max_date']));
+		$dates['min_date'] = strtotime('+1 day', strtotime($row['min_date']));
 
 		wfProfileOut(__METHOD__);
 
 		return $dates;
+	}
+
+	public function getWAMLanguages( $date ) {
+		wfProfileIn( __METHOD__ );
+
+		$date = empty( $date ) ? strtotime( '00:00 -1 day' ) : strtotime( '00:00 -1 day', $date );
+		$memKey = wfSharedMemcKey( 'wam-languages', $date );
+
+		$getData = function () use ( $date ) {
+			$db = $this->getDB();
+			$result = $db->select(
+				[
+					'fw1' => 'fact_wam_scores',
+					'dw' => 'dimension_wikis'
+				],
+				'DISTINCT dw.lang',
+				'fw1.time_id = FROM_UNIXTIME(' . $date . ')',
+				__METHOD__,
+				[ 'ORDER BY' => 'dw.lang ASC' ],
+				[ 'fw1' => [ 'INNER JOIN', 'dw.wiki_id = fw1.wiki_id' ] ]
+			);
+
+			$languages = [];
+			while ( $row = $db->fetchObject( $result ) ) {
+				$languages[] = $row->lang;
+			}
+
+			return $languages;
+		};
+
+		$wamLanguages = WikiaDataAccess::cache( $memKey, self::CACHE_DURATION, $getData );
+		wfProfileOut( __METHOD__ );
+		return $wamLanguages;
 	}
 
 	protected function getWamIndexJoinConditions ($options) {
@@ -314,7 +342,7 @@ class WAMService extends Service {
 					'wam_blacklist',
 					$blacklistExt->cv_id
 				),
-				24 * 60 * 60,
+				self::CACHE_DURATION,
 				function () use ( $blacklistExt ) {
 					$blacklistWikis = WikiFactory::getListOfWikisWithVar( $blacklistExt->cv_id, 'bool', '=', true, true );
 					return array_keys( $blacklistWikis );
@@ -346,5 +374,10 @@ class WAMService extends Service {
 		if (isset(self::$verticalIds[$verticalName])) {
 			return self::$verticalIds[$verticalName];
 		}
+	}
+
+	protected function getDB() {
+		$app = F::app();
+		return wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
 	}
 }

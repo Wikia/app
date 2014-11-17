@@ -7,22 +7,33 @@ if ( !defined('MEDIAWIKI') ) {
 
 $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['HubRssFeedSpecialController']	= $dir . 'HubRssFeedSpecialController.class.php';
-$wgAutoloadClasses['HubRssFeedModel']	= $dir . 'HubRssFeedModel.class.php';
-$wgAutoloadClasses['HubRssFeedService']	= $dir . 'HubRssFeedService.class.php';
+$wgAutoloadClasses['HubRssFeedModel']	= $dir . 'models/external/HubRssFeedModel.class.php';
 $wgAutoloadClasses['RssFeedService']	= $dir . 'RssFeedService.class.php';
-$wgAutoloadClasses['BaseRssModel']	= $dir . 'BaseRssModel.class.php';
-$wgAutoloadClasses['TvRssModel']	= $dir . 'TvRssModel.class.php';
-$wgAutoloadClasses['GamesRssModel']	= $dir . 'GamesRssModel.class.php';
-$wgAutoloadClasses['PopularArticlesModel']	= $dir . 'PopularArticlesModel.class.php';
-$wgAutoloadClasses['EntertainmentHubOnlyRssModel'] = $dir . 'EntertainmentHubOnlyRssModel.class.php';
-$wgAutoloadClasses['LifestyleHubOnlyRssModel'] = $dir . 'LifestyleHubOnlyRssModel.class.php';
-$wgAutoloadClasses['HubOnlyRssModel'] = $dir . 'HubOnlyRssModel.class.php';
+$wgAutoloadClasses['BaseRssModel']	= $dir . 'models/BaseRssModel.class.php';
+$wgAutoloadClasses['PopularArticlesModel']	= $dir . 'models/external/PopularArticlesModel.class.php';
+$wgAutoloadClasses['HubOnlyRssModel'] = $dir . 'models/HubOnlyRssModel.class.php';
+$wgAutoloadClasses['StarWarsDataProvider'] = $dir . 'providers/StarWarsDataProvider.class.php';
+
+//en rss
+$wgAutoloadClasses['TvRssModel']	= $dir . 'models/TvRssModel.class.php';
+$wgAutoloadClasses['GamesRssModel']	= $dir . 'models/GamesRssModel.class.php';
+$wgAutoloadClasses['LifestyleHubOnlyRssModel'] = $dir . 'models/LifestyleHubOnlyRssModel.class.php';
+$wgAutoloadClasses['EntertainmentHubOnlyRssModel'] = $dir . 'models/EntertainmentHubOnlyRssModel.class.php';
+$wgAutoloadClasses['MarvelRssModel'] = $dir . 'models/MarvelRssModel.class.php';
+$wgAutoloadClasses['StarWarsRssModel'] = $dir . 'models/StarWarsRssModel.class.php';
+
+
+//de rss
+$wgAutoloadClasses['GamesDeHubOnlyRssModel']	= $dir . 'models/GamesDeHubOnlyRssModel.class.php';
+$wgAutoloadClasses['EntertainmentDeHubOnlyRssModel']	= $dir . 'models/EntertainmentDeHubOnlyRssModel.class.php';
 
 $wgSpecialPages['HubRssFeed']		= 'HubRssFeedSpecialController';
 
-$wgHubRssFeeds = array(
-	 'Entertainment', 'Lifestyle', 'Games', 'TV', 'Tv'
+$wgHubRssFeedsAll = array(
+	'en' => [ 'Entertainment', 'Lifestyle', 'Games', 'TV', 'Marvel', 'StarWars' ],
+	'de' => [ 'Entertainment', 'Games' ]
 );
+$wgHubRssFeeds = $wgHubRssFeedsAll[ $wgLanguageCode ];
 
 foreach ( $wgHubRssFeeds as $feed ) {
 	if ( isset( $_SERVER['SCRIPT_URL'] ) && strcmp( $_SERVER['SCRIPT_URL'],  '/rss/'.$feed ) === 0 ) {

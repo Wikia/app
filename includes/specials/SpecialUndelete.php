@@ -565,8 +565,15 @@ class PageArchive {
 		wfRunHooks( 'ArticleUndelete', array( &$this->title, $created, $comment ) );
 
 		if( $this->title->getNamespace() == NS_FILE ) {
-			$update = new HTMLCacheUpdate( $this->title, 'imagelinks' );
-			$update->doUpdate();
+			// Wikia change begin @author Scott Rabin (srabin@wikia-inc.com)
+			global $wgCityId;
+
+			$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
+				->wikiId( $wgCityId )
+				->title( $this->title );
+			$task->call( 'purge', 'imagelinks' );
+			$task->queue();
+			// Wikia change end
 		}
 
 		return $restored;

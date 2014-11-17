@@ -23,7 +23,8 @@ ve.ce.NodeFactoryNodeStub.static.name = 'node-factory-node-stub';
 QUnit.test( 'splitNodeOnEnter', 2, function ( assert ) {
 	var factory = new ve.ce.NodeFactory();
 
-	assert.throws( function () {
+	assert.throws(
+		function () {
 			factory.splitNodeOnEnter( 'node-factory-node-stub' );
 		},
 		Error,

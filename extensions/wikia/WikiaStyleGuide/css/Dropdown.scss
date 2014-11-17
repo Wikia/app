@@ -1,7 +1,7 @@
-@import "../../../../skins/oasis/css/core/color";
-@import "../../../../skins/oasis/css/core/layout";
-@import "../../../../skins/oasis/css/mixins/arrow";
-@import "../../../../skins/oasis/css/mixins/box-shadow";
+@import "skins/shared/color";
+@import "skins/oasis/css/core/layout";
+@import "skins/shared/mixins/arrow";
+@import "skins/shared/mixins/box-shadow";
 
 @import "DropdownColors";
 
@@ -90,4 +90,23 @@ $ddHeight: 20px;
 
 	}
 
+}
+
+/* Monobook colorization issues (VOLDEV-36) */
+.skin-monobook {
+	.WikiaDropdown {
+		.selected-items,
+		.dropdown {
+			background-color: white;
+			border: 1px solid black;
+		}
+
+		.dropdown-item.selected {
+			background-color: white;
+		}
+
+		.arrow {
+			@include arrow(4px, black);
+		}
+	}
 }

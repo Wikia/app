@@ -10,18 +10,9 @@ describe("Querystring", function () {
 			hash: ''
 		},
 		windowMock = {
-			document: window.document,
-			history: {
-				length: 0,
-				state: [],
-				pushState: function(data, title, url) {
-					this.length++;
-					this.state.push(data);
-				},
-				replaceState: function(data) {
-					this.state.pop();
-					this.state.push(data);
-				}
+			document: {
+				title: 'title',
+				createElement: function() {}
 			}
 		},
 		querystring = modules['wikia.querystring'](locationMock, windowMock);
@@ -52,23 +43,7 @@ describe("Querystring", function () {
 		expect(typeof qs.addCb).toBe('function', 'addCb');
 		expect(typeof qs.toString).toBe('function', 'toString');
 		expect(typeof qs.goTo).toBe('function', 'goTo');
-		expect(typeof qs.pushState).toBe('function', 'pushState');
-		expect(typeof qs.replaceState).toBe('function', 'replaceState');
-	});
-
-	it('works with history api', function() {
-		var qs = new querystring(),
-			histLen = windowMock.history.length;
-
-		qs.pushState({test:1});
-		expect(windowMock.history.length).toBe(histLen+1);
-		expect(windowMock.history.state[histLen].test).toBe(1);
-
-		histLen = windowMock.history.length;
-		qs.replaceState({test:2});
-		expect(windowMock.history.length).toBe(histLen);
-		expect(windowMock.history.state[histLen-1].test).toBe(2);
-
+		expect(typeof qs.sanitizeHref).toBe('function', 'sanitizeHref');
 	});
 
 	it('works with new and without new operand', function(){
@@ -262,7 +237,7 @@ describe("Querystring", function () {
 
 		expect(qs.getHash()).toBe('test');
 
-		qs.setHash('test1')
+		qs.setHash('test1');
 
 		expect(qs.getHash()).toBe('test1');
 
@@ -333,7 +308,6 @@ describe("Querystring", function () {
 
 	it('is chainable', function(){
 		expect(function(){
-
 			var qs = querystring()
 				.setPath('/wiki/Wodna')
 				.setVal('action', 'purge')
@@ -354,5 +328,24 @@ describe("Querystring", function () {
 
 		expect(qs + '').toBe('http//poznan.wikia.com/wiki/Gzik');
 		expect(qs.toString()).toBe('http//poznan.wikia.com/wiki/Gzik');
+	});
+
+	it('is sanitizing href properly', function(){
+		var testData = [
+				{href: '#hash0',  result: 'hash0'},
+				{href: '#hash1 ', result: 'hash1'},
+				{href: '#hash.2', result: 'hash.2'},
+				{href: '#hash 3', result: 'hash 3'},
+				{href: '#     A', result: '     A'},
+				{href: '   #   ', result: ''},
+				{href: '# ',      result: ''},
+				{href: '#',       result: ''},
+				{href: 'hash',    result: ''}
+			],
+			qs = querystring();
+
+		testData.forEach(function (data) {
+			expect(qs.sanitizeHref(data.href)).toBe(data.result);
+		});
 	});
 });

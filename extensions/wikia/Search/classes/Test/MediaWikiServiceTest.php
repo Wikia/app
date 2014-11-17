@@ -17,22 +17,22 @@ class MediaWikiServiceTest extends BaseTest
 	 * @var \Wikia\Search\MediaWikiService
 	 */
 	protected $service;
-	
+
 	/**
 	 * @var int
 	 */
 	protected $pageId;
-	
+
 	public function setUp() {
 		parent::setUp();
 		$this->pageId = 123;
 		$this->service = $this->getMockBuilder( '\Wikia\Search\MediaWikiService' )
                                 ->disableOriginalConstructor();
-		
+
 		// re-initialize static vars
-		$staticVars = array( 
+		$staticVars = array(
 				'pageIdsToArticles', 'pageIdsToTitles', 'redirectsToCanonicalIds',
-				'pageIdsToFiles', 'redirectArticles', 'wikiDataSources' 
+				'pageIdsToFiles', 'redirectArticles', 'wikiDataSources'
 		);
 		foreach ( $staticVars as $var ) {
 			$refl = new ReflectionProperty( 'Wikia\Search\MediaWikiService', $var );
@@ -40,7 +40,7 @@ class MediaWikiServiceTest extends BaseTest
 			$refl->setValue( array() );
 		}
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08676 ms
@@ -48,13 +48,13 @@ class MediaWikiServiceTest extends BaseTest
 	 */
 	public function testGetTitleStringFromPageId() {
 		$service = $this->service->setMethods( array( 'getTitleString', 'getTitleFromPageId' ) )->getMock();
-		
+
 		$mockTitle = $this->getMockBuilder( 'Title' )
 		                  ->disableOriginalConstructor()
 		                  ->getMock();
-		
+
 		$mockTitleString = 'Mock Title';
-		
+
 		$service
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getTitleFrompageId' )
@@ -73,7 +73,7 @@ class MediaWikiServiceTest extends BaseTest
 				'\Wikia\Search\MediaWikiService::getTitleStringFromPageId should return the string value of a title based on a page ID'
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08731 ms
@@ -81,12 +81,12 @@ class MediaWikiServiceTest extends BaseTest
 	 */
 	public function testGetLocalUrlForPageId() {
 		$service = $this->service->setMethods( array( 'getTitleFromPageId' ) )->getMock();
-		
+
 		$mockTitle = $this->getMockBuilder( 'Title' )
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( array( 'getLocalUrl' ) )
 		                  ->getMock();
-		
+
 		$service
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getTitleFrompageId' )
@@ -105,7 +105,7 @@ class MediaWikiServiceTest extends BaseTest
 				'\Wikia\Search\MediaWikiService::getLocalUrlFromPageId should return the string value of local url based on a page ID'
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08611 ms
@@ -113,16 +113,16 @@ class MediaWikiServiceTest extends BaseTest
 	 */
 	public function testGetTitleFromPageIdFreshPage() {
 		$service = $this->service->setMethods( array( 'getPageFromPageId' ) )->getMock();
-		
+
 		$mockPage = $this->getMockBuilder( 'Article' )
 		                 ->disableOriginalConstructor()
 		                 ->setMethods( array( 'getTitle' ) )
 		                 ->getMock();
-		
+
 		$mockTitle = $this->getMockBuilder( 'Title' )
 		                  ->disableOriginalConstructor()
 		                  ->getMock();
-		
+
 		$service
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getPageFromPageId' )
@@ -134,17 +134,17 @@ class MediaWikiServiceTest extends BaseTest
 		    ->method ( 'getTitle' )
 		    ->will   ( $this->returnValue( $mockTitle ) )
 		;
-		
+
 		$getRefl = new ReflectionMethod( '\Wikia\Search\MediaWikiService', 'getTitleFromPageId' );
 		$getRefl->setAccessible( true );
 
 		$pageIdsToTitles = new ReflectionProperty( '\Wikia\Search\MediaWikiService', 'pageIdsToTitles' );
 		$pageIdsToTitles->setAccessible( true ) ;
-		
+
 		$this->assertEquals(
 				$mockTitle,
 				$getRefl->invoke( $service, $this->pageId ),
-				'\Wikia\Search\MediaWikiService::getTitleFromPageId should return an instance of Title corresponding to the provided page ID' 
+				'\Wikia\Search\MediaWikiService::getTitleFromPageId should return an instance of Title corresponding to the provided page ID'
 		);
 		$this->assertArrayHasKey(
 				$this->pageId,
@@ -152,7 +152,7 @@ class MediaWikiServiceTest extends BaseTest
 				'\Wikia\Search\MediaWikiService::getTitleFromPageId should store any titles it access for a page in the pageIdsToTitles array'
 		);
 	}
-	
+
     /**
 	 * @group Slow
 	 * @slowExecutionTime 0.08477 ms
@@ -160,16 +160,16 @@ class MediaWikiServiceTest extends BaseTest
 	 */
 	public function testGetTitleFromPageIdCachedPage() {
 		$service = $this->service->setMethods( array( 'getPageFromPageId' ) )->getMock();
-		
+
 		$mockPage = $this->getMockBuilder( 'Article' )
 		                 ->disableOriginalConstructor()
 		                 ->setMethods( array( 'getTitle' ) )
 		                 ->getMock();
-		
+
 		$mockTitle = $this->getMockBuilder( 'Title' )
 		                  ->disableOriginalConstructor()
 		                  ->getMock();
-		
+
 		$service
 		    ->expects( $this->never() )
 		    ->method ( 'getPageFromPageId' )
@@ -178,21 +178,21 @@ class MediaWikiServiceTest extends BaseTest
 		    ->expects( $this->never() )
 		    ->method ( 'getTitle' )
 		;
-		
+
 		$getRefl = new ReflectionMethod( '\Wikia\Search\MediaWikiService', 'getTitleFromPageId' );
 		$getRefl->setAccessible( true );
 
 		$pageIdsToTitles = new ReflectionProperty( '\Wikia\Search\MediaWikiService', 'pageIdsToTitles' );
 		$pageIdsToTitles->setAccessible( true );
 		$pageIdsToTitles->setValue( $service, array( $this->pageId => $mockTitle ) );
-		
+
 		$this->assertEquals(
 				$mockTitle,
 				$getRefl->invoke( $service, $this->pageId ),
-				'\Wikia\Search\MediaWikiService::getTitleFromPageId should return an instance of Title corresponding to the provided page ID' 
+				'\Wikia\Search\MediaWikiService::getTitleFromPageId should return an instance of Title corresponding to the provided page ID'
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08548 ms
@@ -200,23 +200,23 @@ class MediaWikiServiceTest extends BaseTest
 	 */
 	public function testGetCanonicalPageIdFromPageIdIsCanonical() {
 		$service = $this->service->setMethods( array( 'getPageFromPageId' ) )->getMock();
-		
+
 		$service
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getPageFromPageId' )
 		    ->with   ( $this->pageId )
 		;
-		
+
 		$getCanonicalPageIdFromPageId = new ReflectionMethod( '\Wikia\Search\MediaWikiService', 'getCanonicalPageIdFromPageId' );
 		$getCanonicalPageIdFromPageId->setAccessible( true );
-		
+
 		$this->assertEquals(
 				$this->pageId,
 				$getCanonicalPageIdFromPageId->invoke( $service, $this->pageId ),
 				'\Wikia\Search\MediaWikiService::getCanonicalPageIdFromPageId should return the value provided to it if a value is not stored in the redirect ID array'
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08534 ms
@@ -233,17 +233,17 @@ class MediaWikiServiceTest extends BaseTest
 		    ->with   ( $this->pageId )
 		    ->will   ( $this->throwException( $ex ) )
 		;
-		
+
 		$getCanonicalPageIdFromPageId = new ReflectionMethod( '\Wikia\Search\MediaWikiService', 'getCanonicalPageIdFromPageId' );
 		$getCanonicalPageIdFromPageId->setAccessible( true );
-		
+
 		$this->assertEquals(
 				$this->pageId,
 				$getCanonicalPageIdFromPageId->invoke( $service, $this->pageId ),
 				'\Wikia\Search\MediaWikiService::getCanonicalPageIdFromPageId should return the value provided to it if an exception is thrown'
 		);
 	}
-	
+
     /**
 	 * @group Slow
 	 * @slowExecutionTime 0.08506 ms
@@ -251,29 +251,29 @@ class MediaWikiServiceTest extends BaseTest
 	 */
 	public function testGetCanonicalPageIdFromPageIdIsRedirect() {
 		$service = $this->service->setMethods( array( 'getPageFromPageId' ) )->getMock();
-		
+
 		$service
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getPageFromPageId' )
 		    ->with   ( $this->pageId )
 		;
-		
+
 		$canonicalPageId = 54321;
-		
+
 		$redirectsToCanonicalIds = new ReflectionProperty( '\Wikia\Search\MediaWikiService', 'redirectsToCanonicalIds' );
 		$redirectsToCanonicalIds->setAccessible( true );
 		$redirectsToCanonicalIds->setValue( $service, array( $this->pageId => $canonicalPageId ) );
-		
+
 		$getCanonicalPageIdFromPageId = new ReflectionMethod( '\Wikia\Search\MediaWikiService', 'getCanonicalPageIdFromPageId' );
 		$getCanonicalPageIdFromPageId->setAccessible( true );
-		
+
 		$this->assertEquals(
 				$canonicalPageId,
 				$getCanonicalPageIdFromPageId->invoke( $service, $this->pageId ),
 				'\Wikia\Search\MediaWikiService::getCanonicalPageIdFromPageId should return the value provided to it if a value is not stored in the redirect ID array'
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08618 ms
@@ -281,7 +281,7 @@ class MediaWikiServiceTest extends BaseTest
 	 */
 	public function testIsPageIdContentYes() {
 		$service = $this->service->setMethods( array( 'getNamespaceFromPageId', 'getGlobal' ) )->getMock();
-		
+
 		$service
 		    ->expects( $this->any() )
 		    ->method ( 'getNamespaceFromPageId' )
@@ -292,13 +292,13 @@ class MediaWikiServiceTest extends BaseTest
 		    ->expects( $this->any() )
 		    ->method ( 'getGlobal' )
 		    ->with   ( 'ContentNamespaces' )
-		    ->will   ( $this->returnValue( array( NS_MAIN, NS_CATEGORY ) ) ) 
+		    ->will   ( $this->returnValue( array( NS_MAIN, NS_CATEGORY ) ) )
 		;
 		$this->assertTrue(
 				$service->isPageIdContent( $this->pageId )
 		);
 	}
-	
+
     /**
 	 * @group Slow
 	 * @slowExecutionTime 0.08544 ms
@@ -306,7 +306,7 @@ class MediaWikiServiceTest extends BaseTest
 	 */
 	public function testIsPageIdContentNo() {
 		$service = $this->service->setMethods( array( 'getNamespaceFromPageId', 'getGlobal' ) )->getMock();
-		
+
 		$service
 		    ->expects( $this->any() )
 		    ->method ( 'getNamespaceFromPageId' )
@@ -317,13 +317,13 @@ class MediaWikiServiceTest extends BaseTest
 		    ->expects( $this->any() )
 		    ->method ( 'getGlobal' )
 		    ->with   ( 'ContentNamespaces' )
-		    ->will   ( $this->returnValue( array( NS_MAIN, NS_CATEGORY ) ) ) 
+		    ->will   ( $this->returnValue( array( NS_MAIN, NS_CATEGORY ) ) )
 		;
 		$this->assertFalse(
 				$service->isPageIdContent( $this->pageId )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08566 ms
@@ -337,7 +337,7 @@ class MediaWikiServiceTest extends BaseTest
 				'\Wikia\Search\MediaWikiService::getLanguageCode should provide an interface to $wgContLang->getCode()'
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08422 ms
@@ -345,14 +345,14 @@ class MediaWikiServiceTest extends BaseTest
 	 */
 	public function testGetUrlFromPageId() {
 		$service = $this->service->setMethods( array( 'getTitleFromPageId' ) )->getMock();
-		
+
 		$mockTitle = $this->getMockBuilder( 'Title' )
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( array( 'getFullUrl' ) )
 		                  ->getMock();
-		
+
 		$url = 'http://foo.wikia.com/wiki/Bar';
-		
+
 		$service
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getTitleFromPageId' )
@@ -370,7 +370,7 @@ class MediaWikiServiceTest extends BaseTest
 				'\Wikia\Search\MediaWikiService::getUrlFromPageId should return the full URL from the title instance associated with the provided page id'
 		);
 	}
-	
+
     /**
 	 * @group Slow
 	 * @slowExecutionTime 0.08527 ms
@@ -378,12 +378,12 @@ class MediaWikiServiceTest extends BaseTest
 	 */
 	public function testGetNamespaceFromPageId() {
 		$service = $this->service->setMethods( array( 'getTitleFromPageId' ) )->getMock();
-		
+
 		$mockTitle = $this->getMockBuilder( 'Title' )
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( array( 'getNamespace' ) )
 		                  ->getMock();
-		
+
 		$service
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getTitleFromPageId' )
@@ -401,7 +401,7 @@ class MediaWikiServiceTest extends BaseTest
 				'\Wikia\Search\MediaWikiService::getNamespaceFromPageId should return the namespace from the title instance associated with the provided page id'
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08489 ms
@@ -413,7 +413,7 @@ class MediaWikiServiceTest extends BaseTest
 				(new MediaWikiService)->getMainPageArticleId()
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08549 ms
@@ -424,7 +424,7 @@ class MediaWikiServiceTest extends BaseTest
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( [ 'getArticleId' ] )
 		                  ->getMock();
-		
+
 		$mockService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getMainPageTitleForWikiId' ] );
 		$mockService
 		    ->expects( $this->once() )
@@ -442,7 +442,7 @@ class MediaWikiServiceTest extends BaseTest
 				$mockService->getMainPageIdForWikiId( 123 )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08591 ms
@@ -450,7 +450,7 @@ class MediaWikiServiceTest extends BaseTest
 	 */
 	public function testGetsimpleLanguageCode() {
 		$service = $this->service->setMethods( array( 'getLanguageCode' ) )->getMock();
-		
+
 		$service
 		    ->expects( $this->any() )
 		    ->method ( 'getLanguageCode' )
@@ -462,21 +462,21 @@ class MediaWikiServiceTest extends BaseTest
 				'\Wikia\Search\MediaWikiService::getSimpleLanguageCode should strip any extensions from the two-letter language code'
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.12579 ms
 	 * Note: we actually expect an array here but since static method calls are tricky here
-	 * we're using proxyClass with translated version of a response array
+	 * we're using mockClass with translated version of a response array
 	 * @covers \Wikia\Search\MediaWikiService::getParseResponseFromPageId
 	 */
 	public function testGetParseResponseFromPageId() {
 		$mockApiService = $this->getMockBuilder( '\ApiService' )
 		                       ->setMethods( array( 'call' ) )
 		                       ->getMock();
-		
+
 		$mockResultArray = (object) array( 'foo' => 'bar' );
-		
+
 		// hack to make this work in our framework
 		$this->mockClass( '\ApiService', $mockResultArray, 'call' );
 
@@ -485,7 +485,7 @@ class MediaWikiServiceTest extends BaseTest
 				(new MediaWikiService)->getParseResponseFromPageId( $this->pageId )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.12603 ms
@@ -493,12 +493,12 @@ class MediaWikiServiceTest extends BaseTest
 	 */
 	public function testGetCacheKey() {
 		$service = $this->service->setMethods( array( 'getWikiId'  ) )->getMock();
-		
+
 		$mockSharedMemcKey = $this->getGlobalFunctionMock( 'wfSharedMemcKey' );
-		
+
 		$wid = 567;
 		$key = 'foo';
-		
+
 		$service
 		    ->expects( $this->any() )
 		    ->method ( 'getWikiId' )
@@ -515,16 +515,16 @@ class MediaWikiServiceTest extends BaseTest
 				$service->getCacheKey( $key )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08632 ms
 	 * @covers \Wikia\Search\MediaWikiService::getCacheResult
 	 */
 	public function testGetCacheResult() {
-		
+
 		$service = $this->service->setMethods( array( 'getGlobal' ) )->getMock();
-		
+
 		$mockMc = $this->getMockBuilder( '\MemcachedClientForWiki' )
 		               ->disableOriginalConstructor()
 		               ->setMethods( array( 'get' ) )
@@ -532,7 +532,7 @@ class MediaWikiServiceTest extends BaseTest
 
 		$key = 'bar';
 		$result = 'foo';
-		
+
 		$app = (object) array( 'wg' => (object ) array( 'Memc' => $mockMc ) );
 		$reflApp = new ReflectionProperty( 'Wikia\Search\MediaWikiService', 'app' );
 		$reflApp->setAccessible( true );
@@ -550,7 +550,7 @@ class MediaWikiServiceTest extends BaseTest
 				'\WikiaSearch\MediaWikiService::getCacheResult should provide an interface to $wgMemc->get()'
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08651 ms
@@ -558,10 +558,10 @@ class MediaWikiServiceTest extends BaseTest
 	 */
 	public function testGetCacheResultFromString() {
 		$service = $this->service->setMethods( array( 'getCacheResult', 'getCacheKey' ) )->getMock();
-		
+
 		$key = 'foo';
 		$val = 'bar';
-		
+
 		$service
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getCacheKey' )
@@ -587,18 +587,18 @@ class MediaWikiServiceTest extends BaseTest
 	 * @covers \Wikia\Search\MediaWikiService::setCacheFromStringKey
 	 */
 	public function testSetCacheFromStringKey() {
-		
+
 		$service = $this->service->setMethods( array( 'getCacheKey', 'getWg' ) )->getMock();
-		
+
 		$mockMc = $this->getMockBuilder( '\MemcachedClientForWiki' )
 		               ->disableOriginalConstructor()
 		               ->setMethods( array( 'set' ) )
 		               ->getMock();
-		
+
 		$key = 'bar';
 		$value = 'foo';
 		$ttl = 3600;
-		
+
 		$service
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getCacheKey' )
@@ -620,22 +620,23 @@ class MediaWikiServiceTest extends BaseTest
 				'\WikiaSearch\MediaWikiService::setCacheResultForStringKey should set a cache value in memcached provided a given plaintext key'
 		);
 	}
-	
+
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.11852 ms
 	 * One day this test will actually work as advertised.
 	 * @covers \Wikia\Search\MediaWikiService::getBacklinksCountFromPageId
 	 */
 	public function testGetBacklinksCountFromPageId() {
 		$service = $this->service->setMethods( array( 'getTitleStringFromPageId' ) )->getMock();
-		
+
 		$mockApiService = $this->getMock( '\ApiService', array( 'call' ) );
-		
+
 		$title = "Foo Bar";
-		
+
 		$data = array( 'query' => array( 'backlinks_count' => 0 ) );
-		
+
 		$service
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getTitleStringFromPageId' )
@@ -648,7 +649,7 @@ class MediaWikiServiceTest extends BaseTest
 		    ->with         ( $title )
 		    ->will         ( $this->returnValue( $data ) )
 		;
-		
+
 		$this->mockClass( '\ApiService', $mockApiService );
 		$this->mockClass( '\ApiService', $mockApiService );
 
@@ -657,7 +658,7 @@ class MediaWikiServiceTest extends BaseTest
 				$service->getBacklinksCountFromPageId( $this->pageId )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08564 ms
@@ -667,14 +668,14 @@ class MediaWikiServiceTest extends BaseTest
 		$service = new MediaWikiService;
 		$app = \F::app();
 		$app->wg->Foo = 'bar';
-		
+
 		$this->assertEquals(
 				'bar',
 				$service->getGlobal( 'Foo' ),
 				'\WikiaSearch\MediaWikiService::getGlobal should provide an interface to MediaWiki wg-prefixed global variables'
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09211 ms
@@ -684,14 +685,14 @@ class MediaWikiServiceTest extends BaseTest
 		$service = new MediaWikiService;
 		$app = \F::app();
 		$app->wg->Foo = null;
-		
+
 		$this->assertEquals(
 				'bar',
 				$service->getGlobalWithDefault( 'Foo', 'bar' ),
 				'\WikiaSearch\MediaWikiService::getGlobalWithDefault should return the default value if the global value is null.'
 		);
 	}
-	
+
     /**
 	 * @group Slow
 	 * @slowExecutionTime 0.08814 ms
@@ -700,7 +701,7 @@ class MediaWikiServiceTest extends BaseTest
 	public function testSetGlobal() {
 		$service = new MediaWikiService;
 		$app = \F::app();
-		
+
 		$this->assertEquals(
 				$service,
 				$service->setGlobal( 'Foo', 'bar' )
@@ -711,7 +712,7 @@ class MediaWikiServiceTest extends BaseTest
 				'\WikiaSearch\MediaWikiService::setGlobal should set the provided key as a global variable name with the provided value'
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08829 ms
@@ -719,7 +720,7 @@ class MediaWikiServiceTest extends BaseTest
 	 */
 	public function testGetWikiId() {
 		$service = $this->service->setMethods( array( 'getGlobal' ) )->getMock();
-		
+
 		$service
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getGlobal' )
@@ -753,7 +754,7 @@ class MediaWikiServiceTest extends BaseTest
 				$service->getWikiId()
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09124 ms
@@ -761,12 +762,12 @@ class MediaWikiServiceTest extends BaseTest
 	 */
 	public function testGetMediaDataFromPageId() {
 		$service = $this->service->setMethods( array( 'pageIdHasFile', 'getFileForPageId' ) )->getMock();
-		
+
 		$mockFile = $this->getMockBuilder( 'File' )
 		                 ->disableOriginalConstructor()
 		                 ->setMethods( array( 'getMetadata' ) )
 		                 ->getMock();
-		
+
 		$service
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'pageIdHasFile' )
@@ -778,9 +779,9 @@ class MediaWikiServiceTest extends BaseTest
 				$service->getMediaDataFromPageId( $this->pageId ),
 				'\WikiaSearch\MediaWikiService::getMediaDataFromPageId should return an empty string if the page id is not a file'
 		);
-		
+
 		$serialized = serialize( array( 'foo' => 'bar' ) );
-		
+
 		$service
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'pageIdHasFile' )
@@ -809,14 +810,14 @@ class MediaWikiServiceTest extends BaseTest
 	 * @group Slow
 	 * @slowExecutionTime 0.09431 ms
      * @covers\Wikia\Search\MediaWikiService::pageIdHasFile
-     */	
+     */
 	public function testPageIdHasFile() {
 		$service = $this->service->setMethods( array( 'getFileForPageId' ) )->getMock();
-		
+
 		$mockFile = $this->getMockBuilder( 'File' )
 		                 ->disableOriginalConstructor()
 		                 ->getMock();
-		
+
 		$service
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getFileForPageId' )
@@ -836,7 +837,7 @@ class MediaWikiServiceTest extends BaseTest
 				$service->pageIdHasFile( $this->pageId )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.20025 ms
@@ -855,7 +856,7 @@ class MediaWikiServiceTest extends BaseTest
 			    (new MediaWikiService)->getApiStatsForPageId( $this->pageId )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.14909 ms
@@ -874,7 +875,7 @@ class MediaWikiServiceTest extends BaseTest
 			    (new MediaWikiService)->getApiStatsForWiki( $wgCityId )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08778 ms
@@ -886,9 +887,9 @@ class MediaWikiServiceTest extends BaseTest
 		             ->disableOriginalConstructor()
 		             ->setMethods( array( 'exists' ) )
 		             ->getMock();
-		
+
 		$mockException = $this->getMock( '\Exception' );
-		
+
 		$service
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getPageFromPageId' )
@@ -930,7 +931,7 @@ class MediaWikiServiceTest extends BaseTest
 				'\WikiaSearch\MediaWikiService::pageExists should pass the return value of Article::exists'
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.1391 ms
@@ -938,18 +939,18 @@ class MediaWikiServiceTest extends BaseTest
 	 */
 	public function testGetRedirectTitlesForPageID() {
 		$service = $this->service->setMethods( array( 'getTitleFromPageId' ) )->getMock();
-		
+
 		$mockDbr = $this->getMockBuilder( '\DatabaseMysql' )
 		                ->disableOriginalConstructor()
 		                ->setMethods( array( 'select', 'fetchObject' ) )
 		                ->getMock();
-		
+
 		$mockGetDB = $this->getGlobalFunctionMock( 'wfGetDB' );
-		
+
 		$mockResult = $this->getMockBuilder( '\ResultWrapper' )
 		                   ->disableOriginalConstructor()
 		                   ->getMock();
-		
+
 		$mockRow = (object) array( 'page_title' => 'Bar_Foo' );
 		$titleKey = 'foo_page';
 		$titleNs = 13;
@@ -963,7 +964,7 @@ class MediaWikiServiceTest extends BaseTest
 		$group = array( 'GROUP' => 'rd_title' );
 		$join = array( 'page' => array( 'INNER JOIN', array( 'rd_title' => $titleKey, 'rd_namespace' => $titleNs, 'page_id = rd_from' ) ) );
 		$expectedResult = array( 'Bar Foo' );
-		
+
 		$mockGetDB
 		    ->expects( $this->once() )
 		    ->method ( 'wfGetDB' )
@@ -1010,9 +1011,10 @@ class MediaWikiServiceTest extends BaseTest
 				$service->getRedirectTitlesForPageId( $this->pageId )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.09684 ms
 	 * @covers \Wikia\Search\MediaWikiService::getMediaDetailFromPageId
 	 */
@@ -1022,9 +1024,9 @@ class MediaWikiServiceTest extends BaseTest
 		$mockTitle = $this->getMockBuilder( 'Title' )
 		                  ->disableOriginalConstructor()
 		                  ->getMock();
-		
+
 		$detailArray = array( 'these my' => 'details' );
-		
+
 		$service
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getTitleFromPageId' )
@@ -1042,7 +1044,7 @@ class MediaWikiServiceTest extends BaseTest
 				'\Wikia\Search\MediaWikiService::getMediaDetailFromPageId should return the array result of \WikiaFileHelper::getMediaDetail'
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.10581 ms
@@ -1050,12 +1052,12 @@ class MediaWikiServiceTest extends BaseTest
 	 */
 	public function testPageIdIsVideoFile() {
 		$service = $this->service->setMethods( array( 'getFileForPageId' ) )->getMock();
-		
+
 		$mockFile = $this->getMockBuilder( '\LocalFile' )
 		                 ->disableOriginalConstructor()
 		                 ->setMethods( array( 'getHandler' ) )
 		                 ->getMock();
-		
+
 		$mockVideoHandler = $this->getMockBuilder( '\VideoHandler' )->getMock();
 		// again, mocking stuff we don't really want to here because of static methods
 		$service
@@ -1073,7 +1075,7 @@ class MediaWikiServiceTest extends BaseTest
 				$service->pageIdIsVideoFile( $this->pageId )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09202 ms
@@ -1105,7 +1107,7 @@ class MediaWikiServiceTest extends BaseTest
 				'\Wikia\Search\MediaWikiService::getTitleKeyFromPageId should return the db key for the canonical title associated with the provided page ID'
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.16046 ms
@@ -1116,13 +1118,13 @@ class MediaWikiServiceTest extends BaseTest
 		$mockFile = $this->getMockBuilder( '\File' )
 		                 ->disableOriginalConstructor()
 		                 ->getMock();
-		
+
 		$mockFindFile = $this->getGlobalFunctionMock( 'wfFindFile' );
-		
+
 		$mockTitle = $this->getMockBuilder( 'Title' )
 		                  ->disableOriginalConstructor()
 		                  ->getMock();
-		
+
 		$service
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getTitleFromPageId' )
@@ -1159,7 +1161,7 @@ class MediaWikiServiceTest extends BaseTest
 				'\Wikia\Search\MediaWikiService::getFileForPageId should return a cached file for the provided page ID if already invoked'
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.14926 ms
@@ -1172,14 +1174,14 @@ class MediaWikiServiceTest extends BaseTest
 		try {
 			$get->invoke( (new MediaWikiService), $this->pageId );
 		} catch ( \Exception $e ) {}
-		
+
 		$this->assertInstanceOf(
 				'\Exception',
 				$e,
 				'\Wikia\Search\MediaWikiService::getPageFromPageId should throw an exception when provided a nonexistent page id'
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.16001 ms
@@ -1191,7 +1193,7 @@ class MediaWikiServiceTest extends BaseTest
 		                    ->disableOriginalConstructor()
 		                    ->setMethods( array( '__call' ) )
 		                    ->getMock();
-		
+
 		$mockArticle
 		    ->expects( $this->any() )
 		    ->method ( '__call' )
@@ -1220,7 +1222,7 @@ class MediaWikiServiceTest extends BaseTest
 				'\Wikia\Search\MediaWikiService::getPageFromPageId should return a cached instance of \Article for a provided page id upon consecutive invocations'
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.16608 ms
@@ -1285,7 +1287,7 @@ class MediaWikiServiceTest extends BaseTest
 				'\Wikia\Search\MediaWikiService::getPageFromPageId should return a cached instance of \Article for a provided canonical page id upon consecutive invocations, even if the redirect was accessed'
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08691 ms
@@ -1293,12 +1295,12 @@ class MediaWikiServiceTest extends BaseTest
 	 */
 	public function testGetTitleStringDefault() {
 		$service = $this->service->getMock();
-		
+
 		$title = $this->getMockBuilder( '\Title' )
 		              ->disableOriginalConstructor()
 		              ->setMethods( array( 'getFullText', 'getNamespace' ) )
 		              ->getMock();
-		
+
 		$title
 		    ->expects( $this->once() )
 		    ->method ( 'getFullText' )
@@ -1316,7 +1318,7 @@ class MediaWikiServiceTest extends BaseTest
 				$get->invoke( $service, $title )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.1397 ms
@@ -1324,12 +1326,12 @@ class MediaWikiServiceTest extends BaseTest
 	 */
 	public function testGetTitleStringChildWallMessage() {
 		$service = $this->service->getMock();
-		
+
 		$title = $this->getMockBuilder( '\Title' )
 		              ->disableOriginalConstructor()
 		              ->setMethods( array( 'getArticleID', 'getNamespace', 'getFullText' ) )
 		              ->getMock();
-		
+
 		$wm = $this->getMockBuilder( '\WallMessage' )
 		           ->disableOriginalConstructor()
 		           ->setMethods( array( 'load', 'isMain', 'getTopParentObj', 'getMetaTitle' ) )
@@ -1370,8 +1372,8 @@ class MediaWikiServiceTest extends BaseTest
 			->will   ( $this->returnValue( 'wall message title' ) )
 		;
 
-		$this->proxyClass( '\WallMessage', $wm, 'newFromId' );
-		$this->mockApp();
+		$this->mockClass( '\WallMessage', $wm, 'newFromId' );
+
 		$get = new ReflectionMethod( '\Wikia\Search\MediaWikiService', 'getTitleString' );
 		$get->setAccessible( true );
 		$this->assertEquals(
@@ -1379,7 +1381,7 @@ class MediaWikiServiceTest extends BaseTest
 				$get->invoke( $service, $title )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.13248 ms
@@ -1387,12 +1389,12 @@ class MediaWikiServiceTest extends BaseTest
 	 */
 	public function testGetTitleStringEmptyChildWallMessage() {
 		$service = $this->service->getMock();
-		
+
 		$title = $this->getMockBuilder( '\Title' )
 		              ->disableOriginalConstructor()
 		              ->setMethods( array( 'getArticleID', 'getNamespace', 'getFullText' ) )
 		              ->getMock();
-		
+
 		$wm = $this->getMockBuilder( '\WallMessage' )
 		           ->disableOriginalConstructor()
 		           ->setMethods( array( 'load', 'isMain', 'getTopParentObj', 'getMetaTitle' ) )
@@ -1435,7 +1437,7 @@ class MediaWikiServiceTest extends BaseTest
 				$get->invoke( $service, $title )
 		);
 	}
-	
+
 //	/**
 //	 * @covers \Wikia\Search\MediaWikiService::getTitleString
 //	 */
@@ -1462,8 +1464,8 @@ class MediaWikiServiceTest extends BaseTest
 //		    ->method ( 'getArticleID' )
 //		    ->will    ( $this->returnValue( $this->pageId ) )
 //		;
-//		$this->proxyClass( '\WallMessage', null, 'newFromId' );
-//		$this->mockApp();
+//		$this->mockClass( '\WallMessage', null, 'newFromId' );
+
 //		$get = new ReflectionMethod( '\Wikia\Search\MediaWikiService', 'getTitleString' );
 //		$get->setAccessible( true );
 //		$this->assertEquals(
@@ -1471,8 +1473,8 @@ class MediaWikiServiceTest extends BaseTest
 //				$get->invoke( $service, $title )
 //		);
 //	}
-	
-	
+
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.13071 ms
@@ -1480,17 +1482,17 @@ class MediaWikiServiceTest extends BaseTest
 	 **/
 	public function testGetTitleStringMainWallMessage() {
 		$service = $this->service->getMock();
-		
+
 		$title = $this->getMockBuilder( '\Title' )
 		              ->disableOriginalConstructor()
 		              ->setMethods( array( 'getArticleID', 'getNamespace', 'getFullText' ) )
 		              ->getMock();
-		
+
 		$wm = $this->getMockBuilder( '\WallMessage' )
 		           ->disableOriginalConstructor()
 		           ->setMethods( array( 'load', 'isMain', 'getTopParentObj', 'getMetaTitle' ) )
 		           ->getMock();
-		
+
 		$title
 		    ->expects( $this->once() )
 		    ->method ( 'getNamespace' )
@@ -1523,7 +1525,7 @@ class MediaWikiServiceTest extends BaseTest
 				$get->invoke( $service, $title )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08616 ms
@@ -1532,9 +1534,10 @@ class MediaWikiServiceTest extends BaseTest
 	public function testGetNamespaceIdForString() {
 		$this->assertEquals( NS_CATEGORY, (new MediaWikiService)->getNamespaceIdForString( 'Category' ) );
 	}
-	
+
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.08865 ms
 	 * @covers Wikia\Search\MediaWikiService::getGlobalForWiki
 	 */
@@ -1562,7 +1565,7 @@ class MediaWikiServiceTest extends BaseTest
 				(new MediaWikiService)->getGlobalForWiki( 'foo', 123 )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.10373 ms
@@ -1590,7 +1593,7 @@ class MediaWikiServiceTest extends BaseTest
 				$service->isSkinMobile()
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08888 ms
@@ -1617,7 +1620,7 @@ class MediaWikiServiceTest extends BaseTest
 				$service->isOnDbCluster()
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08666 ms
@@ -1629,7 +1632,7 @@ class MediaWikiServiceTest extends BaseTest
 				(new MediaWikiService)->getDefaultNamespacesFromSearchEngine()
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09002 ms
@@ -1641,7 +1644,7 @@ class MediaWikiServiceTest extends BaseTest
 				(new MediaWikiService)->getSearchableNamespacesFromSearchEngine()
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08619 ms
@@ -1653,7 +1656,7 @@ class MediaWikiServiceTest extends BaseTest
 				(new MediaWikiService)->getTextForNamespaces( array( 0, 14 ) )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.0894 ms
@@ -1697,7 +1700,7 @@ class MediaWikiServiceTest extends BaseTest
 				$service->getFirstRevisionTimestampForPageId( $this->pageId )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09075 ms
@@ -1724,19 +1727,19 @@ class MediaWikiServiceTest extends BaseTest
 				$service->getSnippetForPageId( $this->pageId )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09298 ms
 	 * @covers Wikia\Search\MediaWikiService::getNonCanonicalTitleStringFromPageId
 	 */
-	public function testGetNonCanonicalTitleStringFromPageId() { 
+	public function testGetNonCanonicalTitleStringFromPageId() {
 		$service = $this->service->setMethods( array( 'getTitleStringFromPageId', 'getTitleString' ) )->getMock();
 		$mockArticle = $this->getMockBuilder( 'Article' )
 		                    ->disableOriginalConstructor()
 		                    ->setMethods( array( 'getTitle' ) )
 		                    ->getMock();
-		
+
 		$mockTitle = $this->getMockBuilder( 'Title' )
 		                  ->disableOriginalConstructor()
 		                  ->getMock();
@@ -1770,19 +1773,19 @@ class MediaWikiServiceTest extends BaseTest
 				$service->getNonCanonicalTitleStringFromPageId( $this->pageId )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09138 ms
 	 * @covers Wikia\Search\MediaWikiService::getNonCanonicalUrlFromPageId
 	 */
-	public function testGetNonCanonicalUrlFromPageId() { 
+	public function testGetNonCanonicalUrlFromPageId() {
 		$service = $this->service->setMethods( array( 'getUrlFromPageId' ) )->getMock();
 		$mockArticle = $this->getMockBuilder( 'Article' )
 		                    ->disableOriginalConstructor()
 		                    ->setMethods( array( 'getTitle' ) )
 		                    ->getMock();
-		
+
 		$mockTitle = $this->getMockBuilder( 'Title' )
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( array( 'getFullUrl' ) )
@@ -1816,9 +1819,10 @@ class MediaWikiServiceTest extends BaseTest
 				$service->getNonCanonicalUrlFromPageId( $this->pageId )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.09557 ms
 	 * @covers Wikia\Search\MediaWikiService::getArticleMatchForTermAndNamespaces
 	 */
@@ -1828,18 +1832,18 @@ class MediaWikiServiceTest extends BaseTest
 		                   ->disableOriginalConstructor()
 		                   ->setMethods( array( 'getNearMatch' ) )
 		                   ->getMock();
-		
+
 		$mockTitle = $this->getMockBuilder( 'Title' )
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( array( 'getNamespace', 'getArticleId' ) )
 		                  ->getMock();
-		
+
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Article' )
 		                  ->disableOriginalConstructor()
 		                  ->getMock();
 		$term = 'Foo';
 		$namespaces = array( 0, 14 );
-		
+
 		$mockEngine
 		    ->staticExpects( $this->at( 0 ) )
 		    ->method       ( 'getNearMatch' )
@@ -1855,7 +1859,7 @@ class MediaWikiServiceTest extends BaseTest
 		    ->staticExpects( $this->at( 0 ) )
 		    ->method       ( 'getNearMatch' )
 		    ->with         ( $term )
-		    ->will         ( $this->returnValue( $mockTitle ) ) 
+		    ->will         ( $this->returnValue( $mockTitle ) )
 		;
 		$mockTitle
 		    ->expects( $this->once() )
@@ -1879,7 +1883,7 @@ class MediaWikiServiceTest extends BaseTest
 				$mockMatch
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09007 ms
@@ -1891,12 +1895,12 @@ class MediaWikiServiceTest extends BaseTest
 		    ->expects( $this->never() )
 		    ->method ( 'getLanguageCode' )
 		;
-		$this->assertNull( 
+		$this->assertNull(
 				$mws->getWikiMatchByHost( '' ),
-				"Empty domain should return null" 
+				"Empty domain should return null"
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09183 ms
@@ -1958,7 +1962,7 @@ class MediaWikiServiceTest extends BaseTest
 				'A host that corresponds to a public wiki matching the current language should return a match'
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08665 ms
@@ -1991,7 +1995,7 @@ class MediaWikiServiceTest extends BaseTest
 				'A host that corresponds to a public wiki matching the current language should return a match'
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08709 ms
@@ -2030,7 +2034,7 @@ class MediaWikiServiceTest extends BaseTest
 				'A host that corresponds to a public wiki matching the current language should return a match'
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08804 ms
@@ -2062,7 +2066,7 @@ class MediaWikiServiceTest extends BaseTest
 				'We should not return a wiki match for a wiki that is closed'
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08925 ms
@@ -2094,10 +2098,11 @@ class MediaWikiServiceTest extends BaseTest
 				'We should not return a wiki match for a non language-matching wiki'
 		);
 	}
-	
-	
+
+
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.08756 ms
 	 * @covers Wikia\Search\MediaWikiService::getWikiFromWikiId
 	 */
@@ -2111,7 +2116,7 @@ class MediaWikiServiceTest extends BaseTest
 		    ->with         ( 123 )
 		    ->will         ( $this->returnValue( $wiki ) )
 		;
-		$this->proxyClass( 'WikiFactory', $mockWf );
+		$this->mockClass( 'WikiFactory', $mockWf );
 		$refl = new ReflectionMethod( $mws, 'getWikiFromWikiId' );
 		$refl->setAccessible( true );
 		$this->assertEquals(
@@ -2148,7 +2153,7 @@ class MediaWikiServiceTest extends BaseTest
 				$service->getMainPageUrlForWikiId( 123 )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08847 ms
@@ -2179,7 +2184,7 @@ class MediaWikiServiceTest extends BaseTest
 				$reflGet->invoke( $service, 123 )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.13295 ms
@@ -2224,7 +2229,7 @@ class MediaWikiServiceTest extends BaseTest
 				$service->getLastRevisionTimestampForPageId( $this->pageId )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.12891 ms
@@ -2253,7 +2258,7 @@ class MediaWikiServiceTest extends BaseTest
 		$lang
 		    ->expects( $this->once() )
 		    ->method ( 'date' )
-		    ->with   ( 'timestamp' ) 
+		    ->with   ( 'timestamp' )
 		    ->will   ( $this->returnValue( 'mw formatted timestamp' ) )
 		;
 		$this->assertEquals(
@@ -2261,7 +2266,7 @@ class MediaWikiServiceTest extends BaseTest
 				$service->getMediaWikiFormattedTimestamp( '11/11/11' )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08929 ms
@@ -2529,9 +2534,10 @@ class MediaWikiServiceTest extends BaseTest
 			$service->getThumbnailHtmlFromFileTitle( 'x', array( 'width' => 12, 'height' => 13 ) )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.09379 ms
 	 * @covers Wikia\Search\MediaWikiService::getVideoViewsForPageId
 	 */
@@ -2546,7 +2552,7 @@ class MediaWikiServiceTest extends BaseTest
 		            ->disableOriginalConstructor()
 		            ->setMethods( array( 'isFileTypeVideo' ) )
 		            ->getMock();
-		
+
 		$mqs = $this->getMockBuilder( 'MediaQueryService' )
 		            ->disableOriginalConstructor()
 		            ->setMethods( array( 'getTotalVideoViewsByTitle' ) )
@@ -2581,7 +2587,7 @@ class MediaWikiServiceTest extends BaseTest
 				$service->getVideoViewsForPageId( $this->pageId )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.13485 ms
@@ -2615,7 +2621,7 @@ class MediaWikiServiceTest extends BaseTest
 				$service->getFormattedVideoViewsForPageId( $this->pageId )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09123 ms
@@ -2623,12 +2629,12 @@ class MediaWikiServiceTest extends BaseTest
 	 */
 	public function testFormatNumber() {
 		$service = $this->service->setMethods( null )->getMock();
-		
+
 		$lang = $this->getMockBuilder( "Language" )
 		             ->disableOriginalConstructor()
 		             ->setMethods( array( 'formatNum' ) )
 		             ->getMock();
-		
+
 		$lang
 		    ->expects( $this->once() )
 		    ->method ( 'formatNum' )
@@ -2644,7 +2650,7 @@ class MediaWikiServiceTest extends BaseTest
 				$service->formatNumber( 10000 )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09122 ms
@@ -2682,7 +2688,7 @@ class MediaWikiServiceTest extends BaseTest
 	public function testGetStatsInfoForWikiId() {
 		$service = $this->service->setMethods( null )->getMock();
 		$wikisvc = $this->getMock( 'WikiService', array( 'getSiteStats', 'getTotalVideos' ) );
-		
+
 		$info = array( 'this' => 'yup' );
 		$wikisvc
 		    ->expects( $this->once() )
@@ -2704,7 +2710,7 @@ class MediaWikiServiceTest extends BaseTest
 				$service->getStatsInfoForWikiId( 123 )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.13199 ms
@@ -2728,7 +2734,7 @@ class MediaWikiServiceTest extends BaseTest
 				$meth->invoke( $service, $timestamp )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09136 ms
@@ -2739,7 +2745,7 @@ class MediaWikiServiceTest extends BaseTest
 		$ds = $this->getMockBuilder( 'WikiDataSource' )
 		           ->disableOriginalConstructor()
 		           ->getMock();
-		
+
 		$this->mockClass( 'WikiDataSource', $ds );
 		$meth = $app = new ReflectionMethod( '\Wikia\Search\MediaWikiService' , 'getDataSourceForWikiId' );
 		$meth->setAccessible( true );
@@ -2754,9 +2760,10 @@ class MediaWikiServiceTest extends BaseTest
 				$service
 		);
 	}
-	
+
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.14423 ms
 	 * @covers Wikia\Search\MediaWikiService::getMainPageTitleForWikiId
 	 */
@@ -2767,7 +2774,7 @@ class MediaWikiServiceTest extends BaseTest
 		              ->disableOriginalConstructor()
 		              ->setMethods( [ 'isRedirect', 'getRedirectTarget' ] )
 		              ->getMock();
-		
+
 		$service
 		    ->expects( $this->once() )
 		    ->method ( 'getDbNameForWikiId' )
@@ -2808,17 +2815,18 @@ class MediaWikiServiceTest extends BaseTest
 				$title
 		);
 	}
-	
+
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.09433 ms
 	 * @covers Wikia\Search\MediaWikiService::getDescriptionTextForWikiId
 	 */
 	public function testGetDescriptionTextForWikiId() {
 		$service = $this->service->setMethods( [ 'getDbNameForWikiId', 'getGlobalForWiki' ] )->getMock();
 		$apiservice = $this->getMock( 'ApiService', [ 'foreignCall' ] );
-		
-		
+
+
 		$service
 		    ->expects( $this->at( 0 ) )
 		    ->method ( 'getDbNameForWikiId' )
@@ -2851,9 +2859,10 @@ class MediaWikiServiceTest extends BaseTest
 				$service->getDescriptionTextForWikiId( 123 )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.09148 ms
 	 * @covers Wikia\Search\MediaWikiService::getHubForWikiId
 	 */
@@ -2872,10 +2881,11 @@ class MediaWikiServiceTest extends BaseTest
 				$service->getHubForWikiId( 123 )
 		);
 	}
-	
-	
+
+
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.09163 ms
 	 * @covers Wikia\Search\MediaWikiService::getSubHubForWikiId
 	 */
@@ -2894,9 +2904,10 @@ class MediaWikiServiceTest extends BaseTest
 				$service->getSubHubForWikiId( 123 )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
+	 * @group Broken
 	 * @slowExecutionTime 0.09473 ms
 	 * @covers Wikia\Search\MediaWikiService::getMainPageTextForWikiId
 	 */
@@ -2907,7 +2918,7 @@ class MediaWikiServiceTest extends BaseTest
 		              ->disableOriginalConstructor()
 		              ->setMethods( [ 'getDbKey' ] )
 		              ->getMock();
-		
+
 		$params = [ 'controller' => 'ArticlesApiController', 'method' => 'getDetails', 'titles' => 'Foo_bar' ];
 		$title
 		    ->expects( $this->once() )
@@ -2939,7 +2950,7 @@ class MediaWikiServiceTest extends BaseTest
 				$service->getMainPageTextForWikiId( 123 )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.13325 ms
@@ -2958,7 +2969,7 @@ class MediaWikiServiceTest extends BaseTest
 				$service->invokeHook( 'onwhatever', [ 'foo', 123 ] )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09113 ms
@@ -2972,7 +2983,7 @@ class MediaWikiServiceTest extends BaseTest
 				$service
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.09036 ms
@@ -2985,7 +2996,7 @@ class MediaWikiServiceTest extends BaseTest
 				$service->getHostName()
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.0917 ms
@@ -3042,7 +3053,7 @@ class MediaWikiServiceTest extends BaseTest
 			array(10000000000, 'message-id', 10000, 'message-id-M'),
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.13412 ms
@@ -3055,7 +3066,7 @@ class MediaWikiServiceTest extends BaseTest
 		                    ->disableOriginalConstructor()
 		                    ->setMethods( array( 'text' ) )
 		                    ->getMock();
-		
+
 		$service = $this->service->setMethods( null )->getMock();
 		$params = array( 'whatever' );
 		$mockWfMessage
@@ -3069,34 +3080,34 @@ class MediaWikiServiceTest extends BaseTest
 		    ->method ( 'text' )
 		    ->will   ( $this->returnValue( 'bar whatever' ) )
 		;
-		
+
 		$this->assertEquals(
 				'bar whatever',
 				$service->getSimpleMessage( 'foo', $params )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.13765 ms
 	 * @covers Wikia\Search\MediaWikiService::getDomainsForWikiId
 	 */
 	public function testGetDomainsForWikiId() {
-		$mws = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getGlobal', 'getWikiId' ] ); 
-		
+		$mws = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getGlobal', 'getWikiId' ] );
+
 		$mockDbr = $this->getMockBuilder( '\DatabaseMysql' )
 		                ->disableOriginalConstructor()
 		                ->setMethods( array( 'select', 'fetchObject' ) )
 		                ->getMock();
-		
+
 		$mockGetDB = $this->getGlobalFunctionMock( 'wfGetDB' );
-		
+
 		$mockResult = $this->getMockBuilder( '\ResultWrapper' )
 		                   ->disableOriginalConstructor()
 		                   ->getMock();
-		
+
 		$mockObject = (object) [ 'city_domain' => 'foo.wikia.com' ];
-		
+
 		$mws
 		    ->expects( $this->once() )
 		    ->method ( 'getGlobal' )

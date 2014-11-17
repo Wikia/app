@@ -62,6 +62,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->wg->SuppressFooter = false;
 		$this->wg->SuppressAds = true;
 		$this->wg->SuppressToolbar = true;
+
+		$this->getOutput()->disallowUserJs(); // just in case...
 	}
 
 	/**
@@ -83,12 +85,17 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string editToken - token for changing password
 	 */
 	public function index() {
+		$returnTo = urldecode( $this->request->getVal( 'returnto', '' ) );
+		$returnToQuery = urldecode( $this->request->getVal( 'returntoquery', '' ) );
 
 		// redirect if signup
 		$type = $this->request->getVal('type', '');
 		if ($type === 'signup' || $this->getPar() == 'signup') {
 			$title = SpecialPage::getTitleFor( 'UserSignup' );
-			$this->wg->Out->redirect( $title->getFullURL() );
+			$this->wg->Out->redirect( $title->getFullURL( [
+				['returnto' => $returnTo],
+				['returntoquery' => $returnToQuery],
+			] ) );
 			return false;
 		}
 
@@ -102,8 +109,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->password = $this->request->getVal( 'password', '' );
 		$this->keeploggedin = $this->request->getCheck( 'keeploggedin' );
 		$this->loginToken = UserLoginHelper::getLoginToken();
-		$this->returnto = htmlentities($this->request->getVal( 'returnto', '' ), ENT_QUOTES, "UTF-8");
-		$this->returntoquery = htmlentities($this->request->getVal( 'returntoquery', '' ), ENT_QUOTES, "UTF-8");
+		$this->returnto = $returnTo;
+		$this->returntoquery = $returnToQuery;
 
 		// process login
 		if ( $this->wg->request->wasPosted() ) {
@@ -229,6 +236,14 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 		$this->returnto = $this->getReturnToFromQuery( $query );
 		$this->returntoquery = $this->getReturnToQueryFromQuery( $query );
+
+		$requestParams = $this->getRequest()->getParams();
+		if ( !empty( $requestParams[ 'registerLink' ] ) ) {
+			$this->registerLink = $requestParams[ 'registerLink' ];
+		}
+		if ( !empty( $requestParams[ 'template' ] ) ) {
+			$this->overrideTemplate( $requestParams[ 'template' ] );
+		}
 	}
 
 	public function getMainPagePartialUrl() {
@@ -352,6 +367,13 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		}
 
 		$loginCase = $loginForm->authenticateUserData();
+
+		/** PLATFORM-508 - logging for Helios project - begin */
+		\Wikia\Logger\WikiaLogger::instance()->debug(
+			'PLATFORM-508',
+			[ 'method' => __METHOD__, 'login_case' => (string) $loginCase ]
+		);
+		/** PLATFORM-508 - logging for Helios project - end */
 
 		switch ( $loginCase ) {
 			case LoginForm::SUCCESS:

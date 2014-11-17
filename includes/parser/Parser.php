@@ -335,6 +335,10 @@ class Parser {
 		wfProfileIn( __METHOD__ );
 		wfProfileIn( $fname );
 
+		// Wikia change begin - @author: wladek
+		$wikitextSize = strlen($text);
+		// Wikia change end
+
 		$this->startParse( $title, $options, self::OT_HTML, $clearState );
 
 		$oldRevisionId = $this->mRevisionId;
@@ -464,6 +468,9 @@ class Parser {
 		}
 
 		wfRunHooks( 'ParserAfterTidy', array( &$this, &$text ) );
+		// Wikia change begin - @author: wladek
+		$this->recordPerformanceStats( $wikitextSize, strlen($text) );
+		// Wikia change end
 
 		# Information on include size limits, for the benefit of users who try to skirt them
 		if ( $this->mOptions->getEnableLimitReport() ) {
@@ -481,8 +488,11 @@ class Parser {
 			// which looks much like the problematic '-'.
 			$limitReport = str_replace( array( '-', '&' ), array( '‐', '&amp;' ), $limitReport );
 
-			$text .= "\n<!-- \n$limitReport-->\n";
+			if ( !empty( $limitReport ) ) {
+				$text .= "\n<!-- \n$limitReport-->\n";
+			}
 		}
+
 		$this->mOutput->setText( $text );
 
 		$this->mRevisionId = $oldRevisionId;
@@ -1993,7 +2003,7 @@ class Parser {
 
 			if ( $might_be_img ) { # if this is actually an invalid link
 				wfProfileIn( __METHOD__."-might_be_img" );
-				if ( ( $ns == NS_FILE || $ns == NS_VIDEO ) && $noforce ) { # but might be an image
+				if ( ( $ns == NS_FILE ) && $noforce ) { # but might be an image
 					$found = false;
 					while ( true ) {
 						# look at the next 'line' to see if we can close it there
@@ -5596,6 +5606,14 @@ class Parser {
 		}
 		$this->mOutput->setCacheTime( -1 ); // old style, for compatibility
 		$this->mOutput->updateCacheExpiry( 0 ); // new style, for consistency
+
+		// Wikia change - begin
+		Wikia\Logger\WikiaLogger::instance()->info(__METHOD__, [
+			'exception' => new Exception()
+		]);
+
+		Transaction::setAttribute( Transaction::PARAM_PARSER_CACHE_DISABLED, true );
+		// Wikia change - end
 	}
 
 	/**
@@ -6150,5 +6168,23 @@ class Parser {
 	 */
 	function isValidHalfParsedText( $data ) {
 		return isset( $data['version'] ) && $data['version'] == self::HALF_PARSED_VERSION;
+	}
+
+	/**
+	 * Records parser performance stats in ParserOutput object
+	 *
+	 * @author wladek
+	 *
+	 * @param $wikitextSize int Wikitext size
+	 * @param $htmlSize int HTML size
+	 */
+	function recordPerformanceStats( $wikitextSize, $htmlSize ) {
+		$parserOutput = $this->mOutput;
+		$parserOutput->setPerformanceStats('expFuncCount',   $this->mExpensiveFunctionCount);
+		$parserOutput->setPerformanceStats('nodeCount',      $this->mPPNodeCount);
+		$parserOutput->setPerformanceStats('postExpandSize', $this->mIncludeSizes['post-expand']);
+		$parserOutput->setPerformanceStats('tempArgSize',    $this->mIncludeSizes['arg']);
+		$parserOutput->setPerformanceStats('wikitextSize',   $wikitextSize);
+		$parserOutput->setPerformanceStats('htmlSize',       $htmlSize);
 	}
 }

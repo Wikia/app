@@ -42,9 +42,9 @@ JSMessages::registerPackage('SpecialPromote', array('promote-*'));
 // special pages
 $wgSpecialPages['Promote'] = 'SpecialPromoteController';
 
-$wgAvailableRights[] = 'promote';
-$wgGroupPermissions['*']['promote'] = false;
-$wgGroupPermissions['staff']['promote'] = true;
-$wgGroupPermissions['helper']['promote'] = true;
-$wgGroupPermissions['sysop']['promote'] = true;
-$wgGroupPermissions['bureaucrat']['promote'] = true;
+$wgAvailableRights[] = 'restricted_promote';
+$wgGroupPermissions['*']['restricted_promote'] = false;
+$wgGroupPermissions['staff']['restricted_promote'] = true;
+$wgGroupPermissions['helper']['restricted_promote'] = true;
+$wgGroupPermissions['sysop']['restricted_promote'] = false;
+$wgGroupPermissions['bureaucrat']['restricted_promote'] = false;

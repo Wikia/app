@@ -1,99 +1,53 @@
 #!/usr/bin/env bash
 
-# FIXME this script is duplicated from update-oojs-ui.sh - factor this out
-
-# This script generates a commit that updates the oojs distribution
-# ./bin/update-oojs.sh path/to/repo/for/oojs
-
-function oojshash() {
-	grep "OOjs v" lib/oojs/oojs.js \
-		| head -n 1 \
-		| grep -Eo '\([a-z0-9]+\)' \
-		| sed 's/^(//' \
-		| sed 's/)$//'
-}
-
-function oojstag() {
-	grep "OOjs v" lib/oojs/oojs.js \
-		| head -n 1 \
-		| grep -Eo '\bv[0-9a-z.-]+\b'
-}
-
-function oojsversion() {
-	grep "OOjs v" lib/oojs/oojs.js \
-		| head -n 1 \
-		| grep -Eo '\bv[0-9a-z.-]+\b.*$'
-}
-
-# cd to the VisualEditor directory
-cd $(cd $(dirname $0)/..; pwd)
-
-if [ "x$1" == "x" ]
+if [ -n "$2" ]
 then
-	echo >&2 "Usage: update-oojs.sh path/to/repo/for/oojs"
+	# Too many parameters
+	echo >&2 "Usage: $0 [<version>]"
 	exit 1
 fi
 
-# Undo any changes in the oojs directory
-git reset lib/oojs/
-git checkout lib/oojs/
+REPO_DIR=$(cd $(dirname $0)/..; pwd) # Root dir of the git repo working tree
+TARGET_DIR=lib/oojs # Destination relative to the root of the repo
+NPM_DIR=`mktemp -d 2>/dev/null || mktemp -d -t 'update-oojs'` # e.g. /tmp/update-oojs.rI0I5Vir
 
-git fetch origin
-# Create branch if needed and reset it to master
-git checkout -B update-oojs origin/master
+# Prepare working tree
+cd $REPO_DIR &&
+git reset $TARGET_DIR && git checkout $TARGET_DIR && git fetch origin &&
+git checkout -B upstream-oojs origin/master || exit 1
 
-# Get the old oojs version
-OLDVERSION=$(oojshash)
-if [ "x$OLDVERSION" == "x" ]
+# Fetch upstream version
+cd $NPM_DIR
+if [ -n "$1" ]
 then
-	TAG=$(oojstag)
+	npm install oojs@$1 || exit 1
+else
+	npm install oojs || exit 1
 fi
 
-# cd to the oojs directory
-cd $1 || exit 1
-if [ "x$OLDVERSION" == "x" ]
+OOJS_VERSION=$(node -e 'console.log(JSON.parse(require("fs").readFileSync("./node_modules/oojs/package.json")).version);')
+if [ "$OOJS_VERSION" == "" ]
 then
-	# Try the tag
-	OLDVERSION=$(git rev-parse $TAG)
-	if [ $? != 0 ]
-	then
-		echo Could not find OOjs version
-		cd -
-		exit 1
-	fi
+	echo 'Could not find OOjs version'
+	exit 1
 fi
-if [ "$(git rev-parse $OLDVERSION)" == "$(git rev-parse HEAD)" ]
-then
-	echo "No changes (already at $OLDVERSION)"
-	cd -
-	exit 0
-fi
-# Build the distribution
-npm install || exit 1
-grunt || exit 1
-# Get the list of changes
-NEWCHANGES=$(git log $OLDVERSION.. --oneline --no-merges --reverse --color=never)
-NEWCHANGESDISPLAY=$(git log $OLDVERSION.. --oneline --no-merges --reverse --color=always)
-# cd back to the VisualEditor directory
-cd -
 
-# Copy files from dist/ to lib/oojs
-cp -a $1/dist/* lib/oojs/
-# Figure out what the new version is
-NEWVERSION=$(oojsversion)
-# Generate commit summary
+# Copy file(s)
+rsync --recursive --delete --force ./node_modules/oojs/dist $REPO_DIR/$TARGET_DIR || exit 1
+
+# Clean up temporary area
+rm -rf $NPM_DIR
+
+# Generate commit
+cd $REPO_DIR || exit 1
+
 COMMITMSG=$(cat <<END
-Update OOjs to $NEWVERSION
+Update OOjs to v$OOJS_VERSION
 
-New changes:
-$NEWCHANGES
+Release notes:
+ https://git.wikimedia.org/blob/oojs%2Fcore.git/v$OOJS_VERSION/History.md
 END
 )
-# Commit
-git commit lib/oojs/ -m "$COMMITMSG"
-cat >&2 <<END
 
-
-Created commit with changes:
-$NEWCHANGESDISPLAY
-END
+# Stage deletion, modification and creation of files. Then commit.
+git add --update $TARGET_DIR && git add $TARGET_DIR && git commit -m "$COMMITMSG" || exit 1

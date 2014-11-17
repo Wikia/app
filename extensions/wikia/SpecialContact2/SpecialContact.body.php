@@ -52,69 +52,71 @@ class ContactForm extends SpecialPage {
 	}
 
 	function execute( $par ) {
-		global $wgRequest, $wgOut;
-		global $wgUser, $wgCaptchaClass, $wgServer;
+		global $wgCaptchaClass, $wgServer;
 
 		$app = F::app();
-
 		$isMobile = $app->checkSkin( 'wikiamobile');
+		$out = $this->getOutput();
+		$user = $this->getUser();
+		$request = $this->getRequest();
 
 		if ( $par === 'close-account' && $this->isCloseMyAccountSupported() ) {
 			$closeAccountTitle = SpecialPage::getTitleFor( 'CloseMyAccount' );
-			$this->getOutput()->redirect( $closeAccountTitle->getFullURL() );
+			$out->redirect( $closeAccountTitle->getFullURL() );
 		}
 
-		$wgOut->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/SpecialContact2/SpecialContact.scss'));
+		$out->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/SpecialContact2/SpecialContact.scss'));
+
 		$extPath = $app->wg->extensionsPath;
-		$wgOut->addScript( "<script src=\"{$extPath}/wikia/SpecialContact2/SpecialContact.js\"></script>" );
+		$out->addScript( "<script src=\"{$extPath}/wikia/SpecialContact2/SpecialContact.js\"></script>" );
 		$this->mUserName = null;
 		$this->mRealName = null;
 		$this->mWhichWiki = null;
-		$this->mProblem = $wgRequest->getText( 'wpContactSubject' ); //subject
+		$this->mProblem = $request->getText( 'wpContactSubject' ); //subject
 		$this->mProblemDesc = null;
-		$this->mAction = $wgRequest->getVal( 'action' );
-		$this->mEmail = $wgRequest->getText( 'wpEmail' );
-		$this->mBrowser = $wgRequest->getText( 'wpBrowser' );
-		$this->mAbTestInfo = $wgRequest->getText( 'wpAbTesting' );
-		$this->mCCme = $wgRequest->getCheck( 'wgCC' );
-		$this->mReferral = $wgRequest->getText( 'wpReferral', ( !empty( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : null ) );
+		$this->mAction = $request->getVal( 'action' );
+		$this->mEmail = $request->getText( 'wpEmail' );
+		$this->mBrowser = $request->getText( 'wpBrowser' );
+		$this->mAbTestInfo = $request->getText( 'wpAbTesting' );
+		$this->mCCme = $request->getCheck( 'wgCC' );
+		$this->mReferral = $request->getText( 'wpReferral', ( !empty( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : null ) );
 
-		if( $wgRequest->wasPosted() ) {
+		if ( $request->wasPosted() ) {
 
-			if( $wgUser->isAnon() && class_exists( $wgCaptchaClass ) ) {
+			if( $user->isAnon() && class_exists( $wgCaptchaClass ) ) {
 				$captchaObj = new $wgCaptchaClass();
 				$info = $captchaObj->passCaptcha();
 			}
 
 			#ubrfzy note: these were moved inside to (lazy) prevent some stupid bots
-			$this->mUserName = $wgRequest->getText( 'wpUserName' );
-			$wgRequest->setVal( 'wpUrlencUserName', urlencode( str_replace( ' ', '_', $wgRequest->getText( 'wpUserName' ) ) ) );
-			$wgRequest->setVal( 'wpUrlencUserNameNew', urlencode( str_replace( ' ', '_', $wgRequest->getText( 'wpUserNameNew' ) ) ) );
+			$this->mUserName = $request->getText( 'wpUserName' );
+			$request->setVal( 'wpUrlencUserName', urlencode( str_replace( ' ', '_', $request->getText( 'wpUserName' ) ) ) );
+			$request->setVal( 'wpUrlencUserNameNew', urlencode( str_replace( ' ', '_', $request->getText( 'wpUserNameNew' ) ) ) );
 
-			$this->mRealName = $wgRequest->getText( 'wpContactRealName' );
-			$this->mWhichWiki = $wgRequest->getText( 'wpContactWikiName', $wgServer );
+			$this->mRealName = $request->getText( 'wpContactRealName' );
+			$this->mWhichWiki = $request->getText( 'wpContactWikiName', $wgServer );
 
 			#sibject still handled outside of post check, because of existing hardcoded prefill links
 
-			if ( $wgUser->isLoggedIn() && ( $wgUser->getName() !== $wgRequest->getText( 'wpUserName' ) ) ) {
-				$wgOut->showErrorPage( 'specialcontact-error-title', 'specialcontact-error-message' );
+			if ( $user->isLoggedIn() && ( $user->getName() !== $request->getText( 'wpUserName' ) ) ) {
+				$out->showErrorPage( 'specialcontact-error-title', 'specialcontact-error-message' );
 				return;
 			}
 
 			// handle custom forms
 			if ( !empty( $par ) && array_key_exists( $par, $this->customForms ) ) {
 				if ( $par === 'rename-account' ) {
-					$this->validateUserName( $wgRequest->getText( 'wpUserNameNew' ) );
+					$this->validateUserName( $request->getText( 'wpUserNameNew' ) );
 				}
 
 				foreach ( $this->customForms[$par]['vars'] as $var ) {
-					$args[] = $wgRequest->getVal( $var );
+					$args[] = $request->getVal( $var );
 				}
 
 				if ( !empty( $this->customForms[$par]['markuser'] ) ) {
 					// notify relevant extension that a request has been made
-					$wgUser->setOption( $this->customForms[$par]['markuser'], 1 );
-					$wgUser->saveSettings();
+					$user->setOption( $this->customForms[$par]['markuser'], 1 );
+					$user->saveSettings();
 				}
 
 				$messageText = vsprintf( $this->customForms[$par]['format'], $args );
@@ -122,26 +124,26 @@ class ContactForm extends SpecialPage {
 				$this->mProblemDesc = $messageText;
 
 				// set subject
-				$this->mProblem = vsprintf( $this->customForms[$par]['subject'], array( $wgRequest->getText( 'wpUserName' ), $this->mWhichWiki ) );
+				$this->mProblem = vsprintf( $this->customForms[$par]['subject'], array( $request->getText( 'wpUserName' ), $this->mWhichWiki ) );
 			} else {
-				$this->mProblemDesc = $wgRequest->getText( 'wpContactDesc' ); //body
+				$this->mProblemDesc = $request->getText( 'wpContactDesc' ); //body
 			}
 
 			#malformed email?
 			if (!Sanitizer::validateEmail($this->mEmail)) {
-				$this->err[] = wfMsg('invalidemailaddress');
+				$this->err[] = $this->msg( 'invalidemailaddress' )->escaped();
 				$this->errInputs['wpEmail'] = true;
 			}
 
 			#empty message text?
 			if( empty($this->mProblemDesc) ) {
-				$this->err[] = wfMsg('specialcontact-nomessage');
+				$this->err[] = $this->msg( 'specialcontact-nomessage' )->escaped();
 				$this->errInputs['wpContactDesc'] = true;
 			}
 
 			#captcha
-			if( $wgUser->isAnon() && class_exists( $wgCaptchaClass ) && !$info ) { // logged in users don't need the captcha (RT#139647)
-				$this->err[] = wfMsg('specialcontact-captchafail');
+			if( $user->isAnon() && class_exists( $wgCaptchaClass ) && !$info ) { // logged in users don't need the captcha (RT#139647)
+				$this->err[] = $this->msg('specialcontact-captchafail' )->escaped();
 				$this->errInputs['wpCaptchaWord'] = true;
 			}
 
@@ -157,42 +159,42 @@ class ContactForm extends SpecialPage {
 			#if there were any ->err s, they will be displayed in ContactForm
 		}
 
-		$wgOut->setRobotpolicy( 'noindex,nofollow' );
-		$wgOut->setArticleRelated( false );
+		$out->setRobotpolicy( 'noindex,nofollow' );
+		$out->setArticleRelated( false );
 
 		if ( $isMobile ) {
 
-			$wgOut->setPageTitle( wfMsg( 'contact' ) );
+			$out->setPageTitle( $this->msg( 'contact' )->text() );
 
 			$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 
 			$captchaErr = !empty( $this->errInputs['wpCaptchaWord'] ) ? 'inpErr' : null;
 
 			$oTmpl->set_vars( [
-				'isLoggedIn' => $wgUser->isLoggedIn(),
-				'intro' => wfMsgExt( 'specialcontact-intro-content-issue-mobile', array( 'parse' ) ),
-				'encName' => $wgUser->getName(),
-				'encEmail' => $wgUser->getEmail(),
-				'hasEmailConf' => $wgUser->isEmailConfirmed(),
+				'isLoggedIn' => $user->isLoggedIn(),
+				'intro' => $this->msg( 'specialcontact-intro-content-issue-mobile' )->parse(),
+				'encName' => $user->getName(),
+				'encEmail' => $user->getEmail(),
+				'hasEmailConf' => $user->isEmailConfirmed(),
 				'subject' => $this->mProblem,
 				'content' => $this->mProblemDesc,
 				'cc' => $this->mCCme,
 				'userName' => $this->mUserName,
 				'email' => $this->mEmail,
-				'captchaForm' => ($wgUser->isAnon() && class_exists( $wgCaptchaClass )) ? (new $wgCaptchaClass())->getForm( $captchaErr ) : '',
+				'captchaForm' => ($user->isAnon() && class_exists( $wgCaptchaClass )) ? (new $wgCaptchaClass())->getForm( $captchaErr ) : '',
 				'errMessages' => $this->err,
 				'errors' => $this->errInputs,
 				'referral' => $this->mReferral
 			] );
 
-			$wgOut->addHTML( $oTmpl->render( "mobile-form" ) );
+			$out->addHTML( $oTmpl->render( "mobile-form" ) );
 
 			foreach ( AssetsManager::getInstance()->getURL( 'special_contact_wikiamobile_scss' ) as $s ) {
-				$wgOut->addStyle( $s );
+				$out->addStyle( $s );
 			}
 
 			foreach ( AssetsManager::getInstance()->getURL( 'special_contact_wikiamobile_js' ) as $s ) {
-				$wgOut->addScript( "<script src=" . $s . ">" );
+				$out->addScript( "<script src=" . $s . ">" );
 			}
 
 		} else {
@@ -210,15 +212,19 @@ class ContactForm extends SpecialPage {
 	 * @access private
 	 */
 	function processCreation() {
-		global $wgUser, $wgOut, $wgCityId, $wgSpecialContactEmail;
-		global $wgLanguageCode, $wgRequest, $wgServer;
+		global $wgCityId, $wgSpecialContactEmail;
+		global $wgLanguageCode, $wgServer;
 
 		// If not configured, fall back to a default just in case.
 		$wgSpecialContactEmail = ( empty( $wgSpecialContactEmail ) ? "community@wikia.com" : $wgSpecialContactEmail );
 
-		$wgOut->setPageTitle( wfMsg( 'specialcontact-pagetitle' ) );
-		$wgOut->setRobotpolicy( 'noindex,nofollow' );
-		$wgOut->setArticleRelated( false );
+		$user = $this->getUser();
+		$output = $this->getOutput();
+		$request = $this->getRequest();
+
+		$output->setPageTitle( $this->msg( 'specialcontact-pagetitle' )->text() );
+		$output->setRobotpolicy( 'noindex,nofollow' );
+		$output->setArticleRelated( false );
 
 		//build common top of both emails
 		$m_shared = '';
@@ -233,13 +239,13 @@ class ContactForm extends SpecialPage {
 		$items[] = 'wkLang: ' . $wgLanguageCode;
 
 		//always add the IP
-		$items[] = 'IP:' . $wgRequest->getIP();
+		$items[] = 'IP:' . $request->getIP();
 
 		//if they are logged in, add the ID(and name) and their lang
-		$uid = $wgUser->getID();
+		$uid = $user->getID();
 		if( !empty($uid) ) {
-			$items[] = 'uID: ' . $uid . " (User:". $wgUser->getName() .")";
-			$items[] = 'uLang: ' . $wgUser->getOption('language');
+			$items[] = 'uID: ' . $uid . " (User:". $user->getName() .")";
+			$items[] = 'uLang: ' . $user->getOption( 'language' );
 		}
 
 		if ( !empty( $this->mReferral ) ) {
@@ -249,7 +255,7 @@ class ContactForm extends SpecialPage {
 		//smush it all together
 		$info = $this->mBrowser . "\n\n";
 		if ( !empty($uid) ) {
-		$info .= 'http://community.wikia.com/wiki/Special:LookUpUser/'. urlencode(str_replace(" ", "_", $this->mUserName)) . "\n";
+		$info .= 'http://community.wikia.com/wiki/Special:LookUpUser/'. urlencode(str_replace(" ", "_", $this->mUserName)) . "_\n";
 		}
 		$info .= 'http://community.wikia.com/wiki/Special:LookUpUser/'. $this->mEmail . "\n\n";
 		$info .= "A/B Tests: " . $this->mAbTestInfo . "\n\n"; // giving it its own line so that it stands out more
@@ -259,7 +265,7 @@ class ContactForm extends SpecialPage {
 		$body = "\n{$this->mProblemDesc}\n\n----\n" . $m_shared . $info;
 
 		if($this->mCCme) {
-			$mcc = wfMsg('specialcontact-ccheader') . "\n\n";
+			$mcc = $this->msg( 'specialcontact-ccheader' )->text() . "\n\n";
 			$mcc .= $m_shared . "\n{$this->mProblemDesc}\n";
 		}
 
@@ -274,9 +280,9 @@ class ContactForm extends SpecialPage {
 			$this->mProblem = 'Mobile: ' . $this->mProblem;
 		}
 
-		$subject = wfMsg('specialcontact-mailsub') . (( !empty($this->mProblem) )? ' - ' . $this->mProblem : '');
+		$subject = $this->msg( 'specialcontact-mailsub' )->text() . (( !empty($this->mProblem) )? ' - ' . $this->mProblem : '');
 
-		$screenshot = $wgRequest->getFileTempname( 'wpScreenshot' );
+		$screenshot = $request->getFileTempname( 'wpScreenshot' );
 		$magic = MimeMagic::singleton();
 
 		$screenshots = array();
@@ -310,26 +316,25 @@ class ContactForm extends SpecialPage {
 		}
 
 		#to user, from us (but only if the first one didnt error, dont want to echo the user on an email we didnt get)
-		if( empty($errors) && $this->mCCme && $wgUser->isEmailConfirmed() ) {
-			$result = UserMailer::send( $mail_user, $mail_community, wfMsg('specialcontact-mailsubcc'), $mcc, $mail_user, null, 'SpecialContactCC' );
+		if ( empty( $errors ) && $this->mCCme && $user->isEmailConfirmed() ) {
+			$result = UserMailer::send( $mail_user, $mail_community, $this->msg( 'specialcontact-mailsubcc' )->text(), $mcc, $mail_user, null, 'SpecialContactCC' );
 			if (!$result->isOK()) {
 				$errors .= "\n" . $result->getMessage();
 			}
 		}
 
-		if ( !empty($errors) ) {
-			$wgOut->addHTML( $this->formatError( $this->err ) );
+		if ( !empty( $errors ) ) {
+			$output->addHTML( $this->formatError( $this->err ) );
 		}
 
 		/********************************************************/
 		#sending done, show message
 
 		#parse this message to allow wiki links (BugId: 1048)
-		$wgOut->addHTML( wfMsgExt('specialcontact-submitcomplete', array('parse')) );
+		$output->addHTML( $this->msg( 'specialcontact-submitcomplete' )->parseAsBlock() );
 
 		$mp = Title::newMainPage();
-		$link = Xml::element('a', array('href'=>$mp->getLocalURL()), $mp->getPrefixedText());
-		$wgOut->addHTML(wfMsg( 'returnto', $link ) );
+		$output->addReturnTo( $mp );
 
 		return;
 	}
@@ -338,11 +343,12 @@ class ContactForm extends SpecialPage {
 	 * @access private
 	 */
 	function ContactFormPicker() {
-		global $wgOut, $SpecialContactSecMap;
+		global $SpecialContactSecMap;
 
-		$wgOut->setPageTitle( wfMsg( 'specialcontact-pagetitle' ) );
+		$out = $this->getOutput();
+		$out->setPageTitle( $this->msg( 'specialcontact-pagetitle' )->text() );
 
-		$uskin = RequestContext::getMain()->getSkin();
+		$uskin = $this->getSkin();
 
 		$secDat = array();
 
@@ -354,7 +360,7 @@ class ContactForm extends SpecialPage {
 			}
 
 			$newsec = array(
-				'header' => wfMsg('specialcontact-secheader-' . $section['headerMsg']),
+				'header' => $this->msg( 'specialcontact-secheader-' . $section['headerMsg'] )->escaped(),
 				'links' => array(),
 			);
 
@@ -389,7 +395,7 @@ class ContactForm extends SpecialPage {
 			$secDat[] = $newsec;
 		}
 
-			$local = wfMsgExt( 'specialcontact-intro-main-local', array('parse', 'content') );
+		$local = $this->msg( 'specialcontact-intro-main-local' )->inContentLanguage()->parse();
 		if( !wfEmptyMsg('specialcontact-intro-main-local', $local) ) {
 			#ok?
 		}
@@ -399,14 +405,14 @@ class ContactForm extends SpecialPage {
 
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$vars = array(
-			'head' => wfMsg( 'specialcontact-intro-main-head' ),
+			'head' => $this->msg( 'specialcontact-intro-main-head' )->parse(),
 			'local' => $local,
-			'foot' => wfMsgExt( 'specialcontact-intro-main-foot', array('parse') ),
+			'foot' => $this->msg( 'specialcontact-intro-main-foot' )->parse(),
 			'sectionData' => $secDat,
 		);
 
 		$oTmpl->set_vars( $vars );
-		$wgOut->addHTML( $oTmpl->render("picker") );
+		$out->addHTML( $oTmpl->render("picker") );
 
 		return;
 	}
@@ -426,20 +432,22 @@ class ContactForm extends SpecialPage {
 	 * @access private
 	 */
 	function ShowContactForm( $sub = null ) {
-		global $wgUser, $wgOut;
 		global $wgServer, $wgCaptchaClass;
 
-		$wgOut->setPageTitle(
-			wfMsg('specialcontact-sectitle', wfMsg('specialcontact-sectitle-'.$sub))
+		$out = $this->getOutput();
+		$user = $this->getUser();
+
+		$out->setPageTitle(
+			$this->msg( 'specialcontact-sectitle', $this->msg( 'specialcontact-sectitle-'.$sub )->text() )->text()
 		);
 
-		if( $wgUser->isLoggedIn() ) {
+		if( $user->isLoggedIn() ) {
 			//user mode
 
 			//we have user data, so use it, overriding any passed in from url
-			$this->mUserName = $wgUser->getName();
-			$this->mRealName = $wgUser->getRealName();
-			$this->mEmail = $wgUser->getEmail();
+			$this->mUserName = $user->getName();
+			$this->mRealName = $user->getRealName();
+			$this->mEmail = $user->getEmail();
 
 			# since logged in, assume...
 			//no box, just print
@@ -501,7 +509,7 @@ class ContactForm extends SpecialPage {
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$vars = array(
 			'type' => $sub,
-			'intro' => wfMsgExt( 'specialcontact-intro-' . $sub, array('parse') ),
+			'intro' => $this->msg( 'specialcontact-intro-' . $sub )->parse(),
 			'form_action' => $action,
 			'unlockURL' => (bool)$wgSpecialContactUnlockURL,
 			'eclass' => $eclass,
@@ -515,13 +523,13 @@ class ContactForm extends SpecialPage {
 			'encRealName' => $encRealName,
 			'encProblem' => $encProblem,
 			'encProblemDesc' => $encProblemDesc,
-			'isLoggedIn' => $wgUser->isLoggedIn(),
+			'isLoggedIn' => $user->isLoggedIn(),
 		);
 
-		if( $wgUser->isLoggedIn() ) {
+		if( $user->isLoggedIn() ) {
 			#logged in
-			$vars[ 'hasEmail' ] = $wgUser->getEmail();
-			$vars[ 'hasEmailConf' ] = $wgUser->isEmailConfirmed();
+			$vars[ 'hasEmail' ] = $user->getEmail();
+			$vars[ 'hasEmailConf' ] = $user->isEmailConfirmed();
 		}
 		elseif (class_exists($wgCaptchaClass)) {
 			#anon
@@ -536,15 +544,15 @@ class ContactForm extends SpecialPage {
 		$oTmpl->set_vars( $vars );
 
 		if( $this->secDat['form'] === true ) {
-			$wgOut->addHTML( $oTmpl->render("form") );
-		} elseif ( $wgUser->isAnon() && !empty( $this->secDat['reqlogin'] ) ) {
-			$wgOut->showErrorPage( 'loginreqtitle', 'specialcontact-error-logintext' );
+			$out->addHTML( $oTmpl->render("form") );
+		} elseif ( $user->isAnon() && !empty( $this->secDat['reqlogin'] ) ) {
+			$out->showErrorPage( 'loginreqtitle', 'specialcontact-error-logintext' );
 			return;
-		} elseif ( $this->secDat['form'] === 'rename-account' && $wgUser->getOption( 'wasRenamed', 0 ) ) {
-			$wgOut->showErrorPage( 'specialcontact-error-title', 'specialcontact-error-alreadyrenamed' );
+		} elseif ( $this->secDat['form'] === 'rename-account' && $user->getOption( 'wasRenamed', 0 ) ) {
+			$out->showErrorPage( 'specialcontact-error-title', 'specialcontact-error-alreadyrenamed' );
 			return;
 		} else {
-			$wgOut->addHTML( $oTmpl->render( $this->secDat['form'] ) );
+			$out->addHTML( $oTmpl->render( $this->secDat['form'] ) );
 		}
 		return true;
 	}
@@ -553,10 +561,10 @@ class ContactForm extends SpecialPage {
 	 * @access private
 	 */
 	function ShowNonForm( $sub = null ) {
-		global $wgOut;
 
-		$wgOut->setPageTitle(
-			wfMsg('specialcontact-sectitle', wfMsg('specialcontact-sectitle-'.$sub))
+		$out = $this->getOutput();
+		$out->setPageTitle(
+			$this->msg( 'specialcontact-sectitle', $this->msg( 'specialcontact-sectitle-'.$sub )->text() )->text()
 		);
 
 		$titleObj = Title::makeTitle( NS_SPECIAL, 'Contact' . '/' . $sub );
@@ -564,13 +572,13 @@ class ContactForm extends SpecialPage {
 		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 		$vars = array(
 			'type' => $sub,
-			'intro' => wfMsgExt( 'specialcontact-intro-' . $sub, array('parse') ),
-			'footer' => wfMsgExt( 'specialcontact-noform-footer' , array('parse') ),
+			'intro' => $this->msg( 'specialcontact-intro-' . $sub )->parse(),
+			'footer' => $this->msg( 'specialcontact-noform-footer' )->parse(),
 		);
 
 		$oTmpl->set_vars( $vars );
 
-		$wgOut->addHTML( $oTmpl->render("noform") );
+		$out->addHTML( $oTmpl->render("noform") );
 
 		return;
 	}
@@ -645,21 +653,21 @@ class ContactForm extends SpecialPage {
 	private function validateUserName( $userName ) {
 		global $wgWikiaMaxNameChars;
 		if ( $userName == '' ) {
-			$this->err[] = wfMsg( 'userlogin-error-noname' );
+			$this->err[] = $this->msg( 'userlogin-error-noname' )->escaped();
 			$this->errInputs['wpUserNameNew'] = true;
 			return false;
 		}
 
 		// check username length
 		if ( !User::isNotMaxNameChars( $userName ) ) {
-			$this->err[] = wfMsg( 'usersignup-error-username-length', $wgWikiaMaxNameChars );
+			$this->err[] = $this->msg( 'usersignup-error-username-length', $wgWikiaMaxNameChars )->escaped();
 			$this->errInputs['wpUserNameNew'] = true;
 			return false;
 		}
 
 		// check valid username
 		if ( !User::isCreatableName( $userName ) ) {
-			$this->err[] = wfMsg( 'usersignup-error-symbols-in-username' );
+			$this->err[] = $this->msg( 'usersignup-error-symbols-in-username' )->escaped();
 			$this->errInputs['wpUserNameNew'] = true;
 			return false;
 		}
@@ -675,11 +683,11 @@ class ContactForm extends SpecialPage {
 		if ( $result !== true ) {
 			$msg = '';
 			if ( $result === 'userlogin-bad-username-taken' ) {
-				$msg = wfMsg( 'userlogin-error-userexists' );
+				$msg = $this->msg( 'userlogin-error-userexists' )->escaped();
 			} else if ( $result === 'userlogin-bad-username-character' ) {
-				$msg = wfMsg( 'usersignup-error-symbols-in-username' );
+				$msg = $this->msg( 'usersignup-error-symbols-in-username' )->escaped();
 			} else if ( $result === 'userlogin-bad-username-length' ) {
-				$msg = wfMsg( 'usersignup-error-username-length', $wgWikiaMaxNameChars );
+				$msg = $this->msg( 'usersignup-error-username-length', $wgWikiaMaxNameChars )->escaped();
 			}
 
 			$this->err[] = empty( $msg ) ? $result : $msg;

@@ -12,7 +12,7 @@ class CategoryExhibitionSection {
 	protected $displayOption = false;	// current state of display option
 	protected $sortOption = false;		// current state of sort option
 
-	protected $allowedSortOptions = array( 'mostvisited', 'alphabetical', 'recentedits' );
+	protected $allowedSortOptions = array( 'mostvisited', 'alphabetical' );
 	protected $allowedDisplayOptions = array( 'exhibition', 'page' );
 
 	protected $verifyChecker = '';
@@ -75,7 +75,6 @@ class CategoryExhibitionSection {
 				//FB#26239 - fall back to alphabetical order if most visited data is empty
 				return ( !empty( $res ) ) ? $res : CategoryDataService::getAlphabetical( $sCategoryDBKey, $ns, $negative );
 			case 'alphabetical': return CategoryDataService::getAlphabetical( $sCategoryDBKey, $ns, $negative );
-			case 'recentedits': return CategoryDataService::getRecentlyEdited( $sCategoryDBKey, $ns, $negative );
 		}
 		return array();
 	}

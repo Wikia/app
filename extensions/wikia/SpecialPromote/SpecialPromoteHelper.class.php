@@ -267,10 +267,6 @@ class SpecialPromoteHelper extends WikiaObject {
 		return false;
 	}
 
-	public function removeImage($imageName) {
-		PromoImage::fromPathname($imageName)->deleteImage();
-	}
-
 	public function saveVisualizationData($data, $langCode) {
 		global $wgEnableUploads;
 
@@ -381,6 +377,7 @@ class SpecialPromoteHelper extends WikiaObject {
 		// wiki info cache
 		$this->wg->memc->delete($helper->getMemcKey($cityId, $langCode));
 		$this->wg->memc->delete((new WikiGetDataForPromoteHelper())->getMemcKey($cityId, $langCode));
+		$this->wg->memc->delete((new WikiGetDataForPromoteHelper())->getImagesMemcKey($cityId, $langCode));
 		// wiki list cache
 		$this->wg->memc->delete(
 			$visualizationModel->getVisualizationWikisListDataCacheKey($corpWikiId, $langCode)
@@ -433,9 +430,13 @@ class SpecialPromoteHelper extends WikiaObject {
 			}
 		}
 
-		// attempt to Delete Leftover image types from corporate wiki
 		foreach($freeImageTypeSlots as $imageType){
 			$promoImage = new PromoImage($imageType, $this->wg->DBname);
+			// attempt to delete leftover image types from current wiki
+			if ($promoImage->getOriginFile(F::app()->wg->cityId)->exists()) {
+				$promoImage->deleteImage();
+			}
+			// attempt to delete leftover image types from corporate wiki
 			if ($promoImage->corporateFileByLang($this->wg->ContLanguageCode)->exists()){
 				$promoImage->deleteImageFromCorporate();
 			}

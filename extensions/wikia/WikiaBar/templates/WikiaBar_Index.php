@@ -1,4 +1,5 @@
 <?php if( empty($wgSuppressWikiaBar) ): ?>
+<div id="WikiaBar">
 	<?= F::app()->renderView('Notifications', 'Index'); ?>
 	<div id="WikiaBarWrapper" class="WikiaBarWrapper hidden">
 		<? if(!empty($wg->WikiaSeasonsWikiaBar) && $wg->User->isAnon()): ?>
@@ -25,4 +26,5 @@
 	<div class="WikiaBarCollapseWrapper">
 		<a href="#" class="wikia-bar-collapse" data-tooltip="<?= wfMsg('wikiabar-tooltip') ?>"></a>
 	</div>
+</div>
 <?php endif; ?>

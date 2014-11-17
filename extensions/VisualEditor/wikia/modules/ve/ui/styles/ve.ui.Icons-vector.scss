@@ -1,4 +1,5 @@
 @import "mixins/ve-icon";
+@import "color";
 
 /*
  * oojs-ui
@@ -81,13 +82,13 @@
  * Selectors copied from lib/ve/lib/oojs-ui/oojs-ui.svg.css
  */
 .oo-ui-indicator-down {
-	@include ve-icon(down, oo-indicators);
+	@include ve-icon(arrow-down, oo-indicators);
 }
 .oo-ui-indicator-required {
 	@include ve-icon(required, oo-indicators);
 }
 .oo-ui-indicator-up {
-	@include ve-icon(up, oo-indicators);
+	@include ve-icon(arrow-up, oo-indicators);
 }
 
 /*
@@ -305,6 +306,9 @@
 .oo-ui-icon-template {
 	@include ve-icon(template, mw);
 }
+.oo-ui-icon-template-inverted {
+	@include ve-icon(template, mw, $color-page-opposite);
+}
 
 /*
  * wikia
@@ -324,12 +328,20 @@
 .oo-ui-icon-unchecked {
 	@include ve-icon(unchecked, wikia);
 }
-// Always black.
 .oo-ui-icon-upload-small {
-	@include ve-icon(upload-small, wikia, white);
+	@include ve-icon(upload-small, wikia, $color-buttons);
 }
 .oo-ui-icon-upload {
 	@include ve-icon(upload, wikia);
+}
+.oo-ui-icon-map {
+	@include ve-icon(map, wikia);
+}
+.oo-ui-icon-grabber {
+	@include ve-icon(grabber, wikia);
+}
+.oo-ui-icon-arrow-circled {
+	@include ve-icon(arrow-circled, wikia);
 }
 
 /*

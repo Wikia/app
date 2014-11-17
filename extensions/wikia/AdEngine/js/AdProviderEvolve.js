@@ -8,11 +8,9 @@ define('ext.wikia.adEngine.provider.evolve', [
 	'wikia.document',
 	'wikia.scriptwriter',
 	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.adEngine.adLogicPageParamsLegacy',
-	'ext.wikia.adEngine.krux',
 	'ext.wikia.adEngine.evolveHelper',
 	'ext.wikia.adEngine.evolveSlotConfig'
-], function (log, window, document, scriptWriter, slotTweaker, adLogicPageParamsLegacy, Krux, evolveHelper, evolveSlotConfig) {
+], function (log, window, document, scriptWriter, slotTweaker, evolveHelper, evolveSlotConfig) {
 	'use strict';
 
 	var slotMap,
@@ -20,7 +18,6 @@ define('ext.wikia.adEngine.provider.evolve', [
 		ord = Math.round(Math.random() * 23456787654),
 		slotForSkin = 'INVISIBLE_SKIN',
 		hoppedSlots = {},
-		hopTo = 'Liftium',
 		iface,
 		undef;
 
@@ -39,7 +36,7 @@ define('ext.wikia.adEngine.provider.evolve', [
 	 * TODO: in future we should rely entirely on offsetHeight, so the actual ad should be loaded
 	 * in a div with no paddings and margins.
 	 *
-	 * @param {DomElement} slot
+	 * @param {Element} slot
 	 * @return {Number}
 	 */
 	function getHeight(slot) {
@@ -75,9 +72,7 @@ define('ext.wikia.adEngine.provider.evolve', [
 			'sect=' + sect + ';' +
 			'mtfInline=true;' +
 			'pos=' + slotname + ';' +
-			's1=_' + (window.wgDBname || 'wikia').replace('/[^0-9A-Z_a-z]/', '_') + ';' +
-			adLogicPageParamsLegacy.getCustomKeyValues() +
-			adLogicPageParamsLegacy.getKruxKeyValues();
+			evolveHelper.getTargeting();
 	}
 
 	function getReskinAndSilverScript(slotname) {
@@ -127,8 +122,6 @@ define('ext.wikia.adEngine.provider.evolve', [
 			'adj' + '/' +
 			'gn.wikia4.com' + '/' +
 			getKv(slotname) +
-			adLogicPageParamsLegacy.getDomainKV() +
-			adLogicPageParamsLegacy.getHostnamePrefix() +
 			'sz=' + size + ';' +
 			(dcopt ? 'dcopt=' + dcopt + ';' : '') +
 			'type=pop;type=int;' + // TODO remove?
@@ -193,7 +186,7 @@ define('ext.wikia.adEngine.provider.evolve', [
 					height;
 
 				if (hoppedSlots[slotname]) {
-					pHop({method: 'hop'}, hopTo);
+					pHop({method: 'hop'});
 					return;
 				}
 
@@ -213,7 +206,7 @@ define('ext.wikia.adEngine.provider.evolve', [
 
 				slotTweaker.addDefaultHeight(slotname);
 				log('Evolve did not hop, but returned 1x1 ad instead for slot ' + slotname, 1, logGroup);
-				pHop({method: '1x1'}, hopTo);
+				pHop({method: '1x1'});
 			});
 		}
 	}

@@ -54,7 +54,7 @@ class SIOInternalObject {
  * protected, and thus can't be accessed externally.
  */
 class SIOSQLStore extends SMWSQLStore2 {
-	
+
 	static function deleteDataForPage( $subject ) {
 		$pageName = $subject->getDBKey();
 		$namespace = $subject->getNamespace();
@@ -69,7 +69,7 @@ class SIOSQLStore extends SMWSQLStore2 {
 			'smw_title LIKE ' . $db->addQuotes( $pageName . '#%' ) . ' AND ' . 'smw_namespace=' . $db->addQuotes( $namespace ) . ' AND smw_iw=' . $db->addQuotes( $iw ),
 			'SIO::getSMWPageObjectIDs'
 		);
-		
+
 		while ( $row = $db->fetchObject( $res ) ) {
 			$idsForDeletion[] = $row->smw_id;
 		}
@@ -115,7 +115,7 @@ class SIOSQLStore extends SMWSQLStore2 {
 			$isAttribute = ( $tableid == 'smw_atts2' );
 			$isText = ( $tableid == 'smw_text2' );
 			$isCoords = ( $tableid == 'smw_coords' );
-			
+
 			if ( $isRelation ) {
 				if ( method_exists( 'SMWDIWikiPage', 'getSubobjectName' ) ) {
 					// SMW 1.6
@@ -142,19 +142,19 @@ class SIOSQLStore extends SMWSQLStore2 {
 						$valueNum = $value->getNumericValue();
 					}
 				}
-				
+
 				$upAttr = array(
 					's_id' => $ioID,
 					'p_id' => $this->makeSMWPropertyID( $property ),
 					'value_xsd' => $keys[0],
 					'value_num' => $valueNum
 				);
-				
+
 				// 'value_unit' DB field was removed in SMW 1.6
 				if ( version_compare( SMW_VERSION, '1.6 alpha', '<' ) ) {
 					$upAttr['value_unit'] = $value->getUnit();
 				}
-				
+
 				$upAtts2[] = $upAttr;
 			} elseif ( $isText ) {
 				if ( method_exists( $value, 'getShortWikiText' ) ) {
@@ -179,7 +179,7 @@ class SIOSQLStore extends SMWSQLStore2 {
 				);
 			}
 		}
-		
+
 		return array( $upRels2, $upAtts2, $upText2, $upCoords );
 	}
 
@@ -202,7 +202,7 @@ class SIOSQLStore extends SMWSQLStore2 {
 			'smw_title LIKE ' . $db->addQuotes( $pageName . '#%' ) . ' AND ' . 'smw_namespace=' . $db->addQuotes( $namespace ) . ' AND smw_iw=' . $db->addQuotes( $iw ),
 			'SIO::getSMWPageObjectIDs'
 		);
-		
+
 		while ( $row = $db->fetchObject( $res ) ) {
 			$value = new SIOInternalObjectValue( $row->smw_title, intval( $row->smw_namespace ) );
 			if ( class_exists( 'SMWSqlStubSemanticData' ) ) {
@@ -218,10 +218,10 @@ class SIOSQLStore extends SMWSQLStore2 {
 					$semdata->addPropertyStubValue( reset( $d ), end( $d ) );
 				}
 			}
-			
+
 			$rdfDataArray[] = SMWExporter::makeExportData( $semdata, null );
 		}
-		
+
 		return true;
 	}
 }
@@ -251,10 +251,10 @@ class SIOHandler {
 		if ( ! empty( self::$mCurPageFullName ) ) {
 			self::$mHandledPages[] = self::$mCurPageFullName;
 		}
-		
+
 		self::$mCurPageFullName = '';
 		self::$mInternalObjectIndex = 1;
-		
+
 		return true;
 	}
 
@@ -280,17 +280,17 @@ class SIOHandler {
 			self::$mCurPageFullName = $mainPageFullName;
 			self::$mInternalObjectIndex = 1;
 		}
-		
+
 		$curObjectNum = self::$mInternalObjectIndex;
 		$params = func_get_args();
 		array_shift( $params ); // we already know the $parser...
 		$internalObject = new SIOInternalObject( $title, $curObjectNum );
 		$objToPagePropName = array_shift( $params );
 		$internalObject->addPropertyAndValue( $objToPagePropName, self::$mCurPageFullName );
-		
+
 		foreach ( $params as $param ) {
 			$parts = explode( '=', trim( $param ), 2 );
-			
+
 			if ( count( $parts ) == 2 ) {
 				$key = $parts[0];
 				$value = $parts[1];
@@ -299,7 +299,7 @@ class SIOHandler {
 				if ( substr( $key, - 5 ) == '#list' ) {
 					$key = substr( $key, 0, strlen( $key ) - 5 );
 					$listValues = explode( ',', $value );
-					
+
 					foreach ( $listValues as $listValue ) {
 						$internalObject->addPropertyAndValue( $key, trim( $listValue ) );
 					}
@@ -308,7 +308,7 @@ class SIOHandler {
 				}
 			}
 		}
-		
+
 		self::$mInternalObjects[] = $internalObject;
 	}
 
@@ -328,7 +328,7 @@ class SIOHandler {
 		} else {
 			$results = SMWParserExtensions::getDatesForRecurringEvent( $params );
 		}
-		
+
 		if ( $results == null ) {
 			return null;
 		}
@@ -342,7 +342,7 @@ class SIOHandler {
 				$objToPagePropName,
 				"$property=$date_string"
 			);
-			
+
 			$cur_params = array_merge( $first_params, $unused_params );
 			call_user_func_array( 'SIOHandler::doSetInternal', $cur_params );
 		}
@@ -375,7 +375,7 @@ class SIOHandler {
 		$allAtts2Inserts = array();
 		$allText2Inserts = array();
 		$allCoordsInserts = array();
-		
+
 		foreach ( self::$mInternalObjects as $internalObject ) {
 			list( $upRels2, $upAtts2, $upText2, $upCoords ) = $sioSQLStore->getStorageSQL( $internalObject );
 			$allRels2Inserts = array_merge( $allRels2Inserts, $upRels2 );
@@ -401,11 +401,11 @@ class SIOHandler {
 		if ( count( $allCoordsInserts ) > 0 ) {
 			$db->insert( 'sm_coords', $allCoordsInserts, 'SIO::updateCoordsData' );
 		}
-		
+
 		// end transaction
 		$db->commit( 'SIO::updatePageData' );
 		self::$mInternalObjects = array();
-		
+
 		return true;
 	}
 
@@ -432,11 +432,11 @@ class SIOHandler {
 			'smw_title LIKE ' . $db->addQuotes( $oldPageName . '#%' ) . ' AND ' . 'smw_namespace=' . $db->addQuotes( $oldNamespace ) . ' AND smw_iw=' . $db->addQuotes( $iw ),
 			'SIO::getTitlesForPageMove'
 		);
-		
+
 		while ( $row = $db->fetchObject( $res ) ) {
 			$sioNames[] = $row->smw_title;
 		}
-		
+
 		foreach ( $sioNames as $sioName ) {
 			// update the name, and possibly the namespace as well
 			$newSIOName = str_replace( $oldPageName, $newPageName, $sioName );
@@ -447,7 +447,7 @@ class SIOHandler {
 				'SIO::updateTitlesForPageMove'
 			);
 		}
-		
+
 		return true;
 	}
 
@@ -459,19 +459,26 @@ class SIOHandler {
 	 */
 	static function handleUpdatingOfInternalObjects( &$jobs ) {
 		$uniqueTitles = array();
-		
+
 		foreach ( $jobs as $i => $job ) {
-			$title = Title::makeTitleSafe( $job->title->getNamespace(), $job->title->getText() );
+			// wikia change start - jobqueue migration
+			/** @var \Wikia\Tasks\Tasks\BaseTask $job */
+			$jobTitle = $job->getTitle();
+			$title = Title::makeTitleSafe( $jobTitle->getNamespace(), $jobTitle->getText() );
 			$id = $title->getArticleID();
 			$uniqueTitles[$id] = $title;
 		}
-		
+
 		$jobs = array();
-		
+
 		foreach ( $uniqueTitles as $id => $title ) {
-			$jobs[] = new SMWUpdateJob( $title );
+			// wikia change start - jobqueue migration
+			$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+			$task->call( 'SMWUpdateJob', $title );
+			$jobs[] = $task;
+			// wikia change end
 		}
-		
+
 		return true;
 	}
 
@@ -485,14 +492,17 @@ class SIOHandler {
 	 static function handleRefreshingOfInternalObjects( &$jobs ) {
 	 	$allJobs = $jobs;
 	 	$jobs = array();
-	 	
+
 	 	foreach ( $allJobs as $job ) {
-	 		if ( strpos( $job->title->getText(), '#' ) === false ) {
+		  // wikia change start - jobqueue migration
+		  /** @var \Wikia\Tasks\Tasks\BaseTask $job */
+		  $titleText = $job->getTitle()->getText();
+	 		if ( strpos( $titleText, '#' ) === false ) { // wikia change end
 	 			$jobs[] = $job;
 	 		}
 	 	}
-	 	
+
 		return true;
 	}
-	
+
 }

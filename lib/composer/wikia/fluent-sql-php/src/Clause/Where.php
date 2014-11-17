@@ -12,6 +12,7 @@ use FluentSql\Breakdown;
 
 class Where implements ClauseInterface {
 	protected $conditions;
+	protected $keyword = 'WHERE';
 
 	public function __construct() {
 		$this->conditions = [];
@@ -45,7 +46,7 @@ class Where implements ClauseInterface {
 		foreach ($this->conditions as $condition) {
 			if ($doWhere) {
 				$bk->line($tabs + 1);
-				$bk->append(" WHERE");
+				$bk->append(" {$this->keyword}");
 				$doWhere = false;
 			} else {
 				$bk->line($tabs + 1);

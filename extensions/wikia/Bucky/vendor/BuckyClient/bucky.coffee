@@ -29,6 +29,11 @@ log.error = (msgs...) ->
   if console?.error?.call?
     console.error msgs...
 
+startsWith = (h, n) ->
+  h.slice(0, n.length) == n
+
+PAGELOAD_PREFIX = 'pageload||'
+
 exportDef = ->
   defaults =
     # Where is the Bucky server hosted.  This should be both the host and the APP_ROOT (if you've
@@ -63,6 +68,16 @@ exportDef = ->
 
     # Set to false to disable sends (in dev mode for example)
     active: true
+
+    # Protocol version to use:
+    # 1 - POST .../v1/send
+    #    with metrics in POST data (one metric per line, graphite/statsd format)
+    # 2 - POST .../v2/send?p=...
+    #    with metrics encoded in JSON in the "p" parameter
+    protocol: 1
+
+    # Request context (will be send along all data reports in v2 API)
+    context: {}
 
   tagOptions = {}
   if not isServer
@@ -176,10 +191,6 @@ exportDef = ->
 
     sendStart = now()
   
-    body = ''
-    for name, val of data
-      body += "#{ name }:#{ val }\n"
-
     if not sameOrigin and not corsSupport and window?.XDomainRequest?
       # CORS support for IE9
       req = new window.XDomainRequest
@@ -191,15 +202,22 @@ exportDef = ->
     # by updateLatency.
     req.bucky = {track: false}
 
-    req.open 'POST', "#{ options.host }/v1/send", true
+    all_data = {
+      context: options.context,
+      data: data
+    }
+    all_data = JSON?.stringify?(all_data)
 
-    req.setRequestHeader 'Content-Type', 'text/plain'
+    if all_data? and (typeof all_data != 'undefined')
+      req.open 'POST', "#{ options.host }/v2/send?p=#{ all_data }", true
 
-    req.addEventListener 'load', ->
-      updateLatency(now() - sendStart)
-    , false
+      req.setRequestHeader 'Content-Type', 'text/plain'
 
-    req.send body
+      req.addEventListener 'load', ->
+        updateLatency(now() - sendStart)
+      , false
+
+      req.send()
 
     req
 
@@ -224,10 +242,15 @@ exportDef = ->
       if point.type in ['gauge', 'timer']
         value = round(value)
 
-      out[key] = "#{ value }|#{ TYPE_MAP[point.type] }"
-
-      if point.count isnt 1
-        out[key] += "@#{ round(1 / point.count, 5) }"
+      if startsWith(key, PAGELOAD_PREFIX)
+        res_key = key.slice(PAGELOAD_PREFIX.length)
+        if not out['pageload']
+          out['pageload'] = {}
+        out['pageload'][res_key] = value
+      else
+        if not out['metrics']
+          out['metrics'] = {}
+        out['metrics'][key] = value
 
     makeRequest out
 
@@ -364,17 +387,14 @@ exportDef = ->
       send(path, count, 'counter')
 
     sentPerformanceData = false
-    sendPagePerformance = (path) ->
+    sendPagePerformance = () ->
       return false unless window?.performance?.timing?
       return false if sentPerformanceData
-
-      if not path or path is true
-        path = requests.urlToKey(document.location.toString()) + '.page'
 
       if document.readyState in ['uninitialized', 'loading']
         # The data isn't fully ready until document load
         document.addEventListener? 'DOMContentLoaded', =>
-          sendPagePerformance.call(@, path)
+          sendPagePerformance.call(@)
         , false
 
         return false
@@ -383,7 +403,7 @@ exportDef = ->
 
       start = window.performance.timing.navigationStart
       for key, time of window.performance.timing when time and typeof time is 'number'
-        timer.send "#{ path }.#{ key }", (time - start)
+        timer.send PAGELOAD_PREFIX + key, (time - start)
 
       return true
 

@@ -26,7 +26,7 @@ class SimpleComplexFunctionsTest extends FluentSqlTestBase {
 			"            AS TotalItemsPurchased ".
 			" FROM dbo.Customers " .
 			" INNER JOIN dbo.Orders ".
-			"        USING ID" .
+			"        USING (ID)" .
 			" WHERE ".
 			"	Orders.n_items > ? ".
 			"			AND CustomerID IN ( ?, ?, ?, ?, ? )".

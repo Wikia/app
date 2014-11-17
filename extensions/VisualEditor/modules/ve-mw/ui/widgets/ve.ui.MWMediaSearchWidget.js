@@ -18,10 +18,20 @@
  * @param {number} [size] Vertical size of thumbnails
  */
 ve.ui.MWMediaSearchWidget = function VeUiMWMediaSearchWidget( config ) {
+	var pageTitle = mw.config.get( 'wgTitle' ),
+		namespace = mw.config.get( 'wgNamespaceNumber' ),
+		namespacesWithSubpages = mw.config.get( 'wgVisualEditor' ).namespacesWithSubpages;
+
+	if ( namespacesWithSubpages[ namespace ] ) {
+		// If we are in a namespace that allows for subpages, strip the entire
+		// title except for the part after the last /
+		pageTitle = pageTitle.substr( pageTitle.lastIndexOf( '/' ) + 1 );
+	}
+
 	// Configuration intialization
 	config = ve.extendObject( {
 		'placeholder': ve.msg( 'visualeditor-media-input-placeholder' ),
-		'value': mw.config.get( 'wgTitle' )
+		'value': pageTitle
 	}, config );
 
 	// Parent constructor
@@ -33,6 +43,13 @@ ve.ui.MWMediaSearchWidget = function VeUiMWMediaSearchWidget( config ) {
 	this.queryTimeout = null;
 	this.titles = {};
 	this.queryMediaSourcesCallback = ve.bind( this.queryMediaSources, this );
+
+	this.sourceCounter = 0;
+
+	this.$noItemsMessage = this.$( '<div>' )
+		.addClass( 've-ui-mwMediaSearchWidget-noresults' )
+		.text( ve.msg( 'visualeditor-dialog-media-noresults' ) )
+		.appendTo( this.$query );
 
 	// Events
 	this.$results.on( 'scroll', ve.bind( this.onResultsScroll, this ) );
@@ -103,6 +120,10 @@ ve.ui.MWMediaSearchWidget.prototype.queryMediaSources = function () {
 		return;
 	}
 
+	// Reset counter
+	this.sourceCounter = 0;
+	this.$noItemsMessage.hide();
+
 	for ( i = 0, len = this.sources.length; i < len; i++ ) {
 		source = this.sources[i];
 		// If we don't have either 'apiurl' or 'scriptDirUrl'
@@ -122,7 +143,7 @@ ve.ui.MWMediaSearchWidget.prototype.queryMediaSources = function () {
 				url = source.apiurl || ( source.scriptDirUrl + '/api.php' );
 			}
 			this.query.pushPending();
-			source.request = ve.init.mw.Target.static.apiRequest( {
+			source.request = ve.init.target.constructor.static.apiRequest( {
 				'action': 'query',
 				'generator': 'search',
 				'gsrsearch': value,
@@ -130,7 +151,7 @@ ve.ui.MWMediaSearchWidget.prototype.queryMediaSources = function () {
 				'gsrlimit': 20,
 				'gsroffset': source.gsroffset,
 				'prop': 'imageinfo',
-				'iiprop': 'dimensions|url',
+				'iiprop': 'dimensions|url|mediatype',
 				'iiurlheight': this.size
 			}, {
 				'url': url,
@@ -159,6 +180,23 @@ ve.ui.MWMediaSearchWidget.prototype.queryMediaSources = function () {
 ve.ui.MWMediaSearchWidget.prototype.onMediaQueryAlways = function ( source ) {
 	source.request = null;
 	this.query.popPending();
+
+	// Count this source as done
+	this.sourceCounter++;
+
+	// Check if all sources are done
+	// TODO use $.when() instead (bug 65321)
+	if ( this.sourceCounter >= this.sources.length ) {
+		if ( this.results.getItems().length === 0 ) {
+			this.$noItemsMessage.show();
+		}
+	}
+
+	// Even if the whole list of sources didn't finish yet
+	// if there are results, make the message go away
+	if ( this.results.getItems().length > 0 ) {
+		this.$noItemsMessage.hide();
+	}
 };
 
 /**

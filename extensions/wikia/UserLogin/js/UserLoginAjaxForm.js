@@ -1,4 +1,4 @@
-/*global WikiaForm:true */
+/*global WikiaForm:true, wgScriptPath */
 var UserLoginAjaxForm = function(el, options){
 	this.el = $(el);
 	this.options = options || {};
@@ -14,7 +14,8 @@ UserLoginAjaxForm.prototype.init = function() {
 		password: this.form.find('input[name=password]'),
 		keeploggedin: this.form.find('input[name=keeploggedin]'),
 		logintoken: this.form.find('input[name=loginToken]'),
-		returnto: this.form.find('input[name=returnto]')
+		returnto: this.form.find('input[name=returnto]'),
+		email: this.form.find('input[name=email]')
 	};
 	this.submitButton = this.form.find('input[type=submit]');
 	this.forgotPasswordLink = this.form.find('.forgot-password');
@@ -28,7 +29,9 @@ UserLoginAjaxForm.prototype.init = function() {
 	// forgot password handler
 	this.forgotPasswordLink.click($.proxy(this.mailPassword, this));
 
-	this.inputs['username'].focus();
+	if ( !this.options['skipFocus'] ) {
+		this.inputs['username'].focus();
+	}
 };
 
 UserLoginAjaxForm.prototype.submitLogin = function(e) {

@@ -32,9 +32,9 @@ class VisualEditorHooks {
 		// when additional dependencies are created and pushed into MediaWiki's
 		// core. The most direct effect of this is to avoid confusing any third
 		// parties who attempt to install VisualEditor onto non-alpha wikis, as
-		// this should have no impact on deploying to Wikimedia's wiki cluster.
-		// Is fine for release tarballs because 1.22wmf11 < 1.22alpha < 1.22.0.
-		//wfUseMW( '1.22' );
+		// this should have no impact on deploying to Wikimedia's wiki cluster;
+		// is fine for release tarballs because 1.22wmf11 < 1.22alpha < 1.22.0.
+		//wfUseMW( '1.24wmf6' );
 
 		// Add tab messages to the init init module
 		foreach ( $wgVisualEditorTabMessages as $msg ) {
@@ -81,6 +81,9 @@ class VisualEditorHooks {
 			return true;
 		}
 		$title = $skin->getRelevantTitle();
+		if ( defined( 'EP_NS' ) && $title->inNamespace( EP_NS ) ) {
+			return true;
+		}
 		// Rebuild the $links['views'] array and inject the VisualEditor tab before or after
 		// the edit tab as appropriate. We have to rebuild the array because PHP doesn't allow
 		// us to splice into the middle of an associative array.
@@ -124,11 +127,11 @@ class VisualEditorHooks {
 
 				// Inject the VE tab before or after the edit tab
 				if ( $wgVisualEditorTabPosition === 'before' ) {
-					$editTab['class'] = 'collapsible';
+					$editTab['class'] .= ' collapsible';
 					$newViews['ve-edit'] = $veTab;
 					$newViews['edit'] = $editTab;
 				} else {
-					$veTab['class'] = 'collapsible';
+					$veTab['class'] .= ' collapsible';
 					$newViews['edit'] = $editTab;
 					$newViews['ve-edit'] = $veTab;
 				}
@@ -201,9 +204,17 @@ class VisualEditorHooks {
 	public static function onDoEditSectionLink( $skin, $title, $section, $tooltip, &$result, $lang ) {
 		// Only do this if the user has VE enabled
 		// (and we're not in parserTests)
+		// (and we're not on a foreign file description page)
 		if (
 			!self::isVisible( $skin ) ||
-			isset( $GLOBALS[ 'wgVisualEditorInParserTests' ] )
+			isset( $GLOBALS[ 'wgVisualEditorInParserTests' ] ) ||
+			!$skin->getUser()->getOption( 'visualeditor-enable' ) ||
+			$skin->getUser()->getOption( 'visualeditor-betatempdisable' ) ||
+			(
+				$title->inNamespace( NS_FILE ) &&
+				WikiPage::factory( $title ) instanceof WikiFilePage &&
+				!WikiPage::factory( $title )->isLocal()
+			)
 		) {
 			return true;
 		}
@@ -224,7 +235,7 @@ class VisualEditorHooks {
 		}
 		$veLink = Linker::link( $title, wfMessage( $veEditSection )->inLanguage( $lang )->text(),
 			$attribs + array( 'class' => 'mw-editsection-visualeditor' ),
-			array( 'veaction' => 'edit', 'section' => $section ),
+			array( 'veaction' => 'edit', 'vesection' => $section ),
 			array( 'noclasses', 'known' )
 		);
 		$sourceLink = Linker::link( $title, wfMessage( $sourceEditSection )->inLanguage( $lang )->text(),
@@ -247,18 +258,45 @@ class VisualEditorHooks {
 		return true;
 	}
 
+	/**
+	 * Convert a namespace index to the local text for display to the user.
+	 *
+	 * @param $nsIndex int
+	 * @return string
+	 */
+	private static function convertNs( $nsIndex ) {
+		global $wgLang;
+		if ( $nsIndex ) {
+			return $wgLang->convertNamespace( $nsIndex );
+		} else {
+			return wfMessage( 'blanknamespace' )->text();
+		}
+	}
+
 	public static function onGetPreferences( $user, &$preferences ) {
-		if ( !array_key_exists( 'visualeditor-enable', $preferences ) ) {
+		global $wgLang, $wgVisualEditorNamespaces;
+		// Wikia does not use the visualeditor-enable preference. Additionally, this block of code now
+		// calls a function (Language::convertNamespace) that Wikia does not currently have.
+		/*if ( !array_key_exists( 'visualeditor-enable', $preferences ) ) {
 			$preferences['visualeditor-enable'] = array(
 				'type' => 'toggle',
-				'label-message' => 'visualeditor-preference-enable',
+				'label-message' => array(
+					'visualeditor-preference-enable',
+					$wgLang->commaList( array_map(
+						array( 'self', 'convertNs' ),
+						$wgVisualEditorNamespaces
+					) )
+				),
 				'section' => 'editing/editor'
 			);
-		}
+		}*/
 		$preferences['visualeditor-betatempdisable'] = array(
 			'type' => 'toggle',
 			'label-message' => 'visualeditor-preference-betatempdisable',
 			'section' => 'editing/editor'
+		);
+		$preferences['visualeditor-hidebetawelcome'] = array(
+			'type' => 'api'
 		);
 		return true;
 	}
@@ -285,7 +323,6 @@ class VisualEditorHooks {
 			)
 		);
 
-/* Disabling Beta Features option for language for now
 		$preferences['visualeditor-enable-language'] = array(
 			'version' => '1.0',
 			'label-message' => 'visualeditor-preference-language-label',
@@ -294,15 +331,14 @@ class VisualEditorHooks {
 				'ltr' => "$iconpath/betafeatures-icon-VisualEditor-language-ltr.svg",
 				'rtl' => "$iconpath/betafeatures-icon-VisualEditor-language-rtl.svg",
 			),
-			'info-message' => 'visualeditor-preference-experimental-info-link',
-			'discussion-message' => 'visualeditor-preference-experimental-discussion-link',
+			'info-message' => 'visualeditor-preference-language-info-link',
+			'discussion-message' => 'visualeditor-preference-language-discussion-link',
 			'requirements' => array(
 				'betafeatures' => array(
 					'visualeditor-enable',
 				),
 			),
 		);
-*/
 
 /* Disabling Beta Features option for generic content for now
 		$preferences['visualeditor-enable-mwalienextension'] = array(
@@ -315,25 +351,6 @@ class VisualEditorHooks {
 			),
 			'info-message' => 'visualeditor-preference-mwalienextension-info-link',
 			'discussion-message' => 'visualeditor-preference-mwalienextension-discussion-link',
-			'requirements' => array(
-				'betafeatures' => array(
-					'visualeditor-enable',
-				),
-			),
-		);
-*/
-
-/* Disabling Beta Features option for hieroglyphics for now
-		$preferences['visualeditor-enable-mwhiero'] = array(
-			'version' => '1.0',
-			'label-message' => 'visualeditor-preference-mwhiero-label',
-			'desc-message' => 'visualeditor-preference-mwhiero-description',
-			'screenshot' => array(
-				'ltr' => "$iconpath/betafeatures-icon-VisualEditor-hieroglyphics-ltr.svg",
-				'rtl' => "$iconpath/betafeatures-icon-VisualEditor-hieroglyphics-rtl.svg",
-			),
-			'info-message' => 'visualeditor-preference-mwhiero-info-link',
-			'discussion-message' => 'visualeditor-preference-mwhiero-discussion-link',
 			'requirements' => array(
 				'betafeatures' => array(
 					'visualeditor-enable',
@@ -354,7 +371,7 @@ class VisualEditorHooks {
 	 * Adds extra variables to the page config.
 	 */
 	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
-		global $wgStylePath, $wgSVGMaxSize;
+		global $wgStylePath, $wgSVGMaxSize, $wgNamespacesWithSubpages;
 
 		$pageLanguage = $out->getTitle()->getPageLanguage();
 
@@ -367,6 +384,7 @@ class VisualEditorHooks {
 			'pageLanguageCode' => $pageLanguage->getHtmlCode(),
 			'pageLanguageDir' => $pageLanguage->getDir(),
 			'svgMaxSize' => $wgSVGMaxSize,
+			'namespacesWithSubpages' => $wgNamespacesWithSubpages
 		);
 
 		return true;
@@ -420,7 +438,7 @@ class VisualEditorHooks {
 	 * Conditionally register the oojs and oojs-ui modules, in case they've already been registered
 	 * by a more recent version of MediaWiki core.
 	 *
-	 * Also conditionally register the jquery.uls and jquery.i18n modules, in case they've already
+	 * Also conditionally register the jquery.uls.data and jquery.i18n modules, in case they've already
 	 * been registered by the UniversalLanguageSelector extension.
 	 *
 	 * @param ResourceLoader $resourceLoader
@@ -452,43 +470,22 @@ class VisualEditorHooks {
 					'ooui-outline-control-move-up',
 					'ooui-outline-control-remove',
 					'ooui-toolbar-more',
+					'ooui-dialog-confirm-title',
+					'ooui-dialog-confirm-default-prompt',
+					'ooui-dialog-confirm-default-ok',
+					'ooui-dialog-confirm-default-cancel'
 				),
 				'dependencies' => array(
 					'oojs'
 				),
 				'targets' => array( 'desktop', 'mobile' ),
 			),
-			'jquery.uls' => $wgVisualEditorResourceTemplate + array(
-				'scripts' => array(
-					'lib/jquery.uls/src/jquery.uls.core.js',
-					'lib/jquery.uls/src/jquery.uls.lcd.js',
-					'lib/jquery.uls/src/jquery.uls.languagefilter.js',
-					'lib/jquery.uls/src/jquery.uls.regionfilter.js',
-				),
-				'styles' => array(
-					'lib/jquery.uls/css/jquery.uls.css',
-					'lib/jquery.uls/css/jquery.uls.lcd.css',
-				),
-				'dependencies' => array(
-					'jquery.uls.grid',
-					'jquery.uls.data',
-					'jquery.uls.compact',
-				),
-			),
 			'jquery.uls.data' => $wgVisualEditorResourceTemplate + array(
 				'scripts' => array(
-					'lib/jquery.uls/src/jquery.uls.data.js',
-					'lib/jquery.uls/src/jquery.uls.data.utils.js',
+					'lib/ve/lib/jquery.uls/src/jquery.uls.data.js',
+					'lib/ve/lib/jquery.uls/src/jquery.uls.data.utils.js',
 				),
-				'position' => 'top',
-			),
-			'jquery.uls.grid' => $wgVisualEditorResourceTemplate + array(
-				'styles' => 'lib/jquery.uls/css/jquery.uls.grid.css',
-				'position' => 'top',
-			),
-			'jquery.uls.compact' => $wgVisualEditorResourceTemplate + array(
-				'styles' => 'lib/jquery.uls/css/jquery.uls.compact.css',
-				'position' => 'top',
+				'targets' => array( 'desktop', 'mobile' ),
 			),
 			'jquery.i18n' => $wgVisualEditorResourceTemplate + array(
 				'scripts' => array(
@@ -516,6 +513,7 @@ class VisualEditorHooks {
 					'sl' => 'lib/ve/lib/jquery.i18n/src/languages/sl.js',
 					'uk' => 'lib/ve/lib/jquery.i18n/src/languages/uk.js',
 				),
+				'targets' => array( 'desktop', 'mobile' ),
 			),
 		);
 
@@ -554,6 +552,7 @@ class VisualEditorHooks {
 				'lib/ve/modules/unicodejs/test/unicodejs.wordbreak.test.js',
 				// VisualEditor Tests
 				'lib/ve/modules/ve/test/ve.test.utils.js',
+				'modules/ve-mw/test/ve.test.utils.js',
 				'lib/ve/modules/ve/test/ve.test.js',
 				'lib/ve/modules/ve/test/ve.Document.test.js',
 				'lib/ve/modules/ve/test/ve.Node.test.js',
@@ -603,6 +602,7 @@ class VisualEditorHooks {
 				'lib/ve/modules/ve/test/ce/ve.ce.LeafNode.test.js',
 				'lib/ve/modules/ve/test/ce/nodes/ve.ce.TextNode.test.js',
 				// VisualEditor Actions Tests
+				'lib/ve/modules/ve/test/ui/actions/ve.ui.AnnotationAction.test.js',
 				'lib/ve/modules/ve/test/ui/actions/ve.ui.FormatAction.test.js',
 				'modules/ve-mw/test/ui/actions/ve.ui.FormatAction.test.js',
 				'lib/ve/modules/ve/test/ui/actions/ve.ui.IndentationAction.test.js',
@@ -666,5 +666,36 @@ class VisualEditorHooks {
 	 */
 	public static function onParserTestGlobals( array &$settings ) {
 		$settings['wgVisualEditorInParserTests'] = true;
+	}
+
+	/**
+	 * @param Array $redirectParams Parameters preserved on special page redirects
+	 *   to wiki pages
+	 * @return bool Always true
+	 */
+	public static function onRedirectSpecialArticleRedirectParams( &$redirectParams ) {
+		array_push( $redirectParams, 'veaction', 'vesection' );
+
+		return true;
+	}
+
+	/**
+	 * If the user has specified that they want to edit the page with VE, suppress any redirect.
+	 * @param Title $title Title being used for request
+	 * @param Article|null $article
+	 * @param OutputPage $output
+	 * @param User $user
+	 * @param WebRequest $request
+	 * @param MediaWiki $mediaWiki
+	 * @return bool Always true
+	 */
+	public static function onBeforeInitialize(
+		Title $title, $article, OutputPage $output,
+		User $user, WebRequest $request, MediaWiki $mediaWiki
+	) {
+		if ( $request->getVal( 'veaction' ) === 'edit' ) {
+			$request->setVal( 'redirect', 'no' );
+		}
+		return true;
 	}
 }

@@ -44,7 +44,7 @@ ve.dm.MWNoTitleConvertMetaItem.static.toDomElements = function ( dataElement, do
 	var meta = doc.createElement( 'meta' );
 	meta.setAttribute(
 		'property',
-		dataElement.attributes.originalProperty || 'mw:PageProp/notitleconvert'
+		( dataElement.attributes && dataElement.attributes.originalProperty ) || 'mw:PageProp/notitleconvert'
 	);
 	return [ meta ];
 };
