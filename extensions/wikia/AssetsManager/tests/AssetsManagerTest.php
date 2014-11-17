@@ -122,6 +122,48 @@ class AssetsManagerTest extends WikiaBaseTest {
 		$this->assertEquals( $assetsManagerMock->checkIfGroupForSkin( 'foo', $wikiaSkinMock ), $expectedValue );
 	}
 
+	/**
+	 * @dataProvider checkAssetUrlForSkinDataProvider
+	 */
+	public function testCheckAssetUrlForSkin( $url, $isSkinStrict, $expectedValue ) {
+		$skinMock = $this->mockClassWithMethods('WikiaSkin', [
+			'isStrict' => $isSkinStrict,
+			'checkIfGroupForSkin' => false, // "block" all assets when in strict mode
+			'loadConfig' => null,
+		]);
+
+		$assetsManagerMock = $this->getMock( 'AssetsManager', null, [], '', false );
+
+		$this->assertEquals( $expectedValue, $assetsManagerMock->checkAssetUrlForSkin($url, $skinMock) );
+	}
+
+	public function checkAssetUrlForSkinDataProvider() {
+		return [
+			// always accept ResourceLoader URLs
+			[
+				'url' => 'http://foo.net/__load/123',
+				'isSkinStrict' => true,
+				'expectedValue' => true,
+			],
+			[
+				'url' => 'http://foo.net/__load/123',
+				'isSkinStrict' => false,
+				'expectedValue' => true,
+			],
+			// AssetsManager URLs - depends on whether the skin is strict
+			[
+				'url' => 'http://i2.macbre.wikia-dev.com/__am/123456/group/-/local_navigation_js',
+				'isSkinStrict' => true,
+				'expectedValue' => false,
+			],
+			[
+				'url' => 'http://i2.macbre.wikia-dev.com/__am/123456/group/-/local_navigation_js',
+				'isSkinStrict' => false,
+				'expectedValue' => true,
+			],
+		];
+	}
+
 	public function duplicateAssetsDataProvider() {
 		$dataSets = array();
 

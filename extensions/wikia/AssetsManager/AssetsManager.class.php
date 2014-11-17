@@ -645,10 +645,15 @@ class AssetsManager {
 	public function checkAssetUrlForSkin( $url, WikiaSkin $skin ) {
 		wfProfileIn( __METHOD__ );
 
+		// ResourceLoader has its own skin filtering mechanism, skip the check for /__load/ URLs - CON-2113
+		if ( strpos( $url, '/__load/' ) !== false ) {
+			wfProfileOut( __METHOD__ );
+			return true;
+		}
+
 		//lazy loading of AssetsConfig
 		$this->loadConfig();
 		$group = null;
-		$skinName = $skin->getSkinName();
 		$strict = $skin->isStrict();
 
 		if ( is_string( $url ) && array_key_exists($url, $this->mGeneratedUrls) ) {

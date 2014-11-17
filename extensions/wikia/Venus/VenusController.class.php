@@ -84,7 +84,12 @@ class VenusController extends WikiaController {
 
 	private function setBodyClasses() {
 		// generate list of CSS classes for <body> tag
-		$bodyClasses = [$this->skinNameClass, $this->dir, $this->pageClass];
+		$bodyClasses = [
+			'mediawiki',
+			$this->skinNameClass,
+			$this->dir,
+			$this->pageClass
+		];
 
 		// add skin theme name
 		if(!empty($this->skin->themename)) {
