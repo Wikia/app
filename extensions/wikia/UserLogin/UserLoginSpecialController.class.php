@@ -66,6 +66,9 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->getOutput()->disallowUserJs(); // just in case...
 	}
 
+	/**
+	 * Route the view based on logged in status
+	 */
 	public function index() {
 		if ( $this->wg->User->isLoggedIn() ) {
 			$this->forward( __CLASS__, 'loggedIn' );

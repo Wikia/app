@@ -23,6 +23,9 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->userLoginHelper = (new UserLoginHelper);
 	}
 
+	/**
+	 * Route the view based on logged in status
+	 */
 	public function index() {
 		if ( $this->wg->User->isLoggedIn() ) {
 			$this->forward( 'UserLoginSpecialController', 'loggedIn' );
