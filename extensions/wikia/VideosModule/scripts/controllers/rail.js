@@ -4,10 +4,11 @@
  * to leave this in there for now as we may at some point switch back to the bottom position.
  */
 require([
-	'videosmodule.views.rail',
+	'videosmodule.views.index',
 	'videosmodule.models.videos',
-	'bucky'
-], function (RailModule, VideoData, bucky) {
+	'bucky',
+	'wikia.tracker'
+], function (RailModule, VideoData, bucky, Tracker) {
 	'use strict';
 
 	var $rail = $('#WikiaRail');
@@ -22,7 +23,14 @@ require([
 		rail = new RailModule({
 			$el: $('#videosModule'),
 			model: new VideoData(),
-			isFluid: false
+			isFluid: false,
+			bucky: bucky('videosmodule.views.rail'),
+			track: Tracker.buildTrackingFunction({
+				category: 'videos-module-rail',
+				trackingMethod: 'both',
+				action: Tracker.ACTIONS.IMPRESSION,
+				label: 'module-impression'
+			})
 		});
 
 		rail.$el.on('initialized.videosModule', function () {

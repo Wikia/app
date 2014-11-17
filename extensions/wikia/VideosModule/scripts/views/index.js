@@ -1,25 +1,13 @@
-define('videosmodule.views.inContent', [
+define('videosmodule.views.index', [
 	'sloth',
 	'videosmodule.views.titleThumbnail',
-	'wikia.tracker',
-	'wikia.log',
-	'bucky'
-], function (sloth, TitleThumbnailView, Tracker, log, bucky) {
+	'wikia.log'
+], function (sloth, TitleThumbnailView, log) {
 	'use strict';
 
-	var VideosModule, track;
-
-	bucky = bucky('videosmodule.views.in-content');
-
-	track = Tracker.buildTrackingFunction({
-		category: 'videos-module-in-content',
-		trackingMethod: 'both',
-		action: Tracker.ACTIONS.IMPRESSION,
-		label: 'module-impression'
-	});
-
-	VideosModule = function (options) {
+	var VideosModule = function (options) {
 		// this.$el is the {jQuery Object} container for the videos module
+
 		this.$el = options.$el;
 		this.hookElement = options.hookElement;
 		this.previousElement = options.previousElement;
@@ -32,6 +20,9 @@ define('videosmodule.views.inContent', [
 		this.numVids = options.numVids || 5;
 		this.minNumVids = options.minNumVids || 5;
 
+		this.bucky = options.bucky;
+		this.track = options.track;
+
 		// Make sure we're on an article page
 		if (window.wgArticleId) {
 			this.init();
@@ -41,7 +32,9 @@ define('videosmodule.views.inContent', [
 	VideosModule.prototype.init = function () {
 		var self = this;
 
-		this.placement.call($(this.hookElement), this.$el);
+		if (this.placement) {
+			this.placement.call($(this.hookElement), this.$el);
+		}
 
 		if (this.previousElement) {
 			// Sloth is a lazy loading service that waits till an element is visible to load more content
@@ -53,15 +46,15 @@ define('videosmodule.views.inContent', [
 				}
 			});
 		} else {
-			self.prep();
+			this.prep();
 		}
 	};
 
 	VideosModule.prototype.prep = function () {
 		var self = this;
 
-		self.$thumbs.addClass('hidden');
-		self.$el
+		this.$thumbs.addClass('hidden');
+		this.$el
 			.startThrobbing()
 			.removeClass('hidden');
 
@@ -79,10 +72,10 @@ define('videosmodule.views.inContent', [
 			$imagesLoaded = $.Deferred(),
 			imgCount = 0;
 
-		bucky.timer.start('render');
+		this.bucky.timer.start('render');
 
 		if (!this.hasEnoughVideos()) {
-			bucky.timer.stop('render');
+			this.bucky.timer.stop('render');
 			return;
 		}
 
@@ -104,12 +97,12 @@ define('videosmodule.views.inContent', [
 				self.$thumbs.removeClass('hidden');
 				self.$el.stopThrobbing()
 					.trigger('initialized.videosModule');
-				bucky.timer.stop('render');
+				self.bucky.timer.stop('render');
 			});
 
 		// Remove tracking for Special Wikis Sampled at 100% -- VID-1800
 		if (window.wgIsGASpecialWiki !== true) {
-			track();
+			this.track();
 		}
 	};
 
