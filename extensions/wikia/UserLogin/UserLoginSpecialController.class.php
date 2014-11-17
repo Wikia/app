@@ -66,6 +66,37 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->getOutput()->disallowUserJs(); // just in case...
 	}
 
+	public function index() {
+		if ( $this->wg->User->isLoggedIn() ) {
+			$this->forward( __CLASS__, 'loggedIn' );
+		} else {
+			$this->forward( __CLASS__, 'loginForm' );
+		}
+	}
+
+	/**
+	 * Shown for both Special:UserLogin and Special:UserSignup when visited logged in.
+	 */
+	public function loggedIn() {
+		// don't show "special page" text
+		$this->wg->SupressPageSubtitle = true;
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+
+		$userName = $this->wg->user->getName();
+		$mainPage = Title::newMainPage()->getText();
+		$userPage = Title::newFromText( $userName, NS_USER )->getFullText();
+
+		$title = wfMessage( 'userlogin-logged-in-title' )
+			->params( $userName )
+			->text();
+		$message = wfMessage( 'userlogin-logged-in-message' )
+			->params( $mainPage, $userPage )
+			->parse();
+
+		$this->wg->Out->setPageTitle($title);
+		$this->message = $message;
+	}
+
 	/**
 	 * @brief serves standalone login page on GET.  if POSTed, parameters will be required.
 	 * @details
@@ -84,7 +115,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string errParam - error param
 	 * @responseParam string editToken - token for changing password
 	 */
-	public function index() {
+	public function loginForm() {
 		$returnTo = urldecode( $this->request->getVal( 'returnto', '' ) );
 		$returnToQuery = urldecode( $this->request->getVal( 'returntoquery', '' ) );
 
