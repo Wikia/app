@@ -15,8 +15,13 @@ class TopArticles implements IDataProvider {
 	const RECOMMENDATION_TYPE = 'article';
 
 	/**
+	 * Keep it low for better performance - we're using foreign call to fetch data about every article
+	 */
+	const MAX_LIMIT = 10;
+
+	/**
 	 * @param int $articleId
-	 * @param int $limit
+	 * @param int $limit - max limit = 10
 	 * @return array of articles with details
 	 */
 	public function get( $articleId, $limit ) {
@@ -26,13 +31,16 @@ class TopArticles implements IDataProvider {
 		$lang = $this->getContentLangCode();
 
 		$out = \WikiaDataAccess::cache(
-			\wfsharedMemcKey('RecommendationApi', self::RECOMMENDATION_ENGINE, $hubName, $lang, $limit),
+			\wfsharedMemcKey('RecommendationApi', self::RECOMMENDATION_ENGINE, $hubName, $lang),
 			24 * 60 *60,
-			function () use ($hubName, $lang, $limit) {
-				$topArticles = $this->getTopArticles( $hubName, $lang, $limit );
+			function () use ($hubName, $lang) {
+				$topArticles = $this->getTopArticles( $hubName, $lang);
 				return $this->getArticlesInfo( $topArticles );
 			}
 		);
+
+		shuffle( $out );
+		$out = array_slice( $out, 0, $limit );
 
 		wfProfileOut( __METHOD__ );
 		return $out;
@@ -62,18 +70,17 @@ class TopArticles implements IDataProvider {
 	}
 
 	/**
-	 * Get most popular cross wiki articles
+	 * Get 10 most popular cross wiki articles
 	 *
 	 * @param string $hubName
 	 * @param string $langCode
-	 * @param int $limit
 	 * @return array of articles - format
 	 * [
 	 *   ['wikiId' => 1, 'articleId' => 2],
 	 *   ['wikiId' => 2, 'articleId' => 3],
 	 * ]
 	 */
-	protected function getTopArticles( $hubName, $langCode, $limit ) {
+	protected function getTopArticles( $hubName, $langCode) {
 		wfProfileIn( __METHOD__ );
 
 		$topArticles = [];
@@ -81,11 +88,10 @@ class TopArticles implements IDataProvider {
 		$results = \DataMartService::getTopCrossWikiArticlesByPageview(
 			$hubName,
 			[$langCode],
-			[NS_MAIN],
-			$limit
+			[NS_MAIN]
 		);
 
-		$articlesCount = ceil( $limit / count($results) );
+		$articlesCount = ceil( self::MAX_LIMIT / count($results) );
 
 		foreach ( $results as $wikiResult ) {
 			for ( $i = 0; $i < $articlesCount; $i++ ) {
@@ -97,7 +103,7 @@ class TopArticles implements IDataProvider {
 		}
 
 		wfProfileOut( __METHOD__ );
-		return array_slice( $topArticles, 0, $limit );
+		return $topArticles;
 	}
 
 	/**
