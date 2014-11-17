@@ -26,7 +26,7 @@ $messages[ 'en' ] = array(
 	'wikiacuratedcontent-content-description-section' => 'Does it make sense to group items under a game series installment? Add a "Section" and drag and drop wiki items under it.',
 	'wikiacuratedcontent-content-description-organize' => 'Feel free to delete or add more lines, and reorder them by dragging and dropping.',
 	'wikiacuratedcontent-content-description-no-section' => 'Items without section or with empty section will be shown as last in Curated Content.',
-	'wikiacuratedcontent-content-description-items-input' => 'When adding items label them (right field) and type names (left field) with following convention: article_name, Category:category_name, User_blog:username/post_name, File:video_name',
+	'wikiacuratedcontent-content-description-items-input' => 'When adding items label them (right field) and type names (left field) with following convention: article_name, {{ns:Category}}:category_name, {{ns:500}}:username/post_name, {{ns:File}}:video_name',
 
 	'wikiacuratedcontent-content-articlenotfound-error' => 'Article not found',
 	'wikiacuratedcontent-content-emptylabel-error' => 'Message shown to a user when he tries to save without putting a label',
