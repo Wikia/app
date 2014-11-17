@@ -38,7 +38,7 @@ $wgAutoloadClasses['WikiaMobileHooks'] = "{$dir}/WikiaMobileHooks.class.php";
 $wgAutoloadClasses['WikiaMobileCategoryItem'] = "{$dir}/models/WikiaMobileCategoryModel.class.php";
 $wgAutoloadClasses['WikiaMobileCategoryItemsCollection'] = "{$dir}/models/WikiaMobileCategoryModel.class.php";
 $wgAutoloadClasses['WikiaMobileCategoryContents'] = "{$dir}/models/WikiaMobileCategoryModel.class.php";
-$wgAutoloadClasses['ResourceVariablesGetter'] = "{$dir}/ResourceVariablesGetter.class.php";
+$wgAutoloadClasses['ResourceVariablesGetter'] = "includes/wikia/resourceloader/ResourceVariablesGetter.class.php";
 
 /**
  * services
@@ -126,7 +126,7 @@ if ( empty( $wgWikiaMobileNavigationBlacklist ) ) {
 	$wgWikiaMobileNavigationBlacklist = array( 'Chat', 'WikiActivity', 'NewFiles' );
 }
 
-//black list of JS globals
+// white list of JS globals
 if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 	$wgWikiaMobileIncludeJSGlobals =
 		[
@@ -137,12 +137,24 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'cscoreCat',
 
 			//ads
-			'wgDartCustomKeyValues',
+			'ads',
+			'wgGaHasAds',
+
+			//ads legacy -- should be removed at some point
+			'adEnginePageType',
 			'cityShort',
+			'wgAdDriverUseAdsAfterInfobox',
+			'wgAdDriverWikiIsTop1000',
+			'wgDartCustomKeyValues',
+			'wgShowAds',
+			'wgUsePostScribe',
+			'wgWikiDirectedAtChildren',
 			'wikiaPageIsHub',
 			'wikiaPageType',
-			'wgAdVideoTargeting',
-			'wgAdDriverUseEbay',
+
+			//vertical&categories
+			'wgWikiVertical',
+			'wgWikiCategories',
 
 			//server/wiki
 			'wgServer',
@@ -191,7 +203,6 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 
 			//login
 			'fbAppId',
-			'fbUseMarkup',
 			'wgLoginToken'
 		];
 }

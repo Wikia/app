@@ -1,3 +1,8 @@
+<?php
+		if ( !empty( $wg->EnableMonetizationModuleExt ) && !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_TITLE] ) ) {
+			echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_TITLE];
+	}
+?>
 <header id="WikiaPageHeader" class="WikiaPageHeader">
     <h1><?= !empty($displaytitle) ? $title : htmlspecialchars($title) ?></h1>
 
@@ -17,11 +22,11 @@
 	// "Add a video" button
 	if (!empty($isSpecialVideos) && !empty($wg->EnableUploads) && $showAddVideoBtn): ?>
         <a class="button addVideo" href="#" rel="tooltip" title="<?=wfMsg('related-videos-tooltip-add');?>"><img src="<?=wfBlankImgUrl();?>" class="sprite addRelatedVideo" /> <?=wfMsg('videos-add-video')?></a>
-		<? endif; 
+		<? endif;
 
 	// comments & like button
 	if( !$isWallEnabled ) {
-		echo F::app()->renderView('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes));
+		echo F::app()->renderView('CommentsLikes', 'Index', array('comments' => $comments));
 	}
 	foreach( $extraButtons as $button ){
 		echo $button;
@@ -53,12 +58,16 @@
 	?>
 </header>
 <?php
+	if ( !empty( $wg->EnableMonetizationModuleExt ) && !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_TITLE] ) ) {
+		echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_TITLE];
+	}
+?>
+<?php
 // render search box
-if ($showSearchBox) {
+
+if ($showSearchBox && !(WikiaPageType::isMainPage() && !empty( $wg->EnableNjordExt) && empty( $wg->EnableGlobalNavExt ) ) ):
 	?>
 <section id="WikiaSearchHeader" class="WikiaSearchHeader">
 	<?=  F::app()->renderView('Search', 'Index', array('searchFormId' => 'WikiaSearch')) ?>
 </section>
-<?php
-}
-?>
+<?php endif; ?>

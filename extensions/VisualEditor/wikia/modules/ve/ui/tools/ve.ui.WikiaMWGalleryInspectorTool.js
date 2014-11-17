@@ -12,7 +12,7 @@
  * @param {Object} [config] Configuration options
  */
 ve.ui.WikiaMWGalleryInspectorTool = function VEUIWikiaMWGalleryInspectorTool( toolGroup, config ) {
-	ve.ui.MWGalleryInspectorTool.call( this, toolGroup, config );
+	ve.ui.WikiaMWGalleryInspectorTool.super.call( this, toolGroup, config );
 };
 OO.inheritClass( ve.ui.WikiaMWGalleryInspectorTool, ve.ui.MWGalleryInspectorTool );
 ve.ui.WikiaMWGalleryInspectorTool.static.contextIcon = 'edit';

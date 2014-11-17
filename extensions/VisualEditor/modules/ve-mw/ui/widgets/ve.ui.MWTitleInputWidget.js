@@ -16,7 +16,7 @@
  *
  * @constructor
  * @param {Object} [config] Configuration options
- * @param {number} [namespace] Namespace to prepend to queries not prefixed with ':'
+ * @cfg {number} [namespace] Namespace to prepend to queries not prefixed with ':'
  */
 ve.ui.MWTitleInputWidget = function VeUiMWTitleInputWidget( config ) {
 	// Config intialization
@@ -78,7 +78,7 @@ ve.ui.MWTitleInputWidget.prototype.getLookupRequest = function () {
 		value = value.substr( 1 );
 	}
 
-	return ve.init.mw.Target.static.apiRequest( {
+	return ve.init.target.constructor.static.apiRequest( {
 		'action': 'opensearch',
 		'search': value,
 		'suggest': ''

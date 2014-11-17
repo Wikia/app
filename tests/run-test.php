@@ -15,13 +15,9 @@ $wgAnnotateTestSpeed = (getenv('ANNOTATE_TEST_SPEED') === '1');
 
 require_once dirname(__FILE__) . '/bootstrap.php';
 
-require_once 'PHP/CodeCoverage/Filter.php';
-
 if (extension_loaded('xdebug')) {
     xdebug_disable();
 }
-
-require_once 'PHPUnit/Autoload.php';
 
 if ( !isset( $params['slow-list'] ) ) {
 	PHPUnit_TextUI_Command::main();

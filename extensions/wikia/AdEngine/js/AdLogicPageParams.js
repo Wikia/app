@@ -3,23 +3,26 @@
 define('ext.wikia.adEngine.adLogicPageParams', [
 	'wikia.log',
 	'wikia.window',
+	'ext.wikia.adEngine.adContext',
 	require.optional('ext.wikia.adEngine.krux'),
 	require.optional('ext.wikia.adEngine.adLogicPageDimensions'),
 	require.optional('wikia.abTest')
-], function (log, window, Krux, adLogicPageDimensions, abTest) {
+], function (log, window, adContext, Krux, adLogicPageDimensions, abTest) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adLogicPageParams',
-		hostname = window.location.hostname.toString(),
-		adsInHeadExperiment = window.wgLoadAdsInHead && abTest && abTest.getGroup('ADS_IN_HEAD'),
+		hostname = window.location.hostname.toString(), // TODO: move to wikia.location module
+		adsInHeadExperiment = adContext.getContext().opts.adsInHead && abTest && abTest.getGroup('ADS_IN_HEAD'),
 		maxNumberOfCategories = 3,
 		maxNumberOfKruxSegments = 27; // keep the DART URL part for Krux segments below 500 chars
 
 	function getDartHubName() {
-		if (window.cscoreCat === 'Entertainment') {
+		var context = adContext.getContext();
+
+		if (context.targeting.wikiVertical === 'Entertainment') {
 			return 'ent';
 		}
-		if (window.cscoreCat === 'Gaming') {
+		if (context.targeting.wikiVertical === 'Gaming') {
 			return 'gaming';
 		}
 		return 'life';
@@ -52,11 +55,12 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	}
 
 	function getCategories() {
-		if (window.wgAdDriverUseCatParam) {
-			if (window.wgCategories instanceof Array && window.wgCategories.length > 0) {
-				var categories = window.wgCategories.slice(0, maxNumberOfCategories);
-				return categories.join('|').toLowerCase().replace(/ /g, '_').split('|');
-			}
+		var categories = adContext.getContext().targeting.pageCategories,
+			outCategories;
+
+		if (categories instanceof Array && categories.length > 0) {
+			outCategories = categories.slice(0, maxNumberOfCategories);
+			return outCategories.join('|').toLowerCase().replace(/ /g, '_').split('|');
 		}
 	}
 
@@ -127,41 +131,52 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		return params;
 	}
 
-	function getPageLevelParams() {
+	/**
+	 * options
+	 * @param options {includeRawDbName: bool}
+	 * @returns object
+	 */
+	function getPageLevelParams(options) {
 		// TODO: cache results (keep in mind some of them may change while executing page)
 
 		log('getPageLevelParams', 9, logGroup);
 
 		var site,
+			dbName,
 			zone1,
 			zone2,
-			params;
+			params,
+			targeting = adContext.getContext().targeting;
 
-		if (window.wikiaPageIsHub) {
+		options = options || {};
+
+		dbName = '_' + (targeting.wikiDbName || 'wikia').replace('/[^0-9A-Z_a-z]/', '_');
+
+		if (targeting.pageIsHub) {
 			site = 'hub';
 			zone1 = '_' + getDartHubName() + '_hub';
 			zone2 = 'hub';
 		} else {
-			site = window.cityShort;
-			zone1 = '_' + (window.wgDBname || 'wikia').replace('/[^0-9A-Z_a-z]/', '_');
-			zone2 = window.wikiaPageType || 'article';
+			site = targeting.wikiCategory;
+			zone1 = dbName;
+			zone2 = targeting.pageType || 'article';
 		}
 
 		params = {
 			s0: site,
 			s1: zone1,
 			s2: zone2,
-			artid: window.wgArticleId && window.wgArticleId.toString(),
+			artid: targeting.pageArticleId && targeting.pageArticleId.toString(),
 			dmn: getDomain(),
 			hostpre: getHostname(),
-			wpage: window.wgPageName && window.wgPageName.toLowerCase(),
-			lang: window.wgContentLanguage || 'unknown',
+			wpage: targeting.pageName && targeting.pageName.toLowerCase(),
+			lang: targeting.wikiLanguage || 'unknown',
 			cat: getCategories(),
 			ab: getAb()
 		};
 
-		if (window.wgArticleId) {
-			params.pageid = zone1 + '/' + window.wgArticleId;
+		if (options.includeRawDbName) {
+			params.rawDbName = dbName;
 		}
 
 		if (adLogicPageDimensions && adLogicPageDimensions.hasPreFooters()) {
@@ -170,14 +185,23 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			params.hasp = 'no';
 		}
 
-		if (Krux && !window.wgWikiDirectedAtChildren) {
+		if (Krux && !targeting.wikiDirectedAtChildren) {
 			params.u = Krux.user;
 			params.ksgmnt = Krux.segments && Krux.segments.slice(0, maxNumberOfKruxSegments);
 		}
 
-		extend(params, decodeLegacyDartParams(window.wgDartCustomKeyValues));
+		if (targeting.wikiIsTop1000) {
+			params.top = '1k';
+		}
+
+		extend(params, decodeLegacyDartParams(targeting.wikiCustomKeyValues));
+
+		if (!params.esrb) {
+			params.esrb = targeting.wikiDirectedAtChildren ? 'ec' : 'teen';
+		}
 
 		if (!adsInHeadExperiment) {
+			// This is set in client side (don't move to adContext)
 			extend(params, decodeLegacyDartParams(window.amzn_targs));
 		}
 

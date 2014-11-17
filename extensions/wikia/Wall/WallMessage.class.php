@@ -560,7 +560,7 @@ class WallMessage {
 		}
 
 		$id = $this->getMessagePageId();
-		
+
 		$postFix = $this->getPageUrlPostFix();
 		$postFix = empty($postFix) ? "":('#'.$postFix);
 		$title = Title::newFromText($id, NS_USER_WALL_MESSAGE);
@@ -939,24 +939,30 @@ class WallMessage {
 	}
 
 	protected function getAdminNotificationEntity($user, $reason) {
+		$data = [];
+
 		$this->load();
 		$wikiId = $this->cityId;
-		$userIdRemoving = $user->getId();
-		$userIdWallOwner = $this->getWallOwner()->getId();
-		$parentPageId = $this->getArticleTitle()->getArticleId();
+		$data['userIdRemoving'] = $user->getId();
+		$data['userIdWallOwner'] = $this->getWallOwner()->getId();
+		$data['parentPageId'] = $this->getArticleTitle()->getArticleId();
 
-		$url = $this->getMessagePageUrl();
-		$title = $this->getMetaTitle();
-		$messageId = $this->getId();
+		$data['url'] = $this->getMessagePageUrl();
+		$data['title'] = $this->getMetaTitle();
+		$data['messageId'] = $this->getId();
+		$data['reason'] = $reason;
 
 		if( $this->isMain() ) {
-			$wnae = new WallNotificationAdminEntity($wikiId, $parentPageId, $userIdRemoving, $userIdWallOwner, $title, $url, $messageId, 0, false, $reason);
+			$data['parentId'] = 0;
+			$data['isReply'] = false;
+			$wnae = new WallNotificationAdminEntity($wikiId, $data);
 		} else {
 			$parent = $this->getTopParentObj();
 			$parent->load();
-			$parentMessageId = $parent->getId();
-			$title = $parent->getMetaTitle();
-			$wnae = new WallNotificationAdminEntity($wikiId, $parentPageId, $userIdRemoving, $userIdWallOwner, $title, $url, $messageId, $parentMessageId, true, $reason);
+			$data['parentId'] = $parent->getId();
+			$data['title'] = $parent->getMetaTitle();
+			$data['isReply'] = true;
+			$wnae = new WallNotificationAdminEntity($wikiId, $data);
 		}
 
 		return $wnae;
@@ -968,22 +974,28 @@ class WallMessage {
 	}
 
 	protected function getOwnerNotificationEntity($user, $reason) {
+		$data = [];
+
 		$this->load();
 		$wikiId = $this->cityId;
-		$userIdRemoving = $user->getId();
-		$userIdWallOwner = $this->getWallOwner()->getId();
-		$url = $this->getMessagePageUrl();
-		$title = $this->getMetaTitle();
-		$messageId = $this->getId();
+		$data['userIdRemoving'] = $user->getId();
+		$data['userIdWallOwner'] = $this->getWallOwner()->getId();
+		$data['url'] = $this->getMessagePageUrl();
+		$data['title'] = $this->getMetaTitle();
+		$data['messageId'] = $this->getId();
+		$data['reason'] = $reason;
 
 		if( $this->isMain() ) {
-			$wnoe = new WallNotificationOwnerEntity($wikiId, $userIdRemoving, $userIdWallOwner, $title, $url, $messageId, 0, false, $reason);
+			$data['parentMessageId'] = 0;
+			$data['isReply'] = false;
+			$wnoe = new WallNotificationOwnerEntity($wikiId, $data);
 		} else {
 			$parent = $this->getTopParentObj();
 			$parent->load();
-			$parentMessageId = $parent->getId();
-			$title = $parent->getMetaTitle();
-			$wnoe = new WallNotificationOwnerEntity($wikiId, $userIdRemoving, $userIdWallOwner, $title, $url, $messageId, $parentMessageId, true, $reason);
+			$data['parentMessageId'] = $parent->getId();
+			$data['title'] = $parent->getMetaTitle();
+			$data['isReply'] = true;
+			$wnoe = new WallNotificationOwnerEntity($wikiId, $data);
 		}
 
 		return $wnoe;

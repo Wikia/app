@@ -1,0 +1,76 @@
+@import 'skins/shared/color';
+@import 'skins/oasis/css/core/layout';
+
+.monetization-module {
+	h1 {
+		display: block;
+		font-size: 20px;
+		margin-bottom: 13px;
+	}
+
+	.affiliate {
+		.prod-thumb img {
+			border: 1px solid #ccc;
+			float: left;
+			height: 70px;
+			padding: 1px;
+			width: 70px;
+		}
+
+		.placard {
+			color: $color-text;
+			float: left;
+			font-size: 14px;
+			font-weight: bold;
+			line-height: 1.4;
+			overflow: visible;
+			padding-left: 10px;
+			white-space: normal;
+			width: 60%;
+		}
+
+		.vendor {
+			float: left;
+			margin: 10px 0 0;
+			margin-bottom: 35px;
+			padding: 0 6px 0 0;
+			width: 95%;
+		}
+
+		.vendor-logo {
+			background-image: url('/extensions/wikia/MonetizationModule/images/logo_amazon.png');
+			float: left;
+			height: 12px;
+			padding-bottom: 3px;
+			padding-top: 7px;
+			width: 88px;
+		}
+
+		.vendor-button {
+			float: right;
+			margin: 2px 0 0 10px;
+		}
+
+		.vendor-price {
+			float: right;
+			font-size: 14px;
+			font-weight: bold;
+			margin: 3px 0 1px;
+		}
+	}
+}
+
+
+.WikiaMainContent {
+	.affiliate {
+		float: left;
+		min-width: 200px;
+		padding: 8px 0 4px 6px;
+		width: 32%;
+	}
+
+	div[data-mon-type=adunit] {
+		margin-bottom: 10px;
+		margin-top: 10px;
+	}
+}

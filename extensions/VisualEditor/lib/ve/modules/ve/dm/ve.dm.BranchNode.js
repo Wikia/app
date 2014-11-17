@@ -13,17 +13,19 @@
  * @abstract
  * @extends ve.dm.Node
  * @mixins ve.BranchNode
+ *
  * @constructor
- * @param {ve.dm.Node[]} [children] Child nodes to attach
  * @param {Object} [element] Reference to element in linear model
+ * @param {ve.dm.Node[]} [children] Child nodes to attach
  */
-ve.dm.BranchNode = function VeDmBranchNode( children, element ) {
+ve.dm.BranchNode = function VeDmBranchNode( element, children ) {
 	// Mixin constructor
 	ve.BranchNode.call( this );
 
 	// Parent constructor
-	ve.dm.Node.call( this, 0, element );
+	ve.dm.Node.call( this, element );
 
+	// TODO: children is only ever used in tests
 	if ( ve.isArray( children ) && children.length ) {
 		this.splice.apply( this, [0, 0].concat( children ) );
 	}

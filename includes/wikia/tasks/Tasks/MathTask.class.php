@@ -32,4 +32,4 @@ class MathTask extends BaseTask {
 	public function multiply($x, $y) {
 		return $x*$y;
 	}
-} 
+}

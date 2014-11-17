@@ -101,7 +101,10 @@ class SearchApiController extends WikiaApiController {
 		}
 		$responseValues['items'] = $items;
 
-		$this->setResponseData($responseValues, 'image');
+		$this->setResponseData(
+			$responseValues,
+			[ 'urlFields' => [ 'url', 'wordmark', 'image' ] ]
+		);
 	}
 
 	/**
@@ -144,7 +147,10 @@ class SearchApiController extends WikiaApiController {
 		$searchService = new CombinedSearchService();
 		$response = $searchService->search($query, $langs, $namespaces, $hubs, $limit, $minArticleQuality);
 
-		$this->setResponseData( $response, 'image' );
+		$this->setResponseData(
+			$response,
+			[ 'urlFields' =>  [ 'url', 'image' ] ]
+		);
 	}
 
 	/**
@@ -167,10 +173,12 @@ class SearchApiController extends WikiaApiController {
 			throw new NotFoundApiException();
 		}
 
-		$response = $this->getResponse();
-		$response->setValues( $responseValues );
 
-		$response->setCacheValidity(WikiaResponse::CACHE_STANDARD);
+		$this->setResponseData(
+			$responseValues,
+			[ 'urlFields' => 'url'  ],
+			WikiaResponse::CACHE_STANDARD
+		);
 	}
 	
 	/**

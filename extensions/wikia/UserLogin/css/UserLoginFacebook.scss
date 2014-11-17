@@ -1,11 +1,11 @@
 // core styles
-@import "skins/oasis/css/core/color";
+@import "skins/shared/color";
 
 // core mixins
-@import "skins/oasis/css/mixins/box-sizing";
-@import "skins/oasis/css/mixins/box-shadow";
-@import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/transition";
+@import "skins/shared/mixins/box-sizing";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/transition";
 
 // local mixins
 @import "../mixins/submitpane";

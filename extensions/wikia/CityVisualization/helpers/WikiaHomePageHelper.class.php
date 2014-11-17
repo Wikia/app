@@ -17,6 +17,7 @@ class WikiaHomePageHelper extends WikiaModel {
 	const VIDEO_GAMES_SLOTS_VAR_NAME = 'wgWikiaHomePageVideoGamesSlots';
 	const ENTERTAINMENT_SLOTS_VAR_NAME = 'wgWikiaHomePageEntertainmentSlots';
 	const LIFESTYLE_SLOTS_VAR_NAME = 'wgWikiaHomePageLifestyleSlots';
+	const CORPORATE_ON_HUB_ENABLED = 'wgDisableWAMOnHubs';
 	const SLOTS_IN_TOTAL = 17;
 
 	const SLOTS_BIG = 2;
@@ -38,15 +39,10 @@ class WikiaHomePageHelper extends WikiaModel {
 	const INTERSTITIAL_SMALL_IMAGE_WIDTH = 115;
 	const INTERSTITIAL_SMALL_IMAGE_HEIGHT = 65;
 
-	const FAILSAFE_COMMUNITIES_COUNT = 300000;
-	const FAILSAFE_NEW_COMMUNITIES_COUNT = 400;
-	const FAILSAFE_VISITORS = 100000000;
-	const FAILSAFE_MOBILE_PERCENTAGE = 25;
-
 	const WAM_SCORE_ROUND_PRECISION = 2;
 
 	const SLIDER_IMAGES_KEY = 'SliderImagesKey';
-	const WIKIA_HOME_PAGE_HELPER_MEMC_VERSION = 'v0.8';
+	const WIKIA_HOME_PAGE_HELPER_MEMC_VERSION = 'v0.9';
 
 	protected $visualizationModel = null;
 	protected $collectionsModel;
@@ -138,165 +134,18 @@ class WikiaHomePageHelper extends WikiaModel {
 	}
 
 	/**
-	 * get unique visitors last 30 days (exclude today)
-	 * @return integer edits
-	 */
-	public function getVisitors() {
-		wfProfileIn(__METHOD__);
-
-		$visitors = 0;
-		$dates = array(date('Y-m-01', strtotime('-1 month')), date('Y-m-01', strtotime('now')));
-		$pageviews = DataMartService::getSumPageviewsMonthly($dates);
-		if (empty($pageviews)) {
-			foreach ($pageviews as $date => $pviews) {
-				$visitors += $pviews;
-			}
-		}
-
-		wfProfileOut(__METHOD__);
-
-		return $visitors;
-	}
-
-	/**
-	 * get number of edits made the day before yesterday
-	 * @return integer edits
-	 */
-	public function getEdits() {
-		wfProfileIn(__METHOD__);
-
-		$edits = 0;
-		if (!empty($this->wg->StatsDBEnabled)) {
-			$db = wfGetDB(DB_SLAVE, array(), $this->wg->StatsDB);
-
-			$row = $db->selectRow(
-				array('events'),
-				array('count(*) cnt'),
-				array('event_date between curdate() - interval 2 day and curdate() - interval 1 day'),
-				__METHOD__
-			);
-
-			if ($row) {
-				$edits = intval($row->cnt);
-			}
-		}
-
-		wfProfileOut(__METHOD__);
-
-		return $edits;
-	}
-
-	public function getTotalCommunities() {
-		return WikiaDataAccess::cache(
-			wfMemcKey('total_communities_count', self::WIKIA_HOME_PAGE_HELPER_MEMC_VERSION, __METHOD__),
-			24 * 60 * 60,
-			array($this, 'getTotalCommunitiesFromDB')
-		);
-	}
-
-
-	public function getTotalCommunitiesFromDB() {
-		wfProfileIn(__METHOD__);
-		$db = wfGetDB(DB_SLAVE, array(), $this->wg->externalSharedDB);
-		$row = $db->selectRow(
-			array('city_list'),
-			array('count(1) cnt'),
-			array('city_public = 1 AND city_created < DATE(NOW())'),
-			__METHOD__
-		);
-
-		$communities = self::FAILSAFE_COMMUNITIES_COUNT;
-		if ($row) {
-			$communities = intval($row->cnt);
-		}
-		wfProfileOut(__METHOD__);
-		return $communities;
-	}
-
-	public function getLastDaysNewCommunities() {
-		return WikiaDataAccess::cache(
-			wfMemcKey('communities_created_in_range', self::WIKIA_HOME_PAGE_HELPER_MEMC_VERSION, __METHOD__),
-			24 * 60 * 60,
-			array($this, 'getLastDaysNewCommunitiesFromDB')
-		);
-	}
-
-	public function getLastDaysNewCommunitiesFromDB() {
-		$today = strtotime('00:00:00');
-		$yesterday = strtotime('-1 day', $today);
-		return $this->getNewCommunitiesInRangeFromDB($yesterday, $today);
-	}
-
-	protected function getNewCommunitiesInRangeFromDB($starttimestamp, $endtimestamp) {
-		wfProfileIn(__METHOD__);
-		$db = wfGetDB(DB_SLAVE, array(), $this->wg->externalSharedDB);
-		$row = $db->selectRow(
-			array('city_list'),
-			array('count(1) cnt'),
-			array(
-				'city_public' => 1,
-				'city_created >= FROM_UNIXTIME(' . $starttimestamp . ')',
-				'city_created < FROM_UNIXTIME(' . $endtimestamp . ')'
-			),
-			__METHOD__
-		);
-
-		$newCommunities = 0;
-		if ($row) {
-			$newCommunities = intval($row->cnt);
-		}
-		if ($newCommunities < self::FAILSAFE_NEW_COMMUNITIES_COUNT) {
-			$newCommunities = self::FAILSAFE_NEW_COMMUNITIES_COUNT;
-		}
-		wfProfileOut(__METHOD__);
-		return $newCommunities;
-	}
-
-	public function getStatsIncludingFallbacks() {
-		$stats = $this->getStatsFromWF();
-
-		$stats[ 'edits' ] = $this->getEdits();
-		$stats[ 'communities' ] = $this->getTotalCommunities();
-		$stats[ 'newCommunities' ] = $this->getLastDaysNewCommunities();
-
-		$totalPages = intval( Wikia::get_content_pages() );
-		if ( $totalPages > $stats[ 'totalPages' ] ) {
-			$stats[ 'totalPages' ] = $totalPages;
-		}
-
-		if ( $stats[ 'mobilePercentage' ] < self::FAILSAFE_MOBILE_PERCENTAGE ) {
-			$stats[ 'mobilePercentage' ] = self::FAILSAFE_MOBILE_PERCENTAGE;
-		}
-
-		if ( $stats[ 'visitors' ] < self::FAILSAFE_VISITORS ) {
-			$stats[ 'visitors' ] = self::FAILSAFE_VISITORS;
-		}
-		return $stats;
-	}
-
-	public function getStatsFromWF() {
-		return WikiFactory::getVarValueByName('wgCorpMainPageStats', Wikia::COMMUNITY_WIKI_ID);
-	}
-
-	public function saveStatsToWF($statsValues) {
-		WikiFactory::setVarByName('wgCorpMainPageStats', Wikia::COMMUNITY_WIKI_ID, $statsValues);
-		$this->wg->Memc->delete($this->getStatsMemcacheKey());
-
-		$corpWikisLangs = array_keys((new CityVisualization())->getVisualizationWikisData());
-		$wikiaHubsHelper = new WikiaHubsServicesHelper();
-		foreach ($corpWikisLangs as $lang) {
-			$wikiaHubsHelper->purgeHomePageVarnish($lang);
-		}
-	}
-
-	/**
 	 * Get information about hubs to display on wikia homepage in hubs section
 	 *
 	 * @param $corporateId corporate wiki id
 	 * @return mixed
 	 */
-	public function getHubSlotsFromWF($corporateId) {
-		$hubSlots = WikiFactory::getVarValueByName('wgWikiaHomePageHubsSlots', $corporateId);
+	public function getHubSlotsFromWF($corporateId, $lang) {
+		$hubSlots = WikiFactory::getVarValueByName('wgWikiaHomePageHubsSlotsV2', $corporateId);
+		if ( empty( $hubSlots ) ) {
+			$hubSlots = WikiFactory::getVarValueByName('wgWikiaHomePageHubsSlots', $corporateId);
+			$hubSlots = $this->updateHubSlotsToV2($hubSlots);
+			$this->saveHubSlotsToWF($hubSlots, $corporateId, $lang, 'wgWikiaHomePageHubsSlotsV2');
+		}
 		return is_array( $hubSlots ) ? $hubSlots : [];
 	}
 
@@ -308,14 +157,29 @@ class WikiaHomePageHelper extends WikiaModel {
 	 * @param $corporateId corporate wiki id
 	 * @param $lang language code
 	 */
-	public function saveHubSlotsToWF($hubSlotsValues, $corporateId, $lang) {
-		$status = WikiFactory::setVarByName('wgWikiaHomePageHubsSlots', $corporateId, $hubSlotsValues);
+	public function saveHubSlotsToWF($hubSlotsValues, $corporateId, $lang, $varName = 'wgWikiaHomePageHubsSlots') {
+		$status = WikiFactory::setVarByName($varName, $corporateId, $hubSlotsValues);
 
 		if ( $status ) {
 			WikiaDataAccess::cachePurge( $this->getHubSlotsMemcacheKey( $lang ) );
 		}
 
 		return $status;
+	}
+
+	/**
+	 * Update old slots structure to new structure
+	 *
+	 * @param $hubSlots
+	 * @return array
+	 */
+	public function updateHubSlotsToV2($hubSlots) {
+		$hubSlotsV2 = [];
+		if (empty($hubSlots)) return $hubSlotsV2;
+		foreach( $hubSlots as $slot ) {
+			$hubSlotsV2['hub_slot'][] = $slot['hub_slot'];
+		}
+		return $hubSlotsV2;
 	}
 
 	/**
@@ -477,10 +341,10 @@ class WikiaHomePageHelper extends WikiaModel {
 
 		return (
 			!$user->isIP($userName)
-				&& !in_array($userId, WikiService::$excludedWikiaUsers)
-				&& !in_array('bot', $user->getRights())
-				&& !$user->isBlocked()
-				&& !$user->isBlockedGlobally()
+			&& !in_array($userId, WikiService::$excludedWikiaUsers)
+			&& !in_array('bot', $user->getRights())
+			&& !$user->isBlocked()
+			&& !$user->isBlockedGlobally()
 		);
 	}
 
@@ -940,6 +804,44 @@ class WikiaHomePageHelper extends WikiaModel {
 
 	public function getVisualizationWikisData() {
 		return $this->getVisualization()->getVisualizationWikisData();
+	}
+
+	public function getCorporateHubWikis() {
+		$wikiFactoryList = [];
+		$varId = WikiFactory::getVarIdByName( self::CORPORATE_ON_HUB_ENABLED );
+		if( is_int( $varId ) ) {
+			$wikiFactoryList = WikiaDataAccess::cache(
+				wfMemcKey( 'corporate_hub_pages_list', self::WIKIA_HOME_PAGE_HELPER_MEMC_VERSION ),
+				24 * 60 * 60,
+				function() use( $varId ) {
+					$list = WikiFactory::getListOfWikisWithVar( $varId, 'bool', '=', true );
+					return $this->cleanWikisDataArray( $list );
+				},
+				WikiaDataAccess::REFRESH_CACHE
+			);
+		}
+
+		return $wikiFactoryList;
+	}
+
+	/**
+	 * @param Array $sites lists of wikis from WikiFactory::getListOfWikisWithVar()
+	 * @return array
+	 */
+	public function cleanWikisDataArray($sites) {
+		$results = array();
+
+		foreach( $sites as $wikiId => $wiki ) {
+			$results[$wiki['l']] = [
+				'wikiId' => $wikiId,
+				'url' => $wiki['u'],
+				'db' => $wiki['d'],
+				'lang' => $wiki['l'],
+				'wikiTitle' => $wiki['t'],
+			];
+		}
+
+		return $results;
 	}
 
 	public function getWikisCountForStaffTool($options) {

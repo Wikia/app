@@ -174,6 +174,7 @@ $messages['diq'] = array(
 /** Spanish (español)
  * @author Armando-Martin
  * @author Bola
+ * @author Macofe
  * @author Sanbec
  */
 $messages['es'] = array(
@@ -189,6 +190,23 @@ Por favor, pregunta a un administrador del sistema si necesitas añadir otros gr
 	'batchuserrights-no-groups' => 'No elegiste ningún grupo.
 De esta forma no ocurrirá nada.
 El resto de la página será ejecutada solo para que puedas ver fácilmente si algún nombre de usuario no se puede cargar.',
+);
+
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'batchuserrights' => 'مجموعهٔ حقوق کاربر',
+	'batchuserrights-names' => 'نام‌های کاربری برای اضافه کردن این گروه به (یکی در هر خط)',
+	'batchuserrights-intro' => 'این صفحه به شما اجازه ‌خواهد‌داد که یک‌دفعه یک گروه را به چند کاربر اضافه کنید.
+به دلایل امنیتی، فهرست‌ گروه‌های قابل اضافه ‌کردن در پیکر‌بندی گستره تنظیم شده‌است و نمی‌تواند در داخل ویکی تغییر داده ‌شود.
+اگر احتیاج به اجازهٔ پردازش یکجای ذیگر گروه‌ها دارید،لطفاً از سرپرست دستگاه سوأل کنید.',
+	'batchuserrights-single-progress-update' => 'اضافه کردن {{PLURAL:$1|group|groups}} به <strong>$2</strong>.',
+	'batchuserrights-add-groups' => 'اضافه کردن {{PLURAL:$1|one user|$1 users}} به {{PLURAL:$2|group|groups}}: <strong>$3</strong> زیر.',
+	'batchuserrights-userload-error' => "کاربر \"'''\$1'''\" نمی‌تواند بارگذاری شود.",
+	'batchuserrights-no-groups' => 'شما هیچ گروهی را انتخاب نکردید.
+هیچ چیز انجام نخواهد‌شد.‌
+صفحات دیگر فقط برای اجرا، آزاد خواهند بود بنابراین اگر هر نام کاربری نتوانست بار شود شما می‌توانید به ‌آسانی ببینید .',
 );
 
 /** Finnish (suomi)
@@ -303,13 +321,25 @@ Le resto del pagina essera executate solmente a fin que tu pote vider facilement
 
 /** Indonesian (Bahasa Indonesia)
  * @author C5st4wr6ch
+ * @author Riemogerz
  */
 $messages['id'] = array(
+	'batchuserrights' => 'Hak-hak pengguna',
 	'batchuserrights-desc' => 'Memperbolehkan menambahkan satu atau beberapa pengguna ke grup dalam satu tindakan',
+	'batchuserrights-names' => 'Nama pengguna untuk menambahkan dalam grup ini (satu per baris):',
 	'batchuserrights-intro' => 'Halaman ini mengizinkan Anda menambahkan sebuah grup ke banyak pengguna sekaligus.
 Untuk alasan keamanan, daftar grup yang dapat ditambahkan diatur dalam pengaturan ekstensi dan tidak dapat diubah dari dalam wiki.
 Silakan minta ke seorang pengurus sistem jika Anda butuh mengizinkan penambahan-massal dari grup-grup lain.',
+	'batchuserrights-single-progress-update' => 'Ditambahkan  {{PLURAL:$1|grup|grup}} untuk <strong> $2 </strong>.',
 	'batchuserrights-add-groups' => 'Menambahkan {{PLURAL:$1|satu pengguna|$1 pengguna}} ke {{PLURAL:$2|kelompok|kelompok-kelompok}} berikut: <strong>$3</strong>.',
+	'batchuserrights-userload-error' => "Tidak bisa memuat pengguna \"'''\$1'''\".",
+);
+
+/** Italian (italiano)
+ * @author PeppeAeco
+ */
+$messages['it'] = array(
+	'batchuserrights-userload-error' => "mpossibile caricare l'utente \"'''\$1'''\".",
 );
 
 /** Japanese (日本語)
@@ -319,11 +349,22 @@ $messages['ja'] = array(
 	'batchuserrights' => '利用者の権限を一括処理',
 );
 
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'batchuserrights-names' => '이 그룹에 추가할 사용자 이름 (줄마다 하나):',
+	'batchuserrights-userload-error' => "\"'''\$1'''\" 사용자를 불러올 수 없습니다.",
+	'batchuserrights-no-groups' => '그룹을 선택하지 않았습니다.
+아무것도 수행하지 않습니다.
+문서의 나머지 부분은 불러올 수 있는 사용자가 있는지 쉽게 볼 수 있도록 계속 실행될 것입니다.',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
 $messages['lb'] = array(
-	'batchuserrights' => 'Benotzerrechter automatiséieren',
+	'batchuserrights' => 'Masse-Benotzerrechter',
 	'batchuserrights-desc' => 'Erlaabt et een oder méi Benotzer an enger Aktioun an e Grupp derbäizesetzen',
 	'batchuserrights-names' => 'Benotzernimm fir an dëse Grupp derbäizesetzen (e pro Linn):',
 	'batchuserrights-userload-error' => "De Benotzer \"'''\$1'''\" konnt net geluede ginn.",

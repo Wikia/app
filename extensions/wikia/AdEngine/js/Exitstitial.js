@@ -1,15 +1,19 @@
+// TODO: ADEN-1332-ize
+
 /**
  * Exitstitial ads
  */
 /*global require, setTimeout*/
-require(['wikia.window', 'wikia.document', 'wikia.location', 'jquery'], function (window, document, location, $) {
+require([
+	'wikia.window', 'wikia.document', 'wikia.location', 'jquery', 'ext.wikia.adEngine.adContext'
+], function (window, document, location, $, adContext) {
 	'use strict';
 
 	var modalId = 'ExitstitialInfobox',
 		modalWidth = 840,
 		adSlot = 'EXIT_STITIAL_BOXAD_1',
 		redirectDelay = window.wgOutboundScreenRedirectDelay || 10,
-		enabled = window.wgEnableOutboundScreenExt && window.wgShowAds && window.wgAdsShowableOnPage;
+		enabled = adContext.getContext().opts.showAds && window.wgEnableOutboundScreenExt;
 
 	// Check if external links should be ad-guarded
 	if (!enabled) {

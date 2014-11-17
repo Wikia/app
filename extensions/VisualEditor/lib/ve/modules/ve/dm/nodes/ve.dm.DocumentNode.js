@@ -10,12 +10,13 @@
  *
  * @class
  * @extends ve.dm.BranchNode
+ *
  * @constructor
  * @param {ve.dm.BranchNode[]} [children] Child nodes to attach
  */
 ve.dm.DocumentNode = function VeDmDocumentNode( children ) {
 	// Parent constructor
-	ve.dm.BranchNode.call( this, children );
+	ve.dm.BranchNode.call( this, null, children );
 
 	// Properties
 	this.root = this;

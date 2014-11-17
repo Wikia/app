@@ -1,5 +1,5 @@
-@import "skins/oasis/css/mixins/transition";
-@import "skins/oasis/css/core/color";
+@import "skins/shared/mixins/transition";
+@import "skins/shared/color";
 @import "skins/oasis/css/core/reset";
 @import "skins/oasis/css/core/sprite";
 @import "skins/oasis/css/core/GlobalHeader";
@@ -20,7 +20,6 @@ $darkGray-c5: #333333;
 }
 
 @mixin buttons {
-	-moz-border-radius: 2px;
 	background-color: $blue-c1;
 	border: solid 1px $blue-c1;
 	border-radius: 2px;
@@ -30,7 +29,6 @@ $darkGray-c5: #333333;
 }
 
 @mixin inputs {
-	-moz-border-radius: 2px;
 	border: solid 1px $midGray-c3;
 	border-radius: 2px;
 	color: $darkGray-c5;

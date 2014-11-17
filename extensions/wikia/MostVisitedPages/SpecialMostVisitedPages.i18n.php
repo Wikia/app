@@ -85,6 +85,18 @@ $messages['bg'] = array(
 	'mostvisitedpagessearchbtn' => 'търсене',
 );
 
+/** Bengali (বাংলা)
+ * @author Aftab1995
+ */
+$messages['bn'] = array(
+	'mostvisitedpages' => 'সর্বাধিক দেখা পাতাসমূহ',
+	'mostvisitedpagessearchtext' => 'নিবন্ধের নাম:',
+	'mostvisitedpagessearchbtn' => 'অনুসন্ধান',
+	'mostvisitedpageslatest' => 'সর্বশেষ $1 {{PLURAL:$1|মিনিটে}}',
+	'mostvisitedpageslatestlink' => 'সর্বশেষ দেখা পাতাসমূহ দেখুন',
+	'mostvisitedpagesalllink' => 'সর্বাধিক দেখা পাতাসমূহ দেখুন',
+);
+
 /** Breton (brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D
@@ -176,6 +188,13 @@ $messages['es'] = array(
 	'mostvisitedpageslatest' => '{{PLURAL:$1|en el último|en los últimos}} $1 {{PLURAL:$1|minuto|minutos}}',
 	'mostvisitedpageslatestlink' => 'Ver últimas páginas visitadas',
 	'mostvisitedpagesalllink' => 'Ver páginas más visitadas',
+);
+
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'mostvisitedpagessearchbtn' => 'جستجو',
 );
 
 /** Finnish (suomi)
@@ -349,6 +368,14 @@ $messages['kn'] = array(
 	'mostvisitedpagesalllink' => 'ಅತ್ಯಂತ ಹೆಚ್ಚು ಭೇಟಿಕೊಟ್ಟ ಪುಟಗಳನ್ನು ನೋಡಿ',
 );
 
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'mostvisitedpagessearchtext' => '문서 이름:',
+	'mostvisitedpagessearchbtn' => '검색',
+);
+
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author George Animal
  */
@@ -366,8 +393,8 @@ $messages['lb'] = array(
 	'mostvisitedpagessearchtext' => 'Numm vum Artikel:',
 	'mostvisitedpagessearchbtn' => 'sichen',
 	'mostvisitedpageslatest' => 'an de leschten $1 Minutten',
-	'mostvisitedpageslatestlink' => 'Déi lescht besichte Säite kucken',
-	'mostvisitedpagesalllink' => 'Déi am dackste besichte Säite kucken',
+	'mostvisitedpageslatestlink' => 'Déi lescht besicht Säite kucken',
+	'mostvisitedpagesalllink' => 'Déi am dackst besicht Säite kucken',
 );
 
 /** لوری (لوری)
@@ -582,6 +609,18 @@ $messages['sv'] = array(
 	'mostvisitedpagesalllink' => 'Se mest besökta sidor',
 );
 
+/** Silesian (ślůnski)
+ * @author Krol111
+ */
+$messages['szl'] = array(
+	'mostvisitedpages' => 'Nojczyńśći uobźyrane zajty',
+	'mostvisitedpagessearchtext' => 'Mjano artikla:',
+	'mostvisitedpagessearchbtn' => 'sznupej',
+	'mostvisitedpageslatest' => 'bez uostatńe $1 minut', # Fuzzy
+	'mostvisitedpageslatestlink' => 'Uobejrzij ńydowno uobźyrane zajty',
+	'mostvisitedpagesalllink' => 'Uobejrzij nojczyńśći uobźyrane zajty',
+);
+
 /** Tamil (தமிழ்)
  * @author Karthi.dr
  */
@@ -676,12 +715,13 @@ $messages['vi'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
+ * @author Liuxinyu970226
  * @author Xiaomingyan
  */
 $messages['zh-hans'] = array(
 	'mostvisitedpages' => '最多访问页面',
 	'mostvisitedpagessearchtext' => '条目名称：',
-	'mostvisitedpagessearchbtn' => '搜寻',
+	'mostvisitedpagessearchbtn' => '搜索',
 	'mostvisitedpageslatest' => '在最近$1分钟内',
 	'mostvisitedpageslatestlink' => '查看最近访问的页面',
 	'mostvisitedpagesalllink' => '查看访问数量最多的页面',

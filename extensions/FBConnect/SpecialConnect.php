@@ -90,33 +90,33 @@ class SpecialConnect extends SpecialPage {
 		$this->mReturnTo = $wgRequest->getVal( 'returnto' );
 		$this->mReturnToQuery = $wgRequest->getVal( 'returntoquery' );
 
-                /**
-                 * BugId:13709
-                 * Before the fix the logic and the usage of parse_str was wrong
-                 * which had fatal side effects.
-                 *
-                 * The goal if the block below is  to remove the fbconnected
-                 * variable from the $this->mReturnToQuery (which is supposed
-                 * to be a QUERY_STRING-like string.
-                 */
-                if ( !empty( $this->mReturnToQuery ) ) {
-                    // a temporary array
-                    $aReturnToQuery = array();
-                    // decompose the query string to the array
-                    parse_str( $this->mReturnToQuery, $aReturnToQuery );
-                    // remove unwanted elements
-                    unset( $aReturnToQuery['fbconnected'] );
+		/**
+		 * BugId:13709
+		 * Before the fix the logic and the usage of parse_str was wrong
+		 * which had fatal side effects.
+		 *
+		 * The goal if the block below is  to remove the fbconnected
+		 * variable from the $this->mReturnToQuery (which is supposed
+		 * to be a QUERY_STRING-like string.
+		 */
+		if ( !empty( $this->mReturnToQuery ) ) {
+			// a temporary array
+			$aReturnToQuery = array();
+			// decompose the query string to the array
+			parse_str( $this->mReturnToQuery, $aReturnToQuery );
+			// remove unwanted elements
+			unset( $aReturnToQuery['fbconnected'] );
 
-                    //recompose the query string
-                    foreach ( $aReturnToQuery as $k => $v ) {
-                        $aReturnToQuery[$k] = "{$k}={$v}";
-                    }
-                    // oh, parse_str implicitly urldecodes values which wasn't
-                    // mentioned in the PHP documentation.
-                    $this->mReturnToQuery = urlencode( implode( '&', $aReturnToQuery ) );
-                    // remove the temporary array
-                    unset( $aReturnToQuery );
-                }
+			//recompose the query string
+			foreach ( $aReturnToQuery as $k => $v ) {
+				$aReturnToQuery[$k] = "{$k}={$v}";
+			}
+			// oh, parse_str implicitly urldecodes values which wasn't
+			// mentioned in the PHP documentation.
+			$this->mReturnToQuery = urlencode( implode( '&', $aReturnToQuery ) );
+			// remove the temporary array
+			unset( $aReturnToQuery );
+		}
 
 		$title = Title::newFromText($this->mReturnTo);
 		if (!empty($title))
@@ -205,12 +205,6 @@ class SpecialConnect extends SpecialPage {
 				break;
 			}
 		default:
-			// Main entry point
-			#if ( $wgRequest->getText( 'returnto' ) ) {
-			#	$this->setReturnTo( $wgRequest->getText( 'returnto' ),
-			#				$wgRequest->getVal( 'returntoquery' ) );
-			#}
-
 			if($wgUser->isLoggedIn()){
 				if($fb_user){
 					// If the user has previously connected, log them in.  If they have not, then complete the connection process.
@@ -248,7 +242,7 @@ class SpecialConnect extends SpecialPage {
 	 * preferences while the other form should have already shown the preferences form to the user.
 	 */
 	public function connectExisting(){
-		global $wgUser, $wgRequest;
+		global $wgUser;
 		wfProfileIn(__METHOD__);
 
 		$fb_ids = FBConnectDB::getFacebookIDs($wgUser);
@@ -263,21 +257,6 @@ class SpecialConnect extends SpecialPage {
 
 			FBConnectDB::addFacebookID($wgUser, $fb_id);
 
-			// Save the default user preferences.
-			global $fbEnablePushToFacebook;
-			if(!empty($fbEnablePushToFacebook)){
-				global $fbPushEventClasses;
-				if(!empty($fbPushEventClasses)){
-					$DEFAULT_ENABLE_ALL_PUSHES = true;
-					foreach($fbPushEventClasses as $pushEventClassName){
-						$pushObj = new $pushEventClassName;
-						$className = get_class();
-						$prefName = $pushObj->getUserPreferenceName();
-
-						$wgUser->setOption($prefName, ($DEFAULT_ENABLE_ALL_PUSHES?"1":"0"));
-					}
-				}
-			}
 			$wgUser->setOption("fbFromExist", "1");
 			$wgUser->saveSettings();
 
@@ -285,6 +264,8 @@ class SpecialConnect extends SpecialPage {
 
 			$this->sendPage('displaySuccessAttaching');
 		}
+
+		$this->track( 'facebook-link-existing' );
 
 		wfProfileOut(__METHOD__);
 	} // end connectExisting
@@ -396,15 +377,6 @@ class SpecialConnect extends SpecialPage {
 				return;
 			}
 
-			/**
-			// Test to see if we are denied by $wgAuth or the user can't create an account
-			if ( !$wgAuth->autoCreate() || !$wgAuth->userExists( $userName ) ||
-										   !$wgAuth->authenticate( $userName )) {
-				$result = false;
-				return true;
-			}
-			/**/
-
 			// Run a hook to let custom forms make sure that it is okay to proceed with processing the form.
 			// This hook should only check preconditions and should not store values.  Values should be stored using the hook at the bottom of this function.
 			// Can use 'this' to call sendPage('chooseNameForm', 'SOME-ERROR-MSG-CODE-HERE') if some of the preconditions are invalid.
@@ -420,19 +392,6 @@ class SpecialConnect extends SpecialPage {
 				wfProfileOut(__METHOD__);
 				return;
 			}
-			// Let extensions abort the account creation.  If you have extensions which are expecting a Real Name or Email, you may need to disable
-			// them since these are not requirements of Facebook Connect (so users will not have them).
-			// NOTE: Currently this is commented out because it seems that most wikis might have a handful of restrictions that won't be needed on
-			// Facebook Connections.  For instance, requiring a CAPTCHA or age-verification, etc.  Having a Facebook account as a pre-requisitie removes the need for that.
-			/*
-			$abortError = '';
-			if( !wfRunHooks( 'AbortNewAccount', array( $user, &$abortError ) ) ) {
-				// Hook point to add extra creation throttles and blocks
-				wfDebug( "SpecialConnect::createUser: a hook blocked creation\n" );
-				$wgOut->showErrorPage('fbconnect-error', 'fbconnect-error-user-creation-hook-aborted', array($abortError));
-				return false;
-			}
-			*/
 
 			// Apply account-creation throttles
 			global $wgAccountCreationThrottle;
@@ -485,25 +444,6 @@ class SpecialConnect extends SpecialPage {
 				}
 			}
 
-			// Process the FBConnectPushEvent preference checkboxes if fbConnectPushEvents are enabled.
-			global $fbEnablePushToFacebook;
-			if($fbEnablePushToFacebook){
-				global $fbPushEventClasses;
-				if(!empty($fbPushEventClasses)){
-					foreach($fbPushEventClasses as $pushEventClassName){
-						$pushObj = new $pushEventClassName;
-						$className = get_class();
-						$prefName = $pushObj->getUserPreferenceName();
-
-						$user->setOption($prefName, ($wgRequest->getCheck($prefName)?"1":"0"));
-					}
-				}
-			}
-
-			// Save the prefeference for letting user select to never send anything to their newsfeed.
-			$prefName = FBConnectPushEvent::$PREF_TO_DISABLE_ALL;
-			$user->setOption($prefName, ($wgRequest->getCheck($prefName)?"1":"0"));
-
 			// Unfortunately, performs a second database lookup
 			$fbUser = new FBConnectUser($user);
 			// Update the user with settings from Facebook
@@ -523,6 +463,8 @@ class SpecialConnect extends SpecialPage {
 
 			$this->isNewUser = true;
 			$this->sendPage('displaySuccessLogin');
+
+			$this->track( 'facebook-signup-join-wikia' );
 		}
 
 		wfProfileOut(__METHOD__);
@@ -552,11 +494,6 @@ class SpecialConnect extends SpecialPage {
 			$u->addToDatabase();
 		}
 
-		// No passwords for FBConnect accounts
-		//if ( $wgAuth->allowPasswordChange() ) {
-		//        $u->setPassword( $this->mPassword );
-		//}
-
 		$u->setEmail( $this->mEmail );
 
 		if ( empty( $this->mEmail ) ) {
@@ -567,6 +504,7 @@ class SpecialConnect extends SpecialPage {
 		} else {
 			// CONN-421: Auto authenticate user's email on FBConnect
 			$u->confirmEmail();
+			wfRunHooks( 'SignupConfirmEmailComplete', array( $u ) );
 		}
 
 		$u->setRealName( $this->mRealName );
@@ -601,7 +539,7 @@ class SpecialConnect extends SpecialPage {
 	 * user object is logged in.
 	 *
 	 * NOTE: This isn't used by Wikia and hasn't been tested with some of the new
-	 * code. Does it handle setting push-preferences correctly?
+	 * code.
 	 */
 	protected function attachUser($fb_user, $name, $password) {
 		global $wgOut, $wgUser;
@@ -641,6 +579,8 @@ class SpecialConnect extends SpecialPage {
 		wfRunHooks( 'SpecialConnect::userAttached', array( &$this ) );
 
 		$this->sendPage('displaySuccessAttaching');
+
+		$this->track( 'facebook-link-existing' );
 
 		wfProfileOut(__METHOD__);
 	}
@@ -1036,6 +976,22 @@ class SpecialConnect extends SpecialPage {
 
 		$response->addText( json_encode(array("status" => "ok") ));
 		return $response;
+	}
+
+	/**
+	 * Track an event with a given label with user-sign-up category
+	 * @param string $label
+	 * @param string $action optional, 'submit' by default
+	 */
+	protected function track( $label, $action = 'submit' ) {
+		global $wgDevelEnvironment;
+
+		\Track::event( 'trackingevent', [
+			'ga_action' => $action,
+			'ga_category' => 'user-sign-up',
+			'ga_label' => $label,
+			'beacon' => !empty( $wgDevelEnvironment ) ? 'ThisIsFake' : wfGetBeaconId(),
+		] );
 	}
 
 }

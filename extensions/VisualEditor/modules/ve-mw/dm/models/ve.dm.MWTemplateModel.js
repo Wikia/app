@@ -63,7 +63,7 @@ OO.inheritClass( ve.dm.MWTemplateModel, ve.dm.MWTransclusionPartModel );
  */
 ve.dm.MWTemplateModel.newFromData = function ( transclusion, data ) {
 	var key,
-		template = new ve.dm.MWTemplateModel( transclusion, data.target, 'data' );
+		template = new ve.dm.WikiaTemplateModel( transclusion, data.target, 'data' );
 
 	for ( key in data.params ) {
 		template.addParameter(
@@ -96,7 +96,7 @@ ve.dm.MWTemplateModel.newFromName = function ( transclusion, name ) {
 	// TODO: Do we need to account for the title being invalid?
 	href = new mw.Title( href ).getPrefixedText();
 
-	return new ve.dm.MWTemplateModel( transclusion, { 'href': href, 'wt': name }, 'user' );
+	return new ve.dm.WikiaTemplateModel( transclusion, { 'href': href, 'wt': name }, 'user' );
 };
 
 /* Methods */
@@ -285,17 +285,23 @@ ve.dm.MWTemplateModel.prototype.removeParameter = function ( param ) {
 };
 
 /**
- * Add all non-existing required parameters, if any.
+ * Add all non-existing required and suggested parameters, if any.
  *
  * @method
  */
-ve.dm.MWTemplateModel.prototype.addRequiredParameters = function () {
+ve.dm.MWTemplateModel.prototype.addPromptedParameters = function () {
 	var i, len,
 		spec = this.getSpec(),
 		names = spec.getParameterNames();
 
 	for ( i = 0, len = names.length; i < len; i++ ) {
-		if ( !this.params[name] && spec.isParameterRequired( names[i] ) ) {
+		if (
+				!this.params[name] &&
+				(
+					spec.isParameterRequired( names[i] ) ||
+					spec.isParameterSuggested( names[i] )
+				)
+			) {
 			this.addParameter( new ve.dm.MWParameterModel( this, names[i] ) );
 		}
 	}
@@ -316,7 +322,7 @@ ve.dm.MWTemplateModel.prototype.setOriginalData = function ( data ) {
 ve.dm.MWTemplateModel.prototype.serialize = function () {
 	var name,
 		template = ve.extendObject(
-			this.originalData || {}, { 'target': this.getTarget(), 'params': {} }
+			{}, this.originalData, { 'target': this.getTarget(), 'params': {} }
 		),
 		params = this.getParameters();
 

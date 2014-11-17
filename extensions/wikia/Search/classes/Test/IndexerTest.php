@@ -7,6 +7,8 @@ use ReflectionProperty, ReflectionMethod;
 /**
  * Tests Wikia\Search\Indexer
  * @author relwell
+ *
+ * @group Broken
  */
 class IndexerTest extends BaseTest
 {

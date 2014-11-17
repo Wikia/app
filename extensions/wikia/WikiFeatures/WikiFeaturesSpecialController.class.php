@@ -7,7 +7,7 @@
  * @author Saipetch
  */
 class WikiFeaturesSpecialController extends WikiaSpecialPageController {
-	use PreventBlockedUsersThrowsError;
+	use PreventBlockedUsersThrowsErrorTrait;
 
 	public function __construct() {
 		parent::__construct('WikiFeatures', 'wikifeaturesview');
@@ -129,15 +129,15 @@ class WikiFeaturesSpecialController extends WikiaSpecialPageController {
 		$log->addEntry( 'wikifeatures', SpecialPage::getTitleFor('WikiFeatures'), $logMsg, array() );
 		WikiFactory::setVarByName($feature, $this->wg->CityId, $enabled, "WikiFeatures");
 
-		if ($feature == 'wgShowTopListsInCreatePage')
-			WikiFactory::setVarByName('wgEnableTopListsExt', $this->wg->CityId, $enabled, "WikiFeatures");
+		if ($feature == 'wgShowTopListsInCreatePage') {
+			WikiFactory::setVarByName( 'wgEnableTopListsExt', $this->wg->CityId, $enabled, "WikiFeatures" );
+		}
 
 		// clear cache for active wikis
 		WikiFactory::clearCache( $this->wg->CityId );
 		$this->wg->Memc->delete(WikiFeaturesHelper::getInstance()->getMemcKeyNumActiveWikis($feature));
 
-
-		wfrunHooks( 'WikiFeatures::afterToggleFeature', array($feature, $enabled) );
+		wfRunHooks( 'WikiFeatures::afterToggleFeature', [ $feature, $enabled ] );
 
 		$this->setVal('result', 'ok');
 	}

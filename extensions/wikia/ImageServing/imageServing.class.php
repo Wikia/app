@@ -54,12 +54,7 @@ class ImageServing {
 		}
 		$this->articles = array();
 
-		if( is_array( $articles ) ) {
-			foreach( $articles as $article ){
-				$articleId = ( int ) $article;
-				$this->articles[ $articleId ] = $articleId;
-			}
-		}
+		$this->setArticleIds( $articles );
 
 		$this->app = F::app();
 		$this->width = $width;
@@ -99,6 +94,15 @@ class ImageServing {
 		wfProfileIn( __METHOD__ );
 		$articles = $this->articles;
 		$out = array();
+
+		// force ImageServing to return an empty list
+		// see PLATFORM-392
+		global $wgImageServingForceNoResults;
+		if (!empty($wgImageServingForceNoResults)) {
+			wfProfileOut(__METHOD__);
+			return $out;
+		}
+
 		if( !empty( $articles ) ) {
 			if( $this->db == null ) {
 				$db = wfGetDB( DB_SLAVE, array() );
@@ -165,7 +169,7 @@ class ImageServing {
 				$out = $out + $driver->execute();
 			}
 
-			if(empty($out)){
+			if( empty( $out ) ) {
 				// Hook for finding fallback images if there were no matches. - NOTE: should this fallback any time (count($out) < $limit)? Seems like overkill.
 				wfRunHooks( 'ImageServing::fallbackOnNoResults', array( &$this, $limit, &$out ) );
 			}
@@ -226,6 +230,7 @@ class ImageServing {
 		if( !empty( $fileNames ) ) {
 			/**
 			 * @var $fileName LocalFile
+			 * @var $title Title
 			 */
 			foreach ( $fileNames as $fileName ) {
 				if(!($fileName instanceof LocalFile)) {
@@ -236,8 +241,11 @@ class ImageServing {
 				}
 			}
 
-			$imagesIds[ $title->getArticleId() ] = $title->getDBkey();
-			$this->articles[ $title->getArticleId() ] = $title->getArticleId();
+			// do not query for page_id = 0
+			if ( $title->exists() ) {
+				$imagesIds[ $title->getArticleId() ] = $title->getDBkey();
+				$this->articles[ $title->getArticleId() ] = $title->getArticleId();
+			}
 		}
 
 		$out = $this->getImages(1);
@@ -265,6 +273,8 @@ class ImageServing {
 	 * @return  string url for image
 	 */
 	public function getUrl( $name, $width = 1, $height = 1 ) {
+		global $wgEnableVignette;
+
 		wfProfileIn( __METHOD__ );
 
 		if ( $name instanceof File || $name instanceof GlobalFile ) {
@@ -279,6 +289,46 @@ class ImageServing {
 			}
 		}
 
+		if (WikiaFileHelper::isVideoFile($img)) {
+			$H = ( float )( ( $width ) * ( $this->proportion['h'] / $this->proportion['w'] ) );
+			$this->tmpDeltaY = 0.5 - $H / $height / 2;
+		}
+
+		if ($wgEnableVignette) {
+			$url = $this->getVignetteUrl($img, $width, $height);
+		} else {
+			$url = $this->getLegacyUrl($img, $width, $height);
+		}
+
+		return $url;
+	}
+
+	/**
+	 * @param File $image
+	 * @param $width
+	 * @param $height
+	 * @return string
+	 */
+	private function getVignetteUrl($image, $width, $height) {
+		list($top, $right, $bottom, $left) = $this->getCutParams($width, $height);
+
+		return VignetteRequest::fromFile($image)
+			->windowCrop()
+			->width($this->width)
+			->xOffset($left)
+			->yOffset($top)
+			->windowWidth($right - $left)
+			->windowHeight($bottom - $top)
+			->url();
+	}
+
+	/**
+	 * @param File $img
+	 * @param $width
+	 * @param $height
+	 * @return String
+	 */
+	private function getLegacyUrl($img, $width, $height) {
 		$issvg = false;
 		$mime = strtolower( $img->getMimeType() );
 		if( $mime == 'image/svg+xml' || $mime == 'image/svg' ) {
@@ -289,9 +339,6 @@ class ImageServing {
 		if ( WikiaFileHelper::isVideoFile( $img ) ) {
 			// videos has different thumbnail markup
 			$sPrefix = 'v,000000,';
-			// they need to be literally centered
-			$H = ( float )( ( $width ) * ( $this->proportion['h'] / $this->proportion['w'] ) );
-			$this->tmpDeltaY = 0.5 - $H / $height / 2;
 		}
 
 		$url = wfReplaceImageServer( $img->getThumbUrl( $sPrefix . $this->getCut( $width, $height ) . "-" . $img->getName().($issvg ? ".png":"") ) );
@@ -306,13 +353,16 @@ class ImageServing {
 	 * @param $width int
 	 * @param $height int
 	 * @param $align string "center", "origin"
-	 *
+	 * @param $issvg bool
 	 *
 	 * @return string prefix for thumb image
 	 */
 	public function getCut( $width, $height, $align = "center", $issvg = false  ) {
-		wfProfileIn( __METHOD__ );
+		list($top, $right, $bottom, $left) = $this->getCutParams($width, $height, $align, $issvg);
+		return "{$this->width}px-$left,$right,$top,$bottom";
+	}
 
+	private function getCutParams($width, $height, $align="center", $issvg=false) {
 		//rescale of png always use width 512;
 		if( $issvg ) {
 			$height = round( ( 512 * $height) / $width );
@@ -366,8 +416,7 @@ class ImageServing {
 			$right = $width;
 		}
 
-		wfProfileOut( __METHOD__ );
-		return "{$this->width}px-$left,$right,$top,$bottom";
+		return [$top, $right, $bottom, $left];
 	}
 
 	public function getDeltaY() {
@@ -379,5 +428,19 @@ class ImageServing {
 
 	public function setDeltaY( $iCenterPosition = 0 ){
 		$this->deltaY = $iCenterPosition;
+	}
+
+	public function setArticleIds( $articleIds ) {
+		if( is_array( $articleIds ) ) {
+			foreach ( $articleIds as $article ) {
+				$articleId = ( int ) $article;
+				$this->articles[ $articleId ] = $articleId;
+			}
+		}
+	}
+
+	public function hasArticleIds( $articleIds ) {
+		$containsArticleIds = array_diff( $articleIds, array_keys( $this->articles ) );
+		return empty( $containsArticleIds );
 	}
 }

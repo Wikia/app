@@ -30,5 +30,4 @@ if ( (! $wgDevelEnvironment ) &&  $wgLanguageCode == 'en' && $wgEnableNlpPipelin
 	$wgHooks['ArticleEditUpdates'][] = 'Wikia\\NLP\\ParserPipeline\\Hooks::onArticleEditUpdates';
 	$wgHooks['ArticleDeleteComplete'][] = 'Wikia\\NLP\\ParserPipeline\\Hooks::onArticleDeleteComplete';
 	$wgHooks['ArticleUndelete'][] = 'Wikia\\NLP\\ParserPipeline\\Hooks::onArticleUndelete';
-	$wgHooks['TitleMoveComplete'][] = 'Wikia\\NLP\\ParserPipeline\\Hooks::onTitleMoveComplete';
 }

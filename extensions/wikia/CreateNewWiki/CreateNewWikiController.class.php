@@ -34,9 +34,7 @@ class CreateNewWikiController extends WikiaController {
 			$currentStep = '';
 		}
 
-		// form field values
-		$hubs = WikiFactoryHub::getInstance();
-		$this->aCategories = $hubs->getCategories();
+		$this->setupVerticalsAndCategories();
 
 		$this->aTopLanguages = explode(',', wfMsg('autocreatewiki-language-top-list'));
 		$languages = wfGetFixedLanguageNames();
@@ -53,8 +51,6 @@ class CreateNewWikiController extends WikiaController {
 			$useLang = 'en';
 		}
 		$params['wikiLanguage'] = empty($useLang) ? $this->wg->LanguageCode : $useLang;  // precedence: selected form field, uselang, default wiki lang
-		// facebook callback overwrite on login.  CreateNewWiki re-uses current login stuff.
-		$fbOnLoginJsOverride = 'WikiBuilder.fbLoginCallback();';
 
 		// export info if user is logged in
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
@@ -96,11 +92,47 @@ class CreateNewWikiController extends WikiaController {
 			'cnw-error-general-heading' => wfMessage( 'cnw-error-general-heading' )->escaped(),
 			'cnw-keys' => $keys
 		);
-		
+
 		// theme designer application theme settings
 		$this->applicationThemeSettings = SassUtil::getApplicationThemeSettings();
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	private function setupVerticalsAndCategories() {
+		$allVerticals = WikiFactoryHub::getInstance()->getAllVerticals();
+		$allCategories = WikiFactoryHub::getInstance()->getAllCategories( true );
+
+		// Defines order in which verticals are going to be displayed in the <select>
+		$verticalsOrder = array( 2, 7, 4, 3, 1, 6, 5, 0 );
+
+		// Defines sets of categories and order of categories in each set
+		$categoriesSetsOrder = array(
+			1 => array( 28, 23, 24, 25, 27, 16, 21, 22),
+			2 => array( 28, 18, 17, 8, 25, 10, 6, 26, 1, 14, 11, 13, 15, 12, 5, 7)
+		);
+
+		// Defines mapping between vertical and categories set
+		$verticalToCategoriesSetMapping = array( 2 => 1, 7 => 1, 4 => 1, 3 => 1, 1 => 1, 6 => 1, 5 => 2, 0 => 2 );
+
+		$this->verticals = array();
+		foreach($verticalsOrder as $verticalId) {
+			$this->verticals[] = array(
+				'id' => $allVerticals[$verticalId]['id'],
+				'name' => $allVerticals[$verticalId]['name'],
+				'short' => $allVerticals[$verticalId]['short'],
+				'categoriesSet' => $verticalToCategoriesSetMapping[$verticalId]
+			);
+		}
+
+		$this->categoriesSets = array();
+		foreach($categoriesSetsOrder as $setId => $categoriesOrder) {
+			$categoriesSet = array();
+			foreach($categoriesOrder as $categoryId) {
+				$categoriesSet[] = $allCategories[$categoryId];
+			}
+			$this->categoriesSets[$setId] = $categoriesSet;
+		}
 	}
 
 	/**
@@ -164,12 +196,11 @@ class CreateNewWikiController extends WikiaController {
 			// log if called with old params
 			trigger_error("CreateWiki called with 2nd old params." . $params['wikiaName'] . " " . $params['wikiaDomain'] . " " . $wgRequest->getIP() . " " . $wgUser->getName() . " " . $wgUser->getId(), E_USER_WARNING);
 		}
-
 		if ( empty($params) ||
 			empty($params['wName']) ||
 			empty($params['wDomain']) ||
 			empty($params['wLanguage']) ||
-			empty($params['wCategory']))
+			(!isset($params['wVertical']) || $params['wVertical'] === '-1'))
 		{
 			// do nothing
 			$this->status = 'error';
@@ -233,7 +264,10 @@ class CreateNewWikiController extends WikiaController {
 				return;
 			}
 
-			$createWiki = new CreateWiki($params['wName'], $params['wDomain'], $params['wLanguage'], $params['wCategory']);
+			$categories = isset($params['wCategories']) ? $params['wCategories'] : array();
+
+			$createWiki = new CreateWiki($params['wName'], $params['wDomain'], $params['wLanguage'], $params['wVertical'], $categories);
+
 			$error_code = $createWiki->create();
 			$cityId = $createWiki->getWikiInfo('city_id');
 			if(empty($cityId)) {
@@ -282,7 +316,7 @@ class CreateNewWikiController extends WikiaController {
 
 		$text = $wgRequest->getVal('text','');
 		$blockedKeyword = '';
-		
+
 		wfRunHooks( 'CheckContent', array( $text, &$blockedKeyword ) );
 
 		$this->msgHeader = '';

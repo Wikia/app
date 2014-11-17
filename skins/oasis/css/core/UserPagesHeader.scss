@@ -1,5 +1,5 @@
-@import "../mixins/clearfix";
-@import "color";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/color";
 
 .WikiaUserPagesHeader {
 	@include clearfix;

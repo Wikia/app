@@ -19,6 +19,4 @@ $dir = dirname(__FILE__);
 $wgAutoloadClasses['JSSnippets'] =  $dir . '/JSSnippets.class.php';
 
 // hooks
-$wgHooks['EditPageLayoutModifyPreview'][] = 'JSSnippets::onEditPageLayoutModifyPreview';
 $wgHooks['WikiaSkinTopScripts'][] = 'JSSnippets::onMakeGlobalVariablesScript';
-$wgHooks['SkinAfterBottomScripts'][] = 'JSSnippets::onSkinAfterBottomScripts';

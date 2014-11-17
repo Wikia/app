@@ -296,6 +296,7 @@ $messages['eo'] = array(
  * @author Armando-Martin
  * @author Benfutbol10
  * @author Ciencia Al Poder
+ * @author Macofe
  * @author VegaDark
  * @author Vivaelcelta
  */
@@ -321,7 +322,7 @@ $1
 	'lightbox-share-email-page-label' => 'Enviar por correo electrónico esta página a un amigo',
 	'lightbox-share-email-page-label-address' => 'Dirección de correo electrónico',
 	'lightbox-share-email-ok-caption' => 'Confirmación',
-	'lightbox-share-email-ok-content' => '{{PLURAL:$1|correo ha|correos han}} sido enviado.',
+	'lightbox-share-email-ok-content' => 'Se {{PLURAL:$1|envió el mensaje|enviaron los mensajes}} de correo electrónico.',
 	'lightbox-share-email-error-caption' => 'Error',
 	'lightbox-share-email-error-content' => 'Error al enviar {{PLURAL:$1|correo|correos}}.
 Detalles: $2',
@@ -339,6 +340,7 @@ $messages['fa'] = array(
 	'lightbox-send' => 'ارسال',
 	'lightbox-share-button-email' => 'رایانامه',
 	'lightbox-share-button-www' => 'به‌اشتراک‌گذاشتن',
+	'lightbox-share-button-embed' => 'توکارکردن',
 	'lightbox-share-email-page-label-address' => 'نشانی رایانامه',
 	'lightbox-share-email-ok-caption' => 'تأیید عمل',
 	'lightbox-share-email-error-caption' => 'خطا',
@@ -619,10 +621,15 @@ $messages['kn'] = array(
 
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author Miri-Nae
+ * @author 관인생략
  */
 $messages['ko'] = array(
+	'lightbox-forum' => '포럼',
 	'lightbox-share-button-email' => '이메일',
+	'lightbox-share-button-www' => '공유',
 	'lightbox-share-email-page-label-address' => '이메일 주소',
+	'lightbox-share-email-error-caption' => '오류',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -633,6 +640,11 @@ $messages['lb'] = array(
 	'lightbox-send' => 'Schécken',
 	'lightbox-share-description' => 'Foto op $1 op $2',
 	'lightbox-share-email-subject' => 'De Benotzer $1 huet Iech eng Foto op Wikia geschéckt',
+	'lightbox-share-button-email' => 'E-Mail',
+	'lightbox-share-button-www' => 'Deelen',
+	'lightbox-share-button-embed' => 'Abannen',
+	'lightbox-share-email-label' => 'Dëst Bild engem Frënd per E-Mail schécken',
+	'lightbox-share-email-page-label-address' => 'E-Mail-Adress',
 	'lightbox-share-email-ok-caption' => 'Confirmatioun',
 	'lightbox-share-email-error-caption' => 'Feeler',
 	'lightbox-share-email-error-noaddress' => 'Dir hutt keng Adress uginn.',
@@ -931,6 +943,7 @@ Detalhes: $2',
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Jefersonmoraes
  * @author Luckas
  * @author Luckas Blade
  */
@@ -942,6 +955,7 @@ $messages['pt-br'] = array(
 	'lightbox-share-button-embed' => 'Incorporar',
 	'lightbox-share-email-ok-caption' => 'Confirmação',
 	'lightbox-share-email-error-caption' => 'Erro',
+	'lightbox-visit-the-wiki' => 'Visite a wikia:',
 );
 
 /** tarandíne (tarandíne)
@@ -1130,6 +1144,13 @@ $messages['tr'] = array(
 	'lightbox-share-email-error-caption' => 'Hata',
 );
 
+/** Tuvinian (тыва дыл)
+ * @author Agilight
+ */
+$messages['tyv'] = array(
+	'lightbox-forum' => 'Шуулган',
+);
+
 /** Ukrainian (українська)
  * @author Andriykopanytsia
  * @author Steve.rusyn
@@ -1214,6 +1235,12 @@ $messages['zh-hans'] = array(
 	'lightbox-blog-link' => '博客链接',
 	'lightbox-send' => '发送',
 	'lightbox-share-description' => '照片在 $1 上$2',
+	'lightbox-share-email-subject' => '$1在Wikia上向您发送了一张照片',
+	'lightbox-share-email-body' => '嗨，有人想在Wikia向您展示一张照片。看看怎么回事：
+
+$1
+
+——Wikia团队',
 	'lightbox-share-button-email' => '电子邮件',
 	'lightbox-share-button-www' => '分享',
 	'lightbox-share-button-embed' => '嵌入',
@@ -1233,13 +1260,14 @@ $messages['zh-hans'] = array(
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  * @author Justincheng12345
+ * @author LNDDYL
  * @author Radish10cm
  */
 $messages['zh-hant'] = array(
-	'lightbox_details_tooltip' => '查看圖片詳細資訊',
+	'lightbox_details_tooltip' => '檢視圖片詳細資訊',
 	'lightbox-blog-link' => '部落格連結',
 	'lightbox-share-button-email' => '電子郵件',
 	'lightbox-share-button-www' => '分享',
 	'lightbox-share-button-embed' => '嵌入',
-	'lightbox-share-email-page-label-address' => '電郵地址',
+	'lightbox-share-email-page-label-address' => '電郵位址',
 );

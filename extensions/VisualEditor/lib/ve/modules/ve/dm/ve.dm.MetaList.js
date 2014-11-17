@@ -113,7 +113,8 @@ ve.dm.MetaList.prototype.onTransact = function ( tx ) {
 							// Adjust index for insertions or removals that happened at this offset
 							newIndex - index + this.items[itemIndex].index :
 							// Offset is retained over completely, don't adjust index
-							this.items[itemIndex].index } );
+							this.items[itemIndex].index
+					} );
 				}
 
 				offset += ops[i].length;

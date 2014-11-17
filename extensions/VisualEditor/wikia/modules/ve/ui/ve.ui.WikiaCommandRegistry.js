@@ -8,8 +8,17 @@
 /* Wikia Command Registrations */
 
 ve.ui.commandRegistry.register(
-	new ve.ui.Command( 'wikiaMediaInsert', 'dialog', 'open', 'wikiaMediaInsert' )
+	new ve.ui.Command( 'wikiaMediaInsert', 'window', 'open', 'wikiaMediaInsert' )
 );
+
 ve.ui.commandRegistry.register(
-	new ve.ui.Command( 'wikiaSourceMode', 'dialog', 'open', 'wikiaSourceMode' )
+	new ve.ui.Command( 'wikiaMapInsert', 'window', 'open', 'wikiaMapInsert' )
+);
+
+ve.ui.commandRegistry.register(
+	new ve.ui.Command( 'wikiaSourceMode', 'window', 'open', 'wikiaSourceMode' )
+);
+
+ve.ui.commandRegistry.register(
+	new ve.ui.Command( 'wikiaTemplateInsert', 'window', 'open', 'wikiaTemplateInsert' )
 );

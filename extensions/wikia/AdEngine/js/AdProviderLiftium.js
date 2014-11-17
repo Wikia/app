@@ -16,6 +16,7 @@ define('ext.wikia.adEngine.provider.liftium', [
 		fillInSlot;
 
 	slotMap = {
+		'BOTTOM_LEADERBOARD': {'size': '728x90'},
 		'EXIT_STITIAL_BOXAD_1': {'size': '300x250'},
 		'HOME_TOP_LEADERBOARD': {'size': '728x90'},
 		'HOME_TOP_RIGHT_BOXAD': {'size': '300x250'},
@@ -31,6 +32,7 @@ define('ext.wikia.adEngine.provider.liftium', [
 		// TOP_BUTTON_WIDE after TOP_LEADERBOARD hack:
 		'TOP_BUTTON_WIDE.force': 'hack',
 
+		'TOP_INCONTENT_BOXAD': {'size': '300x250'},
 		'TOP_LEADERBOARD': {'size': '728x90'},
 		'TOP_RIGHT_BOXAD': {'size': '300x250'},
 		'PREFOOTER_LEFT_BOXAD': {'size': '300x250'},

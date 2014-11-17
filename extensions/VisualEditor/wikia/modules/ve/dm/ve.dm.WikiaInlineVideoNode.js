@@ -12,7 +12,7 @@
  * @param {Object} [element] Reference to element in linear model
  */
 ve.dm.WikiaInlineVideoNode = function VeDmWikiaInlineVideoNode( length, element ) {
-	ve.dm.MWInlineImageNode.call( this, length, element );
+	ve.dm.WikiaInlineVideoNode.super.call( this, length, element );
 };
 
 /* Inheritance */

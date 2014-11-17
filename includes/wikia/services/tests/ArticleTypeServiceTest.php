@@ -15,7 +15,7 @@ class ArticleTypeServiceTest extends WikiaBaseTest {
 			->method("post")
 			->will($this->returnValue('{"classes":{"mini_game":0.26,"tv_episode":0.022},"class":"tv_episode"}'));
 
-		$type = $this->getArticleTypeService()->getArticleType(132);
+		$type = $this->getArticleTypeService()->getArticleType(132, 'en');
 
 		$this->assertEquals($type, "tv_episode");
 	}
@@ -31,7 +31,7 @@ class ArticleTypeServiceTest extends WikiaBaseTest {
 		$httpPostMock->expects($this->never())
 			->method("post");
 
-		$type = $this->getArticleTypeService()->getArticleType(132);
+		$type = $this->getArticleTypeService()->getArticleType(132, 'de');
 
 		$this->assertEquals($type, null);
 	}
@@ -45,7 +45,7 @@ class ArticleTypeServiceTest extends WikiaBaseTest {
 			->will($this->returnValue(''));
 
 		try {
-			$type = $this->getArticleTypeService()->getArticleType(132);
+			$type = $this->getArticleTypeService()->getArticleType(132, 'es');
 			$this->assertEquals("Should", "throw exception");
 		} catch (ServiceUnavailableException $ex) {
 		}
@@ -60,7 +60,7 @@ class ArticleTypeServiceTest extends WikiaBaseTest {
 			->will($this->returnValue(false));
 
 		try {
-			$type = $this->getArticleTypeService()->getArticleType(132);
+			$type = $this->getArticleTypeService()->getArticleType(132, 'en');
 			$this->assertEquals("Should", "throw exception");
 		} catch (ServiceUnavailableException $ex) {
 		}
@@ -68,21 +68,21 @@ class ArticleTypeServiceTest extends WikiaBaseTest {
 
 	private function mockArticle($articleId, $articleTitle, $articleWikiText) {
 		$title = $this->getMockBuilder("Title")->disableOriginalConstructor()->getMock();
-		$title->expects($this->once())
+		$title->expects($this->any())
 			->method("getText")->will($this->returnValue($articleTitle));
 
 		$page = $this->getMockBuilder("WikiPage")->disableOriginalConstructor()->getMock();
-		$page->expects($this->once())
+		$page->expects($this->any())
 			->method("getRawText")->will($this->returnValue($articleWikiText));
 
 		$article = $this->getMockBuilder("Article")->disableOriginalConstructor()->getMock();
-		$article->expects($this->once())
+		$article->expects($this->any())
 			->method("getTitle")->will($this->returnValue($title));
-		$article->expects($this->once())
+		$article->expects($this->any())
 			->method("getPage")->will($this->returnValue($page));
 
 		$articleFactoryMock = $this->getStaticMethodMock("Article", "newFromID");
-		$articleFactoryMock->expects($this->once())
+		$articleFactoryMock->expects($this->any())
 			->method("newFromID")
 			->with($articleId)
 			->will($this->returnValue($article));

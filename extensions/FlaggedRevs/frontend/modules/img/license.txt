@@ -1,5 +1,0 @@
-All images in this folder are available under the 
-GNU Free Documentation license (1.2+).
-
-All the images are to be credited to Joerg Baach, except for lock-open.png and lock-closed.png, 
-which where created by "Jasu" (http://commons.wikimedia.org/wiki/User:Jasu), under the same license.

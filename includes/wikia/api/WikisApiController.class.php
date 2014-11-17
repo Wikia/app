@@ -32,6 +32,17 @@ class WikisApiController extends WikiaApiController {
 	private $wikiDetails;
 
 	/**
+	 * @var CrossOriginResourceSharingHeaderHelper
+	 */
+	protected $cors;
+
+	public function __construct(){
+		parent::__construct();
+		$this->cors = new CrossOriginResourceSharingHeaderHelper();
+		$this->cors->readConfig();
+	}
+
+	/**
 	 * Get the top wikis by pageviews optionally filtering by vertical (hub) and/or language
 	 *
 	 * @requestParam string $hub [OPTIONAL] The name of the vertical (e.g. Gaming, Entertainment, Lifestyle, etc.) to use as a filter
@@ -67,11 +78,11 @@ class WikisApiController extends WikiaApiController {
 		if ( $expand ) {
 			$batches = $this->expandBatches( $batches );
 		}
-
-		foreach ( $batches as $name => $value ) {
-			$this->response->setVal( $name, $value );
-		}
-		$this->response->setCacheValidity(static::CACHE_1_WEEK);
+		$this->setResponseData(
+			$batches,
+			[ 'urlFields' => [ 'wordmark', 'image' ] ],
+			static::CACHE_1_WEEK
+		);
 	}
 
 	/**
@@ -125,9 +136,6 @@ class WikisApiController extends WikiaApiController {
 				$batches = $this->expandBatches( $batches );
 			}
 
-			foreach ( $batches as $name => $value ) {
-				$this->response->setVal( $name, $value );
-			}
 		} else {
 			throw new NotFoundApiException();
 		}
@@ -135,7 +143,11 @@ class WikisApiController extends WikiaApiController {
 		//store only for 24h to allow new wikis
 		//to appear in a reasonable amount of time in the search
 		//results
-		$this->response->setCacheValidity(static::CACHE_1_DAY);
+		$this->setResponseData(
+			$batches,
+			[ 'urlFields' => [ 'image', 'wordmark', 'url' ] ],
+			static::CACHE_1_DAY
+		);
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -158,6 +170,9 @@ class WikisApiController extends WikiaApiController {
 
 	public function getDetails() {
 		wfProfileIn( __METHOD__ );
+		$this->cors->setHeaders($this->response);
+
+		$this->setOutputFieldType( "items", self::OUTPUT_FIELD_TYPE_OBJECT );
 		$ids = $this->request->getVal( self::PARAMETER_WIKI_IDS, null );
 		if ( !empty( $ids ) ) {
 			$ids = explode( ',', $ids );
@@ -174,10 +189,13 @@ class WikisApiController extends WikiaApiController {
 				$items[ (int) $wikiId ] = $details;
 			}
 		}
-		$this->response->setVal( 'items', $items );
 
-		//set varnish caching
-		$this->response->setCacheValidity(static::CACHE_1_DAY);
+		$this->setResponseData(
+			[ 'items' => $items ],
+			[ 'urlFields' => [ 'wordmark', 'image' ] ],
+			static::CACHE_1_DAY
+		);
+
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -244,7 +262,11 @@ class WikisApiController extends WikiaApiController {
 		return $licensed->getCommercialUseNotAllowedWikis();
 	}
 
-	protected function filterNonCommercial( $wikis ) {
+	/**
+	 * @param Array $wikis
+	 * @return array
+	 */
+	protected function filterNonCommercial( Array $wikis ) {
 		$result =[];
 		$blackList = $this->getNonCommercialWikis();
 		foreach( $wikis as $wiki ) {

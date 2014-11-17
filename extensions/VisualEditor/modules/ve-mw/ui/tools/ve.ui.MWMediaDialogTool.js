@@ -23,7 +23,7 @@ ve.ui.MWMediaEditDialogTool.static.group = 'object';
 ve.ui.MWMediaEditDialogTool.static.icon = 'picture';
 ve.ui.MWMediaEditDialogTool.static.title =
 	OO.ui.deferMsg( 'visualeditor-dialogbutton-media-tooltip' );
-ve.ui.MWMediaEditDialogTool.static.modelClasses = [ ve.dm.MWBlockImageNode ];
+ve.ui.MWMediaEditDialogTool.static.modelClasses = [ ve.dm.MWBlockImageNode, ve.dm.MWInlineImageNode ];
 ve.ui.MWMediaEditDialogTool.static.commandName = 'mediaEdit';
 ve.ui.MWMediaEditDialogTool.static.autoAddToCatchall = false;
 ve.ui.MWMediaEditDialogTool.static.autoAddToGroup = false;

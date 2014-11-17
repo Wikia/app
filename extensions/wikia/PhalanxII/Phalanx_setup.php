@@ -60,6 +60,7 @@ $phalanxhooks = array(
 			'AbortMove'          => 'abortMove',
 			'EditContent'        => 'editContent',
 			'CheckContent'       => 'checkContent',
+			'APIEditBeforeSave'  => 'filterAPIEditBeforeSave',
 		),
 	'PhalanxTitleBlock' =>
 		array(
@@ -84,6 +85,9 @@ $phalanxhooks = array(
 			'EditPhalanxBlock'                => 'onEditPhalanxBlock',
 			'DeletePhalanxBlock'              => 'onDeletePhalanxBlock',
 			'AfterFormatPermissionsErrorMessage' => 'onAfterFormatPermissionsErrorMessage',
+			// temp logging for PLATFORM-317
+			'GetBlockedStatus'                => 'onGetBlockedStatus',
+			'ContributionsLogEventsList'      => 'onContributionsLogEventsList',
 		)
 );
 

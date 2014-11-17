@@ -1,55 +1,39 @@
 <?php
 
+/**
+ * Hook handlers for loading the required scripts and bootstrapping Bucky RUM reporting.
+ */
 class Bucky {
 
 	const DEFAULT_SAMPLING = 1; // percentage
 	const BASE_URL = '//speed.wikia.net/__rum';
 
-	static protected $environment;
-
-	static public function getEnvironment() {
-		if ( self::$environment === null ) {
-			if ( ($stagingEnv = Wikia::getStagingServerName()) ) {
-				$environment = $stagingEnv;
-			} else {
-				$app = F::app();
-				$wgDevelEnvironment = $app->wg->DevelEnvironment;
-				if ( $wgDevelEnvironment ) {
-					$environment = "devbox";
-				} else {
-					$environment = 'production';
-				}
-			}
-			self::$environment = $environment;
-		}
-		return self::$environment;
-	}
-
-	static public function onSkinAfterBottomScripts( Skin $skin, &$bottomScripts ) {
-		$environment = self::getEnvironment();
+	/**
+	 * Adds wgBuckyConfig global JS variable
+	 *
+	 * @param array $vars
+	 * @param OutputPage $out
+	 * @return bool true - it's a hook
+	 */
+	static public function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
 		$app = F::app();
-		if ( $environment && $app->checkSkin('oasis',$skin) ) {
+		if ( $app->checkSkin( $app->wg->BuckyEnabledSkins ) ) {
+			// todo: find better place for it
 			$wgBuckySampling = $app->wg->BuckySampling;
 			$url = self::BASE_URL; // "/v1/send" is automatically appended
-			$sample = (isset($wgBuckySampling) ? $wgBuckySampling : self::DEFAULT_SAMPLING) / 100;
-			$config = json_encode(array(
+			// Bucky sampling can be set by request param so we want to check if it's in range from 0 to 100
+			$sample = ( ( isset( $wgBuckySampling ) && $wgBuckySampling >= 0 && $wgBuckySampling <= 100 )
+					? $wgBuckySampling : self::DEFAULT_SAMPLING ) / 100;
+			$config = array(
 				'host' => $url,
 				'sample' => $sample,
 				'aggregationInterval' => 1000,
-			));
-			$script = "<script>$(function(){Bucky.setOptions({$config});$(window).load(function(){Bucky.sendPagePerformance('{$environment}');});});</script>";
-			$bottomScripts .= $script;
+				'protocol' => 2,
+			);
+
+			$vars['wgBuckyConfig'] = $config;
 		}
 
 		return true;
 	}
-
-	static public function onOasisSkinAssetGroups( &$assetGroups ) {
-		if ( self::getEnvironment() ) {
-			$assetGroups[] = 'bucky_js';
-		}
-
-		return true;
-	}
-
 }

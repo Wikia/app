@@ -53,7 +53,10 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 
 	public function index() {
 
-		$hubName = (string)$this->request->getVal( 'par' );
+		$hubName = $this->request->getVal( 'par' ) . $this->wg->LanguageCode;
+
+		$ref = (string)$this->request->getVal( 'ref' );
+
 		$model = BaseRssModel::newFromName( $hubName );
 		if(!$model instanceof BaseRssModel){
 			return $this->forward( 'HubRssFeedSpecial', 'notfound' );
@@ -61,6 +64,7 @@ class HubRssFeedSpecialController extends WikiaSpecialPageController {
 		$this->response->setCacheValidity( self::CACHE_TIME );
 
 		$service = new RssFeedService();
+		$service->setRef( $ref );
 
 		$service->setFeedLang( $model->getFeedLanguage() );
 		$service->setFeedTitle( $model->getFeedTitle() );

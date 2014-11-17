@@ -18,12 +18,12 @@ QUnit.test( 'commit', function ( assert ) {
 		italic = ve.dm.example.createAnnotation( ve.dm.example.italic ),
 		underline = ve.dm.example.createAnnotation( ve.dm.example.underline ),
 		metaElementInsert = {
-				'type': 'alienMeta',
-				'attributes': {
-					'style': 'comment',
-					'text': ' inline '
-				}
-			},
+			'type': 'alienMeta',
+			'attributes': {
+				'style': 'comment',
+				'text': ' inline '
+			}
+		},
 		metaElementInsertClose = { 'type': '/alienMeta' },
 		cases = {
 			'no operations': {
@@ -473,7 +473,8 @@ QUnit.test( 'commit', function ( assert ) {
 				'calls': [
 					[ 'newFromWrap', new ve.Range( 1, 11 ),
 						[ { 'type': 'list' } ], [],
-						[ { 'type': 'listItem', 'attributes': { 'styles': ['bullet'] } } ], [] ]
+						[ { 'type': 'listItem', 'attributes': { 'styles': ['bullet'] } } ], []
+					]
 				],
 				'expected': function ( data ) {
 					data.splice( 35, 1 ); // remove '/list'

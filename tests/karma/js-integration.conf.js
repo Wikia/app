@@ -8,7 +8,7 @@
 
 var base = require('./karma.base.conf.js');
 
-module.exports = function(config) {
+module.exports = function (config) {
 	'use strict';
 
 	base(config);
@@ -63,6 +63,8 @@ module.exports = function(config) {
 			'resources/wikia/libraries/mustache/jquery.mustache.js',
 			'resources/wikia/modules/nirvana.js',
 			'resources/wikia/modules/querystring.js',
+			'resources/wikia/modules/history.js',
+			'resources/wikia/modules/scrollToLink.js',
 			'resources/wikia/modules/stringhelper.js',
 			'resources/wikia/modules/thumbnailer.js',
 			'resources/wikia/modules/uniqueId.js',
@@ -71,7 +73,12 @@ module.exports = function(config) {
 			//SpecialPromote
 			'extensions/wikia/SpecialPromote/js/spec/integration/SpecialPromote.mocks.js',
 			'extensions/wikia/SpecialPromote/js/SpecialPromote.js',
-			'extensions/wikia/SpecialPromote/js/spec/integration/SpecialPromote.spec.js'
+			'extensions/wikia/SpecialPromote/js/spec/integration/SpecialPromote.spec.js',
+
+			// Lightbox
+			'extensions/wikia/Lightbox/scripts/Lightbox.js',
+			'extensions/wikia/Lightbox/scripts/spec/integration/lightbox.spec.js'
+
 		]
 	});
 };

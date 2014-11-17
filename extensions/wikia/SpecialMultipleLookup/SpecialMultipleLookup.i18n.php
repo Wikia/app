@@ -203,12 +203,33 @@ $messages['bs'] = array(
 /** Catalan (català)
  * @author Light of Cosmos
  * @author SMP
+ * @author Unapersona
  */
 $messages['ca'] = array(
+	'specialmultiplelookup-desc' => "Proporciona informació de l'usuari en múltiples wikis.",
 	'multilookup' => 'Revisió múltiple',
 	'multilookupstitle' => 'Revisió múltiple',
 	'multilookupselectuser' => 'Cerca de comptes amb la mateixa IP entre múltiples wikis',
+	'multilookupgo' => 'Vés-hi',
+	'multilookupnotspecify' => 'No heu especificat una adreça IP.',
+	'multilookupnext' => 'Següent',
+	'multilookupprevious' => 'Anterior',
+	'multilookupnbrresult' => 'Nombre de resultats:',
+	'multilookupinvalidresults' => 'Resultats invàlids!',
+	'multilookupnoresultfound' => "No s'han trobat resultats.",
+	'multilookupwiki' => 'Wiki',
+	'multilookuplink' => 'Enllaç de les contribucions',
+	'multilookupdetails' => 'Mostra detalls',
+	'multilookuplistwikiainfo' => "Llista de wikis amb pàgines editades pels usuaris amb l'adreça IP <b>$1</b>",
+	'multilookuplastedit' => "Última edició des d'aquesta adreça IP:",
+	'multilookupwikidbname' => 'Nom de DB',
+	'multilookupwikiurl' => 'URL',
+	'multilookupwikititle' => 'Títol',
+	'multilookupwikioptions' => 'Opcions',
+	'multilookuplastedithdr' => 'Última edició',
+	'multilookuprecordspager' => "S'estan mostrant '''$1''' per '''$2''' de '''$3''' resultats.",
 	'right-multilookup' => "Cercar informació d'usuaris en múltiples wikis",
+	'action-multilookup' => "Cercar informació d'usuaris en múltiples wikis",
 );
 
 /** Chechen (нохчийн)
@@ -349,14 +370,18 @@ $messages['eu'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Alirezaaa
  * @author Reza1615
  */
 $messages['fa'] = array(
 	'multilookupgo' => 'برو',
+	'multilookupnext' => 'بعدی',
+	'multilookupprevious' => 'قبلی',
 	'multilookupwiki' => 'ویکی',
 	'multilookupwikiurl' => 'نشانی اینترنتی',
 	'multilookupwikititle' => 'عنوان',
 	'multilookupwikioptions' => 'گزینه',
+	'multilookuplastedithdr' => 'آخرین ویرایش',
 );
 
 /** Finnish (suomi)
@@ -519,6 +544,7 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Plover-Y
  * @author Tommy6
  * @author 青子守歌
  */
@@ -540,6 +566,7 @@ $messages['ja'] = array(
 	'multilookuplistwikiainfo' => 'IPアドレスが <b>$1</b> のユーザーが記事の編集を行ったことのあるウィキ',
 	'multilookupinvaliduser' => '<p class="error">IPアドレス"<b>$1</b>"は存在しません。入力したIPアドレスに誤りがないか確認してください。</p>',
 	'multilookuplastedit' => 'このIPアドレスからの最後の編集:',
+	'multilookuprecordspager' => "'''$3'''件中'''$1'''件目から'''$2'''件目を表示中",
 	'right-multilookup' => '複数ウィキにおけるユーザの情報を閲覧',
 );
 
@@ -550,6 +577,16 @@ $messages['kn'] = array(
 	'multilookupgo' => 'ಹೋಗು',
 	'multilookupnext' => 'ನಂತರ',
 	'multilookupwiki' => 'ವಿಕಿ',
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'multilookupwikiurl' => 'URL',
+	'multilookupwikititle' => '제목',
+	'multilookupwikioptions' => '설정',
+	'multilookuplastedithdr' => '마지막 편집',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
@@ -1065,6 +1102,14 @@ $messages['tly'] = array(
 	'multilookupwikioptions' => 'Кукон',
 );
 
+/** Turkish (Türkçe)
+ * @author Sucsuzz
+ */
+$messages['tr'] = array(
+	'multilookupwiki' => 'Viki',
+	'multilookupwikiurl' => 'URL',
+);
+
 /** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
@@ -1131,6 +1176,8 @@ $messages['yi'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  * @author Hzy980512
+ * @author Liuxinyu970226
+ * @author Mywood
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
@@ -1138,7 +1185,7 @@ $messages['zh-hans'] = array(
 	'multilookup' => '查询多个',
 	'multilookupstitle' => '查询多个',
 	'multilookupselectuser' => '搜索多个wiki上的同一IP地址的账户',
-	'multilookupgo' => '去',
+	'multilookupgo' => '提交',
 	'multilookupnotspecify' => '您尚未指定IP地址。',
 	'multilookupnext' => '下一步',
 	'multilookupprevious' => '前一步',
@@ -1148,6 +1195,7 @@ $messages['zh-hans'] = array(
 	'multilookupwiki' => '维基',
 	'multilookuplink' => '贡献链接',
 	'multilookupdetails' => '查看资讯',
+	'multilookuplistwikiainfo' => '由来自IP地址<b>$1</b>的用户编辑页面的wiki列表',
 	'multilookupinvaliduser' => '<p class="error">IP地址“<b>$1</b>”不存在。请检查IP地址是否存在错误。</p>',
 	'multilookuplastedit' => '最后来自此IP地址的编辑：',
 	'multilookupwikidbname' => '数据库名称',

@@ -38,6 +38,19 @@ ve.Range = function VeRange( from, to ) {
 /* Static Methods */
 
 /**
+ * Create a new range from a JSON serialization of a range
+ *
+ * @see ve.Range#toJSON
+ *
+ * @param {string} json JSON serialization
+ * @return {ve.Range} New range
+ */
+ve.Range.newFromJSON = function ( json ) {
+	var args = JSON.parse( json );
+	return new ve.Range( args[0], args[1] );
+};
+
+/**
  * Create a new range that's a translated version of another.
  *
  * @static
@@ -175,4 +188,15 @@ ve.Range.prototype.isCollapsed = function () {
  */
 ve.Range.prototype.isBackwards = function () {
 	return this.from > this.to;
+};
+
+/**
+ * Serialize range to JSON
+ *
+ * @see ve.Range#newFromJSON
+ *
+ * @return {string} Serialized range
+ */
+ve.Range.prototype.toJSON = function () {
+	return JSON.stringify( [this.from, this.to] );
 };

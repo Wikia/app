@@ -1,0 +1,16 @@
+<div class="facebook-preferences">
+	{{! Visible when user is not yet connected }}
+	<div id="fbConnectPreferences" {{#isConnected}}class="hidden"{{/isConnected}}>
+		<p>{{facebookConvertMessage}}</p>
+		{{{facebookButton}}}
+	</div>
+
+	{{! Visible when user is already connected }}
+	<div id="fbDisconnectPreferences" {{^isConnected}}class="hidden"{{/isConnected}}>
+		<p id="fbDisconnectLink" data-fb-from-exist="{{fbFromExist}}">
+			{{{facebookDisconnectLink}}}
+		</p>
+	</div>
+</div>
+
+

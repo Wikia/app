@@ -69,6 +69,20 @@ ve.dm.AnnotationSet.prototype.getComparableAnnotations = function ( annotation )
 };
 
 /**
+ * Get an annotation set containing only annotations within the set which are comparable
+ * to an annotation from another set.
+ *
+ * @method
+ * @param {ve.dm.AnnotationSet} annotations Annotation set to compare to
+ * @returns {ve.dm.AnnotationSet} Copy of annotation set
+ */
+ve.dm.AnnotationSet.prototype.getComparableAnnotationsFromSet = function ( annotations ) {
+	return this.filter( function ( a ) {
+		return annotations.containsComparable( a );
+	} );
+};
+
+/**
  * Check if any annotations in the set have a specific name.
  *
  * @method

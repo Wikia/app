@@ -1,12 +1,12 @@
-@import "skins/oasis/css/core/color";
+@import "skins/shared/color";
 @import "skins/oasis/css/core/layout";
-@import "skins/oasis/css/mixins/bodytext";
-@import "skins/oasis/css/mixins/box-shadow";
-@import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/gradient";
-@import "skins/oasis/css/mixins/multiple-box-shadow";
-@import "skins/oasis/css/mixins/wordmark";
-@import "skins/oasis/css/mixins/ellipses";
+@import "skins/shared/mixins/bodytext";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/multiple-box-shadow";
+@import "skins/shared/mixins/wordmark";
+@import "skins/shared/mixins/ellipses";
 @import "extensions/wikia/UserLogin/mixins/tooltip-icon";
 // Colors
 @import "core/colors";
@@ -550,7 +550,6 @@ body {
 	-webkit-overflow-scrolling: touch;
 	-webkit-transform: translate3d(0, 0, 0);
 
-	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 

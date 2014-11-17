@@ -1200,6 +1200,7 @@ $messages['eu'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Alirezaaa
  * @author BlueDevil
  * @author Ebraminio
  * @author Wayiran
@@ -1218,11 +1219,11 @@ $messages['fa'] = array(
 	'myhome-user-contributions-feed' => 'مشارکت‌ها',
 	'myhome-hot-spots-feed' => 'نقاط داغ',
 	'myhome-hot-spots-feed-empty' => "این ویکی در انتظار مشارکت شماست.
-بر '''[[Special:CreatePage|صفحهٔ جدید]]''' برای شروع نوشتن کلیک کنید!",
-	'myhome-hot-spots-newest' => 'صفحات جدید بر ویکی',
+بر '''[[Special:CreatePage|صفحهٔ تازه]]''' برای شروع نوشتن کلیک کنید!",
+	'myhome-hot-spots-newest' => 'صفحات تازه بر ویکی',
 	'tog-userlandingpage' => 'صفحهٔ فرود:',
 	'prefs-myhome' => 'خانه من',
-	'myhome-feed-newpage' => 'صفحهٔ جدید',
+	'myhome-feed-newpage' => 'صفحهٔ تازه',
 	'myhome-feed-edit' => 'ویرایش',
 	'myhome-feed-move' => 'صفحه منتقل شد',
 	'myhome-feed-talkpage' => 'صفحهٔ بحث',
@@ -1242,10 +1243,10 @@ $messages['fa'] = array(
 	'myhome-feed-article-comment-edited-by' => 'نظر ویرایش‌شده توسط $1',
 	'myhome-feed-by' => 'توسط $1',
 	'myhome-feed-diff-alt' => 'تغییرات در این صفحه را نشانم بده',
-	'myhome-feed-new-page-details' => 'صفحهٔ جدید',
+	'myhome-feed-new-page-details' => 'صفحهٔ تازه',
 	'myhome-feed-summary-details' => 'خلاصه',
 	'myhome-feed-section-edit-details' => 'بخش را ویرایش کرد',
-	'myhome-feed-new-blog-post-details' => 'وبلاگ جدید',
+	'myhome-feed-new-blog-post-details' => 'وبلاگ تازه',
 	'myhome-feed-new-blog-comment-details' => 'نظر',
 	'myhome-feed-new-article-comment-details' => 'نظر',
 	'myhome-feed-move-details' => 'تغییر نام',
@@ -1376,7 +1377,7 @@ Jos olet tämän wikin perustaja tai olet ylläpitäjänä tässä wikissä, voi
 * Antaa koko yhteisön tietää muokkaajasta, joka on lisännyt wikiin jotain erityistä.
 
 * Tai vain lähettää muutamia rohkaisevia sanoja!",
-	'myhome-hot-spots-definition' => 'Sivut, joilla eniten muokkaajia viime {{PLURAL:$1|päivän|$1 päivän}} aikana.',
+	'myhome-hot-spots-definition' => 'Sivut, joilla eniten muokkaajia viimeisen {{PLURAL:$1|päivän|$1 päivän}} aikana.',
 	'myhome-default-view-checkbox' => 'Tee sivusta $1 oletusnäkymäni.',
 	'myhome-default-view-success' => 'Ok, tämä on uusi oletusnäkymäsi nyt.',
 	'tooltip-pt-myhome' => 'Palaa kotisivulle',
@@ -1954,7 +1955,7 @@ $messages['it'] = array(
 	'myhome-feed-by' => 'da $1',
 	'myhome-feed-diff-alt' => 'visualizza le modifiche di questa pagina',
 	'myhome-feed-new-page-details' => 'Nuova pagina',
-	'myhome-feed-summary-details' => 'Oggetto della modifica',
+	'myhome-feed-summary-details' => 'Oggetto',
 	'myhome-feed-section-edit-details' => 'Sezione modificata',
 	'myhome-feed-new-blog-post-details' => 'Nuovo blog',
 	'myhome-feed-new-blog-comment-details' => 'Commento',
@@ -2121,8 +2122,16 @@ $messages['kn'] = array(
 
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author Miri-Nae
  */
 $messages['ko'] = array(
+	'wikiactivity' => '위키 활동 내역',
+	'myhome-activity-more' => '더 많은 활동 내역 보기',
+	'myhome-feed-newpage' => '새 문서',
+	'myhome-feed-edit' => '편집',
+	'myhome-feed-new-page-details' => '새 문서',
+	'myhome-feed-redirect-details' => '넘겨주기',
+	'myhome-hot-spots-number-of-editors' => '편집자',
 	'myhome-namespace-blog' => '블로그',
 );
 
@@ -2156,6 +2165,7 @@ $messages['ku-latn'] = array(
 $messages['lb'] = array(
 	'myhome' => 'Meng Haaptsäit',
 	'myhome-watchlist-feed' => 'Iwwerwaachungslëscht',
+	'myhome-user-contributions-feed' => 'Kontributiounen',
 	'myhome-hot-spots-newest' => 'Nei Säiten op der Wiki',
 	'prefs-myhome' => 'Meng Haaptsäit',
 	'myhome-feed-newpage' => 'nei Säit',
@@ -2263,7 +2273,7 @@ $messages['mk'] = array(
 	'myhome-community-corner-header' => 'Пораки на заедницата',
 	'oasis-myhome-community-corner-edit' => 'уреди порака &gt;',
 	'myhome-community-corner-edit' => 'уреди порака',
-	'community-corner' => "'''Добредојдовте на Вашата домашна страница!'''
+	'community-corner' => "'''Добре дојдовте на Вашата домашна страница!'''
 
 Оваа страница ќе ви помогне да бидете во тек со случувањата на викито.
 
@@ -3981,13 +3991,14 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Rémy Lee
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(
 	'myhome-desc' => 'Trang riêng này dành cho thành viên đã đăng nhập',
 	'myhome' => 'Nhà của tôi',
-	'wikiactivity' => 'Hoạt động của Wiki',
+	'wikiactivity' => 'Hoạt động wiki',
 	'myhome-activity-more' => 'xem nhiều hơn hoạt động gần đây',
 	'myhome-activity-feed' => 'Hoạt động nguồn cấp dữ liệu',
 	'myhome-activity-feed-empty' => "Wiki này đang chờ bạn tham gia.
@@ -4170,6 +4181,7 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
  */
 $messages['zh-hant'] = array(
 	'myhome' => '我的首頁',
@@ -4177,7 +4189,7 @@ $messages['zh-hant'] = array(
 	'myhome-activity-more' => '查看更多最新動作',
 	'myhome-activity-feed-empty' => "本wiki在等待您的參與。
 點擊'''[[Special:CreatePage|新頁面]]'''開始撰寫！",
-	'myhome-watchlist-feed' => '監視列表',
+	'myhome-watchlist-feed' => '監視清單',
 	'myhome-user-contributions-feed' => '貢獻',
 	'myhome-hot-spots-feed' => '熱點',
 	'myhome-hot-spots-feed-empty' => "本wiki在等待您的參與。

@@ -1,34 +1,40 @@
-/*global define*/
+/*global define,require*/
 define('ext.wikia.adEngine.adConfig', [
 	// regular dependencies
 	'wikia.log',
-	'wikia.window',
-	'wikia.document',
 	'wikia.geo',
-	'wikia.abTest',
+	'wikia.instantGlobals',
 
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adDecoratorPageDimensions',
 	'ext.wikia.adEngine.evolveSlotConfig',
+	'ext.wikia.adEngine.gptSlotConfig',
+	require.optional('ext.wikia.adEngine.rubiconRtp'),
 
 	// adProviders
 	'ext.wikia.adEngine.provider.directGpt',
 	'ext.wikia.adEngine.provider.later',
-	'ext.wikia.adEngine.provider.null'
+
+	// adSlots
+	require.optional('ext.wikia.adEngine.slot.topInContentBoxad')
 ], function (
 	// regular dependencies
 	log,
-	window,
-	document,
 	geo,
-	abTest,
+	instantGlobals,
 
+	adContext,
 	adDecoratorPageDimensions,
 	evolveSlotConfig,
+	gptSlotConfig,
+	rtp,
 
 	// adProviders
 	adProviderDirectGpt,
 	adProviderLater,
-	adProviderNull
+
+	// adSlots
+	topInContentBoxad
 ) {
 	'use strict';
 
@@ -36,7 +42,10 @@ define('ext.wikia.adEngine.adConfig', [
 		country = geo.getCountryCode(),
 		defaultHighValueSlots,
 		highValueSlots,
-		decorators = [adDecoratorPageDimensions];
+		decorators = [adDecoratorPageDimensions],
+		rtpTier,
+		rtpSlots,
+		i;
 
 	defaultHighValueSlots = {
 		'CORP_TOP_LEADERBOARD': true,
@@ -56,56 +65,35 @@ define('ext.wikia.adEngine.adConfig', [
 		'MODAL_INTERSTITIAL_4': true,
 		'TEST_HOME_TOP_RIGHT_BOXAD': true,
 		'TEST_TOP_RIGHT_BOXAD': true,
+		'TOP_INCONTENT_BOXAD': true,
 		'TOP_LEADERBOARD': true,
 		'TOP_RIGHT_BOXAD': true,
-		'WIKIA_BAR_BOXAD_1': true,
-		'WIKIA_BAR_BOXAD_2': true,
+		'BOTTOM_LEADERBOARD': true,
 		'GPT_FLUSH': true
 	};
 
 	highValueSlots = defaultHighValueSlots;
 
-	function getProvider(slot) {
-		var slotname = slot[0];
+	function getProviderList(slotname) {
+		log(['getProvider', slotname], 'info', logGroup);
 
-		log(['getProvider', slot], 'info', logGroup);
+		var context = adContext.getContext();
 
-		// If wgShowAds set to false, hide slots
-		if (!window.wgShowAds) {
-			return adProviderNull;
+		if (!adContext.getContext().opts.showAds) {
+			return [];
 		}
-
-		// Force providers:
-		if (slot[2] === 'Evolve') {
-			log(['getProvider', slot, 'Evolve'], 'info', logGroup);
-			return adProviderLater;
-		}
-		if (slot[2] === 'AdDriver2') {
-			log(['getProvider', slot, 'DirectGpt'], 'info', logGroup);
-			return adProviderDirectGpt;
-		}
-		if (slot[2] === 'AdDriver') {
-			log(['getProvider', slot, 'DirectGpt'], 'info', logGroup);
-			return adProviderDirectGpt;
-		}
-		if (slot[2] === 'Liftium') {
-			log(['getProvider', slot, 'Later (Liftium)'], 'info', logGroup);
-			return adProviderLater;
-		}
-
 
 		// Force Liftium
-		if (window.wgAdDriverForceLiftiumAd) {
-			log(['getProvider', slot, 'Later (wgAdDriverForceLiftiumAd)'], 'info', logGroup);
-			return adProviderLater;
+		if (context.forceProviders.liftium) {
+			log(['getProvider', slotname, 'Later (wgAdDriverForceLiftiumAd)'], 'info', logGroup);
+			return [adProviderLater];
 		}
 
 		// Force DirectGpt
-		if (window.wgAdDriverForceDirectGptAd && adProviderDirectGpt.canHandleSlot(slotname)) {
-			log(['getProvider', slot, 'DirectGpt (wgAdDriverForceDirectGptAd)'], 'info', logGroup);
-			return adProviderDirectGpt;
+		if (context.forceProviders.directGpt) {
+			log(['getProvider', slotname, 'DirectGpt (wgAdDriverForceDirectGptAd)'], 'info', logGroup);
+			return [adProviderDirectGpt];
 		}
-
 
 		// All SevenOne Media ads are handled in the Later queue
 		// SevenOne Media gets all but WIKIA_BAR_BOXAD_1 and TOP_BUTTON
@@ -113,34 +101,55 @@ define('ext.wikia.adEngine.adConfig', [
 		// only WIKIA_BAR_BOXAD_1.
 		// Also we need to add an exception for GPT_FLUSH, so that WIKIA_BAR_BOXAD_1
 		// is actually requested.
-		if (window.wgAdDriverUseSevenOneMedia &&
+		if (context.providers.sevenOneMedia &&
 				slotname !== 'WIKIA_BAR_BOXAD_1' &&
 				slotname !== 'GPT_FLUSH'
 				) {
-			log(['getProvider', slot, 'Later (SevenOneMedia)'], 'info', logGroup);
-			return adProviderLater;
+			log(['getProvider', slotname, 'Later (SevenOneMedia)'], 'info', logGroup);
+			return [adProviderLater];
 		}
 
 		// Next Evolve (AU, CA, and NZ traffic)
 		if (country === 'AU' || country === 'CA' || country === 'NZ') {
 			if (evolveSlotConfig.canHandleSlot(slotname)) {
-				log(['getProvider', slot, 'Later (Evolve)'], 'info', logGroup);
-				return adProviderLater;
+				log(['getProvider', slotname, 'Later (Evolve)'], 'info', logGroup);
+				return [adProviderLater];
 			}
 		}
 
-		if (highValueSlots[slotname] && adProviderDirectGpt.canHandleSlot(slotname)) {
-			log(['getProvider', slot, 'Gpt'], 'info', logGroup);
-			return adProviderDirectGpt;
+		if (highValueSlots[slotname]) {
+			if (instantGlobals.wgSitewideDisableGpt) {
+				log(['getProvider', slotname, 'wgSitewideDisableGpt ON skipping DirectGPT'], 'warning', logGroup);
+				return [adProviderLater];
+			}
+
+			log(['getProvider', slotname, 'DirectGpt->Later'], 'info', logGroup);
+			return [adProviderDirectGpt, adProviderLater];
 		}
 
 		// Non-high-value slots go to ad provider Later
-		log(['getProvider', slot, 'Later (Liftium)'], 'info', logGroup);
-		return adProviderLater;
+		log(['getProvider', slotname, 'Later (Liftium)'], 'info', logGroup);
+		return [adProviderLater];
+	}
+
+	if (topInContentBoxad) {
+		topInContentBoxad.init();
+	}
+
+	if (rtp && rtp.wasCalled()) {
+		rtp.trackState();
+		rtpTier = rtp.getTier();
+		rtpSlots = rtp.getConfig().slotname;
+
+		if (rtpTier && rtpSlots && rtpSlots.length) {
+			for (i = rtpSlots.length; i >= 0; i -= 1) {
+				gptSlotConfig.extendSlotParams('gpt', rtpSlots[i], { 'rp_tier': rtpTier });
+			}
+		}
 	}
 
 	return {
 		getDecorators: function () { return decorators; },
-		getProvider: getProvider
+		getProviderList: getProviderList
 	};
 });

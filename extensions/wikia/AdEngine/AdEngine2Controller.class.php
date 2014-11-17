@@ -5,16 +5,10 @@
  */
 class AdEngine2Controller extends WikiaController {
 
-	public function init() {
-		if ($this->wg->AdDriverUseEbay && $this->wg->Skin !== 'wikiamobile') {
-			$this->response->addAsset( 'adengine2_ebay_scss' );
-		}
-	}
-
 	public static function getLiftiumOptionsScript() {
 		wfProfileIn(__METHOD__);
 
-		global $wgDBname, $wgTitle, $wgLang, $wgDartCustomKeyValues;
+		global $wgDBname, $wgTitle, $wgLang, $wgDartCustomKeyValues, $wgCityId;
 
 		// See Liftium.js for documentation on options
 		$options = array();
@@ -25,8 +19,9 @@ class AdEngine2Controller extends WikiaController {
 			$options['kv_article_id'] = $wgTitle->getArticleID();
 			$options['kv_wpage'] = $wgTitle->getPartialURL();
 		}
-		$cat = AdEngine2Service::getCachedCategory();
-		$options['kv_Hub'] = $cat['name'];
+
+		$hub = WikiFactoryHub::getInstance();
+		$options['kv_Hub'] = $hub->getCategoryName( $wgCityId );
 		$options['kv_skin'] = RequestContext::getMain()->getSkin()->getSkinName();
 		$options['kv_user_lang'] = $wgLang->getCode();
 		$options['kv_cont_lang'] = $GLOBALS['wgLanguageCode'];

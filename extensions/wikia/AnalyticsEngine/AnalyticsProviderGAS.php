@@ -26,7 +26,7 @@ class AnalyticsProviderGAS implements iAnalyticsProvider {
 		//should be added unprocessed as per Cardinal Path's request
 		//but screw it, that's an additional single request that adds overhead
 		//and the main experiment is done on Oasis :P
-		$jsStaticPackages[] = 'analytics_gas_js';
+		array_unshift( $jsStaticPackages, 'analytics_gas_js' );
 		return true;
 	}
 
@@ -34,12 +34,17 @@ class AnalyticsProviderGAS implements iAnalyticsProvider {
 		$app = F::app();
 
 		//do not proceed if skin is WikiaMobile, see onWikiaMobileAssetsPackages
-		if ( !( $app->checkSkin( array( 'wikiamobile', 'oasis' ), $skin ) ) ) {
+		if ( !( $app->checkSkin( array( 'wikiamobile', 'oasis', 'venus' ), $skin ) ) ) {
 			//needs to be added unprocessed as per Cardinal Path's request
 			//so AssetsManager is not an option here
 			$scripts .= "\n<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->ExtensionsPath}/wikia/AnalyticsEngine/js/analytics_prod.js\"></script>";
 		}
 
+		return true;
+	}
+
+	static public function onVenusAssetsPackages( &$jsHeadGroups, &$jsBodyGroups, &$cssGroups) {
+		$jsHeadGroups[] = 'analytics_gas_js';
 		return true;
 	}
 

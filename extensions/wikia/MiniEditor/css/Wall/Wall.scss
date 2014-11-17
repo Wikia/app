@@ -1,6 +1,6 @@
 @import "../../../Wall/css/WallColors";
-@import "../../../../../skins/oasis/css/mixins/box-shadow";
-@import "../../../../../skins/oasis/css/mixins/clearfix";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/clearfix";
 
 .Wall {
 	.MiniEditorWrapper {

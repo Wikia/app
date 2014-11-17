@@ -1,6 +1,6 @@
-@import "color";
+@import "skins/shared/color";
 @import "layout";
-@import "../mixins/clearfix";
+@import "skins/shared/mixins/clearfix";
 
 body {
 	color: $color-text;

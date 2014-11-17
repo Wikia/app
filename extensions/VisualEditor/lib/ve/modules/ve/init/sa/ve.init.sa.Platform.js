@@ -19,7 +19,7 @@ ve.init.sa.Platform = function VeInitSaPlatform() {
 
 	// Properties
 	this.externalLinkUrlProtocolsRegExp = /^https?\:\/\//;
-	this.modulesUrl = 'extensions/VisualEditor/modules';
+	this.modulesUrl = '/extensions/VisualEditor/modules';
 	this.parsedMessages = {};
 	this.userLanguages = ['en'];
 };
@@ -99,10 +99,34 @@ ve.init.sa.Platform.prototype.getSystemPlatform = function () {
 };
 
 /** @inheritdoc */
+ve.init.sa.Platform.prototype.getLanguageCodes = function () {
+	return Object.keys( $.uls.data.getAutonyms() );
+};
+
+/**
+ * @method
+ * @inheritdoc
+ */
+ve.init.sa.Platform.prototype.getLanguageName = $.uls.data.getAutonym;
+
+/**
+ * @method
+ * @inheritdoc
+ */
+ve.init.sa.Platform.prototype.getLanguageAutonym = $.uls.data.getAutonym;
+
+/**
+ * @method
+ * @inheritdoc
+ */
+ve.init.sa.Platform.prototype.getLanguageDirection = $.uls.data.getDir;
+
+/** @inheritdoc */
 ve.init.sa.Platform.prototype.getUserLanguages = function () {
 	return this.userLanguages;
 };
 
+/** @inheritdoc */
 ve.init.sa.Platform.prototype.initialize = function () {
 	var i, len, partialLocale, localeParts, filename, deferred,
 		path = this.getModulesUrl(),
@@ -143,12 +167,12 @@ ve.init.sa.Platform.prototype.initialize = function () {
 		filename = languages[i].toLowerCase() + '.json';
 
 		deferred = $.Deferred();
-		$.i18n().load( path + '/ve/i18n/' + filename, languages[i] )
+		$.i18n().load( path + '/ve-wmf/i18n/' + filename, languages[i] )
 			.always( deferred.resolve );
 		promises.push( deferred.promise() );
 
 		deferred = $.Deferred();
-		$.i18n().load( path + '/../lib/oojs-ui/i18n/' + filename, languages[i] )
+		$.i18n().load( path + '/../lib/ve/lib/oojs-ui/i18n/' + filename, languages[i] )
 			.always( deferred.resolve );
 		promises.push( deferred.promise() );
 	}

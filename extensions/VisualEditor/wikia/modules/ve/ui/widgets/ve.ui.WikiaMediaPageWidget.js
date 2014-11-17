@@ -22,7 +22,7 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 	config = config || {};
 
 	// Parent constructor
-	OO.ui.PageLayout.call( this, model.getId(), config );
+	ve.ui.WikiaMediaPageWidget.super.call( this, model.getId(), config );
 
 	// Properties
 	this.editable = !!config.editable;
@@ -31,7 +31,7 @@ ve.ui.WikiaMediaPageWidget = function VeUiWikiaMediaPageWidget( model, config ) 
 	this.model = model;
 	this.removeButton = new OO.ui.ButtonWidget( {
 		'$': this.$,
-		'flags': ['destructive'],
+		'flags': ['destructive', 'secondary'],
 		'label': ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-item-remove-button' )
 	} );
 	this.title = new OO.ui.TextInputWidget( {

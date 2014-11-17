@@ -186,6 +186,9 @@ class ExternalUser_Wikia extends ExternalUser {
 	}
 
 	public function authenticate( $password ) {
+		/** PLATFORM-508 - logging for Helios project - begin */
+		\Wikia\Logger\WikiaLogger::instance()->debug( 'PLATFORM-508', [ 'method' => __METHOD__ ] );
+		/** PLATFORM-508 - logging for Helios project - end */
 		# This might be wrong if anyone actually uses the UserComparePasswords hook
 		# (on either end), so don't use this if you those are incompatible.
 		wfDebug( __METHOD__ . ": " . $this->getId() . " \n" );
@@ -219,6 +222,10 @@ class ExternalUser_Wikia extends ExternalUser {
 			wfDebug( __METHOD__ . ": Tried to add user to the $wgExternalSharedDB database while in wgReadOnly mode! " . $User->getName() . " [ " . $User->getId() . " ] (that's bad... fix the calling code)\n" );
 		} else {
 			wfDebug( __METHOD__ . ": add user to the $wgExternalSharedDB database: " . $User->getName() . " [ " . $User->getId() . " ] \n" );
+
+			/** PLATFORM-508 - logging for Helios project - begin */
+			\Wikia\Logger\WikiaLogger::instance()->debug( 'PLATFORM-508', [ 'method' => __METHOD__ ] );
+			/** PLATFORM-508 - logging for Helios project - end */
 
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			$seqVal = $dbw->nextSequenceValue( 'user_user_id_seq' );
@@ -363,6 +370,10 @@ class ExternalUser_Wikia extends ExternalUser {
 			wfDebug( __METHOD__ . ": tried to updateUser while in read-only mode.\n" );
 		} else {
 			wfDebug( __METHOD__ . ": update central user data \n" );
+
+			/** PLATFORM-508 - logging for Helios project - begin */
+			\Wikia\Logger\WikiaLogger::instance()->debug( 'PLATFORM-508', [ 'method' => __METHOD__ ] );
+			/** PLATFORM-508 - logging for Helios project - end */
 
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			$this->mUser->mTouched = User::newTouchedTimestamp();

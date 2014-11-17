@@ -18,6 +18,7 @@ class WallMessageTest extends WikiaBaseTest {
 	/**
 	 * if article comment/title is not in database yet, we should use the article comment title's text as a fallback
 	 * to return wall owner name
+	 * @group Integration
 	 */
 	public function testGetWallOwnerACFallback() {
 		$acTitle = Title::newFromText( 'ArticleCommentTitle/@comment/xxx' );

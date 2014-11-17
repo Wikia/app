@@ -7,75 +7,100 @@
 	'use strict';
 
 	function nirvana($) {
+		var allowedFormats = ['json', 'html', 'jsonp'];
+
+		/**
+		 * Get Nirvana API url
+		 *
+		 * @param Object options
+		 *  controller - controller name
+		 *  method - method name
+		 *  format - (optional) responce format
+		 *  scriptPath - (optional) url protocol and location
+		 *  data - (optional) additional query string params
+		 * @returns {string}
+		 */
+		function getUrl( options ) {
+			var dataParams = options.data || {},
+				format = (options.format || 'json').toLowerCase(),
+				i,
+				key,
+				sortedDict = {},
+				sortedKeys = [],
+				urlParams,
+				url = options.scriptPath || context.wgServer + context.wgScriptPath;
+
+			if ( ( typeof options.controller === 'undefined' ) || ( typeof options.method === 'undefined' ) ) {
+				throw 'controller and method are required';
+			}
+
+			urlParams = {
+				controller: options.controller.replace( /Controller$/, '' ),
+				method: options.method
+			};
+
+			if (typeof dataParams === 'string') {
+				dataParams += '&format=' + format;
+			} else {
+				dataParams.format = format;
+			}
+
+			// Sort params to avoid creating many urls on varnish
+			if ( typeof dataParams !== 'string' ) {
+				for( key in dataParams ) {
+					sortedKeys[sortedKeys.length] = key;
+				}
+				sortedKeys.sort();
+				for( i = 0; i < sortedKeys.length; i++ ) {
+					sortedDict[sortedKeys[i]] = dataParams[sortedKeys[i]];
+				}
+				dataParams = $.param( sortedDict );
+			}
+
+			return url + '/wikia.php?' + $.param( urlParams ) + '&' + dataParams;
+		}
 
 		function sendRequest(attr) {
 			var type = (attr.type || 'POST').toUpperCase(),
 				format = (attr.format || 'json').toLowerCase(),
-				data = attr.data || {},
+				data = {},
 				callback = attr.callback || function() {},
 				onErrorCallback = attr.onErrorCallback || function() {},
-				url,
-				getUrl;
+				url;
 
-			if((typeof attr.controller === 'undefined') || (typeof attr.method === 'undefined')) {
-				throw "controller and method are required";
+
+			if ( allowedFormats.indexOf( format ) === -1 ) {
+				throw 'Only Json,Jsonp and Html format are allowed';
 			}
 
-			if( !(format === 'json' || format === 'html' || format === 'jsonp' ) ) {
-				throw "Only Json,Jsonp and Html format are allowed";
+			if ( type === 'POST' && typeof attr.data !== 'undefined' ) {
+				data = attr.data;
+				delete attr.data;
 			}
+			url = getUrl( attr );
 
-			url = attr.scriptPath || context.wgServer + context.wgScriptPath;
-
-			getUrl = {
-				//Iowa strips out POST parameters, Nirvana requires these to be set
-				//so we're passing them in the GET part of the request
-				controller: attr.controller.replace(/Controller$/, ''),
-				method: attr.method
-			};
-
-			if(type === 'POST') {
-				getUrl.format = format;
-			} else {
-				if(typeof data == 'string') {
-					data += '&format=' + format;
-				}else{
-					data.format = format;
-				}
-			}
-
-			// If data is a string just pass it directly along as is.  Otherwise
-			// sort the structured data so that the URL is consistant (for cache
-			// busting purposes)
-			var sortedDict;
-			if (typeof data == 'string') {
-				sortedDict = data;
-			} else {
-				var sortedKeys = [];
-				for(var key in data) {
-					sortedKeys[sortedKeys.length] = key;
-				}
-				sortedKeys.sort();
-				sortedDict = {};
-				for(var i = 0; i < sortedKeys.length; i++) {
-					sortedDict[sortedKeys[i]] = data[sortedKeys[i]];
-				}
-			}
-
-			return $.ajax({
-				url: url + '/wikia.php?' + $.param(getUrl), /* JSlint ignore */
+			var settings = {
+				url: url,
 				dataType: format,
 				type: type,
-				data: sortedDict,
+				data: data,
 				success: callback,
 				error: onErrorCallback
-			});
+			};
+			if ( typeof attr.contentType != 'undefined' ) {
+				settings.contentType = attr.contentType;
+			}
+			if ( typeof attr.processData != 'undefined' ) {
+				settings.processData = attr.processData;
+			}
+			return $.ajax(settings);
 		}
 
 		return {
 			sendRequest: sendRequest,
+			getUrl: getUrl,
 			getJson: function(controller, method, data, callback, onErrorCallback) {
-				if(typeof data == 'function') {
+				if(typeof data === 'function') {
 					// callback is in data slot, shift parameters
 					onErrorCallback = callback;
 					callback = data;
@@ -91,7 +116,7 @@
 				});
 			},
 			postJson: function (controller, method, data, callback, onErrorCallback) {
-				if(typeof data == 'function') {
+				if(typeof data === 'function') {
 					// callback is in data slot, shift parameters
 					onErrorCallback = callback;
 					callback = data;

@@ -43,18 +43,18 @@ ve.ui.Surface = function VeUiSurface( dataOrDoc, config, target ) {
 	}
 	this.model = new ve.dm.Surface( documentModel );
 	this.view = new ve.ce.Surface( this.model, this, { '$': this.$ } );
-	this.dialogs = new ve.ui.WindowSet( ve.ui.dialogFactory, { '$': this.$ } );
+	this.dialogs = new ve.ui.WindowSet( ve.ui.windowFactory, { '$': this.$ } );
 	this.commands = {};
 	this.triggers = {};
 	this.pasteRules = {};
 	this.enabled = true;
 	this.target = target || null;
-	if ( this.target ) {
-		this.focus = new ve.ui.WikiaFocusWidget( this );
+	if ( config && config.focusMode ) {
+		this.focusWidget = new ve.ui.WikiaFocusWidget( this );
 	}
 
 	// Events
-	this.dialogs.connect( this, { 'close': 'onDialogClose' } );
+	this.dialogs.connect( this, { 'teardown': 'onDialogTeardown' } );
 
 	// Initialization
 	this.setupContext();
@@ -82,13 +82,6 @@ OO.mixinClass( ve.ui.Surface, OO.EventEmitter );
 /* Events */
 
 /**
- * When the surface changes its position (only if it happens
- * after initialize has already been called).
- *
- * @event position
- */
-
-/**
  * When a command is added to the surface.
  *
  * @event addCommand
@@ -106,9 +99,38 @@ OO.mixinClass( ve.ui.Surface, OO.EventEmitter );
 /* Methods */
 
 /**
- * Handle dialog close events
+ * Destroy the surface, releasing all memory and removing all DOM elements.
+ *
+ * @method
+ * @fires destroy
  */
-ve.ui.Surface.prototype.onDialogClose = function () {
+ve.ui.Surface.prototype.destroy = function () {
+	// Remove instance from global array
+	ve.instances.splice( ve.instances.indexOf( this ), 1 );
+
+	// Stop periodic history tracking in model
+	this.model.stopHistoryTracking();
+
+	// Destroy the ce.Surface and the ui.Context
+	this.view.destroy();
+	this.context.destroy();
+
+	// Disconnect events
+	this.dialogs.disconnect( this );
+
+	// Remove DOM elements
+	this.$element.remove();
+	this.$globalOverlay.remove();
+	this.$localOverlay.remove();
+
+	// Let others know we have been destroyed
+	this.emit( 'destroy' );
+};
+
+/**
+ * Handle dialog teardown events
+ */
+ve.ui.Surface.prototype.onDialogTeardown = function () {
 	this.getView().focus();
 };
 
@@ -121,8 +143,8 @@ ve.ui.Surface.prototype.initialize = function () {
 	var $body = $( 'body' );
 
 	this.getView().$element.after( this.$localOverlay );
-	if ( this.focus ) {
-		$body.append( this.focus.$element );
+	if ( this.focusWidget ) {
+		$body.append( this.focusWidget.$element );
 	}
 	// Attach globalOverlay to the global <body>, not the local frame's <body>
 	$body.append( this.$globalOverlay );
@@ -212,23 +234,6 @@ ve.ui.Surface.prototype.getCommand = function ( trigger ) {
  */
 ve.ui.Surface.prototype.getTriggers = function ( name ) {
 	return this.triggers[name];
-};
-
-/**
- * Destroy the surface, releasing all memory and removing all DOM elements.
- *
- * @method
- * @returns {ve.ui.Context} Context user interface
- * @fires destroy
- */
-ve.ui.Surface.prototype.destroy = function () {
-	ve.instances.splice( ve.instances.indexOf( this ), 1 );
-	this.model.stopHistoryTracking();
-	this.view.destroy();
-	this.$element.remove();
-	this.$globalOverlay.remove();
-	this.$localOverlay.remove();
-	this.emit( 'destroy' );
 };
 
 /**
@@ -360,4 +365,12 @@ ve.ui.Surface.prototype.getDir = function () {
  */
 ve.ui.Surface.prototype.getTarget = function () {
 	return this.target;
+};
+
+/**
+ * @method
+ * @returns {ve.ui.WikiaFocusWidget}
+ */
+ve.ui.Surface.prototype.getFocusWidget = function () {
+	return this.focusWidget;
 };

@@ -37,12 +37,30 @@ class WikiaPageType {
 
 		$isMainPage = (
 			is_object($title)
-			&& $title->getArticleId() === Title::newMainPage()->getArticleId()
+			&& $title->isMainPage()
 			&& $title->getArticleId() != 0 # caused problems on central due to NS_SPECIAL main page
 			&& !self::isActionPage()
 		);
 
 		return $isMainPage;
+	}
+
+	/**
+	 * Check if current page is article
+	 *
+	 * @return bool
+	 */
+	public static function isArticlePage() {
+		$title = F::app()->wg->Title;
+
+		$isArticlePage = (
+			is_object($title)
+			&& $title->getArticleId() != 0
+			&& $title->getNamespace() == 0
+			&& !self::isMainPage()
+		);
+
+		return $isArticlePage;
 	}
 
 	/**
@@ -56,8 +74,7 @@ class WikiaPageType {
 		$searchPageNames = array('Search', 'WikiaSearch');
 		$pageNames = SpecialPageFactory::resolveAlias($title->getDBkey());
 
-		return !empty($title) && -1 === $title->getNamespace()
-			&& in_array(array_shift($pageNames), $searchPageNames);
+		return -1 === $title->getNamespace() && in_array(array_shift($pageNames), $searchPageNames);
 	}
 
 	/**
@@ -143,7 +160,7 @@ class WikiaPageType {
 	public static function isWikiaHub() {
 		global $wgEnableWikiaHubsV3Ext;
 
-		return HubService::isCurrentPageAWikiaHub() || !empty( $wgEnableWikiaHubsV3Ext );
+		return !empty( $wgEnableWikiaHubsV3Ext );
 	}
 
 	/**

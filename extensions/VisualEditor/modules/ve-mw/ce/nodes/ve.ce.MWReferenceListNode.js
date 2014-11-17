@@ -10,7 +10,7 @@
  *
  * @class
  * @extends ve.ce.LeafNode
- * @mixins ve.ce.ProtectedNode
+ * @mixins ve.ce.FocusableNode
  *
  * @constructor
  * @param {ve.dm.MWReferenceListNode} model Model to observe
@@ -21,9 +21,7 @@ ve.ce.MWReferenceListNode = function VeCeMWReferenceListNode( model, config ) {
 	ve.ce.LeafNode.call( this, model, config );
 
 	// Mixin constructors
-	ve.ce.ProtectedNode.call( this );
 	ve.ce.FocusableNode.call( this );
-	ve.ce.ClickableNode.call( this );
 
 	// Properties
 	this.internalList = null;
@@ -46,11 +44,7 @@ ve.ce.MWReferenceListNode = function VeCeMWReferenceListNode( model, config ) {
 
 OO.inheritClass( ve.ce.MWReferenceListNode, ve.ce.LeafNode );
 
-OO.mixinClass( ve.ce.MWReferenceListNode, ve.ce.ProtectedNode );
-
 OO.mixinClass( ve.ce.MWReferenceListNode, ve.ce.FocusableNode );
-
-OO.mixinClass( ve.ce.MWReferenceListNode, ve.ce.ClickableNode );
 
 /* Static Properties */
 
@@ -59,6 +53,15 @@ ve.ce.MWReferenceListNode.static.name = 'mwReferenceList';
 ve.ce.MWReferenceListNode.static.tagName = 'div';
 
 ve.ce.MWReferenceListNode.static.primaryCommandName = 'referenceList';
+
+/* Static Methods */
+
+/**
+ * @inheritdoc
+ */
+ve.ce.MWReferenceListNode.static.getDescription = function ( model ) {
+	return model.getAttribute( 'refGroup' );
+};
 
 /* Methods */
 

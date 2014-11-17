@@ -44,7 +44,7 @@ ve.dm.MWNoContentConvertMetaItem.static.toDomElements = function ( dataElement, 
 	var meta = doc.createElement( 'meta' );
 	meta.setAttribute(
 		'property',
-		dataElement.attributes.originalProperty || 'mw:PageProp/nocontentconvert'
+		( dataElement.attributes && dataElement.attributes.originalProperty ) || 'mw:PageProp/nocontentconvert'
 	);
 	return [ meta ];
 };

@@ -779,11 +779,9 @@ class LocalFile extends File {
 		$purgeList = array();
 		$purgeList = array( $this->getThumbUrl( ) ); # wikia change
 		foreach ( $files as $file ) {
-			# Check that the base file name is part of the thumb name
-			# This is a basic sanity check to avoid erasing unrelated directories
-			if ( strpos( $file, $this->getName() ) !== false ) {
-				$purgeList[] = "{$dir}/{$file}";
-			}
+			# Wikia change - remove all thumbnails in all formats (PLATFORM-441)
+			# e.g. PNG file can have a WebP thumbnail
+			$purgeList[] = "{$dir}/{$file}";
 		}
 
 		# Delete the thumbnails
@@ -984,6 +982,8 @@ class LocalFile extends File {
 	function recordUpload2(
 		$oldver, $comment, $pageText, $props = false, $timestamp = false, $user = null
 	) {
+		global $wgCityId;
+
 		if ( is_null( $user ) ) {
 			global $wgUser;
 			$user = $wgUser;
@@ -1139,6 +1139,16 @@ class LocalFile extends File {
 			$wikiPage->doEdit( $pageText, $comment, EDIT_NEW | EDIT_SUPPRESS_RC, false, $user );
 		}
 
+		/* wikia change - begin (VID-1568) */
+		// Update/Insert video info
+		try {
+			\VideoInfoHooksHelper::upsertVideoInfo( $this, $reupload );
+		} catch ( \Exception $e ) {
+			$dbw->rollback();
+			return false;
+		}
+		/* wikia change - end (VID-1568) */
+
 		# Commit the transaction now, in case something goes wrong later
 		# The most important thing is that files don't get lost, especially archives
 		$dbw->commit();
@@ -1157,21 +1167,35 @@ class LocalFile extends File {
 
 			# Remove the old file from the squid cache
 			SquidUpdate::purge( array( $this->getURL() ) );
+
+			/* wikia change - begin (VID-1568) */
+			\VideoInfoHooksHelper::purgeVideoInfoCache( $this );
+			/* wikia change - end (VID-1568) */
 		}
-		
+
 		# Hooks, hooks, the magic of hooks...
 		wfRunHooks( 'FileUpload', array( $this, $reupload, $descTitle->exists() ) );
 
 		# Invalidate cache for all pages using this file
-		$update = new HTMLCacheUpdate( $this->getTitle(), 'imagelinks' );
-		$update->doUpdate();
+		// Wikia change begin @author Scott Rabin (srabin@wikia-inc.com)
+		$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
+			->wikiId( $wgCityId )
+			->title( $this->getTitle() );
+		$task->call( 'purge', 'imagelinks' );
+		$task->queue();
+		// Wikia change end
 
 		# Invalidate cache for all pages that redirects on this page
 		$redirs = $this->getTitle()->getRedirectsHere();
 
 		foreach ( $redirs as $redir ) {
-			$update = new HTMLCacheUpdate( $redir, 'imagelinks' );
-			$update->doUpdate();
+			// Wikia change begin @author Scott Rabin (srabin@wikia-inc.com)
+			$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
+				->wikiId( $wgCityId )
+				->title( $redir );
+			$task->call( 'purge', 'imagelinks' );
+			$task->queue();
+			// Wikia change end
 		}
 
 		return true;
@@ -1516,6 +1540,16 @@ class LocalFile extends File {
 		$dbw = $this->repo->getMasterDB();
 		$dbw->rollback();
 	}
+
+	/* wikia change - begin (VID-1568) */
+	/**
+	 * Check if file data is loaded
+	 * @return bool
+	 */
+	public function isDataLoaded() {
+		return $this->dataLoaded;
+	}
+	/* wikia change - end (VID-1568) */
 } // LocalFile class
 
 # ------------------------------------------------------------------------------

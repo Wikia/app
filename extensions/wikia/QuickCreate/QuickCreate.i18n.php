@@ -162,9 +162,10 @@ $messages['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author Kenrick95
+ * @author Riemogerz
  */
 $messages['id'] = array(
-	'quickcreate-desc' => 'Menambahkan tombol membuat halaman baru dengan kemampuan untuk masuk log untuk pengguna anonim', # Fuzzy
+	'quickcreate-desc' => 'Menambahkan tombol buat halaman baru dengan permintaan masuk log untuk pengguna anonim',
 	'quickcreate' => 'kirimkan resep Anda',
 );
 

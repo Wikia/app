@@ -800,9 +800,9 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 			// trim video titles to two lines
 			for (i in data.items) {
 				item = data.items[i];
-				if (item.title) {
-					item.trimTitle = item.title.substr(0, 35);
-					if (item.trimTitle.length < item.title.length) {
+				if (item.fileTitle) {
+					item.trimTitle = item.fileTitle.substr(0, 35);
+					if (item.trimTitle.length < item.fileTitle.length) {
 						item.trimTitle += '...';
 					}
 				}
@@ -814,7 +814,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 			var html, template;
 
 			template = '{{#items}}<li><figure>{{{thumbnail}}}<figcaption><strong>{{trimTitle}}</strong></figcaption>' +
-				'</figure><a href="{{url}}" title="{{title}}" data-phrase="' +
+				'</figure><a href="{{fileUrl}}" title="{{fileTitle}}" data-phrase="' +
 				data.searchQuery + '" data-pos="{{pos}}">{{addMessage}}</a></li>{{/items}}';
 
 			html = $.mustache(template, data);

@@ -1,8 +1,8 @@
-define( 'wikia.browserDetect', function() {
+define('wikia.browserDetect', ['wikia.window'], function (win) {
 	'use strict';
 
-	var appName = navigator.appName,
-		userAgent = navigator.userAgent;
+	var appName = win.navigator.appName,
+		userAgent = win.navigator.userAgent;
 
 	/**
 	 * Checks if the browser is IE
@@ -11,8 +11,8 @@ define( 'wikia.browserDetect', function() {
 
 	function isIE() {
 		var bool = false;
-		if ( appName === 'Microsoft Internet Explorer' || // IE <= 10
-			( appName === 'Netscape' && userAgent.indexOf( 'Trident/' ) !== -1 ) ) { // IE 11
+		if (appName === 'Microsoft Internet Explorer' || // IE <= 10
+			(appName === 'Netscape' && userAgent.indexOf('Trident/') !== -1)) { // IE 11
 			bool = true;
 		}
 
@@ -26,11 +26,20 @@ define( 'wikia.browserDetect', function() {
 
 	function isIPad() {
 		var bool = false;
-		if ( userAgent.match( /iPad/i ) !== null ) {
+		if (userAgent.match(/iPad/i) !== null) {
 			bool = true;
 		}
 
 		return bool;
+	}
+
+	/**
+	 * Checks if position fixed is supported when keyboard appears.
+	 * Issue is occurring in Safari 6 and 7 on iPads.
+	 * @returns {boolean}
+	 */
+	function isIOS7orLower() {
+		return !!userAgent.match(/iPad.+OS.[6,7].\d.+like.Mac.OS.+Safari/i);
 	}
 
 	/**
@@ -39,6 +48,7 @@ define( 'wikia.browserDetect', function() {
 
 	return {
 		isIE: isIE,
-		isIPad: isIPad
+		isIPad: isIPad,
+		isIOS7orLower: isIOS7orLower
 	};
-} );
+});

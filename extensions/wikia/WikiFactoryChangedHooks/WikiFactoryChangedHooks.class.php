@@ -186,21 +186,10 @@ Class WikiFactoryChangedHooks {
 	static public function BlogArticle($cv_name, $city_id, $value) {
 		if ($cv_name == "wgEnableBlogArticles" && $value == true) {
 			Wikia::log(__METHOD__, $city_id, "{$cv_name} = {$value}");
-			/**
-			 * add task to TaskManager
-			 */
-			if (TaskRunner::isModern('BlogTask')) {
-				$task = (new \Wikia\Blogs\BlogTask())->wikiId($city_id);
-				$task->call('maintenance');
-				$task->queue();
-			} else {
-				if (!class_exists('BlogTask')) {
-					global $IP;
-					extAddBatchTask("$IP/extensions/wikia/Blogs/BlogTask.php", "blog", "BlogTask");
-				}
-				$Task = new BlogTask();
-				$Task->createTask(array("city_id" => $city_id), TASK_QUEUED);
-			}
+
+			$task = (new \Wikia\Blogs\BlogTask())->wikiId($city_id);
+			$task->call('maintenance');
+			$task->queue();
 		}
 		return true;
 	}
