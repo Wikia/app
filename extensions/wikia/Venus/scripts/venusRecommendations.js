@@ -1,6 +1,8 @@
 require(['wikia.document', 'wikia.recommendations'], function(d, recommendations){
 	'use strict';
 
+	// TODO add sloth and move insertion logic to lazy loaded js
+
 	function callback(data) {
 		var articleContainer = d.getElementById('WikiaArticle'),
 			moduleContainer = d.createElement('div');

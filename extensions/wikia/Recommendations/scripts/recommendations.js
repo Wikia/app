@@ -1,35 +1,43 @@
-define('wikia.recommendations', ['wikia.loader'], function(loader){
-	'use strict';
+define(
+	'wikia.recommendations',
+	['wikia.loader', 'wikia.window', 'wikia.mustache'],
+	function(loader, win, mustache) {
+		'use strict';
 
-	/**
-	 * Load recommendations template
-	 *
-	 * @param {Function} callback function passed to process recieved template
-	 */
-	function loadTemplate(callback) {
-		var template = 'Recommendations_index',
-			html;
+		/**
+		 * Load recommendations template
+		 *
+		 * @param {Function} callback function passed to process recieved template
+		 */
+		function loadTemplate(callback) {
+			// TODO rethink loading template & recommendation data in one request
+			loader({
+				type: loader.MULTI,
+				resources: {
+					mustache: '/extensions/wikia/Recommendations/templates/Recommendations_index.mustache',
+					//scripts: 'wikiamobile_smartbanner_js',
+					styles: 'extensions/wikia/Recommendations/styles/recommendations.scss',
+					//messages: 'SmartBanner',
+					templates: [{
+						controller: 'RecommendationsApi',
+						method: 'getArticle',
+						params: {
+							id: win.wgArticleId
+						}
+					}]
+				}
+			}).done(function (res) {
+				loader.processStyle(res.styles);
+				//loader.processScript(res.scripts);
+				console.log(res);
 
-		loader({
-			type: loader.MULTI,
-			resources: {
-				styles: 'extensions/wikia/Recommendations/styles/recommendations.scss',
-				templates: [{
-					controller: 'Recommendations',
-					method: 'index'
-				}]
-			}
-		}).done(function(data) {
-			html = data.templates[template];
+				if (typeof(callback) === 'function') {
+					callback(mustache.render(res.mustache[0])); // TODO
+				}
+			});
+		}
 
-			if (typeof(callback) === 'function') {
-				loader.processStyle(data.styles);
-				callback(html);
-			}
-		});
-	}
-
-	return {
-		loadTemplate: loadTemplate
+		return {
+			loadTemplate: loadTemplate
 	};
 });
