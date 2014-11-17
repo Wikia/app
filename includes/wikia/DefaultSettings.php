@@ -1103,9 +1103,10 @@ $wgPasswordSenderName = 'Wikia';
  *
  * @var array
  */
-$wgResourceLoaderAssetsSkinMapping = array(
+$wgResourceLoaderAssetsSkinMapping = [
 	'oasis' => 'wikia', // in Oasis we use Wikia.js (and Wikia.css) instead of Oasis.js (Oasis.css)
-);
+	'venus' => 'wikia', // in Venus we use Wikia.js (and Wikia.css) instead of Venus.js (Venus.css) - CON-2113
+];
 
 /**
  * @see https://wikia.fogbugz.com/default.asp?36946
