@@ -124,8 +124,8 @@
 	 */
 	$.loadFacebookAPI = function (callback) {
 		// don't load external library if noexternals is in the querystring
-		var params = window.Wikia.Querystring().getVals();
-		if (params.noexternals) {
+		var noexternals = window.Wikia.Querystring().getVals().noexternals;
+		if (noexternals === '1' || noexternals === 'true') {
 			return null;
 		}
 
