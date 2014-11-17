@@ -121,19 +121,6 @@ abstract class ApiWrapper {
 		return $meta;
 	}
 
-/*
-	protected function isIngestedFromFeed() {
-
-		wfProfileIn( __METHOD__ );
-		// need to check cached metadata
-		$memcKey = wfMemcKey( $this->getMetadataCacheKey() );
-		$metadata = F::app()->wg->memc->get( $memcKey );
-		wfProfileOut( __METHOD__ );
-
-		return !empty( $metadata['ingestedFromFeed'] );
-	}
-*/
-
 	protected function postProcess( $return ){
 		return $return;
 	}
