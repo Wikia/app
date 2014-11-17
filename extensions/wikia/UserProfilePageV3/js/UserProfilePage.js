@@ -140,14 +140,6 @@ var UserProfilePage = {
 							// Synthesize a click on the tab to hide/show the right panels
 							$( '[data-tab=' + tabName + '] a' ).click();
 
-							// load facebook API
-							$.loadFacebookAPI(function() {
-								if ( window.FB && window.FB.XFBML ) {
-									// parse FBXML login button
-									window.FB.XFBML.parse( document.getElementById( 'UPPLightboxWrapper' ) );
-								}
-							});
-
 							// show a message when avatars upload is disabled (BAC-1046)
 							if ( data.avatarsDisabled === true ) {
 								window.GlobalNotification.show( data.avatarsDisabledMsg, 'error' );
@@ -345,18 +337,13 @@ var UserProfilePage = {
 	registerAboutMeHandlers: function( modal ) {
 		'use strict';
 
-		var $fbUnsyncButton = modal.find( '#facebookUnsync' ),
-			$monthSelectBox = modal.find( '#userBDayMonth' ),
+		var $monthSelectBox = modal.find( '#userBDayMonth' ),
 			$daySelectBox = modal.find( '#userBDayDay' ),
 			$formFields = modal.find( 'input[type="text"], select' ),
 
 			change = function() {
 			UserProfilePage.wasDataChanged = true;
 		};
-
-		$fbUnsyncButton.click(function() {
-			UserProfilePage.removeFbProfileUrl();
-		});
 
 		$monthSelectBox.change(function() {
 			UserProfilePage.refillBDayDaySelectbox({
@@ -378,12 +365,6 @@ var UserProfilePage = {
 		$formFields.keypress( change );
 
 		UserProfilePage.toggleJoinMoreWikis();
-
-		// Make 'feed preferences' link open in a new page
-		$( '#facebookPage a' ).click(function( event ) {
-			event.preventDefault();
-			window.open( $( this ).attr( 'href' ) );
-		});
 	},
 
 	saveUserData: function() {
@@ -427,7 +408,6 @@ var UserProfilePage = {
 			location: null,
 			occupation: null,
 			gender: null,
-			fbPage: null,
 			website: null,
 			twitter: null,
 			year: null,
@@ -466,114 +446,6 @@ var UserProfilePage = {
 		options = '<option value="0">--</option>' + options;
 
 		selectboxes.day.html( options );
-	},
-
-	// nAndy: it was used to pull data from facebook account to our user profile page
-	// i've just checked it on production and it doesn't work there as well...
-	fbConnect: function() {
-		'use strict';
-
-		$.postJSON( this.ajaxEntryPoint, {
-			method: 'onFacebookConnect',
-			cb: window.wgStyleVersion
-		}, function( data ) {
-			if ( data.result.success === true && typeof ( data.result.fbUser ) !== 'undefined' ) {
-				var userData = {
-					name: 'name',
-					location: 'current_location',
-					occupation: 'work_history',
-					gender: 'sex',
-					website: 'website',
-					fbPage: 'profile_url',
-					twitter: null,
-					day: 'birthday_date'
-				},
-				changed = false,
-				i,
-				key;
-
-				for ( i in userData ) {
-					if ( typeof ( $( document.userData[ i ] ).val() ) !== 'undefined' ) {
-						key = userData[ i ];
-
-						UserProfilePage.fillFieldsWithFbData( i, key, data.result.fbUser );
-						changed = true;
-					}
-				}
-
-				$( '#facebookConnect' ).hide();
-				$( '#facebookPage' ).show();
-
-				if ( changed === true ) {
-					UserProfilePage.wasDataChanged = true;
-				}
-			}
-		});
-	},
-
-	// nAndy: it was used to pull avatar from facebook account to our user profile page
-	// i've just checked it on production and it doesn't work there as well...
-	fbConnectAvatar: function() {
-		'use strict';
-
-		var $modal = UserProfilePage.modal.$element;
-
-		$modal.find( 'img.avatar' ).hide();
-		$modal.startThrobbing();
-		$.postJSON( this.ajaxEntryPoint, {
-			method: 'onFacebookConnectAvatar',
-			avatar: true,
-			cb: window.wgStyleVersion
-		}, function( data ) {
-			if ( data.result.success === true ) {
-				$( '#facebookConnectAvatar' ).hide();
-				var avatarImg = $modal.find( 'img.avatar' );
-				avatarImg.attr( 'src', data.result.avatar ).show();
-				$modal.stopThrobbing();
-				UserProfilePage.wasDataChanged = true;
-				UserProfilePage.newAvatar = {
-					file: data.result.avatar,
-					source: 'facebook',
-					userId: UserProfilePage.userId
-				};
-			}
-		});
-	},
-
-	fillFieldsWithFbData: function( i, key, fbData ) {
-		'use strict';
-
-		if ( typeof( fbData[ key ] ) === 'string' ) {
-			switch( key ) {
-				case 'birthday_date':
-					UserProfilePage.extractFbDateAndFill( fbData.birthday_date );
-					break;
-				default:
-					$( document.userData[ i ] ).val( fbData[ key ] );
-					break;
-			}
-		}
-	},
-
-	extractFbDateAndFill: function( date ) {
-		'use strict';
-		if ( typeof ( date ) === 'string' ) {
-			var dateArray = date.split( '/' ),
-				monthSelectBox = $( '#userBDayMonth' ),
-				daySelectBox = $( '#userBDayDay' );
-
-			if ( typeof ( dateArray[ 0 ] ) !== 'undefined' ) {
-				monthSelectBox.val( parseInt( dateArray[ 0 ], 10 ) );
-			}
-
-			if ( typeof ( dateArray[ 1 ] ) !== 'undefined' ) {
-				UserProfilePage.refillBDayDaySelectbox({
-					month:monthSelectBox,
-					day:daySelectBox
-				});
-				daySelectBox.val( parseInt( dateArray[ 1 ], 10 ) );
-			}
-		}
 	},
 
 	hideFavWiki: function( wikiId ) {

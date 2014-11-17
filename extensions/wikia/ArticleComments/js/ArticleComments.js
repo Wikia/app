@@ -22,15 +22,18 @@
 		loadOnDemand: window.wgArticleCommentsLoadOnDemand,
 		initCompleted: false,
 		wrapperSelector: '#WikiaArticleComments',
-		bucky: window.Bucky && window.Bucky('ArticleComments'),
+		bucky: window.Bucky('ArticleComments'),
 
 		init: function () {
-			ArticleComments.bucky && ArticleComments.bucky.timer.start('init');
+			ArticleComments.bucky.timer.start('init');
 
 			var $articleComments = $('#article-comments'),
 				$articleCommFbMonit = $('#article-comm-fbMonit'),
 				$fbCommentMessage = $('#fbCommentMessage'),
 				newComment;
+
+			// fire event when new article comment is/will be added to DOM
+			mw.hook('wikipage.content').fire($articleComments);
 
 			// jQuery object could have been cached before init method
 			if (!ArticleComments.$wrapper) {
@@ -76,7 +79,7 @@
 			ArticleComments.addHover();
 			ArticleComments.initCompleted = true;
 
-			ArticleComments.bucky && ArticleComments.bucky.timer.stop('init');
+			ArticleComments.bucky.timer.stop('init');
 		},
 
 		actionProxy: function (callback) {
@@ -109,7 +112,7 @@
 			}
 
 			function makeRequest() {
-				ArticleComments.bucky && ArticleComments.bucky.timer.start('edit.makeRequest');
+				ArticleComments.bucky.timer.start('edit.makeRequest');
 				var commentId = e.target.id.replace(/^comment/, ''),
 					$textfield = $('#article-comm-textfield-' + commentId);
 
@@ -164,7 +167,7 @@
 					}
 
 					ArticleComments.processing = false;
-					ArticleComments.bucky && ArticleComments.bucky.timer.stop('edit.makeRequest');
+					ArticleComments.bucky.timer.stop('edit.makeRequest');
 				});
 			}
 
@@ -188,7 +191,7 @@
 		saveEdit: function (e) {
 			var commentId, commentFormDiv, $throbber, $submitButton, $textfield, content;
 
-			ArticleComments.bucky && ArticleComments.bucky.timer.start('saveEdit');
+			ArticleComments.bucky.timer.start('saveEdit');
 			e.preventDefault();
 
 			if (ArticleComments.processing) {
@@ -231,7 +234,9 @@
 					if (!json.error) {
 						if (json.commentId && json.commentId !== 0) {
 							var comment = $('#comm-' + json.commentId),
-								saveTemplate = $(json.text);
+								commentText = comment.find('.article-comm-text'),
+								saveTemplate = $(json.text),
+								saveTemplateText = saveTemplate.find('.article-comm-text');
 
 							$('#article-comm-div-form-' + json.commentId).hide();
 
@@ -240,8 +245,11 @@
 							}
 
 							// Update DOM with information from saveTemplate
-							comment.find('.article-comm-text')
-								.html(saveTemplate.find('.article-comm-text').html()).show();
+							commentText.html(saveTemplateText.html()).show();
+
+							// fire event when new article comment is/will be added to DOM
+							mw.hook('wikipage.content').fire(commentText);
+
 							comment.find('.edited-by').html(saveTemplate.find('.edited-by').html());
 						}
 					} else {
@@ -251,7 +259,7 @@
 					$textfield.removeAttr('readonly');
 
 					ArticleComments.processing = false;
-					ArticleComments.bucky && ArticleComments.bucky.timer.stop('saveEdit');
+					ArticleComments.bucky.timer.stop('saveEdit');
 				});
 
 				ArticleComments.processing = true;
@@ -259,7 +267,7 @@
 		},
 
 		reply: function (e) {
-			ArticleComments.bucky && ArticleComments.bucky.timer.start('reply');
+			ArticleComments.bucky.timer.start('reply');
 			e.preventDefault();
 
 			if (ArticleComments.processing) {
@@ -335,7 +343,7 @@
 				}
 
 				ArticleComments.processing = false;
-				ArticleComments.bucky && ArticleComments.bucky.timer.stop('reply');
+				ArticleComments.bucky.timer.stop('reply');
 			});
 
 			ArticleComments.processing = true;
@@ -386,7 +394,7 @@
 			function requestCallback(json) {
 				var $parent, $subcomments, parentId, nodes;
 
-				ArticleComments.bucky && ArticleComments.bucky.timer.start('postComment.requestCallback');
+				ArticleComments.bucky.timer.start('postComment.requestCallback');
 				$throbber.css('visibility', 'hidden');
 
 				if (ArticleComments.miniEditorEnabled) {
@@ -398,6 +406,9 @@
 				if (!json.error) {
 					parentId = json.parentId;
 					nodes = $(json.text);
+
+					// fire event when new article comment is/will be added to DOM
+					mw.hook('wikipage.content').fire(nodes);
 
 					if (parentId) {
 						//second level: reply
@@ -448,7 +459,7 @@
 				$target.removeAttr('disabled');
 
 				ArticleComments.processing = false;
-				ArticleComments.bucky && ArticleComments.bucky.timer.stop('postComment.requestCallback');
+				ArticleComments.bucky.timer.stop('postComment.requestCallback');
 			}
 
 			function makeRequest() {
@@ -468,7 +479,7 @@
 		},
 
 		setPage: function (e) {
-			ArticleComments.bucky && ArticleComments.bucky.timer.start('setPage');
+			ArticleComments.bucky.timer.start('setPage');
 
 			var page = parseInt($(this).attr('page'));
 
@@ -495,7 +506,7 @@
 				}
 
 				ArticleComments.processing = false;
-				ArticleComments.bucky && ArticleComments.bucky.timer.stop('setPage');
+				ArticleComments.bucky.timer.stop('setPage');
 			});
 		},
 
@@ -519,7 +530,7 @@
 
 		// Used to initialize MiniEditor
 		editorInit: function (element, events, content, edgeCases) {
-			ArticleComments.bucky && ArticleComments.bucky.timer.start('editorInit');
+			ArticleComments.bucky.timer.start('editorInit');
 			var $element = $(element),
 				wikiaEditor = $element.data('wikiaEditor'),
 				editorActivated,
@@ -590,7 +601,7 @@
 					initEditor();
 				}
 			}
-			ArticleComments.bucky && ArticleComments.bucky.timer.stop('editorInit');
+			ArticleComments.bucky.timer.stop('editorInit');
 		},
 
 		getContent: function (element) {
@@ -658,7 +669,7 @@
 			}
 
 			loadAssets = function () {
-				ArticleComments.bucky && ArticleComments.bucky.timer.start('loadAssets');
+				ArticleComments.bucky.timer.start('loadAssets');
 				$.when(
 					$.getResources(styleAssets),
 					$.nirvana.sendRequest({
@@ -683,7 +694,7 @@
 					if (permalink) {
 						ArticleComments.scrollToElement(hash);
 					}
-					ArticleComments.bucky && ArticleComments.bucky.timer.stop('loadAssets');
+					ArticleComments.bucky.timer.stop('loadAssets');
 				});
 			};
 

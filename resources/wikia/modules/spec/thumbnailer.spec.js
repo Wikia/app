@@ -16,25 +16,25 @@ describe('thumbnailer', function () {
 
 	it('returns proper nocrop thumbnail URL', function () {
 		expect(thumbnailer.getThumbURL(legacyThumbnailerUrl, 'nocrop', 660, 330)).toBe('http://images2.wikia.nocookie.net/__cb20111213221641/poznan/pl/images/thumb/0/06/Gzik.jpg/660x330-Gzik.png');
-		expect(thumbnailer.getThumbURL(thumbnailerUrl, 'nocrop', 90, 55)).toBe('http://vignette2.wikia.nocookie.net/arresteddevelopment/f/fb/1x08_My_Mother_the_Car_%2822%29.png/revision/latest/fixed-aspect-ratio/width/90/height/55');
+		expect(thumbnailer.getThumbURL(thumbnailerUrl, 'nocrop', 90, 55)).toBe('http://vignette2.wikia.nocookie.net/arresteddevelopment/f/fb/1x08_My_Mother_the_Car_%2822%29.png/revision/latest/fixed-aspect-ratio/width/90/height/55?cb=20120214071005');
 		expect(thumbnailer.getThumbURL(fullSizeImageUrl, 'nocrop', 90, 55)).toBe('http://img2.wikia.nocookie.net/__cb20140419225924/thelastofus/images/thumb/f/ff/Joel.png/90x55-Joel.png');
 	});
 
 	it('returns proper video thumbnail URL', function () {
 		expect(thumbnailer.getThumbURL(legacyThumbnailerUrl, 'video', 660, 330)).toBe('http://images2.wikia.nocookie.net/__cb20111213221641/poznan/pl/images/thumb/0/06/Gzik.jpg/660x330-Gzik.png');
-		expect(thumbnailer.getThumbURL(thumbnailerUrl, 'video', 90, 55)).toBe('http://vignette2.wikia.nocookie.net/arresteddevelopment/f/fb/1x08_My_Mother_the_Car_%2822%29.png/revision/latest/fixed-aspect-ratio/width/90/height/55');
+		expect(thumbnailer.getThumbURL(thumbnailerUrl, 'video', 90, 55)).toBe('http://vignette2.wikia.nocookie.net/arresteddevelopment/f/fb/1x08_My_Mother_the_Car_%2822%29.png/revision/latest/fixed-aspect-ratio/width/90/height/55?cb=20120214071005');
 		expect(thumbnailer.getThumbURL(fullSizeImageUrl, 'video', 90, 55)).toBe('http://img2.wikia.nocookie.net/__cb20140419225924/thelastofus/images/thumb/f/ff/Joel.png/90x55-Joel.png');
 	});
 
 	it('returns proper image thumbnail URL', function () {
 		expect(thumbnailer.getThumbURL(legacyThumbnailerUrl, 'image', 660, 330)).toBe('http://images2.wikia.nocookie.net/__cb20111213221641/poznan/pl/images/thumb/0/06/Gzik.jpg/660x330x2-Gzik.png');
-		expect(thumbnailer.getThumbURL(thumbnailerUrl, 'image', 90, 55)).toBe('http://vignette2.wikia.nocookie.net/arresteddevelopment/f/fb/1x08_My_Mother_the_Car_%2822%29.png/revision/latest/zoom-crop/width/90/height/55');
+		expect(thumbnailer.getThumbURL(thumbnailerUrl, 'image', 90, 55)).toBe('http://vignette2.wikia.nocookie.net/arresteddevelopment/f/fb/1x08_My_Mother_the_Car_%2822%29.png/revision/latest/zoom-crop/width/90/height/55?cb=20120214071005');
 		expect(thumbnailer.getThumbURL(fullSizeImageUrl, 'image', 90, 55)).toBe('http://img2.wikia.nocookie.net/__cb20140419225924/thelastofus/images/thumb/f/ff/Joel.png/90x55x2-Joel.png');
 	});
 
 	it('returns proper full image URL', function () {
 		expect(thumbnailer.getImageURL(legacyThumbnailerUrl)).toBe('http://images2.wikia.nocookie.net/__cb20111213221641/poznan/pl/images/0/06/Gzik.jpg');
-		expect(thumbnailer.getImageURL(thumbnailerUrl)).toBe('http://vignette2.wikia.nocookie.net/arresteddevelopment/f/fb/1x08_My_Mother_the_Car_%2822%29.png/revision/latest');
+		expect(thumbnailer.getImageURL(thumbnailerUrl)).toBe('http://vignette2.wikia.nocookie.net/arresteddevelopment/f/fb/1x08_My_Mother_the_Car_%2822%29.png/revision/latest?cb=20120214071005');
 		expect(thumbnailer.getImageURL(fullSizeImageUrl)).toBe(fullSizeImageUrl);
 	});
 });

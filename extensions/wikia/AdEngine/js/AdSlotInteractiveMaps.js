@@ -11,14 +11,15 @@ define('ext.wikia.adEngine.slot.interactiveMaps', [
 	function initSlot(container) {
 		log(['initSlot', container], 'info', logGroup);
 
-		if (!adContext.getContext().opts.showAds || !container) {
+		var adParams = {},
+			context = adContext.getContext(),
+			iframe,
+			params = adLogicPageParams.getPageLevelParams(),
+			url = '/extensions/wikia/AdEngine/InteractiveMaps/ad.html';
+
+		if (!context.opts.enableAdsInMaps || !context.opts.showAds || !container) {
 			return;
 		}
-
-		var params = adLogicPageParams.getPageLevelParams(),
-			adParams = {},
-			iframe,
-			url = '/extensions/wikia/AdEngine/InteractiveMaps/ad.html';
 
 		adParams.mapid = container.getAttribute('data-map-id');
 		adParams.s0 = params.s0;

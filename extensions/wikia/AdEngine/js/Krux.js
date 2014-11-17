@@ -15,9 +15,10 @@ Krux.load = function (confid) {
 	s.parentNode.insertBefore(k, s);
 };
 
-if (window.wgEnableKruxTargeting) {
-	(function () {
-		'use strict';
+(function () {
+	'use strict';
+
+	function initKrux() {
 		function retrieve(n) {
 			var m, k = 'kx' + n;
 			if (window.localStorage) {
@@ -40,10 +41,20 @@ if (window.wgEnableKruxTargeting) {
 			kvs.push('ksgmnt=' + Krux.segments[i]);
 		}
 		Krux.dartKeyValues = kvs.length ? kvs.join(';') + ';' : '';
-	})();
-} else {
-	Krux.dartKeyValues = '';
-}
+	}
+
+	var enableKrux;
+
+	try {
+		enableKrux = window.ads.context.targeting.enableKruxTargeting;
+	} catch (ignore) {}
+
+	if (enableKrux) {
+		initKrux();
+	} else {
+		Krux.dartKeyValues = '';
+	}
+}());
 
 define('ext.wikia.adEngine.krux', function () {
 	'use strict';

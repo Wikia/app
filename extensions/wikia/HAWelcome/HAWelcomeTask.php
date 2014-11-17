@@ -401,8 +401,11 @@ class HAWelcomeTask extends BaseTask {
 		// Is sender a staff member and not a local admin?
 		$senderGroups = $this->senderObject->getEffectiveGroups();
 
-		$welcomeMessageKey .= ( in_array( 'staff', $senderGroups ) && !in_array( 'sysop', $senderGroups ) )
-			? '-staff' : '';
+		if ( ( in_array( 'staff', $senderGroups ) || in_array( 'helper', $senderGroups ) )
+			&& !in_array( 'sysop', $senderGroups )
+		) {
+			$welcomeMessageKey .= '-staff';
+		}
 
 		$sPrefixedText = $this->title->getPrefixedText();
 
