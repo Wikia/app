@@ -161,7 +161,7 @@ $(function () {
 				if (ev.keyCode === 13) {
 					$(this).next().focus();
 				}
-			}).keydown(function(ev){
+			}).keyup(function(ev){
 				setTimeout(checkForm, 0);
 			});
 
