@@ -66,8 +66,6 @@ define('wikia.stickyElement', [
 
 			lastY = -1;
 
-			console.log('updateSize', topScrollLimit, topSticked);
-
 			updatePosition();
 		}
 
