@@ -7,8 +7,8 @@ use \Wikia\Logger\WikiaLogger;
  */
 class VideosModule extends WikiaModel {
 
-	const THUMBNAIL_WIDTH = 300;
-	const THUMBNAIL_HEIGHT = 309;
+	const THUMBNAIL_WIDTH = 268;
+	const THUMBNAIL_HEIGHT = 150;
 
 	const LIMIT_VIDEOS = 20;
 	const LIMIT_CATEGORY_VIDEOS = 40;

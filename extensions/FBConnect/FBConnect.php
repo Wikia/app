@@ -162,6 +162,11 @@ class FBConnect {
 			}
 		}
 
+		/* Wikia change begin */
+		$wgHooks['OasisSkinAssetGroups'][] = 'FBConnectHooks::onSkinAssetGroups';
+		$wgHooks['MonobookSkinAssetGroups'][] = 'FBConnectHooks::onSkinAssetGroups';
+		/* Wikia change end */
+
 		// Allow configurable over-riding of the onLogin handler.
 		global $fbOnLoginJsOverride;
 		if(!empty($fbOnLoginJsOverride)){
