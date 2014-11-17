@@ -11,7 +11,7 @@ namespace Wikia\Api\Recommendations\DataProviders;
  * @package Wikia\Api\Recommendations\DataProviders
  */
 class TopArticles implements IDataProvider {
-	const RECOMMENDATION_ENGINE = 'Top articles';
+	const RECOMMENDATION_ENGINE = 'TopArticles';
 	const RECOMMENDATION_TYPE = 'article';
 
 	/**
@@ -32,7 +32,7 @@ class TopArticles implements IDataProvider {
 
 		$out = \WikiaDataAccess::cache(
 			\wfsharedMemcKey('RecommendationApi', self::RECOMMENDATION_ENGINE, $hubName, $lang),
-			WikiaResponse::CACHE_STANDARD,
+			\WikiaResponse::CACHE_STANDARD,
 			function () use ($hubName, $lang) {
 				$topArticles = $this->getTopArticles( $hubName, $lang);
 				return $this->getArticlesInfo( $topArticles );
