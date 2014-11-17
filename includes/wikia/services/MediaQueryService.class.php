@@ -620,7 +620,9 @@ class MediaQueryService extends WikiaService {
 		wfProfileIn( __METHOD__ );
 
 		$cacheTtl = 7200; // 2 hours for caching the result in memcache
-		$staleCacheTtl = 300; // 5m allowance for returning stale results until new cache is built
+		// 24hr allowance for returning stale results until new cache is built
+		// Adjusted to increase the caching benefit for infrequently views videos
+		$staleCacheTtl = 86400;
 		$asyncCacheEnabled = !empty( $app->wg->EnableAsyncVideoViewCache );
 
 		$hashTitle = md5( $title );
