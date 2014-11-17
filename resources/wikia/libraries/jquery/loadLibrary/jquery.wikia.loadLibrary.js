@@ -119,10 +119,16 @@
 
 	/**
 	 * Load the facebook JS library, either v1.x or v2.x
-	 * @param {function} callback Function to be called after library is loaded
-	 * @returns {jQuery} Returns a jQuery promise
+	 * @param {function} [callback] Function to be called after library is loaded
+	 * @returns {jQuery|null} Returns a jQuery promise or nothing if execution is cut short.
 	 */
 	$.loadFacebookAPI = function (callback) {
+		// don't load external library if noexternals is in the querystring
+		var noexternals = window.Wikia.Querystring().getVals().noexternals;
+		if (noexternals === '1' || noexternals === 'true') {
+			return null;
+		}
+
 		if (window.wgEnableFacebookClientExt) {
 			return loadFacebookV2(callback);
 		} else {
@@ -133,6 +139,7 @@
 	/**
 	 * Load the Facebook v1.x sdk
 	 * @private
+	 * @param {function} [callback] Function to be called after library is loaded
 	 * @todo Remove this once we've finished the upgrade to v2.x
 	 */
 	function loadFacebookV1(callback) {
@@ -156,6 +163,7 @@
 	/**
 	 * Load the Facebook v2.x sdk
 	 * @private
+	 * @param {function} [callback] Function to be called after library is loaded
 	 * @todo This will be the public $.loadFacebookAPI function when we're done with the migration
 	 */
 	function loadFacebookV2(callback) {
