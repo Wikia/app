@@ -6,21 +6,21 @@ class FacebookClientController extends WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
 	public function preferences() {
+		$this->response->addAsset( 'facebook_client_preferences_scss' );
+
 		$this->isConnected = $this->getVal( 'isConnected', false );
 
 		// Settings for a connected user
-		$this->facebookDisconnectLink = wfMessage( 'fbconnect-disconnect-link' )->plain();
-		$this->facebookDisconnectDone = wfMessage( 'fbconnect-disconnect-done' )->text();
-		$this->blankImgUrl = F::app()->wg->BlankImgUrl;
-
-		if ( F::app()->wg->User->getOption( 'fbFromExist' ) ) {
-			$this->facebookDisconnectInfo = wfMessage( 'fbconnect-disconnect-info-existing' )->text();
-		} else {
-			$this->facebookDisconnectInfo = wfMessage( 'fbconnect-disconnect-info' )->text();
-		}
+		$this->facebookDisconnectLink = wfMessage( 'fbconnect-disconnect-link' )->parse();
+		$this->fbFromExist = F::app()->wg->User->getOption( 'fbFromExist' );
 
 		// Settings for a user who is not connected yet
 		$this->facebookConvertMessage = wfMessage( 'fbconnect-convert' )->plain();
+
+		$this->facebookButton = F::app()->renderView( 'FacebookButton', 'index', [
+			'class' => 'sso-login-facebook',
+			'text' => wfMessage( 'fbconnect-wikia-signup-w-facebook' )->escaped()
+		] );
 	}
 
 	/**
@@ -135,4 +135,29 @@ class FacebookClientController extends WikiaController {
 			$this->msg = wfMessage( 'fbconnect-unknown-error' )->text();
 		}
 	}
+
+	/**
+	 * Ajax endpoint for connecting a logged in Wikia user to a Facebook account.
+	 * By the time they get here they should already have logged into Facebook and have a Facebook user ID.
+	 */
+	public function connectLoggedInUser() {
+		$wg = F::app()->wg;
+
+		$fb = FacebookClient::getInstance();
+		$fbUserId = $fb->getUserId();
+
+		// The user must be logged into Facebook and wikia
+		if ( !$fbUserId ||
+			!$wg->User->isLoggedIn() ||
+			!\FacebookClientHelper::createUserMapping( $wg->User->getId(), $fbUserId ) ) {
+
+			$this->status = 'error';
+			return true;
+		}
+
+		$this->status = 'ok';
+
+		\FacebookClientHelper::track( 'facebook-link-existing' );
+	}
+
 }

@@ -23,7 +23,7 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 
 		if ( $wg->Request->wasPosted() ) {
 			if ( $wg->Request->getCheck( 'wpCancel' ) ) {
-				$this->cancelConnect();
+				$this->forward( __CLASS__, 'cancelConnect' );
 			} else {
 				$this->loginAndConnect();
 			}
@@ -41,12 +41,13 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 	/**
 	 * Run when the user has clicked the 'cancel' button on the login form
 	 */
-	protected function cancelConnect() {
+	public function cancelConnect() {
 		FacebookClient::getInstance()->logout();
-		$this->wg->Out->showErrorPage(
-			'fbconnect-connect-cancel',
-			'fbconnect-connect-canceltext'
+		F::app()->wg->Out->showErrorPage(
+			'fbconnect-cancel',
+			'fbconnect-canceltext'
 		);
+		$this->skipRendering();
 	}
 
 	/**
@@ -67,6 +68,7 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 		// The user must be logged into Facebook before choosing a wiki username
 		if ( !$fbUserId ) {
 			$wg->Out->showErrorPage( 'fbconnect-error', 'fbconnect-errortext' );
+			$this->skipRendering();
 			return true;
 		}
 
@@ -108,9 +110,10 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 		$fb = FacebookClient::getInstance();
 		$fbUserId = $fb->getUserId();
 
-		// The user must be logged into Facebook before choosing a wiki username
+		// The user must be logged into Facebook.
 		if ( !$fbUserId ) {
 			$wg->Out->showErrorPage( 'fbconnect-error', 'fbconnect-errortext' );
+			$this->skipRendering();
 			return true;
 		}
 
@@ -184,6 +187,7 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 		// redirect at the end of this method.
 		// @TODO Can we pass an empty string here and not define this unused variable?
 		$inject_html = '';
+		$queryStr = '';
 
 		// Pull this into a separate variable so we can assign it back afterward
 		$user = $wg->User;

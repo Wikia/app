@@ -9,7 +9,6 @@ class FacebookClientHooks {
 	 *
 	 * fbAppId - Wikia's App ID
 	 * fbScript
-	 * fbUseMarkup - Should XFBML tags be rendered? (see $fbUseMarkup in config.php)
 	 * fbLogo
 	 * fbLogoutURL - (deprecated) The URL to be redirected to on a disconnect
 	 * fbReturnToTitle
@@ -17,13 +16,12 @@ class FacebookClientHooks {
 	 *
 	 */
 	public static function MakeGlobalVariablesScript( &$vars ) {
-		global $fbScript, $fbAppId, $fbUseMarkup, $fbLogo;
+		global $fbScript, $fbAppId, $fbLogo;
 		$wg = F::app()->wg;
 
 		$thisurl = $wg->Title->getPrefixedURL();
 		$vars['fbAppId'] = $fbAppId;
 		$vars['fbScript'] = $fbScript;
-		$vars['fbUseMarkup'] = $fbUseMarkup;
 		$vars['fbLogo'] = (bool) $fbLogo;
 
 		$vars['fbLogoutURL'] = Skin::makeSpecialUrl(
@@ -92,20 +90,28 @@ class FacebookClientHooks {
 			'section' => 'fbconnect-prefstext/fbconnect-status-prefstext'
 		];
 
+		JSMessages::enqueuePackage( 'FacebookClient', JSMessages::EXTERNAL );
+
 		return true;
 	}
 
 	/**
-	 * Adds JS needed for the user preferences page
+	 * Adds JS needed for FacebookClient code
 	 *
 	 * @param Array $assetsArray
 	 * @return bool
 	 */
-	public static function onOasisSkinAssetGroups( &$assetsArray ) {
+	public static function onSkinAssetGroups( &$assetsArray ) {
 		$title = F::app()->wg->Title;
 
+		// Special:Preferences
 		if ( $title instanceof Title && $title->isSpecial( 'Preferences' ) ) {
 			$assetsArray[] = 'facebook_client_preferences_js';
+		}
+
+		// Special:FacebookConnect
+		if ( $title instanceof Title && $title->isSpecial( 'FacebookConnect' ) ) {
+			$assetsArray[] = 'facebook_client_special_connect';
 		}
 
 		return true;
