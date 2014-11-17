@@ -35,7 +35,7 @@ class MyvideoApiWrapper extends ApiWrapper {
 
 	protected function initializeInterfaceObject(){
 		wfProfileIn( __METHOD__ );
-		$interfaceObj = $this->getInterfaceObjectFromType( static::$RESPONSE_FORMAT );
+		$interfaceObj = $this->getInterfaceObjectFromType();
 		$this->interfaceObj = $interfaceObj['child']['']['response'][0]['child']['']['myvideo'][0]['child']['']['movie'][0]['child'][''];
 		wfProfileOut( __METHOD__ );
 	}
