@@ -103,7 +103,7 @@ $messages['en'] = array(
 
 	// CuratedContent
 	'wikifeatures-feature-heading-wgEnableCuratedContentExt' => 'Curated Content',
-	'wikifeatures-feature-description-wgEnableCuratedContentExt' => 'Use the Special:CuratedContent page of your wiki to manage content which appear in the mobile app. Expand your potential audience!',
+	'wikifeatures-feature-description-wgEnableCuratedContentExt' => 'Use the Special:CuratedContent page of your wiki to manage content which appears in the mobile app. Expand your potential audience!',
 
 	// Empty lab message
 	'wikifeatures-feature-heading-emptylabs' => 'Looks like the lab is taking a break',
