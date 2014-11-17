@@ -16,6 +16,7 @@ $small-grid-slot-big-height: 2 * $small-grid-slot-small-height + $small-grid-gut
 
 	background-color: #eef1f3;
 	padding: $medium-content-padding - $content-border-width;
+	padding-right: $medium-content-padding - $content-border-width - $medium-grid-gutter;
 
 	a {
 		text-decoration: none;
@@ -98,6 +99,7 @@ $small-grid-slot-big-height: 2 * $small-grid-slot-small-height + $small-grid-gut
 @media #{$small-only} {
 	.recommendations {
 		padding: $small-content-padding - $content-border-width;
+		padding-right: $small-content-padding - $content-border-width - $small-grid-gutter;
 
 		.slot {
 			margin: 0 $small-grid-gutter $small-grid-gutter 0;
@@ -127,6 +129,7 @@ $small-grid-slot-big-height: 2 * $small-grid-slot-small-height + $small-grid-gut
 @media #{$large-up} {
 	.recommendations {
 		padding: $large-content-padding - $content-border-width;
+		padding-right: $large-content-padding - $content-border-width - $large-grid-gutter;
 
 		.slot {
 			margin: 0 $large-grid-gutter $large-grid-gutter 0;
