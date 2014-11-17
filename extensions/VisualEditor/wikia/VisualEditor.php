@@ -219,8 +219,10 @@ $wgResourceModules += array(
 			'wikia-visualeditor-dialog-preference-link-preferences',
 			'wikia-visualeditor-dialog-preference-start-button',
 			'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip',
-			'visualeditor-dialog-wikiasinglemedia-title',
-			'visualeditor-dialog-wikiasinglemedia-search',
+			'wikia-visualeditor-dialog-wikiasinglemedia-title',
+			'wikia-visualeditor-dialog-wikiasinglemedia-search',
+			'wikia-visualeditor-wikiamediaoptionwidget-preview-photo',
+			'wikia-visualeditor-wikiamediaoptionwidget-preview-video',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core.desktop',

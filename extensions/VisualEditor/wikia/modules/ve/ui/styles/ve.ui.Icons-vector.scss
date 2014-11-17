@@ -349,6 +349,9 @@
 .oo-ui-icon-cart-list {
 	@include ve-icon(cart-list, wikia);
 }
+.oo-ui-icon-preview-photo {
+	@include ve-icon(preview-photo, wikia);
+}
 
 /*
  * Specific overrides

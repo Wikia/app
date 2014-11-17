@@ -72,8 +72,10 @@ $messages['en'] = array(
 	'wikia-visualeditor-dialog-preference-link-preferences' => 'Manage your editor preferences',
 	'wikia-visualeditor-dialog-preference-start-button' => 'Got it!',
 	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => 'Gallery',
-	'visualeditor-dialog-wikiasinglemedia-title' => 'Insert Gallery',
-	'visualeditor-dialog-wikiasinglemedia-search' => 'Search for images',
+	'wikia-visualeditor-dialog-wikiasinglemedia-title' => 'Insert Gallery',
+	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'Search for images',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'View',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-video' => 'Watch',
 );
 
 /** Message documentation (Message documentation)
@@ -162,8 +164,10 @@ $messages['qqq'] = array(
 	'wikia-visualeditor-dialog-preference-link-preferences' => 'Link text to user preference page',
 	'wikia-visualeditor-dialog-preference-start-button' => 'Button copy that closes the dialog',
 	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => 'Tooltip of the single media dialog tool (currently posing as a Gallery-only tool',
-	'visualeditor-dialog-wikiasinglemedia-title' => 'Title of the single media dialog (currently posing as a Gallery-only tool',
-	'visualeditor-dialog-wikiasinglemedia-search' => 'Placeholder text of the single media dialog search field',
+	'wikia-visualeditor-dialog-wikiasinglemedia-title' => 'Title of the single media dialog (currently posing as a Gallery-only tool',
+	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'Placeholder text of the single media dialog search field',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'The text that prompts a user to preview a photo',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-video' => 'The text that prompts a user to preview a video',
 );
 
 /** Tunisian Spoken Arabic ( زَوُن)

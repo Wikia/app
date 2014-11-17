@@ -1,5 +1,6 @@
 @import "skins/shared/mixins/transition";
 @import "skins/shared/color";
+@import "skins/shared/mixins/cursor";
 @import "mixins/ve-icon";
 
 $width-dialog: 712px;
@@ -28,7 +29,21 @@ $width-results: 552px;
 		}
 
 		.ve-ui-mwMediaResultWidget {
+			cursor: pointer;
 			margin: 0 5px 60px;
+
+			.ve-ui-wikiaMediaOptionWidget-metaData {
+				@include cursor( 'zoom-in' );
+				margin-top: 160px;
+				padding: 2px 0;
+				position: absolute;
+				width: 100%;
+			}
+			.oo-ui-labeledElement-label {
+				@include cursor( 'zoom-in' );
+				margin-top: 178px;
+				padding: 0;
+			}
 		}
 	}
 }
@@ -55,6 +70,7 @@ $width-results: 552px;
 	top: 70px;
 }
 
+/* Foot */
 .ve-ui-wikiaSingleMediaDialog-policy {
 	align-items: center;
 	color: $color-alternate-text;
@@ -71,6 +87,7 @@ $width-results: 552px;
 	}
 }
 
+/* Cart */
 .ve-ui-wikiaSingleMediaCartWidget {
 	background: $color-ve-page-secondary;
 	bottom: 0;
@@ -127,8 +144,19 @@ $width-results: 552px;
 	width: $width-dialog;
 
 	&.oo-ui-optionWidget-highlighted, &.oo-ui-optionWidget-selected {
+		box-shadow: none;
 		background: transparent;
 	}
+}
+
+.ve-ui-wikiaMediaOptionWidget-preview {
+	float: right;
+	text-transform: uppercase;
+}
+.ve-ui-wikiaMediaOptionWidget-preview-icon {
+	float: left;
+	height: 14px;
+	width: 14px;
 }
 
 .ve-ui-wikiaSingleMediaCartOptionImage {
@@ -145,4 +173,12 @@ $width-results: 552px;
 	height: 120px;
 	margin-left: 20px;
 	width: 530px;
+}
+
+.ve-ui-wikiaMediaOptionWidget-metaData {
+	color: $color-alternate-text;
+	font-size: .8em;
+	font-weight: bold;
+	margin-top: 162px;
+	position: absolute;
 }
