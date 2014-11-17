@@ -104,6 +104,86 @@ class FacebookClientController extends WikiaController {
 	}
 
 	/**
+	 * This method is called from Facebook's side whenever a user deletes the Wikia app from their account.  Most
+	 * of the functionality is based on the example given on Facebook:
+	 *
+	 * https://developers.facebook.com/docs/facebook-login/using-login-with-games/#parsingsr
+	 *
+	 * Additional general information on the callback here:
+	 *
+	 * https://developers.facebook.com/docs/facebook-login/manually-build-a-login-flow/v2.1#deauth-callback
+	 *
+	 */
+	public function deauthorizeCallback() {
+		global $fbAppSecret;
+
+		$log = WikiaLogger::instance();
+
+		$signedRequest = $this->getVal( 'signed_request', '' );
+
+		list( $encodedSig, $payload ) = explode( '.', $signedRequest, 2 );
+
+		// decode the data
+		$sig = $this->base64UrlDecode( $encodedSig );
+		$data = json_decode( $this->base64UrlDecode( $payload ), true );
+
+		// confirm the signature
+		$expectedSig = hash_hmac( 'sha256', $payload, $fbAppSecret, $raw = true );
+		if ( $sig !== $expectedSig ) {
+			$log->info( 'Deauthorization callback received with invalid signature', [
+				'method' => __METHOD__,
+			] );
+			return;
+		}
+
+		if ( empty( $data['user_id'] ) ) {
+			$log->warning( 'Deauthorization callback received with missing user ID', [
+				'method' => __METHOD__,
+			] );
+			return;
+		}
+
+		$facebookUserId = $data['user_id'];
+		$map = FacebookMapModel::lookupFromFacebookID( $facebookUserId );
+		if ( empty( $map ) ) {
+			$log->info( 'Deauthorization callback received with no matching Wikia ID mapping found', [
+				'method' => __METHOD__,
+				'facebookId' => $facebookUserId,
+			] );
+			return;
+		}
+
+		// Send this to the normal disconnect action
+		$res = $this->sendSelfRequest( 'disconnectFromFB', [ 'user' => $map->getWikiaUserId() ]);
+		$status = $res->getVal( 'status', '' );
+
+		$logResultParams = [
+			'method' => __METHOD__,
+			'facebookId' => $facebookUserId,
+			'wikiaUserId' => $map->getWikiaUserId(),
+		];
+
+		if ( $status == 'ok' ) {
+			$log->info( 'Deauthorization callback received and completed successfully', $logResultParams );
+		} else {
+			$log->error( 'Deauthorization callback received and did not complete', $logResultParams );
+		}
+	}
+
+	/**
+	 * This is part of the example code Facebook gave for parsing its signed requests.  See above method and:
+	 *
+	 * https://developers.facebook.com/docs/facebook-login/using-login-with-games/#parsingsr
+	 *
+	 * @param $input
+	 *
+	 * @return string
+	 */
+	private function base64UrlDecode( $input ) {
+		return base64_decode( strtr( $input, '-_', '+/' ) );
+	}
+
+	/**
 	 * Disconnect the user from Facebook
 	 *
 	 * @requestParam user This is a user object.  Only works for internal calls

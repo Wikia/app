@@ -1,8 +1,11 @@
 /*
+ * GlobalNotification.show()
  * Handles the color-coded notification messages that generally appear at the top the screen or inside a modal.
  * Use like:
  * GlobalNotification.show('Some success message', 'confirm')
  * GlobalNotification.show('Some error message', 'error', $('.myDiv'), 3000)
+ * @param string content - message to be displayed
+ * @param string type - 'notify' (blue), 'confirm' (green), 'error' (red), 'warn' (yellow)
  */
 
 var GlobalNotification = {
