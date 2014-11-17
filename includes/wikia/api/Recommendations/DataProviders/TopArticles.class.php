@@ -32,7 +32,7 @@ class TopArticles implements IDataProvider {
 
 		$out = \WikiaDataAccess::cache(
 			\wfsharedMemcKey('RecommendationApi', self::RECOMMENDATION_ENGINE, $hubName, $lang),
-			24 * 60 *60,
+			WikiaResponse::CACHE_STANDARD,
 			function () use ($hubName, $lang) {
 				$topArticles = $this->getTopArticles( $hubName, $lang);
 				return $this->getArticlesInfo( $topArticles );
