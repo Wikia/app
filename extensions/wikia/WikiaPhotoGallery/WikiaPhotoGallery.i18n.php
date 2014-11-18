@@ -2297,6 +2297,23 @@ Décrivez cette photo.",
 	'galery-slider-read-more' => 'En savoir plus &gt;',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'wikiaPhotoGallery-error-caption' => 'Flater',
+	'wikiaPhotoGallery-upload-findtitle' => 'Sykje',
+	'wikiaPhotoGallery-upload-findbutton' => 'Sykje',
+	'wikiaPhotoGallery-upload-page-next' => 'Folgjende 8',
+	'wikiaPhotoGallery-upload-page-prev' => 'Foarige 8',
+	'wikiaPhotoGallery-preview-spacing-small' => 'Lyts',
+	'wikiaPhotoGallery-preview-spacing-large' => 'Grut',
+	'wikiaPhotoGallery-preview-captionsize-small' => 'Lyts',
+	'wikiaPhotoGallery-preview-captionsize-large' => 'Grut',
+	'wikiaPhotoGallery-preview-bordersize-small' => 'Lyts',
+	'wikiaPhotoGallery-preview-bordersize-large' => 'Grut',
+);
+
 /** Galician (galego)
  * @author Toliño
  * @author Vivaelcelta

@@ -23,6 +23,10 @@ class WikiDataModel {
 		$this->pageName = $pageName;
 	}
 
+	public function isEmpty() {
+		return empty($this->title) || empty($this->description) || empty($this->imagePath);
+	}
+
 	public function setFromAttributes( $attributes ) {
 		$this->imageName = !empty( $attributes[ 'imagename' ] ) ? $attributes[ 'imagename' ] : null;
 		$this->title = !empty( $attributes[ 'title' ] ) ? $attributes[ 'title' ] : null;

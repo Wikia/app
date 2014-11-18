@@ -35,6 +35,11 @@ class NjordController extends WikiaController {
 
 	public function index() {
 		global $wgTitle, $wgUser, $wgBlankImgUrl;
+		$wikiDataModel = new WikiDataModel( Title::newMainPage()->getText() );
+		$wikiDataModel->getFromProps();
+		if ( !$wgUser->isLoggedIn() && $wikiDataModel->isEmpty() ) {
+			return $this->skipRendering();
+		}
 		$this->wg->SuppressPageHeader = true;
 		//set correct editor
 		$this->editor = EditorPreference::getPrimaryEditor();
@@ -58,8 +63,6 @@ class NjordController extends WikiaController {
 //		$this->wg->out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/NjordPrototype/css/Mom.scss' ) );
 //		$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . '/wikia/NjordPrototype/scripts/Mom.js' );
 
-		$wikiDataModel = new WikiDataModel( Title::newMainPage()->getText() );
-		$wikiDataModel->getFromProps();
 		$wikiDataModel->imageSet = true;
 		if ( !isset( $wikiDataModel->imagePath ) ) {
 			$wikiDataModel->imageSet = false;

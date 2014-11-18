@@ -125,17 +125,13 @@
 	height: 250px;
 }
 
-#PREFOOTER_LEFT_BOXAD {
+#PREFOOTER_LEFT_BOXAD, #PREFOOTER_RIGHT_BOXAD {
 	float: left;
 	margin: 0 15px;
-}
 
-#PREFOOTER_RIGHT_BOXAD {
-	margin: 0 15px;
-}
-
-#PREFOOTER_LEFT_BOXAD.default-height, #PREFOOTER_RIGHT_BOXAD.default-height {
-	height: 250px;
+	&.default-height {
+		height: 250px;
+	}
 }
 
 /** Spotlights **/
