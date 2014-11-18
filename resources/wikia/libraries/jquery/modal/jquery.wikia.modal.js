@@ -30,7 +30,7 @@ $.fn.extend({
 			wrapper;
 
 		//wrap with modal chrome
-		if (skin === 'oasis' || settings.appendToBody) {
+		if (skin === 'oasis' || skin === 'venus' || settings.appendToBody) {
 			/**
 			 * Generate modal content and add it to <body>
 			 * <section class="modalWrapper" id="'+id+'"><section class="modalContent">[modal content]</section></section>');
@@ -76,7 +76,7 @@ $.fn.extend({
 		}
 
 		// skin === oasis is for backward support
-		if (settings.tabsOutsideContent || skin === 'oasis') {
+		if (settings.tabsOutsideContent || skin === 'oasis' || skin === 'venus') {
 			// find tabs with .modal-tabs class and move them outside modal content
 			var modalTabs = wrapper.find('.modal-tabs');
 			if (modalTabs.exists()) {
@@ -85,7 +85,7 @@ $.fn.extend({
 		}
 
 		// calculate modal width for oasis
-		if (skin === 'oasis') {
+		if (skin === 'oasis' || skin === 'venus') {
 
 			if(settings.width !== 'auto') {
 
