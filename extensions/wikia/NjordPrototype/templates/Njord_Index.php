@@ -50,7 +50,7 @@
 				</div>
 			</div>
 			<span class="title-text"><?= $wikiData->title ?></span>
-			<span class="title-default-text">Your Wikia's name</span>
+			<span class="title-default-text">Your wikia's name</span>
 			<? if ($isAllowedToEdit): ?>
 			<img class="title-edit-btn" src="/extensions/wikia/NjordPrototype/images/pencil.svg">
 			<?endif;?>
