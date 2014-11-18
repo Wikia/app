@@ -25,7 +25,7 @@
 							<span class="update-text sg-main">click to update an image</span>
 						</div>
 						<input name="file" type="file" hidden/>
-						<span class="upload-desc sg-sub">or, drag and drop here</span>
+						<span class="upload-desc sg-sub">or drag and drop here</span>
 					</div>
 				</div>
 			</div>
@@ -57,7 +57,7 @@
 		</h1>
 	</div>
 	<div class="image-save-bar btn-bar <?php if ( $wikiData->imageSet ) : ?>filled-state<? else : ?>zero-state<?php endif; ?>">
-		<span class="save-text sg-main">Your cover image will be used to promote your page in search results and on other promotional areas.</span>
+		<span class="save-text sg-main">Your cover image will be used to promote your page in search results and in other promotional areas.</span>
 		<div class="new-btn discard-btn sg-sub">Discard</div>
 		<div class="new-btn save-btn sg-sub">Publish</div>
 	</div>
