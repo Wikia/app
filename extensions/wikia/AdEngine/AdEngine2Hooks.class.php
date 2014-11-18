@@ -232,7 +232,7 @@ class AdEngine2Hooks {
 		$coreGroupIndex = array_search( self::ASSET_GROUP_ADENGINE_MOBILE, $jsStaticPackages );
 
 		if ( $coreGroupIndex === false ) {
-//			 Do nothing. ASSET_GROUP_ADENGINE_MOBILE must be present for ads to work
+			// Do nothing. ASSET_GROUP_ADENGINE_MOBILE must be present for ads to work
 			return true;
 		}
 
