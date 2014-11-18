@@ -8,7 +8,7 @@ require([
 	'videosmodule.models.videos',
 	'bucky',
 	'wikia.tracker'
-], function (RailModule, VideoData, bucky, Tracker) {
+], function(RailModule, VideoData, bucky, Tracker) {
 	'use strict';
 
 	var $rail = $('#WikiaRail');
@@ -25,20 +25,26 @@ require([
 			model: new VideoData(),
 			isFluid: false,
 			bucky: bucky('videosmodule.views.rail'),
-			track: Tracker.buildTrackingFunction({
+			trackImpression: Tracker.buildTrackingFunction({
 				category: 'videos-module-rail',
 				trackingMethod: 'both',
 				action: Tracker.ACTIONS.IMPRESSION,
 				label: 'module-impression'
+			}),
+			trackClick: Tracker.buildTrackingFunction({
+				category: 'videos-module-rail',
+				trackingMethod: 'both',
+				action: Tracker.ACTIONS.CLICK,
+				label: 'thumbnail-click'
 			})
 		});
 
-		rail.$el.on('initialized.videosModule', function () {
+		rail.$el.on('initialized.videosModule', function() {
 			bucky.timer.stop('execution');
 		});
 	}
 
-	$(function () {
+	$(function() {
 		// check if right rail is loaded before initing. If it's not loaded, bind to load event.
 		if ($rail.hasClass('loaded')) {
 			init();

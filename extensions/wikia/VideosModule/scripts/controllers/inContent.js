@@ -7,7 +7,7 @@ require([
 	'bucky',
 	'wikia.tracker',
 	'wikia.document'
-], function (InContentModule, VideoData, nodeFinderModule, Mustache, templates, bucky, Tracker, doc) {
+], function(InContentModule, VideoData, nodeFinderModule, Mustache, templates, bucky, Tracker, doc) {
 	'use strict';
 
 	bucky = bucky('videosmodule.controller.in-content');
@@ -49,11 +49,17 @@ require([
 			numVids: 3,
 			minNumVids: 3,
 			bucky: bucky('videosmodule.views.in-content'),
-			track: Tracker.buildTrackingFunction({
+			trackImpression: Tracker.buildTrackingFunction({
 				category: 'videos-module-in-content',
 				trackingMethod: 'both',
 				action: Tracker.ACTIONS.IMPRESSION,
 				label: 'module-impression'
+			}),
+			trackClick: Tracker.buildTrackingFunction({
+				category: 'videos-module-in-content',
+				trackingMethod: 'both',
+				action: Tracker.ACTIONS.CLICK,
+				label: 'thumbnail-click'
 			})
 		});
 

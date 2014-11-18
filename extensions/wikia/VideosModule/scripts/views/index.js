@@ -2,10 +2,10 @@ define('videosmodule.views.index', [
 	'sloth',
 	'videosmodule.views.titleThumbnail',
 	'wikia.log'
-], function (sloth, TitleThumbnailView, log) {
+], function(sloth, TitleThumbnailView, log) {
 	'use strict';
 
-	var VideosModule = function (options) {
+	var VideosModule = function(options) {
 		// this.$el is the {jQuery Object} container for the videos module
 
 		this.$el = options.$el;
@@ -21,7 +21,8 @@ define('videosmodule.views.index', [
 		this.minNumVids = options.minNumVids || 5;
 
 		this.bucky = options.bucky;
-		this.track = options.track;
+		this.trackImpression = options.trackImpression;
+		this.trackClick = options.trackClick;
 
 		// Make sure we're on an article page
 		if (window.wgArticleId) {
@@ -29,7 +30,7 @@ define('videosmodule.views.index', [
 		}
 	};
 
-	VideosModule.prototype.init = function () {
+	VideosModule.prototype.init = function() {
 		var self = this;
 
 		if (this.placement) {
@@ -50,7 +51,7 @@ define('videosmodule.views.index', [
 		}
 	};
 
-	VideosModule.prototype.prep = function () {
+	VideosModule.prototype.prep = function() {
 		var self = this;
 
 		this.$thumbs.addClass('hidden');
@@ -60,14 +61,14 @@ define('videosmodule.views.index', [
 
 		this.model
 			.fetch()
-			.complete(function () {
+			.complete(function() {
 				self.videos = self.model.data.videos;
 				self.staffPickVideos = self.model.data.staffVideos;
 				self.render();
 			});
 	};
 
-	VideosModule.prototype.render = function () {
+	VideosModule.prototype.render = function() {
 		var self = this,
 			$imagesLoaded = $.Deferred(),
 			imgCount = 0;
@@ -85,7 +86,7 @@ define('videosmodule.views.index', [
 
 		this.$thumbs
 			.append(this.getThumbHtml())
-			.find('img[data-video-key]').on('load error', function () {
+			.find('img[data-video-key]').on('load error', function() {
 				imgCount += 1;
 				if (imgCount === self.numVids) {
 					$imagesLoaded.resolve();
@@ -93,7 +94,7 @@ define('videosmodule.views.index', [
 			});
 
 		$.when($imagesLoaded)
-			.done(function () {
+			.done(function() {
 				self.$thumbs.removeClass('hidden');
 				self.$el.stopThrobbing()
 					.trigger('initialized.videosModule');
@@ -102,7 +103,7 @@ define('videosmodule.views.index', [
 
 		// Remove tracking for Special Wikis Sampled at 100% -- VID-1800
 		if (window.wgIsGASpecialWiki !== true) {
-			this.track();
+			this.trackImpression();
 		}
 	};
 
@@ -110,7 +111,7 @@ define('videosmodule.views.index', [
 	 * Check if we have enough videos to show the module
 	 * @returns {boolean}
 	 */
-	VideosModule.prototype.hasEnoughVideos = function () {
+	VideosModule.prototype.hasEnoughVideos = function() {
 		if (this.videos.length + this.staffPickVideos.length < this.minNumVids) {
 			this.$el.addClass('hidden');
 			log(
@@ -128,7 +129,7 @@ define('videosmodule.views.index', [
 	 * If there are less related videos than our default amount, this.NumVids, pull additional
 	 * videos from the staffPicks videos
 	 */
-	VideosModule.prototype.addBackfill = function () {
+	VideosModule.prototype.addBackfill = function() {
 		var vidsNeeded;
 
 		if (this.videos.length < this.numVids) {
@@ -143,7 +144,7 @@ define('videosmodule.views.index', [
 	 * Using Fisher-Yates shuffle algorithm.
 	 * Slightly adapted from http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
 	 */
-	VideosModule.prototype.shuffle = function (array) {
+	VideosModule.prototype.shuffle = function(array) {
 		var i, j, temp;
 
 		for (i = array.length - 1; i > 0; i--) {
@@ -159,7 +160,7 @@ define('videosmodule.views.index', [
 	 * If we have any staff pick videos, pick one randomly from that list and display it
 	 * in a random position in the Videos Module.
 	 */
-	VideosModule.prototype.addStaffPick = function () {
+	VideosModule.prototype.addStaffPick = function() {
 		var VideosIndex,
 			StaffPicksIndex;
 
@@ -174,7 +175,7 @@ define('videosmodule.views.index', [
 	 * Render TitleThumbnail views and return generated HTML
 	 * @returns {Array}
 	 */
-	VideosModule.prototype.getThumbHtml = function () {
+	VideosModule.prototype.getThumbHtml = function() {
 		var i,
 			thumbHtml = [];
 
@@ -182,7 +183,8 @@ define('videosmodule.views.index', [
 			thumbHtml.push(new TitleThumbnailView({
 				el: 'li',
 				model: this.videos[i],
-				idx: i
+				idx: i,
+				trackClick: this.trackClick
 			})
 				.render()
 				.$el);
