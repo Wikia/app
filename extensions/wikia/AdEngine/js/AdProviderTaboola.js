@@ -27,10 +27,6 @@ define('ext.wikia.adEngine.provider.taboola', [
 		}
 
 		if (!readMoreDiv) {
-			readMoreDiv = document.getElementById('RelatedPagesModuleWrapper');
-		}
-
-		if (!readMoreDiv) {
 			log(['canHandleSlot', slot, 'No "read more" section, disabling'], 'error', logGroup);
 			return false;
 		}
@@ -63,6 +59,7 @@ define('ext.wikia.adEngine.provider.taboola', [
 		s = document.createElement('script');
 		s.async = true;
 		s.src = url;
+		s.id = logGroup;
 		document.getElementsByTagName('body')[0].appendChild(s);
 
 		libraryLoaded = true;
