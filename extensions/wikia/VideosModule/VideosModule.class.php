@@ -401,7 +401,7 @@ class VideosModule extends WikiaModel {
 			'url'         => $video['fileUrl'],
 			'thumbnail'   => $video['thumbnail'],
 			'thumbUrl'    => $video['thumbUrl'],
-			'description' => mb_substr( $video['description'], 0, 50 ),
+			'description' => wfShortenText( $video['description'], 50 ),
 			'videoKey'    => $video['title'],
 			'duration'    => $video['duration'],
 			'source'      => $video['source'],
