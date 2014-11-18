@@ -14,7 +14,6 @@ define('ext.wikia.adEngine.adConfigMobile', [
 		};
 
 	function getProviderList(slotName) {
-
 		var context = adContext.getContext();
 
 		// If wgShowAds set to false, hide slots
