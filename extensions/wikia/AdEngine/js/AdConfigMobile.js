@@ -8,26 +8,14 @@ define('ext.wikia.adEngine.adConfigMobile', [
 ], function (adContext, adProviderDirectGptMobile, adProviderRemnantGptMobile, adProviderTaboola, abTest) {
 	'use strict';
 
-	var context = adContext.getContext(),
-		targeting = context.targeting,
-		pageTypesWithAdsOnMobile = {
+	var pageTypesWithAdsOnMobile = {
 			'all_ads': true,
 			'corporate': true
-		},
-		taboolaEnabledWikis = {
-			darksouls: true,
-			gameofthrones: true,
-			harrypotter: true,
-			helloproject: true,
-			ladygaga: true,
-			onedirection: true
-		},
-		taboolaEnabled = (targeting.pageType === 'article' || targeting.pageType === 'home') &&
-			taboolaEnabledWikis[targeting.wikiDbName] &&
-			context.providers.taboola &&
-			abTest && abTest.inGroup('NATIVE_ADS_TABOOLA', 'YES');
+		};
 
 	function getProviderList(slotName) {
+
+		var context = adContext.getContext();
 
 		// If wgShowAds set to false, hide slots
 		if (!context.opts.showAds) {
@@ -40,7 +28,7 @@ define('ext.wikia.adEngine.adConfigMobile', [
 			return [];
 		}
 
-		if (taboolaEnabled && adProviderTaboola.canHandleSlot(slotName) ) {
+		if (context.providers.taboola && adProviderTaboola.canHandleSlot(slotName) ) {
 			return [adProviderTaboola];
 		}
 
