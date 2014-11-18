@@ -35,8 +35,7 @@ define('ext.wikia.adEngine.provider.taboola', [
 	}
 
 	function loadTaboola() {
-		var taboolaInit, s,
-			url = 'http://cdn.taboola.com/libtrc/wikia-network/loader.js';
+		var taboolaInit, s, url = 'http://cdn.taboola.com/libtrc/wikia-network/loader.js';
 
 		if (libraryLoaded) {
 			return;
