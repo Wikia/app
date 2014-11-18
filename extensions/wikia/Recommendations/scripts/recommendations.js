@@ -66,7 +66,8 @@ define(
 						slot = {
 							title: slotsData[i].title,
 							url: slotsData[i].url,
-							description: slotsData[i].description
+							description: slotsData[i].description,
+							type: slotsData[i].type
 						};
 
 						if (i === 0) {
