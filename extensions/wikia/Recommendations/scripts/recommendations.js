@@ -7,6 +7,30 @@ define(
 		var controllerName = 'RecommendationsApi',
 			methodName = 'getArticle';
 
+		function formatDuration(duration) {
+			var out = '',
+				hours   = Math.floor(duration / 3600),
+				minutes = Math.floor((duration - (hours * 3600)) / 60),
+				seconds = duration - (hours * 3600) - (minutes * 60);
+
+			if (hours > 0){
+				if (hours < 10) {
+					hours = '0' + hours;
+				}
+				out += hours + ':';
+			}
+
+			if (minutes < 10) {
+				minutes = '0' + minutes;
+			}
+			if (seconds < 10) {
+				seconds = '0' + seconds;
+			}
+
+			out += minutes + ':' + seconds;
+			return out;
+		}
+
 		/**
 		 * Load recommendations template
 		 *
@@ -61,7 +85,7 @@ define(
 
 							if (slotsData[i].type === 'video') {
 								slot.videoKey = slotsData[i].media.videoKey;
-								slot.duration = '1:32'; // TODO
+								slot.duration = formatDuration(slotsData[i].media.duration);
 								template = res.mustache[2];
 							} else {
 								template = res.mustache[1];
