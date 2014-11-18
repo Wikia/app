@@ -72,6 +72,9 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 
+		'//extensions/wikia/UserLogin/js/UserLogin.js',
+		'//skins/oasis/js/Tracking.js', # TODO: extract Wikia.trackEditorComponent ?
+
 		'//extensions/wikia/Venus/scripts/isTouchScreen.js',
 		'//extensions/wikia/Venus/scripts/variables.js',
 		'//resources/wikia/modules/dom.js',
