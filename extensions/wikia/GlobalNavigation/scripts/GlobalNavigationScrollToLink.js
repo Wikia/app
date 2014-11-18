@@ -1,6 +1,6 @@
 require(
-	['wikia.scrollToLink', 'wikia.window', 'venus.variables', 'jquery'],
-	function(scrollToLink, win, variables, $) {
+	['wikia.scrollToLink', 'wikia.window', 'venus.layout', 'jquery'],
+	function(scrollToLink, win, layout, $) {
 		'use strict';
 
 		var offset = 0;
@@ -22,7 +22,7 @@ require(
 		function initScrollToLink() {
 			// offset is negative - we want scroll BEFORE element's top offset
 			offset = -(win.document.getElementById('globalNavigation').offsetHeight +
-				variables.normalTextFontSize); // also scroll a bit, so element won't be sticked to GlobalNavigation
+				layout.normalTextFontSize); // also scroll a bit, so element won't be sticked to GlobalNavigation
 
 			scrollToLink.disableBrowserJump();
 

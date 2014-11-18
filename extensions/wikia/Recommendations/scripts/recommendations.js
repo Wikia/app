@@ -1,11 +1,15 @@
 define(
 	'wikia.recommendations',
-	['wikia.loader', 'wikia.window', 'wikia.mustache', 'JSMessages', 'wikia.thumbnailer', 'wikia.arrayHelper'],
-	function(loader, win, mustache, msg, thumbnailer, arrayHelper) {
+	['wikia.loader', 'wikia.window', 'wikia.mustache', 'JSMessages', 'wikia.thumbnailer', 'wikia.arrayHelper', 'venus.layout'],
+	function(loader, win, mustache, msg, thumbnailer, arrayHelper, layout) {
 		'use strict';
 
 		var controllerName = 'RecommendationsApi',
-			methodName = 'getArticle';
+			methodName = 'getArticle',
+			slotColumnCounts = {
+				big: 6,
+				small: 3
+			};
 
 		function formatDuration(duration) {
 			var out = '',
@@ -31,6 +35,39 @@ define(
 			return out;
 		}
 
+		function getSlotWidth(size) {
+			var columnCount;
+			if (size === 'big') {
+				columnCount = slotColumnCounts[size];
+			} else {
+				columnCount = slotColumnCounts[size];
+			}
+			return layout.getGridColumnWidth(
+				layout.getBreakpoint(), // TODO cache
+				columnCount
+			);
+		}
+
+		function getSlotSizes() {
+			var slotSize,
+				out = {},
+				width,
+				height;
+
+			for (slotSize in slotColumnCounts) {
+				if (slotColumnCounts.hasOwnProperty(slotSize)) {
+					width = getSlotWidth(slotSize);
+					height = Math.round(width / 16 * 9);
+					out[slotSize] = {
+						width: width,
+						height: height
+					};
+				}
+			}
+
+			return out;
+		}
+
 		/**
 		 * Load recommendations template
 		 *
@@ -53,7 +90,13 @@ define(
 					}]
 				}
 			}).done(function (res) {
-				var data, i, slot = {}, slots = [], slotsData, template;
+				var data,
+					i,
+					slot = {},
+					slots = [],
+					slotsData,
+					slotSizes,
+					template;
 
 				loader.processStyle(res.styles);
 				//loader.processScript(res.scripts);
@@ -62,7 +105,8 @@ define(
 					slotsData = JSON.parse(res.templates[controllerName + '_' + methodName]).items;
 					slotsData = arrayHelper.shuffle(slotsData);
 
-					for (i=0; i < slotsData.length; i++) { // TODO length
+					slotSizes = getSlotSizes();
+					for (i = 0; i < slotsData.length; i++) { // TODO length
 						slot = {
 							title: slotsData[i].title,
 							url: slotsData[i].url,
@@ -79,8 +123,8 @@ define(
 							slot.thumbUrl = thumbnailer.getThumbURL(
 								slotsData[i].media.thumbUrl,
 								'image',
-								178, // TODO image size
-								100
+								slotSizes[slot.slotType].width,
+								slotSizes[slot.slotType].height
 							);
 
 							if (slotsData[i].type === 'video') {
