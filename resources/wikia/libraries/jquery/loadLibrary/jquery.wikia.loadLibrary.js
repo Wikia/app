@@ -120,7 +120,7 @@
 	/**
 	 * Load the facebook JS library, either v1.x or v2.x
 	 * @param {function} [callback] Function to be called after library is loaded
-	 * @returns {jQuery|null} Returns a jQuery promise or nothing if execution is cut short.
+	 * @returns {jQuery} Returns a jQuery promise
 	 */
 	$.loadFacebookAPI = function (callback) {
 		if (window.wgEnableFacebookClientExt) {
