@@ -123,12 +123,6 @@
 	 * @returns {jQuery|null} Returns a jQuery promise or nothing if execution is cut short.
 	 */
 	$.loadFacebookAPI = function (callback) {
-		// don't load external library if noexternals is in the querystring
-		var noexternals = window.Wikia.Querystring().getVals().noexternals;
-		if (noexternals === '1' || noexternals === 'true') {
-			return null;
-		}
-
 		if (window.wgEnableFacebookClientExt) {
 			return loadFacebookV2(callback);
 		} else {
@@ -207,9 +201,13 @@
 	 * Load the facebook API on every page until the upgrade to v2.x is stable and parser cache has cleared.
 	 * Needed for XFBML tags to render with stale parser cache.
 	 * DO NOT rely on this library always being loaded.
-	 * Estimated removal date: Nov. 27 2014 (https://wikia-inc.atlassian.net/browse/UC-82)
+	 * Estimated removal date: Dec. 10 2014 (https://wikia-inc.atlassian.net/browse/UC-82)
 	 */
-	$($.loadFacebookAPI);
+	$(function () {
+		if (!window.wgNoExternals) {
+			$.loadFacebookAPI();
+		}
+	});
 
 	$.loadGooglePlusAPI = function (callback) {
 		return $.loadLibrary('Google Plus API',
