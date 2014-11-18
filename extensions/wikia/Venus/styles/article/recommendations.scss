@@ -6,6 +6,7 @@
 	@include clearfix;
 
 	background-color: #eef1f3;
+	clear: both;
 	padding: $medium-content-padding - $content-border-width;
 
 	a {
