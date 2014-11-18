@@ -271,8 +271,8 @@ class WikiaMobileService extends WikiaService {
 		$this->handleMessages();
 		$this->handleSmartBanner();
 		$this->handleContent();
-		$this->handleToc();
 		$this->handleAds();
+		$this->handleToc();
 		$this->handleAssets();
 		$this->handleTracking();
 
