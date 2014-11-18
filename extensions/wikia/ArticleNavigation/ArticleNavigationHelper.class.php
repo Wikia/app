@@ -3,8 +3,9 @@
 class ArticleNavigationHelper {
 
 	public function onOverwriteTOC( &$title, &$toc ) {
-		$toc = '';
-
+		if ( F::app()->checkSkin( 'venus' ) ) {
+			$toc = '';
+		}
 		return true;
 	}
 

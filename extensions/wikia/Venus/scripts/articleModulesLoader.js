@@ -1,21 +1,10 @@
 /*global require*/
 require(
-	['wikia.window', 'wikia.document', 'jquery', 'venus.lightboxLoader', 'scrollableTables',  'wikia.venusToc'],
-	function (win, doc, $, lightboxLoader, scrollableTables, tocModule) {
+	['wikia.window', 'wikia.document', 'jquery', 'venus.lightboxLoader', 'scrollableTables'],
+	function (win, doc, $, lightboxLoader, scrollableTables) {
 		'use strict';
 
-		var $win = $(win),
-			isTouchScreen = win.Wikia.isTouchScreen(),
-			$tocButton = $('#articleNavToc');
-
-		/**
-		 * @desc handler that initialises TOC
-		 * @param {Event} event
-		 */
-		function initTOChandler(event) {
-			event.stopPropagation();
-			tocModule.init(event.target.id, isTouchScreen);
-		}
+		var $win = $(win);
 
 		/**
 		 * @desc Look for all tables on article and add or remove scrollbar if needed
@@ -35,9 +24,6 @@ require(
 			.on('resize', $.throttle(100, scanTables))
 			// wikiaTabClicked event is triggered when user switches between different tabs in article
 			.on('wikiaTabClicked', scanTables);
-
-		// initialize TOC in left navigation on first hover / click (touch device)
-		$tocButton.one(isTouchScreen ? 'click' : 'mouseenter', initTOChandler);
 
 		$(function () {
 			//Lightbox initialization needs to be done after DOMReady
