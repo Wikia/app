@@ -106,10 +106,12 @@ class ScribeEventProducer {
 		$this->setIsRedirect( $oTitle->isRedirect() );
 		$this->setRevisionTimestamp( wfTimestamp( TS_DB, $rev_timestamp ) );
 		$this->setRevisionSize( $rev_size );
+		$this->setIsLocalFile( $oTitle );
 		$this->setMediaType( $oTitle );
 		$this->setMediaLinks( $oPage );
 		$this->setTotalWords( str_word_count( $rev_text ) );
 		$this->setIsTop200( $this->app->wg->CityId );
+		$this->setIsImageForReview();
 
 		$t = microtime(true);
 		$micro = sprintf("%06d",($t - floor($t)) * 1000000);
@@ -313,14 +315,18 @@ class ScribeEventProducer {
 		$this->mParams['eventTS'] = $ts;
 	}
 
-	public function setIsLocalFile ( $is_local_file ) {
-		$this->mParams['isLocalFile'] = intval( $is_local_file );
+	public function setIsLocalFile ( Title $oTitle ) {
+		$oFile = wfFindFile( $oTitle );
+		if( $oFile instanceof LocalFile ) {
+			$bIsLocalFile = true;
+		} else {
+			$bIsLocalFile = false;
+		}
+		$this->mParams['isLocalFile'] = intval( $bIsLocalFile );
 	}
 
 	public function setMediaType ( $oTitle ) {
 		wfProfileIn( __METHOD__ );
-
-		$bIsLocalFile = false;
 
 		$result = 0;
 		$page_namespace = $oTitle->getNamespace();
@@ -328,9 +334,7 @@ class ScribeEventProducer {
 
 			$mediaType = MEDIATYPE_UNKNOWN;
 			$oLocalFile = RepoGroup::singleton()->getLocalRepo()->newFile( $oTitle );
-
 			if ( $oLocalFile instanceof LocalFile ) {
-				$bIsLocalFile = true;
 				$mediaType = $oLocalFile->getMediaType();
 			}
 			if ( empty($mediaType) ) {
@@ -349,8 +353,6 @@ class ScribeEventProducer {
 				default 									: $result = 1; break;
 			}
 		}
-
-		$this->setIsLocalFile( $bIsLocalFile );
 
 		$this->mParams['mediaType'] = $result;
 		wfProfileOut( __METHOD__ );
@@ -397,7 +399,7 @@ class ScribeEventProducer {
 	}
 
 	public function setIsTop200( $city_id ) {
-		$this->mParams['isTop200'] = $this->isTop200( $city_id );
+		$this->mParams['isTop200'] = intval( $this->isTop200( $city_id ) );
 	}
 
 	/**
@@ -429,6 +431,21 @@ class ScribeEventProducer {
 
 		wfProfileOut( __METHOD__ );
 		return false;
+	}
+
+	public function setIsImageForReview() {
+		if ( $this->mParams['pageNamespace'] == 6
+			&& $this->mParams['isRedirect'] == 0
+			&& in_array( $this->mParams['mediaType'], [ 1, 2 ] )
+			&& $this->mParams['isLocalFile'] == 1
+			&& $this->mParams['isTop200'] == 0
+		) {
+			$bIsImageForReview = true;
+		} else {
+			$bIsImageForReview = false;
+		}
+
+		$this->mParams['isImageForReview'] = intval( $bIsImageForReview );
 	}
 
 	public function sendLog() {
