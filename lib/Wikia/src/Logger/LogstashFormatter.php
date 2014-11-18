@@ -65,8 +65,8 @@ class LogstashFormatter extends \Monolog\Formatter\LogstashFormatter implements 
 				$data['trace'][] = $frame['file'].':'.$frame['line'];
 			} else {
 				// prevent huge json blobs from preventing message parsing (because of split message) and flooding file logs
-				if (isset($data['args'])) {
-					unset($data['args']);
+				if (isset($frame['args'])) {
+					unset($frame['args']);
 				}
 
 				$data['trace'][] = json_encode($frame);
