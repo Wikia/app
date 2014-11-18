@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 class FacebookClientHelper {
 
 	/**
@@ -22,7 +24,7 @@ class FacebookClientHelper {
 	 * @param $wikiaUserId
 	 * @param $fbUserId
 	 * @return bool True on success, False on failure
-	 * @throws FacebookMapModelInvalidDataException
+	 * @throws FacebookMapModelInvalidParamException
 	 */
 	public static function createUserMapping( $wikiaUserId, $fbUserId ) {
 		$map = new FacebookMapModel();
@@ -30,7 +32,10 @@ class FacebookClientHelper {
 		try {
 			$map->save();
 		} catch ( FacebookMapModelException $e ) {
-			F::app()->wg->Out->showErrorPage( 'fbconnect-error', 'fbconnect-errortext' );
+			WikiaLogger::instance()->warning( 'Failed to create user mapping', [
+				'wikiaUserId' => $wikiaUserId,
+				'fbUserId' => $fbUserId,
+			] );
 			return false;
 		}
 

@@ -71,9 +71,7 @@ class UserLoginFacebookForm extends UserLoginForm {
 	 */
 	private function connectWithFacebook(User $user) {
 		if ( F::app()->wg->EnableFacebookClientExt ) {
-			$map = new FacebookMapModel();
-			$map->relate( $user->getId(), $this->fbUserId);
-			$map->save();
+			\FacebookClientHelper::createUserMapping( $user->getId(), $this->fbUserId );
 		} else {
 			FBConnectDB::addFacebookID( $user, $this->fbUserId );
 		}

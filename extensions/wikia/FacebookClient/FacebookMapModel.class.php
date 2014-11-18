@@ -257,7 +257,6 @@ class FacebookMapModel {
 	/**
 	 * Saves a mapping to the database
 	 *
-	 * @throws FacebookMapModelInvalidDataException
 	 * @throws FacebookMapModelInvalidParamException
 	 * @throws FacebookMapModelInvalidDataException
 	 */
@@ -275,7 +274,7 @@ class FacebookMapModel {
 				->SET( 'user_fbid', $this->facebookUserId )
 				->run( $dbw );
 		} catch ( \Exception $e ) {
-			throw new FacebookMapModelInvalidDataException();
+			throw new FacebookMapModelDbException( $e->getMessage() );
 		}
 
 		$memkey = self::generateMemKey( [
@@ -306,3 +305,10 @@ class FacebookMapModelInvalidParamException extends FacebookMapModelException { 
  * Thrown when the data in a FacebookMapModel is invalid
  */
 class FacebookMapModelInvalidDataException extends FacebookMapModelException { }
+
+/**
+ * Class FacebookMapModelDbException
+ *
+ * Thrown when database error occurs
+ */
+class FacebookMapModelDbException extends FacebookMapModelException { }

@@ -80,6 +80,7 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 		}
 
 		if ( !\FacebookClientHelper::createUserMapping( $user->getId(), $fbUserId ) ) {
+			F::app()->wg->Out->showErrorPage( 'fbconnect-error', 'fbconnect-errortext' );
 			$this->skipRendering();
 			return true;
 		}
@@ -118,6 +119,7 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 		}
 
 		if ( !\FacebookClientHelper::createUserMapping( $wg->User->getId(), $fbUserId ) ) {
+			F::app()->wg->Out->showErrorPage( 'fbconnect-error', 'fbconnect-errortext' );
 			$this->skipRendering();
 			return true;
 		}
