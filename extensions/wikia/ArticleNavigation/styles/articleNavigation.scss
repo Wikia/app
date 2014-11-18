@@ -42,6 +42,10 @@ $dropdownArrowSize: 10px;
 		line-height: $article-navigation-icon-size;
 		margin-bottom: 6px;
 		position: relative;
+
+		&.toc {
+			display: none;
+		}
 	}
 
 	.wikia-dropdown-nav-wrapper {

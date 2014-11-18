@@ -84,6 +84,17 @@ define(
 		}
 
 		/**
+		 * @desc returns true if there is ToC
+		 * @return {Boolean} true if there is ToC
+		 */
+		function isEnabled() {
+			var headersSelector = headers.join(','),
+				headersCollection = win.document.getElementById(articleWrapperId).querySelectorAll(headersSelector);
+
+			return headersCollection.length > 0;
+		}
+
+		/**
 		 * @desc initialize TOC
 		 * @param {String} id -  id of the trigger element
 		 * @param {Boolean} isTouchScreen - true if browser suppport touch events
@@ -140,7 +151,8 @@ define(
 		}
 
 		return {
-			init: init
+			init: init,
+			isEnabled: isEnabled
 		};
 	}
 );
