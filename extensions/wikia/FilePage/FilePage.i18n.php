@@ -383,6 +383,14 @@ Saisissez la description ici.',
 	'file-page-more-links' => 'Afficher la liste',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'video-page-description-heading' => 'Beskriuwing',
+	'file-page-tab-about' => 'Oer',
+);
+
 /** Galician (galego)
  * @author Toliño
  */
@@ -1115,17 +1123,19 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
+ * @author Liuxinyu970226
  * @author Simon Shek
  */
 $messages['zh-hant'] = array(
-	'filepage-desc' => '視頻支持的標準MediaWiki文件修改頁面',
+	'filepage-desc' => '影片支援的標準MediaWiki檔案修改頁面',
 	'video-page-file-list-header' => '出現在這些頁面上',
 	'video-page-global-file-list-header' => '出現在這些wiki上',
 	'video-page-from-provider' => '來自$1',
 	'video-page-expires' => '內容過期時間 $1',
-	'video-page-regional-restrictions-viewable' => '這個視頻受區域播放限制',
-	'video-page-regional-restrictions-unviewable' => '這個視頻在您所在的國家或者地區不能播放',
-	'video-page-views' => '$1 {{PLURAL:$1|次查看|次查看}}',
+	'video-page-regional-restrictions-viewable' => '這個影片受區域播放限制',
+	'video-page-regional-restrictions-unviewable' => '這個影片在您所在的國家或者地區不能播放',
+	'video-page-views' => '$1 次{{PLURAL:$1|查看}}',
 	'video-page-see-more-info' => '展開',
 	'video-page-see-less-info' => '折疊',
 	'video-page-description-heading' => '描述',

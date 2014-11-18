@@ -435,6 +435,14 @@ $messages['fr'] = array(
 	'action-multilookup' => 'rechercher des informations sur les utilisateurs dans plusieurs wikis',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'multilookupnext' => 'folgjende',
+	'multilookupprevious' => 'foarige',
+);
+
 /** Galician (galego)
  * @author Toliño
  */

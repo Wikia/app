@@ -180,10 +180,11 @@ $messages['de'] = array(
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
  * @author Marmase
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'category-exhibition-alphabetical' => 'Alfabetik',
-	'category-exhibition-page-header' => 'Pelê ke kategoriya "$1" miyan derê',
+	'category-exhibition-page-header' => 'Pelê ke kategoriya "$1" derê',
 	'category-exhibition-subcategories-header' => 'Kategoriyê bınêni',
 );
 
@@ -272,6 +273,14 @@ $messages['fr'] = array(
 	'category-exhibition-blogs-header' => 'Billets de blog',
 	'category-exhibition-display-old' => 'Affichage de la catégorie en liste',
 	'category-exhibition-display-new' => 'Affichage de la catégorie en exposition',
+);
+
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'category-exhibition-alphabetical' => 'Alfabetysk',
+	'category-exhibition-subcategories-header' => 'Subkategoryen',
 );
 
 /** Galician (galego)

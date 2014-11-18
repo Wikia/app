@@ -13,6 +13,7 @@ require(
 			mobileTopLeaderBoard = 'MOBILE_TOP_LEADERBOARD',
 			mobileInContent = 'MOBILE_IN_CONTENT',
 			mobilePreFooter = 'MOBILE_PREFOOTER',
+			mobileTaboola = 'NATIVE_TABOOLA',
 			doc = window.document,
 			logGroup = 'ads_run',
 			logLevel = log.levels.info,
@@ -70,6 +71,7 @@ require(
 					$footer.after(createSlot(mobilePreFooter));
 					adSlots.push([mobilePreFooter]);
 				}
+				adSlots.push([mobileTaboola]);
 			});
 		}
 

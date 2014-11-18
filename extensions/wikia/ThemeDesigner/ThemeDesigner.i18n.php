@@ -893,6 +893,16 @@ veuillez entrer le nom du wiki pour sauvegarder.',
 	'themedesigner-upload-disabled' => 'Désolé, nous avons temporairement désactivé les téléchargements. Vérifiez prochainement pour faire des modifications',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'themedesigner-background' => 'Eftergrûn',
+	'themedesigner-small' => 'Lyts',
+	'themedesigner-large' => 'Grut',
+	'themedesigner-button-cancel' => 'Annulearje',
+);
+
 /** Galician (galego)
  * @author Toliño
  * @author Vivaelcelta

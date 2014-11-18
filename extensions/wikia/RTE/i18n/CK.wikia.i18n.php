@@ -1448,6 +1448,20 @@ $messages['fr'] = array(
 	'rte-ck-format-tag_h5' => 'Titre 5',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'rte-ck-errorPopupTitle' => 'Flater!',
+	'rte-ck-hoverPreview-edit' => 'bewurkje',
+	'rte-ck-link-error-title' => 'Flater',
+	'rte-ck-signature-label' => 'ûndertekening',
+	'rte-ck-templateDropDown-label' => 'Berjocht',
+	'rte-ck-templateEditor-editor-previewButton' => 'Proefbyld',
+	'rte-ck-templateEditor-editor-previewTitle' => 'Proefbyld',
+	'rte-ck-video-video' => 'Fideo',
+);
+
 /** Galician (galego)
  * @author Toliño
  */
@@ -4332,11 +4346,12 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
  * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
 	'rte-ck-hoverPreview-delete' => '刪除',
-	'rte-ck-templateDropDown-label' => '樣版',
+	'rte-ck-templateDropDown-label' => '樣板',
 	'rte-ck-templateEditor-editor-previewButton' => '預覽',
 	'rte-ck-templateEditor-editor-previewTitle' => '預覽',
 	'rte-ck-mut-add' => '添加影片 （測試版）',
