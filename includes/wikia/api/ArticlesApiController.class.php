@@ -19,7 +19,6 @@ class ArticlesApiController extends WikiaApiController {
 
 	const MAX_ITEMS = 250;
 	const ITEMS_PER_BATCH = 25;
-	const TOP_WIKIS_FOR_HUB = 10;
 	const LANGUAGES_LIMIT = 10;
 	const MAX_NEW_ARTICLES_LIMIT = 100;
 	const DEFAULT_NEW_ARTICLES_LIMIT = 20;
@@ -332,70 +331,11 @@ class ArticlesApiController extends WikiaApiController {
 				throw new LimitExceededApiException( self::PARAMETER_LANGUAGES, self::LANGUAGES_LIMIT );
 			}
 
-			//fetch the top 10 wikis on a weekly pageviews basis
-			//this has it's own cache
-			$wikis = DataMartService::getTopWikisByPageviews(
-				DataMartService::PERIOD_ID_WEEKLY,
-				self::TOP_WIKIS_FOR_HUB,
-				$langs,
-				$hub,
-				1 /* only pubic */
-			);
+			$res = DataMartService::getTopCrossWikiArticlesByPageview( $hub, $langs, $namespaces );
 
-			$wikisCount = count( $wikis );
-
-			if ( $wikisCount < 1 ) {
-				wfProfileOut( __METHOD__ );
-				throw new NotFoundApiException();
-			}
-
-			$found = 0;
-			$articlesPerWiki = ceil( self::MAX_ITEMS / $wikisCount );
-			$res = array();
-
-			//fetch $articlesPerWiki articles from each wiki
-			//see FB#73094 for performance review
-			foreach ( $wikis as $wikiId => $data ) {
-				//this has it's own cache
-				$articles = DataMartService::getTopArticlesByPageview(
-					$wikiId,
-					null,
-					$namespaces,
-					false,
-					$articlesPerWiki
-				);
-
-				if ( count( $articles ) == 0 ) {
-					continue;
-				}
-
-				$item = [
-					'wiki' => [
-						'id' => $wikiId,
-						//WF data has it's own cache
-						'name' => WikiFactory::getVarValueByName( 'wgSitename', $wikiId ),
-						'language' => WikiFactory::getVarValueByName( 'wgLanguageCode', $wikiId ),
-						'domain' => WikiFactory::getVarValueByName( 'wgServer', $wikiId )
-					],
-					'articles' => []
-				];
-
-				foreach ( $articles as $articleId => $article ) {
-					$found++;
-					$item['articles'][] = [
-						'id' => $articleId,
-						'ns' => $article['namespace_id']
-					];
-				}
-
-				$res[] = $item;
-				$articles = null;
-			}
-
-			$wikis = null;
 			wfProfileOut( __METHOD__ );
 
-			if ( $found == 0 ) {
+			if ( empty( $res ) ) {
 				wfProfileOut( __METHOD__ );
 				throw new NotFoundApiException();
 			}
