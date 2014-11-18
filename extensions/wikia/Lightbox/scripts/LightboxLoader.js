@@ -135,8 +135,6 @@
 						return;
 					}
 
-					fileKey = decodeURI(fileKey);
-
 					// Display video inline, don't open lightbox
 					isVideo = $this.children('.play-circle').length;
 					if (
