@@ -37,14 +37,15 @@ class JSSnippets {
 
 	static public function addToStack( $dependencies, $loaders = array(), $callback = null, $options = null ) {
 		global $wgArticleAsJson;
-
-		wfProfileIn( __METHOD__ );
 		$js = "";
 
 		// HG-97: Don't include script tags when the article is requested as Json
 		if ( !empty( $wgArticleAsJson ) ) {
 			return $js;
 		}
+		
+		wfProfileIn( __METHOD__ );
+		
 		$assetsManager = AssetsManager::getInstance();
 		$skin = RequestContext::getMain()->getSkin();
 		$isWikiaSkin = ( $skin instanceof WikiaSkin );
