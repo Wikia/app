@@ -1,7 +1,7 @@
 define(
 	'wikia.recommendations',
-	['wikia.loader', 'wikia.window', 'wikia.mustache', 'JSMessages'],
-	function(loader, win, mustache, msg) {
+	['wikia.loader', 'wikia.window', 'wikia.mustache', 'JSMessages', 'wikia.thumbnailer'],
+	function(loader, win, mustache, msg, thumbnailer) {
 		'use strict';
 
 		var controllerName = 'RecommendationsApi',
@@ -17,7 +17,7 @@ define(
 			loader({
 				type: loader.MULTI,
 				resources: {
-					mustache: '/extensions/wikia/Recommendations/templates/Recommendations_index.mustache',
+					mustache: '/extensions/wikia/Recommendations/templates/Recommendations_index.mustache,/extensions/wikia/Recommendations/templates/Recommendations_image.mustache,/extensions/wikia/Recommendations/templates/Recommendations_video.mustache',
 					styles: 'extensions/wikia/Recommendations/styles/recommendations.scss',
 					messages: 'Recommendations',
 					templates: [{
@@ -29,11 +29,10 @@ define(
 					}]
 				}
 			}).done(function (res) {
-				var data, i, slot = {}, slots = [], slotsData;
+				var data, i, slot = {}, slots = [], slotsData, template;
 
 				loader.processStyle(res.styles);
 				//loader.processScript(res.scripts);
-				console.log(res);
 
 				if (typeof(callback) === 'function') {
 					slotsData = JSON.parse(res.templates[controllerName + '_' + methodName]).items;
@@ -41,10 +40,9 @@ define(
 
 					for (i=0; i < slotsData.length; i++) { // TODO length
 						slot = {
-							'title': slotsData[i].title,
-							'url': slotsData[i].url,
-							'description': slotsData[i].description
-							// TODO image
+							title: slotsData[i].title,
+							url: slotsData[i].url,
+							description: slotsData[i].description
 						};
 
 						if (i === 0) {
@@ -53,9 +51,25 @@ define(
 							slot.slotType = 'small';
 						}
 
+						if (slotsData[i].media) {
+							slot.thumbUrl = thumbnailer.getThumbURL(
+								slotsData[i].media.thumbUrl,
+								'image',
+								178, // TODO image size
+								100
+							);
+
+							if (slotsData[i].type === 'video') {
+								slot.videoKey = slotsData[i].media.videoKey;
+								slot.duration = '1:32'; // TODO
+								template = res.mustache[2];
+							} else {
+								template = res.mustache[1];
+							}
+							slot.media = mustache.render(template, slot);
+						}
 						slots.push(slot);
 					}
-					console.log(slots);
 
 					data = {
 						header: msg('recommendations-header'),

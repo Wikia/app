@@ -15,6 +15,7 @@ $small-grid-slot-big-height: 2 * $small-grid-slot-small-height + $small-grid-gut
 	@include clearfix;
 
 	background-color: #eef1f3;
+	clear: both;
 	padding: $medium-content-padding - $content-border-width;
 	padding-right: $medium-content-padding - $content-border-width - $medium-grid-gutter;
 
@@ -40,10 +41,14 @@ $small-grid-slot-big-height: 2 * $small-grid-slot-small-height + $small-grid-gut
 		}
 	}
 
-	.slot-image-placeholder {
+	.slot-media-placeholder {
 		background-color: #ccc;
 		display: block;
 		overflow: hidden;
+
+		img {
+			width: 100%;
+		}
 	}
 
 	.slot-small {
@@ -53,7 +58,7 @@ $small-grid-slot-big-height: 2 * $small-grid-slot-small-height + $small-grid-gut
 		font-size: $font-size-xs;
 		height: $medium-grid-slot-small-height;
 
-		.slot-image-placeholder {
+		.slot-media-placeholder {
 			@include proportional-grid-media-height('medium', 3);
 			width: 100%;
 		}
@@ -78,7 +83,7 @@ $small-grid-slot-big-height: 2 * $small-grid-slot-small-height + $small-grid-gut
 		font-size: $font-size-base;
 		height: $medium-grid-slot-big-height;
 
-		.slot-image-placeholder {
+		.slot-media-placeholder {
 			@include proportional-grid-media-height('medium', 6);
 			width: 100%;
 		}
@@ -114,7 +119,7 @@ $small-grid-slot-big-height: 2 * $small-grid-slot-small-height + $small-grid-gut
 
 			height: $small-grid-slot-small-height;;
 
-			.slot-image-placeholder {
+			.slot-media-placeholder {
 				@include proportional-grid-media-height('small', 3);
 			}
 		}
@@ -124,7 +129,7 @@ $small-grid-slot-big-height: 2 * $small-grid-slot-small-height + $small-grid-gut
 
 			height: $small-grid-slot-big-height;
 
-			.slot-image-placeholder {
+			.slot-media-placeholder {
 				@include proportional-grid-media-height('small', 6);
 			}
 		}
@@ -144,7 +149,7 @@ $small-grid-slot-big-height: 2 * $small-grid-slot-small-height + $small-grid-gut
 
 			height: $large-grid-slot-small-height;
 
-			.slot-image-placeholder {
+			.slot-media-placeholder {
 				@include proportional-grid-media-height('large', 3);
 			}
 		}
@@ -153,7 +158,7 @@ $small-grid-slot-big-height: 2 * $small-grid-slot-small-height + $small-grid-gut
 			@include grid-column-width('large', 6);
 
 			height: $large-grid-slot-big-height;
-			.slot-image-placeholder {
+			.slot-media-placeholder {
 				@include proportional-grid-media-height('large', 6);
 			}
 		}
