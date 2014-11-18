@@ -11,7 +11,7 @@ class FacebookClientController extends WikiaController {
 		$this->isConnected = $this->getVal( 'isConnected', false );
 
 		// Settings for a connected user
-		$this->facebookDisconnectLink = wfMessage( 'fbconnect-disconnect-link' )->parse();
+		$this->facebookDisconnectLink = wfMessage( 'fbconnect-disconnect-account-link' )->parse();
 		$this->fbFromExist = F::app()->wg->User->getOption( 'fbFromExist' );
 
 		// Settings for a user who is not connected yet
