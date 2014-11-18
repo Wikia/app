@@ -18,14 +18,14 @@
 					<div class="upload-group">
 						<div class="upload-btn">
 							<img class="upload-icon" src="/extensions/wikia/NjordPrototype/images/addImage.svg">
-							<span class="upload-text sg-main">add an cover image</span>
+							<span class="upload-text sg-main">click to add a cover image</span>
 						</div>
 						<div class="update-btn">
 							<img class="upload-icon" src="/extensions/wikia/NjordPrototype/images/addImage.svg">
-							<span class="update-text sg-main">update image</span>
+							<span class="update-text sg-main">click to update an image</span>
 						</div>
 						<input name="file" type="file" hidden/>
-						<span class="upload-desc sg-sub">or, drop an image here</span>
+						<span class="upload-desc sg-sub">or, drag and drop here</span>
 					</div>
 				</div>
 			</div>
@@ -50,7 +50,7 @@
 				</div>
 			</div>
 			<span class="title-text"><?= $wikiData->title ?></span>
-			<span class="title-default-text">Wikia name can goes three lines</span>
+			<span class="title-default-text">Your Wikia's name</span>
 			<? if ($isAllowedToEdit): ?>
 			<img class="title-edit-btn" src="/extensions/wikia/NjordPrototype/images/pencil.svg">
 			<?endif;?>
@@ -75,8 +75,7 @@
 		<? } ?>
 		</span>
 		<?php if ( !isset ( $wikiData->description ) ) { ?>
-			<span class="hero-description-default-text sg-main"> Add a summary that will be used to
-			promote your page in search results and on other promotional areas.
+			<span class="hero-description-default-text sg-main"> Click to add a summary that will promote your wikia in searches and on hubs.
 		</span>
 		<? } ?>
 		<? if ($isAllowedToEdit): ?>
