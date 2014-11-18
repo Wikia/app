@@ -190,12 +190,14 @@
 							self.form = new window.UserLoginFacebookForm($modal, {
 								ajaxLogin: true,
 								callback: function (res) {
+									var location = decodeURIComponent(res.returnto);
+
 									// Track FB Connect Sign Up
 									self.track({
 										action: self.actions.SUBMIT,
 										label: 'facebook-login-modal'
 									});
-									var location = decodeURIComponent(res.returnto);
+
 									if (res.returntoquery) {
 										location += '?' + decodeURIComponent(res.returntoquery);
 									}
