@@ -1,7 +1,7 @@
 define(
 	'wikia.recommendations',
-	['wikia.loader', 'wikia.window', 'wikia.mustache', 'JSMessages', 'wikia.thumbnailer'],
-	function(loader, win, mustache, msg, thumbnailer) {
+	['wikia.loader', 'wikia.window', 'wikia.mustache', 'JSMessages', 'wikia.thumbnailer', 'wikia.arrayHelper'],
+	function(loader, win, mustache, msg, thumbnailer, arrayHelper) {
 		'use strict';
 
 		var controllerName = 'RecommendationsApi',
@@ -60,7 +60,7 @@ define(
 
 				if (typeof(callback) === 'function') {
 					slotsData = JSON.parse(res.templates[controllerName + '_' + methodName]).items;
-					// TODO shuffle
+					slotsData = arrayHelper.shuffle(slotsData);
 
 					for (i=0; i < slotsData.length; i++) { // TODO length
 						slot = {
