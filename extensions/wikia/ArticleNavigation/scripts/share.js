@@ -1,14 +1,41 @@
 require([
-	'wikia.window', 'wikia.document', 'wikia.tracker'
-], function(win, doc, tracker) {
+	'wikia.window', 'wikia.underscore', 'wikia.document', 'wikia.tracker', 'wikia.dropdownNavigation', 'jquery'
+], function(win, _, doc, tracker, dropdownNavigation, $) {
 	'use strict';
 
-	var trackFunc = tracker.buildTrackingFunction({
+
+	var dropdownId = 'shareActionsDropdown',
+		dropdownParams = {
+			id: dropdownId,
+			trigger: 'articleShareActions',
+			render: false
+		},
+		delayHoverParams = {
+			onActivate: show,
+			onDeactivate: hide,
+			activateOnClick: false
+		},
+		$win = $(win),
+		dropdown,
+		$dropdown,
+		$parent,
+		trackFunc,
+		debouncedUpdatePosition;
+
+	/**
+	 * @desc Tracking function
+	 */
+	trackFunc = tracker.buildTrackingFunction({
 		action: Wikia.Tracker.ACTIONS.CLICK,
 		category: 'share',
 		trackingMethod: 'both'
 	});
 
+	/**
+	 * @desc Share click handler
+	 *
+	 * @param {Event} event
+	 */
 	function shareLinkClick(event) {
 		var url = event.target.getAttribute('href'),
 			title = event.target.getAttribute('title'),
@@ -21,13 +48,70 @@ require([
 		event.preventDefault();
 	}
 
+	/**
+	 * @desc Share link tracking handler
+	 *
+	 * @param {Event} event
+	 */
 	function shareLinkTrack(event) {
 		trackFunc({label: event.target.getAttribute('data-share-name')});
 	}
 
-	[].forEach.call(doc.getElementsByClassName('share-link'), function(element) {
-		element.addEventListener('click', shareLinkClick);
-		element.addEventListener('touchstart', shareLinkTrack);
-		element.addEventListener('mousedown', shareLinkTrack);
+
+	/**
+	 * @desc How much user has scrolled, if enough hide multiple share buttons and show dropdown (and unbind)
+	 */
+	function updatePosition() {
+		if ($win.scrollTop() > 250) {
+			win.removeEventListener('scroll', debouncedUpdatePosition);
+
+			$('.article-navigation').addClass('single-share');
+
+			initializeDropdown();
+		}
+	}
+
+	/**
+	 * @desc shows dropdown
+	 * @param {Event=} event
+	 */
+	function show(event) {
+		$parent.addClass('active');
+
+		// handle touch interactions
+		if (event) {
+			event.stopPropagation();
+		}
+
+		$('body').one('click', hide);
+	}
+
+	/**
+	 * @desc hides dropdown
+	 */
+	function hide() {
+		dropdown.resetUI();
+		$parent.removeClass('active');
+	}
+
+	/**
+	 * @desc initialize dropdown
+	 */
+	function initializeDropdown() {
+		dropdown = dropdownNavigation(dropdownParams);
+
+		$dropdown = $('#' + dropdownId);
+		$parent = $dropdown.parent();
+
+		win.delayedHover($parent[0], delayHoverParams);
+	}
+
+	// bind events to links
+	$('.share-link').each(function() {
+		$(this).on('click', shareLinkClick).on('touchstart mousedown', shareLinkTrack);
 	});
+
+	// initialize one-time event to hide multiple shares
+	debouncedUpdatePosition = _.debounce(updatePosition, 1);
+	win.addEventListener('scroll', debouncedUpdatePosition);
 });

@@ -12,6 +12,9 @@ class ArticleNavigationController extends WikiaController {
 		$this->helper = new ArticleNavigationHelper();
 	}
 
+	/**
+	 * render index
+	 */
 	public function index() {
 		$app = F::app();
 
@@ -20,13 +23,16 @@ class ArticleNavigationController extends WikiaController {
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
-		$this->editActionsDropdown = $this->renderEditActions();
-
-		$this->setVal('share_type', 'multiple');
-		$this->setVal('share', $app->renderView('ArticleNavigationController', 'share'));
-		$this->setVal('user_tools', json_encode($this->helper->extractDropdownData($this->generateUserTools())));
+		$this->setVal( 'edit_actions_dropdown', $this->renderEditActions() );
+		$this->setVal( 'share', $app->renderView( 'ArticleNavigationController', 'share' ) );
+		$this->setVal( 'user_tools', json_encode( $this->helper->extractDropdownData( $this->generateUserTools() ) ) );
 	}
 
+	/**
+	 * Render Dropdown for Edit Actions
+	 * @return string
+	 * @throws Exception
+	 */
 	private function renderEditActions() {
 		return \MustacheService::getInstance()->render(
 			'resources/wikia/ui_components/dropdown_navigation/templates/dropdown.mustache',
@@ -34,6 +40,10 @@ class ArticleNavigationController extends WikiaController {
 		);
 	}
 
+	/**
+	 * Prepare data for edit actions
+	 * @return array
+	 */
 	private function editActionsData()
 	{
 		$contentActions = $this->app->getSkinTemplateObj()->data['content_actions'];
@@ -83,9 +93,14 @@ class ArticleNavigationController extends WikiaController {
 		];
 	}
 
+	/**
+	 * render share
+	 */
 	public function share() {
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
-		$this->services = $this->prepareShareServicesData();
+
+		$this->setVal('services', $this->prepareShareServicesData());
+		$this->setVal('dropdown', $this->renderShareActions());
 	}
 
 	/**
@@ -114,6 +129,45 @@ class ArticleNavigationController extends WikiaController {
 		}
 
 		return $services;
+	}
+
+	/**
+	 * Render Share dropdown
+	 * @return string
+	 * @throws Exception
+	 */
+	private function renderShareActions() {
+		return \MustacheService::getInstance()->render(
+			'resources/wikia/ui_components/dropdown_navigation/templates/dropdown.mustache',
+			$this->shareActionsData()
+		);
+	}
+
+	/**
+	 * Prepare data for share dropdown
+	 * @return array
+	 */
+	private function shareActionsData()
+	{
+		$actions = [];
+
+		foreach ($this->prepareShareServicesData() as $service) {
+			$data = [
+				'href' => $service['full_url'],
+				'title' => $service['title'],
+				'class' => 'share-link',
+				'data' => [
+					'share-name' => $service['name']
+				]
+			];
+
+			$actions[] = $data;
+		}
+
+		return [
+			'id' => 'shareActionsDropdown',
+			'sections' => $actions,
+		];
 	}
 
 	public function getUserTools() {
