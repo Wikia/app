@@ -1,4 +1,5 @@
 @import 'skins/shared/color';
+@import 'extensions/wikia/Venus/styles/color';
 @import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/Venus/styles/variables';
 
@@ -24,7 +25,8 @@ $small-grid-slot-big-height: 2 * $small-grid-slot-small-height + $small-grid-gut
 	}
 
 	.slot {
-		background-color: #fff; // TODO color
+		background-color: $global-wikia-background-color;
+		border-bottom: 8px solid $global-wikia-background-color;
 		float: left;
 		overflow: hidden;
 		margin: 0 $medium-grid-gutter $medium-grid-gutter 0;
@@ -54,7 +56,6 @@ $small-grid-slot-big-height: 2 * $small-grid-slot-small-height + $small-grid-gut
 	.slot-small {
 		@include grid-column-width('medium', 3);
 
-		border-bottom: 8px solid #fff; // TODO color
 		font-size: $font-size-xs;
 		height: $medium-grid-slot-small-height;
 
@@ -79,7 +80,7 @@ $small-grid-slot-big-height: 2 * $small-grid-slot-small-height + $small-grid-gut
 	.slot-big {
 		@include grid-column-width('medium', 6);
 
-		border-bottom: 20px solid #fff; // TODO
+		border-bottom-width: 20px;
 		font-size: $font-size-base;
 		height: $medium-grid-slot-big-height;
 
