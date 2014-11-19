@@ -122,7 +122,7 @@ class FacebookClient {
 				$session->validate();
 				$this->session = $session;
 			} catch ( \Exception $ex ) {
-				$log->warning( 'Invalid Facebook session found', [
+				$log->warning( __CLASS__ . ': Invalid Facebook session found', [
 					'fbUserId' => $this->facebookUserId,
 					'method' => __METHOD__,
 					'message' => $ex->getMessage(),
@@ -141,7 +141,7 @@ class FacebookClient {
 			$this->session = $session;
 			$memc->set( $this->getTokenMemcKey(), $session->getAccessToken(), self::TOKEN_TTL );
 		} catch ( \Exception $ex ) {
-			$log->warning( 'Invalid Facebook session found', [
+			$log->warning( __CLASS__ . ':Invalid Facebook session found', [
 				'fbUserId' => $this->facebookUserId,
 				'method' => __METHOD__,
 				'message' => $ex->getMessage(),
