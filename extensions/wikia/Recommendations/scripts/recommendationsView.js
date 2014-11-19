@@ -26,7 +26,7 @@ define(
 				columnCount = slotColumnCounts[size];
 			}
 			return layout.getGridColumnWidth(
-				layout.getBreakpoint(), // TODO cache
+				layout.getBreakpoint(),
 				columnCount
 			);
 		}
@@ -95,11 +95,12 @@ define(
 				i,
 				slot = {},
 				slots = [],
+				slotsDataLength = slotsData.length,
 				slotSizes,
 				template;
 
 			slotSizes = getSlotSizes();
-			for (i = 0; i < slotsData.length; i++) { // TODO length
+			for (i = 0; i < slotsDataLength; i++) {
 				slot = {
 					title: slotsData[i].title,
 					url: slotsData[i].url,
