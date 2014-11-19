@@ -90,8 +90,8 @@ class ArticleAsJson extends WikiaService {
 				if ( !empty( $caption ) ) {
 					$caption = $parser->parse( $caption, $title, $parserOptions, false )->getText();
 				}
-
-				$media[] = self::createMediaObj( $details, $image['name'], $caption, $image['linkhref'] );
+				$linkHref = isset( $image['linkhref'] ) ? $image['linkhref'] : null;
+				$media[] = self::createMediaObj( $details, $image['name'], $caption, $linkHref );
 
 				self::addUserObj($details);
 			}

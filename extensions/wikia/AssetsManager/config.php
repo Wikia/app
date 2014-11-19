@@ -79,7 +79,6 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdProviderLater.js',
 		'//extensions/wikia/AdEngine/js/AdProviderNull.js',
 		'//extensions/wikia/AdEngine/js/AdProviderRemnantGpt.js',
-		'//extensions/wikia/AdEngine/js/AdProviderTaboola.js',
 		'//extensions/wikia/AdEngine/js/AdTemplateSkin.js',
 		'//extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
 		'//extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
@@ -126,6 +125,14 @@ $config['adengine2_bottom_leaderboard_js'] = array(
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/AdSlotBottomLeaderboard.js',
 		'//extensions/wikia/AdEngine/js/AdSlotBottomLeaderboard.run.js',
+	),
+);
+
+$config['adengine2_taboola_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis', 'venus', 'wikiamobile' ],
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/AdProviderTaboola.js',
 	),
 );
 
@@ -1484,6 +1491,72 @@ $config['wikiaphotogallery_slider_scss_wikiamobile'] = array(
 			'//extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.wikiamobile.scss'
 	)
 );
+
+$config['wikia_photo_gallery_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js',
+	]
+];
+
+$config['wikia_photo_gallery_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//extensions/wikia/WikiaPhotoGallery/css/gallery.scss',
+	]
+];
+
+$config['wikia_photo_gallery_slideshow_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//resources/wikia/libraries/jquery/slideshow/jquery-slideshow-0.4.js',
+		'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slideshow.js',
+	]
+];
+
+$config['wikia_photo_gallery_slideshow_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//extensions/wikia/WikiaPhotoGallery/css/slideshow.scss',
+	]
+];
+
+$config['wikia_photo_gallery_slider_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slider.js',
+	]
+];
+
+$config['wikia_photo_gallery_slider_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.scss',
+	]
+];
+
+$config['wikia_photo_gallery_mosaic_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//resources/wikia/libraries/modernizr/modernizr-2.0.6.js',
+		'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slider.mosaic.js',
+	]
+];
+
+$config['wikia_photo_gallery_mosaic_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.mosaic.scss',
+	]
+];
 
 // ImageDrop
 $config['imagedrop_js'] = array(
