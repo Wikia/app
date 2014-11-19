@@ -14,7 +14,7 @@ function( window, nirvana, $, thumbnailer, lazyload, sloth, msg, mustache, secti
 		articleId = window.wgArticleId,
 		testGroup = Wikia.AbTest.getGroup( 'WIKIAMOBILE_RELATEDPAGES' ),
 		minSectionLength = 1000,
-		$placeholder = $( '#wkRltdCnt' ),
+		$placeholder = $( '#RelatedPagesModuleWrapper' ),
 		cacheKey = 'RelatedPagesAssets',
 		loaded,
 		shouldLoad = $placeholder.length && articleId;

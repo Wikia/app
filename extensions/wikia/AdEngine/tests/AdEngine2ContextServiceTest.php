@@ -74,7 +74,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$customDartKvs = 'a=b;c=d';
 		$catId = WikiFactoryHub::CATEGORY_ID_LIFESTYLE;
 		$shortCat = 'shortcat';
-		$kruxId = WikiFactoryHub::getInstance()->getKruxId( $catId );
 		$sevenOneMediaSub2Site = 'customsub2site';
 		$expectedSevenOneMediaUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3Den%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sevenonemedia';
 
@@ -126,7 +125,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 				'showAds' => true,
 			],
 			'targeting' => [
-				'kruxCategoryId' => $kruxId,
 				'pageName' => $artDbKey,
 				'pageType' => 'article',
 				'sevenOneMediaSub2Site' => $sevenOneMediaSub2Site,

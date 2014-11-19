@@ -1103,9 +1103,10 @@ $wgPasswordSenderName = 'Wikia';
  *
  * @var array
  */
-$wgResourceLoaderAssetsSkinMapping = array(
+$wgResourceLoaderAssetsSkinMapping = [
 	'oasis' => 'wikia', // in Oasis we use Wikia.js (and Wikia.css) instead of Oasis.js (Oasis.css)
-);
+	'venus' => 'wikia', // in Venus we use Wikia.js (and Wikia.css) instead of Venus.js (Venus.css) - CON-2113
+];
 
 /**
  * @see https://wikia.fogbugz.com/default.asp?36946
@@ -1202,17 +1203,17 @@ $wgWikiaHubsFileRepoPath = 'http://corp.wikia.com/';
 $wgWikiaHubsFileRepoDirectory = '/images/c/corp/images';
 
 /**
- * @name $wgEnableAmazonDirectTargetedBuy
- * Enables AmazonDirectTargetedBuy integration
+ * @name $wgEnableAmazonMatch
+ * Enables AmazonMatch integration
  */
-$wgEnableAmazonDirectTargetedBuy = true;
+$wgEnableAmazonMatch = true;
 
 /**
- * @name $wgAmazonDirectTargetedBuyCountries
- * Enables AmazonDirectTargetedBuy integration in theese countries (given AmazonDirectTargetedBuy is also true)
+ * @name $wgAmazonMatchCountries
+ * Enables AmazonMatch integration in these countries (given AmazonMatch is also true)
  * "Utility" var, don't change it here.
  */
-$wgAmazonDirectTargetedBuyCountries = null;
+$wgAmazonMatchCountries = null;
 
 /**
  * @name $wgAdPageLevelCategoryLangs

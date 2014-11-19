@@ -314,6 +314,14 @@ $messages['fr'] = array(
 	'cloakcheck-process-edits-no' => 'L’utilisateur n’a pas suffisamment de modifications.',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'cloakcheck-form-username' => 'Brûkersnamme:',
+	'cloakcheck-process-username' => 'Brûkersnamme: $1',
+);
+
 /** Galician (galego)
  * @author Toliño
  */
