@@ -133,6 +133,7 @@ $header-without-cover-unit-spacing: 60px;
 
 	blockquote {
 		@include font-size-xl;
+		line-height: 36px;
 		margin: 0 0 $article-items-spacing;
 		overflow: hidden;
 		padding-top: 30px;
