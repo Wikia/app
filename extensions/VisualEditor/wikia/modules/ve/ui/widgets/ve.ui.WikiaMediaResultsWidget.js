@@ -53,10 +53,24 @@ ve.ui.WikiaMediaResultsWidget.prototype.onResultsCheck = function ( item ) {
 	this.emit( 'check', item );
 };
 
+/**
+ * Handle metadata event
+ *
+ * @method
+ * @param {ve.ui.WikiaMediaOptionWidget} item Item that fired the event
+ * @param {jQuery.Event} event jQuery Event
+ */
 ve.ui.WikiaMediaResultsWidget.prototype.onResultsMetadata = function ( item, event ) {
 	this.emit( 'metadata', item, event );
 };
 
+/**
+ * Handle label event
+ *
+ * @method
+ * @param {ve.ui.WikiaMediaOptionWidget} item Item that fired the event
+ * @param {jQuery.Event} event jQuery Event
+ */
 ve.ui.WikiaMediaResultsWidget.prototype.onResultsLabel = function ( item, event ) {
 	this.emit( 'label', item, event );
 };

@@ -271,6 +271,8 @@ ve.ui.WikiaSingleMediaDialog.prototype.handleChoose = function ( item ) {
  * Handle showing the media preview
  *
  * @method
+ * @param {ve.ui.WikiaMediaOptionWidget} item Item to preview
+ * @param {jQuery.Event} event jQuery Event
  */
 ve.ui.WikiaSingleMediaDialog.prototype.handlePreview = function ( item, event ) {
 	var data = item.getData();
