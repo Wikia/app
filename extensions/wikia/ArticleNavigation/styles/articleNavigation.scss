@@ -35,7 +35,9 @@ $dropdownArrowSize: 10px;
 	.nav-icon {
 		@include venus-icons-font;
 
-		color: $color-article-navigation-inactive;
+		background: $color-article-navigation-inactive;
+		border-radius: 50%;
+		color: $color-page;
 		cursor: pointer;
 		display: block;
 		font-size: $article-navigation-icon-size;
@@ -98,7 +100,8 @@ $dropdownArrowSize: 10px;
 
 	.active .nav-icon,
 	.nav-icon:hover {
-		color: $color-buttons;
+		background: $color-buttons;
+		color: $color-button-text;
 	}
 }
 
