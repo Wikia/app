@@ -1,4 +1,4 @@
-require(['wikia.document', 'wikia.recommendations'], function(d, recommendations){
+require(['wikia.document', 'wikia.recommendations', 'wikia.recommendations.tracking'], function(d, recommendations, tracking){
 	'use strict';
 
 	// TODO add sloth and move insertion logic to lazy loaded js
@@ -13,6 +13,8 @@ require(['wikia.document', 'wikia.recommendations'], function(d, recommendations
 		moduleContainer.innerHTML = data;
 
 		articleContainer.appendChild(moduleContainer);
+
+		tracking.init(moduleContainer);
 	}
 
 	function addRecommendationsModule() {

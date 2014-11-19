@@ -1,18 +1,31 @@
-define('wikia.recommendations.tracking', ['wikia.tracker', 'wikia.document'], function(tracker, d){
+define('wikia.recommendations.tracking', ['wikia.document', 'wikia.tracker', 'wikia.dom'], function(d, tracker, dom){
 	'use strict';
 
-	var recommendationSlots = d.getElementById('recommendations').getElementsByClassName('slot');
-
 	function trackGARecommendation(e) {
-		var label = e.target.dataset.type;
+		var node = e.target,
+			slot, label;
 
-		tracker.track({
-			action: tracker.ACTIONS.CLICK,
-			category: 'Recommendation',
-			label: label,
-			trackingMethod: 'ga'
-		});
+		if (node.tagName === 'A' || (node = dom.closestByTagName(node, 'A')) !== false) {
+			slot = dom.closestByClassName(node, 'slot');
+
+			if (slot !== false) {
+				label = slot.dataset.type;
+
+				tracker.track({
+					action: tracker.ACTIONS.CLICK,
+					category: 'Recommendation',
+					label: label,
+					trackingMethod: 'ga'
+				});
+			}
+		}
 	}
 
-	recommendationSlots.addEventListener('click', trackGARecommendation);
+	function init(recommendations) {
+		recommendations.addEventListener('click', trackGARecommendation, false);
+	}
+
+	return {
+		init: init
+	};
 });
