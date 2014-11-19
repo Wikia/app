@@ -4,11 +4,31 @@ define(
 	function(loader, win, $, nirvana, arrayHelper) {
 		'use strict';
 
+
+		function init(container) {
+			load(insertModule, container);
+		}
+
+		function insertModule(data, container) {
+			require(['wikia.recommendations.tracking', 'wikia.document'], function(tracking, d){
+				var moduleContainer = d.createElement('div');
+
+				moduleContainer.id = 'recommendations';
+				moduleContainer.classList.add('recommendations');
+
+				moduleContainer.innerHTML = data;
+
+				container.appendChild(moduleContainer);
+
+				tracking.init(moduleContainer);
+			});
+		}
+
 		/**
 		 * @desc Load recommendations template
 		 * @param {Function} callback function passed to process recieved template
 		 */
-		function load(callback) {
+		function load(callback, container) {
 			$.when(
 				nirvana.sendRequest({
 					controller: 'RecommendationsApi',
@@ -37,13 +57,14 @@ define(
 						slotsData = arrayHelper.shuffle(slotsData[0].items);
 
 						template = view.render(slotsData, res.mustache);
-						callback(template);
+						callback(template, container);
 					});
 				}
 			});
 		}
 
 		return {
+			init: init,
 			load: load
 	};
 });
