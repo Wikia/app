@@ -225,6 +225,14 @@ $messages['fr'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Erreur : le corps de la page est nécessaire',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'Titel',
+	'contentfeeds-firstfewarticles-tag-next' => 'Folgjende',
+);
+
 /** Galician (galego)
  * @author Toliño
  */

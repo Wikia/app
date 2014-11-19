@@ -554,6 +554,16 @@ $messages['fr'] = array(
 	'quickstats-number-shortening-billions' => '$1 Mrd',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'quickstats-header-date' => 'Datum',
+	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1*10ˆ6',
+	'quickstats-number-shortening-billions' => '$1*10ˆ9',
+);
+
 /** Galician (galego)
  * @author Toliño
  * @author Vivaelcelta

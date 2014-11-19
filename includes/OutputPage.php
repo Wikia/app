@@ -459,6 +459,21 @@ class OutputPage extends ContextSource {
 	 * @return Array of module names
 	 */
 	public function getModules( $filter = false, $position = null, $param = 'mModules' ) {
+		// Wikia change - begin - @author macbre
+		// Load all ResourceLoader modules at the bottom of the page
+		// when the skin has the flag set (e.g. Venus)
+		$skin = $this->getSkin();
+		if ( $skin instanceof WikiaSkin && !empty( $skin->pushRLModulesToBottom ) ) {
+			// when asked for top modules return nothing
+			if ( $position === 'top' ) {
+				return [];
+			}
+
+			// otherwise, return all modules - null means no filtering below
+			$position = null;
+		}
+		// Wikia change - end
+
 		$modules = array_values( array_unique( $this->$param ) );
 		return $filter
 			? $this->filterModules( $modules, $position )

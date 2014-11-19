@@ -2156,6 +2156,14 @@ $messages['fr'] = array(
 	'newwikisgraph-param-other' => 'Autre',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'wf_city_lang' => 'Taal',
+	'wf_cc_name' => 'Kategory',
+);
+
 /** Galician (galego)
  * @author Toliño
  * @author Vivaelcelta
@@ -4365,7 +4373,7 @@ regist.',
 	'closed-wiki' => 'Wiki fechada',
 	'closed-wiki-info' => 'Esta wiki foi fechada',
 	'disabled-wiki-info' => 'Esta wiki foi desativada',
-	'closed-wiki-dump-exists' => 'Pode recuperar o conteúdo se quiser.<br />(Se a sua wiki foi fechada há pouco, pode levar algum tempo até os ficheiros serem gerados)', # Fuzzy
+	'closed-wiki-dump-exists' => 'Pode recuperar o conteúdo se quiser.<br />(Se a sua wiki foi fechada recentemente, pode levar algum tempo até os ficheiros serem gerados)',
 	'closed-wiki-dump-noexists' => 'Esta wiki foi fechada. A cópia do conteúdo em ficheiro estará disponível nas próximas 24 horas. Verifique novamente mais tarde.',
 	'closed-wiki-create-wiki' => 'Criar uma wiki nova',
 	'closed-wiki-policy' => 'Consulte as Normas de Fecho da Wikia',
@@ -5635,6 +5643,7 @@ $messages['zh-hans'] = array(
 	'closewiki-return' => '返回$1',
 	'wikifactory-button-saveparse' => '解析并保存更改',
 	'wikifactory-button-save' => '保存更改',
+	'wikifactory-public-status-change-default-reason' => '状态已从域名选项卡更改。',
 	'awc-metrics-wikis' => '显示Wiki',
 	'awc-metrics-select' => '显示Wiki：',
 	'awc-metrics-by-language' => '按语言：',
@@ -5679,6 +5688,7 @@ $messages['zh-hans'] = array(
 	'awc-metrics-pageviews-label' => '以及$1次页面监视在过去的$2天',
 	'awc-metrics-close-listed' => '关闭列出的',
 	'awc-metrics-close-checked' => '关闭选中的',
+	'awc-metrics-exact-match' => '精确匹配',
 	'closed-wiki' => '已关闭的维基',
 	'closed-wiki-info' => '此维基已关闭',
 	'disabled-wiki-info' => '此维基已禁用',

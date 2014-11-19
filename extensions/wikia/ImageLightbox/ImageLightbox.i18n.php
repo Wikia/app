@@ -451,6 +451,16 @@ Détails : $2',
 	'lightbox-visit-the-wiki' => 'Visiter le wiki :',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'lightbox-forum' => 'Foarum',
+	'lightbox-share-button-email' => 'E-mail',
+	'lightbox-share-email-page-label-address' => 'E-mailadres',
+	'lightbox-share-email-error-caption' => 'Flater',
+);
+
 /** Galician (galego)
  * @author Toliño
  */
@@ -950,11 +960,31 @@ Detalhes: $2',
 $messages['pt-br'] = array(
 	'lightbox_details_tooltip' => 'Ver detalhes da foto',
 	'lightbox-forum' => 'Fórum',
+	'lightbox-standard-link' => 'Link padrão',
+	'lightbox-blog-link' => 'Link do blog',
 	'lightbox-send' => 'Enviar',
+	'lightbox-share-description' => 'Foto em $1 em $2',
+	'lightbox-share-email-subject' => '$1 lhe enviou uma foto na Wikia',
+	'lightbox-share-email-body' => 'Olá,
+
+Alguém queria te mostrar uma foto na Wikia. Confira:
+
+$1
+
+- A equipe da Wikia',
+	'lightbox-share-button-email' => 'E-mail',
 	'lightbox-share-button-www' => 'Compartilhar',
 	'lightbox-share-button-embed' => 'Incorporar',
+	'lightbox-share-email-label' => 'Enviar por e-mail esta imagem a um amigo',
+	'lightbox-share-email-page-label' => 'Enviar por e-mail esta página a um amigo',
+	'lightbox-share-email-page-label-address' => 'Endereço de e-mail',
 	'lightbox-share-email-ok-caption' => 'Confirmação',
+	'lightbox-share-email-ok-content' => '{{PLURAL:$1|O e-mail foi enviado|Os e-mails foram enviados}}.',
 	'lightbox-share-email-error-caption' => 'Erro',
+	'lightbox-share-email-error-content' => 'Erro ao enviar {{PLURAL:$1|o e-mail|os e-mails}}.
+Detalhes: $2',
+	'lightbox-share-email-error-login' => 'Para enviar e-mails você precisa fazer o login',
+	'lightbox-share-email-error-noaddress' => 'Nenhum endereço foi especificado.',
 	'lightbox-visit-the-wiki' => 'Visite a wikia:',
 );
 
