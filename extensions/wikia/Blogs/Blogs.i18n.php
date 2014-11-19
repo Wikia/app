@@ -1989,6 +1989,15 @@ Créez des pages de liste de blogs pour des catégories comme, par exemple, « B
 	'user-blog-url-link' => 'Blog utilisateur: $1',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'create-blog-listing-sortby-author' => 'Auteur',
+	'blog-comment-history' => 'skiednis',
+	'blog-comment-edit' => 'bewurkje',
+);
+
 /** Galician (galego)
  * @author Toliño
  */

@@ -1080,6 +1080,16 @@ Veuillez [[Special:Contact|contacter Wikia]] à propos de ce problème.<br />La 
 	'right-phalanxemailblock' => 'Vous pouvez lister, voir et gérer les blocs basés sur les courriels.',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'phalanx' => 'Phalanx',
+	'phalanx-type-user-email' => 'e-mail',
+	'phalanx-label-lang' => 'Taal:',
+	'phalanx-stats-table-language' => 'Taal',
+);
+
 /** Galician (galego)
  * @author Toliño
  */

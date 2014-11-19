@@ -5,7 +5,7 @@ define('ext.wikia.adEngine.rubiconRtp', [
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adTracker, document, log, w) {
+], function (adTracker, document, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.rubiconRtp',
@@ -65,22 +65,23 @@ define('ext.wikia.adEngine.rubiconRtp', [
 		rtpConfig = config;
 
 		// Configuration through globals:
-		w.oz_async = true;
-		w.oz_cached_only = config.oz_cached_only;
-		w.oz_api = config.oz_api || "valuation";
-		w.oz_ad_server = config.oz_ad_server || "dart";
-		w.oz_site = config.oz_site;
-		w.oz_zone = config.oz_zone;
-		w.oz_ad_slot_size = config.oz_ad_slot_size;
+		win.oz_async = true;
+		win.oz_cached_only = config.oz_cached_only;
+		win.oz_api = config.oz_api || "valuation";
+		win.oz_ad_server = config.oz_ad_server || "dart";
+		win.oz_site = config.oz_site;
+		win.oz_zone = config.oz_zone;
+		win.oz_ad_slot_size = config.oz_ad_slot_size;
 
 		rubiconCalled = true;
 		rtpTiming = adTracker.measureTime('rubicon', timingEventData, 'start');
 		rtpTiming.track();
 
-		w.oz_callback = onRubiconResponse;
+		win.oz_callback = onRubiconResponse;
 
 		var s = document.createElement('script');
-		s.src = '//tap-cdn.rubiconproject.com/partner/scripts/rubicon/dorothy.js?pc=' + w.oz_site;
+		s.id = logGroup;
+		s.src = '//tap-cdn.rubiconproject.com/partner/scripts/rubicon/dorothy.js?pc=' + win.oz_site;
 		s.async = true;
 		document.body.appendChild(s);
 	}

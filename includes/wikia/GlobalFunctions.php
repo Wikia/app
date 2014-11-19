@@ -1746,3 +1746,16 @@ function wfReturnArray( $value ) {
 	}
 	return $value;
 }
+
+/**
+ * Get unique array (case insensitive). This works because array_unique preserves
+ * the numeric array indices and then array_intersect_key compares these indices
+ * and not the values themselves. Implemention could probably be improved.
+ * @param array $arr
+ * @return array $unique
+ */
+function wfGetUniqueArrayCI( array $arr ) {
+	$lower = array_map( 'strtolower', $arr );
+	$unique = array_intersect_key( $arr, array_unique( $lower ) );
+	return array_filter( $unique );
+}

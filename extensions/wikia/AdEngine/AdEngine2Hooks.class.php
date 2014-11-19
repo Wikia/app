@@ -6,6 +6,9 @@ class AdEngine2Hooks {
 	const ASSET_GROUP_CORE = 'oasis_shared_core_js';
 	const ASSET_GROUP_ADENGINE = 'adengine2_js';
 	const ASSET_GROUP_ADENGINE_RUBICON_RTP = 'adengine2_rubicon_rtp_js';
+	const ASSET_GROUP_ADENGINE_MOBILE = 'wikiamobile_ads_js';
+	const ASSET_GROUP_ADENGINE_TABOOLA = 'adengine2_taboola_js';
+	const ASSET_GROUP_ADENGINE_AMAZON_MATCH = 'adengine2_amazon_match_js';
 	const ASSET_GROUP_ADENGINE_TRACKING = 'adengine2_tracking_js';
 	const ASSET_GROUP_ADENGINE_LATE = 'adengine2_late_js';
 	const ASSET_GROUP_SPOTLIGHTS = 'adengine2_spotlights_js';
@@ -58,7 +61,7 @@ class AdEngine2Hooks {
 		$vars[] = 'wgSitewideDisableRubiconRTP';
 
 		$vars[] = 'wgHighValueCountries';
-		$vars[] = 'wgAmazonDirectTargetedBuyCountries';
+		$vars[] = 'wgAmazonMatchCountries';
 
 		$vars[] = 'wgAdDriverAlwaysCallDartInCountries';
 
@@ -107,7 +110,7 @@ class AdEngine2Hooks {
 	 */
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
 
-		global $wgAdDriverUseBottomLeaderboard, $wgAdDriverUseTopInContentBoxad;
+		global $wgAdDriverUseBottomLeaderboard, $wgAdDriverUseTopInContentBoxad, $wgAdDriverUseTaboola;
 
 		$coreGroupIndex = array_search( self::ASSET_GROUP_CORE, $jsAssets );
 		if ( $coreGroupIndex === false ) {
@@ -139,6 +142,10 @@ class AdEngine2Hooks {
 
 		if ( $wgAdDriverUseBottomLeaderboard === true ) {
 			$jsAssets[] = 'adengine2_bottom_leaderboard_js';
+		}
+
+		if ( $wgAdDriverUseTaboola === true ) {
+			$jsAssets[] = self::ASSET_GROUP_ADENGINE_TABOOLA;
 		}
 
 		$jsAssets[] = 'adengine2_interactive_maps_js';
@@ -173,6 +180,10 @@ class AdEngine2Hooks {
 			$jsAssets[] = self::ASSET_GROUP_ADENGINE_RUBICON_RTP;
 		}
 
+		if ( AnalyticsProviderAmazonMatch::isEnabled() ) {
+			$jsAssets[] = self::ASSET_GROUP_ADENGINE_AMAZON_MATCH;
+		}
+
 		return true;
 	}
 
@@ -199,6 +210,36 @@ class AdEngine2Hooks {
 		$scriptModules[] = 'wikia.querystring';
 		$scriptModules[] = 'wikia.tracker.stub';
 		$scriptModules[] = 'wikia.window';
+		return true;
+	}
+
+	/**
+	 * Modify assets appended to the bottom of wikiaMobileSkin
+	 *
+	 * Note the dependency resolver does not work at this time, so we need to add every
+	 * module needed including their dependencies.
+	 *
+	 * @static
+	 * @param $jsStaticPackages
+	 * @param $jsExtensionPackages
+	 * @param $scssPackages
+	 * @return bool
+	 */
+	public static function onWikiaMobileAssetsPackages( array &$jsStaticPackages, array &$jsExtensionPackages, array &$scssPackages ) {
+
+		global $wgAdDriverUseTaboola;
+
+		$coreGroupIndex = array_search( self::ASSET_GROUP_ADENGINE_MOBILE, $jsStaticPackages );
+
+		if ( $coreGroupIndex === false ) {
+			// Do nothing. ASSET_GROUP_ADENGINE_MOBILE must be present for ads to work
+			return true;
+		}
+
+		if ( $wgAdDriverUseTaboola === true ) {
+			array_splice( $jsStaticPackages, $coreGroupIndex, 0, self::ASSET_GROUP_ADENGINE_TABOOLA );
+		}
+
 		return true;
 	}
 

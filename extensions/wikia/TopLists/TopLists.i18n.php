@@ -1716,6 +1716,7 @@ $messages['oc'] = array(
 
 /** Polish (polski)
  * @author BeginaFelicysym
+ * @author Chrumps
  * @author Sovq
  */
 $messages['pl'] = array(
@@ -1740,7 +1741,7 @@ $messages['pl'] = array(
 	'toplists-error-image-already-exists' => 'Obraz o tej samej nazwie już istnieje.',
 	'toplists-error-add-item-anon' => 'Anonimowi użytkownicy nie mogą dodawać elementów do listy. Prosimy <a class="ajaxLogin" id="login" href="$1"> zaloguj się</a> lub <a href="$2">zarejestruj konto</a>.',
 	'toplists-error-add-item-permission' => 'Błąd uprawnień: twoje konto nie posiada praw do tworzenia nowych elementów.',
-	'toplists-error-add-item-list-not-exists' => 'Lista Top 10 "$1" nie istnieje.',
+	'toplists-error-add-item-list-not-exists' => 'Lista Top 10 „$1” nie istnieje.',
 	'toplists-upload-error-unknown' => 'Wystąpił błąd podczas przetwarzania żądania przesłania. Spróbuj ponownie.',
 	'action-toplists-create-edit-list' => 'utwórz i edytuj listy Top 10',
 	'toplists-editor-title-label' => 'Nazwa listy',
@@ -2612,7 +2613,7 @@ $messages['zh-hans'] = array(
 - Wikia
 
 您可以<a href="$4">退订</a>本列表的变动。',
-	'toplists-seconds' => '$1{{PLURAL:$1|秒}}',
+	'toplists-seconds' => '$1秒',
 	'toplists-minutes' => '$1{{PLURAL:$1|分钟}}',
 	'toplists-hours' => '$1{{PLURAL:$1|小时}}',
 	'toplists-days' => '$1{{PLURAL:$1|天}}',
@@ -2620,6 +2621,7 @@ $messages['zh-hans'] = array(
 	'toplists-msg-fb-OnRateArticle-short' => '在$WIKINAME投票了一个前10列表！',
 	'toplists-create-heading' => '<em>新的！</em>创建你自己的前十',
 	'toplists-create-button-msg' => '创建列表',
+	'toplists-oasis-only' => '创建和编辑前10列表在Monobook皮肤下不可用。如果您希望使用此功能，请在您的用户设置中切换为Wikia皮肤。',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
