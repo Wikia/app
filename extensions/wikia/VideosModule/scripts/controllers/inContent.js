@@ -1,7 +1,7 @@
 require([
 	'videosmodule.views.index',
 	'videosmodule.models.videos',
-	'videosmodule.modules.nodeFinder',
+	'wikia.nodeFinder',
 	'wikia.mustache',
 	'videosmodule.templates.mustache',
 	'bucky',

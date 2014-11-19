@@ -80,8 +80,8 @@ module.exports = function (config) {
 			'extensions/wikia/Venus/scripts/modules/spec/integration/infobox.spec.js',
 
 			// nodeFinder
-			'extensions/wikia/VideosModule/scripts/modules/nodeFinder.module.js',
-			'extensions/wikia/VideosModule/scripts/spec/integration/nodeFinder.spec.js',
+			'resources/wikia/modules/nodeFinder.js',
+			'resources/wikia/modules/spec/integration/nodeFinder.spec.js',
 
 			// Lightbox
 			'extensions/wikia/Lightbox/scripts/Lightbox.js',

@@ -1,4 +1,4 @@
-define('videosmodule.modules.nodeFinder', function() {
+define('wikia.nodeFinder', function() {
 	'use strict';
 
 	/**
@@ -40,7 +40,7 @@ define('videosmodule.modules.nodeFinder', function() {
 	}
 
 	/**
-	 * Check if an element is visible.
+	 * Simple check if an element is visible.
 	 *
 	 * @param {Node} element node to be checked
 	 * @return {Bool}

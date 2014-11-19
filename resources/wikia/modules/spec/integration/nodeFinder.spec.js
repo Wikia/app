@@ -32,7 +32,7 @@ describe('nodeFinder', function(){
 
 	document.body.appendChild(articleMock);
 
-	nodeFinder = modules['videosmodule.modules.nodeFinder']();
+	nodeFinder = modules['wikia.nodeFinder']();
 
 	it('header should returned', function() {
 		var header = nodeFinder.getChildByOffsetTop(articleMock, 'h2', 100);
