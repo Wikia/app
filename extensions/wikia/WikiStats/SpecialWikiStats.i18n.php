@@ -260,6 +260,7 @@ Please [[Special:UserLogin|log in or create an account]] if you do not already h
 $messages['qqq'] = array(
 	'wikistats_info' => '"Show statistics" refers to {{msg-wikia|wikistats_showstats_btn}}.',
 	'wikistats_showstats_btn' => 'Button text, also referenced in {{msg-wikia|wikistats_info}}.',
+	'wikiastast_refresh_data' => '{{Identical|Refresh data}}',
 	'wikistats_panel_close_btn' => 'Button text. Translate as verb.
 {{Identical|Close}}',
 	'wikistats_daterange_from' => '{{Identical|From}}',
@@ -267,6 +268,7 @@ $messages['qqq'] = array(
 	'wikistats_latest_pageviews_subtitle' => '',
 	'wikistats_distrib_article_counting' => '{{Optional}}',
 	'wikistats_active_wikians_date' => 'Seen on the "Editor activity" page, the selections being "1 month", "2 months" ... "6 months".',
+	'wikistats_active_months' => '{{Identical|Month}}',
 	'wikistats_number_editors' => '{{Identical|Number of editors}}',
 	'wikistats_articles_text' => '{{Identical|Article}}',
 	'wikistats_archived' => '{{Identical|Archive}}',
@@ -3164,6 +3166,22 @@ de noms',
 	'wikistats_namespaces_maintenance' => 'Maintenance (MediaWiki, Modèle, Projet)',
 	'wikistats_namespace_top' => 'Espaces de noms prédéfinis',
 	'wikistats_error_malformed_date' => 'Erreur : La date saisie est incorrecte',
+);
+
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'wikistats_active_months' => 'moannen',
+	'wikistats_video' => 'Fideo',
+	'wikistats_bytes' => 'bytes',
+	'wikistats_image' => 'ôfbylding',
+	'wikistats_image_namespace' => 'ôfbylding',
+	'wikistats_more_txt' => 'mear',
+	'wikistats_wikilang' => 'Taal:',
+	'wikistats_trend_value' => 'wearde',
+	'wikistats_xls_cancel' => 'Annulearje',
+	'wikistats_search_text' => 'Sykje:',
 );
 
 /** Galician (galego)
@@ -10069,11 +10087,11 @@ $messages['zh-hant'] = array(
 	'wikistats_video_embeded' => '嵌入的',
 	'wikistats_uploaded_images' => '已上傳',
 	'wikistats_connection_error' => '連結錯誤',
-	'wikistats_distrib_edits' => '編輯 〉 =',
+	'wikistats_distrib_edits' => '編輯 >=',
 	'wikistats_distrib_wikians' => '已註冊的編輯者',
 	'wikistats_distrib_edits_total' => '編輯數共',
 	'wikistats_date' => '日期',
-	'wikistats_namespace' => '名字空間',
+	'wikistats_namespace' => '命名空間',
 	'wikistats_show' => '顯示',
 	'wikistats_stats' => '顯示 %s 統計',
 	'wikistats_hide' => '隱藏',

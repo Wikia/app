@@ -69,7 +69,7 @@
 <?= $comScore ?>
 <?= $quantServe ?>
 <?= $googleAnalytics ?>
-<?= $amazonDirectTargetedBuy ?>
+<?= $amazonMatch ?>
 <?= $dynamicYield ?>
 <?= $ivw2 ?>
 <?= $rubiconRtp ?>

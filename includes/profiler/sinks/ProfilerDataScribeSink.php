@@ -61,7 +61,7 @@ class ProfilerDataScribeSink implements ProfilerDataSink {
 	 * @return bool
 	 */
 	protected function checkDependencies() {
-		return is_callable( 'WScribeClient', 'singleton' );
+		return is_callable( 'WScribeClient::singleton' );
 	}
 
 }

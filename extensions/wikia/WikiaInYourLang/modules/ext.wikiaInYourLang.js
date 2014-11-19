@@ -37,6 +37,8 @@ require(
 					cache.set('wikiaInYourLangRequestSent', true, ttl);
 
 					getNativeWikiaInfo();
+				} else if (typeof cache.get(targetLanguage + 'WikiaInYourLangMessage') === 'string') {
+					displayNotification(cache.get(targetLanguage + 'WikiaInYourLangMessage'));
 				}
 			}
 		}
@@ -46,7 +48,7 @@ require(
 				geoCountryCode = geo.getCountryCode().toLowerCase();
 
 			// Check if a browser's language is one of the supported languages
-			if (typeof (browserLanguage) == 'string' && $.inArray(browserLanguage.substr(0, 2), supportedLanguages) !== -1) {
+			if (typeof browserLanguage === 'string' && $.inArray(browserLanguage.substr(0, 2), supportedLanguages) !== -1) {
 				targetLanguage = browserLanguage.substr(0, 2);
 				// Check if the country code is one of the supported languages
 			} else if ($.inArray(geoCountryCode, supportedLanguages) !== -1) {
@@ -79,10 +81,11 @@ require(
 				},
 				callback: function (results) {
 					if (results.success === true) {
-						// Display notification and then set tracking on
-						// the text link in it
+						// Display notification
 						displayNotification(results.message);
-						bindEvents();
+
+						// Save the message in cache to display until a user closes it
+						cache.set(targetLanguage + 'WikiaInYourLangMessage', results.message);
 					}
 				}
 			});
@@ -91,6 +94,7 @@ require(
 		function displayNotification(message) {
 			w.GlobalNotification.show(message, 'notify');
 
+			// Track a view of the notification
 			var trackingParams = {
 				trackingMethod: 'ga',
 				category: 'wikia-in-your-lang',
@@ -99,6 +103,9 @@ require(
 			};
 
 			tracker.track(trackingParams);
+
+			// Bind tracking of clicks on a link and events on close
+			bindEvents();
 		}
 
 		function bindEvents() {
@@ -112,6 +119,7 @@ require(
 		}
 
 		function onNotificationClosed() {
+			cache.set(targetLanguage + 'WikiaInYourLangMessage', null);
 			cache.set('wikiaInYourLangNotificationShown', true);
 		}
 
@@ -126,6 +134,6 @@ require(
 			tracker.track(trackingParams);
 		}
 
-		init();
+		$(init);
 	}
 );

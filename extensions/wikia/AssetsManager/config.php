@@ -79,7 +79,6 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdProviderLater.js',
 		'//extensions/wikia/AdEngine/js/AdProviderNull.js',
 		'//extensions/wikia/AdEngine/js/AdProviderRemnantGpt.js',
-		'//extensions/wikia/AdEngine/js/AdProviderTaboola.js',
 		'//extensions/wikia/AdEngine/js/AdTemplateSkin.js',
 		'//extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
 		'//extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
@@ -99,7 +98,6 @@ $config['adengine2_late_js'] = array(
 	'skin' => ['oasis', 'venus', 'wikiamobile'],
 	'assets' => array(
 		// ads
-		'//extensions/wikia/AdEngine/js/AdLogicPageParamsLegacy.js',
 		'//extensions/wikia/AdEngine/js/AdProviderEvolve.js',
 		'//extensions/wikia/AdEngine/js/AdProviderLiftium.js',
 		'//extensions/wikia/AdEngine/js/AdProviderSevenOneMedia.js',
@@ -130,6 +128,14 @@ $config['adengine2_bottom_leaderboard_js'] = array(
 	),
 );
 
+$config['adengine2_taboola_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis', 'venus', 'wikiamobile' ],
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/AdProviderTaboola.js',
+	),
+);
+
 $config['adengine2_interactive_maps_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
@@ -157,6 +163,13 @@ $config['adengine2_rubicon_rtp_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/RubiconRtp.js',
+	),
+);
+
+$config['adengine2_amazon_match_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/AmazonMatch.js',
 	),
 );
 
@@ -822,8 +835,8 @@ $config['monobook_js'] = array(
 	'assets' => array(
 		'#group_oasis_shared_core_js',
 		'#group_oasis_jquery',
-		'#group_articlecomments_js',
 		'#group_bucky_js',
+		'#group_articlecomments_js',
 
 		// TODO: remove dependency on YUI (see BugId:3116)
 		'//resources/wikia/libraries/yui/utilities/utilities.js',
@@ -1449,7 +1462,7 @@ $config['wikiasearch_scss_wikiamobile'] = array(
 
 /** Places **/
 $config['places_js'] = array(
-	'skin' => array( 'oasis', 'monobook', 'wikiamobile' ),
+	'skin' => array( 'oasis', 'monobook', 'wikiamobile', 'venus' ),
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 			'//extensions/wikia/Places/js/Places.js'
@@ -1458,7 +1471,7 @@ $config['places_js'] = array(
 
 $config['places_css'] = array(
 	'type' => AssetsManager::TYPE_CSS,
-	'skin' => array( 'oasis', 'monobook', 'wikiamobile' ),
+	'skin' => array( 'oasis', 'monobook', 'wikiamobile', 'venus' ),
 	'assets' => array(
 			'//extensions/wikia/Places/css/Places.css',
 	)
@@ -1480,6 +1493,72 @@ $config['wikiaphotogallery_slider_scss_wikiamobile'] = array(
 			'//extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.wikiamobile.scss'
 	)
 );
+
+$config['wikia_photo_gallery_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js',
+	]
+];
+
+$config['wikia_photo_gallery_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//extensions/wikia/WikiaPhotoGallery/css/gallery.scss',
+	]
+];
+
+$config['wikia_photo_gallery_slideshow_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//resources/wikia/libraries/jquery/slideshow/jquery-slideshow-0.4.js',
+		'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slideshow.js',
+	]
+];
+
+$config['wikia_photo_gallery_slideshow_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//extensions/wikia/WikiaPhotoGallery/css/slideshow.scss',
+	]
+];
+
+$config['wikia_photo_gallery_slider_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slider.js',
+	]
+];
+
+$config['wikia_photo_gallery_slider_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.scss',
+	]
+];
+
+$config['wikia_photo_gallery_mosaic_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//resources/wikia/libraries/modernizr/modernizr-2.0.6.js',
+		'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slider.mosaic.js',
+	]
+];
+
+$config['wikia_photo_gallery_mosaic_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.mosaic.scss',
+	]
+];
 
 // ImageDrop
 $config['imagedrop_js'] = array(
@@ -2074,7 +2153,7 @@ $config['global_header_js'] = [
 
 $config['media_gallery_js'] = [
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis'],
+	'skin' => ['oasis', 'venus'],
 	'assets' => [
 		'//extensions/wikia/MediaGallery/scripts/templates.mustache.js',
 		'//extensions/wikia/MediaGallery/scripts/views/caption.js',
