@@ -50,6 +50,8 @@ class CreateWiki {
 	const DEFAULT_WIKI_TYPE    = "";
 	const DEFAULT_WIKI_LOGO    = '$wgUploadPath/b/bc/Wiki.png';
 
+	const SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH = 55;
+
 	/**
 	 * constructor
 	 *
@@ -712,12 +714,13 @@ class CreateWiki {
 	 * at a later stage of processing.
 	 *
 	 * @see http://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html
+	 *      Wikia change: We accept underscores wherever hyphens are allowed.
 	 *
 	 * @param $name string Directory name
 	 * @return string Sanitized name
 	 */
 	private static function sanitizeS3BucketName( $name ) {
-		$RE_VALID = "/^[a-z0-9](?:[-a-z0-9]{0,53}[a-z0-9])?\$/";
+		$RE_VALID = "/^[a-z0-9](?:[-_a-z0-9]{0,53}[a-z0-9])?\$/";
 		# check if it's already valid
 		$name = mb_strtolower($name);
 		if ( preg_match( $RE_VALID, $name ) ) {
@@ -725,8 +728,10 @@ class CreateWiki {
 		}
 
 		# try fixing the simplest and most popular cases
-		$check_name = str_replace(['.',' ','_','(',')'],'-',$name);
-		if ( substr($check_name,-1) == '-' ) $check_name .= '0';
+		$check_name = str_replace(['.',' ','(',')'],'_',$name);
+		if ( in_array( substr($check_name,-1), [ '-', '_' ] ) ) {
+			$check_name .= '0';
+		}
 		if ( preg_match( $RE_VALID, $check_name ) ) {
 			return $check_name;
 		}
@@ -740,11 +745,11 @@ class CreateWiki {
 			} else {
 				$s .= bin2hex($c);
 			}
-			if ( strlen($s) >= 55 ) {
+			if ( strlen($s) >= self::SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH ) {
 				break;
 			}
 		}
-		$name = substr($s,0,55);
+		$name = substr($s, 0, self::SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH);
 
 		return $name;
 	}
