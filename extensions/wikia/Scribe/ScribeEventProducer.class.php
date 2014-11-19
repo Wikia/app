@@ -420,13 +420,10 @@ class ScribeEventProducer {
 			$this->app->wg->Memc->set( $sCacheKey, $aTop200Wikis, \WikiaResponse::CACHE_LONG );
 		}
 
-		// getTopWikisByPageviews returns an array of arrays
-		foreach ( $aTop200Wikis as $aWiki ) {
-			if ( isset( $aWiki[$city_id] ) ) {
-				// city_ids are keys; return true if that one is set.
-				wfProfileOut( __METHOD__ );
-				return true;
-			}
+		// city_ids are keys; return true if that one is set.
+		if ( isset( $aTop200Wikis[$city_id] ) ) {
+			wfProfileOut( __METHOD__ );
+			return true;
 		}
 
 		wfProfileOut( __METHOD__ );
