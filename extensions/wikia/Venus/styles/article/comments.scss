@@ -13,7 +13,7 @@
 		margin: 60px 0 30px 0;
 
 		span {
-			@include font-size-s; // TODO: get font-size
+			@include font-size-s;
 			color: #aaa;
 			float: right;
 		}
@@ -28,9 +28,9 @@
 		margin: 10px 0;
 
 		.cke_button {
-			border-right: solid 1px #aaa; // TODO: get color
-			line-height: 44px;
+			border-right: solid 1px #aaa;
 			display: inline-block;
+			line-height: 44px;
 
 			&.RTEVideoButton {
 				border-right: none;
@@ -73,7 +73,7 @@
 		padding: 0;
 
 		.comment {
-			border-bottom: solid 1px #aaa; // TODO: get color
+			border-bottom: solid 1px #aaa;
 			padding: 20px 0;
 		}
 
@@ -83,7 +83,7 @@
 			/* date, reply & tools */
 			.edited-by {
 				clear: both;
-				color: #aaa; // TODO: get color
+				color: #aaa;
 				line-height: 44px;
 			}
 
@@ -138,9 +138,9 @@
 
 	/* pagination */
 	.article-comments-pagination {
+		color: $color-links;
 		margin: 0 auto 10px;
 		text-align: center;
-		color: $color-links;
 
 		a {
 			color: $color-links;
@@ -148,8 +148,8 @@
 			margin: 0 4px;
 
 			&.accent {
-				color: White;
 				background-color: $color-links;
+				color: $color-text;
 			}
 		}
 	}
