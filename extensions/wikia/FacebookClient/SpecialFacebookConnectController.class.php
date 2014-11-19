@@ -29,7 +29,7 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 			}
 		} else if ( $wg->User->isLoggedIn() ) {
 			// Send logged-in user to home page
-			$this->app->wg->Out->redirect( '/', 302 );
+			$wg->Out->redirect( '/' );
 		} else {
 			JSMessages::enqueuePackage( 'FacebookClient', JSMessages::INLINE );
 			$this->forward( __CLASS__, 'connectUser' );
