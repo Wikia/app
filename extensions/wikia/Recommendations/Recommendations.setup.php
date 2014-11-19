@@ -7,8 +7,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'version' => 1.0
 );
 
-$wgAutoloadClasses['RecommendationsController'] =  __DIR__ . '/RecommendationsController.class.php';
-
 $wgExtensionMessagesFiles['Recommendations'] = __DIR__ . '/Recommendations.i18n.php';
 
 $wgResourceModules['ext.wikia.recommendations'] = [

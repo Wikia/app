@@ -1,11 +1,10 @@
-require(['wikia.document', 'wikia.recommendations'], function(d, recommendations){
+require(['wikia.document', 'wikia.recommendations', 'sloth'], function(d, recommendations, sloth){
 	'use strict';
 
-	// TODO add sloth and move insertion logic to lazy loaded js
+	var articleContainer = d.getElementById('WikiaArticle');
 
 	function callback(data) {
-		var articleContainer = d.getElementById('WikiaArticle'),
-			moduleContainer = d.createElement('div');
+		var moduleContainer = d.createElement('div');
 
 		moduleContainer.id = 'recommendations';
 		moduleContainer.classList.add('recommendations');
@@ -19,5 +18,9 @@ require(['wikia.document', 'wikia.recommendations'], function(d, recommendations
 		recommendations.load(callback);
 	}
 
-	addRecommendationsModule();
+	sloth({
+		on: articleContainer, // TODO get last visible child
+		threshold: 200,
+		callback: addRecommendationsModule
+	});
 });
