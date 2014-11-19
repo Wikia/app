@@ -16,7 +16,7 @@ require(['wikia.document', 'wikia.recommendations'], function(d, recommendations
 	}
 
 	function addRecommendationsModule() {
-		recommendations.loadTemplate(callback);
+		recommendations.load(callback);
 	}
 
 	addRecommendationsModule();

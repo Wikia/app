@@ -227,6 +227,14 @@ $VenusConfig[ 'video_recommendations_js' ] = [
 	]
 ];
 
+$VenusConfig[ 'recommendations_view_js' ] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'venus' ],
+	'assets' => [
+		'//extensions/wikia/Recommendations/scripts/recommendationsView.js',
+	]
+];
+
 /** Article page */
 $VenusConfig[ 'article_scss' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
