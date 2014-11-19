@@ -12,7 +12,7 @@ define(
 			$.when(
 				nirvana.sendRequest({
 					controller: 'RecommendationsApi',
-					method: 'getArticle',
+					method: 'getForArticle',
 					data: {
 						id: win.wgArticleId
 					}
