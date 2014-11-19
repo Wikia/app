@@ -74,6 +74,9 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 
 	// Events
 	this.cart.connect( this, { 'layout': 'setLayout' } );
+	this.cartModel.connect( this, {
+		'change': 'onCartModelChange'
+	} );
 	this.query.connect( this, {
 		'requestMediaDone': 'onQueryRequestMediaDone'
 	} );
@@ -110,6 +113,7 @@ ve.ui.WikiaSingleMediaDialog.prototype.getSetupProcess = function ( data ) {
 		.next( function () {
 			// TODO: Ultimetly this should work without setTimeout. It seems to be fixed in the
 			// upstream so should be revisited after upstream sync.
+			this.insertButton.setDisabled( true );
 			setTimeout( ve.bind( function () {
 				this.query.input.focus().select();
 			}, this ), 100 );
@@ -265,6 +269,15 @@ ve.ui.WikiaSingleMediaDialog.prototype.onQueryInputChange = function () {
 	if ( this.getLayout() === 'list' ) {
 		this.setLayout( 'grid' );
 	}
+};
+
+/**
+ * Handle any change to the cart model
+ *
+ * @method
+ */
+ve.ui.WikiaSingleMediaDialog.prototype.onCartModelChange = function () {
+	this.insertButton.setDisabled( ( this.cartModel.getItems().length ) ? false : true );
 };
 
 /* Registration */
