@@ -3,7 +3,7 @@ define('ext.wikia.adEngine.adConfigMobile', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.directGptMobile',
 	'ext.wikia.adEngine.provider.remnantGptMobile',
-	'ext.wikia.adEngine.provider.taboola',
+	require.optional('ext.wikia.adEngine.provider.taboola'),
 	require.optional('wikia.abTest')
 ], function (adContext, adProviderDirectGptMobile, adProviderRemnantGptMobile, adProviderTaboola, abTest) {
 	'use strict';
@@ -27,7 +27,7 @@ define('ext.wikia.adEngine.adConfigMobile', [
 			return [];
 		}
 
-		if (context.providers.taboola && adProviderTaboola.canHandleSlot(slotName) ) {
+		if (adProviderTaboola && context.providers.taboola && adProviderTaboola.canHandleSlot(slotName) ) {
 			return [adProviderTaboola];
 		}
 
