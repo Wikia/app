@@ -7,7 +7,7 @@ require([
 	'bucky',
 	'wikia.tracker',
 	'wikia.document'
-], function(InContentModule, VideoData, nodeFinderModule, Mustache, templates, bucky, Tracker, doc) {
+], function (InContentModule, VideoData, nodeFinderModule, Mustache, templates, bucky, Tracker, doc) {
 	'use strict';
 
 	bucky = bucky('videosmodule.controller.in-content');
@@ -63,7 +63,7 @@ require([
 			})
 		});
 
-		inContent.$el.on('initialized.videosModule', function() {
+		inContent.$el.on('initialized.videosModule', function () {
 			bucky.timer.stop('execution');
 		});
 	}

@@ -1,6 +1,6 @@
 define('videosmodule.views.titleThumbnail', [
 	'thumbnails.views.titleThumbnail'
-], function(TitleThumbnail) {
+], function (TitleThumbnail) {
 	'use strict';
 
 	function VideosModuleThumbnail(config) {
@@ -11,9 +11,9 @@ define('videosmodule.views.titleThumbnail', [
 
 	VideosModuleThumbnail.prototype = Object.create(TitleThumbnail.prototype);
 
-	VideosModuleThumbnail.prototype.bindEvents = function() {
+	VideosModuleThumbnail.prototype.bindEvents = function () {
 		var self = this;
-		this.$el.on('mousedown', 'a', function() {
+		this.$el.on('mousedown', 'a', function () {
 			self.trackClick({
 				value: self.idx
 			});
@@ -21,7 +21,7 @@ define('videosmodule.views.titleThumbnail', [
 		});
 	};
 
-	VideosModuleThumbnail.prototype.render = function() {
+	VideosModuleThumbnail.prototype.render = function () {
 		this.constructor.prototype.render.call(this);
 		this.addSourceInfo();
 		this.bindEvents();
@@ -32,7 +32,7 @@ define('videosmodule.views.titleThumbnail', [
 	 * Add information about how the video was selected to the DOM for debugging purposes
 	 * Ex: (subject to change) local, article-related, wiki-topics, etc.
 	 */
-	VideosModuleThumbnail.prototype.addSourceInfo = function() {
+	VideosModuleThumbnail.prototype.addSourceInfo = function () {
 		this.$el.attr('data-source', this.model.source);
 	};
 

@@ -1807,7 +1807,7 @@ $config['videos_module_venus_js'] = [
 		'//extensions/wikia/VideosModule/scripts/views/titleThumbnail.js',
 		'//extensions/wikia/VideosModule/scripts/views/index.js',
 		'//extensions/wikia/VideosModule/scripts/controllers/inContent.js',
-		'//extensions/wikia/VideosModule/scripts/modules/nodeFinder.module.js',
+		'//resources/wikia/modules/nodeFinder.js',
 	]
 ];
 

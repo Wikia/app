@@ -1,4 +1,4 @@
-describe('nodeFinder', function(){
+describe('nodeFinder', function () {
 	'use strict';
 
 	var nodeFinder,
@@ -17,7 +17,7 @@ describe('nodeFinder', function(){
 	hiddenMock.style.visibility = 'hidden';
 	zeroHeightMock.style.height = '0';
 
-	for(id = 0; id < 10; id ++) {
+	for (id = 0; id < 10; id++) {
 		cloneNode = extenderMock.cloneNode();
 		articleMock.appendChild(cloneNode);
 		h2Mock.id = 'h2-' + id;
@@ -34,7 +34,7 @@ describe('nodeFinder', function(){
 
 	nodeFinder = modules['wikia.nodeFinder']();
 
-	it('header should returned', function() {
+	it('header should returned', function () {
 		var header = nodeFinder.getChildByOffsetTop(articleMock, 'h2', 100);
 		expect(header.id).toBe('h2-0');
 
