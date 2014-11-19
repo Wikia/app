@@ -4,7 +4,7 @@ use Wikia\Api\Recommendations\Collector;
 
 class RecommendationsApiController extends WikiaApiController {
 
-	public function getArticle() {
+	public function getForArticle() {
 		$articleId = $this->request->getInt( 'id' );
 		$limit = $this->request->getInt( 'limit', 9 );
 
@@ -12,8 +12,7 @@ class RecommendationsApiController extends WikiaApiController {
 
 		// validate parameters
 		if ( is_null($title) || !$title->exists() ) {
-			// TODO: message
-			throw new NotFoundApiException();
+			throw new NotFoundApiException('Title not found');
 		}
 
 		$data = ( new Collector )->get( $articleId, $limit );
