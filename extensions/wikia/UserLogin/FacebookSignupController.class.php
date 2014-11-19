@@ -54,9 +54,15 @@ class FacebookSignupController extends WikiaController {
 	 * Displays Facebook sign up modal (called by index method)
 	 */
 	public function modal() {
+		$fbUserId = $this->getFacebookUserId();
+		if ( $fbUserId === null ) {
+			$this->skipRendering();
+			return false;
+		}
+
 		// get an email from Facebook API
 		$resp = $this->sendRequest( 'FacebookSignup', 'getFacebookData', [
-			'fbUserId' => $this->getFacebookUserId(),
+			'fbUserId' => $fbUserId,
 		] );
 
 		// BugId:24400
