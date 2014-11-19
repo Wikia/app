@@ -20,12 +20,21 @@
 			overflow: hidden;
 			position: relative;
 		}
-	}
+		& > table,
+		& > div {
+			@include grid-column-max-width('medium', 4, -2 * $medium-grid-column-padding);
+			float: none;
+			margin: 0 auto;
+		}
 
-	table, div {
-		@include grid-column-max-width('medium', 4, -2 * $medium-grid-column-padding);
-		float: none;
-		margin: 0 auto;
+		// reset padding & margin
+		ul,
+		ol,
+		li,
+		p {
+			margin: 0;
+			padding: 0;
+		}
 	}
 
 	.image-thumbnail img {
