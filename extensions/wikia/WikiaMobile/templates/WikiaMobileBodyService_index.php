@@ -17,7 +17,9 @@
 		<?= $bodyContent ;?>
 		<footer id=wkMainCntFtr>
 			<?= !empty( $afterBodyContent ) ? $afterBodyContent : ''; ?>
-			<nav id=wkRltdCnt>
+			<nav id="wkRltdCnt">
+				<div id="RelatedPagesModuleWrapper"></div>
+				<div id="NATIVE_TABOOLA"></div>
 				<?= !empty( $trendingArticles ) ? $trendingArticles : ''; ?>
 				<?= !empty( $categoryLinks ) ? $categoryLinks : ''; ?>
 			</nav>

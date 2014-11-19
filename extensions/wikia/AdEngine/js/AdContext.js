@@ -3,8 +3,8 @@
  * The AMD module to hold all the context needed for the client-side scripts to run.
  */
 define('ext.wikia.adEngine.adContext', [
-	'wikia.document', 'wikia.geo', require.optional('wikia.instantGlobals'), 'wikia.window'
-], function (doc, geo, instantGlobals, w) {
+	'wikia.window', 'wikia.document', 'wikia.geo', require.optional('wikia.instantGlobals'),  require.optional('wikia.abTest')
+], function (w, doc, geo, instantGlobals, abTest) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
@@ -53,6 +53,12 @@ define('ext.wikia.adEngine.adContext', [
 		var alwaysCallDartInCountries = instantGlobals.wgAdDriverAlwaysCallDartInCountries || [];
 		if (alwaysCallDartInCountries.indexOf(geo.getCountryCode()) > -1) {
 			context.opts.alwaysCallDart = true;
+		}
+
+		// Taboola integration
+		if (context.providers.taboola) {
+			context.providers.taboola = abTest && abTest.inGroup('NATIVE_ADS_TABOOLA', 'YES') &&
+				(context.targeting.pageType === 'article' || context.targeting.pageType === 'home');
 		}
 
 		// Export the context back to ads.context
