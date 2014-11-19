@@ -54,6 +54,7 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 	this.results = this.search.getResults();
 	this.cartModel = new ve.dm.WikiaCart();
 	this.cart = new ve.ui.WikiaSingleMediaCartWidget( this.cartModel, this );
+	this.mediaPreview = new ve.ui.WikiaMediaPreviewWidget();
 
 	// Foot elements
 	this.$policy = this.$( '<div>' )
@@ -75,6 +76,8 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 	// Events
 	this.cart.connect( this, { 'layout': 'setLayout' } );
 	this.cartModel.connect( this, {
+		'add': 'onCartModelAdd',
+		'remove': 'onCartModelRemove',
 		'change': 'onCartModelChange'
 	} );
 	this.query.connect( this, {
@@ -82,7 +85,10 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 	} );
 	this.search.connect( this, {
 		'nearingEnd': 'onSearchNearingEnd',
-		'check': 'onSearchCheck'
+		'check': 'handleChoose',
+		'select': 'handleChoose',
+		'metadata': 'handlePreview',
+		'label': 'handlePreview'
 	} );
 	this.queryInput.connect( this, {
 		'change': 'onQueryInputChange'
@@ -98,6 +104,7 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 	this.$policy.append( this.$policyInner );
 	this.$body.append( this.query.$element, this.$main );
 	this.$foot.append( this.insertButton.$element, this.cancelButton.$element, this.$policy );
+	this.surface.getGlobalOverlay().append( this.mediaPreview.$element );
 
 	this.setLayout( 'grid' );
 };
@@ -224,6 +231,7 @@ ve.ui.WikiaSingleMediaDialog.prototype.getLayout = function () {
  */
 ve.ui.WikiaSingleMediaDialog.prototype.onQueryRequestMediaDone = function ( items ) {
 	this.search.addItems( items );
+	this.results.setChecked( this.cartModel.getItems(), true );
 };
 
 /**
@@ -238,25 +246,42 @@ ve.ui.WikiaSingleMediaDialog.prototype.onSearchNearingEnd = function () {
 };
 
 /**
- * Handle check/uncheck of items in search results.
+ * Handle choice of items in search results.
  *
  * @method
- * @param {Object} item The search result item data.
+ * @param {Object} item The search result item.
  */
-ve.ui.WikiaSingleMediaDialog.prototype.onSearchCheck = function ( item ) {
-	// TODO: Only model should be used here, so no cart nor cartSelect
-	var items = this.cartModel.getItems(),
+ve.ui.WikiaSingleMediaDialog.prototype.handleChoose = function ( item ) {
+	var data = item.getData(),
+		items = this.cartModel.getItems(),
 		i;
 	for ( i = 0; i < items.length; i++ ) {
-		if ( item.title === items[i].getId() ) {
+		if ( data.title === items[i].getId() ) {
 			this.cartModel.removeItems( [ items[i] ] );
 			return;
 		}
 	}
 	this.cartModel.addItems( [ new ve.dm.WikiaImageCartItem(
-		item.title,
-		item.url
-	) ] );
+		data.title,
+		data.url
+	) ], 0 );
+};
+
+/**
+ * Handle showing the media preview
+ *
+ * @method
+ * @param {ve.ui.WikiaMediaOptionWidget} item Item to preview
+ * @param {jQuery.Event} event jQuery Event
+ */
+ve.ui.WikiaSingleMediaDialog.prototype.handlePreview = function ( item, event ) {
+	var data = item.getData();
+
+	if ( data.type === 'photo' ) {
+		this.mediaPreview.openForImage( data.title, data.url );
+	}
+
+	event.stopPropagation();
 };
 
 /**
@@ -269,6 +294,26 @@ ve.ui.WikiaSingleMediaDialog.prototype.onQueryInputChange = function () {
 	if ( this.getLayout() === 'list' ) {
 		this.setLayout( 'grid' );
 	}
+};
+
+/**
+ * Handle adding items to the cart model.
+ *
+ * @method
+ * @param {ve.dm.WikiaCartItem[]} items Cart models
+ */
+ve.ui.WikiaSingleMediaDialog.prototype.onCartModelAdd = function ( items ) {
+	this.results.setChecked( items, true );
+};
+
+/**
+ * Handle removing items from the cart model.
+ *
+ * @method
+ * @param {ve.dm.WikiaCartItem[]} items
+ */
+ve.ui.WikiaSingleMediaDialog.prototype.onCartModelRemove = function ( items ) {
+	this.results.setChecked( items, false );
 };
 
 /**
