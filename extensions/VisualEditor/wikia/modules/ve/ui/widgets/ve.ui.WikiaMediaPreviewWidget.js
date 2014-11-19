@@ -161,15 +161,7 @@ ve.ui.WikiaMediaPreviewWidget.prototype.openForImage = function ( title, url ) {
 		.addClass( 've-ui-wikiaMediaPreviewWidget-image' )
 		.hide();
 
-	//debugger;
 	this.$image.attr( 'src', Vignette.getThumbURL( url, 'thumbnail-down', this.maxImgWidth, this.maxImgHeight ) );
-
-/*
-	require( ['wikia.thumbnailer'], ve.bind( function ( thumbnailer ) {
-		debugger;
-		this.$image.attr( 'src', thumbnailer.getThumbURL( url, 'nocrop', this.maxImgWidth, this.maxImgHeight ) );
-	}, this ) );
-*/
 
 	this.$image
 		.load( ve.bind( this.onImageLoad, this ) )

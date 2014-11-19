@@ -77,7 +77,8 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 	this.cart.connect( this, { 'layout': 'setLayout' } );
 	this.cartModel.connect( this, {
 		'add': 'onCartModelAdd',
-		'remove': 'onCartModelRemove'
+		'remove': 'onCartModelRemove',
+		'change': 'onCartModelChange'
 	} );
 	this.query.connect( this, {
 		'requestMediaDone': 'onQueryRequestMediaDone'
@@ -119,6 +120,7 @@ ve.ui.WikiaSingleMediaDialog.prototype.getSetupProcess = function ( data ) {
 		.next( function () {
 			// TODO: Ultimetly this should work without setTimeout. It seems to be fixed in the
 			// upstream so should be revisited after upstream sync.
+			this.insertButton.setDisabled( true );
 			setTimeout( ve.bind( function () {
 				this.query.input.focus().select();
 			}, this ), 100 );
@@ -265,8 +267,18 @@ ve.ui.WikiaSingleMediaDialog.prototype.handleChoose = function ( item ) {
 	) ], 0 );
 };
 
+/**
+ * Handle showing the media preview
+ *
+ * @method
+ */
 ve.ui.WikiaSingleMediaDialog.prototype.handlePreview = function ( item, event ) {
-	ve.log('DO THAT PREVIEW');
+	var data = item.getData();
+
+	if ( data.type === 'photo' ) {
+		this.mediaPreview.openForImage( data.title, data.url );
+	}
+
 	event.stopPropagation();
 };
 
@@ -300,6 +312,15 @@ ve.ui.WikiaSingleMediaDialog.prototype.onCartModelAdd = function ( items ) {
  */
 ve.ui.WikiaSingleMediaDialog.prototype.onCartModelRemove = function ( items ) {
 	this.results.setChecked( items, false );
+};
+
+/**
+ * Handle any change to the cart model
+ *
+ * @method
+ */
+ve.ui.WikiaSingleMediaDialog.prototype.onCartModelChange = function () {
+	this.insertButton.setDisabled( ( this.cartModel.getItems().length ) ? false : true );
 };
 
 /* Registration */
