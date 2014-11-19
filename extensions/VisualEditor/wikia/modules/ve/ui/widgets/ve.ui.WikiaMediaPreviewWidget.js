@@ -2,7 +2,7 @@
  * VisualEditor UserInterface WikiaMediaPreviewWidget class.
  */
 
-/* global mw, require */
+/* global mw, require, Vignette */
 
 ve.ui.WikiaMediaPreviewWidget = function VeUiWikiaMediaPreviewWidget() {
 
