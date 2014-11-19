@@ -40,10 +40,7 @@ $wgVisualEditorWikiaResourceTemplate = array(
 
 $wgResourceModules += array(
 	'ext.visualEditor.wikiaViewPageTarget.init' => $wgVisualEditorWikiaResourceTemplate + array(
-		'scripts' => array(
-			'../../../../resources/wikia/libraries/vignette/vignette.js',
-			've/init/ve.init.mw.WikiaViewPageTarget.init.js'
-		),
+		'scripts' => 've/init/ve.init.mw.WikiaViewPageTarget.init.js',
 		'dependencies' => array(
 			'jquery.client',
 			'jquery.byteLength',
