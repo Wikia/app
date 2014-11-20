@@ -6,9 +6,9 @@ class RecommendationsHooks {
 		global $wgEnableRecommendationsExt;
 
 		if ( !empty( $wgEnableRecommendationsExt ) && F::app()->checkSkin( 'venus' ) ) {
-			$out->addModules( 'ext.wikia.venus.recommendations' );
+			$out->addModules( 'ext.wikia.recommendations' );
 		}
 
 		return true;
 	}
-} 
+}

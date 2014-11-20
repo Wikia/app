@@ -1,7 +1,7 @@
 define(
 	'wikia.recommendations.view',
-	['wikia.mustache', 'JSMessages', 'wikia.thumbnailer', 'wikia.arrayHelper', 'venus.layout'],
-	function(mustache, msg, thumbnailer, arrayHelper, layout) {
+	['wikia.mustache', 'JSMessages', 'wikia.thumbnailer', 'wikia.arrayHelper', 'venus.layout', 'wikia.window'],
+	function(mustache, msg, thumbnailer, arrayHelper, layout, w) {
 		'use strict';
 
 		/**
@@ -115,13 +115,16 @@ define(
 				}
 
 				if (slotsData[i].media) {
-					// TODO empty image
-					slot.thumbUrl = thumbnailer.getThumbURL(
-						slotsData[i].media.thumbUrl,
-						'image',
-						slotSizes[slot.slotType].width,
-						slotSizes[slot.slotType].height
-					);
+					if (slotsData[i].media.thumbUrl) {
+						slot.thumbUrl = thumbnailer.getThumbURL(
+							slotsData[i].media.thumbUrl,
+							'image',
+							slotSizes[slot.slotType].width,
+							slotSizes[slot.slotType].height
+						);
+					} else {
+						slot.thumbUrl = w.wgCdnApiUrl + '/extensions/wikia/Recommendations/images/image_placeholder.svg';
+					}
 
 					if (slotsData[i].type === 'video') {
 						slot.videoKey = slotsData[i].media.videoKey;

@@ -16,6 +16,8 @@ $wgExtensionMessagesFiles['Recommendations'] = __DIR__ . '/Recommendations.i18n.
 $wgResourceModules['ext.wikia.recommendations'] = [
 	'scripts' => [
 		'extensions/wikia/Recommendations/scripts/recommendations.js',
+		'extensions/wikia/Recommendations/scripts/recommendationsVenus.js',
+		'resources/wikia/modules/nodeFinder.js',
 	]
 ];
 
