@@ -231,8 +231,8 @@ $VenusConfig[ 'recommendations_view_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'venus' ],
 	'assets' => [
-		'//extensions/wikia/Recommendations/scripts/recommendationsView.js',
-		'//extensions/wikia/Recommendations/scripts/recommendationsTracking.js',
+		'//extensions/wikia/Recommendations/scripts/view.js',
+		'//extensions/wikia/Recommendations/scripts/tracking.js',
 	]
 ];
 

@@ -32,6 +32,10 @@ define('venus.layout', ['wikia.window'], function(win)  {
 				innerColumn: 58
 			}
 		},
+		/**
+		 * @desc Get current breakpoint size
+		 * @returns string small/medium/big
+		 */
 		getBreakpoint: function() {
 			var breakpoint = 'small',
 				currentWidth = win.innerWidth;
@@ -44,6 +48,12 @@ define('venus.layout', ['wikia.window'], function(win)  {
 			}
 			return breakpoint;
 		},
+		/**
+		 * @desc Calculate column size based on breakpoint and number of columns
+		 * @param string breakpoint breakpoint name
+		 * @param int columnCount
+		 * @returns number column width in px
+		 */
 		getGridColumnWidth: function(breakpoint, columnCount) {
 			var currentBreakpointGrid = this.grid[breakpoint];
 			return columnCount * (currentBreakpointGrid.innerColumn + 2 * currentBreakpointGrid.columnPadding + currentBreakpointGrid.gutter) - currentBreakpointGrid.gutter;

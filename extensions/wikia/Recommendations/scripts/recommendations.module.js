@@ -5,6 +5,10 @@ define(
 		'use strict';
 
 
+		/**
+		 * @desc Lazy load and insert to DOM Recommendations module
+		 * @param DOMNode container for appending module
+		 */
 		function init(container) {
 			load(insertModule, container);
 		}
