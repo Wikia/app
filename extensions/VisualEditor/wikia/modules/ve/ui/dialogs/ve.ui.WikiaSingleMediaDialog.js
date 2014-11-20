@@ -346,6 +346,20 @@ ve.ui.WikiaSingleMediaDialog.prototype.onCancelButtonClick = function () {
 	} );
 };
 
+/**
+ * Overrides parent method in order to handle escape key differently
+ *
+ * @method
+ * @param {jQuery.Event} e The jQuery event Object.
+ */
+ve.ui.WikiaSingleMediaDialog.prototype.onFrameDocumentKeyDown = function ( e ) {
+	if ( e.which === OO.ui.Keys.ESCAPE && this.mediaPreview.isOpen() ) {
+		this.mediaPreview.close();
+		return false; // stop propagation
+	}
+	ve.ui.Dialog.prototype.onFrameDocumentKeyDown.call( this, e );
+};
+
 /* Registration */
 
 ve.ui.windowFactory.register( ve.ui.WikiaSingleMediaDialog );
