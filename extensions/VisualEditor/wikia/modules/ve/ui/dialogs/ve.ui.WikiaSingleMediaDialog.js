@@ -98,7 +98,7 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 	this.cancelButton.connect( this, { 'click': 'onCancelButtonClick' } );
 
 	// Initialization
-	this.frame.$content.addClass( 've-ui-wikiaSingleMediaDialog' );
+	this.frame.$content.addClass( 've-ui-wikiaSingleMediaDialog ve-ui-wikiaSingleMediaDialog-hide-cart-controls' );
 	this.$main.append( this.search.$element, this.cart.$element );
 
 	this.$policy.append( this.$policyInner );

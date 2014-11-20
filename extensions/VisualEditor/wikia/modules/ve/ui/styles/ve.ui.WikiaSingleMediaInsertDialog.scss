@@ -6,6 +6,17 @@
 $width-dialog: 712px;
 $width-results: 552px;
 
+// Temporary class for hiding the cart toggle
+.ve-ui-wikiaSingleMediaDialog-hide-cart-controls {
+	.ve-ui-wikiaSingleMediaDialog-cartControls {
+		display: none;
+	}
+	.ve-ui-wikiaSingleMediaCartSelectWidget {
+		padding-top: 15px;
+		top: 0;
+	}
+}
+
 .ve-ui-wikiaSingleMediaDialog {
 	.oo-ui-window-body {
 		padding: 0;
