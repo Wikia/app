@@ -100,13 +100,38 @@
 				visibility: hidden;
 
 				li {
+					border-right: solid 1px #ededed;
 					float: left;
-					margin-left: 30px;
+					padding: 0 5px;
 				}
 
-				a,
-				img {
-					vertical-align:  middle;
+				li:last-child {
+					border-right: none;
+				}
+
+				/* icons */
+				a {
+					@include font-size-base;
+					color: $color-links;
+
+					&:hover {
+						text-decoration: none;
+					}
+
+					&.article-comm-delete::before {
+						@include venus-icon($venus-icon-cross-negative);
+					}
+					&.article-comm-edit::before {
+						@include venus-icon($venus-icon-edit);
+						font-size: 2em;
+					}
+
+					&.article-comm-reply {
+						padding: 5px;
+					}
+					&.article-comm-reply::before {
+						@include venus-icon($venus-icon-back);
+					}
 				}
 			}
 

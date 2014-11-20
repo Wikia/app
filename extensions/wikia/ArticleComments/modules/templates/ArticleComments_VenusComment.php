@@ -14,8 +14,15 @@
 		<?= $comment['timestamp'] ?>
 		<?php if (count($comment['buttons']) || $comment['replyButton']) { ?>
 			<ul class="tools">
-				<li><?= implode('</li><li>', $comment['buttons']) ?></li>
-				<li><?= $comment['replyButton'] ?></li>
+				<? if (isset($comment['links']['delete'])) :?>
+					<li><a href="<?= htmlspecialchars($comment['links']['delete']) ?>" class="article-comm-delete" title="<?= wfMessage('article-comments-delete')->plain() ?>"></a></li>
+				<? endif; ?>
+				<? if (isset($comment['links']['edit'])) :?>
+					<li><a href="<?= htmlspecialchars($comment['links']['edit']) ?>" class="article-comm-edit" id="comment<?= $comment['id'] ?>" title="<?= wfMessage('article-comments-edit')->plain() ?>"></a></li>
+				<? endif; ?>
+				<? if ($comment['replyButton'] !== ''):?>
+					<li><a class="article-comm-reply" href="#"> <?= wfMessage('article-comments-reply')->plain() ?></a></li>
+				<? endif; ?>
 			</ul>
 		<?php } ?>
 		</div>
