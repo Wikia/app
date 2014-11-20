@@ -1449,6 +1449,18 @@ $messages['fr'] = array(
 	'swm-error-created-tobeforefrom' => 'La date de fin de création du wiki est antérieure à sa date de démarrage.',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'swm-label-edit' => 'Bewurkje',
+	'swm-label-language' => 'Taal',
+	'swm-list-table-lang' => 'Talen',
+	'swm-yes' => 'Ja',
+	'swm-no' => 'Nee',
+	'swm-mode-users-editcount-more' => 'Mear',
+);
+
 /** Galician (galego)
  * @author Toliño
  */

@@ -57,29 +57,6 @@ class WikiFactoryHub extends WikiaModel {
 	const CATEGORY_ID_MOVIES = 27;
 	const CATEFORY_ID_ANIME = 28;
 
-	private $mCategoryKruxMap = array(
-	    self::CATEGORY_ID_HUMOR		=> 'Hixwr2ar',
-	    self::CATEGORY_ID_GAMING		=> 'Hi0kJsuv',
-	    self::CATEGORY_ID_ENTERTAINMENT	=> 'Hi0kPhMT',
-	    self::CATEGORY_ID_CORPORATE		=> 'HixzfXzM',
-	    self::CATEGORY_ID_TOYS		=> 'Hixy7C6A',
-	    self::CATEGORY_ID_FOODANDDRINK	=> 'HixwQQcI',
-	    self::CATEGORY_ID_TRAVEL		=> 'HixzKvV0',
-	    self::CATEGORY_ID_EDUCATION		=> 'Hixv3Pm6',
-	    self::CATEGORY_ID_LIFESTYLE		=> 'HixxTik3',
-	    self::CATEGORY_ID_FINANCE		=> 'HixwC0-o',
-	    self::CATEGORY_ID_POLITICS		=> 'Hixx8x9B',
-	    self::CATEGORY_ID_TECHNOLOGY	=> 'HixyqEjH',
-	    self::CATEGORY_ID_SCIENCE		=> 'HixyJ7zV',
-	    self::CATEGORY_ID_PHILOSOPHY	=> 'HixxvJVY',
-	    self::CATEGORY_ID_SPORTS		=> 'HixyZtmZ',
-	    self::CATEGORY_ID_MUSIC		=> 'HixxfWsd',
-	    self::CATEGORY_ID_CREATIVE		=> 'HixvqnFP',
-	    self::CATEGORY_ID_AUTO		=> 'Hixvb8MR',
-	    self::CATEGORY_ID_GREEN		=> 'Hixwf6fL',
-	    self::CATEGORY_ID_ANSWERS		=> 'Hix9Xb-P'
-	);
-
 	/**
 	 * getInstance
 	 *
@@ -517,18 +494,5 @@ class WikiFactoryHub extends WikiaModel {
 	public function getCategory($id, $new = false) {
 		$categories = $this->getAllCategories($new);
 		return $categories[$id];
-	}
-
-	/**
-	 * Get Krux id for given category
-	 * @param int $categoryId
-	 * @return string Krux category id
-	 */
-	public function getKruxId($categoryId) {
-		if (isset($this->mCategoryKruxMap[$categoryId])) {
-			return $this->mCategoryKruxMap[$categoryId];
-		}
-
-		return '';
 	}
 }

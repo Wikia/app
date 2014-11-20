@@ -81,6 +81,7 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Liuxinyu970226
  * @author Robby
  * @author Shirayuki
  */
@@ -120,7 +121,7 @@ $messages['qqq'] = array(
 	'wikia-visualeditor-wikitext-warning' => 'Contents of notification displayed when Wikitext has been detected.',
 	'wikia-visualeditor-aliennode-tooltip' => 'Tooltip for items that VisualEditor cannot edit',
 	'wikia-visualeditor-dialog-transclusion-title' => 'Title of the transclusion dialog.
-{{Identical|Template}}',
+{{Identical|Edit}}',
 	'wikia-visualeditor-dialog-transclusion-filter' => 'Placeholder text that appears in the transclusion dialog filter field',
 	'wikia-visualeditor-dialog-transclusion-zerostate' => 'Text that appears in the transclusion dialog when the template takes no parameters',
 	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'Tooltip for the transclusion tool button.
@@ -2182,6 +2183,7 @@ $messages['zh-hans'] = array(
  * @author Cwlin0416
  * @author Ffaarr
  * @author LNDDYL
+ * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
 	'wikia-visualeditor-preference-enable' => '啟用測試板 VisualEditor',
@@ -2205,7 +2207,7 @@ $messages['zh-hant'] = array(
 	'wikia-visualeditor-beta-warning' => '此為 Wikia 的 VisualEditor Beta 版，目前還可能有一些小問題，但我們仍希望您能喜歡它！',
 	'wikia-visualeditor-wikitext-warning' => "您正使用 Beta 版 VisualEditor，目前尚無法支援 WikiText。請於 '更多' 選單中選擇 '原始碼模式' 以編輯 WikiText。",
 	'wikia-visualeditor-aliennode-tooltip' => '抱歉，此元素目前僅能透過傳統文字編輯器進行編輯。',
-	'wikia-visualeditor-dialog-transclusion-title' => '模板',
+	'wikia-visualeditor-dialog-transclusion-title' => '編輯',
 	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => '模板',
 	'wikia-visualeditor-savedialog-label-save' => '發佈',
 	'wikia-visualeditor-savedialog-label-restore' => '還原頁面',

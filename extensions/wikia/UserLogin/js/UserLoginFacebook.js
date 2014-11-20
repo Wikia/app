@@ -195,9 +195,9 @@
 										action: self.actions.SUBMIT,
 										label: 'facebook-login-modal'
 									});
-									var location = res.returnto;
+									var location = decodeURIComponent(res.returnto);
 									if (res.returntoquery) {
-										location += '?' + res.returntoquery;
+										location += '?' + decodeURIComponent(res.returntoquery);
 									}
 
 									// redirect to the user page

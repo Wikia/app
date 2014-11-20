@@ -709,6 +709,20 @@ $messages['fr'] = array(
 	'action-lookupcontribs' => 'recherche des contributions d’un utilisateur sur plusieurs wikis',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'lookupcontribswikiurl' => 'URL',
+	'lookupcontribswikititle' => 'Titel',
+	'lookupcontribswikioptions' => 'Opsjes',
+	'lookupcontribsnext' => 'folgjende',
+	'lookupcontribsprevious' => 'foarige',
+	'lookupcontribscontribs' => 'bydragen',
+	'lookupcontribshist' => 'skiednis',
+	'lookupcontribsdiff' => 'ferskil',
+);
+
 /** Galician (galego)
  * @author Toliño
  */
@@ -2096,10 +2110,14 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
 	'lookupcontribs' => '查詢貢獻',
 	'lookupcontribstitle' => '查詢貢獻',
 	'lookupcontribsrecentcontributions' => '$1最近的貢獻',
 	'lookupcontribsfinalcontributions' => '$1 最近的貢獻',
+	'lookupcontribslog' => '日誌',
+	'lookupcontribsdiff' => '差異',
+	'lookupcontribsall' => '全部',
 );

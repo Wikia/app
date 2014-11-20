@@ -330,7 +330,7 @@ $messages['id'] = array(
 	'iwedit-all-interwikis' => 'semua interwiki',
 	'iwedit-update' => 'Perbarui',
 	'iwedit-error' => 'Sebuah kesalahan terjadi.',
-	'iwedit-success' => 'Membuat pranala berhasil. ',
+	'iwedit-success' => 'Membuat pranala berhasil.',
 );
 
 /** Italian (italiano)

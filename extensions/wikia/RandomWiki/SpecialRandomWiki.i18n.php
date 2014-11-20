@@ -314,7 +314,7 @@ $messages['pt'] = array(
  */
 $messages['pt-br'] = array(
 	'randomwiki-desc' => 'Permite que os usuários explorem uma wikia aleatória',
-	'randomwiki' => 'Wiki Aleatória',
+	'randomwiki' => 'Wikia Aleatória',
 );
 
 /** Romanian (română)

@@ -3,12 +3,14 @@ define('ext.wikia.adEngine.adConfig', [
 	// regular dependencies
 	'wikia.log',
 	'wikia.geo',
+	'wikia.instantGlobals',
 
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adDecoratorPageDimensions',
 	'ext.wikia.adEngine.evolveSlotConfig',
 	'ext.wikia.adEngine.gptSlotConfig',
 	require.optional('ext.wikia.adEngine.rubiconRtp'),
+	require.optional('ext.wikia.adEngine.amazonMatch'),
 
 	// adProviders
 	'ext.wikia.adEngine.provider.directGpt',
@@ -20,12 +22,14 @@ define('ext.wikia.adEngine.adConfig', [
 	// regular dependencies
 	log,
 	geo,
+	instantGlobals,
 
 	adContext,
 	adDecoratorPageDimensions,
 	evolveSlotConfig,
 	gptSlotConfig,
 	rtp,
+	amazonMatch,
 
 	// adProviders
 	adProviderDirectGpt,
@@ -41,9 +45,12 @@ define('ext.wikia.adEngine.adConfig', [
 		defaultHighValueSlots,
 		highValueSlots,
 		decorators = [adDecoratorPageDimensions],
-		rtpTier, rtpSlots, i;
+		rtpTier,
+		rtpSlots,
+		i;
 
 	defaultHighValueSlots = {
+		'BOTTOM_LEADERBOARD': true,
 		'CORP_TOP_LEADERBOARD': true,
 		'CORP_TOP_RIGHT_BOXAD': true,
 		'EXIT_STITIAL_BOXAD_1': true,
@@ -64,7 +71,7 @@ define('ext.wikia.adEngine.adConfig', [
 		'TOP_INCONTENT_BOXAD': true,
 		'TOP_LEADERBOARD': true,
 		'TOP_RIGHT_BOXAD': true,
-		'BOTTOM_LEADERBOARD': true,
+		'WIKIA_BAR_BOXAD_1': true,
 		'GPT_FLUSH': true
 	};
 
@@ -114,6 +121,11 @@ define('ext.wikia.adEngine.adConfig', [
 		}
 
 		if (highValueSlots[slotname]) {
+			if (instantGlobals.wgSitewideDisableGpt) {
+				log(['getProvider', slotname, 'wgSitewideDisableGpt ON skipping DirectGPT'], 'warning', logGroup);
+				return [adProviderLater];
+			}
+
 			log(['getProvider', slotname, 'DirectGpt->Later'], 'info', logGroup);
 			return [adProviderDirectGpt, adProviderLater];
 		}
@@ -133,10 +145,14 @@ define('ext.wikia.adEngine.adConfig', [
 		rtpSlots = rtp.getConfig().slotname;
 
 		if (rtpTier && rtpSlots && rtpSlots.length) {
-			for(i = rtpSlots.length; i >= 0; i -= 1) {
-				gptSlotConfig.extendSlotParams('gpt', rtpSlots[i], { rp_tier: rtpTier });
+			for (i = rtpSlots.length; i >= 0; i -= 1) {
+				gptSlotConfig.extendSlotParams('gpt', rtpSlots[i], { 'rp_tier': rtpTier });
 			}
 		}
+	}
+
+	if (amazonMatch && amazonMatch.wasCalled()) {
+		amazonMatch.trackState();
 	}
 
 	return {
