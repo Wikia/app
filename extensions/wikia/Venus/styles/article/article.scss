@@ -1,4 +1,5 @@
 @import 'skins/shared/color';
+@import 'skins/shared/mixins/clearfix';
 @import 'skins/shared/styles/infoboxes';
 @import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/Venus/styles/typographyMixins';
@@ -59,6 +60,8 @@ $header-without-cover-unit-spacing: 60px;
 }
 
 .mw-content-text {
+	@include clearfix;
+
 	clear: left;
 	margin: 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width;
 	padding: 0 $medium-grid-column-padding;
@@ -74,9 +77,8 @@ $header-without-cover-unit-spacing: 60px;
 	.editsection {
 		@include font-size-xxs;
 		display: inline-block;
-		float: right;
-		margin-left: $edit-button-size;
-		padding-left: 5px;
+		margin-left: $edit-button-size + 20px;
+		padding-left: 8px;
 		position: relative;
 		text-transform: uppercase;
 
@@ -91,7 +93,7 @@ $header-without-cover-unit-spacing: 60px;
 		// Source: http://stackoverflow.com/a/21902566/1607968 and http://jsfiddle.net/95C2M/
 		a { text-decoration: none; }
 		a:hover { text-decoration: underline; }
-		a:before { text-decoration: underline; display: inline-block; }
+		a:before { text-decoration: underline; }
 		a:before, a:hover:before { text-decoration: none; }
 		// END
 	}
@@ -115,10 +117,6 @@ $header-without-cover-unit-spacing: 60px;
 
 		.mw-headline {
 			padding-left: $medium-grid-gutter;
-		}
-
-		.editsection {
-			padding-right: $medium-grid-gutter;
 		}
 	}
 
@@ -236,10 +234,6 @@ $header-without-cover-unit-spacing: 60px;
 			.mw-headline {
 				padding-left: $large-grid-gutter;
 			}
-
-			.editsection {
-				padding-right: $large-grid-gutter;
-			}
 		}
 
 		h3 {
@@ -296,10 +290,6 @@ $header-without-cover-unit-spacing: 60px;
 			margin-right: -$small-grid-gutter;
 
 			.mw-headline {
-				padding-left: $small-grid-gutter;
-			}
-
-			.editsection {
 				padding-left: $small-grid-gutter;
 			}
 		}
