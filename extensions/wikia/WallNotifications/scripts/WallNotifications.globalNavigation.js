@@ -38,6 +38,8 @@ require(
 					.on('click', '#markasread-sub', this.proxy( this.markAllAsReadPrompt ))
 					.on('click', '#markasread-this-wiki', this.proxy( this.markAllAsRead ))
 					.on('click', '#markasread-all-wikis', this.proxy( this.markAllAsReadAllWikis ));
+
+				$('#AccountNavigation .user-menu').one('mouseenter', this.proxy(this.setNotificationsHeight));
 			},
 
 			openNotifications: function() {
@@ -47,7 +49,9 @@ require(
 			},
 
 			closeNotifications: function() {
-				WallNotifications.$wallNotifications.removeClass('show');
+				if ( !WallNotifications.unreadCount ) {
+					WallNotifications.$wallNotifications.removeClass('show');
+				}
 			},
 
 			toggleNotifications: function() {
@@ -212,6 +216,8 @@ require(
 
 				if (data.count > 0) {
 					this.$notificationsCount.html(data.count).parent('.bubbles').addClass('show');
+					this.fetchForCurrentWiki();
+					this.$wallNotifications.addClass('show');
 				} else {
 					this.$notificationsCount.empty().parent('.bubbles').removeClass('show');
 				}
