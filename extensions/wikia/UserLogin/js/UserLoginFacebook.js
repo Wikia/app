@@ -190,7 +190,7 @@
 							self.form = new window.UserLoginFacebookForm($modal, {
 								ajaxLogin: true,
 								callback: function (res) {
-									var location = decodeURIComponent(res.returnto);
+									debugger;
 
 									// Track FB Connect Sign Up
 									self.track({
@@ -198,15 +198,12 @@
 										label: 'facebook-login-modal'
 									});
 
-									if (res.returntoquery) {
-										location += '?' + decodeURIComponent(res.returntoquery);
-									}
-
-									// redirect to the user page
+									// redirect to the specified location
 									if (loginCallback && typeof loginCallback === 'function') {
 										loginCallback();
-									} else if (location) {
-										window.location.href = location;
+									} else {
+										// TODO: check that there will always be a return to URL
+										window.location.href = this.returnToUrl;
 									}
 								}
 							});

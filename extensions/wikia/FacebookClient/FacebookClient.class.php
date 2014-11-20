@@ -374,6 +374,43 @@ class FacebookClient {
 			setcookie( $sessionCookieName, '', 0, '/', $base_domain );
 		}
 	}
+
+	/**
+	 * Check if we should redirect back to the specified page by comparing it to this black list
+	 * @param Title $title
+	 * @return bool
+	 */
+	private function isInvalidRedirectOnConnect( Title $title ) {
+		return (
+			!$title instanceof Title ||
+			$title->isSpecial( 'Userlogout' ) ||
+			$title->isSpecial( 'Signup' ) ||
+			$title->isSpecial( 'Connect' ) ||
+			$title->isSpecial( 'FacebookConnect' ) ||
+			$title->isSpecial( 'UserLogin' )
+		);
+	}
+
+	/**
+	 * Get a fully resolved URL for redirecting after login/signup with facebook
+	 * @param $returnTo
+	 * @param $returnToQuery
+	 * @return string
+	 */
+	public function getReturnToUrl( $returnTo, $returnToQuery ) {
+		$queryStr = '&fbconnected=1&cb=' . rand( 1, 10000 );
+		$titleObj = Title::newFromText( $returnTo );
+
+		if ( $this->isInvalidRedirectOnConnect( $titleObj ) ) {
+			// Don't redirect if the location is no good.  Go to the main page instead
+			$titleObj = Title::newMainPage();
+		} else if ( $returnToQuery ) {
+			// Include the return to query string if its ok to redirect
+			$queryStr = urldecode( $returnToQuery ) . $queryStr;
+		}
+
+		return $titleObj->getFullURL( $queryStr );
+	}
 }
 
 /**
