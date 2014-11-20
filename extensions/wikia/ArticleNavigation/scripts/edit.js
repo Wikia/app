@@ -14,6 +14,7 @@ require([
 			onDeactivate: hide,
 			activateOnClick: false
 		},
+		isTouchScreen = win.Wikia.isTouchScreen(),
 		dropdown,
 		$dropdown,
 		$parent;
@@ -105,11 +106,17 @@ require([
 	}
 
 	// Initialize edit actions
-	dropdown = dropdownNavigation(dropdownParams);
-
 	$dropdown = $('#' + dropdownId);
 	$parent = $dropdown.parent();
+	dropdown = dropdownNavigation(dropdownParams);
 
-	win.delayedHover($parent[0], delayHoverParams);
+	if (isTouchScreen) {
+		$parent.on('click', function() {
+			$parent.toggleClass('active');
+		});
+	} else {
+		win.delayedHover($parent[0], delayHoverParams);
+	}
+
 	trackEditAction($dropdown);
 });
