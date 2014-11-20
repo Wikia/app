@@ -90,8 +90,8 @@ class ArticleAsJson extends WikiaService {
 				if ( !empty( $caption ) ) {
 					$caption = $parser->parse( $caption, $title, $parserOptions, false )->getText();
 				}
-
-				$media[] = self::createMediaObj( $details, $image['name'], $caption, $image['linkhref'] );
+				$linkHref = isset( $image['linkhref'] ) ? $image['linkhref'] : null;
+				$media[] = self::createMediaObj( $details, $image['name'], $caption, $linkHref );
 
 				self::addUserObj($details);
 			}
@@ -201,6 +201,25 @@ class ArticleAsJson extends WikiaService {
 		//We don't have editing in this version
 		if ( $wgArticleAsJson ) {
 			$showEditLink = false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Remove any limit report, we don't need that in json
+	 *
+	 * @param $parser Parser
+	 * @param $report
+	 * @return bool
+	 */
+	public static function reportLimits( $parser, &$report ) {
+		global $wgArticleAsJson;
+
+		if ( $wgArticleAsJson ) {
+			$report = '';
+
+			return false;
 		}
 
 		return true;

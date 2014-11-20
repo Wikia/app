@@ -83,7 +83,7 @@ $wgResourceModules['ext.wikia.venus.article.infobox'] = [
 
 $wgResourceModules['ext.wikia.venus.recommendations'] = [
 	'scripts' => [
-		'extensions/wikia/Venus/scripts/venusRecommendations.js'
+		'extensions/wikia/Recommendations/scripts/recommendationsVenus.js'
 	],
 	'dependencies' => [
 		'ext.wikia.recommendations',
