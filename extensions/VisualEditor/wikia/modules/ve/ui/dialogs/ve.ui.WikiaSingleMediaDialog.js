@@ -61,7 +61,7 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 		.addClass( 've-ui-wikiaSingleMediaDialog-policy' );
 	this.$policyInner = this.$( '<div>' )
 		.addClass( 've-ui-wikiaSingleMediaDialog-policyInner' )
-		.html('This is the image policy that has been decided on by this commmunity. Do not upload any photos of kitties or puppies because that is not what this wiki is about and it is played out anyway.');
+		.html( ve.msg( 'wikia-visualeditor-media-' + this.mode.type + '-policy' ) );
 	this.insertButton = new OO.ui.ButtonWidget( {
 		'$': this.$,
 		'label': ve.msg( 'wikia-visualeditor-dialog-done-button' ),
