@@ -4,7 +4,7 @@
 @import "skins/shared/color";
 @import 'extensions/wikia/Venus/styles/variables';
 @import "extensions/wikia/Venus/styles/buttons";
-@import 'skins/oasis/css/core/sprite';
+@import 'extensions/wikia/Venus/styles/fonts/venus-icons';
 
 $categoryselect-list-spacing: 25px;
 
@@ -28,14 +28,26 @@ $categoryselect-list-spacing: 25px;
 		}
 
 		.toolbar {
+			@include venus-icons-font;
+
+			color: $color-article-navigation-inactive;
+			cursor: pointer;
+			float: left;
+			font-size: 16px;
+			line-height: 16px;
 			margin: 0;
 			padding: 0;
+
+			li {
+				color: $color-links;
+				float: left;
+			}
 		}
+
 		.submit-toolbar {
 			display: block;
 		}
 	}
-
 
 	.categories {
 		margin: 0;
@@ -52,8 +64,8 @@ $categoryselect-list-spacing: 25px;
 	.category,
 	.add-toolbar,
 	.placeholder {
-		float: left;
 		display: block;
+		float: left;
 	}
 
 	.add-toolbar {
@@ -74,10 +86,14 @@ $categoryselect-list-spacing: 25px;
 			}
 
 			.toolbar {
-				display: inline-block;
+				display: block;
 			}
 		}
+	}
 
+	.name {
+		display: block;
+		float: left;
 	}
 
 	.input {
@@ -91,10 +107,6 @@ $categoryselect-list-spacing: 25px;
 		width: 245px;
 		height: 30px;
 		margin-bottom: 4px;
-	}
-
-	.sprite-small {//What's that
-//		vertical-align: text-top;
 	}
 
 	.tool {
