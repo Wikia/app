@@ -74,7 +74,7 @@ $VenusConfig[ 'venus_body_js' ] = [
 
 		'//extensions/wikia/Venus/scripts/isTouchScreen.js',
 		'//extensions/wikia/Venus/scripts/variables.js',
-		'//extensions/wikia/Venus/scripts/tracker.js',
+		'//extensions/wikia/Venus/scripts/tracking.js',
 		'//resources/wikia/modules/dom.js',
 
 		// BackgroundChanger
