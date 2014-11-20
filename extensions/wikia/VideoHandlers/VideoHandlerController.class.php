@@ -55,8 +55,10 @@ class VideoHandlerController extends WikiaController {
 					 * This data is being queried by GameGuides that store html in local storage
 					 * Therefore we have to allow for accessing this API, from ie. file://
 					 */
-					$this->response->setHeader( 'Access-Control-Allow-Origin', '*' );
-					$this->response->setHeader( 'Access-Control-Allow-Methods', 'GET' );
+					(new CrossOriginResourceSharingHeaderHelper())
+						->setAllowOrigin( [ '*' ] )
+						->setAllowMethod( [ 'GET' ] )
+						->setHeaders($this->response);
 				}
 			}
 		}
