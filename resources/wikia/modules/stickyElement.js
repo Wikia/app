@@ -108,7 +108,13 @@ define('wikia.stickyElement', [
 		 * @param {Number} value
 		 */
 		function sourceElementPosition (position, alignment, value) {
-			options.sourceElement.style.cssText = "position:" + position + ";" + alignment + ":" + value + "px;";
+			var display = options.sourceElement.style.display;
+			options.sourceElement.style.display = 'none';
+
+			options.sourceElement.style.position = position;
+			options.sourceElement.style[alignment] = value + 'px';
+
+			options.sourceElement.style.display = display;
 		}
 
 		/**

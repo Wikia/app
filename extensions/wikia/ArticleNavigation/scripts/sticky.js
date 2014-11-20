@@ -28,7 +28,7 @@ require([
 	}
 
 	function adjustPositionFunction(scrollY, sourceElement, targetElement) {
-		var additionalBottomOffset = 30,
+		var additionalBottomOffset = 30, // this value was found empirically
 			sourceHeight = $source.outerHeight(true) + additionalBottomOffset,
 			targetBottom = $target.offset().top + $target.outerHeight(true) - sourceHeight;
 
