@@ -41,7 +41,8 @@ define(
 					method: 'getForArticle',
 					data: {
 						id: win.wgArticleId
-					}
+					},
+					type: 'get'
 				}),
 				loader({
 					type: loader.MULTI,
