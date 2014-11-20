@@ -38,6 +38,8 @@ require(
 					.on('click', '#markasread-sub', this.proxy( this.markAllAsReadPrompt ))
 					.on('click', '#markasread-this-wiki', this.proxy( this.markAllAsRead ))
 					.on('click', '#markasread-all-wikis', this.proxy( this.markAllAsReadAllWikis ));
+
+				this.$window.on('resize', $.throttle(100, this.proxy(this.setNotificationsHeight)));
 			},
 
 			openNotifications: function() {
