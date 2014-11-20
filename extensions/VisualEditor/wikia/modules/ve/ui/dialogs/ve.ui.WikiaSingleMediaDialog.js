@@ -41,7 +41,7 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 	// Properties
 	this.mode = {
 		'action': 'insert',
-		'type': 'image'
+		'type': 'photo'
 	};
 	this.query = new ve.ui.WikiaSingleMediaQueryWidget( {
 		'$': this.$,
@@ -95,7 +95,7 @@ ve.ui.WikiaSingleMediaDialog.prototype.initialize = function () {
 	} );
 	this.insertButton.connect( this, { 'click': [ 'close', { 'action': 'insert' } ] } );
 	this.queryInput.$input.on( 'keydown', ve.bind( this.onQueryInputKeydown, this ) );
-	this.cancelButton.connect( this, { 'click': 'onCloseButtonClick' } );
+	this.cancelButton.connect( this, { 'click': 'onCancelButtonClick' } );
 
 	// Initialization
 	this.frame.$content.addClass( 've-ui-wikiaSingleMediaDialog' );
@@ -196,6 +196,13 @@ ve.ui.WikiaSingleMediaDialog.prototype.insertMedia = function () {
 	// Gallery closing
 	linmod.push( {
 		'type': '/wikiaGallery'
+	} );
+
+	// Tracking
+	ve.track( 'wikia', {
+		'action': ve.track.actions.ADD,
+		'label': 'dialog-wikia-single-media-insert-' + this.mode.type,
+		'value': items.length
 	} );
 
 	this.fragment.collapseRangeToEnd().insertContent( linmod );
@@ -323,6 +330,20 @@ ve.ui.WikiaSingleMediaDialog.prototype.onCartModelRemove = function ( items ) {
  */
 ve.ui.WikiaSingleMediaDialog.prototype.onCartModelChange = function () {
 	this.insertButton.setDisabled( ( this.cartModel.getItems().length ) ? false : true );
+};
+
+/**
+ * Handles action when clicking cancel button
+ *
+ * @method
+ */
+ve.ui.WikiaSingleMediaDialog.prototype.onCancelButtonClick = function () {
+	this.close( { 'action': 'cancel' } );
+
+	ve.track( 'wikia', {
+		'action': ve.track.actions.CLICK,
+		'label': 'dialog-wikia-single-media-button-cancel'
+	} );
 };
 
 /* Registration */
