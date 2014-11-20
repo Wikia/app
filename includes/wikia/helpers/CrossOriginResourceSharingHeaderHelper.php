@@ -14,12 +14,20 @@ class CrossOriginResourceSharingHeaderHelper {
 
 	protected $allowValues = [];
 
+	/**
+	 * @param array $values example [ '*' ]
+	 * @return $this
+	 */
 	public function setAllowOrigin( Array $values ) {
 		$this->allowValues[self::ALLOW_ORIGIN_HEADER_NAME] = $values;
 
 		return $this;
 	}
 
+	/**
+	 * @param array $values example [ 'GET', 'POST' ]
+	 * @return $this
+	 */
 	public function setAllowMethod( Array $values ) {
 		$this->allowValues[self::ALLOW_METHOD_HEADER_NAME] = $values;
 
@@ -53,6 +61,9 @@ class CrossOriginResourceSharingHeaderHelper {
 		return $this;
 	}
 
+	/**
+	 * @return $this
+	 */
 	public function readConfig() {
 		global $wgCORSAllowOrigin;
 
