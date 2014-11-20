@@ -76,6 +76,8 @@ $messages['en'] = array(
 	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'Search for images',
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'View',
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-video' => 'Watch',
+	'wikia-visualeditor-media-photo-policy' => 'Please adhere to this wikia\'s image policy when uploading new photos.',
+	'wikia-visualeditor-media-video-policy' => 'Please adhere to this wiki\'s video policy when adding new videos.',
 );
 
 /** Message documentation (Message documentation)

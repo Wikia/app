@@ -223,6 +223,8 @@ $wgResourceModules += array(
 			'wikia-visualeditor-dialog-wikiasinglemedia-search',
 			'wikia-visualeditor-wikiamediaoptionwidget-preview-photo',
 			'wikia-visualeditor-wikiamediaoptionwidget-preview-video',
+			'wikia-visualeditor-media-photo-policy',
+			'wikia-visualeditor-media-video-policy',
 		),
 		'dependencies' => array(
 			'ext.visualEditor.core.desktop',
