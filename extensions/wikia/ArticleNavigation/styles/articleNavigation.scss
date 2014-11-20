@@ -85,18 +85,18 @@ $dropdownArrowSize: 10px;
 		text-decoration: none;
 	}
 
-	[data-share-type=single] {
+	.single-share {
 		display: none;
 	}
-	[data-share-type=multiple] {
+	.multiple-share {
 		display: list-item;
 	}
 
 	&.single-share {
-		[data-share-type=single] {
+		.single-share {
 			display: list-item;
 		}
-		[data-share-type=multiple] {
+		.multiple-share {
 			display: none;
 		}
 	}

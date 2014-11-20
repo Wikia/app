@@ -112,6 +112,9 @@ require([
 	});
 
 	// initialize one-time event to hide multiple shares
-	debouncedUpdatePosition = _.debounce(updatePosition, 1);
+	debouncedUpdatePosition = _.debounce(updatePosition, 10);
 	win.addEventListener('scroll', debouncedUpdatePosition);
+
+	// also update position for the first time
+	$(updatePosition);
 });

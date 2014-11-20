@@ -23,9 +23,9 @@ class ArticleNavigationController extends WikiaController {
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
-		$this->setVal( 'edit_actions_dropdown', $this->renderEditActions() );
+		$this->setVal( 'editActionsDropdown', $this->renderEditActions() );
 		$this->setVal( 'share', $app->renderView( 'ArticleNavigationController', 'share' ) );
-		$this->setVal( 'user_tools', json_encode( $this->helper->extractDropdownData( $this->generateUserTools() ) ) );
+		$this->setVal( 'userTools', json_encode( $this->helper->extractDropdownData( $this->generateUserTools() ) ) );
 	}
 
 	/**
@@ -34,7 +34,12 @@ class ArticleNavigationController extends WikiaController {
 	 * @throws Exception
 	 */
 	private function renderEditActions() {
-		return \MustacheService::getInstance()->render(
+		/**
+		 * Use Mustache render and not renderView because template is outside of extension's
+		 * directory and we want to show that explicitly; it's also a bit faster than doing
+		 * callback just for render small Mustache template anyway.
+		 */
+		return \MustacheService::getInstance()->render( 
 			'resources/wikia/ui_components/dropdown_navigation/templates/dropdown.mustache',
 			$this->editActionsData()
 		);
@@ -49,28 +54,28 @@ class ArticleNavigationController extends WikiaController {
 		$contentActions = $this->app->getSkinTemplateObj()->data['content_actions'];
 		$editActions = [];
 
-		if (isset($contentActions['edit'])) {
-			array_push($editActions, 'edit');
-		} else if (isset($contentActions['viewsource'])) {
-			array_push($editActions, 'viewsource');
+		if ( isset( $contentActions['edit'] ) ) {
+			array_push( $editActions, 'edit' );
+		} else if ( isset( $contentActions['viewsource'] ) ) {
+			array_push( $editActions, 'viewsource' );
 		}
 
-		if (isset($contentActions['ve-edit'])) {
-			if ($contentActions['ve-edit']['main']) {
-				array_unshift($editActions, 've-edit');
+		if ( isset( $contentActions['ve-edit'] ) ) {
+			if ( $contentActions['ve-edit']['main'] ) {
+				array_unshift( $editActions, 've-edit' );
 			} else {
-				array_push($editActions, 've-edit');
+				array_push( $editActions, 've-edit' );
 			}
 		}
 
-		$allowedActions = array_merge($editActions, [
+		$allowedActions = array_merge( $editActions, [
 			'history', 'move', 'protect', 'unprotect', 'delete', 'undelete', 'replace-file'
-		]);
+		] );
 
 		$actions = [];
 
-		foreach ($allowedActions as $action) {
-			if (isset($contentActions[$action])) {
+		foreach ( $allowedActions as $action ) {
+			if ( isset( $contentActions[$action] ) ) {
 				$contentAction = $contentActions[$action];
 
 				$data = [
@@ -79,8 +84,8 @@ class ArticleNavigationController extends WikiaController {
 					'trackingId' => $contentAction['id'],
 				];
 
-				if (isset($contentAction['rel'])) {
-					$data['rel'] = str_replace('ca-', '', $contentAction['rel']);
+				if ( isset( $contentAction['rel'] ) ) {
+					$data['rel'] = str_replace( 'ca-', '', $contentAction['rel'] );
 				}
 
 				$actions[] = $data;
@@ -99,8 +104,8 @@ class ArticleNavigationController extends WikiaController {
 	public function share() {
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
-		$this->setVal('services', $this->prepareShareServicesData());
-		$this->setVal('dropdown', $this->renderShareActions());
+		$this->setVal( 'services', $this->prepareShareServicesData() );
+		$this->setVal( 'dropdown', $this->renderShareActions() );
 	}
 
 	/**
@@ -115,13 +120,13 @@ class ArticleNavigationController extends WikiaController {
 		$location = $protocol . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
 		$services = [];
 
-		foreach ($wgArticleNavigationShareServices as $service ) {
+		foreach ( $wgArticleNavigationShareServices as $service ) {
 			if ( array_key_exists( 'url', $service ) && array_key_exists( 'name', $service ) ) {
-				$service['full_url'] = str_replace( '$1', urlencode( $location ), $service['url'] );
-				$service['name_cased'] = ucfirst( $service['name'] );
+				$service['fullUrl'] = str_replace( '$1', urlencode( $location ), $service['url'] );
+				$service['nameCased'] = ucfirst( $service['name'] );
 
-				if ( !array_key_exists('title', $service ) ) {
-					$service['title'] = $service['name_cased'];
+				if ( !array_key_exists( 'title', $service ) ) {
+					$service['title'] = $service['nameCased'];
 				}
 
 				$services[] = $service;
@@ -137,7 +142,12 @@ class ArticleNavigationController extends WikiaController {
 	 * @throws Exception
 	 */
 	private function renderShareActions() {
-		return \MustacheService::getInstance()->render(
+		/**
+		 * Use Mustache render and not renderView because template is outside of extension's
+		 * directory and we want to show that explicitly; it's also a bit faster than doing
+		 * callback just for render small Mustache template anyway.
+		 */
+		return \MustacheService::getInstance()->render( 
 			'resources/wikia/ui_components/dropdown_navigation/templates/dropdown.mustache',
 			$this->shareActionsData()
 		);
@@ -151,7 +161,7 @@ class ArticleNavigationController extends WikiaController {
 	{
 		$actions = [];
 
-		foreach ($this->prepareShareServicesData() as $service) {
+		foreach ( $this->prepareShareServicesData() as $service ) {
 			$data = [
 				'href' => $service['full_url'],
 				'title' => $service['title'],
@@ -171,8 +181,8 @@ class ArticleNavigationController extends WikiaController {
 	}
 
 	public function getUserTools() {
-		$this->response->setVal(
-			'data', $this->helper->extractDropdownData($this->generateUserTools())
+		$this->response->setVal( 
+			'data', $this->helper->extractDropdownData( $this->generateUserTools() )
 		);
 	}
 
@@ -199,11 +209,11 @@ class ArticleNavigationController extends WikiaController {
 
 		$renderedData = $service->instanceToRenderData( $service->listToInstance( $data ) );
 
-		if ($wgUser->isAllowed('admindashboard')) {
+		if ( $wgUser->isAllowed( 'admindashboard' ) ) {
 			$renderedData[] = [
 				'tracker-name' => 'admin',
 				'caption' => 'Admin',
-				'href' => SpecialPage::getTitleFor('AdminDashboard')->getLocalURL(),
+				'href' => SpecialPage::getTitleFor( 'AdminDashboard' )->getLocalURL(),
 				'type' => 'link'
 			];
 		}

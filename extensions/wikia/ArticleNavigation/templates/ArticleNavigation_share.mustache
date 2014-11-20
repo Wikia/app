@@ -1,11 +1,11 @@
-<li data-share-type="single">
+<li class="single-share">
 	<span class="nav-icon share" id="articleShareActions">&#xF004;</span>
     {{{dropdown}}}
 </li>
 {{#services}}
-<li data-share-type="multiple">
-    <span class="nav-icon share-{{name}}" id="articleShareAction{{name_cased}}">
-        <a class="share-link" href="{{{full_url}}}" target="_blank" title="{{title}}" data-share-name="{{name}}">{{{icon}}}</a>
+<li class="multiple-share">
+    <span class="nav-icon share-{{name}}" id="articleShareAction{{nameCased}}">
+        <a class="share-link" href="{{{fullUrl}}}" target="_blank" title="{{title}}" data-share-name="{{name}}">{{{icon}}}</a>
     </span>
 </li>
 {{/services}}
