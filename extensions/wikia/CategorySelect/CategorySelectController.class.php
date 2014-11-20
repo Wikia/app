@@ -46,6 +46,9 @@ class CategorySelectController extends WikiaController {
 
 		$categoriesLink = Linker::link( Title::newFromText( $categoriesLinkPage ), $categoriesLinkText, $categoriesLinkAttributes );
 
+		Wikia::addAssetsToOutput( 'category_select_css' );
+		Wikia::addAssetsToOutput( 'category_select_js' );
+
 		$this->response->setVal( 'categories', $categories );
 		$this->response->setVal( 'categoriesLink', $categoriesLink );
 		$this->response->setVal( 'showHidden', $showHidden );
@@ -54,7 +57,15 @@ class CategorySelectController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
-	/**
+	public function articlePageVenus() {
+		// Run Oasis articlePage
+		$this->articlePage();
+		// Extend response
+		$categoriesLinkText = wfMessage( 'pagecategories' )->escaped();
+		$this->response->setVal( 'categoriesLinkText', $categoriesLinkText );
+	}
+
+		/**
 	 * The category list template. Used by article pages on view and edit save.
 	 */
 	public function categories() {
