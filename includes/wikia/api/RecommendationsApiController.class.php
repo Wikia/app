@@ -10,6 +10,11 @@ use Wikia\Api\Recommendations\Collector;
  *
  */
 class RecommendationsApiController extends WikiaApiController {
+	const MIN_LIMIT = 1;
+	const MAX_LIMIT = 30;
+
+	const PARAM_NAME_ID = 'id';
+	const PARAM_NAME_LIMIT = 'limit';
 
 	/**
 	 * Get recommendations for article
@@ -20,9 +25,20 @@ class RecommendationsApiController extends WikiaApiController {
 	 * @throws NotFoundApiException
 	 */
 	public function getForArticle() {
-		$articleId = $this->request->getInt( 'id' );
-		$limit = $this->request->getInt( 'limit', 9 );
-		// TODO limit validation
+		$articleId = $this->request->getVal( self::PARAM_NAME_ID );
+		$limit = $this->request->getInt( self::PARAM_NAME_LIMIT, 9 );
+
+		if ( $articleId === null ) {
+			throw new MissingParameterApiException( self::PARAM_NAME_ID );
+		} else {
+			$articleId = intval( $articleId );
+		}
+
+		if ( $limit > self::MAX_LIMIT ) {
+			throw new LimitExceededApiException( self::PARAM_NAME_LIMIT, self::MAX_LIMIT );
+		} else if ($limit < self::MIN_LIMIT ) {
+			throw new LimitExceededApiException( self::PARAM_NAME_LIMIT, self::MIN_LIMIT );
+		}
 
 		$title = Title::newFromID( $articleId );
 

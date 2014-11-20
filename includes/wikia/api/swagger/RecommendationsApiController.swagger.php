@@ -87,7 +87,8 @@ use Swagger\Annotations as SWG;
  * 			nickname="getForArticle",
  * 			responseClass="RecommendationsResultSet",
  * 			@SWG\ErrorResponses(
- * 				@SWG\ErrorResponse( code="404", reason="Selected article not found" )
+ * 				@SWG\ErrorResponse( code="404", reason="Selected article not found" ),
+ * 				@SWG\ErrorResponse( code="400", reason="input parameter missing or exceeds limit" )
  * 			),
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
@@ -101,7 +102,7 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="limit",
- * 					description="Number of requested recommendations - default 9",
+ * 					description="Number of requested recommendations - default 9, min value: 1, max value: 30",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
