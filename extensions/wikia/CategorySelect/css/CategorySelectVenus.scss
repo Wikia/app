@@ -1,0 +1,185 @@
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/box-sizing";
+@import "skins/shared/color";
+@import 'extensions/wikia/Venus/styles/variables';
+@import "extensions/wikia/Venus/styles/buttons";
+@import 'skins/oasis/css/core/sprite';
+
+$categoryselect-list-spacing: 25px;
+
+// These styles are for view pages only
+.CategorySelect {
+	border-top: 1px solid $color-page-border;
+	font-size: 14px;
+	line-height: 16px;
+
+	&.editMode {
+
+		.add {
+			display: none;
+		}
+
+		.input {
+			display: inline-block;
+			&::-ms-clear {
+				display: none;
+			}
+		}
+
+		.toolbar {
+			margin: 0;
+			padding: 0;
+		}
+		.submit-toolbar {
+			display: block;
+		}
+	}
+
+
+	.categories {
+		margin: 0;
+		overflow: hidden;
+		padding: 0;
+
+		&.showHidden {
+			.category.hidden {
+				display: block;
+			}
+		}
+	}
+
+	.category,
+	.add-toolbar,
+	.placeholder {
+		float: left;
+		display: block;
+	}
+
+	.add-toolbar {
+		margin-bottom: 4px;
+	}
+
+	.category {
+		border-right: 1px solid $color-page-border;
+
+		&.hidden {
+			display: none;
+		}
+
+		&.new {
+
+			.name {
+//				cursor: move;
+			}
+
+			.toolbar {
+				display: inline-block;
+			}
+		}
+
+	}
+
+	.input {
+		background-color: transparent;
+		border: 0;
+		color: $color-article-navigation-inactive;
+		display: none;
+		font-size: 12px;
+		font-weight: bold;
+		outline: none;
+		width: 245px;
+		height: 30px;
+		margin-bottom: 4px;
+	}
+
+	.sprite-small {//What's that
+//		vertical-align: text-top;
+	}
+
+	.tool {
+		cursor: pointer;
+		display: inline-block;
+		margin-left: 10px;
+
+		&:first-child {
+			border-left: 0; padding-left: 0;
+		}
+	}
+
+	.toolbar, .submit-toolbar {
+		display: none;
+	}
+
+	.submit-toolbar {
+		border-top: 1px solid $color-page-border;
+		margin-top: 19px;
+		padding-top: 15px;
+		text-align: right;
+
+		.wikia-button {
+			padding: 0 30px;
+			height: 40px;
+			margin-left: 20px;
+		}
+	}
+
+	@media #{$small-only} {
+		margin: $vertical-spacing $small-grid-column + $small-grid-gutter + $small-content-padding - $content-border-width 0;
+		padding: 0 $small-grid-column-padding;
+	}
+
+	@media #{$medium-up} {
+		margin: $vertical-spacing $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width 0;
+		padding: 0 $medium-grid-column-padding;
+	}
+
+	@media #{$large-up} {
+		margin: $vertical-spacing $large-grid-column + $large-grid-gutter + $large-content-padding - $content-border-width 0;
+		padding: 0 $large-grid-column-padding;
+	}
+
+	h2 {
+		margin-top: $vertical-spacing;
+	}
+
+	.category {
+		@media #{$small-only} {
+			margin-right: $small-grid-gutter;
+			padding-right: $small-grid-gutter;
+		}
+
+		@media #{$medium-up} {
+			margin-right: $medium-grid-gutter;
+			padding-right: $medium-grid-gutter;
+		}
+
+		@media #{$large-up} {
+			margin-right: $large-grid-gutter;
+			padding-right: $large-grid-gutter;
+		}
+
+	}
+
+	.categories {
+		margin-top: $categoryselect-list-spacing;
+	}
+
+	.category {
+		margin-bottom: 11px;
+		margin-top: 7px;
+	}
+}
+
+// Need to use ID here for specificity
+#CategorySelectEditModal {
+	.WikiaForm {
+		@include clearfix;
+
+		input,
+		.input-group {
+			@include box-sizing(border-box);
+			width: 100%;
+		}
+	}
+}

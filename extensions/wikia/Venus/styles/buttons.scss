@@ -1,0 +1,19 @@
+@import 'variables';
+
+.wikia-button {
+	background: $color-buttons;
+	border: 0;
+	border: 1px solid $color-buttons;
+	color: #fff;
+	font-size: $font-size-xxs;
+	font-weight: bold;
+	height: 30px;
+	line-height: 30px;
+	padding: 0 10px;
+	text-transform: uppercase;
+}
+
+.wikia-button.secondary {
+	background: transparent;
+	color: $color-buttons;
+}
