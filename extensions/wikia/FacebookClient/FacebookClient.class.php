@@ -342,10 +342,10 @@ class FacebookClient {
 
 	/**
 	 * Check if we should redirect back to the specified page by comparing it to this black list
-	 * @param Title $title
+	 * @param Title|null $title
 	 * @return bool
 	 */
-	private function isInvalidRedirectOnConnect( Title $title ) {
+	private function isInvalidRedirectOnConnect( Title $title = null ) {
 		return (
 			!$title instanceof Title ||
 			$title->isSpecial( 'Userlogout' ) ||

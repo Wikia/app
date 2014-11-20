@@ -189,9 +189,7 @@
 
 							self.form = new window.UserLoginFacebookForm($modal, {
 								ajaxLogin: true,
-								callback: function (res) {
-									debugger;
-
+								callback: function () {
 									// Track FB Connect Sign Up
 									self.track({
 										action: self.actions.SUBMIT,
