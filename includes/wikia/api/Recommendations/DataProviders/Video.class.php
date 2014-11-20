@@ -1,6 +1,13 @@
 <?php
 namespace Wikia\Api\Recommendations\DataProviders;
 
+/**
+ * Video recommendations for RecommendationsApi
+ * @author Maciej Brench <macbre@wikia-inc.com>
+ * @author Damian Jozwiak <damian@wikia-inc.com>
+ * @author Łukasz Konieczny <lukaszk@wikia-inc.com>
+ *
+ */
 class Video implements IDataProvider {
 	const VIDEO_TYPE = 'video';
 	const VIDEO_SOURCE = 'VideoRecommendations';

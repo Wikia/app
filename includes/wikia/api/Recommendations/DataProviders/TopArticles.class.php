@@ -9,6 +9,9 @@ namespace Wikia\Api\Recommendations\DataProviders;
  *
  * Class TopArticles
  * @package Wikia\Api\Recommendations\DataProviders
+ * @author Maciej Brench <macbre@wikia-inc.com>
+ * @author Damian Jozwiak <damian@wikia-inc.com>
+ * @author Łukasz Konieczny <lukaszk@wikia-inc.com>
  */
 class TopArticles implements IDataProvider {
 	const RECOMMENDATION_ENGINE = 'TopArticles';

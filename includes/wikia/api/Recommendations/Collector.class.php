@@ -2,6 +2,13 @@
 
 namespace Wikia\Api\Recommendations;
 
+/**
+ * Recommendations API data collector
+ * @author Maciej Brench <macbre@wikia-inc.com>
+ * @author Damian Jozwiak <damian@wikia-inc.com>
+ * @author Łukasz Konieczny <lukaszk@wikia-inc.com>
+ *
+ */
 class Collector {
 
 	/**

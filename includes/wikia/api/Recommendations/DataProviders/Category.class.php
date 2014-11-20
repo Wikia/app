@@ -1,6 +1,13 @@
 <?php
 namespace Wikia\Api\Recommendations\DataProviders;
 
+/**
+ * Category based recommendations for RecommendationsApi
+ * @author Maciej Brench <macbre@wikia-inc.com>
+ * @author Damian Jozwiak <damian@wikia-inc.com>
+ * @author Łukasz Konieczny <lukaszk@wikia-inc.com>
+ *
+ */
 class Category implements IDataProvider {
 
 	const ARTICLE_TYPE = 'article';
