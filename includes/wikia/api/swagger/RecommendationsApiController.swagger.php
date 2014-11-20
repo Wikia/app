@@ -83,7 +83,7 @@ use Swagger\Annotations as SWG;
  * 	@SWG\Operations(
  * 		@SWG\Operation(
  * 			httpMethod="GET",
- * 			summary="Get recommendations for article from many source",
+ * 			summary="Get recommendations for article from many sources",
  * 			nickname="getForArticle",
  * 			responseClass="RecommendationsResultSet",
  * 			@SWG\ErrorResponses(
