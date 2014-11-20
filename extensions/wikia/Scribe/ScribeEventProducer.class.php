@@ -354,7 +354,6 @@ class ScribeEventProducer {
 			}
 		}
 
-		$this->mParams['mediaTypeName'] = $mediaType;
 		$this->mParams['mediaType'] = $result;
 		wfProfileOut( __METHOD__ );
 	}
@@ -432,9 +431,14 @@ class ScribeEventProducer {
 	}
 
 	public function setIsImageForReview() {
+		$aAllowedTypes = [
+			1 => MEDIATYPE_BITMAP,
+			2 => MEDIATYPE_DRAWING,
+		];
+
 		if ( $this->mParams['pageNamespace'] == 6
 			&& $this->mParams['isRedirect'] == 0
-			&& in_array( $this->mParams['mediaTypeName'], [ MEDIATYPE_BITMAP,  MEDIATYPE_DRAWING ] )
+			&& isset( $aAllowedTypes[ $this->mParams['mediaType'] ] )
 			&& $this->mParams['isLocalFile'] == 1
 			&& $this->mParams['isTop200'] == 0
 		) {
