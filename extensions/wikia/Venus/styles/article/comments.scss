@@ -46,7 +46,7 @@
 		}
 	}
 
-	.wikia-button,
+	/* submit button */
 	.buttons .actionButton {
 		@include font-size-xxs;
 		background: transparent;
@@ -73,7 +73,7 @@
 		padding: 0;
 
 		.comment {
-			border-bottom: solid 1px #aaa;
+			border-bottom: solid 1px #ededed;
 			padding: 20px 0;
 		}
 
@@ -84,7 +84,13 @@
 			.edited-by {
 				clear: both;
 				color: #aaa;
-				line-height: 44px;
+				margin-top: 20px;
+
+				/* timestamp */
+				& > .permalink {
+					@include font-size-xs;
+					color: $color-alternate-text;
+				}
 			}
 
 			/* edit tools */
@@ -126,6 +132,7 @@
 
 		a {
 			display: inline-block;
+			font-weight: bold;
 			line-height: 50px;
 		}
 	}
@@ -147,9 +154,10 @@
 			padding: 2px 8px;
 			margin: 0 4px;
 
-			&.accent {
-				background-color: $color-links;
+			/* the current page */
+			&.article-comments-pagination-link-active {
 				color: $color-text;
+				font-weight: bold;
 			}
 		}
 	}
