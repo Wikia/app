@@ -117,8 +117,6 @@ class FacebookSignupController extends WikiaController {
 		switch ($signupResponse['result']) {
 			case 'ok':
 				$this->result = 'ok';
-				// TODO: check if this is ever used
-				$this->location = $signupResponse['userPage'];
 				break;
 
 			case 'error':
