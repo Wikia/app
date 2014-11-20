@@ -1,11 +1,15 @@
 /*global WikiaForm:true, wgScriptPath */
 var UserLoginAjaxForm = function(el, options){
+	'use strict';
+
 	this.el = $(el);
 	this.options = options || {};
 	this.init();
 };
 
 UserLoginAjaxForm.prototype.init = function() {
+	'use strict';
+
 	// DOM cache
 	this.form = this.el.find("form");
 	this.wikiaForm = new WikiaForm(this.form);
@@ -15,6 +19,8 @@ UserLoginAjaxForm.prototype.init = function() {
 		keeploggedin: this.form.find('input[name=keeploggedin]'),
 		logintoken: this.form.find('input[name=loginToken]'),
 		returnto: this.form.find('input[name=returnto]'),
+		returntoquery: this.form.find('input[name=returntoquery]'),
+		returntourl: this.form.find('input[name=returntourl]'),
 		email: this.form.find('input[name=email]')
 	};
 	this.submitButton = this.form.find('input[type=submit]');
@@ -38,7 +44,7 @@ UserLoginAjaxForm.prototype.submitLogin = function(e) {
 	$(window).trigger('UserLoginSubmit');
 
 	this.submitButton.attr('disabled', 'disabled');
-	if(this.options['ajaxLogin']) {
+	if(this.options.ajaxLogin) {
 		e.preventDefault();
 		this.ajaxLogin();
 	}
@@ -51,24 +57,25 @@ UserLoginAjaxForm.prototype.ajaxLogin = function() {
 		method: 'login',
 		format: 'json',
 		loginToken: this.loginToken,
-		username: this.inputs['username'].val(),
-		password: this.inputs['password'].val(),
-		keeploggedin: this.inputs['keeploggedin'].is(':checked')
-	}, $.proxy(this.submitLoginHandler, this));
+		username: this.inputs.username.val(),
+		password: this.inputs.password.val(),
+		keeploggedin: this.inputs.keeploggedin.is(':checked')
+	}, this.submitLoginHandler.bind(this));
 };
 
 UserLoginAjaxForm.prototype.submitLoginHandler = function(json) {
 	$().log(json);
 	this.form.find('.error-msg').remove();
 	this.form.find('.input-group').removeClass('error');
-	var result = json['result'],
+	var result = json.result,
 		callback;
 
 	if(result === 'ok') {
 		window.wgUserName = json['wgUserName'];
 		callback = this.options['callback'] || '';
 		if(callback && typeof callback === 'function') {
-			callback(json);
+			// call with current context
+			callback.bind(this, json)();
 		} else {
 			// reload page if no callback specified
 			this.reloadPage();
@@ -76,7 +83,8 @@ UserLoginAjaxForm.prototype.submitLoginHandler = function(json) {
 	} else if(result === 'resetpass') {
 		callback = this.options['resetpasscallback'] || '';
 		if(callback && typeof callback === 'function') {
-			callback(json);
+			// call with current context
+			callback.bind(this, json)();
 		} else {
 			// default implementation
 			$.post(wgScriptPath + '/wikia.php', {

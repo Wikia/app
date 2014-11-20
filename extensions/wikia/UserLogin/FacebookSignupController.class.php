@@ -79,15 +79,18 @@ class FacebookSignupController extends WikiaController {
 			}
 		}
 
-		$returnTo = $this->getReturnTo();
+		$returnTo = $this->wg->request->getVal( 'returnto' );
+		$returnToQuery = $this->wg->request->getVal( 'returntoquery' );
+		$returnToUrl = FacebookClient::getInstance()->getReturnToUrl( $returnTo, $returnToQuery );
+
 		$returnToParams = 'returnto=' . $returnTo;
-		$returnToQuery = htmlspecialchars( $this->wg->request->getVal( 'returntoquery' ) );
 		if ( $returnToQuery ) {
-			$returnToParams .= '&returntoquery=' . $returnToQuery;
+			$returnToParams .= '&returntoquery=' . htmlspecialchars( $returnToQuery );
 		}
+		// query string is neaded for redirects after Special:FacebookConnect
 		$this->queryString = $returnToParams;
-		$this->returnTo = $returnTo;
-		$this->returnToQuery = $returnToQuery;
+
+		$this->returnToUrl = $returnToUrl;
 
 		$this->loginToken = UserLoginHelper::getSignupToken();
 
@@ -107,6 +110,7 @@ class FacebookSignupController extends WikiaController {
 		switch ($signupResponse['result']) {
 			case 'ok':
 				$this->result = 'ok';
+				// TODO: check if this is ever used
 				$this->location = $signupResponse['userPage'];
 				break;
 
