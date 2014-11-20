@@ -1,5 +1,5 @@
 /*global WikiaForm:true, wgScriptPath */
-var UserLoginAjaxForm = function(el, options){
+var UserLoginAjaxForm = function (el, options) {
 	'use strict';
 
 	this.el = $(el);
@@ -7,7 +7,7 @@ var UserLoginAjaxForm = function(el, options){
 	this.init();
 };
 
-UserLoginAjaxForm.prototype.init = function() {
+UserLoginAjaxForm.prototype.init = function () {
 	'use strict';
 
 	// DOM cache
@@ -35,24 +35,24 @@ UserLoginAjaxForm.prototype.init = function() {
 	// forgot password handler
 	this.forgotPasswordLink.click($.proxy(this.mailPassword, this));
 
-	if ( !this.options.skipFocus ) {
+	if (!this.options.skipFocus) {
 		this.inputs.username.focus();
 	}
 };
 
-UserLoginAjaxForm.prototype.submitLogin = function(e) {
+UserLoginAjaxForm.prototype.submitLogin = function (e) {
 	'use strict';
 
 	$(window).trigger('UserLoginSubmit');
 
 	this.submitButton.attr('disabled', 'disabled');
-	if(this.options.ajaxLogin) {
+	if (this.options.ajaxLogin) {
 		e.preventDefault();
 		this.ajaxLogin();
 	}
 };
 
-UserLoginAjaxForm.prototype.ajaxLogin = function() {
+UserLoginAjaxForm.prototype.ajaxLogin = function () {
 	'use strict';
 
 	// TODO: use $.nirvana.postJson
@@ -67,7 +67,7 @@ UserLoginAjaxForm.prototype.ajaxLogin = function() {
 	}, this.submitLoginHandler.bind(this));
 };
 
-UserLoginAjaxForm.prototype.submitLoginHandler = function(json) {
+UserLoginAjaxForm.prototype.submitLoginHandler = function (json) {
 	'use strict';
 
 	$().log(json);
@@ -76,62 +76,61 @@ UserLoginAjaxForm.prototype.submitLoginHandler = function(json) {
 	var result = json.result,
 		callback;
 
-	if(result === 'ok') {
+	if (result === 'ok') {
 		window.wgUserName = json.wgUserName;
 		callback = this.options.callback || '';
-		if(callback && typeof callback === 'function') {
+		if (callback && typeof callback === 'function') {
 			// call with current context
 			callback.bind(this, json)();
 		} else {
 			// reload page if no callback specified
 			this.reloadPage();
 		}
-	} else if(result === 'resetpass') {
+	} else if (result === 'resetpass') {
 		callback = this.options.resetpasscallback || '';
-		if(callback && typeof callback === 'function') {
+		if (callback && typeof callback === 'function') {
 			// call with current context
 			callback.bind(this, json)();
 		} else {
 			// default implementation
 			$.post(wgScriptPath + '/wikia.php', {
-					controller: 'UserLoginSpecial',
-					method: 'changePassword',
-					format: 'html',
-					username: this.inputs.username.val(),
-					password: this.inputs.password.val(),
-					returnto: this.inputs.returnto.val(),
-					fakeGet: 1
-				}, $.proxy(this.retrieveTemplateHandler, this)
-			);
+				controller: 'UserLoginSpecial',
+				method: 'changePassword',
+				format: 'html',
+				username: this.inputs.username.val(),
+				password: this.inputs.password.val(),
+				returnto: this.inputs.returnto.val(),
+				fakeGet: 1
+			}, $.proxy(this.retrieveTemplateHandler, this));
 		}
-	} else if(result === 'unconfirm') {
+	} else if (result === 'unconfirm') {
 		$.post(wgScriptPath + '/wikia.php', {
 			controller: 'UserLoginSpecial',
 			method: 'getUnconfirmedUserRedirectUrl',
 			format: 'json',
 			username: this.inputs.username.val()
-		}, function(json) {
+		}, function (json) {
 			window.location = json.redirectUrl;
 		});
-	} else if ( result === 'closurerequested' ) {
-		$.post( wgScriptPath + '/wikia.php', {
+	} else if (result === 'closurerequested') {
+		$.post(wgScriptPath + '/wikia.php', {
 			controller: 'UserLoginSpecial',
 			method: 'getCloseAccountRedirectUrl',
 			format: 'json'
-		}, function( data ) {
+		}, function (data) {
 			window.location = data.redirectUrl;
-		} );
+		});
 	} else {
 		this.submitButton.removeAttr('disabled');
 		this.errorValidation(json);
 	}
 };
 
-UserLoginAjaxForm.prototype.retrieveTemplateHandler = function(html) {
+UserLoginAjaxForm.prototype.retrieveTemplateHandler = function (html) {
 	'use strict';
 
 	var content = $('<div style="display:none" />').append(html);
-	this.form.slideUp(400, function() {
+	this.form.slideUp(400, function () {
 		$(this).replaceWith(content);
 		content.slideDown(400);
 	});
@@ -141,46 +140,46 @@ UserLoginAjaxForm.prototype.retrieveTemplateHandler = function(html) {
  * Reload the current page with an added "cb" (cachebuster) value, usually after a login.
  * @todo: Use querystring helper for this
  */
-UserLoginAjaxForm.prototype.reloadPage = function() {
+UserLoginAjaxForm.prototype.reloadPage = function () {
 	'use strict';
 
 	var location = window.location.href,
 		delim = '?';
-	if(location.indexOf('?') > 0){
+	if (location.indexOf('?') > 0) {
 		delim = '&';
 	}
-	window.location.href = location.split('#')[0] + delim + 'cb=' + Math.floor(Math.random()*10000);
+	window.location.href = location.split('#')[0] + delim + 'cb=' + Math.floor(Math.random() * 10000);
 };
 
-UserLoginAjaxForm.prototype.errorValidation = function(json) {
+UserLoginAjaxForm.prototype.errorValidation = function (json) {
 	'use strict';
 
-	if(json.errParam) {
+	if (json.errParam) {
 		this.wikiaForm.showInputError(json.errParam, json.msg);
 	} else {
 		this.wikiaForm.showGenericError(json.msg);
 	}
 };
 
-UserLoginAjaxForm.prototype.retrieveLoginToken = function(params) {
+UserLoginAjaxForm.prototype.retrieveLoginToken = function (params) {
 	'use strict';
 
 	params = params || {};
-	if(!this.loginToken || params.clearCache) {
+	if (!this.loginToken || params.clearCache) {
 		this.loginToken = 'retrieving';
 		// TODO: use $.nirvana.postJson
 		$.post(wgScriptPath + '/wikia.php', {
 			controller: 'UserLoginSpecial',
 			method: 'retrieveLoginToken',
 			format: 'json'
-		}, $.proxy(function(res) {
+		}, $.proxy(function (res) {
 			this.loginToken = res.loginToken;
 			this.inputs.logintoken.val(res.loginToken);
 		}, this));
 	}
 };
 
-UserLoginAjaxForm.prototype.mailPassword = function(e) {
+UserLoginAjaxForm.prototype.mailPassword = function (e) {
 	'use strict';
 
 	e.preventDefault();
@@ -193,16 +192,16 @@ UserLoginAjaxForm.prototype.mailPassword = function(e) {
 		method: 'mailPassword',
 		format: 'json',
 		username: this.inputs.username.val()
-	}, $.proxy(this.mailPasswordHandler, this) );
+	}, $.proxy(this.mailPasswordHandler, this));
 };
 
-UserLoginAjaxForm.prototype.mailPasswordHandler = function(json) {
+UserLoginAjaxForm.prototype.mailPasswordHandler = function (json) {
 	'use strict';
 
 	$().log(json);
-	if(json.result === 'ok') {
+	if (json.result === 'ok') {
 		this.errorValidation(json);
-	} else if(json.result === 'error') {
+	} else if (json.result === 'error') {
 		this.errorValidation(json);
 	}
 };
