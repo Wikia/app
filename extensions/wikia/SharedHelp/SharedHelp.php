@@ -199,10 +199,10 @@ function SharedHelpHook(&$out, &$text) {
 			}
 		}
 		if(!empty($content)) {
-            # get rid of magic word editsection (non parsed piece causing double section headers)
-            $content = preg_replace("|<mw:editsection( .*)?>.*?</mw:editsection>|", "", $content);
-        } else {# If getting content from memcache failed (invalidate) then just download it via HTTP
-            $urlTemplate = $sharedServer . $sharedScript . "?title=Help:%s&action=render";
+			# get rid of magic word editsection (non parsed piece causing double section headers)
+			$content = preg_replace("|<mw:editsection( .*)?>.*?</mw:editsection>|", "", $content);
+		} else {# If getting content from memcache failed (invalidate) then just download it via HTTP
+			$urlTemplate = $sharedServer . $sharedScript . "?title=Help:%s&action=render";
 			$articleUrl = sprintf($urlTemplate, urlencode($wgTitle->getDBkey()));
 			list($content, $c) = SharedHttp::get($articleUrl);
 
@@ -252,8 +252,7 @@ function SharedHelpHook(&$out, &$text) {
 				$contentA = explode("\n", $content);
 				$tmp = isset($contentA[count($contentA)-2]) ? $contentA[count($contentA)-2] : '';
 				$idx1 = strpos($tmp, 'key');
-				$idx2 = strpos($tmp, 'end');
-				$key = trim(substr($tmp, $idx1+4, $idx2-$idx1));
+				$key = trim( substr( $tmp, $idx1+4, -4 ) );
 				$sharedArticle = array('cachekey' => $key, 'timestamp' => wfTimestamp());
 				$wgMemc->set($sharedArticleKey, $sharedArticle);
 				wfDebug("SharedHelp: using parser cache {$sharedArticle['cachekey']}\n");
