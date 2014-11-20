@@ -11,7 +11,7 @@ UserLoginAjaxForm.prototype.init = function() {
 	'use strict';
 
 	// DOM cache
-	this.form = this.el.find("form");
+	this.form = this.el.find('form');
 	this.wikiaForm = new WikiaForm(this.form);
 	this.inputs = {
 		username: this.form.find('input[name=username]'),
@@ -35,12 +35,14 @@ UserLoginAjaxForm.prototype.init = function() {
 	// forgot password handler
 	this.forgotPasswordLink.click($.proxy(this.mailPassword, this));
 
-	if ( !this.options['skipFocus'] ) {
-		this.inputs['username'].focus();
+	if ( !this.options.skipFocus ) {
+		this.inputs.username.focus();
 	}
 };
 
 UserLoginAjaxForm.prototype.submitLogin = function(e) {
+	'use strict';
+
 	$(window).trigger('UserLoginSubmit');
 
 	this.submitButton.attr('disabled', 'disabled');
@@ -51,6 +53,8 @@ UserLoginAjaxForm.prototype.submitLogin = function(e) {
 };
 
 UserLoginAjaxForm.prototype.ajaxLogin = function() {
+	'use strict';
+
 	// TODO: use $.nirvana.postJson
 	$.post(wgScriptPath + '/wikia.php', {
 		controller: 'UserLoginSpecial',
@@ -64,6 +68,8 @@ UserLoginAjaxForm.prototype.ajaxLogin = function() {
 };
 
 UserLoginAjaxForm.prototype.submitLoginHandler = function(json) {
+	'use strict';
+
 	$().log(json);
 	this.form.find('.error-msg').remove();
 	this.form.find('.input-group').removeClass('error');
@@ -71,8 +77,8 @@ UserLoginAjaxForm.prototype.submitLoginHandler = function(json) {
 		callback;
 
 	if(result === 'ok') {
-		window.wgUserName = json['wgUserName'];
-		callback = this.options['callback'] || '';
+		window.wgUserName = json.wgUserName;
+		callback = this.options.callback || '';
 		if(callback && typeof callback === 'function') {
 			// call with current context
 			callback.bind(this, json)();
@@ -81,7 +87,7 @@ UserLoginAjaxForm.prototype.submitLoginHandler = function(json) {
 			this.reloadPage();
 		}
 	} else if(result === 'resetpass') {
-		callback = this.options['resetpasscallback'] || '';
+		callback = this.options.resetpasscallback || '';
 		if(callback && typeof callback === 'function') {
 			// call with current context
 			callback.bind(this, json)();
@@ -91,9 +97,9 @@ UserLoginAjaxForm.prototype.submitLoginHandler = function(json) {
 					controller: 'UserLoginSpecial',
 					method: 'changePassword',
 					format: 'html',
-					username: this.inputs['username'].val(),
-					password: this.inputs['password'].val(),
-					returnto: this.inputs['returnto'].val(),
+					username: this.inputs.username.val(),
+					password: this.inputs.password.val(),
+					returnto: this.inputs.returnto.val(),
 					fakeGet: 1
 				}, $.proxy(this.retrieveTemplateHandler, this)
 			);
@@ -103,9 +109,9 @@ UserLoginAjaxForm.prototype.submitLoginHandler = function(json) {
 			controller: 'UserLoginSpecial',
 			method: 'getUnconfirmedUserRedirectUrl',
 			format: 'json',
-			username: this.inputs['username'].val()
+			username: this.inputs.username.val()
 		}, function(json) {
-			window.location = json['redirectUrl'];
+			window.location = json.redirectUrl;
 		});
 	} else if ( result === 'closurerequested' ) {
 		$.post( wgScriptPath + '/wikia.php', {
@@ -122,37 +128,45 @@ UserLoginAjaxForm.prototype.submitLoginHandler = function(json) {
 };
 
 UserLoginAjaxForm.prototype.retrieveTemplateHandler = function(html) {
+	'use strict';
+
 	var content = $('<div style="display:none" />').append(html);
-	var heading = content.find('h1');
-	var form = this.form;
 	this.form.slideUp(400, function() {
-		form.replaceWith(content);
+		$(this).replaceWith(content);
 		content.slideDown(400);
 	});
 };
 
-/* TODO: Generalize this - hyun */
-/* It seems like we stuff all utility functions into jQuery namespace.  I'd rather wait until we come to a decision on placement of global utility functions than to further pollute jQuery - hyun */
+/**
+ * Reload the current page with an added "cb" (cachebuster) value, usually after a login.
+ * @todo: Use querystring helper for this
+ */
 UserLoginAjaxForm.prototype.reloadPage = function() {
-	var location = window.location.href;
-	var delim = "?";
-	if(location.indexOf("?") > 0){
-		delim = "&";
+	'use strict';
+
+	var location = window.location.href,
+		delim = '?';
+	if(location.indexOf('?') > 0){
+		delim = '&';
 	}
-	window.location.href = location.split("#")[0] + delim + "cb=" + Math.floor(Math.random()*10000);
+	window.location.href = location.split('#')[0] + delim + 'cb=' + Math.floor(Math.random()*10000);
 };
 
 UserLoginAjaxForm.prototype.errorValidation = function(json) {
-	if(json['errParam']) {
-		this.wikiaForm.showInputError(json['errParam'], json['msg']);
+	'use strict';
+
+	if(json.errParam) {
+		this.wikiaForm.showInputError(json.errParam, json.msg);
 	} else {
-		this.wikiaForm.showGenericError(json['msg']);
+		this.wikiaForm.showGenericError(json.msg);
 	}
 };
 
 UserLoginAjaxForm.prototype.retrieveLoginToken = function(params) {
+	'use strict';
+
 	params = params || {};
-	if(!this.loginToken || params['clearCache']) {
+	if(!this.loginToken || params.clearCache) {
 		this.loginToken = 'retrieving';
 		// TODO: use $.nirvana.postJson
 		$.post(wgScriptPath + '/wikia.php', {
@@ -161,12 +175,14 @@ UserLoginAjaxForm.prototype.retrieveLoginToken = function(params) {
 			format: 'json'
 		}, $.proxy(function(res) {
 			this.loginToken = res.loginToken;
-			this.inputs['logintoken'].val(res.loginToken);
+			this.inputs.logintoken.val(res.loginToken);
 		}, this));
 	}
 };
 
 UserLoginAjaxForm.prototype.mailPassword = function(e) {
+	'use strict';
+
 	e.preventDefault();
 	this.form.find('.input-group').removeClass('error');
 	this.form.find('.error-msg').remove();
@@ -176,15 +192,17 @@ UserLoginAjaxForm.prototype.mailPassword = function(e) {
 		controller: 'UserLoginSpecial',
 		method: 'mailPassword',
 		format: 'json',
-		username: this.inputs['username'].val()
+		username: this.inputs.username.val()
 	}, $.proxy(this.mailPasswordHandler, this) );
 };
 
 UserLoginAjaxForm.prototype.mailPasswordHandler = function(json) {
+	'use strict';
+
 	$().log(json);
-	if(json['result'] === 'ok') {
+	if(json.result === 'ok') {
 		this.errorValidation(json);
-	} else if(json['result'] === 'error') {
+	} else if(json.result === 'error') {
 		this.errorValidation(json);
 	}
 };
