@@ -1,4 +1,4 @@
-require(['jquery', 'wikia.window', 'wikia.tracker'], function($, win, tracker) {
+require(['jquery', 'wikia.window', 'wikia.tracker'], function ($, win, tracker) {
 	var track;
 
 	// skip special pages
@@ -24,11 +24,11 @@ require(['jquery', 'wikia.window', 'wikia.tracker'], function($, win, tracker) {
 	}
 
 	// bind tracker on DOMready
-	$(function() {
+	$(function () {
 		var $article = $('#mw-content-text'),
 			category = 'article';
 
-		$article.on('mousedown', 'a', function(e) {
+		$article.on('mousedown', 'a', function (e) {
 			var label,
 				el = $(e.currentTarget);
 
