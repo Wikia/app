@@ -1,13 +1,12 @@
 <?php
 
-class ScreenplayFeedIngester extends VideoFeedIngester {
+class ScreenplayFeedIngester extends RemoteAssetFeedIngester {
 
 	const TIMEOUT = 60;
 
 	protected static $API_WRAPPER = 'ScreenplayApiWrapper';
 	protected static $PROVIDER = 'screenplay';
 	protected static $FEED_URL = 'http://$2:$3@www.totaleclips.com/api/v1/assets?vendorid=$1&group_by_title=1&date_added=$4&date_added_end=$5&bitrateID=$6';
-	protected static $CLIP_TYPE_BLACKLIST = array();
 
 	protected static $FORMAT_ID_THUMBNAIL = 9;
 	protected static $FORMAT_ID_VIDEO = 20;
@@ -87,7 +86,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 
 		$content = $this->getUrlContent( $url, [ 'timeout' => self::TIMEOUT ] );
 		if ( $content === false  ) {
-			$this->videoErrors( "ERROR: problem downloading content.\n" );
+			$this->logger->videoErrors( "ERROR: problem downloading content.\n" );
 			wfProfileOut( __METHOD__ );
 			return 0;
 		}
@@ -129,7 +128,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 	 * @param array $params
 	 * @return integer $articlesCreated
 	 */
-	public function import( $content = '', $params = array() ) {
+	public function import( $content = '', array $params = [] ) {
 		wfProfileIn( __METHOD__ );
 
 		$articlesCreated = 0;
@@ -156,12 +155,8 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 	 * @param array $params
 	 * @return integer $articlesCreated
 	 */
-	public function ingestVideos( $content = '', $params = array() ) {
+	public function ingestVideos( $content = '', $params = [] ) {
 		wfProfileIn( __METHOD__ );
-
-		$debug = !empty( $params['debug'] );
-		$addlCategories = empty( $params['addlCategories'] ) ? array() : $params['addlCategories'];
-		$remoteAsset = !empty( $params['remoteAsset'] );
 
 		$articlesCreated = 0;
 
@@ -175,7 +170,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 
 		foreach ( $titles as $title ) {
 			if ( empty( $title['Assets'] ) ) {
-				$this->videoSkipped();
+				$this->logger->videoSkipped();
 				continue;
 			}
 
@@ -192,8 +187,8 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 				'resolution'      => '',
 			];
 
+			$addlCategories = [];
 			if ( !empty( $params['keyphrasesCategories'] ) ) {
-				$addlCategories = array();
 				foreach ( $params['keyphrasesCategories'] as $keyphrase => $categories ) {
 					if ( $this->isKeyphraseInString( $clipData['titleName'], $keyphrase ) ) {
 						$addlCategories = array_merge( $addlCategories, $categories );
@@ -205,19 +200,13 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 			$videos = [];
 			foreach ( $title['Assets'] as $clip ) {
 				if ( empty( $clip['EClipId'] ) ) {
-					$this->videoSkipped();
-					continue;
-				}
-
-				// If array is not empty - use only videos that exists in $this->filterByProviderVideoId array
-				if ( count( $this->filterByProviderVideoId ) > 0 && !in_array( $clip['EClipId'], $this->filterByProviderVideoId ) ) {
-					$this->videoSkipped();
+					$this->logger->videoSkipped();
 					continue;
 				}
 
 				// Skip Movie Trailers (trailer type = Home Video, Theatrical, Open-ended )
 				if ( in_array( $clip['TrailerTypeId'], self::$EXCLUDE_TRAILER_TYPE ) && $clip['TrailerVersion'] == 1 ) {
-					$this->videoSkipped();
+					$this->logger->videoSkipped();
 					continue;
 				}
 
@@ -225,7 +214,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 				if ( array_key_exists( $clip['EClipId'], $videos ) ) {
 					$videos[$clip['EClipId']] = $this->getClipData( $clip, $videos[$clip['EClipId']] );
 				} else {
-					$this->setResultSummary( 'found' );
+					$this->logger->printAndSetResultSummary( 'found' );
 					$clipData['addlCategories'] = $addlCategories;
 					$videos[$clip['EClipId']] = $this->getClipData( $clip, $clipData );
 				}
@@ -246,22 +235,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 				$addlCategories = $video['addlCategories'];
 				unset( $video['addlCategories'] );
 
-				$msg = '';
-				if ( $this->isClipTypeBlacklisted( $video ) ) {
-					if ( $debug ) {
-						$this->videoSkipped( "Skipping {$video['titleName']} ({$video['year']}) - {$video['description']}. On clip type blacklist\n" );
-					}
-				} else {
-					$createParams = [
-						'addlCategories' => $addlCategories,
-						'debug'          => $debug,
-						'remoteAsset'    => $remoteAsset,
-					];
-					$articlesCreated += $this->createVideo( $video, $msg, $createParams );
-				}
-				if ( $msg ) {
-					print "ERROR: $msg\n";
-				}
+				$articlesCreated += $this->createVideo( $video, $addlCategories );
 			}
 		}
 
@@ -318,7 +292,7 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 
 		// set type
 		$trailerVersion = empty( self::$TRAILER_VERSION[$clip['TrailerVersion']] ) ? '' : self::$TRAILER_VERSION[$clip['TrailerVersion']];
-		$clipData['type'] = $this->getStdType( $trailerVersion );
+		$clipData['type'] = $this->getType( $trailerVersion );
 
 		// set additional category
 		if ( empty( $clipData['addlCategories'] ) ) {
@@ -371,30 +345,28 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * Generate video name
-	 * @param array $data
 	 * @return string $name
 	 */
-	protected function generateName( $data ) {
+	protected function generateName() {
 		wfProfileIn( __METHOD__ );
 
-		if ( empty( $data['description'] ) ) {
+		if ( empty( $this->videoData['description'] ) ) {
 			$altDescription = '';
-			$altDescription .= empty( $data['category'] ) ? '' : $data['category'].' ';
-			$altDescription .= empty( $data['type'] ) ? '' : $data['type'].' ';
-			//$altDescription .= "({$data['videoId']})";
+			$altDescription .= empty( $this->videoData['category'] ) ? '' : $this->videoData['category'].' ';
+			$altDescription .= empty( $this->videoData['type'] ) ? '' : $this->videoData['type'].' ';
 			$description = $altDescription;
 		} else {
-			$description = $data['description'];
+			$description = $this->videoData['description'];
 		}
 
 		if ( startsWith( $description, 'Trailer ' ) ) {
 			// add trailer type to description
-			if ( !empty( $data['category'] ) ) {
-				$description = $data['category'] . ' ' . $description;
+			if ( !empty( $this->videoData['category'] ) ) {
+				$description = $this->videoData['category'] . ' ' . $description;
 			}
 		}
 
-		$name = sprintf( "%s - %s", $this->generateTitleName( $data ), $description );
+		$name = sprintf( "%s - %s", $this->generateTitleName( $this->videoData ), $description );
 
 		wfProfileOut( __METHOD__ );
 
@@ -414,88 +386,75 @@ class ScreenplayFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * Create a list of category names to add to the new file page
-	 * @param array $data
-	 * @param array $categories
+	 * @param array $addlCategories
 	 * @return array $categories
 	 */
-	public function generateCategories( $data, $categories ) {
+	public function generateCategories( array $addlCategories ) {
 		wfProfileIn( __METHOD__ );
 
-		$categories[] = $data['name'];
+		$addlCategories[] = $this->videoData['name'];
 
-		if ( !empty( $data['type'] ) ) {
-			$categories[] = $this->getStdPageCategory( $data['type'] );
+		if ( !empty( $this->videoData['type'] ) ) {
+			$addlCategories[] = $this->getPageCategory( $this->videoData['type'] );
 		}
 
-		$categories = array_merge( $categories, $this->getAdditionalPageCategories( $categories ) );
+		$addlCategories = array_merge( $addlCategories, $this->getAdditionalPageCategories( $addlCategories ) );
 
 		// add language
-		if ( !empty( $data['language'] ) && !preg_match( "/\benglish\b/i", $data['language'] ) ) {
-			$categories[] = 'International';
-			$categories[] = $data['language'];
+		if ( !empty( $this->videoData['language'] ) && !preg_match( "/\benglish\b/i", $this->videoData['language'] ) ) {
+			$addlCategories[] = 'International';
+			$addlCategories[] = $this->videoData['language'];
 		}
 
-		if ( stripos( $data['titleName'], '(VG)' ) !== false ) {
-			$categories[] = 'Games';
+		if ( preg_match( '\(VG\)', $this->videoData['titleName'] ) !== false ) {
+			$addlCategories[] = 'Games';
 		} else {
-			$categories[] = 'Entertainment';
+			$addlCategories[] = 'Entertainment';
 		}
 
-		$categories[] = 'Screenplay';
+		$addlCategories[] = 'Screenplay';
 
 		wfProfileOut( __METHOD__ );
 
-		return preg_replace( '/\s*,\s*/', ' ', $this->getUniqueArray( $categories ) );
+		return preg_replace( '/\s*,\s*/', ' ', wfGetUniqueArrayCI( $addlCategories ) );
 	}
 
 	/**
 	 * Generate metadata
-	 * @param array $data
-	 * @param string $errorMsg
-	 * @return array|int $metadata or 0 on error
+	 * @throws FeedIngesterSkippedException
+	 * @return array
 	 */
-	public function generateMetadata( $data, &$errorMsg ) {
-		//error checking
-		if ( empty( $data['stdBitrateCode'] ) ) {
-			$errorMsg = 'no supported bitrate code for video id ' . $data['videoId'];
-			return 0;
+	public function generateMetadata() {
+		if ( empty( $this->videoData['stdBitrateCode'] ) ) {
+			throw new FeedIngesterSkippedException('No supported bitrate code for video id ' . $this->videoData['videoId']);
 		}
 
-		$metadata = parent::generateMetadata( $data, $errorMsg );
-		if ( empty( $metadata ) ) {
-			return 0;
-		}
-
-		$metadata['stdBitrateCode'] = $data['stdBitrateCode'];
-		$metadata['jpegBitrateCode'] = empty( $data['jpegBitrateCode'] ) ? '' : $data['jpegBitrateCode'];
-		$metadata['streamUrl'] = empty( $data['streamUrl'] ) ? '' : $data['streamUrl'];
-		$metadata['streamHdUrl'] = empty( $data['streamHdUrl'] ) ? '' : $data['streamHdUrl'];
-		$metadata['distributor'] = empty( $data['distributor'] ) ? '' : $data['distributor'];
+		$metadata = parent::generateMetadata();
+		$metadata['stdBitrateCode'] = $this->getVideoData( 'stdBitrateCode' );
+		$metadata['jpegBitrateCode'] = $this->getVideoData( 'jpegBitrateCode' );
+		$metadata['streamUrl'] = $this->getVideoData( 'streamUrl' );
+		$metadata['streamHdUrl'] = $this->getVideoData( 'streamHdUrl' );
+		$metadata['distributor'] = $this->getVideoData( 'distributor' );
 
 		return $metadata;
 	}
 
 	/**
 	 * Massage some video metadata and generate URLs to this video's assets
-	 * @param string $name
-	 * @param array $data
 	 * @param boolean $generateUrl
-	 * @return array $data
 	 */
-	public function generateRemoteAssetData( $name, $data, $generateUrl = true ) {
-		$data['assetTitle'] = $name;
-		$data['duration'] = $data['duration'] * 1000;
-		$data['published'] = empty( $data['published'] ) ? '' : strftime( '%Y-%m-%d', $data['published'] );
+	public function prepareMetaDataForOoyala( $generateUrl = true ) {
+		$this->metaData['assetTitle'] = $this->metaData['destinationTitle'];
+		$this->metaData['duration'] = $this->metaData['duration'] * 1000;
+		$this->metaData['published'] = empty( $this->metaData['published'] ) ? '' : strftime( '%Y-%m-%d', $this->metaData['published'] );
 
 		if ( $generateUrl ) {
-			$url = empty( $data['streamUrl'] ) ? $data['streamHdUrl'] : $data['streamUrl'];
-			$data['url'] = [
+			$url = empty( $this->metaData['streamUrl'] ) ? $this->metaData['streamHdUrl'] : $this->metaData['streamUrl'];
+			$this->metaData['url'] = [
 				'flash' => $url,
 				'iphone' => $url,
 			];
 		}
-
-		return $data;
 	}
 
 }

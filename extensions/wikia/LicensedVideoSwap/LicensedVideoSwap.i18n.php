@@ -673,6 +673,16 @@ $messages['fr'] = array(
 	'lvs-new-flag' => 'Nouveau',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'lvs-history-button-text' => 'Skiednis',
+	'lvs-button-yes' => 'Ja',
+	'lvs-button-no' => 'Nee',
+	'lvs-posted-in-more' => 'mear',
+);
+
 /** Galician (galego)
  * @author Elisardojm
  * @author Toliño
@@ -701,7 +711,7 @@ $messages['gl'] = array(
 	'lvs-button-swap' => 'Intercambiar',
 	'lvs-button-yes' => 'Si',
 	'lvs-button-no' => 'Non',
-	'lvs-more-suggestions' => 'máis suxestións',
+	'lvs-more-suggestions' => 'máis suxestións', # Fuzzy
 	'lvs-best-match-label' => 'Mellor resultado de entre os vídeos do Wikia',
 	'lvs-undo-swap' => 'Desfacer',
 	'lvs-undo-keep' => 'Desfacer',

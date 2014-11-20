@@ -459,6 +459,7 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
  */
 $messages['zh-hant'] = array(
 	'wikiaconfirmemail-error-empty-code' => '驗證碼為空',
@@ -466,6 +467,6 @@ $messages['zh-hant'] = array(
 	'wikiaconfirmemail-error-user-not-match' => '哎呀，這個確認連結與您輸入的使用者名稱不同。請確保您輸入了正確的使用者名稱。如果您想要使用一個不同的帳戶登錄，請按一下<a href="{{fullurl:{{ns:special}}:UserLogin}}">這裡</a>',
 	'wikiaconfirmemail-login-button' => '確認並登錄',
 	'wikiaconfirmemail-heading' => '快完成了。',
-	'wikiaconfirmemail-subheading' => '用您的用戶名和密碼登錄，讓我們知道您收到了那封電子郵件。',
+	'wikiaconfirmemail-subheading' => '用您的使用者名稱和密碼登入，讓我們知道您收到了那封電子郵件。',
 	'wikiaconfirmemail-username' => '用戶名',
 );

@@ -20,6 +20,7 @@ class EditorPreference {
 	 * @return bool
 	 */
 	public static function onEditingPreferencesBefore( $user, &$preferences ) {
+		global $wgVisualEditorNeverPrimary;
 		$preferences[PREFERENCE_EDITOR] = array(
 			'type' => 'select',
 			'label-message' => 'editor-preference',
@@ -31,6 +32,9 @@ class EditorPreference {
 				wfMessage( 'option-source-editor' )->text() => self::OPTION_EDITOR_SOURCE,
 			),
 		);
+		if ( $wgVisualEditorNeverPrimary ) {
+			$preferences[PREFERENCE_EDITOR]['help-message'] = 'editor-preference-help';
+		}
 		return true;
 	}
 
@@ -126,10 +130,10 @@ class EditorPreference {
 	 * @return integer The editor option value
 	 */
 	public static function getPrimaryEditor() {
-		global $wgUser, $wgEnableVisualEditorUI, $wgEnableRTEExt, $wgForceVisualEditor;
+		global $wgUser, $wgEnableVisualEditorUI, $wgEnableRTEExt, $wgVisualEditorNeverPrimary;
 		$selectedOption = (int)$wgUser->getOption( PREFERENCE_EDITOR );
 
-		if ( $selectedOption === self::OPTION_EDITOR_VISUAL ) {
+		if ( !$wgVisualEditorNeverPrimary && $selectedOption === self::OPTION_EDITOR_VISUAL ) {
 			return self::OPTION_EDITOR_VISUAL;
 		}
 		elseif ( $selectedOption === self::OPTION_EDITOR_SOURCE ) {
@@ -140,7 +144,7 @@ class EditorPreference {
 		}
 		else {
 			// Default option based on other settings
-			if ( $wgEnableVisualEditorUI || ( $wgUser->isAnon() && $wgForceVisualEditor ) ) {
+			if ( !$wgVisualEditorNeverPrimary && ( $wgEnableVisualEditorUI || $wgUser->isAnon() ) ) {
 				return self::OPTION_EDITOR_VISUAL;
 			}
 			elseif ( !$wgEnableVisualEditorUI && $wgEnableRTEExt ) {
@@ -185,12 +189,10 @@ class EditorPreference {
 	 * @return boolean
 	 */
 	public static function onAddNewAccount( User $user ) {
-		global $wgForceVisualEditor;
-		if ( $wgForceVisualEditor ) {
-			// Force new users to set VisualEditor as preference
-			$user->setOption( PREFERENCE_EDITOR, self::OPTION_EDITOR_VISUAL );
-			$user->saveSettings();
-		}
+		// Force new users to set VisualEditor as preference
+		$user->setOption( PREFERENCE_EDITOR, self::OPTION_EDITOR_VISUAL );
+		$user->saveSettings();
+
 		// If the editor preference is not set here, the default preference
 		// is set in CommonSettings.
 		return true;

@@ -62,7 +62,6 @@ class MercuryApiModelTest extends WikiaBaseTest {
 			'targeting' => [
 				'enableKruxTargeting' => true,
 				'enablePageCategories' => true,
-				'kruxCategoryId' => 'HixxTik3',
 				'pageArticleId' => 10,
 				'pageIsArticle' => true,
 				'pageIsHub' => true,
