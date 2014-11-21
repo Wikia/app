@@ -207,13 +207,8 @@ class VideoEmbedToolSearchService
 			],
 		];
 
-		// Choose the correct database
+		// Determine the source for the search
 		$isLocalSearch = ( $this->getSearchType() === 'local' );
-		if ( $isLocalSearch ) {
-			$dbName = F::app()->wg->DBname;
-		} else {
-			$dbName = F::app()->wg->WikiaVideoRepoDBName;
-		}
 
 		$helper = new VideoHandlerHelper();
 
@@ -230,7 +225,7 @@ class VideoEmbedToolSearchService
 				);
 			} else {
 				$videosDetail = $helper->getVideoDetailFromWiki(
-					$dbName,
+					F::app()->wg->WikiaVideoRepoDBName,
 					$singleVideoData['title'],
 					$videoOptions
 				);
