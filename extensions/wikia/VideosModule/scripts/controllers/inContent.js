@@ -25,7 +25,7 @@ require([
 
 		hookElement = nodeFinderModule.getChildByOffsetTop(contentContainer, headerSelector, boundaryOffsetTop);
 		if (hookElement){
-			previousElement = hookElement.previousElementSibling;
+			previousElement = nodeFinderModule.getPreviousVisibleSibling(hookElement);
 			placement = $.fn.before;
 		} else {
 			hookElement = nodeFinderModule.getLastVisibleChild(contentContainer);
