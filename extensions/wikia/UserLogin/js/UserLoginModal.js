@@ -79,7 +79,6 @@
 
 					UserLoginModal.loginAjaxForm = new window.UserLoginAjaxForm($loginModal, {
 						ajaxLogin: true,
-						// TODO: verify this
 						// context is this instance of UserLoginAjaxForm
 						callback: function (res) {
 							window.wgUserName = res.username;
@@ -93,7 +92,6 @@
 								this.reloadPage();
 							}
 						},
-						// TODO: verify this
 						// context is this instance of UserLoginAjaxForm
 						resetpasscallback: function () {
 							$.nirvana.sendRequest({
