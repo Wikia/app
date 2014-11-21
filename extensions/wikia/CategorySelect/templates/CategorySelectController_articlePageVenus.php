@@ -1,5 +1,5 @@
 <aside class="WikiaArticleCategories CategorySelect articlePage<?= $userCanEdit ? ' userCanEdit' : '' ?>" id="WikiaArticleCategories">
-	<h2><?= wfMessage( 'pagecategories' )->escaped() ?></h2>
+	<h3><?= wfMessage( 'pagecategories' )->escaped() ?></h3>
 		<ul class="categories<?= $showHidden ? ' showHidden' : '' ?>">
 			<?= $app->renderView( 'CategorySelectController', 'categories', array(
 				'categories' => $categories

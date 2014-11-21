@@ -6,6 +6,7 @@
 @import "extensions/wikia/Venus/styles/buttons";
 @import 'extensions/wikia/Venus/styles/fonts/venus-icons';
 @import 'extensions/wikia/Venus/styles/jquery.ui.autocomplete';
+@import 'extensions/wikia/Venus/styles/typographyMixins';
 
 $categoryselect-list-spacing: 25px;
 
@@ -152,7 +153,8 @@ $categoryselect-list-spacing: 25px;
 		padding: 0 $large-grid-column-padding;
 	}
 
-	h2 {
+	h3 {
+		@include font-size-xl;
 		margin-top: $vertical-spacing;
 	}
 
