@@ -41,7 +41,7 @@ $dropdownArrowSize: 10px;
 		cursor: pointer;
 		display: block;
 		font-size: $article-navigation-icon-size;
-		line-height: $article-navigation-icon-size;
+		line-height: $article-navigation-icon-size - 1px; //for for aliasing
 		margin-bottom: 6px;
 		position: relative;
 
