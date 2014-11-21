@@ -195,6 +195,9 @@ $messages['qqq'] = array(
 	'wikiamobile-sendpassword-label' => 'Label for the button used to request a new password for recovery',
 	'wikiamobile-facebook-connect-fail' => "Shown when a user tries to log in via FBConnect but there's no matching account in our DB, please keep the message as short as possible as the space at disposal is really limited",
 	'wikiamobile-go-to-login' => 'Message on UserSignup that ask user to login if he has an account',
+	// logged in view
+	'userlogin-logged-in-title' => 'Header (title) for user login or signup page when user is already logged in',
+	'userlogin-logged-in-message' => 'Message body for user login or signup page when user is already logged in',
 );
 
 /** Aragonese (aragonés)
