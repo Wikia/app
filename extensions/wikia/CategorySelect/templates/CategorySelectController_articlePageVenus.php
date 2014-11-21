@@ -1,4 +1,4 @@
-<nav class="WikiaArticleCategories CategorySelect articlePage<?= $userCanEdit ? ' userCanEdit' : '' ?>" id="WikiaArticleCategories">
+<aside class="WikiaArticleCategories CategorySelect articlePage<?= $userCanEdit ? ' userCanEdit' : '' ?>" id="WikiaArticleCategories">
 	<h2><?= wfMessage( 'pagecategories' )->escaped() ?></h2>
 		<ul class="categories<?= $showHidden ? ' showHidden' : '' ?>">
 			<?= $app->renderView( 'CategorySelectController', 'categories', array(
@@ -17,4 +17,4 @@
 			<button class="wikia-button save" id="CategorySelectSave" type="button" disabled="disabled"><?= wfMessage( 'categoryselect-button-save' )->escaped() ?></button>
 		</div>
 	<? endif ?>
-</nav>
+</aside>
