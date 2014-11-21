@@ -1,7 +1,11 @@
 <?php
 /* @var Title $title */
 /* @var WikiaGlobalRegistry $wg */
-?><h1><?= wfMessage('article-comments-toc-item')->text() ?><span><?= wfMessage( 'oasis-comments-header', $wg->Lang->FormatNum( $countCommentsNested ) )->text() ?></span></h1>
+?>
+<h3>
+	<?= wfMessage('article-comments-toc-item')->text() ?>
+	<span><?= wfMessage( 'oasis-comments-header', $wg->Lang->FormatNum( $countCommentsNested ) )->text() ?></span>
+</h3>
 <div id="article-comments" class="article-comments">
 	<? if ( !$isBlocked && $canEdit && $commentingAllowed ): ?>
 		<? if ( $isMiniEditorEnabled ): ?>
