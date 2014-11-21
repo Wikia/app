@@ -12,6 +12,9 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//resources/wikia/libraries/Ponto/ponto.js',
 		'//resources/wikia/libraries/my.class/my.class.js',
 
+		// jQuery 2.x migration layer
+		'//resources/jquery/jquery-migrate-browser.js', // provide $.browser
+
 		//core modules
 		'//resources/wikia/modules/instantGlobals.js',
 		'//resources/wikia/modules/cache.js',
