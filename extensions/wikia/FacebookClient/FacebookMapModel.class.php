@@ -324,12 +324,19 @@ class FacebookMapModel {
 	 * @return bool True if there is such wikia/fb mapping
 	 */
 	public static function hasUserMapping( $wikiaUserId, $fbUserId ) {
-		$mappings = self::loadWithCache( [
-			self::paramWikiaUserId => $wikiaUserId,
-			self::paramFacebookUserId => $fbUserId,
-		] );
+		$dbr = wfGetDB( DB_SLAVE, null, F::app()->wg->ExternalSharedDB );
+		$data = ( new WikiaSQL() )
+			->SELECT( '*' )
+			->FROM( 'user_fbconnect' )
+			->WHERE( 'user_id' )->EQUAL_TO( $wikiaUserId )
+			->AND_( 'user_fbid' )->EQUAL_TO( $fbUserId )
+			->LIMIT( 1 )
+			->run( $dbr, function( $result ) {
+				/** @var ResultWrapper $result */
+				return $result->fetchObject();
+			});
 
-		return !empty( $mappings );
+		return !empty( $data );
 	}
 }
 

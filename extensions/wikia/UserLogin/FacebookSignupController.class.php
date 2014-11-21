@@ -55,7 +55,7 @@ class FacebookSignupController extends WikiaController {
 	 */
 	public function modal() {
 		$fbUserId = $this->getFacebookUserId();
-		if ( $fbUserId === null ) {
+		if ( empty( $fbUserId ) ) {
 			$this->skipRendering();
 			return false;
 		}

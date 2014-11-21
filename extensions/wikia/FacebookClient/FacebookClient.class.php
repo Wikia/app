@@ -203,7 +203,7 @@ class FacebookClient {
 		}
 
 		// If we still couldn't get a user ID, return null
-		if ( $userId === null ) {
+		if ( empty( $userId ) ) {
 			$log->warning( __CLASS__ . ': Could not get user ID from FB session', [ 'method' => __METHOD__ ]);
 			return null;
 		}
