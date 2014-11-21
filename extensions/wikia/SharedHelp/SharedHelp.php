@@ -202,6 +202,13 @@ function SharedHelpHook(&$out, &$text) {
 			$articleUrl = sprintf($urlTemplate, urlencode($wgTitle->getDBkey()));
 			list($content, $c) = SharedHttp::get($articleUrl);
 
+			if ( $content === false ) {
+				$sharedArticle = [ 'exists' => 0, 'timestamp' => wfTimestamp() ];
+				$wgMemc->set( $sharedArticleKey, $sharedArticle, 60 * 60 * 24 );
+				wfProfileOut(__METHOD__);
+				return true;
+			}
+
 			# if we had redirect, then store it somewhere
 			if(curl_getinfo($c, CURLINFO_HTTP_CODE) == 301) {
 				if(preg_match("/^Location: ([^\n]+)/m", $content, $dest_url)) {
