@@ -10,7 +10,9 @@ $global-footer-vertical-spacing: 30px;
 
 .global-footer {
 	background-color: $global-wikia-background-color;
-	border-bottom: 10px solid $color-wikiahome-community;
+	border: $content-border-width solid $color-page-border;
+	border-bottom: 0;
+	border-top: 0;
 	color: $color-text-dark;
 	padding-top: $global-footer-vertical-spacing;
 	text-align: center;
@@ -22,32 +24,39 @@ $global-footer-vertical-spacing: 30px;
 		margin-bottom: $global-footer-vertical-spacing + 10;
 	}
 
-	&.vertical-books {
-		border-bottom-color: $color-vertical-books;
+	&:after {
+		background-color: $color-wikiahome-community;
+		content: '';
+		display: block;
+		height: 10px;
 	}
 
-	&.vertical-comics {
-		border-bottom-color: $color-vertical-comics;
+	&.vertical-books:after {
+		background-color: $color-vertical-books;
 	}
 
-	&.vertical-games {
-		border-bottom-color: $color-vertical-games;
+	&.vertical-comics:after {
+		background-color: $color-vertical-comics;
 	}
 
-	&.vertical-lifestyle {
-		border-bottom-color: $color-vertical-lifestyle;
+	&.vertical-games:after {
+		background-color: $color-vertical-games;
 	}
 
-	&.vertical-movies {
-		border-bottom-color: $color-vertical-movies;
+	&.vertical-lifestyle:after {
+		background-color: $color-vertical-lifestyle;
 	}
 
-	&.vertical-music {
-		border-bottom-color: $color-vertical-music;
+	&.vertical-movies:after {
+		background-color: $color-vertical-movies;
 	}
 
-	&.vertical-tv {
-		border-bottom-color: $color-vertical-tv;
+	&.vertical-music:after {
+		background-color: $color-vertical-music;
+	}
+
+	&.vertical-tv:after {
+		background-color: $color-vertical-tv;
 	}
 
 	.wikia-logo {
@@ -79,6 +88,8 @@ $global-footer-vertical-spacing: 30px;
 			display: inline;
 			margin-top: 0;
 			padding: 0 4px 0 0;
+			white-space: nowrap;
+
 			&::before {
 				border-left: 1px solid $global-footer-color-border;
 				content: '';
