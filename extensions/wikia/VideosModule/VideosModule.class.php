@@ -41,9 +41,8 @@ class VideosModule extends WikiaModel {
 		$communityBlacklist = WikiFactory::getVarByName( "wgVideosModuleBlackList", WikiFactory::COMMUNITY_CENTRAL );
 
 		// Set the blacklist if there is data for it
-		if ( is_object( $communityBlacklist ) ) {
-			$serializedBlackList = $communityBlacklist->cv_value;
-			$this->blacklist = unserialize( $serializedBlackList );
+		if ( is_object( $communityBlacklist ) && !empty( $communityBlacklist->cv_value ) ) {
+			$this->blacklist = unserialize( $communityBlacklist->cv_value );
 		}
 
 		$this->userRegion = $userRegion;
