@@ -3009,6 +3009,10 @@ class PoolWorkArticleView extends PoolCounterWork {
 		Transaction::addEvent( Transaction::EVENT_ARTICLE_PARSE, array(
 			'real' => $time,
 			'article' => $this->page->getTitle()->getPrefixedDBkey(),
+			'input_length' => strlen($text),
+			'options_used' => $this->parserOutput->getUsedOptions(),
+			'options_hash' => $this->parserOptions->optionsHash($this->parserOutput->getUsedOptions()),
+			'output_cacheable' => $this->parserOutput->isCacheable() && !$this->parserOutput->containsOldMagic(),
 		));
 		# </Wikia>
 
