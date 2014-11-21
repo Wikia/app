@@ -163,7 +163,13 @@ class FacebookClient {
 			return $this->facebookUserId;
 		}
 
-		$this->facebookUserId = ( int ) $this->facebookAPI->getUserId();
+		try {
+			$this->facebookAPI->getSession()->validate();
+			$this->facebookUserId = ( int ) $this->facebookAPI->getUserId();
+		} catch ( \Exception $e ) {
+			$this->facebookUserId = 0;
+		}
+
 		if ( $this->facebookUserId === 0 ) {
 			WikiaLogger::instance()->warning( 'Null Facebook user id', [
 				'method' => __METHOD__,
