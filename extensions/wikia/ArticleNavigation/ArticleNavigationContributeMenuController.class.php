@@ -9,12 +9,10 @@ class ArticleNavigationContributeMenuController extends WikiaController {
 			'items' => []
 		];
 
-		$dropdownItems[] = $this->getEditItem();
 		$dropdownItems[] = $this->getMapItem();
 		$dropdownItems[] = $this->getVideoUploadItem();
 		$dropdownItems[] = $this->getAddPhotoItem();
 		$dropdownItems[] = $this->getAddPageItem();
-		$dropdownItems[] = $this->getRecentWikiActivityItem();
 		$dropdownItems[] = $this->getEditWikiNavItem();
 
 		foreach ( $dropdownItems as $item ) {
@@ -32,17 +30,6 @@ class ArticleNavigationContributeMenuController extends WikiaController {
 		return $this->createDropdownItem( $caption, $href, 'add-a-photo' );
 	}
 
-	private function getEditItem() {
-		$contentActions = $this->app->getSkinTemplateObj()->data[ 'content_actions' ];
-		if ( isset( $contentActions[ 'edit' ] ) ) {
-			$caption = wfMessage( 'oasis-navigation-v2-edit-page' )->escaped();
-			$href = $contentActions[ 'edit' ][ 'href' ];
-			return $this->createDropdownItem( $caption, $href, 'edit-a-page' );
-		}
-
-		return false;
-	}
-
 	private function getMapItem() {
 		if ( !empty( $this->wg->EnableWikiaInteractiveMaps ) ) {
 			$caption = wfMessage( 'wikia-interactive-maps-create-a-map' )->text();
@@ -51,13 +38,6 @@ class ArticleNavigationContributeMenuController extends WikiaController {
 		}
 
 		return false;
-	}
-
-	private function getRecentWikiActivityItem() {
-		$href = SpecialPage::getTitleFor( 'WikiActivity' )->getLocalURL();
-		$caption = wfMessage( 'oasis-button-wiki-activity' )->text();
-
-		return $this->createDropdownItem( $caption, $href, 'wiki-activity' );
 	}
 
 	private function getVideoUploadItem() {

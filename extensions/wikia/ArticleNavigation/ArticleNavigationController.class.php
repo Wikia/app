@@ -143,10 +143,12 @@ class ArticleNavigationController extends WikiaController {
 			$data = $service->getVisibleList();
 		}
 
-		$renderedData[] = $this->sendRequest(
-			'ArticleNavigationContributeMenu',
-			'getContributeActionsForDropdown'
-		)->getVal('data');
+		if (!WikiaPageType::isWikiaHubMain()) {
+			$renderedData[] = $this->sendRequest(
+				'ArticleNavigationContributeMenu',
+				'getContributeActionsForDropdown'
+			)->getVal('data');
+		}
 
 		$dataInArr = $service->instanceToRenderData( $service->listToInstance( $data ) );
 		foreach ($dataInArr as $item) {
