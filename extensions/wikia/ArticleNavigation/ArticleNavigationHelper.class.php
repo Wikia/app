@@ -18,17 +18,15 @@ class ArticleNavigationHelper {
 	}
 
 	public function isValidShareService( $service, $lang ) {
-
 		// filter through include list, default ot true
 		if ( array_key_exists( 'languages:include', $service ) && is_array( $service['languages:include'] ) ) {
-			$allowedInLanguage = in_array( $lang, $service['languages:include']);
+			$allowedInLanguage = in_array( $lang, $service['languages:include'] );
 		} else {
 			$allowedInLanguage = true;
 		}
-
 		// filter through exclude list
 		if ( array_key_exists( 'languages:exclude', $service ) && is_array( $service['languages:exclude'] ) ) {
-			$allowedInLanguage = $allowedInLanguage && !in_array( $lang, $service['languages:exclude']);
+			$allowedInLanguage = $allowedInLanguage && !in_array( $lang, $service['languages:exclude'] );
 		}
 
 		return $allowedInLanguage && array_key_exists( 'url', $service ) && array_key_exists( 'name', $service );

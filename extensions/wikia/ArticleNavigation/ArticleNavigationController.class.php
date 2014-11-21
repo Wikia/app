@@ -101,13 +101,12 @@ class ArticleNavigationController extends WikiaController {
 		$services = [];
 		$lang = $this->helper->getUserLanguageCode( $this->request );
 
-
-		foreach ($wgArticleNavigationShareServices as $service ) {
-			if ( $this->helper->isValidShareService($service, $lang ) ) {
+		foreach ( $wgArticleNavigationShareServices as $service ) {
+			if ( $this->helper->isValidShareService( $service, $lang ) ) {
 				$service['full_url'] = str_replace( '$1', urlencode( $location ), $service['url'] );
 				$service['name_cased'] = ucfirst( $service['name'] );
 
-				if ( !array_key_exists('title', $service ) ) {
+				if ( !array_key_exists( 'title', $service ) ) {
 					$service['title'] = $service['name_cased'];
 				}
 
