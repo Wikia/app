@@ -941,6 +941,13 @@ $messages['fr'] = array(
 	'action-editaccount' => 'modifier les informations des autres utilisateurs',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'editaccount-label-reason' => 'Reden:',
+);
+
 /** Galician (galego)
  * @author Toliño
  */
@@ -3079,7 +3086,7 @@ $messages['zh-hant'] = array(
 	'editaccount-warning-close' => '<b>小心!</b>您將要永久禁用此使用者的帳戶<b> $1 </b>。這不能還原。你確定這是你想要做的嗎？',
 	'editaccount-status' => '狀態訊息',
 	'editaccount-success-email' => '已成功更改帳戶的電子郵件地址由 $1 到 $2 。',
-	'editaccount-success-email-blank' => '成功刪除帳戶的電子郵件地址 $1 。',
+	'editaccount-success-email-blank' => '成功刪除帳戶的電子郵件位址 $1 。',
 	'editaccount-success-pass' => '已成功更改了的帳戶 $1 的密碼。',
 	'editaccount-invalid-email' => '「$1」並非有效電郵地址！',
 	'editaccount-error-tempuser-email' => '臨時用戶不能有空白的電郵地址，請輸入一個電郵地址。',

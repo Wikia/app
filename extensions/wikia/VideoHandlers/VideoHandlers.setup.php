@@ -231,18 +231,30 @@ $wgAutoloadClasses['CrunchyrollApiWrapper'] =  $dir . '/apiwrappers/CrunchyrollA
 $wgAutoloadClasses['CrunchyrollVideoHandler'] =  $dir . '/handlers/CrunchyrollVideoHandler.class.php';
 $wgMediaHandlers['video/crunchyroll'] = 'CrunchyrollVideoHandler';
 
+$wgAutoloadClasses['MakerstudiosApiWrapper'] =  $dir . '/apiwrappers/MakerstudiosApiWrapper.class.php';
+$wgAutoloadClasses['MakerstudiosVideoHandler'] =  $dir . '/handlers/MakerstudiosVideoHandler.class.php';
+$wgMediaHandlers['video/makerstudios'] = 'MakerstudiosVideoHandler';
+
 /**
  * Feed ingesters
  */
 $wgAutoloadClasses[ 'VideoFeedIngester' ] = $dir . '/feedingesters/VideoFeedIngester.class.php';
+$wgAutoloadClasses[ 'RemoteAssetFeedIngester' ] = $dir . '/feedingesters/RemoteAssetFeedIngester.class.php';
 $wgAutoloadClasses[ 'ScreenplayFeedIngester' ] = $dir . '/feedingesters/ScreenplayFeedIngester.class.php';
 $wgAutoloadClasses[ 'IgnFeedIngester' ] = $dir . '/feedingesters/IgnFeedIngester.class.php';
 $wgAutoloadClasses[ 'AnyclipFeedIngester' ] = $dir . '/feedingesters/AnyclipFeedIngester.class.php';
 $wgAutoloadClasses[ 'OoyalaFeedIngester' ] = $dir . '/feedingesters/OoyalaFeedIngester.class.php';
 $wgAutoloadClasses[ 'IvaFeedIngester' ] = $dir . '/feedingesters/IvaFeedIngester.class.php';
 $wgAutoloadClasses[ 'CrunchyrollFeedIngester' ] = $dir . '/feedingesters/CrunchyrollFeedIngester.class.php';
+$wgAutoloadClasses[ 'MakerstudiosFeedIngester' ] = $dir . '/feedingesters/MakerstudiosFeedIngester.class.php';
+$wgAutoloadClasses[ 'TestVideoFeedIngester' ] = $dir . '/tests/TestVideoFeedIngester.class.php';
+
+$wgAutoloadClasses[ 'FeedIngesterDataNormalizer' ] = $dir . '/feedingesters/FeedIngesterDataNormalizer.class.php';
+$wgAutoloadClasses[ 'FeedIngesterFactory' ] = $dir . '/feedingesters/FeedIngesterFactory.class.php';
+$wgAutoloadClasses[ 'FeedIngesterLogger' ] = $dir . '/feedingesters/FeedIngesterLogger.class.php';
 
 $wgAutoloadClasses[ 'OoyalaAsset' ] = $dir . '/feedingesters/OoyalaAsset.class.php';
+
 
 $wgVideoMigrationProviderMap = array(
 	4 => 'Fivemin',

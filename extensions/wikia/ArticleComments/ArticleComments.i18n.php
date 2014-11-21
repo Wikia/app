@@ -1424,6 +1424,19 @@ Un nouveau commentaire a été laissé sur « $PAGETITLE » sur {{SITENAME}}. Ut
 <div style="font-size: 70%;margin-top: 25px;text-align: center;">Cliquez <a href="http://communaute.wikia.com/Special:Preferences">ici</a> pour vous désabonner de tous les courriels de Wikia.</div>',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'article-comments-cancel' => 'Annulearje',
+	'article-comments-edit' => 'bewurkje',
+	'article-comments-history' => 'skiednis',
+	'article-comments-prev-page' => 'Foarige',
+	'article-comments-next-page' => 'Folgjende',
+	'article-comments-page-spacer' => '&#160...&#160',
+	'wikiamobile-article-comments-more' => 'Mear laden',
+);
+
 /** Galician (galego)
  * @author Toliño
  */

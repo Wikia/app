@@ -785,6 +785,13 @@ $messages['fr'] = array(
 	'founderprogressbar-browse-page-name' => 'Parcourir',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'founderprogressbar-browse-page-name' => 'Blêdzje',
+);
+
 /** Galician (galego)
  * @author Toliño
  * @author Vivaelcelta

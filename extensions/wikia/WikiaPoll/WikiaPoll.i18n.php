@@ -28,6 +28,7 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Liuxinyu970226
  * @author Shirayuki
  */
 $messages['qqq'] = array(
@@ -41,10 +42,12 @@ $messages['qqq'] = array(
 	'wikiapoll-vote' => 'Button text to vote in a poll.
 {{Identical|Vote}}',
 	'wikiapoll-votes' => 'Parameter:
-* $1 is the number of votes cast.',
+* $1 is the number of votes cast.
+{{Identical|Vote}}',
 	'wikiapoll-createpoll-headline' => 'Headline for Create Poll Special Page.
 {{Identical|Create poll}}',
-	'wikiapoll-editpoll-headline' => 'Headline for Edit Poll Special Page',
+	'wikiapoll-editpoll-headline' => 'Headline for Edit Poll Special Page
+{{Identical|Edit poll}}',
 	'wikiapoll-question-label' => 'Form Label for Special Page.
 {{Identical|Question}}',
 	'wikiapoll-addnewitem-label' => 'Special Page text next to button for a new item to a poll',
@@ -1111,6 +1114,7 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
 	'wikiapoll-desc' => '提供一個創建與管理投票（民意調查）的簡單方法',
@@ -1118,7 +1122,7 @@ $messages['zh-hant'] = array(
 	'wikiapoll-question' => '$1?',
 	'wikiapoll-thanks-for-vote' => '謝謝！',
 	'wikiapoll-vote' => '投票 ！',
-	'wikiapoll-votes' => '{{PLURAL:$1|$1 vote|$1 票}}',
+	'wikiapoll-votes' => '$1 票',
 	'wikiapoll-createpoll-headline' => '創建投票',
 	'wikiapoll-editpoll-headline' => '編輯投票',
 	'wikiapoll-question-label' => '問題',

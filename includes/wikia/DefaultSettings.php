@@ -1203,17 +1203,17 @@ $wgWikiaHubsFileRepoPath = 'http://corp.wikia.com/';
 $wgWikiaHubsFileRepoDirectory = '/images/c/corp/images';
 
 /**
- * @name $wgEnableAmazonDirectTargetedBuy
- * Enables AmazonDirectTargetedBuy integration
+ * @name $wgEnableAmazonMatch
+ * Enables AmazonMatch integration
  */
-$wgEnableAmazonDirectTargetedBuy = true;
+$wgEnableAmazonMatch = true;
 
 /**
- * @name $wgAmazonDirectTargetedBuyCountries
- * Enables AmazonDirectTargetedBuy integration in theese countries (given AmazonDirectTargetedBuy is also true)
+ * @name $wgAmazonMatchCountries
+ * Enables AmazonMatch integration in these countries (given AmazonMatch is also true)
  * "Utility" var, don't change it here.
  */
-$wgAmazonDirectTargetedBuyCountries = null;
+$wgAmazonMatchCountries = null;
 
 /**
  * @name $wgAdPageLevelCategoryLangs

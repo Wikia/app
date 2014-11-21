@@ -37,7 +37,6 @@ define('ext.wikia.adEngine.adConfigLate', [
 	var logGroup = 'ext.wikia.adEngine.adConfigLate',
 		country = geo.getCountryCode(),
 		context = adContext.getContext(),
-		targeting = context.targeting,
 		liftiumSlotsToShowWithSevenOneMedia = {
 			'WIKIA_BAR_BOXAD_1': true,
 			'TOP_BUTTON_WIDE': true,
@@ -45,37 +44,15 @@ define('ext.wikia.adEngine.adConfigLate', [
 		},
 		ie8 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.match(/MSIE [6-8]\./),
 
-		taboolaEnabledWikis = {
-			darksouls: true,
-			gameofthrones: true,
-			harrypotter: true,
-			helloproject: true,
-			ladygaga: true,
-			onedirection: true
-		},
-		taboolaEnabled = (targeting.pageType === 'article' || targeting.pageType === 'home') &&
-			taboolaEnabledWikis[targeting.wikiDbName] &&
-			context.providers.taboola &&
-			abTest && abTest.inGroup('NATIVE_ADS_TABOOLA', 'YES'),
-
 		dartDirectBtfSlots = {
-			INCONTENT_BOXAD_1: true,
-			LEFT_SKYSCRAPER_3: true,
-			PREFOOTER_LEFT_BOXAD: true,
-			PREFOOTER_RIGHT_BOXAD: true,
-			WIKIA_BAR_BOXAD_1: true
+			'INCONTENT_BOXAD_1': true,
+			'LEFT_SKYSCRAPER_3': true,
+			'PREFOOTER_LEFT_BOXAD': true,
+			'PREFOOTER_RIGHT_BOXAD': true
 		},
-
-		alwaysCallDartInSlots = {
-			'WIKIA_BAR_BOXAD_1': true
-		},
-		alwaysCallDart = context.opts.alwaysCallDart;
+		alwaysCallDart = context.opts.alwaysCallDart && !instantGlobals.wgSitewideDisableGpt;
 
 	function getProviderList(slotname) {
-		var callDart = alwaysCallDart || alwaysCallDartInSlots[slotname];
-
-		callDart = callDart && !instantGlobals.wgSitewideDisableGpt;
-
 		log('getProvider', 5, logGroup);
 		log(slotname, 5, logGroup);
 
@@ -100,7 +77,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 			}
 		}
 
-		if (taboolaEnabled && adProviderTaboola.canHandleSlot(slotname)) {
+		if (context.providers.taboola && adProviderTaboola.canHandleSlot(slotname)) {
 			return [adProviderTaboola];
 		}
 
@@ -109,7 +86,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 			return [adProviderEvolve, adProviderLiftium];
 		}
 
-		if (callDart) {
+		if (alwaysCallDart) {
 			if (dartDirectBtfSlots[slotname]) {
 				return [adProviderDirectGpt, adProviderRemnantGpt, adProviderLiftium];
 			}
