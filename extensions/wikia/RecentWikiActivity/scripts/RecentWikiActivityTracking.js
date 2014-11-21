@@ -1,7 +1,7 @@
 require(['wikia.document', 'wikia.tracker'], function(d, tracker){
 	'use strict';
 
-	var recentWikiActivity = d.getElementsByClassName('recent-wiki-activity');
+	var recentWikiActivity = d.getElementById('recentWikiActivity');
 
 	function trackRecentWikiActivity(e) {
 		var label,
@@ -32,5 +32,5 @@ require(['wikia.document', 'wikia.tracker'], function(d, tracker){
 		}
 	}
 
-	recentWikiActivity[0].addEventListener('mousedown', trackRecentWikiActivity);
+	recentWikiActivity.addEventListener('mousedown', trackRecentWikiActivity);
 });

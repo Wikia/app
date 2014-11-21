@@ -1,4 +1,4 @@
-<section class="recent-wiki-activity">
+<section id="recentWikiActivity" class="recent-wiki-activity">
 	<header><?= wfMessage('recent-wiki-activity-header'); ?></header>
 	<ul>
 		<? foreach ($changeList as $change): ?>
