@@ -101,6 +101,11 @@ $specialPageAliases['ja'] = array(
 	'RandomInCategory' => array( 'カテゴリ内おまかせ表示', 'カテゴリ中のランダムなページ' ),
 );
 
+/** Korean (한국어) */
+$specialPageAliases['ko'] = array(
+	'RandomInCategory' => array( '분류중임의문서' ),
+);
+
 /** Colognian (Ripoarisch) */
 $specialPageAliases['ksh'] = array(
 	'RandomInCategory' => array( 'Zohfällije Sigg uß en Saachjropp' ),
@@ -164,4 +169,9 @@ $specialPageAliases['tl'] = array(
 /** Turkish (Türkçe) */
 $specialPageAliases['tr'] = array(
 	'RandomInCategory' => array( 'RastgeleKategori', 'RastgeleUlam' ),
+);
+
+/** Vietnamese (Tiếng Việt) */
+$specialPageAliases['vi'] = array(
+	'RandomInCategory' => array( 'Ngẫu_nhiên_theo_thể_loại' ),
 );

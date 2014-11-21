@@ -198,6 +198,11 @@ $specialPageAliases['tr'] = array(
 	'MultipleUpload' => array( 'ÇokluYükleme' ),
 );
 
+/** Vietnamese (Tiếng Việt) */
+$specialPageAliases['vi'] = array(
+	'MultipleUpload' => array( 'Tải_lên_nhiều_tệp' ),
+);
+
 /** Cantonese (粵語) */
 $specialPageAliases['yue'] = array(
 	'MultipleUpload' => array( '上傳多個檔案' ),

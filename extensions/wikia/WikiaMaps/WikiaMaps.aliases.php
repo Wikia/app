@@ -12,47 +12,47 @@ $specialPageAliases = array();
  * English (English)
  */
 $specialPageAliases['en'] = array(
-	'WikiFeatures' => array( 'WikiFeatures' ),
+	'Maps' => array( 'Maps' ),
 );
 
 /**
  * German (Deutsch)
  */
 $specialPageAliases['de'] = array(
-	'WikiFeatures' => array( 'WikiFunktionen' ),
+	'Maps' => array( 'Karten' ),
 );
 
 /**
- * Spanish (Espanol)
+ * French (Français)
  */
-$specialPageAliases['es'] = array(
-	'WikiFeatures' => array( 'FuncionalidadesDeWikia' ),
+$specialPageAliases['fr'] = array(
+	'Maps' => array( 'Cartes' ),
 );
 
 /**
  * Italian (Italiano)
  */
 $specialPageAliases['it'] = array(
-	'WikiFeatures' => array( 'WikiFunzioni' ),
+	'Maps' => array( 'Mappe' ),
 );
 
 /**
  * Korean (한국어)
  */
 $specialPageAliases['ko'] = array(
-	'WikiFeatures' => array( '위키기능' ),
+	'Maps' => array( '지도' ),
 );
 
 /**
  * Polish (Polski)
  */
 $specialPageAliases['pl'] = array(
-	'WikiFeatures' => array( 'Rozszerzenia wiki' ),
+	'Maps' => array( 'Mapy' ),
 );
 
 /**
  * Vietnamese (Tiếng Việt)
  */
 $specialPageAliases['vi'] = array(
-	'WikiFeatures' => array( 'Tính_năng_wiki' ),
+	'Maps' => array( 'Bản_đồ' ),
 );

@@ -103,6 +103,11 @@ $specialPageAliases['ja'] = array(
 	'ImportFreeImages' => array( 'フリー画像のインポート', 'フリーの画像をインポート' ),
 );
 
+/** Korean (한국어) */
+$specialPageAliases['ko'] = array(
+	'ImportFreeImages' => array( '자유그림가져오기' ),
+);
+
 /** Colognian (Ripoarisch) */
 $specialPageAliases['ksh'] = array(
 	'ImportFreeImages' => array( 'Frei_Bellder_Empotteere', 'FreiBellderEmpotteere' ),
@@ -201,6 +206,11 @@ $specialPageAliases['tl'] = array(
 /** Turkish (Türkçe) */
 $specialPageAliases['tr'] = array(
 	'ImportFreeImages' => array( 'ÖzgürResimAktar', 'ÖzgürResimİçeAktar' ),
+);
+
+/** Vietnamese (Tiếng Việt) */
+$specialPageAliases['vi'] = array(
+	'ImportFreeImages' => array( 'Nhập_ảnh_tự_do' ),
 );
 
 /** Simplified Chinese (‪中文(简体)‬) */
