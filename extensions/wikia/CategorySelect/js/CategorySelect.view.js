@@ -32,7 +32,9 @@
 					mw.loader.use( 'jquery.ui.sortable' ),
 					$.getResources([
 						wgResourceBasePath + '/resources/wikia/libraries/mustache/mustache.js',
-						wgResourceBasePath + '/extensions/wikia/CategorySelect/js/CategorySelect.js'
+						wgResourceBasePath + '/extensions/wikia/CategorySelect/js/CategorySelect.js',
+						wgResourceBasePath + '/resources/wikia/modules/uifactory.js',
+						wgResourceBasePath + '/resources/wikia/modules/uicomponent.js'
 					])
 
 				).done(function( response ) {

@@ -257,41 +257,8 @@ $VenusConfig[ 'category_select_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'venus' ],
 	'assets' => [
-//		'//extensions/wikia/CategorySelect/js/CategorySelect.view.js',
-//		'//extensions/wikia/CategorySelect/js/CategorySelect.js',
-
-//		 shared libraries
-		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
-		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/CategorySelect/js/CategorySelect.view.js',
-		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
-		'//resources/wikia/modules/csspropshelper.js',
-		'//resources/wikia/modules/fluidlayout.js',
-
-//		 oasis specific files
-		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		'//resources/wikia/libraries/bootstrap/popover.js',
-//		'//skins/oasis/js/PageHeader.js',
-		'//skins/oasis/js/Search.js',
-		'//skins/oasis/js/WikiaFooter.js',
-		'//skins/oasis/js/buttons.js',
-		'//skins/oasis/js/WikiHeader.js',
-		'//skins/oasis/js/WikiaNotifications.js',
-//		'//skins/oasis/js/FirefoxFindFix.js',
-		'//skins/oasis/js/tabs.js',
-		'//skins/oasis/js/SharingToolbar/SharingToolbarLoader.js',
-		'//skins/oasis/js/Tracking.js',
-
-
-		'//resources/jquery.ui/jquery.ui.core.js',
-		'//resources/jquery.ui/jquery.ui.widget.js',
-		'//resources/jquery.ui/jquery.ui.mouse.js',
-		'//resources/jquery.ui/jquery.ui.sortable.js',
-		'//extensions/wikia/CategorySelect/js/CategorySelect.js',
-
-		'//resources/wikia/modules/uifactory.js',
-		'//resources/wikia/modules/uicomponent.js',
-
 	]
 ];
 $VenusConfig[ 'category_select_css' ] = [
@@ -299,9 +266,6 @@ $VenusConfig[ 'category_select_css' ] = [
 	'skin' => [ 'venus' ],
 	'assets' => [
 		'//extensions/wikia/CategorySelect/css/CategorySelectVenus.scss',
-//		'//extensions/wikia/CategorySelect/css/CategorySelect.edit.scss',
-
-//		'//skins/oasis/css/core/sprite.scss'
 	]
 ];
 
