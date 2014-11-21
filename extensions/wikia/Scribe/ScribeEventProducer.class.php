@@ -106,9 +106,12 @@ class ScribeEventProducer {
 		$this->setIsRedirect( $oTitle->isRedirect() );
 		$this->setRevisionTimestamp( wfTimestamp( TS_DB, $rev_timestamp ) );
 		$this->setRevisionSize( $rev_size );
+		$this->setIsLocalFile( $oTitle );
 		$this->setMediaType( $oTitle );
 		$this->setMediaLinks( $oPage );
 		$this->setTotalWords( str_word_count( $rev_text ) );
+		$this->setIsTop200( $this->app->wg->CityId );
+		$this->setIsImageForReview();
 
 		$t = microtime(true);
 		$micro = sprintf("%06d",($t - floor($t)) * 1000000);
@@ -312,6 +315,16 @@ class ScribeEventProducer {
 		$this->mParams['eventTS'] = $ts;
 	}
 
+	public function setIsLocalFile ( Title $oTitle ) {
+		$oFile = wfFindFile( $oTitle );
+		if( $oFile instanceof LocalFile ) {
+			$bIsLocalFile = true;
+		} else {
+			$bIsLocalFile = false;
+		}
+		$this->mParams['isLocalFile'] = intval( $bIsLocalFile );
+	}
+
 	public function setMediaType ( $oTitle ) {
 		wfProfileIn( __METHOD__ );
 
@@ -321,7 +334,6 @@ class ScribeEventProducer {
 
 			$mediaType = MEDIATYPE_UNKNOWN;
 			$oLocalFile = RepoGroup::singleton()->getLocalRepo()->newFile( $oTitle );
-
 			if ( $oLocalFile instanceof LocalFile ) {
 				$mediaType = $oLocalFile->getMediaType();
 			}
@@ -373,7 +385,6 @@ class ScribeEventProducer {
 		$this->mParams['languageId'] = WikiFactory::LangCodeToId($lang_code);
 	}
 
-
 	public function setCategory() {
 		//This field is called categoryId but getCategory returns an object with cat_id and cat_name fields
 		$this->mParams['categoryId'] = WikiFactory::getCategory( $this->app->wg->CityId );
@@ -385,6 +396,58 @@ class ScribeEventProducer {
 		// And when categories are updated:
 		//$this->mParams['categories'] = WikiFactory::getCategories( $this->app->wg->CityId );
 
+	}
+
+	public function setIsTop200( $city_id ) {
+		$this->mParams['isTop200'] = intval( $this->isTop200( $city_id ) );
+	}
+
+	/**
+	 * Checks if a given wikia is in the top 200 in terms of pageviews
+	 * @param  int     $city_id
+	 * @return boolean
+	 */
+	public function isTop200( $city_id ) {
+		wfProfileIn( __METHOD__ );
+
+		$sCacheKey = wfSharedMemcKey( __CLASS__, __METHOD__ );
+
+		// Check in memcache before using DataMartService
+		if ( !is_null( $this->app->wg->Memc->get( $sCacheKey ) ) ) {
+			$aTop200Wikis = $this->app->wg->Memc->get( $sCacheKey );
+		} else {
+			$aTop200Wikis = DataMartService::getTopWikisByPageviews( DataMartService::PERIOD_ID_MONTHLY );
+			$this->app->wg->Memc->set( $sCacheKey, $aTop200Wikis, \WikiaResponse::CACHE_LONG );
+		}
+
+		// city_ids are keys; return true if that one is set.
+		if ( isset( $aTop200Wikis[$city_id] ) ) {
+			wfProfileOut( __METHOD__ );
+			return true;
+		}
+
+		wfProfileOut( __METHOD__ );
+		return false;
+	}
+
+	public function setIsImageForReview() {
+		$aAllowedTypes = [
+			1 => MEDIATYPE_BITMAP,
+			2 => MEDIATYPE_DRAWING,
+		];
+
+		if ( $this->mParams['pageNamespace'] == 6
+			&& $this->mParams['isRedirect'] == 0
+			&& isset( $aAllowedTypes[ $this->mParams['mediaType'] ] )
+			&& $this->mParams['isLocalFile'] == 1
+			&& $this->mParams['isTop200'] == 0
+		) {
+			$bIsImageForReview = true;
+		} else {
+			$bIsImageForReview = false;
+		}
+
+		$this->mParams['isImageForReview'] = intval( $bIsImageForReview );
 	}
 
 	public function sendLog() {
