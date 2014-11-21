@@ -81,15 +81,20 @@ class FacebookSignupController extends WikiaController {
 
 		$returnTo = $this->wg->request->getVal( 'returnto' );
 		$returnToQuery = $this->wg->request->getVal( 'returntoquery' );
-		$returnToUrl = FacebookClient::getInstance()->getReturnToUrl( $returnTo, $returnToQuery );
+		if ( F::app()->wg->EnableFacebookClientExt ) {
+			$returnToUrl = FacebookClient::getInstance()->getReturnToUrl( $returnTo, $returnToQuery );
+		} else {
+			$returnToUrl = FBConnect::getReturnToUrl( $returnTo, $returnToQuery );
+		}
 
 		$returnToParams = 'returnto=' . $returnTo;
 		if ( $returnToQuery ) {
 			$returnToParams .= '&returntoquery=' . htmlspecialchars( $returnToQuery );
 		}
+
 		// query string is neaded for redirects after Special:FacebookConnect
 		$this->queryString = $returnToParams;
-
+		// return to url is needed for modal signup completion
 		$this->returnToUrl = $returnToUrl;
 
 		$this->loginToken = UserLoginHelper::getSignupToken();
