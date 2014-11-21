@@ -129,9 +129,10 @@ UserLoginAjaxForm.prototype.submitLoginHandler = function (json) {
 UserLoginAjaxForm.prototype.retrieveTemplateHandler = function (html) {
 	'use strict';
 
-	var content = $('<div style="display:none" />').append(html);
-	this.form.slideUp(400, function () {
-		$(this).replaceWith(content);
+	var content = $('<div style="display:none" />').append(html),
+		form = this.form;
+	form.slideUp(400, function () {
+		form.replaceWith(content);
 		content.slideDown(400);
 	});
 };
