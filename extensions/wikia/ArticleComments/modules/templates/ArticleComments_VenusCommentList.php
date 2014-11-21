@@ -1,19 +1,12 @@
 <ul id="article-comments-ul" class="comments">
 	<? if ( count( $commentListRaw ) ): ?>
-		<? $odd = true ?>
-		<? $id = 1 ?>
 		<? foreach ( $commentListRaw as $commentId => $commentArr ): ?>
-			<? $rowClass = $odd ? 'odd' : 'even' ?>
-			<? $odd = !$odd ?>
-
 			<? if ( isset( $commentArr[ 'level1' ] ) && $commentArr[ 'level1' ] instanceof ArticleComment ): ?>
 				<?= $app->getView( 'ArticleComments', 'VenusComment', [
 						'comment' => $commentArr[ 'level1' ]->getData( $useMaster ),
 						'commentId' => $commentId,
-						'rowClass' => $rowClass,
 						'level' => 1,
 						'page' => $page,
-						'id' => $id++
 					])
 				?>
 			<? endif ?>
@@ -24,7 +17,6 @@
 							<?= $app->getView( 'ArticleComments', 'VenusComment', [
 									'comment' => $reply->getData( $useMaster ),
 									'commentId' => $commentId,
-									'rowClass' => $rowClass,
 									'level' => 2
 								])
 							?>
