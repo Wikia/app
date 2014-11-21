@@ -122,7 +122,7 @@ class ArticleNavigationController extends WikiaController {
 
 		foreach ( $wgArticleNavigationShareServices as $service ) {
 			if ( array_key_exists( 'url', $service ) && array_key_exists( 'name', $service ) ) {
-				$service['fullUrl'] = str_replace( '$1', urlencode( $location ), $service['url'] );
+				$service['href'] = str_replace( '$1', urlencode( $location ), $service['url'] );
 				$service['nameCased'] = ucfirst( $service['name'] );
 
 				if ( !array_key_exists( 'title', $service ) ) {
@@ -147,7 +147,7 @@ class ArticleNavigationController extends WikiaController {
 		 * directory and we want to show that explicitly; it's also a bit faster than doing
 		 * callback just for render small Mustache template anyway.
 		 */
-		return \MustacheService::getInstance()->render( 
+		return \MustacheService::getInstance()->render(
 			'resources/wikia/ui_components/dropdown_navigation/templates/dropdown.mustache',
 			$this->shareActionsData()
 		);
@@ -163,7 +163,7 @@ class ArticleNavigationController extends WikiaController {
 
 		foreach ( $this->prepareShareServicesData() as $service ) {
 			$data = [
-				'href' => $service['full_url'],
+				'href' => $service['href'],
 				'title' => $service['title'],
 				'class' => 'share-link',
 				'data' => [
