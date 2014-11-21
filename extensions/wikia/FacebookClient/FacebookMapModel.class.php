@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 /**
  * Class FacebookMapModel
  *
@@ -282,6 +284,52 @@ class FacebookMapModel {
 		] );
 
 		F::app()->wg->Memc->set( $memkey, [ $this ] );
+	}
+
+	/**
+	 * Create a new user mapping between a Wikia user account and a FB account
+	 *
+	 * @param $wikiaUserId
+	 * @param $fbUserId
+	 * @return bool True on success, False on failure
+	 * @throws FacebookMapModelInvalidParamException
+	 */
+	public static function createUserMapping( $wikiaUserId, $fbUserId ) {
+		// TODO: refactor callers to only call this for connection or FB sign up actions
+		if ( self::hasUserMapping( $wikiaUserId, $fbUserId ) ) {
+			return true;
+		}
+
+		$map = new self();
+		$map->relate( $wikiaUserId, $fbUserId );
+		try {
+			$map->save();
+		} catch ( FacebookMapModelException $e ) {
+			WikiaLogger::instance()->warning( 'Failed to create user mapping', [
+				'wikiaUserId' => $wikiaUserId,
+				'fbUserId' => $fbUserId,
+			] );
+
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Check existence of user mapping between a Wikia user account and a FB account
+	 *
+	 * @param $wikiaUserId
+	 * @param $fbUserId
+	 * @return bool True if there is such wikia/fb mapping
+	 */
+	public static function hasUserMapping( $wikiaUserId, $fbUserId ) {
+		$mappings = self::loadWithCache( [
+			self::paramWikiaUserId => $wikiaUserId,
+			self::paramFacebookUserId => $fbUserId,
+		] );
+
+		return !empty( $mappings );
 	}
 }
 
