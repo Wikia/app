@@ -68,12 +68,14 @@ class UserLoginFacebookForm extends UserLoginForm {
 	 * Connects given Wikia account with FB account and sets FB feed preferences
 	 *
 	 * @param User $user Wikia account
+	 * @return bool true on success
 	 */
 	private function connectWithFacebook(User $user) {
 		if ( F::app()->wg->EnableFacebookClientExt ) {
-			\FacebookClientHelper::createUserMapping( $user->getId(), $this->fbUserId );
-		} else {
-			FBConnectDB::addFacebookID( $user, $this->fbUserId );
+			return \FacebookMapModel::createUserMapping( $user->getId(), $this->fbUserId );
 		}
+
+		FBConnectDB::addFacebookID( $user, $this->fbUserId );
+		return true;
 	}
 }

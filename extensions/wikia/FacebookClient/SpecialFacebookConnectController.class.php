@@ -64,7 +64,7 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 		$wikiaPassword = $wg->Request->getText( 'wpExistingPassword' );
 
 		// The user must be logged into Facebook before choosing a wiki username
-		if ( !$fbUserId ) {
+		if ( $fbUserId === null ) {
 			$wg->Out->showErrorPage( 'fbconnect-error', 'fbconnect-errortext' );
 			$this->skipRendering();
 			return true;
@@ -77,7 +77,8 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 			return true;
 		}
 
-		if ( !\FacebookClientHelper::createUserMapping( $user->getId(), $fbUserId ) ) {
+		if ( !\FacebookMapModel::createUserMapping( $user->getId(), $fbUserId ) ) {
+			// TODO/FIXME: show proper error message @see UC-116
 			F::app()->wg->Out->showErrorPage( 'fbconnect-error', 'fbconnect-errortext' );
 			$this->skipRendering();
 			return true;
@@ -116,7 +117,8 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 			return true;
 		}
 
-		if ( !\FacebookClientHelper::createUserMapping( $wg->User->getId(), $fbUserId ) ) {
+		if ( !\FacebookMapModel::createUserMapping( $wg->User->getId(), $fbUserId ) ) {
+			// TODO/FIXME: show proper error message @see UC-116
 			F::app()->wg->Out->showErrorPage( 'fbconnect-error', 'fbconnect-errortext' );
 			$this->skipRendering();
 			return true;
