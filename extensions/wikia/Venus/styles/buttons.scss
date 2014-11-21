@@ -11,9 +11,37 @@
 	line-height: 30px;
 	padding: 0 10px;
 	text-transform: uppercase;
+
+	&[disabled] {
+		opacity: 0.5;
+
+		&:hover {
+			background: $color-buttons;
+			color: #fff;
+		}
+	}
+
+	&:hover {
+		background: transparent;
+		color: $color-buttons;
+	}
 }
 
 .wikia-button.secondary {
 	background: transparent;
 	color: $color-buttons;
+
+	&[disabled] {
+		opacity: 0.5;
+
+		&:hover {
+			background: transparent;
+			color: $color-buttons;
+		}
+	}
+
+	&:hover {
+		background: $color-buttons;
+		color: #fff;
+	}
 }
