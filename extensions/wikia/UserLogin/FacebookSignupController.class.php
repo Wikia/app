@@ -87,6 +87,8 @@ class FacebookSignupController extends WikiaController {
 
 		$returnTo = $this->wg->request->getVal( 'returnto' );
 		$returnToQuery = $this->wg->request->getVal( 'returntoquery' );
+
+		// Temporary code until we switch fully to FacebookClient
 		if ( F::app()->wg->EnableFacebookClientExt ) {
 			$returnToUrl = FacebookClient::getInstance()->getReturnToUrl( $returnTo, $returnToQuery );
 		} else {
