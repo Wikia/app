@@ -242,7 +242,10 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		}
 		$db->freeResult( $result );
 
-		error_log("ImageReview : refetched " . count($imageList) . " images based on timestamp");
+		WikiaLogger::instance()->info( "ImageReview : refetched images based on timestamp", [
+			'method' => __METHOD__,
+			'count' => count( $imageList ),
+		] );
 
 		wfProfileOut( __METHOD__ );
 
@@ -411,12 +414,19 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 				__METHOD__
 			);
 			$commit = true;
-			error_log( "ImageReview : returning " . count($unusedImages) . " back to the queue" );
+
+			WikiaLogger::instance()->info( "ImageReview : returning unused images back to the queue", [
+				'method' => __METHOD__,
+				'count' => count( $unusedImages ),
+			] );
 		}
 
 		if ( $commit ) $db->commit();
 
-		error_log( "ImageReview : fetched new " . count( $imageList ) . " images" );
+		WikiaLogger::instance()->info( "ImageReview : fetched new images", [
+			'method' => __METHOD__,
+			'count' => count( $imageList ),
+		] );
 
 		wfProfileOut( __METHOD__ );
 
