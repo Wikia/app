@@ -1,10 +1,19 @@
 @import 'variables';
 
-.wikia-button {
+#glyph-button {
 	background: $color-buttons;
+	color: #fff;
+}
+
+#outline-button {
+	background: transparent;
+	color: $color-buttons;
+}
+
+.wikia-button {
+	@extend #glyph-button;
 	border: 0;
 	border: 1px solid $color-buttons;
-	color: #fff;
 	font-size: $font-size-xxs;
 	font-weight: bold;
 	height: 30px;
@@ -16,32 +25,27 @@
 		opacity: 0.5;
 
 		&:hover {
-			background: $color-buttons;
-			color: #fff;
+			@extend #glyph-button;
 		}
 	}
 
 	&:hover {
-		background: transparent;
-		color: $color-buttons;
+		@extend #outline-button;
 	}
 }
 
 .wikia-button.secondary {
-	background: transparent;
-	color: $color-buttons;
+	@extend #outline-button;
 
 	&[disabled] {
 		opacity: 0.5;
 
 		&:hover {
-			background: transparent;
-			color: $color-buttons;
+			@extend #outline-button;
 		}
 	}
 
 	&:hover {
-		background: $color-buttons;
-		color: #fff;
+		@extend #glyph-button;
 	}
 }
