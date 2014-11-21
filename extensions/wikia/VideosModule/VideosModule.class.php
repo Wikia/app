@@ -397,13 +397,14 @@ class VideosModule extends WikiaModel {
 	 */
 	protected function filterVideoDetail( Array $video ) {
 		return [
-			'title'     => $video['fileTitle'],
-			'url'       => $video['fileUrl'],
-			'thumbnail' => $video['thumbnail'],
-			'thumbUrl'  => $video['thumbUrl'],
-			'videoKey'  => $video['title'],
-			'duration'  => $video['duration'],
-			'source'    => $video['source'],
+			'title'       => $video['fileTitle'],
+			'url'         => $video['fileUrl'],
+			'thumbnail'   => $video['thumbnail'],
+			'thumbUrl'    => $video['thumbUrl'],
+			'description' => wfShortenText( $video['description'], 50 ),
+			'videoKey'    => $video['title'],
+			'duration'    => $video['duration'],
+			'source'      => $video['source'],
 		];
 	}
 
