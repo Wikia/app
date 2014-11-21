@@ -26,7 +26,9 @@ require(['jquery', 'wikia.window', 'wikia.tracker'], function ($, win, tracker) 
 	// bind tracker on DOMready
 	$(function () {
 		var $article = $('#mw-content-text'),
-			category = 'article';
+			$alliance = $('.alliance-module', $article),
+			categoryArticle = 'article',
+			categoryAlliance = 'Alliance';
 
 		$article.on('mousedown', 'a', function (e) {
 			var label,
@@ -54,13 +56,51 @@ require(['jquery', 'wikia.window', 'wikia.tracker'], function ($, win, tracker) 
 			if (typeof label !== 'undefined') {
 				track({
 					browserEvent: e,
-					category: category,
+					category: categoryArticle,
 					label: label
 				});
 			}
 		}).on('mousedown', '.editsection a', {
-			category: category,
+			category: categoryArticle,
 			label: 'section-edit'
 		}, trackWithEventData);
+
+		if ($alliance.length) {
+			$alliance.on('mousedown', 'a', function(e){
+				var label,
+					suffix;
+
+				suffix = '-click';
+				if ($(this).attr('href').indexOf('http://www.wikia.com/Alliance') !== -1) {
+					suffix = '-logo-click';
+				}
+				label = $(e.delegateTarget).attr('data-label');
+
+				if (label !== undefined) {
+					label += suffix;
+					track({
+						category: categoryAlliance,
+						label: label
+					});
+				}
+			});
+
+			$alliance.each(function(){
+				var label,
+					suffix;
+
+				suffix = '-impression';
+				label = $(this).attr('data-label');
+
+				if (label !== undefined) {
+					label += suffix;
+					track({
+						action: tracker.ACTIONS.IMPRESSION,
+						category: categoryAlliance,
+						label: label
+					});
+				}
+			});
+		}
 	});
 });
