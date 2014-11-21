@@ -20,7 +20,7 @@ define(
 		 */
 		function insertModule(data, container) {
 			require(['wikia.recommendations.tracking', 'wikia.document'], function(tracking, d){
-				var moduleContainer = d.createElement('div');
+				var moduleContainer = d.createElement('footer');
 
 				moduleContainer.id = 'recommendations';
 				moduleContainer.classList.add('recommendations');

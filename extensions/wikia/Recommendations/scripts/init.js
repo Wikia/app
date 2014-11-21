@@ -5,7 +5,7 @@ require(
 		'use strict';
 
 		function addRecommendationsModule() {
-			recommendations.init(d.getElementById('WikiaArticle'));
+			recommendations.init(d.getElementById('WikiaPage'));
 		}
 
 		sloth({
