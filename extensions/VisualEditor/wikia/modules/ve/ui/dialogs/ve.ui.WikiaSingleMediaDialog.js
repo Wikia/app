@@ -2,6 +2,8 @@
  * VisualEditor user interface WikiaSingleMediaDialog class.
  */
 
+/* global mw */
+
 /**
  * Dialog for inserting MediaWiki media objects.
  *
@@ -137,14 +139,44 @@ ve.ui.WikiaSingleMediaDialog.prototype.getTeardownProcess = function ( data ) {
 	return ve.ui.WikiaSingleMediaDialog.super.prototype.getTeardownProcess.call( this, data )
 		.first( function () {
 			if ( data.action === 'insert' ) {
-				this.insertMedia();
+				if ( mw.config.get( 'wgEnableMediaGalleryExt' ) ) {
+					this.insertWikiaGallery();
+				} else {
+					this.insertMWGallery();
+				}
 			}
 			this.cartModel.clearItems();
 			this.queryInput.setValue( '' );
 		}, this );
 };
 
-ve.ui.WikiaSingleMediaDialog.prototype.insertMedia = function () {
+ve.ui.WikiaSingleMediaDialog.prototype.insertMWGallery = function () {
+	var i, mwData, wt = [], items = this.cartModel.getItems();
+
+	mwData = {
+		'name': 'gallery',
+		'attrs': {},
+		'body': {}
+	};
+
+	for ( i = 0; i < items.length; i++ ) {
+		wt.push( items[i].title );
+	}
+
+	mwData.body.extsrc = '\n' + wt.join( '\n' ) + '\n';
+
+	this.fragment.collapseRangeToEnd().insertContent( [
+		{
+			'type': 'mwGallery',
+			'attributes': {
+				'mw': mwData
+			}
+		},
+		{ 'type': '/mwGallery' }
+	] );
+};
+
+ve.ui.WikiaSingleMediaDialog.prototype.insertWikiaGallery = function () {
 	var i, linmod = [], items = this.cartModel.getItems();
 
 	// Gallery opening
