@@ -85,10 +85,9 @@ $global-footer-vertical-spacing: 30px;
 		}
 
 		li {
-			display: inline;
+			display: inline-block;
 			margin-top: 0;
 			padding: 0 4px 0 0;
-			white-space: nowrap;
 
 			&::before {
 				border-left: 1px solid $global-footer-color-border;
