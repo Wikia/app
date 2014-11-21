@@ -94,14 +94,15 @@ define('wikia.articleNavUserTools', [
 	 */
 	function trackUserTools() {
 		var track = tracker.buildTrackingFunction({
-			action: tracker.ACTIONS.CLICK,
 			trackingMethod: 'both'
 		});
 
 		$('#userToolsDropdown').on('mousedown touchstart', 'a', function (e) {
 			var label,
 				el = e.target,
-				name = $(el).data('name');
+				name = $(el).data('name'),
+				action = tracker.ACTIONS.CLICK,
+				category = 'toolbar';
 
 			// Primary mouse button only
 			if (e.which !== 1) {
@@ -114,6 +115,20 @@ define('wikia.articleNavUserTools', [
 				case 'history':
 				case 'whatlinkshere':
 					label = name;
+					break;
+				case 'edit-a-page':
+				case 'add-a-video':
+				case 'add-a-photo':
+				case 'add-a-page':
+				case 'wiki-activity':
+				case 'edit-wiki-navigation':
+					label = name;
+					category = 'contribute';
+					break;
+				case 'create-map-clicked':
+					label = name;
+					action = 'click-link-button';
+					category = 'map';
 					break;
 				default:
 					label = 'custom';
@@ -128,7 +143,8 @@ define('wikia.articleNavUserTools', [
 			if (label !== undefined) {
 				track({
 					browserEvent: e,
-					category: 'toolbar',
+					action: action,
+					category: category,
 					label: label
 				});
 			}

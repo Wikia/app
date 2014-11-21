@@ -143,7 +143,15 @@ class ArticleNavigationController extends WikiaController {
 			$data = $service->getVisibleList();
 		}
 
-		$renderedData = $service->instanceToRenderData( $service->listToInstance( $data ) );
+		$renderedData[] = $this->sendRequest(
+			'ArticleNavigationContributeMenu',
+			'getContributeActionsForDropdown'
+		)->getVal('data');
+
+		$dataInArr = $service->instanceToRenderData( $service->listToInstance( $data ) );
+		foreach ($dataInArr as $item) {
+			$renderedData[] = $item;
+		}
 
 		if ($wgUser->isAllowed('admindashboard')) {
 			$renderedData[] = [
@@ -153,6 +161,7 @@ class ArticleNavigationController extends WikiaController {
 				'type' => 'link'
 			];
 		}
+
 		return $renderedData;
 	}
 }
