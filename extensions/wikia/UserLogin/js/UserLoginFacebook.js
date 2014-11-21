@@ -196,11 +196,10 @@
 										label: 'facebook-login-modal'
 									});
 
-									// redirect to the specified location
+									// run callback or redirect to the specified location
 									if (loginCallback && typeof loginCallback === 'function') {
 										loginCallback();
 									} else {
-										// TODO: check that there will always be a return to URL
 										window.location.href = this.returnToUrl;
 									}
 								}
