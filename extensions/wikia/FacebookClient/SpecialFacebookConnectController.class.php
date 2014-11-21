@@ -64,7 +64,7 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 		$wikiaPassword = $wg->Request->getText( 'wpExistingPassword' );
 
 		// The user must be logged into Facebook before choosing a wiki username
-		if ( $fbUserId === null ) {
+		if ( empty( $fbUserId ) ) {
 			$wg->Out->showErrorPage( 'fbconnect-error', 'fbconnect-errortext' );
 			$this->skipRendering();
 			return true;

@@ -163,16 +163,24 @@ class FacebookClient {
 			return $this->facebookUserId;
 		}
 
+		$errorMessage = null;
+
 		try {
-			$this->facebookAPI->getSession()->validate();
-			$this->facebookUserId = ( int ) $this->facebookAPI->getUserId();
+			$session = $this->getSession();
+			if ( $session ) {
+				$session->validate();
+				$this->facebookUserId = ( int ) $this->facebookAPI->getUserId();
+			}
 		} catch ( \Exception $e ) {
-			$this->facebookUserId = 0;
+			$errorMessage = $e->getMessage();
 		}
 
-		if ( $this->facebookUserId === 0 ) {
+		if ( empty( $this->facebookUserId ) ) {
+			$this->facebookUserId = 0;
+
 			WikiaLogger::instance()->warning( 'Null Facebook user id', [
 				'method' => __METHOD__,
+				'message' => $errorMessage,
 			] );
 		}
 
@@ -281,6 +289,9 @@ class FacebookClient {
 
 		if ( empty( $fbId ) ) {
 			$fbId = $this->getUserId();
+			if ( empty( $fbId ) ) {
+				return null;
+			}
 		}
 
 		$map = FacebookMapModel::lookupFromFacebookID( $fbId );
