@@ -11,11 +11,16 @@ $global-footer-vertical-spacing: 30px;
 .global-footer {
 	background-color: $global-wikia-background-color;
 	border-bottom: 10px solid $color-wikiahome-community;
-	border-top: 1px solid $global-footer-color-border;
 	color: $color-text-dark;
-	margin-top: $global-footer-vertical-spacing;
-	padding-top: $global-footer-vertical-spacing + 10;
+	padding-top: $global-footer-vertical-spacing;
 	text-align: center;
+
+	&:before {
+		border-top: 1px solid $global-footer-color-border;
+		content: '';
+		display: block;
+		margin-bottom: $global-footer-vertical-spacing + 10;
+	}
 
 	&.vertical-books {
 		border-bottom-color: $color-vertical-books;
