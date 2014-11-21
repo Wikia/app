@@ -28,7 +28,7 @@
 		margin: 10px 0;
 
 		.cke_button {
-			border-right: solid 1px #aaa;
+			border-right: solid 1px #ededed;
 			display: inline-block;
 			line-height: 44px;
 
@@ -43,6 +43,57 @@
 				margin: 0 12px;
 				vertical-align: middle;
 			}
+
+			/* font-based icons will be used instead of PNG sprite */
+			.cke_icon {
+				@include font-size-s;
+				background-image: none;
+				position: relative;
+
+				&::before {
+					position: absolute;
+					top: -$font-size-s;
+				}
+			}
+		}
+
+		.cke_separator {
+			display: none !important;
+		}
+
+		/*
+		 * Customize editor toolbar icons
+		 */
+
+		/* editor modes switching */
+		.cke_button_ModeSource .cke_icon::before {
+			@include venus-icon($venus-icon-brackets);
+		}
+
+		.cke_button_ModeWysiwyg .cke_icon::before {
+			@include venus-icon($venus-icon-eye);
+		}
+
+		/* text formatting */
+		.cke_button_bold .cke_icon::before {
+			@include venus-icon($venus-icon-b);
+		}
+
+		.cke_button_italic .cke_icon::before {
+			@include venus-icon($venus-icon-i);
+		}
+
+		.cke_button_link .cke_icon::before {
+			@include venus-icon($venus-icon-link);
+		}
+
+		/* media tools */
+		.RTEImageButton .cke_icon::before {
+			@include venus-icon($venus-icon-photo);
+		}
+
+		.RTEVideoButton .cke_icon::before {
+			@include venus-icon($venus-icon-movie);
 		}
 	}
 
