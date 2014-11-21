@@ -8,3 +8,4 @@ class ArticleAsJsonParserException extends WikiaHttpException {
 		$this->details = $details;
 	}
 } 
+
