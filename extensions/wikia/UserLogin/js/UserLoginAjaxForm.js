@@ -30,10 +30,10 @@ UserLoginAjaxForm.prototype.init = function () {
 	this.retrieveLoginToken();
 
 	// form submission handler
-	this.form.submit($.proxy(this.submitLogin, this));
+	this.form.submit(this.submitLogin.bind(this));
 
 	// forgot password handler
-	this.forgotPasswordLink.click($.proxy(this.mailPassword, this));
+	this.forgotPasswordLink.click(this.mailPassword.bind(this));
 
 	if (!this.options.skipFocus) {
 		this.inputs.username.focus();
@@ -55,22 +55,22 @@ UserLoginAjaxForm.prototype.submitLogin = function (e) {
 UserLoginAjaxForm.prototype.ajaxLogin = function () {
 	'use strict';
 
-	// TODO: use $.nirvana.postJson
-	$.post(wgScriptPath + '/wikia.php', {
-		controller: 'UserLoginSpecial',
-		method: 'login',
-		format: 'json',
-		loginToken: this.loginToken,
-		username: this.inputs.username.val(),
-		password: this.inputs.password.val(),
-		keeploggedin: this.inputs.keeploggedin.is(':checked')
-	}, this.submitLoginHandler.bind(this));
+	$.nirvana.postJson(
+		'UserLoginSpecial',
+		'login',
+		{
+			loginToken: this.loginToken,
+			username: this.inputs.username.val(),
+			password: this.inputs.password.val(),
+			keeploggedin: this.inputs.keeploggedin.is(':checked')
+		},
+		this.submitLoginHandler.bind(this)
+	);
 };
 
 UserLoginAjaxForm.prototype.submitLoginHandler = function (json) {
 	'use strict';
 
-	$().log(json);
 	this.form.find('.error-msg').remove();
 	this.form.find('.input-group').removeClass('error');
 	var result = json.result,
@@ -101,7 +101,7 @@ UserLoginAjaxForm.prototype.submitLoginHandler = function (json) {
 				password: this.inputs.password.val(),
 				returnto: this.inputs.returnto.val(),
 				fakeGet: 1
-			}, $.proxy(this.retrieveTemplateHandler, this));
+			}, this.retrieveTemplateHandler.bind(this));
 		}
 	} else if (result === 'unconfirm') {
 		$.post(wgScriptPath + '/wikia.php', {
@@ -168,15 +168,19 @@ UserLoginAjaxForm.prototype.retrieveLoginToken = function (params) {
 	params = params || {};
 	if (!this.loginToken || params.clearCache) {
 		this.loginToken = 'retrieving';
-		// TODO: use $.nirvana.postJson
-		$.post(wgScriptPath + '/wikia.php', {
-			controller: 'UserLoginSpecial',
-			method: 'retrieveLoginToken',
-			format: 'json'
-		}, $.proxy(function (res) {
-			this.loginToken = res.loginToken;
-			this.inputs.logintoken.val(res.loginToken);
-		}, this));
+		$.nirvana.postJson(
+			'UserLoginSpecial',
+			'retrieveLoginToken',
+			{
+				controller: 'UserLoginSpecial',
+				method: 'retrieveLoginToken',
+				format: 'json'
+			},
+			function (res) {
+				this.loginToken = res.loginToken;
+				this.inputs.logintoken.val(res.loginToken);
+			}.bind(this)
+		);
 	}
 };
 
@@ -186,20 +190,19 @@ UserLoginAjaxForm.prototype.mailPassword = function (e) {
 	e.preventDefault();
 	this.form.find('.input-group').removeClass('error');
 	this.form.find('.error-msg').remove();
-	$().log('mailing password');
-	// TODO: use $.nirvana.postJson
-	$.post(wgScriptPath + '/wikia.php', {
-		controller: 'UserLoginSpecial',
-		method: 'mailPassword',
-		format: 'json',
-		username: this.inputs.username.val()
-	}, $.proxy(this.mailPasswordHandler, this));
+	$.nirvana.postJson(
+		'UserLoginSpecial',
+		'mailPassword',
+		{
+			username: this.inputs.username.val()
+		},
+		this.mailPasswordHandler.bind(this)
+	);
 };
 
 UserLoginAjaxForm.prototype.mailPasswordHandler = function (json) {
 	'use strict';
 
-	$().log(json);
 	if (json.result === 'ok') {
 		this.errorValidation(json);
 	} else if (json.result === 'error') {
