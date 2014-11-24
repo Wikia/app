@@ -21,6 +21,7 @@ class VenusHooks {
 			$node = $nodes->item(0);
 
 			if (!is_null($node)) {
+				/* @var $node DOMElement */
 				$node = $infoboxExtractor->clearInfoboxStyles( $node );
 				$infoboxWrapper = $infoboxExtractor->wrapInfobox( $node, 'infoboxWrapper', 'infobox-wrapper' );
 				$infoboxContainer = $infoboxExtractor->wrapInfobox( $infoboxWrapper, 'infoboxContainer', 'infobox-container' );
