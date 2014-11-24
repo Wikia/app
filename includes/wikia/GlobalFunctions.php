@@ -1395,24 +1395,16 @@ function json_encode_jsfunc($input=array(), $funcs=array(), $level=0)
  }
 
 /**
- * generate correct version of session key
- *
- * @author Piotr Molski (moli) <moli at wikia-inc.com>
- *
- * @return String $key
- */
-function wfGetSessionKey( $id ) {
-	global $wgSharedDB, $wgDBname, $wgExternalUserEnabled, $wgExternalSharedDB;
-
-	if ( !empty( $wgExternalUserEnabled ) ) {
-		$key = "{$wgExternalSharedDB}:session:{$id}";
-	} elseif ( !empty( $wgSharedDB ) ) {
-		$key = "{$wgSharedDB}:session:{$id}";
-	} else {
-		$key = "{$wgDBname}:session:{$id}";
-	}
-
-	return $key;
+ * calculate user's session memcached key based on user's id
+ * 
+ * @author Piotr Molski <moli@wikia-inc.com>
+ * @author Michał Roszka <michal@wikia-inc.com>
+ * 
+ * @param integer $iId the id of the user
+ * @return string
+ */ 
+function wfGetSessionKey( $iId ) {
+    return "wikicities:session:{$iId}";
 }
 
 /**

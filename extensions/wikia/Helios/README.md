@@ -1,5 +1,12 @@
 # Helios #
 
+## Implementation Log ##
+
+* Step 1: simplify the global function `wfGetSessionKey()`
+    * get rid of `$wgExternalUserEnabled` as it is `true`, always
+    * user literal `wikicities` rather than `$wgExternalSharedDB` as it is not
+      going to change before the Helios project is delivered
+
 ## Notes ##
 
 ### Problems ###
