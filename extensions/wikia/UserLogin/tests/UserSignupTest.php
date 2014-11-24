@@ -66,7 +66,7 @@
 			$this->setUpRequest( $requestParams );
 			$this->setUpMockObject( 'User', $mockUserParams, true );
 
-			$objectName = 'ExternalUser_Wikia';
+			$objectName = 'HeliosExternalUser';
 			$mockObject = true;
 
 			$mockExternalUser = $this->getMock($objectName, ['initFromName', 'getLocalUser', 'getId'], [], '', false);;

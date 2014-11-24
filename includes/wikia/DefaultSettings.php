@@ -234,6 +234,9 @@ $wgAutoloadClasses[ 'LibmemcachedBagOStuff'           ] = "$IP/includes/cache/wi
 $wgAutoloadClasses[ 'LibmemcachedSessionHandler'      ] = "$IP/includes/cache/wikia/LibmemcachedSessionHandler.php";
 $wgAutoloadClasses[ 'WikiaAssets'                     ] = "$IP/includes/wikia/WikiaAssets.class.php";
 $wgAutoloadClasses[ "ExternalUser_Wikia"              ] = "$IP/includes/wikia/ExternalUser_Wikia.php";
+$wgAutoloadClasses[ "Wikia\\Helios\\ExternalUser"     ] = "$IP/extensions/wikia/Helios/ExternalUser.class.php";
+$wgAutoloadClasses[ "Wikia\\Helios\\AuthPlugin"       ] = "$IP/extensions/wikia/Helios/AuthPlugin.class.php";
+$wgAutoloadClasses[ "Wikia\\Helios\\AuthPluginUser"   ] = "$IP/extensions/wikia/Helios/AuthPlugin.class.php";
 $wgAutoloadClasses[ 'AutomaticWikiAdoptionGatherData' ] = "$IP/extensions/wikia/AutomaticWikiAdoption/maintenance/AutomaticWikiAdoptionGatherData.php";
 $wgAutoloadClasses[ 'FakeSkin'                        ] = "$IP/includes/wikia/FakeSkin.class.php";
 $wgAutoloadClasses[ 'WikiaUpdater'                    ] = "$IP/includes/wikia/WikiaUpdater.php";
@@ -1613,3 +1616,9 @@ $wgDisableWAMOnHubs = false;
  * see PLATFORM-392
  */
 $wgImageServingForceNoResults = false;
+
+/**
+ * @name $wgAuthPluginClass
+ * Specifies the authentication plugin for the current request.
+ */
+$wgAuthPluginClass = 'AuthPlugin';
