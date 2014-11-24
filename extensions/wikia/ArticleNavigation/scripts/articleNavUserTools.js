@@ -156,6 +156,8 @@ define('wikia.articleNavUserTools', [
 	 * @param {Event=} event
 	 */
 	function show(event) {
+		$('.article-navigation > ul > li.active').removeClass('active');
+
 		entryPoint.addClass('active');
 
 		// handle touch interactions

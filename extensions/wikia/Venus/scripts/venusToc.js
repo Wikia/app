@@ -65,6 +65,8 @@ define(
 		 * @param {Event=} event
 		 */
 		function show(event) {
+			$('.article-navigation > ul > li.active').removeClass('active');
+
 			$parent.addClass('active');
 
 			// handle touch interactions

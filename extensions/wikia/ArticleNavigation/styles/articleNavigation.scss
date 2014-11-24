@@ -83,17 +83,25 @@ $dropdownArrowSize: 10px;
 	}
 
 	.share-link {
-		color: inherit;
 		text-decoration: none;
 	}
 
-	&.single-share {
-		[data-share-type=multiple] {
-			display: none;
-		}
+	.multiple-share .share-link {
+		color: inherit;
 	}
-	&.multiple-share {
-		[data-share-type=single] {
+
+	.single-share {
+		display: none;
+	}
+	.multiple-share {
+		display: list-item;
+	}
+
+	&.single-share {
+		.single-share {
+			display: list-item;
+		}
+		.multiple-share {
 			display: none;
 		}
 	}
