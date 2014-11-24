@@ -134,15 +134,6 @@ class FacebookSignupController extends WikiaController {
 		}
 	}
 
-	protected function getReturnTo() {
-		$returnTo = $this->wg->request->getVal( 'returnto' );
-		if ( !$returnTo ) {
-			$returnTo = $this->wg->Title->getFullUrl();
-		}
-
-		return htmlspecialchars( $returnTo );
-	}
-
 	/**
 	 * Handle internal requests for creating Wikia accounts
 	 */
