@@ -40,6 +40,7 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 	.wordmark-container {
 		display: inline-block;
 		height: 100%;
+		margin: 0;
 		padding: 0 40px 0 30px;
 		vertical-align: middle;
 
