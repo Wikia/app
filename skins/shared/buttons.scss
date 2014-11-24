@@ -1,0 +1,32 @@
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/box-shadow';
+@import 'skins/shared/mixins/gradient';
+
+@import 'skins/shared/styles/buttons/buttons-wikia';
+@import 'skins/shared/styles/buttons/buttons-wikia-menu';
+@import 'skins/shared/styles/buttons/buttons-wikia-chiclet';
+@import 'skins/shared/styles/buttons/buttons-facebook';
+
+.wikia-menu-button-submit {
+	input[type=submit] {
+		border: none;
+		height: 100%;
+	}
+}
+
+// Border-box model: Inputs and buttons count border as part of height. Increase height. //
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button {
+	height: 21px;
+}
+
+// Fix Mozilla Button Sizing //
+input[type="submit"]::-moz-focus-inner,
+input[type="reset"]::-moz-focus-inner,
+input[type="button"]::-moz-focus-inner,
+button::-moz-focus-inner {
+	padding: 0;
+	border: 0;
+}
