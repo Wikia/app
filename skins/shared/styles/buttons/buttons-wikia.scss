@@ -78,3 +78,27 @@ button {
 		box-shadow: 0px 0px 1px 1px highlight;
 	}
 }
+
+.wikia-menu-button-submit {
+	input[type=submit] {
+		border: none;
+		height: 100%;
+	}
+}
+
+// Border-box model: Inputs and buttons count border as part of height. Increase height. //
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button {
+	height: 21px;
+}
+
+// Fix Mozilla Button Sizing //
+input[type="submit"]::-moz-focus-inner,
+input[type="reset"]::-moz-focus-inner,
+input[type="button"]::-moz-focus-inner,
+button::-moz-focus-inner {
+	padding: 0;
+	border: 0;
+}
