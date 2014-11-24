@@ -252,3 +252,10 @@ $VenusConfig['imglzy_js'] = [
 	]
 ];
 
+$VenusConfig['zenbox_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/Zenbox/scripts/zenbox.js',
+	]
+];
+
