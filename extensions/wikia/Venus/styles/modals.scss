@@ -2,3 +2,11 @@
 @import 'skins/shared/tabs';
 @import 'skins/shared/styles/buttons/buttons-wikia';
 @import 'skins/shared/styles/buttons/buttons-wikia-chiclet';
+
+.wikia-button {
+	.photo {
+		background-color: transparent;
+		background-image: url('/extensions/wikia/Venus/images/gallery_add_photo.png'); /* base64 */
+		background-repeat: no-repeat;
+	}
+}
