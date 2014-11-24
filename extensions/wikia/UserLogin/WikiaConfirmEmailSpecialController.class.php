@@ -49,7 +49,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 
 		if ( $this->code == '' ) {
 			$this->result = 'error';
-			$this->msg = wfMessage( 'wikiaconfirmemail-error-empty-code' )->escaped();
+			$this->msg = wfMessage( 'wikiaconfirmemail-error-empty-code' )->plain();
 			return;
 		}
 
@@ -80,7 +80,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 			$expUser = User::newFromConfirmationCode( $this->code );
 			if ( !is_object( $expUser ) ) {
 				$this->result = 'error';
-				$this->msg = wfMessage( 'wikiaconfirmemail-error-invalid-code' )->escaped();
+				$this->msg = wfMessage( 'wikiaconfirmemail-error-invalid-code' )->plain();
 				return;
 			}
 
@@ -88,7 +88,7 @@ class WikiaConfirmEmailSpecialController extends WikiaSpecialPageController {
 			$user = User::newFromName( $this->username );
 			if ( $user->getId() != $expUser->getId() ) {
 				$this->result = 'error';
-				$this->msg = wfMessage( 'wikiaconfirmemail-error-user-not-match' )->escaped();
+				$this->msg = wfMessage( 'wikiaconfirmemail-error-user-not-match' )->text();
 				$this->errParam = 'username';
 				return;
 			}
