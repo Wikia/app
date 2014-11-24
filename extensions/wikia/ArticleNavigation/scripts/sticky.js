@@ -28,12 +28,11 @@ require([
 	}
 
 	function adjustPositionFunction(scrollY, sourceElement, targetElement) {
-		var targetBottom = $target.offset().top +
+		var targetBottom = $target.position().top +
 			$target.outerHeight(true) -
-			$source.outerHeight(true) -
-			globalNavigationHeight;
+			$source.outerHeight(true);
 
-		if ($doc.scrollTop() + additionalTopOffset >= targetBottom) {
+		if ($doc.scrollTop() >= targetBottom) {
 			stickyElementObject.sourceElementPosition('absolute', 'top', targetBottom);
 			return true;
 		} else {
