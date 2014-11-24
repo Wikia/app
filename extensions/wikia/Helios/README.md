@@ -4,8 +4,9 @@
 
 * Step 1: simplify the global function `wfGetSessionKey()`
     * get rid of `$wgExternalUserEnabled` as it is `true`, always
-    * user literal `wikicities` rather than `$wgExternalSharedDB` as it is not
+    * use literal `wikicities` rather than `$wgExternalSharedDB` as it is not
       going to change before the Helios project is delivered
+* Step 2: remove `$wgExternalUserEnabled` from code and config
 
 ## Notes ##
 
@@ -37,3 +38,13 @@
     * `$wgExternalUserEnabled` is `true` everywhere, including Uncyclopedia and
       it is referenced in the application code only once in the method used to
       determine the session key. It is `wikicities:session:<UserId>`, always.
+
+    * for all wikis but Uncyclopedia, `$wgExternalAuthType` is not null and set
+      to 'ExternalUser_Wikia' and `/includes/wikia/ExternalUser_Wikia.php` is
+      included.
+
+    * the next step is to reuse current AuthPlugin and ExternalUser classes
+      under new names: HeliosAuthPlugin and HeliosExternalUser
+
+    * also, $wgExternalAuthType is terribly misleading, because ExternalUser
+      in fact does not have anything to do with authentication
