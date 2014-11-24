@@ -1395,16 +1395,16 @@ function json_encode_jsfunc($input=array(), $funcs=array(), $level=0)
  }
 
 /**
- * calculate user's session memcached key based on user's id
+ * calculate user's session memcached key based on session id
  * 
  * @author Piotr Molski <moli@wikia-inc.com>
  * @author Michał Roszka <michal@wikia-inc.com>
  * 
- * @param integer $iId the id of the user
+ * @param string $sId the id of the user
  * @return string
  */ 
-function wfGetSessionKey( $iId ) {
-    return "wikicities:session:{$iId}";
+function wfGetSessionKey( $sId ) {
+    return "wikicities:session:{$sId}";
 }
 
 /**
