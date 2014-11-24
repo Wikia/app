@@ -1,3 +1,5 @@
 <?php
-class HeliosExternalUser extends ExternalUser_Wikia {
+namespace Wikia\Helios;
+
+class ExternalUser extends \ExternalUser_Wikia {
 }

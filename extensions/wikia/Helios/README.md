@@ -53,3 +53,6 @@
       either `null` or `HeliosExternalUser`, there is no need to check for the
       exact value in the code and most checks can be simplified, as well as
       calls to static method (adds more flexibility).
+
+    * for the sake of readability, I am moving HeliosExternalUser to its own
+      namespace.
