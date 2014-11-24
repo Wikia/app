@@ -447,9 +447,9 @@ class EditAccount extends SpecialPage {
 		$this->mUser->saveSettings();
 
 		// delete the record from all the secondary clusters
-		if ( $wgExternalAuthType == 'ExternalUser_Wikia' ) {
+		if ( $wgExternalAuthType == 'HeliosExternalUser' ) {
 			$userId = $this->mUser->getId();
-			ExternalUser_Wikia::removeFromSecondaryClusters( $userId );
+			HeliosExternalUser::removeFromSecondaryClusters( $userId );
 		}
 
 		$this->mStatusMsg = wfMsg( 'editaccount-success-unsub', $this->mUser->mName );

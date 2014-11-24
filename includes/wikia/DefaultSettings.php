@@ -233,6 +233,7 @@ $wgAutoloadClasses[ 'LibmemcachedBagOStuff'           ] = "$IP/includes/cache/wi
 $wgAutoloadClasses[ 'LibmemcachedSessionHandler'      ] = "$IP/includes/cache/wikia/LibmemcachedSessionHandler.php";
 $wgAutoloadClasses[ 'WikiaAssets'                     ] = "$IP/includes/wikia/WikiaAssets.class.php";
 $wgAutoloadClasses[ "ExternalUser_Wikia"              ] = "$IP/includes/wikia/ExternalUser_Wikia.php";
+$wgAutoloadClasses[ "HeliosExternalUser"              ] = "$IP/extensions/wikia/Helios/HeliosExternalUser.php";
 $wgAutoloadClasses[ 'AutomaticWikiAdoptionGatherData' ] = "$IP/extensions/wikia/AutomaticWikiAdoption/maintenance/AutomaticWikiAdoptionGatherData.php";
 $wgAutoloadClasses[ 'FakeSkin'                        ] = "$IP/includes/wikia/FakeSkin.class.php";
 $wgAutoloadClasses[ 'WikiaUpdater'                    ] = "$IP/includes/wikia/WikiaUpdater.php";

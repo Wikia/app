@@ -53,7 +53,7 @@ class LoginForm extends SpecialPage {
 	var $wpUserLoginExt, $wpUserBirthDay;
 
 	/**
-	 * @var ExternalUser_Wikia
+	 * @var ExternalUser
 	 */
 	private $mExtUser = null;
 
@@ -428,7 +428,7 @@ class LoginForm extends SpecialPage {
 			return false;
 		}
 
-		$this->mExtUser = ExternalUser_Wikia::newFromName( $this->mUsername );
+		$this->mExtUser = HeliosExternalUser::newFromName( $this->mUsername );
 
 		if ( is_object( $this->mExtUser ) && ( 0 != $this->mExtUser->getId() ) ) {
 			$this->mainLoginForm( $this->msg( $this->wpMsgPrefix . 'userexists' )->text(), 'error', 'username' );
@@ -546,9 +546,9 @@ class LoginForm extends SpecialPage {
 		global $wgAuth, $wgExternalAuthType;
 
 		if ( $wgExternalAuthType ) {
-			$u = ExternalUser_Wikia::addUser( $u, $this->mPassword, $this->mEmail, $this->mRealName );
+			$u = HeliosExternalUser::addUser( $u, $this->mPassword, $this->mEmail, $this->mRealName );
 			if ( is_object( $u ) ) {
-				$this->mExtUser = ExternalUser_Wikia::newFromName( $this->mUsername );
+				$this->mExtUser = HeliosExternalUser::newFromName( $this->mUsername );
 			}
 		} else{
 			$u->addToDatabase();
@@ -649,7 +649,7 @@ class LoginForm extends SpecialPage {
 			return self::SUCCESS;
 		}
 
-		$this->mExtUser = ExternalUser_Wikia::newFromName( $this->mUsername );
+		$this->mExtUser = HeliosExternalUser::newFromName( $this->mUsername );
 
 		global $wgExternalAuthType, $wgAutocreatePolicy;
 		if ( $wgExternalAuthType && $wgAutocreatePolicy != 'never'
