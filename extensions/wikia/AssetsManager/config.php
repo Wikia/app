@@ -1861,9 +1861,9 @@ $config['api_docs_scss'] = array(
 	)
 );
 
-$config['videos_module_js'] = [
+$config['videos_module_common_js'] = [
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis'],
+	'skin' => ['oasis', 'venus'],
 	'assets' => [
 		'//extensions/wikia/Thumbnails/scripts/templates.mustache.js',
 		'//extensions/wikia/Thumbnails/scripts/views/titleThumbnail.js',
@@ -1871,6 +1871,13 @@ $config['videos_module_js'] = [
 		'//extensions/wikia/VideosModule/scripts/models/videos.js',
 		'//extensions/wikia/VideosModule/scripts/views/titleThumbnail.js',
 		'//extensions/wikia/VideosModule/scripts/views/index.js',
+	]
+];
+
+$config['videos_module_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
 		'//extensions/wikia/VideosModule/scripts/controllers/rail.js',
 	]
 ];
@@ -1879,12 +1886,6 @@ $config['videos_module_venus_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['venus'],
 	'assets' => [
-		'//extensions/wikia/Thumbnails/scripts/templates.mustache.js',
-		'//extensions/wikia/Thumbnails/scripts/views/titleThumbnail.js',
-		'//extensions/wikia/VideosModule/scripts/templates.mustache.js',
-		'//extensions/wikia/VideosModule/scripts/models/videos.js',
-		'//extensions/wikia/VideosModule/scripts/views/titleThumbnail.js',
-		'//extensions/wikia/VideosModule/scripts/views/index.js',
 		'//extensions/wikia/VideosModule/scripts/controllers/inContent.js',
 		'//resources/wikia/modules/nodeFinder.js',
 	]
