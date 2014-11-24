@@ -139,8 +139,6 @@ class FacebookClientController extends WikiaController {
 	/**
 	 * Ajax endpoint for connecting a logged in Wikia user to a Facebook account.
 	 * By the time they get here they should already have logged into Facebook and have a Facebook user ID.
-	 *
-	 * @throws FacebookMapModelInvalidDataException
 	 */
 	public function connectLoggedInUser() {
 		$wg = F::app()->wg;
@@ -154,26 +152,16 @@ class FacebookClientController extends WikiaController {
 			return true;
 		}
 
-		$map = new FacebookMapModel();
-		$map->relate( $wg->User->getId(), $fbUserId );
-		$map->save();
+		// Create user mapping
+		$mappingCreated = \FacebookMapModel::createUserMapping( $wg->User->getId(), $fbUserId );
+		if ( !$mappingCreated ) {
+			$this->status = 'error';
+			return true;
+		}
 
 		$this->status = 'ok';
 
-		$this->track( 'facebook-link-existing' );
+		\FacebookClientHelper::track( 'facebook-link-existing' );
 	}
 
-	/**
-	 * Track an event with a given label with user-sign-up category
-	 * @param string $label
-	 * @param string $action optional, 'submit' by default
-	 */
-	protected function track( $label, $action = 'submit' ) {
-		\Track::event( 'trackingevent', [
-			'ga_action' => $action,
-			'ga_category' => 'user-sign-up',
-			'ga_label' => $label,
-			'beacon' => !empty( F::app()->wg->DevelEnvironment ) ? 'ThisIsFake' : wfGetBeaconId(),
-		] );
-	}
 }
