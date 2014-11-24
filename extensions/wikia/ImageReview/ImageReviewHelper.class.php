@@ -10,17 +10,6 @@ use \Wikia\Logger\WikiaLogger;
 class ImageReviewHelper extends ImageReviewHelperBase {
 
 	private $user_id = 0;
-	const LIMIT_IMAGES = 20;
-	/*
-	 * LIMIT_IMAGES_FROM_DB should be a little greater than LIMIT_IMAGES, so if
-	 * we fetch a few icons from DB, we can skip them
-	 */
-	const LIMIT_IMAGES_FROM_DB = 24;
-
-	/**
-	 * Define a size of a thumbnail
-	 */
-	const IMAGE_REVIEW_THUMBNAIL_SIZE = 250;
 
 	static $sortOptions = array(
 		'latest first' => 0,
@@ -259,28 +248,19 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 	public function getImageList( $timestamp, $state = ImageReviewStatuses::STATE_UNREVIEWED, $order = self::ORDER_LATEST ) {
 		wfProfileIn( __METHOD__ );
 
-		// get images
-		$db = $this->getDatawareDB( DB_MASTER );
-		$result = $db->query('
-			SELECT pages.page_title_lower, image_review.wiki_id, image_review.page_id, image_review.state, image_review.flags, image_review.priority, image_review.last_edited
-			FROM (
-				SELECT image_review.wiki_id, image_review.page_id, image_review.state, image_review.flags, image_review.priority, image_review.last_edited
-				FROM `image_review`
-				WHERE state = ' . $state . ' AND top_200 = false
-				ORDER BY ' . $this->getOrder($order) . '
-				LIMIT ' . self::LIMIT_IMAGES_FROM_DB . '
-			) as image_review
-			LEFT JOIN pages ON (image_review.wiki_id=pages.page_wikia_id) AND (image_review.page_id=pages.page_id) AND (pages.page_is_redirect=0)'
-		);
+		$oDB = $this->getDatawareDB( DB_MASTER );
+		$oDatabaseHelper = $this->getDatabaseHelper();
+
+		$oResults = $oDatabaseHelper->selectImagesForList( $oDB, $state, $this->getOrder( $order ), self::LIMIT_IMAGES_FROM_DB );
 
 		$rows = array();
 		$updateWhere = array();
 		$iconsWhere = array();
-		while ( $row = $db->fetchObject($result) ) {
+		while ( $row = $oDB->fetchObject($oResults) ) {
 			$rows[] = $row;
 			$updateWhere[] = "(wiki_id = {$row->wiki_id} and page_id = {$row->page_id})";
 		}
-		$db->freeResult( $result );
+		$oDB->freeResult( $oResults );
 
 		# update records
 		if ( count($updateWhere) > 0) {
@@ -307,14 +287,14 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 				$values[] = "review_end = '0000-00-00 00:00:00'";
 			}
 
-			$db->update(
+			$oDB->update(
 				'image_review',
 				$values,
 				array( implode(' OR ', $updateWhere) ),
 				__METHOD__
 			);
 		}
-		$db->commit();
+		$oDB->commit();
 
 		$imageList = $invalidImages = $unusedImages = array();
 		foreach ( $rows as $row ) {
@@ -325,10 +305,12 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 				if ( $oImagePage instanceof GlobalTitle ) {
 					$oImageGlobalFile = new GlobalFile( $oImagePage );
 					$aImageInfo = array(
-						'src' => $oImageGlobalFile->getThumbUrl( self::IMAGE_REVIEW_THUMBNAIL_SIZE . 'px-' . $oImageGlobalFile->getName() ),
+						// 'src' => $oImageGlobalFile->getThumbUrl( self::IMAGE_REVIEW_THUMBNAIL_SIZE . 'px-' . $oImageGlobalFile->getName() ),
+						'src' => $oImageGlobalFile->getUrlGenerator()->width( self::IMAGE_REVIEW_THUMBNAIL_SIZE )->zoomCrop(),
 						'page' => $oImagePage->getFullUrl(),
-						'extension' => pathinfo( strtolower( $aImageInfo['page'] ), PATHINFO_EXTENSION ), // this needs to use the page index since src for SVG ends in .svg.png :/
+						'extension' => $oImageGlobalFile->getMimeType(),
 					);
+					wfDebug( "\n ImageReviewList::" . json_encode($aImageInfo) . "\n" );
 					$bImageExists = $oImageGlobalFile->exists();
 
 					if ( !$bImageExists && $state != ImageReviewStatuses::STATE_INVALID_IMAGE ) {
@@ -382,7 +364,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 
 		$commit = false;
 		if ( count( $invalidImages ) > 0 ) {
-			$db->update(
+			$oDB->update(
 				'image_review',
 				array(
 					'state' => ImageReviewStatuses::STATE_INVALID_IMAGE
@@ -394,7 +376,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		}
 
 		if ( count( $iconsWhere ) > 0 ) {
-			$db->update(
+			$oDB->update(
 					'image_review',
 					array( 'state' => ImageReviewStatuses::STATE_ICO_IMAGE ),
 					array( implode( ' OR ', $iconsWhere ) ),
@@ -404,7 +386,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		}
 
 		if ( count( $unusedImages ) > 0 ) {
-			$db->update(
+			$oDB->update(
 				'image_review',
 				array(
 					'reviewer_id = null',
@@ -421,7 +403,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			] );
 		}
 
-		if ( $commit ) $db->commit();
+		if ( $commit ) $oDB->commit();
 
 		WikiaLogger::instance()->info( "ImageReview : fetched new images", [
 			'method' => __METHOD__,

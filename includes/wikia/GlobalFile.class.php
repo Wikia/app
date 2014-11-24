@@ -162,6 +162,18 @@ class GlobalFile extends WikiaObject {
 		return !empty($this->mData) ? "{$this->mData->img_major_mime}/{$this->mData->img_minor_mime}" : null;
 	}
 
+	public function getBucket() {
+		return VignetteRequest::parseBucket( $this->getUploadDir() );
+	}
+
+	public function getPathPrefix() {
+		return VignetteRequest::parsePathPrefix( $this->getUploadDir() );
+	}
+
+	public function getUrlGenerator() {
+			return VignetteRequest::fromGlobalFile( $this );
+	}
+
 	/**
 	 * Returns URL to cropped image
 	 *
