@@ -9,6 +9,13 @@
 	display: none;
 }
 
+/* Temp fix for a P1.5 - ADEN-1578 */
+#LEFT_SKYSCRAPER_2, #LEFT_SKYSCRAPER_3 {
+	& >.hidden {
+		display: none !important;
+	}
+}
+
 .wikia-ad.hidden {
 	display: none !important;
 }

@@ -577,6 +577,9 @@ HTML;
 	static function UserLoadFromSession( $user, &$result ) {
 		global $wgCookiePrefix, $wgTitle, $wgOut, $wgUser;
 
+		// Temporary fix for P2: https://wikia-inc.atlassian.net/browse/MAIN-3228
+		return true;
+
 		// Check to see if the user can be logged in from Facebook
 		$fb = new FBConnectAPI();
 		$fbId = $fb->user();

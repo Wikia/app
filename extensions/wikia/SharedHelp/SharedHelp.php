@@ -32,7 +32,7 @@ $wgHooks['SpecialSearchProfiles'][] = 'efSharedHelpSearchProfilesHook';
 $wgHooks['WantedPages::getQueryInfo'][] = 'SharedHelpWantedPagesSql';
 
 define( 'NOSHAREDHELP_MARKER', '<!--NOSHAREDHELP-->' );
-define( 'SHAREDHELP_CACHE_VERSION', '1' );
+define( 'SHAREDHELP_CACHE_VERSION', '2' );
 
 class SharedHttp {
 	static function get( $url, $timeout = 'default' ) {
@@ -126,7 +126,7 @@ class SharedHttp {
  * @return bool
  */
 function SharedHelpHook(&$out, &$text) {
-	global $wgTitle, $wgOut, $wgMemc, $wgSharedDB, $wgCityId, $wgHelpWikiId, $wgContLang, $wgLanguageCode, $wgArticlePath;
+	global $wgTitle, $wgOut, $wgMemc, $wgCityId, $wgHelpWikiId, $wgContLang, $wgLanguageCode, $wgArticlePath;
 
 	/* Insurance that hook will be called only once #BugId:  */
 	static $wasCalled = false;
@@ -156,8 +156,8 @@ function SharedHelpHook(&$out, &$text) {
 	if($wgTitle->getNamespace() == NS_HELP) {
 		# Initialize shared and local variables
 		# Canonical namespace is added here in case we ever want to share other namespaces (e.g. Advice)
-		$sharedArticleKey = $wgSharedDB . ':sharedArticles:' . $wgHelpWikiId . ':' .
-			MWNamespace::getCanonicalName( $wgTitle->getNamespace() ) .  ':' . $wgTitle->getDBkey() . ':' . SHAREDHELP_CACHE_VERSION;
+		$sharedArticleKey = wfSharedMemcKey( 'sharedArticles', $wgHelpWikiId,
+			MWNamespace::getCanonicalName( $wgTitle->getNamespace() ), $wgTitle->getDBkey(), SHAREDHELP_CACHE_VERSION );
 		$sharedArticle = $wgMemc->get($sharedArticleKey);
 		$sharedServer = WikiFactory::getVarValueByName( 'wgServer', $wgHelpWikiId );
 		$sharedScript = WikiFactory::getVarValueByName( 'wgScript', $wgHelpWikiId );
@@ -177,34 +177,37 @@ function SharedHelpHook(&$out, &$text) {
 		$localArticlePathClean = str_replace('$1', '', $wgArticlePath);
 
 		# Try to get content from memcache
-		if ( !empty($sharedArticle['timestamp']) ) {
-			if( (wfTimestamp() - (int) ($sharedArticle['timestamp'])) < 600) {
-				if( isset($sharedArticle['exists']) && $sharedArticle['exists'] == 0 ) {
-					wfProfileOut(__METHOD__);
-					return true;
-				} else if (!empty($sharedArticle['cachekey'])) {
-					wfDebug("SharedHelp: trying parser cache {$sharedArticle['cachekey']}\n");
-					$key1 = str_replace('-1!', '-0!', $sharedArticle['cachekey']);
-					$key2 = str_replace('-0!', '-1!', $sharedArticle['cachekey']);
-					$parser = $wgMemc->get($key1);
-					if(!empty($parser) && is_object($parser)) {
-						$content = $parser->mText;
-					} else {
-						$parser = $wgMemc->get($key2);
-						if(!empty($parser) && is_object($parser)) {
-							$content = $parser->mText;
-						}
-					}
+		if ( isset( $sharedArticle['exists'] ) && $sharedArticle['exists'] == 0 ) {
+			wfProfileOut( __METHOD__ );
+			return true;
+		} elseif ( !empty( $sharedArticle['cachekey'] ) ) {
+			wfDebug( "SharedHelp: trying parser cache {$sharedArticle['cachekey']}\n" );
+			$key1 = str_replace( '-1!', '-0!', $sharedArticle['cachekey'] );
+			$key2 = str_replace( '-0!', '-1!', $sharedArticle['cachekey'] );
+			$parser = $wgMemc->get( $key1 );
+			if ( !empty( $parser ) && is_object( $parser ) ) {
+				$content = $parser->mText;
+			} else {
+				$parser = $wgMemc->get( $key2 );
+				if ( !empty( $parser ) && is_object( $parser ) ) {
+					$content = $parser->mText;
 				}
 			}
 		}
 		if(!empty($content)) {
-            # get rid of magic word editsection (non parsed piece causing double section headers)
-            $content = preg_replace("|<mw:editsection( .*)?>.*?</mw:editsection>|", "", $content);
-        } else {# If getting content from memcache failed (invalidate) then just download it via HTTP
-            $urlTemplate = $sharedServer . $sharedScript . "?title=Help:%s&action=render";
+			# get rid of magic word editsection (non parsed piece causing double section headers)
+			$content = preg_replace("|<mw:editsection( .*)?>.*?</mw:editsection>|", "", $content);
+		} else {# If getting content from memcache failed (invalidate) then just download it via HTTP
+			$urlTemplate = $sharedServer . $sharedScript . "?title=Help:%s&action=render";
 			$articleUrl = sprintf($urlTemplate, urlencode($wgTitle->getDBkey()));
 			list($content, $c) = SharedHttp::get($articleUrl);
+
+			if ( $content === false ) {
+				$sharedArticle = [ 'exists' => 0, 'timestamp' => wfTimestamp() ];
+				$wgMemc->set( $sharedArticleKey, $sharedArticle, 60 * 60 * 24 );
+				wfProfileOut(__METHOD__);
+				return true;
+			}
 
 			# if we had redirect, then store it somewhere
 			if(curl_getinfo($c, CURLINFO_HTTP_CODE) == 301) {
@@ -245,17 +248,16 @@ function SharedHelpHook(&$out, &$text) {
 			}
 			if(strpos($content, '"noarticletext"') > 0) {
 				$sharedArticle = array('exists' => 0, 'timestamp' => wfTimestamp());
-				$wgMemc->set($sharedArticleKey, $sharedArticle);
+				$wgMemc->set( $sharedArticleKey, $sharedArticle, 60 * 60 * 24 );
 				wfProfileOut(__METHOD__);
 				return true;
 			} else {
 				$contentA = explode("\n", $content);
 				$tmp = isset($contentA[count($contentA)-2]) ? $contentA[count($contentA)-2] : '';
 				$idx1 = strpos($tmp, 'key');
-				$idx2 = strpos($tmp, 'end');
-				$key = trim(substr($tmp, $idx1+4, $idx2-$idx1));
+				$key = trim( substr( $tmp, $idx1+4, -4 ) );
 				$sharedArticle = array('cachekey' => $key, 'timestamp' => wfTimestamp());
-				$wgMemc->set($sharedArticleKey, $sharedArticle);
+				$wgMemc->set( $sharedArticleKey, $sharedArticle, 60 * 60 * 24 );
 				wfDebug("SharedHelp: using parser cache {$sharedArticle['cachekey']}\n");
 			}
 			curl_close( $c );

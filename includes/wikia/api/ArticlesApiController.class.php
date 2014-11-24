@@ -1003,7 +1003,11 @@ class ArticlesApiController extends WikiaApiController {
 
 			$parsedArticle = $article->getParserOutput();
 
-			$articleContent = json_decode( $parsedArticle->getText() );
+			if ( $parsedArticle instanceof ParserOutput ) {
+				$articleContent = json_decode( $parsedArticle->getText() );
+			} else {
+				throw new ArticleAsJsonParserException( 'Parser is currently not available' );
+			}
 
 			$wgArticleAsJson = false;
 			$categories = [];
