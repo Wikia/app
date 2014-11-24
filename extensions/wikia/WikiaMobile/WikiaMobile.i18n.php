@@ -829,6 +829,16 @@ $1',
 	'wikiasmartbanner-view' => 'afficher',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'wikiamobile-search' => 'Sykje',
+	'wikiamobile-password' => 'Wachtwurd',
+	'wikiamobile-feedback' => 'Weromkeppeling',
+	'wikiamobile-category-items-more' => 'Mear laden',
+);
+
 /** Galician (galego)
  * @author Toliño
  * @author Vivaelcelta
@@ -2241,10 +2251,11 @@ $1',
  * @author Ffaarr
  * @author LNDDYL
  * @author Lauhenry
+ * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
 	'wikiamobile-search' => '搜尋',
-	'wikiamobile-search-this-wiki' => '搜尋此維基',
+	'wikiamobile-search-this-wiki' => '搜尋此 wiki',
 	'wikiamobile-search-wiki' => '維基',
 	'wikiamobile-search-wikia' => 'Wikia',
 	'wikiamobile-login' => '登入',
@@ -2255,7 +2266,7 @@ $messages['zh-hant'] = array(
 	'wikiamobile-feedback' => '意見反饋',
 	'wikiamobile-back' => '返回',
 	'wikiamobile-hide-section' => '隱藏',
-	'wikiamobile-profile' => '個人資料',
+	'wikiamobile-profile' => '基本資料',
 	'wikiamobile-last-edited-on' => '最近編輯在$1',
 	'wikiamobile-last-edited-by' => '由$1',
 	'wikiamobile-anonymous-edited-by' => '匿名使用者',
@@ -2280,7 +2291,7 @@ $messages['zh-hant'] = array(
 $1',
 	'wikiamobile-media-group-footer' => '$1的1',
 	'wikiamobile-unsupported-video-download' => '您的瀏覽器不支援這種影片格式，請嘗試按一下 <a href="$1">這裡</a>',
-	'wikiamobile-video-views-counter' => '$1次{{PLURAL:$1|瀏覽|瀏覽}}',
+	'wikiamobile-video-views-counter' => '$1 次{{PLURAL:$1|瀏覽}}',
 	'wikiamobile-video-not-friendly' => '抱歉，這段影片不能在行動裝置使用。',
 	'wikiamobile-videos' => '影片',
 	'wikiamobile-toc-header' => '目錄', # Fuzzy

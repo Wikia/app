@@ -22,3 +22,7 @@ ve.ui.commandRegistry.register(
 ve.ui.commandRegistry.register(
 	new ve.ui.Command( 'wikiaTemplateInsert', 'window', 'open', 'wikiaTemplateInsert' )
 );
+
+ve.ui.commandRegistry.register(
+	new ve.ui.Command( 'wikiaSingleMedia', 'window', 'open', 'wikiaSingleMedia' )
+);

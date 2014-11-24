@@ -1296,6 +1296,17 @@ $messages['fr'] = array(
 	'wmu-error-bad-aspect-ratio' => 'Le ratio d’aspect n’est pas correct ($1 x $2 px)',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'wmu-find' => 'Sykje',
+	'wmu-find-btn' => 'Sykje',
+	'wmu-name' => 'Namme',
+	'wmu-prev' => 'Foarige 8',
+	'wmu-next' => 'Folgjende 8',
+);
+
 /** Galician (galego)
  * @author Toliño
  * @author Vivaelcelta

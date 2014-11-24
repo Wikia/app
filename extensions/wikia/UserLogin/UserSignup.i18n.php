@@ -1696,6 +1696,13 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 	'usersignup-facebook-problem' => 'Il y a eu un problème de communication avec Facebook. Veuillez essayer ultérieurement.',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'usersignup-marketing-global-heading' => 'Oanmeitsje',
+);
+
 /** Galician (galego)
  * @author Toliño
  */
@@ -5256,7 +5263,7 @@ $messages['zh-hant'] = array(
 	'usersignup-page-title' => '加入 Wikia',
 	'usersignup-page-captcha-label' => '模糊單詞',
 	'usersignup-error-username-length' => '哎呀，您的使用者名稱不能超過 {{PLURAL:$1|一個字符| $1 字元}}。',
-	'usersignup-error-invalid-user' => '無效用戶，請先登錄。',
+	'usersignup-error-invalid-user' => '無效使用者，請先登入。',
 	'usersignup-error-invalid-email' => '請輸入有效的電子郵件位址。',
 	'usersignup-error-symbols-in-username' => '哎呀，您的用戶名只能包含字母和數位。',
 	'usersignup-error-empty-email' => '哎呀，請填寫您的電子郵件位址。',

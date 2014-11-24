@@ -19,7 +19,7 @@ class ArticleAsJson extends WikiaService {
 		return "<img src='{$blankImgUrl}' class='{$classes}' data-ref='{$id}'{$width}{$height} />";
 	}
 
-	private static function createMediaObj( $details, $imageName, $caption = '' ) {
+	private static function createMediaObj( $details, $imageName, $caption = '', $link = null ) {
 		wfProfileIn( __METHOD__ );
 
 		$media = [
@@ -30,6 +30,10 @@ class ArticleAsJson extends WikiaService {
 			'caption' => $caption,
 			'user' => $details['userName']
 		];
+
+		if ( is_string( $link ) && $link !== '' ) {
+			$media['link'] = $link;
+		}
 
 		if ( !empty( $details['width'] ) ) {
 			$media['width'] = (int) $details['width'];
@@ -86,8 +90,8 @@ class ArticleAsJson extends WikiaService {
 				if ( !empty( $caption ) ) {
 					$caption = $parser->parse( $caption, $title, $parserOptions, false )->getText();
 				}
-
-				$media[] = self::createMediaObj( $details, $image['name'], $caption );
+				$linkHref = isset( $image['linkhref'] ) ? $image['linkhref'] : null;
+				$media[] = self::createMediaObj( $details, $image['name'], $caption, $linkHref );
 
 				self::addUserObj($details);
 			}
@@ -109,7 +113,7 @@ class ArticleAsJson extends WikiaService {
 		return true;
 	}
 
-	public static function onImageBeforeProduceHTML( &$dummy,Title &$title, &$file, &$frameParams, &$handlerParams, &$time, &$res ){
+	public static function onImageBeforeProduceHTML( &$dummy, Title &$title, &$file, &$frameParams, &$handlerParams, &$time, &$res ) {
 		global $wgArticleAsJson;
 
 		wfProfileIn( __METHOD__ );
@@ -131,7 +135,7 @@ class ArticleAsJson extends WikiaService {
 		return true;
 	}
 
-	public static function onPageRenderingHash( &$confstr ){
+	public static function onPageRenderingHash( &$confstr ) {
 		global $wgArticleAsJson;
 
 		wfProfileIn( __METHOD__ );
@@ -152,23 +156,26 @@ class ArticleAsJson extends WikiaService {
 
 			$userName = $parser->getRevisionUser();
 
-			if ( User::isIP( $userName ) ) {
+			if ( !empty( $userName ) ) {
+				if ( User::isIP( $userName ) ) {
 
-				self::addUserObj( [
-					'userId' => 0,
-					'userName' => $userName,
-					'userThumbUrl' => AvatarService::getAvatarUrl( $userName, AvatarService::AVATAR_SIZE_MEDIUM ),
-					'userPageUrl' => Title::newFromText( $userName )->getLocalURL()
-				] );
-			} else {
-				$user = User::newFromName( $userName );
-
-				self::addUserObj( [
-					'userId' => $user->getId(),
-					'userName' => $user->getName(),
-					'userThumbUrl' => AvatarService::getAvatarUrl( $user, AvatarService::AVATAR_SIZE_MEDIUM ),
-					'userPageUrl' => $user->getUserPage()->getLocalURL()
-				] );
+					self::addUserObj( [
+						'userId' => 0,
+						'userName' => $userName,
+						'userThumbUrl' => AvatarService::getAvatarUrl( $userName, AvatarService::AVATAR_SIZE_MEDIUM ),
+						'userPageUrl' => Title::newFromText( $userName )->getLocalURL()
+					] );
+				} else {
+					$user = User::newFromName( $userName );
+					if ( $user instanceof User ) {
+						self::addUserObj( [
+							'userId' => $user->getId(),
+							'userName' => $user->getName(),
+							'userThumbUrl' => AvatarService::getAvatarUrl( $user, AvatarService::AVATAR_SIZE_MEDIUM ),
+							'userPageUrl' => $user->getUserPage()->getLocalURL()
+						] );
+					}
+				}
 			}
 
 			//because we take caption out of main parser flow
@@ -197,6 +204,25 @@ class ArticleAsJson extends WikiaService {
 		//We don't have editing in this version
 		if ( $wgArticleAsJson ) {
 			$showEditLink = false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Remove any limit report, we don't need that in json
+	 *
+	 * @param $parser Parser
+	 * @param $report
+	 * @return bool
+	 */
+	public static function reportLimits( $parser, &$report ) {
+		global $wgArticleAsJson;
+
+		if ( $wgArticleAsJson ) {
+			$report = '';
+
+			return false;
 		}
 
 		return true;

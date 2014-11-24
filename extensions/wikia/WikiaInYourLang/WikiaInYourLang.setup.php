@@ -42,6 +42,7 @@ $wgResourceModules['ext.wikiaInYourLang'] = [
 	],
 	'dependencies' => [
 		'wikia.cache',
+		'wikia.geo',
 		'wikia.tracker',
 	],
 ];
