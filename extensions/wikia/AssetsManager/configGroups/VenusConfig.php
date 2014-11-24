@@ -32,6 +32,9 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//resources/wikia/modules/abTest.js',
 		'//resources/wikia/modules/underscore.js',
 		'//resources/wikia/modules/stickyElement.js',
+		'//resources/wikia/modules/uifactory.js',
+		'//resources/wikia/modules/uicomponent.js',
+
 
 		//tracker
 		'#group_tracker_js',
@@ -207,14 +210,20 @@ $VenusConfig[ 'article_navigation_js' ] = [
 	'assets' => [
 		'//extensions/wikia/ArticleNavigation/scripts/articleNavigation.js',
 		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
-		'//resources/wikia/modules/uifactory.js',
-		'//resources/wikia/modules/uicomponent.js',
 		'//extensions/wikia/UserTools/scripts/UserTools.js',
 		'//extensions/wikia/ArticleNavigation/scripts/articleNavUserTools.js',
 		'//extensions/wikia/ArticleNavigation/scripts/edit.js',
 		'//extensions/wikia/ArticleNavigation/scripts/sticky.js',
 		'//extensions/wikia/ArticleNavigation/scripts/share.js',
 		'//extensions/wikia/ArticleNavigation/scripts/init.js',
+	]
+];
+
+$VenusConfig[ 'article_js' ] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'venus' ],
+	'assets' => [
+		'//extensions/wikia/UserLogin/js/UserLoginModal.js'
 	]
 ];
 

@@ -17,6 +17,7 @@ class ArticleNavigationController extends WikiaController {
 
 		Wikia::addAssetsToOutput( 'article_navigation_scss' );
 		Wikia::addAssetsToOutput( 'article_navigation_js' );
+		Wikia::addAssetsToOutput( 'article_js' );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
@@ -66,7 +67,7 @@ class ArticleNavigationController extends WikiaController {
 				$data = [
 					'href' => $contentAction['href'],
 					'title' => $contentAction['text'],
-					'trackingId' => $contentAction['id'],
+					'trackingId' => $contentAction['id']
 				];
 
 				if (isset($contentAction['rel'])) {
