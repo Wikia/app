@@ -36,7 +36,7 @@ class ArticleNavigationController extends WikiaController {
 	}
 
 	private function editActionsData() {
-		global $wgUser;
+		global $wgUser, $wgTitle;
 
 		$contentActions = $this->app->getSkinTemplateObj()->data['content_actions'];
 		$editActions = [];
@@ -71,8 +71,12 @@ class ArticleNavigationController extends WikiaController {
 					'trackingId' => $contentAction['id']
 				];
 
-				if ($wgUser->isAnon() && $this->isEdit($contentAction)) {
-					$data['class'] = 'force-user-login';
+				if ( $wgUser->isAnon() &&
+					!$wgUser->isBlocked() &&
+					!$wgTitle->userCan( 'edit' ) &&
+					$this->isEdit($contentAction)
+				) {
+					$data[ 'class' ] = 'force-user-login';
 				}
 
 				if (isset($contentAction['rel'])) {
