@@ -63,7 +63,8 @@ require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 					type = $module.attr('data-mon-type'),
 					slot = $module.attr('data-mon-slot'),
 					productName = $product.attr('data-mon-pname'),
-					productCode = $product.attr('data-mon-pcode'),
+					productId = $product.attr('data-mon-pid'),
+					productTag = $product.attr('data-mon-ptag'),
 					productUrl = $this.find('a').attr('href');
 
 				track({
@@ -73,7 +74,8 @@ require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 					type: type,
 					slot: slot,
 					title: productName,
-					pcode: productCode,
+					pid: productId,
+					ptag: productTag,
 					url: productUrl
 				});
 			});
