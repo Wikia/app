@@ -35,8 +35,9 @@ class ArticleNavigationController extends WikiaController {
 		);
 	}
 
-	private function editActionsData()
-	{
+	private function editActionsData() {
+		global $wgUser;
+
 		$contentActions = $this->app->getSkinTemplateObj()->data['content_actions'];
 		$editActions = [];
 
@@ -69,6 +70,10 @@ class ArticleNavigationController extends WikiaController {
 					'title' => $contentAction['text'],
 					'trackingId' => $contentAction['id']
 				];
+
+				if ($wgUser->isAnon() && $this->isEdit($contentAction)) {
+					$data['class'] = 'force-user-login';
+				}
 
 				if (isset($contentAction['rel'])) {
 					$data['rel'] = str_replace('ca-', '', $contentAction['rel']);
@@ -155,5 +160,9 @@ class ArticleNavigationController extends WikiaController {
 			];
 		}
 		return $renderedData;
+	}
+
+	private function isEdit($data) {
+		return !empty($data['id']) && ($data['id'] == 'ca-viewsource');
 	}
 }

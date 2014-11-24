@@ -126,5 +126,24 @@ require([
 		win.delayedHover($parent[0], delayHoverParams);
 	}
 
+	function showUserLoginModal(event) {
+		var target = event.currentTarget;
+		$.getResources([
+			$.getSassCommonURL(
+				'extensions/wikia/Venus/styles/modules/modalVenus.scss'
+			)
+		]).done(
+			win.UserLoginModal.show({
+				origin: 'venus-article-edit',
+				callback: function() {
+					win.location = target.href;
+				}
+			})
+		);
+		return false;
+	}
+
+	$dropdown.find('.force-user-login').on('click', showUserLoginModal);
+
 	trackEditAction($dropdown);
 });
