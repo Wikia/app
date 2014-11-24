@@ -297,7 +297,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		}
 		$oDB->commit();
 
-		$imageList = $invalidImages = $unusedImages = $aDeletionList = [];
+		$imageList = $unusedImages = $aDeletionList = [];
 
 		foreach ( $rows as $row ) {
 			$record = "(wiki_id = {$row->wiki_id} and page_id = {$row->page_id})";
@@ -363,52 +363,34 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			}
 		}
 
-		$commit = false;
-		if ( count( $invalidImages ) > 0 ) {
-			$oDB->update(
-				'image_review',
-				array(
-					'state' => ImageReviewStatuses::STATE_INVALID_IMAGE
-				),
-				array( implode( ' OR ', $invalidImages ) ),
-				__METHOD__
-			);
-			$commit = true;
-		}
+		/**
+		 * Invalid images
+		 */
+		$this->createDeleteImagesTask( $aDeletionList );
 
-		if ( count( $iconsWhere ) > 0 ) {
-			$oDB->update(
-					'image_review',
-					array( 'state' => ImageReviewStatuses::STATE_ICO_IMAGE ),
-					array( implode( ' OR ', $iconsWhere ) ),
-					__METHOD__
-				   );
-			$commit = true;
-		}
+		/**
+		 * Icons
+		 */
+		$aIconsValues = [
+			'state' => ImageReviewStatuses::STATE_ICO_IMAGE,
+		];
+		$aIconsWhere = [ implode( 'OR', $iconsWhere ) ];
+		$this->imageListAdditionalAction( 'icons', $oDB, $aIconsValues, $aIconsWhere );
 
-		if ( count( $unusedImages ) > 0 ) {
-			$oDB->update(
-				'image_review',
-				array(
-					'reviewer_id = null',
-					'state' => $state
-				),
-				array( implode( ' OR ', $unusedImages ) ),
-				__METHOD__
-			);
-			$commit = true;
+		/**
+		 * Unused images
+		 */
+		$aUnusedValues = [
+			'reviewer_id = null',
+			'state' => $state,
+		];
+		$aUnusedWhere = [ implode( 'OR', $unusedImages ) ];
+		$this->imageListAdditionalAction( 'unused', $oDB, $aUnusedValues, $aUnusedWhere );
 
-			WikiaLogger::instance()->info( "ImageReview : returning unused images back to the queue", [
-				'method' => __METHOD__,
-				'count' => count( $unusedImages ),
-			] );
-		}
-
-
-
-		if ( $commit ) $oDB->commit();
-
-		WikiaLogger::instance()->info( "ImageReview : fetched new images", [
+		/**
+		 * Return valid images list
+		 */
+		WikiaLogger::instance()->info( "ImageReviewImageList: fetched new images", [
 			'method' => __METHOD__,
 			'count' => count( $imageList ),
 		] );
@@ -416,6 +398,19 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		wfProfileOut( __METHOD__ );
 
 		return $imageList;
+	}
+
+	private function imageListAdditionalAction( $sType, DatabaseMysql $oDB, $aValues, $aWhere ) {
+		$iCount = count( $aWhere );
+		if ( $iCount > 0 ) {
+			$oDatabaseHelper = $this->getDatabaseHelper();
+			$oDatabaseHelper->updateBatchImages( $oDB, $aValues, $aWhere );
+		}
+
+		WikiaLogger::instance()->info( "ImageReviewImageList: updated {$sType} images.", [
+			'method' => __METHOD__,
+			'count' => $iCount,
+		] );
 	}
 
 	protected function getWhitelistedWikis() {

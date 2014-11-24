@@ -19,4 +19,15 @@ class ImageReviewDatabaseHelper {
 
 		return $oResults;
 	}
+
+	public function updateBatchImages( DatabaseMysql $oDB, Array $aValues, Array $aWhere ) {
+		$oDB->update(
+			'image_review',
+			$aValues,
+			$aWhere,
+			__METHOD__
+		);
+
+		$oDB->commit();
+	}
 }
