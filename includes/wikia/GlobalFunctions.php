@@ -1404,7 +1404,12 @@ function json_encode_jsfunc($input=array(), $funcs=array(), $level=0)
  * @return string
  */ 
 function wfGetSessionKey( $sId ) {
-    return "wikicities:session:{$sId}";
+    global $wgSessionMemcachedKeyPrefix;
+    $sKey = "wikicities:session:{$sId}";
+    if ( $wgSessionMemcachedKeyPrefix ) {
+        $sKey = "{$wgSessionMemcachedKeyPrefix}:{$sKey}";
+    }
+    return $sKey;
 }
 
 /**
