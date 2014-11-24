@@ -10,7 +10,7 @@ define('videosmodule.views.index', [
 		this.$el = options.$el;
 		this.hookElement = options.hookElement;
 		this.previousElement = options.previousElement;
-		this.placement = options.placement;
+		this.moduleInsertingFunction = options.moduleInsertingFunction;
 		this.model = options.model;
 
 		this.$thumbs = this.$el.find('.thumbnails');
@@ -32,8 +32,8 @@ define('videosmodule.views.index', [
 	VideosModule.prototype.init = function () {
 		var self = this;
 
-		if (this.placement) {
-			this.placement.call($(this.hookElement), this.$el);
+		if (this.moduleInsertingFunction) {
+			this.moduleInsertingFunction.call($(this.hookElement), this.$el);
 		}
 
 		if (this.previousElement) {

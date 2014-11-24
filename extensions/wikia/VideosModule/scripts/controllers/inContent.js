@@ -16,7 +16,7 @@ require([
 		var inContent,
 			hookElement,
 			previousElement,
-			placement,
+			moduleInsertingFunction,
 			contentContainer = doc.getElementById('mw-content-text'),
 			headerSelector = '#mw-content-text > h2',
 			boundaryOffsetTop = 1500;
@@ -26,15 +26,15 @@ require([
 		hookElement = nodeFinderModule.getChildByOffsetTop(contentContainer, headerSelector, boundaryOffsetTop);
 		if (hookElement){
 			previousElement = nodeFinderModule.getPreviousVisibleSibling(hookElement);
-			placement = $.fn.before;
+			moduleInsertingFunction = $.fn.before;
 		} else {
 			hookElement = nodeFinderModule.getLastVisibleChild(contentContainer);
 			if (hookElement) {
 				previousElement = hookElement;
-				placement = $.fn.after;
+				moduleInsertingFunction = $.fn.after;
 			} else {
 				hookElement = contentContainer;
-				placement = $.fn.prepend;
+				moduleInsertingFunction = $.fn.prepend;
 			}
 		}
 
@@ -44,7 +44,7 @@ require([
 			})),
 			hookElement: hookElement,
 			previousElement: previousElement,
-			placement: placement,
+			moduleInsertingFunction: moduleInsertingFunction,
 			model: new VideoData(),
 			numVids: 3,
 			minNumVids: 3,
