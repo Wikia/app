@@ -393,12 +393,16 @@ class FacebookClient {
 
 	/**
 	 * Get a fully resolved URL for redirecting after login/signup with facebook
-	 * @param $returnTo
-	 * @param $returnToQuery
+	 * @param $returnTo String Title of page to return to
+	 * @param $returnToQuery String Query string of page to return to
+	 * @param $cb String Cachebuster value
 	 * @return string
 	 */
-	public function getReturnToUrl( $returnTo, $returnToQuery ) {
-		$queryStr = '&fbconnected=1&cb=' . rand( 1, 10000 );
+	public function getReturnToUrl( $returnTo, $returnToQuery, $cb = null ) {
+		if ( is_null( $cb ) ) {
+			$cb = rand( 1, 10000 );
+		}
+		$queryStr = '&fbconnected=1&cb=' . $cb;
 		$titleObj = Title::newFromText( $returnTo );
 
 		if ( $this->isInvalidRedirectOnConnect( $titleObj ) ) {
