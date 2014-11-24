@@ -498,7 +498,9 @@ $wgOut = RequestContext::getMain()->getOutput(); # BackCompat
 $wgParser = new StubObject( 'wgParser', $wgParserConf['class'], array( $wgParserConf ) );
 
 if ( !is_object( $wgAuth ) ) {
-	$wgAuth = new StubObject( 'wgAuth', 'AuthPlugin' );
+	$wgAuth = ( $wgExternalAuthType )
+                ? new \Wikia\Helios\AuthPlugin
+                : new StubObject( 'wgAuth', 'AuthPlugin' );
 	wfRunHooks( 'AuthPluginSetup', array( &$wgAuth ) );
 }
 
