@@ -39,7 +39,10 @@ require(
 					.on('click', '#markasread-this-wiki', this.proxy( this.markAllAsRead ))
 					.on('click', '#markasread-all-wikis', this.proxy( this.markAllAsReadAllWikis ));
 
+
 				$('#AccountNavigation .user-menu').one('mouseenter', this.proxy(this.setNotificationsHeight));
+
+				this.$window.on('resize', $.throttle(100, this.proxy(this.setNotificationsHeight)));
 			},
 
 			openNotifications: function() {
