@@ -1,6 +1,6 @@
 require([
-	'wikia.window', 'wikia.document', 'wikia.tracker'
-], function(win, doc, tracker) {
+	'wikia.window', 'wikia.document', 'wikia.tracker', 'jquery'
+], function(win, doc, tracker, $) {
 	'use strict';
 
 	var trackFunc = tracker.buildTrackingFunction({
@@ -10,6 +10,8 @@ require([
 	});
 
 	function shareLinkClick(event) {
+		$('.article-navigation > ul > li.active').removeClass('active');
+
 		var url = event.target.getAttribute('href'),
 			title = event.target.getAttribute('title'),
 			h = (win.innerHeight / 2 | 0),
