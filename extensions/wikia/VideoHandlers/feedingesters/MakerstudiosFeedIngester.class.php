@@ -3,7 +3,7 @@
 class MakerstudiosFeedIngester extends VideoFeedIngester {
 	protected static $API_WRAPPER = 'MakerstudiosApiWrapper';
 	protected static $PROVIDER = 'makerstudios';
-	protected static $FEED_URL = 'https://devvmsapi.makerstudios.com/v1/feed/mrss/makerdemo?authorization=og9znuMr26krIdkgV0HcPg8PdOwSwZdz&allContent=true';
+	protected static $FEED_URL = 'https://vmsapi.makerstudios.com/v1/feed/mrss/wikia?allContent=true&authorization=X9XZGApFwPV9zeRhCP82mD5RwqI7x4xG';
 
 	/** @var  DOMDocument */
 	private $content;
@@ -68,6 +68,7 @@ class MakerstudiosFeedIngester extends VideoFeedIngester {
 		$videoData['duration'] = $this->getOptionalField( 'content', 'duration' );
 		$videoData['published'] = strtotime( $this->getOptionalField( 'pubdate' ) );
 		$videoData['keywords'] = str_replace( ',', ', ', $this->getOptionalField( 'keywords' ) );
+		$videoData['provider'] = 'makerstudios';
 
 		return $videoData;
 	}
