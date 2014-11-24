@@ -106,6 +106,9 @@ $VenusConfig[ 'venus_body_js' ] = [
 
 		//video recommendations
 		'#group_video_recommendations_js',
+
+		// ui components
+		'#group_ui_repo_api_js',
 	]
 ];
 
@@ -139,7 +142,9 @@ $VenusConfig['local_navigation_js'] = [
 	'skin' => ['venus', 'oasis'],
 	'assets' => [
 		'//extensions/wikia/LocalNavigation/scripts/LocalNavigationMenu.js',
-		'//extensions/wikia/LocalNavigation/scripts/LocalNavigationTracking.js'
+		'//extensions/wikia/LocalNavigation/scripts/LocalNavigationTracking.js',
+		// TODO: should be lazy loaded CON-2169
+		'//extensions/wikia/CreatePage/js/CreatePage.js',
 	]
 ];
 
@@ -251,4 +256,14 @@ $VenusConfig['imglzy_js'] = [
 		'//extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
 	]
 ];
+
+/* UI repo JS API */
+$VenusConfig['ui_repo_api_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//resources/wikia/modules/nirvana.js',
+		'//resources/wikia/modules/uifactory.js',
+		'//resources/wikia/modules/uicomponent.js',
+	)
+);
 
