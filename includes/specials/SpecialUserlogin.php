@@ -428,7 +428,8 @@ class LoginForm extends SpecialPage {
 			return false;
 		}
 
-		$this->mExtUser = HeliosExternalUser::newFromName( $this->mUsername );
+		global $wgExternalAuthType;
+		$this->mExtUser = $wgExternalAuthType::newFromName( $this->mUsername );
 
 		if ( is_object( $this->mExtUser ) && ( 0 != $this->mExtUser->getId() ) ) {
 			$this->mainLoginForm( $this->msg( $this->wpMsgPrefix . 'userexists' )->text(), 'error', 'username' );
@@ -546,9 +547,9 @@ class LoginForm extends SpecialPage {
 		global $wgAuth, $wgExternalAuthType;
 
 		if ( $wgExternalAuthType ) {
-			$u = HeliosExternalUser::addUser( $u, $this->mPassword, $this->mEmail, $this->mRealName );
+			$u = $wgExternalAuthType::addUser( $u, $this->mPassword, $this->mEmail, $this->mRealName );
 			if ( is_object( $u ) ) {
-				$this->mExtUser = HeliosExternalUser::newFromName( $this->mUsername );
+				$this->mExtUser = $wgExternalAuthType::newFromName( $this->mUsername );
 			}
 		} else{
 			$u->addToDatabase();
@@ -649,9 +650,8 @@ class LoginForm extends SpecialPage {
 			return self::SUCCESS;
 		}
 
-		$this->mExtUser = HeliosExternalUser::newFromName( $this->mUsername );
-
 		global $wgExternalAuthType, $wgAutocreatePolicy;
+		$this->mExtUser = $wgExternalAuthType::newFromName( $this->mUsername );
 		if ( $wgExternalAuthType && $wgAutocreatePolicy != 'never'
 		&& is_object( $this->mExtUser )
 		&& $this->mExtUser->authenticate( $this->mPassword ) ) {

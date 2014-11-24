@@ -544,8 +544,9 @@ class RenameUserProcess {
 		wfRunHooks($hookName, array($this->mUserId, $this->mOldUsername, $this->mNewUsername));
 
 		// delete the record from all the secondary clusters
-		if ( class_exists( 'HeliosExternalUser' ) ) {
-			HeliosExternalUser::removeFromSecondaryClusters( $this->mUserId );
+		global $wgExternalAuthType;
+		if ( $wgExternalAuthType ) {
+			$wgExternalAuthType::removeFromSecondaryClusters( $this->mUserId );
 		}
 
 		// rename the user on the shared cluster
@@ -583,7 +584,7 @@ class RenameUserProcess {
 			$fakeUser->setName( $this->mOldUsername );
 
 			if ( $wgExternalAuthType ) {
-				$fakeUser = HeliosExternalUser::addUser( $fakeUser, '', '', '' );
+				$fakeUser = $wgExternalAuthType::addUser( $fakeUser, '', '', '' );
 			} else {
 				$fakeUser->addToDatabase();
 			}

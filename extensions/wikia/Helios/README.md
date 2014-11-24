@@ -48,3 +48,8 @@
 
     * also, $wgExternalAuthType is terribly misleading, because ExternalUser
       in fact does not have anything to do with authentication
+
+    * as in case of Wikia MediaWiki-based application `$wgExternalAuthType` is
+      either `null` or `HeliosExternalUser`, there is no need to check for the
+      exact value in the code and most checks can be simplified, as well as
+      calls to static method (adds more flexibility).

@@ -152,7 +152,10 @@
 				$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 				$userId = $user->getId();
 				$username = $user->getName();
-				HeliosExternalUser::removeFromSecondaryClusters( $userId ); // otherwise they stay there
+				global $wgExternalAuthType;
+				if ( $wgExternalAuthType ) {
+					$wgExternalAuthType::removeFromSecondaryClusters( $userId ); // otherwise they stay there
+				}
 				$dbw->delete( '`user`', array( 'user_id' => $userId ), __METHOD__ );
 				$dbw->delete( 'user_properties', array( 'up_user' => $userId ), __METHOD__ );
 

@@ -46,7 +46,8 @@ $user->setEmail( $email );
 $user->setPassword( $password );
 $user->confirmEmail();
 UserLoginHelper::removeNotConfirmedFlag( $user ); // this calls saveSettings();
-if ( !HeliosExternalUser::addUser( $user, $password, $email, $username ) ) {
+global $wgExternalAuthType;
+if ($wgExternalAuthType && !( $wgExternalAuthType::addUser( $user, $password, $email, $username ) ) ) {
 	echo "error creating external user\n";
 	die( 1 );
 }
