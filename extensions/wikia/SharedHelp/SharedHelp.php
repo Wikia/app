@@ -126,7 +126,7 @@ class SharedHttp {
  * @return bool
  */
 function SharedHelpHook(&$out, &$text) {
-	global $wgTitle, $wgOut, $wgMemc, $wgSharedDB, $wgCityId, $wgHelpWikiId, $wgContLang, $wgLanguageCode, $wgArticlePath;
+	global $wgTitle, $wgOut, $wgMemc, $wgCityId, $wgHelpWikiId, $wgContLang, $wgLanguageCode, $wgArticlePath;
 
 	/* Insurance that hook will be called only once #BugId:  */
 	static $wasCalled = false;
@@ -156,8 +156,8 @@ function SharedHelpHook(&$out, &$text) {
 	if($wgTitle->getNamespace() == NS_HELP) {
 		# Initialize shared and local variables
 		# Canonical namespace is added here in case we ever want to share other namespaces (e.g. Advice)
-		$sharedArticleKey = $wgSharedDB . ':sharedArticles:' . $wgHelpWikiId . ':' .
-			MWNamespace::getCanonicalName( $wgTitle->getNamespace() ) .  ':' . $wgTitle->getDBkey() . ':' . SHAREDHELP_CACHE_VERSION;
+		$sharedArticleKey = wfSharedMemcKey( 'sharedArticles', $wgHelpWikiId,
+			MWNamespace::getCanonicalName( $wgTitle->getNamespace() ), $wgTitle->getDBkey(), SHAREDHELP_CACHE_VERSION );
 		$sharedArticle = $wgMemc->get($sharedArticleKey);
 		$sharedServer = WikiFactory::getVarValueByName( 'wgServer', $wgHelpWikiId );
 		$sharedScript = WikiFactory::getVarValueByName( 'wgScript', $wgHelpWikiId );
@@ -201,6 +201,13 @@ function SharedHelpHook(&$out, &$text) {
 			$urlTemplate = $sharedServer . $sharedScript . "?title=Help:%s&action=render";
 			$articleUrl = sprintf($urlTemplate, urlencode($wgTitle->getDBkey()));
 			list($content, $c) = SharedHttp::get($articleUrl);
+
+			if ( $content === false ) {
+				$sharedArticle = [ 'exists' => 0, 'timestamp' => wfTimestamp() ];
+				$wgMemc->set( $sharedArticleKey, $sharedArticle, 60 * 60 * 24 );
+				wfProfileOut(__METHOD__);
+				return true;
+			}
 
 			# if we had redirect, then store it somewhere
 			if(curl_getinfo($c, CURLINFO_HTTP_CODE) == 301) {
