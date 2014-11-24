@@ -48,4 +48,30 @@ class VenusHooks {
 	static public function isInfoboxInFirstSection( $parser, $section, $content ) {
 		return $parser->mIsMainParse && $section === 0 && stripos($content, InfoboxExtractor::INFOBOX_CLASS_NAME);
 	}
+
+	/**
+	 * Change the order of nodes in headlines
+	 *
+	 * Headline content should go first, followed by edit section link
+	 *
+	 * @param Skin $skin
+	 * @param string $level
+	 * @param string $attribs
+	 * @param string $anchor
+	 * @param string $html
+	 * @param string $link
+	 * @param boolean $legacyAnchor
+	 * @param string $ret
+	 * @return bool
+	 */
+	public static function onMakeHeadline( Skin $skin, $level, $attribs, $anchor, $html, $link, $legacyAnchor, &$ret ) {
+		if ( F::app()->checkSkin( 'venus', $skin ) ) {
+			$ret = "<h$level$attribs"
+				. "<span class=\"mw-headline\" id=\"$anchor\">$html</span>"
+				. $link
+				. "</h$level>";
+		}
+
+		return true;
+	}
 }

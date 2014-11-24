@@ -42,8 +42,8 @@ define('wikia.stickyElement', [
 			options = _.extend(defaultOptions, userOptions);
 
 			win.addEventListener('load',   updateSize);
-			win.addEventListener('scroll', _.debounce(updatePosition, 5));
-			win.addEventListener('resize', _.debounce(updateSize, 5));
+			win.addEventListener('scroll', _.debounce(updatePosition, 10));
+			win.addEventListener('resize', _.debounce(updateSize, 10));
 
 			updateSize();
 
