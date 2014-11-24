@@ -17,7 +17,6 @@ $wgResourceModules['ext.wikia.recommendations'] = [
 	'scripts' => [
 		'extensions/wikia/Recommendations/scripts/recommendations.module.js',
 		'extensions/wikia/Recommendations/scripts/init.js',
-		'resources/wikia/modules/nodeFinder.js',
 	]
 ];
 

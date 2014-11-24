@@ -32,6 +32,7 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//resources/wikia/modules/abTest.js',
 		'//resources/wikia/modules/underscore.js',
 		'//resources/wikia/modules/stickyElement.js',
+		'//resources/wikia/modules/nodeFinder.js',
 
 		//tracker
 		'#group_tracker_js',
@@ -222,7 +223,6 @@ $VenusConfig[ 'video_recommendations_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'venus' ],
 	'assets' => [
-		'//extensions/wikia/Venus/scripts/modules/nodeFinder.module.js',
 		'//extensions/wikia/Venus/scripts/videoRecommendations.js'
 	]
 ];
