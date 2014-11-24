@@ -46,7 +46,7 @@ $user->setEmail( $email );
 $user->setPassword( $password );
 $user->confirmEmail();
 UserLoginHelper::removeNotConfirmedFlag( $user ); // this calls saveSettings();
-if ( !ExternalUser_Wikia::addUser( $user, $password, $email, $username ) ) {
+if ( !HeliosExternalUser::addUser( $user, $password, $email, $username ) ) {
 	echo "error creating external user\n";
 	die( 1 );
 }

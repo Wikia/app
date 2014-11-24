@@ -826,7 +826,7 @@ class Wikia {
 
 		# setup externalAuth
 		global $wgExternalAuthType, $wgAutocreatePolicy;
-		if ( $wgExternalAuthType == 'ExternalUser_Wikia' ) {
+		if ( $wgExternalAuthType == 'HeliosExternalUser' ) {
 			$wgAutocreatePolicy = 'view';
 		}
 		return true;
@@ -2077,8 +2077,8 @@ class Wikia {
 		}
 		$id = $user->getId();
 		// delete the record from all the secondary clusters
-		if ( $wgExternalAuthType == 'ExternalUser_Wikia' ) {
-			ExternalUser_Wikia::removeFromSecondaryClusters( $id );
+		if ( $wgExternalAuthType == 'HeliosExternalUser' ) {
+			HeliosExternalUser::removeFromSecondaryClusters( $id );
 		}
 		$user->invalidateCache();
 

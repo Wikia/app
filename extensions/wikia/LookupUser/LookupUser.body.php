@@ -43,7 +43,7 @@ class LookupUserPage extends SpecialPage {
 		$byIdInvalidUser = false;
 		if( $wgRequest->getText( 'mode' ) == 'by_id' ) {
 			$id = $target;
-			if ( $wgExternalAuthType == 'ExternalUser_Wikia' ) {
+			if ( $wgExternalAuthType == 'HeliosExternalUser' ) {
 				$u = ExternalUser::newFromId( $id );
 				if ( is_object( $u ) && ( $u->getId() != 0 ) ) {
 					#overwrite text
@@ -194,7 +194,7 @@ EOT
 		$targetUserName = ( !empty($userTarget) ? $userTarget : $target );
 		$extUser = null;
 		$user = null;
-		if ( $wgExternalAuthType == 'ExternalUser_Wikia' ) {
+		if ( $wgExternalAuthType == 'HeliosExternalUser' ) {
 			$extUser = ExternalUser::newFromName( $targetUserName );
 		} else {
 			$user = User::newFromName( $targetUserName );
