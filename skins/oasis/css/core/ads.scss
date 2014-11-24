@@ -65,11 +65,6 @@
 }
 
 /** Skyscrapers **/
-#LEFT_SKYSCRAPER_2 {
-	// FIXME: this is bad. Is it necessary?
-	@extend section;
-}
-
 #LEFT_SKYSCRAPER_3 {
 	clear: both;
 	position: absolute;
@@ -239,6 +234,7 @@ body >a >img[src$="noad.gif"] {
 
 // Right rail ads centering
 #LEFT_SKYSCRAPER_2 {
+	margin-bottom: 20px;
 	font-size: 0;
 	text-align: center;
 	> div, > iframe {
