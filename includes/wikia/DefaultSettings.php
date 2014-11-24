@@ -1615,3 +1615,9 @@ $wgDisableWAMOnHubs = false;
  * see PLATFORM-392
  */
 $wgImageServingForceNoResults = false;
+
+/**
+ * @name $wgAuthPluginClass
+ * Specifies the authentication plugin for the current request.
+ */
+$wgAuthPluginClass = 'AuthPlugin';
