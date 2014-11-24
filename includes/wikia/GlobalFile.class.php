@@ -162,14 +162,23 @@ class GlobalFile extends WikiaObject {
 		return !empty($this->mData) ? "{$this->mData->img_major_mime}/{$this->mData->img_minor_mime}" : null;
 	}
 
+	/**
+	 * @return string  A path to file's bucket
+	 */
 	public function getBucket() {
 		return VignetteRequest::parseBucket( $this->getUploadDir() );
 	}
 
+	/**
+	 * @return string  A language prefix
+	 */
 	public function getPathPrefix() {
 		return VignetteRequest::parsePathPrefix( $this->getUploadDir() );
 	}
 
+	/**
+	 * @return UrlGenerator object
+	 */
 	public function getUrlGenerator() {
 			return VignetteRequest::fromGlobalFile( $this );
 	}

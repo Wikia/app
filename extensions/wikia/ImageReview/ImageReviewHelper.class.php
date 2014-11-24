@@ -11,12 +11,6 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 
 	private $user_id = 0;
 
-	static $sortOptions = array(
-		'latest first' => 0,
-		'by priority and recency' => 1,
-		'oldest first' => 2,
-	);
-
 	function __construct() {
 		parent::__construct();
 		$this->user_id = $this->wg->user->getId();
@@ -106,14 +100,21 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 				$this->wg->memc->delete( $key );
 		}
 
-		if ( !empty( $deletionList ) ) {
+		wfProfileOut( __METHOD__ );
+	}
+
+	/**
+	 * Creates a task removing listed images
+	 * @param  array  $aDeletionList  An array of [ city_id, page_id ] arrays.
+	 * @return void
+	 */
+	public function createDeleteImagesTask( $aDeletionList ) {
+		if ( !empty( $aDeletionList ) ) {
 			$task = new \Wikia\Tasks\Tasks\ImageReviewTask();
-			$task->call('delete', $deletionList);
+			$task->call('delete', $aDeletionList);
 			$task->prioritize();
 			$task->queue();
 		}
-
-		wfProfileOut( __METHOD__ );
 	}
 
 	/**
@@ -296,7 +297,8 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		}
 		$oDB->commit();
 
-		$imageList = $invalidImages = $unusedImages = array();
+		$imageList = $invalidImages = $unusedImages = $aDeletionList = [];
+
 		foreach ( $rows as $row ) {
 			$record = "(wiki_id = {$row->wiki_id} and page_id = {$row->page_id})";
 
@@ -304,28 +306,24 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 				$oImagePage = GlobalTitle::newFromId( $row->page_id, $row->wiki_id );
 				if ( $oImagePage instanceof GlobalTitle ) {
 					$oImageGlobalFile = new GlobalFile( $oImagePage );
+
+					$sThumbUrl = $oImageGlobalFile->getUrlGenerator()
+						->width( self::IMAGE_REVIEW_THUMBNAIL_SIZE )
+						->height( self::IMAGE_REVIEW_THUMBNAIL_SIZE )
+						->thumbnailDown()
+						->url();
+
 					$aImageInfo = array(
-						// 'src' => $oImageGlobalFile->getThumbUrl( self::IMAGE_REVIEW_THUMBNAIL_SIZE . 'px-' . $oImageGlobalFile->getName() ),
-						'src' => $oImageGlobalFile->getUrlGenerator()->width( self::IMAGE_REVIEW_THUMBNAIL_SIZE )->zoomCrop(),
+						'src' => $sThumbUrl,
 						'page' => $oImagePage->getFullUrl(),
 						'extension' => $oImageGlobalFile->getMimeType(),
 					);
-					wfDebug( "\n ImageReviewList::" . json_encode($aImageInfo) . "\n" );
-					$bImageExists = $oImageGlobalFile->exists();
 
-					if ( !$bImageExists && $state != ImageReviewStatuses::STATE_INVALID_IMAGE ) {
-						$invalidImages[] = $record;
-						continue;
-					} elseif ( 'ico' == $aImageInfo['extension'] ) {
+					if ( strpos( 'ico', $aImageInfo['extension'] ) ) {
 						$iconsWhere[] = $record;
 						continue;
 					} else {
-						$isThumb = true;
-
-						if  ( in_array( $aImageInfo['extension'], array( 'gif', 'svg' ) ) ) {
-							$aImageInfo = ImagesService::getImageOriginalUrl( $row->wiki_id, $row->page_id );
-							$isThumb = false;
-						}
+						$isThumb = true; // Vignette handles .gif and .svg files
 
 						$wikiRow = WikiFactory::getWikiByID( $row->wiki_id );
 
@@ -355,6 +353,9 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 							'exception' => new Exception()
 						]
 					);
+
+					$aDeletionList[] = [ $row->wiki_id, $row->page_id ];
+
 					continue;
 				}
 			} else {
@@ -402,6 +403,8 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 				'count' => count( $unusedImages ),
 			] );
 		}
+
+
 
 		if ( $commit ) $oDB->commit();
 

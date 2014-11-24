@@ -102,8 +102,6 @@ class VignetteRequest {
 			$config->setTimestamp( $timestamp );
 		}
 
-		wfDebug( "\nImageReviewList::" . json_encode( new UrlGenerator( $config ) ) . "\n" );
-
 		return new UrlGenerator( $config );
 	}
 
