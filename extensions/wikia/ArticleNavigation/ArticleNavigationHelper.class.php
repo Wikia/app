@@ -45,13 +45,15 @@ class ArticleNavigationHelper {
 			if (
 				!empty( $item['type'] )
 				&& $item['type'] !== 'disabled'
-				&& !empty( $item['href'] )
 				&& !empty( $item['caption'] )
 			) {
 				$dropdownItem = [];
 
 				$dropdownItem['title'] = $item['caption'];
-				$dropdownItem['href'] = $item['href'];
+
+				if (!empty( $item['href'] )) {
+					$dropdownItem['href'] = $item['href'];
+				}
 
 				if ( !empty( $item['tracker-name'] ) ) {
 					$dropdownItem['dataAttr'] = [

@@ -279,56 +279,6 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 		}
 	}
 
-	.contribute-container {
-		color: $color-button-text;
-		display: inline-block;
-		padding-top: 20px;
-		position: absolute;
-		right: 30px;
-
-		.contribute-button {
-			@include font-size-xxs;
-			background-color: $color-buttons;
-			cursor: pointer;
-			display: table-cell;
-			font-weight: bold;
-			height: 40px;
-			padding: 0 15px 0 20px;
-			text-transform: uppercase;
-			vertical-align: middle;
-
-			&::after {
-				@include arrow(5px, rgba($color-button-text, .5));
-				content: ' ';
-				display: inline-block;
-				margin: -2px 0 0 15px;
-			}
-		}
-
-		.dropdown {
-			min-width: 100%;
-
-			a:hover {
-				font-weight: bold;
-			}
-		}
-
-		&.active {
-			.contribute-button {
-				border-bottom: 1px solid rgba($color-button-text, .2);
-				height: 41px;
-
-				&::after {
-					border-top-color: $color-button-text;
-				}
-			}
-
-			.dropdown {
-				visibility: visible;
-			}
-		}
-	}
-
 	.dropdown {
 		line-height: 14px;
 
@@ -379,10 +329,6 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 			padding: 0 30px 0 24px;
 		}
 
-		.contribute-container {
-			display: none;
-		}
-
 		.dropdown {
 			.second-level-row,
 			.third-level-row {
@@ -398,10 +344,6 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 	.local-navigation {
 		.wordmark-container {
 			padding-left: 32px;
-		}
-
-		.contribute-container {
-			right: 53px;
 		}
 
 		.dropdown {
