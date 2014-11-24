@@ -15,7 +15,7 @@
 		$thumbnail-margin-right: 2 * $grid-gutter + $small-grid-column; // Remove this line when enabling sliders.
 	}
 
-	.mw-content-text .videos-module-in-content {
+	.videos-module-in-content {
 		@include grid-column-width($breakpoint, $module-columns, $aditional-width);
 		margin-left: -$grid-column-padding;
 		margin-right: -$grid-column-padding;
@@ -26,27 +26,20 @@
 //			@include grid-column-width($breakpoint, $thumbnail-container-columns, $aditional-width);
 //		}
 
-		h2 {
+		.heading,
+		div {
 			padding: 0 $grid-column-padding;
 		}
 
-		li {
+		.title-thumbnail {
 			@include grid-column-width($breakpoint, 3);
 			margin-right: $thumbnail-margin-right;
 //			margin-right: $grid-gutter; // Uncomment this line when enabling sliders and remove the line above.
 		}
-
-		img {
-			@include grid-column-width($breakpoint, 3);
-		}
-
-		div {
-			padding: 0 $grid-column-padding;
-		}
 	}
 }
 
-.mw-content-text .videos-module-in-content {
+.videos-module-in-content {
 	@include grid-column-width(medium, 10);
 //	@include grid-column-width(medium, 9); // Uncomment this line when enabling sliders and remove the line above.
 	border: 0 solid $color-page-border;
@@ -61,6 +54,12 @@
 		display: none;
 	}
 
+	.heading {
+		border: 0;
+		margin: 23px 0;
+		padding: 0 $medium-grid-column-padding;
+	}
+
 	.thumbnails {
 		margin: 14px 0 24px;
 		padding: 0;
@@ -71,13 +70,7 @@
 //		white-space: nowrap;
 	}
 
-	h2 {
-		border: 0;
-		margin: 23px 0;
-		padding: 0 $medium-grid-column-padding;
-	}
-
-	li {
+	.title-thumbnail {
 		@include grid-column-width(medium, 3);
 		display: inline-block;
 		margin: 0 $medium-grid-gutter + floor(.5 * ($medium-grid-column + $medium-grid-column-padding)) 0 0;
@@ -90,7 +83,7 @@
 	}
 
 	img {
-		@include grid-column-width(medium, 3);
+		width: 100%;
 	}
 
 	div {
