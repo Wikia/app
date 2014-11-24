@@ -77,8 +77,14 @@ define('ext.wikia.adEngine.amazonMatch', [
 		return amazonCalled;
 	}
 
+	function getPageParams() {
+		log(['getPageParams', w.amzn_targs], 'debug', logGroup);
+		return w.amzn_targs;
+	}
+
 	return {
 		call: call,
+		getPageParams: getPageParams,
 		trackState: function () { trackState(); },
 		wasCalled: wasCalled
 	};
