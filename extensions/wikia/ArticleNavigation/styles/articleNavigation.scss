@@ -21,7 +21,7 @@ $dropdownArrowSize: 10px;
 	position: absolute;
 	text-align: center;
 	width: $medium-grid-column;
-	z-index: 1;
+	z-index: $article-left-navigation-z-index;
 
 	> ul {
 		display: block;
