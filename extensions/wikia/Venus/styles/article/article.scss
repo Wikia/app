@@ -1,4 +1,5 @@
 @import 'skins/shared/color';
+@import 'skins/shared/mixins/clearfix';
 @import 'skins/shared/styles/infoboxes';
 @import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/Venus/styles/typographyMixins';
@@ -25,12 +26,12 @@ $header-without-cover-unit-spacing: 60px;
 		h1,
 		span {
 			margin: 0;
-			word-break: break-all;
+			word-wrap: break-word;
 		}
 
 		&:not(.cover-unit) {
 			margin-bottom: $header-without-cover-unit-spacing;
-			margin-top: $header-without-cover-unit-spacing;
+			margin-top: 40px;
 
 			h1,
 			span {
@@ -59,6 +60,8 @@ $header-without-cover-unit-spacing: 60px;
 }
 
 .mw-content-text {
+	@include clearfix;
+
 	clear: left;
 	margin: 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width;
 	padding: 0 $medium-grid-column-padding;
@@ -74,9 +77,8 @@ $header-without-cover-unit-spacing: 60px;
 	.editsection {
 		@include font-size-xxs;
 		display: inline-block;
-		float: right;
-		margin-left: $edit-button-size;
-		padding-left: 5px;
+		margin-left: $edit-button-size + 20px;
+		padding-left: 8px;
 		position: relative;
 		text-transform: uppercase;
 
@@ -91,7 +93,7 @@ $header-without-cover-unit-spacing: 60px;
 		// Source: http://stackoverflow.com/a/21902566/1607968 and http://jsfiddle.net/95C2M/
 		a { text-decoration: none; }
 		a:hover { text-decoration: underline; }
-		a:before { text-decoration: underline; display: inline-block; }
+		a:before { text-decoration: underline; }
 		a:before, a:hover:before { text-decoration: none; }
 		// END
 	}
@@ -116,10 +118,6 @@ $header-without-cover-unit-spacing: 60px;
 		.mw-headline {
 			padding-left: $medium-grid-gutter;
 		}
-
-		.editsection {
-			padding-right: $medium-grid-gutter;
-		}
 	}
 
 	h3 {
@@ -133,8 +131,9 @@ $header-without-cover-unit-spacing: 60px;
 
 	blockquote {
 		@include font-size-xl;
-		border-top: 4px solid $color-text;
+		line-height: 36px;
 		margin: 0 0 $article-items-spacing;
+		overflow: hidden;
 		padding-top: 30px;
 		position: relative;
 
@@ -147,7 +146,17 @@ $header-without-cover-unit-spacing: 60px;
 			line-height: 70px;
 			padding-top: 8px;
 			position: absolute;
-			top: -33px;
+			top: -20px;
+		}
+
+		&:after {
+			border-top: 4px solid $color-text;
+			content: ' ';
+			left: 0;
+			margin-left: 25px;
+			position: absolute;
+			top: 10px;
+			width: 100%;
 		}
 	}
 
@@ -236,10 +245,6 @@ $header-without-cover-unit-spacing: 60px;
 			.mw-headline {
 				padding-left: $large-grid-gutter;
 			}
-
-			.editsection {
-				padding-right: $large-grid-gutter;
-			}
 		}
 
 		h3 {
@@ -296,10 +301,6 @@ $header-without-cover-unit-spacing: 60px;
 			margin-right: -$small-grid-gutter;
 
 			.mw-headline {
-				padding-left: $small-grid-gutter;
-			}
-
-			.editsection {
 				padding-left: $small-grid-gutter;
 			}
 		}

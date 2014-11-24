@@ -37,6 +37,8 @@ require([
 	 * @param {Event} event
 	 */
 	function shareLinkClick(event) {
+		$('.article-navigation > ul > li.active').removeClass('active');
+
 		var url = event.target.getAttribute('href'),
 			title = event.target.getAttribute('title'),
 			h = (win.innerHeight / 2 | 0),

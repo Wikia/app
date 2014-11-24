@@ -190,8 +190,8 @@ function wfDevBoxForceWiki(WikiFactoryLoader $wikiFactoryLoader){
 
 			$devbox_dbs = array_merge(getDevBoxOverrideDatabases($db1), getDevBoxOverrideDatabases($db2));
 			if (array_search($dbname, $devbox_dbs) === false) {
-				echo "<pre>Fatal Error: No local copy of database [$dbname] was found.</pre>";
-				exit(); // fatal error
+				header('HTTP/1.1 503');
+				die("<pre>Fatal Error: No local copy of database [$dbname] was found.</pre>");
 			}
 		}
 

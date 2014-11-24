@@ -9,6 +9,13 @@
 	display: none;
 }
 
+/* Temp fix for a P1.5 - ADEN-1578 */
+#LEFT_SKYSCRAPER_2, #LEFT_SKYSCRAPER_3 {
+	& >.hidden {
+		display: none !important;
+	}
+}
+
 .wikia-ad.hidden {
 	display: none !important;
 }
@@ -125,17 +132,13 @@
 	height: 250px;
 }
 
-#PREFOOTER_LEFT_BOXAD {
+#PREFOOTER_LEFT_BOXAD, #PREFOOTER_RIGHT_BOXAD {
 	float: left;
 	margin: 0 15px;
-}
 
-#PREFOOTER_RIGHT_BOXAD {
-	margin: 0 15px;
-}
-
-#PREFOOTER_LEFT_BOXAD.default-height, #PREFOOTER_RIGHT_BOXAD.default-height {
-	height: 250px;
+	&.default-height {
+		height: 250px;
+	}
 }
 
 /** Spotlights **/

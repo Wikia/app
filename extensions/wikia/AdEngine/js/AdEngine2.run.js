@@ -124,10 +124,6 @@ require([
 			window.AdEngine_loadLateAds();
 		}
 	}
-
-	if (window.amzn_targs) {
-		adTracker.track('lookupSuccess/amazon', { amzn_targs: true }, 0);
-	}
 });
 
 // Load late ads now

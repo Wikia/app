@@ -6,7 +6,6 @@
 class CrunchyrollFeedIngester extends VideoFeedIngester {
 	protected static $API_WRAPPER = 'CrunchyrollApiWrapper';
 	protected static $PROVIDER = 'crunchyroll';
-	protected static $CLIP_TYPE_BLACKLIST = [];
 	protected static $FEED_URL = 'http://www.crunchyroll.com/syndication/feed?type=series';
 
 	/**
@@ -81,7 +80,7 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 		$content = $this->getUrlContent( $feedUrl );
 
 		if ( !$content ) {
-			$this->videoErrors( "ERROR: problem downloading content.\n" );
+			$this->logger->videoErrors( "ERROR: problem downloading content.\n" );
 			$content = 0;
 		}
 
@@ -138,12 +137,10 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 	/**
 	 * @inheritdoc
 	 */
-	public function import( $content = '', $params = [] ) {
+	public function import( $content = '', array $params = [] ) {
 		wfProfileIn( __METHOD__ );
 
 		$articlesCreated = 0;
-		$debug = !empty( $params['debug'] );
-		$addlCategories = empty( $params['addlCategories'] ) ? [] : $params['addlCategories'];
 
 		foreach ( $this->getCollectionFeeds() as $collectionFeed ) {
 			$content = $this->downloadCollectionFeed( $collectionFeed );
@@ -155,7 +152,7 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 			@$doc->loadXML( $content );
 			$items = $doc->getElementsByTagName( 'item' );
 			$numItems = $items->length;
-			$this->videoFound( $numItems );
+			$this->logger->videoFound( $numItems );
 
 			$elements = $doc->getElementsByTagName( 'language' );
 			if ( $elements->length > 0 ) {
@@ -175,7 +172,7 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 				if ( $elements->length > 0 ) {
 					$clipData['titleName'] = $clipData['series'] . ' - ' . html_entity_decode( $elements->item( 0 )->textContent );
 				} else {
-					$this->videoSkipped();
+					$this->logger->videoSkipped();
 					continue;
 				}
 
@@ -184,13 +181,13 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 				if ( $elements->length > 0 ) {
 					$freePublishDate = strtotime( $elements->item( 0 )->textContent );
 					if ( $freePublishDate > time() ) {
-						$this->videoSkipped( "\nPremium video (title: {$clipData['titleName']})\n" );
+						$this->logger->videoSkipped( "\nPremium video (title: {$clipData['titleName']})\n" );
 						continue;
 					}
 				}
 
 				if ( WikiaFileHelper::getVideoFileFromTitle( $clipData['titleName'] ) ) {
-					$this->videoSkipped( "\nDuplicate video (title: {$clipData['titleName']})\n" );
+					$this->logger->videoSkipped( "\nDuplicate video (title: {$clipData['titleName']})\n" );
 					continue;
 				}
 
@@ -210,12 +207,12 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 				}
 
 				if ( !isset( $clipData['videoId'] ) ) {
-					$this->videoWarnings( "ERROR: videoId NOT found for {$clipData['titleName']} - {$clipData['description']}.\n" );
+					$this->logger->videoWarnings( "ERROR: videoId NOT found for {$clipData['titleName']} - {$clipData['description']}.\n" );
 					continue;
 				}
 
 				if ( empty( $clipData['videoId'] ) ) {
-					$this->videoWarnings( "ERROR: Empty videoId for {$clipData['titleName']} - {$clipData['description']}.\n" );
+					$this->logger->videoWarnings( "ERROR: Empty videoId for {$clipData['titleName']} - {$clipData['description']}.\n" );
 					continue;
 				}
 
@@ -276,19 +273,7 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 				$clipData['hd'] = 0;
 				$clipData['provider'] = 'crunchyroll';
 
-				$msg = '';
-				if ( $this->isClipTypeBlacklisted( $clipData ) ) {
-					if ( $debug ) {
-						$this->videoSkipped( "Skipping {$clipData['titleName']} - {$clipData['description']}. On clip type blacklist\n" );
-					}
-				} else {
-					$createParams = array( 'addlCategories' => $addlCategories, 'debug' => $debug );
-					$articlesCreated += $this->createVideo( $clipData, $msg, $createParams );
-				}
-
-				if ( $msg ) {
-					print "ERROR: $msg\n";
-				}
+				$articlesCreated += $this->createVideo( $clipData );
 			}
 		}
 
@@ -299,39 +284,32 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 
 	/**
 	 * Create a list of category names to add to the new file page
-	 * @param array $data
-	 * @param array $categories
+	 * @param array $addlCategories
 	 * @return array $categories
 	 */
-	public function generateCategories( $data, $categories ) {
+	public function generateCategories( array $addlCategories ) {
 		wfProfileIn( __METHOD__ );
 
-		$categories[] = 'Anime';
-		$categories[] = 'Crunchyroll';
-		$categories[] = $data['series'];
-		$categories[] = 'Entertainment';
-		if ( !empty( $data['season'] ) ) {
-			$categories[] = $data['series'] . ': ' . $data['season'];
+		$addlCategories[] = 'Anime';
+		$addlCategories[] = 'Crunchyroll';
+		$addlCategories[] = $this->videoData['series'];
+		$addlCategories[] = 'Entertainment';
+		if ( !empty( $this->videoData['season'] ) ) {
+			$addlCategories[] = $this->videoData['series'] . ': ' . $this->videoData['season'];
 		}
 
 		wfProfileOut( __METHOD__ );
 
-		return $this->getUniqueArray( $categories );
+		return wfGetUniqueArrayCI( $addlCategories );
 	}
 
 	/**
 	 * generate metadata
-	 * @param array $data
-	 * @param string $errorMsg
-	 * @return array|int $metadata or 0 on error
+	 * @return array
 	 */
-	public function generateMetadata( $data, &$errorMsg ) {
-		$metadata = parent::generateMetadata( $data, $errorMsg );
-		if ( empty( $metadata ) ) {
-			return 0;
-		}
-
-		$metadata['videoUrl'] = empty( $data['videoUrl'] ) ? '' : $data['videoUrl'];
+	public function generateMetadata() {
+		$metadata = parent::generateMetadata();
+		$metadata['videoUrl'] = $this->getVideoData( 'videoUrl' );
 
 		return $metadata;
 	}
@@ -343,7 +321,7 @@ class CrunchyrollFeedIngester extends VideoFeedIngester {
 	 */
 	protected function convertLanguageCode( $crunchyLanguage ) {
 		$lang = explode( '-', $crunchyLanguage );
-		return $this->getCldrCode( $lang[0], 'language', false );
+		return $this->getCLDRCode( $lang[0], 'language', false );
 	}
 
 	/**

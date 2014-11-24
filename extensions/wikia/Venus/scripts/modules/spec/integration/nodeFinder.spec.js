@@ -1,7 +1,7 @@
-describe( 'moduleInsertion', function(){
+describe( 'nodeFinder', function(){
 	'use strict';
 
-	var moduleInsertion,
+	var nodeFinder,
 		articleMock = document.createElement('div'),
 		extenderMock = document.createElement('div'),
 		h2Mock = document.createElement('h2'),
@@ -22,16 +22,16 @@ describe( 'moduleInsertion', function(){
 
 	document.body.appendChild(articleMock);
 
-	moduleInsertion = modules['venus.moduleInsertion'](document);
+	nodeFinder = modules['venus.nodeFinder'](document);
 
 	it('header should returned', function(){
-		var header = moduleInsertion.findElementByOffsetTop(articleMock, 'h2', 100);
+		var header = nodeFinder.findNodeByOffsetTop(articleMock, 'h2', 100);
 		expect(header.id).toBe('h2-0');
 
-		header = moduleInsertion.findElementByOffsetTop(articleMock, 'h2', 300);
+		header = nodeFinder.findNodeByOffsetTop(articleMock, 'h2', 300);
 		expect(header.id).toBe('h2-1');
 
-		header = moduleInsertion.findElementByOffsetTop(articleMock, 'h2', 1000);
+		header = nodeFinder.findNodeByOffsetTop(articleMock, 'h2', 1000);
 		expect(header.id).toBe('h2-4');
 	});
 });

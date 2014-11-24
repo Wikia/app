@@ -409,16 +409,22 @@ class WikiaPhotoGallery extends ImageGallery {
 			// support captions with internal links with pipe (Foo.jpg|link=Bar|[[test|link]])
 			$caption = implode('|', $captionParts);
 
-			$linkAttributes = $this->parseLink($tp->getLocalUrl(), $tp->getText(), $link);
 			$imageItem = array(
 				'name' => $imageName,
 				'caption' => $caption,
 				'link' => $link,
 				'linktext' => $linktext,
-				'linkhref' => $linkAttributes['href'],
 				'shorttext' => $shorttext,
 				'data-caption' => Sanitizer::removeHTMLtags( $caption ),
 			);
+
+			// Get article link if it exists. If the href attribute is identical to the local
+			// file URL, then there is no article URL.
+			$localUrl = $tp->getLocalUrl();
+			$linkAttributes = $this->parseLink($localUrl, $tp->getText(), $link);
+			if ($linkAttributes['href'] !== $localUrl) {
+				$imageItem['linkhref'] = $linkAttributes['href'];
+			}
 
 			// store list of images from inner content of tag (to be used by front-end)
 			$this->mData['images'][] = $imageItem;
@@ -568,7 +574,6 @@ class WikiaPhotoGallery extends ImageGallery {
 				$out = $this->renderSlider();
 				break;
 		}
-
 		if ( !$this->canRenderMediaGallery() ) {
 			$out .= $this->getBaseJSSnippets();
 		}
@@ -587,8 +592,8 @@ class WikiaPhotoGallery extends ImageGallery {
 	private function getBaseJSSnippets() {
 		$out = JSSnippets::addToStack(
 			array(
-				'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js',
-				'/extensions/wikia/WikiaPhotoGallery/css/gallery.scss',
+				'wikia_photo_gallery_js',
+				'wikia_photo_gallery_scss',
 			),
 			array(),
 			'WikiaPhotoGalleryView.init'
@@ -1353,9 +1358,8 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			$slideshowHtml .= JSSnippets::addToStack(
 				array(
-					'/resources/wikia/libraries/jquery/slideshow/jquery-slideshow-0.4.js',
-					'/extensions/wikia/WikiaPhotoGallery/css/slideshow.scss',
-					'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slideshow.js'
+					'wikia_photo_gallery_slideshow_js',
+					'wikia_photo_gallery_slideshow_scss'
 				),
 				array(),
 				'WikiaPhotoGallerySlideshow.init',
@@ -1544,15 +1548,14 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			if ( $orientation == 'mosaic' ) {
 				$sliderResources = array(
-					'/resources/wikia/libraries/modernizr/modernizr-2.0.6.js',
-					'/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.mosaic.scss',
-					'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slider.mosaic.js'
+					'wikia_photo_gallery_mosaic_js',
+					'wikia_photo_gallery_mosaic_scss'
 				);
 				$javascriptInitializationFunction = 'WikiaMosaicSliderMasterControl.init';
 			} else {
 				$sliderResources = array(
-					'/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.scss',
-					'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slider.js'
+					'wikia_photo_gallery_slider_js',
+					'wikia_photo_gallery_slider_scss'
 				);
 				$javascriptInitializationFunction = 'WikiaPhotoGallerySlider.init';
 			}
