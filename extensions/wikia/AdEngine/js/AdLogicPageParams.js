@@ -180,12 +180,6 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			params.rawDbName = dbName;
 		}
 
-		if (adLogicPageDimensions && adLogicPageDimensions.hasPreFooters()) {
-			params.hasp = 'yes';
-		} else {
-			params.hasp = 'no';
-		}
-
 		if (Krux && !targeting.wikiDirectedAtChildren) {
 			params.u = Krux.user;
 			params.ksgmnt = Krux.segments && Krux.segments.slice(0, maxNumberOfKruxSegments);
