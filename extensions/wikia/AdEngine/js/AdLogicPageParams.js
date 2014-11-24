@@ -3,17 +3,16 @@
 define('ext.wikia.adEngine.adLogicPageParams', [
 	'wikia.log',
 	'wikia.window',
+	require.optional('wikia.abTest'),
 	'ext.wikia.adEngine.adContext',
 	require.optional('ext.wikia.adEngine.adLogicPageViewCounter'),
-	require.optional('ext.wikia.adEngine.krux'),
-	require.optional('ext.wikia.adEngine.adLogicPageDimensions'),
-	require.optional('wikia.abTest')
-], function (log, window, adContext, pvCounter, Krux, adLogicPageDimensions, abTest) {
+	require.optional('ext.wikia.adEngine.amazonMatch'),
+	require.optional('ext.wikia.adEngine.krux')
+], function (log, win, abTest, adContext, pvCounter, amazonMatch, Krux) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adLogicPageParams',
-		hostname = window.location.hostname.toString(), // TODO: move to wikia.location module
-		adsInHeadExperiment = adContext.getContext().opts.adsInHead && abTest && abTest.getGroup('ADS_IN_HEAD'),
+		hostname = win.location.hostname.toString(), // TODO: move to wikia.location module
 		maxNumberOfCategories = 3,
 		maxNumberOfKruxSegments = 27, // keep the DART URL part for Krux segments below 500 chars
 		pvs = pvCounter && pvCounter.increment();
@@ -148,6 +147,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			zone1,
 			zone2,
 			params,
+			amazonParams,
 			targeting = adContext.getContext().targeting;
 
 		options = options || {};
@@ -201,9 +201,13 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			params.esrb = targeting.wikiDirectedAtChildren ? 'ec' : 'teen';
 		}
 
-		if (!adsInHeadExperiment) {
-			// This is set in client side (don't move to adContext)
-			extend(params, decodeLegacyDartParams(window.amzn_targs));
+		if (amazonMatch && amazonMatch.wasCalled()) {
+			amazonMatch.trackState();
+			amazonParams = amazonMatch.getPageParams();
+			if (typeof amazonParams === 'string') {
+				amazonParams = decodeLegacyDartParams(amazonParams);
+			}
+			extend(params, amazonParams);
 		}
 
 		log(params, 9, logGroup);
