@@ -20,13 +20,32 @@ class VenusHooks {
 			$nodes = $infoboxExtractor->getInfoboxNodes();
 			$node = $nodes->item(0);
 
-			if (!is_null($node)) {
-				/* @var $node DOMElement */
+			if ( $node instanceof DOMElement ) {
+				$body = $dom->documentElement->firstChild;
+
+				// remove whitespace before and after the infobox node (CON-2166)
+				$textAroundInfobox = '';
+
+				if ( $node->previousSibling instanceof DOMText ) {
+					$textAroundInfobox .= $node->previousSibling->textContent;
+					$body->removeChild( $node->previousSibling );
+				}
+
+				if ( $node->nextSibling instanceof DOMText ) {
+					$textAroundInfobox .= $node->nextSibling->textContent;
+
+					// remove more than two new lines - otherwise they would create an empty paragraph (CON-2166)
+					$textAroundInfobox = preg_replace( '#^\n{2,}#', "\n\n", $textAroundInfobox );
+
+					// update the text node that follows the infobox (before it's extracted)
+					$node->nextSibling->textContent = $textAroundInfobox;
+				}
+
+				// perform a magic around infobox wrapper
 				$node = $infoboxExtractor->clearInfoboxStyles( $node );
 				$infoboxWrapper = $infoboxExtractor->wrapInfobox( $node, 'infoboxWrapper', 'infobox-wrapper' );
 				$infoboxContainer = $infoboxExtractor->wrapInfobox( $infoboxWrapper, 'infoboxContainer', 'infobox-container' );
 
-				$body = $dom->documentElement->firstChild;
 				$infoboxExtractor->insertNode( $body, $infoboxContainer, true );
 
 				$content = $dom->saveHTML();
