@@ -178,6 +178,7 @@ $wgAutoloadClasses[ 'BadRequestApiException'] =  "{$IP}/includes/wikia/api/ApiEx
 $wgAutoloadClasses[ 'OutOfRangeApiException'] =  "{$IP}/includes/wikia/api/ApiExceptions.php" ;
 $wgAutoloadClasses[ 'MissingParameterApiException'] =  "{$IP}/includes/wikia/api/ApiExceptions.php" ;
 $wgAutoloadClasses[ 'InvalidParameterApiException'] =  "{$IP}/includes/wikia/api/ApiExceptions.php" ;
+$wgAutoloadClasses[ 'InvalidDataApiException' ] = "{$IP}/includes/wikia/api/ApiExceptions.php" ;
 $wgAutoloadClasses[ 'LimitExceededApiException'] =  "{$IP}/includes/wikia/api/ApiExceptions.php" ;
 $wgAutoloadClasses[ 'NotFoundApiException'] =  "{$IP}/includes/wikia/api/ApiExceptions.php" ;
 
