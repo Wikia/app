@@ -32,7 +32,7 @@ require([
 			$target.outerHeight(true) -
 			$source.outerHeight(true);
 
-		if ($doc.scrollTop() >= targetBottom) {
+		if ($doc.scrollTop() + additionalTopOffset >= targetBottom) {
 			stickyElementObject.sourceElementPosition('absolute', 'top', targetBottom);
 			return true;
 		} else {
