@@ -187,7 +187,9 @@ class MercuryApiController extends WikiaController {
 		try {
 			$wikiVariables[ 'navData' ] = $this->getNavigationData();
 		} catch (Exception $e) {
-			\Wikia\Logger\WikiaLogger::instance()->error( 'Fallback to empty navigation', (array) $e );
+			\Wikia\Logger\WikiaLogger::instance()->error( 'Fallback to empty navigation', [
+				'exception' => $e
+			] );
 			$wikiVariables[ 'navData' ] = [];
 		}
 
