@@ -20,3 +20,13 @@
       make ExternalUser easier to remove from it, I am going to merge
       ExternalUser to ExternalUser_Wikia and do all require cleanups here and
       there.
+
+    * there is a special case of [Uncyclopedia](http://uncyclopedia.wikia.com/)
+      that has to be taken into account (it has to be configurable whether to
+      use Helios or not, although backwards compatibility will be limited)
+
+    * `$wgExternalUserEnabled` and `$wgExternalAuthType` are the point to start.
+
+    * `$wgExternalUserEnabled` is `true` everywhere, including Uncyclopedia and
+      it is referenced in the application code only once in the method used to
+      determine the session key. It is `wikicities:session:<UserId>`, always.
