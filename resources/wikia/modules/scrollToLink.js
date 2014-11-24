@@ -57,7 +57,7 @@ define('wikia.scrollToLink',
 				if (!!target) {
 					targetOffset = getOffsetTop(target);
 
-					setTimeout(function(){ win.scrollTo(0, targetOffset + offsetToScroll); }, 1);
+					win.setTimeout(function(){ win.scrollTo(0, targetOffset + offsetToScroll); }, 1);
 
 					return hist.pushState({}, doc.title, win.location.pathname + '#' + sanitizedHref);
 				}
