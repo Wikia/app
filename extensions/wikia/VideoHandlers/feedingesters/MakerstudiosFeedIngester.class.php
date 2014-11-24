@@ -75,10 +75,11 @@ class MakerstudiosFeedIngester extends VideoFeedIngester {
 
 	private function getRequiredField( $fieldName ) {
 		$tag = $this->currentVideo->getElementsByTagName( $fieldName );
-		if ( $tag ) {
-			return $tag->item(0)->textContent;
+		if ( empty( $tag ) ) {
+			throw new MakerStudioException( "Missing required field: $fieldName\n" );
 		}
-		throw new MakerStudioException( "Missing required field: $fieldName\n" );
+
+		return $tag->item(0)->textContent;
 	}
 
 	private function getOptionalField( $fieldName, $attributeName = null ) {
