@@ -1,8 +1,10 @@
 define('videosmodule.views.index', [
 	'sloth',
 	'videosmodule.views.titleThumbnail',
-	'wikia.log'
-], function (sloth, TitleThumbnailView, log) {
+	'wikia.log',
+	'wikia.tracker',
+	'bucky'
+], function (sloth, TitleThumbnailView, log, Tracker, bucky) {
 	'use strict';
 
 	var VideosModule = function (options) {
@@ -19,9 +21,14 @@ define('videosmodule.views.index', [
 		this.numVids = options.numVids || 5;
 		this.minNumVids = options.minNumVids || 5;
 
-		this.bucky = options.bucky;
-		this.trackImpression = options.trackImpression;
-		this.trackClick = options.trackClick;
+		this.bucky = bucky(options.buckyCategory);
+		this.trackingCategory = options.trackingCategory;
+		this.trackImpression = Tracker.buildTrackingFunction({
+			category: options.trackingCategory,
+			trackingMethod: 'both',
+			action: Tracker.ACTIONS.IMPRESSION,
+			label: 'module-impression'
+		});
 
 		// Make sure we're on an article page
 		if (window.wgArticleId) {
@@ -183,7 +190,7 @@ define('videosmodule.views.index', [
 				el: 'li',
 				model: this.videos[i],
 				idx: i,
-				trackClick: this.trackClick
+				trackingCategory: this.trackingCategory
 			})
 				.render()
 				.$el);

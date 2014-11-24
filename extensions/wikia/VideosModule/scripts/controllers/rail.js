@@ -6,9 +6,8 @@
 require([
 	'videosmodule.views.index',
 	'videosmodule.models.videos',
-	'bucky',
-	'wikia.tracker'
-], function (RailModule, VideoData, bucky, Tracker) {
+	'bucky'
+], function (RailModule, VideoData, bucky) {
 	'use strict';
 
 	var $rail = $('#WikiaRail');
@@ -19,24 +18,14 @@ require([
 		var rail;
 
 		bucky.timer.start('execution');
+
 		// instantiate rail view
 		rail = new RailModule({
 			$el: $('#videosModule'),
 			model: new VideoData(),
 			isFluid: false,
-			bucky: bucky('videosmodule.views.rail'),
-			trackImpression: Tracker.buildTrackingFunction({
-				category: 'videos-module-rail',
-				trackingMethod: 'both',
-				action: Tracker.ACTIONS.IMPRESSION,
-				label: 'module-impression'
-			}),
-			trackClick: Tracker.buildTrackingFunction({
-				category: 'videos-module-rail',
-				trackingMethod: 'both',
-				action: Tracker.ACTIONS.CLICK,
-				label: 'thumbnail-click'
-			})
+			buckyCategory: 'videosmodule.views.rail',
+			trackingCategory: 'videos-module-rail'
 		});
 
 		rail.$el.on('initialized.videosModule', function () {

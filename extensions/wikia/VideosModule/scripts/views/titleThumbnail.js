@@ -1,11 +1,17 @@
 define('videosmodule.views.titleThumbnail', [
-	'thumbnails.views.titleThumbnail'
-], function (TitleThumbnail) {
+	'thumbnails.views.titleThumbnail',
+	'wikia.tracker'
+], function (TitleThumbnail, Tracker) {
 	'use strict';
 
 	function VideosModuleThumbnail(config) {
 		this.idx = config.idx;
-		this.trackClick = config.trackClick;
+		this.trackClick = Tracker.buildTrackingFunction({
+			category: config.trackingCategory,
+			trackingMethod: 'both',
+			action: Tracker.ACTIONS.CLICK,
+			label: 'thumbnail-click'
+		});
 		TitleThumbnail.call(this, config);
 	}
 

@@ -5,9 +5,8 @@ require([
 	'wikia.mustache',
 	'videosmodule.templates.mustache',
 	'bucky',
-	'wikia.tracker',
 	'wikia.document'
-], function (InContentModule, VideoData, nodeFinderModule, Mustache, templates, bucky, Tracker, doc) {
+], function (InContentModule, VideoData, nodeFinderModule, Mustache, templates, bucky, doc) {
 	'use strict';
 
 	bucky = bucky('videosmodule.controller.in-content');
@@ -48,19 +47,8 @@ require([
 			model: new VideoData(),
 			numVids: 3,
 			minNumVids: 3,
-			bucky: bucky('videosmodule.views.in-content'),
-			trackImpression: Tracker.buildTrackingFunction({
-				category: 'videos-module-in-content',
-				trackingMethod: 'both',
-				action: Tracker.ACTIONS.IMPRESSION,
-				label: 'module-impression'
-			}),
-			trackClick: Tracker.buildTrackingFunction({
-				category: 'videos-module-in-content',
-				trackingMethod: 'both',
-				action: Tracker.ACTIONS.CLICK,
-				label: 'thumbnail-click'
-			})
+			buckyCategory: 'videosmodule.views.in-content',
+			trackingCategory: 'videos-module-in-content'
 		});
 
 		inContent.$el.on('initialized.videosModule', function () {
