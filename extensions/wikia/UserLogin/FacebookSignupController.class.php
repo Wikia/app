@@ -19,7 +19,7 @@ class FacebookSignupController extends WikiaController {
 
 		// try to get connected Wikia account
 		if ( F::app()->wg->EnableFacebookClientExt ) {
-			$user = FacebookClient::getInstance()->getWikiaUser();
+			$user = FacebookClient::getInstance()->getWikiaUser( $fbUserId );
 		} else {
 			$user = FBConnectDB::getUser( $fbUserId );
 		}
@@ -54,9 +54,15 @@ class FacebookSignupController extends WikiaController {
 	 * Displays Facebook sign up modal (called by index method)
 	 */
 	public function modal() {
+		$fbUserId = $this->getFacebookUserId();
+		if ( empty( $fbUserId ) ) {
+			$this->skipRendering();
+			return false;
+		}
+
 		// get an email from Facebook API
 		$resp = $this->sendRequest( 'FacebookSignup', 'getFacebookData', [
-			'fbUserId' => $this->getFacebookUserId(),
+			'fbUserId' => $fbUserId,
 		] );
 
 		// BugId:24400
@@ -92,7 +98,7 @@ class FacebookSignupController extends WikiaController {
 		$this->loginToken = UserLoginHelper::getSignupToken();
 
 		$specialPage = $this->wg->EnableFacebookClientExt ? 'FacebookConnect' : 'Connect';
-		$this->specialUserLoginUrl = SpecialPage::getTitleFor( $specialPage )->getLocalUrl();
+		$this->connectUrl = SpecialPage::getTitleFor( $specialPage )->getLocalUrl();
 	}
 
 	/**
