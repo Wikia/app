@@ -30,6 +30,15 @@ $dropdownArrowSize: 10px;
 		padding: 0;
 		position: relative;
 		width: $article-navigation-icon-size;
+
+		> li {
+			display: table;
+			margin-bottom: 6px;
+
+			&.hidden {
+				display: none;
+			}
+		}
 	}
 
 	.nav-icon {
@@ -39,15 +48,13 @@ $dropdownArrowSize: 10px;
 		border-radius: 50%;
 		color: $color-page;
 		cursor: pointer;
-		display: block;
+		display: table-cell;
 		font-size: $article-navigation-icon-size;
 		line-height: $article-navigation-icon-size - 1px; //for for aliasing
 		margin-bottom: 6px;
 		position: relative;
-
-		&.toc {
-			display: none;
-		}
+		text-align: center;
+		vertical-align: middle;
 	}
 
 	.wikia-dropdown-nav-wrapper {
