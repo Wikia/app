@@ -21,7 +21,10 @@
 	Preferences.prototype.connect = function (e) {
 		e.preventDefault();
 
-		window.FB.login(this.loginCallback.bind(this));
+		// @see http://developers.facebook.com/docs/reference/javascript/FB.login/
+		window.FB.login(this.loginCallback.bind(this), {
+			scope: 'email'
+		});
 	};
 
 	Preferences.prototype.loginCallback = function () {
