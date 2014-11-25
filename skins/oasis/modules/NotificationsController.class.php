@@ -122,6 +122,12 @@ class NotificationsController extends WikiaController {
 	public function executeConfirmation() {
 		wfProfileIn(__METHOD__);
 
+		// call hook to trigger user messages from extensions
+		#wfRunHooks('SkinTemplatePageBeforeUserMsg', array(&$ntl));
+
+		// add testing confirmation
+		# self::addConfirmation('test');
+
 		if (!empty($_SESSION[self::SESSION_KEY])) {
 			$entry = $_SESSION[self::SESSION_KEY];
 
