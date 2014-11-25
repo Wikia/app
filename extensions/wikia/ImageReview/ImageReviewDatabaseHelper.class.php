@@ -17,7 +17,7 @@ class ImageReviewDatabaseHelper {
 	 * @return ResultWrapper          Query's results
 	 */
 	public function selectImagesForList( $sOrder, $iLimit, $iState = ImageReviewStatuses::STATE_UNREVIEWED ) {
-		$oDB = $oDB = $this->getDatawareDB( DB_SLAVE );
+		$oDB = $this->getDatawareDB( DB_SLAVE );
 
 		$oResults = $oDB->query('
 			SELECT pages.page_title_lower, image_review.wiki_id, image_review.page_id, image_review.state, image_review.flags, image_review.priority, image_review.last_edited
