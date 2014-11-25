@@ -1,7 +1,22 @@
 <?php
+/**
+ * It is a class that will hold all of ImageReview queries
+ * for ease of finding and managing them.
+ *
+ * @package ImageReview
+ * @author  Adam Karmiński <adamk@wikia-inc.com>
+ */
 
 class ImageReviewDatabaseHelper {
 
+	/**
+	 * Query selecting images populating a list
+	 * @param  DatabaseMysql $oDB     A Dataware DB object 
+	 * @param  integer       $iState  A state to select
+	 * @param  string        $sOrder  Sorting order
+	 * @param  integer       $iLimit  SQL limit of queried images
+	 * @return ResultWrapper          Query's results
+	 */
 	public function selectImagesForList( DatabaseMysql $oDB,
 		$iState = ImageReviewStatuses::STATE_UNREVIEWED, $sOrder, $iLimit ) {
 
@@ -20,6 +35,13 @@ class ImageReviewDatabaseHelper {
 		return $oResults;
 	}
 
+	/**
+	 * Query updating a state of a batch of images
+	 * @param  DatabaseMysql $oDB      A Dataware DB object
+	 * @param  Array         $aValues  Values to set
+	 * @param  Array         $aWhere   SQL WHERE conditions
+	 * @return void
+	 */
 	public function updateBatchImages( DatabaseMysql $oDB, Array $aValues, Array $aWhere ) {
 		$oDB->update(
 			'image_review',

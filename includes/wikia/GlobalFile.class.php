@@ -180,7 +180,7 @@ class GlobalFile extends WikiaObject {
 	 * @return UrlGenerator object
 	 */
 	public function getUrlGenerator() {
-			return VignetteRequest::fromGlobalFile( $this );
+		return VignetteRequest::fromGlobalFile( $this );
 	}
 
 	/**
