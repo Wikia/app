@@ -13,6 +13,10 @@ $dropdownArrowSize: 10px;
 
 	.wikia-dropdown-nav {
 		width: $columnWidth;
+
+		.comments-talk-counter {
+			color: $color-alternate-text;
+		}
 	}
 }
 
