@@ -58,6 +58,7 @@ $messages['en'] = array(
 	'wikia-visualeditor-save-error-generic' => 'Error saving data to server.',
 	'wikia-visualeditor-dialogbutton-wikiasourcemode' => 'Source',
 	'wikia-visualeditor-dialog-done-button' => 'Done',
+	'wikia-visualeditor-dialog-cancel-button' => 'Cancel',
 	'wikia-visualeditor-dialog-transclusion-get-info' => 'Get info about the "$1" template',
 	'wikia-visualeditor-dialog-transclusion-preview-button' => 'Update preview',
 	'wikia-visualeditor-context-transclusion-description' => 'Edit',
@@ -70,9 +71,17 @@ $messages['en'] = array(
 	'wikia-visualeditor-dialog-preference-link-help' => 'Read about new features',
 	'wikia-visualeditor-dialog-preference-link-preferences' => 'Manage your editor preferences',
 	'wikia-visualeditor-dialog-preference-start-button' => 'Got it!',
+	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => 'Gallery',
+	'wikia-visualeditor-dialog-wikiasinglemedia-title' => 'Insert Gallery',
+	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'Search for images',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'View',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-video' => 'Watch',
+	'wikia-visualeditor-media-photo-policy' => 'Please adhere to this wikia\'s image policy when uploading new photos.',
+	'wikia-visualeditor-media-video-policy' => 'Please adhere to this wiki\'s video policy when adding new videos.',
 );
 
 /** Message documentation (Message documentation)
+ * @author Liuxinyu970226
  * @author Robby
  * @author Shirayuki
  */
@@ -112,7 +121,7 @@ $messages['qqq'] = array(
 	'wikia-visualeditor-wikitext-warning' => 'Contents of notification displayed when Wikitext has been detected.',
 	'wikia-visualeditor-aliennode-tooltip' => 'Tooltip for items that VisualEditor cannot edit',
 	'wikia-visualeditor-dialog-transclusion-title' => 'Title of the transclusion dialog.
-{{Identical|Template}}',
+{{Identical|Edit}}',
 	'wikia-visualeditor-dialog-transclusion-filter' => 'Placeholder text that appears in the transclusion dialog filter field',
 	'wikia-visualeditor-dialog-transclusion-zerostate' => 'Text that appears in the transclusion dialog when the template takes no parameters',
 	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => 'Tooltip for the transclusion tool button.
@@ -145,6 +154,7 @@ $messages['qqq'] = array(
 	'wikia-visualeditor-dialogbutton-wikiasourcemode' => 'Call-to-action text rendered in the toolbar button for opening the dialog to edit wikitext in source mode.
 {{Identical|Source editor}}',
 	'wikia-visualeditor-dialog-done-button' => 'Button text for applying changes in a dialog.',
+	'wikia-visualeditor-dialog-cancel-button' => 'Button text for abandoning changes in a dialog.',
 	'wikia-visualeditor-dialog-transclusion-get-info' => 'Call to action to get information about the currently-displayed template.',
 	'wikia-visualeditor-dialog-transclusion-preview-button' => 'Button text for updating the preview of template edits.',
 	'wikia-visualeditor-context-transclusion-description' => 'Description text in context menu for transclusion node.',
@@ -156,6 +166,11 @@ $messages['qqq'] = array(
 	'wikia-visualeditor-dialog-preference-link-help' => 'Link text to help page',
 	'wikia-visualeditor-dialog-preference-link-preferences' => 'Link text to user preference page',
 	'wikia-visualeditor-dialog-preference-start-button' => 'Button copy that closes the dialog',
+	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => 'Tooltip of the single media dialog tool (currently posing as a Gallery-only tool',
+	'wikia-visualeditor-dialog-wikiasinglemedia-title' => 'Title of the single media dialog (currently posing as a Gallery-only tool',
+	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'Placeholder text of the single media dialog search field',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'The text that prompts a user to preview a photo',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-video' => 'The text that prompts a user to preview a video',
 );
 
 /** Tunisian Spoken Arabic ( زَوُن)
@@ -2168,6 +2183,7 @@ $messages['zh-hans'] = array(
  * @author Cwlin0416
  * @author Ffaarr
  * @author LNDDYL
+ * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
 	'wikia-visualeditor-preference-enable' => '啟用測試板 VisualEditor',
@@ -2191,7 +2207,7 @@ $messages['zh-hant'] = array(
 	'wikia-visualeditor-beta-warning' => '此為 Wikia 的 VisualEditor Beta 版，目前還可能有一些小問題，但我們仍希望您能喜歡它！',
 	'wikia-visualeditor-wikitext-warning' => "您正使用 Beta 版 VisualEditor，目前尚無法支援 WikiText。請於 '更多' 選單中選擇 '原始碼模式' 以編輯 WikiText。",
 	'wikia-visualeditor-aliennode-tooltip' => '抱歉，此元素目前僅能透過傳統文字編輯器進行編輯。',
-	'wikia-visualeditor-dialog-transclusion-title' => '模板',
+	'wikia-visualeditor-dialog-transclusion-title' => '編輯',
 	'wikia-visualeditor-dialogbutton-transclusion-tooltip' => '模板',
 	'wikia-visualeditor-savedialog-label-save' => '發佈',
 	'wikia-visualeditor-savedialog-label-restore' => '還原頁面',

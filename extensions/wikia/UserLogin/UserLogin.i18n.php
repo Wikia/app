@@ -195,6 +195,9 @@ $messages['qqq'] = array(
 	'wikiamobile-sendpassword-label' => 'Label for the button used to request a new password for recovery',
 	'wikiamobile-facebook-connect-fail' => "Shown when a user tries to log in via FBConnect but there's no matching account in our DB, please keep the message as short as possible as the space at disposal is really limited",
 	'wikiamobile-go-to-login' => 'Message on UserSignup that ask user to login if he has an account',
+	// logged in view
+	'userlogin-logged-in-title' => 'Header (title) for user login or signup page when user is already logged in',
+	'userlogin-logged-in-message' => 'Message body for user login or signup page when user is already logged in',
 );
 
 /** Aragonese (aragonés)
@@ -2892,11 +2895,11 @@ $messages['zh-hant'] = array(
 	'userlogin-error-wrongpasswordempty' => '請輸入密碼。',
 	'userlogin-error-resetpass_announce' => '看起來您使用的是臨時密碼。選擇新的密碼繼續登錄。',
 	'userlogin-error-login-throttled' => '密碼輸入錯誤次數過多，請稍後再試。',
-	'userlogin-error-login-userblocked' => '您的用戶名稱已被封鎖，不能登錄。',
+	'userlogin-error-login-userblocked' => '您的使用者名稱已被封鎖，不能登入。',
 	'userlogin-error-edit-account-closed-flag' => '您的帳戶已被Wikia禁用 。',
-	'userlogin-error-cantcreateaccount-text' => '您的 IP 位址不被允許創建新的帳戶。',
+	'userlogin-error-cantcreateaccount-text' => '您的 IP 位址不被允許建立新的帳號。',
 	'userlogin-error-userexists' => '此用戶名已有人使用，請嘗試其他名稱。',
-	'userlogin-error-invalidemailaddress' => '請輸入有效的電子郵件地址',
+	'userlogin-error-invalidemailaddress' => '請輸入有效的電子郵件位址',
 	'userlogin-get-account' => '沒有帳號？<a href="$1" tabindex="$2">創建新帳號</a>',
 	'userlogin-error-invalid-username' => '無效的使用者名稱',
 	'userlogin-error-userlogin-unable-info' => '抱歉，我們現時不能建立你的帳號。',
@@ -2904,7 +2907,7 @@ $messages['zh-hant'] = array(
 	'userlogin-error-captcha-createaccount-fail' => '輸入的字元不匹配，請重新輸入！',
 	'userlogin-error-userlogin-bad-birthday' => '哎呀，請填寫年、月、和日。',
 	'userlogin-error-externaldberror' => '抱歉！目前系統出錯，請稍後再試。',
-	'userlogin-error-noemailtitle' => '請輸入有效的電子郵件地址。',
+	'userlogin-error-noemailtitle' => '請輸入有效的電子郵件位址。',
 	'userlogin-error-acct_creation_throttle_hit' => '抱歉，此 IP 位址今天已建立了太多帳戶。請稍後再試。',
 	'userlogin-error-resetpass_forbidden' => '無法更改密碼',
 	'userlogin-error-blocked-mailpassword' => '由於您的IP位址已經被Wikia封禁，您不可以請求一個新密碼。',

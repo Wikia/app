@@ -561,6 +561,15 @@ $messages['fr'] = array(
 	'tog-hidefollowedpages-v2' => 'Masquer ma liste de pages suivies pour tout le monde',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'prefs-emailv2' => 'E-mail',
+	'preferences-v2-watchdefault' => 'Bewurkje',
+	'preferences-v2-watchcreations' => 'Oanmeitsje',
+);
+
 /** Galician (galego)
  * @author Fitoschido
  * @author Toliño

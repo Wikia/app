@@ -1526,6 +1526,7 @@ $messages['ps'] = array(
  * @author Imperadeiro98
  * @author Josep Maria 15.
  * @author SandroHc
+ * @author Waldir
  */
 $messages['pt'] = array(
 	'welcome-user-page' => "== Sobre mim ==
@@ -1561,18 +1562,18 @@ Se necessitas de ajuda e não encontras administradores locais, talvez queiras v
 	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => 'Olá, bem-vindo(a) à {{SITENAME}}! Obrigado pela tua edição na página [[:$1]].
 
-Por favor, deixa uma mensagem na [[$2|minha página de discussão]] se eu posso-te ajudar nalguma coisa! $3', # Fuzzy
+Deixa-me uma mensagem se precisares de ajuda com qualquer coisa!',
 	'welcome-message-wall-user-staff' => 'Olá!
 
 Bem-vindo à {{SITENAME}} e obrigado pela tua edição na página [[:$1]]. Se precisas de ajuda, começa por verificar as nossas [[páginas de ajuda: Contents|páginas de ajuda]]. Visita a [[w:c:community|Comunidade Central]] para manter-te informado com o nosso [[w:c:community:Blog:Wikia_Staff_Blog|blog do staff]], fazer perguntas no nosso [[w:c:community:Special:Forum|fórum da comunidade]], participar na nossa [[w:c:community:Help:Webinars|série webinar]], ou ir ao chat em vivo com outros utilizadores de Wikia. Boas contribuições!',
-	'welcome-message-wall-anon' => "Olá, bem-vindo(a) à {{SITENAME}}! Muito obrigado pela tua edição em [[:$1]]. 
+	'welcome-message-wall-anon' => "Olá, bem-vindo(a) à {{SITENAME}}! Muito obrigado pela tua edição na página [[:$1]]. 
 
-Porque não '''[[Special:Userlogin|crias uma conta e te identificas]]'''?  Desta forma será muito máis fácil saber as páginas que tu editaste e o trabalho será atribuido a ti na wiki, alem do mais será de grande ajuda na hora de comunicar-te com o resto da comunidade.
+Porque não '''[[Special:Userlogin|crias uma conta e te identificas]]'''?  Desta forma será muito mais fácil manter um registo das páginas que editaste e o trabalho será atribuído a ti na wiki, e além disso, ajuda a comunicar com o resto da comunidade.
 
-Por favor, se tiveres alguma dúvida, sente-te a vontade para deixar uma mensagem na [[$2|minha pagina de discussão]] para ver se eu posso-te ajudar com alguma coisa. $3", # Fuzzy
-	'welcome-message-wall-anon-staff' => 'Ola, bem-vindo à {{SITENAME}} e obrigado pela tua edição na página [[:$1]]. Nós encorajamos todos os contribuintes para [[Especial:UserLogin|criar um nome de utilizador]], então vais poder manter o controlo das tuas contribuições, acessar aos recursos de Wikia e conhecer o resto da comunidade {{SITENAME}}.
+Se tiveres alguma dúvida, deixa-me uma mensagem caso eu possa ajudar com alguma coisa.",
+	'welcome-message-wall-anon-staff' => 'Ola, bem-vindo à {{SITENAME}} e obrigado pela tua edição na página [[:$1]]. Nós encorajamos todos os contribuintes para [[Special:UserLogin|criar um nome de utilizador]], então vais poder manter o controlo das tuas contribuições, acessar aos recursos de Wikia e conhecer o resto da comunidade {{SITENAME}}.
 !!
-Se precisas de ajuda, primeiro olha as nossas [[Ajuda:Contents|páginas de ajuda]] e depois visita a [[w:c:community|Comunidade Central]] para obter mais informações. Boas contribuições!', # Fuzzy
+Se precisas de ajuda, primeiro olha as nossas [[Help:Contents|páginas de ajuda]] e depois visita a [[w:c:community|Comunidade Central]] para obter mais informações. Boas contribuições!',
 	'welcome-description' => 'Envia uma mensagem de boas-vindas para utilizadores depois das suas primeiras edições',
 );
 

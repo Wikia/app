@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 /**
  * Class FacebookMapModel
  *
@@ -267,11 +269,15 @@ class FacebookMapModel {
 		}
 
 		$dbw = wfGetDB( DB_MASTER, null, F::app()->wg->ExternalSharedDB );
-		( new WikiaSQL() )
-			->INSERT( 'user_fbconnect' )
-			->SET( 'user_id', $this->wikiaUserId )
-			->SET( 'user_fbid', $this->facebookUserId )
-			->run( $dbw );
+		try {
+			( new WikiaSQL() )
+				->INSERT( 'user_fbconnect' )
+				->SET( 'user_id', $this->wikiaUserId )
+				->SET( 'user_fbid', $this->facebookUserId )
+				->run( $dbw );
+		} catch ( \Exception $e ) {
+			throw new FacebookMapModelDbException( $e->getMessage() );
+		}
 
 		$memkey = self::generateMemKey( [
 			self::paramFacebookUserId => $this->facebookUserId
@@ -279,18 +285,85 @@ class FacebookMapModel {
 
 		F::app()->wg->Memc->set( $memkey, [ $this ] );
 	}
+
+	/**
+	 * Create a new user mapping between a Wikia user account and a FB account
+	 *
+	 * @param $wikiaUserId
+	 * @param $fbUserId
+	 * @return bool True on success, False on failure
+	 * @throws FacebookMapModelInvalidParamException
+	 */
+	public static function createUserMapping( $wikiaUserId, $fbUserId ) {
+		// TODO: refactor callers to only call this for connection or FB sign up actions
+		if ( self::hasUserMapping( $wikiaUserId, $fbUserId ) ) {
+			return true;
+		}
+
+		$map = new self();
+		$map->relate( $wikiaUserId, $fbUserId );
+		try {
+			$map->save();
+		} catch ( FacebookMapModelException $e ) {
+			WikiaLogger::instance()->warning( 'Failed to create user mapping', [
+				'wikiaUserId' => $wikiaUserId,
+				'fbUserId' => $fbUserId,
+			] );
+
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Check existence of user mapping between a Wikia user account and a FB account
+	 *
+	 * @param $wikiaUserId
+	 * @param $fbUserId
+	 * @return bool True if there is such wikia/fb mapping
+	 */
+	public static function hasUserMapping( $wikiaUserId, $fbUserId ) {
+		$dbr = wfGetDB( DB_SLAVE, null, F::app()->wg->ExternalSharedDB );
+		$data = ( new WikiaSQL() )
+			->SELECT( '*' )
+			->FROM( 'user_fbconnect' )
+			->WHERE( 'user_id' )->EQUAL_TO( $wikiaUserId )
+			->AND_( 'user_fbid' )->EQUAL_TO( $fbUserId )
+			->LIMIT( 1 )
+			->run( $dbr, function( $result ) {
+				/** @var ResultWrapper $result */
+				return $result->fetchObject();
+			});
+
+		return !empty( $data );
+	}
 }
+
+/**
+ * Class FacebookMapModelException
+ *
+ * Generic FacebookMapModel Exception
+ */
+class FacebookMapModelException extends \Exception { }
 
 /**
  * Class FacebookMapModelInvalidParamException
  *
  * Thrown when the parameters needed for methods in the FacebookMapModel are not given or invalid
  */
-class FacebookMapModelInvalidParamException extends Exception { }
+class FacebookMapModelInvalidParamException extends FacebookMapModelException { }
 
 /**
  * Class FaceBookMapModelInvalidDataException
  *
  * Thrown when the data in a FacebookMapModel is invalid
  */
-class FacebookMapModelInvalidDataException extends Exception { }
+class FacebookMapModelInvalidDataException extends FacebookMapModelException { }
+
+/**
+ * Class FacebookMapModelDbException
+ *
+ * Thrown when database error occurs
+ */
+class FacebookMapModelDbException extends FacebookMapModelException { }

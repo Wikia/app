@@ -1773,6 +1773,17 @@ ___________________________________________
 	'forum-confirmation-board-deleted' => '« $1 » a été supprimé.',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'forum-forum-title' => 'Foarum',
+	'forum-specialpage-heading' => 'Foarum',
+	'forum-specialpage-policies-edit' => 'Bewurkje',
+	'forum-mail-notification-html-greeting' => 'Hallo $1,',
+	'forum-mail-notification-subject' => '$1 -- $2',
+);
+
 /** Galician (galego)
  * @author Elisardojm
  * @author Toliño

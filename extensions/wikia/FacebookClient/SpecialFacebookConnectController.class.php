@@ -19,7 +19,7 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 	 * @requestParam wpCancel
 	 */
 	public function index() {
-		$wg = F::app()->wg;
+		$wg = $this->wg;
 
 		if ( $wg->Request->wasPosted() ) {
 			if ( $wg->Request->getCheck( 'wpCancel' ) ) {
@@ -27,14 +27,12 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 			} else {
 				$this->loginAndConnect();
 			}
+		} else if ( $wg->User->isLoggedIn() ) {
+			// Send logged-in user to home page
+			$wg->Out->redirect( '/' );
 		} else {
 			JSMessages::enqueuePackage( 'FacebookClient', JSMessages::INLINE );
-
-			if ( $wg->User->isLoggedIn() ) {
-				$this->forward( __CLASS__, 'connectCurrentUser' );
-			} else {
-				$this->forward( __CLASS__, 'connectUser' );
-			}
+			$this->forward( __CLASS__, 'connectUser' );
 		}
 	}
 
@@ -57,7 +55,7 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 	 * @throws FacebookMapModelInvalidDataException
 	 */
 	protected function loginAndConnect() {
-		$wg = F::app()->wg;
+		$wg = $this->wg;
 
 		$fb = FacebookClient::getInstance();
 		$fbUserId = $fb->getUserId();
@@ -66,7 +64,7 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 		$wikiaPassword = $wg->Request->getText( 'wpExistingPassword' );
 
 		// The user must be logged into Facebook before choosing a wiki username
-		if ( !$fbUserId ) {
+		if ( empty( $fbUserId ) ) {
 			$wg->Out->showErrorPage( 'fbconnect-error', 'fbconnect-errortext' );
 			$this->skipRendering();
 			return true;
@@ -79,9 +77,12 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 			return true;
 		}
 
-		$map = new FacebookMapModel();
-		$map->relate( $user->getId(), $fbUserId );
-		$map->save();
+		if ( !\FacebookMapModel::createUserMapping( $user->getId(), $fbUserId ) ) {
+			// TODO/FIXME: show proper error message @see UC-116
+			F::app()->wg->Out->showErrorPage( 'fbconnect-error', 'fbconnect-errortext' );
+			$this->skipRendering();
+			return true;
+		}
 
 		// Setup the session as is done when a request first starts
 		if ( !$wg->SessionStarted ) {
@@ -94,7 +95,7 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 
 		$this->forward( __CLASS__, 'successfulConnect' );
 
-		$this->track( 'facebook-link-existing' );
+		\FacebookClientHelper::track( 'facebook-link-existing' );
 	}
 
 	/**
@@ -104,7 +105,7 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 	 * @throws FacebookMapModelInvalidDataException
 	 */
 	public function connectCurrentUser() {
-		$wg = F::app()->wg;
+		$wg = $this->wg;
 
 		$fb = FacebookClient::getInstance();
 		$fbUserId = $fb->getUserId();
@@ -116,13 +117,16 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 			return true;
 		}
 
-		$map = new FacebookMapModel();
-		$map->relate( $wg->User->getId(), $fbUserId );
-		$map->save();
+		if ( !\FacebookMapModel::createUserMapping( $wg->User->getId(), $fbUserId ) ) {
+			// TODO/FIXME: show proper error message @see UC-116
+			F::app()->wg->Out->showErrorPage( 'fbconnect-error', 'fbconnect-errortext' );
+			$this->skipRendering();
+			return true;
+		}
 
 		$this->forward( __CLASS__, 'successfulConnect' );
 
-		$this->track( 'facebook-link-existing' );
+		\FacebookClientHelper::track( 'facebook-link-existing' );
 	}
 
 	/**
@@ -133,7 +137,7 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 	 * @throws ReadOnlyError
 	 */
 	public function connectUser() {
-		$wg = F::app()->wg;
+		$wg = $this->wg;
 
 		$title = wfMessage('fbconnect-connect-existing')->plain();
 		$this->getContext()->getOutput()->setPageTitle( $title );
@@ -179,7 +183,7 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 	 * @throws MWException
 	 */
 	public function successfulConnect() {
-		$wg = F::app()->wg;
+		$wg = $this->wg;
 
 		// Set this so we have something to pass the hook, though its not used since we always
 		// redirect at the end of this method.
@@ -205,7 +209,7 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 	 * @throws MWException
 	 */
 	public function checkCreateAccount() {
-		$wg = F::app()->wg;
+		$wg = $this->wg;
 
 		$fb = FacebookClient::getInstance();
 		$fb_user = $fb->getUserId();
@@ -248,17 +252,4 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 		$this->status = 'ok';
 	}
 
-	/**
-	 * Track an event with a given label with user-sign-up category
-	 * @param string $label
-	 * @param string $action optional, 'submit' by default
-	 */
-	protected function track( $label, $action = 'submit' ) {
-		\Track::event( 'trackingevent', [
-			'ga_action' => $action,
-			'ga_category' => 'user-sign-up',
-			'ga_label' => $label,
-			'beacon' => !empty( F::app()->wg->DevelEnvironment ) ? 'ThisIsFake' : wfGetBeaconId(),
-		] );
-	}
 }

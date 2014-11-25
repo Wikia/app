@@ -20,6 +20,9 @@ class FacebookClient {
 	/** @var Facebook\FacebookSignedRequestFromInputHelper  */
 	private $facebookAPI;
 
+	/** @var int|null Facebook user id */
+	private $facebookUserId;
+
 	/** @var array */
 	private $userInfoCache;
 
@@ -34,6 +37,8 @@ class FacebookClient {
 	 * @throws Exception
 	 */
 	private function __construct( FacebookClientConfig $config ) {
+
+		$this->facebookUserId = null;
 
 		if ( $config->hasFacebookAPI() ) {
 			// Use client passed to our constructor
@@ -117,9 +122,10 @@ class FacebookClient {
 				$session->validate();
 				$this->session = $session;
 			} catch ( \Exception $ex ) {
-				$log->info( __CLASS__ . ': Invalid Facebook session found', [
-					'fbUserId' => $this->getUserId(),
+				$log->warning( __CLASS__ . ': Invalid Facebook session found', [
+					'fbUserId' => $this->facebookUserId,
 					'method' => __METHOD__,
+					'message' => $ex->getMessage(),
 				] );
 			}
 		}
@@ -135,24 +141,50 @@ class FacebookClient {
 			$this->session = $session;
 			$memc->set( $this->getTokenMemcKey(), $session->getAccessToken(), self::TOKEN_TTL );
 		} catch ( \Exception $ex ) {
-			$log->info( __CLASS__ . ': Invalid Facebook session found', [
-				'fbUserId' => $this->getUserId(),
+			$log->warning( __CLASS__ . ': Invalid Facebook session found', [
+				'fbUserId' => $this->facebookUserId,
 				'method' => __METHOD__,
+				'message' => $ex->getMessage(),
 			] );
 		}
 	}
 
 	private function getTokenMemcKey() {
-		return wfSharedMemcKey( 'fbAccessToken', $this->getUserId() );
+		return wfSharedMemcKey( 'fbAccessToken', $this->facebookUserId );
 	}
 
 	/**
 	 * Get the Facebook user ID for the current user, if set
 	 *
-	 * @return null|string
+	 * @return int
 	 */
 	public function getUserId() {
-		return $this->facebookAPI->getUserId();
+		if ( $this->facebookUserId !== null ) {
+			return $this->facebookUserId;
+		}
+
+		$errorMessage = null;
+
+		try {
+			$session = $this->getSession();
+			if ( $session ) {
+				$session->validate();
+				$this->facebookUserId = ( int ) $this->facebookAPI->getUserId();
+			}
+		} catch ( \Exception $e ) {
+			$errorMessage = $e->getMessage();
+		}
+
+		if ( empty( $this->facebookUserId ) ) {
+			$this->facebookUserId = 0;
+
+			WikiaLogger::instance()->warning( 'Null Facebook user id', [
+				'method' => __METHOD__,
+				'message' => $errorMessage,
+			] );
+		}
+
+		return $this->facebookUserId;
 	}
 
 	/**
@@ -166,7 +198,7 @@ class FacebookClient {
 		$log = WikiaLogger::instance();
 
 		// Pull the user ID from the signed FB cookie if it wasn't passed in
-		if ( $userId == 0 ) {
+		if ( empty( $userId ) ) {
 			$userId = $this->getUserId();
 		}
 
@@ -248,18 +280,21 @@ class FacebookClient {
 	/**
 	 * Returns a Wikia User object for the current (or passed) Facebook ID
 	 *
-	 * @param int $fbid [optional] A Facebook ID
+	 * @param int|null $fbId [optional] A Facebook ID
 	 *
 	 * @return null|User
 	 * @throws MWException
 	 */
-	public function getWikiaUser( $fbid = null ) {
+	public function getWikiaUser( $fbId = null ) {
 
-		if ( empty( $fbid ) ) {
-			$fbid = $this->getUserId();
+		if ( empty( $fbId ) ) {
+			$fbId = $this->getUserId();
+			if ( empty( $fbId ) ) {
+				return null;
+			}
 		}
 
-		$map = FacebookMapModel::lookupFromFacebookID( $fbid );
+		$map = FacebookMapModel::lookupFromFacebookID( $fbId );
 		if ( empty( $map ) ) {
 			return null;
 		}

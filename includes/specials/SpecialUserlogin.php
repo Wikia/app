@@ -651,8 +651,8 @@ class LoginForm extends SpecialPage {
 
 		$this->mExtUser = ExternalUser_Wikia::newFromName( $this->mUsername );
 
-		global $wgExternalAuthType, $wgAutocreatePolicy;
-		if ( $wgExternalAuthType && $wgAutocreatePolicy != 'never'
+		global $wgExternalAuthType;
+		if ( $wgExternalAuthType
 		&& is_object( $this->mExtUser )
 		&& $this->mExtUser->authenticate( $this->mPassword ) ) {
 			# The external user and local user have the same name and
@@ -792,7 +792,7 @@ class LoginForm extends SpecialPage {
 	 * @return integer Status code
 	 */
 	function attemptAutoCreate( $user ) {
-		global $wgAuth, $wgAutocreatePolicy;
+		global $wgAuth;
 
 		if ( $this->getUser()->isBlockedFromCreateAccount() ) {
 			wfDebug( __METHOD__ . ": user is blocked from account creation\n" );
@@ -805,11 +805,6 @@ class LoginForm extends SpecialPage {
 		 * yet logged in.
 		 */
 		if ( $this->mExtUser ) {
-			# mExtUser is neither null nor false, so use the new ExternalAuth
-			# system.
-			if ( $wgAutocreatePolicy == 'never' ) {
-				return self::NOT_EXISTS;
-			}
 			if ( !$this->mExtUser->authenticate( $this->mPassword ) ) {
 				return self::WRONG_PLUGIN_PASS;
 			}

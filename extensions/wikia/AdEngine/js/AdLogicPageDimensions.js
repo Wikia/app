@@ -227,18 +227,6 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 	}
 
 	/**
-	 * Check if page should have prefooters (note it can change later)
-	 *
-	 * @returns {boolean}
-	 */
-	function hasPreFooters() {
-		log('hasPreFooters', 'debug', logGroup);
-		pageHeight = document.documentElement.scrollHeight;
-		log(['hasPreFooters', {pageHeight: pageHeight, preFootersThreshold: preFootersThreshold}], 'debug', logGroup);
-		return pageHeight > preFootersThreshold;
-	}
-
-	/**
 	 * Check if window size logic is applicable to the given slot
 	 *
 	 * @param slotname
@@ -256,7 +244,6 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 
 	return {
 		isApplicable: isApplicable,
-		addSlot: add,
-		hasPreFooters: hasPreFooters
+		addSlot: add
 	};
 });

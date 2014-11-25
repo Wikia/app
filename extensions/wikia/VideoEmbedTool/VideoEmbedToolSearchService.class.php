@@ -207,12 +207,8 @@ class VideoEmbedToolSearchService
 			],
 		];
 
-		// Choose the correct database
-		if ( $this->getSearchType() === 'local' ) {
-			$dbName = F::app()->wg->DBname;
-		} else {
-			$dbName = F::app()->wg->WikiaVideoRepoDBName;
-		}
+		// Determine the source for the search
+		$isLocalSearch = ( $this->getSearchType() === 'local' );
 
 		$helper = new VideoHandlerHelper();
 
@@ -222,11 +218,18 @@ class VideoEmbedToolSearchService
 			}
 
 			// Get data about this video from the video wiki
-			$videosDetail = $helper->getVideoDetailFromWiki(
-				$dbName,
-				$singleVideoData['title'],
-				$videoOptions
-			);
+			if ( $isLocalSearch ) {
+				$videosDetail = $helper->getVideoDetail(
+					$singleVideoData,
+					$videoOptions
+				);
+			} else {
+				$videosDetail = $helper->getVideoDetailFromWiki(
+					F::app()->wg->WikiaVideoRepoDBName,
+					$singleVideoData['title'],
+					$videoOptions
+				);
+			}
 
 			$trimTitle = $this->getTrimTitle();
 			if ( ! empty( $trimTitle ) ) {
