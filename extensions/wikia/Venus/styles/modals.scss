@@ -12,3 +12,11 @@
 		background-repeat: no-repeat;
 	}
 }
+
+.UserLoginModal {
+	.wikia-button .facebook {
+		background-image: url('/extensions/wikia/UserLogin/images/facebook_icon.png'); /* base64 */
+		background-repeat: no-repeat;
+		background-size: auto 15px;
+	}
+}
