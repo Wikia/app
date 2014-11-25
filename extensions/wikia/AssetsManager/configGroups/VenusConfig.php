@@ -112,7 +112,8 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'#group_video_recommendations_js',
 
 		// ui components
-		'#group_ui_repo_api_js',
+		'//resources/wikia/modules/uifactory.js',
+		'//resources/wikia/modules/uicomponent.js'
 	]
 ];
 
