@@ -20,6 +20,7 @@ class ArticleNavigationController extends WikiaController {
 
 		Wikia::addAssetsToOutput( 'article_navigation_scss' );
 		Wikia::addAssetsToOutput( 'article_navigation_js' );
+		Wikia::addAssetsToOutput( 'article_js' );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
@@ -50,7 +51,7 @@ class ArticleNavigationController extends WikiaController {
 	 * @return array
 	 */
 	private function editActionsData() {
-		global $wgTitle;
+		global $wgUser, $wgTitle;
 
 		$contentActions = $this->app->getSkinTemplateObj()->data['content_actions'];
 		$editActions = [];
@@ -82,8 +83,16 @@ class ArticleNavigationController extends WikiaController {
 				$data = [
 					'href' => $contentAction['href'],
 					'title' => $contentAction['text'],
-					'trackingId' => $contentAction['id'],
+					'trackingId' => $contentAction['id']
 				];
+
+				if ( $wgUser->isAnon() &&
+					!$wgUser->isBlocked() &&
+					!$wgTitle->userCan( 'edit' ) &&
+					$this->isEdit($contentAction)
+				) {
+					$data[ 'class' ] = 'force-user-login';
+				}
 
 				//Add custom values if talk item found
 				if ( $contentAction['id'] == 'ca-talk' ) {
@@ -230,5 +239,9 @@ class ArticleNavigationController extends WikiaController {
 			];
 		}
 		return $renderedData;
+	}
+
+	private function isEdit($data) {
+		return !empty($data['id']) && ($data['id'] == 'ca-viewsource');
 	}
 }
