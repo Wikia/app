@@ -12,6 +12,9 @@ class ArticleNavigationController extends WikiaController {
 		$this->helper = new ArticleNavigationHelper();
 	}
 
+	/**
+	 * render index
+	 */
 	public function index() {
 		$app = F::app();
 
@@ -20,47 +23,59 @@ class ArticleNavigationController extends WikiaController {
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
-		$this->editActionsDropdown = $this->renderEditActions();
-
-		$this->setVal('share_type', 'multiple');
-		$this->setVal('share', $app->renderView('ArticleNavigationController', 'share'));
-		$this->setVal('user_tools', json_encode($this->helper->extractDropdownData($this->generateUserTools())));
+		$this->setVal( 'editActionsDropdown', $this->renderEditActions() );
+		$this->setVal( 'share', $app->renderView( 'ArticleNavigationController', 'share' ) );
+		$this->setVal( 'userTools', json_encode( $this->helper->extractDropdownData( $this->generateUserTools() ) ) );
 	}
 
+	/**
+	 * Render Dropdown for Edit Actions
+	 * @return string
+	 * @throws Exception
+	 */
 	private function renderEditActions() {
-		return \MustacheService::getInstance()->render(
+		/**
+		 * Use Mustache render and not renderView because template is outside of extension's
+		 * directory and we want to show that explicitly; it's also a bit faster than doing
+		 * callback just for render small Mustache template anyway.
+		 */
+		return \MustacheService::getInstance()->render( 
 			'resources/wikia/ui_components/dropdown_navigation/templates/dropdown.mustache',
 			$this->editActionsData()
 		);
 	}
 
+	/**
+	 * Prepare data for edit actions
+	 * @return array
+	 */
 	private function editActionsData()
 	{
 		$contentActions = $this->app->getSkinTemplateObj()->data['content_actions'];
 		$editActions = [];
 
-		if (isset($contentActions['edit'])) {
-			array_push($editActions, 'edit');
-		} else if (isset($contentActions['viewsource'])) {
-			array_push($editActions, 'viewsource');
+		if ( isset( $contentActions['edit'] ) ) {
+			array_push( $editActions, 'edit' );
+		} else if ( isset( $contentActions['viewsource'] ) ) {
+			array_push( $editActions, 'viewsource' );
 		}
 
-		if (isset($contentActions['ve-edit'])) {
-			if ($contentActions['ve-edit']['main']) {
-				array_unshift($editActions, 've-edit');
+		if ( isset( $contentActions['ve-edit'] ) ) {
+			if ( $contentActions['ve-edit']['main'] ) {
+				array_unshift( $editActions, 've-edit' );
 			} else {
-				array_push($editActions, 've-edit');
+				array_push( $editActions, 've-edit' );
 			}
 		}
 
-		$allowedActions = array_merge($editActions, [
+		$allowedActions = array_merge( $editActions, [
 			'history', 'move', 'protect', 'unprotect', 'delete', 'undelete', 'replace-file'
-		]);
+		] );
 
 		$actions = [];
 
-		foreach ($allowedActions as $action) {
-			if (isset($contentActions[$action])) {
+		foreach ( $allowedActions as $action ) {
+			if ( isset( $contentActions[$action] ) ) {
 				$contentAction = $contentActions[$action];
 
 				$data = [
@@ -69,8 +84,8 @@ class ArticleNavigationController extends WikiaController {
 					'trackingId' => $contentAction['id'],
 				];
 
-				if (isset($contentAction['rel'])) {
-					$data['rel'] = str_replace('ca-', '', $contentAction['rel']);
+				if ( isset( $contentAction['rel'] ) ) {
+					$data['rel'] = str_replace( 'ca-', '', $contentAction['rel'] );
 				}
 
 				$actions[] = $data;
@@ -83,9 +98,14 @@ class ArticleNavigationController extends WikiaController {
 		];
 	}
 
+	/**
+	 * render share
+	 */
 	public function share() {
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
-		$this->services = $this->prepareShareServicesData();
+
+		$this->setVal( 'services', $this->prepareShareServicesData() );
+		$this->setVal( 'dropdown', $this->renderShareActions() );
 	}
 
 	/**
@@ -99,14 +119,15 @@ class ArticleNavigationController extends WikiaController {
 		$protocol = ( !empty( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443 ) ? 'https://' : 'http://';
 		$location = $protocol . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
 		$services = [];
+		$lang = $this->helper->getUserLanguageCode( $this->request );
 
-		foreach ($wgArticleNavigationShareServices as $service ) {
-			if ( array_key_exists( 'url', $service ) && array_key_exists( 'name', $service ) ) {
-				$service['full_url'] = str_replace( '$1', urlencode( $location ), $service['url'] );
-				$service['name_cased'] = ucfirst( $service['name'] );
+		foreach ( $wgArticleNavigationShareServices as $service ) {
+			if ( $this->helper->isValidShareService( $service, $lang ) ) {
+				$service['href'] = str_replace( '$1', urlencode( $location ), $service['url'] );
+				$service['nameCased'] = ucfirst( $service['name'] );
 
-				if ( !array_key_exists('title', $service ) ) {
-					$service['title'] = $service['name_cased'];
+				if ( !array_key_exists( 'title', $service ) ) {
+					$service['title'] = $service['nameCased'];
 				}
 
 				$services[] = $service;
@@ -116,9 +137,53 @@ class ArticleNavigationController extends WikiaController {
 		return $services;
 	}
 
+	/**
+	 * Render Share dropdown
+	 * @return string
+	 * @throws Exception
+	 */
+	private function renderShareActions() {
+		/**
+		 * Use Mustache render and not renderView because template is outside of extension's
+		 * directory and we want to show that explicitly; it's also a bit faster than doing
+		 * callback just for render small Mustache template anyway.
+		 */
+		return \MustacheService::getInstance()->render(
+			'resources/wikia/ui_components/dropdown_navigation/templates/dropdown.mustache',
+			$this->shareActionsData()
+		);
+	}
+
+	/**
+	 * Prepare data for share dropdown
+	 * @return array
+	 */
+	private function shareActionsData()
+	{
+		$actions = [];
+
+		foreach ( $this->prepareShareServicesData() as $service ) {
+			$data = [
+				'href' => $service['href'],
+				'title' => $service['title'],
+				'class' => 'share-link',
+				'data' => [
+					'share-name' => $service['name']
+				]
+			];
+
+			$actions[] = $data;
+		}
+
+		return [
+			'id' => 'shareActionsDropdown',
+			'sections' => $actions,
+		];
+	}
+
 	public function getUserTools() {
-		$this->response->setVal(
-			'data', $this->helper->extractDropdownData($this->generateUserTools())
+		$this->response->setVal( 
+			'data', $this->helper->extractDropdownData( $this->generateUserTools() )
 		);
 	}
 
@@ -145,11 +210,11 @@ class ArticleNavigationController extends WikiaController {
 
 		$renderedData = $service->instanceToRenderData( $service->listToInstance( $data ) );
 
-		if ($wgUser->isAllowed('admindashboard')) {
+		if ( $wgUser->isAllowed( 'admindashboard' ) ) {
 			$renderedData[] = [
 				'tracker-name' => 'admin',
 				'caption' => 'Admin',
-				'href' => SpecialPage::getTitleFor('AdminDashboard')->getLocalURL(),
+				'href' => SpecialPage::getTitleFor( 'AdminDashboard' )->getLocalURL(),
 				'type' => 'link'
 			];
 		}

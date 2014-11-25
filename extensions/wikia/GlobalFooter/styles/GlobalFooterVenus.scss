@@ -10,39 +10,53 @@ $global-footer-vertical-spacing: 30px;
 
 .global-footer {
 	background-color: $global-wikia-background-color;
-	border-bottom: 10px solid $color-wikiahome-community;
-	border-top: 1px solid $global-footer-color-border;
+	border: $content-border-width solid $color-page-border;
+	border-bottom: 0;
+	border-top: 0;
 	color: $color-text-dark;
-	margin-top: $global-footer-vertical-spacing;
-	padding-top: $global-footer-vertical-spacing + 10;
+	padding-top: $global-footer-vertical-spacing;
 	text-align: center;
 
-	&.vertical-books {
-		border-bottom-color: $color-vertical-books;
+	&:before {
+		border-top: 1px solid $global-footer-color-border;
+		content: '';
+		display: block;
+		margin-bottom: $global-footer-vertical-spacing + 10;
 	}
 
-	&.vertical-comics {
-		border-bottom-color: $color-vertical-comics;
+	&:after {
+		background-color: $color-wikiahome-community;
+		content: '';
+		display: block;
+		height: 10px;
 	}
 
-	&.vertical-games {
-		border-bottom-color: $color-vertical-games;
+	&.vertical-books:after {
+		background-color: $color-vertical-books;
 	}
 
-	&.vertical-lifestyle {
-		border-bottom-color: $color-vertical-lifestyle;
+	&.vertical-comics:after {
+		background-color: $color-vertical-comics;
 	}
 
-	&.vertical-movies {
-		border-bottom-color: $color-vertical-movies;
+	&.vertical-games:after {
+		background-color: $color-vertical-games;
 	}
 
-	&.vertical-music {
-		border-bottom-color: $color-vertical-music;
+	&.vertical-lifestyle:after {
+		background-color: $color-vertical-lifestyle;
 	}
 
-	&.vertical-tv {
-		border-bottom-color: $color-vertical-tv;
+	&.vertical-movies:after {
+		background-color: $color-vertical-movies;
+	}
+
+	&.vertical-music:after {
+		background-color: $color-vertical-music;
+	}
+
+	&.vertical-tv:after {
+		background-color: $color-vertical-tv;
 	}
 
 	.wikia-logo {
@@ -71,9 +85,10 @@ $global-footer-vertical-spacing: 30px;
 		}
 
 		li {
-			display: inline;
+			display: inline-block;
 			margin-top: 0;
 			padding: 0 4px 0 0;
+
 			&::before {
 				border-left: 1px solid $global-footer-color-border;
 				content: '';

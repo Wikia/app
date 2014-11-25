@@ -21,6 +21,7 @@ class FeedIngesterFactory {
 		self::PROVIDER_IVA,
 		self::PROVIDER_SCREENPLAY,
 		self::PROVIDER_CRUNCHYROLL,
+		self::PROVIDER_MAKER_STUDIOS
 	];
 
 	/**

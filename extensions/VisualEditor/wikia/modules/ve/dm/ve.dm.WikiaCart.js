@@ -33,6 +33,7 @@ ve.dm.WikiaCart.prototype.addItems = function ( items, index ) {
 		this.items.splice.apply( this.items, [ index, 0 ].concat( items ) );
 	}
 	this.emit( 'add', items, index );
+	this.emit( 'change' );
 };
 
 ve.dm.WikiaCart.prototype.removeItems = function ( items ) {
@@ -44,12 +45,14 @@ ve.dm.WikiaCart.prototype.removeItems = function ( items ) {
 		}
 	}
 	this.emit( 'remove', items );
+	this.emit( 'change' );
 };
 
 ve.dm.WikiaCart.prototype.clearItems = function () {
 	var items = this.items.slice();
 	this.items = [];
 	this.emit( 'remove', items );
+	this.emit( 'change' );
 };
 
 ve.dm.WikiaCart.prototype.getItems = function () {

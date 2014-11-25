@@ -24,6 +24,8 @@ require([
 	 * @param {Event=} event
 	 */
 	function show(event) {
+		$('.article-navigation > ul > li.active').removeClass('active');
+
 		$parent.addClass('active');
 
 		// handle touch interactions
@@ -111,8 +113,14 @@ require([
 	dropdown = dropdownNavigation(dropdownParams);
 
 	if (isTouchScreen) {
-		$parent.on('click', function() {
-			$parent.toggleClass('active');
+		$parent.on('click', function(e) {
+			e.stopPropagation();
+
+			if($parent.hasClass('active')) {
+				hide();
+			} else {
+				show();
+			}
 		});
 	} else {
 		win.delayedHover($parent[0], delayHoverParams);

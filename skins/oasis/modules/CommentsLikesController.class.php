@@ -8,11 +8,10 @@
 class CommentsLikesController extends WikiaController {
 
 	private $contextTitle;
-	
+
 	public function init() {
 		$this->commentsAccesskey = null;
 		$this->commentsBubble = null;
-		$this->showLike = null;
 	}
 
 	/**
@@ -49,7 +48,7 @@ class CommentsLikesController extends WikiaController {
 			} else {
 				// This case shouldn't happen other than Special:ThemeDesignerPreview
 				// We're faking some comments to show a user what an article would look like
-				$commentsLink = '';	
+				$commentsLink = '';
 			}
 		}
 
@@ -73,7 +72,8 @@ class CommentsLikesController extends WikiaController {
 
 	public function executeIndex($data) {
 		wfProfileIn(__METHOD__);
-		global $wgTitle, $wgLang, $wgContentNamespaces, $wgExtraNamespacesLocal;
+		global $wgTitle, $wgContentNamespaces, $wgExtraNamespacesLocal;
+
 		if(empty($wgExtraNamespacesLocal)){
 			$wgExtraNamespacesLocal = array();
 		}
@@ -86,40 +86,6 @@ class CommentsLikesController extends WikiaController {
 		else {
 			// by default we're showing # of comments for current page
 			$this->contextTitle = &$wgTitle;
-		}
-
-		// Facebook's "Like"
-		// @see http://developers.facebook.com/docs/reference/plugins/like
-		if (!empty($data['likes'])) {
-			$this->showLike = true;
-
-			// canonical URL
-			$this->likeHref = $this->contextTitle->getFullUrl();
-
-			// check namespaces
-			$ns = $this->contextTitle->getNamespace();
-			if (in_array($ns, $wgContentNamespaces)) {
-				$this->likeRef = 'content_page';
-			}
-			// RT #74393: include custom namespaces
-			else if (in_array($ns, array_keys($wgExtraNamespacesLocal))) {
-				$this->likeRef = 'content_page';
-			}
-			else if (defined('NS_BLOG_ARTICLE') && $ns == NS_BLOG_ARTICLE) {
-				$this->likeRef = 'blog_page';
-			}
-			else if ($ns == NS_CATEGORY) {
-				$this->likeRef = 'category_page';
-			}
-			else if (defined('NS_TOPLIST') && $ns == NS_TOPLIST) {
-				$this->likeRef = 'list_page';
-			}
-			else {
-				$this->showLike = false;
-			}
-
-			// check lightness of skin theme
-			$this->likeTheme = SassUtil::isThemeDark() ? 'dark' : 'light';
 		}
 
 		// comments / talks
@@ -152,9 +118,6 @@ class CommentsLikesController extends WikiaController {
 			$this->commentsBubble = !empty($data['bubble']);
 		}
 
-		if ( $this->wg->OasisNavV2 ) {
-			$this->response->getView()->setTemplatePath( dirname( __FILE__ ) .'/templates/CommentsLikes_IndexV2.php' );
-		}
 		wfProfileOut(__METHOD__);
 	}
 }

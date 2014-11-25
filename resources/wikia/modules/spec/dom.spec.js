@@ -2,7 +2,8 @@
 describe('wikia.dom', function () {
 	'use strict';
 	var tree, docMock = {},
-		domModule = modules['wikia.dom'](docMock);
+		domModule = modules['wikia.dom'](docMock),
+		tagNames = ['DIV', 'H1', 'A', 'SPAN', 'IMG'];
 
 	/**
 	 * Create Node
@@ -10,14 +11,18 @@ describe('wikia.dom', function () {
 	 * @constructor
 	 */
 	function Node(classes) {
-		var self = this;
+		var self = this,
+			classesNames = classes.toString(),
+			tagName = tagNames[(classes % 6) - 1];
+
 		this.classList = {
 			contains: function (className) {
 				return className === self.classes;
 			}
 		};
 
-		this.classes = classes;
+		this.classes = classesNames;
+		this.tagName = tagName;
 		this.parentNode = '';
 	}
 
@@ -29,7 +34,7 @@ describe('wikia.dom', function () {
 	function createTree(nodesLevel) {
 		var nodes = [];
 		for (var i = nodesLevel; i > 0; i--) {
-			nodes[i] = new Node(i.toString());
+			nodes[i] = new Node(i);
 		}
 
 		for (var j = nodesLevel; j > 0; j--) {
@@ -60,7 +65,25 @@ describe('wikia.dom', function () {
 		tree = createTree(6);
 		//Check if correct element is returned when wanted element is reachable because maxParentsCount is set
 		expect(domModule.closestByClassName(tree[6], '1', 6)).toBe(tree[1]);
+	});
 
+	it('Find closest element with given tag name', function(){
+		tree = createTree(1);
+		//Check if correct element is returned when first element is the wanted one
+		expect(domModule.closestByTagName(tree[1], 'div')).toBe(tree[1]);
+		tree = createTree(5);
+		//Check if correct element is returned with different combinations
+		expect(domModule.closestByTagName(tree[5], 'div')).toBe(tree[1]);
+		expect(domModule.closestByTagName(tree[5], 'h1')).toBe(tree[2]);
+		expect(domModule.closestByTagName(tree[4], 'a')).toBe(tree[3]);
+	});
+
+	it('Return false when given element is not found or not reachable because of provided range', function () {
+		tree = createTree(5);
+		//Check if false is returned if element is not reachable
+		expect(domModule.closestByTagName(tree[5], 'section')).toBe(false);
+		//Check if false is returned if element is not reachable because maxParentsCount is set
+		expect(domModule.closestByTagName(tree[5], 'h1', 2)).toBe(false);
 	});
 });
 

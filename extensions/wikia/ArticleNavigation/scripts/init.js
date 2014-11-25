@@ -5,8 +5,7 @@ require([
 	'use strict';
 
 	var isTouchScreen = win.Wikia.isTouchScreen(),
-		$tocButton = $('#articleNavToc'),
-		$navButtons = $('.article-navigation').find('.nav-icon');
+		$tocButton = $('#articleNavToc');
 
 	/**
 	 * @desc handler that initialises TOC
@@ -15,19 +14,6 @@ require([
 	function initTOChandler(event) {
 		event.stopPropagation();
 		tocModule.init(event.target.id, isTouchScreen);
-	}
-
-	//Handle clicking (tapping) in icons on touch devices - turn other icons "active" state off
-	if (isTouchScreen) {
-		$navButtons.on('click', function (e) {
-			var eTarget = e.target;
-
-			$navButtons.each(function () {
-				if (this !== eTarget) {
-					eTarget.classList.remove('active');
-				}
-			});
-		});
 	}
 
 	//Initialize user tools
