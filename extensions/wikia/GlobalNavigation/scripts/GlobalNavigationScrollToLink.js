@@ -1,6 +1,6 @@
 require(
-	['wikia.scrollToLink', 'wikia.window', 'venus.variables', 'jquery'],
-	function(scrollToLink, win, variables, $) {
+	['wikia.scrollToLink', 'wikia.window', 'venus.variables', 'jquery', 'wikia.browserDetect'],
+	function(scrollToLink, win, variables, $, browserDetect) {
 		'use strict';
 
 		var offset = 0;
@@ -10,9 +10,10 @@ require(
 		 * @param {Event} event
 		 */
 		function hashChangeHandler(event) {
-			if (scrollToLink.handleScrollTo(win.location.hash, offset)) {
+			if (scrollToLink.handleScrollTo(win.location.hash, offset) || browserDetect.isIOS7orLower()) {
 				// prevent only if we managed to scroll to desired ID
 				event.preventDefault();
+				return false;
 			}
 		}
 
