@@ -26,7 +26,7 @@
 
 	// comments & like button
 	if( !$isWallEnabled ) {
-		echo F::app()->renderView('CommentsLikes', 'Index', array('comments' => $comments, 'likes' => $likes));
+		echo F::app()->renderView('CommentsLikes', 'Index', array('comments' => $comments));
 	}
 	foreach( $extraButtons as $button ){
 		echo $button;

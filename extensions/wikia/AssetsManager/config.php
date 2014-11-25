@@ -192,7 +192,7 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/MiniEditor/js/MiniEditor.js',
 		// needs to load after MiniEditor
 		'#group_articlecomments_js',
-		'//extensions/FBConnect/fbconnect.js',
+
 		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
 		// This needs to load last after all common extensions, please keep this last.
 		'//skins/oasis/js/GlobalModal.js',
@@ -856,7 +856,6 @@ $config['monobook_js'] = array(
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
 		'#group_imglzy_js',
-		'//extensions/FBConnect/fbconnect.js',
 		'//extensions/wikia/AdEngine/AdProviderOpenX.js',
 		'//extensions/wikia/AdEngine/LazyLoadAds.js',
 		'//resources/wikia/libraries/ghostwriter/gw.min.js',
@@ -2162,14 +2161,38 @@ $config['media_gallery_js'] = [
 		'//extensions/wikia/MediaGallery/scripts/views/toggler.js',
 		'//extensions/wikia/MediaGallery/scripts/views/gallery.js',
 		'//extensions/wikia/MediaGallery/scripts/controllers/galleries.js',
-		'//extensions/wikia/MediaGallery/scripts/controllers/index.js',
 	]
 ];
 
 $config['facebook_client_preferences_js'] = [
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis'],
+	'skin' => ['oasis', 'monobook'],
 	'assets' => [
 		'//extensions/wikia/FacebookClient/scripts/preferences.js',
+	]
+];
+
+$config['facebook_client_preferences_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis', 'monobook'],
+	'assets' => [
+		'//extensions/wikia/FacebookClient/styles/preferences.scss',
+	]
+];
+
+$config['facebook_client_special_connect'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'//extensions/wikia/FacebookClient/scripts/SpecialFacebookConnect.js',
+	]
+];
+
+// Deprecated Facebook code - remove when we've done a full switch to FacebookClient
+$config['fbconnect_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'monobook'],
+	'assets' => [
+		'//extensions/FBConnect/fbconnect.js',
 	]
 ];

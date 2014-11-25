@@ -24,6 +24,17 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
+	 * Route the view based on logged in status
+	 */
+	public function index() {
+		if ( $this->wg->User->isLoggedIn() ) {
+			$this->forward( 'UserLoginSpecialController', 'loggedIn' );
+		} else {
+			$this->forward( __CLASS__, 'signupForm' );
+		}
+	}
+
+	/**
 	 * @brief serves standalone signup page on GET.  if POSTed, parameters will be required.
 	 * @details
 	 *   on GET, template will render
@@ -44,7 +55,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string msg - result message
 	 * @responseParam string errParam - error param
 	 */
-	public function index() {
+	public function signupForm () {
 		$this->wg->Out->setPageTitle(wfMessage('usersignup-page-title')->plain());
 		$this->response->addAsset('extensions/wikia/UserLogin/css/UserSignup.scss');
 
