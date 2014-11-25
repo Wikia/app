@@ -84,13 +84,13 @@ $global-footer-vertical-spacing: 30px;
 	}
 
 	li {
-		border-left: 1px solid $global-footer-color-border;
+		border-right: 1px solid $global-footer-color-border;
 		display: inline-block;
 		line-height: 18px;
-		padding: 0 4px 0 8px;
+		padding: 0 8px 0 4px;
 		white-space: nowrap;
 
-		&:first-child {
+		&:last-child {
 			border: 0;
 		}
 	}
