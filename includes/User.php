@@ -972,7 +972,6 @@ class User {
 	 * @return Bool True if the user is logged in, false otherwise.
 	 */
 	private function loadFromSession() {
-		global $wgExternalAuthType, $wgAutocreatePolicy;
 		$result = null;
 		wfRunHooks( 'UserLoadFromSession', array( $this, &$result ) );
 		if ( $result !== null ) {
@@ -1011,12 +1010,10 @@ class User {
 		}
 
 		// wikia change start
-		if ( $wgExternalAuthType && $wgAutocreatePolicy == 'view' ) {
-			$extUser = ExternalUser::newFromCookie();
-			if ( $extUser ) {
-				$extUser->linkToLocal( $sId );
-			}
-		}
+                $extUser = ExternalUser::newFromCookie();
+                if ( $extUser ) {
+                        $extUser->linkToLocal( $sId );
+                }
 
 		$passwordCorrect = FALSE;
 		// wikia change end

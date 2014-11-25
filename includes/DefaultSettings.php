@@ -3328,16 +3328,6 @@ $wgExternalAuthType = null;
 $wgExternalAuthConf = array();
 
 /**
- * When should we automatically create local accounts when external accounts
- * already exist, if using ExternalAuth?  Can have three values: 'never',
- * 'login', 'view'.  'view' requires the external database to support cookies,
- * and implies 'login'.
- *
- * TODO: Implement 'view' (currently behaves like 'login').
- */
-$wgAutocreatePolicy = 'login';
-
-/**
  * Policies for how each preference is allowed to be changed, in the presence
  * of external authentication.  The keys are preference keys, e.g., 'password'
  * or 'emailaddress' (see Preferences.php et al.).  The value can be one of the
