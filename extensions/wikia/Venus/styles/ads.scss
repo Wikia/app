@@ -44,6 +44,18 @@
 	}
 }
 
+.bottom-ads {
+	@include clearfix;
+	margin: 0 auto;
+	width: 660px;
+
+	> .wikia-ad {
+		float: left;
+		margin: 40px 15px 30px;
+		width: 300px;
+	}
+}
+
 @media #{$small-only} {
 	.top-ads {
 		width: 100%;
