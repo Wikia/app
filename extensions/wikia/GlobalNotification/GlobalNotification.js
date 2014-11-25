@@ -34,15 +34,6 @@ var GlobalNotification = {
 	},
 
 	/**
-	 * @desc auto-hides global notification after 3 seconds
-	 * @todo: required for CON-1856 - temporary solution must be removed together with global notification redesign
-	 */
-	autoHide: function () {
-		'use strict';
-		window.setTimeout(this.hide, this.defaultTimeout);
-	},
-
-	/**
 	 * Build the notification DOM element and attach it to the DOM
 	 * @param {object} [element] Element to prepend the notification to
 	 * @param {boolean} [isModal] Whether or not a modal is present and visible on the page
