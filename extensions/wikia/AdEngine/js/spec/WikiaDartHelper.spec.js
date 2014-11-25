@@ -237,8 +237,7 @@ describe('WikiaDartHelper', function(){
 						dmn: 'wikiacom',
 						hostpre: 'www',
 						lang: 'en',
-						dis: 'large',
-						hasp: 'yes'
+						dis: 'large'
 					};
 				},
 				getCustomKeyValues: function() {
@@ -262,7 +261,6 @@ describe('WikiaDartHelper', function(){
 		expect(paramsPassed.pos).toBe('SLOT_NAME');
 		expect(paramsPassed.lang).toBe('en');
 		expect(paramsPassed.dis).toBe('large');
-		expect(paramsPassed.hasp).toBe('yes');
 		expect(paramsPassed.src).toBe('driver');
 		expect(paramsPassed.sz).toBe('100x200');
 		expect(paramsPassed.tile).toBe(3);
@@ -295,8 +293,7 @@ describe('WikiaDartHelper', function(){
 						dmn: 'wikiacom',
 						hostpre: 'www',
 						lang: 'en',
-						dis: 'large',
-						hasp: 'yes'
+						dis: 'large'
 					};
 				},
 				getCustomKeyValues: function() {
@@ -320,7 +317,6 @@ describe('WikiaDartHelper', function(){
 		expect(paramsPassed.pos).toBe('SLOT_NAME');
 		expect(paramsPassed.lang).toBe('en');
 		expect(paramsPassed.dis).toBe('large');
-		expect(paramsPassed.hasp).toBe('yes');
 		expect(paramsPassed.src).toBe('driver');
 		expect(paramsPassed.sz).toBe('100x200');
 		expect(paramsPassed.tile).toBe(3);
@@ -353,8 +349,7 @@ describe('WikiaDartHelper', function(){
 						dmn: 'wikiacom',
 						hostpre: 'www',
 						lang: 'en',
-						dis: 'large',
-						hasp: 'yes'
+						dis: 'large'
 					};
 				},
 				getCustomKeyValues: function() {
@@ -379,7 +374,6 @@ describe('WikiaDartHelper', function(){
 		expect(paramsPassed.pos).toBe('SLOT_NAME');
 		expect(paramsPassed.lang).toBe('en');
 		expect(paramsPassed.dis).toBe('large');
-		expect(paramsPassed.hasp).toBe('yes');
 		expect(paramsPassed.src).toBe('driver');
 		expect(paramsPassed.sz).toBe('100x200');
 		expect(paramsPassed.tile).toBe(3);

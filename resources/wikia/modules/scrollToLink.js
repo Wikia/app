@@ -45,7 +45,7 @@ define('wikia.scrollToLink',
 		function scrollToElement(element, offsetToScroll) {
 			var targetOffset = getOffsetTop(element);
 
-			win.scrollTo(win.pageXOffset, targetOffset + offsetToScroll);
+			win.setTimeout(function(){ win.scrollTo(win.pageXOffset, targetOffset + offsetToScroll); }, 1);
 		}
 
 		/**
