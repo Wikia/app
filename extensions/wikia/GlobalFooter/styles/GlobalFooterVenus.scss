@@ -60,7 +60,7 @@ $global-footer-vertical-spacing: 30px;
 	}
 
 	.wikia-logo {
-		@include display-inline-flex();
+		display: inline-block;
 		line-height: 0; /* Get rid of uncontrollable vertical margins for inline-block */
 		margin: 0 auto $global-footer-vertical-spacing + 5;
 	}
