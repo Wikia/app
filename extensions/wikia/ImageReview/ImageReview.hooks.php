@@ -7,7 +7,7 @@ class ImageReviewHooks {
 		\Hooks::register( 'WikiFactoryPublicStatusChange', [ $oImageReviewHooks, 'onWikiFactoryPublicStatusChange' ] );
 	}
 
-	public static function onWikiFactoryPublicStatusChange( $city_public, $city_id, $reason ) {
+	public function onWikiFactoryPublicStatusChange( $city_public, $city_id, $reason ) {
 		if ( $city_public == 0 || $city_public == -1 ) {
 			// the wiki was disabled, mark all unreviewed images as deleted
 
