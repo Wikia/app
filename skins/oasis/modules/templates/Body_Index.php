@@ -15,7 +15,6 @@
 <? else: ?>
 	<?= $app->renderView('GlobalHeader', 'Index') ?>
 <? endif ?>
-<?= $app->renderView('Notifications', 'Confirmation') ?>
 <?= $app->renderView('Ad', 'Top') ?>
 
 <?= empty($wg->WikiaSeasonsPencilUnit) ? '' : $app->renderView('WikiaSeasons', 'pencilUnit', array()); ?>
@@ -23,6 +22,7 @@
 <section id="WikiaPage" class="WikiaPage<?= empty( $wg->OasisNavV2 ) ? '' : ' V2' ?><?= !empty($isGridLayoutEnabled) ? ' WikiaGrid' : '' ?>">
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
 	<div class="WikiaPageContentWrapper">
+		<?= $app->renderView('Notifications', 'Confirmation') ?>
 		<?php
 			if ( empty( $wg->SuppressWikiHeader )) {
 				if ( empty( $wg->EnableLocalNavExt ) ) {

@@ -22,15 +22,13 @@ var GlobalNotification = {
 	 */
 	init: function () {
 		'use strict';
+
 		// If there's already a global notification on page load, set up JS
 		GlobalNotification.dom = $('.global-notification');
 		if (GlobalNotification.dom.length) {
 			this.setUpClose();
-
-			// temporary fix for CON-1856
-			// todo: must be removed together with global notification redesign
-			this.autoHide();
 		}
+
 		// Float notification (BugId:33365)
 		this.wikiaHeaderHeight = $('#WikiaHeader').height();
 	},
