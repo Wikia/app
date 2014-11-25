@@ -140,6 +140,7 @@ require([
 					'extensions/wikia/Venus/styles/modules/modalVenus.scss'
 				)
 			]).done(function() {
+				modalStylesLoaded = true;
 				callUserLoginModalShow(target);
 			});
 		} else {
