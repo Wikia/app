@@ -15,6 +15,7 @@ require([
 			activateOnClick: false
 		},
 		isTouchScreen = win.Wikia.isTouchScreen(),
+		modalStylesLoaded = false,
 		dropdown,
 		$dropdown,
 		$parent;
@@ -125,6 +126,44 @@ require([
 	} else {
 		win.delayedHover($parent[0], delayHoverParams);
 	}
+
+	/**
+	 * Show user login modal when user clicks edit link
+	 * @param {Event} event - event object
+	 * @returns {boolean}
+	 */
+	function showUserLoginModal(event) {
+		var target = event.currentTarget;
+		if (!modalStylesLoaded) {
+			$.getResources([
+				$.getSassCommonURL(
+					'extensions/wikia/Venus/styles/modules/modalVenus.scss'
+				)
+			]).done(function() {
+				modalStylesLoaded = true;
+				callUserLoginModalShow(target);
+			});
+		} else {
+			callUserLoginModalShow(target);
+		}
+
+		return false;
+	}
+
+	/**
+	 * Call userLoginModal.show function with correct params
+	 * @param {Object} target - href which was clicked
+	 */
+	function callUserLoginModalShow(target) {
+		win.UserLoginModal.show({
+			origin: 'venus-article-edit',
+			callback: function() {
+				win.location = target.href;
+			}
+		});
+	}
+
+	$dropdown.find('.force-user-login').on('click', showUserLoginModal);
 
 	trackEditAction($dropdown);
 });
