@@ -195,6 +195,8 @@ class FacebookMapModel {
 			->FROM( 'user_fbconnect' )
 			->WHERE( $column )->EQUAL_TO( $id )
 			->AND_( 'user_fb_app_id' )->IN( $fbAppId, 0 )
+			->ORDER_BY( 'user_fb_app_id' )->DESC()
+			->LIMIT( 1 )
 			->runLoop( $dbr, function ( &$data, $row ) {
 				$data[] = [
 					self::paramWikiaUserId => $row->user_id,
@@ -206,16 +208,6 @@ class FacebookMapModel {
 			} );
 
 		if ( is_array( $data ) ) {
-			// If we get more than one result back, one of them has the right app ID and the other has zero.
-			// Return the version with the app ID.
-			if ( count( $data ) > 1 ) {
-				foreach ( $data as $mapping ) {
-					if ( $mapping[self::paramAppId] == $fbAppId ) {
-						return $mapping;
-					}
-				}
-			}
-
 			return $data[0];
 		} else {
 			return null;
