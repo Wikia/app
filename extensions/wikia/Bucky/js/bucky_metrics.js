@@ -11,7 +11,8 @@ require([
 		var wgTransactionContext = window.wgTransactionContext || {};
 
 		wgTransactionContext.country = geo.getCountryCode();
-		wgTransactionContext.url = window.location.href;
+		// send URL without hash since we don't care about it and it breaks queries.
+		wgTransactionContext.url = window.location.href.split('#')[0];
 		wgTransactionContext.userAgent = window.navigator.userAgent;
 		wgTransactionContext.os = window.navigator.platform;
 		wgTransactionContext.bodySize = document.getElementsByTagName('body')[0].innerHTML.length;
