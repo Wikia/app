@@ -73,7 +73,7 @@ class FacebookClientHooks {
 
 		// Determine if we're connected already or not
 		$id = FacebookClient::getInstance()->getFacebookUserId( $user );
-		if ( empty( $id ) ) {
+		if ( $id ) {
 			$isConnected = false;
 			$prefTab     = 'fbconnect-disconnect';
 		} else {
