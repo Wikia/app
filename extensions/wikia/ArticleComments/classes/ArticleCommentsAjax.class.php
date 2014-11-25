@@ -239,8 +239,7 @@ class ArticleCommentsAjax {
 
 		if($isMobile){
 			$method = 'WikiaMobile' . $method;
-		}
-		else if ( F::app()->checkSkin( 'venus' ) ) {
+		} elseif ( F::app()->checkSkin( 'venus' ) ) {
 			$method = 'Venus' . $method;
 		}
 

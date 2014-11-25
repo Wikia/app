@@ -680,7 +680,6 @@
 				case 'oasis':
 				default:
 					styleAssets.push($.getSassCommonURL('skins/oasis/css/core/ArticleComments.scss'));
-					break;
 			}
 
 			belowTheFold = function () {

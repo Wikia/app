@@ -946,8 +946,7 @@ class ArticleComment {
 
 				if ( $app->checkSkin( 'wikiamobile' ) ) {
 					$viewName = 'WikiaMobileComment';
-				}
-				else if ( $app->checkSkin( 'venus' ) ) {
+				} elseif ( $app->checkSkin( 'venus' ) ) {
 					$viewName = 'VenusComment';
 				}
 				else {
