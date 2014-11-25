@@ -4,7 +4,7 @@
 	function Preferences() {
 		this.$connectWrapper = $('#fbConnectPreferences');
 		this.$disconnectWrapper = $('#fbDisconnectPreferences');
-		this.$disconnectLink = $('#fbDisconnectLink');
+		this.$disconnectLink = $('#fbDisconnectLink').find('a');
 		this.$connectLink = $('.sso-login-facebook');
 		return this;
 	}
