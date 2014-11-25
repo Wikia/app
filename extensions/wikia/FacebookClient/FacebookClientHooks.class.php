@@ -122,4 +122,26 @@ class FacebookClientHooks {
 
 		return true;
 	}
+
+	/**
+	 * Handle confirmation message from Facebook Connect
+	 */
+	public static function onSkinTemplatePageBeforeUserMsg( &$html ) {
+		if ( F::app()->checkSkin( 'oasis' ) ) {
+			$fbStatus = F::app()->wg->Request->getVal( 'fbconnected' );
+
+			if ( $fbStatus  == '1' ) {
+				// note - sometimes returns user id even if user is logged out or disconnected from facebook (UC-144)
+				// doesn't matter so much for our purposes here though
+				$id = FacebookClient::getInstance()->getUserId();
+				if ( $id > 0 ) {
+					NotificationsController::addConfirmation( wfMessage( 'fbconnect-connect-msg' )->plain() );
+				}
+			}
+		}
+
+		return true;
+	}
+
+
 }

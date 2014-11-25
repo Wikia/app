@@ -122,12 +122,6 @@ class NotificationsController extends WikiaController {
 	public function executeConfirmation() {
 		wfProfileIn(__METHOD__);
 
-		// call hook to trigger user messages from extensions
-		#wfRunHooks('SkinTemplatePageBeforeUserMsg', array(&$ntl));
-
-		// add testing confirmation
-		# self::addConfirmation('test');
-
 		if (!empty($_SESSION[self::SESSION_KEY])) {
 			$entry = $_SESSION[self::SESSION_KEY];
 
@@ -303,11 +297,11 @@ class NotificationsController extends WikiaController {
 
 	/**
 	 * Handle confirmations from Facebook Connect
+	 * @todo: Remove this function when we switch over to wgEnableFacebookClientExt
 	 */
 	public static function addFacebookConnectConfirmation(&$html) {
 		wfProfileIn(__METHOD__);
 		global $wgRequest, $wgUser;
-
 
 		// FBConnect messages
 		if ( F::app()->checkSkin( 'oasis' ) && class_exists('FBConnectHooks')) {
