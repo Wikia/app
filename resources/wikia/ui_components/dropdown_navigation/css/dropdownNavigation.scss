@@ -1,44 +1,83 @@
+@import 'skins/shared/mixins/arrow';
 @import 'skins/shared/color';
+@import 'extensions/wikia/Venus/styles/variables';
 
 $dropdown-width: 200px;
+$dropdown-item-padding: 10px;
+
+.wikia-dropdown-nav-wrapper {
+	display: none;
+	position: absolute;
+	top: 0;
+	text-align: left;
+	width: $dropdown-width * 2;
+
+	.active > & {
+		display: block;
+	}
+}
 
 .wikia-dropdown-nav {
 	border: 1px solid $color-page-border-subtle;
-	display: none;
+	box-sizing: border-box;
+	float: left;
 	list-style-type: none;
 	margin: 0;
 	overflow: hidden;
 	overflow-y: auto;
 	padding: 0;
-	position: absolute;
-	text-align: left;
-	top: 0;
+	width: $dropdown-width;
 
-	&.active {
-		display: block;
-	}
+	.wikia-dropdown-nav-subsections-wrapper & {
+		border-left: none;
+		display: none;
 
-	li {
-		background-color: $color-page;
-		width: $dropdown-width;
-
-		&:not(:first-child) {
-			border-top: 1px solid $color-page-border-subtle;
+		&.active {
+			display: block
 		}
+
+		a:hover {
+			background-color: $color-links;
+			color: $color-page;
+		}
+	}
+}
+
+.wikia-dropdown-nav-item {
+	background-color: $color-page;
+
+	&:not(:first-child) {
+		border-top: 1px solid $color-page-border-subtle;
 	}
 
 	a {
 		display: block;
 		overflow: hidden;
-		padding: 10px;
+		padding: $dropdown-item-padding;
+		position: relative;
 		text-decoration: none;
 		text-overflow: ellipsis;
 		white-space: nowrap;
+	}
 
-		&:hover,
-		&.active {
-			background-color: $color-links;
-			color: $color-page;
+	&.active a {
+		background-color: $color-links;
+		color: $color-page;
+	}
+
+	&[data-id] a {
+		padding-right: $dropdown-item-padding * 3;
+
+		&:after {
+			@include arrow(4px, $color-links, 'right');
+			content: '';
+			position: absolute;
+			right: $dropdown-item-padding;
+			top: 19px
 		}
+	}
+
+	&.active[data-id] a:after {
+		@include arrow(4px, $color-page, 'right');
 	}
 }

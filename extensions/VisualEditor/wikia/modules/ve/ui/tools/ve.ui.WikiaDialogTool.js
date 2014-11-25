@@ -210,3 +210,29 @@ ve.ui.WikiaMWReferenceListDialogTool = function VEUIWikiaMWReferenceListDialogTo
 OO.inheritClass( ve.ui.WikiaMWReferenceListDialogTool, ve.ui.MWReferenceListDialogTool );
 ve.ui.WikiaMWReferenceListDialogTool.static.contextIcon = 'edit';
 ve.ui.toolFactory.register( ve.ui.WikiaMWReferenceListDialogTool );
+
+/**
+ * UserInterface WikiaSingleMediaDialog tool.
+ *
+ * @class
+ * @extends ve.ui.DialogTool
+ *
+ * @constructor
+ * @param {OO.ui.ToolGroup} toolGroup
+ * @param {Object} [config] Config options
+ */
+ve.ui.WikiaSingleMediaDialogTool = function VeUiWikiaSingleMediaDialogTool( toolGroup, config ) {
+	// Parent constructor
+	ve.ui.WikiaSingleMediaDialogTool.super.call( this, toolGroup, config );
+};
+
+OO.inheritClass( ve.ui.WikiaSingleMediaDialogTool, ve.ui.DialogTool );
+
+ve.ui.WikiaSingleMediaDialogTool.static.name = 'wikiaSingleMedia';
+ve.ui.WikiaSingleMediaDialogTool.static.group = 'object';
+ve.ui.WikiaSingleMediaDialogTool.static.icon = 'gallery';
+ve.ui.WikiaSingleMediaDialogTool.static.title =
+	OO.ui.deferMsg( 'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' );
+ve.ui.WikiaSingleMediaDialogTool.static.commandName = 'wikiaSingleMedia';
+
+ve.ui.toolFactory.register( ve.ui.WikiaSingleMediaDialogTool );

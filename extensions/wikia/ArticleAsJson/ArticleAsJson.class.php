@@ -90,8 +90,8 @@ class ArticleAsJson extends WikiaService {
 				if ( !empty( $caption ) ) {
 					$caption = $parser->parse( $caption, $title, $parserOptions, false )->getText();
 				}
-
-				$media[] = self::createMediaObj( $details, $image['name'], $caption, $image['linkhref'] );
+				$linkHref = isset( $image['linkhref'] ) ? $image['linkhref'] : null;
+				$media[] = self::createMediaObj( $details, $image['name'], $caption, $linkHref );
 
 				self::addUserObj($details);
 			}
@@ -156,23 +156,26 @@ class ArticleAsJson extends WikiaService {
 
 			$userName = $parser->getRevisionUser();
 
-			if ( User::isIP( $userName ) ) {
+			if ( !empty( $userName ) ) {
+				if ( User::isIP( $userName ) ) {
 
-				self::addUserObj( [
-					'userId' => 0,
-					'userName' => $userName,
-					'userThumbUrl' => AvatarService::getAvatarUrl( $userName, AvatarService::AVATAR_SIZE_MEDIUM ),
-					'userPageUrl' => Title::newFromText( $userName )->getLocalURL()
-				] );
-			} else {
-				$user = User::newFromName( $userName );
-
-				self::addUserObj( [
-					'userId' => $user->getId(),
-					'userName' => $user->getName(),
-					'userThumbUrl' => AvatarService::getAvatarUrl( $user, AvatarService::AVATAR_SIZE_MEDIUM ),
-					'userPageUrl' => $user->getUserPage()->getLocalURL()
-				] );
+					self::addUserObj( [
+						'userId' => 0,
+						'userName' => $userName,
+						'userThumbUrl' => AvatarService::getAvatarUrl( $userName, AvatarService::AVATAR_SIZE_MEDIUM ),
+						'userPageUrl' => Title::newFromText( $userName )->getLocalURL()
+					] );
+				} else {
+					$user = User::newFromName( $userName );
+					if ( $user instanceof User ) {
+						self::addUserObj( [
+							'userId' => $user->getId(),
+							'userName' => $user->getName(),
+							'userThumbUrl' => AvatarService::getAvatarUrl( $user, AvatarService::AVATAR_SIZE_MEDIUM ),
+							'userPageUrl' => $user->getUserPage()->getLocalURL()
+						] );
+					}
+				}
 			}
 
 			//because we take caption out of main parser flow
