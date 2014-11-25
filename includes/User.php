@@ -1009,10 +1009,13 @@ class User {
 			return false;
 		}
 
-		// wikia change start
-                $extUser = ExternalUser::newFromCookie();
-                if ( $extUser ) {
-                        $extUser->linkToLocal( $sId );
+                // Wikia change start
+                global $wgExternalAuthType;
+                if ( $wgExternalAuthType ) { // in other words: unless Uncyclopedia
+                    $extUser = ExternalUser::newFromCookie();
+                    if ( $extUser ) {
+                            $extUser->linkToLocal( $sId );
+                    }
                 }
 
 		$passwordCorrect = FALSE;
