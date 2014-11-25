@@ -4,7 +4,7 @@ if ( empty( $code ) ) {
 } else {
 ?>
 <div class="UserLogin UserConfirm">
-	<h2 class="subheading"><?= wfMessage( 'wikiaconfirmemail-subheading' )->plain() ?></h2>
+	<h2 class="subheading"><?= wfMessage( 'wikiaconfirmemail-subheading' )->escaped() ?></h2>
 <?php
 	$form = [
 		'method' => 'post',
@@ -27,7 +27,7 @@ if ( empty( $code ) ) {
 			[
 				'type' => 'text',
 				'name' => 'username',
-				'label' => wfMessage( 'wikiaconfirmemail-username' )->plain(),
+				'label' => wfMessage( 'wikiaconfirmemail-username' )->escaped(),
 				'value' => Sanitizer::encodeAttribute( $username ),
 				'isInvalid' => !empty( $errParam ) && $errParam === 'username',
 				'errorMsg' => !empty( $resultMessage ) ? $resultMessage : '',
@@ -43,7 +43,7 @@ if ( empty( $code ) ) {
 		'submits' => [
 			[
 				'name' => 'action',
-				'value' => wfMessage( 'wikiaconfirmemail-login-button' )->plain(),
+				'value' => wfMessage( 'wikiaconfirmemail-login-button' )->escaped(),
 				'class' => 'big login-button',
 			]
 		]
