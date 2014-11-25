@@ -35,6 +35,15 @@ require(
 			$(win).on('hashchange', hashChangeHandler);
 		}
 
+		/**
+		 * @desc Function for third party extensions - bleed it to window
+		 * @param {Element} element
+		 */
+		win.GlobalNavigationScrollToElement = function(element) {
+			scrollToLink.scrollToElement(element, offset)
+		};
+
+
 		// bind to DOMReady
 		$(initScrollToLink);
 });

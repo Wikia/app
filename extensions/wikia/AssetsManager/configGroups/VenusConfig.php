@@ -34,6 +34,11 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//resources/wikia/modules/stickyElement.js',
 		'//resources/wikia/modules/nodeFinder.js',
 
+		//It's needs to be included like this.
+		//If we include group AssetManager is loading nirvana twice
+		'//resources/wikia/modules/uifactory.js',
+		'//resources/wikia/modules/uicomponent.js',
+
 		//tracker
 		'#group_tracker_js',
 
@@ -110,6 +115,10 @@ $VenusConfig[ 'venus_body_js' ] = [
 
 		//video recommendations
 		'#group_video_recommendations_js',
+
+		// ui components
+		'//resources/wikia/modules/uifactory.js',
+		'//resources/wikia/modules/uicomponent.js'
 	]
 ];
 
@@ -143,7 +152,9 @@ $VenusConfig['local_navigation_js'] = [
 	'skin' => ['venus', 'oasis'],
 	'assets' => [
 		'//extensions/wikia/LocalNavigation/scripts/LocalNavigationMenu.js',
-		'//extensions/wikia/LocalNavigation/scripts/LocalNavigationTracking.js'
+		'//extensions/wikia/LocalNavigation/scripts/LocalNavigationTracking.js',
+		// TODO: should be lazy loaded CON-2169
+		'//extensions/wikia/CreatePage/js/CreatePage.js',
 	]
 ];
 
@@ -209,14 +220,20 @@ $VenusConfig[ 'article_navigation_js' ] = [
 	'assets' => [
 		'//extensions/wikia/ArticleNavigation/scripts/articleNavigation.js',
 		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
-		'//resources/wikia/modules/uifactory.js',
-		'//resources/wikia/modules/uicomponent.js',
 		'//extensions/wikia/UserTools/scripts/UserTools.js',
 		'//extensions/wikia/ArticleNavigation/scripts/articleNavUserTools.js',
 		'//extensions/wikia/ArticleNavigation/scripts/edit.js',
 		'//extensions/wikia/ArticleNavigation/scripts/sticky.js',
 		'//extensions/wikia/ArticleNavigation/scripts/share.js',
 		'//extensions/wikia/ArticleNavigation/scripts/init.js',
+	]
+];
+
+$VenusConfig[ 'article_js' ] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'venus' ],
+	'assets' => [
+		'//extensions/wikia/UserLogin/js/UserLoginModal.js'
 	]
 ];
 
@@ -273,4 +290,3 @@ $VenusConfig['imglzy_js'] = [
 		'//extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
 	]
 ];
-
