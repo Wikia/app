@@ -28,6 +28,10 @@ ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( data, config
 	this.$back = this.$( '<div>' );
 	this.$front = this.$( '<div>' );
 	this.$thumb = this.$back.add( this.$front );
+	this.$metaData = this.$( '<div>' );
+	this.$preview = this.$( '<div>' );
+	this.$previewIcon = this.$( '<span>' );
+	this.$previewText = this.$( '<span>' );
 	// TODO: Presence of checkbox perhaps should depend on the configuration
 	this.check = new OO.ui.ButtonWidget( {
 		'$': this.$,
@@ -42,12 +46,27 @@ ve.ui.WikiaMediaOptionWidget = function VeUiWikiaMediaOptionWidget( data, config
 	this.check.on( 'click', ve.bind( function () {
 		this.emit( 'check', this );
 	}, this ) );
+	this.$metaData.on( 'mousedown', ve.bind( function ( event ) {
+		this.emit( 'metadata', this, event );
+	}, this ) );
+	this.$label.on( 'mousedown', ve.bind( function ( event ) {
+		this.emit( 'label', this, event );
+	}, this ) );
 
 	// Initialization
 	this.loadThumbnail();
 	this.setLabel( this.mwTitle );
 	this.$label.attr( 'title', this.mwTitle );
 	this.check.$element.addClass( 've-ui-wikiaMediaOptionWidget-check' );
+	this.$previewIcon.addClass( 've-ui-wikiaMediaOptionWidget-preview-icon' );
+	this.$previewText.addClass( 've-ui-wikiaMediaOptionWidget-preview-text' );
+	this.$preview
+		.addClass( 've-ui-wikiaMediaOptionWidget-preview' )
+		.append( this.$previewIcon, this.$previewText );
+	this.$metaData
+		.addClass( 've-ui-wikiaMediaOptionWidget-metaData' )
+		.append( this.$preview )
+		.insertBefore( this.$label );
 	this.$element
 		.addClass( 've-ui-mwMediaResultWidget ve-ui-texture-pending ' + this.data.type )
 		.css( { 'width': this.size, 'height': this.size } )

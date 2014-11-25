@@ -4,7 +4,7 @@
 @import 'extensions/wikia/Venus/styles/typographyMixins';
 
 .search-container {
-	@include grid-column-width('medium', 7, 2 * $medium-grid-gutter);
+	@include grid-column-width('medium', 7, 2 * $medium-grid-gutter - 1px);
 }
 
 .search-form-wrapper {
@@ -149,7 +149,7 @@
 
 @media #{$small-only} {
 	.search-container {
-		@include grid-column-width('small', 7, 2 * $small-grid-gutter);
+		@include grid-column-width('small', 7, 2 * $small-grid-gutter - 1px);
 	}
 
 	.search-form-wrapper {
@@ -159,7 +159,7 @@
 
 @media #{$large-up} {
 	.search-container {
-		@include grid-column-width('large', 7, 2 * $large-grid-gutter);
+		@include grid-column-width('large', 7, 2 * $large-grid-gutter - 1px);
 	}
 
 	.search-form-wrapper {
