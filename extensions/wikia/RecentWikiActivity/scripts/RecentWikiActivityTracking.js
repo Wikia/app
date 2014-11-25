@@ -1,7 +1,11 @@
 require(['wikia.document', 'wikia.tracker'], function(d, tracker){
 	'use strict';
 
-	var recentWikiActivity = d.getElementById('recentWikiActivity');
+	var recentWikiActivity = d.getElementById('recentWikiActivity'),
+		track = tracker.buildTrackingFunction({
+			action: tracker.ACTIONS.CLICK,
+			trackingMethod: 'ga'
+		});
 
 	function trackRecentWikiActivity(e) {
 		var label,
@@ -22,9 +26,7 @@ require(['wikia.document', 'wikia.tracker'], function(d, tracker){
 		}
 
 		if (label) {
-			tracker.track({
-				action: tracker.ACTIONS.CLICK,
-				trackingMethod: 'ga',
+			track({
 				browserEvent: e,
 				category: 'recent-wiki-activity',
 				label: label
