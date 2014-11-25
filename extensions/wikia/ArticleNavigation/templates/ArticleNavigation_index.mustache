@@ -1,14 +1,15 @@
-<nav class="article-navigation {{share_type}}-share">
+<nav class="article-navigation">
 	<ul>
 		<li>
 			<span class="nav-icon toc" id="articleNavToc">&#xF001;</span>
 		</li>
 		<li>
-			<span class="nav-icon edit" id="articleNavEdit">&#xF002;</span>
+			<span class="nav-icon edit" id="articleEditActions">&#xF002;</span>
+			{{{editActionsDropdown}}}
 		</li>
 		<li>
-			<span class="nav-icon settings" id="articleNavSettings">&#xF003;</span>
+			<span class="nav-icon settings" id="articleNavSettings" data-usertools="{{userTools}}">&#xF003;</span>
 		</li>
-        {{{share}}}
+		{{{share}}}
 	</ul>
 </nav>

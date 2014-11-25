@@ -1,12 +1,14 @@
 /*global require*/
 require(
-	['wikia.window', 'wikia.document', 'jquery', 'venus.lightboxLoader', 'scrollableTables',  'wikia.venusToc'],
-	function (win, doc, $, lightboxLoader, scrollableTables, tocModule) {
+	['wikia.window', 'wikia.document', 'jquery', 'venus.lightboxLoader', 'scrollableTables'],
+	function (win, doc, $, lightboxLoader, scrollableTables) {
 		'use strict';
 
 		var $win = $(win);
 
-		/** Look for all tables on article and add or remove scrollbar if needed */
+		/**
+		 * @desc Look for all tables on article and add or remove scrollbar if needed
+		 */
 		function scanTables() {
 			var innerArticle = doc.getElementById('mw-content-text'),
 				tables = innerArticle.getElementsByClassName('article-table');
@@ -15,10 +17,6 @@ require(
 				scrollableTables.adjustScroll(table, innerArticle.offsetWidth);
 			});
 		}
-
-		// initialize TOC in left navigation
-		// Right now it is commented out because it is breaking pages when headers are not present
-//		tocModule.init('leftNavToc');
 
 		//scan for tables in article and if table is too wide add scrollbar
 		scanTables();
