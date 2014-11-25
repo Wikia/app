@@ -1,6 +1,6 @@
 require([
-	'wikia.document', 'wikia.stickyElement', 'venus.variables', 'wikia.tracker'
-], function(doc, stickyElement, v) {
+	'wikia.document', 'wikia.stickyElement', 'venus.layout'
+], function(doc, stickyElement, layout) {
 	'use strict';
 
 	var navigationElement = doc.getElementsByClassName('article-navigation')[0],
@@ -45,7 +45,7 @@ require([
 		sourceElement: navigationElement,
 		alignToElement: boundBoxElement,
 		topFixed: globalNavigationHeight + additionalTopOffset,
-		minWidth: v.breakpointSmallMin,
+		minWidth: layout.breakpoints.smallMin,
 		adjustFunc: adjustValueFunction,
 		adjustPositionFunc: adjustPositionFunction
 	});

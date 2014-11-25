@@ -35,6 +35,7 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//resources/wikia/modules/abTest.js',
 		'//resources/wikia/modules/underscore.js',
 		'//resources/wikia/modules/stickyElement.js',
+		'//resources/wikia/modules/nodeFinder.js',
 
 		//tracker
 		'#group_tracker_js',
@@ -77,8 +78,9 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 
 		'//extensions/wikia/Venus/scripts/isTouchScreen.js',
-		'//extensions/wikia/Venus/scripts/variables.js',
+		'//extensions/wikia/Venus/scripts/layout.js',
 		'//resources/wikia/modules/dom.js',
+		'//resources/wikia/modules/arrayHelper.js',
 
 		// BackgroundChanger
 		'//extensions/wikia/Venus/scripts/BackgroundChanger.js',
@@ -187,7 +189,7 @@ $VenusConfig[ 'global_navigation_js' ] = [
 		'//resources/wikia/libraries/delayed-hover/js-delayed-hover.js',
 		'//resources/wikia/modules/scrollToLink.js',
 		'//skins/shared/scripts/transparent-out.js',
-		'//extensions/wikia/Venus/scripts/variables.js',
+		'//extensions/wikia/Venus/scripts/layout.js',
 		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationiOSScrollFix.js',
 		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationScrollToLink.js',
 		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationTracking.js',
@@ -244,8 +246,16 @@ $VenusConfig[ 'video_recommendations_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'venus' ],
 	'assets' => [
-		'//extensions/wikia/Venus/scripts/modules/nodeFinder.module.js',
 		'//extensions/wikia/Venus/scripts/videoRecommendations.js'
+	]
+];
+
+$VenusConfig[ 'recommendations_view_js' ] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'venus' ],
+	'assets' => [
+		'//extensions/wikia/Recommendations/scripts/view.js',
+		'//extensions/wikia/Recommendations/scripts/tracking.js',
 	]
 ];
 
