@@ -620,10 +620,16 @@
 
 			$element.find('blockquote').addClass('current');
 
-			if (elementTop < docViewTop || elementTop > docViewBottom) {
-				$('html, body').animate({
-					scrollTop: elementTop
-				}, 1);
+			// if new GlobalNavigation is enabled and it's fixed...
+			if ($('#globalNavigation').length && $('#globalNavigation').css('position') === 'fixed') {
+				window.GlobalNavigationScrollToElement(element);
+			} else {
+				// in any other case
+				if (elementTop < docViewTop || elementTop > docViewBottom) {
+					$('html, body').animate({
+						scrollTop: elementTop
+					}, 1);
+				}
 			}
 		}
 	};
