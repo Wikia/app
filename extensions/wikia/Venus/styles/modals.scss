@@ -5,14 +5,6 @@
 @import 'skins/shared/styles/buttons/buttons-facebook';
 @import 'extensions/wikia/WikiaStyleGuide/css/Form';
 
-.wikia-button {
-	.photo {
-		background-color: transparent;
-		background-image: url('/extensions/wikia/Venus/images/gallery_add_photo.png'); /* base64 */
-		background-repeat: no-repeat;
-	}
-}
-
 .UserLoginModal {
 	.wikia-button .facebook {
 		background-image: url('/extensions/wikia/UserLogin/images/facebook_icon.png'); /* base64 */
