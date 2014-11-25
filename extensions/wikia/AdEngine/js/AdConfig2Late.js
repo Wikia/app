@@ -12,8 +12,8 @@ define('ext.wikia.adEngine.adConfigLate', [
 	'ext.wikia.adEngine.provider.liftium',
 	'ext.wikia.adEngine.provider.directGpt',
 	'ext.wikia.adEngine.provider.remnantGpt',
-	'ext.wikia.adEngine.provider.taboola',
 	'ext.wikia.adEngine.provider.sevenOneMedia',
+	require.optional('ext.wikia.adEngine.provider.taboola'),
 	require.optional('wikia.abTest')
 ], function (
 	// regular dependencies
@@ -28,8 +28,8 @@ define('ext.wikia.adEngine.adConfigLate', [
 	adProviderLiftium,
 	adProviderDirectGpt,
 	adProviderRemnantGpt,
-	adProviderTaboola,
 	adProviderSevenOneMedia, // TODO: move this to the early queue (remove jQuery dependency first)
+	adProviderTaboola,
 	abTest
 ) {
 	'use strict';
@@ -77,7 +77,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 			}
 		}
 
-		if (context.providers.taboola && adProviderTaboola.canHandleSlot(slotname)) {
+		if (context.providers.taboola && adProviderTaboola && adProviderTaboola.canHandleSlot(slotname)) {
 			return [adProviderTaboola];
 		}
 
