@@ -557,7 +557,7 @@ class SpecialConnect extends SpecialPage {
 		$wikiaUser = \User::newFromName( $name );
 		if ( ! $wikiaUser instanceof \User ) {
 			// Same treatment as before
-			$this->sendPage( 'chooseNameForm', 'wrongpassword' );
+			$this->sendPage( 'chooseNameForm', 'noname' );
 			wfProfileOut( __METHOD__ );
 			return;
 		}
