@@ -46,8 +46,8 @@ button {
 	img {
 		vertical-align: text-bottom;
 		&.chevron {
-			vertical-align: middle;
 			margin-top: 1px;
+			vertical-align: middle;
 		}
 	}
 	&.secondary {
@@ -69,8 +69,8 @@ button {
 	}
 	&.big {
 		font-size: 18px;
-		line-height: 23px;
 		height: 40px;
+		line-height: 23px;
 	}
 	// BugId:19314 - fix for Firefox 4+
 	// @see https://developer.mozilla.org/en/CSS/%3A-moz-focusring
@@ -99,6 +99,6 @@ input[type="submit"]::-moz-focus-inner,
 input[type="reset"]::-moz-focus-inner,
 input[type="button"]::-moz-focus-inner,
 button::-moz-focus-inner {
-	padding: 0;
 	border: 0;
+	padding: 0;
 }
