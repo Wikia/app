@@ -29,9 +29,6 @@ class ArticleNavigationTest extends WikiaBaseTest {
 				[['type' => 'disabled', 'href' => 'bar', 'caption' => 'foo-bar', 'tracker-name' => 'fizz']],
 				[],
 			], [
-				[['type' => 'foo', 'caption' => 'foo-bar', 'tracker-name' => 'fizz']],
-				[],
-			], [
 				[['type' => 'foo', 'href' => 'bar', 'tracker-name' => 'fizz']],
 				[],
 			], [
