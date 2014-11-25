@@ -34,8 +34,10 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//resources/wikia/modules/stickyElement.js',
 		'//resources/wikia/modules/nodeFinder.js',
 
-		//ui repos
-		'#group_ui_repo_api_js',
+		//It's needs to be included like this.
+		//If we include group AssetManager is loading nirvana twice
+		'//resources/wikia/modules/uifactory.js',
+		'//resources/wikia/modules/uicomponent.js',
 
 		//tracker
 		'#group_tracker_js',
