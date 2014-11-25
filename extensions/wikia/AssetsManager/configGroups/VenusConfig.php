@@ -256,14 +256,3 @@ $VenusConfig['imglzy_js'] = [
 		'//extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
 	]
 ];
-
-/* UI repo JS API */
-$VenusConfig['ui_repo_api_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//resources/wikia/modules/nirvana.js',
-		'//resources/wikia/modules/uifactory.js',
-		'//resources/wikia/modules/uicomponent.js',
-	)
-);
-
