@@ -119,9 +119,10 @@ class ArticleNavigationController extends WikiaController {
 		$protocol = ( !empty( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443 ) ? 'https://' : 'http://';
 		$location = $protocol . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
 		$services = [];
+		$lang = $this->helper->getUserLanguageCode( $this->request );
 
 		foreach ( $wgArticleNavigationShareServices as $service ) {
-			if ( array_key_exists( 'url', $service ) && array_key_exists( 'name', $service ) ) {
+			if ( $this->helper->isValidShareService( $service, $lang ) ) {
 				$service['href'] = str_replace( '$1', urlencode( $location ), $service['url'] );
 				$service['nameCased'] = ucfirst( $service['name'] );
 
