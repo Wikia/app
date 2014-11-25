@@ -153,8 +153,8 @@ class FacebookClientController extends WikiaController {
 		}
 
 		// Create user mapping
-		$mappingCreated = \FacebookMapModel::createUserMapping( $wg->User->getId(), $fbUserId );
-		if ( !$mappingCreated ) {
+		$mapping = \FacebookMapModel::createUserMapping( $wg->User->getId(), $fbUserId );
+		if ( empty( $mapping ) ) {
 			$this->status = 'error';
 			return true;
 		}

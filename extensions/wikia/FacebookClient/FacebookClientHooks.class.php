@@ -72,13 +72,13 @@ class FacebookClientHooks {
 	static function GetPreferences( $user, &$preferences ) {
 
 		// Determine if we're connected already or not
-		$ids = FacebookClient::getInstance()->getFacebookUserIds( $user );
-		if ( count( $ids ) > 0 ) {
+		$id = FacebookClient::getInstance()->getFacebookUserId( $user );
+		if ( empty( $id ) ) {
+			$isConnected = false;
+			$prefTab     = 'fbconnect-disconnect';
+		} else {
 			$isConnected = true;
 			$prefTab = 'fbconnect-connect';
-		} else {
-			$isConnected = false;
-			$prefTab = 'fbconnect-disconnect';
 		}
 
 		$html = F::app()->renderView( 'FacebookClientController', 'preferences', [ 'isConnected' => $isConnected ] );
