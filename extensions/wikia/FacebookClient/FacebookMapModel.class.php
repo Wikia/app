@@ -207,11 +207,7 @@ class FacebookMapModel {
 				];
 			} );
 
-		if ( is_array( $data ) ) {
-			return $data[0];
-		} else {
-			return null;
-		}
+		return is_array( $data ) ? $data[0] : null;
 	}
 
 	private static function generateMemKey( array $params = [] ) {
