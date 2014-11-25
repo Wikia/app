@@ -605,6 +605,7 @@ include_once( "$IP/extensions/wikia/FilePage/FilePage.setup.php" );
 include_once( "$IP/extensions/wikia/CityVisualization/CityVisualization.setup.php" );
 include_once( "$IP/extensions/wikia/Thumbnails/Thumbnails.setup.php" );
 include_once( "$IP/extensions/wikia/InstantGlobals/InstantGlobals.setup.php" );
+include_once( "$IP/extensions/wikia/UserTools/UserTools.setup.php" );
 
 /**
  * @name $wgSkipSkins
