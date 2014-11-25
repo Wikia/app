@@ -371,6 +371,17 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 			}
 		}
 	}
+
+	/* line below local navigation when hero unit not enabled */
+	&::after {
+		@include grid-column-width('medium', 8);
+
+		border-bottom: solid 1px $color-page-border;
+		bottom: 0;
+		content: ' ';
+		left: 0;
+		position: absolute;
+	}
 }
 
 @media #{$small-only} {
@@ -390,6 +401,10 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 					@include grid-column-max-width('small', 3);
 				}
 			}
+		}
+
+		&::after {
+			@include grid-column-width('small', 8);
 		}
 	}
 }
@@ -411,6 +426,10 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 					@include grid-column-max-width('large', 3);
 				}
 			}
+		}
+
+		&::after {
+			@include grid-column-width('large', 8);
 		}
 	}
 }
