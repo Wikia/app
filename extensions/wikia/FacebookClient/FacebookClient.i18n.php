@@ -60,7 +60,7 @@ The Wikia Community Team',
 	'fbconnect-canceltext' => 'The previous action was cancelled by the user.',
 	'fbconnect-preferences-connected' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
 	'fbconnect-preferences-connected-error' => "We're sorry, we couldn't complete your connection. Please make sure you are logged in to your Wikia account and have given Wikia permission to connect with Facebook.",
-	'fbconnect-connect-msg' => "Congratulations! Your Wikia and Facebook accounts are now connected.",
+	'fbconnect-connect-msg' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
 ];
 
 /**
