@@ -6,8 +6,6 @@
  *
  */
 
-$dir = dirname(__FILE__) . '/';
-
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Zenbox',
 	'author' => 'Damian Jóźwiak',
