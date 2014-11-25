@@ -70,6 +70,21 @@ class CommentsLikesController extends WikiaController {
 		return $commentsTooltip;
 	}
 
+	/**
+	 * Format provided integer using one of oasis messages
+	 * @param Integer $count - number of comments/talk pages
+	 * @return String - formatted count
+	 */
+	private function formatCount($count) {
+		if ($count > 999999) {
+			return $formattedComments = wfMessage('oasis-page-header-comments-m', floor($count / 1000000))->text();
+		}
+		else if ($count > 999) {
+			return $formattedComments = wfMessage('oasis-page-header-comments-k', floor($count / 1000))->text();
+		}
+		return $count;
+	}
+
 	public function executeIndex($data) {
 		wfProfileIn(__METHOD__);
 		global $wgTitle, $wgContentNamespaces, $wgExtraNamespacesLocal;
@@ -93,14 +108,7 @@ class CommentsLikesController extends WikiaController {
 			$this->comments = $data['comments'];
 
 			// format number of comments (1200 -> 1k, 9999 -> 9k, 1.300.000 -> 1M)
-			$this->formattedComments = $this->comments;
-
-			if ($this->comments > 999999) {
-				$this->formattedComments = wfMsg('oasis-page-header-comments-m', floor($this->comments / 1000000));
-			}
-			else if ($this->comments > 999) {
-				$this->formattedComments = wfMsg('oasis-page-header-comments-k', floor($this->comments / 1000));
-			}
+			$this->formattedComments = $this->formatCount($this->comments);
 
 			$this->commentsLink = $this->getCommentsLink();
 			$this->commentsTooltip = $this->getCommentsTooltip();
@@ -119,5 +127,29 @@ class CommentsLikesController extends WikiaController {
 		}
 
 		wfProfileOut(__METHOD__);
+	}
+
+	public function getData() {
+		global $wgTitle;
+
+		wfProfileIn(__METHOD__);
+
+		$this->contextTitle = $wgTitle;
+
+		$count = $this->request->getVal('count');
+		$formattedCount = $this->formatCount($count);
+		$href = $this->getCommentsLink();
+		$tooltip = $this->getCommentsTooltip();
+		$mgsKey = $this->checkArticleComments() ? 'oasis-page-header-comments' : 'oasis-page-header-talk';
+		$title = wfMessage($mgsKey)->text();
+
+		wfProfileOut(__METHOD__);
+
+		$this->response->setVal('data', [
+			'href' => $href,
+			'tooltip' => $tooltip,
+			'formattedCount' => $formattedCount,
+			'title' => $title
+		]);
 	}
 }
