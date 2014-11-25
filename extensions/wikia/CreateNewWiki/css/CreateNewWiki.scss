@@ -175,68 +175,6 @@ $color-borders: #CECECE;
 	}
 }
 
-#Auth {
-	display: none;
-	@if ( $responsive-layout-enabled ) {
-		width: auto;
-	} @else {
-		width: 700px;
-	}
-	.login-msg {
-		display: none;
-		text-align: right;
-		.fb_button {
-			clear: left;
-		}
-	}
-	.signup {
-		display: none;
-	}
-	.signup-msg {
-	}
-	.signup-msg,
-	.login-msg {
-		left: 473px;
-		position: absolute;
-		top: 95px;
-	}
-	.fb_button {
-
-	}
-	nav {
-		.signup {
-			display: none;
-		}
-	}
-	.modalToolbar {
-		display: none;
-	}
-	.facebook.login {
-		@include clearfix;
-		float: left;
-		margin: -40px 0 0 67px;
-		padding-bottom: 10px;
-		text-align: center;
-		>span {
-			display: block;
-			margin: 6px 0;
-			text-align: center;
-		}
-	}
-	.plain {
-		font-size: 12px;
-	}
-	.captcha {
-		p:first-child {
-			height: 0;
-			float: right;
-			img {
-				margin-right: 67px;
-			}
-		}
-	}
-}
-
 #AjaxLoginBox {
 	margin-bottom: 20px;
 }
