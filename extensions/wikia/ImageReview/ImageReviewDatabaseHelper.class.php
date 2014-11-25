@@ -11,14 +11,13 @@ class ImageReviewDatabaseHelper {
 
 	/**
 	 * Query selecting images populating a list
-	 * @param  DatabaseMysql $oDB     A Dataware DB object 
 	 * @param  integer       $iState  A state to select
 	 * @param  string        $sOrder  Sorting order
 	 * @param  integer       $iLimit  SQL limit of queried images
 	 * @return ResultWrapper          Query's results
 	 */
-	public function selectImagesForList( DatabaseMysql $oDB,
-		$iState = ImageReviewStatuses::STATE_UNREVIEWED, $sOrder, $iLimit ) {
+	public function selectImagesForList( $sOrder, $iLimit, $iState = ImageReviewStatuses::STATE_UNREVIEWED ) {
+		$oDB = $oDB = $this->getDatawareDB( DB_SLAVE );
 
 		$oResults = $oDB->query('
 			SELECT pages.page_title_lower, image_review.wiki_id, image_review.page_id, image_review.state, image_review.flags, image_review.priority, image_review.last_edited
@@ -37,12 +36,13 @@ class ImageReviewDatabaseHelper {
 
 	/**
 	 * Query updating a state of a batch of images
-	 * @param  DatabaseMysql $oDB      A Dataware DB object
 	 * @param  Array         $aValues  Values to set
 	 * @param  Array         $aWhere   SQL WHERE conditions
 	 * @return void
 	 */
-	public function updateBatchImages( DatabaseMysql $oDB, Array $aValues, Array $aWhere ) {
+	public function updateBatchImages( Array $aValues, Array $aWhere ) {
+		$oDB = $this->getDatawareDB();
+
 		$oDB->update(
 			'image_review',
 			$aValues,
@@ -51,5 +51,14 @@ class ImageReviewDatabaseHelper {
 		);
 
 		$oDB->commit();
+	}
+
+	/**
+	 * @param  int (const) $iDB  Database machine master/slave
+	 * @return DatabaseMysql     Dataware database object
+	 */
+	private function getDatawareDB( $iDB = DB_MASTER ) {
+		global $wgExternalDatawareDB;
+		return wfGetDB( $iDB, [], $wgExternalDatawareDB );
 	}
 }

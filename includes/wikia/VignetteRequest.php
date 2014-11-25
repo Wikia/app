@@ -24,7 +24,6 @@ class VignetteRequest {
 	 * @return UrlGenerator
 	 */
 	public static function fromGlobalFile( GlobalFile $globalFile ) {
-
 		return self::fromConfigMap( [
 			'is-archive' => false, // GlobalFile doesn't serve archive files
 			'timestamp' => $globalFile->getTimestamp(),
