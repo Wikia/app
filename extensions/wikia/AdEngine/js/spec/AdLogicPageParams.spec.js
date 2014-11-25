@@ -27,7 +27,6 @@ describe('AdLogicPageParams', function () {
 
 	/**
 	 * Keys for opts:
-	 *  - hasPreFooters
 	 *  - amzn_targs
 	 *  - kruxSegments
 	 *  - abExperiments
@@ -38,9 +37,6 @@ describe('AdLogicPageParams', function () {
 		opts = opts || {};
 
 		var adLogicPageDimensionsMock = {
-				hasPreFooters: function () {
-					return !!opts.hasPreFooters;
-				}
 			},
 			kruxMock = {
 				segments: opts.kruxSegments || []
@@ -152,16 +148,6 @@ describe('AdLogicPageParams', function () {
 		expect(params.artid).toBe('678', 'artid=678');
 	});
 
-	it('getPageLevelParams has pre footers', function () {
-		var params;
-
-		params = getParams({}, {hasPreFooters: true});
-		expect(params.hasp).toBe('yes', 'yes');
-
-		params = getParams({}, {hasPreFooters: false});
-		expect(params.hasp).toBe('no', 'no');
-	});
-
 	it('getPageLevelParams per-wiki custom DART params', function () {
 		var params = getParams({
 			wikiCustomKeyValues: 'key1=value1;key2=value2;key3=value3;key3=value4'
@@ -269,8 +255,7 @@ describe('AdLogicPageParams', function () {
 			wikiLanguage: 'en',
 			wikiVertical: 'Gaming'
 		}, {
-			hostname: 'www.wikia.com',
-			hasPreFooters: true
+			hostname: 'www.wikia.com'
 		});
 
 		expect(params.s0).toBe('hub');
@@ -279,7 +264,6 @@ describe('AdLogicPageParams', function () {
 		expect(params.dmn).toBe('wikiacom');
 		expect(params.hostpre).toBe('www');
 		expect(params.lang).toBe('en');
-		expect(params.hasp).toBe('yes');
 	});
 
 	it('getUrl Hub page: entertainment', function () {
@@ -290,8 +274,7 @@ describe('AdLogicPageParams', function () {
 			wikiLanguage: 'en',
 			wikiVertical: 'Entertainment'
 		}, {
-			hostname: 'www.wikia.com',
-			hasPreFooters: true
+			hostname: 'www.wikia.com'
 		});
 
 		expect(params.s0).toBe('hub');
@@ -300,7 +283,6 @@ describe('AdLogicPageParams', function () {
 		expect(params.dmn).toBe('wikiacom');
 		expect(params.hostpre).toBe('www');
 		expect(params.lang).toBe('en');
-		expect(params.hasp).toBe('yes');
 	});
 
 	it('getUrl Hub page: lifestyle', function () {
@@ -311,8 +293,7 @@ describe('AdLogicPageParams', function () {
 			wikiLanguage: 'en',
 			wikiVertical: 'Lifestyle'
 		}, {
-			hostname: 'www.wikia.com',
-			hasPreFooters: true
+			hostname: 'www.wikia.com'
 		});
 
 		expect(params.s0).toBe('hub');
@@ -321,7 +302,6 @@ describe('AdLogicPageParams', function () {
 		expect(params.dmn).toBe('wikiacom');
 		expect(params.hostpre).toBe('www');
 		expect(params.lang).toBe('en');
-		expect(params.hasp).toBe('yes');
 	});
 
 	it('getPageLevelParams Krux segments on regular and on COPPA wiki', function () {

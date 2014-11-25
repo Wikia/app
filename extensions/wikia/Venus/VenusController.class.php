@@ -36,7 +36,7 @@ class VenusController extends WikiaController {
 		$this->comScore = null;
 		$this->quantServe = null;
 
-		//TODO clean up wg variables inclusion in views (CON-1533)
+		// TODO clean up wg variables inclusion in views (CON-1533)
 		global $wgOut;
 		$this->topScripts = $wgOut->topScripts;
 	}
@@ -59,11 +59,11 @@ class VenusController extends WikiaController {
 	}
 
 	private function setAds() {
-		$this->adTopRightBoxad = $this->app->renderView('Ad', 'Index', ['slotName' => 'TOP_RIGHT_BOXAD']);
-		$this->adTopLeaderboard = $this->app->renderView('Ad', 'Index', ['slotName' => 'TOP_LEADERBOARD']);
-		$this->adInvisibleSkin = $this->app->renderView('Ad', 'Index', ['slotName' => 'INVISIBLE_SKIN']);
-		$this->adsBottom = $this->app->renderView('Ad', 'Index', ['slotName' => 'GPT_FLUSH']);
-		$this->adsBottom .= $this->app->renderView('Ad', 'Index', ['slotName' => 'SEVENONEMEDIA_FLUSH']);
+		$this->adTopRightBoxad = $this->app->renderView( 'Ad', 'Index', ['slotName' => 'TOP_RIGHT_BOXAD'] );
+		$this->adTopLeaderboard = $this->app->renderView( 'Ad', 'Index', ['slotName' => 'TOP_LEADERBOARD'] );
+		$this->adInvisibleSkin = $this->app->renderView( 'Ad', 'Index', ['slotName' => 'INVISIBLE_SKIN'] );
+		$this->adsBottom = $this->app->renderView( 'Ad', 'Index', ['slotName' => 'GPT_FLUSH'] );
+		$this->adsBottom .= $this->app->renderView( 'Ad', 'Index', ['slotName' => 'SEVENONEMEDIA_FLUSH'] );
 	}
 
 	private function setBodyModules() {
@@ -78,8 +78,8 @@ class VenusController extends WikiaController {
 		}
 
 		if ( WikiaPageType::isArticlePage() ) {
-			$this->leftArticleNav = $this->getLeftArticleNavigation();
-			$this->setVal('header', $this->app->renderView('Venus', 'header'));
+			$this->articleNav = $this->getArticleNavigation();
+			$this->setVal( 'header', $this->app->renderView( 'Venus', 'header' ) );
 			Wikia::addAssetsToOutput( 'article_scss' );
 		}
 	}
@@ -94,16 +94,16 @@ class VenusController extends WikiaController {
 		];
 
 		// add skin theme name
-		if(!empty($this->skin->themename)) {
+		if ( !empty( $this->skin->themename ) ) {
 			$bodyClasses[] = 'venus-' . $this->skin->themename;
 		}
 
 		// mark dark themes
-		if (SassUtil::isThemeDark()) {
+		if ( SassUtil::isThemeDark() ) {
 			$bodyClasses[] = 'venus-dark-theme';
 		}
 
-		$this->bodyClasses = implode(' ', array_merge($bodyClasses, self::getBackgroundClasses()));
+		$this->bodyClasses = implode( ' ', array_merge( $bodyClasses, self::getBackgroundClasses() ) );
 	}
 
 	private function setHeadItems() {
@@ -115,7 +115,7 @@ class VenusController extends WikiaController {
 	private function getPageCss() {
 		$skinVars = $this->skinTemplateObj->data;
 
-		if ($pageCss = $skinVars['pagecss']) {
+		if ( $pageCss = $skinVars['pagecss'] ) {
 			return '<style type="text/css">' . $pageCss . '</style>';
 		} else {
 			return '';
@@ -132,8 +132,8 @@ class VenusController extends WikiaController {
 		$cssGroups = ['venus_css'];
 		$cssLinks = '';
 
-		//let extensions manipulate the asset packages (e.g. ArticleComments,
-		//this is done to cut down the number or requests)
+		// let extensions manipulate the asset packages (e.g. ArticleComments,
+		// this is done to cut down the number or requests)
 		$this->app->runHook(
 			'VenusAssetsPackages',
 			[
@@ -153,7 +153,7 @@ class VenusController extends WikiaController {
 
 		// try to fetch all SASS files using a single request (CON-1487)
 		// "WikiaSkin::getStylesWithCombinedSASS: combined 9 SASS files"
-		$cssLinks .= $this->skin->getStylesWithCombinedSASS($sassFiles);
+		$cssLinks .= $this->skin->getStylesWithCombinedSASS( $sassFiles );
 
 		foreach ( $this->assetsManager->getURL( $jsHeadGroups ) as $src ) {
 			if ( $this->assetsManager->checkAssetUrlForSkin( $src, $this->skin ) ) {
@@ -163,11 +163,11 @@ class VenusController extends WikiaController {
 
 		// try to fetch all AM groups in a single JS request (CON-1772)
 		// "WikiaSkin::getScriptsWithCombinedGroups: combined 8 JS groups"
-		$jsBodyFiles = $this->skin->getScriptsWithCombinedGroups($jsBodyGroups);
+		$jsBodyFiles = $this->skin->getScriptsWithCombinedGroups( $jsBodyGroups );
 
-		//global variables from ResourceLoaderStartUpModule
+		// global variables from ResourceLoaderStartUpModule
 		$res = new ResourceVariablesGetter();
-		$vars = WikiaSkin::makeInlineVariablesScript($res->get()); // is it used anywhere?
+		$vars = WikiaSkin::makeInlineVariablesScript( $res->get() ); // is it used anywhere?
 
 		// set variables
 		$this->cssLinks = $cssLinks;
@@ -225,7 +225,7 @@ class VenusController extends WikiaController {
 	 *
 	 * @param string $group group name
 	 */
-	public static function addSkinAssetGroup($group) {
+	public static function addSkinAssetGroup( $group ) {
 		self::$skinAssetGroups[] = $group;
 	}
 
@@ -234,14 +234,14 @@ class VenusController extends WikiaController {
 		$themeSettings = $wgOasisThemeSettings; // OMG
 
 		$bodyClasses = [];
-		if ( isset($themeSettings['background-fixed'])
-			&& filter_var($themeSettings['background-fixed'], FILTER_VALIDATE_BOOLEAN) )
+		if ( isset( $themeSettings['background-fixed'] )
+			&& filter_var( $themeSettings['background-fixed'], FILTER_VALIDATE_BOOLEAN ) )
 		{
 			$bodyClasses[] = 'background-fixed';
 		}
 
-		if ( isset($themeSettings['background-tiled'])
-			&& !filter_var($themeSettings['background-tiled'], FILTER_VALIDATE_BOOLEAN) )
+		if ( isset( $themeSettings['background-tiled'] )
+			&& !filter_var( $themeSettings['background-tiled'], FILTER_VALIDATE_BOOLEAN ) )
 		{
 			$bodyClasses[] = 'background-not-tiled';
 		}
@@ -249,8 +249,8 @@ class VenusController extends WikiaController {
 		return $bodyClasses;
 	}
 
-	private function getLeftArticleNavigation() {
-		return $this->app->renderView('ArticleNavigation', 'index');
+	private function getArticleNavigation() {
+		return $this->app->renderView( 'ArticleNavigation', 'index' );
 	}
 
 	public function header() {
@@ -280,11 +280,11 @@ class VenusController extends WikiaController {
 			$redirect = null;
 		}
 
-		//TODO should be removed when cover unit is going to be implemented
-		$this->response->setVal('showCoverUnit', $wgRequest->getBool('coverunit', false));
-		$this->response->setVal('title', $title);
-		$this->response->setVal('subtitle', $subtitle);
-		$this->response->setVal('redirect', $redirect);
+		// TODO should be removed when cover unit is going to be implemented
+		$this->response->setVal( 'showCoverUnit', $wgRequest->getBool( 'coverunit', false ) );
+		$this->response->setVal( 'title', $title );
+		$this->response->setVal( 'subtitle', $subtitle );
+		$this->response->setVal( 'redirect', $redirect );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}

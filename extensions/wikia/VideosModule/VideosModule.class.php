@@ -7,8 +7,8 @@ use \Wikia\Logger\WikiaLogger;
  */
 class VideosModule extends WikiaModel {
 
-	const THUMBNAIL_WIDTH = 300;
-	const THUMBNAIL_HEIGHT = 309;
+	const THUMBNAIL_WIDTH = 268;
+	const THUMBNAIL_HEIGHT = 150;
 
 	const LIMIT_VIDEOS = 20;
 	const LIMIT_CATEGORY_VIDEOS = 40;
@@ -41,9 +41,8 @@ class VideosModule extends WikiaModel {
 		$communityBlacklist = WikiFactory::getVarByName( "wgVideosModuleBlackList", WikiFactory::COMMUNITY_CENTRAL );
 
 		// Set the blacklist if there is data for it
-		if ( is_object( $communityBlacklist ) ) {
-			$serializedBlackList = $communityBlacklist->cv_value;
-			$this->blacklist = unserialize( $serializedBlackList );
+		if ( is_object( $communityBlacklist ) && !empty( $communityBlacklist->cv_value ) ) {
+			$this->blacklist = unserialize( $communityBlacklist->cv_value );
 		}
 
 		$this->userRegion = $userRegion;
