@@ -105,7 +105,10 @@ class FacebookMapModel {
 	 * @throws FacebookMapModelInvalidParamException
 	 */
 	public static function createUserMapping( $wikiaUserId, $fbUserId ) {
-		// TODO: refactor callers to only call this for connection or FB sign up actions
+		// TODO: refactor callers to only call this for connection or FB sign up action.
+		// Additionally this check should be removed from createUserMapping; its a little
+		// deceptive to have something that says 'create' return an existing mapping.  That's
+		// probably an error, not a valid use case.
 		$map = self::lookupFromWikiaID( $wikiaUserId );
 		if ( !empty( $map ) ) {
 			return $map;
