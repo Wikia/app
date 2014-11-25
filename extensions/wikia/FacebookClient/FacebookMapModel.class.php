@@ -152,20 +152,35 @@ class FacebookMapModel {
 	 * Delete all mappings that have the given Wikia user ID
 	 *
 	 * @param int $wikiaId A Wikia User ID
+	 *
+	 * @return bool
 	 */
 	public static function deleteFromWikiaID( $wikiaId ) {
 		$map = self::lookupFromWikiaID( $wikiaId );
-		$map->delete();
+		if ( !empty( $map ) ) {
+			$map->delete();
+			return true;
+		} else {
+			return false;
+		}
+
 	}
 
 	/**
 	 * Delete all mappings that have the given Facebook user ID
 	 *
 	 * @param int $facebookId A Facebook user ID
+	 *
+	 * @return bool
 	 */
 	public static function deleteFromFacebookID( $facebookId ) {
 		$map = self::lookupFromFacebookID( $facebookId );
-		$map->delete();
+		if ( !empty( $map ) ) {
+			$map->delete();
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	private static function loadFromDB( array $params = [] ) {
