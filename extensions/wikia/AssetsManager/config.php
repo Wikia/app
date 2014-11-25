@@ -1878,6 +1878,7 @@ $config['videos_module_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['oasis'],
 	'assets' => [
+		'#group_videos_module_common_js',
 		'//extensions/wikia/VideosModule/scripts/controllers/rail.js',
 	]
 ];
@@ -1886,6 +1887,7 @@ $config['videos_module_venus_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => ['venus'],
 	'assets' => [
+		'#group_videos_module_common_js',
 		'//extensions/wikia/VideosModule/scripts/controllers/inContent.js',
 		'//resources/wikia/modules/nodeFinder.js',
 	]
