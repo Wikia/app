@@ -199,5 +199,5 @@ $color-vertical-music-secondary: #981093;
 $color-vertical-tv-secondary: #008cce;
 
 // Venus article
-$color-article-navigation-inactive: if($is-dark-wiki, lighten($color-page, 30%), darken($color-page, 30%));
+$color-article-navigation-inactive: if($is-dark-wiki, mix($color-page, white, 70%), mix($color-page, black, 70%));
 $image-caption-border-color: if($is-dark-wiki, darken($color-text, 30%), lighten($color-text, 30%));
