@@ -4,6 +4,12 @@ define(
 	function (d, tracker, dom) {
 		'use strict';
 
+		var track = tracker.buildTrackingFunction({
+			action: tracker.ACTIONS.CLICK,
+			category: 'Recommendation',
+			trackingMethod: 'ga'
+		});
+
 		/**
 		 * @desc Tracking handler for recommendations
 		 * @param Event e
@@ -18,11 +24,8 @@ define(
 				if (slot !== false) {
 					label = slot.dataset.type;
 
-					tracker.track({
-						action: tracker.ACTIONS.CLICK,
-						category: 'Recommendation',
-						label: label,
-						trackingMethod: 'ga'
+					track({
+						label: label
 					});
 				}
 			}

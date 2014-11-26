@@ -15,6 +15,7 @@ $wgExtensionCredits[ 'specialpage' ][] = [
 
 // controller classes
 $wgAutoloadClasses[ 'ArticleNavigationController' ] =  __DIR__ . '/ArticleNavigationController.class.php';
+$wgAutoloadClasses[ 'ArticleNavigationContributeMenuController' ] =  __DIR__ . '/ArticleNavigationContributeMenuController.class.php';
 $wgAutoloadClasses[ 'ArticleNavigationHelper' ] =  __DIR__ . '/ArticleNavigationHelper.class.php';
 
 //hooks

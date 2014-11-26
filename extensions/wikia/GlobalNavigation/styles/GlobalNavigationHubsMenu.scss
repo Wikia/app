@@ -32,7 +32,7 @@
 	background-position: 16px center;
 	background-repeat: no-repeat;
 	cursor: pointer;
-	padding: 0 9px 0 38px;
+	padding: 0 17px 0 38px;
 
 	&:after {
 		border: 5px solid $global-wikia-background-color;
@@ -249,6 +249,10 @@
 }
 
 @media #{$small-only} {
+	.hubs-entry-point {
+		padding-right: 22px;
+	}
+
 	.hubs-menu {
 		.hub-link {
 			&.active {

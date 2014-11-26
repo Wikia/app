@@ -34,8 +34,10 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//resources/wikia/modules/stickyElement.js',
 		'//resources/wikia/modules/nodeFinder.js',
 
-		//ui repos
-		'#group_ui_repo_api_js',
+		//It's needs to be included like this.
+		//If we include the group from config file AssetManager is loading nirvana twice
+		'//resources/wikia/modules/uifactory.js',
+		'//resources/wikia/modules/uicomponent.js',
 
 		//tracker
 		'#group_tracker_js',
@@ -78,6 +80,7 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 
 		'//extensions/wikia/Venus/scripts/isTouchScreen.js',
+		'//extensions/wikia/Venus/scripts/tracking.js',
 		'//extensions/wikia/Venus/scripts/layout.js',
 		'//resources/wikia/modules/dom.js',
 		'//resources/wikia/modules/arrayHelper.js',
@@ -146,7 +149,9 @@ $VenusConfig['local_navigation_js'] = [
 	'skin' => ['venus', 'oasis'],
 	'assets' => [
 		'//extensions/wikia/LocalNavigation/scripts/LocalNavigationMenu.js',
-		'//extensions/wikia/LocalNavigation/scripts/LocalNavigationTracking.js'
+		'//extensions/wikia/LocalNavigation/scripts/LocalNavigationTracking.js',
+		// TODO: should be lazy loaded CON-2169
+		'//extensions/wikia/CreatePage/js/CreatePage.js',
 	]
 ];
 
@@ -275,6 +280,14 @@ $VenusConfig[ 'recent_wiki_activity_scss' ] = [
 	]
 ];
 
+$VenusConfig[ 'recent_wiki_activity_js' ] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'venus' ],
+	'assets' => [
+		'//extensions/wikia/RecentWikiActivity/scripts/RecentWikiActivityTracking.js',
+	]
+];
+
 $VenusConfig['imglzy_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
@@ -282,4 +295,3 @@ $VenusConfig['imglzy_js'] = [
 		'//extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
 	]
 ];
-
