@@ -105,6 +105,7 @@
 			@include font-size-xxs;
 			background: transparent;
 			border: solid 2px $color-buttons;
+			border-radius: 0;
 			cursor: pointer;
 			display: table-cell;
 			font-weight: bold;
