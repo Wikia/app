@@ -116,9 +116,9 @@ $VenusConfig[ 'venus_body_js' ] = [
 		//video recommendations
 		'#group_video_recommendations_js',
 
-		// ui components
-		'//resources/wikia/modules/uifactory.js',
-		'//resources/wikia/modules/uicomponent.js'
+		//This asset is only for prototype version. It shouldn't be loaded by default.
+		//It is used for Optimizely A/B tests
+//		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationAutoHide.js'
 	]
 ];
 
