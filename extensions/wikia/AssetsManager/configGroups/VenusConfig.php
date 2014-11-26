@@ -279,6 +279,14 @@ $VenusConfig[ 'recent_wiki_activity_scss' ] = [
 	]
 ];
 
+$VenusConfig[ 'recent_wiki_activity_js' ] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'venus' ],
+	'assets' => [
+		'//extensions/wikia/RecentWikiActivity/scripts/RecentWikiActivityTracking.js',
+	]
+];
+
 $VenusConfig['imglzy_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
