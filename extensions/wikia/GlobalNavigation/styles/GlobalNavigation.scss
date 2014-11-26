@@ -17,13 +17,13 @@
 	}
 }
 
-.ve .global-navigation,
-.position-static {
-	position: static;
+.ve .global-navigation {
+	position: absolute;
+	z-index: $global-navigation-z-index - 1;
 }
 
-.position-static {
-	margin-bottom: -$global-navigation-height;
+.global-navigation.static {
+	position: absolute;
 }
 
 .global-navigation-item {
