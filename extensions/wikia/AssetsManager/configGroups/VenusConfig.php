@@ -298,3 +298,10 @@ $VenusConfig['imglzy_js'] = [
 		'//extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
 	]
 ];
+
+$VenusConfig['zenbox_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/Zenbox/scripts/zenbox.js',
+	]
+];
