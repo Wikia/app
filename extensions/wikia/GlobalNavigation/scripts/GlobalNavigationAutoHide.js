@@ -21,8 +21,6 @@
 				$accountNavigation.hasClass('active') ||
 				$searchInput.is(':focus');
 
-		console.log(isUsed);
-
 		if (state > previousScrollTop && previousScrollTop > 0 && !isUsed) {
 			$globalNav.animate({top: '-57px'}, 250);
 		} else {
