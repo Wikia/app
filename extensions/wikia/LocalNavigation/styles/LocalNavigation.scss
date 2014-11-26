@@ -190,9 +190,9 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 			span::after {
 				@include arrow(4px, rgba($color-button-text, .5), 'right');
 				content: ' ';
-				float: right;
-				margin: 1px -20px 0 0;
-				position: static;
+				position: absolute;
+				right: -20px;
+				z-index: 1;
 			}
 		}
 
@@ -206,6 +206,7 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 
 		&.right {
 			.has-more {
+				padding-right: 20px;
 				padding-left: 40px;
 
 				span {
@@ -215,8 +216,8 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 
 				span::after {
 					@include arrow(4px, rgba($color-button-text, .5), 'left');
-					float: left;
-					margin: 1px 0 0 -20px;
+					left: -20px;
+					right: auto;
 				}
 			}
 
@@ -308,6 +309,18 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 			@include linear-gradient(transparent, left, rgba($color-buttons, 0), 0%, rgba($color-buttons, 1), 100%);
 		}
 
+		.second-level-row .has-more > span::before {
+			@include linear-gradient(transparent, left, rgba($color-buttons, 0), 0%, rgba($color-buttons, 1), 40%);
+
+			content: '';
+			display: block;
+			height: 100%;
+			position: absolute;
+			right: -40px;
+			width: 45px;
+			z-index: 1;
+		}
+
 		.third-level-row a::before {
 			@include linear-gradient(transparent, left, rgba($third-level-color, 0), 0%, rgba($third-level-color, 1), 100%);
 		}
@@ -321,6 +334,13 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 				@include linear-gradient(transparent, right, rgba($color-buttons, 0), 0%, rgba($color-buttons, 1), 100%);
 
 				left: 0;
+				right: auto;
+			}
+
+			.second-level-row .has-more > span::before {
+				@include linear-gradient(transparent, right, rgba($color-buttons, 0), 0%, rgba($color-buttons, 1), 40%);
+
+				left: -40px;
 				right: auto;
 			}
 		}
