@@ -58,18 +58,21 @@ define(
 					}
 				})
 			).done(function (slotsData, res) {
-				loader.processStyle(res.styles);
-				loader.processScript(res.scripts);
+				slotsData = slotsData[0].items;
 
-				if (typeof(callback) === 'function') {
-					require(['wikia.recommendations.view'], function (view) {
-						var template;
+				if (slotsData.length > 0) {
+					loader.processStyle(res.styles);
+					loader.processScript(res.scripts);
+					if (typeof(callback) === 'function') {
+						require(['wikia.recommendations.view'], function (view) {
+							var template;
 
-						slotsData = arrayHelper.shuffle(slotsData[0].items);
+							slotsData = arrayHelper.shuffle(slotsData);
 
-						template = view.render(slotsData, res.mustache);
-						callback(template, moduleLocation);
-					});
+							template = view.render(slotsData, res.mustache);
+							callback(template, moduleLocation);
+						});
+					}
 				}
 			});
 		}
