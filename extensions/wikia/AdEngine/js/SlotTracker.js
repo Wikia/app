@@ -1,11 +1,10 @@
-/*global setTimeout, define, require*/
+/*global setTimeout, define*/
 /*jshint camelcase:false, maxparams:5*/
 
 define('ext.wikia.adEngine.slotTracker', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.adTracker',
-	require.optional('wikia.abTest')
-], function (adContext, adTracker, abTest) {
+	'ext.wikia.adEngine.adTracker'
+], function (adContext, adTracker) {
 	'use strict';
 
 	var timeCheckpoints = [2.0, 5.0, 8.0, 20.0],
@@ -42,9 +41,7 @@ define('ext.wikia.adEngine.slotTracker', [
 			TOP_INCONTENT_BOXAD:    'medrec',
 			TOP_RIGHT_BOXAD:        'medrec',
 			WIKIA_BAR_BOXAD_1:      'wikiabar'
-		},
-		adsInHead = context.opts.adsInHead && abTest && abTest.getGroup('ADS_IN_HEAD'),
-		adsAfterPageLoad = context.opts.lateAdsAfterPageLoad && abTest && abTest.getGroup('ADS_AFTER_PAGE_LOAD');
+		};
 
 	// The filtering function
 	function isInteresting(eventName, data) {
@@ -102,8 +99,7 @@ define('ext.wikia.adEngine.slotTracker', [
 			len;
 
 		function trackState(timeCheckPoint) {
-			var eventName = 'state/' + timeCheckPoint + 's',
-				experimentName = [];
+			var eventName = 'state/' + timeCheckPoint + 's';
 
 			setTimeout(function () {
 				trackEvent(
