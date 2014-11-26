@@ -43,8 +43,7 @@ require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 							value: idx,
 							type: type,
 							slot: slot,
-							pid: $element.attr('data-mon-pid'),
-							url: $element.find('a').attr('href')
+							pid: $element.attr('data-mon-pid')
 						});
 					});
 				}
