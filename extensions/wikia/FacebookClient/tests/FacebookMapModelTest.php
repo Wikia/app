@@ -6,8 +6,19 @@
  * Testing the models non-static interface
  *
  * @category Wikia
+ * @group Facebook
  */
 class FacebookMapModelTest extends WikiaBaseTest {
+
+	public function setUp() {
+		// Don't get screwed if someone else doesn't clean up Memc
+		F::app()->wg->Memc = wfGetMainCache();
+	}
+
+	public function tearDown() {
+		// Don't screw anyone else
+		F::app()->wg->Memc = wfGetMainCache();
+	}
 
 	/**
 	 * @dataProvider mappingIdProvider
