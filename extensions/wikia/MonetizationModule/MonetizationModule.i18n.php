@@ -9,7 +9,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'monetization-module-ad-title' => 'Advertisement',
-	'monetization-module-ecommerce-title' => '{{SITENAME}} deals at',
+	'monetization-module-ecommerce-title' => 'Related Items on',
 );
 
 /**
