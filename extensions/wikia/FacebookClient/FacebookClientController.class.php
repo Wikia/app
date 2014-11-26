@@ -146,17 +146,17 @@ class FacebookClientController extends WikiaController {
 		$fb = FacebookClient::getInstance();
 		$fbUserId = $fb->getUserId();
 
-		// The user must be logged into Facebook and wikia
+		// The user must be logged into Facebook and Wikia
 		if ( !$fbUserId || !$wg->User->isLoggedIn() ) {
 			$this->status = 'error';
-			return true;
+			return;
 		}
 
 		// Create user mapping
 		$mapping = \FacebookMapModel::createUserMapping( $wg->User->getId(), $fbUserId );
 		if ( empty( $mapping ) ) {
 			$this->status = 'error';
-			return true;
+			return;
 		}
 
 		$this->status = 'ok';

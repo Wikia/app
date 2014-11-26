@@ -131,11 +131,6 @@ class FacebookMapModel {
 		try {
 			$map->save();
 		} catch ( FacebookMapModelException $e ) {
-			WikiaLogger::instance()->warning( 'Failed to create user mapping', [
-				'wikiaUserId' => $wikiaUserId,
-				'fbUserId' => $fbUserId,
-			] );
-
 			return null;
 		}
 
@@ -310,6 +305,14 @@ class FacebookMapModel {
 				->SET( self::columnFacebookAppId, $this->facebookAppId )
 				->run( $dbw );
 		} catch ( \Exception $e ) {
+			WikiaLogger::instance()->warning( 'Failed to create user mapping', [
+				'wikiaUserId' => $this->wikiaUserId,
+				'fbUserId' => $this->facebookUserId,
+				'fbAppId' => $this->facebookAppId,
+				'fbBizToken' => $this->facebookBizToken,
+				'errorMessage' => $e->getMessage(),
+			] );
+
 			throw new FacebookMapModelDbException( $e->getMessage() );
 		}
 	}
