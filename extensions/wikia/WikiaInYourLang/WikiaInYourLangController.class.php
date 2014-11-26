@@ -69,12 +69,28 @@ class WikiaInYourLangController extends WikiaController {
 
 	/**
 	 * Retrieves a domain (host) from a full URL
+	 * Using preg_match to handle all languages
+	 * e.g. get pad.wikia.com from zh.pad.wikia.com
 	 * @param  string $sCurrentUrl A full URL to parse
 	 * @return string              The retrieved domain
 	 */
 	private function getWikiDomain( $sCurrentUrl ) {
 		$aParsed = parse_url( $sCurrentUrl );
-		return $aParsed['host'];
+		$sHost = $aParsed['host'];
+		$regExp = "/([a-z]{2}\.)?(.*)/i";
+		/**
+		 * preg_match returns this array:
+		 * [
+		 * 	0 => zh.example.wikia.com,
+		 * 	1 => (zh. | empty),
+		 * 	2 => example.wikia.com
+		 * ]
+		 * [2] is a domain without the language prefix
+		 * @var Array
+		 */
+		$aPreged = preg_match( $regExp, $sHost );
+		$sWikiDomain = $aPreged[2];
+		return $sWikiDomain;
 	}
 
 	/**
