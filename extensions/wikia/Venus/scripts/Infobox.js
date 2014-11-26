@@ -1,4 +1,4 @@
-require(['venus.infobox', 'wikia.document'], function(infoboxModule, d) {
+require(['venus.infobox', 'wikia.document', 'wikia.window'], function(infoboxModule, d, w) {
 	'use strict';
 
 	var infoboxContainer = d.getElementById('infoboxContainer'),
@@ -8,11 +8,15 @@ require(['venus.infobox', 'wikia.document'], function(infoboxModule, d) {
 	function init() {
 		var infobox = infoboxWrapper.firstChild,
 			articleContent = d.getElementById('mw-content-text'),
-			seeMoreButton;
+			seeMoreButton,
+			nextElement = infoboxContainer.nextElementSibling,
+			isNextElementFloated;
 
 		articleContent.classList.add('clear-none');
-		infoboxContainer.nextElementSibling.classList.add('clear-left');
-
+		isNextElementFloated = (window.getComputedStyle(nextElement).getPropertyValue('float') === 'right');
+		if (!isNextElementFloated) {
+			nextElement.classList.add('clear-left');
+		}
 
 		if(infoboxModule.isInfoboxCollapsible(infoboxWrapper)) {
 			infoboxModule.collapseInfobox(infoboxWrapper);
