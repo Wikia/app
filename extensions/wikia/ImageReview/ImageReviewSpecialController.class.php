@@ -1,5 +1,7 @@
 <?php
 
+use \Wikia\Logger\WikiaLogger;
+
 class ImageReviewSpecialController extends WikiaSpecialPageController {
 	const ACTION_QUESTIONABLE = 'questionable';
 	const ACTION_REJECTED = 'rejected';
@@ -104,7 +106,9 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$newestTs = $this->wg->Memc->get( $user_key );
 
 		if ( $ts > $newestTs ) {
-			error_log("ImageReview: I've got the newest ts ($ts), I won't refetch the images");
+			WikiaLogger::instance()->info( "ImageReview: I've got the newest ts ($ts), I won't refetch the images", [
+				'method' => __METHOD__,
+			]);
 			$this->imageList = array();
 			$this->wg->memc->set( $user_key, $ts, 3600 /* 1h */ );
 		} else {
