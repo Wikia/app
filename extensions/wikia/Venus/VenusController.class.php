@@ -69,7 +69,7 @@ class VenusController extends WikiaController {
 		$this->localNavigation = $this->getLocalNavigation();
 		$this->globalFooter = $this->getGlobalFooter();
 		$this->corporateFooter = $this->getCorporateFooter();
-		$this->categoriesSelect = $this->getCategoriesSelect();
+		$this->categorySelect = $this->getCategorySelect();
 
 		if ($this->isUserLoggedIn) {
 			$this->recentWikiActivity = $this->getRecentWikiActivity();
@@ -173,7 +173,7 @@ class VenusController extends WikiaController {
 		$this->jsHeadScripts = $wgOut->getHeadScripts() . $jsHeadFiles;
 	}
 
-	public function getCategoriesSelect() {
+	public function getCategorySelect() {
 		global $wgEnableCategorySelectExt;
 
 		return !empty( $wgEnableCategorySelectExt ) ?
