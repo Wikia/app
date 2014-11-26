@@ -295,5 +295,44 @@ class FBConnect {
 
 		return array('status' => "ok" );
 	}
+
+	/**
+	 * HACK: Copied from FacebookClient.class.php for backwards compatibility
+	 * Check if we should redirect back to the specified page by comparing it to this black list
+	 * @param Title|null $title
+	 * @return bool
+	 */
+	private static function isInvalidRedirectOnConnect( Title $title = null ) {
+		return (
+			!$title instanceof Title ||
+			$title->isSpecial( 'Userlogout' ) ||
+			$title->isSpecial( 'Signup' ) ||
+			$title->isSpecial( 'Connect' ) ||
+			$title->isSpecial( 'FacebookConnect' ) ||
+			$title->isSpecial( 'UserLogin' )
+		);
+	}
+
+	/**
+	 * HACK: Copied from FacebookClient.class.php for backwards compatibility
+	 * Get a fully resolved URL for redirecting after login/signup with facebook
+	 * @param $returnTo
+	 * @param $returnToQuery
+	 * @return string
+	 */
+	public static function getReturnToUrl( $returnTo, $returnToQuery ) {
+		$queryStr = '&fbconnected=1&cb=' . rand( 1, 10000 );
+		$titleObj = Title::newFromText( $returnTo );
+
+		if ( self::isInvalidRedirectOnConnect( $titleObj ) ) {
+			// Don't redirect if the location is no good.  Go to the main page instead
+			$titleObj = Title::newMainPage();
+		} else if ( $returnToQuery ) {
+			// Include the return to query string if its ok to redirect
+			$queryStr = urldecode( $returnToQuery ) . $queryStr;
+		}
+
+		return $titleObj->getFullURL( $queryStr );
+	}
 }
 		// probably need some logic to only display on user pages

@@ -1784,6 +1784,7 @@ $config['special_css_js'] = array(
 /* UI repo JS API */
 $config['ui_repo_api_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus'],
 	'assets' => array(
 		'//resources/wikia/modules/nirvana.js',
 		'//resources/wikia/modules/uifactory.js',
