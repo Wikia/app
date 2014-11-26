@@ -99,67 +99,6 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * Handler for Facebook Login for already connected users
-	 *
-	 * @return bool
-	 * @throws FacebookMapModelInvalidDataException
-	 */
-	public function login() {
-		$wg = $this->wg;
-
-		$wikiaUserName = $wg->Request->getText( 'wpExistingName' );
-		$wikiaPassword = $wg->Request->getText( 'wpExistingPassword' );
-
-		if ( !$wikiaUserName || !$wikiaPassword ) {
-			$wg->Request->setVal( 'errorMessage', 'fbconnect-wrong-pass-msg' );
-			$this->forward( __CLASS__, 'connectUser' );
-			return true;
-		}
-
-		$user = User::newFromName( $wikiaUserName );
-		if ( !$user || !$user->checkPassword( $wikiaPassword ) ) {
-			$wg->Request->setVal( 'errorMessage', 'fbconnect-wrong-pass-msg' );
-			$this->forward( __CLASS__, 'connectUser' );
-			return true;
-		}
-
-		// User not logged into Facebook -> sign in user with mapped fb id if any
-		// User already logged into Facebook -> sign in user only if mapping is in place
-
-		$fb = FacebookClient::getInstance();
-		$fbUserId = $fb->getUserId();
-
-		if ( empty( $fbUserId ) ) {
-			$mappings = \FacebookMapModel::lookupFromWikiaID( $user->getId() );
-			// TODO: Look for a record with proper app id
-			if ( empty( $mappings ) ) {
-				// TODO/FIXME: show proper error message @see UC-116
-				F::app()->wg->Out->showErrorPage( 'fbconnect-error', 'fbconnect-errortext' );
-				$this->skipRendering();
-				return true;
-			}
-		} else if ( ! \FacebookMapModel::hasUserMapping( $user->getId(), $fbUserId ) ) {
-			// TODO/FIXME: show proper error message @see UC-116
-			F::app()->wg->Out->showErrorPage( 'fbconnect-error', 'fbconnect-errortext' );
-			$this->skipRendering();
-			return true;
-		}
-
-		// Setup the session as is done when a request first starts
-		if ( !$wg->SessionStarted ) {
-			wfSetupSession();
-		}
-		$user->setCookies();
-
-		// Store the user in the global user object
-		$wg->User = $user;
-
-		$this->forward( __CLASS__, 'successfulConnect' );
-
-		\FacebookClientHelper::track( 'facebook-link-existing' );
-	}
-
-	/**
 	 * Connect the already logged in Wikia user to a Facebook account.  By the time they get here
 	 * they should already have logged into Facebook and have a Facebook user ID.
 	 *

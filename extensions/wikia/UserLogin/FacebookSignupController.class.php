@@ -167,6 +167,90 @@ class FacebookSignupController extends WikiaController {
 	}
 
 	/**
+	 * Handler for Facebook Login for already connected users
+	 * TODO/FIXME error messages
+	 *
+	 * @return bool
+	 * @throws FacebookMapModelInvalidDataException
+	 */
+	public function login() {
+		$wg = $this->wg;
+
+		$wikiaUserName = $wg->Request->getText( 'username' );
+		$wikiaPassword = $wg->Request->getText( 'password' );
+
+		if ( !$wikiaUserName || !$wikiaPassword ) {
+			$this->response->setData( [
+					'response' => 'error',
+					'message' => 'Please enter your username and password', //wfMessage( 'fbconnect-error' ),
+					'format' => 'json',
+				] );
+			return true;
+		}
+
+		$user = \User::newFromName( $wikiaUserName );
+		if ( !$user || !$user->checkPassword( $wikiaPassword ) ) {
+			$this->response->setData( [
+					'response' => 'error',
+					'message' => 'We could not find the username you entered.', //wfMessage( 'fbconnect-error' ),
+					'format' => 'json',
+				] );
+			return true;
+		}
+
+		// Log the user in with existing wikia account
+		// Create the fb/Wikia user mapping if not already created
+
+		$fb = FacebookClient::getInstance();
+		$fbUserId = $fb->getUserId();
+
+		if ( empty( $fbUserId ) ) {
+			// TODO: refactor this after UC-138 changes merge
+			$mappings = \FacebookMapModel::lookupFromWikiaID( $user->getId() );
+			if ( empty( $mappings ) ) {
+				$mappingCreated = \FacebookMapModel::createUserMapping( $user->getId(), $fbUserId );
+				if ( !$mappingCreated ) {
+					// TODO/FIXME: show proper error message @see UC-116
+					$this->response->setData( [
+							'response' => 'error',
+							'message' => 'We could not find the username you entered.', //wfMessage( 'fbconnect-error' ),
+							'format' => 'json',
+						] );
+					return true;
+				}
+			}
+		} else {
+			$mappingCreated = \FacebookMapModel::createUserMapping( $user->getId(), $fbUserId );
+			if ( !$mappingCreated ) {
+				// TODO/FIXME: show proper error message @see UC-116
+				$this->response->setData( [
+						'response' => 'error',
+						'message' => 'There was a problem connecting your account to Facebook!',
+						'format' => 'json',
+					] );
+				return true;
+			}
+		}
+
+		// Setup the session as is done when a request first starts
+		if ( !$wg->SessionStarted ) {
+			wfSetupSession();
+		}
+		$user->setCookies();
+
+		// Store the user in the global user object
+		$wg->User = $user;
+
+		\FacebookClientHelper::track( 'facebook-link-existing' );
+
+		$this->response->setData( [
+			'response' => 'ok',
+			'message' => 'success',
+			'format' => 'json',
+		] );
+	}
+
+	/**
 	 * Return Facebook account data like email, gender, real name
 	 */
 	public function getFacebookData() {
