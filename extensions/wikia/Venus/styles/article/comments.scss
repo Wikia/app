@@ -98,17 +98,21 @@
 	}
 
 	/* submit button */
-	.buttons .actionButton {
-		@include font-size-xxs;
-		background: transparent;
-		border: solid 2px $color-buttons;
-		cursor: pointer;
-		display: table-cell;
-		font-weight: bold;
-		height: 44px;
-		padding: 0 15px 0 20px;
-		text-transform: uppercase;
-		vertical-align: middle;
+	.buttons {
+		margin: 10px 0;
+
+		.actionButton {
+			@include font-size-xxs;
+			background: transparent;
+			border: solid 2px $color-buttons;
+			cursor: pointer;
+			display: table-cell;
+			font-weight: bold;
+			height: 44px;
+			padding: 0 15px 0 20px;
+			text-transform: uppercase;
+			vertical-align: middle;
+		}
 	}
 
 	.throbber {
@@ -124,7 +128,7 @@
 		padding: 0;
 
 		.comment {
-			border-bottom: solid 1px #ededed;
+			border-top: solid 1px #ededed;
 			padding: 20px 0;
 		}
 
