@@ -24,7 +24,7 @@ require(
 			infoboxAdEnabled = window.wgAdDriverUseAdsAfterInfobox && abTest && abTest.inGroup('WIKIAMOBILE_ADS_AFTER_INFOBOX', 'YES'),
 			showInContent = firstSectionTop > minZerothSectionLength,
 			showPreFooter = doc.body.offsetHeight > minPageLength || firstSectionTop < minZerothSectionLength,
-			adLabel = msg('wikiamobile-ad-label'),
+			adLabel = msg('adengine-advertisement'),
 			createSlot = function (name) {
 				return '<div id="' +
 					name +

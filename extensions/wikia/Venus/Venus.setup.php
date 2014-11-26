@@ -81,15 +81,3 @@ $wgResourceModules['ext.wikia.venus.article.infobox'] = [
 	'localBasePath' => __DIR__,
 	'remoteExtPath' => 'wikia/Venus'
 ];
-
-$wgResourceModules['ext.wikia.venus.recommendations'] = [
-	'scripts' => [
-		'extensions/wikia/Venus/scripts/venusRecommendations.js'
-	],
-	'styles' => [
-		'extensions/wikia/Venus/styles/article/recommendations.scss'
-	],
-	'dependencies' => [
-		'ext.wikia.recommendations',
-	]
-];

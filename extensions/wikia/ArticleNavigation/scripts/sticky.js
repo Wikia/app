@@ -1,16 +1,20 @@
 require([
-	'wikia.document', 'wikia.stickyElement', 'venus.variables', 'wikia.tracker'
-], function(doc, stickyElement, v) {
+	'wikia.document', 'wikia.stickyElement', 'venus.layout', 'wikia.browserDetect'
+], function(doc, stickyElement, layout, browserDetect) {
 	'use strict';
 
 	var navigationElement = doc.getElementsByClassName('article-navigation')[0],
 		boundBoxElement = doc.getElementById('mw-content-text'),
 		globalNavigationHeight = doc.getElementsByClassName('global-navigation')[0].offsetHeight,
-		additionalTopOffset = 100;
+		additionalTopOffset = 100,
+		$source = $(navigationElement),
+		$target = $(boundBoxElement),
+		$doc = $(doc),
+		stickyElementObject = stickyElement.spawn();
 
 	// this function is needed for additional margin for screens >= 1024px
 	// (because header is getting float: left on medium and higher breakpoints)
-	function adjustPosition(value, typ) {
+	function adjustValueFunction(value, typ) {
 		switch(typ) {
 			case 'topScrollLimit':
 			case 'topSticked':
@@ -23,12 +27,30 @@ require([
 		}
 	}
 
+	function adjustPositionFunction(scrollY, sourceElement, targetElement) {
+		var additionalOffset, targetBottom;
+
+		targetBottom = $target.position().top +
+			$target.outerHeight(true) -
+			$source.outerHeight(true);
+
+		additionalOffset = browserDetect.isFirefox() ? 0 : additionalTopOffset;
+
+		if ($doc.scrollTop() + additionalOffset >= targetBottom) {
+			stickyElementObject.sourceElementPosition('absolute', 'top', targetBottom);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	// Sticky navigation
-	stickyElement.spawn().init({
+	stickyElementObject.init({
 		sourceElement: navigationElement,
 		alignToElement: boundBoxElement,
 		topFixed: globalNavigationHeight + additionalTopOffset,
-		minWidth: v.breakpointSmallMin,
-		adjustFunc: adjustPosition
+		minWidth: layout.breakpoints.smallMin,
+		adjustFunc: adjustValueFunction,
+		adjustPositionFunc: adjustPositionFunction
 	});
 });

@@ -27,7 +27,7 @@ define('ext.wikia.adEngine.adConfigMobile', [
 			return [];
 		}
 
-		if (adProviderTaboola && context.providers.taboola && adProviderTaboola.canHandleSlot(slotName) ) {
+		if (context.providers.taboola && adProviderTaboola && adProviderTaboola.canHandleSlot(slotName) ) {
 			return [adProviderTaboola];
 		}
 

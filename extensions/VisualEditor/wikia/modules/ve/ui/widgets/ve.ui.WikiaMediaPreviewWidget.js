@@ -2,7 +2,7 @@
  * VisualEditor UserInterface WikiaMediaPreviewWidget class.
  */
 
-/* global mw, require */
+/* global mw, require, Vignette */
 
 ve.ui.WikiaMediaPreviewWidget = function VeUiWikiaMediaPreviewWidget() {
 
@@ -161,9 +161,7 @@ ve.ui.WikiaMediaPreviewWidget.prototype.openForImage = function ( title, url ) {
 		.addClass( 've-ui-wikiaMediaPreviewWidget-image' )
 		.hide();
 
-	require( ['wikia.thumbnailer'], ve.bind( function ( thumbnailer ) {
-		this.$image.attr( 'src', thumbnailer.getThumbURL( url, 'nocrop', this.maxImgWidth ) );
-	}, this ) );
+	this.$image.attr( 'src', Vignette.getThumbURL( url, 'thumbnail-down', this.maxImgWidth, this.maxImgHeight ) );
 
 	this.$image
 		.load( ve.bind( this.onImageLoad, this ) )

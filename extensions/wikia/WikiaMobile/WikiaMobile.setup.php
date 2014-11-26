@@ -76,6 +76,7 @@ $wgAutoloadClasses['WikiaMobileController'] = "{$dir}/WikiaMobileController.clas
 $wgExtensionMessagesFiles['WikiaMobile'] = "{$dir}/WikiaMobile.i18n.php";
 
 JSMessages::registerPackage( 'WkMbl', array(
+	'adengine-advertisement',
 	'wikiamobile-hide-section',
 	'wikiamobile-sharing-media-image',
 	'wikiamobile-sharing-page-text',
@@ -126,7 +127,7 @@ if ( empty( $wgWikiaMobileNavigationBlacklist ) ) {
 	$wgWikiaMobileNavigationBlacklist = array( 'Chat', 'WikiActivity', 'NewFiles' );
 }
 
-//black list of JS globals
+// white list of JS globals
 if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 	$wgWikiaMobileIncludeJSGlobals =
 		[
@@ -203,7 +204,6 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 
 			//login
 			'fbAppId',
-			'fbUseMarkup',
 			'wgLoginToken'
 		];
 }

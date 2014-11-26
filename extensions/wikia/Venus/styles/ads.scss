@@ -8,6 +8,15 @@
 	display: none !important;
 }
 
+.wikia-ad-label {
+	color: $color-alternate-text;
+	display: block;
+	font-size: 10px;
+	line-height: 100%;
+	padding-bottom: 6px;
+	text-transform: uppercase;
+}
+
 .top-ads {
 	line-height: 0;
 	margin: 10px auto;
@@ -41,6 +50,18 @@
 		> .wikia-ad {
 			margin-bottom: 20px;
 		}
+	}
+}
+
+.bottom-ads {
+	@include clearfix;
+	margin: 0 auto;
+	width: 660px;
+
+	> .wikia-ad {
+		float: left;
+		margin: 40px 15px 30px;
+		width: 300px;
 	}
 }
 

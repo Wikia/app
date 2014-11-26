@@ -316,8 +316,8 @@ class WikiaApiController extends WikiaController {
 	}
 
 	/**
-	 * @param $data data to set as output
-	 * @param string|array $imageFields - fields to remove if we don't serve images
+	 * @param $data mixed data to set as output
+	 * @param string|array $processFields - fields to remove if we don't serve images
 	 * @param int $cacheValidity set only if greater than 0
 	 */
 	protected function setResponseData( $data, $processFields = null, $cacheValidity = 0 ) {

@@ -106,12 +106,17 @@ class ScribeEventProducer {
 		$this->setIsRedirect( $oTitle->isRedirect() );
 		$this->setRevisionTimestamp( wfTimestamp( TS_DB, $rev_timestamp ) );
 		$this->setRevisionSize( $rev_size );
-		$this->setIsLocalFile( $oTitle );
-		$this->setMediaType( $oTitle );
 		$this->setMediaLinks( $oPage );
 		$this->setTotalWords( str_word_count( $rev_text ) );
-		$this->setIsTop200( $this->app->wg->CityId );
-		$this->setIsImageForReview();
+
+		if ( in_array( $this->mParams['pageNamespace'], $this->mediaNS ) ) {
+			$this->setMediaType( $oTitle );
+			$this->setIsLocalFile( $oTitle );
+			$this->setIsTop200( $this->app->wg->CityId );
+			$this->setIsImageForReview();
+
+			\Wikia\Logger\WikiaLogger::instance()->info( 'ImageReviewParams', [ 'method' => __METHOD__, 'data' => $this->mParams ] );
+		}
 
 		$t = microtime(true);
 		$micro = sprintf("%06d",($t - floor($t)) * 1000000);
@@ -317,7 +322,7 @@ class ScribeEventProducer {
 
 	public function setIsLocalFile ( Title $oTitle ) {
 		$oFile = wfFindFile( $oTitle );
-		if( $oFile instanceof LocalFile ) {
+		if( $oFile instanceof File && $oFile->exists() ) {
 			$bIsLocalFile = true;
 		} else {
 			$bIsLocalFile = false;
