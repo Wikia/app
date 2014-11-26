@@ -9,6 +9,18 @@ abstract class ImageReviewHelperBase extends WikiaModel {
 	const ORDER_PRIORITY_LATEST = 1;
 	const ORDER_OLDEST = 2;
 
+	/*
+	 * LIMIT_IMAGES_FROM_DB should be a little greater than LIMIT_IMAGES, so if
+	 * we fetch a few icons from DB, we can skip them
+	 */
+	const LIMIT_IMAGES = 20;
+	const LIMIT_IMAGES_FROM_DB = 24;
+
+	/**
+	 * Define a size of a thumbnail
+	 */
+	const IMAGE_REVIEW_THUMBNAIL_SIZE = 250;
+
 	public abstract function updateImageState($images, $action = '');
 
 	public abstract function resetAbandonedWork();
@@ -26,6 +38,10 @@ abstract class ImageReviewHelperBase extends WikiaModel {
 	public abstract function getImageCount();
 
 	public abstract function getUserTsKey();
+
+	protected function getDatabaseHelper() {
+		return new ImageReviewDatabaseHelper();
+	}
 
 	protected function getOrder($order) {
 		switch ($order) {

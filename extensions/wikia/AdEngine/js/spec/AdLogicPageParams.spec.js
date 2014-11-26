@@ -25,6 +25,12 @@ describe('AdLogicPageParams', function () {
 		};
 	}
 
+	function mockPageViewCounter(pvCount) {
+		return {
+			increment: function () { return pvCount; }
+		};
+	}
+
 	/**
 	 * Keys for opts:
 	 *  - amzn_targs
@@ -32,6 +38,7 @@ describe('AdLogicPageParams', function () {
 	 *  - abExperiments
 	 *  - hostname
 	 *  - getPageLevelParamsOptions
+	 *  - pvCount
 	 */
 	function getParams(targeting, opts) {
 		opts = opts || {};
@@ -52,6 +59,7 @@ describe('AdLogicPageParams', function () {
 			logMock,
 			mockWindow(opts.hostname, opts.amzn_targs),
 			mockAdContext(targeting),
+			mockPageViewCounter(opts.pvCount),
 			kruxMock,
 			adLogicPageDimensionsMock,
 			abTestMock
@@ -339,5 +347,11 @@ describe('AdLogicPageParams', function () {
 			wikiDirectedAtChildren: true
 		});
 		expect(params.esrb.toString()).toBe('ec', 'esrb=null, COPPA=yes');
+	});
+
+	it('getPageLevelParams pv param', function () {
+		var params = getParams({}, {pvCount: 13});
+
+		expect(params.pv).toBe('13');
 	});
 });
