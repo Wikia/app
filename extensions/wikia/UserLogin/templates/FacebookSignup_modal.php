@@ -24,13 +24,8 @@
 			],
 			[
 				'type' => 'hidden',
-				'name' => 'returnto',
-				'value' => $returnTo, // already encoded
-			],
-			[
-				'type' => 'hidden',
-				'name' => 'returntoquery',
-				'value' => $returnToQuery, // already encoded
+				'name' => 'returntourl',
+				'value' => Sanitizer::encodeAttribute( $returnToUrl ),
 			],
 		],
 		'method' => 'post',
