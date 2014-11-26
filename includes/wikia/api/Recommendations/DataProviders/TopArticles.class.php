@@ -140,14 +140,16 @@ class TopArticles implements IDataProvider {
 				'height' => 225
 			];
 
-			$response = \ApiService::foreignCall( \WikiFactory::IDtoDB( $wikiId ), $params, \ApiService::WIKIA );
+			$wikiData = self::getWikiByID( $wikiId );
+
+			$response = \ApiService::foreignCall( $wikiData->city_dbname, $params, \ApiService::WIKIA );
 
 			if ( !empty( $response['items'][$articleId] ) ) {
 				$articleDetails =  $response['items'][$articleId];
 
 				$out[] = [
 					'type' => self::RECOMMENDATION_TYPE,
-					'title' => $articleDetails['title'],
+					'title' => $wikiData->city_title . ' - ' . $articleDetails['title'],
 					'url' => $response['basepath'] . $articleDetails['url'],
 					'description' => $articleDetails['abstract'],
 					'media' => [
