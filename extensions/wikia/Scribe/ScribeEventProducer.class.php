@@ -1,5 +1,7 @@
 <?php
 
+use \Wikia\Logger\WikiaLogger;
+
 class ScribeEventProducer {
 	private $app = null;
 	private $mParams, $mKey, $mEventType;
@@ -115,7 +117,7 @@ class ScribeEventProducer {
 			$this->setIsTop200( $this->app->wg->CityId );
 			$this->setIsImageForReview();
 
-			\Wikia\Logger\WikiaLogger::instance()->info( 'ImageReviewParams', [ 'method' => __METHOD__, 'data' => $this->mParams ] );
+			WikiaLogger::instance()->info( 'ImageReviewParams', [ 'method' => __METHOD__, 'data' => $this->mParams ] );
 		}
 
 		$t = microtime(true);
@@ -469,7 +471,7 @@ class ScribeEventProducer {
 	 * @return void
 	 */
 	private function sendImageReviewLog( $sLogMessage ) {
-		\Wikia\Logger\WikiaLogger::instance()->info( "ImageReviewLog: {$sLogMessage}", [
+		WikiaLogger::instance()->info( "ImageReviewLog: {$sLogMessage}", [
 			'method' => __METHOD__,
 			'params' => $this->mParams,
 		] );
