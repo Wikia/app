@@ -1,4 +1,4 @@
-<section id="recentWikiActivity" class="recent-wiki-activity">
+<aside id="recentWikiActivity" class="recent-wiki-activity">
 	<header><?= wfMessage('recent-wiki-activity-header'); ?></header>
 	<ul>
 		<? foreach ($changeList as $change): ?>
@@ -22,4 +22,4 @@
 	</ul>
 
 	<?= Wikia::specialPageLink('WikiActivity', 'recent-wiki-activity-see-more', 'more') ?>
-</section>
+</aside>
