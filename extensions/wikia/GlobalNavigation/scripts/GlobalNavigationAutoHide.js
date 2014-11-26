@@ -1,17 +1,29 @@
+/**
+ * This script is created for the purpose of Global Navigation AB testing only
+ *
+ * It should be treated as a prototype.
+ */
 (function (win, $) {
 	'use strict';
 
 	var $globalNav = $('#globalNavigation'),
 		$hubsEntryPoint = $('#hubsEntryPoint'),
+		$accountNavigation = $('#AccountNavigation'),
+		$searchInput = $('#searchInput'),
 		previousScrollTop = window.scrollY;
 
 	/**
 	 * @desc hides / shows global nav shile scrolling up and down
 	 */
 	function globalNavScroll() {
-		var state = window.scrollY;
+		var state = window.scrollY,
+			isUsed = $hubsEntryPoint.hasClass('active') ||
+				$accountNavigation.hasClass('active') ||
+				$searchInput.is(':focus');
 
-		if (state > previousScrollTop && previousScrollTop > 0 && !$hubsEntryPoint.hasClass('active')) {
+		console.log(isUsed);
+
+		if (state > previousScrollTop && previousScrollTop > 0 && !isUsed) {
 			$globalNav.animate({top: '-57px'}, 250);
 		} else {
 			$globalNav.animate({top: '0'}, 250);
