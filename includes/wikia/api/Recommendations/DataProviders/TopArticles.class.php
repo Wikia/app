@@ -22,6 +22,8 @@ class TopArticles implements IDataProvider {
 	 */
 	const MAX_LIMIT = 10;
 
+	const MCACHE_VERSION = '1.01';
+
 	/**
 	 * @param int $articleId
 	 * @param int $limit - max limit = 10
@@ -34,7 +36,7 @@ class TopArticles implements IDataProvider {
 		$lang = $this->getContentLangCode();
 
 		$out = \WikiaDataAccess::cache(
-			\wfSharedMemcKey( 'RecommendationApi', self::RECOMMENDATION_ENGINE, $hubName, $lang ),
+			\wfSharedMemcKey( 'RecommendationApi', self::RECOMMENDATION_ENGINE, $hubName, $lang, self::MCACHE_VERSION ),
 			\WikiaResponse::CACHE_STANDARD,
 			function () use ( $hubName, $lang ) {
 				$topArticles = $this->getTopArticles( $hubName, $lang);
