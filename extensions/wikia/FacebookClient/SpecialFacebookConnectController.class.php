@@ -77,7 +77,8 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 			return true;
 		}
 
-		if ( !\FacebookMapModel::createUserMapping( $user->getId(), $fbUserId ) ) {
+		$mapping = \FacebookMapModel::createUserMapping( $user->getId(), $fbUserId );
+		if ( empty( $mapping ) ) {
 			// TODO/FIXME: show proper error message @see UC-116
 			F::app()->wg->Out->showErrorPage( 'fbconnect-error', 'fbconnect-errortext' );
 			$this->skipRendering();
@@ -117,7 +118,8 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 			return true;
 		}
 
-		if ( !\FacebookMapModel::createUserMapping( $wg->User->getId(), $fbUserId ) ) {
+		$mapping = \FacebookMapModel::createUserMapping( $wg->User->getId(), $fbUserId );
+		if ( empty( $mapping ) ) {
 			// TODO/FIXME: show proper error message @see UC-116
 			F::app()->wg->Out->showErrorPage( 'fbconnect-error', 'fbconnect-errortext' );
 			$this->skipRendering();

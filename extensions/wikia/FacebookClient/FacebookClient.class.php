@@ -322,14 +322,13 @@ class FacebookClient {
 	}
 
 	/**
-	 * Returns all known Facebook user IDs for the current Wikia user (could be many since Wikia has more
-	 * than one Facebook app
+	 * Returns the Facebook user ID for the current Wikia user
 	 *
 	 * @param User|int $user
 	 *
-	 * @return array|bool|mixed
+	 * @return int|null
 	 */
-	public function getFacebookUserIds( $user ) {
+	public function getFacebookUserId( $user ) {
 
 		// Determine if we got an ID or an object
 		if ( $user instanceof User && $user->getId() != 0 ) {
@@ -338,17 +337,16 @@ class FacebookClient {
 			$wikiaUserId = $user;
 		}
 
-		$fbid = [];
-		if ( $wikiaUserId ) {
-			$mappings = FacebookMapModel::lookupFromWikiaID( $wikiaUserId );
-
-			foreach ( $mappings as $map ) {
-				/** @var FacebookMapModel $map */
-				$fbid[] = $map->getFacebookUserId();
-			}
+		if ( empty( $wikiaUserId ) ) {
+			return null;
 		}
 
-		return $fbid;
+		$map = FacebookMapModel::lookupFromWikiaID( $wikiaUserId );
+		if ( empty( $map ) ) {
+			return null;
+		}
+
+		return $map->getFacebookUserId();
 	}
 
 	/**
