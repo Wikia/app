@@ -52,22 +52,21 @@ $shadow: rgba($color-text, 0.2);
 
 		&:after,
 		&:before {
-			background:
-				/* Shadow covers */
-				linear-gradient($cover $gradient-top-position, $cover-transparent), 0 100%;
 			content: '';
 			display: block;
 			height: $gradient-cover-size;
-			margin: 0 0 -$gradient-cover-size;
 			position: relative;
 			width: inherit;
 		}
 
+		&:before {
+			background: linear-gradient($cover $gradient-top-position, $cover-transparent), 0 100%;
+			margin-bottom: -$gradient-cover-size;
+		}
+
 		&:after {
-			background:
-				/* Shadow covers */
-				linear-gradient($cover-transparent, $cover $gradient-bottom-position) 0 100%;
-			margin: -$gradient-cover-size 0 0;
+			background: linear-gradient($cover-transparent, $cover $gradient-bottom-position) 0 100%;
+			margin-top: -$gradient-cover-size;
 		}
 	}
 }
