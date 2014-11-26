@@ -32,32 +32,40 @@ $shadow: rgba($color-text, 0.2);
 
 	.scrollable {
 		background:
-			/* Shadow covers */
-			linear-gradient($cover 30%, $cover-transparent),
-			linear-gradient($cover-transparent, $cover 70%) 0 100%,
-
 			/* Shadows */
 			linear-gradient($shadow 30%, $shadow-transparent),
 			linear-gradient($shadow-transparent, $shadow 70%) 0 100%;
 
-		background:
-			/* Shadow covers */
-			linear-gradient($cover 30%, $cover-transparent),
-			linear-gradient($cover-transparent, $cover 70%) 0 100%,
-
-			/* Shadows */
-			linear-gradient($shadow 30%, $shadow-transparent),
-			linear-gradient($shadow-transparent, $shadow 70%) 0 100%;
-
-		background-attachment: local, local, scroll, scroll;
 		background-color: $cover;
 		background-repeat: no-repeat;
-		background-size: 100% 40px, 100% 40px, 100% 4px, 100% 4px;
+		background-size: 100% 4px;
+		background-position: 0 0, 0 100%;
 		box-sizing: content-box;
 		overflow-y: auto;
 		overflow-x: hidden;
 		padding-right: 30px;
+		position: relative;
 		width: inherit;
+
+		&:after,
+		&:before {
+			background:
+				/* Shadow covers */
+				linear-gradient($cover 30%, $cover-transparent), 0 100%;
+			content: '';
+			display: block;
+			height: 30px;
+			margin: 0 0 -30px;
+			position: relative;
+			width: inherit;
+		}
+
+		&:after {
+			background:
+				/* Shadow covers */
+				linear-gradient($cover-transparent, $cover 70%) 0 100%;
+			margin: -30px 0 0;
+		}
 	}
 }
 
@@ -80,7 +88,9 @@ $shadow: rgba($color-text, 0.2);
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
+	position: relative;
 	width: inherit;
+	z-index: 1;
 
 	.wikia-dropdown-nav-subsections-wrapper & {
 		display: none;
