@@ -3,6 +3,56 @@ var UserLoginFacebookForm = $.createClass(UserLoginAjaxForm, {
 	// login token is stored in hidden field, no need to send an extra request
 	retrieveLoginToken: function () {},
 
+	submitLoginExisting: function () {
+		'use strict';
+
+		$(window).trigger('loginExistingSubmit');
+
+		this.submitButton.attr('disabled', 'disabled');
+		this.loginExisting();
+	},
+
+	// Handles existing user login via modal
+	loginExisting: function () {
+		'use strict';
+		var values = {
+			username: this.inputs.loginUsername.val(),
+			password: this.inputs.loginPassword.val(),
+			signupToken: this.inputs.logintoken.val()
+		};
+
+		// cache redirect url for after form is complete
+		this.returnToUrl = this.inputs.returntourl.val();
+
+		$.nirvana.postJson(
+			'FacebookSignupController',
+			'login',
+			values,
+			this.submitFbLoginHandler.bind(this)
+		);
+	},
+
+	submitFbLoginHandler: function (json) {
+		'use strict';
+
+		this.form.find('.error-msg').remove();
+		this.form.find('.input-group').removeClass('error');
+		var result = json.result,
+				callback;
+
+		if (result === 'ok') {
+			window.wgUserName = json.wgUserName;
+			callback = this.options.callback || '';
+			if (callback && typeof callback === 'function') {
+				// call with current context
+				callback.bind(this, json)();
+			}
+		} else {
+			this.submitButton.removeAttr('disabled');
+			this.errorValidation(json);
+		}
+	},
+
 	// send a request to FB controller
 	ajaxLogin: function () {
 		'use strict';

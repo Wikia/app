@@ -11,11 +11,14 @@ UserLoginAjaxForm.prototype.init = function () {
 	'use strict';
 
 	// DOM cache
-	this.form = this.el.find('form');
+	this.form = this.el.find('.UserLoginFacebookLeft form');
+	this.loginForm = this.el.find('.UserLoginFacebookRight form');
 	this.wikiaForm = new WikiaForm(this.form);
 	this.inputs = {
 		username: this.form.find('input[name=username]'),
 		password: this.form.find('input[name=password]'),
+		loginUsername: this.loginForm.find('input[name=login_username]'),
+		loginPassword: this.loginForm.find('input[name=login_password]'),
 		keeploggedin: this.form.find('input[name=keeploggedin]'),
 		logintoken: this.form.find('input[name=loginToken]'),
 		returnto: this.form.find('input[name=returnto]'),
@@ -31,6 +34,7 @@ UserLoginAjaxForm.prototype.init = function () {
 
 	// form submission handler
 	this.form.submit(this.submitLogin.bind(this));
+	this.loginForm.submit(this.submitLoginExisting.bind(this));
 
 	// forgot password handler
 	this.forgotPasswordLink.click(this.mailPassword.bind(this));
@@ -52,6 +56,8 @@ UserLoginAjaxForm.prototype.submitLogin = function (e) {
 	}
 };
 
+UserLoginAjaxForm.prototype.submitLoginExisting = function () {};
+
 UserLoginAjaxForm.prototype.ajaxLogin = function () {
 	'use strict';
 
@@ -67,6 +73,8 @@ UserLoginAjaxForm.prototype.ajaxLogin = function () {
 		this.submitLoginHandler.bind(this)
 	);
 };
+
+UserLoginAjaxForm.prototype.loginExisting = function () {};
 
 UserLoginAjaxForm.prototype.submitLoginHandler = function (json) {
 	'use strict';
