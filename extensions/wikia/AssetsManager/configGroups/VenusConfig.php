@@ -85,6 +85,7 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//extensions/wikia/UserLogin/js/UserLoginModal.js',
 
 		'//extensions/wikia/Venus/scripts/isTouchScreen.js',
+		'//extensions/wikia/Venus/scripts/tracking.js',
 		'//extensions/wikia/Venus/scripts/layout.js',
 		'//resources/wikia/modules/dom.js',
 		'//resources/wikia/modules/arrayHelper.js',
