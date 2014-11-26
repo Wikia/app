@@ -219,17 +219,20 @@ $header-without-cover-unit-spacing: 60px;
 	.article header {
 		@include grid-column-width('large', 8, $large-content-padding - $content-border-width);
 
+		&:not(.cover-unit) {
+			h1,
+			span {
+				padding-left: $large-grid-column + $large-grid-gutter + $large-content-padding + $large-grid-column-padding - $content-border-width;
+				padding-right: $large-grid-column-padding;
+			}
+		}
+
 		&.cover-unit {
 			@include proportional-grid-media-height('large', 8, $large-content-padding);
 
 			h1 {
 				padding-left: $large-content-padding + $large-grid-column-padding - $content-border-width;
 			}
-		}
-
-		h1 {
-			padding-left: $large-grid-column + $large-grid-gutter + $large-content-padding + $large-grid-column-padding - $content-border-width;
-			padding-right: $large-grid-column-padding;
 		}
 	}
 
@@ -278,17 +281,20 @@ $header-without-cover-unit-spacing: 60px;
 		float: none;
 		width: 100%;
 
+		&:not(.cover-unit) {
+			h1,
+			span {
+				padding-left: $small-grid-column + $small-grid-gutter + $small-content-padding + $small-grid-column-padding - $content-border-width;
+				padding-right: $small-grid-column-padding + $small-content-padding - $content-border-width;
+			}
+		}
+
 		&.cover-unit {
 			@include proportional-media-height($small-content-width - 2 * $content-border-width);
 
 			h1 {
 				padding-left: $small-content-padding + $small-grid-column-padding - $content-border-width;
 			}
-		}
-
-		h1 {
-			padding-left: $small-grid-column + $small-grid-gutter + $small-content-padding + $small-grid-column-padding - $content-border-width;
-			padding-right: $small-grid-column-padding;
 		}
 	}
 
