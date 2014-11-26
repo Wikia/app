@@ -11,10 +11,20 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 
 	private $user_id = 0;
 
+	/**
+	 * Used in ImageReviewSpecial_index.php
+	 * @var array
+	 */
+	static $sortOptions = array(
+		'latest first' => 0,
+		'by priority and recency' => 1,
+		'oldest first' => 2,
+	);
+
 	function __construct() {
 		parent::__construct();
-		$this->user_id = $this->wg->user->getId();
-	}
+		$this->user_id = $this->wg->user->getId()
+;	}
 
 	/**
 	 * update image state
@@ -252,7 +262,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		$oDB = $this->getDatawareDB( DB_MASTER );
 		$oDatabaseHelper = $this->getDatabaseHelper();
 
-		$oResults = $oDatabaseHelper->selectImagesForList( $oDB, $state, $this->getOrder( $order ), self::LIMIT_IMAGES_FROM_DB );
+		$oResults = $oDatabaseHelper->selectImagesForList( $this->getOrder( $order ), self::LIMIT_IMAGES_FROM_DB, $state );
 
 		$rows = array();
 		$updateWhere = array();
@@ -366,26 +376,32 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		/**
 		 * Invalid images
 		 */
-		$this->createDeleteImagesTask( $aDeletionList );
+		if ( !empty( $aDeletionList ) ) {
+			$this->createDeleteImagesTask( $aDeletionList );
+		}
 
 		/**
 		 * Icons
 		 */
-		$aIconsValues = [
-			'state' => ImageReviewStatuses::STATE_ICO_IMAGE,
-		];
-		$aIconsWhere = [ implode( 'OR', $iconsWhere ) ];
-		$this->imageListAdditionalAction( 'icons', $oDB, $aIconsValues, $aIconsWhere );
+		if ( !empty( $iconsWhere ) ) {
+			$aIconsValues = [
+				'state' => ImageReviewStatuses::STATE_ICO_IMAGE,
+			];
+			$aIconsWhere = [ implode( 'OR', $iconsWhere ) ];
+			$this->imageListAdditionalAction( 'icons', $oDB, $aIconsValues, $aIconsWhere );
+		}
 
 		/**
 		 * Unused images
 		 */
-		$aUnusedValues = [
-			'reviewer_id = null',
-			'state' => $state,
-		];
-		$aUnusedWhere = [ implode( 'OR', $unusedImages ) ];
-		$this->imageListAdditionalAction( 'unused', $oDB, $aUnusedValues, $aUnusedWhere );
+		if ( !empty( $unusedImages ) ) {
+			$aUnusedValues = [
+				'reviewer_id = null',
+				'state' => $state,
+			];
+			$aUnusedWhere = [ implode( 'OR', $unusedImages ) ];
+			$this->imageListAdditionalAction( 'unused', $oDB, $aUnusedValues, $aUnusedWhere );
+		}
 
 		/**
 		 * Return valid images list
@@ -404,7 +420,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		$iCount = count( $aWhere );
 		if ( $iCount > 0 ) {
 			$oDatabaseHelper = $this->getDatabaseHelper();
-			$oDatabaseHelper->updateBatchImages( $oDB, $aValues, $aWhere );
+			$oDatabaseHelper->updateBatchImages( $aValues, $aWhere );
 		}
 
 		WikiaLogger::instance()->info( "ImageReviewImageList: updated {$sType} images.", [
