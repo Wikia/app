@@ -69,7 +69,7 @@ $header-without-cover-unit-spacing: 60px;
 
 	clear: left;
 	margin: 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width;
-	padding: 0 $medium-grid-column-padding;
+	padding: 0 $medium-grid-column-padding 60px;
 
 	&.clear-none {
 		 clear: none;
@@ -240,7 +240,7 @@ $header-without-cover-unit-spacing: 60px;
 
 	.mw-content-text {
 		margin: 0 $large-grid-column + $large-grid-gutter + $large-content-padding - $content-border-width;
-		padding: 0 $large-grid-column-padding;
+		padding: 0 $large-grid-column-padding 60px;
 
 		h2 {
 			margin-bottom: 10px;
@@ -299,7 +299,7 @@ $header-without-cover-unit-spacing: 60px;
 
 	.mw-content-text {
 		margin: 0 $small-content-padding - $content-border-width 0 $small-grid-column + $small-grid-gutter + $small-content-padding - $content-border-width;
-		padding: 0 $small-grid-column-padding;
+		padding: 0 $small-grid-column-padding 60px;
 
 		h2 {
 			margin-left: -$small-grid-gutter;
