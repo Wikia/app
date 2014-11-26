@@ -31,6 +31,23 @@ require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 					type: type,
 					slot: slot
 				});
+
+				// track impression for each product
+				if (type === 'ecommerce') {
+					$this.find('.affiliate').each(function (idx, element) {
+						var $element = $(element);
+						track({
+							category: $element.attr('data-mon-ptag'),
+							label: 'product-impression',
+							action: Tracker.ACTIONS.IMPRESSION,
+							value: idx,
+							type: type,
+							slot: slot,
+							pid: $element.attr('data-mon-pid'),
+							url: $element.find('a').attr('href')
+						});
+					});
+				}
 			});
 
 			this.initEllipses();
@@ -52,7 +69,7 @@ require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 				'.product-price'
 			];
 
-			$('div[data-mon-type=ecommerce]').on('click', elements.join(', '), function () {
+			$('.monetization-module.ecommerce').on('click', elements.join(', '), function () {
 				var $this = $(this),
 					$module = $this.closest('.monetization-module'),
 					$products = $module.find('.affiliate'),
