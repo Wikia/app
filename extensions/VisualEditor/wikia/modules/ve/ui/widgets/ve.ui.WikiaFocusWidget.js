@@ -39,7 +39,7 @@ ve.ui.WikiaFocusWidget = function VeUiWikiaFocusWidget( surface ) {
 	this.$wikiaBarWrapper = this.$( '#WikiaBarWrapper' );
 	this.$wikiaBarCollapseWrapper = this.$( '#WikiaBarCollapseWrapper' );
 	this.$wikiaAds = this.$( '.hide-to-edit, .hide-for-edit, .wikia-ad, #WikiaAdInContentPlaceHolder' );
-	if ( mw.config.get( 'wgEnableWikiaBarExt' ) && !mw.config.get( 'WikiaBar' ).isWikiaBarHidden() ) {
+	if ( mw.config.get( 'WikiaBar' ) && !mw.config.get( 'WikiaBar' ).isWikiaBarHidden() ) {
 		this.showWikiaBar = true;
 	}
 
@@ -258,7 +258,7 @@ ve.ui.WikiaFocusWidget.prototype.onDocumentTeardown = function () {
  * @method
  */
 ve.ui.WikiaFocusWidget.prototype.hideDistractions = function () {
-	if ( mw.config.get( 'wgEnableWikiaBarExt' ) ) {
+	if ( mw.config.get( 'WikiaBar' ) ) {
 		mw.config.get( 'WikiaBar' ).hide();
 	}
 	// Visibility property - problem with edit button opening when setting display property

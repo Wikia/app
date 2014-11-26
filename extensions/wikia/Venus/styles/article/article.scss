@@ -59,7 +59,8 @@ $header-without-cover-unit-spacing: 60px;
 	}
 }
 
-.mw-content-text {
+// mw-body-content is used for VisualEditor styling
+.mw-content-text, .mw-body-content {
 	@include clearfix;
 
 	clear: left;
@@ -114,10 +115,7 @@ $header-without-cover-unit-spacing: 60px;
 		margin-right: -$medium-grid-gutter;
 		margin-top: $article-items-spacing;
 		padding-bottom: 10px;
-
-		.mw-headline {
-			padding-left: $medium-grid-gutter;
-		}
+		padding-left: $medium-grid-gutter;
 	}
 
 	h3 {

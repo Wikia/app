@@ -65,6 +65,14 @@ $wgResourceModules += array(
 			'ext.visualEditor.viewPageTarget'
 		)
 	),
+	'ext.visualEditor.venusViewPageTarget' => $wgVisualEditorWikiaResourceTemplate + array(
+		'scripts' => array(
+			've/init/ve.init.mw.VenusViewPageTarget.js'
+		),
+		'dependencies' => array(
+			'ext.visualEditor.viewPageTarget'
+		)
+	),
 	'ext.visualEditor.wikiaCore' => $wgVisualEditorWikiaResourceTemplate + array(
 		'scripts' => array(
 			've/ve.track.js',
