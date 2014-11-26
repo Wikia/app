@@ -19,7 +19,7 @@ class FacebookSignupController extends WikiaController {
 
 		// try to get connected Wikia account
 		if ( F::app()->wg->EnableFacebookClientExt ) {
-			$user = FacebookClient::getInstance()->getWikiaUser();
+			$user = FacebookClient::getInstance()->getWikiaUser( $fbUserId );
 		} else {
 			$user = FBConnectDB::getUser( $fbUserId );
 		}
@@ -54,9 +54,15 @@ class FacebookSignupController extends WikiaController {
 	 * Displays Facebook sign up modal (called by index method)
 	 */
 	public function modal() {
+		$fbUserId = $this->getFacebookUserId();
+		if ( empty( $fbUserId ) ) {
+			$this->skipRendering();
+			return false;
+		}
+
 		// get an email from Facebook API
 		$resp = $this->sendRequest( 'FacebookSignup', 'getFacebookData', [
-			'fbUserId' => $this->getFacebookUserId(),
+			'fbUserId' => $fbUserId,
 		] );
 
 		// BugId:24400
@@ -79,19 +85,30 @@ class FacebookSignupController extends WikiaController {
 			}
 		}
 
-		$returnTo = $this->getReturnTo();
-		$returnToParams = 'returnto=' . $returnTo;
-		$returnToQuery = htmlspecialchars( $this->wg->request->getVal( 'returntoquery' ) );
-		if ( $returnToQuery ) {
-			$returnToParams .= '&returntoquery=' . $returnToQuery;
+		$returnTo = $this->wg->request->getVal( 'returnto' );
+		$returnToQuery = $this->wg->request->getVal( 'returntoquery' );
+
+		// Temporary code until we switch fully to FacebookClient
+		if ( F::app()->wg->EnableFacebookClientExt ) {
+			$returnToUrl = FacebookClient::getInstance()->getReturnToUrl( $returnTo, $returnToQuery );
+		} else {
+			$returnToUrl = FBConnect::getReturnToUrl( $returnTo, $returnToQuery );
 		}
+
+		$returnToParams = 'returnto=' . $returnTo;
+		if ( $returnToQuery ) {
+			$returnToParams .= '&returntoquery=' . htmlspecialchars( $returnToQuery );
+		}
+
+		// query string is neaded for redirects after Special:FacebookConnect
 		$this->queryString = $returnToParams;
-		$this->returnTo = $returnTo;
-		$this->returnToQuery = $returnToQuery;
+		// return to url is needed for modal signup completion
+		$this->returnToUrl = $returnToUrl;
 
 		$this->loginToken = UserLoginHelper::getSignupToken();
 
-		$this->specialUserLoginUrl = SpecialPage::getTitleFor( 'UserLogin' )->getLocalUrl();
+		$specialPage = $this->wg->EnableFacebookClientExt ? 'FacebookConnect' : 'Connect';
+		$this->connectUrl = SpecialPage::getTitleFor( $specialPage )->getLocalUrl();
 	}
 
 	/**
@@ -107,7 +124,6 @@ class FacebookSignupController extends WikiaController {
 		switch ($signupResponse['result']) {
 			case 'ok':
 				$this->result = 'ok';
-				$this->location = $signupResponse['userPage'];
 				break;
 
 			case 'error':
@@ -116,15 +132,6 @@ class FacebookSignupController extends WikiaController {
 				$this->response->setData($signupResponse);
 				break;
 		}
-	}
-
-	protected function getReturnTo() {
-		$returnTo = $this->wg->request->getVal( 'returnto' );
-		if ( !$returnTo ) {
-			$returnTo = $this->wg->Title->getFullUrl();
-		}
-
-		return htmlspecialchars( $returnTo );
 	}
 
 	/**

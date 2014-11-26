@@ -14,6 +14,10 @@ $dropdownArrowSize: 10px;
 	.wikia-dropdown-nav-sections-wrapper,
 	.wikia-dropdown-nav-subsections-wrapper {
 		width: $columnWidth;
+
+		.comments-talk-counter {
+			color: $color-alternate-text;
+		}
 	}
 }
 
@@ -22,7 +26,7 @@ $dropdownArrowSize: 10px;
 	position: absolute;
 	text-align: center;
 	width: $medium-grid-column;
-	z-index: 1;
+	z-index: $article-left-navigation-z-index;
 
 	> ul {
 		display: block;
@@ -42,7 +46,7 @@ $dropdownArrowSize: 10px;
 		cursor: pointer;
 		display: block;
 		font-size: $article-navigation-icon-size;
-		line-height: $article-navigation-icon-size;
+		line-height: $article-navigation-icon-size - 1px; //for for aliasing
 		margin-bottom: 6px;
 		position: relative;
 
@@ -84,17 +88,25 @@ $dropdownArrowSize: 10px;
 	}
 
 	.share-link {
-		color: inherit;
 		text-decoration: none;
 	}
 
-	&.single-share {
-		[data-share-type=multiple] {
-			display: none;
-		}
+	.multiple-share .share-link {
+		color: inherit;
 	}
-	&.multiple-share {
-		[data-share-type=single] {
+
+	.single-share {
+		display: none;
+	}
+	.multiple-share {
+		display: list-item;
+	}
+
+	&.single-share {
+		.single-share {
+			display: list-item;
+		}
+		.multiple-share {
 			display: none;
 		}
 	}

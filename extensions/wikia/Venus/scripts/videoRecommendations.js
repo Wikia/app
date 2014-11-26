@@ -1,4 +1,4 @@
-require(['wikia.document', 'venus.nodeFinder'], function(d, nodeFinder){
+require(['wikia.document', 'wikia.nodeFinder'], function(d, nodeFinder){
 	'use strict';
 
 	/**
@@ -49,7 +49,7 @@ require(['wikia.document', 'venus.nodeFinder'], function(d, nodeFinder){
 			videoRecommendations, header;
 
 		videoRecommendations = createModuleContainer('videoRecommendations', 'video-recommendations');
-		header = nodeFinder.findNodeByOffsetTop(contentContainer, headerSelector, boundaryOffsetTop);
+		header = nodeFinder.getChildByOffsetTop(contentContainer, headerSelector, boundaryOffsetTop);
 
 		if (header !== null) {
 			insertModuleBeforeElement(contentContainer, videoRecommendations, header);

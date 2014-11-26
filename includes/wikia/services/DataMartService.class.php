@@ -20,6 +20,8 @@ class DataMartService extends Service {
 	const CACHE_TOP_ARTICLES = 86400;
 	const LOCK_TOP_ARTICLES = 10;
 
+	const TOP_WIKIS_FOR_HUB = 10;
+
 	/**
 	 * get pageviews
 	 * @param integer $periodId
@@ -236,6 +238,8 @@ class DataMartService extends Service {
 		$topWikis = $sql->runLoop($db, function(&$topWikis, $row) {
 			$topWikis[$row->id] = $row->pageviews;
 		});
+
+		$topWikis = array_slice($topWikis, 0, $limit, true);
 
 		wfProfileOut(__METHOD__);
 		return $topWikis;
@@ -590,6 +594,104 @@ class DataMartService extends Service {
 		$topArticles = array_slice( $topArticles, 0, $limit, true );
 		wfProfileOut( __METHOD__ );
 		return $topArticles;
+	}
+
+	/**
+	 * Get most popular cross wiki articles based on pageviews in last week.
+	 * Unfortunately according to performance reasons we need to fetch most popular wikis
+	 * and then fetch most popular articles on those wikis.
+	 *
+	 * @param string $hub
+	 * @param string $langs
+	 * @param array|null $namespaces
+	 * @param int $limit
+	 * @return array of wikis with articles. Format:
+	 * [
+	 *   [
+	 *     'wiki' => [
+	 *       'id' => 1030786,
+	 *       'name' => 'Wiki name',
+	 *       'language' => 'language code',
+	 *       'domain' => 'Full url',
+	 *     ],
+	 *     'articles' => [
+	 *        ['id' => 1, 'ns' => 0],
+	 *        ['id' => 2, 'ns' => -1]
+	 *      ]
+	 *   ],
+	 *   [
+	 *     'wiki' => [
+	 *       'id' => 1030786,
+	 *       'name' => 'Wiki name',
+	 *       'language' => 'language code',
+	 *       'domain' => 'Full url',
+	 *     ],
+	 *     'articles' => [
+	 *        ['id' => 1, 'ns' => 0],
+	 *        ['id' => 2, 'ns' => -1]
+	 *      ]
+	 *   ],
+	 * ]
+	 */
+	public static function getTopCrossWikiArticlesByPageview( $hub, $langs, $namespaces = null, $limit = 200 ) {
+		wfProfileIn( __METHOD__ );
+
+		//fetch the top 10 wikis on a weekly pageviews basis
+		//this has it's own cache
+		$wikis = DataMartService::getTopWikisByPageviews(
+			DataMartService::PERIOD_ID_WEEKLY,
+			self::TOP_WIKIS_FOR_HUB,
+			$langs,
+			$hub,
+			1 /* only pubic */
+		);
+
+		$wikisCount = count( $wikis );
+		$res = [];
+
+		if ( $wikisCount >= 1 ) {
+			$articlesPerWiki = ceil( $limit / $wikisCount );
+
+			//fetch $articlesPerWiki articles from each wiki
+			//see FB#73094 for performance review
+			foreach ( $wikis as $wikiId => $data ) {
+				//this has it's own cache
+				$articles = DataMartService::getTopArticlesByPageview(
+					$wikiId,
+					null,
+					$namespaces,
+					false,
+					$articlesPerWiki
+				);
+
+				if ( count( $articles ) == 0 ) {
+					continue;
+				}
+
+				$item = [
+					'wiki' => [
+						'id' => $wikiId,
+						//WF data has it's own cache
+						'name' => WikiFactory::getVarValueByName( 'wgSitename', $wikiId ),
+						'language' => WikiFactory::getVarValueByName( 'wgLanguageCode', $wikiId ),
+						'domain' => WikiFactory::getVarValueByName( 'wgServer', $wikiId )
+					],
+					'articles' => []
+				];
+
+				foreach ( $articles as $articleId => $article ) {
+					$item['articles'][] = [
+						'id' => $articleId,
+						'ns' => $article['namespace_id']
+					];
+				}
+
+				$res[] = $item;
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $res;
 	}
 
 	/**
