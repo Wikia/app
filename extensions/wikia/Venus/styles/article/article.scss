@@ -16,6 +16,11 @@ $placeholder-background-color: $color-article-navigation-inactive; // only for p
 $article-items-spacing: 30px;
 $header-without-cover-unit-spacing: 60px;
 
+// don't display TOC on Venus skin pages (fight cache)
+#toc {
+	display: none !important;
+}
+
 .article {
 	overflow: hidden;
 
