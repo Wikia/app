@@ -1,11 +1,13 @@
+/* global UserLoginAjaxForm */
 var UserLoginFacebookForm = $.createClass(UserLoginAjaxForm, {
 
 	// login token is stored in hidden field, no need to send an extra request
 	retrieveLoginToken: function () {},
 
-	submitLoginExisting: function () {
+	submitLoginExisting: function (e) {
 		'use strict';
 
+		e.preventDefault();
 		$(window).trigger('loginExistingSubmit');
 
 		this.submitButton.attr('disabled', 'disabled');
@@ -46,7 +48,11 @@ var UserLoginFacebookForm = $.createClass(UserLoginAjaxForm, {
 			if (callback && typeof callback === 'function') {
 				// call with current context
 				callback.bind(this, json)();
+			} else {
+				window.location.reload();
 			}
+		} else if (result === 'error') {
+			window.GlobalNotification.show(json.message || $.msg('oasis-generic-error'), 'error');
 		} else {
 			this.submitButton.removeAttr('disabled');
 			this.errorValidation(json);
@@ -80,7 +86,7 @@ var UserLoginFacebookForm = $.createClass(UserLoginAjaxForm, {
 
 	/**
 	 * Extends login handler callback for tracking and any additional work
-	 * @param json string
+	 * @param {string} json
 	 */
 	submitFbSignupHandler: function (json) {
 		'use strict';

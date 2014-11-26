@@ -170,7 +170,7 @@ class FacebookSignupController extends WikiaController {
 	 * Handler for Facebook Login for already connected users
 	 * TODO/FIXME error messages
 	 *
-	 * @return bool
+	 * @return null
 	 * @throws FacebookMapModelInvalidDataException
 	 */
 	public function login() {
@@ -181,21 +181,19 @@ class FacebookSignupController extends WikiaController {
 
 		if ( !$wikiaUserName || !$wikiaPassword ) {
 			$this->response->setData( [
-					'response' => 'error',
-					'message' => 'Please enter your username and password', //wfMessage( 'fbconnect-error' ),
-					'format' => 'json',
-				] );
-			return true;
+				'result' => 'error',
+				'message' => 'Please enter your username and password', //wfMessage( 'fbconnect-error' ),
+			] );
+			return;
 		}
 
 		$user = \User::newFromName( $wikiaUserName );
 		if ( !$user || !$user->checkPassword( $wikiaPassword ) ) {
 			$this->response->setData( [
-					'response' => 'error',
-					'message' => 'We could not find the username you entered.', //wfMessage( 'fbconnect-error' ),
-					'format' => 'json',
-				] );
-			return true;
+				'result' => 'error',
+				'message' => 'We could not find the username you entered.', //wfMessage( 'fbconnect-error' ),
+			] );
+			return;
 		}
 
 		// Log the user in with existing wikia account
@@ -212,11 +210,10 @@ class FacebookSignupController extends WikiaController {
 				if ( !$mappingCreated ) {
 					// TODO/FIXME: show proper error message @see UC-116
 					$this->response->setData( [
-							'response' => 'error',
-							'message' => 'We could not find the username you entered.', //wfMessage( 'fbconnect-error' ),
-							'format' => 'json',
-						] );
-					return true;
+						'result' => 'error',
+						'message' => 'We could not find the username you entered.', //wfMessage( 'fbconnect-error' ),
+					] );
+					return;
 				}
 			}
 		} else {
@@ -224,11 +221,10 @@ class FacebookSignupController extends WikiaController {
 			if ( !$mappingCreated ) {
 				// TODO/FIXME: show proper error message @see UC-116
 				$this->response->setData( [
-						'response' => 'error',
-						'message' => 'There was a problem connecting your account to Facebook!',
-						'format' => 'json',
-					] );
-				return true;
+					'result' => 'error',
+					'message' => 'There was a problem connecting your account to Facebook!',
+				] );
+				return;
 			}
 		}
 
@@ -244,9 +240,8 @@ class FacebookSignupController extends WikiaController {
 		\FacebookClientHelper::track( 'facebook-link-existing' );
 
 		$this->response->setData( [
-			'response' => 'ok',
+			'result' => 'ok',
 			'message' => 'success',
-			'format' => 'json',
 		] );
 	}
 
