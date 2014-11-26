@@ -12,6 +12,11 @@ class VenusHooks {
 	 * @return bool
 	 */
 	static public function onParserSectionCreate( $parser, $section, &$content, $showEditLinks ) {
+		// skip if we're not parsing for venus
+		if ( !F::app()->checkSkin( 'venus' ) ) {
+			return true;
+		}
+
 		if ( self::isInfoboxInFirstSection( $parser, $section, $content ) ) {
 			$infoboxExtractor = new InfoboxExtractor( $content );
 
@@ -23,29 +28,18 @@ class VenusHooks {
 			if ( $node instanceof DOMElement ) {
 				$body = $dom->documentElement->firstChild;
 
-				// remove whitespace before and after the infobox node (CON-2166)
-				$textAroundInfobox = '';
-
-				if ( $node->previousSibling instanceof DOMText ) {
-					$textAroundInfobox .= $node->previousSibling->textContent;
-					$body->removeChild( $node->previousSibling );
-				}
-
-				if ( $node->nextSibling instanceof DOMText ) {
-					$textAroundInfobox .= $node->nextSibling->textContent;
-
-					// remove more than two new lines - otherwise they would create an empty paragraph (CON-2166)
-					$textAroundInfobox = preg_replace( '#^\n{2,}#', "\n\n", $textAroundInfobox );
-
-					// update the text node that follows the infobox (before it's extracted)
-					$node->nextSibling->textContent = $textAroundInfobox;
-				}
+				// replace extracted infobox with a dummy element to prevent newlines from creating empty paragraphs (CON-2166)
+				// <table infobox-placeholder="1"></table>
+				$placeholder = $dom->createElement( 'table' );
+				$placeholder->setAttribute( 'infobox-placeholder', 'true' );
+				$body->insertBefore( $placeholder, $node );
 
 				// perform a magic around infobox wrapper
 				$node = $infoboxExtractor->clearInfoboxStyles( $node );
 				$infoboxWrapper = $infoboxExtractor->wrapInfobox( $node, 'infoboxWrapper', 'infobox-wrapper' );
 				$infoboxContainer = $infoboxExtractor->wrapInfobox( $infoboxWrapper, 'infoboxContainer', 'infobox-container' );
 
+				// move infobox to the beginning of article content
 				$infoboxExtractor->insertNode( $body, $infoboxContainer, true );
 
 				$content = $dom->saveHTML();
@@ -54,6 +48,18 @@ class VenusHooks {
 			}
 		}
 
+		return true;
+	}
+
+	/**
+	 * Remove infobox placeholder (CON-2166)
+	 *
+	 * @param Parser $parser
+	 * @param $text string text from the parse to replacer
+	 * @return bool true, it's a hook
+	 */
+	static public function onParserAfterTidy(Parser $parser, &$text ) {
+		$text = str_replace( '<table infobox-placeholder="true"></table>', '', $text );
 		return true;
 	}
 
