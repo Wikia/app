@@ -77,19 +77,20 @@ class WikiaInYourLangController extends WikiaController {
 	private function getWikiDomain( $sCurrentUrl ) {
 		$aParsed = parse_url( $sCurrentUrl );
 		$sHost = $aParsed['host'];
-		$regExp = "/([a-z]{2}\.)?(.*)/i";
+		$regExp = "/(([a-z]{2,3}|[a-z]{2}\-[a-z]{2})\.)?([^\.]+\.[a-z]+\.[a-z]+)/i";
 		/**
-		 * preg_match returns this array:
+		 * preg_match returns similar array:
 		 * [
 		 * 	0 => zh.example.wikia.com,
 		 * 	1 => (zh. | empty),
-		 * 	2 => example.wikia.com
+		 * 	2 => (zh | empty),
+		 * 	3 => example.wikia.com
 		 * ]
-		 * [2] is a domain without the language prefix
+		 * [3] is a domain without the language prefix
 		 * @var Array
 		 */
 		$aPreged = preg_match( $regExp, $sHost );
-		$sWikiDomain = $aPreged[2];
+		$sWikiDomain = $aPreged[3];
 		return $sWikiDomain;
 	}
 
