@@ -16,6 +16,11 @@ a {
 	&:hover {
 		text-decoration: underline;
 	}
+
+	&.new,
+	&.new:visited {
+		color: #cc2200;
+	}
 }
 
 .wikia-page-wrapper {
