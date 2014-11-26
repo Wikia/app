@@ -71,7 +71,7 @@ require(['jquery', 'wikia.window', 'wikia.tracker'], function ($, win, tracker) 
 					suffix;
 
 				suffix = '-click';
-				if ($(this).attr('href').indexOf('http://www.wikia.com/Alliance') !== -1) {
+				if ($(this).attr('href').indexOf('www.wikia.com/Alliance') !== -1) {
 					suffix = '-logo-click';
 				}
 				label = $(e.delegateTarget).attr('data-label');
