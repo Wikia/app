@@ -7,6 +7,7 @@ class RecentWikiActivityController extends WikiaController {
 		wfProfileIn(__METHOD__);
 
 		Wikia::addAssetsToOutput('recent_wiki_activity_scss');
+		Wikia::addAssetsToOutput('recent_wiki_activity_js');
 
 		$this->changeList = WikiaDataAccess::cache(
 			wfMemcKey( self::$memcKey ),

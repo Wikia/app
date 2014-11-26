@@ -1,4 +1,4 @@
-<aside class="recent-wiki-activity">
+<aside id="recentWikiActivity" class="recent-wiki-activity">
 	<header><?= wfMessage('recent-wiki-activity-header'); ?></header>
 	<ul>
 		<? foreach ($changeList as $change): ?>
