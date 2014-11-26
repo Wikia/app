@@ -6,6 +6,7 @@ use PhpAmqpLib\Message\AMQPMessage;
 class PipelineConnectionBase {
 	const DURABLE_MESSAGE = 2;
 	const NO_REQUEUE = false;
+	const QUEUE_NAME_POSTFIX = 'v0.1';
 	const MESSAGE_TTL = 900000; //15m
 	/** @var Array Should be one element array with ['routing_key' => callable [callback]] schema */
 	public static $binding;
@@ -18,6 +19,7 @@ class PipelineConnectionBase {
 	protected $pass;
 	protected $vhost;
 	protected $exchange;
+	protected $deadExchange;
 
 	/** @var AMQPConnection Holds worker main rabbitmq connection */
 	protected $connection;
@@ -48,7 +50,7 @@ class PipelineConnectionBase {
 		$this->closeMainConnection();
 	}
 
-	public function publish( String $routingKey, Mixed $body ) {
+	public function publish( $routingKey, $body ) {
 		$channel = $this->getAnonChannel();
 		return $channel->basic_publish(
 			new AMQPMessage( json_encode( $body ), [
@@ -77,10 +79,9 @@ class PipelineConnectionBase {
 
 	/** @return \PhpAmqpLib\Channel\AMQPChannel */
 	protected function getAnonChannel() {
-		if ( !isset( $this->publishChannel ) || !$this->publishChannel->isConnected() ) {
+		if ( !isset( $this->publishChannel ) || !$this->publishChannel->is_open ) {
 			$connection = $this->getPublishConnection();
 			$this->publishChannel = $connection->channel();
-			$this->publishChannel->exchange_declare( $this->exchange, 'topic', false, true );
 		}
 		return $this->publishChannel;
 	}
@@ -113,16 +114,12 @@ class PipelineConnectionBase {
 	}
 
 	protected function getQueueName() {
-		return get_class( $this ) . '.queue';
+		return implode( '.', [ get_class( $this ), key( self::$binding ), self::QUEUE_NAME_POSTFIX ] );
 	}
 
 	protected function setConnection( &$connection ) {
-		if ( isset( $connection ) ) {
-			/** @var AMQPConnection $connection */
-			$reconnect = !$connection->isConnected();
-		}
-		if ( !isset( $connection ) || $reconnect ) {
-			return new AMQPConnection( $this->host, $this->port, $this->user, $this->pass );
+		if ( !isset( $connection ) ) {
+			return new AMQPConnection( $this->host, $this->port, $this->user, $this->pass, $this->vhost );
 		}
 		return $connection;
 	}
