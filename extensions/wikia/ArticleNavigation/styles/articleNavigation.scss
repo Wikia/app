@@ -54,8 +54,9 @@ $dropdownArrowSize: 10px;
 		cursor: pointer;
 		display: table-cell;
 		font-size: $article-navigation-icon-size;
-		line-height: $article-navigation-icon-size - 1px; //for for aliasing
+		line-height: $article-navigation-icon-size - 3px;
 		margin-bottom: 6px;
+		padding-top: 2px;
 		position: relative;
 		text-align: center;
 		vertical-align: middle;
