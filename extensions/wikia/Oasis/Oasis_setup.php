@@ -46,7 +46,6 @@ function wfOasisSetup() {
 	$wgHooks['ArticleDeleteComplete'][] = 'NotificationsController::addPageDeletedConfirmation';
 	$wgHooks['ArticleUndelete'][] = 'NotificationsController::addPageUndeletedConfirmation';
 	#$wgHooks['EditPageSuccessfulSave'][] = 'NotificationsController::addSaveConfirmation'; // BugId:10129
-	$wgHooks['SkinTemplatePageBeforeUserMsg'][] = 'NotificationsController::addFacebookConnectConfirmation';
 	$wgHooks['SpecialMovepageAfterMove'][] = 'NotificationsController::addPageMovedConfirmation';
 	$wgHooks['SpecialPreferencesOnRender'][] = 'NotificationsController::addPreferencesConfirmation';
 	$wgHooks['UserLogoutComplete'][] = 'NotificationsController::addLogOutConfirmation';
