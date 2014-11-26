@@ -80,8 +80,8 @@ class PipelineConnectionBase {
 	/** @return \PhpAmqpLib\Channel\AMQPChannel */
 	protected function getAnonChannel() {
 		if ( !isset( $this->publishChannel ) || !$this->publishChannel->is_open ) {
-			$connection = $this->getPublishConnection();
-			$this->publishChannel = $connection->channel();
+			$pubConn = $this->getPublishConnection();
+			$this->publishChannel = $pubConn->channel();
 		}
 		return $this->publishChannel;
 	}
@@ -91,8 +91,8 @@ class PipelineConnectionBase {
 		// check if binding was set
 		if ( is_array( self::$binding ) && is_callable( self::$binding[ 0 ] ) ) {
 			if ( !isset( $this->mainChannel ) ) {
-				$connection = $this->getMainConnection();
-				$this->mainChannel = $connection->channel();
+				$mainConn = $this->getMainConnection();
+				$this->mainChannel = $mainConn->channel();
 				$qName = $this->getQueueName();
 				$this->mainChannel->queue_declare( $qName, false, true, false, true, false, [
 					'x-dead-letter-exchange' => [ 'S', $this->deadExchange ]
@@ -117,17 +117,17 @@ class PipelineConnectionBase {
 		return implode( '.', [ get_class( $this ), key( self::$binding ), self::QUEUE_NAME_POSTFIX ] );
 	}
 
-	protected function setConnection( &$connection ) {
-		if ( !isset( $connection ) ) {
+	protected function setConnection( &$conn ) {
+		if ( !isset( $conn ) ) {
 			return new AMQPConnection( $this->host, $this->port, $this->user, $this->pass, $this->vhost );
 		}
-		return $connection;
+		return $conn;
 	}
 
-	protected static function closeConnection( &$connection ) {
-		if ( isset( $connection ) ) {
-			$connection->close();
-			unset( $connection );
+	protected static function closeConnection( &$conn ) {
+		if ( isset( $conn ) ) {
+			$conn->close();
+			unset( $conn );
 		}
 	}
 

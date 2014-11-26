@@ -31,21 +31,21 @@ class PipelineEventProducerController extends WikiaController {
 		return true;
 	}
 
-	static public function onArticleDeleteComplete( &$oPage, &$oUser, $reason, $page_id ) {
+	static public function onArticleDeleteComplete( &$oPage, &$oUser, $reason, $pageId ) {
 		wfDebug( "IndexingPipeline:onArticleDeleteComplete\n" );
-		self::send( 'onArticleDeleteComplete', $page_id );
+		self::send( 'onArticleDeleteComplete', $pageId );
 		return true;
 	}
 
-	static public function onArticleUndelete( Title &$oTitle, $is_new = false ) {
+	static public function onArticleUndelete( Title &$oTitle, $isNew = false ) {
 		wfDebug( "IndexingPipeline:onArticleUndelete\n" );
-		self::send( 'onArticleUndelete', $oTitle->getArticleId(), [ 'isNew' => $is_new ] );
+		self::send( 'onArticleUndelete', $oTitle->getArticleId(), [ 'isNew' => $isNew ] );
 		return true;
 	}
 
-	static public function onTitleMoveComplete( &$oOldTitle, &$oNewTitle, &$oUser, $page_id, $redirect_id = 0 ) {
+	static public function onTitleMoveComplete( &$oOldTitle, &$oNewTitle, &$oUser, $pageId, $redirectId = 0 ) {
 		wfDebug( "IndexingPipeline:onTitleMoveComplete\n" );
-		self::send( 'onTitleMoveComplete', $page_id, [ 'redirectId' => $redirect_id ] );
+		self::send( 'onTitleMoveComplete', $pageId, [ 'redirectId' => $redirectId ] );
 		return true;
 	}
 }
