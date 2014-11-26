@@ -69,7 +69,6 @@ class VenusController extends WikiaController {
 		$this->localNavigation = $this->getLocalNavigation();
 		$this->globalFooter = $this->getGlobalFooter();
 		$this->corporateFooter = $this->getCorporateFooter();
-		$this->launchRecommendationsModule();
 
 		if ($this->isUserLoggedIn) {
 			$this->recentWikiActivity = $this->getRecentWikiActivity();
@@ -200,14 +199,6 @@ class VenusController extends WikiaController {
 	public function getCorporateFooter() {
 		//return $this->app->renderView('CorporateFooter', 'Index');
 		return '';
-	}
-
-	public function launchRecommendationsModule() {
-		global $wgEnableRecommendationsExt, $wgOut;
-
-		if ( !empty( $wgEnableRecommendationsExt ) ) {
-			$wgOut->addModules( 'ext.wikia.venus.recommendations' );
-		}
 	}
 
 	public function getRecentWikiActivity() {

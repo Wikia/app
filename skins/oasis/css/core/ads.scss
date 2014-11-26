@@ -6,14 +6,7 @@
 
 /** Hide invisible slots and 1x1 iframes **/
 .wikia-ad[id^="INVISIBLE_"], .wikia-ad iframe[width="1"][height="1"], .wikia-ad > .hidden {
-	display: none;
-}
-
-/* Temp fix for a P1.5 - ADEN-1578 */
-#LEFT_SKYSCRAPER_2, #LEFT_SKYSCRAPER_3 {
-	& >.hidden {
-		display: none !important;
-	}
+	display: none !important;
 }
 
 .wikia-ad.hidden {
@@ -65,11 +58,6 @@
 }
 
 /** Skyscrapers **/
-#LEFT_SKYSCRAPER_2 {
-	// FIXME: this is bad. Is it necessary?
-	@extend section;
-}
-
 #LEFT_SKYSCRAPER_3 {
 	clear: both;
 	position: absolute;
@@ -239,6 +227,7 @@ body >a >img[src$="noad.gif"] {
 
 // Right rail ads centering
 #LEFT_SKYSCRAPER_2 {
+	margin-bottom: 20px;
 	font-size: 0;
 	text-align: center;
 	> div, > iframe {

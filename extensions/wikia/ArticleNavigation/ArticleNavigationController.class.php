@@ -20,6 +20,7 @@ class ArticleNavigationController extends WikiaController {
 
 		Wikia::addAssetsToOutput( 'article_navigation_scss' );
 		Wikia::addAssetsToOutput( 'article_navigation_js' );
+		Wikia::addAssetsToOutput( 'article_js' );
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 
@@ -49,8 +50,9 @@ class ArticleNavigationController extends WikiaController {
 	 * Prepare data for edit actions
 	 * @return array
 	 */
-	private function editActionsData()
-	{
+	private function editActionsData() {
+		global $wgUser, $wgTitle;
+
 		$contentActions = $this->app->getSkinTemplateObj()->data['content_actions'];
 		$editActions = [];
 
@@ -69,7 +71,7 @@ class ArticleNavigationController extends WikiaController {
 		}
 
 		$allowedActions = array_merge( $editActions, [
-			'history', 'move', 'protect', 'unprotect', 'delete', 'undelete', 'replace-file'
+			'history', 'move', 'protect', 'unprotect', 'delete', 'undelete', 'replace-file', 'talk'
 		] );
 
 		$actions = [];
@@ -81,8 +83,26 @@ class ArticleNavigationController extends WikiaController {
 				$data = [
 					'href' => $contentAction['href'],
 					'title' => $contentAction['text'],
-					'trackingId' => $contentAction['id'],
+					'trackingId' => $contentAction['id']
 				];
+
+				if ( $wgUser->isAnon() &&
+					!$wgUser->isBlocked() &&
+					!$wgTitle->userCan( 'edit' ) &&
+					$this->isEdit($contentAction)
+				) {
+					$data[ 'class' ] = 'force-user-login';
+				}
+
+				//Add custom values if talk item found
+				if ( $contentAction['id'] == 'ca-talk' ) {
+					$service = new PageStatsService($wgTitle->getArticleId());
+					$count = $service->getCommentsCount();
+					$commentsTalk = $this->sendRequest('CommentsLikes', 'getData', ['count' => $count])->getVal('data');
+					$data['title'] = $commentsTalk['title'] . " <span class='comments-talk-counter'>" . $commentsTalk['formattedCount'] . "</span>";
+					$data['href'] = $commentsTalk['href'];
+					$data['tooltip'] = $commentsTalk['title'];
+				}
 
 				if ( isset( $contentAction['rel'] ) ) {
 					$data['rel'] = str_replace( 'ca-', '', $contentAction['rel'] );
@@ -208,7 +228,17 @@ class ArticleNavigationController extends WikiaController {
 			$data = $service->getVisibleList();
 		}
 
-		$renderedData = $service->instanceToRenderData( $service->listToInstance( $data ) );
+		if (!WikiaPageType::isWikiaHubMain()) {
+			$renderedData[] = $this->sendRequest(
+				'ArticleNavigationContributeMenu',
+				'getContributeActionsForDropdown'
+			)->getVal('data');
+		}
+
+		$dataInArr = $service->instanceToRenderData( $service->listToInstance( $data ) );
+		foreach ($dataInArr as $item) {
+			$renderedData[] = $item;
+		}
 
 		if ( $wgUser->isAllowed( 'admindashboard' ) ) {
 			$renderedData[] = [
@@ -218,6 +248,11 @@ class ArticleNavigationController extends WikiaController {
 				'type' => 'link'
 			];
 		}
+
 		return $renderedData;
+	}
+
+	private function isEdit($data) {
+		return !empty($data['id']) && ($data['id'] == 'ca-viewsource');
 	}
 }

@@ -20,6 +20,9 @@ class FacebookClient {
 	/** @var Facebook\FacebookSignedRequestFromInputHelper  */
 	private $facebookAPI;
 
+	/** @var int|null Facebook user id */
+	private $facebookUserId;
+
 	/** @var array */
 	private $userInfoCache;
 
@@ -34,6 +37,8 @@ class FacebookClient {
 	 * @throws Exception
 	 */
 	private function __construct( FacebookClientConfig $config ) {
+
+		$this->facebookUserId = null;
 
 		if ( $config->hasFacebookAPI() ) {
 			// Use client passed to our constructor
@@ -117,9 +122,10 @@ class FacebookClient {
 				$session->validate();
 				$this->session = $session;
 			} catch ( \Exception $ex ) {
-				$log->info( 'Invalid Facebook session found', [
-					'fbUserId' => $this->getUserId(),
+				$log->warning( __CLASS__ . ': Invalid Facebook session found', [
+					'fbUserId' => $this->facebookUserId,
 					'method' => __METHOD__,
+					'message' => $ex->getMessage(),
 				] );
 			}
 		}
@@ -135,24 +141,50 @@ class FacebookClient {
 			$this->session = $session;
 			$memc->set( $this->getTokenMemcKey(), $session->getAccessToken(), self::TOKEN_TTL );
 		} catch ( \Exception $ex ) {
-			$log->info( 'Invalid Facebook session found', [
-				'fbUserId' => $this->getUserId(),
+			$log->warning( __CLASS__ . ': Invalid Facebook session found', [
+				'fbUserId' => $this->facebookUserId,
 				'method' => __METHOD__,
+				'message' => $ex->getMessage(),
 			] );
 		}
 	}
 
 	private function getTokenMemcKey() {
-		return wfSharedMemcKey( 'fbAccessToken', $this->getUserId() );
+		return wfSharedMemcKey( 'fbAccessToken', $this->facebookUserId );
 	}
 
 	/**
 	 * Get the Facebook user ID for the current user, if set
 	 *
-	 * @return null|string
+	 * @return int
 	 */
 	public function getUserId() {
-		return $this->facebookAPI->getUserId();
+		if ( $this->facebookUserId !== null ) {
+			return $this->facebookUserId;
+		}
+
+		$errorMessage = null;
+
+		try {
+			$session = $this->getSession();
+			if ( $session ) {
+				$session->validate();
+				$this->facebookUserId = ( int ) $this->facebookAPI->getUserId();
+			}
+		} catch ( \Exception $e ) {
+			$errorMessage = $e->getMessage();
+		}
+
+		if ( empty( $this->facebookUserId ) ) {
+			$this->facebookUserId = 0;
+
+			WikiaLogger::instance()->warning( 'Null Facebook user id', [
+				'method' => __METHOD__,
+				'message' => $errorMessage,
+			] );
+		}
+
+		return $this->facebookUserId;
 	}
 
 	/**
@@ -166,7 +198,7 @@ class FacebookClient {
 		$log = WikiaLogger::instance();
 
 		// Pull the user ID from the signed FB cookie if it wasn't passed in
-		if ( $userId == 0 ) {
+		if ( empty( $userId ) ) {
 			$userId = $this->getUserId();
 		}
 
@@ -248,18 +280,21 @@ class FacebookClient {
 	/**
 	 * Returns a Wikia User object for the current (or passed) Facebook ID
 	 *
-	 * @param int $fbid [optional] A Facebook ID
+	 * @param int|null $fbId [optional] A Facebook ID
 	 *
 	 * @return null|User
 	 * @throws MWException
 	 */
-	public function getWikiaUser( $fbid = null ) {
+	public function getWikiaUser( $fbId = null ) {
 
-		if ( empty( $fbid ) ) {
-			$fbid = $this->getUserId();
+		if ( empty( $fbId ) ) {
+			$fbId = $this->getUserId();
+			if ( empty( $fbId ) ) {
+				return null;
+			}
 		}
 
-		$map = FacebookMapModel::lookupFromFacebookID( $fbid );
+		$map = FacebookMapModel::lookupFromFacebookID( $fbId );
 		if ( empty( $map ) ) {
 			return null;
 		}
@@ -338,6 +373,47 @@ class FacebookClient {
 
 			setcookie( $sessionCookieName, '', 0, '/', $base_domain );
 		}
+	}
+
+	/**
+	 * Check if we should redirect back to the specified page by comparing it to this black list
+	 * @param Title|null $title
+	 * @return bool
+	 */
+	private function isInvalidRedirectOnConnect( Title $title = null ) {
+		return (
+			!$title instanceof Title ||
+			$title->isSpecial( 'Userlogout' ) ||
+			$title->isSpecial( 'Signup' ) ||
+			$title->isSpecial( 'Connect' ) ||
+			$title->isSpecial( 'FacebookConnect' ) ||
+			$title->isSpecial( 'UserLogin' )
+		);
+	}
+
+	/**
+	 * Get a fully resolved URL for redirecting after login/signup with facebook
+	 * @param $returnTo String Title of page to return to
+	 * @param $returnToQuery String Query string of page to return to
+	 * @param $cb String Cachebuster value
+	 * @return string
+	 */
+	public function getReturnToUrl( $returnTo, $returnToQuery, $cb = null ) {
+		if ( is_null( $cb ) ) {
+			$cb = rand( 1, 10000 );
+		}
+		$queryStr = '&fbconnected=1&cb=' . $cb;
+		$titleObj = Title::newFromText( $returnTo );
+
+		if ( $this->isInvalidRedirectOnConnect( $titleObj ) ) {
+			// Don't redirect if the location is no good.  Go to the main page instead
+			$titleObj = Title::newMainPage();
+		} else if ( $returnToQuery ) {
+			// Include the return to query string if its ok to redirect
+			$queryStr = urldecode( $returnToQuery ) . $queryStr;
+		}
+
+		return $titleObj->getFullURL( $queryStr );
 	}
 }
 

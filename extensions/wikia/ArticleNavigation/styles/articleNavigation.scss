@@ -11,8 +11,13 @@ $dropdownArrowSize: 10px;
 		width: $columnWidth * 2;
 	}
 
-	.wikia-dropdown-nav {
+	.wikia-dropdown-nav-sections-wrapper,
+	.wikia-dropdown-nav-subsections-wrapper {
 		width: $columnWidth;
+
+		.comments-talk-counter {
+			color: $color-alternate-text;
+		}
 	}
 }
 
@@ -21,7 +26,7 @@ $dropdownArrowSize: 10px;
 	position: absolute;
 	text-align: center;
 	width: $medium-grid-column;
-	z-index: 1;
+	z-index: $article-left-navigation-z-index;
 
 	> ul {
 		display: block;
@@ -127,6 +132,6 @@ $dropdownArrowSize: 10px;
 		margin-left: $small-content-padding - $content-border-width;
 		width: $small-grid-column;
 
-		@include dropdownWidth($small-grid-column * 2);
+		@include dropdownWidth($small-grid-column * 3);
 	}
 }
