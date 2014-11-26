@@ -447,16 +447,16 @@ class ScribeEventProducer {
 			&& isset( $aAllowedTypes[ $this->mParams['mediaType'] ] )
 		) {
 			if ( $this->mParams['isRedirect'] == 1 ) {
-				$sLogMessage = "The page is a redirect";
+				$sLogMessage = 'The page is a redirect';
 				$bIsImageForReview = false;
 			} elseif ( $this->mParams['isLocalFile'] == 0 ) {
-				$sLogMessage = "The file is from an external repo";
+				$sLogMessage = 'The file is from an external repo';
 				$bIsImageForReview = false;
 			} elseif ( $this->mParams['isTop200'] == 1 ) {
-				$sLogMessage = "The was uploaded to one of the Top200 wikias";
+				$sLogMessage = 'The was uploaded to one of the Top200 wikias';
 				$bIsImageForReview = false;
 			} else {
-				$sLogMessage = "The image was sent for a review";
+				$sLogMessage = 'The image was sent for a review';
 				$bIsImageForReview = true;
 			}
 
@@ -471,8 +471,10 @@ class ScribeEventProducer {
 	 * @return void
 	 */
 	private function sendImageReviewLog( $sLogMessage ) {
-		WikiaLogger::instance()->info( "ImageReviewLog: {$sLogMessage}", [
+		WikiaLogger::instance()->info( 'ImageReviewLog', [
 			'method' => __METHOD__,
+			'status' => $bIsImageForReview,
+			'message' => $sLogMessage,
 			'params' => $this->mParams,
 		] );
 	}
