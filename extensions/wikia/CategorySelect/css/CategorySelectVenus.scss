@@ -66,7 +66,7 @@ $categoryselect-list-spacing: 25px;
 
 	.category,
 	.add-toolbar,
-	.placeholder {
+	.placeholder {/* .placeholder is element that replaces .category during drag (jquery.ui.sortable.js) */
 		display: block;
 		float: left;
 	}
@@ -85,13 +85,17 @@ $categoryselect-list-spacing: 25px;
 		&.new {
 
 			.name {
-//				cursor: move;
+				cursor: move;
 			}
 
 			.toolbar {
 				display: block;
 			}
 		}
+	}
+
+	.placeholder {
+		height: 16px;
 	}
 
 	.name {
@@ -159,7 +163,8 @@ $categoryselect-list-spacing: 25px;
 		margin-top: $vertical-spacing;
 	}
 
-	.category {
+	.category,
+	.placeholder {
 		@media #{$small-only} {
 			margin-right: $small-grid-gutter;
 			padding-right: $small-grid-gutter;
@@ -181,7 +186,8 @@ $categoryselect-list-spacing: 25px;
 		margin-top: $categoryselect-list-spacing;
 	}
 
-	.category {
+	.category,
+	.placeholder {
 		margin-bottom: 11px;
 		margin-top: 7px;
 	}
