@@ -142,7 +142,7 @@ class TopArticles implements IDataProvider {
 				'height' => 225
 			];
 
-			$wikiData = self::getWikiByID( $wikiId );
+			$wikiData = \WikiFactory::getWikiByID( $wikiId );
 
 			$response = \ApiService::foreignCall( $wikiData->city_dbname, $params, \ApiService::WIKIA );
 
