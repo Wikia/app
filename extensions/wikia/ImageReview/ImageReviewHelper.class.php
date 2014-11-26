@@ -23,8 +23,8 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 
 	function __construct() {
 		parent::__construct();
-		$this->user_id = $this->wg->user->getId()
-;	}
+		$this->user_id = $this->wg->user->getId();
+	}
 
 	/**
 	 * update image state
