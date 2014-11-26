@@ -115,10 +115,6 @@ $VenusConfig[ 'venus_body_js' ] = [
 
 		//video recommendations
 		'#group_video_recommendations_js',
-
-		//This asset is only for prototype version. It shouldn't be loaded by default.
-		//It is used for Optimizely A/B tests
-//		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationAutoHide.js'
 	]
 ];
 
@@ -200,7 +196,10 @@ $VenusConfig[ 'global_navigation_js' ] = [
 		'//extensions/wikia/UserLogin/js/UserLoginDropdown.globalNavigation.js',
 		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js',
 		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
-		'//resources/wikia/libraries/bootstrap/tooltip.js'
+		'//resources/wikia/libraries/bootstrap/tooltip.js',
+		//This asset is only for prototype version. It shouldn't be loaded by default.
+		//It is used for Optimizely A/B tests
+//		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationAutoHide.js'
 	]
 ];
 
