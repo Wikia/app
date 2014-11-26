@@ -256,7 +256,7 @@ class MercuryApiController extends WikiaController {
 			if ( !empty( $relatedPages ) ) {
 				$data[ 'relatedPages' ] = $relatedPages;
 			}
-		} catch (NotFoundApiException $exception) {
+		} catch (WikiaHttpException $exception) {
 			$this->response->setCode( $exception->getCode() );
 
 			$data = [];
