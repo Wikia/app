@@ -12,6 +12,8 @@ class RelatedPages {
 	protected $memcKeyPrefix = '';
 	static protected $instance = null;
 
+	const LIMIT_MAX = 10;
+
 	protected function __construct() {
 	}
 
@@ -100,9 +102,11 @@ class RelatedPages {
 	}
 
 	/**
-	 * get related pages for article
+	 * Get related pages for article
+	 *
 	 * @param int $articleId Article ID
-	 * @param int $limit limit
+	 * @param int $limit limit (up to 10 - see LIMIT_MAX const)
+	 * @return array
 	 */
 	public function get( $articleId, $limit = 3 ) {
 		wfProfileIn( __METHOD__ );
@@ -113,24 +117,32 @@ class RelatedPages {
 			return $this->getData();
 		}
 
-		$this->setData( array() );
-		$categories = $this->getCategories( $articleId );
+		// get up to self::LIMIT_MAX items and cache them
+		$data = WikiaDataAccess::cache( wfMemcKey( __METHOD__, $articleId ), WikiaResponse::CACHE_STANDARD, function() use ( $articleId ) {
+			$this->setData( [] );
+			$categories = $this->getCategories( $articleId );
 
-		if ( count( $categories ) > 0 ) {
-			// RT#80681/RT#139837: apply category blacklist
-			$categories = CategoriesService::filterOutBlacklistedCategories( $categories );
-			$categories = $this->getCategoriesByRank( $categories );
+			if ( count( $categories ) > 0 ) {
+				// RT#80681/RT#139837: apply category blacklist
+				$categories = CategoriesService::filterOutBlacklistedCategories( $categories );
+				$categories = $this->getCategoriesByRank( $categories );
 
-			if ( count( $categories ) > $this->categoriesLimit ) {
-				// limit the number of categories to look for
-				$categories = array_slice( $categories, 0, $this->categoriesLimit );
+				if ( count( $categories ) > $this->categoriesLimit ) {
+					// limit the number of categories to look for
+					$categories = array_slice( $categories, 0, $this->categoriesLimit );
+				}
+
+				// limit * 2 - get more pages (some can be filtered out - RT #72703)
+				$pages = $this->getPagesForCategories( $articleId, self::LIMIT_MAX * 2, $categories );
+
+				$this->afterGet( $pages, self::LIMIT_MAX );
 			}
 
-			// limit * 2 - get more pages (some can be filtered out - RT #72703)
-			$pages = $this->getPagesForCategories( $articleId, $limit * 2, $categories );
+			return $this->getData();
+		} );
 
-			$this->afterGet( $pages, $limit );
-		}
+		// apply the limit
+		$this->setData( array_slice( $data, 0, $limit ) );
 
 		wfProfileOut( __METHOD__ );
 		return $this->getData();

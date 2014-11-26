@@ -69,6 +69,30 @@ define('wikia.dom', ['wikia.document'], function (doc) {
 	}
 
 	/**
+	 * Find closest element to provided one with given tag name
+	 * @param {Node} element - starting element
+	 * @param {String} targetParentByTag - tag name for parent element
+	 * @param {Number=} maxParentsCount - max number of parents, default value is 5
+	 * @returns {Node|Boolean} returns Node or false in case element not found
+	 */
+	function closestByTagName(element, targetParentByTag, maxParentsCount) {
+		var nodesUp = 0,
+			maxNodesUp = maxParentsCount || 5;
+
+		targetParentByTag = targetParentByTag.toUpperCase();
+
+		while (!!element && nodesUp <= maxNodesUp) {
+			if (element.tagName === targetParentByTag) {
+				return element;
+			}
+			element = element.parentNode;
+			nodesUp++;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Create given element with provided classes
 	 * @param {String} tag - tag for element
 	 * @param {Array} classes - list of classes which should be added to element
@@ -92,6 +116,7 @@ define('wikia.dom', ['wikia.document'], function (doc) {
 
 	return {
 		closestByClassName: closestByClassName,
+		closestByTagName: closestByTagName,
 		createElementWithClass: createElementWithClass
 	};
 });

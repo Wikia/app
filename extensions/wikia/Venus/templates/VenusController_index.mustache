@@ -11,33 +11,35 @@
 	{{{headItems}}}
 </head>
 <body class="{{bodyClasses}}">
-<div id="ad-skin" class="wikia-ad noprint"></div>
-{{{globalNavigation}}}
-<div class="wikia-page-wrapper">
-	<div class="top-ads" id="WikiaTopAds">
-		<div class="ad">
-			{{{adTopLeaderboard}}}
-		</div>
-		{{{adInvisibleSkin}}}
-	</div>
-	<section class="wikia-page page-width" id="WikiaPage">
-		{{{localNavigation}}}
-		<article class="article clearfix" id="WikiaArticle">
-			{{{header}}}
-			<div class="top-right-ad">
-				<div class="ad">
-					{{{adTopRightBoxad}}}
-				</div>
+	<div id="ad-skin" class="wikia-ad noprint"></div>
+	{{{globalNavigation}}}
+	<div class="wikia-page-wrapper">
+		<div class="top-ads" id="WikiaTopAds">
+			<div class="ad">
+				{{{adTopLeaderboard}}}
 			</div>
-			{{{recentWikiActivity}}}
-			{{{leftArticleNav}}}
-			{{{contents}}}
-		</article>
+			{{{adInvisibleSkin}}}
+		</div>
+		<section class="wikia-page page-width" id="WikiaPage">
+			{{{localNavigation}}}
+			<main>
+				<article class="article clearfix" id="WikiaArticle">
+					{{{header}}}
+					<div class="top-right-ad">
+						<div class="ad">
+							{{{adTopRightBoxad}}}
+						</div>
+					</div>
+					{{{recentWikiActivity}}}
+					{{{articleNav}}}
+					{{{contents}}}
+				</article>
+			</main>
+		</section>
 		{{{globalFooter}}}
 		{{! TODO: Re-Enable when it's ready: corporateFooter}}
-	</section>
-</div>
-{{{adsBottom}}}
-{{{jsBodyFiles}}}
+	</div>
+	{{{adsBottom}}}
+	{{{jsBodyFiles}}}
 </body>
 </html>

@@ -30,12 +30,14 @@ define('wikia.stickyElement', [
 		 *  topFixed
 		 *  minWidth (defaults to 0)
 		 *  [adjustFunc]
+		 *  [adjustPositionFunc]
 		 * @returns {Object} StickyElement
 		 */
 		function init (userOptions) {
 			var defaultOptions = {
 				minWidth: 0,
-				adjustFunc: _.identity
+				adjustFunc: _.identity,
+				adjustPositionFunc: false
 			};
 			options = _.extend(defaultOptions, userOptions);
 
@@ -75,35 +77,52 @@ define('wikia.stickyElement', [
 		 * @param {Event=} event
 		 */
 		function updatePosition (event) {
-			var currentY = win.pageYOffset;
+			var currentY = win.pageYOffset,
+				bottomLimit,
+				bottomScrollLimitForElement;
 
 			// return if there's nothing to update
 			if (event != undefined && currentY === lastY) return;
-
-			if (currentY <= topScrollLimit || (!!options.minWidth && win.innerWidth < options.minWidth)) {
-				sourceElementPosition('absolute', topSticked);
-			} else {
-				sourceElementPosition('fixed', options.topFixed);
-			}
-
 			lastY = currentY;
+
+			if (!!options.minWidth && win.innerWidth < options.minWidth) {
+				sourceElementPosition('absolute', 'top', topSticked);
+			} else {
+				if (typeof options.adjustPositionFunc == 'function' && options.adjustPositionFunc(currentY, options.sourceElement, options.alignToElement)) {
+					return;
+				}
+
+				if (currentY <= topScrollLimit) {
+					sourceElementPosition('absolute', 'top', topSticked);
+				} else {
+					sourceElementPosition('fixed', 'top', options.topFixed);
+				}
+			}
 		}
 
 		/**
-		 *  Updates element style, sets "position" and "top" properties
+		 *  Updates element style, sets "position" and "alignment" properties
 		 *
 		 * @param {String} position
-		 * @param {Number} top
+		 * @param {Number} alignment
+		 * @param {Number} value
 		 */
-		function sourceElementPosition (position, top) {
-			options.sourceElement.style.cssText = "position:" + position + ";top:" + top + "px;";
+		function sourceElementPosition (position, alignment, value) {
+			var display = options.sourceElement.style.display;
+			options.sourceElement.style.display = 'none';
+
+			options.sourceElement.style.position = position;
+			options.sourceElement.style[alignment] = value + 'px';
+
+			options.sourceElement.style.display = display;
 		}
 
 		/**
 		 * Return API (only constructor)
 		 */
 		return {
-			init: init
+			init: init,
+			sourceElementPosition: sourceElementPosition
 		};
 	};
 

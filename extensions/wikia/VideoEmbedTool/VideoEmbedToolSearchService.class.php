@@ -207,29 +207,42 @@ class VideoEmbedToolSearchService
 			],
 		];
 
-		foreach ( $searchResponse['items'] as $singleVideoData ) {
-			if ( !empty( $singleVideoData['title'] ) ) {
+		// Determine the source for the search
+		$isLocalSearch = ( $this->getSearchType() === 'local' );
 
-				// Get data about this video from the video wiki
-				$helper = new VideoHandlerHelper();
+		$helper = new VideoHandlerHelper();
+
+		foreach ( $searchResponse['items'] as $singleVideoData ) {
+			if ( empty( $singleVideoData['title'] ) ) {
+				continue;
+			}
+
+			// Get data about this video from the video wiki
+			if ( $isLocalSearch ) {
+				$videosDetail = $helper->getVideoDetail(
+					$singleVideoData,
+					$videoOptions
+				);
+			} else {
 				$videosDetail = $helper->getVideoDetailFromWiki(
 					F::app()->wg->WikiaVideoRepoDBName,
 					$singleVideoData['title'],
 					$videoOptions
 				);
-
-				$trimTitle = $this->getTrimTitle();
-				if ( ! empty( $trimTitle ) ) {
-					$videosDetail['fileTitle'] = mb_substr( $singleVideoData['title'], 0, $trimTitle );
-				}
-				$singleVideoData['pos'] = $pos++;
-				$data[] = $videosDetail;
 			}
+
+			$trimTitle = $this->getTrimTitle();
+			if ( ! empty( $trimTitle ) ) {
+				$videosDetail['fileTitle'] = mb_substr( $singleVideoData['title'], 0, $trimTitle );
+			}
+			$singleVideoData['pos'] = $pos++;
+			$data[] = $videosDetail;
 		}
+
 		return [
-				'totalItemCount' => $searchResponse['total'],
-				'nextStartFrom' => $start + $config->getLimit(),
-				'items' => $data
+			'totalItemCount' => $searchResponse['total'],
+			'nextStartFrom' => $start + $config->getLimit(),
+			'items' => $data,
 		];
 	}
 

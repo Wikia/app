@@ -17,13 +17,35 @@ class MercuryApiController extends WikiaController {
 	}
 
 	/**
-	 * @desc Returns smart banner config that is stored in WF
+	 * @desc Gets smart banner config from WF and cleans it up
 	 */
 	private function getSmartBannerConfig() {
 		if ( !empty( $this->wg->EnableWikiaMobileSmartBanner )
 			&& !empty( $this->wg->WikiaMobileSmartBannerConfig )
 		) {
-			return $this->wg->WikiaMobileSmartBannerConfig;
+			$smartBannerConfig = $this->wg->WikiaMobileSmartBannerConfig;
+
+			unset( $smartBannerConfig[ 'author' ] );
+
+			if ( !empty( $smartBannerConfig[ 'icon' ] )
+				&& !isset( parse_url( $smartBannerConfig[ 'icon' ] )[ 'scheme' ] ) //it differs per wiki
+			) {
+				$smartBannerConfig[ 'icon' ] = $this->wg->extensionsPath . $smartBannerConfig[ 'icon' ];
+			}
+
+			$meta = $smartBannerConfig[ 'meta' ];
+			unset( $smartBannerConfig[ 'meta' ] );
+			$smartBannerConfig[ 'appId' ] = [
+				'ios' => str_replace( 'app-id=', '', $meta[ 'apple-itunes-app' ] ),
+				'android' => str_replace( 'app-id=', '', $meta[ 'google-play-app' ] ),
+			];
+
+			$smartBannerConfig[ 'appScheme' ] = [
+				'ios' => $meta[ 'ios-scheme' ],
+				'android' => $meta[ 'android-scheme' ]
+			];
+
+			return $smartBannerConfig;
 		}
 
 		return null;
@@ -183,7 +205,16 @@ class MercuryApiController extends WikiaController {
 	 */
 	public function getWikiVariables() {
 		$wikiVariables = $this->mercuryApi->getWikiVariables();
-		$wikiVariables[ 'navData' ] = $this->getNavigationData();
+
+		try {
+			$wikiVariables[ 'navData' ] = $this->getNavigationData();
+		} catch (Exception $e) {
+			\Wikia\Logger\WikiaLogger::instance()->error( 'Fallback to empty navigation', [
+				'exception' => $e
+			] );
+			$wikiVariables[ 'navData' ] = [];
+		}
+
 		$wikiVariables[ 'vertical' ] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )['short'];
 		$wikiVariables[ 'basePath' ] = $this->wg->Server;
 
@@ -193,9 +224,8 @@ class MercuryApiController extends WikiaController {
 		}
 
 		$smartBannerConfig = $this->getSmartBannerConfig();
-
 		if ( !is_null( $smartBannerConfig ) ) {
-			$wikiVariables[ 'smartbanner' ] = $smartBannerConfig;
+			$wikiVariables[ 'smartBanner' ] = $smartBannerConfig;
 		}
 
 		$this->response->setVal( 'data', $wikiVariables );
