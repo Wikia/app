@@ -47,7 +47,7 @@
 	@include grid-column-width('medium', 2, $medium-content-padding);
 
 	.wikia-logo {
-		padding: 0 0 0 20px;
+		padding: 0 0 0 $medium-content-padding - $content-border-width;
 	}
 }
 
@@ -69,6 +69,10 @@
 @media #{$small-only} {
 	.wikia-logo-container {
 		@include grid-column-width('small', 3, $small-content-padding);
+
+		.wikia-logo {
+			padding: 0 9px 0 $small-content-padding + $small-grid-column-padding - $content-border-width;
+		}
 	}
 
 	.start-wikia-container {
@@ -85,19 +89,15 @@
 			display: none;
 		}
 	}
-
-	.wikia-logo {
-		padding-right: 15px;
-	}
 }
 
 @media #{$large-up} {
-	.wikia-logo {
-		padding: 0 7px 0 30px;
-	}
-
 	.wikia-logo-container {
 		@include grid-column-width('large', 2, $large-content-padding);
+
+		.wikia-logo {
+			padding: 0 2px 0 $large-content-padding + $large-grid-column-padding - $content-border-width;
+		}
 	}
 
 	.start-wikia-container {

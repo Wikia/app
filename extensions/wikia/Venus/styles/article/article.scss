@@ -31,7 +31,7 @@ $header-without-cover-unit-spacing: 60px;
 
 		&:not(.cover-unit) {
 			margin-bottom: $header-without-cover-unit-spacing;
-			margin-top: $header-without-cover-unit-spacing;
+			margin-top: 40px;
 
 			h1,
 			span {
@@ -131,8 +131,9 @@ $header-without-cover-unit-spacing: 60px;
 
 	blockquote {
 		@include font-size-xl;
-		border-top: 4px solid $color-text;
+		line-height: 36px;
 		margin: 0 0 $article-items-spacing;
+		overflow: hidden;
 		padding-top: 30px;
 		position: relative;
 
@@ -145,7 +146,17 @@ $header-without-cover-unit-spacing: 60px;
 			line-height: 70px;
 			padding-top: 8px;
 			position: absolute;
-			top: -33px;
+			top: -20px;
+		}
+
+		&:after {
+			border-top: 4px solid $color-text;
+			content: ' ';
+			left: 0;
+			margin-left: 25px;
+			position: absolute;
+			top: 10px;
+			width: 100%;
 		}
 	}
 

@@ -187,6 +187,9 @@ module.exports = function (config) {
 			'extensions/wikia/MediaGallery/scripts/views/toggler.js',
 			'extensions/wikia/MediaGallery/scripts/views/gallery.js',
 			'extensions/wikia/MediaGallery/scripts/spec/**/*.spec.js',
+
+			// Lightbox
+			'extensions/wikia/Lightbox/scripts/spec/lightbox.spec.js'
 		]
 	});
 };

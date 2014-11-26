@@ -218,6 +218,20 @@ HTML;
 	}
 
 	/**
+	 * Adds JS needed for FBConnect code
+	 *
+	 * @param array $assetsArray
+	 * @return bool
+	 */
+	public static function onSkinAssetGroups( array &$assetsArray ) {
+		// All pages
+		$assetsArray[] = 'fbconnect_js';
+
+		return true;
+	}
+
+
+	/**
 	 * Fired when MediaWiki is updated to allow FBConnect to update the database.
 	 * If the database type is supported, then a new tabled named 'user_fbconnect'
 	 * is created. For the table's layout, see fbconnect_table.sql. If $wgDBprefix
@@ -577,6 +591,9 @@ HTML;
 	static function UserLoadFromSession( $user, &$result ) {
 		global $wgCookiePrefix, $wgTitle, $wgOut, $wgUser;
 
+		// Temporary fix for P2: https://wikia-inc.atlassian.net/browse/MAIN-3228
+		return true;
+
 		// Check to see if the user can be logged in from Facebook
 		$fb = new FBConnectAPI();
 		$fbId = $fb->user();
@@ -676,7 +693,13 @@ HTML;
 		if ($wgRequest->getVal("fbconnected","") == 1) {
 			$id = FBConnectDB::getFacebookIDs($wgUser, DB_MASTER);
 			if( count($id) > 0 ) {
-				$msg =  Xml::element("img", array("id" => "fbMsgImage", "src" => $wgServer.'/skins/common/fbconnect/fbiconbig.png' ));
+				$msg =  Xml::element(
+					"img",
+					[
+						"id" => "fbMsgImage",
+						"src" => $wgServer.'/skins/common/fbconnect/fbiconbig.png'
+					]
+				);
 				$msg .= "<p>".wfMessage( 'fbconnect-connect-msg' )->text()."</p>";
 				/** Wikia change - starts  @author Andrzej 'nAndy' Łukaszewski */
 				wfRunHooks('FounderProgressBarOnFacebookConnect');
