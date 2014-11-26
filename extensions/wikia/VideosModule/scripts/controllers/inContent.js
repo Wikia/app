@@ -6,10 +6,11 @@ require([
 	'videosmodule.templates.mustache',
 	'bucky',
 	'wikia.document'
-], function (InContentModule, VideoData, nodeFinderModule, Mustache, templates, bucky, doc) {
+], function (InContentModule, VideoData, nodeFinderModule, Mustache, templates, buckyModule, doc) {
 	'use strict';
 
-	bucky = bucky('videosmodule.controller.in-content');
+	var infoboxWrapper = doc.getElementById('infoboxWrapper'),
+		bucky = buckyModule('videosmodule.controller.in-content');
 
 	function init() {
 		var inContent,
@@ -56,5 +57,9 @@ require([
 		});
 	}
 
-	doc.addEventListener('load', init());
+	if (infoboxWrapper) {
+		$(infoboxWrapper).on('initialized.infobox', init);
+	} else {
+		init();
+	}
 });
