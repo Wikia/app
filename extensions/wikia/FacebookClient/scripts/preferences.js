@@ -12,7 +12,7 @@
 
 		/**
 		 * Create single instance. Call after DOM is ready.
-		 * @returns {{}}
+		 * We could return an object with public functions and state variables but it's not necessary ATM.
 		 */
 		function init() {
 			// cache DOM objects
@@ -22,9 +22,6 @@
 			$connectLink = $('.sso-login-facebook');
 
 			$.loadFacebookAPI(bindEvents);
-
-			// could return state variables but not really necessary here.
-			return {};
 		}
 
 		/**
