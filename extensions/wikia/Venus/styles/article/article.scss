@@ -18,7 +18,7 @@ $header-without-cover-unit-spacing: 60px;
 
 // don't display TOC on Venus skin pages (fight cache)
 #toc {
-	display: none;
+	display: none !important;
 }
 
 .article {
