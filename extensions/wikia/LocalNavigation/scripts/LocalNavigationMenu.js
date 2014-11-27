@@ -4,13 +4,12 @@
 	$(function(){
 		var $localNavFirstLevel, $localNavSecondLevel, $localNav, $localNavStart, $window,
 			$openedMenu, $openedSubmenu, alwaysReturnTrueFunc, menuAimCache = [],
-			$contributeEntryPoint, previousThirdLvlWidth = 0;
+			previousThirdLvlWidth = 0;
 
 		$localNav = $('#localNavigation');
 		$localNavStart = $localNav.find('.first-level-menu');
 		$localNavFirstLevel = $localNavStart.find('> .local-nav-entry');
 		$localNavSecondLevel = $localNav.find('.second-level-menu');
-		$contributeEntryPoint = $('#contributeEntryPoint');
 		$window = $(window);
 
 		function recalculateDropdownDirection() {
@@ -50,8 +49,6 @@
 
 		function openMenu() {
 			$(this).addClass('active');
-
-			closeContributeMenu();
 		}
 
 		function closeMenu() {
@@ -93,7 +90,6 @@
 				$target.addClass('active');
 
 				$('body').one('click', handleCloseMenuClick);
-				closeContributeMenu();
 				$openedMenu = $target;
 			}
 		}
@@ -165,22 +161,6 @@
 			}
 		}
 
-		function openContributeMenu(event) {
-			if (event && event.target && $(event.target).attr('class') === 'contribute-button') {
-				event.preventDefault();
-				event.stopPropagation();
-
-				$('body').one('click', closeContributeMenu);
-			}
-
-			$contributeEntryPoint.addClass('active');
-			closeOpenedMenu();
-		}
-
-		function closeContributeMenu() {
-			$contributeEntryPoint.removeClass('active');
-		}
-
 		alwaysReturnTrueFunc = function() {
 			return true;
 		};
@@ -200,24 +180,9 @@
 				$localNavSecondLevel.find('.second-level-row').click(handleSubmenuClick);
 			}
 
-			if ($contributeEntryPoint.length) {
-				if (!window.Wikia.isTouchScreen()) {
-					window.delayedHover(
-						$contributeEntryPoint.get(0),
-						{
-							onActivate: openContributeMenu,
-							onDeactivate: closeContributeMenu,
-							activateOnClick: false
-						}
-					);
-				} else {
-					$contributeEntryPoint.click(openContributeMenu);
-				}
-			}
-
 			$window.on('resize', $.debounce(300, recalculateDropdownDirection));
 
-			recalculateDropdownDirection()
+			recalculateDropdownDirection();
 		});
 	});
 })(window, jQuery);

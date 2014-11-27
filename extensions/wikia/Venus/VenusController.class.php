@@ -57,11 +57,13 @@ class VenusController extends WikiaController {
 	}
 
 	private function setAds() {
-		$this->adTopRightBoxad = $this->app->renderView( 'Ad', 'Index', ['slotName' => 'TOP_RIGHT_BOXAD'] );
-		$this->adTopLeaderboard = $this->app->renderView( 'Ad', 'Index', ['slotName' => 'TOP_LEADERBOARD'] );
-		$this->adInvisibleSkin = $this->app->renderView( 'Ad', 'Index', ['slotName' => 'INVISIBLE_SKIN'] );
-		$this->adsBottom = $this->app->renderView( 'Ad', 'Index', ['slotName' => 'GPT_FLUSH'] );
-		$this->adsBottom .= $this->app->renderView( 'Ad', 'Index', ['slotName' => 'SEVENONEMEDIA_FLUSH'] );
+		$this->adTopRightBoxad = $this->app->renderView( 'Ad', 'Index', [ 'slotName' => 'TOP_RIGHT_BOXAD' ] );
+		$this->adTopLeaderboard = $this->app->renderView( 'Ad', 'Index', [ 'slotName' => 'TOP_LEADERBOARD' ] );
+		$this->adInvisibleSkin = $this->app->renderView( 'Ad', 'Index', [ 'slotName' => 'INVISIBLE_SKIN' ] );
+		$this->adPrefooterLeftBoxad = $this->app->renderView( 'Ad', 'Index', [ 'slotName' => 'PREFOOTER_LEFT_BOXAD', 'includeLabel' => true ] );
+		$this->adPrefooterRightBoxad = $this->app->renderView( 'Ad', 'Index', [ 'slotName' => 'PREFOOTER_RIGHT_BOXAD', 'includeLabel' => true ] );
+		$this->adsBottom = $this->app->renderView( 'Ad', 'Index', [ 'slotName' => 'GPT_FLUSH' ] );
+		$this->adsBottom .= $this->app->renderView( 'Ad', 'Index', [ 'slotName' => 'SEVENONEMEDIA_FLUSH' ] );
 	}
 
 	private function setBodyModules() {
@@ -69,6 +71,7 @@ class VenusController extends WikiaController {
 		$this->localNavigation = $this->getLocalNavigation();
 		$this->globalFooter = $this->getGlobalFooter();
 		$this->corporateFooter = $this->getCorporateFooter();
+		$this->notifications = $this->app->renderView('Notifications', 'Confirmation');
 
 		if ($this->isUserLoggedIn) {
 			$this->recentWikiActivity = $this->getRecentWikiActivity();

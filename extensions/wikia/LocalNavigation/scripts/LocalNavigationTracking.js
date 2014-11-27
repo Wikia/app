@@ -70,48 +70,7 @@
 		}
 	}
 
-	function trackContributeEvent(event) {
-		var $element = $(event.currentTarget),
-			id = $element.data('id'),
-			label;
-
-		// Track only primary mouse button click
-		if (event.which !== 1) {
-			return;
-		}
-
-		switch(id) {
-			case 'createpage':
-				label = 'add-a-page';
-				break;
-			case 'edit':
-				label = 'edit-a-page';
-				break;
-			case 'upload':
-				label = 'add-a-photo';
-				break;
-			case 'wikiavideoadd':
-				label = 'add-a-video';
-				break;
-			case 'wikiactivity':
-				label = 'wiki-activity';
-				break;
-			case 'wikinavedit':
-				label = 'edit-wiki-navigation';
-				break;
-		}
-
-		if (label !== undefined) {
-			track({
-				browserEvent: event,
-				category: 'contribute',
-				label: label
-			});
-		}
-	}
-
 	$('.wordmark-container', $localNav).on('mousedown', 'a', trackWordmarkEvent);
 	$('.local-nav', $localNav).on('mousedown', 'a', trackNavigationDropdownEvent);
-	$('.contribute-container', $localNav).on('mousedown', 'a', trackContributeEvent);
 })(jQuery);
 
