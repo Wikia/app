@@ -72,8 +72,8 @@ class FacebookClientHooks {
 	static function GetPreferences( $user, &$preferences ) {
 
 		// Determine if we're connected already or not
-		$ids = FacebookClient::getInstance()->getFacebookUserIds( $user );
-		if ( count( $ids ) > 0 ) {
+		$id = FacebookClient::getInstance()->getFacebookUserId( $user );
+		if ( $id ) {
 			$isConnected = true;
 			$prefTab = 'fbconnect-connect';
 		} else {
