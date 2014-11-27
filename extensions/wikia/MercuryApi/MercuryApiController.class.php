@@ -237,24 +237,40 @@ class MercuryApiController extends WikiaController {
 	 * @throws BadRequestApiException
 	 */
 	public function getArticle(){
-		$title = $this->getTitleFromRequest();
-		$articleId = $title->getArticleId();
+		try {
+			$title = $this->getTitleFromRequest();
+			$articleId = $title->getArticleId();
 
-		$articleAsJson = $this->getArticleJson( $articleId );
+			$articleAsJson = $this->getArticleJson( $articleId );
 
-		$data = [
-			'details' => $this->getArticleDetails( $articleId ),
-			'topContributors' => $this->getTopContributorsDetails(
+			$data = [
+				'details' => $this->getArticleDetails( $articleId ),
+				'topContributors' => $this->getTopContributorsDetails(
 					$this->getTopContributorsPerArticle( $articleId )
 				),
-			'article' => $articleAsJson,
-			'adsContext' => $this->mercuryApi->getAdsContext( $title )
-		];
+				'article' => $articleAsJson
+			];
 
-		$relatedPages = $this->getRelatedPages( $articleId );
-		if ( !empty( $relatedPages ) ) {
-			$data[ 'relatedPages' ] = $relatedPages;
+			$relatedPages = $this->getRelatedPages( $articleId );
+
+			if ( !empty( $relatedPages ) ) {
+				$data[ 'relatedPages' ] = $relatedPages;
+			}
+		} catch (WikiaHttpException $exception) {
+			$this->response->setCode( $exception->getCode() );
+
+			$data = [];
+
+			$this->response->setVal( 'exception', [
+				'message' => $exception->getMessage(),
+				'code' => $exception->getCode(),
+				'details' => $exception->getDetails()
+			] );
+
+			$title = $this->wg->Title;
 		}
+
+		$data['adsContext'] = $this->mercuryApi->getAdsContext( $title );
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );

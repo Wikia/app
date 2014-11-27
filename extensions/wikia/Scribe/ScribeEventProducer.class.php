@@ -1,5 +1,7 @@
 <?php
 
+use \Wikia\Logger\WikiaLogger;
+
 class ScribeEventProducer {
 	private $app = null;
 	private $mParams, $mKey, $mEventType;
@@ -115,7 +117,7 @@ class ScribeEventProducer {
 			$this->setIsTop200( $this->app->wg->CityId );
 			$this->setIsImageForReview();
 
-			\Wikia\Logger\WikiaLogger::instance()->info( 'ImageReviewParams', [ 'method' => __METHOD__, 'data' => $this->mParams ] );
+			WikiaLogger::instance()->info( 'ImageReviewParams', [ 'method' => __METHOD__, 'data' => $this->mParams ] );
 		}
 
 		$t = microtime(true);
@@ -441,18 +443,40 @@ class ScribeEventProducer {
 			2 => MEDIATYPE_DRAWING,
 		];
 
-		if ( $this->mParams['pageNamespace'] == 6
-			&& $this->mParams['isRedirect'] == 0
+		if ( in_array( $this->mParams['pageNamespace'], $this->mediaNS )
 			&& isset( $aAllowedTypes[ $this->mParams['mediaType'] ] )
-			&& $this->mParams['isLocalFile'] == 1
-			&& $this->mParams['isTop200'] == 0
 		) {
-			$bIsImageForReview = true;
-		} else {
-			$bIsImageForReview = false;
-		}
+			if ( $this->mParams['isRedirect'] == 1 ) {
+				$sLogMessage = 'The page is a redirect';
+				$bIsImageForReview = false;
+			} elseif ( $this->mParams['isLocalFile'] == 0 ) {
+				$sLogMessage = 'The file is from an external repo';
+				$bIsImageForReview = false;
+			} elseif ( $this->mParams['isTop200'] == 1 ) {
+				$sLogMessage = 'The was uploaded to one of the Top200 wikias';
+				$bIsImageForReview = false;
+			} else {
+				$sLogMessage = 'The image was sent for a review';
+				$bIsImageForReview = true;
+			}
 
-		$this->mParams['isImageForReview'] = intval( $bIsImageForReview );
+			$this->sendImageReviewLog( $sLogMessage );
+			$this->mParams['isImageForReview'] = intval( $bIsImageForReview );
+		}
+	}
+
+	/**
+	 * Sends a unified ImageReviewLog message
+	 * @param  string $sLogMessage  A log message
+	 * @return void
+	 */
+	private function sendImageReviewLog( $sLogMessage ) {
+		WikiaLogger::instance()->info( 'ImageReviewLog', [
+			'method' => __METHOD__,
+			'status' => $bIsImageForReview,
+			'message' => $sLogMessage,
+			'params' => $this->mParams,
+		] );
 	}
 
 	public function sendLog() {

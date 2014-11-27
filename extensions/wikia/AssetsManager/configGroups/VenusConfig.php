@@ -38,7 +38,7 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//resources/wikia/modules/nodeFinder.js',
 
 		//It's needs to be included like this.
-		//If we include group AssetManager is loading nirvana twice
+		//If we include the group from config file AssetManager is loading nirvana twice
 		'//resources/wikia/modules/uifactory.js',
 		'//resources/wikia/modules/uicomponent.js',
 
@@ -83,6 +83,7 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 
 		'//extensions/wikia/Venus/scripts/isTouchScreen.js',
+		'//extensions/wikia/Venus/scripts/tracking.js',
 		'//extensions/wikia/Venus/scripts/layout.js',
 		'//resources/wikia/modules/dom.js',
 		'//resources/wikia/modules/arrayHelper.js',
@@ -199,7 +200,10 @@ $VenusConfig[ 'global_navigation_js' ] = [
 		'//extensions/wikia/UserLogin/js/UserLoginDropdown.globalNavigation.js',
 		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js',
 		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
-		'//resources/wikia/libraries/bootstrap/tooltip.js'
+		'//resources/wikia/libraries/bootstrap/tooltip.js',
+		//This asset is only for prototype version. It shouldn't be loaded by default.
+		//It is used for Optimizely A/B tests
+//		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationAutoHide.js'
 	]
 ];
 
@@ -282,6 +286,14 @@ $VenusConfig[ 'recent_wiki_activity_scss' ] = [
 	]
 ];
 
+$VenusConfig[ 'recent_wiki_activity_js' ] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'venus' ],
+	'assets' => [
+		'//extensions/wikia/RecentWikiActivity/scripts/RecentWikiActivityTracking.js',
+	]
+];
+
 $VenusConfig['imglzy_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
@@ -304,5 +316,12 @@ $VenusConfig[ 'category_select_css' ] = [
 	'skin' => [ 'venus' ],
 	'assets' => [
 		'//extensions/wikia/CategorySelect/css/CategorySelectVenus.scss',
+	]
+];
+
+$VenusConfig['zenbox_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/Zenbox/scripts/zenbox.js',
 	]
 ];

@@ -22,6 +22,7 @@ require([
 	// initialize TOC in left navigation on first hover / click (touch device)
 	// only if there are sections from which ToC is built
 	if (tocModule.isEnabled()) {
-		$tocButton.show().one(isTouchScreen ? 'click' : 'mouseenter', initTOChandler);
+		$tocButton.parent().removeClass('hidden');
+		$tocButton.one(isTouchScreen ? 'click' : 'mouseenter', initTOChandler);
 	}
 });
