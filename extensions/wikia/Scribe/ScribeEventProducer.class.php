@@ -323,6 +323,13 @@ class ScribeEventProducer {
 	}
 
 	public function setIsLocalFile ( File $oLocalFile ) {
+		WikiaLogger::instance()->info( 'ImageReviewLog', [
+			'method' => __METHOD__,
+			'status' => $this->mParams['isImageForReview'],
+			'message' => $sLogMessage,
+			'params' => $this->mParams,
+			'file' => $oLocalFile,
+		] );
 		if( $oLocalFile instanceof File && $oLocalFile->exists() ) {
 			$bIsLocalFile = true;
 		} else {
