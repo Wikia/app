@@ -24,7 +24,7 @@ $header-without-cover-unit-spacing: 60px;
 .article {
 	overflow: hidden;
 
-	> header {
+	.article-header {
 		@include grid-column-width('medium', 8, $medium-content-padding - $content-border-width);
 		float: left;
 
@@ -221,7 +221,7 @@ $header-without-cover-unit-spacing: 60px;
 /* END FOR PROTOTYPE/TESTING ONLY */
 
 @media #{$large-up} {
-	.article header {
+	.article .article-header {
 		@include grid-column-width('large', 8, $large-content-padding - $content-border-width);
 
 		&:not(.cover-unit) {
@@ -282,7 +282,7 @@ $header-without-cover-unit-spacing: 60px;
 }
 
 @media #{$small-only} {
-	.article header {
+	.article .article-header {
 		float: none;
 		width: 100%;
 
