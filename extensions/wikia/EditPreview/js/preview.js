@@ -136,7 +136,7 @@ define('wikia.preview', [
 	 * @param {string} type - What type of preview to load currently
 	 *                          empty -> Desktop preview,
 	 *                          mobile -> Mobile preview
-	 * @param {boolean} opening - whether this is first load and all values should be calculated
+	 * @param {boolean=g} opening - whether this is first load and all values should be calculated
 	 */
 	function loadPreview(type, opening) {
 		if (!opening) {
@@ -360,7 +360,11 @@ define('wikia.preview', [
 		currentTypeName = type;
 
 		//load again preview only if changing mobile <-> desktop
-		if (type === previewTypes.mobile.name || lastTypeName === previewTypes.mobile.name) {
+		if (type === previewTypes.mobile.name ||
+			type === previewTypes.venus.name ||
+			lastTypeName === previewTypes.mobile.name ||
+			lastTypeName === previewTypes.venus.name
+		) {
 			loadPreview(previewTypes[currentTypeName].name);
 		}
 
