@@ -1554,7 +1554,6 @@ class DPLMain {
 			// when the page containing the DPL statement is changed we must recreate the cache as the DPL statement may have changed
 			// otherwise we accept the cache if it is not too old
 			if ( !$bDPLRefresh ) {
-				wfDebug(sprintf("%s: cache-check: start: input='%s'\n",__METHOD__,$originalInput));
 				$cacheFound = false;
 				$cacheTimeStamp = null;
 				$cacheAge = null;
@@ -1593,7 +1592,6 @@ class DPLMain {
 								$cacheFound = true;
 							}
 						}
-						wfDebug(sprintf("%s: cache-check: load from memcached: key='%s' found='%d'\n",__METHOD__,$cacheKey,intval($cacheFound)));
 						break;
 				}
 				// when submitting a page we check if the DPL statement has changed
@@ -1610,7 +1608,6 @@ class DPLMain {
 						$output .= "{{Extension DPL cache|mode=get|page={{FULLPAGENAME}}|cache=$DPLCache|date=$cacheTimeStamp|now=" .
 							date( 'H:i:s' ) . "|age=$diffTime|period=$cachePeriod|offset=$iOffset}}";
 					}
-					wfDebug(sprintf("%s: cache-check: success\n",__METHOD__));
 					// ignore further parameters, stop processing, return cache content
 					return $output;
 				}
@@ -2890,7 +2887,6 @@ class DPLMain {
 
 		// save generated wiki text to dplcache page if desired
 		if ( $DPLCache != '' ) {
-			wfDebug(sprintf("%s: cache-save: start\n",__METHOD__));
 			// save data in chosen storage
 			switch ($DPLCacheStorage) {
 				case 'files':
@@ -2918,7 +2914,6 @@ class DPLMain {
 						'input' => $originalInput,
 						'output' => $output,
 					);
-					wfDebug(sprintf("%s: cache-save: save: key='%s' input='%s'\n",__METHOD__,$cacheKey,$originalInput));
 					$wgMemc->set($cacheKey,$cacheData,$iDPLCachePeriod);
 					break;
 			}
@@ -2928,7 +2923,6 @@ class DPLMain {
 				$output .= "{{Extension DPL cache|mode=update|page={{FULLPAGENAME}}|cache=$DPLCache|date=$cacheTimeStamp|age=0|now=" .
 					date( 'H:i:s' ) . "|dpltime=$dplElapsedTime|offset=$iOffset}}";
 			}
-			wfDebug(sprintf("%s: cache-save: success\n",__METHOD__));
 			/** Wikia change begin - never disable parser cache (CE-1066) **/
 			// $parser->disableCache();
 			/** Wikia change end **/
