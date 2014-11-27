@@ -64,7 +64,7 @@
 					}).on( 'click.' + namespace, '.save', function() {
 						var $container = $wrapper.find( '.container' ).startThrobbing(),
 							$saveButton = $( this ).attr( 'disabled', true );
-						
+
 						$.nirvana.sendRequest({
 							controller: 'CategorySelectController',
 							data: {
@@ -97,7 +97,7 @@
 
 					}).on( 'update', function() {
 						var modified = $wrapper.find( '.category.new' ).length > 0;
-						
+
 						$wrapper
 							.toggleClass( 'modified', modified )
 							.find( '.save' )
