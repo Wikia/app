@@ -54,7 +54,8 @@ define(
 						mustache: '/extensions/wikia/Recommendations/templates/Recommendations_index.mustache,/extensions/wikia/Recommendations/templates/Recommendations_image.mustache,/extensions/wikia/Recommendations/templates/Recommendations_video.mustache',
 						scripts: 'recommendations_view_js',
 						styles: 'extensions/wikia/Recommendations/styles/recommendations.scss',
-						messages: 'Recommendations'
+						messages: 'Recommendations',
+						uselang: window.wgUserLanguage
 					}
 				})
 			).done(function (slotsData, res) {
