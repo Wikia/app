@@ -227,7 +227,7 @@ $.fn.extend({
 				}
 		});
 
-		if (skin == "oasis" || settings.appendToBody) {
+		if (skin == 'oasis' || skin == 'venus' || settings.appendToBody) {
 			blackout.appendTo("body");
 		} else {
 			blackout.appendTo("#positioned_elements");
