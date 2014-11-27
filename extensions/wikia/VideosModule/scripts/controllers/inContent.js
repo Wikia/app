@@ -46,6 +46,7 @@ require([
 			previousElement: previousElement,
 			moduleInsertingFunction: moduleInsertingFunction,
 			model: new VideoData(),
+			isFluid: false,
 			numVids: 3,
 			minNumVids: 3,
 			buckyCategory: 'videosmodule.views.in-content',

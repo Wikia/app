@@ -8,19 +8,35 @@ define('videosmodule.views.index', [
 	'use strict';
 
 	var VideosModule = function (options) {
-		// this.$el is the {jQuery Object} container for the videos module
+		// $el is the {jQuery Object} container for the videos module
 		this.$el = options.$el;
-		this.hookElement = options.hookElement;
+
+		// previousElement is the {DOM Node} element which fires the sloth loading of the Videos Module,
+		// if there's none, sloth is running immediately
 		this.previousElement = options.previousElement;
+
+		// hookElement is the {DOM Node} element (a sibling or a parent container),
+		// which is a reference for placing the Videos Module by the
+		// {jQuery Function} moduleInsertingFunction [before(), after(), prepend()]
+		this.hookElement = options.hookElement;
 		this.moduleInsertingFunction = options.moduleInsertingFunction;
+
+		// model is the data model for the Videos Module
 		this.model = options.model;
 
+		// $thumbs is the {jQuery Object} container for the video thumbnails
 		this.$thumbs = this.$el.find('.thumbnails');
 
-		// Default number of videos, this is the number of videos we'd like to display if possible
+		// isFluid parameter is passed to the titleThumbnail and if set to true,
+		// binds applyEllipses on window resize and scroll to the thumbnails title links
+		this.isFluid = options.isFluid;
+
+		// numVids is the maximum number of videos we'd like to display if possible, while
+		// minNumVids is the minimum, if there's less, then the Videos Module is not displayed
 		this.numVids = options.numVids || 5;
 		this.minNumVids = options.minNumVids || 5;
 
+		// Tracking options
 		this.bucky = bucky(options.buckyCategory);
 		this.trackingCategory = options.trackingCategory;
 		this.trackImpression = Tracker.buildTrackingFunction({
@@ -189,6 +205,7 @@ define('videosmodule.views.index', [
 			thumbHtml.push(new TitleThumbnailView({
 				el: 'li',
 				model: this.videos[i],
+				isFluid: this.isFluid,
 				idx: i,
 				trackingCategory: this.trackingCategory
 			})
