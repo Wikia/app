@@ -50,7 +50,7 @@ class PipelineConnectionBase {
 	}
 
 	public function publish( $routingKey, $body ) {
-		$channel = $this->getAnonChannel();
+		$channel = $this->setUpPublishChannel();
 		return $channel->basic_publish(
 			new AMQPMessage( json_encode( $body ), [
 				'delivery_mode' => self::DURABLE_MESSAGE,
@@ -77,7 +77,7 @@ class PipelineConnectionBase {
 	}
 
 	/** @return \PhpAmqpLib\Channel\AMQPChannel */
-	protected function getAnonChannel() {
+	protected function setUpPublishChannel() {
 		if ( !isset( $this->publishChannel ) || !$this->publishChannel->is_open ) {
 			$pubConn = $this->getPublishConnection();
 			$this->publishChannel = $pubConn->channel();
@@ -98,7 +98,7 @@ class PipelineConnectionBase {
 				] );
 				$this->mainChannel->queue_bind( $qName, $this->exchange, key( self::$binding ) );
 				$this->mainChannel->basic_qos( self::$prefetch );
-				$this->mainChannel->basic_consume( $qName, '', false, false, false, fales, [ $this, 'route' ] );
+				$this->mainChannel->basic_consume( $qName, '', false, false, false, false, [ $this, 'route' ] );
 			}
 			return $this->mainChannel;
 		}
