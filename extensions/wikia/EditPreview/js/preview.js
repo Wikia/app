@@ -230,13 +230,19 @@ define('wikia.preview', [
 				}, {
 					value: previewTypes.mobile.name,
 					name: msg('wikia-editor-preview-mobile-width')
-				}, {
-					value: previewTypes.venus.name,
-					name: msg('wikia-editor-preview-venus-width')
 				}],
 				toolTipMessage: msg('wikia-editor-preview-type-tooltip')
 			},
-			html = mustache.render(template, params);
+			html;
+
+		if (window.wgEnableVenusArticle) {
+			params.options.push({
+				value: previewTypes.venus.name,
+				name: msg('wikia-editor-preview-venus-width')
+			});
+		}
+
+		html = mustache.render(template, params);
 
 		$(html).insertAfter($dialog.find('h1:first'));
 
