@@ -326,6 +326,10 @@ class ScribeEventProducer {
 		// $oFile = wfFindFile( $oTitle );
 		$oLocalFile = RepoGroup::singleton()->getLocalRepo()->newFile( $oTitle );
 		wfDebug( "\n ImageReviewFixes " . json_encode($oLocalFile) . "\n" );
+		\Wikia\Logger\WikiaLogger::instance()->info( "ImageReviewFixes", [
+			'method' => __METHOD__,
+			'file' => $oLocalFile,
+		] );
 		if( $oLocalFile instanceof File && $oLocalFile->exists() ) {
 			$bIsLocalFile = true;
 		} else {
