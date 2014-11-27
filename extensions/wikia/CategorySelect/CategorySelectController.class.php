@@ -57,12 +57,16 @@ class CategorySelectController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * CategorySelect module template used under article view in Venus skin
+	 * Uses same variables as old oasis articlePage template but different markup
+	 */
 	public function articlePageVenus() {
-		// Run Oasis articlePage
+		// Run Oasis articlePage to setup variables
 		$this->articlePage();
 	}
 
-		/**
+	/**
 	 * The category list template. Used by article pages on view and edit save.
 	 */
 	public function categories() {
