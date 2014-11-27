@@ -55,7 +55,7 @@ define(
 						scripts: 'recommendations_view_js',
 						styles: 'extensions/wikia/Recommendations/styles/recommendations.scss',
 						messages: 'Recommendations',
-						uselang: window.wgUserLanguage
+						uselang: win.wgUserLanguage
 					}
 				})
 			).done(function (slotsData, res) {
