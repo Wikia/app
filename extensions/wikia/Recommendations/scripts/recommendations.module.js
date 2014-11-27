@@ -44,6 +44,7 @@ define(
 					controller: 'RecommendationsApi',
 					method: 'getForArticle',
 					data: {
+						cb: win.wgStyleVersion,
 						id: win.wgArticleId
 					},
 					type: 'get'
