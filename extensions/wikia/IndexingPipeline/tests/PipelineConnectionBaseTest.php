@@ -1,8 +1,5 @@
 <?php
-/**
- * Created by adam
- * Date: 26.11.14
- */
+
 require_once "$IP/extensions/wikia/IndexingPipeline/PipelineConnectionBase.class.php";
 
 class PipelineConnectionBaseTest extends WikiaBaseTest {
@@ -25,6 +22,7 @@ class PipelineConnectionBaseTest extends WikiaBaseTest {
 		$this->assertAttributeEquals($wgIndexingPipeline['user'], 'user', $pipe);
 		$this->assertAttributeEquals($wgIndexingPipeline['pass'], 'pass', $pipe);
 		$this->assertAttributeEquals($wgIndexingPipeline['vhost'], 'vhost', $pipe);
+		$this->assertAttributeEquals($wgIndexingPipeline['exchange'], 'exchange', $pipe);
 		$this->assertAttributeEquals($wgIndexingPipeline['deadExchange'], 'deadExchange', $pipe);
 	}
 }

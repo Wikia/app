@@ -1,11 +1,12 @@
 <?php
 
-class PipelineEventProducerController extends WikiaController {
+class PipelineEventProducer {
 	const ARTICLE_MESSAGE_PREFIX = 'article';
+	/** @var PipelineConnectionBase */
+	protected static $pipe;
 
 	public static function send( $eventName, $pageId, $params = [ ] ) {
 		global $wgCityId;
-		$pipe = new PipelineConnectionBase();
 		$msg = new stdClass();
 		$msg->cityId = $wgCityId;
 		$msg->pageId = $pageId;
@@ -13,13 +14,26 @@ class PipelineEventProducerController extends WikiaController {
 		foreach ( $params as $param => $value ) {
 			$msg->args->{$param} = $value;
 		}
-		$pipe->publish( implode( '.', [ self::ARTICLE_MESSAGE_PREFIX, $eventName ] ), $msg );
+		try {
+			self::getPipeline()->publish( implode( '.', [ self::ARTICLE_MESSAGE_PREFIX, $eventName ] ), $msg );
+		} catch ( Exception $e ) {
+			\Wikia\Logger\WikiaLogger::instance()->error( $e->getMessage() );
+		}
 	}
 
+	/** @return PipelineConnectionBase */
+	protected static function getPipeline() {
+		if ( !isset( self::$pipe ) ) {
+			self::$pipe = new PipelineConnectionBase();
+		}
+		return self::$pipe;
+	}
+
+	// Hooks handlers
 	static public function onArticleSaveComplete( &$oPage, &$oUser, $text, $summary, $minor, $undef1, $undef2, &$flags, $oRevision, &$status, $baseRevId ) {
 		wfDebug( "IndexingPipeline:onArticleSaveComplete\n" );
 		self::send( 'onArticleSaveComplete', $oPage->getId(),
-			[ 'prevRevision' => $baseRevId, 'revision' => $oRevision ] );
+			[ 'prevRevision' => $baseRevId, 'revision' => $oRevision->getId() ] );
 		return true;
 	}
 
