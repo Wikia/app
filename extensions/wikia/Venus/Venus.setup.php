@@ -63,6 +63,7 @@ JSMessages::registerPackage('VenusArticle', [ 'venus-article-*' ]);
  */
 $wgHooks['ParserSectionCreate'][] = 'VenusHooks::onParserSectionCreate';
 $wgHooks['MakeHeadline'       ][] = 'VenusHooks::onMakeHeadline';
+$wgHooks['UserLogoutComplete' ][] = 'NotificationsController::addLogOutConfirmation';
 
 
 //404 Pages
