@@ -80,12 +80,37 @@ class ImageReviewTask extends BaseTask {
 		return $success;
 	}
 
+	public function deleteFromQueue( $aDeletionList ) {
+		global $wgExternalDatawareDB;
+
+		$oDB = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
+
+		foreach ( $aDeletionList as $aImageData ) {
+			$oDB->delete(
+				'image_review',
+				$aImageData,
+				__METHOD__
+			);
+
+			$oLogger = \Wikia\Logger\WikiaLogger::instance();
+			$oLogger->info( 'ImageReviewLog', [
+				'method' => __METHOD__,
+				'message' => 'Image removed from queue',
+				'params' => $aImageData,
+			] );
+		}
+	}
+
 	private function sendNotification() {
 		global $wgFlowerUrl;
 
 		$subject = "ImageReview deletion failed #{$this->taskId}";
 		$body = "{$wgFlowerUrl}/task/{$this->taskId}";
-		$recipients = [new \MailAddress( 'tor@wikia-inc.com' ), new \MailAddress( 'sannse@wikia-inc.com' )];
+		$recipients = [
+			new \MailAddress( 'tor@wikia-inc.com' ),
+			new \MailAddress( 'sannse@wikia-inc.com' ),
+			new \MailAddress( 'adamk@wikia-inc.com' ),
+		];
 		$from = $recipients[0];
 
 		\UserMailer::send( $recipients, $from, $subject, $body );

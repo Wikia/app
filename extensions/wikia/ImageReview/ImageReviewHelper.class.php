@@ -100,6 +100,8 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 				$this->wg->memc->delete( $key );
 		}
 
+		$this->createDeleteImagesTask( $deletionList );
+
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -113,6 +115,19 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			$task = new \Wikia\Tasks\Tasks\ImageReviewTask();
 			$task->call('delete', $aDeletionList);
 			$task->prioritize();
+			$task->queue();
+		}
+	}
+
+	/**
+	 * Creates a task removing listed images from image_review queue
+	 * @param  array  $aDeletionList  An array of [ city_id, page_id ] arrays.
+	 * @return void
+	 */
+	public function createDeleteFromQueueTask( $aDeletionList ) {
+		if ( !empty( $aDeletionList ) ) {
+			$task = new \Wikia\Tasks\Tasks\ImageReviewTask();
+			$task->call('deleteFromQueue', $aDeletionList);
 			$task->queue();
 		}
 	}
@@ -232,9 +247,9 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		}
 		$db->freeResult( $result );
 
-		WikiaLogger::instance()->info( "ImageReview : refetched images based on timestamp", [
+		WikiaLogger::instance()->info( "ImageReviewLog", [
 			'method' => __METHOD__,
-			'count' => count( $imageList ),
+			'message' => "Refetched " . count( $imageList ) . " images based on timestamp",
 		] );
 
 		wfProfileOut( __METHOD__ );
@@ -297,7 +312,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		}
 		$oDB->commit();
 
-		$imageList = $unusedImages = $aDeletionList = [];
+		$imageList = $unusedImages = $aDeleteFromQueueList = [];
 
 		foreach ( $rows as $row ) {
 			$record = "(wiki_id = {$row->wiki_id} and page_id = {$row->page_id})";
@@ -354,7 +369,10 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 						]
 					);
 
-					$aDeletionList[] = [ $row->wiki_id, $row->page_id ];
+					$aDeleteFromQueueList[] = [
+						'wiki_id' => $row->wiki_id,
+						'page_id' => $row->page_id,
+					];
 
 					continue;
 				}
@@ -366,8 +384,8 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		/**
 		 * Invalid images
 		 */
-		if ( !empty( $aDeletionList ) ) {
-			$this->createDeleteImagesTask( $aDeletionList );
+		if ( !empty( $aDeleteFromQueueList ) ) {
+			$this->createDeleteFromQueueTask( $aDeleteFromQueueList );
 		}
 
 		/**
@@ -396,9 +414,9 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		/**
 		 * Return valid images list
 		 */
-		WikiaLogger::instance()->info( "ImageReviewImageList: fetched new images", [
+		WikiaLogger::instance()->info( "ImageReviewLog", [
 			'method' => __METHOD__,
-			'count' => count( $imageList ),
+			'message' => 'Fetched ' . count( $imageList ) . ' new images',
 		] );
 
 		wfProfileOut( __METHOD__ );
@@ -413,9 +431,9 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			$oDatabaseHelper->updateBatchImages( $aValues, $aWhere );
 		}
 
-		WikiaLogger::instance()->info( "ImageReviewImageList: updated {$sType} images.", [
+		WikiaLogger::instance()->info( "ImageReviewLog", [
 			'method' => __METHOD__,
-			'count' => $iCount,
+			'message' => "Updated {$iCount} images (type {$sType})",
 		] );
 	}
 
@@ -439,8 +457,6 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			wfProfileOut( __METHOD__ );
 			return $total;
 		}
-
-		wfDebug( "\n ImageReviewFixes " . __METHOD__ . "\n" );
 
 		$oDatabaseHelper = $this->getDatabaseHelper();
 		$aCounts = $oDatabaseHelper->countImagesByState();
