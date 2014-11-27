@@ -61,8 +61,9 @@ JSMessages::registerPackage('VenusArticle', [ 'venus-article-*' ]);
 /**
  * hooks
  */
-$wgHooks['ParserSectionCreate'][] = 'VenusHooks::onParserSectionCreate';
-$wgHooks['MakeHeadline'       ][] = 'VenusHooks::onMakeHeadline';
+$wgHooks['ParserSectionCreate'      ][] = 'VenusHooks::onParserSectionCreate';
+$wgHooks['MakeHeadline'             ][] = 'VenusHooks::onMakeHeadline';
+$wgHooks['MakeGlobalVariablesScript'][] = 'VenusHooks::onMakeGlobalVariablesScript';
 
 
 //404 Pages
