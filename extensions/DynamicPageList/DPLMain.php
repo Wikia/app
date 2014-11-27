@@ -1563,7 +1563,6 @@ class DPLMain {
 				switch ( $DPLCacheStorage ) {
 					case 'files':
 						// check if cache file exists
-						$cacheFile = "$wgUploadDirectory/dplcache/$DPLCachePath/$DPLCache";
 						if ( file_exists( $cacheFile ) ) {
 							// find out if cache is acceptable or too old
 							$cacheTimeStamp = filemtime( $cacheFile );
@@ -3239,7 +3238,7 @@ class DPLMain {
 	}
 
 	private static function getMemcacheKey( $dplCacheId ) {
-		return str_replace( ' ', '_', wfMemcKey( 'dplcache', $dplCacheId ) );
+		return wfMemcKey( 'dplcache', $dplCacheId );
 	}
 
 }
