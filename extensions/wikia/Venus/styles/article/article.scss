@@ -68,6 +68,7 @@ $header-without-cover-unit-spacing: 60px;
 	@include clearfix;
 
 	clear: left;
+
 	margin: 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width;
 	padding: 0 $medium-grid-column-padding;
 
@@ -300,6 +301,10 @@ $header-without-cover-unit-spacing: 60px;
 	.mw-content-text {
 		margin: 0 $small-content-padding - $content-border-width 0 $small-grid-column + $small-grid-gutter + $small-content-padding - $content-border-width;
 		padding: 0 $small-grid-column-padding;
+
+		&.mw-content-preview {
+			margin: 0 $small-grid-column + $small-grid-gutter + $small-content-padding - $content-border-width;
+		}
 
 		h2 {
 			margin-left: -$small-grid-gutter;

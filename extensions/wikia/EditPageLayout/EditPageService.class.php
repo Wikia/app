@@ -38,7 +38,7 @@ class EditPageService extends Service {
 		   	$realBodyAttribs['class'] = 'mw-content-'.$lang->getDir();
 
 			if ( !empty( $wgEnableVenusArticle ) ) {
-				$realBodyAttribs['class'] .= ' mw-content-text';
+				$realBodyAttribs['class'] .= ' mw-content-text mw-content-preview';
 			}
 		}
 
