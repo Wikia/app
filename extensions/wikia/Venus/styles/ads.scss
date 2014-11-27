@@ -38,6 +38,7 @@
 	display: block;
 	float: right;
 	margin: 0 $medium-grid-column-padding + $medium-content-padding - $content-border-width 0 $medium-grid-gutter + $medium-grid-column-padding;
+	position: relative; // Temporary fix for tables overlapping recentWikiActivity & medrec ad
 	text-align: center;
 
 	> .ad {
