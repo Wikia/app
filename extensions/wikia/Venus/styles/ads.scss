@@ -14,6 +14,7 @@
 	font-size: 10px;
 	line-height: 100%;
 	padding-bottom: 6px;
+	text-align: left;
 	text-transform: uppercase;
 }
 
@@ -55,12 +56,13 @@
 
 .bottom-ads {
 	@include clearfix;
-	margin: 0 auto;
-	width: 660px;
+	background: $global-wikia-background-color;
+	text-align: center;
 
 	> .wikia-ad {
-		float: left;
-		margin: 40px 15px 30px;
+		display: inline-block;
+		font-size: 0;
+		margin: 40px 15px 50px;
 		width: 300px;
 	}
 }
