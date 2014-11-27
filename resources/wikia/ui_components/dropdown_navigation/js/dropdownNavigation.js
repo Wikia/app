@@ -32,7 +32,7 @@ define(
 					activeClass: 'active',
 					$container: null,
 					id: 'wikiaDropdownNav' + dropdownIndex++,
-					maxHeight: 400
+					maxHeight: 390
 				},
 				menuAIMParams = {
 					activate: showSecondLevelList,
@@ -42,6 +42,9 @@ define(
 
 				// cached DOM elements
 				$sectionsWrapper,
+				$sectionsInnerWrapper,
+				$subSectionsWrapper,
+				$subSectionsInnerWrapper,
 				$sections,
 				$subsections;
 
@@ -50,12 +53,31 @@ define(
 			 */
 			this.resetUI = function () {
 				this.menuAim.resetActiveRow();
+
+				$subSectionsInnerWrapper.scrollTop(0);
+				$sectionsInnerWrapper.scrollTop(0);
+
+				removeScrollable($subSectionsInnerWrapper);
+
 				$sections
 					.add($subsections)
+					.add($subSectionsWrapper)
 					.removeClass(params.activeClass);
-
-				$sectionsWrapper.scrollTop(0);
 			};
+
+			function addScrollable($wrapper) {
+				if ($wrapper.height() > params.maxHeight) {
+					$wrapper
+						.addClass('scrollable')
+						.css('height', params.maxHeight);
+				}
+			}
+
+			function removeScrollable($wrapper) {
+				$wrapper
+					.removeClass('scrollable')
+					.css('height', '');
+			}
 
 			/**
 			 * @desc shows subsection
@@ -64,7 +86,8 @@ define(
 			 */
 			function showSecondLevelList(row, event) {
 				var $row = $(row),
-					id = $row.data('id');
+					id = $row.data('id'),
+					$subSection = $('#' + row.getAttribute('data-id'));
 
 				// handle touch interactions
 				if (event && id && !$row.hasClass(params.activeClass)) {
@@ -72,9 +95,14 @@ define(
 					event.stopPropagation();
 				}
 
-				$('#' + row.getAttribute('data-id'))
+				$subSection
 					.add(row)
 					.addClass(params.activeClass);
+
+				if ($subSection.length) {
+					$subSectionsWrapper.addClass(params.activeClass);
+					addScrollable($subSectionsInnerWrapper);
+				}
 			}
 
 			/**
@@ -82,9 +110,14 @@ define(
 			 * @param {Element} row - dropdwon "<li>" HTML element
 			 */
 			function hideSecondLevelList(row) {
+				$subSectionsInnerWrapper.scrollTop(0);
+
 				$('#' + row.getAttribute('data-id'))
 					.add(row)
+					.add($subSectionsWrapper)
 					.removeClass(params.activeClass);
+
+				removeScrollable($subSectionsInnerWrapper);
 			}
 
 			/**
@@ -118,14 +151,18 @@ define(
 					$('#' + params.id) :
 					createDropdown(params, templates, $parent);
 
-				$sectionsWrapper = $dropdownWrapper.children('ul');
-				$sections = $sectionsWrapper.children();
-				$subsections = $dropdownWrapper.find('div > ul');
+				$sectionsWrapper = $dropdownWrapper.children('.wikia-dropdown-nav-sections-wrapper');
+				$sectionsInnerWrapper = $sectionsWrapper.children('.wikia-dropdown-nav-inner-wrapper');
+				$subSectionsWrapper = $dropdownWrapper.children('.wikia-dropdown-nav-subsections-wrapper');
+				$subSectionsInnerWrapper = $subSectionsWrapper.children('.wikia-dropdown-nav-inner-wrapper');
+				$sections = $sectionsInnerWrapper.find('li');
+				$subsections = $dropdownWrapper.find('.wikia-dropdown-nav-subsections-wrapper ul');
 
 				utils.setPosition($dropdownWrapper, $dropdownTrigger);
+				addScrollable($sectionsInnerWrapper);
 
 				// initialize dropdown UX enhancements
-				self.menuAim = win.menuAim($sectionsWrapper[0], menuAIMParams);
+				self.menuAim = win.menuAim($sectionsInnerWrapper.children()[0], menuAIMParams);
 			}
 
 			// initialize component

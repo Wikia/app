@@ -78,7 +78,7 @@ $image-max-columns-medium-and-large: 10;
 
 	.show-info-icon {
 		.info-icon {
-			background-image: url('/extensions/wikia/Venus/images/info_icon.png'); /* base64 */
+			background: url('/extensions/wikia/Venus/images/info_icon.png') 0 0; /* base64 */
 			display: none;
 			float: right;
 			height: 17px;

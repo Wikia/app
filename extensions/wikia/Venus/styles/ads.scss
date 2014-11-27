@@ -1,11 +1,21 @@
-@import "mixins";
-@import "variables";
+@import 'mixins';
+@import 'variables';
 
 .wikia-ad.hidden,
 .wikia-ad .hidden,
 .wikia-ad[id^="INVISIBLE_"],
 .wikia-ad iframe[width="1"][height="1"] {
 	display: none !important;
+}
+
+.wikia-ad-label {
+	color: $color-alternate-text;
+	display: block;
+	font-size: 10px;
+	line-height: 100%;
+	padding-bottom: 6px;
+	text-align: left;
+	text-transform: uppercase;
 }
 
 .top-ads {
@@ -41,6 +51,22 @@
 		> .wikia-ad {
 			margin-bottom: 20px;
 		}
+	}
+}
+
+.bottom-ads {
+	@include clearfix;
+	background: $global-wikia-background-color;
+	border: $content-border-width solid $color-page-border;
+	border-bottom: 0;
+	border-top: 0;
+	text-align: center;
+
+	> .wikia-ad {
+		display: inline-block;
+		font-size: 0;
+		margin: 40px 15px 50px;
+		width: 300px;
 	}
 }
 
