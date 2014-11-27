@@ -57,8 +57,6 @@ class VenusController extends WikiaController {
 	}
 
 	public function preview() {
-		global $wgUser;
-
 		$this->contents = $this->request->getVal( 'content' );
 
 		$this->setBodyClasses();
