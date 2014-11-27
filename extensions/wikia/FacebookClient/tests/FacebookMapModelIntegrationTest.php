@@ -9,6 +9,7 @@
  * @category Wikia
  * @group UsingDB
  * @group Facebook
+ * @group Broken
  */
 
 class FacebookMapModelIntegrationTest extends WikiaBaseTest {
