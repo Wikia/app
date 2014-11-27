@@ -476,7 +476,7 @@ define('wikia.preview', [
 					name: 'venus',
 					skin: 'venus',
 					type: 'full',
-					value: 1022
+					value: 1024
 				}
 			};
 
