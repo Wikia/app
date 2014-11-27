@@ -21,6 +21,10 @@
 		padding: 10px;
 	}
 
+	&.one {
+		padding: 5px;
+	}
+
 	.ad-header {
 		color: $color-alternate-text;
 		font-size: 10px;
@@ -82,16 +86,39 @@
 	.affiliate-wrapper {
 		height: 285px;
 		overflow: hidden;
+
+		&.one {
+			border: 1px solid $color-page-border;
+			height: 182px;
+		}
 	}
 
-	.affiliate-header h2 {
+	.affiliate-header span {
 		border-bottom: 0;
+		color: #000;
 		font-size: 30px;
 		margin-bottom: 0;
 		margin-top: 0;
 		overflow: hidden;
 		padding-bottom: 0;
 		padding-top: 15px;
+	}
+
+	.affiliate-header.one {
+		background-color: #000;
+		color: #fff;
+		float: left;
+		height: 100%;
+		padding: 0;
+		text-align: center;
+		width: 30%;
+
+		span {
+			color: #fff;
+			font-size: 14px;
+			position: relative;
+			top: 35%;
+		}
 	}
 
 	.affiliate {
@@ -102,6 +129,15 @@
 		padding-right: 0;
 		padding-top: 8px;
 		width: 160px;
+
+		&.one {
+			background-color: #f6f6f6;
+			float: initial;
+			height: 100%;
+			margin: 0 0 0 30%;
+			padding: 10px;
+			width: 70%;
+		}
 	}
 
 	.product-thumb {
@@ -131,6 +167,14 @@
 		text-overflow: ellipsis;
 		white-space: normal;
 		width: 150px;
+
+		&.one {
+			border: 0;
+			float: initial;
+			margin: 0;
+			padding: 5px 10px;
+			width: auto;
+		}
 	}
 
 	.product-price {
@@ -152,6 +196,14 @@
 			color: #000;
 			text-decoration: underline;
 		}
+
+		&.one {
+			background-color: #f09512;
+			border-radius: 0;
+			color: #fff;
+			left: 10px;
+			top: 85px;
+		}
 	}
 
 	.amazon-logo {
@@ -168,5 +220,9 @@
 		top: 16px;
 		vertical-align: top;
 		width: 160px;
+
+		&.one {
+			background-image: url('/extensions/wikia/MonetizationModule/images/amazon-logo-white.png');
+		}
 	}
 }

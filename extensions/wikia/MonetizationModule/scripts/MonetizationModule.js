@@ -64,6 +64,7 @@ require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 		},
 		initClickTrackingEcommerce: function () {
 			var elements = [
+				'.module-title',
 				'.product-thumb',
 				'.product-name',
 				'.product-price'
@@ -73,26 +74,25 @@ require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 				var $this = $(this),
 					$module = $this.closest('.monetization-module'),
 					$products = $module.find('.affiliate'),
-					$product = $this.parent(),
-					trackCategory = $module.attr('id'),
-					trackLabel = $this.attr('class'),
-					trackValue = $products.index($product),
-					type = $module.attr('data-mon-type'),
-					slot = $module.attr('data-mon-slot'),
-					productName = $product.attr('data-mon-pname'),
-					productId = $product.attr('data-mon-pid'),
-					productTag = $product.attr('data-mon-ptag'),
-					productUrl = $this.find('a').attr('href');
+					trackLabel = $this.attr('class').split(' ')[0],
+					productUrl = $this.attr('href') || $this.find('a').attr('href'),
+					$product;
+
+				if (trackLabel === 'module-title') {
+					$product = $products.first();
+				} else {
+					$product = $this.parent();
+				}
 
 				track({
-					category: trackCategory,
+					category: $module.attr('id'),
 					label: trackLabel,
-					value: trackValue,
-					type: type,
-					slot: slot,
-					title: productName,
-					pid: productId,
-					ptag: productTag,
+					value: $products.index($product),
+					type: $module.attr('data-mon-type'),
+					slot: $module.attr('data-mon-slot'),
+					title: $product.attr('data-mon-pname'),
+					pid: $product.attr('data-mon-pid'),
+					ptag: $product.attr('data-mon-ptag'),
 					url: productUrl
 				});
 			});
