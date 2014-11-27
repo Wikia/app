@@ -1,3 +1,4 @@
+@import "../typographyMixins";
 @import 'resources/wikia/libraries/bootstrap/popover';
 
 /* Define some Venus styles for bootstrap popover */
@@ -10,5 +11,5 @@
 }
 
 .popover-content {
-	font-size: $font-size-xs;
+	@include font-size-xs;
 }

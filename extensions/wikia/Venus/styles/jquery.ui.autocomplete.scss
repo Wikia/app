@@ -6,6 +6,7 @@
 
 @import "skins/shared/color";
 @import "z-index";
+@import "typographyMixins";
 @import "skins/shared/mixins/box-shadow";
 @import "skins/shared/mixins/menus";
 
@@ -20,7 +21,7 @@
 	margin-top: 2px;
 	padding: 5px 1px;
 	width: 245px;
-	z-index: $article-left-navigation-z-index;
+	z-index: $autocomplete-z-index;
 
 	.ui-menu-item {
 		border: 0;
@@ -31,7 +32,7 @@
 		}
 
 		a {
-			font-size: 12px;
+			@include font-size-xxs;
 			line-height: 25px;
 			padding: 5px 9px;
 
