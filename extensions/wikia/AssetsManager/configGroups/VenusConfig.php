@@ -305,3 +305,19 @@ $VenusConfig['zenbox_js'] = [
 		'//extensions/wikia/Zenbox/scripts/zenbox.js',
 	]
 ];
+
+
+$VenusConfig['venus_preview_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//resources/wikia/libraries/modil/modil.js',
+		'//resources/wikia/modules/window.js',
+		'//resources/jquery/jquery-2.1.1.js',
+		'//resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js',
+		'//resources/wikia/modules/querystring.js',
+		'//resources/wikia/modules/browserDetect.js',
+		'//resources/wikia/modules/log.js',
+		'//extensions/wikia/ImageLazyLoad/js/ImgLzy.module.js',
+		'//extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
+	]
+];

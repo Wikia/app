@@ -142,18 +142,25 @@ class VenusController extends WikiaController {
 
 		if ($type == 'preview') {
 			$cssGroups[] = 'article_scss';
-		}
+			$jsPreviewFiles = '';
 
-		// let extensions manipulate the asset packages (e.g. ArticleComments,
-		// this is done to cut down the number or requests)
-		$this->app->runHook(
-			'VenusAssetsPackages',
-			[
-				&$jsHeadGroups,
-				&$jsBodyGroups,
-				&$cssGroups
-			]
-		);
+			foreach ( $this->assetsManager->getURL( ['venus_preview_js'] ) as $src ) {
+				$jsPreviewFiles .= "<script src='{$src}'></script>";
+			}
+			$this->jsPreviewFiles = $jsPreviewFiles;
+
+		} else {
+			// let extensions manipulate the asset packages (e.g. ArticleComments,
+			// this is done to cut down the number or requests)
+			$this->app->runHook(
+				'VenusAssetsPackages',
+				[
+					&$jsHeadGroups,
+					&$jsBodyGroups,
+					&$cssGroups
+				]
+			);
+		}
 
 		// SASS files requested via VenusAssetsPackages hook
 		$sassFiles = [];
@@ -167,7 +174,7 @@ class VenusController extends WikiaController {
 		// "WikiaSkin::getStylesWithCombinedSASS: combined 9 SASS files"
 		$cssLinks .= $this->skin->getStylesWithCombinedSASS( $sassFiles );
 
-		foreach ( $this->assetsManager->getURL( $jsHeadGroups ) as $src ) {
+		foreach ( $this->assetsManager->getURL( $$tjsHeadGroups ) as $src ) {
 			if ( $this->assetsManager->checkAssetUrlForSkin( $src, $this->skin ) ) {
 				$jsHeadFiles .= "<script src='{$src}'></script>";
 			}
