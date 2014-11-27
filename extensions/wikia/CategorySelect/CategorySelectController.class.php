@@ -60,9 +60,6 @@ class CategorySelectController extends WikiaController {
 	public function articlePageVenus() {
 		// Run Oasis articlePage
 		$this->articlePage();
-		// Extend response
-		$categoriesLinkText = wfMessage( 'pagecategories' )->escaped();
-		$this->response->setVal( 'categoriesLinkText', $categoriesLinkText );
 	}
 
 		/**
