@@ -460,8 +460,8 @@ class ScribeEventProducer {
 					$bIsImageForReview = true;
 				}
 
-				$this->sendImageReviewLog( $sLogMessage );
 				$this->mParams['isImageForReview'] = intval( $bIsImageForReview );
+				$this->sendImageReviewLog( $sLogMessage );
 			}
 		} else {
 			$this->mParams['isImageForReview'] = intval( $bProvidedValue );
