@@ -302,7 +302,7 @@
 						uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
 							var categoryEditModalConfig = {
 								vars: {
-									id: 'CategorySelectEditModal',
+									id: 'categorySelectEditModal',
 									size: 'small',
 									content: Mustache.render( template.content, data ),
 									title: cached.messages.categoryEdit,

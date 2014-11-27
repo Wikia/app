@@ -11,7 +11,7 @@
 		var articleId = window.wgArticleId,
 			loaded = false,
 			namespace = 'categorySelectView',
-			$wrapper = $( '#WikiaArticleCategories' );
+			$wrapper = $( '#articleCategories' );
 
 		// User can't edit, no need to bind anything
 		if ( !$wrapper.hasClass( 'userCanEdit' ) ) {

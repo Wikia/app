@@ -12,7 +12,7 @@
 $categoryselect-list-spacing: 25px;
 
 // These styles are for view pages only
-.CategorySelect {
+.article-categories {
 	border-top: 1px solid $color-page-border;
 	font-size: 14px;
 	line-height: 16px;
@@ -194,7 +194,7 @@ $categoryselect-list-spacing: 25px;
 }
 
 // Need to use ID here for specificity
-#CategorySelectEditModal {
+#categorySelectEditModal {
 	.WikiaForm {
 		@include clearfix;
 
