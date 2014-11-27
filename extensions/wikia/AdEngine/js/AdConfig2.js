@@ -14,11 +14,7 @@ define('ext.wikia.adEngine.adConfig', [
 
 	// adProviders
 	'ext.wikia.adEngine.provider.directGpt',
-	'ext.wikia.adEngine.provider.later',
-
-	// adSlots
-	require.optional('ext.wikia.adEngine.slot.topInContentBoxad'),
-	require.optional('ext.wikia.adEngine.slot.venus')
+	'ext.wikia.adEngine.provider.later'
 ], function (
 	// regular dependencies
 	log,
@@ -34,11 +30,7 @@ define('ext.wikia.adEngine.adConfig', [
 
 	// adProviders
 	adProviderDirectGpt,
-	adProviderLater,
-
-	// adSlots
-	topInContentBoxad,
-	venusSlots
+	adProviderLater
 ) {
 	'use strict';
 
@@ -137,14 +129,6 @@ define('ext.wikia.adEngine.adConfig', [
 		// Non-high-value slots go to ad provider Later
 		log(['getProvider', slotname, 'Later (Liftium)'], 'info', logGroup);
 		return [adProviderLater];
-	}
-
-	if (topInContentBoxad) {
-		topInContentBoxad.init();
-	}
-
-	if (venusSlots) {
-		venusSlots.init();
 	}
 
 	if (rtp && rtp.wasCalled()) {

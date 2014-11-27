@@ -13,7 +13,7 @@
 	display: block;
 	font-size: 10px;
 	line-height: 100%;
-	padding-bottom: 6px;
+	padding-bottom: 4px;
 	text-align: left;
 	text-transform: uppercase;
 }
@@ -41,7 +41,7 @@
 	text-align: center;
 
 	> .ad {
-		margin: 0 auto;
+		margin: 0 auto 0;
 		width: 300px;
 
 		> .default-height {
@@ -49,6 +49,7 @@
 		}
 
 		> .wikia-ad {
+			margin-top: 50px;
 			margin-bottom: 20px;
 		}
 	}
@@ -60,11 +61,12 @@
 	border: $content-border-width solid $color-page-border;
 	border-bottom: 0;
 	border-top: 0;
+	font-size: 0;
 	text-align: center;
+	position: relative; // ad-skin should not cover this div
 
 	> .wikia-ad {
 		display: inline-block;
-		font-size: 0;
 		margin: 40px 15px 50px;
 		width: 300px;
 	}
@@ -72,12 +74,19 @@
 
 .ad-in-content {
 	float: right;
-	margin: 0 -8px 30px 30px;
 
-	> .wikia-ad.default-height {
+	> .default-height {
 		width: 300px;
-		height: 267px;
+		height: 265px; // height of the ad including the label
 	}
+
+	> .wikia-ad {
+		margin: 12px -8px 30px 30px;
+	}
+}
+
+.clear-right-after-ad-in-content {
+	clear: right;
 }
 
 @media #{$small-only} {

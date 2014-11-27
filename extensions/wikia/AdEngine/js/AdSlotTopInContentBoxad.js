@@ -1,5 +1,5 @@
-/*global define*/
-define('ext.wikia.adEngine.slot.topInContentBoxad', [
+/*global require*/
+require([
 	'wikia.log',
 	'wikia.document',
 	'ext.wikia.adEngine.adContext',
@@ -15,7 +15,11 @@ define('ext.wikia.adEngine.slot.topInContentBoxad', [
 	function doesNotBreakContent(slot) {
 
 		var adPlace,
-			contentDiv;
+			fakeAdId = 'fake-top-incontent-boxad',
+			fakeAdStyle = 'float: right; height: 250px; margin: 0 0 10px 10px; width: 300px',
+			fakeAdHtml = '<div id="' + fakeAdId + '" style="' + fakeAdStyle + '"></div>',
+			contentDiv,
+			fakeAd;
 
 		if (slotName !== slot[0]) {
 			return true;
@@ -34,9 +38,11 @@ define('ext.wikia.adEngine.slot.topInContentBoxad', [
 		}
 
 		contentDiv = document.getElementById('mw-content-text');
-		result = adPlacementChecker.doesAdFit([300, 250], contentDiv) ;
+		result = adPlacementChecker.injectAdIfItFits(fakeAdHtml, contentDiv);
 
 		if (result) {
+			fakeAd = document.getElementById(fakeAdId);
+			fakeAd.parentNode.removeChild(fakeAd);
 			adPlace = contentDiv.parentNode.querySelector('.home-top-right-ads');
 			adPlace.className += ' top-right-ads-in-content';
 		}
@@ -46,13 +52,5 @@ define('ext.wikia.adEngine.slot.topInContentBoxad', [
 
 	}
 
-	function init() {
-		log(['init', slotName], 'debug', logGroup);
-
-		eventDispatcher.bind('ext.wikia.adEngine.adDecoratorPageDimensions fillInSlot', doesNotBreakContent);
-	}
-
-	return {
-		init: init
-	};
+	eventDispatcher.bind('ext.wikia.adEngine.adDecoratorPageDimensions fillInSlot', doesNotBreakContent);
 });

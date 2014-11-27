@@ -127,9 +127,6 @@ class AdEngine2Hooks {
 			// The ASSET_GROUP_ADENGINE_LATE package was added to the blocking group
 		} else {
 			array_splice( $jsAssets, $coreGroupIndex + 1, 0, self::ASSET_GROUP_ADENGINE );
-			if ( $wgAdDriverUseTopInContentBoxad ) {
-				array_splice( $jsAssets, $coreGroupIndex + 2, 0, self::ASSET_GROUP_TOP_INCONTENT_JS );
-			}
 			if ( AdEngine2Service::shouldLoadLateQueue() ) {
 				array_splice( $jsAssets, $coreGroupIndex + 2, 0, self::ASSET_GROUP_ADENGINE_LATE );
 				array_splice( $jsAssets, $coreGroupIndex + 3, 0, self::ASSET_GROUP_SPOTLIGHTS );
@@ -139,6 +136,10 @@ class AdEngine2Hooks {
 		if ( AdEngine2Service::shouldLoadLiftium() ) {
 			$jsAssets[] = self::ASSET_GROUP_LIFTIUM;
 			$jsAssets[] = self::ASSET_GROUP_LIFTIUM_EXTRA;
+		}
+
+		if ( $wgAdDriverUseTopInContentBoxad ) {
+			$jsAssets[] = self::ASSET_GROUP_TOP_INCONTENT_JS;
 		}
 
 		if ( $wgAdDriverUseBottomLeaderboard === true ) {
@@ -171,10 +172,6 @@ class AdEngine2Hooks {
 		if ( AdEngine2Service::areAdsInHead() ) {
 			// Add ad asset to JavaScripts loaded on top (in <head>)
 			$jsAssets[] = self::ASSET_GROUP_ADENGINE;
-
-			if ( $wgAdDriverUseTopInContentBoxad === true ) {
-				array_unshift( $jsAssets, self::ASSET_GROUP_TOP_INCONTENT_JS );
-			}
 		}
 
 		if ( AnalyticsProviderRubiconRTP::isEnabled() ) {
