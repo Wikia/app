@@ -99,15 +99,19 @@ $dropdownArrowSize: 10px;
 		display: table-cell;
 	}
 
-	.multiple-share .share-link {
-		color: inherit;
-	}
-
 	.single-share {
 		display: none;
+
+		.share-link {
+			display: block;
+		}
 	}
 	.multiple-share {
 		display: list-item;
+
+		.share-link {
+			color: inherit;
+		}
 	}
 
 	&.single-share {
