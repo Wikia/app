@@ -231,7 +231,7 @@
 					if ( options.popover ) {
 						$.extend( self.popover.options, {
 							content: $.msg( 'categoryselect-error-duplicate-category-name', existing.name ),
-							placement: 'bottom',
+							placement: 'top',
 							type: 'error'
 						});
 
