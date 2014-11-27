@@ -61,11 +61,9 @@ class VenusController extends WikiaController {
 
 		$this->contents = $this->request->getVal( 'content' );
 
-		Wikia::addAssetsToOutput( 'article_scss' );
-
 		$this->setBodyClasses();
-		$this->setHeadItems();
-		$this->setAssets();
+//		$this->setHeadItems();
+		$this->setAssets('preview');
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
@@ -135,7 +133,7 @@ class VenusController extends WikiaController {
 		}
 	}
 
-	private function setAssets() {
+	private function setAssets($type = 'live') {
 		global $wgOut;
 
 		$jsHeadGroups = ['venus_head_js'];
@@ -144,6 +142,10 @@ class VenusController extends WikiaController {
 		$jsBodyFiles = '';
 		$cssGroups = ['venus_css'];
 		$cssLinks = '';
+
+		if ($type == 'preview') {
+			$cssGroups[] = 'article_scss';
+		}
 
 		// let extensions manipulate the asset packages (e.g. ArticleComments,
 		// this is done to cut down the number or requests)
