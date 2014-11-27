@@ -11,49 +11,39 @@
 
 $categoryselect-list-spacing: 25px;
 
+%category-spacing {
+	margin-bottom: 11px;
+	margin-top: 7px;
+
+	@media #{$small-only} {
+		margin-right: $small-grid-gutter;
+		padding-right: $small-grid-gutter;
+	}
+
+	@media #{$medium-up} {
+		margin-right: $medium-grid-gutter;
+		padding-right: $medium-grid-gutter;
+	}
+
+	@media #{$large-up} {
+		margin-right: $large-grid-gutter;
+		padding-right: $large-grid-gutter;
+	}
+}
+
+%category-display {
+	display: block;
+	float: left;
+}
+
 // These styles are for view pages only
 .article-categories {
 	border-top: 1px solid $color-page-border;
 	font-size: 14px;
 	line-height: 16px;
 
-	&.editMode {
-
-		.add {
-			display: none;
-		}
-
-		.input {
-			display: inline-block;
-			&::-ms-clear {
-				display: none;
-			}
-		}
-
-		.toolbar {
-			@include venus-icons-font;
-
-			color: $color-article-navigation-inactive;
-			cursor: pointer;
-			float: left;
-			font-size: 16px;
-			line-height: 16px;
-			margin: 0;
-			padding: 0;
-
-			li {
-				color: $color-links;
-				float: left;
-			}
-		}
-
-		.submit-toolbar {
-			display: block;
-		}
-	}
-
 	.categories {
-		margin: 0;
+		margin: $categoryselect-list-spacing 0 0;
 		overflow: hidden;
 		padding: 0;
 
@@ -64,18 +54,14 @@ $categoryselect-list-spacing: 25px;
 		}
 	}
 
-	.category,
-	.add-toolbar,
-	.placeholder {/* .placeholder is element that replaces .category during drag (jquery.ui.sortable.js) */
-		display: block;
-		float: left;
-	}
-
 	.add-toolbar {
+		@extend %category-display;
 		margin-bottom: 4px;
 	}
 
 	.category {
+		@extend %category-display;
+		@extend %category-spacing;
 		border-right: 1px solid $color-page-border;
 
 		&.hidden {
@@ -94,7 +80,10 @@ $categoryselect-list-spacing: 25px;
 		}
 	}
 
+	/* .placeholder is element that replaces .category during drag (jquery.ui.sortable.js) */
 	.placeholder {
+		@extend %category-display;
+		@extend %category-spacing;
 		height: 16px;
 	}
 
@@ -143,6 +132,11 @@ $categoryselect-list-spacing: 25px;
 		}
 	}
 
+	h3 {
+		@include font-size-xl;
+		margin-top: $vertical-spacing;
+	}
+
 	@media #{$small-only} {
 		margin: 0 $small-grid-column + $small-grid-gutter + $small-content-padding - $content-border-width $vertical-spacing;
 		padding: 0 $small-grid-column-padding;
@@ -158,38 +152,38 @@ $categoryselect-list-spacing: 25px;
 		padding: 0 $large-grid-column-padding;
 	}
 
-	h3 {
-		@include font-size-xl;
-		margin-top: $vertical-spacing;
-	}
+	&.editMode {
 
-	.category,
-	.placeholder {
-		@media #{$small-only} {
-			margin-right: $small-grid-gutter;
-			padding-right: $small-grid-gutter;
+		.add {
+			display: none;
 		}
 
-		@media #{$medium-up} {
-			margin-right: $medium-grid-gutter;
-			padding-right: $medium-grid-gutter;
+		.input {
+			display: inline-block;
+			&::-ms-clear {
+				display: none;
+			}
 		}
 
-		@media #{$large-up} {
-			margin-right: $large-grid-gutter;
-			padding-right: $large-grid-gutter;
+		.toolbar {
+			@include venus-icons-font;
+			color: $color-article-navigation-inactive;
+			cursor: pointer;
+			float: left;
+			font-size: 16px;
+			line-height: 16px;
+			margin: 0;
+			padding: 0;
+
+			li {
+				color: $color-links;
+				float: left;
+			}
 		}
 
-	}
-
-	.categories {
-		margin-top: $categoryselect-list-spacing;
-	}
-
-	.category,
-	.placeholder {
-		margin-bottom: 11px;
-		margin-top: 7px;
+		.submit-toolbar {
+			display: block;
+		}
 	}
 }
 
