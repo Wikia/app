@@ -44,6 +44,7 @@ define(
 					controller: 'RecommendationsApi',
 					method: 'getForArticle',
 					data: {
+						cb: win.wgStyleVersion,
 						id: win.wgArticleId
 					},
 					type: 'get'
@@ -51,7 +52,6 @@ define(
 				loader({
 					type: loader.MULTI,
 					resources: {
-						cb: win.wgStyleVersion,
 						mustache: '/extensions/wikia/Recommendations/templates/Recommendations_index.mustache,/extensions/wikia/Recommendations/templates/Recommendations_image.mustache,/extensions/wikia/Recommendations/templates/Recommendations_video.mustache',
 						scripts: 'recommendations_view_js',
 						styles: 'extensions/wikia/Recommendations/styles/recommendations.scss',
