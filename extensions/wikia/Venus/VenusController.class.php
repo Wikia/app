@@ -62,7 +62,6 @@ class VenusController extends WikiaController {
 		$this->contents = $this->request->getVal( 'content' );
 
 		$this->setBodyClasses();
-//		$this->setHeadItems();
 		$this->setAssets('preview');
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
