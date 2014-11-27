@@ -4,8 +4,8 @@ use \Wikia\Logger\WikiaLogger;
 
 class ImageReviewSpecialController extends WikiaSpecialPageController {
 	const ACTION_QUESTIONABLE = 'questionable';
-	const ACTION_REJECTED = 'rejected';
-	const ACTION_INVALID = 'invalid';
+	const ACTION_REJECTED     = 'rejected';
+	const ACTION_INVALID      = 'invalid';
 
 	var $statsHeaders = array( 'user', 'total reviewed', 'approved', 'deleted', 'qustionable', 'distance to avg.' );
 
@@ -115,17 +115,22 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			$this->imageList = $helper->refetchImageListByTimestamp( $ts );
 		}
 
-		if ( count($this->imageList) == 0 ) {
+		if ( count( $this->imageList ) == 0 ) {
 			$do = array( 
 				self::ACTION_QUESTIONABLE	=> ImageReviewStatuses::STATE_QUESTIONABLE,
 				self::ACTION_REJECTED		=> ImageReviewStatuses::STATE_REJECTED,
 				self::ACTION_INVALID		=> ImageReviewStatuses::STATE_INVALID_IMAGE,
-				'default'			=> ImageReviewStatuses::STATE_UNREVIEWED
+				'default'					=> ImageReviewStatuses::STATE_UNREVIEWED
 			);
-			$this->imageList = $helper->getImageList( $ts, isset( $do[ $action ] ) ? $do[ $action ] : $do['default'], $order );
-		}
 
-		if ( $this->accessQuestionable ) {
+			if ( isset( $do[ $action ] ) ) {
+				$this->imageList = $helper->getImageList( $ts, $do[ $action ], $order );
+				$this->imageCount = $helper->getImageCount();
+			} else {
+				$this->imageList = $helper->getImageList( $ts, $do[ 'default' ], $order );
+				$this->imageCount = $helper->getImageCount( 'unreviewed', count( $this->imageList ) );
+			}
+		} else {
 			$this->imageCount = $helper->getImageCount();
 		}
 	}

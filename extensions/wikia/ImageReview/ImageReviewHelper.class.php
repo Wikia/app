@@ -11,16 +11,6 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 
 	private $user_id = 0;
 
-	/**
-	 * Used in ImageReviewSpecial_index.php
-	 * @var array
-	 */
-	static $sortOptions = array(
-		'latest first' => 0,
-		'by priority and recency' => 1,
-		'oldest first' => 2,
-	);
-
 	function __construct() {
 		parent::__construct();
 		$this->user_id = $this->wg->user->getId();
@@ -429,91 +419,31 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 		] );
 	}
 
-	protected function getWhitelistedWikis() {
+	public function getImageCount( $sAction = false, $iImageListCount = false ) {
 		wfProfileIn( __METHOD__ );
 
-		$topWikis = $this->getTopWikis();
+		$key = wfMemcKey( 'ImageReviewSpecialController', 'v2', __METHOD__ );
+		$total = $this->wg->memc->get( $key, null );
 
-		$whitelistedWikis = $this->getWhitelistedWikisFromWF();
-
-		$out = array_keys( $whitelistedWikis + $topWikis );
-
-		wfProfileOut( __METHOD__ );
-
-		return $out;
-	}
-
-	protected function getWhitelistedWikisFromWF() {
-		wfProfileIn( __METHOD__ );
-		$key = wfMemcKey( 'ImageReviewSpecialController', __METHOD__ );
-
-		$data = $this->wg->memc->get($key, null);
-
-		if(!empty($data)) {
-			wfProfileOut( __METHOD__ );
-			return $data;
-		}
-
-		$oVariable = WikiFactory::getVarByName( 'wgImageReviewWhitelisted', 177 );
-		$fromWf = WikiFactory::getListOfWikisWithVar($oVariable->cv_variable_id, 'bool', '=' ,true);
-
-		$this->wg->memc->set($key, $fromWf, 60*10);
-		wfProfileOut( __METHOD__ );
-		return $fromWf;
-	}
-
-	protected function getTopWikis() {
-		wfProfileIn( __METHOD__ );
-		$key = wfMemcKey( 'ImageReviewSpecialController','v2', __METHOD__ );
-		$data = $this->wg->memc->get($key, null);
-		if( !empty($data) ) {
-			wfProfileOut( __METHOD__ );
-			return $data;
-		}
-
-		$ids = DataMartService::getTopWikisByPageviews( DataMartService::PERIOD_ID_MONTHLY, 200 );
-
-		$this->wg->memc->set( $key, $ids, 86400 /* 24h */ );
-		wfProfileOut( __METHOD__ );
-		return $ids;
-	}
-
-	public function getImageCount() {
-		wfProfileIn( __METHOD__ );
-
-		$key = wfMemcKey( 'ImageReviewSpecialController', 'v2', __METHOD__);
-		$total = $this->wg->memc->get($key, null);
-		if ( !empty($total) ) {
+		/**
+		 * Don't use cached results if:
+		 * 1. In Unreviewed queue
+		 * 2. SQL select returns 0 images
+		 * 3. Cached count of unreviewed > 0
+		 */
+		if ( !empty( $total )
+			&& ( $sAction != 'unreviewed'
+			|| $iImageListCount != 0
+			|| $total['unreviewed'] == 0 )
+		) {
 			wfProfileOut( __METHOD__ );
 			return $total;
 		}
 
-		$db = $this->getDatawareDB( DB_SLAVE );
-		$where = array();
+		wfDebug( "\n ImageReviewFixes " . __METHOD__ . "\n" );
 
-		$statesToFetch = array(
-			ImageReviewStatuses::STATE_QUESTIONABLE,
-			ImageReviewStatuses::STATE_REJECTED,
-			ImageReviewStatuses::STATE_UNREVIEWED,
-			ImageReviewStatuses::STATE_INVALID_IMAGE,
-		);
-		$where[] = 'state in (' . $db->makeList( $statesToFetch ) . ')';
-
-		$where[] = 'top_200 = 0';
-
-		$list = $this->getWhitelistedWikis();
-		if ( !empty($list) ) {
-			$where[] = 'wiki_id not in('.implode(',', $list).')';
-		}
-
-		// select by reviewer, state and total count with rollup and then pick the data we want out
-		$result = $db->select(
-			array( 'image_review' ),
-			array( 'state', 'count(*) as total' ),
-			$where,
-			__METHOD__,
-			array( 'GROUP BY' => 'state' )
-		);
+		$oDatabaseHelper = $this->getDatabaseHelper();
+		$aCounts = $oDatabaseHelper->countImagesByState();
 
 		$total = array(
 			'unreviewed' => 0,
@@ -521,21 +451,18 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			'rejected' => 0,
 			'invalid' => 0,
 		);
-		while( $row = $db->fetchObject($result) ) {
-			$total[$row->state] = $row->total;
-		}
 
-		if ( array_key_exists( ImageReviewStatuses::STATE_UNREVIEWED, $total ) ) {
-			$total['unreviewed'] = $this->wg->Lang->formatNum($total[ImageReviewStatuses::STATE_UNREVIEWED]);
+		if ( array_key_exists( ImageReviewStatuses::STATE_UNREVIEWED, $aCounts ) ) {
+			$total['unreviewed'] = $this->wg->Lang->formatNum( $aCounts[ ImageReviewStatuses::STATE_UNREVIEWED ] );
 		}
-		if ( array_key_exists( ImageReviewStatuses::STATE_QUESTIONABLE, $total ) ) {
-			$total['questionable'] = $this->wg->Lang->formatNum($total[ImageReviewStatuses::STATE_QUESTIONABLE]);
+		if ( array_key_exists( ImageReviewStatuses::STATE_QUESTIONABLE, $aCounts ) ) {
+			$total['questionable'] = $this->wg->Lang->formatNum( $aCounts[ ImageReviewStatuses::STATE_QUESTIONABLE ] );
 		}
-		if ( array_key_exists( ImageReviewStatuses::STATE_REJECTED, $total ) ) {
-			$total['rejected'] = $this->wg->Lang->formatNum( $total[ImageReviewStatuses::STATE_REJECTED]);
+		if ( array_key_exists( ImageReviewStatuses::STATE_REJECTED, $aCounts ) ) {
+			$total['rejected'] = $this->wg->Lang->formatNum( $aCounts[ ImageReviewStatuses::STATE_REJECTED ] );
 		}
-		if ( array_key_exists( ImageReviewStatuses::STATE_INVALID_IMAGE, $total ) ) {
-			$total['invalid'] = $this->wg->Lang->formatNum( $total[ImageReviewStatuses::STATE_INVALID_IMAGE]);
+		if ( array_key_exists( ImageReviewStatuses::STATE_INVALID_IMAGE, $aCounts ) ) {
+			$total['invalid'] = $this->wg->Lang->formatNum( $aCounts[ ImageReviewStatuses::STATE_INVALID_IMAGE ] );
 		}
 		$this->wg->memc->set( $key, $total, 3600 /* 1h */ );
 

@@ -56,12 +56,42 @@ class ImageReviewDatabaseHelper {
 		$oDB->commit();
 	}
 
+	public function countImagesByState() {
+		$aCounts = [];
+
+		$oDB = $this->getDatawareDB( DB_SLAVE );
+
+		$aWhere = [];
+		$aStatesToFetch = array(
+			ImageReviewStatuses::STATE_QUESTIONABLE,
+			ImageReviewStatuses::STATE_REJECTED,
+			ImageReviewStatuses::STATE_UNREVIEWED,
+			ImageReviewStatuses::STATE_INVALID_IMAGE,
+		);
+		$aWhere[] = 'state in (' . $oDB->makeList( $aStatesToFetch ) . ')';
+
+		// select by reviewer, state and total count with rollup and then pick the data we want out
+		$oResults = $oDB->select(
+			array( 'image_review' ),
+			array( 'state', 'count(*) as total' ),
+			$aWhere,
+			__METHOD__,
+			array( 'GROUP BY' => 'state' )
+		);
+
+		while( $oRow = $oDB->fetchObject( $oResults ) ) {
+			$aCounts[ $oRow->state ] = $oRow->total;
+		}
+
+		return $aCounts;
+	}
+
 	/**
-	 * @param  int (const) $iDB  Database machine master/slave
+	 * @param  mixed $mDatabase  Database machine master/slave
 	 * @return DatabaseMysql     Dataware database object
 	 */
-	private function getDatawareDB( $iDB = DB_MASTER ) {
+	private function getDatawareDB( $mDatabase = DB_MASTER ) {
 		global $wgExternalDatawareDB;
-		return wfGetDB( $iDB, [], $wgExternalDatawareDB );
+		return wfGetDB( $mDatabase, [], $wgExternalDatawareDB );
 	}
 }
