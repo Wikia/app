@@ -55,6 +55,10 @@
 							.find( '.last' )
 							.before( data.element );
 					}).on( 'click.' + namespace, '.cancel', function() {
+						track({
+							label: 'cancel-edit'
+						});
+
 						$wrapper
 							.removeClass( 'editMode' )
 							.trigger( 'reset' )
@@ -62,6 +66,10 @@
 							.remove();
 
 					}).on( 'click.' + namespace, '.save', function() {
+						track({
+							label: 'submit-save'
+						});
+
 						var $container = $wrapper.find( '.container' ).startThrobbing(),
 							$saveButton = $( this ).attr( 'disabled', true );
 
@@ -106,6 +114,15 @@
 				});
 			}
 		});
+
+		/**
+		 * Helper method for tracking clicks on buttons like save or cancel
+		 */
+		var track = Wikia.Tracker.buildTrackingFunction( Wikia.trackEditorComponent, {
+			action: Wikia.Tracker.ACTIONS.CLICK,
+			category: 'category-tool',
+			trackingMethod: 'both'
+		})
 	});
 
 })( window, window.jQuery, window.mw );
