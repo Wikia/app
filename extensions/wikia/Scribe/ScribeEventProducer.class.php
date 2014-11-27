@@ -323,8 +323,10 @@ class ScribeEventProducer {
 	}
 
 	public function setIsLocalFile ( Title $oTitle ) {
-		$oFile = wfFindFile( $oTitle );
-		if( $oFile instanceof File && $oFile->exists() ) {
+		// $oFile = wfFindFile( $oTitle );
+		$oLocalFile = RepoGroup::singleton()->getLocalRepo()->newFile( $oTitle );
+		wfDebug( "\n ImageReviewFixes " . json_encode($oLocalFile) . "\n" );
+		if( $oLocalFile instanceof File && $oLocalFile->exists() ) {
 			$bIsLocalFile = true;
 		} else {
 			$bIsLocalFile = false;

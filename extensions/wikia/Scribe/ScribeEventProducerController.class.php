@@ -14,6 +14,8 @@ class ScribeEventProducerController {
 			}
 		}
 
+		wfDebug( "\n ImageReviewFixes " . __METHOD__ . "\n" );
+
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
@@ -31,6 +33,8 @@ class ScribeEventProducerController {
 			}
 		}
 
+		wfDebug( "\n ImageReviewFixes " . __METHOD__ . "\n" );
+
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
@@ -45,6 +49,8 @@ class ScribeEventProducerController {
 				$oScribeProducer->sendLog();
 			}
 		}
+
+		wfDebug( "\n ImageReviewFixes " . __METHOD__ . "\n" );
 
 		wfProfileOut( __METHOD__ );
 		return true;
@@ -70,6 +76,8 @@ class ScribeEventProducerController {
 			}
 		}
 
+		wfDebug( "\n ImageReviewFixes " . __METHOD__ . "\n" );
+
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
@@ -83,6 +91,8 @@ class ScribeEventProducerController {
 				$oScribeProducer->sendLog();
 			}
 		}
+
+		wfDebug( "\n ImageReviewFixes " . __METHOD__ . "\n" );
 
 		wfProfileOut( __METHOD__ );
 		return true;
@@ -106,6 +116,8 @@ class ScribeEventProducerController {
 				}
 			}
 		}
+
+		wfDebug( "\n ImageReviewFixes " . __METHOD__ . "\n" );
 
 		wfProfileOut( __METHOD__ );
 		return true;
@@ -134,6 +146,8 @@ class ScribeEventProducerController {
 				$oScribeProducer->sendLog();
 			}
 		}
+
+		wfDebug( "\n ImageReviewFixes " . __METHOD__ . "\n" );
 
 		wfProfileOut( __METHOD__ );
 		return true;
