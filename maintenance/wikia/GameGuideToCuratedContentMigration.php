@@ -6,9 +6,10 @@
  * Get familiar with "How_to_run_maintenance_script" article on internal to figure out how to run it.
  *
  */
-include( '../commandLine.inc' );
-require_once( "../../extensions/wikia/CuratedContent/maintenance/GameGuideToCuratedContentHelper.php" );
 
+ini_set( "include_path", dirname( __FILE__ ) . "/.." );
+require_once( 'commandLine.inc' );
+require_once( "../extensions/wikia/CuratedContent/maintenance/GameGuideToCuratedContentHelper.php" );
 $app = F::app();
 $cityId = $app->wg->CityId;
 if ( empty( $cityId ) ) {
@@ -20,11 +21,6 @@ $convertGameGuideToCuratedContent = GameGuideToCuratedContentHelper::ConvertGame
 $statusContent = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $cityId, $convertGameGuideToCuratedContent );
 if ( $statusContent == 0 ) {
 	die( "Error: Cannot Set WikiaCuratedContent Variable" );
-}
-
-$statusEnabled = WikiFactory::setVarByName( 'wgEnableCuratedContentExt', $cityId, $app->wg->GameGuidesContentForAdmins );
-if ( $statusEnabled == 0 ) {
-	die( "Error: Cannot Set EnableCuratedContentExt Variable" );
 }
 
 echo "set content on wikiId: " . $cityId . "\n";
