@@ -56,6 +56,20 @@ class VenusController extends WikiaController {
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 
+	public function preview() {
+		global $wgUser;
+
+		$this->contents = $this->request->getVal( 'content' );
+
+		Wikia::addAssetsToOutput( 'article_scss' );
+
+		$this->setBodyClasses();
+		$this->setHeadItems();
+		$this->setAssets();
+
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+	}
+
 	private function setAds() {
 		$this->adTopRightBoxad = $this->app->renderView( 'Ad', 'Index', [ 'slotName' => 'TOP_RIGHT_BOXAD' ] );
 		$this->adTopLeaderboard = $this->app->renderView( 'Ad', 'Index', [ 'slotName' => 'TOP_LEADERBOARD' ] );
