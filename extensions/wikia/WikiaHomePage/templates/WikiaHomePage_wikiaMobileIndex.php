@@ -1,9 +1,8 @@
 <section class=wkhome>
-	<h1><?= wfMessage('wikiahome-page-header-heading')->plain() ?></h1>
-	<h2><?= wfMessage('wikiahome-page-header-subheading')->plain() ?></h2>
+	<h1><?= wfMessage('wikiahome-page-header-heading-mobile')->plain() ?></h1>
 
 	<section class="wkhome-section">
-		<a href="<?= wfMessage('wikiahome-page-section-yearinfandom-link')->plain() ?>" class=wkhome-hero>
+		<a href="http://yearinfandom.wikia.com/wiki/Portal:Community_Choice" class=wkhome-hero>
 			<img class=wkhome-img src="<?= $wg->ExtensionsPath ?>/wikia/WikiaHomePage/images/YIF_HomePage_Mobile_R3.jpg">
 			<h2><?= wfMessage('wikiahome-page-section-yearinfandom')->plain() ?></h2>
 		</a>
