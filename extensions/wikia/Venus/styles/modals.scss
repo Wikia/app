@@ -14,3 +14,12 @@
 		padding-left: 0;
 	}
 }
+
+.color1 {
+	background-color: $color-buttons;
+	color: $color-button-text;
+
+	a {
+		color: $color-button-text;
+	}
+}
