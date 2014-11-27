@@ -39,12 +39,11 @@ class ScribeEventProducerController {
 
  		$oScribeProducer = new ScribeEventProducer( $key, $is_archive );
 		if ( is_object( $oScribeProducer ) ) {
-			$oTitle = $oPage->getTitle();
-
 			/**
 			 * Ugly fix! TODO
 			 * See the description above.
 			 */
+			$oTitle = $oPage->getTitle();
 			if ( $oTitle->getNamespace() == NS_FILE ) {
 				self::$oPage = $oPage;
 				self::$oUser = $oUser;
@@ -67,6 +66,17 @@ class ScribeEventProducerController {
 		if ( $allow ) {
 			$oScribeProducer = new ScribeEventProducer( 'edit' );
 			if ( is_object( $oScribeProducer ) ) {
+				/**
+				 * Ugly fix! TODO
+				 * See the description above.
+				 */
+				$oTitle = $oPage->getTitle();
+				if ( $oTitle->getNamespace() == NS_FILE ) {
+					self::$oPage = $oPage;
+					self::$oUser = $oUser;
+					self::$oRevision = $oRevision;
+				}
+
 				if ( $oScribeProducer->buildEditPackage( $oPage, $oUser, $oRevision, $revision_id ) ) {
 					$oScribeProducer->sendLog();
 				}
