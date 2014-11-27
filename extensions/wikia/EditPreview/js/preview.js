@@ -469,7 +469,7 @@ define('wikia.preview', [
 					name: 'venus',
 					skin: 'venus',
 					type: 'full',
-					value: null
+					value: 1024
 				}
 			};
 
