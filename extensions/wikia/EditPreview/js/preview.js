@@ -108,7 +108,9 @@ define('wikia.preview', [
 	 */
 	function handleVenusPreview(data) {
 		var iframe = $article.html(
-				'<div class="venus-preview"><iframe  width="100%" height="100%"></iframe></div>'
+				'<div class="venus-preview">' +
+				'<iframe  width="100%" height="100%" frameborder="0" scrolling="no"></iframe>' +
+				'</div>'
 			).find('iframe')[0],
 			doc = iframe.document;
 
@@ -121,6 +123,11 @@ define('wikia.preview', [
 		doc.open();
 		doc.writeln(data.html);
 		doc.close();
+
+		// set iframe height to mach its content
+		$(iframe).one('load', function () {
+			iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
+		});
 	}
 
 	/**
