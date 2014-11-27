@@ -1,8 +1,13 @@
 @import 'variables';
 
+%common-button-styles {
+	border: 1px solid $color-buttons;
+	border-radius: 0;
+}
+
 %glyph-button {
 	background: $color-buttons;
-	color: #fff;
+	color: $color-button-text;
 }
 
 %outline-button {
@@ -22,9 +27,7 @@
 	.button,
 	button {
 		@extend %glyph-button;
-		border: 0;
-		border: 1px solid $color-buttons;
-		border-radius: 0;
+		@extend %common-button-styles;
 		font-size: $font-size-xxs;
 		font-weight: bold;
 		height: 30px;
@@ -52,8 +55,7 @@
 	input[type="button"].secondary,
 	button.secondary {
 		@extend %outline-button;
-		border: 1px solid $color-buttons;
-		border-radius: 0;
+		@extend %common-button-styles;
 
 		&[disabled] {
 			opacity: 0.5;
