@@ -5,3 +5,12 @@
 @import 'skins/shared/styles/buttons/buttons-wikia-chiclet';
 @import 'skins/shared/styles/buttons/buttons-facebook';
 @import 'extensions/wikia/WikiaStyleGuide/css/Form';
+
+.WikiaPhotoGalleryColorPickerPopUp {
+	box-sizing: content-box;
+
+	ul {
+		list-style-type: none;
+		padding-left: 0;
+	}
+}
