@@ -1,6 +1,36 @@
 <?php
 
 class ScribeEventProducerController {
+
+	/**
+	 * Ugly fix! TODO
+	 * The following static properties are declared to store
+	 * $oPage, $oUser and $oRevision objects passed from SaveComplete
+	 * and SaveRevisionComplete hooks. They are necessary to call
+	 * the buildEditPackage() method. For files, to check if they are local,
+	 * we need to wait till the UploadComplete hook is run.
+	 * This hook only passes an instance of UploadBase class so it is needed
+	 * to store the mentioned objects from the previously run hooks.
+	 * It is going to be fixed with the new version of the ImageReview tool.
+	 * @see    CE-1125 or any ImageReview related ticket
+	 * @blame  Adam Karminski <adamk@wikia-inc.com>
+	 */
+	private static $oPage, $oUser, $oRevision;
+
+	static public function onUploadComplete( UploadBase $oForm ) {
+		wfProfileIn( __METHOD__ );
+
+		$oLocalFile = $oForm->getLocalFile();
+
+		$oScribeProducer = new ScribeEventProducer( 'edit' );
+		if ( $oScribeProducer->buildEditPackage( self::$oPage, self::$oUser, self::$oRevision, null, $oLocalFile ) ) {
+			$oScribeProducer->sendLog();
+		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
+
 	static public function onSaveComplete( &$oPage, &$oUser, $text, $summary, $minor, $undef1, $undef2, &$flags, $oRevision, &$status, $baseRevId ) {
 		wfProfileIn( __METHOD__ );
 
@@ -9,12 +39,22 @@ class ScribeEventProducerController {
 
  		$oScribeProducer = new ScribeEventProducer( $key, $is_archive );
 		if ( is_object( $oScribeProducer ) ) {
+			$oTitle = $oPage->getTitle();
+
+			/**
+			 * Ugly fix! TODO
+			 * See the description above.
+			 */
+			if ( $oTitle->getNamespace() == NS_FILE ) {
+				self::$oPage = $oPage;
+				self::$oUser = $oUser;
+				self::$oRevision = $oRevision;
+			}
+
 			if ( $oScribeProducer->buildEditPackage( $oPage, $oUser, $oRevision ) ) {
 				$oScribeProducer->sendLog();
 			}
 		}
-
-		wfDebug( "\n ImageReviewFixes " . __METHOD__ . "\n" );
 
 		wfProfileOut( __METHOD__ );
 		return true;
@@ -33,8 +73,6 @@ class ScribeEventProducerController {
 			}
 		}
 
-		wfDebug( "\n ImageReviewFixes " . __METHOD__ . "\n" );
-
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
@@ -49,8 +87,6 @@ class ScribeEventProducerController {
 				$oScribeProducer->sendLog();
 			}
 		}
-
-		wfDebug( "\n ImageReviewFixes " . __METHOD__ . "\n" );
 
 		wfProfileOut( __METHOD__ );
 		return true;
@@ -76,8 +112,6 @@ class ScribeEventProducerController {
 			}
 		}
 
-		wfDebug( "\n ImageReviewFixes " . __METHOD__ . "\n" );
-
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
@@ -91,8 +125,6 @@ class ScribeEventProducerController {
 				$oScribeProducer->sendLog();
 			}
 		}
-
-		wfDebug( "\n ImageReviewFixes " . __METHOD__ . "\n" );
 
 		wfProfileOut( __METHOD__ );
 		return true;
@@ -116,8 +148,6 @@ class ScribeEventProducerController {
 				}
 			}
 		}
-
-		wfDebug( "\n ImageReviewFixes " . __METHOD__ . "\n" );
 
 		wfProfileOut( __METHOD__ );
 		return true;
@@ -146,8 +176,6 @@ class ScribeEventProducerController {
 				$oScribeProducer->sendLog();
 			}
 		}
-
-		wfDebug( "\n ImageReviewFixes " . __METHOD__ . "\n" );
 
 		wfProfileOut( __METHOD__ );
 		return true;
