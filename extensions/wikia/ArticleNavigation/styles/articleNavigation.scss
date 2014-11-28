@@ -39,6 +39,7 @@ $dropdownArrowSize: 10px;
 		> li {
 			display: table;
 			margin-bottom: 6px;
+			table-layout: fixed;
 
 			&.hidden {
 				display: none;
@@ -61,6 +62,7 @@ $dropdownArrowSize: 10px;
 		position: relative;
 		text-align: center;
 		vertical-align: middle;
+		width: 38px;
 	}
 
 	.wikia-dropdown-nav-wrapper {
@@ -97,7 +99,6 @@ $dropdownArrowSize: 10px;
 
 	.share-link {
 		text-decoration: none;
-		display: table-cell;
 	}
 
 	.single-share {
@@ -107,18 +108,19 @@ $dropdownArrowSize: 10px;
 			display: block;
 		}
 	}
-	.multiple-share {
-		display: list-item;
 
+	.multiple-share {
+		width: 38px;
 		.share-link {
 			color: inherit;
+			display: block;
 		}
 	}
 
 	&.single-share {
 		.single-share {
-			display: list-item;
-		}
+			display: table-cell;
+	 }
 		.multiple-share {
 			display: none;
 		}
