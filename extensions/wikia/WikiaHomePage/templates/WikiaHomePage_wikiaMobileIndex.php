@@ -1,5 +1,5 @@
 <section class=wkhome>
-	<h1><?= wfMessage('wikiahome-page-header-heading-mobile')->plain() ?></h1>
+	<h1><?= wfMessage('wikiahome-page-header-heading-mobile')->escaped() ?></h1>
 
 	<section class="wkhome-section">
 		<a href="http://yearinfandom.wikia.com/wiki/Portal:Community_Choice" class=wkhome-hero>
