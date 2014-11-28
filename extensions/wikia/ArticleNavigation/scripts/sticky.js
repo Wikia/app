@@ -28,16 +28,22 @@ require([
 	}
 
 	function adjustPositionFunction(scrollY, sourceElement, targetElement) {
-		var additionalOffset, targetBottom;
+		var additionalOffset, targetBottom, contentPadding;
 
 		targetBottom = $target.position().top +
 			$target.outerHeight(true) -
 			$source.outerHeight(true);
 
-		additionalOffset = browserDetect.isFirefox() ? 0 : additionalTopOffset;
+		contentPadding = parseInt( $target.css('padding-bottom') );
 
-		if ($doc.scrollTop() + additionalOffset >= targetBottom) {
-			stickyElementObject.sourceElementPosition('absolute', 'top', targetBottom);
+		additionalOffset = additionalTopOffset;
+
+		if (browserDetect.isIE()) {
+			additionalOffset = 2 * additionalTopOffset;
+		}
+
+		if ($doc.scrollTop() + additionalOffset - contentPadding >= targetBottom) {
+			stickyElementObject.sourceElementPosition('absolute', 'top', targetBottom - contentPadding);
 			return true;
 		} else {
 			return false;
