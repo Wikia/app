@@ -7,6 +7,8 @@
 
 namespace Wikia\Tasks\Tasks;
 
+use \Wikia\Logger\WikiaLogger;
+
 class ImageReviewTask extends BaseTask {
 	public function delete( $pageList, $suppress = false ) {
 		global $IP;
@@ -80,7 +82,7 @@ class ImageReviewTask extends BaseTask {
 		return $success;
 	}
 
-	public function deleteFromQueue( $aDeletionList ) {
+	public function deleteFromQueue( Array $aDeletionList ) {
 		global $wgExternalDatawareDB;
 
 		$oDB = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
@@ -92,8 +94,7 @@ class ImageReviewTask extends BaseTask {
 				__METHOD__
 			);
 
-			$oLogger = \Wikia\Logger\WikiaLogger::instance();
-			$oLogger->info( 'ImageReviewLog', [
+			WikiaLogger::instance()->info( 'ImageReviewLog', [
 				'method' => __METHOD__,
 				'message' => 'Image removed from queue',
 				'params' => $aImageData,
@@ -108,11 +109,18 @@ class ImageReviewTask extends BaseTask {
 		$body = "{$wgFlowerUrl}/task/{$this->taskId}";
 		$recipients = [
 			new \MailAddress( 'tor@wikia-inc.com' ),
-			new \MailAddress( 'sannse@wikia-inc.com' ),
 			new \MailAddress( 'adamk@wikia-inc.com' ),
+			new \MailAddress( 'sannse@wikia-inc.com' ),
 		];
 		$from = $recipients[0];
 
 		\UserMailer::send( $recipients, $from, $subject, $body );
+
+		WikiaLogger::instance()->error( "ImageReviewLog", [
+			'method' => __METHOD__,
+			'message' => "Task #{$this->taskId} deleting images did not succeed. Please check.",
+			'taskId' => $this->taskId,
+			'taskUrl' => $body,
+		] );
 	}
-} 
+}
