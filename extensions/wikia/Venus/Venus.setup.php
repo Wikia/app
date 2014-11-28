@@ -61,10 +61,11 @@ JSMessages::registerPackage('VenusArticle', [ 'venus-article-*' ]);
 /**
  * hooks
  */
-$wgHooks['ParserSectionCreate'      ][] = 'VenusHooks::onParserSectionCreate';
-$wgHooks['MakeHeadline'             ][] = 'VenusHooks::onMakeHeadline';
 $wgHooks['MakeGlobalVariablesScript'][] = 'VenusHooks::onMakeGlobalVariablesScript';
-
+$wgHooks['ParserAfterTidy'][] = 'VenusHooks::onParserAfterTidy';
+$wgHooks['ParserSectionCreate'][] = 'VenusHooks::onParserSectionCreate';
+$wgHooks['MakeHeadline'][] = 'VenusHooks::onMakeHeadline';
+$wgHooks['UserLogoutComplete'][] = 'NotificationsController::addLogOutConfirmation';
 
 //404 Pages
 
