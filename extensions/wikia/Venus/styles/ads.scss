@@ -1,5 +1,5 @@
-@import "mixins";
-@import "variables";
+@import 'mixins';
+@import 'variables';
 
 .wikia-ad.hidden,
 .wikia-ad .hidden,
@@ -57,6 +57,9 @@
 .bottom-ads {
 	@include clearfix;
 	background: $global-wikia-background-color;
+	border: $content-border-width solid $color-page-border;
+	border-bottom: 0;
+	border-top: 0;
 	text-align: center;
 
 	> .wikia-ad {

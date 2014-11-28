@@ -12,6 +12,11 @@ class VenusHooks {
 	 * @return bool
 	 */
 	static public function onParserSectionCreate( $parser, $section, &$content, $showEditLinks ) {
+		// skip if we're not parsing for venus
+		if ( !F::app()->checkSkin( 'venus' ) ) {
+			return true;
+		}
+
 		if ( self::isInfoboxInFirstSection( $parser, $section, $content ) ) {
 			$infoboxExtractor = new InfoboxExtractor( $content );
 
@@ -20,12 +25,21 @@ class VenusHooks {
 			$nodes = $infoboxExtractor->getInfoboxNodes();
 			$node = $nodes->item(0);
 
-			if (!is_null($node)) {
+			if ( $node instanceof DOMElement ) {
+				$body = $dom->documentElement->firstChild;
+
+				// replace extracted infobox with a dummy element to prevent newlines from creating empty paragraphs (CON-2166)
+				// <table infobox-placeholder="1"></table>
+				$placeholder = $dom->createElement( 'table' );
+				$placeholder->setAttribute( 'infobox-placeholder', 'true' );
+				$body->insertBefore( $placeholder, $node );
+
+				// perform a magic around infobox wrapper
 				$node = $infoboxExtractor->clearInfoboxStyles( $node );
 				$infoboxWrapper = $infoboxExtractor->wrapInfobox( $node, 'infoboxWrapper', 'infobox-wrapper' );
 				$infoboxContainer = $infoboxExtractor->wrapInfobox( $infoboxWrapper, 'infoboxContainer', 'infobox-container' );
 
-				$body = $dom->documentElement->firstChild;
+				// move infobox to the beginning of article content
 				$infoboxExtractor->insertNode( $body, $infoboxContainer, true );
 
 				$content = $dom->saveHTML();
@@ -34,6 +48,18 @@ class VenusHooks {
 			}
 		}
 
+		return true;
+	}
+
+	/**
+	 * Remove infobox placeholder (CON-2166)
+	 *
+	 * @param Parser $parser
+	 * @param $text string text from the parse to replacer
+	 * @return bool true, it's a hook
+	 */
+	static public function onParserAfterTidy(Parser $parser, &$text ) {
+		$text = str_replace( '<table infobox-placeholder="true"></table>', '', $text );
 		return true;
 	}
 

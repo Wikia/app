@@ -67,11 +67,12 @@ class VenusController extends WikiaController {
 	}
 
 	private function setBodyModules() {
-		$this->globalNavigation = $this->getGlobalNavigation();
-		$this->localNavigation = $this->getLocalNavigation();
-		$this->globalFooter = $this->getGlobalFooter();
 		$this->corporateFooter = $this->getCorporateFooter();
 		$this->categorySelect = $this->getCategorySelect();
+		$this->globalFooter = $this->getGlobalFooter();
+		$this->globalNavigation = $this->getGlobalNavigation();
+		$this->localNavigation = $this->getLocalNavigation();
+		$this->notifications = $this->app->renderView('Notifications', 'Confirmation');
 
 		if ($this->isUserLoggedIn) {
 			$this->recentWikiActivity = $this->getRecentWikiActivity();
