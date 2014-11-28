@@ -4,7 +4,7 @@
 	<section class="wkhome-section">
 		<a href="http://yearinfandom.wikia.com/wiki/Portal:Community_Choice" class=wkhome-hero>
 			<img class=wkhome-img src="<?= $wg->ExtensionsPath ?>/wikia/WikiaHomePage/images/YIF_HomePage_Mobile_R3.jpg">
-			<h2><?= wfMessage('wikiahome-page-section-yearinfandom')->plain() ?></h2>
+			<h2><?= wfMessage('wikiahome-page-section-yearinfandom')->escaped() ?></h2>
 		</a>
 	</section>
 
@@ -20,10 +20,10 @@
 	<? endforeach ?>
 
 	<section class="wkhome-section wkhome-community  wkhome-community-<?= $lang ?>">
-		<a href="<?= wfMessage('wikiahome-community-column1-link')->plain() ?>" class=wkhome-hero>
+		<a href="<?= wfMessage('wikiahome-community-column1-link')->escaped() ?>" class=wkhome-hero>
 			<img class=wkhome-img src="<?= $wg->BlankImgUrl ?>">
 		</a>
-		<p><?=wfMessage('wikiahome-community-column1-creative')->plain() ?></p>
+		<p><?=wfMessage('wikiahome-community-column1-creative')->escaped() ?></p>
 	</section>
 
 </section>
