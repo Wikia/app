@@ -32,6 +32,8 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//resources/wikia/modules/abTest.js',
 		'//resources/wikia/modules/underscore.js',
 		'//resources/wikia/modules/stickyElement.js',
+		'//resources/wikia/modules/uifactory.js',
+		'//resources/wikia/modules/uicomponent.js',
 		'//resources/wikia/modules/nodeFinder.js',
 
 		//It's needs to be included like this.
@@ -78,6 +80,9 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
+
+		'//extensions/wikia/UserLogin/js/UserLogin.js',
+		'//extensions/wikia/UserLogin/js/UserLoginModal.js',
 
 		'//extensions/wikia/Venus/scripts/isTouchScreen.js',
 		'//extensions/wikia/Venus/scripts/tracking.js',
