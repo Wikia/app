@@ -1,4 +1,6 @@
 require(['jquery', 'wikia.window', 'wikia.tracker'], function ($, win, tracker) {
+	'use strict';
+
 	var track, trackEditorComponent;
 
 	// skip special pages

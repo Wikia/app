@@ -1,6 +1,6 @@
 require([
-	'wikia.document', 'wikia.stickyElement', 'venus.layout'
-], function(doc, stickyElement, layout) {
+	'wikia.document', 'wikia.stickyElement', 'venus.layout', 'wikia.browserDetect'
+], function(doc, stickyElement, layout, browserDetect) {
 	'use strict';
 
 	var navigationElement = doc.getElementsByClassName('article-navigation')[0],
@@ -28,11 +28,15 @@ require([
 	}
 
 	function adjustPositionFunction(scrollY, sourceElement, targetElement) {
-		var targetBottom = $target.position().top +
+		var additionalOffset, targetBottom;
+
+		targetBottom = $target.position().top +
 			$target.outerHeight(true) -
 			$source.outerHeight(true);
 
-		if ($doc.scrollTop() + additionalTopOffset >= targetBottom) {
+		additionalOffset = browserDetect.isFirefox() ? 0 : additionalTopOffset;
+
+		if ($doc.scrollTop() + additionalOffset >= targetBottom) {
 			stickyElementObject.sourceElementPosition('absolute', 'top', targetBottom);
 			return true;
 		} else {

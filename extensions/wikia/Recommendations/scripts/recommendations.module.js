@@ -7,18 +7,18 @@ define(
 
 		/**
 		 * @desc Lazy load and insert to DOM Recommendations module
-		 * @param DOMNode container for appending module
+		 * @param DOMNode moduleLocation put recommendation module after this DOM element
 		 */
-		function init(container) {
-			load(insertModule, container);
+		function init(moduleLocation) {
+			load(insertModule, moduleLocation);
 		}
 
 		/**
 		 * @desc Insert recommendation HTML code and attach tracking
 		 * @param {String} data recommendations HTML code
-		 * @param {Node} container parent element for recommendations
+		 * @param {Node} moduleLocation parent element for recommendations
 		 */
-		function insertModule(data, container) {
+		function insertModule(data, moduleLocation) {
 			require(['wikia.recommendations.tracking', 'wikia.document'], function(tracking, d){
 				var moduleContainer = d.createElement('footer');
 
@@ -27,7 +27,7 @@ define(
 
 				moduleContainer.innerHTML = data;
 
-				container.appendChild(moduleContainer);
+				$(moduleLocation).after(moduleContainer);
 
 				tracking.init(moduleContainer);
 			});
@@ -36,14 +36,15 @@ define(
 		/**
 		 * @desc Load recommendations template
 		 * @param {Function} callback function passed to process received template
-		 * @param {Node} container parent element for recommendations
+		 * @param {Node} moduleLocation parent element for recommendations
 		 */
-		function load(callback, container) {
+		function load(callback, moduleLocation) {
 			$.when(
 				nirvana.sendRequest({
 					controller: 'RecommendationsApi',
 					method: 'getForArticle',
 					data: {
+						cb: win.wgStyleVersion,
 						id: win.wgArticleId
 					},
 					type: 'get'
@@ -54,22 +55,26 @@ define(
 						mustache: '/extensions/wikia/Recommendations/templates/Recommendations_index.mustache,/extensions/wikia/Recommendations/templates/Recommendations_image.mustache,/extensions/wikia/Recommendations/templates/Recommendations_video.mustache',
 						scripts: 'recommendations_view_js',
 						styles: 'extensions/wikia/Recommendations/styles/recommendations.scss',
-						messages: 'Recommendations'
+						messages: 'Recommendations',
+						uselang: win.wgUserLanguage
 					}
 				})
 			).done(function (slotsData, res) {
-				loader.processStyle(res.styles);
-				loader.processScript(res.scripts);
+				slotsData = slotsData[0].items;
 
-				if (typeof(callback) === 'function') {
-					require(['wikia.recommendations.view'], function (view) {
-						var template;
+				if (slotsData.length > 0) {
+					loader.processStyle(res.styles);
+					loader.processScript(res.scripts);
+					if (typeof(callback) === 'function') {
+						require(['wikia.recommendations.view'], function (view) {
+							var template;
 
-						slotsData = arrayHelper.shuffle(slotsData[0].items);
+							slotsData = arrayHelper.shuffle(slotsData);
 
-						template = view.render(slotsData, res.mustache);
-						callback(template, container);
-					});
+							template = view.render(slotsData, res.mustache);
+							callback(template, moduleLocation);
+						});
+					}
 				}
 			});
 		}

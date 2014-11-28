@@ -31,7 +31,7 @@ class InfoboxExtractor {
 	 * Create default query to extract infobox nodes
 	 */
 	public function setDefaultQuery() {
-		self::$defaultQuery = "((//div|//table)[contains(translate(@class, '" . strtoupper( self::INFOBOX_CLASS_NAME ). "', '" .
+		self::$defaultQuery = "((//div|//table)[contains(translate(@class, '" . strtoupper( self::INFOBOX_CLASS_NAME ) . "', '" .
 		self::INFOBOX_CLASS_NAME . "'), '" . self::INFOBOX_CLASS_NAME . "')])[1]";
 	}
 
@@ -39,6 +39,7 @@ class InfoboxExtractor {
 	 * Create DOMDocument from HTML string
 	 *
 	 * @param string $content HTML string
+	 * @param string|null $encoding encoding to use when parsing HTML (defaults to UTF-8)
 	 */
 	public function createDOMDocument( $content, $encoding = null ) {
 		if ( is_null( $encoding ) ) {
@@ -52,6 +53,9 @@ class InfoboxExtractor {
 		);
 	}
 
+	/**
+	 * @return DOMDocument
+	 */
 	public function getDOMDocument() {
 		return $this->domDocument;
 	}
@@ -62,9 +66,9 @@ class InfoboxExtractor {
 	 *
 	 * @param DOMNode $parent
 	 * @param DOMNode $node
-	 * @param int $position
+	 * @param bool $prepend
 	 */
-	public function insertNode( $parent, $node, $prepend = false ) {
+	public function insertNode( DOMNode $parent, DOMNode $node, $prepend = false ) {
 		if ( $prepend === true ) {
 			$parent->insertBefore( $node, $parent->firstChild );
 		} else {
@@ -80,13 +84,13 @@ class InfoboxExtractor {
 	 * @return DOMNodeList
 	 */
 	public function getInfoboxNodes( $query = '' ) {
-		$finder = new DOMXPath($this->getDOMDocument());
+		$finder = new DOMXPath( $this->getDOMDocument() );
 
 		if ( empty( $query ) ) {
 			$query = self::$defaultQuery;
 		}
 
-		$nodes = $finder->query($query);
+		$nodes = $finder->query( $query );
 
 		return $nodes;
 	}
@@ -94,14 +98,14 @@ class InfoboxExtractor {
 	/**
 	 * Remove blacklisted styles from node inline styles
 	 *
-	 * @param DOMNode $node infobox node
+	 * @param DOMElement $infobox infobox node
 	 * @return DOMNode node with removed styles from blacklist
 	 */
-	public function clearInfoboxStyles( $infobox ) {
-		if ($infobox->hasAttribute('style')) {
-			$styles = $infobox->getAttribute('style');
+	public function clearInfoboxStyles( DOMElement $infobox ) {
+		if ( $infobox->hasAttribute( 'style' ) ) {
+			$styles = $infobox->getAttribute( 'style' );
 			$styles = $this->removeBlacklistedProperties( $styles );
-			$infobox->setAttribute('style', $styles);
+			$infobox->setAttribute( 'style', $styles );
 		}
 
 		return $infobox;
@@ -111,11 +115,11 @@ class InfoboxExtractor {
 	 * Wrap infobox node by div container with id and class name
 	 *
 	 * @param DOMNode $infobox node with infobox
-	 * @param string $id identyfier for infobox container
+	 * @param string $id identifier for infobox container
 	 * @param string $className class name for infobox container
 	 * @return DOMNode infobox container with infobox node inside
 	 */
-	public function wrapInfobox( $infobox, $id = '', $className = '' ) {
+	public function wrapInfobox( DOMNode $infobox, $id = '', $className = '' ) {
 		$dom = $this->getDOMDocument();
 
 		$infoboxContainer = $dom->createElement( 'div' );
@@ -141,7 +145,7 @@ class InfoboxExtractor {
 	 */
 	public function removeBlacklistedProperties( $styles ) {
 		$stylesArray = self::getStylesArray( $styles );
-		$stylesBlacklist = array_flip(self::$stylesBlacklist);
+		$stylesBlacklist = array_flip( self::$stylesBlacklist );
 
 		$stylesArray = array_diff_key( $stylesArray, $stylesBlacklist );
 
@@ -169,11 +173,11 @@ class InfoboxExtractor {
 			foreach ( $styles as $style ) {
 				if ( !empty( $style ) ) {
 					$styleProperty = explode( ':', $style );
-					$stylesArray[trim($styleProperty[0])] = trim($style);
+					$stylesArray[trim( $styleProperty[0] )] = trim( $style );
 				}
 			}
 		}
 
 		return $stylesArray;
 	}
-} 
+}

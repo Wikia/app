@@ -1,16 +1,22 @@
 <div class="wikia-dropdown-nav-wrapper" id="{{id}}">
-	<ul class="wikia-dropdown-nav{{#classes}} {{.}}{{/classes}}" style="{{#maxHeight}}max-height: {{maxHeight}}px;{{/maxHeight}}">
-	{{#sections}}
-		{{>dropdownItem}}
-	{{/sections}}
-	</ul>
+	<div class="wikia-dropdown-nav-sections-wrapper">
+		<div class="wikia-dropdown-nav-inner-wrapper">
+			<ul class="wikia-dropdown-nav{{#classes}} {{.}}{{/classes}}">
+				{{#sections}}
+					{{>dropdownItem}}
+				{{/sections}}
+			</ul>
+		</div>
+	</div>
 	<div class="wikia-dropdown-nav-subsections-wrapper">
-		{{#subsections}}
-		<ul id="{{referenceId}}" class="wikia-dropdown-nav" style="{{#maxHeight}}max-height: {{maxHeight}}px;{{/maxHeight}}">
-		{{#sections}}
-			{{>dropdownItem}}
-		{{/sections}}
-		</ul>
-		{{/subsections}}
+		<div class="wikia-dropdown-nav-inner-wrapper">
+			{{#subsections}}
+			<ul id="{{referenceId}}" class="wikia-dropdown-nav">
+			{{#sections}}
+				{{>dropdownItem}}
+			{{/sections}}
+			</ul>
+			{{/subsections}}
+		</div>
 	</div>
 </div>
