@@ -179,6 +179,10 @@ $category-height: 16px;
 			display: block;
 		}
 	}
+
+	.ui-autocomplete {
+		padding: 0;
+	}
 }
 
 // Need to use ID here for specificity
