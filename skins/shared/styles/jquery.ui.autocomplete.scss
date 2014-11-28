@@ -5,11 +5,11 @@
  */
 
 @import "skins/shared/color";
-@import "layout";
+@import "skins/oasis/css/core/layout";
 @import "skins/shared/mixins/box-shadow";
 @import "skins/shared/mixins/menus";
 
-.skin-oasis .ui-autocomplete {
+body .ui-autocomplete {
 	@include menu-regular;
 	@include box-shadow( 3px, 3px, 6px, darken( $color-page, 9% ) );
 	border-bottom-left-radius: 3px;

@@ -1,6 +1,23 @@
 <?php
 
 class VenusHooks {
+
+	/**
+	 * Add global JS variables
+	 *
+	 * @param array $vars global variables list
+	 * @return boolean return true
+	 */
+	public static function onMakeGlobalVariablesScript(Array &$vars) {
+		global $wgEnableVenusArticle;
+
+		if ($wgEnableVenusArticle) {
+			$vars['wgEnableVenusArticle'] = $wgEnableVenusArticle;
+		}
+
+		return true;
+	}
+
 	/**
 	 * Check if infobox (div element or table which contains 'infobox' string in class attribute)
 	 * exists in first article section, and extract it from this section
