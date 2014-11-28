@@ -49,9 +49,14 @@
 		}
 
 		> .wikia-ad {
-			margin-top: 50px;
 			margin-bottom: 20px;
 		}
+	}
+}
+
+@media #{$medium-up} {
+	.top-right-ad > .ad > .wikia-ad {
+		margin-top: 50px;
 	}
 }
 
@@ -81,7 +86,25 @@
 	}
 
 	> .wikia-ad {
-		margin: 12px -8px 30px 30px;
+		margin: 12px 0 30px 30px; // margin-right set below per breakpoint
+	}
+}
+
+@media #{$small-only} {
+	.ad-in-content > .wikia-ad {
+		margin-right: -$small-grid-column-padding;
+	}
+}
+
+@media #{$medium-only} {
+	.ad-in-content > .wikia-ad {
+		margin-right: -$medium-grid-column-padding;
+	}
+}
+
+@media #{$large-only} {
+	.ad-in-content > .wikia-ad {
+		margin-right: -$large-grid-column-padding;
 	}
 }
 
