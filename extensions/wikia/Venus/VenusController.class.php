@@ -178,7 +178,7 @@ class VenusController extends WikiaController {
 		// "WikiaSkin::getStylesWithCombinedSASS: combined 9 SASS files"
 		$cssLinks .= $this->skin->getStylesWithCombinedSASS( $sassFiles );
 
-		foreach ( $this->assetsManager->getURL( $$jsHeadGroups ) as $src ) {
+		foreach ( $this->assetsManager->getURL( $jsHeadGroups ) as $src ) {
 			if ( $this->assetsManager->checkAssetUrlForSkin( $src, $this->skin ) ) {
 				$jsHeadFiles .= "<script src='{$src}'></script>";
 			}
