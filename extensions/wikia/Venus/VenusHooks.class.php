@@ -11,7 +11,10 @@ class VenusHooks {
 	public static function onMakeGlobalVariablesScript(Array &$vars) {
 		global $wgEnableVenusArticle;
 
-		$vars['wgEnableVenusArticle'] = $wgEnableVenusArticle;
+		if ($wgEnableVenusArticle) {
+			$vars['wgEnableVenusArticle'] = $wgEnableVenusArticle;
+		}
+
 		return true;
 	}
 
