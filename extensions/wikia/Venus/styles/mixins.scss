@@ -113,8 +113,16 @@
 	height: round($width * 9 / 16);
 }
 
-@mixin proportional-grid-media-height($breakpoint, $columns-count, $aditional-width: 0px) {
-	@include proportional-media-height(calculate-columns-width($breakpoint, $columns-count, $aditional-width));
+@mixin proportional-media-top($width, $additional-width: 0px) {
+	top: round($width * 9 / 16) + $additional-width;
+}
+
+@mixin proportional-grid-media-height($breakpoint, $columns-count, $additional-width: 0px) {
+	@include proportional-media-height(calculate-columns-width($breakpoint, $columns-count, $additional-width));
+}
+
+@mixin proportional-grid-media-top($breakpoint, $columns-count, $additional-width: 0px) {
+	@include proportional-media-top(calculate-columns-width($breakpoint, $columns-count, $additional-width));
 }
 
 @mixin venus-icons-font {

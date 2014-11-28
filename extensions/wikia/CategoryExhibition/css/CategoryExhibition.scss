@@ -13,6 +13,7 @@ $thumb-border-left: 5px;
 $thumb-border-right: 6px;
 $details-fg-color: $color-button-text;
 $details-bg-color: $color-buttons;
+$color: #000;
 
 $color-inctive-button: mix($color-page, #000, 60%);
 @if lightness($color-page) < 50 {

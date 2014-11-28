@@ -10,7 +10,7 @@ class TOCHooksHelper {
 	 * @return bool
 	 */
 
-	public static function onOverwriteTOC( &$title, &$toc ) {
+	public function onOverwriteTOC( &$title, &$toc ) {
 
         $app = F::app();
 		$isWikiaMobile = $app->checkSkin( 'wikiamobile' );
