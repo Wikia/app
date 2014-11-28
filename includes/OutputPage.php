@@ -2904,6 +2904,13 @@ $templates
 	function getScriptsForBottomQueue( $inHead ) {
 		global $wgUseSiteJs, $wgAllowUserJs;
 
+		$asyncMWload = true;
+
+		$skin = $this->getSkin();
+		if ( $skin instanceof WikiaSkin && !empty( $skin->pushRLModulesToBottom ) ) {
+			$asyncMWload = false;
+		}
+
 		// Script and Messages "only" requests marked for bottom inclusion
 		// If we're in the <head>, use load() calls rather than <script src="..."> tags
 		// Messages should go first
@@ -2922,7 +2929,7 @@ $templates
 		if ( $modules ) {
 			$scripts .= Html::inlineScript(
 				ResourceLoader::makeLoaderConditionalScript(
-					Xml::encodeJsCall( 'mw.loader.load', array( $modules, null, true ) )
+					Xml::encodeJsCall( 'mw.loader.load', array( $modules, null, $asyncMWload ) )
 				)
 			);
 		}
