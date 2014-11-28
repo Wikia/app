@@ -36,10 +36,12 @@ require([
 
 		contentPadding = parseInt( $target.css('padding-bottom') );
 
-		additionalOffset = additionalTopOffset;
-
 		if (browserDetect.isIE()) {
 			additionalOffset = 2 * additionalTopOffset;
+		} else if (browserDetect.isFirefox()) {
+			additionalOffset = additionalTopOffset;
+		} else {
+			additionalOffset = additionalTopOffset + contentPadding;
 		}
 
 		if ($doc.scrollTop() + additionalOffset - contentPadding >= targetBottom) {
