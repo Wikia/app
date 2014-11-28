@@ -2,6 +2,10 @@ require([
 	'wikia.document', 'wikia.stickyElement', 'venus.layout', 'wikia.browserDetect'
 ], function(doc, stickyElement, layout, browserDetect) {
 	'use strict';
+	/*
+	 * TODO: This file will/should be rafactored after beta release:
+	 * https://wikia-inc.atlassian.net/browse/CON-2241
+	 */
 
 	var navigationElement = doc.getElementsByClassName('article-navigation')[0],
 		boundBoxElement = doc.getElementById('mw-content-text'),
