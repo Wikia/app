@@ -180,7 +180,7 @@ class VenusController extends WikiaController {
 		global $wgEnableCategorySelectExt;
 
 		return !empty( $wgEnableCategorySelectExt ) ?
-			$this->app->renderView('CategorySelect', 'articlePageVenus') :
+			$this->app->renderView('CategorySelect', 'articlePage') :
 			'';
 	}
 

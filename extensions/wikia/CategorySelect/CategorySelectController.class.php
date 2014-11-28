@@ -54,16 +54,11 @@ class CategorySelectController extends WikiaController {
 		$this->response->setVal( 'showHidden', $showHidden );
 		$this->response->setVal( 'userCanEdit', $userCanEdit );
 
-		wfProfileOut( __METHOD__ );
-	}
+		if ( $this->app->checkSkin( 'venus' ) ) {
+			$this->overrideTemplate( 'articlePageVenus' );
+		}
 
-	/**
-	 * CategorySelect module template used under article view in Venus skin
-	 * Uses same variables as old oasis articlePage template but different markup
-	 */
-	public function articlePageVenus() {
-		// Run Oasis articlePage to setup variables
-		$this->articlePage();
+		wfProfileOut( __METHOD__ );
 	}
 
 	/**
