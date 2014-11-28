@@ -77,8 +77,8 @@ class NavigationModel extends WikiaModel {
 	 *
 	 * City ID can be specified to return key for different wiki
 	 *
-	 * @param string $name message / variable name
-	 * @param int $cityId city ID (false - default to current wiki)
+	 * @param string $messageName message / variable name
+	 * @param int|bool $cityId city ID (false - default to current wiki)
 	 * @return string memcache key
 	 */
 	private function getMemcKey( $messageName, $cityId = false ) {
@@ -215,7 +215,7 @@ class NavigationModel extends WikiaModel {
 	public function getTree( $type, $source, $maxChildrenAtLevel = [], $forContent = false ) {
 		$menuData = WikiaDataAccess::cache(
 			$this->getTreeMemcKey( $type, $source, implode($maxChildrenAtLevel, '-'), $forContent ),
-			1800,
+			self::CACHE_TTL /* 3 hours */,
 			function() use ( $type, $source, $maxChildrenAtLevel, $forContent ) {
 				$menuData = [];
 
@@ -223,7 +223,7 @@ class NavigationModel extends WikiaModel {
 					$type,
 					$source,
 					$maxChildrenAtLevel,
-					1800 /* 3 hours */,
+					self::CACHE_TTL /* 3 hours */,
 					$forContent
 				);
 
@@ -701,5 +701,15 @@ class NavigationModel extends WikiaModel {
 		}
 
 		return isset( $this->biggestCategories[$index-1] ) ? $this->biggestCategories[$index-1] : null;
+	}
+
+	/**
+	 * Check if given title refers to wiki nav messages
+	 *
+	 * @param $title Title title to check
+	 * @return bool
+	 */
+	public static function isWikiNavMessage(Title $title) {
+		return ($title->getNamespace() === NS_MEDIAWIKI) && ($title->getText() === self::WIKI_LOCAL_MESSAGE);
 	}
 }
