@@ -354,6 +354,10 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 			padding: 0 30px 0 24px;
 		}
 
+		.first-level-menu > li:last-child {
+			display: none;
+		}
+
 		.dropdown {
 			.second-level-row,
 			.third-level-row {

@@ -13,7 +13,7 @@
 	display: block;
 	font-size: 10px;
 	line-height: 100%;
-	padding-bottom: 6px;
+	padding-bottom: 4px;
 	text-align: left;
 	text-transform: uppercase;
 }
@@ -38,10 +38,11 @@
 	display: block;
 	float: right;
 	margin: 0 $medium-grid-column-padding + $medium-content-padding - $content-border-width 0 $medium-grid-gutter + $medium-grid-column-padding;
+	position: relative; // Temporary fix for tables overlapping recentWikiActivity & medrec ad
 	text-align: center;
 
 	> .ad {
-		margin: 0 auto;
+		margin: 0 auto 0;
 		width: 300px;
 
 		> .default-height {
@@ -54,20 +55,62 @@
 	}
 }
 
+@media #{$medium-up} {
+	.top-right-ad > .ad > .wikia-ad {
+		margin-top: 50px;
+	}
+}
+
 .bottom-ads {
 	@include clearfix;
 	background: $global-wikia-background-color;
 	border: $content-border-width solid $color-page-border;
 	border-bottom: 0;
 	border-top: 0;
+	font-size: 0;
 	text-align: center;
+	position: relative; // ad-skin should not cover this div
 
 	> .wikia-ad {
 		display: inline-block;
-		font-size: 0;
 		margin: 40px 15px 50px;
 		width: 300px;
 	}
+}
+
+.ad-in-content {
+	float: right;
+
+	> .default-height {
+		width: 300px;
+		height: 265px; // height of the ad including the label
+	}
+
+	> .wikia-ad {
+		margin: 12px 0 30px 30px; // margin-right set below per breakpoint
+	}
+}
+
+@media #{$small-only} {
+	.ad-in-content > .wikia-ad {
+		margin-right: -$small-grid-column-padding;
+	}
+}
+
+@media #{$medium-only} {
+	.ad-in-content > .wikia-ad {
+		margin-right: -$medium-grid-column-padding;
+	}
+}
+
+@media #{$large-only} {
+	.ad-in-content > .wikia-ad {
+		margin-right: -$large-grid-column-padding;
+	}
+}
+
+.clear-right-after-ad-in-content {
+	clear: right;
 }
 
 @media #{$small-only} {

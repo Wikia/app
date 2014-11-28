@@ -75,7 +75,7 @@ $header-without-cover-unit-spacing: 60px;
 		 clear: none;
 	}
 
-	.clear-left {
+	.clear-left:not(.floatright):not(.tright) {
 		clear: left;
 	}
 
