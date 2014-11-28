@@ -13,7 +13,6 @@ require(['venus.infobox', 'wikia.document'], function(infoboxModule, d) {
 		articleContent.classList.add('clear-none');
 		infoboxContainer.nextElementSibling.classList.add('clear-left');
 
-
 		if(infoboxModule.isInfoboxCollapsible(infoboxWrapper)) {
 			infoboxModule.collapseInfobox(infoboxWrapper);
 
