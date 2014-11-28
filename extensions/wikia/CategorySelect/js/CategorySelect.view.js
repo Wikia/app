@@ -49,7 +49,6 @@
 							items: '.new',
 							revert: 200
 						}
-
 					}).on( 'add', function( event, cs, data ) {
 						$wrapper
 							.find( '.last' )
@@ -70,8 +69,9 @@
 							label: 'submit-save'
 						});
 
-						var $container = $wrapper.find( '.container' ).startThrobbing(),
-							$saveButton = $( this ).attr( 'disabled', true );
+						var $container = $wrapper.find( '.container' ).startThrobbing();
+
+						$( this ).attr( 'disabled', true );
 
 						$.nirvana.sendRequest({
 							controller: 'CategorySelectController',
@@ -80,14 +80,11 @@
 								categories: $wrapper.data( 'categorySelect' ).getData( '.new' )
 							},
 							method: 'save'
-
 						}).done(function( response ) {
 							$container.stopThrobbing();
 
-							// TODO: don't use alert
 							if ( response.error ) {
-								alert( response.error );
-
+								throw 'Saving error: ' + response.error;
 							} else {
 								$wrapper
 									.removeClass( 'editMode' )
@@ -102,7 +99,6 @@
 									.val( '' );
 							}
 						});
-
 					}).on( 'update', function() {
 						var modified = $wrapper.find( '.category.new' ).length > 0;
 
