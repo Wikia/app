@@ -58,6 +58,15 @@ class VenusController extends WikiaController {
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 
+	public function preview() {
+		$this->content = $this->request->getVal( 'content' );
+
+		$this->setBodyClasses();
+		$this->setAssets('preview');
+
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+	}
+
 	private function setAds() {
 		$this->adTopRightBoxad = $this->app->renderView( 'Ad', 'Index', [ 'slotName' => 'TOP_RIGHT_BOXAD' ] );
 		$this->adTopLeaderboard = $this->app->renderView( 'Ad', 'Index', [ 'slotName' => 'TOP_LEADERBOARD' ] );
@@ -125,7 +134,7 @@ class VenusController extends WikiaController {
 		}
 	}
 
-	private function setAssets() {
+	private function setAssets($type = 'live') {
 		global $wgOut;
 
 		$jsHeadGroups = ['venus_head_js'];
@@ -135,16 +144,27 @@ class VenusController extends WikiaController {
 		$cssGroups = ['venus_css'];
 		$cssLinks = '';
 
-		// let extensions manipulate the asset packages (e.g. ArticleComments,
-		// this is done to cut down the number or requests)
-		$this->app->runHook(
-			'VenusAssetsPackages',
-			[
-				&$jsHeadGroups,
-				&$jsBodyGroups,
-				&$cssGroups
-			]
-		);
+		if ($type == 'preview') {
+			$cssGroups[] = 'article_scss';
+			$jsPreviewFiles = '';
+
+			foreach ( $this->assetsManager->getURL( ['venus_preview_js'] ) as $src ) {
+				$jsPreviewFiles .= "<script src='{$src}'></script>";
+			}
+			$this->jsPreviewFiles = $jsPreviewFiles;
+
+		} else {
+			// let extensions manipulate the asset packages (e.g. ArticleComments,
+			// this is done to cut down the number or requests)
+			$this->app->runHook(
+				'VenusAssetsPackages',
+				[
+					&$jsHeadGroups,
+					&$jsBodyGroups,
+					&$cssGroups
+				]
+			);
+		}
 
 		// SASS files requested via VenusAssetsPackages hook
 		$sassFiles = [];
@@ -158,7 +178,7 @@ class VenusController extends WikiaController {
 		// "WikiaSkin::getStylesWithCombinedSASS: combined 9 SASS files"
 		$cssLinks .= $this->skin->getStylesWithCombinedSASS( $sassFiles );
 
-		foreach ( $this->assetsManager->getURL( $jsHeadGroups ) as $src ) {
+		foreach ( $this->assetsManager->getURL( $$jsHeadGroups ) as $src ) {
 			if ( $this->assetsManager->checkAssetUrlForSkin( $src, $this->skin ) ) {
 				$jsHeadFiles .= "<script src='{$src}'></script>";
 			}
