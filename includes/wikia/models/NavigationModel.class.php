@@ -105,6 +105,15 @@ class NavigationModel extends WikiaModel {
 		);
 	}
 
+	/**
+	 * Refresh local navigation cache
+	 *
+	 * Called by LocalNavigationHooks::onMessageCacheReplace
+	 */
+	public function clearNavigationTreeCache() {
+		$this->getLocalNavigationTree( NavigationModel::WIKI_LOCAL_MESSAGE, true /* $refreshCache */ );
+	}
+
 	private function setShouldTranslateContent($shouldTranslateContent) {
 		$this->shouldTranslateContent = $shouldTranslateContent;
 	}
@@ -182,7 +191,7 @@ class NavigationModel extends WikiaModel {
 		);
 	}
 
-	public function getLocalNavigationTree( $messageName ) {
+	public function getLocalNavigationTree( $messageName, $refreshCache = false ) {
 		return $this->getTree(
 			NavigationModel::TYPE_MESSAGE,
 			$messageName,
@@ -191,11 +200,12 @@ class NavigationModel extends WikiaModel {
 				self::LOCALNAV_LEVEL_2_ITEMS_COUNT,
 				self::LOCALNAV_LEVEL_3_ITEMS_COUNT
 			],
-			true
+			true,
+			$refreshCache
 		);
 	}
 
-	public function getOnTheWikiNavigationTree( $variableName ) {
+	public function getOnTheWikiNavigationTree( $variableName, $refreshCache = false ) {
 		return $this->getTree(
 			NavigationModel::TYPE_VARIABLE,
 			$variableName,
@@ -204,7 +214,8 @@ class NavigationModel extends WikiaModel {
 				self::LOCALNAV_LEVEL_2_ITEMS_COUNT,
 				self::LOCALNAV_LEVEL_3_ITEMS_COUNT
 			],
-			true
+			true,
+			$refreshCache
 		);
 	}
 
@@ -212,7 +223,15 @@ class NavigationModel extends WikiaModel {
 		return $this->getMemcKey(implode('-', func_get_args() + [self::MEMC_VERSION]));
 	}
 
-	public function getTree( $type, $source, $maxChildrenAtLevel = [], $forContent = false ) {
+	/**
+	 * @param string $type
+	 * @param string $source
+	 * @param array $maxChildrenAtLevel
+	 * @param bool $forContent
+	 * @param bool $refreshCache pass true to refresh the cache which stores parsed navigation tree
+	 * @return Mixed|null
+	 */
+	public function getTree( $type, $source, Array $maxChildrenAtLevel = [], $forContent = false, $refreshCache = false ) {
 		$menuData = WikiaDataAccess::cache(
 			$this->getTreeMemcKey( $type, $source, implode($maxChildrenAtLevel, '-'), $forContent ),
 			self::CACHE_TTL /* 3 hours */,
@@ -232,7 +251,8 @@ class NavigationModel extends WikiaModel {
 				}
 
 				return $menuData;
-			}
+			},
+			( $refreshCache === true ) ? WikiaDataAccess::REFRESH_CACHE : WikiaDataAccess::USE_CACHE
 		);
 
 		return $menuData;
