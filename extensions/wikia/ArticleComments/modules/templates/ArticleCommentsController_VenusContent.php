@@ -1,10 +1,12 @@
 <?php
 /* @var Title $title */
 /* @var WikiaGlobalRegistry $wg */
+
+$commentsCounter = wfMessage( 'oasis-comments-header', $wg->Lang->FormatNum( $countCommentsNested ) )->text();
 ?>
 <h3>
 	<?= wfMessage('article-comments-toc-item')->text() ?>
-	<span><?= wfMessage( 'oasis-comments-header', $wg->Lang->FormatNum( $countCommentsNested ) )->text() ?></span>
+	<span><?= wfMessage( 'parentheses', $commentsCounter )->escaped() ?></span>
 </h3>
 <div id="article-comments" class="article-comments">
 	<? if ( !$isBlocked && $canEdit && $commentingAllowed ): ?>
