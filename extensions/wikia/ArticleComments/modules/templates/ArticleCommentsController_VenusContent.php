@@ -40,7 +40,7 @@ $commentsCounter = wfMessage( 'oasis-comments-header', $wg->Lang->FormatNum( $co
 			<? if ( !$isReadOnly ): ?>
 				<div class="buttons" data-space-type="buttons">
 					<img src="<?= $ajaxicon ?>" class="throbber" />
-					<input type="submit" name="wpArticleSubmit" id="article-comm-submit" class="wikia-button actionButton" value="<?= wfMessage( 'article-comments-post' )->plain() ?>" />
+					<input type="submit" name="wpArticleSubmit" id="article-comm-submit" class="wikia-button actionButton secondary" value="<?= wfMessage( 'article-comments-post' )->plain() ?>" />
 				</div>
 			<? endif ?>
 		</form>
