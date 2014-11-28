@@ -29,6 +29,8 @@ class VenusController extends WikiaController {
 		$this->skinNameClass = $skinVars['skinnameclass'];
 		$this->pageCss = $this->getPageCss();
 
+		// ArticleComments are rendered via SkinAfterContent hook
+		$this->dataAfterContent = $skinVars['dataAfterContent'];
 
 		// initialize variables
 		$this->comScore = null;
