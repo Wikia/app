@@ -1,4 +1,4 @@
-require(['venus.infobox', 'wikia.document', 'wikia.window'], function(infoboxModule, d, w) {
+require(['venus.infobox', 'wikia.document'], function(infoboxModule, d) {
 	'use strict';
 
 	var infoboxContainer = d.getElementById('infoboxContainer'),
@@ -12,7 +12,7 @@ require(['venus.infobox', 'wikia.document', 'wikia.window'], function(infoboxMod
 
 		articleContent.classList.add('clear-none');
 		infoboxContainer.nextElementSibling.classList.add('clear-left');
-		
+
 		if(infoboxModule.isInfoboxCollapsible(infoboxWrapper)) {
 			infoboxModule.collapseInfobox(infoboxWrapper);
 
