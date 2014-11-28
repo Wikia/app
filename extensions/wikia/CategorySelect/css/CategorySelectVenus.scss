@@ -38,7 +38,7 @@ $category-height: 16px;
 
 	border-top: 1px solid $color-page-border;
 	line-height: $category-height;
-	margin: 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width $vertical-spacing;
+	margin: 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width $categories-vertical-spacing;
 	padding: 0 $medium-grid-column-padding;
 
 	.categories {
@@ -134,16 +134,16 @@ $category-height: 16px;
 
 	h3 {
 		@include font-size-xl;
-		margin-top: $vertical-spacing;
+		margin-top: $categories-vertical-spacing;
 	}
 
 	@media #{$small-only} {
-		margin: 0 $small-grid-column + $small-grid-gutter + $small-content-padding - $content-border-width $vertical-spacing;
+		margin: 0 $small-grid-column + $small-grid-gutter + $small-content-padding - $content-border-width $categories-vertical-spacing;
 		padding: 0 $small-grid-column-padding;
 	}
 
 	@media #{$large-up} {
-		margin: 0 $large-grid-column + $large-grid-gutter + $large-content-padding - $content-border-width $vertical-spacing;
+		margin: 0 $large-grid-column + $large-grid-gutter + $large-content-padding - $content-border-width $categories-vertical-spacing;
 		padding: 0 $large-grid-column-padding;
 	}
 
