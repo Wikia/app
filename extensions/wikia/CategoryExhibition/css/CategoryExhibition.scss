@@ -3,6 +3,8 @@
 @import "skins/shared/color";
 @import "extensions/wikia/TopLists/css/mixins";
 
+$color: #000; // was removed from /skins/shared/mixins/box-shadow
+
 $thumb-size-width: 130px;
 $thumb-size-height: 115px;
 $thumb-border-top: 4px;
