@@ -2,6 +2,11 @@
 @import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/Venus/styles/variables';
 
+// The commented code is a preparation for the next phase of the project,
+// where the Videos Module will be scrollable and have a little different dimensions.
+// As the part of this work was already implemented, it can be uncommented and reused --
+// just follw the instructions in the respective comments.
+
 @mixin breakpoint-dependent-sizing($breakpoint, $module-columns, $thumbnail-container-columns, $aditional-width: 0) {
 	$grid-column-padding: $large-grid-column-padding;
 	$grid-gutter: $large-grid-gutter;
@@ -50,7 +55,8 @@
 	min-height: 281px;
 	position: relative;
 
-	&.hidden, .hidden {
+	&.hidden,
+	.hidden {
 		display: none;
 	}
 
@@ -64,7 +70,8 @@
 		margin: 14px 0 24px;
 		padding: 0;
 
-		// Uncomment the 3 lines below to enable scrolling inside the video container (and change the order to alphabetical).
+		// Uncomment the 3 lines below this comment to enable scrolling inside the video container
+		// (and change the order to alphabetical with @include put at the top of this block).
 //		@include grid-column-width(medium, 11);
 //		overflow: auto;
 //		white-space: nowrap;
