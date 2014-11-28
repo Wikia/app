@@ -78,7 +78,7 @@ $shadow: rgba($color-text, 0.2);
 
 .wikia-dropdown-nav-subsections-wrapper {
 	display: none;
-	border-left: none;
+	margin-left: -1px;
 
 	&.active {
 		display: block;

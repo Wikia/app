@@ -6,7 +6,6 @@
 body {
 	color: $color-text;
 	margin: 0;
-	overflow-x: auto;
 	padding: 0;
 }
 
@@ -26,6 +25,10 @@ a {
 
 .wikia-page-wrapper {
 	padding: $global-navigation-height 0 0;
+
+	body.venus-preview & {
+		padding: 0;
+	}
 }
 
 .wikia-page {
@@ -36,6 +39,10 @@ a {
 
 	& > header {
 		@include grid-content-padding;
+	}
+
+	body.venus-preview & {
+		border: 0;
 	}
 }
 

@@ -143,7 +143,7 @@ jQuery(function($){
 				label: 'section-edit'
 			}, trackWithEventData);
 
-		$('#WikiaArticleCategories').on('mousedown', 'a', {
+		$('#articleCategories').on('mousedown', 'a', {
 			category: category,
 			label: 'category-name'
 		}, trackWithEventData).on('mousedown', '.add', {

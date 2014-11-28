@@ -13,6 +13,7 @@ require([
 		additionalTopOffset = 100,
 		$source = $(navigationElement),
 		$target = $(boundBoxElement),
+		$bottomTarget,
 		$doc = $(doc),
 		stickyElementObject = stickyElement.spawn();
 
@@ -31,11 +32,17 @@ require([
 		}
 	}
 
+	// Categories
+	$bottomTarget = $('.article-categories');
+	if ($bottomTarget.length === 0) {
+		$bottomTarget = $target;
+	}
+
 	function adjustPositionFunction(scrollY, sourceElement, targetElement) {
 		var additionalOffset, targetBottom, contentPadding;
 
-		targetBottom = $target.position().top +
-			$target.outerHeight(true) -
+		targetBottom = $bottomTarget.position().top +
+			$bottomTarget.outerHeight(true) -
 			$source.outerHeight(true);
 
 		contentPadding = parseInt( $target.css('padding-bottom') );

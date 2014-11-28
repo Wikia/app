@@ -21,7 +21,7 @@ class EditPageService extends Service {
 
 	# Disgustingly copied from SkinTemplate
 	static public function wrapBodyText($title, $request, $html) {
-		global $wgContLang;
+		global $wgContLang, $wgEnableVenusArticle;
 
 		# An ID that includes the actual body text; without categories, contentSub, ...
 		$realBodyAttribs = array( 'id' => 'mw-content-text' );
@@ -36,6 +36,10 @@ class EditPageService extends Service {
 			$realBodyAttribs['lang'] = $lang->getHtmlCode();
 			$realBodyAttribs['dir'] = $lang->getDir();
 		   	$realBodyAttribs['class'] = 'mw-content-'.$lang->getDir();
+
+			if ( !empty( $wgEnableVenusArticle ) ) {
+				$realBodyAttribs['class'] .= ' mw-content-text mw-content-preview';
+			}
 		}
 
 		return Html::rawElement( 'div', $realBodyAttribs, $html );

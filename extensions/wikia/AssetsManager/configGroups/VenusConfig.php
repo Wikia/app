@@ -314,9 +314,44 @@ $VenusConfig['imglzy_js'] = [
 	]
 ];
 
+/** CategorySelect extension */
+$VenusConfig[ 'category_select_js' ] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'venus' ],
+	'assets' => [
+		'//extensions/wikia/CategorySelect/js/CategorySelect.view.js',
+		'//resources/wikia/libraries/bootstrap/tooltip.js',
+		'//resources/wikia/libraries/bootstrap/popover.js',
+	]
+];
+$VenusConfig[ 'category_select_css' ] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'venus' ],
+	'assets' => [
+		'//extensions/wikia/CategorySelect/css/CategorySelectVenus.scss',
+	]
+];
+
 $VenusConfig['zenbox_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/Zenbox/scripts/zenbox.js',
+	]
+];
+
+
+$VenusConfig['venus_preview_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//resources/wikia/libraries/modil/modil.js',
+		'//resources/wikia/modules/window.js',
+		'//resources/wikia/modules/location.js',
+		'//resources/jquery/jquery-2.1.1.js',
+		'//resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js',
+		'//resources/wikia/modules/querystring.js',
+		'//resources/wikia/modules/browserDetect.js',
+		'//resources/wikia/modules/log.js',
+		'//extensions/wikia/ImageLazyLoad/js/ImgLzy.module.js',
+		'//extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
 	]
 ];
