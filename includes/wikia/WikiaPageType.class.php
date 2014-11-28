@@ -54,6 +54,12 @@ class WikiaPageType {
 
 		$title = F::app()->wg->Title;
 
+		// follow redirects
+		if ( $title->isRedirect() ) {
+			$page = WikiPage::factory( $title );
+			$title = $page->getRedirectTarget();
+		}
+
 		$isArticlePage = (
 			is_object( $title )
 			&& $title->getArticleId() != 0
