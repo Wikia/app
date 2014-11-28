@@ -13,8 +13,12 @@ require(['venus.infobox', 'wikia.document', 'wikia.window'], function(infoboxMod
 			isNextElementFloated;
 
 		articleContent.classList.add('clear-none');
-		isNextElementFloated = (window.getComputedStyle(nextElement).getPropertyValue('float') === 'right');
-		if (!isNextElementFloated) {
+		isNextElementFloated = (window.getComputedStyle(nextElement).getPropertyValue('float') === 'right' ||
+			nextElement.style.float === 'right');
+
+		if (isNextElementFloated) {
+			nextElement.classList.add('clear-both');
+		} else {
 			nextElement.classList.add('clear-left');
 		}
 
