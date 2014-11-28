@@ -143,7 +143,7 @@ define('wikia.preview', [
 	 * @param {string} type - What type of preview to load currently
 	 *                          empty -> Desktop preview,
 	 *                          mobile -> Mobile preview
-	 * @param {boolean=g} opening - whether this is first load and all values should be calculated
+	 * @param {boolean=} opening - whether this is first load and all values should be calculated
 	 */
 	function loadPreview(type, opening) {
 		if (!opening) {
