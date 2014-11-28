@@ -61,6 +61,6 @@ require([
 	if (infoboxWrapper) {
 		$(infoboxWrapper).on('initialized.infobox', init);
 	} else {
-		init();
+		$(doc).ready(init);
 	}
 });
