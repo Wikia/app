@@ -205,6 +205,12 @@ class VenusController extends WikiaController {
 	}
 
 	public function getRecentWikiActivity() {
+		// do not render wiki activity module on diff pages (CON-2239)
+		$diff = $this->wg->request->getVal( 'diff' );
+		if ( isset( $diff ) ) {
+			return '';
+		}
+
 		return $this->app->renderView('RecentWikiActivity', 'index');
 	}
 
