@@ -3,8 +3,9 @@ define('videosmodule.views.index', [
 	'videosmodule.views.titleThumbnail',
 	'wikia.log',
 	'wikia.tracker',
-	'bucky'
-], function (sloth, TitleThumbnailView, log, Tracker, bucky) {
+	'bucky',
+	'wikia.window'
+], function (sloth, TitleThumbnailView, log, Tracker, bucky, win) {
 	'use strict';
 
 	var VideosModule = function (options) {
@@ -47,7 +48,7 @@ define('videosmodule.views.index', [
 		});
 
 		// Make sure we're on an article page
-		if (window.wgArticleId) {
+		if (win.wgArticleId) {
 			this.init();
 		}
 	};
@@ -124,7 +125,7 @@ define('videosmodule.views.index', [
 			});
 
 		// Remove tracking for Special Wikis Sampled at 100% -- VID-1800
-		if (window.wgIsGASpecialWiki !== true) {
+		if (win.wgIsGASpecialWiki !== true) {
 			this.trackImpression();
 		}
 	};
