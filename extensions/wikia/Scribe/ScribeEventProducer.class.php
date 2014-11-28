@@ -108,7 +108,6 @@ class ScribeEventProducer {
 		$this->setIsRedirect( $oTitle->isRedirect() );
 		$this->setRevisionTimestamp( wfTimestamp( TS_DB, $rev_timestamp ) );
 		$this->setRevisionSize( $rev_size );
-		$this->setIsLocalFile( $oTitle );
 		$this->setMediaType( $oTitle );
 		$this->setMediaLinks( $oPage );
 		$this->setTotalWords( str_word_count( $rev_text ) );
