@@ -1,4 +1,4 @@
-require(['venus.infobox', 'wikia.document'], function(infoboxModule, d) {
+require(['venus.infobox', 'wikia.document'], function (infoboxModule, d) {
 	'use strict';
 
 	var infoboxContainer = d.getElementById('infoboxContainer'),
@@ -13,20 +13,22 @@ require(['venus.infobox', 'wikia.document'], function(infoboxModule, d) {
 		articleContent.classList.add('clear-none');
 		infoboxContainer.nextElementSibling.classList.add('clear-left');
 
-		if(infoboxModule.isInfoboxCollapsible(infoboxWrapper)) {
+		if (infoboxModule.isInfoboxCollapsible(infoboxWrapper)) {
 			infoboxModule.collapseInfobox(infoboxWrapper);
 
 			seeMoreButton = infoboxModule.createSeeMoreButton(infobox, seeMoreButtonId);
-			seeMoreButton.addEventListener('click', function(e) {
+			seeMoreButton.addEventListener('click', function (e) {
 				infoboxModule.expandInfobox(infoboxWrapper, seeMoreButton);
 				e.preventDefault();
 			});
 
 			infoboxWrapper.appendChild(seeMoreButton);
 		}
+
+		$(infoboxWrapper).trigger('initialized.infobox');
 	}
 
-	if(infoboxWrapper) {
+	if (infoboxWrapper) {
 		init();
 	}
 });

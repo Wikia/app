@@ -4,7 +4,7 @@
  * to leave this in there for now as we may at some point switch back to the bottom position.
  */
 require([
-	'videosmodule.views.rail',
+	'videosmodule.views.index',
 	'videosmodule.models.videos',
 	'bucky'
 ], function (RailModule, VideoData, bucky) {
@@ -18,11 +18,14 @@ require([
 		var rail;
 
 		bucky.timer.start('execution');
+
 		// instantiate rail view
 		rail = new RailModule({
 			$el: $('#videosModule'),
 			model: new VideoData(),
-			isFluid: false
+			isFluid: false,
+			buckyCategory: 'videosmodule.views.rail',
+			trackingCategory: 'videos-module-rail'
 		});
 
 		rail.$el.on('initialized.videosModule', function () {

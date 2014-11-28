@@ -1,5 +1,6 @@
-define('wikia.nodeFinder', function() {
+define('wikia.nodeFinder', function () {
 	'use strict';
+
 	/**
 	 * Find first element described by selector after set offset top value.
 	 *
@@ -12,37 +13,61 @@ define('wikia.nodeFinder', function() {
 		var elements = container.querySelectorAll(selector),
 			length = elements.length,
 			i;
+
 		for (i = 0; i < length; i++) {
 			if (elements[i].offsetTop > boundaryOffsetTop) {
 				return elements[i];
 			}
 		}
+
 		return null;
 	}
+
+	/**
+	 * Find the closest previous visible element.
+	 *
+	 * @param {Node} referenceNode node to start searching from (exclusively)
+	 * @return {Node} or null if not found
+	 */
+	function getPreviousVisibleSibling(referenceNode) {
+		var node = referenceNode.previousSibling;
+
+		while (node && !isVisibleForSloth(node)) {
+			node = node.previousSibling;
+		}
+
+		return node;
+	}
+
 	/**
 	 * Find the last visible element.
 	 *
 	 * @param {Node} container parent container
-	 * @return {Bool}
+	 * @return {Node} or null if not found
 	 */
 	function getLastVisibleChild(container) {
 		var child = container.lastChild;
-		while (child && !isVisible(child)) {
-			child = child.previousElementSibling;
+
+		if (isVisibleForSloth(child)) {
+			return child;
 		}
-		return child;
+
+		return getPreviousVisibleSibling(child);
 	}
+
 	/**
-	 * Simple check if an element is visible.
+	 * Simple check if an element is visible for Sloth module to be able to bind to it.
 	 *
 	 * @param {Node} element node to be checked
 	 * @return {Bool}
 	 */
-	function isVisible(element) {
-		return element.offsetWidth > 0 && element.offsetHeight > 0;
+	function isVisibleForSloth(element) {
+		return element.scrollWidth || element.scrollHeight;
 	}
+
 	return {
 		getChildByOffsetTop: getChildByOffsetTop,
+		getPreviousVisibleSibling: getPreviousVisibleSibling,
 		getLastVisibleChild: getLastVisibleChild
 	};
 });

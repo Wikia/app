@@ -1,34 +1,54 @@
-define('videosmodule.views.rail', [
+define('videosmodule.views.index', [
+	'sloth',
 	'videosmodule.views.titleThumbnail',
-	'wikia.tracker',
 	'wikia.log',
-	'bucky'
-], function (TitleThumbnailView, Tracker, log, bucky) {
+	'wikia.tracker',
+	'bucky',
+	'wikia.window'
+], function (sloth, TitleThumbnailView, log, Tracker, bucky, win) {
 	'use strict';
 
-	var VideosModule, track;
-
-	bucky = bucky('videosmodule.views.rail');
-
-	track = Tracker.buildTrackingFunction({
-		category: 'videos-module-rail',
-		trackingMethod: 'both',
-		action: Tracker.ACTIONS.IMPRESSION,
-		label: 'module-impression'
-	});
-
-	VideosModule = function (options) {
-		// this.el is the container for the right rail videos module
+	var VideosModule = function (options) {
+		// $el is the {jQuery Object} container for the videos module
 		this.$el = options.$el;
+
+		// previousElement is the {DOM Node} element which fires the sloth loading of the Videos Module,
+		// if there's none, sloth is running immediately
+		this.previousElement = options.previousElement;
+
+		// hookElement is the {DOM Node} element (a sibling or a parent container),
+		// which is a reference for placing the Videos Module by the
+		// {jQuery Function} moduleInsertingFunction [before(), after(), prepend()]
+		this.hookElement = options.hookElement;
+		this.moduleInsertingFunction = options.moduleInsertingFunction;
+
+		// model is the data model for the Videos Module
 		this.model = options.model;
 
+		// $thumbs is the {jQuery Object} container for the video thumbnails
 		this.$thumbs = this.$el.find('.thumbnails');
-		// Default number of videos, this is the number of videos we'd like to display if possible
-		this.numVids = 5;
-		this.minNumVids = 5;
+
+		// isFluid parameter is passed to the titleThumbnail and if set to true,
+		// binds applyEllipses on window resize and scroll to the thumbnails title links
+		this.isFluid = options.isFluid;
+
+		// numVids is the maximum number of videos we'd like to display if possible, while
+		// minNumVids is the minimum, if there's less, then the Videos Module is not displayed
+		this.numVids = options.numVids || 5;
+		this.minNumVids = options.minNumVids || 5;
+
+		// Tracking options
+		this.bucky = bucky(options.buckyCategory);
+		this.trackingCategory = options.trackingCategory;
+		this.trackImpression = Tracker.buildTrackingFunction({
+			category: options.trackingCategory,
+			trackingMethod: 'both',
+			action: Tracker.ACTIONS.IMPRESSION,
+			label: 'module-impression'
+		});
 
 		// Make sure we're on an article page
-		if (window.wgArticleId) {
+		if (win.wgArticleId) {
 			this.init();
 		}
 	};
@@ -36,8 +56,29 @@ define('videosmodule.views.rail', [
 	VideosModule.prototype.init = function () {
 		var self = this;
 
-		self.$thumbs.addClass('hidden');
-		self.$el
+		if (this.moduleInsertingFunction) {
+			this.moduleInsertingFunction.call($(this.hookElement), this.$el);
+		}
+
+		if (this.previousElement) {
+			// Sloth is a lazy loading service that waits till an element is visible to load more content
+			sloth({
+				on: this.previousElement,
+				threshold: 200,
+				callback: function () {
+					self.prep();
+				}
+			});
+		} else {
+			this.prep();
+		}
+	};
+
+	VideosModule.prototype.prep = function () {
+		var self = this;
+
+		this.$thumbs.addClass('hidden');
+		this.$el
 			.startThrobbing()
 			.removeClass('hidden');
 
@@ -55,10 +96,10 @@ define('videosmodule.views.rail', [
 			$imagesLoaded = $.Deferred(),
 			imgCount = 0;
 
-		bucky.timer.start('render');
+		this.bucky.timer.start('render');
 
 		if (!this.hasEnoughVideos()) {
-			bucky.timer.stop('render');
+			this.bucky.timer.stop('render');
 			return;
 		}
 
@@ -80,12 +121,12 @@ define('videosmodule.views.rail', [
 				self.$thumbs.removeClass('hidden');
 				self.$el.stopThrobbing()
 					.trigger('initialized.videosModule');
-				bucky.timer.stop('render');
+				self.bucky.timer.stop('render');
 			});
 
 		// Remove tracking for Special Wikis Sampled at 100% -- VID-1800
-		if (window.wgIsGASpecialWiki !== true) {
-			track();
+		if (win.wgIsGASpecialWiki !== true) {
+			this.trackImpression();
 		}
 	};
 
@@ -97,7 +138,7 @@ define('videosmodule.views.rail', [
 		if (this.videos.length + this.staffPickVideos.length < this.minNumVids) {
 			this.$el.addClass('hidden');
 			log(
-				'Not enough videos were returned for VideosModule rail',
+				'Not enough videos were returned for VideosModule.',
 				log.levels.error,
 				'VideosModule',
 				true
@@ -165,7 +206,9 @@ define('videosmodule.views.rail', [
 			thumbHtml.push(new TitleThumbnailView({
 				el: 'li',
 				model: this.videos[i],
-				idx: i
+				isFluid: this.isFluid,
+				idx: i,
+				trackingCategory: this.trackingCategory
 			})
 				.render()
 				.$el);

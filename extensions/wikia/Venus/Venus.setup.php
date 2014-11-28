@@ -74,8 +74,8 @@ $wgHooks['UserLogoutComplete'][] = 'NotificationsController::addLogOutConfirmati
 
 $wgResourceModules['ext.wikia.venus.article.infobox'] = [
 	'scripts' => [
-		'scripts/Infobox.js',
-		'scripts/modules/infobox.module.js'
+		'scripts/modules/infobox.module.js',
+		'scripts/Infobox.js'
 	],
 	'messages' => [
 		'venus-article-infobox-see-more',

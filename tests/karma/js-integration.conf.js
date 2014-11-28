@@ -22,15 +22,15 @@ module.exports = function (config) {
 			'resources/jquery/jquery-1.8.2.js',
 			'resources/wikia/libraries/define.mock.js',
 
-			//JSMessages
+			// JSMessages
 			'extensions/wikia/JSMessages/js/JSMessages.js',
 
-			//Chat Tests
+			// Chat Tests
 			'extensions/wikia/Chat2/js/spec/integration/views.mocks.js',
 			'extensions/wikia/Chat2/js/views/views.js',
 			'extensions/wikia/Chat2/js/spec/integration/ChatController.spec.js',
 
-			//WikiaMobile
+			// WikiaMobile
 			'extensions/wikia/WikiaMobile/js/autocomplete.js',
 			'extensions/wikia/WikiaMobile/js/events.js',
 			'extensions/wikia/WikiaMobile/js/features.js',
@@ -49,39 +49,40 @@ module.exports = function (config) {
 			'extensions/wikia/WikiaMobile/js/toc.js',
 			'extensions/wikia/WikiaMobile/js/topbar.js',
 			'extensions/wikia/WikiaMobile/js/features.js',
+
+			// loading specs for WikiaMobile
 			'extensions/wikia/WikiaMobile/js/spec/integration/*.spec.js',
 
-			//core modules
-			'resources/wikia/modules/window.js',
+			// core modules
+			'resources/wikia/libraries/mustache/mustache.js',
+			'resources/wikia/libraries/mustache/jquery.mustache.js',
 			'resources/wikia/modules/aim.js',
 			'resources/wikia/modules/cache.js',
 			'resources/wikia/modules/cookies.js',
 			'resources/wikia/modules/geo.js',
+			'resources/wikia/modules/history.js',
 			'resources/wikia/modules/lazyqueue.js',
 			'resources/wikia/modules/loader.js',
-			'resources/wikia/libraries/mustache/mustache.js',
-			'resources/wikia/libraries/mustache/jquery.mustache.js',
 			'resources/wikia/modules/nirvana.js',
+			'resources/wikia/modules/nodeFinder.js',
 			'resources/wikia/modules/querystring.js',
-			'resources/wikia/modules/history.js',
 			'resources/wikia/modules/scrollToLink.js',
 			'resources/wikia/modules/stringhelper.js',
 			'resources/wikia/modules/thumbnailer.js',
 			'resources/wikia/modules/uniqueId.js',
+			'resources/wikia/modules/window.js',
+
+			// loading specs for core modules
 			'resources/wikia/modules/spec/integration/*.spec.js',
 
-			//SpecialPromote
+			// SpecialPromote
 			'extensions/wikia/SpecialPromote/js/spec/integration/SpecialPromote.mocks.js',
 			'extensions/wikia/SpecialPromote/js/SpecialPromote.js',
 			'extensions/wikia/SpecialPromote/js/spec/integration/SpecialPromote.spec.js',
 
-			//venus infobox
+			// Venus infobox
 			'extensions/wikia/Venus/scripts/modules/infobox.module.js',
 			'extensions/wikia/Venus/scripts/modules/spec/integration/infobox.spec.js',
-
-			// module insertion
-			'extensions/wikia/Venus/scripts/modules/nodeFinder.module.js',
-			'extensions/wikia/Venus/scripts/modules/spec/integration/nodeFinder.spec.js',
 
 			// Lightbox
 			'extensions/wikia/Lightbox/scripts/Lightbox.js',
