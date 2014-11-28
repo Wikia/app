@@ -307,6 +307,7 @@ $VenusConfig[ 'category_select_js' ] = [
 	'skin' => [ 'venus' ],
 	'assets' => [
 		'//extensions/wikia/CategorySelect/js/CategorySelect.view.js',
+		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		'//resources/wikia/libraries/bootstrap/popover.js',
 	]
 ];
