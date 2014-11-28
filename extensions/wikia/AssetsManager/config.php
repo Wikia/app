@@ -696,7 +696,6 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdContext.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
-		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
 		'//extensions/wikia/AdEngine/js/AdProviderRemnantGptMobile.js',
 		'//extensions/wikia/AdEngine/js/AdProviderDirectGptMobile.js',
 		'//extensions/wikia/AdEngine/js/AdProviderNull.js',
@@ -755,6 +754,8 @@ $config['wikiamobile_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
+		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
+
 		'#group_mobile_base_ads_js',
 
 		// Interactive maps integration
