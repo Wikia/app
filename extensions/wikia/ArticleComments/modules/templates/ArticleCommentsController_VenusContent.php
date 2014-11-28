@@ -6,7 +6,7 @@ $commentsCounter = wfMessage( 'oasis-comments-header', $wg->Lang->FormatNum( $co
 ?>
 <h3>
 	<?= wfMessage('article-comments-toc-item')->text() ?>
-	<span><?= wfMessage( 'parentheses', $commentsCounter )->escaped() ?></span>
+	<span><?= wfMessage( 'parentheses', $commentsCounter )->text() ?></span>
 </h3>
 <div id="article-comments" class="article-comments">
 	<? if ( !$isBlocked && $canEdit && $commentingAllowed ): ?>
