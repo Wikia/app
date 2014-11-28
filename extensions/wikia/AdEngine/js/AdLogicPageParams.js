@@ -4,7 +4,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	'wikia.log',
 	'wikia.window',
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.adLogicPageViewCounter',
+	require.optional('ext.wikia.adEngine.adLogicPageViewCounter'),
 	require.optional('ext.wikia.adEngine.krux'),
 	require.optional('ext.wikia.adEngine.adLogicPageDimensions'),
 	require.optional('wikia.abTest')
@@ -16,7 +16,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		adsInHeadExperiment = adContext.getContext().opts.adsInHead && abTest && abTest.getGroup('ADS_IN_HEAD'),
 		maxNumberOfCategories = 3,
 		maxNumberOfKruxSegments = 27, // keep the DART URL part for Krux segments below 500 chars
-		pvs = pvCounter.increment();
+		pvs = pvCounter && pvCounter.increment();
 
 	function getDartHubName() {
 		var context = adContext.getContext();
@@ -173,11 +173,14 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			cat: getCategories(),
 			dmn: getDomain(),
 			hostpre: getHostname(),
-			pv: pvs && pvs.toString(),
 			skin: targeting.skin,
 			lang: targeting.wikiLanguage || 'unknown',
 			wpage: targeting.pageName && targeting.pageName.toLowerCase()
 		};
+
+		if (pvs) {
+			params.pv =  pvs.toString();
+		}
 
 		if (options.includeRawDbName) {
 			params.rawDbName = dbName;
