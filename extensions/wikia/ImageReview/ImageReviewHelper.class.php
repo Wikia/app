@@ -133,69 +133,6 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 	}
 
 	/**
-	 * reset state in abandoned work
-	 * note: this is run via a cron script
-	 */
-	public function resetAbandonedWork() {
-		wfProfileIn( __METHOD__ );
-
-		$db = $this->getDatawareDB( DB_MASTER );
-
-		$timeLimit = ( $this->wg->DevelEnvironment ) ? 1 : 3600; // 1 sec
-		$review_start = wfTimestamp(TS_DB, time() - $timeLimit );
-
-		// for STATE_UNREVIEWED
-		$db->update(
-			'image_review',
-			array(
-				'reviewer_id' => null,
-				'state' => ImageReviewStatuses::STATE_UNREVIEWED,
-				'review_start' => '0000-00-00 00:00:00',
-				'review_end' => '0000-00-00 00:00:00',
-			),
-			array(
-				"review_start < '{$review_start}'",
-				'state' => ImageReviewStatuses::STATE_IN_REVIEW,
-			),
-			__METHOD__
-		);
-
-		// for STATE_QUESTIONABLE
-		$db->update(
-			'image_review',
-			array(
-				'state' => ImageReviewStatuses::STATE_QUESTIONABLE,
-				'review_start' => '0000-00-00 00:00:00',
-				'review_end' => '0000-00-00 00:00:00',
-			),
-			array(
-				"review_start < '{$review_start}'",
-				'state' => ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW,
-			),
-			__METHOD__
-		);
-
-		// for STATE_REJECTED
-		$db->update(
-			'image_review',
-			array(
-				'state' => ImageReviewStatuses::STATE_REJECTED,
-				'review_start' => '0000-00-00 00:00:00',
-				'review_end' => '0000-00-00 00:00:00',
-			),
-			array(
-				"review_start < '{$review_start}'",
-				'state' => ImageReviewStatuses::STATE_REJECTED_IN_REVIEW,
-			),
-			__METHOD__
-		);
-
-		$db->commit();
-
-		wfProfileOut( __METHOD__ );
-	}
-
-	/**
 	* get image list from reviewer id based on the timestamp
 	* Note: NOT update image state
 	* @param integer $timestamp review_end
@@ -355,20 +292,6 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 						);
 					}
 				} else {
-					/**
-					 * CE-1068
-					 * Log page_id and wiki_id for images for which GlobalTitle::newFromId returns null.
-					 */
-					WikiaLogger::instance()->error( "ImageReview : Null GlobalTitle",
-						[
-							'method' => __METHOD__,
-							'pageId' => $row->page_id,
-							'wikiId' => $row->wiki_id,
-							'lastEdited' => $row->last_edited,
-							'exception' => new Exception()
-						]
-					);
-
 					$aDeleteFromQueueList[] = [
 						'wiki_id' => $row->wiki_id,
 						'page_id' => $row->page_id,
@@ -574,6 +497,40 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 
 	public function getUserTsKey() {
 		return wfMemcKey( 'ImageReviewSpecialController', 'userts', $this->wg->user->getId());
+	}
+
+	/**
+	 * reset state in abandoned work
+	 * note: this is run via a cron script
+	 */
+	public function resetAbandonedWork() {
+		wfProfileIn( __METHOD__ );
+
+		$oDatabaseHelper = $this->getDatabaseHelper();
+
+		$timeLimit = ( $this->wg->DevelEnvironment ) ? 1 : 3600; // 1 sec
+		$sFrom = wfTimestamp(TS_DB, time() - $timeLimit );
+
+		// for STATE_UNREVIEWED
+		$oDatabaseHelper->updateResetAbandoned( $sFrom,
+			ImageReviewStatuses::STATE_UNREVIEWED,
+			ImageReviewStatuses::STATE_IN_REVIEW
+		);
+
+		// for STATE_QUESTIONABLE
+		$oDatabaseHelper->updateResetAbandoned( $sFrom,
+			ImageReviewStatuses::STATE_QUESTIONABLE,
+			ImageReviewStatuses::STATE_QUESTIONABLE_IN_REVIEW
+		);
+
+		// for STATE_REJECTED
+		$oDatabaseHelper->updateResetAbandoned( $sFrom,
+			ImageReviewStatuses::STATE_REJECTED,
+			ImageReviewStatuses::STATE_REJECTED_IN_REVIEW
+		);
+
+		wfProfileOut( __METHOD__ );
+		return $sFrom;
 	}
 
 	private function getImageStatesForStats() {

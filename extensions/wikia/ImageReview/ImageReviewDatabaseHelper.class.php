@@ -69,6 +69,7 @@ class ImageReviewDatabaseHelper {
 			ImageReviewStatuses::STATE_INVALID_IMAGE,
 		);
 		$aWhere[] = 'state in (' . $oDB->makeList( $aStatesToFetch ) . ')';
+		$aWhere[] = 'top_200=0';
 
 		// select by reviewer, state and total count with rollup and then pick the data we want out
 		$oResults = $oDB->select(
@@ -84,6 +85,27 @@ class ImageReviewDatabaseHelper {
 		}
 
 		return $aCounts;
+	}
+
+	public function updateResetAbandoned( $sFrom, $iStateSet, $iStateWhere ) {
+		$oDB = $this->getDatawareDB();
+
+		$oDB->update(
+			'image_review',
+			[
+				'reviewer_id' => null,
+				'state' => $iStateSet,
+				'review_start' => '0000-00-00 00:00:00',
+				'review_end' => '0000-00-00 00:00:00',
+			],
+			[
+				"review_start < '{$sFrom}'",
+				'state' => $iStateWhere,
+			],
+			__METHOD__
+		);
+
+		$oDB->commit();
 	}
 
 	/**
