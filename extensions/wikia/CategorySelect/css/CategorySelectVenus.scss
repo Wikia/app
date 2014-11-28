@@ -13,17 +13,12 @@ $categoryselect-list-spacing: 25px;
 $category-height: 16px;
 
 %category-spacing {
-	margin-bottom: 11px;
-	margin-top: 7px;
+	margin: 7px $medium-grid-gutter 11px 0;
+	padding-right: $medium-grid-gutter;
 
 	@media #{$small-only} {
 		margin-right: $small-grid-gutter;
 		padding-right: $small-grid-gutter;
-	}
-
-	@media #{$medium-up} {
-		margin-right: $medium-grid-gutter;
-		padding-right: $medium-grid-gutter;
 	}
 
 	@media #{$large-up} {
@@ -39,9 +34,12 @@ $category-height: 16px;
 
 // These styles are for view pages only
 .article-categories {
-	border-top: 1px solid $color-page-border;
 	@include font-size-xs;
+
+	border-top: 1px solid $color-page-border;
 	line-height: $category-height;
+	margin: 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width $vertical-spacing;
+	padding: 0 $medium-grid-column-padding;
 
 	.categories {
 		margin: $categoryselect-list-spacing 0 0;
@@ -142,11 +140,6 @@ $category-height: 16px;
 	@media #{$small-only} {
 		margin: 0 $small-grid-column + $small-grid-gutter + $small-content-padding - $content-border-width $vertical-spacing;
 		padding: 0 $small-grid-column-padding;
-	}
-
-	@media #{$medium-up} {
-		margin: 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width $vertical-spacing;
-		padding: 0 $medium-grid-column-padding;
 	}
 
 	@media #{$large-up} {
