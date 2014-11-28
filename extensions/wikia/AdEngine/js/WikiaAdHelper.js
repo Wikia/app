@@ -9,7 +9,7 @@ define('ext.wikia.adEngine.adHelper', function () {
 
 		return function () {
 			var context = scope || this,
-				now = +new Date,
+				now = +(new Date()),
 				args = arguments;
 
 			if (last && now < last + threshhold) {
