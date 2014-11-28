@@ -5,12 +5,11 @@
  */
 
 @import "skins/shared/color";
-@import "z-index";
-@import "typographyMixins";
+@import "../../oasis/css/core/layout";
 @import "skins/shared/mixins/box-shadow";
 @import "skins/shared/mixins/menus";
 
-.skin-venus .ui-autocomplete {
+.skin-oasis .ui-autocomplete {
 	@include menu-regular;
 	@include box-shadow( 3px, 3px, 6px, darken( $color-page, 9% ) );
 	border-bottom-left-radius: 3px;
@@ -21,7 +20,7 @@
 	margin-top: 2px;
 	padding: 5px 1px;
 	width: 245px;
-	z-index: $autocomplete-z-index;
+	z-index: $zTop;
 
 	.ui-menu-item {
 		border: 0;
@@ -32,7 +31,7 @@
 		}
 
 		a {
-			@include font-size-xxs;
+			font-size: 12px;
 			line-height: 25px;
 			padding: 5px 9px;
 
