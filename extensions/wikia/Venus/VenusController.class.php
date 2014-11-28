@@ -73,6 +73,7 @@ class VenusController extends WikiaController {
 		$this->localNavigation = $this->getLocalNavigation();
 		$this->globalFooter = $this->getGlobalFooter();
 		$this->corporateFooter = $this->getCorporateFooter();
+		$this->categorySelect = $this->getCategorySelect();
 		$this->notifications = $this->app->renderView('Notifications', 'Confirmation');
 
 		if ($this->isUserLoggedIn) {
@@ -175,6 +176,14 @@ class VenusController extends WikiaController {
 		$this->cssLinks = $cssLinks;
 		$this->jsBodyFiles =  $jsBodyFiles;
 		$this->jsHeadScripts = $wgOut->getHeadScripts() . $jsHeadFiles;
+	}
+
+	public function getCategorySelect() {
+		global $wgEnableCategorySelectExt;
+
+		return !empty( $wgEnableCategorySelectExt ) ?
+			$this->app->renderView('CategorySelect', 'articlePage') :
+			'';
 	}
 
 	public function getGlobalNavigation() {
