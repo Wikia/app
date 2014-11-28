@@ -10,6 +10,7 @@
 @import 'extensions/wikia/Venus/styles/modules/popover';
 
 $categoryselect-list-spacing: 25px;
+$category-height: 16px;
 
 %category-spacing {
 	margin-bottom: 11px;
@@ -39,8 +40,8 @@ $categoryselect-list-spacing: 25px;
 // These styles are for view pages only
 .article-categories {
 	border-top: 1px solid $color-page-border;
-	font-size: 14px;
-	line-height: 16px;
+	@include font-size-xs;
+	line-height: $category-height;
 
 	.categories {
 		margin: $categoryselect-list-spacing 0 0;
@@ -84,7 +85,7 @@ $categoryselect-list-spacing: 25px;
 	.placeholder {
 		@extend %category-display;
 		@extend %category-spacing;
-		height: 16px;
+		height: $category-height;
 	}
 
 	.name {
@@ -93,11 +94,11 @@ $categoryselect-list-spacing: 25px;
 	}
 
 	.input {
+		@include font-size-xxs;
 		background-color: transparent;
 		border: 0;
-		color: $color-article-navigation-inactive;
+		color: $color-alternate-text;
 		display: none;
-		font-size: 12px;
 		font-weight: bold;
 		outline: none;
 		width: 245px;
@@ -111,7 +112,8 @@ $categoryselect-list-spacing: 25px;
 		margin-left: 10px;
 
 		&:first-child {
-			border-left: 0; padding-left: 0;
+			border-left: 0;
+			padding-left: 0;
 		}
 	}
 
@@ -167,11 +169,10 @@ $categoryselect-list-spacing: 25px;
 
 		.toolbar {
 			@include venus-icons-font;
-			color: $color-article-navigation-inactive;
 			cursor: pointer;
 			float: left;
-			font-size: 16px;
-			line-height: 16px;
+			@include font-size-base;
+			line-height: $category-height;
 			margin: 0;
 			padding: 0;
 
