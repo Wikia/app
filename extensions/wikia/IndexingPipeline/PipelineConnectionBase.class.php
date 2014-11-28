@@ -116,35 +116,37 @@ class PipelineConnectionBase {
 		return implode( '.', [ get_class( $this ), key( self::$binding ), self::QUEUE_NAME_POSTFIX ] );
 	}
 
-	protected function setConnection( &$conn ) {
-		if ( !isset( $conn ) ) {
-			return new AMQPConnection( $this->host, $this->port, $this->user, $this->pass, $this->vhost );
-		}
-		return $conn;
-	}
-
-	protected static function closeConnection( &$conn ) {
-		if ( isset( $conn ) ) {
-			$conn->close();
-			unset( $conn );
-		}
+	protected function createNewConnection() {
+		return new AMQPConnection( $this->host, $this->port, $this->user, $this->pass, $this->vhost );
 	}
 
 	/** @return AMQPConnection */
 	protected function getMainConnection() {
-		return $this->setConnection( $this->connection );
+		if ( !isset( $this->connection ) ) {
+			$this->connection = $this->createNewConnection();
+		}
+		return $this->connection;
 	}
 
 	protected function closeMainConnection() {
-		$this->closeConnection( $this->connection );
+		if ( isset( $this->connection ) ) {
+			$this->connection->close();
+			unset( $this->connection );
+		}
 	}
 
 	/** @return AMQPConnection */
 	protected function getPublishConnection() {
-		return $this->setConnection( $this->publishConnection );
+		if ( !isset( $this->publishConnection ) ) {
+			$this->publishConnection = $this->createNewConnection();
+		}
+		return $this->publishConnection;
 	}
 
 	protected function closePublishConnection() {
-		$this->closeConnection( $this->publishConnection );
+		if ( isset( $this->publishConnection ) ) {
+			$this->publishConnection->close();
+			unset( $this->publishConnection );
+		}
 	}
 }
