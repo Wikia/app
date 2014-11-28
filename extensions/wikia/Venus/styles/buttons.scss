@@ -58,8 +58,6 @@
 		@extend %common-button-styles;
 
 		&[disabled] {
-			opacity: 0.5;
-
 			&:hover {
 				@extend %outline-button;
 			}
