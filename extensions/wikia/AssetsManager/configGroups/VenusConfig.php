@@ -125,7 +125,6 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//extensions/wikia/MiniEditor/js/MiniEditor.js',
 
 		// loaders for various extensions
-		'//extensions/wikia/UserLogin/js/UserLogin.js',
 		'//extensions/wikia/VideoEmbedTool/js/VET_Loader.js',
 
 		// ArticleComment
