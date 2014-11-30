@@ -22,6 +22,7 @@ $wgAutoloadClasses['CloseMyAccountHooks'] =  __DIR__ . '/CloseMyAccountHooks.cla
 $wgAutoloadClasses['CloseMyAccountHelper'] =  __DIR__ . '/CloseMyAccountHelper.class.php';
 
 $wgExtensionMessagesFiles['CloseMyAccount'] = __DIR__ . '/CloseMyAccount.i18n.php' ;
+$wgExtensionMessagesFiles['CloseMyAccountAliases'] = __DIR__ . '/CloseMyAccount.aliases.php';
 
 $wgSpecialPages['CloseMyAccount'] = 'CloseMyAccountSpecialController';
 $wgSpecialPageGroups['CloseMyAccount'] = 'wikia';

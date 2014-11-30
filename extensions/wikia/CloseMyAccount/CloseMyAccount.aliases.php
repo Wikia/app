@@ -12,26 +12,19 @@ $specialPageAliases = array();
  * English (English)
  */
 $specialPageAliases['en'] = array(
-	'TagsReport' => array( 'TagsReport' ),
+	'CloseMyAccount' => array( 'CloseMyAccount' ),
 );
 
 /**
  * Korean (한국어)
  */
 $specialPageAliases['ko'] = array(
-	'TagsReport' => array( '태그목록' ),
-);
-
-/**
- * Polish (Polski)
- */
-$specialPageAliases['pl'] = array(
-	'TagsReport' => array( 'Rejestr_Znaczników' ),
+	'CloseMyAccount' => array( '계정비활성화' ),
 );
 
 /**
  * Vietnamese (Tiếng Việt)
  */
 $specialPageAliases['vi'] = array(
-	'TagsReport' => array( 'Bản_báo_cáo' ),
+	'CloseMyAccount' => array( 'Đóng_tài_khoản' ),
 );
