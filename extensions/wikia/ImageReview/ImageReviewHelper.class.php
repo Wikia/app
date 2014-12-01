@@ -268,7 +268,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 					$oImageGlobalFile = new GlobalFile( $oImagePage );
 					if ( $oImageGlobalFile->exists() === false ) {
 						$bDisplayImage = false;
-						$sReason = "Page is a redirect";
+						$sReason = "File does not exist";
 					}
 				}
 
