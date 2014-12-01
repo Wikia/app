@@ -255,10 +255,24 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 			$record = "(wiki_id = {$row->wiki_id} and page_id = {$row->page_id})";
 
 			if ( count( $imageList ) < self::LIMIT_IMAGES ) {
+				$bDisplayImage = true;
 				$oImagePage = GlobalTitle::newFromId( $row->page_id, $row->wiki_id );
-				if ( $oImagePage instanceof GlobalTitle && $oImagePage->isRedirect() !== true ) {
-					$oImageGlobalFile = new GlobalFile( $oImagePage );
 
+				if ( $oImagePage instanceof GlobalTitle !== true ) {
+					$bDisplayImage = false;
+					$sReason = "Page does not exist";
+				} elseif ( $oImagePage->isRedirect() === true ) {
+					$bDisplayImage = false;
+					$sReason = "Page is a redirect";
+				} else {
+					$oImageGlobalFile = new GlobalFile( $oImagePage );
+					if ( $oImageGlobalFile->exists() === false ) {
+						$bDisplayImage = false;
+						$sReason = "Page is a redirect";
+					}
+				}
+
+				if ( $bDisplayImage === true && $oImageGlobalFile instanceof GlobalFile ) {
 					$sThumbUrl = $oImageGlobalFile->getUrlGenerator()
 						->width( self::IMAGE_REVIEW_THUMBNAIL_SIZE )
 						->height( self::IMAGE_REVIEW_THUMBNAIL_SIZE )
