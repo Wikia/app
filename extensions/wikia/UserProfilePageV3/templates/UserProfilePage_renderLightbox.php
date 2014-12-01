@@ -24,7 +24,9 @@
 				<fieldset class="avatar-options">
 					<? if($isUploadsPossible): ?>
 						<div class="input-group">
-							<label for="UPPLightboxAvatar"><?= wfMsg('user-identity-box-avatar-upload-avatar'); ?></label>
+							<label for="UPPLightboxAvatar">
+								<button id="UPPLightboxAvatarUpload"><?= wfMessage( 'user-identity-box-avatar-upload-avatar' )->escaped(); ?></button>
+							</label>
 							<input type="file" name="UPPLightboxAvatar" id="UPPLightboxAvatar">
 							<input type="hidden" name="UPPLightboxDefaultAvatar" id="UPPLightboxDefaultAvatar" value="" >
 							<input type="hidden" name="UPPLightboxFbAvatar" id="UPPLightboxFbAvatar" value="" >
@@ -34,7 +36,7 @@
 
 					<? if( !empty($defaultAvatars) ): ?>
 						<div class ="input-group">
-							<label><?= wfMsg('user-identity-box-avatar-choose-avatar'); ?></label>
+							<label><?= wfMessage( 'user-identity-box-avatar-choose-avatar' )->escaped(); ?></label>
 							<ul class="sample-avatars">
 								<? foreach($defaultAvatars as $avatar): ?>
 									<li><img width="40" height="40" src="<?= $avatar['url']; ?>" class="<?= $avatar['name']; ?>"></li>
@@ -50,21 +52,21 @@
 		<li class="about">
 			<form id="userData" class="WikiaForm" name="userData">
 				<div class="input-group">
-					<label for="name" ><?= wfMsg('user-identity-box-about-name'); ?></label>
+					<label for="name" ><?= wfMessage( 'user-identity-box-about-name' )->escaped(); ?></label>
 					<input type="text" name="name" value="<?= $user['realName']; ?>" maxlength="<?= $charLimits['name']; ?>" />
 				</div>
 				<div class="input-group">
-					<label for="location"><?= wfMsg('user-identity-box-about-location'); ?></label>
+					<label for="location"><?= wfMessage( 'user-identity-box-about-location' )->escaped(); ?></label>
 					<input type="text" name="location" value="<?= $user['location']; ?>" maxlength="<?= $charLimits['location']; ?>" />
 				</div>
 				<div class="input-group">
-					<label for="month"><?= wfMsg('user-identity-box-about-birthday'); ?></label>
+					<label for="month"><?= wfMessage( 'user-identity-box-about-birthday' )->escaped(); ?></label>
 					<select id="userBDayMonth" name="month">
 						<option value="0">--</option>
 						<?php
 						$selectedMonth = isset($user['birthday']['month']) ? intval($user['birthday']['month']) : 0;
 						for( $i = 1; $i < 13; $i++ ) {
-							echo Xml::option( F::app()->wg->Lang->getMonthName($i), $i, $selectedMonth === $i );
+							echo Xml::option( $app->wg->Lang->getMonthName($i), $i, $selectedMonth === $i );
 						}
 						?>
 					</select>
@@ -81,24 +83,24 @@
 					</select>
 				</div>
 				<div class="input-group">
-					<label for="occupation"><?= wfMsg('user-identity-box-about-occupation'); ?></label>
+					<label for="occupation"><?= wfMessage( 'user-identity-box-about-occupation' )->escaped(); ?></label>
 					<input type="text" name="occupation" value="<?= $user['occupation']; ?>" maxlength="<?= $charLimits['occupation']; ?>" />
 				</div>
 				<div class="input-group">
-					<label for="gender"><?= wfMsg('user-identity-box-about-gender'); ?></label>
+					<label for="gender"><?= wfMessage( 'user-identity-box-about-gender' )->escaped(); ?></label>
 					<input type="text" name="gender" value="<?= $user['gender']; ?>" maxlength="<?= $charLimits['gender']; ?>" />
 				</div>
 				<div class="input-group">
-					<label for="website"><?= wfMsg('user-identity-box-about-website'); ?></label>
+					<label for="website"><?= wfMessage( 'user-identity-box-about-website' )->escaped(); ?></label>
 					<input type="text" name="website" value="<?= $user['website']; ?>">
 				</div>
 				<div class="input-group">
-					<label for="twitter"><?= wfMsg('user-identity-box-about-tweet'); ?></label>
+					<label for="twitter"><?= wfMessage( 'user-identity-box-about-tweet' )->escaped(); ?></label>
 					<span class="tweet-at">@</span>
 					<input type="text" name="twitter" value="<?= $user['twitter']; ?>">
 				</div>
 				<div class="input-group">
-					<label><?= wfMsg('user-identity-box-about-fav-wikis'); ?></label>
+					<label><?= wfMessage( 'user-identity-box-about-fav-wikis' )->escaped(); ?></label>
 					<a class="favorite-wikis-refresh wikia-chiclet-button" href="#"><img src="<?= $wgBlankImgUrl ?>"></a>
 					<ul class="favorite-wikis">
 					<? foreach($user['topWikis'] as $key => $wiki): ?>
@@ -106,11 +108,11 @@
 							<span><?= $wiki['wikiName']; ?></span> <img src="<?= $wgBlankImgUrl ?>" class="sprite-small delete">
 							</li>
 					<? endforeach; ?>
-						<li class="join-more-wikis"><span><?= wfMsg('user-identity-box-join-more-wikis'); ?></span></li>
+						<li class="join-more-wikis"><span><?= wfMessage( 'user-identity-box-join-more-wikis' )->escaped(); ?></span></li>
 					</ul>
 					<label for="hideEditsWikis">
 						<input type="checkbox" name="hideEditsWikis" id="hideEditsWikis" value="1" <?php if (array_key_exists
-						('hideEditsWikis', $user) && $user['hideEditsWikis']):?>checked="checked"<?php endif;?>/><?= wfMsg('user-identity-box-hide-edits-wikis'); ?>
+						('hideEditsWikis', $user) && $user['hideEditsWikis']):?>checked="checked"<?php endif;?>/><?= wfMessage( 'user-identity-box-hide-edits-wikis' )->escaped(); ?>
 					</label>
 				</div>
 			</form>

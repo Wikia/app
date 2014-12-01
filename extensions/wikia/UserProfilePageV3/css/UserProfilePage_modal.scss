@@ -22,6 +22,11 @@
 			@include box-sizing-border-box;
 			width: 100%;
 		}
+
+		/* VOLDEV-83: Fix confusing avatar upload interface */
+		input[type="file"] {
+			display: none;
+		}
 	}
 
 	img.avatar {
