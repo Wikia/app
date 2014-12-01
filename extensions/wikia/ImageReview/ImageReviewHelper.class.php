@@ -260,15 +260,15 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 
 				if ( $oImagePage instanceof GlobalTitle !== true ) {
 					$bDisplayImage = false;
-					$sReason = "Page does not exist";
+					$sReason = 'Page does not exist';
 				} elseif ( $oImagePage->isRedirect() === true ) {
 					$bDisplayImage = false;
-					$sReason = "Page is a redirect";
+					$sReason = 'Page is a redirect';
 				} else {
 					$oImageGlobalFile = new GlobalFile( $oImagePage );
 					if ( $oImageGlobalFile->exists() === false ) {
 						$bDisplayImage = false;
-						$sReason = "File does not exist";
+						$sReason = 'File does not exist';
 					}
 				}
 
