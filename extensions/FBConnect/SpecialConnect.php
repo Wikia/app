@@ -553,7 +553,17 @@ class SpecialConnect extends SpecialPage {
 			return;
 		}
 		// Look up the user by their name
-		$user = new FBConnectUser(User::newFromName($name));
+		/** Wikia Change @see UC-125 */
+		$wikiaUser = \User::newFromName( $name );
+		if ( ! $wikiaUser instanceof \User ) {
+			// Same treatment as before
+			$this->sendPage( 'chooseNameForm', 'noname' );
+			wfProfileOut( __METHOD__ );
+			return;
+		}
+		/** Wikia Change end */
+
+		$user = new FBConnectUser( $wikiaUser );
 		if (!$user || !$user->checkPassword($password)) {
 			$this->sendPage('chooseNameForm', 'wrongpassword');
 			wfProfileOut(__METHOD__);

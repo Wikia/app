@@ -72,8 +72,8 @@ class FacebookClientHooks {
 	static function GetPreferences( $user, &$preferences ) {
 
 		// Determine if we're connected already or not
-		$ids = FacebookClient::getInstance()->getFacebookUserIds( $user );
-		if ( count( $ids ) > 0 ) {
+		$id = FacebookClient::getInstance()->getFacebookUserId( $user );
+		if ( $id ) {
 			$isConnected = true;
 			$prefTab = 'fbconnect-connect';
 		} else {
@@ -122,4 +122,26 @@ class FacebookClientHooks {
 
 		return true;
 	}
+
+	/**
+	 * Handle confirmation message from Facebook Connect
+	 */
+	public static function onSkinTemplatePageBeforeUserMsg( &$html ) {
+		if ( F::app()->checkSkin( 'oasis' ) ) {
+			// check for querystring param
+			$fbStatus = F::app()->wg->Request->getVal( 'fbconnected' );
+
+			if ( $fbStatus  == '1' ) {
+				// check if current user is connected to facebook
+				$map = FacebookClient::getInstance()->getMapping();
+				if ( !empty( $map ) ) {
+					NotificationsController::addConfirmation( wfMessage( 'fbconnect-connect-msg' )->plain() );
+				}
+			}
+		}
+
+		return true;
+	}
+
+
 }
