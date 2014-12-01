@@ -25,5 +25,5 @@ OO.inheritClass( ve.init.mw.VenusViewPageTarget, ve.init.mw.WikiaViewPageTarget 
 /* Static Properties */
 
 ve.init.mw.VenusViewPageTarget.prototype.getNonEditableUIElements = function () {
-	return $( '#mw-content-text, .recent-wiki-activity, .article-navigation' );
+	return $( '#mw-content-text, .recent-wiki-activity, .article-navigation, #articleCategories' );
 };
