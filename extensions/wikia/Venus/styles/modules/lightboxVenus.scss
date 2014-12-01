@@ -22,26 +22,16 @@
 		padding: 0;
 	}
 
-	.close:after {
-		clear: both;
-		content: ' ';
-		display: block;
-		height: 0;
-		overflow: hidden;
-		visibility: hidden;
+	&.LightboxModal .LightboxHeader {
+		.more-info-button, .share-button {
+			&:before {
+				margin-top: 8px;
+			}
+		}
 	}
 
-	.wikia-chiclet-button {
-		background-image: none;
-		border: 0 none;
-		border-radius: 0;
-		cursor: pointer;
-		display: inline-block;
-		height: 19px;
-		opacity: .3;
-		padding: 0;
-		position: relative;
-		width: 19px;
+	button.wikia-chiclet-button {
+		line-height: 1px;
 	}
 }
 

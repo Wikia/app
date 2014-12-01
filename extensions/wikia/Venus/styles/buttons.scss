@@ -43,7 +43,7 @@
 			}
 		}
 
-		&:hover {
+		&:hover:not(.close) {
 			@extend %outline-button;
 		}
 	}
@@ -63,7 +63,7 @@
 			}
 		}
 
-		&:hover {
+		&:hover:not(.close) {
 			@extend %glyph-button;
 		}
 	}
