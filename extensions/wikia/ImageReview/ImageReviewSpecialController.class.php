@@ -102,8 +102,9 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$newestTs = $this->wg->Memc->get( $user_key );
 
 		if ( $ts > $newestTs ) {
-			WikiaLogger::instance()->info( "ImageReview: I've got the newest ts ($ts), I won't refetch the images", [
+			WikiaLogger::instance()->info( "ImageReviewLog", [
 				'method' => __METHOD__,
+				'message' => "I've got the newest ts ({$ts}), I won't refetch the images",
 			]);
 			$this->imageList = array();
 			$this->wg->memc->set( $user_key, $ts, 3600 /* 1h */ );
