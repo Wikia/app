@@ -17,7 +17,7 @@
  * @return String: cache key
  */
 function memsess_key( $id ) {
-	return wfGetSessionKey($id);
+	return "wikicities:session:{$id}";
 }
 
 /**
