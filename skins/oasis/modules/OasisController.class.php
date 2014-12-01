@@ -60,27 +60,6 @@ class OasisController extends WikiaController {
 		return true;
 	}
 
-	/*
-	 * TODO remove after Global Header ABtesting
-	 */
-	public static function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
-		$app = F::app();
-		if ( $app->checkSkin( ['oasis'], $skin ) ) {
-			$globalSearch = GlobalTitle::newFromText(
-				'Search',
-				NS_SPECIAL,
-				WikiService::WIKIAGLOBAL_CITY_ID
-			)->getFullURL();
-
-			$vars['wgGlobalSearchUrl'] = $globalSearch;
-		}
-
-		return true;
-	}
-	/*
-	 *  END TODO
-	 */
-
 	/**
 	 * Business-logic for determining if the javascript should be at the bottom of the page (it usually should be
 	 * at the bottom for performance reasons, but there are some exceptions for engineering reasons).
@@ -346,7 +325,7 @@ class OasisController extends WikiaController {
 
 		// move JS files added to OutputPage to list of files to be loaded
 		$scripts = RequestContext::getMain()->getSkin()->getScripts();
-	
+
 			foreach ( $scripts as $s ) {
 			//add inline scripts to jsFiles and move non-inline to the queue
 			if ( !empty( $s['url'] ) ) {

@@ -5,16 +5,6 @@ class GlobalHeaderController extends WikiaController {
 	const MAX_COUNT_OF_LEVEL1_NODES = 3;
 	const MAX_COUNT_OF_LEVEL2_NODES = 4;
 	const MAX_COUNT_OF_LEVEL3_NODES = 5;
-	private $menuNodesAB;
-	const MAX_COUNT_OF_LEVEL1_NODES_AB = 7;
-
-	private static $categoryMapForAB = [
-		WikiFactoryHub::CATEGORY_ID_GAMING => 'games',
-		WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => 'tv',
-		WikiFactoryHub::CATEGORY_ID_LIFESTYLE => 'lifestyle',
-		WikiFactoryHub::CATEGORY_ID_CORPORATE => null,
-		WikiFactoryHub::CATEGORY_ID_MUSIC => 'music'
-	];
 
 	public function init() {
 		wfProfileIn( __METHOD__ );
