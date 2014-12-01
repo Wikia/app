@@ -292,9 +292,16 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 						);
 					}
 				} else {
+					if ( $oImagePage instanceof GlobalTitle === false ) {
+						$sReason = "Image does not exist.";
+					} elseif ( $oImagePage->isRedirect() ) {
+						$sReason = "Page is a redirect.";
+					}
+
 					$aDeleteFromQueueList[] = [
 						'wiki_id' => $row->wiki_id,
 						'page_id' => $row->page_id,
+						'reason' => $sReason,
 					];
 
 					continue;
