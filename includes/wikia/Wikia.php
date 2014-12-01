@@ -1978,7 +1978,7 @@ class Wikia {
 	public static function onUserNameLoadFromId( $user_name, &$s, $bUserObject = false ) {
 		global $wgExternalAuthType;
 		if ( $wgExternalAuthType ) {
-			$mExtUser = ExternalUser::newFromName( $user_name );
+			$mExtUser = $wgExternalAuthType::newFromName( $user_name );
 			if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
 				$mExtUser->linkToLocal( $mExtUser->getId() );
 				$s = $mExtUser->getLocalUser( $bUserObject );
@@ -1996,7 +1996,7 @@ class Wikia {
 		/* wikia change */
 		global $wgExternalAuthType;
 		if ( $wgExternalAuthType ) {
-			$mExtUser = ExternalUser::newFromId( $user->mId );
+			$mExtUser = $wgExternalAuthType::newFromId( $user->mId );
 			if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
 				$mExtUser->linkToLocal( $mExtUser->getId() );
 				$s = $mExtUser->getLocalUser( false );
@@ -2071,8 +2071,8 @@ class Wikia {
 		}
 		$id = $user->getId();
 		// delete the record from all the secondary clusters
-		if ( $wgExternalAuthType == 'ExternalUser_Wikia' ) {
-			ExternalUser_Wikia::removeFromSecondaryClusters( $id );
+		if ( $wgExternalAuthType ) {
+			$wgExternalAuthType::removeFromSecondaryClusters( $id );
 		}
 		$user->invalidateCache();
 
