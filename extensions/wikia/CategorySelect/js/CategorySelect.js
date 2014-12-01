@@ -703,7 +703,7 @@
 				}
 			},
 			autocomplete: {
-				appendTo: '.article-categories',
+				appendTo: '.article-categories, .CategorySelect',
 
 				// Non-standard
 				limit: 6
