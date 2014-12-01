@@ -7,8 +7,11 @@ $width-limit: 1000px;
 
 $background-align: if( $background-width > $width-limit, center, left );
 
-body {
-	background: $color-body url($background-image) top $background-align repeat; /* $wgCdnStylePath */
+body:not(.venus-preview) {
+	background-color: $color-body;
+	background-image: url($background-image); /* $wgCdnStylePath */
+	background-repeat: repeat;
+	background-position: top $background-align;
 }
 
 body.background-not-tiled {

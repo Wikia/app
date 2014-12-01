@@ -1,4 +1,5 @@
 @import 'extensions/wikia/Venus/styles/variables';
+@import 'extensions/wikia/Venus/styles/typographyMixins';
 @import 'skins/shared/mixins/calc';
 
 $other-modules-width: 5 * $large-grid-column +  3 * $large-grid-gutter + 2 * $large-content-padding - 1px;
@@ -45,7 +46,7 @@ $other-modules-width: 5 * $large-grid-column +  3 * $large-grid-gutter + 2 * $la
 	padding: 0;
 
 	div {
-		font-size: 15px;
+		@include font-size-s;
 		line-height: 18px;
 	}
 }

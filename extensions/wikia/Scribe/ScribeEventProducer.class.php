@@ -51,7 +51,7 @@ class ScribeEventProducer {
 		$this->setCategory();
 	}
 
-	public function buildEditPackage( $oPage, $oUser, $oRevision = null, $revision_id = null ) {
+	public function buildEditPackage( $oPage, $oUser, $oRevision = null, $revision_id = null, $oLocalFile = null ) {
 		wfProfileIn( __METHOD__ );
 
 		if ( !is_object( $oPage ) ) {
@@ -111,13 +111,13 @@ class ScribeEventProducer {
 		$this->setMediaLinks( $oPage );
 		$this->setTotalWords( str_word_count( $rev_text ) );
 
-		if ( in_array( $this->mParams['pageNamespace'], $this->mediaNS ) ) {
+		if ( $oLocalFile instanceof File ) {
 			$this->setMediaType( $oTitle );
-			$this->setIsLocalFile( $oTitle );
+			$this->setIsLocalFile( $oLocalFile );
 			$this->setIsTop200( $this->app->wg->CityId );
 			$this->setIsImageForReview();
-
-			WikiaLogger::instance()->info( 'ImageReviewParams', [ 'method' => __METHOD__, 'data' => $this->mParams ] );
+		} else {
+			$this->setIsImageForReview( false );
 		}
 
 		$t = microtime(true);
@@ -322,9 +322,8 @@ class ScribeEventProducer {
 		$this->mParams['eventTS'] = $ts;
 	}
 
-	public function setIsLocalFile ( Title $oTitle ) {
-		$oFile = wfFindFile( $oTitle );
-		if( $oFile instanceof File && $oFile->exists() ) {
+	public function setIsLocalFile ( File $oLocalFile ) {
+		if( $oLocalFile instanceof File && $oLocalFile->exists() ) {
 			$bIsLocalFile = true;
 		} else {
 			$bIsLocalFile = false;
@@ -437,31 +436,35 @@ class ScribeEventProducer {
 		return false;
 	}
 
-	public function setIsImageForReview() {
-		$aAllowedTypes = [
-			1 => MEDIATYPE_BITMAP,
-			2 => MEDIATYPE_DRAWING,
-		];
+	public function setIsImageForReview( $bProvidedValue = null ) {
+		if ( $bProvidedValue === null ) {
+			$aAllowedTypes = [
+				1 => MEDIATYPE_BITMAP,
+				2 => MEDIATYPE_DRAWING,
+			];
 
-		if ( in_array( $this->mParams['pageNamespace'], $this->mediaNS )
-			&& isset( $aAllowedTypes[ $this->mParams['mediaType'] ] )
-		) {
-			if ( $this->mParams['isRedirect'] == 1 ) {
-				$sLogMessage = 'The page is a redirect';
-				$bIsImageForReview = false;
-			} elseif ( $this->mParams['isLocalFile'] == 0 ) {
-				$sLogMessage = 'The file is from an external repo';
-				$bIsImageForReview = false;
-			} elseif ( $this->mParams['isTop200'] == 1 ) {
-				$sLogMessage = 'The was uploaded to one of the Top200 wikias';
-				$bIsImageForReview = false;
-			} else {
-				$sLogMessage = 'The image was sent for a review';
-				$bIsImageForReview = true;
+			if ( in_array( $this->mParams['pageNamespace'], $this->mediaNS )
+				&& isset( $aAllowedTypes[ $this->mParams['mediaType'] ] )
+			) {
+				if ( $this->mParams['isRedirect'] == 1 ) {
+					$sLogMessage = 'The page is a redirect';
+					$bIsImageForReview = false;
+				} elseif ( $this->mParams['isLocalFile'] == 0 ) {
+					$sLogMessage = 'The file is from an external repo';
+					$bIsImageForReview = false;
+				} elseif ( $this->mParams['isTop200'] == 1 ) {
+					$sLogMessage = 'The image was uploaded to one of the Top200 wikias';
+					$bIsImageForReview = false;
+				} else {
+					$sLogMessage = 'The image was sent for a review';
+					$bIsImageForReview = true;
+				}
+
+				$this->mParams['isImageForReview'] = intval( $bIsImageForReview );
+				$this->sendImageReviewLog( $sLogMessage );
 			}
-
-			$this->sendImageReviewLog( $sLogMessage );
-			$this->mParams['isImageForReview'] = intval( $bIsImageForReview );
+		} else {
+			$this->mParams['isImageForReview'] = intval( $bProvidedValue );
 		}
 	}
 
@@ -473,7 +476,7 @@ class ScribeEventProducer {
 	private function sendImageReviewLog( $sLogMessage ) {
 		WikiaLogger::instance()->info( 'ImageReviewLog', [
 			'method' => __METHOD__,
-			'status' => $bIsImageForReview,
+			'status' => $this->mParams['isImageForReview'],
 			'message' => $sLogMessage,
 			'params' => $this->mParams,
 		] );

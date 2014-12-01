@@ -28,8 +28,7 @@
 	}
 
 	.add {
-		@include clear-linear-gradient();
-		background-color: $color-speech-bubble;
+		@include clear-linear-gradient($color-speech-bubble);
 	}
 
 	.categories {
@@ -130,6 +129,10 @@
 			border-left: 0;
 			padding-left: 0;
 		}
+
+		&.delete {
+			background-position: -1191px -18px;
+		}
 	}
 
 	.toolbar {
@@ -149,7 +152,7 @@
 }
 
 // Need to use ID here for specificity
-#CategorySelectEditModal {
+#categorySelectEditModal {
 	.WikiaForm {
 		@include clearfix;
 

@@ -144,6 +144,13 @@ ve.ui.WikiaSingleMediaDialog.prototype.getTeardownProcess = function ( data ) {
 				} else {
 					this.insertMWGallery();
 				}
+
+				// Tracking
+				ve.track( 'wikia', {
+					'action': ve.track.actions.ADD,
+					'label': 'dialog-wikia-single-media-insert-' + this.mode.type,
+					'value': this.cartModel.getItems().length
+				} );
 			}
 			this.cartModel.clearItems();
 			this.queryInput.setValue( '' );
@@ -228,13 +235,6 @@ ve.ui.WikiaSingleMediaDialog.prototype.insertWikiaGallery = function () {
 	// Gallery closing
 	linmod.push( {
 		'type': '/wikiaGallery'
-	} );
-
-	// Tracking
-	ve.track( 'wikia', {
-		'action': ve.track.actions.ADD,
-		'label': 'dialog-wikia-single-media-insert-' + this.mode.type,
-		'value': items.length
 	} );
 
 	this.fragment.collapseRangeToEnd().insertContent( linmod );

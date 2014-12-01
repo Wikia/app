@@ -24,13 +24,18 @@ require(
 			infoboxAdEnabled = window.wgAdDriverUseAdsAfterInfobox && abTest && abTest.inGroup('WIKIAMOBILE_ADS_AFTER_INFOBOX', 'YES'),
 			showInContent = firstSectionTop > minZerothSectionLength,
 			showPreFooter = doc.body.offsetHeight > minPageLength || firstSectionTop < minZerothSectionLength,
-			adLabel = msg('wikiamobile-ad-label'),
+			adLabel = msg('adengine-advertisement'),
 			createSlot = function (name) {
-				return '<div id="' +
-					name +
-					'" class="ad-in-content"><label class="wkAdLabel inContent">' +
-					adLabel +
-					'</label></div></div>';
+				var $slot = $('<div/>'),
+					$label = $('<label/>');
+
+				$label.text(adLabel);
+
+				$slot.attr('id', name);
+				$slot.addClass('ad-in-content');
+				$slot.html($label);
+
+				return $slot.wrapAll('</div>').parent().html();
 			},
 			adSlots = [];
 

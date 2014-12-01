@@ -11,18 +11,18 @@
 		</div>
 		<ul>
 			<?php
-			foreach ($footer_links as $link) {
+			foreach ($footerLinks as $link):
 				?>
 				<li>
 					<?php
 					if ($link['isLicense']) {
 						echo $copyright;
 					} else {?>
-						<a<?= ( !empty( $link[ 'id' ] ) ) ? " id=\"{$link[ 'id' ]}\"" : null ;?> href="<?= $link["href"]; ?>"<?= ( !empty( $link[ 'nofollow' ] ) ) ? ' rel="nofollow"' : null ;?>><?= $link["text"]; ?></a>
+						<a<?= ( !empty( $link[ 'id' ] ) ) ? " id=\"{$link[ 'id' ]}\"" : '' ;?> href="<?= $link["href"]; ?>"<?= ( !empty( $link[ 'nofollow' ] ) ) ? ' rel="nofollow"' : '' ;?>><?= $link["text"]; ?></a>
 					<?php } ?>
 				</li>
 			<?php
-			}
+			endforeach;
 			?>
 		</ul>
 	</nav>

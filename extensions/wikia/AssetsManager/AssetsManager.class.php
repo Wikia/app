@@ -323,6 +323,35 @@ class AssetsManager {
 		return substr($url, -5) == '.scss';
 	}
 
+	/**
+	 * determines whether a given url is for JS group
+	 *
+	 * Example: http://slot1.images1.wikia.nocookie.net/__am/1413971462/group/noexternals%3D1/monetization_module_js
+	 *
+	 * @param string $url the url to check
+	 * @return bool true if the url is a JS group, false otherwise
+	 */
+	public function isGroupUrl($url) {
+		return is_string( $url ) && ( strpos( $url, '/group/' ) !== false );
+	}
+
+	/**
+	 * Return AM group name from given URL
+	 *
+	 * If the given URL is not a valid group URL, false is returned
+	 *
+	 * @param string $url the URL to extract group name from
+	 * @return bool|false group name or false if URL is invalid
+	 */
+	public function getGroupNameFromUrl($url) {
+		if ( $this->isGroupUrl( $url ) ) {
+			$parts = explode( '/', $url );
+			return end( $parts );
+		} else {
+			return false;
+		}
+	}
+
 	public function getSassesUrl($sassList) {
 		if (!is_array($sassList)) {
 			$sassList = [$sassList];
@@ -616,10 +645,15 @@ class AssetsManager {
 	public function checkAssetUrlForSkin( $url, WikiaSkin $skin ) {
 		wfProfileIn( __METHOD__ );
 
+		// ResourceLoader has its own skin filtering mechanism, skip the check for /__load/ URLs - CON-2113
+		if ( strpos( $url, '/__load/' ) !== false ) {
+			wfProfileOut( __METHOD__ );
+			return true;
+		}
+
 		//lazy loading of AssetsConfig
 		$this->loadConfig();
 		$group = null;
-		$skinName = $skin->getSkinName();
 		$strict = $skin->isStrict();
 
 		if ( is_string( $url ) && array_key_exists($url, $this->mGeneratedUrls) ) {
@@ -641,15 +675,31 @@ class AssetsManager {
 			return !$strict;
 		}
 
+		$check = $this->checkIfGroupForSkin($group, $skin);
+
+		wfProfileOut( __METHOD__ );
+		return $check;
+	}
+
+	/**
+	 * Checks if given asset's group should be loaded for provided skin
+	 * @param string $group - Asset Manager group name
+	 * @param WikiaSkin $skin - Wikia Skin instance
+	 * @return bool whether group should be loaded for given skin
+	 */
+	public function checkIfGroupForSkin($group, WikiaSkin $skin) {
+		$this->loadConfig();
+		$skinName = $skin->getSkinName();
 		$registeredSkin = $this->mAssetsConfig->getGroupSkin( $group );
-		$check = ( is_array( $registeredSkin ) ) ? in_array( $skinName, $registeredSkin ) : $skinName === $registeredSkin;
+
+		$check = ( is_array( $registeredSkin ) ) ?
+			in_array( $skinName, $registeredSkin ) : $skinName === $registeredSkin;
 
 		//if not strict packages with no skin registered are positive
-		if ( $strict === false ) {
+		if ( $skin->isStrict() === false ) {
 			$check = $check || empty( $registeredSkin );
 		}
 
-		wfProfileOut( __METHOD__ );
 		return $check;
 	}
 
