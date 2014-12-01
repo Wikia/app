@@ -357,7 +357,7 @@ $facebook-background-color: #3c5b9b;
 			}
 
 			input.login-button[type="submit"] {
-				@include clear-linear-gradient($nav-font-color;);
+				@include clear-linear-gradient($nav-font-color);
 				-webkit-appearance: none;
 				border: none;
 				border-radius: 0;
