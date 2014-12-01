@@ -15,7 +15,38 @@ require([
 		$target = $(boundBoxElement),
 		$bottomTarget = $('main'),
 		$doc = $(doc),
-		stickyElementObject = stickyElement.spawn();
+		stickyElementObject = stickyElement.spawn(),
+		adLogicPoolerCount = 0,
+		adLogicLastHeight = 0;
+
+	/**
+	 * Pool for changed TOP_LEADERBOARD's height (can be very lazy-loaded)
+	 */
+	function adLoadPooler() {
+		var $el = $('#TOP_LEADERBOARD.standard-leaderboard, #TOP_LEADERBOARD [data-gpt-creative-size], #TOP_LEADERBOARD [id^="Liftium_"]'),
+			maxPoolerCount = 50,
+			poolerInterval = 250,
+			defaultWidth = 728,
+			defaultHeight = 90,
+			height;
+
+		if ($el.length && adLogicPoolerCount < maxPoolerCount) {
+			adLogicPoolerCount ++;
+
+			// absent, schedule another check
+			setTimeout(adLoadPooler, poolerInterval);
+		} else {
+			// present, calculate height
+			height = ($el.data('gpt-creative-size') || [defaultWidth, defaultHeight])[1];
+
+			// update only if height differs
+			if (height !== adLogicLastHeight) {
+				adLogicLastHeight = height;
+				//stickyElementObject.updateSize();
+			}
+		}
+	}
+	$(adLoadPooler);
 
 	// this function is needed for additional margin for screens >= 1024px
 	// (because header is getting float: left on medium and higher breakpoints)
