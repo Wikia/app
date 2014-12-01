@@ -130,7 +130,7 @@ define('wikia.preview', [
 
 			iframe.style.height = iframeBody.scrollHeight + 'px';
 
-			// prevent any click on links and images from opening withing the preview iframe (CON-2240)
+			// prevent any click on links and images from opening within the preview iframe (CON-2240)
 			$(iframeBody).on('click', 'a', function(ev) {
 				var target = $(ev.target);
 
