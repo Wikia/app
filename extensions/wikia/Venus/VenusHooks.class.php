@@ -10,10 +10,10 @@ class VenusHooks {
 	 * @param array $vars global variables list
 	 * @return boolean return true
 	 */
-	public static function onMakeGlobalVariablesScript(Array &$vars) {
+	public static function onMakeGlobalVariablesScript( Array &$vars ) {
 		global $wgEnableVenusArticle;
 
-		if ($wgEnableVenusArticle) {
+		if ( $wgEnableVenusArticle ) {
 			$vars['wgEnableVenusArticle'] = $wgEnableVenusArticle;
 		}
 
@@ -37,43 +37,43 @@ class VenusHooks {
 		}
 
 		try {
-			if (self::isInfoboxInFirstSection($parser, $section, $content)) {
-				$infoboxExtractor = new InfoboxExtractor($content);
+			if ( self::isInfoboxInFirstSection( $parser, $section, $content ) ) {
+				$infoboxExtractor = new InfoboxExtractor( $content );
 
 				$dom = $infoboxExtractor->getDOMDocument();
 
 				$nodes = $infoboxExtractor->getInfoboxNodes();
-				$node = $nodes->item(0);
+				$node = $nodes->item( 0 );
 
-				if ($node instanceof DOMElement) {
+				if ( $node instanceof DOMElement ) {
 					$body = $dom->documentElement->firstChild;
 
 					// replace extracted infobox with a dummy element to prevent newlines from creating empty paragraphs (CON-2166)
 					// <table infobox-placeholder="1"></table>
-					$placeholder = $dom->createElement('table');
-					$placeholder->setAttribute('infobox-placeholder', 'true');
+					$placeholder = $dom->createElement( 'table' );
+					$placeholder->setAttribute( 'infobox-placeholder', 'true' );
 
-					$node->parentNode->insertBefore($placeholder, $node);
+					$node->parentNode->insertBefore( $placeholder, $node );
 
 					// perform a magic around infobox wrapper
-					$node = $infoboxExtractor->clearInfoboxStyles($node);
-					$infoboxWrapper = $infoboxExtractor->wrapInfobox($node, 'infoboxWrapper', 'infobox-wrapper');
-					$infoboxContainer = $infoboxExtractor->wrapInfobox($infoboxWrapper, 'infoboxContainer', 'infobox-container');
+					$node = $infoboxExtractor->clearInfoboxStyles( $node );
+					$infoboxWrapper = $infoboxExtractor->wrapInfobox( $node, 'infoboxWrapper', 'infobox-wrapper' );
+					$infoboxContainer = $infoboxExtractor->wrapInfobox( $infoboxWrapper, 'infoboxContainer', 'infobox-container' );
 
 					// move infobox to the beginning of article content
-					$infoboxExtractor->insertNode($body, $infoboxContainer, true);
+					$infoboxExtractor->insertNode( $body, $infoboxContainer, true );
 
 					$content = $dom->saveHTML();
 
-					$parser->getOutput()->addModules('ext.wikia.venus.article.infobox');
+					$parser->getOutput()->addModules( 'ext.wikia.venus.article.infobox' );
 				}
 			}
 		}
-		catch(DOMException $e) {
+		catch ( DOMException $e ) {
 			// log exceptions
-			WikiaLogger::instance()->error(__METHOD__, [
+			WikiaLogger::instance()->error( __METHOD__, [
 				'exception' => $e,
-			]);
+			] );
 		}
 
 		return true;
@@ -86,7 +86,7 @@ class VenusHooks {
 	 * @param $text string text from the parse to replacer
 	 * @return bool true, it's a hook
 	 */
-	static public function onParserAfterTidy(Parser $parser, &$text ) {
+	static public function onParserAfterTidy( Parser $parser, &$text ) {
 		$text = str_replace( '<table infobox-placeholder="true"></table>', '', $text );
 		return true;
 	}
@@ -100,7 +100,7 @@ class VenusHooks {
 	 * @return bool
 	 */
 	static public function isInfoboxInFirstSection( $parser, $section, $content ) {
-		return $parser->mIsMainParse && $section === 0 && stripos($content, InfoboxExtractor::INFOBOX_CLASS_NAME);
+		return $parser->mIsMainParse && $section === 0 && stripos( $content, InfoboxExtractor::INFOBOX_CLASS_NAME );
 	}
 
 	/**
