@@ -18,7 +18,7 @@
 @import 'skins/shared/mixins/wordmark';
 
 // Core
-@import 'core/buttons';
+@import 'skins/shared/buttons';
 @import 'core/ads';
 @import 'core/autocomplete';
 @import 'core/typography';
@@ -35,23 +35,23 @@
 @import 'core/WikiHeader';
 @import 'core/PageHeader';
 @import 'core/Search';
-@import 'core/LocalSearchAB';
 @import 'core/article';
 @import 'core/tablepager';
 @import 'core/Footer';
 @import 'core/Notifications';
-@import 'core/table';
-@import 'core/tabs';
+@import 'skins/shared/table';
+@import 'skins/shared/tabs';
 @import 'core/Paginator';
 @import 'core/successerror';
 @import 'core/SpeechBubble';
 @import 'core/ArticleAfterComments';
-@import 'core/GlobalNotification';
+@import 'core/GlobalNotificationOasis';
 @import 'core/WikiaBar';
-@import 'core/jquery.ui.autocomplete'; // TODO: load on demand
 @import 'core/thumbnails';
 @import 'core/MenuElement';
 @import 'core/visualeditor';
+@import 'skins/shared/styles/logo';
+@import 'skins/shared/styles/jquery.ui.autocomplete'; // TODO: load on demand
 
 // Bootstrap
 @import 'resources/wikia/libraries/bootstrap/tooltip';

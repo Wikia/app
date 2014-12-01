@@ -16,10 +16,15 @@ $placeholder-background-color: $color-article-navigation-inactive; // only for p
 $article-items-spacing: 30px;
 $header-without-cover-unit-spacing: 60px;
 
+// don't display TOC on Venus skin pages (fight cache)
+#toc {
+	display: none !important;
+}
+
 .article {
 	overflow: hidden;
 
-	> header {
+	.article-header {
 		@include grid-column-width('medium', 8, $medium-content-padding - $content-border-width);
 		float: left;
 
@@ -36,6 +41,10 @@ $header-without-cover-unit-spacing: 60px;
 			h1,
 			span {
 				padding: 0 $medium-grid-column-padding 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding + $medium-grid-column-padding - $content-border-width;
+			}
+
+			& + .article-navigation {
+				top: $header-without-cover-unit-spacing + 80px;
 			}
 		}
 
@@ -55,6 +64,10 @@ $header-without-cover-unit-spacing: 60px;
 			span {
 				padding-bottom: round($header-without-cover-unit-spacing / 8);
 			}
+
+			& + .article-navigation {
+				@include proportional-grid-media-top('medium', 8, $medium-content-padding + $article-items-spacing + 100px);
+			}
 		}
 	}
 }
@@ -64,14 +77,15 @@ $header-without-cover-unit-spacing: 60px;
 	@include clearfix;
 
 	clear: left;
+
 	margin: 0 $medium-grid-column + $medium-grid-gutter + $medium-content-padding - $content-border-width;
-	padding: 0 $medium-grid-column-padding;
+	padding: 0 $medium-grid-column-padding 60px;
 
 	&.clear-none {
 		 clear: none;
 	}
 
-	.clear-left {
+	.clear-left:not(.floatright):not(.tright) {
 		clear: left;
 	}
 
@@ -214,8 +228,16 @@ $header-without-cover-unit-spacing: 60px;
 /* END FOR PROTOTYPE/TESTING ONLY */
 
 @media #{$large-up} {
-	.article header {
+	.article .article-header {
 		@include grid-column-width('large', 8, $large-content-padding - $content-border-width);
+
+		&:not(.cover-unit) {
+			h1,
+			span {
+				padding-left: $large-grid-column + $large-grid-gutter + $large-content-padding + $large-grid-column-padding - $content-border-width;
+				padding-right: $large-grid-column-padding;
+			}
+		}
 
 		&.cover-unit {
 			@include proportional-grid-media-height('large', 8, $large-content-padding);
@@ -223,17 +245,16 @@ $header-without-cover-unit-spacing: 60px;
 			h1 {
 				padding-left: $large-content-padding + $large-grid-column-padding - $content-border-width;
 			}
-		}
 
-		h1 {
-			padding-left: $large-grid-column + $large-grid-gutter + $large-content-padding + $large-grid-column-padding - $content-border-width;
-			padding-right: $large-grid-column-padding;
+			& + .article-navigation {
+				@include proportional-grid-media-top('large', 8, $large-content-padding + $article-items-spacing + 100px);
+			}
 		}
 	}
 
 	.mw-content-text {
 		margin: 0 $large-grid-column + $large-grid-gutter + $large-content-padding - $content-border-width;
-		padding: 0 $large-grid-column-padding;
+		padding: 0 $large-grid-column-padding 60px;
 
 		h2 {
 			margin-bottom: 10px;
@@ -272,9 +293,17 @@ $header-without-cover-unit-spacing: 60px;
 }
 
 @media #{$small-only} {
-	.article header {
+	.article .article-header {
 		float: none;
 		width: 100%;
+
+		&:not(.cover-unit) {
+			h1,
+			span {
+				padding-left: $small-grid-column + $small-grid-gutter + $small-content-padding + $small-grid-column-padding - $content-border-width;
+				padding-right: $small-grid-column-padding + $small-content-padding - $content-border-width;
+			}
+		}
 
 		&.cover-unit {
 			@include proportional-media-height($small-content-width - 2 * $content-border-width);
@@ -282,17 +311,20 @@ $header-without-cover-unit-spacing: 60px;
 			h1 {
 				padding-left: $small-content-padding + $small-grid-column-padding - $content-border-width;
 			}
-		}
 
-		h1 {
-			padding-left: $small-grid-column + $small-grid-gutter + $small-content-padding + $small-grid-column-padding - $content-border-width;
-			padding-right: $small-grid-column-padding;
+			& + .article-navigation {
+				@include proportional-media-top($small-content-width - 2 * $content-border-width, $article-items-spacing + 100px);
+			}
 		}
 	}
 
 	.mw-content-text {
 		margin: 0 $small-content-padding - $content-border-width 0 $small-grid-column + $small-grid-gutter + $small-content-padding - $content-border-width;
-		padding: 0 $small-grid-column-padding;
+		padding: 0 $small-grid-column-padding 60px;
+
+		&.mw-content-preview {
+			margin: 0 $small-grid-column + $small-grid-gutter + $small-content-padding - $content-border-width;
+		}
 
 		h2 {
 			margin-left: -$small-grid-gutter;

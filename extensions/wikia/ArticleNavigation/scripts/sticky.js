@@ -1,7 +1,11 @@
 require([
-	'wikia.document', 'wikia.stickyElement', 'venus.layout'
-], function(doc, stickyElement, layout) {
+	'wikia.document', 'wikia.stickyElement', 'venus.layout', 'wikia.browserDetect'
+], function(doc, stickyElement, layout, browserDetect) {
 	'use strict';
+	/*
+	 * TODO: This file will/should be rafactored after beta release:
+	 * https://wikia-inc.atlassian.net/browse/CON-2241
+	 */
 
 	var navigationElement = doc.getElementsByClassName('article-navigation')[0],
 		boundBoxElement = doc.getElementById('mw-content-text'),
@@ -9,6 +13,7 @@ require([
 		additionalTopOffset = 100,
 		$source = $(navigationElement),
 		$target = $(boundBoxElement),
+		$bottomTarget,
 		$doc = $(doc),
 		stickyElementObject = stickyElement.spawn();
 
@@ -27,13 +32,31 @@ require([
 		}
 	}
 
+	// Categories
+	$bottomTarget = $('.article-categories');
+	if ($bottomTarget.length === 0) {
+		$bottomTarget = $target;
+	}
+
 	function adjustPositionFunction(scrollY, sourceElement, targetElement) {
-		var targetBottom = $target.position().top +
-			$target.outerHeight(true) -
+		var additionalOffset, targetBottom, contentPadding;
+
+		targetBottom = $bottomTarget.position().top +
+			$bottomTarget.outerHeight(true) -
 			$source.outerHeight(true);
 
-		if ($doc.scrollTop() + additionalTopOffset >= targetBottom) {
-			stickyElementObject.sourceElementPosition('absolute', 'top', targetBottom);
+		contentPadding = parseInt( $target.css('padding-bottom') );
+
+		if (browserDetect.isIE()) {
+			additionalOffset = 2 * additionalTopOffset;
+		} else if (browserDetect.isFirefox()) {
+			additionalOffset = additionalTopOffset;
+		} else {
+			additionalOffset = additionalTopOffset + contentPadding;
+		}
+
+		if ($doc.scrollTop() + additionalOffset - contentPadding >= targetBottom) {
+			stickyElementObject.sourceElementPosition('absolute', 'top', targetBottom - contentPadding);
 			return true;
 		} else {
 			return false;

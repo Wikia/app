@@ -8,7 +8,7 @@ define('GlobalNavigationiOSScrollFix', ['jquery', 'wikia.window'], function($, w
 	 */
 	function scrollToTop($element) {
 		cachedScrollY = win.scrollY;
-		$element.addClass('position-static');
+		$element.addClass('static');
 
 		// SetTimeout is needed for iOS7 and iOS6
 		// in order to wait for keyboard to appear before starting to scroll
@@ -22,7 +22,7 @@ define('GlobalNavigationiOSScrollFix', ['jquery', 'wikia.window'], function($, w
 	 * @param {jQuery} $element - jQuery object from which new class should be removed
 	 */
 	function restoreScrollY($element) {
-		$element.removeClass('position-static');
+		$element.removeClass('static');
 
 		if (cachedScrollY) {
 			win.scrollTo(win.scrollX, cachedScrollY);

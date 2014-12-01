@@ -1,11 +1,11 @@
 @import 'skins/shared/color';
+@import 'extensions/wikia/Venus/styles/modals';
 @import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/mixins';
 
 body {
 	color: $color-text;
 	margin: 0;
-	overflow-x: auto;
 	padding: 0;
 }
 
@@ -17,15 +17,18 @@ a {
 		text-decoration: underline;
 	}
 
-	&.new {
-		background-color: mix($color-links, $color-page, 30%);
-		color: $color-text;
-		padding: 2px;
+	&.new,
+	&.new:visited {
+		color: #cc2200;
 	}
 }
 
 .wikia-page-wrapper {
 	padding: $global-navigation-height 0 0;
+
+	body.venus-preview & {
+		padding: 0;
+	}
 }
 
 .wikia-page {
@@ -36,6 +39,10 @@ a {
 
 	& > header {
 		@include grid-content-padding;
+	}
+
+	body.venus-preview & {
+		border: 0;
 	}
 }
 

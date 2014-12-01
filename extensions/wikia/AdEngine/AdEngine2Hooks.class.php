@@ -5,6 +5,7 @@
 class AdEngine2Hooks {
 	const ASSET_GROUP_CORE = 'oasis_shared_core_js';
 	const ASSET_GROUP_ADENGINE = 'adengine2_js';
+	const ASSET_GROUP_VENUS_ADS = 'adengine2_venus_ads_js';
 	const ASSET_GROUP_ADENGINE_RUBICON_RTP = 'adengine2_rubicon_rtp_js';
 	const ASSET_GROUP_ADENGINE_MOBILE = 'wikiamobile_ads_js';
 	const ASSET_GROUP_ADENGINE_TABOOLA = 'adengine2_taboola_js';
@@ -126,9 +127,6 @@ class AdEngine2Hooks {
 			// The ASSET_GROUP_ADENGINE_LATE package was added to the blocking group
 		} else {
 			array_splice( $jsAssets, $coreGroupIndex + 1, 0, self::ASSET_GROUP_ADENGINE );
-			if ( $wgAdDriverUseTopInContentBoxad ) {
-				array_splice( $jsAssets, $coreGroupIndex + 2, 0, self::ASSET_GROUP_TOP_INCONTENT_JS );
-			}
 			if ( AdEngine2Service::shouldLoadLateQueue() ) {
 				array_splice( $jsAssets, $coreGroupIndex + 2, 0, self::ASSET_GROUP_ADENGINE_LATE );
 				array_splice( $jsAssets, $coreGroupIndex + 3, 0, self::ASSET_GROUP_SPOTLIGHTS );
@@ -138,6 +136,10 @@ class AdEngine2Hooks {
 		if ( AdEngine2Service::shouldLoadLiftium() ) {
 			$jsAssets[] = self::ASSET_GROUP_LIFTIUM;
 			$jsAssets[] = self::ASSET_GROUP_LIFTIUM_EXTRA;
+		}
+
+		if ( $wgAdDriverUseTopInContentBoxad ) {
+			$jsAssets[] = self::ASSET_GROUP_TOP_INCONTENT_JS;
 		}
 
 		if ( $wgAdDriverUseBottomLeaderboard === true ) {
@@ -170,10 +172,6 @@ class AdEngine2Hooks {
 		if ( AdEngine2Service::areAdsInHead() ) {
 			// Add ad asset to JavaScripts loaded on top (in <head>)
 			$jsAssets[] = self::ASSET_GROUP_ADENGINE;
-
-			if ( $wgAdDriverUseTopInContentBoxad === true ) {
-				array_unshift( $jsAssets, self::ASSET_GROUP_TOP_INCONTENT_JS );
-			}
 		}
 
 		if ( AnalyticsProviderRubiconRTP::isEnabled() ) {
@@ -272,6 +270,8 @@ class AdEngine2Hooks {
 	public static function onVenusAssetsPackages( array &$jsHeadGroups, array &$jsBodyGroups, array &$cssGroups ) {
 		$jsHeadGroups[] = self::ASSET_GROUP_ADENGINE_TRACKING;
 		$jsHeadGroups[] = self::ASSET_GROUP_ADENGINE;
+		$jsHeadGroups[] = self::ASSET_GROUP_VENUS_ADS;
+
 		if ( AdEngine2Service::shouldLoadLateQueue() ) {
 			$jsBodyGroups[] = self::ASSET_GROUP_ADENGINE_LATE;
 		}

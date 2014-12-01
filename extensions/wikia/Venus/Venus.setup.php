@@ -61,9 +61,11 @@ JSMessages::registerPackage('VenusArticle', [ 'venus-article-*' ]);
 /**
  * hooks
  */
+$wgHooks['MakeGlobalVariablesScript'][] = 'VenusHooks::onMakeGlobalVariablesScript';
+$wgHooks['ParserAfterTidy'][] = 'VenusHooks::onParserAfterTidy';
 $wgHooks['ParserSectionCreate'][] = 'VenusHooks::onParserSectionCreate';
-$wgHooks['MakeHeadline'       ][] = 'VenusHooks::onMakeHeadline';
-
+$wgHooks['MakeHeadline'][] = 'VenusHooks::onMakeHeadline';
+$wgHooks['UserLogoutComplete'][] = 'NotificationsController::addLogOutConfirmation';
 
 //404 Pages
 
@@ -72,8 +74,8 @@ $wgHooks['MakeHeadline'       ][] = 'VenusHooks::onMakeHeadline';
 
 $wgResourceModules['ext.wikia.venus.article.infobox'] = [
 	'scripts' => [
-		'scripts/Infobox.js',
-		'scripts/modules/infobox.module.js'
+		'scripts/modules/infobox.module.js',
+		'scripts/Infobox.js'
 	],
 	'messages' => [
 		'venus-article-infobox-see-more',

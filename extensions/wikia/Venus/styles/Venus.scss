@@ -19,6 +19,7 @@
 @import 'layout';
 @import 'background';
 @import 'transparent-out';
+@import 'skins/shared/styles/logo';
 
 @import 'ads';
 
@@ -26,5 +27,9 @@
 @import 'grid';
 @import 'visibility';
 
-// hide 'Retrived from...' print footer
+// import notifications styles
+@import 'skins/shared/styles/GlobalNotifications';
+@import 'extensions/wikia/Venus/styles/modules/GlobalNotifiacationsVenus';
+
+// hide 'Retrieved from...' print footer
 .printfooter { display: none; }

@@ -29,6 +29,8 @@ class VenusController extends WikiaController {
 		$this->skinNameClass = $skinVars['skinnameclass'];
 		$this->pageCss = $this->getPageCss();
 
+		// ArticleComments are rendered via SkinAfterContent hook
+		$this->dataAfterContent = $skinVars['dataAfterContent'];
 
 		// initialize variables
 		$this->comScore = null;
@@ -56,12 +58,23 @@ class VenusController extends WikiaController {
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 
+	public function preview() {
+		$this->content = $this->request->getVal( 'content' );
+
+		$this->setBodyClasses();
+		$this->setAssets('preview');
+
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+	}
+
 	private function setAds() {
-		$this->adTopRightBoxad = $this->app->renderView( 'Ad', 'Index', ['slotName' => 'TOP_RIGHT_BOXAD'] );
-		$this->adTopLeaderboard = $this->app->renderView( 'Ad', 'Index', ['slotName' => 'TOP_LEADERBOARD'] );
-		$this->adInvisibleSkin = $this->app->renderView( 'Ad', 'Index', ['slotName' => 'INVISIBLE_SKIN'] );
-		$this->adsBottom = $this->app->renderView( 'Ad', 'Index', ['slotName' => 'GPT_FLUSH'] );
-		$this->adsBottom .= $this->app->renderView( 'Ad', 'Index', ['slotName' => 'SEVENONEMEDIA_FLUSH'] );
+		$this->adTopRightBoxad = $this->app->renderView( 'Ad', 'Index', [ 'slotName' => 'TOP_RIGHT_BOXAD' ] );
+		$this->adTopLeaderboard = $this->app->renderView( 'Ad', 'Index', [ 'slotName' => 'TOP_LEADERBOARD' ] );
+		$this->adInvisibleSkin = $this->app->renderView( 'Ad', 'Index', [ 'slotName' => 'INVISIBLE_SKIN' ] );
+		$this->adPrefooterLeftBoxad = $this->app->renderView( 'Ad', 'Index', [ 'slotName' => 'PREFOOTER_LEFT_BOXAD', 'includeLabel' => true ] );
+		$this->adPrefooterRightBoxad = $this->app->renderView( 'Ad', 'Index', [ 'slotName' => 'PREFOOTER_RIGHT_BOXAD', 'includeLabel' => true ] );
+		$this->adsBottom = $this->app->renderView( 'Ad', 'Index', [ 'slotName' => 'GPT_FLUSH' ] );
+		$this->adsBottom .= $this->app->renderView( 'Ad', 'Index', [ 'slotName' => 'SEVENONEMEDIA_FLUSH' ] );
 	}
 
 	private function setBodyModules() {
@@ -69,6 +82,8 @@ class VenusController extends WikiaController {
 		$this->localNavigation = $this->getLocalNavigation();
 		$this->globalFooter = $this->getGlobalFooter();
 		$this->corporateFooter = $this->getCorporateFooter();
+		$this->categorySelect = $this->getCategorySelect();
+		$this->notifications = $this->app->renderView('Notifications', 'Confirmation');
 
 		if ($this->isUserLoggedIn) {
 			$this->recentWikiActivity = $this->getRecentWikiActivity();
@@ -119,7 +134,7 @@ class VenusController extends WikiaController {
 		}
 	}
 
-	private function setAssets() {
+	private function setAssets($type = 'live') {
 		global $wgOut;
 
 		$jsHeadGroups = ['venus_head_js'];
@@ -129,16 +144,27 @@ class VenusController extends WikiaController {
 		$cssGroups = ['venus_css'];
 		$cssLinks = '';
 
-		// let extensions manipulate the asset packages (e.g. ArticleComments,
-		// this is done to cut down the number or requests)
-		$this->app->runHook(
-			'VenusAssetsPackages',
-			[
-				&$jsHeadGroups,
-				&$jsBodyGroups,
-				&$cssGroups
-			]
-		);
+		if ($type == 'preview') {
+			$cssGroups[] = 'article_scss';
+			$jsPreviewFiles = '';
+
+			foreach ( $this->assetsManager->getURL( ['venus_preview_js'] ) as $src ) {
+				$jsPreviewFiles .= "<script src='{$src}'></script>";
+			}
+			$this->jsPreviewFiles = $jsPreviewFiles;
+
+		} else {
+			// let extensions manipulate the asset packages (e.g. ArticleComments,
+			// this is done to cut down the number or requests)
+			$this->app->runHook(
+				'VenusAssetsPackages',
+				[
+					&$jsHeadGroups,
+					&$jsBodyGroups,
+					&$cssGroups
+				]
+			);
+		}
 
 		// SASS files requested via VenusAssetsPackages hook
 		$sassFiles = [];
@@ -170,6 +196,14 @@ class VenusController extends WikiaController {
 		$this->cssLinks = $cssLinks;
 		$this->jsBodyFiles =  $jsBodyFiles;
 		$this->jsHeadScripts = $wgOut->getHeadScripts() . $jsHeadFiles;
+	}
+
+	public function getCategorySelect() {
+		global $wgEnableCategorySelectExt;
+
+		return !empty( $wgEnableCategorySelectExt ) ?
+			$this->app->renderView('CategorySelect', 'articlePage') :
+			'';
 	}
 
 	public function getGlobalNavigation() {

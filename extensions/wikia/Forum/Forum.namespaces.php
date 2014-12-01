@@ -79,11 +79,20 @@ $namespaces['ja'] = array(
 );
 
 /**
+ * Korean (한국어)
+ */
+$namespaces['ko'] = array(
+	NS_WIKIA_FORUM_BOARD		=> '게시판',
+	NS_WIKIA_FORUM_TOPIC_BOARD	=> '주제',
+	NS_WIKIA_FORUM_BOARD_THREAD	=> '게시판_글',
+);
+
+/**
  * Dutch (Nederlands)
  */
 $namespaces['nl'] = array(
-	NS_WIKIA_FORUM_BOARD		=> 'Board',
-	NS_WIKIA_FORUM_TOPIC_BOARD	=> 'Topic',
+	// "Board" and "Topic" are the same as English
+	// but case varies for "Board_Thread"
 	NS_WIKIA_FORUM_BOARD_THREAD	=> 'Board_thread',
 );
 
@@ -130,6 +139,15 @@ $namespaces['ru'] = array(
 	NS_WIKIA_FORUM_BOARD		=> 'Главная_тема',
 	NS_WIKIA_FORUM_TOPIC_BOARD	=> 'Общая_тема',
 	NS_WIKIA_FORUM_BOARD_THREAD	=> 'Тема_форума',
+);
+
+/**
+ * Vietnamese (Tiếng Việt)
+ */
+$namespaces['vi'] = array(
+	NS_WIKIA_FORUM_BOARD		=> 'Bảng',
+	NS_WIKIA_FORUM_TOPIC_BOARD	=> 'Vấn_đề',
+	NS_WIKIA_FORUM_BOARD_THREAD	=> 'Luồng_bảng',
 );
 
 /**

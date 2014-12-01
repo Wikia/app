@@ -77,7 +77,8 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 			return true;
 		}
 
-		if ( !\FacebookMapModel::createUserMapping( $user->getId(), $fbUserId ) ) {
+		$mapping = \FacebookMapModel::createUserMapping( $user->getId(), $fbUserId );
+		if ( empty( $mapping ) ) {
 			// TODO/FIXME: show proper error message @see UC-116
 			F::app()->wg->Out->showErrorPage( 'fbconnect-error', 'fbconnect-errortext' );
 			$this->skipRendering();
@@ -117,7 +118,8 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 			return true;
 		}
 
-		if ( !\FacebookMapModel::createUserMapping( $wg->User->getId(), $fbUserId ) ) {
+		$mapping = \FacebookMapModel::createUserMapping( $wg->User->getId(), $fbUserId );
+		if ( empty( $mapping ) ) {
 			// TODO/FIXME: show proper error message @see UC-116
 			F::app()->wg->Out->showErrorPage( 'fbconnect-error', 'fbconnect-errortext' );
 			$this->skipRendering();
@@ -189,7 +191,6 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 		// redirect at the end of this method.
 		// @TODO Can we pass an empty string here and not define this unused variable?
 		$inject_html = '';
-		$queryStr = '';
 
 		// Pull this into a separate variable so we can assign it back afterward
 		$user = $wg->User;
@@ -198,27 +199,9 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 
 		$returnTo = $wg->request->getVal( 'returnto' );
 		$returnToQuery = $wg->request->getVal( 'returntoquery' );
-		$titleObj = Title::newFromText( $returnTo );
+		$returnToUrl = FacebookClient::getInstance()->getReturnToUrl( $returnTo, $returnToQuery );
 
-		if ( $this->isInvalidRedirectOnConnect( $titleObj ) ) {
-			// Don't redirect if the location is no good.  Go to the main page instead
-			$titleObj = Title::newMainPage();
-		} else if ( $returnToQuery ) {
-			// Include the return to query string if its ok to redirect
-			$queryStr = urldecode( $returnToQuery ) . '&fbconnected=1&cb=' . rand( 1, 10000 );
-		}
-
-		$wg->Out->redirect( $titleObj->getFullURL( $queryStr ) );
-	}
-
-	private function isInvalidRedirectOnConnect( $title ) {
-		return (
-			!$title instanceof Title ||
-			$title->isSpecial( 'Userlogout' ) ||
-			$title->isSpecial( 'Signup' ) ||
-			$title->isSpecial( 'Connect' ) ||
-			$title->isSpecial( 'FacebookConnect' )
-		);
+		$wg->Out->redirect( $returnToUrl );
 	}
 
 	/**

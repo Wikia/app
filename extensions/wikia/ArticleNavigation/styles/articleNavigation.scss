@@ -8,10 +8,15 @@ $dropdownArrowSize: 10px;
 
 @mixin dropdownWidth($columnWidth: $medium-grid-column * 3) {
 	.wikia-dropdown-nav-wrapper {
-		width: $columnWidth * 2;
+		width: $columnWidth;
+
+		&.wide {
+			width: $columnWidth * 2;
+		}
 	}
 
-	.wikia-dropdown-nav {
+	.wikia-dropdown-nav-sections-wrapper,
+	.wikia-dropdown-nav-subsections-wrapper {
 		width: $columnWidth;
 
 		.comments-talk-counter {
@@ -34,6 +39,16 @@ $dropdownArrowSize: 10px;
 		padding: 0;
 		position: relative;
 		width: $article-navigation-icon-size;
+
+		> li {
+			display: table;
+			margin-bottom: 6px;
+			table-layout: fixed;
+
+			&.hidden {
+				display: none;
+			}
+		}
 	}
 
 	.nav-icon {
@@ -43,15 +58,15 @@ $dropdownArrowSize: 10px;
 		border-radius: 50%;
 		color: $color-page;
 		cursor: pointer;
-		display: block;
+		display: table-cell;
 		font-size: $article-navigation-icon-size;
-		line-height: $article-navigation-icon-size - 1px; //for for aliasing
+		line-height: $article-navigation-icon-size - 3px;
 		margin-bottom: 6px;
+		padding-top: 2px;
 		position: relative;
-
-		&.toc {
-			display: none;
-		}
+		text-align: center;
+		vertical-align: middle;
+		width: 38px;
 	}
 
 	.wikia-dropdown-nav-wrapper {
@@ -90,20 +105,25 @@ $dropdownArrowSize: 10px;
 		text-decoration: none;
 	}
 
-	.multiple-share .share-link {
-		color: inherit;
-	}
-
 	.single-share {
 		display: none;
+
+		.share-link {
+			display: block;
+		}
 	}
+
 	.multiple-share {
-		display: list-item;
+		width: 38px;
+		.share-link {
+			color: inherit;
+			display: block;
+		}
 	}
 
 	&.single-share {
 		.single-share {
-			display: list-item;
+			display: table-cell;
 		}
 		.multiple-share {
 			display: none;
@@ -131,6 +151,6 @@ $dropdownArrowSize: 10px;
 		margin-left: $small-content-padding - $content-border-width;
 		width: $small-grid-column;
 
-		@include dropdownWidth($small-grid-column * 2);
+		@include dropdownWidth($small-grid-column * 3);
 	}
 }

@@ -4,32 +4,101 @@
 
 $dropdown-width: 200px;
 $dropdown-item-padding: 10px;
+$gradient-cover-size: 30px;
+$gradient-top-position: 30%;
+$gradient-bottom-position: 70%;
+$cover: $color-page;
+$cover-transparent: rgba($cover, 0);
+$shadow-transparent: rgba($color-text, 0);
+$shadow: rgba($color-text, 0.2);
 
 .wikia-dropdown-nav-wrapper {
-	display: none;
+	visibility: hidden;
+	font-size: 14px;
+	line-height: 20px;
 	position: absolute;
 	top: 0;
 	text-align: left;
-	width: $dropdown-width * 2;
+	width: $dropdown-width;
+
+	&.wide {
+		width: $dropdown-width * 2;
+	}
 
 	.active > & {
+		visibility: visible;
+	}
+}
+
+.wikia-dropdown-nav-sections-wrapper,
+.wikia-dropdown-nav-subsections-wrapper {
+	background-color: $color-page;
+	box-sizing: border-box;
+	float: left;
+	overflow: hidden;
+
+	.scrollable {
+		background:
+			/* Shadows */
+			linear-gradient($shadow $gradient-top-position, $shadow-transparent),
+			linear-gradient($shadow-transparent, $shadow $gradient-bottom-position) 0 100%;
+
+		background-color: $cover;
+		background-repeat: no-repeat;
+		background-size: 100% 4px;
+		background-position: 0 0, 0 100%;
+		box-sizing: content-box;
+		overflow-y: auto;
+		overflow-x: hidden;
+		padding-right: $gradient-cover-size;
+		position: relative;
+		width: inherit;
+
+		&:after,
+		&:before {
+			content: '';
+			display: block;
+			height: $gradient-cover-size;
+			position: relative;
+			width: inherit;
+		}
+
+		&:before {
+			background: linear-gradient($cover $gradient-top-position, $cover-transparent), 0 100%;
+			margin-bottom: -$gradient-cover-size;
+		}
+
+		&:after {
+			background: linear-gradient($cover-transparent, $cover $gradient-bottom-position) 0 100%;
+			margin-top: -$gradient-cover-size;
+		}
+	}
+}
+
+.wikia-dropdown-nav-sections-wrapper,
+.wikia-dropdown-nav-subsections-wrapper {
+	border: 1px solid $color-page-border-subtle;
+}
+
+.wikia-dropdown-nav-subsections-wrapper {
+	display: none;
+	margin-left: -1px;
+
+	&.active {
 		display: block;
 	}
 }
 
 .wikia-dropdown-nav {
-	border: 1px solid $color-page-border-subtle;
 	box-sizing: border-box;
-	float: left;
 	list-style-type: none;
 	margin: 0;
-	overflow: hidden;
-	overflow-y: auto;
 	padding: 0;
-	width: $dropdown-width;
+	position: relative;
+	width: inherit;
+	z-index: 1;
 
 	.wikia-dropdown-nav-subsections-wrapper & {
-		border-left: none;
 		display: none;
 
 		&.active {
@@ -44,8 +113,6 @@ $dropdown-item-padding: 10px;
 }
 
 .wikia-dropdown-nav-item {
-	background-color: $color-page;
-
 	&:not(:first-child) {
 		border-top: 1px solid $color-page-border-subtle;
 	}

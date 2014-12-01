@@ -22,6 +22,8 @@ class TopArticles implements IDataProvider {
 	 */
 	const MAX_LIMIT = 10;
 
+	const MCACHE_VERSION = '1.01';
+
 	/**
 	 * @param int $articleId
 	 * @param int $limit - max limit = 10
@@ -34,7 +36,7 @@ class TopArticles implements IDataProvider {
 		$lang = $this->getContentLangCode();
 
 		$out = \WikiaDataAccess::cache(
-			\wfSharedMemcKey( 'RecommendationApi', self::RECOMMENDATION_ENGINE, $hubName, $lang ),
+			\wfSharedMemcKey( 'RecommendationApi', self::RECOMMENDATION_ENGINE, $hubName, $lang, self::MCACHE_VERSION ),
 			\WikiaResponse::CACHE_STANDARD,
 			function () use ( $hubName, $lang ) {
 				$topArticles = $this->getTopArticles( $hubName, $lang);
@@ -140,14 +142,16 @@ class TopArticles implements IDataProvider {
 				'height' => 225
 			];
 
-			$response = \ApiService::foreignCall( \WikiFactory::IDtoDB( $wikiId ), $params, \ApiService::WIKIA );
+			$wikiData = \WikiFactory::getWikiByID( $wikiId );
+
+			$response = \ApiService::foreignCall( $wikiData->city_dbname, $params, \ApiService::WIKIA );
 
 			if ( !empty( $response['items'][$articleId] ) ) {
 				$articleDetails =  $response['items'][$articleId];
 
 				$out[] = [
 					'type' => self::RECOMMENDATION_TYPE,
-					'title' => $articleDetails['title'],
+					'title' => $wikiData->city_title . ' - ' . $articleDetails['title'],
 					'url' => $response['basepath'] . $articleDetails['url'],
 					'description' => $articleDetails['abstract'],
 					'media' => [

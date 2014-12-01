@@ -322,14 +322,13 @@ class FacebookClient {
 	}
 
 	/**
-	 * Returns all known Facebook user IDs for the current Wikia user (could be many since Wikia has more
-	 * than one Facebook app
+	 * Returns the Facebook user ID for the current Wikia user
 	 *
 	 * @param User|int $user
 	 *
-	 * @return array|bool|mixed
+	 * @return int|null
 	 */
-	public function getFacebookUserIds( $user ) {
+	public function getFacebookUserId( $user ) {
 
 		// Determine if we got an ID or an object
 		if ( $user instanceof User && $user->getId() != 0 ) {
@@ -338,17 +337,16 @@ class FacebookClient {
 			$wikiaUserId = $user;
 		}
 
-		$fbid = [];
-		if ( $wikiaUserId ) {
-			$mappings = FacebookMapModel::lookupFromWikiaID( $wikiaUserId );
-
-			foreach ( $mappings as $map ) {
-				/** @var FacebookMapModel $map */
-				$fbid[] = $map->getFacebookUserId();
-			}
+		if ( empty( $wikiaUserId ) ) {
+			return null;
 		}
 
-		return $fbid;
+		$map = FacebookMapModel::lookupFromWikiaID( $wikiaUserId );
+		if ( empty( $map ) ) {
+			return null;
+		}
+
+		return $map->getFacebookUserId();
 	}
 
 	/**
@@ -373,6 +371,47 @@ class FacebookClient {
 
 			setcookie( $sessionCookieName, '', 0, '/', $base_domain );
 		}
+	}
+
+	/**
+	 * Check if we should redirect back to the specified page by comparing it to this black list
+	 * @param Title|null $title
+	 * @return bool
+	 */
+	private function isInvalidRedirectOnConnect( Title $title = null ) {
+		return (
+			!$title instanceof Title ||
+			$title->isSpecial( 'Userlogout' ) ||
+			$title->isSpecial( 'Signup' ) ||
+			$title->isSpecial( 'Connect' ) ||
+			$title->isSpecial( 'FacebookConnect' ) ||
+			$title->isSpecial( 'UserLogin' )
+		);
+	}
+
+	/**
+	 * Get a fully resolved URL for redirecting after login/signup with facebook
+	 * @param $returnTo String Title of page to return to
+	 * @param $returnToQuery String Query string of page to return to
+	 * @param $cb String Cachebuster value
+	 * @return string
+	 */
+	public function getReturnToUrl( $returnTo, $returnToQuery, $cb = null ) {
+		if ( is_null( $cb ) ) {
+			$cb = rand( 1, 10000 );
+		}
+		$queryStr = '&fbconnected=1&cb=' . $cb;
+		$titleObj = Title::newFromText( $returnTo );
+
+		if ( $this->isInvalidRedirectOnConnect( $titleObj ) ) {
+			// Don't redirect if the location is no good.  Go to the main page instead
+			$titleObj = Title::newMainPage();
+		} else if ( $returnToQuery ) {
+			// Include the return to query string if its ok to redirect
+			$queryStr = urldecode( $returnToQuery ) . $queryStr;
+		}
+
+		return $titleObj->getFullURL( $queryStr );
 	}
 }
 

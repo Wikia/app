@@ -1,11 +1,11 @@
-
+/*global require*/
 require(
 	['wikia.document', 'wikia.recommendations', 'wikia.nodeFinder', 'sloth'],
-	function(d, recommendations, nodeFinder, sloth) {
+	function (d, recommendations, nodeFinder, sloth) {
 		'use strict';
 
 		function addRecommendationsModule() {
-			recommendations.init(d.getElementById('WikiaPage'));
+			recommendations.init(d.querySelector('#WikiaPage main'));
 		}
 
 		sloth({
@@ -13,4 +13,5 @@ require(
 			threshold: 200,
 			callback: addRecommendationsModule
 		});
-});
+	}
+);

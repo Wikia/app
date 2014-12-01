@@ -82,8 +82,9 @@ $config['adengine2_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdTemplateSkin.js',
 		'//extensions/wikia/AdEngine/js/AdLogicDartSubdomain.js',
 		'//extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
-		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
+		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
+		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
 		'//extensions/wikia/AdEngine/js/AdDecoratorPageDimensions.js',
 		'//extensions/wikia/AdEngine/js/AdConfig2.js',
 		'//extensions/wikia/AdEngine/js/AdContext.js',
@@ -147,7 +148,17 @@ $config['adengine2_top_in_content_boxad_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'venus',
 	'assets' => array(
+		'//extensions/wikia/AdEngine/js/AdPlacementChecker.js',
 		'//extensions/wikia/AdEngine/js/AdSlotTopInContentBoxad.js',
+	),
+);
+
+$config['adengine2_venus_ads_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'venus',
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/AdPlacementChecker.js',
+		'//extensions/wikia/AdEngine/js/AdSlotsVenus.js',
 	),
 );
 
@@ -743,6 +754,8 @@ $config['wikiamobile_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
+		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
+
 		'#group_mobile_base_ads_js',
 
 		// Interactive maps integration
@@ -1590,10 +1603,11 @@ $config['analytics_gas_js'] = array(
 
 $config['analytics_bluekai_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['wikiamobile', 'venus' ],
+	'skin' => ['wikiamobile' ],
 	'assets' => [
 		'//extensions/wikia/AdEngine/js/AdContext.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
+		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
 	]
 );
 
@@ -1864,17 +1878,35 @@ $config['api_docs_scss'] = array(
 	)
 );
 
-$config['videos_module_js'] = [
+$config['videos_module_common_js'] = [
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis'],
+	'skin' => ['oasis', 'venus'],
 	'assets' => [
 		'//extensions/wikia/Thumbnails/scripts/templates.mustache.js',
 		'//extensions/wikia/Thumbnails/scripts/views/titleThumbnail.js',
 		'//extensions/wikia/VideosModule/scripts/templates.mustache.js',
 		'//extensions/wikia/VideosModule/scripts/models/videos.js',
 		'//extensions/wikia/VideosModule/scripts/views/titleThumbnail.js',
-		'//extensions/wikia/VideosModule/scripts/views/rail.js',
-		'//extensions/wikia/VideosModule/scripts/controllers/index.js',
+		'//extensions/wikia/VideosModule/scripts/views/index.js',
+	]
+];
+
+$config['videos_module_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'#group_videos_module_common_js',
+		'//extensions/wikia/VideosModule/scripts/controllers/rail.js',
+	]
+];
+
+$config['videos_module_venus_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['venus'],
+	'assets' => [
+		'#group_videos_module_common_js',
+		'//extensions/wikia/VideosModule/scripts/controllers/inContent.js',
+		'//resources/wikia/modules/nodeFinder.js',
 	]
 ];
 

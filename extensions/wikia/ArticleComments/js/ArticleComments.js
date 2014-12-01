@@ -18,8 +18,8 @@
 		processing: false,
 		mostRecentCount: 0,
 		messagesLoaded: false,
-		miniEditorEnabled: typeof window.wgEnableMiniEditorExt !== 'undefined' && skin === 'oasis',
-		loadOnDemand: typeof window.wgArticleCommentsLoadOnDemand !== 'undefined',
+		miniEditorEnabled: window.wgEnableMiniEditorExt,
+		loadOnDemand: window.wgArticleCommentsLoadOnDemand,
 		initCompleted: false,
 		wrapperSelector: '#WikiaArticleComments',
 		bucky: window.Bucky('ArticleComments'),
@@ -122,7 +122,8 @@
 					convertToFormat: ArticleComments.getLoadConversionFormat($textfield),
 					id: commentId,
 					method: 'axEdit',
-					rs: 'ArticleCommentsAjax'
+					rs: 'ArticleCommentsAjax',
+					useskin: window.skin
 
 				}, function (json) {
 					if (!json.error) {
@@ -276,10 +277,11 @@
 			$.getJSON(wgScript, {
 				action: 'ajax',
 				article: wgArticleId,
-				id: $(this).closest('li').attr('id').replace(/^comm-/, ''),
+				id: $(this).closest('.comment').attr('id').replace(/^comm-/, ''),
 				method: 'axReply',
 				rs: 'ArticleCommentsAjax',
-				title: wgPageName
+				title: wgPageName,
+				useskin: window.skin
 
 			}, function (json) {
 				var $blockquote = $('#comm-text-' + json.id).parent(),
@@ -376,7 +378,8 @@
 				method: 'axPost',
 				rs: 'ArticleCommentsAjax',
 				title: wgPageName,
-				wpArticleComment: content
+				wpArticleComment: content,
+				useskin: window.skin
 			};
 
 			if (e.data.parentId) {
@@ -484,10 +487,11 @@
 
 			ArticleComments.$commentsList.addClass('loading');
 
-			$.getJSON(wgScript + '?action=ajax&rs=ArticleCommentsAjax&method=axGetComments&article=' + wgArticleId, {
+			$.getJSON(wgScript + '?action=ajax&rs=ArticleCommentsAjax&method=axGetComments', {
+				article: wgArticleId,
+				order: $('#article-comm-order').attr('value'),
 				page: page,
-				order: $('#article-comm-order').attr('value')
-
+				useskin: window.skin
 			}, function (json) {
 				ArticleComments.$commentsList.removeClass('loading');
 
@@ -631,12 +635,37 @@
 					}, 1);
 				}
 			}
+		},
+
+		showMoreComments: function() {
+			var $nodesToHide = this.$wrapper.find('.comments').children().slice(3),
+				$pagination = $('.article-comments-pagination', this.$wrapper),
+				showMoreButton = this.$wrapper.find('.comments-show-more');
+
+			// there's no comments, do nothing
+			if ($nodesToHide.length === 0) {
+				return;
+			}
+
+			// hide the comments
+			$nodesToHide.hide();
+			$pagination.hide();
+
+			// ... and show the button
+			showMoreButton.css('display', 'block');
+
+			showMoreButton.click(function() {
+				$nodesToHide.show();
+				$pagination.show();
+
+				showMoreButton.hide();
+			});
 		}
 	};
 
 	if (ArticleComments.loadOnDemand) {
 		$(function () {
-			var content, hash, permalink, styleAssets, belowTheFold, loadAssets;
+			var content, hash, permalink, styleAssets = [], belowTheFold, loadAssets;
 
 			// Cache jQuery selector after DOM ready
 			ArticleComments.$wrapper = $(ArticleComments.wrapperSelector);
@@ -648,10 +677,17 @@
 
 			hash = window.location.hash;
 			permalink = /^#comm-/.test(hash);
-			// TODO: we should be able to load it this way
-			//styleAssets.push($.getAssetManagerGroupUrl(
-			// 'articlecomments' + (ArticleComments.miniEditorEnabled ? '_mini_editor' : '') + '_scss'));
-			styleAssets = [$.getSassCommonURL('skins/oasis/css/core/ArticleComments.scss')];
+
+			switch(window.skin) {
+				case 'venus':
+					styleAssets.push($.getSassCommonURL('extensions/wikia/Venus/styles/article/comments.scss'));
+					break;
+
+				case 'oasis':
+				default:
+					styleAssets.push($.getSassCommonURL('skins/oasis/css/core/ArticleComments.scss'));
+			}
+
 			belowTheFold = function () {
 				return ArticleComments.$wrapper.offset().top >= ($window.scrollTop() + $window.height());
 			};
@@ -674,7 +710,7 @@
 						data: {
 							articleId: window.wgArticleId,
 							page: ArticleComments.$wrapper.data('page'),
-							skin: true
+							useskin: window.skin
 						},
 						callback: function (response) {
 							content = response;
@@ -688,6 +724,12 @@
 					if (permalink) {
 						ArticleComments.scrollToElement(hash);
 					}
+
+					// "Show more comments" button for Venus
+					if (!permalink && window.skin === 'venus') {
+						ArticleComments.showMoreComments();
+					}
+
 					ArticleComments.bucky.timer.stop('loadAssets');
 				});
 			};

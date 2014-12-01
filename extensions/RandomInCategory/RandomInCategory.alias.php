@@ -101,6 +101,14 @@ $specialPageAliases['ja'] = array(
 	'RandomInCategory' => array( 'カテゴリ内おまかせ表示', 'カテゴリ中のランダムなページ' ),
 );
 
+// begin wikia change
+// VOLDEV-97
+/** Korean (한국어) */
+$specialPageAliases['ko'] = array(
+	'RandomInCategory' => array( '분류중임의문서' ),
+);
+// end wikia change
+
 /** Colognian (Ripoarisch) */
 $specialPageAliases['ksh'] = array(
 	'RandomInCategory' => array( 'Zohfällije Sigg uß en Saachjropp' ),
@@ -165,3 +173,11 @@ $specialPageAliases['tl'] = array(
 $specialPageAliases['tr'] = array(
 	'RandomInCategory' => array( 'RastgeleKategori', 'RastgeleUlam' ),
 );
+
+// begin wikia change
+// VOLDEV-94
+/** Vietnamese (Tiếng Việt) */
+$specialPageAliases['vi'] = array(
+	'RandomInCategory' => array( 'Ngẫu_nhiên_theo_thể_loại' ),
+);
+// end wikia change

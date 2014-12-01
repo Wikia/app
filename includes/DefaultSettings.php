@@ -2677,6 +2677,14 @@ $wgResourceLoaderValidateStaticJS = false;
  */
 $wgResourceLoaderExperimentalAsyncLoading = false;
 
+/**
+ * When OutputHandler is used, mangle any output that contains
+ * <cross-domain-policy>. Without this, an attacker can send their own
+ * cross-domain policy unless it is prevented by the crossdomain.xml file at
+ * the domain root.
+ */
+$wgMangleFlashPolicy = true;
+
 /** @} */ # End of resource loader settings }
 
 
@@ -3326,16 +3334,6 @@ $wgExternalAuthType = null;
  * info on what to put here.
  */
 $wgExternalAuthConf = array();
-
-/**
- * When should we automatically create local accounts when external accounts
- * already exist, if using ExternalAuth?  Can have three values: 'never',
- * 'login', 'view'.  'view' requires the external database to support cookies,
- * and implies 'login'.
- *
- * TODO: Implement 'view' (currently behaves like 'login').
- */
-$wgAutocreatePolicy = 'login';
 
 /**
  * Policies for how each preference is allowed to be changed, in the presence

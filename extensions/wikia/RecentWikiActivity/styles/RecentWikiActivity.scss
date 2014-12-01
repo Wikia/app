@@ -12,10 +12,11 @@ $recent-wiki-activity-background-color: mix($color-page, $color-page-opposite, 9
 	float: right;
 	margin: 0 $medium-grid-column-padding + $medium-content-padding - $content-border-width 36px $medium-grid-gutter + $medium-grid-column-padding;
 	padding: 0 20px;
+	position: relative; // Temporary fix for tables overlapping recentWikiActivity & medrec ad
 	word-wrap: break-word;
 
 	header {
-		@include font-size-l;
+		font-size: 18px; // hardcoded because of CON-2202
 		font-weight: bold;
 		margin: 31px 0 25px;
 	}

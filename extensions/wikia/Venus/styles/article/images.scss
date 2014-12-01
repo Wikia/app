@@ -46,6 +46,9 @@ $image-max-columns-medium-and-large: 10;
  * @param $additional-(left|right)-margin: additional margin [px] for the corresponding direction
  */
 @mixin floated-element-breakpoint($breakpoint, $columns, $aditional-left-margin: 0, $aditional-right-margin: 0) {
+	@include floated-element-breakpoint-margins($breakpoint, left, $aditional-left-margin);
+	@include floated-element-breakpoint-margins($breakpoint, right, $aditional-right-margin);
+
 	.article {
 		.floatleft,
 		.tleft,
@@ -53,9 +56,6 @@ $image-max-columns-medium-and-large: 10;
 		.tright {
 			@include grid-column-max-width($breakpoint, $columns);
 		}
-
-		@include floated-element-breakpoint-margins($breakpoint, left, $aditional-left-margin);
-		@include floated-element-breakpoint-margins($breakpoint, right, $aditional-right-margin);
 	}
 }
 
@@ -78,7 +78,7 @@ $image-max-columns-medium-and-large: 10;
 
 	.show-info-icon {
 		.info-icon {
-			background-image: url('/extensions/wikia/Venus/images/info_icon.png'); /* base64 */
+			background: url('/extensions/wikia/Venus/images/info_icon.png') 0 0; /* base64 */
 			display: none;
 			float: right;
 			height: 17px;
@@ -112,6 +112,15 @@ $image-max-columns-medium-and-large: 10;
 
 	@each $direction in left, right {
 		@include floated-element-base($direction, $image-margin, -$medium-grid-column-padding);
+	}
+
+	table {
+		.floatleft,
+		.tleft,
+		.floatright,
+		.tright {
+			margin: $image-margin;
+		}
 	}
 
 	.floatleft,
@@ -155,7 +164,7 @@ $image-max-columns-medium-and-large: 10;
 		.title {
 			font-weight: bold;
 
-			& + .caption {
+			+ .caption {
 				border: 0;
 			}
 		}

@@ -1,36 +1,57 @@
 <?php
+/**
+ * Aliases for special pages
+ *
+ * @file
+ * @ingroup Extensions
+ */
 
 $specialPageAliases = array();
+
 /**
- * English
+ * English (English)
  */
 $specialPageAliases['en'] = array(
 	'LicensedVideoSwap' => array( 'LicensedVideoSwap' ),
 );
 /**
- * German
+ * German (Deutsch)
  */
 $specialPageAliases['de'] = array(
 	'LicensedVideoSwap' => array( 'Lizenzierte_Videos', 'LizenzierteVideos' ),
 );
 
 /**
- * Italian
+ * Spanish (Español)
+ */
+$specialPageAliases['es'] = array(
+	'LicensedVideoSwap' => array( 'Videos_Autorizados', 'VideosAutorizados' ),
+);
+
+/**
+ * Italian (Italiano)
  */
 $specialPageAliases['it'] = array(
 	'LicensedVideoSwap' => array( 'ScambioVideoAutorizzati' ),
 );
 
 /**
- * Polish
+ * Korean (한국어)
+ */
+$specialPageAliases['ko'] = array(
+	'LicensedVideoSwap' => array( '허가받은동영상대체' ),
+);
+
+/**
+ * Polish (Polski)
  */
 $specialPageAliases['pl'] = array(
 	'LicensedVideoSwap' => array( 'Wymiana_filmów' ),
 );
 
 /**
- * Spanish
+ * Vietnamese (Tiếng Việt)
  */
-$specialPageAliases['es'] = array(
-	'LicensedVideoSwap' => array( 'Videos_Autorizados', 'VideosAutorizados' ),
+$specialPageAliases['vi'] = array(
+	'LicensedVideoSwap' => array( 'Cấp_phép_trao_đổi_đoạn_phim' ),
 );
