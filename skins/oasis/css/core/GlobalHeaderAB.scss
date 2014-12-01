@@ -357,11 +357,10 @@ $facebook-background-color: #3c5b9b;
 			}
 
 			input.login-button[type="submit"] {
-				@include clear-linear-gradient;
+				@include clear-linear-gradient($nav-font-color;);
 				-webkit-appearance: none;
 				border: none;
 				border-radius: 0;
-				background-color: $nav-font-color;
 				display: block;
 				font-size: 15px;
 				font-weight: bold;
@@ -401,8 +400,7 @@ $facebook-background-color: #3c5b9b;
 			padding: 20px;
 
 			.wikia-button-facebook {
-				@include clear-linear-gradient;
-				background-color: $facebook-background-color;
+				@include clear-linear-gradient($facebook-background-color);
 				border: 0;
 				border-radius: 0;
 				display: block;
@@ -699,4 +697,3 @@ $facebook-background-color: #3c5b9b;
 		}
 	}
 }
-
