@@ -47,10 +47,7 @@
 
 	.forum-replies {
 		list-style: none;
-
-		@media #{$medium-only} {
-			padding-right: $medium-grid-gutter;
-		}
+		padding-right: $medium-grid-gutter;
 
 		@media #{$large-up} {
 			padding-right: $large-grid-column-padding;
