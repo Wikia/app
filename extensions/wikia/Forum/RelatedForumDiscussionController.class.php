@@ -30,6 +30,11 @@ class RelatedForumDiscussionController extends WikiaController {
 
 		$this->seeMoreUrl = $topicTitle->getFullUrl();
 		$this->seeMoreText = wfMessage( 'forum-related-discussion-see-more' )->escaped();
+
+		if ($this->app->checkSkin( 'venus' ) ) {
+			$this->venusBtnClasses = 'wikia-button secondary';
+			Wikia::addAssetsToOutput( 'related_forum_discussion_css' );
+		}
 	}
 
 	/**
