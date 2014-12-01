@@ -53,7 +53,7 @@ class LoginForm extends SpecialPage {
 	var $wpUserLoginExt, $wpUserBirthDay;
 
 	/**
-	 * @var ExternalUser_Wikia
+	 * @var ExternalUser (if used)
 	 */
 	private $mExtUser = null;
 
@@ -351,7 +351,8 @@ class LoginForm extends SpecialPage {
 	 */
 	function addNewAccountInternal() {
 		global $wgAuth, $wgMemc, $wgAccountCreationThrottle,
-			$wgMinimalPasswordLength, $wgEmailConfirmToEdit;
+			$wgMinimalPasswordLength, $wgEmailConfirmToEdit,
+                        $wgExternalAuthType;
 
 		if ( !$this->wikiaInternalCheck() ) {
 			return false;
@@ -427,8 +428,10 @@ class LoginForm extends SpecialPage {
 			$this->mainLoginForm( $this->msg( $this->wpMsgPrefix . 'noname' )->text(), 'error', 'username' );
 			return false;
 		}
-
-		$this->mExtUser = ExternalUser_Wikia::newFromName( $this->mUsername );
+                
+                if ( $wgExternalAuthType ) {
+        		$this->mExtUser = $wgExternalAuthType::newFromName( $this->mUsername );
+                }
 
 		if ( is_object( $this->mExtUser ) && ( 0 != $this->mExtUser->getId() ) ) {
 			$this->mainLoginForm( $this->msg( $this->wpMsgPrefix . 'userexists' )->text(), 'error', 'username' );
@@ -546,9 +549,9 @@ class LoginForm extends SpecialPage {
 		global $wgAuth, $wgExternalAuthType;
 
 		if ( $wgExternalAuthType ) {
-			$u = ExternalUser_Wikia::addUser( $u, $this->mPassword, $this->mEmail, $this->mRealName );
+			$u = $wgExternalAuthType::addUser( $u, $this->mPassword, $this->mEmail, $this->mRealName );
 			if ( is_object( $u ) ) {
-				$this->mExtUser = ExternalUser_Wikia::newFromName( $this->mUsername );
+				$this->mExtUser = $wgExternalAuthType::newFromName( $this->mUsername );
 			}
 		} else{
 			$u->addToDatabase();
@@ -648,10 +651,12 @@ class LoginForm extends SpecialPage {
 			wfDebug( __METHOD__ . ": already logged in as {$this->mUsername}\n" );
 			return self::SUCCESS;
 		}
+                global $wgExternalAuthType;
+                if ( $wgExternalAuthType ) {
+                    $this->mExtUser = $wgExternalAuthType::newFromName( $this->mUsername );
+                }
 
-		$this->mExtUser = ExternalUser_Wikia::newFromName( $this->mUsername );
-
-		global $wgExternalAuthType;
+		
 		if ( $wgExternalAuthType
 		&& is_object( $this->mExtUser )
 		&& $this->mExtUser->authenticate( $this->mPassword ) ) {
