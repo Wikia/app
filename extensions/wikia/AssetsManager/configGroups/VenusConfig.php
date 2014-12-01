@@ -253,8 +253,7 @@ $VenusConfig[ 'article_navigation_scss' ] = [
 	'skin' => [ 'venus' ],
 	'assets' => [
 		'//extensions/wikia/ArticleNavigation/styles/articleNavigation.scss',
-		'//extensions/wikia/UserTools/styles/UserTools.scss',
-		'//resources/wikia/ui_components/button/css/button_default.scss'
+		'//extensions/wikia/UserTools/styles/UserTools.scss'
 	]
 ];
 
