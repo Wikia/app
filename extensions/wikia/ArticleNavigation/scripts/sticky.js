@@ -13,7 +13,7 @@ require([
 		additionalTopOffset = 100,
 		$source = $(navigationElement),
 		$target = $(boundBoxElement),
-		$bottomTarget,
+		$bottomTarget = $('main'),
 		$doc = $(doc),
 		stickyElementObject = stickyElement.spawn();
 
@@ -32,12 +32,6 @@ require([
 		}
 	}
 
-	// Categories
-	$bottomTarget = $('.article-categories');
-	if ($bottomTarget.length === 0) {
-		$bottomTarget = $target;
-	}
-
 	function adjustPositionFunction(scrollY, sourceElement, targetElement) {
 		var additionalOffset, targetBottom, contentPadding;
 
@@ -49,10 +43,8 @@ require([
 
 		if (browserDetect.isIE()) {
 			additionalOffset = 2 * additionalTopOffset;
-		} else if (browserDetect.isFirefox()) {
-			additionalOffset = additionalTopOffset;
 		} else {
-			additionalOffset = additionalTopOffset + contentPadding;
+			additionalOffset = additionalTopOffset;
 		}
 
 		if ($doc.scrollTop() + additionalOffset - contentPadding >= targetBottom) {
