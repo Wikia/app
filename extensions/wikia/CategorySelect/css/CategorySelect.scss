@@ -28,8 +28,7 @@
 	}
 
 	.add {
-		@include clear-linear-gradient();
-		background-color: $color-speech-bubble;
+		@include clear-linear-gradient($color-speech-bubble);
 	}
 
 	.categories {

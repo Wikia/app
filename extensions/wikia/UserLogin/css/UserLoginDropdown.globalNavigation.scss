@@ -125,8 +125,7 @@
 		}
 
 		input[type=submit] {
-			@include clear-linear-gradient;
-			background-color: $nav-foreground-dark-color;
+			@include clear-linear-gradient($nav-foreground-dark-color);
 			border: 0;
 			border-radius: 0;
 			color: $global-wikia-background-color;
@@ -192,8 +191,7 @@
 			text-transform: uppercase;
 
 			&, &:hover, &:active {
-				@include clear-linear-gradient;
-				background-color: $facebook-background-color;
+				@include clear-linear-gradient($facebook-background-color);
 				text-decoration: none;
 			}
 
