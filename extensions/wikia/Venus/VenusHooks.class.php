@@ -1,5 +1,7 @@
 <?php
 
+use \Wikia\Logger\WikiaLogger;
+
 class VenusHooks {
 
 	/**
@@ -34,35 +36,44 @@ class VenusHooks {
 			return true;
 		}
 
-		if ( self::isInfoboxInFirstSection( $parser, $section, $content ) ) {
-			$infoboxExtractor = new InfoboxExtractor( $content );
+		try {
+			if (self::isInfoboxInFirstSection($parser, $section, $content)) {
+				$infoboxExtractor = new InfoboxExtractor($content);
 
-			$dom = $infoboxExtractor->getDOMDocument();
+				$dom = $infoboxExtractor->getDOMDocument();
 
-			$nodes = $infoboxExtractor->getInfoboxNodes();
-			$node = $nodes->item(0);
+				$nodes = $infoboxExtractor->getInfoboxNodes();
+				$node = $nodes->item(0);
 
-			if ( $node instanceof DOMElement ) {
-				$body = $dom->documentElement->firstChild;
+				if ($node instanceof DOMElement) {
+					$body = $dom->documentElement->firstChild;
 
-				// replace extracted infobox with a dummy element to prevent newlines from creating empty paragraphs (CON-2166)
-				// <table infobox-placeholder="1"></table>
-				$placeholder = $dom->createElement( 'table' );
-				$placeholder->setAttribute( 'infobox-placeholder', 'true' );
-				$body->insertBefore( $placeholder, $node );
+					// replace extracted infobox with a dummy element to prevent newlines from creating empty paragraphs (CON-2166)
+					// <table infobox-placeholder="1"></table>
+					$placeholder = $dom->createElement('table');
+					$placeholder->setAttribute('infobox-placeholder', 'true');
 
-				// perform a magic around infobox wrapper
-				$node = $infoboxExtractor->clearInfoboxStyles( $node );
-				$infoboxWrapper = $infoboxExtractor->wrapInfobox( $node, 'infoboxWrapper', 'infobox-wrapper' );
-				$infoboxContainer = $infoboxExtractor->wrapInfobox( $infoboxWrapper, 'infoboxContainer', 'infobox-container' );
+					$node->parentNode->insertBefore($placeholder, $node);
 
-				// move infobox to the beginning of article content
-				$infoboxExtractor->insertNode( $body, $infoboxContainer, true );
+					// perform a magic around infobox wrapper
+					$node = $infoboxExtractor->clearInfoboxStyles($node);
+					$infoboxWrapper = $infoboxExtractor->wrapInfobox($node, 'infoboxWrapper', 'infobox-wrapper');
+					$infoboxContainer = $infoboxExtractor->wrapInfobox($infoboxWrapper, 'infoboxContainer', 'infobox-container');
 
-				$content = $dom->saveHTML();
+					// move infobox to the beginning of article content
+					$infoboxExtractor->insertNode($body, $infoboxContainer, true);
 
-				$parser->getOutput()->addModules( 'ext.wikia.venus.article.infobox' );
+					$content = $dom->saveHTML();
+
+					$parser->getOutput()->addModules('ext.wikia.venus.article.infobox');
+				}
 			}
+		}
+		catch(DOMException $e) {
+			// log exceptions
+			WikiaLogger::instance()->error(__METHOD__, [
+				'exception' => $e,
+			]);
 		}
 
 		return true;
