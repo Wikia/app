@@ -104,7 +104,14 @@ class VideosModule extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 		$log = WikiaLogger::instance();
 
-		$memcKey = wfMemcKey( 'videomodule', 'local_videos', self::CACHE_VERSION, $sort, $this->userRegion );
+		$memcKey = wfMemcKey(
+			'videomodule',
+			'local_videos',
+			self::CACHE_VERSION,
+			$sort,
+			$this->userRegion,
+			$numRequired
+		);
 		$videos = $this->wg->Memc->get( $memcKey );
 
 		$loggingParams = [ 'method' => __METHOD__, 'num' => $numRequired, 'sort' => $sort ];
@@ -113,7 +120,7 @@ class VideosModule extends WikiaModel {
 			$log->info( __METHOD__.' memc MISS', $loggingParams );
 
 			$filter = 'all';
-			$paddedLimit = $this->getPaddedVideoLimit( self::LIMIT_VIDEOS );
+			$paddedLimit = $this->getPaddedVideoLimit( $numRequired );
 
 			$mediaService = new MediaQueryService();
 			$videoList = $mediaService->getVideoList( $sort, $filter, $paddedLimit );
@@ -121,7 +128,7 @@ class VideosModule extends WikiaModel {
 
 			$videos = [];
 			foreach ( $videosWithDetails as $video ) {
-				if ( count( $videos ) >= self::LIMIT_VIDEOS ) {
+				if ( count( $videos ) >= $numRequired ) {
 					break;
 				}
 				$this->addToList( $videos, $video, self::SOURCE_LOCAL );
@@ -151,7 +158,13 @@ class VideosModule extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 		$log = WikiaLogger::instance();
 
-		$memcKey = wfMemcKey( 'videomodule', 'wiki_related_videos_topics', self::CACHE_VERSION, $this->userRegion );
+		$memcKey = wfMemcKey(
+			'videomodule',
+			'wiki_related_videos_topics',
+			self::CACHE_VERSION,
+			$this->userRegion,
+			$numRequired
+		);
 		$videos = $this->wg->Memc->get( $memcKey );
 
 		$loggingParams = [ 'method' => __METHOD__, 'num' => $numRequired ];
@@ -164,7 +177,7 @@ class VideosModule extends WikiaModel {
 
 			$params = [
 				'defaultTopic' => $wikiTitle,
-				'limit'        => $this->getPaddedVideoLimit( self::LIMIT_VIDEOS ),
+				'limit'        => $this->getPaddedVideoLimit( $numRequired ),
 			];
 
 			$videoResults = $this->app->sendRequest( 'WikiaSearchController', 'searchVideosByTopics', $params )->getData();
@@ -172,7 +185,7 @@ class VideosModule extends WikiaModel {
 
 			$videos = [];
 			foreach ( $videosWithDetails as $video ) {
-				if ( count( $videos ) >= self::LIMIT_VIDEOS ) {
+				if ( count( $videos ) >= $numRequired ) {
 					break;
 				}
 				$this->addToList( $videos, $video, self::SOURCE_WIKI_TOPICS );
@@ -235,7 +248,15 @@ class VideosModule extends WikiaModel {
 
 		sort( $category );
 		$hashCategory = md5( json_encode( $category ) );
-		$memcKey = wfSharedMemcKey( 'videomodule', 'videolist', self::CACHE_VERSION, $hashCategory, $sort, $this->userRegion );
+		$memcKey = wfSharedMemcKey(
+			'videomodule',
+			'videolist',
+			self::CACHE_VERSION,
+			$hashCategory,
+			$sort,
+			$this->userRegion,
+			$limit
+		);
 		$videos = $this->wg->Memc->get( $memcKey );
 
 		$loggingParams = [
