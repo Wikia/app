@@ -8,7 +8,11 @@ $dropdownArrowSize: 10px;
 
 @mixin dropdownWidth($columnWidth: $medium-grid-column * 3) {
 	.wikia-dropdown-nav-wrapper {
-		width: $columnWidth * 2;
+		width: $columnWidth;
+
+		&.wide {
+			width: $columnWidth * 2;
+		}
 	}
 
 	.wikia-dropdown-nav-sections-wrapper,
