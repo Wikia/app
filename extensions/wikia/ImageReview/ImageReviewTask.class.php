@@ -101,7 +101,7 @@ class ImageReviewTask extends BaseTask {
 
 			WikiaLogger::instance()->info( 'ImageReviewLog', [
 				'method' => __METHOD__,
-				'message' => "Image removed from queue",
+				'message' => 'Image removed from queue',
 				'params' => $aRow,
 			] );
 		}
