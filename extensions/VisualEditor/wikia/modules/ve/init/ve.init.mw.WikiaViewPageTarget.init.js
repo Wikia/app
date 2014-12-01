@@ -30,6 +30,10 @@
 		spinnerTimeoutId = null,
 		skin = mw.config.get( 'skin' );
 
+	function isVenus() {
+		return skin === 'venus';
+	}
+
 	function getOptimizelyExperimentId( experimentName ) {
 		if ( experimentName === 'VE Source Entry Point Anon' ) {
 			return mw.config.get( 'wgDevelEnvironment' ) ? 1673650053 : 1783530197;
@@ -97,7 +101,7 @@
 			],
 			targetModule = 'ext.visualEditor.wikiaViewPageTarget';
 
-		if ( skin === 'venus' ) {
+		if ( isVenus() ) {
 			targetModule = 'ext.visualEditor.venusViewPageTarget';
 			resources.push( $.getSassCommonURL( '/extensions/VisualEditor/wikia/modules/ve/ui/styles/Venus.scss' ) );
 		}
@@ -130,17 +134,12 @@
 			).done( function () {
 				var target;
 
-				if ( skin === 'oasis' ) {
-					target = new ve.init.mw.WikiaViewPageTarget();
-				} else if ( skin === 'venus' ) {
+				if ( isVenus() ) {
 					target = new ve.init.mw.VenusViewPageTarget();
-				}
-
-				// Transfer methods
-				if ( skin === 'oasis' ) {
-					ve.init.mw.WikiaViewPageTarget.prototype.setupSectionEditLinks = init.setupSectionLinks;
-				} else if ( skin === 'venus' ) {
 					ve.init.mw.VenusViewPageTarget.prototype.setupSectionEditLinks = init.setupSectionLinks;
+				} else {
+					target = new ve.init.mw.WikiaViewPageTarget();
+					ve.init.mw.WikiaViewPageTarget.prototype.setupSectionEditLinks = init.setupSectionLinks;
 				}
 
 				// Add plugins
