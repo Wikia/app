@@ -86,6 +86,9 @@ class ArticleNavigationController extends WikiaController {
 					'trackingId' => $contentAction['id']
 				];
 
+				// Check if edit or viewsource link should be displayed.
+				// In case of viewsource without namespace and cascade protection
+				// we don't want to display user login modal
 				if (
 					$action == 'viewsource' &&
 					$wgUser->isAnon() &&
