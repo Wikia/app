@@ -139,7 +139,7 @@ $category-height: 16px;
 	}
 
 	@media #{$small-only} {
-		margin: 0 $small-content-padding - $content-border-width $categories-vertical-spacing;
+		margin: 0 $small-content-padding - $content-border-width $categories-vertical-spacing $small-grid-column + $small-grid-gutter + $small-content-padding - $content-border-width;
 		padding: 0 $small-grid-column-padding;
 	}
 
