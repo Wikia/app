@@ -16,6 +16,9 @@ require([
 		$bottomTarget = $('main'),
 		$doc = $(doc),
 		stickyElementObject = stickyElement.spawn(),
+		adPoolerSelector = '#TOP_LEADERBOARD.standard-leaderboard,' +
+			'#TOP_LEADERBOARD [data-gpt-creative-size], ' +
+			'#TOP_LEADERBOARD [id^="Liftium_"]',
 		adLogicPoolerCount = 0,
 		adLogicLastHeight = 0;
 
@@ -23,21 +26,17 @@ require([
 	 * Pool for changed TOP_LEADERBOARD's height (can be very lazy-loaded)
 	 */
 	function adLoadPooler() {
-		var $el = $('#TOP_LEADERBOARD.standard-leaderboard, #TOP_LEADERBOARD [data-gpt-creative-size], #TOP_LEADERBOARD [id^="Liftium_"]'),
-			maxPoolerCount = 50,
-			poolerInterval = 250,
-			defaultWidth = 728,
-			defaultHeight = 90,
+		var $el = $(adPoolerSelector),
 			height;
 
-		if ($el.length === 0 && adLogicPoolerCount < maxPoolerCount) {
+		if ($el.length === 0 && adLogicPoolerCount < 50) {
 			adLogicPoolerCount ++;
 
 			// absent, schedule another check
-			setTimeout(adLoadPooler, poolerInterval);
+			setTimeout(adLoadPooler, 250);
 		} else {
 			// present, calculate height
-			height = ($el.data('gpt-creative-size') || [defaultWidth, defaultHeight])[1];
+			height = ($el.data('gpt-creative-size') || [728, 90])[1];
 
 			// update only if height differs
 			if (height !== adLogicLastHeight) {
