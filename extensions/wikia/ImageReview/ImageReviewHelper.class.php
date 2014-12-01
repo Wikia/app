@@ -256,7 +256,7 @@ class ImageReviewHelper extends ImageReviewHelperBase {
 
 			if ( count( $imageList ) < self::LIMIT_IMAGES ) {
 				$oImagePage = GlobalTitle::newFromId( $row->page_id, $row->wiki_id );
-				if ( $oImagePage instanceof GlobalTitle ) {
+				if ( $oImagePage instanceof GlobalTitle && $oImagePage->isRedirect() !== true ) {
 					$oImageGlobalFile = new GlobalFile( $oImagePage );
 
 					$sThumbUrl = $oImageGlobalFile->getUrlGenerator()
