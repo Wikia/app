@@ -30,7 +30,7 @@ require([
 			defaultHeight = 90,
 			height;
 
-		if ($el.length && adLogicPoolerCount < maxPoolerCount) {
+		if ($el.length === 0 && adLogicPoolerCount < maxPoolerCount) {
 			adLogicPoolerCount ++;
 
 			// absent, schedule another check
@@ -42,7 +42,7 @@ require([
 			// update only if height differs
 			if (height !== adLogicLastHeight) {
 				adLogicLastHeight = height;
-				//stickyElementObject.updateSize();
+				stickyElementObject.updateSize();
 			}
 		}
 	}
