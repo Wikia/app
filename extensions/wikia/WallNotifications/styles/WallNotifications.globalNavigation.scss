@@ -1,19 +1,20 @@
-@import "skins/shared/color";
-@import "skins/shared/mixins/calc";
-@import "skins/shared/mixins/clearfix";
-@import "skins/shared/mixins/box-shadow";
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/calc';
+@import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/box-shadow';
 @import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/mixins';
+@import 'extensions/wikia/Venus/styles/typographyMixins';
 
 $header-bg-color: #092140;
 $border-color: #c7d1d8;
 $wiki-header-color: #2b54b5;
-$wiki-header-bg-color: rgba(113, 133, 148, 0.2);
-$notification-hover: rgba(164, 182, 191, 0.2);
-$white-transparent: rgba(255,255,255,0);
+$wiki-header-bg-color: rgba(113, 133, 148, .2);
+$notification-hover: rgba(164, 182, 191, .2);
+$white-transparent: rgba(255, 255, 255, 0);
 $white: #fff;
-$black-transparent: rgba(0,0,0,0);
-$black-half-transparent: rgba(0,0,0,.6);
+$black-transparent: rgba(0, 0, 0, 0);
+$black-half-transparent: rgba(0, 0, 0, .6);
 
 
 .bubbles {
@@ -33,12 +34,13 @@ $black-half-transparent: rgba(0,0,0,.6);
 }
 
 .bubbles-count {
+	@include font-size-xxs;
 	background-color: red;
 	border-radius: 8px;
 	color: $white;
-	font-size: 12px;
 	font-weight: normal;
 	height: 16px;
+	line-height: 16px;
 	min-width: 16px;
 	padding: 0 2px;
 	text-align: center;
@@ -80,7 +82,7 @@ $black-half-transparent: rgba(0,0,0,.6);
 
 				/* Shadows */
 				radial-gradient(50% 0, farthest-side, $black-half-transparent, $black-transparent),
-				radial-gradient(50% 100%,farthest-side, $black-half-transparent, $black-transparent) 0 100%;
+				radial-gradient(50% 100%, farthest-side, $black-half-transparent, $black-transparent) 0 100%;
 
 			background:
 				/* Shadow covers */
@@ -91,11 +93,10 @@ $black-half-transparent: rgba(0,0,0,.6);
 				radial-gradient(farthest-side at 50% 0, $black-half-transparent, $black-transparent),
 				radial-gradient(farthest-side at 50% 100%, $black-half-transparent, $black-transparent) 0 100%;
 
-			background-repeat: no-repeat;
-			background-color: $white;
-			background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
-
 			background-attachment: local, local, scroll, scroll;
+			background-color: $white;
+			background-repeat: no-repeat;
+			background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
 
 			.notifications-wiki-header {
 				padding-right: 20px;
@@ -108,9 +109,9 @@ $black-half-transparent: rgba(0,0,0,.6);
 	}
 
 	header {
+		font-weight: bold;
 		height: auto;
 		min-height: 51px;
-		font-weight: bold;
 		padding: 15px 20px 0;
 	}
 
@@ -129,8 +130,8 @@ $black-half-transparent: rgba(0,0,0,.6);
 	}
 
 	.notifications-markasread {
+		@include font-size-xxs;
 		float: right;
-		font-size: 12px;
 		font-weight: normal;
 		text-align: right;
 
@@ -153,8 +154,8 @@ $black-half-transparent: rgba(0,0,0,.6);
 		&.show {
 			.chevron {
 				border: 5px solid transparent;
-				border-top: 0;
 				border-bottom-color: $border-color;
+				border-top: 0;
 			}
 
 			.notifications-wiki-header:hover .chevron {
@@ -211,8 +212,8 @@ $black-half-transparent: rgba(0,0,0,.6);
 			@include grid-column-width('medium', 1);
 
 			display: inline-block;
-			vertical-align: top;
 			text-align: center;
+			vertical-align: top;
 
 			.avatar {
 				border-radius: 50%;
@@ -220,14 +221,14 @@ $black-half-transparent: rgba(0,0,0,.6);
 		}
 
 		h4 {
-			font-size: 15px;
+			@include font-size-s;
 			font-weight: bold;
 			margin: 0;
 		}
 
 		time {
+			@include font-size-xxs;
 			color: $border-color;
-			font-size: 12px;
 		}
 
 		&.empty, &.admin-notification {
@@ -237,7 +238,7 @@ $black-half-transparent: rgba(0,0,0,.6);
 		&.admin-notification:before {
 			border-left: 5px solid $header-bg-color;
 			color: transparent;
-			content: ".";
+			content: '.';
 			display: block;
 			height: 100%;
 			left: 0;
@@ -248,7 +249,7 @@ $black-half-transparent: rgba(0,0,0,.6);
 
 		&.read {
 			h4, .avatars {
-				opacity: 0.7;
+				opacity: .7;
 			}
 		}
 

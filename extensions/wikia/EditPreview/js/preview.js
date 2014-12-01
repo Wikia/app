@@ -101,6 +101,36 @@ define('wikia.preview', [
 	}
 
 	/**
+	 * @desc Handles appending venus preview to modal
+	 *
+	 * This is a separate skin so we're loading it in iframe
+	 * @param {object} data - data that comes from preview api
+	 */
+	function handleVenusPreview(data) {
+		var iframe = $article.html(
+				'<div class="venus-preview">' +
+				'<iframe  width="100%" height="100%" frameborder="0" scrolling="no"></iframe>' +
+				'</div>'
+			).find('iframe')[0],
+			doc = iframe.document;
+
+		if (iframe.contentDocument) {
+			doc = iframe.contentDocument;
+		} else if (iframe.contentWindow) {
+			doc = iframe.contentWindow.document;
+		}
+
+		doc.open();
+		doc.writeln(data.html);
+		doc.close();
+
+		// set iframe height to mach its content
+		$(iframe).one('load', function () {
+			iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
+		});
+	}
+
+	/**
 	 * @desc Handles appending desktop preview to modal
 	 * @param {object} data - data that comes from preview api
 	 */
@@ -113,7 +143,7 @@ define('wikia.preview', [
 	 * @param {string} type - What type of preview to load currently
 	 *                          empty -> Desktop preview,
 	 *                          mobile -> Mobile preview
-	 * @param {boolean} opening - whether this is first load and all values should be calculated
+	 * @param {boolean=} opening - whether this is first load and all values should be calculated
 	 */
 	function loadPreview(type, opening) {
 		if (!opening) {
@@ -128,6 +158,8 @@ define('wikia.preview', [
 
 			if (type === previewTypes.mobile.name) {
 				handleMobilePreview(data);
+			} else if (type === previewTypes.venus.name) {
+				handleVenusPreview(data);
 			} else {
 				handleDesktopPreview(data);
 			}
@@ -201,7 +233,16 @@ define('wikia.preview', [
 				}],
 				toolTipMessage: msg('wikia-editor-preview-type-tooltip')
 			},
-			html = mustache.render(template, params);
+			html;
+
+		if (window.wgEnableVenusArticle) {
+			params.options.push({
+				value: previewTypes.venus.name,
+				name: msg('wikia-editor-preview-venus-width')
+			});
+		}
+
+		html = mustache.render(template, params);
 
 		$(html).insertAfter($dialog.find('h1:first'));
 
@@ -332,7 +373,11 @@ define('wikia.preview', [
 		currentTypeName = type;
 
 		//load again preview only if changing mobile <-> desktop
-		if (type === previewTypes.mobile.name || lastTypeName === previewTypes.mobile.name) {
+		if (type === previewTypes.mobile.name ||
+			type === previewTypes.venus.name ||
+			lastTypeName === previewTypes.mobile.name ||
+			lastTypeName === previewTypes.venus.name
+		) {
 			loadPreview(previewTypes[currentTypeName].name);
 		}
 
@@ -432,6 +477,12 @@ define('wikia.preview', [
 					skin: 'wikiamobile',
 					type: 'full',
 					value: null
+				},
+				venus: {
+					name: 'venus',
+					skin: 'venus',
+					type: 'full',
+					value: 1024
 				}
 			};
 

@@ -1553,6 +1553,7 @@ abstract class Skin extends ContextSource {
 			array( 'noclasses', 'known' )
 		);
 
+
 		# Run the old hook.  This takes up half of the function . . . hopefully
 		# we can rid of it someday.
 		$attribs = '';
@@ -1567,17 +1568,32 @@ abstract class Skin extends ContextSource {
 			# run, and even add them to hook-provided text.  (This is the main
 			# reason that the EditSectionLink hook is deprecated in favor of
 			# DoEditSectionLink: it can't change the brackets or the span.)
-			$result = wfMsgExt( 'editsection-brackets', array( 'escape', 'replaceafter', 'language' => $lang ), $result );
-			return "<span class=\"editsection\">$result</span>";
+			return $this->getWrappedEditSectionLink( $result, $lang );
 		}
 
 		# Add the brackets and the span, and *then* run the nice new hook, with
 		# clean and non-redundant arguments.
-		$result = wfMsgExt( 'editsection-brackets', array( 'escape', 'replaceafter', 'language' => $lang ), $link );
-		$result = "<span class=\"editsection\">$result</span>";
+		$result = $this->getWrappedEditSectionLink( $link, $lang );
 
 		wfRunHooks( 'DoEditSectionLink', array( $this, $nt, $section, $tooltip, &$result, $lang ) );
 		return $result;
+	}
+
+	/**
+	 * Wrap edit-section link in brackets (if needed) and span tag
+	 *
+	 * @param $link string Link markup
+	 * @param $langCode string Language code
+	 * @return string Updated link markup
+	 */
+	protected function getWrappedEditSectionLink( $link, $langCode ) {
+		if ( $this->getSkinName() !== WikiaSkin::SKIN_VENUS ) {
+			// Wrap in brackets
+			$link = wfMessage( 'editsection-brackets', $link )
+				->inLanguage( $langCode )
+				->text();
+		}
+		return "<span class=\"editsection\">$link</span>";
 	}
 
 	/**

@@ -4,34 +4,36 @@ define('videosmodule.views.titleThumbnail', [
 ], function (TitleThumbnail, Tracker) {
 	'use strict';
 
-	var track = Tracker.buildTrackingFunction({
-		category: 'videos-module-rail',
-		trackingMethod: 'both',
-		action: Tracker.ACTIONS.CLICK,
-		label: 'thumbnail-click'
-	});
-
 	function VideosModuleThumbnail(config) {
 		this.idx = config.idx;
+		this.trackClick = Tracker.buildTrackingFunction({
+			category: config.trackingCategory,
+			trackingMethod: 'both',
+			action: Tracker.ACTIONS.CLICK,
+			label: 'thumbnail-click'
+		});
 		TitleThumbnail.call(this, config);
 	}
 
 	VideosModuleThumbnail.prototype = Object.create(TitleThumbnail.prototype);
+
 	VideosModuleThumbnail.prototype.bindEvents = function () {
 		var self = this;
 		this.$el.on('mousedown', 'a', function () {
-			track({
+			self.trackClick({
 				value: self.idx
 			});
 			return true;
 		});
 	};
+
 	VideosModuleThumbnail.prototype.render = function () {
 		this.constructor.prototype.render.call(this);
 		this.addSourceInfo();
 		this.bindEvents();
 		return this;
 	};
+
 	/**
 	 * Add information about how the video was selected to the DOM for debugging purposes
 	 * Ex: (subject to change) local, article-related, wiki-topics, etc.

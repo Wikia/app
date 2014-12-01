@@ -1,6 +1,6 @@
 @import 'extensions/wikia/Venus/styles/variables';
+@import 'extensions/wikia/Venus/styles/typographyMixins';
 @import 'skins/shared/color';
-@import 'skins/shared/mixins/blackout';
 @import 'skins/shared/mixins/chevron';
 @import 'skins/shared/mixins/columns';
 @import 'GlobalNavigationColors';
@@ -23,15 +23,19 @@
 	}
 }
 
+.global-navigation {
+	line-height: 23px;
+}
+
 .hubs-entry-point {
 	background-image: url('/extensions/wikia/GlobalNavigation/images/hubs_entry_point.svg'); /* base64 */
 	background-position: 16px center;
 	background-repeat: no-repeat;
 	cursor: pointer;
-	padding: 0 9px 0 38px;
+	padding: 0 17px 0 38px;
 
 	&:after {
-		border: 5px solid $nav-background-color;
+		border: 5px solid $global-wikia-background-color;
 		border-top-color: $nav-border-color;
 		content: ' ';
 		display: inline-block;
@@ -46,14 +50,6 @@
 
 	.hubs-entry-point:after {
 		border-top-color: $nav-foreground-dark-color;
-	}
-}
-
-.transparent-out {
-	@include blackout(rgba(1, 1, 1, 0));
-
-	&.visible {
-		z-index: $blackout-z-index;
 	}
 }
 
@@ -72,6 +68,12 @@
 		color: $nav-foreground-dark-color;
 	}
 
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
 	.hub-list {
 		float: left;
 		width: 256px;
@@ -84,14 +86,14 @@
 	}
 
 	.hub-link {
-		background-color: $nav-background-color;
+		background-color: $global-wikia-background-color;
 		display: block;
 		height: 62px;
 		line-height: 62px;
 		position: relative;
 
 		&.active {
-			color: $nav-background-color;
+			color: $global-wikia-background-color;
 			font-weight: bold;
 
 			&:before {
@@ -145,7 +147,7 @@
 			width: 102px;
 
 			&:after {
-				background-color: $nav-background-color;
+				background-color: $global-wikia-background-color;
 				content: ' ';
 				display: inline-block;
 				float: right;
@@ -155,11 +157,11 @@
 		}
 
 		.label {
-			background-color: $nav-background-color;
+			background-color: $global-wikia-background-color;
 			border-bottom: 1px solid $hubsmenu-background-color;
 			display: inline-block;
 			float: left;
-			font-size: 18px;
+			font-size: $font-size-base-big-screen;
 			height: 62px;
 			width: 142px;
 		}
@@ -169,9 +171,10 @@
 		@include column-count(2);
 		@include column-rule(1px solid $nav-border-color);
 		@include column-gap(36px);
+		@include font-size-s;
 		display: none;
 		float: left;
-		font-size: 15px;
+		line-height: 17px;
 		padding-left: 22px;
 		width: 464px;
 
@@ -185,8 +188,11 @@
 		}
 
 		strong {
+			@include font-size-s;
 			display: inline-block;
 			font-weight: bold;
+			line-height: 17px;
+			margin: 0;
 			padding: 21px 0 5px;
 		}
 
@@ -196,8 +202,8 @@
 
 			&.more {
 				@include right-chevron();
+				@include font-size-base;
 				bottom: 40px;
-				font-size: 16px;
 				font-weight: bold;
 				left: 278px;
 				position: absolute;
@@ -243,6 +249,10 @@
 }
 
 @media #{$small-only} {
+	.hubs-entry-point {
+		padding-right: 22px;
+	}
+
 	.hubs-menu {
 		.hub-link {
 			&.active {

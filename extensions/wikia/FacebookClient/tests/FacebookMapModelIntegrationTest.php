@@ -1,4 +1,3 @@
-
 <?php
 
 /**
@@ -9,6 +8,10 @@
  * @category Wikia
  * @group UsingDB
  * @group Facebook
+<<<<<<< HEAD
+=======
+ * @group Broken
+>>>>>>> dev
  */
 
 class FacebookMapModelIntegrationTest extends WikiaBaseTest {

@@ -249,7 +249,12 @@ tabberObj.prototype.init = function(e)
 
 		/* Create a link to activate the tab */
 		DOM_a = document.createElement("a");
-		DOM_a.appendChild(document.createTextNode(t.headingText));
+		// begin wikia change
+		// @VOLDEV-92
+		// @author Cam
+		// replace spaces with &nbsp;
+		DOM_a.appendChild(document.createTextNode(t.headingText.replace(/ /g, '\u00A0')));
+		// end wikia change
 		DOM_a.href = "javascript:void(null);";
 		DOM_a.title = t.headingText;
 		DOM_a.onclick = this.navClick;
@@ -278,6 +283,13 @@ tabberObj.prototype.init = function(e)
 
 		/* Add the list element to the list */
 		DOM_ul.appendChild(DOM_li);
+
+		// begin wikia change
+		// VOLDEV-92
+		// @author Cam
+		// manually insert word break points
+		DOM_ul.appendChild(document.createElement('wbr'));
+		// end wikia change
 	}
 
 	/* Add the UL list to the beginning of the tabber div */
