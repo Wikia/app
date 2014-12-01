@@ -17,6 +17,7 @@
 	}
 
 	.forum-discussions {
+		list-style: none;
 		margin: 0 -10px;
 		padding-left: 0;
 
@@ -47,6 +48,18 @@
 	.forum-replies {
 		list-style: none;
 
+		@media #{$medium-only} {
+			padding-right: $medium-grid-gutter;
+		}
+
+		@media #{$large-up} {
+			padding-right: $large-grid-column-padding;
+		}
+
+		@media #{$small-only} {
+			padding-right: $small-grid-gutter;
+		}
+
 		.forum-reply {
 			margin-top: 10px;
 			padding-left: 40px;
@@ -54,12 +67,12 @@
 
 			.forum-timestamp {
 				color: $color-alternate-text;
+				display: inline-block;
 				font-size: $font-size-xs;
-				margin-left: 1em;
 			}
 
 			.forum-user-avatar {
-				border: 1px solid $color-page-border;
+				border-radius: 50%;
 				height: 30px;
 				left: 0;
 				position: absolute;
