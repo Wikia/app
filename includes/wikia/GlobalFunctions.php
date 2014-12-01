@@ -1395,27 +1395,6 @@ function json_encode_jsfunc($input=array(), $funcs=array(), $level=0)
  }
 
 /**
- * generate correct version of session key
- *
- * @author Piotr Molski (moli) <moli at wikia-inc.com>
- *
- * @return String $key
- */
-function wfGetSessionKey( $id ) {
-	global $wgSharedDB, $wgDBname, $wgExternalUserEnabled, $wgExternalSharedDB;
-
-	if ( !empty( $wgExternalUserEnabled ) ) {
-		$key = "{$wgExternalSharedDB}:session:{$id}";
-	} elseif ( !empty( $wgSharedDB ) ) {
-		$key = "{$wgSharedDB}:session:{$id}";
-	} else {
-		$key = "{$wgDBname}:session:{$id}";
-	}
-
-	return $key;
-}
-
-/**
  * @brief Handles pagination for arrays
  *
  * @author Federico "Lox" Lucignano
