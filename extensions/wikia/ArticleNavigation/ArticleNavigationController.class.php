@@ -86,11 +86,16 @@ class ArticleNavigationController extends WikiaController {
 					'trackingId' => $contentAction['id']
 				];
 
-				if ( $wgUser->isAnon() &&
+				if (
+					$action == 'viewsource' &&
+					$wgUser->isAnon() &&
 					!$wgUser->isBlocked() &&
 					!$wgTitle->userCan( 'edit' ) &&
-					$this->isEdit($contentAction)
+					!$wgTitle->isProtected() &&
+					!$wgTitle->isNamespaceProtected( $wgUser ) &&
+					!$wgTitle->isCascadeProtected()
 				) {
+					$data[ 'text' ] = wfMessage( 'edit' )->text();
 					$data[ 'class' ] = 'force-user-login';
 				}
 
@@ -250,9 +255,5 @@ class ArticleNavigationController extends WikiaController {
 		}
 
 		return $renderedData;
-	}
-
-	private function isEdit($data) {
-		return !empty($data['id']) && ($data['id'] == 'ca-viewsource');
 	}
 }
