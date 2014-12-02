@@ -163,24 +163,11 @@ class FacebookClient {
 			return $this->facebookUserId;
 		}
 
-		$errorMessage = null;
-
-		try {
-			$session = $this->getSession();
-			if ( $session ) {
-				$session->validate();
-				$this->facebookUserId = ( int ) $this->facebookAPI->getUserId();
-			}
-		} catch ( \Exception $e ) {
-			$errorMessage = $e->getMessage();
-		}
-
+		$this->facebookUserId = $this->facebookAPI->getUserId();
 		if ( empty( $this->facebookUserId ) ) {
 			$this->facebookUserId = 0;
-
 			WikiaLogger::instance()->warning( 'Null Facebook user id', [
 				'method' => __METHOD__,
-				'message' => $errorMessage,
 			] );
 		}
 
@@ -197,18 +184,15 @@ class FacebookClient {
 	public function getUserInfo( $userId = 0 ) {
 		$log = WikiaLogger::instance();
 
-		// Pull the user ID from the signed FB cookie if it wasn't passed in
-		if ( empty( $userId ) ) {
-			$userId = $this->getUserId();
-		}
+		$this->facebookUserId = empty( $userId ) ? $this->getUserId() : $userId;
 
 		// If we still couldn't get a user ID, return null
-		if ( empty( $userId ) ) {
+		if ( empty( $this->facebookUserId ) ) {
 			$log->warning( __CLASS__ . ': Could not get user ID from FB session', [ 'method' => __METHOD__ ]);
 			return null;
 		}
 
-		if ( empty( $this->userInfoCache[$userId] ) ) {
+		if ( empty( $this->userInfoCache[$this->facebookUserId] ) ) {
 			try {
 				$userProfile = ( new \Facebook\FacebookRequest(
 					$this->getSession(),
