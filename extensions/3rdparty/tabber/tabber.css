@@ -28,6 +28,14 @@ ul.tabbernav
  padding: 3px 0;
  border-bottom: 1px solid #778;
  font: bold 12px Verdana, sans-serif;
+ /*
+  * begin wikia change
+  * VOLDEV-92
+  * @author Cqm
+  * Fixes weird word break issues in IE
+  */
+ word-wrap: normal;
+ /* end wikia change */
 }
 
 ul.tabbernav li
