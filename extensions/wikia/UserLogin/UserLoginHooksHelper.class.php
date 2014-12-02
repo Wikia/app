@@ -139,6 +139,9 @@ class UserLoginHooksHelper {
 	 */
 	public static function onMakeGlobalVariablesScript(Array &$vars) {
 		$vars['wgEnableUserLoginExt'] = true;
+		// @lizlux - we're removing PHP $wgEnableUserLogin (always true) and
+		// refining corresponding conditional statements. Please, consider
+		// remove this one too, if relevant.
 
 		if (F::app()->checkSkin('wikiamobile')) {
 			$vars['wgLoginToken'] = UserLoginHelper::getLoginToken();

@@ -176,6 +176,7 @@
 		 */
 		show: function (options) {
 			if (!window.wgComboAjaxLogin && window.wgEnableUserLoginExt) {
+				                               // @lixlux - always true, therefore unneeded?
 				options = options || {};
 
 				options.modalInitCallback = $.proxy(function () {
@@ -234,6 +235,7 @@
 
 	$(function () {
 		if ((typeof window.wgEnableUserLoginExt !== 'undefined') && window.wgEnableUserLoginExt) {
+			// @lizlux - always set, always true, therefore unneeded?
 			UserLoginModal.init();
 		}
 	});
