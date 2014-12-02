@@ -166,7 +166,7 @@ class FacebookClient {
 		$this->facebookUserId = $this->facebookAPI->getUserId();
 		if ( !empty( $this->facebookUserId ) ) {
 			try {
-				// Try and create a sesssion to see if facebookUserId is valid
+				// Try and create a session to see if facebookUserId is valid
 				$session = $this->getSession();
 			} catch ( \Exception $e ) {
 				$this->facebookUserId = 0;
