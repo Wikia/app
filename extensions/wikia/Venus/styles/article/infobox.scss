@@ -90,6 +90,7 @@
 
 	.see-more {
 		@include font-size-xxs;
+		background-color: $color-page;
 		border-top: 1px solid $color-page-border;
 		bottom: 0;
 		color: $color-links;
@@ -98,8 +99,8 @@
 		font-weight: bold;
 		height: 40px;
 		left: 0;
+		line-height: 40px;
 		margin: auto;
-		padding-top: 2px;
 		position: absolute;
 		right: 0;
 		text-align: center;

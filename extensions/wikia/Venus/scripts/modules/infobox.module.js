@@ -63,6 +63,11 @@ define('venus.infobox', ['wikia.document', 'wikia.window'], function(d, w) {
 				borderColor = infoboxStyles.getPropertyValue('border-bottom-color');
 			}
 
+			// Avoid overriding with transparent background
+			if (bgColor == 'rgba(0, 0, 0, 0)' || bgColor == 'rgba(0,0,0,0)' || bgColor == 'transparent') {
+				bgColor = '';
+			}
+
 			if (bgColor.length) {
 				seeMoreButton.style.backgroundColor = bgColor;
 			}
