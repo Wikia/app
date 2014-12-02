@@ -163,24 +163,22 @@ class FacebookClient {
 			return $this->facebookUserId;
 		}
 
-		$errorMessage = null;
-
-		try {
-			$session = $this->getSession();
-			if ( $session ) {
-				$session->validate();
-				$this->facebookUserId = ( int ) $this->facebookAPI->getUserId();
+		$this->facebookUserId = $this->facebookAPI->getUserId();
+		if ( !empty( $this->facebookUserId ) ) {
+			try {
+				// Try and create a session to see if facebookUserId is valid
+				$session = $this->getSession();
+			} catch ( \Exception $e ) {
+				$this->facebookUserId = 0;
+				WikiaLogger::instance()->warning( 'Unable to create valid session', [
+					'method' => __METHOD__,
+					'message' => $e->getMessage()
+				] );
 			}
-		} catch ( \Exception $e ) {
-			$errorMessage = $e->getMessage();
-		}
-
-		if ( empty( $this->facebookUserId ) ) {
+		} else {
 			$this->facebookUserId = 0;
-
 			WikiaLogger::instance()->warning( 'Null Facebook user id', [
 				'method' => __METHOD__,
-				'message' => $errorMessage,
 			] );
 		}
 
@@ -197,18 +195,15 @@ class FacebookClient {
 	public function getUserInfo( $userId = 0 ) {
 		$log = WikiaLogger::instance();
 
-		// Pull the user ID from the signed FB cookie if it wasn't passed in
-		if ( empty( $userId ) ) {
-			$userId = $this->getUserId();
-		}
+		$this->facebookUserId = empty( $userId ) ? $this->getUserId() : $userId;
 
 		// If we still couldn't get a user ID, return null
-		if ( empty( $userId ) ) {
+		if ( empty( $this->facebookUserId ) ) {
 			$log->warning( __CLASS__ . ': Could not get user ID from FB session', [ 'method' => __METHOD__ ]);
 			return null;
 		}
 
-		if ( empty( $this->userInfoCache[$userId] ) ) {
+		if ( empty( $this->userInfoCache[$this->facebookUserId] ) ) {
 			try {
 				$userProfile = ( new \Facebook\FacebookRequest(
 					$this->getSession(),
@@ -216,7 +211,7 @@ class FacebookClient {
 					'/me'
 				) )->execute()->getGraphObject( Facebook\GraphUser::className() );
 
-				$this->userInfoCache[$userId] = $userProfile;
+				$this->userInfoCache[$this->facebookUserId] = $userProfile;
 			} catch( Exception $e ) {
 				$log->error( __CLASS__ . ': Failure in the api requesting "/me"', [
 					'method' => __METHOD__,
@@ -227,7 +222,7 @@ class FacebookClient {
 			}
 		}
 
-		return $this->userInfoCache[$userId];
+		return $this->userInfoCache[$this->facebookUserId];
 	}
 
 	/**
