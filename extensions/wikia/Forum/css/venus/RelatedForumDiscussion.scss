@@ -4,8 +4,22 @@
 .RelatedForumDiscussion {
 	clear: both;
 
-	&.mw-content-text h2 {
-		margin-bottom: 0;
+	.mw-content-text & {
+		h2 {
+			margin-bottom: 0;
+			padding-left: $medium-grid-gutter;
+			padding-right: $medium-grid-gutter;
+
+			@media #{$large-up} {
+				padding-left: $large-grid-column-padding;
+				padding-right: $large-grid-column-padding;
+			}
+
+			@media #{$small-only} {
+				padding-left: $small-grid-gutter;
+				padding-right: $small-grid-gutter;
+			}
+		}
 	}
 
 	h4 {
