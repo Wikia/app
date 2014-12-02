@@ -230,7 +230,19 @@ function (
 						}
 					});
 				}
-			);
+			).fail(function () {
+					document.location.assign(
+						qs()
+							.setPath(w.wgArticlePath.replace('$1', 'Special:UserLogin'))
+							.setVal('returnto',
+							w.wgCanonicalSpecialPageName &&
+							w.wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/) ?
+								w.wgMainPageTitle :
+								w.wgPageName,
+							true
+						).toString()
+					);
+			});
 		}
 	}
 
