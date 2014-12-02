@@ -18,9 +18,10 @@ ddescribe('AdLogicPageParams', function () {
 		};
 	}
 
-	function mockWindow(hostname) {
+	function mockWindow(hostname, amzn_targs) {
 		return {
-			location: {hostname: hostname || 'example.org'}
+			location: {hostname: hostname || 'example.org'},
+			amzn_targs: amzn_targs
 		};
 	}
 
@@ -34,6 +35,23 @@ ddescribe('AdLogicPageParams', function () {
 		return {
 			getPageParams: function () {
 				return amazonPageParams;
+			},
+			wasCalled: function () {
+				return !!amazonPageParams;
+			},
+			trackState: function () {
+				return;
+			}
+		};
+	}
+
+	function mockAmazonMatchOld(enabled) {
+		return {
+			wasCalled: function () {
+				return !!enabled;
+			},
+			trackState: function () {
+				return;
 			}
 		};
 	}
@@ -41,6 +59,7 @@ ddescribe('AdLogicPageParams', function () {
 	/**
 	 * Keys for opts:
 	 *  - amazonPageParams
+	 *  - amzn_targs
 	 *  - kruxSegments
 	 *  - abExperiments
 	 *  - hostname
@@ -62,11 +81,12 @@ ddescribe('AdLogicPageParams', function () {
 
 		return modules['ext.wikia.adEngine.adLogicPageParams'](
 			logMock,
-			mockWindow(opts.hostname),
+			mockWindow(opts.hostname, opts.amzn_targs),
 			abTestMock,
 			mockAdContext(targeting),
 			mockPageViewCounter(opts.pvCount),
 			mockAmazonMatch(opts.amazonPageParams),
+			mockAmazonMatchOld(!!opts.amzn_targs),
 			kruxMock
 		).getPageLevelParams(opts.getPageLevelParamsOptions);
 	}
@@ -170,10 +190,17 @@ ddescribe('AdLogicPageParams', function () {
 		expect(params.key3).toEqual(['value3', 'value4'], 'key3=value3;key3=value4');
 	});
 
-	it('getPageLevelParams Amazon Match params', function () {
+	it('getPageLevelParams Amazon Match params (new)', function () {
 		var params = getParams({}, {amazonPageParams: {amznslots: ['a300x250p1', 'a728x90p2']}});
 
 		expect(params.amznslots).toEqual(['a300x250p1', 'a728x90p2']);
+	});
+
+	it('getPageLevelParams Amazon Match params (old)', function () {
+		var params = getParams({}, {amzn_targs: 'amzn_300x250=1;amzn_728x90=1;'});
+
+		expect(params.amzn_300x250).toEqual(['1']);
+		expect(params.amzn_728x90).toEqual(['1']);
 	});
 
 	it('getPageLevelParams Krux segments', function () {

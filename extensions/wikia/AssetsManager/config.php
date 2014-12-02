@@ -183,6 +183,7 @@ $config['adengine2_amazon_match_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/AmazonMatch.js',
+		'//extensions/wikia/AdEngine/js/AmazonMatchOld.js',
 	),
 );
 

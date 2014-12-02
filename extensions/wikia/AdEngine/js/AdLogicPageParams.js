@@ -7,8 +7,9 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	'ext.wikia.adEngine.adContext',
 	require.optional('ext.wikia.adEngine.adLogicPageViewCounter'),
 	require.optional('ext.wikia.adEngine.amazonMatch'),
+	require.optional('ext.wikia.adEngine.amazonMatchOld'),
 	require.optional('ext.wikia.adEngine.krux')
-], function (log, win, abTest, adContext, pvCounter, amazonMatch, Krux) {
+], function (log, win, abTest, adContext, pvCounter, amazonMatch, amazonMatchOld, Krux) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adLogicPageParams',
@@ -203,11 +204,12 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 
 		if (amazonMatch && amazonMatch.wasCalled()) {
 			amazonMatch.trackState();
-			amazonParams = amazonMatch.getPageParams();
-			if (typeof amazonParams === 'string') {
-				amazonParams = decodeLegacyDartParams(amazonParams);
-			}
-			extend(params, amazonParams);
+			extend(params, amazonMatch.getPageParams());
+		}
+
+		if (amazonMatchOld && amazonMatchOld.wasCalled()) {
+			amazonMatchOld.trackState();
+			extend(params, decodeLegacyDartParams(win.amzn_targs));
 		}
 
 		log(params, 9, logGroup);
