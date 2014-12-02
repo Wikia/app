@@ -7,17 +7,17 @@ $width-limit: 1000px;
 
 $background-align: if( $background-width > $width-limit, center, left );
 
-body:not(.venus-preview) {
+body.skin-venus {
 	background-color: $color-body;
 	background-image: url($background-image); /* $wgCdnStylePath */
 	background-repeat: repeat;
 	background-position: top $background-align;
-}
 
-body.background-not-tiled {
-	background-repeat: no-repeat;
-}
+	&.background-not-tiled {
+		background-repeat: no-repeat;
+	}
 
-body.background-fixed {
-	background-attachment: fixed;
+	&.background-fixed {
+		background-attachment: fixed;
+	}
 }
