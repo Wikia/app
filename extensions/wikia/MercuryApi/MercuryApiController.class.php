@@ -224,7 +224,9 @@ class MercuryApiController extends WikiaController {
 		}
 
 		if ( !empty( $this->wg->ArticlePath ) ) {
-			$wikiVariables[ 'articlePath' ] = $this->wg->ArticlePath;
+			$wikiVariables[ 'articlePath' ] = str_replace('$1', '', $this->wg->ArticlePath);
+		} else {
+			$wikiVariables[ 'articlePath' ] = '/wiki/';
 		}
 
 		$smartBannerConfig = $this->getSmartBannerConfig();
