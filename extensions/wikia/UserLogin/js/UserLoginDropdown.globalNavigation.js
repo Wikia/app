@@ -16,6 +16,8 @@ require(['jquery', 'GlobalNavigationiOSScrollFix', 'wikia.window', 'wikia.browse
 			});
 			UserLoginFacebook.init(UserLoginFacebook.origins.DROPDOWN);
 		}
+
+		$('#globalNavigation').trigger('user-login-menu-opened');
 	}
 
 	/**
