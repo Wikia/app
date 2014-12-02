@@ -69,7 +69,7 @@ class UserLoginFacebookForm extends UserLoginForm {
 	private function confirmUser( User $user ) {
 		$user->confirmEmail();
 		$user->setCookies();
-		wfRunHooks( 'SignupConfirmEmailComplete', array( $user ) );
+		wfRunHooks( 'SignupConfirmEmailComplete', [ $user ] );
 		$userLoginHelper = new UserLoginHelper();
 		$userLoginHelper->addNewUserLogEntry( $user ); // Add new user to log
 	}
