@@ -200,7 +200,7 @@ class FacebookClient {
 					'/me'
 				) )->execute()->getGraphObject( Facebook\GraphUser::className() );
 
-				$this->userInfoCache[$userId] = $userProfile;
+				$this->userInfoCache[$this->facebookUserId] = $userProfile;
 			} catch( Exception $e ) {
 				$log->error( __CLASS__ . ': Failure in the api requesting "/me"', [
 					'method' => __METHOD__,
@@ -211,7 +211,7 @@ class FacebookClient {
 			}
 		}
 
-		return $this->userInfoCache[$userId];
+		return $this->userInfoCache[$this->facebookUserId];
 	}
 
 	/**
