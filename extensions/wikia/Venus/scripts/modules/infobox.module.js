@@ -35,6 +35,28 @@ define('venus.infobox', ['wikia.document', 'wikia.window'], function(d, w) {
 	}
 
 	/**
+	 * Returns alpha value from CSS rgba color value
+	 * if no match found returns null
+	 * example
+	 * for rgba(255,255,255,0.2) returns 0.2
+	 * @param string color
+	 * @return number | null
+	 */
+	function getColorAlpha(color) {
+		var alphaGroups,
+			alphaRegEx = /rgba\(\d+\s*,\s*\d+\s*,\s*\d+\s*,\s*(\d+[\.\d+]*)\)/g,
+			alphaValue = null;
+
+		alphaGroups = alphaRegEx.exec(color);
+
+		if(alphaGroups !== null) {
+			alphaValue = parseFloat(alphaGroups[1]);
+		}
+
+		return alphaValue;
+	}
+
+	/**
 	 * Create and add see more button to infobox
 	 *
 	 * @param infobox DOM node with infobox
@@ -58,7 +80,8 @@ define('venus.infobox', ['wikia.document', 'wikia.window'], function(d, w) {
 			bgColor = infoboxStyles.getPropertyValue('background-color');
 
 			// Avoid overriding with transparent background
-			if (bgColor == 'rgba(0, 0, 0, 0)' || bgColor == 'rgba(0,0,0,0)' || bgColor == 'transparent') {
+			var alphaValue = getColorAlpha(bgColor);
+			if ((alphaValue!==null && alphaValue<0.5) || bgColor=='transparent') {
 				bgColor = '';
 			}
 
