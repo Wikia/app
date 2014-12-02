@@ -1263,7 +1263,7 @@ $wgVisualEditorNamespaces = array_merge( $wgContentNamespaces, array( NS_USER ) 
 $wgVisualEditorEnableTocWidget = false;
 
 // List of skins VisualEditor integration supports
-$wgVisualEditorSupportedSkins = array( 'oasis' );
+$wgVisualEditorSupportedSkins = array( 'oasis', 'venus' );
 
 // List of browsers VisualEditor is incompatibe with
 // See jQuery.client for specification

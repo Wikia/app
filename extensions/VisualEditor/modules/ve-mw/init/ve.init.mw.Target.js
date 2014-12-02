@@ -1341,8 +1341,10 @@ ve.init.mw.Target.prototype.setupSurface = function ( doc, callback ) {
 
 				// Initialize surface
 				surface.getContext().hide();
-				// Wikia change to prepend the surface to the target.
-				target.$element.prepend( target.surface.$element );
+				// Wikia change
+				// Was previously prepended:
+				// https://github.com/Wikia/app/commit/45982569ef4381319e238ef973c49f57f96caf72
+				target.$element.append( target.surface.$element );
 				target.setupToolbar();
 				if ( ve.debug ) {
 					target.setupDebugBar();
