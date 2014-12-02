@@ -180,14 +180,13 @@ class FacebookSignupController extends WikiaController {
 		$wikiaPassword = $wg->Request->getText( 'password' );
 
 		if ( !$wikiaUserName || !$wikiaPassword ) {
-			if ( !$wikiaUserName ) {
-				$errorCode = $wikiaUserName ?
-					'userlogin-error-wrongpasswordempty' :
-					'userlogin-error-noname';
-			}
+			$errorCode = $wikiaUserName ?
+				'userlogin-error-wrongpasswordempty' :
+				'userlogin-error-noname';
+
 			$this->response->setData( [
 				'result' => 'error',
-				'message' => wfMessage( $errorCode ),
+				'message' => wfMessage( $errorCode )->escaped(),
 			] );
 			return;
 		}
@@ -196,7 +195,7 @@ class FacebookSignupController extends WikiaController {
 		if ( !$user || !$user->checkPassword( $wikiaPassword ) ) {
 			$this->response->setData( [
 				'result' => 'error',
-				'message' => wfMessage( 'userlogin-error-wrongcredentials' ),
+				'message' => wfMessage( 'userlogin-error-wrongcredentials' )->escaped(),
 			] );
 			return;
 		}
