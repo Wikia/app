@@ -164,7 +164,18 @@ class FacebookClient {
 		}
 
 		$this->facebookUserId = $this->facebookAPI->getUserId();
-		if ( empty( $this->facebookUserId ) ) {
+		if ( !empty( $this->facebookUserId ) ) {
+			try {
+				// Try and create a sesssion to see if facebookUserId is valid
+				$session = $this->getSession();
+			} catch ( \Exception $e ) {
+				$this->facebookUserId = 0;
+				WikiaLogger::instance()->warning( 'Unable to create valid session', [
+					'method' => __METHOD__,
+					'message' => $e->getMessage()
+				] );
+			}
+		} else {
 			$this->facebookUserId = 0;
 			WikiaLogger::instance()->warning( 'Null Facebook user id', [
 				'method' => __METHOD__,
