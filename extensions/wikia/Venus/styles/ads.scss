@@ -79,6 +79,7 @@
 }
 
 .ad-in-content {
+	clear: right;
 	float: right;
 
 	> .default-height {
@@ -99,13 +100,13 @@
 
 @media #{$medium-only} {
 	.ad-in-content > .wikia-ad {
-		margin-right: -$medium-grid-column-padding;
+		margin-right: -$medium-grid-column - $medium-grid-column-padding;
 	}
 }
 
 @media #{$large-only} {
 	.ad-in-content > .wikia-ad {
-		margin-right: -$large-grid-column-padding;
+		margin-right: -$large-grid-column - $large-grid-column-padding;
 	}
 }
 

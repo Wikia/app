@@ -26,8 +26,8 @@ require(
 			showPreFooter = doc.body.offsetHeight > minPageLength || firstSectionTop < minZerothSectionLength,
 			adLabel = msg('adengine-advertisement'),
 			createSlot = function (name) {
-				var $slot = $('<div/>'),
-					$label = $('<label/>');
+				var $slot = $('<div></div>'),
+					$label = $('<label></label>');
 
 				$label.text(adLabel);
 
@@ -35,7 +35,7 @@ require(
 				$slot.addClass('ad-in-content');
 				$slot.html($label);
 
-				return $slot.wrapAll('</div>').parent().html();
+				return $slot.wrapAll('<div></div>').parent().html();
 			},
 			adSlots = [];
 
