@@ -60,7 +60,7 @@ class UserLoginForm extends LoginForm {
 
 		// send confirmation email
 		$userLoginHelper = new UserLoginHelper();
-		$result = $userLoginHelper->sendConfirmationEmail( $this->mUsername, $u );
+		$result = $userLoginHelper->sendConfirmationEmail( $this->mUsername);
 		$this->mainLoginForm( $result['msg'], $result['result'] );
 
 		return $u;

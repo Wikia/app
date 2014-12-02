@@ -141,7 +141,15 @@
 				}
 			} else if (resp.loginAborted) {
 				window.GlobalNotification.show(resp.errorMsg, 'error');
-
+			} else if (resp.unconfirmed) {
+				$.post(wgScriptPath + '/wikia.php', {
+					controller: 'UserLoginSpecial',
+					method: 'getUnconfirmedUserRedirectUrl',
+					format: 'json',
+					username: resp.userName
+				}, function (json) {
+					window.location = json.redirectUrl;
+				});
 			// user not logged in, show the login/signup modal
 			} else {
 				self.bucky.timer.start('loggedOutCallback');

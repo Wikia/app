@@ -31,12 +31,18 @@ class FacebookSignupController extends WikiaController {
 				// User account was disabled, abort the login
 				$this->loginAborted = true;
 				$this->errorMsg = wfMessage( 'userlogin-error-edit-account-closed-flag' )->escaped();
+			} elseif ( $this->isAccountUnconfirmed( $user ) ) {
+				LoginForm::clearLoginToken();
+				$userLoginHelper = new UserLoginHelper();
+				$userLoginHelper->setNotConfirmedUserSession( $user->getId() );
+				$userLoginHelper->clearPasswordThrottle( $user->getName() );
+				$this->unconfirmed = true;
+				$this->userName = $user->getName();
 			} elseif ( !wfRunHooks( 'FacebookUserLoginSuccess', [ $user, &$this->errorMsg ] ) ) {
 				$this->loginAborted = true;
 			} else {
 				// account is connected - log the user in
 				$user->setCookies();
-
 				$this->loggedIn = true;
 				$this->userName = $user->getName();
 			}
@@ -48,6 +54,22 @@ class FacebookSignupController extends WikiaController {
 			$this->modal = !empty($modal) ? $modal : wfMessage('usersignup-facebook-problem')->escaped();
 			$this->cancelMsg = wfMessage('cancel')->escaped();
 		}
+	}
+
+	/**
+	 * Check if account is disabled
+	 * @param  User $user User account
+	 * @return boolean true if the account is disabled, false otherwise
+	 */
+	private function isAccountDisabled( User $user ) {
+		return $user->getBoolOption( 'disabled' ) || (
+			defined( 'CLOSED_ACCOUNT_FLAG' ) &&
+			$user->getRealName() == CLOSED_ACCOUNT_FLAG
+		);
+	}
+
+	private function isAccountUnconfirmed( User $user ) {
+		 return $user->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) == true;
 	}
 
 	/**
@@ -155,14 +177,6 @@ class FacebookSignupController extends WikiaController {
 		if ($user instanceof User) {
 			$this->userId = $user->getId();
 			$this->userPage = $user->getUserPage()->getFullUrl();
-
-			// CONN-421 Auto confirm Facebook accounts' emails
-			$user->confirmEmail();
-			wfRunHooks( 'SignupConfirmEmailComplete', array( $user ) );
-
-			// Add new user to log
-			$userLoginHelper = new UserLoginHelper();
-			$userLoginHelper->addNewUserLogEntry( $user );
 		}
 	}
 
@@ -213,19 +227,5 @@ class FacebookSignupController extends WikiaController {
 
 			return $fbApi->user();
 		}
-	}
-
-	/**
-	 * Check if account is disabled
-	 *
-	 * @param  User    $user User account
-	 * @return boolean       true if the account is disabled,
-	 *                       false otherwise
-	 */
-	private function isAccountDisabled( User $user ) {
-		return $user->getBoolOption( 'disabled' ) || (
-			defined( 'CLOSED_ACCOUNT_FLAG' ) &&
-			$user->getRealName() == CLOSED_ACCOUNT_FLAG
-		);
 	}
 }

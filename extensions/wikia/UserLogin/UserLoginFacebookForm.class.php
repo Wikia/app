@@ -14,33 +14,31 @@
 
 class UserLoginFacebookForm extends UserLoginForm {
 
-	private $fbUserId;
+	private $hasConfirmedEmail = true;
 
 	function __construct( WebRequest $request ) {
-		$this->fbUserId = $request->getVal( 'fbuserid' );
-
-		// See if we got an email address from the sign up form
-		$userEmail = $request->getVal( 'email' );
-		if ( empty( $userEmail ) ) {
-			// If not, get an email from Facebook API
-			$resp = F::app()->sendRequest( 'FacebookSignup', 'getFacebookData', [
-				'fbUserId' => $this->fbUserId,
-			] );
-			$userEmail = $resp->getVal( 'email', false );
-		}
-
-		// add an email to the request and pass it to the underlying class
-		$request->setVal( 'email', $userEmail );
 
 		// put the username and password field in the expected place for validation MAIN-1283
 		$request->setVal( 'userloginext01', $request->getVal( 'username' ) );
 		$request->setVal( 'userloginext02', $request->getVal( 'password' ) );
 
-		if ( $request->getVal( 'type', '' ) == '' ) {
-			$request->setVal( 'type', 'signup' );
-		}
+		$request->setVal( 'email', $this->getUserEmail( $request ) );
+		$request->setVal( 'type', 'signup' );
 
 		parent::__construct( $request );
+	}
+
+	private function getUserEmail( WebRequest $request ) {
+
+		$userInfo = FacebookClient::getInstance()->getUserInfo();
+		$userEmail = $userInfo->getProperty( 'email' );
+		if ( empty( $userEmail ) ) {
+			// Email didn't come from facebook, we have to confirm it ourselves
+			$this->hasConfirmedEmail = false;
+			$userEmail = $request->getVal( 'email' );
+		}
+
+		return $userEmail;
 	}
 
 	function addNewAccount() {
@@ -50,18 +48,36 @@ class UserLoginFacebookForm extends UserLoginForm {
 	}
 
 	public function initUser( User $user, $autocreate ) {
-		$user = parent::initUser($user, $autocreate, true );
 
-		if ($user instanceof User) {
-			$user->confirmEmail();
+		$user = parent::initUser( $user, $autocreate, $this->hasConfirmedEmail );
+
+		if ( $user instanceof User ) {
+
 			$this->connectWithFacebook($user);
 			$user->saveSettings();
 
-			// log me in
-			$user->setCookies();
+			if ( $this->hasConfirmedEmail ) {
+				$this->confirmUser( $user );
+			} else {
+				$this->sendConfirmationEmail( $user );
+			}
 		}
 
 		return $user;
+	}
+
+	private function confirmUser( User $user ) {
+		$user->confirmEmail();
+		$user->setCookies();
+		wfRunHooks( 'SignupConfirmEmailComplete', array( $user ) );
+		$userLoginHelper = new UserLoginHelper();
+		$userLoginHelper->addNewUserLogEntry( $user ); // Add new user to log
+	}
+
+	private function sendConfirmationEmail() {
+		$userLoginHelper = new UserLoginHelper();
+		$result = $userLoginHelper->sendConfirmationEmail( $this->mUsername );
+		$this->mainLoginForm( $result['msg'], $result['result'] );
 	}
 
 	/**
@@ -71,12 +87,14 @@ class UserLoginFacebookForm extends UserLoginForm {
 	 * @return bool true on success
 	 */
 	private function connectWithFacebook( User $user ) {
+		$fbId = FacebookClient::getInstance()->getUserId();
+
 		if ( F::app()->wg->EnableFacebookClientExt ) {
-			$mapping = \FacebookMapModel::createUserMapping( $user->getId(), $this->fbUserId );
+			$mapping = \FacebookMapModel::createUserMapping( $user->getId(), $fbId );
 			return !empty( $mapping );
 		}
 
-		FBConnectDB::addFacebookID( $user, $this->fbUserId );
+		FBConnectDB::addFacebookID( $user, $fbId );
 		return true;
 	}
 }
