@@ -95,15 +95,14 @@
 	 */
 	function getTarget() {
 		var loadTargetDeferred,
-			resources = [
-				$.getSassCommonURL( '/extensions/VisualEditor/wikia/VisualEditor.scss' ),
-				window.wgResourceBasePath + '/resources/wikia/libraries/vignette/vignette.js'
-			],
+			resources = [ window.wgResourceBasePath + '/resources/wikia/libraries/vignette/vignette.js' ],
 			targetModule = 'ext.visualEditor.wikiaViewPageTarget';
 
 		if ( isVenus() ) {
 			targetModule = 'ext.visualEditor.venusViewPageTarget';
-			resources.push( $.getSassCommonURL( '/extensions/VisualEditor/wikia/modules/ve/ui/styles/Venus.scss' ) );
+			resources.push( $.getSassCommonURL( '/extensions/VisualEditor/wikia/VisualEditor-Venus.scss' ) );
+		} else {
+			resources.push( $.getSassCommonURL( '/extensions/VisualEditor/wikia/VisualEditor.scss' ) );
 		}
 
 		/* Optimizely */
