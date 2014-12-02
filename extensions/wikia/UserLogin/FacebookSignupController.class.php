@@ -196,8 +196,7 @@ class FacebookSignupController extends WikiaController {
 		if ( !$user || !$user->checkPassword( $wikiaPassword ) ) {
 			$this->response->setData( [
 				'result' => 'error',
-				//TODO: Add this message
-				'message' => 'This username and password combination is not correct. Please try again.',
+				'message' => wfMessage( 'userlogin-error-wrongcredentials' ),
 			] );
 			return;
 		}
