@@ -16,6 +16,10 @@ $placeholder-background-color: $color-article-navigation-inactive; // only for p
 $article-items-spacing: 30px;
 $header-without-cover-unit-spacing: 60px;
 
+$header-without-coverunit-height: $font-size-xxl + 130px;
+$header-with-coverunit-height: 80px $font-size-xxl + 140px $font-size-xxl + 140px;
+
+
 // don't display TOC on Venus skin pages (fight cache)
 #toc {
 	display: none !important;
@@ -44,7 +48,7 @@ $header-without-cover-unit-spacing: 60px;
 			}
 
 			& + .article-navigation {
-				top: $header-without-cover-unit-spacing + $font-size-xxl + 130px;
+				top: $header-without-cover-unit-spacing + $header-without-coverunit-height;
 			}
 		}
 
@@ -66,7 +70,7 @@ $header-without-cover-unit-spacing: 60px;
 			}
 
 			& + .article-navigation {
-				@include proportional-grid-media-top('medium', 8, $medium-content-padding + $article-items-spacing + $font-size-xxl + 140px);
+				@include proportional-grid-media-top('medium', 8, $medium-content-padding + $article-items-spacing + nth($header-with-coverunit-height, 2));
 			}
 		}
 	}
@@ -249,7 +253,7 @@ $header-without-cover-unit-spacing: 60px;
 			}
 
 			& + .article-navigation {
-				@include proportional-grid-media-top('large', 8, $large-content-padding + $article-items-spacing + $font-size-xxl + 140px);
+				@include proportional-grid-media-top('large', 8, $large-content-padding + $article-items-spacing + nth($header-with-coverunit-height, 3));
 			}
 		}
 	}
@@ -315,7 +319,7 @@ $header-without-cover-unit-spacing: 60px;
 			}
 
 			& + .article-navigation {
-				@include proportional-media-top($small-content-width - 2 * $content-border-width, $article-items-spacing + 80px);
+				@include proportional-media-top($small-content-width - 2 * $content-border-width, nth($header-with-coverunit-height, 1));
 			}
 		}
 	}

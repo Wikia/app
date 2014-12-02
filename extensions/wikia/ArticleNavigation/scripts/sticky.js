@@ -20,23 +20,29 @@ require([
 			'#TOP_LEADERBOARD [data-gpt-creative-size], ' +
 			'#TOP_LEADERBOARD [id^="Liftium_"]',
 		adLogicPoolerCount = 0,
-		adLogicLastHeight = 0;
+		adLogicLastHeight = 0,
+		adLogicPoolerMaxCount = 50,
+		adLogicPoolerTimeout = 250,
+		adLogicPoolerDefaultLeaderboardHeight = 90;
+
 
 	/**
 	 * Pool for changed TOP_LEADERBOARD's height (can be very lazy-loaded)
 	 */
 	function adLoadPooler() {
 		var $el = $(adPoolerSelector),
-			height;
+			height, size;
 
-		if ($el.length === 0 && adLogicPoolerCount < 50) {
+		if ($el.length === 0 && adLogicPoolerCount < adLogicPoolerMaxCount) {
 			adLogicPoolerCount ++;
 
 			// absent, schedule another check
-			setTimeout(adLoadPooler, 250);
+			setTimeout(adLoadPooler, adLogicPoolerTimeout);
 		} else {
 			// present, calculate height
-			height = ($el.data('gpt-creative-size') || [728, 90])[1];
+			size = $el.data('gpt-creative-size'); // it returns array with [width, height]
+
+			height = size ? size[1] : adLogicPoolerDefaultLeaderboardHeight;
 
 			// update only if height differs
 			if (height !== adLogicLastHeight) {
