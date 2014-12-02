@@ -75,7 +75,7 @@ class LoginForm extends SpecialPage {
 	 * Loader
 	 */
 	function load() {
-		global $wgAuth, $wgHiddenPrefs, $wgEnableEmail, $wgRedirectOnLogin, $wgEnableUserLoginExt;
+		global $wgAuth, $wgHiddenPrefs, $wgEnableEmail, $wgRedirectOnLogin;
 
 		if ( $this->mLoaded ) {
 			return;
@@ -142,13 +142,8 @@ class LoginForm extends SpecialPage {
 		}
 		$wgAuth->setDomain( $this->mDomain );
 
-		if ( empty( $wgEnableUserLoginExt ) ) {
-			$this->wpMsgPrefix = '';
-			$this->wpUserLoginExt = false;
-		} else {
-			$this->wpMsgPrefix = 'userlogin-error-';
-			$this->wpUserLoginExt = true;
-		}
+		$this->wpMsgPrefix = 'userlogin-error-';
+		$this->wpUserLoginExt = true;
 
 		$title = Title::newFromText($this->mReturnTo);
 		if (!empty($title))
