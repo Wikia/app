@@ -6,60 +6,64 @@ class AnalyticsProviderAmazonMatch implements iAnalyticsProvider {
 		global $wgEnableAmazonMatch, $wgEnableAmazonMatchOld,
 			$wgEnableAdEngineExt, $wgShowAds, $wgAdDriverUseSevenOneMedia;
 
-		return ($wgEnableAmazonMatch || $wgEnableAmazonMatchOld)
+		return ( $wgEnableAmazonMatch || $wgEnableAmazonMatchOld )
 			&& $wgEnableAdEngineExt
 			&& $wgShowAds
 			&& AdEngine2Service::areAdsShowableOnPage()
 			&& !$wgAdDriverUseSevenOneMedia;
 	}
 
-	public function getSetupHtml($params = array()) {
-		global $wgEnableAmazonMatch, $wgEnableAmazonMatchOld;
+	private function getIntegrationScript( $moduleName, $instantGlobalName ) {
+		$moduleName = json_encode( $moduleName );
+		$instantGlobalName = json_encode( $instantGlobalName );
 
-		static $called = false;
+		$code = <<< CODE
+	require([$moduleName, "wikia.geo", "wikia.instantGlobals"], function (amazon, geo, globals) {
+		var ac = globals[$instantGlobalName];
 
-		$code = '';
-
-		if (!$called && self::isEnabled()) {
-			$oldEnabled = json_encode((bool) $wgEnableAmazonMatchOld);
-			$newEnabled = json_encode((bool) $wgEnableAmazonMatch);
-
-			$code = <<< SCRIPT
-		<script id="analytics-provider-amazon-match">
-			require([
-				'ext.wikia.adEngine.amazonMatch',
-				'ext.wikia.adEngine.amazonMatchOld',
-				'wikia.geo',
-				'wikia.instantGlobals'
-			], function (amazonMatch, amazonMatchOld, geo, globals) {
-
-				// Old integration:
-				if ($oldEnabled // old integration enabled?
-					&& globals.wgAmazonMatchOldCountries
-					&& globals.wgAmazonMatchOldCountries.indexOf
-					&& globals.wgAmazonMatchOldCountries.indexOf(geo.getCountryCode()) > -1
-				) {
-					amazonMatchOld.call();
-				}
-
-				// New integration:
-				if ($newEnabled // new integration enabled?
-					&& globals.wgAmazonMatchCountries
-					&& globals.wgAmazonMatchCountries.indexOf
-					&& globals.wgAmazonMatchCountries.indexOf(geo.getCountryCode()) > -1
-				) {
-					amazonMatch.call();
-				}
-			});
-		</script>
-SCRIPT;
-
+		if (ac && ac.indexOf && ac.indexOf(geo.getCountryCode()) > -1) {
+			amazon.call();
 		}
+	});
+CODE;
 
 		return $code;
 	}
 
-	public function trackEvent($event, $eventDetails = array()) {
+	public function getSetupHtml( $params = array() ) {
+		global $wgEnableAmazonMatch, $wgEnableAmazonMatchOld;
+
+		static $called = false;
+
+		if ( $called ) {
+			return '';
+		}
+
+		$called = true;
+
+		if ( !self::isEnabled() ) {
+			return '';
+		}
+
+		if ( $wgEnableAmazonMatchOld ) {
+			$oldScript = self::getIntegrationScript( 'ext.wikia.adEngine.amazonMatchOld', 'wgAmazonMatchOldCountries' );
+		} else {
+			$oldScript = '/* old integration disabled */';
+		}
+
+		if ( $wgEnableAmazonMatch ) {
+			$newScript = self::getIntegrationScript( 'ext.wikia.adEngine.amazonMatch', 'wgAmazonMatchCountries' );
+		} else {
+			$newScript = '/* new integration disabled */';
+		}
+
+		return '<script id="analytics-provider-amazon-match">' . PHP_EOL .
+			$oldScript . PHP_EOL .
+			$newScript . PHP_EOL .
+			'</script>' . PHP_EOL;
+	}
+
+	public function trackEvent( $event, $eventDetails = array() ) {
 		return '';
 	}
 }
