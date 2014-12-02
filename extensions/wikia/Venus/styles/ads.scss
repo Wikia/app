@@ -79,6 +79,7 @@
 }
 
 .ad-in-content {
+	clear: right;
 	float: right;
 
 	> .default-height {
@@ -93,19 +94,19 @@
 
 @media #{$small-only} {
 	.ad-in-content > .wikia-ad {
-		margin-right: -$small-grid-column + $small-grid-column-padding;
+		margin-right: -$small-grid-column-padding;
 	}
 }
 
 @media #{$medium-only} {
 	.ad-in-content > .wikia-ad {
-		margin-right: -$medium-grid-column + $medium-grid-column-padding;
+		margin-right: -$medium-grid-column - $medium-grid-column-padding;
 	}
 }
 
 @media #{$large-only} {
 	.ad-in-content > .wikia-ad {
-		margin-right: -$large-grid-column + $large-grid-column-padding;
+		margin-right: -$large-grid-column - $large-grid-column-padding;
 	}
 }
 
