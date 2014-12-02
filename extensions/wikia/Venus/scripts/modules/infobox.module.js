@@ -43,8 +43,7 @@ define('venus.infobox', ['wikia.document', 'wikia.window'], function(d, w) {
 	function createSeeMoreButton(infobox, id) {
 		var seeMoreButton,
 			infoboxStyles,
-			bgColor,
-			borderColor;
+			bgColor;
 
 		if (infobox) {
 			seeMoreButton = d.createElement('a');
@@ -57,11 +56,6 @@ define('venus.infobox', ['wikia.document', 'wikia.window'], function(d, w) {
 			infoboxStyles = w.getComputedStyle(infobox);
 
 			bgColor = infoboxStyles.getPropertyValue('background-color');
-			borderColor = infoboxStyles.getPropertyValue('border-color');
-
-			if (!borderColor.length) {
-				borderColor = infoboxStyles.getPropertyValue('border-bottom-color');
-			}
 
 			// Avoid overriding with transparent background
 			if (bgColor == 'rgba(0, 0, 0, 0)' || bgColor == 'rgba(0,0,0,0)' || bgColor == 'transparent') {
@@ -70,10 +64,6 @@ define('venus.infobox', ['wikia.document', 'wikia.window'], function(d, w) {
 
 			if (bgColor.length) {
 				seeMoreButton.style.backgroundColor = bgColor;
-			}
-
-			if (borderColor.length) {
-				seeMoreButton.style.border = '1px solid ' + borderColor;
 			}
 		}
 
