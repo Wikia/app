@@ -1166,7 +1166,8 @@ ve.init.mw.Target.prototype.save = function ( doc, options ) {
 		'page': this.pageName,
 		'basetimestamp': this.baseTimeStamp,
 		'starttimestamp': this.startTimeStamp,
-		'token': this.editToken
+		'token': this.editToken,
+		'useskin': mw.config.get( 'skin' )
 	} );
 	if ( this.wikitext !== null ) {
 		data.oldwt = this.wikitext;
