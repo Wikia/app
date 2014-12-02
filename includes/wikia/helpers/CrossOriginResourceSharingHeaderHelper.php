@@ -68,7 +68,7 @@ class CrossOriginResourceSharingHeaderHelper {
 		global $wgCORSAllowOrigin;
 
 		if ( !empty( $wgCORSAllowOrigin ) and is_array( $wgCORSAllowOrigin ) ) {
-			$this->allowOriginValues = $wgCORSAllowOrigin;
+			$this->allowValues[self::ALLOW_ORIGIN_HEADER_NAME] = $wgCORSAllowOrigin;
 		}
 
 		return $this;
