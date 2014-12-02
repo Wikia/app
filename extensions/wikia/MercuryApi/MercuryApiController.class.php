@@ -277,4 +277,17 @@ class MercuryApiController extends WikiaController {
 
 		$this->response->setVal( 'data', $data );
 	}
+
+	/**
+	 * @desc HG-377: Returns search suggestions
+	 *
+	 * @throws NotFoundApiException
+	 * @throws MissingParameterApiException
+	 */
+	public function getSearchSuggestions() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setValues(
+			$this->sendRequest( 'SearchSuggestionsApi', 'getList', $this->request->getParams() )->getData()
+		);
+	}
 }
