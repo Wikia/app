@@ -215,7 +215,7 @@ class ExternalUser_Wikia extends ExternalUser {
 	 * @return bool
 	 */
 	protected function addToDatabase( $User, $password, $email, $realname ) {
-		global $wgExternalSharedDB, $wgEnableUserLoginExt;
+		global $wgExternalSharedDB;
 		wfProfileIn( __METHOD__ );
 
 		if( wfReadOnly() ) { // Change to wgReadOnlyDbMode if we implement that
@@ -229,9 +229,6 @@ class ExternalUser_Wikia extends ExternalUser {
 
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			$seqVal = $dbw->nextSequenceValue( 'user_user_id_seq' );
-			if( empty( $wgEnableUserLoginExt ) ) {
-				$User->setPassword( $password );
-			}
 			$User->setToken();
 
 			$dbw->insert(
