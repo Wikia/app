@@ -1,40 +1,50 @@
-var UserSignup = {
-	inputsToValidate: ['userloginext01', 'email', 'userloginext02', 'birthday'],
-	notEmptyFields: ['userloginext01', 'email', 'userloginext02', 'birthday', 'birthmonth', 'birthyear'],
-	captchaField: window.wgUserLoginDisableCaptcha ? '' : 'recaptcha_response_field',
-	invalidInputs: {},
-	init: function () {
-		'use strict';
+/* global WikiaForm, UserSignupAjaxForm */
+(function () {
+	'use strict';
 
-		$('.wikia_terms > a').on('click', function (event) {
-			var url = $(this).attr('href');
-			event.preventDefault();
-			window.open(url, '_blank');
-		});
+	var UserSignup = {
+		inputsToValidate: ['userloginext01', 'email', 'userloginext02', 'birthday'],
+		notEmptyFields: ['userloginext01', 'email', 'userloginext02', 'birthday', 'birthmonth', 'birthyear'],
+		captchaField: window.wgUserLoginDisableCaptcha ? '' : 'recaptcha_response_field',
+		invalidInputs: {},
+		init: function () {
+			$('.wikia_terms > a').on('click', function (event) {
+				var url = $(this).attr('href');
+				event.preventDefault();
+				window.open(url, '_blank');
+			});
 
-		this.wikiaForm = new WikiaForm('#WikiaSignupForm');
-		this.signupAjaxForm = new UserSignupAjaxForm(
-			this.wikiaForm,
-			this.inputsToValidate,
-			this.wikiaForm.inputs['submit'],
-			this.notEmptyFields,
-			this.captchaField
-		);
-		this.wikiaForm.el
-			.find('input[name=userloginext01], input[name=email], input[name=userloginext02]')
-			.on('blur.UserSignup', $.proxy(UserSignup.signupAjaxForm.validateInput, this.signupAjaxForm));
-		this.wikiaForm.el
-			.find('select[name=birthday], select[name=birthmonth], select[name=birthyear]')
-			.on('change.UserSignup', $.proxy(UserSignup.signupAjaxForm.validateBirthdate, this.signupAjaxForm));
+			this.wikiaForm = new WikiaForm('#WikiaSignupForm');
+			this.signupAjaxForm = new UserSignupAjaxForm(
+				this.wikiaForm,
+				this.inputsToValidate,
+				this.wikiaForm.inputs.submit,
+				this.notEmptyFields,
+				this.captchaField
+			);
+			this.wikiaForm.el
+				.find('input[name=userloginext01], input[name=email], input[name=userloginext02]')
+				.on('blur.UserSignup', $.proxy(UserSignup.signupAjaxForm.validateInput, this.signupAjaxForm));
+			this.wikiaForm.el
+				.find('select[name=birthday], select[name=birthmonth], select[name=birthyear]')
+				.on('change.UserSignup', $.proxy(UserSignup.signupAjaxForm.validateBirthdate, this.signupAjaxForm));
 
-		// dom pre-cache
-		this.submitButton = this.wikiaForm.inputs['submit'];
-		if( window.wgUserLoginDisableCaptcha !== true && this.wikiaForm.inputs['recaptcha_response_field']) {
-			this.wikiaForm.inputs['recaptcha_response_field'].on('keyup.UserSignup', $.proxy(UserSignup.signupAjaxForm.activateSubmit, this.signupAjaxForm));
+			// dom pre-cache
+			this.submitButton = this.wikiaForm.inputs.submit;
+			if (
+				window.wgUserLoginDisableCaptcha !== true &&
+				this.wikiaForm.inputs.recaptcha_response_field // jshint ignore:line
+			) {
+				this.wikiaForm.inputs.recaptcha_response_field // jshint ignore:line
+				.on('keyup.UserSignup', $.proxy(UserSignup.signupAjaxForm.activateSubmit, this.signupAjaxForm));
+			}
 		}
-    }
-};
+	};
 
-$( window ).on('load', function() {
-	UserSignup.init();
-});
+	// expose global
+	window.UserSignup = UserSignup;
+
+	$(window).on('load', function () {
+		UserSignup.init();
+	});
+})();

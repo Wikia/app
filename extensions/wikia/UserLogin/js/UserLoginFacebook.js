@@ -1,5 +1,9 @@
-/* global UserLoginModal */
-(function () {
+/* global UserLoginModal, wgCanonicalSpecialPageName, wgMainPageTitle, wgArticlePath */
+require([
+	'wikia.tracker',
+	'wikia.querystring',
+	'wikia.ui.factory'
+], function (tracker, QueryString, uiFactory) {
 	'use strict';
 
 	var UserLoginFacebook = {
@@ -21,28 +25,25 @@
 		},
 
 		init: function (origin) {
-			var self = this;
-
-			if (!this.initialized) {
-				this.bucky.timer.start('init');
-				require(['wikia.tracker'], function (tracker) {
-					self.actions = tracker.ACTIONS;
-					self.track = tracker.buildTrackingFunction({
-						category: 'user-sign-up',
-						value: origin || 0,
-						trackingMethod: 'both'
-					});
-				});
-
-				this.initialized = true;
-				this.loginSetup();
-
-				// load when the login dropdown is shown - see BugId:68955
-				$.loadFacebookAPI();
-
-				this.log('init');
-				this.bucky.timer.stop('init');
+			if (this.initialized) {
+				return;
 			}
+			this.bucky.timer.start('init');
+			this.actions = tracker.ACTIONS;
+			this.track = tracker.buildTrackingFunction({
+				category: 'user-sign-up',
+				value: origin || 0,
+				trackingMethod: 'both'
+			});
+
+			this.initialized = true;
+			this.loginSetup();
+
+			// load when the login dropdown is shown - see BugId:68955
+			$.loadFacebookAPI();
+
+			this.log('init');
+			this.bucky.timer.stop('init');
 		},
 
 		loginSetup: function () {
@@ -56,7 +57,7 @@
 					ev.preventDefault();
 
 					// @see http://developers.facebook.com/docs/reference/javascript/FB.login/
-					window.FB.login($.proxy(self.loginCallback, self), {
+					window.FB.login($.proxy(self.onFBLogin, self), {
 						scope: 'email'
 					});
 					if (UserLoginModal.$modal) {
@@ -66,7 +67,7 @@
 		},
 
 		// callback for FB.login
-		loginCallback: function (response) {
+		onFBLogin: function (response) {
 			if (typeof response === 'object' && response.status) {
 				this.log(response);
 				switch (response.status) {
@@ -118,137 +119,141 @@
 
 			// logged in using FB account, reload the page or callback
 			if (resp.loggedIn) {
+				this.loggedInCallback(loginCallback);
 
-				if (loginCallback && typeof loginCallback === 'function') {
-					loginCallback();
-				} else {
-					this.bucky.timer.start('loggedInCallback');
-					require(['wikia.querystring'], function (Qs) {
-						var w = window,
-							wgCanonicalSpecialPageName = w.wgCanonicalSpecialPageName,
-							qString = new Qs(),
-							returnTo = (wgCanonicalSpecialPageName &&
-								(wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/))) ? w.wgMainPageTitle : null;
-
-						if (returnTo) {
-							qString.setPath(w.wgArticlePath.replace('$1', returnTo));
-						}
-						// send bucky info immediately b/c the page is about to redirect
-						self.bucky.timer.stop('loggedInCallback');
-						self.bucky.flush();
-						qString.addCb().goTo();
-					});
-				}
 			} else if (resp.loginAborted) {
 				window.GlobalNotification.show(resp.errorMsg, 'error');
 
 			// user not logged in, show the login/signup modal
 			} else {
-				self.bucky.timer.start('loggedOutCallback');
-				require(['wikia.ui.factory'], function (uiFactory) {
-					$.when(
-						uiFactory.init('modal'),
-						$.getResources(
-							[$.getSassCommonURL('extensions/wikia/UserLogin/css/UserLoginFacebook.scss')]
-						)
-					).then(function (uiModal) {
-						var modalConfig = {
+				this.showModal(resp, loginCallback);
+			}
+		},
+
+		loggedInCallback: function (callback) {
+			if (callback && typeof callback === 'function') {
+				callback();
+			} else {
+				this.bucky.timer.start('loggedInCallback');
+				var qString = new QueryString(),
+					returnTo = (wgCanonicalSpecialPageName &&
+						(wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/))) ? wgMainPageTitle : null;
+
+				if (returnTo) {
+					qString.setPath(wgArticlePath.replace('$1', returnTo));
+				}
+				// send bucky info immediately b/c the page is about to redirect
+				this.bucky.timer.stop('loggedInCallback');
+				this.bucky.flush();
+				qString.addCb().goTo();
+			}
+		},
+
+		showModal: function (resp, callback) {
+			var self = this;
+
+			this.bucky.timer.start('loggedOutCallback');
+			$.when(
+				uiFactory.init('modal'),
+				$.getResources(
+					[$.getSassCommonURL('extensions/wikia/UserLogin/css/UserLoginFacebook.scss')]
+				)
+			).then(function (uiModal) {
+				var modalConfig = {
+					vars: {
+						id: 'FacebookSignUp',
+						size: 'medium',
+						content: resp.modal,
+						title: resp.title,
+						buttons: [{
 							vars: {
-								id: 'FacebookSignUp',
-								size: 'medium',
-								content: resp.modal,
-								title: resp.title,
-								buttons: [{
-									vars: {
-										value: resp.cancelMsg,
-										data: [{
-											key: 'event',
-											value: 'close'
-										}]
-									}
+								value: resp.cancelMsg,
+								data: [{
+									key: 'event',
+									value: 'close'
 								}]
 							}
-						};
+						}]
+					}
+				};
 
-						uiModal.createComponent(modalConfig, function (facebookSignupModal) {
-							var form,
-								wikiaForm,
-								signupAjaxForm,
-								$modal = facebookSignupModal.$element;
+				uiModal.createComponent(modalConfig, function (facebookSignupModal) {
+					var form,
+						wikiaForm,
+						signupAjaxForm,
+						$modal = facebookSignupModal.$element;
 
-							self.modal = facebookSignupModal; // set reference to modal object
+					// set reference to modal object
+					self.modal = facebookSignupModal;
 
-							// Track Facebook Connect Modal Close
-							facebookSignupModal.bind('beforeClose', function () {
-								// Track FB Connect Modal Close
-								self.track({
-									action: self.actions.CLOSE,
-									label: 'facebook-login-modal'
-								});
-							});
-
-							self.form = new window.UserLoginFacebookForm($modal, {
-								ajaxLogin: true,
-								callback: function () {
-									// Track FB Connect Sign Up
-									self.track({
-										action: self.actions.SUBMIT,
-										label: 'facebook-login-modal'
-									});
-
-									// run callback or redirect to the specified location
-									if (loginCallback && typeof loginCallback === 'function') {
-										loginCallback();
-									} else {
-										window.location.href = this.returnToUrl;
-									}
-								}
-							});
-							form = self.form; // cache in local variables
-
-							self.wikiaForm = form.wikiaForm; // re-reference for convinience
-							wikiaForm = self.wikiaForm; // cache in local variables
-
-							self.signupAjaxForm = new window.UserSignupAjaxForm(
-								wikiaForm,
-								null,
-								form.el.find('input[type=submit]')
-							);
-							signupAjaxForm = self.signupAjaxForm; // cache in local variables
-
-							// attach handlers to modal content
-							$modal
-								.on('click', '.FacebookSignupConfigHeader', function (event) {
-									event.preventDefault();
-									$(this).toggleClass('on').next('form').toggle();
-								})
-								.on('blur', 'input[name=username], input[name=password]',
-									$.proxy(signupAjaxForm.validateInput, signupAjaxForm)
-							)
-								.on('click', '.submit-pane .extiw', function (event) {
-									require(['wikia.tracker'], function (tracker) {
-										tracker.track({
-											action: tracker.ACTIONS.CLICK_LINK_TEXT,
-											browserEvent: event,
-											category: 'user-sign-up',
-											href: $(event.target).attr('href'),
-											label: 'wikia-terms-of-use',
-											trackingMethod: 'both'
-										});
-									});
-								});
-
-							// Track FB Connect Modal Open
-							self.track({
-								action: self.actions.OPEN,
-								label: 'facebook-login-modal'
-							});
-							facebookSignupModal.show();
-							self.bucky.timer.stop('loggedOutCallback');
+					// Track Facebook Connect Modal Close
+					facebookSignupModal.bind('beforeClose', function () {
+						// Track FB Connect Modal Close
+						self.track({
+							action: self.actions.CLOSE,
+							label: 'facebook-login-modal'
 						});
 					});
+
+					// Here's the signup form - we also need a login form
+					form = new window.UserLoginFacebookForm($modal, {
+						ajaxLogin: true,
+						callback: function () {
+							// Track FB Connect Sign Up
+							self.track({
+								action: self.actions.SUBMIT,
+								label: 'facebook-login-modal'
+							});
+
+							// run logged in callback or redirect to the specified location
+							if (callback && typeof callback === 'function') {
+								callback();
+							} else {
+								window.location.href = this.returnToUrl;
+							}
+						}
+					});
+					// set reference to form object
+					self.form = form;
+
+					// get WikiaForm object from form
+					wikiaForm = form.wikiaForm;
+					// and set reference to WikiaForm object
+					self.wikiaForm = wikiaForm;
+
+					// create signup form
+					signupAjaxForm = new window.UserSignupAjaxForm(
+						wikiaForm,
+						null,
+						form.el.find('input[type=submit]')
+					);
+					// and set reference to signup form
+					self.signupAjaxForm = signupAjaxForm;
+
+					// attach handlers to modal content
+					$modal
+						.on('blur', 'input[name=username], input[name=password]',
+							$.proxy(signupAjaxForm.validateInput, signupAjaxForm)
+						)
+						.on('click', '.submit-pane .extiw', function (event) {
+							self.track({
+								action: tracker.ACTIONS.CLICK_LINK_TEXT,
+								browserEvent: event,
+								href: $(event.target).attr('href'),
+								label: 'wikia-terms-of-use'
+							});
+						});
+
+					// Track FB Connect Modal Open
+					self.track({
+						action: self.actions.OPEN,
+						label: 'facebook-login-modal'
+					});
+
+					facebookSignupModal.show();
+					self.bucky.timer.stop('loggedOutCallback');
 				});
-			}
+			});
 		},
 
 		closeSignupModal: function () {
@@ -261,4 +266,4 @@
 	};
 
 	window.UserLoginFacebook = UserLoginFacebook;
-})();
+});

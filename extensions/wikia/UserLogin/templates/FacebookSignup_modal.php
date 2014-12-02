@@ -33,7 +33,7 @@
 
 	if ( trim( $fbEmail ) == '' ) {
 		$form['inputs'][] = [
-			'type' => 'text',
+			'type' => 'email',
 			'name' => 'email',
 			'isRequired' => true,
 			'label' => wfMessage( 'email' )->escaped(),

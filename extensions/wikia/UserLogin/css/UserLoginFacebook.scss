@@ -80,44 +80,6 @@ $fieldset-padding: 12px;
 	}
 }
 
-.FacebookSignupConfigHeader {
-	text-decoration: none;
-
-	.chevron {
-		border-top-color: $color-links;
-		border-bottom-color: $color-page;
-		float: left;
-		height: 2px;
-		margin: 5px 4px 0 0;
-		opacity: .5;
-		vertical-align: bottom;
-	}
-
-	.hide {
-		display: none;
-	}
-
-	.show {
-		display: block;
-	}
-
-	&.on {
-		.chevron {
-			border-bottom-color: $color-links;
-			border-top-color: $color-page;
-			margin: -2px 4px 0 0;
-		}
-
-		.hide {
-			display: block;
-		}
-
-		.show {
-			display: none;
-		}
-	}
-}
-
 .FacebookSignupConfig {
 	display: none;
 	margin: 10px 0 -7px 0;
