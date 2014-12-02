@@ -1,7 +1,7 @@
 /*global describe, it, expect, modules*/
 /*jshint camelcase:false*/
 /*jshint maxlen:200*/
-ddescribe('AdLogicPageParams', function () {
+describe('AdLogicPageParams', function () {
 	'use strict';
 
 	var logMock = function () { return; };
