@@ -260,10 +260,7 @@ $header-without-cover-unit-spacing: 60px;
 			margin-bottom: 10px;
 			margin-left: -$large-grid-gutter;
 			margin-right: -$large-grid-gutter;
-
-			.mw-headline {
-				padding-left: $large-grid-gutter;
-			}
+			padding-left: $large-grid-gutter;
 		}
 
 		h3 {
@@ -329,10 +326,7 @@ $header-without-cover-unit-spacing: 60px;
 		h2 {
 			margin-left: -$small-grid-gutter;
 			margin-right: -$small-grid-gutter;
-
-			.mw-headline {
-				padding-left: $small-grid-gutter;
-			}
+			padding-left: $small-grid-gutter;
 		}
 
 		ol,
