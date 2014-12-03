@@ -16,6 +16,11 @@ $third-level-tint: if(lightness($color-buttons) < 50, #fff, #000);
 $third-level-color: mix($color-buttons, $third-level-tint, 83%); // ~20% of tint
 $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% of tint
 
+$local-nav-first-lev-menu-spacing: 20px;
+$local-nav-first-lev-menu-spacing-small: 15px;
+$local-nav-wordmark-right-spacing: 40px;
+$local-nav-wordmark-right-spacing-small: 30px;
+
 .local-navigation-container {
 	@include clearfix;
 }
@@ -46,7 +51,7 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 		display: inline-block;
 		height: 100%;
 		margin: 0;
-		padding: 0 70px 0 0;
+		padding: 0 $local-nav-wordmark-right-spacing - $local-nav-first-lev-menu-spacing 0 0;
 		vertical-align: middle;
 
 		> span {
@@ -154,7 +159,7 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 				font-weight: bold;
 				height: 100%;
 				line-height: 45px;
-				padding: 0 20px;
+				padding: 0 $local-nav-first-lev-menu-spacing;
 			}
 
 			&:nth-child(n + 2) {
@@ -351,11 +356,17 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 @media #{$small-only} {
 	.local-navigation {
 		.wordmark-container {
-			padding: 0 30px 0 24px;
+			padding: 0 $local-nav-wordmark-right-spacing-small - $local-nav-first-lev-menu-spacing-small 0 0;
 		}
 
-		.first-level-menu > li:last-child {
-			display: none;
+		.first-level-menu > li {
+			> a {
+				padding: 0 $local-nav-first-lev-menu-spacing-small;
+			}
+
+			&:last-child {
+				display: none;
+			}
 		}
 
 		.dropdown {
