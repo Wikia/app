@@ -92,8 +92,7 @@ class UserLoginFacebookForm extends UserLoginForm {
 	 */
 	private function sendConfirmationEmail() {
 		$userLoginHelper = new UserLoginHelper();
-		$result = $userLoginHelper->sendConfirmationEmail( $this->mUsername );
-		$this->mainLoginForm( $result['msg'], $result['result'] );
+		$userLoginHelper->sendConfirmationEmail( $this->mUsername );
 	}
 
 	/**
