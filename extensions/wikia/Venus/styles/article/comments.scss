@@ -208,6 +208,7 @@
 
 					&.article-comm-reply {
 						padding: 5px;
+						visibility: visible;
 					}
 					&.article-comm-reply::before {
 						@include venus-icon($venus-icon-back);
