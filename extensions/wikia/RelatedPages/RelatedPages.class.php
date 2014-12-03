@@ -156,6 +156,9 @@ class RelatedPages {
 
 		foreach ( $pages as $pageId => $data ) {
 			$data[ 'imgUrl' ] = isset( $images[ $pageId ] ) ? $images[ $pageId ][ 0 ][ 'url' ] : null;
+			$data[ 'imgOriginalDimensions' ] = isset( $images[ $pageId ] )
+				? $images[ $pageId ][ 0 ][ 'original_dimensions' ]
+				: null;
 			$data[ 'text' ] = $this->getArticleSnippet( $pageId );
 			$this->pushData( $data );
 			if ( count( $this->getData() ) >= $limit ) {

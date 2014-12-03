@@ -149,14 +149,22 @@ class TopArticles implements IDataProvider {
 			if ( !empty( $response['items'][$articleId] ) ) {
 				$articleDetails =  $response['items'][$articleId];
 
+				$media = [
+					'thumbUrl' => $articleDetails['thumbnail'],
+					'originalWidth' => !empty( $articleDetails['original_dimension']['width'])
+							? (int) $articleDetails['original_dimension']['width']
+							: null,
+					'originalHeight' => !empty( $articleDetails['original_dimension']['height'])
+							? (int) $articleDetails['original_dimension']['height']
+							: null,
+				];
+
 				$out[] = [
 					'type' => self::RECOMMENDATION_TYPE,
 					'title' => $wikiData->city_title . ' - ' . $articleDetails['title'],
 					'url' => $response['basepath'] . $articleDetails['url'],
 					'description' => $articleDetails['abstract'],
-					'media' => [
-						'thumbUrl' => $articleDetails['thumbnail']
-					],
+					'media' => $media,
 					'source' => self::RECOMMENDATION_ENGINE
 				];
 			}

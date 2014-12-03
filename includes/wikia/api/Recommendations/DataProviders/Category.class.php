@@ -52,6 +52,12 @@ class Category implements IDataProvider {
 				'description' => $item[ 'text' ],
 				'media' => [
 					'thumbUrl' => $item[ 'imgUrl' ],
+					'originalWidth' => !empty( $item['imgOriginalDimensions']['width'])
+							? (int) $item['imgOriginalDimensions']['width']
+							: null,
+					'originalHeight' => !empty( $item['imgOriginalDimensions']['height'])
+							? (int) $item['imgOriginalDimensions']['height']
+							: null,
 				],
 				'source' => self::ARTICLE_SOURCE,
 			];

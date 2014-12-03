@@ -65,6 +65,18 @@ use Swagger\Annotations as SWG;
  * 		description="URL to thumbnail"
  * 	)
  * 	@SWG\Property(
+ * 		name="originalWidth",
+ * 		type="int",
+ * 		required="false",
+ * 		description="Original image width"
+ * 	)
+ * 	@SWG\Property(
+ * 		name="originalHeight",
+ * 		type="int",
+ * 		required="false",
+ * 		description="Original image height"
+ * 	)
+ * 	@SWG\Property(
  * 		name="duration",
  * 		type="int",
  * 		required="false",
