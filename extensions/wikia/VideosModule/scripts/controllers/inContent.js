@@ -24,8 +24,9 @@ require([
 
 		bucky.timer.start('execution');
 
-		hookElement = nodeFinderModule.getChildByOffsetTop(contentContainer, headerSelector, boundaryOffsetTop);
-		if (hookElement){
+		hookElement = nodeFinderModule.getFullWidthChildByOffsetTop(contentContainer, headerSelector,
+			boundaryOffsetTop);
+		if (hookElement) {
 			previousElement = nodeFinderModule.getPreviousVisibleSibling(hookElement);
 			moduleInsertingFunction = $.fn.before;
 		} else {

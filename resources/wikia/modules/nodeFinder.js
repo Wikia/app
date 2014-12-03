@@ -2,20 +2,23 @@ define('wikia.nodeFinder', function () {
 	'use strict';
 
 	/**
-	 * Find first element described by selector after set offset top value.
+	 * Find first element described by selector after set offset top value which width is 100% of container.
 	 *
-	 * @param {Node} container parent container
+	 * @param {Element} container parent container
 	 * @param {String} selector selector to search
 	 * @param {Integer} boundaryOffsetTop boundary offset top value
 	 * @return {Node} first element after set offset top value
 	 */
-	function getChildByOffsetTop(container, selector, boundaryOffsetTop) {
+	function getFullWidthChildByOffsetTop(container, selector, boundaryOffsetTop) {
 		var elements = container.querySelectorAll(selector),
 			length = elements.length,
+			containerWidth = container.offsetWidth,
 			i;
 
 		for (i = 0; i < length; i++) {
-			if (elements[i].offsetTop > boundaryOffsetTop) {
+			if (elements[i].offsetTop > boundaryOffsetTop &&
+				elements[i].offsetWidth >= containerWidth) {
+
 				return elements[i];
 			}
 		}
@@ -66,7 +69,7 @@ define('wikia.nodeFinder', function () {
 	}
 
 	return {
-		getChildByOffsetTop: getChildByOffsetTop,
+		getFullWidthChildByOffsetTop: getFullWidthChildByOffsetTop,
 		getPreviousVisibleSibling: getPreviousVisibleSibling,
 		getLastVisibleChild: getLastVisibleChild
 	};
