@@ -55,11 +55,6 @@
 			'type' => 'custom',
 			'output' => '<strong>' . $email . '</strong>'
 		];
-		$form['inputs'][] = [
-			'type' => 'hidden',
-			'name' => 'email',
-			'value' => $email,
-		];
 	}
 
 	$form['inputs'][] = [
