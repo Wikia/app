@@ -10,7 +10,7 @@
 			<div class="upload-mask"></div>
 			<div class="overlay">
 				<div class="overlay-flex">
-					<span class="overlay-text sg-sub-title">drop an image here</span>
+					<span class="overlay-text sg-sub-title"><?= wfMessage('hi-drop-here')->text(); ?></span>
 				</div>
 			</div>
 			<div class="upload-wrap">
@@ -18,19 +18,19 @@
 					<div class="upload-group">
 						<div class="upload-btn">
 							<img class="upload-icon" src="/extensions/wikia/NjordPrototype/images/addImage.svg">
-							<span class="upload-text sg-main">click to add a cover image</span>
+							<span class="upload-text sg-main"><?= wfMessage('hi-add-image')->text(); ?></span>
 						</div>
 						<div class="update-btn">
 							<img class="upload-icon" src="/extensions/wikia/NjordPrototype/images/addImage.svg">
-							<span class="update-text sg-main">click to update an image</span>
+							<span class="update-text sg-main"><?= wfMessage('hi-update-image')->text(); ?></span>
 						</div>
 						<input name="file" type="file" hidden/>
-						<span class="upload-desc sg-sub">or drag and drop here</span>
+						<span class="upload-desc sg-sub"><?= wfMessage('hi-dd-image')->text(); ?></span>
 					</div>
 				</div>
 			</div>
 			<div class="position-info">
-				<div class="position-text sg-main">drag to reposition this image</div>
+				<div class="position-text sg-main"><?= wfMessage('hi-position-image')->text(); ?></div>
 			</div>
 			<? endif; //isAlloweToEdit ?>
 			<div class="image-window">
@@ -45,28 +45,28 @@
 			<div class="edit-box">
 				<div class="hero-title" contenteditable="true"><?= $wikiData->title ?></div>
 				<div class="btn-bar">
-					<div class="new-btn discard-btn sg-sub">Discard</div>
-					<div class="new-btn save-btn sg-sub">Publish</div>
+					<div class="new-btn discard-btn sg-sub"><?= wfMessage('hi-discard-btn')->text(); ?></div>
+					<div class="new-btn save-btn sg-sub"><?= wfMessage('hi-publish-btn')->text(); ?></div>
 				</div>
 			</div>
 			<span class="title-text"><?= $wikiData->title ?></span>
-			<span class="title-default-text">Your wikia's name</span>
+			<span class="title-default-text"><?= wfMessage('hi-default-title')->text(); ?></span>
 			<? if ($isAllowedToEdit): ?>
 			<img class="title-edit-btn" src="/extensions/wikia/NjordPrototype/images/pencil.svg">
 			<?endif;?>
 		</h1>
 	</div>
 	<div class="image-save-bar btn-bar <?php if ( $wikiData->imageSet ) : ?>filled-state<? else : ?>zero-state<?php endif; ?>">
-		<span class="save-text sg-main">Your cover image will be used to promote your page in search results and in other promotional areas.</span>
-		<div class="new-btn discard-btn sg-sub">Discard</div>
-		<div class="new-btn save-btn sg-sub">Publish</div>
+		<span class="save-text sg-main"><?= wfMessage('hi-save-image')->text(); ?></span>
+		<div class="new-btn discard-btn sg-sub"><?= wfMessage('hi-discard-btn')->text(); ?></div>
+		<div class="new-btn save-btn sg-sub"><?= wfMessage('hi-publish-btn')->text(); ?></div>
 	</div>
 	<div class="hero-description <?php if ( isset( $wikiData->description ) ) : ?>filled-state<? else : ?>zero-state<?php endif; ?>">
 		<div class="edit-box">
 			<span class="edited-text sg-main" contenteditable="true"><?= $wikiData->description ?></span>
 			<div class="btn-bar">
-				<div class="new-btn discard-btn sg-sub">Discard</div>
-				<div class="new-btn save-btn sg-sub">Publish</div>
+				<div class="new-btn discard-btn sg-sub"><?= wfMessage('hi-discard-btn')->text(); ?></div>
+				<div class="new-btn save-btn sg-sub"><?= wfMessage('hi-publish-btn')->text(); ?></div>
 			</div>
 		</div>
 		<span class="hero-description-text sg-main">
@@ -75,8 +75,7 @@
 		<? } ?>
 		</span>
 		<?php if ( !isset ( $wikiData->description ) ) { ?>
-			<span class="hero-description-default-text sg-main"> Click to add a summary that will promote your wikia in searches and on hubs.
-		</span>
+			<span class="hero-description-default-text sg-main"><?= wfMessage('hi-default-description')->text(); ?></span>
 		<? } ?>
 		<? if ($isAllowedToEdit): ?>
 		<img class="edit-btn" src="/extensions/wikia/NjordPrototype/images/pencil_b.svg"/>

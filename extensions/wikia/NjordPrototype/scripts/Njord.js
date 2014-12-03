@@ -244,7 +244,7 @@
 					revertDescription();
 					$descriptionEditElement.stopThrobbing();
 					trackMom(saveSummaryFailLabel, trackerActionPost);
-					$.showModal($.msg('error'), 'Error while saving description');
+					$.showModal($.msg('hi-error'), $.msg('hi-description-error'));
 				}
 			});
 		},
@@ -358,7 +358,7 @@
 				trackMom(imageLoadedLabel, trackerActionSuccess);
 			} else {
 				trackMom(imageLoadedFailLabel, trackerActionError);
-				$.showModal($.msg('error'), data.errMessage);
+				$.showModal($.msg('hi-error'), data.errMessage);
 				$heroModule.stopThrobbing();
 			}
 		},
@@ -371,7 +371,7 @@
 				data: formdata,
 				callback: onAfterSendForm,
 				onErrorCallback: function () {
-					$.showModal($.msg('error'), $.msg('unknown-error'));
+					$.showModal($.msg('hi-error'), $.msg('hi-unknown-error'));
 					trackMom(imageLoadedFailLabel, trackerActionError);
 					$heroModule.stopThrobbing();
 				},
@@ -380,6 +380,8 @@
 			});
 
 		}, initializeEditMode = function () {
+			//load messages
+			$.msg.get('HeroImage');
 			$imageSaveBtn.on('click', saveImage)
 				.on('click', function () {
 					trackMom(saveHeroImageLabel, trackerActionClick);
