@@ -1,15 +1,16 @@
 require(['venus.infobox', 'wikia.document'], function (infoboxModule, d) {
 	'use strict';
-
-	var infoboxContainer = d.getElementById('infoboxContainer'),
-		infoboxWrapper = d.getElementById('infoboxWrapper'),
-		seeMoreButtonId = 'infoboxSeeMoreButton';
-
 	function init() {
-		var infobox = infoboxWrapper.firstChild,
+		var infoboxContainer = d.getElementById('infoboxContainer'),
+			infoboxWrapper = d.getElementById('infoboxWrapper'),
+			seeMoreButtonId = 'infoboxSeeMoreButton',
 			articleContent = d.getElementById('mw-content-text'),
-			seeMoreButton;
-
+			seeMoreButton,
+			infobox;
+		if (!infoboxWrapper) {
+			return;
+		}
+		infobox = infoboxWrapper.firstChild,
 		articleContent.classList.add('clear-none');
 		infoboxContainer.nextElementSibling.classList.add('clear-left');
 
@@ -27,8 +28,6 @@ require(['venus.infobox', 'wikia.document'], function (infoboxModule, d) {
 
 		$(infoboxWrapper).trigger('initialized.infobox');
 	}
-
-	if (infoboxWrapper) {
-		init();
-	}
+	init();
+	mw.hook('wikipage.content').add(init);
 });
