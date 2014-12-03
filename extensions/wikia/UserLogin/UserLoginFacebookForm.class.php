@@ -28,6 +28,13 @@ class UserLoginFacebookForm extends UserLoginForm {
 		parent::__construct( $request );
 	}
 
+	/**
+	 * Try and get an email for the user from Facebook. If Facebook has an email for the user
+	 * we don't have to confirm it, Facebook has done that for us. If Facebook doesn't have one,
+	 * try and pull one from the form and make note that we'll have to confirm the user.
+	 * @param WebRequest $request
+	 * @return String
+	 */
 	private function getUserEmail( WebRequest $request ) {
 
 		$userInfo = FacebookClient::getInstance()->getUserInfo();
@@ -35,7 +42,7 @@ class UserLoginFacebookForm extends UserLoginForm {
 		if ( empty( $userEmail ) ) {
 			// Email didn't come from facebook, we have to confirm it ourselves
 			$this->hasConfirmedEmail = false;
-			$userEmail = $request->getVal( 'email' );
+			$userEmail = $request->getVal( 'email', '' );
 		}
 
 		return $userEmail;
@@ -66,6 +73,11 @@ class UserLoginFacebookForm extends UserLoginForm {
 		return $user;
 	}
 
+	/**
+	 * Confirm the user. This is used when a user already has an email registered
+	 * with Facebook.
+	 * @param User $user
+	 */
 	private function confirmUser( User $user ) {
 		$user->confirmEmail();
 		$user->setCookies();
@@ -74,6 +86,10 @@ class UserLoginFacebookForm extends UserLoginForm {
 		$userLoginHelper->addNewUserLogEntry( $user ); // Add new user to log
 	}
 
+	/**
+	 * Send a confirmation email to the user. This is used when the user doesn't
+	 * have an email registered with Facebook and provides us one in the signup form.
+	 */
 	private function sendConfirmationEmail() {
 		$userLoginHelper = new UserLoginHelper();
 		$result = $userLoginHelper->sendConfirmationEmail( $this->mUsername );
@@ -98,6 +114,12 @@ class UserLoginFacebookForm extends UserLoginForm {
 		return true;
 	}
 
+	/**
+	 * Return whether the user is signing up using a confirmed email address
+	 * (ie, one from facebook), or is providing us an email and therefore we
+	 * have to confirm it.
+	 * @return bool
+	 */
 	public function getHasConfirmedEmail() {
 		return $this->hasConfirmedEmail;
 	}

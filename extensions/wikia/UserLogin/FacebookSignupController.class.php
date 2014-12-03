@@ -68,6 +68,11 @@ class FacebookSignupController extends WikiaController {
 		);
 	}
 
+	/**
+	 * Check if account is unconfirmed. User confirms via an email we sent them.
+	 * @param  User $user User account
+	 * @return boolean true if the account is unconfirmed, false otherwise
+	 */
 	private function isAccountUnconfirmed( User $user ) {
 		 return $user->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) == true;
 	}
