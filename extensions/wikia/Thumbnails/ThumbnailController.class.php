@@ -86,7 +86,7 @@ class ThumbnailController extends WikiaController {
 	/**
 	 * Render image tags for the MediaGallery
 	 * @requestParam MediaTransformOutput thumb
-	 * @requestParam array options This is here for consistancy, it's not used yet
+	 * @requestParam array options This is here for consistency, it's not used yet
 	 */
 	public function gallery() {
 		$this->mediaType = 'image';

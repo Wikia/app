@@ -80,6 +80,16 @@ class MediaGalleryModel extends WikiaObject {
 			'height' => $dimension,
 		];
 		$thumb = $file->transform( $dimensions );
+
+		// Error check and logging for VID-2143
+		if ( !$thumb instanceof ThumbnailImage || !$thumb->file instanceof File ) {
+			WikiaLogger::instance()->error(
+				'MediaGalleryModel',
+				'ThumbnailImage from title: ' . $item['title'] . 'couldn\'t be created or is missing associated File'
+			);
+			return null;
+		}
+
 		$thumb->setUrl( $thumbUrl );
 
 		$thumbnail = $this->app->renderView(
