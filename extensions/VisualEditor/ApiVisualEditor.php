@@ -165,12 +165,15 @@ class ApiVisualEditor extends ApiBase {
 		);
 	}
 
-	protected function parseWikitext( $title ) {
+	protected function parseWikitext( $title, $skin = null ) {
 		$apiParams = array(
 			'action' => 'parse',
 			'page' => $title->getPrefixedDBkey(),
-			'prop' => 'text|revid|categorieshtml',
+			'prop' => 'text|revid|categorieshtml'
 		);
+		if ( !empty( $skin ) ) {
+			$apiParams['useskin'] = $skin;
+		}
 		$api = new ApiMain(
 			new DerivativeRequest(
 				$this->getRequest(),
