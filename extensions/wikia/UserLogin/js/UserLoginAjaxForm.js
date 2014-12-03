@@ -10,7 +10,7 @@
 
 	UserLoginAjaxForm.prototype.init = function () {
 		// DOM cache
-		this.form = this.el.find('.UserLoginFacebookLeft form');
+		this.form = this.form = this.el.find('form');
 		this.wikiaForm = new WikiaForm(this.form);
 		this.setInputs();
 		this.forgotPasswordLink = this.form.find('.forgot-password');

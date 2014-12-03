@@ -71,13 +71,13 @@
 		'inputs' => [
 			[
 				'type' => 'text',
-				'name' => 'login_username',
+				'name' => 'username',
 				'isRequired' => true,
 				'label' => wfMessage( 'yourname' )->escaped(),
 			],
 			[
 				'type' => 'password',
-				'name' => 'login_password',
+				'name' => 'password',
 				'isRequired' => true,
 				'label' => wfMessage( 'yourpassword' )->escaped(),
 			],

@@ -197,7 +197,8 @@ require([
 				};
 
 				uiModal.createComponent(modalConfig, function (facebookSignupModal) {
-					var form,
+					var signupForm,
+						loginForm,
 						//wikiaForm,
 						signupAjaxForm,
 						$modal = facebookSignupModal.$element;
@@ -213,55 +214,8 @@ require([
 						});
 					});
 
-					// Here's the signup form - we also need a login form
-					form = new window.UserLoginFacebookForm($modal, {
-						ajaxLogin: true,
-						callback: function () {
-							// Track FB Connect Sign Up
-							self.track({
-								action: self.actions.SUBMIT,
-								label: 'facebook-login-modal'
-							});
-
-							// run logged in callback or redirect to the specified location
-							if (callback && typeof callback === 'function') {
-								callback();
-							} else {
-								window.location.href = this.returnToUrl;
-							}
-						}
-					});
-
-					// TODO: check if we need to set these properties
-					// set reference to form object
-					//self.form = form;
-					// get WikiaForm object from form
-					//wikiaForm = form.wikiaForm;
-					// and set reference to WikiaForm object
-					//self.wikiaForm = wikiaForm;
-
-					// create signup form
-					signupAjaxForm = new window.UserSignupAjaxForm(
-						form.wikiaForm,
-						null,
-						form.el.find('input[type=submit]')
-					);
-					// and set reference to signup form
-					//self.signupAjaxForm = signupAjaxForm;
-
-					// attach handlers to modal content
-					$modal
-						.on('blur', 'input[name=username], input[name=password]',
-							$.proxy(signupAjaxForm.validateInput, signupAjaxForm)
-						)
-						.on('click', '.submit-pane .extiw', function (event) {
-							self.track({
-								action: tracker.ACTIONS.CLICK_LINK_TEXT,
-								browserEvent: event,
-								href: $(event.target).attr('href'),
-								label: 'wikia-terms-of-use'
-							});
-						});
+					self.createSignupForm($modal, callback);
+					self.createLoginForm($modal, callback);
 
 					// Track FB Connect Modal Open
 					self.track({
@@ -272,6 +226,90 @@ require([
 					facebookSignupModal.show();
 					self.bucky.timer.stop('loggedOutCallback');
 				});
+			});
+		},
+
+		/**
+		 * Handle JS for the signup form portion of the modal
+		 * @TODO: probably shouldn't pass callback through all these functions
+		 * @param $modal
+		 * @param callback
+		 */
+		createSignupForm: function ($modal, callback) {
+			var self = this,
+				signupForm, signupAjaxForm;
+
+			signupForm = new window.UserSignupFacebookForm($modal.find('.UserLoginFacebookLeft'), {
+				ajaxLogin: true,
+				callback: function () {
+					// Track FB Connect Sign Up
+					self.track({
+						action: self.actions.SUBMIT,
+						label: 'facebook-login-modal'
+					});
+
+					// run logged in callback or redirect to the specified location
+					if (callback && typeof callback === 'function') {
+						callback();
+					} else {
+						window.location.href = this.returnToUrl;
+					}
+				}
+			});
+
+			// TODO: check if we need to set these properties
+			// set reference to form object
+			//self.form = form;
+			// get WikiaForm object from form
+			//wikiaForm = form.wikiaForm;
+			// and set reference to WikiaForm object
+			//self.wikiaForm = wikiaForm;
+
+			// create signup form
+			signupAjaxForm = new window.UserSignupAjaxForm(
+				signupForm.wikiaForm,
+				null,
+				signupForm.el.find('input[type=submit]')
+			);
+			// and set reference to signup form
+			//self.signupAjaxForm = signupAjaxForm;
+
+			// attach handlers to modal content
+			$modal
+				.on('blur', 'input[name=username], input[name=password]',
+					$.proxy(signupAjaxForm.validateInput, signupAjaxForm)
+				)
+				.on('click', '.submit-pane .extiw', function (event) {
+					self.track({
+						action: tracker.ACTIONS.CLICK_LINK_TEXT,
+						browserEvent: event,
+						href: $(event.target).attr('href'),
+						label: 'wikia-terms-of-use'
+					});
+				});
+		},
+
+		createLoginForm: function ($modal, callback) {
+			var self = this,
+				loginForm;
+
+			loginForm = new window.UserSignupFacebookForm($modal.find('.UserLoginFacebookRight'), {
+				ajaxLogin: true,
+				callback: function () {
+					// TODO: update tracking
+					// Track FB Connect login
+					self.track({
+						action: self.actions.SUBMIT,
+						label: 'facebook-login-modal'
+					});
+
+					// run logged in callback or redirect to the specified location
+					if (callback && typeof callback === 'function') {
+						callback();
+					} else {
+						window.location.href = this.returnToUrl;
+					}
+				}
 			});
 		},
 
