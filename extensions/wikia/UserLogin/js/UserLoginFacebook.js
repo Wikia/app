@@ -197,11 +197,7 @@ require([
 				};
 
 				uiModal.createComponent(modalConfig, function (facebookSignupModal) {
-					var signupForm,
-						loginForm,
-						//wikiaForm,
-						signupAjaxForm,
-						$modal = facebookSignupModal.$element;
+					var $modal = facebookSignupModal.$element;
 
 					// set reference to modal object
 					self.modal = facebookSignupModal;
@@ -226,7 +222,6 @@ require([
 						});
 					});
 
-
 					// Track FB Connect Modal Open
 					self.track({
 						action: self.actions.OPEN,
@@ -242,12 +237,12 @@ require([
 		/**
 		 * Handle JS for the signup form portion of the modal
 		 * @TODO: probably shouldn't pass callback through all these functions
-		 * @param $modal
-		 * @param callback
+		 * @param {Object} $modal jQuery DOM element of the open modal
+		 * @param {function} [callback] Optional callback once login is complete
 		 */
 		createSignupForm: function ($modal, callback) {
 			var self = this,
-				signupForm, signupAjaxForm;
+				signupForm;
 
 			signupForm = new window.UserSignupFacebookForm($modal.find('.UserLoginFacebookLeft'), {
 				ajaxLogin: true,
@@ -301,9 +296,14 @@ require([
 				}
 			});
 
+			// TODO: see if this is necessary (check in with armon)
 			this.applyAjaxForm(loginForm);
 		},
 
+		/**
+		 * Apply UserSignupAjaxForm validation to a UserLoginAjaxForm instance
+		 * @param {Object} form Form with a base class of UserLoginAjaxForm
+		 */
 		applyAjaxForm: function (form) {
 			var ajaxForm = new window.UserSignupAjaxForm(
 				form.wikiaForm,
@@ -313,7 +313,8 @@ require([
 
 			// attach validation handlers
 			// TODO: see if we need this or if we can just validate on submit
-			// TODO: check with armon about the error: we could not find the username you entered - when the password is incorrect
+			// TODO: check with armon about the error: we could not find the
+			// username you entered - when the password is incorrect
 			form.el.on(
 				'blur',
 				'input[name=username], input[name=password]', // todo: use form properties?
