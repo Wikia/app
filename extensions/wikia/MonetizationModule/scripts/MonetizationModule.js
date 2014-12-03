@@ -9,7 +9,7 @@ require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 
 	track = Tracker.buildTrackingFunction({
 		trackingMethod: 'internal',
-		action: Tracker.ACTIONS.CLICK,
+		category: 'monetization-module',
 		geo: geo.getCountryCode()
 	});
 
@@ -18,15 +18,14 @@ require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 			// track impression for each placement
 			$('.monetization-module').each(function () {
 				var $this = $(this),
-					trackCategory = $this.attr('id'),
+					label = $this.attr('id'),
 					value = $this.children().children().length,	// check if the ad is blocked
 					type = $this.attr('data-mon-type'),
 					slot = $this.attr('data-mon-slot');
 
 				track({
-					category: trackCategory,
-					label: 'module-impression',
-					action: Tracker.ACTIONS.IMPRESSION,
+					action: 'module-impression',
+					label: label,
 					value: value,
 					type: type,
 					slot: slot
@@ -37,9 +36,8 @@ require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 					$this.find('.affiliate').each(function (idx, element) {
 						var $element = $(element);
 						track({
-							category: $element.attr('data-mon-ptag'),
-							label: 'product-impression',
-							action: Tracker.ACTIONS.IMPRESSION,
+							label: $element.attr('data-mon-ptag'),
+							action: 'product-impression' + '-' + label,
 							value: idx,
 							type: type,
 							slot: slot,
@@ -73,25 +71,25 @@ require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 				var $this = $(this),
 					$module = $this.closest('.monetization-module'),
 					$products = $module.find('.affiliate'),
-					trackLabel = $this.attr('class').split(' ')[0],
+					elementName = $this.attr('class').split(' ')[0],
 					productUrl = $this.attr('href') || $this.find('a').attr('href'),
 					$product;
 
-				if (trackLabel === 'module-title') {
+				if (elementName === 'module-title') {
 					$product = $products.first();
 				} else {
 					$product = $this.parent();
 				}
 
 				track({
-					category: $module.attr('id'),
-					label: trackLabel,
+					action: Tracker.ACTIONS.CLICK + '-' + $module.attr('id') + '-' + elementName,
+					label: $product.attr('data-mon-ptag'),
 					value: $products.index($product),
 					type: $module.attr('data-mon-type'),
 					slot: $module.attr('data-mon-slot'),
 					title: $product.attr('data-mon-pname'),
 					pid: $product.attr('data-mon-pid'),
-					ptag: $product.attr('data-mon-ptag'),
+					element: elementName,
 					url: productUrl
 				});
 			});
