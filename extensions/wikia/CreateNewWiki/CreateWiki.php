@@ -720,10 +720,10 @@ class CreateWiki {
 	 * @return string Sanitized name
 	 */
 	private static function sanitizeS3BucketName( $name ) {
-		$RE_VALID = "/^[a-z0-9](?:[-_a-z0-9]{0,53}[a-z0-9])?\$/";
+		$RE_VALID = "/^[a-z0-9](?:[-_a-z0-9]{0,53}[a-z0-9])?(?:[a-z0-9](?:\\.[-_a-z0-9]{0,53}[a-z0-9])?)*\$/";
 		# check if it's already valid
 		$name = mb_strtolower($name);
-		if ( preg_match( $RE_VALID, $name ) ) {
+		if ( preg_match( $RE_VALID, $name ) && strlen($name) <= self::SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH ) {
 			return $name;
 		}
 
@@ -732,7 +732,7 @@ class CreateWiki {
 		if ( in_array( substr($check_name,-1), [ '-', '_' ] ) ) {
 			$check_name .= '0';
 		}
-		if ( preg_match( $RE_VALID, $check_name ) ) {
+		if ( preg_match( $RE_VALID, $check_name ) && strlen($check_name) <= self::SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH ) {
 			return $check_name;
 		}
 
