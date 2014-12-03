@@ -11,9 +11,6 @@ class WAMService extends Service {
 	const CACHE_DURATION = 86400; /* 24 hours */
 
 	protected static $verticalNames = [
-		// WikiFactoryHub::CATEGORY_ID_GAMING => 'Gaming',
-		// WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => 'Entertainment',
-		// WikiFactoryHub::CATEGORY_ID_LIFESTYLE => 'Lifestyle'
 		WikiFactoryHub::HUB_ID_OTHER => 'Other',
 		WikiFactoryHub::HUB_ID_TV => 'TV',
 		WikiFactoryHub::HUB_ID_VIDEO_GAMES => 'Games',
@@ -24,9 +21,6 @@ class WAMService extends Service {
 		WikiFactoryHub::HUB_ID_MOVIES => 'Movies',
 	];
 	protected static $verticalIds = [
-		// 'Gaming' => WikiFactoryHub::CATEGORY_ID_GAMING,
-		// 'Entertainment' => WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
-		// 'Lifestyle' => WikiFactoryHub::CATEGORY_ID_LIFESTYLE
 		'Other' => WikiFactoryHub::HUB_ID_OTHER,
 		'TV' => WikiFactoryHub::HUB_ID_TV,
 		'Games' => WikiFactoryHub::HUB_ID_VIDEO_GAMES,
@@ -58,9 +52,9 @@ class WAMService extends Service {
 	public function getCurrentWamScoreForWiki ($wikiId) {
 		wfProfileIn(__METHOD__);
 
-		$memKey = wfSharedMemcKey('datamart', 'wam', $wikiId);
+		$memKey = wfSharedMemcKey( 'datamart', 'wam', $wikiId);
 
-		$getData = function () use ($wikiId) {
+		$getData = function () use ( $wikiId ) {
 			$db = $this->getDB();
 
 			$result = $db->select(
@@ -124,7 +118,6 @@ class WAMService extends Service {
 		$options = $this->getWamIndexOptions($inputOptions);
 		$join_conds = $this->getWamIndexJoinConditions($inputOptions);
 
-
 		$result = $db->select(
 			$tables,
 			$fields,
@@ -133,7 +126,6 @@ class WAMService extends Service {
 			$options,
 			$join_conds
 		);
-		wfDebug("\nWAM Logs: " . json_encode($db->lastQuery()) . "\n");
 
 		$resultCount = $db->select(
 			$tables,
@@ -155,7 +147,6 @@ class WAMService extends Service {
 		$wamIndex['wam_results_total'] = $count->wam_results_total;
 		$wamIndex['wam_index_date'] = $inputOptions['currentTimestamp'];
 
-		wfDebug( "\nWAM Logs:" . json_encode($wamIndex) . "\n" );
 
 		wfProfileOut(__METHOD__);
 
@@ -283,7 +274,6 @@ class WAMService extends Service {
 						"OR dw.title like '%" . $db->strencode($options['wikiWord']) . "%'";
 		}
 
-
 		if ($options['verticalId']) {
 			$verticals = $options['verticalId'];
 		} else {
@@ -298,8 +288,6 @@ class WAMService extends Service {
 				WikiFactoryHub::HUB_ID_MOVIES,
 			);
 		}
-		// $conds['fw1.hub_name'] = $this->translateVerticalsNames($verticals);
-		wfDebug( "\nWAM Logs" . json_encode( $verticals ) . "\n" );
 		$conds['fw1.vertical_id'] = $verticals;
 
 		if (!is_null($options['wikiLang'])) {
@@ -408,6 +396,6 @@ class WAMService extends Service {
 
 	protected function getDB() {
 		$app = F::app();
-		return wfGetDB(DB_MASTER, array(), $app->wg->DatamartDB);
+		return wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
 	}
 }

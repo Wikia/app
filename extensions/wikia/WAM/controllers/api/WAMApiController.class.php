@@ -63,15 +63,15 @@ class WAMApiController extends WikiaApiController {
 		$app = F::app();
 
 		$options = $this->getWAMParameters();
-		// $wamIndex = WikiaDataAccess::cacheWithLock(
-		// 	wfSharedMemcKey(
-		// 		'wam_index_table',
-		// 		self::MEMCACHE_VER,
-		// 		$app->wg->ContLang->getCode(),
-		// 		implode( ':', $options )
-		// 	),
-		// 	6 * 60 * 60,
-		// 	function () use ( $options ) {
+		$wamIndex = WikiaDataAccess::cacheWithLock(
+			wfSharedMemcKey(
+				'wam_index_table',
+				self::MEMCACHE_VER,
+				$app->wg->ContLang->getCode(),
+				implode( ':', $options )
+			),
+			6 * 60 * 60,
+			function () use ( $options ) {
 				$wamService = new WAMService();
 
 				$wamIndex = $wamService->getWamIndex( $options );
@@ -83,7 +83,6 @@ class WAMApiController extends WikiaApiController {
 					foreach ($wamIndex['wam_index'] as &$row) {
 						$row['admins'] = $wikiService->getMostActiveAdmins($row['wiki_id'], $options['avatarSize']);
 						$row['admins'] = $this->prepareAdmins($row['admins'], self::DEFAULT_WIKI_ADMINS_LIMIT);
-						wfDebug( "\nWAM Logs Admins: " . json_encode( $row['admins'] ) . "\n" );
 					}
 				}
 				if ($options['fetchWikiImages']) {
@@ -98,9 +97,9 @@ class WAMApiController extends WikiaApiController {
 					}
 				}
 
-		// 		return $wamIndex;
-		// 	}
-		// );
+				return $wamIndex;
+			}
+		);
 		
 		if (!$this->request->isInternal() && empty($wamIndex['wam_index'])) {
 			$wamIndex['wam_index'] = (object)$wamIndex['wam_index'];
@@ -150,20 +149,20 @@ class WAMApiController extends WikiaApiController {
 	}
 
 	private function getMinMaxWamIndexDateInternal() {
-		// $wamDates = WikiaDataAccess::cache(
-		// 	wfSharedMemcKey(
-		// 		'wam_minmax_date',
-		// 		self::MEMCACHE_VER
-		// 	),
-		// 	2 * 60 * 60,
-		// 	function () {
+		$wamDates = WikiaDataAccess::cache(
+			wfSharedMemcKey(
+				'wam_minmax_date',
+				self::MEMCACHE_VER
+			),
+			2 * 60 * 60,
+			function () {
 				$wamService = new WAMService();
 
 				return $wamService->getWamIndexDates();
-		// 	}
-		// );
+			}
+		);
 
-		// return $wamDates;
+		return $wamDates;
 	}
 
 	private function getWAMParameters() {
@@ -189,8 +188,6 @@ class WAMApiController extends WikiaApiController {
 		if ($options['limit'] > self::MAX_PAGE_SIZE) {
 			throw new InvalidParameterApiException('limit');
 		}
-
-		wfDebug( "\nWAM Logs: options " . json_encode($options) . "\n" );
 
 		$wamDates = $this->getMinMaxWamIndexDateInternal();
 

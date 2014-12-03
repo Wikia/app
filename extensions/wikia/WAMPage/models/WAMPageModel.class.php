@@ -36,9 +36,6 @@ class WAMPageModel extends WikiaModel {
 	];
 
 	static protected $verticalIds = [
-		// WikiFactoryHub::CATEGORY_ID_GAMING,
-		// WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
-		// WikiFactoryHub::CATEGORY_ID_LIFESTYLE
 		WikiFactoryHub::HUB_ID_OTHER,
 		WikiFactoryHub::HUB_ID_TV,
 		WikiFactoryHub::HUB_ID_VIDEO_GAMES,
@@ -274,11 +271,11 @@ class WAMPageModel extends WikiaModel {
 	}
 
 	protected function prepareIndex($wamWikis, $tabIndex) {
-		$wamScoreName = ($tabIndex != self::TAB_INDEX_BIGGEST_GAINERS) ? 'wam' : 'wam_change';
-		foreach ($wamWikis as &$wiki) {
+		$wamScoreName = ( $tabIndex != self::TAB_INDEX_BIGGEST_GAINERS ) ? 'wam' : 'wam_change';
+		foreach ( $wamWikis as &$wiki ) {
 			$wamScore = $wiki[$wamScoreName];
-			$wiki['change'] = $this->getScoreChangeName($wiki['wam'], $wiki['wam_change']);
-			$wiki['wam'] = round($wamScore, self::SCORE_ROUND_PRECISION);
+			$wiki['change'] = $this->getScoreChangeName( $wiki['wam'], $wiki['wam_change'] );
+			$wiki['wam'] = round( $wamScore, self::SCORE_ROUND_PRECISION );
 			$wiki['verticalId'] = $this->getVerticalName( $wiki['vertical_id'] );
 		}
 

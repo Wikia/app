@@ -136,7 +136,7 @@ use Swagger\Annotations as SWG;
  * 		name="vertical_id",
  * 		type="int",
  * 		required="true",
- * 		description="An internal identification number for a Verticla"
+ * 		description="An internal identification number for a Vertical"
  * 	)
  * 	@SWG\Property(
  * 		name="wam_change",

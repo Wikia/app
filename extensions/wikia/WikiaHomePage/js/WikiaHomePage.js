@@ -608,4 +608,3 @@ $(window).load(function() {
 		$('#' + WikiaRemixInstance.SPONSOR_HERO_IMG_CONTAINER_ID).fadeOut(WikiaRemixInstance.SPONSOR_HERO_IMG_FADE_OUT_TIME);
 	}, WikiaRemixInstance.SPONSOR_HERO_IMG_TIMEOUT);
 });
-

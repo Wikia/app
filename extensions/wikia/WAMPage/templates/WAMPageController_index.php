@@ -31,10 +31,10 @@
 
 <div class="wam-index" id="wam-index">
 	<form method="get" action="" class="wam-index-search" id="wam-index-search">
-		<div class="wam-verticals">
+		<div class="wam-verticals-tabs">
 			<ul class="clearfix">
 			<? foreach ($filterVerticals as $verticalId => $verticalName): ?>
-				<li class="wam-filtering-tab <? if ( $verticalId == $selectedVerticalId ) : ?>selected<? endif; ?> " data-vertical-id="<?= $verticalId ?>">
+				<li class="wam-filtering-tab <? if ( $verticalId == $selectedVerticalId ) : ?> selected<? endif; ?>" data-vertical-id="<?= $verticalId ?>">
 					<a>
 						<img src="http://placehold.it/32/0a5fa3">
 						<?= $verticalName ?>
@@ -92,7 +92,7 @@
 								<ul>
 								<? foreach($wiki['admins'] as $admin): ?>
 									<li><a href="<?= $admin['userPageUrl'] ?>">
-										<img src="http://img2.wikia.nocookie.net/__cb1401702611/common/avatars/thumb/1/1b/24715421.png/20px-24715421.png" alt="<?= $admin['name'] ?>" title="<?= $admin['name'] ?>" />
+										<img src="<?= $admin['avatarUrl'] ?>" alt="<?= $admin['name'] ?>" title="<?= $admin['name'] ?>" />
 									</a></li>
 								<? endforeach ?>
 								</ul>
