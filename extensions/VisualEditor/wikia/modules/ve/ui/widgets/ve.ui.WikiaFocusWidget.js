@@ -19,7 +19,7 @@ ve.ui.WikiaFocusWidget = function VeUiWikiaFocusWidget( surface ) {
 	// Properties
 	this.surface = surface;
 	this.node = null;
-	this.spacing = 10;
+	this.spacing = this.constructor.static.getSpacing();
 	this.layout = null;
 	this.layoutHash = null;
 	this.$top = this.$( '<div>' )
@@ -65,6 +65,19 @@ ve.ui.WikiaFocusWidget = function VeUiWikiaFocusWidget( surface ) {
 
 /* Inheritance */
 OO.inheritClass( ve.ui.WikiaFocusWidget, OO.ui.Widget );
+
+/* Static Methods */
+
+/*
+ * How far the focus widget should be spaced from the edges of the surface
+ * This is highly dependent on the UI of the skin. The edge of the surface may not be the visual edge of the docuemnt.
+ *
+ * @method
+ * @returns {int} Spacing value
+ */
+ve.ui.WikiaFocusWidget.static.getSpacing = function () {
+	return mw.config.get( 'skin' ) === 'oasis' ? 10 : 0;
+};
 
 /* Methods */
 
