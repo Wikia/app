@@ -1,4 +1,7 @@
 /* global UserLoginModal, wgCanonicalSpecialPageName, wgMainPageTitle, wgArticlePath */
+/**
+ * Handle
+ */
 require([
 	'wikia.tracker',
 	'wikia.querystring',
@@ -39,7 +42,7 @@ require([
 			this.initialized = true;
 			this.loginSetup();
 
-			// load when the login dropdown is shown - see BugId:68955
+			// load when the login dropdown is shown or specific page is loaded
 			$.loadFacebookAPI();
 
 			this.log('init');
@@ -68,59 +71,64 @@ require([
 
 		// callback for FB.login
 		onFBLogin: function (response) {
-			if (typeof response === 'object' && response.status) {
-				this.log(response);
-				switch (response.status) {
-				case 'connected':
-					this.log('FB.login successful');
+			if (typeof response !== 'object' || !response.status) {
+				this.bucky.timer.stop('loginSetup');
+				return;
+			}
+			this.log(response);
+			switch (response.status) {
+			case 'connected':
+				this.log('FB.login successful');
 
-					this.track({
-						action: this.actions.SUCCESS,
-						label: 'facebook-login'
-					});
+				this.track({
+					action: this.actions.SUCCESS,
+					label: 'facebook-login'
+				});
 
-					// begin ajax call performance tracking
-					this.bucky.timer.start('loginCallbackAjax');
+				// begin ajax call performance tracking
+				this.bucky.timer.start('loginCallbackAjax');
 
-					// now check FB account (is it connected with Wikia account?)
-					$.nirvana.postJson('FacebookSignupController', 'index', {
-							returnto: encodeURIComponent(window.wgPageName),
-							returntoquery: encodeURIComponent(window.location.search.substring(1))
-						},
-						$.proxy(this.checkAccountCallback, this));
-					break;
-				case 'not_authorized':
-					// Not logged into the Wikia FB app
-					this.track({
-						action: this.actions.SUCCESS,
-						label: 'facebook-login-not-auth'
-					});
-					break;
-				default:
-					// Track FB Connect Error
-					this.track({
-						action: this.actions.ERROR,
-						label: 'facebook-login'
-					});
-				}
+				// now check FB account (is it connected with Wikia account?)
+				$.nirvana.postJson('FacebookSignupController', 'index', {
+						returnto: encodeURIComponent(window.wgPageName),
+						returntoquery: encodeURIComponent(window.location.search.substring(1))
+					},
+					$.proxy(this.checkAccountCallback, this));
+				break;
+			case 'not_authorized':
+				// Not logged into the Wikia FB app
+				this.track({
+					action: this.actions.SUCCESS,
+					label: 'facebook-login-not-auth'
+				});
+				break;
+			default:
+				// Track FB Connect Error
+				this.track({
+					action: this.actions.ERROR,
+					label: 'facebook-login'
+				});
 			}
 			this.bucky.timer.stop('loginSetup');
 		},
 
-		// check FB account (is it connected with Wikia account?)
+		/**
+		 * Check if the current user's FB account is connected with a Wikia account and act acordingly
+		 * @param {Object} resp Response object from FacebookSignupController::index
+		 */
 		checkAccountCallback: function (resp) {
-			var self, loginCallback;
+			var loginCallback;
 
 			// end ajax call performance tracking
 			this.bucky.timer.stop('loginCallbackAjax');
 
-			self = this;
 			loginCallback = this.callbacks['login-success'] || '';
 
 			// logged in using FB account, reload the page or callback
 			if (resp.loggedIn) {
 				this.loggedInCallback(loginCallback);
 
+			// some error occurred
 			} else if (resp.loginAborted) {
 				window.GlobalNotification.show(resp.errorMsg, 'error');
 
@@ -130,6 +138,10 @@ require([
 			}
 		},
 
+		/**
+		 * This runs after has signed in with facebook and is already registered with Wikia.
+		 * @param {function} [callback] Called when outside extension has specified a callback
+		 */
 		loggedInCallback: function (callback) {
 			if (callback && typeof callback === 'function') {
 				callback();
@@ -137,7 +149,8 @@ require([
 				this.bucky.timer.start('loggedInCallback');
 				var qString = new QueryString(),
 					returnTo = (wgCanonicalSpecialPageName &&
-						(wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/))) ? wgMainPageTitle : null;
+						(wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/))) ?
+						wgMainPageTitle : null;
 
 				if (returnTo) {
 					qString.setPath(wgArticlePath.replace('$1', returnTo));
@@ -149,6 +162,12 @@ require([
 			}
 		},
 
+		/**
+		 * Show a modal (to logged out users) for logging in or signing up with Wikia
+		 * after a successful Facebook connection.
+		 * @param {Object} resp Response object from FacebookSignupController::index
+		 * @param {function} [callback]
+		 */
 		showModal: function (resp, callback) {
 			var self = this;
 
@@ -179,7 +198,7 @@ require([
 
 				uiModal.createComponent(modalConfig, function (facebookSignupModal) {
 					var form,
-						wikiaForm,
+						//wikiaForm,
 						signupAjaxForm,
 						$modal = facebookSignupModal.$element;
 
@@ -188,7 +207,6 @@ require([
 
 					// Track Facebook Connect Modal Close
 					facebookSignupModal.bind('beforeClose', function () {
-						// Track FB Connect Modal Close
 						self.track({
 							action: self.actions.CLOSE,
 							label: 'facebook-login-modal'
@@ -213,22 +231,23 @@ require([
 							}
 						}
 					});
-					// set reference to form object
-					self.form = form;
 
+					// TODO: check if we need to set these properties
+					// set reference to form object
+					//self.form = form;
 					// get WikiaForm object from form
-					wikiaForm = form.wikiaForm;
+					//wikiaForm = form.wikiaForm;
 					// and set reference to WikiaForm object
-					self.wikiaForm = wikiaForm;
+					//self.wikiaForm = wikiaForm;
 
 					// create signup form
 					signupAjaxForm = new window.UserSignupAjaxForm(
-						wikiaForm,
+						form.wikiaForm,
 						null,
 						form.el.find('input[type=submit]')
 					);
 					// and set reference to signup form
-					self.signupAjaxForm = signupAjaxForm;
+					//self.signupAjaxForm = signupAjaxForm;
 
 					// attach handlers to modal content
 					$modal
@@ -256,6 +275,9 @@ require([
 			});
 		},
 
+		/**
+		 * Used mainly by other extensions to close the signup modal after a successful login
+		 */
 		closeSignupModal: function () {
 			var modal = this.modal;
 
