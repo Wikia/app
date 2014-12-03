@@ -61,5 +61,29 @@
 		"assets": [
 			"//resources/wikia/ui_components/modal/js/modal_sample.js"
 		]
+	},
+	{
+		"description": "styleguide-example-modal-html-title-description",
+		"helpers": {
+			"components": [
+				{
+					"name": "button",
+					"params": {
+						"type": "link",
+						"vars": {
+							"id": "showHtmlTitleModalExample",
+							"href": "#",
+							"classes": [ "primary" ],
+							"htmlTitle": "This <b>title</b> includes <i>html</i>",
+							"value": "Large modal"
+						}
+					}
+				}
+			]
+		},
+		"assets": [
+			"//resources/wikia/ui_components/modal/js/modal_sample.js"
+		]
 	}
+
 ]

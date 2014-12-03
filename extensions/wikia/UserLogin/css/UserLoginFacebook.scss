@@ -1,19 +1,50 @@
 // core styles
-@import "skins/shared/color";
+@import 'skins/shared/color';
 
 // core mixins
-@import "skins/shared/mixins/box-sizing";
-@import "skins/shared/mixins/box-shadow";
-@import "skins/shared/mixins/clearfix";
-@import "skins/shared/mixins/transition";
+@import 'skins/shared/mixins/box-sizing';
+@import 'skins/shared/mixins/box-shadow';
+@import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/transition';
 
 // local mixins
-@import "../mixins/submitpane";
-@import "../mixins/tooltip-icon";
+@import '../mixins/submitpane';
+@import '../mixins/tooltip-icon';
 
 // variables
 $section-padding: 20px;
 $fieldset-padding: 12px;
+
+// extra .modal tacked on for specificity
+.facebook-signup-modal.modal > header {
+	height: auto;
+
+	h3 {
+		box-sizing: border-box;
+		clear: right;
+		float: left;
+		font-size: 23px;
+		margin: auto;
+		overflow: visible;
+		padding: 5px 10% 15px;
+		text-align: center;
+		white-space: normal;
+		width: 45%;
+	}
+
+	span {
+		background: cyan; // fix me
+		border-radius: 100%;
+		clear: right;
+		display: block;
+		float: left;
+		font-size: 23px;
+		line-height: 60px;
+		height: 60px;
+		text-align: center;
+		width: 60px;
+	}
+}
 
 .UserLoginFacebookWrapper {
 	@include clearfix;

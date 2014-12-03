@@ -42,9 +42,10 @@ class FacebookSignupController extends WikiaController {
 			}
 		} else {
 			$modal = $this->sendRequest('FacebookSignup', 'modal')->__toString();
+			$title = $this->sendRequest('FacebookSignup', 'modalHeader')->__toString();
 
 			// no account connected - show FB sign up modal
-			$this->title = wfMessage('usersignup-facebook-heading')->escaped();
+			$this->htmlTitle = $title;
 			$this->modal = !empty($modal) ? $modal : wfMessage('usersignup-facebook-problem')->escaped();
 			$this->cancelMsg = wfMessage('cancel')->escaped();
 		}
@@ -109,6 +110,14 @@ class FacebookSignupController extends WikiaController {
 
 		$specialPage = $this->wg->EnableFacebookClientExt ? 'FacebookConnect' : 'Connect';
 		$this->connectUrl = SpecialPage::getTitleFor( $specialPage )->getLocalUrl();
+	}
+
+	public function modalHeader() {
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+
+		$this->signupMsg = wfMessage( 'usersignup-facebook-signup-header' )->escaped();
+		$this->loginMsg = wfMessage( 'usersignup-facebook-login-header' )->escaped();
+		$this->orMsg = wfMessage( 'usersignup-facebook-or-header' )->escaped();
 	}
 
 	/**

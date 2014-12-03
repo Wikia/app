@@ -2,7 +2,12 @@
     <div id="{{id}}" class="modal {{size}} {{#classes}}{{.}} {{/classes}}" {{#data}}data-{{key}}="{{value}}"{{/data}}>
         <header>
             <a href="#" class="close" title="{{closeText}}">{{closeText}}</a>
-            <h3>{{title}}</h3>
+	        {{#htmlTitle}}
+		        {{{htmlTitle}}}
+		    {{/htmlTitle}}
+			{{^htmlTitle}}
+                <h3>{{title}}</h3>
+			{{/htmlTitle}}
         </header>
         <section>
             {{{content}}}

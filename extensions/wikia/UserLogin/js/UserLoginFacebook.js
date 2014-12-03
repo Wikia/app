@@ -183,7 +183,8 @@ require([
 						id: 'FacebookSignUp',
 						size: 'medium',
 						content: resp.modal,
-						title: resp.title,
+						htmlTitle: resp.htmlTitle,
+						classes: ['facebook-signup-modal'],
 						buttons: [{
 							vars: {
 								value: resp.cancelMsg,
