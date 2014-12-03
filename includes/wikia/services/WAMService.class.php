@@ -64,7 +64,7 @@ class WAMService extends Service {
 			$db = $this->getDB();
 
 			$result = $db->select(
-				array('fact_wam_scores_dev'),
+				array('fact_wam_scores'),
 				array(
 					'wam'
 				),
@@ -124,6 +124,7 @@ class WAMService extends Service {
 		$options = $this->getWamIndexOptions($inputOptions);
 		$join_conds = $this->getWamIndexJoinConditions($inputOptions);
 
+
 		$result = $db->select(
 			$tables,
 			$fields,
@@ -132,6 +133,7 @@ class WAMService extends Service {
 			$options,
 			$join_conds
 		);
+		wfDebug("\nWAM Logs: " . json_encode($db->lastQuery()) . "\n");
 
 		$resultCount = $db->select(
 			$tables,
@@ -152,6 +154,8 @@ class WAMService extends Service {
 		$count = $resultCount->fetchObject();
 		$wamIndex['wam_results_total'] = $count->wam_results_total;
 		$wamIndex['wam_index_date'] = $inputOptions['currentTimestamp'];
+
+		wfDebug( "\nWAM Logs:" . json_encode($wamIndex) . "\n" );
 
 		wfProfileOut(__METHOD__);
 
@@ -174,7 +178,7 @@ class WAMService extends Service {
 		);
 
 		$result = $db->select(
-			'fact_wam_scores_dev',
+			'fact_wam_scores',
 			$fields
 		);
 
@@ -198,7 +202,7 @@ class WAMService extends Service {
 			$db = $this->getDB();
 			$result = $db->select(
 				[
-					'fw1' => 'fact_wam_scores_dev',
+					'fw1' => 'fact_wam_scores',
 					'dw' => 'dimension_wikis'
 				],
 				'DISTINCT dw.lang',
@@ -345,8 +349,8 @@ class WAMService extends Service {
 
 	protected function getWamIndexTables () {
 		$tables = array(
-			'fw1' => 'fact_wam_scores_dev',
-			'fw2' => 'fact_wam_scores_dev',
+			'fw1' => 'fact_wam_scores',
+			'fw2' => 'fact_wam_scores',
 			'dw' => 'dimension_wikis'
 		);
 		return $tables;
@@ -404,6 +408,6 @@ class WAMService extends Service {
 
 	protected function getDB() {
 		$app = F::app();
-		return wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+		return wfGetDB(DB_MASTER, array(), $app->wg->DatamartDB);
 	}
 }

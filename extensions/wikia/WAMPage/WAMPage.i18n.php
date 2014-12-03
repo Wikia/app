@@ -14,17 +14,17 @@ $messages['en'] = array(
 	'wam-Lifestyle' => 'Lifestyle',
 	'wam-other' => 'All',
 	'wam-tv' => 'TV',
-	'wam-games' => 'Video Games',
+	'wam-games' => 'Games',
 	'wam-books' => 'Books',
 	'wam-comics' => 'Comics',
 	'wam-lifestyle' => 'Lifestyle',
 	'wam-music' => 'Music',
 	'wam-movies' => 'Movies',
+	'wampage-title' => 'Top Gainers',
 	'wampage-header-faq' => 'Faq',
-	'wampage-header-wam' => 'What is WAM Score?',
-	'wampage-content' => 'Wikia Activity Monitor (WAM) is an indicator of a wikia’s health and vitality. WAM is a custom measurement developed by Wikia to capture a number of independent indicators into one overall index, like the Billboard or Parker score.
-
-The WAM is calculated daily for the top 5,000 Wikia sites and includes an overall and vertical rank as well as a score from 0 to 100. The WAM rankings are sensitive to real-world events and change frequently, so be sure to check back regularly to see the latest trends. The WAM can also be viewed daily on each of our [[Video Games]], [[Entertainment]] and [[Lifestyle]] hub pages.
+	'wampage-header-wam' => 'WAM Score',
+	'wampage-subheader-wam' => 'is an indicator of a wikia\'s health nad vitality.',
+	'wampage-content' => 'The WAM is calculated daily for the top 5,000 Wikia sites and includes an overall and vertical rank as well as a score from 0 to 100. The WAM rankings are sensitive to real-world events and change frequently, so be sure to check back regularly to see the latest trends.
 
 [[$1|Frequently Asked Questions]]',
 	'wampage-faq' => '__NOTOC____NOEDITSECTION__===How is the WAM calculated?===

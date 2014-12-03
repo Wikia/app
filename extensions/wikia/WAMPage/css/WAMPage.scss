@@ -40,6 +40,7 @@
 .WikiaArticle .wam-header {
 	background-image: url("/extensions/wikia/WAMPage/images/wamheaderbg.jpg");
 	height: 285px;
+	padding-bottom: 10px;
 	@if ( $responsive-layout-enabled ) {
 		width: 100%;
 	} else {
@@ -104,14 +105,26 @@
 				background-repeat: no-repeat;
 				background-position: 5px 50%;
 			}
+			.vertical-1 {
+				background-color: #00b7e0; // TODO: Use a variable here!
+			}
 			.vertical-2 {
-				background-color: $color-wikiahome-videogames;
+				background-color: #94d11f; // TODO: Use a variable here!
 			}
 			.vertical-3 {
-				background-color: $color-wikiahome-entertainment;
+				background-color: #ff7f26; // TODO: Use a variable here!
 			}
-			.vertical-9 {
-				background-color: $color-wikiahome-lifestyle;
+			.vertical-4 {
+				background-color: #ff5400; // TODO: Use a variable here!
+			}
+			.vertical-5 {
+				background-color: #ffd000; // TODO: Use a variable here!
+			}
+			.vertical-6 {
+				background-color: #c819ad; // TODO: Use a variable here!
+			}
+			.vertical-7 {
+				background-color: #09d3bf; // TODO: Use a variable here!
 			}
 			.wam-up {
 				background-image: url("/extensions/wikia/WAMPage/images/wam-up.png"); /* base64 */
@@ -225,14 +238,64 @@
 }
 
 .wam-index {
-	margin: 25px 10px 50px;
+	margin: 25px 0 50px;
 	@if ( $responsive-layout-enabled == false ) {
-		width: 1010px;
+		width: 1032px;
 	}
 	.wam-index-search {
+
+		.wam-verticals {
+			display: table;
+			margin: 0 0 10px 0;
+
+			ul {
+				background-color: #f7f7f7; // TODO: Use a variable here!
+				border: solid #ccc; // TODO: Use a variable here!
+				border-collapse: collapse;
+				border-width: 1px 0 1px 0;
+				display: table-row;
+
+				li {
+					border-collapse: collapse;
+					border: solid #ccc; // TODO: Use a variable here!
+					border-width: 1px 1px 1px 0;
+					display: table-cell;
+					list-style-type: none;
+					margin: 0;
+					width: 0;
+
+					a {
+						background-color: transparent;
+						color: #0a5fa3; // TODO: Use a variable here!
+						cursor: pointer;
+						display: block;
+						font-weight: bold;
+						padding: 10px 20px;
+						text-align: center;
+						text-transform: uppercase;
+
+						img {
+							display: block;
+							margin: 3px auto;
+						}
+					}
+				}
+
+				li:last-child {
+					border-right: 0;
+					width: 100%;
+				}
+
+				li.selected {
+					background-color: #fff; // TODO: Use a variable here!
+					border-bottom: 1px solid #fff; // TODO: Use a variable here!
+				}
+			}
+		}
 		.filtering {
 			float: left;
 			font-weight: bold;
+			margin-left: 10px;
 			select, input {
 				margin-right: 35px;
 				max-width: 140px;
@@ -244,6 +307,7 @@
 		}
 		.searching {
 			float: right;
+			margin-right: 10px;
 		}
 		margin-bottom: 18px;
 		overflow: hidden;
@@ -275,6 +339,9 @@
 		input:-ms-input-placeholder { /* Internet Explorer 10+ */
 			color: $color-text;
 		}
+	}
+	.wam-index-table-wrapper {
+		margin: 0 10px;
 	}
 	table {
 		border-collapse:collapse;
@@ -324,6 +391,9 @@
 						overflow: hidden;
 						width: 21px;
 					}
+				}
+				img {
+					border-radius: 11px;
 				}
 			}
 

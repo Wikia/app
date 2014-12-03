@@ -384,6 +384,7 @@ WikiaHomePageRemix.prototype = {
 		}
 	},
 	remix: function (getSlotCurrent, getSlotList) {
+		debugger;
 		getSlotCurrent.each(function(slotIndex, slot) {
 			var listslot = getSlotList[slotIndex],
 				currentslot = $(slot ),

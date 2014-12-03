@@ -83,6 +83,7 @@ class WAMApiController extends WikiaApiController {
 					foreach ($wamIndex['wam_index'] as &$row) {
 						$row['admins'] = $wikiService->getMostActiveAdmins($row['wiki_id'], $options['avatarSize']);
 						$row['admins'] = $this->prepareAdmins($row['admins'], self::DEFAULT_WIKI_ADMINS_LIMIT);
+						wfDebug( "\nWAM Logs Admins: " . json_encode( $row['admins'] ) . "\n" );
 					}
 				}
 				if ($options['fetchWikiImages']) {
@@ -149,20 +150,20 @@ class WAMApiController extends WikiaApiController {
 	}
 
 	private function getMinMaxWamIndexDateInternal() {
-		$wamDates = WikiaDataAccess::cache(
-			wfSharedMemcKey(
-				'wam_minmax_date',
-				self::MEMCACHE_VER
-			),
-			2 * 60 * 60,
-			function () {
+		// $wamDates = WikiaDataAccess::cache(
+		// 	wfSharedMemcKey(
+		// 		'wam_minmax_date',
+		// 		self::MEMCACHE_VER
+		// 	),
+		// 	2 * 60 * 60,
+		// 	function () {
 				$wamService = new WAMService();
 
 				return $wamService->getWamIndexDates();
-			}
-		);
+		// 	}
+		// );
 
-		return $wamDates;
+		// return $wamDates;
 	}
 
 	private function getWAMParameters() {
