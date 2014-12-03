@@ -81,7 +81,7 @@ define('venus.infobox', ['wikia.document', 'wikia.window'], function(d, w) {
 
 			// Avoid overriding with transparent background
 			var alphaValue = getColorAlpha(bgColor);
-			if ((alphaValue!==null && alphaValue<0.5) || bgColor=='transparent') {
+			if ((alphaValue !== null && alphaValue < 0.5) || bgColor == 'transparent') {
 				bgColor = '';
 			}
 
