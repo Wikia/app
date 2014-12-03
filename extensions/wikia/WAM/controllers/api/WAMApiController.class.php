@@ -53,7 +53,7 @@ class WAMApiController extends WikiaApiController {
 	 * 		last_peak - the last time that the Wiki was at its peak_wam_rank
 	 * 		title - wiki title
 	 * 		url - wiki url
-	 * 		hub_id - wiki hub id
+	 * 		vertical_id - wiki vertical id
 	 * 		wam_change - wam score change from $wam_previous_day
 	 * 		wam_is_new - 1 if wiki wasn't classified on $wam_previous_day, 0 if this wiki was in index
 	 * @responseParam array $wam_results_total The total count of wikis available for provided params
@@ -63,20 +63,20 @@ class WAMApiController extends WikiaApiController {
 		$app = F::app();
 
 		$options = $this->getWAMParameters();
-		$wamIndex = WikiaDataAccess::cacheWithLock(
-			wfSharedMemcKey(
-				'wam_index_table',
-				self::MEMCACHE_VER,
-				$app->wg->ContLang->getCode(),
-				implode(':', $options)
-			),
-			6 * 60 * 60,
-			function () use ($options) {
+		// $wamIndex = WikiaDataAccess::cacheWithLock(
+		// 	wfSharedMemcKey(
+		// 		'wam_index_table',
+		// 		self::MEMCACHE_VER,
+		// 		$app->wg->ContLang->getCode(),
+		// 		implode( ':', $options )
+		// 	),
+		// 	6 * 60 * 60,
+		// 	function () use ( $options ) {
 				$wamService = new WAMService();
 
-				$wamIndex = $wamService->getWamIndex($options);
+				$wamIndex = $wamService->getWamIndex( $options );
 
-				if ($options['fetchAdmins']) {
+				if ( $options['fetchAdmins'] ) {
 					if (empty($wikiService)) {
 						$wikiService = new WikiService();
 					}
@@ -97,9 +97,9 @@ class WAMApiController extends WikiaApiController {
 					}
 				}
 
-				return $wamIndex;
-			}
-		);
+		// 		return $wamIndex;
+		// 	}
+		// );
 		
 		if (!$this->request->isInternal() && empty($wamIndex['wam_index'])) {
 			$wamIndex['wam_index'] = (object)$wamIndex['wam_index'];
@@ -169,7 +169,7 @@ class WAMApiController extends WikiaApiController {
 		$options = array();
 		$options['currentTimestamp'] = $this->request->getInt('wam_day', null);
 		$options['previousTimestamp'] = $this->request->getInt('wam_previous_day', null);
-		$options['verticalId'] = $this->request->getInt('vertical_id', null);
+		$options['verticalId'] = $this->request->getInt('verticalId', null);
 		$options['wikiLang'] = $this->request->getVal('wiki_lang', null);
 		$options['wikiId'] = $this->request->getInt('wiki_id', null);
 		$options['wikiWord'] = $this->request->getVal('wiki_word', null);
@@ -188,6 +188,8 @@ class WAMApiController extends WikiaApiController {
 		if ($options['limit'] > self::MAX_PAGE_SIZE) {
 			throw new InvalidParameterApiException('limit');
 		}
+
+		wfDebug( "\nWAM Logs: options " . json_encode($options) . "\n" );
 
 		$wamDates = $this->getMinMaxWamIndexDateInternal();
 

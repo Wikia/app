@@ -11,6 +11,13 @@ WAMPage.prototype = {
 			);
 		}
 
+		var $wamFilteringTabs = $('.wam-filtering-tab');
+		$wamFilteringTabs.each( function() {
+			$(this).on( 'click', function() {
+				WAMPage.filterWamIndexByVertical(this);
+			});
+		});
+
 		var wamIndexSearch = document.getElementById('wam-index-search');
 		if( wamIndexSearch ) {
 			wamIndexSearch.addEventListener(
@@ -98,6 +105,11 @@ WAMPage.prototype = {
 		} else if ( e.type === 'change' && node.closest('.wam-index-search select[name=verticalId]').length > 0 ) {
 			WAMPage.trackClick('wam-page', Wikia.Tracker.ACTIONS.CLICK, 'wam-search-filter-change', null, {lang: lang, filter: 'verticalId'}, e);
 		}
+	},
+
+	filterWamIndexByVertical: function(target) {
+		// debugger;
+		alert( "yo!" );
 	},
 
 	filterWamIndex: function(target) {

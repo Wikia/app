@@ -11,14 +11,30 @@ class WAMService extends Service {
 	const CACHE_DURATION = 86400; /* 24 hours */
 
 	protected static $verticalNames = [
-		WikiFactoryHub::CATEGORY_ID_GAMING => 'Gaming',
-		WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => 'Entertainment',
-		WikiFactoryHub::CATEGORY_ID_LIFESTYLE => 'Lifestyle'
+		// WikiFactoryHub::CATEGORY_ID_GAMING => 'Gaming',
+		// WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => 'Entertainment',
+		// WikiFactoryHub::CATEGORY_ID_LIFESTYLE => 'Lifestyle'
+		WikiFactoryHub::HUB_ID_OTHER => 'Other',
+		WikiFactoryHub::HUB_ID_TV => 'TV',
+		WikiFactoryHub::HUB_ID_VIDEO_GAMES => 'Games',
+		WikiFactoryHub::HUB_ID_BOOKS => 'Books',
+		WikiFactoryHub::HUB_ID_COMICS => 'Comics',
+		WikiFactoryHub::HUB_ID_LIFESTYLE => 'Lifestyle',
+		WikiFactoryHub::HUB_ID_MUSIC => 'Music',
+		WikiFactoryHub::HUB_ID_MOVIES => 'Movies',
 	];
 	protected static $verticalIds = [
-		'Gaming' => WikiFactoryHub::CATEGORY_ID_GAMING,
-		'Entertainment' => WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
-		'Lifestyle' => WikiFactoryHub::CATEGORY_ID_LIFESTYLE
+		// 'Gaming' => WikiFactoryHub::CATEGORY_ID_GAMING,
+		// 'Entertainment' => WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
+		// 'Lifestyle' => WikiFactoryHub::CATEGORY_ID_LIFESTYLE
+		'Other' => WikiFactoryHub::HUB_ID_OTHER,
+		'TV' => WikiFactoryHub::HUB_ID_TV,
+		'Games' => WikiFactoryHub::HUB_ID_VIDEO_GAMES,
+		'Books' => WikiFactoryHub::HUB_ID_BOOKS,
+		'Comics' => WikiFactoryHub::HUB_ID_COMICS,
+		'Lifestyle' => WikiFactoryHub::HUB_ID_LIFESTYLE,
+		'Music' => WikiFactoryHub::HUB_ID_MUSIC,
+		'Movies' => WikiFactoryHub::HUB_ID_MOVIES,
 	];
 
 	protected $defaultIndexOptions = array(
@@ -48,7 +64,7 @@ class WAMService extends Service {
 			$db = $this->getDB();
 
 			$result = $db->select(
-				array('fact_wam_scores'),
+				array('fact_wam_scores_dev'),
 				array(
 					'wam'
 				),
@@ -127,9 +143,10 @@ class WAMService extends Service {
 		);
 
 		/* @var $db DatabaseMysql */
-		while ($row = $db->fetchObject($result)) {
-			$row = (array)$row;
-			$row['hub_id'] = $this->getVerticalId($row['hub_name']);
+		while ( $row = $db->fetchObject( $result ) ) {
+			$row = ( array )$row;
+			$row['hub_id'] = $this->getVerticalId( $row['hub_name'] );
+			$row['vertical_name'] = $this->getVerticalName( $row['vertical_id'] );
 			$wamIndex['wam_index'][$row['wiki_id']] = $row;
 		}
 		$count = $resultCount->fetchObject();
@@ -157,7 +174,7 @@ class WAMService extends Service {
 		);
 
 		$result = $db->select(
-			'fact_wam_scores',
+			'fact_wam_scores_dev',
 			$fields
 		);
 
@@ -181,7 +198,7 @@ class WAMService extends Service {
 			$db = $this->getDB();
 			$result = $db->select(
 				[
-					'fw1' => 'fact_wam_scores',
+					'fw1' => 'fact_wam_scores_dev',
 					'dw' => 'dimension_wikis'
 				],
 				'DISTINCT dw.lang',
@@ -262,16 +279,24 @@ class WAMService extends Service {
 						"OR dw.title like '%" . $db->strencode($options['wikiWord']) . "%'";
 		}
 
+
 		if ($options['verticalId']) {
-			$vericals = $options['verticalId'];
+			$verticals = $options['verticalId'];
 		} else {
-			$vericals = array(
-				WikiFactoryHub::CATEGORY_ID_GAMING,
-				WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
-				WikiFactoryHub::CATEGORY_ID_LIFESTYLE
+			$verticals = array(
+				WikiFactoryHub::HUB_ID_OTHER,
+				WikiFactoryHub::HUB_ID_TV,
+				WikiFactoryHub::HUB_ID_VIDEO_GAMES,
+				WikiFactoryHub::HUB_ID_BOOKS,
+				WikiFactoryHub::HUB_ID_COMICS,
+				WikiFactoryHub::HUB_ID_LIFESTYLE,
+				WikiFactoryHub::HUB_ID_MUSIC,
+				WikiFactoryHub::HUB_ID_MOVIES,
 			);
 		}
-		$conds['fw1.hub_name'] = $this->translateVerticalsNames($vericals);
+		// $conds['fw1.hub_name'] = $this->translateVerticalsNames($verticals);
+		wfDebug( "\nWAM Logs" . json_encode( $verticals ) . "\n" );
+		$conds['fw1.vertical_id'] = $verticals;
 
 		if (!is_null($options['wikiLang'])) {
 			$conds ['dw.lang'] = $db->strencode($options['wikiLang']);
@@ -302,6 +327,7 @@ class WAMService extends Service {
 			'fw1.first_peak',
 			'fw1.last_peak',
 			'fw1.hub_name',
+			'fw1.vertical_id',
 			'dw.title',
 			'dw.url',
 			'fw1.wam - IFNULL(fw2.wam, 0) as wam_change',
@@ -319,8 +345,8 @@ class WAMService extends Service {
 
 	protected function getWamIndexTables () {
 		$tables = array(
-			'fw1' => 'fact_wam_scores',
-			'fw2' => 'fact_wam_scores',
+			'fw1' => 'fact_wam_scores_dev',
+			'fw2' => 'fact_wam_scores_dev',
 			'dw' => 'dimension_wikis'
 		);
 		return $tables;

@@ -42,9 +42,9 @@ class WAMPageController extends WikiaController
 		$this->tabs = $this->model->getTabs($currentTabIndex, $this->filterParams);
 		$this->visualizationWikis = $this->model->getVisualizationWikis($currentTabIndex);
 
-		$this->indexWikis = $this->model->getIndexWikis($this->getIndexParams());
+		$this->indexWikis = $this->model->getIndexWikis( $this->getIndexParams() );
 
-		$total = ( empty($this->indexWikis['wam_results_total']) ) ? 0 : $this->indexWikis['wam_results_total'];
+		$total = ( empty( $this->indexWikis['wam_results_total'] ) ) ? 0 : $this->indexWikis['wam_results_total'];
 		$itemsPerPage = $this->model->getItemsPerPage();
 		if( $total > $itemsPerPage ) {
 			$paginator = Paginator::newFromArray( array_fill( 0, $total, '' ), $itemsPerPage );

@@ -133,10 +133,10 @@ use Swagger\Annotations as SWG;
  * 		description="The absolute URL of the Wikia"
  * 	)
  * 	@SWG\Property(
- * 		name="hub_id",
+ * 		name="vertical_id",
  * 		type="int",
  * 		required="true",
- * 		description="An internal identification number for Hub"
+ * 		description="An internal identification number for a Verticla"
  * 	)
  * 	@SWG\Property(
  * 		name="wam_change",

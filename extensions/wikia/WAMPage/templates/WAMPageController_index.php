@@ -23,10 +23,10 @@
 					<? endif ?>
 					<span><?= $wiki['title'] ?></span>
 				</figure>
-				<div class="wam-score vertical-<?= $wiki['hub_id'] ?> wam-<?= $wiki['change'] ?>">
+				<div class="wam-score vertical-<?= $wiki['verticalId'] ?> wam-<?= $wiki['change'] ?>">
 					<?= $wg->ContLang->formatNum(number_format($wiki['wam'], WAMPageModel::SCORE_ROUND_PRECISION)) ?>
 				</div>
-				<span class="wam-vertical"><?= $wiki['hub_name'] ?></span>
+				<span class="wam-vertical"><?= $wiki['vertical_name'] ?></span>
 			</a>
 		<? endforeach ?>
 	</div>
@@ -44,17 +44,15 @@
 
 <div class="wam-index" id="wam-index">
 	<form method="get" action="" class="wam-index-search" id="wam-index-search">
+		<div class="wam-verticals-tabs">
+			<ul>
+			<? foreach ($filterVerticals as $verticalId => $verticalName): ?>
+				<li class="wam-filtering-tab" data-vertical-id="<?= $verticalId ?>"> <?= $verticalName ?></li>
+			<? endforeach; ?>
+			</ul>
+		</div>
 		<div class="filtering">
-			<label for="verticalId"><?= wfMessage('wam-index-filter-sort-label')->text() ?></label>
-			<select name="verticalId" id="verticalId">
-				<option value=""><?= wfMessage('wam-index-filter-vertical-default')->text() ?></option>
-				<? foreach ($filterVerticals as $verticalId => $verticalName): ?>
-				<option value="<?=$verticalId?>"<? if ($selectedVerticalId == $verticalId): ?>selected="selected"<? endif ?>><?=$verticalName?></option>
-				<? endforeach ?>
-			</select>
-			<input type="hidden" name="date" id="WamFilterDate" value="<?=$selectedDate?>"/>
-			<label for="WamFilterDate"><?= wfMessage('wam-index-filter-date-label')->text() ?></label>
-			<input type="text" id="WamFilterHumanDate" value="<?= $wg->Lang->date($selectedDate); ?>" placeholder="<?= $wg->Lang->date(time()); ?>"/>
+			<input type="hidden" name="verticalId" id="wam-filtering-vertical-id" value="<?= $selectedVerticalId ?>"/>
 			<label for="langCode"><?= wfMessage('wam-index-filter-lang-label')->text() ?></label>
 			<select name="langCode" id="langCode">
 				<option value=""><?= wfMessage('wam-index-filter-language-default')->text() ?></option>
@@ -62,6 +60,9 @@
 				<option value="<?=$langCode?>"<? if ($selectedLangCode == $langCode): ?>selected="selected"<? endif ?>><?= $wg->ContLang->getLanguageName( $langCode )?></option>
 				<? endforeach ?>
 			</select>
+			<input type="hidden" name="date" id="WamFilterDate" value="<?=$selectedDate?>"/>
+			<label for="WamFilterDate"><?= wfMessage('wam-index-filter-date-label')->text() ?></label>
+			<input type="text" id="WamFilterHumanDate" value="<?= $wg->Lang->date($selectedDate); ?>" placeholder="<?= $wg->Lang->date(time()); ?>"/>
 		</div>
 		<div class="searching">
 			<input type="text" name="searchPhrase" value="<?=$searchPhrase?>" placeholder=" <?= wfMessage('wam-index-filter-search-placeholder')->text() ?>" />
@@ -70,6 +71,7 @@
 			</button>
 		</div>
 	</form>
+
 	<table>
 		<tr>
 			<th><?= wfMessage('wam-index-header-rank')->text() ?></th>
@@ -90,7 +92,7 @@
 					</td>
 					<td><?=$wiki['peak_wam_rank']?></td>
 					<td><a href="http://<?=$wiki['url']?>"><?=$wiki['url']?></a></td>
-					<td><?=$wiki['hub_name']?></td>
+					<td><?=$wiki['vertical_name']?></td>
 					<td><?=$wiki['hub_wam_rank']?></td>
 					<td class="admins">
 						<? if(!empty($wiki['admins'])): ?>

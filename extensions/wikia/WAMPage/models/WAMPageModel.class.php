@@ -36,9 +36,17 @@ class WAMPageModel extends WikiaModel {
 	];
 
 	static protected $verticalIds = [
-		WikiFactoryHub::CATEGORY_ID_GAMING,
-		WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
-		WikiFactoryHub::CATEGORY_ID_LIFESTYLE
+		// WikiFactoryHub::CATEGORY_ID_GAMING,
+		// WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
+		// WikiFactoryHub::CATEGORY_ID_LIFESTYLE
+		WikiFactoryHub::HUB_ID_OTHER,
+		WikiFactoryHub::HUB_ID_TV,
+		WikiFactoryHub::HUB_ID_VIDEO_GAMES,
+		WikiFactoryHub::HUB_ID_BOOKS,
+		WikiFactoryHub::HUB_ID_COMICS,
+		WikiFactoryHub::HUB_ID_LIFESTYLE,
+		WikiFactoryHub::HUB_ID_MUSIC,
+		WikiFactoryHub::HUB_ID_MOVIES,
 	];
 
 	public function __construct() {
@@ -96,10 +104,10 @@ class WAMPageModel extends WikiaModel {
 	 *
 	 * @return array
 	 */
-	public function getIndexWikis($params) {
-		$params = $this->getIndexParams($params);
-		$WAMData = $this->app->sendRequest('WAMApi', 'getWAMIndex', $params)->getData();
-		$WAMData['wam_index'] = $this->prepareIndex($WAMData['wam_index'], self::TAB_INDEX_TOP_WIKIS);
+	public function getIndexWikis( $params ) {
+		$params = $this->getIndexParams( $params );
+		$WAMData = $this->app->sendRequest( 'WAMApi', 'getWAMIndex', $params )->getData();
+		$WAMData['wam_index'] = $this->prepareIndex( $WAMData['wam_index'], self::TAB_INDEX_TOP_WIKIS );
 
 		return $WAMData;
 	}
@@ -271,7 +279,7 @@ class WAMPageModel extends WikiaModel {
 			$wamScore = $wiki[$wamScoreName];
 			$wiki['change'] = $this->getScoreChangeName($wiki['wam'], $wiki['wam_change']);
 			$wiki['wam'] = round($wamScore, self::SCORE_ROUND_PRECISION);
-			$wiki['hub_name'] = $this->getVerticalName($wiki['hub_id']);
+			$wiki['verticalId'] = $this->getVerticalName( $wiki['vertical_id'] );
 		}
 
 		return $wamWikis;
@@ -294,11 +302,17 @@ class WAMPageModel extends WikiaModel {
 		return $out;
 	}
 
-	protected function getVerticalName($verticalId) {
+	protected function getVerticalName( $verticalId ) {
 		/** @var WikiFactoryHub $wikiFactoryHub */
-		$wikiFactoryHub = WikiFactoryHub::getInstance();
-		$wikiaHub = $wikiFactoryHub->getCategory($verticalId);
-		return wfMessage('wam-' . $wikiaHub['name'])->inContentLanguage()->text();
+		$oWikiFactoryHub = WikiFactoryHub::getInstance();
+		// $wikiaHub = $wikiFactoryHub->getCategory($verticalId);
+		$aAllVerticals = $oWikiFactoryHub->getAllVerticals();
+		if ( isset( $aAllVerticals[ $verticalId ] ) ) {
+			$aVertical = $aAllVerticals[ $verticalId ];
+			return wfMessage( 'wam-' . $aVertical['short'] )->inContentLanguage()->text();
+		} else {
+			return false;
+		}
 	}
 
 	protected function getVisualizationParams($verticalId = null, $sortColumn = 'wam_index') {
@@ -340,7 +354,7 @@ class WAMPageModel extends WikiaModel {
 			'sort_column' => 'wam_index',
 			'sort_direction' => 'DESC',
 			'wiki_word' => isset($params['searchPhrase']) ? $params['searchPhrase'] : null,
-			'vertical_id' => isset($params['verticalId']) ? $params['verticalId'] : null,
+			'verticalId' => isset($params['verticalId']) ? $params['verticalId'] : null,
 			'wiki_lang' =>  isset($params['langCode']) ? $params['langCode'] : null,
 			'wam_day' => isset($params['date']) ? $params['date'] : null,
 		];
