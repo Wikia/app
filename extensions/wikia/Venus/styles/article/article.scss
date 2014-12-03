@@ -16,9 +16,10 @@ $placeholder-background-color: $color-article-navigation-inactive; // only for p
 $article-items-spacing: 30px;
 $header-without-cover-unit-spacing: 60px;
 
-$header-without-coverunit-height: $font-size-xxl + 130px;
-$header-with-coverunit-height: 80px $font-size-xxl + 140px $font-size-xxl + 140px;
-
+$article-nav-gap-no-coverunit: 220px;
+$article-nav-gap-coverunit-small: 115px;
+$article-nav-gap-coverunit-medium: 215px;
+$article-nav-gap-coverunit-large: 220px;
 
 // don't display TOC on Venus skin pages (fight cache)
 #toc {
@@ -48,7 +49,7 @@ $header-with-coverunit-height: 80px $font-size-xxl + 140px $font-size-xxl + 140p
 			}
 
 			& + .article-navigation {
-				top: $header-without-cover-unit-spacing + $header-without-coverunit-height;
+				top: $article-nav-gap-no-coverunit;
 			}
 		}
 
@@ -70,7 +71,7 @@ $header-with-coverunit-height: 80px $font-size-xxl + 140px $font-size-xxl + 140p
 			}
 
 			& + .article-navigation {
-				@include proportional-grid-media-top('medium', 8, $medium-content-padding + $article-items-spacing + nth($header-with-coverunit-height, 2));
+				@include proportional-grid-media-top('medium', 8, $article-nav-gap-coverunit-medium);
 			}
 		}
 	}
@@ -253,7 +254,7 @@ $header-with-coverunit-height: 80px $font-size-xxl + 140px $font-size-xxl + 140p
 			}
 
 			& + .article-navigation {
-				@include proportional-grid-media-top('large', 8, $large-content-padding + $article-items-spacing + nth($header-with-coverunit-height, 3));
+				@include proportional-grid-media-top('large', 8, $article-nav-gap-coverunit-large);
 			}
 		}
 	}
@@ -319,7 +320,7 @@ $header-with-coverunit-height: 80px $font-size-xxl + 140px $font-size-xxl + 140p
 			}
 
 			& + .article-navigation {
-				@include proportional-media-top($small-content-width - 2 * $content-border-width, nth($header-with-coverunit-height, 1));
+				@include proportional-media-top($small-content-width - 2 * $content-border-width, $article-nav-gap-coverunit-small);
 			}
 		}
 	}
