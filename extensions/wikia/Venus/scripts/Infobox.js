@@ -29,5 +29,5 @@ require(['venus.infobox', 'wikia.document'], function (infoboxModule, d) {
 		$(infoboxWrapper).trigger('initialized.infobox');
 	}
 	init();
-	mw.hook('wikipage.content').add(init);
+	mw.hook('postEdit').add(init);
 });
