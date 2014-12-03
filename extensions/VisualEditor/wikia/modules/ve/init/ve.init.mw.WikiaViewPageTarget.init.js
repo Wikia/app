@@ -65,7 +65,7 @@
 			.css( 'opacity', 1 )
 			.hide();
 
-		$fade.appendTo( '#WikiaArticle' );
+		$fade.appendTo( '#WikiaArticle' ).hide();
 
 		// Cleanup spinner when hook is fired
 		mw.hook( 've.activationComplete' ).add( function hide() {
@@ -83,7 +83,7 @@
 
 		$message.hide();
 		$spinner.fadeIn( 400 );
-		$fade.css( 'opacity', 0.75 );
+		$fade.show().css( 'opacity', 0.75 );
 
 		// Display a message if loading is taking longer than 3 seconds
 		spinnerTimeoutId = setTimeout( function () {
