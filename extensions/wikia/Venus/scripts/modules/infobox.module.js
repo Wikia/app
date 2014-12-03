@@ -44,13 +44,13 @@ define('venus.infobox', ['wikia.document', 'wikia.window'], function(d, w) {
 	 */
 	function getColorAlpha(color) {
 		var alphaGroups,
-			alphaRegEx = /rgba\(\d+\s*,\s*\d+\s*,\s*\d+\s*,\s*(\d+[\.\d+]*)\)/g,
+			alphaRegEx = /rgba\((\d*[,\s]*){3},\s*(0[\.\d]*)\)/,
 			alphaValue = null;
 
 		alphaGroups = alphaRegEx.exec(color);
 
 		if(alphaGroups !== null) {
-			alphaValue = parseFloat(alphaGroups[1]);
+			alphaValue = parseFloat(alphaGroups[2]);
 		}
 
 		return alphaValue;
