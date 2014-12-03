@@ -24,4 +24,8 @@
 	// Overlap with page header bottom border
 	top: -1px;
 	z-index: $zTop + 3;
+
+	&.transition {
+		z-index: $zTop - 1;
+	}
 }

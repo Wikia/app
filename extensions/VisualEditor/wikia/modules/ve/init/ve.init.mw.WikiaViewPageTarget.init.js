@@ -51,7 +51,9 @@
 			$icon = $( '<div>' ).addClass( 'loading' ),
 			$message = $( '<p>' )
 				.addClass( 'message' )
-				.text( mw.message( 'wikia-visualeditor-loading' ).plain() );
+				.text( mw.message( 'wikia-visualeditor-loading' ).plain() ),
+			$fade = $( '<div>' )
+				.addClass( 've-spinner-fade');
 
 		$content
 			.append( $icon )
@@ -62,6 +64,8 @@
 			.appendTo( $( 'body' ) )
 			.css( 'opacity', 1 )
 			.hide();
+
+		$fade.appendTo( '#WikiaArticle' );
 
 		// Cleanup spinner when hook is fired
 		mw.hook( 've.activationComplete' ).add( function hide() {
@@ -74,10 +78,12 @@
 
 	function showSpinner() {
 		var $spinner = $( '.ve-spinner[data-type="loading"]' ),
-			$message = $spinner.find( 'p.message' );
+			$message = $spinner.find( 'p.message' ),
+			$fade = $( '.ve-spinner-fade' );
 
 		$message.hide();
 		$spinner.fadeIn( 400 );
+		$fade.css( 'opacity', 0.75 );
 
 		// Display a message if loading is taking longer than 3 seconds
 		spinnerTimeoutId = setTimeout( function () {

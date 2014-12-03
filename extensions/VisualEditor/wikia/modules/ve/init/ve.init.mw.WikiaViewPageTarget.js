@@ -222,9 +222,19 @@ ve.init.mw.WikiaViewPageTarget.prototype.getToolbar = function () {
  * @inheritdoc
  */
 ve.init.mw.WikiaViewPageTarget.prototype.hideSpinner = function () {
-	var $spinner = $( '.ve-spinner[data-type="loading"]' );
+	var $spinner = $( '.ve-spinner[data-type="loading"]' ),
+		$throbber = $spinner.children(),
+		$fade = $( '.ve-spinner-fade' ),
+		timeout = mw.config.get( 'skin' ) === 'venus' ? 500 : 0;
+
 	if ( $spinner.is( ':visible' ) ) {
-		$spinner.fadeOut( 400 );
+		$throbber.hide();
+		$fade.css( 'opacity', 1 );
+
+		setTimeout( function () {
+			$spinner.hide();
+			$throbber.show();
+		}, timeout );
 	}
 };
 
