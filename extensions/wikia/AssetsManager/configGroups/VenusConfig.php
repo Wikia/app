@@ -319,6 +319,7 @@ $VenusConfig[ 'category_select_js' ] = [
 		'//resources/wikia/libraries/bootstrap/popover.js',
 	]
 ];
+
 $VenusConfig[ 'category_select_css' ] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'venus' ],
@@ -348,5 +349,13 @@ $VenusConfig['venus_preview_js'] = [
 		'//resources/wikia/modules/log.js',
 		'//extensions/wikia/ImageLazyLoad/js/ImgLzy.module.js',
 		'//extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
+	]
+];
+
+$VenusConfig[ 'related_forum_discussion_css' ] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'venus' ],
+	'assets' => [
+		'//extensions/wikia/Forum/css/venus/RelatedForumDiscussion.scss',
 	]
 ];
