@@ -217,6 +217,16 @@ require([
 					self.createSignupForm($modal, callback);
 					self.createLoginForm($modal, callback);
 
+					$modal.on('click', '.submit-pane .extiw', function (event) {
+						self.track({
+							action: tracker.ACTIONS.CLICK_LINK_TEXT,
+							browserEvent: event,
+							href: $(event.target).attr('href'),
+							label: 'wikia-terms-of-use'
+						});
+					});
+
+
 					// Track FB Connect Modal Open
 					self.track({
 						action: self.actions.OPEN,
@@ -257,6 +267,8 @@ require([
 				}
 			});
 
+			this.applyAjaxForm(signupForm);
+
 			// TODO: check if we need to set these properties
 			// set reference to form object
 			//self.form = form;
@@ -264,36 +276,13 @@ require([
 			//wikiaForm = form.wikiaForm;
 			// and set reference to WikiaForm object
 			//self.wikiaForm = wikiaForm;
-
-			// create signup form
-			signupAjaxForm = new window.UserSignupAjaxForm(
-				signupForm.wikiaForm,
-				null,
-				signupForm.el.find('input[type=submit]')
-			);
-			// and set reference to signup form
-			//self.signupAjaxForm = signupAjaxForm;
-
-			// attach handlers to modal content
-			$modal
-				.on('blur', 'input[name=username], input[name=password]',
-					$.proxy(signupAjaxForm.validateInput, signupAjaxForm)
-				)
-				.on('click', '.submit-pane .extiw', function (event) {
-					self.track({
-						action: tracker.ACTIONS.CLICK_LINK_TEXT,
-						browserEvent: event,
-						href: $(event.target).attr('href'),
-						label: 'wikia-terms-of-use'
-					});
-				});
 		},
 
 		createLoginForm: function ($modal, callback) {
 			var self = this,
 				loginForm;
 
-			loginForm = new window.UserSignupFacebookForm($modal.find('.UserLoginFacebookRight'), {
+			loginForm = new window.UserLoginFacebookForm($modal.find('.UserLoginFacebookRight'), {
 				ajaxLogin: true,
 				callback: function () {
 					// TODO: update tracking
@@ -311,6 +300,25 @@ require([
 					}
 				}
 			});
+
+			this.applyAjaxForm(loginForm);
+		},
+
+		applyAjaxForm: function (form) {
+			var ajaxForm = new window.UserSignupAjaxForm(
+				form.wikiaForm,
+				null,
+				form.el.find('input[type=submit]') // todo: use form.submitButton?
+			);
+
+			// attach validation handlers
+			// TODO: see if we need this or if we can just validate on submit
+			// TODO: check with armon about the error: we could not find the username you entered - when the password is incorrect
+			form.el.on(
+				'blur',
+				'input[name=username], input[name=password]', // todo: use form properties?
+				$.proxy(ajaxForm.validateInput, ajaxForm)
+			);
 		},
 
 		/**

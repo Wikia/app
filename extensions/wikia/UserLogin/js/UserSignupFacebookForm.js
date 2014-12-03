@@ -1,12 +1,16 @@
+/* global UserLoginAjaxForm */
 (function () {
+	'use strict';
+
 	var UserSignupFacebookForm = $.createClass(UserLoginAjaxForm, {
 
 		// login token is stored in hidden field, no need to send an extra request
 		retrieveLoginToken: function () {},
 
-		// send a request to FB controller
+		/**
+		 * Send a request to FB controller
+		 */
 		ajaxLogin: function () {
-			'use strict';
 			var values = {
 				username: this.inputs.username.val(),
 				password: this.inputs.password.val(),
@@ -34,7 +38,6 @@
 		 * @param json string
 		 */
 		submitFbSignupHandler: function (json) {
-			'use strict';
 			if (json.result === 'ok') {
 				window.Wikia.Tracker.track({
 					category: 'user-sign-up',

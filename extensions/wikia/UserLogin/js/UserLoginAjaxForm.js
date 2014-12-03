@@ -12,20 +12,13 @@
 		// DOM cache
 		this.form = this.form = this.el.find('form');
 		this.wikiaForm = new WikiaForm(this.form);
-		this.setInputs();
 		this.forgotPasswordLink = this.form.find('.forgot-password');
+		this.submitButton = this.el.find('input[type=submit]');
+		this.setInputs();
 
-		// modal can have multiple submit buttons; ATM, functionality is the same for all
-		this.submitButtons = this.el.find('input[type=submit]');
-
-		// get login token
 		this.retrieveLoginToken();
-
-		// form submission handler
-		this.form.submit(this.submitLogin.bind(this));
-
-		// forgot password handler
-		this.forgotPasswordLink.click(this.mailPassword.bind(this));
+		this.form.on('submit', this.submitLogin.bind(this));
+		this.forgotPasswordLink.on('click', this.mailPassword.bind(this));
 
 		if (!this.options.skipFocus) {
 			this.inputs.username.focus();
@@ -48,7 +41,7 @@
 	UserLoginAjaxForm.prototype.submitLogin = function (e) {
 		$(window).trigger('UserLoginSubmit');
 
-		this.submitButtons.attr('disabled', 'disabled');
+		this.submitButton.attr('disabled', 'disabled');
 		if (this.options.ajaxLogin) {
 			e.preventDefault();
 			this.ajaxLogin();
@@ -121,7 +114,7 @@
 				window.location = data.redirectUrl;
 			});
 		} else {
-			this.submitButtons.removeAttr('disabled');
+			this.submitButton.removeAttr('disabled');
 			this.errorValidation(json);
 		}
 	};
@@ -157,6 +150,10 @@
 		}
 	};
 
+	/**
+	 * @TODO: possibly get login token from form field
+	 * @param params
+	 */
 	UserLoginAjaxForm.prototype.retrieveLoginToken = function (params) {
 		params = params || {};
 		if (!this.loginToken || params.clearCache) {
