@@ -55,103 +55,46 @@ $fieldset-padding: 12px;
 		float: left;
 		width: 50%;
 	}
-}
 
-.UserLoginFacebookLeft {
-	border-right: solid 1px $color-page-border;
-	padding-right: $section-padding;
+	.UserLoginFacebookLeft {
+		border-right: solid 1px $color-page-border;
+		padding-right: $section-padding;
+	}
+
+	.UserLoginFacebookRight {
+		padding-left: $section-padding;
+		padding-top: 4px;
+
+		.login-button {
+			width: 100%;
+		}
+	}
 
 	.modal-pane {
 		@include submitpane;
 	}
 
-	.WikiaForm {
-		.input-group {
-			float: none;
+	.input-group {
+		float: none;
 
-			input[type=text],
-			input[type=password] {
-				@include box-sizing();
-				width: 100%;
-			}
-		}
-
-		.tooltip-icon-wrapper {
-			line-height: 15px;
-			position: relative;
-		}
-
-		.tooltip-icon {
-			@include tooltip-icon;
-			right: -15px;
-		}
-
-		.email {
-			margin-bottom: 0;
-		}
-
-	}
-}
-
-.UserLoginFacebookRight {
-	padding-left: $section-padding;
-	padding-top: 4px;
-
-	> h1 {
-		font-size: 17px;
-	}
-
-	> p {
-		font-size: 14px;
-		padding: 19px 0;
-	}
-
-	> .wikia-button {
-		display: inline-block;
-	}
-}
-
-.FacebookSignupConfig {
-	display: none;
-	margin: 10px 0 -7px 0;
-
-	legend {
-		font-weight: bold;
-		left: $fieldset-padding;
-		position: absolute;
-		top: $fieldset-padding;
-	}
-
-	> fieldset {
-		@include box-shadow(0, 0, 5px, mix($color-page, #000000, 90%), true, 1px);
-		@if $is-dark-wiki {
-			background-color: mix($color-page, #ffffff, 85%);
-		} @else {
-			background-color: mix($color-page, #000000, 95%);
-		}
-		padding: 40px 0 $fieldset-padding 0;
-		position: relative;
-
-		> .input-group {
+		input[type=text],
+		input[type=password] {
 			@include box-sizing();
-			clear: none;
-			float: left;
-			padding: 0 $fieldset-padding;
-			width: 50%;
-		}
-
-		.indented {
-			padding-top: 10px;
+			width: 100%;
 		}
 	}
 
-	label {
-		padding-left: 40px;
+	.tooltip-icon-wrapper {
+		line-height: 15px;
 		position: relative;
+	}
 
-		input {
-			left: 0;
-			position: absolute;
-		}
+	.tooltip-icon {
+		@include tooltip-icon;
+		right: -15px;
+	}
+
+	.email {
+		margin-bottom: 0;
 	}
 }
