@@ -97,4 +97,8 @@ class UserLoginFacebookForm extends UserLoginForm {
 		FBConnectDB::addFacebookID( $user, $fbId );
 		return true;
 	}
+
+	public function getHasConfirmedEmail() {
+		return $this->hasConfirmedEmail;
+	}
 }

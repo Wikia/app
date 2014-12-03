@@ -42,7 +42,6 @@
 				method: 'connectLoggedInUser',
 				format: 'json',
 				callback: function (data) {
-					debugger;
 					if (data.status === 'ok') {
 
 						window.GlobalNotification.show($.msg('fbconnect-preferences-connected'), 'confirm');

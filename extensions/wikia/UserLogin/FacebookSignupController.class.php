@@ -137,17 +137,16 @@ class FacebookSignupController extends WikiaController {
 	 * Handle sign up requests from modal
 	 */
 	public function signup() {
-		// add Facebook user ID to the request, so the login form logic can access it
-		$this->wg->Request->setVal('fbuserid', $this->getFacebookUserId());
 
-		// handle signup request
-		$signupResponse = $this->app->sendRequest('FacebookSignup', 'createAccount')->getData();
+		$signupResponse = $this->app->sendRequest( 'FacebookSignup', 'createAccount' )->getData();
 
-		switch ($signupResponse['result']) {
+		switch ( $signupResponse['result'] ) {
 			case 'ok':
 				$this->result = 'ok';
 				break;
-
+			case 'unconfirm':
+				$this->result = 'unconfirm';
+				break;
 			case 'error':
 			default:
 				// pass errors to the frontend form
@@ -161,23 +160,24 @@ class FacebookSignupController extends WikiaController {
 	 */
 	public function createAccount() {
 		// Init session if necessary
-		if (session_id() == '') {
+		if ( session_id() == '' ) {
 			wfSetupSession();
 		}
 
 		$signupForm = new UserLoginFacebookForm( $this->wg->request );
 		$signupForm->load();
-		$user = $signupForm->addNewAccount();
+		$signupForm->addNewAccount();
 
-		$this->result = ( $signupForm->msgType == 'error' ) ? $signupForm->msgType : 'ok' ;
+		$result = ( $signupForm->msgType == 'error' ) ? 'error' : 'ok' ;
+		if ( $result == 'ok' ) {
+			if ( ! $signupForm->getHasConfirmedEmail() ) {
+				$result = 'unconfirm'	;
+			}
+		}
+
+		$this->result = $result;
 		$this->msg = $signupForm->msg;
 		$this->errParam = $signupForm->errParam;
-
-		// pass an ID of created account for FBConnect feature
-		if ($user instanceof User) {
-			$this->userId = $user->getId();
-			$this->userPage = $user->getUserPage()->getFullUrl();
-		}
 	}
 
 	/**

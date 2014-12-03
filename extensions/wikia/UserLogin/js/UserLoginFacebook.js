@@ -108,7 +108,6 @@
 
 		// check FB account (is it connected with Wikia account?)
 		checkAccountCallback: function (resp) {
-			debugger;
 			var self, loginCallback;
 
 			// end ajax call performance tracking
