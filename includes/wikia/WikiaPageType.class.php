@@ -18,7 +18,12 @@ class WikiaPageType {
 		// follow redirects
 		if ( $title instanceof Title && $title->isRedirect() ) {
 			$page = WikiPage::factory( $title );
-			$title = $page->getRedirectTarget();
+			$tmpTitle = $page->getRedirectTarget();
+
+			// TODO check why $title->isRedirect() is true and there is no redirectTarget
+			if ( $tmpTitle instanceof Title ) {
+				$title = $tmpTitle;
+			}
 		}
 
 		return $title;
