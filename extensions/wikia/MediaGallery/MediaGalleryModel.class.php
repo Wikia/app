@@ -66,8 +66,8 @@ class MediaGalleryModel extends WikiaObject {
 
 		if ( !$file instanceof File ) {
 			WikiaLogger::instance()->error(
-				'MediaGalleryModel',
-				'File with title: ' . $item['title'] . 'doesn\'t exist'
+				'File with title: ' . $item['title'] . 'doesn\'t exist',
+				[ 'class' => __CLASS__ ]
 			);
 			return null;
 		}
@@ -81,11 +81,10 @@ class MediaGalleryModel extends WikiaObject {
 		];
 		$thumb = $file->transform( $dimensions );
 
-		// Error check and logging for VID-2143
-		if ( !$thumb instanceof ThumbnailImage || !$thumb->file instanceof File ) {
+		if ( !$thumb instanceof ThumbnailImage ) {
 			WikiaLogger::instance()->error(
-				'MediaGalleryModel',
-				'ThumbnailImage from title: ' . $item['title'] . 'couldn\'t be created or is missing associated File'
+				'ThumbnailImage from title: ' . $item['title'] . ' couldn\'t be created.',
+				[ 'thumbClass' => get_class( $thumb ) ]
 			);
 			return null;
 		}
