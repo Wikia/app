@@ -1,5 +1,5 @@
 /*global define*/
-define('ext.wikia.adEngine.adPlacementChecker', ['jquery', 'wikia.document', 'wikia.log', 'wikia.window'], function ($, doc, log, win) {
+define('ext.wikia.adEngine.adPlacementChecker', ['jquery', 'wikia.log'], function ($, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adPlacementChecker';
@@ -7,7 +7,7 @@ define('ext.wikia.adEngine.adPlacementChecker', ['jquery', 'wikia.document', 'wi
 	function canReflow($el) {
 		var ret = $el.css('display') === 'block' &&
 			$el.css('float') === 'none' &&
-			$el.css('visibility') === 'visible';
+			$el.css('overflow') === 'visible';
 
 		log(['canReflow', $el, ret], 'info', logGroup);
 
