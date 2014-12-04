@@ -158,7 +158,9 @@ class WAMService extends Service {
 
 		$result = $db->select(
 			'fact_wam_scores',
-			$fields
+			$fields,
+			'',
+			__METHOD__
 		);
 
 		$row = $db->fetchRow($result);
@@ -248,7 +250,7 @@ class WAMService extends Service {
 		return $options;
 	}
 
-	protected function getWamIndexConditions ($options, $db) {
+	protected function getWamIndexConditions ($options, DatabaseBase $db) {
 		$conds = array(
 			'fw1.time_id = FROM_UNIXTIME(' . $options['currentTimestamp'] . ')'
 		);
