@@ -247,6 +247,7 @@ require([
 
 			signupForm = new window.UserSignupFacebookForm($modal.find('.UserLoginFacebookLeft'), {
 				ajaxLogin: true,
+				skipFocus: true,
 				callback: function () {
 					// Track FB Connect Sign Up
 					self.track({
@@ -280,6 +281,7 @@ require([
 
 			loginForm = new window.UserLoginFacebookForm($modal.find('.UserLoginFacebookRight'), {
 				ajaxLogin: true,
+				skipFocus: true,
 				callback: function () {
 					// TODO: update tracking
 					// Track FB Connect login
@@ -306,21 +308,21 @@ require([
 		 * @param {Object} form Form with a base class of UserLoginAjaxForm
 		 */
 		applyAjaxForm: function (form) {
-			var ajaxForm = new window.UserSignupAjaxForm(
-				form.wikiaForm,
-				null,
-				form.el.find('input[type=submit]') // todo: use form.submitButton?
-			);
-
-			// attach validation handlers
-			// TODO: see if we need this or if we can just validate on submit
-			// TODO: check with armon about the error: we could not find the
-			// username you entered - when the password is incorrect
-			form.el.on(
-				'blur',
-				'input[name=username], input[name=password]', // todo: use form properties?
-				$.proxy(ajaxForm.validateInput, ajaxForm)
-			);
+//			var ajaxForm = new window.UserSignupAjaxForm(
+//				form.wikiaForm,
+//				null,
+//				form.el.find('input[type=submit]') // todo: use form.submitButton?
+//			);
+//
+////			attach validation handlers
+////			TODO: see if we need this or if we can just validate on submit
+////			TODO: check with armon about the error: we could not find the
+////			username you entered - when the password is incorrect
+//			form.el.on(
+//				'blur',
+//				'input[name=username], input[name=password]', // todo: use form properties?
+//				$.proxy(ajaxForm.validateInput, ajaxForm)
+//			);
 		},
 
 		/**
