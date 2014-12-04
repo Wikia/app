@@ -221,7 +221,7 @@ class FacebookClient {
 				$log->error( __CLASS__ . ': Failure in the api requesting "/me"', [
 					'method' => __METHOD__,
 					'message' => $e->getMessage(),
-					'facebookUserId' => $userId,
+					'fbUserId' => $userId,
 				]);
 				return null;
 			}
