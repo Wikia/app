@@ -16,10 +16,12 @@
 }
 
 /*
- * .skin-venus class added to override
+ * Hack: Adding 'html' ancestor to add greater specificity to selector.
+ *
+ * TODO: Load this file after:
  * resources/wikia/ui_components/button/css/button_default.scss
 */
-.article {
+html {
 	a.wikia-button,
 	input[type="submit"],
 	input[type="reset"],
@@ -53,6 +55,7 @@
 	input[type="submit"].secondary,
 	input[type="reset"].secondary,
 	input[type="button"].secondary,
+	.button.secondary,
 	button.secondary {
 		@extend %outline-button;
 		@extend %common-button-styles;
