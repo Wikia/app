@@ -19,7 +19,7 @@ ve.ui.WikiaFocusWidget = function VeUiWikiaFocusWidget( surface ) {
 	// Properties
 	this.surface = surface;
 	this.node = null;
-	this.spacing = 10;
+	this.spacing = this.constructor.static.getSpacing();
 	this.layout = null;
 	this.layoutHash = null;
 	this.$top = this.$( '<div>' )
@@ -39,7 +39,7 @@ ve.ui.WikiaFocusWidget = function VeUiWikiaFocusWidget( surface ) {
 	this.$wikiaBarWrapper = this.$( '#WikiaBarWrapper' );
 	this.$wikiaBarCollapseWrapper = this.$( '#WikiaBarCollapseWrapper' );
 	this.$wikiaAds = this.$( '.hide-to-edit, .hide-for-edit, .wikia-ad, #WikiaAdInContentPlaceHolder' );
-	if ( mw.config.get( 'wgEnableWikiaBarExt' ) && !mw.config.get( 'WikiaBar' ).isWikiaBarHidden() ) {
+	if ( mw.config.get( 'WikiaBar' ) && !mw.config.get( 'WikiaBar' ).isWikiaBarHidden() ) {
 		this.showWikiaBar = true;
 	}
 
@@ -65,6 +65,19 @@ ve.ui.WikiaFocusWidget = function VeUiWikiaFocusWidget( surface ) {
 
 /* Inheritance */
 OO.inheritClass( ve.ui.WikiaFocusWidget, OO.ui.Widget );
+
+/* Static Methods */
+
+/*
+ * How far the focus widget should be spaced from the edges of the surface
+ * This is highly dependent on the UI of the skin. The edge of the surface may not be the visual edge of the docuemnt.
+ *
+ * @method
+ * @returns {int} Spacing value
+ */
+ve.ui.WikiaFocusWidget.static.getSpacing = function () {
+	return mw.config.get( 'skin' ) === 'oasis' ? 10 : 0;
+};
 
 /* Methods */
 
@@ -258,7 +271,7 @@ ve.ui.WikiaFocusWidget.prototype.onDocumentTeardown = function () {
  * @method
  */
 ve.ui.WikiaFocusWidget.prototype.hideDistractions = function () {
-	if ( mw.config.get( 'wgEnableWikiaBarExt' ) ) {
+	if ( mw.config.get( 'WikiaBar' ) ) {
 		mw.config.get( 'WikiaBar' ).hide();
 	}
 	// Visibility property - problem with edit button opening when setting display property

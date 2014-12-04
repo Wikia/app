@@ -1166,7 +1166,8 @@ ve.init.mw.Target.prototype.save = function ( doc, options ) {
 		'page': this.pageName,
 		'basetimestamp': this.baseTimeStamp,
 		'starttimestamp': this.startTimeStamp,
-		'token': this.editToken
+		'token': this.editToken,
+		'useskin': mw.config.get( 'skin' )
 	} );
 	if ( this.wikitext !== null ) {
 		data.oldwt = this.wikitext;
@@ -1341,8 +1342,10 @@ ve.init.mw.Target.prototype.setupSurface = function ( doc, callback ) {
 
 				// Initialize surface
 				surface.getContext().hide();
-				// Wikia change to prepend the surface to the target.
-				target.$element.prepend( target.surface.$element );
+				// Wikia change
+				// Was previously prepended:
+				// https://github.com/Wikia/app/commit/45982569ef4381319e238ef973c49f57f96caf72
+				target.surface.$element.insertBefore( '#mw-content-text' );
 				target.setupToolbar();
 				if ( ve.debug ) {
 					target.setupDebugBar();

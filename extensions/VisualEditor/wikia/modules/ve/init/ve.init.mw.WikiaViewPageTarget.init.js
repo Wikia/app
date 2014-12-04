@@ -27,7 +27,12 @@
 			'category': 'editor-ve',
 			'trackingMethod': 'both'
 		},
-		spinnerTimeoutId = null;
+		spinnerTimeoutId = null,
+		skin = mw.config.get( 'skin' );
+
+	function isVenus() {
+		return skin === 'venus';
+	}
 
 	function getOptimizelyExperimentId( experimentName ) {
 		if ( experimentName === 'VE Source Entry Point Anon' ) {
@@ -89,7 +94,16 @@
 	 * @returns {jQuery.Promise}
 	 */
 	function getTarget() {
-		var loadTargetDeferred;
+		var loadTargetDeferred,
+			resources = [ window.wgResourceBasePath + '/resources/wikia/libraries/vignette/vignette.js' ],
+			targetModule = 'ext.visualEditor.wikiaViewPageTarget';
+
+		if ( isVenus() ) {
+			targetModule = 'ext.visualEditor.venusViewPageTarget';
+			resources.push( $.getSassCommonURL( '/extensions/VisualEditor/wikia/VisualEditor-Venus.scss' ) );
+		} else {
+			resources.push( $.getSassCommonURL( '/extensions/VisualEditor/wikia/VisualEditor.scss' ) );
+		}
 
 		/* Optimizely */
 		window.optimizely = window.optimizely || [];
@@ -115,15 +129,17 @@
 
 			$.when(
 				loadTargetDeferred,
-				$.getResources( [
-					$.getSassCommonURL( '/extensions/VisualEditor/wikia/VisualEditor.scss' ),
-					window.wgResourceBasePath + '/resources/wikia/libraries/vignette/vignette.js'
-				] )
+				$.getResources( resources )
 			).done( function () {
-				var target = new ve.init.mw.WikiaViewPageTarget();
+				var target;
 
-				// Transfer methods
-				ve.init.mw.WikiaViewPageTarget.prototype.setupSectionEditLinks = init.setupSectionLinks;
+				if ( isVenus() ) {
+					target = new ve.init.mw.VenusViewPageTarget();
+					ve.init.mw.VenusViewPageTarget.prototype.setupSectionEditLinks = init.setupSectionLinks;
+				} else {
+					target = new ve.init.mw.WikiaViewPageTarget();
+					ve.init.mw.WikiaViewPageTarget.prototype.setupSectionEditLinks = init.setupSectionLinks;
+				}
 
 				// Add plugins
 				target.addPlugins( plugins );
@@ -131,7 +147,7 @@
 				getTargetDeferred.resolve( target );
 			} ).fail( getTargetDeferred.reject );
 
-			mw.loader.using( 'ext.visualEditor.wikiaViewPageTarget', loadTargetDeferred.resolve, loadTargetDeferred.reject );
+			mw.loader.using( targetModule, loadTargetDeferred.resolve, loadTargetDeferred.reject );
 		}
 		return getTargetDeferred.promise();
 	}

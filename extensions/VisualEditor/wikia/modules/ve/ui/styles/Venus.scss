@@ -1,0 +1,8 @@
+/*
+ * It is not known how many specific style changes will be necessary for Venus, for for now, all changes are here.
+ * This file loads after the Wikia VE SCSS so selectors of the same specificity here will win.
+ */
+
+.ve-ce-documentNode {
+	overflow: visible;
+}
