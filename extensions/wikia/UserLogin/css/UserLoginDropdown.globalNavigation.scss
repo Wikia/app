@@ -12,7 +12,7 @@
 
 .UserLoginDropdown {
 	@include grid-column-width('large', 2, $large-grid-column-padding + $large-grid-gutter + $large-content-padding);
-	background-color: $global-wikia-background-color;
+	background-color: $nav-background-color;
 	border: 1px solid $nav-border-color;
 	color: $nav-foreground-alternative-color;
 	display: none;
@@ -32,7 +32,7 @@
 
 		.ajaxRegister {
 			background-color: $nav-foreground-bright-color;
-			color: $global-wikia-background-color;
+			color: $nav-background-color;
 			display: table-cell;
 			font-weight: bold;
 			height: 40px;
@@ -125,10 +125,11 @@
 		}
 
 		input[type=submit] {
-			@include clear-linear-gradient($nav-foreground-dark-color);
+			@include clear-linear-gradient;
+			background-color: $nav-foreground-dark-color;
 			border: 0;
 			border-radius: 0;
-			color: $global-wikia-background-color;
+			color: $nav-background-color;
 			font-weight: bold;
 			line-height: 16px;
 			min-height: 40px;
@@ -166,7 +167,7 @@
 			text-align: center;
 
 			span {
-				background-color: $global-wikia-background-color;
+				background-color: $nav-background-color;
 				color: $nav-border-color;
 				display: inline-block;
 				font-weight: bold;
@@ -180,7 +181,7 @@
 		.wikia-button-facebook {
 			border: 0;
 			border-radius: 0;
-			color: $global-wikia-background-color;
+			color: $nav-background-color;
 			display: block;
 			font-weight: bold;
 			height: 40px;
@@ -191,7 +192,8 @@
 			text-transform: uppercase;
 
 			&, &:hover, &:active {
-				@include clear-linear-gradient($facebook-background-color);
+				@include clear-linear-gradient;
+				background-color: $facebook-background-color;
 				text-decoration: none;
 			}
 

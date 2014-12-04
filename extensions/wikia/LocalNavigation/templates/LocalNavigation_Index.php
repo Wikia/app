@@ -1,4 +1,7 @@
-<header id="localNavigation" class="local-navigation">
+<nav id="localNavigation" class="local-navigation">
 	<?= $app->renderView( 'LocalNavigation', 'Wordmark') ?>
 	<?= $app->renderView( 'LocalNavigation', 'menu' ); ?>
-</header>
+	<? if ( $enableContributeButton ): ?>
+		<?= $app->renderView( 'LocalNavigationContributeMenu', 'Index' ) ?>
+	<? endif; ?>
+</nav>

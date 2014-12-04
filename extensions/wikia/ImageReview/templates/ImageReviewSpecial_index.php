@@ -5,6 +5,9 @@
 			<a href="<?= $baseUrl ?>"><em><?= $imageCount['unreviewed'] ?></em> <span>unreviewed<br>images</span></a>
 		</div>
 		<div class="tally">
+			<a href="<?= $baseUrl ?>/invalid"><em><?= $imageCount['invalid']?></em> <span>invalid<br>images</span></a>
+		</div>
+		<div class="tally">
 			<a href="<?= $baseUrl ?>/questionable"><em><?= $imageCount['questionable']?></em> <span>questionable<br>images</span></a>
 		</div>
 <?php } ?>

@@ -73,8 +73,7 @@ $namespaces['ja'] = array(
  * Korean (한국어)
  */
 $namespaces['ko'] = array(
-	NS_TOPLIST	=> '상위_10_목록',
-	NS_TOPLIST_TALK	=> '상위_10_목록_토론',
+	NS_TOPLIST => '상위_10_목록',
 );
 
 /**
@@ -123,14 +122,6 @@ $namespaces['uk'] = array(
 $namespaces['ru'] = array(
 	NS_TOPLIST	=> 'Список_Топ_10',
 	NS_TOPLIST_TALK	=> 'Обсуждение_списка_Топ_10',
-);
-
-/**
- * Vietnamese (Tiếng Việt)
- */
-$namespaces['vi'] = array(
-	NS_TOPLIST	=> 'Danh_sách_top_10',
-	NS_TOPLIST_TALK	=> 'Thảo_luận_Danh_sách_top_10',
 );
 
 /**

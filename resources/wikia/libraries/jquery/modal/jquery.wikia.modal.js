@@ -15,22 +15,19 @@ $.fn.extend({
 			showCloseButton: true,
 			width: 400,
 			height: "auto",
-			tabsOutsideContent: false,
 			topOffset: 50,
 			escapeToClose: true
-		}, calculatedZIndex, modalWidth, mainContent;
-
+		};
 		if (options) {
 			$.extend(settings, options);
 		}
-
 		// modal wrapper ID
 		var ts = Math.round((new Date()).getTime() / 1000),
 			id = settings.id || ($(this).attr('id') || ts) + 'Wrapper',
 			wrapper;
 
 		//wrap with modal chrome
-		if (skin === 'oasis' || skin === 'venus' || settings.appendToBody) {
+		if (skin == "oasis") {
 			/**
 			 * Generate modal content and add it to <body>
 			 * <section class="modalWrapper" id="'+id+'"><section class="modalContent">[modal content]</section></section>');
@@ -55,7 +52,6 @@ $.fn.extend({
 
 		// let's have it dynamically generated, so every newly created modal will be on top
 		var zIndex = settings.zIndex ? parseInt(settings.zIndex) : (5001101 + ($('body').children('.blackout').length) * 2);
-		calculatedZIndex = zIndex + 1;
 
 		// needed here for getModalTopOffset()
 		wrapper.data('settings', settings);
@@ -75,57 +71,41 @@ $.fn.extend({
 			headline.prependTo(wrapper);
 		}
 
-		// skin === oasis is for backward support
-		if (settings.tabsOutsideContent || skin === 'oasis' || skin === 'venus') {
+		if (skin == "oasis") {
+
 			// find tabs with .modal-tabs class and move them outside modal content
 			var modalTabs = wrapper.find('.modal-tabs');
 			if (modalTabs.exists()) {
 				modalTabs.insertBefore(wrapper.find('.modalContent'));
 			}
-		}
 
-		// calculate modal width for oasis
-		if (skin === 'oasis' || skin === 'venus') {
+			if(settings.width != 'auto') {
+				//set up dimensions and position
+				var modalWidth = $("#WikiaMainContent").width();
 
-			if(settings.width !== 'auto') {
-
-				// use provided width
-				if (settings.width !== undefined) {
+				// or use width provided
+				if (typeof settings.width != 'undefined') {
 					modalWidth = settings.width + 40 /* padding */;
-				} else {
-					// or use wikiaMainContent
-					mainContent = $("#WikiaMainContent");
-					if (mainContent.length > 0) {
-						modalWidth = mainContent.width();
-					}
 				}
 			} else {
 				modalWidth = 'auto';
 			}
-
 			//position modal. width must be set before calculating negative left margin
-			wrapper.width(modalWidth)
-				.css({
-				left: '50%',
-				height: settings.height,
-				'margin-left': -wrapper.outerWidth(false)/2,
-				top: $(window).scrollTop() + settings.topOffset,
-				zIndex: calculatedZIndex
-			});
-		} else if (settings.suppressDefaultStyles) {
-			// z-index and top value need to be set when modal is created
-			// their values are calculated based on the current state of the page
 			wrapper.css({
-				zIndex: calculatedZIndex,
-				top: $(window).scrollTop() + settings.topOffset
-			});
+				left: "50%",
+				top: $(window).scrollTop() + settings.topOffset,
+				width: modalWidth,
+				height: settings.height,
+				zIndex: zIndex + 1
+			}).css("margin-left", -wrapper.outerWidth(false)/2);
+
 		} else {
 			wrapper
 				.width(settings.width)
 				.css({
 					marginLeft: -wrapper.outerWidth(false) / 2,
 					top: wrapper.getModalTopOffset(),
-					zIndex: calculatedZIndex
+					zIndex: zIndex + 1
 				})
 				.fadeIn("fast");
 		}
@@ -187,7 +167,7 @@ $.fn.extend({
 			});
 		}
 		$(window).bind("resize.modal", function() {
-			if (window.skin == 'oasis' || !settings.resizeModal) {
+			if (window.skin == 'oasis') {
 				return;
 			}
 
@@ -227,7 +207,7 @@ $.fn.extend({
 				}
 		});
 
-		if (skin == 'oasis' || skin == 'venus' || settings.appendToBody) {
+		if (skin == "oasis") {
 			blackout.appendTo("body");
 		} else {
 			blackout.appendTo("#positioned_elements");

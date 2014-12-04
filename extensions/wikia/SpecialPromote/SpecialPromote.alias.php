@@ -1,65 +1,33 @@
 <?php
-/**
- * Aliases for special pages
- *
- * @file
- * @ingroup Extensions
- */
 
 $specialPageAliases = array();
 
-/**
- * English (English)
- */
+/** English */
 $specialPageAliases['en'] = array(
 	'Promote' => array( 'Promote' )
 );
 
-/**
- * German (Deutsch)
- */
+/** German (Deutsch) */
 $specialPageAliases['de'] = array(
 	'Promote' => array( 'Wiki_vorstellen' ),
 );
 
-/**
- * Spanish (Español)
- */
-$specialPageAliases['es'] = array(
-	'Promote' => array( 'Promocionar' ),
-);
-
-/**
- * French (Français)
- */
+/** French (Francais) */
 $specialPageAliases['fr'] = array(
 	'Promote' => array( 'Promouvoir' ),
 );
 
-/**
- * Italian (Italiano)
- */
+/** Spanish (Espanol) */
+$specialPageAliases['es'] = array(
+	'Promote' => array( 'Promocionar' ),
+);
+
+/** Italian (Italiano) */
 $specialPageAliases['it'] = array(
 	'Promote' => array( 'Promuovi' ),
 );
 
-/**
- * Korean (한국어)
- */
-$specialPageAliases['ko'] = array(
-	'Promote' => array( '홍보' ),
-);
-
-/**
- * Polish (Polski)
- */
+/** Polish (Polski) */
 $specialPageAliases['pl'] = array(
 	'Promote' => array( 'Promocja' ),
-);
-
-/**
- * Vietnamese (Tiếng Việt)
- */
-$specialPageAliases['vi'] = array(
-	'Promote' => array( 'Xúc_tiến' ),
 );

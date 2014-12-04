@@ -6,7 +6,6 @@ class AdController extends WikiaController {
 		$this->slotName = $this->request->getVal('slotName');
 		$this->pageTypes = $this->request->getVal('pageTypes');
 		$this->pageFairId = $this->request->getVal('pageFairId', null);
-		$this->includeLabel = $this->request->getVal('includeLabel');
 	}
 
 	public function executeConfig() {

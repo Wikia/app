@@ -87,16 +87,6 @@ $namespaces['ja'] = array(
 );
 
 /**
- * Korean (한국어)
- */
-$namespaces['ko'] = array(
-	NS_BLOG_ARTICLE		=> '사용자_블로그',
-	NS_BLOG_ARTICLE_TALK	=> '사용자_블로그_댓글',
-	NS_BLOG_LISTING		=> '블로그',
-	NS_BLOG_LISTING_TALK	=> '블로그_토론',
-);
-
-/**
  * Dutch (Nederlands)
  */
 $namespaces['nl'] = array(
@@ -174,16 +164,6 @@ $namespaces['ru'] = array(
 	NS_BLOG_ARTICLE_TALK	=> 'Комментарий_блога_участника',
 	NS_BLOG_LISTING		=> 'Блог',
 	NS_BLOG_LISTING_TALK	=> 'Обсуждение_блога',
-);
-
-/**
- * Vietnamese (Tiếng Việt)
- */
-$namespaces['vi'] = array(
-	NS_BLOG_ARTICLE		=> 'Blog_thành_viên',
-	NS_BLOG_ARTICLE_TALK	=> 'Bình_luận_blog_thành_viên',
-	// vi has no translation for "Blog"
-	NS_BLOG_LISTING_TALK	=> 'Thảo_luận_Blog',
 );
 
 /**

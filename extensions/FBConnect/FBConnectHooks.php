@@ -686,7 +686,6 @@ HTML;
 		return true;
 	}
 
-	// doesn't actually work. This is done in NotificationsController.class.php
 	public static function SkinTemplatePageBeforeUserMsg(&$msg) {
 		global $wgRequest, $wgUser, $wgServer;
 

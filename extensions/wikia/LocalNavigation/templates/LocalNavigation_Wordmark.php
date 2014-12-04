@@ -1,4 +1,4 @@
-<h3 class="wordmark-container">
+<header class="wordmark-container">
 	<span>
 		<a class="wordmark" accesskey="z" href="<?= htmlspecialchars( $mainPageURL ) ?>">
 			<? if ( !empty( $wordmarkUrl ) ) { ?>
@@ -8,4 +8,4 @@
 			<? } ?>
 		</a>
 	</span>
-</h3>
+</header>

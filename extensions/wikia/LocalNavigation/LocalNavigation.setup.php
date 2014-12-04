@@ -23,8 +23,6 @@ $wgExtensionCredits[ 'specialpage' ][] = [
 
 // controller classes
 $wgAutoloadClasses[ 'LocalNavigationController' ] =  __DIR__ . '/LocalNavigationController.class.php';
-$wgAutoloadClasses[ 'LocalNavigationHooks' ] =  __DIR__ . '/LocalNavigationHooks.class.php';
+$wgAutoloadClasses[ 'LocalNavigationContributeMenuController' ] =  __DIR__ . '/LocalNavigationContributeMenuController.class.php';
 
 $wgExtensionMessagesFiles[ 'LocalNavigation' ] = __DIR__ . '/LocalNavigation.i18n.php';
-
-$wgHooks['MessageCacheReplace'][] = 'LocalNavigationHooks::onMessageCacheReplace';

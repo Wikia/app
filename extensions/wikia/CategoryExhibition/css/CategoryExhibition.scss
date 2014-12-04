@@ -3,8 +3,6 @@
 @import "skins/shared/color";
 @import "extensions/wikia/TopLists/css/mixins";
 
-$color: #000; // was removed from /skins/shared/mixins/box-shadow
-
 $thumb-size-width: 130px;
 $thumb-size-height: 115px;
 $thumb-border-top: 4px;
@@ -13,7 +11,6 @@ $thumb-border-left: 5px;
 $thumb-border-right: 6px;
 $details-fg-color: $color-button-text;
 $details-bg-color: $color-buttons;
-$color: #000;
 
 $color-inctive-button: mix($color-page, #000, 60%);
 @if lightness($color-page) < 50 {

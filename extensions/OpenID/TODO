@@ -1,0 +1,91 @@
+Status: 0.929-beta 20110528
+
+? more details are needed to understand the "to do"
+* resolved, or partially resolved, wontfix
+- open
++ fixed
+
+? Dynamic HTML swap in of OpenID login form on Special:Userlogin
+? OpenID extension to share MW settings
+? Optionally redirect User: page to OpenID URL
+? AJAX login, rather than klutzy JS form
+? Provider-driven identifier selection (eh? do we care?)
+? Auto-login if you've logged in before with an OpenID,
+  and are logged into that account now
+
+- $byEmail parameter of AddNewAccount hook: should this be false, or true ?
+- i18n of OpenIDDashboard.body.php
+- redesign MediaWiki extension and php-openid library paths to avoid
+  $path=array( dirname( __FILE__ ) );
+  set_include_path(implode(PATH_SEPARATOR,$path).PATH_SEPARATOR.get_include_path());
+  in OpenID.setup.php. I don't know, if it can be avoided.
+- keep user from mailing new password in OpenID account except case S/OO
+- keep user from setting password in OpenID account except case S/OO
+- participate in account-creation throttle
+- audit to prevent circumventing blocks/bans
+- share timezone when/if available
+- Manage allow-to-trust settings in User preferences
+- optimize trust storage
+- If user logs in with OpenID, add a cookie, and auto-login next time
+  with check_immediate
+- configurable regexps for finding a user ID from an OpenID.
+- deal with difference between canonical ID and "display ID" with XRIs
+- support RP discovery
+- README (always keep README up to date)
+
+* warn if a user account has been used as a login before attaching an
+  OpenID (I think, this is solved; marked with * instead of +)
+* Configure some stuff through Special:Preferences or a dedicated control panel
+  (under construction, see Special:OpenIDDashboard)
+
++ be aware of user deletions done by extension UserMerge and Delete (and others)
+  https://bugzilla.wikimedia.org/show_bug.cgi?id=28993
++ allow user to set or reset a password in case of
+  !$wgOpenIDClientOnly && $wgOpenIDOnly
+  (https://bugzilla.wikimedia.org/show_bug.cgi?id=29027)
+  = case Server/OpenID-Only
++ Execute MediaWiki hook 'AddNewAccount' when new account is added
+  https://bugzilla.wikimedia.org/show_bug.cgi?id=21711
++ Add a Storage class for $wgMemc
++ Prevent running OpenIDLogin when you're already logged in
++ Add a server mode
++ Prevent serving OpenID accounts
++ Prevent trusting the same server
++ Limit domains whose OpenIDs you trust
++ For domains, Order Allow,Deny or Deny,Allow
++ Function to let skins tell if user is OpenID user
++ Function to let skins know user's OpenID URL
++ Interwiki login
++ drop-down for username prefixes (Yahoo, etc.)
++ server mode login
++ server mode trust form
++ server mode share fields form
++ change a "regular" account to an OpenID account
++ split big file into 2-3 smaller modules
++ add openid.server to user pages
++ hide openid.server for non-user pages
++ change trust data separators from , and | to FS and RS
++ User preferences tab for OpenID
++ Have some $trust_root values that we _always_ allow to trust
++ form to choose user ID if not sreg.nickname or sreg.fullname
++ try to guess user name from URL with /
+  like http://getopenid.com/evanprodromou or
+  http://profile.typekey.com/EvanProdromou/
++ Allow specifying a FileStore
++ Allow specifying a MySQLStore
++ Allow specifying a memcached store
++ Fall back to FileStore if Memc is bogus
++ Unit test for MemcStore
++ for just-a-hostname OpenIDs, if the first element is not
+  www, use the first element as a proposed ID
++ Make the OpenID login page more prominent. A personal toolbox link for each page?
++ Update Sreg support for new API in version 2.0 libraries
++ fix problem with getting $request->identity after login on server
++ fix problem with return_to parsing on login
++ fix problem with return_to parsing on convert
++ optionally allow user to specify an existing username/password after
+  logging in with OpenID the first time (like ma.gnolia.com)
++ add more explanatory text to the default login instructions (copy Wikitravel text)
++ add more than one OpenID to a user account
++ link to Special:OpenIDConvert if user is already logged in (fixed in 0.924-beta)
++ link to OpenID login on Special:Userlogin (fixed in 0.924-beta)

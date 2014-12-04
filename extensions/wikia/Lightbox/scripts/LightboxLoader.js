@@ -22,11 +22,11 @@
 		videoInstance: null,
 		pageAds: $('#TOP_RIGHT_BOXAD'), // if more ads start showing up over lightbox, add them here
 		reloadOnClose: false, // Means to reload the page on closing the lightbox - see VID-473
-		lightboxSettings: {
+		defaults: {
 			// start with default modal options
 			id: 'LightboxModal',
 			className: 'LightboxModal',
-			width: 970, // modal adds 40px of padding to width in case of oasis skin
+			width: 970, // modal adds 40px of padding to width
 			noHeadline: true,
 			topOffset: 25,
 			height: 628,
@@ -62,12 +62,9 @@
 			}
 		},
 		videoThumbWidthThreshold: 400,
-		init: function (customSettings) {
+		init: function () {
 			var self = this,
 				$article, $photos, $comments, $footer, $videosModule, $videoHomePage;
-
-			// performance profiling
-			bucky = window.Bucky('LightboxLoader');
 
 			bucky.timer.start('init');
 
@@ -77,8 +74,6 @@
 			$footer = $('#WikiaArticleFooter'); // bottom videos module
 			$videosModule = $('.videos-module-rail'); // right rail videos module
 			$videoHomePage = $('#latest-videos-wrapper');
-
-			$.extend(self.lightboxSettings, customSettings);
 
 			// Bind click event to initiate lightbox
 			$article.add($photos).add($footer).add($videosModule)
@@ -173,9 +168,6 @@
 					}
 				);
 			bucky.timer.stop('init');
-
-			// wait till end of execution stack to load lightbox
-			setTimeout(LightboxLoader.loadFromURL, 0);
 		},
 
 		/**
@@ -196,7 +188,7 @@
 			LightboxLoader.pageAds.css('visibility', 'hidden');
 
 			// Display modal with default dimensions
-			openModal = $('<div>').makeModal(LightboxLoader.lightboxSettings);
+			openModal = $('<div>').makeModal(LightboxLoader.defaults);
 			openModal.find('.modalContent').startThrobbing();
 
 			lightboxParams = {
@@ -384,7 +376,7 @@
 
 			// if any of the following conditions are true, don't open the lightbox
 			return !(
-				$(window).width() < LightboxLoader.lightboxSettings.width + modalPadding || // browser is too small, like tablet
+				$(window).width() < LightboxLoader.defaults.width + modalPadding || // browser is too small, like tablet
 				$link.hasClass('link-internal') ||
 				$link.hasClass('link-external') ||
 				$thumb && $thumb.attr('data-shared-help') ||
@@ -425,9 +417,16 @@
 	};
 
 	$(function () {
-		if (window.wgEnableLightboxExt && window.skin !== 'venus' ) {
+		if (window.wgEnableLightboxExt) {
+			// performance profiling
+			bucky = window.Bucky('LightboxLoader');
+
 			LightboxLoader.init();
+
+			// wait till end of execution stack to load lightbox
+			setTimeout(LightboxLoader.loadFromURL, 0);
 		}
+
 	});
 
 	window.LightboxLoader = LightboxLoader;

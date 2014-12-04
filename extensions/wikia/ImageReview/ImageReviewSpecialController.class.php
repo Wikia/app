@@ -4,7 +4,8 @@ use \Wikia\Logger\WikiaLogger;
 
 class ImageReviewSpecialController extends WikiaSpecialPageController {
 	const ACTION_QUESTIONABLE = 'questionable';
-	const ACTION_REJECTED     = 'rejected';
+	const ACTION_REJECTED = 'rejected';
+	const ACTION_INVALID = 'invalid';
 
 	var $statsHeaders = array( 'user', 'total reviewed', 'approved', 'deleted', 'qustionable', 'distance to avg.' );
 
@@ -44,6 +45,9 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			return false;
 		} elseif ( $action == self::ACTION_QUESTIONABLE && !$this->accessQuestionable ) {
 			$this->specialPage->displayRestrictionError( 'questionableimagereview' );
+			return false;
+		} elseif ( $action == self::ACTION_INVALID && !$this->accessQuestionable ) {
+			$this->specialPage->displayRestrictionError();
 			return false;
 		} elseif ( $action == self::ACTION_REJECTED && !$this->accessRejected ) {
 			$this->specialPage->displayRestrictionError( 'rejectedimagereview' );
@@ -102,9 +106,8 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 		$newestTs = $this->wg->Memc->get( $user_key );
 
 		if ( $ts > $newestTs ) {
-			WikiaLogger::instance()->info( 'ImageReviewLog', [
+			WikiaLogger::instance()->info( "ImageReview: I've got the newest ts ($ts), I won't refetch the images", [
 				'method' => __METHOD__,
-				'message' => "I've got the newest ts ({$ts}), I won't refetch the images",
 			]);
 			$this->imageList = array();
 			$this->wg->memc->set( $user_key, $ts, 3600 /* 1h */ );
@@ -112,21 +115,17 @@ class ImageReviewSpecialController extends WikiaSpecialPageController {
 			$this->imageList = $helper->refetchImageListByTimestamp( $ts );
 		}
 
-		if ( count( $this->imageList ) == 0 ) {
+		if ( count($this->imageList) == 0 ) {
 			$do = array( 
 				self::ACTION_QUESTIONABLE	=> ImageReviewStatuses::STATE_QUESTIONABLE,
 				self::ACTION_REJECTED		=> ImageReviewStatuses::STATE_REJECTED,
-				'default'					=> ImageReviewStatuses::STATE_UNREVIEWED
+				self::ACTION_INVALID		=> ImageReviewStatuses::STATE_INVALID_IMAGE,
+				'default'			=> ImageReviewStatuses::STATE_UNREVIEWED
 			);
+			$this->imageList = $helper->getImageList( $ts, isset( $do[ $action ] ) ? $do[ $action ] : $do['default'], $order );
+		}
 
-			if ( isset( $do[ $action ] ) ) {
-				$this->imageList = $helper->getImageList( $ts, $do[ $action ], $order );
-				$this->imageCount = $helper->getImageCount();
-			} else {
-				$this->imageList = $helper->getImageList( $ts, $do[ 'default' ], $order );
-				$this->imageCount = $helper->getImageCount( 'unreviewed', count( $this->imageList ) );
-			}
-		} else {
+		if ( $this->accessQuestionable ) {
 			$this->imageCount = $helper->getImageCount();
 		}
 	}

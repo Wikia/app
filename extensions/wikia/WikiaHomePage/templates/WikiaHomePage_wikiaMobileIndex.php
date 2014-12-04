@@ -1,12 +1,6 @@
 <section class=wkhome>
-	<h1><?= wfMessage('wikiahome-page-header-heading-mobile')->escaped() ?></h1>
-
-	<section class="wkhome-section">
-		<a href="http://yearinfandom.wikia.com/wiki/Portal:Community_Choice" class=wkhome-hero>
-			<img class=wkhome-img src="<?= $wg->ExtensionsPath ?>/wikia/WikiaHomePage/images/YIF_HomePage_Mobile_R3.jpg">
-			<h2><?= wfMessage('wikiahome-page-section-yearinfandom')->escaped() ?></h2>
-		</a>
-	</section>
+	<h1><?= wfMsg('wikiahome-page-header-heading') ?></h1>
+	<h2><?= wfMsg('wikiahome-page-header-subheading') ?></h2>
 
 	<? foreach ( $hubsSlots as $hubsSlot ): ?>
 		<? if ( !empty($hubsSlot) ): ?>
@@ -20,10 +14,10 @@
 	<? endforeach ?>
 
 	<section class="wkhome-section wkhome-community  wkhome-community-<?= $lang ?>">
-		<a href="<?= wfMessage('wikiahome-community-column1-link')->escaped() ?>" class=wkhome-hero>
+		<a href="<?= wfMsg('wikiahome-community-column1-link') ?>" class=wkhome-hero>
 			<img class=wkhome-img src="<?= $wg->BlankImgUrl ?>">
 		</a>
-		<p><?=wfMessage('wikiahome-community-column1-creative')->escaped() ?></p>
+		<p><?=wfMsg('wikiahome-community-column1-creative') ?></p>
 	</section>
 
 </section>

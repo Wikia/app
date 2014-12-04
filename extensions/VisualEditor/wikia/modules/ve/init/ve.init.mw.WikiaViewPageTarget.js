@@ -113,7 +113,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.getNonEditableUIElements = function () 
 		$elements = $( '#mw-content-text' );
 	}
 
-	$elements = $elements.add( '.article-categories' );
+	$elements = $elements.add( '.WikiaArticleCategories' );
 
 	return $elements;
 };

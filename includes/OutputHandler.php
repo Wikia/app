@@ -7,16 +7,14 @@
 
 /**
  * Standard output handler for use with ob_start
- *
+ * 
  * @param $s string
- *
+ * 
  * @return string
  */
 function wfOutputHandler( $s ) {
-	global $wgDisableOutputCompression, $wgValidateAllHtml, $wgMangleFlashPolicy;
-	if ( $wgMangleFlashPolicy ) {
-		$s = wfMangleFlashPolicy( $s );
-	}
+	global $wgDisableOutputCompression, $wgValidateAllHtml;
+	$s = wfMangleFlashPolicy( $s );
 	if ( $wgValidateAllHtml ) {
 		$headers = apache_response_headers();
 		$isHTML = true;
@@ -72,7 +70,7 @@ function wfRequestExtension() {
 /**
  * Handler that compresses data with gzip if allowed by the Accept header.
  * Unlike ob_gzhandler, it works for HEAD requests too.
- *
+ * 
  * @param $s string
  *
  * @return string

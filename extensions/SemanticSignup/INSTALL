@@ -1,0 +1,68 @@
+These is the install file for the SemanticSignup extension.
+
+Extension page on mediawiki.org: http://www.mediawiki.org/wiki/Extension:SemanticSignup
+Latest version of the install file: http://svn.wikimedia.org/viewvc/mediawiki/trunk/extensions/SemanticSignup/INSTALL?view=co
+
+
+== Requirements ==
+
+SemanticSignup requires:
+
+* MediaWiki 1.16 or above
+* Semantic MediaWiki 1.6 or above
+* Semantic Forms 2.0 or above
+* PHP 5.2 or above
+
+== Download ==
+
+You can find the current version of SemanticSignup on the [https://code.google.com/p/semanticsignup/downloads/list Google Code download page],
+as well as a [https://code.google.com/p/semanticsignup/downloads/list?can=1 list of legacy downloads].
+
+You can also get the code directly from SVN. Tags can be obtained via
+
+ svn checkout <nowiki>http://svn.wikimedia.org/svnroot/mediawiki/tags/extensions/SemanticSignup/REL_version</nowiki>
+
+Where 'version' is the version number of the tag, such as 0_1 (see the [http://svn.wikimedia.org/svnroot/mediawiki/tags/extensions/SemanticSignup/ available tags]).
+The latest code can be obtained from trunk:
+
+ svn checkout <nowiki>http://svn.wikimedia.org/svnroot/mediawiki/trunk/extensions/SemanticSignup/</nowiki>
+
+== Installation ==
+
+Once you have downloaded the code, place the ''SemanticSignup'' directory within your MediaWiki
+'extensions' directory. Then add the following code to your [[Manual:LocalSettings.php|LocalSettings.php]] file:
+
+# SemanticSignup
+require_once( "$IP/extensions/SemanticSignup/SemanticSignup.php" );
+
+== Configuration ==
+
+Configuration of SemanticSignup is done by assigning to $egSemanticSignupSettings in your
+[[Manual:LocalSettings.php|LocalSettings.php]] file. These statements need to be placed
+AFTER the inclusion of SemanticSignup. The options are listed below and their default
+is set in the [http://svn.wikimedia.org/viewvc/mediawiki/trunk/extensions/SemanticSignup/SemanticSignup.settings.php?view=markup SemanticSignup settings file].
+You should NOT modify the settings file, but can have a look at it to get an idea of
+how to use the  settings, in case the below descriptions do not suffice.
+
+=== Require name ===
+
+Require entering a real name during the registration process?
+
+Default: $egSemanticSignupSettings['requireName'] = false; // true or false
+
+=== Form name ===
+
+The name of the form you want to use for signup.
+
+Default: $egSemanticSignupSettings['formName'] = '';
+
+Example: $egSemanticSignupSettings['formName'] = 'Signup_form';
+
+=== Bot name ===
+
+The name of the user to create the user page with. This user needs
+sufficient priviliges to create new pages in the User: namespace.
+
+Default: $egSemanticSignupSettings['botName'] = '';
+
+Example: $egSemanticSignupSettings['botName'] = 'Admin';

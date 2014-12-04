@@ -1,0 +1,38 @@
+.articleFeedbackv5-ui .articleFeedbackv5-submit {
+	min-width: 190px;
+}
+.articleFeedbackv5-tags ul {
+	margin: 0;
+	padding: 0;
+	display: block;
+	list-style: none;
+}
+.articleFeedbackv5-tags ul li {
+	 margin: 0 2% 5px 0 !important;
+	 border: 0;
+	 list-style: none;
+}
+.articleFeedbackv5-tags ul li:first-child {
+	margin: 0;
+}
+.articleFeedbackv5-tags ul li {
+	display: block !important;
+	float: left !important;
+	width: 20% !important;
+	white-space:nowrap;
+	text-align: center;
+	line-height: 18px !important;
+}
+.articleFeedbackv5-fixedtab {
+	margin: 0 40px 0 0 !important;
+	*margin: 0 !important;
+	/*filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);*/
+}
+.articleFeedbackv5-fixedtabbox {
+	
+}
+.articleFeedbackv5-fixedtablink {
+	/*position: absolute;*/
+	*min-width: 0 !important;
+	*display: block !important;
+}

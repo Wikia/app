@@ -29,9 +29,9 @@ class MonetizationModuleHelper extends WikiaModel {
 	const FONT_COLOR_LIGHT_THEME = '#3a3a3a';
 
 	const KEYWORD_PREFIX = '$set'; 	// used for checking if mapping is needed
+	const KEYWORD_THEME_SETTINGS_OLD = '$theme';	// TODO: remove this after updating the service
 	const KEYWORD_THEME_SETTINGS = '$setTheme';
-	const KEYWORD_AD_TITLE = '$setAdTitle';
-	const KEYWORD_ECOMMERCE_TITLE = '$setEcommTitle';
+	const KEYWORD_TITLE = '$setAdTitle';
 
 	protected static $mapThemeSettings = [
 		'data-color-bg'     => 'color-page',
@@ -164,14 +164,12 @@ class MonetizationModuleHelper extends WikiaModel {
 	public function setThemeSettings( $adUnits, $memcKey ) {
 		wfProfileIn( __METHOD__ );
 
-		$found = strpos( $adUnits, self::KEYWORD_PREFIX );
+		// TODO: cleanup this after updating the service
+		$found = strpos( $adUnits, self::KEYWORD_PREFIX ) || strpos( $adUnits, self::KEYWORD_THEME_SETTINGS_OLD );
 		$adUnits = json_decode( $adUnits, true );
 		if ( $found !== false && is_array( $adUnits ) ) {
 			$adTitle = $this->wf->Message( 'monetization-module-ad-title' )->plain();
-			$adUnits = str_replace( self::KEYWORD_AD_TITLE, $adTitle, $adUnits );
-
-			$ecommTitle = $this->wf->Message( 'monetization-module-ecommerce-title' )->text();
-			$adUnits = str_replace( self::KEYWORD_ECOMMERCE_TITLE, $ecommTitle, $adUnits );
+			$adUnits = str_replace( self::KEYWORD_TITLE, $adTitle, $adUnits );
 
 			$theme = SassUtil::getOasisSettings();
 			if ( SassUtil::isThemeDark() ) {
@@ -187,6 +185,8 @@ class MonetizationModuleHelper extends WikiaModel {
 				}
 			}
 
+			// TODO: remove this after updating the service
+			$adUnits = str_replace( self::KEYWORD_THEME_SETTINGS_OLD, $adSettings, $adUnits );
 			$adUnits = str_replace( self::KEYWORD_THEME_SETTINGS, $adSettings, $adUnits );
 
 			// set cache

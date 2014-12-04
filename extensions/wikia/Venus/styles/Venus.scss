@@ -1,35 +1,21 @@
 // reset css
-@import 'libs/normalize';
-
-// fonts
-@import 'fonts/venus-icons';
-
-// basic mediawiki styles
-@import 'mediawiki.basic.legacy.css';
+@import "libs/normalize";
 
 // import variables and mixins
-@import 'variables';
-@import 'mixins';
+@import "variables";
+@import "mixins";
 
 // import general styles
-@import 'general';
+@import "general";
 
-// import typography, page layout and background
-@import 'typography';
-@import 'layout';
-@import 'background';
-@import 'transparent-out';
-@import 'skins/shared/styles/logo';
-
-@import 'ads';
+// import page layout and background
+@import "layout";
+@import "background";
 
 // import grid & visibility from foundation
-@import 'grid';
-@import 'visibility';
+@import "grid";
+@import "visibility";
 
-// import notifications styles
-@import 'skins/shared/styles/GlobalNotifications';
-@import 'extensions/wikia/Venus/styles/modules/GlobalNotifiacationsVenus';
 
-// hide 'Retrieved from...' print footer
+// hide "Retrived from..." print footer
 .printfooter { display: none; }

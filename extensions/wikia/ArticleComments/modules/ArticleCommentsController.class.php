@@ -71,7 +71,7 @@ class ArticleCommentsController extends WikiaController {
 	 * The content for an article page. This is included on the index (for the current title)
 	 * if lazy loading is disabled, otherwise it is requested via AJAX.
 	 */
-	public function content() {
+	public function executeContent() {
 		//this is coming via ajax we need to set correct wgTitle ourselves
 		global $wgTitle;
 
@@ -107,10 +107,6 @@ class ArticleCommentsController extends WikiaController {
 		if ( !empty( $this->wg->ArticleCommentsLoadOnDemand ) ) {
 			$this->response->setCachePolicy( WikiaResponse::CACHE_PRIVATE );
 			$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
-		}
-
-		if ( F::app()->checkSkin( 'venus' ) ) {
-			$this->overrideTemplate( 'VenusContent' );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -175,20 +171,6 @@ class ArticleCommentsController extends WikiaController {
 
 		wfProfileOut( __METHOD__ );
 	}
-
-	/**
-	 * Overrides the template for one comment item for the Venus skin
-	 *
-	 * @author macbre
-	 **/
-	public function executeVenusComment() {/** render Venus template**/}
-
-	/**
-	 * Overrides the template for comments list for the Venus skin
-	 *
-	 * @author macbre
-	 **/
-	public function executeVenusCommentList() {/** render Venus template**/}
 
 	private function getCommentsData(Title $title, $page, $perPage = null, $filterid = null) {
 		wfProfileIn(__METHOD__);

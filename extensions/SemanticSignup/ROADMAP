@@ -1,0 +1,10 @@
+This is the roadmap for the SemanticSignup extension.
+	
+Extension page on mediawiki.org: http://www.mediawiki.org/wiki/Extension:SemanticSignup
+Latest version of the roadmap: http://svn.wikimedia.org/viewvc/mediawiki/trunk/extensions/SemanticSignup/ROADMAP?view=co
+
+
+== Version 0.4 ==
+
+* Fix compatibility with Confirm Edit and other captcha extensions.
+* Fix loading of obsolete JavaScript and CSS files.

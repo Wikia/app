@@ -574,6 +574,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				$out = $this->renderSlider();
 				break;
 		}
+
 		if ( !$this->canRenderMediaGallery() ) {
 			$out .= $this->getBaseJSSnippets();
 		}
@@ -592,8 +593,8 @@ class WikiaPhotoGallery extends ImageGallery {
 	private function getBaseJSSnippets() {
 		$out = JSSnippets::addToStack(
 			array(
-				'wikia_photo_gallery_js',
-				'wikia_photo_gallery_scss',
+				'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js',
+				'/extensions/wikia/WikiaPhotoGallery/css/gallery.scss',
 			),
 			array(),
 			'WikiaPhotoGalleryView.init'
@@ -1358,8 +1359,9 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			$slideshowHtml .= JSSnippets::addToStack(
 				array(
-					'wikia_photo_gallery_slideshow_js',
-					'wikia_photo_gallery_slideshow_scss'
+					'/resources/wikia/libraries/jquery/slideshow/jquery-slideshow-0.4.js',
+					'/extensions/wikia/WikiaPhotoGallery/css/slideshow.scss',
+					'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slideshow.js'
 				),
 				array(),
 				'WikiaPhotoGallerySlideshow.init',
@@ -1548,14 +1550,15 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			if ( $orientation == 'mosaic' ) {
 				$sliderResources = array(
-					'wikia_photo_gallery_mosaic_js',
-					'wikia_photo_gallery_mosaic_scss'
+					'/resources/wikia/libraries/modernizr/modernizr-2.0.6.js',
+					'/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.mosaic.scss',
+					'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slider.mosaic.js'
 				);
 				$javascriptInitializationFunction = 'WikiaMosaicSliderMasterControl.init';
 			} else {
 				$sliderResources = array(
-					'wikia_photo_gallery_slider_js',
-					'wikia_photo_gallery_slider_scss'
+					'/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.scss',
+					'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slider.js'
 				);
 				$javascriptInitializationFunction = 'WikiaPhotoGallerySlider.init';
 			}

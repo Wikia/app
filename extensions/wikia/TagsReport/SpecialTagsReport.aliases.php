@@ -1,37 +1,14 @@
 <?php
-/**
- * Aliases for special pages
- *
- * @file
- * @ingroup Extensions
- */
-
 $specialPageAliases = array();
-
 /**
- * English (English)
+ * English
  */
 $specialPageAliases['en'] = array(
-	'TagsReport' => array( 'TagsReport' ),
+    'TagsReport' => array( 'TagsReport' ),
 );
-
 /**
- * Korean (한국어)
- */
-$specialPageAliases['ko'] = array(
-	'TagsReport' => array( '태그목록' ),
-);
-
-/**
- * Polish (Polski)
+ * Polish
  */
 $specialPageAliases['pl'] = array(
-	'TagsReport' => array( 'Rejestr_Znaczników' ),
-);
-
-/**
- * Vietnamese (Tiếng Việt)
- */
-$specialPageAliases['vi'] = array(
-	'TagsReport' => array( 'Bản_báo_cáo' ),
+    'TagsReport' => array( 'Rejestr_Znaczników', 'TagsReport' ),
 );

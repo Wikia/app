@@ -7,8 +7,6 @@
 
 namespace Wikia\Tasks\Tasks;
 
-use \Wikia\Logger\WikiaLogger;
-
 class ImageReviewTask extends BaseTask {
 	public function delete( $pageList, $suppress = false ) {
 		global $IP;
@@ -82,50 +80,14 @@ class ImageReviewTask extends BaseTask {
 		return $success;
 	}
 
-	public function deleteFromQueue( Array $aDeletionList ) {
-		global $wgExternalDatawareDB;
-
-		$oDB = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
-
-		foreach ( $aDeletionList as $aRow ) {
-			$aImageData = [
-				'wiki_id' => $aRow['wiki_id'],
-				'page_id' => $aRow['page_id'],
-			];
-
-			$oDB->delete(
-				'image_review',
-				$aImageData,
-				__METHOD__
-			);
-
-			WikiaLogger::instance()->info( 'ImageReviewLog', [
-				'method' => __METHOD__,
-				'message' => 'Image removed from queue',
-				'params' => $aRow,
-			] );
-		}
-	}
-
 	private function sendNotification() {
 		global $wgFlowerUrl;
 
 		$subject = "ImageReview deletion failed #{$this->taskId}";
 		$body = "{$wgFlowerUrl}/task/{$this->taskId}";
-		$recipients = [
-			new \MailAddress( 'tor@wikia-inc.com' ),
-			new \MailAddress( 'adamk@wikia-inc.com' ),
-			new \MailAddress( 'sannse@wikia-inc.com' ),
-		];
+		$recipients = [new \MailAddress( 'tor@wikia-inc.com' ), new \MailAddress( 'sannse@wikia-inc.com' )];
 		$from = $recipients[0];
 
 		\UserMailer::send( $recipients, $from, $subject, $body );
-
-		WikiaLogger::instance()->error( "ImageReviewLog", [
-			'method' => __METHOD__,
-			'message' => "Task #{$this->taskId} deleting images did not succeed. Please check.",
-			'taskId' => $this->taskId,
-			'taskUrl' => $body,
-		] );
 	}
-}
+} 

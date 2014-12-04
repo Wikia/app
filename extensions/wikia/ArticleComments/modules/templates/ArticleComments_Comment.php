@@ -1,5 +1,5 @@
 <? if ( is_array( $comment ) ) :?>
-<li id="comm-<?=$commentId?>" class="comment SpeechBubble <?=$rowClass?>" data-user="<?=$comment['username']?>">
+<li id="comm-<?=$commentId?>" class="SpeechBubble <?=$rowClass?>" data-user="<?=$comment['username']?>">
 	<div class="speech-bubble-avatar">
 		<a href="<?= $comment['userurl'] ?>">
 			<?= $comment['avatar'] ?>

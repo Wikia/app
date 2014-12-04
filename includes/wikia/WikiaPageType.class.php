@@ -4,41 +4,21 @@
  * Utility class to check types of currently rendered page
  */
 class WikiaPageType {
-
-	/**
-	 * Get the current $wgTitle
-	 *
-	 * This method additionally resolves redirects
-	 *
-	 * @return Title|null title instance
-	 */
-	private static function getTitle() {
-		$title = F::app()->wg->Title;
-
-		// follow redirects
-		if ( $title instanceof Title && $title->isRedirect() ) {
-			$page = WikiPage::factory( $title );
-			$title = $page->getRedirectTarget();
-		}
-
-		return $title;
-	}
-
 	/**
 	 * Get type of page as string
 	 *
 	 * @return string one of corporate, home, search, forum, article or extra
 	 */
 	public static function getPageType() {
-		if ( self::isMainPage() ) {
+		if (self::isMainPage()) {
 			$type = 'home';
-		} elseif ( self::isFilePage() ) {
+		} elseif (self::isFilePage()) {
 			$type = 'file';
-		} elseif ( self::isSearch() ) {
+		} elseif (self::isSearch()) {
 			$type = 'search';
-		} elseif ( self::isForum() ) {
+		} elseif (self::isForum()) {
 			$type = 'forum';
-		} elseif ( self::isExtra() ) {
+		} elseif (self::isExtra()) {
 			$type = 'extra';
 		} else {
 			$type = 'article';
@@ -53,10 +33,10 @@ class WikiaPageType {
 	 * @return bool
 	 */
 	public static function isMainPage() {
-		$title = self::getTitle();
+		$title = F::app()->wg->Title;
 
 		$isMainPage = (
-			$title instanceof Title
+			is_object($title)
 			&& $title->isMainPage()
 			&& $title->getArticleId() != 0 # caused problems on central due to NS_SPECIAL main page
 			&& !self::isActionPage()
@@ -71,31 +51,16 @@ class WikiaPageType {
 	 * @return bool
 	 */
 	public static function isArticlePage() {
-		$title = self::getTitle();
+		$title = F::app()->wg->Title;
 
 		$isArticlePage = (
-			$title instanceof Title
+			is_object($title)
 			&& $title->getArticleId() != 0
 			&& $title->getNamespace() == 0
 			&& !self::isMainPage()
-			&& !self::isEditPage()
 		);
 
 		return $isArticlePage;
-	}
-
-	/**
-	 * Check if current page is edit, formedit, history or submit
-	 *
-	 * @return bool
-	 */
-	public static function isEditPage() {
-		global $wgRequest;
-
-		return in_array(
-			$wgRequest->getVal( 'action', 'view' ),
-			array( 'edit', 'formedit' , 'history' , 'submit' )
-		);
 	}
 
 	/**
@@ -104,13 +69,12 @@ class WikiaPageType {
 	 * @return bool
 	 */
 	public static function isSearch() {
-		$title = self::getTitle();
+		$title = F::app()->wg->Title;
 
-		$searchPageNames = array( 'Search', 'WikiaSearch' );
-		$pageNames = SpecialPageFactory::resolveAlias( $title->getDBkey() );
+		$searchPageNames = array('Search', 'WikiaSearch');
+		$pageNames = SpecialPageFactory::resolveAlias($title->getDBkey());
 
-		return ( $title instanceof Title ) && $title->isSpecialPage()
-			&& in_array( array_shift( $pageNames ), $searchPageNames );
+		return -1 === $title->getNamespace() && in_array(array_shift($pageNames), $searchPageNames);
 	}
 
 	/**
@@ -119,9 +83,9 @@ class WikiaPageType {
 	 * @return bool
 	 */
 	public static function isFilePage() {
-		$title = self::getTitle();
+		global $wgTitle;
 
-		return ( $title instanceof Title ) && NS_FILE === $title->getNamespace();
+		return !empty($wgTitle) && NS_FILE === $wgTitle->getNamespace();
 	}
 
 	/**
@@ -130,11 +94,11 @@ class WikiaPageType {
 	 * @return bool
 	 */
 	public static function isForum() {
-		$title = self::getTitle();
+		$wg = F::app()->wg;
 
 		return (
-			( defined( 'NS_FORUM' ) && $title instanceof Title && $title->getNamespace() === NS_FORUM ) // old forum
-			|| ( F::app()->wg->EnableForumExt && ForumHelper::isForum() )                               // new forum
+			(defined('NS_FORUM') && $wg->Title && $wg->Title->getNamespace() === NS_FORUM) // old forum
+			|| ($wg->EnableForumExt && ForumHelper::isForum())                             // new forum
 		);
 	}
 
@@ -144,9 +108,10 @@ class WikiaPageType {
 	 * @return bool
 	 */
 	public static function isExtra() {
-		$title = self::getTitle();
+		$title = F::app()->wg->Title;
+		$extraNamespaces = F::app()->wg->ExtraNamespaces;
 
-		return $title instanceof Title && array_key_exists( $title->getNamespace(), F::app()->wg->ExtraNamespaces );
+		return array_key_exists($title->getNamespace(), $extraNamespaces);
 	}
 
 	/**
@@ -155,21 +120,21 @@ class WikiaPageType {
 	 * @return bool
 	 */
 	public static function isContentPage() {
-		$title = self::getTitle();
+		$title = F::app()->wg->Title;
 
 		$contentNamespaces = array_merge(
 			F::app()->wg->ContentNamespaces,
-			array( NS_MAIN, NS_IMAGE, NS_CATEGORY )
+			array(NS_MAIN, NS_IMAGE, NS_CATEGORY)
 		);
 
 		// not a content page if we're on action page
-		if ( self::isActionPage() ) {
+		if (self::isActionPage()) {
 			return false;
 		}
 
 		// actual content namespace checked along with hardcoded override (main, image & category)
 		// note this is NOT used in isMainPage() since that is to ignore content namespaces
-		return ( $title instanceof Title && in_array( $title->getNamespace(), $contentNamespaces ) );
+		return (is_object($title) && in_array($title->getNamespace(), $contentNamespaces));
 	}
 
 	/**
@@ -182,8 +147,8 @@ class WikiaPageType {
 		$request = F::app()->wg->Request;
 
 		return (
-			$request->getVal( 'action', 'view' ) !== 'view'
-			|| $request->getVal( 'diff' ) !== null
+			$request->getVal('action', 'view') !== 'view'
+			|| $request->getVal('diff') !== null
 		);
 	}
 
@@ -204,9 +169,9 @@ class WikiaPageType {
 	 * @return bool
 	 */
 	public static function isWikiaHubMain() {
-		$title = self::getTitle();
+		global $wgTitle;
 		$mainPageName = trim( str_replace( '_', ' ', wfMessage( 'mainpage' )->inContentLanguage()->text() ) );
-		$isMainPage = ( strcasecmp( $mainPageName, $title->getText() ) === 0 ) && $title->getNamespace() === NS_MAIN;
+		$isMainPage = ( strcasecmp( $mainPageName, $wgTitle->getText() ) === 0 ) && $wgTitle->getNamespace() === NS_MAIN;
 
 		return ( self::isWikiaHub() && $isMainPage );
 	}

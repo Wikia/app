@@ -29,20 +29,3 @@ $aliases['pl'] = array(
 $aliases['es'] = array(
     'Connect'    => array( 'Conectar', 'Connect', 'ConnectAccount' ),
 );
-
-// begin wikia change
-// VOLDEV-94, VOLDEV-97
-/**
- * Korean (한국어)
- */
-$aliases['ko'] = array(
-    'Connect'	=> array( '연동하기' ),
-);
-
-/**
- * Vietnamese (Tiếng Việt)
- */
-$aliases['vi'] = array(
-    'Connect'	=> array( 'Kết_nối' ),
-);
-// end wikia change

@@ -1,64 +1,40 @@
 <?php
 /**
  * Aliases for special pages of Blogs extension.
- *
- * @file
- * @ingroup Extensions
  */
 
 $specialPageAliases = array();
 
-/**
- * English (English)
+/** English
  */
 $specialPageAliases['en'] = array(
-	'CreateBlogPage'	=> array( 'CreateBlogPage' ),
-	'CreateBlogListingPage'	=> array( 'CreateBlogListingPage' ),
+	'CreateBlogPage'        => array( 'CreateBlogPage' ),
+	'CreateBlogListingPage' => array( 'CreateBlogListingPage' ),
 );
 
-/**
- * German (Deutsch)
+/** German (Deutsch)
  */
 $specialPageAliases['de'] = array(
-	'CreateBlogPage'	=> array( 'Blog-Beitrag_erstellen' ),
-	'CreateBlogListingPage'	=> array( 'Blog-Aggregation_erstellen' ),
+	'CreateBlogPage' => array( 'Blog-Beitrag_erstellen' , 'CreateBlogPage' ),
+	'CreateBlogListingPage' => array( 'Blog-Aggregation_erstellen', 'CreateBlogListingPage' ),
 );
 
-/**
- * Spanish (Espanol)
- */
-$specialPageAliases['es'] = array(
-	'CreateBlogPage'	=> array( 'PublicarEnBlog' ),
-	'CreateBlogListingPage'	=> array( 'CrearListaDeBlogs' ),
-);
-
-/**
- * Italian (Italiano)
- */
-$specialPageAliases['it'] = array(
-	'CreateBlogPage'	=> array( 'CreaNuovoPost' ),
-);
-
-/**
- * Korean (한국어)
- */
-$specialPageAliases['ko'] = array(
-	'CreateBlogPage'	=> array( '블로그글쓰기' ),
-	'CreateBlogListingPage'	=> array( '블로그글목록만들기' ),
-);
-
-/**
- * Polish (Polski)
+/** Polish (Polski)
  */
 $specialPageAliases['pl'] = array(
-	'CreateBlogPage'	=> array( 'Utwórz wpis na blogu' ),
-	'CreateBlogListingPage'	=> array( 'Utwórz listę wpisów na blogach' ),
+	'CreateBlogPage'	=> array( 'Utwórz wpis na blogu', 'CreateBlogPage' ),
+	'CreateBlogListingPage' => array( 'Utwórz listę wpisów na blogach', 'CreateBlogListingPage' )
 );
 
-/**
- * Vietnamese (Tiếng Việt)
+/** Spanish (Espanol)
  */
-$specialPageAliases['vi'] = array(
-	'CreateBlogPage'	=> array( 'Tạo_blog' ),
-	'CreateBlogListingPage'	=> array( 'Tạo_danh_sách_blog' ),
+$specialPageAliases['es'] = array(
+	'CreateBlogPage'	=> array( 'PublicarEnBlog', 'CreateBlogPage' ),
+	'CreateBlogListingPage' => array( 'CrearListaDeBlogs', 'CreateBlogListingPage' )
+);
+
+/** Italian (Italiano)
+ */
+$specialPageAliases['it'] = array(
+	'CreateBlogPage'	=> array( 'CreaNuovoPost', 'CreateBlogPage' )
 );

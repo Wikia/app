@@ -9,9 +9,7 @@ describe("scrollToLink", function() {
 					return {};
 				}
 			},
-			setTimeout: function(func, delay) {
-				func();
-			},
+			setTimeout: function() {},
 			location: {
 				hash: '',
 				pathname: 'pathname'
@@ -122,7 +120,6 @@ describe("scrollToLink", function() {
 
 		testData.forEach(function(data) {
 			var result = scrollToLinkApi.handleScrollTo(data.params.hash, data.params.offset);
-
 			expect(result).toBe(data.result.success);
 			expect(windowMock.position.y).toBe(data.result.y);
 			expect(historyMock.state.url).toBe(data.result.url);

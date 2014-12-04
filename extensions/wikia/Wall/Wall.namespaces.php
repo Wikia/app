@@ -78,15 +78,6 @@ $namespaces['ja'] = array(
 );
 
 /**
- * Korean (한국어)
- */
-$namespaces['ko'] = array(
-	NS_USER_WALL			=> '메시지 담벼락',
-	NS_USER_WALL_MESSAGE		=> '게시글',
-	NS_USER_WALL_MESSAGE_GREETING	=> '메시지 담벼락 환영',
-);
-
-/**
  * Dutch (Nederlands)
  */
 $namespaces['nl'] = array(
@@ -138,15 +129,6 @@ $namespaces['ru'] = array(
 	NS_USER_WALL			=> 'Стена_обсуждения',
 	NS_USER_WALL_MESSAGE		=> 'Тема',
 	NS_USER_WALL_MESSAGE_GREETING	=> 'Приветствие_стены_обсуждения',
-);
-
-/**
- * Vietnamese (Tiếng Việt)
- */
-$namespaces['vi'] = array(
-	NS_USER_WALL			=> 'Tường_tin_nhắn',
-	NS_USER_WALL_MESSAGE		=> 'Luồng',
-	NS_USER_WALL_MESSAGE_GREETING	=> 'Thông_điệp_Tường_tin_nhắn',
 );
 
 /**

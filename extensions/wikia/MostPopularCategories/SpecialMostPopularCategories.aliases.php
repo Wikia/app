@@ -1,50 +1,21 @@
 <?php
-/**
- * Aliases for special pages
- *
- * @file
- * @ingroup Extensions
- */
-
 $specialPageAliases = array();
  
-/**
- * English (English)
- */
+/** English */
 $specialPageAliases['en'] = array(
-	'Mostpopularcategories' => array( 'Mostpopularcategories' ),
+    'Mostpopularcategories' => array( 'Mostpopularcategories' ),
 );
-/**
- * German (Deutsch)
- */
+/** German */
 $specialPageAliases['de'] = array(
-	'Mostpopularcategories' => array( 'BeliebtesteKategorien' ),
+    'Mostpopularcategories' => array( 'BeliebtesteKategorien', 'Mostpopularcategories' ),
 );
 
-/**
- * Spanish (Español)
- */
-$specialPageAliases['es'] = array(
-   	'Mostpopularcategories' => array( 'CategoríasMásPopulares' ),
-);
-
-/**
- * Korean (한국어)
- */
-$specialPageAliases['ko'] = array(
-	'Mostpopularcategories' => array( '많이쓰는분류' ),
-);
-
-/**
- * Polish (Polski)
- */
+/** Polish */
 $specialPageAliases['pl'] = array(
-	'Mostpopularcategories' => array( 'Najpopularniejsze kategorie' ),
+	'Mostpopularcategories' => array( 'Najpopularniejsze kategorie', 'Mostpopularcategories' ),
 );
 
-/**
- * Vietnamese (Tiếng Việt)
- */
-$specialPageAliases['vi'] = array(
-	'Mostpopularcategories' => array( 'Thể_loại_phổ_biến_nhất' ),
+/** Spanish */
+$specialPageAliases['es'] = array(
+    'Mostpopularcategories' => array( 'CategoríasMásPopulares', 'Mostpopularcategories' ),
 );

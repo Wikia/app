@@ -36,7 +36,7 @@ class SwiftStorageTest extends WikiaBaseTest {
 		$swift = \Wikia\SwiftStorage::newFromContainer(self::CONTAINER);
 
 		// upload the file
-		$localFile = "{$IP}/skins/shared/images/sprite.png";
+		$localFile = "{$IP}/skins/oasis/images/sprite.png";
 		$remoteFile = sprintf('Test_%s.png', time());
 
 		$this->assertFalse($swift->exists($remoteFile), 'File should not exist before the upload');

@@ -1,11 +1,5 @@
 <?
 class FacebookClientTest extends WikiaBaseTest {
-
-	public function setUp() {
-		$this->setupFile =  __DIR__ . '/../FacebookClient.setup.php';
-		parent::setUp();
-	}
-
 	public function testGetReturnToUrl() {
 		$cb = '123';
 		$actualQueryString = '&fbconnected=1&cb=' . $cb;

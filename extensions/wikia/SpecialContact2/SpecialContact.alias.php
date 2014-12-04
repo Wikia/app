@@ -1,58 +1,27 @@
 <?php
-/**
- * Aliases for special pages
- *
- * @file
- * @ingroup Extensions
- */
-
 $specialPageAliases = array();
  
-/**
- * English (English)
- */
+/** English */
 $specialPageAliases['en'] = array(
-    'Contact' => array(  'Contact', 'ContactForm', 'ContactWikia' ),
+    'Contact' => array(  'Contact', 'ContactForm', 'ContactWikia',  ),
 );
  
-/**
- * German (Deutsch)
- */
+/** German */
 $specialPageAliases['de'] = array(
-    'Contact' => array(  'Kontakt' ),
+    'Contact' => array(  'Kontakt',  ),
 );
 
-/**
- * Spanish (Español)
- */
-$specialPageAliases['es'] = array(
-    'Contact' => array(  'Contactar' ),
-);
-
-/**
- * Italian (Italiano)
- */
+/** Italian */
 $specialPageAliases['it'] = array(
 	'Contact' => array( 'Contatta' ),
 );
 
-/**
- * Korean (한국어)
- */
-$specialPageAliases['ko'] = array(
-	'Contact' => array( '문의' ),
+/** Spanish */
+$specialPageAliases['es'] = array(
+    'Contact' => array(  'Contactar',  ),
 );
 
-/**
- * Polish (Polski)
- */
+/** Polish */
 $specialPageAliases['pl'] = array(
 	'Contact' => array( 'Kontakt' ),
-);
-
-/**
- * Vietnamese (Tiếng Việt)
- */
-$specialPageAliases['vi'] = array(
-	'Contact' => array( 'Liên_hệ' ),
 );

@@ -1,24 +1,5 @@
 @import 'variables';
 
-@function calculate-columns-width($breakpoint, $columns-count, $aditional-width: 0px) {
-	$width: 0;
-
-	@if $breakpoint == small {
-		$width: round($columns-count * ($small-grid-column + $small-grid-gutter) - $small-grid-gutter + $aditional-width);
-	}
-
-	@if $breakpoint == medium {
-		$width: round($columns-count * ($medium-grid-column + $medium-grid-gutter) - $medium-grid-gutter + $aditional-width);
-	}
-
-	@if $breakpoint == large {
-		$width: round($columns-count * ($large-grid-column + $large-grid-gutter) - $large-grid-gutter + $aditional-width);
-	}
-
-	@return $width;
-}
-
-
 // We use this to do clear floats
 @mixin clearfix {
 	&:before, &:after { content: ' '; display: table; }
@@ -68,15 +49,43 @@
 // calculate column width in pixels for different screen sizes
 // $breakpoint: one of 'small', 'medium', 'large'
 @mixin grid-column-width($breakpoint, $columns-count, $aditional-width: 0px) {
-	width: calculate-columns-width($breakpoint, $columns-count, $aditional-width);
-}
+	@if $breakpoint == small {
+		width: round($columns-count * ($small-grid-column + $small-grid-gutter) - $small-grid-gutter + $aditional-width);
+	}
 
+	@if $breakpoint == medium {
+		width: round($columns-count * ($medium-grid-column + $medium-grid-gutter) - $medium-grid-gutter + $aditional-width);
+	}
+
+	@if $breakpoint == large {
+		width: round($columns-count * ($large-grid-column + $large-grid-gutter) - $large-grid-gutter + $aditional-width);
+	}
+}
 @mixin grid-column-max-width($breakpoint, $columns-count, $aditional-width: 0px) {
-	max-width: calculate-columns-width($breakpoint, $columns-count, $aditional-width);
-}
+	@if $breakpoint == small {
+		max-width: round($columns-count * ($small-grid-column + $small-grid-gutter) - $small-grid-gutter + $aditional-width);
+	}
 
+	@if $breakpoint == medium {
+		max-width: round($columns-count * ($medium-grid-column + $medium-grid-gutter) - $medium-grid-gutter + $aditional-width);
+	}
+
+	@if $breakpoint == large {
+		max-width: round($columns-count * ($large-grid-column + $large-grid-gutter) - $large-grid-gutter + $aditional-width);
+	}
+}
 @mixin grid-position($breakpoint, $columns-count, $position: 'left', $aditional-width: 0px) {
-	#{$position}: calculate-columns-width($breakpoint, $columns-count, $aditional-width);
+	@if $breakpoint == small {
+		#{$position}: round($columns-count * ($small-grid-column + $small-grid-gutter) - $small-grid-gutter + $aditional-width);
+	}
+
+	@if $breakpoint == medium {
+		#{$position}: round($columns-count * ($medium-grid-column + $medium-grid-gutter) - $medium-grid-gutter + $aditional-width);
+	}
+
+	@if $breakpoint == large {
+		#{$position}: round($columns-count * ($large-grid-column + $large-grid-gutter) - $large-grid-gutter + $aditional-width);
+	}
 }
 
 @mixin grid-column-padding() {
@@ -107,50 +116,4 @@
 		padding-left: $small-content-padding;
 		padding-right: $small-content-padding;
 	}
-}
-
-@mixin proportional-media-height($width) {
-	height: round($width * 9 / 16);
-}
-
-@mixin proportional-media-top($width, $additional-width: 0px) {
-	top: round($width * 9 / 16) + $additional-width;
-}
-
-@mixin proportional-grid-media-height($breakpoint, $columns-count, $additional-width: 0px) {
-	@include proportional-media-height(calculate-columns-width($breakpoint, $columns-count, $additional-width));
-}
-
-@mixin proportional-grid-media-top($breakpoint, $columns-count, $additional-width: 0px) {
-	@include proportional-media-top(calculate-columns-width($breakpoint, $columns-count, $additional-width));
-}
-
-@mixin venus-icons-font {
-	font-family: 'venus-icons-font' !important;
-	-moz-osx-font-smoothing: grayscale;
-	-webkit-font-smoothing: antialiased;
-	font-style: normal !important;
-	font-weight: normal !important;
-	font-variant: normal !important;
-	speak: none;
-	text-transform: none !important;
-}
-
-@mixin venus-icon($character) {
-	@include venus-icons-font;
-	content: $character;
-}
-
-// edit button has an icon from font glyph therefore it's width & height are equal to font's size
-$edit-button-size: 22px;
-
-@mixin edit-button {
-	@include venus-icon($venus-icon-edit-negative);
-
-	display: inline-block;
-	font-size: $edit-button-size;
-	height: $edit-button-size;
-	position: absolute;
-	right: 100%;
-	width: $edit-button-size;
 }

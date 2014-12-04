@@ -64,10 +64,6 @@ $specialPageAliases = array(
 	'Booksources'               => array( 'Nguồn_sách' ),
 	'BrokenRedirects'           => array( 'Đổi_hướng_sai' ),
 	'Categories'                => array( 'Thể_loại' ),
-	// begin wikia change
-	// VOLDEV-94
-	'ChangeEmail'				=> array( 'Đổi_thư_điện_tử' ),
-	// end wikia change
 	'ChangePassword'            => array( 'Đổi_mật_khẩu' ),
 	'ComparePages'              => array( 'So_sánh_trang' ),
 	'Confirmemail'              => array( 'Xác_nhận_thư' ),

@@ -8,51 +8,27 @@
 
 $specialPageAliases = array();
 
-/**
- * English (English)
- */
+/** English */
 $specialPageAliases['en'] = array(
 	'WikiFeatures' => array( 'WikiFeatures' ),
 );
 
-/**
- * German (Deutsch)
- */
+/** German (Deutsch) */
 $specialPageAliases['de'] = array(
 	'WikiFeatures' => array( 'WikiFunktionen' ),
 );
 
-/**
- * Spanish (Espanol)
- */
-$specialPageAliases['es'] = array(
-	'WikiFeatures' => array( 'FuncionalidadesDeWikia' ),
-);
-
-/**
- * Italian (Italiano)
- */
-$specialPageAliases['it'] = array(
-	'WikiFeatures' => array( 'WikiFunzioni' ),
-);
-
-/**
- * Korean (한국어)
- */
-$specialPageAliases['ko'] = array(
-	'WikiFeatures' => array( '위키기능' ),
-);
-
-/**
- * Polish (Polski)
- */
+/** Polish (Polski) */
 $specialPageAliases['pl'] = array(
-	'WikiFeatures' => array( 'Rozszerzenia wiki' ),
+	'WikiFeatures' => array( 'Rozszerzenia wiki', 'WikiFeatures' ),
 );
 
-/**
- * Vietnamese (Tiếng Việt)
- */
-$specialPageAliases['vi'] = array(
-	'WikiFeatures' => array( 'Tính_năng_wiki' ),
+/** Italian (Italiano) */
+$specialPageAliases['it'] = array(
+	'WikiFeatures' => array( 'WikiFunzioni', 'WikiFeatures' ),
+);
+
+/** Spanish (Espanol) */
+$specialPageAliases['es'] = array(
+	'WikiFeatures' => array( 'FuncionalidadesDeWikia', 'WikiFeatures' ),
 );

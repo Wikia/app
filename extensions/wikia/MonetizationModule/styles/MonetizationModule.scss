@@ -1,29 +1,8 @@
 @import 'skins/shared/color';
 @import 'skins/oasis/css/core/layout';
-@import 'skins/shared/mixins/box-shadow';
-@import 'skins/shared/mixins/clearfix';
-@import 'skins/shared/mixins/gradient';
 
 .monetization-module {
 	clear: left;
-
-	&.adunit {
-		margin-bottom: 50px;
-		margin-top: 24px;
-	}
-
-	&.ecommerce {
-		@include linear-gradient($color-module-shadow, top, $color-page, 50%, $color-module-shadow, 100%);
-		border: 1px solid $color-page-border;
-		clear: both;
-		line-height: 1.8em;
-		margin: 0;
-		padding: 10px;
-	}
-
-	&.one {
-		padding: 5px;
-	}
 
 	.ad-header {
 		color: $color-alternate-text;
@@ -83,146 +62,75 @@
 		}
 	}
 
-	.affiliate-wrapper {
-		height: 285px;
-		overflow: hidden;
 
-		&.one {
-			border: 1px solid $color-page-border;
-			height: 182px;
-		}
-	}
-
-	.affiliate-header span {
-		border-bottom: 0;
-		color: #000;
-		font-size: 30px;
-		margin-bottom: 0;
-		margin-top: 0;
-		overflow: hidden;
-		padding-bottom: 0;
-		padding-top: 15px;
-	}
-
-	.affiliate-header.one {
-		background-color: #000;
-		color: #fff;
-		float: left;
-		height: 100%;
-		padding: 0;
-		text-align: center;
-		width: 30%;
-
-		span {
-			color: #fff;
-			font-size: 14px;
-			position: relative;
-			top: 35%;
-		}
+	h1 {
+		display: block;
+		font-size: 20px;
+		margin-bottom: 13px;
 	}
 
 	.affiliate {
-		float: left;
-		margin-bottom: 50px;
-		margin-right: 40px;
-		padding-bottom: 4px;
-		padding-right: 0;
-		padding-top: 8px;
-		width: 160px;
-
-		&.one {
-			background-color: #f6f6f6;
-			float: initial;
-			height: 100%;
-			margin: 0 0 0 30%;
-			padding: 10px;
-			width: 70%;
-		}
-	}
-
-	.product-thumb {
-		padding: 0;
-
-		img {
+		.prod-thumb img {
 			border: 1px solid #ccc;
 			float: left;
-			height: 160px;
-			width: 160px;
+			height: 70px;
+			padding: 1px;
+			width: 70px;
+		}
+
+		.placard {
+			color: $color-text;
+			float: left;
+			font-size: 14px;
+			font-weight: bold;
+			line-height: 1.4;
+			overflow: visible;
+			padding-left: 10px;
+			white-space: normal;
+			width: 60%;
+		}
+
+		.vendor {
+			float: left;
+			margin: 10px 0 0;
+			margin-bottom: 35px;
+			padding: 0 6px 0 0;
+			width: 95%;
+		}
+
+		.vendor-logo {
+			background-image: url('/extensions/wikia/MonetizationModule/images/logo_amazon.png');
+			float: left;
+			height: 12px;
+			padding-bottom: 3px;
+			padding-top: 7px;
+			width: 88px;
+		}
+
+		.vendor-button {
+			float: right;
+			margin: 2px 0 0 10px;
+		}
+
+		.vendor-price {
+			float: right;
+			font-size: 14px;
+			font-weight: bold;
+			margin: 3px 0 1px;
 		}
 	}
+}
 
-	.product-name {
-		border-bottom: 1px solid #ccc;
-		border-left: 1px solid #ccc;
-		border-right: 1px solid #ccc;
-		-webkit-box-orient: vertical;
-		display: -webkit-box;
+.WikiaMainContent {
+	.affiliate {
 		float: left;
-		font-size: 14px;
-		height: 2.4em;
-		-webkit-line-clamp: 2;
-		line-height: 1.4;
-		overflow: hidden;
-		padding: 5px 5px 7px;
-		text-overflow: ellipsis;
-		white-space: normal;
-		width: 150px;
-
-		&.one {
-			border: 0;
-			float: initial;
-			margin: 0;
-			padding: 5px 10px;
-			width: auto;
-		}
+		min-width: 200px;
+		padding: 8px 0 4px 6px;
+		width: 32%;
 	}
 
-	.product-price {
-		background-color: #5d98d4;
-		border-radius: 3px;
-		color: #000;
-		display: inline-block;
-		font-size: 14px;
-		font-weight: bold;
-		height: 20px;
-		left: 85px;
-		padding: 6px 12px;
-		position: relative;
-		text-align: center;
-		top: -100px;
-		width: 60px;
-
-		&:hover {
-			color: #000;
-			text-decoration: underline;
-		}
-
-		&.one {
-			background-color: #f09512;
-			border-radius: 0;
-			color: #fff;
-			left: 10px;
-			top: 85px;
-		}
-	}
-
-	.amazon-logo {
-		@if $is-dark-wiki {
-			background-image: url('/extensions/wikia/MonetizationModule/images/amazon-logo-white.png');
-		} @else {
-			background-image: url('/extensions/wikia/MonetizationModule/images/amazon-logo-black.png');
-		}
-		background-repeat: no-repeat;
-		background-size: cover;
-		display: inline-block;
-		height: 34px;
-		margin-left: 6px;
-		top: 16px;
-		vertical-align: top;
-		width: 160px;
-
-		&.one {
-			background-image: url('/extensions/wikia/MonetizationModule/images/amazon-logo-white.png');
-		}
+	[data-mon-type=adunit] {
+		margin-bottom: 50px;
+		margin-top: 24px;
 	}
 }

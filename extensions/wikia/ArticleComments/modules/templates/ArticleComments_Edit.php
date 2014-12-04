@@ -10,7 +10,7 @@
 			))->render()
 		?>
 		<? endif ?>
-		<form action="<?= $articleFullUrl ?>" method="post" id="article-comm-form-<?= $articleId ?>" class="article-comm-form">
+		<form action="<?= $articleFullUrl ?>" method="post" id="article-comm-form-<?= $articleId ?>">
 			<input type="hidden" name="wpArticleId" value="<?=$articleId?>" />
 			<div class="article-comm-input-text">
 				<? if ( $isMiniEditorEnabled ): ?>

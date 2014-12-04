@@ -3,14 +3,9 @@
 @import 'skins/shared/mixins/clearfix';
 @import 'skins/shared/mixins/gradient';
 @import 'skins/shared/color';
-@import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/mixins';
-@import 'extensions/wikia/Venus/styles/typographyMixins';
+@import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/z-index';
-
-// style required for Create Page Modal
-// TODO: should be lazy loaded CON-2169
-@import '/extensions/wikia/CreatePage/css/CreatePage.css';
 
 $third-level-tint: if(lightness($color-buttons) < 50, #fff, #000);
 $third-level-color: mix($color-buttons, $third-level-tint, 83%); // ~20% of tint
@@ -21,8 +16,7 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 }
 
 .local-navigation {
-	@include font-size-xxs;
-	border-bottom: 1px solid $color-page-border-subtle;
+	background-color: $color-page;
 	height: 80px;
 	position: relative;
 	white-space: nowrap;
@@ -45,8 +39,7 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 	.wordmark-container {
 		display: inline-block;
 		height: 100%;
-		margin: 0;
-		padding: 0 70px 0 0;
+		padding: 0 40px 0 30px;
 		vertical-align: middle;
 
 		> span {
@@ -68,17 +61,14 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 
 		&.large {
 			font-size: 27px;
-			line-height: 31px;
 		}
 
 		&.medium {
 			font-size: 24px;
-			line-height: 28px;
 		}
 
 		&.small {
 			font-size: 20px;
-			line-height: 23px;
 		}
 	}
 
@@ -142,15 +132,14 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 		padding: 20px 0 0;
 
 		> li {
-			background-clip: padding-box;
 			display: block;
 			float: left;
 			height: 100%;
 			position: relative;
 
 			> a {
-				@include font-size-s;
 				display: block;
+				font-size: 15px;
 				font-weight: bold;
 				height: 100%;
 				line-height: 45px;
@@ -162,12 +151,12 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 			}
 
 			&.active {
-				background-color: $color-buttons;
-				border-color: transparent;
+				background: $color-buttons;
+				border-color: $color-page;
 				color: $color-button-text;
 
 				+ li {
-					border-color: transparent;
+					border-color: $color-page;
 				}
 
 				.second-level-menu {
@@ -191,9 +180,9 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 			span::after {
 				@include arrow(4px, rgba($color-button-text, .5), 'right');
 				content: ' ';
-				position: absolute;
-				right: -20px;
-				z-index: 1;
+				float: right;
+				margin: 1px -20px 0 0;
+				position: static;
 			}
 		}
 
@@ -207,7 +196,6 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 
 		&.right {
 			.has-more {
-				padding-right: 20px;
 				padding-left: 40px;
 
 				span {
@@ -217,8 +205,8 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 
 				span::after {
 					@include arrow(4px, rgba($color-button-text, .5), 'left');
-					left: -20px;
-					right: auto;
+					float: left;
+					margin: 1px 0 0 -20px;
 				}
 			}
 
@@ -285,9 +273,57 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 		}
 	}
 
-	.dropdown {
-		line-height: 14px;
+	.contribute-container {
+		color: $color-button-text;
+		display: inline-block;
+		padding-top: 20px;
+		position: absolute;
+		right: 30px;
 
+		.contribute-button {
+			background-color: $color-buttons;
+			cursor: pointer;
+			display: table-cell;
+			font-size: 12px;
+			font-weight: bold;
+			height: 40px;
+			padding: 0 15px 0 20px;
+			text-transform: uppercase;
+			vertical-align: middle;
+
+			&::after {
+				@include arrow(5px, rgba($color-button-text, .5));
+				content: ' ';
+				display: inline-block;
+				margin: -2px 0 0 15px;
+			}
+		}
+
+		.dropdown {
+			min-width: 100%;
+
+			a:hover {
+				font-weight: bold;
+			}
+		}
+
+		&.active {
+			.contribute-button {
+				border-bottom: 1px solid rgba($color-button-text, .2);
+				height: 41px;
+
+				&::after {
+					border-top-color: $color-button-text;
+				}
+			}
+
+			.dropdown {
+				visibility: visible;
+			}
+		}
+	}
+
+	.dropdown {
 		.second-level-row,
 		.third-level-row {
 			a {
@@ -310,18 +346,6 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 			@include linear-gradient(transparent, left, rgba($color-buttons, 0), 0%, rgba($color-buttons, 1), 100%);
 		}
 
-		.second-level-row .has-more > span::before {
-			@include linear-gradient(transparent, left, rgba($color-buttons, 0), 0%, rgba($color-buttons, 1), 40%);
-
-			content: '';
-			display: block;
-			height: 100%;
-			position: absolute;
-			right: -40px;
-			width: 45px;
-			z-index: 1;
-		}
-
 		.third-level-row a::before {
 			@include linear-gradient(transparent, left, rgba($third-level-color, 0), 0%, rgba($third-level-color, 1), 100%);
 		}
@@ -337,13 +361,6 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 				left: 0;
 				right: auto;
 			}
-
-			.second-level-row .has-more > span::before {
-				@include linear-gradient(transparent, right, rgba($color-buttons, 0), 0%, rgba($color-buttons, 1), 40%);
-
-				left: -40px;
-				right: auto;
-			}
 		}
 	}
 }
@@ -354,7 +371,7 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 			padding: 0 30px 0 24px;
 		}
 
-		.first-level-menu > li:last-child {
+		.contribute-container {
 			display: none;
 		}
 
@@ -373,6 +390,10 @@ $third-level-color-hover: mix($color-buttons, $third-level-tint, 71%); // ~40% o
 	.local-navigation {
 		.wordmark-container {
 			padding-left: 32px;
+		}
+
+		.contribute-container {
+			right: 53px;
 		}
 
 		.dropdown {

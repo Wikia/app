@@ -1,9 +1,10 @@
-@import 'extensions/wikia/Venus/styles/variables';
-@import 'extensions/wikia/Venus/styles/mixins';
+@import '../../Venus/styles/mixins';
+@import '../../Venus/styles/variables';
+@import 'skins/shared/mixins/blackout';
 @import 'GlobalNavigationColors';
 
 .global-navigation {
-	background-color: $global-wikia-background-color;
+	background-color: $nav-background-color;
 	border-bottom: 1px solid $nav-border-color;
 	color: $nav-foreground-dark-color;
 	position: fixed;
@@ -17,13 +18,9 @@
 	}
 }
 
-.ve .global-navigation {
-	position: absolute;
-	z-index: $global-navigation-z-index - 1;
-}
-
-.global-navigation.static {
-	position: absolute;
+.ve .global-navigation,
+.position-static {
+	position: static;
 }
 
 .global-navigation-item {
@@ -36,7 +33,7 @@
 .global-navigation-link {
 	color: $nav-border-color;
 	display: table-cell;
-	font-size: $font-size-base-big-screen;
+	font-size: 18px;
 	font-weight: bold;
 	height: $global-navigation-height;
 	vertical-align: middle;
@@ -44,10 +41,6 @@
 
 .wikia-logo-container {
 	@include grid-column-width('medium', 2, $medium-content-padding);
-
-	.wikia-logo {
-		padding: 0 0 0 $medium-content-padding - $content-border-width;
-	}
 }
 
 .start-wikia-container {
@@ -60,18 +53,34 @@
 
 	&:hover {
 		background-color: $nav-foreground-dark-color;
-		color: $global-wikia-background-color;
+		color: $nav-background-color;
 		text-decoration: none;
+	}
+}
+
+.wikia-logo {
+	padding: 0 0 0 20px;
+
+	img {
+		background-image: url('/extensions/wikia/GlobalNavigation/images/wikia_logo.svg'); /* base64 */
+		background-position: center;
+		background-repeat: no-repeat;
+	}
+}
+
+// TODO move it to layout.scss when Venus is enable globally
+
+.transparent-out {
+	@include blackout( rgba( 1, 1, 1, 0.0 ) );
+
+	&.visible {
+		z-index: $blackout-z-index;
 	}
 }
 
 @media #{$small-only} {
 	.wikia-logo-container {
 		@include grid-column-width('small', 3, $small-content-padding);
-
-		.wikia-logo {
-			padding: 0 9px 0 $small-content-padding + $small-grid-column-padding - $content-border-width;
-		}
 	}
 
 	.start-wikia-container {
@@ -88,15 +97,19 @@
 			display: none;
 		}
 	}
+
+	.wikia-logo {
+		padding-right: 15px;
+	}
 }
 
 @media #{$large-up} {
+	.wikia-logo {
+		padding: 0px 7px 0px 30px
+	}
+
 	.wikia-logo-container {
 		@include grid-column-width('large', 2, $large-content-padding);
-
-		.wikia-logo {
-			padding: 0 2px 0 $large-content-padding + $large-grid-column-padding - $content-border-width;
-		}
 	}
 
 	.start-wikia-container {
@@ -108,5 +121,9 @@
 	.global-navigation {
 		min-width: 767px;
 		position: relative;
+	}
+
+	.wikia-page {
+		padding-top: 0;
 	}
 }

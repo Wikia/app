@@ -9,7 +9,7 @@
 			))->render()
 		?>
 		<? endif ?>
-		<form action="#" method="post" id="article-comm-reply-form-<?= $commentId ?>" class="article-comm-form">
+		<form action="#" method="post" id="article-comm-reply-form-<?= $commentId ?>">
 			<input type="hidden" name="wpParentId" value="<?= $commentId ?>" />
 			<div class="article-comm-input-text">
 				<? if ( $isMiniEditorEnabled ): ?>

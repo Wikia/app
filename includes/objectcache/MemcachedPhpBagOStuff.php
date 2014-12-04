@@ -70,7 +70,7 @@ class MemcachedPhpBagOStuff extends BagOStuff {
 	/**
 	 * @param $key string
 	 * @param $value
-	 * @param $exptime int If it's equal to zero, the item will never expire!
+	 * @param $exptime int
 	 * @return bool
 	 */
 	public function set( $key, $value, $exptime = 0 ) {

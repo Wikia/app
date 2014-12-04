@@ -1,0 +1,70 @@
+.articleFeedback-table {
+	border: solid 1px #cccccc;
+	margin-bottom: 2em;
+}
+
+.articleFeedback-table caption {
+	text-align: left;
+	font-size: 1.6em;
+	margin-bottom: 0.5em;
+}
+
+.articleFeedback-table th {
+	padding-left: 0.75em;
+	padding-top: 0.25em;
+	padding-bottom: 0.25em;
+	text-align: left;
+}
+
+.articleFeedback-table td {
+	padding: 0.25em 0.75em;
+	border-top: solid 1px #eeeeee;
+}
+
+.articleFeedback-table td.articleFeedback-table-column-page,
+.articleFeedback-table td.articleFeedback-table-column-category {
+	text-align: left;
+}
+
+.articleFeedback-table td.articleFeedback-table-column-rating,
+.articleFeedback-table td.articleFeedback-table-column-average {
+	text-align: right;
+}
+
+/**
+ * Per ArticleFeedback meeting of 2011-05-06,
+ * disable colors for now. We may re-enable them
+ * later if found useful.
+ */
+/*
+.articleFeedback-table-column-score-0,
+.articleFeedback-table-column-score-1 {
+	background-color: #ffcccc;
+}
+
+
+.articleFeedback-table-column-score-2,
+.articleFeedback-table-column-bad {
+	background-color: #ffcc99;
+}
+
+.articleFeedback-table-column-score-3 {
+	background-color: #ffff99;
+}
+
+.articleFeedback-table-column-score-4,
+.articleFeedback-table-column-good {
+	background-color: #99ff99;
+}
+.articleFeedback-table-column-score-5 {
+	background-color: #55ff55;
+}
+*/
+
+.articleFeedback-table-column-bad {
+	background-color: #ffcc99;
+}
+
+.articleFeedback-table-column-good {
+	background-color: #99ff99;
+}

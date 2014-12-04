@@ -11,7 +11,7 @@
 		var articleId = window.wgArticleId,
 			loaded = false,
 			namespace = 'categorySelectView',
-			$wrapper = $( '#articleCategories' );
+			$wrapper = $( '#WikiaArticleCategories' );
 
 		// User can't edit, no need to bind anything
 		if ( !$wrapper.hasClass( 'userCanEdit' ) ) {
@@ -32,9 +32,7 @@
 					mw.loader.use( 'jquery.ui.sortable' ),
 					$.getResources([
 						wgResourceBasePath + '/resources/wikia/libraries/mustache/mustache.js',
-						wgResourceBasePath + '/extensions/wikia/CategorySelect/js/CategorySelect.js',
-						wgResourceBasePath + '/resources/wikia/modules/uifactory.js',
-						wgResourceBasePath + '/resources/wikia/modules/uicomponent.js'
+						wgResourceBasePath + '/extensions/wikia/CategorySelect/js/CategorySelect.js'
 					])
 
 				).done(function( response ) {
@@ -49,15 +47,12 @@
 							items: '.new',
 							revert: 200
 						}
+
 					}).on( 'add', function( event, cs, data ) {
 						$wrapper
 							.find( '.last' )
 							.before( data.element );
 					}).on( 'click.' + namespace, '.cancel', function() {
-						track({
-							label: 'cancel-edit'
-						});
-
 						$wrapper
 							.removeClass( 'editMode' )
 							.trigger( 'reset' )
@@ -65,14 +60,9 @@
 							.remove();
 
 					}).on( 'click.' + namespace, '.save', function() {
-						track({
-							label: 'submit-save'
-						});
-
-						var $container = $wrapper.find( '.container' ).startThrobbing();
-
-						$( this ).attr( 'disabled', true );
-
+						var $container = $wrapper.find( '.container' ).startThrobbing(),
+							$saveButton = $( this ).attr( 'disabled', true );
+						
 						$.nirvana.sendRequest({
 							controller: 'CategorySelectController',
 							data: {
@@ -80,11 +70,14 @@
 								categories: $wrapper.data( 'categorySelect' ).getData( '.new' )
 							},
 							method: 'save'
+
 						}).done(function( response ) {
 							$container.stopThrobbing();
 
+							// TODO: don't use alert
 							if ( response.error ) {
-								throw 'Saving error: ' + response.error;
+								alert( response.error );
+
 							} else {
 								$wrapper
 									.removeClass( 'editMode' )
@@ -99,9 +92,10 @@
 									.val( '' );
 							}
 						});
+
 					}).on( 'update', function() {
 						var modified = $wrapper.find( '.category.new' ).length > 0;
-
+						
 						$wrapper
 							.toggleClass( 'modified', modified )
 							.find( '.save' )
@@ -110,15 +104,6 @@
 				});
 			}
 		});
-
-		/**
-		 * Helper method for tracking clicks on buttons like save or cancel
-		 */
-		var track = Wikia.Tracker.buildTrackingFunction( Wikia.trackEditorComponent, {
-			action: Wikia.Tracker.ACTIONS.CLICK,
-			category: 'category-tool',
-			trackingMethod: 'both'
-		})
 	});
 
 })( window, window.jQuery, window.mw );

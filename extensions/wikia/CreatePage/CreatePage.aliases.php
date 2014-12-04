@@ -1,57 +1,35 @@
 <?php
-/**
- * Aliases for special pages
- *
- * @file
- * @ingroup Extensions
- */
-
 $specialPageAliases = array();
-
 /**
- * English (English)
+ * English
  */
 $specialPageAliases['en'] = array(
-	'CreatePage' => array( 'CreatePage' ),
+    'CreatePage' => array( 'CreatePage' ),
 );
 /**
- * German (Deutsch)
+ * German
  */
 $specialPageAliases['de'] = array(
-	'CreatePage' => array( 'Seite_erstellen', 'Seiteerstellen', 'Seite_Erstellen', 'SiteErstellen' ),
+    'CreatePage' => array( 'Seite_erstellen', 'Seiteerstellen', 'Seite_Erstellen', 'SiteErstellen', 'CreatePage' ),
 );
 
 /**
- * Spanish (Español)
- */
-$specialPageAliases['es'] = array(
-	'CreatePage' => array( 'CrearPágina' ),
-);
-
-/**
- * Italian (Italiano)
+ * Italian
  */
 $specialPageAliases['it'] = array(
-	'CreatePage' => array( 'CreaPagina' ),
+	'CreatePage' => array( 'CreaPagina', 'CreatePage' ),
 );
 
 /**
- * Korean (한국어)
- */
-$specialPageAliases['ko'] = array(
-	'CreatePage' => array( '새문서만들기' ),
-);
-
-/**
- * Polish (Polski)
+ * Polish
  */
 $specialPageAliases['pl'] = array(
-	'CreatePage' => array( 'Utwórz_stronę' ),
+	'CreatePage' => array( 'Utwórz_stronę', 'CreatePage' ),
 );
 
 /**
- * Vietnamese (Tiếng Việt)
+ * Spanish
  */
-$specialPageAliases['vi'] = array(
-	'CreatePage' => array( 'Tạo_trang' ),
+$specialPageAliases['es'] = array(
+	'CreatePage' => array( 'CrearPágina', 'CreatePage' ),
 );

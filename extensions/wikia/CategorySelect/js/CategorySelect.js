@@ -231,7 +231,7 @@
 					if ( options.popover ) {
 						$.extend( self.popover.options, {
 							content: $.msg( 'categoryselect-error-duplicate-category-name', existing.name ),
-							placement: 'top',
+							placement: 'right',
 							type: 'error'
 						});
 
@@ -302,7 +302,7 @@
 						uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
 							var categoryEditModalConfig = {
 								vars: {
-									id: 'categorySelectEditModal',
+									id: 'CategorySelectEditModal',
 									size: 'small',
 									content: Mustache.render( template.content, data ),
 									title: cached.messages.categoryEdit,
@@ -703,7 +703,7 @@
 				}
 			},
 			autocomplete: {
-				appendTo: '.article-categories',
+				appendTo: '.CategorySelect',
 
 				// Non-standard
 				limit: 6

@@ -21,13 +21,13 @@ define('ext.wikia.adEngine.adDecoratorPageDimensions', [
 
 			if (adLogicPageDimensions.isApplicable(slotname)) {
 				adLogicPageDimensions.addSlot(slotname, function () {
-					if (eventDispatcher.trigger('ext.wikia.adEngine.adDecoratorPageDimensions fillInSlot', slot)) {
+					if(eventDispatcher.trigger('ext.wikia.adEngine.adDecoratorPageDimensions fillInSlot', slot)) {
 						fillInSlot(slot);
 					}
 				});
 
 				log(['decorated', slot, 'deferred'], 'debug', logGroup);
-				return function () { return; };
+				return function () {};
 			}
 
 			log(['decorated', slot, 'return same'], 'debug', logGroup);

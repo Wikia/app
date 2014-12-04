@@ -1,58 +1,34 @@
 <?php
-/**
- * Aliases for special pages
- *
- * @file
- * @ingroup Extensions
- */
-
 $specialPageAliases = array();
-
 /**
- * English (English)
+ * English
  */
 $specialPageAliases['en'] = array(
 	'Following' => array( 'Following' )
 );
-
 /**
- * German (Deutsch)
+ * German
  */
 $specialPageAliases['de'] = array(
-	'Following' => array( 'Verfolgen' ),
+	'Following' => array( 'Verfolgen' )
 );
-
 /**
- * Spanish (Español)
- */
-$specialPageAliases['es'] = array(
-	'Following' => array( 'Siguiendo' ),
-);
-
-/**
- * Italian (Italiano)
- */
-$specialPageAliases['it'] = array(
-	'Following' => array( 'PagineSeguite' ),
-);
-
-/**
- * Korean (한국어)
- */
-$specialPageAliases['ko'] = array(
-	'Following' => array( '주시중인글' ),
-);
-
-/**
- * Polish (Polski)
+ * Polish
  */
 $specialPageAliases['pl'] = array(
-	'Following' => array( 'Obserwowane_strony' ),
+	'Following' => array( 'Obserwowane strony' )
 );
 
 /**
- * Vietnamese (Tiếng Việt)
+ * Spanish
  */
-$specialPageAliases['vi'] = array(
-	'Following' => array( 'Theo_dõi' ),
+$specialPageAliases['es'] = array(
+	'Following' => array( 'Siguiendo' )
+);
+
+/**
+ * Italian
+ */
+$specialPageAliases['it'] = array(
+	'Following' => array( 'PagineSeguite' )
 );

@@ -10,7 +10,7 @@ class ArticleComment {
 	const AVATAR_BIG_SIZE = 50;
 	const AVATAR_SMALL_SIZE = 30;
 
-	const CACHE_VERSION = 2;
+	const CACHE_VERSION = 1;
 	const AN_HOUR = 3600;
 
 	/**
@@ -83,7 +83,8 @@ class ArticleComment {
 	 * @static
 	 * @access public
 	 *
-	 * @param Article $article object connected to comment
+	 * @param Title $title -- Title object connected to comment
+	 *
 	 * @return ArticleComment object
 	 */
 	static public function newFromArticle( Article $article ) {
@@ -360,8 +361,7 @@ class ArticleComment {
 
 			$parts = self::explode( $title->getDBkey() );
 
-			$buttons = []; // action links with full markup (used in Oasis)
-			$links = []; // action links with only a URL
+			$buttons = array();
 			$replyButton = '';
 
 			//this is for blogs we want to know if commenting on it is enabled
@@ -380,8 +380,6 @@ class ArticleComment {
 			if ( $canDelete && !ArticleCommentInit::isFbConnectionNeeded() ) {
 				$img = '<img class="remove sprite" alt="" src="'. $wgBlankImgUrl .'" width="16" height="16" />';
 				$buttons[] = $img . '<a href="' . $title->getLocalUrl('redirect=no&action=delete') . '" class="article-comm-delete">' . wfMsg('article-comments-delete') . '</a>';
-
-				$links['delete'] = $title->getLocalUrl('redirect=no&action=delete');
 			}
 
 			//due to slave lag canEdit() can return false negative - we are hiding it by CSS and force showing by JS
@@ -389,14 +387,10 @@ class ArticleComment {
 				$display = $this->canEdit() ? 'test=' : ' style="display:none"';
 				$img = '<img class="edit-pencil sprite" alt="" src="' . $wgBlankImgUrl . '" width="16" height="16" />';
 				$buttons[] = "<span class='edit-link'$display>" . $img . '<a href="#comment' . $commentId . '" class="article-comm-edit actionButton" id="comment' . $commentId . '">' . wfMsg('article-comments-edit') . '</a></span>';
-
-				$links['edit'] = '#comment' . $commentId;
 			}
 
 			if ( !$this->mTitle->isNewPage(Title::GAID_FOR_UPDATE) ) {
 				$buttons[] = RequestContext::getMain()->getSkin()->makeKnownLinkObj( $title, wfMsgHtml('article-comments-history'), 'action=history', '', '', 'class="article-comm-history"' );
-
-				$links['history'] = $title->getLocalUrl('action=history');
 			}
 
 			$rawmwtimestamp = $this->mFirstRevision->getTimestamp();
@@ -412,7 +406,6 @@ class ArticleComment {
 				'userurl' =>  AvatarService::getUrl($this->mUser->getName()),
 				'isLoggedIn' => $this->mUser->isLoggedIn(),
 				'buttons' => $buttons,
-				'links' => $links,
 				'replyButton' => $replyButton,
 				'sig' => $sig,
 				'text' => $this->mText,
@@ -900,7 +893,6 @@ class ArticleComment {
 
 	/**
 	 * @param Title $title
-	 * @return array
 	 */
 	public static function getSquidURLs( Title $title ) {
 		$urls = [];
@@ -926,15 +918,16 @@ class ArticleComment {
 	/**
 	 * @static
 	 * @param $status
-	 * @param $article WikiPage
+	 * @param $article Article
 	 * @param int $parentId
 	 * @return array
 	 */
+
 	static public function doAfterPost( $status, $article, $parentId = 0 ) {
 		global $wgUser, $wgDBname;
 
 		wfRunHooks( 'ArticleCommentAfterPost', array( $status, &$article ) );
-		$commentId = $article->getId();
+		$commentId = $article->getID();
 		$error = false;
 		$id = 0;
 
@@ -943,17 +936,8 @@ class ArticleComment {
 			case EditPage::AS_SUCCESS_NEW_ARTICLE:
 				$comment = ArticleComment::newFromArticle( $article );
 				$app = F::app();
-
-				if ( $app->checkSkin( 'wikiamobile' ) ) {
-					$viewName = 'WikiaMobileComment';
-				} elseif ( $app->checkSkin( 'venus' ) ) {
-					$viewName = 'VenusComment';
-				} else {
-					$viewName = 'Comment';
-				}
-
 				$text = $app->getView( 'ArticleComments',
-					$viewName,
+					( $app->checkSkin( 'wikiamobile' ) ) ? 'WikiaMobileComment' : 'Comment',
 					array('comment' => $comment->getData(true),
 						'commentId' => $commentId,
 						'rowClass' => '',
@@ -1430,7 +1414,7 @@ class ArticleComment {
 	 */
 	static public function isMiniEditorEnabled() {
 		$app = F::app();
-		return $app->wg->EnableMiniEditorExtForArticleComments && $app->checkSkin( [ 'oasis', 'venus' ] );
+		return $app->wg->EnableMiniEditorExtForArticleComments && $app->checkSkin( 'oasis' );
 	}
 
 	/**

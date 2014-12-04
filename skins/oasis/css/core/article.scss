@@ -5,8 +5,6 @@
 @import 'skins/shared/mixins/gradient';
 @import 'skins/shared/mixins/infobox';
 
-@import 'skins/shared/styles/infoboxes';
-
 .WikiaArticle {
 	@extend %bodytext;
 	// Prevent content from escaping the article area
@@ -284,7 +282,7 @@
 	// FIXME: anyone still using gopher?
 	a.external, a[href^='gopher://'] {
 		&:after {
-			background-image: url('/skins/shared/images/sprite.png');	/* $wgCdnStylePath */
+			background-image: url('/skins/oasis/images/sprite.png');	/* $wgCdnStylePath */
 			background-position: -1198px 0;
 			background-repeat: no-repeat;
 			content: '';
@@ -361,6 +359,22 @@
 
 		legend {
 			padding: 7px;
+		}
+	}
+
+	.infobox {
+		background-color: mix($color-page, #000, 95%);
+		border: 1px solid $color-page-border;
+		clear: right;
+		color: $color-text;
+		float: right;
+		margin-bottom: .5em;
+		margin-left: 1em;
+		padding: .2em;
+
+		&[width='100%'] {	/* fb:8918 - 100% width support */
+			float: none;
+			margin-left: 0;
 		}
 	}
 

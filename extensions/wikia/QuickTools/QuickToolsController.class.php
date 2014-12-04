@@ -11,7 +11,7 @@ class QuickToolsController extends WikiaController  {
 	 */
 	public function quickToolsModal() {
 		$this->setVal( 'username', $this->request->getVal( 'username' ) );
-		$this->setVal( 'blocklength', '2 weeks' );
+		$this->setVal( 'blocklength', '3 days' );
 		if ( in_array( 'bot', $this->wg->User->getGroups() ) ) {
 			$this->setVal( 'botflag', 'remove' );
 		} else {

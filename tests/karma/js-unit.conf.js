@@ -14,10 +14,6 @@ module.exports = function (config) {
 	base(config);
 
 	config.set({
-		exclude: [
-			'resources/wikia/ui_components/**/Gruntfile.js',
-			'resources/wikia/ui_components/**/node_modules/**/*.js',
-		],
 		files: [
 			'tests/lib/jasmine/jasmine.async.js',
 
@@ -59,9 +55,6 @@ module.exports = function (config) {
 			'resources/wikia/modules/scrollToLink.js',
 			'resources/wikia/libraries/mustache/mustache.js',
 			'resources/wikia/libraries/jquery/ellipses.js',
-
-			//helper modules
-			'resources/wikia/modules/dom.js',
 
 			// Performance
 			'extensions/wikia/Bucky/js/spec/bucky.mock.js',
@@ -187,7 +180,7 @@ module.exports = function (config) {
 			'extensions/wikia/MediaGallery/scripts/views/media.js',
 			'extensions/wikia/MediaGallery/scripts/views/toggler.js',
 			'extensions/wikia/MediaGallery/scripts/views/gallery.js',
-			'extensions/wikia/MediaGallery/scripts/spec/**/*.spec.js'
+			'extensions/wikia/MediaGallery/scripts/spec/**/*.spec.js',
 		]
 	});
 };

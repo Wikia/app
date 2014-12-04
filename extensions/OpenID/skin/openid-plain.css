@@ -1,0 +1,55 @@
+#openid_form {
+	width: 470px;	
+}
+
+#openid_form legend {
+	font-weight: bold;
+}
+
+#openid_input_area {
+	clear: both;
+	padding: 20px;
+	margin: 5px;
+}
+
+#openid_btns {
+}
+
+#openid_highlight {
+	padding: 3px;
+	background-color: #FFFCC9;
+	float: left;
+}
+
+.openid_large_link {
+	font-size: larger;
+	border: 1px solid #DDD;
+	padding: 15px;
+	margin: 7px;
+}
+.openid_small_link {
+}	
+
+.openid_selected {
+	color: orange;
+}
+
+#openid_large_providers {
+	margin: 22px;
+}
+
+#openid_small_providers_links {
+	margin: 0 0 0 30px;
+}
+.openid_small_providers_block {
+	float: left;
+	margin: 0 0 0 30px;
+}
+
+#openid_url {
+	background: url(icons/openid-inputicon.png) no-repeat;
+	background-position: 0 50%;
+	background-color: #fff;
+	color: #000;
+	padding-left: 18px;
+}

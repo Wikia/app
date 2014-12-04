@@ -1,5 +1,5 @@
 <? if ( !empty( $categoryLinks ) ): ?>
-	<nav id="articleCategories" class="article-categories">
+	<nav id="WikiaArticleCategories" class="WikiaArticleCategories">
 		<h1><?= wfMsg( 'oasis-related-categories' ); ?></h1>
 		<?= $categoryLinks ?>
 	</nav>

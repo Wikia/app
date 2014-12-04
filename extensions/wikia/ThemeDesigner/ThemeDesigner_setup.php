@@ -1,12 +1,12 @@
 <?php
 
-$wgExtensionCredits['specialpage'][] = [
+$wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Theme designer',
-	'author' => [ 'Christian Williams', 'Inez Korczyński', 'Maciej Brencz' ],
+	'author' => array( 'Christian Williams', 'Inez Korczyński', 'Maciej Brencz' ),
 	'descriptionmsg' => 'themedesigner-desc',
-];
+);
 
-$dir = __DIR__;
+$dir = dirname( __FILE__ );
 
 // autoloads
 $wgAutoloadClasses[ 'UploadBackgroundFromFile' ] = "{$dir}/UploadBackgroundFromFile.class.php";
@@ -21,7 +21,6 @@ $wgAutoloadClasses['ThemeDesignerHooks'] = "$dir/ThemeDesignerHooks.class.php";
 // special pages
 $wgSpecialPages['ThemeDesigner'] = 'SpecialThemeDesigner';
 $wgSpecialPages['ThemeDesignerPreview'] = 'SpecialThemeDesignerPreview';
-
 // i18n
 $wgExtensionMessagesFiles['ThemeDesigner'] = "$dir/ThemeDesigner.i18n.php";
 $wgExtensionMessagesFiles['ThemeDesignerAliases'] = "$dir/ThemeDesigner.alias.php";
@@ -33,12 +32,10 @@ $wgGroupPermissions['sysop']['themedesigner'] = true;
 $wgGroupPermissions['helper']['themedesigner'] = true;
 $wgGroupPermissions['staff']['themedesigner'] = true;
 
-JSMessages::registerPackage('ThemeDesigner', [
+JSMessages::registerPackage('ThemeDesigner', array(
 	'themedesigner-wordmark-preview-error'
-]);
+));
 
-// hooks
-$wgHooks['ArticleDeleteComplete'][] = 'ThemeDesignerHooks::onArticleDeleteComplete';
 $wgHooks['RevisionInsertComplete'][] = 'ThemeDesignerHooks::onRevisionInsertComplete';
+$wgHooks['ArticleDeleteComplete'][] = 'ThemeDesignerHooks::onArticleDeleteComplete';
 $wgHooks['UploadComplete'][] = 'ThemeDesignerHooks::onUploadComplete';
-$wgHooks['UploadVerification'][] = 'ThemeDesignerHooks::onUploadVerification';

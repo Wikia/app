@@ -2,6 +2,7 @@
 $messages = [];
 
 $messages['en'] = [
+	'global-navigation-wikia' => 'Wikia',
 	'global-navigation-create-wiki' => 'Start a wikia',
 	'global-navigation-hubs-menu-more-of' => 'More $1',
 	'global-navigation-hubs-menu' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
@@ -221,6 +222,7 @@ $messages['en'] = [
 ];
 
 $messages['es'] = [
+	'global-navigation-wikia' => 'Wikia',
 	'global-navigation-create-wiki' => 'Crear un wiki',
 	'global-navigation-hubs-menu-more-of' => 'Más $1',
 	'global-navigation-hubs-menu' => "*http://es.comicshub.wikia.com/wiki/Wiki_Cómics_Hub|Cómics|comics
@@ -440,6 +442,7 @@ $messages['es'] = [
 ];
 
 $messages['qqq'] = [
+	'global-navigation-wikia' => 'Alt and title for Wikia logo linkon Global Navigation',
 	'global-navigation-create-wiki' => 'Label on create new wikia button on Global Navigation - top bar',
 	'global-navigation-hubs-menu-more-of' => 'Global Navigation Hubs Menu - Link that goes to specific hub\'s mainpage. First parameter is hub\'s name (Video Games, Life, etc.)',
 	'global-navigation-hubs-menu' => 'Global Navigation Hubs Menu structure. For example see English translation.',

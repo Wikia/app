@@ -25,12 +25,6 @@
 	flex-direction: $direction;
 }
 
-@mixin display-inline-flex() {
-	display: -ms-inline-flexbox;
-	display: -webkit-inline-flex;
-	display: inline-flex;
-}
-
 @mixin flex-grow($number) { // (default: 0)
 	// old syntax
 	-webkit-box-flex: $number;

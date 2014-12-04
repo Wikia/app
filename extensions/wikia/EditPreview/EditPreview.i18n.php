@@ -5,7 +5,6 @@ $messages['en'] = array(
 	'wikia-editor-preview-min-width' => 'Minimum width',
 	'wikia-editor-preview-max-width' => 'Maximum width',
 	'wikia-editor-preview-mobile-width' => 'Mobile',
-	'wikia-editor-preview-venus-width' => 'Venus',
 	'wikia-editor-preview-type-tooltip' => "Changing this option will show you what this article will look like when it's displayed in a browser on small screens, large screens, mobile devices, or your current display.",
 );
 
