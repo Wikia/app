@@ -1,0 +1,79 @@
+@mixin verticals-icon($icon-name, $selected) {
+	@if $selected == 1 {
+		background-image: url("/extensions/wikia/WAMPage/images/#{$icon-name}-black.svg"); /* base64 */
+	} @else if $selected == 0 {
+		background-image: url("/extensions/wikia/WAMPage/images/#{$icon-name}.svg"); /* base64 */
+	}
+}
+
+.icon-vertical {
+	background-repeat: no-repeat;
+	margin: 0 auto;
+	display: block;
+	height: 32px;
+	width: 32px;
+}
+
+.icon-vertical-all {
+	@include verticals-icon('all', 0);
+}
+
+.icon-vertical-all-selected {
+	@include verticals-icon('all', 1);
+}
+
+.icon-vertical-books {
+	@include verticals-icon('books', 0);
+}
+
+.icon-vertical-books-selected {
+	@include verticals-icon('books', 1);
+}
+
+.icon-vertical-comics {
+	@include verticals-icon('comics', 0);
+}
+
+.icon-vertical-comics-selected {
+	@include verticals-icon('comics', 1);
+}
+
+.icon-vertical-games {
+	@include verticals-icon('games', 0);
+}
+
+.icon-vertical-games-selected {
+	@include verticals-icon('games', 1);
+}
+
+.icon-vertical-lifestyle {
+	@include verticals-icon('lifestyle', 0);
+}
+
+.icon-vertical-lifestyle-selected {
+	@include verticals-icon('lifestyle', 1);
+}
+
+.icon-vertical-movies {
+	@include verticals-icon('movies', 0);
+}
+
+.icon-vertical-movies-selected {
+	@include verticals-icon('movies', 1);
+}
+
+.icon-vertical-music {
+	@include verticals-icon('music', 0);
+}
+
+.icon-vertical-music-selected {
+	@include verticals-icon('music', 1);
+}
+
+.icon-vertical-tv {
+	@include verticals-icon('tv', 0);
+}
+
+.icon-vertical-tv-selected {
+	@include verticals-icon('tv', 1);
+}

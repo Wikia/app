@@ -55,6 +55,7 @@ class WAMPageController extends WikiaController
 
 	protected function collectRequestParameters() {
 		$this->filterVerticals = $this->model->getVerticals();
+		$this->verticalsShorts = $this->model->getVerticalsShorts();
 
 		$this->searchPhrase = htmlspecialchars($this->getVal('searchPhrase', null));
 		$this->selectedVerticalId = $this->getVal('verticalId', null);

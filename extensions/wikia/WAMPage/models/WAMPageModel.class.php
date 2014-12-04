@@ -266,6 +266,24 @@ class WAMPageModel extends WikiaModel {
 		return $verticals;
 	}
 
+	/**
+	 * Get verticals' machine-friendly names
+	 * @return array  An [ id => short ] array
+	 */
+	public function getVerticalsShorts() {
+		$aVerticalsShorts = [
+			WikiFactoryHub::HUB_ID_OTHER => 'all',
+		];
+		$oWikiFactoryHub = WikiFactoryHub::getInstance();
+		$aVerticals = $oWikiFactoryHub->getAllVerticals();
+		foreach ( $aVerticals as $iVerticalId => $aVerticalData ) {
+			if ( $iVerticalId !== WikiFactoryHub::HUB_ID_OTHER ) {
+				$aVerticalsShorts[ $iVerticalId ] = $aVerticalData['short'];
+			}
+		}
+		return $aVerticalsShorts;
+	}
+
 	protected function getDefaultTabsNames() {
 		return self::$failoverTabsNames;
 	}

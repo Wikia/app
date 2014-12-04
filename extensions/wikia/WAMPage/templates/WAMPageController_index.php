@@ -36,7 +36,7 @@
 			<? foreach ($filterVerticals as $verticalId => $verticalName): ?>
 				<li class="wam-filtering-tab <? if ( $verticalId == $selectedVerticalId ) : ?> selected<? endif; ?>" data-vertical-id="<?= $verticalId ?>">
 					<a>
-						<img src="http://placehold.it/32/0a5fa3">
+						<span class="icon-vertical icon-vertical-<?= $verticalsShorts[ $verticalId ] ?><? if ( $verticalId == $selectedVerticalId ) : ?>-selected<? endif; ?>"></span>
 						<?= $verticalName ?>
 					</a>
 				</li>
@@ -92,7 +92,7 @@
 								<ul>
 								<? foreach($wiki['admins'] as $admin): ?>
 									<li><a href="<?= $admin['userPageUrl'] ?>">
-										<img src="<?= $admin['avatarUrl'] ?>" alt="<?= $admin['name'] ?>" title="<?= $admin['name'] ?>" />
+										<img src="<? //$admin['avatarUrl'] ?>http://vignette2.wikia.nocookie.net/common/avatars/1/1b/24715421.png/revision/latest/scale-to-width/20" alt="<?= $admin['name'] ?>" title="<?= $admin['name'] ?>" />
 									</a></li>
 								<? endforeach ?>
 								</ul>

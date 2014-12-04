@@ -1,5 +1,6 @@
 @import "skins/shared/color";
 @import "skins/oasis/css/core/layout";
+@import "extensions/wikia/WAMPage/css/icons-verticals";
 
 .WAMPage {
 	.WikiaPage .WikiaPageContentWrapper {
@@ -106,25 +107,25 @@
 				background-position: 5px 50%;
 			}
 			.vertical-1 {
-				background-color: #00b7e0; // TODO: Use a variable here!
+				background-color: $color-vertical-tv;
 			}
 			.vertical-2 {
-				background-color: #94d11f; // TODO: Use a variable here!
+				background-color: $color-vertical-games;
 			}
 			.vertical-3 {
-				background-color: #ff7f26; // TODO: Use a variable here!
+				background-color: $color-vertical-books;
 			}
 			.vertical-4 {
-				background-color: #ff5400; // TODO: Use a variable here!
+				background-color: $color-vertical-comics;
 			}
 			.vertical-5 {
-				background-color: #ffd000; // TODO: Use a variable here!
+				background-color: $color-vertical-lifestyle;
 			}
 			.vertical-6 {
-				background-color: #c819ad; // TODO: Use a variable here!
+				background-color: $color-vertical-music;
 			}
 			.vertical-7 {
-				background-color: #09d3bf; // TODO: Use a variable here!
+				background-color: $color-vertical-movies;
 			}
 			.wam-up {
 				background-image: url("/extensions/wikia/WAMPage/images/wam-up.png"); /* base64 */
@@ -249,15 +250,15 @@
 			margin: 0 0 10px 0;
 
 			ul {
-				background-color: #f7f7f7; // TODO: Use a variable here!
-				border: solid #ccc; // TODO: Use a variable here!
+				background-color: #f7f7f7;
+				border: solid #ccc;
 				border-collapse: collapse;
 				border-width: 1px 0 1px 0;
 				display: table-row;
 
 				li {
 					border-collapse: collapse;
-					border: solid #ccc; // TODO: Use a variable here!
+					border: solid #ccc;
 					border-width: 1px 1px 1px 0;
 					display: table-cell;
 					list-style-type: none;
@@ -266,7 +267,7 @@
 
 					a {
 						background-color: transparent;
-						color: #0a5fa3; // TODO: Use a variable here!
+						color: #0a5fa3;
 						cursor: pointer;
 						display: block;
 						font-weight: bold;
@@ -287,8 +288,12 @@
 				}
 
 				li.selected {
-					background-color: #fff; // TODO: Use a variable here!
-					border-bottom: 1px solid #fff; // TODO: Use a variable here!
+					background-color: #fff;
+					border-bottom: 1px solid #fff;
+
+					a {
+						color: #000;
+					}
 				}
 			}
 		}
