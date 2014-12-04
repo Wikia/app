@@ -138,8 +138,6 @@ class UserLoginHooksHelper {
 	 * @return bool
 	 */
 	public static function onMakeGlobalVariablesScript(Array &$vars) {
-		$vars['wgEnableUserLoginExt'] = true;
-
 		if (F::app()->checkSkin('wikiamobile')) {
 			$vars['wgLoginToken'] = UserLoginHelper::getLoginToken();
 		}

@@ -337,7 +337,13 @@ class SkinChooser {
 		return false;
 	}
 
-	private static function showVenusSkin( $title ) {
+	/**
+	 * Check if the current page should be rendered using Venus
+	 *
+	 * @param Title $title
+	 * @return bool
+	 */
+	private static function showVenusSkin( Title $title ) {
 		global $wgEnableVenusSkin, $wgEnableVenusSpecialSearch, $wgEnableVenusArticle, $wgRequest;
 
 		$action = $wgRequest->getVal('action');

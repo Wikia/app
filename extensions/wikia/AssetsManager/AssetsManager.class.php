@@ -684,10 +684,10 @@ class AssetsManager {
 	/**
 	 * Checks if given asset's group should be loaded for provided skin
 	 * @param string $group - Asset Manager group name
-	 * @param WikiaSkin $skin - Wikia Skin instance
+	 * @param Skin $skin - skin instance
 	 * @return bool whether group should be loaded for given skin
 	 */
-	public function checkIfGroupForSkin($group, WikiaSkin $skin) {
+	public function checkIfGroupForSkin($group, Skin $skin) {
 		$this->loadConfig();
 		$skinName = $skin->getSkinName();
 		$registeredSkin = $this->mAssetsConfig->getGroupSkin( $group );
@@ -696,7 +696,7 @@ class AssetsManager {
 			in_array( $skinName, $registeredSkin ) : $skinName === $registeredSkin;
 
 		//if not strict packages with no skin registered are positive
-		if ( $skin->isStrict() === false ) {
+		if ( ( $skin instanceof WikiaSkin ) && ( $skin->isStrict() === false ) ) {
 			$check = $check || empty( $registeredSkin );
 		}
 
