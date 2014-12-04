@@ -142,7 +142,7 @@
 			} else if (resp.loginAborted) {
 				window.GlobalNotification.show(resp.errorMsg, 'error');
 			} else if (resp.unconfirmed) {
-				$.post(wgScriptPath + '/wikia.php', {
+				$.get(wgScriptPath + '/wikia.php', {
 					controller: 'UserLoginSpecial',
 					method: 'getUnconfirmedUserRedirectUrl',
 					format: 'json',
