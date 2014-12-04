@@ -40,6 +40,7 @@
 				}
 			}
 		},
+		messagesReady = false,
 		heroData = {
 			oTitle: null,
 			oDescription: null,
@@ -244,7 +245,9 @@
 					revertDescription();
 					$descriptionEditElement.stopThrobbing();
 					trackMom(saveSummaryFailLabel, trackerActionPost);
-					$.showModal($.msg('hi-error'), $.msg('hi-description-error'));
+					if ( messagesReady ) {
+						$.showModal($.msg('hero-image-error'), $.msg('hero-image-description-error'));
+					}
 				}
 			});
 		},
@@ -358,7 +361,9 @@
 				trackMom(imageLoadedLabel, trackerActionSuccess);
 			} else {
 				trackMom(imageLoadedFailLabel, trackerActionError);
-				$.showModal($.msg('hi-error'), data.errMessage);
+				if ( messagesReady ) {
+					$.showModal($.msg('hero-image-error'), data.errMessage);
+				}
 				$heroModule.stopThrobbing();
 			}
 		},
@@ -371,7 +376,9 @@
 				data: formdata,
 				callback: onAfterSendForm,
 				onErrorCallback: function () {
-					$.showModal($.msg('hi-error'), $.msg('hi-unknown-error'));
+					if ( messagesReady ) {
+						$.showModal($.msg('hero-image-error'), $.msg('hero-image-unknown-error'));
+					}
 					trackMom(imageLoadedFailLabel, trackerActionError);
 					$heroModule.stopThrobbing();
 				},
@@ -381,7 +388,10 @@
 
 		}, initializeEditMode = function () {
 			//load messages
-			$.msg.get('HeroImage');
+			$.msg.get('HeroImage').done(function() {
+				console.info('messages ready');
+				messagesReady = true;
+			});
 			$imageSaveBtn.on('click', saveImage)
 				.on('click', function () {
 					trackMom(saveHeroImageLabel, trackerActionClick);

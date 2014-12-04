@@ -9,11 +9,7 @@ $dir = dirname( __FILE__ );
  * messages
  */
 $wgExtensionMessagesFiles[ 'Njord' ] = $dir . '/Njord.i18n.php';
-JSMessages::registerPackage( 'HeroImage', [
-	'hi-error',
-	'hi-unknown-error',
-	'hi-description-error'
-] );
+JSMessages::registerPackage( 'HeroImage', [ 'hero-image-*' ] );
 
 /**
  * classes
