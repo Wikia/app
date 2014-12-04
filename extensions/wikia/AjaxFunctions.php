@@ -54,13 +54,14 @@ function cxValidateUserName () {
  * is intentional because there are some long usernames that were created when only wgMaxNameChars limited to 255 characters and we still want
  * those usernames to be valid (so that they can still login), but we just don't want NEW accounts to be created above the length of wgWikiaMaxNameChars.
  */
-function wfValidateUserName($uName){
-	wfProfileIn(__METHOD__);
+function wfValidateUserName( $uName ){
+	wfProfileIn( __METHOD__ );
 
-	$result = true;#wfMsg ('username-valid');
+	// This should be treated as 'username-valid'
+	$result = true;
 
 	$nt = Title::newFromText( $uName );
-	if( !User::isNotMaxNameChars($uName) ) {
+	if( !User::isNotMaxNameChars( $uName ) ) {
 		$result = 'userlogin-bad-username-length';
 
 	} elseif ( is_null( $nt ) ) {
@@ -71,24 +72,29 @@ function wfValidateUserName($uName){
 		if ( !User::isCreatableName( $uName ) ) {
 			$result = 'userlogin-bad-username-character';
 		} else {
-			$dbr = wfGetDB (DB_SLAVE);
-			$uName = $dbr->strencode($uName);
-			if ($uName == '') {
+			$dbr = wfGetDB( DB_SLAVE );
+			$uName = $dbr->strencode( $uName );
+			if ( $uName == '' ) {
 				$result = 'userlogin-bad-username-character';
 			} else {
-				if(User::idFromName($uName) != 0) {
-					$result = 'userlogin-bad-username-taken';
+				$spoof = new SpoofUser( $uName );
+				if ( $spoof->isLegal() ) {
+					$conflicts = $spoof->getConflicts();
+					if ( !empty( $conflicts ) ) {
+						$result = 'userlogin-bad-username-taken';
+					}
 				}
 
-				global $wgReservedUsernames;
-				if(in_array($uName, $wgReservedUsernames)){
-					$result = 'userlogin-bad-username-taken'; // if we returned 'invalid', that would be confusing once a user checked and found that the name already met the naming requirements.
+				if ( in_array( $uName, F::app()->wg->ReservedUsernames ) ) {
+					// if we returned 'invalid', that would be confusing once a user
+					// checked and found that the name already met the naming requirements.
+					$result = 'userlogin-bad-username-taken';
 				}
 			}
 		}
 	}
 
-	wfProfileOut(__METHOD__);
+	wfProfileOut( __METHOD__ );
 	return $result;
 }
 
