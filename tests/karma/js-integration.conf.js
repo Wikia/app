@@ -16,6 +16,7 @@ module.exports = function (config) {
 	config.set({
 		files: [
 			'tests/lib/jasmine/jasmine.async.js',
+			'tests/lib/jasmine/jasmine.dataprovider.js',
 
 			'tests/lib/jasmine/helpers.js',
 
