@@ -28,6 +28,13 @@
 	}
 }
 
-.cke_skin_wikia.linkEditorDialog .cke_dialog {
-	box-sizing: content-box;
+.cke_skin_wikia {
+	&.linkEditorDialog .cke_dialog {
+		box-sizing: content-box;
+	}
+
+	.cke_dialog_ui_text input.cke_dialog_ui_input_text,
+	.cke_dialog_ui_text input.cke_dialog_ui_input_password {
+		height: 100%;
+	}
 }
