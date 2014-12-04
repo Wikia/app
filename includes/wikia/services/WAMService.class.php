@@ -250,7 +250,12 @@ class WAMService extends Service {
 		return $options;
 	}
 
-	protected function getWamIndexConditions ($options, DatabaseBase $db) {
+	/**
+	 * @param Array $options
+	 * @param DatabaseBase $db
+	 * @return array
+	 */
+	protected function getWamIndexConditions ($options, $db) {
 		$conds = array(
 			'fw1.time_id = FROM_UNIXTIME(' . $options['currentTimestamp'] . ')'
 		);
