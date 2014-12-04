@@ -1,6 +1,12 @@
+$color-wam-blue: #1a5eB8;
+$color-wam-grey: #3a3a3a;
+$color-wam-light-grey: #f7f7f7;
+$color-wam-border-grey: #ccc;
+
 @import "skins/shared/color";
+@import "skins/shared/mixins/clearfix";
 @import "skins/oasis/css/core/layout";
-@import "extensions/wikia/WAMPage/css/icons-verticals";
+@import "extensions/wikia/WAMPage/css/verticals-tabs";
 
 .WAMPage {
 	.WikiaPage .WikiaPageContentWrapper {
@@ -39,27 +45,48 @@
 }
 
 .WikiaArticle .wam-header {
-	background-image: url("/extensions/wikia/WAMPage/images/wamheaderbg.jpg");
-	height: 285px;
+	background-image: url("/extensions/wikia/WAMPage/images/hero.jpg"); /* base64 */
+	height: 340px;
 	padding-bottom: 10px;
 	@if ( $responsive-layout-enabled ) {
 		width: 100%;
 	} else {
 		width: 1030px;
 	}
-	h2 {
-		border: 0;
-		color: #f2f2f2;
-		font-size: 34px;
-		line-height: 120%;
-		margin: 0;
-		padding: 50px 25px;
-		text-transform: capitalize;
 
-		@if ( $responsive-layout-enabled ) {
-			width: auto;
-		} else {
-			width: 300px;
+	.wam-top-gainers {
+		float: left;
+		margin: 60px 40px;
+
+		h2 {
+			border: 0;
+			color: #fff;
+			font-size: 40px;
+			font-weight: bold;
+			line-height: 40px;
+			margin: 0 0 20px;
+			text-transform: capitalize;
+
+			@if ( $responsive-layout-enabled ) {
+				width: auto;
+			} else {
+				width: 300px;
+			}
+		}
+
+		ol {
+			margin: 0 0 0 22px;
+			padding: 0;
+
+			li {
+				color: #fff;
+				font-size: 16px;
+				line-height: 40px;
+
+				&.leader {
+					font-weight: bold;
+				}
+			}
 		}
 	}
 	.wam-cards {
@@ -68,7 +95,7 @@
 		float: right;
 		font-size: 0.85em;
 		font-weight: bold;
-		margin-top: 50px;
+		margin-top: 105px;
 		overflow: hidden;
 		position: relative;
 		.wam-card {
@@ -169,16 +196,52 @@
 }
 
 .wam-content {
-	padding: 20px 25px;
-	h2 {
-		background-image: url("/extensions/wikia/WAMPage/images/wam-title.png"); /* base64 */
-		background-repeat: no-repeat;
-		border: none;
-		font-size: 21px;
-		font-weight: bold;
-		height: 25px;
-		margin: 0 0 20px 0;
-		padding: 55px 0 0 85px;
+	@include clearfix;
+
+	padding: 65px 60px;
+
+	.wam-content-logo {
+		background-image: url("/extensions/wikia/WAMPage/images/WAM-Logo.png"); /* base64 */
+		display: inline;
+		float: left;
+		height: 190px;
+		margin-right: 60px;
+		width: 176px;
+	}
+
+	.wam-content-text {
+		display: inline;
+
+		h2 {
+			border: 0;
+			color: $color-wam-grey;
+			font-size: 36px;
+			font-weight: bold;
+			line-height: 36px;
+			margin: 0 0 5px 0;
+			padding: 0;
+		}
+
+		h3 {
+			border: 0;
+			color: $color-wam-grey;
+			font-size: 24px;
+			font-weight: bold;
+			line-height: 28px;
+			margin: 0 0 15px 0;
+			padding: 0;
+		}
+
+		a {
+			color: $color-wam-blue;
+		}
+
+		p {
+			color: $color-wam-grey;
+			font-size: 14px;
+			line-height: 20px;
+			margin: 0 0 30px 0;
+		}
 	}
 }
 
@@ -239,64 +302,14 @@
 }
 
 .wam-index {
-	margin: 25px 0 50px;
+	margin: 0 0 50px;
 	@if ( $responsive-layout-enabled == false ) {
 		width: 1032px;
 	}
 	.wam-index-search {
+		margin-bottom: 40px;
+		overflow: hidden;
 
-		.wam-verticals-tabs {
-			display: table;
-			margin: 0 0 10px 0;
-
-			ul {
-				background-color: #f7f7f7;
-				border: solid #ccc;
-				border-collapse: collapse;
-				border-width: 1px 0 1px 0;
-				display: table-row;
-
-				li {
-					border-collapse: collapse;
-					border: solid #ccc;
-					border-width: 1px 1px 1px 0;
-					display: table-cell;
-					list-style-type: none;
-					margin: 0;
-					width: 0;
-
-					a {
-						background-color: transparent;
-						color: #0a5fa3;
-						cursor: pointer;
-						display: block;
-						font-weight: bold;
-						padding: 10px 20px;
-						text-align: center;
-						text-transform: uppercase;
-
-						img {
-							display: block;
-							margin: 3px auto;
-						}
-					}
-				}
-
-				li:last-child {
-					border-right: 0;
-					width: 100%;
-				}
-
-				li.selected {
-					background-color: #fff;
-					border-bottom: 1px solid #fff;
-
-					a {
-						color: #000;
-					}
-				}
-			}
-		}
 		.filtering {
 			float: left;
 			font-weight: bold;
@@ -314,8 +327,6 @@
 			float: right;
 			margin-right: 10px;
 		}
-		margin-bottom: 18px;
-		overflow: hidden;
 		button {
 			height: 22px;
 			vertical-align: middle;

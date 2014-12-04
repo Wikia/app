@@ -1,0 +1,106 @@
+@mixin vertical-icon($icon-name, $selected) {
+	@if $selected == 1 {
+		background-image: url("/extensions/wikia/WAMPage/images/#{$icon-name}-black.svg"); /* base64 */
+	} @else if $selected == 0 {
+		background-image: url("/extensions/wikia/WAMPage/images/#{$icon-name}.svg"); /* base64 */
+	}
+}
+
+@mixin all-icons($selected) {
+	.icon-vertical-all {
+		@include vertical-icon('all', $selected);
+	}
+
+	.icon-vertical-comics {
+		@include vertical-icon('comics', $selected);
+	}
+
+	.icon-vertical-games {
+		@include vertical-icon('games', $selected);
+	}
+
+	.icon-vertical-books {
+		@include vertical-icon('books', $selected);
+	}
+
+	.icon-vertical-movies {
+		@include vertical-icon('movies', $selected);
+	}
+
+	.icon-vertical-music {
+		@include vertical-icon('music', $selected);
+	}
+
+	.icon-vertical-lifestyle {
+		@include vertical-icon('lifestyle', $selected);
+	}
+
+	.icon-vertical-tv {
+		@include vertical-icon('tv', $selected);
+	}
+}
+
+.wam-verticals-tabs {
+	display: table;
+	margin: 0 0 40px 0;
+
+	ul {
+		background-color: $color-wam-light-grey;
+		border: solid $color-wam-border-grey;
+		border-collapse: collapse;
+		border-width: 1px 0 1px 0;
+		display: table-row;
+
+		li {
+			border-collapse: collapse;
+			border: solid $color-wam-border-grey;
+			border-width: 1px 1px 1px 0;
+			display: table-cell;
+			list-style-type: none;
+			margin: 0;
+			min-width: 80px;
+			width: 0;
+
+			a {
+				@include all-icons(0);
+
+				color: $color-wam-blue;
+				cursor: pointer;
+				display: block;
+				font-size: 12px;
+				font-weight: bold;
+				padding: 10px 20px;
+				text-align: center;
+				text-decoration: none;
+				text-transform: uppercase;
+
+				span {
+					background-repeat: no-repeat;
+					margin: 0 auto;
+					display: block;
+					height: 32px;
+					width: 32px;
+				}
+			}
+		}
+
+		li.selected {
+			background-color: #fff;
+			border-bottom: 1px solid #fff;
+		}
+
+		li.selected,
+		li:hover {
+			a {
+				@include all-icons(1);
+
+				color: $color-wam-grey;
+			}
+		}
+
+		li:last-child {
+			border-right: 0;
+			width: 100%;
+		}
+	}
+}

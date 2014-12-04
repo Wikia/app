@@ -1,7 +1,17 @@
 <div class="wam-header">
+	<div class="wam-top-gainers">
+		<h2><?= wfMessage('wampage-title'); ?></h2>
+		<ol>
+		<?	$i = 0;
+			foreach( $visualizationWikis as $k => $wiki ): ?>
+				<li <? if ( $i == 0 ) : ?> class="leader"<? endif; ?>><?= $wiki['title'] ?></li>
+		<?		$i++;
+			endforeach; ?>
+		</ol>
+	</div>
 	<div class="wam-cards">
 		<? 	$i = 1;
-			foreach($visualizationWikis as $k => $wiki): ?>
+			foreach( $visualizationWikis as $k => $wiki ): ?>
 			<a href="http://<?= $wiki['url'] ?>" class="wam-card card<?= $i++ ?>">
 				<figure>
 					<? if(!empty($wiki['wiki_image'])): ?>
@@ -16,17 +26,16 @@
 			</a>
 		<? endforeach ?>
 	</div>
-	
-	<h2><?= wfMessage('wampage-title'); ?></h2>
 </div>
 
 <div class="wam-content">
-	<h2><?= wfMessage('wampage-header-wam')->text(); ?></h2>
-	<h3><?= wfMessage('wampage-subheader-wam')->text(); ?></h3>
-	<?= wfMessage(
-		'wampage-content',
-		$faqPage
-	)->parse(); ?>
+	<div class="wam-content-logo"></div>
+	<div class="wam-content-text">
+		<h2><?= wfMessage( 'wampage-header-wam' )->text(); ?></h2>
+		<h3><?= wfMessage( 'wampage-subheader-wam' )->text(); ?></h3>
+		<p><?= wfMessage( 'wampage-content' )->parse(); ?></p>
+		<span class="wam-content-faq-link"><?= wfMessage( 'wampage-content-faq-link' )->parse(); ?></span>
+	</div>
 </div>
 
 <div class="wam-index" id="wam-index">
@@ -36,7 +45,7 @@
 			<? foreach ($filterVerticals as $verticalId => $verticalName): ?>
 				<li class="wam-filtering-tab <? if ( $verticalId == $selectedVerticalId ) : ?> selected<? endif; ?>" data-vertical-id="<?= $verticalId ?>">
 					<a>
-						<span class="icon-vertical icon-vertical-<?= $verticalsShorts[ $verticalId ] ?><? if ( $verticalId == $selectedVerticalId ) : ?>-selected<? endif; ?>"></span>
+						<span class="icon-vertical icon-vertical-<?= $verticalsShorts[ $verticalId ] ?>"></span>
 						<?= $verticalName ?>
 					</a>
 				</li>
