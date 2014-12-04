@@ -60,11 +60,13 @@ class UserLoginFacebookForm extends UserLoginForm {
 
 		if ( $user instanceof User ) {
 
-			$this->connectWithFacebook($user);
+			$this->connectWithFacebook( $user );
 			$user->saveSettings();
 
 			if ( $this->hasConfirmedEmail ) {
 				$this->confirmUser( $user );
+				$user->setCookies();
+				$this->addNewUserToLog( $user );
 			} else {
 				$this->sendConfirmationEmail( $user );
 			}
@@ -74,16 +76,22 @@ class UserLoginFacebookForm extends UserLoginForm {
 	}
 
 	/**
-	 * Confirm the user. This is used when a user already has an email registered
-	 * with Facebook.
+	 * Confirm the user and set their cookies. This is used when a user already has an
+	 * email registered with Facebook.
 	 * @param User $user
 	 */
 	private function confirmUser( User $user ) {
 		$user->confirmEmail();
-		$user->setCookies();
 		wfRunHooks( 'SignupConfirmEmailComplete', [ $user ] );
+	}
+
+	/**
+	 * Adds new user to log
+	 * @param $user
+	 */
+	private function addNewUserToLog( $user ) {
 		$userLoginHelper = new UserLoginHelper();
-		$userLoginHelper->addNewUserLogEntry( $user ); // Add new user to log
+		$userLoginHelper->addNewUserLogEntry( $user );
 	}
 
 	/**

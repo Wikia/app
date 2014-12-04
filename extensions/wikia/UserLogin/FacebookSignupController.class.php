@@ -32,12 +32,12 @@ class FacebookSignupController extends WikiaController {
 				$this->loginAborted = true;
 				$this->errorMsg = wfMessage( 'userlogin-error-edit-account-closed-flag' )->escaped();
 			} elseif ( $this->isAccountUnconfirmed( $user ) ) {
+				$this->unconfirmed = true;
+				$this->userName = $user->getName();
 				LoginForm::clearLoginToken();
 				$userLoginHelper = new UserLoginHelper();
 				$userLoginHelper->setNotConfirmedUserSession( $user->getId() );
-				$userLoginHelper->clearPasswordThrottle( $user->getName() );
-				$this->unconfirmed = true;
-				$this->userName = $user->getName();
+				$userLoginHelper->clearPasswordThrottle( $this->userName );
 			} elseif ( !wfRunHooks( 'FacebookUserLoginSuccess', [ $user, &$this->errorMsg ] ) ) {
 				$this->loginAborted = true;
 			} else {
@@ -74,7 +74,7 @@ class FacebookSignupController extends WikiaController {
 	 * @return boolean true if the account is unconfirmed, false otherwise
 	 */
 	private function isAccountUnconfirmed( User $user ) {
-		 return $user->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) == true;
+		return $user->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME );
 	}
 
 	/**
@@ -174,10 +174,8 @@ class FacebookSignupController extends WikiaController {
 		$signupForm->addNewAccount();
 
 		$result = ( $signupForm->msgType == 'error' ) ? 'error' : 'ok' ;
-		if ( $result == 'ok' ) {
-			if ( ! $signupForm->getHasConfirmedEmail() ) {
-				$result = 'unconfirm'	;
-			}
+		if ( $result == 'ok' && !$signupForm->getHasConfirmedEmail() ) {
+			$result = 'unconfirm'	;
 		}
 
 		$this->result = $result;
