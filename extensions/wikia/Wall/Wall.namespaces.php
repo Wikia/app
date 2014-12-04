@@ -81,9 +81,9 @@ $namespaces['ja'] = array(
  * Korean (한국어)
  */
 $namespaces['ko'] = array(
-	NS_USER_WALL			=> '메시지 담벼락',
+	NS_USER_WALL			=> '메시지_담벼락',
 	NS_USER_WALL_MESSAGE		=> '게시글',
-	NS_USER_WALL_MESSAGE_GREETING	=> '메시지 담벼락 환영',
+	NS_USER_WALL_MESSAGE_GREETING	=> '메시지_담벼락_환영',
 );
 
 /**
