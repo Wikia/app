@@ -107,6 +107,16 @@
 	}
 }
 
+.ad-in-content-lb {
+	clear: both;
+	margin: 0 auto;
+
+	> .default-height {
+		width: 728px;
+		height: 90px;
+	}
+}
+
 @media #{$small-only} {
 	.ad-in-content > .wikia-ad {
 		margin-right: -$small-grid-column-padding;

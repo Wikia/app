@@ -15,9 +15,11 @@ define('ext.wikia.adEngine.gptSlotConfig', function () {
 		INCONTENT_1A:               {size: '300x250', loc: 'middle'},
 		INCONTENT_1B:               {size: '300x250,160x600', loc: 'middle'},
 		INCONTENT_1C:               {size: '300x250,300x600,160x600', loc: 'middle'},
+		INCONTENT_1D:               {size: '728x90,468x90', loc: 'middle'},
 		INCONTENT_2A:               {size: '300x250', loc: 'middle'},
 		INCONTENT_2B:               {size: '300x250,160x600', loc: 'middle'},
 		INCONTENT_2C:               {size: '300x250,300x600,160x600', loc: 'middle'},
+		INCONTENT_2D:               {size: '728x90,468x90', loc: 'middle'},
 		INVISIBLE_SKIN:             {size: '1000x1000,1x1', loc: 'top'},
 		LEFT_SKYSCRAPER_2:          {size: '160x600', loc: 'middle'},
 		LEFT_SKYSCRAPER_3:          {size: '160x600', loc: 'footer'},
@@ -49,9 +51,14 @@ define('ext.wikia.adEngine.gptSlotConfig', function () {
 			INCONTENT_1A:               desktopSlots.INCONTENT_1A,
 			INCONTENT_1B:               desktopSlots.INCONTENT_1B,
 			INCONTENT_1C:               desktopSlots.INCONTENT_1C,
+			INCONTENT_1D:               desktopSlots.INCONTENT_1D,
 			INCONTENT_2A:               desktopSlots.INCONTENT_1A,
 			INCONTENT_2B:               desktopSlots.INCONTENT_1B,
 			INCONTENT_2C:               desktopSlots.INCONTENT_1C,
+<<<<<<< HEAD
+=======
+			INCONTENT_2D:               desktopSlots.INCONTENT_1D,
+>>>>>>> ADEN-1591 incontent Leaderboards
 			LEFT_SKYSCRAPER_2:          desktopSlots.LEFT_SKYSCRAPER_2,
 			LEFT_SKYSCRAPER_3:          desktopSlots.LEFT_SKYSCRAPER_3,
 			PREFOOTER_LEFT_BOXAD:       desktopSlots.PREFOOTER_LEFT_BOXAD,
