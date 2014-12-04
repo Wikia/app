@@ -3,7 +3,7 @@
 $messages = [];
 
 $messages['en'] = [
-	'recommendations-header' => 'Related Content'
+	'recommendations-header' => 'Recommended Content'
 ];
 
 $messages['qqq'] = [
