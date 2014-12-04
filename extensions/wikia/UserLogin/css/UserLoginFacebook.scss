@@ -15,10 +15,10 @@
 $section-padding: 20px;
 $fieldset-padding: 12px;
 
-$badge-background-color: darken( $color-page, 20% );
+$badge-background-color: darken($color-page, 20%);
 
-@if( $is-dark-wiki ) {
-	$badge-background-color: lighten( $color-page, 10% );
+@if($is-dark-wiki) {
+	$badge-background-color: lighten($color-page, 10%);
 }
 
 
