@@ -15,6 +15,14 @@
 $section-padding: 20px;
 $fieldset-padding: 12px;
 
+$badge-background-color: darken( $color-page, 20% );
+
+@if( $is-dark-wiki ) {
+	$badge-background-color: lighten( $color-page, 10% );
+}
+
+
+
 // extra .modal tacked on for specificity
 .facebook-signup-modal.modal > header {
 	height: auto;
@@ -33,16 +41,17 @@ $fieldset-padding: 12px;
 	}
 
 	span {
-		background: cyan; // fix me
+		background: $badge-background-color;
 		border-radius: 100%;
 		clear: right;
 		display: block;
 		float: left;
 		font-size: 23px;
-		line-height: 60px;
-		height: 60px;
+		height: 45px;
+		line-height: 45px;
+		margin-top: 10px;
 		text-align: center;
-		width: 60px;
+		width: 45px;
 	}
 }
 
