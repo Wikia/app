@@ -11,7 +11,7 @@ class NjordController extends WikiaController {
 		$articleWikiMarkup = '';
 		$articleTitle = $this->getRequest()->getVal( 'articleTitle' );
 		$pageTitleObj = Title::newFromText( $articleTitle );
-		if ( $pageTitleObj->exists() ) {
+		if ( isset($pageTitleObj) && $pageTitleObj->exists() ) {
 			$pageArticleObj = new Article( $pageTitleObj );
 			$articleWikiMarkup = $pageArticleObj->getPage()->getText();
 		}
