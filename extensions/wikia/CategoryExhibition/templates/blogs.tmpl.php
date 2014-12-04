@@ -13,7 +13,7 @@
 							<?php } elseif( !empty($row['snippet']) ) { ?>
 								<div class="snippet">
 									<span class="quote">&#x201C;</span>
-									<span class="text"><?=$row['snippet']; ?></span>
+									<span class="text"><?=htmlspecialchars($row['snippet']); ?></span>
 								</div>
 							<?php } else {
 								?><div class="snippet category-gallery-placeholder" ></div><?
