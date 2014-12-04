@@ -9,13 +9,6 @@ class NjordHooks {
 		return true;
 	}
 
-	public static function onCreateNewWikiComplete( $params ) {
-		if ( !empty( $params[ 'city_id' ] ) ) {
-			WikiFactory::setVarByName( 'wgEnableNjordExt', $params[ 'city_id' ], true );
-		}
-		return true;
-	}
-
 	public static function renderHeroTag( $content, array $attributes, Parser $parser, PPFrame $frame ) {
 		$wikiData = new WikiDataModel( Title::newMainPage()->getText() );
 		$wikiData->setFromAttributes( $attributes );
@@ -24,13 +17,13 @@ class NjordHooks {
 	}
 
 	public static function renderModuleContainerTag( $content, array $attributes, Parser $parser, PPFrame $frame ) {
-		if( !empty( $attributes[ 'content-title' ] ) ) {
+		if ( !empty( $attributes[ 'content-title' ] ) ) {
 			$title = Title::newFromText( $attributes[ 'content-title' ] );
 			if ( $title->exists() ) {
 				$article = Article::newFromTitle( $title, RequestContext::getMain() );
-				$attributes['content'] = $parser->recursiveTagParse($article->getContent());
+				$attributes[ 'content' ] = $parser->recursiveTagParse( $article->getContent() );
 			}
 		}
-		return F::app()->renderView('Njord', 'modula', $attributes);
+		return F::app()->renderView( 'Njord', 'modula', $attributes );
 	}
 }

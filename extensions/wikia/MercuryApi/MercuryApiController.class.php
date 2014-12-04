@@ -223,6 +223,12 @@ class MercuryApiController extends WikiaController {
 			$wikiVariables[ 'isGASpecialWiki' ] = true;
 		}
 
+		if ( !empty( $this->wg->ArticlePath ) ) {
+			$wikiVariables[ 'articlePath' ] = str_replace('$1', '', $this->wg->ArticlePath);
+		} else {
+			$wikiVariables[ 'articlePath' ] = '/wiki/';
+		}
+
 		$smartBannerConfig = $this->getSmartBannerConfig();
 		if ( !is_null( $smartBannerConfig ) ) {
 			$wikiVariables[ 'smartBanner' ] = $smartBannerConfig;
@@ -276,5 +282,18 @@ class MercuryApiController extends WikiaController {
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 
 		$this->response->setVal( 'data', $data );
+	}
+
+	/**
+	 * @desc HG-377: Returns search suggestions
+	 *
+	 * @throws NotFoundApiException
+	 * @throws MissingParameterApiException
+	 */
+	public function getSearchSuggestions() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setValues(
+			$this->sendRequest( 'SearchSuggestionsApi', 'getList', $this->request->getParams() )->getData()
+		);
 	}
 }
