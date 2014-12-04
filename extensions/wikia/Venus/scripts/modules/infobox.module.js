@@ -131,6 +131,7 @@ define('venus.infobox', ['wikia.document', 'wikia.window'], function(d, w) {
 		isInfoboxCollapsible: isInfoboxCollapsible,
 		collapseInfobox: collapseInfobox,
 		expandInfobox: expandInfobox,
-		createSeeMoreButton: createSeeMoreButton
+		createSeeMoreButton: createSeeMoreButton,
+		getColorAlpha: getColorAlpha
 	};
 });

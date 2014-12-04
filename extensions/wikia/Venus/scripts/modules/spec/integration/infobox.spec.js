@@ -46,5 +46,21 @@ describe( 'infobox', function(){
 		expect(button.style.backgroundColor).toBe('rgb(240, 240, 240)');
 	});
 
+	it('getColorAlpha should return alpha channel values', function() {
+		var cases = {
+			'rgba(255, 255, 255, 0.2)': 0.2,
+			'rgba(255,255,255,0.2)': 0.2,
+			'rgba(255,255,255,0.5)': 0.5,
+			'rgba(255,255,255,0.75)': 0.75,
+			'rgba(255,255,255,1.0)': null,
+			'rgb(255,255,255)': null
+		};
+
+		Object.keys(cases).forEach(function(val) {
+			var expected = cases[val];
+
+			expect(infobox.getColorAlpha(val)).toBe(expected);
+		})
+	});
 
 });
