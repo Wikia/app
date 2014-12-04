@@ -337,7 +337,7 @@ HTML;
 	 * TODO: Better 'returnto' code
 	 */
 	public static function PersonalUrls( &$personal_urls, &$wgTitle ) {
-		global $wgUser, $fbPersonalUrls, $fbConnectOnly, $wgEnableUserLoginExt;
+		global $wgUser, $fbPersonalUrls, $fbConnectOnly;
 		$skinName = get_class($wgUser->getSkin());
 
 		// Get the logged-in user from the Facebook API
@@ -413,17 +413,6 @@ HTML;
 						'href'   => '#', // SpecialPage::getTitleFor( 'Connect' )->getLocalUrl( 'returnto=' . $wgTitle->getPrefixedURL() ),
 						'active' => $wgTitle->isSpecial('Connect')
 					);
-				}
-
-				if ( in_array($skinName, array('SkinMonaco', 'SkinOasis')) && empty($wgEnableUserLoginExt) ) {
-					$html = Xml::openElement("span",array("id" => 'fbconnect' ));
-						$html .= Xml::openElement("a",array("href" => '#', 'class' => 'fb_button fb_button_small' ));
-							$html .= Xml::openElement("span",array("class" => "fb_button_text" ));
-								$html .= wfMsg( 'fbconnect-connect-simple' );
-							$html .= Xml::closeElement( "span" );
-						$html .= Xml::closeElement( "a" );
-					$html .= Xml::closeElement( "span" );
-					$personal_urls['fbconnect']['html'] = $html;
 				}
 			}
 

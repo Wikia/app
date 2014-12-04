@@ -21,7 +21,7 @@
 		padding: 10px;
 	}
 
-	&.one {
+	&.single-product {
 		padding: 5px;
 	}
 
@@ -87,7 +87,7 @@
 		height: 285px;
 		overflow: hidden;
 
-		&.one {
+		&.single-product {
 			border: 1px solid $color-page-border;
 			height: 182px;
 		}
@@ -104,7 +104,7 @@
 		padding-top: 15px;
 	}
 
-	.affiliate-header.one {
+	.affiliate-header.single-product {
 		background-color: #000;
 		color: #fff;
 		float: left;
@@ -130,7 +130,7 @@
 		padding-top: 8px;
 		width: 160px;
 
-		&.one {
+		&.single-product {
 			background-color: #f6f6f6;
 			float: initial;
 			height: 100%;
@@ -168,7 +168,7 @@
 		white-space: normal;
 		width: 150px;
 
-		&.one {
+		&.single-product {
 			border: 0;
 			float: initial;
 			margin: 0;
@@ -197,7 +197,7 @@
 			text-decoration: underline;
 		}
 
-		&.one {
+		&.single-product {
 			background-color: #f09512;
 			border-radius: 0;
 			color: #fff;
@@ -221,7 +221,7 @@
 		vertical-align: top;
 		width: 160px;
 
-		&.one {
+		&.single-product {
 			background-image: url('/extensions/wikia/MonetizationModule/images/amazon-logo-white.png');
 		}
 	}

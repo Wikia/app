@@ -11,7 +11,7 @@
 				<a href="<?= $fileUsage['wikiUrl'] ?>" class="page-listing-wiki"><?= $fileUsage['wiki'] ?></a>
 			<? endif; ?>
 			<p class="page-listing-snippet">
-				<?= $fileUsage['snippet'] ?>
+				<?= htmlspecialchars($fileUsage['snippet']) ?>
 			</p>
 		</div>
 	</li>

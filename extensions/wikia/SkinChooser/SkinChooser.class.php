@@ -180,7 +180,7 @@ class SkinChooser {
 		$disabled = $disabled ? ' disabled="disabled"' : '';
 		$trailer = $trailer ? $trailer : '';
 		return "<div class='toggle'><input type='checkbox' value='1' id=\"$tname\" name=\"wpOp$tname\"$checked$disabled />" .
-			" <span class='toggletext'><label for=\"$tname\">$ttext</label>$trailer</span></div>\n";
+		" <span class='toggletext'><label for=\"$tname\">$ttext</label>$trailer</span></div>\n";
 	}
 
 	/**
@@ -337,7 +337,13 @@ class SkinChooser {
 		return false;
 	}
 
-	private static function showVenusSkin( $title ) {
+	/**
+	 * Check if the current page should be rendered using Venus
+	 *
+	 * @param Title $title
+	 * @return bool
+	 */
+	private static function showVenusSkin( Title $title ) {
 		global $wgEnableVenusSkin, $wgEnableVenusSpecialSearch, $wgEnableVenusArticle, $wgRequest;
 
 		$action = $wgRequest->getVal('action');

@@ -127,7 +127,7 @@ class RebuildLocalisationCache extends Maintenance {
 		// Default exit code
 		$exitcode = 0;
 
-		if ( $force ) {
+		if ( $force && ( $numRebuilt != $total ) ) {
 			if ($numRebuilt == 0 ) {
 				// The rebuild was successful so assume all languages were rebuilt
 				$numRebuilt = $total;
