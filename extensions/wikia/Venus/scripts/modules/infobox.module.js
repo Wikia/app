@@ -5,6 +5,16 @@ define('venus.infobox', ['wikia.document', 'wikia.window'], function(d, w) {
 		infoboxCollapsedClass = 'collapsed-infobox';
 
 	/**
+	 * Checks if given color is valid and not transparent
+	 *
+	 * @param {string} color CSS color
+	 * @return {boolean}
+	 */
+	function isValidColor(color) {
+		return (color.length) && (color !== 'rgba(0, 0, 0, 0)');
+	}
+
+	/**
 	 * Check should infobox be collapsed
 	 *
 	 * @param container infobox wrapper
@@ -59,15 +69,21 @@ define('venus.infobox', ['wikia.document', 'wikia.window'], function(d, w) {
 			bgColor = infoboxStyles.getPropertyValue('background-color');
 			borderColor = infoboxStyles.getPropertyValue('border-color');
 
-			if (!borderColor.length) {
+			// try fallbacks
+			if (!isValidColor(borderColor)) {
 				borderColor = infoboxStyles.getPropertyValue('border-bottom-color');
 			}
 
-			if (bgColor.length) {
+			if (!isValidColor(bgColor)) {
+				bgColor = borderColor;
+			}
+
+			// apply colors
+			if (isValidColor(bgColor)) {
 				seeMoreButton.style.backgroundColor = bgColor;
 			}
 
-			if (borderColor.length) {
+			if (isValidColor(borderColor)) {
 				seeMoreButton.style.border = '1px solid ' + borderColor;
 			}
 		}
