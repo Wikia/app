@@ -413,6 +413,16 @@ class FacebookClient {
 
 		return $titleObj->getFullURL( $queryStr );
 	}
+
+	/**
+	 * Get facebook mapping for current user
+	 * @return FacebookMapModel
+	 */
+	public function getMapping() {
+		$id = $this->getUserId();
+		$map = FacebookMapModel::lookupFromFacebookID( $id );
+		return $map;
+	}
 }
 
 /**

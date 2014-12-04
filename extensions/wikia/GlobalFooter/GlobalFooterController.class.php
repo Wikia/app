@@ -7,11 +7,18 @@ class GlobalFooterController extends WikiaController {
 	const CORPORATE_CATEGORY_ID = 4;
 
 	public function index() {
-		$this->footer_links = $this->getGlobalFooterLinks();
+		$this->footerLinks = $this->getGlobalFooterLinks();
 		$this->copyright = RequestContext::getMain()->getSkin()->getCopyright();
 		$this->hub = $this->getHub();
 
 		$this->isCorporate = $this->hub->cat_id == self::CORPORATE_CATEGORY_ID;
+	}
+
+	public function indexVenus() {
+		$this->response->setVal( 'centralUrl', $this->getCentralWikiUrl() );
+		$this->response->setVal( 'copyright', RequestContext::getMain()->getSkin()->getCopyright() );
+		$this->response->setVal( 'footerLinks', $this->getGlobalFooterLinks() );
+		$this->response->setVal( 'verticalShort', $this->getVerticalShortName() );
 	}
 
 	private function getGlobalFooterLinks() {
@@ -52,13 +59,25 @@ class GlobalFooterController extends WikiaController {
 		return $parsedLinks;
 	}
 
+	private function getCentralWikiUrl() {
+		$userLang = $this->wg->Lang->getCode();
+		$globalNavogation = new GlobalNavigationController();
+		return $globalNavogation->getCentralUrlForLang( $userLang );
+	}
+
+	private function getVerticalShortName() {
+		global $wgCityId;
+		$wikiFactoryHub = new WikiFactoryHub();
+		$wikiVertical = $wikiFactoryHub->getWikiVertical( $wgCityId );
+		return $wikiVertical['short'];
+	}
+
 	private function getHub() {
 		global $wgCityId;
 
 		wfProfileIn( __METHOD__ );
 
 		$catInfo = HubService::getCategoryInfoForCity($wgCityId);
-
 		if (!empty($catInfo)) {
 			$catInfo->cat_link = wfMessage('oasis-corporatefooter-hub-'. $catInfo->cat_name .'-link')->text();
 			$catInfo->cat_name = wfMessage('hub-'. $catInfo->cat_name)->text();

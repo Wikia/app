@@ -34,6 +34,7 @@ $config['tracker_js'] = array(
 
 $config['liftium_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus', 'wikiamobile'],
 	'assets' => array(
 		'//extensions/wikia/AdEngine/liftium/Liftium.js',
 	)
@@ -41,6 +42,7 @@ $config['liftium_ads_js'] = array(
 
 $config['liftium_ads_extra_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus', 'wikiamobile'],
 	'assets' => array(
 		// TODO: get rid of those:
 		'//extensions/wikia/AdEngine/liftium/Wikia.Athena.js',
@@ -53,6 +55,7 @@ $config['liftium_ads_extra_js'] = array(
 
 $config['adengine2_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus', 'wikiamobile'],
 	'assets' => array(
 		// core
 		'//resources/wikia/modules/scriptwriter.js',
@@ -93,6 +96,7 @@ $config['adengine2_js'] = array(
 
 $config['adengine2_late_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus', 'wikiamobile'],
 	'assets' => array(
 		// ads
 		'//extensions/wikia/AdEngine/js/AdProviderEvolve.js',
@@ -142,13 +146,25 @@ $config['adengine2_interactive_maps_js'] = array(
 
 $config['adengine2_top_in_content_boxad_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'venus',
 	'assets' => array(
+		'//extensions/wikia/AdEngine/js/AdPlacementChecker.js',
 		'//extensions/wikia/AdEngine/js/AdSlotTopInContentBoxad.js',
+	),
+);
+
+$config['adengine2_venus_ads_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'venus',
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/AdPlacementChecker.js',
+		'//extensions/wikia/AdEngine/js/AdSlotsVenus.js',
 	),
 );
 
 $config['adengine2_tracking_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus', 'wikiamobile'],
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
 	),
@@ -216,7 +232,6 @@ $config['oasis_noads_extensions_js'] = array(
 $config['oasis_blocking'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//skins/wikia/js/JqueryLoader.js',
 		'//resources/wikia/modules/lazyqueue.js',
 	)
 );
@@ -354,6 +369,8 @@ $config['oasis_nojquery_shared_js'] = array(
 		'//skins/oasis/js/tabs.js',
 		'//skins/oasis/js/SharingToolbar/SharingToolbarLoader.js',
 		'//skins/oasis/js/Tracking.js',
+
+		'//extensions/wikia/UserTools/scripts/UserTools.js',
 	)
 );
 
@@ -679,7 +696,6 @@ $config['mobile_base_ads_js'] = array(
 		'//extensions/wikia/AdEngine/js/AdContext.js',
 		'//extensions/wikia/AdEngine/js/AdEngine2.js',
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
-		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
 		'//extensions/wikia/AdEngine/js/AdProviderRemnantGptMobile.js',
 		'//extensions/wikia/AdEngine/js/AdProviderDirectGptMobile.js',
 		'//extensions/wikia/AdEngine/js/AdProviderNull.js',
@@ -738,6 +754,8 @@ $config['wikiamobile_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'wikiamobile',
 	'assets' => array(
+		'//extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
+
 		'#group_mobile_base_ads_js',
 
 		// Interactive maps integration
@@ -1100,6 +1118,13 @@ $config['wall_notifications_js'] = array(
 	)
 );
 
+$config['wall_notifications_global_navigation_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/WallNotifications/scripts/WallNotifications.globalNavigation.js',
+	)
+);
+
 $config['wall_mini_editor_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
@@ -1450,7 +1475,7 @@ $config['wikiasearch_scss_wikiamobile'] = array(
 
 /** Places **/
 $config['places_js'] = array(
-	'skin' => array( 'oasis', 'monobook', 'wikiamobile' ),
+	'skin' => array( 'oasis', 'monobook', 'wikiamobile', 'venus' ),
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 			'//extensions/wikia/Places/js/Places.js'
@@ -1459,7 +1484,7 @@ $config['places_js'] = array(
 
 $config['places_css'] = array(
 	'type' => AssetsManager::TYPE_CSS,
-	'skin' => array( 'oasis', 'monobook', 'wikiamobile' ),
+	'skin' => array( 'oasis', 'monobook', 'wikiamobile', 'venus' ),
 	'assets' => array(
 			'//extensions/wikia/Places/css/Places.css',
 	)
@@ -1481,6 +1506,72 @@ $config['wikiaphotogallery_slider_scss_wikiamobile'] = array(
 			'//extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.wikiamobile.scss'
 	)
 );
+
+$config['wikia_photo_gallery_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js',
+	]
+];
+
+$config['wikia_photo_gallery_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//extensions/wikia/WikiaPhotoGallery/css/gallery.scss',
+	]
+];
+
+$config['wikia_photo_gallery_slideshow_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//resources/wikia/libraries/jquery/slideshow/jquery-slideshow-0.4.js',
+		'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slideshow.js',
+	]
+];
+
+$config['wikia_photo_gallery_slideshow_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//extensions/wikia/WikiaPhotoGallery/css/slideshow.scss',
+	]
+];
+
+$config['wikia_photo_gallery_slider_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slider.js',
+	]
+];
+
+$config['wikia_photo_gallery_slider_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.scss',
+	]
+];
+
+$config['wikia_photo_gallery_mosaic_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//resources/wikia/libraries/modernizr/modernizr-2.0.6.js',
+		'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slider.mosaic.js',
+	]
+];
+
+$config['wikia_photo_gallery_mosaic_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.mosaic.scss',
+	]
+];
 
 // ImageDrop
 $config['imagedrop_js'] = array(
@@ -1504,7 +1595,7 @@ $config['imagedrop_scss'] = array(
 /** Note: this group is also used in Oasis! */
 $config['analytics_gas_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['wikiamobile', 'venus' ],
+	'skin' => [ 'wikiamobile', 'venus' ],
 	'assets' => [
 		'//extensions/wikia/AnalyticsEngine/js/analytics_prod.js'
 	]
@@ -1707,6 +1798,7 @@ $config['special_css_js'] = array(
 /* UI repo JS API */
 $config['ui_repo_api_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus'],
 	'assets' => array(
 		'//resources/wikia/modules/nirvana.js',
 		'//resources/wikia/modules/uifactory.js',
@@ -1786,17 +1878,35 @@ $config['api_docs_scss'] = array(
 	)
 );
 
-$config['videos_module_js'] = [
+$config['videos_module_common_js'] = [
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis'],
+	'skin' => ['oasis', 'venus'],
 	'assets' => [
 		'//extensions/wikia/Thumbnails/scripts/templates.mustache.js',
 		'//extensions/wikia/Thumbnails/scripts/views/titleThumbnail.js',
 		'//extensions/wikia/VideosModule/scripts/templates.mustache.js',
 		'//extensions/wikia/VideosModule/scripts/models/videos.js',
 		'//extensions/wikia/VideosModule/scripts/views/titleThumbnail.js',
-		'//extensions/wikia/VideosModule/scripts/views/rail.js',
-		'//extensions/wikia/VideosModule/scripts/controllers/index.js',
+		'//extensions/wikia/VideosModule/scripts/views/index.js',
+	]
+];
+
+$config['videos_module_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis'],
+	'assets' => [
+		'#group_videos_module_common_js',
+		'//extensions/wikia/VideosModule/scripts/controllers/rail.js',
+	]
+];
+
+$config['videos_module_venus_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['venus'],
+	'assets' => [
+		'#group_videos_module_common_js',
+		'//extensions/wikia/VideosModule/scripts/controllers/inContent.js',
+		'//resources/wikia/modules/nodeFinder.js',
 	]
 ];
 
@@ -1863,7 +1973,7 @@ $config['corporate_footer_js'] = array(
 /* extension/wikia/Bucky */
 $config['bucky_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
+	'skin' => [ 'oasis', 'venus' ],
 	'assets' => array(
 		'//extensions/wikia/Bucky/vendor/BuckyClient/bucky.js',
 		'//extensions/wikia/Bucky/js/bucky_init.js',
@@ -2076,7 +2186,7 @@ $config['global_header_js'] = [
 
 $config['media_gallery_js'] = [
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis'],
+	'skin' => ['oasis', 'venus'],
 	'assets' => [
 		'//extensions/wikia/MediaGallery/scripts/templates.mustache.js',
 		'//extensions/wikia/MediaGallery/scripts/views/caption.js',
