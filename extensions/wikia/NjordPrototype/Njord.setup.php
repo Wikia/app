@@ -9,7 +9,6 @@ $dir = dirname( __FILE__ );
  * messages
  */
 $wgExtensionMessagesFiles[ 'Njord' ] = $dir . '/Njord.i18n.php';
-JSMessages::registerPackage( 'HeroImage', [ 'hero-image-*' ] );
 
 /**
  * classes

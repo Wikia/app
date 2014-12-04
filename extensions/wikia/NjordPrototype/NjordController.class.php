@@ -153,6 +153,7 @@ class NjordController extends WikiaController {
 				$this->getResponse()->setVal( 'url', wfReplaceImageServer( $stashFile->getThumbUrl( static::THUMBNAILER_SIZE_SUFIX ) ) );
 				$this->getResponse()->setVal( 'filename', $stashFile->getFileKey() );
 			} else {
+				$this->getResponse()->setVal( 'errTitle', wfMessage( 'hero-image-error')->text() );
 				$this->getResponse()->setVal( 'errMessage', $errorMessage );
 			}
 		}

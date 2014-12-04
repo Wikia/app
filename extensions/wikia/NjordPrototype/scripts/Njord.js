@@ -40,7 +40,6 @@
 				}
 			}
 		},
-		messagesReady = false,
 		heroData = {
 			oTitle: null,
 			oDescription: null,
@@ -245,9 +244,6 @@
 					revertDescription();
 					$descriptionEditElement.stopThrobbing();
 					trackMom(saveSummaryFailLabel, trackerActionPost);
-					if ( messagesReady ) {
-						$.showModal($.msg('hero-image-error'), $.msg('hero-image-description-error'));
-					}
 				}
 			});
 		},
@@ -361,9 +357,7 @@
 				trackMom(imageLoadedLabel, trackerActionSuccess);
 			} else {
 				trackMom(imageLoadedFailLabel, trackerActionError);
-				if ( messagesReady ) {
-					$.showModal($.msg('hero-image-error'), data.errMessage);
-				}
+				$.showModal(data.errTitle, data.errMessage);
 				$heroModule.stopThrobbing();
 			}
 		},
@@ -376,9 +370,6 @@
 				data: formdata,
 				callback: onAfterSendForm,
 				onErrorCallback: function () {
-					if ( messagesReady ) {
-						$.showModal($.msg('hero-image-error'), $.msg('hero-image-unknown-error'));
-					}
 					trackMom(imageLoadedFailLabel, trackerActionError);
 					$heroModule.stopThrobbing();
 				},
@@ -388,10 +379,6 @@
 
 		}, initializeEditMode = function () {
 			//load messages
-			$.msg.get('HeroImage').done(function() {
-				console.info('messages ready');
-				messagesReady = true;
-			});
 			$imageSaveBtn.on('click', saveImage)
 				.on('click', function () {
 					trackMom(saveHeroImageLabel, trackerActionClick);
