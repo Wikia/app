@@ -10,7 +10,7 @@
 			<div class="upload-mask"></div>
 			<div class="overlay">
 				<div class="overlay-flex">
-					<span class="overlay-text sg-sub-title"><?= wfMessage('hero-image-drop-here')->text(); ?></span>
+					<span class="overlay-text sg-sub-title"><?= wfMessage('hero-image-drop-here')->escaped(); ?></span>
 				</div>
 			</div>
 			<div class="upload-wrap">
@@ -18,19 +18,19 @@
 					<div class="upload-group">
 						<div class="upload-btn">
 							<img class="upload-icon" src="/extensions/wikia/NjordPrototype/images/addImage.svg">
-							<span class="upload-text sg-main"><?= wfMessage('hero-image-add-image')->text(); ?></span>
+							<span class="upload-text sg-main"><?= wfMessage('hero-image-add-image')->escaped(); ?></span>
 						</div>
 						<div class="update-btn">
 							<img class="upload-icon" src="/extensions/wikia/NjordPrototype/images/addImage.svg">
-							<span class="update-text sg-main"><?= wfMessage('hero-image-update-image')->text(); ?></span>
+							<span class="update-text sg-main"><?= wfMessage('hero-image-update-image')->escaped(); ?></span>
 						</div>
 						<input name="file" type="file" hidden/>
-						<span class="upload-desc sg-sub"><?= wfMessage('hero-image-dd-image')->text(); ?></span>
+						<span class="upload-desc sg-sub"><?= wfMessage('hero-image-dd-image')->escaped(); ?></span>
 					</div>
 				</div>
 			</div>
 			<div class="position-info">
-				<div class="position-text sg-main"><?= wfMessage('hero-image-position-image')->text(); ?></div>
+				<div class="position-text sg-main"><?= wfMessage('hero-image-position-image')->escaped(); ?></div>
 			</div>
 			<? endif; //isAlloweToEdit ?>
 			<div class="image-window">
@@ -45,28 +45,28 @@
 			<div class="edit-box">
 				<div class="hero-title" contenteditable="true"><?= $wikiData->title ?></div>
 				<div class="btn-bar">
-					<div class="new-btn discard-btn sg-sub"><?= wfMessage('hero-image-discard-btn')->text(); ?></div>
-					<div class="new-btn save-btn sg-sub"><?= wfMessage('hero-image-publish-btn')->text(); ?></div>
+					<div class="new-btn discard-btn sg-sub"><?= wfMessage('hero-image-discard-btn')->escaped(); ?></div>
+					<div class="new-btn save-btn sg-sub"><?= wfMessage('hero-image-publish-btn')->escaped(); ?></div>
 				</div>
 			</div>
 			<span class="title-text"><?= $wikiData->title ?></span>
-			<span class="title-default-text"><?= wfMessage('hero-image-default-title')->text(); ?></span>
+			<span class="title-default-text"><?= wfMessage('hero-image-default-title')->escaped(); ?></span>
 			<? if ($isAllowedToEdit): ?>
 			<img class="title-edit-btn" src="/extensions/wikia/NjordPrototype/images/pencil.svg">
 			<?endif;?>
 		</h1>
 	</div>
 	<div class="image-save-bar btn-bar <?php if ( $wikiData->imageSet ) : ?>filled-state<? else : ?>zero-state<?php endif; ?>">
-		<span class="save-text sg-main"><?= wfMessage('hero-image-save-image')->text(); ?></span>
-		<div class="new-btn discard-btn sg-sub"><?= wfMessage('hero-image-discard-btn')->text(); ?></div>
-		<div class="new-btn save-btn sg-sub"><?= wfMessage('hero-image-publish-btn')->text(); ?></div>
+		<span class="save-text sg-main"><?= wfMessage('hero-image-save-image')->escaped(); ?></span>
+		<div class="new-btn discard-btn sg-sub"><?= wfMessage('hero-image-discard-btn')->escaped(); ?></div>
+		<div class="new-btn save-btn sg-sub"><?= wfMessage('hero-image-publish-btn')->escaped(); ?></div>
 	</div>
 	<div class="hero-description <?php if ( isset( $wikiData->description ) ) : ?>filled-state<? else : ?>zero-state<?php endif; ?>">
 		<div class="edit-box">
 			<span class="edited-text sg-main" contenteditable="true"><?= $wikiData->description ?></span>
 			<div class="btn-bar">
-				<div class="new-btn discard-btn sg-sub"><?= wfMessage('hero-image-discard-btn')->text(); ?></div>
-				<div class="new-btn save-btn sg-sub"><?= wfMessage('hero-image-publish-btn')->text(); ?></div>
+				<div class="new-btn discard-btn sg-sub"><?= wfMessage('hero-image-discard-btn')->escaped(); ?></div>
+				<div class="new-btn save-btn sg-sub"><?= wfMessage('hero-image-publish-btn')->escaped(); ?></div>
 			</div>
 		</div>
 		<span class="hero-description-text sg-main">
@@ -75,7 +75,7 @@
 		<? } ?>
 		</span>
 		<?php if ( !isset ( $wikiData->description ) ) { ?>
-			<span class="hero-description-default-text sg-main"><?= wfMessage('hero-image-default-description')->text(); ?></span>
+			<span class="hero-description-default-text sg-main"><?= wfMessage('hero-image-default-description')->escaped(); ?></span>
 		<? } ?>
 		<? if ($isAllowedToEdit): ?>
 		<img class="edit-btn" src="/extensions/wikia/NjordPrototype/images/pencil_b.svg"/>
