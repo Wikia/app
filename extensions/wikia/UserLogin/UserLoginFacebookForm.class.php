@@ -87,9 +87,9 @@ class UserLoginFacebookForm extends UserLoginForm {
 
 	/**
 	 * Adds new user to log
-	 * @param $user
+	 * @param User $user
 	 */
-	private function addNewUserToLog( $user ) {
+	private function addNewUserToLog( User $user ) {
 		$userLoginHelper = new UserLoginHelper();
 		$userLoginHelper->addNewUserLogEntry( $user );
 	}
