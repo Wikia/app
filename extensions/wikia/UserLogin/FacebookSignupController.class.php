@@ -189,9 +189,13 @@ class FacebookSignupController extends WikiaController {
 		$wikiaPassword = $wg->Request->getText( 'password' );
 
 		if ( !$wikiaUserName || !$wikiaPassword ) {
+			$errorCode = $wikiaUserName ?
+				'userlogin-error-wrongpasswordempty' :
+				'userlogin-error-noname';
+
 			$this->response->setData( [
 				'result' => 'error',
-				'message' => 'Please enter your username and password', //wfMessage( 'fbconnect-error' ),
+				'message' => wfMessage( $errorCode )->escaped(),
 			] );
 			return;
 		}
@@ -200,7 +204,7 @@ class FacebookSignupController extends WikiaController {
 		if ( !$user || !$user->checkPassword( $wikiaPassword ) ) {
 			$this->response->setData( [
 				'result' => 'error',
-				'message' => 'We could not find the username you entered.', //wfMessage( 'fbconnect-error' ),
+				'message' => wfMessage( 'userlogin-error-wrongcredentials' )->escaped(),
 			] );
 			return;
 		}
@@ -208,33 +212,26 @@ class FacebookSignupController extends WikiaController {
 		// Log the user in with existing wikia account
 		// Create the fb/Wikia user mapping if not already created
 
-		$fb = FacebookClient::getInstance();
-		$fbUserId = $fb->getUserId();
+		$fbUserId = FacebookClient::getInstance()->getUserId();
 
-		if ( empty( $fbUserId ) ) {
-			// TODO: refactor this after UC-138 changes merge
-			$mappings = \FacebookMapModel::lookupFromWikiaID( $user->getId() );
-			if ( empty( $mappings ) ) {
-				$mappingCreated = \FacebookMapModel::createUserMapping( $user->getId(), $fbUserId );
-				if ( !$mappingCreated ) {
-					// TODO/FIXME: show proper error message @see UC-116
-					$this->response->setData( [
-						'result' => 'error',
-						'message' => 'We could not find the username you entered.', //wfMessage( 'fbconnect-error' ),
-					] );
-					return;
-				}
+		// Returns an existing mapping or attempts to create one
+		$userMap = \FacebookMapModel::createUserMapping( $user->getId(), $fbUserId );
+
+		if ( !$userMap ) {
+			// TODO/FIXME: show proper error message @see UC-116
+			if ( empty( $fbUserId ) ) {
+				$errorMessage = 'There was a problem detecting your Facebook account; please login to Facebook and try again.';
+			} else {
+				$errorMessage = 'There was a problem connecting your Wikia account to Facebook.';
 			}
-		} else {
-			$mappingCreated = \FacebookMapModel::createUserMapping( $user->getId(), $fbUserId );
-			if ( !$mappingCreated ) {
-				// TODO/FIXME: show proper error message @see UC-116
-				$this->response->setData( [
+
+			$this->response->setData(
+				[
 					'result' => 'error',
-					'message' => 'There was a problem connecting your account to Facebook!',
-				] );
-				return;
-			}
+					'message' => $errorMessage,
+				]
+			);
+			return;
 		}
 
 		// Setup the session as is done when a request first starts

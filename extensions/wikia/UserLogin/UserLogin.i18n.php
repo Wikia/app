@@ -26,6 +26,7 @@ $messages['en'] = array(
 	'userlogin-error-cantcreateaccount-text' => 'Your IP address is not allowed to create new accounts.',
 	'userlogin-error-userexists' => 'Someone already has this username. Try a different one!',
 	'userlogin-error-invalidemailaddress' => 'Please enter a valid email address.',
+	'userlogin-error-wrongcredentials' => 'This username and password combination is not correct. Please try again.',
 	'userlogin-get-account' => "Don't have an account? <a href=\"$1\" tabindex=\"$2\">Sign up</a>",
 
 	// signup
@@ -145,6 +146,7 @@ $messages['qqq'] = array(
 	'userlogin-error-cantcreateaccount-text' => "Error message upon login attempt stating that the user's IP address has been throttled because of login failures.",
 	'userlogin-error-userexists' => 'Error message upon signup attempt stating user name already exists.',
 	'userlogin-error-invalidemailaddress' => 'Error message upon signup attempt stating e-mail address is invalid.',
+	'userlogin-error-wrongcredentials' => 'Error message upon login attempt with invalid credentials.',
 	'userlogin-get-account' => 'Marketing blurb asking to sign up with wikitext internal link to usersignup page. Parameters:
 * $1 - the URL address to usersignup page. Please append userlang as appropriate.
 * $2 - the tabindex of this link tag.
