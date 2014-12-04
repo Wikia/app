@@ -5,13 +5,49 @@ define('venus.infobox', ['wikia.document', 'wikia.window'], function(d, w) {
 		infoboxCollapsedClass = 'collapsed-infobox';
 
 	/**
+	 * Returns alpha value from CSS rgba color value
+	 * if no match found returns null
+	 * example
+	 * for rgba(255,255,255,0.2) returns 0.2
+	 * @param {string} color
+	 * @return number | null
+	 */
+	function getColorAlpha(color) {
+		var alphaGroups,
+			alphaRegEx = /rgba\((\d*[,\s]*){3},\s*(0[\.\d]*)\)/,
+			alphaValue = null;
+
+		alphaGroups = alphaRegEx.exec(color);
+
+		if(alphaGroups !== null) {
+			alphaValue = parseFloat(alphaGroups[2]);
+		}
+
+		return alphaValue;
+	}
+
+	/**
 	 * Checks if given color is valid and not transparent
 	 *
 	 * @param {string} color CSS color
 	 * @return {boolean}
 	 */
 	function isValidColor(color) {
-		return (color.length) && (color !== 'rgba(0, 0, 0, 0)');
+		var alphaValue;
+
+		// quick check for transparency
+		if (!color.length || color === 'rgba(0, 0, 0, 0)' || color === 'transparent') {
+			return false;
+		}
+
+		// check alpha channel (ported from CON-2230)
+		alphaValue = getColorAlpha(color);
+
+		if (alphaValue !== null && alphaValue < 0.5) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
