@@ -46,6 +46,8 @@ require(['jquery', 'wikia.window', 'wikia.globalnavigation.lazyload'], function 
 		if (!GlobalNavLazyLoad.isMenuWorking()) {
 			GlobalNavLazyLoad.getHubLinks();
 		}
+
+		$('#globalNavigation').trigger('hubs-menu-opened');
 	}
 
 	/**

@@ -11,7 +11,7 @@ class NjordController extends WikiaController {
 		$articleWikiMarkup = '';
 		$articleTitle = $this->getRequest()->getVal( 'articleTitle' );
 		$pageTitleObj = Title::newFromText( $articleTitle );
-		if ( $pageTitleObj->exists() ) {
+		if ( isset($pageTitleObj) && $pageTitleObj->exists() ) {
 			$pageArticleObj = new Article( $pageTitleObj );
 			$articleWikiMarkup = $pageArticleObj->getPage()->getText();
 		}
@@ -40,22 +40,7 @@ class NjordController extends WikiaController {
 		if ( !$wgUser->isLoggedIn() && $wikiDataModel->isEmpty() ) {
 			return $this->skipRendering();
 		}
-		$this->wg->SuppressPageHeader = true;
-		//set correct editor
-		$this->editor = EditorPreference::getPrimaryEditor();
-		$this->name = 'edit';
-		$this->source = false;
-		if ( !$wgUser->isAllowed('edit') || !$wgUser->isLoggedIn() || $wgTitle->isNamespaceProtected( $wgUser ) ) {
-			$this->name = 'view source';
-			$this->source = true;
-			$this->editor = EditorPreference::OPTION_EDITOR_SOURCE;
-		}
-		$editOptions = [ 'action' => 'edit' ];
-		if ( $this->editor === EditorPreference::OPTION_EDITOR_VISUAL ) {
-			$editOptions = [ 'veaction' => 'edit' ];
-		}
-		$this->editLink = $wgTitle->getLocalURL( $editOptions );
-
+		$this->wg->SupressPageTitle = true;
 		$this->wg->out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/NjordPrototype/css/Njord.scss' ) );
 		$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . '/wikia/NjordPrototype/scripts/jquery-ui-1.10.4.js' );
 		$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . '/wikia/NjordPrototype/scripts/jquery.caret.js' );
