@@ -208,7 +208,7 @@ class MonetizationModuleHelper extends WikiaModel {
 	 * @return string
 	 */
 	public function getMemcKey( $params ) {
-		$geo = empty( $params['geo'] ) ? 'ROW' : $params['geo'];
+		$geo = empty( $params['geo'] ) ? 'ALL' : $params['geo'];
 		$memcKey = wfMemcKey( 'monetization_module', $params['cache'], $geo, $params['max'] );
 		return $memcKey;
 	}
