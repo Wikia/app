@@ -57,8 +57,6 @@ define('ext.wikia.adEngine.adConfig', [
 		'INCONTENT_2A': true,
 		'INCONTENT_2B': true,
 		'INCONTENT_2C': true,
-		'INCONTENT_BOXAD_1': true,
-		'INCONTENT_BOXAD_2': true,
 		'INVISIBLE_SKIN': true,
 		'LEFT_SKYSCRAPER_2': true,
 		'MIDDLE_RIGHT_BOXAD': true,
