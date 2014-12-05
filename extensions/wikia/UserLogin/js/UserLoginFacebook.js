@@ -1,8 +1,12 @@
 /* global UserLoginModal, wgCanonicalSpecialPageName, wgMainPageTitle, wgArticlePath */
+
+// TODO: this is now an AMD module, which causes race conditions. Either revert that change or fix where this is called to require it as such.
+
+
 /**
  * Handle
  */
-require([
+define('wikia.userLoginFacebook', [
 	'wikia.tracker',
 	'wikia.querystring',
 	'wikia.ui.factory'
@@ -117,16 +121,16 @@ require([
 		 * @param {Object} resp Response object from FacebookSignupController::index
 		 */
 		checkAccountCallback: function (resp) {
-			var loginCallback;
-
 			// end ajax call performance tracking
 			this.bucky.timer.stop('loginCallbackAjax');
 
-			loginCallback = this.callbacks['login-success'] || '';
+			// if extensions have specified a callback, run it after successful login
+			this.loginCallback = typeof this.callbacks['login-success'] === 'function' ?
+				this.callbacks['login-success'] : false;
 
 			// logged in using FB account, reload the page or callback
 			if (resp.loggedIn) {
-				this.loggedInCallback(loginCallback);
+				this.loggedInCallback();
 
 			// some error occurred
 			} else if (resp.loginAborted) {
@@ -134,17 +138,16 @@ require([
 
 			// user not logged in, show the login/signup modal
 			} else {
-				this.showModal(resp, loginCallback);
+				this.showModal(resp);
 			}
 		},
 
 		/**
 		 * This runs after has signed in with facebook and is already registered with Wikia.
-		 * @param {function} [callback] Called when outside extension has specified a callback
 		 */
-		loggedInCallback: function (callback) {
-			if (callback && typeof callback === 'function') {
-				callback();
+		loggedInCallback: function () {
+			if (this.loginCallback) {
+				this.loginCallback();
 			} else {
 				this.bucky.timer.start('loggedInCallback');
 				var qString = new QueryString(),
@@ -166,9 +169,8 @@ require([
 		 * Show a modal (to logged out users) for logging in or signing up with Wikia
 		 * after a successful Facebook connection.
 		 * @param {Object} resp Response object from FacebookSignupController::index
-		 * @param {function} [callback]
 		 */
-		showModal: function (resp, callback) {
+		showModal: function (resp) {
 			var self = this;
 
 			this.bucky.timer.start('loggedOutCallback');
@@ -211,8 +213,8 @@ require([
 						});
 					});
 
-					self.createSignupForm($modal, callback);
-					self.createLoginForm($modal, callback);
+					self.createSignupForm($modal);
+					self.createLoginForm($modal);
 
 					$modal.on('click', '.submit-pane .extiw', function (event) {
 						self.track({
@@ -237,53 +239,38 @@ require([
 
 		/**
 		 * Handle JS for the signup form portion of the modal
-		 * @TODO: probably shouldn't pass callback through all these functions
 		 * @param {Object} $modal jQuery DOM element of the open modal
-		 * @param {function} [callback] Optional callback once login is complete
 		 */
-		createSignupForm: function ($modal, callback) {
-			var self = this,
-				signupForm;
+		createSignupForm: function ($modal) {
+			var self = this;
 
-			signupForm = new window.UserSignupFacebookForm($modal.find('.UserLoginFacebookLeft'), {
+			this.signupForm = new window.UserSignupFacebookForm($modal.find('.UserLoginFacebookLeft'), {
 				ajaxLogin: true,
 				skipFocus: true,
 				callback: function () {
 					// Track FB Connect Sign Up
 					self.track({
 						action: self.actions.SUBMIT,
-						label: 'facebook-login-modal'
+						label: 'facebook-signup-modal'
 					});
 
 					// run logged in callback or redirect to the specified location
-					if (callback && typeof callback === 'function') {
-						callback();
+					if (self.loginCallback) {
+						self.loginCallback();
 					} else {
 						window.location.href = this.returnToUrl;
 					}
 				}
 			});
-
-			this.applyAjaxForm(signupForm);
-
-			// TODO: check if we need to set these properties
-			// set reference to form object
-			//self.form = form;
-			// get WikiaForm object from form
-			//wikiaForm = form.wikiaForm;
-			// and set reference to WikiaForm object
-			//self.wikiaForm = wikiaForm;
 		},
 
-		createLoginForm: function ($modal, callback) {
-			var self = this,
-				loginForm;
+		createLoginForm: function ($modal) {
+			var self = this;
 
-			loginForm = new window.UserLoginFacebookForm($modal.find('.UserLoginFacebookRight'), {
+			this.loginForm = new window.UserLoginFacebookForm($modal.find('.UserLoginFacebookRight'), {
 				ajaxLogin: true,
 				skipFocus: true,
 				callback: function () {
-					// TODO: update tracking
 					// Track FB Connect login
 					self.track({
 						action: self.actions.SUBMIT,
@@ -291,38 +278,13 @@ require([
 					});
 
 					// run logged in callback or redirect to the specified location
-					if (callback && typeof callback === 'function') {
-						callback();
+					if (self.loginCallback) {
+						self.loginCallback();
 					} else {
 						window.location.href = this.returnToUrl;
 					}
 				}
 			});
-
-			// TODO: see if this is necessary (check in with armon)
-			this.applyAjaxForm(loginForm);
-		},
-
-		/**
-		 * Apply UserSignupAjaxForm validation to a UserLoginAjaxForm instance
-		 * @param {Object} form Form with a base class of UserLoginAjaxForm
-		 */
-		applyAjaxForm: function (form) {
-//			var ajaxForm = new window.UserSignupAjaxForm(
-//				form.wikiaForm,
-//				null,
-//				form.el.find('input[type=submit]') // todo: use form.submitButton?
-//			);
-//
-////			attach validation handlers
-////			TODO: see if we need this or if we can just validate on submit
-////			TODO: check with armon about the error: we could not find the
-////			username you entered - when the password is incorrect
-//			form.el.on(
-//				'blur',
-//				'input[name=username], input[name=password]', // todo: use form properties?
-//				$.proxy(ajaxForm.validateInput, ajaxForm)
-//			);
 		},
 
 		/**
@@ -337,5 +299,5 @@ require([
 		}
 	};
 
-	window.UserLoginFacebook = UserLoginFacebook;
+	return UserLoginFacebook;
 });
