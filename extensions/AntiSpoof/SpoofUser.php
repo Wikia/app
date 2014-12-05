@@ -52,9 +52,10 @@ class SpoofUser {
 
 		// Join against the user table to ensure that we skip stray
 		// entries left after an account is renamed or otherwise munged.
-		/* Wikia Change - begin */
+		/* Wikia Change - begin : Quote the table names, otherwise the select method
+		   tries to prefix the tablenames with the current user DB */
 		$spoofedUsers = $dbr->select(
-			array( 'spoofuser', 'user' ),
+			array( '`spoofuser`', '`user`' ),
 			array( 'user_name' ),
 			array(
 				'su_normalized' => $this->mNormalized,
@@ -139,7 +140,7 @@ class SpoofUser {
 	 * @return DatabaseBase
 	 */
 	protected static function getDBSlave() {
-		return wfGetDB( DB_SLAVE );
+		return wfGetDB( DB_SLAVE, [], F::app()->wg->ExternalSharedDB );
 	}
 
 	/**
@@ -147,7 +148,7 @@ class SpoofUser {
 	 * @return DatabaseBase
 	 */
 	protected static function getDBMaster() {
-		return wfGetDB( DB_MASTER );
+		return wfGetDB( DB_MASTER, [], F::app()->wg->ExternalSharedDB );
 	}
 
 	/**
