@@ -10,7 +10,7 @@
 		navHeight = 57,
 		navVisible = navHeight,
 		isUsed,
-		isVenus = $('body').hasClass('skin-venus'),
+		isVenus = win.skin === 'venus',
 		cssAttr = isVenus ? 'top' : 'marginTop',
 		cssStartingValue = isVenus ? 0 : -navHeight,
 		previousScrollTop = win.pageYOffset,
