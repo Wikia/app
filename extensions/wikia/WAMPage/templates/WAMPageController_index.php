@@ -80,22 +80,30 @@
 				<th><?= wfMessage('wam-index-header-score')->text() ?></th>
 				<th><?= wfMessage('wam-index-header-peak-rank')->text() ?></th>
 				<th><?= wfMessage('wam-index-header-wiki-name')->text() ?></th>
-				<th><?= wfMessage('wam-index-header-vertical')->text() ?></th>
-				<th><?= wfMessage('wam-index-header-vertical-rank')->text() ?></th>
-	            <th><?= wfMessage('wam-index-header-admins')->text() ?></th>
+				<? if ( $selectedVerticalId == 0 ) : ?>
+					<th><?= wfMessage('wam-index-header-vertical')->text() ?></th>
+					<th><?= wfMessage('wam-index-header-vertical-rank')->text() ?></th>
+				<? endif; ?>
+				<th><?= wfMessage('wam-index-header-admins')->text() ?></th>
 			</tr>
 
 			<? if($indexWikis['wam_index']): ?>
 				<? foreach ($indexWikis['wam_index'] as $wiki): ?>
 					<tr>
-						<td><?=$wiki['wam_rank']?></td>
+						<? if ( $selectedVerticalId == 0 ) : ?>
+							<td><?=$wiki['wam_rank']?></td>
+						<? else: ?>
+							<td><?=$wiki['vertical_wam_rank']?></td>
+						<? endif; ?>
 						<td class="score <?=$wiki['change']?>">
 							<?= $wg->Lang->formatNum(number_format($wiki['wam'], WAMPageModel::SCORE_ROUND_PRECISION))?>
 						</td>
-						<td><?=$wiki['peak_wam_rank']?></td>
+						<td><?=$wiki['peak_vertical_wam_rank']?></td>
 						<td><a href="http://<?=$wiki['url']?>"><?=$wiki['url']?></a></td>
-						<td><?=$wiki['vertical_name']?></td>
-						<td><?=$wiki['hub_wam_rank']?></td>
+						<? if ( $selectedVerticalId == 0 ) : ?>
+							<td><?=$wiki['vertical_name']?></td>
+							<td><?=$wiki['vertical_wam_rank']?></td>
+						<? endif; ?>
 						<td class="admins">
 							<? if(!empty($wiki['admins'])): ?>
 								<ul>

@@ -94,7 +94,7 @@ class WAMService extends Service {
 	 *
 	 * @return array
 	 */
-	public function getWamIndex ($inputOptions) {
+	public function getWamIndex( $inputOptions ) {
 		$inputOptions += $this->defaultIndexOptions;
 
 		$inputOptions['currentTimestamp'] = $inputOptions['currentTimestamp'] ? strtotime('00:00 -1 day', $inputOptions['currentTimestamp']) : strtotime('00:00 -1 day');
@@ -146,7 +146,6 @@ class WAMService extends Service {
 		$count = $resultCount->fetchObject();
 		$wamIndex['wam_results_total'] = $count->wam_results_total;
 		$wamIndex['wam_index_date'] = $inputOptions['currentTimestamp'];
-
 
 		wfProfileOut(__METHOD__);
 
@@ -312,8 +311,10 @@ class WAMService extends Service {
 			'fw1.wam',
 			'fw1.wam_rank',
 			'fw1.hub_wam_rank',
+			'fw1.vertical_wam_rank',
 			'fw1.peak_wam_rank',
 			'fw1.peak_hub_wam_rank',
+			'fw1.peak_vertical_wam_rank',
 			'fw1.top_1k_days',
 			'fw1.top_1k_weeks',
 			'fw1.first_peak',
@@ -396,6 +397,6 @@ class WAMService extends Service {
 
 	protected function getDB() {
 		$app = F::app();
-		return wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+		return wfGetDB(DB_MASTER, array(), $app->wg->DatamartDB);
 	}
 }
