@@ -55,7 +55,7 @@ $wgAPIModules['visualeditoredit'] = 'ApiVisualEditorEdit';
 
 // Register Hooks
 $wgHooks['BeforePageDisplay'][] = 'VisualEditorHooks::onBeforePageDisplay';
-$wgHooks['DoEditSectionLink'][] = 'VisualEditorHooks::onDoEditSectionLink';
+//$wgHooks['DoEditSectionLink'][] = 'VisualEditorHooks::onDoEditSectionLink';
 $wgHooks['GetBetaFeaturePreferences'][] = 'VisualEditorHooks::onGetBetaPreferences';
 $wgHooks['GetPreferences'][] = 'VisualEditorHooks::onGetPreferences';
 $wgHooks['ListDefinedTags'][] = 'VisualEditorHooks::onListDefinedTags';
@@ -1261,9 +1261,6 @@ $wgVisualEditorNamespaces = array_merge( $wgContentNamespaces, array( NS_USER ) 
 
 // Whether to enable the (experimental for now) TOC widget
 $wgVisualEditorEnableTocWidget = false;
-
-// List of skins VisualEditor integration supports
-$wgVisualEditorSupportedSkins = array( 'oasis', 'venus' );
 
 // List of browsers VisualEditor is incompatibe with
 // See jQuery.client for specification
