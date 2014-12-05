@@ -36,7 +36,7 @@ class SpoofUser {
 
 	/**
 	 * Get the normalized key form
-	 * @return string|nuyll
+	 * @return string|null
 	 */
 	public function getNormalized() {
 		return $this->mNormalized;
@@ -45,16 +45,17 @@ class SpoofUser {
 	/**
 	 * Does the username pass Unicode legality and script-mixing checks?
 	 *
-	 * @return array empty if no conflict, or array containing conflicting usernames
+	 * @return array empty if no conflict, or array containing conflicting user names
 	 */
 	public function getConflicts() {
 		$dbr = self::getDBSlave();
 
 		// Join against the user table to ensure that we skip stray
 		// entries left after an account is renamed or otherwise munged.
-		/* Wikia Change - begin */
+		/* Wikia Change - begin : Quote the table names, otherwise the select method
+		   tries to prefix the tablenames with the current user DB */
 		$spoofedUsers = $dbr->select(
-			array( 'specials.spoofuser', 'events_local_users' ),
+			array( '`spoofuser`', '`user`' ),
 			array( 'user_name' ),
 			array(
 				'su_normalized' => $this->mNormalized,
@@ -139,7 +140,7 @@ class SpoofUser {
 	 * @return DatabaseBase
 	 */
 	protected static function getDBSlave() {
-		return wfGetDB( DB_SLAVE, array(), 'specials' );
+		return wfGetDB( DB_SLAVE, [], F::app()->wg->ExternalSharedDB );
 	}
 
 	/**
@@ -147,7 +148,7 @@ class SpoofUser {
 	 * @return DatabaseBase
 	 */
 	protected static function getDBMaster() {
-		return wfGetDB( DB_MASTER, array(), 'specials' );
+		return wfGetDB( DB_MASTER, [], F::app()->wg->ExternalSharedDB );
 	}
 
 	/**
