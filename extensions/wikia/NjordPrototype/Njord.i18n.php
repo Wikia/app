@@ -19,18 +19,17 @@ $messages['en'] = array(
 
 $messages['qqq'] = array(
 	//template messages
-	'hero-image-drop-here' => 'drop image here message during drag & drop action',
-	'hero-image-add-image' => 'add image call to action link',
-	'hero-image-update-image' => 'update image call to action link',
-	'hero-image-dd-image' => 'information about drag & drop function being enabled',
-	'hero-image-position-image' => 'after upload, reposition image call to action information',
-	'hero-image-discard-btn' => 'discard button text',
-	'hero-image-publish-btn' => 'publish button text',
-	'hero-image-default-title' => 'default main title, displayed when title not provided',
-	'hero-image-save-image' => 'save image confirmation message',
-	'hero-image-default-description' => 'default description, displayed when description not provided',
+	'hero-image-drop-here' => 'call to action message displayed as overlay on hero image module during drag action',
+	'hero-image-add-image' => 'call to action message link displayed when hero image not set, after click will open upload image window',
+	'hero-image-update-image' => 'call to action message link displayed when hero image is set, after click will open upload image window',
+	'hero-image-dd-image' => 'information message displayed on hero module about drag & drop function being enabled',
+	'hero-image-position-image' => 'call to action message, displayed on hero module after image upload is completed and reposition is enabled',
+	'hero-image-discard-btn' => 'hero module discard button label',
+	'hero-image-publish-btn' => 'hero module publish button label',
+	'hero-image-default-title' => 'hero module default main title, displayed when title not provided',
+	'hero-image-save-image' => 'message displayed after image upload, together with publish/discard buttons, describes upload image future usage',
+	'hero-image-default-description' => 'hero module default description, displayed when description not provided',
 	//js messages
-	'hero-image-error' => 'error modal title',
-	'hero-image-unknown-error' => 'unknown error message',
-	'hero-image-description-error' => 'description saving error',
+	'hero-image-error' => 'hero module error modal title',
+	'hero-image-unknown-error' => 'hero module unknown error message displayed in modal',
 );
