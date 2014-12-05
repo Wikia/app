@@ -83,7 +83,8 @@ class ArticleNavigationController extends WikiaController {
 				$data = [
 					'href' => $contentAction['href'],
 					'title' => $contentAction['text'],
-					'trackingId' => $contentAction['id']
+					'id' => $contentAction['id'],
+					'accesskey' => $contentAction['accesskey']
 				];
 
 				if ( $wgUser->isAnon() &&

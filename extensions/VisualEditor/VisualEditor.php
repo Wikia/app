@@ -1262,9 +1262,6 @@ $wgVisualEditorNamespaces = array_merge( $wgContentNamespaces, array( NS_USER ) 
 // Whether to enable the (experimental for now) TOC widget
 $wgVisualEditorEnableTocWidget = false;
 
-// List of skins VisualEditor integration supports
-$wgVisualEditorSupportedSkins = array( 'oasis', 'venus' );
-
 // List of browsers VisualEditor is incompatibe with
 // See jQuery.client for specification
 $wgVisualEditorBrowserBlacklist = array(
