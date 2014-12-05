@@ -992,6 +992,9 @@ class CreateWiki {
 		$this->mWFSettingVars['wgEnableSectionEdit']      = true;
 		$this->mWFSettingVars['wgEnableSwiftFileBackend'] = true;
 		$this->mWFSettingVars['wgOasisLoadCommonCSS']     = true;
+		if ( $this->mNewWiki->language == 'en' ) {
+			$this->mWFSettingVars['wgEnableNjordExt'] = true;
+		}
 
 		// rt#60223: colon allowed in sitename, breaks project namespace
 		if( mb_strpos( $this->mWFSettingVars['wgSitename'], ':' ) !== false ) {
