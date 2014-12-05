@@ -24,7 +24,7 @@ define('wikia.imageServing', function () {
 		} else {
 			// advanced face recognition algorithm ported from ImageServing.class.php
 			offsetYFactor = (expectedWidth / expectedHeight - 1) * 0.1;
-			yOffset1 = Math.round(expectedHeight * offsetYFactor);
+			yOffset1 = Math.round(originalHeight * offsetYFactor);
 
 			yOffset2 = originalProportionHeight + yOffset1;
 		}
