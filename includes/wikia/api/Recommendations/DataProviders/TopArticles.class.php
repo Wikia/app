@@ -22,7 +22,7 @@ class TopArticles implements IDataProvider {
 	 */
 	const MAX_LIMIT = 10;
 
-	const MCACHE_VERSION = '1.01';
+	const MCACHE_VERSION = '1.02';
 
 	/**
 	 * @param int $articleId
