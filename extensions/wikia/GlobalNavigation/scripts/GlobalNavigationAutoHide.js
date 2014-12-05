@@ -13,7 +13,7 @@
 		isVenus = $('body').hasClass('skin-venus'),
 		cssAttr = isVenus ? 'top' : 'marginTop',
 		cssStartingValue = isVenus ? 0 : -navHeight,
-		previousScrollTop = win.scrollY,
+		previousScrollTop = win.pageYOffset,
 		currentState,
 		scrollDelta,
 		scrollDown,
@@ -21,7 +21,7 @@
 
 
 	function globalNavScroll() {
-		currentState = win.scrollY;
+		currentState = win.pageYOffset;
 		scrollValue = currentState - previousScrollTop;
 		scrollDown = scrollValue > 0;
 		scrollDelta = Math.abs(scrollValue);
