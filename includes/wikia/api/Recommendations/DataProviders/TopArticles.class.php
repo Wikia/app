@@ -22,7 +22,7 @@ class TopArticles implements IDataProvider {
 	 */
 	const MAX_LIMIT = 10;
 
-	const MCACHE_VERSION = '1.02';
+	const MCACHE_VERSION = '1.03';
 
 	/**
 	 * @param int $articleId
@@ -151,11 +151,11 @@ class TopArticles implements IDataProvider {
 
 				$media = [
 					'thumbUrl' => $articleDetails['thumbnail'],
-					'originalWidth' => !empty( $articleDetails['original_dimension']['width'])
-							? (int) $articleDetails['original_dimension']['width']
+					'originalWidth' => !empty( $articleDetails['original_dimensions']['width'])
+							? (int) $articleDetails['original_dimensions']['width']
 							: null,
-					'originalHeight' => !empty( $articleDetails['original_dimension']['height'])
-							? (int) $articleDetails['original_dimension']['height']
+					'originalHeight' => !empty( $articleDetails['original_dimensions']['height'])
+							? (int) $articleDetails['original_dimensions']['height']
 							: null,
 				];
 
