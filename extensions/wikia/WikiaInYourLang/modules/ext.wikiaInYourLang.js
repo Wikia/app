@@ -27,7 +27,7 @@ require(
 			targetLanguage = getTargetLanguage();
 
 		function init() {
-			if (targetLanguage !== false) {
+			if (targetLanguage !== false && targetLanguage != w.wgContentLanguage) {
 				// Check local browser cache to see if a request has been sent
 				// in the last month and if the notification has been shown to him.
 				// Both have to be !== true to continue.

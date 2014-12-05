@@ -6,6 +6,8 @@
 
 class WikiaInYourLangController extends WikiaController {
 
+	const WIKIAINYOURLANG_WIKIA_DOMAIN = "wikia.com";
+
 	/**
 	 * Searches the city_list table for the given wikia in the target language.
 	 * Takes the currentUrl and targetLanguage parameters from the Request object.
@@ -59,6 +61,8 @@ class WikiaInYourLangController extends WikiaController {
 			$this->response->setVal( 'success', false );
 		}
 
+		$this->response->setVal( 'query', $sWikiDomain );
+
 		/**
 		 * Cache the response aggresively
 		 */
@@ -77,20 +81,27 @@ class WikiaInYourLangController extends WikiaController {
 	private function getWikiDomain( $sCurrentUrl ) {
 		$aParsed = parse_url( $sCurrentUrl );
 		$sHost = $aParsed['host'];
-		$regExp = "/(([a-z]{2,3}|[a-z]{2}\-[a-z]{2})\.)?([^\.]+\.[a-z]+\.[a-z]+)/i";
+		$regExp = "/(([a-z]{2,3}|[a-z]{2}\-[a-z]{2})\.)?([^\.]+\.)(.*)/i";
 		/**
-		 * preg_match returns similar array:
+		 * preg_match returns similar array as a third parameter:
 		 * [
 		 * 	0 => zh.example.wikia.com,
 		 * 	1 => (zh. | empty),
 		 * 	2 => (zh | empty),
-		 * 	3 => example.wikia.com
+		 * 	3 => example.
+		 * 	4 => ( wikia.com | adamk.wikia-dev.com )
 		 * ]
 		 * [3] is a domain without the language prefix
 		 * @var Array
 		 */
-		$aPreged = preg_match( $regExp, $sHost );
-		$sWikiDomain = $aPreged[3];
+		$aMatches = [];
+		$aPreged = preg_match( $regExp, $sHost, $aMatches );
+		/**
+		 * Domains are stored only with an original domain - wikia.com
+		 * This allows the extension to work on devboxes
+		 */
+		$sWikiDomain = $aMatches[3] . self::WIKIAINYOURLANG_WIKIA_DOMAIN;
+
 		return $sWikiDomain;
 	}
 
