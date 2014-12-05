@@ -6,7 +6,7 @@
 
 class WikiaInYourLangController extends WikiaController {
 
-	const WIKIAINYOURLANG_WIKIA_DOMAIN = "wikia.com";
+	const WIKIAINYOURLANG_WIKIA_DOMAIN = 'wikia.com';
 
 	/**
 	 * Searches the city_list table for the given wikia in the target language.
@@ -37,31 +37,35 @@ class WikiaInYourLangController extends WikiaController {
 		 * 3. Get the native wikia's ID from the city_domains table
 		 */
 		$sWikiDomain = $this->getWikiDomain( $sCurrentUrl );
-		$sNativeWikiDomain = $this->getNativeWikiDomain( $sWikiDomain, $sTargetLanguage );
-		$iNativeWikiId = $this->getWikiIdByDomain( $sNativeWikiDomain );
+		if ( $sWikiDomain !== false ) {
+			$sNativeWikiDomain = $this->getNativeWikiDomain( $sWikiDomain, $sTargetLanguage );
+			$iNativeWikiId = $this->getWikiIdByDomain( $sNativeWikiDomain );
 
-		/**
-		 * If a wikia is found - send a response with its url and sitename.
-		 * Send success=false otherwise.
-		 */
-		if ( $iNativeWikiId > 0 ) {
-			$oNativeWiki = WikiFactory::getWikiById( $iNativeWikiId );
+			/**
+			 * If a wikia is found - send a response with its url and sitename.
+			 * Send success=false otherwise.
+			 */
+			if ( $iNativeWikiId > 0 ) {
+				$oNativeWiki = WikiFactory::getWikiById( $iNativeWikiId );
 
-			$aMessageParams = [
-				$sCurrentSitename,
-				$oNativeWiki->city_url,
-				$oNativeWiki->city_title,
-			];
+				$aMessageParams = [
+					$sCurrentSitename,
+					$oNativeWiki->city_url,
+					$oNativeWiki->city_title,
+				];
 
-			$sMessage = $this->prepareMessage( $sTargetLanguage, $aMessageParams );
+				$sMessage = $this->prepareMessage( $sTargetLanguage, $aMessageParams );
 
-			$this->response->setVal( 'success', true );
-			$this->response->setVal( 'message', $sMessage );
+				$this->response->setVal( 'success', true );
+				$this->response->setVal( 'message', $sMessage );
+			} else {
+				$this->response->setVal( 'success', false );
+				$this->response->setVal( 'error', 'A native wikia not found.' );
+			}
 		} else {
 			$this->response->setVal( 'success', false );
+			$this->response->setVal( 'error', 'An invalid URL passed for parsing.' );
 		}
-
-		$this->response->setVal( 'query', $sWikiDomain );
 
 		/**
 		 * Cache the response aggresively
@@ -95,12 +99,16 @@ class WikiaInYourLangController extends WikiaController {
 		 * @var Array
 		 */
 		$aMatches = [];
-		$aPreged = preg_match( $regExp, $sHost, $aMatches );
+		$iMatchesCount = preg_match( $regExp, $sHost, $aMatches );
 		/**
 		 * Domains are stored only with an original domain - wikia.com
 		 * This allows the extension to work on devboxes
 		 */
-		$sWikiDomain = $aMatches[3] . self::WIKIAINYOURLANG_WIKIA_DOMAIN;
+		if ( $iMatchesCount == 1 ) {
+			$sWikiDomain = $aMatches[3] . self::WIKIAINYOURLANG_WIKIA_DOMAIN;
+		} else {
+			$sWikiDomain = false;
+		}
 
 		return $sWikiDomain;
 	}
