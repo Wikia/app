@@ -80,5 +80,15 @@
 			}
 		};
 	}
+
+	function showAllNav() {
+		animateObj[cssAttr] += navHeight - navVisible;
+		$globalNav.animate(animateObj, 100, 'linear');
+		navVisible = navHeight;
+	}
+
+	$globalNav.on('hubs-menu-opened', showAllNav);
+	$globalNav.on('user-login-menu-opened', showAllNav);
+	$searchInput.on('focus', showAllNav);
 	$(win).on('scroll', throttle(globalNavScroll, 100));
 })(window, jQuery);
