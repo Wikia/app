@@ -1,3 +1,5 @@
+/* global  wgScriptPath, UserSignup */
+
 /**
  * UserSignupAjaxForm is contains business logic for ajax signup validation
  * wikiaForm - instance of WikiaForm
@@ -21,12 +23,13 @@ UserSignupAjaxForm.prototype.validateInput = function (e) {
 
 	var el = $(e.target),
 		paramName = el.attr('name'),
-		params = this.getDefaultParamsForAjax();
+		params = this.getDefaultParamsForAjax(),
+		proxyObj;
 
 	params.field = paramName;
 	params[paramName] = el.val();
 
-	var proxyObj = {
+	proxyObj = {
 		'paramName': paramName,
 		'form': this
 	};
