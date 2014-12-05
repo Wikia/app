@@ -21,11 +21,7 @@ $wgAutoloadClasses[ 'NjordController' ] = $dir . '/NjordController.class.php';
 
 $wgHooks[ 'ParserFirstCallInit' ][ ] = 'NjordHooks::onParserFirstCallInit';
 
-if ( !empty( $wgEnableNjordExtOnNewWikias ) ) {
-	$wgHooks[ 'CreateWikiLocalJob-complete' ][ ] = 'NjordHooks::onCreateNewWikiComplete';
-}
-
-$wgAvailableRights[ ] = 'njordeditmode';
+$wgAvailableRights[] = 'njordeditmode';
 
 $wgGroupPermissions[ '*' ][ 'njordeditmode' ] = false;
 $wgGroupPermissions[ 'staff' ][ 'njordeditmode' ] = true;

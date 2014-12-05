@@ -66,8 +66,8 @@ class MediaGalleryModel extends WikiaObject {
 
 		if ( !$file instanceof File ) {
 			WikiaLogger::instance()->error(
-				'MediaGalleryModel',
-				'File with title: ' . $item['title'] . 'doesn\'t exist'
+				'File with title: ' . $item['title'] . 'doesn\'t exist',
+				[ 'class' => __CLASS__ ]
 			);
 			return null;
 		}
@@ -80,6 +80,15 @@ class MediaGalleryModel extends WikiaObject {
 			'height' => $dimension,
 		];
 		$thumb = $file->transform( $dimensions );
+
+		if ( !$thumb instanceof ThumbnailImage ) {
+			WikiaLogger::instance()->error(
+				'ThumbnailImage from title: ' . $item['title'] . ' couldn\'t be created.',
+				[ 'thumbClass' => get_class( $thumb ) ]
+			);
+			return null;
+		}
+
 		$thumb->setUrl( $thumbUrl );
 
 		$thumbnail = $this->app->renderView(
