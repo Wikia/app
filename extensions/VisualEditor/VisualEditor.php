@@ -55,7 +55,7 @@ $wgAPIModules['visualeditoredit'] = 'ApiVisualEditorEdit';
 
 // Register Hooks
 $wgHooks['BeforePageDisplay'][] = 'VisualEditorHooks::onBeforePageDisplay';
-$wgHooks['DoEditSectionLink'][] = 'VisualEditorHooks::onDoEditSectionLink';
+//$wgHooks['DoEditSectionLink'][] = 'VisualEditorHooks::onDoEditSectionLink';
 $wgHooks['GetBetaFeaturePreferences'][] = 'VisualEditorHooks::onGetBetaPreferences';
 $wgHooks['GetPreferences'][] = 'VisualEditorHooks::onGetPreferences';
 $wgHooks['ListDefinedTags'][] = 'VisualEditorHooks::onListDefinedTags';
