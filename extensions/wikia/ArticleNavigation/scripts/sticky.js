@@ -60,7 +60,7 @@ require([
 			case 'topScrollLimit':
 			case 'topSticked':
 				if ($('.mw-content-text').css('clear') === 'none') {
-					return value + $('#WikiaArticle').find('> header').outerHeight(true);
+					return value + $('.article-header').outerHeight(true);
 				}
 			// fall-through on purpose!
 			default:
