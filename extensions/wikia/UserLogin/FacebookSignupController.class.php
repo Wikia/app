@@ -167,72 +167,35 @@ class FacebookSignupController extends WikiaController {
 	}
 
 	/**
-	 * Handler for Facebook Login for already connected users
-	 * TODO/FIXME error messages
+	 * Handler for Facebook Login (and connect) for users with a Wikia account
 	 *
 	 * @return null
-	 * @throws FacebookMapModelInvalidDataException
 	 */
 	public function login() {
 		$wg = $this->wg;
 
-		$wikiaUserName = $wg->Request->getText( 'username' );
-		$wikiaPassword = $wg->Request->getText( 'password' );
+		$wikiaUserName = $wg->Request->getVal( 'username' );
+		$wikiaPassword = $wg->Request->getVal( 'password' );
 
-		if ( !$wikiaUserName || !$wikiaPassword ) {
-			$errorCode = $wikiaUserName ?
-				'userlogin-error-wrongpasswordempty' :
-				'userlogin-error-noname';
-
-			$this->response->setData( [
-				'result' => 'error',
-				'message' => wfMessage( $errorCode )->escaped(),
-			] );
-			return;
-		}
-
-		$user = \User::newFromName( $wikiaUserName );
-		if ( !$user || !$user->checkPassword( $wikiaPassword ) ) {
-			$this->response->setData( [
-				'result' => 'error',
-				'message' => wfMessage( 'userlogin-error-wrongcredentials' )->escaped(),
-			] );
+		$user = $this->getValidWikiaUser( $wikiaUserName, $wikiaPassword );
+		if ( !$user ) {
 			return;
 		}
 
 		// Log the user in with existing wikia account
 		// Create the fb/Wikia user mapping if not already created
 
-		$fbUserId = FacebookClient::getInstance()->getUserId();
-
-		// Returns an existing mapping or attempts to create one
-		$userMap = \FacebookMapModel::createUserMapping( $user->getId(), $fbUserId );
-
-		if ( !$userMap ) {
-			// TODO/FIXME: show proper error message @see UC-116
-			if ( empty( $fbUserId ) ) {
-				$errorMessage = 'There was a problem detecting your Facebook account; please login to Facebook and try again.';
-			} else {
-				$errorMessage = 'There was a problem connecting your Wikia account to Facebook.';
-			}
-
-			$this->response->setData(
-				[
-					'result' => 'error',
-					'message' => $errorMessage,
-				]
-			);
+		$fbUserId = $this->getValidFbUserId();
+		if ( !$fbUserId ) {
 			return;
 		}
 
-		// Setup the session as is done when a request first starts
-		if ( !$wg->SessionStarted ) {
-			wfSetupSession();
+		$map = $this->createUserMap( $user->getId(), $fbUserId );
+		if ( !$map ) {
+			return;
 		}
-		$user->setCookies();
 
-		// Store the user in the global user object
-		$wg->User = $user;
+		$this->setupUserSession( $user );
 
 		\FacebookClientHelper::track( 'facebook-link-existing' );
 
@@ -273,6 +236,97 @@ class FacebookSignupController extends WikiaController {
 				$this->response->setData($data);
 			}
 		}
+	}
+
+	/**
+	 * Create a user mapping to associate given Wikia user id with FB id
+	 *
+	 * @param $wikiaUserId
+	 * @param $fbUserId
+	 * @return FacebookMapModel|null
+	 */
+	protected function createUserMap( $wikiaUserId, $fbUserId ) {
+		// Returns an existing mapping or attempts to create one
+		$userMap = \FacebookMapModel::createUserMapping( $wikiaUserId, $fbUserId );
+
+		if ( !$userMap ) {
+			$this->setAjaxyErrorResponse( 'userlogin-error-fbconnect' );
+			return null;
+		}
+
+		return $userMap;
+	}
+
+	/**
+	 * Retrieve and validate Facebook user id
+	 *
+	 * @return int|null
+	 */
+	protected function getValidFbUserId() {
+		$fbUserId = FacebookClient::getInstance()->getUserId();
+		if ( !$fbUserId ) {
+			$this->setAjaxyErrorResponse( 'userlogin-error-invalidfacebook' );
+			return null;
+		}
+
+		return $fbUserId;
+	}
+
+	/**
+	 * Retrieves and validates the User object matching given credentials
+	 *
+	 * @param string $wikiaUserName
+	 * @param string $wikiaPassword
+	 * @return null|User
+	 */
+	protected function getValidWikiaUser( $wikiaUserName, $wikiaPassword ) {
+		if ( !$wikiaUserName || !$wikiaPassword ) {
+			$messageCode = $wikiaUserName ?
+				'userlogin-error-wrongpasswordempty' :
+				'userlogin-error-noname';
+
+			$this->setAjaxyErrorResponse( $messageCode );
+			return null;
+		}
+
+		$user = \User::newFromName( $wikiaUserName );
+		if ( !$user || !$user->checkPassword( $wikiaPassword ) ) {
+			$this->setAjaxyErrorResponse( 'userlogin-error-wrongcredentials' );
+			return null;
+		}
+
+		return $user;
+	}
+
+	/**
+	 * Setup session for user to be logged in
+	 *
+	 * @param User $user
+	 */
+	protected function setupUserSession( \User $user ) {
+		$wg = $this->wg;
+
+		// Setup the session as is done when a request first starts
+		if ( !$wg->SessionStarted ) {
+			wfSetupSession();
+		}
+
+		$user->setCookies();
+
+		// Store the user in the global user object
+		$wg->User = $user;
+	}
+
+	/**
+	 * Set a normalized error response meant for Ajax calls
+	 *
+	 * @param string $messageKey an i18n message key
+	 */
+	protected function setAjaxyErrorResponse( $messageKey ) {
+		$this->response->setData( [
+			'result' => 'error',
+			'message' => wfMessage( $messageKey )->escaped(),
+		] );
 	}
 
 	/**
