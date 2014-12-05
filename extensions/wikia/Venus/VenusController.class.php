@@ -81,7 +81,6 @@ class VenusController extends WikiaController {
 		$this->globalNavigation = $this->getGlobalNavigation();
 		$this->localNavigation = $this->getLocalNavigation();
 		$this->globalFooter = $this->getGlobalFooter();
-		$this->corporateFooter = $this->getCorporateFooter();
 		$this->categorySelect = $this->getCategorySelect();
 		$this->notifications = $this->app->renderView('Notifications', 'Confirmation');
 
@@ -211,19 +210,11 @@ class VenusController extends WikiaController {
 	}
 
 	public function getGlobalNavigation() {
-		global $wgEnableGlobalNavExt;
-
-		return !empty( $wgEnableGlobalNavExt ) ?
-			$this->app->renderView('GlobalNavigation', 'index') :
-			'';
+		return $this->app->renderView('GlobalNavigation', 'index');
 	}
 
 	private function getLocalNavigation() {
-		global $wgEnableLocalNavExt;
-
-		return !empty( $wgEnableLocalNavExt ) ?
-			$this->app->renderView('LocalNavigation', 'Index') :
-			'';
+		return $this->app->renderView('LocalNavigation', 'Index');
 	}
 
 	private function getGlobalFooter() {
@@ -234,13 +225,12 @@ class VenusController extends WikiaController {
 			'';
 	}
 
-	public function getCorporateFooter() {
-		//return $this->app->renderView('CorporateFooter', 'Index');
-		return '';
-	}
-
 	public function getRecentWikiActivity() {
-		return $this->app->renderView('RecentWikiActivity', 'index');
+		global $wgEnableRecentWikiActivity;
+
+		return !empty( $wgEnableRecentWikiActivity ) ?
+			$this->app->renderView('RecentWikiActivity', 'index') :
+			'';
 	}
 
 	public static function addBodyClass($class) {
@@ -277,7 +267,11 @@ class VenusController extends WikiaController {
 	}
 
 	private function getArticleNavigation() {
-		return $this->app->renderView( 'ArticleNavigation', 'index' );
+		global $wgEnableArticleNavExt;
+
+		return !empty( $wgEnableArticleNavExt ) ?
+			$this->app->renderView( 'ArticleNavigation', 'index' ) :
+			'';
 	}
 
 	public function header() {
