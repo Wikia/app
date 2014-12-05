@@ -978,6 +978,10 @@ class CreateWiki {
 	 *
 	 */
 	private function setWFVariables() {
+		global $wgEnableNjordExtOnNewWikias;
+		if ( !empty( $wgEnableNjordExtOnNewWikias ) && $this->mNewWiki->language == 'en' ) {
+			$this->mWFSettingVars['wgEnableNjordExt'] = true;
+		}
 		// WF Variables containter
 		$this->mWFSettingVars = array();
 
