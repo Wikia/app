@@ -39,7 +39,6 @@ define('wikia.imageServing', function () {
 
 	function getThumbUrl(thumbUrl, originalWidth, originalHeight, expectedWidth, expectedHeight) {
 		var cutParams = getCutParams(originalWidth, originalHeight, expectedWidth, expectedHeight);
-		console.log(thumbUrl);
 		return Vignette.getThumbURL(thumbUrl, 'window-crop', expectedWidth, expectedHeight, cutParams);
 	}
 
