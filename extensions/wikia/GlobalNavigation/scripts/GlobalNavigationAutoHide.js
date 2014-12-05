@@ -20,7 +20,7 @@
 		scrollValue;
 
 
-	function globalNavScroll() {
+	function globalNavScrollNoTouch() {
 		currentState = win.pageYOffset;
 		scrollValue = currentState - previousScrollTop;
 		scrollDown = scrollValue > 0;
@@ -59,6 +59,23 @@
 		previousScrollTop = currentState;
 	}
 
+	function globalNavScrollTouch() {
+		currentState = win.pageYOffset;
+		isUsed = $hubsEntryPoint.hasClass('active') ||
+			$accountNavigation.hasClass('active') ||
+			$searchInput.is(':focus');
+		if (!isUsed && Math.abs(currentState - previousScrollTop) > 10) {
+			if (currentState > previousScrollTop && previousScrollTop > 0) {
+				animateObj[cssAttr] = cssStartingValue - navHeight;
+				$globalNav.animate(animateObj, 100);
+			} else {
+				animateObj[cssAttr] = cssStartingValue;
+				$globalNav.animate(animateObj, 100);
+			}
+			previousScrollTop = currentState;
+		}
+	}
+
 	function throttle(fn, threshold) {
 		var last, deferTimer;
 
@@ -90,5 +107,9 @@
 	$globalNav.on('hubs-menu-opened', showAllNav);
 	$globalNav.on('user-login-menu-opened', showAllNav);
 	$searchInput.on('focus', showAllNav);
-	$(win).on('scroll', throttle(globalNavScroll, 100));
+	if ('ontouchstart' in win) {
+		$(win).on('scroll', throttle(globalNavScrollTouch, 100));
+	} else {
+		$(win).on('scroll', throttle(globalNavScrollNoTouch, 100));
+	}
 })(window, jQuery);
