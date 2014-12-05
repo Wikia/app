@@ -979,9 +979,6 @@ class CreateWiki {
 	 */
 	private function setWFVariables() {
 		global $wgEnableNjordExtOnNewWikias;
-		if ( !empty( $wgEnableNjordExtOnNewWikias ) && $this->mNewWiki->language == 'en' ) {
-			$this->mWFSettingVars['wgEnableNjordExt'] = true;
-		}
 		// WF Variables containter
 		$this->mWFSettingVars = array();
 
@@ -996,6 +993,9 @@ class CreateWiki {
 		$this->mWFSettingVars['wgEnableSectionEdit']      = true;
 		$this->mWFSettingVars['wgEnableSwiftFileBackend'] = true;
 		$this->mWFSettingVars['wgOasisLoadCommonCSS']     = true;
+		if ( !empty( $wgEnableNjordExtOnNewWikias ) && $this->mNewWiki->language == 'en' ) {
+			$this->mWFSettingVars['wgEnableNjordExt'] = true;
+		}
 
 		// rt#60223: colon allowed in sitename, breaks project namespace
 		if( mb_strpos( $this->mWFSettingVars['wgSitename'], ':' ) !== false ) {
