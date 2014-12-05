@@ -119,11 +119,21 @@ require(
 		}
 
 		function onNotificationClosed() {
+			// Track closing of a notification
+			var trackingParams = {
+				trackingMethod: 'ga',
+				category: 'wikia-in-your-lang',
+				action: tracker.ACTIONS.CLOSE,
+				label: targetLanguage + '-notification-close',
+			};
+			tracker.track(trackingParams);
+
 			cache.set(targetLanguage + 'WikiaInYourLangMessage', null);
 			cache.set('wikiaInYourLangNotificationShown', true);
 		}
 
 		function onLinkClick() {
+			// Track a click on a notification link
 			var trackingParams = {
 				trackingMethod: 'ga',
 				category: 'wikia-in-your-lang',
