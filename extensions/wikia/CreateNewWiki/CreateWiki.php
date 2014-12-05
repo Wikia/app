@@ -978,7 +978,6 @@ class CreateWiki {
 	 *
 	 */
 	private function setWFVariables() {
-		global $wgEnableNjordExtOnNewWikias;
 		// WF Variables containter
 		$this->mWFSettingVars = array();
 
@@ -993,7 +992,7 @@ class CreateWiki {
 		$this->mWFSettingVars['wgEnableSectionEdit']      = true;
 		$this->mWFSettingVars['wgEnableSwiftFileBackend'] = true;
 		$this->mWFSettingVars['wgOasisLoadCommonCSS']     = true;
-		if ( !empty( $wgEnableNjordExtOnNewWikias ) && $this->mNewWiki->language == 'en' ) {
+		if ( $this->mNewWiki->language == 'en' ) {
 			$this->mWFSettingVars['wgEnableNjordExt'] = true;
 		}
 
