@@ -52,8 +52,7 @@
 			$message = $( '<p>' )
 				.addClass( 'message' )
 				.text( mw.message( 'wikia-visualeditor-loading' ).plain() ),
-			$fade = $( '<div>' )
-				.addClass( 've-spinner-fade');
+			$fade = $( '<div>' ).addClass( 've-spinner-fade');
 
 		$content
 			.append( $icon )

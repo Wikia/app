@@ -144,7 +144,9 @@ ve.ui.Surface.prototype.initialize = function () {
 
 	this.getView().$element.after( this.$localOverlay );
 	if ( this.focusWidget ) {
-		$body.append( this.focusWidget.$element.hide() );
+		this.focusWidget.$element
+			.hide()
+			.appendTo( $body );
 	}
 	// Attach globalOverlay to the global <body>, not the local frame's <body>
 	$body.append( this.$globalOverlay );

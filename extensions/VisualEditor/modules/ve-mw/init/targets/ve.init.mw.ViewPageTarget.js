@@ -374,8 +374,6 @@ ve.init.mw.ViewPageTarget.prototype.onLoadError = function ( jqXHR, status ) {
  * @method
  */
 ve.init.mw.ViewPageTarget.prototype.onSurfaceReady = function () {
-	var timeout = mw.config.get( 'skin' ) === 'venus' ? 500 : 0;
-
 	this.activating = false;
 	this.surface.getModel().connect( this, {
 		'documentUpdate': function () {
@@ -395,31 +393,43 @@ ve.init.mw.ViewPageTarget.prototype.onSurfaceReady = function () {
 
 	// Update UI
 	this.hideSpinner();
-	setTimeout( ve.bind( function () {
-		this.transformPageTitle();
-		this.changeDocumentTitle();
-		this.hidePageContent();
+	if ( this.timeout ) {
+		setTimeout( ve.bind( this.afterHideSpinner, this ), this.timeout );
+	} else {
+		this.afterHideSpinner();
+	}
+};
 
-		this.surface.getFocusWidget().$element.show();
-		this.surface.getView().focus();
+ve.init.mw.ViewPageTarget.prototype.afterHideSpinner = function () {
+	this.transformPageTitle();
+	this.changeDocumentTitle();
+	this.hidePageContent();
 
-		this.setupToolbarButtons();
-		this.attachToolbarButtons();
-		this.restoreScrollPosition();
-		this.restoreEditSection();
-		this.setupBeforeUnloadHandler();
-		this.maybeShowDialogs();
-		if ( window.veTrack ) {
-			veTrack( { action: 've-edit-page-stop' } );
-		}
-		mw.hook( 've.activationComplete' ).fire();
+	this.surface.getFocusWidget().$element.show();
+	this.surface.getView().focus();
 
-		$( '.ve-spinner-fade' ).css( 'opacity', 0 );
-		setTimeout( ve.bind( function () {
-			this.toolbar.$element.removeClass( 'transition' );
-			$( '.ve-spinner-fade' ).hide();
-		}, this ), timeout );
-	}, this ), timeout );
+	this.setupToolbarButtons();
+	this.attachToolbarButtons();
+	this.restoreScrollPosition();
+	this.restoreEditSection();
+	this.setupBeforeUnloadHandler();
+	this.maybeShowDialogs();
+	if ( window.veTrack ) {
+		veTrack( { action: 've-edit-page-stop' } );
+	}
+	mw.hook( 've.activationComplete' ).fire();
+
+	$( '.ve-spinner-fade' ).css( 'opacity', 0 );
+	if ( this.timeout ) {
+		setTimeout( ve.bind( this.afterSpinnerFadeOpacity, this ), this.timeout );
+	} else {
+		this.afterSpinnerFadeOpacity();
+	}
+};
+
+ve.init.mw.ViewPageTarget.prototype.afterSpinnerFadeOpacity = function () {
+	this.toolbar.$element.removeClass( 'transition' );
+	$( '.ve-spinner-fade' ).hide();
 };
 
 /**
