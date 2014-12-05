@@ -16,12 +16,9 @@
 }
 
 /*
- * Hack: Adding 'html' ancestor to add greater specificity to selector.
- *
- * TODO: Load this file after:
- * resources/wikia/ui_components/button/css/button_default.scss
+ * Adding '.venus-button' ancestor to scope button style changes to desired areas.
 */
-html {
+.venus-button {
 	a.wikia-button,
 	input[type="submit"],
 	input[type="reset"],
