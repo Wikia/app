@@ -147,7 +147,7 @@ class VideosModule extends WikiaModel {
 	 * @param integer $numRequired - number of videos required
 	 * @return array - Premium videos related to the local wiki.
 	 */
-	public function getWikiRelatedVideosTopics( $numRequired ) {
+	public function getVideosRelatedToWiki( $numRequired ) {
 		wfProfileIn( __METHOD__ );
 		$log = WikiaLogger::instance();
 

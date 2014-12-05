@@ -36,7 +36,7 @@ class VideosModuleController extends WikiaController {
 		} elseif ( !empty( $this->wg->VideosModuleCategories )  ) {
 			$videos = $module->getVideosByCategory();
 		} else {
-			$videos = $module->getWikiRelatedVideosTopics( $numRequired );
+			$videos = $module->getVideosRelatedToWiki( $numRequired );
 		}
 
 		$this->result = "ok";
