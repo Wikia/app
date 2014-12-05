@@ -65,10 +65,11 @@ class VideosModuleHooks {
 
 		JSMessages::enqueuePackage( 'VideosModule', JSMessages::EXTERNAL );
 
-		$scripts = AssetsManager::getInstance()->getURL( 'videos_module_js' );
-
-		foreach( $scripts as $script ){
-			$out->addScript( "<script src='{$script}'></script>" );
+		if ( $app->checkSkin( 'venus' ) ) {
+			Wikia::addAssetsToOutput( 'videos_module_venus_js' );
+			Wikia::addAssetsToOutput( 'videos_module_venus_scss' );
+		} else {
+			Wikia::addAssetsToOutput( 'videos_module_js' );
 		}
 
 		$app->wg->VideosModuleAssetsLoaded = true;

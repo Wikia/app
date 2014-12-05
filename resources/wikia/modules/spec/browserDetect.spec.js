@@ -9,9 +9,18 @@ describe('browserDetect', function () {
 		},
 		browserDetectModule;
 
+	it('Validates Firefox userAgent', function() {
+		winMock.navigator.userAgent =
+			'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:33.0) Gecko/20100101 Firefox/33.0';
+
+		browserDetectModule = modules['wikia.browserDetect'](winMock);
+		expect(browserDetectModule.isFirefox()).toBe(true);
+	});
+
 	it('Check if position fixed is not supported for iPad with iOS7', function () {
 		winMock.navigator.userAgent =
 			'Mozilla/5.0 (iPad; CPU OS 7_0 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A465 Safari/9537.53';
+
 		browserDetectModule = modules['wikia.browserDetect'](winMock);
 		expect(browserDetectModule.isIOS7orLower()).toBe(true);
 	});
@@ -19,6 +28,7 @@ describe('browserDetect', function () {
 	it('Check if position fixed is not supported for iPad with iOS6', function () {
 		winMock.navigator.userAgent =
 			'Mozilla/5.0 (iPad; CPU OS 6_0 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A465 Safari/9537.53';
+
 		browserDetectModule = modules['wikia.browserDetect'](winMock);
 		expect(browserDetectModule.isIOS7orLower()).toBe(true);
 	});
@@ -26,6 +36,7 @@ describe('browserDetect', function () {
 	it('Check if position fixed is supported for iPad with iOS8', function () {
 		winMock.navigator.userAgent =
 			'Mozilla/5.0 (iPad; CPU OS 8_0 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A465 Safari/9537.53';
+
 		browserDetectModule = modules['wikia.browserDetect'](winMock);
 		expect(browserDetectModule.isIOS7orLower()).toBe(false);
 	});

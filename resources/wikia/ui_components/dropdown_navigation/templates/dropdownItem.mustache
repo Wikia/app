@@ -1,0 +1,12 @@
+<li {{#referenceId}}data-id="{{referenceId}}" {{/referenceId}} class="wikia-dropdown-nav-item">
+	<a href="{{href}}" title="{{#tooltip}}{{tooltip}}{{/tooltip}}{{^tooltip}}{{title}}{{/tooltip}}"
+		{{#trackingId}}data-tracking-id="{{trackingId}}" {{/trackingId}}
+		rel="{{#rel}}{{rel}}{{/rel}}{{^rel}}nofollow{{/rel}}"
+		{{#dataAttr}}
+			data-{{key}}="{{value}}"
+		{{/dataAttr}}
+		{{#class}} class="{{class}}" {{/class}}
+	>
+		{{{title}}}
+	</a>
+</li>

@@ -25,22 +25,25 @@ describe('AdLogicPageParams', function () {
 		};
 	}
 
+	function mockPageViewCounter(pvCount) {
+		return {
+			increment: function () { return pvCount; }
+		};
+	}
+
 	/**
 	 * Keys for opts:
-	 *  - hasPreFooters
 	 *  - amzn_targs
 	 *  - kruxSegments
 	 *  - abExperiments
 	 *  - hostname
 	 *  - getPageLevelParamsOptions
+	 *  - pvCount
 	 */
 	function getParams(targeting, opts) {
 		opts = opts || {};
 
 		var adLogicPageDimensionsMock = {
-				hasPreFooters: function () {
-					return !!opts.hasPreFooters;
-				}
 			},
 			kruxMock = {
 				segments: opts.kruxSegments || []
@@ -56,6 +59,7 @@ describe('AdLogicPageParams', function () {
 			logMock,
 			mockWindow(opts.hostname, opts.amzn_targs),
 			mockAdContext(targeting),
+			mockPageViewCounter(opts.pvCount),
 			kruxMock,
 			adLogicPageDimensionsMock,
 			abTestMock
@@ -150,16 +154,6 @@ describe('AdLogicPageParams', function () {
 		var params = getParams({pageArticleId: 678});
 
 		expect(params.artid).toBe('678', 'artid=678');
-	});
-
-	it('getPageLevelParams has pre footers', function () {
-		var params;
-
-		params = getParams({}, {hasPreFooters: true});
-		expect(params.hasp).toBe('yes', 'yes');
-
-		params = getParams({}, {hasPreFooters: false});
-		expect(params.hasp).toBe('no', 'no');
 	});
 
 	it('getPageLevelParams per-wiki custom DART params', function () {
@@ -269,8 +263,7 @@ describe('AdLogicPageParams', function () {
 			wikiLanguage: 'en',
 			wikiVertical: 'Gaming'
 		}, {
-			hostname: 'www.wikia.com',
-			hasPreFooters: true
+			hostname: 'www.wikia.com'
 		});
 
 		expect(params.s0).toBe('hub');
@@ -279,7 +272,6 @@ describe('AdLogicPageParams', function () {
 		expect(params.dmn).toBe('wikiacom');
 		expect(params.hostpre).toBe('www');
 		expect(params.lang).toBe('en');
-		expect(params.hasp).toBe('yes');
 	});
 
 	it('getUrl Hub page: entertainment', function () {
@@ -290,8 +282,7 @@ describe('AdLogicPageParams', function () {
 			wikiLanguage: 'en',
 			wikiVertical: 'Entertainment'
 		}, {
-			hostname: 'www.wikia.com',
-			hasPreFooters: true
+			hostname: 'www.wikia.com'
 		});
 
 		expect(params.s0).toBe('hub');
@@ -300,7 +291,6 @@ describe('AdLogicPageParams', function () {
 		expect(params.dmn).toBe('wikiacom');
 		expect(params.hostpre).toBe('www');
 		expect(params.lang).toBe('en');
-		expect(params.hasp).toBe('yes');
 	});
 
 	it('getUrl Hub page: lifestyle', function () {
@@ -311,8 +301,7 @@ describe('AdLogicPageParams', function () {
 			wikiLanguage: 'en',
 			wikiVertical: 'Lifestyle'
 		}, {
-			hostname: 'www.wikia.com',
-			hasPreFooters: true
+			hostname: 'www.wikia.com'
 		});
 
 		expect(params.s0).toBe('hub');
@@ -321,7 +310,6 @@ describe('AdLogicPageParams', function () {
 		expect(params.dmn).toBe('wikiacom');
 		expect(params.hostpre).toBe('www');
 		expect(params.lang).toBe('en');
-		expect(params.hasp).toBe('yes');
 	});
 
 	it('getPageLevelParams Krux segments on regular and on COPPA wiki', function () {
@@ -359,5 +347,11 @@ describe('AdLogicPageParams', function () {
 			wikiDirectedAtChildren: true
 		});
 		expect(params.esrb.toString()).toBe('ec', 'esrb=null, COPPA=yes');
+	});
+
+	it('getPageLevelParams pv param', function () {
+		var params = getParams({}, {pvCount: 13});
+
+		expect(params.pv).toBe('13');
 	});
 });

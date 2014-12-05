@@ -1,6 +1,9 @@
 <?php if ($showAd): ?>
-<!-- BEGIN SLOTNAME: <?= htmlspecialchars($slotName) ?> -->
-<div id="<?= htmlspecialchars($slotName) ?>" class="wikia-ad noprint default-height">
+<!-- BEGIN SLOTNAME: <?= htmlspecialchars( $slotName ) ?> -->
+<div id="<?= htmlspecialchars( $slotName ) ?>" class="wikia-ad noprint default-height">
+	<? if ($includeLabel): ?>
+		<label class="wikia-ad-label"><?= wfMessage( 'adengine-advertisement' )->escaped() ?></label>
+	<? endif; ?>
 <script>
 	window.adslots2.push(<?= json_encode([$slotName]) ?>);
 </script>

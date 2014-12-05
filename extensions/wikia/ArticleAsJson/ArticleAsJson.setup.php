@@ -10,6 +10,7 @@ $dir = dirname(__FILE__) . '/';
 
 //classes
 $wgAutoloadClasses['ArticleAsJson'] =  $dir . 'ArticleAsJson.class.php';
+$wgAutoloadClasses['ArticleAsJsonParserException'] =  $dir . 'ArticleAsJsonParserException.class.php';
 
 //hooks
 $wgHooks['ImageBeforeProduceHTML'][] = 'ArticleAsJson::onImageBeforeProduceHTML';

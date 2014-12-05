@@ -1,7 +1,7 @@
 <nav class="global-navigation" id="globalNavigation">
 	<div class="page-width">
 		<div class="global-navigation-item wikia-logo-container" id="hubsEntryPoint">
-			<a href="<?= htmlspecialchars( $centralUrl ) ?>" class="global-navigation-link wikia-logo" rel="nofollow"><img src="<?= $wg->BlankImgUrl ?>" height="24" width="91" alt="<?= wfMessage('global-navigation-wikia')->escaped() ?>" title="<?= wfMessage('global-navigation-wikia')->escaped() ?>"></a>
+			<a href="<?= htmlspecialchars( $centralUrl ) ?>" class="global-navigation-link wikia-logo" rel="nofollow"><img src="<?= $wg->BlankImgUrl ?>" height="24" width="91" alt="<?= wfMessage('venus-wikia')->escaped() ?>" title="<?= wfMessage('venus-wikia')->escaped() ?>"></a>
 			<?= $app->renderView('GlobalNavigation', 'hubsMenu') ?>
 		</div>
 		<div class="global-navigation-item search-container">

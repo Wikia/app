@@ -141,10 +141,13 @@ foreach($csv as $line) {
 		}
 	}
 
-	echo "Changing $city_url ($city_id) to $vertical_id\n";
 	if ( !$dryrun ) {
+		echo "Changing $city_url ($city_id) to $vertical_id\n";
 		$hub->setVertical( $city_id, $vertical_id, $reason );
+	} else {
+		echo "NOT Changing $city_url ($city_id) to $vertical_id\n";
 	}
+
 	$categories = [];
 	if ( !empty($cat1_id) ) {
 		$categories[] = $cat1_id;
@@ -152,9 +155,11 @@ foreach($csv as $line) {
 	if ( !empty($cat2_id) ) {
 		$categories[] = $cat2_id;
 	}
-	echo "Changing categories to $cat1 ($cat1_id) $cat2 ($cat2_id)\n";
 	if ( !$dryrun && !empty($categories)) {
+		echo "Changing categories to $cat1 ($cat1_id) $cat2 ($cat2_id)\n";
 		$hub->updateCategories( $city_id, $categories, $reason );
+	} else {
+		echo "NOT changing categories to $cat1 ($cat1_id) $cat2 ($cat2_id)\n";
 	}
 
 }

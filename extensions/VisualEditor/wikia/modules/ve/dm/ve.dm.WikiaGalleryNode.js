@@ -83,6 +83,7 @@ ve.dm.WikiaGalleryNode.static.toDomElements = function ( data, doc ) {
 		el.setAttribute( 'data-mw', JSON.stringify( mwData ) );
 	}
 
+	el.setAttribute( 'typeof', 'mw:Extension/nativeGallery' );
 	return [ el ];
 };
 

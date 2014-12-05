@@ -265,7 +265,10 @@ class ScribuntoHooks {
 	 */
 	public static function onAfterDisplayingTextbox( EditPage $editPage, &$hidden ) {
 		$app = F::app();
-		if ( !$app->checkSkin( 'oasis' ) || $editPage->getTitle()->getNamespace() !== NS_MODULE ) {
+		if ( !$app->checkSkin( 'oasis' )
+			|| !( $editPage instanceof EditPageLayout )
+			|| $editPage->getTitle()->getNamespace() !== NS_MODULE
+		) {
 			return true;
 		}
 

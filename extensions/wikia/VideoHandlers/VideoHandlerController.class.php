@@ -51,6 +51,14 @@ class VideoHandlerController extends WikiaController {
 					$this->setVal( 'videoId', $videoId );
 					$this->setVal( 'asset', $assetUrl );
 					$this->setVal( 'embedCode', $embedCode );
+					/**
+					 * This data is being queried by GameGuides that store html in local storage
+					 * Therefore we have to allow for accessing this API, from ie. file://
+					 */
+					(new CrossOriginResourceSharingHeaderHelper())
+						->setAllowOrigin( [ '*' ] )
+						->setAllowMethod( [ 'GET' ] )
+						->setHeaders($this->response);
 				}
 			}
 		}

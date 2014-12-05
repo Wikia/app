@@ -218,6 +218,20 @@ HTML;
 	}
 
 	/**
+	 * Adds JS needed for FBConnect code
+	 *
+	 * @param array $assetsArray
+	 * @return bool
+	 */
+	public static function onSkinAssetGroups( array &$assetsArray ) {
+		// All pages
+		$assetsArray[] = 'fbconnect_js';
+
+		return true;
+	}
+
+
+	/**
 	 * Fired when MediaWiki is updated to allow FBConnect to update the database.
 	 * If the database type is supported, then a new tabled named 'user_fbconnect'
 	 * is created. For the table's layout, see fbconnect_table.sql. If $wgDBprefix
@@ -323,7 +337,7 @@ HTML;
 	 * TODO: Better 'returnto' code
 	 */
 	public static function PersonalUrls( &$personal_urls, &$wgTitle ) {
-		global $wgUser, $fbPersonalUrls, $fbConnectOnly, $wgEnableUserLoginExt;
+		global $wgUser, $fbPersonalUrls, $fbConnectOnly;
 		$skinName = get_class($wgUser->getSkin());
 
 		// Get the logged-in user from the Facebook API
@@ -399,17 +413,6 @@ HTML;
 						'href'   => '#', // SpecialPage::getTitleFor( 'Connect' )->getLocalUrl( 'returnto=' . $wgTitle->getPrefixedURL() ),
 						'active' => $wgTitle->isSpecial('Connect')
 					);
-				}
-
-				if ( in_array($skinName, array('SkinMonaco', 'SkinOasis')) && empty($wgEnableUserLoginExt) ) {
-					$html = Xml::openElement("span",array("id" => 'fbconnect' ));
-						$html .= Xml::openElement("a",array("href" => '#', 'class' => 'fb_button fb_button_small' ));
-							$html .= Xml::openElement("span",array("class" => "fb_button_text" ));
-								$html .= wfMsg( 'fbconnect-connect-simple' );
-							$html .= Xml::closeElement( "span" );
-						$html .= Xml::closeElement( "a" );
-					$html .= Xml::closeElement( "span" );
-					$personal_urls['fbconnect']['html'] = $html;
 				}
 			}
 
@@ -577,6 +580,9 @@ HTML;
 	static function UserLoadFromSession( $user, &$result ) {
 		global $wgCookiePrefix, $wgTitle, $wgOut, $wgUser;
 
+		// Temporary fix for P2: https://wikia-inc.atlassian.net/browse/MAIN-3228
+		return true;
+
 		// Check to see if the user can be logged in from Facebook
 		$fb = new FBConnectAPI();
 		$fbId = $fb->user();
@@ -676,7 +682,13 @@ HTML;
 		if ($wgRequest->getVal("fbconnected","") == 1) {
 			$id = FBConnectDB::getFacebookIDs($wgUser, DB_MASTER);
 			if( count($id) > 0 ) {
-				$msg =  Xml::element("img", array("id" => "fbMsgImage", "src" => $wgServer.'/skins/common/fbconnect/fbiconbig.png' ));
+				$msg =  Xml::element(
+					"img",
+					[
+						"id" => "fbMsgImage",
+						"src" => $wgServer.'/skins/common/fbconnect/fbiconbig.png'
+					]
+				);
 				$msg .= "<p>".wfMessage( 'fbconnect-connect-msg' )->text()."</p>";
 				/** Wikia change - starts  @author Andrzej 'nAndy' Łukaszewski */
 				wfRunHooks('FounderProgressBarOnFacebookConnect');

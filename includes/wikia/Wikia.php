@@ -823,12 +823,6 @@ class Wikia {
 	static public function setupAfterCache() {
 		global $wgTTCache;
 		$wgTTCache = wfGetSolidCacheStorage();
-
-		# setup externalAuth
-		global $wgExternalAuthType, $wgAutocreatePolicy;
-		if ( $wgExternalAuthType == 'ExternalUser_Wikia' ) {
-			$wgAutocreatePolicy = 'view';
-		}
 		return true;
 	}
 

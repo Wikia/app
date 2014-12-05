@@ -68,6 +68,7 @@ $wgResourceModules['ext.wikia.WikiaMaps.ParserTag'] = [
 
 // i18n mapping
 $wgExtensionMessagesFiles[ 'WikiaMaps' ] = $dir . 'WikiaMaps.i18n.php';
+$wgExtensionMessagesFiles[ 'WikiaMapsAliases' ] = $dir . 'WikiaMaps.aliases.php';
 
 JSMessages::registerPackage( 'WikiaMaps', [
 	'wikia-interactive-maps-map-placeholder-error'

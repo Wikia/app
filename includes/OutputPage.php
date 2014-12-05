@@ -459,6 +459,21 @@ class OutputPage extends ContextSource {
 	 * @return Array of module names
 	 */
 	public function getModules( $filter = false, $position = null, $param = 'mModules' ) {
+		// Wikia change - begin - @author macbre
+		// Load all ResourceLoader modules at the bottom of the page
+		// when the skin has the flag set (e.g. Venus)
+		$skin = $this->getSkin();
+		if ( $skin instanceof WikiaSkin && !empty( $skin->pushRLModulesToBottom ) ) {
+			// when asked for top modules return nothing
+			if ( $position === 'top' ) {
+				return [];
+			}
+
+			// otherwise, return all modules - null means no filtering below
+			$position = null;
+		}
+		// Wikia change - end
+
 		$modules = array_values( array_unique( $this->$param ) );
 		return $filter
 			? $this->filterModules( $modules, $position )
@@ -2889,6 +2904,13 @@ $templates
 	function getScriptsForBottomQueue( $inHead ) {
 		global $wgUseSiteJs, $wgAllowUserJs;
 
+		$asyncMWload = true;
+
+		$skin = $this->getSkin();
+		if ( $skin instanceof WikiaSkin && !empty( $skin->pushRLModulesToBottom ) ) {
+			$asyncMWload = false;
+		}
+
 		// Script and Messages "only" requests marked for bottom inclusion
 		// If we're in the <head>, use load() calls rather than <script src="..."> tags
 		// Messages should go first
@@ -2907,7 +2929,7 @@ $templates
 		if ( $modules ) {
 			$scripts .= Html::inlineScript(
 				ResourceLoader::makeLoaderConditionalScript(
-					Xml::encodeJsCall( 'mw.loader.load', array( $modules, null, true ) )
+					Xml::encodeJsCall( 'mw.loader.load', array( $modules, null, $asyncMWload ) )
 				)
 			);
 		}

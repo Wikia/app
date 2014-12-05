@@ -23,6 +23,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			$title->method( 'getDBkey' )->willReturn( 'Search' );
 			$title->method( 'getPrefixedDbKey' )->willReturn( 'Special:Search' );
 			$title->method( 'getNamespace' )->willReturn( -1 );
+			$title->method( 'isSpecialPage' )->willReturn( true );
 		} else {
 			$title->method( 'getPrefixedDbKey' )->willReturn( $artDbKey );
 			$title->method( 'getArticleId' )->willReturn( $artId );

@@ -46,8 +46,8 @@ describe('AdConfig2Late', function () {
 			adProviderLiftiumMock,
 			adProviderDirectGpt,
 			adProviderRemnantGpt,
-			adProviderTaboola,
-			adProviderSevenOneMedia
+			adProviderSevenOneMedia,
+			adProviderTaboola
 		);
 
 		expect(adConfig.getProviderList('foo')).toEqual([adProviderLiftiumMock], 'adProviderLiftiumMock');
@@ -76,8 +76,8 @@ describe('AdConfig2Late', function () {
 			adProviderLiftiumMock,
 			adProviderDirectGpt,
 			adProviderRemnantGpt,
-			adProviderTaboola,
-			adProviderSevenOneMedia
+			adProviderSevenOneMedia,
+			adProviderTaboola
 		);
 
 		expect(adConfig.getProviderList('foo')).toEqual([adProviderSevenOneMedia], 'adProviderSevenOneMediaMock');
@@ -106,8 +106,8 @@ describe('AdConfig2Late', function () {
 			adProviderLiftiumMock,
 			adProviderDirectGpt,
 			adProviderRemnantGpt,
-			adProviderTaboola,
-			adProviderSevenOneMedia
+			adProviderSevenOneMedia,
+			adProviderTaboola
 		);
 
 		expect(adConfig.getProviderList('foo')).toEqual([adProviderRemnantGpt, adProviderLiftiumMock], 'adProviderRemnantGpt');
@@ -136,8 +136,8 @@ describe('AdConfig2Late', function () {
 			adProviderLiftiumMock,
 			adProviderDirectGpt,
 			adProviderRemnantGpt,
-			adProviderTaboola,
-			adProviderSevenOneMedia
+			adProviderSevenOneMedia,
+			adProviderTaboola
 		);
 
 		expect(adConfig.getProviderList('foo')).toEqual([adProviderSevenOneMedia], 'adProviderSevenOneMediaMock');
@@ -166,8 +166,8 @@ describe('AdConfig2Late', function () {
 			adProviderLiftiumMock,
 			adProviderDirectGpt,
 			adProviderRemnantGpt,
-			adProviderTaboola,
-			adProviderSevenOneMedia
+			adProviderSevenOneMedia,
+			adProviderTaboola
 		);
 
 		expect(adConfig.getProviderList('foo')).toEqual([]);
@@ -196,8 +196,8 @@ describe('AdConfig2Late', function () {
 			adProviderLiftiumMock,
 			adProviderDirectGpt,
 			adProviderRemnantGpt,
-			adProviderTaboola,
-			adProviderSevenOneMedia
+			adProviderSevenOneMedia,
+			adProviderTaboola
 		);
 
 		expect(adConfig.getProviderList('foo')).toEqual([adProviderLiftiumMock], 'adProviderLiftiumMock');
@@ -226,8 +226,8 @@ describe('AdConfig2Late', function () {
 			adProviderLiftiumMock,
 			adProviderDirectGpt,
 			adProviderRemnantGpt,
-			adProviderTaboola,
-			adProviderSevenOneMedia
+			adProviderSevenOneMedia,
+			adProviderTaboola
 		);
 		expect(adConfig.getProviderList('foo')).toEqual([]);
 	});
@@ -255,8 +255,8 @@ describe('AdConfig2Late', function () {
 			adProviderLiftiumMock,
 			adProviderDirectGpt,
 			adProviderRemnantGpt,
-			adProviderTaboola,
-			adProviderSevenOneMedia
+			adProviderSevenOneMedia,
+			adProviderTaboola
 		);
 		expect(adConfig.getProviderList('foo')).toEqual([adProviderLiftiumMock], 'adProviderLiftiumMock');
 	});
@@ -284,8 +284,8 @@ describe('AdConfig2Late', function () {
 			adProviderLiftiumMock,
 			adProviderDirectGpt,
 			adProviderRemnantGpt,
-			adProviderTaboola,
-			adProviderSevenOneMedia
+			adProviderSevenOneMedia,
+			adProviderTaboola
 		);
 
 		expect(adConfig.getProviderList('foo')).toEqual([adProviderLiftiumMock], 'adProviderLiftiumMock');
@@ -316,8 +316,8 @@ describe('AdConfig2Late', function () {
 			adProviderLiftiumMock,
 			adProviderDirectGpt,
 			adProviderRemnantGpt,
-			adProviderTaboola,
-			adProviderSevenOneMedia
+			adProviderSevenOneMedia,
+			adProviderTaboola
 		);
 
 		expectedProviderListRemnants = [adProviderRemnantGpt, adProviderLiftiumMock];
@@ -356,8 +356,8 @@ describe('AdConfig2Late', function () {
 			adProviderLiftiumMock,
 			adProviderDirectGpt,
 			adProviderRemnantGpt,
-			adProviderTaboola,
 			adProviderSevenOneMedia,
+			adProviderTaboola,
 			abTestMock
 		);
 
@@ -390,8 +390,8 @@ describe('AdConfig2Late', function () {
 			adProviderLiftiumMock,
 			adProviderDirectGpt,
 			adProviderRemnantGpt,
-			adProviderTaboola,
 			adProviderSevenOneMedia,
+			adProviderTaboola,
 			abTestMock
 		);
 

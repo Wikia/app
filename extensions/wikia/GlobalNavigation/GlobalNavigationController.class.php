@@ -22,6 +22,7 @@ class GlobalNavigationController extends WikiaController {
 	}
 
 	public function index() {
+
 		Wikia::addAssetsToOutput( 'global_navigation_scss' );
 		Wikia::addAssetsToOutput( 'global_navigation_js' );
 		Wikia::addAssetsToOutput( 'global_navigation_facebook_login_js' );

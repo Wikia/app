@@ -74,7 +74,7 @@ ve.init.mw.WikiaViewPageTarget.static.toolbarGroups = [
 		'type': 'list',
 		'label': OO.ui.deferMsg( 'visualeditor-toolbar-insert' ),
 		'indicator': 'down',
-		'include': [ 'wikiaMediaInsert', 'wikiaMapInsert', 'number', 'bullet', 'wikiaTemplateInsert', 'reference', 'referenceList' ]
+		'include': [ 'wikiaMediaInsert', 'wikiaSingleMedia', 'wikiaMapInsert', 'number', 'bullet', 'wikiaTemplateInsert', 'reference', 'referenceList' ]
 	}
 ];
 
@@ -113,7 +113,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.getNonEditableUIElements = function () 
 		$elements = $( '#mw-content-text' );
 	}
 
-	$elements = $elements.add( '.WikiaArticleCategories' );
+	$elements = $elements.add( '.article-categories' );
 
 	return $elements;
 };
@@ -346,4 +346,5 @@ ve.init.mw.WikiaViewPageTarget.prototype.maybeShowDialogs = function () {
 	if ( parseInt( mw.config.get( 'showVisualEditorTransitionDialog' ) ) === 1 ) {
 		this.surface.getDialogs().getWindow( 'wikiaPreference' ).open( null, null, this.surface );
 	}
+	//this.surface.getDialogs().getWindow( 'wikiaSingleMedia' ).open( null, null, this.surface );
 };

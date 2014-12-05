@@ -17,20 +17,13 @@ class FacebookClientXFBML {
 	];
 
 	/**
-	 * Register parser hooks for all supported Facebook FBML tags
+	 * Register parser hooks for all supported Facebook XFBML tags
 	 *
 	 * @param Parser $parser
 	 *
 	 * @throws MWException
 	 */
 	public static function registerHooks( Parser $parser ) {
-		global $fbUseMarkup;
-
-		// Don't register any hooks if this global is explicitly set to false
-		if ( $fbUseMarkup === false ) {
-			return;
-		}
-
 		foreach ( self::$supportedTags as $tag ) {
 			$parser->setHook( $tag, function ( $text, $args, $parser ) use ($tag) {
 				return FacebookClientXFBML::parserHook( $tag, $text, $args, $parser );

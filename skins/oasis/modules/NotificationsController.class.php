@@ -275,7 +275,8 @@ class NotificationsController extends WikiaController {
 		wfProfileIn(__METHOD__);
 		global $wgOut, $wgRequest;
 
-		if ( F::app()->checkSkin( 'oasis' ) ) {
+		if ( F::app()->checkSkin( 'oasis' ) || F::app()->checkSkin( 'venus' )) {
+
 			self::addConfirmation(wfMsg('oasis-confirmation-user-logout'));
 
 			// redirect the page user has been on when he clicked "log out" link

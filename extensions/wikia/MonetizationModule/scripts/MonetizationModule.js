@@ -9,7 +9,8 @@ require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 
 	track = Tracker.buildTrackingFunction({
 		trackingMethod: 'internal',
-		action: Tracker.ACTIONS.CLICK
+		category: 'monetization-module',
+		geo: geo.getCountryCode()
 	});
 
 	var MonetizationModule = {
@@ -17,22 +18,33 @@ require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 			// track impression for each placement
 			$('.monetization-module').each(function () {
 				var $this = $(this),
-					trackCategory = $this.attr('id'),
+					label = $this.attr('id'),
 					value = $this.children().children().length,	// check if the ad is blocked
-					type = $this.attr('data-mon-type');
-					// TODO: remove after updating the service
-					if (typeof type === 'undefined') {
-						type = $this.attr('class').split(' ')[1];
-					}
+					type = $this.attr('data-mon-type'),
+					slot = $this.attr('data-mon-slot');
 
 				track({
-					category: trackCategory,
-					label: 'module-impression',
-					action: Tracker.ACTIONS.IMPRESSION,
+					action: 'module-impression',
+					label: label,
 					value: value,
-					geo: geo.getCountryCode(),
-					type: type
+					type: type,
+					slot: slot
 				});
+
+				// track impression for each product
+				if (type === 'ecommerce') {
+					$this.find('.affiliate').each(function (idx, element) {
+						var $element = $(element);
+						track({
+							label: $element.attr('data-mon-ptag'),
+							action: 'product-impression' + '-' + label,
+							value: idx,
+							type: type,
+							slot: slot,
+							pid: $element.attr('data-mon-pid')
+						});
+					});
+				}
 			});
 
 			this.initEllipses();
@@ -49,46 +61,35 @@ require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 		},
 		initClickTrackingEcommerce: function () {
 			var elements = [
-				'.prod-thumb',
-				'.prod-name',
-				'.vendor-logo',
-				'.vendor-button',
-				'.vendor-price'
+				'.module-title',
+				'.product-thumb',
+				'.product-name',
+				'.product-price'
 			];
 
 			$('.monetization-module.ecommerce').on('click', elements.join(', '), function () {
-				var $products,
-					$productThumb,
-					$module,
-					trackCategory,
-					trackLabel,
-					trackValue,
-					type,
-					vendor,
-					productName,
-					productId,
-					productUrl;
+				var $this = $(this),
+					$module = $this.closest('.monetization-module'),
+					$products = $module.find('.affiliate'),
+					elementName = $this.attr('class').split(' ')[0],
+					productUrl = $this.attr('href') || $this.find('a').attr('href'),
+					$product;
 
-				$products = $(this).closest('.affiliate');
-				$productThumb = $products.find('.prod-thumb img');
-				$module = $(this).closest('.monetization-module');
-				trackCategory = $module.attr('id');
-				trackLabel = $(this).attr('class').split(' ')[0];
-				trackValue = $products.index();
-				vendor = $products.find('.vendor').attr('class').split(' ')[0];
-				type = $module.attr('class').split(' ')[1];
-				productName = $productThumb.attr('data-prod-name');
-				productId = $productThumb.attr('data-prod-id');
-				productUrl = $(this).attr('href');
+				if (elementName === 'module-title') {
+					$product = $products.first();
+				} else {
+					$product = $this.parent();
+				}
 
 				track({
-					category: trackCategory,
-					label: trackLabel,
-					value: trackValue,
-					title: productName,
-					pid: productId,
-					vendor: vendor,
-					type: type,
+					action: Tracker.ACTIONS.CLICK + '-' + $module.attr('id') + '-' + elementName,
+					label: $product.attr('data-mon-ptag'),
+					value: $products.index($product),
+					type: $module.attr('data-mon-type'),
+					slot: $module.attr('data-mon-slot'),
+					title: $product.attr('data-mon-pname'),
+					pid: $product.attr('data-mon-pid'),
+					element: elementName,
 					url: productUrl
 				});
 			});

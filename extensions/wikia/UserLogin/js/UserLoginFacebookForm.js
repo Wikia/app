@@ -6,20 +6,26 @@ var UserLoginFacebookForm = $.createClass(UserLoginAjaxForm, {
 	// send a request to FB controller
 	ajaxLogin: function () {
 		'use strict';
-		var inputs = {
+		var values = {
 			username: this.inputs.username.val(),
 			password: this.inputs.password.val(),
-			signupToken: this.inputs.logintoken.val(),
-			returnto: encodeURIComponent(window.wgPageName),
-			returntoquery: encodeURIComponent(window.location.search.substring(1))
+			signupToken: this.inputs.logintoken.val()
 		};
+
+		// cache redirect url for after form is complete
+		this.returnToUrl = this.inputs.returntourl.val();
 
 		// The email box will only appear if the user has not shared their Facebook email
 		if (this.inputs.email) {
-			inputs.email = this.inputs.email.val();
+			values.email = this.inputs.email.val();
 		}
 
-		$.nirvana.postJson('FacebookSignupController', 'signup', inputs, $.proxy(this.submitFbSignupHandler, this));
+		$.nirvana.postJson(
+			'FacebookSignupController',
+			'signup',
+			values,
+			this.submitFbSignupHandler.bind(this)
+		);
 	},
 
 	/**
@@ -36,8 +42,6 @@ var UserLoginFacebookForm = $.createClass(UserLoginAjaxForm, {
 				label: 'facebook-signup'
 			});
 		}
-		json.returnto = encodeURIComponent(window.wgPageName);
-		json.returntoquery = encodeURIComponent(window.location.search.substring(1));
 		this.submitLoginHandler(json);
 	}
 });

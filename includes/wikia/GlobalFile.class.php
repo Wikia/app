@@ -163,6 +163,27 @@ class GlobalFile extends WikiaObject {
 	}
 
 	/**
+	 * @return string  A path to file's bucket
+	 */
+	public function getBucket() {
+		return VignetteRequest::parseBucket( $this->getUploadDir() );
+	}
+
+	/**
+	 * @return string  A language prefix
+	 */
+	public function getPathPrefix() {
+		return VignetteRequest::parsePathPrefix( $this->getUploadDir() );
+	}
+
+	/**
+	 * @return UrlGenerator object
+	 */
+	public function getUrlGenerator() {
+		return VignetteRequest::fromGlobalFile( $this );
+	}
+
+	/**
 	 * Returns URL to cropped image
 	 *
 	 * Uses ImageServing cropping functionality

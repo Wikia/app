@@ -7,7 +7,7 @@ class SpecialCreateNewWiki extends UnlistedSpecialPage {
 	}
 
 	public function execute() {
-		global $wgUser, $wgOut, $wgExtensionsPath, $wgEnableUserLoginExt;
+		global $wgUser, $wgOut, $wgExtensionsPath;
 		wfProfileIn( __METHOD__ );
 
 		if ( wfReadOnly() ) {
@@ -30,10 +30,7 @@ class SpecialCreateNewWiki extends UnlistedSpecialPage {
 		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/CreateNewWiki/js/CreateNewWiki.js"></script>');
 		$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/CreateNewWiki/js/CreateNewWikiSupplemental.js"></script>');
 		$wgOut->addModules('wikia.stringhelper');
-
-		if($wgEnableUserLoginExt) {
-			$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/UserLogin/css/UserLoginModal.scss'));
-		}
+		$wgOut->addStyle(AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/UserLogin/css/UserLoginModal.scss'));
 
 		wfProfileOut( __METHOD__ );
 	}

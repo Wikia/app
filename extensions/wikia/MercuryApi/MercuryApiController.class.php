@@ -205,7 +205,16 @@ class MercuryApiController extends WikiaController {
 	 */
 	public function getWikiVariables() {
 		$wikiVariables = $this->mercuryApi->getWikiVariables();
-		$wikiVariables[ 'navData' ] = $this->getNavigationData();
+
+		try {
+			$wikiVariables[ 'navData' ] = $this->getNavigationData();
+		} catch (Exception $e) {
+			\Wikia\Logger\WikiaLogger::instance()->error( 'Fallback to empty navigation', [
+				'exception' => $e
+			] );
+			$wikiVariables[ 'navData' ] = [];
+		}
+
 		$wikiVariables[ 'vertical' ] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )['short'];
 		$wikiVariables[ 'basePath' ] = $this->wg->Server;
 
@@ -214,8 +223,13 @@ class MercuryApiController extends WikiaController {
 			$wikiVariables[ 'isGASpecialWiki' ] = true;
 		}
 
-		$smartBannerConfig = $this->getSmartBannerConfig();
+		if ( !empty( $this->wg->ArticlePath ) ) {
+			$wikiVariables[ 'articlePath' ] = str_replace('$1', '', $this->wg->ArticlePath);
+		} else {
+			$wikiVariables[ 'articlePath' ] = '/wiki/';
+		}
 
+		$smartBannerConfig = $this->getSmartBannerConfig();
 		if ( !is_null( $smartBannerConfig ) ) {
 			$wikiVariables[ 'smartBanner' ] = $smartBannerConfig;
 		}
@@ -229,28 +243,57 @@ class MercuryApiController extends WikiaController {
 	 * @throws BadRequestApiException
 	 */
 	public function getArticle(){
-		$title = $this->getTitleFromRequest();
-		$articleId = $title->getArticleId();
+		try {
+			$title = $this->getTitleFromRequest();
+			$articleId = $title->getArticleId();
 
-		$articleAsJson = $this->getArticleJson( $articleId );
+			$articleAsJson = $this->getArticleJson( $articleId );
 
-		$data = [
-			'details' => $this->getArticleDetails( $articleId ),
-			'topContributors' => $this->getTopContributorsDetails(
+			$data = [
+				'details' => $this->getArticleDetails( $articleId ),
+				'topContributors' => $this->getTopContributorsDetails(
 					$this->getTopContributorsPerArticle( $articleId )
 				),
-			'article' => $articleAsJson,
-			'adsContext' => $this->mercuryApi->getAdsContext( $title )
-		];
+				'article' => $articleAsJson
+			];
 
-		$relatedPages = $this->getRelatedPages( $articleId );
-		if ( !empty( $relatedPages ) ) {
-			$data[ 'relatedPages' ] = $relatedPages;
+			$relatedPages = $this->getRelatedPages( $articleId );
+
+			if ( !empty( $relatedPages ) ) {
+				$data[ 'relatedPages' ] = $relatedPages;
+			}
+		} catch (WikiaHttpException $exception) {
+			$this->response->setCode( $exception->getCode() );
+
+			$data = [];
+
+			$this->response->setVal( 'exception', [
+				'message' => $exception->getMessage(),
+				'code' => $exception->getCode(),
+				'details' => $exception->getDetails()
+			] );
+
+			$title = $this->wg->Title;
 		}
+
+		$data['adsContext'] = $this->mercuryApi->getAdsContext( $title );
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 
 		$this->response->setVal( 'data', $data );
+	}
+
+	/**
+	 * @desc HG-377: Returns search suggestions
+	 *
+	 * @throws NotFoundApiException
+	 * @throws MissingParameterApiException
+	 */
+	public function getSearchSuggestions() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setValues(
+			$this->sendRequest( 'SearchSuggestionsApi', 'getList', $this->request->getParams() )->getData()
+		);
 	}
 }

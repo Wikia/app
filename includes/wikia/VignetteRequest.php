@@ -20,6 +20,20 @@ class VignetteRequest {
 	}
 
 	/**
+	 * @param GlobalFile $globalFile
+	 * @return UrlGenerator
+	 */
+	public static function fromGlobalFile( GlobalFile $globalFile ) {
+		return self::fromConfigMap( [
+			'is-archive' => false, // GlobalFile doesn't serve archive files
+			'timestamp' => $globalFile->getTimestamp(),
+			'relative-path' => $globalFile->getUrlRel(),
+			'bucket' => $globalFile->getBucket(),
+			'path-prefix' => $globalFile->getPathPrefix(),
+		] );
+	}
+
+	/**
 	 * create a UrlGenerator from a config map. $config must have the following keys: relative-path.
 	 * optionally, it can also have timestamp, is-archive, path-prefix, bucket, base-url, and domain-shard-count.
 	 * if the optional values aren't in the map, they'll be generated from the current wiki environment

@@ -374,3 +374,11 @@ ve.ui.Surface.prototype.getTarget = function () {
 ve.ui.Surface.prototype.getFocusWidget = function () {
 	return this.focusWidget;
 };
+
+/**
+ * @method
+ * @returns {jQuery} this.$globalOverlay
+ */
+ve.ui.Surface.prototype.getGlobalOverlay = function () {
+	return this.$globalOverlay;
+};

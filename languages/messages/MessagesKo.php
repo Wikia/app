@@ -67,6 +67,10 @@ $specialPageAliases = array(
 	'Booksources'               => array( '책찾기' ),
 	'BrokenRedirects'           => array( '끊긴넘겨주기' ),
 	'Categories'                => array( '분류' ),
+	// begin wikia change
+	// VOLDEV-97
+	'ChangeEmail'				=> array( '이메일변경' ),
+	// end wikia change
 	'ChangePassword'            => array( '비밀번호변경', '비밀번호바꾸기' ),
 	'ComparePages'              => array( '문서비교' ),
 	'Confirmemail'              => array( '이메일인증' ),

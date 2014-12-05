@@ -1,24 +1,14 @@
 @import "skins/shared/color";
 
-.global-edit-wrap {
-  border-bottom: 1px solid $color-page-border;
-  margin:60px 8% 20px 8%;
-  a:hover {
-    text-decoration: none;
-  }
-  .global-edit-btn {
-    vertical-align: text-bottom;
-  }
-  .edit-link {
-    color: #0a5fa3;
-    text-transform: uppercase;
-  }
-}
 .MainPageHero {
   background-color: #092140;
   max-height: 400px;
   position: relative;
   width: 100%;
+
+  h1 {
+    background: none;
+  }
 
   .btn-bar {
     align-items: center;

@@ -115,7 +115,10 @@
 
 			$.when(
 				loadTargetDeferred,
-				$.getResources( $.getSassCommonURL( '/extensions/VisualEditor/wikia/VisualEditor.scss' ) )
+				$.getResources( [
+					$.getSassCommonURL( '/extensions/VisualEditor/wikia/VisualEditor.scss' ),
+					window.wgResourceBasePath + '/resources/wikia/libraries/vignette/vignette.js'
+				] )
 			).done( function () {
 				var target = new ve.init.mw.WikiaViewPageTarget();
 

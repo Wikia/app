@@ -75,7 +75,7 @@ class LoginForm extends SpecialPage {
 	 * Loader
 	 */
 	function load() {
-		global $wgAuth, $wgHiddenPrefs, $wgEnableEmail, $wgRedirectOnLogin, $wgEnableUserLoginExt;
+		global $wgAuth, $wgHiddenPrefs, $wgEnableEmail, $wgRedirectOnLogin;
 
 		if ( $this->mLoaded ) {
 			return;
@@ -142,13 +142,8 @@ class LoginForm extends SpecialPage {
 		}
 		$wgAuth->setDomain( $this->mDomain );
 
-		if ( empty( $wgEnableUserLoginExt ) ) {
-			$this->wpMsgPrefix = '';
-			$this->wpUserLoginExt = false;
-		} else {
-			$this->wpMsgPrefix = 'userlogin-error-';
-			$this->wpUserLoginExt = true;
-		}
+		$this->wpMsgPrefix = 'userlogin-error-';
+		$this->wpUserLoginExt = true;
 
 		$title = Title::newFromText($this->mReturnTo);
 		if (!empty($title))
@@ -651,8 +646,8 @@ class LoginForm extends SpecialPage {
 
 		$this->mExtUser = ExternalUser_Wikia::newFromName( $this->mUsername );
 
-		global $wgExternalAuthType, $wgAutocreatePolicy;
-		if ( $wgExternalAuthType && $wgAutocreatePolicy != 'never'
+		global $wgExternalAuthType;
+		if ( $wgExternalAuthType
 		&& is_object( $this->mExtUser )
 		&& $this->mExtUser->authenticate( $this->mPassword ) ) {
 			# The external user and local user have the same name and
@@ -792,7 +787,7 @@ class LoginForm extends SpecialPage {
 	 * @return integer Status code
 	 */
 	function attemptAutoCreate( $user ) {
-		global $wgAuth, $wgAutocreatePolicy;
+		global $wgAuth;
 
 		if ( $this->getUser()->isBlockedFromCreateAccount() ) {
 			wfDebug( __METHOD__ . ": user is blocked from account creation\n" );
@@ -805,11 +800,6 @@ class LoginForm extends SpecialPage {
 		 * yet logged in.
 		 */
 		if ( $this->mExtUser ) {
-			# mExtUser is neither null nor false, so use the new ExternalAuth
-			# system.
-			if ( $wgAutocreatePolicy == 'never' ) {
-				return self::NOT_EXISTS;
-			}
 			if ( !$this->mExtUser->authenticate( $this->mPassword ) ) {
 				return self::WRONG_PLUGIN_PASS;
 			}

@@ -28,6 +28,7 @@ $dir = dirname( __FILE__ ) . '/';
  * classes
  */
 $wgAutoloadClasses['FacebookClient'] =  $dir . 'FacebookClient.class.php';
+$wgAutoloadClasses['FacebookClientHelper'] =  $dir . 'FacebookClientHelper.class.php';
 $wgAutoloadClasses['FacebookClientController'] =  $dir . 'FacebookClientController.class.php';
 $wgAutoloadClasses['FacebookClientLocale'] =  $dir . 'FacebookClientLocale.class.php';
 $wgAutoloadClasses['FacebookMapModel'] =  $dir . 'FacebookMapModel.class.php';
@@ -38,11 +39,11 @@ $wgAutoloadClasses['FacebookClientXFBML'] = $dir . 'FacebookClientXFBML.php';
  * hooks
  */
 $wgAutoloadClasses['FacebookClientHooks'] =  $dir . 'FacebookClientHooks.class.php';
-$wgHooks['UserLoadFromSession'][] = 'FacebookClientHooks::UserLoadFromSession';
 $wgHooks['MakeGlobalVariablesScript'][] = 'FacebookClientHooks::MakeGlobalVariablesScript';
 $wgHooks['SkinAfterBottomScripts'][] = 'FacebookClientHooks::SkinAfterBottomScripts';
 $wgHooks['GetPreferences'][] = 'FacebookClientHooks::GetPreferences';
-$wgHooks['OasisSkinAssetGroups'][] = 'FacebookClientHooks::onOasisSkinAssetGroups';
+$wgHooks['OasisSkinAssetGroups'][] = 'FacebookClientHooks::onSkinAssetGroups';
+$wgHooks['MonobookSkinAssetGroups'][] = 'FacebookClientHooks::onSkinAssetGroups';
 $wgHooks['ParserFirstCallInit'][] = 'FacebookClientHooks::setupParserHook';
 
 // special pages
@@ -62,5 +63,11 @@ $wgResourceModules['ext.wikia.FacebookClient.XFBML'] = [
 	'remoteExtPath' => 'wikia/FacebookClient',
 ];
 
-JSMessages::registerPackage( 'FacebookClient', ['fbconnect-logout-confirm'] );
+JSMessages::registerPackage( 'FacebookClient', [
+	'fbconnect-logout-confirm',
+	'fbconnect-preferences-connected',
+	'fbconnect-preferences-connected-error',
+	'fbconnect-disconnect-info-existing',
+	'fbconnect-disconnect-info',
+] );
 
