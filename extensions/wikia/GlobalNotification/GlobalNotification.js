@@ -6,7 +6,7 @@
  */
 var GlobalNotification = {
 
-	defaultTimeout: 5000,
+	defaultTimeout: 10000,
 	/**
 	 * Used for introspection in the browser, has no affect on this code
 	 */
