@@ -197,7 +197,7 @@ $wgWikiaApiControllers['RecommendationsApiController'] = "{$IP}/includes/wikia/a
 /**
  * Modular main pages hooks
  */
-$wgAutoloadClasses['NjordHooks'] =  $dir . '/NjordHooks.class.php';
+$wgAutoloadClasses['NjordHooks'] =  "{$IP}/extensions/wikia/NjordPrototype/NjordHooks.class.php";
 
 /**
  * Wikia Skins
