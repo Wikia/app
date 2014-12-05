@@ -14,7 +14,6 @@ $messages['en'] = array(
 	'hero-image-default-description' => ' Click to add a summary that will promote your wikia in searches and on hubs.',
 	'hero-image-error' => 'Error',
 	'hero-image-unknown-error' => 'Unknown error occured.',
-	'hero-image-description-error' => 'Error while saving description',
 );
 
 $messages['qqq'] = array(
