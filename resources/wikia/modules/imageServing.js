@@ -8,36 +8,43 @@ define('wikia.imageServing', function () {
 	'use strict';
 
 	function getCutParams(originalWidth, originalHeight, expectedWidth, expectedHeight) {
-		var offsetX = 0,
-			offsetY = 0,
+		var xOffset1 = 0,
+			yOffset1 = 0,
+			xOffset2 = originalWidth,
+			yOffset2 = originalHeight,
 			originalProportionWidth,
 			originalProportionHeight = Math.round(originalWidth * expectedHeight / expectedWidth),
-			offsetYFactor,
-			windowWidth = originalWidth,
-			windowHeight = originalHeight;
+			offsetYFactor;
 
 		if (originalProportionHeight >= originalHeight) {
 			originalProportionWidth = Math.round(originalHeight * expectedWidth / expectedHeight);
 
-			offsetX = Math.round((originalWidth - originalProportionWidth) / 2);
-			windowWidth -= 2 * offsetX;
+			xOffset1 = Math.round((originalWidth - originalProportionWidth) / 2);
+			xOffset2 = originalProportionWidth + xOffset1;
 		} else {
 			// advanced face recognition algorithm ported from ImageServing.class.php
 			offsetYFactor = (expectedWidth / expectedHeight - 1) * 0.1;
-			offsetY = Math.round(expectedHeight * offsetYFactor);
+			yOffset1 = Math.round(expectedHeight * offsetYFactor);
 
-			windowHeight = originalProportionHeight;
+			yOffset2 = originalProportionHeight + yOffset1;
 		}
 
 		return {
-			offsetX: offsetX,
-			offsetY: offsetY,
-			windowWidth: windowWidth,
-			windowHeight: windowHeight
+			xOffset1: xOffset1,
+			yOffset1: yOffset1,
+			xOffset2: xOffset2,
+			yOffset2: yOffset2
 		};
 	}
 
+	function getThumbUrl(thumbUrl, originalWidth, originalHeight, expectedWidth, expectedHeight) {
+		var cutParams = getCutParams(originalWidth, originalHeight, expectedWidth, expectedHeight);
+		console.log(thumbUrl);
+		return Vignette.getThumbURL(thumbUrl, 'window-crop', expectedWidth, expectedHeight, cutParams);
+	}
+
 	return {
-		getCutParams: getCutParams
+		getCutParams: getCutParams,
+		getThumbUrl: getThumbUrl
 	};
 });
