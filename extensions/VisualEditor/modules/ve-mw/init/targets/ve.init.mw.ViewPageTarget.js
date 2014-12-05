@@ -35,6 +35,7 @@ ve.init.mw.ViewPageTarget = function VeInitMwViewPageTarget() {
 	this.saveDialog = null;
 	this.onBeforeUnloadFallback = null;
 	this.onBeforeUnloadHandler = null;
+	this.timeout = null;
 	this.active = false;
 	this.activating = false;
 	this.deactivating = false;
@@ -421,13 +422,13 @@ ve.init.mw.ViewPageTarget.prototype.afterHideSpinner = function () {
 
 	$( '.ve-spinner-fade' ).css( 'opacity', 0 );
 	if ( this.timeout ) {
-		setTimeout( ve.bind( this.afterSpinnerFadeOpacity, this ), this.timeout );
+		setTimeout( ve.bind( this.afterSpinnerFadeOpacityOut, this ), this.timeout );
 	} else {
-		this.afterSpinnerFadeOpacity();
+		this.afterSpinnerFadeOpacityOut();
 	}
 };
 
-ve.init.mw.ViewPageTarget.prototype.afterSpinnerFadeOpacity = function () {
+ve.init.mw.ViewPageTarget.prototype.afterSpinnerFadeOpacityOut = function () {
 	this.toolbar.$element.removeClass( 'transition' );
 	$( '.ve-spinner-fade' ).hide();
 };
