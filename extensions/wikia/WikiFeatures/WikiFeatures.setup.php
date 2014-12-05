@@ -48,6 +48,5 @@ JSMessages::registerPackage( 'WikiFeatures', array(
 	'wikifeatures-deactivate-cancel-button'
 ) );
 
-if ( !empty( $wgEnableNjordExtOnNewWikias ) ) {
-	$wgHooks['WikiFeatures::onGetFeatureLabs'][] = 'NjordHooks::onGetFeatureLabs';
-}
+// For running Modular Main Pages prototype
+$wgHooks['WikiFeatures::onGetFeatureLabs'][] = 'NjordHooks::onGetFeatureLabs';
