@@ -167,10 +167,10 @@ class MonetizationModuleHelper extends WikiaModel {
 		$found = strpos( $adUnits, self::KEYWORD_PREFIX );
 		$adUnits = json_decode( $adUnits, true );
 		if ( $found !== false && is_array( $adUnits ) ) {
-			$adTitle = $this->wf->Message( 'monetization-module-ad-title' )->plain();
+			$adTitle = $this->wf->Message( 'monetization-module-ad-title' )->escaped();
 			$adUnits = str_replace( self::KEYWORD_AD_TITLE, $adTitle, $adUnits );
 
-			$ecommTitle = $this->wf->Message( 'monetization-module-ecommerce-title' )->text();
+			$ecommTitle = $this->wf->Message( 'monetization-module-ecommerce-title' )->escaped();
 			$adUnits = str_replace( self::KEYWORD_ECOMMERCE_TITLE, $ecommTitle, $adUnits );
 
 			$theme = SassUtil::getOasisSettings();

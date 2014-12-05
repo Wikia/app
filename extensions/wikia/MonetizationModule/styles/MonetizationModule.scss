@@ -13,16 +13,10 @@
 	}
 
 	&.ecommerce {
-		@include linear-gradient($color-module-shadow, top, $color-page, 50%, $color-module-shadow, 100%);
-		border: 1px solid $color-page-border;
 		clear: both;
+		font-family: Helvetica,sans-serif;
 		line-height: 1.8em;
 		margin: 0;
-		padding: 10px;
-	}
-
-	&.single-product {
-		padding: 5px;
 	}
 
 	.ad-header {
@@ -84,41 +78,49 @@
 	}
 
 	.affiliate-wrapper {
-		height: 285px;
 		overflow: hidden;
-
-		&.single-product {
-			border: 1px solid $color-page-border;
-			height: 182px;
-		}
 	}
 
-	.affiliate-header span {
-		border-bottom: 0;
+	.module-title {
+		overflow: hidden;
+	}
+
+	.product-thumb {
+		padding: 0;
+	}
+
+	.product-name {
+		-webkit-box-orient: vertical;
+		display: -webkit-box;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: normal;
+	}
+
+	.product-price {
+		display: inline-block;
+		position: relative;
+		text-align: center;
+	}
+
+	.amazon-logo {
+		background-repeat: no-repeat;
+		height: 34px;
+	}
+}
+
+.ecommerce-multiple-product {
+	@include linear-gradient($color-module-shadow, top, $color-page, 50%, $color-module-shadow, 100%);
+	border: 1px solid $color-page-border;
+	padding: 10px;
+
+	.affiliate-wrapper {
+		height: 285px;
+	}
+
+	.module-title {
 		color: #000;
 		font-size: 30px;
-		margin-bottom: 0;
-		margin-top: 0;
-		overflow: hidden;
-		padding-bottom: 0;
-		padding-top: 15px;
-	}
-
-	.affiliate-header.single-product {
-		background-color: #000;
-		color: #fff;
-		float: left;
-		height: 100%;
-		padding: 0;
-		text-align: center;
-		width: 30%;
-
-		span {
-			color: #fff;
-			font-size: 14px;
-			position: relative;
-			top: 35%;
-		}
 	}
 
 	.affiliate {
@@ -129,59 +131,32 @@
 		padding-right: 0;
 		padding-top: 8px;
 		width: 160px;
-
-		&.single-product {
-			background-color: #f6f6f6;
-			float: initial;
-			height: 100%;
-			margin: 0 0 0 30%;
-			padding: 10px;
-			width: 70%;
-		}
 	}
 
-	.product-thumb {
-		padding: 0;
-
-		img {
-			border: 1px solid #ccc;
-			float: left;
-			height: 160px;
-			width: 160px;
-		}
+	.product-thumb img {
+		border: 1px solid #ccc;
+		float: left;
+		height: 160px;
+		width: 160px;
 	}
 
 	.product-name {
 		border-bottom: 1px solid #ccc;
 		border-left: 1px solid #ccc;
 		border-right: 1px solid #ccc;
-		-webkit-box-orient: vertical;
-		display: -webkit-box;
 		float: left;
 		font-size: 14px;
 		height: 2.4em;
 		-webkit-line-clamp: 2;
 		line-height: 1.4;
-		overflow: hidden;
 		padding: 5px 5px 7px;
-		text-overflow: ellipsis;
-		white-space: normal;
 		width: 150px;
-
-		&.single-product {
-			border: 0;
-			float: initial;
-			margin: 0;
-			padding: 5px 10px;
-			width: auto;
-		}
 	}
 
 	.product-price {
 		background-color: #5d98d4;
 		border-radius: 3px;
 		color: #000;
-		display: inline-block;
 		font-size: 14px;
 		font-weight: bold;
 		height: 20px;
@@ -191,19 +166,6 @@
 		text-align: center;
 		top: -100px;
 		width: 60px;
-
-		&:hover {
-			color: #000;
-			text-decoration: underline;
-		}
-
-		&.single-product {
-			background-color: #f09512;
-			border-radius: 0;
-			color: #fff;
-			left: 10px;
-			top: 85px;
-		}
 	}
 
 	.amazon-logo {
@@ -212,17 +174,99 @@
 		} @else {
 			background-image: url('/extensions/wikia/MonetizationModule/images/amazon-logo-black.png');
 		}
-		background-repeat: no-repeat;
 		background-size: cover;
 		display: inline-block;
-		height: 34px;
 		margin-left: 6px;
 		top: 16px;
 		vertical-align: top;
 		width: 160px;
+	}
+}
 
-		&.single-product {
-			background-image: url('/extensions/wikia/MonetizationModule/images/amazon-logo-white.png');
+.ecommerce-single-product {
+	background-color: #fff;
+	border: 1px solid #d8d8d8;
+	box-shadow: 1px 1px 5px rgba(0, 0, 0, .2);
+	padding: 6px;
+
+	.affiliate-wrapper {
+		border: 1px solid #d8d8d8;
+		height: 202px;
+	}
+
+	.affiliate-header {
+		background-color: #000;
+		float: left;
+		height: 100%;
+		padding-top: 70px;
+		text-align: center;
+		width: 30%;
+	}
+
+	.module-title {
+		color: #fff;
+		font-size: 20px;
+		font-weight: 400;
+	}
+
+	.affiliate {
+		background-color: #f6f6f6;
+		height: 182px;
+		margin-left: 30%;
+		padding: 10px;
+	}
+
+	.product-thumb {
+		background-color: #fff;
+		border: 1px solid #c6c6c6;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+		float: left;
+		height: 180px;
+		min-width: 256px;
+		text-align: center;
+
+		img {
+			border: 0;
+			height: 180px;
 		}
+	}
+
+	.product-name {
+		font-size: 20px;
+		height: 80px;
+		-webkit-line-clamp: 4;
+		line-height: 1.1;
+		padding: 5px 10px;
+
+		a {
+			color: #004b91;
+		}
+
+		strong {
+			font-weight: 400;
+		}
+	}
+
+	.product-price {
+		@include linear-gradient(#ec850c, top, #f19a16, 50%, #ec850c, 100%);
+		background-color: #f09512;
+		border: 1px solid #e38600;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, .25);
+		color: #fff;
+		font-size: 20px;
+		font-weight: 400;
+		height: 33px;
+		left: 10px;
+		padding-top: 15px;
+		text-shadow: 0 1px 0 rgba(0, 0, 0, .2);
+		top: 41px;
+		width: 116px;
+	}
+
+	.amazon-logo {
+		background-image: url('/extensions/wikia/MonetizationModule/images/amazon-logo-white.png');
+		background-position: center;
+		background-size: 160px 34px;
+		display: block;
 	}
 }
