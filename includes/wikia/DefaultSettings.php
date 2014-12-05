@@ -195,6 +195,11 @@ $wgWikiaApiControllers['RecommendationsApiController'] = "{$IP}/includes/wikia/a
  */
 
 /**
+ * Modular main pages hooks
+ */
+$wgAutoloadClasses['NjordHooks'] =  $dir . '/NjordHooks.class.php';
+
+/**
  * Wikia Skins
  *
  * this need to be autoloaded to avoid PHPUnit replacing the classes definition with mocks
