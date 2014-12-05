@@ -1,24 +1,14 @@
 @import "skins/shared/color";
 
-.global-edit-wrap {
-  border-bottom: 1px solid $color-page-border;
-  margin:60px 8% 20px 8%;
-  a:hover {
-    text-decoration: none;
-  }
-  .global-edit-btn {
-    vertical-align: text-bottom;
-  }
-  .edit-link {
-    color: #0a5fa3;
-    text-transform: uppercase;
-  }
-}
 .MainPageHero {
-  background-color: #092140;
+  background-color: $color-buttons;
   max-height: 400px;
   position: relative;
   width: 100%;
+
+  h1 {
+    background: none;
+  }
 
   .btn-bar {
     align-items: center;
@@ -82,7 +72,7 @@
     bottom: 6%;
     color: #fff;
     display: inline-block;
-    left: 8%;
+    left: 10px;
     position: absolute;
     text-align: left;
     width: 425px;
@@ -135,7 +125,7 @@
     display: flex;
     display: -webkit-flex;
     flex-direction: column;
-    margin: 5px auto auto 7%;
+    margin: 5px auto auto 2px;
     z-index: 1;
     -webkit-flex-direction: column;
   }
@@ -200,7 +190,7 @@
   }
 
   .hero-description {
-    margin: 20px 8%;
+    margin: 20px 10px 20px 10px;
     word-wrap: break-word;
   }
 
@@ -216,7 +206,7 @@
     background-color: white;
     display: none;
     justify-content: flex-end;
-    padding: 10px 15px 10px 8%;
+    padding: 10px 15px 10px 10px;
     width: 100%;
     -webkit-justify-content: flex-end;
     -webkit-align-items: center;
@@ -360,7 +350,7 @@
       display: none;
     }
     .upload-group {
-      margin: 5px auto auto 8%;
+      margin: 5px auto auto 2px;
       position: absolute;
       z-index: 1;
     }
@@ -397,11 +387,11 @@
       border: 1px dashed white;
       display: flex;
       display: -webkit-flex;
-      height: 92%;
-      margin: 1%;
+      height: 97.1%;
+      margin: 0.3%;
       position: absolute;
       text-align: center;
-      width: 98%;
+      width: 99.3%;
     }
     .hero-description-text {
       display: none;
