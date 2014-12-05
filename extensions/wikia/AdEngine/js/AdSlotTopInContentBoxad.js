@@ -52,5 +52,7 @@ require([
 
 	}
 
+	log('Binding to ext.wikia.adEngine.adDecoratorPageDimensions fillInSlot', 'info', logGroup);
+
 	eventDispatcher.bind('ext.wikia.adEngine.adDecoratorPageDimensions fillInSlot', doesNotBreakContent);
 });
