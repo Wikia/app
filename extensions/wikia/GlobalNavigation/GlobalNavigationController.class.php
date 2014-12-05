@@ -46,14 +46,15 @@ class GlobalNavigationController extends WikiaController {
 	}
 
 	public function searchIndex() {
+		global $wgLanguageCode;
 		$lang = $this->wg->Lang->getCode();
-		$centralUrl = $this->getCentralUrlForLang( $lang );
-		$globalSearchUrl = $this->getGlobalSearchUrl( $centralUrl, $lang );
+		$centralUrl = $this->getCentralUrlForLang( $wgLanguageCode );
+		$globalSearchUrl = $this->getGlobalSearchUrl( $centralUrl, $wgLanguageCode );
 		$specialSearchTitle = SpecialPage::getTitleFor( 'Search' );
 		$localSearchUrl = $specialSearchTitle->getFullUrl();
 		$fulltext = $this->wg->User->getOption( 'enableGoSearch' ) ? 0 : 'Search';
 		$globalRequest = $this->wg->request;
-		$query = $globalRequest->getVal( 'search', $globalRequest->getVal( 'query', '' ) );
+		$query = htmlspecialchars_decode( $globalRequest->getVal( 'search', $globalRequest->getVal( 'query', '' ) ) );
 
 		if ( WikiaPageType::isCorporatePage() && !WikiaPageType::isWikiaHub() ) {
 			$this->response->setVal( 'disableLocalSearchOptions', true );
@@ -170,7 +171,7 @@ class GlobalNavigationController extends WikiaController {
 	}
 
 	public function getGlobalSearchUrl( $centralUrl, $lang ) {
-		if ( $lang != self::DEFAULT_LANG && !$this->centralWikiInLangExists( $lang ) ) {
+		if ( !$this->centralWikiInLangExists( $lang ) ) {
 			return $centralUrl . self::CENTRAL_WIKI_SEARCH;
 		} else {
 			$specialSearchTitle = $this->getTitleForSearch();
