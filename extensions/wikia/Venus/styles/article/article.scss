@@ -21,6 +21,11 @@ $header-without-cover-unit-spacing: 60px;
 	display: none !important;
 }
 
+// Allow VisualEditor toolbar menus to go outside of article area
+.ve .article {
+	overflow: visible;
+}
+
 .article {
 	overflow: hidden;
 
