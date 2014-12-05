@@ -1,35 +1,24 @@
-/*global require*/
-require([
+/*global define*/
+define('ext.wikia.adEngine.adDecoratorTopInContent', [
 	'wikia.log',
 	'wikia.document',
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.adPlacementChecker',
-	'ext.wikia.adEngine.eventDispatcher'
-], function (log, document, adContext, adPlacementChecker, eventDispatcher) {
+	'ext.wikia.adEngine.adPlacementChecker'
+], function (log, document, adContext, adPlacementChecker) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.slot.topInContentBoxad',
-		slotName = 'TOP_INCONTENT_BOXAD',
-		result = null;
+	var logGroup = 'ext.wikia.adEngine.adDecoratorTopInContent',
+		slotName = 'TOP_INCONTENT_BOXAD';
 
-	function doesNotBreakContent(slot) {
+	function doesNotBreakContent() {
 
 		var adPlace,
 			fakeAdId = 'fake-top-incontent-boxad',
 			fakeAdStyle = 'float: right; height: 250px; margin: 0 0 10px 10px; width: 300px',
 			fakeAdHtml = '<div id="' + fakeAdId + '" style="' + fakeAdStyle + '"></div>',
 			contentDiv,
-			fakeAd;
-
-		if (slotName !== slot[0]) {
-			return true;
-		}
-
-		if (result !== null) {
-			log(['doesNotBreakContent result', result], 'debug', logGroup);
-
-			return result;
-		}
+			fakeAd,
+			result;
 
 		if (!adContext.getContext().targeting.pageIsArticle) {
 			log(['doesNotBreakContent result', false, 'Page is not an article'], 'debug', logGroup);
@@ -52,7 +41,31 @@ require([
 
 	}
 
-	log('Binding to ext.wikia.adEngine.adDecoratorPageDimensions fillInSlot', 'info', logGroup);
+	/**
+	 * fillInSlot decorator. Returns function to call instead.
+	 *
+	 * @returns {function}
+	 */
+	function decorator(fillInSlot) {
+		log(['decorator', fillInSlot], 'debug', logGroup);
 
-	eventDispatcher.bind('ext.wikia.adEngine.adDecoratorPageDimensions fillInSlot', doesNotBreakContent);
+		return function (decoratedSlot) {
+			log(['decorated', decoratedSlot], 'debug', logGroup);
+
+			var decoratedSlotName = decoratedSlot[0];
+
+			if (slotName !== decoratedSlotName) {
+				return fillInSlot(decoratedSlot);
+			}
+
+			if (doesNotBreakContent()) {
+				return fillInSlot(decoratedSlot);
+			}
+
+			log(['decorated', decoratedSlot, 'return null'], 'debug', logGroup);
+			return;
+		};
+	}
+
+	return decorator;
 });
