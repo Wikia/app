@@ -163,7 +163,15 @@
 			$helper = new WikiFeaturesHelper();
 			WikiFeaturesHelper::$release_date = $release_date;
 			$response = $helper->getFeatureLabs();
-			$this->assertEquals($exp_result, $response);
+
+			$actual_features = [];
+
+			foreach($response as $actual_feature) {
+				$actual_features [$actual_feature['name']] = true;
+			}
+			foreach($exp_result as $feature) {
+				$this->assertArrayHasKey($feature['name'], $actual_features);
+			}
 
 			$this->tearDownGetFeature();
 		}

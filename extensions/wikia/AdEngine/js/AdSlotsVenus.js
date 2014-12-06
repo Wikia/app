@@ -11,7 +11,7 @@ require([
 	var logGroup = 'ext.wikia.adEngine.slot.venus',
 		headersSelector = '#mw-content-text > h2, #mw-content-text > h3, #mw-content-text > section > h2',
 		inContentSlots = ['INCONTENT_BOXAD_1', 'INCONTENT_BOXAD_2'],
-		minOffset = 750 + 300, // 300 = height of the ad
+		minOffset = 750 + 250, // 250 = height of the ad
 		adHtml = '<div class="ad-in-content ad-in-content-current"><div class="wikia-ad default-height"></div></div>',
 		labelHtml = '<label class="wikia-ad-label"></label>';
 

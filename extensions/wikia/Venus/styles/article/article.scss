@@ -16,6 +16,11 @@ $placeholder-background-color: $color-article-navigation-inactive; // only for p
 $article-items-spacing: 30px;
 $header-without-cover-unit-spacing: 60px;
 
+$article-nav-gap-no-coverunit: 220px;
+$article-nav-gap-coverunit-small: 115px;
+$article-nav-gap-coverunit-medium: 215px;
+$article-nav-gap-coverunit-large: 220px;
+
 // don't display TOC on Venus skin pages (fight cache)
 #toc {
 	display: none !important;
@@ -49,7 +54,7 @@ $header-without-cover-unit-spacing: 60px;
 			}
 
 			& + .article-navigation {
-				top: $header-without-cover-unit-spacing + 80px;
+				top: $article-nav-gap-no-coverunit;
 			}
 		}
 
@@ -71,7 +76,7 @@ $header-without-cover-unit-spacing: 60px;
 			}
 
 			& + .article-navigation {
-				@include proportional-grid-media-top('medium', 8, $medium-content-padding + $article-items-spacing + 100px);
+				@include proportional-grid-media-top('medium', 8, $article-nav-gap-coverunit-medium);
 			}
 		}
 	}
@@ -252,7 +257,7 @@ $header-without-cover-unit-spacing: 60px;
 			}
 
 			& + .article-navigation {
-				@include proportional-grid-media-top('large', 8, $large-content-padding + $article-items-spacing + 100px);
+				@include proportional-grid-media-top('large', 8, $article-nav-gap-coverunit-large);
 			}
 		}
 	}
@@ -315,7 +320,7 @@ $header-without-cover-unit-spacing: 60px;
 			}
 
 			& + .article-navigation {
-				@include proportional-media-top($small-content-width - 2 * $content-border-width, $article-items-spacing + 100px);
+				@include proportional-media-top($small-content-width - 2 * $content-border-width, $article-nav-gap-coverunit-small);
 			}
 		}
 	}
