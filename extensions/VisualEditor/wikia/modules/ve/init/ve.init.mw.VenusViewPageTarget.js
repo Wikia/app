@@ -16,6 +16,10 @@
 ve.init.mw.VenusViewPageTarget = function VeInitMwVenusViewPageTarget() {
 	// Parent constructor
 	ve.init.mw.VenusViewPageTarget.super.call( this );
+
+	// This is used to trigger code after a CSS animation.
+	// Its value matches the animation speed in extensions/wikia/Venus/styles/visualeditor.scss
+	this.timeout = 500;
 };
 
 /* Inheritance */

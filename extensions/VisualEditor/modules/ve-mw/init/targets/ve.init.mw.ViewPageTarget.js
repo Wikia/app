@@ -35,6 +35,7 @@ ve.init.mw.ViewPageTarget = function VeInitMwViewPageTarget() {
 	this.saveDialog = null;
 	this.onBeforeUnloadFallback = null;
 	this.onBeforeUnloadHandler = null;
+	this.timeout = null;
 	this.active = false;
 	this.activating = false;
 	this.deactivating = false;
@@ -204,33 +205,15 @@ ve.init.mw.ViewPageTarget.prototype.setupToolbar = function () {
 	// Parent method
 	ve.init.mw.Target.prototype.setupToolbar.call( this );
 
-	// Keep it hidden so that we can slide it down smoothly (avoids sudden
-	// offset flash when original content is hidden, and replaced in-place with a
-	// similar-looking surface).
-	// FIXME: This is not ideal, the parent class creates it and appends
-	// to target (visibly), only for us to hide it again 0ms later.
-	// Though we can't hide it by default because it needs visible dimensions
-	// to compute stuff during setup.
-	this.toolbar.$bar.hide();
-
 	this.toolbar.enableFloatable();
 	this.toolbar.$element
-		.addClass( 've-init-mw-viewPageTarget-toolbar' );
+		.addClass( 've-init-mw-viewPageTarget-toolbar transition' );
 
 	// Move the toolbar to before #firstHeading if it exists
 	$firstHeading = $( '#WikiaPageHeader' );
 	if ( $firstHeading.length ) {
 		this.toolbar.$element.insertAfter( $firstHeading );
 	}
-
-	this.toolbar.$bar.slideDown( 'fast', ve.bind( function () {
-		// Check the surface wasn't torn down while the toolbar was animating
-		if ( this.surface ) {
-			this.toolbar.initialize();
-			this.surface.getView().emit( 'position' );
-			this.surface.getContext().update();
-		}
-	}, this ) );
 };
 
 /**
@@ -410,11 +393,20 @@ ve.init.mw.ViewPageTarget.prototype.onSurfaceReady = function () {
 	}
 
 	// Update UI
+	this.hideSpinner();
+	if ( this.timeout ) {
+		setTimeout( ve.bind( this.afterHideSpinner, this ), this.timeout );
+	} else {
+		this.afterHideSpinner();
+	}
+};
+
+ve.init.mw.ViewPageTarget.prototype.afterHideSpinner = function () {
 	this.transformPageTitle();
 	this.changeDocumentTitle();
 	this.hidePageContent();
-	this.hideSpinner();
 
+	this.surface.getFocusWidget().$element.show();
 	this.surface.getView().focus();
 
 	this.setupToolbarButtons();
@@ -427,6 +419,18 @@ ve.init.mw.ViewPageTarget.prototype.onSurfaceReady = function () {
 		veTrack( { action: 've-edit-page-stop' } );
 	}
 	mw.hook( 've.activationComplete' ).fire();
+
+	$( '.ve-spinner-fade' ).css( 'opacity', 0 );
+	if ( this.timeout ) {
+		setTimeout( ve.bind( this.afterSpinnerFadeOpacityOut, this ), this.timeout );
+	} else {
+		this.afterSpinnerFadeOpacityOut();
+	}
+};
+
+ve.init.mw.ViewPageTarget.prototype.afterSpinnerFadeOpacityOut = function () {
+	this.toolbar.$element.removeClass( 'transition' );
+	$( '.ve-spinner-fade' ).hide();
 };
 
 /**
