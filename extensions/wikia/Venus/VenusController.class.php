@@ -116,9 +116,9 @@ class VenusController extends WikiaController {
 		}
 
 		$this->bodyClasses = implode( ' ', array_merge(
-			$bodyClasses,
-			self::getBackgroundClasses(),
-			self::$bodyClassArray )
+				$bodyClasses,
+				self::getBackgroundClasses(),
+				self::$bodyClassArray )
 		);
 	}
 

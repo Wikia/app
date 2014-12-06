@@ -1,10 +1,14 @@
+/* global  wgScriptPath, UserSignup */
+
 /**
  * UserSignupAjaxForm is contains business logic for ajax signup validation
  * wikiaForm - instance of WikiaForm
  * inputsToValide - array of input names to be ok'ed before submission
  * submitButton - pointer to main submit button of the form
  */
-var UserSignupAjaxForm = function(wikiaForm, inputsToValidate, submitButton, notEmptyFields, captchaField) {
+var UserSignupAjaxForm = function (wikiaForm, inputsToValidate, submitButton, notEmptyFields, captchaField) {
+	'use strict';
+
 	this.wikiaForm = wikiaForm;
 	this.inputsToValidate = inputsToValidate || [];
 	this.notEmptyFields = notEmptyFields || [];
@@ -14,46 +18,54 @@ var UserSignupAjaxForm = function(wikiaForm, inputsToValidate, submitButton, not
 	this.activateSubmit();
 };
 
-UserSignupAjaxForm.prototype.validateInput = function(e) {
-	var el = $(e.target);
-	var paramName = el.attr('name');
-	var params = this.getDefaultParamsForAjax();
-	params['field'] = paramName;
+UserSignupAjaxForm.prototype.validateInput = function (e) {
+	'use strict';
+
+	var el = $(e.target),
+		paramName = el.attr('name'),
+		params = this.getDefaultParamsForAjax(),
+		proxyObj;
+
+	params.field = paramName;
 	params[paramName] = el.val();
 
-	var proxyObj = {
+	proxyObj = {
 		'paramName': paramName,
 		'form': this
 	};
 
-	$.post(wgScriptPath + '/wikia.php', params, $.proxy(this.validationHandler, proxyObj));
+	$.get(wgScriptPath + '/wikia.php', params, $.proxy(this.validationHandler, proxyObj));
 };
 
-UserSignupAjaxForm.prototype.validationHandler = function(res) {
-	var paramName = this.paramName;
+UserSignupAjaxForm.prototype.validationHandler = function (res) {
+	'use strict';
+
 	var form = this.form;	// instance of UserSignupAjaxForm
-	if(res['result'] === 'ok') {
+	if (res.result === 'ok') {
 		form.wikiaForm.clearInputError(this.paramName);
 	} else {
-		form.wikiaForm.showInputError(this.paramName, res['msg']);
+		form.wikiaForm.showInputError(this.paramName, res.msg);
 	}
 
 	this.form.activateSubmit();
 };
 
-UserSignupAjaxForm.prototype.validateBirthdate = function(e) {
-	var el = $(e.target);
-	var proxyObj = {'paramName':el.attr('name'), 'form': this};
-	if(UserSignup.deferred && typeof UserSignup.deferred.reject === 'function') {
+UserSignupAjaxForm.prototype.validateBirthdate = function (e) {
+	'use strict';
+
+	var el = $(e.target),
+		proxyObj = {'paramName':el.attr('name'), 'form': this},
+		params = this.getDefaultParamsForAjax();
+
+	if (UserSignup.deferred && typeof UserSignup.deferred.reject === 'function') {
 		UserSignup.deferred.reject();
 	}
 
-	var params = this.getDefaultParamsForAjax();
 	$.extend(params, {
 		field: 'birthdate',
-		birthyear: this.wikiaForm.inputs['birthyear'].val(),
-		birthmonth: this.wikiaForm.inputs['birthmonth'].val(),
-		birthday: this.wikiaForm.inputs['birthday'].val()
+		birthyear: this.wikiaForm.inputs.birthyear.val(),
+		birthmonth: this.wikiaForm.inputs.birthmonth.val(),
+		birthday: this.wikiaForm.inputs.birthday.val()
 	});
 
 	UserSignup.deferred = $.post(
@@ -63,7 +75,9 @@ UserSignupAjaxForm.prototype.validateBirthdate = function(e) {
 	);
 };
 
-UserSignupAjaxForm.prototype.getDefaultParamsForAjax = function() {
+UserSignupAjaxForm.prototype.getDefaultParamsForAjax = function () {
+	'use strict';
+
 	return {
 		controller: 'UserSignupSpecial',
 		method: 'formValidation',
@@ -71,13 +85,16 @@ UserSignupAjaxForm.prototype.getDefaultParamsForAjax = function() {
 	};
 };
 
-UserSignupAjaxForm.prototype.checkFieldsValid = function() {
-	var isValid = true;
-	var inputsToValidate = this.notEmptyFields;
+UserSignupAjaxForm.prototype.checkFieldsValid = function () {
+	'use strict';
 
-	for(var i = 0; i < inputsToValidate.length; i++) {
-		if (this.checkFieldEmpty(this.wikiaForm.inputs[inputsToValidate[i]])
-			|| this.wikiaForm.getInputGroup(inputsToValidate[i]).hasClass('error')) {
+	var isValid = true,
+		inputsToValidate = this.notEmptyFields,
+		i;
+
+	for (i = 0; i < inputsToValidate.length; i++) {
+		if (this.checkFieldEmpty(this.wikiaForm.inputs[inputsToValidate[i]]) ||
+			this.wikiaForm.getInputGroup(inputsToValidate[i]).hasClass('error')) {
 			isValid = false;
 			break;
 		}
@@ -90,13 +107,17 @@ UserSignupAjaxForm.prototype.checkFieldsValid = function() {
 	return isValid;
 };
 
-UserSignupAjaxForm.prototype.checkFieldEmpty = function(field) {
-	return field && ((field.is('input') && field.val() == '') || (field.is('select') && field.val() == -1));
+UserSignupAjaxForm.prototype.checkFieldEmpty = function (field) {
+	'use strict';
+
+	return field && ((field.is('input') && field.val() === '') || (field.is('select') && field.val() === -1));
 };
 
-UserSignupAjaxForm.prototype.activateSubmit = function() {
+UserSignupAjaxForm.prototype.activateSubmit = function () {
+	'use strict';
+
 	var isvalid = this.checkFieldsValid();
-	if(isvalid) {
+	if (isvalid) {
 		this.submitButton.removeAttr('disabled');
 	} else {
 		this.submitButton.attr('disabled', 'disabled');
