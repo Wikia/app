@@ -424,7 +424,6 @@ ve.init.mw.ViewPageTarget.prototype.afterHideSpinner = function () {
 	this.restoreEditSection();
 	this.setupBeforeUnloadHandler();
 	this.maybeShowDialogs();
-
 	if ( window.veTrack ) {
 		veTrack( { action: 've-edit-page-stop' } );
 	}
