@@ -1346,11 +1346,13 @@ ve.init.mw.Target.prototype.setupSurface = function ( doc, callback ) {
 				// Was previously prepended:
 				// https://github.com/Wikia/app/commit/45982569ef4381319e238ef973c49f57f96caf72
 				target.surface.$element.insertAfter( '#mw-content-text' );
+
+/*
 				target.setupToolbar();
 				if ( ve.debug ) {
 					target.setupDebugBar();
 				}
-
+*/
 				// Apply mw-body-content to the view (ve-ce-surface).
 				// Not to surface (ve-ui-surface), since that contains both the view
 				// and the overlay container, and we don't want inspectors to
