@@ -28,7 +28,8 @@
 
 			$this->setUpMockObject( 'stdClass', $memcParams, false, 'wgMemc' );
 
-			$this->mockGlobalVariable('wgCityId', self::TEST_CITY_ID);
+			$this->mockGlobalVariable( 'wgCityId', self::TEST_CITY_ID );
+			$this->mockGlobalVariable( 'wgAntiSpoofAccounts', false );
 
 			// "mock" IP
 			$this->originalServer = $_SERVER;
