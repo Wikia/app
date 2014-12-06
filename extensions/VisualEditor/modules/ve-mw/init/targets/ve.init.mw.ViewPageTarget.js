@@ -214,6 +214,10 @@ ve.init.mw.ViewPageTarget.prototype.setupToolbar = function () {
 	if ( $firstHeading.length ) {
 		this.toolbar.$element.insertAfter( $firstHeading );
 	}
+
+	this.toolbar.initialize();
+	this.surface.getView().emit( 'position' );
+	this.surface.getContext().update();
 };
 
 /**
@@ -408,6 +412,11 @@ ve.init.mw.ViewPageTarget.prototype.afterHideSpinner = function () {
 
 	this.surface.getFocusWidget().$element.show();
 	this.surface.getView().focus();
+
+	this.setupToolbar();
+	if ( ve.debug ) {
+		this.setupDebugBar();
+	}
 
 	this.setupToolbarButtons();
 	this.attachToolbarButtons();
