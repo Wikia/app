@@ -465,6 +465,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 					$abortError,
 					'email'
 				);
+				// FIXME: unreachable
 				$phalanxValid = false;
 			}
 			return $phalanxValid;

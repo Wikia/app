@@ -9,6 +9,16 @@ class NjordHooks {
 		return true;
 	}
 
+	public static function onGetFeatureLabs( ) {
+		global $wgContLang, $wgWikiFeatures;
+
+		if ( $wgContLang->getCode() == 'en' ) {
+			$wgWikiFeatures['labs'] [] = 'wgEnableNjordExt';
+		}
+
+		return true;
+	}
+
 	public static function renderHeroTag( $content, array $attributes, Parser $parser, PPFrame $frame ) {
 		$wikiData = new WikiDataModel( Title::newMainPage()->getText() );
 		$wikiData->setFromAttributes( $attributes );

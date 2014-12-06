@@ -244,7 +244,6 @@
 					revertDescription();
 					$descriptionEditElement.stopThrobbing();
 					trackMom(saveSummaryFailLabel, trackerActionPost);
-					$.showModal($.msg('error'), 'Error while saving description');
 				}
 			});
 		},
@@ -358,7 +357,7 @@
 				trackMom(imageLoadedLabel, trackerActionSuccess);
 			} else {
 				trackMom(imageLoadedFailLabel, trackerActionError);
-				$.showModal($.msg('error'), data.errMessage);
+				$.showModal(data.errTitle, data.errMessage);
 				$heroModule.stopThrobbing();
 			}
 		},
@@ -371,7 +370,6 @@
 				data: formdata,
 				callback: onAfterSendForm,
 				onErrorCallback: function () {
-					$.showModal($.msg('error'), $.msg('unknown-error'));
 					trackMom(imageLoadedFailLabel, trackerActionError);
 					$heroModule.stopThrobbing();
 				},
@@ -380,6 +378,7 @@
 			});
 
 		}, initializeEditMode = function () {
+			//load messages
 			$imageSaveBtn.on('click', saveImage)
 				.on('click', function () {
 					trackMom(saveHeroImageLabel, trackerActionClick);
