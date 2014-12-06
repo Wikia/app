@@ -41,8 +41,6 @@ OO.inheritClass( ve.ui.Dialog, OO.ui.Dialog );
 ve.ui.Dialog.prototype.initialize = function () {
 	// Parent Method
 	ve.ui.Dialog.super.prototype.initialize.call( this );
-
-	this.frame.$content.addClass( 'venus-button' );
 };
 
 ve.ui.Dialog.prototype.setDraggable = function () {
