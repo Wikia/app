@@ -34,6 +34,7 @@ class VideosModule extends WikiaModel {
 	protected $blacklistCount = null;   // number of blacklist videos
 	protected $existingVideos = [];     // list of titles of existing videos (those which have been added already)
 	protected $userRegion;
+	private $log;
 
 	public function __construct( $userRegion ) {
 		// All black listed videos are stored in WikiFactory in the wgVideosModuleBlackList variable
@@ -46,6 +47,7 @@ class VideosModule extends WikiaModel {
 		}
 
 		$this->userRegion = $userRegion;
+		$this->log = WikiaLogger::instance();
 		parent::__construct();
 	}
 
@@ -102,7 +104,7 @@ class VideosModule extends WikiaModel {
 	 */
 	public function getLocalVideos( $numRequired, $sort ) {
 		wfProfileIn( __METHOD__ );
-		$log = WikiaLogger::instance();
+		$this->log = WikiaLogger::instance();
 
 		$memcKey = wfMemcKey( 'videomodule', 'local_videos', self::CACHE_VERSION, $sort, $this->userRegion );
 		$videos = $this->wg->Memc->get( $memcKey );
@@ -110,7 +112,7 @@ class VideosModule extends WikiaModel {
 		$loggingParams = [ 'method' => __METHOD__, 'num' => $numRequired, 'sort' => $sort ];
 
 		if ( !is_array( $videos ) ) {
-			$log->info( __METHOD__.' memc MISS', $loggingParams );
+			$this->log->info( __METHOD__.' memc MISS', $loggingParams );
 
 			$filter = 'all';
 			$paddedLimit = $this->getPaddedVideoLimit( self::LIMIT_VIDEOS );
@@ -130,11 +132,11 @@ class VideosModule extends WikiaModel {
 			$ttl = self::CACHE_TTL;
 			if ( empty( $videos ) ) {
 				$ttl = self::NEGATIVE_CACHE_TTL;
-				$log->info( __METHOD__ . ' zero videos', $loggingParams );
+				$this->log->info( __METHOD__ . ' zero videos', $loggingParams );
 			}
 			$this->wg->Memc->set( $memcKey, $videos, $ttl );
 		} else {
-			$log->info( __METHOD__.' memc HIT', $loggingParams );
+			$this->log->info( __METHOD__.' memc HIT', $loggingParams );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -157,15 +159,21 @@ class VideosModule extends WikiaModel {
 	 */
 	public function getVideosFromAsyncCache() {
 		$memcKey = wfMemcKey( 'videomodule', 'wiki_related_videos_topics', self::CACHE_VERSION, $this->userRegion );
-		$videos = ( new Wikia\Cache\AsyncCache() )
+		$asynCache = ( new Wikia\Cache\AsyncCache() )
 			->key( $memcKey )
 			->ttl( self::CACHE_TTL )
 			->negativeResponseTTL( self::NEGATIVE_CACHE_TTL )
 			->callback( 'VideosModule::getVideosRelatedToWikiStatically' )
-			->callbackParams( [ $this->userRegion ] )
-			->value();
+			->callbackParams( [ $this->userRegion ] );
 
-		return $videos;
+		if ( $asynCache->foundInCache() ) {
+			$this->log->info( __METHOD__.' memc HIT');
+		} else {
+			$this->log->info( __METHOD__.' memc MISS');
+		}
+
+		$videos = $asynCache->value();
+		return is_null( $videos ) ? [] : $videos;
 	}
 
 	/**
@@ -206,9 +214,12 @@ class VideosModule extends WikiaModel {
 			$this->addToList( $videos, $video, self::SOURCE_WIKI_TOPICS );
 		}
 
+		$videos = [];
 		if ( empty( $videos ) ) {
-			// Caught by AsyncCache task which then caches empty array using negative cache TTL
-			throw new Wikia\Cache\NegativeResponseException( "No videos found" );
+			$msg = "No videos found for wiki {$this->wg->Sitename}";
+			$this->log->info( __METHOD__ . " " . $msg );
+			// Caught by AsyncCache task which then using negative cache TTL
+			throw new Wikia\Cache\NegativeResponseException( $msg );
 		}
 
 		return $videos;
@@ -252,7 +263,6 @@ class VideosModule extends WikiaModel {
 	 */
 	public function getVideoListFromVideoWiki( $category, $limit = self::LIMIT_VIDEOS, $sort = 'recent', $source = '' ) {
 		wfProfileIn( __METHOD__ );
-		$log = WikiaLogger::instance();
 
 		sort( $category );
 		$hashCategory = md5( json_encode( $category ) );
@@ -267,7 +277,7 @@ class VideosModule extends WikiaModel {
 		];
 
 		if ( !is_array( $videos ) ) {
-			$log->info( __METHOD__.' memc MISS', $loggingParams );
+			$this->log->info( __METHOD__.' memc MISS', $loggingParams );
 
 			$params = [
 				'controller' => 'VideoHandler',
@@ -291,11 +301,11 @@ class VideosModule extends WikiaModel {
 			$ttl = self::CACHE_TTL;
 			if ( empty( $videos ) ) {
 				$ttl = self::NEGATIVE_CACHE_TTL;
-				$log->info( __METHOD__ . ' zero videos', $loggingParams );
+				$this->log->info( __METHOD__ . ' zero videos', $loggingParams );
 			}
 			$this->wg->Memc->set( $memcKey, $videos, $ttl );
 		} else {
-			$log->info( __METHOD__.' memc HIT', $loggingParams );
+			$this->log->info( __METHOD__.' memc HIT', $loggingParams );
 		}
 
 		wfProfileOut( __METHOD__ );
