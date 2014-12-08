@@ -50,7 +50,7 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 	protected function getImagesFromDB($articles = array()) {
 		wfProfileIn( __METHOD__ );
 
-		$props = $this->getArticleProbs($articles, 2*$this->queryLimit);
+		$props = $this->getArticleProps($articles, 2*$this->queryLimit);
 		foreach($props as  $article => $prop) {
 			foreach( $prop as $key => $image  ) {
 				$this->addImagesList(  $image, $article, $key, $this->queryLimit );
@@ -60,7 +60,7 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 		wfProfileOut( __METHOD__ );
 	}
 
-	protected function getArticleProbs($articles, $limit) {
+	protected function getArticleProps($articles, $limit) {
 		wfProfileIn( __METHOD__ );
 
 		$out = array();

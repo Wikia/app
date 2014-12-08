@@ -13,7 +13,7 @@ class ImageServingDriverCategoryNS extends ImageServingDriverMainNS {
 			}
 		}
 		
-		$props = $this->getArticleProbs(array_keys($toGetFromArticle), $this->queryLimit);
+		$props = $this->getArticleProps(array_keys($toGetFromArticle), $this->queryLimit);
 		
 		$propNumber = 0;
 		foreach($props as  $article => $prop) {
