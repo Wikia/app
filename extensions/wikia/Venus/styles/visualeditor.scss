@@ -12,3 +12,9 @@
 	transition: opacity .5s ease-in-out;
 	z-index: $zTop;
 }
+
+.ve-spinner {
+	.message {
+		margin: 0;
+	}
+}
