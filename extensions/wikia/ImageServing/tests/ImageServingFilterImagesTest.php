@@ -23,7 +23,7 @@ class ImageServingDriverMainNSProxy extends ImageServingDriverMainNS {
 	}
 
 	public function getFilteredOut() {
-		return $this->filterdOut;
+		return $this->filteredOut;
 	}
 
 }

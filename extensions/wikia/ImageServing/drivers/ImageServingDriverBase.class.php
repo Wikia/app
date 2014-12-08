@@ -13,7 +13,7 @@ abstract class ImageServingDriverBase {
 	protected $db;
 	protected $imagesList;
 	protected $articleCountList;
-	protected $filterdOut;
+	protected $filteredOut;
 
 	protected $minWidth;
 	protected $minHeight;
@@ -71,11 +71,11 @@ abstract class ImageServingDriverBase {
 
 		$this->imagesList = array();
 		$this->articleCountList = array();
-		$this->filterdOut = array();
+		$this->filteredOut = array();
 
 		$this->executeGetData( $articles );
 
-		$dbOut = $this->formatResult($this->imagesList, $this->filterdOut);
+		$dbOut = $this->formatResult($this->imagesList, $this->filteredOut);
 
 		$this->storeInCache($dbOut);
 
@@ -95,8 +95,8 @@ abstract class ImageServingDriverBase {
 		return $this->imagesList;
 	}
 
-	protected function addToFiltredList($name, $count, $width, $height, $minorMime) {
-		$this->filterdOut[ $name ] = array(
+	protected function addToFilteredList($name, $count, $width, $height, $minorMime) {
+		$this->filteredOut[ $name ] = array(
 			'cnt'            => $count,
 			'il_to'          => $name,
 			'img_width'      => $width,
