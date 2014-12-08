@@ -29,6 +29,12 @@ require(['venus.infobox', 'wikia.document'], function (infoboxModule, d) {
 	}
 
 	if (infoboxWrapper) {
-		init();
+		// waiting for document ready when makeCollapsible is loaded
+		$(document).ready(function() {
+			// Wrap collapsible sections
+			$(infoboxWrapper).find('.mw-collapsible').makeCollapsible();
+			// Wrap whole infobox by adding see more button
+			init();
+		});
 	}
 });
