@@ -24,7 +24,6 @@ $media-margin: 2.5px;
 
 .media-gallery-wrapper {
 	@include grid-row();
-	clear: both;
 	margin: 0 $media-margin * -1;
 	padding: 1px; // leave room for the image outlines
 	width: auto;
