@@ -5,8 +5,6 @@
 
 	var UserLoginFacebookForm = $.createClass(UserLoginAjaxForm, {
 		// login token is stored in hidden field, no need to send an extra request
-		// TODO: check if this override is necessary.
-		// Maybe check login token from hidden field before making the request
 		retrieveLoginToken: function () {},
 
 		// Handles existing user login via modal
