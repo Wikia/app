@@ -8,7 +8,7 @@
 		captchaField: window.wgUserLoginDisableCaptcha ? '' : 'recaptcha_response_field',
 		invalidInputs: {},
 		init: function () {
-			$('.wikia_terms > a').on('click', function (event) {
+			$('.wikia-terms > a').on('click', function (event) {
 				var url = $(this).attr('href');
 				event.preventDefault();
 				window.open(url, '_blank');

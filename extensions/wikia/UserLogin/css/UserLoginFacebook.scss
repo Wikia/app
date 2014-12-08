@@ -8,7 +8,6 @@
 @import 'skins/shared/mixins/transition';
 
 // local mixins
-@import '../mixins/submitpane';
 @import '../mixins/tooltip-icon';
 
 // variables
@@ -21,35 +20,45 @@ $badge-background-color: darken($color-page, 20%);
 	$badge-background-color: lighten($color-page, 10%);
 }
 
-// extra .modal tacked on for specificity
-.facebook-signup-modal.modal > header {
-	height: auto;
+$submits-width: 60%;
 
-	h3 {
-		box-sizing: border-box;
-		clear: right;
-		float: left;
-		font-size: 23px;
-		margin: auto;
-		overflow: visible;
-		padding: 5px 10% 15px;
-		text-align: center;
-		white-space: normal;
-		width: 45%;
+// extra .modal tacked on for specificity
+.facebook-signup-modal.modal {
+	> header {
+		height: auto;
+
+		h3 {
+			box-sizing: border-box;
+			clear: right;
+			float: left;
+			font-size: 23px;
+			margin: auto;
+			overflow: visible;
+			padding: 5px 10% 15px;
+			text-align: center;
+			white-space: normal;
+			width: 45%;
+		}
+
+		span {
+			background: $badge-background-color;
+			border-radius: 100%;
+			clear: right;
+			display: block;
+			float: left;
+			font-size: 23px;
+			height: 45px;
+			line-height: 45px;
+			margin-top: 10px;
+			text-align: center;
+			visibility: hidden;
+			width: 45px;
+		}
 	}
 
-	span {
-		background: $badge-background-color;
-		border-radius: 100%;
-		clear: right;
-		display: block;
-		float: left;
-		font-size: 23px;
-		height: 45px;
-		line-height: 45px;
-		margin-top: 10px;
-		text-align: center;
-		width: 45px;
+	// only show the "or" circle for wikis where it makes sense
+	&.lang-en span {
+		visibility: visible;
 	}
 }
 
@@ -71,21 +80,27 @@ $badge-background-color: darken($color-page, 20%);
 	.UserLoginFacebookRight {
 		padding-left: $section-padding;
 		padding-top: 4px;
-
-		.login-button {
-			width: 100%;
-		}
 	}
 
-	.modal-pane {
-		@include submitpane;
+	.submits {
+		width: $submits-width;
+	}
+
+	.wikia-terms, .forgot-password {
+		font-size: 12px;
+		line-height: 18px;
+		width: $submits-width;
+	}
+
+	.login-button {
+		width: 100%;
 	}
 
 	.input-group {
 		float: none;
 
-		input[type=text],
-		input[type=password] {
+		[type=text],
+		[type=password] {
 			@include box-sizing();
 			width: 100%;
 		}

@@ -1,4 +1,4 @@
-/* global UserLoginModal, wgCanonicalSpecialPageName, wgMainPageTitle, wgArticlePath, wgScriptPath */
+/* global UserLoginModal, wgCanonicalSpecialPageName, wgMainPageTitle, wgArticlePath, wgScriptPath, wgUserLanguage */
 
 /**
  * Handle signing in and signing up with Facebook
@@ -200,13 +200,18 @@
 					[$.getSassCommonURL('extensions/wikia/UserLogin/css/UserLoginFacebook.scss')]
 				)
 			).then(function (uiModal) {
-				var modalConfig = {
+					// show the "or" circle only for languages where it makes sense
+				var langClass = 'lang-' + wgUserLanguage,
+					modalConfig = {
 					vars: {
 						id: 'FacebookSignUp',
 						size: 'medium',
 						content: resp.modal,
 						htmlTitle: resp.htmlTitle,
-						classes: ['facebook-signup-modal'],
+						classes: [
+							'facebook-signup-modal',
+							langClass
+						],
 						buttons: [{
 							vars: {
 								value: resp.cancelMsg,

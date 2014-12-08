@@ -58,17 +58,25 @@ if ( trim( $fbEmail ) == '' ) {
 }
 
 $signpuForm['inputs'][] = [
-	'type' => 'nirvanaview',
-	'controller' => 'UserSignupSpecial',
-	'view' => 'submit',
-	'class' => 'submit-pane modal-pane',
-	'params' => ['createAccountButtonLabel' => wfMessage( 'createaccount' )->escaped()]
+	'type' => 'custom',
+	'class' => 'wikia-terms',
+	'output' => wfMessage('prefs-help-terms')->parse()
 ];
+
+$signpuForm['submits'] = [
+	[
+		'value' => wfMessage( 'createaccount' )->escaped(),
+		'name' => 'submit',
+		'class' => 'big login-button',
+	]
+];
+
 
 $loginForm['inputs'][] = [
 	'type' => 'nirvanaview',
 	'controller' => 'UserLogin',
 	'view' => 'forgotPasswordLink',
+	'class' => 'forgot-password',
 ];
 
 $loginForm['submits'] = [
