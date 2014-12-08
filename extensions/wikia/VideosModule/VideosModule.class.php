@@ -142,53 +142,52 @@ class VideosModule extends WikiaModel {
 		return $videos;
 	}
 
+	public function getVideosRelatedToWiki() {
+		$videos = $this->getVideosFromAsyncCache();
+		return $videos;
+	}
+
+	public function getVideosFromAsyncCache() {
+		$memcKey = wfMemcKey( 'videomodule', 'wiki_related_videos_topics', self::CACHE_VERSION, $this->userRegion );
+		$videos = ( new Wikia\Cache\AsyncCache() )
+			->key( $memcKey )
+			->ttl( self::CACHE_TTL )
+			->callback( 'VideosModule::getVideosRelatedToWikiStatically' )
+			->callbackParams( [ $this->userRegion ] )
+			->value();
+
+		return $videos;
+	}
+
+	public static function getVideosRelatedToWikiStatically( $userRegion ) {
+		$module = new self( $userRegion );
+		$videos = $module->getVideosRelatedToWikiFromSearch();
+		return $videos;
+	}
+
 	/**
 	 * Use WikiaSearchController to find premium videos related to the local wiki. (Search video content by wiki topics)
-	 * @param integer $numRequired - number of videos required
 	 * @return array - Premium videos related to the local wiki.
 	 */
-	public function getVideosRelatedToWiki( $numRequired ) {
-		wfProfileIn( __METHOD__ );
-		$log = WikiaLogger::instance();
+	public function getVideosRelatedToWikiFromSearch() {
+		// Strip Wiki off the end of the wiki name if it exists
+		$wikiTitle = preg_replace( '/ Wiki$/', '', $this->wg->Sitename );
 
-		$memcKey = wfMemcKey( 'videomodule', 'wiki_related_videos_topics', self::CACHE_VERSION, $this->userRegion );
-		$videos = $this->wg->Memc->get( $memcKey );
+		$params = [
+			'defaultTopic' => $wikiTitle,
+			'limit'        => $this->getPaddedVideoLimit( self::LIMIT_VIDEOS ),
+		];
 
-		$loggingParams = [ 'method' => __METHOD__, 'num' => $numRequired ];
+		$videoResults = $this->app->sendRequest( 'WikiaSearchController', 'searchVideosByTopics', $params )->getData();
+		$videosWithDetails = $this->getVideoDetailFromVideoWiki( $this->getVideoTitles( $videoResults ) );
 
-		if ( !is_array( $videos ) ) {
-			$log->info( __METHOD__.' memc MISS', $loggingParams );
-
-			// Strip Wiki off the end of the wiki name if it exists
-			$wikiTitle = preg_replace( '/ Wiki$/', '', $this->wg->Sitename );
-
-			$params = [
-				'defaultTopic' => $wikiTitle,
-				'limit'        => $this->getPaddedVideoLimit( self::LIMIT_VIDEOS ),
-			];
-
-			$videoResults = $this->app->sendRequest( 'WikiaSearchController', 'searchVideosByTopics', $params )->getData();
-			$videosWithDetails = $this->getVideoDetailFromVideoWiki( $this->getVideoTitles( $videoResults ) );
-
-			$videos = [];
-			foreach ( $videosWithDetails as $video ) {
-				if ( count( $videos ) >= self::LIMIT_VIDEOS ) {
-					break;
-				}
-				$this->addToList( $videos, $video, self::SOURCE_WIKI_TOPICS );
+		$videos = [];
+		foreach ( $videosWithDetails as $video ) {
+			if ( count( $videos ) >= self::LIMIT_VIDEOS ) {
+				break;
 			}
-
-			$ttl = self::CACHE_TTL;
-			if ( empty( $videos ) ) {
-				$ttl = self::NEGATIVE_CACHE_TTL;
-				$log->info( __METHOD__ . ' zero videos', $loggingParams );
-			}
-			$this->wg->Memc->set( $memcKey, $videos, $ttl );
-		} else {
-			$log->info( __METHOD__.' memc HIT', $loggingParams );
+			$this->addToList( $videos, $video, self::SOURCE_WIKI_TOPICS );
 		}
-
-		wfProfileOut( __METHOD__ );
 
 		return $videos;
 	}

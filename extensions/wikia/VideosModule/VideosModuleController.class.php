@@ -23,22 +23,16 @@ class VideosModuleController extends WikiaController {
 	public function index() {
 		wfProfileIn( __METHOD__ );
 
-		$this->title = wfMessage( 'videosmodule-title-default' )->plain();
-		$numRequired = $this->request->getVal( 'limit', VideosModule::LIMIT_VIDEOS );
-		$localContent = ( $this->request->getVal( 'local' ) == 'true' );
-		$sort = $this->request->getVal( 'sort', 'trend' );
 		$userRegion = $this->request->getVal( 'userRegion', VideosModule::DEFAULT_REGION );
-
 		$module = new VideosModule( $userRegion );
 		$staffVideos = $module->getStaffPicks();
-		if ( $localContent ) {
-			$videos = $module->getLocalVideos( $numRequired, $sort );
-		} elseif ( !empty( $this->wg->VideosModuleCategories )  ) {
+		if ( !empty( $this->wg->VideosModuleCategories )  ) {
 			$videos = $module->getVideosByCategory();
 		} else {
-			$videos = $module->getVideosRelatedToWiki( $numRequired );
+			$videos = $module->getVideosRelatedToWiki();
 		}
 
+		$this->title = wfMessage( 'videosmodule-title-default' )->plain();
 		$this->result = "ok";
 		$this->msg = '';
 		$this->videos = $videos;
