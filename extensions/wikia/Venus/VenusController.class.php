@@ -42,7 +42,7 @@ class VenusController extends WikiaController {
 	}
 
 	public function index() {
-		global $wgUser, $wgRequest;
+		global $wgUser, $wgCityId;
 
 		$this->contents = $this->skinTemplateObj->data['bodytext'];
 
