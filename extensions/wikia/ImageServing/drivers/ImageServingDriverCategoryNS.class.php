@@ -8,7 +8,7 @@ class ImageServingDriverCategoryNS extends ImageServingDriverMainNS {
 
 		$toGetFromArticle = array();
 		foreach($articles as $val) {
-			if($this->getImagesCountBeforeFiltr($val) < $this->queryLimit) {
+			if($this->getImagesCountBeforeFilter($val) < $this->queryLimit) {
 				$this->getCategoryArticleList($val, $toGetFromArticle);
 			}
 		}

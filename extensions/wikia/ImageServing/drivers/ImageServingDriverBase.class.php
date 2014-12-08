@@ -119,7 +119,7 @@ abstract class ImageServingDriverBase {
 		return $isNew;
 	}
 
-	protected function getImagesCountBeforeFiltr($pageId){
+	protected function getImagesCountBeforeFilter($pageId){
 		if(!empty($this->articleCountList[$pageId])) {
 			return $this->articleCountList[$pageId];
 		} else {
