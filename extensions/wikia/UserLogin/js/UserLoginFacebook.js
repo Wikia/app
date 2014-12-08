@@ -85,7 +85,10 @@
 				});
 		},
 
-		// callback for FB.login
+		/**
+		 * Callback function after Facebook Login
+		 * @param {object} response Response object sent from Facebook after login attempt
+		 */
 		onFBLogin: function (response) {
 			if (typeof response !== 'object' || !response.status) {
 				this.bucky.timer.stop('loginSetup');
@@ -289,6 +292,10 @@
 			});
 		},
 
+		/**
+		 * Handle JS for the login form portion of the modal
+		 * @param {Object} $modal jQuery DOM element of the open modal
+		 */
 		createLoginForm: function ($modal) {
 			var self = this;
 

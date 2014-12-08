@@ -29,11 +29,17 @@
 		this.submitButton = this.el.find('input[type=submit]');
 	};
 
+	/**
+	 * Bind form events
+	 */
 	UserLoginAjaxForm.prototype.bindEvents = function () {
 		this.form.on('submit', this.submitLogin.bind(this));
 		this.forgotPasswordLink.on('click', this.mailPassword.bind(this));
 	};
 
+	/**
+	 * Cache form inputs
+	 */
 	UserLoginAjaxForm.prototype.setInputs = function () {
 		this.inputs = {
 			username: this.form.find('input[name=username]'),
@@ -47,6 +53,10 @@
 		};
 	};
 
+	/**
+	 * Handler for login form submit
+	 * @param {Object} e jQuery event object
+	 */
 	UserLoginAjaxForm.prototype.submitLogin = function (e) {
 		$(window).trigger('UserLoginSubmit');
 
@@ -57,6 +67,9 @@
 		}
 	};
 
+	/**
+	 * Make the call to the back end to log the user in via ajax
+	 */
 	UserLoginAjaxForm.prototype.ajaxLogin = function () {
 		$.nirvana.postJson(
 			'UserLoginSpecial',
@@ -71,6 +84,10 @@
 		);
 	};
 
+	/**
+	 * Callback after ajax login
+	 * @param {Object} json Response from server after ajax login
+	 */
 	UserLoginAjaxForm.prototype.submitLoginHandler = function (json) {
 		var result = json.result,
 			callback;
@@ -103,7 +120,7 @@
 					password: this.inputs.password.val(),
 					returnto: this.inputs.returnto.val(),
 					fakeGet: 1
-				}, this.retrieveTemplateHandler.bind(this));
+				}, this.retrieveTemplateCallback.bind(this));
 			}
 		} else if (result === 'unconfirm') {
 			$.get(wgScriptPath + '/wikia.php', {
@@ -128,7 +145,7 @@
 		}
 	};
 
-	UserLoginAjaxForm.prototype.retrieveTemplateHandler = function (html) {
+	UserLoginAjaxForm.prototype.retrieveTemplateCallback = function (html) {
 		var content = $('<div style="display:none" />').append(html),
 			form = this.form;
 
@@ -190,11 +207,11 @@
 			{
 				username: this.inputs.username.val()
 			},
-			this.mailPasswordHandler.bind(this)
+			this.mailPasswordCallback.bind(this)
 		);
 	};
 
-	UserLoginAjaxForm.prototype.mailPasswordHandler = function (json) {
+	UserLoginAjaxForm.prototype.mailPasswordCallback = function (json) {
 		if (json.result === 'ok') {
 			this.errorValidation(json);
 		} else if (json.result === 'error') {
