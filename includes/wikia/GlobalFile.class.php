@@ -177,7 +177,7 @@ class GlobalFile extends WikiaObject {
 	}
 
 	/**
-	 * @return UrlGenerator object
+	 * @return \Wikia\Vignette\UrlGenerator object
 	 */
 	public function getUrlGenerator() {
 		return VignetteRequest::fromGlobalFile( $this );
