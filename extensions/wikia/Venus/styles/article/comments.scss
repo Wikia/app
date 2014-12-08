@@ -243,13 +243,17 @@
 		a {
 			display: inline-block;
 			font-weight: bold;
-			line-height: 50px;
+			line-height: 40px;
+			padding-left: 70px;
+			position: relative;
 		}
 	}
 
 	.avatar {
 		border-radius: 25px;
+		left: 0;
 		margin: 0 10px;
+		position: absolute;
 		vertical-align: middle;
 	}
 
