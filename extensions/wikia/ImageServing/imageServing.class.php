@@ -7,7 +7,7 @@
  * or specific dimensions.
  */
 
-use \Wikia\Vignette\UrlGeneratorInterface;
+use Wikia\Vignette\UrlGeneratorInterface;
 
 class ImageServing {
 	private $articles = array();
