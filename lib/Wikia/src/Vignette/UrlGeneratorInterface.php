@@ -4,6 +4,9 @@
  *
  * This is intended to be used
  */
+
+namespace Wikia\Vignette;
+
 interface UrlGeneratorInterface {
 
 	/*

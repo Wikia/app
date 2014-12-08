@@ -5,7 +5,7 @@
  *
  * @author macbre
  */
-use \Wikia\Vignette\UrlGeneratorInterface;
+use Wikia\Vignette\UrlGeneratorInterface;
 
 class GlobalFile extends WikiaObject implements UrlGeneratorInterface {
 
