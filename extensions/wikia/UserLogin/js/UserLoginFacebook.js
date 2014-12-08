@@ -1,19 +1,14 @@
-/* global UserLoginModal, wgCanonicalSpecialPageName, wgMainPageTitle, wgArticlePath */
-
-// TODO: this is now an AMD module, which causes race conditions. Either revert that change or fix where this is called to require it as such.
-
+/* global UserLoginModal, wgCanonicalSpecialPageName, wgMainPageTitle, wgArticlePath, wgScriptPath */
 
 /**
- * Handle
+ * Handle signing in and signing up with Facebook
  */
-define('wikia.userLoginFacebook', [
-	'wikia.tracker',
-	'wikia.querystring',
-	'wikia.ui.factory'
-], function (tracker, QueryString, uiFactory) {
+(function () {
 	'use strict';
 
-	var UserLoginFacebook = {
+	var tracker, QueryString, uiFactory, UserLoginFacebook;
+
+	UserLoginFacebook = {
 		modal: false,
 		form: false,
 		callbacks: {},
@@ -32,25 +27,42 @@ define('wikia.userLoginFacebook', [
 		},
 
 		init: function (origin) {
+			var self = this;
+
 			if (this.initialized) {
 				return;
 			}
+
 			this.bucky.timer.start('init');
-			this.actions = tracker.ACTIONS;
-			this.track = tracker.buildTrackingFunction({
-				category: 'user-sign-up',
-				value: origin || 0,
-				trackingMethod: 'both'
+
+			// requiring these variables here instead of at the top of the page to avoid race conditions until we can
+			// turn this file into a proper AMD module
+			// @todo: Turn this file into a proper AMD module
+			require([
+				'wikia.tracker',
+				'wikia.querystring',
+				'wikia.ui.factory'
+			], function (t, qs, uf) {
+
+				tracker = t;
+				QueryString = qs;
+				uiFactory = uf;
+				self.actions = tracker.ACTIONS;
+				self.track = tracker.buildTrackingFunction({
+					category: 'user-sign-up',
+					value: origin || 0,
+					trackingMethod: 'both'
+				});
+
+				self.initialized = true;
+				self.loginSetup();
+
+				// load when the login dropdown is shown or specific page is loaded
+				$.loadFacebookAPI();
+
+				self.log('init');
+				self.bucky.timer.stop('init');
 			});
-
-			this.initialized = true;
-			this.loginSetup();
-
-			// load when the login dropdown is shown or specific page is loaded
-			$.loadFacebookAPI();
-
-			this.log('init');
-			this.bucky.timer.stop('init');
 		},
 
 		loginSetup: function () {
@@ -307,5 +319,5 @@ define('wikia.userLoginFacebook', [
 		}
 	};
 
-	return UserLoginFacebook;
-});
+	window.UserLoginFacebook = UserLoginFacebook;
+})();
