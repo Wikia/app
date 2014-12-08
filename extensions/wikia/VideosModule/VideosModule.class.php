@@ -142,11 +142,19 @@ class VideosModule extends WikiaModel {
 		return $videos;
 	}
 
+	/**
+	 * Get premium videos related to the local wiki.
+	 * @return array
+	 */
 	public function getVideosRelatedToWiki() {
 		$videos = $this->getVideosFromAsyncCache();
 		return $videos;
 	}
 
+	/**
+	 * Get videos related to wiki from AsyncCache.
+	 * @return array
+	 */
 	public function getVideosFromAsyncCache() {
 		$memcKey = wfMemcKey( 'videomodule', 'wiki_related_videos_topics', self::CACHE_VERSION, $this->userRegion );
 		$videos = ( new Wikia\Cache\AsyncCache() )
@@ -159,6 +167,13 @@ class VideosModule extends WikiaModel {
 		return $videos;
 	}
 
+	/**
+	 * Static function which is used as an entrypoint for AsyncCache. If AsyncCache can't find
+	 * the value it wants in cache, or if that value is stale, a job will be created which requires
+	 * a callback function. This static method serves as that callback function.
+	 * @param $userRegion
+	 * @return array
+	 */
 	public static function getVideosRelatedToWikiStatically( $userRegion ) {
 		$module = new self( $userRegion );
 		$videos = $module->getVideosRelatedToWikiFromSearch();
