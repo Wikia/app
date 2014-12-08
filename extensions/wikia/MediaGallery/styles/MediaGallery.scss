@@ -32,6 +32,8 @@ $media-margin: 2.5px;
 	// default is 8 or more images
 	.media {
 		@include grid-column(3);
+		display: inline-block;
+		float: none !important; // grid-column mixin sets float later on, force no float with !important
 		position: relative;
 		transition: all 1s ease-in-out;
 
