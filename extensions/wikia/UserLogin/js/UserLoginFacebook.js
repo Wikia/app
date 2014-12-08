@@ -135,7 +135,15 @@ define('wikia.userLoginFacebook', [
 			// some error occurred
 			} else if (resp.loginAborted) {
 				window.GlobalNotification.show(resp.errorMsg, 'error');
-
+			} else if (resp.unconfirmed) {
+				$.get(wgScriptPath + '/wikia.php', {
+					controller: 'UserLoginSpecial',
+					method: 'getUnconfirmedUserRedirectUrl',
+					format: 'json',
+					username: resp.userName
+				}, function (json) {
+					window.location = json.redirectUrl;
+				});
 			// user not logged in, show the login/signup modal
 			} else {
 				this.showModal(resp);

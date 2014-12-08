@@ -97,7 +97,7 @@
 				}, this.retrieveTemplateHandler.bind(this));
 			}
 		} else if (result === 'unconfirm') {
-			$.post(wgScriptPath + '/wikia.php', {
+			$.get(wgScriptPath + '/wikia.php', {
 				controller: 'UserLoginSpecial',
 				method: 'getUnconfirmedUserRedirectUrl',
 				format: 'json',
