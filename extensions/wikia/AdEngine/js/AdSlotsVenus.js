@@ -14,7 +14,7 @@ require([
 			['INCONTENT_2C', 'ad-in-content-c', 'INCONTENT_2B', 'ad-in-content-b', 'INCONTENT_2A', 'ad-in-content-a'],
 			['INCONTENT_1C', 'ad-in-content-c', 'INCONTENT_1B', 'ad-in-content-b', 'INCONTENT_1A', 'ad-in-content-a']
 		],
-		inContentLeaderboards = ['INCONTENT_1D', 'INCONTENT_2D'],
+		inContentLeaderboards = ['INCONTENT_LEADERBOARD_1', 'INCONTENT_LEADERBOARD_2'],
 		slotsAdded = 0,
 		maxSlots = 2,
 		minOffset = 750 + 125, // 250 = height of the ad
@@ -38,6 +38,10 @@ require([
 		}
 
 		return true;
+	}
+
+	function processAddedSlot() {
+
 	}
 
 
