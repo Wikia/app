@@ -25,9 +25,16 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 
 	/**
 	 * Route the view based on logged in status
+	 *
+	 * The only logged in user who must not be re-routed away from
+	 * the signup form are those who have the right to create new
+	 * accounts (are members of the createaccount group and therefore
+	 * have the createaccount right. An example use case: Wikia One's
+	 * user accounts can be created by a limited group of Wikia
+	 * employees who have been given the right explicitly.
 	 */
 	public function index() {
-		if ( $this->wg->User->isLoggedIn() ) {
+		if ( $this->wg->User->isLoggedIn() && !$this->wg->User->isAllowed( 'createaccount' ) ) {
 			$this->forward( 'UserLoginSpecialController', 'loggedIn' );
 		} else {
 			$this->forward( __CLASS__, 'signupForm' );
