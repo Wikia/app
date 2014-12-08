@@ -160,6 +160,7 @@ class VideosModule extends WikiaModel {
 		$videos = ( new Wikia\Cache\AsyncCache() )
 			->key( $memcKey )
 			->ttl( self::CACHE_TTL )
+			->negativeResponseTTL( self::NEGATIVE_CACHE_TTL )
 			->callback( 'VideosModule::getVideosRelatedToWikiStatically' )
 			->callbackParams( [ $this->userRegion ] )
 			->value();
@@ -183,6 +184,7 @@ class VideosModule extends WikiaModel {
 	/**
 	 * Use WikiaSearchController to find premium videos related to the local wiki. (Search video content by wiki topics)
 	 * @return array - Premium videos related to the local wiki.
+	 * @throws Wikia\Cache\NegativeResponseException
 	 */
 	public function getVideosRelatedToWikiFromSearch() {
 		// Strip Wiki off the end of the wiki name if it exists
@@ -202,6 +204,11 @@ class VideosModule extends WikiaModel {
 				break;
 			}
 			$this->addToList( $videos, $video, self::SOURCE_WIKI_TOPICS );
+		}
+
+		if ( empty( $videos ) ) {
+			// Caught by AsyncCache task which then caches empty array using negative cache TTL
+			throw new Wikia\Cache\NegativeResponseException( "No videos found" );
 		}
 
 		return $videos;
