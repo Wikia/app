@@ -32,8 +32,9 @@
  *
  * @ingroup FileAbstraction
  */
+use \Wikia\Vignette\UrlGeneratorInterface;
 
-abstract class File {
+abstract class File implements UrlGeneratorInterface {
 	const DELETED_FILE = 1;
 	const DELETED_COMMENT = 2;
 	const DELETED_USER = 4;
@@ -1786,7 +1787,15 @@ abstract class File {
 	 *
 	 */
 	public function getUrlGenerator() {
-			return VignetteRequest::fromFile( $this );
+			$timestamp = $this->isOld() ? $this->getArchiveTimestamp() : $this->getTimestamp();
+
+			return VignetteRequest::fromConfigMap( [
+				'is-archive' => $this->isOld(),
+				'timestamp' => $timestamp,
+				'relative-path' => $this->getHashPath() . rawurlencode( $this->getName() ),
+				'bucket' => $this->getBucket(),
+				'path-prefix' => $this->getPathPrefix(),
+			] );
 	}
 
 	/**
