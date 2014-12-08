@@ -2,7 +2,6 @@
 @import 'skins/shared/color';
 
 // core mixins
-@import 'skins/shared/mixins/box-sizing';
 @import 'skins/shared/mixins/box-shadow';
 @import 'skins/shared/mixins/clearfix';
 @import 'skins/shared/mixins/transition';
@@ -67,7 +66,7 @@ $submits-width: 60%;
 	margin-bottom: 25px;
 
 	> section {
-		@include box-sizing();
+		box-sizing: border-box;
 		float: left;
 		width: 50%;
 	}
@@ -101,7 +100,7 @@ $submits-width: 60%;
 
 		[type=text],
 		[type=password] {
-			@include box-sizing();
+			box-sizing: border-box;
 			width: 100%;
 		}
 	}

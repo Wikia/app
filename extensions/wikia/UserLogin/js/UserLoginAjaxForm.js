@@ -131,15 +131,12 @@
 
 	/**
 	 * Reload the current page with an added "cb" (cachebuster) value, usually after a login.
-	 * @todo: Use querystring helper for this
 	 */
 	UserLoginAjaxForm.prototype.reloadPage = function () {
-		var location = window.location.href,
-			delim = '?';
-		if (location.indexOf('?') > 0) {
-			delim = '&';
-		}
-		window.location.href = location.split('#')[0] + delim + 'cb=' + Math.floor(Math.random() * 10000);
+		require(['wikia.querystring'], function (QuerySring) {
+			var qs = new QuerySring();
+			qs.addCb().goTo();
+		});
 	};
 
 	UserLoginAjaxForm.prototype.errorValidation = function (json) {
@@ -152,7 +149,7 @@
 
 	/**
 	 * @TODO: possibly get login token from form field
-	 * @param params
+	 * @param {Object} [params]
 	 */
 	UserLoginAjaxForm.prototype.retrieveLoginToken = function (params) {
 		params = params || {};
