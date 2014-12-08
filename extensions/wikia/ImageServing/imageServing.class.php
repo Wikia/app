@@ -59,7 +59,7 @@ class ImageServing {
 		$this->app = F::app();
 		$this->width = $width;
 		$this->memc =  $this->app->wg->Memc;
-		$this->imageServingDrivers = $this->app->getGlobal( 'wgImageServingDrivers' );
+		$this->imageServingDrivers = $this->app->wg->ImageServingDrivers;
 
 		$this->db = $db;
 	}
