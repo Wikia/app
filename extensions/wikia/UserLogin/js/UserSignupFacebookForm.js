@@ -4,11 +4,13 @@
 
 	var UserSignupFacebookForm = $.createClass(UserLoginAjaxForm, {
 
-		// login token is stored in hidden field, no need to send an extra request
+		/**
+		 * Login token is stored in hidden field, no need to send an extra request
+		 */
 		retrieveLoginToken: function () {},
 
 		/**
-		 * Send a request to FB controller
+		 * Send ajax login request to FB controller. Overrides parent method.
 		 */
 		ajaxLogin: function () {
 			var values = {
@@ -35,10 +37,10 @@
 
 		/**
 		 * Extends login handler callback for tracking and any additional work
-		 * @param json string
+		 * @param {Object} response Response object from FacebookSignupController::signup
 		 */
-		submitFbSignupHandler: function (json) {
-			if (json.result === 'ok') {
+		submitFbSignupHandler: function (response) {
+			if (response.result === 'ok') {
 				window.Wikia.Tracker.track({
 					category: 'user-sign-up',
 					trackingMethod: 'both',
@@ -46,7 +48,7 @@
 					label: 'facebook-signup'
 				});
 			}
-			this.submitLoginHandler(json);
+			this.submitLoginHandler(response);
 		}
 	});
 

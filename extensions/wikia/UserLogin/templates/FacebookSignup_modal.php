@@ -1,5 +1,7 @@
 <?php
-// both forms share these inputs
+/**
+ * Both login and signup forms share the following inputs
+ */
 $baseForm = [
 	'inputs' => [
 		[
@@ -30,6 +32,10 @@ $baseForm = [
 
 $loginForm = $baseForm;
 $signpuForm = $baseForm;
+
+/**
+ * Add form fields to signup form
+ */
 
 // Facebook may or may not provide the user's email
 if ( trim( $fbEmail ) == '' ) {
@@ -71,6 +77,9 @@ $signpuForm['submits'] = [
 	]
 ];
 
+/**
+ * Add form fields to login form
+ */
 
 $loginForm['inputs'][] = [
 	'type' => 'nirvanaview',
@@ -87,6 +96,7 @@ $loginForm['submits'] = [
 	]
 ];
 ?>
+
 <div class="UserLoginFacebook">
 	<section class="UserLoginFacebookWrapper">
 		<section class="UserLoginFacebookLeft">
