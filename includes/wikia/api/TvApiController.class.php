@@ -33,7 +33,7 @@ class TvApiController extends WikiaApiController {
 		$seriesName = $this->getRequiredParam( 'seriesName' );
 		$episodeName = $this->getRequiredParam( 'episodeName' );
 		$lang = $request->getVal( 'lang', self::LANG_SETTING );
-		$minQuality = $request->getVal( 'minArticleQuality', null );
+		$minQuality = $request->getVal( 'minArticleQuality', self::DEFAULT_QUALITY );
 		if ( $minQuality !== null ) {
 			$minQuality = (int)$minQuality;
 		}
@@ -61,7 +61,7 @@ class TvApiController extends WikiaApiController {
 		$request = $this->getRequest();
 		$name = $this->getRequiredParam( 'seriesName' );
 		$lang = $request->getVal( 'lang', self::LANG_SETTING );
-		$minQuality = $request->getVal( 'minArticleQuality', null );
+		$minQuality = $request->getVal( 'minArticleQuality', self::DEFAULT_QUALITY );
 		if ( $minQuality !== null ) {
 			$minQuality = (int)$minQuality;
 		}
@@ -78,7 +78,7 @@ class TvApiController extends WikiaApiController {
 		);
 	}
 
-	protected function findEpisode( $seriesName, $episodeName, $lang, $quality = null ) {
+	protected function findEpisode( $seriesName, $episodeName, $lang, $quality = self::DEFAULT_QUALITY ) {
 
 		// TODO: this is a workaround to not alter schema of main index too much
 		// once the next gen search is implemented such workarounds would not be needed hopefully
@@ -93,7 +93,7 @@ class TvApiController extends WikiaApiController {
 			$episodeService = $this->getEpisodeService();
 			$episodeService->setLang( $lang )
 				->setSeries( $seriesName )
-				->setQuality( ( $quality !== null ) ? $quality : self::DEFAULT_QUALITY );
+				->setQuality( $quality );
 			$result = null;
 			foreach ( $wikis as $wiki ) {
 				$episodeService->setWikiId( $wiki[ 'id' ] );
@@ -210,14 +210,13 @@ class TvApiController extends WikiaApiController {
 		return $searchConfig;
 	}
 
-	protected function findSeries( $seriesName, $lang, $quality = null ) {
-		$minQuality = $quality !== null ? $quality : self::DEFAULT_QUALITY;
+	protected function findSeries( $seriesName, $lang, $quality = self::DEFAULT_QUALITY ) {
 		//check exact match on series first
 		$result = $this->exactMatchOnSeries( $seriesName, $lang );
 		if ( $result == null ) {
-			$result = $this->searchForSeries( $seriesName, $lang, $minQuality );
+			$result = $this->searchForSeries( $seriesName, $lang, $quality );
 		}
-		if ( $result !== null && $result[ 'quality' ] >= $minQuality ) {
+		if ( $result !== null && $result[ 'quality' ] >= $quality ) {
 			return $result;
 		}
 		return false;
