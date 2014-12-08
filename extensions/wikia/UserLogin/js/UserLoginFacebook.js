@@ -87,7 +87,7 @@
 
 		/**
 		 * Callback function after Facebook Login
-		 * @param {object} response Response object sent from Facebook after login attempt
+		 * @param {Object} response Response object sent from Facebook after login attempt
 		 */
 		onFBLogin: function (response) {
 			if (typeof response !== 'object' || !response.status) {
@@ -133,9 +133,9 @@
 
 		/**
 		 * Check if the current user's FB account is connected with a Wikia account and act acordingly
-		 * @param {Object} resp Response object from FacebookSignupController::index
+		 * @param {Object} response Response object from FacebookSignupController::index
 		 */
-		checkAccountCallback: function (resp) {
+		checkAccountCallback: function (response) {
 			// end ajax call performance tracking
 			this.bucky.timer.stop('loginCallbackAjax');
 
@@ -144,24 +144,24 @@
 				this.callbacks['login-success'] : false;
 
 			// logged in using FB account, reload the page or callback
-			if (resp.loggedIn) {
+			if (response.loggedIn) {
 				this.loggedInCallback();
 
 			// some error occurred
-			} else if (resp.loginAborted) {
-				window.GlobalNotification.show(resp.errorMsg, 'error');
-			} else if (resp.unconfirmed) {
+			} else if (response.loginAborted) {
+				window.GlobalNotification.show(response.errorMsg, 'error');
+			} else if (response.unconfirmed) {
 				$.get(wgScriptPath + '/wikia.php', {
 					controller: 'UserLoginSpecial',
 					method: 'getUnconfirmedUserRedirectUrl',
 					format: 'json',
-					username: resp.userName
+					username: response.userName
 				}, function (json) {
 					window.location = json.redirectUrl;
 				});
 			// user not logged in, show the login/signup modal
 			} else {
-				this.showModal(resp);
+				this.showModal(response);
 			}
 		},
 
@@ -191,9 +191,9 @@
 		/**
 		 * Show a modal (to logged out users) for logging in or signing up with Wikia
 		 * after a successful Facebook connection.
-		 * @param {Object} resp Response object from FacebookSignupController::index
+		 * @param {Object} response Response object from FacebookSignupController::index
 		 */
-		showModal: function (resp) {
+		showModal: function (response) {
 			var self = this;
 
 			this.bucky.timer.start('loggedOutCallback');
@@ -209,15 +209,15 @@
 					vars: {
 						id: 'FacebookSignUp',
 						size: 'medium',
-						content: resp.modal,
-						htmlTitle: resp.htmlTitle,
+						content: response.modal,
+						htmlTitle: response.htmlTitle,
 						classes: [
 							'facebook-signup-modal',
 							langClass
 						],
 						buttons: [{
 							vars: {
-								value: resp.cancelMsg,
+								value: response.cancelMsg,
 								data: [{
 									key: 'event',
 									value: 'close'
