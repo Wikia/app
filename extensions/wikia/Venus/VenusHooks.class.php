@@ -132,11 +132,11 @@ class VenusHooks {
 	/**
 	 * Check if venus skin can be show and set it if all conditions are met
 	 *
-	 * @param $userSkin skin chosen by SkinChooser
-	 * @param $title page title
+	 * @param string $userSkin skin chosen by SkinChooser
+	 * @param Title $title page title
 	 * @return bool
 	 */
-	public static function onBeforeSkinLoad( &$userSkin, $title ) {
+	public static function onBeforeSkinLoad( &$userSkin, Title $title ) {
 		if ( $userSkin == 'oasis' && self::showVenusSkin( $title ) ) {
 			$userSkin = 'venus';
 		}
@@ -150,7 +150,7 @@ class VenusHooks {
      * @param Title $title
      * @return bool
 	 */
-	public static function showVenusSkin( $title ) {
+	public static function showVenusSkin( Title $title ) {
 		global $wgEnableVenusSkin, $wgEnableVenusSpecialSearch, $wgEnableVenusArticle, $wgRequest;
 
 		$action = $wgRequest->getVal('action');
