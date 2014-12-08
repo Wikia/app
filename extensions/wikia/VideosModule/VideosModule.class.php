@@ -168,7 +168,7 @@ class VideosModule extends WikiaModel {
 	}
 
 	/**
-	 * Static function which is used as an entrypoint for AsyncCache. If AsyncCache can't find
+	 * Static method which is used as an entry point for AsyncCache. If AsyncCache can't find
 	 * the value it wants in cache, or if that value is stale, a job will be created which requires
 	 * a callback function. This static method serves as that callback function.
 	 * @param $userRegion
@@ -205,7 +205,6 @@ class VideosModule extends WikiaModel {
 			$this->addToList( $videos, $video, self::SOURCE_WIKI_TOPICS );
 		}
 
-		$videos = [];
 		if ( empty( $videos ) ) {
 			$msg = "No videos found for wiki {$this->wg->Sitename}";
 			$this->log->info( __METHOD__ . " " . $msg );
