@@ -40,11 +40,6 @@ require([
 		return true;
 	}
 
-	function processAddedSlot() {
-
-	}
-
-
 	function addMedrecs() {
 
 		var i,
