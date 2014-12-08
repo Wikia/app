@@ -115,7 +115,7 @@ class WikiaPageType {
 		$pageNames = SpecialPageFactory::resolveAlias( $title->getDBkey() );
 
 		return ( $title instanceof Title ) && $title->isSpecialPage()
-			&& in_array( array_shift( $pageNames ), $searchPageNames );
+		&& in_array( array_shift( $pageNames ), $searchPageNames );
 	}
 
 	/**

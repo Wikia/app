@@ -1,7 +1,7 @@
 <?php
 
 class VenusController extends WikiaController {
-	private static $bodyParametersArray = [];
+	private static $bodyClassArray = [];
 	private static $skinAssetGroups = [];
 
 	/** @var AssetsManager $assetsManager */
@@ -140,7 +140,11 @@ class VenusController extends WikiaController {
 			$bodyClasses[] = 'venus-dark-theme';
 		}
 
-		$this->bodyClasses = implode( ' ', array_merge( $bodyClasses, self::getBackgroundClasses() ) );
+		$this->bodyClasses = implode( ' ', array_merge(
+				$bodyClasses,
+				self::getBackgroundClasses(),
+				self::$bodyClassArray )
+		);
 	}
 
 	private function setHeadItems() {
@@ -264,8 +268,8 @@ class VenusController extends WikiaController {
 		return $this->app->renderView('RecentWikiActivity', 'index');
 	}
 
-	public static function addBodyParameter($parameter) {
-		static::$bodyParametersArray[] = $parameter;
+	public static function addBodyClass($class) {
+		static::$bodyClassArray[] = $class;
 	}
 
 	/**
