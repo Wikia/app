@@ -18,8 +18,8 @@ class ImageServingDriverMainNSProxy extends ImageServingDriverMainNS {
 		return $res;
 	}
 
-	public function filterImages( $imagesList = []) {
-		parent::filterImages( $imagesList );
+	public function filterImages( $images = []) {
+		parent::filterImages( $images );
 	}
 
 	public function getFilteredOut() {

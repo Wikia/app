@@ -165,30 +165,31 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 		return $result;
 	}
 
-	protected function filterImages( $imagesList = array() ) {
+	protected function filterImages( $images = array() ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( empty( $imagesList ) ) {
+		if ( empty( $images ) ) {
 			wfProfileOut( __METHOD__ );
 			return;
 		}
 
-		$imageNames = array_keys($imagesList);
-		$imageRefs = array();
-		$imageData = array();
+		$imageNames = array_keys($images);
+		$imagePopularity = array();
+		$imageDetails = array();
 
 		// filter out images that are too widely used
 		if ( !empty($imageNames) ) {
-			$imageRefs = $this->getImagesPopularity($imageNames,$this->maxCount);
+			$imagePopularity = $this->getImagesPopularity($imageNames,$this->maxCount);
+			$imageNames = array_keys($imagePopularity);
 		}
 
 		// collect metadata about images
-		if ( !empty($imageRefs) ) {
+		if ( !empty($imageNames) ) {
 			$result = $this->db->select(
 				array( 'image' ),
 				array( 'img_name', 'img_height', 'img_width', 'img_minor_mime' ),
 				array(
-					'img_name' => array_keys($imageRefs),
+					'img_name' => $imageNames,
 				),
 				__METHOD__
 			);
@@ -196,7 +197,7 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 			foreach ($result as $row) {
 				if ( $row->img_height >= $this->minHeight && $row->img_width >= $this->minWidth ) {
 					if ( !in_array( $row->img_minor_mime, $this->mimeTypesBlacklist ) ) {
-						$imageData[$row->img_name] = $row;
+						$imageDetails[$row->img_name] = $row;
 					}
 					else {
 						wfDebug(__METHOD__ . ": {$row->img_name} - filtered out because of {$row->img_minor_mime} minor MIME type\n");
@@ -204,18 +205,14 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 				}
 			}
 			$result->free();
+			$imageNames = array_keys($imageDetails);
 		}
 
 		// finally record all the information gathered in previous steps
-		if ( !empty($imageData) ) {
-			foreach ($imageNames as $imageName) {
-				if ( isset($imageRefs[$imageName]) && isset($imageData[$imageName] ) ) {
-					$row = $imageData[$imageName];
-					$this->addToFilteredList( $row->img_name, $imageRefs[$imageName],
-						$row->img_width, $row->img_height, $row->img_minor_mime);
-
-				}
-			}
+		foreach ($imageNames as $imageName) {
+			$row = $imageDetails[$imageName];
+			$this->addToFilteredList( $row->img_name, $imagePopularity[$imageName],
+				$row->img_width, $row->img_height, $row->img_minor_mime);
 		}
 
 		wfProfileOut( __METHOD__ );

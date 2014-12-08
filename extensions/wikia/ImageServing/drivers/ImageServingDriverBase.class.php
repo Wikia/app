@@ -12,7 +12,7 @@ abstract class ImageServingDriverBase {
 
 	protected $db;
 	protected $imagesList;
-	protected $articleCountList;
+	protected $imageCountByArticle;
 	protected $filteredOut;
 
 	protected $minWidth;
@@ -36,7 +36,7 @@ abstract class ImageServingDriverBase {
 	}
 
 	abstract protected function getImagesFromDB($articles = array());
-	abstract protected function filterImages($imagesList = array());
+	abstract protected function filterImages($images = array());
 
 	final public function setArticlesList($articles = array()) {
 		$this->articles = $articles;
@@ -70,7 +70,7 @@ abstract class ImageServingDriverBase {
 		}
 
 		$this->imagesList = array();
-		$this->articleCountList = array();
+		$this->imageCountByArticle = array();
 		$this->filteredOut = array();
 
 		$this->executeGetData( $articles );
@@ -112,16 +112,16 @@ abstract class ImageServingDriverBase {
 		}
 
 		if ( !isset($this->imagesList[$imageName][$pageId]) &&
-			(empty($this->articleCountList[$pageId]) || $this->articleCountList[$pageId] <  $limit) ) {
-			$this->articleCountList[$pageId] = empty($this->articleCountList[$pageId]) ? 1:($this->articleCountList[$pageId] + 1);
+			(empty($this->imageCountByArticle[$pageId]) || $this->imageCountByArticle[$pageId] <  $limit) ) {
+			$this->imageCountByArticle[$pageId] = empty($this->imageCountByArticle[$pageId]) ? 1:($this->imageCountByArticle[$pageId] + 1);
 			$this->imagesList[$imageName][$pageId] = $order;
 		}
 		return $isNew;
 	}
 
 	protected function getImagesCountBeforeFilter($pageId){
-		if(!empty($this->articleCountList[$pageId])) {
-			return $this->articleCountList[$pageId];
+		if(!empty($this->imageCountByArticle[$pageId])) {
+			return $this->imageCountByArticle[$pageId];
 		} else {
 			return 0;
 		}
