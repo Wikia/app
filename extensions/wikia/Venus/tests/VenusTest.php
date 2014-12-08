@@ -3,6 +3,7 @@
 class VenusTest extends WikiaBaseTest {
 
 	public function setUp() {
+		require_once( dirname(__FILE__) . '/../VenusHooks.class.php');
 		parent::setUp();
 	}
 
