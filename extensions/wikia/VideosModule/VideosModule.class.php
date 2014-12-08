@@ -149,15 +149,6 @@ class VideosModule extends WikiaModel {
 	 * @return array
 	 */
 	public function getVideosRelatedToWiki() {
-		$videos = $this->getVideosFromAsyncCache();
-		return $videos;
-	}
-
-	/**
-	 * Get videos related to wiki from AsyncCache.
-	 * @return array
-	 */
-	public function getVideosFromAsyncCache() {
 		$memcKey = wfMemcKey( 'videomodule', 'wiki_related_videos_topics', self::CACHE_VERSION, $this->userRegion );
 		$asynCache = ( new Wikia\Cache\AsyncCache() )
 			->key( $memcKey )
