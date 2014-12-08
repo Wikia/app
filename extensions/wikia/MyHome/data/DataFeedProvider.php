@@ -268,26 +268,40 @@ class DataFeedProvider {
 		wfProfileOut(__METHOD__);
 	}
 
-	private function filterHiddenCategories($categories) {
-		global $wgMemc;
+	/**
+	 * Get a full list of hidden categories cached using WikiaDataAccess. This method returns stalled data while
+	 * the first one is generating a fresh version of the list so there should be no delay if the outdated
+	 * version is still in cache. On the other hand if the data is not present in memcached only one process
+	 * is generating the data.
+	 *
+	 * WikiaDataAccess has this advantage over WikiaSQL that it returns stalled data and odes not introduce a delay.
+	 *
+	 * @return array
+	 */
+	private function getHiddenCategories() {
 		wfProfileIn(__METHOD__);
-
 		if (!is_array(self::$hiddenCategories)) {
-			$memcKey = wfMemcKey('hidden-categories');
-			self::$hiddenCategories = $wgMemc->get($memcKey);
-			if (!is_array(self::$hiddenCategories)) {
-				$dbr = wfGetDB(DB_SLAVE);
-				$res = $dbr->query("SELECT page_title FROM page JOIN page_props ON page_id=pp_page AND pp_propname='hiddencat';");
-				self::$hiddenCategories = array();
-				while($row = $dbr->fetchObject($res)) {
-					self::$hiddenCategories[] = $row->page_title;
-				}
-				$wgMemc->set($memcKey, self::$hiddenCategories, 60*60);
-			}
+			self::$hiddenCategories = WikiaDataAccess::cacheWithLock('hidden-categories-v2',60*60,
+				function(){
+					$dbr = wfGetDB(DB_SLAVE);
+					$res = $dbr->query("SELECT sql_no_cache page_title FROM page JOIN page_props ON page_id=pp_page AND pp_propname='hiddencat';");
+					$hiddenCategories = array();
+					while($row = $dbr->fetchObject($res)) {
+						$hiddenCategories[] = $row->page_title;
+					}
+					return $hiddenCategories;
+				});
 		}
-		$categories = array_values(array_diff($categories, self::$hiddenCategories));
-
 		wfProfileOut(__METHOD__);
+
+		return self::$hiddenCategories;
+	}
+
+	private function filterHiddenCategories($categories) {
+		wfProfileIn(__METHOD__);
+		$categories = array_values(array_diff($categories, $this->getHiddenCategories()));
+		wfProfileOut(__METHOD__);
+
 		return $categories;
 	}
 
