@@ -7,7 +7,7 @@ abstract class ToolbarService {
 	protected $name = '';
 
 	public function __construct() {
-		$this->name = 'wikia';
+		$this->name = 'oasis';
 	}
 
 

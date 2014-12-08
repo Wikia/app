@@ -19,7 +19,7 @@
  * .skin-venus class added to override
  * resources/wikia/ui_components/button/css/button_default.scss
 */
-.skin-venus {
+.article {
 	a.wikia-button,
 	input[type="submit"],
 	input[type="reset"],
@@ -43,7 +43,7 @@
 			}
 		}
 
-		&:hover {
+		&:hover:not(.close) {
 			@extend %outline-button;
 		}
 	}
@@ -63,7 +63,7 @@
 			}
 		}
 
-		&:hover {
+		&:hover:not(.close) {
 			@extend %glyph-button;
 		}
 	}

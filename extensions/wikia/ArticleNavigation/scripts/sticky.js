@@ -13,9 +13,45 @@ require([
 		additionalTopOffset = 100,
 		$source = $(navigationElement),
 		$target = $(boundBoxElement),
-		$bottomTarget,
+		$bottomTarget = $('main'),
 		$doc = $(doc),
-		stickyElementObject = stickyElement.spawn();
+		stickyElementObject = stickyElement.spawn(),
+		adPoolerSelector = '#TOP_LEADERBOARD.standard-leaderboard,' +
+			'#TOP_LEADERBOARD [data-gpt-creative-size], ' +
+			'#TOP_LEADERBOARD [id^="Liftium_"]',
+		adLogicPoolerCount = 0,
+		adLogicLastHeight = 0,
+		adLogicPoolerMaxCount = 50,
+		adLogicPoolerTimeout = 250,
+		adLogicPoolerDefaultLeaderboardHeight = 90;
+
+
+	/**
+	 * Pool for changed TOP_LEADERBOARD's height (can be very lazy-loaded)
+	 */
+	function adLoadPooler() {
+		var $el = $(adPoolerSelector),
+			height, size;
+
+		if ($el.length === 0 && adLogicPoolerCount < adLogicPoolerMaxCount) {
+			adLogicPoolerCount ++;
+
+			// absent, schedule another check
+			setTimeout(adLoadPooler, adLogicPoolerTimeout);
+		} else {
+			// present, calculate height
+			size = $el.data('gpt-creative-size'); // it returns array with [width, height]
+
+			height = size ? size[1] : adLogicPoolerDefaultLeaderboardHeight;
+
+			// update only if height differs
+			if (height !== adLogicLastHeight) {
+				adLogicLastHeight = height;
+				stickyElementObject.updateSize();
+			}
+		}
+	}
+	$(adLoadPooler);
 
 	// this function is needed for additional margin for screens >= 1024px
 	// (because header is getting float: left on medium and higher breakpoints)
@@ -23,19 +59,13 @@ require([
 		switch(typ) {
 			case 'topScrollLimit':
 			case 'topSticked':
-				if (window.matchMedia("(min-width: 1024px)").matches && $('#infoboxWrapper').length) {
-					return value + $('#WikiaArticle').find('> header').outerHeight(true);
+				if ($('.mw-content-text').css('clear') === 'none') {
+					return value + $('.article-header').outerHeight(true);
 				}
 			// fall-through on purpose!
 			default:
 				return value;
 		}
-	}
-
-	// Categories
-	$bottomTarget = $('.article-categories');
-	if ($bottomTarget.length === 0) {
-		$bottomTarget = $target;
 	}
 
 	function adjustPositionFunction(scrollY, sourceElement, targetElement) {
@@ -49,10 +79,8 @@ require([
 
 		if (browserDetect.isIE()) {
 			additionalOffset = 2 * additionalTopOffset;
-		} else if (browserDetect.isFirefox()) {
-			additionalOffset = additionalTopOffset;
 		} else {
-			additionalOffset = additionalTopOffset + contentPadding;
+			additionalOffset = additionalTopOffset;
 		}
 
 		if ($doc.scrollTop() + additionalOffset - contentPadding >= targetBottom) {

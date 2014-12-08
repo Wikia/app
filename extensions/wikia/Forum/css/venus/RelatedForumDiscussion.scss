@@ -1,0 +1,104 @@
+@import "skins/shared/color";
+@import "extensions/wikia/Venus/styles/variables";
+
+.RelatedForumDiscussion {
+	clear: both;
+
+	.mw-content-text & {
+		h2 {
+			margin-bottom: 0;
+			padding-left: $medium-grid-gutter;
+			padding-right: $medium-grid-gutter;
+
+			@media #{$large-up} {
+				padding-left: $large-grid-column-padding;
+				padding-right: $large-grid-column-padding;
+			}
+
+			@media #{$small-only} {
+				padding-left: $small-grid-gutter;
+				padding-right: $small-grid-gutter;
+			}
+		}
+	}
+
+	h4 {
+		margin: 0;
+	}
+
+	.forum-new-post {
+		float: right;
+	}
+
+	.forum-discussions {
+		list-style: none;
+		margin: 0 -10px;
+		padding-left: 0;
+
+		.forum-thread {
+			border-bottom: 1px solid $color-page-border;
+			padding: 5px 0 15px 68px;
+			position: relative;
+
+			.forum-total-replies {
+				color: $color-alternate-text;
+				font-size: $font-size-xs;
+			}
+
+			.talk-two {
+				left: 30px;
+				position: absolute;
+				top: 8px;
+			}
+		}
+	}
+
+	.forum-message-body {
+		p {
+			display: inline;
+		}
+	}
+
+	.forum-replies {
+		list-style: none;
+		padding-right: $medium-grid-gutter;
+
+		@media #{$large-up} {
+			padding-right: $large-grid-column-padding;
+		}
+
+		@media #{$small-only} {
+			padding-right: $small-grid-gutter;
+		}
+
+		.forum-reply {
+			margin-top: 10px;
+			padding-left: 40px;
+			position: relative;
+
+			.forum-timestamp {
+				color: $color-alternate-text;
+				display: inline-block;
+				font-size: $font-size-xs;
+			}
+
+			.forum-user-avatar {
+				border-radius: 50%;
+				height: 30px;
+				left: 0;
+				position: absolute;
+				top: 3px;
+				width: 30px;
+			}
+		}
+	}
+
+	.forum-see-more {
+		text-align: right;
+	}
+
+	.forum-user-name {
+		font-weight: bold;
+	}
+
+}

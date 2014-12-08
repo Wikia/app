@@ -136,7 +136,7 @@ EOT
 	 * @param $target Mixed: user whose info we're looking up
 	 */
 	function showInfo( $target, $emailUser = "" ) {
-		global $wgOut, $wgLang, $wgScript, $wgEnableWallExt, $wgEnableUserLoginExt, $wgExternalSharedDB, $wgExternalAuthType;
+		global $wgOut, $wgLang, $wgScript, $wgEnableWallExt, $wgExternalSharedDB, $wgExternalAuthType;
 		//Small Stuff Week - adding table from Special:LookupContribs --nAndy
 		global $wgExtensionsPath, $wgJsMimeType, $wgResourceBasePath, $wgEnableLookupContribsExt;
 
