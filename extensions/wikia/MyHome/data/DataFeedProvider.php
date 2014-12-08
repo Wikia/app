@@ -269,12 +269,12 @@ class DataFeedProvider {
 	}
 
 	/**
-	 * Get a full list of hidden categories cached using WikiaDataAccess. This method returns stalled data while
-	 * the first one is generating a fresh version of the list so there should be no delay if the outdated
-	 * version is still in cache. On the other hand if the data is not present in memcached only one process
-	 * is generating the data.
+	 * Get list of hidden categories (cached in memcached using WikiaDataAccess).
 	 *
-	 * WikiaDataAccess has this advantage over WikiaSQL that it returns stalled data and odes not introduce a delay.
+	 * Using WikiaDataAccess to limit number of processes regenerating cache and prevent delay when other
+	 * process is already regenerating data. The stalled data is returned in the latter case.
+	 *
+	 * @see https://wikia-inc.atlassian.net/browse/PLATFORM-615
 	 *
 	 * @return array
 	 */
