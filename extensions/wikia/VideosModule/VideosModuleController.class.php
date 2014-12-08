@@ -26,7 +26,7 @@ class VideosModuleController extends WikiaController {
 		}
 
 		$this->response->setData( [
-			'title'	 => wfMessage( 'videosmodule-title-default' )->plain(),
+			'title'	 => wfMessage( 'videosmodule-title-default' )->escaped(),
 			'videos' => $videos,
 			'staffVideos' => $staffVideos
 		] );
