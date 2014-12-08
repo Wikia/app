@@ -32,11 +32,11 @@ class VideosModuleController extends WikiaController {
 			$videos = $module->getVideosRelatedToWiki();
 		}
 
-		$this->title = wfMessage( 'videosmodule-title-default' )->plain();
-		$this->result = "ok";
-		$this->msg = '';
-		$this->videos = $videos;
-		$this->staffVideos = $staffVideos;
+		$this->response->setData( [
+			'title'	 => wfMessage( 'videosmodule-title-default' )->plain(),
+			'videos' => $videos,
+			'staffVideos' => $staffVideos
+		] );
 
 		// set cache
 		$this->response->setCacheValidity( VideosModule::CACHE_TTL );
