@@ -280,11 +280,12 @@ class DataFeedProvider {
 	 */
 	private function getHiddenCategories() {
 		wfProfileIn(__METHOD__);
+		$fname = __METHOD__;
 		if (!is_array(self::$hiddenCategories)) {
-			self::$hiddenCategories = WikiaDataAccess::cacheWithLock('hidden-categories-v2',60*60,
-				function(){
+			self::$hiddenCategories = WikiaDataAccess::cacheWithLock(wfMemcKey('hidden-categories-v2'),60*60,
+				function() use ($fname) {
 					$dbr = wfGetDB(DB_SLAVE);
-					$res = $dbr->query("SELECT sql_no_cache page_title FROM page JOIN page_props ON page_id=pp_page AND pp_propname='hiddencat';");
+					$res = $dbr->query("SELECT page_title FROM page JOIN page_props ON page_id=pp_page AND pp_propname='hiddencat';",$fname);
 					$hiddenCategories = array();
 					while($row = $dbr->fetchObject($res)) {
 						$hiddenCategories[] = $row->page_title;
