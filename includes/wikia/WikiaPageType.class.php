@@ -18,7 +18,12 @@ class WikiaPageType {
 		// follow redirects
 		if ( $title instanceof Title && $title->isRedirect() ) {
 			$page = WikiPage::factory( $title );
-			$title = $page->getRedirectTarget();
+			$tmpTitle = $page->getRedirectTarget();
+
+			// TODO check why $title->isRedirect() is true and there is no redirectTarget
+			if ( $tmpTitle instanceof Title ) {
+				$title = $tmpTitle;
+			}
 		}
 
 		return $title;
@@ -110,7 +115,7 @@ class WikiaPageType {
 		$pageNames = SpecialPageFactory::resolveAlias( $title->getDBkey() );
 
 		return ( $title instanceof Title ) && $title->isSpecialPage()
-			&& in_array( array_shift( $pageNames ), $searchPageNames );
+		&& in_array( array_shift( $pageNames ), $searchPageNames );
 	}
 
 	/**

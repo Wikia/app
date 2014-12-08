@@ -1,7 +1,7 @@
 <?php
 
 class VenusController extends WikiaController {
-	private static $bodyParametersArray = [];
+	private static $bodyClassArray = [];
 	private static $skinAssetGroups = [];
 
 	/** @var AssetsManager $assetsManager */
@@ -42,7 +42,7 @@ class VenusController extends WikiaController {
 	}
 
 	public function index() {
-		global $wgUser;
+		global $wgUser, $wgCityId;
 
 		$this->contents = $this->skinTemplateObj->data['bodytext'];
 
@@ -54,6 +54,31 @@ class VenusController extends WikiaController {
 		$this->setBodyClasses();
 		$this->setHeadItems();
 		$this->setAssets();
+
+		// FIXME: create separate module for stats stuff?
+		// load Google Analytics code
+		$this->googleAnalytics = AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
+
+		// onewiki GA
+		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
+
+		// track page load time
+		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'pagetime', array('oasis'));
+
+		// record which varnish this page was served by
+		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'varnish-stat');
+
+		// Add important Gracenote analytics for reporting needed for licensing on LyricWiki.
+		if (43339 == $wgCityId){
+			$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'lyrics');
+		}
+
+		$this->comScore = AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
+		$this->quantServe = AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
+		$this->amazonMatch = AnalyticsEngine::track('AmazonMatch', AnalyticsEngine::EVENT_PAGEVIEW);
+		$this->rubiconRtp = AnalyticsEngine::track('RubiconRTP', AnalyticsEngine::EVENT_PAGEVIEW);
+		$this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);
+		$this->ivw2 = AnalyticsEngine::track('IVW2', AnalyticsEngine::EVENT_PAGEVIEW);
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
@@ -115,7 +140,11 @@ class VenusController extends WikiaController {
 			$bodyClasses[] = 'venus-dark-theme';
 		}
 
-		$this->bodyClasses = implode( ' ', array_merge( $bodyClasses, self::getBackgroundClasses() ) );
+		$this->bodyClasses = implode( ' ', array_merge(
+				$bodyClasses,
+				self::getBackgroundClasses(),
+				self::$bodyClassArray )
+		);
 	}
 
 	private function setHeadItems() {
@@ -239,8 +268,8 @@ class VenusController extends WikiaController {
 		return $this->app->renderView('RecentWikiActivity', 'index');
 	}
 
-	public static function addBodyParameter($parameter) {
-		static::$bodyParametersArray[] = $parameter;
+	public static function addBodyClass($class) {
+		static::$bodyClassArray[] = $class;
 	}
 
 	/**

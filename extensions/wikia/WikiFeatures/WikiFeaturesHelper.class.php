@@ -39,6 +39,7 @@ class WikiFeaturesHelper extends WikiaModel {
 		'wgEnableWikiaInteractiveMaps' => 260,
 		'wgEnableCuratedContentExt' => 261,
 		'wgEnableMediaGalleryExt' => 1,
+		'wgEnableNjordPrototypeExt' => 2,
 	);
 
 	// no need to add feature to $release_date if not require "new" flag
@@ -91,6 +92,9 @@ class WikiFeaturesHelper extends WikiaModel {
 	public function getFeatureLabs() {
 		$list = array();
 		if (isset($this->wg->WikiFeatures['labs']) && is_array($this->wg->WikiFeatures['labs'])) {
+			//allow adding features in runtime
+			wfrunHooks( 'WikiFeatures::onGetFeatureLabs' );
+
 			foreach ($this->wg->WikiFeatures['labs'] as $feature) {
 				$list[] = array(
 					'name' => $feature,
