@@ -1,12 +1,12 @@
 <?php
 class ImageServingDriverMainNS extends ImageServingDriverBase {
+	const QUERY_LIMIT = 50;
 	/**
 	 * @var array
 	 *
 	 * Minor MIME types of files that should not be returned by ImageServing
 	 */
 	static private $mimeTypesBlacklist = null;
-	protected $queryLimit = 50;
 	protected $maximumPopularity = 10;
 
 	function __construct( $db, $imageServing ) {
@@ -58,10 +58,10 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 	protected function loadImagesFromDb( $articleIds = array() ) {
 		wfProfileIn( __METHOD__ );
 
-		$props = $this->getImageIndex( $articleIds, 2 * $this->queryLimit );
-		foreach ( $props as $article => $prop ) {
-			foreach ( $prop as $key => $image ) {
-				$this->addImage( $image, $article, $key, $this->queryLimit );
+		$articleImageIndex = $this->getImageIndex( $articleIds, 2 * self::QUERY_LIMIT );
+		foreach ( $articleImageIndex as $articleId => $imageIndex ) {
+			foreach ( $imageIndex as $orderKey => $imageData ) {
+				$this->addImage( $imageData, $articleId, $orderKey, self::QUERY_LIMIT );
 			}
 		}
 

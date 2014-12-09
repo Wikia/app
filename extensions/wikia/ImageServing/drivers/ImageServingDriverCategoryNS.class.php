@@ -8,19 +8,19 @@ class ImageServingDriverCategoryNS extends ImageServingDriverMainNS {
 
 		$articleCategories = array();
 		foreach ( $articleIds as $categoryId ) {
-			if ( $this->getAllImagesCountForArticle( $categoryId ) < $this->queryLimit ) {
+			if ( $this->getAllImagesCountForArticle( $categoryId ) < self::QUERY_LIMIT ) {
 				$this->addTopArticlesFromCategory( $categoryId, $articleCategories );
 			}
 		}
 
-		$imageIndex = $this->getImageIndex( array_keys( $articleCategories ), $this->queryLimit );
+		$imageIndex = $this->getImageIndex( array_keys( $articleCategories ), self::QUERY_LIMIT );
 
 		$propNumber = 0;
 		foreach ( $imageIndex as $articleId => $articleImageIndex ) {
 			$propNumber++;
 			foreach ( $articleImageIndex as $key => $imageData ) {
 				foreach ( $articleCategories[$articleId] as $categoryId ) {
-					$this->addImage( $imageData, $categoryId, $propNumber * ( 2 * $this->queryLimit + $key ), $this->queryLimit );
+					$this->addImage( $imageData, $categoryId, $propNumber * ( 2 * self::QUERY_LIMIT + $key ), self::QUERY_LIMIT );
 				}
 			}
 		}
