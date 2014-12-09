@@ -32,7 +32,6 @@
  *
  * @ingroup FileAbstraction
  */
-use Wikia\Vignette\UrlGeneratorInterface;
 
 abstract class File implements UrlGeneratorInterface {
 	const DELETED_FILE = 1;
