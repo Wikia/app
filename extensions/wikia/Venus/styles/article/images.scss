@@ -62,6 +62,7 @@ $image-max-columns-medium-and-large: 10;
 .article {
 	.image-thumbnail img {
 		margin: 10px;
+		vertical-align: middle;
 	}
 
 	.thumbborder {
