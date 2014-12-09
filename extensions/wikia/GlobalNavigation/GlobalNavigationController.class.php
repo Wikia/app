@@ -22,6 +22,8 @@ class GlobalNavigationController extends WikiaController {
 	}
 
 	public function index() {
+		// $wgLang represents user language
+		global $wgLang;
 
 		Wikia::addAssetsToOutput( 'global_navigation_scss' );
 		Wikia::addAssetsToOutput( 'global_navigation_js' );
@@ -29,11 +31,9 @@ class GlobalNavigationController extends WikiaController {
 		// TODO remove after when Oasis is retired
 		Wikia::addAssetsToOutput( 'global_navigation_oasis_scss' );
 
-		$userLang = $this->wg->Lang->getCode();
-		// Link to Wikia home page
-		$centralUrl = $this->getCentralUrlForLang( $userLang );
-
-		$createWikiUrl = $this->getCreateNewWikiUrl( $userLang );
+		$lang = $wgLang->getCode();
+		$centralUrl = $this->getCentralUrlForLang( $lang );
+		$createWikiUrl = $this->getCreateNewWikiUrl( $lang );
 
 		$this->response->setVal( 'centralUrl', $centralUrl );
 		$this->response->setVal( 'createWikiUrl', $createWikiUrl );
@@ -47,14 +47,13 @@ class GlobalNavigationController extends WikiaController {
 
 	public function searchIndex() {
 		global $wgLanguageCode;
-		$lang = $this->wg->Lang->getCode();
 		$centralUrl = $this->getCentralUrlForLang( $wgLanguageCode );
 		$globalSearchUrl = $this->getGlobalSearchUrl( $centralUrl, $wgLanguageCode );
 		$specialSearchTitle = SpecialPage::getTitleFor( 'Search' );
 		$localSearchUrl = $specialSearchTitle->getFullUrl();
 		$fulltext = $this->wg->User->getOption( 'enableGoSearch' ) ? 0 : 'Search';
 		$globalRequest = $this->wg->request;
-		$query = htmlspecialchars_decode( $globalRequest->getVal( 'search', $globalRequest->getVal( 'query', '' ) ) );
+		$query = $globalRequest->getVal( 'search', $globalRequest->getVal( 'query', '' ) );
 
 		if ( WikiaPageType::isCorporatePage() && !WikiaPageType::isWikiaHub() ) {
 			$this->response->setVal( 'disableLocalSearchOptions', true );
@@ -67,7 +66,7 @@ class GlobalNavigationController extends WikiaController {
 		}
 		$this->response->setVal( 'fulltext', $fulltext );
 		$this->response->setVal( 'query', $query );
-		$this->response->setVal( 'lang', $lang );
+		$this->response->setVal( 'lang', $wgLanguageCode );
 	}
 
 	public function hubsMenu() {
@@ -147,18 +146,23 @@ class GlobalNavigationController extends WikiaController {
 
 
 	/**
-	 * @desc gets corporate page URL for given language
+	 * @desc gets corporate page URL for given language.
+	 * Firstly, it checks using GlobalTitle method.
+	 * If entry for given language doesn't exist it checks in $wgLangToCentralMap variable
+	 * If it doesn't exist it fallbacks to english version (default lang) using GlobalTitle method
+	 *
 	 * @param string $lang - language
 	 * @return string - Corporate Wikia Domain for given language
 	 */
 	public function getCentralUrlForLang( $lang ) {
-		$title = $this->getCentralWikiTitleForLang(
-			$this->centralWikiInLangExists( $lang ) ?
-				$lang :
-				self::DEFAULT_LANG
-		);
-
-		return $title->getServer();
+		global $wgLangToCentralMap;
+		if ( $this->centralWikiInLangExists( $lang ) ) {
+			return $this->getCentralWikiTitleForLang( $lang )->getServer();
+		} else if ( !empty( $wgLangToCentralMap[ $lang ] ) ) {
+			return $wgLangToCentralMap[ $lang ];
+		} else {
+			return $this->getCentralWikiTitleForLang( self::DEFAULT_LANG )->getServer();
+		}
 	}
 
 	public function getCreateNewWikiUrl( $lang ) {

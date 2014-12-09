@@ -29,7 +29,7 @@ class GlobalNavigationTest extends WikiaBaseTest {
 		return [
 			['de', 'http://de.wikia.com'],
 			['en', 'http://www.wikia.com'],
-			['it', 'http://www.wikia.com'],
+			['it', 'http://it.wikia.com/wiki/Pagina_principale'],
 			['zh', 'http://www.wikia.com'],
 		];
 	}
