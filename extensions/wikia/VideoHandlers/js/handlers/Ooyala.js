@@ -81,7 +81,7 @@ define('wikia.videohandler.ooyala', [
 
 		createParams.onCreate = onCreate;
 
-		if (adContext.getContext().opts.showAds) {
+		if (adContext && adContext.getContext().opts.showAds) {
 			if (!dartVideoHelper) {
 				throw 'ext.wikia.adEngine.dartVideoHelper is not defined and it should as we need to display ads';
 			}

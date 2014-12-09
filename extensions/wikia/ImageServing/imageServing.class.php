@@ -304,7 +304,7 @@ class ImageServing {
 	}
 
 	/**
-	 * @param File $image
+	 * @param File|GlobalFile $image
 	 * @param $width
 	 * @param $height
 	 * @return string
@@ -312,7 +312,7 @@ class ImageServing {
 	private function getVignetteUrl($image, $width, $height) {
 		list($top, $right, $bottom, $left) = $this->getCutParams($width, $height);
 
-		return VignetteRequest::fromFile($image)
+		return $image->getUrlGenerator()
 			->windowCrop()
 			->width($this->width)
 			->xOffset($left)

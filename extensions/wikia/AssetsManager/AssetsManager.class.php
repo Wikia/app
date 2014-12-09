@@ -691,15 +691,12 @@ class AssetsManager {
 		$this->loadConfig();
 		$skinName = $skin->getSkinName();
 		$registeredSkin = $this->mAssetsConfig->getGroupSkin( $group );
-
 		$check = ( is_array( $registeredSkin ) ) ?
 			in_array( $skinName, $registeredSkin ) : $skinName === $registeredSkin;
-
 		//if not strict packages with no skin registered are positive
 		if ( ( $skin instanceof WikiaSkin ) && ( $skin->isStrict() === false ) ) {
 			$check = $check || empty( $registeredSkin );
 		}
-
 		return $check;
 	}
 

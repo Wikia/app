@@ -704,7 +704,6 @@
 			},
 			autocomplete: {
 				appendTo: '.article-categories, .CategorySelect',
-
 				// Non-standard
 				limit: 6
 			},

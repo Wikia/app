@@ -52,6 +52,9 @@
 	>div[id^=Liftium_] {
 		text-align: center;
 	}
+}
+
+#HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
 	&.default-height {
 		height: 90px;
 	}
