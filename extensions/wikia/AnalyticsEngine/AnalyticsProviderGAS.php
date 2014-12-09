@@ -15,7 +15,6 @@ class AnalyticsProviderGAS implements iAnalyticsProvider {
 			case 'onewiki':
 			case 'pagetime':
 			case "varnish-stat":
-				#throw new WikiaException("{$event} unsupported");
 				return ''; // NOP
 
 			case "usertiming":

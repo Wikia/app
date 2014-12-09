@@ -165,16 +165,8 @@ class WikiaMobileService extends WikiaService {
 				);
 		}
 
-		//Stats for Gracenote reporting
-		if ( $this->wg->cityId == self::LYRICSWIKI_ID ){
-			$trackingCode .= AnalyticsEngine::track('GAS', 'lyrics');
-		}
-
-		$trackingCode .= AnalyticsEngine::track( 'GAS', AnalyticsEngine::EVENT_PAGEVIEW ).
-			AnalyticsEngine::track( 'GAS', 'onewiki', [$this->wg->cityId] ).
-			AnalyticsEngine::track( 'GAS', 'pagetime', ['wikiamobile'] ).
-			AnalyticsEngine::track( 'GAS', 'varnish-stat').
-			AnalyticsEngine::track( 'GAS', 'usertiming' );
+		// front-end performance reported to GoogleAnalytics
+		$trackingCode .= AnalyticsEngine::track( 'GAS', 'usertiming' );
 
 		$this->response->setVal( 'trackingCode', $trackingCode );
 

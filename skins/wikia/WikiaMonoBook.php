@@ -130,12 +130,7 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 	 * Return tracking code
 	 */
 	private function getAnalyticsCode() {
-		global $wgCityId;
-
-		return AnalyticsEngine::track('GAS', AnalyticsEngine::EVENT_PAGEVIEW) .
-			AnalyticsEngine::track('GAS', 'hub', AdEngine2Service::getCachedCategory()) .
-			AnalyticsEngine::track('GAS', 'onewiki', array($wgCityId)) .
-			AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
+		return AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 	}
 
 	/**

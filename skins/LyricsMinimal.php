@@ -824,18 +824,6 @@ if(empty($wgEnableRecipesTweaksExt) || !RecipesTweaks::isHeaderStripeShown()) {
 		?>
 		</div>
 		<!-- /PAGE -->
-<!-- Begin Analytics -->
-<?php
-// Note, these were placed above the Ad calls intentionally because ad code screws with analytics
-echo AnalyticsEngine::track('GAS', AnalyticsEngine::EVENT_PAGEVIEW);
-echo AnalyticsEngine::track('GAS', 'hub', AdEngine2Service::getCachedCategory());
-global $wgCityId;
-echo AnalyticsEngine::track('GAS', 'onewiki', array($wgCityId));
-echo AnalyticsEngine::track('GAS', 'pagetime', array('lean_monaco'));
-if (43339 == $wgCityId) echo AnalyticsEngine::track("GAS", "lyrics");
-?>
-<!-- End Analytics -->
-
 <?php		wfProfileOut( __METHOD__ . '-page'); ?>
 
 		<noscript><link rel="stylesheet" type="text/css" href="<?= $wgStylePath ?>/monaco/css/noscript.css?<?= $wgStyleVersion ?>" /></noscript>

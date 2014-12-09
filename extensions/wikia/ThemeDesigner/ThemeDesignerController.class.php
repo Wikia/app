@@ -55,9 +55,6 @@ class ThemeDesignerController extends WikiaController {
 			$this->returnTo = $this->wg->Script;
 		}
 
-		// load Google Analytics code
-		$this->analytics = AnalyticsEngine::track('GAS', AnalyticsEngine::EVENT_PAGEVIEW);
-
 		$wgOut->getResourceLoader()->getModule( 'mediawiki' );
 
 		$ret = implode( "\n", array(
