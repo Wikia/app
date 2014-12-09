@@ -77,9 +77,7 @@ define('wikia.stickyElement', [
 		 * @param {Event=} event
 		 */
 		function updatePosition (event) {
-			var currentY = win.pageYOffset,
-				bottomLimit,
-				bottomScrollLimitForElement;
+			var currentY = win.pageYOffset;
 
 			// return if there's nothing to update
 			if (event != undefined && currentY === lastY) return;

@@ -69,7 +69,7 @@ require([
 	}
 
 	function adjustPositionFunction(scrollY, sourceElement, targetElement) {
-		var additionalOffset, targetBottom, contentPadding;
+		var additionalOffset = 0, targetBottom, contentPadding;
 
 		targetBottom = $bottomTarget.position().top +
 			$bottomTarget.outerHeight(true) -
@@ -77,13 +77,13 @@ require([
 
 		contentPadding = parseInt( $target.css('padding-bottom') );
 
-		if (browserDetect.isIE()) {
-			additionalOffset = 2 * additionalTopOffset;
-		} else {
-			additionalOffset = additionalTopOffset;
+		if (browserDetect.isWebKit() || browserDetect.isChrome()) {
+			additionalOffset = $source.outerHeight(true);
+		} else if (browserDetect.isFirefox()) {
+			additionalOffset = contentPadding;
 		}
 
-		if ($doc.scrollTop() + additionalOffset - contentPadding >= targetBottom) {
+		if (scrollY + additionalOffset >= targetBottom) {
 			stickyElementObject.sourceElementPosition('absolute', 'top', targetBottom - contentPadding);
 			return true;
 		} else {
