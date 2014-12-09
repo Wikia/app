@@ -80,13 +80,15 @@ define('wikia.stickyElement', [
 			var currentY = win.pageYOffset;
 
 			// return if there's nothing to update
-			if (event != undefined && currentY === lastY) return;
+			if (event !== undefined && currentY === lastY) {
+				return;
+			}
 			lastY = currentY;
 
 			if (!!options.minWidth && win.innerWidth < options.minWidth) {
 				sourceElementPosition('absolute', 'top', topSticked);
 			} else {
-				if (typeof options.adjustPositionFunc == 'function' && options.adjustPositionFunc(currentY, options.sourceElement, options.alignToElement)) {
+				if (typeof options.adjustPositionFunc === 'function' && options.adjustPositionFunc(currentY)) {
 					return;
 				}
 

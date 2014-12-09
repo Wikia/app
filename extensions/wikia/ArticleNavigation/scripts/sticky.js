@@ -68,7 +68,7 @@ require([
 		}
 	}
 
-	function adjustPositionFunction(scrollY, sourceElement, targetElement) {
+	function adjustPositionFunction(scrollY) {
 		var additionalOffset = 0, targetBottom, contentPadding;
 
 		targetBottom = $bottomTarget.position().top +
