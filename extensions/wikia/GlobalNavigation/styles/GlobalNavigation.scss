@@ -46,7 +46,11 @@
 	@include grid-column-width('medium', 2, $medium-content-padding);
 
 	.wikia-logo {
-		padding: 0 0 0 $medium-content-padding - $content-border-width;
+		padding: 0;
+		@include grid-content-left-padding-with-gutter();
+		img {
+			margin-left: -2px; /* Shift logo img as svg conatins 2px padding itself */
+		}
 	}
 }
 

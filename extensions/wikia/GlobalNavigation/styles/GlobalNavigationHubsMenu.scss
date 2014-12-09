@@ -29,10 +29,10 @@
 
 .hubs-entry-point {
 	background-image: url('/extensions/wikia/GlobalNavigation/images/hubs_entry_point.svg'); /* base64 */
-	background-position: 16px center;
+	background-position: 12px center;
 	background-repeat: no-repeat;
 	cursor: pointer;
-	padding: 0 17px 0 38px;
+	padding: 0 $medium-grid-gutter 0 34px;
 
 	&:after {
 		border: 5px solid $global-wikia-background-color;
@@ -250,7 +250,8 @@
 
 @media #{$small-only} {
 	.hubs-entry-point {
-		padding-right: 22px;
+		background-position: 14px center;
+		padding: 0 $small-grid-gutter 0 36px;
 	}
 
 	.hubs-menu {
@@ -275,7 +276,8 @@
 
 @media #{$large-up} {
 	.hubs-entry-point {
-		padding-right: 23px;
+		background-position: 25px center;
+		padding: 0 $large-grid-gutter 0 47px;
 	}
 
 	.hubs-menu {
