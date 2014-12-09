@@ -12,7 +12,6 @@ abstract class ImageServingDriverBase {
 	protected $filteredImages;
 	protected $minWidth;
 	protected $minHeight;
-
 	private $articles;
 
 	/**
