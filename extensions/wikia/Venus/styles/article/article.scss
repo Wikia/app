@@ -26,9 +26,15 @@ $article-nav-gap-coverunit-large: 220px;
 	display: none !important;
 }
 
-// Allow VisualEditor toolbar menus to go outside of article area
 .ve .article {
+	// Allow VisualEditor toolbar menus to go outside of article area
 	overflow: visible;
+
+	// Adjust article header margins while in VisualEditor
+	.article-header:not(.cover-unit) {
+		margin-top: 20px;
+		margin-bottom: 8px;
+	}
 }
 
 .article {
