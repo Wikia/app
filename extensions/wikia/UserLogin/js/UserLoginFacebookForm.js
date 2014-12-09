@@ -24,29 +24,6 @@
 				values,
 				this.submitLoginHandler.bind(this)
 			);
-		},
-
-		submitLoginHandler: function (json) {
-			this.form.find('.error-msg').remove();
-			this.form.find('.input-group').removeClass('error');
-			var result = json.result,
-				callback;
-
-			if (result === 'ok') {
-				window.wgUserName = json.wgUserName;
-				callback = this.options.callback || '';
-				if (callback && typeof callback === 'function') {
-					// call with current context
-					callback.bind(this, json)();
-				} else {
-					window.location.reload();
-				}
-			} else if (result === 'error') {
-				window.GlobalNotification.show(json.message || $.msg('oasis-generic-error'), 'error');
-			} else {
-				this.submitButton.removeAttr('disabled');
-				this.errorValidation(json);
-			}
 		}
 	});
 

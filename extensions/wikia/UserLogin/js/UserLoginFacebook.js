@@ -244,7 +244,7 @@
 					self.createSignupForm($modal);
 					self.createLoginForm($modal);
 
-					$modal.on('click', '.submit-pane .extiw', function (event) {
+					$modal.on('click', '.extiw', function (event) {
 						self.track({
 							action: tracker.ACTIONS.CLICK_LINK_TEXT,
 							browserEvent: event,
