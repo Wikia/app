@@ -7,6 +7,9 @@
  */
 class FacebookSignupController extends WikiaController {
 
+	const SIGNUP_USERNAME_KEY = 'username';
+	const SIGNUP_PASSWORD_KEY = 'password';
+
 	/**
 	 * This method is called when user successfully logins using FB credentials
 	 *
@@ -191,8 +194,8 @@ class FacebookSignupController extends WikiaController {
 	public function login() {
 		$wg = $this->wg;
 
-		$wikiaUserName = $wg->Request->getVal( 'username' );
-		$wikiaPassword = $wg->Request->getVal( 'password' );
+		$wikiaUserName = $wg->Request->getVal( self::SIGNUP_USERNAME_KEY );
+		$wikiaPassword = $wg->Request->getVal( self::SIGNUP_PASSWORD_KEY );
 
 		$user = $this->getValidWikiaUser( $wikiaUserName, $wikiaPassword );
 		if ( !$user ) {
@@ -218,7 +221,7 @@ class FacebookSignupController extends WikiaController {
 
 		$this->response->setData( [
 			'result' => 'ok',
-			'message' => 'success',
+			'msg' => 'success',
 		] );
 	}
 
@@ -282,7 +285,7 @@ class FacebookSignupController extends WikiaController {
 	protected function getValidFbUserId() {
 		$fbUserId = FacebookClient::getInstance()->getUserId();
 		if ( !$fbUserId ) {
-			$this->setAjaxyErrorResponse( 'userlogin-error-invalidfacebook' );
+			$this->setAjaxyErrorResponse( 'userlogin-error-invalidfacebook', '' );
 			return null;
 		}
 
@@ -297,18 +300,27 @@ class FacebookSignupController extends WikiaController {
 	 * @return null|User
 	 */
 	protected function getValidWikiaUser( $wikiaUserName, $wikiaPassword ) {
-		if ( !$wikiaUserName || !$wikiaPassword ) {
-			$messageCode = $wikiaUserName ?
-				'userlogin-error-wrongpasswordempty' :
-				'userlogin-error-noname';
-
-			$this->setAjaxyErrorResponse( $messageCode );
-			return null;
+		if ( !$wikiaUserName ) {
+			$messageCode = 'userlogin-error-noname';
+			$errorParam = self::SIGNUP_USERNAME_KEY;
+		} else if ( !$wikiaPassword ) {
+			$messageCode = 'userlogin-error-wrongpasswordempty';
+			$errorParam = self::SIGNUP_PASSWORD_KEY;
+		} else {
+			$user = \User::newFromName( $wikiaUserName );
+			if ( !$user ) {
+				$messageCode = 'userlogin-error-nosuchuser';
+				$errorParam = self::SIGNUP_USERNAME_KEY;
+			} else {
+				if ( !$user->checkPassword( $wikiaPassword ) ) {
+					$messageCode = 'userlogin-error-wrongpassword';
+					$errorParam = self::SIGNUP_PASSWORD_KEY;
+				}
+			}
 		}
 
-		$user = \User::newFromName( $wikiaUserName );
-		if ( !$user || !$user->checkPassword( $wikiaPassword ) ) {
-			$this->setAjaxyErrorResponse( 'userlogin-error-wrongcredentials' );
+		if ( $messageCode ) {
+			$this->setAjaxyErrorResponse( $messageCode, $errorParam );
 			return null;
 		}
 
@@ -338,11 +350,13 @@ class FacebookSignupController extends WikiaController {
 	 * Set a normalized error response meant for Ajax calls
 	 *
 	 * @param string $messageKey an i18n message key
+	 * @param string|null $errorParam the error key
 	 */
-	protected function setAjaxyErrorResponse( $messageKey ) {
+	protected function setAjaxyErrorResponse( $messageKey, $errorParam = null ) {
 		$this->response->setData( [
 			'result' => 'error',
-			'message' => wfMessage( $messageKey )->escaped(),
+			'msg' => wfMessage( $messageKey )->escaped(),
+			'errParam' => $errorParam,
 		] );
 	}
 
