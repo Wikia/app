@@ -91,7 +91,7 @@ abstract class ImageServingDriverBase {
 		return $this->allImages;
 	}
 
-	protected function addToFilteredList($name, $count, $width, $height, $minorMime) {
+	protected function addImageDetails($name, $count, $width, $height, $minorMime) {
 		$this->filteredImages[ $name ] = array(
 			'cnt'            => $count,
 			'il_to'          => $name,
@@ -137,13 +137,13 @@ abstract class ImageServingDriverBase {
 		return array( 'cache' => $cached, 'miss' => $cacheMissArticleIds ) ;
 	}
 
-	protected function formatResult($imageList,$dbOut) {
+	protected function formatResult($allImages,$filteredImages) {
 		wfProfileIn( __METHOD__ );
 
 		$out = [ ];
 		$pageOrderedImages = [ ];
-		foreach ( $imageList as $imageName => $pageData ) {
-			if ( isset( $dbOut[ $imageName ] ) ) {
+		foreach ( $allImages as $imageName => $pageData ) {
+			if ( isset( $filteredImages[ $imageName ] ) ) {
 				foreach ( $pageData as $pageId => $pageImageOrder ) {
 					// unit tests say that this can be an array. I don't see how, but maybe there's case I'm not aware of
 					if (is_array($pageImageOrder)) {
@@ -166,7 +166,7 @@ abstract class ImageServingDriverBase {
 						"width" => !empty( $img ) ? $img->getWidth() : 0,
 						"height" => !empty( $img ) ? $img->getHeight() : 0
 					],
-					"url" => !empty( $img ) ? $this->imageServing->getUrl( $img, $dbOut[ $imageName ][ 'img_width' ], $dbOut[ $imageName ][ 'img_height' ] ) : ''
+					"url" => !empty( $img ) ? $this->imageServing->getUrl( $img, $filteredImages[ $imageName ][ 'img_width' ], $filteredImages[ $imageName ][ 'img_height' ] ) : ''
 				];
 			}
 		}

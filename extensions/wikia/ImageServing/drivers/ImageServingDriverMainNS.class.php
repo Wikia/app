@@ -211,7 +211,7 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 		// finally record all the information gathered in previous steps
 		foreach ($imageNames as $imageName) {
 			$row = $imageDetails[$imageName];
-			$this->addToFilteredList( $row->img_name, $imagePopularity[$imageName],
+			$this->addImageDetails( $row->img_name, $imagePopularity[$imageName],
 				$row->img_width, $row->img_height, $row->img_minor_mime);
 		}
 
