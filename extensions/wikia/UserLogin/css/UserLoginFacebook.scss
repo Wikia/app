@@ -19,8 +19,6 @@ $badge-background-color: darken($color-page, 20%);
 	$badge-background-color: lighten($color-page, 10%);
 }
 
-$submits-width: 60%;
-
 // extra .modal tacked on for specificity
 .facebook-signup-modal.modal {
 	> header {
@@ -55,11 +53,6 @@ $submits-width: 60%;
 		}
 	}
 
-	// only show the "or" circle for wikis where it makes sense
-	&.lang-en span {
-		visibility: visible;
-	}
-
 	footer {
 		display: none;
 	}
@@ -85,14 +78,9 @@ $submits-width: 60%;
 		padding-top: 4px;
 	}
 
-	.submits {
-		width: $submits-width;
-	}
-
-	.wikia-terms, .forgot-password {
+	.wikia-terms, .forgot-password-container {
 		font-size: 12px;
 		line-height: 18px;
-		width: $submits-width;
 	}
 
 	.login-button {
@@ -122,4 +110,17 @@ $submits-width: 60%;
 	.email {
 		margin-bottom: 0;
 	}
+}
+
+// Special styles for english language formatting
+.facebook-signup-modal.lang-en {
+	.submits, .wikia-terms, .forgot-password-container {
+		width: 60%;
+	}
+
+	// only show the "or" circle for wikis where it makes sense
+	> header span {
+		visibility: visible;
+	}
+
 }

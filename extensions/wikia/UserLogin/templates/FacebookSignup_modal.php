@@ -85,7 +85,7 @@ $loginForm['inputs'][] = [
 	'type' => 'nirvanaview',
 	'controller' => 'UserLogin',
 	'view' => 'forgotPasswordLink',
-	'class' => 'forgot-password',
+	'class' => 'forgot-password-container',
 ];
 
 $loginForm['submits'] = [
