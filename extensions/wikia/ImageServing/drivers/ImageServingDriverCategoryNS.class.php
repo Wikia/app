@@ -1,7 +1,7 @@
 <?php
 class ImageServingDriverCategoryNS extends ImageServingDriverMainNS {
-	protected $articlesFromCategory = 10;
-	private $straightJoinLimit = 70000;
+	const STRAIGHT_JOIN_LIMIT = 70000;
+	const ARTICLES_LIMIT_PER_CATEGORY = 10;
 
 	protected function loadImagesFromDb( $articleIds = array() ) {
 		parent::loadImagesFromDb( $articleIds );
@@ -42,10 +42,10 @@ class ImageServingDriverCategoryNS extends ImageServingDriverMainNS {
 		# fetch list of N longest (by wikitext size) articles from this category
 		$options = array(
 			'ORDER BY' => 'page.page_len desc',
-			'LIMIT' => $this->articlesFromCategory
+			'LIMIT' => self::ARTICLES_LIMIT_PER_CATEGORY,
 		);
 
-		if ( $count > $this->straightJoinLimit ) {
+		if ( $count > self::STRAIGHT_JOIN_LIMIT ) {
 			$options[] = 'STRAIGHT_JOIN';
 		}
 
