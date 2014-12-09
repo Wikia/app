@@ -14,7 +14,7 @@ WAMPage.prototype = {
 		var $wamFilteringTabs = $('.wam-filtering-tab');
 		if ($wamFilteringTabs.length > 0) {
 			$wamFilteringTabs.on('click', function() {
-				WAMPage.filterWamIndexByVertical(this)
+				WAMPage.filterWamIndexByVertical(this);
 			});
 		}
 
@@ -124,8 +124,8 @@ WAMPage.prototype = {
 	},
 
 	filterWamIndexByVertical: function (tab) {
-		$('input[name="verticalId"').val($(tab).data('vertical-id'));
-		$('#wam-index-search').submit();
+		$('.wam-filtering-vertical-id').val($(tab).data('vertical-id'));
+		$('.wam-index-search').submit();
 	},
 
 	filterWamIndex: function (target) {

@@ -1,8 +1,8 @@
 <div class="wam-header">
 	<div class="wam-top-gainers">
-		<h2><?= wfMessage('wampage-top-gainers-title')->escaped(); ?></h2>
+		<h2 class="wam-top-gainers-header"><?= wfMessage('wampage-top-gainers-header')->escaped(); ?></h2>
 		<? if ( $isSingleVertical ) : ?>
-			<h3><?= wfMessage('wampage-top-gainers-subtitle', $filterVerticals[ $selectedVerticalId ] )->escaped(); ?></h3>
+			<h3 class="wam-top-gainers-subheader"><?= wfMessage('wampage-top-gainers-subheader', $filterVerticals[ $selectedVerticalId ] )->escaped(); ?></h3>
 		<? endif; ?>
 		<ol class="wam-top-gainers-list">
 		<?	foreach( $visualizationWikis as $k => $wiki ): ?>
@@ -42,7 +42,7 @@
 <div class="wam-index" id="wam-index">
 	<form method="get" action="" class="wam-index-search" id="wam-index-search">
 		<div class="wam-verticals-tabs">
-			<ul class="clearfix">
+			<ul>
 			<? foreach ( $filterVerticals as $verticalId => $verticalName ) : ?>
 				<li class="wam-filtering-tab <? if ( $verticalId == $selectedVerticalId ) : ?> selected<? endif; ?>" data-vertical-id="<?= $verticalId ?>">
 					<a>
@@ -51,11 +51,10 @@
 					</a>
 				</li>
 			<? endforeach; ?>
-				<li></li>
 			</ul>
 		</div>
 		<div class="filtering">
-			<input type="hidden" name="verticalId" id="wam-filtering-vertical-id" value="<?= $selectedVerticalId ?>"/>
+			<input type="hidden" name="verticalId" class="wam-filtering-vertical-id" value="<?= $selectedVerticalId ?>"/>
 			<label for="langCode"><?= wfMessage('wam-index-filter-lang-label')->escaped() ?></label>
 			<select name="langCode" id="langCode">
 				<option value=""><?= wfMessage('wam-index-filter-language-default')->escaped() ?></option>
@@ -106,11 +105,11 @@
 							<td><?=$wiki['vertical_wam_rank']?></td>
 						<? endif; ?>
 						<td class="admins">
-							<? if(!empty($wiki['admins'])): ?>
+							<? if(!empty($wiki['admins'])) : ?>
 								<ul>
 								<? foreach($wiki['admins'] as $admin): ?>
 									<li><a href="<?= $admin['userPageUrl'] ?>">
-										<img src="<? $admin['avatarUrl'] ?>" alt="<?= $admin['name'] ?>" title="<?= $admin['name'] ?>" />
+										<img src="<?= $admin['avatarUrl'] ?>" alt="<?= $admin['name'] ?>" title="<?= $admin['name'] ?>" />
 									</a></li>
 								<? endforeach ?>
 								</ul>

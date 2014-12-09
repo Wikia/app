@@ -57,41 +57,42 @@ $color-wam-white: #fff;
 
 	.wam-top-gainers {
 		float: left;
-		margin: 50px 40px;
+		margin: 35px 40px;
 
-		h2 {
-			border: 0;
-			color: $color-wam-white;
-			font-size: 40px;
-			font-weight: bold;
-			line-height: 40px;
-			margin: 0;
-			text-transform: capitalize;
+	}
 
-			@if ( $responsive-layout-enabled ) {
-				width: auto;
-			} else {
-				width: 300px;
-			}
-		}
+	.wam-top-gainers-header {
+		border: 0;
+		color: $color-wam-white;
+		font-size: 40px;
+		font-weight: bold;
+		line-height: 40px;
+		margin: 0;
+		text-transform: capitalize;
 
-		h3 {
-			color: $color-wam-white;
-			font-size: 24px;
-			line-height: 28px;
-			margin: 5px 0 0 0;
+		@if ( $responsive-layout-enabled ) {
+			width: auto;
+		} else {
+			width: 300px;
 		}
 	}
 
+	.wam-top-gainers-subheader {
+		color: $color-wam-white;
+		font-size: 18px;
+		line-height: 28px;
+		margin: 5px 0 0 0;
+	}
+
 	.wam-top-gainers-list {
-		margin: 20px 0 0 22px;
+		margin: 25px 0 0 22px;
 		padding: 0;
 
 		.wam-top-gainers-list-item {
 			color: $color-wam-white;
 			font-size: 16px;
 			line-height: 20px;
-			margin-bottom: 20px;
+			margin-bottom: 10px;
 			max-width: 200px;
 		}
 

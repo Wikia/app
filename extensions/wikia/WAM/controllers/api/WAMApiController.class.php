@@ -169,7 +169,7 @@ class WAMApiController extends WikiaApiController {
 		$options = [];
 		$options['currentTimestamp'] = $this->request->getInt('wam_day', null);
 		$options['previousTimestamp'] = $this->request->getInt('wam_previous_day', null);
-		$options['verticalId'] = $this->request->getVal('vertical_id', null);
+		$options['verticalId'] = $this->request->getInt('vertical_id', null);
 		$options['wikiLang'] = $this->request->getVal('wiki_lang', null);
 		$options['wikiId'] = $this->request->getInt('wiki_id', null);
 		$options['wikiWord'] = $this->request->getVal('wiki_word', null);

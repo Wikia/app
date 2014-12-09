@@ -48,8 +48,16 @@
 		background-color: $color-wam-light-grey;
 		border: solid $color-wam-border-grey;
 		border-collapse: collapse;
-		border-width: 1px 0 1px 0;
+		border-width: 1px 0;
 		display: table-row;
+	}
+
+	ul::after {
+		content: ' ';
+		display: table-cell;
+		border: solid $color-wam-border-grey;
+		border-width: 1px 0;
+		width: 100%;
 	}
 
 	li {
@@ -75,11 +83,6 @@
 
 			color: $color-wam-grey;
 		}
-	}
-
-	li:last-child {
-		border-right: 0;
-		width: 100%;
 	}
 
 	a {
