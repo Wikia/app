@@ -20,7 +20,8 @@ $messages['en'] = array(
 	'wam-lifestyle' => 'Lifestyle',
 	'wam-music' => 'Music',
 	'wam-movies' => 'Movies',
-	'wampage-title' => 'Top Gainers',
+	'wampage-top-gainers-title' => 'Top Gainers',
+	'wampage-top-gainers-subtitle' => 'in $1',
 	'wampage-header-faq' => 'Faq',
 	'wampage-header-wam' => 'WAM Score',
 	'wampage-subheader-wam' => 'is an indicator of a wikia\'s health and vitality.',
@@ -47,7 +48,6 @@ We encourage you to display your WAM score or rank on your Wiki, but we ask you 
 ===Who can I speak to if I have other questions about the WAM?===
 Please contact community support at [mailto:support@wikia-inc.com support@wikia-inc.com].
 	',
-
 	'wam-index-header-rank' => 'Rank',
 	'wam-index-header-score' => 'WAM Score',
 	'wam-index-header-wiki-name' => 'Wikia URL',

@@ -10,6 +10,17 @@ class WAMService extends Service {
 	const WAM_BLACKLIST_EXT_VAR_NAME = 'wgEnableContentWarningExt';
 	const CACHE_DURATION = 86400; /* 24 hours */
 
+	protected $verticalIds = [
+		WikiFactoryHub::HUB_ID_OTHER,
+		WikiFactoryHub::HUB_ID_TV,
+		WikiFactoryHub::HUB_ID_VIDEO_GAMES,
+		WikiFactoryHub::HUB_ID_BOOKS,
+		WikiFactoryHub::HUB_ID_COMICS,
+		WikiFactoryHub::HUB_ID_LIFESTYLE,
+		WikiFactoryHub::HUB_ID_MUSIC,
+		WikiFactoryHub::HUB_ID_MOVIES,
+	];
+
 	protected static $verticalNames = [
 		WikiFactoryHub::HUB_ID_OTHER => 'Other',
 		WikiFactoryHub::HUB_ID_TV => 'TV',
@@ -19,16 +30,6 @@ class WAMService extends Service {
 		WikiFactoryHub::HUB_ID_LIFESTYLE => 'Lifestyle',
 		WikiFactoryHub::HUB_ID_MUSIC => 'Music',
 		WikiFactoryHub::HUB_ID_MOVIES => 'Movies',
-	];
-	protected static $verticalIds = [
-		'Other' => WikiFactoryHub::HUB_ID_OTHER,
-		'TV' => WikiFactoryHub::HUB_ID_TV,
-		'Games' => WikiFactoryHub::HUB_ID_VIDEO_GAMES,
-		'Books' => WikiFactoryHub::HUB_ID_BOOKS,
-		'Comics' => WikiFactoryHub::HUB_ID_COMICS,
-		'Lifestyle' => WikiFactoryHub::HUB_ID_LIFESTYLE,
-		'Music' => WikiFactoryHub::HUB_ID_MUSIC,
-		'Movies' => WikiFactoryHub::HUB_ID_MOVIES,
 	];
 
 	protected $defaultIndexOptions = array(
@@ -114,9 +115,9 @@ class WAMService extends Service {
 		$tables = $this->getWamIndexTables();
 		$fields = $this->getWamIndexFields();
 		$countFields = $this->getWamIndexCountFields();
-		$conds = $this->getWamIndexConditions($inputOptions, $db);
-		$options = $this->getWamIndexOptions($inputOptions);
-		$join_conds = $this->getWamIndexJoinConditions($inputOptions);
+		$conds = $this->getWamIndexConditions( $inputOptions, $db );
+		$options = $this->getWamIndexOptions( $inputOptions );
+		$join_conds = $this->getWamIndexJoinConditions( $inputOptions );
 
 		$result = $db->select(
 			$tables,
@@ -139,7 +140,6 @@ class WAMService extends Service {
 		/* @var $db DatabaseMysql */
 		while ( $row = $db->fetchObject( $result ) ) {
 			$row = ( array )$row;
-			$row['hub_id'] = $this->getVerticalId( $row['hub_name'] );
 			$row['vertical_name'] = $this->getVerticalName( $row['vertical_id'] );
 			$wamIndex['wam_index'][$row['wiki_id']] = $row;
 		}
@@ -273,19 +273,10 @@ class WAMService extends Service {
 						"OR dw.title like '%" . $db->strencode($options['wikiWord']) . "%'";
 		}
 
-		if ($options['verticalId']) {
+		if ( $options['verticalId'] ) {
 			$verticals = $options['verticalId'];
 		} else {
-			$verticals = array(
-				WikiFactoryHub::HUB_ID_OTHER,
-				WikiFactoryHub::HUB_ID_TV,
-				WikiFactoryHub::HUB_ID_VIDEO_GAMES,
-				WikiFactoryHub::HUB_ID_BOOKS,
-				WikiFactoryHub::HUB_ID_COMICS,
-				WikiFactoryHub::HUB_ID_LIFESTYLE,
-				WikiFactoryHub::HUB_ID_MUSIC,
-				WikiFactoryHub::HUB_ID_MOVIES,
-			);
+			$verticals = $this->verticalIds;
 		}
 		$conds['fw1.vertical_id'] = $verticals;
 
@@ -383,20 +374,14 @@ class WAMService extends Service {
 		return $verticals;
 	}
 
-	protected function getVerticalName($verticalId) {
-		if (isset(self::$verticalNames[$verticalId])) {
-			return self::$verticalNames[$verticalId];
-		}
-	}
-
-	protected function getVerticalId($verticalName) {
-		if (isset(self::$verticalIds[$verticalName])) {
-			return self::$verticalIds[$verticalName];
+	protected function getVerticalName( $verticalId ) {
+		if ( isset( self::$verticalNames[ $verticalId ] ) ) {
+			return self::$verticalNames[ $verticalId ];
 		}
 	}
 
 	protected function getDB() {
 		$app = F::app();
-		return wfGetDB(DB_MASTER, array(), $app->wg->DatamartDB);
+		return wfGetDB( DB_SLAVE, [], $app->wg->DatamartDB );
 	}
 }

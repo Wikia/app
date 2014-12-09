@@ -63,15 +63,15 @@ class WAMApiController extends WikiaApiController {
 		$app = F::app();
 
 		$options = $this->getWAMParameters();
-		// $wamIndex = WikiaDataAccess::cacheWithLock(
-		// 	wfSharedMemcKey(
-		// 		'wam_index_table',
-		// 		self::MEMCACHE_VER,
-		// 		$app->wg->ContLang->getCode(),
-		// 		implode( ':', $options )
-		// 	),
-		// 	6 * 60 * 60,
-		// 	function () use ( $options ) {
+		$wamIndex = WikiaDataAccess::cacheWithLock(
+			wfSharedMemcKey(
+				'wam_index_table',
+				self::MEMCACHE_VER,
+				$app->wg->ContLang->getCode(),
+				implode( ':', $options )
+			),
+			6 * 60 * 60,
+			function () use ( $options ) {
 				$wamService = new WAMService();
 
 				$wamIndex = $wamService->getWamIndex( $options );
@@ -97,9 +97,9 @@ class WAMApiController extends WikiaApiController {
 					}
 				}
 
-				// return $wamIndex;
-		// 	}
-		// );
+				return $wamIndex;
+			}
+		);
 		
 		if (!$this->request->isInternal() && empty($wamIndex['wam_index'])) {
 			$wamIndex['wam_index'] = (object)$wamIndex['wam_index'];
@@ -149,27 +149,27 @@ class WAMApiController extends WikiaApiController {
 	}
 
 	private function getMinMaxWamIndexDateInternal() {
-		// $wamDates = WikiaDataAccess::cache(
-		// 	wfSharedMemcKey(
-		// 		'wam_minmax_date',
-		// 		self::MEMCACHE_VER
-		// 	),
-		// 	2 * 60 * 60,
-		// 	function () {
+		$wamDates = WikiaDataAccess::cache(
+			wfSharedMemcKey(
+				'wam_minmax_date',
+				self::MEMCACHE_VER
+			),
+			2 * 60 * 60,
+			function () {
 				$wamService = new WAMService();
 
 				return $wamService->getWamIndexDates();
-		// 	}
-		// );
+			}
+		);
 
-		// return $wamDates;
+		return $wamDates;
 	}
 
 	private function getWAMParameters() {
-		$options = array();
+		$options = [];
 		$options['currentTimestamp'] = $this->request->getInt('wam_day', null);
 		$options['previousTimestamp'] = $this->request->getInt('wam_previous_day', null);
-		$options['verticalId'] = $this->request->getInt('verticalId', null);
+		$options['verticalId'] = $this->request->getVal('vertical_id', null);
 		$options['wikiLang'] = $this->request->getVal('wiki_lang', null);
 		$options['wikiId'] = $this->request->getInt('wiki_id', null);
 		$options['wikiWord'] = $this->request->getVal('wiki_word', null);

@@ -13,10 +13,8 @@ WAMPage.prototype = {
 
 		var $wamFilteringTabs = $('.wam-filtering-tab');
 		if ($wamFilteringTabs.length > 0) {
-			$wamFilteringTabs.each(function () {
-				$(this).on('click', function () {
-					WAMPage.filterWamIndexByVertical(this);
-				});
+			$wamFilteringTabs.on('click', function() {
+				WAMPage.filterWamIndexByVertical(this)
 			});
 		}
 
@@ -127,7 +125,7 @@ WAMPage.prototype = {
 
 	filterWamIndexByVertical: function (tab) {
 		$('input[name="verticalId"').val($(tab).data('vertical-id'));
-		document.getElementById('wam-index-search').submit();
+		$('#wam-index-search').submit();
 	},
 
 	filterWamIndex: function (target) {
