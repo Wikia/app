@@ -3,6 +3,7 @@ require(['venus.infobox', 'wikia.document'], function (infoboxModule, d) {
 
 	var infoboxContainer = d.getElementById('infoboxContainer'),
 		infoboxWrapper = d.getElementById('infoboxWrapper'),
+		$infoboxWrapper = $(infoboxWrapper),
 		seeMoreButtonId = 'infoboxSeeMoreButton';
 
 	function init() {
@@ -25,14 +26,14 @@ require(['venus.infobox', 'wikia.document'], function (infoboxModule, d) {
 			infoboxWrapper.appendChild(seeMoreButton);
 		}
 
-		$(infoboxWrapper).trigger('initialized.infobox');
+		$infoboxWrapper.trigger('initialized.infobox');
 	}
 
 	if (infoboxWrapper) {
 		// waiting for document ready when makeCollapsible is loaded
-		$(document).ready(function() {
+		$(d).ready(function() {
 			// Wrap collapsible sections
-			$(infoboxWrapper).find('.mw-collapsible').makeCollapsible();
+			$infoboxWrapper.find('.mw-collapsible').makeCollapsible();
 			// Wrap whole infobox by adding see more button
 			init();
 		});
