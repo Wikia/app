@@ -43,8 +43,8 @@ $(function () {
 			window.wgExtensionsPath +
 			'/wikia/WikiaMobile/images/MarvelMobileAsset.png" alt="Marvel VDNA"></a></div>'
 		).on('click', function() {
-				window.VDNATalk.launch('marvel-wiki');
-			});
+			window.VDNATalk.launch('marvel-wiki');
+		});
 
 		$('#wkMainCnt').prepend($marvelVDNAImage);
 	}
