@@ -22,7 +22,6 @@ class GlobalNavigationController extends WikiaController {
 	}
 
 	public function index() {
-		// $wgLang represents user language
 		global $wgLang;
 
 		Wikia::addAssetsToOutput( 'global_navigation_scss' );
@@ -46,9 +45,10 @@ class GlobalNavigationController extends WikiaController {
 	}
 
 	public function searchIndex() {
-		global $wgLanguageCode;
-		$centralUrl = $this->getCentralUrlForLang( $wgLanguageCode );
-		$globalSearchUrl = $this->getGlobalSearchUrl( $centralUrl, $wgLanguageCode );
+		global $wgLang;
+		$lang = $wgLang->getCode();
+		$centralUrl = $this->getCentralUrlFromGlobalTitle( $lang );
+		$globalSearchUrl = $this->getGlobalSearchUrl( $centralUrl );
 		$specialSearchTitle = SpecialPage::getTitleFor( 'Search' );
 		$localSearchUrl = $specialSearchTitle->getFullUrl();
 		$fulltext = $this->wg->User->getOption( 'enableGoSearch' ) ? 0 : 'Search';
@@ -66,7 +66,7 @@ class GlobalNavigationController extends WikiaController {
 		}
 		$this->response->setVal( 'fulltext', $fulltext );
 		$this->response->setVal( 'query', $query );
-		$this->response->setVal( 'lang', $wgLanguageCode );
+		$this->response->setVal( 'lang', $lang );
 	}
 
 	public function hubsMenu() {
@@ -165,6 +165,11 @@ class GlobalNavigationController extends WikiaController {
 		}
 	}
 
+	public function getCentralUrlFromGlobalTitle( $lang ) {
+		$currentLang = $this->centralWikiInLangExists( $lang ) ? $lang : self::DEFAULT_LANG;
+		return $this->getCentralWikiTitleForLang( $currentLang )->getServer();
+	}
+
 	public function getCreateNewWikiUrl( $lang ) {
 		$createWikiUrl = $this->getCreateNewWikiFullUrl();
 
@@ -174,13 +179,16 @@ class GlobalNavigationController extends WikiaController {
 		return $createWikiUrl;
 	}
 
-	public function getGlobalSearchUrl( $centralUrl, $lang ) {
-		if ( !$this->centralWikiInLangExists( $lang ) ) {
-			return $centralUrl . self::CENTRAL_WIKI_SEARCH;
-		} else {
-			$specialSearchTitle = $this->getTitleForSearch();
-			return $centralUrl . $specialSearchTitle;
-		}
+	/**
+	 * @desc This method appends /wiki/Special:Search to central URL.
+	 * It appends not localized version because SpecialPage::getTitle returns value based on content language
+	 * not user language.
+	 *
+	 * @param String $centralUrl - central wiki URL in given user language
+	 * @return string - url to Special:Search page
+	 */
+	public function getGlobalSearchUrl( $centralUrl ) {
+		return $centralUrl . self::CENTRAL_WIKI_SEARCH;
 	}
 
 	protected function centralWikiInLangExists( $lang ) {

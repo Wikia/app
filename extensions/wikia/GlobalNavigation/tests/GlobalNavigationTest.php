@@ -53,7 +53,7 @@ class GlobalNavigationTest extends WikiaBaseTest {
 
 	public function testGetGlobalSearchUrlDataProvider() {
 		return [
-			['de', 'http://de.wikia.com', '/wiki/Spezial:Suche', 'http://de.wikia.com/wiki/Spezial:Suche'],
+			['de', 'http://de.wikia.com', '/wiki/Spezial:Suche', 'http://de.wikia.com/wiki/Special:Search'],
 			['en', 'http://www.wikia.com', '/wiki/Special:Search', 'http://www.wikia.com/wiki/Special:Search'],
 			['it', 'http://www.wikia.com', null, 'http://www.wikia.com/wiki/Special:Search'],
 			['zh', 'http://www.wikia.com', null, 'http://www.wikia.com/wiki/Special:Search'],
