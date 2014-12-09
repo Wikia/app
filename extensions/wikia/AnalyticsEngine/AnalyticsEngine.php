@@ -33,8 +33,6 @@ class AnalyticsEngine {
 
 	private static function getProvider($provider) {
 		switch ($provider) {
-			case 'GA_Urchin':
-				return new AnalyticsProviderGAS();
 			case 'QuantServe':
 				return new AnalyticsProviderQuantServe();
 			case 'Comscore':
@@ -42,6 +40,7 @@ class AnalyticsEngine {
 			case 'Exelate':
 				return new AnalyticsProviderExelate();
 			case 'GAS':
+			case 'GA_Urchin':
 				return new AnalyticsProviderGAS();
 			case 'AmazonMatch':
 				return new AnalyticsProviderAmazonMatch();
