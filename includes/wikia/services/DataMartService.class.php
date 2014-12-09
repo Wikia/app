@@ -492,12 +492,13 @@ class DataMartService extends Service {
 	 *
 	 * @return Array The list, the key contains article ID's and each item as a "namespace_id" and "pageviews" key
 	 */
-	private static function doGetTopArticlesByPageview( $wikiId,
-	                                                 Array $articleIds = null,
-	                                                 Array $namespaces = null,
-	                                                 $excludeNamespaces = false,
-	                                                 $limit = 200,
-	                                                 $rollupDate = null
+	private static function doGetTopArticlesByPageview( 
+		$wikiId,
+                Array $articleIds = null,
+                Array $namespaces = null,
+                $excludeNamespaces = false,
+                $limit = 200,
+                $rollupDate = null
 	) {
 		$app = F::app();
 		wfProfileIn( __METHOD__ );
@@ -617,12 +618,13 @@ class DataMartService extends Service {
 	 *
 	 * @return Array The list, the key contains article ID's and each item as a "namespace_id" and "pageviews" key
 	 */
-	public static function getTopArticlesByPageview( $wikiId,
-													 Array $articleIds = null,
-													 Array $namespaces = null,
-													 $excludeNamespaces = false,
-													 $limit = 200,
-													 $rollupDate = null
+	public static function getTopArticlesByPageview( 
+		$wikiId,
+ 		Array $articleIds = null,
+		Array $namespaces = null,
+		$excludeNamespaces = false,
+		$limit = 200,
+		$rollupDate = null
 	) {
 		wfProfileIn( __METHOD__ );
 
