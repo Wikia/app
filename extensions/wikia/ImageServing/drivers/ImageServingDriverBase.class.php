@@ -5,15 +5,13 @@
  *
  * This class is used to get image list for custom namespaces
  */
-
 abstract class ImageServingDriverBase {
 	private $articles;
-	private $proportion;
 
 	protected $db;
-	protected $imagesList;
-	protected $imageCountByArticle;
-	protected $filteredOut;
+	protected $allImages;
+	protected $imageCountsByArticle;
+	protected $filteredImages;
 
 	protected $minWidth;
 	protected $minHeight;
@@ -21,12 +19,10 @@ abstract class ImageServingDriverBase {
 	/**
 	 * @param $db DatabaseBase
 	 * @param $imageServing ImageServing
-	 * @param $proportion
 	 */
-	function __construct($db, $imageServing, $proportion) {
+	function __construct($db, $imageServing) {
 		$this->app = F::app();
 		$this->db = $db;
-		$this->proportion = $proportion;
 		//TODO: remove it
 		$this->imageServing = $imageServing;
 		$this->memc =  $this->app->wg->Memc;
@@ -35,18 +31,18 @@ abstract class ImageServingDriverBase {
 		$this->minWidth = $this->imageServing->getRequestedWidth();
 	}
 
-	abstract protected function getImagesFromDB($articles = array());
+	abstract protected function loadImagesFromDb($articleIds = array());
 	abstract protected function filterImages($images = array());
 
-	final public function setArticlesList($articles = array()) {
+	final public function setArticles($articles = array()) {
 		$this->articles = $articles;
 	}
 
-	final protected function getArticlesList() {
+	final protected function getArticles() {
 		return $this->articles;
 	}
 
-	final protected function getSimpleArticlesList() {
+	final protected function getArticleIds() {
 		return array_keys($this->articles);
 	}
 
@@ -60,43 +56,43 @@ abstract class ImageServingDriverBase {
 	final public function execute() {
 		wfProfileIn( __METHOD__ );
 
-		$articles = $this->getSimpleArticlesList();
-		$cacheOut = $this->loadFromCache($articles);
-		$articles = $cacheOut['rest'];
+		$articleIds = $this->getArticleIds();
+		$cacheResult = $this->loadFromCache($articleIds);
+		$articleIds = $cacheResult['miss'];
 
-		if(count($articles) == 0) {
+		if(count($articleIds) == 0) {
 			wfProfileOut( __METHOD__ );
-			return $cacheOut['data'];
+			return $cacheResult['cache'];
 		}
 
-		$this->imagesList = array();
-		$this->imageCountByArticle = array();
-		$this->filteredOut = array();
+		$this->allImages = array();
+		$this->imageCountsByArticle = array();
+		$this->filteredImages = array();
 
-		$this->executeGetData( $articles );
+		$this->loadFromDb( $articleIds );
 
-		$dbOut = $this->formatResult($this->imagesList, $this->filteredOut);
+		$dbOut = $this->formatResult($this->allImages, $this->filteredImages);
 
 		$this->storeInCache($dbOut);
 
-		$ret = $dbOut + $cacheOut['data'];
+		$ret = $dbOut + $cacheResult['cache'];
 
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
 
-	protected function executeGetData($articles) {
-		$this->getImagesFromDB($articles);
+	protected function loadFromDb($articleIds) {
+		$this->loadImagesFromDb($articleIds);
 
-		if(count($this->imagesList) > 0) {
-			$this->filterImages($this->imagesList);
+		if(count($this->allImages) > 0) {
+			$this->filterImages($this->allImages);
 		}
 
-		return $this->imagesList;
+		return $this->allImages;
 	}
 
 	protected function addToFilteredList($name, $count, $width, $height, $minorMime) {
-		$this->filteredOut[ $name ] = array(
+		$this->filteredImages[ $name ] = array(
 			'cnt'            => $count,
 			'il_to'          => $name,
 			'img_width'      => $width,
@@ -105,43 +101,43 @@ abstract class ImageServingDriverBase {
 		);
 	}
 
-	protected function addImagesList($imageName, $pageId, $order, $limit = 999 ) {
+	protected function addImage($imageName, $pageId, $order, $limit = 999 ) {
 		$isNew = false;
-		if(!isset($this->imagesList[$imageName])) {
+		if(!isset($this->allImages[$imageName])) {
 			$isNew = true;
 		}
 
-		if ( !isset($this->imagesList[$imageName][$pageId]) &&
-			(empty($this->imageCountByArticle[$pageId]) || $this->imageCountByArticle[$pageId] <  $limit) ) {
-			$this->imageCountByArticle[$pageId] = empty($this->imageCountByArticle[$pageId]) ? 1:($this->imageCountByArticle[$pageId] + 1);
-			$this->imagesList[$imageName][$pageId] = $order;
+		if ( !isset($this->allImages[$imageName][$pageId]) &&
+			(empty($this->imageCountsByArticle[$pageId]) || $this->imageCountsByArticle[$pageId] <  $limit) ) {
+			$this->imageCountsByArticle[$pageId] = empty($this->imageCountsByArticle[$pageId]) ? 1:($this->imageCountsByArticle[$pageId] + 1);
+			$this->allImages[$imageName][$pageId] = $order;
 		}
 		return $isNew;
 	}
 
-	protected function getImagesCountBeforeFilter($pageId){
-		if(!empty($this->imageCountByArticle[$pageId])) {
-			return $this->imageCountByArticle[$pageId];
+	protected function getAllImagesCountForArticle($pageId){
+		if(!empty($this->imageCountsByArticle[$pageId])) {
+			return $this->imageCountsByArticle[$pageId];
 		} else {
 			return 0;
 		}
 	}
 
-	protected function loadFromCache($articles = array()) {
-		$out = array();
-		$articlesRest = array();
-		foreach ( $articles as $value ) {
-			$mcOut = $this->memc->get( $this->makeKey( $value ), null );
-			if(!empty($mcOut)) {
-				$out[ $value ] = $mcOut;
+	protected function loadFromCache($articleIds = array()) {
+		$cached = array();
+		$cacheMissArticleIds = array();
+		foreach ( $articleIds as $articleId ) {
+			$articleCache = $this->memc->get( $this->makeKey( $articleId ), null );
+			if(!empty($articleCache)) {
+				$cached[ $articleId ] = $articleCache;
 			} else {
-				$articlesRest[] = $value;
+				$cacheMissArticleIds[] = $articleId;
 			}
 		}
-		return array( 'data' => $out, 'rest' => $articlesRest ) ;
+		return array( 'cache' => $cached, 'miss' => $cacheMissArticleIds ) ;
 	}
 
-	protected function formatResult($imageList ,$dbOut) {
+	protected function formatResult($imageList,$dbOut) {
 		wfProfileIn( __METHOD__ );
 
 		$out = [ ];
@@ -163,7 +159,7 @@ abstract class ImageServingDriverBase {
 		foreach ( $pageOrderedImages as $pageId => $pageImageList ) {
 			ksort( $pageImageList );
 			foreach ( $pageImageList as $imageName ) {
-				$img = $this->getImageFile( $imageName );
+				$img = $this->getFileByName( $imageName );
 				$out[ $pageId ][ ] = [
 					"name" => $imageName,
 					"original_dimensions" => [
@@ -179,7 +175,7 @@ abstract class ImageServingDriverBase {
 		return $out;
 	}
 
-	protected function getImageFile( $text ) {
+	protected function getFileByName( $text ) {
 		$file_title = Title::newFromText( $text, NS_FILE );
 		$img = wfFindFile( $file_title );
 		return $img;

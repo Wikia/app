@@ -1,77 +1,73 @@
-<?php 
+<?php
 class ImageServingDriverCategoryNS extends ImageServingDriverMainNS {
 	protected $articlesFromCategory = 10;
 	private $straightJoinLimit = 70000;
-	
-	protected function getImagesFromDB($articles = array()) {
-		parent::getImagesFromDB($articles);
 
-		$toGetFromArticle = array();
-		foreach($articles as $val) {
-			if($this->getImagesCountBeforeFilter($val) < $this->queryLimit) {
-				$this->getCategoryArticleList($val, $toGetFromArticle);
+	protected function loadImagesFromDb( $articleIds = array() ) {
+		parent::loadImagesFromDb( $articleIds );
+
+		$articleCategories = array();
+		foreach ( $articleIds as $categoryId ) {
+			if ( $this->getAllImagesCountForArticle( $categoryId ) < $this->queryLimit ) {
+				$this->addTopArticlesFromCategory( $categoryId, $articleCategories );
 			}
 		}
-		
-		$props = $this->getArticleProps(array_keys($toGetFromArticle), $this->queryLimit);
-		
+
+		$imageIndex = $this->getArticleProps( array_keys( $articleCategories ), $this->queryLimit );
+
 		$propNumber = 0;
-		foreach($props as  $article => $prop) {
-			$count = 0;
+		foreach ( $imageIndex as $articleId => $articleImageIndex ) {
 			$propNumber++;
-			foreach( $prop as $key => $image  ) {
-				foreach( $toGetFromArticle[$article] as $cat ) {
-					$this->addImagesList(  $image, $cat, $propNumber*(2*$this->queryLimit + $key), $this->queryLimit );
+			foreach ( $articleImageIndex as $key => $imageData ) {
+				foreach ( $articleCategories[$articleId] as $categoryId ) {
+					$this->addImage( $imageData, $categoryId, $propNumber * ( 2 * $this->queryLimit + $key ), $this->queryLimit );
 				}
 			}
-		}		
+		}
 	}
-	
-	protected function getCategoryArticleList($id, &$toGetFromArticle) {
-		$out = array();
-				
-		$count = $this->db->selectField ( 
-			array( 'page', 'categorylinks' ), 
-			array( 'COUNT(cl_from)' ), 
+
+	protected function addTopArticlesFromCategory( $categoryId, &$articleCategories ) {
+		# fetch number of articles in category
+		# which controls if we use STRAIGHT_JOIN in the next query
+		$count = $this->db->selectField(
+			array( 'page', 'categorylinks' ),
+			array( 'COUNT(cl_from)' ),
 			array(
-				'cl_to  = page_title', 
-				'page_id' => $id 
+				'cl_to  = page_title',
+				'page_id' => $categoryId
 			),
 			__METHOD__
 		);
-		
+
+		# fetch list of N longest (by wikitext size) articles from this category
 		$options = array(
-			'ORDER BY' =>  'page.page_len desc',
+			'ORDER BY' => 'page.page_len desc',
 			'LIMIT' => $this->articlesFromCategory
 		);
-		
+
 		if ( $count > $this->straightJoinLimit ) {
 			$options[] = 'STRAIGHT_JOIN';
 		}
 
 		$res = $this->db->select(
-			array( 'page', 'categorylinks' ,'page as cat_page'  ),
+			array( 'page', 'categorylinks', 'page as cat_page' ),
 			array(
-				"page.page_title", 
-				"page.page_id", 
-				"page.page_len" 
+				"page.page_id",
 			),
 			array(
 				'cl_from = page.page_id',
-				'cl_to  = cat_page.page_title', 
-				'cat_page.page_id' => $id 
+				'cl_to  = cat_page.page_title',
+				'cat_page.page_id' => $categoryId
 			),
 			__METHOD__,
 			$options
 		);
 
-		while ($row =  $this->db->fetchRow( $res ) ) {
-			if(empty($toGetFromArticle[$row['page_id']])) {
-				$toGetFromArticle[$row['page_id']] = array( $id );	
-			} else {
-				$toGetFromArticle[$row['page_id']][] = $id;
+		while ( $row = $this->db->fetchRow( $res ) ) {
+			if ( empty( $articleCategories[$row['page_id']] ) ) {
+				$articleCategories[$row['page_id']] = array();
 			}
+			$articleCategories[$row['page_id']][] = $categoryId;
 		}
-		return $out;
 	}
 }

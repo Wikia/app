@@ -10,8 +10,8 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 	 */
 	private $mimeTypesBlacklist = [];
 
-	function __construct($db, $imageServing, $proportion) {
-		parent::__construct( $db, $imageServing, $proportion );
+	function __construct($db, $imageServing) {
+		parent::__construct( $db, $imageServing );
 
 		wfProfileIn(__METHOD__);
 
@@ -47,13 +47,13 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 		wfProfileOut(__METHOD__);
 	}
 
-	protected function getImagesFromDB($articles = array()) {
+	protected function loadImagesFromDb($articleIds = array()) {
 		wfProfileIn( __METHOD__ );
 
-		$props = $this->getArticleProps($articles, 2*$this->queryLimit);
+		$props = $this->getArticleProps($articleIds, 2*$this->queryLimit);
 		foreach($props as  $article => $prop) {
 			foreach( $prop as $key => $image  ) {
-				$this->addImagesList(  $image, $article, $key, $this->queryLimit );
+				$this->addImage( $image, $article, $key, $this->queryLimit );
 			}
 		}
 
