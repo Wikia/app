@@ -43,8 +43,8 @@ define('ext.wikia.adEngine.adPlacementChecker', ['jquery', 'wikia.log'], functio
 
 		function logInfo(result) {
 			var padding = '                              ',
-				name1 = $insertAfter.first().text().substring(0, 30) || 'unknown',
-				name2 = $fitBefore.first().text().substring(0, 30) || 'unknown',
+				name1 = $insertAfter.children().first().text().substring(0, 30) || 'unknown',
+				name2 = $fitBefore.children().first().text().substring(0, 30) || 'unknown',
 				msgPrefix = 'Between ' + name1 + ' and ' + name2 + padding,
 				msg = msgPrefix.substring(0, 60).replace(/( *)$/, ':$1 ') + result;
 
