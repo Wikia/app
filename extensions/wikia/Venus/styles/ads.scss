@@ -110,6 +110,11 @@
 .ad-in-content-lb {
 	clear: both;
 	margin: 0 auto;
+	text-align: center;
+
+	.wikia-ad {
+		display: inline-block;
+	}
 
 	> .default-height {
 		width: 728px;
