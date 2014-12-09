@@ -27,6 +27,7 @@ $local-nav-wordmark-right-spacing-small: 30px;
 
 .local-navigation {
 	@include font-size-xxs;
+	@include grid-content-padding-with-gutter;
 	border-bottom: 1px solid $color-page-border-subtle;
 	height: 80px;
 	position: relative;
