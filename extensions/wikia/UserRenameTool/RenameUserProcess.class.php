@@ -518,7 +518,7 @@ class RenameUserProcess {
 	 * @return bool True if the process succeded
 	 */
 	private function doRun() {
-		global $wgMemc, $wgAuth;
+		global $wgMemc, $wgAuth, $wgExternalAuthType;
 		wfProfileIn(__METHOD__);
 
 		$this->addLog("User rename global task start." . ((!empty($this->mFakeUserId)) ? ' Process is being repeated.' : null));
@@ -544,8 +544,8 @@ class RenameUserProcess {
 		wfRunHooks($hookName, array($this->mUserId, $this->mOldUsername, $this->mNewUsername));
 
 		// delete the record from all the secondary clusters
-		if ( class_exists( 'ExternalUser_Wikia' ) ) {
-			ExternalUser_Wikia::removeFromSecondaryClusters( $this->mUserId );
+		if ( $wgExternalAuthType ) {
+			$wgExternalAuthType::removeFromSecondaryClusters( $this->mUserId );
 		}
 
 		// rename the user on the shared cluster
@@ -583,7 +583,7 @@ class RenameUserProcess {
 			$fakeUser->setName( $this->mOldUsername );
 
 			if ( $wgExternalAuthType ) {
-				$fakeUser = ExternalUser_Wikia::addUser( $fakeUser, '', '', '' );
+				$fakeUser = $wgExternalAuthType::addUser( $fakeUser, '', '', '' );
 			} else {
 				$fakeUser->addToDatabase();
 			}
