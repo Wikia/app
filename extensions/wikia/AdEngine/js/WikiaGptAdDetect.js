@@ -85,7 +85,14 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 
 		log(['getAdType', slotname], 'info', logGroup);
 
-		if (iframe && iframe.contentWindow && iframe.contentWindow.AdEngine_adType) {
+		try {
+			iframeOk = !!iframe.contentWindow.document.querySelector;
+		} catch (e) {
+			// Frame with origin "http://tpc.googlesyndication.com" is used for some AdSense/AdEx ads
+			log(['getAdType', slotname, 'ad iframe not accessible (or not found)'], 'error', logGroup);
+		}
+
+		if (iframeOk && iframe.contentWindow.AdEngine_adType) {
 			log(['getAdType', slotname, 'iframe AdEngine_adType = ', iframe.contentWindow.AdEngine_adType], 'info', logGroup);
 
 			return iframe.contentWindow.AdEngine_adType;
@@ -108,16 +115,8 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 			return 'always_success';
 		}
 
-		try {
-			iframeOk = !!iframe.contentWindow.document.querySelector;
-		} catch (ignore) {}
-
 		if (!iframeOk) {
-			log(
-				['getAdType', slotname, 'running ad callback (no ad iframe found)'],
-				'error',
-				logGroup
-			);
+			log(['getAdType', slotname, 'running ad callback (!iframeOk)'], 'error', logGroup);
 			return 'always_success';
 		}
 
