@@ -1,4 +1,3 @@
-// TODO replace this file https://github.com/Wikia/vignette-js/pull/16
 /**
  * Helper module to generate the URL to a thumbnail of specific size from JS
  */
@@ -27,7 +26,7 @@ var Vignette = (function () {
 			height: height
 		};
 		if (mode === Vignette.mode.windowCrop || mode === Vignette.mode.windowCropFixed) {
-			if (config && 'xOffset1' in config && 'yOffset1' in config && 'xOffset2' in config && 'yOffset2' in config) {
+			if (config && config.hasOwnProperty('xOffset1') && config.hasOwnProperty('yOffset1') && config.hasOwnProperty('xOffset2') && config.hasOwnProperty('yOffset2')) {
 				sizing['xOffset1'] = parseInt(config.xOffset1, 10);
 				sizing['yOffset1'] = parseInt(config.yOffset1, 10);
 				sizing['xOffset2'] = parseInt(config.xOffset2, 10);
