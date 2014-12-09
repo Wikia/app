@@ -205,29 +205,20 @@ class OasisController extends WikiaController {
 
 		// FIXME: create separate module for stats stuff?
 		// load Google Analytics code
-		$this->googleAnalytics = AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
+		$this->googleAnalytics = AnalyticsEngine::track('GAS', AnalyticsEngine::EVENT_PAGEVIEW);
 
 		// onewiki GA
-		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
+		$this->googleAnalytics .= AnalyticsEngine::track('GAS', 'onewiki', array($wgCityId));
 
 		// track page load time
-		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'pagetime', array('oasis'));
-
-		// track browser height TODO NEF no browser height tracking code anymore, remove
-		//$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'browser-height');
+		$this->googleAnalytics .= AnalyticsEngine::track('GAS', 'pagetime', array('oasis'));
 
 		// record which varnish this page was served by
-		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'varnish-stat');
-
-		// TODO NEF not used, remove
-		//$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'noads');
-
-		// TODO NEF we dont do AB this way anymore, remove
-		//$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'abtest');
+		$this->googleAnalytics .= AnalyticsEngine::track('GAS', 'varnish-stat');
 
 		// Add important Gracenote analytics for reporting needed for licensing on LyricWiki.
 		if (43339 == $wgCityId){
-			$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'lyrics');
+			$this->googleAnalytics .= AnalyticsEngine::track('GAS', 'lyrics');
 		}
 
 		// macbre: RT #25697 - hide Comscore & QuantServe tags on edit pages

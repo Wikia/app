@@ -40,7 +40,6 @@ class AnalyticsEngine {
 			case 'Exelate':
 				return new AnalyticsProviderExelate();
 			case 'GAS':
-			case 'GA_Urchin':
 				return new AnalyticsProviderGAS();
 			case 'AmazonMatch':
 				return new AnalyticsProviderAmazonMatch();

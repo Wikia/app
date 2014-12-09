@@ -1,6 +1,8 @@
 <?php
 class AnalyticsProviderGAS implements iAnalyticsProvider {
 
+	const CB = 1; // invalidates userTiming() inline code cache
+
 	public function getSetupHtml($params=array()){
 		return '';
 	}
@@ -13,6 +15,7 @@ class AnalyticsProviderGAS implements iAnalyticsProvider {
 			case 'onewiki':
 			case 'pagetime':
 			case "varnish-stat":
+				#throw new WikiaException("{$event} unsupported");
 				return ''; // NOP
 
 			case "usertiming":
@@ -65,7 +68,7 @@ class AnalyticsProviderGAS implements iAnalyticsProvider {
 		$app = F::app();
 		//global Memcache key, this code doesn't change on a per-wiki base
 		//uses cachebuster to allow for easier purging
-		$key = implode( ':', array( __METHOD__, $app->wg->StyleVersion ) );
+		$key = wfSharedMemcKey( __METHOD__, self::CB );
 		$code = $app->wg->Memc->get( $key );
 
 		if ( empty( $code ) ) {
@@ -108,7 +111,7 @@ class AnalyticsProviderGAS implements iAnalyticsProvider {
 JSCODE;
 			$code = Html::inlineScript( AssetsManagerBaseBuilder::minifyJs( $code ) );
 			//cache it as minification is expensive
-			$app->wg->Memc->set( $key, $code, 2592000 /* 30 days */);
+			$app->wg->Memc->set( $key, $code, WikiaResponse::CACHE_LONG );
 		}
 
 		wfProfileOut( __METHOD__ );

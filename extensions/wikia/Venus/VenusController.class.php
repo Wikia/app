@@ -57,20 +57,20 @@ class VenusController extends WikiaController {
 
 		// FIXME: create separate module for stats stuff?
 		// load Google Analytics code
-		$this->googleAnalytics = AnalyticsEngine::track('GA_Urchin', AnalyticsEngine::EVENT_PAGEVIEW);
+		$this->googleAnalytics = AnalyticsEngine::track('GAS', AnalyticsEngine::EVENT_PAGEVIEW);
 
 		// onewiki GA
-		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'onewiki', array($wgCityId));
+		$this->googleAnalytics .= AnalyticsEngine::track('GAS', 'onewiki', array($wgCityId));
 
 		// track page load time
-		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'pagetime', array('oasis'));
+		$this->googleAnalytics .= AnalyticsEngine::track('GAS', 'pagetime', array('oasis'));
 
 		// record which varnish this page was served by
-		$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'varnish-stat');
+		$this->googleAnalytics .= AnalyticsEngine::track('GAS', 'varnish-stat');
 
 		// Add important Gracenote analytics for reporting needed for licensing on LyricWiki.
 		if (43339 == $wgCityId){
-			$this->googleAnalytics .= AnalyticsEngine::track('GA_Urchin', 'lyrics');
+			$this->googleAnalytics .= AnalyticsEngine::track('GAS', 'lyrics');
 		}
 
 		$this->comScore = AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
