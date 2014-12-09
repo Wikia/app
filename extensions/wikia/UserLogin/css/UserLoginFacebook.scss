@@ -36,7 +36,7 @@ $submits-width: 60%;
 			padding: 5px 10% 15px;
 			text-align: center;
 			white-space: normal;
-			width: 45%;
+			width: 307px;
 		}
 
 		span {
@@ -48,7 +48,7 @@ $submits-width: 60%;
 			font-size: 23px;
 			height: 45px;
 			line-height: 45px;
-			margin: 10px 0 0 10px;
+			margin: 10px 0 0;
 			text-align: center;
 			visibility: hidden;
 			width: 45px;
@@ -58,6 +58,10 @@ $submits-width: 60%;
 	// only show the "or" circle for wikis where it makes sense
 	&.lang-en span {
 		visibility: visible;
+	}
+
+	footer {
+		display: none;
 	}
 }
 

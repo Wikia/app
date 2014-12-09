@@ -214,16 +214,7 @@
 						classes: [
 							'facebook-signup-modal',
 							langClass
-						],
-						buttons: [{
-							vars: {
-								value: response.cancelMsg,
-								data: [{
-									key: 'event',
-									value: 'close'
-								}]
-							}
-						}]
+						]
 					}
 				};
 
