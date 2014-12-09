@@ -182,9 +182,17 @@ class ArticleService extends WikiaObject {
 		//get standard parser cache for anons,
 		//99% of the times it will be available but
 		//generate it in case is not
+		$content = '';
 		$page = $this->article->getPage();
 		$opts = $page->makeParserOptions( new User() );
-		$content = $page->getParserOutput( $opts )->getText();
+		$parserOpt = $page->getParserOutput( $opts );
+		if ( isset( $parserOpt ) ) {
+			$content = $parserOpt->getText();
+		} else {
+			\Wikia\Logger\WikiaLogger::instance()->error(
+				'ArticleService, no parser output found', [ 'parserOptions' => $opts, 'page' => $page ]
+			);
+		}
 
 		//Run hook to allow wikis to modify the content (ie: customize their snippets) before the stripping and length limitations are done.
 		wfRunHooks( 'ArticleService::getTextSnippet::beforeStripping', array( &$this->article, &$content, ArticleService::MAX_LENGTH ) );
