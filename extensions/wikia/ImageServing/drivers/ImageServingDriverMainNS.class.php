@@ -50,7 +50,7 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 	protected function loadImagesFromDb($articleIds = array()) {
 		wfProfileIn( __METHOD__ );
 
-		$props = $this->getArticleProps($articleIds, 2*$this->queryLimit);
+		$props = $this->getImageIndex($articleIds, 2*$this->queryLimit);
 		foreach($props as  $article => $prop) {
 			foreach( $prop as $key => $image  ) {
 				$this->addImage( $image, $article, $key, $this->queryLimit );
@@ -60,11 +60,11 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 		wfProfileOut( __METHOD__ );
 	}
 
-	protected function getArticleProps($articles, $limit) {
+	protected function getImageIndex($articleIds, $limitPerArticle) {
 		wfProfileIn( __METHOD__ );
 
 		$out = array();
-		if ( !empty ( $articles ) && is_array( $articles) ) {
+		if ( !empty ( $articleIds ) && is_array( $articleIds) ) {
 			$res = $this->db->select(
 				array( 'page_wikia_props' ),
 				array(
@@ -72,8 +72,8 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 					'props'
 				),
 				array(
-					'page_id' => $articles,
-					'propname' => 0
+					'page_id' => $articleIds,
+					'propname' => WPP_IMAGE_SERVING
 				),
 				__METHOD__
 			);
@@ -81,9 +81,9 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 
 			/* build list of images to get info about it */
 			while ($row =  $this->db->fetchRow( $res ) ) {
-				$props = unserialize( $row['props'] );
-				if ( is_array( $props ) ) {
-					$out[$row['page_id']] = array_slice($props, 0, $limit);
+				$imageIndex = unserialize( $row['props'] );
+				if ( is_array( $imageIndex ) ) {
+					$out[$row['page_id']] = array_slice($imageIndex, 0, $limitPerArticle);
 				}
 			}
 		}
@@ -165,15 +165,21 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 		return $result;
 	}
 
-	protected function filterImages( $images = array() ) {
+	/**
+	 * Load image details. Skips images that does not meet the following criteria:
+	 *  - image usage is relatively low in content namespaces (fewer than {$this->maxCount} links)
+	 *  - image actually exists in DB
+	 *
+	 * @param array $imageNames
+	 */
+	protected function loadImageDetails( $imageNames = array() ) {
 		wfProfileIn( __METHOD__ );
 
-		if ( empty( $images ) ) {
+		if ( empty( $imageNames ) ) {
 			wfProfileOut( __METHOD__ );
 			return;
 		}
 
-		$imageNames = array_keys($images);
 		$imagePopularity = array();
 		$imageDetails = array();
 
