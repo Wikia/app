@@ -185,9 +185,9 @@ class ArticleService extends WikiaObject {
 		$content = '';
 		$page = $this->article->getPage();
 		$opts = $page->makeParserOptions( new User() );
-		$parserOpt = $page->getParserOutput( $opts );
-		if ( isset( $parserOpt ) ) {
-			$content = $parserOpt->getText();
+		$parserOutput = $page->getParserOutput( $opts );
+		if ( isset( $parserOutput ) ) {
+			$content = $parserOutput->getText();
 		} else {
 			\Wikia\Logger\WikiaLogger::instance()->error(
 				'ArticleService, no parser output found', [ 'parserOptions' => $opts, 'page' => $page ]
