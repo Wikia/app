@@ -383,10 +383,6 @@ $local-nav-wordmark-right-spacing-small: 30px;
 
 @media #{$large-up} {
 	.local-navigation {
-		.wordmark-container {
-			padding-left: 32px;
-		}
-
 		.dropdown {
 			.second-level-row,
 			.third-level-row {
