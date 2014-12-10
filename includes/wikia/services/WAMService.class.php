@@ -65,7 +65,18 @@ class WAMService extends Service {
 			return ($row = $db->fetchObject($result)) ? $row->wam : 0;
 		};
 
-		$wamScore = WikiaDataAccess::cacheWithLock($memKey, self::CACHE_DURATION, $getData);
+		if ( !F::app()->wg->StatsDBMartEnabled ) {
+			$getData = function() {
+				throw new Exception("statsdb_mart unavailable, cannot fetch fresh data");
+			};
+		}
+
+		try {
+			$wamScore = WikiaDataAccess::cacheWithLock($memKey, self::CACHE_DURATION, $getData);
+		} catch (Exception $e) {
+			$wamScore = 0;
+		}
+
 		wfProfileOut(__METHOD__);
 		return $wamScore;
 	}
@@ -96,8 +107,13 @@ class WAMService extends Service {
 
 		$wamIndex = array(
 			'wam_index' => array(),
-			'wam_results_total' => 0
+			'wam_results_total' => 0,
+			'wam_index_date' => $inputOptions['currentTimestamp'],
 		);
+
+		if ( !F::app()->wg->StatsDBMartEnabled ) {
+			return $wamIndex;
+		}
 
 		$db = $this->getDB();
 
@@ -134,7 +150,6 @@ class WAMService extends Service {
 		}
 		$count = $resultCount->fetchObject();
 		$wamIndex['wam_results_total'] = $count->wam_results_total;
-		$wamIndex['wam_index_date'] = $inputOptions['currentTimestamp'];
 
 		wfProfileOut(__METHOD__);
 
@@ -142,6 +157,8 @@ class WAMService extends Service {
 	}
 
 	public function getWamIndexDates() {
+		$app = F::app();
+
 		$dates = array(
 			'max_date' => null,
 			'min_date' => null
@@ -149,7 +166,11 @@ class WAMService extends Service {
 
 		wfProfileIn(__METHOD__);
 
-		$db = $this->getDB();
+		if ( $app->wg->StatsDBMartEnabled ) {
+			$db = $this->getDB();
+		} else {
+			$db = wfGetDB(DB_SLAVE);
+		}
 
 		$fields = array(
 			'MAX(time_id) AS max_date',
@@ -201,7 +222,18 @@ class WAMService extends Service {
 			return $languages;
 		};
 
-		$wamLanguages = WikiaDataAccess::cache( $memKey, self::CACHE_DURATION, $getData );
+		if ( !F::app()->wg->StatsDBMartEnabled ) {
+			$getData = function() {
+				throw new Exception("statsdb_mart unavailable, cannot fetch fresh data");
+			};
+		}
+
+		try {
+			$wamLanguages = WikiaDataAccess::cache( $memKey, self::CACHE_DURATION, $getData );
+		} catch (Exception $e) {
+			$wamLanguages = array();
+		}
+
 		wfProfileOut( __METHOD__ );
 		return $wamLanguages;
 	}
