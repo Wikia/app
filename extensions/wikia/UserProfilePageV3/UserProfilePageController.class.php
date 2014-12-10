@@ -540,7 +540,7 @@ class UserProfilePageController extends WikiaController {
 	public function onSubmitUsersAvatar() {
 		wfProfileIn(__METHOD__);
 
-		$this->response->setContentType('text/html; charset=utf-8');
+		$this->response->setContentType( 'application/json; charset=utf-8' );
 
 		$user = User::newFromId($this->getVal('userId'));
 
