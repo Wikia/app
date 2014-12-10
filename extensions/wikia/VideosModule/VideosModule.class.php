@@ -104,7 +104,6 @@ class VideosModule extends WikiaModel {
 	 */
 	public function getLocalVideos( $numRequired, $sort ) {
 		wfProfileIn( __METHOD__ );
-		$this->log = WikiaLogger::instance();
 
 		$memcKey = wfMemcKey( 'videomodule', 'local_videos', self::CACHE_VERSION, $sort, $this->userRegion );
 		$videos = $this->wg->Memc->get( $memcKey );
@@ -154,7 +153,7 @@ class VideosModule extends WikiaModel {
 			->key( $memcKey )
 			->ttl( self::CACHE_TTL )
 			->negativeResponseTTL( self::NEGATIVE_CACHE_TTL )
-			->callback( 'VideosModule::getVideosRelatedToWikiStatically' )
+			->callback( 'VideosModule::getVideosRelatedToWikiCallback' )
 			->callbackParams( [ $this->userRegion ] );
 
 		if ( $asynCache->foundInCache() ) {
@@ -174,7 +173,7 @@ class VideosModule extends WikiaModel {
 	 * @param $userRegion
 	 * @return array
 	 */
-	public static function getVideosRelatedToWikiStatically( $userRegion ) {
+	public static function getVideosRelatedToWikiCallback( $userRegion ) {
 		$module = new self( $userRegion );
 		$videos = $module->getVideosRelatedToWikiFromSearch();
 		return $videos;
@@ -208,7 +207,7 @@ class VideosModule extends WikiaModel {
 		if ( empty( $videos ) ) {
 			$msg = "No videos found for wiki {$this->wg->Sitename}";
 			$this->log->info( __METHOD__ . " " . $msg );
-			// Caught by AsyncCache task which then using negative cache TTL
+			// Caught by AsyncCache task which then uses negative cache TTL
 			throw new Wikia\Cache\NegativeResponseException( $msg );
 		}
 
