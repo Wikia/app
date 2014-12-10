@@ -119,6 +119,7 @@ class MercuryApi {
 			],
 			'namespaces' => MWNamespace::getCanonicalNamespaces(),
 			'siteName' => $this->getSiteName(),
+			'mainPageTitle' => Title::newMainPage()->getPrefixedDBkey(),
 			'theme' => SassUtil::getOasisSettings()
 		];
 	}
