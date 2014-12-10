@@ -396,6 +396,9 @@ ve.init.mw.ViewPageTarget.prototype.onSurfaceReady = function () {
 		this.surface.mwTocWidget = new ve.ui.MWTocWidget( this.surface );
 	}
 
+	this.setupToolbarButtons();
+	this.attachToolbarButtons();
+
 	// Update UI
 	this.hideSpinner();
 	if ( this.timeout ) {
@@ -413,13 +416,6 @@ ve.init.mw.ViewPageTarget.prototype.afterHideSpinner = function () {
 	this.surface.getFocusWidget().$element.show();
 	this.surface.getView().focus();
 
-	this.setupToolbar();
-	if ( ve.debug ) {
-		this.setupDebugBar();
-	}
-
-	this.setupToolbarButtons();
-	this.attachToolbarButtons();
 	this.restoreScrollPosition();
 	this.restoreEditSection();
 	this.setupBeforeUnloadHandler();
