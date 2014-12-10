@@ -12,12 +12,13 @@ require([
 		headersSelector = '#mw-content-text > h2, #mw-content-text > h3, #mw-content-text > section > h2',
 		inContentMedrecs = [
 			['INCONTENT_1C', 'INCONTENT_1B', 'INCONTENT_1A'],
-			['INCONTENT_2C', 'INCONTENT_2B', 'INCONTENT_2A']
+			['INCONTENT_2C', 'INCONTENT_2B', 'INCONTENT_2A'],
+			['INCONTENT_3C', 'INCONTENT_3B', 'INCONTENT_3A']
 		],
-		inContentLeaderboards = ['INCONTENT_LEADERBOARD_1', 'INCONTENT_LEADERBOARD_2'],
+		inContentLeaderboards = ['INCONTENT_LEADERBOARD_1', 'INCONTENT_LEADERBOARD_2', 'INCONTENT_LEADERBOARD_3'],
 		slotsAdded = 0,
-		maxSlots = 2,
-		minOffset = 1100, // 250 = height of the ad
+		maxSlots = 3,
+		minOffset = 1100,
 		offsetMap = [ [ -minOffset, minOffset ] ],
 		adHtml = '<div class="ad-in-content"><div id="%%ID%%" class="wikia-ad default-height"></div></div>',
 		labelHtml = '<label class="wikia-ad-label"></label>',
