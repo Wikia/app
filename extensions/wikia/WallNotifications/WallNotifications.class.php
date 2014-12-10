@@ -390,7 +390,7 @@ class WallNotifications {
 		return $key;
 	}
 
-	protected function sendEmails( $watchers, WallNotificationEntity $notification ) {
+	protected function sendEmails( array $watchers, WallNotificationEntity $notification ) {
 		$text = strip_tags( $notification->data_noncached->msg_text, '<p><br>' );
 		$text = substr( $text, 0, 3000 ) . ( strlen( $text ) > 3000 ? '...' : '' );
 
@@ -460,7 +460,7 @@ class WallNotifications {
 		return true;
 	}
 
-	protected function sendEmail( User $watcher, $data ) {
+	protected function sendEmail( User $watcher, array $data ) {
 		global $wgPasswordSender, $wgNoReplyAddress;
 
 		$from = new MailAddress( $wgPasswordSender, 'Wikia' );
@@ -516,9 +516,10 @@ class WallNotifications {
 	 * @param WallNotificationEntity $notification
 	 */
 	public function addNotificationLinks( Array $userIds, WallNotificationEntity $notification ) {
+		$wg = F::app()->wg;
 		foreach ( $userIds as $userId ) {
 			$this->addNotificationLink( $userId, $notification );
-			$this->addWikiToList( $userId, F::app()->wg->CityId, F::app()->wg->Sitename );
+			$this->addWikiToList( $userId, $wg->CityId, $wg->Sitename );
 		}
 	}
 
@@ -925,10 +926,6 @@ class WallNotifications {
 		}
 
 		return $val;
-	}
-
-	protected function setData( MemcacheSync $cache, $data ) {
-		return $cache->set( $data );
 	}
 
 	public function forceRebuild( $userId, $wikiId ) {
