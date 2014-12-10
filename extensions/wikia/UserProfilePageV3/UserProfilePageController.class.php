@@ -542,33 +542,32 @@ class UserProfilePageController extends WikiaController {
 
 		$this->response->setContentType( 'application/json; charset=utf-8' );
 
-		$user = User::newFromId($this->getVal('userId'));
+		$user = User::newFromId( $this->getVal( 'userId' ) );
 
-		$errorMsg = wfMsg('userprofilepage-interview-save-internal-error');
-		$result = array('success' => false, 'error' => $errorMsg);
+		$errorMsg = wfMessage( 'userprofilepage-interview-save-internal-error' )->escaped();
+		$result = [ 'success' => false, 'error' => $errorMsg ];
 
-		if (!$user->isAnon() && $this->request->wasPosted()) {
+		if ( !$user->isAnon() && $this->request->wasPosted() ) {
 			$avatarUploadFiled = 'UPPLightboxAvatar';
-			$uploadError = $this->app->wg->Request->getUploadError($avatarUploadFiled);
+			$uploadError = $this->app->wg->Request->getUploadError( $avatarUploadFiled );
 
-			if ($uploadError != 0) {
+			if ( $uploadError != 0 ) {
 				$thumbnail = $uploadError;
 			} else {
-				$fileName = $this->app->wg->Request->getFileTempName($avatarUploadFiled);
+				$fileName = $this->app->wg->Request->getFileTempName( $avatarUploadFiled );
 
 				$fileuploader = new WikiaTempFilesUpload();
 
-				$thumbnail = $this->storeInTempImage($fileName, $fileuploader);
+				$thumbnail = $this->storeInTempImage( $fileName, $fileuploader );
 			}
 
 			if ( false === $thumbnail || is_int( $thumbnail ) ) {
-				$result = array('success' => false, 'error' => $this->validateUpload($thumbnail));
-				$this->setVal('result', $result);
-				wfProfileOut(__METHOD__);
+				$result = [ 'success' => false, 'error' => $this->validateUpload( $thumbnail ) ];
+				$this->setVal( 'result', $result ) ;
 				return;
 			}
 
-			$this->setVal('result', $result);
+			$this->setVal( 'result', $result );
 
 			$avatarUrl = $thumbnail->url;
 			// look for an occurrence of a ? to know if we should append the query string with a ? or a &
@@ -577,14 +576,11 @@ class UserProfilePageController extends WikiaController {
 			$result = [ 'success' => true, 'avatar' => $avatarUrl ];
 			$this->setVal('result', $result);
 
-			wfProfileOut(__METHOD__);
 			return;
 		}
 
-		$result = array('success' => false, 'error' => $errorMsg);
-		$this->setVal('result', $result);
-		wfProfileOut(__METHOD__);
-		return;
+		$result = [ 'success' => false, 'error' => $errorMsg ];
+		$this->setVal( 'result', $result );
 	}
 
 	/**
