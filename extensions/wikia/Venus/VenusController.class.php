@@ -72,22 +72,7 @@ class VenusController extends WikiaController {
 	 * Inject tracking codes from various providers
 	 */
 	private function setTracking() {
-		$providers = [
-			'Comscore',
-			'QuantServe',
-			'AmazonMatch',
-			'RubiconRTP',
-			'DynamicYield',
-			'IVW2',
-		];
-
-		$code = '';
-
-		foreach($providers as $provider) {
-			$code .= AnalyticsEngine::track( $provider, AnalyticsEngine::EVENT_PAGEVIEW );
-		}
-
-		$this->tracking = $code;
+		$this->tracking = $this->sendRequest( 'AnalyticsEngine', 'track' );
 	}
 
 	private function setAds() {

@@ -5,6 +5,7 @@ $wgExtensionCredits['other'][] = array(
 );
 
 // autoloaded classes
+$wgAutoloadClasses['AnalyticsEngineController'] = __DIR__ . '/AnalyticsEngineController.class.php';
 $wgAutoloadClasses['iAnalyticsProvider'] = __DIR__ . '/iAnalyticsProvider.php';
 $wgAutoloadClasses['AnalyticsEngine'] = __DIR__ . '/AnalyticsEngine.php';
 $wgAutoloadClasses['AnalyticsProviderQuantServe'] = __DIR__ . '/AnalyticsProviderQuantServe.php';

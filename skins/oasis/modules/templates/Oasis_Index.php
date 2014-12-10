@@ -66,12 +66,8 @@
 	<div class="background-image-gradient"></div>
 <? endif ?>
 
-<?= $comScore ?>
-<?= $quantServe ?>
-<?= $amazonMatch ?>
-<?= $dynamicYield ?>
-<?= $ivw2 ?>
-<?= $rubiconRtp ?>
+<?= $tracking ?>
+
 <div class="WikiaSiteWrapper">
 	<?= $body ?>
 
