@@ -31,7 +31,7 @@ class ExternalUser_Wikia extends ExternalUser {
 
 		wfDebug( __METHOD__ . ": init User from cond: " . wfArrayToString( $cond ) . " \n" );
 
-		# PLATFORM-624: do not user slave if we just updated this user
+		# PLATFORM-624: do not use slave if we just updated this user
 		if ( array_key_exists('user_id',$cond) && isset(self::$recentlyUpdated[$cond['user_id']]) ) {
 			$row = null;
 		} else {
