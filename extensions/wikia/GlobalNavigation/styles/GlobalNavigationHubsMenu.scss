@@ -5,6 +5,15 @@
 @import 'skins/shared/mixins/columns';
 @import 'GlobalNavigationColors';
 
+$hub-menu-icon-width: 16px;
+$hub-menu-icon-arrow-space: 6px;
+$hum-menu-icon-left-padding-small: 26px;
+$hum-menu-icon-left-padding-medium: 13px;
+$hum-menu-icon-left-padding-large: 28px;
+$hum-arrow-icon-left-padding-small: $hum-menu-icon-left-padding-small + $hub-menu-icon-width + $hub-menu-icon-arrow-space;
+$hum-arrow-icon-left-padding-medium: $hum-menu-icon-left-padding-medium + $hub-menu-icon-width + $hub-menu-icon-arrow-space;
+$hum-arrow-icon-left-padding-large: $hum-menu-icon-left-padding-large + $hub-menu-icon-width + $hub-menu-icon-arrow-space;
+
 @mixin hub-background-border-icon($color, $secondary-color, $hub-name) {
 	background: linear-gradient(to right, $color 99%, $hubsmenu-background-color);
 
@@ -29,10 +38,10 @@
 
 .hubs-entry-point {
 	background-image: url('/extensions/wikia/GlobalNavigation/images/hubs_entry_point.svg'); /* base64 */
-	background-position: 12px center;
+	background-position: $hum-menu-icon-left-padding-medium center;
 	background-repeat: no-repeat;
 	cursor: pointer;
-	padding: 0 $medium-grid-gutter 0 34px;
+	padding: 0 $medium-grid-gutter 0 $hum-arrow-icon-left-padding-medium;
 
 	&:after {
 		border: 5px solid $global-wikia-background-color;
@@ -250,8 +259,8 @@
 
 @media #{$small-only} {
 	.hubs-entry-point {
-		background-position: 14px center;
-		padding: 0 $small-grid-gutter 0 36px;
+		background-position: $hum-menu-icon-left-padding-small center;
+		padding: 0 $small-grid-gutter 0 $hum-arrow-icon-left-padding-small;
 	}
 
 	.hubs-menu {
@@ -276,8 +285,8 @@
 
 @media #{$large-up} {
 	.hubs-entry-point {
-		background-position: 25px center;
-		padding: 0 $large-grid-gutter 0 47px;
+		background-position: $hum-menu-icon-left-padding-large center;
+		padding: 0 $large-grid-gutter 0 $hum-arrow-icon-left-padding-large;
 	}
 
 	.hubs-menu {
