@@ -538,7 +538,6 @@ class UserProfilePageController extends WikiaController {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function onSubmitUsersAvatar() {
-		wfProfileIn(__METHOD__);
 
 		$this->response->setContentType( 'application/json; charset=utf-8' );
 
