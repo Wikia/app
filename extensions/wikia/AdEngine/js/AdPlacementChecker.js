@@ -23,7 +23,7 @@ define('ext.wikia.adEngine.adPlacementChecker', ['jquery', 'wikia.log'], functio
 	 * @param {Element=} nextHeader Following header after the ad
 	 * @returns {boolean}           Whether the ad fits
 	 */
-	function injectAdIfItFits(adHtml, container, header, nextHeader) {
+	function injectAdIfMedrecFits(adHtml, container, header, nextHeader) {
 		var $content = $(container),
 			$ad = $(adHtml.toString()),
 			$extraDivTop = $('<div></div>'),
@@ -65,8 +65,7 @@ define('ext.wikia.adEngine.adPlacementChecker', ['jquery', 'wikia.log'], functio
 				heightDiff + '<' + maxHeightDiff.toFixed(1)], 'info', logGroup);
 			return true;
 		}
-
-		log(['injectAdIfItFits', container, header, nextHeader], 'info', logGroup);
+		log(['injectAdIfMedrecFits', container, header, nextHeader], 'info', logGroup);
 
 		$content.prepend($extraDivTop);
 		$content.append($extraDivBottom);
@@ -105,12 +104,69 @@ define('ext.wikia.adEngine.adPlacementChecker', ['jquery', 'wikia.log'], functio
 			$firstElement.removeClass('clear-right-after-ad-in-content');
 		}
 
-		log(['injectAdIfItFits', conditionsMet, $insertAfter, $fitBefore, $firstElement], 'info', logGroup);
+		log(['injectAdIfMedrecFits', conditionsMet, $insertAfter, $fitBefore, $firstElement], 'info', logGroup);
+
+		return conditionsMet;
+	}
+
+	/**
+	 * Check if the ad fits in the content
+	 *
+	 * @param {String} adHtml       HTML to inject
+	 * @param {Element} container   Container to check for height difference
+	 * @param {Element=} header     Try insert ad after header element (or before first child otherwise)
+	 * @returns {boolean}           Whether the ad fits
+	 */
+	function injectAdIfLeaderboardFits(adHtml, container, header) {
+
+		var $content = $(container),
+			$ad = $(adHtml.toString()),
+			$header = $(header),
+			originalContentWidth,
+
+			conditionsMet;
+
+		function logInfo(result) {
+			var padding = '                              ',
+				name1 = $header.children().first().text().substring(0, 30) || 'unknown',
+				msgPrefix = 'Before ' + name1 + ' ' + padding,
+				msg = msgPrefix.substring(0, 60).replace(/( *)$/, ':$1 ') + result;
+
+			log(msg, 'info', logGroup);
+		}
+
+		function checkConditions() {
+
+			if (originalContentWidth < 728) {
+				logInfo('ERROR: content width is not wide enough for leaderboard');
+				return false;
+			}
+			if ($header.width() < originalContentWidth) {
+				logInfo('ERROR: the section does not have the full width');
+				return false;
+			}
+
+			logInfo('SUCCESS: ad fits');
+			return true;
+		}
+
+		log(['injectAdIfLeaderboardFits', container, header], 'debug', logGroup);
+
+		originalContentWidth = $content.width();
+
+		conditionsMet = checkConditions();
+
+		if (conditionsMet) {
+			$ad.insertBefore($header);
+		}
+
+		log(['injectAdIfLeaderboardFits', conditionsMet, adHtml, container, header], 'debug', logGroup);
 
 		return conditionsMet;
 	}
 
 	return {
-		injectAdIfItFits: injectAdIfItFits
+		injectAdIfMedrecFits: injectAdIfMedrecFits,
+		injectAdIfLeaderboardFits: injectAdIfLeaderboardFits
 	};
 });

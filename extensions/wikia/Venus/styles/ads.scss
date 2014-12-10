@@ -78,6 +78,21 @@
 	}
 }
 
+.ad-in-content-lb {
+	clear: both;
+	margin: 0 auto;
+	text-align: center;
+
+	.wikia-ad {
+		display: inline-block;
+	}
+
+	> .default-height {
+		width: 728px;
+		height: 90px;
+	}
+}
+
 .ad-in-content {
 	clear: right;
 	float: right;
@@ -104,21 +119,6 @@
 
 	> .wikia-ad {
 		margin: 12px 0 30px 30px; // margin-right set below per breakpoint
-	}
-}
-
-.ad-in-content-lb {
-	clear: both;
-	margin: 0 auto;
-	text-align: center;
-
-	.wikia-ad {
-		display: inline-block;
-	}
-
-	> .default-height {
-		width: 728px;
-		height: 90px;
 	}
 }
 
