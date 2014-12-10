@@ -3,7 +3,16 @@ class AnalyticsEngine {
 
 	const EVENT_PAGEVIEW = 'page_view';
 
-	static public function track($provider, $event, $eventDetails=array(), $setupParams=array()){
+	/**
+	 * Returns HTML with tracking code from a given analytics provider
+	 *
+	 * @param string $provider
+	 * @param string $event
+	 * @param array $eventDetails
+	 * @param array $setupParams
+	 * @return string
+	 */
+	static public function track($provider, $event, Array $eventDetails=[], Array $setupParams=[]){
 		global $wgNoExternals, $wgRequest;
 		global $wgBlockedAnalyticsProviders;
 		$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
@@ -16,8 +25,9 @@ class AnalyticsEngine {
 			return '<!-- AnalyticsEngine::track - externals disabled -->';
 		}
 
-		$AP = self::getProvider($provider);
-		if (empty($AP)) {
+		try {
+			$AP = self::getProvider($provider);
+		} catch(Exception $e) {
 			return '<!-- Invalid provider for AnalyticsEngine::getTrackCode -->';
 		}
 
@@ -31,34 +41,16 @@ class AnalyticsEngine {
 		return $out;
 	}
 
+	/**
+	 * Returns an instance of given analytics provider
+	 *
+	 * @param string $provider
+	 * @return iAnalyticsProvider
+	 *
+	 * @throws Exception
+	 */
 	private static function getProvider($provider) {
-		switch ($provider) {
-			case 'QuantServe':
-				return new AnalyticsProviderQuantServe();
-			case 'Comscore':
-				return new AnalyticsProviderComscore();
-			case 'Exelate':
-				return new AnalyticsProviderExelate();
-			case 'GAS':
-				return new AnalyticsProviderGAS();
-			case 'AmazonMatch':
-				return new AnalyticsProviderAmazonMatch();
-			case 'DynamicYield':
-				return new AnalyticsProviderDynamicYield();
-			case 'IVW2':
-				return new AnalyticsProviderIVW2();
-			case 'BlueKai':
-				return new AnalyticsProviderBlueKai();
-			case 'Datonics':
-				return new AnalyticsProviderDatonics();
-			case 'ClarityRay':
-				return new AnalyticsProviderClarityRay();
-			case 'PageFair':
-				return new AnalyticsProviderPageFair();
-			case 'RubiconRTP':
-				return new AnalyticsProviderRubiconRTP();
-		}
-
-		return null;
+		$className = "AnalyticsProvider{$provider}";
+		return new $className();
 	}
 }
