@@ -118,8 +118,7 @@ class MercuryApi {
 				'contentDir' => $wg->ContLang->getDir()
 			],
 			'namespaces' => MWNamespace::getCanonicalNamespaces(),
-			'siteName' => $this->getSitename(),
-			'mainPageTitle' => Title::newMainPage()->getPrefixedDBkey(),
+			'siteName' => $this->getSiteName(),
 			'theme' => SassUtil::getOasisSettings()
 		];
 	}
@@ -129,7 +128,7 @@ class MercuryApi {
 	 *
 	 * @return null|String
 	 */
-	public function getSitename() {
+	public function getSiteName() {
 		$siteName = F::app()->wg->Sitename;
 		$msg = wfMessage( static::SITENAME_MSG_KEY )->inContentLanguage();
 

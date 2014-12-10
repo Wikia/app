@@ -92,7 +92,7 @@ class MercuryApiModelTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider getSitenameDataProvider
 	 */
-	public function testGetSitename( $expected, $isDisabled, $textMock, $wgSitenameMock ) {
+	public function testGetSiteName( $expected, $isDisabled, $textMock, $wgSitenameMock ) {
 		$messageMock = $this->getMockBuilder( 'Message' )
 			->disableOriginalConstructor()
 			->setMethods( [ 'inContentLanguage', 'isDisabled', 'text' ] )
@@ -117,7 +117,7 @@ class MercuryApiModelTest extends WikiaBaseTest {
 		$this->assertEquals( $expected, $mercuryApi->getSitename() );
 	}
 
-	public function getSitenameDataProvider() {
+	public function getSiteNameDataProvider() {
 		return [
 			[
 				'$expected' => 'Test Wiki',
