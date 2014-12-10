@@ -31,7 +31,7 @@
 				if(typeof d.responseContent !== "undefined") {
 					response = d.responseContent;
 				} else {
-					response = d.body.innerHTML;
+					response = d.body.textContent;
 				}
 
 				i.onComplete(response);
