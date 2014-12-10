@@ -11,6 +11,10 @@ require(['venus.infobox', 'wikia.document'], function (infoboxModule, d) {
 		if (!infoboxWrapper) {
 			return;
 		}
+
+		// Wrap collapsible sections before adding see more button
+		$infoboxWrapper.find('.mw-collapsible').makeCollapsible();
+
 		infobox = infoboxWrapper.firstChild,
 		articleContent.classList.add('clear-none');
 		infoboxContainer.nextElementSibling.classList.add('clear-left');
@@ -30,15 +34,10 @@ require(['venus.infobox', 'wikia.document'], function (infoboxModule, d) {
 		$infoboxWrapper.trigger('initialized.infobox');
 	}
 
-	if (infoboxWrapper) {
-		// waiting for document ready when makeCollapsible is loaded
-		$(d).ready(function() {
-			// Wrap collapsible sections
-			$infoboxWrapper.find('.mw-collapsible').makeCollapsible();
-			// Wrap whole infobox by adding see more button
-			init();
-			// Init after reloading article content with AJAX
-			mw.hook('postEdit').add(init);
-		});
-	}
+	// Wait for document ready when makeCollapsible is loaded
+	$(d).ready(function() {
+		init();
+		// Add running init after reloading article content with AJAX
+		mw.hook('postEdit').add(init);
+	});
 });
