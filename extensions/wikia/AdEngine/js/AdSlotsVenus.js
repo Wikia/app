@@ -11,9 +11,8 @@ require([
 	var logGroup = 'ext.wikia.adEngine.slot.venus',
 		headersSelector = '#mw-content-text > h2, #mw-content-text > h3, #mw-content-text > section > h2',
 		inContentMedrecs = [
-			['INCONTENT_1C', 'INCONTENT_2C'],
-			['INCONTENT_1B', 'INCONTENT_2B'],
-			['INCONTENT_1A', 'INCONTENT_2A']
+			['INCONTENT_1C', 'INCONTENT_1B', 'INCONTENT_1A'],
+			['INCONTENT_2C', 'INCONTENT_2B', 'INCONTENT_2A']
 		],
 		inContentLeaderboards = ['INCONTENT_LEADERBOARD_1', 'INCONTENT_LEADERBOARD_2'],
 		slotsAdded = 0,
@@ -23,16 +22,14 @@ require([
 		adHtml = '<div class="ad-in-content"><div id="%%ID%%" class="wikia-ad default-height %%CLASS%%"></div></div>',
 		labelHtml = '<label class="wikia-ad-label"></label>',
 
-
 		container,
-		originalContentWidth,
 		headers,
 		labelText;
 
 	function isValidOffset(offset) {
 		var i, len;
 
-		for (i = 0, len = offsetMap.length; i < len; i += 1 ) {
+		for (i = 0, len = offsetMap.length; i < len; i += 1) {
 			if (offset > offsetMap[i][0] && offset < offsetMap[i][1]) {
 				return false;
 			}
@@ -41,6 +38,10 @@ require([
 	}
 
 	function getSlotParams(slotName) {
+		if (!slotName) {
+			return ;
+		}
+
 		var className = slotName.toLowerCase().replace(/_/g, '-'),
 			html = adHtml
 				.replace('%%ID%%', slotName)
@@ -58,7 +59,6 @@ require([
 	}
 
 	function pushSlot(type, slot, header, headerNext) {
-
 		var headerOffset = header.offsetTop;
 
 		if (!isValidOffset(headerOffset)) {
@@ -73,9 +73,8 @@ require([
 			return false;
 		}
 
-		offsetMap.push([headerOffset - minOffset, headerOffset + minOffset]);
 		slotsAdded += 1;
-
+		offsetMap.push([headerOffset - minOffset, headerOffset + minOffset]);
 		win.adslots2.push([slot.name]);
 
 		return true;
@@ -83,34 +82,35 @@ require([
 
 	function addMedrecs() {
 		var i,
+			j,
 			len,
 			slot;
 
-		inContentMedrecs.forEach(function(remainingSlots) {
-			remainingSlots = remainingSlots.slice();
-			slot = getSlotParams(remainingSlots.shift());
-
-			for (i = 0, len = headers.length; i < len && slot &&  slotsAdded < maxSlots; i += 1) {
-				if (pushSlot('medrec', slot, headers[i], headers[i + 1])) {
+		inContentMedrecs.forEach(function(remainingSlots, index) {
+			for (i = 0, len = headers.length; i < len && slotsAdded < maxSlots; i += 1) {
+				remainingSlots = inContentMedrecs[index].slice();
+				for (j = remainingSlots.length - 1; j >= 0; j -= 1) {
 					slot = getSlotParams(remainingSlots.shift());
+					if (pushSlot('medrec', slot, headers[i], headers[i + 1])) {
+						return ;
+					}
 				}
 			}
 		});
 	}
 
 	function addLeaderBoards() {
-
 		var i,
 			len,
 			remainingSlots,
 			slot;
 
 		remainingSlots = inContentLeaderboards.slice();
-
 		slot = getSlotParams(remainingSlots.shift());
-
 		for (i = 0, len = headers.length; i < len && slot && slotsAdded < maxSlots; i += 1) {
-			pushSlot('leaderboard', slot, headers[i]);
+			if (pushSlot('leaderboard', slot, headers[i])) {
+				slot = getSlotParams(remainingSlots.shift());
+			}
 		}
 	}
 
@@ -118,7 +118,6 @@ require([
 		log(['init'], 'debug', logGroup);
 
 		container = $('#mw-content-text');
-		originalContentWidth = container.width();
 		headers = $(headersSelector);
 		labelText = $('.wikia-ad-label').html();
 
