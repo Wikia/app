@@ -385,6 +385,8 @@ class WAMService extends Service {
 
 	protected function getDB() {
 		$app = F::app();
-		return wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
+		$db = wfGetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
+		$db->clearFlag( DBO_TRX );
+		return $db;
 	}
 }
