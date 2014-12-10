@@ -790,9 +790,9 @@ class DataMartService extends Service {
 
 	protected static function getDB() {
 		$app = F::app();
+		wfGetLB( $app->wg->DatamartDB )->allowLagged(true);
 		$db = wfGetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
 		$db->clearFlag( DBO_TRX );
-		wfGetLB( $app->wg->DatamartDB )->allowLagged(true);
 		return $db;
 	}
 
