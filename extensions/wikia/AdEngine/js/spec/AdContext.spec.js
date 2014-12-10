@@ -7,50 +7,77 @@ describe('AdContext', function () {
 		getCountryCode: function () { return 'XX'; }
 	};
 
-	it('makes opts.showAds true when wgShowAds = true', function () {
+	it('fills getContext() with context, targeting, providers and forceProviders even for empty (or missing) ads.context', function () {
+		var adContext;
+
+		adContext = modules['ext.wikia.adEngine.adContext']({}, {}, geoMock, {});
+		expect(adContext.getContext().opts).toEqual({});
+		expect(adContext.getContext().targeting).toEqual({});
+		expect(adContext.getContext().providers).toEqual({});
+		expect(adContext.getContext().forceProviders).toEqual({});
+
+		adContext = modules['ext.wikia.adEngine.adContext']({ads: {context: {}}}, {}, geoMock, {});
+		expect(adContext.getContext().opts).toEqual({});
+		expect(adContext.getContext().targeting).toEqual({});
+		expect(adContext.getContext().providers).toEqual({});
+		expect(adContext.getContext().forceProviders).toEqual({});
+	});
+
+	it('copies ads.context into the returned context', function () {
 		var adContext;
 
 		adContext = modules['ext.wikia.adEngine.adContext']({
-			wgShowAds: true
+			ads: {
+				context: {
+					opts: {
+						showAds: true,
+						xxx: true
+					},
+					targeting: {
+						yyy: true
+					},
+					providers: {
+						someProvider: true,
+						someProviderProperty: 7
+					}
+				}
+			}
 		}, {}, geoMock, {});
-		expect(adContext.getContext().opts.showAds).toBeTruthy();
-
-		adContext = modules['ext.wikia.adEngine.adContext']({
-			wgShowAds: false
-		}, {}, geoMock, {});
-		expect(adContext.getContext().opts.showAds).toBeFalsy();
+		expect(adContext.getContext().opts.showAds).toBe(true);
+		expect(adContext.getContext().opts.xxx).toBe(true);
+		expect(adContext.getContext().targeting.yyy).toBe(true);
+		expect(adContext.getContext().providers.someProvider).toBe(true);
+		expect(adContext.getContext().providers.someProviderProperty).toBe(7);
 	});
 
 	it('makes opts.showAds false for sony tvs', function () {
 		var adContext;
 
 		adContext = modules['ext.wikia.adEngine.adContext']({
-			wgShowAds: true
+			ads: {
+				context: {
+					opts: {
+						showAds: true
+					}
+				}
+			}
 		}, {
 			referrer: 'info.tvsideview.sony.net'
 		}, geoMock, {});
 		expect(adContext.getContext().opts.showAds).toBeFalsy();
 	});
 
-	it('makes opts.usePostScribe true when wgUsePostScribe = true', function () {
-		var adContext;
-
-		adContext = modules['ext.wikia.adEngine.adContext']({
-			wgUsePostScribe: false
-		}, {}, geoMock, {});
-		expect(adContext.getContext().opts.usePostScribe).toBeFalsy();
-
-		adContext = modules['ext.wikia.adEngine.adContext']({
-			wgUsePostScribe: true
-		}, {}, geoMock, {});
-		expect(adContext.getContext().opts.usePostScribe).toBeTruthy();
-	});
-
 	it('makes opts.usePostScribe true when wgAdDriverUseSevenOneMedia = true', function () {
 		var adContext;
 
 		adContext = modules['ext.wikia.adEngine.adContext']({
-			wgAdDriverUseSevenOneMedia: true
+			ads: {
+				context: {
+					providers: {
+						sevenOneMedia: true
+					}
+				}
+			}
 		}, {}, geoMock, {});
 		expect(adContext.getContext().opts.usePostScribe).toBeTruthy();
 	});
