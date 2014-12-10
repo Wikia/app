@@ -149,7 +149,7 @@ $config['adengine2_top_in_content_boxad_js'] = array(
 	'skin' => 'venus',
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/AdPlacementChecker.js',
-		'//extensions/wikia/AdEngine/js/AdSlotTopInContentBoxad.js',
+		'//extensions/wikia/AdEngine/js/AdDecoratorTopInContent.js',
 	),
 );
 
