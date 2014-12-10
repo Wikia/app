@@ -12,6 +12,8 @@ class RelatedPages {
 	protected $memcKeyPrefix = '';
 	static protected $instance = null;
 
+	const MCACHE_VER = '1.01';
+
 	const LIMIT_MAX = 10;
 
 	protected function __construct() {
@@ -118,28 +120,31 @@ class RelatedPages {
 		}
 
 		// get up to self::LIMIT_MAX items and cache them
-		$data = WikiaDataAccess::cache( wfMemcKey( __METHOD__, $articleId ), WikiaResponse::CACHE_STANDARD, function() use ( $articleId ) {
-			$this->setData( [] );
-			$categories = $this->getCategories( $articleId );
+		$data = WikiaDataAccess::cache(
+			wfMemcKey( __METHOD__, $articleId, self::MCACHE_VER ),
+			WikiaResponse::CACHE_STANDARD,
+			function() use ( $articleId ) {
+				$this->setData( [] );
+				$categories = $this->getCategories( $articleId );
 
-			if ( count( $categories ) > 0 ) {
-				// RT#80681/RT#139837: apply category blacklist
-				$categories = CategoriesService::filterOutBlacklistedCategories( $categories );
-				$categories = $this->getCategoriesByRank( $categories );
+				if ( count( $categories ) > 0 ) {
+					// RT#80681/RT#139837: apply category blacklist
+					$categories = CategoriesService::filterOutBlacklistedCategories( $categories );
+					$categories = $this->getCategoriesByRank( $categories );
 
-				if ( count( $categories ) > $this->categoriesLimit ) {
-					// limit the number of categories to look for
-					$categories = array_slice( $categories, 0, $this->categoriesLimit );
+					if ( count( $categories ) > $this->categoriesLimit ) {
+						// limit the number of categories to look for
+						$categories = array_slice( $categories, 0, $this->categoriesLimit );
+					}
+
+					// limit * 2 - get more pages (some can be filtered out - RT #72703)
+					$pages = $this->getPagesForCategories( $articleId, self::LIMIT_MAX * 2, $categories );
+
+					$this->afterGet( $pages, self::LIMIT_MAX );
 				}
-
-				// limit * 2 - get more pages (some can be filtered out - RT #72703)
-				$pages = $this->getPagesForCategories( $articleId, self::LIMIT_MAX * 2, $categories );
-
-				$this->afterGet( $pages, self::LIMIT_MAX );
+				return $this->getData();
 			}
-
-			return $this->getData();
-		} );
+		);
 
 		// apply the limit
 		$this->setData( array_slice( $data, 0, $limit ) );
@@ -156,6 +161,9 @@ class RelatedPages {
 
 		foreach ( $pages as $pageId => $data ) {
 			$data[ 'imgUrl' ] = isset( $images[ $pageId ] ) ? $images[ $pageId ][ 0 ][ 'url' ] : null;
+			$data[ 'imgOriginalDimensions' ] = isset( $images[ $pageId ] )
+				? $images[ $pageId ][ 0 ][ 'original_dimensions' ]
+				: null;
 			$data[ 'text' ] = $this->getArticleSnippet( $pageId );
 			$this->pushData( $data );
 			if ( count( $this->getData() ) >= $limit ) {

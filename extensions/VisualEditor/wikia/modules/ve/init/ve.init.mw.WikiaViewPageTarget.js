@@ -222,10 +222,25 @@ ve.init.mw.WikiaViewPageTarget.prototype.getToolbar = function () {
  * @inheritdoc
  */
 ve.init.mw.WikiaViewPageTarget.prototype.hideSpinner = function () {
-	var $spinner = $( '.ve-spinner[data-type="loading"]' );
+	var $spinner = $( '.ve-spinner[data-type="loading"]' ),
+		$throbber = $spinner.children(),
+		$fade = $( '.ve-spinner-fade' );
+
 	if ( $spinner.is( ':visible' ) ) {
-		$spinner.fadeOut( 400 );
+		$throbber.hide();
+		$fade.css( 'opacity', 1 );
+
+		if ( this.timeout ) {
+			setTimeout ( ve.bind( this.afterSpinnerFadeOpacityIn, this, $spinner, $throbber ), this.timeout );
+		} else {
+			this.afterSpinnerFadeOpacityIn( $spinner, $throbber );
+		}
 	}
+};
+
+ve.init.mw.WikiaViewPageTarget.prototype.afterSpinnerFadeOpacityIn = function ( $spinner, $throbber ) {
+	$spinner.hide();
+	$throbber.show();
 };
 
 /**

@@ -20,6 +20,7 @@ module.exports = function (config) {
 		],
 		files: [
 			'tests/lib/jasmine/jasmine.async.js',
+			'tests/lib/jasmine/jasmine.dataprovider.js',
 
 			'resources/wikia/libraries/define.mock.js',
 			'tests/lib/jasmine/helpers.js',
@@ -48,6 +49,7 @@ module.exports = function (config) {
 			'resources/wikia/modules/cache.js',
 			'resources/wikia/modules/cookies.js',
 			'resources/wikia/modules/geo.js',
+			'resources/wikia/modules/imageServing.js',
 			'resources/wikia/modules/lazyqueue.js',
 			'resources/wikia/modules/loader.js',
 			'resources/wikia/modules/nirvana.js',

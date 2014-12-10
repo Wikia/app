@@ -73,6 +73,7 @@ class MercuryApiModelTest extends WikiaBaseTest {
 				'wikiCustomKeyValues' => 'a=b;c=d',
 				'wikiDbName' => 'mydbname',
 				'wikiDirectedAtChildren' => true,
+				'wikiIsCorporate' => true,
 				'wikiLanguage' => 'en',
 				'wikiVertical' => 'Lifestyle',
 			],
