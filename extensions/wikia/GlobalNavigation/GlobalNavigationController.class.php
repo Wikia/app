@@ -62,7 +62,7 @@ class GlobalNavigationController extends WikiaController {
 		} else {
 			$this->response->setVal( 'globalSearchUrl', $globalSearchUrl );
 			$this->response->setVal( 'localSearchUrl', $localSearchUrl );
-			$this->response->setVal( 'defaultSearchMessage', wfMessage( 'global-navigation-local-search' )->text() );
+			$this->response->setVal( 'defaultSearchMessage', wfMessage( 'global-navigation-local-search' )->escaped() );
 			$this->response->setVal( 'defaultSearchUrl', $localSearchUrl );
 		}
 		$this->response->setVal( 'fulltext', $fulltext );
