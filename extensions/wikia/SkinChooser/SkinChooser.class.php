@@ -280,16 +280,15 @@ class SkinChooser {
 
 		wfProfileOut( __METHOD__ . '::GetSkinLogic' );
 
-		if ( !$useskin ) {
-			$useskin = $userSkin;
-		}
+		$chosenSkin = !$useskin ? $userSkin : $useskin;
 
-		$elems = explode( '-', $useskin );
+		$elems = explode( '-', $chosenSkin );
+
 		$userSkin = ( array_key_exists( 0, $elems ) ) ? ( ( empty( $wgEnableAnswers ) && $elems[ 0 ] == 'answers' ) ? 'oasis' : $elems[ 0 ] ) : null;
 		$userTheme = ( array_key_exists( 1, $elems ) ) ? $elems[ 1 ] : $userTheme;
 		$userTheme = $request->getVal( 'usetheme', $userTheme );
 
-		wfRunHooks( 'BeforeSkinLoad', [ &$userSkin, $title ] );
+		wfRunHooks( 'BeforeSkinLoad', [ &$userSkin, $useskin, $title ] );
 
 		$skin = Skin::newFromKey( $userSkin );
 
