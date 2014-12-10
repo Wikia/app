@@ -47,7 +47,7 @@ define(
 		 */
 		function getHubLinks() {
 			var lang,
-				data = {};
+				data = {cb: window.wgStyleVersion};
 
 			if (isMenuWorking()) {
 				return;
