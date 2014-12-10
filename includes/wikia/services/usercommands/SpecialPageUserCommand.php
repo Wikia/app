@@ -3,7 +3,7 @@
 class SpecialPageUserCommand extends UserCommand {
 
 	const EXTERNAL_DATA_SOURCE_WIKI_ID = 4036;
-	const EXTERNAL_DATA_URL = 'http://messaging.wikia.com/wikia.php?controller=Footer&method=executeToolbarGetList&format=json';
+	const EXTERNAL_DATA_URL = 'http://messaging.wikia.com/wikia.php?controller=UserTools&method=executeToolbarGetList&format=json';
 	const EXTERNAL_DATA_CACHE_TTL = 7200;
 
 	protected $disabledExtension = false;

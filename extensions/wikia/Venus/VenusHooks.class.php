@@ -128,4 +128,41 @@ class VenusHooks {
 
 		return true;
 	}
+
+	/**
+	 * Check if venus skin can be show and set it if all conditions are met
+	 *
+	 * @param string $userSkin skin chosen by SkinChooser
+	 * @param Title $title page title
+	 * @return bool
+	 */
+	public static function onBeforeSkinLoad( &$userSkin, Title $title ) {
+		if ( $userSkin == 'oasis' && self::showVenusSkin( $title ) ) {
+			$userSkin = 'venus';
+		}
+
+		return true;
+	}
+
+	/**
+     * Check if the current page should be rendered using Venus
+     *
+     * @param Title $title
+     * @return bool
+	 */
+	public static function showVenusSkin( Title $title ) {
+		global $wgEnableVenusSkin, $wgEnableVenusSpecialSearch, $wgEnableVenusArticle, $wgRequest;
+
+		$action = $wgRequest->getVal('action');
+		$diff = $wgRequest->getVal('diff');
+
+		$isSpecialSearch = WikiaPageType::isSearch() && $wgEnableVenusSpecialSearch;
+		$isSpecialVenusTest = $title->isSpecialPage() && $title->getText() == 'VenusTest';
+		$isVenusArticle = WikiaPageType::isArticlePage() &&
+			$wgEnableVenusArticle &&
+			(empty($action) || $action == 'view') &&
+			empty($diff);
+
+		return $wgEnableVenusSkin && ( $isSpecialSearch || $isSpecialVenusTest || $isVenusArticle );
+	}
 }

@@ -118,16 +118,12 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 				break;
 		}
 
-		$markup = '<a';
-		foreach( $attributes as $name => $value ) {
-			$markup .= ' ' . $name .'="' . $value . '"';
-		}
-		$markup .= '>';
-
+		$linkContents = null;
 		if ( !$openingTagOnly ) {
-			$markup .= $personalUrl[ 'text' ];
-			$markup .= '</a>';
+			$linkContents = $personalUrl[ 'text' ];
 		}
+
+		$markup = Xml::element( 'a', $attributes, $linkContents );
 
 		wfProfileOut( __METHOD__ );
 		return $markup;
@@ -142,7 +138,7 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 		if ( $this->isAnon ) {
 			$query = F::app()->wg->Request->getValues();
 			if ( isset( $query[ 'title' ] ) && !self::isBlacklisted( $query[ 'title' ] ) ) {
-				$returnto = $query[ 'title' ];
+				$returnto = wfUrlencode( $query[ 'title' ] );
 			} else {
 				$returnto = Title::newMainPage()->getPartialURL();
 			}

@@ -26,6 +26,17 @@ $article-nav-gap-coverunit-large: 220px;
 	display: none !important;
 }
 
+.ve .article {
+	// Allow VisualEditor toolbar menus to go outside of article area
+	overflow: visible;
+
+	// Adjust article header margins while in VisualEditor
+	.article-header:not(.cover-unit) {
+		margin-top: 20px;
+		margin-bottom: 8px;
+	}
+}
+
 .article {
 	overflow: hidden;
 
@@ -77,7 +88,8 @@ $article-nav-gap-coverunit-large: 220px;
 	}
 }
 
-.mw-content-text {
+// mw-body-content is used for VisualEditor styling
+.mw-content-text, .mw-body-content {
 	@include clearfix;
 
 	clear: left;
@@ -133,10 +145,7 @@ $article-nav-gap-coverunit-large: 220px;
 		margin-right: -$medium-grid-gutter;
 		margin-top: $article-items-spacing;
 		padding-bottom: 10px;
-
-		.mw-headline {
-			padding-left: $medium-grid-gutter;
-		}
+		padding-left: $medium-grid-gutter;
 	}
 
 	h3 {
@@ -267,10 +276,7 @@ $article-nav-gap-coverunit-large: 220px;
 			margin-bottom: 10px;
 			margin-left: -$large-grid-gutter;
 			margin-right: -$large-grid-gutter;
-
-			.mw-headline {
-				padding-left: $large-grid-gutter;
-			}
+			padding-left: $large-grid-gutter;
 		}
 
 		h3 {
@@ -336,10 +342,7 @@ $article-nav-gap-coverunit-large: 220px;
 		h2 {
 			margin-left: -$small-grid-gutter;
 			margin-right: -$small-grid-gutter;
-
-			.mw-headline {
-				padding-left: $small-grid-gutter;
-			}
+			padding-left: $small-grid-gutter;
 		}
 
 		ol,
