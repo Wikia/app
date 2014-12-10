@@ -67,7 +67,6 @@ class WallNotificationsExternalController extends WikiaController {
 
 		wfProfileIn(__METHOD__);
 
-		$app = F::app();
 		$all = $wn->getCounts( $wgUser->getId() );
 
 		$sum = 0;
