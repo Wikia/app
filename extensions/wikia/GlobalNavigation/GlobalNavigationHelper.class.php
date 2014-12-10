@@ -76,6 +76,23 @@ class GlobalNavigationHelper {
 		return $centralUrl . self::CENTRAL_WIKI_SEARCH;
 	}
 
+	/**
+	 * @desc get language for search results.
+	 * If resultsLang param is set then use it if not get it from $wgLang
+	 *
+	 * @return String - language
+	 */
+	public function getLangForSearchResults() {
+		global $wgLang, $wgRequest;
+
+		$resultsLang = $wgRequest->getVal('resultsLang');
+		if (!empty($resultsLang)) {
+			return $resultsLang;
+		} else {
+			return $wgLang->getCode();
+		}
+	}
+
 	protected function centralWikiInLangExists( $lang ) {
 		try {
 			GlobalTitle::newMainPage( $this->wikiCorporateModel->getCorporateWikiIdByLang( $lang ) );

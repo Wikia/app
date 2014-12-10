@@ -74,4 +74,34 @@ class GlobalNavigationTest extends WikiaBaseTest {
 
 		$this->assertEquals( $globalNavHelperMock->getCreateNewWikiUrl( 'en' ), 'foo' );
 	}
+
+	public function testGetLangForSearchResultsIfResultsLangSet() {
+		$wgRequestMock = $this->getMock( 'WebRequest', [ 'getVal' ] );
+		$wgRequestMock->expects($this->any())
+			->method('getVal')
+			->will($this->returnValue('foo'));
+		$this->mockGlobalVariable('wgRequest', $wgRequestMock);
+
+		$globalNavHelper = new GlobalNavigationHelper();
+
+		$this->assertEquals($globalNavHelper->getLangForSearchResults(), 'foo');
+	}
+
+	public function testGetLangForSearchResultsIfResultsLangNotSet() {
+		$wgRequestMock = $this->getMock( 'WebRequest', [ 'getVal' ] );
+		$wgRequestMock->expects($this->any())
+			->method('getVal')
+			->will($this->returnValue(null));
+		$this->mockGlobalVariable('wgRequest', $wgRequestMock);
+
+		$wgLangMock = $this->getMock( 'Language', [ 'getCode' ] );
+		$wgLangMock->expects($this->any())
+			->method('getCode')
+			->will($this->returnValue('bar'));
+		$this->mockGlobalVariable('wgLang', $wgLangMock);
+
+		$globalNavHelper = new GlobalNavigationHelper();
+
+		$this->assertEquals($globalNavHelper->getLangForSearchResults(), 'bar');
+	}
 }
