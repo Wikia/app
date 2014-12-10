@@ -387,6 +387,7 @@ class WAMService extends Service {
 		$app = F::app();
 		$db = wfGetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
 		$db->clearFlag( DBO_TRX );
+		wfGetLB( $app->wg->DatamartDB )->allowLagged(true);
 		return $db;
 	}
 }
