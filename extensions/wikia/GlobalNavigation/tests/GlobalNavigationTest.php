@@ -13,13 +13,10 @@ class GlobalNavigationTest extends WikiaBaseTest {
 			->will( $this->returnValue( 'foo' ) );
 
 		$globalNavHelperMock = $this->getMock(
-			'GlobalNavigationHelper', ['centralWikiInLangExists', 'getCentralWikiTitleForLang']
+			'GlobalNavigationHelper', ['getCentralWikiUrlForLangIfExists']
 		);
 		$globalNavHelperMock->expects( $this->any() )
-			->method( 'centralWikiInLangExists' )
-			->will( $this->returnValue( true ) );
-		$globalNavHelperMock->expects( $this->any() )
-			->method( 'getCentralWikiTitleForLang' )
+			->method( 'getCentralWikiUrlForLangIfExists' )
 			->will( $this->returnValue( $globalTitleMock ) );
 
 		$this->assertEquals( $globalNavHelperMock->getCentralUrlForLang( 'bar' ), 'foo' );
@@ -28,9 +25,9 @@ class GlobalNavigationTest extends WikiaBaseTest {
 	public function testGetCentralUrlForLangWhenCentralWikiExistsInWgLangToCentralMap() {
 		$this->mockGlobalVariable( 'wgLangToCentralMap', ['foo' => 'bar'] );
 
-		$globalNavHelperMock = $this->getMock( 'GlobalNavigationHelper', ['centralWikiInLangExists'] );
+		$globalNavHelperMock = $this->getMock( 'GlobalNavigationHelper', ['getCentralWikiUrlForLangIfExists'] );
 		$globalNavHelperMock->expects( $this->any() )
-			->method( 'centralWikiInLangExists' )
+			->method( 'getCentralWikiUrlForLangIfExists' )
 			->will( $this->returnValue( false ) );
 
 		$this->assertEquals( $globalNavHelperMock->getCentralUrlForLang( 'foo' ), 'bar' );
@@ -45,17 +42,57 @@ class GlobalNavigationTest extends WikiaBaseTest {
 			->will( $this->returnValue( 'foo' ) );
 
 		$globalNavHelperMock = $this->getMock(
-			'GlobalNavigationHelper', ['centralWikiInLangExists', 'getCentralWikiTitleForLang']
+			'GlobalNavigationHelper', ['getCentralWikiUrlForLangIfExists']
 		);
 		$globalNavHelperMock->expects( $this->any() )
-			->method( 'centralWikiInLangExists' )
-			->will( $this->returnValue( null ) );
-		$globalNavHelperMock->expects( $this->any() )
-			->method( 'getCentralWikiTitleForLang' )
-			->will( $this->returnValue( $globalTitleMock ) );
+			->method( 'getCentralWikiUrlForLangIfExists' )
+			->will( $this->returnCallback(function($arg) use ($globalTitleMock){
+				if ($arg == 'en') {
+					return $globalTitleMock;
+				};
+				return false;
+			}));
 
 		$this->assertEquals( $globalNavHelperMock->getCentralUrlForLang( 'fizz' ), 'foo' );
 	}
+
+	public function testGetCentralUrlFromGlobalTitleWhenCentralWikiExists() {
+		$globalTitleMock = $this->getMock( 'GlobalTitle', ['getServer'] );
+		$globalTitleMock->expects( $this->any() )
+			->method( 'getServer' )
+			->will( $this->returnValue( 'foo' ) );
+
+		$globalNavHelperMock = $this->getMock(
+			'GlobalNavigationHelper', ['getCentralWikiUrlForLangIfExists']
+		);
+		$globalNavHelperMock->expects( $this->any() )
+			->method( 'getCentralWikiUrlForLangIfExists' )
+			->will( $this->returnValue($globalTitleMock));
+
+		$this->assertEquals( $globalNavHelperMock->getCentralUrlForLang( 'bar' ), 'foo' );
+	}
+
+	public function testGetCentralUrlFromGlobalTitleWhenCentralWikiNotExists() {
+		$globalTitleMock = $this->getMock( 'GlobalTitle', ['getServer'] );
+		$globalTitleMock->expects( $this->any() )
+			->method( 'getServer' )
+			->will( $this->returnValue( 'foo' ) );
+
+		$globalNavHelperMock = $this->getMock(
+			'GlobalNavigationHelper', ['getCentralWikiUrlForLangIfExists']
+		);
+		$globalNavHelperMock->expects( $this->any() )
+			->method( 'getCentralWikiUrlForLangIfExists' )
+			->will( $this->returnCallback(function($arg) use ($globalTitleMock){
+				if ($arg == 'en') {
+					return $globalTitleMock;
+				};
+				return false;
+			}));
+
+		$this->assertEquals( $globalNavHelperMock->getCentralUrlForLang( 'bar' ), 'foo' );
+	}
+
 
 	public function testGetCreateNewWikiWhenLangDifferentThanDefault() {
 		$globalNavHelperMock = $this->getMock( 'GlobalNavigationHelper', ['createCNWUrlFromGlobalTitle'] );
