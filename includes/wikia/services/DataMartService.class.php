@@ -4,6 +4,7 @@
  */
 
 use FluentSql\StaticSQL as sql;
+use Wikia\Logger\WikiaLogger;
 
 class DataMartService extends Service {
 
@@ -487,15 +488,17 @@ class DataMartService extends Service {
 	 * @param Array $namespaces [OPTIONAL] A list of namespace ID's to restrict the list (inclusive)
 	 * @param boolean $excludeNamespaces [OPTIONAL] Sets $namespaces as an exclusive list, defaults to false
 	 * @param integer $limit [OPTIONAL] The maximum number of items in the list, defaults to 200
+	 * @param integer $rollupDate [OPTIONAL] Rollup ID to get (instead of the recent one)
 	 *
 	 * @return Array The list, the key contains article ID's and each item as a "namespace_id" and "pageviews" key
 	 */
-	public static function getTopArticlesByPageview( $wikiId,
-	                                                 Array $articleIds = null,
-	                                                 Array $namespaces = null,
-	                                                 $excludeNamespaces = false,
-	                                                 $limit = 200,
-	                                                 $rollupDate = null
+	private static function doGetTopArticlesByPageview( 
+		$wikiId,
+                Array $articleIds = null,
+                Array $namespaces = null,
+                $excludeNamespaces = false,
+                $limit = 200,
+                $rollupDate = null
 	) {
 		$app = F::app();
 		wfProfileIn( __METHOD__ );
@@ -594,6 +597,68 @@ class DataMartService extends Service {
 		$topArticles = array_slice( $topArticles, 0, $limit, true );
 		wfProfileOut( __METHOD__ );
 		return $topArticles;
+	}
+
+	/**
+	 * Gets the list of top articles for a wiki on a weekly pageviews basis
+	 *
+	 * It internally calls doGetTopArticlesByPageview() method,
+	 * but applies a fallback to the last rollup when the current one is not replicated
+	 *
+	 * It's A Nasty And Ugly Hack (TM) before we have a proper rollups solution.
+	 *
+	 * @see https://wikia-inc.atlassian.net/browse/OPS-5465
+	 *
+	 * @param integer $wikiId A valid Wiki ID to fetch the list from
+	 * @param Array $articleIds [OPTIONAL] A list of article ID's to restrict the list
+	 * @param Array $namespaces [OPTIONAL] A list of namespace ID's to restrict the list (inclusive)
+	 * @param boolean $excludeNamespaces [OPTIONAL] Sets $namespaces as an exclusive list, defaults to false
+	 * @param integer $limit [OPTIONAL] The maximum number of items in the list, defaults to 200
+	 * @param integer $rollupDate [OPTIONAL] Rollup ID to get (instead of the recent one)
+	 *
+	 * @return Array The list, the key contains article ID's and each item as a "namespace_id" and "pageviews" key
+	 */
+	public static function getTopArticlesByPageview( 
+		$wikiId,
+ 		Array $articleIds = null,
+		Array $namespaces = null,
+		$excludeNamespaces = false,
+		$limit = 200,
+		$rollupDate = null
+	) {
+		wfProfileIn( __METHOD__ );
+
+		$articles = self::doGetTopArticlesByPageview(
+			$wikiId,
+			$articleIds,
+			$namespaces,
+			$excludeNamespaces,
+			$limit,
+			$rollupDate
+		);
+
+		if ( empty( $articles ) ) {
+			// log when the fallback takes place
+			WikiaLogger::instance()->error( __METHOD__ . ' fallback', [
+				'wiki_id' => $wikiId,
+				'rollup_date' => $rollupDate
+			]);
+
+			$fallbackDate = self::findLastRollupsDate( self::PERIOD_ID_WEEKLY );
+			if ( $fallbackDate ) {
+				$articles = self::doGetTopArticlesByPageview(
+					$wikiId,
+					$articleIds,
+					$namespaces,
+					$excludeNamespaces,
+					$limit,
+					$fallbackDate
+				);
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $articles;
 	}
 
 	/**

@@ -27,12 +27,14 @@ class GlobalNavigationHelper {
 	 */
 	public function getCentralUrlForLang( $lang ) {
 		global $wgLangToCentralMap;
-		if ( $this->centralWikiInLangExists( $lang ) ) {
-			return $this->getCentralWikiTitleForLang( $lang )->getServer();
+		$title = $this->getCentralWikiUrlForLangIfExists( $lang );
+		if ( $title ) {
+			return $title->getServer();
 		} else if ( !empty( $wgLangToCentralMap[ $lang ] ) ) {
 			return $wgLangToCentralMap[ $lang ];
 		} else {
-			return $this->getCentralWikiTitleForLang( self::DEFAULT_LANG )->getServer();
+			$var = $this->getCentralWikiUrlForLangIfExists( self::DEFAULT_LANG );
+			return $var->getServer();
 		}
 	}
 
@@ -44,8 +46,12 @@ class GlobalNavigationHelper {
 	 * @return string - central wiki url
 	 */
 	public function getCentralUrlFromGlobalTitle( $lang ) {
-		$currentLang = $this->centralWikiInLangExists( $lang ) ? $lang : self::DEFAULT_LANG;
-		return $this->getCentralWikiTitleForLang( $currentLang )->getServer();
+		$title = $this->getCentralWikiUrlForLangIfExists($lang);
+		if ($title) {
+			return $title->getServer();
+		} else {
+			return $this->getCentralWikiUrlForLangIfExists(self::DEFAULT_LANG)->getServer();
+		}
 	}
 
 	/**
@@ -93,17 +99,20 @@ class GlobalNavigationHelper {
 		}
 	}
 
-	protected function centralWikiInLangExists( $lang ) {
+	/**
+	 * @desc get central wiki URL for given language.
+	 * If wiki in given language doesn't exist GlobalTitle method is throwing an exception and this method returns false
+	 *
+	 * @param String $lang - language code
+	 * @return bool|GlobalTitle
+	 */
+	protected function getCentralWikiUrlForLangIfExists( $lang ) {
 		try {
-			GlobalTitle::newMainPage( $this->wikiCorporateModel->getCorporateWikiIdByLang( $lang ) );
+			$title = GlobalTitle::newMainPage( $this->wikiCorporateModel->getCorporateWikiIdByLang( $lang ) );
 		} catch ( Exception $ex ) {
 			return false;
 		}
-		return true;
-	}
-
-	protected function getCentralWikiTitleForLang( $lang ) {
-		return GlobalTitle::newMainPage( $this->wikiCorporateModel->getCorporateWikiIdByLang( $lang ) );
+		return $title;
 	}
 
 	protected function createCNWUrlFromGlobalTitle() {
