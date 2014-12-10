@@ -36,7 +36,13 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 	function findAdInIframe(slotname, iframe, adCallback, noAdCallback) {
 		var iframeHeight, iframeContentHeight, iframeDoc;
 
-		iframeDoc = iframe.contentWindow.document;
+		try {
+			iframeDoc = iframe.contentWindow.document;
+		} catch (e) {
+			// Frame with origin "http://tpc.googlesyndication.com" is used for SafeFrame ads
+			log(['findAdInIframe', slotname, 'ad iframe not accessible (or not found): assuming success'], 'error', logGroup);
+			return adCallback();
+		}
 
 		// Because Chrome reports document.body.offsetHeight as the outer
 		// iframe height, we're setting the outer height to 0, so the innerHeight
@@ -88,7 +94,7 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 		try {
 			iframeOk = !!iframe.contentWindow.document.querySelector;
 		} catch (e) {
-			// Frame with origin "http://tpc.googlesyndication.com" is used for some AdSense/AdEx ads
+			// Frame with origin "http://tpc.googlesyndication.com" is used for SafeFrame ads
 			log(['getAdType', slotname, 'ad iframe not accessible (or not found)'], 'error', logGroup);
 		}
 
