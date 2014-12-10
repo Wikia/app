@@ -11,24 +11,25 @@ require([
 	var logGroup = 'ext.wikia.adEngine.slot.venus',
 		headersSelector = '#mw-content-text > h2, #mw-content-text > h3, #mw-content-text > section > h2',
 		inContentMedrecs = [
-			['INCONTENT_2C', 'ad-in-content-c', 'INCONTENT_2B', 'ad-in-content-b', 'INCONTENT_2A', 'ad-in-content-a'],
-			['INCONTENT_1C', 'ad-in-content-c', 'INCONTENT_1B', 'ad-in-content-b', 'INCONTENT_1A', 'ad-in-content-a']
+			['INCONTENT_1C', 'INCONTENT_2C'],
+			['INCONTENT_1B', 'INCONTENT_2B'],
+			['INCONTENT_1A', 'INCONTENT_2A']
 		],
 		inContentLeaderboards = ['INCONTENT_LEADERBOARD_1', 'INCONTENT_LEADERBOARD_2'],
 		slotsAdded = 0,
 		maxSlots = 2,
 		minOffset = 750 + 125, // 250 = height of the ad
 		offsetMap = [ [ -minOffset, minOffset ] ],
-		adHtml = '<div class="ad-in-content ad-in-content-current"><div class="wikia-ad default-height"></div></div>',
+		adHtml = '<div class="ad-in-content"><div id="%%ID%%" class="wikia-ad default-height %%CLASS%%"></div></div>',
 		labelHtml = '<label class="wikia-ad-label"></label>',
 
 
 		container,
+		originalContentWidth,
 		headers,
 		labelText;
 
 	function isValidOffset(offset) {
-
 		var i, len;
 
 		for (i = 0, len = offsetMap.length; i < len; i += 1 ) {
@@ -36,52 +37,65 @@ require([
 				return false;
 			}
 		}
+		return true;
+	}
+
+	function getSlotParams(slotName) {
+		var className = slotName.toLowerCase().replace(/_/g, '-'),
+			html = adHtml
+				.replace('%%ID%%', slotName)
+				.replace('%%CLASS%%', className);
+
+		if (/leaderboard/i.test(slotName)) {
+			html = html.replace('ad-in-content', 'ad-in-content-lb');
+		}
+
+		return {
+			name: slotName,
+			className: className,
+			html: html
+		};
+	}
+
+	function pushSlot(type, slot, header, headerNext) {
+
+		var headerOffset = header.offsetTop;
+
+		if (!isValidOffset(headerOffset)) {
+			return false;
+		}
+
+		if (type === 'medrec' && !adPlacementChecker.injectAdIfMedrecFits(slot.html, container, header, headerNext)) {
+			return false;
+		}
+
+		if (type === 'leaderboard' && !adPlacementChecker.injectAdIfLeaderboardFits(slot.html, container, header)) {
+			return false;
+		}
+
+		offsetMap.push([headerOffset - minOffset, headerOffset + minOffset]);
+		slotsAdded += 1;
+
+		win.adslots2.push([slot.name]);
 
 		return true;
 	}
 
 	function addMedrecs() {
-
 		var i,
-			j,
 			len,
-			remainingSlots,
-			slotName,
-			slotHtml,
-			slotClass,
-			$slot;
+			slot;
 
-		for (i = inContentMedrecs.length - 1; i >= 0 && slotsAdded < maxSlots; i -= 1) {
-			remainingSlots = inContentMedrecs[i].slice();
+		inContentMedrecs.forEach(function(remainingSlots) {
+			remainingSlots = remainingSlots.slice();
+			slot = getSlotParams(remainingSlots.shift());
 
-			for (j = 0, len = headers.length; j < len && slotsAdded < maxSlots; j += 1) {
-
-				if (isValidOffset(headers[i].offsetTop)) {
-					slotName = remainingSlots.shift();
-					slotClass = remainingSlots.shift();
-					slotHtml = adHtml.replace('default-height', 'default-height ' + slotClass);
-
-					if (adPlacementChecker.injectAdIfItFits(slotHtml, container, headers[j], headers[j + 1])) {
-
-						offsetMap.push([headers[j].offsetTop - minOffset, headers[j].offsetTop + minOffset]);
-						slotsAdded += 1;
-
-						$slot = $('.ad-in-content-current', container);
-						$slot.removeClass('ad-in-content-current');
-
-						$slot.find('.wikia-ad')
-							.attr('id', slotName)
-							.removeClass(slotClass)
-							.append($(labelHtml).text(labelText));
-						win.adslots2.push([slotName]);
-
-						break;
-					}
+			for (i = 0, len = headers.length; i < len && slot &&  slotsAdded < maxSlots; i += 1) {
+				if (pushSlot('medrec', slot, headers[i], headers[i + 1])) {
+					slot = getSlotParams(remainingSlots.shift());
 				}
-
 			}
-		}
-
+		});
 	}
 
 	function addLeaderBoards() {
@@ -89,53 +103,29 @@ require([
 		var i,
 			len,
 			remainingSlots,
-			slotName,
-			slotHtml,
-			$slot,
-
-			originalContentWidth;
+			slot;
 
 		remainingSlots = inContentLeaderboards.slice();
 
-		originalContentWidth = container.clientWidth;
+		slot = getSlotParams(remainingSlots.shift());
 
-		for (i = 0, len = headers.length; i < len && slotsAdded < maxSlots; i += 1) {
-
-			if (isValidOffset(headers[i].offsetTop) && headers[i].clientWidth + 20 >= originalContentWidth) {
-				slotName = remainingSlots.shift();
-				slotHtml = adHtml.replace('ad-in-content', 'ad-in-content-lb');
-
-				headers[i].insertAdjacentHTML('beforebegin', slotHtml);
-
-				offsetMap.push([headers[i].offsetTop - minOffset, headers[i].offsetTop + minOffset]);
-				slotsAdded += 1;
-
-				$slot = $('.ad-in-content-current', container);
-				$slot.removeClass('ad-in-content-current');
-
-				$slot.find('.wikia-ad')
-					.attr('id', slotName)
-					.append($(labelHtml).text(labelText));
-
-				win.adslots2.push([slotName]);
-
-			}
+		for (i = 0, len = headers.length; i < len && slot && slotsAdded < maxSlots; i += 1) {
+			pushSlot('leaderboard', slot, headers[i]);
 		}
-
 	}
-
-
 
 	function init() {
 		log(['init'], 'debug', logGroup);
 
-		container = doc.getElementById('mw-content-text');
-		headers = container.querySelectorAll(headersSelector);
+		container = $('#mw-content-text');
+		originalContentWidth = container.width();
+		headers = $(headersSelector);
 		labelText = $('.wikia-ad-label').html();
 
 		addMedrecs();
 		addLeaderBoards();
 
+		$('.wikia-ad', container).prepend($(labelHtml).text(labelText));
 	}
 
 	$(doc).ready(init);

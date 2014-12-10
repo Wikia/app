@@ -55,10 +55,6 @@ define('ext.wikia.adEngine.gptSlotConfig', function () {
 			INCONTENT_2A:               desktopSlots.INCONTENT_1A,
 			INCONTENT_2B:               desktopSlots.INCONTENT_1B,
 			INCONTENT_2C:               desktopSlots.INCONTENT_1C,
-<<<<<<< HEAD
-=======
-			INCONTENT_2D:               desktopSlots.INCONTENT_1D,
->>>>>>> ADEN-1591 incontent Leaderboards
 			LEFT_SKYSCRAPER_2:          desktopSlots.LEFT_SKYSCRAPER_2,
 			LEFT_SKYSCRAPER_3:          desktopSlots.LEFT_SKYSCRAPER_3,
 			PREFOOTER_LEFT_BOXAD:       desktopSlots.PREFOOTER_LEFT_BOXAD,
