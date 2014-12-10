@@ -47,8 +47,7 @@ class DataMartService extends Service {
 			}
 		}
 
-		$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
-		$db->clearFlag( DBO_TRX );
+		$db = DataMartService::getDB();
 		$pageviews = (new WikiaSQL())->skipIf(empty($app->wg->StatsDBEnabled))->cacheGlobal(60*60*12)
 			->SELECT("date_format(time_id,'%Y-%m-%d')")->AS_('date')
 				->FIELD('pageviews')->AS_('cnt')
@@ -91,8 +90,7 @@ class DataMartService extends Service {
 			}
 		}
 
-		$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
-		$db->clearFlag( DBO_TRX );
+		$db = DataMartService::getDB();
 		$pageviews = (new WikiaSQL())->skipIf(empty($app->wg->StatsDBEnabled))->cacheGlobal(60*60*12)
 			->SELECT('wiki_id')
 				->FIELD("date_format(time_id,'%Y-%m-%d')")->AS_('date')
@@ -127,8 +125,7 @@ class DataMartService extends Service {
 			return array();
 		}
 
-		$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
-		$db->clearFlag( DBO_TRX );
+		$db = DataMartService::getDB();
 		$pageviews = (new WikiaSQL())->skipIf(empty($app->wg->StatsDBEnabled))->cacheGlobal(60*60*12)
 			->SELECT('time_id')
 				->SUM('pageviews')->AS_('cnt')
@@ -215,8 +212,8 @@ class DataMartService extends Service {
 				break;
 		}
 
-		$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
-		$db->clearFlag( DBO_TRX );
+		$db = DataMartService::getDB();
+
 		$sql = (new WikiaSQL())->skipIf(empty($app->wg->StatsDBEnabled))->cacheGlobal(43200)
 			->SELECT('r.wiki_id')->AS_('id')
 				->FIELD($field)->AS_('pageviews')
@@ -263,8 +260,8 @@ class DataMartService extends Service {
 		$app = F::app();
 		wfProfileIn(__METHOD__);
 
-		$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
-		$db->clearFlag( DBO_TRX );
+		$db = DataMartService::getDB();
+
 		$topWikis = (new WikiaSQL())->skipIf(empty($app->wg->StatsDBEnabled))->cacheGlobal(43200)
 			->SELECT('r.wiki_id')->AS_('id')
 				->SUM('views')->AS_('totalViews')
@@ -311,8 +308,7 @@ class DataMartService extends Service {
 			}
 		}
 
-		$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
-		$db->clearFlag( DBO_TRX );
+		$db = DataMartService::getDB();
 		$events = (new WikiaSQL())->skipIf(empty($app->wg->StatsDBEnabled))->cacheGlobal(60*60*12)
 			->SELECT("date_format(time_id,'%Y-%m-%d')")->AS_('date')
 				->SUM('creates')->AS_('creates')
@@ -381,8 +377,7 @@ class DataMartService extends Service {
 			wfSharedMemcKey('datamart', 'user_edits', $wikiId, $userIdsKey, $periodId, $rollupDate),
 			86400 /* 24 hours */,
 			function () use ($app, $wikiId, $userIds, $periodId, $rollupDate) {
-				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
-				$db->clearFlag( DBO_TRX );
+				$db = DataMartService::getDB();
 				$events = (new WikiaSQL())->skipIf(empty($app->wg->StatsDBEnabled))
 					->SELECT('user_id')
 						->SUM('creates')->AS_('creates')
@@ -441,8 +436,7 @@ class DataMartService extends Service {
 
 	public static function findLastRollupsDate( $period_id, $numTry = 5 ){
 		$app = F::app();
-		$db = wfGetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
-		$db->clearFlag( DBO_TRX );
+		$db = DataMartService::getDB();
 		//compensation for NOW
 		$date = date( 'Y-m-d' ) . ' 00:00:01';
 		do {
@@ -546,8 +540,7 @@ class DataMartService extends Service {
 			multiple partitions kills kittens
 			*/
 
-			$db = wfGetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
-			$db->clearFlag( DBO_TRX );
+			$db = DataMartService::getDB();
 			$sql = (new WikiaSQL())->skipIf(empty($app->wg->StatsDBEnabled))
 				->SELECT('namespace_id', 'article_id', 'pageviews as pv')
 				->FROM('rollup_wiki_article_pageviews')
@@ -738,8 +731,7 @@ class DataMartService extends Service {
 		if (!is_array($tagViews)) {
 			$tagViews = array();
 			if (!empty($app->wg->StatsDBEnabled)) {
-				$db = wfGetDB(DB_SLAVE, array(), $app->wg->DatamartDB);
-				$db->clearFlag( DBO_TRX );
+				$db = DataMartService::getDB();
 
 				$tables = array(
 					'r' => 'rollup_wiki_pageviews',
@@ -795,4 +787,14 @@ class DataMartService extends Service {
 
 		return $wikis;
 	}
+
+	protected static function getDB() {
+		$app = F::app();
+		$db = wfGetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
+		$db->clearFlag( DBO_TRX );
+		wfGetLB( $app->wg->DatamartDB )->allowLagged(true);
+		return $db;
+	}
+
+
 }
