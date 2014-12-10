@@ -42,7 +42,10 @@ require([
 			return ;
 		}
 
-		var className = slotName.toLowerCase().replace(/_/g, '-'),
+		var className = slotName
+				.toLowerCase()
+				.replace(/\d/g, '')
+				.replace(/_/g, '-'),
 			html = adHtml
 				.replace('%%ID%%', slotName)
 				.replace('%%CLASS%%', className);
