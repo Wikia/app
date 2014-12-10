@@ -9,7 +9,7 @@ $(function () {
 	/**
 	 * VDNA promotion enabled only on vdna.wikia.com (1066105)
 	 */
-	if (['1066105'].indexOf(window.wgCityId) !== -1) {
+	if (['1066105', '2233'].indexOf(window.wgCityId) !== -1) {
 		// Code from VDNA
 		setTimeout(
 			function(){
