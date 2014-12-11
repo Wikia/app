@@ -29,7 +29,7 @@
 
 @mixin vertical-icon($icon-name, $selected) {
 	@if $selected == 1 {
-		background-image: url("/extensions/wikia/WAMPage/images/#{$icon-name}-black.svg"); /* base64 */
+		background-image: url("/extensions/wikia/WAMPage/images/#{$icon-name}-active.svg"); /* base64 */
 	} @else if $selected == 0 {
 		background-image: url("/extensions/wikia/WAMPage/images/#{$icon-name}.svg"); /* base64 */
 	}
@@ -37,34 +37,106 @@
 
 @mixin all-icons($selected) {
 	.icon-vertical-all {
-		@include vertical-icon('all', $selected);
+		color: $color-wam-blue;
+
+		&.icon-vertical-selected,
+		&:hover {
+			color: $color-wam-grey;
+		}
+
+		span {
+			@include vertical-icon('all', $selected);
+		}
 	}
 
 	.icon-vertical-comics {
-		@include vertical-icon('comics', $selected);
+		color: $color-wam-blue;
+
+		&.icon-vertical-selected,
+		&:hover {
+			color: $color-vertical-comics;
+		}
+
+		span {
+			@include vertical-icon('comics', $selected);
+		}
 	}
 
 	.icon-vertical-games {
-		@include vertical-icon('games', $selected);
+		color: $color-wam-blue;
+
+		&.icon-vertical-selected,
+		&:hover {
+			color: $color-vertical-games;
+		}
+
+		span {
+			@include vertical-icon('games', $selected);
+		}
 	}
 
 	.icon-vertical-books {
-		@include vertical-icon('books', $selected);
+		color: $color-wam-blue;
+
+		&.icon-vertical-selected,
+		&:hover {
+			color: $color-vertical-books;
+		}
+
+		span {
+			@include vertical-icon('books', $selected);
+		}
 	}
 
 	.icon-vertical-movies {
-		@include vertical-icon('movies', $selected);
+		color: $color-wam-blue;
+
+		&.icon-vertical-selected,
+		&:hover {
+			color: $color-vertical-movies;
+		}
+
+		span {
+			@include vertical-icon('movies', $selected);
+		}
 	}
 
 	.icon-vertical-music {
-		@include vertical-icon('music', $selected);
+		color: $color-wam-blue;
+
+		&.icon-vertical-selected,
+		&:hover {
+			color: $color-vertical-music;
+		}
+
+		span {
+			@include vertical-icon('music', $selected);
+		}
 	}
 
 	.icon-vertical-lifestyle {
-		@include vertical-icon('lifestyle', $selected);
+		color: $color-wam-blue;
+
+		&.icon-vertical-selected,
+		&:hover {
+			color: $color-vertical-lifestyle;
+		}
+
+		span {
+			@include vertical-icon('lifestyle', $selected);
+		}
 	}
 
 	.icon-vertical-tv {
-		@include vertical-icon('tv', $selected);
+		color: $color-wam-blue;
+
+		&.icon-vertical-selected,
+		&:hover {
+			color: $color-vertical-tv;
+		}
+
+		span {
+			@include vertical-icon('tv', $selected);
+		}
 	}
 }

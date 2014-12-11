@@ -273,6 +273,8 @@ $color-wam-white: #fff;
 	}
 
 	li {
+		@include all-icons(0);
+
 		border-collapse: collapse;
 		border: solid $color-wam-border-grey;
 		border-width: 1px 1px 1px 0;
@@ -290,17 +292,10 @@ $color-wam-white: #fff;
 
 	li.selected,
 	li:hover {
-		a {
-			@include all-icons(1);
-
-			color: $color-wam-grey;
-		}
+		@include all-icons(1);
 	}
 
 	a {
-		@include all-icons(0);
-
-		color: $color-wam-blue;
 		cursor: pointer;
 		display: block;
 		font-size: 12px;
