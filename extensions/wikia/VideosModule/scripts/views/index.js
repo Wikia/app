@@ -9,6 +9,11 @@ define('videosmodule.views.index', [
 	'use strict';
 
 	var VideosModule = function (options) {
+		// Make sure we're on an article page
+		if (!win.wgArticleId) {
+			return;
+		}
+
 		// $el is the {jQuery Object} container for the videos module
 		this.$el = options.$el;
 
@@ -47,10 +52,7 @@ define('videosmodule.views.index', [
 			label: 'module-impression'
 		});
 
-		// Make sure we're on an article page
-		if (win.wgArticleId) {
-			this.init();
-		}
+		this.init();
 	};
 
 	VideosModule.prototype.init = function () {
