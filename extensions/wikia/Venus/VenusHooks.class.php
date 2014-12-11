@@ -133,11 +133,12 @@ class VenusHooks {
 	 * Check if venus skin can be show and set it if all conditions are met
 	 *
 	 * @param string $userSkin skin chosen by SkinChooser
+	 * @param string $useskin skin name passed via useskin parameter in url
 	 * @param Title $title page title
 	 * @return bool
 	 */
-	public static function onBeforeSkinLoad( &$userSkin, Title $title ) {
-		if ( $userSkin == 'oasis' && self::showVenusSkin( $title ) ) {
+	public static function onBeforeSkinLoad( &$userSkin, $useskin, Title $title ) {
+		if ( (!$useskin || $useskin == 'venus') && self::showVenusSkin( $title ) ) {
 			$userSkin = 'venus';
 		}
 
