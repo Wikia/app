@@ -1,9 +1,9 @@
-var WAMPage = function () {};
+var WAMPage = function() {};
 
 WAMPage.prototype = {
-	init: function () {
+	init: function() {
 		var wamIndex = document.getElementById('wam-index');
-		if (wamIndex) {
+		if(wamIndex) {
 			wamIndex.addEventListener(
 				'click',
 				WAMPage.clickTrackingHandler,
@@ -22,7 +22,7 @@ WAMPage.prototype = {
 		if (wamIndexSearch) {
 			wamIndexSearch.addEventListener(
 				'change',
-				$.proxy(function (event) {
+				$.proxy(function(event) {
 					WAMPage.clickTrackingHandler(event);
 					WAMPage.filterWamIndex($(event.target));
 				}, this),
@@ -52,7 +52,7 @@ WAMPage.prototype = {
 			// jQuery UI datepicker plugin
 			mw.loader.use(['jquery.ui.datepicker'])
 		).done(
-			$.proxy(function (getResourcesData) {
+			$.proxy(function(getResourcesData) {
 				var minDate = new Date(window.wamFilterMinMaxDates.min_date * 1000),
 					maxDate = new Date(window.wamFilterMinMaxDates.max_date * 1000);
 
@@ -68,7 +68,7 @@ WAMPage.prototype = {
 					altFormat: '@',
 					dateFormat: (typeof window.wamFilterDateFormat !== 'undefined' && window.wamFilterDateFormat) ?
 						window.wamFilterDateFormat : undefined,
-					onSelect: $.proxy(function () {
+					onSelect: $.proxy(function() {
 						var $date = $('#WamFilterDate'),
 							timestamp = parseInt($date.val(), 10),
 							currentTimezoneOffset = (new Date(timestamp)).getTimezoneOffset();
@@ -85,7 +85,7 @@ WAMPage.prototype = {
 		);
 	},
 
-	trackClick: function (category, action, label, value, params, event) {
+	trackClick: function(category, action, label, value, params, event) {
 		Wikia.Tracker.track({
 			action: action,
 			browserEvent: event,
@@ -96,7 +96,7 @@ WAMPage.prototype = {
 		}, params);
 	},
 
-	clickTrackingHandler: function (e) {
+	clickTrackingHandler: function(e) {
 		var node = $(e.target),
 			lang = wgContentLanguage,
 			searchPhrase;
@@ -123,17 +123,17 @@ WAMPage.prototype = {
 		}
 	},
 
-	filterWamIndexByVertical: function (tab) {
+	filterWamIndexByVertical: function(tab) {
 		$('.wam-filtering-vertical-id').val($(tab).data('vertical-id'));
 		$('.wam-index-search').submit();
 	},
 
-	filterWamIndex: function (target) {
+	filterWamIndex: function(target) {
 		target.parents('.wam-index-search').submit();
 	}
 };
 
 var WAMPage = new WAMPage();
-$(function () {
+$(function() {
 	WAMPage.init();
 });

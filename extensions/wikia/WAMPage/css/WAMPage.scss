@@ -63,7 +63,7 @@ $color-wam-white: #fff;
 	padding-bottom: 10px;
 	@if ( $responsive-layout-enabled ) {
 		width: 100%;
-	} else {
+	} @else {
 		width: 1030px;
 	}
 
@@ -84,7 +84,7 @@ $color-wam-white: #fff;
 
 		@if ( $responsive-layout-enabled ) {
 			width: auto;
-		} else {
+		} @else {
 			width: 300px;
 		}
 	}

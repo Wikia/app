@@ -53,9 +53,9 @@ class WAMService extends Service {
 	public function getCurrentWamScoreForWiki ($wikiId) {
 		wfProfileIn(__METHOD__);
 
-		$memKey = wfSharedMemcKey( 'datamart', 'wam', $wikiId);
+		$memKey = wfSharedMemcKey('datamart', 'wam', $wikiId);
 
-		$getData = function () use ( $wikiId ) {
+		$getData = function () use ($wikiId) {
 			$db = $this->getDB();
 
 			$result = $db->select(
@@ -95,7 +95,7 @@ class WAMService extends Service {
 	 *
 	 * @return array
 	 */
-	public function getWamIndex( $inputOptions ) {
+	public function getWamIndex($inputOptions) {
 		$inputOptions += $this->defaultIndexOptions;
 
 		$inputOptions['currentTimestamp'] = $inputOptions['currentTimestamp'] ? strtotime('00:00 -1 day', $inputOptions['currentTimestamp']) : strtotime('00:00 -1 day');
@@ -115,9 +115,9 @@ class WAMService extends Service {
 		$tables = $this->getWamIndexTables();
 		$fields = $this->getWamIndexFields();
 		$countFields = $this->getWamIndexCountFields();
-		$conds = $this->getWamIndexConditions( $inputOptions, $db );
-		$options = $this->getWamIndexOptions( $inputOptions );
-		$join_conds = $this->getWamIndexJoinConditions( $inputOptions );
+		$conds = $this->getWamIndexConditions($inputOptions, $db);
+		$options = $this->getWamIndexOptions($inputOptions);
+		$join_conds = $this->getWamIndexJoinConditions($inputOptions);
 
 		$result = $db->select(
 			$tables,

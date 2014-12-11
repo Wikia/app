@@ -68,15 +68,15 @@ class WAMApiController extends WikiaApiController {
 				'wam_index_table',
 				self::MEMCACHE_VER,
 				$app->wg->ContLang->getCode(),
-				implode( ':', $options )
+				implode(':', $options)
 			),
 			6 * 60 * 60,
-			function () use ( $options ) {
+			function () use ($options) {
 				$wamService = new WAMService();
 
-				$wamIndex = $wamService->getWamIndex( $options );
+				$wamIndex = $wamService->getWamIndex($options);
 
-				if ( $options['fetchAdmins'] ) {
+				if ($options['fetchAdmins']) {
 					if (empty($wikiService)) {
 						$wikiService = new WikiService();
 					}
@@ -166,7 +166,7 @@ class WAMApiController extends WikiaApiController {
 	}
 
 	private function getWAMParameters() {
-		$options = [];
+		$options = array();
 		$options['currentTimestamp'] = $this->request->getInt('wam_day', null);
 		$options['previousTimestamp'] = $this->request->getInt('wam_previous_day', null);
 		$options['verticalId'] = $this->request->getInt('vertical_id', null);
