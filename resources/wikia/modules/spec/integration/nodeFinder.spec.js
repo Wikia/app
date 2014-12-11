@@ -21,6 +21,7 @@ describe('nodeFinder', function () {
 
 	// prepare node properties
 	articleNode.id = 'nodeFinder-article-content';
+	articleNode.style.width = '1000px';
 	extenderNode.style.height = '200px';
 	headerNode.style.height = '20px';
 	headerNode.style.margin = '0';
@@ -45,6 +46,7 @@ describe('nodeFinder', function () {
 		}
 
 		headerNode.id = 'nodeFinder-h2-' + id;
+		headerNode.style.width = id === 4 ? '800px' : '1000px';
 		clonedNode = headerNode.cloneNode();
 		articleNode.appendChild(clonedNode);
 	}
@@ -67,14 +69,14 @@ describe('nodeFinder', function () {
 
 	// define the testing rules
 	it('getChildByOffsetTop should return a node', function () {
-		var header = nodeFinder.getChildByOffsetTop(articleNode, 'h2', 100);
+		var header = nodeFinder.getFullWidthChildByOffsetTop(articleNode, 'h2', 100);
 		expect(header.id).toBe('nodeFinder-h2-0');
 
-		header = nodeFinder.getChildByOffsetTop(articleNode, 'h2', 300);
+		header = nodeFinder.getFullWidthChildByOffsetTop(articleNode, 'h2', 300);
 		expect(header.id).toBe('nodeFinder-h2-1');
 
-		header = nodeFinder.getChildByOffsetTop(articleNode, 'h2', 1000);
-		expect(header.id).toBe('nodeFinder-h2-4');
+		header = nodeFinder.getFullWidthChildByOffsetTop(articleNode, 'h2', 1000);
+		expect(header.id).toBe('nodeFinder-h2-5');
 	});
 
 	it('getPreviousVisibleSibling should return a node', function () {
