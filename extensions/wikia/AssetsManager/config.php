@@ -171,6 +171,7 @@ $config['adengine2_tracking_js'] = array(
 );
 
 $config['adengine2_rubicon_rtp_js'] = array(
+	'skin' => ['oasis', 'venus'],
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/RubiconRtp.js',
@@ -178,6 +179,7 @@ $config['adengine2_rubicon_rtp_js'] = array(
 );
 
 $config['adengine2_amazon_match_js'] = array(
+	'skin' => ['oasis', 'venus'],
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/AmazonMatch.js',
@@ -623,6 +625,9 @@ $config['wikiamobile_js_body_full'] = array(
 
 		//entrypoint
 		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
+
+		//Script for VDNA promotion
+		'//extensions/wikia/WikiaMobile/js/VDNA.js',
 	)
 );
 

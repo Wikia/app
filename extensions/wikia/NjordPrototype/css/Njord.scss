@@ -83,9 +83,10 @@
     width: 100%;
   }
   .position-info {
+    cursor: move;
     display: none;
     position: absolute;
-    top: 15px;
+    padding-top: 15px;
     width: 100%;
     z-index: 1;
     .position-text {

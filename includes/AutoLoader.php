@@ -571,7 +571,7 @@ $wgAutoloadLocalClasses = array(
 	'Services_JSON_Error' => 'includes/json/Services_JSON.php',
 
 	# includes/libs
-	'CSSJanus' => 'includes/libs/CSSJanus.php',
+	'CSSJanus' => 'lib/composer/cssjanus/cssjanus/src/CSSJanus.php',
 	'CSSMin' => 'includes/libs/CSSMin.php',
 	'HttpStatus' => 'includes/libs/HttpStatus.php',
 	'IEContentAnalyzer' => 'includes/libs/IEContentAnalyzer.php',
