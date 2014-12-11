@@ -150,4 +150,20 @@ class VignetteRequest {
 
 		return $isVignetteUrl;
 	}
+
+	public static function setThumbnailFormat($url, $format) {
+		$format = preg_replace('/^\./', '', $format);
+
+		if ($url instanceof UrlGenerator) {
+			return $url->format($format);
+		} else if (!self::isVignetteUrl($url)) {
+			return $url;
+		}
+
+		$parts = parse_url($url);
+		parse_str($parts['query'], $query);
+		$query['format'] = $format;
+		$parts['query'] = http_build_query($query);
+		return http_build_url($url, $parts);
+	}
 }

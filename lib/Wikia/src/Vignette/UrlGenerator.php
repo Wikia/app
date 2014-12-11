@@ -337,7 +337,7 @@ class UrlGenerator {
 		return $this;
 	}
 
-	private function format($format) {
+	public function format($format) {
 		$this->query['format'] = $format;
 		return $this;
 	}

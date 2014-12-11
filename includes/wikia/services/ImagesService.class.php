@@ -126,7 +126,9 @@ class ImagesService extends Service {
 	 */
 	public static function overrideThumbnailFormat($thumbUrl, $newExtension) {
 
-		if ( !empty($thumbUrl)
+		if (VignetteRequest::isVignetteUrl($thumbUrl)) {
+			$thumbUrl = VignetteRequest::setThumbnailFormat($thumbUrl, $newExtension);
+		} elseif ( !empty($thumbUrl)
 				&& in_array($newExtension, self::$allowedExtensionsList) // only change extension if it's allowed
 				&& !self::imageUrlHasExtension($thumbUrl, $newExtension) // only change extension if it's different that current one
 				&& (substr($thumbUrl, 0, strlen(static::DATA_TAG)) != static::DATA_TAG)
