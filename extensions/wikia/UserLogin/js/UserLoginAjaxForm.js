@@ -24,7 +24,7 @@
 	 * Cache DOM selectors
 	 */
 	UserLoginAjaxForm.prototype.cacheDOM = function () {
-		this.form = this.form = this.el.find('form');
+		this.form = this.el.find('form');
 		this.forgotPasswordLink = this.form.find('.forgot-password');
 		this.submitButton = this.el.find('input[type=submit]');
 	};
@@ -146,7 +146,7 @@
 	};
 
 	UserLoginAjaxForm.prototype.retrieveTemplateCallback = function (html) {
-		var content = $('<div style="display:none" />').append(html),
+		var content = $('<div>').hide().append(html),
 			form = this.form;
 
 		form.slideUp(400, function () {
@@ -184,11 +184,6 @@
 			$.nirvana.postJson(
 				'UserLoginSpecial',
 				'retrieveLoginToken',
-				{
-					controller: 'UserLoginSpecial',
-					method: 'retrieveLoginToken',
-					format: 'json'
-				},
 				function (res) {
 					this.loginToken = res.loginToken;
 					this.inputs.logintoken.val(res.loginToken);
@@ -207,16 +202,9 @@
 			{
 				username: this.inputs.username.val()
 			},
-			this.mailPasswordCallback.bind(this)
+			// error validation will show success and error messages in this case
+			this.errorValidation.bind(this)
 		);
-	};
-
-	UserLoginAjaxForm.prototype.mailPasswordCallback = function (json) {
-		if (json.result === 'ok') {
-			this.errorValidation(json);
-		} else if (json.result === 'error') {
-			this.errorValidation(json);
-		}
 	};
 
 	// Expose global
