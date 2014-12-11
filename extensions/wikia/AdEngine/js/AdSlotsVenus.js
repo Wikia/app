@@ -19,7 +19,7 @@ require([
 		maxSlots = 2,
 		minOffset = 750 + 125, // 250 = height of the ad
 		offsetMap = [ [ -minOffset, minOffset ] ],
-		adHtml = '<div class="ad-in-content"><div id="%%ID%%" class="wikia-ad default-height %%CLASS%%"></div></div>',
+		adHtml = '<div class="ad-in-content"><div id="%%ID%%" class="wikia-ad default-height"></div></div>',
 		labelHtml = '<label class="wikia-ad-label"></label>',
 
 		container,
@@ -42,13 +42,7 @@ require([
 			return ;
 		}
 
-		var className = slotName
-				.toLowerCase()
-				.replace(/\d/g, '')
-				.replace(/_/g, '-'),
-			html = adHtml
-				.replace('%%ID%%', slotName)
-				.replace('%%CLASS%%', className);
+		var html = adHtml.replace('%%ID%%', slotName);
 
 		if (/leaderboard/i.test(slotName)) {
 			html = html.replace('ad-in-content', 'ad-in-content-lb');
@@ -56,7 +50,6 @@ require([
 
 		return {
 			name: slotName,
-			className: className,
 			html: html
 		};
 	}
