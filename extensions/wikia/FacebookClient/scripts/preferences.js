@@ -8,6 +8,7 @@
 			$connectWrapper,
 			$disconnectWrapper,
 			$disconnectLink,
+			$disconnectButton,
 			$connectLink;
 
 		/**
@@ -19,6 +20,7 @@
 			$connectWrapper = $('#fbConnectPreferences');
 			$disconnectWrapper = $('#fbDisconnectPreferences');
 			$disconnectLink = $('#fbDisconnectLink').find('a');
+			$disconnectButton = $('.fb-disconnect');
 			$connectLink = $('.sso-login-facebook');
 
 			$.loadFacebookAPI(bindEvents);
@@ -114,6 +116,7 @@
 		function bindEvents() {
 			$connectLink.on('click', connect);
 			$disconnectLink.on('click', disconnect);
+			$disconnectButton.on('click', disconnect);
 		}
 
 		/**
