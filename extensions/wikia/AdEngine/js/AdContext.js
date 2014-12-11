@@ -68,57 +68,7 @@ define('ext.wikia.adEngine.adContext', [
 		}
 	}
 
-	setContext(w.ads ? w.ads.context : {
-		opts: {
-			adsAfterInfobox: w.wgAdDriverUseAdsAfterInfobox,
-			adsInHead: w.wgLoadAdsInHead,
-			disableLateQueue: w.wgAdEngineDisableLateQueue,
-			lateAdsAfterPageLoad: w.wgLoadLateAdsAfterPageLoad,
-			pageType: w.adEnginePageType,
-			showAds: w.wgShowAds,
-			usePostScribe: w.wgUsePostScribe,
-			trackSlotState: w.wgAdDriverTrackState
-		},
-
-		targeting: {
-			enableKruxTargeting: w.wgEnableKruxTargeting,
-			kruxCategoryId: w.wgKruxCategoryId,
-
-			pageArticleId: w.wgArticleId,
-			pageIsArticle: !!w.wgArticleId,
-			pageIsHub: w.wikiaPageIsHub,
-			pageName: w.wgPageName,
-			pageType: w.wikiaPageType,
-
-			sevenOneMediaSub2Site: w.wgAdDriverSevenOneMediaOverrideSub2Site,
-			skin: w.skin,
-
-			wikiCategory: w.cityShort,
-			wikiCustomKeyValues: w.wgDartCustomKeyValues,
-			wikiDbName: w.wgDBname,
-			wikiDirectedAtChildren: w.wgWikiDirectedAtChildren,
-			wikiIsTop1000: w.wgAdDriverWikiIsTop1000,
-			wikiLanguage: w.wgContentLanguage,
-			wikiVertical: w.cscoreCat
-		},
-
-		providers: {
-			sevenOneMedia: w.wgAdDriverUseSevenOneMedia,
-			sevenOneMediaCombinedUrl: w.wgAdDriverSevenOneMediaCombinedUrl,
-			remnantGptMobile: w.wgAdDriverEnableRemnantGptMobile,
-			taboola: w.wgAdDriverUseTaboola
-		},
-
-		slots: {
-			bottomLeaderboardImpressionCapping: w.wgAdDriverBottomLeaderboardImpressionCapping
-		},
-
-		// TODO: make it like forceadprovider=liftium
-		forceProviders: {
-			directGpt: w.wgAdDriverForceDirectGptAd,
-			liftium: w.wgAdDriverForceLiftiumAd
-		}
-	});
+	setContext(w.ads ? w.ads.context : {});
 
 	return {
 		getContext: getContext,

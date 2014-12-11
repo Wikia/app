@@ -34,6 +34,7 @@ class VideosModule extends WikiaModel {
 	protected $blacklistCount = null;   // number of blacklist videos
 	protected $existingVideos = [];     // list of titles of existing videos (those which have been added already)
 	protected $userRegion;
+	private $log;
 
 	public function __construct( $userRegion ) {
 		// All black listed videos are stored in WikiFactory in the wgVideosModuleBlackList variable
@@ -46,6 +47,7 @@ class VideosModule extends WikiaModel {
 		}
 
 		$this->userRegion = $userRegion;
+		$this->log = WikiaLogger::instance();
 		parent::__construct();
 	}
 
@@ -102,7 +104,6 @@ class VideosModule extends WikiaModel {
 	 */
 	public function getLocalVideos( $numRequired, $sort ) {
 		wfProfileIn( __METHOD__ );
-		$log = WikiaLogger::instance();
 
 		$memcKey = wfMemcKey( 'videomodule', 'local_videos', self::CACHE_VERSION, $sort, $this->userRegion );
 		$videos = $this->wg->Memc->get( $memcKey );
@@ -110,7 +111,7 @@ class VideosModule extends WikiaModel {
 		$loggingParams = [ 'method' => __METHOD__, 'num' => $numRequired, 'sort' => $sort ];
 
 		if ( !is_array( $videos ) ) {
-			$log->info( __METHOD__.' memc MISS', $loggingParams );
+			$this->log->info( __METHOD__.' memc MISS', $loggingParams );
 
 			$filter = 'all';
 			$paddedLimit = $this->getPaddedVideoLimit( self::LIMIT_VIDEOS );
@@ -130,11 +131,11 @@ class VideosModule extends WikiaModel {
 			$ttl = self::CACHE_TTL;
 			if ( empty( $videos ) ) {
 				$ttl = self::NEGATIVE_CACHE_TTL;
-				$log->info( __METHOD__ . ' zero videos', $loggingParams );
+				$this->log->info( __METHOD__ . ' zero videos', $loggingParams );
 			}
 			$this->wg->Memc->set( $memcKey, $videos, $ttl );
 		} else {
-			$log->info( __METHOD__.' memc HIT', $loggingParams );
+			$this->log->info( __METHOD__.' memc HIT', $loggingParams );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -143,52 +144,72 @@ class VideosModule extends WikiaModel {
 	}
 
 	/**
-	 * Use WikiaSearchController to find premium videos related to the local wiki. (Search video content by wiki topics)
-	 * @param integer $numRequired - number of videos required
-	 * @return array - Premium videos related to the local wiki.
+	 * Get premium videos related to the local wiki.
+	 * @return array
 	 */
-	public function getWikiRelatedVideosTopics( $numRequired ) {
-		wfProfileIn( __METHOD__ );
-		$log = WikiaLogger::instance();
-
+	public function getVideosRelatedToWiki() {
 		$memcKey = wfMemcKey( 'videomodule', 'wiki_related_videos_topics', self::CACHE_VERSION, $this->userRegion );
-		$videos = $this->wg->Memc->get( $memcKey );
+		$asynCache = ( new Wikia\Cache\AsyncCache() )
+			->key( $memcKey )
+			->ttl( self::CACHE_TTL )
+			->negativeResponseTTL( self::NEGATIVE_CACHE_TTL )
+			->callback( 'VideosModule::getVideosRelatedToWikiCallback' )
+			->callbackParams( [ $this->userRegion ] );
 
-		$loggingParams = [ 'method' => __METHOD__, 'num' => $numRequired ];
-
-		if ( !is_array( $videos ) ) {
-			$log->info( __METHOD__.' memc MISS', $loggingParams );
-
-			// Strip Wiki off the end of the wiki name if it exists
-			$wikiTitle = preg_replace( '/ Wiki$/', '', $this->wg->Sitename );
-
-			$params = [
-				'defaultTopic' => $wikiTitle,
-				'limit'        => $this->getPaddedVideoLimit( self::LIMIT_VIDEOS ),
-			];
-
-			$videoResults = $this->app->sendRequest( 'WikiaSearchController', 'searchVideosByTopics', $params )->getData();
-			$videosWithDetails = $this->getVideoDetailFromVideoWiki( $this->getVideoTitles( $videoResults ) );
-
-			$videos = [];
-			foreach ( $videosWithDetails as $video ) {
-				if ( count( $videos ) >= self::LIMIT_VIDEOS ) {
-					break;
-				}
-				$this->addToList( $videos, $video, self::SOURCE_WIKI_TOPICS );
-			}
-
-			$ttl = self::CACHE_TTL;
-			if ( empty( $videos ) ) {
-				$ttl = self::NEGATIVE_CACHE_TTL;
-				$log->info( __METHOD__ . ' zero videos', $loggingParams );
-			}
-			$this->wg->Memc->set( $memcKey, $videos, $ttl );
+		if ( $asynCache->foundInCache() ) {
+			$this->log->info( __METHOD__.' memc HIT');
 		} else {
-			$log->info( __METHOD__.' memc HIT', $loggingParams );
+			$this->log->info( __METHOD__.' memc MISS');
 		}
 
-		wfProfileOut( __METHOD__ );
+		$videos = $asynCache->value();
+		return is_null( $videos ) ? [] : $videos;
+	}
+
+	/**
+	 * Static method which is used as an entry point for AsyncCache. If AsyncCache can't find
+	 * the value it wants in cache, or if that value is stale, a job will be created which requires
+	 * a callback function. This static method serves as that callback function.
+	 * @param $userRegion
+	 * @return array
+	 */
+	public static function getVideosRelatedToWikiCallback( $userRegion ) {
+		$module = new self( $userRegion );
+		$videos = $module->getVideosRelatedToWikiFromSearch();
+		return $videos;
+	}
+
+	/**
+	 * Use WikiaSearchController to find premium videos related to the local wiki. (Search video content by wiki topics)
+	 * @return array - Premium videos related to the local wiki.
+	 * @throws Wikia\Cache\NegativeResponseException
+	 */
+	public function getVideosRelatedToWikiFromSearch() {
+		// Strip Wiki off the end of the wiki name if it exists
+		$wikiTitle = preg_replace( '/ Wiki$/', '', $this->wg->Sitename );
+
+		$params = [
+			'defaultTopic' => $wikiTitle,
+			'limit'        => $this->getPaddedVideoLimit( self::LIMIT_VIDEOS ),
+		];
+
+		$videoResults = $this->app->sendRequest( 'WikiaSearchController', 'searchVideosByTopics', $params )->getData();
+		$videosWithDetails = $this->getVideoDetailFromVideoWiki( $this->getVideoTitles( $videoResults ) );
+
+		$videos = [];
+		foreach ( $videosWithDetails as $video ) {
+			if ( count( $videos ) >= self::LIMIT_VIDEOS ) {
+				break;
+			}
+			$this->addToList( $videos, $video, self::SOURCE_WIKI_TOPICS );
+		}
+
+		if ( empty( $videos ) ) {
+			$msg = "No videos found for wiki {$this->wg->Sitename}";
+			$this->log->info( __METHOD__ . " " . $msg );
+			// Caught by AsyncCache task which then uses negative cache TTL
+			throw new Wikia\Cache\NegativeResponseException( $msg );
+		}
 
 		return $videos;
 	}
@@ -231,7 +252,6 @@ class VideosModule extends WikiaModel {
 	 */
 	public function getVideoListFromVideoWiki( $category, $limit = self::LIMIT_VIDEOS, $sort = 'recent', $source = '' ) {
 		wfProfileIn( __METHOD__ );
-		$log = WikiaLogger::instance();
 
 		sort( $category );
 		$hashCategory = md5( json_encode( $category ) );
@@ -246,7 +266,7 @@ class VideosModule extends WikiaModel {
 		];
 
 		if ( !is_array( $videos ) ) {
-			$log->info( __METHOD__.' memc MISS', $loggingParams );
+			$this->log->info( __METHOD__.' memc MISS', $loggingParams );
 
 			$params = [
 				'controller' => 'VideoHandler',
@@ -270,11 +290,11 @@ class VideosModule extends WikiaModel {
 			$ttl = self::CACHE_TTL;
 			if ( empty( $videos ) ) {
 				$ttl = self::NEGATIVE_CACHE_TTL;
-				$log->info( __METHOD__ . ' zero videos', $loggingParams );
+				$this->log->info( __METHOD__ . ' zero videos', $loggingParams );
 			}
 			$this->wg->Memc->set( $memcKey, $videos, $ttl );
 		} else {
-			$log->info( __METHOD__.' memc HIT', $loggingParams );
+			$this->log->info( __METHOD__.' memc HIT', $loggingParams );
 		}
 
 		wfProfileOut( __METHOD__ );
