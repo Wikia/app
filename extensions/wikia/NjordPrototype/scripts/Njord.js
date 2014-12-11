@@ -87,6 +87,7 @@
 		$heroModuleUpdateButton = $('#MainPageHero .upload .update-btn'),
 		$heroModuleInput = $('#MainPageHero .upload input[name="file"]'),
 		$heroModuleImage = $('#MainPageHero .hero-image'),
+		$heroPositionText = $('#MainPageHero .position-info'),
 
 		$wikiaArticle = $('#WikiaArticle'),
 
@@ -489,6 +490,10 @@
 					$heroModuleInput.wrap('<form>').closest('form').get(0).reset();
 					$heroModuleInput.unwrap();
 				}
+			});
+
+			$heroPositionText.on('mousedown', function(e) {
+				$heroModuleImage.trigger(e);
 			});
 		}, initializeEditButton = function () {
 			var onclose = new MutationObserver(function (m) {

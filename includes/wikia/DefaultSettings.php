@@ -284,7 +284,8 @@ $wgHooks          [ 'RestInPeace'                     ][] = 'ScribePurge::onRest
 $wgAutoloadClasses[ 'Wikia\\Blogs\\BlogTask'          ] = "$IP/extensions/wikia/Blogs/BlogTask.class.php";
 $wgAutoloadClasses[ 'TemplatePageHelper'              ] = "$IP/includes/wikia/helpers/TemplatePageHelper.php";
 $wgAutoloadClasses[ 'CrossOriginResourceSharingHeaderHelper' ] = "$IP/includes/wikia/helpers/CrossOriginResourceSharingHeaderHelper.php";
-$wgAutoloadClasses[ 'VignetteRequest'                 ] = "{$IP}/includes/wikia/VignetteRequest.php";
+$wgAutoloadClasses[ 'VignetteRequest'                 ] = "{$IP}/includes/wikia/vignette/VignetteRequest.php";
+$wgAutoloadClasses[ 'UrlGeneratorInterface'           ] = "{$IP}/includes/wikia/vignette/UrlGeneratorInterface.php";
 $wgAutoloadClasses[ 'Wikia\\Cache\\AsyncCacheTask'    ] = "$IP/includes/wikia/AsyncCacheTask.php";
 $wgAutoloadClasses[ 'Wikia\\Cache\\AsyncCache'        ] = "$IP/includes/wikia/AsyncCache.php";
 
@@ -1209,15 +1210,28 @@ $wgWikiaHubsFileRepoPath = 'http://corp.wikia.com/';
 $wgWikiaHubsFileRepoDirectory = '/images/c/corp/images';
 
 /**
- * @name $wgEnableAmazonMatch
- * Enables AmazonMatch integration
+ * @name $wgEnableAmazonMatchOld
+ * Enables AmazonMatch old integration (id=3006)
  */
-$wgEnableAmazonMatch = true;
+$wgEnableAmazonMatchOld = true;
+
+/**
+ * @name $wgAmazonMatchOldCountries
+ * Enables AmazonMatch old integration (id=3006) in these countries (given wgEnableAmazonMatchOld is also true).
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAmazonMatchOldCountries = null;
+
+/**
+ * @name $wgEnableAmazonMatch
+ * Enables AmazonMatch new integration (id=3115)
+ */
+$wgEnableAmazonMatch = false;
 
 /**
  * @name $wgAmazonMatchCountries
- * Enables AmazonMatch integration in these countries (given AmazonMatch is also true)
- * "Utility" var, don't change it here.
+ * Enables AmazonMatch new integration (id=3115) in these countries (given wgEnableAmazonMatch is also true).
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAmazonMatchCountries = null;
 

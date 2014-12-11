@@ -4,7 +4,7 @@ namespace Wikia\Api\Recommendations;
 
 /**
  * Recommendations API data collector
- * @author Maciej Brench <macbre@wikia-inc.com>
+ * @author Maciej Brencz <macbre@wikia-inc.com>
  * @author Damian Jozwiak <damian@wikia-inc.com>
  * @author Łukasz Konieczny <lukaszk@wikia-inc.com>
  *
@@ -28,6 +28,7 @@ class Collector {
 				$currentLimit = $limit - count( $out );
 			}
 
+			wfDebug( sprintf("%s: calling %s to get %d items...\n", __METHOD__, get_class($dataProvider), $currentLimit ) );
 			$out = array_merge( $out, $dataProvider->get($articleId, $currentLimit ) );
 		}
 
@@ -39,13 +40,20 @@ class Collector {
 	/**
 	 * Get instances of all available data providers
 	 *
-	 * @return array
+	 * @return \Wikia\Api\Recommendations\DataProviders\IDataProvider[]
 	 */
 	protected function getDataProviders() {
-		return [
+		global $wgWikiDirectedAtChildrenByStaff, $wgWikiDirectedAtChildrenByFounder;
+
+		$availableDataProviders = [
 			(new DataProviders\Video),
-			(new DataProviders\Category),
-			(new DataProviders\TopArticles)
+			(new DataProviders\Category)
 		];
+
+		if ( empty( $wgWikiDirectedAtChildrenByStaff ) && empty( $wgWikiDirectedAtChildrenByFounder ) ) {
+			$availableDataProviders[] = (new DataProviders\TopArticles);
+		}
+
+		return $availableDataProviders;
 	}
 }

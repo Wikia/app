@@ -63,6 +63,7 @@ class AdEngine2Hooks {
 
 		$vars[] = 'wgHighValueCountries';
 		$vars[] = 'wgAmazonMatchCountries';
+		$vars[] = 'wgAmazonMatchOldCountries';
 
 		$vars[] = 'wgAdDriverAlwaysCallDartInCountries';
 
@@ -163,8 +164,6 @@ class AdEngine2Hooks {
 	 * @return bool
 	 */
 	public static function onOasisSkinAssetGroupsBlocking( &$jsAssets ) {
-
-		global $wgAdDriverUseTopInContentBoxad;
 
 		// Tracking should be available very early, so we can track how lookup calls (Amazon, Rubicon) perform
 		$jsAssets[] = self::ASSET_GROUP_ADENGINE_TRACKING;
@@ -271,6 +270,14 @@ class AdEngine2Hooks {
 		$jsHeadGroups[] = self::ASSET_GROUP_ADENGINE_TRACKING;
 		$jsHeadGroups[] = self::ASSET_GROUP_ADENGINE;
 		$jsHeadGroups[] = self::ASSET_GROUP_VENUS_ADS;
+
+		if ( AnalyticsProviderRubiconRTP::isEnabled() ) {
+			$jsHeadGroups[] = self::ASSET_GROUP_ADENGINE_RUBICON_RTP;
+		}
+
+		if ( AnalyticsProviderAmazonMatch::isEnabled() ) {
+			$jsHeadGroups[] = self::ASSET_GROUP_ADENGINE_AMAZON_MATCH;
+		}
 
 		if ( AdEngine2Service::shouldLoadLateQueue() ) {
 			$jsBodyGroups[] = self::ASSET_GROUP_ADENGINE_LATE;

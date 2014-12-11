@@ -3,7 +3,7 @@ namespace Wikia\Api\Recommendations\DataProviders;
 
 /**
  * Category based recommendations for RecommendationsApi
- * @author Maciej Brench <macbre@wikia-inc.com>
+ * @author Maciej Brencz <macbre@wikia-inc.com>
  * @author Damian Jozwiak <damian@wikia-inc.com>
  * @author Łukasz Konieczny <lukaszk@wikia-inc.com>
  *
@@ -52,6 +52,12 @@ class Category implements IDataProvider {
 				'description' => $item[ 'text' ],
 				'media' => [
 					'thumbUrl' => $item[ 'imgUrl' ],
+					'originalWidth' => !empty( $item['imgOriginalDimensions']['width'])
+							? (int) $item['imgOriginalDimensions']['width']
+							: null,
+					'originalHeight' => !empty( $item['imgOriginalDimensions']['height'])
+							? (int) $item['imgOriginalDimensions']['height']
+							: null,
 				],
 				'source' => self::ARTICLE_SOURCE,
 			];
