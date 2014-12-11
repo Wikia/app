@@ -286,7 +286,6 @@ var UserProfilePage = {
 			},
 			onComplete: function (response) {
 				try {
-					response = String(response).replace(/&amp;/g, '&');
 					response = JSON.parse(response);
 					var avatarImg = $modal.find('img.avatar');
 					if (response.result.success === true) {
