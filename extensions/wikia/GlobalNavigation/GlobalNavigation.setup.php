@@ -9,8 +9,9 @@
 $wgExtensionCredits[ 'specialpage' ][] = [
 	'name' => 'GlobalNavigation',
 	'author' => 'Damian "kvas" Jóźwiak',
-	'description' => 'GlobalNavigation',
-	'version' => 1.0
+	'descriptionmsg' => 'global-navigation-desc',
+	'version' => 1.0,
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/GlobalNavigation
 ];
 
 // controller classes

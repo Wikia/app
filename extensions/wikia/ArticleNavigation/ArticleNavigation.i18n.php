@@ -3,6 +3,7 @@
 $messages = [];
 
 $messages['en'] = [
+	'article-navigation-desc' => 'ArticleNavigation',
 	'article-navigation-icon-title-toc' => 'Table of Contents',
 	'article-navigation-icon-title-edit' => 'Edit',
 	'article-navigation-icon-title-tools' => 'Tools',
@@ -17,6 +18,7 @@ $messages['pl'] = [
 ];
 
 $messages['qqq'] = [
+	'article-navigation-desc' => '{{desc}}',
 	'article-navigation-icon-title-toc' => 'Title for "Table of Contents" icon in article navigation',
 	'article-navigation-icon-title-edit' => 'Title for "Edit" icon in article navigation',
 	'article-navigation-icon-title-tools' => 'Title for "Tools" icon in article navigation',

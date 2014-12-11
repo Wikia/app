@@ -3,12 +3,14 @@
 $messages = [];
 
 $messages['en'] = [
+	'mediagallery-desc' => 'MediaGallery extension',
 	'mediagallery-show-more' => 'Show More',
 	'mediagallery-show-less' => 'Show Fewer',
 	'mediagallery-add-image-button' => 'Add an image',
 ];
 
 $messages['qqq'] = [
+	'mediagallery-desc' => '{{desc}}',
 	'mediagallery-show-more' => 'Button to expand the gallery, showing more images',
 	'mediagallery-show-less' => 'Button to collapse the gallery, showing fewer images',
 	'mediagallery-add-image-button' => 'Button that allows users to add additional images to the gallery',

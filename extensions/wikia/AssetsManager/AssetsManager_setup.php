@@ -12,8 +12,13 @@ if(!defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'AssetsManager',
-	'author' => 'Inez Korczyński'
+	'author' => 'Inez Korczyński',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AssetsManager',
+	'descriptionmsg' => 'assestsmanager-desc',
 );
+
+//i18n
+$wgExtensionMessagesFiles['AssetsManager'] = __DIR__ . '/i18n/AssetsManager.i18n.php';
 
 $wgAutoloadClasses['AssetsManagerBaseBuilder'] = __DIR__.'/builders/AssetsManagerBaseBuilder.class.php';
 $wgAutoloadClasses['AssetsManagerOneBuilder'] = __DIR__.'/builders/AssetsManagerOneBuilder.class.php';
@@ -30,6 +35,8 @@ $wgAutoloadClasses['AssetsManagerController'] = __DIR__.'/AssetsManagerControlle
 $wgAjaxExportList[] = 'AssetsManagerEntryPoint';
 $wgHooks['MakeGlobalVariablesScript'][] = 'AssetsManager::onMakeGlobalVariablesScript';
 $wgHooks['UserGetRights'][] = 'onUserGetRights';
+
+
 
 /**
  * Add read right to all am reqest.

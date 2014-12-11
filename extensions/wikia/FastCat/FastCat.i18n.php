@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'fastscat-desc' => 'One-click categorization from a predefined list of categories.',
 	'fastcat-marker-category' => "None",
 	'fastcat-edit-comment' => "FastCat: added category $1",
 	'fastcat-box-title' => 'Fast Categorization',

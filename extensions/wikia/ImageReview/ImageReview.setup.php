@@ -20,6 +20,7 @@ $wgExtensionCredits['specialpage'][] = array(
 		'[http://www.wikia.com/wiki/User:Mech.wikia Jacek Woźniak]',
 		"[http://community.wikia.com/wiki/User:TOR Lucas 'TOR' Garczewski]",
 	),
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ImageReview'
 );
 
 $dir = dirname(__FILE__) . '/';
