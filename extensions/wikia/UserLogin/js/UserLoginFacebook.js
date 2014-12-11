@@ -161,7 +161,7 @@
 				});
 			// user not logged in, show the login/signup modal
 			} else {
-				this.showModal(response);
+				this.setupModal(response);
 			}
 		},
 
@@ -193,19 +193,27 @@
 		 * after a successful Facebook connection.
 		 * @param {Object} response Response object from FacebookSignupController::index
 		 */
-		showModal: function (response) {
-			var self = this;
-
+		setupModal: function (response) {
 			this.bucky.timer.start('loggedOutCallback');
 			$.when(
 				uiFactory.init('modal'),
 				$.getResources(
 					[$.getSassCommonURL('extensions/wikia/UserLogin/css/UserLoginFacebook.scss')]
 				)
-			).then(function (uiModal) {
-					// show the "or" circle only for languages where it makes sense
-				var langClass = 'lang-' + wgUserLanguage,
-					modalConfig = {
+			// response argument will be prepended to arguments otherwise passed to buildModal
+			).then(this.buildModal.bind(this, response));
+		},
+
+		/**
+		 * Build the login/signup modal once the dependencies are retrieved
+		 * @param {Object} response Response object from FacebookSignupController::index
+		 * @param {Object} uiModal UI Factory modal
+		 */
+		buildModal: function (response, uiModal) {
+			// show the "or" circle only for languages where it makes sense
+			var self = this,
+				langClass = 'lang-' + wgUserLanguage,
+				modalConfig = {
 					vars: {
 						id: 'FacebookSignUp',
 						size: 'medium',
@@ -218,41 +226,40 @@
 					}
 				};
 
-				uiModal.createComponent(modalConfig, function (facebookSignupModal) {
-					var $modal = facebookSignupModal.$element;
+			uiModal.createComponent(modalConfig, function (facebookSignupModal) {
+				var $modal = facebookSignupModal.$element;
 
-					// set reference to modal object
-					self.modal = facebookSignupModal;
+				// set reference to modal object
+				self.modal = facebookSignupModal;
 
-					// Track Facebook Connect Modal Close
-					facebookSignupModal.bind('beforeClose', function () {
-						self.track({
-							action: self.actions.CLOSE,
-							label: 'facebook-login-modal'
-						});
-					});
-
-					self.createSignupForm($modal);
-					self.createLoginForm($modal);
-
-					$modal.on('click', '.extiw', function (event) {
-						self.track({
-							action: tracker.ACTIONS.CLICK_LINK_TEXT,
-							browserEvent: event,
-							href: $(event.target).attr('href'),
-							label: 'wikia-terms-of-use'
-						});
-					});
-
-					// Track FB Connect Modal Open
+				// Track Facebook Connect Modal Close
+				facebookSignupModal.bind('beforeClose', function () {
 					self.track({
-						action: self.actions.OPEN,
+						action: self.actions.CLOSE,
 						label: 'facebook-login-modal'
 					});
-
-					facebookSignupModal.show();
-					self.bucky.timer.stop('loggedOutCallback');
 				});
+
+				self.createSignupForm($modal);
+				self.createLoginForm($modal);
+
+				$modal.on('click', '.extiw', function (event) {
+					self.track({
+						action: tracker.ACTIONS.CLICK_LINK_TEXT,
+						browserEvent: event,
+						href: $(event.target).attr('href'),
+						label: 'wikia-terms-of-use'
+					});
+				});
+
+				// Track FB Connect Modal Open
+				self.track({
+					action: self.actions.OPEN,
+					label: 'facebook-login-modal'
+				});
+
+				facebookSignupModal.show();
+				self.bucky.timer.stop('loggedOutCallback');
 			});
 		},
 

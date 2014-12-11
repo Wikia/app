@@ -13,10 +13,10 @@ class UserLoginController extends WikiaController {
 		$type = $this->wg->Request->getVal( 'type' );
 		$lang = $this->wg->Request->getVal( 'lang', 'en' );
 
-		$params = array(
+		$params = [
 				'type' => $type,
 				'language' => $lang,
-		);
+		];
 
 		if ( $type == 'welcome-email' ) {
 			$this->previewBody = $this->app->renderView( "UserLogin", 'WelcomeMail', $params );
