@@ -115,7 +115,7 @@ class MercuryApi {
 				'content' => $wg->LanguageCode,
 				'contentDir' => $wg->ContLang->getDir()
 			],
-			'namespaces' => MWNamespace::getCanonicalNamespaces(),
+			'namespaces' => $wg->ContLang->getNamespaces(),
 			'siteName' => $wg->Sitename,
 			'mainPageTitle' => Title::newMainPage()->getPrefixedDBkey(),
 			'theme' => SassUtil::getOasisSettings()
