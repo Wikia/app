@@ -152,7 +152,7 @@ class VignetteRequest {
 	}
 
 	public static function setThumbnailFormat($url, $format) {
-		$format = preg_replace('/^\./', '', $format);
+		$format = ltrim($format, ".");
 
 		if ($url instanceof UrlGenerator) {
 			return $url->format($format);
