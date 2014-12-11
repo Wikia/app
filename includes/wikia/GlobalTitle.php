@@ -18,6 +18,11 @@
 class GlobalTitle extends Title {
 
 	/**
+	 * Default wgArticlePath
+	 */
+	const DEFAULT_ARTICLE_PATH = '/wiki/$1';
+
+	/**
 	 * public, used in static constructor
 	 */
 	public $mText = false;
@@ -152,6 +157,21 @@ class GlobalTitle extends Title {
 				GlobalTitle::newFromText( $text, $namespace, $city_id );
 		}
 		return self::$cachedObjects[$city_id][$namespace][$text];
+	}
+
+	/**
+	 * @param $wikiId
+	 * @return string
+	 */
+	protected static function getWgArticlePath( $wikiId ) {
+		$destinationWgArticlePathObject = WikiFactory::getVarByName( 'wgArticlePath', $wikiId );
+		if ( is_object( $destinationWgArticlePathObject ) ) {
+			$destinationWgArticlePath = $destinationWgArticlePathObject->cv_name;
+			return $destinationWgArticlePath;
+		} else {
+			$destinationWgArticlePath = self::DEFAULT_ARTICLE_PATH;
+			return $destinationWgArticlePath;
+		}
 	}
 
 	/**
@@ -568,7 +588,7 @@ class GlobalTitle extends Title {
 		if ( isset( $queryParts['title'] ) ) {
 			$articleName = $queryParts['title'];
 		} else {
-			$destinationWgArticlePath = WikiFactory::getVarByName('wgArticlePath', $wikiId);
+			$destinationWgArticlePath = self::getWgArticlePath( $wikiId );
 			$articleName = self::stripArticlePath($urlParts['path'], $destinationWgArticlePath );
 		}
 
