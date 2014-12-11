@@ -167,11 +167,10 @@ class GlobalTitle extends Title {
 		$destinationWgArticlePathObject = WikiFactory::getVarByName( 'wgArticlePath', $wikiId );
 		if ( is_object( $destinationWgArticlePathObject ) ) {
 			$destinationWgArticlePath = $destinationWgArticlePathObject->cv_name;
-			return $destinationWgArticlePath;
 		} else {
 			$destinationWgArticlePath = self::DEFAULT_ARTICLE_PATH;
-			return $destinationWgArticlePath;
 		}
+		return $destinationWgArticlePath;
 	}
 
 	/**
