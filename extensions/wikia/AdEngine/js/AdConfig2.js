@@ -146,10 +146,6 @@ define('ext.wikia.adEngine.adConfig', [
 		}
 	}
 
-	if (amazonMatch && amazonMatch.wasCalled()) {
-		amazonMatch.trackState();
-	}
-
 	return {
 		getDecorators: function () { return decorators; },
 		getProviderList: getProviderList
