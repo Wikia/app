@@ -245,6 +245,22 @@ class EditorPreference {
 	}
 
 	/**
+	 * For users with default option, return their preference as VisualEditor
+	 *
+	 * @param array $options User options
+	 * @param string $name Option name
+	 * @param mixed $value Value of option
+	 * @return boolean
+	 */
+	public static function onUserGetOption($options, $name, &$value) {
+		if ($name === 'editor' && $value === self::OPTION_EDITOR_DEFAULT) {
+			$value = self::OPTION_EDITOR_VISUAL;
+		}
+
+		return true;
+	}
+
+	/**
 	 * Get the message key for a non-VisualEditor edit link in the actions dropdown.
 	 *
 	 * @return string
