@@ -35,7 +35,7 @@ define('wikia.nodeFinder', function () {
 	function getPreviousVisibleSibling(referenceNode) {
 		var node = referenceNode.previousSibling;
 
-		while (node && !isVisibleForSloth(node)) {
+		while (node && !hasDimension(node)) {
 			node = node.previousSibling;
 		}
 
@@ -51,7 +51,7 @@ define('wikia.nodeFinder', function () {
 	function getLastVisibleChild(container) {
 		var child = container.lastChild;
 
-		if (isVisibleForSloth(child)) {
+		if (hasDimension(child)) {
 			return child;
 		}
 
@@ -59,12 +59,14 @@ define('wikia.nodeFinder', function () {
 	}
 
 	/**
-	 * Simple check if an element is visible for Sloth module to be able to bind to it.
+	 * Simple check if an element is rendered.
+	 * This method works well with modules like Sloth
+	 * while still avoiding the actual dependency.
 	 *
 	 * @param {Node} element node to be checked
 	 * @return {Bool}
 	 */
-	function isVisibleForSloth(element) {
+	function hasDimension(element) {
 		return element.scrollWidth || element.scrollHeight;
 	}
 
