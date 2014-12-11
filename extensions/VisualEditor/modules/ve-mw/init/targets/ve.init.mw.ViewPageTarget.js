@@ -424,6 +424,7 @@ ve.init.mw.ViewPageTarget.prototype.afterHideSpinner = function () {
 		veTrack( { action: 've-edit-page-stop' } );
 	}
 	mw.hook( 've.activationComplete' ).fire();
+	this.emit( 'mid-transition' );
 
 	$( '.ve-spinner-fade' ).css( 'opacity', 0 );
 	if ( this.timeout ) {

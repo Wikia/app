@@ -63,6 +63,7 @@ ve.ui.Toolbar = function VeUiToolbar( surface, options ) {
 	// Events
 	this.surface.getModel().connect( this, { 'contextChange': 'onContextChange' } );
 	this.surface.connect( this, { 'addCommand': 'onSurfaceAddCommand' } );
+	this.surface.target.connect( this, { 'mid-transition': 'onTargetMidTransition' } );
 };
 
 /* Inheritance */
@@ -240,13 +241,10 @@ ve.ui.Toolbar.prototype.getSurface = function () {
 };
 
 /**
- * Sets up handles and preloads required information for the toolbar to work.
- * This must be called immediately after it is attached to a visible document.
+ * Emitted when the transition is halfway complete and only the white overlay is visible.
+ * Toolbar has been initialized and is properly positioned.
  */
-ve.ui.Toolbar.prototype.initialize = function () {
-	// Parent method
-	OO.ui.Toolbar.prototype.initialize.call( this );
-
+ve.ui.Toolbar.prototype.onTargetMidTransition = function () {
 	// Properties
 	this.$window = this.$( this.getElementWindow() );
 	this.$surfaceView = this.surface.getView().$element;
