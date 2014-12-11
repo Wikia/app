@@ -16,6 +16,7 @@ $wgExtensionCredits[ 'specialpage' ][] = [
 // controller classes
 $wgAutoloadClasses[ 'GlobalNavigationController' ] =  __DIR__ . '/GlobalNavigationController.class.php';
 $wgAutoloadClasses[ 'GlobalNavigationAccountNavigationController' ] =  __DIR__ . '/GlobalNavigationAccountNavigationController.class.php';
+$wgAutoloadClasses[ 'GlobalNavigationHelper' ] =  __DIR__ . '/GlobalNavigationHelper.class.php';
 $wgAutoloadClasses[ 'GlobalNavigationHooks' ] =  __DIR__ . '/GlobalNavigationHooks.class.php';
 
 $wgHooks['OutputPageParserOutput'][] = 'GlobalNavigationHooks::onOutputPageParserOutput';
