@@ -24,6 +24,7 @@ $wgHooks['SkinTemplateNavigation'][] = 'EditorPreference::onSkinTemplateNavigati
 $wgHooks['MakeGlobalVariablesScript'][] = 'EditorPreference::onMakeGlobalVariablesScript';
 $wgHooks['AddNewAccount'][] = 'EditorPreference::onAddNewAccount';
 $wgHooks['UserProfilePageAfterGetActionButtonData'][] = 'EditorPreference::onUserProfilePageAfterGetActionButtonData';
+$wgHooks['UserGetOption'][] = 'EditorPreference::onUserGetOption';
 
 // Default preference
 $wgDefaultUserOptions[PREFERENCE_EDITOR] = 0;

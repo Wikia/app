@@ -26,7 +26,6 @@ class EditorPreference {
 			'label-message' => 'editor-preference',
 			'section' => 'editing/editing-experience',
 			'options' => array(
-				wfMessage( 'option-default-editor' )->text() => self::OPTION_EDITOR_DEFAULT,
 				wfMessage( 'option-visual-editor' )->text() => self::OPTION_EDITOR_VISUAL,
 				wfMessage( 'option-ck-editor' )->text() => self::OPTION_EDITOR_CK,
 				wfMessage( 'option-source-editor' )->text() => self::OPTION_EDITOR_SOURCE,
@@ -240,6 +239,22 @@ class EditorPreference {
 
 				$actionButtonArray['action']['id'] = 'ca-edit';
 			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * For users with default option, return their preference as VisualEditor
+	 *
+	 * @param array $options User options
+	 * @param string $name Option name
+	 * @param mixed $value Value of option
+	 * @return boolean
+	 */
+	public static function onUserGetOption($options, $name, &$value) {
+		if ($name === 'editor' && $value === self::OPTION_EDITOR_DEFAULT) {
+			$value = self::OPTION_EDITOR_VISUAL;
 		}
 
 		return true;
