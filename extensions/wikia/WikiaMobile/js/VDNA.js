@@ -31,7 +31,7 @@ $(function () {
 					var i = 'expires='+r.toUTCString();
 					document.cookie = 'MarvelWikiaCampaign=1; ' + i;
 					t.onload = function () {
-						window.VDNATalk.talk('marvel-wiki_new')
+						window.VDNATalk.talk('wikia-marvel_auto')
 					}
 				}
 			},
