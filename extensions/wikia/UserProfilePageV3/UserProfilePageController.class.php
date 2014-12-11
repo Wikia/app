@@ -539,7 +539,7 @@ class UserProfilePageController extends WikiaController {
 	 */
 	public function onSubmitUsersAvatar() {
 
-		$this->response->setContentType( 'application/json; charset=utf-8' );
+		$this->response->setContentType( 'text/html; charset=utf-8' );
 
 		$user = User::newFromId( $this->getVal( 'userId' ) );
 
@@ -554,9 +554,7 @@ class UserProfilePageController extends WikiaController {
 				$thumbnail = $uploadError;
 			} else {
 				$fileName = $this->app->wg->Request->getFileTempName( $avatarUploadFiled );
-
 				$fileuploader = new WikiaTempFilesUpload();
-
 				$thumbnail = $this->storeInTempImage( $fileName, $fileuploader );
 			}
 
