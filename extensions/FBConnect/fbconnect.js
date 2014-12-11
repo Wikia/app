@@ -1,4 +1,4 @@
-/*global UserLoginFacebook, FB, GlobalTriggers, wgServer, wgScript */
+/*global FB, GlobalTriggers, wgServer, wgScript */
 /*
  * Copyright (c) 2010 Garrett Brown <http://www.mediawiki.org/wiki/User:Gbruin>
  * This program is free software; you can redistribute it and/or modify
