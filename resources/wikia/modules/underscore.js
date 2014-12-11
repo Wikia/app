@@ -9,13 +9,11 @@
 define('wikia.underscore', ['wikia.window'], function underscoreModule(win) {
 	'use strict';
 
-	var now, debounce, extend, noop, isObject, identity;
-
-	now = Date.now || function() {
+	var now = Date.now || function() {
 		return new Date().getTime();
 	};
 
-	debounce = function (func, wait, immediate) {
+	var debounce = function (func, wait, immediate) {
 		var timeout, args, context, timestamp, result, later;
 
 		later = function() {
@@ -27,7 +25,9 @@ define('wikia.underscore', ['wikia.window'], function underscoreModule(win) {
 				timeout = null;
 				if (!immediate) {
 					result = func.apply(context, args);
-					if (!timeout) context = args = null;
+					if (!timeout) {
+						context = args = null;
+					}
 				}
 			}
 		};
@@ -37,7 +37,9 @@ define('wikia.underscore', ['wikia.window'], function underscoreModule(win) {
 			args = arguments;
 			timestamp = now();
 			var callNow = immediate && !timeout;
-			if (!timeout) timeout = win.setTimeout(later, wait);
+			if (!timeout) {
+				timeout = win.setTimeout(later, wait);
+			}
 			if (callNow) {
 				result = func.apply(context, args);
 				context = args = null;
@@ -47,15 +49,55 @@ define('wikia.underscore', ['wikia.window'], function underscoreModule(win) {
 		};
 	};
 
+	var throttle = function(func, wait, options) {
+		var context, args, result;
+		var timeout = null;
+		var previous = 0;
+		if (!options) {
+			options = {};
+		}
+		var later = function() {
+			previous = options.leading === false ? 0 : now();
+			timeout = null;
+			result = func.apply(context, args);
+			if (!timeout) {
+				context = args = null;
+			}
+		};
+		return function() {
+			var n = now();
+			if (!previous && options.leading === false) {
+				previous = n;
+			}
+			var remaining = wait - (n - previous);
+			context = this;
+			args = arguments;
+			if (remaining <= 0 || remaining > wait) {
+				win.clearTimeout(timeout);
+				timeout = null;
+				previous = n;
+				result = func.apply(context, args);
+				if (!timeout) {
+					context = args = null;
+				}
+			} else if (!timeout && options.trailing !== false) {
+				timeout = win.setTimeout(later, remaining);
+			}
+			return result;
+		};
+	};
+
 	// Is a given variable an object?
-	isObject = function(obj) {
+	var isObject = function(obj) {
 		var type = typeof obj;
 		return type === 'function' || type === 'object' && !!obj;
 	};
 
 	// Extend a given object with all the properties in passed-in object(s).
-	extend = function(obj) {
-		if (!isObject(obj)) return obj;
+	var extend = function(obj) {
+		if (!isObject(obj)) {
+			return obj;
+		}
 		var source, prop;
 		for (var i = 1, length = arguments.length; i < length; i++) {
 			source = arguments[i];
@@ -66,10 +108,10 @@ define('wikia.underscore', ['wikia.window'], function underscoreModule(win) {
 		return obj;
 	};
 
-	noop = function(){};
+	var noop = function(){};
 
 	// Keep the identity function around for default iteratees.
-	identity = function(value) {
+	var identity = function(value) {
 		return value;
 	};
 
@@ -79,9 +121,10 @@ define('wikia.underscore', ['wikia.window'], function underscoreModule(win) {
 	return {
 		now: now,
 		debounce: debounce,
+		throttle: throttle,
 		extend: extend,
 		noop: noop,
 		identity: identity,
 		isObject: isObject
-	}
+	};
 });

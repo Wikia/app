@@ -41,12 +41,14 @@ define('wikia.stickyElement', [
 			};
 			options = _.extend(defaultOptions, userOptions);
 
-			win.addEventListener('load',   updateSize);
-			win.addEventListener('scroll', _.debounce(updatePosition, 10));
-			win.addEventListener('resize', _.debounce(updateSize, 10));
+			win.addEventListener('load',   updateSize, false);
+			win.addEventListener('resize', _.debounce(updateSize, 10), false);
+			win.addEventListener('scroll', _.throttle(updatePosition, 10), false);
+			win.addEventListener('touchmove', _.throttle(updatePosition, 10), false);
 
 			updateSize();
 
+			/*jshint validthis:true*/
 			return this;
 		}
 
@@ -135,5 +137,5 @@ define('wikia.stickyElement', [
 		spawn: function() {
 			return new StickyElement();
 		}
-	}
+	};
 });

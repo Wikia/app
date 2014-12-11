@@ -20,30 +20,6 @@ define('wikia.browserDetect', ['wikia.window'], function (win) {
 	}
 
 	/**
-	 * Checks if the browser is Firefox
-	 * @returns {Boolean}
-	 */
-	function isFirefox() {
-		return userAgent.toLowerCase().indexOf('firefox') > -1;
-	}
-
-	/**
-	 * Checks if the browser is WebKit-based
-	 * @returns {Boolean}
-	 */
-	function isWebKit() {
-		return userAgent.toLowerCase().indexOf('webkit') > -1;
-	}
-
-	/**
-	 * Checks if the browser is Chrome
-	 * @returns {Boolean}
-	 */
-	function isChrome() {
-		return userAgent.toLowerCase().indexOf('chrome') > -1;
-	}
-
-	/**
 	 * Checks if the site is opened on iPad
 	 * @returns {boolean}
 	 */
@@ -72,9 +48,6 @@ define('wikia.browserDetect', ['wikia.window'], function (win) {
 
 	return {
 		isIE: isIE,
-		isFirefox: isFirefox,
-		isChrome: isChrome,
-		isWebKit: isWebKit,
 		isIPad: isIPad,
 		isIOS7orLower: isIOS7orLower
 	};
