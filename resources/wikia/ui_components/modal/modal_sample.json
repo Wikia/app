@@ -74,7 +74,7 @@
 							"id": "showHtmlTitleModalExample",
 							"href": "#",
 							"classes": [ "primary" ],
-							"htmlTitle": "This <b>title</b> includes <i>html</i>",
+							"title": "This <b>title</b> includes <i>html</i>",
 							"value": "Large modal"
 						}
 					}
