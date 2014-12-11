@@ -1,47 +1,32 @@
-var UserLoginFacebookForm = $.createClass(UserLoginAjaxForm, {
+/* global UserLoginAjaxForm */
 
-	// login token is stored in hidden field, no need to send an extra request
-	retrieveLoginToken: function () {},
+(function () {
+	'use strict';
 
-	// send a request to FB controller
-	ajaxLogin: function () {
-		'use strict';
-		var values = {
-			username: this.inputs.username.val(),
-			password: this.inputs.password.val(),
-			signupToken: this.inputs.logintoken.val()
-		};
+	var UserLoginFacebookForm = $.createClass(UserLoginAjaxForm, {
+		// login token is stored in hidden field, no need to send an extra request
+		retrieveLoginToken: function () {},
 
-		// cache redirect url for after form is complete
-		this.returnToUrl = this.inputs.returntourl.val();
+		// Handles existing user login via modal
+		ajaxLogin: function () {
+			var values = {
+				username: this.inputs.username.val(),
+				password: this.inputs.password.val(),
+				signupToken: this.inputs.logintoken.val()
+			};
 
-		// The email box will only appear if the user has not shared their Facebook email
-		if (this.inputs.email) {
-			values.email = this.inputs.email.val();
+			// cache redirect url for after form is complete
+			this.returnToUrl = this.inputs.returntourl.val();
+
+			$.nirvana.postJson(
+				'FacebookSignupController',
+				'login',
+				values,
+				this.submitLoginHandler.bind(this)
+			);
 		}
+	});
 
-		$.nirvana.postJson(
-			'FacebookSignupController',
-			'signup',
-			values,
-			this.submitFbSignupHandler.bind(this)
-		);
-	},
-
-	/**
-	 * Extends login handler callback for tracking and any additional work
-	 * @param json string
-	 */
-	submitFbSignupHandler: function (json) {
-		'use strict';
-		if (json.result === 'ok') {
-			window.Wikia.Tracker.track({
-				category: 'user-sign-up',
-				trackingMethod: 'both',
-				action: window.Wikia.Tracker.ACTIONS.SUCCESS,
-				label: 'facebook-signup'
-			});
-		}
-		this.submitLoginHandler(json);
-	}
-});
+	// Expose global
+	window.UserLoginFacebookForm = UserLoginFacebookForm;
+})();
