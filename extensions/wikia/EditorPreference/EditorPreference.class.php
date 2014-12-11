@@ -26,7 +26,6 @@ class EditorPreference {
 			'label-message' => 'editor-preference',
 			'section' => 'editing/editing-experience',
 			'options' => array(
-				wfMessage( 'option-default-editor' )->text() => self::OPTION_EDITOR_DEFAULT,
 				wfMessage( 'option-visual-editor' )->text() => self::OPTION_EDITOR_VISUAL,
 				wfMessage( 'option-ck-editor' )->text() => self::OPTION_EDITOR_CK,
 				wfMessage( 'option-source-editor' )->text() => self::OPTION_EDITOR_SOURCE,

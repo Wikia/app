@@ -73,6 +73,11 @@ class Preferences {
 		## Prod in defaults from the user
 		foreach ( $defaultPreferences as $name => &$info ) {
 			$prefFromUser = self::getOptionFromUser( $name, $info, $user );
+			/* VE-1730: Temporarily treat all Default editor prefs as VE as first step of migration */
+			if ( $name === 'editor' && $prefFromUser === 0 ) {
+				$prefFromUser = 2;
+			}
+
 			$field = HTMLForm::loadInputFromParameters( $name, $info ); // For validation
 			$defaultOptions = User::getDefaultOptions();
 			$globalDefault = isset( $defaultOptions[$name] )
