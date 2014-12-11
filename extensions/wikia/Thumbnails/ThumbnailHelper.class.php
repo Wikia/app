@@ -186,7 +186,7 @@ class ThumbnailHelper extends WikiaModel {
 	 * @return String
 	 */
 	public static function getContextualFileUrl( MediaTransformOutput $thumb ) {
-		// If we have the details icon enabled, have the anchor wrapping the image link to the
+		// If skin is not monobook, have the anchor wrapping the image link to the
 		// raw file. If not, keep previous behavior and link to the file page
 		if ( !F::app()->checkSkin( 'monobook' ) ) {
 			$defaultHref = $thumb->file->getUrl();
