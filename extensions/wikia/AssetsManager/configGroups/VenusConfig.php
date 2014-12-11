@@ -272,6 +272,8 @@ $VenusConfig[ 'recommendations_view_js' ] = [
 	'assets' => [
 		'//extensions/wikia/Recommendations/scripts/view.js',
 		'//extensions/wikia/Recommendations/scripts/tracking.js',
+		'//resources/wikia/modules/imageServing.js',
+		'//resources/wikia/libraries/vignette/vignette.js'
 	]
 ];
 

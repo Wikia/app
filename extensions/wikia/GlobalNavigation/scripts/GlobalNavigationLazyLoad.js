@@ -1,6 +1,6 @@
 define(
-	'wikia.globalnavigation.lazyload', ['jquery', 'wikia.nirvana', 'wikia.querystring'],
-	function lazyLoad($, nirvana, Querystring) {
+	'wikia.globalnavigation.lazyload', ['jquery', 'wikia.nirvana', 'wikia.querystring', 'wikia.window'],
+	function lazyLoad($, nirvana, Querystring, win) {
 		'use strict';
 
 		var menuLoading = false,
@@ -47,7 +47,9 @@ define(
 		 */
 		function getHubLinks() {
 			var lang,
-				data = {};
+				data = {
+					cb: win.wgStyleVersion
+				};
 
 			if (isMenuWorking()) {
 				return;

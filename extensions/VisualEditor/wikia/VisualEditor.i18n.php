@@ -456,6 +456,13 @@ $messages['de'] = array(
 	'wikia-visualeditor-dialog-preference-link-help' => 'Lies hier über die neuen Funktionen',
 	'wikia-visualeditor-dialog-preference-link-preferences' => 'Verwalte deine Editor Einstellungen',
 	'wikia-visualeditor-dialog-preference-start-button' => 'Okay!',
+	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => 'Medien-Galerie',
+	'wikia-visualeditor-dialog-wikiasinglemedia-title' => 'Galerie einfügen',
+	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'Bilder suchen',
+	'wikia-visualeditor-media-photo-policy' => 'Bitte richte dich nach den Richtlinien für Bilder dieses Wikias, wenn du neue Bilder hochlädst.',
+	'wikia-visualeditor-dialog-cancel-button' => 'Abbrechen',
+	'wikia-visualeditor-dialog-done-button' => 'Erledigt',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'Anzeigen',
 );
 
 /** Zazaki (Zazaki)
@@ -594,6 +601,13 @@ $messages['es'] = array(
 	'wikia-visualeditor-dialog-preference-link-help' => 'Lee acerca de las nueva funcionalidades',
 	'wikia-visualeditor-dialog-preference-link-preferences' => 'Maneja las preferencias de su editor',
 	'wikia-visualeditor-dialog-preference-start-button' => 'Entendido',
+	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => 'Galería',
+	'wikia-visualeditor-dialog-wikiasinglemedia-title' => 'Insertar galería',
+	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'Buscar imágenes',
+	'wikia-visualeditor-media-photo-policy' => 'Por favor respeta las políticas sobre imágenes de esta wikia al subir nuevas imágenes',
+	'wikia-visualeditor-dialog-cancel-button' => 'Cancelar',
+	'wikia-visualeditor-dialog-done-button' => 'Hecho',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'Ver',
 );
 
 /** Persian (فارسی)
@@ -663,6 +677,13 @@ $messages['fi'] = array(
 	'wikia-visualeditor-dialog-preference-link-help' => 'Lue uusista ominaisuuksista',
 	'wikia-visualeditor-dialog-preference-link-preferences' => 'Hallinnoi muokkausasetuksiasi',
 	'wikia-visualeditor-dialog-preference-start-button' => 'Selvä!',
+	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => 'Galleria',
+	'wikia-visualeditor-dialog-wikiasinglemedia-title' => 'Lisää galleria',
+	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'Hae kuvia',
+	'wikia-visualeditor-media-photo-policy' => 'Noudatathan tämän wikian kuvakäytäntöjä lataessasi uusia kuvia',
+	'wikia-visualeditor-dialog-cancel-button' => 'Peruuta',
+	'wikia-visualeditor-dialog-done-button' => 'Valmis',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'Katso',
 );
 
 /** Faroese (føroyskt)
@@ -767,6 +788,13 @@ $messages['fr'] = array(
 	'wikia-visualeditor-dialog-preference-link-help' => 'En lire plus sur les nouvelles fonctionnalités',
 	'wikia-visualeditor-dialog-preference-link-preferences' => "Gérer vos préférences pour l'éditeur",
 	'wikia-visualeditor-dialog-preference-start-button' => 'OK',
+	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => 'Galerie',
+	'wikia-visualeditor-dialog-wikiasinglemedia-title' => 'Insérer une galerie',
+	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'Rechercher des images',
+	'wikia-visualeditor-media-photo-policy' => 'Veuillez respecter les règles sur les images de ce wikia quand vous importez de nouvelles images',
+	'wikia-visualeditor-dialog-cancel-button' => 'Annuler',
+	'wikia-visualeditor-dialog-done-button' => 'Terminer',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'Afficher',
 );
 
 /** Galician (galego)
@@ -947,6 +975,13 @@ $messages['it'] = array(
 	'wikia-visualeditor-dialog-preference-link-help' => 'Scopri di più sulle nuove funzioni',
 	'wikia-visualeditor-dialog-preference-link-preferences' => "Controlla le tue impostazioni dell'editor",
 	'wikia-visualeditor-dialog-preference-start-button' => 'OK!',
+	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => 'Galleria',
+	'wikia-visualeditor-dialog-wikiasinglemedia-title' => 'Inserisci galleria',
+	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'Cerca un\'immagine',
+	'wikia-visualeditor-media-photo-policy' => 'Accertati di rispettare la politica sulle immagini della wiki, quando carichi nuove foto',
+	'wikia-visualeditor-dialog-cancel-button' => 'Cancella',
+	'wikia-visualeditor-dialog-done-button' => 'Fatto',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'Visualizza',
 );
 
 /** Japanese (日本語)
@@ -1000,6 +1035,13 @@ $messages['ja'] = array(
 	'wikia-visualeditor-dialog-preference-link-help' => '新しい機能について知る',
 	'wikia-visualeditor-dialog-preference-link-preferences' => 'あなたの編集方法を管理する',
 	'wikia-visualeditor-dialog-preference-start-button' => '了解しました',
+	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => 'ギャラリー',
+	'wikia-visualeditor-dialog-wikiasinglemedia-title' => 'ギャラリーを挿入',
+	'wikia-visualeditor-dialog-wikiasinglemedia-search' => '画像検索',
+	'wikia-visualeditor-media-photo-policy' => '新しいフォトをアップロードするときはこのウィキアの画像ポリシーを忠実に守ってください',
+	'wikia-visualeditor-dialog-cancel-button' => 'キャンセル',
+	'wikia-visualeditor-dialog-done-button' => '完了',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => '閲覧',
 );
 
 /** Khmer (ភាសាខ្មែរ)
@@ -1063,6 +1105,13 @@ $messages['ko'] = array(
 	'wikia-visualeditor-dialog-preference-link-help' => '새로운 기능을 확인해보세요',
 	'wikia-visualeditor-dialog-preference-link-preferences' => '편집기 환경 설정을 변경해보세요',
 	'wikia-visualeditor-dialog-preference-start-button' => '확인',
+	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => '갤러리',
+	'wikia-visualeditor-dialog-wikiasinglemedia-title' => '갤러리 삽입',
+	'wikia-visualeditor-dialog-wikiasinglemedia-search' => '그림 검색하기',
+	'wikia-visualeditor-media-photo-policy' => '그림을 올릴 땐 반드시 위키아 그림 정책을 준수해주세요',
+	'wikia-visualeditor-dialog-cancel-button' => '취소',
+	'wikia-visualeditor-dialog-done-button' => '완료',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => '전체 보기',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -1407,6 +1456,13 @@ $messages['nl'] = array(
 	'wikia-visualeditor-dialog-preference-link-help' => 'Over de nieuwe functies lezen',
 	'wikia-visualeditor-dialog-preference-link-preferences' => 'Je bewerkingsvoorkeuren beheren',
 	'wikia-visualeditor-dialog-preference-start-button' => 'Begrepen!',
+	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => 'Galerij',
+	'wikia-visualeditor-dialog-wikiasinglemedia-title' => 'Galerij invoegen',
+	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'Zoek naar afbeeldingen',
+	'wikia-visualeditor-media-photo-policy' => 'Houd je alsjeblieft aan deze wikia zijn afbeeldingsrichtlijnen bij het uploaden van nieuwe foto\'s',
+	'wikia-visualeditor-dialog-cancel-button' => 'Annuleren',
+	'wikia-visualeditor-dialog-done-button' => 'Klaar',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'Bekijken',
 );
 
 /** Occitan (occitan)
@@ -1529,6 +1585,13 @@ $messages['pl'] = array(
 	'wikia-visualeditor-dialog-preference-link-help' => 'Dowiedz się więcej o nowych funkcjach',
 	'wikia-visualeditor-dialog-preference-link-preferences' => 'Dostosuj swoje preferencje edytora',
 	'wikia-visualeditor-dialog-preference-start-button' => 'OK',
+	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => 'Galeria',
+	'wikia-visualeditor-dialog-wikiasinglemedia-title' => 'Wstaw galerię',
+	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'Szukaj obrazów',
+	'wikia-visualeditor-media-photo-policy' => 'Proszę stosować się do polityki obrazów podczas dodawania nowych obrazów na tej wiki.',
+	'wikia-visualeditor-dialog-cancel-button' => 'Anuluj',
+	'wikia-visualeditor-dialog-done-button' => 'Zrobione',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'Podgląd',
 );
 
 /** Pashto (پښتو)
@@ -1580,6 +1643,13 @@ $messages['pt'] = array(
 	'wikia-visualeditor-dialog-preference-link-help' => 'Leia sobre as nossas novas funções',
 	'wikia-visualeditor-dialog-preference-link-preferences' => 'Controle as preferências do seu editor',
 	'wikia-visualeditor-dialog-preference-start-button' => 'OK',
+	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => 'Galeria',
+	'wikia-visualeditor-dialog-wikiasinglemedia-title' => 'Inserir Galeria',
+	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'Procurar por imagens',
+	'wikia-visualeditor-media-photo-policy' => 'Por favor, obedeça a política de imagens da Wikia quando enviar novas fotos ',
+	'wikia-visualeditor-dialog-cancel-button' => 'Cancelar',
+	'wikia-visualeditor-dialog-done-button' => 'Feito',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'Ver',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -1770,6 +1840,13 @@ $messages['ru'] = array(
 	'wikia-visualeditor-dialog-preference-link-help' => 'Прочитать о новых возможностях',
 	'wikia-visualeditor-dialog-preference-link-preferences' => 'Настроить предпочтения в редакторе',
 	'wikia-visualeditor-dialog-preference-start-button' => 'Попробовать!',
+	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => 'Галерея',
+	'wikia-visualeditor-dialog-wikiasinglemedia-title' => 'Добавить галерею',
+	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'Поиск изображений',
+	'wikia-visualeditor-media-photo-policy' => 'Пожалуйста, соблюдайте политику вики при загрузке новых изображений',
+	'wikia-visualeditor-dialog-cancel-button' => 'Отмена',
+	'wikia-visualeditor-dialog-done-button' => 'Готово',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'Увел.',
 );
 
 /** Sardinian (sardu)
@@ -2089,6 +2166,7 @@ $messages['vi'] = array(
 	'wikia-visualeditor-dialog-preference-link-help' => 'Tìm hiểu về tính năng mới',
 	'wikia-visualeditor-dialog-preference-link-preferences' => 'Quản lý tùy chọn soạn thảo của bạn',
 	'wikia-visualeditor-dialog-preference-start-button' => 'Hiểu rồi!',
+	'wikia-visualeditor-dialog-done-button' => 'Đã xong',
 );
 
 /** Volapük (Volapük)
@@ -2177,6 +2255,13 @@ $messages['zh-hans'] = array(
 	'wikia-visualeditor-dialog-preference-link-help' => '浏览新功能',
 	'wikia-visualeditor-dialog-preference-link-preferences' => '管理编辑器参数',
 	'wikia-visualeditor-dialog-preference-start-button' => '知道了',
+	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => '图片册',
+	'wikia-visualeditor-dialog-wikiasinglemedia-title' => '插入图片册',
+	'wikia-visualeditor-dialog-wikiasinglemedia-search' => '查找图片',
+	'wikia-visualeditor-media-photo-policy' => '在您上传图片的同时，请遵守这个社区的用户规范',
+	'wikia-visualeditor-dialog-cancel-button' => '取消',
+	'wikia-visualeditor-dialog-done-button' => '完成',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => '查看',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
@@ -2227,4 +2312,11 @@ $messages['zh-hant'] = array(
 	'wikia-visualeditor-dialog-orientation-text' => '這個頁面是由像您一樣的使用者建立、編輯和維護的。您也可以立刻作出貢獻。',
 	'wikia-visualeditor-dialog-orientation-start-button' => '開始編輯',
 	'wikia-visualeditor-dialog-transclusion-no-template-description' => '您正在編輯\\"$1\\"個模板。',
+	'wikia-visualeditor-dialogbutton-wikiasinglemedia-tooltip' => '圖片冊',
+	'wikia-visualeditor-dialog-wikiasinglemedia-title' => '插入圖片冊',
+	'wikia-visualeditor-dialog-wikiasinglemedia-search' => '查找圖片',
+	'wikia-visualeditor-media-photo-policy' => '在您上傳圖片的同時，請遵守這個社區的用戶規範',
+	'wikia-visualeditor-dialog-cancel-button' => '取消',
+	'wikia-visualeditor-dialog-done-button' => '完成',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => '查看',
 );

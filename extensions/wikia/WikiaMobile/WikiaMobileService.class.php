@@ -140,8 +140,7 @@ class WikiaMobileService extends WikiaService {
 			$trackingCode .= AnalyticsEngine::track(
 					'QuantServe',
 					AnalyticsEngine::EVENT_PAGEVIEW,
-					[],
-					['extraLabels'=> ['mobilebrowser']]
+					['extraLabels'=> ['Category.MobileWeb.WikiaMobile']]
 				) .
 				AnalyticsEngine::track(
 					'Comscore',

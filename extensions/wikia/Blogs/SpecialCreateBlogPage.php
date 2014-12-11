@@ -206,7 +206,10 @@ class CreateBlogPage extends SpecialCustomEditPage {
 			$oArticle->doEdit(
 				wfMsg("create-blog-empty-article"),     # body
 				wfMsg("create-blog-empty-article-log"), # summary
-				EDIT_NEW | EDIT_MINOR | EDIT_FORCE_BOT  # flags
+				EDIT_NEW | EDIT_MINOR | EDIT_FORCE_BOT, # flags
+				false,                                  # baseRevId
+				null,                                   # user
+				true                                    # forcePatrolled
 			);
 		}
 	}

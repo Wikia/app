@@ -84,11 +84,26 @@
 
 	> .default-height {
 		width: 300px;
-		height: 265px; // height of the ad including the label
+		height: 265px;
+	}
+
+	> .ad-in-content-c {
+		width: 300px;
+		height: 615px;
+	}
+
+	> .ad-in-content-b {
+		width: 160px;
+		height: 615px;
+	}
+
+	> .ad-in-content-a {
+		width: 300px;
+		height: 265px;
 	}
 
 	> .wikia-ad {
-		margin: 12px 0 30px 30px; // margin-right set below per breakpoint
+		margin: 0 0 30px 30px; // margin-right set below per breakpoint
 	}
 }
 
