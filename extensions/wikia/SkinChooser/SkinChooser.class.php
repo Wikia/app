@@ -196,13 +196,13 @@ class SkinChooser {
 		$request = $context->getRequest();
 		$title = $context->getTitle();
 		$user = $context->getUser();
-		$useskin = $request->getVal( 'useskin' );
+		$useskin = $request->getVal( 'useskin', null );
 
 		/**
 		 * check headers sent by varnish, if X-Skin is send force skin unless there is useskin param in url
 		 * @author eloy, requested by artur
 		 */
-		if ( !$useskin && function_exists( 'apache_request_headers' ) ) {
+		if ( is_null( $useskin ) && function_exists( 'apache_request_headers' ) ) {
 			$headers = apache_request_headers();
 
 			if ( isset( $headers[ "X-Skin" ] ) && in_array( $headers[ "X-Skin" ], array( "monobook", "oasis", "venus",
@@ -280,7 +280,7 @@ class SkinChooser {
 
 		wfProfileOut( __METHOD__ . '::GetSkinLogic' );
 
-		$chosenSkin = !$useskin ? $userSkin : $useskin;
+		$chosenSkin = !is_null( $useskin ) ? $useskin : $userSkin;
 
 		$elems = explode( '-', $chosenSkin );
 
