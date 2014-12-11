@@ -242,7 +242,7 @@ ve.ui.Toolbar.prototype.getSurface = function () {
 /**
  * Sets up handles and preloads required information for the toolbar to work.
  * This must be called immediately after it is attached to a visible document.
-*/
+ */
 ve.ui.Toolbar.prototype.initialize = function () {
 	// Parent method
 	OO.ui.Toolbar.prototype.initialize.call( this );
