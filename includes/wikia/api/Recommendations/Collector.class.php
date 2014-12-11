@@ -42,10 +42,17 @@ class Collector {
 	 * @return array
 	 */
 	protected function getDataProviders() {
-		return [
+		global $wgWikiDirectedAtChildrenByStaff, $wgWikiDirectedAtChildrenByFounder;
+
+		$availableDataProviders = [
 			(new DataProviders\Video),
-			(new DataProviders\Category),
-			(new DataProviders\TopArticles)
+			(new DataProviders\Category)
 		];
+
+		if ( empty( $wgWikiDirectedAtChildrenByStaff ) && empty( $wgWikiDirectedAtChildrenByFounder ) ) {
+			$availableDataProviders[] = (new DataProviders\TopArticles);
+		}
+
+		return $availableDataProviders;
 	}
 }

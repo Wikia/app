@@ -85,6 +85,37 @@ define(
 		}
 
 		/**
+		 * @desc Get numer of slots that should be shown
+		 * @param number availableSlotsCount
+		 * @returns {number}
+		 */
+		function getSlotsToShowCount(availableSlotsCount) {
+			var out = 0;
+			if (availableSlotsCount >= 9) {
+				out = 9;
+			} else if (availableSlotsCount >= 5) {
+				out = 5;
+			} else if (availableSlotsCount >= 4) {
+				out = 4;
+			}
+			return out;
+		}
+
+		/**
+		 * @desc Check whether current slot should be displayed as big one
+		 * @param number index slot index
+		 * @param number slotsToShowCount number of slots that should be shown
+		 * @returns {boolean}
+		 */
+		function shouldDisplayBigSlot(index, slotsToShowCount) {
+			var out = false;
+			if (index === 0 && slotsToShowCount !== 4) {
+				out = true;
+			}
+			return out;
+		}
+
+		/**
 		 * @desc Render recommendations module
 		 * @param object slotsData
 		 * @param array mustacheTemplates
@@ -95,12 +126,13 @@ define(
 				i,
 				slot = {},
 				slots = [],
-				slotsDataLength = slotsData.length,
 				slotSizes,
-				template;
+				template,
+				slotsToShowCount = getSlotsToShowCount(slotsData.length);
 
 			slotSizes = getSlotSizes();
-			for (i = 0; i < slotsDataLength; i++) {
+
+			for (i = 0; i < slotsToShowCount; i++) {
 				slot = {
 					title: slotsData[i].title,
 					url: slotsData[i].url,
@@ -108,7 +140,7 @@ define(
 					type: slotsData[i].type
 				};
 
-				if (i === 0) {
+				if (shouldDisplayBigSlot(i, slotsToShowCount)) {
 					slot.slotType = 'big';
 				} else {
 					slot.slotType = 'small';
