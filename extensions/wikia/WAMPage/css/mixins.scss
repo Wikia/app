@@ -1,0 +1,70 @@
+@mixin verticals-colors($property, $vertical-name) {
+	@if $vertical-name == 'tv' {
+		#{$property}: $color-vertical-tv;
+	} @else if $vertical-name == 'games' {
+		#{$property}: $color-vertical-games;
+	} @else if $vertical-name == 'books' {
+		#{$property}: $color-vertical-books;
+	} @else if $vertical-name == 'comics' {
+		#{$property}: $color-vertical-comics;
+	} @else if $vertical-name == 'lifestyle' {
+		#{$property}: $color-vertical-lifestyle;
+	} @else if $vertical-name == 'music' {
+		#{$property}: $color-vertical-music;
+	} @else if $vertical-name == 'movies' {
+		#{$property}: $color-vertical-movies;
+	}
+}
+
+@mixin verticals-colors-classes($list) {
+	@each $vertical-name in $list {
+		.vertical-#{$vertical-name} {
+			@include verticals-colors('color', $vertical-name);
+		}
+		.vertical-bg-#{$vertical-name} {
+			@include verticals-colors('background-color', $vertical-name);
+		}	
+	}
+}
+
+@mixin vertical-icon($icon-name, $selected) {
+	@if $selected == 1 {
+		background-image: url("/extensions/wikia/WAMPage/images/#{$icon-name}-black.svg"); /* base64 */
+	} @else if $selected == 0 {
+		background-image: url("/extensions/wikia/WAMPage/images/#{$icon-name}.svg"); /* base64 */
+	}
+}
+
+@mixin all-icons($selected) {
+	.icon-vertical-all {
+		@include vertical-icon('all', $selected);
+	}
+
+	.icon-vertical-comics {
+		@include vertical-icon('comics', $selected);
+	}
+
+	.icon-vertical-games {
+		@include vertical-icon('games', $selected);
+	}
+
+	.icon-vertical-books {
+		@include vertical-icon('books', $selected);
+	}
+
+	.icon-vertical-movies {
+		@include vertical-icon('movies', $selected);
+	}
+
+	.icon-vertical-music {
+		@include vertical-icon('music', $selected);
+	}
+
+	.icon-vertical-lifestyle {
+		@include vertical-icon('lifestyle', $selected);
+	}
+
+	.icon-vertical-tv {
+		@include vertical-icon('tv', $selected);
+	}
+}

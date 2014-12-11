@@ -1,3 +1,5 @@
+$verticals-list: 'tv' 'games' 'books' 'comics' 'lifestyle' 'music' 'movies';
+$color-vertical-all: #c5ced9;
 $color-wam-blue: #1a5eB8;
 $color-wam-grey: #3a3a3a;
 $color-wam-light-grey: #f7f7f7;
@@ -7,9 +9,19 @@ $color-wam-white: #fff;
 @import "skins/shared/color";
 @import "skins/shared/mixins/clearfix";
 @import "skins/oasis/css/core/layout";
-@import "extensions/wikia/WAMPage/css/verticals-tabs";
+@import "extensions/wikia/WAMPage/css/mixins";
 
 .WAMPage {
+	/* Font of a vertical color */
+	@include verticals-colors-classes($verticals-list);
+
+	.vertical-all {
+		color: $color-vertical-all;
+	}
+	.vertical-bg-all {
+		background-color: $color-vertical-all;
+	}
+
 	.WikiaPage .WikiaPageContentWrapper {
 		padding-top: 0;
 	}
@@ -26,7 +38,7 @@ $color-wam-white: #fff;
 		height: 100px;
 		@if ( $responsive-layout-enabled ) {
 			width: 100%;
-		} else {
+		} @else {
 			width: 1030px;
 		}
 		h2 {
@@ -67,7 +79,7 @@ $color-wam-white: #fff;
 		font-size: 40px;
 		font-weight: bold;
 		line-height: 40px;
-		margin: 0;
+		margin: 20px 0 0 23px;
 		text-transform: capitalize;
 
 		@if ( $responsive-layout-enabled ) {
@@ -85,15 +97,17 @@ $color-wam-white: #fff;
 	}
 
 	.wam-top-gainers-list {
-		margin: 25px 0 0 22px;
+		display: inline-block;
+		float: right;
+		margin: 45px 45px 0 22px;
 		padding: 0;
+		width: 240px;
 
 		.wam-top-gainers-list-item {
 			color: $color-wam-white;
 			font-size: 16px;
-			line-height: 20px;
-			margin-bottom: 10px;
-			max-width: 200px;
+			line-height: 24px;
+			margin-bottom: 20px;
 		}
 
 		.wam-top-gainers-list-item:first-child {
@@ -101,13 +115,18 @@ $color-wam-white: #fff;
 		}
 	}
 
+	.wam-top-gainers-cards {
+		display: inline-block;
+		float: left;
+		width: 680px;
+	}
+
 	.wam-cards {
 		width: 680px;
 		height: 235px;
-		float: right;
 		font-size: 0.85em;
 		font-weight: bold;
-		margin-top: 105px;
+		margin: 42px 0 0 10px;
 		overflow: hidden;
 		position: relative;
 		.wam-card {
@@ -144,30 +163,6 @@ $color-wam-white: #fff;
 				width: 40px;
 				background-repeat: no-repeat;
 				background-position: 5px 50%;
-			}
-			.vertical-all {
-				background-color: $color-wam-blue;
-			}
-			.vertical-tv {
-				background-color: $color-vertical-tv;
-			}
-			.vertical-games {
-				background-color: $color-vertical-games;
-			}
-			.vertical-books {
-				background-color: $color-vertical-books;
-			}
-			.vertical-comics {
-				background-color: $color-vertical-comics;
-			}
-			.vertical-lifestyle {
-				background-color: $color-vertical-lifestyle;
-			}
-			.vertical-music {
-				background-color: $color-vertical-music;
-			}
-			.vertical-movies {
-				background-color: $color-vertical-movies;
 			}
 			.wam-up {
 				background-image: url('/extensions/wikia/WAMPage/images/wam-up.png'); /* base64 */
@@ -270,51 +265,74 @@ $color-wam-white: #fff;
 	}
 }
 
-.WikiaArticle .wam-tabs {
-	margin: 0;
-	overflow: hidden;
+.wam-verticals-tabs {
+	display: table;
+	margin: 0 0 40px 0;
+
+	ul {
+		background-color: $color-wam-light-grey;
+		border: solid $color-wam-border-grey;
+		border-collapse: collapse;
+		border-width: 1px 0;
+		display: table-row;
+	}
+
+	ul::after {
+		content: ' ';
+		display: table-cell;
+		border: solid $color-wam-border-grey;
+		border-width: 1px 0;
+		width: 100%;
+	}
+
 	li {
-		border-left: 1px solid #eaeaea;
-		float: left;
-		height: 72px;
-		list-style: none;
+		border-collapse: collapse;
+		border: solid $color-wam-border-grey;
+		border-width: 1px 1px 1px 0;
+		display: table-cell;
+		list-style-type: none;
 		margin: 0;
-		@if ( $responsive-layout-enabled ) {
-			width: 19%;
-			// one-fifth minus four 1px-width borders for tabs
-			width: -moz-calc(20%  - 4px);
-			width: calc(20%  - 4px);
-		}
+		min-width: 80px;
+		width: 0;
+	}
+
+	li.selected {
+		background-color: #fff;
+		border-bottom: 1px solid #fff;
+	}
+
+	li.selected,
+	li:hover {
 		a {
-			color: #666;
-			display: block;
-			font-weight: bold;
-			height: 45px;
-			font-size: 13px;
-			line-height: 15px;
-			padding: 23px 15px 0 15px;
-			text-transform: uppercase;
-			@if ( $responsive-layout-enabled == false ) {
-				width: 172px;
-			}
-		}
-		a:hover {
-			color: #0a5fa3;
-			text-decoration: none;
-		}
-		a.selected {
-			border-bottom: 4px solid #0a5fa3;
+			@include all-icons(1);
+
+			color: $color-wam-grey;
 		}
 	}
-	li:first-child {
-		border-left: none;
-		a {
-			@if ( $responsive-layout-enabled == false ) {
-				width: 181px;
-			}
-		}
+
+	a {
+		@include all-icons(0);
+
+		color: $color-wam-blue;
+		cursor: pointer;
+		display: block;
+		font-size: 12px;
+		font-weight: bold;
+		padding: 10px 20px;
+		text-align: center;
+		text-decoration: none;
+		text-transform: uppercase;
+	}
+
+	span {
+		background-repeat: no-repeat;
+		margin: 0 auto;
+		display: block;
+		height: 32px;
+		width: 32px;
 	}
 }
+
 
 .wam-index {
 	margin: 0 0 50px;
@@ -402,9 +420,8 @@ $color-wam-white: #fff;
 
 			td, th {
 				height: 35px;
-				border: 1px solid #e8e8e8;
-				border-left: none;
-				border-right: none;
+				border: solid #e8e8e8;
+				border-width: 1px 0;
 				padding: 0 10px;
 			}
 

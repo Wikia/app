@@ -1,32 +1,29 @@
 <div class="wam-header">
-	<div class="wam-top-gainers">
-		<h2 class="wam-top-gainers-header"><?= wfMessage('wampage-top-gainers-header')->escaped(); ?></h2>
-		<? if ( $isSingleVertical ) : ?>
-			<h3 class="wam-top-gainers-subheader"><?= wfMessage('wampage-top-gainers-subheader', $filterVerticals[ $selectedVerticalId ] )->escaped(); ?></h3>
-		<? endif; ?>
-		<ol class="wam-top-gainers-list">
-		<?	foreach( $visualizationWikis as $k => $wiki ): ?>
-				<li class="wam-top-gainers-list-item"><?= $wiki['title'] ?></li>
-		<?	endforeach; ?>
-		</ol>
+	<div class="wam-top-gainers-cards">
+		<h2 class="wam-top-gainers-header"><?= wfMessage('wampage-top-gainers-header')->escaped(); ?><? if ( $isSingleVertical ) : ?>: <span class="vertical-<?= $verticalsShorts[ $selectedVerticalId ] ?>"><?= $filterVerticals[ $selectedVerticalId ] ?></span><? endif; ?></h2>
+		<div class="wam-cards">
+			<? 	$i = 1;
+				foreach( $visualizationWikis as $k => $wiki ): ?>
+				<a href="http://<?= $wiki['url'] ?>" class="wam-card card<?= $i++ ?>">
+					<figure>
+						<? if(!empty($wiki['wiki_image'])): ?>
+							<img src="<?= $wiki['wiki_image'] ?>" alt="<?= $wiki['title'] ?>" title="<?= $wiki['title'] ?>" />
+						<? endif ?>
+						<span><?= $wiki['title'] ?></span>
+					</figure>
+					<div class="wam-score vertical-bg-<?= $verticalsShorts[ $wiki['vertical_id'] ] ?> wam-<?= $wiki['change'] ?>">
+						<?= $wg->ContLang->formatNum( number_format( $wiki['wam'], WAMPageModel::SCORE_ROUND_PRECISION ) ) ?>
+					</div>
+					<span class="wam-vertical"><?= $wiki['vertical_name'] ?></span>
+				</a>
+			<? endforeach ?>
+		</div>
 	</div>
-	<div class="wam-cards">
-		<? 	$i = 1;
-			foreach( $visualizationWikis as $k => $wiki ): ?>
-			<a href="http://<?= $wiki['url'] ?>" class="wam-card card<?= $i++ ?>">
-				<figure>
-					<? if(!empty($wiki['wiki_image'])): ?>
-						<img src="<?= $wiki['wiki_image'] ?>" alt="<?= $wiki['title'] ?>" title="<?= $wiki['title'] ?>" />
-					<? endif ?>
-					<span><?= $wiki['title'] ?></span>
-				</figure>
-				<div class="wam-score vertical-<?= $verticalsShorts[ $wiki['vertical_id'] ] ?> wam-<?= $wiki['change'] ?>">
-					<?= $wg->ContLang->formatNum( number_format( $wiki['wam'], WAMPageModel::SCORE_ROUND_PRECISION ) ) ?>
-				</div>
-				<span class="wam-vertical"><?= $wiki['vertical_name'] ?></span>
-			</a>
-		<? endforeach ?>
-	</div>
+	<ol class="wam-top-gainers-list">
+	<?	foreach( $visualizationWikis as $k => $wiki ): ?>
+			<li class="wam-top-gainers-list-item"><?= $wiki['title'] ?></li>
+	<?	endforeach; ?>
+	</ol>
 </div>
 
 <div class="wam-content">
