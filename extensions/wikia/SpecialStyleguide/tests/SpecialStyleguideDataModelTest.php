@@ -5,7 +5,7 @@ class SpecialStyleguideDataModelTest extends WikiaBaseTest {
 		$this->setupFile =  dirname(__FILE__) . '/../SpecialStyleguide.setup.php';
 		parent::setUp();
 	}
-	
+
 	private $mockedSectionData = array(
 		'header' => [
 			'home' => [
@@ -58,7 +58,7 @@ class SpecialStyleguideDataModelTest extends WikiaBaseTest {
 			]
 		],
 	);
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.02869 ms
@@ -73,7 +73,7 @@ class SpecialStyleguideDataModelTest extends WikiaBaseTest {
 		/** @var SpecialStyleguideDataModel $modelMock */
 		$this->assertEquals( $expectedResults, $modelMock->getPartOfSectionData( $sectionNamesArray ) );
 	}
-	
+
 	public function testGetSectionDataProvider() {
 		return [
 			[
@@ -106,5 +106,5 @@ class SpecialStyleguideDataModelTest extends WikiaBaseTest {
 			],
 		];
 	}
-	
+
 }
