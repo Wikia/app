@@ -13,6 +13,17 @@ $dir = dirname(__FILE__);
 // WikiaApp
 $app = F::app();
 
+$wgExtensionCredits[ 'other' ][ ] = array(
+	'name' => 'ShareButton',
+	'author' => 'Wikia',
+	'descriptionmsg' => 'share-buttons-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ShareButtons',
+);
+
+//i18n
+$wgExtensionMessagesFiles['ShareButton'] = $dir . '/ShareButton.i18n.php';
+
+
 // autoloaded classes
 $wgAutoloadClasses['ShareButton'] =  "$dir/ShareButton.class.php";
 

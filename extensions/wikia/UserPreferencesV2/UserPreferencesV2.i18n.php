@@ -2,6 +2,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'preferences-v2-desc' => 'User Preferences v2',
 	'prefs-personal' => 'My Info',
 	'preferences-v2-username' => 'My username:',
 	'preferences-v2-usergroups' => 'My user groups:',
@@ -63,6 +64,7 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'preferences-v2-desc' => '{{desc}}',
 	'prefs-personal' => 'Title of a tab in [[Special:Preferences]].',
 	'preferences-v2-username' => 'Label for the user name listed on [[Special:Preferences]].',
 	'preferences-v2-usergroups' => 'Label for the user groups listed on [[Special:Preferences]].',

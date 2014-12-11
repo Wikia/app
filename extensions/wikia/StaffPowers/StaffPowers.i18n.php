@@ -12,6 +12,7 @@ $messages = array();
  * @author Łukasz Garczewski (TOR) <tor@wikia-inc.com>
  */
 $messages['en'] = array(
+	'staffpowers-desc' => 'Gives Staff various superpowers like unblockable.',
 	'staffpowers-ipblock-abort' => 'Blocking Wikia Staff, Wikia Helpers, or members of our Volunteer Spam Task Force user team (VSTF) is not possible. Please use the [[Special:Contact|contact form]] to report any issues or problems with our staff.'
 );
 
@@ -19,6 +20,7 @@ $messages['en'] = array(
  * @author Lloffiwr
  */
 $messages['qqq'] = array(
+	'staffpowers-desc' => '{{desc}}',
 	'staffpowers-ipblock-abort' => "Do not translate (but do add additional text if you like) <nowiki>[[Special:Contact</nowiki>'''|optional additional text'''<nowiki>]]</nowiki>.",
 );
 

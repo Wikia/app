@@ -13,6 +13,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'author' => 'Tomasz Odrobny',
 	'descriptionmsg' => 'stafflog-desc',
 	'version' => '0.0.1',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/StaffLog'
 );
 
 $dir = __DIR__ . '/';

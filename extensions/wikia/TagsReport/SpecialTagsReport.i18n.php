@@ -4,6 +4,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'tagsreport' => 'Tags report',
+	'tagsreport-desc' => 'List of articles which use special tags in text (like \'dpl\', \'youtube\')',
 	'tagsreporttitle'  => 'Tags report', 
 	'tagsreportselecttag' => 'Select tag:',
 	'tagsreportgo' => 'Show',
@@ -23,6 +24,7 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'tagsreport-desc' => '{{desc}}',
 	'tagsreportselecttag' => '{{Identical|Select tag}}',
 	'tagsreportgo' => '{{Identical|Show}}',
 	'tagsreportmainnspace' => '{{Identical|Main}}',

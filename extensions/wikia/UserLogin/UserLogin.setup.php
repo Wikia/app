@@ -8,6 +8,9 @@
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'UserLogin',
+	'author' => array('Hyun Lim', 'Saipetch Kongkatong'),
+	'descriptionmsg' => 'userlogin-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/UserLogin'
 );
  
 $dir = dirname(__FILE__) . '/';
