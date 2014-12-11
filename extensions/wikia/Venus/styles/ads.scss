@@ -102,23 +102,24 @@
 		height: 265px;
 	}
 
-	> .incontent-c {
-		width: 300px;
-		height: 615px;
+	> .wikia-ad {
+		margin: 0 0 30px 30px; // margin-right set below per breakpoint
 	}
+}
 
-	> .incontent-b {
-		width: 160px;
-		height: 615px;
-	}
-
-	> .incontent-a {
+$incontent-slots: INCONTENT_1, INCONTENT_2, INCONTENT_3;
+@each $incontent-slot in $incontent-slots {
+	#{$incontent-slot}A .default-height {
 		width: 300px;
 		height: 265px;
 	}
-
-	> .wikia-ad {
-		margin: 0 0 30px 30px; // margin-right set below per breakpoint
+	#{$incontent-slot}B .default-height {
+		width: 160px;
+		height: 615px;
+	}
+	#{$incontent-slot}C .default-height {
+		width: 300px;
+		height: 615px;
 	}
 }
 
