@@ -32,7 +32,7 @@
 		<h2><?= wfMessage( 'wampage-header-wam' )->escaped(); ?></h2>
 		<h3><?= wfMessage( 'wampage-subheader-wam' )->escaped(); ?></h3>
 		<p><?= wfMessage( 'wampage-content' )->parse(); ?></p>
-		<span class="wam-content-faq-link"><?= wfMessage( 'wampage-content-faq-link' )->parse(); ?></span>
+		<span class="wam-content-faq-link"><?= wfMessage( 'wampage-content-faq-link', $faqPage )->parse(); ?></span>
 	</div>
 </div>
 

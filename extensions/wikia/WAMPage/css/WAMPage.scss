@@ -73,7 +73,7 @@ $color-wam-white: #fff;
 
 	}
 
-	.wam-top-gainers-header {
+	h2 {
 		border: 0;
 		color: $color-wam-white;
 		font-size: 40px;
@@ -81,19 +81,6 @@ $color-wam-white: #fff;
 		line-height: 40px;
 		margin: 20px 0 0 23px;
 		text-transform: capitalize;
-
-		@if ( $responsive-layout-enabled ) {
-			width: auto;
-		} @else {
-			width: 300px;
-		}
-	}
-
-	.wam-top-gainers-subheader {
-		color: $color-wam-white;
-		font-size: 18px;
-		line-height: 28px;
-		margin: 5px 0 0 0;
 	}
 
 	.wam-top-gainers-list {
