@@ -26,13 +26,13 @@ class WAMPageModel extends WikiaModel {
 
 	static protected $verticalIds = [
 		WikiFactoryHub::HUB_ID_OTHER,
-		WikiFactoryHub::HUB_ID_TV,
-		WikiFactoryHub::HUB_ID_VIDEO_GAMES,
-		WikiFactoryHub::HUB_ID_BOOKS,
 		WikiFactoryHub::HUB_ID_COMICS,
-		WikiFactoryHub::HUB_ID_LIFESTYLE,
-		WikiFactoryHub::HUB_ID_MUSIC,
+		WikiFactoryHub::HUB_ID_TV,
 		WikiFactoryHub::HUB_ID_MOVIES,
+		WikiFactoryHub::HUB_ID_MUSIC,
+		WikiFactoryHub::HUB_ID_BOOKS,
+		WikiFactoryHub::HUB_ID_VIDEO_GAMES,
+		WikiFactoryHub::HUB_ID_LIFESTYLE,
 	];
 
 	public function __construct() {
