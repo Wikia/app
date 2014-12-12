@@ -32,15 +32,14 @@ class Related extends Base {
 		$videoResults = $this->app->sendRequest( 'WikiaSearchController', 'searchVideosByTopics', $params )->getData();
 		$videosWithDetails = $this->getVideoDetailFromVideoWiki( $this->getVideoTitles( $videoResults ) );
 
-		$videos = [];
 		foreach ( $videosWithDetails as $video ) {
-			if ( count( $videos ) >= $this->limit ) {
+			if ( $this->atVideoLimit() ) {
 				break;
 			}
-			$this->addToList( $videos, $video );
+			$this->addVideo( $video );
 		}
 
-		return $videos;
+		return $this->videos;
 	}
 }
 

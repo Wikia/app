@@ -17,8 +17,8 @@ class Vertical extends Base {
 		\WikiFactoryHub::CATEGORY_ID_LIFESTYLE     => 'Lifestyle',
 	];
 
-	public function __construct( $userRegion, $sort = '' ) {
-		parent::__construct( $userRegion, $sort );
+	public function __construct( array $params ) {
+		parent::__construct( $params );
 
 		$this->initCategories();
 	}
@@ -61,9 +61,9 @@ class Vertical extends Base {
 	 * @return array - list of vertical videos (premium videos)
 	 */
 	public function getModuleVideos() {
-		$videos = $this->getVideoListFromVideoWiki( $this->categories, $this->limit, $this->sort );
+		$this->addVideosFromVideoWiki( $this->categories, $this->limit, $this->sort );
 
-		return $videos;
+		return $this->videos;
 	}
 
 	/**

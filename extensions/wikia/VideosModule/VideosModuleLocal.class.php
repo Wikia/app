@@ -25,7 +25,6 @@ class Local extends Base {
 	}
 
 	/**
-	 * @param string $sort [recent/trend] - how to sort the results
 	 * @return array - list of vertical videos (premium videos)
 	 */
 	public function getModuleVideos() {
@@ -37,14 +36,13 @@ class Local extends Base {
 		$videoList = $mediaService->getVideoList( $this->sort, $filter, $paddedLimit );
 		$videosWithDetails = $this->getVideoDetailFromLocalWiki( $videoList );
 
-		$videos = [];
 		foreach ( $videosWithDetails as $video ) {
-			if ( count( $videos ) >= $this->limit ) {
+			if ( $this->atVideoLimit() ) {
 				break;
 			}
-			$this->addToList( $videos, $video );
+			$this->addVideo( $video );
 		}
 
-		return $videos;
+		return $this->videos;
 	}
 }

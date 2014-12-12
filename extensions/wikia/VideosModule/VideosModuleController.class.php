@@ -4,28 +4,29 @@ class VideosModuleController extends WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 	const DEFAULT_REGION = 'US';
 
+	/** @var  VideosModule\Staff */
+	protected $staffModule;
+
+	/** @var  VideosModule\Base */
+	protected $generalModule;
+
 	/**
 	 * VideosModule
 	 * Returns videos to populate the Videos Module. First check if there are
 	 * categories associated with this wiki for the Videos Module and pull
 	 * premium videos from those categories. Finally, if neither of those
 	 * first conditions are true, search for premium videos related to the wiki.
-	 * @responseParam string $title - i18nized title of the videos module
+	 * @responseParam string $title - i18n'ized title of the videos module
 	 * @responseParam array $videos - list of videos
 	 * @responseParam array $staffVideos - list of staff picked videos
 	 */
 	public function index() {
-		$userRegion = $this->request->getVal( 'userRegion', self::DEFAULT_REGION );
+		$this->initModules();
 
-		$staffModule = new VideosModule\Staff( $userRegion );
-		$staffVideos = $staffModule->getVideos();
+		$staffVideos = $this->staffModule->getVideos();
+		$videos = $this->generalModule->getVideos();
 
-		if ( !empty( $this->wg->VideosModuleCategories )  ) {
-			$module = new VideosModule\Category( $userRegion );
-		} else {
-			$module = new VideosModule\Related( $userRegion );
-		}
-		$videos = $module->getVideos();
+		$videos = $this->removeDuplicates( $videos, $staffVideos );
 
 		$this->response->setData( [
 			'title'	 => wfMessage( 'videosmodule-title-default' )->escaped(),
@@ -37,22 +38,60 @@ class VideosModuleController extends WikiaController {
 		$this->response->setCacheValidity( VideosModule\Base::CACHE_TTL );
 	}
 
+	/**
+	 * Clears the VideosModule cache.  Takes same parameters as the index method.
+	 */
 	public function clear() {
-		$userRegion = $this->request->getVal( 'userRegion', VideosModule\Base::DEFAULT_REGION );
+		$this->initModules();
 
-		$staffModule = new VideosModule\Staff( $userRegion );
-		$staffModule->clearCache();
-
-		if ( !empty( $this->wg->VideosModuleCategories )  ) {
-			$module = new VideosModule\Category( $userRegion );
-		} else {
-			$module = new VideosModule\Related( $userRegion );
-		}
-		$module->clearCache();
+		$this->staffModule->clearCache();
+		$this->generalModule->clearCache();
 
 		$this->response->setData([
 			'result' => 'ok',
 			'msg' => '',
 		]);
+	}
+
+	/**
+	 * Initialize the modules used in this request.
+	 */
+	protected function initModules() {
+		$userRegion = $this->request->getVal( 'userRegion', self::DEFAULT_REGION );
+		$params = [ 'userRegion' => $userRegion ];
+
+		$this->staffModule = new VideosModule\Staff( $params );
+
+		if ( !empty( $this->wg->VideosModuleCategories )  ) {
+			$this->generalModule = new VideosModule\Category( $params );
+		} else {
+			$this->generalModule = new VideosModule\Related( $params );
+		}
+	}
+
+	/**
+	 * Since VideosModule is using Async cache, its not practical to send a list of video titles to the offline job.
+	 * Dedup the titles here instead of in VideosModule
+	 *
+	 * @param array $removeFromList
+	 * @param array $existingList
+	 *
+	 * @return array
+	 */
+	protected function removeDuplicates( array $removeFromList, array $existingList ) {
+		$existingTitles = [];
+		foreach ( $existingList as $videoDetail ) {
+			$existingTitles[] = $videoDetail['title'];
+		}
+
+		$resultList = [];
+		foreach ( $removeFromList as $videoDetail ) {
+			if ( array_key_exists( $videoDetail['title'], $existingTitles ) ) {
+				continue;
+			}
+			$resultList[] = $videoDetail;
+		}
+
+		return $resultList;
 	}
 }

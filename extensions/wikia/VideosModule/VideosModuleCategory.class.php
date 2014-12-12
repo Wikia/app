@@ -12,8 +12,8 @@ class Category extends Base {
 	const SOURCE = 'wiki-categories';
 	const LIMIT = 40;
 
-	public function __construct( $userRegion, $sort = '' ) {
-		parent::__construct( $userRegion, $sort );
+	public function __construct( array $params ) {
+		parent::__construct( $params );
 
 		$this->initCategories();
 	}
@@ -71,9 +71,9 @@ class Category extends Base {
 	 * @return array
 	 */
 	public function getModuleVideos() {
-		$videos = $this->getVideoListFromVideoWiki( $this->categories, $this->limit, $this->sort );
+		$this->addVideosFromVideoWiki( $this->categories, $this->limit, $this->sort );
 
-		return $videos;
+		return $this->videos;
 	}
 
 	/**
