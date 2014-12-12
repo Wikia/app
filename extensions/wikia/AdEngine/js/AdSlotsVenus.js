@@ -17,7 +17,7 @@ require([
 		inContentLeaderboards = ['INCONTENT_LEADERBOARD_1', 'INCONTENT_LEADERBOARD_2'],
 		slotsAdded = 0,
 		maxSlots = 2,
-		minOffset = 750 + 125, // 250 = height of the ad
+		minOffset = 1100, // 250 = height of the ad
 		offsetMap = [ [ -minOffset, minOffset ] ],
 		adHtml = '<div class="ad-in-content"><div id="%%ID%%" class="wikia-ad default-height"></div></div>',
 		labelHtml = '<label class="wikia-ad-label"></label>',
