@@ -2,9 +2,10 @@
  * This file is used for setting frontend data we want to track in Bucky
  */
 require([
+	'jquery',
 	'wikia.geo',
 	'wikia.window'
-], function (geo, window) {
+], function ($, geo, window) {
 	'use strict';
 
 	$(function () {
