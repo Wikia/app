@@ -52,7 +52,7 @@ class AnalyticsEngine {
 	private static function getProvider( $provider ) {
 		$className = "AnalyticsProvider{$provider}";
 		if ( !class_exists( $className ) ) {
-			throw new Exception('<!-- Invalid provider for AnalyticsEngine::getTrackCode -->');
+			throw new Exception("<!-- Invalid provider for AnalyticsEngine::getTrackCode. $className doesn't exist. -->");
 		}
 		return new $className();
 	}
