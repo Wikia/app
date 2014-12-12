@@ -87,7 +87,12 @@ class ImageReviewTask extends BaseTask {
 
 		$oDB = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
 
-		foreach ( $aDeletionList as $aImageData ) {
+		foreach ( $aDeletionList as $aRow ) {
+			$aImageData = [
+				'wiki_id' => $aRow['wiki_id'],
+				'page_id' => $aRow['page_id'],
+			];
+
 			$oDB->delete(
 				'image_review',
 				$aImageData,
@@ -97,7 +102,7 @@ class ImageReviewTask extends BaseTask {
 			WikiaLogger::instance()->info( 'ImageReviewLog', [
 				'method' => __METHOD__,
 				'message' => 'Image removed from queue',
-				'params' => $aImageData,
+				'params' => $aRow,
 			] );
 		}
 	}

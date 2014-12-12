@@ -205,7 +205,12 @@ $black-half-transparent: rgba(0, 0, 0, .6);
 
 		.notification-message {
 			@include grid-column-width('medium', 3);
+
 			display: inline-block;
+
+			p {
+				margin: 0;
+			}
 		}
 
 		.avatars {
@@ -232,7 +237,13 @@ $black-half-transparent: rgba(0, 0, 0, .6);
 		}
 
 		&.empty, &.admin-notification {
-			padding: 20px;
+			padding: 17px 25px 17px 20px;
+		}
+
+		&.admin-notification {
+			.notification-message {
+				width: auto;
+			}
 		}
 
 		&.admin-notification:before {

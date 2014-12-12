@@ -406,7 +406,8 @@ abstract class BaseRssModel extends WikiaService {
 					]);
 
 					if(!empty($res['query']['pages'])) {
-						$page_id = array_shift(array_keys($res['query']['pages']));
+						$pages = array_keys( $res['query']['pages'] );
+						$page_id = array_shift( $pages );
 						$newItem = $item;
 						$newItem[ 'wikia_id' ] = $wikia_id;
 						$newItem[ 'page_id' ] = $page_id;

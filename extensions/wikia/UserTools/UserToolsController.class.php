@@ -62,6 +62,12 @@ class UserToolsController extends WikiaController {
 		] );
 	}
 
+	//Method used in SpecialPageUserCommand class
+	public function executeToolbarGetList() {
+		$service = $this->getToolbarService();
+		$this->allOptions = $service->listToJson($service->getAllList());
+	}
+
 	public function ToolbarConfigurationPopup() {
 		// Method stub
 	}

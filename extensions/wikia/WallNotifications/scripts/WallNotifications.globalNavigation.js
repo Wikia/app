@@ -49,6 +49,7 @@ require(
 				if ( this.getAttribute('id') === 'notifications' ) {
 					WallNotifications.$wallNotifications.addClass('show');
 				}
+				$('#globalNavigation').trigger('notifications-menu-opened');
 			},
 
 			closeNotifications: function() {

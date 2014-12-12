@@ -38,6 +38,10 @@
 			position: absolute;
 			top: -64px;
 		}
+
+		.editarea {
+			min-height: 59px;
+		}
 	}
 
 	.MiniEditorWrapper .toolbar {
@@ -149,6 +153,14 @@
 			padding: 20px 0;
 		}
 
+		p {
+			margin: 0;
+		}
+
+		p + p {
+			margin-top: 20px;
+		}
+
 		blockquote {
 			margin: 0;
 
@@ -156,7 +168,7 @@
 			.edited-by {
 				clear: both;
 				color: #aaa;
-				margin-top: 20px;
+				margin-top: 10px;
 
 				/* timestamp */
 				& > .permalink {
@@ -200,6 +212,7 @@
 
 					&.article-comm-reply {
 						padding: 5px;
+						visibility: visible;
 					}
 					&.article-comm-reply::before {
 						@include venus-icon($venus-icon-back);
@@ -225,18 +238,21 @@
 
 	/* avatars */
 	.speech-bubble-avatar {
-		margin-left: -70px;
+		margin: -10px 0 -7px -70px;
 
 		a {
 			display: inline-block;
 			font-weight: bold;
-			line-height: 50px;
+			line-height: 40px;
+			padding-left: 70px;
+			position: relative;
 		}
 	}
 
 	.avatar {
 		border-radius: 25px;
-		margin: 0 10px;
+		left: 0;
+		position: absolute;
 		vertical-align: middle;
 	}
 

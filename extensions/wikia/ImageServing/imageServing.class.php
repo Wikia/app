@@ -6,6 +6,7 @@
  * retriving thumbnails of those images which are scaled either by an aspect-ratio
  * or specific dimensions.
  */
+
 class ImageServing {
 	private $articles = array();
 	private $width;
@@ -304,15 +305,15 @@ class ImageServing {
 	}
 
 	/**
-	 * @param File $image
+	 * @param File|GlobalFile $image
 	 * @param $width
 	 * @param $height
 	 * @return string
 	 */
-	private function getVignetteUrl($image, $width, $height) {
+	private function getVignetteUrl(URLGeneratorInterface $image, $width, $height) {
 		list($top, $right, $bottom, $left) = $this->getCutParams($width, $height);
 
-		return VignetteRequest::fromFile($image)
+		return $image->getUrlGenerator()
 			->windowCrop()
 			->width($this->width)
 			->xOffset($left)

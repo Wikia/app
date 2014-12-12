@@ -43,7 +43,6 @@ function wfOasisSetup() {
 	$wgHooks['ArticleDeleteComplete'][] = 'NotificationsController::addPageDeletedConfirmation';
 	$wgHooks['ArticleUndelete'][] = 'NotificationsController::addPageUndeletedConfirmation';
 	#$wgHooks['EditPageSuccessfulSave'][] = 'NotificationsController::addSaveConfirmation'; // BugId:10129
-	$wgHooks['SkinTemplatePageBeforeUserMsg'][] = 'NotificationsController::addFacebookConnectConfirmation';
 	$wgHooks['SpecialMovepageAfterMove'][] = 'NotificationsController::addPageMovedConfirmation';
 	$wgHooks['SpecialPreferencesOnRender'][] = 'NotificationsController::addPreferencesConfirmation';
 	$wgHooks['UserLogoutComplete'][] = 'NotificationsController::addLogOutConfirmation';
@@ -58,14 +57,6 @@ function wfOasisSetup() {
 	// misc
 	$wgHooks['ArticleViewHeader'][]  = 'UserPagesHeaderController::saveFacebookConnectProfile';
 	$wgHooks['MakeGlobalVariablesScript'][] = 'OasisController::onMakeGlobalVariablesScript';
-
-	/*
-	 * TODO remove after Global Header ABtesting
-	 */
-	$wgHooks['WikiaSkinTopScripts'][] = 'OasisController::onWikiaSkinTopScripts';
-	/*
-	 *  END TODO
-	 */
 
 	// support "noexternals" URL param
 	global $wgNoExternals, $wgRequest;

@@ -3,35 +3,6 @@ use Wikia\Vignette\UrlConfig;
 use Wikia\Vignette\UrlGenerator;
 
 class VignetteRequest {
-	/**
-	 * @param File $file
-	 * @return UrlGenerator
-	 */
-	public static function fromFile( File $file ) {
-		$timestamp = $file->isOld() ? $file->getArchiveTimestamp() : $file->getTimestamp();
-
-		return self::fromConfigMap( [
-			'is-archive' => $file->isOld(),
-			'timestamp' => $timestamp,
-			'relative-path' => $file->getHashPath() . rawurlencode( $file->getName() ),
-			'bucket' => $file->getBucket(),
-			'path-prefix' => $file->getPathPrefix(),
-		] );
-	}
-
-	/**
-	 * @param GlobalFile $globalFile
-	 * @return UrlGenerator
-	 */
-	public static function fromGlobalFile( GlobalFile $globalFile ) {
-		return self::fromConfigMap( [
-			'is-archive' => false, // GlobalFile doesn't serve archive files
-			'timestamp' => $globalFile->getTimestamp(),
-			'relative-path' => $globalFile->getUrlRel(),
-			'bucket' => $globalFile->getBucket(),
-			'path-prefix' => $globalFile->getPathPrefix(),
-		] );
-	}
 
 	/**
 	 * create a UrlGenerator from a config map. $config must have the following keys: relative-path.
@@ -156,7 +127,7 @@ class VignetteRequest {
 	/**
 	 * Figure out if a url is a vignette url or not. If you're using this, you should feel sad, and a task should be
 	 * filed to fix whatever code you're using to not use this function.
-	 * 
+	 *
 	 * @param $url
 	 * @return bool
 	 */
