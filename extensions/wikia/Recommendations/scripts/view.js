@@ -1,7 +1,7 @@
 define(
 	'wikia.recommendations.view',
-	['wikia.mustache', 'JSMessages', 'wikia.thumbnailer', 'wikia.arrayHelper', 'venus.layout', 'wikia.window'],
-	function(mustache, msg, thumbnailer, arrayHelper, layout, w) {
+	['wikia.mustache', 'JSMessages', 'wikia.imageServing', 'wikia.thumbnailer', 'wikia.arrayHelper', 'venus.layout', 'wikia.window'],
+	function(mustache, msg, imageServing, thumbnailer, arrayHelper, layout, w) {
 		'use strict';
 
 		/**
@@ -11,7 +11,8 @@ define(
 		var slotColumnCounts = {
 			big: 6,
 			small: 3
-		};
+		},
+			slotSizes;
 
 		/**
 		 * @desc Get image width in px
@@ -126,8 +127,6 @@ define(
 				i,
 				slot = {},
 				slots = [],
-				slotSizes,
-				template,
 				slotsToShowCount = getSlotsToShowCount(slotsData.length);
 
 			slotSizes = getSlotSizes();
@@ -147,25 +146,7 @@ define(
 				}
 
 				if (slotsData[i].media) {
-					if (slotsData[i].media.thumbUrl) {
-						slot.thumbUrl = thumbnailer.getThumbURL(
-							slotsData[i].media.thumbUrl,
-							'image',
-							slotSizes[slot.slotType].width,
-							slotSizes[slot.slotType].height
-						);
-					} else {
-						slot.thumbUrl = w.wgCdnApiUrl + '/extensions/wikia/Recommendations/images/image_placeholder.svg';
-					}
-
-					if (slotsData[i].type === 'video') {
-						slot.videoKey = slotsData[i].media.videoKey;
-						slot.duration = formatDuration(slotsData[i].media.duration);
-						template = mustacheTemplates[2];
-					} else {
-						template = mustacheTemplates[1];
-					}
-					slot.media = mustache.render(template, slot);
+					slot.media = renderMedia(slot, slotsData[i], mustacheTemplates);
 				}
 				slots.push(slot);
 			}
@@ -175,6 +156,45 @@ define(
 				slots: slots
 			};
 			return mustache.render(mustacheTemplates[0], data);
+		}
+
+		/**
+		 * @desc Render recommendation media
+		 * @param object slot
+		 * @param object slotsData
+		 * @param array mustacheTemplates
+		 * @returns {string}
+		 */
+		function renderMedia(slot, slotsData, mustacheTemplates) {
+			var template;
+
+			if (slot.type === 'video') {
+				slot.videoKey = slotsData.media.videoKey;
+				slot.duration = formatDuration(slotsData.media.duration);
+				template = mustacheTemplates[2];
+
+				slot.thumbUrl = thumbnailer.getThumbURL(
+					slotsData.media.thumbUrl,
+					'image',
+					slotSizes[slot.slotType].width,
+					slotSizes[slot.slotType].height
+				);
+			} else {
+				template = mustacheTemplates[1];
+
+				if (slotsData.media.thumbUrl) {
+					slot.thumbUrl = imageServing.getThumbUrl(
+						slotsData.media.thumbUrl,
+						slotsData.media.originalWidth,
+						slotsData.media.originalHeight,
+						slotSizes[slot.slotType].width,
+						slotSizes[slot.slotType].height
+					);
+				} else {
+					slot.thumbUrl = w.wgCdnApiUrl + '/extensions/wikia/Recommendations/images/image_placeholder.svg';
+				}
+			}
+			return mustache.render(template, slot);
 		}
 
 		return {
