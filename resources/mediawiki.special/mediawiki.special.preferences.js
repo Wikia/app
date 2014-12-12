@@ -37,7 +37,9 @@ $legends.each( function( i, legend ) {
 		e.preventDefault();
 		// Handle hash manually to prevent jumping
 		// Therefore save and restore scrollTop to prevent jumping
-		var scrollTop = $(window).scrollTop();
+		var scrollTop = $(window).scrollTop(),
+			prefix,
+			classes;
 		window.location.hash = $(this).attr('href');
 		$(window).scrollTop(scrollTop);
 
@@ -46,9 +48,12 @@ $legends.each( function( i, legend ) {
 
 		/** Wikia change begin @see UC-145 */
 		// Make elements outside tabs targetable based on selected tab
-		$preferences.removeClass()
-			.addClass('jsprefs')
-			.addClass(ident);
+		prefix = 'container';
+		classes = $preferences[0].className.split(' ').filter(function (c) {
+			return c.lastIndexOf(prefix, 0) !== 0;
+		});
+		$preferences[0].className = $.trim(classes.join(' '));
+		$preferences.addClass(ident.replace('mw-prefsection', prefix));
 		/** Wikia change end */
 
 		$( '#preferences > fieldset' ).hide();
