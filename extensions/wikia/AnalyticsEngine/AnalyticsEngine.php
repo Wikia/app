@@ -25,10 +25,9 @@ class AnalyticsEngine {
 			return '<!-- AnalyticsEngine::track - externals disabled -->';
 		}
 
-		try {
-			$AP = self::getProvider( $provider );
-		} catch ( Exception $e ) {
-			return $e->getMessage();
+		$AP = self::getProvider( $provider );
+		if ( empty( $AP ) ) {
+			return '<!-- Invalid provider for AnalyticsEngine::getTrackCode. -->';
 		}
 
 		$out = $AP->getSetupHtml( $setupParams );
@@ -45,14 +44,14 @@ class AnalyticsEngine {
 	 * Returns an instance of given analytics provider
 	 *
 	 * @param string $provider
-	 * @return iAnalyticsProvider
+	 * @return iAnalyticsProvider or null if provider doesn't exist
 	 *
 	 * @throws Exception
 	 */
 	private static function getProvider( $provider ) {
 		$className = "AnalyticsProvider{$provider}";
 		if ( !class_exists( $className ) ) {
-			throw new Exception("<!-- Invalid provider for AnalyticsEngine::getTrackCode. $className doesn't exist. -->");
+			return null;
 		}
 		return new $className();
 	}
