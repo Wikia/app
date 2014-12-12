@@ -104,7 +104,7 @@ class AccountNavigationController extends WikiaController {
 	public function executeIndex() {
 		wfProfileIn(__METHOD__);
 
-		global $wgUser, $wgEnableUserLoginExt;
+		global $wgUser;
 
 		$this->setupPersonalUrls();
 
@@ -122,9 +122,7 @@ class AccountNavigationController extends WikiaController {
 			$this->loginLink = $this->renderPersonalUrl('login');
 			$this->registerLink = $this->renderPersonalUrl('register');
 			$this->loginDropdown = '';
-			if(!empty($wgEnableUserLoginExt)) {
-				$this->loginDropdown = (string)F::app()->sendRequest( 'UserLoginSpecial', 'dropdown', array('param' => 'paramvalue' ));
-			}
+			$this->loginDropdown = (string)F::app()->sendRequest( 'UserLoginSpecial', 'dropdown', array('param' => 'paramvalue' ));
 		}
 		else {
 			// render user avatar and link to his user page

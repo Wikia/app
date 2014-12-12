@@ -27,6 +27,11 @@ class ArticleNavigationController extends WikiaController {
 		$this->setVal( 'editActionsDropdown', $this->renderEditActions() );
 		$this->setVal( 'share', $app->renderView( 'ArticleNavigationController', 'share' ) );
 		$this->setVal( 'userTools', json_encode( $this->helper->extractDropdownData( $this->generateUserTools() ) ) );
+
+		// messages
+		$this->setVal( 'tocTitle', wfMessage( 'article-navigation-icon-title-toc' )->text() );
+		$this->setVal( 'editTitle', wfMessage( 'article-navigation-icon-title-edit' )->text() );
+		$this->setVal( 'toolsTitle', wfMessage( 'article-navigation-icon-title-tools' )->text() );
 	}
 
 	/**
@@ -83,7 +88,8 @@ class ArticleNavigationController extends WikiaController {
 				$data = [
 					'href' => $contentAction['href'],
 					'title' => $contentAction['text'],
-					'trackingId' => $contentAction['id']
+					'id' => $contentAction['id'],
+					'accesskey' => $contentAction['accesskey']
 				];
 
 				if ( $wgUser->isAnon() &&
@@ -126,6 +132,7 @@ class ArticleNavigationController extends WikiaController {
 
 		$this->setVal( 'services', $this->prepareShareServicesData() );
 		$this->setVal( 'dropdown', $this->renderShareActions() );
+		$this->setVal( 'shareTitle', wfMessage( 'article-navigation-icon-title-share' )->text());
 	}
 
 	/**
@@ -197,7 +204,7 @@ class ArticleNavigationController extends WikiaController {
 
 		return [
 			'id' => 'shareActionsDropdown',
-			'sections' => $actions,
+			'sections' => $actions
 		];
 	}
 

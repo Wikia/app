@@ -1,5 +1,6 @@
 <?php
 class AvatarServiceTest extends WikiaBaseTest {
+
 	/**
 	 * @dataProvider getDefaultAvatarDataProvider
 	 * @group UsingDB
@@ -84,6 +85,7 @@ class AvatarServiceTest extends WikiaBaseTest {
 	}
 
 	function testCustomUploadedAvatar() {
+		$this->mockGlobalVariable( 'wgVignetteUrl', 'http://vignette.wikia-dev.com' );
 		$user = $this->getMock( 'User' );
 		$user
 			->expects( $this->any() )
@@ -114,6 +116,7 @@ class AvatarServiceTest extends WikiaBaseTest {
 	}
 
 	function testWikiaAvatar() {
+		$this->mockGlobalVariable( 'wgVignetteUrl', 'http://vignette.wikia-dev.com' );
 		$user = $this->getMock( 'User' );
 		$user
 			->expects( $this->any() )
@@ -129,6 +132,7 @@ class AvatarServiceTest extends WikiaBaseTest {
 	}
 
 	function testDefaultAvatar() {
+		$this->mockGlobalVariable( 'wgVignetteUrl', 'http://vignette.wikia-dev.com' );
 		$user = $this->getMock( 'User' );
 		$user
 			->expects( $this->any() )

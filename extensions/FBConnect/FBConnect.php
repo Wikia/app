@@ -163,6 +163,7 @@ class FBConnect {
 		}
 
 		/* Wikia change begin */
+		$wgHooks['SkinTemplatePageBeforeUserMsg'][] = 'NotificationsController::addFacebookConnectConfirmation';
 		$wgHooks['OasisSkinAssetGroups'][] = 'FBConnectHooks::onSkinAssetGroups';
 		$wgHooks['MonobookSkinAssetGroups'][] = 'FBConnectHooks::onSkinAssetGroups';
 		/* Wikia change end */

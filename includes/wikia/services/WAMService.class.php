@@ -169,7 +169,9 @@ class WAMService extends Service {
 
 		$result = $db->select(
 			'fact_wam_scores',
-			$fields
+			$fields,
+			'',
+			__METHOD__
 		);
 
 		$row = $db->fetchRow($result);
@@ -259,6 +261,11 @@ class WAMService extends Service {
 		return $options;
 	}
 
+	/**
+	 * @param Array $options
+	 * @param DatabaseBase $db
+	 * @return array
+	 */
 	protected function getWamIndexConditions ($options, $db) {
 		$conds = array(
 			'fw1.time_id = FROM_UNIXTIME(' . $options['currentTimestamp'] . ')'
@@ -382,6 +389,9 @@ class WAMService extends Service {
 
 	protected function getDB() {
 		$app = F::app();
-		return wfGetDB( DB_SLAVE, [], $app->wg->DatamartDB );
+		wfGetLB( $app->wg->DatamartDB )->allowLagged(true);
+		$db = wfGetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
+		$db->clearFlag( DBO_TRX );
+		return $db;
 	}
 }

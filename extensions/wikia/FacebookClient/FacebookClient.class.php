@@ -216,7 +216,7 @@ class FacebookClient {
 				$log->error( __CLASS__ . ': Failure in the api requesting "/me"', [
 					'method' => __METHOD__,
 					'message' => $e->getMessage(),
-					'facebookUserId' => $userId,
+					'fbUserId' => $userId,
 				]);
 				return null;
 			}
@@ -407,6 +407,16 @@ class FacebookClient {
 		}
 
 		return $titleObj->getFullURL( $queryStr );
+	}
+
+	/**
+	 * Get facebook mapping for current user
+	 * @return FacebookMapModel
+	 */
+	public function getMapping() {
+		$id = $this->getUserId();
+		$map = FacebookMapModel::lookupFromFacebookID( $id );
+		return $map;
 	}
 }
 

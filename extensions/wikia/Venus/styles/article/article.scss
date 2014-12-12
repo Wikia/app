@@ -16,9 +16,25 @@ $placeholder-background-color: $color-article-navigation-inactive; // only for p
 $article-items-spacing: 30px;
 $header-without-cover-unit-spacing: 60px;
 
+$article-nav-gap-no-coverunit: 220px;
+$article-nav-gap-coverunit-small: 115px;
+$article-nav-gap-coverunit-medium: 215px;
+$article-nav-gap-coverunit-large: 220px;
+
 // don't display TOC on Venus skin pages (fight cache)
 #toc {
 	display: none !important;
+}
+
+.ve .article {
+	// Allow VisualEditor toolbar menus to go outside of article area
+	overflow: visible;
+
+	// Adjust article header margins while in VisualEditor
+	.article-header:not(.cover-unit) {
+		margin-top: 20px;
+		margin-bottom: 8px;
+	}
 }
 
 .article {
@@ -44,7 +60,7 @@ $header-without-cover-unit-spacing: 60px;
 			}
 
 			& + .article-navigation {
-				top: $header-without-cover-unit-spacing + 80px;
+				top: $article-nav-gap-no-coverunit;
 			}
 		}
 
@@ -66,13 +82,14 @@ $header-without-cover-unit-spacing: 60px;
 			}
 
 			& + .article-navigation {
-				@include proportional-grid-media-top('medium', 8, $medium-content-padding + $article-items-spacing + 100px);
+				@include proportional-grid-media-top('medium', 8, $article-nav-gap-coverunit-medium);
 			}
 		}
 	}
 }
 
-.mw-content-text {
+// mw-body-content is used for VisualEditor styling
+.mw-content-text, .mw-body-content {
 	@include clearfix;
 
 	clear: left;
@@ -128,10 +145,7 @@ $header-without-cover-unit-spacing: 60px;
 		margin-right: -$medium-grid-gutter;
 		margin-top: $article-items-spacing;
 		padding-bottom: 10px;
-
-		.mw-headline {
-			padding-left: $medium-grid-gutter;
-		}
+		padding-left: $medium-grid-gutter;
 	}
 
 	h3 {
@@ -249,7 +263,7 @@ $header-without-cover-unit-spacing: 60px;
 			}
 
 			& + .article-navigation {
-				@include proportional-grid-media-top('large', 8, $large-content-padding + $article-items-spacing + 100px);
+				@include proportional-grid-media-top('large', 8, $article-nav-gap-coverunit-large);
 			}
 		}
 	}
@@ -262,10 +276,7 @@ $header-without-cover-unit-spacing: 60px;
 			margin-bottom: 10px;
 			margin-left: -$large-grid-gutter;
 			margin-right: -$large-grid-gutter;
-
-			.mw-headline {
-				padding-left: $large-grid-gutter;
-			}
+			padding-left: $large-grid-gutter;
 		}
 
 		h3 {
@@ -315,7 +326,7 @@ $header-without-cover-unit-spacing: 60px;
 			}
 
 			& + .article-navigation {
-				@include proportional-media-top($small-content-width - 2 * $content-border-width, $article-items-spacing + 100px);
+				@include proportional-media-top($small-content-width - 2 * $content-border-width, $article-nav-gap-coverunit-small);
 			}
 		}
 	}
@@ -331,10 +342,7 @@ $header-without-cover-unit-spacing: 60px;
 		h2 {
 			margin-left: -$small-grid-gutter;
 			margin-right: -$small-grid-gutter;
-
-			.mw-headline {
-				padding-left: $small-grid-gutter;
-			}
+			padding-left: $small-grid-gutter;
 		}
 
 		ol,

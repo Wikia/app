@@ -1,8 +1,54 @@
 define('venus.infobox', ['wikia.document', 'wikia.window'], function(d, w) {
 	'use strict';
 
-	var maxInfoboxHeight = 700,
+	var maxInfoboxHeight = 800,
 		infoboxCollapsedClass = 'collapsed-infobox';
+
+	/**
+	 * Returns alpha value from CSS rgba color value
+	 * if no match found returns null
+	 * example
+	 * for rgba(255,255,255,0.2) returns 0.2
+	 * @param {string} color
+	 * @return number | null
+	 */
+	function getColorAlpha(color) {
+		var alphaGroups,
+			alphaRegEx = /rgba\((\d*[,\s]*){3},\s*(0[\.\d]*)\)/,
+			alphaValue = null;
+
+		alphaGroups = alphaRegEx.exec(color);
+
+		if(alphaGroups !== null) {
+			alphaValue = parseFloat(alphaGroups[2]);
+		}
+
+		return alphaValue;
+	}
+
+	/**
+	 * Checks if given color is valid and not transparent
+	 *
+	 * @param {string} color CSS color
+	 * @return {boolean}
+	 */
+	function isValidColor(color) {
+		var alphaValue;
+
+		// quick check for transparency
+		if (!color.length || color === 'rgba(0, 0, 0, 0)' || color === 'transparent') {
+			return false;
+		}
+
+		// check alpha channel (ported from CON-2230)
+		alphaValue = getColorAlpha(color);
+
+		if (alphaValue !== null && alphaValue < 0.5) {
+			return false;
+		}
+
+		return true;
+	}
 
 	/**
 	 * Check should infobox be collapsed
@@ -59,15 +105,21 @@ define('venus.infobox', ['wikia.document', 'wikia.window'], function(d, w) {
 			bgColor = infoboxStyles.getPropertyValue('background-color');
 			borderColor = infoboxStyles.getPropertyValue('border-color');
 
-			if (!borderColor.length) {
+			// try fallbacks
+			if (!isValidColor(borderColor)) {
 				borderColor = infoboxStyles.getPropertyValue('border-bottom-color');
 			}
 
-			if (bgColor.length) {
+			if (!isValidColor(bgColor)) {
+				bgColor = borderColor;
+			}
+
+			// apply colors
+			if (isValidColor(bgColor)) {
 				seeMoreButton.style.backgroundColor = bgColor;
 			}
 
-			if (borderColor.length) {
+			if (isValidColor(borderColor)) {
 				seeMoreButton.style.border = '1px solid ' + borderColor;
 			}
 		}
@@ -79,6 +131,7 @@ define('venus.infobox', ['wikia.document', 'wikia.window'], function(d, w) {
 		isInfoboxCollapsible: isInfoboxCollapsible,
 		collapseInfobox: collapseInfobox,
 		expandInfobox: expandInfobox,
-		createSeeMoreButton: createSeeMoreButton
+		createSeeMoreButton: createSeeMoreButton,
+		getColorAlpha: getColorAlpha
 	};
 });

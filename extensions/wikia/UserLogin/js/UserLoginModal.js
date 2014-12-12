@@ -175,7 +175,8 @@
 		 * returns: true if modal is shown, false if it is not
 		 */
 		show: function (options) {
-			if (!window.wgComboAjaxLogin && window.wgEnableUserLoginExt) {
+			if (!window.wgComboAjaxLogin) {
+				                               // @lixlux - always true, therefore unneeded?
 				options = options || {};
 
 				options.modalInitCallback = $.proxy(function () {
@@ -184,7 +185,7 @@
 				this.initModal(options);
 
 				return true;
-			} else if (window.wgComboAjaxLogin) {
+			} else {
 				/* 1st, 2nd, 4th, and 5th vars in this method is not used outside of ajaxlogin itself*/
 				window.showComboAjaxForPlaceHolder(false, false, function () {
 					if (options.callback) {
@@ -233,8 +234,6 @@
 	window.UserLoginModal = UserLoginModal;
 
 	$(function () {
-		if ((typeof window.wgEnableUserLoginExt !== 'undefined') && window.wgEnableUserLoginExt) {
-			UserLoginModal.init();
-		}
+		UserLoginModal.init();
 	});
 })();

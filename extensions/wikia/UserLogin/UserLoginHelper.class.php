@@ -235,7 +235,7 @@ class UserLoginHelper extends WikiaModel {
 	 * @param string $username
 	 * @return array result { array( 'result' => result status[error/ok/invalidsession/confirmed], 'msg' => result message ) }
 	 */
-	public function sendConfirmationEmail( $username, $user=null ) {
+	public function sendConfirmationEmail( $username ) {
 		global $wgExternalSharedDB;
 		if ( empty($username) ) {
 			$result['result'] = 'error';

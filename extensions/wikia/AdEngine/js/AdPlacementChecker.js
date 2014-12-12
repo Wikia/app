@@ -1,5 +1,5 @@
 /*global define*/
-define('ext.wikia.adEngine.adPlacementChecker', ['jquery', 'wikia.document', 'wikia.log', 'wikia.window'], function ($, doc, log, win) {
+define('ext.wikia.adEngine.adPlacementChecker', ['jquery', 'wikia.log'], function ($, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adPlacementChecker';
@@ -7,9 +7,9 @@ define('ext.wikia.adEngine.adPlacementChecker', ['jquery', 'wikia.document', 'wi
 	function canReflow($el) {
 		var ret = $el.css('display') === 'block' &&
 			$el.css('float') === 'none' &&
-			$el.css('visibility') === 'visible';
+			$el.css('overflow') === 'visible';
 
-		log(['canReflow', $el, ret], 'info', logGroup);
+		log(['canReflow', $el, ret], 'debug', logGroup);
 
 		return ret;
 	}
@@ -41,32 +41,40 @@ define('ext.wikia.adEngine.adPlacementChecker', ['jquery', 'wikia.document', 'wi
 			maxHeightDiff,
 			conditionsMet;
 
+		function logInfo(result) {
+			var padding = '                              ',
+				name1 = $insertAfter.children().first().text().substring(0, 30) || 'unknown',
+				name2 = $fitBefore.children().first().text().substring(0, 30) || 'unknown',
+				msgPrefix = 'Between ' + name1 + ' and ' + name2 + padding,
+				msg = msgPrefix.substring(0, 60).replace(/( *)$/, ':$1 ') + result;
+
+			log(msg, 'info', logGroup);
+		}
+
 		function checkConditions() {
 			if ($insertAfter.width() < originalContentWidth) {
-				log(['checkConditions', 'the preceding element is too narrow'], 'info', logGroup);
+				logInfo('ERROR: the preceding element is too narrow');
 				return false;
 			}
 			if (!canReflow($firstElement) && $firstElement.width() > newContentWidth) {
-				log(['checkConditions', 'the first element is too wide and does not adapt: ' +
-					$firstElement.width() + '>' + newContentWidth], 'info', logGroup);
+				logInfo('ERROR: the first element is too wide and does not adapt: ' +
+					$firstElement.width() + '>' + newContentWidth);
 				return false;
 			}
 			if ($fitBefore.width() < originalContentWidth) {
-				log(['checkConditions', 'the next section would not have the full width'], 'info', logGroup);
+				logInfo('ERROR: the next section would not have the full width');
 				return false;
 			}
 			if (heightDiff > maxHeightDiff) {
-				log(['checkConditions', 'height difference is too big: ' +
-					heightDiff + '>' + maxHeightDiff.toFixed(1)], 'info', logGroup);
+				logInfo('ERROR: height difference is too big: ' + heightDiff + '>' + maxHeightDiff.toFixed(1));
 				return false;
 			}
 
-			log(['checkConditions', 'ad fits and height difference is acceptable: ' +
-				heightDiff + '<' + maxHeightDiff.toFixed(1)], 'info', logGroup);
+			logInfo('SUCCESS: ad fits and height difference is acceptable: ' + heightDiff + '<' + maxHeightDiff.toFixed(1));
 			return true;
 		}
 
-		log(['injectAdIfItFits', container, header, nextHeader], 'info', logGroup);
+		log(['injectAdIfItFits', container, header, nextHeader], 'debug', logGroup);
 
 		$content.prepend($extraDivTop);
 		$content.append($extraDivBottom);
@@ -105,7 +113,7 @@ define('ext.wikia.adEngine.adPlacementChecker', ['jquery', 'wikia.document', 'wi
 			$firstElement.removeClass('clear-right-after-ad-in-content');
 		}
 
-		log(['injectAdIfItFits', conditionsMet, $insertAfter, $fitBefore, $firstElement], 'info', logGroup);
+		log(['injectAdIfItFits', conditionsMet, $insertAfter, $fitBefore, $firstElement], 'debug', logGroup);
 
 		return conditionsMet;
 	}

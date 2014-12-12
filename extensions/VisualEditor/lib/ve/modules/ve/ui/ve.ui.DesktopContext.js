@@ -393,7 +393,7 @@ ve.ui.DesktopContext.prototype.updateDimensions = function ( transition ) {
 		if ( cursorPosition ) {
 			// Correct for surface offset:
 			position = {
-				'x': cursorPosition.end.x - surfaceOffset.left,
+				'x': cursorPosition.end.x - surfaceOffset.left + parseInt( surface.$element.css('margin-left'), 10 ),
 				'y': cursorPosition.end.y - surfaceOffset.top
 			};
 		}
