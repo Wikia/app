@@ -6,9 +6,21 @@ use Wikia\Cache\AsyncCache;
 use Wikia\Logger\WikiaLogger;
 
 /**
- * Class VideosModuleBase
+ * Interface Module
+ *
+ * @package VideosModule\Modules
  */
-abstract class Base extends \WikiaModel {
+interface Module {
+	public function getSource();
+	public function getModuleVideos();
+}
+
+/**
+ * Class Base
+ *
+ * @package VideosModule\Modules
+ */
+abstract class Base extends \WikiaModel implements Module {
 
 	const THUMBNAIL_WIDTH = 268;
 	const THUMBNAIL_HEIGHT = 150;
@@ -18,7 +30,6 @@ abstract class Base extends \WikiaModel {
 	const CACHE_VERSION = 5;
 
 	const LIMIT = 20;
-	const SOURCE = '';
 	const SORT = 'recent';
 
 	// A label for the data source, used to construct cache keys and for logging
@@ -71,7 +82,7 @@ abstract class Base extends \WikiaModel {
 
 		$this->userRegion = $params['userRegion'];
 		$this->limit = static::LIMIT;
-		$this->source = static::SOURCE;
+		$this->source = $this->getSource();
 		$this->sort = static::SORT;
 	}
 

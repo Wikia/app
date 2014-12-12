@@ -9,13 +9,16 @@ namespace VideosModule\Modules;
  */
 class Category extends Base {
 
-	const SOURCE = 'wiki-categories';
 	const LIMIT = 40;
 
 	public function __construct( array $params ) {
 		parent::__construct( $params );
 
 		$this->initCategories();
+	}
+
+	public function getSource() {
+		return 'wiki-categories';
 	}
 
 	protected function initCategories() {

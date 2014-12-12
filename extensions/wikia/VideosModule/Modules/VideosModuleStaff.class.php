@@ -10,7 +10,6 @@ namespace VideosModule\Modules;
  * category.
  */
 class Staff extends Base {
-	const SOURCE = 'staff-picks';
 
 	const STAFF_PICK_PREFIX = 'Staff_Pick_';
 	const STAFF_PICK_GLOBAL_CATEGORY = 'Staff_Pick_Global';
@@ -23,6 +22,10 @@ class Staff extends Base {
 			self::STAFF_PICK_PREFIX.$this->wg->DBname,
 			self::STAFF_PICK_GLOBAL_CATEGORY,
 		];
+	}
+
+	public function getSource() {
+		return 'staff-picks';
 	}
 
 	public function getCacheKey() {

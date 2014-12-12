@@ -8,8 +8,6 @@ namespace VideosModule\Modules;
  */
 class Vertical extends Base {
 
-	const SOURCE = 'wiki-vertical';
-
 	// list of page categories for premium videos [ array( categoryId => name ) ]
 	protected static $pageCategories = [
 		\WikiFactoryHub::CATEGORY_ID_GAMING        => 'Games',
@@ -21,6 +19,10 @@ class Vertical extends Base {
 		parent::__construct( $params );
 
 		$this->initCategories();
+	}
+
+	public function getSource() {
+		return 'wiki-vertical';
 	}
 
 	/**
