@@ -9,23 +9,6 @@
 class WikiFactoryHubHooks extends WikiaModel {
 
 	/**
-	 * Gets list of wiki categories
-	 *
-	 * @param Int $cityId CityId
-	 * @return Array - list of wiki categories
-	 */
-	public static function getWikiCategories( $cityId ) {
-		$wikiCategories = [];
-		$wikiFactoryHub = WikiFactoryHub::getInstance();
-
-		$categories = $wikiFactoryHub->getWikiCategories( $cityId );
-		foreach( $categories as $category ) {
-			$wikiCategories[] = $category['cat_short'];
-		}
-		return $wikiCategories;
-	}
-
-	/**
 	 * Hooks that export wiki vertical and categories on frontend
 	 *
 	 * @param Array $vars - (reference) js variables
@@ -38,7 +21,7 @@ class WikiFactoryHubHooks extends WikiaModel {
 		$wikiFactoryHub = WikiFactoryHub::getInstance();
 
 		$vars['wgWikiVertical'] = $wikiFactoryHub->getWikiVertical( $wgCityId )['short'];
-		$vars['wgWikiCategories'] = self::getWikiCategories( $wgCityId );
+		$vars['wgWikiCategories'] = $wikiFactoryHub->getWikiCategoryNames( $wgCityId );
 
 		return true;
 	}

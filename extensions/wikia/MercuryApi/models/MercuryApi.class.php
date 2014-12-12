@@ -119,7 +119,7 @@ class MercuryApi {
 			'siteName' => $wg->Sitename,
 			'mainPageTitle' => Title::newMainPage()->getPrefixedDBkey(),
 			'theme' => SassUtil::getOasisSettings(),
-			'wikiCategories' => WikiFactoryHubHooks::getWikiCategories( $wg->CityId ),
+			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wg->CityId ),
 		];
 	}
 
