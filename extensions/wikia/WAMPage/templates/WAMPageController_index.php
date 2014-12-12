@@ -41,9 +41,8 @@
 		<div class="wam-verticals-tabs">
 			<ul>
 			<? foreach ( $filterVerticals as $verticalId => $verticalName ) : ?>
-				<li class="wam-filtering-tab <? if ( $verticalId == $selectedVerticalId ) : ?> selected<? endif; ?>" data-vertical-id="<?= $verticalId ?>">
-					<a class="icon-vertical icon-vertical-<?= $verticalsShorts[ $verticalId ] ?> <? if ( $verticalId == $selectedVerticalId ) : ?>icon-vertical-selected<? endif; ?>">
-						<span></span>
+				<li class="wam-filtering-tab <? if ( $verticalId == $selectedVerticalId ) : ?> selected<? endif; ?>">
+					<a class="icon-vertical icon-vertical-<?= $verticalsShorts[ $verticalId ] ?> <? if ( $verticalId == $selectedVerticalId ) : ?>icon-vertical-selected<? endif; ?>" data-vertical-id="<?= $verticalId ?>">
 						<?= $verticalName ?>
 					</a>
 				</li>
@@ -97,7 +96,7 @@
 						</td>
 						<td><?=$wiki['peak_vertical_wam_rank']?></td>
 						<td><a href="http://<?=$wiki['url']?>"><?=$wiki['url']?></a></td>
-						<? if ( $selectedVerticalId == 0 ) : ?>
+						<? if ( !$isSingleVertical ) : ?>
 							<td><?=$wiki['vertical_name']?></td>
 							<td><?=$wiki['vertical_wam_rank']?></td>
 						<? endif; ?>

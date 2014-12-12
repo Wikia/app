@@ -57,7 +57,7 @@ class WAMPageController extends WikiaController
 		$this->selectedLangCode = ( $this->selectedLangCode !== '' ) ? $this->selectedLangCode : null;
 		$this->selectedDate = ( $this->selectedDate !== '' ) ? $this->selectedDate : null;
 
-		( $this->selectedVerticalId != 0 ) ? $this->isSingleVertical = true : $this->isSingleVertical = false;
+		$this->isSingleVertical = ( $this->selectedVerticalId != WikiFactoryHub::HUB_ID_OTHER ) ? true : false;
 
 		$this->page = $this->getVal('page', $this->model->getFirstPage());
 

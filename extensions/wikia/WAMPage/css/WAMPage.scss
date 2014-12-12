@@ -209,24 +209,24 @@ $color-wam-white: #fff;
 	.wam-content-text {
 		display: inline;
 
-		h2 {
-			border: 0;
-			color: $color-wam-grey;
-			font-size: 36px;
-			font-weight: bold;
-			line-height: 36px;
-			margin: 0 0 5px 0;
-			padding: 0;
-		}
-
+		h2,
 		h3 {
 			border: 0;
 			color: $color-wam-grey;
-			font-size: 24px;
 			font-weight: bold;
+			padding: 0;
+		}
+
+		h2 {
+			font-size: 36px;
+			line-height: 36px;
+			margin: 0 0 5px 0;
+		}
+
+		h3 {
+			font-size: 24px;
 			line-height: 28px;
 			margin: 0 0 15px 0;
-			padding: 0;
 		}
 
 		a {
@@ -304,6 +304,14 @@ $color-wam-white: #fff;
 		text-align: center;
 		text-decoration: none;
 		text-transform: uppercase;
+
+		&::before {
+			content: '';
+			display: inline-block;
+			height: 30px;
+			margin-bottom: -5px;
+			width: 30px;
+		}
 	}
 
 	span {
@@ -319,7 +327,7 @@ $color-wam-white: #fff;
 .wam-index {
 	margin: 0 0 50px;
 	@if ( $responsive-layout-enabled == false ) {
-		width: 1032px;
+		width: 1030px;
 	}
 	.wam-index-search {
 		margin-bottom: 40px;

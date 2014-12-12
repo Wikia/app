@@ -1,9 +1,9 @@
-var WAMPage = function() {};
+var WAMPage = function () {};
 
 WAMPage.prototype = {
-	init: function() {
+	init: function () {
 		var wamIndex = document.getElementById('wam-index');
-		if(wamIndex) {
+		if (wamIndex) {
 			wamIndex.addEventListener(
 				'click',
 				WAMPage.clickTrackingHandler,
@@ -11,18 +11,21 @@ WAMPage.prototype = {
 			);
 		}
 
-		var $wamFilteringTabs = $('.wam-filtering-tab');
-		if ($wamFilteringTabs.length > 0) {
-			$wamFilteringTabs.on('click', function() {
-				WAMPage.filterWamIndexByVertical(this);
-			});
-		}
+		document.querySelector('.wam-verticals-tabs').addEventListener(
+			'click',
+			function(event) {
+				var target = event.target;
+				if (target.tagName ==='A') {
+					WAMPage.filterWamIndexByVertical(target);
+				}
+			}
+		)
 
 		var wamIndexSearch = document.getElementById('wam-index-search');
 		if (wamIndexSearch) {
 			wamIndexSearch.addEventListener(
 				'change',
-				$.proxy(function(event) {
+				$.proxy(function (event) {
 					WAMPage.clickTrackingHandler(event);
 					WAMPage.filterWamIndex($(event.target));
 				}, this),
@@ -52,7 +55,7 @@ WAMPage.prototype = {
 			// jQuery UI datepicker plugin
 			mw.loader.use(['jquery.ui.datepicker'])
 		).done(
-			$.proxy(function(getResourcesData) {
+			$.proxy(function (getResourcesData) {
 				var minDate = new Date(window.wamFilterMinMaxDates.min_date * 1000),
 					maxDate = new Date(window.wamFilterMinMaxDates.max_date * 1000);
 
@@ -66,9 +69,8 @@ WAMPage.prototype = {
 					maxDate: maxDate,
 					altField: '#WamFilterDate',
 					altFormat: '@',
-					dateFormat: (typeof window.wamFilterDateFormat !== 'undefined' && window.wamFilterDateFormat) ?
-						window.wamFilterDateFormat : undefined,
-					onSelect: $.proxy(function() {
+					dateFormat: window.wamFilterDateFormat,
+					onSelect: $.proxy(function () {
 						var $date = $('#WamFilterDate'),
 							timestamp = parseInt($date.val(), 10),
 							currentTimezoneOffset = (new Date(timestamp)).getTimezoneOffset();
@@ -85,7 +87,7 @@ WAMPage.prototype = {
 		);
 	},
 
-	trackClick: function(category, action, label, value, params, event) {
+	trackClick: function (category, action, label, value, params, event) {
 		Wikia.Tracker.track({
 			action: action,
 			browserEvent: event,
@@ -96,7 +98,7 @@ WAMPage.prototype = {
 		}, params);
 	},
 
-	clickTrackingHandler: function(e) {
+	clickTrackingHandler: function (e) {
 		var node = $(e.target),
 			lang = wgContentLanguage,
 			searchPhrase;
@@ -123,17 +125,17 @@ WAMPage.prototype = {
 		}
 	},
 
-	filterWamIndexByVertical: function(tab) {
+	filterWamIndexByVertical: function (tab) {
 		$('.wam-filtering-vertical-id').val($(tab).data('vertical-id'));
 		$('.wam-index-search').submit();
 	},
 
-	filterWamIndex: function(target) {
+	filterWamIndex: function (target) {
 		target.parents('.wam-index-search').submit();
 	}
 };
 
 var WAMPage = new WAMPage();
-$(function() {
+$(function () {
 	WAMPage.init();
 });

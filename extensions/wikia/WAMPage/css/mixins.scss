@@ -1,3 +1,5 @@
+@import "skins/shared/color";
+
 @mixin verticals-colors($property, $vertical-name) {
 	@if $vertical-name == 'tv' {
 		#{$property}: $color-vertical-tv;
@@ -44,7 +46,7 @@
 			color: $color-wam-grey;
 		}
 
-		span {
+		&::before {
 			@include vertical-icon('all', $selected);
 		}
 	}
@@ -57,7 +59,7 @@
 			color: $color-vertical-comics;
 		}
 
-		span {
+		&::before {
 			@include vertical-icon('comics', $selected);
 		}
 	}
@@ -70,7 +72,7 @@
 			color: $color-vertical-games;
 		}
 
-		span {
+		&::before {
 			@include vertical-icon('games', $selected);
 		}
 	}
@@ -83,7 +85,7 @@
 			color: $color-vertical-books;
 		}
 
-		span {
+		&::before {
 			@include vertical-icon('books', $selected);
 		}
 	}
@@ -96,7 +98,7 @@
 			color: $color-vertical-movies;
 		}
 
-		span {
+		&::before {
 			@include vertical-icon('movies', $selected);
 		}
 	}
@@ -109,7 +111,7 @@
 			color: $color-vertical-music;
 		}
 
-		span {
+		&::before {
 			@include vertical-icon('music', $selected);
 		}
 	}
@@ -122,7 +124,7 @@
 			color: $color-vertical-lifestyle;
 		}
 
-		span {
+		&::before {
 			@include vertical-icon('lifestyle', $selected);
 		}
 	}
@@ -135,7 +137,7 @@
 			color: $color-vertical-tv;
 		}
 
-		span {
+		&::before {
 			@include vertical-icon('tv', $selected);
 		}
 	}
