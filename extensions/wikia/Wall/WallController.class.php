@@ -141,26 +141,6 @@ class WallController extends WallBaseController {
 		return $this->parserText( $text );
 	}
 
-	protected function checkAndSetUserBlockedStatus( $wallOwner = null ) {
-		$user = $this->app->wg->User;
-
-		if ( $user->isBlocked() || $user->isBlockedGlobally() ) {
-			if (	!empty( $wallOwner ) &&
-				$wallOwner->getName() == $this->wg->User->getName() &&
-				!( empty( $user->mAllowUsertalk ) ) ) {
-
-				// user is blocked, but this is his wall and he was not blocked
-				// from user talk page
-				$this->response->setVal( 'userBlocked', false );
-			} else {
-				$this->response->setVal( 'userBlocked', true );
-			}
-		} else {
-			$this->response->setVal( 'userBlocked', false );
-		}
-
-	}
-
 	protected function getSortingOptions() {
 		$title = $this->request->getVal( 'title', $this->app->wg->Title );
 

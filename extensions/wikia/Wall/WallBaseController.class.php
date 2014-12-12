@@ -614,8 +614,10 @@ class WallBaseController extends WikiaController {
 	protected function checkAndSetUserBlockedStatus( $wallOwner = null ) {
 		$user = $this->app->wg->User;
 
-		if ( $user->isBlocked() || $user->isBlockedGlobally() ) {
-			if (	!empty( $wallOwner ) &&
+		if ( $user->isBlockedGlobally() ) {
+			$this->response->setVal('userBlocked', true);
+		} else if ( $user->isBlocked() ) {
+			if( !empty($wallOwner) &&
 				$wallOwner->getName() == $this->wg->User->getName() &&
 				!( empty( $user->mAllowUsertalk ) ) ) {
 				// user is blocked, but this is his wall and he was not blocked
@@ -627,7 +629,6 @@ class WallBaseController extends WikiaController {
 		} else {
 			$this->response->setVal( 'userBlocked', false );
 		}
-
 	}
 
 	public function getThread( $filterid ) {
