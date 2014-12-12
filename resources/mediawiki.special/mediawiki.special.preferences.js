@@ -43,6 +43,14 @@ $legends.each( function( i, legend ) {
 
 		$preftoc.find( 'li' ).removeClass( 'selected' );
 		$(this).parent().addClass( 'selected' );
+
+		/** Wikia change begin @see UC-145 */
+		// Make elements outside tabs targetable based on selected tab
+		$preferences.removeClass()
+			.addClass('jsprefs')
+			.addClass(ident);
+		/** Wikia change end */
+
 		$( '#preferences > fieldset' ).hide();
 		$( '#' + ident ).show();
 	});
