@@ -29,12 +29,10 @@ $dir = dirname( __FILE__ ) . '/';
 /**
  * classes
  */
-$wgAutoloadClasses['VideosModule\Base'] =  $dir . 'VideosModuleBase.class.php' ;
-$wgAutoloadClasses['VideosModule\Category'] =  $dir . 'VideosModuleCategory.class.php' ;
-$wgAutoloadClasses['VideosModule\Local'] =  $dir . 'VideosModuleLocal.class.php' ;
-$wgAutoloadClasses['VideosModule\Related'] =  $dir . 'VideosModuleRelated.class.php' ;
-$wgAutoloadClasses['VideosModule\Staff'] =  $dir . 'VideosModuleStaff.class.php' ;
-$wgAutoloadClasses['VideosModule\Vertical'] =  $dir . 'VideosModuleVertical.class.php' ;
+$wgAutoloadClasses['VideosModule\Modules\Base'] =  $dir . 'Modules/VideosModuleBase.class.php';
+$wgAutoloadClasses['VideosModule\Modules\Category'] =  $dir . 'Modules/VideosModuleCategory.class.php';
+$wgAutoloadClasses['VideosModule\Modules\Related'] =  $dir . 'Modules/VideosModuleRelated.class.php';
+$wgAutoloadClasses['VideosModule\Modules\Staff'] =  $dir . 'Modules/VideosModuleStaff.class.php';
 
 /**
  * controllers

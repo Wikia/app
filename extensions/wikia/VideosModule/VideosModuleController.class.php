@@ -1,13 +1,15 @@
 <?php
 
+use VideosModule\Modules;
+
 class VideosModuleController extends WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 	const DEFAULT_REGION = 'US';
 
-	/** @var  VideosModule\Staff */
+	/** @var $staffModule VideosModule\Modules\Staff */
 	protected $staffModule;
 
-	/** @var  VideosModule\Base */
+	/** @var $generalModule VideosModule\Modules\Base */
 	protected $generalModule;
 
 	/**
@@ -35,7 +37,7 @@ class VideosModuleController extends WikiaController {
 		] );
 
 		// Set client cache
-		$this->response->setCacheValidity( VideosModule\Base::CACHE_TTL );
+		$this->response->setCacheValidity( Modules\Base::CACHE_TTL );
 	}
 
 	/**
@@ -60,12 +62,12 @@ class VideosModuleController extends WikiaController {
 		$userRegion = $this->request->getVal( 'userRegion', self::DEFAULT_REGION );
 		$params = [ 'userRegion' => $userRegion ];
 
-		$this->staffModule = new VideosModule\Staff( $params );
+		$this->staffModule = new Modules\Staff( $params );
 
 		if ( !empty( $this->wg->VideosModuleCategories )  ) {
-			$this->generalModule = new VideosModule\Category( $params );
+			$this->generalModule = new Modules\Category( $params );
 		} else {
-			$this->generalModule = new VideosModule\Related( $params );
+			$this->generalModule = new Modules\Related( $params );
 		}
 	}
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace VideosModule;
+namespace VideosModule\Modules;
 
 /**
  * Class VideosModuleVertical
@@ -61,7 +61,7 @@ class Vertical extends Base {
 	 * @return array - list of vertical videos (premium videos)
 	 */
 	public function getModuleVideos() {
-		$this->addVideosFromVideoWiki( $this->categories, $this->limit, $this->sort );
+		$this->addVideosFromVideoWiki();
 
 		return $this->videos;
 	}
