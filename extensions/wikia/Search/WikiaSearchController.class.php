@@ -13,7 +13,7 @@ use \Wikia\Logger\WikiaLogger;
  */
 class WikiaSearchController extends WikiaSpecialPageController {
 
-	const NON_ENGLISH_DEFAULT_THRESHOLD = 25;
+	const DEFAULT_NON_ENGLISH_WIKI_ARTICLE_THRESHOLD = 25;
 	use Wikia\Search\Traits\NamespaceConfigurable;
 
 	/**
@@ -577,11 +577,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		;
 
 		if ( $this->isCorporateWiki() ) {
-			$searchConfig->setLanguageCode($this->getVal('resultsLang'));
+			$searchConfig->setLanguageCode( $this->getVal( 'resultsLang' ) );
 			if ( $searchConfig->getLanguageCode() !== 'en' ) {
-				$searchConfig->setXwikiArticleThreshold(
-					$this->getVal( 'minArticlesCount', self::NON_ENGLISH_DEFAULT_THRESHOLD )
-				);
+				$threshold = self::DEFAULT_NON_ENGLISH_WIKI_ARTICLE_THRESHOLD;
+				if ( in_array( 'staff', $this->wg->user->getEffectiveGroups() ) ) {
+					$threshold = $this->getVal( 'minArticleCount', self::DEFAULT_NON_ENGLISH_WIKI_ARTICLE_THRESHOLD );
+				}
+				$searchConfig->setXwikiArticleThreshold( $threshold );
 			}
 		}
 
