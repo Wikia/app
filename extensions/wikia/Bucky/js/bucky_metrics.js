@@ -39,7 +39,7 @@ require([
 	$(window).load(function () {
 		resourceTiming.reportToBucky('WindowLoad');
 
-		setTimeout(function() {
+		setTimeout(function () {
 			resourceTiming.reportToBucky('AfterWindowLoad');
 		}, 5000);
 	});

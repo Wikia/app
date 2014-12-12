@@ -75,14 +75,24 @@ define('bucky.resourceTiming', ['jquery', 'wikia.window', 'bucky'], function ($,
 			}
 		}
 
-		['total', 'cached', '3rdparty', 'css', 'link', 'iframe', 'img', 'script', 'xmlhttprequest'].map(function(item) {
+		[
+			'total',
+			'cached',
+			'3rdparty',
+			'css',
+			'link',
+			'iframe',
+			'img',
+			'script',
+			'xmlhttprequest'
+		].map(function (item) {
 			initStatsEntry(item);
 		});
 
 		// we're "sharing" assetIdx between calls to getResourcesStats
 		// each time it's called we only send statistics on assets that we've fetched
 		// AFTER the previous call
-		for (len=resources.length; assetIdx<len; assetIdx++) {
+		for (len = resources.length; assetIdx < len; assetIdx++) {
 			res = resources[assetIdx];
 
 			/**
