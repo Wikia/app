@@ -1,6 +1,7 @@
 <?php
 
 namespace VideosModule;
+
 use Wikia\Cache\AsyncCache;
 use Wikia\Logger\WikiaLogger;
 
@@ -20,14 +21,29 @@ abstract class Base extends \WikiaModel {
 	const SOURCE = '';
 	const SORT = 'recent';
 
+	// A label for the data source, used to construct cache keys and for logging
 	protected $source = '';
+
+	// The maximum number of videos to fetch
 	protected $limit;
-	protected $blacklist = [];          // black listed videos we never want to show in videos module
-	protected $blacklistCount = null;   // number of blacklist videos
-	protected $existingVideos = [];     // list of titles of existing videos (those which have been added already)
+
+	// Black listed videos we never want to show in videos module
+	protected $blacklist = [];
+
+	// List of titles of existing videos (those which have been added already)
+	protected $existingVideos = [];
+
+	// A two character region code for getting region specific videos
 	protected $userRegion;
+
+	// How to sort video results (some modules)
 	protected $sort = '';
+
+	// Any categories to pull videos from (some modules)
 	protected $categories = [];
+
+	// The list of videos found
+	protected $videos = [];
 
 	// Options used when calling the getVideoDetail* methods in VideoHandlerHelper
 	protected static $videoOptions = [
@@ -40,20 +56,32 @@ abstract class Base extends \WikiaModel {
 		],
 	];
 
-	public function __construct( $userRegion, $sort = '' ) {
+	/**
+	 * @param array $params Valid parameters are:
+	 *
+	 *   userRegion - A two character country code
+	 *
+	 * @throws MissingRequireParametersException
+	 */
+	public function __construct( array $params ) {
 		parent::__construct();
+
+		if ( empty( $params['userRegion'] ) ) {
+			throw new MissingRequireParametersException( "Parameter 'userRegion' required" );
+		}
 
 		$this->initializeBlacklist();
 
-		$this->userRegion = $userRegion;
+		$this->userRegion = $params['userRegion'];
 		$this->limit = static::LIMIT;
 		$this->source = static::SOURCE;
-		$this->sort = empty( $sort ) ? static::SORT : $sort;
+		$this->sort = static::SORT;
 	}
 
+	/**
+	 * Look for videos that are blacklisted in the wgVideosModuleBlackList variable on community central
+	 */
 	protected function initializeBlacklist() {
-		// All black listed videos are stored in WikiFactory in the wgVideosModuleBlackList variable
-		// on Community wiki.
 		$communityBlacklist = \WikiFactory::getVarByName( "wgVideosModuleBlackList", \WikiFactory::COMMUNITY_CENTRAL );
 
 		if ( is_object( $communityBlacklist ) && !empty( $communityBlacklist->cv_value ) ) {
@@ -65,15 +93,15 @@ abstract class Base extends \WikiaModel {
 	 * This is an entry point for the AsyncCache class to call the getModuleVideos method on a specific VideosModule
 	 * class.
 	 *
-	 * @param $class
-	 * @param $region
-	 * @param $sort
+	 * @param string $class The class name to use to create a new VideosModule\Base object
+	 * @param string $region The two character region code to pull videos for
+	 * @param string $sort How to sort video results that are found
 	 *
-	 * @return mixed
+	 * @return array
 	 */
-	public static function getVideosCallback( $class, $region, $sort ) {
+	public static function getVideosCallback( $class, $region ) {
 		/** @var Base $module */
-		$module = new $class( $region, $sort );
+		$module = new $class( [ 'userRegion' => $region ] );
 		$videos = $module->getModuleVideos();
 		return $videos;
 	}
@@ -92,12 +120,12 @@ abstract class Base extends \WikiaModel {
 			->ttl( self::CACHE_TTL )
 			->negativeResponseTTL( self::NEGATIVE_CACHE_TTL )
 			->callback( 'VideosModule\Base::getVideosCallback' )
-			->callbackParams( [ get_class( $this ), $this->userRegion, $this->sort ] );
+			->callbackParams( [ get_class( $this ), $this->userRegion ] );
 
 		if ( $asyncCache->foundInCache() ) {
-			$this->logInfo( 'Cache HIT');
+			$this->logInfo( 'Cache HIT' );
 		} else {
-			$this->logInfo( 'Cache MISS');
+			$this->logInfo( 'Cache MISS' );
 		}
 
 		$videos = $asyncCache->value();
@@ -112,6 +140,7 @@ abstract class Base extends \WikiaModel {
 
 	/**
 	 * This method should be overridden to return a unique key to use to cache videos found
+	 *
 	 * @return mixed
 	 */
 	protected function getCacheKey() {
@@ -126,6 +155,7 @@ abstract class Base extends \WikiaModel {
 
 	/**
 	 * Returns a caching client for this class
+	 *
 	 * @return AsyncCache
 	 */
 	public function getCache() {
@@ -134,6 +164,7 @@ abstract class Base extends \WikiaModel {
 
 	/**
 	 * This method should be overridden to do the actual work of getting videos for the source of the implementing class
+	 *
 	 * @return mixed
 	 */
 	abstract public function getModuleVideos();
@@ -178,6 +209,7 @@ abstract class Base extends \WikiaModel {
 
 	/**
 	 * Parameters to send when logging
+	 *
 	 * @return array
 	 */
 	protected function getLogParams() {
@@ -190,11 +222,20 @@ abstract class Base extends \WikiaModel {
 	}
 
 	/**
+	 * Returns whether we've currently found enough videos given our current limit
+	 *
+	 * @return bool
+	 */
+	public function atVideoLimit() {
+		return  count( $this->videos ) >= $this->limit;
+	}
+
+	/**
 	 * Get video list from Video wiki
 	 *
 	 * @return array
 	 */
-	public function getVideoListFromVideoWiki() {
+	public function addVideosFromVideoWiki() {
 		$params = [
 			'controller' => 'VideoHandler',
 			'method'     => 'getVideoList',
@@ -206,34 +247,34 @@ abstract class Base extends \WikiaModel {
 		$response = \ApiService::foreignCall( $this->wg->WikiaVideoRepoDBName, $params, \ApiService::WIKIA );
 		$videosWithDetails = $this->getVideoDetailFromVideoWiki( $this->getVideoTitles( $response['videos'] ) );
 
-		$videos = [];
 		foreach ( $videosWithDetails as $video ) {
-			if ( count( $videos ) >= $this->limit ) {
+			if ( $this->atVideoLimit() ) {
 				break;
 			}
-			$this->addToList( $videos, $video );
+			$this->addVideo( $video );
 		}
-
-		return $videos;
 	}
 
 	/**
-	 * Return a list of just titles given a list of videos.
-	 * @param $videos
+	 * Return a list of just titles given a list of video details.
+	 *
+	 * @param array $videos An array of video details
 	 * @return array
 	 */
-	protected function getVideoTitles( $videos ) {
+	protected function getVideoTitles( array $videos ) {
 		$videoTitles = [];
-		foreach( $videos as $video ) {
+		foreach ( $videos as $video ) {
 			$videoTitles[] = $video['title'];
 		}
 		return $videoTitles;
 	}
 
 	/**
-	 * Call 'VideoHandlerHelper::getVideoDetail' on the video wiki for each of a list of video titles
+	 * Call 'VideoHandlerHelper::getVideoDetail' on the video wiki for each of a list of video titles.  Returns a list
+	 * of video details for each title passed
+	 *
 	 * @param array $videos A list of video titles
-	 * @return array - A list of video details for each title passed
+	 * @return array
 	 */
 	public function getVideoDetailFromVideoWiki( $videos ) {
 		$videoDetails = [];
@@ -252,10 +293,11 @@ abstract class Base extends \WikiaModel {
 	/**
 	 * Get the video details (things like videoId, provider, description, regional restrictions, etc)
 	 * for video from the local wiki.
-	 * @param $videos
+	 *
+	 * @param array $videos A list of video titles
 	 * @return array
 	 */
-	public function getVideoDetailFromLocalWiki( $videos ) {
+	public function getVideoDetailFromLocalWiki( array $videos ) {
 		$videoDetails = [];
 		$helper = new \VideoHandlerHelper();
 		foreach ( $videos as $video ) {
@@ -273,28 +315,23 @@ abstract class Base extends \WikiaModel {
 	 * @return integer
 	 */
 	protected function getPaddedVideoLimit( ) {
-		if ( is_null( $this->blacklistCount ) ) {
-			$this->blacklistCount = count( $this->blacklist );
-		}
-
-		$limit = $this->limit + $this->blacklistCount;
+		$limit = $this->limit + count( $this->blacklist );
 
 		return $limit;
 	}
 
 	/**
-	 * Checks if a video is able to be added to the current list being collected (eg, staffPicks, videosByCategory,
-	 * wikiRelated), and adds it to that list. Adding the source of that video to it's detail, as well as appending
-	 * it to the list of existingVideos which includes all videos added from all lists. We use this existingVideos
-	 * list to filter as we're adding videos to ensure we don't include duplicates.
-	 * @param $videos
-	 * @param $video
+	 * Checks if a video can be added to the list of videos for this module.  If so, we add the source of that video
+	 * to it's detail, as well as appending it to the list of existingVideos which includes all videos added from all
+	 * lists. We use this existingVideos list to filter as we're adding videos to ensure we don't include duplicates.
+	 *
+	 * @param array $video Details for one video
 	 * @return bool
 	 */
-	protected function addToList( &$videos, $video ) {
-		if ( $this->canAddToList( $video ) ) {
+	protected function addVideo( $video ) {
+		if ( $this->canAddVideo( $video ) ) {
 			$this->existingVideos[$video['title']] = true;
-			$videos[] = $this->normalizeVideoDetail( $video );
+			$this->videos[] = $this->normalizeVideoDetail( $video );
 			return true;
 		} else {
 			return false;
@@ -304,10 +341,11 @@ abstract class Base extends \WikiaModel {
 	/**
 	 * Return whether the video can be added to the current list of videos being
 	 * collected (eg, staffPicks, videosByCategory, wikiRelated).
-	 * @param $video
+	 *
+	 * @param array $video Details of one video
 	 * @return bool
 	 */
-	protected function canAddToList( $video ) {
+	protected function canAddVideo( array $video ) {
 		return !( $this->isRegionallyRestricted( $video )
 			|| $this->isBlackListed( $video )
 			|| $this->isAlreadyAdded( $video ) );
@@ -315,10 +353,11 @@ abstract class Base extends \WikiaModel {
 
 	/**
 	 * Return whether the video is regionally restricted in the user's country.
-	 * @param \LocalFile $video
+	 *
+	 * @param array $video Details for a single video
 	 * @return bool
 	 */
-	public function isRegionallyRestricted( $video ) {
+	public function isRegionallyRestricted( array $video ) {
 		return !empty( $video['regionalRestrictions'] )
 			&& !empty( $this->userRegion )
 			&& !preg_match( "/$this->userRegion/", $video['regionalRestrictions'] );
@@ -326,10 +365,11 @@ abstract class Base extends \WikiaModel {
 
 	/**
 	 * Return whether the video is blacklisted or not.
-	 * @param $video
+	 *
+	 * @param array $video Details for a single video
 	 * @return bool
 	 */
-	public function isBlackListed( $video ) {
+	public function isBlackListed( array $video ) {
 		return in_array( $video['title'], $this->blacklist );
 	}
 
@@ -337,19 +377,20 @@ abstract class Base extends \WikiaModel {
 	 * Return whether a video has already been added to a list of videos
 	 * to send out to the user (eg, staffPicks, videosByCategory, wikiRelated).
 	 * Any video which we're going to send out we add to the existingVideos list.
-	 * @param $video
+	 *
+	 * @param array $video
 	 * @return bool
 	 */
-	protected function isAlreadyAdded( $video ) {
+	protected function isAlreadyAdded( array $video ) {
 		return array_key_exists( $video['title'], $this->existingVideos );
 	}
 
 	/**
 	 * Normalize video details to a set of keys understood by this module
-	 * @param array $video
+	 * @param array $video Details for a single video
 	 * @return array
 	 */
-	protected function normalizeVideoDetail( Array $video ) {
+	protected function normalizeVideoDetail( array $video ) {
 		return [
 			'title'       => $video['fileTitle'],
 			'url'         => $video['fileUrl'],
@@ -363,3 +404,4 @@ abstract class Base extends \WikiaModel {
 	}
 }
 
+class MissingRequireParametersException extends \Exception {}
