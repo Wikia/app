@@ -1,4 +1,6 @@
 jQuery(function($) {
+	window.Wikia = window.Wikia || {};
+	
 	var RecentChanges = {
 		init: function() {
 			this.$table = $('.mw-recentchanges-table');
@@ -41,4 +43,5 @@ jQuery(function($) {
 	};
 
 	RecentChanges.init();
+	Wikia.RecentChanges = RecentChanges;
 });
