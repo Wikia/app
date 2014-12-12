@@ -127,7 +127,6 @@ define(
 				i,
 				slot = {},
 				slots = [],
-				slotSizes,
 				slotsToShowCount = getSlotsToShowCount(slotsData.length);
 
 			slotSizes = getSlotSizes();
