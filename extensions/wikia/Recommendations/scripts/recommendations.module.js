@@ -4,6 +4,7 @@ define(
 	function(loader, win, $, nirvana, arrayHelper) {
 		'use strict';
 
+		var minSlotsCount = 4;
 
 		/**
 		 * @desc Lazy load and insert to DOM Recommendations module
@@ -62,7 +63,7 @@ define(
 			).done(function (slotsData, res) {
 				slotsData = slotsData[0].items;
 
-				if (slotsData.length > 0) {
+				if (slotsData.length >= minSlotsCount) {
 					loader.processStyle(res.styles);
 					loader.processScript(res.scripts);
 					if (typeof(callback) === 'function') {

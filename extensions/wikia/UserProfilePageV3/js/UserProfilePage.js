@@ -375,7 +375,7 @@ var UserProfilePage = {
 			type: 'POST',
 			url: this.ajaxEntryPoint + '&method=saveUserData',
 			dataType: 'json',
-			data: 'userId=' + UserProfilePage.userId + '&data=' + JSON.stringify(userData),
+			data: {'userId' : UserProfilePage.userId, 'data' : JSON.stringify(userData)},
 			success: function (data) {
 				if (data.status === 'error') {
 					UserProfilePage.error(data.errMsg);
