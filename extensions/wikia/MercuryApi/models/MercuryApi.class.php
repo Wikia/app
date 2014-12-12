@@ -6,6 +6,8 @@ class MercuryApi {
 
 	const CACHE_TIME_TOP_CONTRIBUTORS = 2592000; // 30 days
 
+	const SITENAME_MSG_KEY = 'pagetitle-view-mainpage';
+
 	/**
 	 * Aggregated list of comments users
 	 *
@@ -116,10 +118,26 @@ class MercuryApi {
 				'contentDir' => $wg->ContLang->getDir()
 			],
 			'namespaces' => $wg->ContLang->getNamespaces(),
-			'siteName' => $wg->Sitename,
+			'siteName' => $this->getSiteName(),
 			'mainPageTitle' => Title::newMainPage()->getPrefixedDBkey(),
 			'theme' => SassUtil::getOasisSettings()
 		];
+	}
+
+	/**
+	 * @desc Gets a wikia sitename either from the message or WF variable
+	 *
+	 * @return null|String
+	 */
+	public function getSiteName() {
+		$siteName = F::app()->wg->Sitename;
+		$msg = wfMessage( static::SITENAME_MSG_KEY )->inContentLanguage();
+
+		if( !$msg->isDisabled() ) {
+			$siteName = $msg->text();
+		}
+
+		return $siteName;
 	}
 
 	/**
