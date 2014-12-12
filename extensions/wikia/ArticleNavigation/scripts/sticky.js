@@ -58,8 +58,8 @@ require([
 
 	// this function is needed for additional margin for screens >= 1024px
 	// (because header is getting float: left on medium and higher breakpoints)
-	function adjustValueFunction(value, typ) {
-		switch(typ) {
+	function adjustValueFunction(value, type) {
+		switch(type) {
 			case 'topScrollLimit':
 			case 'topSticked':
 				if ($('.mw-content-text').css('clear') === 'none') {
