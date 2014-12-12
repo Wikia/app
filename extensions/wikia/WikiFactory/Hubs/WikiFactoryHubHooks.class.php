@@ -11,8 +11,8 @@ class WikiFactoryHubHooks extends WikiaModel {
 	/**
 	 * Gets list of wiki categories
 	 *
-	 * @param int $cityId CityId
-	 * @return array - list of wiki categories
+	 * @param Int $cityId CityId
+	 * @return Array - list of wiki categories
 	 */
 	public static function getWikiCategories( $cityId ) {
 		$wikiCategories = [];
