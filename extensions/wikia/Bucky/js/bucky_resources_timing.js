@@ -1,8 +1,10 @@
 /*
- * Send ResourceTiming performance data:
+ * Provides ResourceTiming performance stats for Bucky reporting
  *
+ * They include:
  *  - number of assets fetched
  *  - type of assets fetched
+ *  - number of assets fetched from browser's cache
  *  - time statistics
  *
  * @see PLATFORM-645
@@ -10,18 +12,30 @@
  *
  * @author macbre
  */
-require([
-	'jquery',
-	'wikia.window',
-	'bucky'
-], function ($, window, bucky) {
+define('bucky.resourceTiming', ['jquery', 'wikia.window', 'bucky'], function ($, window, bucky) {
 	'use strict';
-	var assetIdx = 0;
 
-	// early support check
-	// @see http://caniuse.com/#feat=resource-timing
-	if (!('performance' in window) || typeof window.performance.getEntriesByType !== 'function') {
-		return;
+	var assetIdx = 0,
+		wikiaAssetRegex = /^https?:\/\/([^\/]+)(\.wikia-dev\.com|\.wikia\.com|\.wikia\.nocookie\.net)\//;
+
+	/**
+	 * Check the support of ResourceTiming
+	 * @returns {boolean}
+	 *
+	 * @see http://caniuse.com/#feat=resource-timing
+	 */
+	function isSupported() {
+		return ('performance' in window) && (typeof window.performance.getEntriesByType === 'function');
+	}
+
+	/**
+	 * Returns true if given asset comes from Wikia servers (including CDN and devboxes)
+	 *
+	 * @param {string} url URL to check
+	 * @return {boolean} is this a Wikia asset?
+	 */
+	function isWikiaAsset(url) {
+		return wikiaAssetRegex.test(url);
 	}
 
 	/**
@@ -32,8 +46,7 @@ require([
 	 */
 	function getResourcesStats(resources) {
 		var len, res,
-			stats = {},
-			wikiaAssetRegex = /^https?:\/\/([^\/]+)(\.wikia-dev\.com|\.wikia\.com|\.wikia\.nocookie\.net)\//;
+			stats = {};
 
 		/**
 		 * Initialize stats entry for a given type
@@ -60,16 +73,6 @@ require([
 				stats[type].count++;
 				stats[type].time += time;
 			}
-		}
-
-		/**
-		 * Returns true if given asset comes from Wikia servers (including CDN)
-		 *
-		 * @param {string} url URL to check
-		 * @return {boolean} is this a Wikia asset?
-		 */
-		function isWikiaAsset(url) {
-			return wikiaAssetRegex.test(url);
 		}
 
 		['total', 'cached', '3rdparty', 'css', 'link', 'iframe', 'img', 'script', 'xmlhttprequest'].map(function(item) {
@@ -99,7 +102,7 @@ require([
 			addStatsEntry('total', res.duration);
 
 			// browser cache hit
-			if (res.duration == 0) {
+			if (res.duration === 0) {
 				addStatsEntry('cached', 0);
 			}
 
@@ -133,19 +136,10 @@ require([
 		}
 	}
 
-	/**
-	 * Bind to onDOMReady, windowLoad and five-seconds-after-windowLoad events
-	 * and send statistics for resources fetched before these events
-	 */
-	$(function () {
-		reportToBucky('DomReady');
-	});
-
-	$(window).load(function () {
-		reportToBucky('WindowLoad');
-
-		setTimeout(function() {
-			reportToBucky('AfterWindowLoad');
-		}, 5000);
-	});
+	// public API
+	return {
+		isSupported: isSupported,
+		isWikiaAsset: isWikiaAsset, // exposed for unit tests
+		reportToBucky: reportToBucky
+	};
 });
