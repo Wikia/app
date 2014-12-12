@@ -13,6 +13,7 @@ use \Wikia\Logger\WikiaLogger;
  */
 class WikiaSearchController extends WikiaSpecialPageController {
 
+	const NON_ENGLISH_DEFAULT_THRESHOLD = 25;
 	use Wikia\Search\Traits\NamespaceConfigurable;
 
 	/**
@@ -577,6 +578,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		if ( $this->isCorporateWiki() ) {
 			$searchConfig->setLanguageCode($this->getVal('resultsLang'));
+			if ( $searchConfig->getLanguageCode() !== 'en' ) {
+				$searchConfig->setXwikiArticleThreshold(
+					$this->getVal( 'minArticlesCount', self::NON_ENGLISH_DEFAULT_THRESHOLD )
+				);
+			}
 		}
 
 		$this->setNamespacesFromRequest( $searchConfig, $this->wg->User );
