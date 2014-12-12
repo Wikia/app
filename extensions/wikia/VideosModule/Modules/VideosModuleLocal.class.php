@@ -9,7 +9,9 @@ namespace VideosModule\Modules;
  */
 class Local extends Base {
 
-	const SOURCE = 'local';
+	public function getSource() {
+		return 'local';
+	}
 
 	public function getCacheKey() {
 		$cacheKey = parent::getCacheKey();

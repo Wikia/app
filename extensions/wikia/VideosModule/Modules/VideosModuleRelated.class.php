@@ -8,7 +8,10 @@ namespace VideosModule\Modules;
  * Use WikiaSearchController to find premium videos related to the local wiki. (Search video content by wiki topics)
  */
 class Related extends Base {
-	const SOURCE = 'wiki-topics';
+
+	public function getSource() {
+		return 'wiki-topics';
+	}
 
 	/**
 	 * @return array - Premium videos related to the local wiki.
