@@ -28,7 +28,7 @@ class AnalyticsEngine {
 		try {
 			$AP = self::getProvider( $provider );
 		} catch ( Exception $e ) {
-			return '<!-- Invalid provider for AnalyticsEngine::getTrackCode -->';
+			return $e->getMessage();
 		}
 
 		$out = $AP->getSetupHtml( $setupParams );
@@ -51,6 +51,9 @@ class AnalyticsEngine {
 	 */
 	private static function getProvider( $provider ) {
 		$className = "AnalyticsProvider{$provider}";
+		if ( !class_exists( $className ) ) {
+			throw new Exception('<!-- Invalid provider for AnalyticsEngine::getTrackCode -->');
+		}
 		return new $className();
 	}
 }
