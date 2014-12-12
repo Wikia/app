@@ -1,6 +1,6 @@
 <?php
 
-namespace VideosModule;
+namespace VideosModule\Modules;
 
 /**
  * Class VideosModuleStaff
@@ -40,7 +40,7 @@ class Staff extends Base {
 	 * @return array
 	 */
 	public function getModuleVideos() {
-		$this->addVideosFromVideoWiki( $this->categories, $this->limit, $this->sort );
+		$this->addVideosFromVideoWiki();
 
 		return $this->videos;
 	}

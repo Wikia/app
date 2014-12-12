@@ -1,6 +1,6 @@
 <?php
 
-namespace VideosModule;
+namespace VideosModule\Modules;
 
 /**
  * Class VideosModuleCategory
@@ -71,7 +71,7 @@ class Category extends Base {
 	 * @return array
 	 */
 	public function getModuleVideos() {
-		$this->addVideosFromVideoWiki( $this->categories, $this->limit, $this->sort );
+		$this->addVideosFromVideoWiki();
 
 		return $this->videos;
 	}

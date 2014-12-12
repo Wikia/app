@@ -1,6 +1,6 @@
 <?php
 
-namespace VideosModule;
+namespace VideosModule\Modules;
 
 /**
  * Class VideosModuleRelated
@@ -9,13 +9,6 @@ namespace VideosModule;
  */
 class Related extends Base {
 	const SOURCE = 'wiki-topics';
-
-	protected function getLogParams() {
-		$params = parent::getLogParams();
-		$params['sort'] = $this->sort;
-
-		return $params;
-	}
 
 	/**
 	 * @return array - Premium videos related to the local wiki.

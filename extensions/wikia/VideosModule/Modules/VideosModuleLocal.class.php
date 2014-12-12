@@ -1,6 +1,6 @@
 <?php
 
-namespace VideosModule;
+namespace VideosModule\Modules;
 
 /**
  * Class VideosModuleLocal
@@ -44,5 +44,24 @@ class Local extends Base {
 		}
 
 		return $this->videos;
+	}
+
+	/**
+	 * Get the video details (things like videoId, provider, description, regional restrictions, etc)
+	 * for video from the local wiki.
+	 *
+	 * @param array $videos A list of video titles
+	 * @return array
+	 */
+	public function getVideoDetailFromLocalWiki( array $videos ) {
+		$videoDetails = [];
+		$helper = new \VideoHandlerHelper();
+		foreach ( $videos as $video ) {
+			$details = $helper->getVideoDetail( $video, self::$videoOptions );
+			if ( !empty( $details ) ) {
+				$videoDetails[] = $details;
+			}
+		}
+		return $videoDetails;
 	}
 }
