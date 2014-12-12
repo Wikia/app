@@ -443,5 +443,10 @@ class VideoHandlerController extends WikiaController {
 		$cacheKey = $this->getVideoListCacheKey( $params );
 
 		\WikiaDataAccess::cachePurge( $cacheKey );
+
+		$this->response->setData([
+			'status' => 'ok',
+			'msg' => '',
+		]);
 	}
 }
