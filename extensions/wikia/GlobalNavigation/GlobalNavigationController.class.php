@@ -100,6 +100,8 @@ class GlobalNavigationController extends WikiaController {
 
 		$this->response->setVal( 'menuSections', $lazyLoadMenuNodes );
 		$this->overrideTemplate( 'hubsMenuSections' );
+
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 	}
 
 	private function getMenuNodes() {

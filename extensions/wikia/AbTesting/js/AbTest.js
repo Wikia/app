@@ -80,11 +80,17 @@
 		return !!(current && current.groups[groupName]);
 	};
 
-	// Returns the GA slot that tracking should be reported to
+	/**
+	 * Returns the GA slot that tracking should be reported to
+	 *
+	 * @param expName
+	 * @returns {Number|undefined}
+	 */
 	AbTest.getGASlot = function( expName ) {
 		var exp = getExperiment(expName,'getGASlot'),
-			current = exp && exp.current;
-		return current && current.gaSlot;
+			current = exp && exp.current,
+			gaSlot = current && current.gaSlot;
+		return parseInt(gaSlot,10) || undefined;
 	};
 
 	// Returns list of active experiments with IDs and names of them and groups that user fell in
