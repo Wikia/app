@@ -42,7 +42,7 @@
 			<ul>
 			<? foreach ( $filterVerticals as $verticalId => $verticalName ) : ?>
 				<li class="wam-filtering-tab <? if ( $verticalId == $selectedVerticalId ) : ?> selected<? endif; ?>">
-					<a class="icon-vertical icon-vertical-<?= $verticalsShorts[ $verticalId ] ?> <? if ( $verticalId == $selectedVerticalId ) : ?>icon-vertical-selected<? endif; ?>" data-vertical-id="<?= $verticalId ?>">
+					<a href="#" class="icon-vertical icon-vertical-<?= $verticalsShorts[ $verticalId ] ?> <? if ( $verticalId == $selectedVerticalId ) : ?>icon-vertical-selected<? endif; ?>" data-vertical-id="<?= $verticalId ?>">
 						<?= $verticalName ?>
 					</a>
 				</li>

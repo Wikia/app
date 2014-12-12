@@ -172,8 +172,8 @@ class WAMPageModel extends WikiaModel {
 		if( is_null( $this->pagesMap ) ) {
 			$this->pagesMap = [];
 			$pageName = $this->getWAMMainPageName();
-			$this->pagesMap[ mb_strtolower( $pageName ) ] = $pageName;
-			$this->pagesMap[ mb_strtolower( $this->getWAMFAQPageName() ) ] = $this->getWAMFAQPageName();
+			$this->pagesMap[mb_strtolower( $pageName )] = $pageName;
+			$this->pagesMap[mb_strtolower( $this->getWAMFAQPageName() )] = $this->getWAMFAQPageName();
 		}
 		return $this->pagesMap;
 	}
@@ -213,7 +213,7 @@ class WAMPageModel extends WikiaModel {
 		$aVerticals = $oWikiFactoryHub->getAllVerticals();
 		foreach ( $aVerticals as $iVerticalId => $aVerticalData ) {
 			if ( $iVerticalId !== WikiFactoryHub::HUB_ID_OTHER ) {
-				$aVerticalsShorts[ $iVerticalId ] = $aVerticalData['short'];
+				$aVerticalsShorts[$iVerticalId] = $aVerticalData['short'];
 			}
 		}
 		return $aVerticalsShorts;

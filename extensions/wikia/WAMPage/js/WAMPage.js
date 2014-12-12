@@ -14,6 +14,7 @@ WAMPage.prototype = {
 		document.querySelector('.wam-verticals-tabs').addEventListener(
 			'click',
 			function(event) {
+				event.preventDefault();
 				var target = event.target;
 				if (target.tagName ==='A') {
 					WAMPage.filterWamIndexByVertical(target);
