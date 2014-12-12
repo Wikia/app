@@ -89,13 +89,13 @@ class GlobalNavigationHelper {
 	 * @return String - language
 	 */
 	public function getLangForSearchResults() {
-		global $wgLang, $wgRequest;
+		global $wgLanguageCode, $wgRequest;
 
 		$resultsLang = $wgRequest->getVal('resultsLang');
 		if (!empty($resultsLang)) {
 			return $resultsLang;
 		} else {
-			return $wgLang->getCode();
+			return $wgLanguageCode;
 		}
 	}
 
