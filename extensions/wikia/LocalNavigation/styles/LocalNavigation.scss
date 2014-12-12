@@ -27,9 +27,10 @@ $local-nav-wordmark-right-spacing-small: 30px;
 
 .local-navigation {
 	@include font-size-xxs;
-	@include grid-content-padding-with-gutter;
 	border-bottom: 1px solid $color-page-border-subtle;
 	height: 80px;
+	padding-left: $medium-content-padding + $medium-grid-column-padding - $content-border-width;
+	padding-right: $medium-content-padding + $medium-grid-column-padding - $content-border-width;
 	position: relative;
 	white-space: nowrap;
 	width: 100%;
@@ -356,6 +357,9 @@ $local-nav-wordmark-right-spacing-small: 30px;
 
 @media #{$small-only} {
 	.local-navigation {
+		padding-left: $small-content-padding + $small-grid-column-padding - $content-border-width;
+		padding-right: $small-content-padding + $small-grid-column-padding - $content-border-width;
+
 		.wordmark-container {
 			padding: 0 $local-nav-wordmark-right-spacing-small - $local-nav-first-lev-menu-spacing-small 0 0;
 		}
@@ -383,6 +387,9 @@ $local-nav-wordmark-right-spacing-small: 30px;
 
 @media #{$large-up} {
 	.local-navigation {
+		padding-left: $large-content-padding + $large-grid-column-padding - $content-border-width;
+		padding-right: $large-content-padding + $large-grid-column-padding - $content-border-width;
+
 		.dropdown {
 			.second-level-row,
 			.third-level-row {
