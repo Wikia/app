@@ -67,6 +67,11 @@ $dropdownArrowSize: 10px;
 		text-align: center;
 		vertical-align: middle;
 		width: 38px;
+		&:before,
+		&:after {
+			content: "";
+			position: absolute;
+		}
 	}
 
 	.wikia-dropdown-nav-wrapper {
@@ -81,10 +86,8 @@ $dropdownArrowSize: 10px;
 		.nav-icon {
 			&:before,
 			&:after {
-				content: "";
 				border-top: $dropdownArrowSize solid transparent;
 				border-bottom: $dropdownArrowSize solid transparent;
-				position: absolute;
 				top: $dropdownArrowSize;
 			}
 
