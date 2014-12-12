@@ -434,6 +434,10 @@ class VideoHandlerController extends WikiaController {
 		return wfMemcKey( __METHOD__, md5( serialize( $params ) ) );
 	}
 
+	/**
+	 * Clears the cache created by the getVideoList method. As such this takes the same request parameters
+	 * as that method.
+	 */
 	public function clearVideoListCache() {
 		$params = $this->getVideoListParams();
 		$cacheKey = $this->getVideoListCacheKey( $params );
