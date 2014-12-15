@@ -27,7 +27,7 @@ define('ext.wikia.adEngine.adDecoratorTopInContent', [
 		}
 
 		contentDiv = document.getElementById('mw-content-text');
-		result = adPlacementChecker.injectAdIfItFits(fakeAdHtml, contentDiv);
+		result = adPlacementChecker.injectAdIfMedrecFits(fakeAdHtml, contentDiv);
 
 		if (result) {
 			fakeAd = document.getElementById(fakeAdId);
