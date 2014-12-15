@@ -9,7 +9,7 @@ use \Wikia\Logger\Loggable;
 class VignetteUrlToUrlGenerator {
 	use Loggable;
 
-	const URL_REGEX = '/^\/(?<bucket>[^\/]+)\/(images\/?)(?<relativePath>.*?)\/revision\/(?<revision>latest|\d+)(\/(?<thumbnailDefinition>.*))?/';
+	const URL_REGEX = '/^\/(?<bucket>[^\/]+)\/(images\/|avatars\/)?(?<relativePath>.*?)\/revision\/(?<revision>latest|\d+)(\/(?<thumbnailDefinition>.*))?/';
 
 	private $url;
 	private $asOriginal;
