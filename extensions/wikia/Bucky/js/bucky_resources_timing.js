@@ -45,7 +45,7 @@ define('bucky.resourceTiming', ['jquery', 'wikia.window', 'bucky'], function ($,
 	 * @return object
 	 */
 	function getResourcesStats(resources) {
-		var len, res,
+		var dnsTime, len, res,
 			stats = {};
 
 		/**
@@ -66,7 +66,7 @@ define('bucky.resourceTiming', ['jquery', 'wikia.window', 'bucky'], function ($,
 		 * Measure total time and count entry of the same type
 		 *
 		 * @param {string} type
-		 * @param {float} time
+		 * @param {number} time
 		 */
 		function addStatsEntry(type, time) {
 			if (typeof stats[type] !== 'undefined') {
@@ -75,9 +75,11 @@ define('bucky.resourceTiming', ['jquery', 'wikia.window', 'bucky'], function ($,
 			}
 		}
 
+		// setup stats fields to be sent to Bucky
 		[
 			'total',
 			'cached',
+			'dns',
 			'3rdparty',
 			'css',
 			'link',
@@ -106,20 +108,29 @@ define('bucky.resourceTiming', ['jquery', 'wikia.window', 'bucky'], function ($,
 			}));
 			/**/
 
+			// 3rd-party assets vs Wikia assets
 			// report duration (which includes assets being blocked!)
 			// @see http://www.stevesouders.com/blog/2014/11/25/serious-confusion-with-resource-timing/
-			addStatsEntry(res.initiatorType, res.duration);
-			addStatsEntry('total', res.duration);
+			if (isWikiaAsset(res.name)) {
+				addStatsEntry(res.initiatorType, res.duration);
+
+				// count DNS calls and report the time
+				dnsTime = res.domainLookupStart ? res.domainLookupEnd - res.domainLookupStart : false;
+				if (dnsTime !== false) {
+					addStatsEntry('dns', dnsTime);
+				}
+			}
+			else {
+				addStatsEntry('3rdparty', res.duration);
+			}
 
 			// browser cache hit
 			if (res.duration === 0) {
 				addStatsEntry('cached', 0);
 			}
 
-			// 3rd-party assets
-			if (!isWikiaAsset(res.name)) {
-				addStatsEntry('3rdparty', res.duration);
-			}
+			// count all assets fetched
+			addStatsEntry('total', res.duration);
 		}
 
 		return stats;
