@@ -74,7 +74,7 @@ class TaskRunner {
 				}
 			}
 
-			WikiaLogger::instance()->pushContext( [ 'task_call' => get_class($task).".{$method}"] );
+			WikiaLogger::instance()->pushContext( [ 'task_call' => get_class($task)."::{$method}"] );
 			$result = $task->execute( $method, $args );
 			WikiaLogger::instance()->popContext();
 			$this->results [] = $result;
