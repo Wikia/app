@@ -104,7 +104,7 @@ class ArticleNavigationController extends WikiaController {
 					!$wgTitle->isNamespaceProtected( $wgUser ) &&
 					!$wgTitle->isCascadeProtected()
 				) {
-					$data[ 'text' ] = wfMessage( 'edit' )->text();
+					$data[ 'title' ] = wfMessage( 'edit' )->text();
 					$data[ 'class' ] = 'force-user-login';
 				}
 
