@@ -23,6 +23,11 @@ $baseForm = [
 		],
 		[
 			'type' => 'hidden',
+			'name' => 'wpRegistrationCountry',
+			'value' => '',
+		],
+		[
+			'type' => 'hidden',
 			'name' => 'returntourl',
 			'value' => Sanitizer::encodeAttribute( $returnToUrl ),
 		],
