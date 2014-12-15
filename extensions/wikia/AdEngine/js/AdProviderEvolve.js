@@ -16,12 +16,18 @@ define('ext.wikia.adEngine.provider.evolve', [
 	var slotMap,
 		logGroup = 'ext.wikia.adEngine.provider.evolve',
 		ord = Math.round(Math.random() * 23456787654),
+		tile = 0,
 		slotForSkin = 'INVISIBLE_SKIN',
 		hoppedSlots = {},
 		iface,
 		undef;
 
 	slotMap = evolveSlotConfig.getConfig();
+
+	function getTileKv() {
+		tile += 1;
+		return 'tile=' + tile + ';';
+	}
 
 	function hasEmbed(slot) {
 		log(['hasEmbed', slot], 5, logGroup);
@@ -91,7 +97,7 @@ define('ext.wikia.adEngine.provider.evolve', [
 		//script += '<script type="text/javascript">' + '\n';
 		script += "if ((typeof(f406815)=='undefined' || f406815 > 0) ) {" + '\n';
 		script += "document.write('<scr'+'ipt src=\"http://n4403ad.doubleclick.net/adj/gn.wikia4.com/";
-		script += kv + ";sz=1000x1000;tile=1;ord=" + ord + "?\" type=\"text/javascript\"></scr'+'ipt>');" + '\n';
+		script += kv + "sz=1000x1000;" + getTileKv() + "ord=" + ord + "?\" type=\"text/javascript\"></scr'+'ipt>');" + '\n';
 		script += '}' + '\n';
 		//script += '</script>' + '\n';
 
@@ -99,7 +105,7 @@ define('ext.wikia.adEngine.provider.evolve', [
 		//script += '<script type="text/javascript">' + '\n';
 		script += "if ((typeof(f406785)=='undefined' || f406785 > 0) ) {" + '\n';
 		script += "document.write('<scr'+'ipt src=\"http://n4403ad.doubleclick.net/adj/gn.wikia4.com/";
-		script += kv + ";sz=47x47;tile=2;ord=" + ord + "?\" type=\"text/javascript\"></scr'+'ipt>');" + '\n';
+		script += kv + "sz=47x47;" + getTileKv() + "ord=" + ord + "?\" type=\"text/javascript\"></scr'+'ipt>');" + '\n';
 		script += '}' + '\n';
 		//script += '</script>' + '\n';
 
@@ -125,7 +131,7 @@ define('ext.wikia.adEngine.provider.evolve', [
 			'sz=' + size + ';' +
 			(dcopt ? 'dcopt=' + dcopt + ';' : '') +
 			'type=pop;type=int;' + // TODO remove?
-			'tile=' + tile + ';' +
+			getTileKv() +
 			'ord=' + ord + '?';
 
 		log(url, 7, logGroup);
