@@ -21,6 +21,19 @@
 		}
 	}
 
+	.MiniEditorWrapper {
+		.session {
+			@include font-size-xxs;
+			line-height: 16px;
+			width: 90px;
+		}
+
+		.avatar {
+			display: block;
+			position: static;
+		}
+	}
+
 	/* editor */
 	.session {
 		position: absolute;
