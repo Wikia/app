@@ -120,7 +120,8 @@ class MercuryApi {
 			'namespaces' => $wg->ContLang->getNamespaces(),
 			'siteName' => $this->getSiteName(),
 			'mainPageTitle' => Title::newMainPage()->getPrefixedDBkey(),
-			'theme' => SassUtil::getOasisSettings()
+			'theme' => SassUtil::getOasisSettings(),
+			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wg->CityId ),
 		];
 	}
 
