@@ -85,6 +85,12 @@ $form = [
 			'errorMsg' => ( !empty( $msg ) ? $msg : '' )
 		],
 		[
+			'class' => 'opt-in-container',
+			'type' => 'checkbox',
+			'name' => 'wpMarketingOptIn',
+			'label' => wfMessage( 'userlogin-opt-in-label' )->plain(),
+		],
+		[
 			'type' => 'nirvanaview',
 			'controller' => 'UserSignupSpecial',
 			'view' => 'submit',
