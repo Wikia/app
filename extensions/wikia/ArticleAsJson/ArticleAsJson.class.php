@@ -119,9 +119,19 @@ class ArticleAsJson extends WikiaService {
 		wfProfileIn( __METHOD__ );
 
 		if ( $wgArticleAsJson ) {
+			$linkTitle = $frameParams['link-title'];
+			$linkUrl = $frameParams['link-url'];
+			$linkHref = '';
+
+			if ( $linkTitle instanceof Title ) {
+				$linkHref = $linkTitle->getLocalURL();
+			} else if ( !empty( $linkUrl ) ) {
+				$linkHref = $linkUrl;
+			}
+
 			$details = WikiaFileHelper::getMediaDetail( $title, self::$mediaDetailConfig );
 
-			self::$media[] = self::createMediaObj( $details, $title->getText(), $frameParams['caption'] );
+			self::$media[] = self::createMediaObj( $details, $title->getText(), $frameParams['caption'], $linkHref );
 
 			self::addUserObj($details);
 
