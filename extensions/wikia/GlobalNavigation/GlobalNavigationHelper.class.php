@@ -83,6 +83,23 @@ class GlobalNavigationHelper {
 	}
 
 	/**
+	 * @desc get language for search results.
+	 * If resultsLang param is set then use it if not get it from $wgLang
+	 *
+	 * @return String - language
+	 */
+	public function getLangForSearchResults() {
+		global $wgLanguageCode, $wgRequest;
+
+		$resultsLang = $wgRequest->getVal('resultsLang');
+		if (!empty($resultsLang)) {
+			return $resultsLang;
+		} else {
+			return $wgLanguageCode;
+		}
+	}
+
+	/**
 	 * @desc get central wiki URL for given language.
 	 * If wiki in given language doesn't exist GlobalTitle method is throwing an exception and this method returns false
 	 *

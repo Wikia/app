@@ -13,7 +13,7 @@
 			</div>
 		<? else: ?>
 			<div class="search-select-underlay">
-				<span class="search-label-inline" id="search-label-inline"><?= wfMessage( 'global-navigation-global-search' )->escaped(); ?></span>
+				<span class="search-label-inline" id="searchLabelSingle"><?= wfMessage( 'global-navigation-global-search' )->escaped(); ?></span>
 			</div>
 		<? endif ?>
 		</div>
