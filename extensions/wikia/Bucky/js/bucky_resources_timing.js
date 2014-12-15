@@ -12,7 +12,7 @@
  *
  * @author macbre
  */
-define('bucky.resourceTiming', ['jquery', 'wikia.window', 'bucky'], function ($, window, bucky) {
+define('bucky.resourceTiming', ['jquery', 'wikia.window', 'wikia.log', 'bucky'], function ($, window, log, bucky) {
 	'use strict';
 
 	var assetIdx = 0,
@@ -36,6 +36,16 @@ define('bucky.resourceTiming', ['jquery', 'wikia.window', 'bucky'], function ($,
 	 */
 	function isWikiaAsset(url) {
 		return wikiaAssetRegex.test(url);
+	}
+
+	/**
+	 * Log debug information
+	 *
+	 * @param {string} msg
+	 * @param {object} data
+	 */
+	function debug(msg, data) {
+		log(msg + ': ' + JSON.stringify(data), log.levels.debug, 'ResourceTiming');
 	}
 
 	/**
@@ -149,10 +159,12 @@ define('bucky.resourceTiming', ['jquery', 'wikia.window', 'bucky'], function ($,
 
 		// report to bucky
 		sink = bucky('ResourceTiming.' + eventName);
+		debug('Sending stats', eventName);
 
 		for (key in stats) {
 			for (subkey in stats[key]) {
 				sink.send(key + '.' + subkey, Math.round(stats[key][subkey]));
+				debug(key + '.' + subkey, Math.round(stats[key][subkey]));
 			}
 		}
 	}
