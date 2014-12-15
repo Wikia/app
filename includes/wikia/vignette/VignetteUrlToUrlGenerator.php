@@ -29,7 +29,7 @@ class VignetteUrlToUrlGenerator {
 
 	public function build() {
 		if (!$this->parseUrl()) {
-			return null;
+			$this->reportError('unable to parse url');
 		}
 
 		$isArchive = $this->urlParts['revision'] != \Wikia\Vignette\UrlGenerator::REVISION_LATEST;
