@@ -2,6 +2,11 @@
 describe('ImgLzy', function () {
 	'use strict';
 
+	/**
+	 * @desc creates ImgLzy mock
+	 * @param {Boolean} supportsWebP
+	 * @returns {Object}
+	 */
 	function getImgLzyMock(supportsWebP) {
 		var logMock = function () {},
 			windowMock = {
@@ -17,41 +22,49 @@ describe('ImgLzy', function () {
 		return ImgLzy;
 	}
 
-	var ImgLzy = getImgLzyMock(true), // "force" WebP support to test URL rewrites
-		urls;
+	var ImgLzy = getImgLzyMock(true); // "force" WebP support to test URL rewrite
 
-	// API check
-	expect(typeof ImgLzy).toBe('object');
-	expect(typeof ImgLzy.init).toBe('function');
-	expect(typeof ImgLzy.rewriteURLForWebP).toBe('function');
+	it('has valid API', function () {
+		expect(typeof ImgLzy).toBe('object');
+		expect(typeof ImgLzy.init).toBe('function');
+		expect(typeof ImgLzy.rewriteURLForWebP).toBe('function');
+	});
 
-	// test thumbnail URL rewrites
-	urls = [{
-			url: 'http://images.macbre.wikia-dev.com/__cb20120211200134/muppet/images/thumb/9/96/Early_elmo.jpg/300px-Early_elmo.png',
-			webp: true
-		}, {
-			url: 'http://images.macbre.wikia-dev.com/__cb20120211200134/muppet/images/thumb/9/96/Early_elmo.png/300px-Early_elmo.png',
-			webp: true
-		},
-		// skip GIFs
-		{
-			url: 'http://images.macbre.wikia-dev.com/__cb20120211200134/muppet/images/thumb/9/96/Early_elmo.gif/300px-Early_elmo.gif',
-			webp: false
-		},
-		// not a thumb
-		{
-			url: 'http://images.macbre.wikia-dev.com/__cb20060721230014/muppet/images/4/45/Rovelive.jpg',
-			web: false,
-		},
-		// video thumb
-		{
-			url: 'http://images.macbre.wikia-dev.com/__cb20120603092251/muppet/images/thumb/9/92/The_Muppets_Bollywood_Spoof_trailer_Official_HD/150px-The_Muppets_Bollywood_Spoof_trailer_Official_HD.jpg',
-			webp: false
-		}
-	];
+	it('rewrites thumbnail URL', function () {
+		var urls = [
+			{
+				url: 'http://images.macbre.wikia-dev.com/__cb20120211200134/muppet/images/thumb/9/96/Early_elmo.jpg/' +
+				'300px-Early_elmo.png',
+				webp: true
+			},
+			{
+				url: 'http://images.macbre.wikia-dev.com/__cb20120211200134/muppet/images/thumb/9/96/Early_elmo.png/' +
+				'300px-Early_elmo.png',
+				webp: true
+			},
+			// skip GIFs
+			{
+				url: 'http://images.macbre.wikia-dev.com/__cb20120211200134/muppet/images/thumb/9/96/Early_elmo.gif/' +
+				'300px-Early_elmo.gif',
+				webp: false
+			},
+			// not a thumb
+			{
+				url: 'http://images.macbre.wikia-dev.com/__cb20060721230014/muppet/images/4/45/Rovelive.jpg',
+				web: false
+			},
+			// video thumb
+			{
+				url: 'http://images.macbre.wikia-dev.com/__cb20120603092251/muppet/images/thumb/9/92/' +
+				'The_Muppets_Bollywood_Spoof_trailer_Official_HD/' +
+				'150px-The_Muppets_Bollywood_Spoof_trailer_Official_HD.jpg',
+				webp: false
+			}
+		];
 
-	urls.forEach(function (testCase) {
-		var url = ImgLzy.rewriteURLForWebP(testCase.url);
-		expect(url.indexOf('.webp') > -1).toBe(testCase.webp === true);
+		urls.forEach(function (testCase) {
+			var url = ImgLzy.rewriteURLForWebP(testCase.url);
+			expect(url.indexOf('.webp') > -1).toBe(testCase.webp === true);
+		});
 	});
 });
