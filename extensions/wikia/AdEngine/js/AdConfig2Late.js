@@ -56,6 +56,8 @@ define('ext.wikia.adEngine.adConfigLate', [
 		decorators = adDecoratorTopInContent ? [adDecoratorTopInContent] : [];
 
 	function getProviderList(slotname) {
+		var evolveProvidersForSlot;
+
 		log('getProvider', 5, logGroup);
 		log(slotname, 5, logGroup);
 
@@ -86,7 +88,19 @@ define('ext.wikia.adEngine.adConfigLate', [
 
 		if (country === 'AU' || country === 'CA' || country === 'NZ') {
 			log(['getProvider', slotname, 'Evolve'], 'info', logGroup);
-			return [adProviderEvolve, adProviderLiftium];
+			evolveProvidersForSlot = [adProviderRemnantGpt, adProviderLiftium];
+
+			if (adProviderEvolve.canHandleSlot(slotname)) {
+				evolveProvidersForSlot.unshift(adProviderEvolve);
+				return evolveProvidersForSlot;
+			}
+
+			if (dartDirectBtfSlots[slotname]) {
+				evolveProvidersForSlot.unshift(adProviderDirectGpt);
+				return evolveProvidersForSlot;
+			}
+
+			return evolveProvidersForSlot;
 		}
 
 		// Don't load ads in TOP_INCONTENT_BOXAD if adDecoratorTopInContent is not available
