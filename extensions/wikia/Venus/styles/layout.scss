@@ -37,10 +37,6 @@ a {
 	border-bottom: 0;
 	position: relative; // needed for skin ads to not cover the article
 
-	& > header {
-		@include grid-content-padding;
-	}
-
 	body.venus-preview & {
 		border: 0;
 	}
