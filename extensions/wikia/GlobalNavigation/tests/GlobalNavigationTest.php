@@ -131,11 +131,7 @@ class GlobalNavigationTest extends WikiaBaseTest {
 			->will($this->returnValue(null));
 		$this->mockGlobalVariable('wgRequest', $wgRequestMock);
 
-		$wgLangMock = $this->getMock( 'Language', [ 'getCode' ] );
-		$wgLangMock->expects($this->any())
-			->method('getCode')
-			->will($this->returnValue('bar'));
-		$this->mockGlobalVariable('wgLang', $wgLangMock);
+		$this->mockGlobalVariable('wgLanguageCode', 'bar');
 
 		$globalNavHelper = new GlobalNavigationHelper();
 
