@@ -187,12 +187,14 @@ class FacebookSignupController extends WikiaController {
 
 		$result = ( $signupForm->msgType == 'error' ) ? 'error' : 'ok' ;
 		if ( $result == 'ok' && !$signupForm->getHasConfirmedEmail() ) {
-			$result = 'unconfirm'	;
+			$result = 'unconfirm';
 		}
 
-		$this->result = $result;
-		$this->msg = $signupForm->msg;
-		$this->errParam = $signupForm->errParam;
+		$this->response->setData([
+			'result' => $result,
+			'msg' => $signupForm->msg,
+			'errParam' => $signupForm->errParam,
+		]);
 	}
 
 	/**
