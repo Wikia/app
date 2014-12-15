@@ -40,6 +40,7 @@ $messages['en'] = array(
 	'userlogin-error-externaldberror' => 'Sorry! Our site is currently having an issue, please try again later.',
 	'userlogin-error-noemailtitle' => 'Please enter a valid email address.',
 	'userlogin-error-acct_creation_throttle_hit' => 'Sorry, this IP address has created too many accounts today. Please try again later.',
+	'userlogin-opt-in-label' => 'Email me about Wikia news and events',
 
 	// mail password
 	'userlogin-error-resetpass_forbidden' => 'Passwords cannot be changed',
