@@ -13,6 +13,7 @@ $messages['en'] = [
 	'fbconnect-connect-password-label' => 'Password:',
 	'fbconnect-wrong-pass-msg' => 'The password you have entered is incorrect',
 	'fbconnect-graphapi-not-configured' => 'Facebook App ID and App secret missing from configuration.',
+	'prefs-fbconnect-disconnect-prefstext' => 'Disconnect from Facebook',
 
 	// Keys copied from FBConnect and in use
 
@@ -75,6 +76,7 @@ $messages['qqq'] = [
 	'fbconnect-connect-password-label' => 'Label for the Wikia password field on the login box to link your Wikia account to Facebook',
 	'fbconnect-wrong-pass-msg' => 'Error text that appears when the user has entered their username/password incorrectly',
 	'fbconnect-graphapi-not-configured' => 'Text that appears when the Facebook credentials within the Wikia app are incorrect.',
+	'prefs-fbconnect-disconnect-prefstext' => 'Caption text for Facebook disconnect button; Please keep this very short.',
 
 	'fbconnect-desc' => 'Short description of the FBConnect extension, shown in [[Special:Version]]. Do not translate or change links.',
 	'fbconnect-or' => 'This is just the word "OR" in English, used to separate the Facebook Connect login option from the normal Wikia login options on the AJAX login dialog box.',
