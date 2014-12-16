@@ -59,8 +59,8 @@
 			groupsString = '',
 			groupsCount = 0,
 			enabled = false,
-			//used to check for iOS devices
-			isIdevice,
+			// we log everything as a simple string on iOS devices or when forced through ?log_as_string=1
+			logAsString,
 			levelsMap = [],
 			levelID,
 			p;
@@ -87,11 +87,11 @@
 					//add one between parameters
 					group += ': ';
 
-					if (isIdevice === undefined) {
-						isIdevice = /i(pod|pad|phone)/i.test(context.navigator.userAgent);
+					if (logAsString === undefined) {
+						logAsString = /i(pod|pad|phone)/i.test(context.navigator.userAgent);
 					}
 
-					if (isIdevice) {
+					if (logAsString) {
 						//iOS doesn't print out more than one parameter
 						//and has no tree view for objects
 						console.log(group + msg.toString());
@@ -165,6 +165,11 @@
 				x,
 				y,
 				g;
+
+
+			if (qs.getVal('log_as_string')) {
+				logAsString = true;
+			}
 
 			outputLevel = qs.getVal('log_level') || (cookies && cookies.get('log_level')) || outputLevel;
 
