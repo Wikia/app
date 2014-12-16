@@ -65,22 +65,14 @@ abstract class Base extends \WikiaModel implements Module {
 	];
 
 	/**
-	 * @param array $params Valid parameters are:
-	 *
-	 *   userRegion - A two character country code
-	 *
-	 * @throws MissingRequireParametersException
+	 * @param string $userRegion - A two character country code
 	 */
-	public function __construct( array $params ) {
+	public function __construct( $userRegion ) {
 		parent::__construct();
-
-		if ( empty( $params['userRegion'] ) ) {
-			throw new MissingRequireParametersException( "Parameter 'userRegion' required" );
-		}
 
 		$this->initializeBlacklist();
 
-		$this->userRegion = $params['userRegion'];
+		$this->userRegion = $userRegion;
 		$this->limit = static::LIMIT;
 		$this->source = $this->getSource();
 		$this->sort = static::SORT;
@@ -159,7 +151,6 @@ abstract class Base extends \WikiaModel implements Module {
 	 *
 	 * @param string $class The class name to use to create a new VideosModule\Base object
 	 * @param string $region The two character region code to pull videos for
-	 * @param string $sort How to sort video results that are found
 	 *
 	 * @return array
 	 */
@@ -169,13 +160,6 @@ abstract class Base extends \WikiaModel implements Module {
 		$videos = $module->getModuleVideos();
 		return $videos;
 	}
-
-	/**
-	 * This method should be overridden to do the actual work of getting videos for the source of the implementing class
-	 *
-	 * @return mixed
-	 */
-	abstract public function getModuleVideos();
 
 	/**
 	 * Method to clear all caches related to this video module
@@ -208,6 +192,7 @@ abstract class Base extends \WikiaModel implements Module {
 
 	/**
 	 * General logging method
+	 *
 	 * @param $message
 	 */
 	protected function logInfo( $message ) {
@@ -333,9 +318,9 @@ abstract class Base extends \WikiaModel implements Module {
 	 * @return bool
 	 */
 	protected function canAddVideo( array $video ) {
-		return !(
-			$this->isRegionallyRestricted( $video ) ||
-			$this->isBlackListed( $video )
+		return (
+			!$this->isRegionallyRestricted( $video ) &&
+			!$this->isBlackListed( $video )
 		);
 	}
 
@@ -363,6 +348,7 @@ abstract class Base extends \WikiaModel implements Module {
 
 	/**
 	 * Normalize video details to a set of keys understood by this module
+	 *
 	 * @param array $video Details for a single video
 	 * @return array
 	 */
@@ -379,5 +365,3 @@ abstract class Base extends \WikiaModel implements Module {
 		];
 	}
 }
-
-class MissingRequireParametersException extends \Exception {}

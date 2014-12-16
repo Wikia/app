@@ -3,11 +3,13 @@
 namespace VideosModule\Modules;
 
 /**
- * Class VideosModuleStaff
+ * Class Staff
  *
  * Look for 'Staff Picks' on the video wiki.  These are videos that have been added to the
  * "Staff Pick DBNAME" category (where DBNAME is this wiki's DB NAME) or the "Staff Pick Global"
  * category.
+ *
+ * @package VideosModule\Modules
  */
 class Staff extends Base {
 
@@ -15,8 +17,8 @@ class Staff extends Base {
 	const STAFF_PICK_GLOBAL_CATEGORY = 'Staff_Pick_Global';
 	const LIMIT = 5;
 
-	public function __construct( array $params ) {
-		parent::__construct( $params );
+	public function __construct( $userRegion ) {
+		parent::__construct( $userRegion );
 
 		$this->categories = [
 			self::STAFF_PICK_PREFIX.$this->wg->DBname,

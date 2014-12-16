@@ -3,11 +3,15 @@
 namespace VideosModule\Modules;
 
 /**
- * Class VideosModuleLocal
+ * Class Local
  *
  * Get videos added to the wiki
+ *
+ * @package VideosModule\Modules
  */
 class Local extends Base {
+
+	const SORT = 'trend';
 
 	public function getSource() {
 		return 'local';

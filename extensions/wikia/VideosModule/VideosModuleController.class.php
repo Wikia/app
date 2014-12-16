@@ -60,14 +60,13 @@ class VideosModuleController extends WikiaController {
 	 */
 	protected function initModules() {
 		$userRegion = $this->request->getVal( 'userRegion', self::DEFAULT_REGION );
-		$params = [ 'userRegion' => $userRegion ];
 
-		$this->staffModule = new Modules\Staff( $params );
+		$this->staffModule = new Modules\Staff( $userRegion );
 
 		if ( !empty( $this->wg->VideosModuleCategories )  ) {
-			$this->generalModule = new Modules\Category( $params );
+			$this->generalModule = new Modules\Category( $userRegion );
 		} else {
-			$this->generalModule = new Modules\Related( $params );
+			$this->generalModule = new Modules\Related( $userRegion );
 		}
 	}
 

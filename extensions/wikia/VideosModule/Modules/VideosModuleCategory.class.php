@@ -3,16 +3,18 @@
 namespace VideosModule\Modules;
 
 /**
- * Class VideosModuleCategory
+ * Class Category
  *
  * Get videos from the Video wiki that are in categories listed in wgVideosModuleCategories
+ *
+ * @package VideosModule\Modules
  */
 class Category extends Base {
 
 	const LIMIT = 40;
 
-	public function __construct( array $params ) {
-		parent::__construct( $params );
+	public function __construct( $userRegion ) {
+		parent::__construct( $userRegion );
 
 		$this->initCategories();
 	}
@@ -28,11 +30,7 @@ class Category extends Base {
 			return;
 		}
 
-		if ( !is_array( $categories ) ) {
-			$categories = [ $categories ];
-		}
-
-		$this->categories = $this->transformCatNames( $categories );
+		$this->categories = $this->transformCatNames( wfReturnArray( $categories ) );
 	}
 
 	/**
