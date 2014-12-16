@@ -2,9 +2,12 @@
 /**
  * The AMD module to hold all the context needed for the client-side scripts to run.
  */
-define('ext.wikia.adEngine.adContext', [
-	'wikia.window', 'wikia.document', 'wikia.geo', require.optional('wikia.instantGlobals'),  require.optional('wikia.abTest')
-], function (w, doc, geo, instantGlobals, abTest) {
+define('ext.wikia.adEngine.adContext',
+	[
+		'wikia.window', 'wikia.document', 'wikia.geo',
+		require.optional('wikia.instantGlobals'), require.optional('wikia.abTest')
+	],
+	function (w, doc, geo, instantGlobals, abTest) {
 	'use strict';
 
 	instantGlobals = instantGlobals || {};
@@ -42,7 +45,9 @@ define('ext.wikia.adEngine.adContext', [
 		}
 
 		// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
-		context.opts.usePostScribe = context.opts.usePostScribe || context.providers.sevenOneMedia;
+		if (context.providers.sevenOneMedia) {
+			context.opts.usePostScribe = true;
+		}
 
 		// Targeting by page categories
 		if (context.targeting.enablePageCategories) {
