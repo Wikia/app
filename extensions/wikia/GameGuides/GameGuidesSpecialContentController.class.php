@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @deprecated
+ */
 class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 	const CURATED_CONTENT = "CuratedContent";
 	public function __construct() {
