@@ -3,8 +3,9 @@
 namespace VideosModule\Modules;
 
 /**
- * Class VideosModuleVertical
- * category.
+ * Class Vertical
+ *
+ * @package VideosModule\Modules
  */
 class Vertical extends Base {
 
@@ -15,8 +16,8 @@ class Vertical extends Base {
 		\WikiFactoryHub::CATEGORY_ID_LIFESTYLE     => 'Lifestyle',
 	];
 
-	public function __construct( array $params ) {
-		parent::__construct( $params );
+	public function __construct( $userRegion ) {
+		parent::__construct( $userRegion );
 
 		$this->initCategories();
 	}
