@@ -12,10 +12,10 @@ state. The `dev` branch is an upstream branch.
 
 To deploy the latest stable version of Helios to `sandbox-s4` run the following commands on `deploy-s3`:
 
-``
+```
 dt prep --env sandbox-s4 --app wikia --repo app@helios-dev --repo config@helios-dev
 dt push --env sandbox-s4 --app wikia
-``
+```
 
 ## Contact ##
 
