@@ -127,7 +127,7 @@ class Client
 /**
  * Class ClientException
  *
- * The basic exception class for exception raised by the Helios Client.
+ * The basic exception class for exceptions raised by the Helios Client.
  */
 class ClientException extends Exception
 {
