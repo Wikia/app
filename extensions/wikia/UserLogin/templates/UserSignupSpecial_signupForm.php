@@ -85,7 +85,7 @@ $form = [
 			'errorMsg' => ( !empty( $msg ) ? $msg : '' )
 		],
 		[
-			'class' => 'opt-in-container',
+			'class' => 'opt-in-container hidden',
 			'type' => 'checkbox',
 			'name' => 'wpMarketingOptIn',
 			'label' => wfMessage( 'userlogin-opt-in-label' )->plain(),

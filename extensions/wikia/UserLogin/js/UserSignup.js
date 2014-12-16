@@ -1,3 +1,4 @@
+
 /* global WikiaForm, UserSignupAjaxForm */
 (function () {
 	'use strict';
@@ -22,9 +23,9 @@
 				captchaField: this.captchaField
 			});
 
+			this.initOptIn();
 			this.setupValidation();
 			this.termsOpenNewTab();
-			this.initOptIn();
 		},
 
 		/**
@@ -65,8 +66,26 @@
 
 		/**
 		 * Handle marketing email opt-in for different locales
+		 * Canada sees the checkbox unchecked
+		 * Europe sees the checkbox checked
+		 * Everywhere else is opted in automatically
 		 */
 		initOptIn: function () {
+			var geo = Wikia.geo,
+				$optInField = this.wikiaForm.inputs.wpMarketingOptIn,
+				$optInGroup = this.wikiaForm.getInputGroup('wpMarketingOptIn'),
+				isEurope = geo.getContinentCode().toLowerCase() === 'eu',
+				isCanada = geo.getCountryCode().toLowerCase() === 'ca';
+
+			if (!isCanada) {
+				$optInField.attr('checked', true);
+			}
+
+			if (isEurope || isCanada) {
+				$optInGroup
+					.add($optInField)
+					.removeClass('hidden');
+			}
 		}
 	};
 
