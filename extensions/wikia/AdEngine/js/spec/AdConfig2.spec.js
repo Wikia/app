@@ -257,7 +257,7 @@ describe('AdConfig2', function () {
 			adProviderLaterMock
 		);
 
-		expect(gptSlotConfigMock.extendSlotParams.calls.length).toBe(0);
+		expect(gptSlotConfigMock.extendSlotParams.calls.count()).toBe(0);
 	});
 
 	it('getProviderList RTP integration -- RTP called without tier info', function () {
@@ -280,7 +280,7 @@ describe('AdConfig2', function () {
 			adProviderLaterMock
 		);
 
-		expect(gptSlotConfigMock.extendSlotParams.calls.length).toBe(0);
+		expect(gptSlotConfigMock.extendSlotParams.calls.count()).toBe(0);
 		expect(rtpMockWithoutTier.trackState).toHaveBeenCalled();
 	});
 
