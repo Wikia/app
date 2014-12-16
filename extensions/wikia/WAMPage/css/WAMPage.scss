@@ -70,7 +70,7 @@ $color-wam-button: #092344;
 			background-color: $color-wam-button;
 			color: $color-wam-white;
 			display: block;
-			padding: 10px 20px 10px 30px;
+			padding: 10px 30px;
 
 			&::before {
 				margin-right: 5px;
@@ -219,9 +219,10 @@ $color-wam-button: #092344;
 
 	.wam-content-logo {
 		background-image: url('/extensions/wikia/WAMPage/images/WAM-Logo.png'); /* base64 */
+		background-repeat: no-repeat;
 		display: inline;
 		float: left;
-		height: 190px;
+		height: 260px;
 		margin-right: 60px;
 		width: 176px;
 	}
@@ -240,13 +241,13 @@ $color-wam-button: #092344;
 		h2 {
 			font-size: 36px;
 			line-height: 36px;
-			margin: 0 0 5px 0;
+			margin: 0;
 		}
 
 		h3 {
 			font-size: 24px;
 			line-height: 28px;
-			margin: 0 0 15px 0;
+			margin: 30px 0;
 		}
 
 		a {
