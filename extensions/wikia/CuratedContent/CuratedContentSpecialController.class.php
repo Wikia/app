@@ -190,6 +190,8 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			$this->response->setVal( 'error', $err );
 			return true;
 		}
+
+
 		$status = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $this->wg->CityId, $sections );
 		$this->response->setVal( 'status', $status );
 
@@ -258,17 +260,25 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$err = [ ];
 		if ( !empty( $sections ) ) {
 			foreach ( $sections as &$section ) {
-				$section[ 'image_id' ] = (int)$section[ 'image_id' ];
-				if ( !empty( $section[ self::ITEMS_TAG ] ) ) {
-					$sectionErr = $this->processSection( $section );
-					if ( !empty( $sectionErr ) ) {
-						$err = array_merge( $err, $sectionErr );
-					}
-				}
-
+				$this->saveTag( $section, $err );
 			}
 		}
 		return $err;
+	}
+
+	/**
+	 * @param $section
+	 * @param $err
+	 * @param string $sectionType
+	 */
+	private function saveTag( &$section, &$err ) {
+		$section[ 'image_id' ] = (int)$section[ 'image_id' ];
+		if ( !empty( $section[ self::ITEMS_TAG ] ) ) {
+			$sectionErr = $this->processSection( $section );
+			if ( !empty( $sectionErr ) ) {
+				$err = array_merge( $err, $sectionErr );
+			}
+		}
 	}
 
 	/**
@@ -284,7 +294,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			if ( !empty( $info ) ) {
 				$row[ 'video_info' ] = $info;
 			}
-			$rowErr = $this->checkForErrors( $row, $type, $articleId, $info );
+			$rowErr = $this->checkForErrors( $row, $type, $articleId, $info, $section[ 'featured' ] );
 			if ( !empty( $rowErr ) ) {
 				$sectionErr[ ] = $rowErr;
 			}
@@ -299,34 +309,40 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	 * @param $info
 	 * @return array
 	 */
-	private function checkForErrors( $row, $type, $articleId, $info ) {
+	private function checkForErrors( $row, $type, $articleId, $info, $isFeatured ) {
 		$rowErr = [ ];
+		$reason = '';
 		if ( empty( $row[ 'label' ] ) ) {
-			$rowErr [ 'title' ] = $row[ 'title' ];
-			$rowErr [ 'reason' ] = 'emptyLabel';
+			$reason = 'emptyLabel';
 		}
 
 		if ( $this->needsArticleId( $type ) && $articleId === 0 ) {
-			$rowErr [ 'title' ] = $row[ 'title' ];
-			$rowErr [ 'reason' ] = 'articleNotFound';
+			$reason = 'articleNotFound';
 		}
 
 		if ( $type == null ) {
-			$rowErr [ 'title' ] = $row[ 'title' ];
-			$rowErr [ 'reason' ] = 'notSupportedType';
+			$reason = 'notSupportedType';
 		}
 
 		if ( $type === 'video' ) {
 			if ( empty( $info ) ) {
-				$rowErr [ 'title' ] = $row[ 'title' ];
-				$rowErr [ 'reason' ] = 'videoNotHaveInfo';
+				$reason = 'videoNotHaveInfo';
 			} else {
 				if ( $this->isSupportedProviders( $info ) ) {
-					$rowErr [ 'title' ] = $row[ 'title' ];
-					$rowErr [ 'reason' ] = 'videoNotSupportProvider';
+					$reason = 'videoNotSupportProvider';
 				}
 			}
 		}
+
+		if ( !(bool)$isFeatured && $type !== 'category' ) {
+			$reason = 'notCategoryInTag';
+		}
+
+		if($reason !==''){
+			$rowErr[ 'title' ] = $row[ 'title' ];
+			$rowErr['reason'] = $reason;
+		}
+
 		return $rowErr;
 	}
 
