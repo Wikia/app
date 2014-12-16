@@ -93,8 +93,8 @@ class Client
     {
         return $this->request(
             'token',
-            [ 'username' => $sUsername, 'password' => $sPassword ],
             [ 'grant_type' => 'password' ],
+            [ 'username' => $sUsername, 'password' => $sPassword ],
             [ 'method' => 'POST' ]
         );
     }
