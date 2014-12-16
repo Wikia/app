@@ -1,3 +1,4 @@
+/* global wgScriptPath */
 require(['track', 'wikia.querystring', 'toast', 'wikia.nirvana', 'JSMessages', 'wikia.window'],
 	function (track, Qs, toast, nirvana, msg, window) {
 	'use strict';
@@ -50,7 +51,7 @@ require(['track', 'wikia.querystring', 'toast', 'wikia.nirvana', 'JSMessages', '
 			var reload = new Qs(),
 				returnto = reload.getVal('returnto',
 					(window.wgCanonicalSpecialPageName &&
-						window.wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/)) ?
+						window.wgCanonicalSpecialPageName.match(/Userlogin|Userlogout|UserSignup/)) ?
 						window.wgMainPageTitle :
 						''
 				);

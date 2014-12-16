@@ -175,7 +175,7 @@
 				this.bucky.timer.start('loggedInCallback');
 				var qString = new QueryString(),
 					returnTo = (wgCanonicalSpecialPageName &&
-						(wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/))) ?
+						(wgCanonicalSpecialPageName.match(/Userlogin|Userlogout|UserSignup/))) ?
 						wgMainPageTitle : null;
 
 				if (returnTo) {
