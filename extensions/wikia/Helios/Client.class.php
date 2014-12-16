@@ -74,7 +74,7 @@ class Client
             throw new ClientException('Request failed.');
         }
 
-        $sOutput = json_encode( $oRequest->getContent() );
+        $sOutput = json_decode( $oRequest->getContent() );
 
         if ( !$sOutput ) {
             throw new ClientException('Invalid response.');
