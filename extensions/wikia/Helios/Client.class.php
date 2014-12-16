@@ -1,5 +1,5 @@
 <?php
-namespace \Wikia\Helios;
+namespace Wikia\Helios;
 
 /**
  * Class Client
@@ -47,7 +47,7 @@ class Client
     public function request( $sResource, $aGetData = [], $aPostData = [], $aCustomOptions = [] )
     {
         // Crash as soon as we know we are unable to make HTTP requests.
-        \Wikia\Util\Assert::true( MWHttpRequest::canMakeRequests() );
+        \Wikia\Util\Assert::true( \MWHttpRequest::canMakeRequests() );
 
         // Request URI pre-processing.
         $sUri = "{$this->sBaseUri}{$sResource}?client_id={$this->sClientId}&client_secret={$this->sClientSecret}&";
@@ -135,7 +135,7 @@ class Client
  *
  * The basic exception class for exceptions raised by the Helios Client.
  */
-class ClientException extends Exception
+class ClientException extends \Exception
 {
 
 }
