@@ -55,7 +55,7 @@ describe('AdConfig2', function () {
 			wasCalled: function () {
 				return false;
 			},
-			call: function() {}
+			call: function () {}
 		},
 		rtpMock = mockRtp({ slotname: [ 'HOME_TOP_RIGHT_BOXAD' ] }),
 		rtpMockWithTier = mockRtp({ slotname: [ 'HOME_TOP_RIGHT_BOXAD' ] }, true, 5),
