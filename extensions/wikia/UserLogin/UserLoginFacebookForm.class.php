@@ -97,7 +97,7 @@ class UserLoginFacebookForm extends UserLoginForm {
 	 * following values for a user's gender: 'male', 'female', null.
 	 * @param User $user
 	 */
-	public function saveUserGender( User $user ) {
+	private function saveUserGender( User $user ) {
 		$fbUserInfo = FacebookClient::getInstance()->getUserInfo();
 		$gender = $fbUserInfo->getProperty( 'gender' );
 		if ( !is_null( $gender ) ) {
