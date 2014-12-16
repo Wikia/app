@@ -1,10 +1,10 @@
-@import "skins/shared/mixins/clearfix";
-@import "skins/shared/mixins/forms";
-@import "skins/shared/mixins/wordmark";
-@import "skins/shared/color";
-@import "skins/oasis/css/core/layout";
-@import "../mixins/submitpane";
-@import "../mixins/divider";
+@import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/forms';
+@import 'skins/shared/mixins/wordmark';
+@import 'skins/shared/color';
+@import 'skins/oasis/css/core/layout';
+@import '../mixins/submitpane';
+@import '../mixins/divider';
 
 .WikiaSignup {
 	margin: 50px 25px 50px 15px;
