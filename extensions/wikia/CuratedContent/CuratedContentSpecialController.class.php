@@ -15,6 +15,10 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	const ITEM_FUNCTION_NAME = 'item';
 
 
+	const DEFAULT_SECTION_TEMPLATE = 'section';
+
+	const FEATURED_SECTION_TEMPLATE = 'featuredSection';
+
 	public function __construct() {
 		parent::__construct( 'CuratedContent', '', false );
 	}
@@ -93,21 +97,18 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			$list = '';
 
 			foreach ( $sections as $section ) {
-				$list .= $this->sendSelfRequest( 'section', [
-					'value' => $section[ 'title' ],
-					'image_id' => $section[ 'image_id' ]
-				] );
-
-				if ( !empty( $section[ self::ITEMS_TAG ] ) ) {
-					foreach ( $section[ self::ITEMS_TAG ] as $item ) {
-						$list .= $this->sendSelfRequest( self::ITEM_FUNCTION_NAME, [
-							'item_value' => $item[ 'title' ],
-							'name_value' => !empty( $item[ 'label' ] ) ? $item[ 'label' ] : '',
-							'image_id' => $item[ 'image_id' ]
-						] );
-					}
+				if ( isset( $section[ 'featured' ] ) && $section[ 'featured' ] ) {
+					$featuredSection = $this->buildSection( $section );
+				} else {
+					$list .= $this->buildSection( $section );
 				}
 			}
+			if ( !isset( $featuredSection ) ) {
+				// add featured section if not yet exists
+				$featuredSection = $this->sendSelfRequest( self::FEATURED_SECTION_TEMPLATE );
+			}
+			// prepend featured section
+			$list = $featuredSection . $list;
 
 			$this->response->setVal( 'list', $list );
 		} else {
@@ -116,6 +117,19 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		}
 
 		return true;
+	}
+
+	public function featuredSection() {
+		$this->response->setTemplateEngine( self::TEMPLATE_ENGINE );
+
+		$id = $this->request->getVal( 'image_id', 0 );
+
+		$this->response->setVal( 'value', wfMessage( 'wikiacuratedcontent-featured-section-name' ) );
+		$this->response->setVal( 'image_id', $id );
+		$this->response->setVal( 'image_url', $this->getImage( $id ) );
+		if ( $id != 0 ) {
+			$this->response->setVal( 'image_set', true );
+		}
 	}
 
 	public function section() {
@@ -212,6 +226,28 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$this->response->setVal( 'id', $id );
 
 		return $url;
+	}
+
+	private function buildSection( $section ) {
+		$result = '';
+		$sectionTemplate = self::DEFAULT_SECTION_TEMPLATE;
+		if ( isset( $section[ 'featured' ] ) && $section[ 'featured' ] ) {
+			$sectionTemplate = self::FEATURED_SECTION_TEMPLATE;
+		}
+		$result .= $this->sendSelfRequest( $sectionTemplate, [
+			'value' => $section[ 'title' ],
+			'image_id' => $section[ 'image_id' ]
+		] );
+		if ( !empty( $section[ self::ITEMS_TAG ] ) ) {
+			foreach ( $section[ self::ITEMS_TAG ] as $item ) {
+				$result .= $this->sendSelfRequest( self::ITEM_FUNCTION_NAME, [
+					'item_value' => $item[ 'title' ],
+					'name_value' => !empty( $item[ 'label' ] ) ? $item[ 'label' ] : '',
+					'image_id' => $item[ 'image_id' ]
+				] );
+			}
+		}
+		return $result;
 	}
 
 	/**

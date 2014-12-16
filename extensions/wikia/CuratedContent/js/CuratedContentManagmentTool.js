@@ -103,17 +103,17 @@ $(function () {
 				$ul.find('.item:not(.section ~ .item)').each(function () {
 					var $t = $(this);
 					$t.addClass('error')
-							.popover('destroy')
-							.popover({
-								content: orphanError
-							});
+						.popover('destroy')
+						.popover({
+							content: orphanError
+						});
 				});
 
 				$ul.find('.section').each(function () {
 					var $t = $(this),
 						$items = $t.nextUntil('.section');
 
-					if ($items.length === 0) {
+					if ($items.length === 0 && !$t.hasClass('featured')) {
 						$t.find('.section-input')
 							.addClass('error')
 							.popover('destroy')
@@ -161,7 +161,7 @@ $(function () {
 				if (ev.keyCode === 13) {
 					$(this).next().focus();
 				}
-			}).keyup(function(ev){
+			}).keyup(function (ev) {
 				setTimeout(checkForm, 0);
 			});
 
@@ -173,7 +173,7 @@ $(function () {
 			addNew(section);
 		});
 
-		function getData(li) {
+		function getItemData(li) {
 			var $lia = $(li);
 			return {
 				title: $lia.find('.item-input').val(),
@@ -182,45 +182,50 @@ $(function () {
 			}
 		}
 
+		function getSectionData(li) {
+			var $lia = $(li),
+				name = $lia.find('.section-input').val() || '',
+				imageId = $lia.find('.image').data('id') || 0,
+				featured = $lia.hasClass('featured') || false,
+				items = [],
+				result = {};
+
+			$lia.nextUntil('.section').each(function () {
+				items.push(getItemData(this));
+			});
+
+			result = {
+				title: name,
+				image_id: imageId,
+				items: items
+			}
+			if (featured) {
+				result['featured'] = true;
+			}
+			return result;
+		}
+
 		$save.on('click', function () {
 			var data = [],
 				orphans = [];
 
 			if (checkForm()) {
 				$ul.find('.item:not(.section ~ .item)').each(function () {
-					orphans.push(getData(this));
+					orphans.push(getItemData(this));
 				});
 
 				$ul.find('.section').each(function () {
-					var $t = $(this),
-							name = $t.find('.section-input').val(),
-							imageId = $t.find('.image').data('id') || 0,
-							items = [];
-
-					if (orphans.length > 0){
-					// adopts the orphans to the top of topmost section
-					// since that what probably orphaned them in the first place
-						items = orphans;
+					var sectionData = getSectionData(this);
+					if (orphans.length > 0) {
+						// adopts the orphans to the top of topmost section
+						// since that what probably orphaned them in the first place
+						sectionData.items = sectionData.items.reduce(function (self, item) {
+							self.push(item);
+							return self;
+						}, orphans);
 						orphans = [];
 					}
-
-					$t.nextUntil('.section').each(function () {
-						items.push(getData(this));
-					});
-
-					if (name) {
-						data.push({
-							title: name,
-							image_id: imageId,
-							items: items
-						});
-					} else {
-						data.push({
-							title: '',
-							image_id: imageId,
-							items: items
-						});
-					}
+					data.push(sectionData);
 				});
 				nirvana.sendRequest({
 					controller: 'CuratedContentSpecial',
@@ -365,6 +370,7 @@ $(function () {
 				containment: '#contentManagmentForm',
 				cursor: 'move',
 				handle: '.drag',
+				items: 'li:not(.sort-disabled)',
 				placeholder: 'drop',
 				update: function () {
 					checkForm();
