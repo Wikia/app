@@ -12,6 +12,7 @@ $global-footer-vertical-spacing: 30px;
 	border-top: 1px solid $global-footer-color-border;
 	color: $color-text-dark;
 	padding-top: $global-footer-vertical-spacing;
+	position: relative;
 	text-align: center;
 
 	&:after {
