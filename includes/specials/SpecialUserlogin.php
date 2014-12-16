@@ -587,10 +587,10 @@ class LoginForm extends SpecialPage {
 	 * creation.
 	 */
 	public function authenticateUserData() {
-		global $wgUser, $wgHeliosBaseUri, $wgHeliosClientSecret, $wgHeliosClientSecret;
+		global $wgUser, $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret;
 		$this->load();
 
-		$oHelios = new \Wikia\Helios\Client( $wgHeliosBaseUri, $wgHeliosClientSecret, $wgHeliosClientSecret );
+		$oHelios = new \Wikia\Helios\Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
 
 		try {
 			$oLogin = $oHelios->login( $this->mUsername, $this->mPassword );
