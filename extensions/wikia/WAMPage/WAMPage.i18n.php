@@ -9,7 +9,7 @@ $messages = array();
 $messages['en'] = array(
 	'wam-html-title' => 'Wikia Activity Monitor (WAM) - Wikia.com/WAM',
 	'wampage-header' => 'Wam',
-	'wampage-header-faq' => 'Faq',
+	'wampage-header-faq' => 'Frequently asked questions',
 	'wam-other' => 'All',
 	'wam-tv' => 'TV',
 	'wam-games' => 'Games',
@@ -50,7 +50,7 @@ Please contact community support at [mailto:support@wikia-inc.com support@wikia-
 	'wam-index-header-vertical' => 'Vertical',
 	'wam-index-header-vertical-rank' => 'Vertical Rank',
 	'wam-index-header-admins' => 'Admins',
-	'wampage-breadcrumb-back-to-wam' => 'WAM Score',
+	'wampage-breadcrumb-back-to-wam' => 'Back to WAM Score',
 	'wam-index-header-peak-rank' => 'Peak Rank',
 	'wam-index-no-results' => 'The wiki you searched for is not in the top 5000 for the date you selected. WAM rankings are updated daily, so check back frequently. [mailto:support@wikia-inc.com Contact Wikia Community Support] if you have any questions.',
 	'wam-index-filter-search-placeholder' => 'Search',

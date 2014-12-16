@@ -1,4 +1,4 @@
-<div class="wam-header">
+<div class="wam-header wam-hero">
 	<div class="wam-top-gainers-cards">
 		<h2 class="wam-top-gainers-header"><?= wfMessage('wampage-top-gainers-header')->escaped(); ?><? if ( $isSingleVertical ) : ?>: <span class="vertical-<?= $verticalsShorts[ $selectedVerticalId ] ?>"><?= $filterVerticals[ $selectedVerticalId ] ?></span><? endif; ?></h2>
 		<div class="wam-cards">
