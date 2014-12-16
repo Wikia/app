@@ -250,7 +250,7 @@ describe('Modal events', function () {
 			onTriggerSuccess: function () {}
 		};
 
-		spyOn(listeners, 'onFoo1').andCallThrough();
+		spyOn(listeners, 'onFoo1').and.callThrough();
 		spyOn(listeners, 'onFoo2');
 		spyOn(listeners, 'onTriggerSuccess');
 
