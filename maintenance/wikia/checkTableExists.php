@@ -60,11 +60,11 @@ while ( $row = $db->fetchObject($sth) ) {
 
 	try {
 		$wiki_db = wfGetDB(DB_SLAVE, [], $row->Database);
-	    if (! $wiki_db->tableExists($table)) {
-	    	$wiki_id = WikiFactory::DBToId($row->Database);
-	    	$missing[$wiki_id] = $row->Database;
-	    };
-	    $wiki_db->close();
+		if (! $wiki_db->tableExists($table)) {
+			$wiki_id = WikiFactory::DBToId($row->Database);
+			$missing[$wiki_id] = $row->Database;
+		};
+		$wiki_db->close();
 
 		$count ++;
 		if ($count % 1000 == 0) {
