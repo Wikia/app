@@ -330,7 +330,7 @@ abstract class Base extends \WikiaModel implements Module {
 	 * @param array $video Details for a single video
 	 * @return bool
 	 */
-	public function isRegionallyRestricted( array $video ) {
+	public function isRegionallyRestricted( $video ) {
 		return !empty( $video['regionalRestrictions'] )
 			&& !empty( $this->userRegion )
 			&& !preg_match( "/$this->userRegion/", $video['regionalRestrictions'] );
