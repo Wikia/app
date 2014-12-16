@@ -70,11 +70,17 @@ class Client
         $oStatus = $oRequest->execute();
 
         // Response handling.
-        if ( $oStatus->isGood() ) {
-            return json_encode( $oRequest->getContent() );
-        } else {
-            throw new ClientException( 'Request failed.' );
+        if ( !$oStatus->isGood() ) {
+            throw new ClientException('Request failed.');
         }
+
+        $sOutput = json_encode( $oRequest->getContent() );
+
+        if ( !$sOutput ) {
+            throw new ClientException('Invalid response.');
+        }
+
+        return $sOutput;
     }
 
     /**
