@@ -50,7 +50,7 @@
 			</ul>
 		</div>
 		<div class="filtering">
-			<input type="hidden" name="verticalId" class="wam-filtering-vertical-id" value="<?= $selectedVerticalId ?>"/>
+			<input type="hidden" name="verticalId" class="wam-filtering-vertical-id" value="<?= Sanitizer::encodeAttribute( $selectedVerticalId ) ?>"/>
 			<label for="langCode"><?= wfMessage('wam-index-filter-lang-label')->escaped() ?></label>
 			<select name="langCode" id="langCode">
 				<option value=""><?= wfMessage('wam-index-filter-language-default')->escaped() ?></option>
