@@ -15,13 +15,14 @@
 			});
 
 			this.wikiaForm = new WikiaForm('#WikiaSignupForm');
-			this.signupAjaxForm = new UserSignupAjaxForm(
-				this.wikiaForm,
-				this.inputsToValidate,
-				this.wikiaForm.inputs.submit,
-				this.notEmptyFields,
-				this.captchaField
-			);
+			this.signupAjaxForm = new UserSignupAjaxForm({
+				wikiaForm: this.wikiaForm,
+				inputsToValidate: this.inputsToValidate,
+				submitButton: this.wikiaForm.inputs.submit,
+				notEmptyFields: this.notEmptyFields,
+				captchaField: this.captchaField
+			});
+
 			this.wikiaForm.el
 				.find('input[name=userloginext01], input[name=email], input[name=userloginext02]')
 				.on('blur.UserSignup', $.proxy(UserSignup.signupAjaxForm.validateInput, this.signupAjaxForm));
