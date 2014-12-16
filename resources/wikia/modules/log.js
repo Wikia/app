@@ -1,3 +1,5 @@
+/*global require, syslogReport*/
+
 /**
  * Logging utility extracted from Liftium's library and further modified
  *
@@ -39,21 +41,19 @@
 		feedback: 9,
 		system: 10,
 		trace: 11,
-		trace_l2: 12, // trace level 2
-		trace_l3: 13 // trace level 3
+		'trace_l2': 12, // trace level 2
+		'trace_l3': 13 // trace level 3
 	};
 
 	function syslog(priority, message, context) {
 		// syslogReport defined in Oasis_Index
-		if (typeof syslogReport == 'function' && priority < SYSLOG_CUTOFF) {
+		if (typeof syslogReport === 'function' && priority < SYSLOG_CUTOFF) {
 			syslogReport(priority, message, context);
 		}
 	}
 
 	function logger() {
 		var console = context.console,
-			//used for undefined checks
-			undef,
 			outputLevel = 0,
 			groups = {},
 			groupsString = '',
@@ -63,8 +63,7 @@
 			isIdevice,
 			levelsMap = [],
 			levelID,
-			p,
-			v;
+			p;
 
 		for (p in levels) {
 			if (levels.hasOwnProperty(p)) {
@@ -82,13 +81,13 @@
 		 * @param {String} group The log group
 		 */
 		function printMessage(msg, group) {
-			if (console !== undef) {
+			if (console !== undefined) {
 				if (group) {
 					//forcing space as IE doesn't
 					//add one between parameters
 					group += ': ';
 
-					if (isIdevice === undef) {
+					if (isIdevice === undefined) {
 						isIdevice = /i(pod|pad|phone)/i.test(context.navigator.userAgent);
 					}
 
@@ -142,7 +141,7 @@
 			}
 
 			if (!enabled ||
-					(msg === undef) ||
+					(msg === undefined) ||
 					(levelID > outputLevel) ||
 					(groupsCount > 0 && !(groups.hasOwnProperty(group)))) {
 				return false;
@@ -157,11 +156,11 @@
 		 *
 		 * @private
 		 *
-		 * @param {Object} querystring The QueryString module
+		 * @param {Object} QueryString The QueryString module
 		 * @param {Object} cookies The Cookies module
 		 */
-		function init(querystring, cookies) {
-			var qs = new querystring(),
+		function init(QueryString, cookies) {
+			var qs = new QueryString(),
 				selectedGroups,
 				x,
 				y,
@@ -175,20 +174,23 @@
 				outputLevel = parseInt(outputLevel, 10);
 			}
 
-			selectedGroups = (qs.getVal('log_group') || (cookies && cookies.get('log_group')) || '').replace(' ', '').replace('|', ',').split(',');
+			selectedGroups = (qs.getVal('log_group') || (cookies && cookies.get('log_group')) || '');
+			selectedGroups = selectedGroups.replace(' ', '').replace('|', ',').split(',');
 			groupsString = selectedGroups.join(', ');
 
-			for (x = 0, y = selectedGroups.length; x < y; x++) {
+			for (x = 0, y = selectedGroups.length; x < y; x += 1) {
 				g = selectedGroups[x];
 
 				if (g !== '') {
 					groups[g] = '';
-					groupsCount++;
+					groupsCount += 1;
 				}
 			}
 
 			if (outputLevel > 0) {
-				printMessage('initialized at level ' + outputLevel + ((groupsCount > 0) ? ' for ' + groupsString : ''), 'Wikia.log');
+				printMessage('initialized at level ' + outputLevel + (
+					(groupsCount > 0) ? ' for ' + groupsString : ''
+				), 'Wikia.log');
 				enabled = true;
 			}
 		}
