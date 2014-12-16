@@ -8,18 +8,31 @@ class FacebookClientController extends WikiaController {
 	public function preferences() {
 		$this->response->addAsset( 'facebook_client_preferences_scss' );
 
-		$this->isConnected = $this->getVal( 'isConnected', false );
+		$isUserConnected = $this->getVal( 'isConnected', false );
 
 		// Settings for a connected user
-		$this->facebookDisconnectLink = wfMessage( 'fbconnect-disconnect-account-link' )->parse();
-		$this->fbFromExist = F::app()->wg->User->getOption( 'fbFromExist' );
+		$disconnectLink = wfMessage( 'fbconnect-disconnect-account-link' )->parse();
+		$fbFromExist = F::app()->wg->User->getOption( 'fbFromExist' );
 
 		// Settings for a user who is not connected yet
-		$this->facebookConvertMessage = wfMessage( 'fbconnect-convert' )->plain();
+		$convertMessage = wfMessage( 'fbconnect-convert' )->plain();
 
-		$this->facebookButton = F::app()->renderView( 'FacebookButton', 'index', [
+		$connectButton = F::app()->renderView( 'FacebookButton', 'index', [
 			'class' => 'sso-login-facebook',
 			'text' => wfMessage( 'fbconnect-wikia-signup-w-facebook' )->escaped()
+		] );
+		$disconnectButton = F::app()->renderView( 'FacebookButton', 'index', [
+			'class' => 'fb-disconnect',
+			'text' => wfMessage( 'prefs-fbconnect-disconnect-prefstext' )->escaped()
+		] );
+
+		$this->response->setData( [
+			'isConnected' => $isUserConnected,
+			'fbFromExist' => $fbFromExist,
+			'connectButton' => $connectButton,
+			'disconnectButton' => $disconnectButton,
+			'convertMessage' => $convertMessage,
+			'disconnectLink' => $disconnectLink,
 		] );
 	}
 

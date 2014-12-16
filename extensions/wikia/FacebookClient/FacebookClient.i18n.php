@@ -13,6 +13,7 @@ $messages['en'] = [
 	'fbconnect-connect-password-label' => 'Password:',
 	'fbconnect-wrong-pass-msg' => 'The password you have entered is incorrect',
 	'fbconnect-graphapi-not-configured' => 'Facebook App ID and App secret missing from configuration.',
+	'prefs-fbconnect-disconnect-prefstext' => 'Disconnect from Facebook',
 
 	// Keys copied from FBConnect and in use
 
@@ -24,7 +25,7 @@ $messages['en'] = [
 	'fbconnect-error' => 'Verification error',
 	'fbconnect-errortext' => 'Yikes! It looks like that didn\'t work out. Please try again.',
 	'fbconnect-disconnect-account-link' => 'Your Wikia account is currently connected to Facebook. You can [[#|disconnect]] your Wikia account from Facebook. You will be able to continue using your Wikia account as usual, with your history (edits, points, achievements) intact.',
-	'fbconnect-disconnect-info' => 'Disconnect complete. We have emailed a new password to use with your account - you can log in with the same username as before. Hooray!',
+	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Wikia account.',
 	'fbconnect-disconnect-info-existing' => 'Disconnect complete. You can still log in using your user name and password, as usual.',
 	'fbconnect-unknown-error' => 'Unknown error, please try again.',
 	'fbconnect-passwordremindertitle' => 'Your Wikia account is now disconnected from Facebook!',
@@ -75,6 +76,7 @@ $messages['qqq'] = [
 	'fbconnect-connect-password-label' => 'Label for the Wikia password field on the login box to link your Wikia account to Facebook',
 	'fbconnect-wrong-pass-msg' => 'Error text that appears when the user has entered their username/password incorrectly',
 	'fbconnect-graphapi-not-configured' => 'Text that appears when the Facebook credentials within the Wikia app are incorrect.',
+	'prefs-fbconnect-disconnect-prefstext' => 'Caption text for Facebook disconnect button; Please keep this very short.',
 
 	'fbconnect-desc' => 'Short description of the FBConnect extension, shown in [[Special:Version]]. Do not translate or change links.',
 	'fbconnect-or' => 'This is just the word "OR" in English, used to separate the Facebook Connect login option from the normal Wikia login options on the AJAX login dialog box.',

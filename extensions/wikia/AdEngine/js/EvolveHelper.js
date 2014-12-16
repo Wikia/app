@@ -65,6 +65,7 @@ define('ext.wikia.adEngine.evolveHelper', [
 	function getTargeting() {
 		var i, decorated, additionalParams = getCustomKeyValues() + getKruxKeyValues(),
 			params = {
+				artid: pageParams.artid,
 				s1: pageParams.rawDbName,
 				esrb: pageParams.esrb,
 				dmn: pageParams.dmn,

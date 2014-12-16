@@ -256,9 +256,15 @@ class WikiaMobileService extends WikiaService {
 		$this->response->setVal( 'toc', $toc );
 	}
 
+	private function disableSiteCSS() {
+		global $wgUseSiteCss;
+		$wgUseSiteCss = false;
+	}
+
 	public function index() {
 		wfProfileIn( __METHOD__ );
 
+		$this->disableSiteCSS();
 		$this->handleMessages();
 		$this->handleSmartBanner();
 		$this->handleContent();

@@ -215,7 +215,6 @@ ve.init.mw.ViewPageTarget.prototype.setupToolbar = function () {
 		this.toolbar.$element.insertAfter( $firstHeading );
 	}
 
-	this.toolbar.initialize();
 	this.surface.getView().emit( 'position' );
 	this.surface.getContext().update();
 };
@@ -412,18 +411,13 @@ ve.init.mw.ViewPageTarget.prototype.afterHideSpinner = function () {
 	this.transformPageTitle();
 	this.changeDocumentTitle();
 	this.hidePageContent();
-
+	this.toolbar.initialize();
 	this.surface.getFocusWidget().$element.show();
 	this.surface.getView().focus();
-
 	this.restoreScrollPosition();
 	this.restoreEditSection();
 	this.setupBeforeUnloadHandler();
 	this.maybeShowDialogs();
-	if ( window.veTrack ) {
-		veTrack( { action: 've-edit-page-stop' } );
-	}
-	mw.hook( 've.activationComplete' ).fire();
 
 	$( '.ve-spinner-fade' ).css( 'opacity', 0 );
 	if ( this.timeout ) {
@@ -436,6 +430,11 @@ ve.init.mw.ViewPageTarget.prototype.afterHideSpinner = function () {
 ve.init.mw.ViewPageTarget.prototype.afterSpinnerFadeOpacityOut = function () {
 	this.toolbar.$element.removeClass( 'transition' );
 	$( '.ve-spinner-fade' ).hide();
+
+	if ( window.veTrack ) {
+		veTrack( { action: 've-edit-page-stop' } );
+	}
+	mw.hook( 've.activationComplete' ).fire();
 };
 
 /**
