@@ -49,7 +49,7 @@ class WAMPageController extends WikiaController
 		$this->verticalsShorts = $this->model->getVerticalsShorts();
 
 		$this->searchPhrase = htmlspecialchars( $this->getVal( 'searchPhrase', null ) );
-		$this->selectedVerticalId = $this->getVal( 'verticalId', null );
+		$this->selectedVerticalId = intval( $this->getVal( 'verticalId', null ) );
 		$this->selectedLangCode = $this->getVal( 'langCode', null );
 		$this->selectedDate = $this->getVal( 'date', null );
 
@@ -57,9 +57,9 @@ class WAMPageController extends WikiaController
 		$this->selectedLangCode = ( $this->selectedLangCode !== '' ) ? $this->selectedLangCode : null;
 		$this->selectedDate = ( $this->selectedDate !== '' ) ? $this->selectedDate : null;
 
-		$this->isSingleVertical = ( $this->selectedVerticalId != WikiFactoryHub::HUB_ID_OTHER ) ? true : false;
+		$this->isSingleVertical = ( $this->selectedVerticalId != WikiFactoryHub::HUB_ID_OTHER );
 
-		$this->page = $this->getVal('page', $this->model->getFirstPage());
+		$this->page = intval( $this->getVal( 'page', $this->model->getFirstPage() ) );
 
 		$verticalValidator = new WikiaValidatorSelect(array('allowed' => array_keys($this->filterVerticals)));
 		if (!$verticalValidator->isValid($this->selectedVerticalId)) {
@@ -122,10 +122,10 @@ class WAMPageController extends WikiaController
 
 		$indexParams = [
 			'searchPhrase' => $this->searchPhrase,
-			'verticalId' => $this->selectedVerticalId,
+			'verticalId' => Sanitizer::encodeAttribute( $this->selectedVerticalId ),
 			'langCode' => $this->selectedLangCode,
 			'date' => isset($this->selectedDate) ? $this->selectedDate : null,
-			'page' => $page,
+			'page' => Sanitizer::encodeAttribute( $page ),
 		];
 
 		return $indexParams;
@@ -181,4 +181,3 @@ class WAMPageController extends WikiaController
 		$this->wamPageUrl = $this->model->getWAMMainPageUrl();
 	}
 }
-
