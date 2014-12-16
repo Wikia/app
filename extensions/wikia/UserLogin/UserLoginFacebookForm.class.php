@@ -54,6 +54,13 @@ class UserLoginFacebookForm extends UserLoginForm {
 		});
 	}
 
+	/**
+	 * Initialized the user object
+	 *
+	 * @param User $user
+	 * @param bool $autocreate
+	 * @return User
+	 */
 	public function initUser( User $user, $autocreate ) {
 
 		$user = parent::initUser( $user, $autocreate, $this->hasConfirmedEmail );
@@ -84,11 +91,15 @@ class UserLoginFacebookForm extends UserLoginForm {
 		$fbId = FacebookClient::getInstance()->getUserId();
 
 		if ( F::app()->wg->EnableFacebookClientExt ) {
-			$mapping = \FacebookMapModel::createUserMapping( $user->getId(), $fbId );
-			return !empty( $mapping );
+			$fbClientService = new \FacebookClientService();
+			$mapping = $fbClientService->connectToFacebook( $user->getId(), $fbId );
+			if ( $mapping instanceof \Message ) {
+				return false;
+			}
+		} else {
+			FBConnectDB::addFacebookID( $user, $fbId );
 		}
 
-		FBConnectDB::addFacebookID( $user, $fbId );
 		return true;
 	}
 

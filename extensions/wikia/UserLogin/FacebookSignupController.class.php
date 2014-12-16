@@ -10,6 +10,15 @@ class FacebookSignupController extends WikiaController {
 	const SIGNUP_USERNAME_KEY = 'username';
 	const SIGNUP_PASSWORD_KEY = 'password';
 
+	/** @var \FacebookClientService */
+	protected $fbClientService;
+
+	public function __construct() {
+		parent::__construct();
+
+		$this->fbClientService = new \FacebookClientService();
+	}
+
 	/**
 	 * This method is called when user successfully logins using FB credentials
 	 *
@@ -219,8 +228,9 @@ class FacebookSignupController extends WikiaController {
 			return;
 		}
 
-		$map = $this->createUserMap( $user->getId(), $fbUserId );
-		if ( !$map ) {
+		$mapping = $this->fbClientService->connectToFacebook( $user->getId(), $fbUserId );
+		if ( $mapping instanceof \Message ) {
+			$this->setAjaxyErrorResponse( $mapping->escaped() );
 			return;
 		}
 
@@ -268,25 +278,6 @@ class FacebookSignupController extends WikiaController {
 	}
 
 	/**
-	 * Create a user mapping to associate given Wikia user id with FB id
-	 *
-	 * @param $wikiaUserId
-	 * @param $fbUserId
-	 * @return FacebookMapModel|null
-	 */
-	protected function createUserMap( $wikiaUserId, $fbUserId ) {
-		// Returns an existing mapping or attempts to create one
-		$userMap = \FacebookMapModel::createUserMapping( $wikiaUserId, $fbUserId );
-
-		if ( !$userMap ) {
-			$this->setAjaxyErrorResponse( 'userlogin-error-fbconnect' );
-			return null;
-		}
-
-		return $userMap;
-	}
-
-	/**
 	 * Retrieve and validate Facebook user id
 	 *
 	 * @return int|null
@@ -294,7 +285,7 @@ class FacebookSignupController extends WikiaController {
 	protected function getValidFbUserId() {
 		$fbUserId = FacebookClient::getInstance()->getUserId();
 		if ( !$fbUserId ) {
-			$this->setAjaxyErrorResponse( 'userlogin-error-invalidfacebook', '' );
+			$this->setAjaxyErrorResponse( wfMessage( 'userlogin-error-invalidfacebook' )->escaped() );
 			return null;
 		}
 
@@ -329,7 +320,7 @@ class FacebookSignupController extends WikiaController {
 		}
 
 		if ( $messageCode ) {
-			$this->setAjaxyErrorResponse( $messageCode, $errorParam );
+			$this->setAjaxyErrorResponse( wfMessage( $messageCode )->escaped(), $errorParam );
 			return null;
 		}
 
@@ -358,13 +349,13 @@ class FacebookSignupController extends WikiaController {
 	/**
 	 * Set a normalized error response meant for Ajax calls
 	 *
-	 * @param string $messageKey an i18n message key
+	 * @param string $message Error message
 	 * @param string|null $errorParam the error key
 	 */
-	protected function setAjaxyErrorResponse( $messageKey, $errorParam = null ) {
+	protected function setAjaxyErrorResponse( $message, $errorParam = null ) {
 		$this->response->setData( [
 			'result' => 'error',
-			'msg' => wfMessage( $messageKey )->escaped(),
+			'msg' => $message,
 			'errParam' => $errorParam,
 		] );
 	}

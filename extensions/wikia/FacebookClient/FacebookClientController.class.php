@@ -5,6 +5,15 @@ use Wikia\Logger\WikiaLogger;
 class FacebookClientController extends WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
+	/** @var \FacebookClientService */
+	protected $fbClientService;
+
+	public function __construct() {
+		parent::__construct();
+
+		$this->fbClientService = new \FacebookClientService();
+	}
+
 	public function preferences() {
 		$this->response->addAsset( 'facebook_client_preferences_scss' );
 
@@ -166,15 +175,27 @@ class FacebookClientController extends WikiaController {
 		}
 
 		// Create user mapping
-		$mapping = \FacebookMapModel::createUserMapping( $wg->User->getId(), $fbUserId );
-		if ( empty( $mapping ) ) {
-			$this->status = 'error';
+		$mapping = $this->fbClientService->connectToFacebook( $wg->User->getId(), $fbUserId );
+		if ( $mapping instanceof \Message ) {
+			$this->setAjaxyErrorResponse( $mapping->escaped() );
 			return;
 		}
 
 		$this->status = 'ok';
 
 		\FacebookClientHelper::track( 'facebook-link-existing' );
+	}
+
+	/**
+	 * Set a normalized error response meant for Ajax calls
+	 *
+	 * @param string $message Error message
+	 */
+	protected function setAjaxyErrorResponse( $message ) {
+		$this->response->setData( [
+			'status' => 'error',
+			'msg' => $message,
+		] );
 	}
 
 }
