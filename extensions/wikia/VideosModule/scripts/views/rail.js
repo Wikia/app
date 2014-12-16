@@ -1,31 +1,15 @@
-define('videosmodule.views.index', [
-	'sloth',
+define('videosmodule.views.rail', [
 	'videosmodule.views.titleThumbnail',
 	'wikia.log',
 	'wikia.tracker',
 	'bucky',
 	'wikia.window'
-], function (sloth, TitleThumbnailView, log, Tracker, bucky, win) {
+], function (TitleThumbnailView, log, Tracker, bucky, win) {
 	'use strict';
 
 	var VideosModule = function (options) {
-		// Make sure we're on an article page
-		if (!win.wgArticleId) {
-			return;
-		}
-
 		// $el is the {jQuery Object} container for the videos module
 		this.$el = options.$el;
-
-		// previousElement is the {DOM Node} element which fires the sloth loading of the Videos Module,
-		// if there's none, sloth is running immediately
-		this.previousElement = options.previousElement;
-
-		// hookElement is the {DOM Node} element (a sibling or a parent container),
-		// which is a reference for placing the Videos Module by the
-		// {jQuery Function} moduleInsertingFunction [before(), after(), prepend()]
-		this.hookElement = options.hookElement;
-		this.moduleInsertingFunction = options.moduleInsertingFunction;
 
 		// model is the data model for the Videos Module
 		this.model = options.model;
@@ -56,27 +40,6 @@ define('videosmodule.views.index', [
 	};
 
 	VideosModule.prototype.init = function () {
-		var self = this;
-
-		if (this.moduleInsertingFunction) {
-			this.moduleInsertingFunction.call($(this.hookElement), this.$el);
-		}
-
-		if (this.previousElement) {
-			// Sloth is a lazy loading service that waits till an element is visible to load more content
-			sloth({
-				on: this.previousElement,
-				threshold: 200,
-				callback: function () {
-					self.prep();
-				}
-			});
-		} else {
-			this.prep();
-		}
-	};
-
-	VideosModule.prototype.prep = function () {
 		var self = this;
 
 		this.$thumbs.addClass('hidden');

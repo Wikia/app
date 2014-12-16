@@ -1,21 +1,27 @@
 require([
-	'videosmodule.views.index',
+	'videosmodule.views.incontent',
 	'videosmodule.models.videos',
 	'wikia.nodeFinder',
 	'wikia.mustache',
 	'videosmodule.templates.mustache',
 	'bucky',
+	'wikia.window',
 	'wikia.document',
 	'jquery'
-], function (InContentModule, VideoData, nodeFinderModule, Mustache, templates, buckyModule, doc, $) {
+], function (InContentModule,VideoData, nodeFinderModule, Mustache, templates, buckyModule, win, doc, $) {
 	'use strict';
+
+	// Make sure we're on an article page
+	if (!win.wgArticleId) {
+		return;
+	}
 
 	var infoboxWrapper = doc.getElementById('infoboxWrapper'),
 		bucky = buckyModule('videosmodule.controller.in-content');
 
 	function init() {
 		var inContent,
-			hookElement,
+			referenceElement,
 			previousElement,
 			moduleInsertingFunction,
 			contentContainer = doc.getElementById('mw-content-text'),
@@ -24,18 +30,22 @@ require([
 
 		bucky.timer.start('execution');
 
-		hookElement = nodeFinderModule.getFullWidthChildByOffsetTop(contentContainer, headerSelector,
-			boundaryOffsetTop);
-		if (hookElement) {
-			previousElement = nodeFinderModule.getPreviousVisibleSibling(hookElement);
+		referenceElement = nodeFinderModule.getFullWidthChildByOffsetTop(
+			contentContainer,
+			headerSelector,
+			boundaryOffsetTop
+		);
+
+		if (referenceElement) {
+			previousElement = nodeFinderModule.getPreviousVisibleSibling(referenceElement);
 			moduleInsertingFunction = $.fn.before;
 		} else {
-			hookElement = nodeFinderModule.getLastVisibleChild(contentContainer);
-			if (hookElement) {
-				previousElement = hookElement;
+			referenceElement = nodeFinderModule.getLastVisibleChild(contentContainer);
+			if (referenceElement) {
+				previousElement = referenceElement;
 				moduleInsertingFunction = $.fn.after;
 			} else {
-				hookElement = contentContainer;
+				referenceElement = contentContainer;
 				moduleInsertingFunction = $.fn.prepend;
 			}
 		}
@@ -44,7 +54,7 @@ require([
 			$el: $(Mustache.render(templates.inContent, {
 				title: $.msg('videosmodule-title-default')
 			})),
-			hookElement: hookElement,
+			referenceElement: referenceElement,
 			previousElement: previousElement,
 			moduleInsertingFunction: moduleInsertingFunction,
 			model: new VideoData(),
