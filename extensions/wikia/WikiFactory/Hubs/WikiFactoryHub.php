@@ -271,6 +271,23 @@ class WikiFactoryHub extends WikiaModel {
 	}
 
 	/**
+	 * Gets list of wiki category names
+	 *
+	 * @param Int $cityId CityId
+	 * @param Int $active Active status of categories to return
+	 * @return array Array of wiki category names
+	 */
+	public function getWikiCategoryNames( $cityId, $active = 1 ) {
+		$wikiCategoryNames = [];
+		$categories = $this->getWikiCategories( $cityId, $active );
+		foreach( $categories as $category ) {
+			$wikiCategoryNames[] = $category['cat_short'];
+		}
+		return $wikiCategoryNames;
+	}
+
+
+	/**
 	 * get single category name for a wiki
 	 * This is deprecated, use getWikiCategories instead
 	 * @deprecated

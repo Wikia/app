@@ -146,14 +146,20 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 
 		function noop() { return; }
 
-		function callAdCallback() {
+		function callAdCallback(extra) {
+			extra = extra || {};
+			extra.adType = adType;
+
 			clearTimeout(successTimer);
-			adCallback({adType: adType});
+			adCallback(extra);
 		}
 
-		function callNoAdCallback() {
+		function callNoAdCallback(extra) {
+			extra = extra || {};
+			extra.adType = adType;
+
 			clearTimeout(successTimer);
-			noAdCallback({adType: adType});
+			noAdCallback(extra);
 		}
 
 		function pollForSuccess() {
@@ -169,7 +175,7 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 
 			if (data.status === 'success') {
 				if (expectAsyncSuccess) {
-					callAdCallback();
+					callAdCallback(data.extra);
 				} else {
 					log(
 						['msgCallback', slotname, 'Got asynchronous success message, while not expecting it'],
@@ -181,7 +187,7 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 
 			if (data.status === 'hop') {
 				if (expectAsyncHop || expectAsyncHopWithSlotName) {
-					callNoAdCallback();
+					callNoAdCallback(data.extra);
 				} else {
 					log(
 						['msgCallback', slotname, 'Got asynchronous hop message, while not expecting it'],

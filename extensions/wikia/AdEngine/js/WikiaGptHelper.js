@@ -109,17 +109,17 @@ define('ext.wikia.adEngine.wikiaGptHelper', [
 							sizes = filterOutSizesBiggerThanScreenSize(sizes);
 						}
 
-						slotPath = path + '/' + slotname + '_' + slotMapSrc;
+						slotPath = path + '/' + slotnameGpt;
 
 						log(['defineSlots', 'googletag.defineSlot', slotPath, sizes, slotnameGpt], 'debug', logGroup);
 						slot = googletag.defineSlot(slotPath, sizes, slotnameGpt);
 						slot.addService(pubads);
 
 						delete slotItem.size;
-						slotItem.pos = slotname;
+						slotItem.pos = slotItem.pos || slotname;
 						slotItem.src = slotMapSrc;
 
-                        for (name in slotItem) {
+						for (name in slotItem) {
 							if (slotItem.hasOwnProperty(name)) {
 								value = slotItem[name];
 								if (value) {
