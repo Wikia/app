@@ -20,7 +20,7 @@ $messages['en'] = array(
 	'wam-movies' => 'Movies',
 	'wampage-top-gainers-header' => 'Top Gainers',
 	'wampage-header-wam' => 'WAM Score',
-	'wampage-subheader-wam' => 'is an indicator of a wikia\'s health and vitality.',
+	'wampage-subheader-wam' => 'WAM Score is an indicator of the strength and momentum of a Wikia fan community.',
 	'wampage-content' => 'The WAM is calculated daily for the top 5,000 Wikia sites and includes an overall and vertical rank as well as a score from 0 to 100. The WAM rankings are sensitive to real-world events and change frequently, so be sure to check back regularly to see the latest trends.',
 	'wampage-content-faq-link' => '[[$1|Frequently Asked Questions]]',
 	'wampage-faq' => '__NOTOC____NOEDITSECTION__===How is the WAM calculated?===
