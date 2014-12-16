@@ -28,10 +28,12 @@ $dir = dirname( __FILE__ ) . '/';
  * classes
  */
 $wgAutoloadClasses['FacebookClient'] =  $dir . 'FacebookClient.class.php';
+$wgAutoloadClasses['FacebookMapModelException'] =  $dir . 'Exceptions/FacebookMapModelException.php';
 $wgAutoloadClasses['FacebookClientHelper'] =  $dir . 'FacebookClientHelper.class.php';
-$wgAutoloadClasses['FacebookClientController'] =  $dir . 'FacebookClientController.class.php';
 $wgAutoloadClasses['FacebookClientLocale'] =  $dir . 'FacebookClientLocale.class.php';
 $wgAutoloadClasses['FacebookMapModel'] =  $dir . 'FacebookMapModel.class.php';
+$wgAutoloadClasses['FacebookClientService'] =  $dir . 'FacebookClientService.php';
+$wgAutoloadClasses['FacebookClientController'] =  $dir . 'FacebookClientController.class.php';
 $wgAutoloadClasses['SpecialFacebookConnectController'] =  $dir . 'SpecialFacebookConnectController.class.php';
 $wgAutoloadClasses['FacebookClientXFBML'] = $dir . 'FacebookClientXFBML.php';
 
