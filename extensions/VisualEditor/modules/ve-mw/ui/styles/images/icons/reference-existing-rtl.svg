@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <g id="reference-existing">
+        <path id="fore-reference" d="M17 5v17h-12c-1 0-2-1-2-2v-15h14zm-12 14c0 1 1 1 1 1h8v-13h-2v6l-2-2-2 2v-6h-3v12z"/>
+        <path id="back-reference" d="M19 18h.3c1.5 0 2.7-1.2 2.7-2.7v-13.5h-3v16.2zm3-17h-16v2h16z"/>
+    </g>
+</svg>

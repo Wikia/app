@@ -1,0 +1,29 @@
+{
+	"@metadata": {
+		"authors": [
+			"ChrisPtDe"
+		]
+	},
+	"tooltip-ca-ve-edit": "Changiér ceta pâge avouéc VisualEditor",
+	"visualeditor-ca-editsource": "Changiér la sôrsa",
+	"visualeditor-ca-ve-create": "VisualEditor",
+	"visualeditor-ca-ve-edit": "VisualEditor",
+	"visualeditor-desc": "Èditor visuâl por MediaWiki",
+	"visualeditor-descriptionpagelink": "Project:VisualEditor",
+	"visualeditor-editnotices-tool": "$1 avèrtissement{{PLURAL:$1||s}}",
+	"visualeditor-linkinspector-suggest-external-link": "Lim vouèbe",
+	"visualeditor-linkinspector-suggest-new-page": "Pâge novèla",
+	"visualeditor-mainnamespacepagelink": "Project:Èspâço de noms principâl",
+	"visualeditor-notification-created": "$1 est étâye fêta.",
+	"visualeditor-notification-restored": "$1 est étâye refêta.",
+	"visualeditor-notification-saved": "Voutros changements a $1 sont étâs encartâs.",
+	"visualeditor-savedialog-label-create": "Fâre la pâge",
+	"visualeditor-savedialog-label-report": "Signalar un problèmo",
+	"visualeditor-savedialog-label-restore": "Refâre la pâge",
+	"visualeditor-savedialog-label-review-good": "Mè parêt justo",
+	"visualeditor-savedialog-label-save": "Encartar la pâge",
+	"visualeditor-savedialog-title-review": "Revêre voutros changements",
+	"visualeditor-savedialog-title-save": "Encartar voutros changements",
+	"visualeditor-toolbar-savedialog": "Revêre et pués encartar",
+	"visualeditor-usernamespacepagelink": "Project:Èspâço de noms utilisator"
+}

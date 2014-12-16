@@ -13,16 +13,20 @@
 			"Simon Shek",
 			"Spring Roll Conan",
 			"Waihorace",
-			"Cwlin0416"
+			"Cwlin0416",
+			"LNDDYL"
 		]
 	},
-	"ooui-dialog-action-close": "關閉",
 	"ooui-outline-control-move-down": "項目下移",
 	"ooui-outline-control-move-up": "項目上移",
 	"ooui-outline-control-remove": "移除項目",
 	"ooui-toolbar-more": "更多",
-	"ooui-dialog-confirm-title": "確認",
-	"ooui-dialog-confirm-default-prompt": "您確定嗎？",
-	"ooui-dialog-confirm-default-ok": "確定",
-	"ooui-dialog-confirm-default-cancel": "取消"
+	"ooui-toolgroup-expand": "更多",
+	"ooui-toolgroup-collapse": "更少",
+	"ooui-dialog-message-accept": "確定",
+	"ooui-dialog-message-reject": "取消",
+	"ooui-dialog-process-error": "發生不明錯誤",
+	"ooui-dialog-process-dismiss": "關閉",
+	"ooui-dialog-process-retry": "再試一次",
+	"ooui-dialog-process-continue": "繼續"
 }

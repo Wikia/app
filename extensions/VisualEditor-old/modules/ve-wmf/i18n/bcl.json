@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"Geopoet",
+			"Sky Harbor"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Biswal-na-Paraliwat]]",
+	"tag-visualeditor-description": "An pagliwat pinaghimo na ginagamit an [[{{MediaWiki:visualeditor-descriptionpagelink}}|Biswal-na-Paraliwat]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Biswal-na-Paraliwat: Rikisaron]]",
+	"tag-visualeditor-needcheck-description": "An pagliwat pinaghimo na ginagamit an [[{{MediaWiki:visualeditor-descriptionpagelink}}|Biswal-na-Paraliwat]] na kun saen an sistema detektado an wikiteksto na posibleng magkakaigwa nin bakong pinagtutugutan na mga kaliwatan.",
+	"visualeditor-feedback-link": "Project:Biswal-na-Paraliwat/Balik-simbag",
+	"visualeditor-feedback-tool": "Magwalat nin balik-simbag",
+	"visualeditor-help-label": "Basahon an giya nin paragamit",
+	"visualeditor-help-title": "Giya nin paragamit para sa kun paanuhon gagamiton an paraliwat"
+}

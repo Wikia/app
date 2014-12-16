@@ -1,0 +1,31 @@
+/*!
+ * VisualEditor MediaWiki UserInterface MWLinkTargetInputWidget styles.
+ *
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
+ * @license The MIT License (MIT); see LICENSE.txt
+ */
+
+.ve-ui-mwLinkTargetInputWidget-menu {
+	width: 20em;
+	margin-top: -7px;
+}
+
+.ve-ui-mwLinkTargetInputWidget-menu .oo-ui-menuWidget-item {
+	padding: 0.33em 1.25em;
+	color: #0645AD;
+}
+
+.ve-ui-mwLinkTargetInputWidget-menu .oo-ui-menuItemWidget[rel=newPage] {
+	color: #BA0000;
+}
+
+.ve-ui-mwLinkTargetInputWidget-menu .oo-ui-menuItemWidget[rel=externalLink] {
+	color: #36b;
+}
+
+.ve-ui-mwLinkTargetInputWidget-menu .oo-ui-menuItemWidget[rel=existingPage],
+.ve-ui-mwLinkTargetInputWidget-menu .oo-ui-menuItemWidget[rel=matchingPage],
+.ve-ui-mwLinkTargetInputWidget-menu .oo-ui-menuItemWidget[rel=disambigPage],
+.ve-ui-mwLinkTargetInputWidget-menu .oo-ui-menuItemWidget[rel=redirectPage] {
+	color: #0645AD;
+}

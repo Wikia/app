@@ -15,15 +15,20 @@
 	part of it instead of its parent, thus making it treat the area as part
 	of content editable.
 	*/
-	margin: 0.8em -1.5em 0 -1.5em;
+	margin: 0.8em -1em 0 -1em;
 }
 
 .ve-init-mw-viewPageTarget-surface .ve-ce-documentNode {
-	padding: 0 1.714em; /* surface-margin-left (1.5em) / (mw-body-content font-size) 0.875em */
+	padding: 0 1.143em; /* surface-margin-left (1em) / (mw-body-content font-size) 0.875em */
 }
 
-.ve-init-mw-viewPageTarget-surface .oo-ui-menuWidget {
+.ve-init-mw-viewPageTarget-surface .oo-ui-menuSelectWidget {
 	font-size: 0.8em;
+}
+
+.ve-ui-mwSurfaceWidget .ve-ce-surface {
+	/* 0.875 (mw-body-content) / 0.8em (window) */
+	font-size: 1.09375em;
 }
 
 .ve-init-mw-viewPageTarget-toolbar {
@@ -46,6 +51,37 @@
 	margin-left: 0;
 }
 
-.ve-ui-surface-overlay-global {
+.ve-ui-overlay-global {
 	z-index: 101; /* #p-personal is z-index 100 in vector :( */
+}
+
+.oo-ui-actionWidget a:hover {
+	text-decoration: none;
+}
+
+/* ve.ce.TableCellnode.css's margin replaced by more specific rule in Vector (div#content p) */
+/*csslint ids:false */
+#content .ve-ce-tableCellNode .ve-ce-paragraphNode {
+	margin: 0;
+}
+/*csslint ids:true */
+
+/* High-definition-specific styles (because Vector adds 1em to the leftNav if width is 982px+ */
+@media screen and (min-width: 982px) {
+	.ve-init-mw-viewPageTarget-surface {
+		margin: 0.8em -1.5em 0 -1.5em;
+	}
+
+	.ve-init-mw-viewPageTarget-surface .ve-ce-documentNode {
+		padding: 0 1.714em; /* surface-margin-left (1.5em) / (mw-body-content font-size) 0.875em */
+	}
+
+	.ve-init-mw-viewPageTarget-toolbar {
+		margin: -1.25em -1.5em 1.5em -1.5em;
+	}
+
+	.ve-ui-debugBar {
+		padding: 1.5em;
+		margin: 1em -1.5em -1.5em -1.5em;
+	}
 }

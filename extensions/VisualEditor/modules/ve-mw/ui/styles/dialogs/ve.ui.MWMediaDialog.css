@@ -5,6 +5,18 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-.ve-ui-mwMediaEditDialog-altText {
+.ve-ui-mwMediaDialog-altText {
 	width: auto;
+}
+
+.ve-ui-mwMediaDialog .ve-ui-mwMediaSearchWidget {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.ve-ui-mwMediaSearchWidget .oo-ui-searchWidget-results {
+	padding-right: 0;
 }

@@ -33,7 +33,7 @@ ve.dm.MWStaticRedirectMetaItem.static.matchTagNames = [ 'meta' ];
 ve.dm.MWStaticRedirectMetaItem.static.matchRdfaTypes = [ 'mw:PageProp/staticredirect' ];
 
 ve.dm.MWStaticRedirectMetaItem.static.toDataElement = function ( ) {
-	return { 'type': this.name };
+	return { type: this.name };
 };
 
 ve.dm.MWStaticRedirectMetaItem.static.toDomElements = function ( dataElement, doc ) {

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <g id="reference">
+        <path id="books" d="M3 6v12h4v-12h-4zm3 10h-2v-1h2v1zm0-3h-2v-1h2v1zm2-7v12h4v-12h-4zm3 10h-2v-1h2v1zm0-3h-2v-1h2v1zm.934-5.353l6.066 10.353 3.449-2.021-6.065-10.354-3.45 2.022zm7.643 7.111l-1.726 1.012-.506-.862 1.725-1.012.507.862zm-1.517-2.588l-1.725 1.011-.506-.862 1.726-1.012.505.863z"/>
+    </g>
+</svg>

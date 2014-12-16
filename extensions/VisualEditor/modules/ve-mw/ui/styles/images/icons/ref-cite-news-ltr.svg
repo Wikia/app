@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <g id="cite-news">
+        <path id="paper" d="M21 21h-17c-1 0-2-1-2-2v-15h19v17zm-17-15v12.278c0 .397.325.722.722.722h14.28l-.002-13h-15z"/>
+        <path id="banner" d="M6 8h11v3h-11z"/>
+        <path id="text1" d="M12 12h5v2h-5z"/>
+        <path id="text2" d="M6 12h5v2h-5z"/>
+        <path id="text3" d="M12 15h5v2h-5z"/>
+        <path id="text4" d="M6 15h5v2h-5z"/>
+    </g>
+</svg>

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# This script generates a commit that updates our copy of OOjs
+
 if [ -n "$2" ]
 then
 	# Too many parameters
@@ -7,25 +9,25 @@ then
 	exit 1
 fi
 
-REPO_DIR=$(cd $(dirname $0)/..; pwd) # Root dir of the git repo working tree
-TARGET_DIR=lib/oojs # Destination relative to the root of the repo
-NPM_DIR=`mktemp -d 2>/dev/null || mktemp -d -t 'update-oojs'` # e.g. /tmp/update-oojs.rI0I5Vir
+REPO_DIR=$(cd "$(dirname $0)/.."; pwd) # Root dir of the git repo working tree
+TARGET_DIR="lib/oojs" # Destination relative to the root of the repo
+NPM_DIR=$(mktemp -d 2>/dev/null || mktemp -d -t 'update-oojs') # e.g. /tmp/update-oojs.rI0I5Vir
 
 # Prepare working tree
-cd $REPO_DIR &&
-git reset $TARGET_DIR && git checkout $TARGET_DIR && git fetch origin &&
+cd "$REPO_DIR" &&
+git reset -- $TARGET_DIR && git checkout -- $TARGET_DIR && git fetch origin &&
 git checkout -B upstream-oojs origin/master || exit 1
 
 # Fetch upstream version
 cd $NPM_DIR
 if [ -n "$1" ]
 then
-	npm install oojs@$1 || exit 1
+	npm install "oojs@$1" || exit 1
 else
 	npm install oojs || exit 1
 fi
 
-OOJS_VERSION=$(node -e 'console.log(JSON.parse(require("fs").readFileSync("./node_modules/oojs/package.json")).version);')
+OOJS_VERSION=$(node -e 'console.log(require("./node_modules/oojs/package.json").version);')
 if [ "$OOJS_VERSION" == "" ]
 then
 	echo 'Could not find OOjs version'
@@ -33,10 +35,10 @@ then
 fi
 
 # Copy file(s)
-rsync --recursive --delete --force ./node_modules/oojs/dist $REPO_DIR/$TARGET_DIR || exit 1
+rsync --force ./node_modules/oojs/dist/oojs.jquery.js "$REPO_DIR/$TARGET_DIR" || exit 1
 
 # Clean up temporary area
-rm -rf $NPM_DIR
+rm -rf "$NPM_DIR"
 
 # Generate commit
 cd $REPO_DIR || exit 1

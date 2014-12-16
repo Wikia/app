@@ -4,8 +4,10 @@
 			"Jayarathina",
 			"Sank",
 			"Shanmugamp7",
-			"மதனாஹரன்"
+			"மதனாஹரன்",
+			"ElangoRamanujam"
 		]
 	},
-	"ooui-dialog-action-close": "மூடுக"
+	"ooui-toolgroup-expand": "மேலும்",
+	"ooui-dialog-process-continue": "தொடரவும்"
 }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <g id="reference">
+        <path id="bookmark" d="M5 4v17h12c1 0 2-1 2-2v-15h-14zm12 14c0 1-1 1-1 1h-8v-13h2v6l2-2 2 2v-6h3v12z"/>
+    </g>
+</svg>

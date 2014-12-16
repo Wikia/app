@@ -22,10 +22,10 @@
 	"tag-visualeditor-description": "Правка сделана с использованием [[{{MediaWiki:visualeditor-descriptionpagelink}}|Визуального редактора]]",
 	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Визуальный редактор]]: проверить",
 	"tag-visualeditor-needcheck-description": "Правка с помощью [[{{MediaWiki:visualeditor-descriptionpagelink}}|визуального редактора]], в которой система обнаружила, возможно, непреднамеренно изменённую вики-разметку.",
-	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Визуальный редактор: Переключен]]",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Визуальный редактор: переключён]]",
 	"tag-visualeditor-switched-description": "Участник начал редактировать с помощью VisualEditor, а затем переключился в редактор викитекста.",
 	"visualeditor-feedback-link": "Project:Визуальный редактор/Отзывы",
 	"visualeditor-feedback-tool": "Оставить отзыв",
 	"visualeditor-help-label": "Прочтите руководство пользователя",
-	"visualeditor-help-title": "Руководство пользователя по использованию редактора"
+	"visualeditor-help-title": "Руководство по использованию редактора"
 }
