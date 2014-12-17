@@ -142,6 +142,9 @@ $(function () {
 				ul.removeChild(this.parentElement);
 				checkForm();
 			})
+			.on('click', '.add-item-into-section', function () {
+				addNew(item, $(this).parent());
+			})
 			.on('blur', 'input', function () {
 				var val = $.trim(this.value);
 
