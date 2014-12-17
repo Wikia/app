@@ -184,12 +184,13 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$this->response->setFormat( 'json' );
 
 		$sections = $this->request->getArray( 'sections' );
-		$err = $this->saveLogic( $sections );
+		list( $sections, $err ) = $this->processSaveLogic( $sections );
 
 		if ( !empty( $err ) ) {
 			$this->response->setVal( 'error', $err );
 			return true;
 		}
+
 		$status = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $this->wg->CityId, $sections );
 		$this->response->setVal( 'status', $status );
 
@@ -254,27 +255,39 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	 * @param $sections
 	 * @return array
 	 */
-	private function saveLogic( &$sections ) {
+	private function processSaveLogic( $sections ) {
 		$err = [ ];
+		$sectionsAfterProcess = [ ];
 		if ( !empty( $sections ) ) {
-			foreach ( $sections as &$section ) {
-				$section[ 'image_id' ] = (int)$section[ 'image_id' ];
-				if ( !empty( $section[ self::ITEMS_TAG ] ) ) {
-					$sectionErr = $this->processSection( $section );
-					if ( !empty( $sectionErr ) ) {
-						$err = array_merge( $err, $sectionErr );
-					}
-				}
-
+			foreach ( $sections as $section ) {
+				list( $newSection, $sectionErr ) = $this->processTagBeforeSave( $section, $err );
+				array_push( $sectionsAfterProcess, $newSection );
+				$err = array_push( $err, $sectionErr );
 			}
 		}
-		return $err;
+		return [ $sectionsAfterProcess, $err ];
+	}
+
+	/**
+	 * @param $section
+	 * @param $err
+	 * @param string $sectionType
+	 */
+	private function processTagBeforeSave( $section, $err ) {
+		$section[ 'image_id' ] = (int)$section[ 'image_id' ];
+		if ( !empty( $section[ self::ITEMS_TAG ] ) ) {
+			list( $section, $sectionErr ) = $this->processSection( $section );
+			if ( !empty( $sectionErr ) ) {
+				$err = array_push( $err, $sectionErr );
+			}
+		}
+		return [ $section, $err ];
 	}
 
 	/**
 	 * @param $section
 	 */
-	private function processSection( &$section ) {
+	private function processSection( $section ) {
 		$sectionErr = [ ];
 		foreach ( $section[ self::ITEMS_TAG ] as &$row ) {
 			list( $articleId, $namespaceId, $type, $info, $imageId ) = $this->getInfoFromRow( $row );
@@ -284,12 +297,15 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			if ( !empty( $info ) ) {
 				$row[ 'video_info' ] = $info;
 			}
-			$rowErr = $this->checkForErrors( $row, $type, $articleId, $info );
-			if ( !empty( $rowErr ) ) {
+			$reason = $this->checkForErrors( $row, $type, $articleId, $info, $section[ 'featured' ] );
+			if ( !empty( $reason ) ) {
+				$rowErr = [ ];
+				$rowErr[ 'title' ] = $row[ 'title' ];
+				$rowErr[ 'reason' ] = $reason;
 				$sectionErr[ ] = $rowErr;
 			}
 		}
-		return $sectionErr;
+		return [ $section, $sectionErr ];
 	}
 
 	/**
@@ -297,37 +313,35 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	 * @param $type
 	 * @param $articleId
 	 * @param $info
-	 * @return array
+	 * @return reason
 	 */
-	private function checkForErrors( $row, $type, $articleId, $info ) {
-		$rowErr = [ ];
+	private function checkForErrors( $row, $type, $articleId, $info, $isFeatured ) {
+		$reason = '';
 		if ( empty( $row[ 'label' ] ) ) {
-			$rowErr [ 'title' ] = $row[ 'title' ];
-			$rowErr [ 'reason' ] = 'emptyLabel';
-		}
-
-		if ( $this->needsArticleId( $type ) && $articleId === 0 ) {
-			$rowErr [ 'title' ] = $row[ 'title' ];
-			$rowErr [ 'reason' ] = 'articleNotFound';
+			$reason = 'emptyLabel';
 		}
 
 		if ( $type == null ) {
-			$rowErr [ 'title' ] = $row[ 'title' ];
-			$rowErr [ 'reason' ] = 'notSupportedType';
+			$reason = 'notSupportedType';
 		}
 
 		if ( $type === 'video' ) {
 			if ( empty( $info ) ) {
-				$rowErr [ 'title' ] = $row[ 'title' ];
-				$rowErr [ 'reason' ] = 'videoNotHaveInfo';
-			} else {
-				if ( $this->isSupportedProviders( $info ) ) {
-					$rowErr [ 'title' ] = $row[ 'title' ];
-					$rowErr [ 'reason' ] = 'videoNotSupportProvider';
-				}
+				$reason = 'videoNotHaveInfo';
+			} elseif ( $this->isSupportedProviders( $info ) ) {
+				$reason = 'videoNotSupportProvider';
 			}
 		}
-		return $rowErr;
+
+		if ( !(bool)$isFeatured && $type !== 'category' ) {
+			$reason = 'noCategoryInTag';
+		}
+
+		if ( $this->needsArticleId( $type ) && $articleId === 0 ) {
+			$reason = 'articleNotFound';
+		}
+
+		return $reason;
 	}
 
 	private function getInfoFromRow( &$row ) {
