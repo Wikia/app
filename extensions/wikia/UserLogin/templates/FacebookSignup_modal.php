@@ -53,7 +53,7 @@ if ( trim( $fbEmail ) == '' ) {
 		'method' => 'index',
 		'params' => [
 			'text' => wfMessage( 'email' )->escaped(),
-			'tooltipIconTitle' => wfMessage( 'usersignup-facebook-email-tooltip' )->escaped(),
+			'tooltipIconTitle' => wfMessage( 'usersignup-facebook-email-tooltip' )->text(),
 		],
 	];
 
