@@ -1227,7 +1227,7 @@ $wgAmazonMatchOldCountries = null;
  * @name $wgEnableAmazonMatch
  * Enables AmazonMatch new integration (id=3115)
  */
-$wgEnableAmazonMatch = false;
+$wgEnableAmazonMatch = true;
 
 /**
  * @name $wgAmazonMatchCountries
