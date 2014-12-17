@@ -82,32 +82,35 @@ class WikiaInYourLangController extends WikiaController {
 	 * @param  string $sCurrentUrl A full URL to parse
 	 * @return string              The retrieved domain
 	 */
-	private function getWikiDomain( $sCurrentUrl ) {
+	public function getWikiDomain( $sCurrentUrl ) {
 		$aParsed = parse_url( $sCurrentUrl );
-		$sHost = $aParsed['host'];
-		$regExp = "/(([a-z]{2,3}|[a-z]{2}\-[a-z]{2})\.)?([^\.]+\.)(.*)/i";
-		/**
-		 * preg_match returns similar array as a third parameter:
-		 * [
-		 * 	0 => zh.example.wikia.com,
-		 * 	1 => (zh. | empty),
-		 * 	2 => (zh | empty),
-		 * 	3 => example.
-		 * 	4 => ( wikia.com | adamk.wikia-dev.com )
-		 * ]
-		 * [3] is a domain without the language prefix
-		 * @var Array
-		 */
-		$aMatches = [];
-		$iMatchesCount = preg_match( $regExp, $sHost, $aMatches );
-		/**
-		 * Domains are stored only with an original domain - wikia.com
-		 * This allows the extension to work on devboxes
-		 */
-		if ( $iMatchesCount == 1 ) {
-			$sWikiDomain = $aMatches[3] . self::WIKIAINYOURLANG_WIKIA_DOMAIN;
-		} else {
-			$sWikiDomain = false;
+		// Assume false
+		$sWikiDomain = false;
+
+		if ( isset( $aParsed['host'] ) ) {
+			$sHost = $aParsed['host'];
+			$regExp = "/(([a-z]{2,3}|[a-z]{2}\-[a-z]{2})\.)?([^\.]+\.)(.*)/i";
+			/**
+			 * preg_match returns similar array as a third parameter:
+			 * [
+			 * 	0 => zh.example.wikia.com,
+			 * 	1 => (zh. | empty),
+			 * 	2 => (zh | empty),
+			 * 	3 => example.
+			 * 	4 => ( wikia.com | adamk.wikia-dev.com )
+			 * ]
+			 * [3] is a domain without the language prefix
+			 * @var Array
+			 */
+			$aMatches = [];
+			$iMatchesCount = preg_match( $regExp, $sHost, $aMatches );
+			/**
+			 * Domains are stored only with an original domain - wikia.com
+			 * This allows the extension to work on devboxes
+			 */
+			if ( $iMatchesCount == 1 ) {
+				$sWikiDomain = $aMatches[3] . self::WIKIAINYOURLANG_WIKIA_DOMAIN;
+			}
 		}
 
 		return $sWikiDomain;
