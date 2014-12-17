@@ -49,10 +49,7 @@ class VideosModuleController extends WikiaController {
 		$this->staffModule->clearCache();
 		$this->generalModule->clearCache();
 
-		$this->response->setData([
-			'result' => 'ok',
-			'msg' => '',
-		]);
+		$this->response->setVal( 'result', 'ok' );
 	}
 
 	/**
