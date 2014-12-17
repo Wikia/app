@@ -1,0 +1,58 @@
+<?php
+
+use Wikia\Memcache\MemcacheStats;
+
+class MemcacheStatsTest extends WikiaBaseTest {
+
+	const WIKI_PREFIX = 'wiki123';
+
+	public function setUp() {
+		parent::setUp();
+
+		// mock wfWikiID() to return the faked prefix
+		$this->mockGlobalFunction('wfWikiID', self::WIKI_PREFIX);
+	}
+
+	/**
+	 * @param string $key
+	 * @param string $expected
+	 * @dataProvider normalizeMemcacheKeyDataProvider
+	 */
+	public function testNormalizeMemcacheKey($key, $expected) {
+		$this->assertEquals($expected, MemcacheStats::normalizeMemcacheKey($key));
+	}
+
+	public function normalizeMemcacheKeyDataProvider() {
+		return [
+			[
+				'key' => self::WIKI_PREFIX . ':user:id:119245',
+				'expected' => '*:user:id:*'
+			],
+			[
+				'key' => self::WIKI_PREFIX . ':linkcache:good:6e5bd2fbb1845c64534e8c6840ef73f3',
+				'expected' => '*:linkcache:good:*'
+			],
+			[
+				'key' => self::WIKI_PREFIX . ':imageserving-images-data:1727:100:100',
+				'expected' => '*:imageserving-images-data:*:*:*'
+			],
+			[
+				'key' => self::WIKI_PREFIX . ':timeago:i18n:pl:3',
+				'expected' => '*:timeago:i18n:pl:*'
+			],
+			// shared keys
+			[
+				'key' => 'wikifactory:wikia:v1:1031256',
+				'expected' => 'wikifactory:wikia:v1:*'
+			],
+			[
+				'key' => 'extuser:119245:c6',
+				'expected' => 'extuser:*:*'
+			],
+			[
+				'key' => 'wikicities_c6:sharedLinks:1686:21e74e1deae71d1903d7a323d4eae53e',
+				'expected' => 'wikicities_c6:sharedLinks:*:*'
+			],
+		];
+	}
+}
