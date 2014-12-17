@@ -384,6 +384,7 @@ $config['oasis_anon_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/Exitstitial.js',
+		'//extensions/wikia/UserLogin/js/UserSignupMarketingOptIn.js',
 		'//extensions/wikia/UserLogin/js/UserSignupFacebookForm.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
@@ -397,6 +398,7 @@ $config['oasis_anon_with_new_global_nav_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/Exitstitial.js',
+		'//extensions/wikia/UserLogin/js/UserSignupMarketingOptIn.js',
 		'//extensions/wikia/UserLogin/js/UserSignupFacebookForm.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
@@ -409,6 +411,7 @@ $config['oasis_user_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
+		'//extensions/wikia/UserLogin/js/UserSignupMarketingOptIn.js',
 		'//extensions/wikia/UserLogin/js/UserSignupFacebookForm.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
 	)
@@ -806,6 +809,7 @@ $config['wikiamobile_usersignup_js'] = array(
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
 		'//extensions/wikia/UserLogin/js/UserSignupAjaxForm.js',
+		'//extensions/wikia/UserLogin/js/UserSignupMarketingOptIn.js',
 		'//extensions/wikia/UserLogin/js/UserSignup.js'
 	)
 );
