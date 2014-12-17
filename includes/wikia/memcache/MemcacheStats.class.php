@@ -23,7 +23,10 @@ class MemcacheStats {
 
 		$stats = [
 			'counts' => $client->stats,
-			'keys' => $client->keys_stats,
+			'keys' => [
+				'hits' => array_map([__CLASS__, 'normalizeMemcacheKey'], $client->keys_stats['hits']),
+				'misses' => array_map([__CLASS__, 'normalizeMemcacheKey'], $client->keys_stats['misses']),
+			]
 		];
 
 		return $stats;
@@ -43,10 +46,15 @@ class MemcacheStats {
 			$key = str_replace($prefix, '*:', $key);
 		}
 
-		// remove IDs and hashes
-		$key = preg_replace('#:[0-9a-f]+#', ':*', $key);
+		$parts = array_map(
+			function($part) {
+				// replace IDs and hashes with *
+				return ctype_xdigit($part) ? '*' : $part;
+			},
+			explode(':', $key)
+		);
 
-		return $key;
+		return implode(':', $parts);
 	}
 
 	/**
@@ -55,9 +63,9 @@ class MemcacheStats {
 	 * @return bool true - it's a hook
 	 */
 	public static function onRestInPeace() {
-		#$stats = self::getStats();
+		$stats = self::getStats();
 
-		#var_dump(__METHOD__); var_dump($stats); die;
+		var_dump(__METHOD__); var_dump($stats); die;
 		return true;
 	}
 }

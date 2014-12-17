@@ -40,6 +40,10 @@ class MemcacheStatsTest extends WikiaBaseTest {
 				'key' => self::WIKI_PREFIX . ':timeago:i18n:pl:3',
 				'expected' => '*:timeago:i18n:pl:*'
 			],
+			[
+				'key' => self::WIKI_PREFIX . ':favicon-v1',
+				'expected' => '*:favicon-v1'
+			],
 			// shared keys
 			[
 				'key' => 'wikifactory:wikia:v1:1031256',
@@ -52,6 +56,10 @@ class MemcacheStatsTest extends WikiaBaseTest {
 			[
 				'key' => 'wikicities_c6:sharedLinks:1686:21e74e1deae71d1903d7a323d4eae53e',
 				'expected' => 'wikicities_c6:sharedLinks:*:*'
+			],
+			[
+				'key' => 'wikicities:WikiFactoryHub::getCategoryId:1031256',
+				'expected' => 'wikicities:WikiFactoryHub::getCategoryId:*'
 			],
 		];
 	}
