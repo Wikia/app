@@ -5,7 +5,7 @@ class WikiaInYourLangControllerTest extends WikiaBaseTest {
 	public function setUp() {
 		include_once __DIR__ . DIRECTORY_SEPARATOR
 			. '..' . DIRECTORY_SEPARATOR
-			. 'WikiaInYourLangController.class.php';
+			. 'WikiaInYourLang.setup.php';
 		parent::setUp();
 	}
 
@@ -14,7 +14,7 @@ class WikiaInYourLangControllerTest extends WikiaBaseTest {
 	 */
 	public function testGetWikiDomain( $sDomainToParse, $sParsedDomain ) {
 		$oController = new WikiaInYourLangController();
-		$this->assertTrue( $sParsedDomain === $oController->getWikiDomain( $sDomainToParse ) );
+		$this->assertEquals( $sParsedDomain, $oController->getWikiDomain( $sDomainToParse ) );
 	}
 
 	public function getDomainsList() {
