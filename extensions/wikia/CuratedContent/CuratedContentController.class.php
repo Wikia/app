@@ -311,7 +311,7 @@ class CuratedContentController extends WikiaController {
 			}
 		}
 		if ( !empty( $ret ) ) {
-			$this->setSectionItemsResponse( 'features', $ret );
+			$this->setSectionItemsResponse( 'featured', $ret );
 		}
 	}
 
