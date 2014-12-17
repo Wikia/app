@@ -88,7 +88,7 @@ $form = [
 			'class' => 'opt-in-container hidden',
 			'type' => 'checkbox',
 			'name' => 'wpMarketingOptIn',
-			'label' => wfMessage( 'userlogin-opt-in-label' )->plain(),
+			'label' => wfMessage( 'userlogin-opt-in-label' )->escaped(),
 		],
 		[
 			'type' => 'nirvanaview',
