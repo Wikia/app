@@ -24,12 +24,22 @@ class MemcacheStats {
 		$stats = [
 			'counts' => $client->stats,
 			'keys' => [
-				'hits' => array_map([__CLASS__, 'normalizeMemcacheKey'], $client->keys_stats['hits']),
-				'misses' => array_map([__CLASS__, 'normalizeMemcacheKey'], $client->keys_stats['misses']),
+				'hits' => self::normalizeMemcacheKeys($client->keys_stats['hits']),
+				'misses' => self::normalizeMemcacheKeys($client->keys_stats['misses']),
 			]
 		];
 
 		return $stats;
+	}
+
+	/**
+	 * Normalizes the given set of keys
+	 *
+	 * @param array $keys
+	 * @return array normalized keys
+	 */
+	private static function normalizeMemcacheKeys(Array $keys) {
+		return array_map([__CLASS__, 'normalizeMemcacheKey'], $keys);
 	}
 
 	/**
