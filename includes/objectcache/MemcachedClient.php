@@ -239,6 +239,13 @@ class MWMemcached {
 	 */
 	var $_dupe_cache;
 
+	/**
+	 * @author macbre
+	 * Internal structure containing keys that were passed to get() method
+	 * This data will be used to generate the list of hot keys an top misses
+	 */
+	var $keys_stats;
+
 	// }}}
 	// }}}
 	// {{{ methods
@@ -265,6 +272,10 @@ class MWMemcached {
 		$this->_host_dead = array();
 		# start wikia change
 		$this->_dupe_cache = array();
+		$this->keys_stats = [
+			'hits' => [],
+			'misses' => [],
+		];
 		# end wikia change
 
 		$this->_timeout_seconds = 0;
@@ -487,10 +498,12 @@ class MWMemcached {
 		# Owen wants to get more detailed profiling info
 		if ( array_key_exists($key,$val) ) {
 			$this->_dupe_cache[$key] = $val[$key];
+			$this->keys_stats['hits'][] = $key;
 			wfProfileIn ( __METHOD__ . "::$key !HIT");
 			wfProfileOut ( __METHOD__ . "::$key !HIT");
 		} else {
 			$this->_dupe_cache[$key] = false;
+			$this->keys_stats['misses'][] = $key;
 			wfProfileIn ( __METHOD__ . "::$key !MISS");
 			wfProfileOut ( __METHOD__ . "::$key !MISS");
 		}
@@ -599,11 +612,13 @@ class MWMemcached {
 		foreach ($keys as $key) {
 			if ( array_key_exists($key,$val) ) {
 				$this->_dupe_cache[$key] = $val[$key];
+				$this->keys_stats['hits'][] = $key;
 				wfProfileIn ( __METHOD__ . "::$key !HIT");
 				wfProfileOut ( __METHOD__ . "::$key !HIT");
 			} else {
 				$val[$key] = false;
 				$this->_dupe_cache[$key] = false;
+				$this->keys_stats['misses'][] = $key;
 				wfProfileIn ( __METHOD__ . "::$key !MISS");
 				wfProfileOut ( __METHOD__ . "::$key !MISS");
 			}
