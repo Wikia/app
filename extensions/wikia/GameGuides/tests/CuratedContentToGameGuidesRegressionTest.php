@@ -20,7 +20,7 @@ class CuratedContentToGameGuidesRegressionTest extends WikiaBaseTest {
 			[
 				'empty content',
 				'',
-				[]
+				[ ]
 			],
 			[
 				'simple one',
@@ -80,6 +80,23 @@ class CuratedContentToGameGuidesRegressionTest extends WikiaBaseTest {
 											'type' => 'category'
 										],
 								],
+						],
+					2 =>
+						[
+							'title' => 'features',
+							'image_id' => 2344,
+							'items' =>
+								[
+									0 =>
+										[
+											'title' => 'Category:Carson Beckett (clone) images',
+											'label' => 'Carson Beckett (clone) images',
+											'image_id' => 0,
+											'article_id' => 38761,
+											'type' => 'category'
+										],
+								],
+							'featured' => true
 						],
 				],
 				//GameGuide Content
