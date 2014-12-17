@@ -12,7 +12,7 @@ class MemcacheStats {
 	/**
 	 * Get memcache stats:
 	 *  - top keys (both hits and misses)
-	 *  - memcache operations counter (get, set, delete)
+	 *  - memcache operations counter (get, set, miss, delete, add)
 	 *
 	 * @return array
 	 */

@@ -504,6 +504,11 @@ class MWMemcached {
 		} else {
 			$this->_dupe_cache[$key] = false;
 			$this->keys_stats['misses'][] = $key;
+			if ( isset( $this->stats['miss'] ) ) {
+				$this->stats['miss']++;
+			} else {
+				$this->stats['miss'] = 1;
+			}
 			wfProfileIn ( __METHOD__ . "::$key !MISS");
 			wfProfileOut ( __METHOD__ . "::$key !MISS");
 		}
