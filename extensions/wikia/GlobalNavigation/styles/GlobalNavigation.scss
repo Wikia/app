@@ -46,7 +46,10 @@
 	@include grid-column-width('medium', 2, $medium-content-padding);
 
 	.wikia-logo {
-		padding: 0 0 0 $medium-content-padding - $content-border-width;
+		padding: 0 0 0 $medium-content-padding + $medium-grid-gutter - $content-border-width;
+		img {
+			margin-left: -2px; /* Shift logo img as svg conatins 2px padding itself */
+		}
 	}
 }
 
@@ -70,7 +73,7 @@
 		@include grid-column-width('small', 3, $small-content-padding);
 
 		.wikia-logo {
-			padding: 0 9px 0 $small-content-padding + $small-grid-column-padding - $content-border-width;
+			padding: 0 $small-grid-column-padding 0 $small-content-padding + $small-grid-column-padding - $content-border-width;
 		}
 	}
 
@@ -95,7 +98,7 @@
 		@include grid-column-width('large', 2, $large-content-padding);
 
 		.wikia-logo {
-			padding: 0 2px 0 $large-content-padding + $large-grid-column-padding - $content-border-width;
+			padding: 0 $large-content-padding 0 $large-content-padding + $large-grid-column-padding - $content-border-width;
 		}
 	}
 

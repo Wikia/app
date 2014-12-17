@@ -1,10 +1,11 @@
+@import 'skins/shared/mixins/box-sizing';
 
 html {
-	box-sizing: border-box;
+	@include box-sizing(border-box);
 }
 
-*, *:before, *:after {
-	box-sizing: inherit;
+*, *::before, *::after {
+	@include box-sizing(inherit);
 }
 
 .clearfix {

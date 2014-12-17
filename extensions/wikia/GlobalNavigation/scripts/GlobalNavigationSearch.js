@@ -7,6 +7,7 @@ require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], funct
 		$inputResultLang,
 		$formElement,
 		$searchLabel,
+		isLocalSearchDisabled,
 		$autocompleteObj;
 
 	/**
@@ -16,6 +17,7 @@ require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], funct
 		$inputResultLang = $('#searchInputResultLang');
 		$formElement = $('#searchForm');
 		$searchLabel = $('#searchLabelInline');
+		isLocalSearchDisabled = $('#searchLabelSingle').length > 0;
 		$selectElement = $('#searchSelect');
 		$chevron = $('#searchFormChevron');
 		$searchInput = $('#searchInput');
@@ -31,7 +33,7 @@ require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], funct
 		$formElement.attr('action', $selectedOption.attr('data-search-url'));
 		//Setting reference to jQuery search autocomplete object
 		$autocompleteObj = $autocompleteObj || $searchInput.data('autocomplete');
-		if ($selectedOption.val() === 'global') {
+		if ($selectedOption.val() === 'global' || isLocalSearchDisabled) {
 			setPropertiesOnInput(false);
 		} else {
 			setPropertiesOnInput(true);
