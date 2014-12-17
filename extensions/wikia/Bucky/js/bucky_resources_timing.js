@@ -118,10 +118,10 @@ define('bucky.resourceTiming', ['jquery', 'wikia.window', 'wikia.log', 'bucky'],
 			}));
 			/**/
 
-			// 3rd-party assets vs Wikia assets
-			// report duration (which includes assets being blocked!)
-			// @see http://www.stevesouders.com/blog/2014/11/25/serious-confusion-with-resource-timing/
+			// Wikia assets vs 3rd-party assets
 			if (isWikiaAsset(res.name)) {
+				// report duration (which includes assets being blocked!)
+				// @see http://www.stevesouders.com/blog/2014/11/25/serious-confusion-with-resource-timing/
 				addStatsEntry(res.initiatorType, res.duration);
 
 				// count DNS calls and report the time
@@ -129,14 +129,14 @@ define('bucky.resourceTiming', ['jquery', 'wikia.window', 'wikia.log', 'bucky'],
 				if (dnsTime !== false) {
 					addStatsEntry('dns', dnsTime);
 				}
+
+				// browser cache hit
+				if (res.duration === 0) {
+					addStatsEntry('cached', 0);
+				}
 			}
 			else {
 				addStatsEntry('3rdparty', res.duration);
-			}
-
-			// browser cache hit
-			if (res.duration === 0) {
-				addStatsEntry('cached', 0);
 			}
 
 			// count all assets fetched
