@@ -262,7 +262,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			foreach ( $sections as $section ) {
 				list( $newSection, $sectionErr ) = $this->processTagBeforeSave( $section, $err );
 				array_push( $sectionsAfterProcess, $newSection );
-				$err = array_push( $err, $sectionErr );
+				$err = array_merge( $err, $sectionErr );
 			}
 		}
 		return [ $sectionsAfterProcess, $err ];
@@ -274,14 +274,15 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	 * @param string $sectionType
 	 */
 	private function processTagBeforeSave( $section, $err ) {
+		$errFromTag = [ ];
 		$section[ 'image_id' ] = (int)$section[ 'image_id' ];
 		if ( !empty( $section[ self::ITEMS_TAG ] ) ) {
 			list( $section, $sectionErr ) = $this->processSection( $section );
 			if ( !empty( $sectionErr ) ) {
-				$err = array_push( $err, $sectionErr );
+				$errFromTag = array_merge( $errFromTag, $sectionErr );
 			}
 		}
-		return [ $section, $err ];
+		return [ $section, $errFromTag ];
 	}
 
 	/**
@@ -340,7 +341,6 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		if ( $this->needsArticleId( $type ) && $articleId === 0 ) {
 			$reason = 'articleNotFound';
 		}
-
 		return $reason;
 	}
 
