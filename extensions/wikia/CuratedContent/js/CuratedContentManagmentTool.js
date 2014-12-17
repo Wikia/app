@@ -14,7 +14,7 @@ $(function () {
 			emptyLabelError = msg('wikiacuratedcontent-content-emptylabel-error'),
 			videoNotSupportedError = msg('wikiacuratedcontent-content-videonotsupported-error'),
 			notSupportedType = msg('wikiacuratedcontent-content-notsupportedtype-error'),
-			notCategoryInTag = msg('wikiacuratedcontent-content-notcategoryintag-error'),
+			notCategoryInTag = msg('wikiacuratedcontent-content-nocategoryintag-error'),
 			addItem = d.getElementById('addItem'),
 			addSection = d.getElementById('addSection'),
 			$save = $(d.getElementById('save')),
