@@ -354,14 +354,16 @@ class CuratedContentController extends WikiaController {
 	}
 
 	/**
-	 * @brief Whenever data is saved in GG Content Managment Tool
-	 * purge Varnish cache for it
+	 * @brief Whenever data is saved in Curated Content Management Tool
+	 * purge Varnish cache for it and Game Guides
 	 *
 	 * @return bool
 	 */
 	static function onCuratedContentSave() {
 		self::purgeMethod( 'getList' );
-
+		if(class_exists( 'GameGuidesController' ) ) {
+			GameGuidesController::purgeMethod( 'getList' );
+		}
 		return true;
 	}
 }
