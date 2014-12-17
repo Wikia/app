@@ -15,9 +15,7 @@
  * @var array $avatars
  * @var array $popularWikis
  */
-?>
 
-<?
 $form = [
 	'id' => 'WikiaSignupForm',
 	'method' => 'post',
