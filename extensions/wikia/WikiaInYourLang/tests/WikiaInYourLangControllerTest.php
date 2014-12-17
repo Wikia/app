@@ -3,9 +3,7 @@
 class WikiaInYourLangControllerTest extends WikiaBaseTest {
 
 	public function setUp() {
-		include_once __DIR__ . DIRECTORY_SEPARATOR
-			. '..' . DIRECTORY_SEPARATOR
-			. 'WikiaInYourLang.setup.php';
+		$this->setupFile = __DIR__ . '/../WikiaInYourLang.setup.php';
 		parent::setUp();
 	}
 
