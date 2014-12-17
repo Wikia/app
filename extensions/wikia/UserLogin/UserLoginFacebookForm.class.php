@@ -55,7 +55,7 @@ class UserLoginFacebookForm extends UserLoginForm {
 	}
 
 	/**
-	 * Initialized the user object
+	 * Initialize the user object
 	 *
 	 * @param User $user
 	 * @param bool $autocreate

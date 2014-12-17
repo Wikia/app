@@ -385,6 +385,13 @@ class FacebookMapModel {
 }
 
 /**
+ * Class FacebookMapModelException
+ *
+ * Generic FacebookMapModel Exception
+ */
+class FacebookMapModelException extends \Exception { }
+
+/**
  * Class FacebookMapModelInvalidParamException
  *
  * Thrown when the parameters needed for methods in the FacebookMapModel are not given or invalid
