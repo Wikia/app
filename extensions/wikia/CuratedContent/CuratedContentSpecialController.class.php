@@ -259,7 +259,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$err = [ ];
 		if ( !empty( $sections ) ) {
 			foreach ( $sections as &$section ) {
-				$this->saveTag( $section, $err );
+				$this->processTagBeforeSave( $section, $err );
 			}
 		}
 		return $err;
@@ -270,7 +270,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	 * @param $err
 	 * @param string $sectionType
 	 */
-	private function saveTag( &$section, &$err ) {
+	private function processTagBeforeSave( &$section, &$err ) {
 		$section[ 'image_id' ] = (int)$section[ 'image_id' ];
 		if ( !empty( $section[ self::ITEMS_TAG ] ) ) {
 			$sectionErr = $this->processSection( $section );
