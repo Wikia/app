@@ -184,7 +184,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$this->response->setFormat( 'json' );
 
 		$sections = $this->request->getArray( 'sections' );
-		$err = $this->saveLogic( $sections );
+		list( $sections, $err ) = $this->processSaveLogic( $sections );
 
 		if ( !empty( $err ) ) {
 			$this->response->setVal( 'error', $err );
@@ -255,14 +255,14 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	 * @param $sections
 	 * @return array
 	 */
-	private function saveLogic( &$sections ) {
+	private function processSaveLogic( $sections ) {
 		$err = [ ];
 		if ( !empty( $sections ) ) {
 			foreach ( $sections as &$section ) {
-				$this->processTagBeforeSave( $section, $err );
+				list( $section, $err ) = $this->processTagBeforeSave( $section, $err );
 			}
 		}
-		return $err;
+		return [ $sections, $err ];
 	}
 
 	/**
@@ -270,20 +270,21 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	 * @param $err
 	 * @param string $sectionType
 	 */
-	private function processTagBeforeSave( &$section, &$err ) {
+	private function processTagBeforeSave( $section, $err ) {
 		$section[ 'image_id' ] = (int)$section[ 'image_id' ];
 		if ( !empty( $section[ self::ITEMS_TAG ] ) ) {
-			$sectionErr = $this->processSection( $section );
+			list( $section, $sectionErr ) = $this->processSection( $section );
 			if ( !empty( $sectionErr ) ) {
 				$err = array_merge( $err, $sectionErr );
 			}
 		}
+		return [ $section, $err ];
 	}
 
 	/**
 	 * @param $section
 	 */
-	private function processSection( &$section ) {
+	private function processSection( $section ) {
 		$sectionErr = [ ];
 		foreach ( $section[ self::ITEMS_TAG ] as &$row ) {
 			list( $articleId, $namespaceId, $type, $info, $imageId ) = $this->getInfoFromRow( $row );
@@ -301,7 +302,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 				$sectionErr[ ] = $rowErr;
 			}
 		}
-		return $sectionErr;
+		return [ $section, $sectionErr ];
 	}
 
 	/**
@@ -315,10 +316,6 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$reason = '';
 		if ( empty( $row[ 'label' ] ) ) {
 			$reason = 'emptyLabel';
-		}
-
-		if ( $this->needsArticleId( $type ) && $articleId === 0 ) {
-			$reason = 'articleNotFound';
 		}
 
 		if ( $type == null ) {
@@ -335,6 +332,10 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 
 		if ( !(bool)$isFeatured && $type !== 'category' ) {
 			$reason = 'notCategoryInTag';
+		}
+
+		if ( $this->needsArticleId( $type ) && $articleId === 0 ) {
+			$reason = 'articleNotFound';
 		}
 
 		return $reason;
