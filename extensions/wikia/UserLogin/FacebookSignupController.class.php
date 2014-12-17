@@ -230,7 +230,7 @@ class FacebookSignupController extends WikiaController {
 
 		$mapping = $this->fbClientService->connectToFacebook( $user->getId(), $fbUserId );
 		if ( $mapping instanceof \Message ) {
-			$this->setAjaxyErrorResponse( $mapping->escaped() );
+			$this->setErrorResponse( $mapping->escaped() );
 			return;
 		}
 
@@ -285,7 +285,7 @@ class FacebookSignupController extends WikiaController {
 	protected function getValidFbUserId() {
 		$fbUserId = FacebookClient::getInstance()->getUserId();
 		if ( !$fbUserId ) {
-			$this->setAjaxyErrorResponse( wfMessage( 'userlogin-error-invalidfacebook' )->escaped() );
+			$this->setErrorResponse( wfMessage( 'userlogin-error-invalidfacebook' )->escaped() );
 			return null;
 		}
 
@@ -320,7 +320,7 @@ class FacebookSignupController extends WikiaController {
 		}
 
 		if ( $messageCode ) {
-			$this->setAjaxyErrorResponse( wfMessage( $messageCode )->escaped(), $errorParam );
+			$this->setErrorResponse( wfMessage( $messageCode )->escaped(), $errorParam );
 			return null;
 		}
 
@@ -352,7 +352,7 @@ class FacebookSignupController extends WikiaController {
 	 * @param string $message Error message
 	 * @param string|null $errorParam the error key
 	 */
-	protected function setAjaxyErrorResponse( $message, $errorParam = null ) {
+	protected function setErrorResponse( $message, $errorParam = null ) {
 		$this->response->setData( [
 			'result' => 'error',
 			'msg' => $message,

@@ -177,7 +177,7 @@ class FacebookClientController extends WikiaController {
 		// Create user mapping
 		$mapping = $this->fbClientService->connectToFacebook( $wg->User->getId(), $fbUserId );
 		if ( $mapping instanceof \Message ) {
-			$this->setAjaxyErrorResponse( $mapping->escaped() );
+			$this->setErrorResponse( $mapping->escaped() );
 			return;
 		}
 
@@ -191,7 +191,7 @@ class FacebookClientController extends WikiaController {
 	 *
 	 * @param string $message Error message
 	 */
-	protected function setAjaxyErrorResponse( $message ) {
+	protected function setErrorResponse( $message ) {
 		$this->response->setData( [
 			'status' => 'error',
 			'msg' => $message,
