@@ -821,9 +821,9 @@ class GlobalTitle extends Title {
 	 * @return string
 	 */
 	private function memcKey() {
-		global $wgSharedDB, $wgDevelEnvironmentName;
+		global $wgSharedKeyPrefix, $wgDevelEnvironmentName;
 
-		$parts = array( $wgSharedDB, "globaltitle", $this->mCityId );
+		$parts = array( $wgSharedKeyPrefix, "globaltitle", $this->mCityId );
 
 		if (!empty($wgDevelEnvironmentName)) {
 			$parts[] = $wgDevelEnvironmentName;
