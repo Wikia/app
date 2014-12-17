@@ -191,7 +191,6 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			return true;
 		}
 
-
 		$status = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $this->wg->CityId, $sections );
 		$this->response->setVal( 'status', $status );
 
@@ -294,8 +293,11 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			if ( !empty( $info ) ) {
 				$row[ 'video_info' ] = $info;
 			}
-			$rowErr = $this->checkForErrors( $row, $type, $articleId, $info, $section[ 'featured' ] );
-			if ( !empty( $rowErr ) ) {
+			$reason = $this->checkForErrors( $row, $type, $articleId, $info, $section[ 'featured' ] );
+			if ( !empty( $reason ) ) {
+				$rowErr = [ ];
+				$rowErr[ 'title' ] = $row[ 'title' ];
+				$rowErr[ 'reason' ] = $reason;
 				$sectionErr[ ] = $rowErr;
 			}
 		}
@@ -307,10 +309,9 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	 * @param $type
 	 * @param $articleId
 	 * @param $info
-	 * @return array
+	 * @return reason
 	 */
 	private function checkForErrors( $row, $type, $articleId, $info, $isFeatured ) {
-		$rowErr = [ ];
 		$reason = '';
 		if ( empty( $row[ 'label' ] ) ) {
 			$reason = 'emptyLabel';
@@ -327,10 +328,8 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		if ( $type === 'video' ) {
 			if ( empty( $info ) ) {
 				$reason = 'videoNotHaveInfo';
-			} else {
-				if ( $this->isSupportedProviders( $info ) ) {
-					$reason = 'videoNotSupportProvider';
-				}
+			} elseif ( $this->isSupportedProviders( $info ) ) {
+				$reason = 'videoNotSupportProvider';
 			}
 		}
 
@@ -338,12 +337,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 			$reason = 'notCategoryInTag';
 		}
 
-		if($reason !==''){
-			$rowErr[ 'title' ] = $row[ 'title' ];
-			$rowErr['reason'] = $reason;
-		}
-
-		return $rowErr;
+		return $reason;
 	}
 
 	private function getInfoFromRow( &$row ) {

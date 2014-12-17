@@ -32,6 +32,7 @@ $messages[ 'en' ] = array(
 	'wikiacuratedcontent-content-emptylabel-error' => 'Message shown to a user when he tries to save without putting a label',
 	'wikiacuratedcontent-content-videonotsupported-error' => 'This video file provider is not supported',
 	'wikiacuratedcontent-content-notsupportedtype-error' => 'This type is not supported',
+	'wikiacuratedcontent-content-notcategoryintag-error' => 'U can put only category here',
 	'wikiacuratedcontent-featured-section-name' => 'Featured Content'
 
 
@@ -71,6 +72,7 @@ $messages[ 'qqq' ] = array(
 	'wikiacuratedcontent-content-emptylabel-error' => 'Message shown to a user when he tries to save without putting a label',
 	'wikiacuratedcontent-content-videonotsupported-error' => 'Message shown to a user when he tries to save a video item that is not supported',
 	'wikiacuratedcontent-content-notsupportedtype-error' => 'Message shown to a user when he tries to save a item that have not supported type',
+	'wikiacuratedcontent-content-notcategoryintag-error' => 'Message shown to a user when he tries to save a item that is not category type in simple tag',
 	'wikiacuratedcontent-featured-section-name' => 'Featured content section title'
 
 	//Sponsored Videos Managment Tools

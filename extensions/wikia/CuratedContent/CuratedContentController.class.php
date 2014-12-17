@@ -203,7 +203,7 @@ class CuratedContentController extends WikiaController {
 			if ( empty( $section ) ) {
 				$this->cacheResponseFor( 14, self::DAYS );
 				$this->getSections( $content );
-				$this->getFeatures( $content );
+				$this->getFeaturedSection( $content );
 			} else {
 				$this->getSectionItems( $content, $section );
 			}
@@ -303,7 +303,7 @@ class CuratedContentController extends WikiaController {
 		}
 	}
 
-	private function getFeatures( $content ) {
+	private function getFeaturedSection( $content ) {
 		$ret = false;
 		foreach ( $content as $section ) {
 			if ( $section[ 'featured' ] ) {
