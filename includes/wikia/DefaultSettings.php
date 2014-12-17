@@ -1608,6 +1608,7 @@ $wgBuckyEnabledSkins = [
 	'monobook',
 	'oasis',
 	'venus',
+	'uncyclopedia',
 ];
 
 /*
