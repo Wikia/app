@@ -142,30 +142,30 @@ if( !empty( $byemail ) ) {
 	</div>
 
 	<? if( empty( $byemail ) ): ?>
-	    <div class="marketing">
-	        <h2><?= wfMessage( 'usersignup-marketing-benefits' )->text() ?></h2>
-	        <div class="benefit">
-	            <ul class="avatars">
+		<div class="marketing">
+			<h2><?= wfMessage( 'usersignup-marketing-benefits' )->text() ?></h2>
+			<div class="benefit">
+				<ul class="avatars">
 					<? foreach( $avatars as $avatar ) { ?>
-	                <li class="avatar"><img src="<?= $avatar ?>" width="30" height="30"></li>
+					<li class="avatar"><img src="<?= $avatar ?>" width="30" height="30"></li>
 					<? } ?>
-	            </ul>
-	            <h3><?= wfMessage( 'usersignup-marketing-community-heading' )->text() ?></h3>
-	            <p><?= wfMessage( 'usersignup-marketing-community' )->text() ?></p>
-	        </div>
-	        <div class="benefit">
-	            <ul class="wikis">
+				</ul>
+				<h3><?= wfMessage( 'usersignup-marketing-community-heading' )->text() ?></h3>
+				<p><?= wfMessage( 'usersignup-marketing-community' )->text() ?></p>
+			</div>
+			<div class="benefit">
+				<ul class="wikis">
 					<? foreach( $popularWikis as $wiki ) { ?>
-	                <li class="wiki"><img src="<?= $wiki ?>" width="65" height="18"></li>
+					<li class="wiki"><img src="<?= $wiki ?>" width="65" height="18"></li>
 					<? } ?>
-	            </ul>
-	            <h3><?= wfMessage( 'usersignup-marketing-global-heading' )->text() ?></h3>
-	            <p><?= wfMessage( 'usersignup-marketing-global' )->text() ?></p>
-	        </div>
-	        <div class="benefit">
-	            <h3><?= wfMessage( 'usersignup-marketing-creativity-heading' )->text() ?></h3>
-	            <p><?= wfMessage( 'usersignup-marketing-creativity' )->text() ?></p>
-	        </div>
-	    </div>
+				</ul>
+				<h3><?= wfMessage( 'usersignup-marketing-global-heading' )->text() ?></h3>
+				<p><?= wfMessage( 'usersignup-marketing-global' )->text() ?></p>
+			</div>
+			<div class="benefit">
+				<h3><?= wfMessage( 'usersignup-marketing-creativity-heading' )->text() ?></h3>
+				<p><?= wfMessage( 'usersignup-marketing-creativity' )->text() ?></p>
+			</div>
+		</div>
 	<? endif; ?>
 </section>
