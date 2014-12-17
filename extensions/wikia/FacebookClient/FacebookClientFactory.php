@@ -1,12 +1,12 @@
 <?php
 
 /**
- * Class FacebookClientService
+ * Class FacebookClientFactory
  *
- * This is a service for retrieval and modifications to Wikia users' Facebook data
+ * This is a factory for retrieval of Wikia users' Facebook data
  * It is built on top of FacebookMapModel
  */
-class FacebookClientService {
+class FacebookClientFactory {
 
 	/**
 	 * Map an existing Wikia user to a Facebook id

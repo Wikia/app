@@ -9,13 +9,13 @@
 class SpecialFacebookConnectController extends WikiaSpecialPageController {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
-	/** @var \FacebookClientService */
-	protected $fbClientService;
+	/** @var \FacebookClientFactory */
+	protected $fbClientFactory;
 
 	public function __construct() {
 		parent::__construct( 'FacebookConnect', '', false );
 
-		$this->fbClientService = new \FacebookClientService();
+		$this->fbClientFactory = new \FacebookClientFactory();
 	}
 
 	/**
@@ -83,7 +83,7 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 		}
 
 		// Create user mapping
-		$mapping = $this->fbClientService->connectToFacebook( $wg->User->getId(), $fbUserId );
+		$mapping = $this->fbClientFactory->connectToFacebook( $wg->User->getId(), $fbUserId );
 		if ( $mapping instanceof \Message ) {
 			F::app()->wg->Out->showErrorPage( 'fbconnect-error', $mapping );
 			$this->skipRendering();
@@ -124,7 +124,7 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 		}
 
 		// Create user mapping
-		$mapping = $this->fbClientService->connectToFacebook( $wg->User->getId(), $fbUserId );
+		$mapping = $this->fbClientFactory->connectToFacebook( $wg->User->getId(), $fbUserId );
 		if ( $mapping instanceof \Message ) {
 			F::app()->wg->Out->showErrorPage( 'fbconnect-error', $mapping );
 			$this->skipRendering();

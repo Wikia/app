@@ -10,13 +10,13 @@ class FacebookSignupController extends WikiaController {
 	const SIGNUP_USERNAME_KEY = 'username';
 	const SIGNUP_PASSWORD_KEY = 'password';
 
-	/** @var \FacebookClientService */
-	protected $fbClientService;
+	/** @var \FacebookClientFactory */
+	protected $fbClientFactory;
 
 	public function __construct() {
 		parent::__construct();
 
-		$this->fbClientService = new \FacebookClientService();
+		$this->fbClientFactory = new \FacebookClientFactory();
 	}
 
 	/**
@@ -228,7 +228,7 @@ class FacebookSignupController extends WikiaController {
 			return;
 		}
 
-		$mapping = $this->fbClientService->connectToFacebook( $user->getId(), $fbUserId );
+		$mapping = $this->fbClientFactory->connectToFacebook( $user->getId(), $fbUserId );
 		if ( $mapping instanceof \Message ) {
 			$this->setErrorResponse( $mapping->escaped() );
 			return;
