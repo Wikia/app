@@ -14,7 +14,7 @@ $(function () {
 			emptyLabelError = msg('wikiacuratedcontent-content-emptylabel-error'),
 			videoNotSupportedError = msg('wikiacuratedcontent-content-videonotsupported-error'),
 			notSupportedType = msg('wikiacuratedcontent-content-notsupportedtype-error'),
-			notCategoryInTag = msg('wikiacuratedcontent-content-nocategoryintag-error'),
+			noCategoryInTag = msg('wikiacuratedcontent-content-nocategoryintag-error'),
 			addItem = d.getElementById('addItem'),
 			addSection = d.getElementById('addSection'),
 			$save = $(d.getElementById('save')),
@@ -249,8 +249,8 @@ $(function () {
 							if (errReason === 'notSupportedType') {
 								return notSupportedType;
 							}
-							if (errReason === 'notCategoryInTag') {
-								return notCategoryInTag;
+							if (errReason === 'noCategoryInTag') {
+								return noCategoryInTag;
 							}
 							return errReason;
 						}

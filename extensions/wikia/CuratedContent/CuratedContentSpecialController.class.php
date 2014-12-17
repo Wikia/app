@@ -334,7 +334,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		}
 
 		if ( !(bool)$isFeatured && $type !== 'category' ) {
-			$reason = 'notCategoryInTag';
+			$reason = 'noCategoryInTag';
 		}
 
 		if ( $this->needsArticleId( $type ) && $articleId === 0 ) {
