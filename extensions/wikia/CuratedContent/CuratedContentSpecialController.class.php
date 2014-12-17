@@ -257,12 +257,15 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	 */
 	private function processSaveLogic( $sections ) {
 		$err = [ ];
+		$sectionsAfterProcess = [ ];
 		if ( !empty( $sections ) ) {
-			foreach ( $sections as &$section ) {
-				list( $section, $err ) = $this->processTagBeforeSave( $section, $err );
+			foreach ( $sections as $section ) {
+				list( $newSection, $sectionErr ) = $this->processTagBeforeSave( $section, $err );
+				array_push( $sectionsAfterProcess, $newSection );
+				$err = array_push( $err, $sectionErr );
 			}
 		}
-		return [ $sections, $err ];
+		return [ $sectionsAfterProcess, $err ];
 	}
 
 	/**
@@ -275,7 +278,7 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		if ( !empty( $section[ self::ITEMS_TAG ] ) ) {
 			list( $section, $sectionErr ) = $this->processSection( $section );
 			if ( !empty( $sectionErr ) ) {
-				$err = array_merge( $err, $sectionErr );
+				$err = array_push( $err, $sectionErr );
 			}
 		}
 		return [ $section, $err ];
