@@ -33,7 +33,7 @@ class FacebookClientService {
 			switch ( $map ) {
 				case \FacebookMapModel::ERROR_WIKIA_USER_ID_MISMATCH :
 					$errorMessageKey = 'fbconnect-error-fb-account-in-use';
-					$messageParams[] = $wikiaUserId;
+					$messageParams[] = \User::whoIs( $wikiaUserId );
 					break;
 				case \FacebookMapModel::ERROR_FACEBOOK_USER_ID_MISMATCH :
 					$errorMessageKey = 'fbconnect-error-already-connected';
