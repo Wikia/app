@@ -67,7 +67,7 @@ class UserLoginFacebookForm extends UserLoginForm {
 		if ( $user instanceof User ) {
 
 			$this->connectWithFacebook( $user );
-			$user->saveSettings();
+			$this->saveUserGender( $user );
 
 			if ( $this->hasConfirmedEmail ) {
 				$this->confirmUser( $user );
@@ -79,6 +79,37 @@ class UserLoginFacebookForm extends UserLoginForm {
 		}
 
 		return $user;
+	}
+
+	/**
+	 * Connects given Wikia account with FB account and sets FB feed preferences
+	 * @param User $user Wikia account
+	 * @return bool true on success
+	 */
+	private function connectWithFacebook( User $user ) {
+		$fbId = FacebookClient::getInstance()->getUserId();
+
+		if ( F::app()->wg->EnableFacebookClientExt ) {
+			$mapping = \FacebookMapModel::createUserMapping( $user->getId(), $fbId );
+			return !empty( $mapping );
+		}
+
+		FBConnectDB::addFacebookID( $user, $fbId );
+		return true;
+	}
+
+	/**
+	 * Save a user's gender from facebook if one is available. Facebook will return the
+	 * following values for a user's gender: 'male', 'female', null.
+	 * @param User $user
+	 */
+	private function saveUserGender( User $user ) {
+		$fbUserInfo = FacebookClient::getInstance()->getUserInfo();
+		$gender = $fbUserInfo->getProperty( 'gender' );
+		if ( !is_null( $gender ) ) {
+			$user->setOption( 'gender', $gender );
+			$user->saveSettings();
+		}
 	}
 
 	/**
@@ -108,24 +139,6 @@ class UserLoginFacebookForm extends UserLoginForm {
 	private function sendConfirmationEmail() {
 		$userLoginHelper = new UserLoginHelper();
 		$userLoginHelper->sendConfirmationEmail( $this->mUsername );
-	}
-
-	/**
-	 * Connects given Wikia account with FB account and sets FB feed preferences
-	 *
-	 * @param User $user Wikia account
-	 * @return bool true on success
-	 */
-	private function connectWithFacebook( User $user ) {
-		$fbId = FacebookClient::getInstance()->getUserId();
-
-		if ( F::app()->wg->EnableFacebookClientExt ) {
-			$mapping = \FacebookMapModel::createUserMapping( $user->getId(), $fbId );
-			return !empty( $mapping );
-		}
-
-		FBConnectDB::addFacebookID( $user, $fbId );
-		return true;
 	}
 
 	/**
