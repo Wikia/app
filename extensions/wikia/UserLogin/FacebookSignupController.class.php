@@ -167,7 +167,7 @@ class FacebookSignupController extends WikiaController {
 			case 'error':
 			default:
 				// pass errors to the frontend form
-				$this->response->setData($signupResponse);
+				$this->response->setData( $signupResponse );
 				break;
 		}
 	}
@@ -190,11 +190,11 @@ class FacebookSignupController extends WikiaController {
 			$result = 'unconfirm';
 		}
 
-		$this->response->setData([
+		$this->response->setData( [
 			'result' => $result,
 			'msg' => $signupForm->msg,
 			'errParam' => $signupForm->errParam,
-		]);
+		] );
 	}
 
 	/**
