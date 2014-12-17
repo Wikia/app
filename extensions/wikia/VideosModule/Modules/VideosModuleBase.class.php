@@ -6,21 +6,11 @@ use Wikia\Cache\AsyncCache;
 use Wikia\Logger\WikiaLogger;
 
 /**
- * Interface Module
- *
- * @package VideosModule\Modules
- */
-interface Module {
-	public function getSource();
-	public function getModuleVideos();
-}
-
-/**
  * Class Base
  *
  * @package VideosModule\Modules
  */
-abstract class Base extends \WikiaModel implements Module {
+abstract class Base extends \WikiaModel {
 
 	const THUMBNAIL_WIDTH = 268;
 	const THUMBNAIL_HEIGHT = 150;
@@ -77,6 +67,9 @@ abstract class Base extends \WikiaModel implements Module {
 		$this->source = $this->getSource();
 		$this->sort = static::SORT;
 	}
+
+	abstract public function getSource();
+	abstract public function getModuleVideos();
 
 	/**
 	 * Look for videos that are blacklisted in the wgVideosModuleBlackList variable on community central
