@@ -67,7 +67,7 @@ $signupForm['inputs'][] = [
 	'class' => 'opt-in-container',
 	'type' => 'checkbox',
 	'name' => 'wpMarketingOptIn',
-	'label' => wfMessage( 'userlogin-opt-in-label' )->plain(),
+	'label' => wfMessage( 'userlogin-opt-in-label' )->escaped(),
 ];
 
 $signupForm['inputs'][] = [
