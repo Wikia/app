@@ -11,8 +11,8 @@ define('usersignup.marketingOptIn', ['wikia.geo'], function (geo) {
 	function init(wikiaForm) {
 		var $optInField = wikiaForm.inputs.wpMarketingOptIn,
 			$optInGroup = wikiaForm.getInputGroup('wpMarketingOptIn'),
-			isEurope = geo.getContinentCode().toLowerCase() === 'eu',
-			isCanada = geo.getCountryCode().toLowerCase() === 'ca';
+			isEurope = geo.getContinentCode() === 'EU',
+			isCanada = geo.getCountryCode() === 'CA';
 
 		if (!$optInField.length || !$optInGroup.length) {
 			throw 'Wikia Form must contain a field called wpMarketingOptIn';
