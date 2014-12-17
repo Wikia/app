@@ -7,7 +7,7 @@
 
 define( 'REPORTING_INTERVAL', 1000 );
 
-function populateCategorySearch( $begin, $maxlag, $throttle, $force ) {
+function populateCategorySearch( $begin, $throttle, $force ) {
 	$dbw = wfGetDB( DB_MASTER );
 
 	if( !$force ) {
@@ -25,7 +25,6 @@ function populateCategorySearch( $begin, $maxlag, $throttle, $force ) {
 		}
 	}
 
-	$maxlag = intval( $maxlag );
 	$throttle = intval( $throttle );
 	$force = (bool)$force;
 	if( $begin !== '' ) {
@@ -67,7 +66,7 @@ function populateCategorySearch( $begin, $maxlag, $throttle, $force ) {
 		$i++;
 		if( !( $i % REPORTING_INTERVAL ) ) {
 			echo "$pageid\n";
-			wfWaitForSlaves( $maxlag );
+			wfWaitForSlaves();
 		}
 		usleep( $throttle * 1000 );
 	}

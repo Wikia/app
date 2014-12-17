@@ -3772,10 +3772,9 @@ function wfGetNull() {
  *
  * Wikia note: provide external DB name in $wiki parameter to wait for external DB
  *
- * @param $maxLag Integer (deprecated)
  * @param $wiki mixed Wiki identifier accepted by wfGetLB
  */
-function wfWaitForSlaves( $maxLag = false, $wiki = false ) {
+function wfWaitForSlaves( $wiki = false ) {
 	$lb = wfGetLB( $wiki );
 	// bug 27975 - Don't try to wait for slaves if there are none
 	// Prevents permission error when getting master position
