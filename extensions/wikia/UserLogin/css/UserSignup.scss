@@ -171,8 +171,8 @@
 
 		@if ( $responsive-layout-enabled ) {
 			@media screen and (max-width: 910px) {
-				width: 52%;
 				padding-left: 2%;
+				width: 52%;
 
 				form {
 					width: 332px;
