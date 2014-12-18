@@ -31,9 +31,6 @@ jQuery( document ).ready( function( $ ) {
 		$( 'input[placeholder]' ).placeholder();
 	}
 
-	/* Enable makeCollapsible */
-	$( '.mw-collapsible' ).makeCollapsible();
-
 	/* Enable CheckboxShiftClick */
 	$( 'input[type=checkbox]:not(.noshiftselect)' ).checkboxShiftClick();
 
