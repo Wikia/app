@@ -4,6 +4,7 @@
  * Game Guides mobile app API controller
  *
  * @author Federico "Lox" Lucignano <federico@wikia-inc.com>
+ * @deprecated
  */
 class GameGuidesController extends WikiaController {
 	const API_VERSION = 1;

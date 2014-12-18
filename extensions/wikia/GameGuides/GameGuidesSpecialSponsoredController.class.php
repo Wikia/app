@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @deprecated
+ */
 class GameGuidesSpecialSponsoredController extends WikiaSpecialPageController {
 
 	const TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
