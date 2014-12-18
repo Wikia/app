@@ -1,3 +1,4 @@
+@import 'skins/shared/mixins/box-sizing';
 @import 'skins/oasis/css/core/responsive-variables';
 @import '../../Venus/styles/variables';
 
@@ -11,11 +12,11 @@
 }
 
 .global-navigation {
-	box-sizing: border-box;
+	@include box-sizing(border-box);
 	margin-top: -$global-navigation-height - 1px;
 
-	*, *:before, *:after {
-		box-sizing: inherit;
+	*, *::before, *::after {
+		@include box-sizing(inherit);
 	}
 }
 
