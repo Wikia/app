@@ -3,26 +3,34 @@
 		<h2 class="wam-top-gainers-header"><?= wfMessage('wampage-top-gainers-header')->escaped(); ?><? if ( $isSingleVertical ) : ?>: <span class="vertical-<?= $verticalsShorts[ $selectedVerticalId ] ?>"><?= $filterVerticals[ $selectedVerticalId ] ?></span><? endif; ?></h2>
 		<div class="wam-cards">
 			<? 	$i = 1;
-				foreach( $visualizationWikis as $k => $wiki ): ?>
-				<a href="http://<?= $wiki['url'] ?>" class="wam-card card<?= $i++ ?>">
+				foreach( $visualizationWikis as $k => $wiki ):
+					/**
+					 * Escape the HTML output
+					 */
+					$sWikiTitle = Sanitizer::encodeAttribute( $wiki['title'] );
+					$sWikiUrl = Sanitizer::encodeAttribute( $wiki['url'] );
+					$sWikiImageUrl = Sanitizer::encodeAttribute( $wiki['wiki_image'] );
+					$sWikiVerticalName = Sanitizer::encodeHtmlAllowEntities( $wiki['vertical_name'] );
+			?>
+				<a href="http://<?= $sWikiUrl ?>" class="wam-card card<?= $i++ ?>">
 					<figure>
-						<? if(!empty($wiki['wiki_image'])): ?>
-							<img src="<?= $wiki['wiki_image'] ?>" alt="<?= $wiki['title'] ?>" title="<?= $wiki['title'] ?>" />
+						<? if( !empty( $sWikiImageUrl ) ): ?>
+							<img src="<?= $sWikiImageUrl ?>" alt="<?= $sWikiTitle ?>" title="<?= $sWikiTitle ?>" />
 						<? endif ?>
-						<span><?= $wiki['title'] ?></span>
+						<span><?= $sWikiTitle ?></span>
 					</figure>
 					<div class="wam-score vertical-bg-<?= $verticalsShorts[ $wiki['vertical_id'] ] ?> wam-<?= $wiki['change'] ?>">
 						<?= $wg->ContLang->formatNum( number_format( $wiki['wam'], WAMPageModel::SCORE_ROUND_PRECISION ) ) ?>
 					</div>
-					<span class="wam-vertical"><?= $wiki['vertical_name'] ?></span>
+					<span class="wam-vertical"><?= $sWikiVerticalName ?></span>
 				</a>
 			<? endforeach ?>
 		</div>
 	</div>
 	<ol class="wam-top-gainers-list">
-	<?	foreach( $visualizationWikis as $k => $wiki ): ?>
-			<li class="wam-top-gainers-list-item"><?= $wiki['title'] ?></li>
-	<?	endforeach; ?>
+		<?	foreach( $visualizationWikis as $k => $wiki ): ?>
+			<li class="wam-top-gainers-list-item"><?= Sanitizer::encodeHtmlAllowEntities( $wiki['title'] ) ?></li>
+		<?	endforeach; ?>
 	</ol>
 </div>
 
@@ -42,7 +50,7 @@
 			<ul>
 			<? foreach ( $filterVerticals as $verticalId => $verticalName ) : ?>
 				<li class="wam-filtering-tab <? if ( $verticalId == $selectedVerticalId ) : ?> selected<? endif; ?>">
-					<a href="#" class="icon-vertical icon-vertical-<?= $verticalsShorts[ $verticalId ] ?> <? if ( $verticalId == $selectedVerticalId ) : ?>icon-vertical-selected<? endif; ?>" data-vertical-id="<?= $verticalId ?>">
+					<a href="#" class="icon-vertical icon-vertical-<?= Sanitizer::encodeAttribute( $verticalsShorts[ $verticalId ] ) ?> <? if ( $verticalId == $selectedVerticalId ) : ?>icon-vertical-selected<? endif; ?>" data-vertical-id="<?= $verticalId ?>">
 						<?= $verticalName ?>
 					</a>
 				</li>
@@ -55,7 +63,7 @@
 			<select name="langCode" id="langCode">
 				<option value=""><?= wfMessage('wam-index-filter-language-default')->escaped() ?></option>
 				<? foreach ($filterLanguages as $langCode): ?>
-				<option value="<?=$langCode?>"<? if ($selectedLangCode == $langCode): ?>selected="selected"<? endif ?>><?= $wg->ContLang->getLanguageName( $langCode )?></option>
+				<option value="<?= Sanitizer::encodeAttribute( $langCode ) ?>"<? if ($selectedLangCode == $langCode): ?>selected="selected"<? endif ?>><?= $wg->ContLang->getLanguageName( $langCode )?></option>
 				<? endforeach ?>
 			</select>
 			<input type="hidden" name="date" id="WamFilterDate" value="<?=$selectedDate?>"/>
@@ -63,7 +71,7 @@
 			<input type="text" id="WamFilterHumanDate" value="<?= $wg->Lang->date($selectedDate); ?>" placeholder="<?= $wg->Lang->date(time()); ?>"/>
 		</div>
 		<div class="searching">
-			<input type="text" name="searchPhrase" value="<?=$searchPhrase?>" placeholder=" <?= wfMessage('wam-index-filter-search-placeholder')->escaped() ?>" />
+			<input type="text" name="searchPhrase" value="<?= Sanitizer::encodeAttribute( $searchPhrase ) ?>" placeholder=" <?= wfMessage('wam-index-filter-search-placeholder')->escaped() ?>" />
 			<button type="submit" value="<?= wfMessage('wam-index-search-button')->escaped() ?>" class="secondary">
 				<img src="<?= $wg->BlankImgUrl ?>" />
 			</button>
@@ -104,8 +112,8 @@
 							<? if(!empty($wiki['admins'])) : ?>
 								<ul>
 								<? foreach($wiki['admins'] as $admin): ?>
-									<li><a href="<?= $admin['userPageUrl'] ?>">
-										<img src="<?= $admin['avatarUrl'] ?>" alt="<?= $admin['name'] ?>" title="<?= $admin['name'] ?>" />
+									<li><a href="<?= Sanitizer::encodeAttribute( $admin['userPageUrl'] ) ?>">
+										<img src="<?= Sanitizer::encodeAttribute( $admin['avatarUrl'] ) ?>" alt="<?= Sanitizer::encodeAttribute( $admin['name'] ) ?>" title="<?= Sanitizer::encodeAttribute( $admin['name'] ); ?>" />
 									</a></li>
 								<? endforeach ?>
 								</ul>

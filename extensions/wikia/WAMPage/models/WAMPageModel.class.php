@@ -253,7 +253,7 @@ class WAMPageModel extends WikiaModel {
 		$aAllVerticals = $oWikiFactoryHub->getAllVerticals();
 		if ( isset( $aAllVerticals[ $iVerticalId ] ) ) {
 			$aVertical = $aAllVerticals[ $iVerticalId ];
-			return wfMessage( 'wam-' . $aVertical['short'] )->inContentLanguage()->text();
+			return wfMessage( 'wam-' . $aVertical['short'] )->inContentLanguage()->escaped();
 		} else {
 			return false;
 		}
