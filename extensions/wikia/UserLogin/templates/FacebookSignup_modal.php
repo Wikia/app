@@ -64,6 +64,12 @@ if ( trim( $fbEmail ) == '' ) {
 }
 
 $signupForm['inputs'][] = [
+	'type' => 'hidden',
+	'name' => 'wpRegistrationCountry',
+	'value' => '',
+];
+
+$signupForm['inputs'][] = [
 	'class' => 'opt-in-container hidden',
 	'type' => 'checkbox',
 	'name' => 'wpMarketingOptIn',

@@ -65,6 +65,11 @@ $form = [
 			'errorMsg' => ( !empty( $msg ) ? $msg : '' )
 		],
 		[
+			'type' => 'hidden',
+			'name' => 'wpRegistrationCountry',
+			'value' => '',
+		],
+		[
 			'type' => 'nirvanaview',
 			'controller' => 'UserSignupSpecial',
 			'view' => 'birthday',
