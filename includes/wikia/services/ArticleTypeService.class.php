@@ -84,9 +84,6 @@ class ArticleTypeService {
 					'wikiaId' => $wgCityId,
 					'wikiaUrl' => $artUrl
 				];
-			} else {
-				throw new MissingFieldException( 'missing title or text: ' . $wgCityId .
-					'_' . $pageId );
 			}
 		}
 		return null;
