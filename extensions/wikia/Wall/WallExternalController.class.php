@@ -277,6 +277,10 @@ class WallExternalController extends WikiaController {
 			break;
 
 			case 'remove':
+				if (!$mw->canModerate($this->wg->User)) {
+					$mw->load(); // must do this to allow checking for wall owner/message author - data not loaded otherwise
+				}
+
 				if( $mw->canRemove($this->wg->User) ) {
 					$this->response->setVal('status', $result);
 					$result = $mw->remove($this->wg->User, $reason, $notify);
@@ -366,6 +370,10 @@ class WallExternalController extends WikiaController {
 			return true;
 		}
 
+		if (!$mw->canModerate($this->wg->User)) {
+			$mw->load();
+		}
+
 		if($mw->isAdminDelete() && $mw->isRemove() && $mw->canRestore($this->wg->User)) {
 			$mw->undoAdminDelete($this->wg->User);
 			$this->response->setVal('status', true);
@@ -394,6 +402,9 @@ class WallExternalController extends WikiaController {
 			return true;
 		}
 
+		if (!$mw->canModerate($this->wg->User)) {
+			$mw->load();
+		}
 		if($mw->canRestore($this->wg->User)) {
 			$formassoc = $this->processModalForm($this->request);
 

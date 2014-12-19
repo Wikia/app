@@ -309,7 +309,7 @@ class WallMessage {
 	}
 
 	public function canRemove(User $user){
-		return $this->can($user, 'wallremove');
+		return $this->can($user, 'wallremove') || ( ( $this->isAuthor($user) || $this->isWallOwner($user) ) && !$this->isMarkInProps(WPP_WALL_MODERATORREMOVE) && !$user->isBlocked() );
 	}
 
 	public function canAdminDelete(User $user) {
@@ -328,11 +328,11 @@ class WallMessage {
 	 * archive is "close".
 	 */
 	public function canArchive(User $user) {
-		return in_array(MWNamespace::getSubject($this->title->getNamespace()), F::app()->wg->WallThreadCloseNS) && $this->can($user, 'wallarchive') && !$this->isRemove() && !$this->isArchive() && !$this->isRemove() && $this->isMain();
+		return in_array(MWNamespace::getSubject($this->title->getNamespace()), F::app()->wg->WallThreadCloseNS) && ( $this->can($user, 'wallarchive') || ( $this->isWallOwner( $user ) && !$this->isMarkInProps( WPP_WALL_MODERATORREOPEN ) ) ) && !$this->isRemove() && !$this->isArchive() && $this->isMain() && !$user->isBlocked();
 	}
 
 	public function canReopen(User $user) {
-		return in_array(MWNamespace::getSubject($this->title->getNamespace()), F::app()->wg->WallThreadCloseNS) && $this->can($user, 'wallarchive') && !$this->isRemove() && $this->isArchive() && $this->isMain();
+		return in_array(MWNamespace::getSubject($this->title->getNamespace()), F::app()->wg->WallThreadCloseNS) && ( $this->can($user, 'wallarchive') || ( $this->isWallOwner( $user ) && !$this->isMarkInProps( WPP_WALL_MODERATORARCHIVE ) ) ) && !$this->isRemove() && $this->isArchive() && $this->isMain() && !$user->isBlocked();
 	}
 
 	public function getMetaTitle() {
@@ -847,6 +847,10 @@ class WallMessage {
 		return $this->getArticleComment()->isAuthor($user);
 	}
 
+	public function canModerate(User $user) {
+		return $this->can($user, 'wallarchive') || $this->can($user, 'wallremove');
+	}
+
 	public function isWallWatched(User $user) {
 		return $user->isWatched( $this->getArticleTitle() );
 	}
@@ -894,6 +898,9 @@ class WallMessage {
 
 	public function archive($user, $reason = '') {
 		$status = $this->markInProps(WPP_WALL_ARCHIVE);
+		if ( $this->can( $user, 'wallarchive' ) ) {
+			$this->markInProps(WPP_WALL_MODERATORARCHIVE); // VOLDEV-79
+		}
 		$this->recordAdminHistory($user, $reason, WH_ARCHIVE);
 		$this->saveReason($user, $reason);
 		$this->customActionNotifyRC($user, 'wall_archive', $reason);
@@ -902,6 +909,12 @@ class WallMessage {
 
 	public function reopen($user) {
 		$this->unMarkInProps(WPP_WALL_ARCHIVE);
+		if ( $this->isMarkInProps( WPP_WALL_MODERATORARCHIVE ) ) {
+			$this->unMarkInProps( WPP_WALL_MODERATORARCHIVE );
+		}
+		if ( $this->can( $user, 'wallarchive' ) ) {
+			$this->markInProps( WPP_WALL_MODERATORREOPEN );
+		}
 		$this->recordAdminHistory($user, '', WH_REOPEN);
 		$this->customActionNotifyRC($user, 'wall_reopen', '');
 		return true;
@@ -911,7 +924,16 @@ class WallMessage {
 		$this->saveReason($user, $reason);
 
 		$this->unMarkInProps(WPP_WALL_ARCHIVE);
+		if ( $this->isMarkInProps( WPP_WALL_MODERATORARCHIVE ) ) {
+			$this->unMarkInProps( WPP_WALL_MODERATORARCHIVE );
+		}
+		if ( $this->isMarkInProps( WPP_WALL_MODERATORREOPEN ) ) {
+			$this->unMarkInProps( WPP_WALL_MODERATORREOPEN );
+		}
 		$status = $this->markInProps(WPP_WALL_REMOVE);
+		if ( $this->can( $user, 'wallremove' ) ) {
+			$this->markInProps( WPP_WALL_MODERATORREMOVE );
+		}
 
 		if( $status === true ) {
 			$this->customActionNotifyRC($user, 'wall_remove', $reason);
@@ -1158,6 +1180,7 @@ class WallMessage {
 	public function restore($user, $reason = '') {
 		$this->unMarkInProps(WPP_WALL_REMOVE);
 		$this->unMarkInProps(WPP_WALL_ADMINDELETE);
+		$this->unMarkInProps( WPP_WALL_MODERATORREMOVE );
 		$this->customActionNotifyRC($user, 'wall_restore', $reason);
 
 		$wne = $this->getAdminNotificationEntity($user, $reason);
