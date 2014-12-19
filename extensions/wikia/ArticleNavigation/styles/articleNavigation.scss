@@ -26,10 +26,12 @@ $dropdownArrowSize: 10px;
 }
 
 .article-navigation {
+	margin-bottom: 60px;
 	margin-left: $medium-content-padding - $content-border-width;
 	position: absolute;
 	text-align: center;
 	width: $medium-grid-column;
+	top: 157px;
 	z-index: $article-left-navigation-z-index;
 
 	> ul {
