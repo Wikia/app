@@ -1611,6 +1611,14 @@ $wgBuckyEnabledSkins = [
 	'uncyclopedia',
 ];
 
+/**
+ * @name wgMemcacheStatsSampling
+ * Sets the sampling rate for Memcache stats reporting, sampling applied at each page view
+ *
+ * Unit: percent (0-100)
+ */
+$wgMemcacheStatsSampling = 0;
+
 /*
  * @name wgXhprofUDPHost
  * Host that xhprof data should be reported to (if set to null will use $wgUDPProfilerHost)
