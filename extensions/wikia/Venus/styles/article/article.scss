@@ -26,6 +26,19 @@ $article-nav-gap-coverunit-large: 220px;
 	display: none !important;
 }
 
+main {
+	position: relative;
+
+	.article-navigation-wrapper {
+		height: 100%;
+		left: 0;
+		padding-top: 450px;
+		position: absolute;
+		top: 0;
+		width: $medium-grid-column;
+	}
+}
+
 .article {
 	overflow: hidden;
 
@@ -235,6 +248,10 @@ $article-nav-gap-coverunit-large: 220px;
 /* END FOR PROTOTYPE/TESTING ONLY */
 
 @media #{$large-up} {
+	.article-navigation-wrapper {
+		width: $large-grid-column;
+	}
+
 	.article .article-header {
 		@include grid-column-width('large', 8, $large-content-padding - $content-border-width);
 
@@ -300,6 +317,10 @@ $article-nav-gap-coverunit-large: 220px;
 }
 
 @media #{$small-only} {
+	.article-navigation-wrapper {
+		width: $small-grid-column;
+	}
+
 	.article .article-header {
 		float: none;
 		width: 100%;

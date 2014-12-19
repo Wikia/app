@@ -1,6 +1,6 @@
 require([
-	'wikia.document', 'wikia.stickyElement', 'venus.layout'
-], function(doc, stickyElement, layout) {
+	'wikia.document', 'wikia.window', 'wikia.stickyElement', 'venus.layout', 'wikia.underscore'
+], function(doc, win, stickyElement, layout, _) {
 	'use strict';
 	/*
 	 * TODO: This file will/should be rafactored after beta release:
@@ -88,13 +88,38 @@ require([
 		}
 	}
 
-	// Sticky navigation
-	stickyElementObject.init({
-		sourceElement: navigationElement,
-		alignToElement: boundBoxElement,
-		topFixed: globalNavigationHeight + additionalTopOffset,
-		minWidth: layout.breakpoints.smallMin,
-		adjustFunc: adjustValueFunction,
-		adjustPositionFunc: adjustPositionFunction
-	});
+	function adjustTopPosition() {
+		navigationElement.parentElement.style.paddingTop = $('.article-header').outerHeight(true) + 'px';
+	}
+
+	function isPositionStickySupported() {
+		var isSupported = false;
+
+		navigationElement.style.position = 'sticky';
+		if ( navigationElement.style.position !== 'sticky' ) {
+			navigationElement.style.position = '-webkit-sticky';
+			isSupported = navigationElement.style.position === '-webkit-sticky';
+		} else {
+			isSupported = true;
+		}
+
+		if (isSupported) {
+			adjustTopPosition();
+			win.addEventListener('resize', _.debounce(adjustTopPosition, 50), false);
+		}
+
+		return isSupported;
+	}
+
+	if ( !isPositionStickySupported() ) {
+		// Sticky navigation
+		stickyElementObject.init({
+			sourceElement: navigationElement,
+			alignToElement: boundBoxElement,
+			topFixed: globalNavigationHeight + additionalTopOffset,
+			minWidth: layout.breakpoints.smallMin,
+			adjustFunc: adjustValueFunction,
+			adjustPositionFunc: adjustPositionFunction
+		});
+	}
 });
