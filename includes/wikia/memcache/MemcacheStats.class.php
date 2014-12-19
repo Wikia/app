@@ -7,6 +7,8 @@
  */
 namespace Wikia\Memcache;
 
+use Wikia\Util\Statistics\BernoulliTrial;
+
 class MemcacheStats {
 
 	/**
@@ -68,14 +70,38 @@ class MemcacheStats {
 	}
 
 	/**
-	 * Bind to the last stage of MW response generation and send stats to the storgae
+	 * Bind to the last stage of MW response generation and send stats to the storage
 	 *
 	 * @return bool true - it's a hook
 	 */
 	public static function onRestInPeace() {
+		// obey the sampling
+		global $wgMemcacheStatsSampling;
+
+		$trial = new BernoulliTrial($wgMemcacheStatsSampling / 100); // normalize percents to 0-1 range
+		if (!$trial->shouldSample()) {
+			return true;
+		}
+
 		$stats = self::getStats();
 
-		var_dump(__METHOD__); var_dump($stats); die;
+		// send generic stats
+		foreach($stats['counts'] as $name => $value) {
+			\Transaction::addEvent( \Transaction::EVENT_MEMCACHE_STATS_COUNTERS, [
+				'name' => $name,
+				'value' => $value,
+			]);
+		}
+
+		// send top keys for misses and hits
+		foreach($stats['keys'] as $bucket => $keys) {
+			foreach($keys as $key) {
+				\Transaction::addEvent( \Transaction::EVENT_MEMCACHE_STATS_KEYS, [
+					'bucket' => $bucket,
+					'key' => $key,
+				]);
+			}
+		}
 		return true;
 	}
 }

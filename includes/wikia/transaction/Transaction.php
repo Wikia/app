@@ -41,7 +41,10 @@ class Transaction {
 	const SIZE_CATEGORY_AVERAGE = 'average';
 	const SIZE_CATEGORY_COMPLEX = 'complex';
 
+	// Definition of different events
 	const EVENT_ARTICLE_PARSE = 'article_parse';
+	const EVENT_MEMCACHE_STATS_COUNTERS = 'memcache_stats_counters';
+	const EVENT_MEMCACHE_STATS_KEYS = 'memcache_stats_keys';
 
 	/**
 	 * Returns TransactionTrace singleton instance
