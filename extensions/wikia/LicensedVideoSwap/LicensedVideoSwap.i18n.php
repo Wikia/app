@@ -8,6 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'licensedvideoswap-desc' => 'Licensed Video Swap extension',
 	'licensedvideoswap' => 'Licensed Video Swap',
 	'action-licensedvideoswap' => 'swap unlicensed video',
 	'lvs-page-title' => 'Licensed Video Swap',
@@ -72,6 +73,7 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'licsensedvideoswap-desc' => '{{desc}}',
 	'licensedvideoswap' => 'Licensed Video Swap short title (for special page listings)
 {{Identical|Licensed video swap}}',
 	'action-licensedvideoswap' => '{{doc|action}}',

@@ -7,6 +7,17 @@
  */
 $dir = dirname(__FILE__) . '/';
 $app = F::app();
+
+$wgExtensionCredits[ 'specialpage' ][ ] = array(
+	'name' => 'WikiFeatures',
+	'author' => array(
+		'Hyun Lim',
+		'Owen Davis'
+	),
+	'descriptionmsg' => 'wikifeatures-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AuthImage',
+);
+
 //classes
 $wgAutoloadClasses['WikiFeaturesSpecialController'] = $dir . 'WikiFeaturesSpecialController.class.php';
 $app->getDispatcher()->addRouting(

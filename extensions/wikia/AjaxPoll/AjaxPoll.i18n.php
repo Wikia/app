@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'ajaxpoll-desc' => 'Poll extension for MediaWiki driven by Ajax requests',
 	"ajaxpoll-percentVotes" => "$1%&nbsp;of all votes",
 	"ajaxpoll-thankyou" => "Thank you for your vote!",
 	"ajaxpoll-error" => "There was a problem with processing your vote, please try again.",
@@ -16,6 +17,7 @@ $messages['en'] = array(
  * @author Shirayuki
  */
 $messages['qqq'] = array(
+	'ajaxpoll-desc' => '{{desc}}',
 	'ajaxpoll-submit' => '{{Identical|Vote}}',
 );
 

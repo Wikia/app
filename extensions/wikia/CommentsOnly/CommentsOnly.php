@@ -9,6 +9,13 @@ EOT;
 	exit(1);
 }
 
+$wgExtensionCredits[ 'other' ][ ] = array(
+	'name' => 'CommentsOnly',
+	'author' => 'Wikia',
+	'descriptionmsg' => 'comments-only-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CommentsOnly',
+);
+
 $dir = dirname(__FILE__) . '/';
 
 $wgExtensionMessagesFiles['CommentsOnly'] = $dir . 'CommentsOnly.i18n.php';
