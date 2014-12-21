@@ -1,13 +1,11 @@
 <?php
 
 /**
- * Captcha class using the reCAPTCHA widget.
- * Stop Spam. Read Books.
+ * Captcha class using the Google reCAPTCHA/noCAPTCHA
  *
  * @addtogroup Extensions
- * @author Mike Crawford <mike.crawford@gmail.com>
- * @copyright Copyright (c) 2007 reCAPTCHA -- http://recaptcha.net
- * @licence MIT/X11
+ * @author Andrzej 'nAndy' Łukaszewski <nandy@wikia-inc.com>
+ * @copyright Copyright (c) 2014 reCAPTCHA -- http://recaptcha.net
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
@@ -22,6 +20,8 @@ $dir = dirname( __FILE__ );
 $wgExtensionMessagesFiles['ReCaptcha'] = $dir . '/ReCaptcha.i18n.php';
 
 $wgAutoloadClasses['ReCaptcha'] = $dir . '/ReCaptcha.class.php';
+
+$wgHooks['BeforePageDisplay'][] = 'efReCaptchaOnBeforePageDisplay';
 
 require_once( 'recaptchalib.php' );
 
@@ -62,4 +62,9 @@ function efReCaptcha() {
 				"use the reCAPTCHA plugin. You can sign up for a key <a href='" .
 				htmlentities( recaptcha_get_signup_url ( str_replace( 'http://', '', $wgServer ), "mediawiki" ) ) . "'>here</a>." );
 	}
+}
+
+function efReCaptchaOnBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
+	$out->addScript( '<script src="https://www.google.com/recaptcha/api.js" async defer></script>' );
+	return true;
 }
