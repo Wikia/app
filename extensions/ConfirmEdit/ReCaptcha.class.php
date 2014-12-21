@@ -12,7 +12,10 @@ class ReCaptcha extends SimpleCaptcha {
 	function getForm() {
 		global $wgReCaptchaPublicKey;
 
-		return '<div class="g-recaptcha" data-sitekey="' . $wgReCaptchaPublicKey . '" data-theme="light"></div>';
+		return '<div class="g-recaptcha" data-sitekey="' .
+			$wgReCaptchaPublicKey .
+			'" data-theme="' . ( SassUtil::isThemeDark() ? 'dark' : 'light') .
+			'"></div>';
 	}
 
 	/**
