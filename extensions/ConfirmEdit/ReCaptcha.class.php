@@ -10,12 +10,9 @@ class ReCaptcha extends SimpleCaptcha {
 	 *
 	 */
 	function getForm() {
-		global $wgReCaptchaPublicKey, $wgReCaptchaTheme;
+		global $wgReCaptchaPublicKey;
 
-		$useHttps = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] == 'on' );
-		$js = 'var RecaptchaOptions = ' . Xml::encodeJsVar( array( 'theme' => $wgReCaptchaTheme /*Wikia change */ /*, 'tabindex' => 1 */ /*Wikia change end*/) );
-
-		return Html::inlineScript( $js ) . recaptcha_get_html( $wgReCaptchaPublicKey, $this->recaptcha_error, $useHttps );
+		return '<div class="g-recaptcha" data-sitekey="' . $wgReCaptchaPublicKey . '"></div>';
 	}
 
 	/**

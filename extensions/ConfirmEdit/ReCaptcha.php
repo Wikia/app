@@ -23,11 +23,9 @@ $wgAutoloadClasses['ReCaptcha'] = $dir . '/ReCaptcha.class.php';
 
 $wgHooks['BeforePageDisplay'][] = 'efReCaptchaOnBeforePageDisplay';
 
-require_once( 'recaptchalib.php' );
-
 // Set these in LocalSettings.php
-# $wgReCaptchaPublicKey = '';
-# $wgReCaptchaPrivateKey = '';
+$wgReCaptchaPublicKey = '6Lduj_8SAAAAAMjr7vGPC7oODOjgwLi-EmU7NWwz'; // called site key on Google Recaptcha Admin site
+$wgReCaptchaPrivateKey = '6Lduj_8SAAAAAAMTdBfXb90dTkWsiI8JUZafO3Ts'; // called secret key on Google Recaptcha Admin site
 // For backwards compatibility
 # $recaptcha_public_key = '';
 # $recaptcha_private_key = '';
