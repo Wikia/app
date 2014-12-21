@@ -13,7 +13,7 @@
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'User Wall',
 	'author' => array( 'Tomek Odrobny', 'Christian Williams', "Andrzej 'nAndy' Lukaszewski", 'Piotr Bablok' ),
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Wall',
+	'url' => 'http://www.wikia.com',
 	'descriptionmsg' => 'wall-desc',
 );
 

@@ -14,7 +14,6 @@
 $messages = array();
 
 $messages['en'] = array(
-	'interwikiedit-desc'            => 'Special:InterwikiEdit for web-based handling of interwiki links',
 	'interwikiedit'                 => 'Interwiki Editor',
 	'iwedit-title'                  => 'Interwiki Editor',
 	'iwedit-language-interwikis'    => 'language interwikis only',
@@ -32,7 +31,6 @@ $messages['en'] = array(
  * @author Translationista
  */
 $messages['qqq'] = array(
-	'interwikiedit-desc' => '{{desc}}',
 	'iwedit-update' => '{{Identical|Update}}',
 );
 

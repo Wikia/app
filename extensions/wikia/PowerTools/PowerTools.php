@@ -22,12 +22,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['other'][] = array(
         'name' => 'PowerTools',
         'author' => "[http://www.wikia.com/wiki/User:TOR Łukasz 'TOR' Garczewski]",
-        'descriptionmsg' => 'powertools-desc',
-		'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/PowerTools'
+        'description' => 'Enables privilidged users to delete and protect pages in one action.'
 );
-
-//i18n
-$wgExtensionMessagesFiles['PowerTools'] = __DIR__ . '/PowerTools.i18n.php';
 
 // New user right, required to use the extension.
 $wgAvailableRights[] = 'powerdelete';

@@ -12,7 +12,7 @@ $dir = dirname(__FILE__) . '/';
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Wikia Home Staff Tool',
-	'descriptionmsg' => 'managewikiahome-desc',
+	'description' => 'Internal tool to manage corporate pages\'s visualization aka. remix feature',
 	'authors' => array(
 		'Andrzej "nAndy" Łukaszewski',
 		'Marcin Maciejewski',
@@ -20,8 +20,7 @@ $wgExtensionCredits['specialpage'][] = array(
 		'Damian Jóźwiak',
 		'Łukasz Konieczny'
 	),
-	'version' => 1.0,
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialManageWikiaHome'
+	'version' => 1.0
 );
 
 //classes

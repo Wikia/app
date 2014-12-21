@@ -15,7 +15,6 @@ $wgExtensionCredits['other'][] = array(
 	'version' => '0.3',
 	'author' => array('[http://lyrics.wikia.com/User:Sean_Colombo Sean Colombo]', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]'),
 	'descriptionmsg' => 'ogmc-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/OpenGraphMetaCustomizations'
 );
 
 $wgExtensionMessagesFiles['OpenGraphMetaCustomizations'] = __DIR__ . '/OpenGraphMetaCustomizations.i18n.php';

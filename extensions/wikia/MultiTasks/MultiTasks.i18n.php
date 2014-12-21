@@ -6,10 +6,6 @@
 $messages = array();
 
 $messages['en'] = array(
-	'multiwikifinder-desc' => 'Staff tool to search for a specific title across Wikia ',
-	'multidelete-desc' => 'Special Multi Wiki Delete',
-	'multiedit-desc' => 'Special Multi Wiki Edit',
-	
 	'multitasks-link-back-label' => 'here', # used for link captions
 	'multiwikiedit' => 'Edit batch of pages',
 	'multiwikiedit_button' => 'EDIT',
@@ -132,10 +128,6 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'multiwikifinder-desc' => '{{desc}}',
-	'multidelete-desc' => '{{desc}}',
-	'multiedit-desc' => '{{desc}}',
-	
 	'multiwikiedit_button' => '{{Identical|Edit}}',
 	'multiwikiedit_on' => 'Label for dropdown menu where user can select type of wikis to run script on',
 	'multiwikiedit_minoredit_caption' => '{{Identical|Minor edit}}',

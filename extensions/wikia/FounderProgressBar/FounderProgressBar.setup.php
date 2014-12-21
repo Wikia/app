@@ -4,7 +4,6 @@ $wgExtensionCredits['other'][] = array(
 	'name'           => 'FounderProgressBar',
 	'author'         => 'Wikia',
 	'descriptionmsg' => 'founderprogressbar-credits',
-	'url'            => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/FounderProgressBar'
 );
 
 $dir = dirname(__FILE__).'/';

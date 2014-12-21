@@ -9,7 +9,6 @@
 $messages = array();
 
 $messages['en'] = array(
-	'mostpopularcategories-desc' => 'Get list of most popular categories',
 	'mostpopularcategories' => 'Most popular categories',
 );
 

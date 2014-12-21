@@ -15,8 +15,6 @@ $wgExtensionCredits['lightbox'][] = array(
 		'Garth Webb',
 		'James Sutterfield',
 	),
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Lightbox',
-	'descriptionmsg' => 'lightbox-desc'
 );
 
 $dir = dirname(__FILE__) . '/';

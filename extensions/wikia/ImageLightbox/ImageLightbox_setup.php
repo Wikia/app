@@ -2,9 +2,8 @@
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Image Lightbox',
 	'version' => '1.21',
-	'descriptionmsg' => 'imagelightbox-desc',
+	'description' => 'Add lightbox preview for images within article',
 	'author' => array('Maciej Brencz', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]'),
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ImageLightbox'
 );
 
 // register extension class

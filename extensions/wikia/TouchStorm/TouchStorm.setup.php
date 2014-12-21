@@ -18,7 +18,6 @@ $wgExtensionCredits['touchstorm'][] = array(
 		"Saipetch Kongkatong",
 	),
 	'descriptionmsg' => 'touchstorm-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/TouchStorm'
 );
 
 $dir = dirname( __FILE__ ) . '/';

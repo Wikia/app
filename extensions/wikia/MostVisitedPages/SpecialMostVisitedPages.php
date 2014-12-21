@@ -20,9 +20,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 $wgExtensionCredits['specialpage'][] = array(
     "name" => "MostVisitedPages",
-    "descriptionmsg" => "mostvisitedpages-desc",
-    "author" => "Moli <moli at wikia.com>",
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/MostVisitedPages'
+    "description" => "Get list of most visited pages",
+    "author" => "Moli <moli at wikia.com>"
 );
 
 $dir = dirname(__FILE__) . '/';

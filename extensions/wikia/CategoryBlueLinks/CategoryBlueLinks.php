@@ -21,12 +21,8 @@
 $wgExtensionCredits['other'][] = array(
 	'name' => 'CategoryBlueLinks',
 	'author' => array( "[http://community.wikia.com/wiki/User:TOR Lucas 'TOR' Garczewski]" ),
-	'descriptionmsg' => 'categorybluelinks-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CategoryBlueLinks',
+	'description' => 'This extension makes all link to category pages appear as "known" (aka "blue").',
 );
-
-//i18n
-$wgExtensionMessagesFiles['CategoryBlueLinks'] = __DIR__ . '/CategoryBlueLinks.i18n.php';
 
 $wgHooks['LinkBegin'][] = 'efCategoryBlueLinks';
 

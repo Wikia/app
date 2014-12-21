@@ -9,13 +9,12 @@ $dir = dirname(__FILE__) . '/';
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'CSS Editor',
-	'descriptionmsg' => 'specialcss-desc',
+	'description' => 'Admin tool for editing CSS files',
 	'authors' => array(
 		'Andrzej "nAndy" Łukaszewski',
 		'Łukasz Konieczny',
 	),
-	'version' => 1.0,
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialCss'
+	'version' => 1.0
 );
 
 // models

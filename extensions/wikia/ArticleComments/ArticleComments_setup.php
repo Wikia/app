@@ -23,9 +23,7 @@
 $wgExtensionCredits['other'][] = array(
 	'name' => 'ArticleComments',
 	'version' => '2.0',
-	'author' => array('[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)]', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]'),
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ArticleComments',
-	'descriptionmsg' => 'article-comments-desc'
+	'author' => array('[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)]', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]')
 );
 
 define('ARTICLECOMMENTORDERCOOKIE_NAME', 'articlecommentorder');

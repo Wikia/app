@@ -22,14 +22,10 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['other'][] = array(
 	'name' => 'CommentCSV',
 	'author' => "[http://www.wikia.com/wiki/User:Grunny Daniel Grunwell (Grunny)]",
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CommentCSV',
-	'descriptionmsg' => 'commentcsv-desc'
+	'description' => 'Enables privileged users to download article and blog comments as a CSV file.'
 );
 
 $dir = dirname(__FILE__) . '/';
-
-//i18n
-$wgExtensionMessagesFiles['AbuseFilterBypass'] = $dir . 'CommentCSV.i18n.php';
 
 // New user right, required to use the extension.
 $wgAvailableRights[] = 'commentcsv';

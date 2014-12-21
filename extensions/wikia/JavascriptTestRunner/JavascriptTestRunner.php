@@ -15,7 +15,8 @@ $wgExtensionCredits['specialpage'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'JavascriptUnitTest',
 	'author'         => array( 'Władysław Bodzek' ),
-	'url'            => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/JavascriptTestRunner',
+	'url'            => '',
+	'description'    => 'Javascript test runner',
 	'descriptionmsg' => 'javascripttestrunner-desc',
 );
 

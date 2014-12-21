@@ -16,8 +16,7 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'SharedHelp',
 	'version' => '0.25',
 	'descriptionmsg' => 'sharedhelp-desc',
-	'author' => array('Maciej Brencz', 'Inez Korczyński', 'Bartek Łapiński', "[http://www.wikia.com/wiki/User:TOR Lucas 'TOR' Garczewski]", '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]'),
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SharedHelp'
+	'author' => array('Maciej Brencz', 'Inez Korczyński', 'Bartek Łapiński', "[http://www.wikia.com/wiki/User:TOR Lucas 'TOR' Garczewski]", '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]')
 );
 
 $wgExtensionMessagesFiles['SharedHelp'] =  dirname( __FILE__ ) . '/SharedHelp.i18n.php';

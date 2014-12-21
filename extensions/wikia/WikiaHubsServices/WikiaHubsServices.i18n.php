@@ -8,7 +8,6 @@
 $messages = array();
 
 $messages['en'] = array(
-	'wikia-hub-services' => 'WikiaHubs services and classes used in Special:EditHub and WikiaHomePage',
 	'wikia-hubs-module-slider' => 'Slider',
 	'wikia-hubs-module-pulse' => 'Pulse',
 	'wikia-hubs-module-wikias-picks' => 'Wikia\'s Picks',

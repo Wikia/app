@@ -7,9 +7,7 @@
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'RecentChanges',
-	'author' => array( 'Kyle Florence', 'Saipetch Kongkatong', 'Tomasz Odrobny' ),
-	'descriptionmsg' => 'recentchanges-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/RecentChanges'
+	'author' => array( 'Kyle Florence', 'Saipetch Kongkatong', 'Tomasz Odrobny' )
 );
 
 $dir = __DIR__ . '/';

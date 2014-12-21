@@ -29,5 +29,4 @@ $wgExtensionCredits['other'][] = array(
 	'version'			=> '1.1',
 	'author'			=> '[http://wikia.com/wiki/User:Relwell Robert Elwell]',
 	'descriptionmsg'	=> 'wikia-version-desc',
-	'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialVersion'
 );

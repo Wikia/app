@@ -23,8 +23,7 @@ $wgExtensionCredits['special'][] = array(
 	'author' => array(
 		'[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]',
 		'Władysław Bodzek' ),
-	'description-msg' => 'scavengerhunt-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ScavengerHunt'
+	'description-msg' => 'scavengerhunt-desc'
 );
 
 $dir = dirname(__FILE__);

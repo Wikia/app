@@ -21,8 +21,7 @@ $wgExtensionCredits['specialpage'][] = [
 		"Andrzej 'nAndy' Łukaszewski",
 		"Jacek 'mech' Woźniak",
 	],
-	'version' => 1.0,
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialStyleguide'
+	'version' => 1.0
 ];
 
 // classes

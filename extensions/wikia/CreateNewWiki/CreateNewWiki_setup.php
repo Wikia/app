@@ -3,8 +3,7 @@
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'CreateNewWiki',
 	'descriptionmsg' => 'createnewwiki-desc',
-	'author' => 'Hyun Lim',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CreateNewWiki'
+	'author' => array('Hyun Lim')
 );
 
 $dir = __DIR__.'/';

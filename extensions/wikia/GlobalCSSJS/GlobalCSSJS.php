@@ -7,13 +7,9 @@ $wgExtensionCredits['other'][] = array(
 		'[http://www.wikia.com/wiki/User:Datrio Dariusz Siedlecki]',
 		'Wladyslaw Bodzek',
 	),
-	'descriptionmsg' => 'globalcssjs-desc',
-  	'version' => "1.0",
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/GlobalCSSJS'
+	'description' => 'Adds global user CSS and JavaScript to a page, fetched from the Central Wikia.',
+  	'version' => "1.0"
   );
-  
-  //i18n
-$wgExtensionMessagesFiles['GlobalCSSJS'] = __DIR__ . '/GlobalCSSJS.i18n.php';
 
 /**
  * Adds custom user CSS and JavaScript to a page

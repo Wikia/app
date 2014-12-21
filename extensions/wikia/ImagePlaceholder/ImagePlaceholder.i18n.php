@@ -2,7 +2,6 @@
 $messages = array();
 
 $messages['en'] = array(
-	'imgplc-desc' => 'Creates image/video placeholders',
 	'imgplc-add-image' => 'Add Image',
 	'imgplc-add-video' => 'Add Video',
 	'imgplc-placeholder' => 'Placeholder',
@@ -15,7 +14,6 @@ $messages['en'] = array(
  * @author Shirayuki
  */
 $messages['qqq'] = array(
-	'imgplc-desc' => '{{desc}}',
 	'imgplc-image' => '{{Identical|Image}}',
 );
 

@@ -9,7 +9,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'author' => 'Bartek Lapinski',
 	'descriptionmsg' => 'signup-desc',
 	'version' => '2.0.1',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialSignup'
 );
 
 $dir = dirname(__FILE__) . '/';

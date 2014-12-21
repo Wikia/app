@@ -12,12 +12,8 @@ $wgExtensionCredits['specialpage'][] = array(
         'name' => 'Canonical Href',
 		'version' => '1.1',
         'author' => array('Nick Sullivan nick at wikia-inc.com', 'Maciej Brencz', '[http://seancolombo.com Sean Colombo]'),
-        'descriptionmsg' => 'canonicalhref-desc',
-		'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CanonicalHref'
+        'description' => 'This extension prints a link type="canonical" tag with a canonical representation of the url, which is used by Google, MSN, and Yahoo! to funnel PageRank.'
 );
-
-//i18n
-$wgExtensionMessagesFiles['CanonicalHref'] = __DIR__ . '/CanonicalHref.i18n.php';
 
 $wgHooks['BeforePageDisplay'][] = 'wfCanonicalHref';
 /**

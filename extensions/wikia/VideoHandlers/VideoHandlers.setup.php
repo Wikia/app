@@ -26,7 +26,7 @@ $wgExtensionCredits['videohandlers'][] = array(
 		"Garth Webb <garth at wikia-inc.com>",
 		"James Sutterfield <james at wikia-inc.com>",
 	),
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/VideoHandlers',
+	'url' => 'http://video.wikia.com',
 	'descriptionmsg' => 'wikia-videohandlers-desc',
 );
 

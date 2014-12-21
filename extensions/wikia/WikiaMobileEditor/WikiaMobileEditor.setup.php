@@ -8,13 +8,6 @@
 
 $dir = dirname(__FILE__) . '/';
 
-$wgExtensionCredits[ 'other' ][ ] = array(
-	'name' => 'WikiaMobileEditor',
-	'author' => 'Bartek <Bart(at)wikia-inc.com>',
-	'descriptionmsg' => 'wikiamobileeditor-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaMobileEditor',
-);
-
 /**
  * classes
  */

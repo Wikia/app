@@ -18,8 +18,7 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'EditPageLayout',
 	'version' => '1.0',
 	'author' => 'Maciej Brencz',
-	'descriptionmsg' => 'editpagelayout-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/EditPageLayout'
+	'description' => 'Applies updated layout for edit pages',
 );
 
 $dir = dirname(__FILE__);

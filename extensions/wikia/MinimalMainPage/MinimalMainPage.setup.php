@@ -10,8 +10,7 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'Minimal Main Page',
 	'author' => array( '[http://www.seancolombo.com/ Sean Colombo]' ),
 	'descriptionmsg' => 'minimalmainpage-desc',
-	'version' => '1.0',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/MinimalMainPage'
+	'version' => '1.0'
 );
 
 $dir = dirname(__FILE__) . '/';
