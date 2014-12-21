@@ -63,6 +63,6 @@ function efReCaptcha() {
 }
 
 function efReCaptchaOnBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
-	$out->addScript( '<script src="https://www.google.com/recaptcha/api.js" async defer></script>' );
+	$out->addScript( '<script src="https://www.google.com/recaptcha/api.js?hl=' . $out->getContext()->getLanguage()->getCode() . '" async defer></script>' );
 	return true;
 }
