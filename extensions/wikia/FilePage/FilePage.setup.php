@@ -16,7 +16,6 @@ $wgExtensionCredits['filepage'][] = array(
 		"Saipetch Kongkatong",
 	),
 	'descriptionmsg' => 'filepage-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/FilePage'
 );
 
 $dir = dirname( __FILE__ ) . '/';

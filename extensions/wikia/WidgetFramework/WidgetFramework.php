@@ -11,7 +11,6 @@ $wgExtensionCredits['specialpage'][] = array(
     'name' => 'WidgetFramework',
     'author' => 'Inez Korczyński',
     'descriptionmsg' => 'widgetframework-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WidgetFramework'
 );
 
 $wgAutoloadClasses["ReorderWidgets"] = "$IP/extensions/wikia/WidgetFramework/ReorderWidgets.php";

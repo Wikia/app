@@ -9,7 +9,6 @@
 $messages = array();
 
 $messages['en'] = array(
-	'mostvisitedpages-desc' => 'Get list of most visited pages',
 	'mostvisitedpages' => 'Most visited pages',
 	'mostvisitedpagessearchtext' => 'Article\'s name:',
 	'mostvisitedpagessearchbtn' => 'search',
@@ -23,7 +22,6 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'mostvisitedpages-desc' => '{{desc}}',
 	'mostvisitedpagessearchbtn' => '{{Identical|Search}}',
 	'mostvisitedpageslatest' => '',
 );

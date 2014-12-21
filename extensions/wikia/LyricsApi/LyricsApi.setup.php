@@ -14,8 +14,7 @@ $wgExtensionCredits['api'][] = array(
 		'Andrzej "nAndy" Łukaszewski',
 		'Evgeniy "aquilax" Vasilev',
 	),
-	'version' => 1.0,
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/LyricsApi'
+	'version' => 1.0
 );
 
 // Load needed classes

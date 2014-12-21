@@ -20,8 +20,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Our404Handler',
 	'version' => '1.0',
 	'author' => 'Krzysztof Krzyżaniak',
-	'descriptionmsg' => 'our404handler-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Our404Handler'
+	'description' => 'Our 404 handler for non-existent pages tricks',
 );
 
 // Set up the new special page

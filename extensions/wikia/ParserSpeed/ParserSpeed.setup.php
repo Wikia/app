@@ -5,7 +5,6 @@ $wgExtensionCredits['specialpage'][] = [
 	'author' => [ 'Władysław Bodzek' ],
 	'name' => 'ParserSpeed',
 	'descriptionmsg' => 'parserspeed-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ParserSpeed'
 ];
 
 $wgAutoloadClasses['ParserSpeedHooks'] = __DIR__ . '/ParserSpeedHooks.class.php';

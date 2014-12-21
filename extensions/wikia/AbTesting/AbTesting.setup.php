@@ -31,7 +31,6 @@ $wgExtensionCredits['other'][] =
 		),
 		'descriptionmsg' => 'abtesting-desc',
 		'version' => '1.0',
-		'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AbTesting',
 	);
 
 /**

@@ -12,7 +12,8 @@ if(!defined('MEDIAWIKI')) {
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Content Feeds',
 	'author' => 'Adrian \'ADi\' Wieczorek',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ContentFeeds',
+	'url' => 'http://www.wikia.com' ,
+	'description' => 'provides a rich and up to date information through various tags or "feeds"',
 	'descriptionmsg' => 'contentfeeds-desc'
 );
 

@@ -6,9 +6,8 @@ $app = F::app();
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'WikiaStats',
 	'author' => 'Bogna "bognix" Knychala',
-	'descriptionmsg' => 'wikiastats-desc',
-	'version' => 1.0,
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaStats'
+	'description' => 'WikiaStats',
+	'version' => 1.0
 );
 
 $wgAutoloadClasses['WikiaStatsController'] =  $dir . 'WikiaStatsController.class.php';

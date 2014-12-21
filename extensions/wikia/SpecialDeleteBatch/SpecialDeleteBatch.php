@@ -15,8 +15,7 @@ $wgExtensionMessagesFiles['deletebatch'] = $dir.'SpecialDeleteBatch.i18n.php';
 $wgExtensionCredits['specialpage'][] = array(
    'name' => 'Delete Batch',
    'author' => 'Bartek',
-   'descriptionmsg' => 'deletebatch-desc',
-   'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialDeleteBatch'
+   'description' => 'deletes a batch of pages'
 );
 
 require_once($IP . '/includes/SpecialPage.php');

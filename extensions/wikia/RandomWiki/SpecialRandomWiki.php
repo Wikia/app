@@ -28,8 +28,7 @@ $wgExtensionCredits['specialpage'][] = array(
 		'Owen Davis',
 		'Federico "Lox" Lucignano'
 	),
-	'descriptionmsg' => 'randomwiki-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/RandomWiki'
+	'descriptionmsg' => 'randomwiki-desc'
 );
 
 // Set up the new special page

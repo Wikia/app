@@ -8,9 +8,7 @@
 
 $wgExtensionCredits['specialpage'][] = array( 
 	'name' => 'Forum',
-	'author' => array( 'Kyle Florence', 'Saipetch Kongkatong', 'Tomasz Odrobny' ),
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia',
-	'descriptionmsg' => 'forum-disabled-desc'
+	'author' => array( 'Kyle Florence', 'Saipetch Kongkatong', 'Tomasz Odrobny' )
 );
 
 $dir = dirname( __FILE__ ) . '/';

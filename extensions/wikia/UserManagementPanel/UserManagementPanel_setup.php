@@ -4,8 +4,6 @@
  $wgExtensionCredits['other'][] = array(
  	'name' => 'UserManagementPanel',
  	'author' => array( 'Lucas "TOR" Garczewski', 'Michał Roszka' ),
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/UserManagementPanel',
-	'descriptionmsg' => 'usermanagment-desc'
  );
 
 $dir = dirname(__FILE__);

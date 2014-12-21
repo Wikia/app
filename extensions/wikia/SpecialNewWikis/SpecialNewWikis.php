@@ -20,9 +20,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 $wgExtensionCredits['specialpage'][] = array(
     "name" => "NewWikis",
-    "descriptionms" => "newwikis-desc",
-    "author" => "Moli <moli at wikia.com>",
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialNewWikis'
+    "description" => "Get list of the newest Wikis",
+    "author" => "Moli <moli at wikia.com>"
 );
 
 $wgHooks['wgQueryPages'][] = 'wfSetupNewWikis';

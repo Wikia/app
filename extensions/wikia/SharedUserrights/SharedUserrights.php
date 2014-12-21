@@ -21,19 +21,6 @@ if (!defined('MEDIAWIKI')) {
 	exit(1) ;
 }
 
-$wgExtensionCredits[ 'other' ][ ] = array(
-	'name' => 'SharedUserrights',
-	'author' => array(
-		'Lucas \'TOR\' Garczewski <tor@wikia.com>',
-		'Maciej Błaszkowski (Marooned) <marooned at wikia-inc.com>'
-	),
-	'descriptionmsg' => 'shareduserrights-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SharedUserrights',
-);
-
-//i18n
-$wgExtensionMessagesFiles['SharedUserrights'] = __DIR__ . '/SharedUserrights.i18n.php';
-
 if (!empty($wgSharedDB)) {
 	$wgHooks['UserEffectiveGroups'][] = 'UserRights::userEffectiveGroups';
 	$wgHooks['UserRights::groupCheckboxes'][] = 'UserRights::groupCheckboxes';

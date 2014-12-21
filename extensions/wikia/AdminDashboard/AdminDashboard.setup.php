@@ -8,13 +8,6 @@
 
 $dir = dirname(__FILE__) . '/';
 
-$wgExtensionCredits[ 'specialpage' ][ ] = array(
-	'name' => 'Admin Dashboard',
-	'author' => 'Wikia',
-	'descriptionmsg' => 'admindashboard-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AdminDashboard',
-);
-
 //classes
 $wgAutoloadClasses['AdminDashboardSpecialPageController'] =  $dir . 'AdminDashboardSpecialPageController.class.php';
 $wgAutoloadClasses['AdminDashboardController'] =  $dir . 'AdminDashboardController.class.php';

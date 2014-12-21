@@ -8,13 +8,6 @@ EOT;
         exit( 1 );
 }
 
-$wgExtensionCredits[ 'other' ][ ] = array(
-	'name' => 'AutoPageCreate',
-	'author' => 'Wikia',
-	'descriptionmsg' => 'autopagecreate-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AutoPageCreate',
-);
-
 $wgExtensionMessagesFiles['AutoPageCreate'] = dirname(__FILE__) . '/AutoPageCreate.i18n.php';
 $wgExtensionFunctions[] = 'wfAutoPageCreateInit';
 

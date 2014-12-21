@@ -9,12 +9,7 @@ if(!defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['other'][] = array(
         'name' => 'WikiaMiniUpload (Add Images)',
-        'author' => array(
-			'Inez Korczyński', 
-			'Bartek Łapiński'
-		),
-		'descriptionmsg' => 'wmu-desc',
-		'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaMiniUpload'
+        'author' => 'Inez Korczyński, Bartek Łapiński',
 );
 
 $dir = dirname(__FILE__).'/';

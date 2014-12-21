@@ -10,7 +10,6 @@ $messages = array();
 
 $messages['en'] = array(
 	"taskmanager" => "Display and manage background tasks",
-	"taskmanager-desc" => "Display and manage background tasks",
 	"taskmanager_title" => "Display and manage background tasks",
 	"taskmanager_tasklist" => "Return to Task List",
 	'right-taskmanager' => "Can display background tasks",
@@ -25,7 +24,6 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'taskmanager' => '{{Identical|Display and manage background task}}',
-	'taskmanager-desc' => '{{desc}}',
 	'taskmanager_title' => '{{Identical|Display and manage background task}}',
 	'right-taskmanager' => '{{doc-right|taskmanager}}',
 	'right-taskmanager-action' => '{{doc-right|taskmanager-action}}',

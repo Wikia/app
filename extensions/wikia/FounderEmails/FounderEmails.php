@@ -12,7 +12,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Founder Emails',
 	'author' => 'Adrian \'ADi\' Wieczorek',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/FounderEmails',
+	'url' => 'http://www.wikia.com' ,
+	'description' => 'Helps informing founders about changes on their wiki',
 	'descriptionmsg' => 'founderemails-desc'
 );
 

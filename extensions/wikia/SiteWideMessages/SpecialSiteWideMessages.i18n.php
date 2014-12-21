@@ -21,7 +21,6 @@
 $messages = array();
 
 $messages['en'] = array(
-	'sidewidemessages-desc'     => 'This extension provides an interface for sending messages seen on all wikis.',
 	'sitewidemessages'			=> 'Site wide messages',	//the name displayed on Special:SpecialPages
 	'swm-page-title-editor'		=> 'Site wide messages :: Editor',
 	'swm-page-title-preview'	=> 'Site wide messages :: Preview',
@@ -132,7 +131,6 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'sitewidemessages-desc' => '{{desc}}',
 	'swm-page-title-sent' => 'Page title after message is sent out.',
 	'swm-page-title-list' => 'List is a noun here',
 	'swm-label-preview' => '{{Identical|Preview}}',

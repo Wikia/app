@@ -17,12 +17,11 @@ $dir = dirname( __FILE__ );
 $wgExtensionCredits['other'][] =
 	array(
 		"name" => "WikiaMobile",
-		"descriptionmsg" => "wikiamobile-desc",
+		"description" => "Mobile Skin for Wikia",
 		"author" => array(
 			'Federico "Lox" Lucignano <federico(at)wikia-inc.com>',
 			'Jakub Olek <jakubolek(at)wikia-inc.com>'
-		),
-		'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaMobile'
+		)
 	);
 
 /**

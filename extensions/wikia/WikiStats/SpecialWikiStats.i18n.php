@@ -3,7 +3,6 @@
 $messages = array();
 
 $messages['en'] = array(
-	'wikistats-desc' => 'Gathers a wide array of statistics for this wiki and adds an GUI to browse them. Inspired by and partially based on the original [http://meta.wikimedia.org/wiki/Wikistats WikiStats] written by Erik Zachte',
 	"wikistats" => "Wikia Statistics",
 	"wikistats_wikia" => "Wikia",
 	"wikistats_pagetitle" => "Wikia Statistics",
@@ -259,7 +258,6 @@ Please [[Special:UserLogin|log in or create an account]] if you do not already h
  * @author VezonThunder
  */
 $messages['qqq'] = array(
-	'wikistats-desc' => '{{desc}}',
 	'wikistats_info' => '"Show statistics" refers to {{msg-wikia|wikistats_showstats_btn}}.',
 	'wikistats_showstats_btn' => 'Button text, also referenced in {{msg-wikia|wikistats_info}}.',
 	'wikiastast_refresh_data' => '{{Identical|Refresh data}}',

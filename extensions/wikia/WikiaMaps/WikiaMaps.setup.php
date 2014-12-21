@@ -11,9 +11,8 @@ $wgExtensionCredits[ 'specialpage' ][] = [
 		'Jakub "Student" Olek',
 		'Rafał Leszczyński'
 	],
-	'descriptionmsg' => 'wikia-interactive-maps-desc',
-	'version' => 0.1,
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaMaps'
+	'description' => 'Create your own maps with point of interest or add your own point of interest into a real world map',
+	'version' => 0.1
 ];
 
 // controller classes

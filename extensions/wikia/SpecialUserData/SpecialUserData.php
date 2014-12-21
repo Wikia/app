@@ -27,7 +27,6 @@ $wgExtensionCredits['special'][] = array(
 	'name' => 'SpecialUserData',
 	'author' => '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]',
 	'description-msg' => 'specialuserdata-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialUserData'
 );
 
 class SpecialUserData extends SpecialPage {

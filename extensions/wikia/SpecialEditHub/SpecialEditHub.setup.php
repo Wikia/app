@@ -14,15 +14,14 @@ $dir = dirname(__FILE__) . '/';
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Edit Hub',
-	'descriptionmsg' => 'edithub-desc',
+	'description' => 'Internal tool to configure Hub page',
 	'authors' => array(
 		'Damian Jóźwiak',
 		'Sebastian Marzjan',
 		'Łukasz Konieczny',
 		'Bartosz Bentkowski'
 	),
-	'version' => 1.0,
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialEditHub'
+	'version' => 1.0
 );
 
 //classes

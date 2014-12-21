@@ -9,7 +9,6 @@ $messages = array();
 
 $messages['en'] = array(
 	// general
-	'wikiahubs-v3-desc' => 'Wikia Hubs v3',
 	'wikiahubs-v3-button-cancel' => 'Cancel',
 	'wikiahubs-search-placeholder' => 'Search Wikia',
 

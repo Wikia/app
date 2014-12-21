@@ -120,7 +120,6 @@ Helpful Tools:
  * @author TK-999
  */
 $messages['qqq'] = array(
-	'wikiadoption-desc' => '{{desc}}',
 	'tog-adoptionmails' => 'Parameters:
 * $1 is the wiki name potentially up for adoption.',
 	'wikiadoption-pref-label' => 'This message is located within the Email tab of Special:Preferences. Parameters:

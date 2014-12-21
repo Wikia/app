@@ -3,7 +3,6 @@
 $messages = array();
 
 $messages['en'] = array(
-	'oasis-desc' => 'Provides an easy way to add hooks for Oasis skin modules',
 	'oasis-global-page-header' => 'Wikia',
 	'oasis-home' => 'Home',
 	'oasis-more' => 'See more >',
@@ -202,7 +201,6 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
  * @author Verdy p
  */
 $messages['qqq'] = array(
-	'oasis-desc' => '{{desc}}',
 	'oasis-home' => "This refers to the wiki's main page title shown on the top of the page.",
 	'oasis-more' => 'Included in the activity minibox in the sidebar beside articles.',
 	'oasis-signup' => 'Label for link to account creation form, seen in header',

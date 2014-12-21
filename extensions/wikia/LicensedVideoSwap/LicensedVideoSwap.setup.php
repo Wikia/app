@@ -7,9 +7,7 @@
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'LicensedVideoSwap',
-	'author' => array( 'Garth Webb', 'Liz Lee', 'Saipetch Kongkatong' ),
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/LicensedVideoSwap',
-	'descriptionmsg' => 'licensedvideoswap-desc'
+	'author' => array( 'Garth Webb', 'Liz Lee', 'Saipetch Kongkatong' )
 );
 
 $dir = dirname(__FILE__) . '/';

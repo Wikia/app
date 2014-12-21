@@ -4,7 +4,6 @@ $wgExtensionCredits['specialpage'][] = [
 	'name' => 'Theme designer',
 	'author' => [ 'Christian Williams', 'Inez Korczyński', 'Maciej Brencz' ],
 	'descriptionmsg' => 'themedesigner-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ThemeDesigner'
 ];
 
 $dir = __DIR__;

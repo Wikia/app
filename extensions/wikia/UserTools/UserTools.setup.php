@@ -10,11 +10,10 @@
 $wgExtensionCredits['specialpage'][] =
 	[
 		"name" => "UserTools",
-		"description" => "user-tools-desc",
+		"description" => "Customization of user tools enabled in user's toolbar and article navigation",
 		"author" => [
 			'Bogna "bognix" Knychała',
-		],
-		"url" => "https://github.com/Wikia/app/tree/dev/extensions/wikia/UserTools"
+		]
 	];
 
 $wgAutoloadClasses['UserToolsController'] = __DIR__ . '/UserToolsController.class.php';

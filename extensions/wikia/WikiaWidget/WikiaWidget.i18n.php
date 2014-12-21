@@ -3,7 +3,6 @@
 $messages = array();
 
 $messages['en'] = array(
-	'wikiawidget-desc' => 'Create Wikia Widgets for use on external sites or for inclusion on your wiki',
 	'wikiawidget' => 'Wikia widgets',
 );
 
@@ -11,7 +10,6 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'wikiawidget-desc' => '{{desc}}',
 	'wikiawidget' => 'Special page name as displayed on Special:SpecialPages and page title of special page.',
 );
 

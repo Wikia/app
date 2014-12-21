@@ -15,9 +15,8 @@ require_once ( dirname(__FILE__) . '/MultiTasksCore.php' );
 
 $wgExtensionCredits['specialpage'][] = array(
     "name" => "Multi Wiki Delete",
-    "descriptionmsg" => "multidelete-desc",
-    "author" => "Bartek Łapiński, Piotr Molski",
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/MultiTasks'
+    "description" => "Special Multi Wiki Delete",
+    "author" => "Bartek Łapiński, Piotr Molski"
 );
 
 $wgExtensionMessagesFiles["Multidelete"] = dirname(__FILE__) . '/MultiTasks.i18n.php';

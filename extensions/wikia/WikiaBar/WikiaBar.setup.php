@@ -9,17 +9,6 @@
 
 $dir = dirname(__FILE__) . '/';
 
-$wgExtensionCredits[ 'other' ][ ] = array(
-	'name' => 'WikiaBar',
-	'author' => array(
-		'Andrzej \'nAndy\' Łukaszewski',
-		'Marcin Maciejewski',
-		'Sebastian Marzjan'
-	),
-	'descriptionmsg' => 'wikiabar-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaBar',
-);
-
 /**
  * classes
  */

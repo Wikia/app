@@ -8,12 +8,6 @@
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'WikiaStyleGuide',
-	'author' => array(
-		'Hyun Lim',
-		'Kyle Florence'
-	),
-	'descriptionmsg' => 'wikiastyleguide-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaStyleGuide'
 );
 
 $dir = dirname(__FILE__) . '/';

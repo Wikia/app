@@ -2,7 +2,6 @@
 $messages = array();
 
 $messages['en'] = array(
-	'ircgate-desc' => 'Lets users insert IRC login form on any page',
 	'ircgate-username' => 'Username:',
 	'ircgate-channel'  => 'Channel:',
 	'ircgate-channellist' => '* #wikia
@@ -25,7 +24,6 @@ $messages['en'] = array(
  * @author EugeneZelenko
  */
 $messages['qqq'] = array(
-	'ircgate-desc' => '{{desc}}',
 	'ircgate-username' => '{{Identical|Username}}',
 );
 
