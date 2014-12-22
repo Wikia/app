@@ -1616,7 +1616,7 @@ $wgBuckyEnabledSkins = [
  *
  * Unit: percent (0-100)
  */
-$wgMemcacheStatsSampling = 0;
+$wgMemcacheStatsSampling = 1;
 
 /*
  * @name wgXhprofUDPHost
