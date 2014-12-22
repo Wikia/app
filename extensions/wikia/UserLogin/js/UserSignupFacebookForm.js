@@ -4,6 +4,11 @@
 
 	var UserSignupFacebookForm = $.createClass(UserLoginAjaxForm, {
 
+		init: function () {
+			UserLoginAjaxForm.prototype.init.call(this);
+			this.initOptIn();
+		},
+
 		/**
 		 * Login token is stored in hidden field, no need to send an extra request
 		 */
@@ -49,6 +54,17 @@
 				});
 			}
 			this.submitLoginHandler(response);
+		},
+
+		/**
+		 * Handle marketing email opt-in for different locales
+		 */
+		initOptIn: function () {
+			var self = this;
+
+			require(['usersignup.marketingOptIn'], function (optIn) {
+				optIn.init(self.wikiaForm);
+			});
 		}
 	});
 
