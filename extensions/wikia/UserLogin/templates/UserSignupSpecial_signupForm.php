@@ -1,120 +1,134 @@
 <section class="WikiaSignup">
-<?php if (!$isMonobookOrUncyclo) { ?>
+<?php if ( !$isMonobookOrUncyclo ): ?>
 	<h2 class="pageheading">
 		<?= $pageHeading ?>
 	</h2>
 	<h3 class="subheading"></h3>
 	<div class="wiki-info">
-		<?= F::app()->renderView('WikiHeader', 'Wordmark') ?>
-		<p><?= wfMessage('usersignup-marketing-wikia')->text() ?></p>
-		<?= wfMessage('usersignup-marketing-login')->parse() ?>
+		<?= F::app()->renderView( 'WikiHeader', 'Wordmark' ) ?>
+		<p><?= wfMessage( 'usersignup-marketing-wikia' )->text() ?></p>
+		<?= wfMessage( 'usersignup-marketing-login' )->parse() ?>
 	</div>
 
-<?php } //$isMonobookOrUncyclo ?>
+<?php endif; //$isMonobookOrUncyclo ?>
 	<div class="form-container">
 	<?php
 		// 3rd party providers buttons
-		if (!$isMonobookOrUncyclo) {
-			echo $app->renderView('UserLoginSpecial', 'ProvidersTop', array('requestType' => 'signup') );
+		if ( !$isMonobookOrUncyclo ) {
+			echo $app->renderView( 'UserLoginSpecial', 'ProvidersTop', ['requestType' => 'signup'] );
 		}
 	?>
 <?php
-	$form = array(
+	$form = [
 		'id' => 'WikiaSignupForm',
 		'method' => 'post',
-		'inputs' => array(
-			array(
+		'inputs' => [
+			[
 				'type' => 'hidden',
 				'name' => 'signupToken',
 				'value' => Sanitizer::encodeAttribute( $signupToken ),
-			),
-			array( //fake username field (not in use)
+			],
+			[ //fake username field (not in use)
 				'type' => 'hidden',
 				'name' => 'username',
 				'value' => '',
-				'label' => wfMessage('yourname')->text(),
-			),
-			array( //actual username field
+				'label' => wfMessage( 'yourname' )->text(),
+			],
+			[ //actual username field
 				'type' => 'text',
 				'name' => 'userloginext01',
-				'value' => htmlspecialchars($username),
-				'label' => wfMessage('yourname')->text(),
+				'value' => htmlspecialchars( $username ),
+				'label' => wfMessage( 'yourname' )->text(),
 				'isRequired' => true,
-				'isInvalid' => (!empty($errParam) && $errParam === 'username'),
-				'errorMsg' => (!empty($msg) ? $msg : '')
-			),
-			array(
+				'isInvalid' => ( !empty( $errParam ) && $errParam === 'username' ),
+				'errorMsg' => ( !empty( $msg ) ? $msg : '' ),
+			],
+			[
 				'type' => 'text',
 				'name' => 'email',
 				'value' => Sanitizer::encodeAttribute( $email ),
-				'label' => wfMessage('email')->text(),
+				'label' => wfMessage( 'email' )->text(),
 				'isRequired' => true,
-				'isInvalid' => (!empty($errParam) && $errParam === 'email'),
-				'errorMsg' => (!empty($msg) ? $msg : '')
-			),
-			array( //fake password field (not in use)
+				'isInvalid' => ( !empty( $errParam ) && $errParam === 'email' ),
+				'errorMsg' => ( !empty( $msg ) ? $msg : '' ),
+			],
+			[ //fake password field (not in use)
 				'type' => 'hidden',
 				'name' => 'password',
 				'value' => '',
-				'label' => wfMessage('yourpassword')->text(),
-			),
-			array( //actual password field
+				'label' => wfMessage( 'yourpassword' )->text(),
+			],
+			[ //actual password field
 				'type' => 'password',
 				'name' => 'userloginext02',
 				'value' => '',
-				'label' => wfMessage('yourpassword')->text(),
+				'label' => wfMessage( 'yourpassword' )->text(),
 				'isRequired' => true,
-				'isInvalid' => (!empty($errParam) && $errParam === 'password'),
-				'errorMsg' => (!empty($msg) ? $msg : '')
-			),
-			array(
+				'isInvalid' => ( !empty( $errParam ) && $errParam === 'password' ),
+				'errorMsg' => ( !empty( $msg)  ? $msg : '' ),
+			],
+			[
+				'type' => 'hidden',
+				'name' => 'wpRegistrationCountry',
+				'value' => '',
+			],
+			[
 				'type' => 'nirvanaview',
 				'controller' => 'UserSignupSpecial',
 				'view' => 'birthday',
 				'isRequired' => true,
-				'isInvalid' => (!empty($errParam) && $errParam === 'birthyear') || (!empty($errParam) && $errParam === 'birthmonth') || (!empty($errParam) && $errParam === 'birthday'),
-				'errorMsg' => (!empty($msg) ? $msg : ''),
-				'params' => array('birthyear' => $birthyear, 'birthmonth' => $birthmonth, 'birthday' => $birthday, 'isEn' => $isEn),
-			),
-			array(
+				'isInvalid' => (
+					( !empty( $errParam ) && $errParam === 'birthyear' ) ||
+					( !empty( $errParam ) && $errParam === 'birthmonth') ||
+					( !empty($errParam ) && $errParam === 'birthday' )
+				),
+				'errorMsg' => ( !empty( $msg ) ? $msg : ''),
+				'params' => [
+					'birthyear' => $birthyear,
+					'birthmonth' => $birthmonth,
+					'birthday' => $birthday,
+					'isEn' => $isEn
+				],
+			],
+			[
 				'type' => 'nirvana',
 				'controller' => 'UserSignupSpecial',
 				'method' => 'captcha',
 				'isRequired' => true,
 				'class' => 'captcha',
 				'isInvalid' => (!empty($errParam) && $errParam === 'wpCaptchaWord'),
-				'errorMsg' => (!empty($msg) ? $msg : '')
-			),
-			array(
+				'errorMsg' => (!empty($msg) ? $msg : ''),
+			],
+			[
 				'type' => 'nirvanaview',
 				'controller' => 'UserSignupSpecial',
 				'view' => 'submit',
 				'class' => 'submit-pane error',
-				'params' => array('createAccountButtonLabel' => $createAccountButtonLabel)
-			)
-		)
-	);
+				'params' => ['createAccountButtonLabel' => $createAccountButtonLabel],
+			],
+		],
+	];
 
 	$form['isInvalid'] = !empty($result) && $result === 'error' && empty($errParam);
 	$form['errorMsg'] = $form['isInvalid'] ? $msg : '';
 
 	if(!empty($returnto)) {
-		$form['inputs'][] = array(
+		$form['inputs'][] = [
 			'type' => 'hidden',
 			'name' => 'returnto',
-			'value' => Sanitizer::encodeAttribute( $returnto )
-		);
+			'value' => Sanitizer::encodeAttribute( $returnto ),
+		];
 	}
 
 	if(!empty($byemail)) {
-		$form['inputs'][] = array(
+		$form['inputs'][] = [
 			'type' => 'hidden',
 			'name' => 'byemail',
-			'value' => Sanitizer::encodeAttribute( $byemail )
-		);
+			'value' => Sanitizer::encodeAttribute( $byemail ),
+		];
 	}
 
-	echo F::app()->renderView('WikiaStyleGuideForm', 'index', array('form' => $form));
+	echo F::app()->renderView( 'WikiaStyleGuideForm', 'index', ['form' => $form] );
 ?>
 	</div>
 

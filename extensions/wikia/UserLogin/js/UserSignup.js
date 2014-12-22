@@ -1,4 +1,4 @@
-/* global WikiaForm, UserSignupAjaxForm */
+/* global WikiaForm, UserSignupAjaxForm, Wikia */
 (function () {
 	'use strict';
 
@@ -8,6 +8,8 @@
 		captchaField: window.wgUserLoginDisableCaptcha ? '' : 'recaptcha_response_field',
 		invalidInputs: {},
 		init: function () {
+			var country;
+
 			$('.wikia-terms > a').on('click', function (event) {
 				var url = $(this).attr('href');
 				event.preventDefault();
@@ -28,6 +30,9 @@
 			this.wikiaForm.el
 				.find('select[name=birthday], select[name=birthmonth], select[name=birthyear]')
 				.on('change.UserSignup', $.proxy(UserSignup.signupAjaxForm.validateBirthdate, this.signupAjaxForm));
+
+			country = this.wikiaForm.el.find('input[name=wpRegistrationCountry]');
+			country.val(Wikia.geo.getCountryCode());
 
 			// dom pre-cache
 			this.submitButton = this.wikiaForm.inputs.submit;
