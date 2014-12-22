@@ -242,6 +242,7 @@ function (
 	 */
 	function createReturnToString() {
 		return w.wgCanonicalSpecialPageName &&
+			// TODO: special page URL matching needs to be consolidated. @see UC-187
 			w.wgCanonicalSpecialPageName.match(/Userlogin|Userlogout|UserSignup/) ?
 			w.wgMainPageTitle :
 			w.wgPageName;
