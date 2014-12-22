@@ -434,8 +434,8 @@ $wgHooks['WikiFactory::execute'][] = 'Wikia\\Logger\\Hooks::onWikiFactoryExecute
 $wgHooks['WikiFactory::onExecuteComplete'][] = 'Wikia\\Logger\\Hooks::onWikiFactoryExecuteComplete';
 
 // memcache stats (PLATFORM-292)
-$wgAutoloadClasses['Wikia\\Memcache\\MemcacheStats'] = "$IP/includes/wikia/memcache/MemcacheStats.class.php";
-$wgHooks['RestInPeace'][] = 'Wikia\\Memcache\\MemcacheStats::onRestInPeace';
+$wgAutoloadClasses['Wikia\\Memcached\\MemcachedStats'] = "$IP/includes/wikia/memcached/MemcachedStats.class.php";
+$wgHooks['RestInPeace'][] = 'Wikia\\Memcached\\MemcachedStats::onRestInPeace';
 
 # list of groups for wfDebugLog calls that will be logged using WikiaLogger
 # @see PLATFORM-424

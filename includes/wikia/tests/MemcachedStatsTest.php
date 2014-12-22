@@ -1,8 +1,8 @@
 <?php
 
-use Wikia\Memcache\MemcacheStats;
+use Wikia\Memcached\MemcachedStats;
 
-class MemcacheStatsTest extends WikiaBaseTest {
+class MemcachedStatsTest extends WikiaBaseTest {
 
 	const WIKI_PREFIX = 'wiki123';
 
@@ -16,13 +16,13 @@ class MemcacheStatsTest extends WikiaBaseTest {
 	/**
 	 * @param string $key
 	 * @param string $expected
-	 * @dataProvider normalizeMemcacheKeyDataProvider
+	 * @dataProvider normalizeKeyDataProvider
 	 */
-	public function testNormalizeMemcacheKey($key, $expected) {
-		$this->assertEquals($expected, MemcacheStats::normalizeMemcacheKey($key));
+	public function testNormalizeKey($key, $expected) {
+		$this->assertEquals($expected, MemcachedStats::normalizeKey($key));
 	}
 
-	public function normalizeMemcacheKeyDataProvider() {
+	public function normalizeKeyDataProvider() {
 		return [
 			[
 				'key' => self::WIKI_PREFIX . ':user:id:119245',

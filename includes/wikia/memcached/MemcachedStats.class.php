@@ -5,11 +5,11 @@
  *
  * @author macbre
  */
-namespace Wikia\Memcache;
+namespace Wikia\Memcached;
 
 use Wikia\Util\Statistics\BernoulliTrial;
 
-class MemcacheStats {
+class MemcachedStats {
 
 	/**
 	 * Get memcache stats:
@@ -26,8 +26,8 @@ class MemcacheStats {
 		$stats = [
 			'counts' => $client->stats,
 			'keys' => [
-				'hits' => self::normalizeMemcacheKeys($client->keys_stats['hits']),
-				'misses' => self::normalizeMemcacheKeys($client->keys_stats['misses']),
+				'hits' => self::normalizeKeys($client->keys_stats['hits']),
+				'misses' => self::normalizeKeys($client->keys_stats['misses']),
 			]
 		];
 
@@ -40,8 +40,8 @@ class MemcacheStats {
 	 * @param array $keys
 	 * @return array normalized keys
 	 */
-	private static function normalizeMemcacheKeys(Array $keys) {
-		return array_map([__CLASS__, 'normalizeMemcacheKey'], $keys);
+	private static function normalizeKeys(Array $keys) {
+		return array_map([__CLASS__, 'normalizeKey'], $keys);
 	}
 
 	/**
@@ -51,7 +51,7 @@ class MemcacheStats {
 	 * @param string $key
 	 * @return string
 	 */
-	public static function normalizeMemcacheKey($key) {
+	public static function normalizeKey($key) {
 		// remove per-wiki prefix
 		$prefix = \F::app()->wf->WikiId() . ':';
 		if (startsWith($key, $prefix)) {
