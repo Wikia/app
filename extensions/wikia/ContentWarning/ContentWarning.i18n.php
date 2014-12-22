@@ -8,7 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'content-warning-desc' => 'Provides a content warning to wikis that may contain objectionable content.",
+	'content-warning-desc' => 'Provides a content warning to wikis that may contain objectionable content.',
 	'content-warning-title' => 'Content Warning',
 	'content-warning-body' => 'The wiki at $1 may contain objectionable content such as depictions of violence, sexual suggestion, dark humor parody, or other materials not intended for a general audience.
 

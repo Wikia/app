@@ -22,7 +22,7 @@ if (!defined('MEDIAWIKI')){
 $wgExtensionCredits[ 'specialpage' ][ ] = array(
 	'name' => 'SpecialInterwikiEdit',
 	'author' => array(
-		'Lucas \'TOR\' Garczewski <tor@wikia.com>'
+		'Lucas \'TOR\' Garczewski <tor@wikia.com>',
 		'Lucas \'Egon\' Matysiak <egon@wikia.com>'
 	),
 	'descriptionmsg' => 'interwikiedit-desc',

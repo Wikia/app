@@ -14,7 +14,7 @@
 );
 
 //i18n
-$wgExtensionMessagesFiles['LoaderQueue'] = __DIR__ '/LoaderQueue.i18n.php';
+$wgExtensionMessagesFiles['LoaderQueue'] = __DIR__ . '/LoaderQueue.i18n.php';
 
 // ResourceLoader support (MW 1.17+)
 $wgResourceModules['ext.wikia.loaderQueue'] = array(

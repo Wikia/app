@@ -9,4 +9,4 @@ $messages['en'] = array(
 
 $messages['qqq'] = array( 
 	'antispaminput-msg' => '{{desc}}'
-};
+);
