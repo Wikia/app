@@ -17,6 +17,8 @@ $wgExtensionCredits['other'][] = array(
 
 $dir = dirname(__FILE__) . '/';
 
+$wgExtensionMessagesFiles["NLP"] = $dir . 'WikiaNLP.i18n.php';
+
 // we still haven't done sensible cross-extension namespace autoloading, grr
 $wgAutoloadClasses['Wikia\NLP\Entities\PageEntitiesService'] =  $dir . 'classes/Entities/PageEntitiesService.php';
 $wgAutoloadClasses['Wikia\NLP\Entities\WikiEntitiesService'] =  $dir . 'classes/Entities/WikiEntitiesService.php';

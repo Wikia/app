@@ -25,7 +25,7 @@ $wgExtensionCredits['other'][] = array(
 );
 
 //i18n
-$wgExtensionMessagesFiles['AbuseFilterBypass'] = __DIR__ . '/DataProvider.i18n.php';
+$wgExtensionMessagesFiles['DataProvider'] = __DIR__ . '/DataProvider.i18n.php';
 
 
 class DataProvider {

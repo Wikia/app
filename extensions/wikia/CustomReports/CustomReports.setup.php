@@ -9,13 +9,13 @@ $wgExtensionCredits[ 'specialpage' ][ ] = array(
 
 $dir = dirname(__FILE__) . '/';
 
-$wgAutoloadClasses['Report'] =  $dir.'Report.class.php';
+$wgAutoloadClasses['Report'] =  $dir . 'Report.class.php';
 
-$wgAutoloadClasses['CustomReportsSpecialController'] =  $dir.'CustomReportsSpecialController.class.php';
+$wgAutoloadClasses['CustomReportsSpecialController'] =  $dir . 'CustomReportsSpecialController.class.php';
 
 $wgSpecialPages['CustomReports'] = 'CustomReportsSpecialController';
 
-$wgExtensionMessagesFiles['CustomReports'] = $dir.'CustomReports.i18n.php';
+$wgExtensionMessagesFiles['CustomReports'] = $dir . 'CustomReports.i18n.php';
 
 $wgAvailableRights[] = 'customreports';
 

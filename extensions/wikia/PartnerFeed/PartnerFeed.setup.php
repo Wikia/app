@@ -26,7 +26,7 @@ $wgAutoloadClasses['PartnerAtomFeed']	= $dir . 'PartnerFeed.class.php';
 $wgAutoloadClasses['PartnerFeed']	= $dir . 'PartnerFeed.body.php';
 
 $wgExtensionMessagesFiles['PartnerFeed'] = $dir . 'PartnerFeed.i18n.php';
-$wgExtensionMessagesFiles['PartnerFeedAliases'] = __DIR__ . '/PartnerFeed.aliases.php';
+$wgExtensionMessagesFiles['PartnerFeedAliases'] = $dir. 'PartnerFeed.aliases.php';
 
 $wgSpecialPages['PartnerFeed']		= 'PartnerFeed';
 $wgSpecialPageGroups['PartnerFeed']	= 'wikia';

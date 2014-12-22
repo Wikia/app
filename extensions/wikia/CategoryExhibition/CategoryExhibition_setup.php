@@ -19,7 +19,7 @@ $wgExtensionCredits['other'][] = array(
 );
 
 // Calculate the base directory and use it later a few times
-$dir = dirname(__FILE__).'/';
+$dir = dirname(__FILE__) . '/';
 
 // Autoload Category Page classes
 $wgAutoloadClasses[ 'CategoryExhibitionPage' ]		= $dir . 'CategoryExhibitionPage.php';

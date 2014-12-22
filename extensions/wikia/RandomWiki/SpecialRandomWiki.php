@@ -44,4 +44,4 @@ $wgSpecialPages['RandomWiki'] = 'RandomWiki';
 $wgSpecialPageGroups['RandomWiki'] = 'redirects';
 
 // i18n
-$wgExtensionMessagesFiles['SpecialRandomWiki'] = $dir . '/SpecialRandomWiki.i18n.php';
+$wgExtensionMessagesFiles['RandomWiki'] = $dir . 'SpecialRandomWiki.i18n.php';

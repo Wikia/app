@@ -29,7 +29,7 @@ $wgExtensionCredits['other'][] = array(
 $dir = dirname(__FILE__) . '/';
 
 //i18n
-$wgExtensionMessagesFiles['AbuseFilterBypass'] = $dir . 'CommentCSV.i18n.php';
+$wgExtensionMessagesFiles['CommentCSV'] = $dir . 'CommentCSV.i18n.php';
 
 // New user right, required to use the extension.
 $wgAvailableRights[] = 'commentcsv';

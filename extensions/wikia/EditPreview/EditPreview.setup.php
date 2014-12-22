@@ -21,7 +21,7 @@ $wgExtensionCredits['editpreview'][] = [
 ];
 
 // messages
-$wgExtensionMessagesFiles[ 'EditPreview' ] = $dir . '/EditPreview.i18n.php';
+$wgExtensionMessagesFiles[ 'EditPreview' ] = $dir . 'EditPreview.i18n.php';
 
 // register messages package for JS
 JSMessages::registerPackage('EditPreview', [

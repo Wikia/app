@@ -22,7 +22,7 @@ $dir = dirname(__FILE__);
 $app = F::app();
 
 //i18n
-$wgExtensionMessagesFiles['InWikiExternalForm'] = $dir . 'InWikiExternalForm.i18n.php';
+$wgExtensionMessagesFiles['InWikiExternalForm'] = $dir . '/InWikiExternalForm.i18n.php';
 
 // classes
 $wgAutoloadClasses['InWikiExternalFormController'] =  $dir . '/InWikiExternalFormController.class.php';

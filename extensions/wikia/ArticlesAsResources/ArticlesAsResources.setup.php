@@ -53,4 +53,4 @@ $wgAutoloadClasses['ArticlesAsResources'] =  $dir . '/ArticlesAsResources.class.
 $wgHooks['ResourceLoaderBeforeRespond'][] = 'ArticlesAsResources::onResourceLoaderBeforeRespond';
 
 //i18n
-$wgExtensionMessagesFiles['ArticlesAsResources'] = $dir . 'ArticlesAsResources.i18n.php';
+$wgExtensionMessagesFiles['ArticlesAsResources'] = $dir . '/ArticlesAsResources.i18n.php';

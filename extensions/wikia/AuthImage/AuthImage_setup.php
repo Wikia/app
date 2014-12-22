@@ -27,4 +27,4 @@ $wgAutoloadClasses['AuthImageSpecialPageController'] =  $dir . 'AuthImageSpecial
 $wgSpecialPages['AuthImage'] = 'AuthImageSpecialPageController';
 
 //i18n
-$wgExtensionMessagesFiles['AuthImage'] = $dir.'AuthImage.i18n.php';
+$wgExtensionMessagesFiles['AuthImage'] = $dir . 'AuthImage.i18n.php';

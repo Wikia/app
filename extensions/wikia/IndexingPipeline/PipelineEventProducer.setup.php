@@ -10,7 +10,7 @@ $wgExtensionCredits[ 'other' ][ ] = array(
 $dir = dirname( __FILE__ );
 
 //i18n
-$wgExtensionMessagesFiles['IndexingPipeline'] = $dir . 'IndexingPipeline.i18n.php';
+$wgExtensionMessagesFiles['IndexingPipeline'] = $dir . '/IndexingPipeline.i18n.php';
 
 $wgAutoloadClasses['PipelineConnectionBase'] =  $dir . '/PipelineConnectionBase.class.php';
 $wgAutoloadClasses['PipelineEventProducer'] =  $dir . '/PipelineEventProducer.class.php';

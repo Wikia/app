@@ -25,7 +25,7 @@ $wgExtensionCredits['parserhook'][] = array(
 );
 
 //i18n
-$wgExtensionMessagesFiles['GoogleDocs'] = __DIR__ . '/GoogleDocs.i18n.php';
+$wgExtensionMessagesFiles['GoogleDocs4MW'] = __DIR__ . '/GoogleDocs.i18n.php';
 
 function wfGoogleDocs( Parser $parser ) {
 	$parser->setHook( "googlespreadsheet", "renderGoogleSpreadsheet" );

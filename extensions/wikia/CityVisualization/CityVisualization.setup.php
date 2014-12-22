@@ -22,7 +22,7 @@ $wgExtensionCredits['other'][] = array(
 );
 
 //i18n
-$wgExtensionMessagesFiles['AbuseFilterBypass'] = $dir . 'i18n/CityVisualization.i18n.php';
+$wgExtensionMessagesFiles['CityVisualization'] = $dir . 'i18n/CityVisualization.i18n.php';
 
 // helper hierarchy
 // row assigners

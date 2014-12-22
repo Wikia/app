@@ -13,6 +13,7 @@ $messages = array();
  */
 $messages['en'] = array(
 	'unsubscribe' => 'Unsubscribe',
+	'unsubscribe-desc' => 'Single email unbsubscribe point',
 
 	'unsubscribe-badaccess' => 'Sorry, this page cannot be used directly. Please follow the link from your e-mail.',
 	'unsubscribe-badtoken' => 'Sorry, there was a problem with the security token.',
@@ -44,6 +45,7 @@ $messages['en'] = array(
  * @author Shirayuki
  */
 $messages['qqq'] = array(
+	'unsubscribe-desc' => '{{desc}}',
 	'unsubscribe-working-done' => '{{Identical|Complete}}',
 	'unsubscribe-preferences-toggle' => 'zugehörige Adresse: http://de.wikia.com/Spezial:Einstellungen',
 );
