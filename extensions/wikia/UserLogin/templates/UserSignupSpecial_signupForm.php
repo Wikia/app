@@ -29,13 +29,13 @@ $form = [
 			'type' => 'hidden',
 			'name' => 'username',
 			'value' => '',
-			'label' => wfMessage( 'yourname' )->text(),
+			'label' => wfMessage( 'yourname' )->escaped(),
 		],
 		[ //actual username field
 			'type' => 'text',
 			'name' => 'userloginext01',
 			'value' => htmlspecialchars( $username ),
-			'label' => wfMessage( 'yourname' )->text(),
+			'label' => wfMessage( 'yourname' )->escaped(),
 			'isRequired' => true,
 			'isInvalid' => ( !empty( $errParam ) && $errParam === 'username' ),
 			'errorMsg' => ( !empty( $msg ) ? $msg : '' )
@@ -44,7 +44,7 @@ $form = [
 			'type' => 'text',
 			'name' => 'email',
 			'value' => Sanitizer::encodeAttribute( $email ),
-			'label' => wfMessage( 'email' )->text(),
+			'label' => wfMessage( 'email' )->escaped(),
 			'isRequired' => true,
 			'isInvalid' => ( !empty( $errParam ) && $errParam === 'email' ),
 			'errorMsg' => ( !empty( $msg ) ? $msg : '' )
@@ -53,13 +53,13 @@ $form = [
 			'type' => 'hidden',
 			'name' => 'password',
 			'value' => '',
-			'label' => wfMessage( 'yourpassword' )->text(),
+			'label' => wfMessage( 'yourpassword' )->escaped(),
 		],
 		[ //actual password field
 			'type' => 'password',
 			'name' => 'userloginext02',
 			'value' => '',
-			'label' => wfMessage( 'yourpassword' )->text(),
+			'label' => wfMessage( 'yourpassword' )->escaped(),
 			'isRequired' => true,
 			'isInvalid' => ( !empty( $errParam ) && $errParam === 'password' ),
 			'errorMsg' => ( !empty( $msg ) ? $msg : '' )
