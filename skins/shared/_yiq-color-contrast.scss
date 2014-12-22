@@ -1,0 +1,78 @@
+$yiq-contrasted-dark-default: #000 !default;
+$yiq-contrasted-light-default: #fff !default;
+$yiq-contrasted-threshold: 128 !default;
+$yiq-debug: false !default;
+
+/*
+ * Get yiq value of a color
+ * @returns int yiq value
+ */
+@function yiq($color) {
+  $red: red($color);
+  $green: green($color);
+  $blue: blue($color);
+
+  @return (($red*299)+($green*587)+($blue*114))/1000;
+}
+
+/*
+ * Is the color's yiq value lighter than the threshold?
+ * @returns boolean
+ */
+@function yiq-is-light(
+  $color,
+  $threshold: $yiq-contrasted-threshold
+) {
+  $yiq: yiq($color);
+
+  @if $yiq-debug { @debug $yiq, $threshold; }
+
+  @return if($yiq >= $threshold, true, false);
+}
+
+/*
+ * Get light color or dark color depending on color's yiq value
+ * @returns color
+ */
+@function yiq-contrast-color(
+  $color,
+  $dark: $yiq-contrasted-dark-default,
+  $light: $yiq-contrasted-light-default,
+  $threshold: $yiq-contrasted-threshold
+) {
+  @return if(yiq-is-light($color, $threshold), $yiq-contrasted-dark-default, $yiq-contrasted-light-default);
+}
+
+/*
+ * Change foreground color to contrast enough with background color
+ * @returns color
+ */
+@function fix-contrast($foreground, $background: $color-page) {
+  $fgYiq: yiq($foreground);
+  $bgYiq: yiq($background);
+  $threshold: 40;
+
+  @return if(
+    yiq-is-light($background),
+    if(
+      $fgYiq < ($bgYiq - $threshold),
+      $foreground,
+      scale-color($foreground, $lightness: -50%)
+    ),
+    if(
+      $fgYiq > ($bgYiq + $threshold),
+      $foreground,
+      scale-color($foreground, $lightness: 50%)
+    )
+  );
+}
+
+@mixin yiq-contrasted(
+  $background-color,
+  $dark: $yiq-contrasted-dark-default,
+  $light: $yiq-contrasted-light-default,
+  $threshold: $yiq-contrasted-threshold
+) {
+  background-color: $background-color;
+  color: yiq-contrast-color($background-color, $dark, $light, $threshold);
+}
