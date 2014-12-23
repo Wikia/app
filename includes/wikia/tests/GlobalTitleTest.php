@@ -53,8 +53,11 @@ class GlobalTitleTest extends WikiaBaseTest {
 	 */
 	function testUrlsMainNS() {
 		$title = GlobalTitle::newFromText( "Timeline", NS_MAIN, 113 ); # memory-alpha
-		$url = "http://en.memory-alpha.org/wiki/Timeline";
-		$this->assertTrue( $title->getFullURL() === $url, sprintf("%s = %s, NOT MATCH", $title->getFullURL(), $url ) );
+		$this->assertStringEndsWith(
+			"/Timeline",
+			$title->getFullURL(),
+			"verify if there is no namespace if regular main namespace is being used"
+		);
 	}
 
 	/**
