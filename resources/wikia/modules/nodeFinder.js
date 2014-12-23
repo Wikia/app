@@ -65,7 +65,7 @@ define('wikia.nodeFinder', function () {
 	 * @return {Bool}
 	 */
 	function isVisibleForSloth(element) {
-		return element.scrollWidth || element.scrollHeight;
+		return element.offsetWidth || element.offsetHeight;
 	}
 
 	return {
