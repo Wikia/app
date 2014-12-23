@@ -180,7 +180,7 @@ module.exports = function ( grunt ) {
 				autoWatch: false
 			},
 			main: {
-				browsers: [ 'Firefox' ],
+				browsers: [ 'Chrome' ],
 				preprocessors: {
 					'src/**/*.js': [ 'coverage' ]
 				},
