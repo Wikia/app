@@ -19,10 +19,10 @@ require(
 		'use strict';
 
 		// Get user's geographic data and a country code
-		targetLanguage = getTargetLanguage();
+		var targetLanguage = getTargetLanguage();
 
 		function init() {
-			if (targetLanguage !== false && targetLanguage != w.wgContentLanguage) {
+			if (targetLanguage !== false && targetLanguage !== w.wgContentLanguage) {
 				// Check local browser cache to see if a request has been sent
 				// in the last month and if the notification has been shown to him.
 				// Both have to be !== true to continue.
