@@ -18,13 +18,8 @@ require(
 	function ($, mw, w, geo, cache, tracker) {
 		'use strict';
 
-		/**
-		 * An array of language codes for which we want to look for a native wikia
-		 * @type {Array}
-		 */
-		var supportedLanguages = ['ja'],
-			// Get user's geographic data and a country code
-			targetLanguage = getTargetLanguage();
+		// Get user's geographic data and a country code
+		targetLanguage = getTargetLanguage();
 
 		function init() {
 			if (targetLanguage !== false && targetLanguage != w.wgContentLanguage) {
@@ -47,13 +42,13 @@ require(
 			var browserLanguage = window.navigator.language || window.navigator.userLanguage,
 				geoCountryCode = geo.getCountryCode().toLowerCase();
 
-			// Check if a browser's language is one of the supported languages
-			if (typeof browserLanguage === 'string' && $.inArray(browserLanguage.substr(0, 2), supportedLanguages) !== -1) {
+			// Check if a browser's language is accessible
+			if (typeof browserLanguage === 'string') {
 				targetLanguage = browserLanguage.substr(0, 2);
-				// Check if the country code is one of the supported languages
-			} else if ($.inArray(geoCountryCode, supportedLanguages) !== -1) {
+				// Check if a langcode from Geo cookie is accessible
+			} else if (typeof geoCountryCode === 'string') {
 				targetLanguage = geoCountryCode;
-				// If neither - return an empty string
+				// If neither - return false
 			} else {
 				targetLanguage = false;
 			}
