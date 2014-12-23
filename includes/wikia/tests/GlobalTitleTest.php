@@ -71,8 +71,7 @@ class GlobalTitleTest extends WikiaBaseTest {
 	 */
 	function testUrlsSpacebars() {
 		$title = GlobalTitle::newFromText( "Test Ze Spacjami", NS_TALK, 177 );
-		$url = "http://community.wikia.com/wiki/Talk:Test_Ze_Spacjami";
-		$this->assertTrue( $title->getFullURL() === $url, sprintf("%s = %s, NOT MATCH", $title->getFullURL(), $url ) );
+		$this->assertStringEndsWith( "Talk:Test_Ze_Spacjami", $title->getFullURL(), "verify if whitespaces changed to underscores" );
 	}
 
 	/**
