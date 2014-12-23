@@ -1,5 +1,10 @@
 /* global UserLoginFacebook:true, UserLoginAjaxForm:true */
-require(['jquery', 'GlobalNavigationiOSScrollFix', 'wikia.window', 'wikia.browserDetect'], function ($, scrollFix, win, browserDetect) {
+require([
+	'jquery',
+	'GlobalNavigationiOSScrollFix',
+	'wikia.window',
+	'wikia.browserDetect'
+], function ($, scrollFix, win, browserDetect) {
 	'use strict';
 	var $entryPoint, $userLoginDropdown, loginAjaxForm = false;
 
