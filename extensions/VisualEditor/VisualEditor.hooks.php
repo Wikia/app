@@ -17,7 +17,9 @@ class VisualEditorHooks {
 		// parties who attempt to install VisualEditor onto non-alpha wikis, as
 		// this should have no impact on deploying to Wikimedia's wiki cluster;
 		// is fine for release tarballs because 1.22wmf11 < 1.22alpha < 1.22.0.
-		wfUseMW( '1.25wmf13' );
+
+		// Wikia change: skip version check
+		// wfUseMW( '1.25wmf13' );
 	}
 
 	/**
@@ -378,14 +380,16 @@ class VisualEditorHooks {
 	 * Adds extra variables to the page config.
 	 */
 	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
+		global $wgSVGMaxSize, $wgNamespacesWithSubpages;
+
 		$pageLanguage = $out->getTitle()->getPageLanguage();
 
 		$vars['wgVisualEditor'] = array(
 			'isPageWatched' => $out->getUser()->isWatched( $out->getTitle() ),
 			'pageLanguageCode' => $pageLanguage->getHtmlCode(),
 			'pageLanguageDir' => $pageLanguage->getDir(),
-			'svgMaxSize' => $out->getConfig()->get( 'SVGMaxSize' ),
-			'namespacesWithSubpages' => $out->getConfig()->get( 'NamespacesWithSubpages' )
+			'svgMaxSize' => $wgSVGMaxSize,
+			'namespacesWithSubpages' => $wgNamespacesWithSubpages
 		);
 
 		return true;
@@ -434,7 +438,8 @@ class VisualEditorHooks {
 	 * @return boolean true
 	 */
 	public static function onResourceLoaderRegisterModules( ResourceLoader &$resourceLoader ) {
-		$resourceModules = $resourceLoader->getConfig()->get( 'ResourceModules' );
+		global $wgResourceModules;
+
 		$veResourceTemplate = ConfigFactory::getDefaultInstance()
 			->makeConfig( 'visualeditor')->get( 'VisualEditorResourceTemplate' );
 		$libModules = array(
