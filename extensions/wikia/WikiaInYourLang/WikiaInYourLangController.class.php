@@ -60,7 +60,7 @@ class WikiaInYourLangController extends WikiaController {
 				$this->response->setVal( 'message', $sMessage );
 			} else {
 				$this->response->setVal( 'success', false );
-				$this->response->setVal( 'error', 'A native wikia not found.' );
+				$this->response->setVal( 'error', "A native wikia with a domain {$sNativeWikiDomain} not found." );
 			}
 		} else {
 			$this->response->setVal( 'success', false );

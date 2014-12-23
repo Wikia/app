@@ -40,7 +40,8 @@ require(
 
 		function getTargetLanguage() {
 			var browserLanguage = window.navigator.language || window.navigator.userLanguage,
-				geoCountryCode = geo.getCountryCode().toLowerCase();
+				geoCountryCode = geo.getCountryCode().toLowerCase(),
+				targetLanguage;
 
 			// Check if a browser's language is accessible
 			if (typeof browserLanguage === 'string') {
