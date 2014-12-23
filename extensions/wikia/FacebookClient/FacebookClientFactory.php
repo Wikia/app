@@ -38,17 +38,17 @@ class FacebookClientFactory {
 			$messageParams = [];
 			switch ( $e->getCode() ) {
 				case \FacebookMapModel::ERROR_WIKIA_USER_ID_MISMATCH :
-					$errorMessageKey = 'fbconnect-error-fb-account-in-use';
+					$messageParams[] = 'fbconnect-error-fb-account-in-use';
 					$messageParams[] = \User::whoIs( $wikiaUserId );
 					break;
 				case \FacebookMapModel::ERROR_FACEBOOK_USER_ID_MISMATCH :
-					$errorMessageKey = 'fbconnect-error-already-connected';
+					$messageParams[] = 'fbconnect-error-already-connected';
 					break;
 				default :
-					$errorMessageKey = 'fbconnect-error';
+					$messageParams[] = 'fbconnect-error';
 			}
 			$status->setResult( false );
-			$status->error( $errorMessageKey, $messageParams );
+			call_user_func_array( [$status, 'error'], $messageParams );
 		}
 
 		return $status;
@@ -62,5 +62,29 @@ class FacebookClientFactory {
 	 */
 	public function isFacebookIdInUse( $facebookId ) {
 		return (\FacebookMapModel::lookupFromFacebookID( $facebookId ) !== null);
+	}
+
+	/**
+	 * Get error message key and parameters from status
+	 *
+	 * @param \Status $status
+	 * @return array of error message key, and message parameters as an array
+	 * @throws Exception if called on an "OK" Status
+	 */
+	public function getStatusError( \Status $status ) {
+		if ( $status->isOK() ) {
+			throw new \Exception( 'Status contains no errors' );
+		}
+
+		$errors = $status->getErrorsByType( 'error' );
+		if ( ! empty( $errors[0]['message'] ) ) {
+			$message = $errors[0]['message'];
+			$params = $errors[0]['params'];
+		} else {
+			$message = 'fbconnect-error';
+			$params = [];
+		}
+
+		return [$message, $params];
 	}
 }

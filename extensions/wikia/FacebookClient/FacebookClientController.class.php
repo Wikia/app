@@ -177,7 +177,8 @@ class FacebookClientController extends WikiaController {
 		// Create user mapping
 		$status = $this->fbClientFactory->connectToFacebook( $wg->User->getId(), $fbUserId );
 		if ( ! $status->isGood() ) {
-			$this->setErrorResponse( $status->getMessage() );
+			list( $message, $params ) = $this->fbClientFactory->getStatusError( $status );
+			$this->setErrorResponse( $message, $params );
 			return;
 		}
 
@@ -189,12 +190,13 @@ class FacebookClientController extends WikiaController {
 	/**
 	 * Set a normalized error response meant for Ajax calls
 	 *
-	 * @param string $message Error message
+	 * @param string $messageKey i18n error message key
+	 * @param array $messageParams
 	 */
-	protected function setErrorResponse( $message ) {
+	protected function setErrorResponse( $messageKey, array $messageParams = [] ) {
 		$this->response->setData( [
 			'status' => 'error',
-			'msg' => $message,
+			'msg' => wfMessage( $messageKey, $messageParams )->escaped(),
 		] );
 	}
 

@@ -169,7 +169,7 @@ class FacebookSignupController extends WikiaController {
 		if ( $this->fbClientFactory->isFacebookIdInUse( $fbId ) ) {
 			$errorMessageKey = 'fbconnect-error-fb-account-in-use';
 			$messageParams = [ $this->request->getVal( 'username' ) ];
-			$this->setErrorResponse( wfMessage( $errorMessageKey, $messageParams )->escaped() );
+			$this->setErrorResponse( $errorMessageKey, $messageParams );
 			return;
 		}
 
@@ -239,7 +239,8 @@ class FacebookSignupController extends WikiaController {
 
 		$status = $this->fbClientFactory->connectToFacebook( $user->getId(), $fbUserId );
 		if ( ! $status->isGood() ) {
-			$this->setErrorResponse( $status->getMessage() );
+			list( $message, $params ) = $this->fbClientFactory->getStatusError( $status );
+			$this->setErrorResponse( $message, $params );
 			return;
 		}
 
@@ -294,7 +295,7 @@ class FacebookSignupController extends WikiaController {
 	protected function getValidFbUserId() {
 		$fbUserId = FacebookClient::getInstance()->getUserId();
 		if ( !$fbUserId ) {
-			$this->setErrorResponse( wfMessage( 'userlogin-error-invalidfacebook' )->escaped() );
+			$this->setErrorResponse( 'userlogin-error-invalidfacebook' );
 			return null;
 		}
 
@@ -329,7 +330,7 @@ class FacebookSignupController extends WikiaController {
 		}
 
 		if ( $messageCode ) {
-			$this->setErrorResponse( wfMessage( $messageCode )->escaped(), $errorParam );
+			$this->setErrorResponse( $messageCode, [], $errorParam );
 			return null;
 		}
 
@@ -358,13 +359,14 @@ class FacebookSignupController extends WikiaController {
 	/**
 	 * Set a normalized error response meant for Ajax calls
 	 *
-	 * @param string $message Error message
+	 * @param string $messageKey i18n error message key
+	 * @param array $messageParams message parameters
 	 * @param string|null $errorParam the error key
 	 */
-	protected function setErrorResponse( $message, $errorParam = null ) {
+	protected function setErrorResponse( $messageKey, array $messageParams = [], $errorParam = null ) {
 		$this->response->setData( [
 			'result' => 'error',
-			'msg' => $message,
+			'msg' => wfMessage( $messageKey, $messageParams )->escaped(),
 			'errParam' => $errorParam,
 		] );
 	}
