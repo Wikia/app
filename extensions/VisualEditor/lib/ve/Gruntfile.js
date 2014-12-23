@@ -180,9 +180,9 @@ module.exports = function ( grunt ) {
 				autoWatch: false
 			},
 			main: {
-				browsers: [ 'Chrome_travis_ci' ],
+				browsers: [ 'ChromeTravisCi' ],
 				customLaunchers: {
-					Chrome_travis_ci: {
+					ChromeTravisCi: {
 						base: 'Chrome',
 						flags: [ '--no-sandbox' ]
 					}
