@@ -137,9 +137,6 @@ class FacebookSignupController extends WikiaController {
 		$this->returnToUrl = $returnToUrl;
 
 		$this->loginToken = UserLoginHelper::getSignupToken();
-
-		$specialPage = $this->wg->EnableFacebookClientExt ? 'FacebookConnect' : 'Connect';
-		$this->connectUrl = SpecialPage::getTitleFor( $specialPage )->getLocalUrl();
 	}
 
 	public function modalHeader() {

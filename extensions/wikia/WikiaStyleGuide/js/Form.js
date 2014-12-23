@@ -13,6 +13,10 @@
 		this.el = $(el);
 		this.form = this.el.is('form') ? this.el : this.el.find('form');
 
+		if (!this.form.length) {
+			Wikia.log('WikiaForm doesn\'t include a form element', Wikia.log.levels.error, 'WikiaForm');
+		}
+
 		// initialize genericError field
 		this.genericError = this.el.find('.general-errors');
 		if(this.genericError.length == 0) {

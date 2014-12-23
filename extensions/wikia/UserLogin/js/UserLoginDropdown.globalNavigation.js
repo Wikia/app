@@ -9,15 +9,20 @@ require(['jquery', 'GlobalNavigationiOSScrollFix', 'wikia.window', 'wikia.browse
 	function openMenu() {
 		$entryPoint.addClass('active');
 		win.transparentOut.show();
+		initLoginForm();
+		$('#globalNavigation').trigger('user-login-menu-opened');
+	}
 
-		if (!loginAjaxForm) {
+	/**
+	 * Initialize the login form for logged out users
+	 */
+	function initLoginForm () {
+		if (!loginAjaxForm && !window.wgUserName) {
 			loginAjaxForm = new UserLoginAjaxForm($entryPoint, {
 				skipFocus: true
 			});
 			UserLoginFacebook.init(UserLoginFacebook.origins.DROPDOWN);
 		}
-
-		$('#globalNavigation').trigger('user-login-menu-opened');
 	}
 
 	/**
@@ -74,7 +79,8 @@ require(['jquery', 'GlobalNavigationiOSScrollFix', 'wikia.window', 'wikia.browse
 
 		if (!win.Wikia.isTouchScreen()) {
 			win.delayedHover(
-				$entryPoint.get(0), {
+				$entryPoint.get(0),
+				{
 					checkInterval: 100,
 					maxActivationDistance: 20,
 					onActivate: openMenu,

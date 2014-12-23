@@ -18,11 +18,6 @@ $baseForm = [
 		],
 		[
 			'type' => 'hidden',
-			'name' => 'loginToken',
-			'value' => Sanitizer::encodeAttribute( $loginToken ),
-		],
-		[
-			'type' => 'hidden',
 			'name' => 'returntourl',
 			'value' => Sanitizer::encodeAttribute( $returnToUrl ),
 		],
@@ -70,6 +65,12 @@ $signupForm['inputs'][] = [
 ];
 
 $signupForm['inputs'][] = [
+	'type' => 'hidden',
+	'name' => 'signupToken',
+	'value' => Sanitizer::encodeAttribute( $loginToken ),
+];
+
+$signupForm['inputs'][] = [
 	'class' => 'opt-in-container hidden',
 	'type' => 'checkbox',
 	'name' => 'wpMarketingOptIn',
@@ -99,6 +100,12 @@ $loginForm['inputs'][] = [
 	'controller' => 'UserLogin',
 	'view' => 'forgotPasswordLink',
 	'class' => 'forgot-password-container',
+];
+
+$loginForm['inputs'][] = [
+	'type' => 'hidden',
+	'name' => 'loginToken',
+	'value' => Sanitizer::encodeAttribute( $loginToken ),
 ];
 
 $loginForm['submits'] = [
