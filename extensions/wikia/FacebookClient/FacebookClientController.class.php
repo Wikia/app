@@ -176,7 +176,7 @@ class FacebookClientController extends WikiaController {
 
 		// Create user mapping
 		$status = $this->fbClientFactory->connectToFacebook( $wg->User->getId(), $fbUserId );
-		if ( ! $status->isGood() ) {
+		if ( !$status->isGood() ) {
 			list( $message, $params ) = $this->fbClientFactory->getStatusError( $status );
 			$this->setErrorResponse( $message, $params );
 			return;

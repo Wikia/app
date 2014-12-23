@@ -11,7 +11,7 @@ class FacebookClientFactory {
 	/**
 	 * Map an existing Wikia user to a Facebook id
 	 * If an exact or partial match of the map already exists, OR
-	 * if creation of mapping does not succeed, returns a Message object containing error
+	 * if creation of mapping does not succeed, returns not-OK Status
 	 *
 	 * @param int $wikiaUserId
 	 * @param int $fbUserId
@@ -22,7 +22,11 @@ class FacebookClientFactory {
 
 		try {
 			$map = \FacebookMapModel::getUserMapping( $wikiaUserId, $fbUserId );
-			if ( !$map ) {
+			if ( $map ) {
+				// Error! There is already a mapping
+				$status->setResult( false );
+				$status->error( 'fbconnect-error-already-connected' );
+			} else {
 				$map = \FacebookMapModel::createUserMapping( $wikiaUserId, $fbUserId );
 				if ( $map instanceof \FacebookMapModel ) {
 					$status->setResult( true, $map );
@@ -30,9 +34,6 @@ class FacebookClientFactory {
 					$status->setResult( false );
 					$status->error( 'fbconnect-error' );
 				}
-			} else {
-				$status->setResult( false );
-				$status->error( 'fbconnect-error-already-connected' );
 			}
 		} catch ( \Exception $e ) {
 			$messageParams = [];
