@@ -1350,17 +1350,11 @@ class ArticlesApiController extends WikiaApiController {
 	 * @return string
 	 * @throws WikiaException
 	 */
-	protected function getArticleDescription( $article, $descLength = 100 ) {
+	protected function getArticleDescription( Article $article, $descLength = 100 ) {
 		$title = $article->getTitle();
 		$sMessage = null;
-		$sMainPage = wfMessage( 'Mainpage' )->inContentLanguage()->text();
-		if ( strpos( $sMainPage, ':' ) !== false ) {
-			$sTitle = $title->getFullText();
-		} else {
-			$sTitle = $title->getText();
-		}
 
-		if ( strcmp( $sTitle, $sMainPage ) == 0 ) {
+		if ( $title->isMainPage() ) {
 			// we're on Main Page, check MediaWiki:Description message
 			$sMessage = wfMessage( 'Description' )->text();
 		}
