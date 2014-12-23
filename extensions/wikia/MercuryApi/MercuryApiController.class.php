@@ -204,6 +204,8 @@ class MercuryApiController extends WikiaController {
 	 *
 	 */
 	public function getWikiVariables() {
+		global $egFacebookAppId;
+
 		$wikiVariables = $this->mercuryApi->getWikiVariables();
 
 		try {
@@ -232,6 +234,10 @@ class MercuryApiController extends WikiaController {
 		$smartBannerConfig = $this->getSmartBannerConfig();
 		if ( !is_null( $smartBannerConfig ) ) {
 			$wikiVariables[ 'smartBanner' ] = $smartBannerConfig;
+		}
+
+		if ( !is_null( $egFacebookAppId ) ) {
+			$wikiVariables[ 'facebookAppId' ] = $egFacebookAppId;
 		}
 
 		$this->response->setVal( 'data', $wikiVariables );
