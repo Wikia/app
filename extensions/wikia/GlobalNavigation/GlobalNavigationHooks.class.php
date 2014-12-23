@@ -8,8 +8,9 @@ class GlobalNavigationHooks {
 	//That's why changing wgEnableMWSuggest to true in hook is not enough
 	static public function onResourceLoaderGetConfigVarsWithContext(&$vars, $context) {
 		global $wgUseAjax;
+		$skin = $context->getSkin();
 
-		if ($context->getSkin() == 'monobook') {
+		if ($skin == 'monobook' || $skin == 'uncyclopedia') {
 			if (!empty($wgUseAjax)) {
 				$vars['wgMWSuggestTemplate'] = SearchEngine::getMWSuggestTemplate();
 			}
@@ -21,8 +22,9 @@ class GlobalNavigationHooks {
 	//In case of monobook, GlobalNavigation is not present and we want to show to users MW suggestions.
 	static public function onOutputPageParserOutput( OutputPage &$out, ParserOutput $parseroutput ) {
 		global $wgEnableMWSuggest;
+		$skin = $out->getSkin()->getSkinName();
 
-		if ($out->getSkin()->getSkinName() == 'monobook') {
+		if ($skin == 'monobook' || $skin == 'uncyclopedia') {
 			$wgEnableMWSuggest = true;
 		}
 		return true;

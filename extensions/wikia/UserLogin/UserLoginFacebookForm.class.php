@@ -48,7 +48,13 @@ class UserLoginFacebookForm extends UserLoginForm {
 		return $userEmail;
 	}
 
-	function addNewAccount() {
+	/**
+	 * Create a new user account wrapping the code with method callWithCaptchaDisabled to disable
+	 * captcha checking.
+	 *
+	 * @return User A new user object
+	 */
+	public function addNewAccount() {
 		return UserLoginHelper::callWithCaptchaDisabled(function() {
 			return $this->addNewAccountInternal();
 		});

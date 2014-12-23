@@ -146,9 +146,6 @@ class FacebookSignupController extends WikiaController {
 		$this->returnToUrl = $returnToUrl;
 
 		$this->loginToken = UserLoginHelper::getSignupToken();
-
-		$specialPage = $this->wg->EnableFacebookClientExt ? 'FacebookConnect' : 'Connect';
-		$this->connectUrl = SpecialPage::getTitleFor( $specialPage )->getLocalUrl();
 	}
 
 	public function modalHeader() {
@@ -185,7 +182,7 @@ class FacebookSignupController extends WikiaController {
 			case 'error':
 			default:
 				// pass errors to the frontend form
-				$this->response->setData($signupResponse);
+				$this->response->setData( $signupResponse );
 				break;
 		}
 	}
@@ -205,12 +202,14 @@ class FacebookSignupController extends WikiaController {
 
 		$result = ( $signupForm->msgType == 'error' ) ? 'error' : 'ok' ;
 		if ( $result == 'ok' && !$signupForm->getHasConfirmedEmail() ) {
-			$result = 'unconfirm'	;
+			$result = 'unconfirm';
 		}
 
-		$this->result = $result;
-		$this->msg = $signupForm->msg;
-		$this->errParam = $signupForm->errParam;
+		$this->response->setData( [
+			'result' => $result,
+			'msg' => $signupForm->msg,
+			'errParam' => $signupForm->errParam,
+		] );
 	}
 
 	/**
