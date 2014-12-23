@@ -12,7 +12,11 @@
 		this.form = this.el.is('form') ? this.el : this.el.find('form');
 
 		if (!this.form.length) {
-			Wikia.log('WikiaForm doesn\'t include a form element', Wikia.log.levels.error, 'WikiaForm');
+			Wikia.log(
+				'WikiaForm with selector "' + this.el.selector + '" doesn\'t include a form element',
+				Wikia.log.levels.error,
+				'WikiaForm'
+			);
 		}
 
 		this.initGenericError();
