@@ -10,6 +10,15 @@ class FacebookSignupController extends WikiaController {
 	const SIGNUP_USERNAME_KEY = 'username';
 	const SIGNUP_PASSWORD_KEY = 'password';
 
+	/** @var \FacebookClientFactory */
+	protected $fbClientFactory;
+
+	public function __construct() {
+		parent::__construct();
+
+		$this->fbClientFactory = new \FacebookClientFactory();
+	}
+
 	/**
 	 * This method is called when user successfully logins using FB credentials
 	 *
@@ -152,6 +161,15 @@ class FacebookSignupController extends WikiaController {
 	 */
 	public function signup() {
 
+		// Check that Facebook account is not in use!
+		$fbId = \FacebookClient::getInstance()->getUserId();
+		if ( $this->fbClientFactory->isFacebookIdInUse( $fbId ) ) {
+			$errorMessageKey = 'fbconnect-error-fb-account-in-use';
+			$messageParams = [ $this->request->getVal( 'username' ) ];
+			$this->setErrorResponse( $errorMessageKey, $messageParams );
+			return;
+		}
+
 		$signupResponse = $this->app->sendRequest( 'FacebookSignup', 'createAccount' )->getData();
 
 		switch ( $signupResponse['result'] ) {
@@ -218,8 +236,10 @@ class FacebookSignupController extends WikiaController {
 			return;
 		}
 
-		$map = $this->createUserMap( $user->getId(), $fbUserId );
-		if ( !$map ) {
+		$status = $this->fbClientFactory->connectToFacebook( $user->getId(), $fbUserId );
+		if ( ! $status->isGood() ) {
+			list( $message, $params ) = $this->fbClientFactory->getStatusError( $status );
+			$this->setErrorResponse( $message, $params );
 			return;
 		}
 
@@ -267,25 +287,6 @@ class FacebookSignupController extends WikiaController {
 	}
 
 	/**
-	 * Create a user mapping to associate given Wikia user id with FB id
-	 *
-	 * @param $wikiaUserId
-	 * @param $fbUserId
-	 * @return FacebookMapModel|null
-	 */
-	protected function createUserMap( $wikiaUserId, $fbUserId ) {
-		// Returns an existing mapping or attempts to create one
-		$userMap = \FacebookMapModel::createUserMapping( $wikiaUserId, $fbUserId );
-
-		if ( !$userMap ) {
-			$this->setAjaxyErrorResponse( 'userlogin-error-fbconnect' );
-			return null;
-		}
-
-		return $userMap;
-	}
-
-	/**
 	 * Retrieve and validate Facebook user id
 	 *
 	 * @return int|null
@@ -293,7 +294,7 @@ class FacebookSignupController extends WikiaController {
 	protected function getValidFbUserId() {
 		$fbUserId = FacebookClient::getInstance()->getUserId();
 		if ( !$fbUserId ) {
-			$this->setAjaxyErrorResponse( 'userlogin-error-invalidfacebook', '' );
+			$this->setErrorResponse( 'userlogin-error-invalidfacebook' );
 			return null;
 		}
 
@@ -328,7 +329,7 @@ class FacebookSignupController extends WikiaController {
 		}
 
 		if ( $messageCode ) {
-			$this->setAjaxyErrorResponse( $messageCode, $errorParam );
+			$this->setErrorResponse( $messageCode, [], $errorParam );
 			return null;
 		}
 
@@ -357,13 +358,14 @@ class FacebookSignupController extends WikiaController {
 	/**
 	 * Set a normalized error response meant for Ajax calls
 	 *
-	 * @param string $messageKey an i18n message key
+	 * @param string $messageKey i18n error message key
+	 * @param array $messageParams message parameters
 	 * @param string|null $errorParam the error key
 	 */
-	protected function setAjaxyErrorResponse( $messageKey, $errorParam = null ) {
+	protected function setErrorResponse( $messageKey, array $messageParams = [], $errorParam = null ) {
 		$this->response->setData( [
 			'result' => 'error',
-			'msg' => wfMessage( $messageKey )->escaped(),
+			'msg' => wfMessage( $messageKey, $messageParams )->escaped(),
 			'errParam' => $errorParam,
 		] );
 	}
