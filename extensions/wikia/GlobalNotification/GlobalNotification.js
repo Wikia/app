@@ -29,8 +29,10 @@ var GlobalNotification = {
 			this.setUpClose();
 		}
 
-		// Float notification (BugId:33365)
-		this.wikiaHeaderHeight = $('#WikiaHeader').height();
+		this.pageContainer = $('.WikiaPageContentWrapper');
+		this.pageContainerElem = this.pageContainer[0];
+		this.wikiaHeader = $('#globalNavigation');
+		this.headerHeight = this.wikiaHeader.height();
 	},
 
 	/**
@@ -40,6 +42,7 @@ var GlobalNotification = {
 	 */
 	createDom: function (element, isModal) {
 		'use strict';
+
 		// create and store dom
 		if (!GlobalNotification.dom.length) {
 			GlobalNotification.dom = $('<div class="global-notification">' +
@@ -54,17 +57,13 @@ var GlobalNotification = {
 		if (element instanceof jQuery) {
 			element.prepend(GlobalNotification.dom).show();
 
-		// handle standard modal implementation
+		// handle modal implementations
 		} else if (isModal) {
 			GlobalNotification.modal.prepend(GlobalNotification.dom);
 
 		// handle non-modal implementation
 		} else {
-			if ($('.oasis-split-skin').length) {
-				$('.WikiaHeader').after(GlobalNotification.dom);
-			} else {
-				$('.WikiaPageContentWrapper').prepend(GlobalNotification.dom);
-			}
+			this.pageContainer.prepend(GlobalNotification.dom);
 		}
 
 		GlobalNotification.msg = GlobalNotification.dom.find('.msg');
@@ -165,19 +164,25 @@ var GlobalNotification = {
 	},
 
 	/**
-	 * Hack to share the scroll event with WikiaFooter.js
-	 * @param {number} scrollTop
+	 * Pin the notification to the top of the screen when scrolled down the page.
+	 * Shares the scroll event with WikiaFooter.js
 	 */
-	onScroll: function (scrollTop) {
+	onScroll: function () {
 		'use strict';
-		if (GlobalNotification.dom && GlobalNotification.dom.length) {
-			var minTop = GlobalNotification.wikiaHeaderHeight;
-			if (scrollTop > minTop) {
-				GlobalNotification.dom.addClass('float');
-			} else {
-				GlobalNotification.dom.removeClass('float');
-			}
 
+		var containerTop;
+
+		if (!GlobalNotification.dom || !GlobalNotification.dom.length) {
+			return;
+		}
+
+		// get the position of the wrapper element relative to the top of the viewport
+		containerTop = GlobalNotification.pageContainerElem.getBoundingClientRect().top;
+
+		if (containerTop < GlobalNotification.headerHeight) {
+			GlobalNotification.dom.addClass('float');
+		} else {
+			GlobalNotification.dom.removeClass('float');
 		}
 	}
 };
@@ -186,11 +191,3 @@ $(function () {
 	'use strict';
 	GlobalNotification.init();
 });
-
-// ajax failure notification event registration
-if (typeof wgAjaxFailureMsg !== 'undefined') {
-	$(document).ajaxError(function () {
-		'use strict';
-		GlobalNotification.show(window.wgAjaxFailureMsg, 'error');
-	});
-}

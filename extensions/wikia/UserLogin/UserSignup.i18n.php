@@ -243,6 +243,9 @@ To check out the latest happenings on Wikia, visit http://community.wikia.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-confirmation-reminder-email_body-HTML' => '',
 	'usersignup-facebook-problem' => 'There was a problem communicating with Facebook. Please try again later.',
+	'usersignup-facebook-signup-header' => 'Creating a new account?',
+	'usersignup-facebook-login-header' => 'Already have an account?',
+	'usersignup-facebook-or-header' => 'or',
 );
 
 /** Message documentation (Message documentation)
@@ -367,6 +370,11 @@ Page content for confirm page when byemail=1 is used.  Parameters:
 	'usersignup-confirmation-reminder-email-signature' => 'Confirmation email signature that is sent 7 days after user has started the signup process without confirming.',
 	'usersignup-confirmation-reminder-email_body' => 'Text-only version of confirmation email that is sent 7 days after user has started the signup process without confirming.  $1 is username, $2 is confirmation url.',
 	'usersignup-confirmation-reminder-email_body-HTML' => 'Stand-alone HTML version of confirmation email that is sent 7 days after user has started the signup process without confirming.  $1 is username, $2 is confirmation url.',
+
+	'usersignup-facebook-signup-header' => 'Message used in conjunction with usersignup-facebook-login-header and usersignup-facebook-or-header. The full message, in english, reads: Create a new account? or Already have an account?',
+	'usersignup-facebook-login-header' => 'Message used in conjunction with usersignup-facebook-signup-header and usersignup-facebook-or-header. The full message, in english, reads: Create a new account? or Already have an account?',
+	'usersignup-facebook-or-header' => 'Message used in conjunction with usersignup-facebook-login-header and usersignup-facebook-signup-header. The full message, in english, reads: Create a new account? or Already have an account?',
+
 );
 
 /** Arabic (العربية)
