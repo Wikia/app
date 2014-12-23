@@ -10,14 +10,25 @@
 
 class ApiVisualEditor extends ApiBase {
 
+	// Wikia change
+	/**
+	 * @protected
+	 * @description Simple helper to retrieve relevant api uri
+	 * @return String
+	 */
+	protected function getApiSource() {
+		return wfExpandUrl( wfScript( 'api' ) );
+	}
+
 	/**
 	 * @var Config
 	 */
 	protected $veConfig;
 
-	public function __construct( ApiMain $main, $name, Config $config ) {
+	public function __construct( ApiMain $main, $name /*, Config $config */ ) {
 		parent::__construct( $main, $name );
-		$this->veConfig = $config;
+		// Wikia change
+		$this->veConfig = ConfigFactory::getDefaultInstance()->makeConfig( 'visualeditor' );
 	}
 
 	/**
@@ -33,10 +44,10 @@ class ApiVisualEditor extends ApiBase {
 	}
 
 	protected function requestParsoid( $method, $title, $params ) {
+		// Wikia change
 		$url = $this->veConfig->get( 'VisualEditorParsoidURL' ) . '/' .
-			$this->veConfig->get( 'VisualEditorParsoidPrefix' ) . '/' .
+			urlencode( $this->getApiSource() ) . '/' .
 			urlencode( $title->getPrefixedDBkey() );
-
 		$data = array_merge(
 			$this->getProxyConf(),
 			array(
@@ -327,6 +338,15 @@ class ApiVisualEditor extends ApiBase {
 				global $wgTitle; // FIXME NOOOOOOOOES
 				$wgTitle = $page;
 				RequestContext::getMain()->setTitle( $page );
+				// Wikia change
+				$notices = array();
+				$anoneditwarning = false;
+				$anoneditwarningMessage = $this->msg( 'VisualEditor-anoneditwarning' );
+				if ( $user->isAnon() && $anoneditwarningMessage->exists() ) {
+					$notices[] = $anoneditwarningMessage->parseAsBlock();
+					$anoneditwarning = true;
+				}
+				/*
 				$notices = $page->getEditNotices();
 				if ( $user->isAnon() ) {
 					$notices[] = $this->msg(
@@ -337,6 +357,7 @@ class ApiVisualEditor extends ApiBase {
 						'{{fullurl:Special:UserLogin/signup|returnto={{FULLPAGENAMEE}}}}'
 					)->parseAsBlock();
 				}
+				*/
 				if ( $parsed && $parsed['restoring'] ) {
 					$notices[] = $this->msg( 'editingold' )->parseAsBlock();
 				}
@@ -656,5 +677,10 @@ class ApiVisualEditor extends ApiBase {
 	 */
 	public function getDescription() {
 		return 'Returns HTML5 for a page from the parsoid service.';
+	}
+
+	// Wikia change
+	public function getVersion() {
+		return __CLASS__ . ': $Id$';
 	}
 }

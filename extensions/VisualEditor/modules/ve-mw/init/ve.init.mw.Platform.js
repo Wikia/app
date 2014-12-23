@@ -105,7 +105,9 @@ ve.init.mw.Platform.prototype.getLanguageDirection = $.uls.data.getDir;
 
 /** @inheritdoc */
 ve.init.mw.Platform.prototype.getUserLanguages = function () {
-	return mw.language.getFallbackLanguageChain();
+	// Wikia change
+	return [ mw.config.get( 'wgUserLanguage' ), mw.config.get( 'wgContentLanguage' ) ];
+	//return mw.language.getFallbackLanguageChain();
 };
 
 /* Initialization */

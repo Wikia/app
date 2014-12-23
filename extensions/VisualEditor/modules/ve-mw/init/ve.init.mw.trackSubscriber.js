@@ -84,11 +84,11 @@
 				'page.revid': mw.config.get( 'wgRevisionId' ),
 				'page.length': -1, // FIXME
 				editingSessionId: editingSessionId,
-				'user.id': mw.user.getId(),
+				'user.id': mw.user.id(),
 				'user.editCount': mw.config.get( 'wgUserEditCount', 0 )
 			}, data );
 
-			if ( mw.user.isAnon() ) {
+			if ( mw.user.anonymous() ) {
 				newData['user.class'] = 'IP';
 			}
 
@@ -106,7 +106,7 @@
 			lastEventWithAction[action] = now;
 		}
 
-		mw.track( topic, data );
+		//mw.track( topic, data );
 	} );
 
 } )();

@@ -43,6 +43,7 @@ $wgAutoloadClasses['VisualEditorHooks'] = $dir . 'VisualEditor.hooks.php';
 $wgAutoloadClasses['VisualEditorDataModule'] = $dir . 'VisualEditorDataModule.php';
 $wgAutoloadClasses['VisualEditorViewPageTargetInitModule'] =
 	$dir . 'VisualEditorViewPageTargetInitModule.php';
+$wgExtensionMessagesFiles['VisualEditor'] = $dir . 'VisualEditor.i18n.php';
 $wgMessagesDirs['VisualEditor'] = array(
 	__DIR__ . '/lib/ve/i18n',
 	__DIR__ . '/modules/ve-mw/i18n',
@@ -51,6 +52,8 @@ $wgMessagesDirs['VisualEditor'] = array(
 );
 
 // Register API modules
+// Wikia change
+/*
 $wgAPIModules['visualeditor'] = array(
 	'class' => 'ApiVisualEditor',
 	'factory' => 'wfVisualEditorApiFactory',
@@ -59,6 +62,9 @@ $wgAPIModules['visualeditoredit'] = array(
 	'class' => 'ApiVisualEditorEdit',
 	'factory' => 'wfVisualEditorApiFactory',
 );
+*/
+$wgAPIModules['visualeditor'] = 'ApiVisualEditor';
+$wgAPIModules['visualeditoredit'] = 'ApiVisualEditorEdit';
 
 /**
  * @param ApiMain $main
@@ -92,7 +98,9 @@ $wgHooks['ParserTestGlobals'][] = 'VisualEditorHooks::onParserTestGlobals';
 $wgHooks['EditPage::showEditForm:fields'][] = 'VisualEditorHooks::onEditPageShowEditFormFields';
 $wgHooks['PageContentSaveComplete'][] = 'VisualEditorHooks::onPageContentSaveComplete';
 $wgHooks['BeforeInitialize'][] = 'VisualEditorHooks::onBeforeInitialize';
-$wgExtensionFunctions[] = 'VisualEditorHooks::onSetup';
+// Wikia change - There is no need to register VisualEditorHooks::onSetup as it is only responsible
+// for checking if MediaWiki version is compatible with VisualEditor.
+//$wgExtensionFunctions[] = 'VisualEditorHooks::onSetup';
 
 // Register resource modules
 
@@ -850,7 +858,8 @@ $wgResourceModules += array(
 			'mediawiki.jqueryMsg',
 			'jquery.autoEllipsis',
 			'jquery.byteLimit',
-			'mediawiki.skinning.content.parsoid',
+			// Wikia change
+			//'mediawiki.skinning.content.parsoid',
 		),
 		'messages' => array(
 			'visualeditor-beta-label',
@@ -1505,7 +1514,7 @@ $wgVisualEditorNamespaces = array_merge( $wgContentNamespaces, array( NS_USER ) 
 $wgVisualEditorEnableTocWidget = false;
 
 // List of skins VisualEditor integration supports
-$wgVisualEditorSupportedSkins = array( 'vector', 'apex', 'monobook', 'minerva' );
+//$wgVisualEditorSupportedSkins = array( 'vector', 'apex', 'monobook', 'minerva' );
 
 // List of browsers VisualEditor is incompatibe with
 // See jQuery.client for specification
