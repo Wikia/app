@@ -124,8 +124,13 @@ class WikiaInYourLangController extends WikiaController {
 	 * @return string                  A native wikia URL (e.g. ja.community.wikia.com)
 	 */
 	private function getNativeWikiDomain( $sWikiDomain, $sTargetLanguage ) {
-		$sNativeWikiDomain = $sTargetLanguage . '.' . $sWikiDomain;
-		return $sNativeWikiDomain;
+		if ( $sTargetLanguage !== 'en' ) {
+			$sNativeWikiDomain = $sTargetLanguage . '.' . $sWikiDomain;
+			return $sNativeWikiDomain;
+		}
+		else {
+			return $sWikiDomain;
+		}
 	}
 
 	/**
