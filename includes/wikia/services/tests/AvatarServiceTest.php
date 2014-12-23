@@ -1,6 +1,11 @@
 <?php
 class AvatarServiceTest extends WikiaBaseTest {
 
+	public function setUp() {
+		parent::setUp();
+		$this->mockGlobalVariable( 'wgEnableVignette', true );
+	}
+
 	/**
 	 * @dataProvider getDefaultAvatarDataProvider
 	 * @group UsingDB
