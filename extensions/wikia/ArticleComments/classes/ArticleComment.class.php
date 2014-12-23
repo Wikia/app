@@ -627,7 +627,7 @@ class ArticleComment {
 
 		$text = '';
 		$this->load(true);
-		if ($this->canEdit() ) {
+		if ( $this->canEdit() ) {
 			$vars = array(
 				'canEdit'				=> $this->canEdit(),
 				'comment'				=> htmlentities(ArticleCommentsAjax::getConvertedContent($this->mLastRevision->getText())),

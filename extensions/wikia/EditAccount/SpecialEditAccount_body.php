@@ -423,7 +423,6 @@ class EditAccount extends SpecialPage {
 	 * Make sure a wikia user account is disconnected from their facebook account.
 	 *
 	 * @param  User $user The user account to disconnect
-	 * @return void
 	 */
 	public static function disconnectFromFacebook( User $user ) {
 		if ( !empty( F::app()->wg->EnableFacebookClientExt ) ) {
