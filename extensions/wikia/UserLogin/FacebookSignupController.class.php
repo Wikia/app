@@ -164,6 +164,15 @@ class FacebookSignupController extends WikiaController {
 	 */
 	public function signup() {
 
+		// Check that Facebook account is not in use!
+		$fbId = \FacebookClient::getInstance()->getUserId();
+		if ( $this->fbClientFactory->isFacebookIdInUse( $fbId ) ) {
+			$errorMessageKey = 'fbconnect-error-fb-account-in-use';
+			$messageParams = [ $this->request->getVal( 'username' ) ];
+			$this->setErrorResponse( wfMessage( $errorMessageKey, $messageParams )->escaped() );
+			return;
+		}
+
 		$signupResponse = $this->app->sendRequest( 'FacebookSignup', 'createAccount' )->getData();
 
 		switch ( $signupResponse['result'] ) {
