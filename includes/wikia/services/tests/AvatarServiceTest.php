@@ -69,14 +69,14 @@ class AvatarServiceTest extends WikiaBaseTest {
 		return [
 			// anon
 			[
-				'url' => '/images/thumb/1/19/Avatar.jpg/20px-Avatar.jpg',
+				'url' => '/images/1/19/Avatar.jpg/revision/latest/scale-to-width/20',
 				'userName' => '80.2.3.4',
 				'userId' => 0,
 				'avatarSize' => 20,
 			],
 			// logged-in
 			[
-				'url' => '/images/thumb/e/e1/123456/20px-123456',
+				'url' => '/images/e/e1/123456/revision/latest/scale-to-width/20',
 				'userName' => 'TestUser123',
 				'userId' => 123456,
 				'avatarSize' => 20,
