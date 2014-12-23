@@ -110,25 +110,27 @@ class FacebookMapModel {
 	}
 
 	/**
-	 * Find a Wikia/Facebook User mapping based on both Ids
+	 * Retrieve a Wikia/Facebook User mapping based on both Ids
 	 * If a two-id match was found, returns the map
-	 * If only one Id matched, returns an integer error code
+	 * If only one Id matched, throws exception with error code
 	 * If no matches, returns null
 	 *
 	 * @param int $wikiaUserId
 	 * @param int $facebookId
-	 * @return FacebookMapModel|int|null
+	 * @return FacebookMapModel|null
+	 * @throws FacebookMapModelException
 	 */
-	public static function lookupUserMapping( $wikiaUserId, $facebookId ) {
+	public static function getUserMapping( $wikiaUserId, $facebookId ) {
 		$map = self::lookupFromFacebookID( $facebookId );
+
 		if ( $map && ( $map->wikiaUserId != $wikiaUserId ) ) {
-			return self::ERROR_WIKIA_USER_ID_MISMATCH;
+			throw new FacebookMapModelException( '', self::ERROR_WIKIA_USER_ID_MISMATCH );
 		}
 
 		if ( !$map ) {
 			$map = self::lookupFromWikiaID( $wikiaUserId );
-			if ( $map && $map->$facebookId != $facebookId ) {
-				return self::ERROR_FACEBOOK_USER_ID_MISMATCH;
+			if ( $map && ( $map->$facebookId != $facebookId ) ) {
+				throw new FacebookMapModelException( '', self::ERROR_FACEBOOK_USER_ID_MISMATCH );
 			}
 		}
 

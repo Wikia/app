@@ -175,9 +175,9 @@ class FacebookClientController extends WikiaController {
 		}
 
 		// Create user mapping
-		$mapping = $this->fbClientFactory->connectToFacebook( $wg->User->getId(), $fbUserId );
-		if ( $mapping instanceof \Message ) {
-			$this->setErrorResponse( $mapping->escaped() );
+		$status = $this->fbClientFactory->connectToFacebook( $wg->User->getId(), $fbUserId );
+		if ( ! $status->isGood() ) {
+			$this->setErrorResponse( $status->getMessage() );
 			return;
 		}
 

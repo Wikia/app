@@ -15,22 +15,28 @@ class FacebookClientFactory {
 	 *
 	 * @param int $wikiaUserId
 	 * @param int $fbUserId
-	 * @return \FacebookMapModel|\Message
+	 * @return \Status (status value will be null or \FacebookMapModel if successfully created)
 	 */
 	public function connectToFacebook( $wikiaUserId, $fbUserId ) {
-		$map = \FacebookMapModel::lookupUserMapping( $wikiaUserId, $fbUserId );
-		if ( $map == null ) {
-			$map = \FacebookMapModel::createUserMapping( $wikiaUserId, $fbUserId );
-			if ( $map instanceof \FacebookMapModel ) {
-				return $map;
-			}
-		}
+		$status = new Status();
 
-		$messageParams = [];
-		if ( $map instanceof \FacebookMapModel ) {
-			$errorMessageKey = 'fbconnect-error-already-connected';
-		} else {
-			switch ( $map ) {
+		try {
+			$map = \FacebookMapModel::getUserMapping( $wikiaUserId, $fbUserId );
+			if ( !$map ) {
+				$map = \FacebookMapModel::createUserMapping( $wikiaUserId, $fbUserId );
+				if ( $map instanceof \FacebookMapModel ) {
+					$status->setResult( true, $map );
+				} else {
+					$status->setResult( false );
+					$status->error( 'fbconnect-error' );
+				}
+			} else {
+				$status->setResult( false );
+				$status->error( 'fbconnect-error-already-connected' );
+			}
+		} catch ( \Exception $e ) {
+			$messageParams = [];
+			switch ( $e->getCode() ) {
 				case \FacebookMapModel::ERROR_WIKIA_USER_ID_MISMATCH :
 					$errorMessageKey = 'fbconnect-error-fb-account-in-use';
 					$messageParams[] = \User::whoIs( $wikiaUserId );
@@ -41,8 +47,20 @@ class FacebookClientFactory {
 				default :
 					$errorMessageKey = 'fbconnect-error';
 			}
+			$status->setResult( false );
+			$status->error( $errorMessageKey, $messageParams );
 		}
-		return new \Message( $errorMessageKey, $messageParams );
+
+		return $status;
 	}
 
+	/**
+	 * Determine if Facebook account with given Id is connected to a Wikia account
+	 *
+	 * @param int $facebookId
+	 * @return bool
+	 */
+	public function isFacebookIdInUse( $facebookId ) {
+		return (\FacebookMapModel::lookupFromFacebookID( $facebookId ) !== null);
+	}
 }

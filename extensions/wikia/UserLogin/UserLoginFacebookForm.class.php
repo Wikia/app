@@ -92,8 +92,8 @@ class UserLoginFacebookForm extends UserLoginForm {
 
 		if ( F::app()->wg->EnableFacebookClientExt ) {
 			$fbClientFactory = new \FacebookClientFactory();
-			$mapping = $fbClientFactory->connectToFacebook( $user->getId(), $fbId );
-			if ( $mapping instanceof \Message ) {
+			$status = $fbClientFactory->connectToFacebook( $user->getId(), $fbId );
+			if ( ! $status->isGood() ) {
 				return false;
 			}
 		} else {

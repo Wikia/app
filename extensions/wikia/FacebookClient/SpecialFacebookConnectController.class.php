@@ -83,9 +83,9 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 		}
 
 		// Create user mapping
-		$mapping = $this->fbClientFactory->connectToFacebook( $wg->User->getId(), $fbUserId );
-		if ( $mapping instanceof \Message ) {
-			F::app()->wg->Out->showErrorPage( 'fbconnect-error', $mapping );
+		$status = $this->fbClientFactory->connectToFacebook( $wg->User->getId(), $fbUserId );
+		if ( ! $status->isGood() ) {
+			$this->showErrorPage( $status );
 			$this->skipRendering();
 			return true;
 		}
@@ -124,9 +124,9 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 		}
 
 		// Create user mapping
-		$mapping = $this->fbClientFactory->connectToFacebook( $wg->User->getId(), $fbUserId );
-		if ( $mapping instanceof \Message ) {
-			F::app()->wg->Out->showErrorPage( 'fbconnect-error', $mapping );
+		$status = $this->fbClientFactory->connectToFacebook( $wg->User->getId(), $fbUserId );
+		if ( ! $status->isGood() ) {
+			$this->showErrorPage( $status );
 			$this->skipRendering();
 			return true;
 		}
@@ -259,4 +259,22 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 		$this->status = 'ok';
 	}
 
+	/**
+	 * Displays an error page with error messages in status
+	 * Wraps the OutputPage class
+	 * @param Status $status
+	 */
+	protected function showErrorPage( \Status $status ) {
+		if ( ! $status->isGood() ) {
+			$errors = $status->getErrorsByType( 'error' );
+			if ( ! empty( $errors[0]['message'] ) ) {
+				$message = $errors[0]['message'];
+				$params = $errors[0]['params'];
+			} else {
+				$message = 'fbconnect-error';
+				$params = [];
+			}
+			F::app()->wg->Out->showErrorPage( 'fbconnect-error', $message, $params );
+		}
+	}
 }

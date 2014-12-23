@@ -228,9 +228,9 @@ class FacebookSignupController extends WikiaController {
 			return;
 		}
 
-		$mapping = $this->fbClientFactory->connectToFacebook( $user->getId(), $fbUserId );
-		if ( $mapping instanceof \Message ) {
-			$this->setErrorResponse( $mapping->escaped() );
+		$status = $this->fbClientFactory->connectToFacebook( $user->getId(), $fbUserId );
+		if ( ! $status->isGood() ) {
+			$this->setErrorResponse( $status->getMessage() );
 			return;
 		}
 
