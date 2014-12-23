@@ -62,8 +62,7 @@ class GlobalTitleTest extends WikiaBaseTest {
 	 */
 	function testUrlsMainNSonWoW() {
 		$title = GlobalTitle::newFromText( "Main", 116, 490); # wowwiki
-		$url = "http://www.wowwiki.com/Portal:Main";
-		$this->assertTrue( $title->getFullURL() === $url, sprintf("%s = %s, NOT MATCH", $title->getFullURL(), $url ) );
+		$this->assertStringEndsWith( "Portal:Main", $title->getFullURL(), "verify if WOW Wikia namespace was used" );
 	}
 
 	/**
