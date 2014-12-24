@@ -62,8 +62,7 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 		}
 
 		if (!empty($lang)) {
-			global $wgLanguageNames;
-			if (!array_key_exists($lang, $wgLanguageNames)) {
+			if (!Language::isValidBuiltInCode($lang)) {
 				// FIXME add proper error msg
 				$this->dieUsageMsg(array("invalidtitle", $lang));
 			}
