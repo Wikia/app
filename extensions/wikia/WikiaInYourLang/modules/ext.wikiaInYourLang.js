@@ -43,14 +43,19 @@ require(
 				geoCountryCode = geo.getCountryCode().toLowerCase(),
 				targetLanguage;
 
-			// Check if a browser's language is accessible
-			if (typeof browserLanguage === 'string') {
+
+			if (typeof w.wgUserName !== 'null') {
+				// Check if a user is logged and if so - use a lang from settings
+				targetLanguage = w.wgUserLanguage;
+			}
+			else if (typeof browserLanguage === 'string') {
+				// Check if a browser's language is accessible
 				targetLanguage = browserLanguage.substr(0, 2);
-				// Check if a langcode from Geo cookie is accessible
 			} else if (typeof geoCountryCode === 'string') {
+				// Check if a langcode from Geo cookie is accessible
 				targetLanguage = geoCountryCode;
-				// If neither - return false
 			} else {
+				// If neither - return false
 				targetLanguage = false;
 			}
 
