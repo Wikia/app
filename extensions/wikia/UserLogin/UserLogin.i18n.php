@@ -8,6 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'userlogin-desc' => 'UserLogin extension',
 	// login
 	'userlogin-login-heading' => 'Log in',
 	'userlogin-forgot-password' => 'Forgot your password?',
@@ -129,6 +130,7 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'userlogin-desc' => '{{desc}}',
 	'userlogin-login-heading' => 'Login page heading.
 {{Identical|Log in}}',
 	'userlogin-forgot-password' => 'Link that asks if you forgot your password.

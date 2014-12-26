@@ -1,8 +1,13 @@
 <?php
 $wgExtensionCredits['other'][] = array(
 	'name' => 'AnalyticsEngine',
-	'author' => 'Nick Sullivan'
+	'author' => 'Nick Sullivan',
+	'description-msg' => 'analyticsengine-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AnalyticsEngine',
 );
+
+//i18n
+$wgExtensionMessagesFiles['AnalyticsEngine'] = __DIR__ . '/i18n/AnalyticsEngine.i18n.php';
 
 // autoloaded classes
 $wgAutoloadClasses['iAnalyticsProvider'] = __DIR__ . '/iAnalyticsProvider.php';

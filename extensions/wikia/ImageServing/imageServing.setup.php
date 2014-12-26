@@ -7,6 +7,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'author' => 'Tomasz Odrobny',
 	'descriptionmsg' => 'imageserving-desc',
 	'version' => '1.0.1',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ImageServing'
 );
 
 $dir = __DIR__ . '/';

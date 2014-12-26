@@ -11,14 +11,18 @@ if ( !defined('MEDIAWIKI') ) {
 	exit(1);
 }
 
+$wgExtensionCredits[ 'other' ][ ] = array(
+	'name' => 'GoogleAnalyticsSampling',
+	'author' => 'Wikia',
+	'descriptionmsg' => 'google-analytics-sampling-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/GoogleAnalyticsSampling',
+);
+
 $dir = dirname(__FILE__);
 
-<<<<<<< HEAD
 //i18n
 $wgExtensionMessagesFiles['GoogleAnalyticsSampling'] = $dir . '/GoogleAnalyticsSampling.i18n.php';
 
-=======
->>>>>>> upstream/dev
 // WikiaApp
 $app = F::app();
 

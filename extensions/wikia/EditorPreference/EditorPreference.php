@@ -9,6 +9,7 @@ $wgExtensionCredits['other'][] = array(
 	'name'           => 'EditorPreference',
 	'author'         => 'Matt Klucsarits',
 	'descriptionmsg' => 'editorpreference-desc',
+	'url'            => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/EditorPreference'
 );
 
 $dir = dirname(__FILE__) . '/';

@@ -12,10 +12,11 @@ if(!defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'AssetsManager',
-	'author' => 'Inez Korczyński'
+	'author' => 'Inez Korczyński',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AssetsManager',
+	'descriptionmsg' => 'assestsmanager-desc',
 );
 
-<<<<<<< HEAD
 //i18n
 $wgExtensionMessagesFiles['AssetsManager'] = __DIR__ . '/i18n/AssetsManager.i18n.php';
 
@@ -25,14 +26,6 @@ $wgAutoloadClasses['AssetsManagerGroupBuilder'] = __DIR__ . '/builders/AssetsMan
 $wgAutoloadClasses['AssetsManagerGroupsBuilder'] = __DIR__ . '/builders/AssetsManagerGroupsBuilder.class.php';
 $wgAutoloadClasses['AssetsManagerSassBuilder'] = __DIR__ . '/builders/AssetsManagerSassBuilder.class.php';
 $wgAutoloadClasses['AssetsManagerSassesBuilder'] = __DIR__ . '/builders/AssetsManagerSassesBuilder.class.php';
-=======
-$wgAutoloadClasses['AssetsManagerBaseBuilder'] = __DIR__.'/builders/AssetsManagerBaseBuilder.class.php';
-$wgAutoloadClasses['AssetsManagerOneBuilder'] = __DIR__.'/builders/AssetsManagerOneBuilder.class.php';
-$wgAutoloadClasses['AssetsManagerGroupBuilder'] = __DIR__.'/builders/AssetsManagerGroupBuilder.class.php';
-$wgAutoloadClasses['AssetsManagerGroupsBuilder'] = __DIR__.'/builders/AssetsManagerGroupsBuilder.class.php';
-$wgAutoloadClasses['AssetsManagerSassBuilder'] = __DIR__.'/builders/AssetsManagerSassBuilder.class.php';
-$wgAutoloadClasses['AssetsManagerSassesBuilder'] = __DIR__.'/builders/AssetsManagerSassesBuilder.class.php';
->>>>>>> upstream/dev
 
 $wgAutoloadClasses['AssetsManagerServer'] = __DIR__ . '/AssetsManagerServer.class.php';
 $wgAutoloadClasses['AssetsManagerException'] = __DIR__ . '/AssetsManagerException.class.php';

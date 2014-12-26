@@ -13,17 +13,15 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'JSMessages',
 	'version' => '1.1',
 	'author' => 'Maciej Brencz',
-	'description' => 'Adds support for MW messages in JS code',
+	'descriptionmsg' => 'jsmessages-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/JSMessages'
 );
 
 $dir = dirname(__FILE__);
 
-<<<<<<< HEAD
 //i18n
 $wgExtensionMessagesFiles['JSMessages'] = $dir . '/JSMessages.i18n.php';
 
-=======
->>>>>>> upstream/dev
 // classes
 $wgAutoloadClasses['JSMessages'] =  $dir . '/JSMessages.class.php';
 $wgAutoloadClasses['JSMessagesHelper'] =  $dir . '/JSMessagesHelper.class.php';

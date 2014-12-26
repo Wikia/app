@@ -10,6 +10,9 @@
 $wgExtensionCredits['other'][] = [
 	'name' => 'Oasis Skin',
 	'version' => '1.0',
+	'author' => 'Maciej Brencz',
+	'descriptionmsg' => 'oasis-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Oasis'
 ];
 
 // Messages

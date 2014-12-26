@@ -12,6 +12,7 @@ $messages = array();
  * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
  */
 $messages['en'] = array(
+	'our404handler-desc' => 'Our 404 handler for non-existent pages tricks',
 	'our404handler' => 'Error 404: Page not found!',
 	'our404handler-oops' => "These aren't the pages you're looking for. Move along, please.",
 	'message404' => "

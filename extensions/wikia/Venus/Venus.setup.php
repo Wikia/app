@@ -15,10 +15,11 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['other'][] =
 	[
 		"name" => "Venus",
-		"description" => "Venus Skin for Wikia",
+		"descriptionmsg" => "venus-desc",
 		"author" => [
 			'Consumer Team',
-		]
+		],
+		'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Venus'
 	];
 
 /**

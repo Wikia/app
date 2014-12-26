@@ -12,6 +12,7 @@ $wgExtensionCredits['other'][] = array(
 		'version'           => '1.0',
 		'author'            => '[http://wikia.com/wiki/User:Relwell Robert Elwell]',
 		'descriptionmsg'    => 'wikia-nlp-desc',
+		'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/NLP'
 );
 
 $dir = dirname(__FILE__) . '/';

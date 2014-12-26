@@ -1,6 +1,5 @@
 <?php
 
-<<<<<<< HEAD
 $wgExtensionCredits[ 'other' ][ ] = array(
 	'name' => 'WallNotifications',
 	'author' => 'Wikia',
@@ -11,8 +10,6 @@ $wgExtensionCredits[ 'other' ][ ] = array(
 //i18n
 $wgExtensionMessagesFiles['WallNotifications'] = __DIR__ . '/i18n/WallNotifications.i18n.php';
 
-=======
->>>>>>> upstream/dev
 $wgAutoloadClasses['WallNotifications'] =  __DIR__ . '/WallNotifications.class.php';
 
 $wgAutoloadClasses['WallNotificationsAdmin'] =  __DIR__ . '/WallNotificationsAdmin.class.php';

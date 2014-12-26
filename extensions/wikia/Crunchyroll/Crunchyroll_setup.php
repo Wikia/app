@@ -33,16 +33,16 @@ if (!defined('MEDIAWIKI'))
 
 $wgExtensionCredits['parserhook'][] = array
 (
-	'name'        => 'YouTube',
-	'version'     => '1.10',
-	'author'      => 'Jakub Kurcek',
-	'url'         => '',
-	'description' => 'Embed Crunchyroll RSS videos',
+	'name'           => 'Crunchyroll',
+	'version'        => '1.10',
+	'author'         => 'Jakub Kurcek',
+	'url'            => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Crunchyroll',
+	'descriptionmsg' => 'crunchyroll-desc',
 );
 
 $dir = dirname(__FILE__) . '/';
 
-$wgAutoloadClasses['Crunchyroll']		= $dir . 'Crunchyroll.body.php';
+$wgAutoloadClasses['Crunchyroll']	    	= $dir . 'Crunchyroll.body.php';
 $wgAutoloadClasses['CrunchyrollRSS']		= $dir . 'CrunchyrollRSS.class.php';
 $wgAutoloadClasses['CrunchyrollVideo']		= $dir . 'CrunchyrollVideo.class.php';
 $wgAutoloadClasses['CrunchyrollHelpers']	= $dir . 'CrunchyrollHelpers.class.php';

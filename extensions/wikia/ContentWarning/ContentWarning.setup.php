@@ -7,7 +7,9 @@
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'ContentWarning',
-	'author' => array( 'Kyle Florence', 'Saipetch Kongkatong', 'Tomasz Odrobny' )
+	'author' => array( 'Kyle Florence', 'Saipetch Kongkatong', 'Tomasz Odrobny' ),
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ContentWarning',
+	'descriptionmsg' => 'content-warning-desc',
 );
 
 $dir = dirname(__FILE__) . '/';

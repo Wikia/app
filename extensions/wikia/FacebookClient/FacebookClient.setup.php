@@ -20,6 +20,7 @@ $wgExtensionCredits['facebookclient'][] = array(
 		"Armon Rabiyan <armon@wikia-inc.com>",
 	),
 	'descriptionmsg' => 'fbconnect-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/FacebookClient'
 );
 
 $dir = dirname( __FILE__ ) . '/';

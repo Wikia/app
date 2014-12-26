@@ -19,7 +19,6 @@ if (!defined('MEDIAWIKI')){
     echo ('THIS IS NOT VALID ENTRY POINT.'); exit (1);
 }
 
-<<<<<<< HEAD
 $wgExtensionCredits[ 'specialpage' ][ ] = array(
 	'name' => 'SpecialInterwikiEdit',
 	'author' => array(
@@ -30,8 +29,6 @@ $wgExtensionCredits[ 'specialpage' ][ ] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialInterwikiEdit',
 );
 
-=======
->>>>>>> upstream/dev
 $wgExtensionMessagesFiles['SpecialInterwikiEdit'] = dirname(__FILE__) . '/SpecialInterwikiEdit.i18n.php';
 $wgSpecialPageGroups['InterwikiEdit'] = 'wiki';
 
