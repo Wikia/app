@@ -2,10 +2,9 @@
 
 $wgExtensionCredits[ 'specialpage' ][] = array(
 	'name' => 'CorporateFooter',
-	'author' => array('Mateusz "Warkot" Warkocki', 'Bogna "bognix" Knychala'),
-	'descriptionmsg' => 'corporate-footer-desc',
-	'version' => 1.0,
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CorporateFooter'
+	'author' => 'Mateusz "Warkot" Warkocki, Bogna "bognix" Knychala',
+	'description' => 'CorporateFooter',
+	'version' => 1.0
 );
 
 $wgAutoloadClasses[ 'CorporateFooterController' ] = __DIR__ . '/CorporateFooterController.class.php';

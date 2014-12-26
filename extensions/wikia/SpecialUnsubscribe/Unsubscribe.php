@@ -25,7 +25,7 @@ $wgExtensionCredits['specialpage'][] = array(
 		'[http://community.wikia.com/wiki/User:TOR Lucas \'TOR\' Garczewski]'
 	),
 	'description' => 'Single email unbsubscribe point',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialUnsubscribe',
+	#'url' => '',
 	'descriptionmsg' => 'Unsubscribe-desc',
 );
 

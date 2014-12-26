@@ -6,9 +6,8 @@ if (!defined('MEDIAWIKI')) {
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'WikiaWidget',
 	'author' => 'Christian Williams',
-	'descriptionmsg' => 'wikiawidget-desc',
+	'description' => 'Create Wikia Widgets for use on external sites or for inclusion on your wiki',
 	'version' => '1.0',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaWidget'
 );
  
 $dir = dirname(__FILE__);

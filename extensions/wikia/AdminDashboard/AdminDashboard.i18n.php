@@ -8,7 +8,10 @@
 $messages = array();
 
 $messages['en'] = array(
+<<<<<<< HEAD
 	'admindashboard-desc' => 'A Dashboard for Wiki Administrators',
+=======
+>>>>>>> upstream/dev
 	'admindashboard-loading' => 'Loading…',
 	'admindashboard-title' => '{{SITENAME}} Dashboard',
 	'admindashboard-header' => 'Admin Dashboard',

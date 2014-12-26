@@ -31,7 +31,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'author' => 'Krzysztof Krzyżaniak',
 	'description' => 'Generate Sitemaps for the wiki on the fly',
 	'description-msg' => 'sitemap-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Sitemap'
 );
 
 /**

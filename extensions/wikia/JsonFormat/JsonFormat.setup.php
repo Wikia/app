@@ -1,18 +1,14 @@
 <?php
 
-$wgExtensionCredits[ 'other' ][ ] = array(
-	'name' => 'JsonFormat',
-	'author' => 'Wikia',
-	'descriptionmsg' => 'jsonformat-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/JsonFormat',
-);
-
 $dir = dirname(__FILE__);
 $app = F::app();
 
+<<<<<<< HEAD
 //i18n
 $wgExtensionMessagesFiles['JsonFormat'] =                       $dir . '/i18n/JsonFormat.i18n.php';
 
+=======
+>>>>>>> upstream/dev
 $wgAutoloadClasses[ 'Wikia\JsonFormat\HtmlParser' ] =           $dir . "/HtmlParser.php";
 $wgAutoloadClasses[ 'JsonFormatService' ] =                     $dir . "/JsonFormatService.php";
 $wgAutoloadClasses[ 'JsonFormatBuilder' ] =                     $dir . "/JsonFormatBuilder.php";

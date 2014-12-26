@@ -13,7 +13,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'author' => array(
 		"[http://community.wikia.com/wiki/User:R-Frank Kamil 'R-Frank' Koterba]"
 	),
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WDACReview'
 );
 
 $dir = __DIR__ . '/';

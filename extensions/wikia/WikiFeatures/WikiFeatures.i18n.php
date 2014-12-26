@@ -8,7 +8,6 @@
 $messages = array();
 
 $messages['en'] = array(
-	'wikifeatures-desc' => 'Allows privileged users to toggle Wikia\'s optional features',
 	'wikifeatures' => 'Wiki Features',
 	'wikifeatures-title' => 'Wiki Features',
 	'wikifeatures-heading' => 'Features',
@@ -120,7 +119,6 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'wikifeatures-desc' => '{{desc}}',
 	'wikifeatures-feature-description-wgEnableChat' => 'Feel free not to translate "lol omg rolfl" if there is no proper equivalent in your language. These are acronyms for Laughing Out Loud, Oh My God, and Rolling On The Floor Laughing.',
 	'wikifeatures-feature-heading-wgEnableWikiaInteractiveMaps' => 'Heading title for the Maps feature.',
 	'wikifeatures-feature-description-wgEnableWikiaInteractiveMaps' => 'Description text for the Maps feature.',

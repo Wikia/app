@@ -7,7 +7,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'author' => 'Jakub Kurcek',
 	'descriptionmsg' => 'wikia-watchsubpages-desc',
 	'version' => '1.0.0',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WatchSubPages'
 );
 
 $dir = dirname( __FILE__ ) . '/';

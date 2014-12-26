@@ -10,7 +10,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'IRC CloakCheck',
 	'author' => 'Chris \'Uberfuzzy\' Stafford',
 	'version' => '1.1 (Summer 2011)',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CloakCheck',
 	'description' => 'cloakcheck-desc'
 );
 

@@ -13,8 +13,6 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'Image Placeholder (Add Images)',
 	'author' => 'Bartek Łapiński',
 	'version' => '0.61',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ImagePlaceholder',
-	'descriptionmsg' => 'imgplc-desc'
 );
 
 global $wgWikiaImagesFoundInTemplates;

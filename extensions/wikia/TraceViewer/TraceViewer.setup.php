@@ -6,7 +6,6 @@ $wgExtensionCredits['other'][] = array(
 	'author'         => array( 'Władysław Bodzek' ),
 	'version'        => '0.1',
 //	'descriptionmsg' => 'titleblacklist-desc',
-	'url'            => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/TraceViewer'
 );
 
 $wgHooks['BeforePageDisplay'][] = 'efTraceViewerBeforePageDisplay';

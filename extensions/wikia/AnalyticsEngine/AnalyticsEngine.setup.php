@@ -1,9 +1,7 @@
 <?php
 $wgExtensionCredits['other'][] = array(
 	'name' => 'AnalyticsEngine',
-	'author' => 'Nick Sullivan',
-	'description-msg' => 'analyticsengine-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AnalyticsEngine',
+	'author' => 'Nick Sullivan'
 );
 
 // autoloaded classes

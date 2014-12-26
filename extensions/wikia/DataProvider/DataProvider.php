@@ -19,14 +19,16 @@ if (!defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'DataProvider',
-	'descriptionmsg' => 'dataprovider-desc',
-	'author' => array('Inez Korczyński', 'Tomasz Klim', 'Maciej Brencz', 'Gerard Adamczewski'),
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/DataProvider'
+	'description' => 'data provider for wikia skins',
+	'author' => 'Inez Korczyński, Tomasz Klim'
 );
 
+<<<<<<< HEAD
 //i18n
 $wgExtensionMessagesFiles['DataProvider'] = __DIR__ . '/DataProvider.i18n.php';
 
+=======
+>>>>>>> upstream/dev
 
 class DataProvider {
 	private $skin;

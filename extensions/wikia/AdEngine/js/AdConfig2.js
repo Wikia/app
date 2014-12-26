@@ -57,6 +57,12 @@ define('ext.wikia.adEngine.adConfig', [
 		'INCONTENT_2A': true,
 		'INCONTENT_2B': true,
 		'INCONTENT_2C': true,
+		'INCONTENT_3A': true,
+		'INCONTENT_3B': true,
+		'INCONTENT_3C': true,
+		'INCONTENT_LEADERBOARD_1': true,
+		'INCONTENT_LEADERBOARD_2': true,
+		'INCONTENT_LEADERBOARD_3': true,
 		'INVISIBLE_SKIN': true,
 		'LEFT_SKYSCRAPER_2': true,
 		'MIDDLE_RIGHT_BOXAD': true,
@@ -68,7 +74,6 @@ define('ext.wikia.adEngine.adConfig', [
 		'MODAL_INTERSTITIAL_4': true,
 		'TEST_HOME_TOP_RIGHT_BOXAD': true,
 		'TEST_TOP_RIGHT_BOXAD': true,
-		'TOP_INCONTENT_BOXAD': true,
 		'TOP_LEADERBOARD': true,
 		'TOP_RIGHT_BOXAD': true,
 		'WIKIA_BAR_BOXAD_1': true,
@@ -145,10 +150,6 @@ define('ext.wikia.adEngine.adConfig', [
 				gptSlotConfig.extendSlotParams('gpt', rtpSlots[i], { 'rp_tier': rtpTier });
 			}
 		}
-	}
-
-	if (amazonMatch && amazonMatch.wasCalled()) {
-		amazonMatch.trackState();
 	}
 
 	return {

@@ -20,7 +20,6 @@ $wgExtensionCredits['facebookclient'][] = array(
 		"Armon Rabiyan <armon@wikia-inc.com>",
 	),
 	'descriptionmsg' => 'fbconnect-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/FacebookClient'
 );
 
 $dir = dirname( __FILE__ ) . '/';
@@ -30,9 +29,10 @@ $dir = dirname( __FILE__ ) . '/';
  */
 $wgAutoloadClasses['FacebookClient'] =  $dir . 'FacebookClient.class.php';
 $wgAutoloadClasses['FacebookClientHelper'] =  $dir . 'FacebookClientHelper.class.php';
-$wgAutoloadClasses['FacebookClientController'] =  $dir . 'FacebookClientController.class.php';
 $wgAutoloadClasses['FacebookClientLocale'] =  $dir . 'FacebookClientLocale.class.php';
 $wgAutoloadClasses['FacebookMapModel'] =  $dir . 'FacebookMapModel.class.php';
+$wgAutoloadClasses['FacebookClientFactory'] =  $dir . 'FacebookClientFactory.php';
+$wgAutoloadClasses['FacebookClientController'] =  $dir . 'FacebookClientController.class.php';
 $wgAutoloadClasses['SpecialFacebookConnectController'] =  $dir . 'SpecialFacebookConnectController.class.php';
 $wgAutoloadClasses['FacebookClientXFBML'] = $dir . 'FacebookClientXFBML.php';
 

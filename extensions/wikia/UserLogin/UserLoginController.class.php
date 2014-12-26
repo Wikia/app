@@ -7,16 +7,16 @@
  *
  */
 class UserLoginController extends WikiaController {
-	
+
 	// This function is only used for testing / previewing / debugging the email templates
 	public function executeIndex() {
 		$type = $this->wg->Request->getVal( 'type' );
 		$lang = $this->wg->Request->getVal( 'lang', 'en' );
-		
-		$params = array(
-				'type' => $type, 
-				'language' => $lang, 
-		);
+
+		$params = [
+				'type' => $type,
+				'language' => $lang,
+		];
 
 		if ( $type == 'welcome-email' ) {
 			$this->previewBody = $this->app->renderView( "UserLogin", 'WelcomeMail', $params );

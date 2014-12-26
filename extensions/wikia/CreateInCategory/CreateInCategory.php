@@ -22,8 +22,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'CreateInCategory',
 	'author' => "[http://www.wikia.com/wiki/User:TOR Łukasz 'TOR' Garczewski]",
-	'descriptionmsg' => 'createincategory-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CreateInCategory'
+	'description' => 'Enables Wikia Staff members to manage user account information.'
 );
 
 // Set up the new special page

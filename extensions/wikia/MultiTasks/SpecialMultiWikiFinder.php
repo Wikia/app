@@ -20,9 +20,14 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 $wgExtensionCredits['specialpage'][] = array(
     "name" => "Multi-Title Finder",
+<<<<<<< HEAD
     "descriptionmsg" => "multiwikifinder-desc",
     "author" => "Moli <moli at wikia.com>",
 	"url" => "https://github.com/Wikia/app/tree/dev/extensions/wikia/MultiTasks"
+=======
+    "description" => "Staff tool to search for a specific title across Wikia ",
+    "author" => "Moli <moli at wikia.com>"
+>>>>>>> upstream/dev
 );
 
 #--- messages file

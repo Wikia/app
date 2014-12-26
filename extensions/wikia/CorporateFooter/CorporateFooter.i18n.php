@@ -3,7 +3,6 @@
 $messages = array();
 
 $messages['en'] = array(
-	'corporate-footer-desc' => 'Corporate Footer',
 	'wikiahome-footer-wikiainc' => '===Wikia, Inc.===
 *[http://www.wikia.com/About_Us About Us]
 *[http://www.wikia.com/Special:Contact Contact Wikia]
@@ -208,7 +207,6 @@ __NOEDITSECTION__",
 );
 
 $messages['qqq'] = array(
-	'corporate-footer-desc' => '{{desc}}',
 	'wikiahome-footer-wikiainc' => 'First column in the corporate footer; use here wikitext: __NOEDITSECTION__ magic word, bold headline and create list of links; the corporate footer is displayed on all corporate pages and is divided to few columns',
 
 	'wikiahome-footer-get-started-heading' => 'The headline of 2nd column in corporate footer; use here wikitext to bold it; the corporate footer is displayed on all corporate pages and is divided to few columns',

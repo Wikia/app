@@ -11,7 +11,7 @@
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'MiniEditor',
 	'author' => array( 'Liz Lee', 'Kyle Florence', 'Owen Davis' ),
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/MiniEditor',
+	'url' => 'http://www.wikia.com',
 	'descriptionmsg' => 'minieditor-desc'
 );
 

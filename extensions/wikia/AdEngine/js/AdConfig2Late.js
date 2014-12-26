@@ -14,7 +14,8 @@ define('ext.wikia.adEngine.adConfigLate', [
 	'ext.wikia.adEngine.provider.remnantGpt',
 	'ext.wikia.adEngine.provider.sevenOneMedia',
 	require.optional('ext.wikia.adEngine.provider.taboola'),
-	require.optional('wikia.abTest')
+
+	require.optional('ext.wikia.adEngine.adDecoratorTopInContent')
 ], function (
 	// regular dependencies
 	log,
@@ -30,7 +31,8 @@ define('ext.wikia.adEngine.adConfigLate', [
 	adProviderRemnantGpt,
 	adProviderSevenOneMedia, // TODO: move this to the early queue (remove jQuery dependency first)
 	adProviderTaboola,
-	abTest
+
+	adDecoratorTopInContent
 ) {
 	'use strict';
 
@@ -47,9 +49,11 @@ define('ext.wikia.adEngine.adConfigLate', [
 		dartDirectBtfSlots = {
 			'LEFT_SKYSCRAPER_3': true,
 			'PREFOOTER_LEFT_BOXAD': true,
-			'PREFOOTER_RIGHT_BOXAD': true
+			'PREFOOTER_RIGHT_BOXAD': true,
+			'TOP_INCONTENT_BOXAD': true
 		},
-		alwaysCallDart = context.opts.alwaysCallDart && !instantGlobals.wgSitewideDisableGpt;
+		alwaysCallDart = context.opts.alwaysCallDart && !instantGlobals.wgSitewideDisableGpt,
+		decorators = adDecoratorTopInContent ? [adDecoratorTopInContent] : [];
 
 	function getProviderList(slotname) {
 		log('getProvider', 5, logGroup);
@@ -85,11 +89,21 @@ define('ext.wikia.adEngine.adConfigLate', [
 			return [adProviderEvolve, adProviderLiftium];
 		}
 
+		// Don't load ads in TOP_INCONTENT_BOXAD if adDecoratorTopInContent is not available
+		if (slotname === 'TOP_INCONTENT_BOXAD' && !adDecoratorTopInContent) {
+			return [];
+		}
+
 		if (alwaysCallDart) {
 			if (dartDirectBtfSlots[slotname]) {
 				return [adProviderDirectGpt, adProviderRemnantGpt, adProviderLiftium];
 			}
 			return [adProviderRemnantGpt, adProviderLiftium];
+		}
+
+		// Load GPT and Liftium ads in TOP_INCONTENT_BOXAD
+		if (slotname === 'TOP_INCONTENT_BOXAD') {
+			return [adProviderDirectGpt, adProviderLiftium];
 		}
 
 		if (context.targeting.skin === 'venus' && slotname === 'INCONTENT_BOXAD_1') {
@@ -100,7 +114,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 	}
 
 	return {
-		getDecorators: function () { return []; },
+		getDecorators: function () { return decorators; },
 		getProviderList: getProviderList
 	};
 });

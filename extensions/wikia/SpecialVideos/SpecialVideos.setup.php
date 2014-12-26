@@ -6,9 +6,7 @@
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'SpecialVideos',
-	'author' => array( 'Liz Lee', 'Saipetch Kongkatong' ),
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialVideos',
-	'descriptionmsg' => 'specialvideos-desc'
+	'author' => array( 'Liz Lee', 'Saipetch Kongkatong' )
 );
 
 $dir = dirname(__FILE__) . '/';

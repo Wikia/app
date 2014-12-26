@@ -19,7 +19,6 @@ $wgExtensionCredits['other'][] = array(
 	'version' => '0.1',
 	'author' => 'Maciej Brencz',
 	'descriptionmsg' => 'wikiapoll-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaPoll'
 );
 
 $dir = dirname(__FILE__);

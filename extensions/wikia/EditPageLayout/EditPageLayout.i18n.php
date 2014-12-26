@@ -3,7 +3,6 @@
 $messages = array();
 
 $messages['en'] = array(
-	'editpagelayout-desc' => 'Applies updated layout for edit pages',
 	'editpagelayout-more' => 'more',
 	'editpagelayout-less' => 'less',
 	'editpagelayout-helpLink-url' => 'Help:Editing',
@@ -108,7 +107,6 @@ $messages['en'] = array(
  * @author TK-999
  */
 $messages['qqq'] = array(
-	'editpagelayout-desc' => '{{desc}}',
 	'editpagelayout-more' => '{{Identical|More}}',
 	'editpagelayout-helpLink-url' => 'See interwiki links (below categories) on http://help.wikia.com/wiki/Help:Editing for eventually an appropiate page name. {{doc-important|Do not change the "<tt>Help:</tt>" part.}}',
 	'editpagelayout-notificationsLink-none' => '{{Identical|Notification}}',

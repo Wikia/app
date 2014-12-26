@@ -8,16 +8,12 @@ $dir = dirname(__FILE__) . '/';
 
 $wgExtensionCredits['api'][] = [
 	'name' => 'Mercury API',
-	'descriptionmsg' => 'mercuryapi-desc',
+	'description' => 'This extensions provides API classes for the Mercury project',
 	'authors' => array(
 		'Evgeniy "aquilax" Vasilev',
 	),
-	'version' => 1.0,
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/MercuryApi'
+	'version' => 1.0
 ];
-
-//i18n
-$wgExtensionMessagesFiles['MercuryApi'] = $dir . 'MercuryApi.i18n.php';
 
 // Load needed classes
 $wgAutoloadClasses['MercuryApiController'] = $dir . 'MercuryApiController.class.php';

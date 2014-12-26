@@ -8,7 +8,6 @@
 
 $messages = array();
 $messages['en'] = array(
-	"newwikis-desc" => "Get list of the newest Wikis",
 	"newwikis" => "New wikis",
 	"newwikisstart" => "Display wikis starting at:",
 );

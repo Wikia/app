@@ -9,7 +9,6 @@
 $messages = array();
 
 $messages['en'] = array(
-	'promote-desc' => 'SpecialPromote page is enable for admins to add information about their wiki. After review of those informations it can show up on wikia.com',
 	'promote' => 'Promote',
 
 	'promote-title' => 'Promote',
@@ -376,7 +375,6 @@ $messages['pl'] = array(
 );
 
 $messages['qqq'] = array(
-	'promote-desc' => '{{desc}}',
 	'promote' => 'Promote page heading',
 
 	'promote-title' => 'Promote page title',

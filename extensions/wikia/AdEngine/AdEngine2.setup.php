@@ -1,14 +1,5 @@
 <?php
 
-$wgExtensionCredits['other'][] =
-	array(
-		'name' => 'Ad Engine',
-		'author' => 'Wikia',
-		'descriptionmsg' => 'adengine-desc',
-		'version' => '2.0',
-		'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AdEngine',
-	);
-	
 // Autoload
 $wgAutoloadClasses['AdEngine2ContextService'] =  __DIR__ . '/AdEngine2ContextService.class.php';
 $wgAutoloadClasses['AdEngine2Controller'] =  __DIR__ . '/AdEngine2Controller.class.php';

@@ -11,13 +11,10 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 1 );
 }
 
-$wgExtensionCredits[ 'other' ][ ] = array(
+$wgExtensionCredits[ 'specialpage' ][ ] = array(
 	'name' => 'Abuse Filter Bypass',
 	'author' => 'Nelson Monterroso',
 	'version' => '1.0.0',
-	'descriptionmsg' => 'abusefilterbypass-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AbuseFilterBypass',
-	
 );
 
 $dir = dirname( __FILE__ );
@@ -31,7 +28,11 @@ $wgGroupPermissions[ '*' ][ 'abusefilter-bypass' ] = false;
 $wgGroupPermissions[ 'staff' ][ 'abusefilter-bypass' ] = true;
 
 // hooks
+<<<<<<< HEAD
 $wgHooks[ 'AbuseFilterShouldFilter' ][ ] = 'AbuseFilterBypass::onBypassCheck';
 
 //i18n
 $wgExtensionMessagesFiles['AbuseFilterBypass'] = $dir . '/i18n/AbuseFilterBypass.i18n.php';
+=======
+$wgHooks[ 'AbuseFilterShouldFilter' ][ ] = 'AbuseFilterBypass::onBypassCheck';
+>>>>>>> upstream/dev

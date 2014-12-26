@@ -17,8 +17,7 @@ $wgExtensionCredits['monetizationmodule'][] = [
 		'Saipetch Kongkatong',
 		'Ted Gill',
 	],
-	'descriptionmsg' => 'monetizationmodule-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/MonetizationModule'
+	'description' => 'Monetization Module',
 ];
 
 $dir = dirname( __FILE__ ) . '/';

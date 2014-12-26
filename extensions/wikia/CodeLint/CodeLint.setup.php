@@ -20,15 +20,17 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'CodeLint',
 	'version' => '1.1',
 	'author' => 'Maciej Brencz',
-	'descriptionmsg' => 'codelint-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CodeLint',
+	'description' => 'Provides an interface for linting PHP, JS and CSS code',
 );
 
 $dir = dirname(__FILE__);
 
+<<<<<<< HEAD
 //i18n
 $wgExtensionMessagesFiles['CodeLint'] = $dir . '/i18n/CodeLint.i18n.php';
 
+=======
+>>>>>>> upstream/dev
 // WikiaApp
 $app = F::app();
 

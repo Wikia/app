@@ -22,7 +22,6 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'ShowPerformanceStats',
 	'author' => 'Sean Colombo',
 	'descriptionmsg' => 'showperformancestats-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ShowPerformanceStats'
 );
 
 $wgExtensionMessagesFiles['ShowPerformanceStats'] = dirname(__FILE__) . '/ShowPerformanceStats.i18n.php';

@@ -16,8 +16,7 @@ if (!defined('MEDIAWIKI')) die();
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Editcount',
 	'author' => 'Ævar Arnfjörð Bjarmason',
-	'descriptionmsg' => 'editcount-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Editcount'
+	'description' => 'Displays [[Special:Editcount|edit count]] of a user',
 );
 
 $dir =  dirname( __FILE__ );

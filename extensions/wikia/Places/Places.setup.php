@@ -18,8 +18,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'author' => array(
 		'Maciej Brencz',
 		'Jakub Kurcek' ),
-	'descriptionmsg' => 'places-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Places'
+	'descriptionmsg' => 'places-desc'
 );
 
 $dir = dirname( __FILE__ );

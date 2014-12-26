@@ -22,8 +22,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'HealthCheck',
 	'author' => "[http://www.wikia.com/wiki/User:TOR Łukasz 'TOR' Garczewski]",
-	'descriptionmsg' => 'healthcheck-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialHealthcheck'
+	'descriptionmsg' => 'healthcheck-desc'
 );
 
 // Set up the new special page

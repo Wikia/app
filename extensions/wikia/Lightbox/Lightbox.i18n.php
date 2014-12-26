@@ -3,7 +3,6 @@
 $messages = array();
 
 $messages['en'] = array(
-	'lightbox-desc' => 'Lightbox extension',
 	/* new stuff for new lightbox */
 	'lightbox-header-more-info-button' => 'More Info',
 	'lightbox-header-share-button' => 'Share',
@@ -86,7 +85,6 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'lightbox-desc' => '{{desc}}',
 	/* new stuff for new lightbox */
 	'lightbox-header-more-info-button' => 'Click this button to view more information about an image or video, like where it\'s posted.',
 	'lightbox-header-share-button' => 'Click this button to go to a screen where you can email a video or image to a friend and get permalinks to the media.',

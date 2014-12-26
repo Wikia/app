@@ -3,7 +3,10 @@
 $messages = array();
 
 $messages['en'] = array(
+<<<<<<< HEAD
 	'recipiestemplate-desc' => 'Adds forms to help people add recipes and ingredients pages to Recipes wikis',
+=======
+>>>>>>> upstream/dev
 	'createingredient' => 'Create an ingredient page',
 	'createrecipe' => 'Create a recipe page',
 	'createfromtemplate' => 'Create a page from a template',

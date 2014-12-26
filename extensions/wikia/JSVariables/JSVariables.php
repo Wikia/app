@@ -2,6 +2,7 @@
 /*
  * Author: Inez Korczyński (inez@wikia.com)
  */
+<<<<<<< HEAD
  
 $wgExtensionCredits[ 'other' ][ ] = array(
 	'name' => 'JSVariables',
@@ -12,6 +13,8 @@ $wgExtensionCredits[ 'other' ][ ] = array(
 
 //i18n
 $wgExtensionMessagesFiles[ 'JSVariables' ] = __DIR__ . '/JSVariables.i18n.php';
+=======
+>>>>>>> upstream/dev
 
 $wgHooks['MakeGlobalVariablesScript'][] = 'wfMakeGlobalVariablesScript';
 $wgHooks['WikiaSkinTopScripts'][] = 'wfJSVariablesTopScripts';

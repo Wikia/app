@@ -5,6 +5,7 @@
  *
  * @author Macbre
  */
+<<<<<<< HEAD
  
  $wgExtensionCredits[ 'other' ][ ] = array(
 	'name' => 'LoaderQueue',
@@ -15,6 +16,8 @@
 
 //i18n
 $wgExtensionMessagesFiles['LoaderQueue'] = __DIR__ . '/LoaderQueue.i18n.php';
+=======
+>>>>>>> upstream/dev
 
 // ResourceLoader support (MW 1.17+)
 $wgResourceModules['ext.wikia.loaderQueue'] = array(

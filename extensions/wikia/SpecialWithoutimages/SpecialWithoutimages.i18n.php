@@ -7,6 +7,5 @@
 $messages = array();
 
 $messages['en'] = array(
-	'withoutimages-desc' => 'Implements [[Special:WithoutImages]] to show pages without images',
 	'withoutimages' => 'Pages without images',
 );

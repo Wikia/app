@@ -8,7 +8,6 @@
 $messages = array();
 
 $messages['en'] = array(
-	'managewikiahome-desc' => 'Internal tool to manage corporate pages\'s visualization aka. remix feature',
 	'managewikiahome' => 'Manage Wikia Home',
 	'manage-wikia-home-wrong-rights' => "You are probably logged-out or you don't have permissions to use this special page.",
 
@@ -121,7 +120,6 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'managewikiahome-desc' => '{{desc}}',
 	'managewikiahome' => "Page title visible as browser window's title; Content of <title /> tag in HTML",
 	'manage-wikia-home-wrong-rights' => "A message displayed to a user if he doesn't have rights to use this special page",
 	'manage-wikia-home-wikis-in-slots-heading' => "Header of slots' configuration container; this container have input fields which we use to configure amounts of images per vertical we're showing in the visualization on corporate main page",

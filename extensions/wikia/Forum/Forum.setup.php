@@ -10,8 +10,6 @@
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Forum',
 	'author' => array( 'Hyun Lim', 'Kyle Florence', 'Saipetch Kongkatong', 'Tomasz Odrobny' ),
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Forum',
-	'descriptionmsg' => 'forum-desc'
 );
 
 $dir = dirname( __FILE__ ) . '/';

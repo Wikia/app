@@ -2,7 +2,6 @@
 $messages = [];
 
 $messages[ 'en' ] = [
-	'wikia-interactive-maps-desc' => 'Create your own maps with point of interest or add your own point of interest into a real world map',
 	'wikia-interactive-maps-title' => 'Maps',
 	'wikia-interactive-maps-create-a-map' => 'Create a Map',
 	'wikia-interactive-maps-no-maps-header' => 'There are no maps created yet.',
@@ -1656,7 +1655,6 @@ $messages[ 'nl' ] = [
 ];
 
 $messages[ 'qqq' ] = [
-	'wikia-interactive-maps-desc' => '{{desc}}',
 	'wikia-interactive-maps-title' => 'Maps special page title',
 	'wikia-interactive-maps-create-a-map' => 'Label for create new map button',
 	'wikia-interactive-maps-no-maps-header' => 'No maps created yet for this wikia header.',

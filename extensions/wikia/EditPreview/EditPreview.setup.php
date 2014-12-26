@@ -10,14 +10,13 @@ $dir = dirname(__FILE__) . '/';
 
 $wgExtensionCredits['editpreview'][] = [
 	'name' => 'Edit preview',
-	'descriptionmsg' => 'wikia-editor-preview-desc',
+	'description' => 'Enables users to preview their edits before saving them',
 	'authors' => [
 		'Rafał Leszczyński',
 		'Andrzej "nAndy" Łukaszewski',
 		'Jacek "mech" Woźniak',
 	],
-	'version' => 1.0,
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/EditPreview'
+	'version' => 1.0
 ];
 
 // messages

@@ -13,9 +13,9 @@ if ( ! defined( 'MEDIAWIKI' ) ){
 
 $wgExtensionCredits['other'][] = array(
 	"name" => "CategoryExhibition",
-	"descriptionmsg" => "category-exhibition-desc",
-	"author" => 'Jakub Kurcek',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CategoryExhibition',
+	"description" => "New loot to category page",
+	"descriptionmsg" => "catexhibition-desc",
+	"author" => array('Jakub Kurcek')
 );
 
 // Calculate the base directory and use it later a few times

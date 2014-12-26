@@ -6,9 +6,7 @@
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'RecentWikiActivity',
-	'author' => array( 'Damian Jozwiak' ),
-	'descriptionmsg' => 'recent-wiki-activity-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/RecentWikiActivity'
+	'author' => array( 'Damian Jozwiak' )
 );
 
 $dir = __DIR__ . '/';

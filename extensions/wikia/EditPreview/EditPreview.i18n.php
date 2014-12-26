@@ -1,7 +1,6 @@
 <?php
 /** English */
 $messages['en'] = array(
-	'wikia-editor-preview-desc' => 'Enables users to preview their edits before saving them',
 	'wikia-editor-preview-current-width' => 'Current width',
 	'wikia-editor-preview-min-width' => 'Minimum width',
 	'wikia-editor-preview-max-width' => 'Maximum width',
@@ -12,7 +11,6 @@ $messages['en'] = array(
 
 /** Message Documentation */
 $messages['qqq'] = array(
-	'wikia-editor-preview-desc' => '{{desc}}',
 	'wikia-editor-preview-current-width' => 'select option; after choosing it a user see preview of the article in his/her current screen width',
 	'wikia-editor-preview-min-width' => 'select option; after choosing it a user see preview of the article in minimum supported width (1024px)',
 	'wikia-editor-preview-max-width' => 'select option; after choosing it a user see preview of the article in maximum supported width (1600px)',
