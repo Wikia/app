@@ -62,6 +62,7 @@ Check given username for possible typos.</p>',
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author Liuxinyu970226
  * @author Shirayuki
  * @author Siebrand
  * @author Umherirrender
@@ -78,7 +79,9 @@ $messages['qqq'] = array(
 	'lookupcontribsprevious' => '{{Identical|Previous}}',
 	'lookupcontribspageremoved' => '{{Identical|Removed}}',
 	'lookupcontribsrestore' => '{{Identical|Restore}}',
+	'lookupcontribslog' => '{{Identical|Log}}',
 	'lookupcontribscontribs' => '{{Identical|Contribution}}',
+	'lookupcontribsdiff' => '{{Identical|Diff}}',
 	'right-lookupcontribs' => '{{doc-right|lookupcontribs|ns=Wikia}}',
 	'lookupcontribsshowpages' => '',
 	'lookupcontribscontent' => '{{Identical|Content}}',
@@ -326,12 +329,12 @@ Registre d\'entrada donat nom d\'usuari per possibles errors tipogràfics.</p>',
  */
 $messages['ce'] = array(
 	'lookupcontribs' => 'Къинхьегаме хьажа',
-	'lookupcontribslinks' => 'къинхьегаме хьажораг',
+	'lookupcontribslinks' => 'къинхьегаме хьажорг',
 	'lookupcontribsgo' => 'Дехьа гӀо',
 	'lookupcontribsnoresultfound' => 'ХӀума ца карийна!',
 	'lookupcontribswikititle' => 'ЦӀе',
 	'lookupcontribswikioptions' => 'Параметраш',
-	'lookupcontribscontribslink' => 'Къинхьегаме хьажораг',
+	'lookupcontribscontribslink' => 'Къинхьегаме хьажорг',
 	'lookupcontribscontribs' => 'къинхьегам',
 	'lookupcontribshist' => 'истори',
 	'lookupcontribscontent' => 'чулацам',
@@ -991,6 +994,7 @@ $messages['kn'] = array(
  * @author Miri-Nae
  */
 $messages['ko'] = array(
+	'lookupcontribsfullurls' => '전체 URL',
 	'lookupcontribsnoresultfound' => '결과를 찾을 수 없습니다!',
 	'lookupcontribswiki' => '위키',
 	'lookupcontribswikiurl' => 'URL',
@@ -1350,12 +1354,21 @@ $messages['nl-informal'] = array(
  * @author Cedric31
  */
 $messages['oc'] = array(
+	'lookupcontribs' => 'Recèrca de contribucions',
+	'lookupcontribstitle' => 'Recèrca de contribucions',
+	'lookupcontribsselectuser' => "Seleccionar l'utilizaire :",
+	'lookupcontribsselectfor' => 'Seleccionar per :',
+	'lookupcontribsfullurls' => 'URLs completas',
+	'lookupcontribsgo' => 'Veire',
+	'lookupcontribsselectwikis' => 'Seleccionar los wikis :',
 	'lookupcontribswiki' => 'Wiki',
 	'lookupcontribswikidbname' => 'Nom de la Banca de Donadas',
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Títol',
+	'lookupcontribswikioptions' => 'Opcions',
 	'lookupcontribscontribslink' => 'Ligams cap a las contribucions',
 	'lookupcontribsdetails' => 'Veire de detalhs per:',
+	'lookupcontribslastedited' => 'Darrièr cambiament',
 	'lookupcontribsnbrresult' => 'Nombre de resultats:',
 	'lookupcontribsnext' => 'seguent',
 	'lookupcontribsprevious' => 'precedent',
@@ -1368,6 +1381,9 @@ $messages['oc'] = array(
 	'right-lookupcontribs' => "Veire las edicions globalas de l'utilizaire",
 	'lookupcontribsshowpages' => 'Totas las paginas ($1 espacis de nom)',
 	'lookupcontribscontent' => 'contengut',
+	'lookupcontribsnormal' => 'recent',
+	'lookupcontribsfinal' => 'final',
+	'lookupcontribsall' => 'tot',
 );
 
 /** Deitsch (Deitsch)
@@ -1753,6 +1769,7 @@ $messages['sr-ec'] = array(
 );
 
 /** Swedish (svenska)
+ * @author Jopparn
  * @author Lokal Profil
  * @author Per
  * @author WikiPhoenix
@@ -1787,7 +1804,7 @@ Kolla efter möjliga stavfel i det angivna användarnamnet.</p>',
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Titel',
 	'lookupcontribswikioptions' => 'Alternativ',
-	'lookupcontribscontribslink' => 'Bidragslänkar',
+	'lookupcontribscontribslink' => 'Bidragslänk',
 	'lookupcontribsdetails' => 'Se detaljer för:',
 	'lookupcontribslastedited' => 'Senast redigerad',
 	'lookupcontribsrecordspager' => "Visar '''$1''' till '''$2''' av '''$3''' poster.",
@@ -2038,6 +2055,41 @@ $messages['uk'] = array(
 	'lookupcontribsfinal' => 'остаточні',
 	'lookupcontribsall' => 'усі',
 	'action-lookupcontribs' => 'пошук внесків користувача на декількох вікі',
+);
+
+/** Vietnamese (Tiếng Việt)
+ * @author Dinhxuanduyet
+ * @author Max20091
+ */
+$messages['vi'] = array(
+	'lookupcontribs' => 'Tra cứu Contribs',
+	'lookupcontribstitle' => 'Tra cứu Contribs',
+	'lookupcontribusernotspecify' => 'Bạn đã không chỉ định một người dùng',
+	'lookupcontribsselectuser' => 'Chọn người dùng:',
+	'lookupcontribsselectfor' => 'Chọn cho:',
+	'lookupcontribsdisplaymode' => 'Chế độ hiển thị:',
+	'lookupcontribsfullurls' => 'URL đầy đủ',
+	'lookupcontribsgo' => 'Đi',
+	'lookupcontribsselectwikis' => 'Chọn Wikia:',
+	'lookupcontribslistwikiainfo' => 'Danh sách wikia nơi có các bài viết được biên bập bởi <b>$1</b>',
+	'lookupcontribsnoresultfound' => 'Không tìm thấy kết quả!',
+	'lookupcontribsinvalidresults' => 'Kết quả không hợp lệ!',
+	'lookupcontribswiki' => 'Wiki',
+	'lookupcontribswikidbname' => 'Tên DB',
+	'lookupcontribswikiurl' => 'URL',
+	'lookupcontribswikititle' => 'Tựa đề',
+	'lookupcontribswikioptions' => 'Tùy chọn',
+	'lookupcontribslastedited' => 'Sửa đổi lần cuối',
+	'lookupcontribsnext' => 'tiếp',
+	'lookupcontribsprevious' => 'Trước',
+	'lookupcontribspageremoved' => 'Đã xoá:',
+	'lookupcontribsrestore' => 'khôi phục',
+	'lookupcontribslog' => 'nhật trình',
+	'lookupcontribscontribs' => 'đóng góp',
+	'lookupcontribshist' => 'sử',
+	'lookupcontribscontent' => 'nội dung',
+	'lookupcontribsnormal' => 'Gần đây',
+	'lookupcontribsall' => 'tất cả',
 );
 
 /** Yiddish (ייִדיש)

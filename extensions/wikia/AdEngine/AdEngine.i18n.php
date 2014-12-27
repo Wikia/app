@@ -32,7 +32,7 @@ $messages['ar'] = array(
 	'adengine-exitstitial-title-template' => 'أنت تغادر $1...',
 	'adengine-exitstitial-redirecting' => 'المتصفح الخاص بك سيقوم بتحويلك إلى الصفحة التي طلبتها في بضع ثوانٍ.',
 	'adengine-exitstitial-go-back' => 'أتريد أن تعود؟',
-	'adengine-exitstitial-button' => 'تخطَّ هذا الإعلان'
+	'adengine-exitstitial-button' => 'تخطَّ هذا الإعلان',
 );
 
 /** Azerbaijani (azərbaycanca)
@@ -91,7 +91,7 @@ $messages['bn'] = array(
 	'adengine-exitstitial-title-template' => 'আপনি $1 ছেড়ে যাচ্ছেন',
 	'adengine-exitstitial-redirecting' => 'আপনার ব্রাউজার আপনার অনুরোধ করা পাতার মধ্যে কিছুক্ষণের মধ্যে পুনঃনির্দেশ করবে।',
 	'adengine-exitstitial-go-back' => 'ফিরে যেতে চান?',
-	'adengine-exitstitial-button' => 'এই বিজ্ঞাপনটি বাদ দিন'
+	'adengine-exitstitial-button' => 'এই বিজ্ঞাপনটি বাদ দিন',
 );
 
 /** Breton (brezhoneg)
@@ -240,6 +240,12 @@ $messages['gl'] = array(
 	'adengine-exitstitial-button' => 'Saltar este anuncio',
 );
 
+/** Manx (Gaelg)
+ */
+$messages['gv'] = array(
+	'adengine-advertisement' => 'soilsheen',
+);
+
 /** Hakka (客家語/Hak-kâ-ngî)
  * @author EagerLin
  */
@@ -339,6 +345,12 @@ $messages['ko'] = array(
 	'adengine-exitstitial-redirecting' => '브라우저가 몇 초 뒤에 요청한 페이지로 넘어갑니다.',
 	'adengine-exitstitial-go-back' => '돌아가시겠습니까?',
 	'adengine-exitstitial-button' => '광고 건너뛰기',
+);
+
+/** Karachay-Balkar (къарачай-малкъар)
+ */
+$messages['krc'] = array(
+	'adengine-advertisement' => 'реклама',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -646,6 +658,12 @@ $messages['tr'] = array(
 	'adengine-exitstitial-button' => 'Reklamı geç',
 );
 
+/** Tatar (Cyrillic script) (татарча)
+ */
+$messages['tt-cyrl'] = array(
+	'adengine-advertisement' => 'реклама',
+);
+
 /** Ukrainian (українська)
  * @author Andriykopanytsia
  * @author Mykola Swarnyk
@@ -661,6 +679,7 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Max20091
  * @author Xiao Qiao
  */
 $messages['vi'] = array(
@@ -668,7 +687,7 @@ $messages['vi'] = array(
 	'adengine-exitstitial-title-template' => 'Bạn đang rời khỏi $1…',
 	'adengine-exitstitial-redirecting' => 'Trình duyệt của bạn sẽ chuyển hướng bạn đến trang web mà bạn yêu cầu trong vài giây nữa.',
 	'adengine-exitstitial-go-back' => 'Bạn muốn quay trở lại?',
-	'adengine-exitstitial-button' => 'Bỏ qua các quảng cáo này',
+	'adengine-exitstitial-button' => 'Bỏ qua quảng cáo này',
 );
 
 /** Waray (Winaray)
@@ -712,6 +731,9 @@ $messages['tt-cyrl'] = array(
 	'adengine-advertisement' => 'реклама',
 );
 
+/** Traditional Chinese (中文（繁體）‎)
+ */
 $messages['zh-hant'] = array(
 	'adengine-advertisement' => '廣告',
 );
+

@@ -264,6 +264,18 @@ $messages['az'] = array(
 	'editaccount-submit-realname' => 'Əsl adı qeyd et',
 );
 
+/** South Azerbaijani (تورکجه)
+ * @author Koroğlu
+ */
+$messages['azb'] = array(
+	'editaccount-label-reason' => 'ندن:',
+	'editaccount-submit-pass' => 'رمزی ساخلا',
+	'editaccount-submit-realname' => 'دوغرو آدی ساخلا',
+	'editaccount-submit-close' => 'حسابی باغلا',
+	'editaccount-submit-button' => 'ساخلا',
+	'editaccount-labal-email-status' => 'ایمیل دورومو',
+);
+
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  */
@@ -364,6 +376,16 @@ $messages['br'] = array(
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Diweredekaet eo bet ar gont-mañ en un doare hollek gant Wikia.</div>',
 	'right-editaccount' => 'Kemmañ penndibaboù implijerien all',
 	'action-editaccount' => 'Kemmañ titouroù implijerien all',
+);
+
+/** Bosnian (bosanski)
+ * @author Palapa
+ */
+$messages['bs'] = array(
+	'editaccount' => 'Urediti korisnički račun',
+	'editaccount-frame-manage' => 'Uredite korisnički račun',
+	'editaccount-frame-usage' => 'Bilješka',
+	'editaccount-submit-button' => 'Spremiti',
 );
 
 /** Catalan (català)
@@ -1612,6 +1634,10 @@ $messages['mk'] = array(
 	'editaccount-status-tempuser' => 'Привремен корисник',
 	'editaccount-error-tempuser-email' => 'Привремените корисници мора да внесат е-пошта. Внесете ја.',
 	'editaccount-email-change-requested' => 'Корисникот преку нагодувањата побара промена на е-поштата во $1. За да ја потврдите промената, внесете ја бараната адреса во долунаведеното поле и стиснете на „Зачувај и потврди“.',
+	'editaccount-closure-requested' => 'Сметкава е предвидена да се затвори по барање на сопственикот.',
+	'editaccount-submit-clearclosurerequest' => 'Тргни го барањето за затворање',
+	'editaccount-error-clearclosurerequest' => 'Грешка: Сметката е веќе затворена или не е предвидена за затворање.',
+	'editaccount-success-clearclosurerequest' => 'Барањето за затворање на сметката на $1 е тргнато.',
 	'editaccount-log' => 'Дневник на кориснички сметки',
 	'editaccount-log-header' => 'Оваа страница ги прикажува промените во нагодувањата на корисниците направени од персоналот на Викија',
 	'editaccount-log-entry-email' => 'променета е-поштата на корисникот $2',
@@ -1856,6 +1882,10 @@ Probeer het opnieuw of neem contact op met het Tech Team.',
 	'editaccount-status-tempuser' => 'Tijdelijke gebruiker',
 	'editaccount-error-tempuser-email' => 'Tijdelijke gebruikers moeten een e-mailadres opgeven. Geef een e-mailadres op.',
 	'editaccount-email-change-requested' => 'De gebruiker heeft via de voorkeuren een wijziging van het e-mailadres naar $1 aangevraagd. Voer het aangevraagde e-mailadres in het onderstaande veld in en klik op "Opslaan en bevestigen" om de gevraagde wijziging te bevestigen.',
+	'editaccount-closure-requested' => 'Deze gebruiker wordt op eigen verzoek afgesloten.',
+	'editaccount-submit-clearclosurerequest' => 'Afsluitingsverzoek intrekken',
+	'editaccount-error-clearclosurerequest' => 'Fout: de gebruiker is al afgesloten of er is nog geen afsluiting aangevraagd.',
+	'editaccount-success-clearclosurerequest' => 'Het afsluitingsverzoek voor $1 is ingetrokken.',
 	'editaccount-log' => 'Logboek gebruikers',
 	'editaccount-log-header' => 'Op deze pagina staan wijzigingen in gebruikersvoorkeuren die door stafleden van Wikia zijn gemaakt.',
 	'editaccount-log-entry-email' => 'heeft het e-mailadres voor gebruiker $2 aangepast',
@@ -3078,7 +3108,7 @@ $messages['zh-hant'] = array(
 	'editaccount-label-reason' => '原因：',
 	'editaccount-submit-email' => '保存並確認電子郵件位址',
 	'editaccount-submit-pass' => '保存密碼',
-	'editaccount-submit-realname' => '保存真實姓名',
+	'editaccount-submit-realname' => '儲存真實姓名',
 	'editaccount-submit-clearunsub' => '取消退訂',
 	'editaccount-submit-close' => '關閉帳戶',
 	'editaccount-submit-button' => '儲存',

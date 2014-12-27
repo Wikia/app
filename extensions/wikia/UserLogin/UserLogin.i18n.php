@@ -125,6 +125,7 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 );
 
 /** Message documentation (Message documentation)
+ * @author Liuxinyu970226
  * @author Shirayuki
  * @author Siebrand
  */
@@ -175,7 +176,8 @@ $messages['qqq'] = array(
 * $1 contains the user name in plain text',
 	'userlogin-error-unconfirmed-user' => 'Error message stating that user needs to be confirmed first.',
 	'userlogin-error-confirmation-reminder-already-sent' => 'Error message stating that confirmation email was already sent. This message is only used by maintenance scripts.',
-	'userlogin-password-page-title' => 'Heading for change password page.',
+	'userlogin-password-page-title' => 'Heading for change password page.
+{{Identical|Change password}}',
 	'userlogin-oldpassword' => 'Label for old password field.
 {{Identical|Old password}}',
 	'userlogin-newpassword' => 'Label for new password field.
@@ -203,7 +205,6 @@ $messages['qqq'] = array(
 	'wikiamobile-sendpassword-label' => 'Label for the button used to request a new password for recovery',
 	'wikiamobile-facebook-connect-fail' => "Shown when a user tries to log in via FBConnect but there's no matching account in our DB, please keep the message as short as possible as the space at disposal is really limited",
 	'wikiamobile-go-to-login' => 'Message on UserSignup that ask user to login if he has an account',
-	// logged in view
 	'userlogin-logged-in-title' => 'Header (title) for user login or signup page when user is already logged in',
 	'userlogin-logged-in-message' => 'Message body for user login or signup page when user is already logged in',
 );
@@ -323,6 +324,7 @@ $messages['az'] = array(
 
 /** South Azerbaijani (تورکجه)
  * @author Arjanizary
+ * @author Koroğlu
  */
 $messages['azb'] = array(
 	'userlogin-login-heading' => 'گیریش',
@@ -330,9 +332,11 @@ $messages['azb'] = array(
 	'userlogin-remembermypassword' => 'ایچری‌ده قال', # Fuzzy
 	'userlogin-error-noname' => 'اوخخخ، لوطفا ایشلدن‌آدی یئرین دولدورون',
 	'userlogin-error-invalidemailaddress' => 'لوطفا بیر گئچرلی ایمیل تاپاناغین یازین.',
+	'userlogin-error-invalid-username' => 'گئچرسیز ایشلدن آدی',
 	'userlogin-error-user-not-allowed' => 'بو ایشلدن‌آدی قویولمور.',
 	'userlogin-error-noemailtitle' => 'لوطفا بیر گئچرلی ایمیل تاپاناغین یازین.',
 	'userlogin-error-resetpass_forbidden' => 'رمزلر دَییشیلمز.',
+	'userlogin-password-page-title' => 'رمزی دَییشدیر',
 	'userlogin-oldpassword' => 'اسکی رمز',
 	'userlogin-newpassword' => 'یئنی رمز',
 	'userlogin-retypenew' => 'یئنی رمزی یئنی‌دن یازین',
@@ -342,6 +346,18 @@ $messages['azb'] = array(
 	'userlogin-loginreqlink' => 'گیریش',
 	'userlogin-changepassword-needlogin' => 'رمز دَییشمه‌سینه گؤره $1 اولماغی گرک‌دیر.',
 	'wikiamobile-sendpassword-label' => 'یئنی رمزی گؤندر',
+);
+
+/** Bashkir (башҡортса)
+ * @author Assele
+ */
+$messages['ba'] = array(
+	'userlogin-login-heading' => 'Танылыу',
+	'userlogin-forgot-password' => 'Паролегеҙҙе оноттоғоҙмо?',
+	'userlogin-forgot-password-button' => 'Дауам итергә',
+	'userlogin-remembermypassword' => 'Танылған килеш ҡалырға',
+	'userlogin-error-noname' => 'Зинһар, исем юлын тултырығыҙ.',
+	'userlogin-error-sessionfailure' => 'Һеҙҙең танылыу сессияһы ваҡыты үткән. Зиһар, ҡабаттан танылығыҙ.',
 );
 
 /** Bikol Central (Bikol Central)
@@ -428,6 +444,8 @@ N'haller ket cheñch ar gerioù-termen",
  * @author Alvaro Vidal-Abarca
  * @author BroOk
  * @author Marcmpujol
+ * @author Toniher
+ * @author Unapersona
  */
 $messages['ca'] = array(
 	'userlogin-login-heading' => 'Iniciar sessió',
@@ -497,10 +515,11 @@ Desitges controlar quins missatges de correu electrònic reps? Vés a: {{fullurl
 	'userlogin-provider-tooltip-facebook-signup' => 'Clica el botó per iniciar sessió amb Facebook',
 	'userlogin-facebook-show-preferences' => 'Mostrar les preferències de connexió de Facebook',
 	'userlogin-facebook-hide-preferences' => 'Amagar les preferències de connexió de Facebook',
-	'userlogin-loginreqlink' => 'Iniciar sessió',
+	'userlogin-loginreqlink' => 'Inicia la sessió',
 	'userlogin-changepassword-needlogin' => 'Necessites $1 per canviar la contrasenya.',
 	'wikiamobile-sendpassword-label' => 'Enviar una contrasenya nova',
 	'wikiamobile-facebook-connect-fail' => 'Ho sentim, el teu compte de Facebook no està actualment vinculat amb el teu compte de Wikia.',
+	'wikiamobile-go-to-login' => 'Teniu un compte? [[Special:UserLogin|iniciar Sessió ara >]]',
 );
 
 /** Chechen (нохчийн)
@@ -1740,7 +1759,7 @@ Om in te stellen welke e-mails u wilt ontvangen, gaat u naar {{fullurl:{{ns:spec
 	'userlogin-changepassword-needlogin' => 'U moet $1 om uw wachtwoord te kunnen wijzigen.',
 	'wikiamobile-sendpassword-label' => 'Nieuw wachtwoord sturen',
 	'wikiamobile-facebook-connect-fail' => 'Uw Facebookgebruiker is op het moment niet gekoppeld met uw Wikiagebruiker.',
-	'wikiamobile-go-to-login' => 'Heeft u een account? [[Special:UserLogin|Log nu in >]]',
+	'wikiamobile-go-to-login' => 'Heeft u een gebruiker? [[Special:UserLogin|Log nu in >]]',
 );
 
 /** Occitan (occitan)
@@ -1751,6 +1770,7 @@ $messages['oc'] = array(
 );
 
 /** Polish (polski)
+ * @author Chrumps
  * @author Nandy
  * @author Pio387
  * @author Sovq
@@ -1828,7 +1848,7 @@ Chcesz zmienić ustawienia otrzymywanych powiadomień? Zajrzyj tutaj: {{fullurl:
 	'userlogin-changepassword-needlogin' => '$1, aby zmienić swoje hasło.',
 	'wikiamobile-sendpassword-label' => 'Wyślij nowe hasło',
 	'wikiamobile-facebook-connect-fail' => 'Przepraszamy, Twoje konto na Facebooku nie jest obecnie połączone z kontem na Wikii.',
-	'wikiamobile-go-to-login' => 'Masz konto? [[Specjalna:UserLogin|Zaloguj się >]]', # Fuzzy
+	'wikiamobile-go-to-login' => 'Masz konto? [[Special:UserLogin|Zaloguj się >]]',
 );
 
 /** Piedmontese (Piemontèis)
@@ -2887,6 +2907,7 @@ _______________________________________
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  * @author LNDDYL
+ * @author Liuxinyu970226
  * @author Simon Shek
  * @author StephDC
  */
@@ -2924,7 +2945,7 @@ $messages['zh-hant'] = array(
 	'userlogin-password-email-sent' => '我們已經向帳戶 $1 傳送了一封包含有該帳戶的新密碼的電子郵件。',
 	'userlogin-error-unconfirmed-user' => '抱歉，您尚未確認您的電子郵件位址。請先去確認您的電子郵件位址。',
 	'userlogin-error-confirmation-reminder-already-sent' => '驗證提醒郵件已經發送',
-	'userlogin-password-page-title' => '更改您的密碼',
+	'userlogin-password-page-title' => '變更您的密碼',
 	'userlogin-oldpassword' => '舊密碼',
 	'userlogin-newpassword' => '新密碼',
 	'userlogin-retypenew' => '重新輸入新密碼',

@@ -118,11 +118,12 @@ $messages['de'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'wikiaconfirmemail-login-button' => 'Arşatkrden u qeydi',
 	'wikiaconfirmemail-heading' => 'Ze ke uca dero!',
-	'wikiaconfirmemail-username' => 'Namey karberi',
+	'wikiaconfirmemail-username' => 'Nameyê karberi',
 );
 
 /** Spanish (español)
@@ -175,6 +176,13 @@ $messages['fr'] = array(
 	'wikiaconfirmemail-heading' => 'On y est presque !',
 	'wikiaconfirmemail-subheading' => 'Connectez-vous avec vos nom d’utilisateur et mot de passe afin que nous sachions que vous avez reçu le courriel.',
 	'wikiaconfirmemail-username' => 'Nom d’utilisateur',
+);
+
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'wikiaconfirmemail-username' => 'Brûkersnamme',
 );
 
 /** Galician (galego)
@@ -289,7 +297,7 @@ $messages['nl'] = array(
 $messages['oc'] = array(
 	'wikiaconfirmemail-error-empty-code' => 'Còde de confirmacion void',
 	'wikiaconfirmemail-error-invalid-code' => 'Còde de confirmacion invalid',
-	'wikiaconfirmemail-error-user-not-match' => 'Ops, aqueste ligam de confirmacion correspond pas al nom d’utilizaire qu\'avètz picat. Asseguratz-vos qu’avètz picat lo bon nom d’utilizaire. Se vos volètz connectar amb un compte diferent, clicatz [[{{ns:special}}:UserLogin|aicí]].',
+	'wikiaconfirmemail-error-user-not-match' => "Ops, aqueste ligam de confirmacion correspond pas al nom d’utilizaire qu'avètz picat. Asseguratz-vos qu’avètz picat lo bon nom d’utilizaire. Se vos volètz connectar amb un compte diferent, clicatz [[{{ns:special}}:UserLogin|aicí]].",
 	'wikiaconfirmemail-login-button' => 'Confirmar e se connectar',
 	'wikiaconfirmemail-heading' => 'I sèm gaireben !',
 	'wikiaconfirmemail-subheading' => "Connectatz-vos amb vòstres nom d’utilizaire e senhal per tal que sapiam qu'avètz recebut lo corrièl.",
@@ -422,7 +430,7 @@ $messages['tl'] = array(
 $messages['uk'] = array(
 	'wikiaconfirmemail-error-empty-code' => 'Порожній код підтвердження',
 	'wikiaconfirmemail-error-invalid-code' => 'Код підтвердження невірний',
-	'wikiaconfirmemail-error-user-not-match' => 'Це посилання для підтвердження не відповідає імені учасника, яке ви ввели. Переконайтеся, що ви правильно ввели ім\'я учасника. Якщо ви хочете увійти в систему з іншого облікового запису, натисніть [[{{ns:special}}:UserLogin|тут]]',
+	'wikiaconfirmemail-error-user-not-match' => "Це посилання для підтвердження не відповідає імені учасника, яке ви ввели. Переконайтеся, що ви правильно ввели ім'я учасника. Якщо ви хочете увійти в систему з іншого облікового запису, натисніть [[{{ns:special}}:UserLogin|тут]]",
 	'wikiaconfirmemail-login-button' => 'Підтвердити й увійти',
 	'wikiaconfirmemail-heading' => 'Майже готово',
 	'wikiaconfirmemail-subheading' => "Увійдіть до системи, використовуючи ваше ім'я користувача і пароль, щоб ми знали, що ви отримали електронну пошту.",

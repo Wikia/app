@@ -1423,6 +1423,7 @@ $messages['bs'] = array(
  * @author BroOk
  * @author Erdemaslancan
  * @author Marcmpujol
+ * @author Unapersona
  */
 $messages['ca'] = array(
 	'wall-no-title' => 'Sense títol',
@@ -1589,7 +1590,7 @@ El missatge original i el teu resum apareixeran a l'historial del wiki.",
 	'wall-recentchanges-deleted-thread' => 'eliminat el tema "[[$1|$2]]" del mur de [[$3|$4]]',
 	'wall-recentchanges-deleted-reply' => "ha eliminat en el [[$3|mur de $4]] un missatge del tema ''[[$1|$2]]''",
 	'wall-recentchanges-closed-thread' => 'ha tancat el tema "[[$1|$2]] en el mur de [[$3|$4]]"',
-	'wall-recentchanges-reopened-thread' => 'ha restaurat el tema "[[$1|$2]] en el mur de [[$3|$4]]"', # Fuzzy
+	'wall-recentchanges-reopened-thread' => 'ha restaurat el tema "[[$1|$2]]" en el mur de [[$3|$4]]',
 	'wall-recentchanges-deleted-reply-title' => 'Una resposta en el mur de missatges',
 	'wall-recentchanges-wall-created-title' => "S'ha creat un mur de missatges",
 	'wall-recentchanges-namespace-selector-message-wall' => 'Mur de missatges',
@@ -1626,7 +1627,7 @@ El missatge original i el teu resum apareixeran a l'historial del wiki.",
 	'wall-history-action-view' => 'veure',
 	'wall-history-action-restore' => 'restaurar',
 	'wall-history-action-thread-history' => 'historial del tema',
-	'wall-thread-history-title' => 'historial del tema', # Fuzzy
+	'wall-thread-history-title' => 'Historial del fil',
 	'wall-thread-history-thread-created' => '$1 creat per $2',
 	'wall-thread-history-reply-created' => '$1 $2 ha deixat una resposta',
 	'wall-thread-history-thread-removed' => '$1 $2 ha retirat aquest tema',
@@ -2351,7 +2352,7 @@ $messages['diq'] = array(
 	'wall-message-wall-shorten' => 'dês',
 	'wall-message-unfollow' => 'Mepaw',
 	'wall-message-undoremove' => 'Peyser biya',
-	'wall-message-edited' => '<a href="$3" >Vurnerê</a> <a class="namey karberi" href="$1">$2</a>',
+	'wall-message-edited' => '<a href="$3" >Terefê</a> <a class="username" href="$1">$2</a> ra vurniya',
 	'wall-message-edited-summary' => '<a href="$4" >$1 by </a><a class="username" href="$2">$3</a>',
 	'wall-message-update-highlight-summary' => 'Xulaseya',
 	'wall-message-mywall' => 'Dêsê me',
@@ -4712,6 +4713,9 @@ $messages['ka'] = array(
 	'wall-message-edit' => 'რედაქტირება',
 	'wall-message-more' => 'მეტი',
 	'wall-message-close-thread' => 'ბმულის დახურვა',
+	'wall-notifications' => 'შეტყობინებები',
+	'wall-notifications-all' => 'ყველა შეტყობინება',
+	'wall-notifications-empty' => 'შეტყობინებები არ არის',
 	'wall-sorting-newest-threads' => 'უახლესი ბმულები',
 	'wall-sorting-oldest-threads' => 'უძველესი ბმულები',
 	'wall-sorting-newest-replies' => 'უახლესი პასუხები',
@@ -5515,7 +5519,7 @@ ubah keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preference
  * @author C.R.
  */
 $messages['nap'] = array(
-	'wall-thread-history-title' => "Storico d&#39;'o filo",
+	'wall-thread-history-title' => "Storico d' 'o filo",
 );
 
 /** Norwegian Bokmål (norsk bokmål)
@@ -5978,13 +5982,13 @@ Het oorspronkelijke bericht en uw bewerkingssamenvatting blijven nog wel in de g
 	'wall-recentchanges-deleted-thread' => 'heeft de draad "[[$1|$2]]" van het [[$3|prikbord van $4]] verwijderd',
 	'wall-recentchanges-deleted-reply' => 'heeft een antwoord uit de draad "[[$1|$2]]" van het [[$3|prikbord van $4]] verwijderd',
 	'wall-recentchanges-closed-thread' => 'heeft de draad "[[$1|$2]]" van het [[$3|prikbord van $4]] gesloten',
-	'wall-recentchanges-reopened-thread' => 'heeft de draad "[[$1|$2]]" van het [[$3|prikbord van $4]] heropend', # Fuzzy
+	'wall-recentchanges-reopened-thread' => 'heeft het overleg "[[$1|$2]]" van het [[$3|prikbord van $4]] heropend',
 	'wall-recentchanges-deleted-reply-title' => 'Een antwoord op het prikbord',
 	'wall-recentchanges-wall-created-title' => 'Berichtenmuur aangemaakt',
 	'wall-recentchanges-namespace-selector-message-wall' => 'Prikbord',
 	'wall-recentchanges-thread-group' => '$1 op het [[$2|prikbord van $3]]',
 	'wall-recentchanges-history-link' => 'prikbordgeschiedenis',
-	'wall-recentchanges-thread-history-link' => 'draadgeschiedenis',
+	'wall-recentchanges-thread-history-link' => 'overleggeschiedenis',
 	'wall-contributions-line' => '[[$1|$2]] op het [[$3|prikbord van $4]]',
 	'wall-whatlinkshere-wall-line' => '[[$1|$2]] op het [[$3|prikbord van $4]]',
 	'wall-message-not-found' => 'Dit bericht is niet aangetroffen. Als u deze foutmelding ziet, neem dan [[Special:Contact|contact op met Wikia]] en lever zoveel mogelijk details aan over hoe het mogelijk is deze foutmelding tevoorschijn te laten komen. Alvast bedankt!',
@@ -6014,7 +6018,7 @@ Het oorspronkelijke bericht en uw bewerkingssamenvatting blijven nog wel in de g
 	'wall-history-rail-block' => 'blokkeren',
 	'wall-history-action-view' => 'bekijken',
 	'wall-history-action-restore' => 'terugplaatsen',
-	'wall-history-action-thread-history' => 'draadgeschiedenis',
+	'wall-history-action-thread-history' => 'overleggeschiedenis',
 	'wall-thread-history-title' => 'Draadgeschiedenis',
 	'wall-thread-history-thread-created' => '$2 heeft deze draad $1 gemaakt',
 	'wall-thread-history-reply-created' => '$1 $2 heeft een antwoord achtergelaten.',
@@ -6866,6 +6870,7 @@ suas preferências de e-mail aqui: http://community.wikia.com/Special:Preference
  * @author Jefersonmoraes
  * @author Luckas
  * @author Luckas Blade
+ * @author Macofe
  * @author TheGabrielZaum
  * @author Tooguether
  */
@@ -6973,8 +6978,8 @@ O post original e seu sumário ainda aparecerão no histórico da wikia.',
 	'wall-notifications' => 'Notificações',
 	'wall-notifications-all' => 'Todas as Notificações',
 	'wall-notifications-markasread' => 'Marcar tudo como lido',
-	'wall-notifications-markasread-all-wikis' => 'Todas as wikias',
-	'wall-notifications-markasread-this-wiki' => 'Esta wikia',
+	'wall-notifications-markasread-all-wikis' => 'Todas as wikis',
+	'wall-notifications-markasread-this-wiki' => 'Esta wiki',
 	'wall-notifications-empty' => 'Não há notificações',
 	'wall-notifications-loading' => 'Carregando notificações',
 	'wall-notifications-reminder' => 'Você tem <span>$1</span> {{PLURAL:$1|notificação|notificações}} {{PLURAL:$1|não lida|não lidas}}',
@@ -8518,7 +8523,7 @@ $messages['uk'] = array(
 	'wall-message-elseswall' => 'Стіна $1',
 	'wall-message-no-permission' => 'У вас немає прав на виконання цієї дії над повідомленням',
 	'wall-thread-removed' => 'Вилучено',
-	'wall-thread-isnotifyeveryone' => 'Перейдіть',
+	'wall-thread-isnotifyeveryone' => 'Сповіщення',
 	'wall-thread-deleted' => 'Видалено',
 	'wall-thread-closed' => 'Закрито',
 	'wall-default-title' => 'Повідомлення від $1',
@@ -9221,6 +9226,7 @@ $messages['zh-hans'] = array(
 	'wall-desc' => '用户讨论页替换',
 	'wall-placeholder-topic' => '这是什么？',
 	'wall-placeholder-message' => '在$1的信息墙上发表新留言',
+	'wall-placeholder-message-anon' => '发布新留言',
 	'wall-placeholder-reply' => '发表回复',
 	'wall-button-to-preview-comment' => '预览',
 	'wall-button-to-cancel-preview' => '编辑',
@@ -9252,6 +9258,8 @@ $messages['zh-hans'] = array(
 	'wall-action-remove-reply-title' => '移除此回复',
 	'wall-action-remove-thread-title' => '移除此帖子',
 	'wall-delete-error-title' => '错误',
+	'wall-delete-error-content' => '留言已被删除',
+	'wall-confirm-monobook-lack-of-reason' => '请输入删除该对话/回复的理由。',
 	'wall-action-remove-confirm' => '请告诉我们移除原因：',
 	'wall-action-remove-confirm-ok' => '删除',
 	'wall-action-close-thread-title' => '关闭此对话',
@@ -9304,6 +9312,7 @@ $messages['zh-hans'] = array(
 	'wn-newmsg' => '您在$1的墙上留下了一条新信息',
 	'wn-newmsg-on-followed-wall' => '$1在$2的墙上留言了',
 	'wn-admin-thread-deleted' => '帖子从$1的墙上移除',
+	'wn-owner-thread-deleted' => '对话已被移除',
 	'wall-sorting-newest-threads' => '最新帖子',
 	'wall-sorting-oldest-threads' => '最旧帖子',
 	'wall-sorting-newest-replies' => '最新回复',
@@ -9311,11 +9320,18 @@ $messages['zh-hans'] = array(
 	'wall-sorting-archived' => '已归档的',
 	'tog-enotifmywall' => '…有人在我的信息墙上留言',
 	'wall-deleted-msg-pagetitle' => '信息已删除',
+	'wall-deleted-msg-text' => '您尝试查看的消息已被删除。',
 	'wall-deleted-msg-return-to' => '返回$1的留言墙',
 	'wall-deleted-msg-view' => '（查看/恢复）',
 	'wall-recentchanges-wall-thread' => '墙帖子',
 	'wall-recentchanges-new-message' => '在[[$1|$2的信息墙上]]',
 	'wall-recentchanges-edit' => '已编辑信息',
+	'wall-recentchanges-removed-thread' => '从[[$3|$4的墙]]上移除帖子“[[$1|$2]]”',
+	'wall-recentchanges-removed-reply' => '从[[$3|$4的墙]]上的“[[$1|$2]]”移除回复',
+	'wall-recentchanges-restored-thread' => '将帖子“[[$1|$2]]”恢复至[[$3|$4的墙]]',
+	'wall-recentchanges-restored-reply' => '将“[[$1|$2]]”上的回复恢复至[[$3|$4的墙]]',
+	'wall-recentchanges-deleted-thread' => '从[[$3|$4的墙]]上删除帖子“[[$1|$2]]”',
+	'wall-recentchanges-deleted-reply' => '从[[$3|$4的墙]]上的“[[$1|$2]]”删除回复',
 	'wall-recentchanges-closed-thread' => '关闭在[[$3|$4墙]]上的帖子“[[$1|$2]]”',
 	'wall-recentchanges-reopened-thread' => '在[[$3|$4墙]]重启帖子“[[$1|$2]]”',
 	'wall-recentchanges-deleted-reply-title' => '消息墙上的答复',
@@ -9337,6 +9353,7 @@ $messages['zh-hans'] = array(
 	'wall-history' => '历史',
 	'wall-history-title' => '墙历史',
 	'wall-history-who-involved-wall-title' => '涉及谁？',
+	'wall-history-who-involved-thread-title' => '谁参与了本条对话？',
 	'wall-history-thread-created' => '$1由$2创建',
 	'wall-history-thread-removed' => '$1由$2移除',
 	'wall-history-thread-restored' => '$1由$2恢复',
@@ -9623,7 +9640,7 @@ $messages['zh-hant'] = array(
 	'wall-history-summary-label' => '摘要',
 	'wall-history-rail-wall' => '訊息牆',
 	'wall-history-rail-contribs' => '貢獻',
-	'wall-history-rail-block' => '封禁',
+	'wall-history-rail-block' => '封鎖',
 	'wall-history-action-view' => '檢視',
 	'wall-history-action-restore' => '恢復',
 	'wall-history-action-thread-history' => '討論串歷史',
@@ -9668,7 +9685,7 @@ $messages['zh-hant'] = array(
 	'wall-votes-modal-showmore' => '看看其他給了讚的人。',
 	'wall-votes-modal-title' => '讚',
 	'wall-votes-modal-title-desc' => '有{{PLURAL:$1|One person|$1 個人}}幫這個訊息按讚',
-	'wall-votes-number' => '$1 個{{PLURAL:$1|Kudos|讚}}',
+	'wall-votes-number' => '$1 個{{PLURAL:$1|榮譽}}',
 	'wall-votes-number-tooltip' => '看誰幫這個訊息按讚',
 	'wall-votes-vote-tooltip' => '幫這個訊息按讚',
 	'wall-votes-voted-tooltip' => '你已幫這個訊息按讚',

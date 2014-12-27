@@ -33,6 +33,7 @@ Enter the description here.',
 );
 
 /** Message documentation (Message documentation)
+ * @author Liuxinyu970226
  * @author Shirayuki
  * @author Siebrand
  */
@@ -56,7 +57,8 @@ $messages['qqq'] = array(
 	'video-page-description-zero-state' => 'Placeholder file page content that states there is no description',
 	'video-page-add-description-link-text' => 'This is a link that takes you to the edit page where you can add a description for a video or image. The description, once added, will be a section in the file page content.',
 	'video-page-file-list-pagination' => 'Pagination for file listing.  e.g. 1 of 2.  $1 is current page, $2 is total pages',
-	'file-page-replace-button' => 'Replace button label, hidden in menu button',
+	'file-page-replace-button' => 'Replace button label, hidden in menu button
+{{Identical|Replace}}',
 	'file-page-tab-about' => 'Navigation tab label for the "about" section on a File Page.
 {{Identical|About}}',
 	'file-page-tab-history' => 'Navigation tab label for the "File History" section on a File Page.',
@@ -574,6 +576,7 @@ $messages['ko'] = array(
 	'video-page-default-description-header-and-text' => '==설명==
 여기에 설명을 입력하세요.',
 	'video-page-file-list-pagination' => '$1 / $2',
+	'file-page-replace-button' => '바꾸기',
 	'file-page-tab-about' => '소개',
 	'file-page-tab-history' => '파일 역사',
 	'file-page-tab-metadata' => '메타 데이터',
@@ -1114,7 +1117,7 @@ $messages['zh-hans'] = array(
 	'video-page-default-description-header-and-text' => '==说明==
 在这里输入说明。',
 	'video-page-file-list-pagination' => '$2的$1',
-	'file-page-replace-button' => '取代',
+	'file-page-replace-button' => '替换',
 	'file-page-tab-about' => '关于',
 	'file-page-tab-history' => '文件历史',
 	'file-page-tab-metadata' => '元数据',
@@ -1144,7 +1147,7 @@ $messages['zh-hant'] = array(
 	'video-page-default-description-header-and-text' => '==描述==
 在這裡輸入描述性內容。',
 	'video-page-file-list-pagination' => '$2的$1',
-	'file-page-replace-button' => '替換',
+	'file-page-replace-button' => '取代',
 	'file-page-tab-about' => '關於',
 	'file-page-tab-history' => '檔案歷史',
 	'file-page-tab-metadata' => '元數據',

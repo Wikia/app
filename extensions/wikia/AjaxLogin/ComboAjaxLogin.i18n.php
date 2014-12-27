@@ -265,6 +265,16 @@ Klaskit en-dro pe [[Special:Contact|kasit keloù]].',
 	'comboajaxlogin-ajaxerror' => 'Ne respont ket Wikipedia. Gwiriit ho kefluniadur rouedad, mar plij.',
 );
 
+/** Bosnian (bosanski)
+ * @author Palapa
+ */
+$messages['bs'] = array(
+	'comboajaxlogin-createlog' => 'Prijavite se ili napravite novi račun',
+	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Logujte se sa Facebook Connect</h1>',
+	'comboajaxlogin-connectmarketing-back' => 'Nazad',
+	'comboajaxlogin-connectmarketing-forward' => 'Započnite »',
+);
+
 /** Catalan (català)
  * @author Alvaro Vidal-Abarca
  * @author BroOk
@@ -410,12 +420,13 @@ Prøv igen eller [[Special: Contact|rapportér dette]].', # Fuzzy
  * @author SVG
  * @author Suriyaa Kudo
  * @author The Evil IP address
+ * @author Yottabyte
  */
 $messages['de'] = array(
 	'comboajaxlogin-desc' => 'Dynamische Box, die es Benutzern ermöglicht, sich anzumelden, Passwörter zu merken und Benutzer zu registrieren',
 	'comboajaxlogin-createlog' => 'Anmelden oder Benutzerkonto erstellen',
 	'comboajaxlogin-actionmsg' => 'Um diese Aktion auszuführen, musst du dich zuerst anmelden oder ein Benutzerkonto erstellen',
-	'comboajaxlogin-actionmsg-protected' => 'Um diese geschützten Seite zu bearbeiten, musst du dich zunächst anmelden oder ein Benutzerkonto anlegen.',
+	'comboajaxlogin-actionmsg-protected' => 'Um diese geschützte Seite zu bearbeiten, musst du dich zunächst anmelden oder ein Benutzerkonto anlegen.',
 	'comboajaxlogin-connectmarketing' => '<h1>Verbinden Sie Ihre Konten</h1>
 <ul>
 <li>Behalte Sie Ihre aktuellen Benutzernamen, Versionsgeschichte, Bearbeitungen... ändert sich nichts, außer, wie Sie in </li> einloggen <li>Teile deine Aktivitäten auf Wikia mit deinen Freunden auf Facebook</li>
@@ -661,6 +672,13 @@ Veuillez essayer à nouveau ou [[Special:Contact|le signaler]].',
 <br />
 (Si vous avez déjà un compte, vous pouvez <a href="#">vous identifier</a> comme d’habitude, mais vous ne pourrez rien modifier.)</p>',
 	'comboajaxlogin-ajaxerror' => 'Wikia ne répond pas. Veuillez vérifier votre connexion réseau.',
+);
+
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'comboajaxlogin-connectmarketing-back' => '« Foarige',
 );
 
 /** Galician (galego)

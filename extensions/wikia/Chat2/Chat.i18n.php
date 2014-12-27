@@ -404,6 +404,19 @@ $messages['az'] = array(
 	'chat-status-away' => 'Kənar',
 );
 
+/** South Azerbaijani (تورکجه)
+ * @author Koroğlu
+ */
+$messages['azb'] = array(
+	'chat-ban-modal-label-reason' => 'ندن',
+	'chat-log-reason-undo' => 'قایتار',
+	'chat-ban-undolink' => 'قایتار',
+	'chat-ban-modal-button-cancel' => 'وازگئچ',
+	'chat-user-menu-talk-page' => 'دانیشیق صفحه‌سی',
+	'chat-user-menu-contribs' => 'چالیشمالار',
+	'chat-status-away' => 'اوزاق',
+);
+
 /** Bulgarian (български)
  * @author DCLXVI
  */
@@ -555,12 +568,13 @@ $messages['bto'] = array(
 /** Catalan (català)
  * @author Anskar
  * @author BroOk
+ * @author Unapersona
  */
 $messages['ca'] = array(
 	'chat' => 'Xat',
 	'chat-desc' => '[[Special:Chat|Xat en directe]]',
-	'chat-no-login' => "Has d'estar connectat al xat.",
-	'chat-no-login-text' => "Si us plau connecta't per parlar.",
+	'chat-no-login' => "Has d'estar connectat per poder entrar al xat.",
+	'chat-no-login-text' => "Si us plau connecta't per entrar al xat.",
 	'chat-default-topic' => 'Benvingut al xat de $1',
 	'chat-welcome-message' => 'Benvingut al xat de $1',
 	'chat-user-joined' => "$1 s'ha unit al xat.",
@@ -573,42 +587,42 @@ $messages['ca'] = array(
 	'chat-kick-cant-kick-moderator' => 'No pots expulsar un altre Moderador del Xat.',
 	'chat-user-was-kicked' => '$1 ha estat expulsat per $2',
 	'chat-you-were-kicked' => 'Has sigut expulsat per $1.',
-	'chat-user-was-banned' => '$1 ha estat bannejat per $2 $3.',
-	'chat-you-were-banned' => 'Has estat bannejat per $1.',
-	'chat-user-was-unbanned' => '$2 ha desbannejat a $1.',
-	'chat-ban-cannt-undo' => "El banneig s'ha acabat",
+	'chat-user-was-banned' => '$1 ha estat bandejat per $2 $3.',
+	'chat-you-were-banned' => 'Has estat bandejat per $1.',
+	'chat-user-was-unbanned' => '$2 ha desbandejat a $1.',
+	'chat-ban-cannt-undo' => 'El bandeig ha finalitzat',
 	'chat-user-permanently-disconnected' => 'Has sigut desconnectat, comprova la teva connexió a Internet i refresca la finestra del navegador',
-	'chat-inlinealert-a-made-b-chatmod' => '$1ha fet a <strong>$2</strong> un Moderador de Xat.',
+	'chat-inlinealert-a-made-b-chatmod' => '$1 ha fer a <strong>$2</strong> un Moderador de Xat.',
 	'chat-err-connected-from-another-browser' => "T'has connectat des d'un altre navegador. Aquesta connexió es tancarà.",
 	'chat-err-communicating-with-mediawiki' => 'Error de comunicació amb el servidor MediaWiki.',
-	'chat-ban-contributions-heading' => 'Bannejar del xat',
-	'chat-ban-modal-heading' => 'Bannejar aquest usuari del xat',
+	'chat-ban-contributions-heading' => 'Bandejar del xat',
+	'chat-ban-modal-heading' => 'Bandejar aquest usuari del xat',
 	'chat-ban-modal-label-expires' => 'Caduca',
 	'chat-ban-modal-label-reason' => 'Raó',
 	'chat-log-reason-banadd' => 'Mal comportament al xat',
 	'chat-log-reason-undo' => 'desfés',
 	'chat-ban-undolink' => 'desfés',
-	'chat-ban-modal-button-ok' => 'Bannejar aquest usuari',
-	'chat-ban-modal-button-change-ban' => 'Canviar el banneig',
+	'chat-ban-modal-button-ok' => 'Bandejar aquest usuari',
+	'chat-ban-modal-button-change-ban' => 'Canviar el bandeig',
 	'chat-ban-modal-button-cancel' => 'Cancel·lar',
-	'chat-ban-modal-change-ban-heading' => "Canviar el banneig d'aquest usuari",
+	'chat-ban-modal-change-ban-heading' => "Canviar el bandeig d'aquest usuari",
 	'chat-ban-modal-change-ban-label' => 'Canviar a',
-	'chat-ban-modal-end-ban' => 'Acabar el banneig',
+	'chat-ban-modal-end-ban' => 'Finalitzar el bandeig',
 	'chat-log-reason-banchange' => "No s'ha donat cap raó.",
 	'chat-log-reason-banremove' => "No s'ha donat cap raó.",
-	'chat-ban-cant-ban-moderator' => 'No pots expulsar/bennejar un altre Moderador del Xat.',
-	'chat-ban-already-banned' => "$1 ja està bannejat del xat d'aquest wiki.",
-	'chat-ban-you-need-permission' => 'No teniu el permís $1 que es necessita per expulsar/bannejar un usuari.',
+	'chat-ban-cant-ban-moderator' => 'No pots expulsar/bandejar un altre Moderador del Xat.',
+	'chat-ban-already-banned' => "$1 ja està bandejat del xat d'aquest wiki.",
+	'chat-ban-you-need-permission' => 'No teniu el permís $1 que es necessita per expulsar/bandejar un usuari.',
 	'chat-missing-required-parameter' => "'$1' és necessari però no s'ha trobat a la sol·licitud.",
 	'chat-err-already-chatmod' => 'Error: "$1" ja està al grup "$2".',
-	'chat-err-no-permission-to-add-chatmod' => 'Error: No tens permís per afegir el grup " $1 " a aquest usuari.',
+	'chat-err-no-permission-to-add-chatmod' => 'Error: No tens permís per afegir el grup "$1" a aquest usuari.',
 	'chat-userrightslog-a-made-b-chatmod' => '$1 promogut a $2 per ser moderador del xat en aquest wiki.',
 	'chat-err-invalid-username-chatmod' => 'Error: No s\'ha pogut trobar l\'usuari "$1"',
 	'chat-you-are-banned' => 'Error de permisos.',
 	'chat-you-are-banned-text' => "Ho sentim, no tens permís per entrar al xat d'aquest wiki. Si penses que és un error o vols ser reconsiderat, si us plau posa't contacte amb un administrador.",
 	'chat-room-is-not-on-this-wiki' => 'La sala de xat a la que estàs intentant entrar no sembla existir en aquest wiki.',
-	'chat-kick-log-reason' => "Expulsat/bannejat del xat d'aquest wiki per $1. Si us plau, poseu-vos en contacte per més informació.",
-	'chat-live2' => 'Live! Xat',
+	'chat-kick-log-reason' => "Expulsat/badnejat del xat d'aquest wiki per $1. Si us plau, poseu-vos en contacte per més informació.",
+	'chat-live2' => 'Xat en directe!',
 	'chat-start-a-chat' => 'Entra al xat',
 	'chat-join-the-chat' => 'Uneix-te al xat',
 	'chat-edit-count' => '{{PLURAL:$1|$1 edició|$1 edicions}}',
@@ -620,25 +634,25 @@ $messages['ca'] = array(
 	'chat-user-menu-private' => 'Missatge Privat',
 	'chat-user-menu-give-chat-mod' => 'Fer Mod. del Xat',
 	'chat-user-menu-kick' => 'Expulsar',
-	'chat-user-menu-ban' => 'Bannejar',
+	'chat-user-menu-ban' => 'Bandejar',
 	'chat-user-menu-private-block' => 'Bloquejar Missatges Privats',
 	'chat-user-menu-private-allow' => 'Permetre Missatges Privats',
 	'chat-user-menu-private-close' => 'Tancar la Sala Privada',
 	'chat-private-headline' => 'Xat privat amb $1',
-	'right-chatmoderator' => 'Pots expulsar/bannejar un usuari del [[Help:Chat|Xat]]',
+	'right-chatmoderator' => 'Pots expulsar/bandejar un usuari del [[Help:Chat|Xat]]',
 	'group-chatmoderator' => 'Moderadors del Xat',
 	'group-chatmoderator-member' => 'Moderador del Xat',
-	'group-bannedfromchat' => 'Bannejat del xat',
-	'group-bannedfromchat-member' => 'Bannejat del xat',
+	'group-bannedfromchat' => 'Bandejat del xat',
+	'group-bannedfromchat-member' => 'Bandejat del xat',
 	'chat-ban-option-list' => '2 hores:2 hours,1 dia:1 day,3 dies:3 days,1 setmana:1 week,2 setmanes:2 weeks,1 mes:1 month,3 mesos:3 months,6 mesos:6 months,1 any:1 year,per sempre:infinite',
-	'chat-ban-log-change-ban-link' => 'Canviar el blocatge',
+	'chat-ban-log-change-ban-link' => 'Canviar el bandeig',
 	'chat-chatconnect-log' => 'Registre de connexions al xat',
 	'chat-chatconnect-log-entry' => 'Connectat a $1 des de $2',
-	'chat-chatban-log' => 'Registre de bannejos del xat',
-	'chat-chatbanadd-log-entry' => "bannejat del xat l'usuari $1 amb un termini de $2, acaba el $3",
-	'chat-chatbanremove-log-entry' => "Desbannejat l'usuari $1 del xat",
-	'chat-chatbanchange-log-entry' => "Canviat el banneig de l'usuari $1 amb un termini de $2, acaba el $3",
-	'chat-contributions-ban-notice' => "{{GENDER:$1|Aquest usuari}} actualment està bannejat del xat. L'última entrada al registre es proporciona a continuació:",
+	'chat-chatban-log' => 'Registre de bandejos del xat',
+	'chat-chatbanadd-log-entry' => "bandejat del xat l'usuari $1 amb un termini de $2, acaba el $3",
+	'chat-chatbanremove-log-entry' => "Desbandejat l'usuari $1 del xat",
+	'chat-chatbanchange-log-entry' => "Canviat el bandeig de l'usuari $1 amb un termini de $2, acaba el $3",
+	'chat-contributions-ban-notice' => "{{GENDER:$1|Aquest usuari}} està actualment bandejat del xat. L'última entrada al registre es proporciona a continuació:",
 	'chat-browser-is-notsupported' => 'El teu navegador no és compatible. Per una millor experiència, fes servir un <a href="http://ayuda.wikia.com/wiki/Ayuda:Navegadores_soportados">navegador millor i nou</a>.',
 	'chat-checkuser-join-action' => "S'ha unit al xat",
 	'chat-status-away' => 'Absent',
@@ -1999,6 +2013,7 @@ $messages['ko'] = array(
 	'chat-ban-modal-heading' => '이 사용자를 채팅에서 차단하기',
 	'chat-ban-modal-label-expires' => '차단 기한',
 	'chat-ban-modal-label-reason' => '이유',
+	'chat-log-reason-banadd' => '채팅에서의 문제 행동',
 	'chat-log-reason-undo' => '되돌리기',
 	'chat-ban-undolink' => '되돌리기',
 	'chat-ban-modal-button-ok' => '이 사용자 차단하기',
@@ -3348,6 +3363,7 @@ $messages['sr-ec'] = array(
 
 /** Swedish (svenska)
  * @author Geitost
+ * @author Jopparn
  * @author Lokal Profil
  * @author WikiPhoenix
  */
@@ -3362,7 +3378,7 @@ $messages['sv'] = array(
 	'chat-read-only' => 'Chatten är för tillfället inte tillgänglig medan wikin är i skrivskyddat läge.',
 	'chat-private-messages' => 'Privata meddelanden',
 	'chat-user-parted' => '$1 har lämnat chatten.',
-	'chat-user-blocked' => '$1 har blockerat $2 .',
+	'chat-user-blocked' => '$1 har blockerat $2.',
 	'chat-user-allow' => '$1 har tillåtit $2 .',
 	'chat-kick-you-need-permission' => 'Du har inte behörigheter att sparka en användare.',
 	'chat-kick-cant-kick-moderator' => 'Du kan inte sparka en annan Chatt-moderator.',

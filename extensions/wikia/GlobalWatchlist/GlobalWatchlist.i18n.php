@@ -565,6 +565,15 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'ブログページは見つかりませんでした。',
 );
 
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'globalwatchlist-digest-email-subject' => '주간 주시문서 편집 내역',
+	'globalwatchlist-no-page-found' => '문서를 찾을 수 없습니다.',
+	'globalwatchlist-no-blog-page-found' => '블로그 글을 찾을 수 없습니다.',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */

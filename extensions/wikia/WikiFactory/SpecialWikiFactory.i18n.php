@@ -164,6 +164,7 @@ $messages['qqq'] = array(
 	'wf_city_public' => '{{Identical|Status}}',
 	'wf_city_lang' => '{{Identical|Language}}',
 	'wf_cc_name' => '{{Identical|Category}}',
+	'wikifactory-label-info' => '{{Identical|Info}}',
 	'wikifactory-label-variables' => '{{Identical|Variable}}',
 	'wikifactory-label-variables2' => '{{Identical|General}}',
 	'wikifactory-label-domains' => '{{Identical|Domain}}',
@@ -610,6 +611,14 @@ $messages['bar'] = array(
 	'closed-wiki-create-wiki' => 'A neichs Wiki erstejn',
 );
 
+/** Southern Balochi (بلوچی مکرانی)
+ * @author Baloch Afghanistan
+ */
+$messages['bcc'] = array(
+	'wf_cc_name' => 'تهر',
+	'awc-metrics-category' => 'و تهر',
+);
+
 /** Belarusian (беларуская)
  * @author Тест
  */
@@ -992,6 +1001,7 @@ $messages['bs'] = array(
  * @author Gemmaa
  * @author Paucabot
  * @author SMP
+ * @author Unapersona
  */
 $messages['ca'] = array(
 	'wikifactorypagetitle' => 'Configurador de fàbrica de wiki',
@@ -1024,6 +1034,8 @@ $messages['ca'] = array(
 	'wikifactory-label-findtags' => 'FindTags',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
 	'wikifactory-label-compare' => 'Comparar',
+	'wikifactory-label-reason' => "'''Raó''' (Opcional, text de la raó o nombre de tiquet):",
+	'wikifactory-label-domain' => "'''Domini:'''",
 	'right-wikifactory' => 'Canvia la configuració interna de wikis',
 	'action-wikifactory' => 'canviar la configuració interna dels wikis',
 	'wikifactory-domain-edit' => 'editar aquesta URL',
@@ -1100,7 +1112,7 @@ $messages['ca'] = array(
 	'closed-wiki' => 'Wiki tancat',
 	'closed-wiki-info' => "S'ha tancat aquest wiki",
 	'disabled-wiki-info' => 'Aquest wiki ha estat inhabilitat',
-	'closed-wiki-dump-exists' => 'Pots [$1 recuperar el teu contingut] si ho vols.<br />(Si el teu wiki va tancar fa poc, pot trigar una mica la generació dels arxius)', # Fuzzy
+	'closed-wiki-dump-exists' => 'Podeu recuperar el contingut si vols.<br />(Si el vostre wiki va ser tancat recentment, es pot trigar una estona a generar els fitxers)',
 	'closed-wiki-dump-links' => '[$1 Pàgines actuals] (aquesta versió és la millor normalment per a bots)<br />[$2 Pàgines actuals i història] (advertència: aquest fitxer pot ser molt gran)',
 	'closed-wiki-dump-noexists' => "S'ha tancat aquest wiki. La descàrrega de contingut estarà disponible d'aquí 24 hores. Si us plau, comprova-ho una altra vegada més tard.",
 	'closed-wiki-create-wiki' => 'Crear un nou wiki',
@@ -1156,7 +1168,7 @@ $messages['ce'] = array(
 	'wikifactory-label-masstags' => 'Дуккхаллин билгалонаш',
 	'wikifactory-label-findtags' => 'Лаха къастам',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
-	'wikifactory-label-compare' => 'Муха ю хьажа',
+	'wikifactory-label-compare' => 'Юста',
 	'right-wikifactory' => 'Викин чоьхьара гӀирс нисбарш хийца',
 	'action-wikifactory' => 'Викин чоьхьара гӀирс нисбарш хийцар',
 	'wikifactory-domain-edit' => 'хӀара URL тае',
@@ -3734,6 +3746,7 @@ $messages['nl'] = array(
 	'wikifactory-label-findtags' => 'FindTags',
 	'wikifactory-label-ezsharedupload' => 'Eenvoudige gedeelde upload',
 	'wikifactory-label-compare' => 'Vergelijken',
+	'wikifactory-label-reason' => "'''Reden''' (optioneel, tekst voor de reden of een ticketnummer):",
 	'wikifactory-label-domain' => "'''Domein''':",
 	'right-wikifactory' => 'Interne instellingen van de wiki wijzigen',
 	'action-wikifactory' => "de interne instellingen voor wiki's te wijzigen",
@@ -5758,7 +5771,7 @@ $messages['zh-hant'] = array(
 	'wikifactory-domain-remove' => '從 wiki 刪除此網址',
 	'wikifactory-domain-setmain' => '將此網址提交到wgServer',
 	'closewiki-check-and-confirm' => '檢查 wiki 並確認操作',
-	'closewiki-redirect-to' => '重定向到',
+	'closewiki-redirect-to' => '重新導向至',
 	'closewiki-message' => '網域名 $1',
 	'closewiki-confirm-button' => "確認$2的'$1'",
 	'closewiki-nbr-wiki' => '$1 個wiki',
@@ -5766,7 +5779,7 @@ $messages['zh-hant'] = array(
 	'closewiki-wiki-closed_removed' => "' ' $1 '' 現在關閉並將會刪除 ( $2 )",
 	'closewiki-wiki-closed_redirect' => "' ' $1 '' 被關閉 （ $2 ） ，現在重定向到：$3",
 	'closewiki-images-url' => '圖像存檔：$1',
-	'closewiki-unknown' => '未知',
+	'closewiki-unknown' => '不明',
 	'closewiki-return' => '回到 $1',
 	'wikifactory-button-save' => '儲存變更',
 	'awc-metrics-wikis' => '顯示 Wiki',
@@ -5779,7 +5792,7 @@ $messages['zh-hant'] = array(
 	'awc-metrics-one-week' => '創建於一週以內',
 	'awc-metrics-two-weeks' => '創建 < 2 周前',
 	'awc-metrics-three-weeks' => '創建 < 3 周前',
-	'awc-metrics-one-months' => '創建 < 1 個月前',
+	'awc-metrics-one-months' => '建立 < 1 個月前',
 	'awc-metrics-two-months' => '創建 < 2 個月前',
 	'awc-metrics-three-months' => '創建 < 3 個月前',
 	'awc-metrics-half-year' => '創建於六個月以內',
