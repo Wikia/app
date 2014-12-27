@@ -117,11 +117,6 @@ $messages['ca'] = array(
 	'adengine-exitstitial-button' => 'Saltar aquest anunci',
 );
 
-/** Chechen (нохчийн)
- * @author Умар
- */
-$messages['ce'] = array();
-
 /** Czech (čeština)
  * @author Chmee2
  * @author H4nek
@@ -639,11 +634,6 @@ $messages['te'] = array(
 	'adengine-exitstitial-button' => 'ఈ యాడ్‍ను దాటవెయ్యి',
 );
 
-/** Tagalog (Tagalog)
- * @author Jewel457
- */
-$messages['tl'] = array();
-
 /** Turkish (Türkçe)
  * @author Sabri Vatansever
  * @author Sayginer
@@ -688,11 +678,6 @@ $messages['war'] = array(
 	'adengine-exitstitial-title-template' => 'Naíwas ka na han $1...',
 	'adengine-exitstitial-go-back' => '¿Karúyag mo bumálik?',
 );
-
-/** Yiddish (ייִדיש)
- * @author פוילישער
- */
-$messages['yi'] = array();
 
 /** Chinese (中文)
  * @author Shangkuanlc
