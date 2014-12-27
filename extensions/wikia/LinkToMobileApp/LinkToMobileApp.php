@@ -8,7 +8,7 @@
  * Requires the following settings in config or WikiFactory to work:
  * $wgWikiaMobileAppPackageId = 'com.wikia.singlewikia';
  * $wgWikiaMobileAppPackageIdLocalPart = 'muppet';
- * 
+ *
  * @author Łukasz Garczewski (TOR) <tor@wikia-inc.com>
  * @date 2014-11-03
  * @copyright Copyright © 2014 Łukasz Garczewski, Wikia Inc.
@@ -25,7 +25,12 @@ $wgExtensionCredits['specialpage'][] = array(
         'name' => 'LinkToMobileApp',
         'version' => '1.0',
         'author' => "[http://www.wikia.com/wiki/User:TOR Łukasz 'TOR' Garczewski]",
+		'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/LinkToMobileApp',
+		'descriptionmsg' => 'linktomobileapp-desc'
 );
+
+// i18n
+$wgExtensionMessagesFiles['LinkToMobileApp'] = __DIR__ . '/LinkToMobileApp.i18n.php';
 
 $wgHooks['BeforePageDisplay'][] = 'efLinkToMobileApp';
 
@@ -43,7 +48,7 @@ function efLinkToMobileApp( $out ) {
 	$href = 'android-app://' . $app . '/http/' . $url['host'] . $url['path'];
 
 	$out->addLink(
-		array( 
+		array(
 			'rel' => 'alternate',
 			'href' => $href,
 		)

@@ -2,6 +2,14 @@
 /**
  * Curated Content API setup file
  */
+
+$wgExtensionCredits[ 'specialpage' ][ ] = array(
+	'name' => 'CuratedContent',
+	'author' => 'Wikia',
+	'descriptionmsg' => 'wikiacuratedcontent-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CuratedContent',
+);
+
 $dir = dirname( __FILE__ );
 /**
  * classes
@@ -15,7 +23,7 @@ $wgAutoloadClasses['CuratedContentModel'] =  "{$dir}/CuratedContentModel.class.p
 $wgExtensionMessagesFiles['CuratedContent'] = "{$dir}/CuratedContent.i18n.php";
 
 
-//Special Page to preview page in Curated Content style
+// Special Page to preview page in Curated Content style
 $wgAutoloadClasses['CuratedContentSpecialPreviewController'] =  "{$dir}/CuratedContentSpecialPreviewController.class.php" ;
 $wgSpecialPages['CuratedContentPreview'] = 'CuratedContentSpecialPreviewController';
 
@@ -23,7 +31,7 @@ $wgGroupPermissions['*']['curatedcontentpreview'] = false;
 $wgGroupPermissions['staff']['curatedcontentpreview'] = true;
 $wgGroupPermissions['sysop']['curatedcontentpreview'] = true;
 
-//Special Page for Content Managment Tool
+// Special Page for Content Managment Tool
 $wgAutoloadClasses[ 'CuratedContentSpecialController'] =  "{$dir}/CuratedContentSpecialController.class.php" ;
 $wgSpecialPages[ 'CuratedContent' ] =  'CuratedContentSpecialController';
 
@@ -47,10 +55,10 @@ JSMessages::registerPackage( 'CuratedContentMsg', [
 	'wikiacuratedcontent-content-notsupportedtype-error'
 ] );
 
-//hooks
+// hooks
 $wgHooks['CuratedContentSave'][] = 'CuratedContentController::onCuratedContentSave';
 
-//minimal package of messages in CuratedContent
+// minimal package of messages in CuratedContent
 JSMessages::registerPackage( 'CuratedContent', [
 	'wikiamobile-hide-section',
 	'wikiamobile-image-not-loaded',

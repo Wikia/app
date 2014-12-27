@@ -10,14 +10,15 @@
  */
 
 $wgExtensionCredits['other'][] = array(
-	'name'			=> 'InWikiGame',
-	'author'		=> 'Andrzej "nAndy" Łukaszewski, Marcin Maciejewski, Sebastian Marzjan',
-	'description'	=> 'In Wiki Game enables to put an interactive game (i.e. in an iframe) to the wiki page',
-	'version'		=> 1.0
+	'name'				=> 'InWikiGame',
+	'author'			=> 'Andrzej "nAndy" Łukaszewski, Marcin Maciejewski, Sebastian Marzjan',
+	'descriptionmsg'	=> 'inwikigame-desc',
+	'version'			=> 1.0,
+	'url'				=> 'https://github.com/Wikia/app/tree/dev/extensions/wikia/InWikiGame'
 );
 
 
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
 
 // classes
 $wgAutoloadClasses['InWikiGameHelper'] =  $dir . '/InWikiGameHelper.class.php';
@@ -33,4 +34,4 @@ $wgHooks['WikiaAssetsPackages'][] = 'InWikiGameHooks::onWikiaAssetsPackages';
 
 // i18n mapping
 $wgExtensionMessagesFiles['InWikiGame'] = $dir . '/InWikiGame.i18n.php';
-JSMessages::registerPackage('InWikiGame', array('inwikigame-*'));
+JSMessages::registerPackage( 'InWikiGame', array( 'inwikigame-*' ) );

@@ -15,38 +15,48 @@
  * @todo add support for non-$wgSharedDB wikis
  */
 
-if (!defined('MEDIAWIKI')){
-    echo ('THIS IS NOT VALID ENTRY POINT.'); exit (1);
+if ( !defined( 'MEDIAWIKI' ) ) {
+    echo ( 'THIS IS NOT VALID ENTRY POINT.' ); exit ( 1 );
 }
 
-$wgExtensionMessagesFiles['SpecialInterwikiEdit'] = dirname(__FILE__) . '/SpecialInterwikiEdit.i18n.php';
+$wgExtensionCredits[ 'specialpage' ][ ] = array(
+	'name' => 'SpecialInterwikiEdit',
+	'author' => array(
+		'Lucas \'TOR\' Garczewski <tor@wikia.com>',
+		'Lucas \'Egon\' Matysiak <egon@wikia.com>'
+	),
+	'descriptionmsg' => 'interwikiedit-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialInterwikiEdit',
+);
+
+$wgExtensionMessagesFiles['SpecialInterwikiEdit'] = dirname( __FILE__ ) . '/SpecialInterwikiEdit.i18n.php';
 $wgSpecialPageGroups['InterwikiEdit'] = 'wiki';
 
 $wgAvailableRights [] = 'InterwikiEdit';
 $wgGroupPermissions ['staff']['InterwikiEdit'] = true;
-require_once($IP . '/includes/SpecialPage.php');
+require_once( $IP . '/includes/SpecialPage.php' );
 $wgSpecialPages['InterwikiEdit'] = 'InterwikiEdit';
 
 class InterwikiEdit extends SpecialPage {
 
-	public function InterwikiEdit(){
-		parent::__construct('InterwikiEdit');
+	public function InterwikiEdit() {
+		parent::__construct( 'InterwikiEdit' );
 	}
 
-	function execute( $par ){
+	function execute( $par ) {
 		global $wgOut, $wgUser, $wgRequest;
 
-		if( !$wgUser->isAllowed( 'InterwikiEdit' ) ) {
+		if ( !$wgUser->isAllowed( 'InterwikiEdit' ) ) {
 			throw new PermissionsError( 'InterwikiEdit' );
 		}
 
-		$action = $wgRequest->getVal('action', 'choose');
-		//$lang_only = $wgRequest->getVal('lang_only', 1);
+		$action = $wgRequest->getVal( 'action', 'choose' );
+		// $lang_only = $wgRequest->getVal('lang_only', 1);
 
-		if ($action != 'choose') $ret = "<p class='subpages'>&lt; <a href='?'>Back to menu</a></p>";
+		if ( $action != 'choose' ) $ret = "<p class='subpages'>&lt; <a href='?'>Back to menu</a></p>";
 		else $ret = "";
 
-		switch ($action){
+		switch ( $action ) {
 			case 'Change umbrella' :
 			case 'change_umbrella_commit' : $ret .= wfSIWEChangeUmbrella(); break;
 			case 'commit_link' : $ret .= wfSIWELinkWikisCommit (); break;
@@ -59,50 +69,50 @@ class InterwikiEdit extends SpecialPage {
 			default : $ret .= wfSIWEChooseAction();
 		}
 
-		$wgOut->setPageTitle(wfMessage( 'iwedit-title' )->text());
-		$wgOut->AddHTML ($ret);
+		$wgOut->setPageTitle( wfMessage( 'iwedit-title' )->text() );
+		$wgOut->AddHTML ( $ret );
 	} // end execute()
 
 } // end class InterwikiEdit
 
 
-function wfSIWEGetWikiaData($wikia=null, $wikiaID=null){
+function wfSIWEGetWikiaData( $wikia = null, $wikiaID = null ) {
 	global $wgOut, $wgExternalSharedDB;
 
-	if (!$wikia && !$wikiaID ){
-		$wgOut->addHTML("No wikia specified <br />\n<br />\n");
+	if ( !$wikia && !$wikiaID ) {
+		$wgOut->addHTML( "No wikia specified <br />\n<br />\n" );
 		return false;
 	}
 
 	$wikiaDB = null;
 	$result = null;
-	$wikia = trim($wikia);
-	$db =& wfGetDB (DB_SLAVE, array(), $wgExternalSharedDB);
+	$wikia = trim( $wikia );
+	$db =& wfGetDB ( DB_SLAVE, array(), $wgExternalSharedDB );
 
-	if (empty($wikiaID)){
+	if ( empty( $wikiaID ) ) {
 		$wikiaID = 0;
 
 	        # citydomain autocompletion -- .wikia.com is appended if:
 		# (a) there's no dot in cityname we add .wikia.com
 		# (b) there's one dot in cityname and the first part is a language code
-		$domain = explode('.', $wikia);
-		if ( count($domain) == 1 || ( count($domain) == 2 && Language::getLanguageName($domain[0]) != '' )) {
-			$wikia = $wikia.".wikia.com";
+		$domain = explode( '.', $wikia );
+		if ( count( $domain ) == 1 || ( count( $domain ) == 2 && Language::getLanguageName( $domain[0] ) != '' ) ) {
+			$wikia = $wikia . ".wikia.com";
 		}
 
 		$oRes = $db->select( "city_domains", "city_id, city_domain",
-	            array("city_domain" => $wikia), __METHOD__, array("limit" => 1) );
+	            array( "city_domain" => $wikia ), __METHOD__, array( "limit" => 1 ) );
 
-		if ($dbobject = $db->fetchObject($oRes)){
+		if ( $dbobject = $db->fetchObject( $oRes ) ) {
 			$wikiaID = $dbobject->city_id;
 		}
 
 	}
 
-	$result = $db->select('city_list', 'city_id,city_dbname,city_url,city_umbrella,city_lang', "city_id = ". $db->addQuotes($wikiaID));
+	$result = $db->select( 'city_list', 'city_id,city_dbname,city_url,city_umbrella,city_lang', "city_id = " . $db->addQuotes( $wikiaID ) );
 
-	$dbobject = $db->fetchObject($result);
-	if (!empty($dbobject)){
+	$dbobject = $db->fetchObject( $result );
+	if ( !empty( $dbobject ) ) {
 		return array(
 			$dbobject->city_id,
 			$dbobject->city_dbname,
@@ -110,13 +120,13 @@ function wfSIWEGetWikiaData($wikia=null, $wikiaID=null){
 			$dbobject->city_umbrella,
 			$dbobject->city_lang
 		);
-	}else{
-		$wgOut->addHTML("Didn't manage to find wikia for url with: '". htmlspecialchars($wikia). "'<br />\n<br />\n");
+	} else {
+		$wgOut->addHTML( "Didn't manage to find wikia for url with: '" . htmlspecialchars( $wikia ) . "'<br />\n<br />\n" );
 		return false;
 	}
 }
 
-function wfSIWEChooseAction(){
+function wfSIWEChooseAction() {
 	return "<form id='chooseaction' action='' method='POST'>
 	<table>
 	<tr><td>
@@ -138,33 +148,33 @@ function wfSIWEChooseAction(){
 	</form>";
 }
 
-function wfSIWEChangeUmbrella(){
+function wfSIWEChangeUmbrella() {
 	global $wgRequest, $wgExternalSharedDB;
 
 	$ret = '';
 
-	list($wikia, $wikiaID) = wfSIWEGetRequestData();
+	list( $wikia, $wikiaID ) = wfSIWEGetRequestData();
 
 	$db = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 
-	list($wikiaID, , $wikiaURL, $wikiaUmbrella) = wfSIWEGetWikiaData($wikia, $wikiaID);
-	if (!isset($wikiaURL)) return false;
+	list( $wikiaID, , $wikiaURL, $wikiaUmbrella ) = wfSIWEGetWikiaData( $wikia, $wikiaID );
+	if ( !isset( $wikiaURL ) ) return false;
 
-	if ( $wgRequest->getVal('action')=='change_umbrella_commit' ){
-		$wikiaUmbrella = $wgRequest->getVal( 'wikiaUmbrella', '');
+	if ( $wgRequest->getVal( 'action' ) == 'change_umbrella_commit' ) {
+		$wikiaUmbrella = $wgRequest->getVal( 'wikiaUmbrella', '' );
 
-		$result = $db->update('city_list',array('city_umbrella' => $wikiaUmbrella), array('city_id ' => $wikiaID));
-		list(,,,$wikiaUmbrellaNew) = wfSIWEGetWikiaData(null, $wikiaID);
-		$ret .= "<p>Umbrella for ". htmlspecialchars($wikiaURL). " is now set to ".
-			htmlspecialchars($wikiaUmbrellaNew). "</p>\n";
+		$result = $db->update( 'city_list', array( 'city_umbrella' => $wikiaUmbrella ), array( 'city_id ' => $wikiaID ) );
+		list( , , , $wikiaUmbrellaNew ) = wfSIWEGetWikiaData( null, $wikiaID );
+		$ret .= "<p>Umbrella for " . htmlspecialchars( $wikiaURL ) . " is now set to " .
+			htmlspecialchars( $wikiaUmbrellaNew ) . "</p>\n";
 
 	} else {
 
-		$ret.= "<form id='edit_form' action='' method='POST'>
-			<p>Change umbrella for ". htmlspecialchars($wikiaURL). " from '". htmlspecialchars($wikiaUmbrella). "' to: </p>\n
+		$ret .= "<form id='edit_form' action='' method='POST'>
+			<p>Change umbrella for " . htmlspecialchars( $wikiaURL ) . " from '" . htmlspecialchars( $wikiaUmbrella ) . "' to: </p>\n
 			<input type='text' name='wikiaUmbrella' />
 			<input type='hidden' name='action' value='change_umbrella_commit' />
-			<input type='hidden' name='wikia_id' value='". htmlspecialchars($wikiaID). "' />
+			<input type='hidden' name='wikia_id' value='" . htmlspecialchars( $wikiaID ) . "' />
 			<input type='submit' value='Change' />
 		</form>";
 	}
@@ -172,114 +182,114 @@ function wfSIWEChangeUmbrella(){
 	return $ret;
 }
 
-function wfSIWEEditInterwiki(){
+function wfSIWEEditInterwiki() {
 	global $wgRequest;
 
 	$ret = '';
 
-	list($wikia, $wikiaID) = wfSIWEGetRequestData();
-	list($wikiaID, $wikiaDB, $wikiaURL) = wfSIWEGetWikiaData($wikia, $wikiaID);
+	list( $wikia, $wikiaID ) = wfSIWEGetRequestData();
+	list( $wikiaID, $wikiaDB, $wikiaURL ) = wfSIWEGetWikiaData( $wikia, $wikiaID );
 
-	if (!$wikiaDB){
+	if ( !$wikiaDB ) {
 	        return wfSIWEChooseAction();
 	}
-	$db = wfGetDB (DB_MASTER, array(), $wikiaDB );
+	$db = wfGetDB ( DB_MASTER, array(), $wikiaDB );
 
-	$fields['iw_prefix'] = htmlspecialchars($wgRequest->getVal('iw_prefix', null));
-	$fields['iw_url'] = htmlspecialchars($wgRequest->getVal('iw_url', null));
-	$conf = $wgRequest->getVal('iw_local_conf',null);
-	if ($conf != null) {
+	$fields['iw_prefix'] = htmlspecialchars( $wgRequest->getVal( 'iw_prefix', null ) );
+	$fields['iw_url'] = htmlspecialchars( $wgRequest->getVal( 'iw_url', null ) );
+	$conf = $wgRequest->getVal( 'iw_local_conf', null );
+	if ( $conf != null ) {
 		$fields['iw_local'] = $conf;
 	} else {
-		$fields['iw_local'] = ($wgRequest->getCheck('iw_local')) ? 1 : 0;
+		$fields['iw_local'] = ( $wgRequest->getCheck( 'iw_local' ) ) ? 1 : 0;
 	}
-	$conf = $wgRequest->getVal('iw_trans_conf',null);
-	if ($conf != null) {
+	$conf = $wgRequest->getVal( 'iw_trans_conf', null );
+	if ( $conf != null ) {
 		$fields['iw_trans'] = $conf;
 	} else {
-		$fields['iw_trans'] = ($wgRequest->getCheck('iw_trans')) ? 1 : 0;
+		$fields['iw_trans'] = ( $wgRequest->getCheck( 'iw_trans' ) ) ? 1 : 0;
 	}
 
-	$from = htmlspecialchars($wgRequest->getVal('from', null));
+	$from = htmlspecialchars( $wgRequest->getVal( 'from', null ) );
 
-	$old_prefix = htmlspecialchars($wgRequest->getVal('old_prefix', ''));
-	$old_url = htmlspecialchars($wgRequest->getVal('old_url', ''));
+	$old_prefix = htmlspecialchars( $wgRequest->getVal( 'old_prefix', '' ) );
+	$old_url = htmlspecialchars( $wgRequest->getVal( 'old_url', '' ) );
 
-	$action = htmlspecialchars($wgRequest->getVal('action'));
+	$action = htmlspecialchars( $wgRequest->getVal( 'action' ) );
 
-	if ($action != 'Edit interwiki' && ($fields['iw_prefix'] == null || $fields['iw_url'] == null))
+	if ( $action != 'Edit interwiki' && ( $fields['iw_prefix'] == null || $fields['iw_url'] == null ) )
 		$ret .= "<p><b>Error:</b> You didn't specify a URL and/or a prefix.</p>";
 
-	#Edit or delete if requested...
-	if ( ($action=='edit_interwiki' || $action=='delete_interwiki') && $fields['iw_prefix'] && $fields['iw_url']){
+	# Edit or delete if requested...
+	if ( ( $action == 'edit_interwiki' || $action == 'delete_interwiki' ) && $fields['iw_prefix'] && $fields['iw_url'] ) {
 
-		switch ($action) {
+		switch ( $action ) {
 			case 'edit_interwiki' :
 #				Allow for non-language interwikis (rt#12266)
 #				if (!in_array($fields['iw_prefix'], $lang_names)) {
 #		        	$ret .= "<b>Error:</b> incorrect language interwiki prefix: $iw_prefix<br />\n";
 #					break;
 #				}
-				if ( $fields['iw_prefix'] != $old_prefix ){
+				if ( $fields['iw_prefix'] != $old_prefix ) {
 					$res = $db->select(
 						'interwiki',
-						array( '*'),
-						array('iw_prefix' => $fields['iw_prefix']),
+						array( '*' ),
+						array( 'iw_prefix' => $fields['iw_prefix'] ),
 						__METHOD__
 					);
 
-					if ( $dbObject = $db->fetchObject($res) ){
+					if ( $dbObject = $db->fetchObject( $res ) ) {
 
 						$ret .= "Prefix exists. Do you really want to change from:<br />\n";
 						$ret .= "Prefix:'{$dbObject->iw_prefix}' URL:'{$dbObject->iw_url}' LOCAL:'{$dbObject->iw_local}' TRANS:'{$dbObject->iw_trans}'<br />\n";
 						$ret .= "To<br />\n";
-						$ret .= "Prefix:'". $fields['iw_prefix']. "' URL:'". $fields['iw_url']. "' LOCAL:'". $fields['iw_local']. "' TRANS:'". $fields['iw_trans']. "'<br />\n";
+						$ret .= "Prefix:'" . $fields['iw_prefix'] . "' URL:'" . $fields['iw_url'] . "' LOCAL:'" . $fields['iw_local'] . "' TRANS:'" . $fields['iw_trans'] . "'<br />\n";
 						$ret .= "<form id='same_prefix_confirmation' action='' method='POST'>
-							<input type='hidden' name='iw_url' value='". $fields['iw_url']. "' />
-							<input type='hidden' name='old_prefix' value='". $fields['iw_prefix']. "' />
-							<input type='hidden' name='iw_prefix' value='". $fields['iw_prefix']. "' />
-							<input type='hidden' name='iw_local_conf' value='". $fields['iw_local']. "' />
-							<input type='hidden' name='iw_trans_conf' value='". $fields['iw_trans']. "' />
+							<input type='hidden' name='iw_url' value='" . $fields['iw_url'] . "' />
+							<input type='hidden' name='old_prefix' value='" . $fields['iw_prefix'] . "' />
+							<input type='hidden' name='iw_prefix' value='" . $fields['iw_prefix'] . "' />
+							<input type='hidden' name='iw_local_conf' value='" . $fields['iw_local'] . "' />
+							<input type='hidden' name='iw_trans_conf' value='" . $fields['iw_trans'] . "' />
 							<input type='hidden' name='action' value='edit_interwiki' />
 							<input type='hidden' name='wikia_id' value='$wikiaID' />
 							<input type='submit' value='" . wfMessage( 'yes' )->escaped() . "' />
 							</form>";
-					}else{
+					} else {
 						$ret .= "<p>Changeing interwiki...<br />\n";
 						$res = $db->insert( 'interwiki', $fields, __METHOD__ );
 
-	  					if ($res){
-   						$ret.= "<p>Prefix <b>". $fields['iw_prefix']. "</b> edited for <a href='$wikiaURL'>$wikiaURL</a> to:<ul>\n
-  							<li>url: ". $fields['iw_url']. "</li>\n
-  							<li>local: ". $fields['iw_local']. "</li>\n
-  							<li>trans: ". $fields['iw_trans']. "</li>\n
+	  					if ( $res ) {
+   						$ret .= "<p>Prefix <b>" . $fields['iw_prefix'] . "</b> edited for <a href='$wikiaURL'>$wikiaURL</a> to:<ul>\n
+  							<li>url: " . $fields['iw_url'] . "</li>\n
+  							<li>local: " . $fields['iw_local'] . "</li>\n
+  							<li>trans: " . $fields['iw_trans'] . "</li>\n
 							</ul></p>\n";
-  						}else{
+  						} else {
 	  		        			$ret .= "Database error: data not changed</p>\n";
 	  					}
   					}
-				}else{
+				} else {
 			        	$ret .= "<p>Changing interwiki...<br />\n";
-		        		$res = $db->query("INSERT INTO " .
+		        		$res = $db->query( "INSERT INTO " .
 		        				"`interwiki` (iw_prefix,iw_url,iw_local,iw_trans) " .
-		        				"VALUES (". $db->addQuotes($fields['iw_prefix']). ",". $db->addQuotes($fields['iw_url']). ",".
-		        				$db->addQuotes($fields['iw_local']). ",". $db->addQuotes($fields['iw_trans']). ") ".
-		        				"ON DUPLICATE KEY ".
-		        				"UPDATE iw_url=". $db->addQuotes($fields['iw_url']).
-		        				", iw_local=". $db->addQuotes($fields['iw_local']).
-		        				", iw_trans=". $db->addQuotes($fields['iw_trans']), __METHOD__ );
+		        				"VALUES (" . $db->addQuotes( $fields['iw_prefix'] ) . "," . $db->addQuotes( $fields['iw_url'] ) . "," .
+		        				$db->addQuotes( $fields['iw_local'] ) . "," . $db->addQuotes( $fields['iw_trans'] ) . ") " .
+		        				"ON DUPLICATE KEY " .
+		        				"UPDATE iw_url=" . $db->addQuotes( $fields['iw_url'] ) .
+		        				", iw_local=" . $db->addQuotes( $fields['iw_local'] ) .
+		        				", iw_trans=" . $db->addQuotes( $fields['iw_trans'] ), __METHOD__ );
 
-	  				if ($res){
-  						$ret.= "Prefix <b>". $fields['iw_prefix']. "</b> edited for <a href='$wikiaURL'>$wikiaURL</a> to:<ul>\n
-  							<li>url: ". $fields['iw_url']. "</li>\n
-  							<li>local: ". $fields['iw_local']. "</li>\n
-  							<li>trans: ". $fields['iw_trans']. "</li>\n
+	  				if ( $res ) {
+  						$ret .= "Prefix <b>" . $fields['iw_prefix'] . "</b> edited for <a href='$wikiaURL'>$wikiaURL</a> to:<ul>\n
+  							<li>url: " . $fields['iw_url'] . "</li>\n
+  							<li>local: " . $fields['iw_local'] . "</li>\n
+  							<li>trans: " . $fields['iw_trans'] . "</li>\n
 							</ul></p>\n
 							<form action='' method='POST'>\n
 							<input type='hidden' name='action' value='clear_cache' />\n
 							<input type='hidden' name='db' value='$wikiaDB' />\n
 							<input type='submit' value='Clear cache' /></form>";
-  					}else{
+  					} else {
 	  		        		$ret .= "Database error: data not changed</p>\n";
   					}
 				}
@@ -288,11 +298,11 @@ function wfSIWEEditInterwiki(){
 
 			    $ret .= "<p>Deleting interwiki selected interwiki...";
 
-				$res = $db->delete('interwiki', $fields, __METHOD__ );
+				$res = $db->delete( 'interwiki', $fields, __METHOD__ );
 
-	  			if ($res){
-  					$ret.= " Done.<br />Prefix <b>". $fields['iw_prefix']. "</b> deleted for <a href='$wikiaURL'>$wikiaURL</a></p>\n";
-  				}else{
+	  			if ( $res ) {
+  					$ret .= " Done.<br />Prefix <b>" . $fields['iw_prefix'] . "</b> deleted for <a href='$wikiaURL'>$wikiaURL</a></p>\n";
+  				} else {
   		        	$ret .= "Database error: data not deleted</p>\n";
   				}
 			break;
@@ -348,22 +358,22 @@ function wfSIWEEditInterwiki(){
 
 	$ret .= "<p>Editing interwiki table for <a href='$wikiaURL'>$wikiaURL</a><br />\n";
 	$ret .= "<form id='settings' action='' method='POST'>
-	<label for='from'>Show from: </label><input type='text' id='from' name='from' value= " . $db->addQuotes($from) . " />
+	<label for='from'>Show from: </label><input type='text' id='from' name='from' value= " . $db->addQuotes( $from ) . " />
 	<input type='submit' value='" . wfMessage( 'iwedit-update' )->escaped() . "' />
 	<input type='hidden' name='wikia_id' value='$wikiaID' />
 	<input type='hidden' name='action' value='Edit interwiki' />
 	</form> </p>";
 
 #	$languages = "'".$lang_names[0]."'";
-	//$lang_names = array_slice($lang_names, 1);
+	// $lang_names = array_slice($lang_names, 1);
 #	foreach ( $lang_names as $lang_name){
 #	  $languages .= ", '$lang_name'";
 #	}
-	if ($from) $from = "WHERE iw_prefix like '". $db->escapeLike($from) . "%'";
-	$result = $db->query("SELECT * FROM `$wikiaDB`.`interwiki` $from;");
+	if ( $from ) $from = "WHERE iw_prefix like '" . $db->escapeLike( $from ) . "%'";
+	$result = $db->query( "SELECT * FROM `$wikiaDB`.`interwiki` $from;" );
 
 	$ret .= "<p><select multiple='multiple' onchange='updateForm( this.value );'>\n";
-	while( $dbObject = $db->fetchObject($result)){
+	while ( $dbObject = $db->fetchObject( $result ) ) {
 	        $ret .= "<option id='{$dbObject->iw_prefix}'>{$dbObject->iw_prefix}|{$dbObject->iw_url}|{$dbObject->iw_local}|{$dbObject->iw_trans}</option>\n";
 	}
 	$ret .= "</select></p>\n";
@@ -416,19 +426,19 @@ function wfSIWEEditInterwiki(){
 	return $ret;
 }
 
-function wfSIWELinkWikis(){
-	list($wikia, $wikiaID, $ext_wikia, $ext_wikiaID) = wfSIWEGetRequestData();
+function wfSIWELinkWikis() {
+	list( $wikia, $wikiaID, $ext_wikia, $ext_wikiaID ) = wfSIWEGetRequestData();
 
-	list($wikiaID, $wikiaDB, $wikiaURL, $wikiaUmbrella, $wikiaLang) = wfSIWEGetWikiaData($wikia, $wikiaID);
-	list($ext_wikiaID, $ext_wikiaDB, $ext_wikiaURL, $ext_wikiaUmbrella, $ext_wikiaLang) = wfSIWEGetWikiaData($ext_wikia, $ext_wikiaID);
+	list( $wikiaID, $wikiaDB, $wikiaURL, $wikiaUmbrella, $wikiaLang ) = wfSIWEGetWikiaData( $wikia, $wikiaID );
+	list( $ext_wikiaID, $ext_wikiaDB, $ext_wikiaURL, $ext_wikiaUmbrella, $ext_wikiaLang ) = wfSIWEGetWikiaData( $ext_wikia, $ext_wikiaID );
 
-	if ($wikiaID == $ext_wikiaID) return "<p>Same wiki specified in primary and secondary fields. Refusing to link wiki to self.</p>";
+	if ( $wikiaID == $ext_wikiaID ) return "<p>Same wiki specified in primary and secondary fields. Refusing to link wiki to self.</p>";
 
-	#if ($wikiaUmbrella != $ext_wikiaUmbrella) {
+	# if ($wikiaUmbrella != $ext_wikiaUmbrella) {
 	#	$ret .= ("<p><b>Warning!</b> Umbrellas for $wikiaURL [<a href='". $_SERVER['PHP_SELF'].
 	#	"?action=change_umbrella&amp;wikia_id=$wikiaID'>edit</a>] and $ext_wikiaURL [<a href='".
 	#	$_SERVER['PHP_SELF']. "?action=change_umbrella&amp;wikia_id=$ext_wikiaID'>edit</a>] <b>do not match</b>.");
-	#}
+	# }
 
 	$ret = '';
 
@@ -452,7 +462,7 @@ function wfSIWELinkWikis(){
     <td>$wikiaURL</td>
     <td>$wikiaDB</td>
     <td>$ext_wikiaLang</td>
-    <td>" . wfSIWEMakeInterlanguageUrl($ext_wikiaID) . "</td>
+    <td>" . wfSIWEMakeInterlanguageUrl( $ext_wikiaID ) . "</td>
     <td>1</td>
     <td>0</td>
     </tr>
@@ -461,7 +471,7 @@ function wfSIWELinkWikis(){
     <td>$ext_wikiaURL</td>
     <td>$ext_wikiaDB</td>
     <td>$wikiaLang</td>
-    <td>" . wfSIWEMakeInterlanguageUrl($wikiaID) . "</td>
+    <td>" . wfSIWEMakeInterlanguageUrl( $wikiaID ) . "</td>
     <td>1</td>
     <td>0</td>
     </tr>
@@ -482,9 +492,9 @@ function wfSIWELinkWikis(){
 }
 
 function wfSIWELinkWikisCommit () {
-	list( , $wikiaID, , $ext_wikiaID) = wfSIWEGetRequestData();
+	list( , $wikiaID, , $ext_wikiaID ) = wfSIWEGetRequestData();
 
-	if (wfSIWELinkWikisCommitProper ($wikiaID, $ext_wikiaID) && wfSIWELinkWikisCommitProper ($ext_wikiaID, $wikiaID)) {
+	if ( wfSIWELinkWikisCommitProper ( $wikiaID, $ext_wikiaID ) && wfSIWELinkWikisCommitProper ( $ext_wikiaID, $wikiaID ) ) {
 		$ret = wfMessage( 'iwedit-success' )->text();
 	} else {
 		$ret = wfMessage( 'iwedit-error' )->text();
@@ -493,7 +503,7 @@ function wfSIWELinkWikisCommit () {
 	return Xml::element( 'p', [], $ret );
 }
 
-function wfSIWEMakeInterlanguageUrl($wikiaID) {
+function wfSIWEMakeInterlanguageUrl( $wikiaID ) {
 	global $wgArticlePath;
 
 	$server = WikiFactory::getVarValueByName( 'wgServer', $wikiaID );
@@ -507,15 +517,15 @@ function wfSIWEMakeInterlanguageUrl($wikiaID) {
 	return $server . $path;
 }
 
-function wfSIWELinkWikisCommitProper ($linker, $linkee) {
+function wfSIWELinkWikisCommitProper ( $linker, $linkee ) {
 
-	list( , $linkerDB) = wfSIWEGetWikiaData( '', $linker);
-	list( , , , , $iw_prefix) = wfSIWEGetWikiaData( '', $linkee);
+	list( , $linkerDB ) = wfSIWEGetWikiaData( '', $linker );
+	list( , , , , $iw_prefix ) = wfSIWEGetWikiaData( '', $linkee );
 
 	$db =& wfGetDB( DB_MASTER, array(), $linkerDB );
-	if ($db->selectDB($linkerDB)) {
-		return (bool) $db->query("REPLACE INTO `$linkerDB`.`interwiki`(iw_prefix, iw_url, iw_local, iw_trans)" .
-				" values('". $iw_prefix. "','". wfSIWEMakeInterlanguageUrl($linkee). "',1,0);");
+	if ( $db->selectDB( $linkerDB ) ) {
+		return (bool) $db->query( "REPLACE INTO `$linkerDB`.`interwiki`(iw_prefix, iw_url, iw_local, iw_trans)" .
+				" values('" . $iw_prefix . "','" . wfSIWEMakeInterlanguageUrl( $linkee ) . "',1,0);" );
 	} else {
 		return false;
 	}
@@ -526,10 +536,10 @@ function wfSIWEGetRequestData() {
 	global $wgRequest;
 
 	return array(
-		htmlspecialchars($wgRequest->getVal('wikia')),
-		htmlspecialchars($wgRequest->getVal('wikia_id', false)),
-		htmlspecialchars($wgRequest->getVal('ext_wikia')),
-		htmlspecialchars($wgRequest->getVal('ext_wikia_id', false)),
+		htmlspecialchars( $wgRequest->getVal( 'wikia' ) ),
+		htmlspecialchars( $wgRequest->getVal( 'wikia_id', false ) ),
+		htmlspecialchars( $wgRequest->getVal( 'ext_wikia' ) ),
+		htmlspecialchars( $wgRequest->getVal( 'ext_wikia_id', false ) ),
 	);
 }
 
@@ -546,7 +556,7 @@ function wfSIWEClearCache() {
 	}
 
 	foreach ( $prefixes as $prefix ) {
-		$wgMemc->delete("$db:interwiki:" . md5($prefix) );
+		$wgMemc->delete( "$db:interwiki:" . md5( $prefix ) );
 	}
 
 	return 'Cache cleared for ' . $db;

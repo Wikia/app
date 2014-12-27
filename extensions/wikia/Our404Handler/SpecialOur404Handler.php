@@ -20,11 +20,12 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Our404Handler',
 	'version' => '1.0',
 	'author' => 'Krzysztof Krzyżaniak',
-	'description' => 'Our 404 handler for non-existent pages tricks',
+	'descriptionmsg' => 'our404handler-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Our404Handler'
 );
 
 // Set up the new special page
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['Our404Handler'] = $dir . 'SpecialOur404Handler.i18n.php';
-$wgAutoloadClasses['Our404HandlerPage'] = $dir. 'SpecialOur404Handler_body.php';
+$wgAutoloadClasses['Our404HandlerPage'] = $dir . 'SpecialOur404Handler_body.php';
 $wgSpecialPages['Our404Handler'] = 'Our404HandlerPage';

@@ -1,5 +1,5 @@
 <?php
-if (!defined('MEDIAWIKI')) die();
+if ( !defined( 'MEDIAWIKI' ) ) die();
 /**
  * A Special Page extension that displays edit counts.
  *
@@ -16,7 +16,8 @@ if (!defined('MEDIAWIKI')) die();
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Editcount',
 	'author' => 'Ævar Arnfjörð Bjarmason',
-	'description' => 'Displays [[Special:Editcount|edit count]] of a user',
+	'descriptionmsg' => 'editcount-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Editcount'
 );
 
 $dir =  dirname( __FILE__ );

@@ -2,7 +2,7 @@
 
 /**
  * Special page-based tool to review wikis directed at children.
- * 
+ *
  * @since June 2013
  * @author Kamil Koterba kamil@wikia-inc.com
  */
@@ -13,6 +13,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'author' => array(
 		"[http://community.wikia.com/wiki/User:R-Frank Kamil 'R-Frank' Koterba]"
 	),
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WDACReview'
 );
 
 $dir = __DIR__ . '/';

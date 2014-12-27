@@ -11,12 +11,12 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Create Page',
 	'author' => array( 'Bartek Lapinski', 'Adrian Wieczorek' ),
-	'url' => 'http://www.wikia.com' ,
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CreatePage',
 	'descriptionmsg' => 'createpage-desc',
 );
 
 define( 'CREATEPAGE_ITEM_WIDTH', 140 );
-define( 'CREATEPAGE_MAX_DIALOG_WIDTH', CREATEPAGE_ITEM_WIDTH * 3);
+define( 'CREATEPAGE_MAX_DIALOG_WIDTH', CREATEPAGE_ITEM_WIDTH * 3 );
 define( 'CREATEPAGE_MIN_DIALOG_WIDTH', 400 );
 define( 'CREATEPAGE_DIALOG_SIDE_PADDING', 10 );
 
@@ -32,7 +32,7 @@ $wgExtensionMessagesFiles['CreatePageAliases'] = __DIR__ . '/CreatePage.aliases.
 /**
  * Special page
  */
-$wgAutoloadClasses['SpecialCreatePage'] = dirname(__FILE__) . '/SpecialCreatePage.class.php';
+$wgAutoloadClasses['SpecialCreatePage'] = dirname( __FILE__ ) . '/SpecialCreatePage.class.php';
 $wgSpecialPages['CreatePage'] = 'SpecialCreatePage';
 $wgSpecialPageGroups['CreatePage'] = 'pagetools';
 
@@ -59,15 +59,15 @@ function wfCreatePageInit() {
 }
 
 // use different code for Special:CreatePage when using monobook (BugId:6601)
-function wfCreatePageOnBeforeInitialize(&$title, &$article, &$output, User &$user, $request, $mediaWiki) {
+function wfCreatePageOnBeforeInitialize( &$title, &$article, &$output, User &$user, $request, $mediaWiki ) {
 	global $wgAutoloadClasses;
 
 	// this line causes initialization of the skin
 	// title before redirect handling is passed causing BugId:7282 - it will be fixed in "AfterInitialize" hook
-	$skinName = get_class($user->getSkin());
-	if ($skinName == 'SkinMonoBook') {
+	$skinName = get_class( $user->getSkin() );
+	if ( $skinName == 'SkinMonoBook' ) {
 		// use different class to handle Special:CreatePage
-		$dir = dirname(__FILE__) . '/monobook';
+		$dir = dirname( __FILE__ ) . '/monobook';
 
 		$wgAutoloadClasses['SpecialCreatePage'] = $dir . '/SpecialCreatePage.class.php';
 		$wgAutoloadClasses['SpecialEditPage'] = $dir . '/SpecialEditPage.class.php';
@@ -76,7 +76,7 @@ function wfCreatePageOnBeforeInitialize(&$title, &$article, &$output, User &$use
 	return true;
 }
 
-function wfCreatePageSetupVars(Array &$vars ) {
+function wfCreatePageSetupVars( Array &$vars ) {
 	global $wgWikiaEnableNewCreatepageExt,
 		$wgWikiaDisableDynamicLinkCreatePagePopup,
 		$wgContentNamespaces,
@@ -91,13 +91,13 @@ function wfCreatePageSetupVars(Array &$vars ) {
 
 	$vars['WikiaEnableNewCreatepage'] = $wgUser->getOption( 'createpagepopupdisabled', false ) ? false : $wgWikiaEnableNewCreatepageExt;
 
-	if (!empty( $wgWikiaDisableDynamicLinkCreatePagePopup )) {
+	if ( !empty( $wgWikiaDisableDynamicLinkCreatePagePopup ) ) {
 		$vars['WikiaDisableDynamicLinkCreatePagePopup'] = true;
 	}
 
 	$vars['ContentNamespacesText'] = $contentNamespaces;
 
-	if ( RequestContext::getMain()->getTitle()->isSpecial('CreatePage') ) {
+	if ( RequestContext::getMain()->getTitle()->isSpecial( 'CreatePage' ) ) {
 		$vars['wgAction'] = RequestContext::getMain()->getRequest()->getVal( 'action', 'edit' );
 	}
 
@@ -107,10 +107,10 @@ function wfCreatePageSetupVars(Array &$vars ) {
 function wfCreatePageLoadPreformattedContent( $editpage ) {
 	global $wgRequest, $wgEnableVideoToolExt, $wgUser;
 
-	if( !$editpage->textbox1 ) {
+	if ( !$editpage->textbox1 ) {
 		if ( $wgRequest->getCheck( 'useFormat' ) ) {
 			// if user has proper permissions, show Create Page with Video panel
-			if ( $wgEnableVideoToolExt && $wgUser->isAllowed('videoupload') ) {
+			if ( $wgEnableVideoToolExt && $wgUser->isAllowed( 'videoupload' ) ) {
 					$editpage->textbox1 = wfMsgForContentNoTrans( 'createpage-with-video' );
 			} else {
 				$editpage->textbox1 = wfMsgForContentNoTrans( 'newpagelayout' );
@@ -185,7 +185,7 @@ function wfCreatePageAjaxGetDialog() {
 	);
 
 	$listtype = "short";
-	wfRunHooks( 'CreatePage::FetchOptions', array(&$standardOptions, &$options, &$listtype ) );
+	wfRunHooks( 'CreatePage::FetchOptions', array( &$standardOptions, &$options, &$listtype ) );
 
 	$options = $options + $standardOptions;
 	$optionsCount = count( $options );
@@ -203,7 +203,7 @@ function wfCreatePageAjaxGetDialog() {
 	$divider = ( $maxItemsPerRow > $optionsCount ) ? $optionsCount : $maxItemsPerRow;
 	$itemWidthPercentage =  round( 100 / $divider );
 
-	foreach( $options as $key => $params ) {
+	foreach ( $options as $key => $params ) {
 		$options[ $key ][ 'width' ] = "{$itemWidthPercentage}%";
 	}
 
@@ -212,9 +212,9 @@ function wfCreatePageAjaxGetDialog() {
 	$defaultLayout = $wgUser->getOption( 'createpagedefaultblank', false ) ?  'blank' : 'format';
 
 	// some extensions (e.g. PLB) can remove "format" option, so fallback to first available option here
-	if(!array_key_exists($defaultLayout, $options) ) {
-		reset($options);
-		$defaultLayout = key($options);
+	if ( !array_key_exists( $defaultLayout, $options ) ) {
+		reset( $options );
+		$defaultLayout = key( $options );
 	}
 
 	$template->set_vars( array(

@@ -7,19 +7,19 @@
  * @author Władysław Bodzek <wladek@wikia-inc.com>
  */
 
-if ( ! defined( 'MEDIAWIKI' ) ){
-	die("Extension file.  Not a valid entry point");
+if ( ! defined( 'MEDIAWIKI' ) ) {
+	die( "Extension file.  Not a valid entry point" );
 }
 
 $wgExtensionCredits['other'][] = array(
 	"name" => "CategoryGalleries",
 	'descriptionmsg' => 'categorygalleries-desc',
-//	"url" => "http://help.wikia.com/wiki/Help:Category_Galleries",
-	"author" => array('Władysław Bodzek')
+	"url" => "https://github.com/Wikia/app/tree/dev/extensions/wikia/CategoryGalleries",
+	"author" => 'Władysław Bodzek'
 );
 
 // Calculate the base directory and use it later a few times
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
 
 // Autoload base classes
 $wgAutoloadClasses[ 'CategoryGallery' ] = $dir . '/CategoryGallery.class.php';
@@ -35,8 +35,8 @@ $wgHooks['CategoryService::invalidateTopArticles'][] = 'CategoryGalleriesHelper:
 $wgHooks['ArticlePurge'][] = 'CategoryGalleriesHelper::onArticlePurge';
 
 // Add parser magic words
-define('CATGALLERY_ENABLED', 'CATGALLERY_ENABLED');
-define('CATGALLERY_DISABLED', 'CATGALLERY_DISABLED');
+define( 'CATGALLERY_ENABLED', 'CATGALLERY_ENABLED' );
+define( 'CATGALLERY_DISABLED', 'CATGALLERY_DISABLED' );
 $wgHooks['LanguageGetMagic'][] = 'CategoryGalleriesHelper::onLanguageGetMagic';
 $wgHooks['InternalParseBeforeLinks'][] = 'CategoryGalleriesHelper::onInternalParseBeforeLinks';
 

@@ -8,11 +8,11 @@
  *
  */
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Wikia Home Staff Tool',
-	'description' => 'Internal tool to manage corporate pages\'s visualization aka. remix feature',
+	'descriptionmsg' => 'managewikiahome-desc',
 	'authors' => array(
 		'Andrzej "nAndy" Łukaszewski',
 		'Marcin Maciejewski',
@@ -20,29 +20,30 @@ $wgExtensionCredits['specialpage'][] = array(
 		'Damian Jóźwiak',
 		'Łukasz Konieczny'
 	),
-	'version' => 1.0
+	'version' => 1.0,
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialManageWikiaHome'
 );
 
-//classes
-$wgAutoloadClasses['ManageWikiaHomeController'] = $dir.'ManageWikiaHomeController.class.php';
+// classes
+$wgAutoloadClasses['ManageWikiaHomeController'] = $dir . 'ManageWikiaHomeController.class.php';
 
 // models
 $wgAutoloadClasses['SpecialManageWikiaHomeModel'] = $dir . '/models/SpecialManageWikiaHomeModel.class.php';
 
 // forms
-$wgAutoloadClasses['CollectionsForm'] = $dir.'/forms/CollectionsForm.class.php';
-$wgAutoloadClasses['StatsForm'] = $dir.'/forms/StatsForm.class.php';
-$wgAutoloadClasses['HubsSlotsForm'] = $dir.'/forms/HubsSlotsForm.class.php';
+$wgAutoloadClasses['CollectionsForm'] = $dir . '/forms/CollectionsForm.class.php';
+$wgAutoloadClasses['StatsForm'] = $dir . '/forms/StatsForm.class.php';
+$wgAutoloadClasses['HubsSlotsForm'] = $dir . '/forms/HubsSlotsForm.class.php';
 
-//special page
+// special page
 $wgSpecialPages['ManageWikiaHome'] = 'ManageWikiaHomeController';
 $wgSpecialPageGroups['ManageWikiaHome'] = 'wikia';
 
-//message files
-$wgExtensionMessagesFiles['ManageWikiaHome'] = $dir.'ManageWikiaHome.i18n.php';
-JSMessages::registerPackage('ManageWikiaHome', array('manage-wikia-home-*'));
+// message files
+$wgExtensionMessagesFiles['ManageWikiaHome'] = $dir . 'ManageWikiaHome.i18n.php';
+JSMessages::registerPackage( 'ManageWikiaHome', array( 'manage-wikia-home-*' ) );
 
-//add wikia staff tool rights to staff users
+// add wikia staff tool rights to staff users
 $wgGroupPermissions['*']['managewikiahome'] = false;
 $wgGroupPermissions['staff']['managewikiahome'] = true;
 $wgGroupPermissions['util']['managewikiahome'] = true;

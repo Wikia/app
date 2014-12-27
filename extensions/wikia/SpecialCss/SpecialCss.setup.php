@@ -5,16 +5,17 @@
  * @author Andrzej 'nAndy' Łukaszewski
  * @author Łukasz Konieczny
  */
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'CSS Editor',
-	'description' => 'Admin tool for editing CSS files',
+	'descriptionmsg' => 'specialcss-desc',
 	'authors' => array(
 		'Andrzej "nAndy" Łukaszewski',
 		'Łukasz Konieczny',
 	),
-	'version' => 1.0
+	'version' => 1.0,
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialCss'
 );
 
 // models
@@ -27,7 +28,7 @@ F::app()->getDispatcher()->addRouting( 'SpecialCssController', ['index' => ["not
 
 /**
  * @global Array $wgHooks The list of hooks.
- * 
+ *
  * @see http://www.mediawiki.org/wiki/Manual:$wgHooks
  * @see http://www.mediawiki.org/wiki/Manual:Hooks/AlternateEdit
  * @see http://www.mediawiki.org/wiki/Manual:Hooks/ArticleSaveComplete
@@ -44,10 +45,10 @@ $wgSpecialPages['CSS'] = 'SpecialCssController';
 $wgSpecialPageGroups['CSS'] = 'wikia';
 
 // message files
-$wgExtensionMessagesFiles['SpecialCss'] = $dir.'SpecialCss.i18n.php';
+$wgExtensionMessagesFiles['SpecialCss'] = $dir . 'SpecialCss.i18n.php';
 JSMessages::registerPackage( 'SpecialCss', array( 'special-css-*' ) );
 
-//mapping community central language to it's database name
+// mapping community central language to it's database name
 $wgCssUpdatesLangMap = array (
 	'en' => 'wikia',
 	'pl' => 'plwikia',

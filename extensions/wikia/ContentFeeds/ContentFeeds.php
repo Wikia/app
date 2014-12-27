@@ -5,15 +5,14 @@
  * @author Adrian 'ADi' Wieczorek <adi(at)wikia-inc.com>
  */
 
-if(!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	die();
 }
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Content Feeds',
 	'author' => 'Adrian \'ADi\' Wieczorek',
-	'url' => 'http://www.wikia.com' ,
-	'description' => 'provides a rich and up to date information through various tags or "feeds"',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ContentFeeds',
 	'descriptionmsg' => 'contentfeeds-desc'
 );
 
@@ -22,12 +21,12 @@ $wgExtensionCredits['specialpage'][] = array(
  * setup functions
  */
 $wgExtensionFunctions[] = 'wfContentFeedsInit';
-$wgExtensionMessagesFiles['ContentFeeds'] = dirname(__FILE__) . '/ContentFeeds.i18n.php';
+$wgExtensionMessagesFiles['ContentFeeds'] = dirname( __FILE__ ) . '/ContentFeeds.i18n.php';
 
 function wfContentFeedsInit() {
 	global $wgHooks, $wgAutoloadClasses;
 
-	$dir = dirname(__FILE__) . '/';
+	$dir = dirname( __FILE__ ) . '/';
 
 	/**
 	 * hooks
@@ -45,7 +44,7 @@ function wfContentFeedsInit() {
 	/**
 	 * ajax calls
 	 */
-	//$wgAjaxExportList[] = '';
+	// $wgAjaxExportList[] = '';
 
 function wfContentFeedsInitParserHooks( Parser &$parser ) {
 
@@ -57,7 +56,7 @@ function wfContentFeedsInitParserHooks( Parser &$parser ) {
 	$parser->setHook( 'highestrated', 'ContentFeeds::highestRatedParserHook' );
 	$parser->setHook( 'recentimages', 'ContentFeeds::dummyRecentImagesParserHook' );
 	// TODO: turned off until it's ready
-	//$parser->setHook( 'firstfewarticles', 'ContentFeeds::firstFewArticlesParserHook' );
+	// $parser->setHook( 'firstfewarticles', 'ContentFeeds::firstFewArticlesParserHook' );
 
 	return true;
 }

@@ -21,7 +21,8 @@
 $messages = array();
 
 $messages['en'] = array(
-	'sitewidemessages'			=> 'Site wide messages',	//the name displayed on Special:SpecialPages
+	'sidewidemessages-desc'     => 'This extension provides an interface for sending messages seen on all wikis.',
+	'sitewidemessages'			=> 'Site wide messages',	// the name displayed on Special:SpecialPages
 	'swm-page-title-editor'		=> 'Site wide messages :: Editor',
 	'swm-page-title-preview'	=> 'Site wide messages :: Preview',
 	'swm-page-title-send'		=> 'Site wide messages :: Send',
@@ -40,7 +41,7 @@ $messages['en'] = array(
 	'swm-label-expiration-hint' => '<i>Pick an expiry time from the drop down or write a time by hand to overwrite the drop down selection. Time written manually must be in the form 2012-04-01 00:00:00</i>',
 	'swm-label-mode-wikis-all'	=> 'All wikis',
 	'swm-label-mode-wikis-hub'	=> 'Selected hub',
-	'swm-label-mode-wikis-cluster'=> 'Selected cluster',
+	'swm-label-mode-wikis-cluster' => 'Selected cluster',
 	'swm-label-mode-wikis-wiki'	=> 'Selected wiki',
 	'swm-label-mode-wikis-wiki-multi' => 'List of wikis',
 	'swm-label-mode-wikis-wiki-multi-hint' => '<i>Enter one wiki per line.</i>',
@@ -69,8 +70,8 @@ $messages['en'] = array(
 	'swm-msg-sent-err'			=> '<h3>The message has NOT been sent.</h3>See error log for more informations.',
 	'swm-msg-sent-task'			=> 'Task created to send message: $1',
 	'swm-msg-remove'			=> 'Are you sure you want to remove this message? This can not be undone!',
-	'swm-days'					=> 'never,hour,hours,day,days',	//[0] => never expire, [1] => 1 hour, [2] => 2 hours and more, [3] => 1 day, [4] => 2 days and more. FIXME: bad i18n
-	'swm-expire-options'		=> '0,1h,6h,12h,1,3,7,14,30,60',	//0 = never
+	'swm-days'					=> 'never,hour,hours,day,days',	// [0] => never expire, [1] => 1 hour, [2] => 2 hours and more, [3] => 1 day, [4] => 2 days and more. FIXME: bad i18n
+	'swm-expire-options'		=> '0,1h,6h,12h,1,3,7,14,30,60',	// 0 = never
 	'swm-expire-info'			=> 'This message will expire on $1.',
 	'swm-link-dismiss'			=> 'dismiss this message',
 	'swm-dismiss-content'		=> '<p>The message was dismissed.</p><p>%s</p>',
@@ -131,6 +132,7 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'sitewidemessages-desc' => '{{desc}}',
 	'swm-page-title-sent' => 'Page title after message is sent out.',
 	'swm-page-title-list' => 'List is a noun here',
 	'swm-label-preview' => '{{Identical|Preview}}',

@@ -7,6 +7,13 @@
  *
  */
 
+$wgExtensionCredits[ 'specialpage' ][ ] = array(
+	'name' => 'UserPreferencesV2',
+	'author' => 'Wikia',
+	'descriptionmsg' => 'preferences-v2-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/UserPreferencesV2',
+);
+
 /**
  * new default user preferences
  */

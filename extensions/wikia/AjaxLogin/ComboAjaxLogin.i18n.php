@@ -39,6 +39,7 @@ Please try again or [[Special:Contact|report this]].",
  * @author The Evil IP address
  */
 $messages['qqq'] = array(
+	'comboajaxlogin-desc' => '{{desc}}',
 	'comboajaxlogin-createlog' => ' Prompts the user to log in order create an account to proceed. Appears to the user when they reach a page that requires a "user" or higher permission.',
 	'comboajaxlogin-connectmarketing' => 'A message that appears on the login dialog which prompts the user to start the Facebook account connection process.',
 	'comboajaxlogin-connectmarketing-oasis' => "A message that appears on the login dialog which prompts the user to start the Facebook account connection process.  Similar to {{msg-wikia|comboajaxlogin-connectmarketing|notext=yes}} except that it explicitly calls out that the connection is for Facebook Connect.  This is necessary because the login dialog box does not have other mentions of Facebook Connect on it, so it wouldn't be clear otherwise.",
@@ -158,9 +159,9 @@ $messages['bcl'] = array(
 	'comboajaxlogin-actionmsg-protected' => 'Tanganing gibohon ining aksyon ika enot na kaipuhang maglaog o magmukna nin panindog',
 	'comboajaxlogin-connectmarketing' => '<h1>Ikonekta an saimong mga panindog</h1> <ul> <li>Sayudon an saimong pangaran nin paragamit ngunyan, historiya, mga pagliwat... mayong maliliwat laen lang kun paanuhon ka maglaog</li> <li>Iheras an saimong aktibidad sa Wikia kaiban an saimong mga kaaramigohan sa Facebook</li> <li>Kumpletong kontrol kun ano an pinagpublikar</li> </ul>',
 	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Maglaog na gamit an Facebook Connect</h1>',
-	'comboajaxlogin-connectmarketing-oasis' => '<h1>Ikonekta an saimong mga panindog</h1> 
-<ul> 
-<li>Sayudon an saimong pangaran nin paragamit ngunyan, historiya, mga pagliwat... mayong maliliwat laen lang kun paanuhon ka maglaog</li> 
+	'comboajaxlogin-connectmarketing-oasis' => '<h1>Ikonekta an saimong mga panindog</h1>
+<ul>
+<li>Sayudon an saimong pangaran nin paragamit ngunyan, historiya, mga pagliwat... mayong maliliwat laen lang kun paanuhon ka maglaog</li>
 <li>Iheras an saimong aktibidad sa Wikia kaiban an saimong mga kaaramigohan sa Facebook</li> <li>Kumpletong kontrol kun ano an pinagpublikar</li> </ul>',
 	'comboajaxlogin-connectmarketing-back' => '<< Magbuwelta',
 	'comboajaxlogin-connectmarketing-forward' => 'Magpoon ka na >>',
@@ -436,7 +437,7 @@ Sobald du fertig bist, kannst du dich einfach über den Facebook-Connect-Knopf a
 Bitte versuche es erneut oder [[Special:Contact|melde es]].',
 	'comboajaxlogin-readonlytext' => '<h2>Entschuldigung!</h2>
 <p>Du kannst momentan kein Benutzerkonto erstellen - wir sollten in Kürze wieder erreichbar sein. Sieh nach, was los ist:<br /><em>$1</em></p>
-<p>Bitte schau bei <a href="http://twitter.com/wikia">Twitter</a> oder <a href="http://facebook.com/wikia">Facebook</a> für weitere Informationen. 
+<p>Bitte schau bei <a href="http://twitter.com/wikia">Twitter</a> oder <a href="http://facebook.com/wikia">Facebook</a> für weitere Informationen.
 <br />
  (Wenn du bereits ein Benutzerkonto hast, kannst du dich <a href="#">einloggen</a> wie sonst auch, wirst aber nichts bearbeiten können.)</p>',
 	'comboajaxlogin-ajaxerror' => 'Wikia reagiert nicht. Bitte überprüfe deine Netzwerkverbindung.',
@@ -650,10 +651,10 @@ $messages['fr'] = array(
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '&laquo; Retour',
 	'comboajaxlogin-connectmarketing-forward' => 'Avant de commencer &raquo;',
-	'comboajaxlogin-connectdirections' => "Entrez votre nom d'utilisateur et mot de passe Wikia - nous allons magiquement connecter vos comptes Wikia et Facebook en arrière plan. 
+	'comboajaxlogin-connectdirections' => "Entrez votre nom d'utilisateur et mot de passe Wikia - nous allons magiquement connecter vos comptes Wikia et Facebook en arrière plan.
 
 Une fois que vous avez terminé, vous pouvez vous connecter facilement à l'aide de n'importe quel bouton Facebook Connect.",
-	'comboajaxlogin-post-not-understood' => 'Il y a eu une erreur dans la façon dont ce formulaire a été construit. 
+	'comboajaxlogin-post-not-understood' => 'Il y a eu une erreur dans la façon dont ce formulaire a été construit.
 Veuillez essayer à nouveau ou [[Special:Contact|le signaler]].',
 	'comboajaxlogin-readonlytext' => '<h2>Désolé !</h2>
 <p>Vous ne pouvez pas créer de compte actuellement - nous devrions être de nouveau disponibles dans peu de temps. Voici ce qui se passe :<br /><em>$1</em></p>
@@ -740,7 +741,7 @@ $messages['he'] = array(
  * @author Kush rohra
  */
 $messages['hi'] = array(
-	'comboajaxlogin-desc' => 'गतिशील डिब्बा जो अनुमति देना उपयोगकर्ता से लॉगिन , याद दिलाना पासवर्ड और रजिस्टर्ड 	
+	'comboajaxlogin-desc' => 'गतिशील डिब्बा जो अनुमति देना उपयोगकर्ता से लॉगिन , याद दिलाना पासवर्ड और रजिस्टर्ड
 प्रयोग करनेवाला',
 	'comboajaxlogin-createlog' => 'सत्रारंभ / खाता खोलें',
 	'comboajaxlogin-actionmsg' => 'से निष्पादन यह कार्य आप पहले ज़रूरत से लोगिन और बनाना कोए खाता',
@@ -969,13 +970,13 @@ $messages['kn'] = array(
 	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>ಫೇಸ್ಬುಕ್ ಕನೆಕ್ಟ್ ಒಟ್ಟಿಗೆ ಲಾಗ್ ಇನ್ ಮಾಡಿ</h1>.',
 	'comboajaxlogin-connectmarketing-back' => '« ವಾಪಸು',
 	'comboajaxlogin-connectmarketing-forward' => 'ಶುರು ಮಾಡಿ',
-	'comboajaxlogin-connectdirections' => 'ಇಲ್ಲಿ ನಿಮ್ಮ ವಿಕಿಯ ಸದಸ್ಯನಾಮ ಮತ್ತು ಗುಪ್ತಪದವನ್ನು ಬರಿರಿ - ನಾವು ಹಿನ್ನೆಲೆ ಅಲ್ಲಿ ಮಾಂತ್ರಿಕವಾಗಿ ನಿಮ್ಮ ವಿಕಿಯ ಮತ್ತು ಮುಖಪುಸ್ತಕ ("ಫೇಸ್ಬುಕ್") ಖಾತೆ ಗಳ್ಳನ್ನು ಜೊದಿಸುತೆವೆ. 
+	'comboajaxlogin-connectdirections' => 'ಇಲ್ಲಿ ನಿಮ್ಮ ವಿಕಿಯ ಸದಸ್ಯನಾಮ ಮತ್ತು ಗುಪ್ತಪದವನ್ನು ಬರಿರಿ - ನಾವು ಹಿನ್ನೆಲೆ ಅಲ್ಲಿ ಮಾಂತ್ರಿಕವಾಗಿ ನಿಮ್ಮ ವಿಕಿಯ ಮತ್ತು ಮುಖಪುಸ್ತಕ ("ಫೇಸ್ಬುಕ್") ಖಾತೆ ಗಳ್ಳನ್ನು ಜೊದಿಸುತೆವೆ.
 
 ಒಂದು ಸಲ ಮುಗಿಸಿದಮೇಲೆ, ನೀವು ಯಾವದೂ "ಫೇಸ್ಬುಕ್ ಕನೆಕ್ಟ್" ಗುಂಡಿದಿಂದ ಲಾಗ್ ಇನ್ ಆಗ ಬಹುದು.',
-	'comboajaxlogin-readonlytext' => '<h2>ಕ್ಷಮಿಸಿ! </h2>  
-<p>ನಿಮಗೆ ಈಗ ಖಾತೆ ನಿರ್ಮಾಣ ಮಾಡಲಿಕ್ಕೆ ಆಗುದಿಲ್ಲ! ನಾವು ಸ್ವಲ್ಪ ಹೊತ್ತಲ್ಲಿ ಸರಿ ಆಗ ಬೆಕು.   ಹೀಗೆ ಆಗುತ ಉಂಟು: <br /> <em>$1</em> </p>  
+	'comboajaxlogin-readonlytext' => '<h2>ಕ್ಷಮಿಸಿ! </h2>
+<p>ನಿಮಗೆ ಈಗ ಖಾತೆ ನಿರ್ಮಾಣ ಮಾಡಲಿಕ್ಕೆ ಆಗುದಿಲ್ಲ! ನಾವು ಸ್ವಲ್ಪ ಹೊತ್ತಲ್ಲಿ ಸರಿ ಆಗ ಬೆಕು.   ಹೀಗೆ ಆಗುತ ಉಂಟು: <br /> <em>$1</em> </p>
 <p>ದೈವಿತ್ತು ಜಾಸ್ತಿ ಮಾಹಿತಿ ಇಗೆ <a href="http://twitter.com/wikia">ಟ್ವಿಟ್ಟರ್</a> ಅಥವ <a href="http://facebook.com/wikia">ಫೇಸ್ಬುಕ್</a> ವನ್ನು ತಡೆಹಾಕು ಮಾದಿ.
-<br /> 
+<br />
 (ಒಂದು ಪಕ್ಷ ನಿಮಗೆ ಮೊದ್ದಾಳೆ ಖಾತೆ ಇದ್ದರೆ, ನಿಮಗೆ ಯಾವತ್ತ ಹಾಗೆ <a href="#">ಲಾಗ್ ಇನ್</a> ಮಾಡಲಿಕ್ಕೆ ಆಗುತದೆ, ಆದರೆ ಸಂಪಾದನ ಮಾಡಲಿಕ್ಕೆ ಆಗುದಿಲ್ಲ.)       </p>',
 	'comboajaxlogin-ajaxerror' => 'ವಿಕಿಯ ಉತ್ತರ ಕೊಡುತ ಇಲ್ಲ. ನಿಮ್ಮ ನೆಟ್ವರ್ಕ್ ಕನೆಕ್ಷನ್ ಪರಿಶೀಲಿಸಿ',
 );
@@ -1950,7 +1951,7 @@ $messages['zh-hans'] = array(
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '« 返回',
 	'comboajaxlogin-connectmarketing-forward' => '开始 »',
-	'comboajaxlogin-connectdirections' => '在此输入您的Wikia用户名和密码，我们将在后台把您的Wikia账户和Facebook帐户设置关联。 
+	'comboajaxlogin-connectdirections' => '在此输入您的Wikia用户名和密码，我们将在后台把您的Wikia账户和Facebook帐户设置关联。
 设置完成后，您可以轻松使用任何Facebook关联按钮进行登录。',
 	'comboajaxlogin-post-not-understood' => '构造此窗体时发生错误。
 请重试或[[Special:Contact|报告此问题]]。',

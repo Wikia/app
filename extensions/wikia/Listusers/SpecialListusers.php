@@ -15,7 +15,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['specialpage'][] = array(
 	"name" => "Local users",
 	"description-msg" => "listusers-desc",
-	"author" => "Piotr Molski"
+	"author" => "Piotr Molski",
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Listusers'
 );
 
 /**
@@ -39,7 +40,7 @@ $wgHooks['SpecialPage_initList'][] = 'ListusersHooks::ActiveUsers';
 $wgAjaxExportList[] = 'ListusersAjax::axShowUsers';
 
 // This tries to write to a database that the devboxes don't have write-permission for.
-if( empty( $wgDevelEnvironment ) ){
+if ( empty( $wgDevelEnvironment ) ) {
 	$wgHooks['UserRights'][] = 'ListusersHooks::updateUserRights';
 }
 

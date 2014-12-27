@@ -8,7 +8,7 @@
 
 
 $app = F::app();
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 /**
  * classes
@@ -20,4 +20,9 @@ $wgExtensionCredits['other'][] = array(
 	'name'				=> 'WAM',
 	'version'			=> '1.0',
 	'author'			=> 'Sebastian Marzjan',
+	'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WAM',
+	'descriptionmsg'    => 'wam-desc'
 );
+
+// i18n
+$wgExtensionMessagesFiles['WAM'] = $dir . 'WAM.i18n.php';

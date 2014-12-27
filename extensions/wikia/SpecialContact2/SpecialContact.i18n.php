@@ -8,6 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'specialcontact-desc' => 'Wikia\'s contact [[Special:Contact]] form',
 	/* special page */
 	'contact' => 'Contact Wikia',
 	'specialcontact-wikia' => 'Contact Wikia',
@@ -16,7 +17,7 @@ $messages['en'] = array(
 	/* picker */
 	'specialcontact-intro-main-head' => "<big>Need help? Don't worry, the Wikia community is here to help you!</big><br/>
 Follow the links below to learn more about how to use Wikia, make changes to your wiki or modify your account.",
-	'specialcontact-intro-main-local' => '', #(this is meant to be blank)
+	'specialcontact-intro-main-local' => '', # (this is meant to be blank)
 	'specialcontact-intro-main-foot' => "'''Does this page answer your question?''' If not, please feel free to [[Special:contact/general|contact us]] to discuss your issue further. Remember you can always check out our '''[[w:c:community:Help:Index|help pages]]''', [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]]  or post on our '''[[w:c:community:Special:Forum|community help forums]]'''. If you are looking for admin help and advice, stop by [[w:c:community:Admin_Central:Main_Page|Founder & Admin Central]].",
 
 
@@ -239,7 +240,7 @@ $messages['de'] = array(
 	/* picker */
 	'specialcontact-intro-main-head' => "<big>Brauchst du Hilfe? Mach dir keine Sorgen, die Wikia-Community ist hier um dir zu helfen.</big><br/>
 Klicke auf die folgenden Links, um mehr darüber zu erfahren, wie man Wikis benutzt, Wikis anpasst oder das eigene Profil verändert.",
-	'specialcontact-intro-main-local' => '', #(this is meant to be blank)
+	'specialcontact-intro-main-local' => '', # (this is meant to be blank)
 	'specialcontact-intro-main-foot' => "'''Beantwortet diese Seite deine Fragen?''' Falls nicht, dann [[Special:contact/general|schreib uns]]. Vergiss nicht, dass du dir immer unsere '''[[w:c:de.community:Hilfe:Übersicht|Hilfeseiten]]''', das [[w:c:de.community:Blog:Wikia_Deutschland_News|Wikia-Blog]]  oder unsere '''[[w:c:de.community:Spezial:Forum|Foren]]'''  ansehen kannst. Falls du ein Admin bist und nach Hilfe suchst, sieh dir unseren [[w:c:de.community:Admin-Bereich:Hauptseite|Gründer- und Adminbereich]] an.",
 
 
@@ -442,7 +443,7 @@ $messages['es'] = array(
 	/* picker */
 	'specialcontact-intro-main-head' => "<big>¿Necesitas ayuda? ¡Que no cunda el pánico, la comunidad de Wikia está aquí para ayudarte!</big><br/>
 Sigue los enlaces que hay debajo para aprender más sobre cómo usar Wikia, hacer cambios en tu wiki o modificar tu cuenta.",
-	'specialcontact-intro-main-local' => '', #(this is meant to be blank)
+	'specialcontact-intro-main-local' => '', # (this is meant to be blank)
 	'specialcontact-intro-main-foot' => "'''¿Responde esta página a tu pregunta?''' Si no lo hace, siéntete libre de [[Special:contact/general|contactar con nosotros]] para hablar sobre el problema que tienes. Recuerda que siempre puedes revisar nuestras '''[[w:c:ayuda|páginas de ayuda]]''', [[w:c:comunidad:Blog:Noticias_de_Wikia|blog del staff]] o dejar un mensaje en nuestros '''[[w:c:comunidad:Foro:Índice|foros de ayuda]]'''.",
 
 
@@ -659,7 +660,7 @@ $messages['ja'] = array(
 
 	/* picker */
 	'specialcontact-intro-main-head' => "<big>助けが必要? 心配しないで,　ウィキアコミュニティーがあなたのお手伝いをさせていただきます。!</big><br/>ページの内容を変えたりあなたのアカウント内容の変更したりとウィキアの使用方法は下記のリンクから情報を得ることができます。。",
-	'specialcontact-intro-main-local' => '', #(this is meant to be blank)
+	'specialcontact-intro-main-local' => '', # (this is meant to be blank)
 	'specialcontact-intro-main-foot' => "'''このページで充分な回答は得られましたか?''' そうでなければ [[Special:contact/general|連絡をとる]] で問題点を解決しましょう。またいつでも '''[[w:c:community:Help:Index|ヘルプページ]]''', [[w:c:community:Blog:Wikia_Staff_Blog|スタッフブログ]]  もしくは '''[[w:c:community:Forum:Community_Central_Forum|コミュニティーヘルプフォーラム]]'''. 管理者からのヘルプもしくはアドバイスが欲しい場合は, ここから [[w:c:community:Admin_Central:Main_Page|管理者のページ]].",
 
 
@@ -869,7 +870,7 @@ $messages['pt'] = array(
 	/* picker */
 	'specialcontact-intro-main-head' => '<big>Precisa de ajuda? Não se preocupe, a comunidade da Wikia está aqui para te ajudar!</big><br/>
 Siga os links abaixo para aprender mais sobre como usar a Wikia, fazer mudanças na sua comunidade ou modificar a sua conta.',
-	'specialcontact-intro-main-local' => '', #(this is meant to be blank)
+	'specialcontact-intro-main-local' => '', # (this is meant to be blank)
 	'specialcontact-intro-main-foot' => "'''Essa página responde a sua pergunta?'''Se não, fique à vontade para [[Special:contact/general|entrar em contato conosco]] para falar sobre o seu problema. Lembre-se de que você sempre pode olhar '''[[w:c:comunidade:Ajuda|as páginas de ajuda]]''', [[w:c:comunidade:Categoria:Notícias_da_Wikia|blogs da equipe]] ou escreva nos nossos '''[[w:c:comunidade:Special:Forum|fóruns de ajuda da comunidade]]'''. Se você estiver procurando por ajuda ou conselho de um administrador, confira a página [[w:c:community:Admin_Central:Main_Page|Fundadores e Administração Central]].",
 
 
@@ -1093,7 +1094,7 @@ $messages['zh'] = array(
 	/* picker */
 	'specialcontact-intro-main-head' => "<big>在这里，维基社区发展和支持团队会帮您解决所有问题。</big><br/>
 点击下面的链接了解如何使用维基以及如何更改您的维基主页或者个人帐户。",
-	'specialcontact-intro-main-local' => '', #(this is meant to be blank)
+	'specialcontact-intro-main-local' => '', # (this is meant to be blank)
 	'specialcontact-intro-main-foot' => "'''请问我们帮您解决问题了吗？如果没有，请[[Special:contact/general|联系我们]]，告诉我们您遇到的相关问题。您也可以登陆我们的'''[[w:c:community:Help:Index|帮助中心]]'''或者[[w:c:community:Blog:Wikia_Staff_Blog|员工博客]]进行查询，或者去'''[[w:c:community:Forum:Community_Central_Forum|社区帮助论坛]]'''进行提问。如果您希望得到维基主页管理员的帮助或者建议，请访问[[w:c:community:Admin_Central:Main_Page|维基管理员中心]]进行查看。",
 
 

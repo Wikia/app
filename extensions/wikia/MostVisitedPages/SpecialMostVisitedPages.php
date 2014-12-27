@@ -20,22 +20,23 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 $wgExtensionCredits['specialpage'][] = array(
     "name" => "MostVisitedPages",
-    "description" => "Get list of most visited pages",
-    "author" => "Moli <moli at wikia.com>"
+    "descriptionmsg" => "mostvisitedpages-desc",
+    "author" => "Moli <moli at wikia.com>",
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/MostVisitedPages'
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 $wgAutoloadClasses['MostvisitedpagesPage']  = $dir . 'SpecialMostVisitedPages_body.php';
 
-#--- messages file
-$wgExtensionMessagesFiles["Mostvisitedpages"] = dirname(__FILE__) . '/SpecialMostVisitedPages.i18n.php';
+# --- messages file
+$wgExtensionMessagesFiles["Mostvisitedpages"] = $dir . 'SpecialMostVisitedPages.i18n.php';
 
 if ( !function_exists( 'extAddSpecialPage' ) ) {
     require_once ( "$IP/extensions/ExtensionFunctions.php" );
 }
 
-extAddSpecialPage( dirname(__FILE__) . '/SpecialMostVisitedPages_body.php', 'Mostvisitedpages', 'MostvisitedpagesSpecialPage' );
+extAddSpecialPage( dirname( __FILE__ ) . '/SpecialMostVisitedPages_body.php', 'Mostvisitedpages', 'MostvisitedpagesSpecialPage' );
 
 $wgSpecialPageGroups['Mostvisitedpages'] = 'highuse';
 

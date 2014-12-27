@@ -6,6 +6,10 @@
 $messages = array();
 
 $messages['en'] = array(
+	'multiwikifinder-desc' => 'Staff tool to search for a specific title across Wikia ',
+	'multidelete-desc' => 'Special Multi Wiki Delete',
+	'multiedit-desc' => 'Special Multi Wiki Edit',
+
 	'multitasks-link-back-label' => 'here', # used for link captions
 	'multiwikiedit' => 'Edit batch of pages',
 	'multiwikiedit_button' => 'EDIT',
@@ -128,6 +132,10 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'multiwikifinder-desc' => '{{desc}}',
+	'multidelete-desc' => '{{desc}}',
+	'multiedit-desc' => '{{desc}}',
+
 	'multiwikiedit_button' => '{{Identical|Edit}}',
 	'multiwikiedit_on' => 'Label for dropdown menu where user can select type of wikis to run script on',
 	'multiwikiedit_minoredit_caption' => '{{Identical|Minor edit}}',
@@ -143,7 +151,7 @@ $messages['qqq'] = array(
 	'multidelete_reason' => 'none',
 	'multidelete_all_wikis' => '{{Identical|All wikis}}',
 	'multidelete_success_subtitle' => '{{Identical|For $1}}',
-	'multidelete_split_results' => 'If number of articles to run the script on exceeds a maximum number, user receives a message informing them that the script will be split up into a number of tasks. 
+	'multidelete_split_results' => 'If number of articles to run the script on exceeds a maximum number, user receives a message informing them that the script will be split up into a number of tasks.
 Parameters:
 * $1 is the number of tasks the script has been split into
 * $2 is the number of articles included per task',

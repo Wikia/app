@@ -12,6 +12,7 @@ $messages = array();
  * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
  */
 $messages['en'] = array(
+	'our404handler-desc' => 'Our 404 handler for non-existent pages tricks',
 	'our404handler' => 'Error 404: Page not found!',
 	'our404handler-oops' => "These aren't the pages you're looking for. Move along, please.",
 	'message404' => "
@@ -340,12 +341,12 @@ $messages['he'] = array(
 $messages['hr'] = array(
 	'our404handler' => '404: Stranica nije pronađena!',
 	'our404handler-oops' => 'Ovo nije stranica koju tražite. Molim probajte negdje drugdje.',
-	'message404' => "'''Jako nam je žao, ali iz nekog razloga stranica koju ste tražili ne postoji.''' 
+	'message404' => "'''Jako nam je žao, ali iz nekog razloga stranica koju ste tražili ne postoji.'''
 
-Članak '''$1''' nije pronađen. 
+Članak '''$1''' nije pronađen.
 
-* Možete probati članak [[$2]] 
-* Možete koristiti okvir za pretraživanje na lijevoj strani stranice 
+* Možete probati članak [[$2]]
+* Možete koristiti okvir za pretraživanje na lijevoj strani stranice
 * Da bi došli na glavnu stranicu ovog projekta, kliknite na poveznicu: [{{SERVER}} {{sitename}}]",
 );
 
@@ -403,12 +404,12 @@ Le articulo '''$1''' non poteva esser trovate.
 $messages['id'] = array(
 	'our404handler' => 'Kesalahan 404: Halaman tidak ditemukan!',
 	'our404handler-oops' => 'Ini bukanlah halaman yang anda cari. Silahkan untuk pergi.',
-	'message404' => "'''Kami benar-benar minta maaf, tapi untuk beberapa alasan halaman yang Anda minta tidak ada'''. 
+	'message404' => "'''Kami benar-benar minta maaf, tapi untuk beberapa alasan halaman yang Anda minta tidak ada'''.
 
-Artikel '''$1''' tidak dapat ditemukan. 
+Artikel '''$1''' tidak dapat ditemukan.
 
-* Anda dapat mencoba artikel [[$2]] 
-* Anda dapat menggunakan kotak pencarian di sisi kiri halaman 
+* Anda dapat mencoba artikel [[$2]]
+* Anda dapat menggunakan kotak pencarian di sisi kiri halaman
 * Untuk kembali ke halaman utama situs ini, klik pranala: [{{SERVER}} {{SITENAME}}]",
 );
 
@@ -419,12 +420,12 @@ Artikel '''$1''' tidak dapat ditemukan.
 $messages['it'] = array(
 	'our404handler' => 'Errore 404: Pagina non trovata!',
 	'our404handler-oops' => 'Queste non sono le pagine che stavi cercando. Prosegui, per favore.',
-	'message404' => "'''Siamo davvero spiacenti, ma per qualche motivo la pagina che hai richiesto non esiste.''' 
+	'message404' => "'''Siamo davvero spiacenti, ma per qualche motivo la pagina che hai richiesto non esiste.'''
 
-La pagina '''$1''' non è stata trovata. 
+La pagina '''$1''' non è stata trovata.
 
- * Puoi provare la pagina [[$2]] 
- * Puoi utilizzare la casella di ricerca sul lato sinistro della pagina 
+ * Puoi provare la pagina [[$2]]
+ * Puoi utilizzare la casella di ricerca sul lato sinistro della pagina
  * Per andare alla pagina principale di questo sito, clicca sul link: [{{SERVER}} {{SITENAME}}]",
 );
 
@@ -438,7 +439,7 @@ $messages['ja'] = array(
 
 ページ '''$1''' が見つかりませんでした。
 
-* 次のリンクが、お探しのページかもしれません: [[$2]] 
+* 次のリンクが、お探しのページかもしれません: [[$2]]
 * ページの左側にある検索ボックスを利用できます
 * このサイトのメインページへ飛ぶには、次のリンクをクリックしてください: [{{SERVER}} {{SITENAME}}]",
 );

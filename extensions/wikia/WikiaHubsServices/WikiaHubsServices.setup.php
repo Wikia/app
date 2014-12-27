@@ -8,8 +8,20 @@
  * @author Sebastian Marzjan
  */
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 $app = F::app();
+
+$wgExtensionCredits[ 'other' ][ ] = array(
+	'name' => 'WikiaHubsServices',
+	'author' => array(
+		'Andrzej \'nAndy\' Łukaszewski',
+		'Damian Jóźwiak',
+		'Marcin Maciejewski',
+		'Sebastian Marzjan'
+	),
+	'descriptionmsg' => 'wikia-hub-services-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaHubsServices',
+);
 
 $wgAutoloadClasses['EditHubModel'] =  $dir . 'models/EditHubModel.class.php';
 $wgAutoloadClasses['WikiaHubsExploreModel'] =  $dir . 'models/WikiaHubsExploreModel.class.php';
@@ -40,7 +52,7 @@ $wgAutoloadClasses['WikiaHubsApiController'] = "{$IP}/extensions/wikia/WikiaHubs
 
 $wgWikiaApiControllers['WikiaHubsApiController'] = "{$IP}/extensions/wikia/WikiaHubsServices/api/WikiaHubsApiController.class.php";
 
-//message files
+// message files
 $wgExtensionMessagesFiles['WikiaHubsServices'] = $dir . 'WikiaHubsServices.i18n.php';
 
 // foreign file repo

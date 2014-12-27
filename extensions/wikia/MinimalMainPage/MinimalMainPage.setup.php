@@ -10,16 +10,17 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'Minimal Main Page',
 	'author' => array( '[http://www.seancolombo.com/ Sean Colombo]' ),
 	'descriptionmsg' => 'minimalmainpage-desc',
-	'version' => '1.0'
+	'version' => '1.0',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/MinimalMainPage'
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 // MinimalMainPage shared classes
 $wgAutoloadClasses['MinimalMainPageHooks'] =  $dir . 'MinimalMainPageHooks.class.php';
 
 // i18n mapping
-$wgExtensionMessagesFiles['MinimalMainPage'] = $dir.'MinimalMainPage.i18n.php';
+$wgExtensionMessagesFiles['MinimalMainPage'] = $dir . 'MinimalMainPage.i18n.php';
 
 // hooks
 $wgHooks['ArticleFromTitle'][] = 'MinimalMainPageHooks::onArticleFromTitle';

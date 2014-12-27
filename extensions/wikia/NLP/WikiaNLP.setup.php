@@ -12,9 +12,12 @@ $wgExtensionCredits['other'][] = array(
 		'version'           => '1.0',
 		'author'            => '[http://wikia.com/wiki/User:Relwell Robert Elwell]',
 		'descriptionmsg'    => 'wikia-nlp-desc',
+		'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/NLP'
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
+
+$wgExtensionMessagesFiles["NLP"] = $dir . 'WikiaNLP.i18n.php';
 
 // we still haven't done sensible cross-extension namespace autoloading, grr
 $wgAutoloadClasses['Wikia\NLP\Entities\PageEntitiesService'] =  $dir . 'classes/Entities/PageEntitiesService.php';
@@ -26,7 +29,7 @@ if ( $wgEnableTopicsForDFP ) {
 	$wgHooks['ArticleViewHeader'][] = 'Wikia\\NLP\\Entities\\Hooks::onArticleViewHeader';
 }
 
-if ( (! $wgDevelEnvironment ) &&  $wgLanguageCode == 'en' && $wgEnableNlpPipelineEvents ) {
+if ( ( ! $wgDevelEnvironment ) &&  $wgLanguageCode == 'en' && $wgEnableNlpPipelineEvents ) {
 	$wgHooks['ArticleEditUpdates'][] = 'Wikia\\NLP\\ParserPipeline\\Hooks::onArticleEditUpdates';
 	$wgHooks['ArticleDeleteComplete'][] = 'Wikia\\NLP\\ParserPipeline\\Hooks::onArticleDeleteComplete';
 	$wgHooks['ArticleUndelete'][] = 'Wikia\\NLP\\ParserPipeline\\Hooks::onArticleUndelete';

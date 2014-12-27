@@ -4,6 +4,7 @@ $wgExtensionCredits['specialpage'][] = [
 	'name' => 'Theme designer',
 	'author' => [ 'Christian Williams', 'Inez Korczyński', 'Maciej Brencz' ],
 	'descriptionmsg' => 'themedesigner-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ThemeDesigner'
 ];
 
 $dir = __DIR__;
@@ -33,9 +34,9 @@ $wgGroupPermissions['sysop']['themedesigner'] = true;
 $wgGroupPermissions['helper']['themedesigner'] = true;
 $wgGroupPermissions['staff']['themedesigner'] = true;
 
-JSMessages::registerPackage('ThemeDesigner', [
+JSMessages::registerPackage( 'ThemeDesigner', [
 	'themedesigner-wordmark-preview-error'
-]);
+] );
 
 // hooks
 $wgHooks['ArticleDeleteComplete'][] = 'ThemeDesignerHooks::onArticleDeleteComplete';

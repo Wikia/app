@@ -16,7 +16,7 @@ $wgSpecialPages['BatchUserRights'] = 'SpecialBatchUserRights';
 // $wgAutoloadClasses['SpecialBatchUserRights'] = $dir . 'SpecialBatchUserRights.php';
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'BatchUserRights',
-	'url' => 'http://lyrics.wikia.com/User:Sean_Colombo', // FIXME: please point to a location where to get more information on this extension (presumably mediawiki.org/wiki/Extension/BatchUserRights
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialBatchUserRights', // FIXME: please point to a location where to get more information on this extension (presumably mediawiki.org/wiki/Extension/BatchUserRights
 	'author' => '[http://www.seancolombo.com Sean Colombo]',
 	'descriptionmsg' => 'batchuserrights-desc',
 	'version' => '1.1',
@@ -136,8 +136,8 @@ class SpecialBatchUserRights extends SpecialPage {
 
 					// Loop through each target user and apply the update.
 					foreach ( $usernames as $username ) {
-						$username = trim($username);
-						if($username !== ""){
+						$username = trim( $username );
+						if ( $username !== "" ) {
 							$wgOut->addHTML( wfMsgExt(
 								'batchuserrights-single-progress-update',
 								'parseinline',

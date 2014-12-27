@@ -23,11 +23,11 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['other'][] = array(
 	'name' => 'AutomaticWikiAdoption',
 	'author' => '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]',
-	'description' => 'TODO',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AutomaticWikiAdoption',
 	'description-msg' => 'wikiadoption-desc',
 );
 
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
 
 $wgExtensionFunctions[] = 'AutomaticWikiAdoptionInit';
 $wgExtensionMessagesFiles['AutomaticWikiAdoption'] = "$dir/AutomaticWikiAdoption.i18n.php";
@@ -35,7 +35,7 @@ $wgAutoloadClasses['AutomaticWikiAdoptionAjax'] = "$dir/AutomaticWikiAdoptionAja
 $wgAutoloadClasses['AutomaticWikiAdoptionHelper'] = "$dir/AutomaticWikiAdoptionHelper.class.php";
 $wgAutoloadClasses['AutomaticWikiAdoptionController'] = "$dir/AutomaticWikiAdoptionController.class.php";
 
-//register special page
+// register special page
 $wgAutoloadClasses['SpecialWikiAdoption'] = "$dir/SpecialWikiAdoption.class.php";
 $wgSpecialPages['WikiAdoption'] = 'SpecialWikiAdoption';
 

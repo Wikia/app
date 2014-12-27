@@ -12,8 +12,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Founder Emails',
 	'author' => 'Adrian \'ADi\' Wieczorek',
-	'url' => 'http://www.wikia.com' ,
-	'description' => 'Helps informing founders about changes on their wiki',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/FounderEmails',
 	'descriptionmsg' => 'founderemails-desc'
 );
 
@@ -89,7 +88,7 @@ function wfFounderEmailsInit() {
 	$wgDefaultUserOptions["founderemails-complete-digest-$wgCityId"] = 0;
 }
 
-$dir = dirname(__FILE__).'/';
+$dir = dirname( __FILE__ ) . '/';
 $wgAutoloadClasses['FounderEmailsController'] = $dir . 'FounderEmailsController.class.php';
 $wgAutoloadClasses['SpecialFounderEmails'] = $dir . 'SpecialFounderEmails.class.php';
 

@@ -18,7 +18,8 @@ $wgExtensionCredits['specialpage'][] = array(
 	'author' => array(
 		'Maciej Brencz',
 		'Jakub Kurcek' ),
-	'descriptionmsg' => 'places-desc'
+	'descriptionmsg' => 'places-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Places'
 );
 
 $dir = dirname( __FILE__ );
@@ -76,14 +77,14 @@ $wgAPIModules['places'] = 'WikiaApiPlaces';
 $wgExtensionMessagesFiles['Places'] = $dir . '/Places.i18n.php';
 $wgExtensionMessagesFiles['PlacesAliases'] = $dir . '/Places.alias.php';
 
-JSMessages::registerPackage('Places', array(
+JSMessages::registerPackage( 'Places', array(
 	'places-toolbar-button-*',
 	'places-editor-*',
 	'ok',
-));
+) );
 
-JSMessages::registerPackage('PlacesEditPageButton', array( 'places-toolbar-button-tooltip' ) );
-JSMessages::registerPackage('PlacesGeoLocationModal', array( 'places-geolocation-modal-*' ) );
+JSMessages::registerPackage( 'PlacesEditPageButton', array( 'places-toolbar-button-tooltip' ) );
+JSMessages::registerPackage( 'PlacesGeoLocationModal', array( 'places-geolocation-modal-*' ) );
 
 /*
  * user rights

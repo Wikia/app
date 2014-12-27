@@ -22,6 +22,7 @@ $wgExtensionCredits['videosmodule'][] = array(
 		"Kenneth Kouot <kenneth at wikia-inc.com>",
 	),
 	'descriptionmsg' => 'wikia-videosmodule-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/VideosModule'
 );
 
 $dir = dirname( __FILE__ ) . '/';
@@ -55,4 +56,4 @@ $wgExtensionMessagesFiles['VideosModule'] = $dir . 'VideosModule.i18n.php';
 // register messages package for JS
 JSMessages::registerPackage( 'VideosModule', array(
 	'videosmodule-title-default',
-));
+) );

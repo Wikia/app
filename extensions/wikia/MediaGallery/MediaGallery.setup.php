@@ -14,11 +14,13 @@ $wgExtensionCredits['other'][] = array(
 		'James Sutterfield',
 		'Armon Rabiyan',
 	),
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/MediaGallery',
+	'descriptionmsg' => 'mediagallery-desc'
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
-//classes
+// classes
 $wgAutoloadClasses['MediaGalleryController'] =  $dir . 'MediaGalleryController.class.php';
 $wgAutoloadClasses['MediaGalleryHelper'] =  $dir . 'MediaGalleryHelper.class.php';
 $wgAutoloadClasses['MediaGalleryModel'] =  $dir . 'MediaGalleryModel.class.php';
@@ -34,7 +36,7 @@ $wgHooks['WikiFeatures::afterToggleFeature'][] = 'MediaGalleryHooks::afterToggle
 // i18n mapping
 $wgExtensionMessagesFiles['MediaGallery'] = $dir . 'MediaGallery.i18n.php';
 
-JSMessages::registerPackage('MediaGallery', array(
+JSMessages::registerPackage( 'MediaGallery', array(
 	'mediagallery-show-more',
 	'mediagallery-show-less',
-));
+) );

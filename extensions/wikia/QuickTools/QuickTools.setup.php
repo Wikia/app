@@ -15,9 +15,10 @@ $wgExtensionCredits['antispam'][] = array(
 	'author' => array(
 		'[http://community.wikia.com/wiki/User:Grunny Daniel Grunwell (grunny)]'
 	),
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/QuickTools'
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 // Classes
 $wgAutoloadClasses[ 'QuickToolsController'] =  $dir . 'QuickToolsController.class.php';

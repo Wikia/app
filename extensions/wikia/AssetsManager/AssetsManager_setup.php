@@ -6,26 +6,31 @@
  * @see https://internal.wikia-inc.com/wiki/AssetsManager
  */
 
-if(!defined('MEDIAWIKI')) {
-	exit(1);
+if ( !defined( 'MEDIAWIKI' ) ) {
+	exit( 1 );
 }
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'AssetsManager',
-	'author' => 'Inez Korczyński'
+	'author' => 'Inez Korczyński',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AssetsManager',
+	'descriptionmsg' => 'assestsmanager-desc',
 );
 
-$wgAutoloadClasses['AssetsManagerBaseBuilder'] = __DIR__.'/builders/AssetsManagerBaseBuilder.class.php';
-$wgAutoloadClasses['AssetsManagerOneBuilder'] = __DIR__.'/builders/AssetsManagerOneBuilder.class.php';
-$wgAutoloadClasses['AssetsManagerGroupBuilder'] = __DIR__.'/builders/AssetsManagerGroupBuilder.class.php';
-$wgAutoloadClasses['AssetsManagerGroupsBuilder'] = __DIR__.'/builders/AssetsManagerGroupsBuilder.class.php';
-$wgAutoloadClasses['AssetsManagerSassBuilder'] = __DIR__.'/builders/AssetsManagerSassBuilder.class.php';
-$wgAutoloadClasses['AssetsManagerSassesBuilder'] = __DIR__.'/builders/AssetsManagerSassesBuilder.class.php';
+// i18n
+$wgExtensionMessagesFiles['AssetsManager'] = __DIR__ . '/i18n/AssetsManager.i18n.php';
 
-$wgAutoloadClasses['AssetsManagerServer'] = __DIR__.'/AssetsManagerServer.class.php';
-$wgAutoloadClasses['AssetsManagerException'] = __DIR__.'/AssetsManagerException.class.php';
+$wgAutoloadClasses['AssetsManagerBaseBuilder'] = __DIR__ . '/builders/AssetsManagerBaseBuilder.class.php';
+$wgAutoloadClasses['AssetsManagerOneBuilder'] = __DIR__ . '/builders/AssetsManagerOneBuilder.class.php';
+$wgAutoloadClasses['AssetsManagerGroupBuilder'] = __DIR__ . '/builders/AssetsManagerGroupBuilder.class.php';
+$wgAutoloadClasses['AssetsManagerGroupsBuilder'] = __DIR__ . '/builders/AssetsManagerGroupsBuilder.class.php';
+$wgAutoloadClasses['AssetsManagerSassBuilder'] = __DIR__ . '/builders/AssetsManagerSassBuilder.class.php';
+$wgAutoloadClasses['AssetsManagerSassesBuilder'] = __DIR__ . '/builders/AssetsManagerSassesBuilder.class.php';
 
-$wgAutoloadClasses['AssetsManagerController'] = __DIR__.'/AssetsManagerController.class.php';
+$wgAutoloadClasses['AssetsManagerServer'] = __DIR__ . '/AssetsManagerServer.class.php';
+$wgAutoloadClasses['AssetsManagerException'] = __DIR__ . '/AssetsManagerException.class.php';
+
+$wgAutoloadClasses['AssetsManagerController'] = __DIR__ . '/AssetsManagerController.class.php';
 
 $wgAjaxExportList[] = 'AssetsManagerEntryPoint';
 $wgHooks['MakeGlobalVariablesScript'][] = 'AssetsManager::onMakeGlobalVariablesScript';
@@ -37,7 +42,7 @@ $wgHooks['UserGetRights'][] = 'onUserGetRights';
  */
 function onUserGetRights( $user, &$aRights ) {
 	global $wgRequest;
-	if ( $wgRequest->getVal('action') === 'ajax' && $wgRequest->getVal('rs') === 'AssetsManagerEntryPoint' ) {
+	if ( $wgRequest->getVal( 'action' ) === 'ajax' && $wgRequest->getVal( 'rs' ) === 'AssetsManagerEntryPoint' ) {
 		$aRights[] = 'read';
 	}
 	return true;
@@ -45,8 +50,8 @@ function onUserGetRights( $user, &$aRights ) {
 
 function AssetsManagerEntryPoint() {
 	global $wgRequest;
-	AssetsManagerServer::serve($wgRequest);
+	AssetsManagerServer::serve( $wgRequest );
 
-	wfRunHooks('RestInPeace');
+	wfRunHooks( 'RestInPeace' );
 	exit();
 }

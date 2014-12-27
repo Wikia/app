@@ -1,7 +1,7 @@
 <?php
 /**
  * MiniEditor - A miniature editor
- * 
+ *
  * Most of this extension is dynamic / javascript.  We do need some messages from other extensions.
  *
  * @author Owen Davis, Liz Lee, Kyle Florence
@@ -11,11 +11,11 @@
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'MiniEditor',
 	'author' => array( 'Liz Lee', 'Kyle Florence', 'Owen Davis' ),
-	'url' => 'http://www.wikia.com',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/MiniEditor',
 	'descriptionmsg' => 'minieditor-desc'
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 /**
  * Controllers

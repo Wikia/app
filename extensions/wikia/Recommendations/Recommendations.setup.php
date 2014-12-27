@@ -3,8 +3,9 @@
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Recommendations',
 	'author' => 'Łukasz Konieczny',
-	'description' => 'Recommendations',
-	'version' => 1.0
+	'descriptionmsg' => 'recommendations-desc',
+	'version' => 1.0,
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Recommendations'
 );
 
 $wgAutoloadClasses['RecommendationsHooks'] =  __DIR__ . '/RecommendationsHooks.class.php';

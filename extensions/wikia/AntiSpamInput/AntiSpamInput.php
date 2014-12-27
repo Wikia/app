@@ -15,9 +15,9 @@
  */
 
 # Not a valid entry point, skip unless MEDIAWIKI is defined
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
         echo "Not a valid entry point";
-        exit(1);
+        exit( 1 );
 }
 
 $wgExtensionFunctions[] = 'wfAntiSpamInputInit';
@@ -25,9 +25,10 @@ $wgExtensionCredits['other'][] = array(
     'name' => 'AntiSpamInput' ,
     'author' => "[http://www.wikia.com/wiki/User:TOR Łukasz 'TOR' Garczewski]",
     'version' => 0.4 ,
-    'description' => 'Simple spambot blocking mechanism.'
+    'descriptionmsg' => 'antispaminput-msg',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AntiSpamInput'
 );
-$wgExtensionMessagesFiles['AntiSpamInput'] = dirname(__FILE__) . '/AntiSpamInput.i18n.php';
+$wgExtensionMessagesFiles['AntiSpamInput'] = dirname( __FILE__ ) . '/AntiSpamInput.i18n.php';
 
 function wfAntiSpamInputInit () {
 	global $wgHooks;
@@ -45,17 +46,17 @@ function wfAntiSpamInputInit () {
 }
 
 function wfAntiSpamInputBoxInclusion ( $form = false ) {
-	$input = "\n<div id='antispam_container' style='display: none'>\n".
-                 "<label for='antispam'>". wfMsg('antispam_label'). "</label>\n".
-                 "<input type='text' value='' id='antispam' name='antispam' />\n".
+	$input = "\n<div id='antispam_container' style='display: none'>\n" .
+                 "<label for='antispam'>" . wfMsg( 'antispam_label' ) . "</label>\n" .
+                 "<input type='text' value='' id='antispam' name='antispam' />\n" .
                  "</div>";
 
 	# check if we're using EditPage, wgOut or something else
 	# FIXME: if possible all cases should be handled identically
-	if (is_object($form) && property_exists($form, 'editFormTextBottom')) {
+	if ( is_object( $form ) && property_exists( $form, 'editFormTextBottom' ) ) {
 		$form->editFormTextBottom .= $input;
-	} elseif (method_exists($form, 'addHTML')) {
-		$form->addHTML($input);
+	} elseif ( method_exists( $form, 'addHTML' ) ) {
+		$form->addHTML( $input );
 	} else {
 		echo $input;
 	}
@@ -64,7 +65,7 @@ function wfAntiSpamInputBoxInclusion ( $form = false ) {
 
 
 function wfAntiSpamInputCheck () {
-	if (!empty($_POST['antispam'])) {
+	if ( !empty( $_POST['antispam'] ) ) {
 		$title = new Title();
 		$article = new Article( $title );
 		$edit = new EditPage( $article );

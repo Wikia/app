@@ -31,6 +31,7 @@ $wgExtensionCredits['other'][] =
 		),
 		'descriptionmsg' => 'abtesting-desc',
 		'version' => '1.0',
+		'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AbTesting',
 	);
 
 /**
@@ -88,8 +89,8 @@ $wgResourceModules['wikia.ext.abtesting.edit'] = array(
 	)
 );
 
-//AbTesting is an Oasis-only experiment for now
-//$wgHooks['WikiaMobileAssetsPackages'][] = 'AbTesting::onWikiaMobileAssetsPackages';
+// AbTesting is an Oasis-only experiment for now
+// $wgHooks['WikiaMobileAssetsPackages'][] = 'AbTesting::onWikiaMobileAssetsPackages';
 
 $wgSpecialPages[ 'AbTesting'] = 'SpecialAbTestingController';
 

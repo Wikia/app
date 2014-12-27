@@ -12,7 +12,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
-if( !defined( 'MEDIAWIKI' ) ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
         echo "This is a MediaWiki extension named WikiaIrcGateway.\n";
         exit( 1 );
 }
@@ -21,7 +21,8 @@ if( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'Wikia IRC Gateway',
 	'author' => "[http://www.wikia.com/wiki/User:TOR Łukasz 'TOR' Garczewski]",
-	'description' => 'Lets users insert IRC login form on any page'
+	'descriptionmsg' => 'ircgate-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaIrcGateway'
 );
 
 $wgExtensionMessagesFiles['WikiaIrcGateway'] = dirname( __FILE__ ) . '/WikiaIrcGateway.i18n.php';
@@ -38,9 +39,9 @@ function wfWikiaIrcGateway( $parser ) {
 
 function printWikiaIrcGatewayLoginForm( $input, $argv ) {
 
-	#only do this once per page;
+	# only do this once per page;
 	global $GatewayOnPage;
-	if( !empty($GatewayOnPage) ) {
+	if ( !empty( $GatewayOnPage ) ) {
 		return '';
 	}
 	$GatewayOnPage = true;
@@ -49,18 +50,18 @@ function printWikiaIrcGatewayLoginForm( $input, $argv ) {
 <form id="ircform" method="get" action="http://irc.wikia.com/" name="loginform">
 	<table>
 		<tr>
-			<td> ' . wfMsg('ircgate-username') . '</td>
+			<td> ' . wfMsg( 'ircgate-username' ) . '</td>
 			<td>
 				<input type="text" name="nick" value="">
 				<input type="submit" value="Login">
 			</td>
 		</tr>
 		<tr>
-			<td>' . wfMsg('ircgate-channel') . '</td>
+			<td>' . wfMsg( 'ircgate-channel' ) . '</td>
 			<td>
 				<select name="channels">';
 
-	$array = explode( "\n*", wfMsgForContent('ircgate-channellist') );
+	$array = explode( "\n*", wfMsgForContent( 'ircgate-channellist' ) );
 
 	foreach ( $array as $line ) {
 		if ( strpos( ltrim( $line, '* ' ), 'group: ' ) === 0 ) {
@@ -68,7 +69,7 @@ function printWikiaIrcGatewayLoginForm( $input, $argv ) {
 		} elseif ( strpos( ltrim( $line, '* ' ), 'group-end' ) === 0 ) {
 			$output .= "</optgroup>\n";
 		} else {
-			$output .= '<option>' . htmlspecialchars( ltrim( $line, '* ') ) . "</option>\n";
+			$output .= '<option>' . htmlspecialchars( ltrim( $line, '* ' ) ) . "</option>\n";
 		}
 	}
 

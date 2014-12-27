@@ -20,14 +20,15 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 $wgExtensionCredits['specialpage'][] = array(
     "name" => "MostPopularCategories",
-    "description" => "Get list of most popular categories",
-    "author" => "Moli <moli at wikia.com>"
+    "descriptionmsg" => "mostpopularcategories-desc",
+    "author" => "Moli <moli at wikia.com>",
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/MostPopularCategories'
 );
 
 $wgHooks['wgQueryPages'][] = 'wfSetupMostPopularCategories';
 $wgExtensionFunctions[] = 'wfSetupMostPopularCategories';
-#--- messages file
-$wgExtensionMessagesFiles["Mostpopularcategories"] = dirname(__FILE__) . '/SpecialMostPopularCategories.i18n.php';
+# --- messages file
+$wgExtensionMessagesFiles["Mostpopularcategories"] = dirname( __FILE__ ) . '/SpecialMostPopularCategories.i18n.php';
 
 // aliases
 $wgExtensionMessagesFiles['MostpopularcategoriesAliases'] = __DIR__ . '/SpecialMostPopularCategories.aliases.php';
@@ -35,14 +36,14 @@ $wgExtensionMessagesFiles['MostpopularcategoriesAliases'] = __DIR__ . '/SpecialM
 if ( !function_exists( 'extAddSpecialPage' ) ) {
     require_once( "$IP/extensions/ExtensionFunctions.php" );
 }
-extAddSpecialPage( dirname(__FILE__) . '/SpecialMostPopularCategories_body.php', 'Mostpopularcategories', 'MostpopularcategoriesSpecialPage' );
+extAddSpecialPage( dirname( __FILE__ ) . '/SpecialMostPopularCategories_body.php', 'Mostpopularcategories', 'MostpopularcategoriesSpecialPage' );
 
 $wgSpecialPageGroups['Mostpopularcategories'] = 'highuse';
 
 // macbre: fix fatal when accessing this special page via API
-$wgAutoloadClasses['MostpopularcategoriesPage'] = dirname(__FILE__) . '/SpecialMostPopularCategories_body.php';
+$wgAutoloadClasses['MostpopularcategoriesPage'] = dirname( __FILE__ ) . '/SpecialMostPopularCategories_body.php';
 
 function wfSetupMostPopularCategories( &$queryPages = array() ) {
-    $queryPages[] = array( 'MostpopularcategoriesPage', 'Mostpopularcategories');
+    $queryPages[] = array( 'MostpopularcategoriesPage', 'Mostpopularcategories' );
     return true;
 }

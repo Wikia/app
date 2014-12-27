@@ -14,7 +14,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
-if( !defined( 'MEDIAWIKI' ) ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
         echo "This is a MediaWiki extension named FastCat.\n";
         exit( 1 );
 }
@@ -23,7 +23,8 @@ if( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['specialpage'][] = array(
         'name' => 'FastCat',
         'author' => array( "[http://www.wikia.com/wiki/User:TOR Łukasz 'TOR' Garczewski]", 'Jochen Kornitzky' ),
-        'description' => 'One-click categorization from a predefined list of categories.'
+        'descriptionmsg' => 'fastcat-desc',
+		'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/FastCat'
 );
 
 $dir = dirname( __FILE__ );
@@ -38,7 +39,7 @@ $wgHooks['OutputPageMakeCategoryLinks'][] = 'efFastCatInit';
 /*
  * Determine whether or not we want a FastCat module displayed
  */
-function efFastCatInit($out, $categories, $links) {
+function efFastCatInit( $out, $categories, $links ) {
 
 	global $wgUser, $wgTitle, $wgHooks;
 
@@ -64,14 +65,14 @@ function efFastCatSelector( &$categories ) {
 	global $wgTitle, $wgArticle;
 
 	// BugId:26491
-	if (empty($wgTitle) || empty($wgArticle)) {
+	if ( empty( $wgTitle ) || empty( $wgArticle ) ) {
 		return true;
 	}
 
 	$artname = $wgTitle->getText();
 	$artid = $wgArticle->getID();
 
-	$spice = sha1("Kroko-katMeNot-" . $artid . "-" . $artname . "-NotMekat-Schnapp");
+	$spice = sha1( "Kroko-katMeNot-" . $artid . "-" . $artname . "-NotMekat-Schnapp" );
 
 	$catUrl = Title::newFromText( 'FastCat', NS_SPECIAL )->getFullURL();
 
@@ -86,9 +87,9 @@ function efFastCatSelector( &$categories ) {
 
 	$kat = explode( "\n", wfMsgForContent( 'fastcat-categories-list' ) );
 
-	foreach($kat as $k) {
+	foreach ( $kat as $k ) {
 
-		if( strpos( $k, '* ' ) === 0 ) {
+		if ( strpos( $k, '* ' ) === 0 ) {
 			$k = trim( $k, '* ' );
 			$ret .= "</p><p style=\"text-indent:-1em;margin-left:1em\">\n";
 			$ret .= "<button style=\"font-size:smaller;\" name=\"cat\" value=\"$k\"><b>$k</b></button>\n";
@@ -99,7 +100,7 @@ function efFastCatSelector( &$categories ) {
 
 	}
 
-	$ret .=<<< EORET
+	$ret .= <<< EORET
 		</p>
 		</form>
 EORET;

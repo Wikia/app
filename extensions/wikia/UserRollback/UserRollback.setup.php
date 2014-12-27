@@ -1,6 +1,13 @@
 <?php
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
+
+$wgExtensionCredits[ 'other' ][ ] = array(
+	'name' => 'UserRollback',
+	'author' => 'Wikia',
+	'descriptionmsg' => 'userrollback-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/UserRollback',
+);
 
 /**
  * controllers

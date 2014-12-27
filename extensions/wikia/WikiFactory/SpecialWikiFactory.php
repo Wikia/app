@@ -16,9 +16,10 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 $wgExtensionCredits['specialpage'][] = array(
     "name" => "WikiFactory",
-    "description" => "Store MediaWiki settings in database",
+    "descriptionmsg" => "wikifactory-desc",
 	"version" => preg_replace( '/^.* (\d\d\d\d-\d\d-\d\d).*$/', '\1', '$Id: SpecialWikiFactory.php 11926 2008-04-23 13:58:29Z eloy $' ),
-    "author" => "[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)]"
+    "author" => "[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)]",
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiFactory'
 );
 
 $dir = dirname( __FILE__ );
@@ -55,10 +56,10 @@ $wgGroupPermissions['util']['wikifactory'] = true;
 $wgAvailableRights[] = 'wikifactorymetrics';
 $wgGroupPermissions['staff']['wikifactorymetrics'] = true;
 
-extAddSpecialPage( dirname(__FILE__) . '/SpecialWikiFactory_body.php', 'WikiFactory', 'WikiFactoryPage' );
+extAddSpecialPage( dirname( __FILE__ ) . '/SpecialWikiFactory_body.php', 'WikiFactory', 'WikiFactoryPage' );
 $wgSpecialPageGroups['WikiFactory'] = 'wikia';
 
-$wgAutoloadClasses[ "CloseWikiPage" ] = $dir. "/Close/SpecialCloseWiki_body.php";
+$wgAutoloadClasses[ "CloseWikiPage" ] = $dir . "/Close/SpecialCloseWiki_body.php";
 $wgSpecialPages[ "CloseWiki" ] = "CloseWikiPage";
 $wgSpecialPageGroups[ "CloseWiki" ] = 'wikia';
 

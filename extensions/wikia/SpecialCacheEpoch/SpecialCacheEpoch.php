@@ -16,63 +16,64 @@
  *     include("$IP/extensions/wikia/SpecialCacheEpoch/SpecialCacheEpoch.php");
  */
 
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This is MediaWiki extension named SpecialCacheEpoch.\n";
-	exit(1) ;
+	exit( 1 ) ;
 }
 
 $wgSpecialPages['CacheEpoch'] = 'SpecialCacheEpoch';
-$wgExtensionMessagesFiles['CacheEpoch'] = dirname(__FILE__) . '/SpecialCacheEpoch.i18n.php';
+$wgExtensionMessagesFiles['CacheEpoch'] = dirname( __FILE__ ) . '/SpecialCacheEpoch.i18n.php';
 $wgExtensionCredits['special'][] = array(
 	'name' => 'SpecialCacheEpoch',
 	'author' => '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]',
 	'description-msg' => 'cacheepoch-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialCacheEpoch'
 );
 
 // @todo FIXME: split off to class page.
 class SpecialCacheEpoch extends SpecialPage {
 	public function __construct() {
-		parent::__construct('CacheEpoch', 'cacheepoch');
+		parent::__construct( 'CacheEpoch', 'cacheepoch' );
 	}
 
-	public function execute($subpage) {
+	public function execute( $subpage ) {
 		global $wgOut, $wgRequest, $wgUser, $wgCacheEpoch, $wgCityId;
 
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
 		$this->setHeaders();
-		$this->mTitle = SpecialPage::getTitleFor('cacheepoch');
+		$this->mTitle = SpecialPage::getTitleFor( 'cacheepoch' );
 
-		if ($this->isRestricted() && !$this->userCanExecute($wgUser)) {
+		if ( $this->isRestricted() && !$this->userCanExecute( $wgUser ) ) {
 			$this->displayRestrictionError();
-			wfProfileOut(__METHOD__);
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
-		//no WikiFactory (internal wikis)
-		if (empty($wgCityId)) {
-			$wgOut->addHTML(wfMsg('cacheepoch-no-wf'));
-			wfProfileOut(__METHOD__);
+		// no WikiFactory (internal wikis)
+		if ( empty( $wgCityId ) ) {
+			$wgOut->addHTML( wfMsg( 'cacheepoch-no-wf' ) );
+			wfProfileOut( __METHOD__ );
 			return;
 		}
 
-		if ($wgRequest->wasPosted()) {
+		if ( $wgRequest->wasPosted() ) {
 			$wgCacheEpoch = wfTimestampNow();
-			$status = WikiFactory::setVarByName('wgCacheEpoch', $wgCityId, $wgCacheEpoch, wfMsg('cacheepoch-wf-reason'));
-			if ($status) {
-				$wgOut->addHTML('<h2>' . wfMsg('cacheepoch-updated', $wgCacheEpoch) . '</h2>');
+			$status = WikiFactory::setVarByName( 'wgCacheEpoch', $wgCityId, $wgCacheEpoch, wfMsg( 'cacheepoch-wf-reason' ) );
+			if ( $status ) {
+				$wgOut->addHTML( '<h2>' . wfMsg( 'cacheepoch-updated', $wgCacheEpoch ) . '</h2>' );
 			} else {
-				$wgOut->addHTML('<h2>' . wfMsg('cacheepoch-not-updated') . '</h2>');
+				$wgOut->addHTML( '<h2>' . wfMsg( 'cacheepoch-not-updated' ) . '</h2>' );
 			}
 		} else {
-			$wgOut->addHTML('<h2>' . wfMsg('cacheepoch-header') . '</h2>');
+			$wgOut->addHTML( '<h2>' . wfMsg( 'cacheepoch-header' ) . '</h2>' );
 		}
 
-		$wgOut->addHTML(Xml::openElement('form', array('action' => $this->mTitle->getFullURL(), 'method' => 'post')));
-		$wgOut->addHTML(wfMsg('cacheepoch-value', $wgCacheEpoch) . '<br>');
-		$wgOut->addHTML(Xml::submitButton(wfMsg('cacheepoch-submit')));
-		$wgOut->addHTML(Xml::closeElement('form'));
+		$wgOut->addHTML( Xml::openElement( 'form', array( 'action' => $this->mTitle->getFullURL(), 'method' => 'post' ) ) );
+		$wgOut->addHTML( wfMsg( 'cacheepoch-value', $wgCacheEpoch ) . '<br>' );
+		$wgOut->addHTML( Xml::submitButton( wfMsg( 'cacheepoch-submit' ) ) );
+		$wgOut->addHTML( Xml::closeElement( 'form' ) );
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 	}
 }

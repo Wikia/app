@@ -10,8 +10,8 @@
  */
 $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'Wikia RSS feed',
-	'author' => array("Andrzej 'nAndy' Łukaszewski"),
-	'url' => 'http://www.wikia.com',
+	'author' => array( "Andrzej 'nAndy' Łukaszewski" ),
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaRSS',
 	'descriptionmsg' => 'wikia-rss-desc',
 );
 
@@ -20,14 +20,14 @@ $wgExtensionCredits['parserhook'][] = array(
  */
 $dir = dirname( __FILE__ );
 
-//classes
+// classes
 $wgAutoloadClasses['WikiaRssModel'] =  $dir . '/WikiaRssModel.class.php';
 $wgAutoloadClasses['WikiaRssHooks'] =  $dir . '/WikiaRssHooks.class.php';
 $wgAutoloadClasses['WikiaRssHelper'] =  $dir . '/WikiaRssHelper.class.php';
 $wgAutoloadClasses['WikiaRssExternalController'] =  $dir . '/WikiaRssExternalController.class.php';
 
-//hooks
+// hooks
 $wgHooks['ParserFirstCallInit'][] = 'WikiaRssHooks::onParserFirstCallInit';
 
-//messages
+// messages
 $wgExtensionMessagesFiles['WikiaRss'] = $dir . '/WikiaRss.i18n.php';

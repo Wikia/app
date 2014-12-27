@@ -15,10 +15,11 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['other'][] =
 	[
 		"name" => "Venus",
-		"description" => "Venus Skin for Wikia",
+		"descriptionmsg" => "venus-desc",
 		"author" => [
 			'Consumer Team',
-		]
+		],
+		'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Venus'
 	];
 
 /**
@@ -56,7 +57,7 @@ $wgAutoloadClasses['VenusController'] = __DIR__ . '/VenusController.class.php';
  * message files
  */
 $wgExtensionMessagesFiles['Venus'] = __DIR__ . '/Venus.i18n.php';
-JSMessages::registerPackage('VenusArticle', [ 'venus-article-*' ]);
+JSMessages::registerPackage( 'VenusArticle', [ 'venus-article-*' ] );
 
 /**
  * hooks
@@ -68,7 +69,7 @@ $wgHooks['MakeHeadline'][] = 'VenusHooks::onMakeHeadline';
 $wgHooks['UserLogoutComplete'][] = 'NotificationsController::addLogOutConfirmation';
 $wgHooks['BeforeSkinLoad'][] = 'VenusHooks::onBeforeSkinLoad';
 
-//404 Pages
+// 404 Pages
 
 // Resources Loader modules
 

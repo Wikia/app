@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'oasis-desc' => 'Provides an easy way to add hooks for Oasis skin modules',
 	'oasis-global-page-header' => 'Wikia',
 	'oasis-home' => 'Home',
 	'oasis-more' => 'See more >',
@@ -162,7 +163,7 @@ $messages['en'] = array(
 	'oasis-wiki-navigation' => '$1 Navigation',
 	'oasis-related-categories' => 'Related Categories',
 
-	#wikia navigation v2
+	# wikia navigation v2
 	'oasis-navigation-v2-create-page' => 'Add a Page',
 	'oasis-navigation-v2-edit-page' => 'Edit this Page',
 	'oasis-navigation-v2-add-photo' => 'Add a Photo',
@@ -178,7 +179,7 @@ $messages['en'] = array(
 	'oasis-navigation-v2-new-photos' => 'Photos',
 	'oasis-on-the-wiki' => 'On the Wiki',
 
-	#sharing toolbar e-mail
+	# sharing toolbar e-mail
 	'oasis-sharing-toolbar-mail-subject' => '$1 has sent you a link on Wikia',
 	'oasis-sharing-toolbar-mail-body' => 'Hi.
 $1 sent you this page from {{SITENAME}} on Wikia:
@@ -201,6 +202,7 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
  * @author Verdy p
  */
 $messages['qqq'] = array(
+	'oasis-desc' => '{{desc}}',
 	'oasis-home' => "This refers to the wiki's main page title shown on the top of the page.",
 	'oasis-more' => 'Included in the activity minibox in the sidebar beside articles.',
 	'oasis-signup' => 'Label for link to account creation form, seen in header',

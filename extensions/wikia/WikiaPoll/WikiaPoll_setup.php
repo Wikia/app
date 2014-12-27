@@ -19,19 +19,20 @@ $wgExtensionCredits['other'][] = array(
 	'version' => '0.1',
 	'author' => 'Maciej Brencz',
 	'descriptionmsg' => 'wikiapoll-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaPoll'
 );
 
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
 
 // i18n
 $wgExtensionMessagesFiles['WikiaPoll'] = "{$dir}/WikiaPoll.i18n.php";
 
 // setup "Poll" namespace
-define('NS_WIKIA_POLL', 800);
-define('NS_WIKIA_POLL_TALK', 801);
+define( 'NS_WIKIA_POLL', 800 );
+define( 'NS_WIKIA_POLL_TALK', 801 );
 
 $wgExtensionNamespacesFiles['WikiaPoll'] = "{$dir}/WikiaPoll.namespaces.php";
-wfLoadExtensionNamespaces('WikiaPoll', array(NS_WIKIA_POLL, NS_WIKIA_POLL_TALK));
+wfLoadExtensionNamespaces( 'WikiaPoll', array( NS_WIKIA_POLL, NS_WIKIA_POLL_TALK ) );
 // use comments and not talk pages for poll pages
 $wgArticleCommentsNamespaces[] = NS_WIKIA_POLL;
 
@@ -58,32 +59,32 @@ $wgHooks['ParserReplaceInternalLinks2NoForce'][] = 'WikiaPollHooks::onParserRepl
 $wgAjaxExportList[] = 'WikiaPollAjax';
 function WikiaPollAjax() {
 	global $wgRequest;
-	$method = $wgRequest->getVal('method', false);
+	$method = $wgRequest->getVal( 'method', false );
 
-	if (method_exists('WikiaPollAjax', $method)) {
-		wfProfileIn(__METHOD__);
+	if ( method_exists( 'WikiaPollAjax', $method ) ) {
+		wfProfileIn( __METHOD__ );
 
 		$data = WikiaPollAjax::$method();
 
 		// send array as JSON
-		$json = json_encode($data);
-		$response = new AjaxResponse($json);
-		$response->setContentType('application/json; charset=utf-8');
+		$json = json_encode( $data );
+		$response = new AjaxResponse( $json );
+		$response->setContentType( 'application/json; charset=utf-8' );
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $response;
 	}
 }
 
-//Edit page
+// Edit page
 $wgHooks['EditPage::showEditForm:initial2'][] = 'CreatePollSetup';
-function CreatePollSetup($editform) {
+function CreatePollSetup( $editform ) {
 	global $wgOut, $wgExtensionsPath, $wgStylePath;
-	$wgOut->addScript('<script src="'.$wgExtensionsPath.'/wikia/WikiaPoll/js/CreateWikiaPoll.js"></script>');
+	$wgOut->addScript( '<script src="' . $wgExtensionsPath . '/wikia/WikiaPoll/js/CreateWikiaPoll.js"></script>' );
 	return true;
 }
 
-//WikiaMobile
+// WikiaMobile
 
 JSMessages::registerPackage( 'WikiaMobilePolls', array(
 	'wikiamobile-wikiapoll-thanks-voting',

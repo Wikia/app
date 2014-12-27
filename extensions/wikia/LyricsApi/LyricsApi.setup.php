@@ -5,7 +5,7 @@
  * @author Andrzej 'nAndy' Łukaszewski
  * @author Evgeniy 'aquilax' Vasilev
  */
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 $wgExtensionCredits['api'][] = array(
 	'name' => 'Lyrics API',
@@ -14,7 +14,8 @@ $wgExtensionCredits['api'][] = array(
 		'Andrzej "nAndy" Łukaszewski',
 		'Evgeniy "aquilax" Vasilev',
 	),
-	'version' => 1.0
+	'version' => 1.0,
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/LyricsApi'
 );
 
 // Load needed classes

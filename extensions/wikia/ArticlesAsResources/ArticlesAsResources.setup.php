@@ -40,13 +40,17 @@ $wgExtensionCredits['other'][] = array(
 		'Wladyslaw Bodzek',
 		'Kyle Florence'
 	),
-	'description' => 'Serves multiple MediaWiki articles combined together (and minified) as JS or CSS resources.',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ArticlesAsResources',
+	'descriptionmsg' => 'articlesasresources-desc',
 );
 
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
 
 // classes
 $wgAutoloadClasses['ArticlesAsResources'] =  $dir . '/ArticlesAsResources.class.php';
 
 // hooks
 $wgHooks['ResourceLoaderBeforeRespond'][] = 'ArticlesAsResources::onResourceLoaderBeforeRespond';
+
+// i18n
+$wgExtensionMessagesFiles['ArticlesAsResources'] = $dir . '/ArticlesAsResources.i18n.php';

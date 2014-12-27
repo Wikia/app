@@ -8,9 +8,15 @@
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'WikiaStyleGuide',
+	'author' => array(
+		'Hyun Lim',
+		'Kyle Florence'
+	),
+	'descriptionmsg' => 'wikiastyleguide-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaStyleGuide'
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 // classes
 $wgAutoloadClasses['WikiaStyleGuideSpecialController'] =  $dir . 'WikiaStyleGuideSpecialController.class.php';
@@ -19,7 +25,7 @@ $wgAutoloadClasses['WikiaStyleGuideSpecialController'] =  $dir . 'WikiaStyleGuid
 $wgSpecialPages['WikiaStyleGuide'] = 'WikiaStyleGuideSpecialController';
 
 // JS Messages
-JSMessages::registerPackage('VideoPage', array(
+JSMessages::registerPackage( 'VideoPage', array(
   'videohandler-remove-video-modal-*',
-));
+) );
 

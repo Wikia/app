@@ -10,6 +10,9 @@
 $wgExtensionCredits['other'][] = [
 	'name' => 'Oasis Skin',
 	'version' => '1.0',
+	'author' => 'Maciej Brencz',
+	'descriptionmsg' => 'oasis-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Oasis'
 ];
 
 // Messages
@@ -42,7 +45,7 @@ function wfOasisSetup() {
 	// confirmations
 	$wgHooks['ArticleDeleteComplete'][] = 'NotificationsController::addPageDeletedConfirmation';
 	$wgHooks['ArticleUndelete'][] = 'NotificationsController::addPageUndeletedConfirmation';
-	#$wgHooks['EditPageSuccessfulSave'][] = 'NotificationsController::addSaveConfirmation'; // BugId:10129
+	# $wgHooks['EditPageSuccessfulSave'][] = 'NotificationsController::addSaveConfirmation'; // BugId:10129
 	$wgHooks['SpecialMovepageAfterMove'][] = 'NotificationsController::addPageMovedConfirmation';
 	$wgHooks['SpecialPreferencesOnRender'][] = 'NotificationsController::addPreferencesConfirmation';
 	$wgHooks['UserLogoutComplete'][] = 'NotificationsController::addLogOutConfirmation';
@@ -60,23 +63,23 @@ function wfOasisSetup() {
 
 	// support "noexternals" URL param
 	global $wgNoExternals, $wgRequest;
-	$wgNoExternals = $wgRequest->getBool('noexternals', $wgNoExternals);
+	$wgNoExternals = $wgRequest->getBool( 'noexternals', $wgNoExternals );
 
-	//Oasis-navigation-v2 messages
+	// Oasis-navigation-v2 messages
 	$jsMessages = new JSMessages();
-	$jsMessages->registerPackage('Oasis-navigation-v2', array(
+	$jsMessages->registerPackage( 'Oasis-navigation-v2', array(
 		'oasis-navigation-v2-*'
-	));
+	) );
 
-	$jsMessages->registerPackage('Oasis-mobile-switch', array(
+	$jsMessages->registerPackage( 'Oasis-mobile-switch', array(
 		'oasis-mobile-site'
-	));
+	) );
 
 	// Generic messages that can be used by all extensions such as error messages
-	$jsMessages->registerPackage('Oasis-generic', array(
+	$jsMessages->registerPackage( 'Oasis-generic', array(
 		'oasis-generic-error',
-	));
-	$jsMessages->enqueuePackage('Oasis-generic', JSMessages::EXTERNAL);
+	) );
+	$jsMessages->enqueuePackage( 'Oasis-generic', JSMessages::EXTERNAL );
 }
 
 

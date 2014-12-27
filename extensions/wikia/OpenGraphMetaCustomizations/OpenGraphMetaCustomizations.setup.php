@@ -13,8 +13,9 @@ $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'OpenGraphMetaCustomizations',
 	'version' => '0.3',
-	'author' => array('[http://lyrics.wikia.com/User:Sean_Colombo Sean Colombo]', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]'),
+	'author' => array( '[http://lyrics.wikia.com/User:Sean_Colombo Sean Colombo]', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]' ),
 	'descriptionmsg' => 'ogmc-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/OpenGraphMetaCustomizations'
 );
 
 $wgExtensionMessagesFiles['OpenGraphMetaCustomizations'] = __DIR__ . '/OpenGraphMetaCustomizations.i18n.php';
@@ -26,7 +27,7 @@ $wgHooks['ParserAfterTidy'][] = 'egOgmcParserAfterTidy';
  */
 function egOgmcParserAfterTidy( Parser $parser, &$text ) {
 	$pOut = $parser->getOutput();
-	$pOut->addOutputHook('applyOpenGraphMetaCustomizations');
+	$pOut->addOutputHook( 'applyOpenGraphMetaCustomizations' );
 
 	return true;
 } // end egOgmcParserAfterTidy
@@ -38,28 +39,28 @@ function egOgmcParserAfterTidy( Parser $parser, &$text ) {
  */
 $wgParserOutputHooks['applyOpenGraphMetaCustomizations'] = 'egOgmcParserOutputApplyValues';
 function egOgmcParserOutputApplyValues( OutputPage $out, ParserOutput $parserOutput, $data ) {
-	wfProfileIn(__METHOD__);
+	wfProfileIn( __METHOD__ );
 	global $wgTitle;
 
 	$articleId = $wgTitle->getArticleID();
 	$titleImage = $titleDescription = null;
-	wfRunHooks('OpenGraphMeta:beforeCustomFields', array($articleId, &$titleImage, &$titleDescription));
+	wfRunHooks( 'OpenGraphMeta:beforeCustomFields', array( $articleId, &$titleImage, &$titleDescription ) );
 
 	// Get description from ArticleService
-	if (is_null($titleDescription)) {
+	if ( is_null( $titleDescription ) ) {
 		$DESC_LENGTH = 500;
 		$articleService = new ArticleService( $wgTitle );
 		$titleDescription = $articleService->getTextSnippet( $DESC_LENGTH );
 	}
 
-	if (!empty($titleDescription)) {
-		$parserOutput->setProperty('description', $titleDescription);
-		$out->mDescription = $parserOutput->getProperty('description');
+	if ( !empty( $titleDescription ) ) {
+		$parserOutput->setProperty( 'description', $titleDescription );
+		$out->mDescription = $parserOutput->getProperty( 'description' );
 	}
 
-	if ($page_id = Wikia::getFacebookDomainId()) {
-		$out->addMeta('property:fb:page_id', $page_id);
+	if ( $page_id = Wikia::getFacebookDomainId() ) {
+		$out->addMeta( 'property:fb:page_id', $page_id );
 	}
 
-	wfProfileOut(__METHOD__);
+	wfProfileOut( __METHOD__ );
 } // end egOgmcParserOutputApplyValues()

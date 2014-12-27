@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'wikistats-desc' => 'Gathers a wide array of statistics for this wiki and adds an GUI to browse them. Inspired by and partially based on the original [http://meta.wikimedia.org/wiki/Wikistats WikiStats] written by Erik Zachte',
 	"wikistats" => "Wikia Statistics",
 	"wikistats_wikia" => "Wikia",
 	"wikistats_pagetitle" => "Wikia Statistics",
@@ -112,8 +113,8 @@ $messages['en'] = array(
 	"wikistats_total" => "total",
 	"wikistats_new" => "new",
 	"wikistats_register" => "Reg.",
-	"wikistats_unregister" => "Unreg.",	
-	"wikistats_more_txt" => "more",	
+	"wikistats_unregister" => "Unreg.",
+	"wikistats_more_txt" => "more",
 	"wikistats_now" => "now",
 	"wikistats_prev_rank" => "Δ",
 	"wikistats_prev_rank_xls" => "+/-",
@@ -134,7 +135,7 @@ $messages['en'] = array(
 	"wikistats_column_E" => "Number of all content namespaces articles",
 	"wikistats_column_F" => "New articles per day in current month",
 	"wikistats_column_G" => "Number of edits content namespaces articles",
-	"wikistats_column_H" => "Total number of links to images in content namespaces articles",	
+	"wikistats_column_H" => "Total number of links to images in content namespaces articles",
 	"wikistats_column_I" => "Total number of uploaded images",
 	"wikistats_column_J" => "Total number of embeded video on content namespaces articles",
 	"wikistats_column_K" => "Total number of uploaded videos",
@@ -258,6 +259,7 @@ Please [[Special:UserLogin|log in or create an account]] if you do not already h
  * @author VezonThunder
  */
 $messages['qqq'] = array(
+	'wikistats-desc' => '{{desc}}',
 	'wikistats_info' => '"Show statistics" refers to {{msg-wikia|wikistats_showstats_btn}}.',
 	'wikistats_showstats_btn' => 'Button text, also referenced in {{msg-wikia|wikistats_info}}.',
 	'wikiastast_refresh_data' => '{{Identical|Refresh data}}',

@@ -4,6 +4,16 @@
  * switch colocation cookie
  */
 
+$wgExtensionCredits[ 'specialpage' ][ ] = array(
+	'name' => 'Datacenter',
+	'author' => 'Wikia',
+	'descriptionmsg' => 'datacenter-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Datacenter',
+);
+
+// i18n
+$wgExtensionMessagesFiles['Datacenter'] = __DIR__ . '/Datacenter.i18n.php';
+
 
 $wgSpecialPages[ "Datacenter" ] = "SpecialDatacenter";
 
@@ -36,24 +46,24 @@ class SpecialDatacenter extends UnlistedSpecialPage {
 		/**
 		 * if posted change cookie value
 		 */
-		if( $this->mRequest->wasPosted() ) {
+		if ( $this->mRequest->wasPosted() ) {
 			$val = $this->mRequest->getVal( "iowacookie", 0 );
-			if( $val == 2 ) {
+			if ( $val == 2 ) {
 				$this->mOut->addHTML( Wikia::successbox( "cookie set to sjc" ) );
 				$this->mRequest->response()->setcookie( $this->mCookieName, "sjc" );
 				$this->mCookie = "sjc";
 			}
-			elseif( $val == 1 ) {
+			elseif ( $val == 1 ) {
 				$this->mOut->addHTML( Wikia::successbox( "cookie set to iowa" ) );
 				$this->mRequest->response()->setcookie( $this->mCookieName, "iowa" );
 				$this->mCookie = "iowa";
 			}
-			elseif( $val == 3 ) {
+			elseif ( $val == 3 ) {
 				$this->mOut->addHTML( Wikia::successbox( "cookie set to ash" ) );
 				$this->mRequest->response()->setcookie( $this->mCookieName, "ash" );
 				$this->mCookie = "ash";
 			}
-			elseif( $val == 4 ) {
+			elseif ( $val == 4 ) {
 				$this->mOut->addHTML( Wikia::successbox( "cookie set to closest" ) );
 				$this->mRequest->response()->setcookie( $this->mCookieName, "closest" );
 				$this->mCookie = "closest";

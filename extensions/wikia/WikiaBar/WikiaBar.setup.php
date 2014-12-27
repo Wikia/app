@@ -7,7 +7,18 @@
  * @author Sebastian Marzjan
  */
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
+
+$wgExtensionCredits[ 'other' ][ ] = array(
+	'name' => 'WikiaBar',
+	'author' => array(
+		'Andrzej \'nAndy\' Łukaszewski',
+		'Marcin Maciejewski',
+		'Sebastian Marzjan'
+	),
+	'descriptionmsg' => 'wikiabar-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaBar',
+);
 
 /**
  * classes
@@ -23,7 +34,7 @@ $wgAutoloadClasses['WikiaBarMessageDataValidator'] =  $dir . 'models/WikiaBarMes
 $wgAutoloadClasses['WikiaBarFailsafeDataValidator'] =  $dir . 'models/WikiaBarFailsafeDataValidator.class.php';
 
 $wgAutoloadClasses['WikiaBarUserPropertiesHandler'] =  $dir . 'models/WikiaBarUserPropertiesHandler.class.php';
-WikiaUserPropertiesController::registerHandler('WikiaBarUserPropertiesHandler');
+WikiaUserPropertiesController::registerHandler( 'WikiaBarUserPropertiesHandler' );
 
 /**
  * hooks

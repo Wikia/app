@@ -16,7 +16,7 @@
  * @copyright Copyright (c) 2008-2012, Wikia Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
-if( !defined( 'MEDIAWIKI' ) ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 'This is not a valid entry point to MediaWiki.' );
 }
 
@@ -29,6 +29,7 @@ $wgExtensionCredits['other'][] = array(
 		'Jesús Martínez Novo', 'Jack Phoenix', 'Sean Colombo', 'Robert Elwell',
 	),
 	'descriptionmsg' => 'linksuggest-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/LinkSuggest'
 );
 
 // ResourceLoader support (MW 1.17+)
@@ -59,34 +60,34 @@ $wgAjaxExportList[] = 'getLinkSuggestImage';
 
 function getLinkSuggest() {
 	global $wgRequest;
-	wfProfileIn(__METHOD__);
+	wfProfileIn( __METHOD__ );
 
-	$out = LinkSuggest::getLinkSuggest($wgRequest);
+	$out = LinkSuggest::getLinkSuggest( $wgRequest );
 
-	$ar = new AjaxResponse($out);
-	$ar->setCacheDuration(60 * 60);
+	$ar = new AjaxResponse( $out );
+	$ar->setCacheDuration( 60 * 60 );
 
-	if ($wgRequest->getText('format') == 'json') {
-		$ar->setContentType('application/json; charset=utf-8');
+	if ( $wgRequest->getText( 'format' ) == 'json' ) {
+		$ar->setContentType( 'application/json; charset=utf-8' );
 	}
 	else {
-		$ar->setContentType('text/plain; charset=utf-8');
+		$ar->setContentType( 'text/plain; charset=utf-8' );
 	}
 
-	wfProfileOut(__METHOD__);
+	wfProfileOut( __METHOD__ );
 	return $ar;
 }
 
 function getLinkSuggestImage() {
 	global $wgRequest;
-	wfProfileIn(__METHOD__);
+	wfProfileIn( __METHOD__ );
 
-	$res = LinkSuggest::getLinkSuggestImage($wgRequest->getText('imageName'));
+	$res = LinkSuggest::getLinkSuggestImage( $wgRequest->getText( 'imageName' ) );
 
-	$ar = new AjaxResponse($res);
-	$ar->setCacheDuration(60 * 60);
-	$ar->setContentType('text/plain; charset=utf-8');
+	$ar = new AjaxResponse( $res );
+	$ar->setCacheDuration( 60 * 60 );
+	$ar->setContentType( 'text/plain; charset=utf-8' );
 
-	wfProfileOut(__METHOD__);
+	wfProfileOut( __METHOD__ );
 	return $ar;
 }

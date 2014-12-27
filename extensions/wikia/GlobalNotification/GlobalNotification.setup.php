@@ -10,9 +10,10 @@
 $wgExtensionCredits['globalnotification'][] = array(
 	'name' => 'GlobalNotification',
 	'descriptionmsg' => 'globalnotification-desc',
-	'author' => array('Hyun Lim')
+	'author' => 'Hyun Lim',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/GlobalNotification'
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 $wgExtensionMessagesFiles['GlobalNotification'] = $dir . 'GlobalNotification.i18n.php';

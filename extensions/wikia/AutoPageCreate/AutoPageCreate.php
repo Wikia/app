@@ -1,6 +1,6 @@
 <?php
 # Not a valid entry point, skip unless MEDIAWIKI is defined
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
         echo <<<EOT
 To install my extension, put the following line in LocalSettings.php:
 require_once( "\$IP/extensions/AutoPageCreate/AutoPageCreate.php" );
@@ -8,7 +8,14 @@ EOT;
         exit( 1 );
 }
 
-$wgExtensionMessagesFiles['AutoPageCreate'] = dirname(__FILE__) . '/AutoPageCreate.i18n.php';
+$wgExtensionCredits[ 'other' ][ ] = array(
+	'name' => 'AutoPageCreate',
+	'author' => 'Wikia',
+	'descriptionmsg' => 'autopagecreate-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AutoPageCreate',
+);
+
+$wgExtensionMessagesFiles['AutoPageCreate'] = dirname( __FILE__ ) . '/AutoPageCreate.i18n.php';
 $wgExtensionFunctions[] = 'wfAutoPageCreateInit';
 
 function wfAutoPageCreateInit() {
@@ -27,7 +34,7 @@ function wfAutoPageCreateTextForImagePlaceholder( Title $title, &$text ) {
 	// basic idea is to load the template for ImagePlaceholder to work when the article does not yet exist
 	// but on view, not on article edit (on preview the placeholder is blocked by default)
 	global $wgRequest;
-	if( !$title->exists() && ( 'edit' != $wgRequest->getVal( 'action' ) ) ) {
+	if ( !$title->exists() && ( 'edit' != $wgRequest->getVal( 'action' ) ) ) {
 		$text = wfMsgForContent( 'newpagelayout' );
 	}
 
@@ -38,10 +45,10 @@ function wfAutoPageCreateEditPage( $editpage ) {
 	global $wgRequest;
 	$preload = $wgRequest->getVal( 'preload' );
 
-	if( !$editpage->mTitle->exists() && !$editpage->preview  && empty( $preload ) ) {
-		if( $editpage->mTitle->isContentPage() ) {
+	if ( !$editpage->mTitle->exists() && !$editpage->preview  && empty( $preload ) ) {
+		if ( $editpage->mTitle->isContentPage() ) {
 			$editpage->textbox1 = wfMsgForContent( 'newpagelayout' );
-		} else if( ( $editpage->mTitle->getNamespace() == NS_USER ) && !wfAutoPageCreateIsAnonUserpage( $editpage->mTitle->getText()  ) ) {
+		} else if ( ( $editpage->mTitle->getNamespace() == NS_USER ) && !wfAutoPageCreateIsAnonUserpage( $editpage->mTitle->getText()  ) ) {
 			$editpage->textbox1 = wfMsgForContent( 'welcome-user-page', $editpage->mTitle->getText() );
 		}
 	}
@@ -49,8 +56,8 @@ function wfAutoPageCreateEditPage( $editpage ) {
 }
 
 function wfAutoPageCreateIsAnonUserpage( $title  ) {
-	if( User::IsIP( $title ) ) {
-		if( !User::idFromName( $title ) ) {
+	if ( User::IsIP( $title ) ) {
+		if ( !User::idFromName( $title ) ) {
 			return true;
 		}
 	}
@@ -72,7 +79,7 @@ function wfAutoPageCreateSetupVars( Array &$vars ) {
  * @return bool
  */
 function wfAutoPageCreateViewPage( $article, $out, &$text  ) {
-	wfProfileIn(__METHOD__);
+	wfProfileIn( __METHOD__ );
 
 	global $wgOut;
 
@@ -98,9 +105,9 @@ function wfAutoPageCreateViewPage( $article, $out, &$text  ) {
 			$text = $title->isContentPage() ? wfMsgForContent( "newpagelayout" ) : '';
 			$overlayMsgKey = "autopagecreate-newpage-notice-other";
 
-			if( $title->isContentPage() ) {
+			if ( $title->isContentPage() ) {
 				$overlayMsgKey = "autopagecreate-newpage-notice-content";
-			} elseif( $title->isTalkPage() ) {
+			} elseif ( $title->isTalkPage() ) {
 				$overlayMsgKey = "autopagecreate-newpage-notice-talk";
 				$wgOut->setRobotPolicy( 'noindex,nofollow' );
 			} else {
@@ -110,7 +117,7 @@ function wfAutoPageCreateViewPage( $article, $out, &$text  ) {
 						if ( $title->isSubpage() ) {
 							$overlayMsgKey = false;
 						}
-						else if( !wfAutoPageCreateIsAnonUserpage( $title->getText() ) ) {
+						else if ( !wfAutoPageCreateIsAnonUserpage( $title->getText() ) ) {
 							$text = wfMsgForContent( 'welcome-user-page', $title->getText() );
 							$overlayMsgKey = "autopagecreate-newpage-notice-user";
 						}
@@ -139,11 +146,11 @@ function wfAutoPageCreateViewPage( $article, $out, &$text  ) {
 				$wgOut->setRobotPolicy( 'noindex,nofollow' );
 			}
 
-			if (!empty($overlayMsgKey)) {
-				wfDebug(__METHOD__ . ": showing message '{$overlayMsgKey}'\n");
+			if ( !empty( $overlayMsgKey ) ) {
+				wfDebug( __METHOD__ . ": showing message '{$overlayMsgKey}'\n" );
 
 				$overlayMsg4JS = Xml::escapeJsString( wfMsgExt( $overlayMsgKey, "parseinline" ) );
-				if( $overlayMsg4JS != "-" ) {
+				if ( $overlayMsg4JS != "-" ) {
 					$js = <<<END
 wgAfterContentAndJS.push( function() { $( function() {
 	$("#wikia_page").prepend("<div id=\"NoArticleTextNotice\">{$overlayMsg4JS}<img id=\"NoArticleTextNoticeClose\" src=\""+wgBlankImgUrl+"\" class=\"sprite close\" /></div>");
@@ -154,7 +161,7 @@ END;
 				}
 			}
 			else {
-				wfDebug(__METHOD__ . ": forced to not show the message\n");
+				wfDebug( __METHOD__ . ": forced to not show the message\n" );
 			}
 	}
 
@@ -162,6 +169,6 @@ END;
 		$article->autoPageCreate__content = $text;
 	}
 
-	wfProfileOut(__METHOD__);
+	wfProfileOut( __METHOD__ );
 	return $retval;
 }

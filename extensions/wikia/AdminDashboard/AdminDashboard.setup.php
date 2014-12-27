@@ -6,9 +6,16 @@
  *
  */
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
-//classes
+$wgExtensionCredits[ 'specialpage' ][ ] = array(
+	'name' => 'Admin Dashboard',
+	'author' => 'Wikia',
+	'descriptionmsg' => 'admindashboard-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AdminDashboard',
+);
+
+// classes
 $wgAutoloadClasses['AdminDashboardSpecialPageController'] =  $dir . 'AdminDashboardSpecialPageController.class.php';
 $wgAutoloadClasses['AdminDashboardController'] =  $dir . 'AdminDashboardController.class.php';
 $wgAutoloadClasses['AdminDashboardLogic'] =  $dir . 'AdminDashboardLogic.class.php';
@@ -33,6 +40,6 @@ $wgGroupPermissions['bureaucrat']['admindashboard'] = true;
 $wgGroupPermissions['helper']['admindashboard'] = true;
 
 // register messages package for JS (BugId:41451)
-JSMessages::registerPackage('AdminDashboard', array(
+JSMessages::registerPackage( 'AdminDashboard', array(
 	'admindashboard-loading',
-));
+) );

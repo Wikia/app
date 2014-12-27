@@ -11,9 +11,10 @@ $wgExtensionCredits['parserhook'][] = array(
 	'descriptionmsg' => 'quickcreate-desc',
 	'version' => '1,0',
 	'author' => array( 'Bartek Lapinski' ),
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/QuickCreate'
 );
 
-$wgExtensionMessagesFiles['QuickCreate'] = dirname(__FILE__) . '/QuickCreate.i18n.php';
+$wgExtensionMessagesFiles['QuickCreate'] = dirname( __FILE__ ) . '/QuickCreate.i18n.php';
 
 $wgHooks['ParserFirstCallInit'][] = 'wfQuickCreate';
 
@@ -24,15 +25,15 @@ function wfQuickCreate( &$parser ) {
 
 function wfQuickCreateButton( $input, $argv, $parser ) {
 
-	$title = Title::makeTitle( NS_SPECIAL, "CreatePage");
+	$title = Title::makeTitle( NS_SPECIAL, "CreatePage" );
 	$link = $title->getFullUrl();
 	$output = Xml::openElement( 'a', array(
 			'class' => 'wikia-button wikiaComboAjaxLogin',
 			'id'	=> 'mr-submit',
 			'href' => $link
 		) )
-		.wfMsg( 'quickcreate' )
-		.Xml::closeElement( 'a' );
+		. wfMsg( 'quickcreate' )
+		. Xml::closeElement( 'a' );
 
 	return $parser->replaceVariables( $output );
 }

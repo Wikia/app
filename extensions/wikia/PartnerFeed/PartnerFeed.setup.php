@@ -1,7 +1,7 @@
 <?php
-if ( !defined('MEDIAWIKI') ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This is a MediaWiki extension.\n";
-	exit(1);
+	exit( 1 );
 }
 /**
  *
@@ -12,26 +12,33 @@ if ( !defined('MEDIAWIKI') ) {
  * To use this extension $wgEnableWidgetBoxFeed = true
   */
 
-$dir = dirname(__FILE__) . '/';
+$wgExtensionCredits[ 'specialpage' ][ ] = array(
+	'name' => 'PartnerFeed',
+	'author' => 'Wikia',
+	'descriptionmsg' => 'partner-feed-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/PartnerFeed',
+);
+
+$dir = dirname( __FILE__ ) . '/';
 $wgAutoloadClasses['ExtendedFeedItem']	= $dir . 'PartnerFeed.class.php';
 $wgAutoloadClasses['PartnerRSSFeed']	= $dir . 'PartnerFeed.class.php';
 $wgAutoloadClasses['PartnerAtomFeed']	= $dir . 'PartnerFeed.class.php';
 $wgAutoloadClasses['PartnerFeed']	= $dir . 'PartnerFeed.body.php';
 
 $wgExtensionMessagesFiles['PartnerFeed'] = $dir . 'PartnerFeed.i18n.php';
-$wgExtensionMessagesFiles['PartnerFeedAliases'] = __DIR__ . '/PartnerFeed.aliases.php';
+$wgExtensionMessagesFiles['PartnerFeedAliases'] = $dir . 'PartnerFeed.aliases.php';
 
 $wgSpecialPages['PartnerFeed']		= 'PartnerFeed';
 $wgSpecialPageGroups['PartnerFeed']	= 'wikia';
 
-//hook for purging Achievemets-related cache
+// hook for purging Achievemets-related cache
 $wgHooks['AchievementsInvalidateCache'][] = 'OnAchievementsInvalidateCache';
 
-function OnAchievementsInvalidateCache( User $user ){
+function OnAchievementsInvalidateCache( User $user ) {
 	wfProfileIn( __METHOD__ );
 	global $wgMemc;
 
-	//used in ParterFeed:FeedAchivementsLeaderboard()
+	// used in ParterFeed:FeedAchivementsLeaderboard()
 	$rankingCacheKey = AchRankingService::getRankingCacheKey( 20 );
 	$wgMemc->delete( $rankingCacheKey );
 

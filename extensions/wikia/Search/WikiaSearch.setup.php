@@ -7,9 +7,9 @@
 
 
 $app = F::app();
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
-require_once( $IP . '/lib/vendor/php-nlp-tools/autoloader.php' ); //@TODO find a better place for this
+require_once( $IP . '/lib/vendor/php-nlp-tools/autoloader.php' ); // @TODO find a better place for this
 require_once( $IP . '/lib/vendor/Solarium/Autoloader.php' );
 require_once( $IP . '/lib/vendor/simplehtmldom/simple_html_dom.php' );
 Solarium_Autoloader::register();
@@ -27,14 +27,14 @@ define( 'SEARCH_PROFILE_ADVANCED', 'advanced' );
 spl_autoload_register( function( $class ) {
 	if ( substr_count( $class, 'Wikia\\Search\\' ) > 0 ) {
 		$class = preg_replace( '/\\\\?Wikia\\\\Search\\\\/', '', $class );
-		$file = __DIR__ . '/classes/'.strtr( $class, '\\', '/' ).'.php';
+		$file = __DIR__ . '/classes/' . strtr( $class, '\\', '/' ) . '.php';
 		if ( file_exists( $file ) ) {
 			require_once( $file );
 			return true;
 		}
 		return false;
-	}  
-});
+	}
+} );
 
 /**
  * Keeping the traditional controller registry for now
@@ -85,4 +85,5 @@ $wgExtensionCredits['other'][] = array(
 	'version'			=> '3.0',
 	'author'			=> '[http://wikia.com/wiki/User:Relwell Robert Elwell]',
 	'descriptionmsg'	=> 'wikia-search-desc',
+	'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Search'
 );

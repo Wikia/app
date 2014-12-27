@@ -1,5 +1,15 @@
 <?php
 
+$wgExtensionCredits[ 'other' ][ ] = array(
+	'name' => 'WallNotifications',
+	'author' => 'Wikia',
+	'descriptionmsg' => 'wallnotifications-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WallNotifications',
+);
+
+// i18n
+$wgExtensionMessagesFiles['WallNotifications'] = __DIR__ . '/i18n/WallNotifications.i18n.php';
+
 $wgAutoloadClasses['WallNotifications'] =  __DIR__ . '/WallNotifications.class.php';
 
 $wgAutoloadClasses['WallNotificationsAdmin'] =  __DIR__ . '/WallNotificationsAdmin.class.php';
@@ -21,7 +31,7 @@ $wgAutoloadClasses['WallNotificationsHooksHelper'] =  __DIR__ . '/WallNotificati
 $wgAutoloadClasses['WallHelper'] =  __DIR__ . '/../Wall/WallHelper.class.php';
 $wgAutoloadClasses['WallMessage'] =  __DIR__ . '/../Wall/WallMessage.class.php';
 
-//add script in monobook
+// add script in monobook
 $wgHooks['SkinAfterBottomScripts'][] = 'WallNotificationsHooksHelper::onSkinAfterBottomScripts';
 
 $wgHooks['PersonalUrls'][] = 'WallNotificationsHooksHelper::onPersonalUrls';

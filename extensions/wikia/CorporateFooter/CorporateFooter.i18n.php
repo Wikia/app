@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'corporate-footer-desc' => 'Corporate Footer',
 	'wikiahome-footer-wikiainc' => '===Wikia, Inc.===
 *[http://www.wikia.com/About_Us About Us]
 *[http://www.wikia.com/Special:Contact Contact Wikia]
@@ -34,7 +35,7 @@ __NOEDITSECTION__',
 *[http://www.mediakit.wikia.com Media kit]
 *'''[http://mediakit.wikia.com/wiki/Contact Advertise with us]'''
 __NOEDITSECTION__",
-	'wikiahome-footer-community-wam' =>'*[$1 WAM Score]',
+	'wikiahome-footer-community-wam' => '*[$1 WAM Score]',
 );
 
 $messages['de'] = array(
@@ -64,7 +65,7 @@ $messages['de'] = array(
 	'wikiahome-footer-partner' => "===Partner===
 *[http://www.mediakit.wikia.com Pressekit]
 *'''[http://mediakit.wikia.com/wiki/Contact Auf Wikia werben]'''",
-	'wikiahome-footer-community-wam' =>'*[$1 WAM-Rang]',
+	'wikiahome-footer-community-wam' => '*[$1 WAM-Rang]',
 );
 
 $messages['es'] = array(
@@ -99,7 +100,7 @@ __NOEDITSECTION__',
 *[http://www.mediakit.wikia.com Kit de prensa]
 *'''[http://mediakit.wikia.com/wiki/Contact Anúnciate con nosotros]'''
 __NOEDITSECTION__",
-	'wikiahome-footer-community-wam' =>'*[$1 Puntuación WAM]',
+	'wikiahome-footer-community-wam' => '*[$1 Puntuación WAM]',
 );
 
 $messages['fr'] = array(
@@ -134,7 +135,7 @@ __NOEDITSECTION__',
 *[http://www.mediakit.wikia.com Kit de presse ]
 *'''[http://mediakit.wikia.com/wiki/Contact Publicité]'''
 __NOEDITSECTION__",
-	'wikiahome-footer-community-wam' =>'*[$1 Classement WAM]',
+	'wikiahome-footer-community-wam' => '*[$1 Classement WAM]',
 );
 
 $messages['pl'] = array(
@@ -169,7 +170,7 @@ __NOEDITSECTION__',
 *[http://www.mediakit.wikia.com Materiały prasowe]
 *'''[http://mediakit.wikia.com/wiki/Contact Reklama na Wikii]'''
 __NOEDITSECTION__",
-	'wikiahome-footer-community-wam' =>'*[$1 Punktacja WAM]',
+	'wikiahome-footer-community-wam' => '*[$1 Punktacja WAM]',
 );
 
 $messages['ja'] = array(
@@ -203,10 +204,11 @@ __NOEDITSECTION__',
 	'wikiahome-footer-partner' => "===パートナー===
 *[http://www.mediakit.wikia.com メディアキット]
 __NOEDITSECTION__",
-	'wikiahome-footer-community-wam' =>'*[$1 WAM スコア]',
+	'wikiahome-footer-community-wam' => '*[$1 WAM スコア]',
 );
 
 $messages['qqq'] = array(
+	'corporate-footer-desc' => '{{desc}}',
 	'wikiahome-footer-wikiainc' => 'First column in the corporate footer; use here wikitext: __NOEDITSECTION__ magic word, bold headline and create list of links; the corporate footer is displayed on all corporate pages and is divided to few columns',
 
 	'wikiahome-footer-get-started-heading' => 'The headline of 2nd column in corporate footer; use here wikitext to bold it; the corporate footer is displayed on all corporate pages and is divided to few columns',

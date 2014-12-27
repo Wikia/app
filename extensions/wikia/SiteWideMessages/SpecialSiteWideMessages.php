@@ -19,9 +19,9 @@
  *     require_once("$IP/extensions/wikia/SiteWideMessages/SpecialSiteWideMessages.php");
  */
 
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This is MediaWiki extension named SiteWideMessages.\n";
-	exit(1) ;
+	exit( 1 ) ;
 }
 
 $wgExtensionCredits['specialpage'][] = array(
@@ -30,25 +30,26 @@ $wgExtensionCredits['specialpage'][] = array(
 		'[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]',
 		'[http://www.wikia.com/wiki/User:Grunny Daniel Grunwell (Grunny)]'
 	),
-	'description' => 'This extension provides an interface for sending messages seen on all wikis.'
+	'descriptionmsg' => 'sidewidemessages-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SiteWideMessages'
 );
-//Allow group STAFF to use this extension.
+// Allow group STAFF to use this extension.
 $wgAvailableRights[] = 'messagetool';
 $wgGroupPermissions['*']['messagetool'] = false;
 $wgGroupPermissions['staff']['messagetool'] = true;
 $wgGroupPermissions['util']['messagetool'] = true;
 
 $wgExtensionFunctions[] = 'SiteWideMessagesInit';
-$wgExtensionMessagesFiles['SpecialSiteWideMessages'] = dirname(__FILE__) . '/SpecialSiteWideMessages.i18n.php';
+$wgExtensionMessagesFiles['SpecialSiteWideMessages'] = dirname( __FILE__ ) . '/SpecialSiteWideMessages.i18n.php';
 $wgAjaxExportList[] = 'SiteWideMessagesAjaxDismiss';
 
 if ( empty( $wgSWMSupportedLanguages ) ) $wgSWMSupportedLanguages = array( 'en' );
 
-//Register special page
-if (!function_exists('extAddSpecialPage')) {
-	require("$IP/extensions/ExtensionFunctions.php");
+// Register special page
+if ( !function_exists( 'extAddSpecialPage' ) ) {
+	require( "$IP/extensions/ExtensionFunctions.php" );
 }
-extAddSpecialPage(dirname(__FILE__) . '/SpecialSiteWideMessages_body.php', 'SiteWideMessages', 'SiteWideMessages');
+extAddSpecialPage( dirname( __FILE__ ) . '/SpecialSiteWideMessages_body.php', 'SiteWideMessages', 'SiteWideMessages' );
 $wgSpecialPageGroups['SiteWideMessages'] = 'wikia';
 
 $wgAutoloadClasses['SiteWideMessagesController'] =  __DIR__ . '/SiteWideMessagesController.class.php';
@@ -65,8 +66,8 @@ $wgResourceModules['ext.siteWideMessages.anon'] = array(
  */
 function SiteWideMessagesInit() {
 	global $wgSharedDB, $wgDontWantShared;
-	//Include files ONLY when SharedDB is defined and desired.
-	if (isset($wgSharedDB) && empty($wgDontWantShared)) {
+	// Include files ONLY when SharedDB is defined and desired.
+	if ( isset( $wgSharedDB ) && empty( $wgDontWantShared ) ) {
 		global $wgHooks;
 		$wgHooks['WikiFactoryPublicStatusChange'][] = 'SiteWideMessagesPublicStatusChange';
 		$wgHooks['SiteNoticeAfter'][] = 'SiteWideMessagesSiteNoticeAfter';
@@ -80,7 +81,7 @@ function SiteWideMessagesInit() {
  * Load JS/CSS for extension
  *
  */
-function SiteWideMessagesIncludeJSCSS( $skin, &$bottomScripts) {
+function SiteWideMessagesIncludeJSCSS( $skin, &$bottomScripts ) {
 	global $wgExtensionsPath;
 
 	$bottomScripts .= "<script type=\"text/javascript\" src=\"$wgExtensionsPath/wikia/SiteWideMessages/SpecialSiteWideMessages.js\"></script>";
@@ -101,7 +102,7 @@ function SiteWideMessagesGetUserMessagesContent( $dismissLink = true, $parse = t
 		if ( $addJSandCSS ) {
 			global $wgHooks;
 			$wgHooks['SkinAfterBottomScripts'][] = 'SiteWideMessagesIncludeJSCSS';
-			$wgOut->addScript("<link rel=\"stylesheet\" type=\"text/css\" href=\"$wgExtensionsPath/wikia/SiteWideMessages/SpecialSiteWideMessages.css\" />");
+			$wgOut->addScript( "<link rel=\"stylesheet\" type=\"text/css\" href=\"$wgExtensionsPath/wikia/SiteWideMessages/SpecialSiteWideMessages.css\" />" );
 		}
 		return $parse ? $wgOut->parse( $content ) : $content;
 	}
@@ -112,9 +113,9 @@ function SiteWideMessagesGetUserMessagesContent( $dismissLink = true, $parse = t
  * Dismiss message via AJAX
  *
  */
-function SiteWideMessagesAjaxDismiss($msgId) {
-	$result = SiteWideMessages::dismissMessage($msgId);
-	return is_bool($result) ? ($result ? '1' : '0') : $result;
+function SiteWideMessagesAjaxDismiss( $msgId ) {
+	$result = SiteWideMessages::dismissMessage( $msgId );
+	return is_bool( $result ) ? ( $result ? '1' : '0' ) : $result;
 }
 
 /**
@@ -124,11 +125,11 @@ function SiteWideMessagesAjaxDismiss($msgId) {
  */
 function SiteWideMessagesSiteNoticeAfter( &$siteNotice ) {
 	global $wgUser;
-	wfProfileIn(__METHOD__);
-	if ( !( F::app()->checkSkin( 'oasis' ) ) && !$wgUser->isAnon() && !$wgUser->isAllowed('bot') ) {
+	wfProfileIn( __METHOD__ );
+	if ( !( F::app()->checkSkin( 'oasis' ) ) && !$wgUser->isAnon() && !$wgUser->isAllowed( 'bot' ) ) {
 		$siteNotice .= SiteWideMessagesGetUserMessagesContent();
 	}
-	wfProfileOut(__METHOD__);
+	wfProfileOut( __METHOD__ );
 	return true;
 }
 
@@ -137,9 +138,9 @@ function SiteWideMessagesSiteNoticeAfter( &$siteNotice ) {
  *
  * @author macbre
  */
-function SiteWideMessagesAddNotifications(&$skim, &$tpl) {
+function SiteWideMessagesAddNotifications( &$skim, &$tpl ) {
 	global $wgOut, $wgUser, $wgExtensionsPath;
-	wfProfileIn(__METHOD__);
+	wfProfileIn( __METHOD__ );
 
 	if ( F::app()->checkSkin( 'oasis' ) ) {
 		// Add site wide notifications that haven't been dismissed
@@ -164,7 +165,7 @@ function SiteWideMessagesAddNotifications(&$skim, &$tpl) {
 		}
 	}
 
-	wfProfileOut(__METHOD__);
+	wfProfileOut( __METHOD__ );
 	return true;
 }
 
@@ -172,9 +173,9 @@ function SiteWideMessagesAddNotifications(&$skim, &$tpl) {
  * When wiki is disabled or changed into the redirect, remove all messages from that wiki
  * User won't be able to do this by his own
  */
-function SiteWideMessagesPublicStatusChange($city_public, $city_id, $reason = '') {
-	if ($city_public == 0 || $city_public == 2) {
-		SiteWideMessages::deleteMessagesOnWiki($city_id);
+function SiteWideMessagesPublicStatusChange( $city_public, $city_id, $reason = '' ) {
+	if ( $city_public == 0 || $city_public == 2 ) {
+		SiteWideMessages::deleteMessagesOnWiki( $city_id );
 	}
 	return true;
 }

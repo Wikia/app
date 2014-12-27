@@ -4,13 +4,13 @@
  *
  * @author Adam Karmiński < adamk@wikia-inc.com >
  * @date   Jun 26, 2014 (Thu) (start)
- * 
+ *
  */
 
 /**
  * Terminate if used outside MediaWiki
  */
-if ( !defined('MEDIAWIKI') ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
@@ -22,6 +22,7 @@ $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'InfoboxBuilder',
 	'descriptionmsg' => 'infoboxbuilder-desc',
 	'author' => 'Adam Karmiński <adamk@wikia-inc.com>',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/InfoboxBuilder'
 );
 
 /**

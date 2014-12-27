@@ -8,7 +8,18 @@
  */
 
 $app = F::app();
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
+
+$wgExtensionCredits[ 'other' ][ ] = array(
+	'name' => 'WikiaSeasons',
+	'author' => array(
+		'Andrzej \'nAndy\' Łukaszewski',
+		'Marcin Maciejewski',
+		'Sebastian Marzjan'
+	),
+	'descriptionmsg' => 'wikiaseasons-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaSeasons',
+);
 
 /**
  * classes
@@ -18,9 +29,9 @@ $wgAutoloadClasses['WikiaSeasonsController'] =  $dir . 'WikiaSeasonsController.c
 /**
  * hooks
  */
-//$app->registerHook();
+// $app->registerHook();
 
 /**
  * i18n mapping
  */
-//$app->registerExtensionMessageFile();
+$app->registerExtensionMessageFile( 'WikiaSeasons', $dir . 'WikiaSeasons.i18n.php' );

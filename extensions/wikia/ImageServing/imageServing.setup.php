@@ -7,6 +7,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'author' => 'Tomasz Odrobny',
 	'descriptionmsg' => 'imageserving-desc',
 	'version' => '1.0.1',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ImageServing'
 );
 
 $dir = __DIR__ . '/';
@@ -33,8 +34,8 @@ $wgAutoloadClasses['FakeImageGalleryImageServing'] = $dir . 'FakeImageGalleryIma
 $wgHooks['LinksUpdateComplete'][] = 'ImageServingHelper::onLinksUpdateComplete';
 $wgHooks['ImageBeforeProduceHTML'][] = 'ImageServingHelper::onImageBeforeProduceHTML';
 
-if (isset($wgHooks['BeforeParserrenderImageGallery'])) {
-	$wgHooks['BeforeParserrenderImageGallery'] = array_merge(array( 'ImageServingHelper::onBeforeParserrenderImageGallery' ), $wgHooks['BeforeParserrenderImageGallery'] );
+if ( isset( $wgHooks['BeforeParserrenderImageGallery'] ) ) {
+	$wgHooks['BeforeParserrenderImageGallery'] = array_merge( array( 'ImageServingHelper::onBeforeParserrenderImageGallery' ), $wgHooks['BeforeParserrenderImageGallery'] );
 } else {
 	$wgHooks['BeforeParserrenderImageGallery'] = array( 'ImageServingHelper::onBeforeParserrenderImageGallery' );
 }

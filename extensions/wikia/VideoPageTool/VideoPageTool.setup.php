@@ -7,10 +7,12 @@
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name'   => 'VideoPageTool',
-	'author' => array( 'Garth Webb', 'Kenneth Kouot', 'Liz Lee', 'Saipetch Kongkatong' )
+	'author' => array( 'Garth Webb', 'Kenneth Kouot', 'Liz Lee', 'Saipetch Kongkatong' ),
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/VideoPageTool',
+	'descriptionmsg' => 'videopagetool-desc'
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 // VideoPageTool shared classes
 $wgAutoloadClasses['VideoPageToolProgram']       =  $dir . 'model/VideoPageToolProgram.class.php';
@@ -22,7 +24,7 @@ $wgAutoloadClasses['VideoPageToolHelper']        =  $dir . 'VideoPageToolHelper.
 $wgAutoloadClasses['VideoPageToolHooks']         =  $dir . 'VideoPageToolHooks.class.php';
 
 // VideoPageAdmin classes
-$wgAutoloadClasses['VideoPageAdminSpecialController'] = $dir.'VideoPageAdminSpecialController.class.php';
+$wgAutoloadClasses['VideoPageAdminSpecialController'] = $dir . 'VideoPageAdminSpecialController.class.php';
 
 // VideoHomePage classes
 $wgAutoloadClasses['VideoHomePageController'] =  $dir . 'VideoHomePageController.class.php';
@@ -30,7 +32,7 @@ $wgAutoloadClasses['VideoHomePageArticle']    =  $dir . 'model/VideoHomePageArti
 $wgAutoloadClasses['VideoHomePagePage']       =  $dir . 'model/VideoHomePagePage.class.php';
 
 // i18n mapping
-$wgExtensionMessagesFiles['VideoPageTool'] = $dir.'VideoPageTool.i18n.php';
+$wgExtensionMessagesFiles['VideoPageTool'] = $dir . 'VideoPageTool.i18n.php';
 
 // special pages
 $wgSpecialPages['VideoPageAdmin'] = 'VideoPageAdminSpecialController';
@@ -50,7 +52,7 @@ $wgGroupPermissions['helper']['videopagetool'] = true;
 $wgGroupPermissions['vstf']['videopagetool'] = true;
 
 // register messages package for JS
-JSMessages::registerPackage('VideoPageTool', array(
+JSMessages::registerPackage( 'VideoPageTool', array(
 	'htmlform-required',
 	'videopagetool-confirm-clear-title',
 	'videopagetool-confirm-clear-message',
@@ -60,4 +62,4 @@ JSMessages::registerPackage('VideoPageTool', array(
 	'videopagetool-formerror-videokey',
 	'videopagetool-formerror-altthumb',
 	'videopagetool-formerror-category-name',
-));
+) );

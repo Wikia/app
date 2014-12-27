@@ -16,26 +16,26 @@
  *     require_once("$IP/extensions/wikia/InterwikiDispatcher/SpecialInterwikiDispatcher.php");
  */
 
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This is MediaWiki extension named InterwikiDispatcher.\n";
-	exit(1) ;
+	exit( 1 ) ;
 }
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'InterwikiDispatcher',
 	'author' => '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]',
-	'description' => 'This extension solves interwiki links to reduce amount of apache redirects',
 	'descriptionmsg' => 'interwikidispatcher-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/InterwikiDispatcher'
 );
 
-$wgExtensionMessagesFiles['SpecialInterwikiDispatcher'] = dirname(__FILE__) . '/SpecialInterwikiDispatcher.i18n.php';
-$wgExtensionMessagesFiles['SpecialInterwikiDispatcherAliases'] = dirname(__FILE__) . '/SpecialInterwikiDispatcher.alias.php';
+$wgExtensionMessagesFiles['SpecialInterwikiDispatcher'] = dirname( __FILE__ ) . '/SpecialInterwikiDispatcher.i18n.php';
+$wgExtensionMessagesFiles['SpecialInterwikiDispatcherAliases'] = dirname( __FILE__ ) . '/SpecialInterwikiDispatcher.alias.php';
 
-//Register hook
+// Register hook
 $wgHooks['GetFullURL'][] = 'InterwikiDispatcher::getInterWikiaURL';
 
-//Register special page
-if (!function_exists('extAddSpecialPage')) {
-	require("$IP/extensions/ExtensionFunctions.php");
+// Register special page
+if ( !function_exists( 'extAddSpecialPage' ) ) {
+	require( "$IP/extensions/ExtensionFunctions.php" );
 }
-extAddSpecialPage(dirname(__FILE__) . '/SpecialInterwikiDispatcher_body.php' /* file */, 'InterwikiDispatcher' /* name */, 'InterwikiDispatcher' /* class */);
+extAddSpecialPage( dirname( __FILE__ ) . '/SpecialInterwikiDispatcher_body.php' /* file */, 'InterwikiDispatcher' /* name */, 'InterwikiDispatcher' /* class */ );

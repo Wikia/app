@@ -17,9 +17,9 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $sSpecialPage = "TaskManager";
 $wgExtensionCredits['specialpage'][] = array(
 	"name" => $sSpecialPage,
-	"description" => "Display and manage background tasks",
-	"url" => "http://www.wikia.com/",
-	"author" => "Krzysztof Krzyżaniak (eloy)"
+	"descriptionmsg" => "taskmanager-desc",
+	"author" => "Krzysztof Krzyżaniak (eloy)",
+	"url" => "https://github.com/Wikia/app/tree/dev/extensions/wikia/TaskManager"
 );
 
 $dir = __DIR__;
@@ -28,10 +28,10 @@ $dir = __DIR__;
  * add all task which should be visible here
  */
 require_once( $dir . "/BatchTask.php" );
-extAddBatchTask( $dir."/Tasks/PageImporterTask.php", "pageimporter", "PageImporterTask" );
-extAddBatchTask( $dir."/Tasks/SWMSendToGroupTask.php", "SWMSendToGroup", "SWMSendToGroupTask" );
-extAddBatchTask( $dir."/Tasks/LocalMaintenanceTask.php", "local-maintenance", "LocalMaintenanceTask" );
-extAddBatchTask( $dir ."/Tasks/UpdateSpecialPagesTask.php", "update_special_pages", "UpdateSpecialPagesTask" );
+extAddBatchTask( $dir . "/Tasks/PageImporterTask.php", "pageimporter", "PageImporterTask" );
+extAddBatchTask( $dir . "/Tasks/SWMSendToGroupTask.php", "SWMSendToGroup", "SWMSendToGroupTask" );
+extAddBatchTask( $dir . "/Tasks/LocalMaintenanceTask.php", "local-maintenance", "LocalMaintenanceTask" );
+extAddBatchTask( $dir . "/Tasks/UpdateSpecialPagesTask.php", "update_special_pages", "UpdateSpecialPagesTask" );
 
 /**
  * permissions

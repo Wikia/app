@@ -17,15 +17,16 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'SearchDigest',
 	'author' => array( '[http://community.wikia.com/wiki/User:TOR Lucas \'TOR\' Garczewski]', '[http://community.wikia.com/wiki/User:Grunny Daniel Grunwell (Grunny)]' ),
 	'descriptionmsg' => 'searchdigest-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SearchDigest'
 );
 
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
 
 // autoloaded classes
 $wgAutoloadClasses['SpecialSearchDigest'] = "$dir/SearchDigest.class.php";
 
 // i18n
-$wgExtensionMessagesFiles['SearchDigest'] = $dir.'/SearchDigest.i18n.php';
+$wgExtensionMessagesFiles['SearchDigest'] = $dir . '/SearchDigest.i18n.php';
 
 // register special page
 $wgSpecialPages['SearchDigest'] = 'SpecialSearchDigest';
@@ -59,9 +60,9 @@ function efSearchDigestRecordMiss( $title ) {
 			'params' => $params
 		);
 		$data = json_encode( $message );
-		WScribeClient::singleton('trigger')->send($data);
+		WScribeClient::singleton( 'trigger' )->send( $data );
 	}
-	catch( TException $e ) {
+	catch ( TException $e ) {
 		Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
 	}
 

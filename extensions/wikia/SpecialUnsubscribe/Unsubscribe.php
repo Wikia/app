@@ -11,7 +11,7 @@
  * @licence GNU General Public Licence
  */
 
-if( !defined( 'MEDIAWIKI' ) ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo( "This file is an extension to the MediaWiki software and cannot be used standalone.\n" );
 	die( 1 );
 }
@@ -25,12 +25,12 @@ $wgExtensionCredits['specialpage'][] = array(
 		'[http://community.wikia.com/wiki/User:TOR Lucas \'TOR\' Garczewski]'
 	),
 	'description' => 'Single email unbsubscribe point',
-	#'url' => '',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialUnsubscribe',
 	'descriptionmsg' => 'Unsubscribe-desc',
 );
 
 // Set up the new special page
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['Unsubscribe'] = $dir . 'Unsubscribe.i18n.php';
 $wgExtensionMessagesFiles['UnsubscribeAliases'] = $dir . 'Unsubscribe.alias.php';
 

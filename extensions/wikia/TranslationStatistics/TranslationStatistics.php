@@ -9,6 +9,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'author' => "[http://www.wikia.com/wiki/User:TOR Lucas 'TOR' Garczewski]",
 	'descriptionmsg' => 'transstats-desc',
 	'description' => 'Provides statistics for translations done using the Translate extension',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/TranslationStatistics'
 );
 
 $dir = dirname( __FILE__ ) . '/';
@@ -19,7 +20,7 @@ $wgAutoloadClasses['SpecialTranslationCount'] = $dir . 'SpecialTranslationCount.
 $wgAutoloadClasses['SpecialNewLanguageStats'] = $dir . 'SpecialLanguageStats.php';
 $wgAutoloadClasses['SpecialTranslationStats'] = $dir . 'SpecialTranslationStats.php';
 $wgAutoloadClasses['SpecialGroupStats'] = $dir . 'SpecialGroupStats.body.php';
-//$wgAutoloadClasses['SpecialNewTranslationStats'] = $dir . 'SpecialTranslationStats.php';
+// $wgAutoloadClasses['SpecialNewTranslationStats'] = $dir . 'SpecialTranslationStats.php';
 $wgAutoloadClasses['PHPlot'] = $dir . 'phplot.php';
 $wgAutoloadClasses['TranslateUtils'] = $dir . 'TranslateUtils.php';
 $wgAutoloadClasses['JsSelectToInput'] = $dir . 'utils/JsSelectToInput.php';
@@ -34,6 +35,6 @@ $wgExtensionMessagesFiles['TranslationStatistics'] = $dir . 'TranslationStatisti
 // Special pages
 $wgSpecialPages['TranslationCount'] = 'SpecialTranslationCount';
 $wgSpecialPages['NewLanguageStats'] = 'SpecialNewLanguageStats';
-//$wgSpecialPages['NewTranslationStats'] = 'SpecialNewTranslationStats';
+// $wgSpecialPages['NewTranslationStats'] = 'SpecialNewTranslationStats';
 $wgSpecialPages['GroupStats'] = 'SpecialGroupStats';
 $wgSpecialPages['TranslationStats'] = 'SpecialTranslationStats';

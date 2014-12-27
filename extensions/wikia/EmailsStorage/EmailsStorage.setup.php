@@ -11,9 +11,10 @@ $wgExtensionCredits['specialpage'][] = array(
 	'version' => '1.0',
 	'author' => 'Maciej Brencz',
 	'descriptionmsg' => 'emailsstorage-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/EmailsStorage'
 );
 
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
 
 // autoloaded classes
 $wgAutoloadClasses['EmailsStorage'] =  "$dir/EmailsStorage.class.php";

@@ -7,7 +7,7 @@
  * @version 1.0
  */
 
-if ( !defined('MEDIAWIKI') ) die();
+if ( !defined( 'MEDIAWIKI' ) ) die();
 
 // Extension credits
 $wgExtensionCredits['specialpage'][] = array(
@@ -16,6 +16,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'author' => 'Moli',
 	'description' => 'A special page with the interface for blocking, and unblocking of unwanted phrases in any text',
 	'descriptionmsg' => 'textregex-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/TextRegex'
 );
 
 // New user right
@@ -23,7 +24,7 @@ $wgAvailableRights[] = 'textregex';
 $wgGroupPermissions['staff']['textregex'] = true;
 
 // Set up the new special page
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['TextRegex'] = $dir . 'TextRegex.i18n.php';
 $wgExtensionMessagesFiles['TextRegexAliases'] = $dir . 'TextRegex.alias.php';
 

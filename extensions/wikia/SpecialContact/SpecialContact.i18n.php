@@ -8,6 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'specialcontact-desc' => 'Wikia\'s contact [[Special:Contact]] form',
 	/* special page */
 	'contact' => 'Contact Wikia',
 	'specialcontact-wikia' => 'Contact Wikia',
@@ -153,7 +154,7 @@ $messages['ca'] = array(
 	'specialcontact-pagetitle' => 'Contactar amb Wikia',
 	'specialcontact-intro' => "Pots posar-te en contacte amb l'[[w:project:Staff|Staff de Wikia]] mitjançant aquest formulari. Pots trobar els administradors d'aquest wiki [[Special:ListAdmins|aquí]].
 
-Pots trobar informació addicional sobre com reportar els problemes de Wikia [[w:project:Report_a_problem|aquí]] o pots obrir un [[w:Forum:Index|Fòrum]]per cercar ajuda dels usuaris. 
+Pots trobar informació addicional sobre com reportar els problemes de Wikia [[w:project:Report_a_problem|aquí]] o pots obrir un [[w:Forum:Index|Fòrum]]per cercar ajuda dels usuaris.
 
 Si prefereixes l'ús regular del correu electrònic amb dades adjuntes, pots contactar amb nosaltres a [mailto:community@wikia.com community@wikia.com].",
 	'specialcontact-username' => "El teu nom d'usuari",

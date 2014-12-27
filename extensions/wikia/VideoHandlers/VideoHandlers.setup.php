@@ -26,7 +26,7 @@ $wgExtensionCredits['videohandlers'][] = array(
 		"Garth Webb <garth at wikia-inc.com>",
 		"James Sutterfield <james at wikia-inc.com>",
 	),
-	'url' => 'http://video.wikia.com',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/VideoHandlers',
 	'descriptionmsg' => 'wikia-videohandlers-desc',
 );
 
@@ -120,7 +120,7 @@ if ( !empty( $wgUseVideoVerticalFilters ) ) {
 	$wgHooks['CategorySelectSave'][] = 'VideoInfoHooksHelper::onCategorySelectSave';
 }
 
-if ( !empty($wgVideoHandlersVideosMigrated) ) {
+if ( !empty( $wgVideoHandlersVideosMigrated ) ) {
 	$wgHooks['ParserFirstCallInit'][] = 'VideoHandlerHooks::initParserHook';
 }
 

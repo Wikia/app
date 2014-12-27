@@ -8,6 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'managewikiahome-desc' => 'Internal tool to manage corporate pages\'s visualization aka. remix feature',
 	'managewikiahome' => 'Manage Wikia Home',
 	'manage-wikia-home-wrong-rights' => "You are probably logged-out or you don't have permissions to use this special page.",
 
@@ -120,6 +121,7 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'managewikiahome-desc' => '{{desc}}',
 	'managewikiahome' => "Page title visible as browser window's title; Content of <title /> tag in HTML",
 	'manage-wikia-home-wrong-rights' => "A message displayed to a user if he doesn't have rights to use this special page",
 	'manage-wikia-home-wikis-in-slots-heading' => "Header of slots' configuration container; this container have input fields which we use to configure amounts of images per vertical we're showing in the visualization on corporate main page",
@@ -221,7 +223,7 @@ Parameters:
 
 Hero graphic is a term used in web design for a specific type of banner image. A hero graphic is large banner image, prominently placed on a web page, generally front and center.",
 	'manage-wikia-home-collections-sponsor-image-field-label' => "A label next to collection's smaller image field (the smaller image covers statistic section on corporate main page for a specific wikis' set); in the field you put an image name",
-	'manage-wikia-home-collections-wikis-in-collection' => 'It says how many wikis are in the collections; 
+	'manage-wikia-home-collections-wikis-in-collection' => 'It says how many wikis are in the collections;
 * $1 = actual number of wikis assigned to a collection
 * $2 = maximum number of wikis per collection
 

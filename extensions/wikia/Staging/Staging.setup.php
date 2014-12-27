@@ -4,11 +4,11 @@
  *
  * @author Damian Jóźwiak
  */
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'StagingHooks',
-	'description' => '',
+	'description' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Staging',
 	'authors' => array(
 		'Damian Jóźwiak',
 	),
