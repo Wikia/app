@@ -703,6 +703,7 @@ $messages['zh-hans'] = array(
 $messages['gv'] = array(
 	'adengine-advertisement' => 'soilsheen',
 );
+
 $messages['krc'] = array(
 	'adengine-advertisement' => 'реклама',
 );
@@ -710,6 +711,7 @@ $messages['krc'] = array(
 $messages['tt-cyrl'] = array(
 	'adengine-advertisement' => 'реклама',
 );
+
 $messages['zh-hant'] = array(
 	'adengine-advertisement' => '廣告',
 );
