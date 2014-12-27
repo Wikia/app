@@ -11,7 +11,7 @@
 /**
  * Terminate if executed outside of MediaWiki.
  */
-if( !defined( 'MEDIAWIKI' ) ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 

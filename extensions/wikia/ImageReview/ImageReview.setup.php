@@ -23,7 +23,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ImageReview'
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 $app = F::app();
 
 // classes

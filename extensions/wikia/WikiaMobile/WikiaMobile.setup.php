@@ -28,8 +28,8 @@ $wgExtensionCredits['other'][] =
 /**
  * settings
  */
-//used internally to avoid an infinite wikitext expansion loop in galleries
-//it might be moved to CommonSettings if it turns out to be desireable for wider usage
+// used internally to avoid an infinite wikitext expansion loop in galleries
+// it might be moved to CommonSettings if it turns out to be desireable for wider usage
 $wgWikiaMobileDisableMediaGrouping = false;
 
 /**
@@ -109,7 +109,7 @@ $wgHooks['CategoryPageView'][] = 'WikiaMobileHooks::onCategoryPageView';
 $wgHooks['ArticlePurge'][] = 'WikiaMobileHooks::onArticlePurge';
 $wgHooks['DoEditSectionLink'][] = 'WikiaMobileHooks::onDoEditSectionLink';
 
-//404 Pages
+// 404 Pages
 $wgHooks['BeforeDisplayNoArticleText'][] = 'WikiaMobileHooks::onBeforeDisplayNoArticleText';
 $wgHooks['BeforePageDisplay'][] = 'WikiaMobileHooks::onBeforePageDisplay';
 
@@ -118,12 +118,12 @@ $wgHooks['BeforePageDisplay'][] = 'WikiaMobileHooks::onBeforePageDisplay';
  * settings
  */
 
-//global menu for the mobile skin
-if ( empty($wgWikiaMobileGlobalNavigationMenu ) ) {
+// global menu for the mobile skin
+if ( empty( $wgWikiaMobileGlobalNavigationMenu ) ) {
 	$wgWikiaMobileGlobalNavigationMenu = '*Special:Random|randompage';
 }
 
-//list of special pages (canonical names) to strip out from the navigation menu
+// list of special pages (canonical names) to strip out from the navigation menu
 if ( empty( $wgWikiaMobileNavigationBlacklist ) ) {
 	$wgWikiaMobileNavigationBlacklist = array( 'Chat', 'WikiActivity', 'NewFiles' );
 }
@@ -132,17 +132,17 @@ if ( empty( $wgWikiaMobileNavigationBlacklist ) ) {
 if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 	$wgWikiaMobileIncludeJSGlobals =
 		[
-			//analytics
+			// analytics
 			'_gaq',
 			'wgEnableKruxTargeting',
 			'wgKruxCategoryId',
 			'cscoreCat',
 
-			//ads
+			// ads
 			'ads',
 			'wgGaHasAds',
 
-			//ads legacy -- should be removed at some point
+			// ads legacy -- should be removed at some point
 			'adEnginePageType',
 			'cityShort',
 			'wgAdDriverUseAdsAfterInfobox',
@@ -154,11 +154,11 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'wikiaPageIsHub',
 			'wikiaPageType',
 
-			//vertical&categories
+			// vertical&categories
 			'wgWikiVertical',
 			'wgWikiCategories',
 
-			//server/wiki
+			// server/wiki
 			'wgServer',
 			'wgDBname',
 			'wgCityId',
@@ -177,7 +177,7 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'wgExtensionsPath',
 			'wikiaPageIsCorporate',
 
-			//article
+			// article
 			'wgArticlePath',
 			'wgArticleId',
 			'wgNamespaceNumber',
@@ -187,11 +187,11 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'wgTitle',
 			'wgRevisionId',
 
-			//user
+			// user
 			'wgUserName',
 			'wgUserLanguage',
 
-			//configs
+			// configs
 			'wgSassParams',
 			'wgStyleVersion',
 			'wgMessages',
@@ -200,14 +200,14 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'wgCookiePrefix',
 			'JSSnippetsStack',
 
-			//skin
+			// skin
 			'skin',
 
-			//login
+			// login
 			'fbAppId',
 			'wgLoginToken',
 
-			//AbTesting
+			// AbTesting
 			'wgCdnApiUrl',
 		];
 }

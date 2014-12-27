@@ -18,7 +18,7 @@ $wgExtensionCredits['antispam'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/QuickTools'
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 // Classes
 $wgAutoloadClasses[ 'QuickToolsController'] =  $dir . 'QuickToolsController.class.php';

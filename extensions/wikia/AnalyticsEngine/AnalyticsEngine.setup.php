@@ -6,7 +6,7 @@ $wgExtensionCredits['other'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AnalyticsEngine',
 );
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles['AnalyticsEngine'] = __DIR__ . '/i18n/AnalyticsEngine.i18n.php';
 
 // autoloaded classes
@@ -26,18 +26,18 @@ $wgAutoloadClasses['AnalyticsProviderClarityRay'] = __DIR__ . '/AnalyticsProvide
 $wgAutoloadClasses['AnalyticsProviderPageFair'] = __DIR__ . '/AnalyticsProviderPageFair.php';
 $wgAutoloadClasses['AnalyticsProviderRubiconRTP'] = __DIR__ . '/AnalyticsProviderRubiconRTP.php';
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles['AnalyticsEngine'] = __DIR__ . '/i18n/AnalyticsEngine.i18n.php';
 
-//hooks
-//register hook to inject gas js library (MW 1.19)
+// hooks
+// register hook to inject gas js library (MW 1.19)
 $wgHooks['WikiaSkinTopScripts'][] = 'AnalyticsProviderGAS::onWikiaSkinTopScripts';
 $wgHooks['SkinAfterBottomScripts'][] = 'AnalyticsProviderClarityRay::onSkinAfterBottomScripts';
 $wgHooks['SkinAfterBottomScripts'][] = 'AnalyticsProviderPageFair::onSkinAfterBottomScripts';
 $wgHooks['OasisSkinAssetGroupsBlocking'][] = 'AnalyticsProviderGAS::onOasisSkinAssetGroupsBlocking';
 $wgHooks['InstantGlobalsGetVariables'][] = 'AnalyticsProviderIVW2::onInstantGlobalsGetVariables';
 
-//register hook for WikiaMobile skin to get the asset as part of the head js package in one request
+// register hook for WikiaMobile skin to get the asset as part of the head js package in one request
 $wgHooks['WikiaMobileAssetsPackages'][] = 'AnalyticsProviderGAS::onWikiaMobileAssetsPackages';
 $wgHooks['WikiaMobileAssetsPackages'][] = 'AnalyticsProviderBlueKai::onWikiaMobileAssetsPackages';
 

@@ -17,7 +17,7 @@
  * require_once("$IP/extensions/wikia/WhatIsMyIP/whatismyip.php");
  */
 
-if (!defined('MEDIAWIKI')) 
+if ( !defined( 'MEDIAWIKI' ) )
 {
 	echo "This is MediaWiki extension named WhatIsMyIP.\n";
 	exit( 1 ) ;
@@ -30,7 +30,7 @@ $wgExtensionCredits[ 'specialpage' ][ ] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WhatIsMyIP',
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 $wgAutoloadClasses['WhatIsMyIP'] = $dir . 'whatismyip.php'; # Tell MediaWiki to load the extension body.
 $wgExtensionMessagesFiles['WhatIsMyIP'] = $dir . 'WhatIsMyIP.i18n.php';
 

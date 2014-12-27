@@ -10,16 +10,16 @@
  * @author Damian Jóźwiak
  */
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 $wgExtensionCredits['other'][] = array(
 	'name'				=> 'WikiaHomePage',
 	'author'			=> array(
-		'Andrzej "nAndy" Łukaszewski', 
-		'Hyun Lim', 
-		'Marcin Maciejewski', 
-		'Saipetch Kongkatong', 
-		'Sebastian Marzjan', 
+		'Andrzej "nAndy" Łukaszewski',
+		'Hyun Lim',
+		'Marcin Maciejewski',
+		'Saipetch Kongkatong',
+		'Sebastian Marzjan',
 		'Damian Jóźwiak'
 	),
 	'descriptionmsg'	=> 'wikiahome-desc',
@@ -27,12 +27,12 @@ $wgExtensionCredits['other'][] = array(
 	'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaHomePage'
 );
 
-$wgAutoloadClasses['WikiaHomePageController'] = $dir.'WikiaHomePageController.class.php';
+$wgAutoloadClasses['WikiaHomePageController'] = $dir . 'WikiaHomePageController.class.php';
 $wgAutoloadClasses['WikiaHubsApiController'] = $dir . '../WikiaHubsServices/api/WikiaHubsApiController.class.php';
 
-//i18n mapping
-$wgExtensionMessagesFiles['WikiaHomePage'] = $dir.'WikiaHomePage.i18n.php';
-JSMessages::registerPackage('WikiaHomePage', array('wikia-home-page-*'));
+// i18n mapping
+$wgExtensionMessagesFiles['WikiaHomePage'] = $dir . 'WikiaHomePage.i18n.php';
+JSMessages::registerPackage( 'WikiaHomePage', array( 'wikia-home-page-*' ) );
 
 // services
 $wgAutoloadClasses['RedirectService'] = 'includes/wikia/services/RedirectService.class.php';

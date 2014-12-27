@@ -64,7 +64,7 @@ $messages['en'] = array(
 	'wikia-hubs-module-sponsored-image-tip' => "'''Tip:''' The maximum file size is 85x15 pixels",
 	'wikia-hubs-module-slider-image-tip' => "'''Tip:''' Image size should be 160px X 100px",
 	'wikia-hubs-module-explore-image-tip' => "'''Tip:''' Image size should be 142px wide and no taller than 200px",
-	
+
 	'wikia-hubs-module-featured-video-header' => 'Header',
 	'wikia-hubs-module-featured-video-desc' => 'Description',
 	'wikia-hubs-module-featured-video-article-url' => 'Article URL',

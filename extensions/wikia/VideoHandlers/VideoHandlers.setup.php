@@ -120,7 +120,7 @@ if ( !empty( $wgUseVideoVerticalFilters ) ) {
 	$wgHooks['CategorySelectSave'][] = 'VideoInfoHooksHelper::onCategorySelectSave';
 }
 
-if ( !empty($wgVideoHandlersVideosMigrated) ) {
+if ( !empty( $wgVideoHandlersVideosMigrated ) ) {
 	$wgHooks['ParserFirstCallInit'][] = 'VideoHandlerHooks::initParserHook';
 }
 

@@ -5,7 +5,7 @@
  * @author Andrzej 'nAndy' Łukaszewski
  */
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 $wgExtensionCredits['other'][] = array(
 	'name'				=> 'WikiaRecentChangesBlockHandler',
@@ -15,11 +15,11 @@ $wgExtensionCredits['other'][] = array(
 	'url'       	    => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaRecentChangesBlockHandler'
 );
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles['WikiaRecentChangesBlockHandler'] = $dir . 'WikiaRecentChangesBlockHandler.i18n.php';
 
-//classes
-$wgAutoloadClasses['WikiaRecentChangesBlockHandler'] =  $dir.'WikiaRecentChangesBlockHandler.php';
+// classes
+$wgAutoloadClasses['WikiaRecentChangesBlockHandler'] =  $dir . 'WikiaRecentChangesBlockHandler.php';
 
-//hooks
+// hooks
 $wgHooks['ChangesListHeaderBlockGroup'][] = 'WikiaRecentChangesBlockHandler::onChangesListHeaderBlockGroup';

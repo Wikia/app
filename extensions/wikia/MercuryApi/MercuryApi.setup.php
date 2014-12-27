@@ -4,7 +4,7 @@
  *
  * @author Evgeniy 'aquilax' Vasilev
  */
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 $wgExtensionCredits['api'][] = [
 	'name' => 'Mercury API',
@@ -16,7 +16,7 @@ $wgExtensionCredits['api'][] = [
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/MercuryApi'
 ];
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles['MercuryApi'] = $dir . 'MercuryApi.i18n.php';
 
 // Load needed classes

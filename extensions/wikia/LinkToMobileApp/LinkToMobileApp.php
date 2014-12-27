@@ -8,7 +8,7 @@
  * Requires the following settings in config or WikiFactory to work:
  * $wgWikiaMobileAppPackageId = 'com.wikia.singlewikia';
  * $wgWikiaMobileAppPackageIdLocalPart = 'muppet';
- * 
+ *
  * @author Łukasz Garczewski (TOR) <tor@wikia-inc.com>
  * @date 2014-11-03
  * @copyright Copyright © 2014 Łukasz Garczewski, Wikia Inc.
@@ -29,7 +29,7 @@ $wgExtensionCredits['specialpage'][] = array(
 		'descriptionmsg' => 'linktomobileapp-desc'
 );
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles['LinkToMobileApp'] = __DIR__ . '/LinkToMobileApp.i18n.php';
 
 $wgHooks['BeforePageDisplay'][] = 'efLinkToMobileApp';
@@ -48,7 +48,7 @@ function efLinkToMobileApp( $out ) {
 	$href = 'android-app://' . $app . '/http/' . $url['host'] . $url['path'];
 
 	$out->addLink(
-		array( 
+		array(
 			'rel' => 'alternate',
 			'href' => $href,
 		)

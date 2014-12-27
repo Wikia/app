@@ -10,7 +10,7 @@
  *
  */
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Edit Hub',
@@ -25,7 +25,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialEditHub'
 );
 
-//classes
+// classes
 $wgAutoloadClasses['EditHubController'] = $dir . 'EditHubController.class.php';
 $wgAutoloadClasses['EditHubVideosController'] =  $dir . 'EditHubVideosController.class.php';
 
@@ -33,13 +33,13 @@ $wgAutoloadClasses['EditHubVideosController'] =  $dir . 'EditHubVideosController
 $wgAutoloadClasses['EditHubHooks'] =  $dir . 'hooks/EditHubHooks.class.php';
 $wgHooks['MakeGlobalVariablesScript'][] = 'EditHubHooks::onMakeGlobalVariablesScript';
 
-//special page
+// special page
 $wgSpecialPages['EditHub'] = 'EditHubController';
 $wgSpecialPageGroups['EditHub'] = 'wikia';
 
-//message files
+// message files
 $wgExtensionMessagesFiles['EditHub'] = $dir . 'EditHub.i18n.php';
-JSMessages::registerPackage('EditHub', array('edit-hub-*', 'wikia-hubs-*'));
+JSMessages::registerPackage( 'EditHub', array( 'edit-hub-*', 'wikia-hubs-*' ) );
 
 
 $wgAvailableRights[] = 'edithub';

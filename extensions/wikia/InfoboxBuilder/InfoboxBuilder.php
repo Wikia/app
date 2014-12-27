@@ -4,13 +4,13 @@
  *
  * @author Adam Karmiński < adamk@wikia-inc.com >
  * @date   Jun 26, 2014 (Thu) (start)
- * 
+ *
  */
 
 /**
  * Terminate if used outside MediaWiki
  */
-if ( !defined('MEDIAWIKI') ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 

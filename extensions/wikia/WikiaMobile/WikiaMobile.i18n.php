@@ -28,7 +28,7 @@ $messages['en'] = array(
 	'wikiamobile-anonymous-edited-by' => 'Anonymous',
 	'wikiamobile-trending-articles-heading' => 'Trending Articles',
 
-	//footer
+	// footer
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Lifestyle]]',
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Entertainment]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Video Games]]',
@@ -36,7 +36,7 @@ $messages['en'] = array(
 	'wikiamobile-footer-link-privacy' => '[[w:c:www:Privacy_Policy|Privacy Policy]]',
 	'mobile-full-site' => 'Full site',
 
-	//categories
+	// categories
 	'wikiamobile-categories-tagline' => 'Category Page',
 	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|article|articles}}',
 	'wikiamobile-category-items-more' => 'Load more',
@@ -45,7 +45,7 @@ $messages['en'] = array(
 	'wikiamobile-categories-collapse' => 'Hide All',
 	'wikiamobile-categories-blogs' => 'Blog posts',
 
-	//sharing
+	// sharing
 	'wikiamobile-sharing-media-image' => 'Picture',
 	'wikiamobile-sharing-page-text' => '$1 - $2',
 	'wikiamobile-sharing-modal-text' => '$1 on $2 - $3',
@@ -54,7 +54,7 @@ you should definitely check this out:
 
  $1',
 
- 	//media
+ 	// media
  	'wikiamobile-media-group-footer' => '1 of $1',
  	'wikiamobile-unsupported-video-download' => 'Your browser doesn\'t support this video format, try clicking <a href="$1">here</a>',
  	'wikiamobile-video-views-counter' => '$1 {{PLURAL:$1|view|views}}',
@@ -62,20 +62,20 @@ you should definitely check this out:
 	'wikiamobile-video-not-friendly' => 'Sorry, this video isn\'t available on mobile.',
 	'wikiamobile-videos' => 'Videos',
 
-	//toc
+	// toc
 	'wikiamobile-toc-header' => 'Table of Contents',
 
-	//ad
+	// ad
 
-	//modal
+	// modal
 	'wikiamobile-image-not-loaded' => 'Image is not available',
 	'wikiamobile-shared-file-not-available' => "Oops, this item is no longer available, but now that you're here, explore the wiki!",
 
-	//404 page
+	// 404 page
 	'wikiamobile-page-not-found' => "Oops! <b>$1</b> does not exist.",
 	'wikiamobile-page-not-found-tap' => "Tap what's hiding behind the crack to see one that does.",
 
-	//Game Guides promotion on wikiamobile
+	// Game Guides promotion on wikiamobile
 	'wikiasmartbanner-appstore' => 'On the App Store',
 	'wikiasmartbanner-googleplay' => 'In Google Play',
 	'wikiasmartbanner-price' => 'free',

@@ -15,12 +15,12 @@ $wgExtensionCredits[ 'other' ][ ] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/PerformanceMetrics',
 );
 
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
 
 // WikiaApp
 $app = F::app();
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles['PerformanceMetrics'] = $dir . '/PerformanceMetrics.i18n.php';
 
 // generic classes

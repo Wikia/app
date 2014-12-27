@@ -18,7 +18,7 @@ $wgExtensionCredits['other'][] = array(
 );
 
 
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
 
 // classes
 $wgAutoloadClasses['InWikiGameHelper'] =  $dir . '/InWikiGameHelper.class.php';
@@ -34,4 +34,4 @@ $wgHooks['WikiaAssetsPackages'][] = 'InWikiGameHooks::onWikiaAssetsPackages';
 
 // i18n mapping
 $wgExtensionMessagesFiles['InWikiGame'] = $dir . '/InWikiGame.i18n.php';
-JSMessages::registerPackage('InWikiGame', array('inwikigame-*'));
+JSMessages::registerPackage( 'InWikiGame', array( 'inwikigame-*' ) );

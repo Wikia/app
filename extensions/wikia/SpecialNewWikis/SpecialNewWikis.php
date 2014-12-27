@@ -27,14 +27,14 @@ $wgExtensionCredits['specialpage'][] = array(
 
 $wgHooks['wgQueryPages'][] = 'wfSetupNewWikis';
 
-#--- messages file
+# --- messages file
 $wgExtensionMessagesFiles["Newwikis"] = __DIR__ . '/SpecialNewWikis.i18n.php';
 
 if ( !function_exists( 'extAddSpecialPage' ) ) {
     require_once ( "$IP/extensions/ExtensionFunctions.php" );
 }
 
-extAddSpecialPage( dirname(__FILE__) . '/SpecialNewWikis_body.php', 'Newwikis', 'NewWikisSpecialPage' );
+extAddSpecialPage( dirname( __FILE__ ) . '/SpecialNewWikis_body.php', 'Newwikis', 'NewWikisSpecialPage' );
 
 $wgSpecialPageGroups['Newwikis'] = 'highuse';
 
@@ -47,6 +47,6 @@ $wgGroupPermissions['staff']['newwikislist'] = true;
  * @return bool
  */
 function wfSetupNewWikis( &$queryPages ) {
-    $queryPages[] = array( 'NewWikisPage', 'Newwikis');
+    $queryPages[] = array( 'NewWikisPage', 'Newwikis' );
     return true;
 }

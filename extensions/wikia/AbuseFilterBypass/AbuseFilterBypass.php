@@ -17,7 +17,7 @@ $wgExtensionCredits[ 'other' ][ ] = array(
 	'version' => '1.0.0',
 	'descriptionmsg' => 'abusefilterbypass-desc',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AbuseFilterBypass',
-	
+
 );
 
 $dir = dirname( __FILE__ );
@@ -33,5 +33,5 @@ $wgGroupPermissions[ 'staff' ][ 'abusefilter-bypass' ] = true;
 // hooks
 $wgHooks[ 'AbuseFilterShouldFilter' ][ ] = 'AbuseFilterBypass::onBypassCheck';
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles['AbuseFilterBypass'] = $dir . '/i18n/AbuseFilterBypass.i18n.php';

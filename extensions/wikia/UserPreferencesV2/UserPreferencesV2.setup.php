@@ -6,7 +6,7 @@
  * @author Marcin Maciejewski <marcin(at)wikia.com>
  *
  */
- 
+
 $wgExtensionCredits[ 'specialpage' ][ ] = array(
 	'name' => 'UserPreferencesV2',
 	'author' => 'Wikia',

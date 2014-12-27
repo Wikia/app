@@ -45,11 +45,11 @@ $app->wg->set( 'wgExtensionMessagesFiles', "{$dir}/LandingPagesAsContent.i18n.ph
 /**
  * wikitext magic words
  */
-define('__NORAIL__', '__NORAIL__');
-define('__NONAV__', '__NONAV__');
-define('__NOHEADER__', '__NOHEADER__');
-define('__NOSPOTLIGHTS__', '__NOSPOTLIGHTS__');
-define('__INTERLANGTOP__', '__INTERLANGTOP__');
+define( '__NORAIL__', '__NORAIL__' );
+define( '__NONAV__', '__NONAV__' );
+define( '__NOHEADER__', '__NOHEADER__' );
+define( '__NOSPOTLIGHTS__', '__NOSPOTLIGHTS__' );
+define( '__INTERLANGTOP__', '__INTERLANGTOP__' );
 
 /**
  * hooks

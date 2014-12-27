@@ -5,7 +5,7 @@
  * @author Andrzej 'nAndy' Łukaszewski
  * @author Rafal Leszczynski
  */
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 $wgExtensionCredits['other'][] = array(
 	'name' => 'TOC',
@@ -18,7 +18,7 @@ $wgExtensionCredits['other'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/TOC'
 );
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles['TOC'] = $dir . 'TOC.i18n.php';
 
 // register classes

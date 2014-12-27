@@ -19,7 +19,7 @@ $dir = dirname( __FILE__ );
 // Translations
 $wgExtensionMessagesFiles["WikiaNewFiles"] =  "{$dir}/SpecialNewFiles.i18n.php";
 
-//Fix BugzId: 4310
+// Fix BugzId: 4310
 $wgExtensionMessagesFiles['WikiaNewFilesAliases'] = "{$dir}/SpecialNewFiles.alias.php";
 
 // Autoloaded classes

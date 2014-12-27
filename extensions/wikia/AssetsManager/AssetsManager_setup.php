@@ -6,8 +6,8 @@
  * @see https://internal.wikia-inc.com/wiki/AssetsManager
  */
 
-if(!defined('MEDIAWIKI')) {
-	exit(1);
+if ( !defined( 'MEDIAWIKI' ) ) {
+	exit( 1 );
 }
 
 $wgExtensionCredits['other'][] = array(
@@ -17,7 +17,7 @@ $wgExtensionCredits['other'][] = array(
 	'descriptionmsg' => 'assestsmanager-desc',
 );
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles['AssetsManager'] = __DIR__ . '/i18n/AssetsManager.i18n.php';
 
 $wgAutoloadClasses['AssetsManagerBaseBuilder'] = __DIR__ . '/builders/AssetsManagerBaseBuilder.class.php';
@@ -42,7 +42,7 @@ $wgHooks['UserGetRights'][] = 'onUserGetRights';
  */
 function onUserGetRights( $user, &$aRights ) {
 	global $wgRequest;
-	if ( $wgRequest->getVal('action') === 'ajax' && $wgRequest->getVal('rs') === 'AssetsManagerEntryPoint' ) {
+	if ( $wgRequest->getVal( 'action' ) === 'ajax' && $wgRequest->getVal( 'rs' ) === 'AssetsManagerEntryPoint' ) {
 		$aRights[] = 'read';
 	}
 	return true;
@@ -50,8 +50,8 @@ function onUserGetRights( $user, &$aRights ) {
 
 function AssetsManagerEntryPoint() {
 	global $wgRequest;
-	AssetsManagerServer::serve($wgRequest);
+	AssetsManagerServer::serve( $wgRequest );
 
-	wfRunHooks('RestInPeace');
+	wfRunHooks( 'RestInPeace' );
 	exit();
 }

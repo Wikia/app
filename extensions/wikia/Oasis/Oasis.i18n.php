@@ -163,7 +163,7 @@ $messages['en'] = array(
 	'oasis-wiki-navigation' => '$1 Navigation',
 	'oasis-related-categories' => 'Related Categories',
 
-	#wikia navigation v2
+	# wikia navigation v2
 	'oasis-navigation-v2-create-page' => 'Add a Page',
 	'oasis-navigation-v2-edit-page' => 'Edit this Page',
 	'oasis-navigation-v2-add-photo' => 'Add a Photo',
@@ -179,7 +179,7 @@ $messages['en'] = array(
 	'oasis-navigation-v2-new-photos' => 'Photos',
 	'oasis-on-the-wiki' => 'On the Wiki',
 
-	#sharing toolbar e-mail
+	# sharing toolbar e-mail
 	'oasis-sharing-toolbar-mail-subject' => '$1 has sent you a link on Wikia',
 	'oasis-sharing-toolbar-mail-body' => 'Hi.
 $1 sent you this page from {{SITENAME}} on Wikia:

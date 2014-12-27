@@ -28,10 +28,10 @@ $dir = __DIR__;
  * add all task which should be visible here
  */
 require_once( $dir . "/BatchTask.php" );
-extAddBatchTask( $dir."/Tasks/PageImporterTask.php", "pageimporter", "PageImporterTask" );
-extAddBatchTask( $dir."/Tasks/SWMSendToGroupTask.php", "SWMSendToGroup", "SWMSendToGroupTask" );
-extAddBatchTask( $dir."/Tasks/LocalMaintenanceTask.php", "local-maintenance", "LocalMaintenanceTask" );
-extAddBatchTask( $dir ."/Tasks/UpdateSpecialPagesTask.php", "update_special_pages", "UpdateSpecialPagesTask" );
+extAddBatchTask( $dir . "/Tasks/PageImporterTask.php", "pageimporter", "PageImporterTask" );
+extAddBatchTask( $dir . "/Tasks/SWMSendToGroupTask.php", "SWMSendToGroup", "SWMSendToGroupTask" );
+extAddBatchTask( $dir . "/Tasks/LocalMaintenanceTask.php", "local-maintenance", "LocalMaintenanceTask" );
+extAddBatchTask( $dir . "/Tasks/UpdateSpecialPagesTask.php", "update_special_pages", "UpdateSpecialPagesTask" );
 
 /**
  * permissions

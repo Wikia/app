@@ -11,7 +11,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
     exit( 1 ) ;
 }
 
-require_once ( dirname(__FILE__) . '/MultiTasksCore.php' );
+require_once ( dirname( __FILE__ ) . '/MultiTasksCore.php' );
 
 $wgExtensionCredits['specialpage'][] = array(
     "name" => "Multi Wiki Delete",
@@ -20,7 +20,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/MultiTasks'
 );
 
-$wgExtensionMessagesFiles["Multidelete"] = dirname(__FILE__) . '/MultiTasks.i18n.php';
+$wgExtensionMessagesFiles["Multidelete"] = dirname( __FILE__ ) . '/MultiTasks.i18n.php';
 $wgExtensionMessagesFiles['MultideleteAliases'] = __DIR__ . '/MultiTasks.aliases.php';
 
 $wgAvailableRights[] = 'multidelete';
@@ -28,7 +28,7 @@ $wgGroupPermissions['staff']['multidelete'] = true;
 $wgGroupPermissions['helper']['multidelete'] = true;
 $wgGroupPermissions['vstf']['multidelete'] = true;
 
-extAddSpecialPage( dirname(__FILE__) . '/SpecialMultiDelete_body.php', 'Multidelete', 'Multidelete' );
+extAddSpecialPage( dirname( __FILE__ ) . '/SpecialMultiDelete_body.php', 'Multidelete', 'Multidelete' );
 
 require_once( $IP . "/extensions/wikia/TaskManager/BatchTask.php" );
 

@@ -1,7 +1,7 @@
 <?php
 /**
  * MiniEditor - A miniature editor
- * 
+ *
  * Most of this extension is dynamic / javascript.  We do need some messages from other extensions.
  *
  * @author Owen Davis, Liz Lee, Kyle Florence
@@ -15,7 +15,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'descriptionmsg' => 'minieditor-desc'
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 /**
  * Controllers

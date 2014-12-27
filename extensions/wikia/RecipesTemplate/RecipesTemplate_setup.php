@@ -16,16 +16,16 @@ $wgExtensionCredits['specialpage'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/RecipesTemplate'
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 // register classes
-$wgAutoloadClasses['RecipesTemplate'] = $dir.'RecipesTemplate.class.php';
-$wgAutoloadClasses['RecipesTemplateAjax'] = $dir.'RecipesTemplateAjax.class.php';
+$wgAutoloadClasses['RecipesTemplate'] = $dir . 'RecipesTemplate.class.php';
+$wgAutoloadClasses['RecipesTemplateAjax'] = $dir . 'RecipesTemplateAjax.class.php';
 
 // register special pages
-$wgAutoloadClasses['SpecialCreateIngredient'] = $dir.'SpecialCreateIngredient.class.php';
-$wgAutoloadClasses['SpecialCreateRecipe'] = $dir.'SpecialCreateRecipe.class.php';
-$wgAutoloadClasses['SpecialCreateFromTemplate'] = $dir.'SpecialCreateFromTemplate.class.php';
+$wgAutoloadClasses['SpecialCreateIngredient'] = $dir . 'SpecialCreateIngredient.class.php';
+$wgAutoloadClasses['SpecialCreateRecipe'] = $dir . 'SpecialCreateRecipe.class.php';
+$wgAutoloadClasses['SpecialCreateFromTemplate'] = $dir . 'SpecialCreateFromTemplate.class.php';
 $wgSpecialPages['CreateIngredient'] = 'SpecialCreateIngredient';
 $wgSpecialPages['CreateRecipe'] = 'SpecialCreateRecipe';
 $wgSpecialPages['CreateFromTemplate'] = 'SpecialCreateFromTemplate';
@@ -37,14 +37,14 @@ $wgExtensionMessagesFiles['RecipesTemplate'] = $dir . 'RecipesTemplate.i18n.php'
 $wgAjaxExportList[] = 'RecipesTemplateAjax';
 function RecipesTemplateAjax() {
 	global $wgRequest;
-	$method = $wgRequest->getVal('method', false);
+	$method = $wgRequest->getVal( 'method', false );
 
-	if (method_exists('RecipesTemplateAjax', $method)) {
+	if ( method_exists( 'RecipesTemplateAjax', $method ) ) {
 		$data = RecipesTemplateAjax::$method();
-		$json = json_encode($data);
+		$json = json_encode( $data );
 
-		$response = new AjaxResponse($json);
-		$response->setContentType('application/json; charset=utf-8');
+		$response = new AjaxResponse( $json );
+		$response->setContentType( 'application/json; charset=utf-8' );
 
 		return $response;
 	}

@@ -7,7 +7,7 @@
  */
 
 
-if( !defined( 'MEDIAWIKI' ) ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	die( 1 );
 }
 
@@ -18,7 +18,7 @@ $wgExtensionCredits[ 'other' ][ ] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/MainPageTag',
 );
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles['MainPageTag'] = __DIR__ . '/MainPageTag.i18n.php';
 
 $wgHooks['ParserFirstCallInit'][] = 'wfMainPageTag';
@@ -95,7 +95,7 @@ function wfMainPageTag_lcs( $input, $args, $parser ) {
 		$html .= 'main-page-tag-lcs-collapsed"';
 
 		if ( !$isResponsiveLayoutEnabled ) {
-			$html .= ' style="padding-right: '. $gutter .'px"';
+			$html .= ' style="padding-right: ' . $gutter . 'px"';
 		}
 
 		$html .= '><div class="lcs-container">';
@@ -105,7 +105,7 @@ function wfMainPageTag_lcs( $input, $args, $parser ) {
 		if ( $isGridLayoutEnabled || $isResponsiveLayoutEnabled ) {
 			$html .= '><div class="lcs-container">';
 		} else {
-			$html .= 'style="margin-right: -'. $gutter .'px; "><div class="lcs-container" style="margin-right: '. $gutter .'px;">';
+			$html .= 'style="margin-right: -' . $gutter . 'px; "><div class="lcs-container" style="margin-right: ' . $gutter . 'px;">';
 		}
 	}
 

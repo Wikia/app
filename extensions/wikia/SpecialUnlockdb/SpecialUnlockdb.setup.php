@@ -11,9 +11,9 @@ $wgExtensionCredits['specialpage'][] = array(
 	'descriptionmsg' => 'specialunlockdb-desc'
 );
 
-$dir = dirname(__FILE__).'/';
+$dir = dirname( __FILE__ ) . '/';
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles['SpecialUnlockdb'] = $dir . 'SpecialUnlockdb.i18n.php';
 
 $wgAutoloadClasses['WikiaSpecialUnlockdb'] = $dir . 'SpecialUnlockdb.class.php';

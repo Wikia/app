@@ -4,8 +4,8 @@
  */
 
 
-if(!defined('MEDIAWIKI')) {
-	exit(1);
+if ( !defined( 'MEDIAWIKI' ) ) {
+	exit( 1 );
 }
 
 
@@ -17,7 +17,7 @@ $wgExtensionCredits['other'][] = array(
 	'descriptionmsg' => 'vet-desc',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/VideoEmbedTool'
 );
-$dir = dirname(__FILE__).'/';
+$dir = dirname( __FILE__ ) . '/';
 
 $wgAutoloadClasses['VideoEmbedTool'] = $dir . 'VideoEmbedTool_body.php';
 $wgAutoloadClasses['VideoEmbedToolSearchService'] = $dir . 'VideoEmbedToolSearchService.class.php';
@@ -25,25 +25,25 @@ $wgAutoloadClasses['VideoEmbedToolController'] = $dir . '/VideoEmbedToolControll
 
 define( 'VIDEO_PREVIEW', 350 );
 
-#--- register special page (MW 1.1x way)
+# --- register special page (MW 1.1x way)
 if ( !function_exists( 'extAddSpecialPage' ) ) {
     require( "$IP/extensions/ExtensionFunctions.php" );
 }
 
-$wgExtensionMessagesFiles['WikiaVideoAdd'] = dirname(__FILE__) . '/WikiaVideoAdd.i18n.php';
-$wgExtensionMessagesFiles['WikiaVideoAddAliases'] = dirname(__FILE__) . '/WikiaVideoAdd.alias.php';
-extAddSpecialPage( dirname(__FILE__) . '/WikiaVideoAdd_body.php', 'WikiaVideoAdd', 'WikiaVideoAddForm' );
+$wgExtensionMessagesFiles['WikiaVideoAdd'] = dirname( __FILE__ ) . '/WikiaVideoAdd.i18n.php';
+$wgExtensionMessagesFiles['WikiaVideoAddAliases'] = dirname( __FILE__ ) . '/WikiaVideoAdd.alias.php';
+extAddSpecialPage( dirname( __FILE__ ) . '/WikiaVideoAdd_body.php', 'WikiaVideoAdd', 'WikiaVideoAddForm' );
 
-$wgExtensionMessagesFiles['VideoEmbedTool'] = $dir.'/VideoEmbedTool.i18n.php';
+$wgExtensionMessagesFiles['VideoEmbedTool'] = $dir . '/VideoEmbedTool.i18n.php';
 $wgHooks['EditPage::showEditForm:initial2'][] = 'VETSetup';
 
-JSMessages::registerPackage('VideoEmbedTool', array(
+JSMessages::registerPackage( 'VideoEmbedTool', array(
 	'vet-warn2',
 	'vet-warn3',
 	'vet-insert-error',
 	'vet-imagebutton',
 	'vet-error-while-loading'
-));
+) );
 
 /**
  * @param $article
@@ -52,8 +52,8 @@ JSMessages::registerPackage('VideoEmbedTool', array(
  * @param $summary
  * @return bool
  */
-function VETArticleSave( $article, $user, &$text, $summary) {
-	if (NS_FILE == $article->mTitle->getNamespace()) {
+function VETArticleSave( $article, $user, &$text, $summary ) {
+	if ( NS_FILE == $article->mTitle->getNamespace() ) {
 		$text = $article->dataline . $text;
 	}
 	return true;
@@ -63,9 +63,9 @@ function VETArticleSave( $article, $user, &$text, $summary) {
  * @param EditPage $editform
  * @return bool
  */
-function VETSetup($editform) {
+function VETSetup( $editform ) {
 	global $wgOut, $wgExtensionsPath, $wgHooks;
-	if( get_class(RequestContext::getMain()->getSkin()) === 'SkinOasis' ) {
+	if ( get_class( RequestContext::getMain()->getSkin() ) === 'SkinOasis' ) {
 		$wgHooks['MakeGlobalVariablesScript'][] = 'VETSetupVars';
 	}
 	return true;
@@ -75,7 +75,7 @@ function VETSetup($editform) {
  * @param array $vars
  * @return bool
  */
-function VETSetupVars(Array &$vars) {
+function VETSetupVars( Array &$vars ) {
 	global $wgFileBlacklist, $wgCheckFileExtensions, $wgStrictFileExtensions, $wgFileExtensions, $wgEnableVideoToolExt;
 
 	$vars['wgEnableVideoToolExt'] = $wgEnableVideoToolExt;
@@ -92,12 +92,12 @@ $wgAjaxExportList[] = 'VET';
 function VET() {
 	global $wgRequest;
 
-	$method = $wgRequest->getVal('method');
+	$method = $wgRequest->getVal( 'method' );
 	$vet = new VideoEmbedTool();
 
 	$html = $vet->$method();
-	$domain = $wgRequest->getVal('domain', null);
-	if(!empty($domain)) {
+	$domain = $wgRequest->getVal( 'domain', null );
+	if ( !empty( $domain ) ) {
 		$html .= '<script type="text/javascript">document.domain = "' . $domain  . '"</script>';
 	}
 	$resp = new AjaxResponse( $html );

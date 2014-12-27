@@ -14,7 +14,7 @@ $wgExtensionCredits['other'][] = array(
 
 $dir = __DIR__ . '/';
 
-//classes
+// classes
 $wgAutoloadClasses['RecentChangesController'] =  $dir . 'RecentChangesController.class.php';
 $wgAutoloadClasses['RecentChangesHooks'] =  $dir . 'RecentChangesHooks.class.php';
 $wgAutoloadClasses['RecentChangesFiltersStorage'] =  $dir . 'RecentChangesFiltersStorage.class.php';

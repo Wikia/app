@@ -34,7 +34,7 @@ $wgExtensionCredits['specialpage'][] = array(
 		'descriptionmsg' => 'perpageseo-desc'
 );
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles['PerPageSEO'] = __DIR__ . '/PerPageSEO.i18n.php';
 
 $wgHooks['BeforePageDisplay'][] = 'efPerPageSEO';

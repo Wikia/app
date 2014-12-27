@@ -19,9 +19,9 @@ $wgExtensionCredits['lightbox'][] = array(
 	'descriptionmsg' => 'lightbox-desc'
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
-//classes
+// classes
 $wgAutoloadClasses['LightboxController'] =  $dir . 'LightboxController.class.php';
 $wgAutoloadClasses['LightboxHelper'] =  $dir . 'LightboxHelper.class.php';
 $wgAutoloadClasses['LightboxHooks'] =  $dir . 'LightboxHooks.class.php';
@@ -32,6 +32,6 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'LightboxHooks::onMakeGlobalVariablesS
 // i18n mapping
 $wgExtensionMessagesFiles['Lightbox'] = $dir . 'Lightbox.i18n.php';
 
-JSMessages::registerPackage('Lightbox', array(
+JSMessages::registerPackage( 'Lightbox', array(
 	'lightbox-carousel-more-items',
-));
+) );

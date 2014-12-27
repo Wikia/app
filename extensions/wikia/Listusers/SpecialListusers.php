@@ -40,7 +40,7 @@ $wgHooks['SpecialPage_initList'][] = 'ListusersHooks::ActiveUsers';
 $wgAjaxExportList[] = 'ListusersAjax::axShowUsers';
 
 // This tries to write to a database that the devboxes don't have write-permission for.
-if( empty( $wgDevelEnvironment ) ){
+if ( empty( $wgDevelEnvironment ) ) {
 	$wgHooks['UserRights'][] = 'ListusersHooks::updateUserRights';
 }
 

@@ -34,8 +34,8 @@ $wgAutoloadClasses['FakeImageGalleryImageServing'] = $dir . 'FakeImageGalleryIma
 $wgHooks['LinksUpdateComplete'][] = 'ImageServingHelper::onLinksUpdateComplete';
 $wgHooks['ImageBeforeProduceHTML'][] = 'ImageServingHelper::onImageBeforeProduceHTML';
 
-if (isset($wgHooks['BeforeParserrenderImageGallery'])) {
-	$wgHooks['BeforeParserrenderImageGallery'] = array_merge(array( 'ImageServingHelper::onBeforeParserrenderImageGallery' ), $wgHooks['BeforeParserrenderImageGallery'] );
+if ( isset( $wgHooks['BeforeParserrenderImageGallery'] ) ) {
+	$wgHooks['BeforeParserrenderImageGallery'] = array_merge( array( 'ImageServingHelper::onBeforeParserrenderImageGallery' ), $wgHooks['BeforeParserrenderImageGallery'] );
 } else {
 	$wgHooks['BeforeParserrenderImageGallery'] = array( 'ImageServingHelper::onBeforeParserrenderImageGallery' );
 }

@@ -2,7 +2,7 @@
 
 $wgExtensionCredits[ 'specialpage' ][] = array(
 	'name' => 'CorporateFooter',
-	'author' => array('Mateusz "Warkot" Warkocki', 'Bogna "bognix" Knychala'),
+	'author' => array( 'Mateusz "Warkot" Warkocki', 'Bogna "bognix" Knychala' ),
 	'descriptionmsg' => 'corporate-footer-desc',
 	'version' => 1.0,
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CorporateFooter'

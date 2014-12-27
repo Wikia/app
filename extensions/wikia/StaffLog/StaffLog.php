@@ -1,6 +1,6 @@
 <?php
 # Alert the user that this is not a valid entry point to MediaWiki if they try to access the special pages file directly.
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo <<<EOT
 To install my extension, put the following line in LocalSettings.php:
 require_once( "\$IP/extensions/MyExtension/MyExtension.php" );
@@ -29,11 +29,11 @@ if ( !empty( $wgEnableStaffLogSpecialPage ) ) {
 
 $wgLogRestrictions['StaffLog'] = 'StaffLog';
 
-$wgStaffLogType = array(1 => "Block");
+$wgStaffLogType = array( 1 => "Block" );
 $wgSpecialPageGroups['stafflog'] = 'changes';
 
 $wgAvailableRights[] = 'stafflog';
 $wgGroupPermissions['staff']['stafflog'] = true;
 $wgGroupPermissions['helper']['stafflog'] = true;
 
-require_once $dir."StaffLog.events.php";
+require_once $dir . "StaffLog.events.php";

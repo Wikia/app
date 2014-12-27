@@ -23,9 +23,9 @@ $wgExtensionCredits[ 'other' ][ ] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/JSSnippets',
 );
 
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles['JSSnippets'] = $dir . '/JSSnippets.i18n.php';
 
 // classes

@@ -1,6 +1,6 @@
 <?php
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 $app = F::app();
 
 $wgExtensionCredits['specialpage'][] = array(

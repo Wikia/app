@@ -34,9 +34,9 @@ $wgGroupPermissions['sysop']['themedesigner'] = true;
 $wgGroupPermissions['helper']['themedesigner'] = true;
 $wgGroupPermissions['staff']['themedesigner'] = true;
 
-JSMessages::registerPackage('ThemeDesigner', [
+JSMessages::registerPackage( 'ThemeDesigner', [
 	'themedesigner-wordmark-preview-error'
-]);
+] );
 
 // hooks
 $wgHooks['ArticleDeleteComplete'][] = 'ThemeDesignerHooks::onArticleDeleteComplete';

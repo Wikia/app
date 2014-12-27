@@ -89,8 +89,8 @@ $wgResourceModules['wikia.ext.abtesting.edit'] = array(
 	)
 );
 
-//AbTesting is an Oasis-only experiment for now
-//$wgHooks['WikiaMobileAssetsPackages'][] = 'AbTesting::onWikiaMobileAssetsPackages';
+// AbTesting is an Oasis-only experiment for now
+// $wgHooks['WikiaMobileAssetsPackages'][] = 'AbTesting::onWikiaMobileAssetsPackages';
 
 $wgSpecialPages[ 'AbTesting'] = 'SpecialAbTestingController';
 

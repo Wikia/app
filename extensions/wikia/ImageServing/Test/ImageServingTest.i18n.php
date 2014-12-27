@@ -1,7 +1,7 @@
 <?php
 $messages = array();
- 
-$messages['en'] = array( 
+
+$messages['en'] = array(
 	'imageservingtest' => 'ImageServingTest',
 	'imageservingtest-desc' => 'ImageServing testing web pege',
 	'imageserving-showall' => '(show all)',

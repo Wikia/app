@@ -12,7 +12,7 @@
  * @copyright Copyright © 2011 Daniel Grunwell, Wikia Inc.
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
- 
+
 if ( !defined( 'MEDIAWIKI' ) ) {
 	echo( "This is an extension to the MediaWiki package and cannot be run standalone.\n" );
 	die( -1 );
@@ -26,9 +26,9 @@ $wgExtensionCredits['other'][] = array(
 	'descriptionmsg' => 'commentcsv-desc'
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles['CommentCSV'] = $dir . 'CommentCSV.i18n.php';
 
 // New user right, required to use the extension.

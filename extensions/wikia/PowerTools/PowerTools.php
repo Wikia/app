@@ -26,7 +26,7 @@ $wgExtensionCredits['other'][] = array(
 		'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/PowerTools'
 );
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles['PowerTools'] = __DIR__ . '/PowerTools.i18n.php';
 
 // New user right, required to use the extension.

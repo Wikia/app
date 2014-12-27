@@ -7,7 +7,7 @@
  * @author Sebastian Marzjan
  */
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 $wgExtensionCredits[ 'other' ][ ] = array(
 	'name' => 'WikiaBar',
@@ -34,7 +34,7 @@ $wgAutoloadClasses['WikiaBarMessageDataValidator'] =  $dir . 'models/WikiaBarMes
 $wgAutoloadClasses['WikiaBarFailsafeDataValidator'] =  $dir . 'models/WikiaBarFailsafeDataValidator.class.php';
 
 $wgAutoloadClasses['WikiaBarUserPropertiesHandler'] =  $dir . 'models/WikiaBarUserPropertiesHandler.class.php';
-WikiaUserPropertiesController::registerHandler('WikiaBarUserPropertiesHandler');
+WikiaUserPropertiesController::registerHandler( 'WikiaBarUserPropertiesHandler' );
 
 /**
  * hooks

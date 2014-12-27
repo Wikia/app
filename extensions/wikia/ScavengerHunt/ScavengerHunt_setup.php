@@ -27,7 +27,7 @@ $wgExtensionCredits['special'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ScavengerHunt'
 );
 
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
 
 // autoloaded classes
 $wgAutoloadClasses['ScavengerHunt'] =  "$dir/ScavengerHunt.class.php";

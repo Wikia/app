@@ -25,8 +25,8 @@ $wgExtensionCredits['specialpage'][] = array(
 	"url" => "https://github.com/Wikia/app/tree/dev/extensions/wikia/MultiTasks"
 );
 
-#--- messages file
-$wgExtensionMessagesFiles["Multiwikifinder"] = dirname(__FILE__) . '/MultiTasks.i18n.php';
+# --- messages file
+$wgExtensionMessagesFiles["Multiwikifinder"] = dirname( __FILE__ ) . '/MultiTasks.i18n.php';
 $wgExtensionMessagesFiles['MultiwikifinderAliases'] = __DIR__ . '/MultiTasks.aliases.php';
 
 $wgAvailableRights[] = 'multiwikifinder';
@@ -38,6 +38,6 @@ if ( !function_exists( 'extAddSpecialPage' ) ) {
     require_once ( "$IP/extensions/ExtensionFunctions.php" );
 }
 
-extAddSpecialPage( dirname(__FILE__) . '/SpecialMultiWikiFinder_body.php', 'Multiwikifinder', 'MultiwikifinderSpecialPage' );
+extAddSpecialPage( dirname( __FILE__ ) . '/SpecialMultiWikiFinder_body.php', 'Multiwikifinder', 'MultiwikifinderSpecialPage' );
 
 $wgSpecialPageGroups['Multiwikifinder'] = 'pagetools';

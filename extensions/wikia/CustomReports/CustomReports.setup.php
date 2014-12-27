@@ -7,7 +7,7 @@ $wgExtensionCredits[ 'specialpage' ][ ] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CustomReports',
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 $wgAutoloadClasses['Report'] =  $dir . 'Report.class.php';
 

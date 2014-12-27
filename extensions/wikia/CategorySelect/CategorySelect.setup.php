@@ -45,4 +45,4 @@ JSMessages::registerPackage( 'CategorySelect', array(
 	'categoryselect-modal-category-name',
 	'categoryselect-modal-category-sortkey',
 	'categoryselect-tooltip-add',
-));
+) );

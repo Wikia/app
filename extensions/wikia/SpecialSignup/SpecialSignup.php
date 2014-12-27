@@ -1,6 +1,6 @@
 <?php
 
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
         exit( 1 );
 }
 
@@ -12,10 +12,10 @@ $wgExtensionCredits['specialpage'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialSignup'
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 // special page
-$wgAutoloadClasses['Signup'] = $dir.'SpecialSignup.class.php';
+$wgAutoloadClasses['Signup'] = $dir . 'SpecialSignup.class.php';
 
 $wgSpecialPages['Signup'] = 'Signup';
 $wgSpecialPageGroups['Signup'] = 'login';

@@ -44,7 +44,7 @@ $wgExtensionCredits['other'][] = array(
 	'descriptionmsg' => 'articlesasresources-desc',
 );
 
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
 
 // classes
 $wgAutoloadClasses['ArticlesAsResources'] =  $dir . '/ArticlesAsResources.class.php';
@@ -52,5 +52,5 @@ $wgAutoloadClasses['ArticlesAsResources'] =  $dir . '/ArticlesAsResources.class.
 // hooks
 $wgHooks['ResourceLoaderBeforeRespond'][] = 'ArticlesAsResources::onResourceLoaderBeforeRespond';
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles['ArticlesAsResources'] = $dir . '/ArticlesAsResources.i18n.php';

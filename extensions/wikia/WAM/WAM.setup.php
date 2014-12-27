@@ -8,7 +8,7 @@
 
 
 $app = F::app();
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 /**
  * classes
@@ -24,5 +24,5 @@ $wgExtensionCredits['other'][] = array(
 	'descriptionmsg'    => 'wam-desc'
 );
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles['WAM'] = $dir . 'WAM.i18n.php';

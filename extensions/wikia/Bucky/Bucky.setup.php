@@ -12,11 +12,11 @@ $wgExtensionCredits[ 'specialpage' ][ ] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Bucky',
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 $wgAutoloadClasses['Bucky'] =  $dir . 'Bucky.class.php';
 
 $wgHooks['MakeGlobalVariablesScript'][] = 'Bucky::onMakeGlobalVariablesScript';
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles['Bucky'] = $dir . 'Bucky.i18n.php';

@@ -5,7 +5,7 @@
  * @author Andrzej 'nAndy' Łukaszewski
  * @author Łukasz Konieczny
  */
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'CSS Editor',
@@ -28,7 +28,7 @@ F::app()->getDispatcher()->addRouting( 'SpecialCssController', ['index' => ["not
 
 /**
  * @global Array $wgHooks The list of hooks.
- * 
+ *
  * @see http://www.mediawiki.org/wiki/Manual:$wgHooks
  * @see http://www.mediawiki.org/wiki/Manual:Hooks/AlternateEdit
  * @see http://www.mediawiki.org/wiki/Manual:Hooks/ArticleSaveComplete
@@ -48,7 +48,7 @@ $wgSpecialPageGroups['CSS'] = 'wikia';
 $wgExtensionMessagesFiles['SpecialCss'] = $dir . 'SpecialCss.i18n.php';
 JSMessages::registerPackage( 'SpecialCss', array( 'special-css-*' ) );
 
-//mapping community central language to it's database name
+// mapping community central language to it's database name
 $wgCssUpdatesLangMap = array (
 	'en' => 'wikia',
 	'pl' => 'plwikia',

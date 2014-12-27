@@ -11,8 +11,8 @@
  *
  */
 
-if (!defined('MEDIAWIKI')){
-    echo ('THIS IS NOT VALID ENTRY POINT.'); exit (1);
+if ( !defined( 'MEDIAWIKI' ) ) {
+    echo ( 'THIS IS NOT VALID ENTRY POINT.' ); exit ( 1 );
 }
 
 $wgHooks['ParserFirstCallInit'][] = "wfGoogleDocs";
@@ -24,7 +24,7 @@ $wgExtensionCredits['parserhook'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/GoogleDocs'
 );
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles['GoogleDocs4MW'] = __DIR__ . '/GoogleDocs.i18n.php';
 
 function wfGoogleDocs( Parser $parser ) {
@@ -34,17 +34,17 @@ function wfGoogleDocs( Parser $parser ) {
 
 function renderGoogleSpreadsheet( $input, $argv ) {
 
-	#Set default width and height
-	if (empty($argv['height'])) $argv['height'] = 300;
-	if (empty($argv['width'])) $argv['width'] = 500;
+	# Set default width and height
+	if ( empty( $argv['height'] ) ) $argv['height'] = 300;
+	if ( empty( $argv['width'] ) ) $argv['width'] = 500;
 
-	$output = "<iframe class='googlespreadsheetframe' width='".
-		htmlspecialchars($argv['width']).
-		"' height='".
-		htmlspecialchars($argv['height']).
+	$output = "<iframe class='googlespreadsheetframe' width='" .
+		htmlspecialchars( $argv['width'] ) .
+		"' height='" .
+		htmlspecialchars( $argv['height'] ) .
 		"' ";
-	if (!empty($argv['style'])) $output .= "style='". htmlspecialchars($argv['style']). "' ";
-	$output .= "src='http://spreadsheets.google.com/pub?key=". htmlspecialchars($input). "&output=html&widget=true'></iframe>";
+	if ( !empty( $argv['style'] ) ) $output .= "style='" . htmlspecialchars( $argv['style'] ) . "' ";
+	$output .= "src='http://spreadsheets.google.com/pub?key=" . htmlspecialchars( $input ) . "&output=html&widget=true'></iframe>";
 
 	return $output;
 }

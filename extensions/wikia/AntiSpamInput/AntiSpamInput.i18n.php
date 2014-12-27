@@ -7,6 +7,6 @@ $messages['en'] = array(
 	'antispaminput-msg' => 'Simple spambot blocking mechanism.'
 );
 
-$messages['qqq'] = array( 
+$messages['qqq'] = array(
 	'antispaminput-msg' => '{{desc}}'
 );

@@ -9,7 +9,7 @@
 $messages = array();
 
 /** English
- * @author 
+ * @author
  */
 $messages['en'] = array(
 	'unsubscribe' => 'Unsubscribe',
@@ -20,22 +20,22 @@ $messages['en'] = array(
 	'unsubscribe-bademail' => 'Sorry, there was a problem with the e-mail.',
 	'unsubscribe-badtime' => 'Sorry, the link has expired. Please use a link that is less then 7 days old.',
 
-	#user info list
+	# user info list
 	'unsubscribe-nousers' => 'No users found with that e-mail address.',
-	#'unsubscribe-already' => 'Already unsubscribed', 
+	# 'unsubscribe-already' => 'Already unsubscribed',
 	'unsubscribe-noconfusers' => 'No confirmed users found with that e-mail address.',
 
-	#confirm form
+	# confirm form
 	'unsubscribe-confirm-legend' => 'Confirm',
 	'unsubscribe-confirm-text' => 'Unsubscribe all accounts with <code>$1</code>?',
 	'unsubscribe-confirm-button' => "Yes, I'm sure",
-	
-	#working page
+
+	# working page
 	'unsubscribe-working' => 'Unsubscribing $1 {{PLURAL:$1|account|accounts}} for $2',
 	'unsubscribe-working-problem' => 'problem loading user info for: $1',
 	'unsubscribe-working-done' => 'Complete.',
 
-	#preferences changes
+	# preferences changes
 	'unsubscribe-preferences-toggle' => 'Unsubscribe from all emails from Wikia (deselect this to access the options below)',
 	'unsubscribe-preferences-notice' => 'Emails have been disabled for your account. Visit the User Profile tab to re-enable them.',
 );

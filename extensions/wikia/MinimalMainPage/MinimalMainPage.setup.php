@@ -14,7 +14,7 @@ $wgExtensionCredits['other'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/MinimalMainPage'
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 // MinimalMainPage shared classes
 $wgAutoloadClasses['MinimalMainPageHooks'] =  $dir . 'MinimalMainPageHooks.class.php';

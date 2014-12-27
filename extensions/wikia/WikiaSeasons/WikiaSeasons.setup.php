@@ -8,7 +8,7 @@
  */
 
 $app = F::app();
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 $wgExtensionCredits[ 'other' ][ ] = array(
 	'name' => 'WikiaSeasons',
@@ -29,7 +29,7 @@ $wgAutoloadClasses['WikiaSeasonsController'] =  $dir . 'WikiaSeasonsController.c
 /**
  * hooks
  */
-//$app->registerHook();
+// $app->registerHook();
 
 /**
  * i18n mapping

@@ -8,7 +8,7 @@
  */
 
 # Not a valid entry point, skip unless MEDIAWIKI is defined
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
@@ -19,9 +19,9 @@ $wgExtensionCredits[ 'specialpage' ][ ] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Top',
 );
 
-//i18n
-$wgExtensionMessagesFiles['Top'] = dirname(__FILE__) . '/Top.i18n.php';
+// i18n
+$wgExtensionMessagesFiles['Top'] = dirname( __FILE__ ) . '/Top.i18n.php';
 
-$wgAutoloadClasses['Top'] = dirname(__FILE__) . '/Top_body.php';
+$wgAutoloadClasses['Top'] = dirname( __FILE__ ) . '/Top_body.php';
 $wgSpecialPages['Top'] = 'Top';
 

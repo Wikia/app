@@ -40,13 +40,13 @@ class SpecialCategoryIntersection extends SpecialPage {
 		parent::__construct( 'CategoryIntersection' );
 
 		global $wgContLang;
-		$this->CATEGORY_NS_PREFIX = $wgContLang->getNSText(NS_CATEGORY) . ":"; // the actual namespace prefix (includes the colon at the end).
+		$this->CATEGORY_NS_PREFIX = $wgContLang->getNSText( NS_CATEGORY ) . ":"; // the actual namespace prefix (includes the colon at the end).
 	}
 
-	public function getDocumentationUrl(){
+	public function getDocumentationUrl() {
 		// TODO: Ideally, we should create documentation for the extension on MediaWiki.org, then instead of this function, we should use a static member var (string) for the URL.
 		global $wgServer;
-		return $wgServer."/api.php";
+		return $wgServer . "/api.php";
 	}
 
 	/**
@@ -58,10 +58,10 @@ class SpecialCategoryIntersection extends SpecialPage {
 		global $wgOut, $wgExtensionsPath;
 		wfProfileIn( __METHOD__ );
 
-		$wgOut->setPagetitle( wfMsg('categoryintersection') );
+		$wgOut->setPagetitle( wfMsg( 'categoryintersection' ) );
 
 		// Just splurt some CSS onto the page for now (TODO: Make this an external file.. do it in a way that works for both AssetsManager and for MediaWiki in general)
-		$wgOut->addHTML("
+		$wgOut->addHTML( "
 			<style type='text/css'>
 				h3{
 					font-weight:bold;
@@ -104,22 +104,22 @@ class SpecialCategoryIntersection extends SpecialPage {
 					padding:3px;
 				}
 			</style>
-		");
+		" );
 
 		// Show the header
-		$wgOut->addHTML( "<h2>" . wfMsg('categoryintersection-header-title') . "</h2>" );
-		$docLink = "<a href='".$this->getDocumentationUrl()."'>". wfMsg('categoryintersection-docs-linktext') ."</a>";
-		$wgOut->addHTML( wfMsg('categoryintersection-header-body', $docLink) );
+		$wgOut->addHTML( "<h2>" . wfMsg( 'categoryintersection-header-title' ) . "</h2>" );
+		$docLink = "<a href='" . $this->getDocumentationUrl() . "'>" . wfMsg( 'categoryintersection-docs-linktext' ) . "</a>";
+		$wgOut->addHTML( wfMsg( 'categoryintersection-header-body', $docLink ) );
 		$wgOut->addHTML( "<br/><br/>" );
 
-		$wgOut->addHTML("<table><tr><td class='form'>"); // oh snap, tables for layout!
+		$wgOut->addHTML( "<table><tr><td class='form'>" ); // oh snap, tables for layout!
 			$this->showForm( $wgOut );
-		$wgOut->addHTML("</td><td class='results'>");
+		$wgOut->addHTML( "</td><td class='results'>" );
 
-		$wgOut->addHTML("<h3>" . wfMsg('categoryintersection-instructions-title') . "</h3>");
-		$wgOut->addHTML(wfMsg('categoryintersection-instructions'));
+		$wgOut->addHTML( "<h3>" . wfMsg( 'categoryintersection-instructions-title' ) . "</h3>" );
+		$wgOut->addHTML( wfMsg( 'categoryintersection-instructions' ) );
 
-		$wgOut->addHTML("</td></tr></table>\n");
+		$wgOut->addHTML( "</td></tr></table>\n" );
 
 		$this->showResults( $wgOut );
 
@@ -128,7 +128,7 @@ class SpecialCategoryIntersection extends SpecialPage {
 
 		// Javascript for the autocompletion - this must be done after the form exists since it does calculations on the form.
 		$js = "{$wgExtensionsPath}/wikia/SpecialCategoryIntersection/CategoryAutoComplete.js";
-		$wgOut->addScript('<script type="text/javascript" src="'.$js.'"></script>');
+		$wgOut->addScript( '<script type="text/javascript" src="' . $js . '"></script>' );
 
 		wfProfileOut( __METHOD__ );
 	} // end execute()
@@ -138,41 +138,41 @@ class SpecialCategoryIntersection extends SpecialPage {
 	 *
 	 * @param out - OutputPage to add HTML to.
 	 */
-	private function showForm($out){
+	private function showForm( $out ) {
 		global $wgRequest;
 		wfProfileIn( __METHOD__ );
 
 		$html = "";
-		$html .= "<h3>". wfMsg('categoryintersection-form-title') ."</h3>";
+		$html .= "<h3>" . wfMsg( 'categoryintersection-form-title' ) . "</h3>";
 
 		$html .= "<div>\n";
 		$html .= "<form name='categoryintersection' id='CategoryAutoComplete' class='WikiaForm' action='' method='GET'>\n";
 
 			// Display a couple of rows
-			$html .= $this->getHtmlForCategoryBox(1);
-			$html .= wfMsg('categoryintersection-and') . "<br/>\n";
-			$html .= $this->getHtmlForCategoryBox(2);
+			$html .= $this->getHtmlForCategoryBox( 1 );
+			$html .= wfMsg( 'categoryintersection-and' ) . "<br/>\n";
+			$html .= $this->getHtmlForCategoryBox( 2 );
 
 // TODO: Display a button to make more rows....
 // TODO: Display a button to make more rows....
 
 			// Display limit (default to this->defaultLimit)
-			$html .= wfMsg('categoryintersection-limit') . " <select name='limit' style='margin:10px 0 35px 0'>";
-			$limit = $wgRequest->getVal('limit', $this->defaultLimit);
-			$limits = array(10, 25, 50, 100);
-			foreach($limits as $currLimit){
-				$selected = (($currLimit == $limit)? " selected='selected'" : "");
+			$html .= wfMsg( 'categoryintersection-limit' ) . " <select name='limit' style='margin:10px 0 35px 0'>";
+			$limit = $wgRequest->getVal( 'limit', $this->defaultLimit );
+			$limits = array( 10, 25, 50, 100 );
+			foreach ( $limits as $currLimit ) {
+				$selected = ( ( $currLimit == $limit ) ? " selected='selected'" : "" );
 				$html .= "\t<option value='$currLimit'$selected>$currLimit</option>\n";
 			}
 			$html .= "</select><br/>\n";
 
 			// Display submit button
-			$html .= "<input class='wikia-button' type='submit' name='wpSubmit' value='". wfMsg('categoryintersection-form-submit') ."'/>\n";
+			$html .= "<input class='wikia-button' type='submit' name='wpSubmit' value='" . wfMsg( 'categoryintersection-form-submit' ) . "'/>\n";
 
 		$html .= "</form>\n";
 		$html .= "</div>\n";
 
-		$out->addHTML($html);
+		$out->addHTML( $html );
 
 		wfProfileOut( __METHOD__ );
 	} // end showForm()
@@ -182,13 +182,13 @@ class SpecialCategoryIntersection extends SpecialPage {
 	 * @return a string which contains HTML for a text field for a category.  Will be pre-populated with a value if this page
 	 * is a form submission
 	 */
-	private function getHtmlForCategoryBox($num){
+	private function getHtmlForCategoryBox( $num ) {
 		global $wgRequest;
 		$formName = self::$CAT_PREFIX . "$num";
-		$value = $wgRequest->getVal($formName);
+		$value = $wgRequest->getVal( $formName );
 		// The wrapper is what the auto-complete popupwill be appended to.
-		$zIndex = (300 - $num); // make the top boxes show up on top of anything below them
-		return "<div class='autoCompleteWrapper' style='z-index:$zIndex'><input type='text' name='$formName' value='$value' autocomplete='off' placeholder='".$this->CATEGORY_NS_PREFIX."...'/></div>\n";
+		$zIndex = ( 300 - $num ); // make the top boxes show up on top of anything below them
+		return "<div class='autoCompleteWrapper' style='z-index:$zIndex'><input type='text' name='$formName' value='$value' autocomplete='off' placeholder='" . $this->CATEGORY_NS_PREFIX . "...'/></div>\n";
 	} // end getHtmlForCategoryBox()
 
 	/**
@@ -197,28 +197,28 @@ class SpecialCategoryIntersection extends SpecialPage {
 	 *
 	 * @param out - OutputPage to add HTML to.
 	 */
-	private function showResults($out){
+	private function showResults( $out ) {
 		wfProfileIn( __METHOD__ );
 		global $wgRequest, $wgServer, $wgScriptPath;
 
 		$html = "";
 		$html .= "<div class='ci_results'>\n";
 
-			$html .= "<h2>". wfMsg('categoryintersection-results-title') ."</h2>\n";
+			$html .= "<h2>" . wfMsg( 'categoryintersection-results-title' ) . "</h2>\n";
 
-			$submit = $wgRequest->getVal('wpSubmit');
-			if(!empty($submit)){
-				$limit = $wgRequest->getVal('limit', $this->defaultLimit);
+			$submit = $wgRequest->getVal( 'wpSubmit' );
+			if ( !empty( $submit ) ) {
+				$limit = $wgRequest->getVal( 'limit', $this->defaultLimit );
 
 				$categories = array();
-				$keys = array_keys($_GET);
-				foreach($keys as $key){
-					if(startsWith($key, self::$CAT_PREFIX)){
-						$cat = $wgRequest->getVal($key);
-						if(!empty($cat)){
+				$keys = array_keys( $_GET );
+				foreach ( $keys as $key ) {
+					if ( startsWith( $key, self::$CAT_PREFIX ) ) {
+						$cat = $wgRequest->getVal( $key );
+						if ( !empty( $cat ) ) {
 							$categories[] = $cat;
 
-							if(!startsWith($cat, $this->CATEGORY_NS_PREFIX)){
+							if ( !startsWith( $cat, $this->CATEGORY_NS_PREFIX ) ) {
 								$html .= "<em>Warning: \"$cat\" does not start with \"{$this->CATEGORY_NS_PREFIX}\".</em><br/>\n";
 							}
 						}
@@ -230,36 +230,36 @@ class SpecialCategoryIntersection extends SpecialPage {
 					'action' => 'query',
 					'list' => 'categoryintersection',
 					'limit' => $limit,
-					'categories' => implode("|", $categories)
+					'categories' => implode( "|", $categories )
 				);
-				$apiData = ApiService::call($apiParams);
-				if (empty($apiData)) {
+				$apiData = ApiService::call( $apiParams );
+				if ( empty( $apiData ) ) {
 					$RESULTS_FOUND = 0;
-					$html .= "<em>".wfMsg('categoryintersection-summary', implode($categories, ", "), $limit, $RESULTS_FOUND)."</em>\n";
-					$html .= "<em>". wfMsg('categoryintersection-noresults'). "</em>\n";
+					$html .= "<em>" . wfMsg( 'categoryintersection-summary', implode( $categories, ", " ), $limit, $RESULTS_FOUND ) . "</em>\n";
+					$html .= "<em>" . wfMsg( 'categoryintersection-noresults' ) . "</em>\n";
 				} else {
 					$articles = $apiData['query']['categoryintersection'];
 
 					// Summary of the query and the results.
-					$html .= "<small><em>".wfMsg('categoryintersection-summary', implode($categories, ", "), $limit, count($articles))."</em></small><br/>\n";
+					$html .= "<small><em>" . wfMsg( 'categoryintersection-summary', implode( $categories, ", " ), $limit, count( $articles ) ) . "</em></small><br/>\n";
 
 					$html .= "<ul>\n";
-					foreach($articles as $articleData){
+					foreach ( $articles as $articleData ) {
 						$title = $articleData['title'];
-						$titleObj = Title::newFromText($title);
-						$html .= "<li><a href='".$titleObj->getFullURL()."'>$title</a></li>\n";
+						$titleObj = Title::newFromText( $title );
+						$html .= "<li><a href='" . $titleObj->getFullURL() . "'>$title</a></li>\n";
 					}
 					$html .= "</ul>\n";
 				}
 
 				// Display the URL that could be used to make that API call.
-				$apiUrl = $wgServer.$wgScriptPath."/api.php?".http_build_query($apiParams);
-				$apiUrl = strtr($apiUrl, array( // several of the very commonly used characters shouldn't be encoded (less confusing URL this way)
+				$apiUrl = $wgServer . $wgScriptPath . "/api.php?" . http_build_query( $apiParams );
+				$apiUrl = strtr( $apiUrl, array( // several of the very commonly used characters shouldn't be encoded (less confusing URL this way)
 								"%3A" => ":",
 								"%2F" => "/",
 								"%7C" => "|"
-							));
-				$html .= "<br/><strong>" . wfMsg('categoryintersection-query-used') . "</strong><br/>\n";
+							) );
+				$html .= "<br/><strong>" . wfMsg( 'categoryintersection-query-used' ) . "</strong><br/>\n";
 				$html .= "<a href='$apiUrl'>$apiUrl</a>\n";
 			} else {
 				// TODO: Some placeholder text that explains that you should use the form on the left to make a query.
@@ -279,39 +279,39 @@ class SpecialCategoryIntersection extends SpecialPage {
 	 *
 	 * @param out - OutputPage to add HTML to.
 	 */
-	private function showFooter($out){
+	private function showFooter( $out ) {
 		wfProfileIn( __METHOD__ );
 		global $wgServer, $wgScriptPath;
 
 		$html = "";
-		$html .= "<h2>" . wfMsg('categoryintersection-footer-title') . "</h2>";
-		$html .= wfMsgExt('categoryintersection-footer-body', 'parse');
+		$html .= "<h2>" . wfMsg( 'categoryintersection-footer-title' ) . "</h2>";
+		$html .= wfMsgExt( 'categoryintersection-footer-body', 'parse' );
 
 		// Examples will be an array of arrays where each sub-array contains items for a single example.
 		$examples = array();
 
 		// Examples are now kept in wikitext so that each wiki can have its own examples if it wishes.
-		$exampleText = wfMsg('categoryintersection-footer-examples');
-		$rawExamples = explode("\n\n", $exampleText);
-		foreach($rawExamples as $singleExample){
-			$items = explode("\n", trim($singleExample));
-			if(count($items) > 0){
+		$exampleText = wfMsg( 'categoryintersection-footer-examples' );
+		$rawExamples = explode( "\n\n", $exampleText );
+		foreach ( $rawExamples as $singleExample ) {
+			$items = explode( "\n", trim( $singleExample ) );
+			if ( count( $items ) > 0 ) {
 				$examples[] = $items;
 			}
 		}
 
 		// Format and output the examples.
 		$html .= "<ul>\n";
-		foreach($examples as $exampleCategories){
+		foreach ( $examples as $exampleCategories ) {
 			$readableCats = array();
 			$queryParams = array(
 				"wpSubmit" => "Example" // so that the page can detect that there was a request for API data
 			);
 			$catNum = 1;
-			foreach($exampleCategories as $cat){
+			foreach ( $exampleCategories as $cat ) {
 				$queryParams[self::$CAT_PREFIX . $catNum++] = $cat;
-				if(startsWith($cat, $this->CATEGORY_NS_PREFIX)){
-					$readableCats[] = substr($cat, strlen($this->CATEGORY_NS_PREFIX));
+				if ( startsWith( $cat, $this->CATEGORY_NS_PREFIX ) ) {
+					$readableCats[] = substr( $cat, strlen( $this->CATEGORY_NS_PREFIX ) );
 				} else {
 					$readableCats[] = $cat;
 				}
@@ -319,11 +319,11 @@ class SpecialCategoryIntersection extends SpecialPage {
 
 			// Create URL
 			$baseUrl = $this->getTitle()->getFullURL();
-			$baseUrl .= ((strpos($baseUrl, "?")===false) ? "?" : "&" ); // first delimiter depends on whether there has been a '?' in the url already
-			$link = $baseUrl . http_build_query($queryParams);
+			$baseUrl .= ( ( strpos( $baseUrl, "?" ) === false ) ? "?" : "&" ); // first delimiter depends on whether there has been a '?' in the url already
+			$link = $baseUrl . http_build_query( $queryParams );
 
 			// Create readable text
-			$html .= "<li><a href='$link'>(". implode($readableCats, "), (") .")</a></li>\n";
+			$html .= "<li><a href='$link'>(" . implode( $readableCats, "), (" ) . ")</a></li>\n";
 		}
 		$html .= "</ul>\n";
 

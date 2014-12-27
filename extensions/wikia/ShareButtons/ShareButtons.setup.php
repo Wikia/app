@@ -8,7 +8,7 @@
  * @see http://www.phpied.com/social-button-bffs/
  */
 
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
 
 // WikiaApp
 $app = F::app();
@@ -20,7 +20,7 @@ $wgExtensionCredits[ 'other' ][ ] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ShareButtons',
 );
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles['ShareButton'] = $dir . '/ShareButton.i18n.php';
 
 

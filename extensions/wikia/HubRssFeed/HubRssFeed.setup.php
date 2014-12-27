@@ -1,8 +1,8 @@
 <?php
 
-if ( !defined('MEDIAWIKI') ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This is a MediaWiki extension.\n";
-	exit(1);
+	exit( 1 );
 }
 
 $wgExtensionCredits[ 'specialpage' ][ ] = array(
@@ -12,9 +12,9 @@ $wgExtensionCredits[ 'specialpage' ][ ] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/HubRssFeed',
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles['HubRssFeed'] = $dir . 'i18n/HubRssFeed.i18n.php';
 
 $wgAutoloadClasses['HubRssFeedSpecialController']	= $dir . 'HubRssFeedSpecialController.class.php';
@@ -25,7 +25,7 @@ $wgAutoloadClasses['PopularArticlesModel']	= $dir . 'models/external/PopularArti
 $wgAutoloadClasses['HubOnlyRssModel'] = $dir . 'models/HubOnlyRssModel.class.php';
 $wgAutoloadClasses['StarWarsDataProvider'] = $dir . 'providers/StarWarsDataProvider.class.php';
 
-//en rss
+// en rss
 $wgAutoloadClasses['TvRssModel']	= $dir . 'models/TvRssModel.class.php';
 $wgAutoloadClasses['GamesRssModel']	= $dir . 'models/GamesRssModel.class.php';
 $wgAutoloadClasses['LifestyleHubOnlyRssModel'] = $dir . 'models/LifestyleHubOnlyRssModel.class.php';
@@ -34,7 +34,7 @@ $wgAutoloadClasses['MarvelRssModel'] = $dir . 'models/MarvelRssModel.class.php';
 $wgAutoloadClasses['StarWarsRssModel'] = $dir . 'models/StarWarsRssModel.class.php';
 
 
-//de rss
+// de rss
 $wgAutoloadClasses['GamesDeHubOnlyRssModel']	= $dir . 'models/GamesDeHubOnlyRssModel.class.php';
 $wgAutoloadClasses['EntertainmentDeHubOnlyRssModel']	= $dir . 'models/EntertainmentDeHubOnlyRssModel.class.php';
 
@@ -47,7 +47,7 @@ $wgHubRssFeedsAll = array(
 $wgHubRssFeeds = $wgHubRssFeedsAll[ $wgLanguageCode ];
 
 foreach ( $wgHubRssFeeds as $feed ) {
-	if ( isset( $_SERVER['SCRIPT_URL'] ) && strcmp( $_SERVER['SCRIPT_URL'],  '/rss/'.$feed ) === 0 ) {
+	if ( isset( $_SERVER['SCRIPT_URL'] ) && strcmp( $_SERVER['SCRIPT_URL'],  '/rss/' . $feed ) === 0 ) {
 		/*
 		 * This is used by WebRequest::interpolateTitle to overwrite title in $_GET
 		 * (based on $_SERVER['REQUEST_URI']).

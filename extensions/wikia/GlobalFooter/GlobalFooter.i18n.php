@@ -4,7 +4,7 @@ $messages = [];
 
 $messages['en'] = [
 	'global-footer-desc' => 'GlobalFooter',
-	//Oasis
+	// Oasis
 	'oasis-corporatefooter-navigation-header' => 'Wikia Inc Navigation',
 	'oasis-corporatefooter-hub-Entertainment-link' => 'http://www.wikia.com/Entertainment',
 	'oasis-corporatefooter-hub-Gaming-link' => 'http://www.wikia.com/Video_Games',
@@ -22,7 +22,7 @@ $messages['en'] = [
 		*http://www.wikia.com/Privacy_Policy|Privacy Policy
 		*_LICENSE_',
 
-	//Monobook
+	// Monobook
 	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
 		* [http://www.wikia.com/wiki/Wikia:About About Wikia]
 		* [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]
@@ -31,7 +31,7 @@ $messages['en'] = [
 ];
 
 $messages['de'] = [
-	//Oasis
+	// Oasis
 	'oasis-corporatefooter-hub-Entertainment-link' => 'http://de.wikia.com/wiki/Entertainment',
 	'oasis-corporatefooter-hub-Food_and_Drink-link' => 'http://de.wikia.com/Lifestyle',
 	'oasis-corporatefooter-hub-Gaming-link' => 'http://de.wikia.com/wiki/Videospiele',
@@ -48,7 +48,7 @@ $messages['de'] = [
 		*http://de.wikia.com/Datenschutz|Datenschutz
 		*_LICENSE_',
 
-	//Monobook
+	// Monobook
 	'shared-Monobook-footer-wikia-links' => '* [http://de.wikia.com/Datenschutz Datenschutz]
 * [http://de.wikia.com/wiki/%C3%9Cber_Wikia Über Wikia]
 * [http://de.wikia.com/Nutzungsbedingungen Nutzungsbedingungen]<span style="color: #ff0000"> (Aktualisiert)</span>
@@ -57,7 +57,7 @@ $messages['de'] = [
 ];
 
 $messages['fr'] = [
-	//Oasis
+	// Oasis
 	'oasis-corporatefooter-hub-Entertainment-link' => 'http://fr.wikia.com/Divertissement',
 	'oasis-corporatefooter-hub-Gaming-link' => 'http://fr.wikia.com/Jeux_vid%C3%A9o',
 	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://fr.wikia.com/Mode_de_vie',
@@ -72,7 +72,7 @@ $messages['fr'] = [
 		*http://www.wikia.com/Privacy_Policy|Politique de confidentialité
 		*_LICENSE_',
 
-	//Monobook
+	// Monobook
 	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Confidentialité]
 		* [http://fr.wikia.com/À_propos À propos de Wikia]
 		* [http://fr.wikia.com/Conditions_d\'utilisation Conditions d\'utilisation]<span style="color: #ff0000"> (Mises à jour)</span>
@@ -81,7 +81,7 @@ $messages['fr'] = [
 ];
 
 $messages['pl'] = [
-	//Oasis
+	// Oasis
 	'oasis-corporatefooter-hub-Entertainment-link' => 'http://pl.wikia.com/Rozrywka',
 	'oasis-corporatefooter-hub-Gaming-link' => 'http://pl.wikia.com/Gry',
 	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://pl.wikia.com/Lifestyle',
@@ -96,7 +96,7 @@ $messages['pl'] = [
 		*http://pl.wikia.com/Polityka_Prywatności|Polityka Prywatności
 		*_LICENSE_',
 
-	//Monobook
+	// Monobook
 	'shared-Monobook-footer-wikia-links' => '* [http://pl.wikia.com/Polityka_Prywatności Polityka Prywatności]
 		* [http://pl.wikia.com/O_nas O Wikii]
 		* [http://pl.wikia.com/Zasady_Użytkowania Zasady Użytkowania]<span style="color: #ff0000"> (Zaktualizowane)</span>
@@ -106,7 +106,7 @@ $messages['pl'] = [
 ];
 
 $messages['es'] = [
-	//Oasis
+	// Oasis
 	'oasis-corporatefooter-hub-Entertainment-link' => 'http://es.wikia.com/Entretenimiento',
 	'oasis-corporatefooter-hub-Gaming-link' => 'http://es.wikia.com/Videojuegos',
 	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://es.wikia.com/Estilo_de_vida',
@@ -120,7 +120,7 @@ $messages['es'] = [
 		*http://es.wikia.com/Pol%C3%ADtica_de_Privacidad|Política de Privacidad
 		*http://es.wikia.com/Licencia|CC-BY-SA',
 
-	//Monobook
+	// Monobook
 	'shared-Monobook-footer-wikia-links' => '* [http://es.wikia.com/Pol%C3%ADtica_de_Privacidad Política de Privacidad]
 		* [http://es.wikia.com/Sobre_nosotros Sobre Wikia]
 		* [http://es.wikia.com/T%C3%A9rminos_de_Uso Términos de Uso]
@@ -172,7 +172,7 @@ $messages['sv'] = [
 ];
 
 $messages['it'] = [
-	//Oasis
+	// Oasis
 	'shared-Oasis-footer-wikia-links' => '* http://www.wikia.com/About_Us |Su di noi
 		* http://www.wikia.com/Hiring |Lavoro
 		* http://www.wikia.com/Advertising |Pubblicità
@@ -182,7 +182,7 @@ $messages['it'] = [
 		* http://it.community.wikia.com/wiki/Wiki_della_Community:Licenza |Licenza
 		* http://www.wikia.com/Special:CreateWiki |Crea una wiki',
 
-	//Monobook
+	// Monobook
 	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
 		* [http://www.wikia.com/wiki/Wikia:About About Wikia]
 		* [http://it.community.wikia.com/wiki/Wiki_della_Community:Termini_di_utilizzo Termini di utilizzo]<span style="color: #ff0000"> (Aggiornati)</span>
@@ -213,7 +213,7 @@ $messages['ru'] = [
 		*http://ru.community.wikia.com/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%8F:%D0%9A%D0%BE%D0%BD%D1%84%D0%B8%D0%B4%D0%B5%D0%BD%D1%86%D0%B8%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D1%81%D1%82%D1%8C|Конфиденциальность
 		*_LICENSE_',
 
-	//Monobook
+	// Monobook
 	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
 		* [http://www.wikia.com/wiki/Wikia:About About Wikia]
 		* [http://ru.community.wikia.com/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%8F:%D0%A3%D1%81%D0%BB%D0%BE%D0%B2%D0%B8%D1%8F_%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F Условия использования]

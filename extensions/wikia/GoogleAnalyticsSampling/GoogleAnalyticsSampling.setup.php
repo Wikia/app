@@ -6,9 +6,9 @@
  * @author Jakub Kurcek
  */
 
-if ( !defined('MEDIAWIKI') ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This is a MediaWiki extension.\n";
-	exit(1);
+	exit( 1 );
 }
 
 $wgExtensionCredits[ 'other' ][ ] = array(
@@ -18,9 +18,9 @@ $wgExtensionCredits[ 'other' ][ ] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/GoogleAnalyticsSampling',
 );
 
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles['GoogleAnalyticsSampling'] = $dir . '/GoogleAnalyticsSampling.i18n.php';
 
 // WikiaApp

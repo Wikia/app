@@ -17,23 +17,23 @@
 $wgExtensionCredits['other'][] = array(
 	'name' => 'Wikia Quiz',
 	'version' => '0.1',
-	'author' => array('Will Lee', 'Hyun Lim'),
+	'author' => array( 'Will Lee', 'Hyun Lim' ),
 	'descriptionmsg' => 'wikiaquiz-desc',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaQuiz'
 );
 
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
 
 // i18n
 $wgExtensionMessagesFiles['WikiaQuiz'] = "{$dir}/WikiaQuiz.i18n.php";
 
 // setup "Quiz" namespace
-define('NS_WIKIA_QUIZ', 1000);
-define('NS_WIKIA_QUIZARTICLE', 1010);
-define('NS_WIKIA_PLAYQUIZ', 1020);
+define( 'NS_WIKIA_QUIZ', 1000 );
+define( 'NS_WIKIA_QUIZARTICLE', 1010 );
+define( 'NS_WIKIA_PLAYQUIZ', 1020 );
 
 $wgExtensionNamespacesFiles['WikiaQuiz'] = "{$dir}/WikiaQuiz.namespaces.php";
-wfLoadExtensionNamespaces('WikiaQuiz', array(NS_WIKIA_QUIZ, NS_WIKIA_QUIZARTICLE, NS_WIKIA_PLAYQUIZ));
+wfLoadExtensionNamespaces( 'WikiaQuiz', array( NS_WIKIA_QUIZ, NS_WIKIA_QUIZARTICLE, NS_WIKIA_PLAYQUIZ ) );
 
 // classes
 $wgAutoloadClasses['WikiaQuiz'] = "{$dir}/WikiaQuiz.class.php";
@@ -61,24 +61,24 @@ $wgHooks['AlternateEdit'][] = 'WikiaQuizHooks::onAlternateEdit';
 $wgAjaxExportList[] = 'WikiaQuizAjax';
 function WikiaQuizAjax() {
 	global $wgRequest;
-	$method = $wgRequest->getVal('method', false);
+	$method = $wgRequest->getVal( 'method', false );
 
-	if (method_exists('WikiaQuizAjax', $method)) {
-		wfProfileIn(__METHOD__);
+	if ( method_exists( 'WikiaQuizAjax', $method ) ) {
+		wfProfileIn( __METHOD__ );
 
 		$data = WikiaQuizAjax::$method();
 
 		// send array as JSON
-		$json = json_encode($data);
-		$response = new AjaxResponse($json);
-		$response->setContentType('application/json; charset=utf-8');
+		$json = json_encode( $data );
+		$response = new AjaxResponse( $json );
+		$response->setContentType( 'application/json; charset=utf-8' );
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $response;
 	}
 }
 
-//Edit page
+// Edit page
 
 // permissions
 $wgGroupPermissions['*']['wikiaquiz'] = false;

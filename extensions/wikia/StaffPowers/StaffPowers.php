@@ -13,7 +13,7 @@ $wgExtensionCredits[ 'other' ][ ] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/StaffPowers',
 );
 
-$wgExtensionMessagesFiles['StaffPowers'] = dirname(__FILE__) . '/StaffPowers.i18n.php';
+$wgExtensionMessagesFiles['StaffPowers'] = dirname( __FILE__ ) . '/StaffPowers.i18n.php';
 
 // Power: unblockableness
 $wgHooks['BlockIp'][] = 'efPowersMakeUnblockable';
@@ -30,7 +30,7 @@ $wgGroupPermissions['vstf']['unblockable'] = true;
 function efPowersMakeUnblockable( $block, $user ) {
 	$blockedUser = User::newFromName( $block->getRedactedName() );
 
-	if (empty($blockedUser) || !$blockedUser->isAllowed( 'unblockable' ) ) {
+	if ( empty( $blockedUser ) || !$blockedUser->isAllowed( 'unblockable' ) ) {
 		return true;
 	}
 
@@ -41,6 +41,6 @@ function efPowersMakeUnblockable( $block, $user ) {
 	$wgMessageCache->addMessages( array( 'hookaborted' => $replacement ) );
 	*/
 
-	wfRunHooks('BlockIpStaffPowersCancel', array($block, $user));
+	wfRunHooks( 'BlockIpStaffPowersCancel', array( $block, $user ) );
 	return false;
 }

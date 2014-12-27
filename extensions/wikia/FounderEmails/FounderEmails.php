@@ -88,7 +88,7 @@ function wfFounderEmailsInit() {
 	$wgDefaultUserOptions["founderemails-complete-digest-$wgCityId"] = 0;
 }
 
-$dir = dirname(__FILE__).'/';
+$dir = dirname( __FILE__ ) . '/';
 $wgAutoloadClasses['FounderEmailsController'] = $dir . 'FounderEmailsController.class.php';
 $wgAutoloadClasses['SpecialFounderEmails'] = $dir . 'SpecialFounderEmails.class.php';
 

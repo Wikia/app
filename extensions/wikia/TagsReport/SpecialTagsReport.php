@@ -17,11 +17,11 @@ $wgExtensionCredits['specialpage'][] = array(
 	"url" => "https://github.com/Wikia/app/tree/dev/extensions/wikia/TagsReport"
 );
 
-$wgExtensionMessagesFiles["TagsReport"] = dirname(__FILE__) . '/SpecialTagsReport.i18n.php';
+$wgExtensionMessagesFiles["TagsReport"] = dirname( __FILE__ ) . '/SpecialTagsReport.i18n.php';
 $wgExtensionMessagesFiles['TagsReportAliases'] = __DIR__ . '/SpecialTagsReport.aliases.php';
 
 $wgAvailableRights[] = 'tagsreport';
 $wgGroupPermissions['*']['tagsreport'] = true;
 
-extAddSpecialPage( dirname(__FILE__) . '/SpecialTagsReport_body.php', 'TagsReport', 'TagsReportPage' );
+extAddSpecialPage( dirname( __FILE__ ) . '/SpecialTagsReport_body.php', 'TagsReport', 'TagsReportPage' );
 $wgSpecialPageGroups['TagsReport'] = 'maintenance';

@@ -23,16 +23,16 @@
 $wgExtensionCredits['other'][] = array(
 	'name' => 'ArticleComments',
 	'version' => '2.0',
-	'author' => array('[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)]', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]'),
+	'author' => array( '[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)]', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]' ),
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ArticleComments',
 	'descriptionmsg' => 'article-comments-desc'
 );
 
-define('ARTICLECOMMENTORDERCOOKIE_NAME', 'articlecommentorder');
-define('ARTICLECOMMENTORDERCOOKIE_EXPIRE', 60 * 60 * 24 * 365);
-define('ARTICLECOMMENT_PREFIX', '@comment-');
+define( 'ARTICLECOMMENTORDERCOOKIE_NAME', 'articlecommentorder' );
+define( 'ARTICLECOMMENTORDERCOOKIE_EXPIRE', 60 * 60 * 24 * 365 );
+define( 'ARTICLECOMMENT_PREFIX', '@comment-' );
 
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
 
 // autoloaded classes
 $wgAutoloadClasses['ArticleCommentInit'] = "$dir/classes/ArticleCommentInit.class.php";
@@ -42,7 +42,7 @@ $wgAutoloadClasses['ArticleCommentsAjax'] = "$dir/classes/ArticleCommentsAjax.cl
 $wgAutoloadClasses['ArticleCommentsController'] = "$dir/modules/ArticleCommentsController.class.php";
 $wgAutoloadClasses['CommentsIndex'] = "$dir/classes/CommentsIndex.class.php";
 
-$wgExtensionMessagesFiles['ArticleComments'] = dirname(__FILE__) . '/ArticleComments.i18n.php';
+$wgExtensionMessagesFiles['ArticleComments'] = dirname( __FILE__ ) . '/ArticleComments.i18n.php';
 
 $wgAvailableRights[] = 'commentmove';
 $wgAvailableRights[] = 'commentedit';
@@ -52,7 +52,7 @@ $wgGroupPermissions['sysop']['commentmove'] = true;
 $wgGroupPermissions['sysop']['commentedit'] = true;
 $wgGroupPermissions['sysop']['commentdelete'] = true;
 
-if (!empty($wgEnableWallEngine) || !empty($wgEnableArticleCommentsExt) || !empty($wgEnableBlogArticles)) {
+if ( !empty( $wgEnableWallEngine ) || !empty( $wgEnableArticleCommentsExt ) || !empty( $wgEnableBlogArticles ) ) {
 
 	$wgHooks['ArticleDelete'][] = 'ArticleCommentList::articleDelete';
 	$wgHooks['ArticleDeleteComplete'][] = 'ArticleCommentList::articleDeleteComplete';
@@ -106,11 +106,11 @@ if (!empty($wgEnableWallEngine) || !empty($wgEnableArticleCommentsExt) || !empty
 
 $wgHooks['BeforeDeletePermissionErrors'][] = 'ArticleComment::onBeforeDeletePermissionErrors';
 
-//JSMEssages setup
+// JSMEssages setup
 JSMessages::registerPackage( 'ArticleCommentsCounter', array(
 	'oasis-comments-header',
 	'oasis-comments-showing-most-recent'
-));
+) );
 
 JSMessages::registerPackage( 'WikiaMobileComments', array(
 	'wikiamobile-article-comments-replies',
@@ -119,33 +119,33 @@ JSMessages::registerPackage( 'WikiaMobileComments', array(
 	'wikiamobile-article-comments-post-reply',
 	'wikiamobile-article-comments-login-post',
 	'wikiamobile-article-comments-post-fail'
-));
+) );
 
 // Ajax dispatcher
 $wgAjaxExportList[] = 'ArticleCommentsAjax';
 
 function ArticleCommentsAjax() {
 	global $wgUser, $wgRequest;
-	$method = $wgRequest->getVal('method', false);
+	$method = $wgRequest->getVal( 'method', false );
 
-	if (method_exists('ArticleCommentsAjax', $method)) {
-		wfProfileIn(__METHOD__);
+	if ( method_exists( 'ArticleCommentsAjax', $method ) ) {
+		wfProfileIn( __METHOD__ );
 
 		$data = ArticleCommentsAjax::$method();
 
-		if (is_array($data)) {
+		if ( is_array( $data ) ) {
 			// send array as JSON
-			$json = json_encode($data);
-			$response = new AjaxResponse($json);
-			$response->setContentType('application/json; charset=utf-8');
+			$json = json_encode( $data );
+			$response = new AjaxResponse( $json );
+			$response->setContentType( 'application/json; charset=utf-8' );
 		}
 		else {
 			// send text as text/html
-			$response = new AjaxResponse($data);
-			$response->setContentType('text/html; charset=utf-8');
+			$response = new AjaxResponse( $data );
+			$response->setContentType( 'text/html; charset=utf-8' );
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $response;
 	}
 }

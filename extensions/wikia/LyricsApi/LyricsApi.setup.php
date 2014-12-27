@@ -5,7 +5,7 @@
  * @author Andrzej 'nAndy' Łukaszewski
  * @author Evgeniy 'aquilax' Vasilev
  */
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 $wgExtensionCredits['api'][] = array(
 	'name' => 'Lyrics API',

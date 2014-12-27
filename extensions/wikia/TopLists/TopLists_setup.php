@@ -11,7 +11,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
-//info
+// info
 global $wgExtensionCredits;
 
 $wgExtensionCredits['other'][] = array(
@@ -25,20 +25,20 @@ $wgExtensionCredits['other'][] = array(
 	)
 );
 
-//constants/variables
+// constants/variables
 define( 'TOPLISTS_SAVE_AUTODETECT', 0 );
 define( 'TOPLISTS_SAVE_CREATE', 1 );
 define( 'TOPLISTS_SAVE_UPDATE', 2 );
 define( 'TOPLISTS_HOT_MIN_COUNT', 10 );
-define( 'TOPLISTS_HOT_MIN_TIMESPAN', 60 * 60 * 24);
-define( 'TOPLISTS_ITEM_REMOVED', 'removed');
-define( 'TOPLISTS_ITEM_CREATED', 'created');
-define( 'TOPLISTS_ITEM_UPDATED', 'updated');
+define( 'TOPLISTS_HOT_MIN_TIMESPAN', 60 * 60 * 24 );
+define( 'TOPLISTS_ITEM_REMOVED', 'removed' );
+define( 'TOPLISTS_ITEM_CREATED', 'created' );
+define( 'TOPLISTS_ITEM_UPDATED', 'updated' );
 define( 'TOPLISTS_STATUS_SEPARATOR', ', ' );
 
 $dir = dirname( __FILE__ );
 
-//namespaces
+// namespaces
 global $wgNamespacesWithSubpages, $wgExtensionNamespacesFiles, $wgSuppressNamespacePrefix, $wgArticleCommentsNamespaces;
 
 define( 'NS_TOPLIST', 700 );
@@ -54,13 +54,13 @@ wfLoadExtensionNamespaces( 'TopLists', array( NS_TOPLIST, NS_TOPLIST_TALK ) );
 $wgSuppressNamespacePrefix[] = NS_TOPLIST;
 $wgArticleCommentsNamespaces[] = NS_TOPLIST;
 
-//messages
+// messages
 global $wgExtensionMessagesFiles;
 
 $wgExtensionMessagesFiles[ 'TopLists' ] = "{$dir}/TopLists.i18n.php";
 $wgExtensionMessagesFiles[ 'TopListsAliases' ] = "{$dir}/TopLists.alias.php";
 
-//rights
+// rights
 global $wgAvailableRights, $wgGroupPermissions;
 
 $wgAvailableRights[] = 'toplists-create-edit-list';
@@ -87,7 +87,7 @@ $wgGroupPermissions[ '*' ][ 'toplists-delete-item' ] = false;
 $wgGroupPermissions[ 'staff' ][ 'toplists-delete-item' ] = true;
 $wgGroupPermissions[ 'sysop' ][ 'toplists-delete-item' ] = true;
 
-//special pages
+// special pages
 global $wgSpecialPages;
 
 $wgSpecialPages['CreateTopList'] = 'SpecialCreateTopList';
@@ -96,7 +96,7 @@ $wgSpecialPages['EditTopList'] = 'SpecialEditTopList';
 $wgSpecialPageGroups['CreateTopList'] = 'wikia';
 $wgSpecialPageGroups['EditTopList'] = 'wikia';
 
-//classes
+// classes
 global $wgAutoloadClasses;
 
 $wgAutoloadClasses[ 'TopListHelper' ] = "{$dir}/TopListHelper.class.php";
@@ -109,7 +109,7 @@ $wgAutoloadClasses[ 'WikiaPhotoGalleryUpload' ] = "{$dir}/../WikiaPhotoGallery/W
 $wgAutoloadClasses[ 'SpecialCreateTopList' ] = "{$dir}/specials/SpecialCreateTopList.class.php";
 $wgAutoloadClasses[ 'SpecialEditTopList' ] = "{$dir}/specials/SpecialEditTopList.class.php";
 
-//ajax exports
+// ajax exports
 global $wgAjaxExportList;
 
 $wgAjaxExportList[] = 'TopListHelper::renderImageBrowser';
@@ -119,7 +119,7 @@ $wgAjaxExportList[] = 'TopListHelper::checkListStatus';
 $wgAjaxExportList[] = 'TopListHelper::addItem';
 $wgAjaxExportList[] = 'TopListHelper::getImageData';
 
-//hooks
+// hooks
 global $wgHooks;
 
 $wgHooks[ 'ArticleFromTitle' ][] = 'TopListHelper::onArticleFromTitle';
@@ -137,11 +137,11 @@ $wgHooks[ 'getUserPermissionsErrors' ][] = 'TopListHelper::onGetUserPermissionsE
 $wgHooks[ 'FBConnect::BeforePushEvent' ][] = 'TopListHelper::onBeforePushEvent';
 $wgHooks[ 'ArticleService::getTextSnippet::beforeStripping' ][] = 'TopListHelper::onArticleServiceBeforeStripping';
 
-//parser functions, tags and attributes
+// parser functions, tags and attributes
 define( 'TOPLIST_TAG', 'toplist' );
-define( 'TOPLIST_ATTRIBUTE_RELATED', 'related');
-define( 'TOPLIST_ATTRIBUTE_PICTURE', 'picture');
-define( 'TOPLIST_ATTRIBUTE_LASTUPDATE', 'lastupdate');
-define( 'TOPLIST_ATTRIBUTE_DESCRIPTION', 'description');
+define( 'TOPLIST_ATTRIBUTE_RELATED', 'related' );
+define( 'TOPLIST_ATTRIBUTE_PICTURE', 'picture' );
+define( 'TOPLIST_ATTRIBUTE_LASTUPDATE', 'lastupdate' );
+define( 'TOPLIST_ATTRIBUTE_DESCRIPTION', 'description' );
 
 $wgHooks['ParserFirstCallInit'][] = "TopListParser::onParserFirstCallInit";

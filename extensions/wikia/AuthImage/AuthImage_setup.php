@@ -5,7 +5,7 @@
  * @author Piotr 'MoLi' Molski <moli(at)wikia.com>
  *
  */
- 
+
 $wgExtensionCredits[ 'specialpage' ][ ] = array(
 	'name' => 'AuthImage',
 	'author' => 'Piotr \'MoLi\' Molski <moli(at)wikia.com>',
@@ -14,7 +14,7 @@ $wgExtensionCredits[ 'specialpage' ][ ] = array(
 );
 
 $app = F::app();
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 /**
  * classes
@@ -26,5 +26,5 @@ $wgAutoloadClasses['AuthImageSpecialPageController'] =  $dir . 'AuthImageSpecial
  */
 $wgSpecialPages['AuthImage'] = 'AuthImageSpecialPageController';
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles['AuthImage'] = $dir . 'AuthImage.i18n.php';

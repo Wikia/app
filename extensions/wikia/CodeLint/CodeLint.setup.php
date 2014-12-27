@@ -24,9 +24,9 @@ $wgExtensionCredits['other'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CodeLint',
 );
 
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles['CodeLint'] = $dir . '/i18n/CodeLint.i18n.php';
 
 // WikiaApp

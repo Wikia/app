@@ -8,14 +8,14 @@
 	'descriptionmsg' => 'usermanagment-desc'
  );
 
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
 
 // autoloaded classes
 $wgAutoloadClasses['SpecialUserManagementController'] =  $dir . '/SpecialUserManagementController.class.php' ;
 $wgSpecialPages['UserManagement'] = 'SpecialUserManagementController';
 
 // i18n
-$wgExtensionMessagesFiles['UserManagementPanel'] = $dir.'/UserManagementPanel.i18n.php';
+$wgExtensionMessagesFiles['UserManagementPanel'] = $dir . '/UserManagementPanel.i18n.php';
 
 // hooks
 $wgHooks['UserPagesHeaderModuleAfterGetTabs'][] = 'efUserManagementPanelAddTab';
@@ -38,8 +38,8 @@ function efUserManagementPanelAddTab( &$tabs, $namespace, $userName ) {
 	}
 
 	$tabs[] = array(
-		'link' => Wikia::link(SpecialPage::getTitleFor('UserManagement/' . $userName ), wfMsg('usermanagement-tab-label')),
-		'selected' => ($wgTitle->isSpecial( 'UserManagement' )),
+		'link' => Wikia::link( SpecialPage::getTitleFor( 'UserManagement/' . $userName ), wfMsg( 'usermanagement-tab-label' ) ),
+		'selected' => ( $wgTitle->isSpecial( 'UserManagement' ) ),
 		'data-id' => 'usermanagment',
 	);
 

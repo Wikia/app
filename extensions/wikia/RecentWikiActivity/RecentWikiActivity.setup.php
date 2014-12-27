@@ -13,7 +13,7 @@ $wgExtensionCredits['other'][] = array(
 
 $dir = __DIR__ . '/';
 
-//classes
+// classes
 $wgAutoloadClasses['RecentWikiActivityController'] =  $dir . 'RecentWikiActivityController.class.php';
 
 $wgExtensionMessagesFiles['RecentWikiActivity'] = $dir . 'RecentWikiActivity.i18n.php';

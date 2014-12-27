@@ -16,7 +16,7 @@ $wgExtensionCredits[ 'other' ][] = array(
 	'url'            => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Optimizely'
 );
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles['Optimizely'] = $dir . 'Optimizely.i18n.php';
 
 // classes

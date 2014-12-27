@@ -5,7 +5,7 @@
  * @author Hyun Lim, Owen Davis
  *
  */
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 $app = F::app();
 
 $wgExtensionCredits[ 'specialpage' ][ ] = array(
@@ -18,11 +18,11 @@ $wgExtensionCredits[ 'specialpage' ][ ] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AuthImage',
 );
 
-//classes
+// classes
 $wgAutoloadClasses['WikiFeaturesSpecialController'] = $dir . 'WikiFeaturesSpecialController.class.php';
 $app->getDispatcher()->addRouting(
 	'WikiFeaturesSpecialController',
-	array( 'index' => array( "skin" => array( "monobook", "wikiamobile" ), "method" => "notOasis") )
+	array( 'index' => array( "skin" => array( "monobook", "wikiamobile" ), "method" => "notOasis" ) )
 );
 
 $wgAutoloadClasses['WikiFeaturesHelper'] =  $dir . 'WikiFeaturesHelper.class.php';

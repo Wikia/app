@@ -223,7 +223,7 @@ Parameters:
 
 Hero graphic is a term used in web design for a specific type of banner image. A hero graphic is large banner image, prominently placed on a web page, generally front and center.",
 	'manage-wikia-home-collections-sponsor-image-field-label' => "A label next to collection's smaller image field (the smaller image covers statistic section on corporate main page for a specific wikis' set); in the field you put an image name",
-	'manage-wikia-home-collections-wikis-in-collection' => 'It says how many wikis are in the collections; 
+	'manage-wikia-home-collections-wikis-in-collection' => 'It says how many wikis are in the collections;
 * $1 = actual number of wikis assigned to a collection
 * $2 = maximum number of wikis per collection
 

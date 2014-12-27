@@ -8,9 +8,9 @@
  * To use this extension $wgEnableSponsorshipDashboardExt = true
  */
 
-if ( !defined('MEDIAWIKI') ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This is a MediaWiki extension.\n";
-	exit(1);
+	exit( 1 );
 }
 
 $wgExtensionCredits['specialpage'][] = array(
@@ -20,7 +20,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SponsorshipDashboard'
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 require_once( $dir . '/SponsorshipDashboard_autoload.php' );
 
@@ -30,23 +30,23 @@ $wgAjaxExportList[] = 'SponsorshipDashboardAjax';
 
 function SponsorshipDashboardAjax() {
 	global $wgRequest;
-	wfProfileIn(__METHOD__);
-	$method = $wgRequest->getVal('method', false);
-	if ( method_exists('SponsorshipDashboardAjax', $method) ) {
+	wfProfileIn( __METHOD__ );
+	$method = $wgRequest->getVal( 'method', false );
+	if ( method_exists( 'SponsorshipDashboardAjax', $method ) ) {
 		$data = SponsorshipDashboardAjax::$method();
-		if (is_array($data)) {
+		if ( is_array( $data ) ) {
 			// send array as JSON
-			$json = json_encode($data);
-			$response = new AjaxResponse($json);
-			$response->setContentType('application/json; charset=utf-8');
+			$json = json_encode( $data );
+			$response = new AjaxResponse( $json );
+			$response->setContentType( 'application/json; charset=utf-8' );
 		}
 		else {
 			// send text as text/html
-			$response = new AjaxResponse($data);
-			$response->setContentType('text/html; charset=utf-8');
+			$response = new AjaxResponse( $data );
+			$response->setContentType( 'text/html; charset=utf-8' );
 		}
 	}
-	wfProfileOut(__METHOD__);
+	wfProfileOut( __METHOD__ );
 	return $response;
 }
 

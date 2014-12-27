@@ -5,8 +5,8 @@
  * Note: This includes video and image placeholders
  */
 
-if(!defined('MEDIAWIKI')) {
-        exit(1);
+if ( !defined( 'MEDIAWIKI' ) ) {
+        exit( 1 );
 }
 
 $wgExtensionCredits['other'][] = array(
@@ -20,14 +20,14 @@ $wgExtensionCredits['other'][] = array(
 global $wgWikiaImagesFoundInTemplates;
 
 // minimal and default widths for placeholder box
-define('IMG_PLC_MIN_WIDTH', 150);
-define('IMG_PLC_DEF_WIDTH', 150);
+define( 'IMG_PLC_MIN_WIDTH', 150 );
+define( 'IMG_PLC_DEF_WIDTH', 150 );
 
 // This should not be fully internationalized, as the text will remain in wikitext
 // and changing the message would break the markup if we only use wfMsg.
-define('IMG_PLC_PLACEHOLDER', 'Placeholder');
+define( 'IMG_PLC_PLACEHOLDER', 'Placeholder' );
 
-$dir = dirname(__FILE__).'/';
+$dir = dirname( __FILE__ ) . '/';
 
 $wgExtensionFunctions[] = 'ImagePlaceholder_init';
 
@@ -36,8 +36,8 @@ $wgExtensionFunctions[] = 'ImagePlaceholder_init';
  */
 $wgExtensionMessagesFiles['ImagePlaceholder'] = $dir . 'ImagePlaceholder.i18n.php';
 
-JSMessages::registerPackage('ImagePlaceholder', array('imgplc-*'));
-JSMessages::enqueuePackage('ImagePlaceholder', JSMessages::EXTERNAL);
+JSMessages::registerPackage( 'ImagePlaceholder', array( 'imgplc-*' ) );
+JSMessages::enqueuePackage( 'ImagePlaceholder', JSMessages::EXTERNAL );
 
 $wgHooks['ImageBeforeProduceHTML'][] = 'ImagePlaceholderImageBeforeProduceHTML';
 $wgHooks['ParserBeforeStrip'][] = 'ImagePlaceholderParserBeforeStrip';
@@ -64,7 +64,7 @@ function ImagePlaceholderTranslateNsImage() {
 
 function ImagePlaceholderParserShouldAddTrackingCategory( Parser $parser, Title $title, $file, &$shouldAddTrackingCategory ) {
 
-	if( ImagePlaceholderIsPlaceholder( $title->getText() ) ){
+	if ( ImagePlaceholderIsPlaceholder( $title->getText() ) ) {
 		$shouldAddTrackingCategory = false;
 	}
 	return true;
@@ -76,7 +76,7 @@ function ImagePlaceholderBeforeParserMakeImageLinkObjOptions( Parser $parser, Ti
 	// we have to ready the parameters and then fire up makeLink, heh
 	// other way parameters are mangled
 
-	if( !ImagePlaceholderIsPlaceholder( $title->getText() ) ){
+	if ( !ImagePlaceholderIsPlaceholder( $title->getText() ) ) {
 		return true;
 	}
 	global $wgContLang;
@@ -100,23 +100,23 @@ function ImagePlaceholderBeforeParserMakeImageLinkObjOptions( Parser $parser, Ti
 	$caption = '';
 	$params['handler']['options'] = $options;
 
-	foreach( $parts as $part ) {
-		if( 'thumb' == $part ) {
+	foreach ( $parts as $part ) {
+		if ( 'thumb' == $part ) {
 			$params['frame']['thumbnail'] = '';
 		} elseif ( 'frame' == $part ) {
 			$params['frame']['frame'] = '';
-		} elseif( in_array( $part, $horizAlign ) ) {
+		} elseif ( in_array( $part, $horizAlign ) ) {
 			$params['frame']['align'] = $part;
 			$params['horizAlign'][$part] = '';
-		} elseif( 0 === strpos( $part, 'link=' ) ) {
+		} elseif ( 0 === strpos( $part, 'link=' ) ) {
 			$params['frame']['link'] = substr( $part, 5 );
-		} elseif( 'video' == $part ) {
+		} elseif ( 'video' == $part ) {
 			$params['handler']['isvideo'] = 1;
-		} elseif( preg_match( '/^([0-9]*)x([0-9]*)\s*(?:px)?\s*$/', $part, $m ) ) { // width we have
+		} elseif ( preg_match( '/^([0-9]*)x([0-9]*)\s*(?:px)?\s*$/', $part, $m ) ) { // width we have
 			$params['handler']['width'] = intval( $m[1] ) ;
 		} elseif ( preg_match( '/^[0-9]*\s*(?:px)?\s*$/', $part ) ) {
 			$params['handler']['width'] = intval( $part );
-		} else if( ( mb_strtolower($plc_tag) != mb_strtolower($part) /* RT #35575 */ ) && ( $img_tag != $part ) ) {
+		} else if ( ( mb_strtolower( $plc_tag ) != mb_strtolower( $part ) /* RT #35575 */ ) && ( $img_tag != $part ) ) {
 			$params['frame']['caption'] = $part;
 		}
 	}
@@ -124,7 +124,7 @@ function ImagePlaceholderBeforeParserMakeImageLinkObjOptions( Parser $parser, Ti
 	return false;
 }
 
-function ImagePlaceholderParserBeforeStrip($parser, $text, $strip_state) {
+function ImagePlaceholderParserBeforeStrip( $parser, $text, $strip_state ) {
 	global $wgWikiaImagePlaceholderId, $wgWikiaVideoPlaceholderId;
 
 	$wgWikiaVideoPlaceholderId = 0;
@@ -134,7 +134,7 @@ function ImagePlaceholderParserBeforeStrip($parser, $text, $strip_state) {
 
 // function that calls our custom placeholder maker and bypasses default MW image construction functionality
 function ImagePlaceholderImageBeforeProduceHTML( $skin, Title $title, $file, $frameParams, $handlerParams, $time, &$res ) {
-	if( ImagePlaceholderIsPlaceholder( $title->getText() ) ) {
+	if ( ImagePlaceholderIsPlaceholder( $title->getText() ) ) {
 		$res = ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams );
 		return false;
 	}
@@ -150,7 +150,7 @@ function ImagePlaceholder_makeDullImage( $title, $options, $holders = false ) {
 // generate the placeholder box based on given parameters
 function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) {
 
-	wfProfileIn(__METHOD__);
+	wfProfileIn( __METHOD__ );
 
 	global $wgRequest, $wgWikiaImagePlaceholderId, $wgWikiaVideoPlaceholderId, $wgContLang, $wgTitle;
 	// Shortcuts
@@ -161,7 +161,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 
 	$plc_tag = '';
 	$plc_tag = $wgContLang->getFormattedNsText( NS_FILE ) . ':' . wfMsgForContent( 'imgplc-placeholder' );
-	( isset( $hp['options'] ) && is_string($hp['options']) && ( '' != $hp['options'] ) ) ? $wikitext = '[[' . $plc_tag . '|' . $hp['options'] . ']]' : $wikitext = '[[' . $plc_tag . ']]';
+	( isset( $hp['options'] ) && is_string( $hp['options'] ) && ( '' != $hp['options'] ) ) ? $wikitext = '[[' . $plc_tag . '|' . $hp['options'] . ']]' : $wikitext = '[[' . $plc_tag . ']]';
 
 	$prefix = $postfix = '';
 
@@ -177,14 +177,14 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	$islink = 0;
 	$isvideo = 0;
 
-	if( !empty( $hp['isvideo'] ) ) {
+	if ( !empty( $hp['isvideo'] ) ) {
 		$isvideo = 1;
 	}
 
-	if( isset( $hp['width'] ) && ( 0 != $hp['width'] ) ) { // FCK takes 0
+	if ( isset( $hp['width'] ) && ( 0 != $hp['width'] ) ) { // FCK takes 0
 		$width = $hp['width'];
 		// if too small, the box will end up looking... extremely silly
-		if( $width < IMG_PLC_MIN_WIDTH ) {
+		if ( $width < IMG_PLC_MIN_WIDTH ) {
 			$width = IMG_PLC_MIN_WIDTH;
 		}
 		$iswidth = $width;
@@ -200,10 +200,10 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	if ( isset( $fp['frame'] ) ) {
 	        $frame = true;
 	}
-	if( isset( $fp['align'] ) ) {
-		if( ( 'left' == $fp['align']) || ('right' == $fp['align'] ) || ('center' == $fp['align'] ) ) {
+	if ( isset( $fp['align'] ) ) {
+		if ( ( 'left' == $fp['align'] ) || ( 'right' == $fp['align'] ) || ( 'center' == $fp['align'] ) ) {
 			$align = $fp['align'];
-			('left' == $fp['align']) ? $isalign = 1 : $isalign = 2;
+			( 'left' == $fp['align'] ) ? $isalign = 1 : $isalign = 2;
 		}
 	} else {
 		( $thumb || $frame ) ? $align = 'right' : $align = '';
@@ -211,7 +211,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	// set margin accordingly to alignment, identical to normal Image: -- RT#21368
 	// FIXME: this REALLY should be done in a class
 	$margin = '';
-	if( isset( $align ) ) {
+	if ( isset( $align ) ) {
 		if ( $align == 'right' ) {
 			$margin = 'margin: 0.5em 0 1.2em 1.4em;';
 		} else if ( $align == 'center' ) {
@@ -238,7 +238,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 
 	$additionalClass = '';
 
-	if( $isvideo ) {
+	if ( $isvideo ) {
 		$additionalClass .= ' wikiaVideoPlaceholder';
 	} else {
 		$additionalClass .= ' wikiaImagePlaceholder';
@@ -252,53 +252,53 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 	);
 
 	// ImagePlaceholders still use id attribute, videos use data-id attribute. Images should be updated to match videos at some point
-	if(!$isvideo) {
+	if ( !$isvideo ) {
 		$wrapperAttribs['id'] = "WikiaImagePlaceholder{$wgWikiaImagePlaceholderId}";
 	}
 
-	if (isset($refid)) {
+	if ( isset( $refid ) ) {
 		$wrapperAttribs['refid'] = $refid;
 	}
 
-	$out .= Xml::openElement('div', $wrapperAttribs);
-	$out .= Xml::openElement('div', array(
+	$out .= Xml::openElement( 'div', $wrapperAttribs );
+	$out .= Xml::openElement( 'div', array(
 		'class' => "thumb t{$align} videobox", // TODO: maybe change class name (videobox)
 		'style' => "height: {$height}px; width: {$width}px;",
-	));
+	) );
 
 	$linkAttrs = array(
 		'id' => "WikiaImagePlaceholderInner{$wgWikiaImagePlaceholderId}",
 		'class' => 'wikia-button',
 		'style' => "top: {$tmarg}px;",
-		'href' => ($wgTitle instanceof Title) ? $wgTitle->getLocalUrl( array( 'action' => 'edit') ) : '#',
+		'href' => ( $wgTitle instanceof Title ) ? $wgTitle->getLocalUrl( array( 'action' => 'edit' ) ) : '#',
 		'data-id' => $isvideo ? $wgWikiaVideoPlaceholderId : $wgWikiaImagePlaceholderId,
 		'data-align' => $isalign,
 		'data-thumb' => $isthumb,
-		'data-caption' => htmlspecialchars($caption),
+		'data-caption' => htmlspecialchars( $caption ),
 		'data-width' => $width,
 	);
 
-	if( !$isvideo ) { // image placeholder
-		$linkAttrs = array_merge($linkAttrs, array(
-			'data-link' => htmlspecialchars($link),
+	if ( !$isvideo ) { // image placeholder
+		$linkAttrs = array_merge( $linkAttrs, array(
+			'data-link' => htmlspecialchars( $link ),
 			'data-width' => $width, // set only for images, let VET slider determine width for video
-		));
+		) );
 	}
 
-	$out .= Xml::openElement('a', $linkAttrs);
+	$out .= Xml::openElement( 'a', $linkAttrs );
 
-	$out .= $isvideo ? wfMsg('imgplc-add-video') : wfMsg('imgplc-add-image');
-	$out .= Xml::closeElement('a');
+	$out .= $isvideo ? wfMsg( 'imgplc-add-video' ) : wfMsg( 'imgplc-add-image' );
+	$out .= Xml::closeElement( 'a' );
 
 	// caption (RT #47460)
-	if ($caption != '') {
-		$out .= Xml::element('span', array('class' => 'thumbcaption'), $caption);
+	if ( $caption != '' ) {
+		$out .= Xml::element( 'span', array( 'class' => 'thumbcaption' ), $caption );
 	}
 
-	$out .= Xml::closeElement('div') . Xml::closeElement('div') . Xml::closeElement('td');
+	$out .= Xml::closeElement( 'div' ) . Xml::closeElement( 'div' ) . Xml::closeElement( 'td' );
 
 	// increase counter
-	if($isvideo) {
+	if ( $isvideo ) {
 		$wgWikiaVideoPlaceholderId++;
 	} else {
 		$wgWikiaImagePlaceholderId++;
@@ -306,8 +306,8 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 
 	// dirty hack for CK support
 	global $wgRTEParserEnabled;
-	if (!empty($wgRTEParserEnabled)) {
-		$out = RTEParser::renderMediaPlaceholder(array(
+	if ( !empty( $wgRTEParserEnabled ) ) {
+		$out = RTEParser::renderMediaPlaceholder( array(
 			'type' => $isvideo ? 'video-placeholder' : 'image-placeholder',
 			'params' => array(
 				'width' => $width,
@@ -319,7 +319,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 				'isAlign' => $isalign,
 				'isThumb' => $isthumb,
 			)
-		));
+		) );
 	} else {
 		$out .= JSSnippets::addToStack(
 			array( '/extensions/wikia/ImagePlaceholder/js/MediaPlaceholder.js' ),
@@ -328,7 +328,7 @@ function ImagePlaceholderMakePlaceholder( $file, $frameParams, $handlerParams ) 
 		);
 	}
 
-	wfProfileOut(__METHOD__);
+	wfProfileOut( __METHOD__ );
 	return $out;
 }
 
@@ -358,33 +358,33 @@ function MediaPlaceholderMatch ( $text, $box = 0, $isVideo = false ) {
 
 	// Get the placeholder text in both the content language and in english
 	$placeholder_msg = wfMsgForContent( 'imgplc-placeholder' );
-	$en_placeholder_msg = wfMsgReal( 'imgplc-placeholder', array(), true, 'en');
+	$en_placeholder_msg = wfMsgReal( 'imgplc-placeholder', array(), true, 'en' );
 
-	$placeholder = '(?:' . implode('|', array(
+	$placeholder = '(?:' . implode( '|', array(
 			$ns_vid . ':' . $placeholder_msg,
 			$ns_img . ':' . $placeholder_msg,
 			$en_ns_vid . ':' . $en_placeholder_msg,
-			$en_ns_img . ':' . $en_placeholder_msg)) . ')';
+			$en_ns_img . ':' . $en_placeholder_msg ) ) . ')';
 
 	preg_match_all( '/\[\[' . $placeholder . '[^\]]*\]\]/si', $text, $matches, PREG_OFFSET_CAPTURE );
 
 	// Make sure we have matches and that there exists a match at index $box
-	if ( is_array($matches) ) {
+	if ( is_array( $matches ) ) {
 		$matchArr = $matches[0];
 
-		for( $x = 0; $x < count( $matchArr ); $x++ ) {
+		for ( $x = 0; $x < count( $matchArr ); $x++ ) {
 			$match = $matchArr[$x];
-			if( $isVideo ) {
+			if ( $isVideo ) {
 				if ( !preg_match( '/\|video/', $match[0] ) ) {
-					array_splice($matchArr, $x, 1);
+					array_splice( $matchArr, $x, 1 );
 				}
 			} else {
 				if ( preg_match( '/video/', $match[0] ) ) {
-					array_splice($matchArr, $x, 1);
+					array_splice( $matchArr, $x, 1 );
 				}
 			}
 		}
-		if ( count($matchArr) > $box ) {
+		if ( count( $matchArr ) > $box ) {
 			return $matchArr[$box];
 		}
 	}

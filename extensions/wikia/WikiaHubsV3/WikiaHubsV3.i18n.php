@@ -23,7 +23,7 @@ $messages['en'] = array(
 	'wikiahubs-v3-error-invalid-article-url-length' => 'Article url requires at least 10 characters',
 	'wikiahubs-v3-error-invalid-reason-length' => 'Comment must be between 1 and 140 characters',
 
-	//WAM
+	// WAM
 	'wikiahubs-v3-wam-header' => 'WAM Score',
 	'wikiahubs-v3-wam-see-full-wam-ranking' => 'Read more about WAM',
 	'wikiahubs-v3-wam-top-wikis-headline' => 'Top Wikia $1 Communities',
@@ -36,7 +36,7 @@ $messages['en'] = array(
 	'wikiahubs-v3-from-community-caption' => 'From [$1 $2] on [$3 $4]',
 	'wikiahubs-v3-from-community-headline' => 'From the Community',
 
-	//featured video
+	// featured video
 	'wikiahubs-v3-sponsored-by' => 'Sponsored by $1',
 
 	// 404 page
@@ -65,7 +65,7 @@ $messages['de'] = array(
 	'wikiahubs-v3-error-invalid-article-url-length' => 'Die Artikel-URL muss mindestens 10 Zeichen lang sein.',
 	'wikiahubs-v3-error-invalid-reason-length' => 'Dein Kommentar muss zwischen 1 und 140 Zeichen lang sein.',
 
-	//WAM
+	// WAM
 	'wikiahubs-v3-wam-header' => 'WAM-Punktzahl',
 	'wikiahubs-v3-wam-see-full-wam-ranking' => 'Mehr über WAM',
 	'wikiahubs-v3-wam-top-wikis-headline' => 'Top in $1',
@@ -78,7 +78,7 @@ $messages['de'] = array(
 	'wikiahubs-v3-from-community-caption' => 'Von [$1 $2] aus [$3 $4]',
 	'wikiahubs-v3-from-community-headline' => 'Aus der Community',
 
-	//featured video
+	// featured video
 	'wikiahubs-v3-sponsored-by' => 'Gesponsert von $1',
 
 	// 404 page
@@ -108,7 +108,7 @@ $messages['fr'] = array(
 	'wikiahubs-v3-error-invalid-article-url-length' => 'L\'URL de l\'article doit faire 10 caractères au moins',
 	'wikiahubs-v3-error-invalid-reason-length' => 'Le commentaire doit faire entre 1 et 140 caractères',
 
-	//WAM
+	// WAM
 	'wikiahubs-v3-wam-header' => 'Score WAM',
 	'wikiahubs-v3-wam-see-full-wam-ranking' => 'En lire plus sur WAM',
 	'wikiahubs-v3-wam-top-wikis-headline' => 'Top des communautés Wikia de $1',
@@ -121,7 +121,7 @@ $messages['fr'] = array(
 	'wikiahubs-v3-from-community-caption' => 'De [$1 $2] sur [$3 $4]',
 	'wikiahubs-v3-from-community-headline' => 'En provenance de la communauté',
 
-	//featured video
+	// featured video
 	'wikiahubs-v3-sponsored-by' => 'Sponsorisée par $1',
 
 	// 404 page
@@ -151,7 +151,7 @@ $messages['es'] = array(
 	'wikiahubs-v3-error-invalid-article-url-length' => 'La url del artículo requiere al menos 10 caracteres',
 	'wikiahubs-v3-error-invalid-reason-length' => 'El comentario tiene que tener entre 1 y 140 caracteres',
 
-	//WAM
+	// WAM
 	'wikiahubs-v3-wam-header' => 'Puntuación en el WAM',
 	'wikiahubs-v3-wam-see-full-wam-ranking' => 'Leer más acerca del WAM',
 	'wikiahubs-v3-wam-top-wikis-headline' => 'Comunidades de Wikia - Top $1',
@@ -164,7 +164,7 @@ $messages['es'] = array(
 	'wikiahubs-v3-from-community-caption' => 'De [$1 $2] en [$3 $4]',
 	'wikiahubs-v3-from-community-headline' => 'De la comunidad',
 
-	//featured video
+	// featured video
 	'wikiahubs-v3-sponsored-by' => 'Patrocinado por $1',
 
 	// 404 page
@@ -191,7 +191,7 @@ $messages['pl'] = [
 	'wikiahubs-v3-error-invalid-article-url-length' => 'Adres URL artykułu musi mieć co najmniej 10 znaków',
 	'wikiahubs-v3-error-invalid-reason-length' => 'Komentarz musi mieć od 1 do 140 znaków',
 
-	//WAM
+	// WAM
 	'wikiahubs-v3-wam-header' => 'Punktacja WAM',
 	'wikiahubs-v3-wam-see-full-wam-ranking' => 'Dowiedz się więcej o WAM',
 	'wikiahubs-v3-wam-top-wikis-headline' => 'Społeczności Wikii - $1',
@@ -204,7 +204,7 @@ $messages['pl'] = [
 	'wikiahubs-v3-from-community-caption' => 'Od [$1 $2] na [$3 $4]',
 	'wikiahubs-v3-from-community-headline' => 'Od społeczności',
 
-	//featured video
+	// featured video
 	'wikiahubs-v3-sponsored-by' => 'Sponsorowany przez $1',
 
 	// 404 page
@@ -234,7 +234,7 @@ $messages['ja'] = array(
 	'wikiahubs-v3-error-invalid-article-url-length' => '記事ページのurlは最低でも10文字必要です。',
 	'wikiahubs-v3-error-invalid-reason-length' => 'コメントは1から140文字以内でお願いします。',
 
-	//WAM
+	// WAM
 	'wikiahubs-v3-wam-header' => 'WAM スコア',
 	'wikiahubs-v3-wam-see-full-wam-ranking' => 'WAMについてもっと読む',
 	'wikiahubs-v3-wam-top-wikis-headline' => 'トップウィキア $1 コミュニティー',
@@ -247,7 +247,7 @@ $messages['ja'] = array(
 	'wikiahubs-v3-from-community-caption' => '[$1 $2] から[$3 $4]',
 	'wikiahubs-v3-from-community-headline' => 'コミュニティーから',
 
-	//featured video
+	// featured video
 	'wikiahubs-v3-sponsored-by' => '$1によって提供されました。',
 
 	// 404 page
@@ -278,14 +278,14 @@ $messages['qqq'] = array(
 	'wikiahubs-v3-error-invalid-article-url-length' => 'Get promoted - Article url validation error message',
 	'wikiahubs-v3-error-invalid-reason-length' => 'Get promoted - Reason validation error message',
 
-	//WAM
+	// WAM
 	'wikiahubs-v3-wam-top-wikis-headline' => 'the parameter is a vertical name i.e. Video Games or Entertainment',
 
 	// from the community
 	'wikiahubs-v3-from-community-promoted' => 'Text on button next to FTC title - suggest new article',
 	'wikiahubs-v3-from-community-caption' => 'From [$1 $2] on [$3 $4] - 1st parameter: Users URL, 2nd - User Name, 3rd - Article Url, 4th - wiki name',
 
-	//featured video
+	// featured video
 	'wikiahubs-v3-sponsored-by' => 'Just a text next to the sponsor image (logo). First parameter is <img /> tag with the image path',
 
 	// 404 page

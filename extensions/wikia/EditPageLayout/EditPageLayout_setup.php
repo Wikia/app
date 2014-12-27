@@ -22,7 +22,7 @@ $wgExtensionCredits['other'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/EditPageLayout'
 );
 
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
 
 // classes
 $wgAutoloadClasses['EditPageLayout'] =  $dir . '/EditPageLayout.class.php';
@@ -61,10 +61,10 @@ $wgExtensionMessagesFiles['EditPageLayout'] = $dir . '/EditPageLayout.i18n.php';
 
 // add class to autoloader and register handler for it
 $wgAutoloadClasses['EditorUserPropertiesHandler'] = "$dir/models/EditorUserPropertiesHandler.class.php";
-WikiaUserPropertiesController::registerHandler('EditorUserPropertiesHandler');
+WikiaUserPropertiesController::registerHandler( 'EditorUserPropertiesHandler' );
 
 // register messages package for JS
-JSMessages::registerPackage('EditPageLayout', array(
+JSMessages::registerPackage( 'EditPageLayout', array(
 	'ok',
 	'back',
 	'preview',
@@ -83,26 +83,26 @@ JSMessages::registerPackage('EditPageLayout', array(
 	'wikia-editor-preview-min-width',
 	'wikia-editor-preview-max-width',
 	'wikia-editor-preview-type-tooltip'
-));
+) );
 
 // Ajax dispatcher
 $wgAjaxExportList[] = 'EditPageLayoutAjax';
 function EditPageLayoutAjax() {
 	global $wgRequest;
-	wfProfileIn(__METHOD__);
+	wfProfileIn( __METHOD__ );
 
 	$ret = false;
 
-	$method = $wgRequest->getVal('method', false);
+	$method = $wgRequest->getVal( 'method', false );
 
-	if ($method && method_exists('EditPageLayoutAjax', $method)) {
+	if ( $method && method_exists( 'EditPageLayoutAjax', $method ) ) {
 		$data = EditPageLayoutAjax::$method();
 
-		if (is_array($data)) {
-			$json = json_encode($data);
+		if ( is_array( $data ) ) {
+			$json = json_encode( $data );
 
-			$response = new AjaxResponse($json);
-			$response->setContentType('application/json; charset=utf-8');
+			$response = new AjaxResponse( $json );
+			$response->setContentType( 'application/json; charset=utf-8' );
 			$ret = $response;
 		}
 		else {
@@ -110,7 +110,7 @@ function EditPageLayoutAjax() {
 		}
 	}
 
-	wfProfileOut(__METHOD__);
+	wfProfileOut( __METHOD__ );
 	return $ret;
 }
 

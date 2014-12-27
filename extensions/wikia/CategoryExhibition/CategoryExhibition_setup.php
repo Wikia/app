@@ -7,8 +7,8 @@
  * @author Jakub Kurcek <jakub@wikia-inc.com>
  */
 
-if ( ! defined( 'MEDIAWIKI' ) ){
-	die("Extension file.  Not a valid entry point");
+if ( ! defined( 'MEDIAWIKI' ) ) {
+	die( "Extension file.  Not a valid entry point" );
 }
 
 $wgExtensionCredits['other'][] = array(
@@ -19,7 +19,7 @@ $wgExtensionCredits['other'][] = array(
 );
 
 // Calculate the base directory and use it later a few times
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 // Autoload Category Page classes
 $wgAutoloadClasses[ 'CategoryExhibitionPage' ]		= $dir . 'CategoryExhibitionPage.php';
@@ -43,7 +43,7 @@ $wgAutoloadClasses[ 'CategoryExhibitionSectionSubcategories' ]	= $dir . 'Categor
 $wgExtensionMessagesFiles['CategoryPageII'] = $dir . 'i18n/CategoryExhibition.i18n.php';
 
 // Hooks
-define('CATEXHIBITION_DISABLED', 'CATEXHIBITION_DISABLED');
+define( 'CATEXHIBITION_DISABLED', 'CATEXHIBITION_DISABLED' );
 $wgHooks['LanguageGetMagic'][] = 'CategoryExhibitionHelper::onLanguageGetMagic';
 $wgHooks['InternalParseBeforeLinks'][] = 'CategoryExhibitionHelper::onInternalParseBeforeLinks';
 $wgHooks['ArticleFromTitle'][] = 'CategoryExhibitionHelper::onArticleFromTitle';
@@ -55,22 +55,22 @@ $wgAjaxExportList[] = 'CategoryExhibitionAjax';
 
 function CategoryExhibitionAjax() {
 	global $wgRequest;
-	wfProfileIn(__METHOD__);
-	$method = $wgRequest->getVal('method', false);
-	if ( method_exists('CategoryExhibitionAjax', $method) ) {
+	wfProfileIn( __METHOD__ );
+	$method = $wgRequest->getVal( 'method', false );
+	if ( method_exists( 'CategoryExhibitionAjax', $method ) ) {
 		$data = CategoryExhibitionAjax::$method();
-		if (is_array($data)) {
+		if ( is_array( $data ) ) {
 			// send array as JSON
-			$json = json_encode($data);
-			$response = new AjaxResponse($json);
-			$response->setContentType('application/json; charset=utf-8');
+			$json = json_encode( $data );
+			$response = new AjaxResponse( $json );
+			$response->setContentType( 'application/json; charset=utf-8' );
 		}
 		else {
 			// send text as text/html
-			$response = new AjaxResponse($data);
-			$response->setContentType('text/html; charset=utf-8');
+			$response = new AjaxResponse( $data );
+			$response->setContentType( 'text/html; charset=utf-8' );
 		}
 	}
-	wfProfileOut(__METHOD__);
+	wfProfileOut( __METHOD__ );
 	return $response;
 }

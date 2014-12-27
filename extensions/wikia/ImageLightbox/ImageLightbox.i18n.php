@@ -228,7 +228,7 @@ $messages['de'] = array(
 	'lightbox-send' => 'Senden',
 	'lightbox-share-description' => 'Foto auf $1 im $2',
 	'lightbox-share-email-subject' => '$1 hat dir ein Foto auf Wikia geschickt.',
-	'lightbox-share-email-body' => 'Hallo, 
+	'lightbox-share-email-body' => 'Hallo,
 
 jemand will dir ein Foto auf Wikia zeigen. Sieh es dir an:
 
@@ -257,7 +257,7 @@ Details: $2',
  */
 $messages['de-formal'] = array(
 	'lightbox-share-email-subject' => '$1 hat Ihnen ein Foto auf Wikia geschickt.',
-	'lightbox-share-email-body' => 'Hallo, 
+	'lightbox-share-email-body' => 'Hallo,
 
 jemand will Ihnen ein Foto auf Wikia zeigen. Sehen Sie es sich an:
 

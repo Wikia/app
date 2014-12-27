@@ -3,7 +3,7 @@
  * @file
  * @ingroup SpecialPage
  */
- 
+
 $wgExtensionCredits[ 'specialpage' ][ ] = array(
 	'name' => 'SpecialWithoutimages',
 	'author' => 'Wikia',
@@ -11,7 +11,7 @@ $wgExtensionCredits[ 'specialpage' ][ ] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialWithoutimages',
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 // autoloader
 $wgAutoloadClasses['SpecialWithoutimages'] = $dir . 'SpecialWithoutimages.class.php';

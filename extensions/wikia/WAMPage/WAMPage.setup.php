@@ -10,7 +10,7 @@
  *
  */
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'WAM Page',

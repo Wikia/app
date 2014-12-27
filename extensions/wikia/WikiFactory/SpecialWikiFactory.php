@@ -56,10 +56,10 @@ $wgGroupPermissions['util']['wikifactory'] = true;
 $wgAvailableRights[] = 'wikifactorymetrics';
 $wgGroupPermissions['staff']['wikifactorymetrics'] = true;
 
-extAddSpecialPage( dirname(__FILE__) . '/SpecialWikiFactory_body.php', 'WikiFactory', 'WikiFactoryPage' );
+extAddSpecialPage( dirname( __FILE__ ) . '/SpecialWikiFactory_body.php', 'WikiFactory', 'WikiFactoryPage' );
 $wgSpecialPageGroups['WikiFactory'] = 'wikia';
 
-$wgAutoloadClasses[ "CloseWikiPage" ] = $dir. "/Close/SpecialCloseWiki_body.php";
+$wgAutoloadClasses[ "CloseWikiPage" ] = $dir . "/Close/SpecialCloseWiki_body.php";
 $wgSpecialPages[ "CloseWiki" ] = "CloseWikiPage";
 $wgSpecialPageGroups[ "CloseWiki" ] = 'wikia';
 

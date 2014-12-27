@@ -13,10 +13,10 @@ $wgExtensionCredits['other'][] = array(
 );
 
 // basic permissions
-#$wgGroupPermissions['sysop']['setadminskin'] = true; #rt74835
+# $wgGroupPermissions['sysop']['setadminskin'] = true; #rt74835
 $wgGroupPermissions['staff']['setadminskin'] = true;
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 // register class
 $wgAutoloadClasses['SkinChooser'] = $dir . 'SkinChooser.class.php';

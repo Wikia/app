@@ -13,7 +13,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
-if( !defined( 'MEDIAWIKI' ) ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This is a MediaWiki extension named CreateInCategory.\n";
 	exit( 1 );
 }
@@ -27,9 +27,9 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 // Set up the new special page
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['CreateInCategory'] = $dir . 'CreateInCategory.i18n.php';
-$wgAutoloadClasses['CreateInCategory'] = $dir. 'SpecialCreateInCategory_body.php';
+$wgAutoloadClasses['CreateInCategory'] = $dir . 'SpecialCreateInCategory_body.php';
 $wgSpecialPages['CreateInCategory'] = 'CreateInCategory';
 // Special page group for MW 1.13+
 $wgSpecialPageGroups['CreateInCategory'] = 'users';

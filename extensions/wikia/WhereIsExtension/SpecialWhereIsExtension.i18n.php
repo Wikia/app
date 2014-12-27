@@ -22,7 +22,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'whereisextension-desc'     => 'Provides a list of wikis with enabled extensions',
-	'whereisextension'			=> 'Where is extension',	//the name displayed on Special:SpecialPages
+	'whereisextension'			=> 'Where is extension',	// the name displayed on Special:SpecialPages
 	'whereisextension-submit'	=> 'Search',
 	'whereisextension-list'		=> 'List of wikis with matched criteria ($1)',
 	'whereisextension-isset'	=> 'is set to',

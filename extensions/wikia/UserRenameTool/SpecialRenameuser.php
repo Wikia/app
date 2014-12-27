@@ -10,8 +10,8 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
-//check for dependencies
-if(!defined('MEDIAWIKI')) die("This is MediaWiki extension and cannot be used standalone.");
+// check for dependencies
+if ( !defined( 'MEDIAWIKI' ) ) die( "This is MediaWiki extension and cannot be used standalone." );
 
 /**
  * REQUIRES THE FOLLOWING EXTENSIONS TO BE ENABLED:
@@ -29,46 +29,46 @@ $wgExtensionCredits['specialpage'][] = array(
 	'descriptionmsg' => 'userrenametool-desc',
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
-//special pages
+// special pages
 $wgSpecialPages['UserRenameTool'] = 'SpecialRenameuser';
 $wgSpecialPageGroups['UserRenameTool'] = 'users';
 
-//rights
+// rights
 $wgAvailableRights[] = 'renameuser';
 $wgGroupPermissions['*']['renameuser'] = false;
 $wgGroupPermissions['staff']['renameuser'] = true;
 
 
-//internationalization files
+// internationalization files
 $wgExtensionMessagesFiles['UserRenameTool'] = $dir . 'SpecialRenameuser.i18n.php';
 $wgExtensionMessagesFiles['UserRenameToolAliases'] = $dir . 'SpecialRenameuser.alias.php';
 
-//classes
+// classes
 $wgAutoloadClasses['SpecialRenameuser'] = dirname( __FILE__ ) . '/SpecialRenameuser_body.php';
 $wgAutoloadClasses['RenameUserHelper'] = dirname( __FILE__ ) . '/RenameUserHelper.class.php';
 $wgAutoloadClasses['RenameUserProcess'] = dirname( __FILE__ ) . '/RenameUserProcess.class.php';
 $wgAutoloadClasses['RenameUserLogFormatter'] = dirname( __FILE__ ) . '/RenameUserLogFormatter.class.php';
 $wgAutoloadClasses['UserRenameTask'] = dirname( __FILE__ ) . '/UserRenameTask.class.php';
 
-//constants
-//define('ENV_DEVBOX', true);//TODO: used for some debug switches, comment out as soon as the code hits production!
-define('USERRENAME_ROWS_PER_LOOP', 500);
-define('USERRENAME_LOOP_PAUSE', 5);
-define('COMMUNITY_CENTRAL_CITY_ID', 177);//city_id for community.wikia.com
+// constants
+// define('ENV_DEVBOX', true);//TODO: used for some debug switches, comment out as soon as the code hits production!
+define( 'USERRENAME_ROWS_PER_LOOP', 500 );
+define( 'USERRENAME_LOOP_PAUSE', 5 );
+define( 'COMMUNITY_CENTRAL_CITY_ID', 177 );// city_id for community.wikia.com
 
-//log type
+// log type
 global $wgLogTypes, $wgLogNames, $wgLogHeaders, $wgLogActions;
 $wgLogTypes[]                          = 'renameuser';
 $wgLogNames['renameuser']              = 'userrenametool-logpage';
 $wgLogHeaders['renameuser']            = 'userrenametool-logpagetext';
 
-//hooks
+// hooks
 $wgHooks['StaffLog::formatRow'][] = 'UserRenameToolStaffLogFormatRow';
 
 function UserRenameToolStaffLogFormatRow( $type, $row, $time, $linker, &$out ) {
-	if ($type == "renameuser") {
+	if ( $type == "renameuser" ) {
 		$out = "{$time} Rename - {$row->slog_comment}";
 		return false;
 	}

@@ -17,8 +17,8 @@ $wgExtensionCredits['other'][] = array(
 	'url'           	=> 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialPromote'
 );
 
-$dir = dirname(__FILE__) . '/';
-$promoteImageReviewExtDir = dirname(dirname(__FILE__)) . '/ImageReview/modules/PromoteImage/';
+$dir = dirname( __FILE__ ) . '/';
+$promoteImageReviewExtDir = dirname( dirname( __FILE__ ) ) . '/ImageReview/modules/PromoteImage/';
 
 // classes
 $wgAutoloadClasses['SpecialPromoteController'] =  $dir . 'SpecialPromoteController.class.php';
@@ -35,10 +35,10 @@ $wgHooks['CityVisualization::wikiDataInserted'][] = 'CityVisualization::onWikiDa
 $wgHooks['FileDeleteComplete'][] = 'SpecialPromoteHooks::onFileDeleteComplete';
 
 // i18n mapping
-$wgExtensionMessagesFiles['SpecialPromote'] = $dir.'SpecialPromote.i18n.php';
+$wgExtensionMessagesFiles['SpecialPromote'] = $dir . 'SpecialPromote.i18n.php';
 $wgExtensionMessagesFiles['SpecialPromoteAliases'] = $dir . 'SpecialPromote.alias.php';
 
-JSMessages::registerPackage('SpecialPromote', array('promote-*'));
+JSMessages::registerPackage( 'SpecialPromote', array( 'promote-*' ) );
 
 // special pages
 $wgSpecialPages['Promote'] = 'SpecialPromoteController';

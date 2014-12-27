@@ -22,7 +22,7 @@ $wgExtensionCredits['other'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpellChecker'
 );
 
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
 
 // i18n
 $wgExtensionMessagesFiles['SpellChecker'] = $dir . '/SpellChecker.i18n.php';
@@ -45,19 +45,19 @@ $wgAjaxExportList[] = 'SpellCheckerAjax';
 
 function SpellCheckerAjax() {
 	global $wgRequest;
-	$method = $wgRequest->getVal('method', false);
+	$method = $wgRequest->getVal( 'method', false );
 
-	if (method_exists('SpellCheckerAjax', $method)) {
-		wfProfileIn(__METHOD__);
+	if ( method_exists( 'SpellCheckerAjax', $method ) ) {
+		wfProfileIn( __METHOD__ );
 
 		$data = SpellCheckerAjax::$method();
 
 		// send array as JSON
-		$json = json_encode($data);
-		$response = new AjaxResponse($json);
-		$response->setContentType('application/json; charset=utf-8');
+		$json = json_encode( $data );
+		$response = new AjaxResponse( $json );
+		$response->setContentType( 'application/json; charset=utf-8' );
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $response;
 	}
 }

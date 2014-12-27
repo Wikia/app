@@ -16,7 +16,7 @@ $wgExtensionCredits['parserhook'][] = array(
 	'url'            => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/RelatedPages',
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 // hooks
 global $wgHooks;

@@ -12,7 +12,7 @@ $wgExtensionCredits['other'][] = array(
 	'url'            => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/EditorPreference'
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 $wgAutoloadClasses['EditorPreference'] = $dir . 'EditorPreference.class.php';
 

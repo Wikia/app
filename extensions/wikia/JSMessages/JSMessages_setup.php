@@ -17,9 +17,9 @@ $wgExtensionCredits['other'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/JSMessages'
 );
 
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles['JSMessages'] = $dir . '/JSMessages.i18n.php';
 
 // classes
@@ -34,9 +34,9 @@ $wgHooks['MessageCacheReplace']        [] = 'JSMessagesHelper::onMessageCacheRep
 
 $wgExtensionFunctions[] = function () {
 	// This has to be wrapped in a function so it isn't run before we include GlobalSettings.php
-	JSMessages::registerPackage("ConfirmModal", array(
+	JSMessages::registerPackage( "ConfirmModal", array(
 		'ok',
 		'cancel'
-	));
-	JSMessages::enqueuePackage("ConfirmModal", JSMessages::EXTERNAL); // We need this to ensure the messages are loaded on every page
+	) );
+	JSMessages::enqueuePackage( "ConfirmModal", JSMessages::EXTERNAL ); // We need this to ensure the messages are loaded on every page
 };

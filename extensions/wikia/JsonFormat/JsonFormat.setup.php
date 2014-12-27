@@ -7,10 +7,10 @@ $wgExtensionCredits[ 'other' ][ ] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/JsonFormat',
 );
 
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
 $app = F::app();
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles['JsonFormat'] =                       $dir . '/i18n/JsonFormat.i18n.php';
 
 $wgAutoloadClasses[ 'Wikia\JsonFormat\HtmlParser' ] =           $dir . "/HtmlParser.php";

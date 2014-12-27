@@ -25,7 +25,7 @@ $wgExtensionCredits['other'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CategoryBlueLinks',
 );
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles['CategoryBlueLinks'] = __DIR__ . '/CategoryBlueLinks.i18n.php';
 
 $wgHooks['LinkBegin'][] = 'efCategoryBlueLinks';

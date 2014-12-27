@@ -29,7 +29,7 @@ $wgExtensionCredits['other'][] = array(
 	'descriptionmsg' => 'wikiaphotogallery-desc',
 );
 
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
 
 // autoloaded classes
 $wgAutoloadClasses['WikiaPhotoGallery'] = "$dir/WikiaPhotoGallery.class.php";
@@ -52,32 +52,32 @@ $wgHooks['EditPage::importFormData'][] = 'WikiaPhotoGalleryHelper::onImportFormD
 $wgHooks[ 'PageRenderingHash' ][] = 'WikiaPhotoGalleryHelper::addMediaGalleryCacheKey';
 
 // i18n
-$wgExtensionMessagesFiles['WikiaPhotoGallery'] = $dir.'/WikiaPhotoGallery.i18n.php';
+$wgExtensionMessagesFiles['WikiaPhotoGallery'] = $dir . '/WikiaPhotoGallery.i18n.php';
 
 // Ajax dispatcher
 $wgAjaxExportList[] = 'WikiaPhotoGalleryAjax';
 function WikiaPhotoGalleryAjax() {
 	global $wgRequest;
-	$method = $wgRequest->getVal('method', false);
+	$method = $wgRequest->getVal( 'method', false );
 
-	if (method_exists('WikiaPhotoGalleryAjax', $method)) {
-		wfProfileIn(__METHOD__);
+	if ( method_exists( 'WikiaPhotoGalleryAjax', $method ) ) {
+		wfProfileIn( __METHOD__ );
 
 		$data = WikiaPhotoGalleryAjax::$method();
 
-		if (is_array($data)) {
+		if ( is_array( $data ) ) {
 			// send array as JSON
-			$json = json_encode($data);
-			$response = new AjaxResponse($json);
-			$response->setContentType('application/json; charset=utf-8');
+			$json = json_encode( $data );
+			$response = new AjaxResponse( $json );
+			$response->setContentType( 'application/json; charset=utf-8' );
 		}
 		else {
 			// send text as text/html
-			$response = new AjaxResponse($data);
-			$response->setContentType('text/html; charset=utf-8');
+			$response = new AjaxResponse( $data );
+			$response->setContentType( 'text/html; charset=utf-8' );
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $response;
 	}
 }

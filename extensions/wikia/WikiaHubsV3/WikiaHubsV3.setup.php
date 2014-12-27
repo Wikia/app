@@ -8,13 +8,13 @@
  *
  */
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'WikiaHubs V3',
 	'author' => array(
 		'Bartosz "V" Bentkowski',
-		'Damian Jóźwiak', 
+		'Damian Jóźwiak',
 		'Łukasz Konieczny',
 		'Sebastian Marzjan'
 	),

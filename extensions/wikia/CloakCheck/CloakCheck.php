@@ -1,10 +1,10 @@
 <?php
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This is a MediaWiki extension.\n";
-	exit(1);
+	exit( 1 );
 }
 
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'IRC CloakCheck',

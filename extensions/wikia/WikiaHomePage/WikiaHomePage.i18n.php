@@ -274,7 +274,7 @@ $messages['fr'] = array(
 	'wikiahome-community-social-twitter' => 'Twitter',
 	'wikiahome-community-social-facebook' => 'Facebook',
 	'wikiahome-community-social-googleplus' => '',
-	
+
 	'wikiahome-preview-stats-videos' => "'''1''' {{PLURAL:$1|vidéo|vidéos}}",
 
 	'wikiahome-preview-description-heading' => '$1',
@@ -448,7 +448,7 @@ $messages['qqq'] = array(
 
 	'wikia-home-page-preview' => 'The text on preview button; when you click the button you\'ll be presented with more detailed information about a wiki; the button is visible when you hover on a wiki image',
 	'wikia-home-page-visit' => 'The text on visit button; when you click the button you\'ll be redirected to chosen wiki; the button is visible when you hover on a wiki image',
-	
+
 	'wikia-home-parse-source-empty-exception' => 'An exception text when an attempt of loading wikis from message fails because the data is empty',
 	'wikia-home-parse-vertical-invalid-data' => 'An exception text when an attempt of loading wikis from message fails because the vertical data is invalid',
 	'wikia-home-parse-wiki-too-few-parameters' => 'An exception text when an attempt of loading wikis from message fails because the wiki data is invalid',
@@ -484,7 +484,7 @@ $messages['qqq'] = array(
 
 	'wikiahome-preview-stats-wam-empty-label' => 'Label for WAM score placeholder, when this Wiki is not included in WAM Index',
 	'wikiahome-preview-stats-wam' => "WAM Score label, 1st parameter is score - please bold it with wikitext",
-	
+
 	'wikiahome-preview-stats-page' => "Number of pages on a wiki. Could be singular or plural.  Please bold the number via wikitext or html.",
 	'wikiahome-preview-stats-photos' => "Number of photos on a wiki. Could be singular or plural.  Please bold the number via wikitext or html.",
 	'wikiahome-preview-stats-videos' => "Number of videos on a wiki. Could be singular or plural.  Please bold the number via wikitext or html.",
@@ -497,8 +497,8 @@ $messages['qqq'] = array(
 	'wikiahome-preview-go-to-wiki-label' => 'Generic link label that navigates to a wiki.',
 	'wikiahome-preview-error' => 'Interstitial error',
 	'wikiahome-preview-user-member-since' => 'Member since date',
-	
+
 	'wikiahome-import-script-no-description' => 'This message should be used only when an edge case occurs and there is no wiki description on wikis list used in importing process. This message will be place in wiki description in Interstitial if original description is not provided.',
-	
+
 	'wikiahome-hub-current-day' => 'Date in format "day monthname year" using templates: {{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}}',
 );

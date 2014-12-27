@@ -7,9 +7,9 @@ $wgExtensionCredits['other'][] = array(
 	'url'            => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/FounderProgressBar'
 );
 
-$dir = dirname(__FILE__).'/';
+$dir = dirname( __FILE__ ) . '/';
 
-//Autoload
+// Autoload
 $wgAutoloadClasses['FounderProgressBarController'] =  $dir . '/FounderProgressBarController.class.php';
 $wgAutoloadClasses['FounderProgressBarHooks'] =  $dir . '/FounderProgressBarHooks.class.php';
 

@@ -25,43 +25,43 @@ $wgExtensionCredits['other'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ShowPerformanceStats'
 );
 
-$wgExtensionMessagesFiles['ShowPerformanceStats'] = dirname(__FILE__) . '/ShowPerformanceStats.i18n.php';
+$wgExtensionMessagesFiles['ShowPerformanceStats'] = dirname( __FILE__ ) . '/ShowPerformanceStats.i18n.php';
 
 $wgAvailableRights[] = 'performancestats';
 $wgGroupPermissions['*']['performancestats'] = false;
 $wgGroupPermissions['staff']['performancestats'] = true;
 $wgGroupPermissions['helper']['performancestats'] = true; // BugId:5497
 
-function wfGetPerformanceStats(){
+function wfGetPerformanceStats() {
 	wfProfileIn( __METHOD__ );
 	$statsString = "";
 	$precision = 3;
 
 	$COOKIE_NAME = "loadtime";
-	if(isset($_COOKIE[$COOKIE_NAME])){
-		$data = explode(",", $_COOKIE[$COOKIE_NAME]);
+	if ( isset( $_COOKIE[$COOKIE_NAME] ) ) {
+		$data = explode( ",", $_COOKIE[$COOKIE_NAME] );
 		$metrics = array(); // associative array of metric-name (all uppercase) to its value.
-		foreach($data as $dataPair){
+		foreach ( $data as $dataPair ) {
 			$matches = array();
-			if(0 < preg_match("/^([a-zA-Z]+)([0-9\.]+)$/", $dataPair, $matches)){
-				$metrics[strtoupper($matches[1])] = $matches[2];
+			if ( 0 < preg_match( "/^([a-zA-Z]+)([0-9\.]+)$/", $dataPair, $matches ) ) {
+				$metrics[strtoupper( $matches[1] )] = $matches[2];
 			} else {
-				trigger_error("Loadtime cookie had data that we couldn't parse: \"$dataPair\"", E_USER_NOTICE);
+				trigger_error( "Loadtime cookie had data that we couldn't parse: \"$dataPair\"", E_USER_NOTICE );
 			}
 		}
 
 		// NOTE: Each metric should be treated as optional.  Full metrics are only on 1% of cache-misses.
-		if(isset($metrics['VS']) && isset($metrics['VE'])){
-			$statsString .= ($statsString == "" ? "" : ", ");
-			$statsString .= wfMsg('performancestat-total', round(($metrics['VE'] - $metrics['VS'])/1000, $precision));
+		if ( isset( $metrics['VS'] ) && isset( $metrics['VE'] ) ) {
+			$statsString .= ( $statsString == "" ? "" : ", " );
+			$statsString .= wfMsg( 'performancestat-total', round( ( $metrics['VE'] - $metrics['VS'] ) / 1000, $precision ) );
 		}
-		if(isset($metrics['AS']) && isset($metrics['AE'])){
-			$statsString .= ($statsString == "" ? "" : ", ");
-			$statsString .= wfMsg('performancestat-apache', round(($metrics['AE'] - $metrics['AS'])/1000, $precision));
+		if ( isset( $metrics['AS'] ) && isset( $metrics['AE'] ) ) {
+			$statsString .= ( $statsString == "" ? "" : ", " );
+			$statsString .= wfMsg( 'performancestat-apache', round( ( $metrics['AE'] - $metrics['AS'] ) / 1000, $precision ) );
 		}
-		if(isset($metrics['CD'])){
-			$statsString .= ($statsString == "" ? "" : ", ");
-			$statsString .= wfMsg('performancestat-cpu', round(($metrics['CD'])/1000, $precision));
+		if ( isset( $metrics['CD'] ) ) {
+			$statsString .= ( $statsString == "" ? "" : ", " );
+			$statsString .= wfMsg( 'performancestat-cpu', round( ( $metrics['CD'] ) / 1000, $precision ) );
 		}
 	}
 

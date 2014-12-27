@@ -11,8 +11,8 @@ $wgExtensionCredits['other'][] = array(
   	'version' => "1.0",
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/GlobalCSSJS'
   );
-  
-  //i18n
+
+  // i18n
 $wgExtensionMessagesFiles['GlobalCSSJS'] = __DIR__ . '/GlobalCSSJS.i18n.php';
 
 /**
@@ -30,9 +30,9 @@ function wfGlobalWikiaCSSJS( $module, $context, $userpage, &$pages ) {
 	if ( $username ) {
 		$pages = array_merge( array(
 			'globalcss' => array( 'type' => 'style', 'city_id' => $COMMUNITY_ID, 'title' => "User:{$username}/global.css",
-				'originalName' => "w:c:User:{$username}/global.css"),
+				'originalName' => "w:c:User:{$username}/global.css" ),
 			'globaljs'  => array( 'type' => 'script', 'city_id' => $COMMUNITY_ID, 'title' => "User:{$username}/global.js",
-				'originalName' => "w:c:User:{$username}/global.js"),
+				'originalName' => "w:c:User:{$username}/global.js" ),
 		), $pages );
 	}
 

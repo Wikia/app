@@ -7,16 +7,16 @@ $wgExtensionCredits['other'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ArticleAsJson',
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles['ArticleAsJson'] = $dir . 'ArticleAsJson.i18n.php';
 
-//classes
+// classes
 $wgAutoloadClasses['ArticleAsJson'] =  $dir . 'ArticleAsJson.class.php';
 $wgAutoloadClasses['ArticleAsJsonParserException'] =  $dir . 'ArticleAsJsonParserException.class.php';
 
-//hooks
+// hooks
 $wgHooks['ImageBeforeProduceHTML'][] = 'ArticleAsJson::onImageBeforeProduceHTML';
 $wgHooks['GalleryBeforeProduceHTML'][] = 'ArticleAsJson::onGalleryBeforeProduceHTML';
 $wgHooks['PageRenderingHash'][] = 'ArticleAsJson::onPageRenderingHash';

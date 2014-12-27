@@ -21,6 +21,6 @@ $wgResourceModules['wikia.ext.traceviewer.init'] = array(
 );
 
 function efTraceViewerBeforePageDisplay( $out, $skin ) {
-	$out->addModules('wikia.ext.traceviewer.init');
+	$out->addModules( 'wikia.ext.traceviewer.init' );
 	return true;
 }

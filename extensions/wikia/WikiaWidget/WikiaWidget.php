@@ -1,5 +1,5 @@
 <?php
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
         exit( 1 );
 }
 
@@ -10,8 +10,8 @@ $wgExtensionCredits['specialpage'][] = array(
 	'version' => '1.0',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaWidget'
 );
- 
-$dir = dirname(__FILE__);
+
+$dir = dirname( __FILE__ );
 
 /*
 $wgAutoloadClasses['WikiaWidget'] = $dir . 'WikiaWidget_body.php'; # Tell MediaWiki to load the extension body.
@@ -29,5 +29,5 @@ $wgGroupPermissions['staff']['wikiawidget'] = true;
 $wgGroupPermissions['sysop']['wikiawidget'] = true;
 $wgGroupPermissions['wikiawidget']['wikiawidget'] = true;
 
-extAddSpecialPage( dirname(__FILE__) . '/WikiaWidget_body.php', 'WikiaWidget', 'WikiaWidget' );
+extAddSpecialPage( dirname( __FILE__ ) . '/WikiaWidget_body.php', 'WikiaWidget', 'WikiaWidget' );
 $wgSpecialPageGroups['WikiaWidget'] = 'wikia';

@@ -10,7 +10,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Follow'
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 /*Auto loader setup */
 $wgAutoloadClasses['FollowHelper']  = $dir . 'FollowHelper.class.php';
 $wgAutoloadClasses['FollowedPages']  = $dir . 'FollowedPagesSpecial.php';
@@ -19,7 +19,7 @@ $wgExtensionMessagesFiles['Follow'] = $dir . 'Follow.i18n.php';
 $wgExtensionMessagesFiles['FollowAliases'] = $dir . 'Follow.alias.php';
 
 /* Hooks setup */
-if ( !empty($wgEnableWikiaFollowedPages) && $wgEnableWikiaFollowedPages ) {
+if ( !empty( $wgEnableWikiaFollowedPages ) && $wgEnableWikiaFollowedPages ) {
 	$wgHooks['AfterCategoriesUpdate'][] = 'FollowHelper::watchCategories';
 	$wgHooks['BlogListingSave'][] = 'FollowHelper::blogListingBuildRelation';
 	$wgHooks['ArticleSaveComplete'][] = "FollowHelper::watchBlogListing";

@@ -9,7 +9,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
-if(!defined('MEDIAWIKI')) die("This is MediaWiki extension and cannot be used standalone.");
+if ( !defined( 'MEDIAWIKI' ) ) die( "This is MediaWiki extension and cannot be used standalone." );
 
 $wgExtensionCredits['specialpage'][] = array(
 	'path'           => __FILE__,
@@ -19,22 +19,22 @@ $wgExtensionCredits['specialpage'][] = array(
 	'descriptionmsg' => 'javascripttestrunner-desc',
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 
-//special pages
+// special pages
 $wgSpecialPages['JavascriptTestRunner'] = 'SpecialJavascriptTestRunner';
 $wgSpecialPageGroups['JavascriptTestRunner'] = 'wikia';
 
-//rights
+// rights
 $wgAvailableRights[] = 'javascripttestrunner';
 $wgGroupPermissions['*']['javascripttestrunner'] = false;
 $wgGroupPermissions['staff']['javascripttestrunner'] = true;
 
-//internationalization files
+// internationalization files
 $wgExtensionMessagesFiles['JavascriptTestRunner'] = $dir . 'JavascriptTestRunner.i18n.php';
 
-//classes
+// classes
 $wgAutoloadClasses['SpecialJavascriptTestRunner'] = dirname( __FILE__ ) . '/SpecialJavascriptTestRunner.class.php';
 $wgAutoloadClasses['JavascriptTestFramework'] = dirname( __FILE__ ) . '/JavascriptTestFramework.class.php';
 $wgAutoloadClasses['JavascriptTestFramework_QUnit'] = dirname( __FILE__ ) . '/JavascriptTestFramework_QUnit.class.php';

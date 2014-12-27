@@ -2,7 +2,7 @@
 /*
  * Author: Inez Korczyński (inez@wikia.com)
  */
- 
+
 $wgExtensionCredits[ 'other' ][ ] = array(
 	'name' => 'JSVariables',
 	'author' => 'Inez Korczyński (inez@wikia.com)',
@@ -10,7 +10,7 @@ $wgExtensionCredits[ 'other' ][ ] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/JSVariables',
 );
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles[ 'JSVariables' ] = __DIR__ . '/JSVariables.i18n.php';
 
 $wgHooks['MakeGlobalVariablesScript'][] = 'wfMakeGlobalVariablesScript';
@@ -21,7 +21,7 @@ $wgHooks['WikiaSkinTopScripts'][] = 'wfJSVariablesTopScripts';
  * @param array $scripts JS scripts to add to the top of the page
  * @return bool return true - it's a hook
  */
-function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
+function wfJSVariablesTopScripts( Array &$vars, &$scripts ) {
 	$wg = F::app()->wg;
 
 	$title = $wg->Title;
@@ -29,7 +29,7 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 
 	// ads need it
 	$vars['wgAfterContentAndJS'] = array();
-	if (is_array($wg->WikiFactoryTags)) {
+	if ( is_array( $wg->WikiFactoryTags ) ) {
 		$vars['wgWikiFactoryTagIds'] = array_keys( $wg->WikiFactoryTags );
 		$vars['wgWikiFactoryTagNames'] = array_values( $wg->WikiFactoryTags );
 	}
@@ -45,12 +45,12 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 
 	// c&p from OutputPage::getJSVars, it's needed earlier
 	$user = $wg->User; /** @var $user User */
-	if ($user->isAnon()) {
+	if ( $user->isAnon() ) {
 		$vars['wgUserName'] = null;
 	} else {
 		$vars['wgUserName'] = $user->getName();
 	}
-	if ($out->isArticle()) {
+	if ( $out->isArticle() ) {
 		$vars['wgArticleId'] = $out->getWikiPage()->getId();
 	}
 	$vars['wgCategories'] = $out->getCategories();
@@ -66,16 +66,16 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 	$vars['wgIsGASpecialWiki'] = $wg->IsGASpecialWiki;
 
 	// PER-58: moved wgStyleVersion to <head>
-	$vars['wgStyleVersion'] = (string)($wg->StyleVersion);
+	$vars['wgStyleVersion'] = (string)( $wg->StyleVersion );
 
-	$wg->NoExternals = $wg->Request->getBool('noexternals', $wg->NoExternals);
-	if (!empty($wg->NoExternals)) {
+	$wg->NoExternals = $wg->Request->getBool( 'noexternals', $wg->NoExternals );
+	if ( !empty( $wg->NoExternals ) ) {
 		$vars["wgNoExternals"] = $wg->NoExternals;
 	}
 
 	$vars['wgTransactionContext'] = Transaction::getAttributes();
 
-	$scripts .= Html::inlineScript("var wgNow = new Date();") .	"\n";
+	$scripts .= Html::inlineScript( "var wgNow = new Date();" ) .	"\n";
 
 	return true;
 }
@@ -86,8 +86,8 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
  * @param OutputPage $out
  * @return bool return true - it's a hook
  */
-function wfMakeGlobalVariablesScript(Array &$vars, OutputPage $out) {
-	wfProfileIn(__METHOD__);
+function wfMakeGlobalVariablesScript( Array &$vars, OutputPage $out ) {
+	wfProfileIn( __METHOD__ );
 	global $wgMemc, $wgEnableAjaxLogin, $wgPrivateTracker, $wgExtensionsPath,
 		$wgArticle, $wgSitename, $wgDisableAnonymousEditing, $wgCityId,
 		$wgGroupPermissions, $wgBlankImgUrl, $wgCookieDomain, $wgCookiePath, $wgResourceBasePath;
@@ -98,40 +98,40 @@ function wfMakeGlobalVariablesScript(Array &$vars, OutputPage $out) {
 	// FIXME: This needs to be converted to getVerticalId when the data is available (PLATFORM-267)
 	$hubService = WikiFactoryHub::getInstance();
 	$catId = $hubService->getCategoryId( $wgCityId );
-	if( isset( $catId ) ) {
+	if ( isset( $catId ) ) {
 		$vars['wgCatId'] = $catId;
 	} else	{
 		$vars['wgCatId'] = 0;
 	}
 
-	$skinName = get_class($skin);
-	if (is_array($wgEnableAjaxLogin) && in_array($skinName, $wgEnableAjaxLogin)) {
+	$skinName = get_class( $skin );
+	if ( is_array( $wgEnableAjaxLogin ) && in_array( $skinName, $wgEnableAjaxLogin ) ) {
 		$vars['wgEnableAjaxLogin'] = true;
 	}
 
 	$vars['wgBlankImgUrl'] = $wgBlankImgUrl;
 
-	if (!empty($wgPrivateTracker)) {
+	if ( !empty( $wgPrivateTracker ) ) {
 		$vars['wgPrivateTracker'] = true;
 	}
 
 	// TODO: load it on-demand using JSMessages
-	if($vars['wgIsArticle'] == false && !empty($vars['wgEnableAjaxLogin'])) {
-		$vars['ajaxLogin1'] = wfMsg('ajaxLogin1');
-		$vars['ajaxLogin2'] = wfMsg('ajaxLogin2');
+	if ( $vars['wgIsArticle'] == false && !empty( $vars['wgEnableAjaxLogin'] ) ) {
+		$vars['ajaxLogin1'] = wfMsg( 'ajaxLogin1' );
+		$vars['ajaxLogin2'] = wfMsg( 'ajaxLogin2' );
 	}
 
 	// TODO: use wgMainPageTitle instead?
 	$vars['wgMainpage'] = wfMsgForContent( 'mainpage' );
-	if (Wikia::isMainPage()) {
+	if ( Wikia::isMainPage() ) {
 		$vars['wgIsMainpage'] = true;
 	}
-	if (Wikia::isContentNamespace()) {
+	if ( Wikia::isContentNamespace() ) {
 		$vars['wgIsContentNamespace'] = true;
 	}
 
 	// TODO: is this one really needed?
-	if(isset($skin->themename)) {
+	if ( isset( $skin->themename ) ) {
 		$vars['themename'] = $skin->themename;
 	}
 
@@ -140,11 +140,11 @@ function wfMakeGlobalVariablesScript(Array &$vars, OutputPage $out) {
 	$vars['wgSitename'] = $wgSitename;
 
 	// Set the JavaScript variable which is used by AJAX request to make data caching possible - Inez
-	$vars['wgMWrevId'] = $wgMemc->get(wfMemcKey('wgMWrevId'));
+	$vars['wgMWrevId'] = $wgMemc->get( wfMemcKey( 'wgMWrevId' ) );
 
 	// macbre: get revision ID of current article
-	if ( ( $title->isContentPage() || $title->isTalkPage() ) && !is_null($wgArticle)) {
-		$vars['wgRevisionId'] = !empty($wgArticle->mRevision) ? $wgArticle->mRevision->getId() : intval($wgArticle->mLatest);
+	if ( ( $title->isContentPage() || $title->isTalkPage() ) && !is_null( $wgArticle ) ) {
+		$vars['wgRevisionId'] = !empty( $wgArticle->mRevision ) ? $wgArticle->mRevision->getId() : intval( $wgArticle->mLatest );
 	}
 
 	// is anon editing disabled?
@@ -156,6 +156,6 @@ function wfMakeGlobalVariablesScript(Array &$vars, OutputPage $out) {
 	$vars['wgCookieDomain'] = $wgCookieDomain;
 	$vars['wgCookiePath'] = $wgCookiePath;
 
-	wfProfileOut(__METHOD__);
+	wfProfileOut( __METHOD__ );
 	return true;
 }

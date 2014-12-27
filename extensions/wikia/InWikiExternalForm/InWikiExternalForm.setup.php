@@ -18,10 +18,10 @@ $wgExtensionCredits['other'][] = array(
 );
 
 
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
 $app = F::app();
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles['InWikiExternalForm'] = $dir . '/InWikiExternalForm.i18n.php';
 
 // classes

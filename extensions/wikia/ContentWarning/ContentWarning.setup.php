@@ -12,9 +12,9 @@ $wgExtensionCredits['other'][] = array(
 	'descriptionmsg' => 'content-warning-desc',
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
-//classes
+// classes
 $wgAutoloadClasses['ContentWarningController'] =  $dir . 'ContentWarningController.class.php';
 $wgAutoloadClasses['ContentWarningHooks'] =  $dir . 'ContentWarningHooks.class.php';
 

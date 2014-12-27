@@ -18,9 +18,9 @@ $wgExtensionCredits['parserhook'][] = array(
 
 $wgHooks['ParserFirstCallInit'][] = 'efWidgetTagSetup';
 
-$wgAutoloadClasses['WidgetTagRenderer'] = dirname(__FILE__) . '/WidgetTagRenderer.class.php';
+$wgAutoloadClasses['WidgetTagRenderer'] = dirname( __FILE__ ) . '/WidgetTagRenderer.class.php';
 
-//i18n
+// i18n
 $wgExtensionMessagesFiles['WidgetTag'] = __DIR__ . '/WidgetTag.i18n.php';
 
 /**
@@ -29,7 +29,7 @@ $wgExtensionMessagesFiles['WidgetTag'] = __DIR__ . '/WidgetTag.i18n.php';
  * @param Parser $parser
  * @return bool
  */
-function efWidgetTagSetup(Parser $parser) {
+function efWidgetTagSetup( Parser $parser ) {
 	global $wgHooks;
 	$parser->setHook( 'widget', 'efWidgetTagRender' );
 	$wgHooks['ParserAfterTidy'][] = 'efWidgetTagReplaceMarkers';
@@ -41,8 +41,8 @@ function efWidgetTagRender( $input, $args, $parser ) {
 	return $widgetTagRenderer->renderTag( $input, $args, $parser );
 }
 
-function efWidgetTagReplaceMarkers(&$parser, &$text) {
+function efWidgetTagReplaceMarkers( &$parser, &$text ) {
 	$widgetTagRenderer = WidgetTagRenderer::getInstance();
-	$text = $widgetTagRenderer->replaceMarkers($text);
+	$text = $widgetTagRenderer->replaceMarkers( $text );
 	return true;
 }

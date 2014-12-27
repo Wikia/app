@@ -25,10 +25,10 @@
  * USA
  */
 
-if (!defined('MEDIAWIKI'))
+if ( !defined( 'MEDIAWIKI' ) )
 {
 	echo "This is MediaWiki extension.\n";
-	exit(1);
+	exit( 1 );
 }
 
 $wgExtensionCredits['parserhook'][] = array
@@ -40,7 +40,7 @@ $wgExtensionCredits['parserhook'][] = array
 	'descriptionmsg' => 'crunchyroll-desc',
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 $wgAutoloadClasses['Crunchyroll']	    	= $dir . 'Crunchyroll.body.php';
 $wgAutoloadClasses['CrunchyrollRSS']		= $dir . 'CrunchyrollRSS.class.php';
@@ -59,22 +59,22 @@ $wgAjaxExportList[] = 'CrunchyrollAjax';
 
 function CrunchyrollAjax() {
 	global $wgRequest;
-	wfProfileIn(__METHOD__);
-	$method = $wgRequest->getVal('method', false);
-	if ( method_exists('CrunchyrollAjax', $method) ) {
+	wfProfileIn( __METHOD__ );
+	$method = $wgRequest->getVal( 'method', false );
+	if ( method_exists( 'CrunchyrollAjax', $method ) ) {
 		$data = CrunchyrollAjax::$method();
-		if (is_array($data)) {
+		if ( is_array( $data ) ) {
 			// send array as JSON
-			$json = json_encode($data);
-			$response = new AjaxResponse($json);
-			$response->setContentType('application/json; charset=utf-8');
+			$json = json_encode( $data );
+			$response = new AjaxResponse( $json );
+			$response->setContentType( 'application/json; charset=utf-8' );
 		}
 		else {
 			// send text as text/html
-			$response = new AjaxResponse($data);
-			$response->setContentType('text/html; charset=utf-8');
+			$response = new AjaxResponse( $data );
+			$response->setContentType( 'text/html; charset=utf-8' );
 		}
 	}
-	wfProfileOut(__METHOD__);
+	wfProfileOut( __METHOD__ );
 	return $response;
 }

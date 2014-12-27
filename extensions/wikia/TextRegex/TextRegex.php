@@ -7,7 +7,7 @@
  * @version 1.0
  */
 
-if ( !defined('MEDIAWIKI') ) die();
+if ( !defined( 'MEDIAWIKI' ) ) die();
 
 // Extension credits
 $wgExtensionCredits['specialpage'][] = array(
@@ -24,7 +24,7 @@ $wgAvailableRights[] = 'textregex';
 $wgGroupPermissions['staff']['textregex'] = true;
 
 // Set up the new special page
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['TextRegex'] = $dir . 'TextRegex.i18n.php';
 $wgExtensionMessagesFiles['TextRegexAliases'] = $dir . 'TextRegex.alias.php';
 

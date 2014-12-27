@@ -11,7 +11,7 @@
  * @licence GNU General Public Licence
  */
 
-if( !defined( 'MEDIAWIKI' ) ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo( "This file is an extension to the MediaWiki software and cannot be used standalone.\n" );
 	die( 1 );
 }
@@ -30,7 +30,7 @@ $wgExtensionCredits['specialpage'][] = array(
 );
 
 // Set up the new special page
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 $wgExtensionMessagesFiles['Unsubscribe'] = $dir . 'Unsubscribe.i18n.php';
 $wgExtensionMessagesFiles['UnsubscribeAliases'] = $dir . 'Unsubscribe.alias.php';
 

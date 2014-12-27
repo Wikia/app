@@ -25,7 +25,7 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'comboAjaxLoginVars';
 $wgHooks['GetHTMLAfterBody'][] = 'renderHiddenForm';
 $wgHooks['GetConfirmEditMessage'][] = 'onGetConfirmEditMessage';
 
-$wgExtensionMessagesFiles['ComboAjaxLogin'] = dirname(__FILE__) . '/ComboAjaxLogin.i18n.php';
+$wgExtensionMessagesFiles['ComboAjaxLogin'] = dirname( __FILE__ ) . '/ComboAjaxLogin.i18n.php';
 
 $wgExtensionFunctions[] = 'efSetupComboAjaxLogin';
 
@@ -33,9 +33,9 @@ function efSetupComboAjaxLogin() {
 	wfProfileIn( __METHOD__ );
 
 	// register messages package for JS
-	JSMessages::registerPackage('ComboAjaxLogin', array(
+	JSMessages::registerPackage( 'ComboAjaxLogin', array(
 		'comboajaxlogin-ajaxerror',
-	));
+	) );
 
 	wfProfileOut( __METHOD__ );
 	return true;
@@ -44,15 +44,15 @@ function efSetupComboAjaxLogin() {
 /**
  * Adds a hidden form to the page so user agents may prefill with client-stored information. The pre-filled information is later copied to the Ajax Login modal window.
 */
-function renderHiddenForm($skin, &$html) {
+function renderHiddenForm( $skin, &$html ) {
 	global $wgUser;
-	$checked = ($wgUser->getOption('rememberpassword')) ? ' checked="checked" ' : '';
-	if ($wgUser->isAnon()) {
+	$checked = ( $wgUser->getOption( 'rememberpassword' ) ) ? ' checked="checked" ' : '';
+	if ( $wgUser->isAnon() ) {
 		$html .= '<form action="" method="post" name="userajaxloginform" id="userajaxloginformhide" style="display: none">
 			<input type="text" name="wpName" id="wpName1Ajax" tabindex="101" size="20" />
 			<input type="password" name="wpPassword" id="wpPassword1Ajax" tabindex="102" size="20" />
-			<input type="checkbox" name="wpRemember" id="wpRemember1Ajax" tabindex="104" value="1"'. $checked .' />
-		</form>'."\n";
+			<input type="checkbox" name="wpRemember" id="wpRemember1Ajax" tabindex="104" value="1"' . $checked . ' />
+		</form>' . "\n";
 	}
 	return true;
 }
@@ -66,8 +66,8 @@ function onGetConfirmEditMessage( $captcha, &$message ) {
 	}
 
 	$name = 'fancycaptcha-createaccount';
-	$text = wfMsgExt( $name, array('parseinline') );
-	$message = wfEmptyMsg( $name, $text ) ? wfMsgExt( 'fancycaptcha-edit', array('parseinline') ) : $text;
+	$text = wfMsgExt( $name, array( 'parseinline' ) );
+	$message = wfEmptyMsg( $name, $text ) ? wfMsgExt( 'fancycaptcha-edit', array( 'parseinline' ) ) : $text;
 
 	return true;
 }
@@ -78,8 +78,8 @@ function onGetConfirmEditMessage( $captcha, &$message ) {
 function GetComboAjaxLogin() {
 	$tmpl = AjaxLoginForm::getTemplateForCombinedForms();
 
-	$response = new AjaxResponse($tmpl->render('ComboAjaxLogin'));
-	$response->setContentType('text/html; charset=utf-8');
+	$response = new AjaxResponse( $tmpl->render( 'ComboAjaxLogin' ) );
+	$response->setContentType( 'text/html; charset=utf-8' );
 
 	return $response;
 }
@@ -90,52 +90,52 @@ $wgAjaxExportList[] = 'GetComboAjaxLogin';
  * marge js from register and ajax login
  */
 $wgAjaxExportList[] = 'getRegisterJS';
-function getRegisterJS(){
+function getRegisterJS() {
 	$response = new AjaxResponse();
 	$response->addText( AjaxLoginForm::getRegisterJS() );
-	$response->addText( file_get_contents(dirname( __FILE__ ) . '/AjaxLogin.js')."\n\n" );
+	$response->addText( file_get_contents( dirname( __FILE__ ) . '/AjaxLogin.js' ) . "\n\n" );
 
 	$vars = array(
-		'prefs_help_birthmesg' => wfMsg('prefs-help-birthmesg'),
-		'prefs_help_birthinfo' => wfMsg('prefs-help-birthinfo'),
-		'prefs_help_mailmesg' => wfMsg('prefs-help-mailmesg'),
-		'prefs_help_email' => wfMsg('prefs-help-email'),
-		'prefs_help_blurmesg' => wfMsg('prefs-help-blurmesg'),
+		'prefs_help_birthmesg' => wfMsg( 'prefs-help-birthmesg' ),
+		'prefs_help_birthinfo' => wfMsg( 'prefs-help-birthinfo' ),
+		'prefs_help_mailmesg' => wfMsg( 'prefs-help-mailmesg' ),
+		'prefs_help_email' => wfMsg( 'prefs-help-email' ),
+		'prefs_help_blurmesg' => wfMsg( 'prefs-help-blurmesg' ),
 		'prefs_help_blurinfo' => wfMsgExt( 'captchahelp-text', array( 'parse' ) )
 
 	);
 
-	foreach ($vars as $key => $value) {
-		$response->addText( "var ".$key." = ".Xml::encodeJsVar($value).";\n" );
+	foreach ( $vars as $key => $value ) {
+		$response->addText( "var " . $key . " = " . Xml::encodeJsVar( $value ) . ";\n" );
 	}
 
-	header("X-Pass-Cache-Control: s-maxage=315360000, max-age=315360000");
-	$response->setCacheDuration( 3600 * 24 * 365);
+	header( "X-Pass-Cache-Control: s-maxage=315360000, max-age=315360000" );
+	$response->setCacheDuration( 3600 * 24 * 365 );
 	return $response;
 }
 
-function comboAjaxLoginVars(Array &$vars) {
-	global $wgUser,$wgRequest, $wgEnableAPI;
+function comboAjaxLoginVars( Array &$vars ) {
+	global $wgUser, $wgRequest, $wgEnableAPI;
 
-	$vars['wgReturnTo'] = $wgRequest->getVal('returnto', '');
-	$vars['wgReturnToQuery'] = $wgRequest->getVal('returntoquery', '');
+	$vars['wgReturnTo'] = $wgRequest->getVal( 'returnto', '' );
+	$vars['wgReturnToQuery'] = $wgRequest->getVal( 'returntoquery', '' );
 
 	$titleObj = Title::newFromText( $vars['wgReturnTo'] );
 
-	if (  ( !$titleObj instanceof Title ) || ( $titleObj->isSpecial("Userlogout") ) || ( $titleObj->isSpecial("Signup") )   ) {
+	if (  ( !$titleObj instanceof Title ) || ( $titleObj->isSpecial( "Userlogout" ) ) || ( $titleObj->isSpecial( "Signup" ) )   ) {
 		$titleObj = Title::newMainPage();
 		$vars['wgReturnTo'] = $titleObj->getText( );
 	}
 
-	if ( (empty($wgEnableAPI)) || (!$wgUser->isAllowed('read')) ) {
+	if ( ( empty( $wgEnableAPI ) ) || ( !$wgUser->isAllowed( 'read' ) ) ) {
 		$vars['wgEnableLoginAPI'] = false;
 	} else {
 		$vars['wgEnableLoginAPI'] = true;
 	}
 
 	$query = $wgRequest->getValues();
-	if (isset($query['title'])) {
-		unset($query['title']);
+	if ( isset( $query['title'] ) ) {
+		unset( $query['title'] );
 	}
 
 	$vars['wgPageQuery'] = wfUrlencode( wfArrayToCGI( $query ) );
@@ -147,8 +147,8 @@ function comboAjaxLoginVars(Array &$vars) {
 };
 
 $wgAjaxExportList[] = 'createUserLogin';
-function createUserLogin(){
-	global $wgRequest,$wgUser,$wgExternalSharedDB,$wgWikiaEnableConfirmEditExt, $wgEnableCOPPA, $wgDefaultSkin;
+function createUserLogin() {
+	global $wgRequest, $wgUser, $wgExternalSharedDB, $wgWikiaEnableConfirmEditExt, $wgEnableCOPPA, $wgDefaultSkin;
 
 	// Init session if necessary
 	if ( session_id() == '' ) {
@@ -156,14 +156,14 @@ function createUserLogin(){
 	}
 
 	$response = new AjaxResponse();
-	$response->setCacheDuration( 3600 * 24 * 365);
+	$response->setCacheDuration( 3600 * 24 * 365 );
 
-	if (!(($wgRequest->getCheck("wpCreateaccountMail") || $wgRequest->getCheck("wpCreateaccount") ) && ($wgRequest->wasPosted()))) {
-		$response->addText(json_encode(
+	if ( !( ( $wgRequest->getCheck( "wpCreateaccountMail" ) || $wgRequest->getCheck( "wpCreateaccount" ) ) && ( $wgRequest->wasPosted() ) ) ) {
+		$response->addText( json_encode(
 			array(
 					'status' => "ERROR",
-					'msg' => wfMsgExt('comboajaxlogin-post-not-understood', array('parseinline')),
-					'type' => 'error')));
+					'msg' => wfMsgExt( 'comboajaxlogin-post-not-understood', array( 'parseinline' ) ),
+					'type' => 'error' ) ) );
 		return $response;
 	}
 
@@ -176,35 +176,35 @@ function createUserLogin(){
 
 	if ( $wgEnableCOPPA && !$form->checkDate() ) {
 		// If the users is too young to legally register.
-		$response->addText(json_encode(
+		$response->addText( json_encode(
 			array(
 					'status' => "ERROR",
 					'msg' => wfMsg( 'userlogin-unable-info' ),
-					'type' => 'error')));
+					'type' => 'error' ) ) );
 		return $response;
 	}
 
-	$dbw = wfGetDB(DB_MASTER, array(), $wgExternalSharedDB);
+	$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 	$dbl = wfGetDB( DB_MASTER );
 
 	$dbw->begin();
 	$dbl->begin();
 
-	$form->execute('signup');
+	$form->execute( 'signup' );
 
 	$dbw->commit();
 	$dbl->commit();
 
-	if( $form->msgtype == "error" ) {
-		if( !$wgWikiaEnableConfirmEditExt ){
+	if ( $form->msgtype == "error" ) {
+		if ( !$wgWikiaEnableConfirmEditExt ) {
 		/*theoretically impossible because the only possible error is captcha error*/
-			$response->addText(json_encode(
+			$response->addText( json_encode(
 				array(
 						'status' => "ERROR",
 						'msg' => $form->msg ,
 						'type' => $form->msgtype,
 						'captchaUrl' =>	'',
-						'captcha' => '')));
+						'captcha' => '' ) ) );
 			return $response;
 		}
 		$captchaObj = new FancyCaptcha();
@@ -212,17 +212,17 @@ function createUserLogin(){
 		$captchaIndex = $captchaObj->storeCaptcha( $captcha );
 		$titleObj = SpecialPage::getTitleFor( 'Captcha/image' );
 		$captchaUrl = $titleObj->getLocalUrl( 'wpCaptchaId=' . urlencode( $captchaIndex ) );
-		$response->addText(json_encode(
+		$response->addText( json_encode(
 			array(
 					'status' => "ERROR",
 					'msg' => $form->msg ,
 					'type' => $form->msgtype,
 					'captchaUrl' =>	$captchaUrl,
-					'captcha' => $captchaIndex)));
+					'captcha' => $captchaIndex ) ) );
 		return $response;
 	}
 
-	$response->addText(json_encode(array('status' => "OK")));
+	$response->addText( json_encode( array( 'status' => "OK" ) ) );
 	return $response;
 }
 
@@ -239,15 +239,15 @@ class AjaxLoginForm extends LoginForm {
 	function load() {
 		parent::load();
 		$request = $this->mOverrideRequest;
-		if($request->getText( 'wpName2Ajax', '' ) != '') {
+		if ( $request->getText( 'wpName2Ajax', '' ) != '' ) {
 			$this->mUsername = $request->getText( 'wpName2Ajax', '' );
 		}
 
-		if($request->getText( 'wpPassword2Ajax', '' ) != '') {
+		if ( $request->getText( 'wpPassword2Ajax', '' ) != '' ) {
 			$this->mPassword = $request->getText( 'wpPassword2Ajax' );
 		}
 
-		if($request->getText( 'wpRemember2Ajax', '' ) != '') {
+		if ( $request->getText( 'wpRemember2Ajax', '' ) != '' ) {
 			$this->mRemember = $request->getCheck( 'wpRemember2Ajax' );
 		}
 
@@ -255,7 +255,7 @@ class AjaxLoginForm extends LoginForm {
 	}
 
 
-	public function getAjaxTemplate(){
+	public function getAjaxTemplate() {
 		return $this->ajaxTemplate;
 	}
 
@@ -265,7 +265,7 @@ class AjaxLoginForm extends LoginForm {
 	 * different EasyTemplates to give different results such as one view for ajax dialogs
 	 * and one view for standalone pages (such as Special:Signup).
 	 */
-	static public function getTemplateForCombinedForms($static = false, $lastmsg = "", &$ajaxLoginForm = ""){
+	static public function getTemplateForCombinedForms( $static = false, $lastmsg = "", &$ajaxLoginForm = "" ) {
 		global $wgRequest;
 
 		// Setup the data for the templates, similar to GetComboAjaxLogin.
@@ -274,31 +274,31 @@ class AjaxLoginForm extends LoginForm {
 		}
 
 		// TODO: Invstigate why this was here.
-		//if ($wgRequest->getCheck( 'wpCreateaccount' )) {
+		// if ($wgRequest->getCheck( 'wpCreateaccount' )) {
 		//	return "error";
-		//}
+		// }
 
 		$tmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 		$response = new AjaxResponse();
 
-		$type = $wgRequest->getVal('type', '');
+		$type = $wgRequest->getVal( 'type', '' );
 
-		if (!wfReadOnly()){
-			if(empty($ajaxLoginForm)){
+		if ( !wfReadOnly() ) {
+			if ( empty( $ajaxLoginForm ) ) {
 				$ajaxLoginForm = new AjaxLoginForm( $wgRequest );
 			}
-			$ajaxLoginForm->execute($type);
+			$ajaxLoginForm->execute( $type );
 
-			if (!empty($ajaxLoginForm->ajaxTemplate)) {
+			if ( !empty( $ajaxLoginForm->ajaxTemplate ) ) {
 				$lastmsg = $ajaxLoginForm->ajaxTemplate->data['message'];
-				$tmpl->set('message', $ajaxLoginForm->ajaxTemplate->data['message']);
-				$tmpl->set('messagetype', $ajaxLoginForm->ajaxTemplate->data['messagetype']);
+				$tmpl->set( 'message', $ajaxLoginForm->ajaxTemplate->data['message'] );
+				$tmpl->set( 'messagetype', $ajaxLoginForm->ajaxTemplate->data['messagetype'] );
 			}
-			$tmpl->set("registerAjax", $ajaxLoginForm->ajaxRender());
+			$tmpl->set( "registerAjax", $ajaxLoginForm->ajaxRender() );
 		}
 
-		$isReadOnly =  wfReadOnly() ? 1:0;
-		$tmpl->set("isReadOnly", $isReadOnly);
+		$isReadOnly =  wfReadOnly() ? 1: 0;
+		$tmpl->set( "isReadOnly", $isReadOnly );
 
 		if ( !LoginForm::getLoginToken() ) {
 			LoginForm::setLoginToken();
@@ -313,39 +313,39 @@ class AjaxLoginForm extends LoginForm {
 		// Use the existing settings to generate the login portion of the form, which will then
 		// be fed back into the bigger template in this case (it is not always fed into ComboAjaxLogin template).
 
-		$returnto = $wgRequest->getVal( 'returnto', '');
+		$returnto = $wgRequest->getVal( 'returnto', '' );
 
-		if( !($returnto == '') ){
-			$returnto = "&returnto=". wfUrlencode( $returnto );
+		if ( !( $returnto == '' ) ) {
+			$returnto = "&returnto=" . wfUrlencode( $returnto );
 		}
 
-		$returntoquery = $wgRequest->getVal( 'returntoquery', '');
+		$returntoquery = $wgRequest->getVal( 'returntoquery', '' );
 
-		if( !($returntoquery == '') ){
+		if ( !( $returntoquery == '' ) ) {
 			$returntoquery = "&returntoquery=" . wfUrlencode( $returntoquery );
 		}
 
-		$loginaction = Skin::makeSpecialUrl( 'Signup', "type=login&action=submitlogin".$returnto.$returntoquery );
-		$signupaction = Skin::makeSpecialUrl( 'Signup', "type=signup".$returnto.$returntoquery );
+		$loginaction = Skin::makeSpecialUrl( 'Signup', "type=login&action=submitlogin" . $returnto . $returntoquery );
+		$signupaction = Skin::makeSpecialUrl( 'Signup', "type=signup" . $returnto . $returntoquery );
 
-		$tmpl->set("loginaction", $loginaction);
-		$tmpl->set("signupaction", $signupaction);
-		$tmpl->set("loginerror", $lastmsg);
-		$tmpl->set("actiontype", $type);
-		$tmpl->set("showRegister", false );
-		$tmpl->set("showLogin", false );
+		$tmpl->set( "loginaction", $loginaction );
+		$tmpl->set( "signupaction", $signupaction );
+		$tmpl->set( "loginerror", $lastmsg );
+		$tmpl->set( "actiontype", $type );
+		$tmpl->set( "showRegister", false );
+		$tmpl->set( "showLogin", false );
 
-		if( $static ) {
-			if( strtolower( $type ) == "login" ) {
-				$tmpl->set("showLogin", true );
+		if ( $static ) {
+			if ( strtolower( $type ) == "login" ) {
+				$tmpl->set( "showLogin", true );
 			} else {
-				if( !$isReadOnly ) {
-					$tmpl->set("showRegister", true );
+				if ( !$isReadOnly ) {
+					$tmpl->set( "showRegister", true );
 				}
 			}
 		}
 
-		$tmpl->set("ajaxLoginComponent", $tmpl->render('AjaxLoginComponent'));
+		$tmpl->set( "ajaxLoginComponent", $tmpl->render( 'AjaxLoginComponent' ) );
 
 		return $tmpl;
 	}
@@ -354,7 +354,7 @@ class AjaxLoginForm extends LoginForm {
 	 * Used to create the body of Special:Signup in a way that reuses the same form code as the
 	 * modal dialog versions of the same login/signup functionality.
 	 */
-	public function executeAsPage(){
+	public function executeAsPage() {
 		global $wgOut ;
 
 		$wgOut->setPageTitle( wfMsg( 'userlogin' ) );
@@ -365,14 +365,14 @@ class AjaxLoginForm extends LoginForm {
 		// Output the HTML which combines the two forms (which are already in the template) in a way that looks right for a standalone page.
 
 		$tmpl = self::getTemplateForCombinedForms( true, $this->lastmsg, $this );
-		if( $this->authenticateStatus == self::RESET_PASS ) {
+		if ( $this->authenticateStatus == self::RESET_PASS ) {
 			return ;
 		}
 		$wgOut->addHTML( $tmpl->render( 'ComboAjaxLogin' ) );
 		$wgOut->addHTML( $tmpl->render( 'ComboPageFooter' ) );
 	}
 
-	public static function getRegisterJS(){
+	public static function getRegisterJS() {
 		$tpl = new UsercreateTemplate();
 		ob_start();
 		$tpl->executeRegisterJS();
@@ -381,9 +381,9 @@ class AjaxLoginForm extends LoginForm {
 		return $out;
 	}
 
-	function ajaxRender(){
+	function ajaxRender() {
 		ob_start();
-		if(isset($this->ajaxTemplate)){
+		if ( isset( $this->ajaxTemplate ) ) {
 			$this->ajaxTemplate->execute();
 		}
 		$out = ob_get_clean();
@@ -401,14 +401,14 @@ class AjaxLoginForm extends LoginForm {
 	}
 
 	/* check date before execute because of redirect */
-	function  checkDate(){
-		if ($this->wpBirthYear == -1 || $this->wpBirthMonth == -1 || $this->wpBirthDay == -1) {
+	function  checkDate() {
+		if ( $this->wpBirthYear == -1 || $this->wpBirthMonth == -1 || $this->wpBirthDay == -1 ) {
 			$this->mainLoginForm( wfMsg( 'userlogin-bad-birthday' ) );
 			return null;
 		}
 
-		$userBirthDay = strtotime($this->wpBirthYear . '-' . $this->wpBirthMonth . '-' . $this->wpBirthDay);
-		if($userBirthDay > strtotime('-13 years')) {
+		$userBirthDay = strtotime( $this->wpBirthYear . '-' . $this->wpBirthMonth . '-' . $this->wpBirthDay );
+		if ( $userBirthDay > strtotime( '-13 years' ) ) {
 			$this->mainLoginForm( wfMsg( 'userlogin-unable-info' ) );
 			return false;
 		} else {
@@ -424,7 +424,7 @@ class AjaxLoginForm extends LoginForm {
 
 		$titleObj = SpecialPage::getTitleFor( 'Userlogin' );
 
-		$this->saveMessage($msg);
+		$this->saveMessage( $msg );
 		$this->msg = $msg;
 		$this->msgtype = $msgtype;
 
@@ -432,7 +432,7 @@ class AjaxLoginForm extends LoginForm {
 			if ( $wgUser->isLoggedIn() ) {
 				$this->mUsername = $wgUser->getName();
 			} else {
-				$this->mUsername = isset( $_COOKIE[$wgCookiePrefix.'UserName'] ) ? $_COOKIE[$wgCookiePrefix.'UserName'] : null;
+				$this->mUsername = isset( $_COOKIE[$wgCookiePrefix . 'UserName'] ) ? $_COOKIE[$wgCookiePrefix . 'UserName'] : null;
 			}
 		}
 
@@ -441,7 +441,7 @@ class AjaxLoginForm extends LoginForm {
 		$template = new UserAjaxCreateTemplate();
 
 		// ADi: marketing opt-in/out checkbox added
-		$template->addInputItem( 'wpMarketingOptIn', 1, 'checkbox', 'tog-marketingallowed');
+		$template->addInputItem( 'wpMarketingOptIn', 1, 'checkbox', 'tog-marketingallowed' );
 
 		$titleObj = SpecialPage::getTitleFor( 'Signup' );
 		$q = 'action=submitlogin&type=signup';
@@ -476,9 +476,9 @@ class AjaxLoginForm extends LoginForm {
 		$template->set( 'birthday', $this->wpBirthDay );
 
 		# Prepare language selection links as needed
-		if( $wgLoginLanguageSelector ) {
+		if ( $wgLoginLanguageSelector ) {
 			$template->set( 'languages', $this->makeLanguageSelector() );
-			if( $this->mLanguage )
+			if ( $this->mLanguage )
 			$template->set( 'uselang', $this->mLanguage );
 		}
 
@@ -500,7 +500,7 @@ class AjaxLoginForm extends LoginForm {
 		$this->ajaxTemplate = $template;
 	}
 
-	function saveMessage($msg) {
+	function saveMessage( $msg ) {
 		$this->lastmsg = $msg;
 	}
 }

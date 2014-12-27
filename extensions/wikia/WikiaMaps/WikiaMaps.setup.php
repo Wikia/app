@@ -1,5 +1,5 @@
 <?php
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 $wgExtensionCredits[ 'specialpage' ][] = [
 	'name' => 'Wikia Maps',

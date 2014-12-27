@@ -9,9 +9,9 @@
  * @package MediaWiki
  */
 
-if (!defined('MEDIAWIKI')) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo "This is MediaWiki extension named TimeAgo Messaging.\n";
-	exit(1) ;
+	exit( 1 ) ;
 }
 
 $wgExtensionCredits['other'][] = array(
@@ -22,7 +22,7 @@ $wgExtensionCredits['other'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/TimeAgoMessaging'
 );
 
-$dir = dirname(__FILE__);
+$dir = dirname( __FILE__ );
 
 // i18n
 $wgExtensionMessagesFiles['TimeAgoMessaging'] = "{$dir}/TimeAgoMessaging.i18n.php";

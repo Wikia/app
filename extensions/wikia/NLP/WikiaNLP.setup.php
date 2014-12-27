@@ -15,7 +15,7 @@ $wgExtensionCredits['other'][] = array(
 		'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/NLP'
 );
 
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 $wgExtensionMessagesFiles["NLP"] = $dir . 'WikiaNLP.i18n.php';
 
@@ -29,7 +29,7 @@ if ( $wgEnableTopicsForDFP ) {
 	$wgHooks['ArticleViewHeader'][] = 'Wikia\\NLP\\Entities\\Hooks::onArticleViewHeader';
 }
 
-if ( (! $wgDevelEnvironment ) &&  $wgLanguageCode == 'en' && $wgEnableNlpPipelineEvents ) {
+if ( ( ! $wgDevelEnvironment ) &&  $wgLanguageCode == 'en' && $wgEnableNlpPipelineEvents ) {
 	$wgHooks['ArticleEditUpdates'][] = 'Wikia\\NLP\\ParserPipeline\\Hooks::onArticleEditUpdates';
 	$wgHooks['ArticleDeleteComplete'][] = 'Wikia\\NLP\\ParserPipeline\\Hooks::onArticleDeleteComplete';
 	$wgHooks['ArticleUndelete'][] = 'Wikia\\NLP\\ParserPipeline\\Hooks::onArticleUndelete';

@@ -2,7 +2,7 @@
 
 /**
  * Special page-based tool to review wikis directed at children.
- * 
+ *
  * @since June 2013
  * @author Kamil Koterba kamil@wikia-inc.com
  */

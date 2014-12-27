@@ -6,7 +6,7 @@
  * @author Andrzej 'nAndy' Łukaszewski
  * @author Jacek 'mech' Woźniak
  */
-$dir = dirname(__FILE__) . '/';
+$dir = dirname( __FILE__ ) . '/';
 
 $wgExtensionCredits['editpreview'][] = [
 	'name' => 'Edit preview',
@@ -24,7 +24,7 @@ $wgExtensionCredits['editpreview'][] = [
 $wgExtensionMessagesFiles[ 'EditPreview' ] = $dir . 'EditPreview.i18n.php';
 
 // register messages package for JS
-JSMessages::registerPackage('EditPreview', [
+JSMessages::registerPackage( 'EditPreview', [
 	'back',
 	'preview',
 	'savearticle',
@@ -33,4 +33,4 @@ JSMessages::registerPackage('EditPreview', [
 	'wikia-editor-preview-max-width',
 	'wikia-editor-preview-mobile-width',
 	'wikia-editor-preview-type-tooltip'
-]);
+] );

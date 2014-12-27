@@ -20,7 +20,7 @@ $wgAutoloadClasses['SpecialTranslationCount'] = $dir . 'SpecialTranslationCount.
 $wgAutoloadClasses['SpecialNewLanguageStats'] = $dir . 'SpecialLanguageStats.php';
 $wgAutoloadClasses['SpecialTranslationStats'] = $dir . 'SpecialTranslationStats.php';
 $wgAutoloadClasses['SpecialGroupStats'] = $dir . 'SpecialGroupStats.body.php';
-//$wgAutoloadClasses['SpecialNewTranslationStats'] = $dir . 'SpecialTranslationStats.php';
+// $wgAutoloadClasses['SpecialNewTranslationStats'] = $dir . 'SpecialTranslationStats.php';
 $wgAutoloadClasses['PHPlot'] = $dir . 'phplot.php';
 $wgAutoloadClasses['TranslateUtils'] = $dir . 'TranslateUtils.php';
 $wgAutoloadClasses['JsSelectToInput'] = $dir . 'utils/JsSelectToInput.php';
@@ -35,6 +35,6 @@ $wgExtensionMessagesFiles['TranslationStatistics'] = $dir . 'TranslationStatisti
 // Special pages
 $wgSpecialPages['TranslationCount'] = 'SpecialTranslationCount';
 $wgSpecialPages['NewLanguageStats'] = 'SpecialNewLanguageStats';
-//$wgSpecialPages['NewTranslationStats'] = 'SpecialNewTranslationStats';
+// $wgSpecialPages['NewTranslationStats'] = 'SpecialNewTranslationStats';
 $wgSpecialPages['GroupStats'] = 'SpecialGroupStats';
 $wgSpecialPages['TranslationStats'] = 'SpecialTranslationStats';

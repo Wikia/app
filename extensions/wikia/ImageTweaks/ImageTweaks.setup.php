@@ -40,14 +40,14 @@ $wgAutoloadClasses['ImageTweaksHooks'] = "{$dir}/ImageTweaksHooks.class.php";
 /**
  * hooks
  */
-//hook into Linker::MakeImageLink2
+// hook into Linker::MakeImageLink2
 $wgHooks['ImageAfterProduceHTML'][] = 'ImageTweaksHooks::onImageAfterProduceHTML';
 
-//hook into Linker::MakeThumbLink2
+// hook into Linker::MakeThumbLink2
 $wgHooks['ThumbnailAfterProduceHTML'][] = 'ImageTweaksHooks::onThumbnailAfterProduceHTML';
 
-//hook into ThumbnailImage::toHTML
+// hook into ThumbnailImage::toHTML
 $wgHooks['ThumbnailImageHTML'][] = 'ImageTweaksHooks::onThumbnailImageHTML';
 
-//hook into ThumbnailVideo::toHTML
+// hook into ThumbnailVideo::toHTML
 $wgHooks['ThumbnailVideoHTML'][] = 'ImageTweaksHooks::onThumbnailVideoHTML';

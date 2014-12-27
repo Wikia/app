@@ -12,7 +12,7 @@ $messages['en'] = array(
 	'wikiastyleguide-dropdown-all' => 'All',
 	'wikiastyleguide-dropdown-select-all' => 'Select All',
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 and $2 more',
-	
+
 	'wikiastyleguide-tooltip-icon-question-mark' => '?',
 );
 
