@@ -285,9 +285,6 @@ class AbstractServiceTest extends BaseTest
 			->method ( 'getCurrentDocumentId' )
 			->will   ( $this->returnValue( '321_123' ) );
 
-
-
-
 		$reflIf = new ReflectionProperty( '\Wikia\Search\IndexService\AbstractService', 'service' );
 		$reflIf->setAccessible( true );
 		$reflIf->setValue( $service, $mwservice );
