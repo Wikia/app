@@ -102,6 +102,7 @@ abstract class AbstractService
 
 			if ( $currentId != $originalId ) {
 				$documents[] = array( "delete" => array( "id" => $originalId ) );
+				continue;
 			}
 
 			if ( !$this->getService()->pageIdExists( $pageId ) ) {
