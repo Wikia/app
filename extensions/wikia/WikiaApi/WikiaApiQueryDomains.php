@@ -61,13 +61,13 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 			}
 		}
 
-		if (!empty($lang)) {
-			if (!Language::isValidBuiltInCode($lang)) {
+		if ( !empty( $lang ) ) {
+			if ( !Language::isValidBuiltInCode( $lang ) ) {
 				// FIXME add proper error msg
-				$this->dieUsageMsg(array("invalidtitle", $lang));
+				$this->dieUsageMsg( array( 'invalidtitle', $lang ) );
 			}
-		
-			$this->addWhereFld("city_lang", $lang);
+
+			$this->addWhereFld( 'city_lang', $lang );
 		}
 
 		if ( isset( $countonly ) ) {
