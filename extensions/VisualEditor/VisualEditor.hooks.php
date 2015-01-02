@@ -9,6 +9,13 @@
  */
 
 class VisualEditorHooks {
+
+	// Wikia change
+	public static function isAvailable( $skin ) {
+		global $wgVisualEditorSupportedSkins;
+		return in_array( $skin->getSkinName(), $wgVisualEditorSupportedSkins );
+	}
+
 	public static function onSetup() {
 		// This prevents VisualEditor from being run in environments that don't
 		// have the dependent code in core; this should be updated as a part of
@@ -17,9 +24,7 @@ class VisualEditorHooks {
 		// parties who attempt to install VisualEditor onto non-alpha wikis, as
 		// this should have no impact on deploying to Wikimedia's wiki cluster;
 		// is fine for release tarballs because 1.22wmf11 < 1.22alpha < 1.22.0.
-
-		// Wikia change: skip version check
-		// wfUseMW( '1.25wmf13' );
+		wfUseMW( '1.25wmf13' );
 	}
 
 	/**
@@ -32,8 +37,12 @@ class VisualEditorHooks {
 	 * @return boolean
 	 */
 	public static function onBeforePageDisplay( OutputPage &$output, Skin &$skin ) {
-		$output->addModules( array( 'ext.visualEditor.viewPageTarget.init' ) );
-		$output->addModuleStyles( array( 'ext.visualEditor.viewPageTarget.noscript' ) );
+		// Wikia change
+		if ( self::isAvailable( $skin ) ) {
+			$output->addModules( array( 'ext.visualEditor.wikiaViewPageTarget.init' ) );
+		}
+		//$output->addModules( array( 'ext.visualEditor.viewPageTarget.init' ) );
+		//$output->addModuleStyles( array( 'ext.visualEditor.viewPageTarget.noscript' ) );
 		return true;
 	}
 
@@ -399,9 +408,7 @@ class VisualEditorHooks {
 	 * Adds extra variables to the global config
 	 */
 	public static function onResourceLoaderGetConfigVars( array &$vars ) {
-		$coreConfig = RequestContext::getMain()->getConfig();
-		$defaultUserOptions = $coreConfig->get( 'DefaultUserOptions' );
-		$thumbLimits = $coreConfig->get( 'ThumbLimits' );
+		global $wgDefaultUserOptions, $wgThumbLimits;
 		$veConfig = ConfigFactory::getDefaultInstance()->makeConfig( 'visualeditor' );
 
 		$vars['wgVisualEditorConfig'] = array(
@@ -410,9 +417,9 @@ class VisualEditorHooks {
 			'namespaces' => $veConfig->get( 'VisualEditorNamespaces' ),
 			'pluginModules' => $veConfig->get( 'VisualEditorPluginModules' ),
 			'defaultUserOptions' => array(
-				'betatempdisable' => $defaultUserOptions['visualeditor-betatempdisable'],
-				'enable' => $defaultUserOptions['visualeditor-enable'],
-				'defaultthumbsize' => $thumbLimits[ $defaultUserOptions['thumbsize'] ]
+				'betatempdisable' => $wgDefaultUserOptions['visualeditor-betatempdisable'],
+				'enable' => $wgDefaultUserOptions['visualeditor-enable'],
+				'defaultthumbsize' => $wgThumbLimits[ $wgDefaultUserOptions['thumbsize'] ]
 			),
 			'blacklist' => $veConfig->get( 'VisualEditorBrowserBlacklist' ),
 			'skins' => $veConfig->get( 'VisualEditorSupportedSkins' ),
