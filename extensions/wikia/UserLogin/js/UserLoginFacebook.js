@@ -174,8 +174,9 @@
 			} else {
 				this.bucky.timer.start('loggedInCallback');
 				var qString = new QueryString(),
+				// TODO: special page URL matching needs to be consolidated. @see UC-187
 					returnTo = (wgCanonicalSpecialPageName &&
-						(wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/))) ?
+						(wgCanonicalSpecialPageName.match(/Userlogin|Userlogout|UserSignup/))) ?
 						wgMainPageTitle : null;
 
 				if (returnTo) {

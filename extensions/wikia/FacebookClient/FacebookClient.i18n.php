@@ -14,6 +14,8 @@ $messages['en'] = [
 	'fbconnect-wrong-pass-msg' => 'The password you have entered is incorrect',
 	'fbconnect-graphapi-not-configured' => 'Facebook App ID and App secret missing from configuration.',
 	'prefs-fbconnect-disconnect-prefstext' => 'Disconnect from Facebook',
+	'fbconnect-error-already-connected' => 'This Wikia account is already connected to Facebook. Please disconnect the original Facebook account prior to connecting another account.',
+	'fbconnect-error-fb-account-in-use' => 'This Facebook account is already connected to another Wikia user account. Please connect with a different account or log in with Facebook and disconnect the original Wikia account prior to connecting the $1 account.',
 
 	// Keys copied from FBConnect and in use
 
@@ -77,6 +79,9 @@ $messages['qqq'] = [
 	'fbconnect-wrong-pass-msg' => 'Error text that appears when the user has entered their username/password incorrectly',
 	'fbconnect-graphapi-not-configured' => 'Text that appears when the Facebook credentials within the Wikia app are incorrect.',
 	'prefs-fbconnect-disconnect-prefstext' => 'Caption text for Facebook disconnect button; Please keep this very short.',
+	'fbconnect-error-already-connected' => 'Error message stating that Wikia account user is trying to connected to Facebook is already connected.',
+	'fbconnect-error-fb-account-in-use' => "Error message stating that another Wikia account is already connected to the Facebook account user is trying to connect to. Parameter:
+* $1 is a username.",
 
 	'fbconnect-desc' => 'Short description of the FBConnect extension, shown in [[Special:Version]]. Do not translate or change links.',
 	'fbconnect-or' => 'This is just the word "OR" in English, used to separate the Facebook Connect login option from the normal Wikia login options on the AJAX login dialog box.',

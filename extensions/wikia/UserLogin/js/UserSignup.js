@@ -23,6 +23,7 @@
 			});
 
 			this.initOptIn();
+			this.setCountryValue();
 			this.setupValidation();
 			this.termsOpenNewTab();
 		},
@@ -72,6 +73,13 @@
 			require(['usersignup.marketingOptIn'], function (optIn) {
 				optIn.init(self.wikiaForm);
 			});
+		},
+		/**
+		 * Send country code upon signup
+		 */
+		setCountryValue: function () {
+			var country = Wikia.geo.getCountryCode();
+			this.wikiaForm.inputs.wpRegistrationCountry.val(country);
 		}
 	};
 
