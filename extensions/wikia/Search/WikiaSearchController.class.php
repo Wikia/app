@@ -797,7 +797,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @see SearchControllerTest::testIsCorporateWiki
 	 */
 	protected function  isCorporateWiki() {
-	    return WikiaPageType::isCorporatePage();
+	    return WikiaPageType::isWikiaHomePage();
 	}
 
 	/**
