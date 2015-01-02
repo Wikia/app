@@ -180,7 +180,13 @@ module.exports = function ( grunt ) {
 				autoWatch: false
 			},
 			main: {
-				browsers: [ 'Chrome' ],
+				browsers: [ 'ChromeTravisCi' ],
+				customLaunchers: {
+					ChromeTravisCi: {
+						base: 'Chrome',
+						flags: [ '--no-sandbox' ]
+					}
+				},
 				preprocessors: {
 					'src/**/*.js': [ 'coverage' ]
 				},
