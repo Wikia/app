@@ -197,10 +197,11 @@ ve.init.mw.ViewPageTarget.prototype.setupToolbar = function ( surface ) {
 	this.getToolbar().$element
 		.addClass( 've-init-mw-viewPageTarget-toolbar' );
 
+	// Wikia change - #WikiaPageHeader instead of #firstHeading and after instead of before
 	// Move the toolbar to before #firstHeading if it exists
-	$firstHeading = $( '#firstHeading' );
+	$firstHeading = $( '#WikiaPageHeader' );
 	if ( $firstHeading.length ) {
-		this.getToolbar().$element.insertBefore( $firstHeading );
+		this.getToolbar().$element.insertAfter( $firstHeading );
 	}
 
 	this.getToolbar().$bar.slideDown( 'fast', function () {
