@@ -18,44 +18,40 @@
  */
 ( function () {
 	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage,
-		init, support, targetPromise, enable, userPrefEnabled,
-		plugins = [], getTargetDeferred;
+		init, support, targetDeferred, enable, userPrefEnabled,
+		plugins = [];
 
 	/**
 	 * Use deferreds to avoid loading and instantiating Target multiple times.
 	 * @returns {jQuery.Promise}
 	 */
+	// Wikia change - 
 	function getTarget() {
-		if ( !getTargetDeferred ) {
-			getTargetDeferred = $.Deferred();
-			mw.loader.using( 'ext.visualEditor.viewPageTarget', function() {
-				debugger;
+		var resources, loadTargetDeferred;
+		if ( !targetDeferred ) {
+			targetDeferred = $.Deferred();
+			loadTargetDeferred = $.Deferred();
+			mw.loader.using( 'ext.visualEditor.viewPageTarget', loadTargetDeferred.resolve, loadTargetDeferred.reject );
+			$.when(
+				$.getResources( [
+					wgResourceBasePath + '/resources/wikia/libraries/vignette/vignette.js',
+					$.getSassCommonURL( '/extensions/VisualEditor/wikia/VisualEditor-Oasis.scss' )
+				] ),
+				loadTargetDeferred
+			).done( function() {
 				var target = new ve.init.mw.ViewPageTarget();
-				$( '#mw-content-text' /*'#content'*/ ).append( target.$element );
+				target.$element.insertAfter( '#mw-content-text' );
+
+				// Transfer methods
 				ve.init.mw.ViewPageTarget.prototype.setupSectionEditLinks = init.setupSectionLinks;
-				getTargetDeferred.resolve( target );
+
+				// Add plugins
+				target.addPlugins( plugins );
+
+				targetDeferred.resolve( target );
 			} );
 		}
-		return getTargetDeferred.promise();		
-
-		if ( !targetPromise ) {
-			targetPromise = mw.loader.using( 'ext.visualEditor.viewPageTarget' )
-				.then( function () {
-					var target = new ve.init.mw.ViewPageTarget();
-					$( '#content' ).append( target.$element );
-
-					// Transfer methods
-					ve.init.mw.ViewPageTarget.prototype.setupSectionEditLinks = init.setupSectionLinks;
-
-					// Add plugins
-					target.addPlugins( plugins );
-
-					return target;
-				}, function ( e ) {
-					mw.log.warn( 'VisualEditor failed to load: ' + e );
-				} );
-		}
-		return targetPromise;
+		return targetDeferred.promise();
 	}
 
 	conf = mw.config.get( 'wgVisualEditorConfig' );
