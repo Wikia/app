@@ -727,7 +727,7 @@ Groet, Wikia
 
 * Op de pagina http://www.wikia.com/wiki/Special:Preferences kunt u uw instellingen wijzigen voor volglijste-mails.
 * Zie het tabblad "Volglijst" in uw voorkeuren om alle pagina\'s uit deze wekelijkse samenvatting als gelezen te markeren.',
-	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|opmerking|opmerkingen}})',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|reactie|reacties}})',
 	'globalwatchlist-no-page-found' => 'Geen pagina aangetroffen.',
 	'globalwatchlist-no-blog-page-found' => 'Geen blogpagina aangetroffen.',
 );

@@ -550,11 +550,13 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Guilhermemau
  * @author Matheus Sousa L.T
  * @author TheGabrielZaum
  * @author Tuliouel
  */
 $messages['pt-br'] = array(
+	'adengine-advertisement' => 'anúncio',
 	'adengine-exitstitial-title-template' => 'Você está deixando $1...',
 	'adengine-exitstitial-redirecting' => 'Seu navegador irá redirecioná-lo à página que você requisitou em alguns segundos.',
 	'adengine-exitstitial-go-back' => 'Deseja voltar?',
@@ -719,21 +721,8 @@ $messages['zh-hans'] = array(
 	'adengine-exitstitial-button' => '跳过这个广告',
 );
 
-$messages['gv'] = array(
-	'adengine-advertisement' => 'soilsheen',
-);
-
-$messages['krc'] = array(
-	'adengine-advertisement' => 'реклама',
-);
-
-$messages['tt-cyrl'] = array(
-	'adengine-advertisement' => 'реклама',
-);
-
 /** Traditional Chinese (中文（繁體）‎)
  */
 $messages['zh-hant'] = array(
 	'adengine-advertisement' => '廣告',
 );
-

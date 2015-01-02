@@ -6003,7 +6003,7 @@ Het Wikia-team',
 	'founderemails-email-first-edit-greeting' => 'Hallo $USERNAME,',
 	'founderemails-email-first-edit-headline' => 'Wow! $EDITORNAME heeft $WIKINAME voor het eerst bewerkt.',
 	'founderemails-email-first-edit-content' => 'Ga naar $PAGETITLE om de wijziging te bekijken.',
-	'founderemails-email-first-edit-signature' => 'Het Wikia-team',
+	'founderemails-email-first-edit-signature' => 'Het Wikiateam',
 	'founderemails-email-first-edit-button' => 'Ga kijken!',
 	'founderemails-email-page-edited-reg-user-first-edit-body-HTML' => 'Hallo $USERNAME,<br /><br />
 De geregistreerde gebruiker $EDITORNAME heeft uw wiki voor de eerste keer bewerkt! Waarom gaat u niet even langs op de <a href="$EDITORTALKPAGEURL">overlegpagina</a> om goedendag te zeggen?<br /><br />
@@ -6021,7 +6021,7 @@ Het Wikia-team',
 	'founderemails-email-general-edit-greeting' => 'Hallo $USERNAME,',
 	'founderemails-email-general-edit-headline' => '$EDITORNAME heeft net weer een bewerking gemaakt op de pagina $PAGETITLE op $WIKINAME.',
 	'founderemails-email-general-edit-content' => 'Ga naar $PAGETITLE om de wijziging te bekijken.',
-	'founderemails-email-general-edit-signature' => 'Het Wikia-team',
+	'founderemails-email-general-edit-signature' => 'Het Wikiateam',
 	'founderemails-email-general-edit-button' => 'Ga kijken!',
 	'founderemails-email-page-edited-reg-user-body-HTML' => 'Hallo $USERNAME,<br /><br />
 
@@ -6066,12 +6066,12 @@ De gebruiker $EDITORNAME heeft zich geregistreerd op uw wiki! Waarom zegt u niet
 	'founderemails-answers-email-3-days-passed-subject' => 'Even contact houden',
 	'founderemails-answers-email-3-days-passed-body' => 'Hallo $USERNAME,
 
-Nu uw wiki een aantal dagen bestaat, dachten we dat het misschien een goed idee was als u eens ging kijken wat u allemaal kan doen.
+Nu uw wiki een aantal dagen bestaat, dachten we dat het misschien een goed idee was als u eens ging kijken wat u allemaal kunt doen.
 
--- Het Wikia-team',
+-- Het Wikiateam',
 	'founderemails-answers-email-3-days-passed-body-HTML' => 'Hallo $USERNAME,<br /><br />
-Nu uw wiki een aantal dagen bestaat, dachten we dat het misschien een goed idee was als u eens ging kijken wat u allemaal kan doen.<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Het Wikia-team</div>',
+Nu uw wiki een aantal dagen bestaat, dachten we dat het misschien een goed idee was als u eens ging kijken wat u allemaal kunt doen.<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Het Wikiateam</div>',
 	'founderemails-answers-email-10-days-passed-subject' => 'Hoe gaat het met uw wiki?',
 	'founderemails-answers-email-10-days-passed-body' => 'Hallo $USERNAME,
 
@@ -6080,7 +6080,7 @@ Het is al weer even geleden sinds uw u wiki aangemaakt hebt bij Wikia. We hopen 
 -- Het Wikia-team',
 	'founderemails-answers-email-10-days-passed-body-HTML' => 'Hallo $USERNAME,<br /><br />
 Het is al weer even geleden sinds uw u wiki aangemaakt hebt bij Wikia. We hopen dat het fantastisch gaat! We willen graag een paar laatste details met u delen om uw wiki verder te kunnen vormgeven.<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Het Wikia-team</div>',
+<div style="font-style: italic; font-size: 120%;">-- Het Wikiateam</div>',
 	'founderemails-answers-email-page-edited-reg-user-first-edit-subject' => 'Een gebruiker heeft voor de eerste keer uw site gewijzigd!',
 	'founderemails-answers-email-page-edited-reg-user-first-edit-body' => 'Hallo $USERNAME,
 
@@ -6104,10 +6104,10 @@ Het lijkt erop dat de geregistreerde gebruiker $EDITORNAME uw wiki heeft bewerkt
 
 Het lijkt erop dat iemand uw wiki heeft bewerkt! Waarom gaat u niet even kijken wat er is veranderd? $MYHOMEURL
 
--- Het Wikia-team',
+-- Het Wikiateam',
 	'founderemails-answers-email-page-edited-anon-body-HTML' => 'Hallo $USERNAME,<br /><br />
 Het lijkt erop dat iemand uw wiki heeft bewerkt! Waarom gaat u niet even kijken <a href="$MYHOMEURL">wat er is veranderd</a>?<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Het Wikia-team</div>',
+<div style="font-style: italic; font-size: 120%;">-- Het Wikiateam</div>',
 	'founderemails-lot-happening-subject' => 'Er gebeurt veel op $WIKINAME!',
 	'founderemails-lot-happening-body' => 'Hallo $USERNAME.
 
@@ -6120,15 +6120,15 @@ Omdat er zoveel gebeurt, wilt u misschien ook wel uw e-mailvoorkeuren aanpassen 
 Het Wikia-team',
 	'founderemails-lot-happening-body-HTML' => 'Hallo $USERNAME,<br /><br />
 Er gebeurt veel op uw wiki vandaag! Kom naar $MYHOMEURL om te kijken wat er allemaal gebeurt.<br /><br />
-<div style="font-style: italic; font-size: 120%;">-- Het Wikia-team</div>',
+<div style="font-style: italic; font-size: 120%;">-- Het Wikiateam</div>',
 	'founderemails-email-lot-happening-greeting' => 'Hallo $USERNAME,',
 	'founderemails-email-lot-happening-headline' => 'Gefeliciteerd! Er is veel gaande op $WIKINAAM vandaag!',
 	'founderemails-email-lot-happening-content' => 'Als u niet al hebt gekeken, kunt u op Wikiactiviteit zien wat er allemaal is gedaan. Omdat er zoveel gebeurt, wilt u misschien ook wel uw e-mailvoorkeuren aanpassen naar verzamelmodus. In verzamelmodus ontvangt u iedere dag in een enkele e-mail een lijst met alles dat er in uw wiki is gebeurd.',
 	'founderemails-email-lot-happening-signature' => 'Het Wikia-team',
-	'founderemails-email-lot-happening-button' => 'Activiteiten bekijken',
+	'founderemails-email-lot-happening-button' => 'Activiteit bekijken',
 	'founderemails-email-footer-line1' => 'Ga naar <a style="color:#2a87d5;text-decoration:none;" href="http://community.wikia.com">community.wikia.com</a> om de laatste ontwikkelingen bij Wikia te volgen',
 	'founderemails-email-footer-line2' => 'Wilt u bepalen welke e-mails u krijgt? Ga naar uw [{{fullurl:{{ns:special}}:Preferences}} voorkeuren]',
-	'founderemails-email-0-day-heading' => 'Goed u te ontmoeten, $USERNAME.',
+	'founderemails-email-0-day-heading' => 'Goed u te zien, $USERNAME.',
 	'founderemails-email-0-day-congratulations' => 'Gefeliciteerd met het aanmaken van $WIKINAME!',
 	'founderemails-email-0-day-tips-heading' => 'Hier zijn een paar nuttige tips om u snel op weg te helpen:',
 	'founderemails-email-0-day-addpages-heading' => "Pagina's toevoegen.",

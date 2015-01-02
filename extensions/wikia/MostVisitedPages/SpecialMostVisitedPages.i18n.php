@@ -465,7 +465,7 @@ $messages['nl'] = array(
 	'mostvisitedpages' => "Meest bezochte pagina's",
 	'mostvisitedpagessearchtext' => 'Paginanaam:',
 	'mostvisitedpagessearchbtn' => 'zoeken',
-	'mostvisitedpageslatest' => 'in de laatste $1 minuten',
+	'mostvisitedpageslatest' => 'in de laatste {{PLURAL:$1|minuut|$1 minuten}}',
 	'mostvisitedpageslatestlink' => "Recent bezochte pagina's bekijken",
 	'mostvisitedpagesalllink' => "Meest bezochte pagina's bekijken",
 );

@@ -2345,7 +2345,7 @@ $messages['nb'] = array(
  * @author Siebrand
  */
 $messages['nl'] = array(
-	'multitasks-link-back-label' => 'Hier',
+	'multitasks-link-back-label' => 'hier',
 	'multiwikiedit' => "Meerdere pagina's bewerken",
 	'multiwikiedit_button' => 'BEWERKEN',
 	'multiwikiedit_confirm' => 'Bevestigen',

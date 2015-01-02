@@ -250,6 +250,7 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 
 /** Message documentation (Message documentation)
  * @author McDutchie
+ * @author Robby
  * @author Shirayuki
  * @author Siebrand
  */
@@ -372,7 +373,7 @@ Page content for confirm page when byemail=1 is used.  Parameters:
 	'usersignup-confirmation-reminder-email_body-HTML' => 'Stand-alone HTML version of confirmation email that is sent 7 days after user has started the signup process without confirming.  $1 is username, $2 is confirmation url.',
 	'usersignup-facebook-signup-header' => 'Message used in conjunction with usersignup-facebook-login-header and usersignup-facebook-or-header. The full message, in english, reads: Create a new account? or Already have an account?',
 	'usersignup-facebook-login-header' => 'Message used in conjunction with usersignup-facebook-signup-header and usersignup-facebook-or-header. The full message, in english, reads: Create a new account? or Already have an account?',
-	'usersignup-facebook-or-header' => 'Message used in conjunction with usersignup-facebook-login-header and usersignup-facebook-signup-header. The full message, in english, reads: Create a new account? or Already have an account?',
+	'usersignup-facebook-or-header' => '{{Identical|Or}}',
 );
 
 /** Arabic (العربية)
@@ -1139,6 +1140,9 @@ ___________________________________________
 Um dich zu Wikia auf dem aktuellen Stand zu halten, besuche http://de.community.wikia.com
 Steuere, welche E-Mails du von uns erhalten willst, auf {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-facebook-problem' => 'Es gab ein Problem bei der Kommunikation mit Facebook. Bitte später noch einmal probieren.',
+	'usersignup-facebook-signup-header' => 'Ein neues Benutzerkonto erstellen?',
+	'usersignup-facebook-login-header' => 'Hast du bereits ein Benutzerkonto?',
+	'usersignup-facebook-or-header' => 'oder',
 );
 
 /** Zazaki (Zazaki)
@@ -1384,6 +1388,9 @@ ___________________________________________
 Para ver las noticias más recientes en Wikia, visita http://es.wikia.com
 ¿Quieres controlar los mensajes que recibes?? Ve a: {{fullurl:{{ns:special}}:Preferencias}}',
 	'usersignup-facebook-problem' => 'Hubo un problema de comunicación con Facebook. Por favor, inténtalo otra vez más tarde.',
+	'usersignup-facebook-signup-header' => '¿Creando una cuenta nueva?',
+	'usersignup-facebook-login-header' => '¿Ya tienes una cuenta?',
+	'usersignup-facebook-or-header' => 'o',
 );
 
 /** Persian (فارسی)
@@ -1707,6 +1714,9 @@ ___________________________________________
 To check out the latest happenings on Wikia, visit http://community.wikia.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}",
 	'usersignup-facebook-problem' => 'Il y a eu un problème de communication avec Facebook. Veuillez essayer ultérieurement.',
+	'usersignup-facebook-signup-header' => 'Créer un nouveau compte ?',
+	'usersignup-facebook-login-header' => 'Vous avez déjà un compte ?',
+	'usersignup-facebook-or-header' => 'ou',
 );
 
 /** Western Frisian (Frysk)
@@ -1714,6 +1724,7 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
  */
 $messages['fy'] = array(
 	'usersignup-marketing-global-heading' => 'Oanmeitsje',
+	'usersignup-facebook-or-header' => 'of',
 );
 
 /** Galician (galego)
@@ -2430,7 +2441,15 @@ ___________________________________________
 	'usersignup-facebook-problem' => 'Facebook との通信中に問題が発生しました。しばらくしてからもう一度お試しください。',
 );
 
+/** Georgian (ქართული)
+ * @author MIKHEIL
+ */
+$messages['ka'] = array(
+	'usersignup-facebook-or-header' => 'ან',
+);
+
 /** Korean (한국어)
+ * @author Gusdud25
  * @author Miri-Nae
  */
 $messages['ko'] = array(
@@ -2440,6 +2459,7 @@ $messages['ko'] = array(
 	'usersignup-welcome-email-signature' => '위키아 팀',
 	'usersignup-account-creation-email-signature' => '위키아 팀',
 	'usersignup-confirmation-reminder-email-signature' => '위키아 팀',
+	'usersignup-facebook-or-header' => '또는',
 );
 
 /** Karachay-Balkar (къарачай-малкъар)
@@ -2448,6 +2468,13 @@ $messages['ko'] = array(
 $messages['krc'] = array(
 	'usersignup-facebook-create-account' => 'Аккаунт къурау',
 	'usersignup-confirm-email-update' => 'Джангырт',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'usersignup-facebook-or-header' => 'oder',
 );
 
 /** Macedonian (македонски)
@@ -3292,6 +3319,9 @@ ___________________________________________
 Ga naar http://community.wikia.com voor het laatste nieuws over Wikia.
 Wilt u bepalen welke e-mails u ontvangt? Ga dan naar {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-facebook-problem' => 'Er is een probleem opgetreden in de communicatie met Facebook. Probeer het later opnieuw.',
+	'usersignup-facebook-signup-header' => 'Nieuwe gebruiker registreren?',
+	'usersignup-facebook-login-header' => 'Hebt u al een gebruiker?',
+	'usersignup-facebook-or-header' => 'of',
 );
 
 /** Occitan (occitan)
@@ -3800,6 +3830,7 @@ $messages['ps'] = array(
  * @author Josep Maria 15.
  * @author Luckas
  * @author SandroHc
+ * @author Vitorvicentevalente
  */
 $messages['pt'] = array(
 	'usersignup-page-title' => 'Junta-te à Wikia',
@@ -3830,6 +3861,7 @@ $messages['pt'] = array(
 	'usersignup-confirmation-reminder-email_subject' => 'Não seja um estranho...',
 	'usersignup-confirmation-reminder-email-greeting' => 'Olá $USERNAME',
 	'usersignup-confirmation-reminder-email-signature' => 'A Equipa da Wikia',
+	'usersignup-facebook-or-header' => 'ou',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -4169,6 +4201,7 @@ ___________________________________________
 Чтобы проверить последние события на Викия, посетите http://community.wikia.com
 Хотите настроить email рассылку? Перейдите к {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-facebook-problem' => 'Есть проблема со связью с Facebook. Пожалуйста, попробуйте ещё раз позже.',
+	'usersignup-facebook-or-header' => 'или',
 );
 
 /** Swedish (svenska)
@@ -4383,6 +4416,9 @@ ___________________________________________
 För att kolla in de senaste händelserna på Wikia, besök http://community.wikia.com
 Vill du kontrollera vilka e-postmeddelanden du får? Gå till: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-facebook-problem' => 'Det gick inte att kommunicera med Facebook. Försök igen senare.',
+	'usersignup-facebook-signup-header' => 'Skapa ett nytt konto?',
+	'usersignup-facebook-login-header' => 'Har redan ett konto?',
+	'usersignup-facebook-or-header' => 'eller',
 );
 
 /** Thai (ไทย)
@@ -5265,6 +5301,9 @@ ___________________________________________
 查看Wikia的最新信息请访问http://community.wikia.com
 想控制接收那些电子邮件？请查看：{{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-facebook-problem' => '与脸谱链接出错，请稍后再试。',
+	'usersignup-facebook-signup-header' => '创建一个新的账户？',
+	'usersignup-facebook-login-header' => '已有帐户？',
+	'usersignup-facebook-or-header' => '或',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

@@ -725,11 +725,11 @@ Por favor, déixame unha mensaxe se necesitas axuda con algunha cousa!',
 	'welcome-message-wall-user-staff' => 'Boas:
 
 Dámoslle a benvida a {{SITENAME}} e agradecemos a súa edición na páxina "[[:$1]]". Se necesita axuda, empece consultando as [[Help:Contents|páxinas de axuda]]. Visite a [[w:c:community|central da comunidade]] para informarse a través do [[w:c:community:Blog:Wikia_Staff_Blog|blogue do persoal]], facer preguntas no noso [[w:c:community:Special:Forum|foro comunitario]], participar na nosa [[w:c:community:Help:Webinars|serie webinar]] ou conversar en tempo real con outros compañeiros de Wikia. Páseo ben!',
-	'welcome-message-wall-anon' => "Ola, dámoslle a benvida a {{SITENAME}}! Grazas pola súa edición na páxina \"[[:\$1]]\".
+	'welcome-message-wall-anon' => "Ola, dámosche a benvida a {{SITENAME}}! Grazas pola túa edición na páxina \"[[:\$1]]\".
 
-'''Por favor, [[Special:Userlogin|rexístrese e cree unha conta de usuario]]'''. É un xeito doado de manter baixo control as súas achegas e axuda á comunicación co resto da comunidade.
+'''Por favor, [[Special:Userlogin|rexístrate e crea unha conta de usuario]]'''. É un xeito doado de manter baixo control as túas achegas e axuda á comunicación co resto da comunidade.
 
-Por favor, déixeme unha mensaxe se quere que lle axude con algunha cousa!",
+Por favor, déixame unha mensaxe se queres que che axude con algunha cousa!",
 	'welcome-message-wall-anon-staff' => 'Boas:
 
 Dámoslle a benvida a {{SITENAME}} e agradecemos a súa edición na páxina "[[:$1]]". Animamos a todos os colaboradores a [[Special:UserLogin|crear unha conta de usuario]], un xeito doado de manter baixo control as súas achegas, acceder a máis características de Wikia e axudar a darse a coñecer no resto da comunidade de {{SITENAME}}.

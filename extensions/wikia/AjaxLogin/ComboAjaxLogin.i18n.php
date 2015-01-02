@@ -1300,10 +1300,10 @@ $messages['nl'] = array(
 <li>Volledige controle over wat wordt gepubliceerd</li>
 </ul>',
 	'comboajaxlogin-log-in-with-facebook-oasis' => '<h1>Aanmelden via Facebook Connect</h1>',
-	'comboajaxlogin-connectmarketing-oasis' => '<h1>Uw Wikia-gebruiker met uw Facebook-gebruiker verbinden</h1>
+	'comboajaxlogin-connectmarketing-oasis' => '<h1>Uw Wikiagebruiker met uw Facebookgebruiker koppelen</h1>
 <ul>
-<li>Behoud uw huidige gebruikersnaam, geschiedenis, bewerkingen, enzovoort. Niets wijzigt, behalve de manier waarop u aanmeldt</li>
-<li>Deel uw activiteit bij Wikia met uw vrienden op Facebook en behoud volledige controle over wat wordt gepubliceerd</li>
+<li>Behoud uw huidige gebruikersnaam, geschiedenis, bewerkingen, enzovoort. Niets wijzigt, behalve de manier waarop u aanmeldt;</li>
+<li>Deel uw activiteit bij Wikia met uw vrienden op Facebook en behoud volledige controle over wat wordt gepubliceerd.</li>
 </ul>',
 	'comboajaxlogin-connectmarketing-back' => '« Terug',
 	'comboajaxlogin-connectmarketing-forward' => 'Aan de slag »',
@@ -1978,6 +1978,13 @@ $messages['zh-hans'] = array(
 <br />
 （如果您已拥有一个账户，则可以正常<a href="#">登陆</a>，但不能做出任何编辑。）</p>',
 	'comboajaxlogin-ajaxerror' => 'Wikia没有响应。请检查您的网络连接。',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Liuxinyu970226
+ */
+$messages['zh-hant'] = array(
+	'comboajaxlogin-connectmarketing-forward' => '入門 »',
 );
 
 /** Chinese (Hong Kong) (中文（香港）‎)

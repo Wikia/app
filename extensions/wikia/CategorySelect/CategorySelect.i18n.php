@@ -944,7 +944,7 @@ $messages['nl'] = array(
 	'categoryselect-edit-summary' => 'Bezig met het toevoegen van categorieën',
 	'categoryselect-error-article-doesnt-exist' => 'De pagina [id=$1] bestaat niet.',
 	'categoryselect-error-category-name-length' => 'De maximale lengte voor een categorienaam is bereikt.',
-	'categoryselect-error-db-locked' => 'De database is geblokkeerd.',
+	'categoryselect-error-db-locked' => 'De database is vergrendeld.',
 	'categoryselect-error-duplicate-category-name' => 'De categorie "$1" bestaat al.',
 	'categoryselect-error-edit-abort' => 'De wijzigingen die u probeerde te maken zijn afgebroken door een uitbreidingshook.',
 	'categoryselect-error-empty-category-name' => 'Geef de categorienaam op.',

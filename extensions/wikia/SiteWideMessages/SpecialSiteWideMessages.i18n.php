@@ -3890,6 +3890,8 @@ $messages['zh-hant'] = array(
 	'swm-label-list' => '清單',
 	'swm-label-recipient-users' => '使用者',
 	'swm-label-mode-users-anon' => '所有匿名用戶',
+	'swm-label-content' => '內容',
 	'swm-label-language' => '語言',
+	'swm-list-table-content' => '內容',
 	'swm-list-table-tools' => '工具',
 );
