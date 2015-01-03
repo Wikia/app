@@ -24,6 +24,18 @@ $wgResourceModules += array(
 			'ext.visualEditor.track'
 		),
 		'position' => 'top'
-	)
+	),
+	'ext.visualEditor.wikiaViewPageTarget' => $wgVisualEditorWikiaResourceTemplate + array(
+		'scripts' => array(
+			've/init/ve.init.wikia.js',
+			've/init/ve.init.wikia.ViewPageTarget.js'
+		),
+		'styles' => array(
+			've/init/styles/ve.init.wikia.ViewPageTarget.css'
+		),
+		'dependencies' => array(
+			'ext.visualEditor.viewPageTarget'
+		)
+	),
 );
 
