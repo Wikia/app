@@ -243,7 +243,8 @@ class ApiVisualEditor extends ApiBase {
 			'action' => 'query',
 			'prop' => 'revisions',
 			'titles' => $title->getPrefixedDBkey(),
-			'rvdifftotext' => $this->pstWikitext( $title, $wikitext )
+			//'rvdifftotext' => $this->pstWikitext( $title, $wikitext )
+			'rvdifftotext' => $wikitext
 		);
 		$api = new ApiMain(
 			new DerivativeRequest(

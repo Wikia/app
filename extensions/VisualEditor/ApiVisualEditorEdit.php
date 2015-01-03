@@ -10,7 +10,7 @@
 
 class ApiVisualEditorEdit extends ApiVisualEditor {
 
-	public function __construct( ApiMain $main, $name, Config $config ) {
+	public function __construct( ApiMain $main, $name /*, Config $config */ ) {
 		parent::__construct( $main, $name, $config );
 	}
 
