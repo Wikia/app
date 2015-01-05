@@ -12,7 +12,7 @@ $wgVisualEditorWikiaResourceTemplate = array(
 
 $wgResourceModules += array(
 	// Based on ext.visualEditor.viewPageTarget.init
-	'ext.visualEditor.wikiaViewPageTarget.init' => $wgVisualEditorWikiaResourceTemplate + array(
+	'ext.visualEditor.wikia.viewPageTarget.init' => $wgVisualEditorWikiaResourceTemplate + array(
 		'scripts' => 've/init/ve.init.wikia.ViewPageTarget.init.js',
 		'dependencies' => array(
 			'jquery.client',
@@ -25,7 +25,7 @@ $wgResourceModules += array(
 		),
 		'position' => 'top'
 	),
-	'ext.visualEditor.wikiaViewPageTarget' => $wgVisualEditorWikiaResourceTemplate + array(
+	'ext.visualEditor.wikia.oasisViewPageTarget' => $wgVisualEditorWikiaResourceTemplate + array(
 		'scripts' => array(
 			've/init/ve.init.wikia.js',
 			've/init/ve.init.wikia.ViewPageTarget.js'
@@ -36,6 +36,12 @@ $wgResourceModules += array(
 		'dependencies' => array(
 			'ext.visualEditor.viewPageTarget'
 		)
+	),
+	'ext.visualEditor.wikia.venusViewPageTarget' => $wgVisualEditorWikiaResourceTemplate + array(
+		// placeholder to establish naming scheme
+	),
+	'ext.visualEditor.wikia.core' => $wgVisualEditorWikiaResourceTemplate + array(
+		// placeholder to establish naming scheme
 	),
 );
 

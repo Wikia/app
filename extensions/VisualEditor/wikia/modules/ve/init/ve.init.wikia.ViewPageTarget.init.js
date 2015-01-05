@@ -31,7 +31,7 @@
 		if ( !targetDeferred ) {
 			targetDeferred = $.Deferred();
 			loadTargetDeferred = $.Deferred();
-			mw.loader.using( 'ext.visualEditor.wikiaViewPageTarget', loadTargetDeferred.resolve, loadTargetDeferred.reject );
+			mw.loader.using( 'ext.visualEditor.wikia.oasisViewPageTarget', loadTargetDeferred.resolve, loadTargetDeferred.reject );
 			$.when(
 				$.getResources( [
 					wgResourceBasePath + '/resources/wikia/libraries/vignette/vignette.js',
