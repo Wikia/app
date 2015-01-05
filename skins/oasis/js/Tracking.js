@@ -568,11 +568,6 @@ jQuery(function($){
 			}
 		});
 
-		$('#UserLoginDropdown input[type=submit]').on('mousedown', {
-			category: category,
-			label: 'login'
-		}, trackWithEventData);
-
 		$('#wall-notifications-markasread').on('mousedown', 'span', function(e) {
 			var label,
 				el = $(e.target),
