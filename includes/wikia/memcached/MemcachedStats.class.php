@@ -23,25 +23,43 @@ class MemcachedStats {
 		global $wgMemc;
 		$client = $wgMemc->getClient();
 
+		wfProfileIn(__METHOD__);
+
 		$stats = [
 			'counts' => $client->stats,
 			'keys' => [
-				'hits' => self::normalizeKeys($client->keys_stats['hits']),
-				'misses' => self::normalizeKeys($client->keys_stats['misses']),
+				'hits' => self::normalizeAndCountKeys($client->keys_stats['hits']),
+				'misses' => self::normalizeAndCountKeys($client->keys_stats['misses']),
 			]
 		];
 
+		wfProfileOut(__METHOD__);
 		return $stats;
 	}
 
 	/**
-	 * Normalizes the given set of keys
+	 * Normalizes the given set of keys and aggregates them
 	 *
 	 * @param array $keys
-	 * @return array normalized keys
+	 * @return array normalized and aggregated keys
 	 */
-	private static function normalizeKeys(Array $keys) {
-		return array_map([__CLASS__, 'normalizeKey'], $keys);
+	private static function normalizeAndCountKeys(Array $keys) {
+		wfProfileIn(__METHOD__);
+
+		$normalized = array_map([__CLASS__, 'normalizeKey'], $keys);
+
+		$aggregated = [];
+		foreach($normalized as $key) {
+			if (!isset($aggregated[$key])) {
+				$aggregated[$key] = 1;
+			}
+			else {
+				$aggregated[$key]++;
+			}
+		}
+
+		wfProfileOut(__METHOD__);
+		return $aggregated;
 	}
 
 	/**
@@ -95,10 +113,11 @@ class MemcachedStats {
 
 		// send top keys for misses and hits
 		foreach($stats['keys'] as $bucket => $keys) {
-			foreach($keys as $key) {
+			foreach($keys as $key => $count) {
 				\Transaction::addEvent( \Transaction::EVENT_MEMCACHE_STATS_KEYS, [
 					'bucket' => $bucket,
 					'key' => $key,
+					'count' => $count
 				]);
 			}
 		}
