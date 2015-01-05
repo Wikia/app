@@ -114,7 +114,7 @@ class MemcachedStats {
 		// send top keys for misses and hits
 		foreach($stats['keys'] as $bucket => $keys) {
 			foreach($keys as $key => $count) {
-				\Transaction::addEvent( \Transaction::EVENT_MEMCACHE_STATS_KEYS, [
+				\Transaction::addRawEvent( \Transaction::EVENT_MEMCACHE_STATS_KEYS, [
 					'bucket' => $bucket,
 					'key' => $key,
 					'count' => $count
