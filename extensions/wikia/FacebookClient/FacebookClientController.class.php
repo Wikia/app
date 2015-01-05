@@ -136,6 +136,7 @@ class FacebookClientController extends WikiaController {
 	public function disconnectFromFB() {
 
 		if ( $this->request->isInternal() ) {
+			// deauthorizeCallback which makes this internal request ensures 'user' is set
 			$userId = $this->getVal( 'user' );
 			$user = User::newFromId( $userId );
 		} elseif ( $this->isValidExternalRequest() ) {
