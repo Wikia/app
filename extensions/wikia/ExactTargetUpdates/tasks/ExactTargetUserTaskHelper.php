@@ -115,6 +115,7 @@ class ExactTargetUserTaskHelper {
 	 * Prepares array of params for ExactTarget API for updating DataExtension objects for UserID_WikiID mapping
 	 * @param int $iUserId User id
 	 * @param array $aUsersEdits array of user ids and number of contributions on wikis
+	 * e.g. $aUsersEdits = [ 12345 => [ 177 => 5 ] ]; It means user 12345 made 5 edits on 177 wiki
 	 * @return array
 	 */
 	public function prepareUserEditsUpdateParams( array $aUsersEdits ) {
@@ -122,14 +123,14 @@ class ExactTargetUserTaskHelper {
 		$aCustomerKeys = $this->getCustomerKeys();
 		$sCustomerKey = $aCustomerKeys[ 'UserID_WikiID' ];
 		$aApiParams = [ 'DataExtension' => [] ];
-		foreach ( $aUsersEdits as $iUserId => $aValues ) {
-			foreach ( $aValues as $aEditsOnWiki ) {
+		foreach ( $aUsersEdits as $iUserId => $aWikiContributions ) {
+			foreach ( $aWikiContributions as $iWikiId => $iContributions ) {
 				$aApiParams[ 'DataExtension' ][] = [
 					'CustomerKey' => $sCustomerKey,
-					'Properties' => [ 'contributions' => $aEditsOnWiki['contributions'] ],
+					'Properties' => [ 'contributions' => $iContributions ],
 					'Keys' => [
 						'user_id' => $iUserId,
-						'wiki_id' => $aEditsOnWiki['wiki_id']
+						'wiki_id' => $iWikiId
 					]
 				];
 			}

@@ -27,8 +27,8 @@ class ExactTargetUpdateUserEditsPerWikiMaintenance {
 		$oStatsDBr = wfGetDB( DB_SLAVE, array(), $wgDWStatsDB );
 		$sStartDate = $this->getLastDayDate();
 		$oUsersListResult = $this->getUsersEditedRecently( $oStatsDBr, $sStartDate );
-		$aData = $this->getUserEdits( $oStatsDBr, $sStartDate, $oUsersListResult );
-		$this->addEditsUpdateTask($aData);
+		$aUsersEditsData = $this->getUserEdits( $oStatsDBr, $sStartDate, $oUsersListResult );
+		$this->addEditsUpdateTask( $aUsersEditsData );
 	}
 
 	private function getUsersEditedRecently( $oStatsDBr, $sStartDate ) {
@@ -42,22 +42,29 @@ class ExactTargetUpdateUserEditsPerWikiMaintenance {
 		return "time_id>'{$sStartDate}' and period_id=1";
 	}
 
+	/**
+	 * Fetches user edits from statsDB from last period determined by prepareTimeCondition function
+	 * e.g. result
+	 * [ 12345 => [ 177 => 5 ] ]; It means user 12345 made 5 edits on 177 wiki
+	 * @param $oStatsDBr
+	 * @param $sStartDate
+	 * @param $oUsersListResult
+	 * @return array
+	 */
 	private function getUserEdits( $oStatsDBr, $sStartDate, $oUsersListResult ) {
 		$timeCondition = $this->prepareTimeCondition( $sStartDate );
 		// Get user edits
-		$aData = [];
+		$aUsersEditsData = [];
 		foreach ( $oUsersListResult as $oUserResult ) {
 			if ( !$this->isUserBot( $oUserResult->user_id ) ) {
 				$oUserEditCountWikisResult = $oStatsDBr->query("SELECT user_id, wiki_id, ( sum( edits )+sum( creates ) ) as editcount from rollup_wiki_user_events where {$timeCondition} and user_id = {$oUserResult->user_id} group by wiki_id");
-				foreach ($oUserEditCountWikisResult as $oUserEditCountWikiResult) {
-					$aData[$oUserEditCountWikiResult->user_id][] = [
-						'wiki_id' => $oUserEditCountWikiResult->wiki_id,
-						'contributions' => $oUserEditCountWikiResult->editcount
-					];
+				foreach ( $oUserEditCountWikisResult as $oUserEditCountWikiResult ) {
+					$aUsersEditsData[ $oUserEditCountWikiResult->user_id ][ $oUserEditCountWikiResult->wiki_id ] =
+						intval( $oUserEditCountWikiResult->editcount );
 				}
 			}
 		}
-		return $aData;
+		return $aUsersEditsData;
 	}
 
 	private function isUserBot($uId) {
@@ -82,10 +89,10 @@ class ExactTargetUpdateUserEditsPerWikiMaintenance {
 		}
 	}
 
-	private function addEditsUpdateTask( $aData ) {
+	private function addEditsUpdateTask( $aUsersEditsData ) {
 		/* Get and run the task */
 		$task = new \Wikia\ExactTarget\ExactTargetUpdateUserTask();
-		$task->call( 'updateUserEdits', $aData );
+		$task->call( 'updateUserEdits', $aUsersEditsData );
 		$task->queue();
 	}
 
