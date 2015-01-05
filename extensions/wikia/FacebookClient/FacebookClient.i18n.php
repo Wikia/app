@@ -53,9 +53,7 @@ You can use the same username and password as you did before you connected.
 Thanks,
 
 The Wikia Community Team',
-	'fbconnect-wikia-login-w-facebook' => 'Log in / Sign up with Facebook Connect',
 	'fbconnect-wikia-signup-w-facebook' => 'Sign up with Facebook',
-	'fbconnect-wikia-login-or-create' => 'Log in / Create an account',
 	'fbconnect-logout-confirm' => 'Choosing to cancel will log you out of Wikia and Facebook. Do you want to continue?',
 	'prefs-fbconnect-prefstext' => 'Facebook Connect',
 	'prefs-fbconnect-status-prefstext' => 'Status',
@@ -103,8 +101,6 @@ $messages['qqq'] = [
 	'fbconnect-prefstext' => '',
 	'fbconnect-prefstext/fbconnect-status-prefstext' => '',
 	'fbconnect-unknown-error' => '',
-	'fbconnect-wikia-login-or-create' => '',
-	'fbconnect-wikia-login-w-facebook' => '',
 	'fbconnect-wikia-signup-w-facebook' => '',
 	'fbconnect-logout-confirm' => 'Message shown if a user attempts to cancel process of connecting Wikia account with Facebook account. It informs the user that proceeding with this action will result in logout from Facebook and asks for confirmation.',
 	'fbconnect-preferences-connected' => 'Notifies user when they have successfully connected their facebook and wikia accounts via Special:Preferences',

@@ -73,8 +73,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			$this->response->addAsset('extensions/wikia/UserLogin/js/UserSignup.js');
 		}
 
-		// TODO: change this to FacebookClient or remove the check if we're enabled globally UC-188
-		if ( !empty($this->wg->EnableFacebookConnectExt) ) {
+		if ( !empty($this->wg->EnableFacebookClientExt ) ) {
 			$this->response->addAsset('extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js');
 		}
 
