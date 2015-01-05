@@ -1,16 +1,16 @@
 <? if(!$fromAjax){ ?><div id="mw-subcategories">
 	
-	<h2><?= wfMsg( 'category-exhibition-subcategories-header' ) ?></h2>
+	<h2><?= wfMessage( 'category-exhibition-subcategories-header' )->escaped() ?></h2>
 
 <div class="category-gallery">
 	<div class="category-gallery-holder">
 		<div class="category-gallery-room1" /><? } ?>
 	<? foreach($data as $row){ ?>
 		<div class="category-gallery-item ">
-			<a href="<?=$row['url'] ?>?display=<?=$row['displayType']; ?>&sort=<?=$row['sortType']; ?>" title="<?=htmlspecialchars($row['title']) ?>">
+			<a href="<?= Sanitizer::encodeAttribute( $row['url'] . '?display=' . urlencode( $row['displayType'] ) . '&sort=' . urlencode( $row['sortType'] ) ); ?>" title="<?= Sanitizer::encodeAttribute( $row['title'] ) ?>">
 				<div class="category-gallery-item-image">
 					<?php if (!empty($row['img'])) {?>
-						<img src="<?=$row['img'] ?>" alt="<?=htmlspecialchars($row['title']) ?>" width="<?= $row['width'] ?>" height="<?= $row['height'] ?>" />
+						<img src="<?= Sanitizer::encodeAttribute( $row['img'] ) ?>" alt="<?= Sanitizer::encodeAttribute( $row['title'] ) ?>" width="<?= Sanitizer::encodeAttribute( $row['width'] ) ?>" height="<?= Sanitizer::encodeAttribute( $row['height'] ) ?>" />
 					<?php } elseif( !empty($row['snippet']) ) { ?>
 						<div class="snippet">
 							<span class="quote">&#x201C;</span>
