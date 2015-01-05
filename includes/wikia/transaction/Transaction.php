@@ -4,6 +4,8 @@
  * Class Transaction defines various constants and gives access to TransactionTrace singleton object
  */
 class Transaction {
+	const APP_NAME = 'mediawiki';
+
 	// Transaction names
 	const ENTRY_POINT_PAGE = 'page';
 	const ENTRY_POINT_SPECIAL_PAGE = 'special_page';
@@ -108,8 +110,18 @@ class Transaction {
 	 * @param string $event Event name
 	 * @param array $data Event data
 	 */
-	public static function addEvent( $event, $data ) {
+	public static function addEvent( $event, Array $data ) {
 		self::getInstance()->addEvent( $event, $data );
+	}
+
+	/**
+	 * Records a raw event
+	 *
+	 * @param string $event Event name
+	 * @param array $data Event data
+	 */
+	public static function addRawEvent( $event, Array $data ) {
+		self::getInstance()->addRawEvent( $event, $data );
 	}
 
 	/**
@@ -137,6 +149,15 @@ class Transaction {
 	 */
 	public static function getEvents() {
 		return self::getInstance()->getEvents();
+	}
+
+	/**
+	 * Returns all raw events recorded during current transaction
+	 *
+	 * @return array
+	 */
+	public static function getRawEvents() {
+		return self::getInstance()->getRawEvents();
 	}
 
 	/**
