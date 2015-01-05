@@ -144,6 +144,7 @@ $messages['fr'] = array(
  */
 $messages['fy'] = array(
 	'paginator-next' => 'Folgjende',
+	'paginator-back' => 'Foarige',
 );
 
 /** Galician (galego)

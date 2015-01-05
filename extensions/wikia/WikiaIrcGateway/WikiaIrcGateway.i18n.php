@@ -199,6 +199,13 @@ $messages['fr'] = array(
 	'ircgate-channel' => 'Canal :',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'ircgate-username' => 'Brûkersnamme:',
+);
+
 /** Galician (galego)
  * @author Toliño
  */
