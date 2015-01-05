@@ -45,8 +45,10 @@ class ExactTargetApiDataExtension extends ExactTargetApi {
 	 * 		],
 	 * 		// SimpleFilterPart is an equivalent of a WHERE statement
 	 * 		'SimpleFilterPart' => [
-	 * 			'Property' => 'Key fieldname'
-	 * 			'Value' => 'Value to match'
+	 * 			'Property' => 'Key fieldname',
+	 * 			'Value' => 'Value to match',
+	 * 			'SimpleOperator' => 'IN', // optional (default: equals)
+	 * 			// for IN operator provide array in Value field
 	 * 		],
 	 *  );
 	 * @return stdObject|false  Returns false when an Exception happens and an stdObject otherwise
