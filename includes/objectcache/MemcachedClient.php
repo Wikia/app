@@ -273,8 +273,10 @@ class MWMemcached {
 		# start wikia change
 		$this->_dupe_cache = array();
 		$this->keys_stats = [
-			'hits' => [],
-			'misses' => [],
+			'hit' => [],
+			'miss' => [],
+			'set' => [],
+			'delete' => [],
 		];
 		# end wikia change
 
@@ -339,6 +341,7 @@ class MWMemcached {
 
 		# start wikia change
 		unset( $this->_dupe_cache[ $key ] );
+		$this->keys_stats['delete'][] = $key;
 		# end wikia change
 
 		$sock = $this->get_sock( $key, $host );
@@ -498,12 +501,12 @@ class MWMemcached {
 		# Owen wants to get more detailed profiling info
 		if ( array_key_exists($key,$val) ) {
 			$this->_dupe_cache[$key] = $val[$key];
-			$this->keys_stats['hits'][] = $key;
+			$this->keys_stats['hit'][] = $key;
 			wfProfileIn ( __METHOD__ . "::$key !HIT");
 			wfProfileOut ( __METHOD__ . "::$key !HIT");
 		} else {
 			$this->_dupe_cache[$key] = false;
-			$this->keys_stats['misses'][] = $key;
+			$this->keys_stats['miss'][] = $key;
 			if ( isset( $this->stats['miss'] ) ) {
 				$this->stats['miss']++;
 			} else {
@@ -617,13 +620,13 @@ class MWMemcached {
 		foreach ($keys as $key) {
 			if ( array_key_exists($key,$val) ) {
 				$this->_dupe_cache[$key] = $val[$key];
-				$this->keys_stats['hits'][] = $key;
+				$this->keys_stats['hit'][] = $key;
 				wfProfileIn ( __METHOD__ . "::$key !HIT");
 				wfProfileOut ( __METHOD__ . "::$key !HIT");
 			} else {
 				$val[$key] = false;
 				$this->_dupe_cache[$key] = false;
-				$this->keys_stats['misses'][] = $key;
+				$this->keys_stats['miss'][] = $key;
 				wfProfileIn ( __METHOD__ . "::$key !MISS");
 				wfProfileOut ( __METHOD__ . "::$key !MISS");
 			}
@@ -1109,6 +1112,7 @@ class MWMemcached {
 		// start wikia change
 		// Memoize duplicate memcache requests for the same key in the same request
 		$this->_dupe_cache[ $key ] = $val;
+		$this->keys_stats['set'][] = $key;
 		// end wikia change
 
 		if ( isset( $this->stats[$cmd] ) ) {

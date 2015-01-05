@@ -47,7 +47,6 @@ class TransactionTraceScribe {
 			'events' => $events,
 		];
 
-		#print_r($data);
 		$data = json_encode( $data );
 
 		try {

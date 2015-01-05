@@ -27,11 +27,12 @@ class MemcachedStats {
 
 		$stats = [
 			'counts' => $client->stats,
-			'keys' => [
-				'hits' => self::normalizeAndCountKeys($client->keys_stats['hits']),
-				'misses' => self::normalizeAndCountKeys($client->keys_stats['misses']),
-			]
+			'keys' => []
 		];
+
+		foreach($client->keys_stats as $bucket => $keys) {
+			$stats['keys'][$bucket] = !empty( $keys ) ? self::normalizeAndCountKeys( $keys ) : $keys;
+		}
 
 		wfProfileOut(__METHOD__);
 		return $stats;
