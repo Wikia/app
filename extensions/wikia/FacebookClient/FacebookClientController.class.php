@@ -127,7 +127,7 @@ class FacebookClientController extends WikiaController {
 
 	/**
 	 * Disconnect the user from Facebook. This can occur in one of two ways, either when the user
-	 * deletes the Wikia App from facebook, of when they explicitly disconnect via Special:Preferences.
+	 * deletes the Wikia App from facebook, or when they explicitly disconnect via Special:Preferences.
 	 * If it comes from Facebook, the request is internal and is sent by FacebookClientController::deauthorizeCallback.
 	 * If it comes explicitly from the user, the request is external and is sent by preferences.js::disconnect.
 	 *
@@ -142,7 +142,7 @@ class FacebookClientController extends WikiaController {
 			$user = F::app()->wg->User;
 		} else {
 			$this->status = 'error';
-			$this->msg	= wfMessage( 'fbconnect-unknown-error' )->text();
+			$this->msg = wfMessage( 'fbconnect-unknown-error' )->escaped();
 			return;
 		}
 
@@ -171,10 +171,7 @@ class FacebookClientController extends WikiaController {
 	 * @return bool
 	 */
 	private function isValidExternalRequest() {
-		if ( $this->request->wasPosted() && $this->wg->User->matchEditToken( $this->getVal( 'token' ) ) ) {
-			return true;
-		}
-		return false;
+		return ( $this->request->wasPosted() && $this->wg->User->matchEditToken( $this->getVal( 'token' ) ) );
 	}
 
 	/**
