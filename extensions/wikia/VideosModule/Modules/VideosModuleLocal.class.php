@@ -20,7 +20,7 @@ class Local extends Base {
 	public function getCacheKey() {
 		$cacheKey = parent::getCacheKey();
 
-		return implode( ':', $cacheKey, $this->sort );
+		return implode( ':', [ $cacheKey, $this->sort ] );
 	}
 
 	protected function getLogParams() {
