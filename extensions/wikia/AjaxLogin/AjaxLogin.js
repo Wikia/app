@@ -83,11 +83,6 @@ var AjaxLogin = {
 			return AjaxLogin.tabOrderHack(e, '#wpLoginattempt');
 		});
 
-		$("#wpPassword3Ajax").keypress(
-		function(e) {
-			return AjaxLogin.tabOrderHack(e, '#wpLoginAndConnectCombo');
-		});
-
 		//MW 1.16 merge change, original: $('#wpLoginattemptAjax')
 		$('#wpLoginattempt').attr('tabindex', parseInt($('#wpRemember1Ajax').attr('tabindex')) + 101).click( this.clickLogIn );
 
