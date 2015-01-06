@@ -589,20 +589,14 @@ class AssetsManager {
 	}
 
 	private function getAMLocalURL($type, $oid, $params = array()) {
-		wfProfileIn( __METHOD__ );
-
-		global $wgAssetsManagerQuery, $IP, $wgDevelEnvironment;
-
+		global $wgAssetsManagerQuery;
 		$url = sprintf($wgAssetsManagerQuery,
 			/* 1 */ $type,
 			/* 2 */ $oid,
 			/* 3 */ !empty($params) ? urlencode(http_build_query($params)) : '-',
 			/* 4 */ $this->mCacheBuster);
-
-		wfProfileOut( __METHOD__ );
 		return $url;
 	}
-
 
 	public function getAllowedAssetExtensions(){
 		return $this->mAllowedAssetExtensions;
