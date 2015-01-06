@@ -53,7 +53,7 @@ class HubsRssIntegrationTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * Check rss hub data
+	 * Check that all required fields exist in the RSS item
 	 */
 	private function verifyRssItem( $item ) {
 		$this->assertContains( 'title',  $item . ' RSS item title is missing' );
