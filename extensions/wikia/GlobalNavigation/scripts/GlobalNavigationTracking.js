@@ -6,6 +6,9 @@ $(function ($) {
 	$globalNavigationSearch = $globalNavigation.find('#searchForm');
 	searchSuggestionsShowed = false;
 
+	/**
+	 * Tracking helper function with most commonly used options. Overrides are passed in by callers.
+	 */
 	track = Wikia.Tracker.buildTrackingFunction({
 		category: 'search',
 		trackingMethod: 'both',
