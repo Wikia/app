@@ -230,35 +230,23 @@ jQuery(function ($) {
 
 		switch (id) {
 		case 'createpage':
-			{
-				label = 'add-a-page';
-				break;
-			}
+			label = 'add-a-page';
+			break;
 		case 'edit':
-			{
-				label = 'edit-a-page';
-				break;
-			}
+			label = 'edit-a-page';
+			break;
 		case 'upload':
-			{
-				label = 'add-a-photo';
-				break;
-			}
+			label = 'add-a-photo';
+			break;
 		case 'wikiavideoadd':
-			{
-				label = 'add-a-video';
-				break;
-			}
+			label = 'add-a-video';
+			break;
 		case 'wikiactivity':
-			{
-				label = 'wiki-activity';
-				break;
-			}
+			label = 'wiki-activity';
+			break;
 		case 'wikinavedit':
-			{
-				label = 'edit-wiki-navigation';
-				break;
-			}
+			label = 'edit-wiki-navigation';
+			break;
 		}
 
 		if (label !== undefined) {
@@ -517,15 +505,11 @@ jQuery(function ($) {
 		case 'follow':
 		case 'history':
 		case 'whatlinkshere':
-			{
-				label = name;
-				break;
-			}
+			label = name;
+			break;
 		default:
-			{
-				label = 'custom';
-				break;
-			}
+			label = 'custom';
+			break;
 		}
 
 		if (label !== undefined) {
@@ -555,10 +539,8 @@ jQuery(function ($) {
 			switch (id) {
 			case 'wall-notifications-markasread-this-wiki':
 			case 'wall-notifications-markasread-all-wikis':
-				{
-					label = id;
-					break;
-				}
+				label = id;
+				break;
 			}
 
 			if (label !== undefined) {
