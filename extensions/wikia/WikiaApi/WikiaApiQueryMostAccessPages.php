@@ -83,12 +83,12 @@ class WikiaApiQueryMostAccessPages extends WikiaApiQuery {
 			#--- identifier of namespace
 			if ( !is_null($nspace) ) { 
 				//error_log("nspace=".urldecode($nspace)."\n");
-				$namespace_keys = preg_split( "/\,+/", urldecode($nspace) );
+				$namespace_keys = array_map( 'intval', explode( ',', urldecode( $nspace ) ) );
 				if ( empty($namespace_keys) ) {
 					throw new WikiaApiQueryError(1);
 				}
 				$this->setCacheKey ($lcache_key, 'N', $nspace);
-				$this->addWhere ( "rc_namespace in ('".implode("','", $namespace_keys)."')" );
+				$this->addWhere( 'rc_namespace in (' . $db->makeList( $namespace_keys ) . ')' );
 			}
 			
 			#---
