@@ -102,8 +102,6 @@ class UserLoginFacebookForm extends UserLoginForm {
 			if ( ! $status->isGood() ) {
 				return false;
 			}
-		} else {
-			FBConnectDB::addFacebookID( $user, $fbId );
 		}
 
 		return true;
