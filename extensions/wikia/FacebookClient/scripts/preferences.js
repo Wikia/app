@@ -1,4 +1,5 @@
-(function () {
+/* global jQuery, mediaWiki */
+(function ($, mw) {
 	'use strict';
 
 	var fbPreferences = (function () {
@@ -89,6 +90,8 @@
 				controller: 'FacebookClient',
 				method: 'disconnectFromFB',
 				format: 'json',
+				data: {token: mw.user.tokens.get('editToken')},
+				type: 'POST',
 				callback: function (data) {
 					if (data.status === 'ok') {
 						window.GlobalNotification.show($.msg(disconnectMsg), 'confirm');
@@ -145,4 +148,4 @@
 
 	// instantiate singleton on DOM ready
 	$(fbPreferences.getInstance);
-})();
+})(jQuery, mediaWiki);
