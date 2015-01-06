@@ -564,6 +564,7 @@ $messages['br'] = array(
  * @author Fitoschido
  * @author Gemmaa
  * @author Paucabot
+ * @author Unapersona
  */
 $messages['ca'] = array(
 	'wmu-upload-image' => 'Carregar una imatge',
@@ -638,6 +639,10 @@ $messages['ca'] = array(
 	'wmu-alignment' => 'Alineació',
 	'wmu-file-protected' => 'Aquesta imatge està protegida',
 	'wmu-file-error' => 'Hi ha hagut un error durant el procés de càrrega. Intenta-ho de nou.',
+	'wmu-file-not-found' => "No s'ha trobat el fitxer",
+	'wmu-error-exact-height' => "L'alçada de la imatge ha de ser eactamanet $1 px (aquesta té $2 px)",
+	'wmu-error-exact-width' => "L'amplada de la imatge ha de ser exactament $1 (aquesta té $2 px)",
+	'wmu-error-exact-width-height' => 'La mida de la imatge ha de ser exactamanet $1 x $3 px (aquesta fa $2 x $4 px)',
 );
 
 /** Chechen (нохчийн)
@@ -970,8 +975,8 @@ $messages['de-formal'] = array(
  * @author Mirzali
  */
 $messages['diq'] = array(
-	'wmu-upload-image' => 'Resim Barke',
-	'wmu-title' => 'Resim Barke',
+	'wmu-upload-image' => 'Resım Bar ke',
+	'wmu-title' => 'Resım Bar ke',
 	'wmu-upload' => 'Bar ke',
 	'wmu-find' => 'Bıvin',
 	'wmu-thiswiki' => 'E na wiki',
@@ -1294,6 +1299,17 @@ $messages['fr'] = array(
 	'wmu-error-exact-width' => 'La largeur de l’image doit être de $1 px ($2 px trouvés)',
 	'wmu-error-exact-width-height' => 'La taille de l’image doit être de $1 x $3 px ($2 x $4 px trouvés)',
 	'wmu-error-bad-aspect-ratio' => 'Le ratio d’aspect n’est pas correct ($1 x $2 px)',
+);
+
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'wmu-find' => 'Sykje',
+	'wmu-find-btn' => 'Sykje',
+	'wmu-name' => 'Namme',
+	'wmu-prev' => 'Foarige 8',
+	'wmu-next' => 'Folgjende 8',
 );
 
 /** Galician (galego)
@@ -1805,6 +1821,7 @@ $messages['ko'] = array(
 	'wmu-find' => '찾기',
 	'wmu-find-btn' => '찾기',
 	'wmu-license' => '라이선스',
+	'wmu-licensing' => '라이선스',
 	'wmu-size' => '크기',
 	'wmu-thumbnail' => '섬네일',
 	'wmu-width' => '너비',

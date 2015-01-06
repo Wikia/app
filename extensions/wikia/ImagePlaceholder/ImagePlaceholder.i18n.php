@@ -214,6 +214,13 @@ $messages['fr'] = array(
 	'imgplc-notinhistory-video' => 'Vous ne pouvez pas ajouter une vidéo en mode historique.',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'imgplc-image' => 'Ôfbylding',
+);
+
 /** Galician (galego)
  * @author Toliño
  */
@@ -311,11 +318,13 @@ $messages['kn'] = array(
 );
 
 /** Korean (한국어)
+ * @author Miri-Nae
  * @author 아라
  * @author 한글화담당
  */
 $messages['ko'] = array(
 	'imgplc-add-image' => '그림 추가',
+	'imgplc-add-video' => '동영상 추가',
 	'imgplc-placeholder' => '플레이스홀더',
 	'imgplc-image' => '그림',
 	'imgplc-notinhistory' => '역사 모드에서 그림을 추가할 수 없습니다.',

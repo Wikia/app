@@ -155,11 +155,9 @@ class WikiaMapsMapController extends WikiaMapsBaseController {
 			// Log new map created
 			WikiaMapsLogger::addLogEntry(
 				WikiaMapsLogger::ACTION_CREATE_MAP,
+				$this->wg->User,
 				$mapId,
-				$this->getData( 'title' ),
-				[
-					$this->wg->User->getName(),
-				]
+				$this->getData( 'title' )
 			);
 		}
 
@@ -192,14 +190,7 @@ class WikiaMapsMapController extends WikiaMapsBaseController {
 				? WikiaMapsLogger::ACTION_DELETE_MAP
 				: WikiaMapsLogger::ACTION_UNDELETE_MAP;
 
-			WikiaMapsLogger::addLogEntry(
-				$action,
-				$mapId,
-				$mapId,
-				[
-					$this->wg->User->getName(),
-				]
-			);
+			WikiaMapsLogger::addLogEntry( $action, $this->wg->User, $mapId, $mapId );
 
 			NotificationsController::addConfirmation(
 				$deleted ?

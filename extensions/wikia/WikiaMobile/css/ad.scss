@@ -6,15 +6,18 @@ $slotTopHeight: 50px;
 
 #MOBILE_TOP_LEADERBOARD {
 	background-color: white;
-
+	min-height: 50px;
 	margin: 0 auto;
-	text-align: center;
-
-	height: 50px;
+	width: 320px;
 
 	&.hidden, .hidden {
 		display: none;
 	}
+}
+
+#NATIVE_TABOOLA {
+	max-width: 480px;
+	margin: 0 auto;
 }
 
 .ad-in-content {

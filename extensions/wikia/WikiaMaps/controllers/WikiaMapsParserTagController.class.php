@@ -45,6 +45,11 @@ class WikiaMapsParserTagController extends WikiaController {
 	 * @return String
 	 */
 	public function renderPlaceholder( $input, Array $args, Parser $parser, PPFrame $frame ) {
+		// register resource loader module dependencies for map parser tag
+		// done separately for CSS and JS, so CSS will go to top of the page
+		$parser->getOutput()->addModuleStyles( 'ext.wikia.WikiaMaps.ParserTag' );
+		$parser->getOutput()->addModuleScripts( 'ext.wikia.WikiaMaps.ParserTag' );
+
 		$errorMessage = '';
 		$params = $this->sanitizeParserTagArguments( $args );
 		$isValid = $this->validateParseTagParams( $params, $errorMessage );

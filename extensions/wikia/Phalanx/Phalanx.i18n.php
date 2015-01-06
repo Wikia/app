@@ -132,11 +132,14 @@ Please [[Special:Contact|contact Wikia]] about the problem.<br />The blocker als
 );
 
 /** Message documentation (Message documentation)
+ * @author Liuxinyu970226
  * @author McDutchie
  * @author PtM
  * @author Shirayuki
  */
 $messages['qqq'] = array(
+	'phalanx-type-content' => '{{Identical|Page content}}',
+	'phalanx-type-summary' => '{{Identical|Page summary}}',
 	'phalanx-type-title' => '{{Identical|Page title}}',
 	'phalanx-type-user' => '{{Identical|User}}',
 	'phalanx-type-user-email' => '{{Identical|Email}}',
@@ -155,6 +158,7 @@ $messages['qqq'] = array(
 	'phalanx-stats-table-create' => '{{Identical|Created}}',
 	'phalanx-stats-table-expire' => '{{Identical|Expire}}',
 	'phalanx-stats-table-regex' => '{{Identical|Regex}}',
+	'phalanx-stats-table-case' => '{{Identical|Case}}',
 	'phalanx-stats-table-language' => '{{Identical|Language}}',
 	'phalanx-stats-table-text' => '{{Identical|Text}}',
 	'phalanx-stats-table-reason' => '{{Identical|Reason}}',
@@ -488,6 +492,9 @@ Si vostè creu que es tracta d\'un error, si us plau, [[Special:Contact|contacti
 	'phalanx-stats-table-wiki-url' => 'Wiki URL',
 	'phalanx-stats-table-wiki-last-edited' => 'Última edició',
 	'phalanx-email-filter-hidden' => "Filtre d'E-mail ocult. No tens permís per veure el text.",
+	'action-phalanx' => 'utilitzar el Mecanisme de Defensa de Spam Integrat',
+	'right-phalanx' => 'Pot gestionar blocatges globals i filtres antispam',
+	'right-phalanxexempt' => 'Exempt de les regles de la falange',
 );
 
 /** Chechen (нохчийн)
@@ -1077,6 +1084,16 @@ Veuillez [[Special:Contact|contacter Wikia]] à propos de ce problème.<br />La 
 	'right-phalanxemailblock' => 'Vous pouvez lister, voir et gérer les blocs basés sur les courriels.',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'phalanx' => 'Phalanx',
+	'phalanx-type-user-email' => 'e-mail',
+	'phalanx-label-lang' => 'Taal:',
+	'phalanx-stats-table-language' => 'Taal',
+);
+
 /** Galician (galego)
  * @author Toliño
  */
@@ -1610,12 +1627,15 @@ $messages['ko'] = array(
 	'phalanx-label-type' => '유형:',
 	'phalanx-label-lang' => '언어:',
 	'phalanx-view-type' => '차단 유형...',
+	'phalanx-test-submit' => '테스트',
+	'phalanx-test-results-legend' => '테스트 결과',
 	'phalanx-link-stats' => '통계',
 	'phalanx-stats-table-language' => '언어',
 	'phalanx-stats-table-reason' => '이유',
 	'phalanx-stats-table-wiki-id' => '위키 ID',
 	'phalanx-stats-table-wiki-name' => '위키 이름',
 	'phalanx-stats-table-wiki-url' => '위키 URL',
+	'phalanx-stats-table-wiki-last-edited' => '마지막 편집',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -1722,7 +1742,7 @@ $messages['mk'] = array(
 	'phalanx-help-type-title' => 'Овој филтер спречува создавање на страница ако нејзиниот наслов одговара на некој израз наведен на црниот список.
 
 Филтерот не спречува уредување на веќе постоечка страница.',
-	'phalanx-help-type-user' => 'Овој филтер блокира корисник (сосем исто како локален блок на МедијаВики) ако неговото име или IP-адреса одговара на некое име или IP-адреса наведена на црниот список.',
+	'phalanx-help-type-user' => 'Овој филтер блокира корисник (сосем исто како месен блок на МедијаВики) ако неговото име или IP-адреса одговара на некое име или IP-адреса наведена на црниот список.',
 	'phalanx-help-type-wiki-creation' => 'Овој филтер спречува создавање на вики ако неговото име или URL-адреса одговара на нешто од наведеното на црниот список.',
 	'phalanx-help-type-answers-question-title' => 'Овој филтер блокира создавање на прашање (страница) ако насловот одговара на некој од изразите наведени на црниот список.
 
@@ -2085,7 +2105,7 @@ Als u op "{{int:phalanx-add-block}}" klikt, worden uw wijzigingen opgeslagen.',
 	'phalanx-link-modify' => 'aanpassen',
 	'phalanx-link-stats' => 'statistieken',
 	'phalanx-reset-form' => 'Formulier opnieuw instellen',
-	'phalanx-legend-input' => 'Filter aanmaken of aanpassen',
+	'phalanx-legend-input' => 'Filter aanmaken of wijzigen',
 	'phalanx-legend-listing' => 'Huidige actieve filters',
 	'phalanx-unblock-message' => 'Blokkadenummer #$1 is verwijderd',
 	'phalanx-help-type-content' => 'Dit filter voorkomt dat een bewerking wordt opgeslagen als in de inhoud tekst voorkomt die op de zwarte lijst staat.',
@@ -3227,6 +3247,7 @@ Nếu bạn tin rằng đây là lỗi, xin vui lòng [[Special:Contact|liên l�
 );
 
 /** Simplified Chinese (中文（简体）‎)
+ * @author Dimension
  * @author Hydra
  * @author Liuxinyu970226
  * @author Reasno
@@ -3264,6 +3285,9 @@ $messages['zh-hans'] = array(
 	'phalanx-tab-main' => '管理过滤器',
 	'phalanx-tab-secondary' => '测试过滤器',
 	'phalanx-block-success' => '封禁已成功添加',
+	'phalanx-block-failure' => '添加封禁时出错',
+	'phalanx-modify-success' => '封禁已成功修改',
+	'phalanx-modify-failure' => '修改封禁时出错',
 	'phalanx-modify-warning' => '您正在编辑封禁ID#$1。点击“{{int:phalanx-edit-block}}”将保存您的更改！',
 	'phalanx-test-submit' => '测试',
 	'phalanx-test-results-legend' => '测试结果',
@@ -3274,7 +3298,9 @@ $messages['zh-hans'] = array(
 	'phalanx-link-stats' => '状态',
 	'phalanx-reset-form' => '重置表单',
 	'phalanx-legend-input' => '创建或修改过滤器',
+	'phalanx-legend-listing' => '当前应用的过滤器',
 	'phalanx-unblock-message' => '封禁ID#$1已成功移除',
+	'phalanx-title-move-summary' => '您输入的理由包含被禁用词汇。',
 	'phalanx-stats-title' => 'Phalanx 统计',
 	'phalanx-stats-block-notfound' => '封禁ID找不到',
 	'phalanx-stats-table-id' => '封禁ID',
@@ -3303,7 +3329,9 @@ $messages['zh-hans'] = array(
 	'phalanx-stats-table-wiki-last-edited' => '最后编辑',
 	'phalanx-email-filter-hidden' => '电子邮件过滤器已隐藏。您并无权限查看文本。',
 	'action-phalanx' => '使用集成的反垃圾邮件机制',
+	'right-phalanx' => '可以管理全域封禁和滥用过滤器',
 	'right-phalanxexempt' => 'Phalanx规则例外',
+	'right-phalanxemailblock' => '可以归档、查看基于电子邮件的封禁',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
@@ -3313,5 +3341,7 @@ $messages['zh-hant'] = array(
 	'phalanx-type-user' => '使用者',
 	'phalanx-label-filter' => '過濾器：',
 	'phalanx-label-reason' => '原因：',
+	'phalanx-format-regex' => '正規表示法',
+	'phalanx-stats-table-regex' => '正規表示法',
 	'phalanx-stats-table-reason' => '原因',
 );

@@ -5,7 +5,7 @@
 
 		<?= $app->renderView('FacebookButton', 'index', array(
 			'class' => 'sso-login-facebook',
-			'text' => wfMessage('fbconnect-connect-simple')->escaped(),
+			'text' => wfMessage( 'fbconnect-connect-simple' )->escaped(),
 			'tabindex' => $tabindex,
 		)) ?>
 	</div>

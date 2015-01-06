@@ -221,6 +221,7 @@ $messages['ca'] = array(
 	'multilookuplink' => 'Enllaç de les contribucions',
 	'multilookupdetails' => 'Mostra detalls',
 	'multilookuplistwikiainfo' => "Llista de wikis amb pàgines editades pels usuaris amb l'adreça IP <b>$1</b>",
+	'multilookupinvaliduser' => '<p class="error">L\'adreça IP "<b>$1</b>" no existeix. Comprova la IP per possibles errors tipogràfics.</p>',
 	'multilookuplastedit' => "Última edició des d'aquesta adreça IP:",
 	'multilookupwikidbname' => 'Nom de DB',
 	'multilookupwikiurl' => 'URL',
@@ -239,7 +240,7 @@ $messages['ca'] = array(
 $messages['ce'] = array(
 	'multilookupgo' => 'Дехьа гӀо',
 	'multilookupnoresultfound' => 'ХӀума ца карийна',
-	'multilookuplink' => 'Къинхьегаме хьажораг',
+	'multilookuplink' => 'Къинхьегаме хьажорг',
 	'multilookupwikititle' => 'Корта',
 	'multilookupwikioptions' => 'Параметраш',
 );
@@ -435,6 +436,14 @@ $messages['fr'] = array(
 	'action-multilookup' => 'rechercher des informations sur les utilisateurs dans plusieurs wikis',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'multilookupnext' => 'folgjende',
+	'multilookupprevious' => 'foarige',
+);
+
 /** Galician (galego)
  * @author Toliño
  */
@@ -544,6 +553,7 @@ $messages['it'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Plover-Y
  * @author Tommy6
  * @author 青子守歌
  */
@@ -565,6 +575,7 @@ $messages['ja'] = array(
 	'multilookuplistwikiainfo' => 'IPアドレスが <b>$1</b> のユーザーが記事の編集を行ったことのあるウィキ',
 	'multilookupinvaliduser' => '<p class="error">IPアドレス"<b>$1</b>"は存在しません。入力したIPアドレスに誤りがないか確認してください。</p>',
 	'multilookuplastedit' => 'このIPアドレスからの最後の編集:',
+	'multilookuprecordspager' => "'''$3'''件中'''$1'''件目から'''$2'''件目を表示中",
 	'right-multilookup' => '複数ウィキにおけるユーザの情報を閲覧',
 );
 
@@ -581,6 +592,8 @@ $messages['kn'] = array(
  * @author Miri-Nae
  */
 $messages['ko'] = array(
+	'multilookupwiki' => '위키',
+	'multilookupwikidbname' => '데이터베이스 이름',
 	'multilookupwikiurl' => 'URL',
 	'multilookupwikititle' => '제목',
 	'multilookupwikioptions' => '설정',

@@ -5,16 +5,16 @@ define('ext.wikia.adEngine.rubiconRtp', [
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adTracker, document, log, window) {
+], function (adTracker, document, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.rubiconRtp',
-		timingEventData = {ozCachedOnly: !!window.wgAdDriverRubiconCachedOnly},
-		rtpStart,
-		rtpEnd,
+		timingEventData = {},
+		rtpTiming,
 		rubiconCalled = false,
 		rtpResponse,
-		rtpTier;
+		rtpTier,
+		rtpConfig;
 
 	function trackState(trackEnd) {
 		log(['trackState', rtpResponse], 'debug', logGroup);
@@ -24,7 +24,7 @@ define('ext.wikia.adEngine.rubiconRtp', [
 			data = {},
 			label;
 
-		data.ozCachedOnly = !!window.wgAdDriverRubiconCachedOnly;
+		data.ozCachedOnly = !!rtpConfig.oz_cached_only;
 		data.response = !!rtpResponse;
 		data.size = (rtpResponse && rtpResponse.estimate && rtpResponse.estimate.size) || e;
 		data.pmpEligible = (rtpResponse && rtpResponse.pmp && rtpResponse.pmp.eligible) || e;
@@ -49,12 +49,9 @@ define('ext.wikia.adEngine.rubiconRtp', [
 
 	function onRubiconResponse(response) {
 		// Track the start, end times
-		rtpEnd = adTracker.measureTime('rubiconEnd', timingEventData);
+		rtpTiming.measureDiff(timingEventData, 'end').track();
 
 		log(['onRubiconResponse', response], 'debug', logGroup);
-
-		rtpStart.track();
-		rtpEnd.track();
 
 		rtpResponse = response;
 		rtpTier = response && response.estimate && response.estimate.tier;
@@ -62,16 +59,29 @@ define('ext.wikia.adEngine.rubiconRtp', [
 		trackState(true);
 	}
 
-	function call() {
+	function call(config) {
 		log('call', 'debug', logGroup);
 
-		rubiconCalled = true;
-		rtpStart = adTracker.measureTime('rubiconStart', timingEventData);
+		rtpConfig = config;
 
-		window.oz_callback = onRubiconResponse;
+		// Configuration through globals:
+		win.oz_async = true;
+		win.oz_cached_only = config.oz_cached_only;
+		win.oz_api = config.oz_api || "valuation";
+		win.oz_ad_server = config.oz_ad_server || "dart";
+		win.oz_site = config.oz_site;
+		win.oz_zone = config.oz_zone;
+		win.oz_ad_slot_size = config.oz_ad_slot_size;
+
+		rubiconCalled = true;
+		rtpTiming = adTracker.measureTime('rubicon', timingEventData, 'start');
+		rtpTiming.track();
+
+		win.oz_callback = onRubiconResponse;
 
 		var s = document.createElement('script');
-		s.src = '//tap-cdn.rubiconproject.com/partner/scripts/rubicon/dorothy.js?pc=' + window.oz_site;
+		s.id = logGroup;
+		s.src = '//tap-cdn.rubiconproject.com/partner/scripts/rubicon/dorothy.js?pc=' + win.oz_site;
 		s.async = true;
 		document.body.appendChild(s);
 	}
@@ -88,6 +98,7 @@ define('ext.wikia.adEngine.rubiconRtp', [
 
 	return {
 		call: call,
+		getConfig: function () { return rtpConfig; },
 		getTier: getTier,
 		trackState: function () { trackState(); },
 		wasCalled: wasCalled

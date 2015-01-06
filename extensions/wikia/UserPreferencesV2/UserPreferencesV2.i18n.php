@@ -265,6 +265,62 @@ $messages['br'] = array(
 	'tog-hidefollowedpages-v2' => "Kuzhat ma fajennoù heuliet d'an holl",
 );
 
+/** Catalan (català)
+ * @author Unapersona
+ */
+$messages['ca'] = array(
+	'prefs-personal' => 'La meva informació',
+	'preferences-v2-username' => "El meu nom d'usuari:",
+	'preferences-v2-usergroups' => "Els meus grups d'usuaris:",
+	'preferences-v2-gender' => 'El meu gènere:',
+	'preferences-v2-password' => 'La meva contrasenya:',
+	'preferences-v2-oldsig' => 'Signatura actual:',
+	'preferences-v2-nickname' => 'Signatura personalitzada:',
+	'preferences-v2-fancysig' => 'Vull utilitzar wikitext en la meva sigantura<br />[[{{MediaWiki:preferences-v2-fancysig-help-page-name}}|Què són les signatures?]]',
+	'preferences-v2-fancysig-help-page-name' => 'Ajuda:Signatura', # Fuzzy
+	'prefs-appearance' => 'Aparença',
+	'preferences-v2-date' => 'Format de la data',
+	'preferences-v2-time' => 'Fus horari:',
+	'preferences-v2-skin' => 'Disseny',
+	'prefs-emailv2' => 'Correu electrònic',
+	'prefs-email-me-v2' => "Envia'm un correu electrònic quan...",
+	'tog-enotifwatchlistpages-v2' => '...una pàgina que estic següent es canviï',
+	'tog-enotifusertalkpages-v2' => '...la meva pàgina de discussió es canviï',
+	'tog-enotifminoredits-v2' => '...una pàgina que segueixo tingui una edició menor',
+	'tog-marketingallowed-v2' => '...Wikia tingui notícies i esdeveniments',
+	'prefs-email-advanced-v2' => 'Opcions avançades',
+	'tog-htmlemails-v2' => 'Enviar missatges de correu electrònic HTML',
+	'prefs-wikiemail' => "{{SITENAME}} opcions. Envia'm un correu electrònic quan...",
+	'prefs-email-unsubscribe' => 'Desactiveu tots els missatges de correu electrònic',
+	'unsubscribe-preferences-toggle-v2' => 'Desactiveu tots els missatges de correu electrònic de Wikia (ignora totes les altres opcions)',
+	'tog-watchlistdigest-v2' => '...un Resum Setmanal dels canvis a les pàgines que segueixo estigui a punt.',
+	'tog-justify-v2' => 'Mostra els paràgrafs justificats',
+	'preferences-v2-redirect-wiki-activity' => 'Activitat Wiki',
+	'preferences-v2-redirect-main-page' => 'Pàgina principal',
+	'preferences-v2-redirect-recent-changes' => 'Canvis Recents',
+	'preferences-v2-redirect-explanation' => 'La pàgina de Destinació us permet escollir on anar quan escriviu $1 en el vostre navegador.',
+	'prefs-monobookv2' => 'MonoBook',
+	'prefs-under-the-hood' => 'Seguiment',
+	'prefs-recent-changesv2' => 'Canvis recents, historials i registres',
+	'prefs-followed-pagesv2' => 'Llista de seguiment',
+	'prefs-advanced-displayv2' => 'Opcions de visualització avançada',
+	'tog-highlightbrokenv2' => 'Mostrar els enllaços trencats de color vermell, no amb un interrogant.',
+	'tog-showAdsv2' => 'Anuncis:',
+	'prefs-addressv2' => 'Adreça',
+	'prefs-followed-pages-iv2' => 'Seguir pàgines que...',
+	'preferences-v2-watchdefault' => 'Modifica',
+	'preferences-v2-watchmoves' => 'Reanomena',
+	'preferences-v2-watchdeletion' => 'Suprimeix',
+	'preferences-v2-watchcreations' => 'Crea',
+	'preferences-v2-showads-enable' => 'Mostra tots els anuncis',
+	'preferences-v2-showads-disable' => 'No mostris tots els anuncis',
+	'preferences-v2-my-email-address' => 'La meva adreça de correu electrònic:',
+	'prefs-patrolled-editsv2' => 'Edicions patrullades',
+	'tog-editsectiononrightclick-v2' => "Habilita l'edició per seccions en clicar amb el botó dret sobre els títols de les seccions",
+	'tog-editondblclick-v2' => 'Edita les pàgines amb un doble clic',
+	'tog-hidefollowedpages-v2' => 'Amagar la meva llista de seguiment a tothom',
+);
+
 /** Chechen (нохчийн)
  * @author Умар
  */
@@ -561,6 +617,15 @@ $messages['fr'] = array(
 	'tog-hidefollowedpages-v2' => 'Masquer ma liste de pages suivies pour tout le monde',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'prefs-emailv2' => 'E-mail',
+	'preferences-v2-watchdefault' => 'Bewurkje',
+	'preferences-v2-watchcreations' => 'Oanmeitsje',
+);
+
 /** Galician (galego)
  * @author Fitoschido
  * @author Toliño
@@ -621,6 +686,7 @@ $messages['gl'] = array(
 );
 
 /** Japanese (日本語)
+ * @author Plover-Y
  * @author Tommy6
  */
 $messages['ja'] = array(
@@ -632,6 +698,7 @@ $messages['ja'] = array(
 	'preferences-v2-oldsig' => '現在の署名:',
 	'preferences-v2-nickname' => '新しい署名:',
 	'preferences-v2-fancysig' => '署名をウィキテキストとして扱う<br />[[{{MediaWiki:preferences-v2-fancysig-help-page-name}}|署名とは?]]',
+	'preferences-v2-fancysig-help-page-name' => 'Help:署名',
 	'prefs-appearance' => '表示',
 	'preferences-v2-date' => '日付の表示形式:',
 	'preferences-v2-time' => '時間帯:',
@@ -1540,6 +1607,7 @@ $messages['zh-hans'] = array(
 	'prefs-wikiemail' => '{{SITENAME}}选项。发邮件给我，当...',
 	'prefs-email-unsubscribe' => '禁用所有电子邮件',
 	'unsubscribe-preferences-toggle-v2' => '禁用所有来自Wikia的电子邮件（覆盖所有其他选项）',
+	'tog-watchlistdigest-v2' => '……已准备好我关注的Wikia页面更新的每周摘要',
 	'tog-justify-v2' => '显示两端对齐的段落',
 	'preferences-v2-user-landing-page' => '着陆页面：',
 	'preferences-v2-redirect-wiki-activity' => 'Wiki活动',
@@ -1572,11 +1640,12 @@ $messages['zh-hans'] = array(
  * @author EagerLin
  * @author Ffaarr
  * @author LNDDYL
+ * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
 	'prefs-personal' => '我的資訊',
-	'preferences-v2-username' => '我的用户名：',
-	'preferences-v2-usergroups' => '我的用户组：',
+	'preferences-v2-username' => '我的使用者名稱：',
+	'preferences-v2-usergroups' => '我的使用者群組：',
 	'preferences-v2-gender' => '我的性别：',
 	'preferences-v2-password' => '我的密碼：',
 	'preferences-v2-oldsig' => '現有的簽名：',
@@ -1586,7 +1655,7 @@ $messages['zh-hant'] = array(
 	'prefs-appearance' => '外觀',
 	'preferences-v2-date' => '日期格式',
 	'preferences-v2-time' => '時區：',
-	'preferences-v2-skin' => '布局',
+	'preferences-v2-skin' => '佈局：',
 	'prefs-emailv2' => '電子郵件',
 	'prefs-email-me-v2' => '發電子郵件通知我，當...',
 	'tog-enotifwatchlistpages-v2' => '...我關注的頁面被更改',
@@ -1616,7 +1685,7 @@ $messages['zh-hant'] = array(
 	'preferences-v2-watchdefault' => '編輯',
 	'preferences-v2-watchmoves' => '移動',
 	'preferences-v2-watchdeletion' => '刪除',
-	'preferences-v2-watchcreations' => '創建',
+	'preferences-v2-watchcreations' => '建立',
 	'preferences-v2-showads-enable' => '顯示所有廣告',
 	'preferences-v2-showads-disable' => '不顯示所有的廣告',
 	'preferences-v2-my-email-address' => '我的電子郵件位址：',

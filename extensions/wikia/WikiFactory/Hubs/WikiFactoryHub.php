@@ -57,29 +57,6 @@ class WikiFactoryHub extends WikiaModel {
 	const CATEGORY_ID_MOVIES = 27;
 	const CATEFORY_ID_ANIME = 28;
 
-	private $mCategoryKruxMap = array(
-	    self::CATEGORY_ID_HUMOR		=> 'Hixwr2ar',
-	    self::CATEGORY_ID_GAMING		=> 'Hi0kJsuv',
-	    self::CATEGORY_ID_ENTERTAINMENT	=> 'Hi0kPhMT',
-	    self::CATEGORY_ID_CORPORATE		=> 'HixzfXzM',
-	    self::CATEGORY_ID_TOYS		=> 'Hixy7C6A',
-	    self::CATEGORY_ID_FOODANDDRINK	=> 'HixwQQcI',
-	    self::CATEGORY_ID_TRAVEL		=> 'HixzKvV0',
-	    self::CATEGORY_ID_EDUCATION		=> 'Hixv3Pm6',
-	    self::CATEGORY_ID_LIFESTYLE		=> 'HixxTik3',
-	    self::CATEGORY_ID_FINANCE		=> 'HixwC0-o',
-	    self::CATEGORY_ID_POLITICS		=> 'Hixx8x9B',
-	    self::CATEGORY_ID_TECHNOLOGY	=> 'HixyqEjH',
-	    self::CATEGORY_ID_SCIENCE		=> 'HixyJ7zV',
-	    self::CATEGORY_ID_PHILOSOPHY	=> 'HixxvJVY',
-	    self::CATEGORY_ID_SPORTS		=> 'HixyZtmZ',
-	    self::CATEGORY_ID_MUSIC		=> 'HixxfWsd',
-	    self::CATEGORY_ID_CREATIVE		=> 'HixvqnFP',
-	    self::CATEGORY_ID_AUTO		=> 'Hixvb8MR',
-	    self::CATEGORY_ID_GREEN		=> 'Hixwf6fL',
-	    self::CATEGORY_ID_ANSWERS		=> 'Hix9Xb-P'
-	);
-
 	/**
 	 * getInstance
 	 *
@@ -218,6 +195,11 @@ class WikiFactoryHub extends WikiaModel {
 	 */
 	public function getWikiVertical( $city_id ) {
 
+		global $wgWikiaEnvironment;
+		if ( $wgWikiaEnvironment == WIKIA_ENV_INTERNAL ) {
+			$city_id = 11;
+		}
+
 		$vertical_id = $this->getVerticalId( $city_id );
 		$all_verticals = $this->getAllVerticals();
 		$vertical = $all_verticals[$vertical_id];
@@ -267,6 +249,11 @@ class WikiFactoryHub extends WikiaModel {
 	 */
 	public function getWikiCategories( $city_id, $active = 1 ) {
 
+		global $wgWikiaEnvironment;
+		if ( $wgWikiaEnvironment == WIKIA_ENV_INTERNAL ) {
+			$city_id = 11;
+		}
+
 		// query instead of lookup in AllCategories list
 		$categories = (new WikiaSQL())
 			->SELECT( "*" )
@@ -282,6 +269,23 @@ class WikiFactoryHub extends WikiaModel {
 		return $categories;
 
 	}
+
+	/**
+	 * Gets list of wiki category names
+	 *
+	 * @param Int $cityId CityId
+	 * @param Int $active Active status of categories to return
+	 * @return array Array of wiki category names
+	 */
+	public function getWikiCategoryNames( $cityId, $active = 1 ) {
+		$wikiCategoryNames = [];
+		$categories = $this->getWikiCategories( $cityId, $active );
+		foreach( $categories as $category ) {
+			$wikiCategoryNames[] = $category['cat_short'];
+		}
+		return $wikiCategoryNames;
+	}
+
 
 	/**
 	 * get single category name for a wiki
@@ -397,6 +401,11 @@ class WikiFactoryHub extends WikiaModel {
 		$name = $verticals[$vertical_id]['name'];
 		WikiFactory::log( WikiFactory::LOG_CATEGORY, "Vertical changed to $name. $reason", $city_id );
 
+		$aHookParams = [
+			'city_id' => $city_id,
+			'vertical_id' => $vertical_id,
+		];
+		wfRunHooks( "WikiFactoryVerticalSet", array( $aHookParams ) );
 	}
 
 	/**
@@ -425,6 +434,12 @@ class WikiFactoryHub extends WikiaModel {
 			$dbw->commit();
 
 			$this->clearCache( $city_id );
+
+			$aHookParams = [
+				'city_id' => $city_id,
+				'categories' => $categories,
+			];
+			wfRunHooks( 'CityCatMappingUpdated', array( $aHookParams ) );
 		}
 
 		# pretty clunky way to load all the categories just for the name, maybe refactor this?
@@ -439,7 +454,6 @@ class WikiFactoryHub extends WikiaModel {
 		}
 
 		WikiFactory::log( WikiFactory::LOG_CATEGORY, "Categories changed to $message. $reason", $city_id );
-
 	}
 
 	// Add 1 category
@@ -497,18 +511,5 @@ class WikiFactoryHub extends WikiaModel {
 	public function getCategory($id, $new = false) {
 		$categories = $this->getAllCategories($new);
 		return $categories[$id];
-	}
-
-	/**
-	 * Get Krux id for given category
-	 * @param int $categoryId
-	 * @return string Krux category id
-	 */
-	public function getKruxId($categoryId) {
-		if (isset($this->mCategoryKruxMap[$categoryId])) {
-			return $this->mCategoryKruxMap[$categoryId];
-		}
-
-		return '';
 	}
 }

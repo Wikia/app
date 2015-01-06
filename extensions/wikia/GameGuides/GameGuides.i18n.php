@@ -21,6 +21,7 @@ $messages['en'] = array(
 	'wikiagameguides-content-duplicate-entry' => 'This value is duplicated',
 	'wikiagameguides-content-empty-tag' => 'This tag needs some categories',
 
+	'wikiagameguides-content-description-soft-redirect' => 'New interface for content curation is available on special:CuratedContent page. Firstly turn it on on Special:WikiFeatures page.',
 	'wikiagameguides-content-description-categories' => 'Add wiki "Categories" and rename them as you\'d like them to appear in Game Guides with "Game Guide Names".',
 	'wikiagameguides-content-description-tag' => 'Does it make sense to group categories under a game series installment? Add a category "Tag," and drag and drop wiki categories under it.',
 	'wikiagameguides-content-description-organize' => 'Feel free to delete or add more lines, and reorder them by dragging and dropping.',
@@ -71,6 +72,7 @@ $messages['qqq'] = array(
 	'wikiagameguides-content-duplicate-entry' => 'Message shown to a user next to an input that has duplicated content',
 	'wikiagameguides-content-empty-tag' => 'Message shown to a a user if he has not added any categories to a tag',
 
+	'wikiagameguides-content-description-soft-redirect' => 'Message about moving tool to Curated Content',
 	'wikiagameguides-content-description-categories' => 'Message describing a purpose and usage of the tool',
 	'wikiagameguides-content-description-tag' => 'Message describing a purpose and usage of the tool',
 	'wikiagameguides-content-description-organize' => 'Message describing a purpose and usage of the tool',

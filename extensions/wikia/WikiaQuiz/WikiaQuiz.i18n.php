@@ -501,7 +501,7 @@ $messages['diq'] = array(
 	'wikiaquiz-moreinfoarticle-label' => 'Wesiqe',
 	'wikiaquiz-moreinfolinktext-label' => 'Metnê Gri',
 	'wikiaquiz-question-label' => 'Pers',
-	'wikiaquiz-image-label' => 'Resim (opsiyonel)',
+	'wikiaquiz-image-label' => 'Resım (opsiyonel)',
 	'wikiaquiz-quiz-label' => 'Quiz',
 	'wikiaquiz-questions-label' => 'Persi',
 	'wikiaquiz-answers-label' => 'Cıwab',
@@ -690,6 +690,13 @@ $messages['fr'] = array(
 	'wikiaquiz-game-email-error' => 'Une erreur est survenue à l’envoi de ce courriel : $1',
 	'wikiaquiz-game-challenge' => 'Défiez vos amis d’y participer !',
 	'wikiaquiz-game-mute' => 'Muet',
+);
+
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'wikiaquiz-cancel-label' => 'Annulearje',
 );
 
 /** Galician (galego)
@@ -1046,6 +1053,7 @@ $messages['kn'] = array(
 
 /** Korean (한국어)
  * @author Infinity
+ * @author Miri-Nae
  * @author 아라
  */
 $messages['ko'] = array(
@@ -1071,7 +1079,7 @@ $messages['ko'] = array(
 	'wikiaquiz-correct-label' => '맞나요?',
 	'wikiaquiz-addnewitem-label' => '새 항목 추가',
 	'wikiaquiz-cancel-label' => '취소',
-	'wikiaquiz-publish-label' => '게시',
+	'wikiaquiz-publish-label' => '저장',
 	'wikiaquiz-error-duplicate-quiz' => '같은 이름의 퀴즈가 이미 존재합니다.',
 	'wikiaquiz-error-duplicate-question' => '같은 질문이 이미 존재합니다.',
 	'wikiaquiz-error-invalid-question' => '질문 글이 올바르지 않습니다.',

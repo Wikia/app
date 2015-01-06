@@ -236,6 +236,7 @@ class VideoFileUploader {
 			$delay = UpdateThumbnailTask::getDelay( $provider, $delayIndex );
 			$task = ( new UpdateThumbnailTask() )->wikiId( F::app()->wg->CityId );
 			$task->delay( $delay );
+			$task->dupCheck();
 			$task->call( 'retryThumbUpload', $this->getDestinationTitle(), $delayIndex, $provider, $this->sVideoId );
 			$task->queue();
 		}

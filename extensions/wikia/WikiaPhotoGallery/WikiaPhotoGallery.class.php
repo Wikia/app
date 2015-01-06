@@ -418,6 +418,14 @@ class WikiaPhotoGallery extends ImageGallery {
 				'data-caption' => Sanitizer::removeHTMLtags( $caption ),
 			);
 
+			// Get article link if it exists. If the href attribute is identical to the local
+			// file URL, then there is no article URL.
+			$localUrl = $tp->getLocalUrl();
+			$linkAttributes = $this->parseLink($localUrl, $tp->getText(), $link);
+			if ($linkAttributes['href'] !== $localUrl) {
+				$imageItem['linkhref'] = $linkAttributes['href'];
+			}
+
 			// store list of images from inner content of tag (to be used by front-end)
 			$this->mData['images'][] = $imageItem;
 
@@ -566,7 +574,6 @@ class WikiaPhotoGallery extends ImageGallery {
 				$out = $this->renderSlider();
 				break;
 		}
-
 		if ( !$this->canRenderMediaGallery() ) {
 			$out .= $this->getBaseJSSnippets();
 		}
@@ -585,8 +592,8 @@ class WikiaPhotoGallery extends ImageGallery {
 	private function getBaseJSSnippets() {
 		$out = JSSnippets::addToStack(
 			array(
-				'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js',
-				'/extensions/wikia/WikiaPhotoGallery/css/gallery.scss',
+				'wikia_photo_gallery_js',
+				'wikia_photo_gallery_scss',
 			),
 			array(),
 			'WikiaPhotoGalleryView.init'
@@ -601,7 +608,8 @@ class WikiaPhotoGallery extends ImageGallery {
 	 */
 	private function canRenderMediaGallery() {
 		// Do not render media gallery for special pages - It is only for UGC pages
-		if ( F::app()->wg->Title->getNamespace() === NS_SPECIAL ) {
+		$globalTitle = F::app()->wg->Title;
+		if ( !$globalTitle || $globalTitle->getNamespace() === NS_SPECIAL ) {
 			return false;
 		}
 
@@ -612,6 +620,12 @@ class WikiaPhotoGallery extends ImageGallery {
 
 		// We don't support new features in monobook
 		if ( F::app()->checkSkin( 'monobook' ) ) {
+			return false;
+		}
+
+		// TODO: If Parsoid is the client always return "old gallery" so "alternative rendering" can work
+		// like a charm. This is meant to be deleted when "new galleries" are the only galleries. 
+		if ( strpos( $_SERVER[ 'HTTP_USER_AGENT' ], 'Parsoid' ) !== false ) {
 			return false;
 		}
 
@@ -1344,9 +1358,8 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			$slideshowHtml .= JSSnippets::addToStack(
 				array(
-					'/resources/wikia/libraries/jquery/slideshow/jquery-slideshow-0.4.js',
-					'/extensions/wikia/WikiaPhotoGallery/css/slideshow.scss',
-					'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slideshow.js'
+					'wikia_photo_gallery_slideshow_js',
+					'wikia_photo_gallery_slideshow_scss'
 				),
 				array(),
 				'WikiaPhotoGallerySlideshow.init',
@@ -1535,15 +1548,14 @@ class WikiaPhotoGallery extends ImageGallery {
 
 			if ( $orientation == 'mosaic' ) {
 				$sliderResources = array(
-					'/resources/wikia/libraries/modernizr/modernizr-2.0.6.js',
-					'/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.mosaic.scss',
-					'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slider.mosaic.js'
+					'wikia_photo_gallery_mosaic_js',
+					'wikia_photo_gallery_mosaic_scss'
 				);
 				$javascriptInitializationFunction = 'WikiaMosaicSliderMasterControl.init';
 			} else {
 				$sliderResources = array(
-					'/extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.scss',
-					'/extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slider.js'
+					'wikia_photo_gallery_slider_js',
+					'wikia_photo_gallery_slider_scss'
 				);
 				$javascriptInitializationFunction = 'WikiaPhotoGallerySlider.init';
 			}
@@ -1646,15 +1658,25 @@ class WikiaPhotoGallery extends ImageGallery {
 	 * @return String
 	 */
 	public function resizeURL( File $file, array $box ) {
-		list( $adjWidth, $adjHeight ) = $this->fitWithin( $file, $box );
+		global $wgEnableVignette;
 
-		$append = '';
-		$mime = strtolower( $file->getMimeType() );
-		if ( $mime == 'image/svg+xml' || $mime == 'image/svg' ) {
-			$append = '.png';
+		list( $adjWidth, $_ ) = $this->fitWithin( $file, $box );
+
+		if ( $wgEnableVignette ) {
+			$resizeUrl = $file->getUrlGenerator()
+				->scaleToWidth( $adjWidth )
+				->url();
+		} else {
+			$append = '';
+			$mime = strtolower( $file->getMimeType() );
+			if ( $mime == 'image/svg+xml' || $mime == 'image/svg' ) {
+				$append = '.png';
+			}
+
+			$resizeUrl = wfReplaceImageServer( $file->getThumbUrl( $adjWidth . 'px-' . $file->getName() . $append ) );
 		}
 
-		return wfReplaceImageServer( $file->getThumbUrl( $adjWidth . 'px-' . $file->getName() . $append ) );
+		return $resizeUrl;
 	}
 
 	/**
@@ -1664,37 +1686,43 @@ class WikiaPhotoGallery extends ImageGallery {
 	 *
 	 * @param File $file
 	 * @param array $box
-	 * @param int $position
 	 *
 	 * @return String
 	 */
-	public function cropURL( File $file, array $box, $position = null ) {
-		list( $adjWidth, $adjHeight ) = $this->fitClosest( $file, $box );
+	private function cropURL( File $file, array $box ) {
+		global $wgEnableVignette;
 
-		$height = $file->getHeight();
-		$width = $file->getWidth();
-
-		if ( $adjHeight == $box['h'] ) {
-			$width = $box['w'] * ($file->getHeight()/$box['h']);
-		}
-
-		if ( $adjWidth == $box['w'] ) {
-			$height = $box['h'] * ($file->getWidth()/$box['w']);
-		}
-
-		if ( $position ) {
-			$cropStr = sprintf( "%dx%dx%d", $width, $height, $position );
+		if ( $wgEnableVignette ) {
+			$cropUrl = $file->getUrlGenerator()
+				->zoomCropDown()
+				->width( $box['w'] )
+				->height( $box['h'] )
+				->url();
 		} else {
+			list( $adjWidth, $adjHeight ) = $this->fitClosest( $file, $box );
+
+			$height = $file->getHeight();
+			$width = $file->getWidth();
+
+			if ( $adjHeight == $box['h'] ) {
+				$width = $box['w'] * ($file->getHeight()/$box['h']);
+			}
+
+			if ( $adjWidth == $box['w'] ) {
+				$height = $box['h'] * ($file->getWidth()/$box['w']);
+			}
+
 			$cropStr = sprintf( "%dpx-0,%d,0,%d", $adjWidth, $width, $height );
+			$append = '';
+			$mime = strtolower( $file->getMimeType() );
+			if ( $mime == 'image/svg+xml' || $mime == 'image/svg' ) {
+				$append = '.png';
+			}
+
+			$cropUrl = wfReplaceImageServer( $file->getThumbUrl( $cropStr . '-' . $file->getName() . $append ) );
 		}
 
-		$append = '';
-		$mime = strtolower( $file->getMimeType() );
-		if ( $mime == 'image/svg+xml' || $mime == 'image/svg' ) {
-			$append = '.png';
-		}
-
-		return wfReplaceImageServer( $file->getThumbUrl( $cropStr . '-' . $file->getName() . $append ) );
+		return $cropUrl;
 	}
 
 
@@ -1783,6 +1811,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				[
 					'items' => $media,
 					'gallery_params' => $this->mData['params'],
+					'parser' => $this->mParser,
 				]
 			);
 		}

@@ -36,7 +36,13 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 	function findAdInIframe(slotname, iframe, adCallback, noAdCallback) {
 		var iframeHeight, iframeContentHeight, iframeDoc;
 
-		iframeDoc = iframe.contentWindow.document;
+		try {
+			iframeDoc = iframe.contentWindow.document;
+		} catch (e) {
+			// Frame with origin "http://tpc.googlesyndication.com" is used for SafeFrame ads
+			log(['findAdInIframe', slotname, 'ad iframe not accessible (or not found): assuming success'], 'error', logGroup);
+			return adCallback();
+		}
 
 		// Because Chrome reports document.body.offsetHeight as the outer
 		// iframe height, we're setting the outer height to 0, so the innerHeight
@@ -85,7 +91,14 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 
 		log(['getAdType', slotname], 'info', logGroup);
 
-		if (iframe && iframe.contentWindow && iframe.contentWindow.AdEngine_adType) {
+		try {
+			iframeOk = !!iframe.contentWindow.document.querySelector;
+		} catch (e) {
+			// Frame with origin "http://tpc.googlesyndication.com" is used for SafeFrame ads
+			log(['getAdType', slotname, 'ad iframe not accessible (or not found)'], 'error', logGroup);
+		}
+
+		if (iframeOk && iframe.contentWindow.AdEngine_adType) {
 			log(['getAdType', slotname, 'iframe AdEngine_adType = ', iframe.contentWindow.AdEngine_adType], 'info', logGroup);
 
 			return iframe.contentWindow.AdEngine_adType;
@@ -108,16 +121,8 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 			return 'always_success';
 		}
 
-		try {
-			iframeOk = !!iframe.contentWindow.document.querySelector;
-		} catch (ignore) {}
-
 		if (!iframeOk) {
-			log(
-				['getAdType', slotname, 'running ad callback (no ad iframe found)'],
-				'error',
-				logGroup
-			);
+			log(['getAdType', slotname, 'running ad callback (!iframeOk)'], 'error', logGroup);
 			return 'always_success';
 		}
 
@@ -141,14 +146,20 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 
 		function noop() { return; }
 
-		function callAdCallback() {
+		function callAdCallback(extra) {
+			extra = extra || {};
+			extra.adType = adType;
+
 			clearTimeout(successTimer);
-			adCallback({adType: adType});
+			adCallback(extra);
 		}
 
-		function callNoAdCallback() {
+		function callNoAdCallback(extra) {
+			extra = extra || {};
+			extra.adType = adType;
+
 			clearTimeout(successTimer);
-			noAdCallback({adType: adType});
+			noAdCallback(extra);
 		}
 
 		function pollForSuccess() {
@@ -164,7 +175,7 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 
 			if (data.status === 'success') {
 				if (expectAsyncSuccess) {
-					callAdCallback();
+					callAdCallback(data.extra);
 				} else {
 					log(
 						['msgCallback', slotname, 'Got asynchronous success message, while not expecting it'],
@@ -176,7 +187,7 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 
 			if (data.status === 'hop') {
 				if (expectAsyncHop || expectAsyncHopWithSlotName) {
-					callNoAdCallback();
+					callNoAdCallback(data.extra);
 				} else {
 					log(
 						['msgCallback', slotname, 'Got asynchronous hop message, while not expecting it'],

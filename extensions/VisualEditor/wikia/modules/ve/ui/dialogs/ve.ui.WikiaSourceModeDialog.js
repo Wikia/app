@@ -61,9 +61,20 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 	this.applyButton.connect( this, { 'click': [ 'onApply' ] } );
 
 	// Initialization
+	if ( !!mw.loader.getState( 'ext.wikia.LinkSuggest' ) ) {
+		this.initLinkSuggest();
+	}
 	this.$body.append( this.sourceModeTextarea.$element );
 	this.$foot.append( this.$helpLink, this.applyButton.$element );
 	this.frame.$content.addClass( 've-ui-wikiaSourceModeDialog-content' );
+};
+
+/**
+ * Initialize Wikia's link suggest for autocompleting links
+ *
+ * @method
+ */
+ve.ui.WikiaSourceModeDialog.prototype.initLinkSuggest = function () {
 	// Add class to iframe body that is required for linksuggest styling
 	this.$( 'body' ).addClass( 'skin-oasis' );
 	// Initialize linksuggest on the dialog textarea

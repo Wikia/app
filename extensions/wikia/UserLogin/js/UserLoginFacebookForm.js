@@ -1,39 +1,32 @@
-var UserLoginFacebookForm = $.createClass(UserLoginAjaxForm, {
+/* global UserLoginAjaxForm */
 
-	// extend this.inputs storing form fields
-	init: function() {
-		UserLoginFacebookForm.superclass.init.call(this);
+(function () {
+	'use strict';
 
-		// FB feed options
-		var feedForm = this.form.parent().children('.FacebookSignupConfig');
-		this.feedCheckboxes = feedForm.find('input[type="checkbox"]');
-	},
+	var UserLoginFacebookForm = $.createClass(UserLoginAjaxForm, {
+		// login token is stored in hidden field, no need to send an extra request
+		retrieveLoginToken: function () {},
 
-	// get selected FB feed options
-	getFeedOptions: function() {
-		var ret = [],
-			feedName,
-			feedOptions = this.feedCheckboxes.serializeArray();
+		// Handles existing user login via modal
+		ajaxLogin: function () {
+			var values = {
+				username: this.inputs.username.val(),
+				password: this.inputs.password.val(),
+				signupToken: this.inputs.loginToken.val()
+			};
 
-		for (var i=0, len = feedOptions.length; i<len; i++) {
-			feedName = feedOptions[i].name.split('-').pop();
-			ret.push(feedName);
+			// cache redirect url for after form is complete
+			this.returnToUrl = this.inputs.returntourl.val();
+
+			$.nirvana.postJson(
+				'FacebookSignupController',
+				'login',
+				values,
+				this.submitLoginHandler.bind(this)
+			);
 		}
+	});
 
-		return ret;
-	},
-
-	// login token is stored in hidden field, no need to send an extra request
-	retrieveLoginToken: function() {},
-
-	// send a request to FB controller
-	ajaxLogin: function() {
-		$.nirvana.postJson('FacebookSignupController', 'signup', {
-			username: this.inputs.username.val(),
-			password: this.inputs.password.val(),
-			signupToken: this.inputs.logintoken.val(),
-			fbfeedoptions: this.getFeedOptions().join(',')
-		},
-		$.proxy(this.submitLoginHandler, this));
-	}
-});
+	// Expose global
+	window.UserLoginFacebookForm = UserLoginFacebookForm;
+})();

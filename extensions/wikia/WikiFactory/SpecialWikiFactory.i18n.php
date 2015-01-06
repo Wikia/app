@@ -147,6 +147,7 @@ $messages['en'] = array(
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
  * @author LWChris
+ * @author Liuxinyu970226
  * @author McDutchie
  * @author PtM
  * @author Purodha
@@ -163,6 +164,7 @@ $messages['qqq'] = array(
 	'wf_city_public' => '{{Identical|Status}}',
 	'wf_city_lang' => '{{Identical|Language}}',
 	'wf_cc_name' => '{{Identical|Category}}',
+	'wikifactory-label-info' => '{{Identical|Info}}',
 	'wikifactory-label-variables' => '{{Identical|Variable}}',
 	'wikifactory-label-variables2' => '{{Identical|General}}',
 	'wikifactory-label-domains' => '{{Identical|Domain}}',
@@ -174,7 +176,8 @@ $messages['qqq'] = array(
 	'wikifactory-label-findtags' => 'Label for a tab that contains a form, allowing staff to find wikis by tag. [http://translatewiki.net/w/i.php?title=Thread:Translating_talk:Wikia/MassTag%3F_FindTag%3F/reply source]',
 	'wikifactory-label-eznamespace' => '{{Optional}}',
 	'wikifactory-label-reason' => 'Label for a form field where a user provides the reason for which a change has been made.',
-	'wikifactory-label-domain' => 'Label for a form field where a user provides the domain name.',
+	'wikifactory-label-domain' => 'Label for a form field where a user provides the domain name.
+{{identical|Domain}}',
 	'right-wikifactory' => '{{doc-right|wikifactory|ns=Wikia}}',
 	'action-wikifactory' => '{{doc-action|wikifactory}}',
 	'closewiki-nbr-wiki' => 'Number of wikis. $1 represents a numeric value',
@@ -608,6 +611,14 @@ $messages['bar'] = array(
 	'closed-wiki-create-wiki' => 'A neichs Wiki erstejn',
 );
 
+/** Southern Balochi (بلوچی مکرانی)
+ * @author Baloch Afghanistan
+ */
+$messages['bcc'] = array(
+	'wf_cc_name' => 'تهر',
+	'awc-metrics-category' => 'و تهر',
+);
+
 /** Belarusian (беларуская)
  * @author Тест
  */
@@ -990,6 +1001,7 @@ $messages['bs'] = array(
  * @author Gemmaa
  * @author Paucabot
  * @author SMP
+ * @author Unapersona
  */
 $messages['ca'] = array(
 	'wikifactorypagetitle' => 'Configurador de fàbrica de wiki',
@@ -1022,6 +1034,8 @@ $messages['ca'] = array(
 	'wikifactory-label-findtags' => 'FindTags',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
 	'wikifactory-label-compare' => 'Comparar',
+	'wikifactory-label-reason' => "'''Raó''' (Opcional, text de la raó o nombre de tiquet):",
+	'wikifactory-label-domain' => "'''Domini:'''",
 	'right-wikifactory' => 'Canvia la configuració interna de wikis',
 	'action-wikifactory' => 'canviar la configuració interna dels wikis',
 	'wikifactory-domain-edit' => 'editar aquesta URL',
@@ -1098,7 +1112,7 @@ $messages['ca'] = array(
 	'closed-wiki' => 'Wiki tancat',
 	'closed-wiki-info' => "S'ha tancat aquest wiki",
 	'disabled-wiki-info' => 'Aquest wiki ha estat inhabilitat',
-	'closed-wiki-dump-exists' => 'Pots [$1 recuperar el teu contingut] si ho vols.<br />(Si el teu wiki va tancar fa poc, pot trigar una mica la generació dels arxius)', # Fuzzy
+	'closed-wiki-dump-exists' => 'Podeu recuperar el contingut si vols.<br />(Si el vostre wiki va ser tancat recentment, es pot trigar una estona a generar els fitxers)',
 	'closed-wiki-dump-links' => '[$1 Pàgines actuals] (aquesta versió és la millor normalment per a bots)<br />[$2 Pàgines actuals i història] (advertència: aquest fitxer pot ser molt gran)',
 	'closed-wiki-dump-noexists' => "S'ha tancat aquest wiki. La descàrrega de contingut estarà disponible d'aquí 24 hores. Si us plau, comprova-ho una altra vegada més tard.",
 	'closed-wiki-create-wiki' => 'Crear un nou wiki',
@@ -1154,7 +1168,7 @@ $messages['ce'] = array(
 	'wikifactory-label-masstags' => 'Дуккхаллин билгалонаш',
 	'wikifactory-label-findtags' => 'Лаха къастам',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
-	'wikifactory-label-compare' => 'Муха ю хьажа',
+	'wikifactory-label-compare' => 'Юста',
 	'right-wikifactory' => 'Викин чоьхьара гӀирс нисбарш хийца',
 	'action-wikifactory' => 'Викин чоьхьара гӀирс нисбарш хийцар',
 	'wikifactory-domain-edit' => 'хӀара URL тае',
@@ -1451,6 +1465,7 @@ $messages['da'] = array(
  * @author Sebastian Wallroth
  * @author The Evil IP address
  * @author Umherirrender
+ * @author Yottabyte
  */
 $messages['de'] = array(
 	'wikifactorypagetitle' => 'Wiki Factory: Konfigurator',
@@ -1483,6 +1498,8 @@ $messages['de'] = array(
 	'wikifactory-label-findtags' => 'Finde Tags',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
 	'wikifactory-label-compare' => 'Vergleichen',
+	'wikifactory-label-reason' => "'''Grund''' (optional, Begründungstext oder Ticket-Nummer):",
+	'wikifactory-label-domain' => "'''Domain''':",
 	'right-wikifactory' => 'Interne Einstellungen für Wikis ändern',
 	'action-wikifactory' => 'interne Einstellungen für Wikis zu ändern',
 	'wikifactory-domain-edit' => 'Bearbeite diese URL',
@@ -1556,7 +1573,7 @@ $messages['de'] = array(
 	'awc-metrics-close-checked' => 'Schließe markierte',
 	'awc-metrics-exact-match' => 'genaue Übereinstimmung',
 	'awc-metrics-recordspager' => "Zeige '''$1''' bis '''$2''' von '''$3''' Einträgen",
-	'closed-wiki' => 'geschlossenes Wiki',
+	'closed-wiki' => 'Geschlossenes Wiki',
 	'closed-wiki-info' => 'Dieses Wiki wurde geschlossen',
 	'disabled-wiki-info' => 'Dieses Wiki wurde deaktiviert',
 	'closed-wiki-dump-exists' => 'Du kannst deine Inhalte herunterladen, wenn du möchtest.<br />(Wenn dein Wiki kürzlich geschlossen worden ist, kann es eine kurze Weile dauern, bis die Daten erstellt werden.)',
@@ -1703,6 +1720,14 @@ $messages['el'] = array(
 	'awc-metrics-images' => 'Εικόνες',
 );
 
+/** British English (British English)
+ * @author Captaindogfish
+ */
+$messages['en-gb'] = array(
+	'wikifactory-label-reason' => "'''Reason''' (optional, reason text or ticket number):",
+	'wikifactory-label-domain' => "'''Domain''':",
+);
+
 /** Spanish (español)
  * @author Armando-Martin
  * @author Bola
@@ -1742,6 +1767,8 @@ $messages['es'] = array(
 	'wikifactory-label-findtags' => 'EtiquetasEncontrar',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
 	'wikifactory-label-compare' => 'Comparar',
+	'wikifactory-label-reason' => "'''Motivo''' (opcional, motivo o número de tiquete):",
+	'wikifactory-label-domain' => "'''Dominio''':",
 	'right-wikifactory' => 'Cambiar configuración interna de los wikis',
 	'action-wikifactory' => 'cambiar la configuración interna de los wikis',
 	'wikifactory-domain-edit' => 'editar esta URL',
@@ -2042,6 +2069,8 @@ $messages['fr'] = array(
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
 	'wikifactory-label-eznamespace' => 'Espace de noms EZ',
 	'wikifactory-label-compare' => 'Comparer',
+	'wikifactory-label-reason' => "'''Motif''' (facultatif, texte du motif ou numéro de ticket) :",
+	'wikifactory-label-domain' => "'''Domaine''' :",
 	'right-wikifactory' => 'Changer les paramètres internes des wikis',
 	'action-wikifactory' => 'modifier les paramètres internes des wikis',
 	'wikifactory-domain-edit' => 'modifier cette adresse URL',
@@ -2138,6 +2167,14 @@ $messages['fr'] = array(
 	'newwikisgraph-wikis-created' => 'wikis créés',
 	'newwikisgraph-param-all' => 'Tout',
 	'newwikisgraph-param-other' => 'Autre',
+);
+
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'wf_city_lang' => 'Taal',
+	'wf_cc_name' => 'Kategory',
 );
 
 /** Galician (galego)
@@ -2290,9 +2327,12 @@ $messages['ha'] = array(
 
 /** Hebrew (עברית)
  * @author 0ftal
+ * @author Guycn2
  */
 $messages['he'] = array(
 	'wikifactory-label-close' => 'סגירה',
+	'wikifactory-label-reason' => "'''סיבה''' (אופציונלי, הסיבה או מספר הכרטיס):",
+	'wikifactory-label-domain' => "'''דומיין''':",
 	'closewiki-redirect-to' => 'הפניה ל',
 	'awc-metrics-articles' => 'מאמרים',
 	'awc-metrics-articles-per-day' => 'מאמרים <br /> (ממוצע ביום)',
@@ -2837,6 +2877,7 @@ $messages['ja'] = array(
 	'closewiki-return' => '$1へ戻る',
 	'awc-metrics-all' => 'すべてのウィキ',
 	'awc-metrics-all-languages' => 'すべての言語',
+	'awc-metrics-search' => '検索オプション:',
 	'awc-metrics-one-week' => '作成後1週間未満',
 	'awc-metrics-two-weeks' => '作成後2週間未満',
 	'awc-metrics-three-weeks' => '作成後3週間未満',
@@ -2845,7 +2886,9 @@ $messages['ja'] = array(
 	'awc-metrics-three-months' => '作成後3ヶ月未満',
 	'awc-metrics-half-year' => '作成後6ヶ月未満',
 	'awc-metrics-not-found' => 'ウィキが見つかりません',
+	'awc-metrics-articles' => '記事',
 	'awc-metrics-images' => 'イメージ',
+	'awc-metrics-recordspager' => "'''$3'''件中'''$1'''件目から'''$2'''件目を表示中",
 	'closed-wiki-create-wiki' => '新しいWikiを作成する',
 	'closed-create-dump' => 'データベース ダンプの作成',
 	'closed-create-image-archive' => 'イメージ アーカイブを作成',
@@ -3383,6 +3426,8 @@ $messages['ms'] = array(
 	'wikifactory-label-findtags' => 'FindTags',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
 	'wikifactory-label-compare' => 'Bandingkan',
+	'wikifactory-label-reason' => "'''Sebab''' (tidak wajib, teks sebab atau nombor tiket):",
+	'wikifactory-label-domain' => "'''Domain''':",
 	'right-wikifactory' => 'Mengubah tetapan dalaman wiki',
 	'action-wikifactory' => 'mengubah tetapan dalaman wiki',
 	'wikifactory-domain-edit' => 'edit URL ini',
@@ -3483,6 +3528,7 @@ $messages['ms'] = array(
 
 /** Maltese (Malti)
  * @author Chrisportelli
+ * @author Leli Forte
  */
 $messages['mt'] = array(
 	'wikifactory-label-return' => 'Lura għal-lista',
@@ -3491,6 +3537,7 @@ $messages['mt'] = array(
 	'wikifactory-label-close' => 'Agħlaq',
 	'wikifactory-label-tags' => 'Tikketti',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
+	'wikifactory-label-domain' => "'''Dominju''':",
 	'right-wikifactory' => 'Biddel l-impostazzjonijiet interni għall-wikis',
 	'closewiki-check-and-confirm' => 'Ikkontrolla l-wikis u ikkonferma l-operazzjoni',
 	'closewiki-message' => 'Isem tad-dominju $1',
@@ -3663,6 +3710,7 @@ $messages['nb'] = array(
 
 /** Dutch (Nederlands)
  * @author McDutchie
+ * @author Romaine
  * @author SPQRobin
  * @author Siebrand
  * @author Southparkfan
@@ -3699,6 +3747,8 @@ $messages['nl'] = array(
 	'wikifactory-label-findtags' => 'FindTags',
 	'wikifactory-label-ezsharedupload' => 'Eenvoudige gedeelde upload',
 	'wikifactory-label-compare' => 'Vergelijken',
+	'wikifactory-label-reason' => "'''Reden''' (optioneel, tekst voor de reden of een ticketnummer):",
+	'wikifactory-label-domain' => "'''Domein''':",
 	'right-wikifactory' => 'Interne instellingen van de wiki wijzigen',
 	'action-wikifactory' => "de interne instellingen voor wiki's te wijzigen",
 	'wikifactory-domain-edit' => 'deze URL bewerken',
@@ -3849,6 +3899,14 @@ $messages['oc'] = array(
 	'closewiki-wiki-closed' => "'''$1''' es estat clausurat ($2)",
 );
 
+/** Punjabi (ਪੰਜਾਬੀ)
+ * @author Babanwalia
+ */
+$messages['pa'] = array(
+	'wikifactory-label-reason' => "'''ਕਾਰਨ''' (ਚੋਣਵਾਂ, ਕਾਰਨ ਦੀ ਲਿਖਤ ਜਾਂ ਟਿਕਟ ਨੰਬਰ):",
+	'wikifactory-label-domain' => "'''ਮਿਲਖ''':",
+);
+
 /** Deitsch (Deitsch)
  * @author Xqt
  */
@@ -3872,8 +3930,10 @@ $messages['pdc'] = array(
 /** Polish (polski)
  * @author BeginaFelicysym
  * @author Marcin Łukasz Kiejzik
+ * @author Py64
  * @author Sovq
  * @author Sp5uhe
+ * @author Vengir
  */
 $messages['pl'] = array(
 	'wikifactorypagetitle' => 'Konfiguracja WikiFactory',
@@ -3906,6 +3966,8 @@ $messages['pl'] = array(
 	'wikifactory-label-findtags' => 'FindTags',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
 	'wikifactory-label-compare' => 'Porównaj',
+	'wikifactory-label-reason' => "'''Powód''' (opcjonalny, tekst powodu lub bilet zgłoszenia):",
+	'wikifactory-label-domain' => "'''Domena''':",
 	'right-wikifactory' => 'Zmiana ustawień wewnętrznych wiki',
 	'action-wikifactory' => 'zmiany wewnętrznych ustawień wiki',
 	'wikifactory-domain-edit' => 'edytuj ten adres URL',
@@ -4325,7 +4387,7 @@ regist.',
 	'closed-wiki' => 'Wiki fechada',
 	'closed-wiki-info' => 'Esta wiki foi fechada',
 	'disabled-wiki-info' => 'Esta wiki foi desativada',
-	'closed-wiki-dump-exists' => 'Pode recuperar o conteúdo se quiser.<br />(Se a sua wiki foi fechada há pouco, pode levar algum tempo até os ficheiros serem gerados)', # Fuzzy
+	'closed-wiki-dump-exists' => 'Pode recuperar o conteúdo se quiser.<br />(Se a sua wiki foi fechada recentemente, pode levar algum tempo até os ficheiros serem gerados)',
 	'closed-wiki-dump-noexists' => 'Esta wiki foi fechada. A cópia do conteúdo em ficheiro estará disponível nas próximas 24 horas. Verifique novamente mais tarde.',
 	'closed-wiki-create-wiki' => 'Criar uma wiki nova',
 	'closed-wiki-policy' => 'Consulte as Normas de Fecho da Wikia',
@@ -4633,6 +4695,8 @@ $messages['ru'] = array(
 	'wikifactory-label-findtags' => 'Поиск меток',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
 	'wikifactory-label-compare' => 'Сравнить',
+	'wikifactory-label-reason' => "'''Причина''' (необязательно, текст причины или билет заявки):",
+	'wikifactory-label-domain' => "'''Домен''':",
 	'right-wikifactory' => 'Изменить внутренние настройки вики',
 	'action-wikifactory' => 'изменение внутренних настроек вики',
 	'wikifactory-domain-edit' => 'редактировать этот URL',
@@ -4917,6 +4981,8 @@ $messages['sv'] = array(
 	'wikifactory-label-findtags' => 'HittaTaggar',
 	'wikifactory-label-ezsharedupload' => 'EZSharedUpload',
 	'wikifactory-label-compare' => 'Jämför',
+	'wikifactory-label-reason' => "'''Anledning''' (valfri, anledningstext eller ämnesnummer):",
+	'wikifactory-label-domain' => "'''Domän''':",
 	'right-wikifactory' => 'Ändra interna inställningar för wikis',
 	'action-wikifactory' => 'ändra interna inställningar för wikis',
 	'wikifactory-domain-edit' => 'redigera denna URL',
@@ -5570,6 +5636,8 @@ $messages['zh-hans'] = array(
 	'wikifactory-label-findtags' => '查找标签',
 	'wikifactory-label-ezsharedupload' => 'EZ共享上传',
 	'wikifactory-label-compare' => '比较',
+	'wikifactory-label-reason' => "'''原因'''（可选，原因文本或问题编号）：",
+	'wikifactory-label-domain' => "'''域名'''：",
 	'right-wikifactory' => '对wiki更改内部设置',
 	'action-wikifactory' => '对wiki更改内部设置',
 	'wikifactory-domain-edit' => '编辑此URL',
@@ -5589,6 +5657,7 @@ $messages['zh-hans'] = array(
 	'closewiki-return' => '返回$1',
 	'wikifactory-button-saveparse' => '解析并保存更改',
 	'wikifactory-button-save' => '保存更改',
+	'wikifactory-public-status-change-default-reason' => '状态已从域名选项卡更改。',
 	'awc-metrics-wikis' => '显示Wiki',
 	'awc-metrics-select' => '显示Wiki：',
 	'awc-metrics-by-language' => '按语言：',
@@ -5605,11 +5674,16 @@ $messages['zh-hans'] = array(
 	'awc-metrics-half-year' => '创建于不到6月前',
 	'awc-metrics-by-email' => '或者（用户电子邮件）：',
 	'awc-metrics-by-user' => '创始人 (用户名):',
+	'awc-metrics-by-dbname' => 'DB名称包含在哪：',
+	'awc-metrics-by-title' => '并且标题起始于：',
+	'awc-metrics-by-domains' => '并且域名包含：',
 	'awc-metrics-not-found' => '未找到任何wiki',
 	'awc-metrics-nbr-result' => '结果：',
 	'awc-metrics-created-between' => '创建于$1（YYYY/MM/DD）和$2（YYYY/MM/DD）之间',
 	'awc-metrics-wikians' => '维基人<br />（大于10次编辑）',
 	'awc-metrics-articles' => '条目',
+	'awc-metrics-articles-per-day' => '条目<br />（每天平均值）',
+	'awc-metrics-revisions-per-page' => '修订<br />（每页平均值）',
 	'awc-metrics-article-avg-size' => '平均作品<br />大小',
 	'awc-metrics-edits' => '编辑',
 	'awc-metrics-db-size' => 'DB大小',
@@ -5617,6 +5691,7 @@ $messages['zh-hans'] = array(
 	'awc-metrics-all-users' => '注册<br />用户',
 	'awc-metrics-all-users-edit-main-ns' => '注册用户<br />（内容NS）',
 	'awc-metrics-pageviews' => '页面<br />浏览',
+	'awc-metrics-statistics' => '统计（全月平均值）',
 	'awc-metrics-close' => '关闭',
 	'awc-metrics-close-action' => '关闭',
 	'awc-metrics-active' => '活跃',
@@ -5627,12 +5702,15 @@ $messages['zh-hans'] = array(
 	'awc-metrics-news-day' => '新wiki（每日）',
 	'awc-metrics-sum-month' => '计数（每月）',
 	'awc-metrics-sum-day' => '计数（每天）',
+	'awc-metrics-fewer-than' => '那个少于{{PLURAL:$1|$1个条目}}，',
 	'awc-metrics-edits-label' => '在$2的$1次编辑，',
 	'awc-metrics-this-month' => '本月',
 	'awc-metrics-last-month' => '上$1个月',
 	'awc-metrics-pageviews-label' => '以及$1次页面监视在过去的$2天',
 	'awc-metrics-close-listed' => '关闭列出的',
 	'awc-metrics-close-checked' => '关闭选中的',
+	'awc-metrics-exact-match' => '精确匹配',
+	'awc-metrics-recordspager' => "显示'''$1'''至'''$2'''项记录，总共'''$3'''项",
 	'closed-wiki' => '已关闭的维基',
 	'closed-wiki-info' => '此维基已关闭',
 	'disabled-wiki-info' => '此维基已禁用',
@@ -5660,6 +5738,7 @@ $messages['zh-hans'] = array(
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  * @author LNDDYL
+ * @author Liuxinyu970226
  * @author Simon Shek
  * @author Wrightbus
  */
@@ -5684,7 +5763,7 @@ $messages['zh-hant'] = array(
 	'wikifactory-label-hubs' => '主題',
 	'wikifactory-label-domains' => '域名',
 	'wikifactory-label-return' => '返回清單',
-	'wikifactory-label-clog' => '修改記錄',
+	'wikifactory-label-clog' => '更動紀錄',
 	'wikifactory-label-actions' => '操作',
 	'wikifactory-label-google' => 'Google 工具',
 	'wikifactory-label-close' => '關閉',
@@ -5694,13 +5773,14 @@ $messages['zh-hant'] = array(
 	'wikifactory-label-findtags' => '尋找標籤',
 	'wikifactory-label-ezsharedupload' => '簡易共享上傳',
 	'wikifactory-label-compare' => '比較',
+	'wikifactory-label-domain' => "'''網域'''：",
 	'right-wikifactory' => '更改wiki的內部設置',
 	'action-wikifactory' => '更改wiki的內部設置',
 	'wikifactory-domain-edit' => '編輯此網址',
 	'wikifactory-domain-remove' => '從 wiki 刪除此網址',
 	'wikifactory-domain-setmain' => '將此網址提交到wgServer',
 	'closewiki-check-and-confirm' => '檢查 wiki 並確認操作',
-	'closewiki-redirect-to' => '重定向到',
+	'closewiki-redirect-to' => '重新導向至',
 	'closewiki-message' => '網域名 $1',
 	'closewiki-confirm-button' => "確認$2的'$1'",
 	'closewiki-nbr-wiki' => '$1 個wiki',
@@ -5708,7 +5788,7 @@ $messages['zh-hant'] = array(
 	'closewiki-wiki-closed_removed' => "' ' $1 '' 現在關閉並將會刪除 ( $2 )",
 	'closewiki-wiki-closed_redirect' => "' ' $1 '' 被關閉 （ $2 ） ，現在重定向到：$3",
 	'closewiki-images-url' => '圖像存檔：$1',
-	'closewiki-unknown' => '未知',
+	'closewiki-unknown' => '不明',
 	'closewiki-return' => '回到 $1',
 	'wikifactory-button-save' => '儲存變更',
 	'awc-metrics-wikis' => '顯示 Wiki',
@@ -5721,7 +5801,7 @@ $messages['zh-hant'] = array(
 	'awc-metrics-one-week' => '創建於一週以內',
 	'awc-metrics-two-weeks' => '創建 < 2 周前',
 	'awc-metrics-three-weeks' => '創建 < 3 周前',
-	'awc-metrics-one-months' => '創建 < 1 個月前',
+	'awc-metrics-one-months' => '建立 < 1 個月前',
 	'awc-metrics-two-months' => '創建 < 2 個月前',
 	'awc-metrics-three-months' => '創建 < 3 個月前',
 	'awc-metrics-half-year' => '創建於六個月以內',

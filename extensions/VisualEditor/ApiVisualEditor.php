@@ -8,6 +8,8 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
+use \Wikia\Logger\WikiaLogger;
+
 class ApiVisualEditor extends ApiBase {
 
 	/**
@@ -56,11 +58,20 @@ class ApiVisualEditor extends ApiBase {
 			// served directly from Varnish, in  which case discard the value of the XPP header
 			// and use it to declare the cache hit instead.
 			$xCache = $req->getResponseHeader( 'X-Cache' );
-			if ( is_string( $xCache ) && strpos( $xCache, 'hit' ) !== false ) {
+			if ( is_string( $xCache ) && strpos( strtolower( $xCache ), 'hit' ) !== false ) {
 				$xpp = 'cached-response=true';
+				$hit = true;
 			} else {
 				$xpp = $req->getResponseHeader( 'X-Parsoid-Performance' );
+				$hit = false;
 			}
+
+			WikiaLogger::instance()->debug( 'ApiVisualEditor', array(
+				'hit' => $hit,
+				'method' => $method,
+				'url' => $url
+			) );
+
 			if ( $xpp !== null ) {
 				$resp = $this->getRequest()->response();
 				$resp->header( 'X-Parsoid-Performance: ' . $xpp );
@@ -165,12 +176,15 @@ class ApiVisualEditor extends ApiBase {
 		);
 	}
 
-	protected function parseWikitext( $title ) {
+	protected function parseWikitext( $title, $skin = null ) {
 		$apiParams = array(
 			'action' => 'parse',
 			'page' => $title->getPrefixedDBkey(),
-			'prop' => 'text|revid|categorieshtml',
+			'prop' => 'text|revid|categorieshtml'
 		);
+		if ( !empty( $skin ) ) {
+			$apiParams['useskin'] = $skin;
+		}
 		$api = new ApiMain(
 			new DerivativeRequest(
 				$this->getRequest(),

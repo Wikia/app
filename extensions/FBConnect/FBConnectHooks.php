@@ -218,6 +218,20 @@ HTML;
 	}
 
 	/**
+	 * Adds JS needed for FBConnect code
+	 *
+	 * @param array $assetsArray
+	 * @return bool
+	 */
+	public static function onSkinAssetGroups( array &$assetsArray ) {
+		// All pages
+		$assetsArray[] = 'fbconnect_js';
+
+		return true;
+	}
+
+
+	/**
 	 * Fired when MediaWiki is updated to allow FBConnect to update the database.
 	 * If the database type is supported, then a new tabled named 'user_fbconnect'
 	 * is created. For the table's layout, see fbconnect_table.sql. If $wgDBprefix
@@ -315,7 +329,7 @@ HTML;
 	}
 
 	/**
-	 * Modify the user's persinal toolbar (in the upper right).
+	 * Modify the user's personal toolbar (in the upper right).
 	 *
 	 *
 	 * @param $personal_urls
@@ -323,7 +337,7 @@ HTML;
 	 * TODO: Better 'returnto' code
 	 */
 	public static function PersonalUrls( &$personal_urls, &$wgTitle ) {
-		global $wgUser, $fbPersonalUrls, $fbConnectOnly, $wgEnableUserLoginExt;
+		global $wgUser, $fbPersonalUrls, $fbConnectOnly;
 		$skinName = get_class($wgUser->getSkin());
 
 		// Get the logged-in user from the Facebook API
@@ -399,17 +413,6 @@ HTML;
 						'href'   => '#', // SpecialPage::getTitleFor( 'Connect' )->getLocalUrl( 'returnto=' . $wgTitle->getPrefixedURL() ),
 						'active' => $wgTitle->isSpecial('Connect')
 					);
-				}
-
-				if ( in_array($skinName, array('SkinMonaco', 'SkinOasis')) && empty($wgEnableUserLoginExt) ) {
-					$html = Xml::openElement("span",array("id" => 'fbconnect' ));
-						$html .= Xml::openElement("a",array("href" => '#', 'class' => 'fb_button fb_button_small' ));
-							$html .= Xml::openElement("span",array("class" => "fb_button_text" ));
-								$html .= wfMsg( 'fbconnect-connect-simple' );
-							$html .= Xml::closeElement( "span" );
-						$html .= Xml::closeElement( "a" );
-					$html .= Xml::closeElement( "span" );
-					$personal_urls['fbconnect']['html'] = $html;
 				}
 			}
 
@@ -577,6 +580,9 @@ HTML;
 	static function UserLoadFromSession( $user, &$result ) {
 		global $wgCookiePrefix, $wgTitle, $wgOut, $wgUser;
 
+		// Temporary fix for P2: https://wikia-inc.atlassian.net/browse/MAIN-3228
+		return true;
+
 		// Check to see if the user can be logged in from Facebook
 		$fb = new FBConnectAPI();
 		$fbId = $fb->user();
@@ -585,23 +591,7 @@ HTML;
 				intval($_COOKIE["{$wgCookiePrefix}UserID"]) :
 				(isset($_SESSION['wsUserID']) ? $_SESSION['wsUserID'] : 0);
 
-		// Case: Not logged into Facebook, but logged into the wiki
-		/*if (!$fbId && $localId) {
-			$mwUser = User::newFromId($localId);
-			// If the user was Connected, the JS should have logged them out...
-			// TODO: test to see if they logged in normally (with a password)
-			#if (FBConnectDB::userLoggedInWithPassword($mwUser)) return true;
-			if (count(FBConnectDB::getFacebookIDs($mwUser))) {
-				// Oh well, they shouldn't be here anyways; silently log them out
-				$mwUser->logout();
-				// Defaults have just been loaded, so save some time
-				$result = false;
-			}
-		}
-		// Case: Logged into Facebook, not logged into the wiki
-		else
-                */
-                if ($fbId && !$localId) {
+		if ($fbId && !$localId) {
 			// Look up the MW ID of the Facebook user
 			$mwUser = FBConnectDB::getUser($fbId);
 			$id = $mwUser ? $mwUser->getId() : 0;
@@ -614,19 +604,6 @@ HTML;
 					// Redirect to Special:Connect so the Facebook user can choose a nickname
 					$wgOut->redirect($wgUser->getSkin()->makeSpecialUrl('Connect', $returnto));
 				}
-			} else {
-				// TODO: To complete the SSO experience, this should log the user on
-				/*
-				// Load the user from their ID
-				$user->mId = $id;
-				$user->mFrom = 'id';
-				$user->load();
-				// Update user's info from Facebook
-				$fbUser = new FBConnectUser($mwUser);
-				$fbUser->updateFromFacebook();
-				// Authentification okay, no need to continue with User::loadFromSession()
-				$result = true;
-				/**/
 			}
 		}
 		// Case: Not logged into Facebook or the wiki
@@ -638,11 +615,12 @@ HTML;
 	 * Create disconnect button and other things in pref
 	 *
 	 * @param $user User
+	 * @param $preferences Preferences
+	 * @return true
 	 */
 	static function GetPreferences( $user, &$preferences ){
 		global $wgOut, $wgJsMimeType, $wgExtensionsPath, $wgStyleVersion, $wgBlankImgUrl;
 		$wgOut->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/FBConnect/prefs.js?{$wgStyleVersion}\"></script>\n");
-		//$prefsection = 'fbconnect-prefstext';
 
 		$id = FBConnectDB::getFacebookIDs($user, DB_MASTER);
 		if( count($id) > 0 ) {
@@ -662,17 +640,6 @@ HTML;
 				$html .= wfMsg('fbconnect-disconnect-info');
 			}
 			$html .= Xml::closeElement( "div" );
-
-			$preferences['fbconnect-prefstext' ] = array(
-					'label' => "",
-					'type' => 'info',
-					'section' => 'fbconnect-prefstext/fbconnect-event-prefstext' );
-
-			$preferences['fbconnect-push-allow-never'] = array(
-					'type' => 'toggle',
-					'label-message' => 'tog-fbconnect-push-allow-never',
-					'section' => 'fbconnect-prefstext/fbconnect-event-prefstext',
-			);
 
 			$preferences['fbconnect-connect'] = array(
 					'help' => $html,
@@ -708,6 +675,7 @@ HTML;
 		return true;
 	}
 
+	// doesn't actually work. This is done in NotificationsController.class.php
 	public static function SkinTemplatePageBeforeUserMsg(&$msg) {
 		global $wgRequest, $wgUser, $wgServer;
 
@@ -715,8 +683,14 @@ HTML;
 		if ($wgRequest->getVal("fbconnected","") == 1) {
 			$id = FBConnectDB::getFacebookIDs($wgUser, DB_MASTER);
 			if( count($id) > 0 ) {
-				$msg =  Xml::element("img", array("id" => "fbMsgImage", "src" => $wgServer.'/skins/common/fbconnect/fbiconbig.png' ));
-				$msg .= "<p>".wfMsg('fbconnect-connect-msg', array("$1" => $pref->getFullUrl() ))."</p>";
+				$msg =  Xml::element(
+					"img",
+					[
+						"id" => "fbMsgImage",
+						"src" => $wgServer.'/skins/common/fbconnect/fbiconbig.png'
+					]
+				);
+				$msg .= "<p>".wfMessage( 'fbconnect-connect-msg' )->text()."</p>";
 				/** Wikia change - starts  @author Andrzej 'nAndy' Łukaszewski */
 				wfRunHooks('FounderProgressBarOnFacebookConnect');
 				/** Wikia change - ends */

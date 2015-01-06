@@ -1221,11 +1221,22 @@ function wfLogProfilingData() {
 	if ( $wgUser->isItemLoaded( 'id' ) && $wgUser->isAnon() ) {
 		$forward .= ' anon';
 	}
-	$log = sprintf( "%s\t%04.3f\t%s\n",
-		gmdate( 'YmdHis' ), $elapsed,
-		urldecode( $wgRequest->getRequestURL() . $forward ) );
 
-	wfErrorLog( $log . $profiler->getOutput(), $wgDebugLogFile );
+	// Wikia change - begin - FauxRequest::getRequestURL() is not implemented and throws exception
+	// in maintenance scripts
+	try {
+		$log = sprintf( "%s\t%04.3f\t%s\n",
+			gmdate( 'YmdHis' ), $elapsed,
+			urldecode( $wgRequest->getRequestURL() . $forward ) );
+
+		wfErrorLog( $log . $profiler->getOutput(), $wgDebugLogFile );
+	} catch (MWException $e) {
+		// double-check it is the case
+		if ( $e->getMessage() !== "FauxRequest::getRequestURL() not implemented" ) {
+			throw $e;
+		}
+	}
+	// Wikia change - end
 }
 
 /**

@@ -254,7 +254,7 @@ $messages['diq'] = array(
 	'contact' => 'Wikia de irtıbat kewe',
 	'specialcontact-wikia' => 'Wikia de irtıbat kewe',
 	'specialcontact-pagetitle' => 'Wikia de irtıbat kewe',
-	'specialcontact-username' => 'Namey Karberi', # Fuzzy
+	'specialcontact-username' => 'Nameyê şımayê karberi',
 	'specialcontact-realname' => 'Nameyê şıma',
 	'specialcontact-yourmail' => 'Adresê e-posta',
 	'specialcontact-problem' => 'Mewzu',
@@ -412,6 +412,13 @@ Si vous préférez utiliser la messagerie électronique classique ou souhaitez j
 	'specialcontact-mailsubcc' => 'Copie du courriel de contact avec Wikia',
 	'specialcontact-ccheader' => 'Ceci est une copie du message qui a été envoyé au staff d’aide de Wikia',
 	'specialcontact-submitcomplete' => 'Merci d’avoir contacté Wikia.',
+);
+
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'specialcontact-problem' => 'Ûnderwerp',
 );
 
 /** Galician (galego)
@@ -894,6 +901,7 @@ Se prefere usar o correio eletrónico ou precisa de enviar ficheiros anexos, pod
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Caio1478
+ * @author Guilhermemau
  * @author Luckas
  */
 $messages['pt-br'] = array(
@@ -911,7 +919,7 @@ Se você preferir usar o e-mail regular ou ter anexos, você pode contatar-nos e
 	'specialcontact-yourmail' => 'Endereço de e-mail',
 	'specialcontact-problem' => 'Assunto',
 	'specialcontact-problemdesc' => 'Mensagem',
-	'specialcontact-mail' => 'Enviar a Wikia',
+	'specialcontact-mail' => 'Enviar para a Wikia',
 	'specialcontact-filledin' => 'Esta informação foi preenchida a partir de suas preferências de conta',
 	'specialcontact-ccme' => 'Envie-me uma cópia dessa mensagem',
 	'specialcontact-ccdisabled' => 'Erro: Valide seu endereço de e-mail para utilizar esta função',
@@ -1251,7 +1259,7 @@ $messages['zh-hant'] = array(
 	'contact' => '聯絡Wikia',
 	'specialcontact-wikia' => '聯絡Wikia',
 	'specialcontact-pagetitle' => '聯絡Wikia',
-	'specialcontact-username' => '您的用戶名',
+	'specialcontact-username' => '您的使用者名稱：',
 	'specialcontact-wikiname' => '哪個 wiki',
 	'specialcontact-realname' => '您的名字',
 	'specialcontact-yourmail' => '電擬郵件位址',

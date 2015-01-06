@@ -135,7 +135,7 @@ define(
 		 */
 		function chooseTileSet() {
 			$.nirvana.getJson(
-				'WikiaMaps',
+				'WikiaMapsSpecial',
 				'getRealMapImageUrl',
 				function (data) {
 					templateData.mapType[0].image = data.url;

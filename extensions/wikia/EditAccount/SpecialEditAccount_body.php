@@ -37,7 +37,7 @@ class EditAccount extends SpecialPage {
 	 * @param $par Mixed: parameter passed to the page or null
 	 */
 	public function execute( $par ) {
-		global $wgEnableUserLoginExt, $wgExternalAuthType;
+		global $wgExternalAuthType;
 
 		// Set page title and other stuff
 		$this->setHeaders();
@@ -240,18 +240,15 @@ class EditAccount extends SpecialPage {
 	 * @return Boolean: true on success, false on failure (i.e. if we were given an invalid email address)
 	 */
 	function setEmail( $email, $changeReason = '' ) {
-		global $wgEnableUserLoginExt;
 		$oldEmail = $this->mUser->getEmail();
 		if ( Sanitizer::validateEmail( $email ) || $email == '' ) {
 			$this->mUser->setEmail( $email );
 			if ( $email != '' ) {
-				if ( !empty( $wgEnableUserLoginExt ) ) {// Clear not confirmed signup flag
-					UserLoginHelper::removeNotConfirmedFlag( $this->mUser );
-				}
+				UserLoginHelper::removeNotConfirmedFlag( $this->mUser );
 				$this->mUser->confirmEmail();
 				$this->mUser->setOption( 'new_email', null );
 			} else {
-				if ( !empty( $wgEnableUserLoginExt ) && $this->mUser->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
+				if ( $this->mUser->getOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) ) {
 					// User not confirmed on signup can't has empty email
 					// @TODO introduce new message since usecase here is same as temp user empty email but it's not temp user anymore
 					$this->mStatusMsg = wfMsg( 'editaccount-error-tempuser-email' );
@@ -273,6 +270,7 @@ class EditAccount extends SpecialPage {
 				} else {
 					$this->mStatusMsg = wfMsg( 'editaccount-success-email', $this->mUser->mName, $email );
 				}
+				wfRunHooks( 'EditAccountEmailChanged', array( $this->mUser ) );
 				return true;
 			} else {
 				$this->mStatusMsg = wfMsg( 'editaccount-error-email', $this->mUser->mName );
@@ -411,6 +409,8 @@ class EditAccount extends SpecialPage {
 
 			// All clear!
 			$mStatusMsg = wfMessage( 'editaccount-success-close', $user->mName )->plain();
+
+			wfRunHooks( 'EditAccountClosed', array( $user ) );
 			return true;
 
 		} else {
@@ -427,9 +427,14 @@ class EditAccount extends SpecialPage {
 	 * @return void
 	 */
 	public static function disconnectFBConnect( User $user ) {
-		$fbIds = FBConnectDB::getFacebookIDs( $user );
-		if ( !empty( $fbIds ) ) {
-			FBConnectDB::removeFacebookID( $user );
+		global $wgEnableFacebookClientExt;
+		if ( !empty( $wgEnableFacebookClientExt ) ) {
+			FacebookMapModel::deleteFromWikiaID( $user->getId() );
+		} else {
+			$fbIds = FBConnectDB::getFacebookIDs( $user );
+			if ( !empty( $fbIds ) ) {
+				FBConnectDB::removeFacebookID( $user );
+			}
 		}
 	}
 

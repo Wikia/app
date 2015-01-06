@@ -62,6 +62,7 @@ Check given username for possible typos.</p>',
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author Liuxinyu970226
  * @author Shirayuki
  * @author Siebrand
  * @author Umherirrender
@@ -78,7 +79,9 @@ $messages['qqq'] = array(
 	'lookupcontribsprevious' => '{{Identical|Previous}}',
 	'lookupcontribspageremoved' => '{{Identical|Removed}}',
 	'lookupcontribsrestore' => '{{Identical|Restore}}',
+	'lookupcontribslog' => '{{Identical|Log}}',
 	'lookupcontribscontribs' => '{{Identical|Contribution}}',
+	'lookupcontribsdiff' => '{{Identical|Diff}}',
 	'right-lookupcontribs' => '{{doc-right|lookupcontribs|ns=Wikia}}',
 	'lookupcontribsshowpages' => '',
 	'lookupcontribscontent' => '{{Identical|Content}}',
@@ -326,12 +329,12 @@ Registre d\'entrada donat nom d\'usuari per possibles errors tipogràfics.</p>',
  */
 $messages['ce'] = array(
 	'lookupcontribs' => 'Къинхьегаме хьажа',
-	'lookupcontribslinks' => 'къинхьегаме хьажораг',
+	'lookupcontribslinks' => 'къинхьегаме хьажорг',
 	'lookupcontribsgo' => 'Дехьа гӀо',
 	'lookupcontribsnoresultfound' => 'ХӀума ца карийна!',
 	'lookupcontribswikititle' => 'ЦӀе',
 	'lookupcontribswikioptions' => 'Параметраш',
-	'lookupcontribscontribslink' => 'Къинхьегаме хьажораг',
+	'lookupcontribscontribslink' => 'Къинхьегаме хьажорг',
 	'lookupcontribscontribs' => 'къинхьегам',
 	'lookupcontribshist' => 'истори',
 	'lookupcontribscontent' => 'чулацам',
@@ -709,6 +712,20 @@ $messages['fr'] = array(
 	'action-lookupcontribs' => 'recherche des contributions d’un utilisateur sur plusieurs wikis',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'lookupcontribswikiurl' => 'URL',
+	'lookupcontribswikititle' => 'Titel',
+	'lookupcontribswikioptions' => 'Opsjes',
+	'lookupcontribsnext' => 'folgjende',
+	'lookupcontribsprevious' => 'foarige',
+	'lookupcontribscontribs' => 'bydragen',
+	'lookupcontribshist' => 'skiednis',
+	'lookupcontribsdiff' => 'ferskil',
+);
+
 /** Galician (galego)
  * @author Toliño
  */
@@ -926,6 +943,8 @@ $messages['it'] = array(
 $messages['ja'] = array(
 	'lookupcontribs' => '全体の投稿記録を見る',
 	'lookupcontribstitle' => '全体の投稿履歴を見る',
+	'lookupcontribsrecentcontributions' => '$1の最近の投稿記録',
+	'lookupcontribsfinalcontributions' => '$1の最後の投稿記録',
 	'lookupcontribshelp' => 'このページでは、複数のウィキにおけるユーザーの投稿記録が閲覧できます。下にユーザー名を入力してください。',
 	'lookupcontribusernotspecify' => 'ユーザーが指定されていません',
 	'lookupcontribsselectuser' => 'ユーザー名を入力:',
@@ -939,6 +958,7 @@ $messages['ja'] = array(
 	'lookupcontribswikioptions' => 'オプション',
 	'lookupcontribsdetails' => '詳細を見る:',
 	'lookupcontribslastedited' => '最終編集',
+	'lookupcontribsrecordspager' => "'''$3'''件中'''$1'''件目から'''$2'''件目を表示中",
 	'lookupcontribsnbrresult' => '表示件数:',
 	'lookupcontribsnext' => '次',
 	'lookupcontribsprevious' => '前',
@@ -974,11 +994,13 @@ $messages['kn'] = array(
  * @author Miri-Nae
  */
 $messages['ko'] = array(
+	'lookupcontribsfullurls' => '전체 URL',
 	'lookupcontribsnoresultfound' => '결과를 찾을 수 없습니다!',
 	'lookupcontribswiki' => '위키',
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => '제목',
 	'lookupcontribswikioptions' => '설정',
+	'lookupcontribslastedited' => '마지막 편집',
 	'lookupcontribsnbrresult' => '결과 수:',
 	'lookupcontribsnext' => '다음',
 	'lookupcontribsprevious' => '이전',
@@ -1282,7 +1304,7 @@ Geef hieronder een gebruikersnaam op om de lijst weer te geven.",
 	'lookupcontribsselectmodenormal' => 'recente bijdragen voor die gebruiker',
 	'lookupcontribsselectmodefinal' => 'laatste bijdragen voor die gebruiker',
 	'lookupcontribsselectmodeall' => 'alle bijdragen voor die gebruiker',
-	'lookupcontribsfullurls' => 'volledige URLs',
+	'lookupcontribsfullurls' => "volledige URL's",
 	'lookupcontribslinks' => 'koppeling naar bijdragen',
 	'lookupcontribsgo' => 'OK',
 	'lookupcontribsinvaliduser' => '<p class="error">Gebruiker "<b>$1</b>" bestaat niet.
@@ -1297,7 +1319,7 @@ Controleer of u een tikfout hebt gemaakt in de gebruikersnaam.</p>',
 	'lookupcontribswikidbname' => 'Databasenaam',
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Paginanaam',
-	'lookupcontribswikioptions' => 'Instellingen',
+	'lookupcontribswikioptions' => 'Opties',
 	'lookupcontribscontribslink' => 'Koppeling naar bijdragen',
 	'lookupcontribsdetails' => 'Details bekijken voor:',
 	'lookupcontribslastedited' => 'Laatste bewerking',
@@ -1332,12 +1354,21 @@ $messages['nl-informal'] = array(
  * @author Cedric31
  */
 $messages['oc'] = array(
+	'lookupcontribs' => 'Recèrca de contribucions',
+	'lookupcontribstitle' => 'Recèrca de contribucions',
+	'lookupcontribsselectuser' => "Seleccionar l'utilizaire :",
+	'lookupcontribsselectfor' => 'Seleccionar per :',
+	'lookupcontribsfullurls' => 'URLs completas',
+	'lookupcontribsgo' => 'Veire',
+	'lookupcontribsselectwikis' => 'Seleccionar los wikis :',
 	'lookupcontribswiki' => 'Wiki',
 	'lookupcontribswikidbname' => 'Nom de la Banca de Donadas',
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Títol',
+	'lookupcontribswikioptions' => 'Opcions',
 	'lookupcontribscontribslink' => 'Ligams cap a las contribucions',
 	'lookupcontribsdetails' => 'Veire de detalhs per:',
+	'lookupcontribslastedited' => 'Darrièr cambiament',
 	'lookupcontribsnbrresult' => 'Nombre de resultats:',
 	'lookupcontribsnext' => 'seguent',
 	'lookupcontribsprevious' => 'precedent',
@@ -1350,6 +1381,9 @@ $messages['oc'] = array(
 	'right-lookupcontribs' => "Veire las edicions globalas de l'utilizaire",
 	'lookupcontribsshowpages' => 'Totas las paginas ($1 espacis de nom)',
 	'lookupcontribscontent' => 'contengut',
+	'lookupcontribsnormal' => 'recent',
+	'lookupcontribsfinal' => 'final',
+	'lookupcontribsall' => 'tot',
 );
 
 /** Deitsch (Deitsch)
@@ -1735,6 +1769,7 @@ $messages['sr-ec'] = array(
 );
 
 /** Swedish (svenska)
+ * @author Jopparn
  * @author Lokal Profil
  * @author Per
  * @author WikiPhoenix
@@ -1769,7 +1804,7 @@ Kolla efter möjliga stavfel i det angivna användarnamnet.</p>',
 	'lookupcontribswikiurl' => 'URL',
 	'lookupcontribswikititle' => 'Titel',
 	'lookupcontribswikioptions' => 'Alternativ',
-	'lookupcontribscontribslink' => 'Bidragslänkar',
+	'lookupcontribscontribslink' => 'Bidragslänk',
 	'lookupcontribsdetails' => 'Se detaljer för:',
 	'lookupcontribslastedited' => 'Senast redigerad',
 	'lookupcontribsrecordspager' => "Visar '''$1''' till '''$2''' av '''$3''' poster.",
@@ -2022,6 +2057,41 @@ $messages['uk'] = array(
 	'action-lookupcontribs' => 'пошук внесків користувача на декількох вікі',
 );
 
+/** Vietnamese (Tiếng Việt)
+ * @author Dinhxuanduyet
+ * @author Max20091
+ */
+$messages['vi'] = array(
+	'lookupcontribs' => 'Tra cứu Contribs',
+	'lookupcontribstitle' => 'Tra cứu Contribs',
+	'lookupcontribusernotspecify' => 'Bạn đã không chỉ định một người dùng',
+	'lookupcontribsselectuser' => 'Chọn người dùng:',
+	'lookupcontribsselectfor' => 'Chọn cho:',
+	'lookupcontribsdisplaymode' => 'Chế độ hiển thị:',
+	'lookupcontribsfullurls' => 'URL đầy đủ',
+	'lookupcontribsgo' => 'Đi',
+	'lookupcontribsselectwikis' => 'Chọn Wikia:',
+	'lookupcontribslistwikiainfo' => 'Danh sách wikia nơi có các bài viết được biên bập bởi <b>$1</b>',
+	'lookupcontribsnoresultfound' => 'Không tìm thấy kết quả!',
+	'lookupcontribsinvalidresults' => 'Kết quả không hợp lệ!',
+	'lookupcontribswiki' => 'Wiki',
+	'lookupcontribswikidbname' => 'Tên DB',
+	'lookupcontribswikiurl' => 'URL',
+	'lookupcontribswikititle' => 'Tựa đề',
+	'lookupcontribswikioptions' => 'Tùy chọn',
+	'lookupcontribslastedited' => 'Sửa đổi lần cuối',
+	'lookupcontribsnext' => 'tiếp',
+	'lookupcontribsprevious' => 'Trước',
+	'lookupcontribspageremoved' => 'Đã xoá:',
+	'lookupcontribsrestore' => 'khôi phục',
+	'lookupcontribslog' => 'nhật trình',
+	'lookupcontribscontribs' => 'đóng góp',
+	'lookupcontribshist' => 'sử',
+	'lookupcontribscontent' => 'nội dung',
+	'lookupcontribsnormal' => 'Gần đây',
+	'lookupcontribsall' => 'tất cả',
+);
+
 /** Yiddish (ייִדיש)
  * @author פוילישער
  */
@@ -2092,10 +2162,15 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
 	'lookupcontribs' => '查詢貢獻',
 	'lookupcontribstitle' => '查詢貢獻',
 	'lookupcontribsrecentcontributions' => '$1最近的貢獻',
 	'lookupcontribsfinalcontributions' => '$1 最近的貢獻',
+	'lookupcontribslog' => '日誌',
+	'lookupcontribsdiff' => '差異',
+	'lookupcontribscontent' => '內容',
+	'lookupcontribsall' => '全部',
 );

@@ -6,7 +6,7 @@
 
 /** Hide invisible slots and 1x1 iframes **/
 .wikia-ad[id^="INVISIBLE_"], .wikia-ad iframe[width="1"][height="1"], .wikia-ad > .hidden {
-	display: none;
+	display: none !important;
 }
 
 .wikia-ad.hidden {
@@ -52,17 +52,15 @@
 	>div[id^=Liftium_] {
 		text-align: center;
 	}
+}
+
+#HOME_TOP_LEADERBOARD, #TOP_LEADERBOARD, #CORP_TOP_LEADERBOARD, #HUB_TOP_LEADERBOARD {
 	&.default-height {
 		height: 90px;
 	}
 }
 
 /** Skyscrapers **/
-#LEFT_SKYSCRAPER_2 {
-	// FIXME: this is bad. Is it necessary?
-	@extend section;
-}
-
 #LEFT_SKYSCRAPER_3 {
 	clear: both;
 	position: absolute;
@@ -125,17 +123,13 @@
 	height: 250px;
 }
 
-#PREFOOTER_LEFT_BOXAD {
+#PREFOOTER_LEFT_BOXAD, #PREFOOTER_RIGHT_BOXAD {
 	float: left;
 	margin: 0 15px;
-}
 
-#PREFOOTER_RIGHT_BOXAD {
-	margin: 0 15px;
-}
-
-#PREFOOTER_LEFT_BOXAD.default-height, #PREFOOTER_RIGHT_BOXAD.default-height {
-	height: 250px;
+	&.default-height {
+		height: 250px;
+	}
 }
 
 /** Spotlights **/
@@ -236,6 +230,7 @@ body >a >img[src$="noad.gif"] {
 
 // Right rail ads centering
 #LEFT_SKYSCRAPER_2 {
+	margin-bottom: 20px;
 	font-size: 0;
 	text-align: center;
 	> div, > iframe {

@@ -139,6 +139,14 @@ $messages['fr'] = array(
 	'paginator-back' => 'Précédent',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'paginator-next' => 'Folgjende',
+	'paginator-back' => 'Foarige',
+);
+
 /** Galician (galego)
  * @author Toliño
  */
@@ -196,10 +204,11 @@ $messages['kn'] = array(
 
 /** Korean (한국어)
  * @author Miri-Nae
+ * @author 아라
  */
 $messages['ko'] = array(
 	'paginator-next' => '다음',
-	'paginator-back' => '이전',
+	'paginator-back' => '뒤로',
 );
 
 /** Colognian (Ripoarisch)

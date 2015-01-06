@@ -66,9 +66,7 @@ ve.ui.WikiaTemplateInsertDialog.prototype.onTemplateSelect = function ( itemData
 
 	if ( itemData ) {
 		this.$frame.startThrobbing();
-
-		this.transclusionModel = new ve.dm.MWTransclusionModel();
-
+		this.transclusionModel = new ve.dm.WikiaTransclusionModel();
 		template = ve.dm.MWTemplateModel.newFromName(
 			this.transclusionModel, itemData.title
 		);

@@ -67,6 +67,10 @@ $specialPageAliases = array(
 	'Booksources'               => array( '책찾기' ),
 	'BrokenRedirects'           => array( '끊긴넘겨주기' ),
 	'Categories'                => array( '분류' ),
+	// begin wikia change
+	// VOLDEV-97
+	'ChangeEmail'				=> array( '이메일변경' ),
+	// end wikia change
 	'ChangePassword'            => array( '비밀번호변경', '비밀번호바꾸기' ),
 	'ComparePages'              => array( '문서비교' ),
 	'Confirmemail'              => array( '이메일인증' ),
@@ -2556,6 +2560,7 @@ $1',
 'unblocked'                       => '[[User:$1|$1]] 사용자 차단 해제됨',
 'unblocked-range'                 => '$1 대역이 차단 해제되었습니다.',
 'unblocked-id'                    => '차단 $1 해제됨',
+'unblocked-ip'                    => '[[Special:Contributions/$1|$1]] 사용자가 차단 해제되었습니다.',
 'blocklist'                       => '차단된 사용자 목록',
 'ipblocklist'                     => '현재 차단된 IP 주소/사용자 이름',
 'ipblocklist-legend'              => '차단 중인 사용자 찾기',

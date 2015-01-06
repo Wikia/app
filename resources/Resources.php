@@ -79,7 +79,10 @@ return array(
 
 	'jquery' => array(
 		// Wikia change - begin
-		'scripts' => 'resources/jquery/jquery-1.8.2.js',
+		'skinScripts' => [
+			'default' => 'resources/jquery/jquery-' . AssetsConfig::JQUERY_VERSION . '.js',
+			'venus' => 'resources/jquery/jquery-2.1.1.js',
+		],
 		// Wikia change - end
 		'debugRaw' => false,
 	),
@@ -244,6 +247,9 @@ return array(
 			'oasis' => array(
 				'resources/jquery.ui/themes/default/jquery.ui.core.css',
 				// TODO: use /skins/oasis/css/core/jquery.ui.autocomplete.scss SASS file here
+			),
+			'venus' => array(
+				'resources/jquery.ui/themes/default/jquery.ui.core.css',
 			)
 			// wikia change - end
 		),

@@ -45,6 +45,7 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 	}
 	$vars['wgCategories'] = $out->getCategories();
 	$vars['wgPageName'] = $title->getPrefixedDBKey();
+	$vars['wikiaPageType'] = WikiaPageType::getPageType();
 
 	// missing in 1.19
 	$skin = RequestContext::getMain()->getSkin();

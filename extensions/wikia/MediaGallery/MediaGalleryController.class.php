@@ -17,18 +17,21 @@ class MediaGalleryController extends WikiaController {
 	 */
 	public function gallery() {
 		$items = $this->getVal( 'items' );
-		$this->model = new MediaGalleryModel( $items );
+		$parser = $this->getVal( 'parser', $this->wg->Parser );
+		$this->model = new MediaGalleryModel( $items, $parser );
 
 		$galleryParams = $this->getVal( 'gallery_params', [] ); // gallery tag parameters
-		$visibleCount = empty( $galleryParams['expand'] ) ? self::MAX_ITEMS : self::MAX_EXPANDED_ITEMS;
+		$visibleCount = isset( $galleryParams['expand'] ) && $galleryParams['expand'] == 'true' ?
+			self::MAX_EXPANDED_ITEMS : self::MAX_ITEMS;
 
 		$data = $this->model->getGalleryData();
 
 		// noscript tag does not need more than 100 images
-		$this->media = array_slice( $data, 0, 100 );
+		$this->media = array_slice( $data, 0, self::MAX_EXPANDED_ITEMS );
 		$this->json = json_encode( $data );
 		$this->count = $this->model->getMediaCount();
 		$this->visibleCount = $visibleCount;
+		$this->expanded = empty( $galleryParams['expand'] ) ? 0 : self::MAX_EXPANDED_ITEMS;
 		$this->addImageButton = wfMessage('mediagallery-add-image-button')->plain();
 	}
 }

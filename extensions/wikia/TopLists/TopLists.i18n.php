@@ -386,21 +386,68 @@ $messages['ca'] = array(
 	'toplists-error-empty-item-name' => "El nom d'un element existent no pot estar buit.",
 	'toplists-item-cannot-delete' => "La supressió d'aquest element ha fallat.",
 	'toplists-error-image-already-exists' => 'Una imatge amb el mateix nom ja existeix.',
+	'toplists-error-add-item-anon' => 'Els usuaris anònims no poden afegir ítems a llistes. Si us plau, <a class="ajaxLogin" id="login" href="$1">entra a la sessió</a> o <a href="$2">crea\'t un nou compte</a>.',
+	'toplists-error-add-item-permission' => 'Error de permisos: El teu compte no té el dret de crear nous ítems.',
+	'toplists-error-add-item-list-not-exists' => 'La llista Top 10 "$1" no existeix.',
+	'toplists-upload-error-unknown' => "S'ha produït un error mentre es processava la càrrega. Si us plau, torna-ho a intentar.",
+	'action-toplists-create-edit-list' => 'Crea i modifica les pàgines de la llista Tp 10',
+	'toplists-editor-title-label' => 'Nom de la llista',
+	'toplists-editor-title-placeholder' => 'Introduïu un nom per a la llista',
+	'toplists-editor-related-article-label' => 'Pàgina relacionada <small>(Opcional, però selecciona una imatge)</small>',
+	'toplists-editor-related-article-placeholder' => "Introduïu el no d'una pàgina existent",
+	'toplists-editor-description-label' => 'Una breu descripció de la seva llista dels Top 10',
 	'toplists-editor-description-placeholder' => 'Introduïu una descripció',
 	'toplists-editor-image-browser-tooltip' => 'Afegir una imatge',
 	'toplists-editor-remove-item-tooltip' => 'Esborrar ítem',
+	'toplists-editor-drag-item-tooltip' => "Arrossegueu per canviar l'ordre",
+	'toplists-editor-add-item-label' => 'Afegeix un element nou',
+	'toplists-editor-add-item-tooltip' => 'Afegir un nou element a la llista',
 	'toplists-create-button' => 'Crear llista',
 	'toplists-update-button' => 'Desar llista',
 	'toplists-cancel-button' => 'Cancel·la',
+	'toplists-items-removed' => '$1 {{PLURAL:$1|element retirat|elements retirats}}',
+	'toplists-items-created' => '$1 {{PLURAL:$1|element creat|elements creats}}',
+	'toplists-items-updated' => '$1 {{PLURAL:$1|element actualitzat|elements actualitzats}}',
+	'toplists-items-nochange' => 'No hi ha elements canviats',
+	'toplits-image-browser-no-picture-selected' => 'No hi ha cap imatge seleccionada',
 	'toplits-image-browser-clear-picture' => 'Imatge clara',
+	'toplits-image-browser-selected-picture' => 'Actualment seleccionada: $1',
 	'toplists-image-browser-upload-btn' => 'Escollir',
 	'toplists-image-browser-upload-label' => 'Carrega el teu propi',
 	'toplists-list-creation-summary' => 'Creant una llista, $1',
+	'toplists-list-update-summary' => 'Actualitzant una llista, $1',
+	'toplists-item-creation-summary' => "Creant un element d'una llista",
+	'toplists-item-update-summary' => "Actualització d'un element de la llista",
 	'toplists-item-remove-summary' => 'Element esborrat de la llista',
 	'toplists-item-restored' => 'Ítem restaurat',
 	'toplists-list-related-to' => 'Relacionat amb:',
 	'toplists-list-votes-num' => '{{PLURAL:$1|1<br />vot|$1<br />vots}}',
 	'toplists-list-created-by' => 'per [[User:$1|$1]]',
+	'toplists-list-hotitem-count' => '$1 {{PLURAL:$1|vot|vots}} en $2',
+	'toplists-list-add-item-label' => 'Afegeix element',
+	'toplists-list-item-voted' => 'Votat',
+	'toplists-createpage-dialog-label' => 'Lista Top 10',
+	'toplists-email-subject' => "Una llista Top 10 s'ha modificat",
+	'toplists-email-body' => 'Hola des de Wikia!
+
+La llista <a href="$1">$2</a> a Wikia s\'ha modificat.
+
+ $3
+
+Ves a Wikia per comprovar els canvis! $1
+
+- Wikia
+
+Pots <a href="$4">cancel·lar la subscripció</a> dels canvis de la llista',
+	'toplists-seconds' => '$1 {{PLURAL:$1|segon|segons}}',
+	'toplists-minutes' => '$1 {{PLURAL:$1|minut|minuts}}',
+	'toplists-hours' => '$1 {{PLURAL:$1|hora|hores}}',
+	'toplists-days' => '$1 {{PLURAL:$1|dia|dies}}',
+	'toplists-weeks' => '$1 {{PLURAL:$1|setmana|setmanes}}',
+	'toplists-msg-fb-OnRateArticle-short' => 'ha votat en una llista Top 10 de $WIKINAME!',
+	'toplists-create-heading' => '<em>Nou!</em> Crea la teva pròpia llista Top 10',
+	'toplists-create-button-msg' => 'Crear llista',
+	'toplists-oasis-only' => 'Crear i editar llistes Top 10 no està disponible en Monobook. Si vols utilitzar aquesta funció, activa la interfície "Wikia" a les teves preferències.',
 );
 
 /** Chechen (нохчийн)
@@ -931,6 +978,18 @@ Vous pouvez <a href="$4">vous désinscrire</a> des modifications de cette liste.
 	'toplists-oasis-only' => "Créer et modifier les listes Top 10 n'est pas possible dans Monobook. Si vous désirez utiliser cette fonctionnalité, changez plutôt votre préférence pour l'apparence Wikia.",
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'toplists-cancel-button' => 'Annulearje',
+	'toplists-seconds' => '$1 {{PLURAL:$1|sekonde|sekonden}}',
+	'toplists-minutes' => '$1 {{PLURAL:$1|minút|minuten}}',
+	'toplists-hours' => '$1 {{PLURAL:$1|oere|oeren}}',
+	'toplists-days' => '$1 {{PLURAL:$1|dei|dagen}}',
+	'toplists-weeks' => '$1 {{PLURAL:$1|wike|wiken}}',
+);
+
 /** Galician (galego)
  * @author Toliño
  * @author Vivaelcelta
@@ -1284,6 +1343,8 @@ $1
  * @author Miri-Nae
  */
 $messages['ko'] = array(
+	'toplists-desc' => '상위 10개 목록',
+	'toplists-category' => '상위 10개 목록',
 	'toplists-cancel-button' => '취소',
 	'toplists-oasis-only' => '모노북 스킨에는 상위 10 목록이 적용되지 않습니다. 이 기능을 체험하고 싶으시다면 스킨을 위키아 스킨으로 바꿔주세요.',
 );
@@ -1716,6 +1777,7 @@ $messages['oc'] = array(
 
 /** Polish (polski)
  * @author BeginaFelicysym
+ * @author Chrumps
  * @author Sovq
  */
 $messages['pl'] = array(
@@ -1740,7 +1802,7 @@ $messages['pl'] = array(
 	'toplists-error-image-already-exists' => 'Obraz o tej samej nazwie już istnieje.',
 	'toplists-error-add-item-anon' => 'Anonimowi użytkownicy nie mogą dodawać elementów do listy. Prosimy <a class="ajaxLogin" id="login" href="$1"> zaloguj się</a> lub <a href="$2">zarejestruj konto</a>.',
 	'toplists-error-add-item-permission' => 'Błąd uprawnień: twoje konto nie posiada praw do tworzenia nowych elementów.',
-	'toplists-error-add-item-list-not-exists' => 'Lista Top 10 "$1" nie istnieje.',
+	'toplists-error-add-item-list-not-exists' => 'Lista Top 10 „$1” nie istnieje.',
 	'toplists-upload-error-unknown' => 'Wystąpił błąd podczas przetwarzania żądania przesłania. Spróbuj ponownie.',
 	'action-toplists-create-edit-list' => 'utwórz i edytuj listy Top 10',
 	'toplists-editor-title-label' => 'Nazwa listy',
@@ -2554,6 +2616,7 @@ $messages['zh-hans'] = array(
 	'createtoplist' => '创建新的前10列表',
 	'edittoplist' => '编辑前10列表',
 	'toplists-category' => '前10列表',
+	'toplists-error-invalid-picture' => '当前选中图片无效。',
 	'toplists-error-title-exists' => '此页面已存在。您可前往<a href="$2" target="_blank">$1</a>或提供一个不同的名字。',
 	'toplists-error-article-not-exists' => '“$1”不存在。您是否希望<a href="$2" target="_blank">创建它</a>？',
 	'toplists-error-picture-not-exists' => '“$1”不存在。您是否希望<a href="$2" target="_blank">上传它</a>？',
@@ -2612,7 +2675,7 @@ $messages['zh-hans'] = array(
 - Wikia
 
 您可以<a href="$4">退订</a>本列表的变动。',
-	'toplists-seconds' => '$1{{PLURAL:$1|秒}}',
+	'toplists-seconds' => '$1秒',
 	'toplists-minutes' => '$1{{PLURAL:$1|分钟}}',
 	'toplists-hours' => '$1{{PLURAL:$1|小时}}',
 	'toplists-days' => '$1{{PLURAL:$1|天}}',
@@ -2620,11 +2683,16 @@ $messages['zh-hans'] = array(
 	'toplists-msg-fb-OnRateArticle-short' => '在$WIKINAME投票了一个前10列表！',
 	'toplists-create-heading' => '<em>新的！</em>创建你自己的前十',
 	'toplists-create-button-msg' => '创建列表',
+	'toplists-oasis-only' => '创建和编辑前10列表在Monobook皮肤下不可用。如果您希望使用此功能，请在您的用户设置中切换为Wikia皮肤。',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
 	'toplists-list-item-voted' => '投票了',
+	'toplists-seconds' => '$1 秒',
+	'toplists-hours' => '$1 小時',
+	'toplists-weeks' => '$1 週',
 );

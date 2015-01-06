@@ -187,9 +187,10 @@ class WikiaMapsPoiCategoryController extends WikiaMapsBaseController {
 
 				$this->addLogEntry( WikiaMapsLogger::newLogEntry(
 					WikiaMapsLogger::ACTION_CREATE_PIN_TYPE,
+					$this->wg->User,
 					$this->getData( 'mapId' ),
 					$poiCategory[ 'name' ],
-					[ $this->wg->User->getName(), $poiCategoryId ]
+					[ '4::poi_category_id' => $poiCategoryId ]
 				) );
 
 				$poiCategory[ 'id' ] = $poiCategoryId;
@@ -222,9 +223,10 @@ class WikiaMapsPoiCategoryController extends WikiaMapsBaseController {
 			if ( true === $response[ 'success' ] ) {
 				$this->addLogEntry( WikiaMapsLogger::newLogEntry(
 					WikiaMapsLogger::ACTION_UPDATE_PIN_TYPE,
+					$this->wg->User,
 					$this->getData( 'mapId' ),
 					$poiCategory[ 'name' ],
-					[ $this->wg->User->getName(), $poiCategoryId ]
+					[ '4::poi_category_id' => $poiCategoryId ]
 				) );
 
 				$poiCategoriesUpdated[] = $poiCategoryId;
@@ -255,9 +257,10 @@ class WikiaMapsPoiCategoryController extends WikiaMapsBaseController {
 
 				$this->addLogEntry( WikiaMapsLogger::newLogEntry(
 					WikiaMapsLogger::ACTION_DELETE_PIN_TYPE,
+					$this->wg->User,
 					$this->getData( 'mapId' ),
 					$poiCategoryId,
-					[ $this->wg->User->getName(), $poiCategoryId ]
+					[ '4::poi_category_id' => $poiCategoryId ]
 				) );
 			} else {
 				WikiaLogger::instance()->error( 'WikiaMaps tried to delete POI category and failed', [

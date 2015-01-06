@@ -6,7 +6,7 @@
  * @author macbre
  */
 
-class GlobalFile extends WikiaObject {
+class GlobalFile extends WikiaObject implements UrlGeneratorInterface {
 
 	private $mTitle;
 
@@ -160,6 +160,33 @@ class GlobalFile extends WikiaObject {
 	public function getMimeType() {
 		$this->loadData();
 		return !empty($this->mData) ? "{$this->mData->img_major_mime}/{$this->mData->img_minor_mime}" : null;
+	}
+
+	/**
+	 * @return string  A path to file's bucket
+	 */
+	public function getBucket() {
+		return VignetteRequest::parseBucket( $this->getUploadDir() );
+	}
+
+	/**
+	 * @return string  A language prefix
+	 */
+	public function getPathPrefix() {
+		return VignetteRequest::parsePathPrefix( $this->getUploadDir() );
+	}
+
+	/**
+	 * @return \Wikia\Vignette\UrlGenerator object
+	 */
+	public function getUrlGenerator() {
+		return VignetteRequest::fromConfigMap( [
+			'is-archive' => false,
+			'timestamp' => $this->getTimestamp(),
+			'relative-path' => $this->getUrlRel(),
+			'bucket' => $this->getBucket(),
+			'path-prefix' => $this->getPathPrefix(),
+		] );
 	}
 
 	/**

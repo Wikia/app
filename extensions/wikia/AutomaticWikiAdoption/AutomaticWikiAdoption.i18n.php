@@ -419,6 +419,7 @@ $messages['bs'] = array(
  * @author Marcmpujol
  * @author Pintor Smeargle
  * @author Roxas Nobody 15
+ * @author Unapersona
  */
 $messages['ca'] = array(
 	'wikiadoption' => 'Adopció automàtica de wikis',
@@ -469,52 +470,55 @@ Des De fa tants dies ja que no hi ha un administrador actiu, #WIKINAME ara serà
 Equip Comunitari de Wikia
 
 Que pot donar-se de baixa de canvis a aquesta llista aquí: <span class="notranslate" traduir="no">$3</span>',
-	'wikiadoption-mail-second-content-HTML' => 'Hola <span class="notranslate" traduir="no">$1</span>,
-Oh, no! Ha estat gairebé 60 dies des que hi ha hagut un actiu administrador #WIKINAME. És important que els administradors apareixen regularment i contribuisquen a la wiki perque puga continuar funcionant sense problemes.
+	'wikiadoption-mail-second-content-HTML' => 'Hola $1,<br /><br />
+Oh, no! Han passat 60 dies sense un administrador actiu a #WIKINAME. És important que els administradors apareixin regularment i contribueixin a la wiki perquè pugui continuar funcionant sense problemes.
 
-Des De fa tants dies ja que no hi ha un administrador actiu, #WIKINAME ara serà ofertat en adopció a altres editors.
+Com que fa tants dies de que cap administrador a aparegut, #WIKINAME serà ofert per l\'adopció d\'altres editors. <br /><br />
 
-Equip Comunitari de Wikia
+L\'Equip de Wikia<br /><br />
 
-Que pot donar-se de baixa de canvis a aquesta llista aquí: <span class="notranslate" traduir="no">$3</span>',
+Pots <a href="$3">cancel·lar la subscripció</a> dels canvis d\'aquesta llista.',
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME ha estat adoptat',
 	'wikiadoption-mail-adoption-content' => "Hi $1,
 
-#WIKINAME ha estat adoptat.  les Wikis són disponibles per adoptar quan cap dels administradors actuals són actius durant 60 dies o més.
+#WIKINAME ha estat adoptat. Els Wikis es poden adoptar quan cap dels administradors actuals són actius durant 60 dies o més.
 
-L'usuari adopció #WIKINAME tindran ara estatus de buròcrata i admin.  No et preocupis, vostè també el seu estatus d'administrador en aquest wiki i estan convidats a tornar i continuar col•laborant en qualsevol moment!
+L'usuari que adopti #WIKINAME tindrà ara drets de buròcrata i administrador. No et preocupis, tu continuaràs sent administrador d'aquest wiki i seràs benvingut si vols tornar a contribuir!
 
 L'equip de Wikia
 
-Vostè pot revocar els canvis a aquesta llista aquí:$3",
+Pots cancel·lar la subscripció dels canvis d'aquesta llista aquí:$3",
 	'wikiadoption-mail-adoption-content-HTML' => "Hola \$1,<br /><br />
 
 #WIKINAME ha estat adoptat. Les viquis s'han d'adoptar quan cap dels administradors actuals estan actius durant 60 dies o més.<br /><br />
+Hi \$1,
 
-L'usuari que ha adoptat #WIKINAME tindrà ara estatus de buròcrata i administrador. No et preocupis, també mantindràs el teu estatus d'administrador en aquesta viqui i estàs convidat a tornar i seguir col·laborant qualsevol moment!<br /><br />
+#WIKINAME ha estat adoptat. Els Wikis es poden adoptar quan cap dels administradors actuals són actius durant 60 dies o més.
 
-L'equip de Wikia<br /><br />
+L'usuari que adopti #WIKINAME tindrà ara drets de buròcrata i administrador. No et preocupis, tu continuaràs sent administrador d'aquest wiki i seràs benvingut si vols tornar a contribuir!
 
-Pots <a href=\"\$3\">donar-te de baixa</a> dels canvis en aquesta llista.",
-	'tog-adoptionmails' => 'Envia\'m un correu electrònic si <span class="notranslate" traduir="no">$1</span> estarà disponible per a altres usuaris a adoptar',
-	'tog-adoptionmails-v2' => '...si el wiki estarà disponible per a altres usuaris a adoptar',
-	'wikiadoption-pref-label' => 'Canviar aquestes preferències afectarà només missatges de correu electrònic des de  $1 .',
+L'equip de Wikia
+
+Pots <a href=\"\$3\">cancel·lar la subscripció</a> dels canvis d'aquesta llista.",
+	'tog-adoptionmails' => "Envia'm un correu electrònic quan $1 estigui disponible per a l'adopció.",
+	'tog-adoptionmails-v2' => '...si el wiki està disponible per a altres usuaris a adoptar',
+	'wikiadoption-pref-label' => 'Canviar aquestes preferències afectarà només missatges de correu electrònic des de  $1.',
 	'wikiadoption-welcome-header' => 'Felicitats! Heu adoptat {{SITENAME}}!',
-	'wikiadoption-welcome-body' => "Ara ets un buròcrata en aquesta viqui. Amb aquest nou estatus, ara tindràs accés a totes les eines que t'ajudaran a gestionar {{SITENAME}}.
+	'wikiadoption-welcome-body' => "Ara ets un buròcrata en aquesta wiki. Amb aquest nou estatus, ara tindràs accés a totes les eines que t'ajudaran a gestionar {{SITENAME}}.
 <br /><br />
 La cosa més important que pots fer per ajudar {{SITENAME}} a créixer és seguir editant.
 <br /><br />
-Si no hi ha cap administrador actiu en una viqui es pot proposar per l'adopció, per això assegura't de comprovar la viqui amb regularitat.
+Si no hi ha cap administrador actiu en una wiki es pot proposar per a l'adopció, per això assegura't de comprovar la wiki amb regularitat.
 <br /><br />
 Eines útils:
 <br /><br />
-[[Special:ThemeDesigner|ThemeDesigner]]
+[[Special:ThemeDesigner|Dissenyador de Temes]]
 <br />
 [[Special:LayoutBuilder|Constructor de dissenys de pàgina]]
 <br />
 [[Special:ListUsers|Llista d'usuaris]]
 <br />
-[[Special:UserRights|Gestió de drets]]",
+[[Special:UserRights|Gestió de drets d'usuari]]",
 );
 
 /** Czech (čeština)
@@ -535,6 +539,22 @@ $messages['cs'] = array(
 	'tog-adoptionmails' => 'Pošlete mi e-mail, pokud $1 bude k dispozici k převzetí pro ostatní uživatele',
 	'tog-adoptionmails-v2' => '...pokud bude wiki k dispozici k převzetí pro ostatní uživatele',
 	'wikiadoption-welcome-header' => 'Gratulujeme! Převzal jste {{SITENAME}}!',
+);
+
+/** Welsh (Cymraeg)
+ * @author Robin Owain
+ */
+$messages['cy'] = array(
+	'wikiadoption' => 'Mabwysiadu wiki awtomatig',
+	'wikiadoption-desc' => 'Estyniad OtomaticMabwysiaduWici ar gyfer MediaWiki',
+	'wikiadoption-header' => 'Mabwysiadu y wici hwn',
+	'wikiadoption-button-adopt' => 'Ydw, rwyf eisiau mabwysiadu{{SITENAME}}!',
+	'wikiadoption-adopt-inquiry' => 'Dysgwch ragor!',
+	'wikiadoption-know-more-header' => 'Eisiau gwybod mwy?',
+	'wikiadoption-adoption-successed' => "Llongyfarchiadau! Rydych chi'n awr yn weinyddwr ar y wici hwn!",
+	'wikiadoption-adoption-failed' => 'Yr ydym yn flin. Ceisiasom rich gwneud yn weinyddwr, ond methom. Os gwelwch yn dda [http://community.wikia.com/Special:Contact cysylltwch â ni], a byddwn yn ceisio eich helpu.',
+	'wikiadoption-not-allowed' => "Ymddiheurwn! Fedrwch chi ddim mabwysiadu'r wici hwn nawr.",
+	'wikiadoption-not-enough-edits' => "Wwwwps! Mae angen dros 10 golygiad cyn y gallwch fabwysiadu'r wici yma.",
 );
 
 /** German (Deutsch)
@@ -3408,12 +3428,12 @@ $messages['zh-hans'] = array(
 	'wikiadoption-not-allowed' => '我们很抱歉。您现在不能认领此维基。',
 	'wikiadoption-not-enough-edits' => '糟糕！您需要编辑10次以上方能领养此维基。',
 	'wikiadoption-adopted-recently' => '糟糕！您最近已认领了一个维基。您需要等待一段时间之后再认领一个新的维基。',
-	'wikiadoption-log-reason' => '制动维基领养',
+	'wikiadoption-log-reason' => '自动认领维基',
 	'wikiadoption-notification' => '{{SITENAME}}正等待认领。您是否对领导此维基感兴趣？那就从认领它开始吧！$2',
-	'wikiadoption-mail-first-subject' => '我们没有看到你在一段时间',
+	'wikiadoption-mail-first-subject' => '我们已经有一段时间没有看到你了',
 	'wikiadoption-mail-first-content' => '嗨！$1，
 
-因为我们在#WIKINAME上关注到有管理员有几个星期。管理员是#WIKINAME的组成部分之一，它是重要的并且应经常出现。如果此处长期没有活跃管理员，这个wiki可能通过允许其他用户成为管理员。
+距我们上次在#WIKINAME上关注到有管理员已经过了几个星期。管理员是#WIKINAME的组成部分之一，其经常出现是十分重要的。如果此处长期没有活跃管理员，这个wiki开放认领以允许其他用户成为管理员。
 
 如果您需要帮助照顾此wiki，您还可以允许其他社群成员加入$2成为管理员。我们盼望不久您活跃在#WIKINAME上！
 

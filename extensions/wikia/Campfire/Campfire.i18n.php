@@ -205,6 +205,14 @@ $messages['lb'] = array(
 	'campfire-licensed-under' => 'Lizenséiert ënner $1',
 );
 
+/** Lithuanian (lietuvių)
+ * @author Gediminas
+ */
+$messages['lt'] = array(
+	'campfire-page-header' => '$1 iš $2',
+	'campfire-licensed-under' => 'Licencijuota pagal $1',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */

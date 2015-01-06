@@ -85,6 +85,19 @@ $messages['bg'] = array(
 	'mostvisitedpagessearchbtn' => 'търсене',
 );
 
+/** Bengali (বাংলা)
+ * @author Aftab1995
+ * @author Aftabuzzaman
+ */
+$messages['bn'] = array(
+	'mostvisitedpages' => 'সর্বাধিক দেখা পাতাসমূহ',
+	'mostvisitedpagessearchtext' => 'নিবন্ধের নাম:',
+	'mostvisitedpagessearchbtn' => 'অনুসন্ধান',
+	'mostvisitedpageslatest' => 'সর্বশেষ $1 {{PLURAL:$1|মিনিটে}}',
+	'mostvisitedpageslatestlink' => 'সর্বশেষ দেখা পাতাসমূহ দেখুন',
+	'mostvisitedpagesalllink' => 'সর্বাধিক দেখা পাতাসমূহ দেখুন',
+);
+
 /** Breton (brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D
@@ -114,7 +127,7 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
-	'mostvisitedpagessearchbtn' => 'лаха',
+	'mostvisitedpagessearchbtn' => 'лахар',
 );
 
 /** Czech (čeština)
@@ -221,6 +234,13 @@ $messages['fr'] = array(
 	'mostvisitedpageslatest' => 'dans les $1 dernières minutes',
 	'mostvisitedpageslatestlink' => 'Voir les dernières pages consultées',
 	'mostvisitedpagesalllink' => 'Voir pages les plus consultées',
+);
+
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'mostvisitedpagessearchbtn' => 'Sykje',
 );
 
 /** Galician (galego)
@@ -360,6 +380,7 @@ $messages['kn'] = array(
  * @author Miri-Nae
  */
 $messages['ko'] = array(
+	'mostvisitedpages' => '가장 많이 읽힌 문서',
 	'mostvisitedpagessearchtext' => '문서 이름:',
 	'mostvisitedpagessearchbtn' => '검색',
 );
@@ -444,7 +465,7 @@ $messages['nl'] = array(
 	'mostvisitedpages' => "Meest bezochte pagina's",
 	'mostvisitedpagessearchtext' => 'Paginanaam:',
 	'mostvisitedpagessearchbtn' => 'zoeken',
-	'mostvisitedpageslatest' => 'in de laatste $1 minuten',
+	'mostvisitedpageslatest' => 'in de laatste {{PLURAL:$1|minuut|$1 minuten}}',
 	'mostvisitedpageslatestlink' => "Recent bezochte pagina's bekijken",
 	'mostvisitedpagesalllink' => "Meest bezochte pagina's bekijken",
 );

@@ -26,7 +26,7 @@ class WikiNavigationController extends WikiaController {
 	 * @return bool return true
 	 */
 	public static function onEditPageLayoutModifyPreview(Title $title, &$html, $wikitext) {
-		if (self::isWikiNavMessage($title)) {
+		if (NavigationModel::isWikiNavMessage($title)) {
 			// render a preview
 			$html = F::app()->renderView('WikiNavigation', 'Index', array(
 				'msgName' => $title->getText(),
@@ -58,7 +58,7 @@ HEADER;
 	public static function onEditPageMakeGlobalVariablesScript(Array &$vars) {
 		global $wgTitle;
 
-		if (self::isWikiNavMessage($wgTitle)) {
+		if (NavigationModel::isWikiNavMessage($wgTitle)) {
 			$vars['wgIsWikiNavMessage'] = true;
 		}
 
@@ -73,7 +73,7 @@ HEADER;
 	 * @return bool return true
 	 */
 	public static function onMessageCacheReplace($title, $text) {
-		if ( self::isWikiNavMessage( Title::newFromText( $title, NS_MEDIAWIKI ) ) ) {
+		if ( NavigationModel::isWikiNavMessage( Title::newFromText( $title, NS_MEDIAWIKI ) ) ) {
 			$model = new NavigationModel();
 
 			$model->clearMemc( $title );
@@ -106,12 +106,5 @@ HEADER;
 		}
 
 		return true;
-	}
-
-	/**
-	 * Check if given title refers to wiki nav messages
-	 */
-	private static function isWikiNavMessage(Title $title) {
-		return ($title->getNamespace() == NS_MEDIAWIKI) && ($title->getText() == NavigationModel::WIKI_LOCAL_MESSAGE);
 	}
 }

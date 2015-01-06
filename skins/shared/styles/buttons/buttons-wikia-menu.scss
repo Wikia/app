@@ -1,0 +1,176 @@
+@import "skins/shared/color";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/gradient";
+
+
+/*****************************
+Wikia Menu Button
+This list-based button is used in the page header for edit/history/delete actions
+******************************/
+.wikia-menu-button {
+	*display: inline;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	position: relative;
+	text-align: left;
+	&:hover {
+		@include linear-gradient($color-buttons, top, $color-button-highlight, 35%, $color-buttons, 65%);	/* fb:5020 - default hover overwrite, look below */
+	}
+	a:hover {
+		text-decoration: none;
+	}
+	/* fb:5020 - highlight individual elements of menu button separately */
+	>a, .drop, >li >a {
+		display: inline-block;
+		&:hover {
+			@include linear-gradient(darken($color-buttons, 4%), top, darken($color-button-highlight, 4%), 35%, darken($color-buttons, 4%), 65%);
+		}
+		&:active {
+			@include linear-gradient(false, top, darken($color-buttons, 4%), 35%, darken($color-button-highlight, 4%), 65%);
+			color: $color-button-text;
+		}
+	}
+	>a, >li >a {
+		border-bottom-left-radius: 4px;
+		border-right: 1px solid mix($color-button-text, $color-buttons, 40%);
+		border-top-left-radius: 4px;
+		color: $color-button-text;
+		padding: 0 8px 0 5px;
+	}
+	.drop {
+		border-bottom-right-radius: 4px;
+		border-top-right-radius: 4px;
+		margin-left: -3px;
+		padding-left: 5px;
+	}
+	ul {
+		background: $color-page;
+		border: 1px solid $color-buttons;
+		display: none;
+		left: -1px;
+		list-style: none;
+		margin: 0;
+		position: absolute;
+		top: 19px;
+		z-index: 100;
+		@include box-shadow( 1px, 2px, 12px, darken($color-page,80%));
+		a {
+			color: $color-text;
+			display: block;
+			padding: 9px 9px 7px;
+			&:hover {
+				$dropdown-background: mix($color-buttons, $color-page, 20%);
+				@if $is-dark-wiki {
+					$dropdown-background: lighten($dropdown-background, 8%);
+				}
+				background-color: $dropdown-background;
+			}
+		}
+		li {
+			border-top: 1px solid $color-page-border;
+			line-height: normal;
+			&:first-child {
+				border: 0;
+			}
+		}
+	}
+	.WikiaMenuElement {
+		margin: 0;
+	}
+	.icon, img {
+		vertical-align: text-bottom;
+	}
+	.chevron {
+		border-top-color: $color-button-text;
+		margin: 0 7px 0 1px;
+	}
+	&.active {
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+		ul {
+			display: block;
+		}
+	}
+
+}
+
+/*****************************
+Secondary Wikia Menu Button
+This list-based button used for all additional actions
+******************************/
+.wikia-menu-button {
+	&.secondary {
+		border: 1px solid $color-page-border;
+		*display: inline;
+		list-style: none;
+		margin: 0;
+		position: relative;
+		text-align: left;
+		&:hover {
+			@include linear-gradient($color-secondary-button, top, $color-secondary-button-highlight, 35%, $color-secondary-button, 65%);
+		}
+		&.combined {
+			padding-left: 4px;
+			&:hover {
+				@include linear-gradient(darken($color-secondary-button, 4%), top, darken($color-secondary-button-highlight, 4%), 35%, darken($color-secondary-button, 4%), 65%);
+			}
+			.drop {
+				&:hover {
+					background: transparent;
+				}
+			}
+		}
+		>a,
+		.drop,
+		>li>a {
+			color: $color-text;
+			margin-top: -2px;
+			&:hover {
+				@include linear-gradient(darken($color-secondary-button, 4%), top, darken($color-secondary-button-highlight, 4%), 35%, darken($color-secondary-button, 4%), 65%);
+			}
+			&:active {
+				@include linear-gradient($color-secondary-button, top, darken($color-secondary-button, 4%), 35%, darken($color-secondary-button-highlight, 4%), 65%);
+			}
+		}
+		>a {
+			border-right: 1px solid mix($color-text, $color-page-border, 0%);
+		}
+		ul {
+			background: $color-page;
+			border: 2px solid $color-page-border;
+			display: none;
+			left: -1px;
+			list-style: none;
+			margin: 0;
+			position: absolute;
+			top: 19px;
+			z-index: 100;
+			a {
+				color: $color-text;
+				display: block;
+				&:hover {
+					$dropdown-background: mix($color-buttons, $color-page, 20%);
+					@if $is-dark-wiki {
+						$dropdown-background: lighten($dropdown-background, 8%);
+					}
+					background-color: $dropdown-background !important;
+				}
+			}
+			li {
+				border-top: 1px solid $color-page-border;
+				line-height: normal;
+				&:first-child {
+					border: 0;
+				}
+			}
+		}
+		&.active {
+			border-bottom-left-radius: 0;
+			border-bottom-right-radius: 0;
+			ul {
+				display: block;
+			}
+		}
+	}
+}

@@ -8,15 +8,8 @@ class WikiaMapsHooks {
 	 *
 	 * @return bool
 	 */
-	public static function onOasisSkinAssetGroups( &$assetsArray ) {
-		$mapsAssets = [ 'wikia_maps_contribution_button_create_map_js' ];
-
-		if ( !self::isSpecialMapsPage() ) {
-			array_unshift( $mapsAssets, 'wikia_maps_parser_tag_js' );
-		}
-
-		$assetsArray = array_merge( $assetsArray, $mapsAssets );
-
+	public static function onOasisSkinAssetGroups( Array &$assetsArray ) {
+		$assetsArray[] = 'wikia_maps_contribution_button_create_map_js';
 		return true;
 	}
 
@@ -40,24 +33,7 @@ class WikiaMapsHooks {
 	}
 
 	/**
-	 * @brief Adds the CSS asset
-	 *
-	 * @param OutputPage $out
-	 * @param string $text article HTML
-	 *
-	 * @return bool: true because it is a hook
-	 */
-	public static function onOutputPageBeforeHTML( OutputPage $out, &$text ) {
-		global $wgEnableWikiaInteractiveMaps;
-
-		if ( !empty( $wgEnableWikiaInteractiveMaps ) && $out->isArticle() ) {
-			F::app()->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/WikiaMaps/css/WikiaMapsParserTag.scss' ) );
-		}
-		return true;
-	}
-
-	/**
-	 * @brief Returns true if interactive maps are enabled and the current page is Special:Maps
+	 * @brief Returns true if Wikia Maps are enabled and the current page is Special:Maps
 	 *
 	 * @return bool
 	 */
@@ -66,6 +42,23 @@ class WikiaMapsHooks {
 
 		return !empty( $wgEnableWikiaInteractiveMaps )
 			&& $wgTitle->isSpecial( WikiaMapsSpecialController::PAGE_NAME );
+	}
+
+	/**
+	 * @brief Returns true if the current page is Special:Maps single map page
+	 *
+	 * @return bool
+	 */
+	public static function isSingleMapPage() {
+		global $wgTitle;
+
+		$find = [
+			WikiaMapsSpecialController::PAGE_NAME . '/',
+			WikiaMapsSpecialController::PAGE_NAME
+		];
+		$titleFiltered = (int) str_replace( $find, '', $wgTitle->getSubpageText() );
+
+		return $titleFiltered > 0;
 	}
 
 	/**
@@ -88,4 +81,17 @@ class WikiaMapsHooks {
 		return true;
 	}
 
+	/**
+	 * @brief Adds fragment metatag in <head> section on single maps' pages
+	 * 
+	 * @param OutputPage $out
+	 * 
+	 * @return bool true
+	 */
+	public static function onBeforePageDisplay( $out ) {
+		if ( self::isSpecialMapsPage() && self::isSingleMapPage() ) {
+			$out->addMeta( 'fragment', '!' );
+		}
+		return true;
+	}
 }

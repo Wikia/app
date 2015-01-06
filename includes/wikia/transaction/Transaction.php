@@ -12,6 +12,8 @@ class Transaction {
 	const ENTRY_POINT_NIRVANA = 'api/nirvana';
 	const ENTRY_POINT_AJAX = 'api/ajax';
 	const ENTRY_POINT_API = 'api/api';
+	const ENTRY_POINT_API_V1 = 'api/v1';
+	const ENTRY_POINT_MAINTENANCE = 'maintenance';
 
 	// Parameters
 	const PARAM_ENVIRONMENT = 'env';

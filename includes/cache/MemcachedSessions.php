@@ -17,7 +17,7 @@
  * @return String: cache key
  */
 function memsess_key( $id ) {
-	return wfGetSessionKey($id);
+	return "wikicities:session:{$id}";
 }
 
 /**
@@ -130,6 +130,11 @@ function memsess_write_close() {
 			]
 		);
 	}
+	/** PLATFORM-508 - logging for Helios project - begin */
+	\Wikia\Logger\WikiaLogger::instance()->debug(
+		'PLATFORM-508',
+		[ 'method' => __METHOD__, 'session_id' => session_id() ]
+	);
 	/** Wikia change - end */
 }
 
