@@ -370,12 +370,13 @@ class LoadBalancer {
 	/**
 	 * Set the master wait position and wait for ALL slaves to catch up to it
 	 * @param $pos int
+	 * @param $wiki
 	 */
-	public function waitForAll( $pos ) {
+	public function waitForAll( $pos, $wiki ) {
 		wfProfileIn( __METHOD__ );
 		$this->mWaitForPos = $pos;
 		for ( $i = 1; $i < count( $this->mServers ); $i++ ) {
-			$this->doWait( $i , true );
+			$this->doWait( $i , true, $wiki );
 		}
 		wfProfileOut( __METHOD__ );
 	}
@@ -400,9 +401,10 @@ class LoadBalancer {
 	 * Wait for a given slave to catch up to the master pos stored in $this
 	 * @param $index
 	 * @param $open bool
+	 * @param $wiki
 	 * @return bool
 	 */
-	function doWait( $index, $open = false ) {
+	function doWait( $index, $open = false, $wiki = false ) {
 		# Find a connection to wait on
 		$conn = $this->getAnyOpenConnection( $index );
 		if ( !$conn ) {
@@ -410,7 +412,7 @@ class LoadBalancer {
 				wfDebug( __METHOD__ . ": no connection open\n" );
 				return false;
 			} else {
-				$conn = $this->openConnection( $index );
+				$conn = $this->openConnection( $index, $wiki );
 				if ( !$conn ) {
 					wfDebug( __METHOD__ . ": failed to open connection\n" );
 					return false;
@@ -586,10 +588,8 @@ class LoadBalancer {
 	 * error will be available via $this->mErrorConnection.
 	 *
 	 * @param $i Integer server index
-	 * @param $wiki String wiki ID to open
+	 * @param $wiki String|bool wiki ID to open
 	 * @return DatabaseBase
-	 *
-	 * @access private
 	 */
 	function openConnection( $i, $wiki = false ) {
 		wfProfileIn( __METHOD__ );

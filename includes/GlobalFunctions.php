@@ -3782,7 +3782,7 @@ function wfWaitForSlaves( $wiki = false ) {
 		/* Wikia change - added array() and $wiki parameters to getConnection to be able to wait for various DBs */
 		$dbw = $lb->getConnection( DB_MASTER, array(), $wiki );
 		$pos = $dbw->getMasterPos();
-		$lb->waitForAll( $pos );
+		$lb->waitForAll( $pos, $wiki );
 	}
 }
 
