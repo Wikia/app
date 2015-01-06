@@ -126,17 +126,25 @@ class FacebookClientController extends WikiaController {
 	}
 
 	/**
-	 * Disconnect the user from Facebook
+	 * Disconnect the user from Facebook. This can occur in one of two ways, either when the user
+	 * deletes the Wikia App from facebook, or when they explicitly disconnect via Special:Preferences.
+	 * If it comes from Facebook, the request is internal and is sent by FacebookClientController::deauthorizeCallback.
+	 * If it comes explicitly from the user, the request is external and is sent by preferences.js::disconnect.
 	 *
-	 * @requestParam user This is a user object.  Only works for internal calls
+	 * @requestParam user This is a user object.
 	 */
 	public function disconnectFromFB() {
-		$user = $this->getVal( 'user', null );
 
-		if ( $user ) {
-			$user = User::newFromId( $user );
-		} else {
+		if ( $this->request->isInternal() ) {
+			// deauthorizeCallback which makes this internal request ensures 'user' is set
+			$userId = $this->getVal( 'user' );
+			$user = User::newFromId( $userId );
+		} elseif ( $this->isValidExternalRequest() ) {
 			$user = F::app()->wg->User;
+		} else {
+			$this->status = 'error';
+			$this->msg = wfMessage( 'fbconnect-unknown-error' )->escaped();
+			return;
 		}
 
 		FacebookMapModel::deleteFromWikiaID( $user->getId() );
@@ -156,6 +164,15 @@ class FacebookClientController extends WikiaController {
 			$this->status = 'error';
 			$this->msg = wfMessage( 'fbconnect-unknown-error' )->text();
 		}
+	}
+
+	/**
+	 * Checks the validity of the request, making sure that it was both posted
+	 * and that the user has a valid CSRF token
+	 * @return bool
+	 */
+	private function isValidExternalRequest() {
+		return ( $this->request->wasPosted() && $this->wg->User->matchEditToken( $this->getVal( 'token' ) ) );
 	}
 
 	/**
