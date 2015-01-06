@@ -95,23 +95,17 @@ jQuery(function ($) {
 
 			switch (id) {
 			case 'comment':
-				{
-					label = el.hasClass('talk') ? 'talk' : 'comment';
-					break;
-				}
+				label = el.hasClass('talk') ? 'talk' : 'comment';
+				break;
 			case 'edit':
-				{
-					label = id;
-					break;
-				}
+				label = id;
+				break;
 			case 'delete':
 			case 'history':
 			case 'move':
 			case 'protect':
-				{
-					label = 'edit-' + id;
-					break;
-				}
+				label = 'edit-' + id;
+				break;
 			}
 
 			if (label !== undefined) {
@@ -377,7 +371,7 @@ jQuery(function ($) {
 			}).on('mousedown', '.Results .result-link', function (e) {
 				var el = $(e.currentTarget),
 					label = 'result-' +
-						(el.data('event') === 'search_click_match' ? 'push-top' : 'item-' +
+					(el.data('event') === 'search_click_match' ? 'push-top' : 'item-' +
 						el.data('pos'));
 				track({
 					browserEvent: e,
@@ -388,9 +382,9 @@ jQuery(function ($) {
 			}).on('mousedown', '.Results .wiki-thumb-tracking', function (e) {
 				var el = $(e.currentTarget),
 					label = 'result-item-' +
-						el.data('pos') +
-						'-image' +
-						(el.data('event') === 'search_click_wiki-no-thumb' ? '-placeholder' : '');
+					el.data('pos') +
+					'-image' +
+					(el.data('event') === 'search_click_wiki-no-thumb' ? '-placeholder' : '');
 				track({
 					browserEvent: e,
 					category: category,
@@ -400,8 +394,8 @@ jQuery(function ($) {
 			}).on('mousedown', '.thumb-tracking', function (e) {
 				var el = $(e.currentTarget),
 					label = 'result-item-' +
-						'image-' +
-						(el.data('event') === 'search_click_match' ? 'push-top' : el.data('pos'));
+					'image-' +
+					(el.data('event') === 'search_click_match' ? 'push-top' : el.data('pos'));
 				track({
 					browserEvent: e,
 					category: category,
@@ -411,8 +405,8 @@ jQuery(function ($) {
 			}).on('mousedown', '.image', function (e) {
 				var $currentTarget = $(e.currentTarget),
 					label = 'result-' +
-						($currentTarget.hasClass('video') ? 'video' : 'photo') +
-						(($currentTarget.parents('.video-addon-results').length > 0) ? '-video-addon' : '');
+					($currentTarget.hasClass('video') ? 'video' : 'photo') +
+					(($currentTarget.parents('.video-addon-results').length > 0) ? '-video-addon' : '');
 				track({
 					browserEvent: e,
 					category: category,
