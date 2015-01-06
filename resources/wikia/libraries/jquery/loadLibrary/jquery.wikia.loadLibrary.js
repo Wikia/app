@@ -118,7 +118,7 @@
 	};
 
 	/**
-	 * Load the facebook JS library, either v1.x or v2.x
+	 * Load the facebook JS library v2.x if Client extension is enabled
 	 * @param {function} [callback] Function to be called after library is loaded
 	 * @returns {jQuery} Returns a jQuery promise
 	 */
