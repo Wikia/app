@@ -1,15 +1,12 @@
 $(function ($) {
 	'use strict';
-	var searchSuggestionsShowed, trackSearch, $globalNavigation, $globalNavigationSearch;
+	var searchSuggestionsShowed, track, $globalNavigation, $globalNavigationSearch;
 
 	$globalNavigation = $('#globalNavigation');
 	$globalNavigationSearch = $globalNavigation.find('#searchForm');
 	searchSuggestionsShowed = false;
 
-	/**
-	 * Helper function for search-related tracking. Includes default options.
-	 */
-	trackSearch = Wikia.Tracker.buildTrackingFunction({
+	track = Wikia.Tracker.buildTrackingFunction({
 		category: 'search',
 		trackingMethod: 'both',
 		action: Wikia.Tracker.ACTIONS.CLICK
@@ -20,18 +17,12 @@ $(function ($) {
 	 * @param {object} event
 	 */
 	function globalNavigationClickTrackingHandler(event) {
-		var $element, label, track;
+		var $element, label;
 
 		//Track only primary mouse button click
 		if (event.type === 'mousedown' && event.which !== 1) {
 			return;
 		}
-
-		track = Wikia.Tracker.buildTrackingFunction({
-			action: Wikia.Tracker.ACTIONS.CLICK,
-			category: 'top-nav',
-			trackingMethod: 'ga'
-		});
 
 		$element = $(event.target);
 
@@ -40,6 +31,7 @@ $(function ($) {
 
 		if (label !== false) {
 			track({
+				category: 'top-nav',
 				label: label
 			});
 		}
@@ -102,7 +94,7 @@ $(function ($) {
 			return;
 		}
 
-		trackSearch({
+		track({
 			browserEvent: event,
 			label: 'search-suggest'
 		});
@@ -110,22 +102,22 @@ $(function ($) {
 
 	function searchSubmitButtonClickTrackingHandler(event) {
 		if (event.which === 1 && event.clientX > 0) {
-			trackSearch({
+			track({
 				label: !searchSuggestionsShowed ? 'search-button' : 'search-after-suggest-button'
 			});
 		}
 	}
 
 	function searchSubmitEnterPressTrackingHandler(event) {
-		if (event.which === 13 && $(this).is(':focus')) {
-			trackSearch({
+		if (event.which === 13 && $(event.target).is(':focus')) {
+			track({
 				label: !searchSuggestionsShowed ? 'search-enter' : 'search-after-suggest-enter'
 			});
 		}
 	}
 
 	function searchSuggestionsEnterPressOnSuggestionsTrackingHandler() {
-		trackSearch({
+		track({
 			label: 'search-suggest-enter'
 		});
 	}
@@ -133,7 +125,7 @@ $(function ($) {
 	function searchSuggestionsShowedTrackingHandler() {
 		searchSuggestionsShowed = true;
 
-		trackSearch({
+		track({
 			action: Wikia.Tracker.ACTIONS.VIEW,
 			label: 'search-suggest-show'
 		});
