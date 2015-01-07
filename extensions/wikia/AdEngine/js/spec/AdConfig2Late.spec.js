@@ -23,6 +23,96 @@ describe('AdConfig2Late', function () {
 	}
 
 
+	it('getProvider returns Evolve in CA AU NZ counties', function () {
+		var adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return true; }},
+			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true; }},
+			adProviderRemnantGpt = {name: 'RemnantGpt', canHandleSlot: function () {return false; }},
+			adProviderTaboola = {name: 'Taboola', canHandleSlot: function () {return true; }},
+			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function () {return true; }},
+			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function () {return true; }},
+			logMock = function () { return; },
+			windowMock = {},
+			instantGlobalsMock = {},
+			geoMock = { getCountryCode: function () { return 'CA'; } },
+			adConfig;
+
+		adConfig = modules['ext.wikia.adEngine.adConfigLate'](
+			logMock,
+			windowMock,
+			instantGlobalsMock,
+			geoMock,
+			mockAdContext(),
+			adProviderEvolveMock,
+			adProviderLiftiumMock,
+			adProviderDirectGpt,
+			adProviderRemnantGpt,
+			adProviderSevenOneMedia,
+			adProviderTaboola
+		);
+
+		expect(adConfig.getProviderList('foo')).toEqual([adProviderEvolveMock, adProviderRemnantGpt, adProviderLiftiumMock], 'adProviderEvolveMock');
+	});
+
+	it('getProvider returns DirectGpt in CA AU NZ counties for non Evolve slots if slotname in dartDirectBtfSlots', function () {
+		var adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return false; }},
+			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true; }},
+			adProviderRemnantGpt = {name: 'RemnantGpt', canHandleSlot: function () {return false; }},
+			adProviderTaboola = {name: 'Taboola', canHandleSlot: function () {return true; }},
+			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function () {return true; }},
+			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function () {return true; }},
+			logMock = function () { return; },
+			windowMock = {},
+			instantGlobalsMock = {},
+			geoMock = { getCountryCode: function () { return 'CA'; } },
+			adConfig;
+
+		adConfig = modules['ext.wikia.adEngine.adConfigLate'](
+			logMock,
+			windowMock,
+			instantGlobalsMock,
+			geoMock,
+			mockAdContext(),
+			adProviderEvolveMock,
+			adProviderLiftiumMock,
+			adProviderDirectGpt,
+			adProviderRemnantGpt,
+			adProviderSevenOneMedia,
+			adProviderTaboola
+		);
+
+		expect(adConfig.getProviderList('PREFOOTER_LEFT_BOXAD')).toEqual([adProviderDirectGpt, adProviderRemnantGpt, adProviderLiftiumMock], 'adProviderDirectGpt');
+	});
+
+	it('getProvider returns RemnantGpt in CA AU NZ counties for non Evolve slots if slotname not in dartDirectBtfSlots', function () {
+		var adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return false; }},
+			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true; }},
+			adProviderRemnantGpt = {name: 'RemnantGpt', canHandleSlot: function () {return false; }},
+			adProviderTaboola = {name: 'Taboola', canHandleSlot: function () {return true; }},
+			adProviderLiftiumMock = {name: 'LiftiumMock', canHandleSlot: function () {return true; }},
+			adProviderSevenOneMedia = {name: 'SevenOneMediaMock', canHandleSlot: function () {return true; }},
+			logMock = function () { return; },
+			windowMock = {},
+			instantGlobalsMock = {},
+			geoMock = { getCountryCode: function () { return 'CA'; } },
+			adConfig;
+
+		adConfig = modules['ext.wikia.adEngine.adConfigLate'](
+			logMock,
+			windowMock,
+			instantGlobalsMock,
+			geoMock,
+			mockAdContext(),
+			adProviderEvolveMock,
+			adProviderLiftiumMock,
+			adProviderDirectGpt,
+			adProviderRemnantGpt,
+			adProviderSevenOneMedia,
+			adProviderTaboola
+		);
+
+		expect(adConfig.getProviderList('SOME_OTHER_SLOT')).toEqual([adProviderRemnantGpt, adProviderLiftiumMock], 'adProviderRemnantGpt');
+	});
+
 	it('getProvider returns Liftium if it can handle it', function () {
 		var adProviderEvolveMock = {name: 'EvolveMock', canHandleSlot: function () {return true; }},
 			adProviderDirectGpt = {name: 'DirectGpt', canHandleSlot: function () {return true; }},

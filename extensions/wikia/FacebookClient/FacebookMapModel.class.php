@@ -25,6 +25,10 @@ class FacebookMapModel {
 	const paramAppId = 'appId';
 	const paramBizToken = 'bizToken';
 
+	// Error codes related to user mapping
+	const ERROR_FACEBOOK_USER_ID_MISMATCH = 1;
+	const ERROR_WIKIA_USER_ID_MISMATCH = 2;
+
 	protected $facebookUserId;
 	protected $wikiaUserId;
 	protected $lastUpdateTime;
@@ -61,6 +65,25 @@ class FacebookMapModel {
 	}
 
 	/**
+	 * Create a new user mapping between a Wikia user account and a FB account
+	 *
+	 * @param int $wikiaUserId
+	 * @param int $fbUserId
+	 * @return FacebookMapModel|null Returns the mapping on success, null otherwise
+	 */
+	public static function createUserMapping( $wikiaUserId, $fbUserId ) {
+		$map = new self();
+		$map->relate( $wikiaUserId, $fbUserId );
+		try {
+			$map->save();
+		} catch ( \FacebookMapModelException $e ) {
+			return null;
+		}
+
+		return $map;
+	}
+
+	/**
 	 * Lookup a mapping where the Wikia user ID is set to the given ID.
 	 *
 	 * @param int $wikiaUserId The Wikia user ID
@@ -82,6 +105,34 @@ class FacebookMapModel {
 	 */
 	public static function lookupFromFacebookID( $facebookId ) {
 		$map = self::loadWithCache( [ self::paramFacebookUserId => $facebookId ] );
+
+		return $map;
+	}
+
+	/**
+	 * Retrieve a Wikia/Facebook User mapping based on both Ids
+	 * If a two-id match was found, returns the map
+	 * If only one Id matched, throws exception with error code
+	 * If no matches, returns null
+	 *
+	 * @param int $wikiaUserId
+	 * @param int $facebookId
+	 * @return FacebookMapModel|null
+	 * @throws FacebookMapModelException
+	 */
+	public static function getUserMapping( $wikiaUserId, $facebookId ) {
+		$map = self::lookupFromFacebookID( $facebookId );
+
+		if ( $map && ( $map->wikiaUserId != $wikiaUserId ) ) {
+			throw new FacebookMapModelException( '', self::ERROR_WIKIA_USER_ID_MISMATCH );
+		}
+
+		if ( !$map ) {
+			$map = self::lookupFromWikiaID( $wikiaUserId );
+			if ( $map && ( $map->$facebookId != $facebookId ) ) {
+				throw new FacebookMapModelException( '', self::ERROR_FACEBOOK_USER_ID_MISMATCH );
+			}
+		}
 
 		return $map;
 	}
@@ -109,85 +160,22 @@ class FacebookMapModel {
 	}
 
 	/**
-	 * Create a new user mapping between a Wikia user account and a FB account
+	 * Generate Memcache key for the wikia/FB user mapping
 	 *
-	 * @param $wikiaUserId
-	 * @param $fbUserId
-	 * @return FacebookMapModel|null Returns the mapping on success, null otherwise
+	 * @param array $params
+	 * @return string
 	 * @throws FacebookMapModelInvalidParamException
 	 */
-	public static function createUserMapping( $wikiaUserId, $fbUserId ) {
-		// TODO: refactor callers to only call this for connection or FB sign up action.
-		// Additionally this check should be removed from createUserMapping; its a little
-		// deceptive to have something that says 'create' return an existing mapping.  That's
-		// probably an error, not a valid use case.
-		$map = self::lookupFromWikiaID( $wikiaUserId );
-		if ( !empty( $map ) ) {
-			return $map;
-		}
-
-		$map = new self();
-		$map->relate( $wikiaUserId, $fbUserId );
-		try {
-			$map->save();
-		} catch ( FacebookMapModelException $e ) {
-			return null;
-		}
-
-		return $map;
-	}
-
-	/**
-	 * Check existence of user mapping between a Wikia user account and a FB account
-	 *
-	 * @param $wikiaUserId
-	 * @param $fbUserId
-	 * @return bool True if there is such wikia/fb mapping
-	 */
-	public static function hasUserMapping( $wikiaUserId, $fbUserId ) {
-		$map = self::lookupFromWikiaID( $wikiaUserId );
-
-		if ( empty( $map ) ) {
-			return false;
-		}
-
-		// If we have a mapping, verify that the FB user ID is the one we're looking for
-		return $map->facebookUserId == $fbUserId;
-	}
-
-	/**
-	 * Delete all mappings that have the given Wikia user ID
-	 *
-	 * @param int $wikiaId A Wikia User ID
-	 *
-	 * @return bool
-	 */
-	public static function deleteFromWikiaID( $wikiaId ) {
-		$map = self::lookupFromWikiaID( $wikiaId );
-		if ( !empty( $map ) ) {
-			$map->delete();
-			return true;
+	protected static function generateMemKey( array $params = [] ) {
+		if ( !empty( $params[ self::paramWikiaUserId ] ) ) {
+			$memkey = wfSharedMemcKey( self::cacheKeyVersion, 'wikiaUserId', $params[ self::paramWikiaUserId ] );
+		} elseif ( !empty( $params[ self::paramFacebookUserId ] ) ) {
+			$memkey = wfSharedMemcKey( self::cacheKeyVersion, 'facebookUserId', $params[ self::paramFacebookUserId ] );
 		} else {
-			return false;
+			throw new FacebookMapModelInvalidParamException();
 		}
 
-	}
-
-	/**
-	 * Delete all mappings that have the given Facebook user ID
-	 *
-	 * @param int $facebookId A Facebook user ID
-	 *
-	 * @return bool
-	 */
-	public static function deleteFromFacebookID( $facebookId ) {
-		$map = self::lookupFromFacebookID( $facebookId );
-		if ( !empty( $map ) ) {
-			$map->delete();
-			return true;
-		} else {
-			return false;
-		}
+		return $memkey;
 	}
 
 	protected static function loadFromDB( array $params = [] ) {
@@ -223,18 +211,6 @@ class FacebookMapModel {
 		return $data;
 	}
 
-	protected static function generateMemKey( array $params = [] ) {
-		if ( !empty( $params[ self::paramWikiaUserId ] ) ) {
-			$memkey = wfSharedMemcKey( self::cacheKeyVersion, 'wikiaUserId', $params[ self::paramWikiaUserId ] );
-		} elseif ( !empty( $params[ self::paramFacebookUserId ] ) ) {
-			$memkey = wfSharedMemcKey( self::cacheKeyVersion, 'facebookUserId', $params[ self::paramFacebookUserId ] );
-		} else {
-			throw new FacebookMapModelInvalidParamException();
-		}
-
-		return $memkey;
-	}
-
 	protected static function getColumnAndValue( array $params = [] ) {
 		// Determine what column to constrain on
 		if ( !empty( $params[ self::paramFacebookUserId ] ) ) {
@@ -259,6 +235,58 @@ class FacebookMapModel {
 	public function relate( $wikiaUserId, $facebookUserId ) {
 		$this->wikiaUserId = $wikiaUserId;
 		$this->facebookUserId = $facebookUserId;
+	}
+
+	/**
+	 * Check existence of user mapping between a Wikia user account and a FB account
+	 *
+	 * @param $wikiaUserId
+	 * @param $fbUserId
+	 * @return bool True if there is such wikia/fb mapping
+	 */
+	public static function hasUserMapping( $wikiaUserId, $fbUserId ) {
+		$map = self::lookupFromWikiaID( $wikiaUserId );
+
+		if ( empty( $map ) ) {
+			return false;
+		}
+
+		// If we have a mapping, verify that the FB user ID is the one we're looking for
+		return $map->facebookUserId == $fbUserId;
+	}
+
+	/**
+	 * Delete all mappings that have the given Wikia user ID
+	 *
+	 * @param int $wikiaId A Wikia User ID
+	 *
+	 * @return bool
+	 */
+	public static function deleteFromWikiaID( $wikiaId ) {
+		$map = self::lookupFromWikiaID( $wikiaId );
+		if ( !empty( $map ) ) {
+			$map->delete();
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Delete all mappings that have the given Facebook user ID
+	 *
+	 * @param int $facebookId A Facebook user ID
+	 *
+	 * @return bool
+	 */
+	public static function deleteFromFacebookID( $facebookId ) {
+		$map = self::lookupFromFacebookID( $facebookId );
+		if ( !empty( $map ) ) {
+			$map->delete();
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

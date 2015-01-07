@@ -241,6 +241,13 @@ $messages['kn'] = array(
 	'mostpopularcategories' => 'ಅತ್ಯಂತ ಜನಪ್ರಿಯ ವರ್ಗಗಳು',
 );
 
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'mostpopularcategories' => '가장 많이 사용된 분류',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
@@ -260,6 +267,13 @@ $messages['lad'] = array(
  */
 $messages['lb'] = array(
 	'mostpopularcategories' => 'Beléifst Kategorien',
+);
+
+/** Lithuanian (lietuvių)
+ * @author Gediminas
+ */
+$messages['lt'] = array(
+	'mostpopularcategories' => 'Populiariausios kategorijos',
 );
 
 /** Latvian (latviešu)
