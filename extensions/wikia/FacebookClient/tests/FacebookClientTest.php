@@ -7,15 +7,6 @@ class FacebookClientTest extends WikiaBaseTest {
 	}
 
 	public function testGetReturnToUrl() {
-
-		// TODO: remove this once FB is turned on globally and unconditionally
-		// If FB Client Ext is disabled, configuration is not set properly, so skip
-		global $wgEnableFacebookClientExt;
-		if ( !$wgEnableFacebookClientExt ) {
-			$this->markTestSkipped();
-			return;
-		}
-
 		$cb = '123';
 		$actualQueryString = '&fbconnected=1&cb=' . $cb;
 
