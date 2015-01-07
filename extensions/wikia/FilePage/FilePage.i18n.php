@@ -33,6 +33,7 @@ Enter the description here.',
 );
 
 /** Message documentation (Message documentation)
+ * @author Liuxinyu970226
  * @author Shirayuki
  * @author Siebrand
  */
@@ -56,7 +57,8 @@ $messages['qqq'] = array(
 	'video-page-description-zero-state' => 'Placeholder file page content that states there is no description',
 	'video-page-add-description-link-text' => 'This is a link that takes you to the edit page where you can add a description for a video or image. The description, once added, will be a section in the file page content.',
 	'video-page-file-list-pagination' => 'Pagination for file listing.  e.g. 1 of 2.  $1 is current page, $2 is total pages',
-	'file-page-replace-button' => 'Replace button label, hidden in menu button',
+	'file-page-replace-button' => 'Replace button label, hidden in menu button
+{{Identical|Replace}}',
 	'file-page-tab-about' => 'Navigation tab label for the "about" section on a File Page.
 {{Identical|About}}',
 	'file-page-tab-history' => 'Navigation tab label for the "File History" section on a File Page.',
@@ -383,6 +385,14 @@ Saisissez la description ici.',
 	'file-page-more-links' => 'Afficher la liste',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'video-page-description-heading' => 'Beskriuwing',
+	'file-page-tab-about' => 'Oer',
+);
+
 /** Galician (galego)
  * @author Toliño
  */
@@ -566,6 +576,7 @@ $messages['ko'] = array(
 	'video-page-default-description-header-and-text' => '==설명==
 여기에 설명을 입력하세요.',
 	'video-page-file-list-pagination' => '$1 / $2',
+	'file-page-replace-button' => '바꾸기',
 	'file-page-tab-about' => '소개',
 	'file-page-tab-history' => '파일 역사',
 	'file-page-tab-metadata' => '메타 데이터',
@@ -711,8 +722,8 @@ $messages['nl'] = array(
 	'video-page-global-file-list-header' => "Gebruikt op deze wiki's",
 	'video-page-from-provider' => 'Van provider $1',
 	'video-page-expires' => 'Inhoud verloopt op $1',
-	'video-page-regional-restrictions-viewable' => 'Deze video is gelimiteerd op regio',
-	'video-page-regional-restrictions-unviewable' => 'Deze video kan niet worden bekeken in jouw locatie',
+	'video-page-regional-restrictions-viewable' => 'Deze video heeft een regiobeperking',
+	'video-page-regional-restrictions-unviewable' => 'Deze video kan niet worden bekeken in uw locatie',
 	'video-page-views' => '$1 {{PLURAL:$1|keer}} bekeken',
 	'video-page-see-more-info' => 'Meer informatie weergeven',
 	'video-page-see-less-info' => 'Minder informatie weergeven',
@@ -1106,7 +1117,7 @@ $messages['zh-hans'] = array(
 	'video-page-default-description-header-and-text' => '==说明==
 在这里输入说明。',
 	'video-page-file-list-pagination' => '$2的$1',
-	'file-page-replace-button' => '取代',
+	'file-page-replace-button' => '替换',
 	'file-page-tab-about' => '关于',
 	'file-page-tab-history' => '文件历史',
 	'file-page-tab-metadata' => '元数据',
@@ -1115,17 +1126,19 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
+ * @author Liuxinyu970226
  * @author Simon Shek
  */
 $messages['zh-hant'] = array(
-	'filepage-desc' => '視頻支持的標準MediaWiki文件修改頁面',
+	'filepage-desc' => '影片支援的標準MediaWiki檔案修改頁面',
 	'video-page-file-list-header' => '出現在這些頁面上',
 	'video-page-global-file-list-header' => '出現在這些wiki上',
 	'video-page-from-provider' => '來自$1',
 	'video-page-expires' => '內容過期時間 $1',
-	'video-page-regional-restrictions-viewable' => '這個視頻受區域播放限制',
-	'video-page-regional-restrictions-unviewable' => '這個視頻在您所在的國家或者地區不能播放',
-	'video-page-views' => '$1 {{PLURAL:$1|次查看|次查看}}',
+	'video-page-regional-restrictions-viewable' => '這個影片受區域播放限制',
+	'video-page-regional-restrictions-unviewable' => '這個影片在您所在的國家或者地區不能播放',
+	'video-page-views' => '$1 次{{PLURAL:$1|查看}}',
 	'video-page-see-more-info' => '展開',
 	'video-page-see-less-info' => '折疊',
 	'video-page-description-heading' => '描述',
@@ -1134,7 +1147,7 @@ $messages['zh-hant'] = array(
 	'video-page-default-description-header-and-text' => '==描述==
 在這裡輸入描述性內容。',
 	'video-page-file-list-pagination' => '$2的$1',
-	'file-page-replace-button' => '替換',
+	'file-page-replace-button' => '取代',
 	'file-page-tab-about' => '關於',
 	'file-page-tab-history' => '檔案歷史',
 	'file-page-tab-metadata' => '元數據',

@@ -823,12 +823,6 @@ class Wikia {
 	static public function setupAfterCache() {
 		global $wgTTCache;
 		$wgTTCache = wfGetSolidCacheStorage();
-
-		# setup externalAuth
-		global $wgExternalAuthType, $wgAutocreatePolicy;
-		if ( $wgExternalAuthType == 'ExternalUser_Wikia' ) {
-			$wgAutocreatePolicy = 'view';
-		}
 		return true;
 	}
 
@@ -1149,11 +1143,7 @@ class Wikia {
 	 * hooked up to AddNewAccount
 	 */
 	static public function ignoreUser( $user, $byEmail = false ) {
-		global $wgStatsDBEnabled, $wgExternalDatawareDB;
-
-		if ( empty( $wgStatsDBEnabled ) ) {
-			return true;
-		}
+		global $wgExternalDatawareDB;
 
 		if ( ( $user instanceof User ) && ( 0 === strpos( $user->getName(), 'WikiaTestAccount' ) ) ) {
 			if( !wfReadOnly() ){ // Change to wgReadOnlyDbMode if we implement that
@@ -2314,5 +2304,20 @@ class Wikia {
 		}
 
 		return $countryNames;
+	}
+
+	/**
+	 * Get an environment name that should be enough to separate cache containing URLs
+	 *
+	 * @return string
+	 */
+	static public function getEnvironmentName() {
+		global $wgWikiaEnvironment;
+
+		if ( in_array( $wgWikiaEnvironment, [ WIKIA_ENV_PROD, WIKIA_ENV_PREVIEW, WIKIA_ENV_VERIFY ] ) ) {
+			return $wgWikiaEnvironment;
+		} else {
+			return wfHostname();
+		}
 	}
 }

@@ -51,8 +51,6 @@ class CreateNewWikiController extends WikiaController {
 			$useLang = 'en';
 		}
 		$params['wikiLanguage'] = empty($useLang) ? $this->wg->LanguageCode : $useLang;  // precedence: selected form field, uselang, default wiki lang
-		// facebook callback overwrite on login.  CreateNewWiki re-uses current login stuff.
-		$fbOnLoginJsOverride = 'WikiBuilder.fbLoginCallback();';
 
 		// export info if user is logged in
 		$this->isUserLoggedIn = $wgUser->isLoggedIn();
@@ -73,13 +71,11 @@ class CreateNewWikiController extends WikiaController {
 		$params['LangAllAgesOpt'] = self::LANG_ALL_AGES_OPT;
 		$this->params = $params;
 		$this->signupUrl = '';
-		if(!empty($this->wg->EnableUserLoginExt)) {
-			$signupTitle = Title::newFromText('UserSignup', NS_SPECIAL);
-			if ( $wgRequest->getInt( 'nocaptchatest' ) ) {
-				$this->signupUrl = $signupTitle->getFullURL('nocaptchatest=1');
-			} else {
-				$this->signupUrl = $signupTitle->getFullURL();
-			}
+		$signupTitle = Title::newFromText('UserSignup', NS_SPECIAL);
+		if ( $wgRequest->getInt( 'nocaptchatest' ) ) {
+			$this->signupUrl = $signupTitle->getFullURL('nocaptchatest=1');
+		} else {
+			$this->signupUrl = $signupTitle->getFullURL();
 		}
 
 		// Make various parsed messages and status available in JS

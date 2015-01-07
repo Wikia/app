@@ -51,17 +51,17 @@ class MercuryApiModelTest extends WikiaBaseTest {
 		$expected = [
 			'opts' => [
 				'adsInHead' => true,
+				'adsInContent' => true,
 				'disableLateQueue' => true,
+				'enableAdsInMaps' => true,
 				'lateAdsAfterPageLoad' => true,
 				'pageType' => 'corporate',
 				'showAds' => true,
 				'trackSlotState' => true,
-				'useDartForSlotsBelowTheFold' => true,
 			],
 			'targeting' => [
 				'enableKruxTargeting' => true,
 				'enablePageCategories' => true,
-				'kruxCategoryId' => 'HixxTik3',
 				'pageArticleId' => 10,
 				'pageIsArticle' => true,
 				'pageIsHub' => true,
@@ -73,6 +73,7 @@ class MercuryApiModelTest extends WikiaBaseTest {
 				'wikiCustomKeyValues' => 'a=b;c=d',
 				'wikiDbName' => 'mydbname',
 				'wikiDirectedAtChildren' => true,
+				'wikiIsCorporate' => true,
 				'wikiLanguage' => 'en',
 				'wikiVertical' => 'Lifestyle',
 			],
@@ -86,5 +87,50 @@ class MercuryApiModelTest extends WikiaBaseTest {
 		];
 		$result = $mercuryApi->getAdsContext( $title );
 		$this->assertEquals( $expected, $result );
+	}
+
+	/**
+	 * @dataProvider getSitenameDataProvider
+	 */
+	public function testGetSiteName( $expected, $isDisabled, $textMock, $wgSitenameMock ) {
+		$messageMock = $this->getMockBuilder( 'Message' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'inContentLanguage', 'isDisabled', 'text' ] )
+			->getMock();
+
+		$messageMock->expects( $this->once() )
+			->method( 'isDisabled' )
+			->willReturn( $isDisabled );
+
+		$messageMock->expects( $this->any() )
+			->method( 'text' )
+			->willReturn( $textMock );
+
+		$messageMock->expects( $this->once() )
+			->method( 'inContentLanguage' )
+			->willReturn( $messageMock );
+
+		$this->mockGlobalVariable( 'wgSitename', $wgSitenameMock );
+		$this->mockGlobalFunction( 'wfMessage', $messageMock );
+
+		$mercuryApi = new MercuryApi();
+		$this->assertEquals( $expected, $mercuryApi->getSitename() );
+	}
+
+	public function getSiteNameDataProvider() {
+		return [
+			[
+				'$expected' => 'Test Wiki',
+				'$isDisabled' => false,
+				'$textMock' => 'Test Wiki',
+				'$wgSitenameMock' => 'A test wikia'
+			],
+			[
+				'$expected' => 'A test wikia',
+				'$isDisabled' => true,
+				'$textMock' => 'Test Wiki',
+				'$wgSitenameMock' => 'A test wikia'
+			]
+		];
 	}
 }

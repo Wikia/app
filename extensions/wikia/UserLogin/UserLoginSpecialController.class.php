@@ -38,6 +38,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	private function initializeTemplate() {
 		//Oasis/Monobook, will be filtered in AssetsManager :)
 		$this->response->addAsset( 'extensions/wikia/UserLogin/css/UserLogin.scss' );
+
+		// TODO: change this to FacebookClient or remove the check if we're enabled globally UC-188
 		if ( !empty($this->wg->EnableFacebookConnectExt) ) {
 			$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js' );
 			$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebook.js' );
@@ -67,6 +69,40 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
+	 * Route the view based on logged in status
+	 */
+	public function index() {
+		if ( $this->wg->User->isLoggedIn() ) {
+			$this->forward( __CLASS__, 'loggedIn' );
+		} else {
+			$this->forward( __CLASS__, 'loginForm' );
+		}
+	}
+
+	/**
+	 * Shown for both Special:UserLogin and Special:UserSignup when visited logged in.
+	 */
+	public function loggedIn() {
+		// don't show "special page" text
+		$this->wg->SupressPageSubtitle = true;
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+
+		$userName = $this->wg->user->getName();
+		$mainPage = Title::newMainPage()->getText();
+		$userPage = Title::newFromText( $userName, NS_USER )->getFullText();
+
+		$title = wfMessage( 'userlogin-logged-in-title' )
+			->params( $userName )
+			->text();
+		$message = wfMessage( 'userlogin-logged-in-message' )
+			->params( $mainPage, $userPage )
+			->parse();
+
+		$this->wg->Out->setPageTitle($title);
+		$this->message = $message;
+	}
+
+	/**
 	 * @brief serves standalone login page on GET.  if POSTed, parameters will be required.
 	 * @details
 	 *   on GET, template will render
@@ -84,13 +120,18 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string errParam - error param
 	 * @responseParam string editToken - token for changing password
 	 */
-	public function index() {
+	public function loginForm() {
+		$returnTo = urldecode( $this->request->getVal( 'returnto', '' ) );
+		$returnToQuery = urldecode( $this->request->getVal( 'returntoquery', '' ) );
 
 		// redirect if signup
 		$type = $this->request->getVal('type', '');
 		if ($type === 'signup' || $this->getPar() == 'signup') {
 			$title = SpecialPage::getTitleFor( 'UserSignup' );
-			$this->wg->Out->redirect( $title->getFullURL() );
+			$this->wg->Out->redirect( $title->getFullURL( [
+				['returnto' => $returnTo],
+				['returntoquery' => $returnToQuery],
+			] ) );
 			return false;
 		}
 
@@ -104,8 +145,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->password = $this->request->getVal( 'password', '' );
 		$this->keeploggedin = $this->request->getCheck( 'keeploggedin' );
 		$this->loginToken = UserLoginHelper::getLoginToken();
-		$this->returnto = htmlentities($this->request->getVal( 'returnto', '' ), ENT_QUOTES, "UTF-8");
-		$this->returntoquery = htmlentities($this->request->getVal( 'returntoquery', '' ), ENT_QUOTES, "UTF-8");
+		$this->returnto = $returnTo;
+		$this->returntoquery = $returnToQuery;
 
 		// process login
 		if ( $this->wg->request->wasPosted() ) {
@@ -362,6 +403,13 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		}
 
 		$loginCase = $loginForm->authenticateUserData();
+
+		/** PLATFORM-508 - logging for Helios project - begin */
+		\Wikia\Logger\WikiaLogger::instance()->debug(
+			'PLATFORM-508',
+			[ 'method' => __METHOD__, 'login_case' => (string) $loginCase ]
+		);
+		/** PLATFORM-508 - logging for Helios project - end */
 
 		switch ( $loginCase ) {
 			case LoginForm::SUCCESS:

@@ -95,6 +95,36 @@ class ExactTargetUserHooks {
 	}
 
 	/**
+	 * Adds a task for adding user groups
+	 * @param User $user
+	 * @param string $sGroup Group name to add
+	 * @return bool
+	 */
+	public function onAfterUserAddGlobalGroup( \User $oUser, $sGroup ) {
+		/* Get and run the task */
+		$oUserHelper = $this->getUserHelper();
+		$task = $oUserHelper->getUpdateUserTask();
+		$task->call( 'addUserGroup', $oUser->getId(), $sGroup );
+		$task->queue();
+		return true;
+	}
+
+	/**
+	 * Adds a task for removing user groups
+	 * @param User $user
+	 * @param string $sGroup Group name to remove
+	 * @return bool
+	 */
+	public function onAfterUserRemoveGlobalGroup( \User $oUser, $sGroup ) {
+		/* Get and run the task */
+		$oUserHelper = $this->getUserHelper();
+		$task = $oUserHelper->getUpdateUserTask();
+		$task->call( 'removeUserGroup', $oUser->getId(), $sGroup );
+		$task->queue();
+		return true;
+	}
+
+	/**
 	 * Adds a task for updating user properties
 	 * @param User $user
 	 * @return bool

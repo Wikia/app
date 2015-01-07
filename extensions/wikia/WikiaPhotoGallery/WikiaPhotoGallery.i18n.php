@@ -208,7 +208,8 @@ $messages['qqq'] = array(
 	'wikiaPhotoGallery-feed-caption' => 'Parameters:
 * $1 is an image caption
 * $2 is a source URL
-* $3 is the protocol used to upload',
+* $3 is the protocol used to upload
+{{Identical|Via}}',
 	'wikiaPhotoGallery-lightbox-caption' => 'Parameters:
 * $1 is a feed title',
 	'wikiaPhotoGallery-error-caption' => '{{Identical|Error}}',
@@ -1634,7 +1635,7 @@ $messages['diq'] = array(
 	'wikiaPhotoGallery-slideshowpreview-position-right' => 'Raşt',
 	'wikiaPhotoGallery-sliderpreview-addphoto' => 'Yew fotraf cıke',
 	'wikiaPhotoGallery-upload-uploadtitle' => 'Fotrafê xo bıvêne',
-	'wikiaPhotoGallery-upload-uploadbutton' => 'Resim Barke',
+	'wikiaPhotoGallery-upload-uploadbutton' => 'Resım bar ke',
 	'wikiaPhotoGallery-upload-existingtext-onarticle' => 'ena pele',
 	'wikiaPhotoGallery-upload-selectbutton' => 'Weçine',
 	'wikiaPhotoGallery-photooptions-description' => 'Teferruatê Resimi',
@@ -2295,6 +2296,24 @@ Décrivez cette photo.",
 	'wikiaPhotoGallery-upload-image-size' => 'Les images doivent être de 670 par 360 px ou plus.',
 	'wikiaPhotoGallery-not-displayed' => 'Non affiché',
 	'galery-slider-read-more' => 'En savoir plus &gt;',
+);
+
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'wikiaPhotoGallery-back' => 'Foarige',
+	'wikiaPhotoGallery-error-caption' => 'Flater',
+	'wikiaPhotoGallery-upload-findtitle' => 'Sykje',
+	'wikiaPhotoGallery-upload-findbutton' => 'Sykje',
+	'wikiaPhotoGallery-upload-page-next' => 'Folgjende 8',
+	'wikiaPhotoGallery-upload-page-prev' => 'Foarige 8',
+	'wikiaPhotoGallery-preview-spacing-small' => 'Lyts',
+	'wikiaPhotoGallery-preview-spacing-large' => 'Grut',
+	'wikiaPhotoGallery-preview-captionsize-small' => 'Lyts',
+	'wikiaPhotoGallery-preview-captionsize-large' => 'Grut',
+	'wikiaPhotoGallery-preview-bordersize-small' => 'Lyts',
+	'wikiaPhotoGallery-preview-bordersize-large' => 'Grut',
 );
 
 /** Galician (galego)
@@ -5500,6 +5519,13 @@ $messages['ru'] = array(
 	'galery-slider-read-more' => 'Читать подробнее >',
 );
 
+/** Rusyn (русиньскый)
+ * @author Tkalyn
+ */
+$messages['rue'] = array(
+	'wikiaPhotoGallery-preview-add-link' => 'Придати одказ',
+);
+
 /** Sinhala (සිංහල)
  * @author පසිඳු කාවින්ද
  * @author බිඟුවා
@@ -6588,7 +6614,7 @@ $messages['zh-hans'] = array(
 	'wikiaphotogallery-desc' => '提供一个界面以供在页面中管理画廊和幻灯片',
 	'wikiaPhotoGallery-back' => '返回',
 	'wikiaPhotoGallery-finish' => '完成',
-	'wikiaPhotoGallery-feed-caption' => '$1, 通过 <超链接="$2">$3</a>',
+	'wikiaPhotoGallery-feed-caption' => '$1，通过<a href="$2">$3</a>',
 	'wikiaPhotoGallery-lightbox-caption' => '通过$1',
 	'wikiaPhotoGallery-add-gallery' => '插入照片库或幻灯片',
 	'wikiaPhotoGallery-viewmode-addphoto' => '在此图库中添加照片',
@@ -6740,7 +6766,7 @@ $messages['zh-hant'] = array(
 	'wikiaphotogallery-desc' => '提供管理圖片冊和幻燈片的介面',
 	'wikiaPhotoGallery-back' => '返回',
 	'wikiaPhotoGallery-finish' => '完成',
-	'wikiaPhotoGallery-feed-caption' => '$1, 通過 <超链接="$2">$3</a>',
+	'wikiaPhotoGallery-feed-caption' => '$1，透過 <a href="$2">$3</a>',
 	'wikiaPhotoGallery-lightbox-caption' => '透過$1',
 	'wikiaPhotoGallery-add-gallery' => '插入照片庫或幻燈片',
 	'wikiaPhotoGallery-viewmode-addphoto' => '在圖片冊中增加圖片',
@@ -6791,7 +6817,7 @@ $messages['zh-hant'] = array(
 	'wikiaPhotoGallery-preview-placeholder-caption' => '標題將顯示在此處',
 	'wikiaPhotoGallery-preview-link-tooltip' => '圖片連結到" $1 "',
 	'wikiaPhotoGallery-preview-feed-label' => '從 RSS feed 的網址：',
-	'wikiaPhotoGallery-preview-tab-layout' => '布局',
+	'wikiaPhotoGallery-preview-tab-layout' => '佈局',
 	'wikiaPhotoGallery-preview-px' => '像素',
 	'wikiaPhotoGallery-preview-size-smaller' => '縮小',
 	'wikiaPhotoGallery-preview-size-larger' => '放大',
@@ -6903,10 +6929,10 @@ $messages['zh-hant'] = array(
 	'wikiaPhotoGallery-photooptions-linktext' => '連結顯示的文字。',
 	'wikiaPhotoGallery-photooptions-linkurl' => '連結到 （貼上頁面名稱或 URL）。',
 	'wikiaPhotoGallery-photooptions-description' => '圖片詳細訊息',
-	'wikiaPhotoGallery-search-tooltip' => '搜索此 wiki 上的圖片',
+	'wikiaPhotoGallery-search-tooltip' => '搜尋此 wiki 上的圖片',
 	'wikiaPhotoGallery-upload-image-size' => '圖片應該是 670px*360px 或更大',
 	'wikiaPhotoGallery-not-displayed' => '不顯示',
-	'galery-slider-read-more' => '讀更多',
+	'galery-slider-read-more' => '讀更多 >',
 );
 
 /** Chinese (Hong Kong) (中文（香港）‎)

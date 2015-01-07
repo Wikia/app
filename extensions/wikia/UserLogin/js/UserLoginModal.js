@@ -79,6 +79,7 @@
 
 					UserLoginModal.loginAjaxForm = new window.UserLoginAjaxForm($loginModal, {
 						ajaxLogin: true,
+						// context is this instance of UserLoginAjaxForm
 						callback: function (res) {
 							window.wgUserName = res.username;
 							var callback = options.callback;
@@ -88,18 +89,19 @@
 								}
 								callback();
 							} else {
-								UserLoginModal.loginAjaxForm.reloadPage();
+								this.reloadPage();
 							}
 						},
+						// context is this instance of UserLoginAjaxForm
 						resetpasscallback: function () {
 							$.nirvana.sendRequest({
 								controller: 'UserLoginSpecial',
 								method: 'changePassword',
 								format: 'html',
 								data: {
-									username: UserLoginModal.loginAjaxForm.inputs.username.val(),
-									password: UserLoginModal.loginAjaxForm.inputs.password.val(),
-									returnto: UserLoginModal.loginAjaxForm.inputs.returnto.val(),
+									username: this.inputs.username.val(),
+									password: this.inputs.password.val(),
+									returnto: this.inputs.returnto.val(),
 									fakeGet: 1
 								},
 								callback: function (html) {
@@ -173,7 +175,8 @@
 		 * returns: true if modal is shown, false if it is not
 		 */
 		show: function (options) {
-			if (!window.wgComboAjaxLogin && window.wgEnableUserLoginExt) {
+			if (!window.wgComboAjaxLogin) {
+				                               // @lixlux - always true, therefore unneeded?
 				options = options || {};
 
 				options.modalInitCallback = $.proxy(function () {
@@ -182,7 +185,7 @@
 				this.initModal(options);
 
 				return true;
-			} else if (window.wgComboAjaxLogin) {
+			} else {
 				/* 1st, 2nd, 4th, and 5th vars in this method is not used outside of ajaxlogin itself*/
 				window.showComboAjaxForPlaceHolder(false, false, function () {
 					if (options.callback) {
@@ -231,8 +234,6 @@
 	window.UserLoginModal = UserLoginModal;
 
 	$(function () {
-		if ((typeof window.wgEnableUserLoginExt !== 'undefined') && window.wgEnableUserLoginExt) {
-			UserLoginModal.init();
-		}
+		UserLoginModal.init();
 	});
 })();

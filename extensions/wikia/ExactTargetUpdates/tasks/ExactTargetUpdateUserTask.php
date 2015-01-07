@@ -40,6 +40,30 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 	}
 
 	/**
+	 * Task for creating a record with user group and user in ExactTarget
+	 * @param int $iUserId
+	 * @param string $sGroup name of added group
+	 */
+	public function addUserGroup( $iUserId, $sGroup ) {
+		$oHelper = $this->getUserHelper();
+		$aApiParams = $oHelper->prepareUserGroupCreateParams( $iUserId, [ $sGroup ] );
+		$oApiDataExtension = $this->getApiDataExtension();
+		$oApiDataExtension->createRequest( $aApiParams );
+	}
+
+	/**
+	 * Task for removing a record with user group and user in ExactTarget
+	 * @param int $iUserId
+	 * @param string $sGroup name of removed group
+	 */
+	public function removeUserGroup( $iUserId, $sGroup ) {
+		$oHelper = $this->getUserHelper();
+		$aApiParams = $oHelper->prepareUserGroupRemoveParams( $iUserId, [ $sGroup ] );
+		$oApiDataExtension = $this->getApiDataExtension();
+		$oApiDataExtension->deleteRequest( $aApiParams );
+	}
+
+	/**
 	 * Task for updating user_properties data in ExactTarget
 	 * @param array $aUserData Selected fields from Wikia user table
 	 * @param array $aUserProperties Array of Wikia user gloal properties ['property_name'=>'property_value']

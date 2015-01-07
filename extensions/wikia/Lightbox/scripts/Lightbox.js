@@ -19,7 +19,7 @@
 		carouselThumbHeight: 55,
 		// Modal vars
 		openModal: false, // gets replaced with dom object of open modal
-		shortScreen: false, // flag if the screen is shorter than LightboxLoader.defaults.height
+		shortScreen: false, // flag if the screen is shorter than LightboxLoader.lightboxSettings.height
 
 		// Carousel vars
 		// overlay for thumb images
@@ -68,7 +68,7 @@
 
 			// Check screen height for future interactions
 			Lightbox.shortScreen = ($(window).height() <
-				LightboxLoader.defaults.height + LightboxLoader.defaults.topOffset + 20); // buffer by 20px
+				LightboxLoader.lightboxSettings.height + LightboxLoader.lightboxSettings.topOffset + 20); // buffer by 20px
 
 			// Add template to modal
 			Lightbox.openModal.find('.modalContent').html(LightboxLoader.templateHtml);
@@ -77,7 +77,7 @@
 			Lightbox.cacheDOM();
 
 			// Init ads in Lightbox
-			if ($('#MODAL_RECTANGLE').length && window.wgShowAds) {
+			if ($('#MODAL_RECTANGLE').length && Lightbox.ads.showAds()) {
 				Lightbox.openModal.lightbox.addClass('show-ads');
 				window.adslots2.push(['MODAL_RECTANGLE']);
 				Lightbox.ads.adModalRectangleShown = true;
@@ -390,8 +390,8 @@
 					})
 					.load(function () {
 						var image = $(this),
-							topOffset = LightboxLoader.defaults.topOffset,
-							modalMinHeight = LightboxLoader.defaults.height,
+							topOffset = LightboxLoader.lightboxSettings.topOffset,
+							modalMinHeight = LightboxLoader.lightboxSettings.height,
 							windowHeight = $(window).height(),
 							modalHeight = windowHeight - topOffset * 2,
 							currentModalHeight = Lightbox.openModal.height(),
@@ -476,7 +476,7 @@
 				Lightbox.openModal.media.html('');
 			},
 			updateLightbox: function (data) {
-				var height = LightboxLoader.defaults.height;
+				var height = LightboxLoader.lightboxSettings.height;
 				if (data.extraHeight) {
 					height += data.extraHeight;
 				}
@@ -563,8 +563,11 @@
 			},
 			// should user see ads?
 			showAds: function () {
+				var showAds = window.ads && window.ads.context &&
+					window.ads.context.opts && window.ads.context.opts.showAds;
+
 				return !!(
-					window.wgShowAds &&
+					showAds &&
 					(Geo.getCountryCode() === 'US' || Geo.getCountryCode() === 'GB') &&
 					$('#' + this.getSlotName()).length
 				);
@@ -624,7 +627,7 @@
 
 				// Set lightbox css
 				var css = {
-					height: LightboxLoader.defaults.height
+					height: LightboxLoader.lightboxSettings.height
 				};
 
 				// don't change top offset if the screen is shorter than the min modal height
@@ -660,7 +663,7 @@
 			updateLightbox: function () {
 				// Set lightbox css
 				var css = {
-					height: LightboxLoader.defaults.height
+					height: LightboxLoader.lightboxSettings.height
 				};
 
 				// don't change top offset if the screen is shorter than the min modal height
@@ -679,7 +682,7 @@
 				// Display error message
 				Lightbox.openModal.media
 					.css({
-						'margin-top': (LightboxLoader.defaults.height / 2) - 14,
+						'margin-top': (LightboxLoader.lightboxSettings.height / 2) - 14,
 						'line-height': 'normal'
 					})
 					.addClass('error-lightbox')
@@ -700,7 +703,7 @@
 			}
 		},
 		getDefaultTopOffset: function () {
-			var modalHeight = LightboxLoader.defaults.height,
+			var modalHeight = LightboxLoader.lightboxSettings.height,
 				windowHeight = $(window).height(),
 				topOffset = (windowHeight - modalHeight - 10) / 2;
 
@@ -1223,13 +1226,6 @@
 						}
 					});
 
-					// Add cached media gallery data sent over from MediaGallery extension.
-					$(window).trigger('lightboxArticleMedia', {
-						thumbArr: thumbArr,
-						width: Lightbox.carouselThumbWidth,
-						height: Lightbox.carouselThumbHeight
-					});
-
 					// Fill articleMedia cache
 					LightboxLoader.cache.articleMedia = thumbArr;
 
@@ -1391,7 +1387,6 @@
 
 				// Add thumbs to current lightbox cache
 				Lightbox.current.thumbs = Lightbox.current.thumbs.concat(thumbArr);
-
 				Lightbox.addThumbsToCarousel(thumbArr, backfill);
 			}
 		},

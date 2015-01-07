@@ -13,7 +13,7 @@ class ParsoidPurgePriorityQueue extends Queue {
 	const NAME = 'ParsoidPurgePriorityQueue';
 
 	public function __construct() {
-		$this->name = 'parsoid_purge_priority_tmp';
-		$this->routingKey = 'mediawiki.parsoid_purge_priority_tmp';
+		$this->name = 'parsoid_purge_priority';
+		$this->routingKey = 'mediawiki.parsoid_purge_priority';
 	}
 } 

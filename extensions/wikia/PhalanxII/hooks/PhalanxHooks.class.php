@@ -252,4 +252,28 @@ class PhalanxHooks extends WikiaObject {
 
 		return true;
 	}
+
+	/**
+	 * Outputs information about users global block and prevents displaying extract from local log which does not contain
+	 * information about phalanx block.
+	 *
+	 * @see PLATFORM-470
+	 * @author jcellary
+	 *
+	 * @param OutputPage $out
+	 * @param User $user
+	 * @return bool false
+	 */
+	static public function onContributionsLogEventsList( OutputPage $out, User $user ) {
+
+		$blockedGlobally = $user->mBlockedGlobally;
+
+		if ($blockedGlobally) {
+			$message = wfMessage( 'phalanx-sp-contributions-blocked-globally' )->text();
+			$message = '<div class="'.LogEventsList::WARN_BOX_DIV_CLASS.'">'.$message.'</div>';
+			$out->addHTML($message);
+		}
+
+		return !$blockedGlobally; //If blocked globally disable listing local log
+	}
 }

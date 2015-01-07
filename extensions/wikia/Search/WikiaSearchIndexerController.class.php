@@ -11,6 +11,7 @@ use Wikia\Search\MediaWikiService;
  */
 class WikiaSearchIndexerController extends WikiaController
 {
+	const REQUEST_PARAMETER_API_KEY = 'apiKey';
 	/**
 	 * Allows us to avoid direct calls to MediaWiki components
 	 * @var Wikia\Search\MediaWikiService
@@ -72,5 +73,20 @@ class WikiaSearchIndexerController extends WikiaController
 		$service = new $serviceName();
 		
 		$this->response->setData( $service->getStubbedWikiResponse() );
+	}
+
+	/**
+	 * Check for existence of specific key in request.
+	 * If key exists - access is allowed
+	 * @return bool
+	 */
+	public function isAnonAccessAllowedInCurrentContext() {
+		$originalRequest = RequestContext::getMain()->getRequest();
+		$apiKey = $originalRequest->getVal( self::REQUEST_PARAMETER_API_KEY, null );
+		global $wgPrivateWikiaApiAccessKey;
+		if( ( $apiKey !== null ) && ( $apiKey === $wgPrivateWikiaApiAccessKey ) ) {
+			return true;
+		}
+		return false;
 	}
 }

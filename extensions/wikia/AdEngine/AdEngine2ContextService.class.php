@@ -28,19 +28,20 @@ class AdEngine2ContextService {
 
 			return [
 				'opts' => $this->filterOutEmptyItems( [
-					'adsInHead' => !!$wg->EnableAdsInContent,
+					'adsInContent' => !!$wg->EnableAdsInContent,
+					'adsInHead' => !!$wg->LoadAdsInHead,
+					'alwaysCallDart' => $wg->AdDriverAlwaysCallDart,
 					'disableLateQueue' => $wg->AdEngineDisableLateQueue,
+					'enableAdsInMaps' => $wg->AdDriverEnableAdsInMaps,
 					'lateAdsAfterPageLoad' => $adEngineService->areAdsAfterPageLoad(),
 					'pageType' => $adPageTypeService->getPageType(),
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
-					'useDartForSlotsBelowTheFold' => $wg->AdDriverUseDartForSlotsBelowTheFold,
 					'usePostScribe' => $wg->Request->getBool( 'usepostscribe', false ),
 					'trackSlotState' => $wg->AdDriverTrackState,
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
 					'enableKruxTargeting' => $wg->EnableKruxTargeting,
 					'enablePageCategories' => array_search($langCode, $wg->AdPageLevelCategoryLangs) !== false,
-					'kruxCategoryId' => $wikiFactoryHub->getKruxId( $wikiFactoryHub->getCategoryId( $wg->CityId ) ),
 					'pageArticleId' => $title->getArticleId(),
 					'pageIsArticle' => !!$title->getArticleId(),
 					'pageIsHub' => $wikiaPageType->isWikiaHub(),
@@ -52,19 +53,20 @@ class AdEngine2ContextService {
 					'wikiCustomKeyValues' => $wg->DartCustomKeyValues,
 					'wikiDbName' => $wg->DBname,
 					'wikiDirectedAtChildren' => $wg->WikiDirectedAtChildrenByFounder || $wg->WikiDirectedAtChildrenByStaff,
+					'wikiIsCorporate' => $wikiaPageType->isCorporatePage(),
 					'wikiIsTop1000' => $wg->AdDriverWikiIsTop1000,
 					'wikiLanguage' => $langCode,
 					'wikiVertical' => $hubService->getCategoryInfoForCity( $wg->CityId )->cat_name,
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
 					'remnantGptMobile' => !!$wg->AdDriverEnableRemnantGptMobile,
-					'remnantGpt' => !!$wg->AdDriverUseRemnantGpt,
 					'sevenOneMedia' => !!$wg->AdDriverUseSevenOneMedia,
 					'sevenOneMediaCombinedUrl' => $sevenOneMediaCombinedUrl,
 					'taboola' => !!$wg->AdDriverUseTaboola,
 				] ),
 				'slots' => $this->filterOutEmptyItems( [
 				] ),
+				// TODO: make it like forceadprovider=liftium
 				'forceProviders' => $this->filterOutEmptyItems( [
 					'directGpt' => $wg->AdDriverForceDirectGptAd,
 					'liftium' => $wg->AdDriverForceLiftiumAd,

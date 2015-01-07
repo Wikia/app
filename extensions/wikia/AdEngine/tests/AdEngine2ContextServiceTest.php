@@ -23,6 +23,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			$title->method( 'getDBkey' )->willReturn( 'Search' );
 			$title->method( 'getPrefixedDbKey' )->willReturn( 'Special:Search' );
 			$title->method( 'getNamespace' )->willReturn( -1 );
+			$title->method( 'isSpecialPage' )->willReturn( true );
 		} else {
 			$title->method( 'getPrefixedDbKey' )->willReturn( $artDbKey );
 			$title->method( 'getArticleId' )->willReturn( $artId );
@@ -35,16 +36,19 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		return [
 			[ ],
 
+			[ 'article', ['wgAdDriverAlwaysCallDart'], ['alwaysCallDart' => true] ],
+			[ 'article', ['wgAdDriverEnableAdsInMaps'], ['enableAdsInMaps' => true] ],
 			[ 'article', ['wgAdDriverEnableRemnantGptMobile'], [], [], ['remnantGptMobile' => true] ],
 			[ 'article', ['wgAdDriverTrackState'], ['trackSlotState' => true], [] ],
-			[ 'article', ['wgAdDriverUseDartForSlotsBelowTheFold'], ['useDartForSlotsBelowTheFold' => true], [] ],
-			[ 'article', ['wgAdDriverUseRemnantGpt'], [], [], ['remnantGpt' => true] ],
 			[ 'article', ['wgAdDriverUseSevenOneMedia'], [], [], ['sevenOneMedia' => true] ],
 			[ 'article', ['wgAdDriverWikiIsTop1000'], [], ['wikiIsTop1000' => true] ],
-			[ 'article', ['wgAdEngineDisableLateQueue'], ['disableLateQueue' => true], [] ],
+			[ 'article', ['wgAdEngineDisableLateQueue'], ['disableLateQueue' => true] ],
+			[ 'article', ['wgEnableAdsInContent'], ['adsInContent' => true] ],
+			[ 'article', ['wgLoadAdsInHead'], ['adsInHead' => true] ],
 			[ 'article', ['wgEnableKruxTargeting'], [], ['enableKruxTargeting' => true] ],
-			[ 'article', ['wgEnableWikiaHomePageExt'], ['pageType' => 'corporate'], [] ],
-			[ 'article', ['wgEnableWikiaHubsV3Ext'], ['pageType' => 'corporate'], ['pageIsHub' => true] ],
+			[ 'article', ['wgEnableWikiaHomePageExt'], ['pageType' => 'corporate'], ['wikiIsCorporate' => true] ],
+			[ 'article', ['wgEnableWikiaHubsV3Ext'], ['pageType' => 'corporate'], ['pageIsHub' => true, 'wikiIsCorporate' => true] ],
+			[ 'article', ['wgLoadAdsInHead'], ['adsInHead' => true] ],
 			[ 'article', ['wgLoadLateAdsAfterPageLoad'], ['lateAdsAfterPageLoad' => true], [] ],
 			[ 'article', ['wgWikiDirectedAtChildrenByFounder'], [], ['wikiDirectedAtChildren' => true] ],
 			[ 'article', ['wgWikiDirectedAtChildrenByStaff'], [], ['wikiDirectedAtChildren' => true] ],
@@ -71,7 +75,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$customDartKvs = 'a=b;c=d';
 		$catId = WikiFactoryHub::CATEGORY_ID_LIFESTYLE;
 		$shortCat = 'shortcat';
-		$kruxId = WikiFactoryHub::getInstance()->getKruxId( $catId );
 		$sevenOneMediaSub2Site = 'customsub2site';
 		$expectedSevenOneMediaUrlFormat = 'http://%s/__load/-/cb%3D%d%26debug%3Dfalse%26lang%3Den%26only%3Dscripts%26skin%3Doasis/wikia.ext.adengine.sevenonemedia';
 
@@ -87,18 +90,21 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgAdDriverSevenOneMediaOverrideSub2Site', $sevenOneMediaSub2Site );
 
 		// Flags
-
+		$this->mockGlobalVariable( 'wgAdDriverAlwaysCallDart', false );
+		$this->mockGlobalVariable( 'wgAdDriverEnableAdsInMaps', false );
 		$this->mockGlobalVariable( 'wgAdDriverEnableRemnantGptMobile', false );
 		$this->mockGlobalVariable( 'wgAdDriverTrackState', false );
-		$this->mockGlobalVariable( 'wgAdDriverUseDartForSlotsBelowTheFold', false );
 		$this->mockGlobalVariable( 'wgAdDriverUseSevenOneMedia', false );
 		$this->mockGlobalVariable( 'wgAdEngineDisableLateQueue', false );
+		$this->mockGlobalVariable( 'wgEnableAdsInContent', false );
+		$this->mockGlobalVariable( 'wgEnableKruxTargeting', false );
 		$this->mockGlobalVariable( 'wgEnableWikiaHomePageExt', false );
 		$this->mockGlobalVariable( 'wgEnableWikiaHubsV3Ext', false );
+		$this->mockGlobalVariable( 'wgLoadAdsInHead', false );
 		$this->mockGlobalVariable( 'wgLoadLateAdsAfterPageLoad', false );
-		$this->mockGlobalVariable( 'wgWikiDirectedAtChildrenByStaff', false );
 		$this->mockGlobalVariable( 'wgWikiDirectedAtChildrenByFounder', false );
-		$this->mockGlobalVariable( 'wgEnableKruxTargeting', false );
+		$this->mockGlobalVariable( 'wgWikiDirectedAtChildrenByStaff', false );
+
 
 		foreach ( $flags as $flag ) {
 			$this->mockGlobalVariable( $flag, true );
@@ -116,12 +122,10 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 
 		$expected = [
 			'opts' => [
-				'adsInHead' => true,
 				'pageType' => 'all_ads',
 				'showAds' => true,
 			],
 			'targeting' => [
-				'kruxCategoryId' => $kruxId,
 				'pageName' => $artDbKey,
 				'pageType' => 'article',
 				'sevenOneMediaSub2Site' => $sevenOneMediaSub2Site,

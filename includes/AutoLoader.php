@@ -571,7 +571,7 @@ $wgAutoloadLocalClasses = array(
 	'Services_JSON_Error' => 'includes/json/Services_JSON.php',
 
 	# includes/libs
-	'CSSJanus' => 'includes/libs/CSSJanus.php',
+	'CSSJanus' => 'lib/composer/cssjanus/cssjanus/src/CSSJanus.php',
 	'CSSMin' => 'includes/libs/CSSMin.php',
 	'HttpStatus' => 'includes/libs/HttpStatus.php',
 	'IEContentAnalyzer' => 'includes/libs/IEContentAnalyzer.php',
@@ -997,29 +997,7 @@ class AutoLoader {
 		} elseif ( isset( $wgAutoloadClasses[$className] ) ) {
 			$filename = $wgAutoloadClasses[$className];
 		} else {
-			// can't do lookup on whole array!
-			// better to fail and find cases which don't have
-			// correct case then pay performance penalty
 			return false;
-			# Try a different capitalisation
-			# The case can sometimes be wrong when unserializing PHP 4 objects
-			$filename = false;
-			$lowerClass = strtolower( $className );
-
-			foreach ( $wgAutoloadLocalClasses as $class2 => $file2 ) {
-				if ( strtolower( $class2 ) == $lowerClass ) {
-					$filename = $file2;
-				}
-			}
-
-			if ( !$filename ) {
-				if ( function_exists( 'wfDebug' ) ) {
-					wfDebug( "Class {$className} not found; skipped loading\n" );
-				}
-
-				# Give up
-				return false;
-			}
 		}
 
 		# Make an absolute path, this improves performance by avoiding some stat calls

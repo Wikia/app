@@ -984,7 +984,7 @@ $messages['de-formal'] = array(
 $messages['diq'] = array(
 	'rte-ck-bucket-controls' => 'Qontroli',
 	'rte-ck-errorPopupTitle' => 'Xeta!',
-	'rte-ck-hoverPreview-comment-title' => 'Vatış',
+	'rte-ck-hoverPreview-comment-title' => 'Mışewre',
 	'rte-ck-hoverPreview-delete' => 'bestere',
 	'rte-ck-hoverPreview-edit' => 'bıvurne',
 	'rte-ck-image-add' => 'Yew resım cı ke',
@@ -1446,6 +1446,20 @@ $messages['fr'] = array(
 	'rte-ck-format-tag_h3' => 'Titre 3',
 	'rte-ck-format-tag_h4' => 'Titre 4',
 	'rte-ck-format-tag_h5' => 'Titre 5',
+);
+
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'rte-ck-errorPopupTitle' => 'Flater!',
+	'rte-ck-hoverPreview-edit' => 'bewurkje',
+	'rte-ck-link-error-title' => 'Flater',
+	'rte-ck-signature-label' => 'ûndertekening',
+	'rte-ck-templateDropDown-label' => 'Berjocht',
+	'rte-ck-templateEditor-editor-previewButton' => 'Proefbyld',
+	'rte-ck-templateEditor-editor-previewTitle' => 'Proefbyld',
+	'rte-ck-video-video' => 'Fideo',
 );
 
 /** Galician (galego)
@@ -2036,6 +2050,8 @@ $messages['kn'] = array(
  */
 $messages['ko'] = array(
 	'rte-ck-errorPopupTitle' => '오류!',
+	'rte-ck-hoverPreview-comment-title' => '댓글',
+	'rte-ck-hoverPreview-confirmDelete' => '이것을 삭제하시겠습니까?',
 	'rte-ck-hoverPreview-delete' => '삭제',
 	'rte-ck-hoverPreview-edit' => '편집',
 	'rte-ck-hoverPreview-media-notExisting' => '이 그림, 혹은 파일이 존재하지 않습니다!',
@@ -2092,7 +2108,7 @@ $messages['ko'] = array(
 	'rte-ck-table-invalidCols' => '세로줄의 수는 0보다 커야 합니다.',
 	'rte-ck-table-invalidRows' => '가로줄의 수는 0보다 커야 합니다.',
 	'rte-ck-table-toolbarTooltip' => '표 추가',
-	'rte-ck-templateDropDown-showUsedList' => '틀을 사용하는 문서들 표시',
+	'rte-ck-templateDropDown-showUsedList' => '사용한 틀 목록 보이기',
 	'rte-ck-templateDropDown-label' => '틀',
 	'rte-ck-templateDropDown-title' => '틀을 선택해주세요',
 	'rte-ck-templateEditor-dialog-insert' => '삽입',
@@ -2329,7 +2345,7 @@ $messages['mk'] = array(
 	'rte-ck-poll-confirmDeleteTitle' => 'Да ја отстранам анкетава?',
 	'rte-ck-spellchecker-moreSuggestions' => 'Повеќе предлози',
 	'rte-ck-pasteText-title' => 'Вметнете го текстот',
-	'rte-ck-clipboard-pasteMsg' => 'Од безбедносни причини, уредникот не може директно да дојде до она што го ископиравте. Копирањето направете го во полето подолу користејќи тастатурни кратенки (Ctrl/Cmd+V) и стиснете на „ОК“.<br /><br />Напомена: форматирањето на вашиот текст ќе биде отстрането за да се избегне добивање на сложен викитекст.',
+	'rte-ck-clipboard-pasteMsg' => 'Од безбедносни причини, уредникот не може непосредно да дојде до она што го ископиравте. Копирањето направете го во полето подолу користејќи тастатурни кратенки (Ctrl/Cmd+V) и стиснете на „ОК“.<br /><br />Напомена: форматирањето на вашиот текст ќе биде отстрането за да се избегне добивање на сложен викитекст.',
 	'rte-ck-format-tag_p' => 'Нормален текст',
 	'rte-ck-format-tag_pre' => 'Код (претформатиран текст)',
 	'rte-ck-format-tag_h2' => 'Наслов 2',
@@ -3527,6 +3543,13 @@ $messages['ru'] = array(
 	'rte-ck-format-tag_h5' => 'Заголовок 5',
 );
 
+/** Rusyn (русиньскый)
+ * @author Tkalyn
+ */
+$messages['rue'] = array(
+	'rte-ck-link-add' => 'Придати одказ',
+);
+
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
@@ -4305,7 +4328,7 @@ $messages['zh-hans'] = array(
 	'rte-ck-templateEditor-editor-previewTitle' => '预览',
 	'rte-ck-templateEditor-editor-viewTemplate' => '（查看模版页面－打开新窗口）',
 	'rte-ck-templateEditor-usedTemplates-title' => '以使用模版列表',
-	'rte-ck-templateEditor-title' => '模版编辑器',
+	'rte-ck-templateEditor-title' => '模板编辑器',
 	'rte-ck-unlink' => '删除链接',
 	'rte-ck-video-add' => '添加视频',
 	'rte-ck-video-video' => '视频',
@@ -4332,13 +4355,15 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
  * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
 	'rte-ck-hoverPreview-delete' => '刪除',
-	'rte-ck-templateDropDown-label' => '樣版',
+	'rte-ck-templateDropDown-label' => '模板',
 	'rte-ck-templateEditor-editor-previewButton' => '預覽',
 	'rte-ck-templateEditor-editor-previewTitle' => '預覽',
+	'rte-ck-video-video' => '影片',
 	'rte-ck-mut-add' => '添加影片 （測試版）',
 	'rte-ck-mut-mut' => '影片 （測試版）',
 );

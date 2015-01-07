@@ -1,9 +1,13 @@
-/*global define*/
+/*global define,require*/
 /**
  * The AMD module to hold all the context needed for the client-side scripts to run.
  */
-define('ext.wikia.adEngine.adContext', ['wikia.window', 'wikia.document'], function (w, document) {
+define('ext.wikia.adEngine.adContext', [
+	'wikia.window', 'wikia.document', 'wikia.geo', require.optional('wikia.instantGlobals'),  require.optional('wikia.abTest')
+], function (w, doc, geo, instantGlobals, abTest) {
 	'use strict';
+
+	instantGlobals = instantGlobals || {};
 
 	var context;
 
@@ -33,7 +37,7 @@ define('ext.wikia.adEngine.adContext', ['wikia.window', 'wikia.document'], funct
 		context.forceProviders = context.forceProviders || {};
 
 		// Don't show ads when Sony requests the page
-		if (document && document.referrer && document.referrer.match(/info\.tvsideview\.sony\.net/)) {
+		if (doc && doc.referrer && doc.referrer.match(/info\.tvsideview\.sony\.net/)) {
 			context.opts.showAds = false;
 		}
 
@@ -44,59 +48,27 @@ define('ext.wikia.adEngine.adContext', ['wikia.window', 'wikia.document'], funct
 		if (context.targeting.enablePageCategories) {
 			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();
 		}
+
+		// Always call DART in specific countries
+		var alwaysCallDartInCountries = instantGlobals.wgAdDriverAlwaysCallDartInCountries || [];
+		if (alwaysCallDartInCountries.indexOf(geo.getCountryCode()) > -1) {
+			context.opts.alwaysCallDart = true;
+		}
+
+		// Taboola integration
+		if (context.providers.taboola) {
+			context.providers.taboola = abTest && abTest.inGroup('NATIVE_ADS_TABOOLA', 'YES') &&
+				(context.targeting.pageType === 'article' || context.targeting.pageType === 'home');
+		}
+
+		// Export the context back to ads.context
+		// Only used by Lightbox.js, WikiaBar.js and AdsInContext.js
+		if (w.ads && w.ads.context) {
+			w.ads.context = context;
+		}
 	}
 
-	setContext(w.ads ? w.ads.context : {
-		opts: {
-			adsAfterInfobox: w.wgAdDriverUseAdsAfterInfobox,
-			adsInHead: w.wgLoadAdsInHead,
-			disableLateQueue: w.wgAdEngineDisableLateQueue,
-			lateAdsAfterPageLoad: w.wgLoadLateAdsAfterPageLoad,
-			pageType: w.adEnginePageType,
-			showAds: w.wgShowAds,
-			usePostScribe: w.wgUsePostScribe,
-			trackSlotState: w.wgAdDriverTrackState
-		},
-
-		targeting: {
-			enableKruxTargeting: w.wgEnableKruxTargeting,
-			kruxCategoryId: w.wgKruxCategoryId,
-
-			pageArticleId: w.wgArticleId,
-			pageIsArticle: !!w.wgArticleId,
-			pageIsHub: w.wikiaPageIsHub,
-			pageName: w.wgPageName,
-			pageType: w.wikiaPageType,
-
-			sevenOneMediaSub2Site: w.wgAdDriverSevenOneMediaOverrideSub2Site,
-			skin: w.skin,
-
-			wikiCategory: w.cityShort,
-			wikiCustomKeyValues: w.wgDartCustomKeyValues,
-			wikiDbName: w.wgDBname,
-			wikiDirectedAtChildren: w.wgWikiDirectedAtChildren,
-			wikiIsTop1000: w.wgAdDriverWikiIsTop1000,
-			wikiLanguage: w.wgContentLanguage,
-			wikiVertical: w.cscoreCat
-		},
-
-		providers: {
-			sevenOneMedia: w.wgAdDriverUseSevenOneMedia,
-			sevenOneMediaCombinedUrl: w.wgAdDriverSevenOneMediaCombinedUrl,
-			remnantGptMobile: w.wgAdDriverEnableRemnantGptMobile,
-			taboola: w.wgAdDriverUseTaboola
-		},
-
-		slots: {
-			bottomLeaderboardImpressionCapping: w.wgAdDriverBottomLeaderboardImpressionCapping
-		},
-
-		// TODO: make it like forceadprovider=liftium
-		forceProviders: {
-			directGpt: w.wgAdDriverForceDirectGptAd,
-			liftium: w.wgAdDriverForceLiftiumAd
-		}
-	});
+	setContext(w.ads ? w.ads.context : {});
 
 	return {
 		getContext: getContext,

@@ -17,10 +17,12 @@ class MediaGalleryController extends WikiaController {
 	 */
 	public function gallery() {
 		$items = $this->getVal( 'items' );
-		$this->model = new MediaGalleryModel( $items );
+		$parser = $this->getVal( 'parser', $this->wg->Parser );
+		$this->model = new MediaGalleryModel( $items, $parser );
 
 		$galleryParams = $this->getVal( 'gallery_params', [] ); // gallery tag parameters
-		$visibleCount = empty( $galleryParams['expand'] ) ? self::MAX_ITEMS : self::MAX_EXPANDED_ITEMS;
+		$visibleCount = isset( $galleryParams['expand'] ) && $galleryParams['expand'] == 'true' ?
+			self::MAX_EXPANDED_ITEMS : self::MAX_ITEMS;
 
 		$data = $this->model->getGalleryData();
 

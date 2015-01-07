@@ -169,7 +169,7 @@ class ResourceLoaderHooks {
 	 * @return bool
 	 */
 	public static function onResourceLoaderSiteModuleGetPages( $module, $context, &$pages ) {
-		global $wgResourceLoaderAssetsSkinMapping, $wgOasisLoadCommonCSS;
+		global $wgResourceLoaderAssetsSkinMapping, $wgOasisLoadCommonCSS, $wgLoadCommonCSS;
 
 		// handle skin name changes
 		$skinName = $context->getSkin();
@@ -184,9 +184,10 @@ class ResourceLoaderHooks {
 			$pages = Wikia::renameArrayKeys($pages,$mapping);
 		}
 
-		// Wikia doesn't include Mediawiki:Common.css in Oasis
+		// Wikia doesn't include Mediawiki:Common.css in Oasis and Venus
 		// lower-case skin name is returned by getSkin()
-		if ( $skinName == 'oasis' && empty( $wgOasisLoadCommonCSS ) ) {
+		// TODO: Remove $wgOasisLoadCommonCSS after renaming it to $wgLoadCommonCSS in WF after release
+		if ( in_array($skinName, ['oasis', 'venus']) && empty( $wgOasisLoadCommonCSS ) && empty( $wgLoadCommonCSS ) ) {
 			unset($pages['MediaWiki:Common.css']);
 		}
 

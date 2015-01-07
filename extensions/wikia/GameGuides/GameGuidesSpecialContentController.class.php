@@ -50,6 +50,7 @@ class GameGuidesSpecialContentController extends WikiaSpecialPageController {
 		JSMessages::enqueuePackage( 'GameGuidesContentMsg', JSMessages::INLINE );
 
 		$this->response->setVal( 'descriptions', [
+			wfMsg( 'wikiagameguides-content-description-soft-redirect' ),
 			wfMsg( 'wikiagameguides-content-description-categories' ),
 			wfMsg( 'wikiagameguides-content-description-tag' ),
 			wfMsg( 'wikiagameguides-content-description-organize' ),

@@ -117,8 +117,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.$policyReadMoreLink = this.$( '<a>' )
 		.html( ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-read-more' ) );
 	this.$policyReadMore.append( this.$policyReadMoreLink );
-	// Core VE used to pass VeUiSurface to this constructor. Getting it now with DOM traversal.
-	this.$globalOverlay = this.$frame.closest('.ve-ui-surface-overlay-global');
 
 	// Events
 	this.cartModel.connect( this, {
@@ -140,7 +138,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.search.connect( this, {
 		'nearingEnd': 'onSearchNearingEnd',
 		'check': 'onSearchCheck',
-		'preview': 'onMediaPreview'
+		'select': 'onMediaPreview'
 	} );
 	this.upload.connect( this, uploadEvents );
 	this.queryUpload.connect( this, uploadEvents );
@@ -165,7 +163,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.frame.$content.addClass( 've-ui-wikiaMediaInsertDialog' );
 	this.$foot.append( this.insertButton.$element );
 	this.$frame.prepend( this.dropTarget.$element );
-	this.$globalOverlay.append( this.mediaPreview.$element );
+	this.surface.getGlobalOverlay().append( this.mediaPreview.$element );
 };
 
 /**
@@ -269,20 +267,19 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchNearingEnd = function () {
  * Handle check/uncheck of items in search results.
  *
  * @method
- * @param {Object} item The search result item data.
+ * @param {Object} item The search result item.
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onSearchCheck = function ( item ) {
-	var cartItem;
-
-	cartItem = this.cart.getItemFromData( item.title );
+	var data = item.getData(),
+		cartItem = this.cart.getItemFromData( data.title );
 
 	if ( cartItem ) {
 		this.cartModel.removeItems( [ cartItem.getModel() ] );
 	} else {
-		if ( item.type === 'video' ) {
-			this.addCartItem( new ve.dm.WikiaCartItem( item.title, item.url, item.type, undefined, 'wikia' ) );
+		if ( data.type === 'video' ) {
+			this.addCartItem( new ve.dm.WikiaCartItem( data.title, data.url, data.type, undefined, 'wikia' ) );
 		} else {
-			this.addCartItem( new ve.dm.WikiaCartItem( item.title, item.url, item.type ) );
+			this.addCartItem( new ve.dm.WikiaCartItem( data.title, data.url, data.type ) );
 		}
 	}
 };

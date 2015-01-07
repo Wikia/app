@@ -2,37 +2,35 @@
 
 class GlobalNavigationController extends WikiaController {
 
-	const DEFAULT_LANG = 'en';
-	const USE_LANG_PARAMETER = '?uselang=';
-	const CENTRAL_WIKI_SEARCH = '/wiki/Special:Search';
-
 	// how many hubs should be displayed in the menu
 	// if we do not get enough, use transparent background
 	// to fill the space (CON-1820)
 	const HUBS_COUNT = 7;
 
 	/**
-	 * @var WikiaCorporateModel
+	 * @var GlobalNavigationHelper
 	 */
-	private $wikiCorporateModel;
+	private $helper;
 
 	public function __construct() {
 		parent::__construct();
-		$this->wikiCorporateModel = new WikiaCorporateModel();
+		$this->helper = new GlobalNavigationHelper();
 	}
 
 	public function index() {
+		global $wgLang;
+
 		Wikia::addAssetsToOutput( 'global_navigation_scss' );
 		Wikia::addAssetsToOutput( 'global_navigation_js' );
 		Wikia::addAssetsToOutput( 'global_navigation_facebook_login_js' );
 		// TODO remove after when Oasis is retired
 		Wikia::addAssetsToOutput( 'global_navigation_oasis_scss' );
 
-		$userLang = $this->wg->Lang->getCode();
-		// Link to Wikia home page
-		$centralUrl = $this->getCentralUrlForLang( $userLang );
-
-		$createWikiUrl = $this->getCreateNewWikiUrl( $userLang );
+		//Lang for centralUrl and CNW should be the same as user language not content language
+		//That's why $wgLang global is used
+		$lang = $wgLang->getCode();
+		$centralUrl = $this->helper->getCentralUrlForLang( $lang );
+		$createWikiUrl = $this->helper->getCreateNewWikiUrl( $lang );
 
 		$this->response->setVal( 'centralUrl', $centralUrl );
 		$this->response->setVal( 'createWikiUrl', $createWikiUrl );
@@ -45,14 +43,15 @@ class GlobalNavigationController extends WikiaController {
 	}
 
 	public function searchIndex() {
-		$lang = $this->wg->Lang->getCode();
-		$centralUrl = $this->getCentralUrlForLang( $lang );
-		$globalSearchUrl = $this->getGlobalSearchUrl( $centralUrl, $lang );
-		$specialSearchTitle = SpecialPage::getTitleFor( 'Search' );
-		$localSearchUrl = $specialSearchTitle->getFullUrl();
-		$fulltext = $this->wg->User->getOption( 'enableGoSearch' ) ? 0 : 'Search';
-		$globalRequest = $this->wg->request;
-		$query = $globalRequest->getVal( 'search', $globalRequest->getVal( 'query', '' ) );
+		global $wgRequest, $wgUser;
+
+		$lang = $this->helper->getLangForSearchResults();
+
+		$centralUrl = $this->helper->getCentralUrlFromGlobalTitle( $lang );
+		$globalSearchUrl = $this->helper->getGlobalSearchUrl( $centralUrl );
+		$localSearchUrl = SpecialPage::getTitleFor( 'Search' )->getFullUrl();
+		$fulltext = $wgUser->getOption( 'enableGoSearch' ) ? 0 : 'Search';
+		$query = $wgRequest->getVal( 'search', $wgRequest->getVal( 'query', '' ) );
 
 		if ( WikiaPageType::isCorporatePage() && !WikiaPageType::isWikiaHub() ) {
 			$this->response->setVal( 'disableLocalSearchOptions', true );
@@ -60,9 +59,10 @@ class GlobalNavigationController extends WikiaController {
 		} else {
 			$this->response->setVal( 'globalSearchUrl', $globalSearchUrl );
 			$this->response->setVal( 'localSearchUrl', $localSearchUrl );
-			$this->response->setVal( 'defaultSearchMessage', wfMessage( 'global-navigation-local-search' )->text() );
+			$this->response->setVal( 'defaultSearchMessage', wfMessage( 'global-navigation-local-search' )->escaped() );
 			$this->response->setVal( 'defaultSearchUrl', $localSearchUrl );
 		}
+
 		$this->response->setVal( 'fulltext', $fulltext );
 		$this->response->setVal( 'query', $query );
 		$this->response->setVal( 'lang', $lang );
@@ -100,6 +100,8 @@ class GlobalNavigationController extends WikiaController {
 
 		$this->response->setVal( 'menuSections', $lazyLoadMenuNodes );
 		$this->overrideTemplate( 'hubsMenuSections' );
+
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 	}
 
 	private function getMenuNodes() {
@@ -143,64 +145,6 @@ class GlobalNavigationController extends WikiaController {
 		return $activeNode;
 	}
 
-
-	/**
-	 * @desc gets corporate page URL for given language
-	 * @param string $lang - language
-	 * @return string - Corporate Wikia Domain for given language
-	 */
-	public function getCentralUrlForLang( $lang ) {
-		$title = $this->getCentralWikiTitleForLang(
-			$this->centralWikiInLangExists( $lang ) ?
-				$lang :
-				self::DEFAULT_LANG
-		);
-
-		return $title->getServer();
-	}
-
-	public function getCreateNewWikiUrl( $lang ) {
-		$createWikiUrl = $this->getCreateNewWikiFullUrl();
-
-		if ( $lang != self::DEFAULT_LANG ) {
-			$createWikiUrl .= self::USE_LANG_PARAMETER . $lang;
-		}
-		return $createWikiUrl;
-	}
-
-	public function getGlobalSearchUrl( $centralUrl, $lang ) {
-		if ( $lang != self::DEFAULT_LANG && !$this->centralWikiInLangExists( $lang ) ) {
-			return $centralUrl . self::CENTRAL_WIKI_SEARCH;
-		} else {
-			$specialSearchTitle = $this->getTitleForSearch();
-			return $centralUrl . $specialSearchTitle;
-		}
-	}
-
-	protected function centralWikiInLangExists( $lang ) {
-		try {
-			GlobalTitle::newMainPage( $this->wikiCorporateModel->getCorporateWikiIdByLang( $lang ) );
-		} catch ( Exception $ex ) {
-			return false;
-		}
-		return true;
-	}
-
-	protected function getCreateNewWikiFullUrl() {
-		return GlobalTitle::newFromText(
-			'CreateNewWiki',
-			NS_SPECIAL,
-			WikiService::WIKIAGLOBAL_CITY_ID
-		)->getFullURL();
-	}
-
-	protected function getCentralWikiTitleForLang( $lang ) {
-		return GlobalTitle::newMainPage( $this->wikiCorporateModel->getCorporateWikiIdByLang( $lang ) );
-	}
-
-	protected function getTitleForSearch() {
-		return SpecialPage::getTitleFor( 'Search' )->getLocalURL();
-	}
 
 	protected function isGameStarLogoEnabled() {
 		return $this->wg->contLang->getCode() == 'de';

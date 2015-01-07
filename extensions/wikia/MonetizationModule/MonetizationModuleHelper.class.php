@@ -27,7 +27,11 @@ class MonetizationModuleHelper extends WikiaModel {
 
 	const FONT_COLOR_DARK_THEME = '#d5d4d4';
 	const FONT_COLOR_LIGHT_THEME = '#3a3a3a';
-	const THEME_SETTINGS_KEYWORD = '$theme';
+
+	const KEYWORD_PREFIX = '$set'; 	// used for checking if mapping is needed
+	const KEYWORD_THEME_SETTINGS = '$setTheme';
+	const KEYWORD_AD_TITLE = '$setAdTitle';
+	const KEYWORD_ECOMMERCE_TITLE = '$setEcommTitle';
 
 	protected static $mapThemeSettings = [
 		'data-color-bg'     => 'color-page',
@@ -160,9 +164,15 @@ class MonetizationModuleHelper extends WikiaModel {
 	public function setThemeSettings( $adUnits, $memcKey ) {
 		wfProfileIn( __METHOD__ );
 
-		$found = strpos( $adUnits, self::THEME_SETTINGS_KEYWORD );
+		$found = strpos( $adUnits, self::KEYWORD_PREFIX );
 		$adUnits = json_decode( $adUnits, true );
 		if ( $found !== false && is_array( $adUnits ) ) {
+			$adTitle = $this->wf->Message( 'monetization-module-ad-title' )->escaped();
+			$adUnits = str_replace( self::KEYWORD_AD_TITLE, $adTitle, $adUnits );
+
+			$ecommTitle = $this->wf->Message( 'monetization-module-ecommerce-title' )->escaped();
+			$adUnits = str_replace( self::KEYWORD_ECOMMERCE_TITLE, $ecommTitle, $adUnits );
+
 			$theme = SassUtil::getOasisSettings();
 			if ( SassUtil::isThemeDark() ) {
 				$theme['color'] = self::FONT_COLOR_DARK_THEME;
@@ -177,9 +187,7 @@ class MonetizationModuleHelper extends WikiaModel {
 				}
 			}
 
-			foreach ( $adUnits as &$unit ) {
-				$unit = str_replace( '$theme', $adSettings, $unit );
-			}
+			$adUnits = str_replace( self::KEYWORD_THEME_SETTINGS, $adSettings, $adUnits );
 
 			// set cache
 			$cacheTtl = mt_rand( self::CACHE_TTL_MIN, self::CACHE_TTL_MAX );
@@ -200,7 +208,7 @@ class MonetizationModuleHelper extends WikiaModel {
 	 * @return string
 	 */
 	public function getMemcKey( $params ) {
-		$geo = empty( $params['geo'] ) ? 'ROW' : $params['geo'];
+		$geo = empty( $params['geo'] ) ? 'ALL' : $params['geo'];
 		$memcKey = wfMemcKey( 'monetization_module', $params['cache'], $geo, $params['max'] );
 		return $memcKey;
 	}

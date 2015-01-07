@@ -199,6 +199,14 @@ function mwtext.unstrip( s )
 	return php.unstrip( s )
 end
 
+function mwtext.unstripNoWiki( s )
+	return php.unstripNoWiki( s )
+end
+
+function mwtext.killMarkers( s )
+	return php.killMarkers( s )
+end
+
 function mwtext.split( text, pattern, plain )
 	local ret = {}
 	for m in mwtext.gsplit( text, pattern, plain ) do

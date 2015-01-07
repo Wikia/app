@@ -259,22 +259,30 @@ class UrlGenerator {
 	public function url() {
 		$imagePath = "{$this->config->bucket()}/{$this->imageType}/{$this->config->relativePath()}/revision/{$this->getRevision()}";
 
-		if (!isset($this->query['path-prefix'])) {
+		if ( !isset( $this->query['path-prefix'] ) ) {
 			$this->pathPrefix($this->config->pathPrefix());
 		}
 
-		if (!isset($this->query['replace']) && $this->config->replaceThumbnail()) {
+		if ( !isset( $this->query['replace'] ) && $this->config->replaceThumbnail() ) {
 			$this->replaceThumbnail();
 		}
 
 		$imagePath .= $this->modePath();
 
-		if (!empty($this->query)) {
-			ksort($this->query); // ensure that the keys we use will be ordered deterministically
-			$imagePath .= '?'.http_build_query($this->query);
+		if ( !empty( $this->query ) ) {
+			// ensure that the keys we use will be ordered deterministically
+			ksort( $this->query );
+			$queryString = http_build_query( $this->query );
+
+			// Don't add a floating '?' if queryString ends up empty (e.g. if a valueless param is given)
+			$imagePath .= empty( $queryString ) ? '' : '?'.$queryString;
 		}
 
-		return $this->domainShard($imagePath);
+		return $this->domainShard( $imagePath );
+	}
+
+	public function config() {
+		return $this->config;
 	}
 
 	/**
@@ -328,12 +336,12 @@ class UrlGenerator {
 	 * @param string $mode one of the MODE_ constants defined above
 	 * @return $this
 	 */
-	private function mode($mode) {
+	public function mode($mode) {
 		$this->mode = $mode;
 		return $this;
 	}
 
-	private function format($format) {
+	public function format($format) {
 		$this->query['format'] = $format;
 		return $this;
 	}

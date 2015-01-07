@@ -8,14 +8,12 @@ require(
 	function ($, msg, window, document, log, abTest, adEngine, adConfigMobile, messageListener) {
 		'use strict';
 
-		// Don't show ads for Sony
-		window.wgShowAds = window.wgShowAds && !window.document.referrer.match(/info\.tvsideview\.sony\.net/);
-
 		var minZerothSectionLength = 700,
 			minPageLength = 2000,
 			mobileTopLeaderBoard = 'MOBILE_TOP_LEADERBOARD',
 			mobileInContent = 'MOBILE_IN_CONTENT',
 			mobilePreFooter = 'MOBILE_PREFOOTER',
+			mobileTaboola = 'NATIVE_TABOOLA',
 			doc = window.document,
 			logGroup = 'ads_run',
 			logLevel = log.levels.info,
@@ -26,13 +24,18 @@ require(
 			infoboxAdEnabled = window.wgAdDriverUseAdsAfterInfobox && abTest && abTest.inGroup('WIKIAMOBILE_ADS_AFTER_INFOBOX', 'YES'),
 			showInContent = firstSectionTop > minZerothSectionLength,
 			showPreFooter = doc.body.offsetHeight > minPageLength || firstSectionTop < minZerothSectionLength,
-			adLabel = msg('wikiamobile-ad-label'),
+			adLabel = msg('adengine-advertisement'),
 			createSlot = function (name) {
-				return '<div id="' +
-					name +
-					'" class="ad-in-content"><label class="wkAdLabel inContent">' +
-					adLabel +
-					'</label></div></div>';
+				var $slot = $('<div></div>'),
+					$label = $('<label></label>');
+
+				$label.text(adLabel);
+
+				$slot.attr('id', name);
+				$slot.addClass('ad-in-content');
+				$slot.html($label);
+
+				return $slot.wrapAll('<div></div>').parent().html();
 			},
 			adSlots = [];
 
@@ -73,6 +76,7 @@ require(
 					$footer.after(createSlot(mobilePreFooter));
 					adSlots.push([mobilePreFooter]);
 				}
+				adSlots.push([mobileTaboola]);
 			});
 		}
 

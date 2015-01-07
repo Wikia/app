@@ -153,6 +153,13 @@ $messages['ko'] = array(
 	'wikiastyleguide-dropdown-select-all' => '모두 선택',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'wikiastyleguide-dropdown-select-all' => 'Alles uwielen',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */

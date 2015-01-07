@@ -139,6 +139,14 @@ $messages['fr'] = array(
 	'paginator-back' => 'Précédent',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'paginator-next' => 'Folgjende',
+	'paginator-back' => 'Foarige',
+);
+
 /** Galician (galego)
  * @author Toliño
  */

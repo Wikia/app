@@ -34,10 +34,10 @@
 			height = height || 0;
 			width = (width || 50) + (height ? '' : 'px');
 
-			if (isThumbUrl(url)) {
+			if (isLegacyThumbnailerUrl(url)) {
 				// URL points to a thumbnail, remove crop and size
 				url = clearThumbOptions(url);
-			} else {
+			} else if (!isThumbUrl(url)) {
 				// URL points to an image, convert to thumbnail URL
 				url = switchPathTo(url, 'thumb');
 			}
@@ -51,8 +51,14 @@
 		 * @param {String} url The URL to a thumbnail
 		 */
 		function getImageURL(url) {
-			if (isThumbUrl(url)) {
-				// URL points to a thumbnail
+			if (isThumbnailerUrl(url)) {
+				var query = getThumbQueryParams(url);
+				url = clearThumbOptions(url);
+
+				if (query) {
+					url += '?' + query;
+				}
+			} else if (isLegacyThumbnailerUrl(url)) {
 				url = clearThumbOptions(url);
 				url = switchPathTo(url, 'image');
 			}
@@ -108,6 +114,17 @@
 				clearedOptionsUrl = url.substring(0, url.lastIndexOf('/'));
 			}
 			return clearedOptionsUrl;
+		}
+
+		function getThumbQueryParams(url) {
+			var query = null,
+				queryStart = url.indexOf('?');
+
+			if (queryStart != -1) {
+				query = url.substring(url.indexOf('?') + 1);
+			}
+
+			return query;
 		}
 
 		/**
@@ -169,8 +186,17 @@
 		 * @returns {String}
 		 */
 		function addThumbnailerParameters(url, type, width, height) {
-			var thumbnailerRoute = (type === 'video' || type === 'nocrop') ? '/fixed-aspect-ratio' : '/zoom-crop';
-			return url + thumbnailerRoute + '/width/' + width + '/height/' + height;
+			var originalUrl = clearThumbOptions(url),
+				queryParams = getThumbQueryParams(url),
+				thumbnailerRoute = (type === 'video' || type === 'nocrop') ? '/fixed-aspect-ratio' : '/zoom-crop';
+
+			url = originalUrl + thumbnailerRoute + '/width/' + width + '/height/' + height;
+
+			if (queryParams) {
+				url += '?' + queryParams;
+			}
+
+			return url;
 		}
 
 		/**

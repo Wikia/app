@@ -3,7 +3,6 @@
 define('ext.wikia.adEngine.provider.directGpt', [
 	'wikia.cache',
 	'wikia.geo',
-	'wikia.instantGlobals',
 	'wikia.log',
 	'wikia.window',
 	'ext.wikia.adEngine.adContext',
@@ -11,7 +10,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 	'ext.wikia.adEngine.adLogicHighValueCountry',
 	'ext.wikia.adEngine.wikiaGptHelper',
 	'ext.wikia.adEngine.gptSlotConfig'
-], function (cacheStorage, Geo, instantGlobals, log, window, adContext, slotTweaker, adLogicHighValueCountry, wikiaGpt, slotMapConfig) {
+], function (cacheStorage, Geo, log, window, adContext, slotTweaker, adLogicHighValueCountry, wikiaGpt, slotMapConfig) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.directGpt',
@@ -25,8 +24,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 		leaderboardCalled = false, // save if leaderboard was called, so we know whether to call INVISIBLE slot as well
 		gptConfig,
 		gptFlushed = false,
-		alwaysCallDartInCountries = instantGlobals.wgAdDriverAlwaysCallDartInCountries || [],
-		alwaysCallDart = (alwaysCallDartInCountries.indexOf(country) > -1);
+		alwaysCallDart = adContext.getContext().opts.alwaysCallDart;
 
 	// TODO: integrate this array to slotMap if it makes sense
 	gptConfig = { // slots to use SRA with
@@ -114,16 +112,23 @@ define('ext.wikia.adEngine.provider.directGpt', [
 	function canHandleSlot(slotname) {
 		log(['canHandleSlot', slotname], 'debug', logGroup);
 
+		if (!slotMap[slotname]) {
+			log(['canHandleSlot', slotname, 'no DART for this slot', false], 'info', logGroup);
+			return false;
+		}
+
 		if (alwaysCallDart) {
-			log(['canHandleSlot', slotname, 'always calling DART'], 'info', logGroup);
+			log(['canHandleSlot', slotname, 'always calling DART', true], 'info', logGroup);
 			return true;
 		}
 
-		if (adContext.getContext().forceProviders.directGpt && slotMap[slotname]) {
+		if (adContext.getContext().forceProviders.directGpt) {
+			log(['canHandleSlot', slotname, 'forced through adContext', true], 'info', logGroup);
 			return true;
 		}
 
-		if (!isHighValueCountry || !slotMap[slotname]) {
+		if (!isHighValueCountry) {
+			log(['canHandleSlot', slotname, 'no high value country', false], 'info', logGroup);
 			return false;
 		}
 
@@ -170,7 +175,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 
 				// hop to Liftium
 				adInfo.method = 'hop';
-				hop(adInfo, 'Liftium');
+				hop(adInfo);
 			},
 			srcName
 		);

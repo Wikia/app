@@ -1306,6 +1306,13 @@ $messages['fr'] = array(
 	'action-multiwikifinder' => 'rechercher un titre spécifique dans Wikia',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'multiwikiedit_button' => 'BEWURKJE',
+);
+
 /** Galician (galego)
  * @author Toliño
  * @author Vivaelcelta
@@ -2334,12 +2341,13 @@ $messages['nb'] = array(
 /** Dutch (Nederlands)
  * @author HanV
  * @author McDutchie
+ * @author Robin0van0der0vliet
  * @author Siebrand
  */
 $messages['nl'] = array(
-	'multitasks-link-back-label' => 'Hier',
+	'multitasks-link-back-label' => 'hier',
 	'multiwikiedit' => "Meerdere pagina's bewerken",
-	'multiwikiedit_button' => 'Bewerken',
+	'multiwikiedit_button' => 'BEWERKEN',
 	'multiwikiedit_confirm' => 'Bevestigen',
 	'multiwikiedit_help' => 'Bewerk een groep pagina\'s.
 U kunt pagina\'s opnemen in het onderstaande invoervenster.
@@ -2361,7 +2369,7 @@ De taak is niet toegevoegd.",
 	'multiwikiedit_reason' => 'Reden',
 	'multiwikiedit_list_caption' => 'Wikilijst',
 	'multiwikiedit_minoredit_caption' => 'Kleine bewerking',
-	'multiwikiedit_botedit_caption' => 'Botbewerking (verborgen)',
+	'multiwikiedit_botedit_caption' => 'Robotbewerking (verborgen)',
 	'multiwikiedit_autosummary_caption' => 'Automatische bewerkingssamenvatting inschakelen',
 	'multiwikiedit_norecentchanges_caption' => 'De wijziging niet weergeven in de recente wijzigingen',
 	'multiwikiedit_newonly_caption' => "Bestaande pagina's overslaan",
@@ -3743,6 +3751,7 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Max20091
  */
 $messages['vi'] = array(
 	'multitasks-link-back-label' => 'Ở đây',
@@ -3751,6 +3760,9 @@ $messages['vi'] = array(
 	'multiwikiedit_confirm' => 'XÁC NHẬN',
 	'multiwikiedit_help' => 'Chỉnh sửa hàng loạt của trang. Bạn có thể chỉnh sửa các trang được liệt kê trong một hộp văn bản. Chọn một người dùng sẽ được hiển thị trong xóa Nhật ký. Đã tải lên tệp nên chứa tên trang và tùy chọn lý do tách ra bởi | nhân vật trong mỗi dòng.',
 	'multiwikiedit_caption' => 'Danh sách trang:',
+	'multiwikiedit_reason' => 'Lí do để chỉnh sửa',
+	'multiwikiedit_list_caption' => 'Danh sách wiki',
+	'multiwikiedit_minoredit_caption' => 'Sửa đổi nhỏ',
 );
 
 /** Simplified Chinese (中文（简体）‎)

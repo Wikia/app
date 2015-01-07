@@ -31,11 +31,13 @@ $wgAutoloadClasses['Wikia\\Tasks\\Tasks\\ImageReviewTask'] = "{$dir}ImageReviewT
 $wgAutoloadClasses['ImageReviewSpecialController'] =  $dir . 'ImageReviewSpecialController.class.php';
 $wgAutoloadClasses['ImageReviewHelperBase'] =  $dir . 'ImageReviewHelperBase.class.php';
 $wgAutoloadClasses['ImageReviewHelper'] =  $dir . 'ImageReviewHelper.class.php';
+$wgAutoloadClasses['ImageReviewDatabaseHelper'] =  $dir . 'ImageReviewDatabaseHelper.class.php';
+$wgAutoloadClasses['ImageReviewHooks'] =  $dir . 'ImageReview.hooks.php';
 
 $wgSpecialPages['ImageReview'] = 'ImageReviewSpecialController';
 
-// hooks
-$wgHooks['WikiFactoryPublicStatusChange'][] = 'ImageReviewHelper::onWikiFactoryPublicStatusChange' ;
+// hooks setup
+$wgExtensionFunctions[] = 'ImageReviewHooks::setupHooks';
 
 // rights
 $wgAvailableRights[] = 'imagereview';

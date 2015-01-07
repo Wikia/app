@@ -15,6 +15,9 @@
 ve.ce.WikiaGalleryItemCaptionNode = function VeCeWikiaGalleryItemCaptionNode( model, config ) {
 	// Parent constructor
 	ve.ce.WikiaGalleryItemCaptionNode.super.call( this, model, config );
+
+	// DOM changes
+	this.$element.find( '*' ).addClass( 've-ce-noHighlight' );
 };
 
 /* Inheritance */

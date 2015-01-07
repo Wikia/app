@@ -140,6 +140,9 @@
 			this.clearNewMessageBody();
 			this.enableNewMessage();
 
+			// fire event when new article comment is/will be added to DOM
+			mw.hook('wikipage.content').fire(newmsg);
+
 			this.comments.prepend(newmsg);
 
 			// IE is too slow for animations

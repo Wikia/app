@@ -36,9 +36,10 @@ class WikiFeaturesHelper extends WikiaModel {
 		'wgEnableChat' => 258,
 		'wgEnableWallExt' => 258,
 		'wgEnableForumExt' => 259,
-		'wgEnableVisualEditorUI' => 259,
 		'wgEnableWikiaInteractiveMaps' => 260,
+		'wgEnableCuratedContentExt' => 261,
 		'wgEnableMediaGalleryExt' => 1,
+		'wgEnableNjordPrototypeExt' => 2,
 	);
 
 	// no need to add feature to $release_date if not require "new" flag
@@ -47,7 +48,6 @@ class WikiFeaturesHelper extends WikiaModel {
 		'wgShowTopListsInCreatePage' => '2012-02-12',
 		'wgEnableAchievementsExt' => '2012-02-12',
 		'wgEnableForumExt' => '2012-11-29',
-		'wgEnableVisualEditorUI' => '2013-12-04',
 		'wgEnableWikiaInteractiveMaps' => '2014-07-23',
 	);
 
@@ -92,13 +92,16 @@ class WikiFeaturesHelper extends WikiaModel {
 	public function getFeatureLabs() {
 		$list = array();
 		if (isset($this->wg->WikiFeatures['labs']) && is_array($this->wg->WikiFeatures['labs'])) {
+			//allow adding features in runtime
+			wfrunHooks( 'WikiFeatures::onGetFeatureLabs' );
+
 			foreach ($this->wg->WikiFeatures['labs'] as $feature) {
 				$list[] = array(
 					'name' => $feature,
 					'enabled' => $this->getFeatureEnabled($feature),
 					'new' => self::isNew($feature),
 					'active' => $this->wg->Lang->formatNum( $this->getNumActiveWikis( $feature ) ),
-					'imageExtension' => $feature == 'wgEnableVisualEditorUI' ? '.gif' : '.png'
+					'imageExtension' => '.png'
 				);
 			}
 		}

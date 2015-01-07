@@ -124,10 +124,6 @@ require([
 			window.AdEngine_loadLateAds();
 		}
 	}
-
-	if (window.amzn_targs) {
-		adTracker.track('lookupSuccess/amazon', { amzn_targs: true }, 0);
-	}
 });
 
 // Load late ads now
@@ -160,3 +156,13 @@ window.AdEngine_loadLateAds = function () {
 		}
 	});
 };
+
+// FPS meter
+require(['wikia.querystring', 'wikia.document'], function (qs, doc) {
+	'use strict';
+	if (qs().getVal('fps')) {
+		var s = doc.createElement('script');
+		s.src = 'https://raw.githubusercontent.com/Wikia/fps-meter/master/fps-meter.js';
+		doc.body.appendChild(s);
+	}
+});

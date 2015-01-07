@@ -8,7 +8,9 @@
  */
 
 class AssetsConfig {
-	private /* array */ $mConfig;
+	private static /* array */ $mConfig;
+
+	const JQUERY_VERSION = '1.8.2';
 
 	public static function getSiteJS( $combine ) {
 		return array( Title::newFromText( '-' )->getFullURL( 'action=raw&smaxage=0&gen=js&useskin=oasis' ) );
@@ -38,14 +40,15 @@ class AssetsConfig {
 	}
 
 	public static function getEPLAssets( $combine ) {
-		global $wgOasisResponsive;
+		global $wgOasisResponsive, $wgEnableVenusArticle;
+
 		$files = [];
 
 		if ( class_exists( 'EditPageLayoutHelper' ) ) {
 			$files = EditPageLayoutHelper::getAssets();
 		}
 		// $wgOasisResponsive determines if the EditPreview extension is loaded
-		if ( !empty( $wgOasisResponsive ) ) {
+		if ( !empty( $wgOasisResponsive ) || !empty( $wgEnableVenusArticle ) ) {
 			array_push( $files, 'extensions/wikia/EditPreview/js/preview.js' );
 		}
 
@@ -61,10 +64,10 @@ class AssetsConfig {
 
 		if ( !empty( $wgUseJQueryFromCDN ) && empty( $params['noexternals'] ) ) {
 			$url = $minify
-				? '#external_http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js'
-				: '#external_http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.js';
+				? '#external_http://ajax.googleapis.com/ajax/libs/jquery/' . self::JQUERY_VERSION . '/jquery.min.js'
+				: '#external_http://ajax.googleapis.com/ajax/libs/jquery/' . self::JQUERY_VERSION . '/jquery.js';
 		} else {
-			$url = 'resources/jquery/jquery-1.8.2.js';
+			$url = 'resources/jquery/jquery-' . self::JQUERY_VERSION . '.js';
 		}
 
 		return array( $url );
@@ -76,27 +79,27 @@ class AssetsConfig {
 	 * @author Federico "Lox" Lucignano <federico(at)wikia-inc.com>
 	 */
 	private function load() {
-		wfProfileIn( __METHOD__ );
-
-		if ( empty( $this->mConfig ) ) {
+		if ( empty( self::$mConfig ) ) {
+			wfProfileIn( __METHOD__ );
 			include( 'config.php' );
-			$this->mConfig = $config;
-		}
+			/* @var $config Array */
+			self::$mConfig = $config;
 
-		wfProfileOut( __METHOD__ );
+			wfProfileOut( __METHOD__ );
 
-		wfProfileIn( __METHOD__ . 'Groups' );
+			wfProfileIn( __METHOD__ . 'Groups' );
 
-		foreach ( glob ( __DIR__ . '/configGroups/*Config.php' ) as $fileName ) {
-			include_once( $fileName  );
-			$configFileName = pathinfo( $fileName )['filename'];
-			if ( !empty ( $$configFileName ) ) {
-				$configVar = $$configFileName;
-				$this->mConfig = array_merge( $this->mConfig, $configVar );
+			foreach ( glob ( __DIR__ . '/configGroups/*Config.php' ) as $fileName ) {
+				include( $fileName );
+				$configFileName = pathinfo( $fileName )['filename'];
+				if ( !empty ( $$configFileName ) ) {
+					$configVar = $$configFileName;
+					self::$mConfig = array_merge( self::$mConfig, $configVar );
+				}
 			}
-		}
 
-		wfProfileOut( __METHOD__ . 'Groups' );
+			wfProfileOut( __METHOD__ . 'Groups' );
+		}
 	}
 
 	/**
@@ -107,8 +110,8 @@ class AssetsConfig {
 	public function getGroupSkin( $groupName ) {
 		$this->load();
 
-		if ( isset( $this->mConfig[$groupName] ) ) {
-			return ( isset( $this->mConfig[$groupName]['skin'] ) ) ? $this->mConfig[$groupName]['skin'] : null;
+		if ( $this->isGroupDefined( $groupName ) ) {
+			return ( isset( self::$mConfig[$groupName]['skin'] ) ) ? self::$mConfig[$groupName]['skin'] : null;
 		} else {
 			// this is being called on non-defined groups programmatically, so no need to log failure
 			return null;
@@ -123,8 +126,8 @@ class AssetsConfig {
 	public function getGroupType( $groupName ) {
 		$this->load();
 
-		if ( isset( $this->mConfig[$groupName] ) ) {
-			return $this->mConfig[$groupName]['type'];
+		if ( $this->isGroupDefined( $groupName ) ) {
+			return self::$mConfig[$groupName]['type'];
 		} else {
 			// this is being called on non-defined groups programmatically, so no need to log failure
 			return null;
@@ -135,16 +138,18 @@ class AssetsConfig {
 	 * Returns assets array for particular group. If group does not exists in config then returns empty array
 	 *
 	 * @author Inez Korczyński <korczynski@gmail.com>
+	 *
+	 * @param $groupName
+	 * @return array
+	 * @throws AssetsManagerException
 	 */
 	protected function getGroupAssets( $groupName ) {
 		$this->load();
 
-		if ( is_string( $groupName ) && isset( $this->mConfig[$groupName] ) ) {
-			return $this->mConfig[$groupName]['assets'];
+		if ( $this->isGroupDefined( $groupName ) ) {
+			return self::$mConfig[$groupName]['assets'];
 		} else {
-			$requestDetails = AssetsManager::getRequestDetails();
-			Wikia::log( __METHOD__, false, "group '{$groupName}' doesn't exist ({$requestDetails})", true /* $always */ );
-			return array();
+			throw new AssetsManagerException("Group '{$groupName}' doesn't exist");
 		}
 	}
 
@@ -188,9 +193,19 @@ class AssetsConfig {
 		return $assets;
 	}
 
+	/**
+	 * Check if given group is defined in config file(s)
+	 *
+	 * @param $groupName group to check
+	 * @return bool true if the group is defined
+	 */
+	public function isGroupDefined($groupName) {
+		return is_string( $groupName ) && isset( self::$mConfig[$groupName] );
+	}
+
 	public function getGroupNames() {
 		$this->load();
 
-		return array_keys( $this->mConfig );
+		return array_keys( self::$mConfig );
 	}
 }

@@ -275,7 +275,8 @@ class NotificationsController extends WikiaController {
 		wfProfileIn(__METHOD__);
 		global $wgOut, $wgRequest;
 
-		if ( F::app()->checkSkin( 'oasis' ) ) {
+		if ( F::app()->checkSkin( 'oasis' ) || F::app()->checkSkin( 'venus' )) {
+
 			self::addConfirmation(wfMsg('oasis-confirmation-user-logout'));
 
 			// redirect the page user has been on when he clicked "log out" link
@@ -303,11 +304,11 @@ class NotificationsController extends WikiaController {
 
 	/**
 	 * Handle confirmations from Facebook Connect
+	 * @todo: Remove this function when we switch over to wgEnableFacebookClientExt
 	 */
 	public static function addFacebookConnectConfirmation(&$html) {
 		wfProfileIn(__METHOD__);
 		global $wgRequest, $wgUser;
-
 
 		// FBConnect messages
 		if ( F::app()->checkSkin( 'oasis' ) && class_exists('FBConnectHooks')) {

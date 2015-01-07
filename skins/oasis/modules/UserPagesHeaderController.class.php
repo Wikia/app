@@ -14,7 +14,6 @@ class UserPagesHeaderController extends WikiaController {
 		$this->content_actions = $this->app->getSkinTemplateObj()->data['content_actions'];
 		$this->isUserProfilePageExt = false;
 		$this->actionMenu = array();
-		$this->likes = null;
 		$this->comments = null;
 		$this->editTimestamp = null;
 
@@ -201,9 +200,6 @@ class UserPagesHeaderController extends WikiaController {
 
 		// user stats (edit points, account creation date)
 		$this->stats = $this->getStats( $this->userName );
-
-		// no "user" likes
-		$this->likes = false;
 
 		$actionMenu = array(
 				'action' => array(),
@@ -471,7 +467,6 @@ class UserPagesHeaderController extends WikiaController {
 
 			$this->editTimestamp = $wgLang->date( $service->getFirstRevisionTimestamp() );
 			$this->comments = $service->getCommentsCount();
-			$this->likes = true;
 		}
 
 		$actionMenu = array();

@@ -53,34 +53,20 @@ class AnalyticsProviderRubiconRTP implements iAnalyticsProvider {
 	}
 
 	public function getSetupHtml($params = array()) {
-		global $wgAdDriverRubiconCachedOnly;
-
 		static $called = false;
 		$code = '';
 
 		$rtpConfig = json_encode(self::getRtpConfig());
 		$rtpCountries = json_encode(self::getRtpCountries());
 
-		$ozCachedOnly = json_encode((bool)$wgAdDriverRubiconCachedOnly);
-
 		if (!$called && self::isEnabled()) {
 			$code = <<< SCRIPT
 <script>
-	rp_config = {$rtpConfig};
-	// Configuration through globals:
-	oz_async = true;
-	oz_cached_only = {$ozCachedOnly};
-	oz_api = rp_config.oz_api || "valuation";
-	oz_ad_server = rp_config.oz_ad_server || "dart";
-	oz_site = rp_config.oz_site;
-	oz_zone = rp_config.oz_zone;
-	oz_ad_slot_size = rp_config.oz_ad_slot_size;
-
 	require(['wikia.geo', 'wikia.instantGlobals', 'ext.wikia.adEngine.rubiconRtp'], function (geo, instantGlobals, rtp) {
 		var rtpCountries = {$rtpCountries}, country = geo.getCountryCode();
 
 		if (rtpCountries.indexOf(country) !== -1 && !instantGlobals.wgSitewideDisableRubiconRTP) {
-			rtp.call();
+			rtp.call({$rtpConfig});
 		}
 	});
 </script>

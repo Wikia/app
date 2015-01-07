@@ -14,8 +14,13 @@ module.exports = function (config) {
 	base(config);
 
 	config.set({
+		exclude: [
+			'resources/wikia/ui_components/**/Gruntfile.js',
+			'resources/wikia/ui_components/**/node_modules/**/*.js',
+		],
 		files: [
 			'tests/lib/jasmine/jasmine.async.js',
+			'tests/lib/jasmine/jasmine.dataprovider.js',
 
 			'resources/wikia/libraries/define.mock.js',
 			'tests/lib/jasmine/helpers.js',
@@ -44,6 +49,7 @@ module.exports = function (config) {
 			'resources/wikia/modules/cache.js',
 			'resources/wikia/modules/cookies.js',
 			'resources/wikia/modules/geo.js',
+			'resources/wikia/modules/imageServing.js',
 			'resources/wikia/modules/lazyqueue.js',
 			'resources/wikia/modules/loader.js',
 			'resources/wikia/modules/nirvana.js',
@@ -55,6 +61,9 @@ module.exports = function (config) {
 			'resources/wikia/modules/scrollToLink.js',
 			'resources/wikia/libraries/mustache/mustache.js',
 			'resources/wikia/libraries/jquery/ellipses.js',
+
+			//helper modules
+			'resources/wikia/modules/dom.js',
 
 			// Performance
 			'extensions/wikia/Bucky/js/spec/bucky.mock.js',
@@ -79,7 +88,7 @@ module.exports = function (config) {
 			'extensions/wikia/AdEngine/js/AdLogicHighValueCountry.js',
 			'extensions/wikia/AdEngine/js/AdLogicPageDimensions.js',
 			'extensions/wikia/AdEngine/js/AdLogicPageParams.js',
-			'extensions/wikia/AdEngine/js/AdLogicPageParamsLegacy.js',
+			'extensions/wikia/AdEngine/js/AdLogicPageViewCounter.js',
 			'extensions/wikia/AdEngine/js/AdProviderDirectGpt.js',
 			'extensions/wikia/AdEngine/js/AdProviderEvolve.js',
 			'extensions/wikia/AdEngine/js/AdProviderLater.js',
@@ -178,12 +187,9 @@ module.exports = function (config) {
 			'extensions/wikia/MediaGallery/scripts/templates.mustache.js',
 			'extensions/wikia/MediaGallery/scripts/views/caption.js',
 			'extensions/wikia/MediaGallery/scripts/views/media.js',
+			'extensions/wikia/MediaGallery/scripts/views/toggler.js',
 			'extensions/wikia/MediaGallery/scripts/views/gallery.js',
-			'extensions/wikia/MediaGallery/scripts/spec/**/*.spec.js',
-
-			// Lightbox
-			'extensions/wikia/Lightbox/scripts/spec/lightbox.spec.js'
-
+			'extensions/wikia/MediaGallery/scripts/spec/**/*.spec.js'
 		]
 	});
 };

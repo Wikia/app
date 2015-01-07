@@ -47,3 +47,4 @@ JSMessages::registerPackage( 'WikiFeatures', array(
 	'wikifeatures-deactivate-confirm-button',
 	'wikifeatures-deactivate-cancel-button'
 ) );
+

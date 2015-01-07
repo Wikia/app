@@ -369,8 +369,9 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
  */
 $messages['zh-hant'] = array(
-	'quickcreate-desc' => '增加“創建新頁面”按钮，要求匿名用戶登錄編輯。',
+	'quickcreate-desc' => '增加“建立新頁面”按钮，要求匿名使用者登入編輯。',
 	'quickcreate' => '提交您的方案',
 );
