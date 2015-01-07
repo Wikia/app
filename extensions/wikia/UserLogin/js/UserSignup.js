@@ -22,10 +22,35 @@
 				captchaField: this.captchaField
 			});
 
+			this.checkCaptcha();
+
 			this.initOptIn();
 			this.setCountryValue();
 			this.setupValidation();
 			this.termsOpenNewTab();
+		},
+
+		checkCaptcha: function () {
+			var $captchaField = $('#' + this.captchaField),
+				$captchaImg,
+				captchaImgSrc,
+				testImg;
+
+			if (!$captchaField.length) {
+				return;
+			}
+
+			$captchaImg = $('#recaptcha_challenge_image');
+			captchaImgSrc = $captchaImg.attr('src');
+			testImg = new Image();
+			testImg.src = captchaImgSrc;
+			testImg.style.display = 'none';
+			testImg.onerror = function () {
+				// handle error
+//				alert('error');
+			};
+			document.body.appendChild(testImg);
+
 		},
 
 		/**
