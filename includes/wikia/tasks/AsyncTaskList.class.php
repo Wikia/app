@@ -304,8 +304,6 @@ class AsyncTaskList {
 				$connection = $this->connection();
 				$channel = $connection->channel();
 				$channel->basic_publish( $message, '', $this->getQueue()->name() );
-				$channel->close();
-				$connection->close();
 			} catch ( AMQPRuntimeException $e ) {
 				$exception = $e;
 			} catch ( AMQPTimeoutException $e ) {
