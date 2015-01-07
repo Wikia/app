@@ -36,8 +36,8 @@
 			<div class="image-window">
 				<picture>
 					<img class="hero-image" data-cropposition="<?= $wikiData->cropPosition ?>"
-						 data-fullpath="<?= $wikiData->originalImagePath ?>" src="<?= $wikiData->imagePath ?>"
-						 alt="<?= $wikiData->title ?>">
+						 data-fullpath="<?= htmlspecialchars($wikiData->originalImagePath) ?>" src="<?= htmlspecialchars($wikiData->imagePath) ?>"
+						 alt="<?= htmlspecialchars( $wikiData->title ) ?>">
 				</picture>
 			</div>
 		</div>
@@ -71,7 +71,7 @@
 		</div>
 		<span class="hero-description-text sg-main">
 		<?php if ( isset( $wikiData->description ) ) { ?>
-			<?= $wikiData->description; ?>
+			<?= htmlspecialchars( $wikiData->description ) ?>
 		<? } ?>
 		</span>
 		<?php if ( !isset ( $wikiData->description ) ) { ?>
