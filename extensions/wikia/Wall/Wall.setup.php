@@ -227,7 +227,6 @@ $wgGroupPermissions['sysop']['wallarchive'] = true;
 $wgGroupPermissions['moderator']['wallarchive'] = true;
 
 $wgGroupPermissions['*']['wallremove'] = false;
-$wgGroupPermissions['user']['wallremove'] = false;
 $wgGroupPermissions['staff']['wallremove'] = true;
 $wgGroupPermissions['vstf']['wallremove'] = true;
 $wgGroupPermissions['helper']['wallremove'] = true;
@@ -262,7 +261,6 @@ $wgGroupPermissions['vstf']['wallfastadmindelete'] = true;
 $wgGroupPermissions['staff']['wallfastadmindelete'] = true;
 
 $wgGroupPermissions['*']['wallmessagemove'] = false;
-$wgGroupPermissions['user']['wallmessagemove'] = false;
 $wgGroupPermissions['moderator']['wallmessagemove'] = true;
 $wgGroupPermissions['sysop']['wallmessagemove'] = true;
 $wgGroupPermissions['vstf']['wallmessagemove'] = true;
