@@ -365,7 +365,7 @@ class VideoHandlerController extends WikiaController {
 				);
 
 				// get video detail
-				if ( !empty( $detail ) ) {
+				if ( !empty( $params['detail'] ) ) {
 					$videoOptions = [
 						'thumbWidth' => $params['width'],
 						'thumbHeight' => $params['height'],
