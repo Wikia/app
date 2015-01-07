@@ -228,7 +228,7 @@ $messages['ka'] = array(
  * @author Miri-Nae
  */
 $messages['ko'] = array(
-	'communitymessages-notice-msg' => '[[Special:WikiActivity|커뮤니티 코너가 업데이트되었습니다]].',
+	'communitymessages-notice-msg' => '[[특수기능:WikiActivity|커뮤니티 코너가 업데이트되었습니다]].', # Fuzzy
 );
 
 /** Colognian (Ripoarisch)

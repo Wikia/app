@@ -157,7 +157,6 @@ Referred to in:
 	'swm-label-mode-wikis-wiki-multi-hint' => 'Message explaining the format of the list of wikis.',
 	'swm-label-mode-users-user-hint' => 'Refers to option:
 *{{msg-wikia|Swm-label-recipient-wikis}}',
-	'swm-label-mode-users-anon' => '{{Identical|Anonymous user}}',
 	'swm-label-mode-users-anon-hint' => 'Refers to options:
 *{{msg-wikia|Swm-label-mode-wikis-all}}
 *{{msg-wikia|Swm-label-mode-wikis-wiki-multi}}
@@ -1015,7 +1014,7 @@ $messages['diq'] = array(
 	'swm-label-mode-users-user' => 'Karber weçinê',
 	'swm-label-mode-users-user-multi' => 'Listey karberan',
 	'swm-label-content' => 'Tede este',
-	'swm-label-comment' => 'Mışewre',
+	'swm-label-comment' => 'Vatış',
 	'swm-label-language' => 'Zıwan',
 	'swm-button-preview' => '[ Verqayt ]',
 	'swm-button-send' => '[ Bırsê ]',
@@ -1946,14 +1945,11 @@ $messages['kn'] = array(
  * @author 아라
  */
 $messages['ko'] = array(
-	'swm-label-preview' => '미리 보기',
 	'swm-label-edit' => '편집',
 	'swm-label-remove' => '제거',
 	'swm-label-list' => '목록',
 	'swm-label-recipient-wikis' => '위키',
 	'swm-label-recipient-users' => '사용자',
-	'swm-label-mode-users-active' => '활동적인 사용자',
-	'swm-label-comment' => '댓글',
 	'swm-label-language' => '언어',
 	'swm-button-save' => '[ 저장 ]',
 	'swm-list-table-id' => 'ID',
@@ -3795,13 +3791,6 @@ $messages['yi'] = array(
  * @author Xiaomingyan
  */
 $messages['zh-hans'] = array(
-	'sitewidemessages' => '网站广域消息',
-	'swm-page-title-editor' => '网站广域消息 :: 编辑者',
-	'swm-page-title-preview' => '网站广域消息 :: 预览',
-	'swm-page-title-send' => '网站广域消息 :: 发送',
-	'swm-page-title-sent' => '网站广域消息 :: 已发送',
-	'swm-page-title-dismiss' => '网站广域消息 :: 丢失',
-	'swm-page-title-list' => '网站广域消息 :: 列表',
 	'swm-label-preview' => '预览',
 	'swm-label-edit' => '编辑',
 	'swm-label-remove' => '删除',
@@ -3819,7 +3808,6 @@ $messages['zh-hans'] = array(
 	'swm-label-mode-wikis-wiki-multi-hint' => '<i>每行输入一个wiki。</i>',
 	'swm-label-mode-users-all' => '所有用户',
 	'swm-label-mode-users-active' => '活跃用户',
-	'swm-label-mode-users-group' => '用户属于该组',
 	'swm-label-mode-users-user' => '选定用户',
 	'swm-label-mode-users-user-multi' => '用户列表',
 	'swm-label-mode-users-anon' => '任何匿名用户',
@@ -3833,7 +3821,6 @@ $messages['zh-hans'] = array(
 	'swm-button-send' => '[ 发送 ]',
 	'swm-button-save' => '[ 保存 ]',
 	'swm-button-new' => '[ 新 ]',
-	'swm-msg-sent-ok' => '<h3>消息已发送。</h3>',
 	'swm-msg-sent-err' => "<h3>此消息'''尚未'''发送。</h3>更多消息参见错误日志。",
 	'swm-msg-sent-task' => '发送消息的任务已创建：$1',
 	'swm-msg-remove' => '您确信要移除此消息？它不能被撤销！',
@@ -3864,7 +3851,6 @@ $messages['zh-hans'] = array(
 	'swm-error-empty-group' => '输入组名。',
 	'swm-error-invalid-time' => '提供的时间无效。',
 	'swm-lang-other' => '所有现存语言',
-	'action-messagetool' => '发送网站广域消息',
 	'swm-label-mode-users-registration' => '注册日期',
 	'swm-mode-users-registration-after' => '之后',
 	'swm-mode-users-registration-before' => '之前',
@@ -3887,11 +3873,6 @@ $messages['zh-hans'] = array(
  */
 $messages['zh-hant'] = array(
 	'sitewidemessages' => '全站訊息',
-	'swm-label-list' => '清單',
 	'swm-label-recipient-users' => '使用者',
-	'swm-label-mode-users-anon' => '所有匿名用戶',
-	'swm-label-content' => '內容',
 	'swm-label-language' => '語言',
-	'swm-list-table-content' => '內容',
-	'swm-list-table-tools' => '工具',
 );

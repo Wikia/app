@@ -248,7 +248,6 @@ $messages['el'] = array(
 /** Spanish (español)
  * @author Bola
  * @author Crazymadlover
- * @author Fitoschido
  * @author VegaDark
  */
 $messages['es'] = array(
@@ -258,7 +257,7 @@ $messages['es'] = array(
 	'rte-edgecase-info' => 'Edición de texto enriquecido ha sido deshabilitado porque la página contiene código complejo.',
 	'rte-edgecase-comment' => 'Comentarios HTML',
 	'rte-edgecase-triplecurls' => 'parámetros de plantilla',
-	'rte-edgecase-nowysiwyg' => 'la orden «no WYSIWYG»',
+	'rte-edgecase-nowysiwyg' => 'el comando "no wysiwyg"',
 	'rte-edgecase-complex-description' => 'una URL externa o una plantilla sin descripción',
 	'rte-edgecase-template-with-link' => 'una plantilla con un enlace como parámetro',
 	'rte-edgecase-syntax' => 'sintaxis no permitida',
@@ -428,8 +427,6 @@ $messages['kn'] = array(
  * @author Miri-Nae
  */
 $messages['ko'] = array(
-	'rte-edgecase-comment' => 'HTML 댓글',
-	'rte-edgecase-triplecurls' => '틀 매개변수',
 	'rte-edgecase-redirect' => '넘겨주기',
 );
 

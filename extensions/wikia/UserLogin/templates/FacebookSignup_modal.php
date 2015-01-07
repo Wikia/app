@@ -18,6 +18,11 @@ $baseForm = [
 		],
 		[
 			'type' => 'hidden',
+			'name' => 'loginToken',
+			'value' => Sanitizer::encodeAttribute( $loginToken ),
+		],
+		[
+			'type' => 'hidden',
 			'name' => 'returntourl',
 			'value' => Sanitizer::encodeAttribute( $returnToUrl ),
 		],
@@ -26,7 +31,7 @@ $baseForm = [
 ];
 
 $loginForm = $baseForm;
-$signupForm = $baseForm;
+$signpuForm = $baseForm;
 
 /**
  * Add form fields to signup form
@@ -34,56 +39,37 @@ $signupForm = $baseForm;
 
 // Facebook may or may not provide the user's email
 if ( trim( $fbEmail ) == '' ) {
-	$signupForm['inputs'][] = [
+	$signpuForm['inputs'][] = [
 		'type' => 'email',
 		'name' => 'email',
 		'isRequired' => true,
 		'label' => wfMessage( 'email' )->escaped(),
 	];
 } else {
-	$signupForm['inputs'][] = [
+	$signpuForm['inputs'][] = [
 		'type' => 'nirvana',
 		'class' => 'email',
 		'controller' => 'WikiaStyleGuideTooltipIconController',
 		'method' => 'index',
 		'params' => [
-			'text' => wfMessage( 'email' )->escaped(),
-			'tooltipIconTitle' => wfMessage( 'usersignup-facebook-email-tooltip' )->text(),
+			'text' => wfMessage('email')->escaped(),
+			'tooltipIconTitle' => wfMessage( 'usersignup-facebook-email-tooltip' )->plain(),
 		],
 	];
 
-	$signupForm['inputs'][] = [
+	$signpuForm['inputs'][] = [
 		'type' => 'custom',
 		'output' => '<strong>' . htmlspecialchars( $fbEmail ) . '</strong>'
 	];
 }
 
-$signupForm['inputs'][] = [
-	'type' => 'hidden',
-	'name' => 'wpRegistrationCountry',
-	'value' => '',
-];
-
-$signupForm['inputs'][] = [
-	'type' => 'hidden',
-	'name' => 'signupToken',
-	'value' => Sanitizer::encodeAttribute( $loginToken ),
-];
-
-$signupForm['inputs'][] = [
-	'class' => 'opt-in-container hidden',
-	'type' => 'checkbox',
-	'name' => 'wpMarketingOptIn',
-	'label' => wfMessage( 'userlogin-opt-in-label' )->escaped(),
-];
-
-$signupForm['inputs'][] = [
+$signpuForm['inputs'][] = [
 	'type' => 'custom',
 	'class' => 'wikia-terms',
 	'output' => wfMessage('prefs-help-terms')->parse()
 ];
 
-$signupForm['submits'] = [
+$signpuForm['submits'] = [
 	[
 		'value' => wfMessage( 'createaccount' )->escaped(),
 		'name' => 'submit',
@@ -102,12 +88,6 @@ $loginForm['inputs'][] = [
 	'class' => 'forgot-password-container',
 ];
 
-$loginForm['inputs'][] = [
-	'type' => 'hidden',
-	'name' => 'loginToken',
-	'value' => Sanitizer::encodeAttribute( $loginToken ),
-];
-
 $loginForm['submits'] = [
 	[
 		'value' => wfMessage( 'userlogin-login-heading' )->escaped(),
@@ -120,7 +100,7 @@ $loginForm['submits'] = [
 <div class="UserLoginFacebook">
 	<section class="UserLoginFacebookWrapper">
 		<section class="UserLoginFacebookLeft">
-			<?=  F::app()->renderView( 'WikiaStyleGuideForm', 'index', ['form' => $signupForm] ); ?>
+			<?=  F::app()->renderView( 'WikiaStyleGuideForm', 'index', ['form' => $signpuForm] ); ?>
 		</section>
 
 		<section class="UserLoginFacebookRight">

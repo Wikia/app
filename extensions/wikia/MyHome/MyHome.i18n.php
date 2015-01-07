@@ -895,16 +895,16 @@ $messages['diq'] = array(
 	'myhome-feed-added-by' => 'terefê $1 ra bi cı',
 	'myhome-feed-edited-by' => 'terefê $1 ra vuriya',
 	'myhome-feed-posted-by' => 'terefê $1 ra rışiya',
-	'myhome-feed-comment-by' => 'terefê $1 ra mışewre',
+	'myhome-feed-comment-by' => 'terefê $1 ra xulasa',
 	'myhome-feed-deleted-by' => 'terefê $1 ra esteriya',
 	'myhome-feed-moved-by' => 'terefê $1 ra berd',
-	'myhome-feed-article-comment-created-by' => 'terefê $1 ra mışewreyo newe',
+	'myhome-feed-article-comment-created-by' => 'terefê $1 ra vatışo newe',
 	'myhome-feed-article-comment-edited-by' => 'terefê $1 ra xulasa vurnê',
 	'myhome-feed-by' => 'terefê $1 ra',
 	'myhome-feed-new-page-details' => 'Pela newiye',
 	'myhome-feed-summary-details' => 'Xulasa',
-	'myhome-feed-new-blog-comment-details' => 'Mışewre',
-	'myhome-feed-new-article-comment-details' => 'Mışewre',
+	'myhome-feed-new-blog-comment-details' => 'Vatış',
+	'myhome-feed-new-article-comment-details' => 'Vacayış',
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Resime ke debyay|Resime ke debyay}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Videoye ke debyay|Videoye ke debyay}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Kategoriye ke debyay|Kategoriye ke debyay}}',
@@ -1478,13 +1478,6 @@ Si vous êtes le fondateur ou bien un administrateur de ce wiki, vous pouvez cha
 	'tooltip-pt-myhome' => 'Aller à Mon Accueil',
 	'activityfeed' => 'Flux d’activité',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|un message|$1 messages}}',
-);
-
-/** Western Frisian (Frysk)
- * @author Robin0van0der0vliet
- */
-$messages['fy'] = array(
-	'myhome-feed-edit' => 'bewurkje',
 );
 
 /** Galician (galego)
@@ -2139,18 +2132,7 @@ $messages['ko'] = array(
 	'myhome-activity-more' => '더 많은 활동 내역 보기',
 	'myhome-feed-newpage' => '새 문서',
 	'myhome-feed-edit' => '편집',
-	'myhome-feed-created-by' => '$1의 생성',
-	'myhome-feed-added-by' => '$1의 추가',
-	'myhome-feed-edited-by' => '$1의 편집',
-	'myhome-feed-posted-by' => '$1의 게시',
-	'myhome-feed-comment-by' => '$1의 댓글',
-	'myhome-feed-deleted-by' => '$1의 삭제',
-	'myhome-feed-moved-by' => '$1의 이동',
-	'myhome-feed-article-comment-created-by' => '$1의 새 댓글',
-	'myhome-feed-article-comment-edited-by' => '$1의 댓글 편집',
 	'myhome-feed-new-page-details' => '새 문서',
-	'myhome-feed-new-blog-comment-details' => '댓글',
-	'myhome-feed-new-article-comment-details' => '댓글',
 	'myhome-feed-redirect-details' => '넘겨주기',
 	'myhome-hot-spots-number-of-editors' => '편집자',
 	'myhome-namespace-blog' => '블로그',
@@ -4112,7 +4094,6 @@ $messages['zh'] = array(
  * @author Hydra
  * @author Hzy980512
  * @author Liangent
- * @author Liuxinyu970226
  * @author Yanmiao liu
  * @author Yfdyh000
  */
@@ -4164,7 +4145,7 @@ $messages['zh-hans'] = array(
 	'myhome-feed-redirect-details' => '重定向',
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|添加的照片|添加的照片}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|添加的视频|添加的视频}}',
-	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|已添加的分类}}',
+	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|添加的类别|添加的类别}}',
 	'myhome-user-contributions-empty' => '您可以通过点击任何页面上的"{{int:editthispage}}"来参与本维基，并添加您所知道的。
 每个人都可以进行更改，添加信息或纠正错误。
 维基是由社团建立的，一旦您点击“编辑”按钮，您也是社团的一部分。

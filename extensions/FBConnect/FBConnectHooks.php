@@ -691,6 +691,9 @@ HTML;
 					]
 				);
 				$msg .= "<p>".wfMessage( 'fbconnect-connect-msg' )->text()."</p>";
+				/** Wikia change - starts  @author Andrzej 'nAndy' Łukaszewski */
+				wfRunHooks('FounderProgressBarOnFacebookConnect');
+				/** Wikia change - ends */
 			}
 		}
 

@@ -64,7 +64,7 @@
 		videoThumbWidthThreshold: 400,
 		init: function (customSettings) {
 			var self = this,
-				$article, $photos, $comments, $footer, $videosModule, $videoHomePage, $recommendations;
+				$article, $photos, $comments, $footer, $videosModule, $videoHomePage;
 
 			// performance profiling
 			bucky = window.Bucky('LightboxLoader');
@@ -77,12 +77,11 @@
 			$footer = $('#WikiaArticleFooter'); // bottom videos module
 			$videosModule = $('.videos-module-rail'); // right rail videos module
 			$videoHomePage = $('#latest-videos-wrapper');
-			$recommendations = $('#recommendations');
 
 			$.extend(self.lightboxSettings, customSettings);
 
 			// Bind click event to initiate lightbox
-			$article.add($photos).add($footer).add($videosModule).add($recommendations)
+			$article.add($photos).add($footer).add($videosModule)
 				.off('.lightbox')
 				.on('click.lightbox', '.lightbox, a.image', function (e) {
 					var $this = $(this),
@@ -108,8 +107,6 @@
 						$parent = $photos;
 					} else if ($this.closest($comments).length) {
 						$parent = $comments;
-					} else if ($this.closest($recommendations).length) {
-						$parent = $recommendations;
 					} else if ($this.closest('#videosModule').length) {
 						// Don't use cached object because it may not have been in the DOM on init
 						$parent = $('#videosModule');

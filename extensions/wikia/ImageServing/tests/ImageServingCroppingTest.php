@@ -13,8 +13,6 @@ class ImageServingCroppingTest extends WikiaBaseTest {
 	public function setUp() {
 		$this->setupFile =  __DIR__ . '/../imageServing.setup.php';
 		parent::setUp();
-
-		$this->mockGlobalVariable('wgEnableVignette', true);
 	}
 
 	public function testCropping() {
@@ -25,8 +23,7 @@ class ImageServingCroppingTest extends WikiaBaseTest {
 		// pass dimensions of full size image
 		$cropUrl = $im->getUrl($file, $file->getWidth(), $file->getHeight());
 
-		$this->assertContains('/firefly/images/8/89/Wiki-wordmark.png/revision/latest/', $cropUrl);
-		$this->assertContains('/width/50/', $cropUrl);
+		$this->assertStringEndsWith('/50px-94%2C160%2C0%2C65-Wiki-wordmark.png', $cropUrl);
 
 		// verify crop response
 		$res = Http::get($cropUrl, 'default', ['noProxy' => true]);

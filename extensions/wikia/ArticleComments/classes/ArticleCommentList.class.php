@@ -424,6 +424,7 @@ class ArticleCommentList {
 			'countCommentsNested' => $countCommentsNested,
 			'isAnon' => $wgUser->isAnon(),
 			'isBlocked' => $isBlocked,
+			'isFBConnectionProblem' => ArticleCommentInit::isFbConnectionNeeded(),
 			'isReadOnly' => $isReadOnly,
 			'page' => $page,
 			'pagination' => $pagination,

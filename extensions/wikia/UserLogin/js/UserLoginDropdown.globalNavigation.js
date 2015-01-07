@@ -1,10 +1,5 @@
 /* global UserLoginFacebook:true, UserLoginAjaxForm:true */
-require([
-	'jquery',
-	'GlobalNavigationiOSScrollFix',
-	'wikia.window',
-	'wikia.browserDetect'
-], function ($, scrollFix, win, browserDetect) {
+require(['jquery', 'GlobalNavigationiOSScrollFix', 'wikia.window', 'wikia.browserDetect'], function ($, scrollFix, win, browserDetect) {
 	'use strict';
 	var $entryPoint, $userLoginDropdown, loginAjaxForm = false;
 
@@ -14,20 +9,15 @@ require([
 	function openMenu() {
 		$entryPoint.addClass('active');
 		win.transparentOut.show();
-		initLoginForm();
-		$('#globalNavigation').trigger('user-login-menu-opened');
-	}
 
-	/**
-	 * Initialize the login form for logged out users
-	 */
-	function initLoginForm () {
-		if (!loginAjaxForm && !window.wgUserName) {
+		if (!loginAjaxForm) {
 			loginAjaxForm = new UserLoginAjaxForm($entryPoint, {
 				skipFocus: true
 			});
 			UserLoginFacebook.init(UserLoginFacebook.origins.DROPDOWN);
 		}
+
+		$('#globalNavigation').trigger('user-login-menu-opened');
 	}
 
 	/**
@@ -84,8 +74,7 @@ require([
 
 		if (!win.Wikia.isTouchScreen()) {
 			win.delayedHover(
-				$entryPoint.get(0),
-				{
+				$entryPoint.get(0), {
 					checkInterval: 100,
 					maxActivationDistance: 20,
 					onActivate: openMenu,

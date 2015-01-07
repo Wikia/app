@@ -145,7 +145,6 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 			# get list of votes
 			try {
 				$wgTopVoted = ( !empty($topvoted) ) ? true : false;
-				$dbr = wfGetDB( DB_SLAVE );
 
 				$this->addTables( array("`page_vote` AS p1", "page") );
 				$add_fields = array('page_id', 'page_title', 'AVG(vote) as votesavg, max(time) as max_time');
@@ -169,9 +168,9 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 					$select_user_vote = "select article_id as page_id, max(vote) as uservote from page_vote where IMPLODE and ";
 					if ( !empty($user_id) ) {
 						$this->setCacheKey ($lcache_key, 'U', $user_id);
-						$select_user_vote .= ' user_id = ' . $dbr->addQuotes( $user_id ) . ' ';
+						$select_user_vote .= " user_id = '$user_id' ";
 					} else {
-						$select_user_vote .= ' unique_id = ' . $dbr->addQuotes( $browserId ) . ' ';
+						$select_user_vote .= " unique_id = '$browserId' ";
 						$this->setCacheKey ($lcache_key, 'UB', $browserId);
 					}
 					$select_user_vote .= " group by article_id";
@@ -241,7 +240,9 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 
 					if ( !empty($data) && is_array($data) ) {
 						if (!empty($select_user_vote)) {
-							$pages = $dbr->makeList( array_keys( $data ) );
+							$dbr = wfGetDB( DB_SLAVE );
+
+							$pages = implode( ",", array_keys($data) );
 							$select_user_vote = str_replace("IMPLODE", " article_id in (".$pages.") ", $select_user_vote);
 							$oRes = $dbr->query($select_user_vote, __METHOD__);
 
@@ -434,14 +435,14 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 				$this->setFields($data);
 
 				#---
-				$this->addWhereFld( 'article_id', $page );
+				$this->addWhere("article_id = $page");
 				if (!empty($user_id)) {
 					$data['user_id'] = $user_id;
-					$this->addWhereFld( 'user_id', $user_id );
+					$this->addWhere("user_id = ".$user_id);
 				}
 				elseif (!empty($browserId)) {
 					$data['unique_id'] = $browserId;
-					$this->addWhereFld( 'unique_id', $browserId );
+					$this->addWhere( "unique_id = '{$browserId}'" );
 				}
 
 
@@ -522,10 +523,10 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 				throw new WikiaApiQueryError(2);
 			} else {
 				if (!empty($user_id)) {
-					$this->addWhereFld( 'user_id', $user_id );
+					$this->addWhere("user_id = ".$user_id);
 				}
 				elseif (!empty($browserId)) {
-					$this->addWhereFld( 'unique_id', $browserId );
+					$this->addWhere("unique_id = '".$browserId."'");
 				}
 			}
 
@@ -535,9 +536,9 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 			}
 
 			#---
-			$this->addWhereFld( 'article_id', $page );
+			$this->addWhere("article_id = $page");
 			if ( !empty($vote) ) {
-				$this->addWhereFld( 'vote', $vote );
+				$this->addWhere("vote = $vote");
 			}
 
 			#---
@@ -704,7 +705,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 		$clonedInstance->addFields( array("AVG(vote) as votesavg") );
 		$clonedInstance->addWhere( "article_id > 0");
 
-		$clonedInstance->addWhereFld( 'article_id', $page );
+		$clonedInstance->addWhere( "article_id = $page" );
 
 		$res = $clonedInstance->select(__METHOD__);
 
@@ -732,7 +733,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 		$clonedInstance->addFields( array("COUNT(vote) as votecount") );
 		$clonedInstance->addWhere( "article_id > 0");
 
-		$clonedInstance->addWhereFld( 'article_id', $page );
+		$clonedInstance->addWhere( "article_id = $page" );
 
 		$res = $clonedInstance->select(__METHOD__);
 
@@ -760,7 +761,7 @@ class WikiaApiQueryVoteArticle extends WikiaApiQuery {
 		$clonedInstance->addFields( array( "UNIX_TIMESTAMP(time) AS time_stamp" ) );
 		$clonedInstance->addWhere( "article_id > 0");
 
-		$clonedInstance->addWhereFld( 'article_id', $page );
+		$clonedInstance->addWhere( "article_id = $page" );
 
 		$res = $clonedInstance->select( __METHOD__ );
 		$values = array();

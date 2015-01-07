@@ -78,7 +78,6 @@ $messages['ca'] = array(
 Les majúscules i les minúscules compten, revisa l\'escriptura!',
 	'piggyback-wronguser' => "$1 no és el teu nom d'usuari.",
 	'piggyback-loginprompt' => "Si us plau, torneu a introduir el vostre nom d'usuari i contrasenya.",
-	'piggyback-firstlogout' => 'Si us plau, surt de la teva sessió i torna a entrar.',
 	'action-piggyback' => 'registre a un altre usuari',
 );
 

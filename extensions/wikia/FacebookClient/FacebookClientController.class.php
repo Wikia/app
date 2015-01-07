@@ -5,15 +5,6 @@ use Wikia\Logger\WikiaLogger;
 class FacebookClientController extends WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
-	/** @var \FacebookClientFactory */
-	protected $fbClientFactory;
-
-	public function __construct() {
-		parent::__construct();
-
-		$this->fbClientFactory = new \FacebookClientFactory();
-	}
-
 	public function preferences() {
 		$this->response->addAsset( 'facebook_client_preferences_scss' );
 
@@ -126,25 +117,17 @@ class FacebookClientController extends WikiaController {
 	}
 
 	/**
-	 * Disconnect the user from Facebook. This can occur in one of two ways, either when the user
-	 * deletes the Wikia App from facebook, or when they explicitly disconnect via Special:Preferences.
-	 * If it comes from Facebook, the request is internal and is sent by FacebookClientController::deauthorizeCallback.
-	 * If it comes explicitly from the user, the request is external and is sent by preferences.js::disconnect.
+	 * Disconnect the user from Facebook
 	 *
-	 * @requestParam user This is a user object.
+	 * @requestParam user This is a user object.  Only works for internal calls
 	 */
 	public function disconnectFromFB() {
+		$user = $this->getVal( 'user', null );
 
-		if ( $this->request->isInternal() ) {
-			// deauthorizeCallback which makes this internal request ensures 'user' is set
-			$userId = $this->getVal( 'user' );
-			$user = User::newFromId( $userId );
-		} elseif ( $this->isValidExternalRequest() ) {
-			$user = F::app()->wg->User;
+		if ( $user ) {
+			$user = User::newFromId( $user );
 		} else {
-			$this->status = 'error';
-			$this->msg = wfMessage( 'fbconnect-unknown-error' )->escaped();
-			return;
+			$user = F::app()->wg->User;
 		}
 
 		FacebookMapModel::deleteFromWikiaID( $user->getId() );
@@ -167,15 +150,6 @@ class FacebookClientController extends WikiaController {
 	}
 
 	/**
-	 * Checks the validity of the request, making sure that it was both posted
-	 * and that the user has a valid CSRF token
-	 * @return bool
-	 */
-	private function isValidExternalRequest() {
-		return ( $this->request->wasPosted() && $this->wg->User->matchEditToken( $this->getVal( 'token' ) ) );
-	}
-
-	/**
 	 * Ajax endpoint for connecting a logged in Wikia user to a Facebook account.
 	 * By the time they get here they should already have logged into Facebook and have a Facebook user ID.
 	 */
@@ -192,29 +166,15 @@ class FacebookClientController extends WikiaController {
 		}
 
 		// Create user mapping
-		$status = $this->fbClientFactory->connectToFacebook( $wg->User->getId(), $fbUserId );
-		if ( !$status->isGood() ) {
-			list( $message, $params ) = $this->fbClientFactory->getStatusError( $status );
-			$this->setErrorResponse( $message, $params );
+		$mapping = \FacebookMapModel::createUserMapping( $wg->User->getId(), $fbUserId );
+		if ( empty( $mapping ) ) {
+			$this->status = 'error';
 			return;
 		}
 
 		$this->status = 'ok';
 
 		\FacebookClientHelper::track( 'facebook-link-existing' );
-	}
-
-	/**
-	 * Set a normalized error response meant for Ajax calls
-	 *
-	 * @param string $messageKey i18n error message key
-	 * @param array $messageParams
-	 */
-	protected function setErrorResponse( $messageKey, array $messageParams = [] ) {
-		$this->response->setData( [
-			'status' => 'error',
-			'msg' => wfMessage( $messageKey, $messageParams )->escaped(),
-		] );
 	}
 
 }

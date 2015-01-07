@@ -3,18 +3,6 @@
 $wgWikiaNewtalkExpiry = 300;
 
 /**
- * Generate a memcache key for given user's shared message cache
- *
- * Either user's ID (logged-in) or his IP (anon) will be used
- *
- * @param User $user
- * @return string
- */
-function wfWikiaNewTalkMemcKey( User $user ) {
-	return wfSharedMemcKey( 'WikiaSharedNewTalk', $user->isLoggedIn() ? $user->getId() : $user->getName() );
-}
-
-/**
  * wfSetWikiaNewtalk
  *
  * Hook, set new wikia shared message
@@ -28,7 +16,7 @@ function wfWikiaNewTalkMemcKey( User $user ) {
  * @return false: don't go to next hook
  */
 function wfSetWikiaNewtalk( &$article ) {
-	global $wgMemc, $wgExternalSharedDB;
+	global $wgMemc, $wgWikiaNewtalkExpiry, $wgExternalSharedDB;
 	$name = $article->mTitle->getDBkey();
 	$other = User::newFromName( $name );
 
@@ -70,7 +58,8 @@ function wfSetWikiaNewtalk( &$article ) {
             __METHOD__
         );
         $dbw->commit();
-		$wgMemc->delete( wfWikiaNewTalkMemcKey( $other ) );
+		$key = 'wikia:shared_newtalk:'.$other->getID().':'.str_replace( ' ', '_', $other->getName() );
+		$wgMemc->delete( $key );
 	}
 	return false;
 }
@@ -80,7 +69,7 @@ function wfSetWikiaNewtalk( &$article ) {
  * @param $talks
  * @return bool
  */
-function wfGetWikiaNewtalk( User $user, &$talks ) {
+function wfGetWikiaNewtalk( &$user, &$talks ) {
 	global $wgMemc, $wgWikiaNewtalkExpiry, $wgExternalSharedDB;
 
 	# hack: don't check it for our varnish ip addresses
@@ -92,7 +81,7 @@ function wfGetWikiaNewtalk( User $user, &$talks ) {
 		return true;
 	}
 	wfProfileIn( __METHOD__ );
-	$key = wfWikiaNewTalkMemcKey( $user );
+	$key = 'wikia:shared_newtalk:'.$user->getID().':'.str_replace( ' ', '_', $user->getName() );
 	$wikia_talks = $wgMemc->get( $key );
 	if( !is_array( $wikia_talks ) ) {
 		$wikia_talks = array();
@@ -161,7 +150,7 @@ function wfGetWikiaNewtalk( User $user, &$talks ) {
  *
  * @return true: don't stop hook's processing
  */
-function wfClearWikiaNewtalk( User $user ) {
+function wfClearWikiaNewtalk( &$user ) {
 	global $wgMemc, $wgExternalSharedDB;
 
 	$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
@@ -174,7 +163,8 @@ function wfClearWikiaNewtalk( User $user ) {
         ),
         __METHOD__
     );
-	$wgMemc->delete( wfWikiaNewTalkMemcKey( $user ) );
+	$key = 'wikia:shared_newtalk:'.$user->getID().':'.str_replace( ' ', '_', $user->getName() );
+	$wgMemc->delete( $key );
 	return true;
 }
 
@@ -218,7 +208,8 @@ function wfDismissWikiaNewtalks() {
 		$dbw = wfGetDB(DB_MASTER);
 		$dbw->commit();
 
-		$wgMemc->delete( wfWikiaNewTalkMemcKey( $wgUser ) );
+		$key = 'wikia:shared_newtalk:'.$wgUser->getID().':'.str_replace( ' ', '_', $wgUser->getName() );
+		$wgMemc->delete( $key );
 
 		$result = true;
 	}

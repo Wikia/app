@@ -10,15 +10,6 @@ class FacebookSignupController extends WikiaController {
 	const SIGNUP_USERNAME_KEY = 'username';
 	const SIGNUP_PASSWORD_KEY = 'password';
 
-	/** @var \FacebookClientFactory */
-	protected $fbClientFactory;
-
-	public function __construct() {
-		parent::__construct();
-
-		$this->fbClientFactory = new \FacebookClientFactory();
-	}
-
 	/**
 	 * This method is called when user successfully logins using FB credentials
 	 *
@@ -146,6 +137,9 @@ class FacebookSignupController extends WikiaController {
 		$this->returnToUrl = $returnToUrl;
 
 		$this->loginToken = UserLoginHelper::getSignupToken();
+
+		$specialPage = $this->wg->EnableFacebookClientExt ? 'FacebookConnect' : 'Connect';
+		$this->connectUrl = SpecialPage::getTitleFor( $specialPage )->getLocalUrl();
 	}
 
 	public function modalHeader() {
@@ -161,15 +155,6 @@ class FacebookSignupController extends WikiaController {
 	 */
 	public function signup() {
 
-		// Check that Facebook account is not in use!
-		$fbId = \FacebookClient::getInstance()->getUserId();
-		if ( $this->fbClientFactory->isFacebookIdInUse( $fbId ) ) {
-			$errorMessageKey = 'fbconnect-error-fb-account-in-use';
-			$messageParams = [ $this->request->getVal( 'username' ) ];
-			$this->setErrorResponse( $errorMessageKey, $messageParams );
-			return;
-		}
-
 		$signupResponse = $this->app->sendRequest( 'FacebookSignup', 'createAccount' )->getData();
 
 		switch ( $signupResponse['result'] ) {
@@ -182,7 +167,7 @@ class FacebookSignupController extends WikiaController {
 			case 'error':
 			default:
 				// pass errors to the frontend form
-				$this->response->setData( $signupResponse );
+				$this->response->setData($signupResponse);
 				break;
 		}
 	}
@@ -202,14 +187,12 @@ class FacebookSignupController extends WikiaController {
 
 		$result = ( $signupForm->msgType == 'error' ) ? 'error' : 'ok' ;
 		if ( $result == 'ok' && !$signupForm->getHasConfirmedEmail() ) {
-			$result = 'unconfirm';
+			$result = 'unconfirm'	;
 		}
 
-		$this->response->setData( [
-			'result' => $result,
-			'msg' => $signupForm->msg,
-			'errParam' => $signupForm->errParam,
-		] );
+		$this->result = $result;
+		$this->msg = $signupForm->msg;
+		$this->errParam = $signupForm->errParam;
 	}
 
 	/**
@@ -236,10 +219,8 @@ class FacebookSignupController extends WikiaController {
 			return;
 		}
 
-		$status = $this->fbClientFactory->connectToFacebook( $user->getId(), $fbUserId );
-		if ( ! $status->isGood() ) {
-			list( $message, $params ) = $this->fbClientFactory->getStatusError( $status );
-			$this->setErrorResponse( $message, $params );
+		$map = $this->createUserMap( $user->getId(), $fbUserId );
+		if ( !$map ) {
 			return;
 		}
 
@@ -287,6 +268,25 @@ class FacebookSignupController extends WikiaController {
 	}
 
 	/**
+	 * Create a user mapping to associate given Wikia user id with FB id
+	 *
+	 * @param $wikiaUserId
+	 * @param $fbUserId
+	 * @return FacebookMapModel|null
+	 */
+	protected function createUserMap( $wikiaUserId, $fbUserId ) {
+		// Returns an existing mapping or attempts to create one
+		$userMap = \FacebookMapModel::createUserMapping( $wikiaUserId, $fbUserId );
+
+		if ( !$userMap ) {
+			$this->setAjaxyErrorResponse( 'userlogin-error-fbconnect' );
+			return null;
+		}
+
+		return $userMap;
+	}
+
+	/**
 	 * Retrieve and validate Facebook user id
 	 *
 	 * @return int|null
@@ -294,7 +294,7 @@ class FacebookSignupController extends WikiaController {
 	protected function getValidFbUserId() {
 		$fbUserId = FacebookClient::getInstance()->getUserId();
 		if ( !$fbUserId ) {
-			$this->setErrorResponse( 'userlogin-error-invalidfacebook' );
+			$this->setAjaxyErrorResponse( 'userlogin-error-invalidfacebook', '' );
 			return null;
 		}
 
@@ -329,7 +329,7 @@ class FacebookSignupController extends WikiaController {
 		}
 
 		if ( $messageCode ) {
-			$this->setErrorResponse( $messageCode, [], $errorParam );
+			$this->setAjaxyErrorResponse( $messageCode, $errorParam );
 			return null;
 		}
 
@@ -358,14 +358,13 @@ class FacebookSignupController extends WikiaController {
 	/**
 	 * Set a normalized error response meant for Ajax calls
 	 *
-	 * @param string $messageKey i18n error message key
-	 * @param array $messageParams message parameters
+	 * @param string $messageKey an i18n message key
 	 * @param string|null $errorParam the error key
 	 */
-	protected function setErrorResponse( $messageKey, array $messageParams = [], $errorParam = null ) {
+	protected function setAjaxyErrorResponse( $messageKey, $errorParam = null ) {
 		$this->response->setData( [
 			'result' => 'error',
-			'msg' => wfMessage( $messageKey, $messageParams )->escaped(),
+			'msg' => wfMessage( $messageKey )->escaped(),
 			'errParam' => $errorParam,
 		] );
 	}

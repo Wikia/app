@@ -156,12 +156,8 @@ function SharedHelpHook(&$out, &$text) {
 	if($wgTitle->getNamespace() == NS_HELP) {
 		# Initialize shared and local variables
 		# Canonical namespace is added here in case we ever want to share other namespaces (e.g. Advice)
-		$sharedArticleKey = wfSharedMemcKey(
-			'sharedArticles',
-			$wgHelpWikiId,
-			md5(MWNamespace::getCanonicalName( $wgTitle->getNamespace() ), $wgTitle->getDBkey()),
-			SHAREDHELP_CACHE_VERSION
-		);
+		$sharedArticleKey = wfSharedMemcKey( 'sharedArticles', $wgHelpWikiId,
+			MWNamespace::getCanonicalName( $wgTitle->getNamespace() ), $wgTitle->getDBkey(), SHAREDHELP_CACHE_VERSION );
 		$sharedArticle = $wgMemc->get($sharedArticleKey);
 		$sharedServer = WikiFactory::getVarValueByName( 'wgServer', $wgHelpWikiId );
 		$sharedScript = WikiFactory::getVarValueByName( 'wgScript', $wgHelpWikiId );
@@ -322,11 +318,7 @@ function SharedHelpHook(&$out, &$text) {
 			}
 
 			/* Tomasz Odrobny #36016 */
-			$sharedRedirectsArticlesKey = wfSharedMemcKey(
-				'sharedRedirectsArticles',
-				$wgHelpWikiId,
-				md5( MWNamespace::getCanonicalName( $wgTitle->getNamespace() ), $wgTitle->getDBkey() )
-			);
+			$sharedRedirectsArticlesKey = wfSharedMemcKey('sharedRedirectsArticles', $wgHelpWikiId, MWNamespace::getCanonicalName( $wgTitle->getNamespace() ), $wgTitle->getDBkey());
 			$articleLink = $wgMemc->get($sharedRedirectsArticlesKey, null);
 
 			if ( $articleLink == null ){
@@ -383,7 +375,7 @@ function SharedHelpEditPageHook(&$editpage) {
 	return true;
 }
 
-function SharedHelpLinkBegin( $skin, Title $target, &$text, &$customAttribs, &$query, &$options, &$ret ) {
+function SharedHelpLinkBegin( $skin, $target, &$text, &$customAttribs, &$query, &$options, &$ret ) {
 	global $wgTitle;
 
 	// First do simple checks before going to more expensive ones
@@ -406,31 +398,23 @@ function SharedHelpLinkBegin( $skin, Title $target, &$text, &$customAttribs, &$q
  * does $title article exist @help.wikia?
  *
  * @param Title $title
- * @return bool
  * @see SharedHelpHook
  */
-function SharedHelpArticleExists(Title $title) {
-	global $wgMemc, $wgHelpWikiId;
+function SharedHelpArticleExists($title) {
+	global $wgMemc, $wgSharedDB, $wgHelpWikiId;
 	wfProfileIn(__METHOD__);
 
 	$exists = false;
 
-	$sharedLinkKey = wfSharedMemcKey(
-		'sharedLinks',
-		$wgHelpWikiId,
-		md5(MWNamespace::getCanonicalName( $title->getNamespace() ) .  ':' . $title->getDBkey())
-	);
+	$sharedLinkKey = $wgSharedDB . ':sharedLinks:' . $wgHelpWikiId . ':' .
+		md5(MWNamespace::getCanonicalName( $title->getNamespace() ) .  ':' . $title->getDBkey());
 	$sharedLink = $wgMemc->get($sharedLinkKey);
 
 	if ( $sharedLink ) {
 		$exists =  true;
 	} else {
-		$sharedArticleKey = wfSharedMemcKey(
-			'sharedArticles',
-			$wgHelpWikiId,
-			md5(MWNamespace::getCanonicalName( $title->getNamespace() ) .  ':' . $title->getDBkey()),
-			SHAREDHELP_CACHE_VERSION
-		);
+		$sharedArticleKey = $wgSharedDB . ':sharedArticles:' . $wgHelpWikiId . ':' .
+			md5(MWNamespace::getCanonicalName( $title->getNamespace() ) .  ':' . $title->getDBkey()) . ':' . SHAREDHELP_CACHE_VERSION;
 		$sharedArticle = $wgMemc->get($sharedArticleKey);
 
 		if ( !empty($sharedArticle['timestamp']) ) {
@@ -476,7 +460,7 @@ function SharedHelpWantedPagesSql( &$page, &$sql ) {
 	$helpdb = WikiFactory::IDtoDB( $wgHelpWikiId  );
 
 	if ($helpdb) {
-		$helpPagesKey = wfSharedMemcKey('helppages', $helpdb);
+		$helpPagesKey = "helppages:{$helpdb}";
 		$helpArticles = $wgMemc->get($helpPagesKey);
 
 		if ( empty($helpArticles) ) {

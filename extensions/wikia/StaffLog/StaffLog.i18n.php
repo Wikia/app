@@ -349,22 +349,18 @@ $messages['kn'] = array(
  * @author Miri-Nae
  */
 $messages['ko'] = array(
-	'stafflog' => '스태프 로그',
 	'stafflog-filter-label' => '필터',
 	'stafflog-filter-user' => '사용자:',
 	'stafflog-filter-type' => '유형:',
 	'stafflog-filter-apply' => '필터 적용',
-	'stafflog-filter-type-block' => '차단',
 	'stafflog-filter-type-wikifactory' => '위키 통계',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
- * @author Robby
  */
 $messages['lb'] = array(
 	'stafflog-desc' => 'Zentraliséiert Logge vun de Staff-Mataarbechter',
 	'stafflog-blockmsg' => '$1 $2 huet versicht de Staff-Mataarbechter $3 op der Wiki $4 ze spären: Grond: $5',
-	'stafflog-filter-user' => 'Benotzer:',
 );
 
 /** لوری (لوری)

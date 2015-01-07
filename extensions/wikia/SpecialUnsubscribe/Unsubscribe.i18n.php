@@ -102,22 +102,13 @@ $messages['br'] = array(
 
 /** Catalan (català)
  * @author Light of Cosmos
- * @author Unapersona
  */
 $messages['ca'] = array(
-	'unsubscribe' => 'Donar-se de baixa',
-	'unsubscribe-badaccess' => "Ho sentim, però aquesta pàgina no pot ser utilitzada directament. Si us plau, seguiu l'enllaç des de l'adreça d'e-mail.",
-	'unsubscribe-bademail' => "Ho sentim, hi havia un problema amb l'e-mail.",
 	'unsubscribe-nousers' => "No s'han trobat usuaris amb aquesta adreça electrònica.",
 	'unsubscribe-noconfusers' => "No s'han trobat usuaris confirmats amb aquesta adreça electrònica.",
 	'unsubscribe-confirm-legend' => 'Confirmar',
-	'unsubscribe-confirm-text' => 'Donar de baixa tots els comptes amb <code>$1</code>?',
 	'unsubscribe-confirm-button' => "Sí, n'estic segur.",
-	'unsubscribe-working' => 'Sonant de baixa $1 {{PLURAL:$1|compte|comptes}} per $2',
-	'unsubscribe-working-problem' => "problema carregant la informació d'usuari per: $1",
 	'unsubscribe-working-done' => 'Complet.',
-	'unsubscribe-preferences-toggle' => 'Donar-se de baixa de tots els correus electrònics de Wikia (desmarqueu per accedir a les opcions de sota)',
-	'unsubscribe-preferences-notice' => "Els missatges de correu electrònic han estat inhabilitades per al vostre compte. Vés a la pestanya del Perfil d'Usuari per a activar-les.",
 );
 
 /** Chechen (нохчийн)
@@ -395,7 +386,7 @@ $messages['lv'] = array(
  */
 $messages['mk'] = array(
 	'unsubscribe' => 'Отпиши',
-	'unsubscribe-badaccess' => 'За жал, оваа страница не може да се користи непосредно. Стиснете на врската наведена во пораката што ви ја испративме по е-пошта.',
+	'unsubscribe-badaccess' => 'За жал, оваа страница не може да се користи директно. Стиснете на врската наведена во пораката што ви ја испративме по е-пошта.',
 	'unsubscribe-badtoken' => 'За жал, се појави проблем со безбедносната шифра.',
 	'unsubscribe-bademail' => 'За жал, се појави проблем со е-поштата.',
 	'unsubscribe-badtime' => 'За жал, врската истече. Врската не треба да е постара од 7 дена.',

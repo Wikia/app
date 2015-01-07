@@ -49,8 +49,7 @@ class LoginForm extends SpecialPage {
 	var $mType, $mReason, $mName, $mRealName;
 	var $mAbortLoginErrorMsg = 'login-abort-generic';
 	private $mLoaded = false;
-	var $mMarketingOptIn, $mRegistrationCountry;
-	var $wpBirthYear, $wpBirthMonth, $wpBirthDay, $wpMsgPrefix;
+	var $mMarketingOptIn, $wpBirthYear, $wpBirthMonth, $wpBirthDay, $wpMsgPrefix;
 	var $wpUserLoginExt, $wpUserBirthDay;
 
 	/**
@@ -109,7 +108,6 @@ class LoginForm extends SpecialPage {
 		$this->mRemember = $request->getCheck( 'wpRemember' );
 		$this->mStickHTTPS = $request->getCheck( 'wpStickHTTPS' );
 		$this->mMarketingOptIn = $request->getCheck( 'wpMarketingOptIn' );
-		$this->mRegistrationCountry = $request->getVal( 'wpRegistrationCountry' );
 		$this->mLanguage = $request->getText( 'uselang' );
 		$this->mSkipCookieCheck = $request->getCheck( 'wpSkipCookieCheck' );
 		$this->mToken = ( $this->mType == 'signup' ) ? $request->getVal( 'wpCreateaccountToken' ) : $request->getVal( 'wpLoginToken' );
@@ -571,8 +569,7 @@ class LoginForm extends SpecialPage {
 
 		$u->setOption( 'rememberpassword', $this->mRemember ? 1 : 0 );
 		$u->setOption( 'marketingallowed', $this->mMarketingOptIn ? 1 : 0 );
-		$u->setOption( 'registrationCountry', $this->mRegistrationCountry );
-		$u->setOption( 'skinoverwrite', 1 );
+		$u->setOption('skinoverwrite', 1);
 		$u->saveSettings();
 
 		# Update user count

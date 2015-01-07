@@ -136,14 +136,13 @@ $messages['br'] = array(
  * @author Gemmaa
  * @author Marcmpujol
  * @author Paucabot
- * @author Unapersona
  */
 $messages['ca'] = array(
-	'wva-success' => "La pàgina de vídeo [[:$1]] s'ha afegit correctament.",
-	'wva-success-replaced' => 'La pàgina de vídeo de [[:$1]] ha estat subtituïda amb èxit.',
+	'wva-success' => "Pàgina de vídeo de  $1  s'afegia reeixidament.", # Fuzzy
+	'wva-success-replaced' => 'Pàgina de vídeo de  $1  va ser substituït amb èxit.', # Fuzzy
 	'wva-failure' => 'Si us plau proporcionar els paràmetres vàlids.',
-	'wva-name' => 'Nom del vídeo:',
-	'wva-url' => 'URL del vídeo:',
+	'wva-name' => 'Escriviu el nom:', # Fuzzy
+	'wva-url' => 'Introduïu la URL:', # Fuzzy
 	'wva-add' => 'Afegeix',
 	'wva-title' => "De pressa afegir des d'URL de vídeo",
 	'wva-notlogged' => "Vostè necessita connectar-se o inscriure's per inserir vídeos.",
@@ -957,7 +956,6 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
- * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
 	'wva-success' => '成功增加影片[[:$1]]',
@@ -969,6 +967,6 @@ $messages['zh-hant'] = array(
 	'wva-title' => '從網路快速新增影片',
 	'wva-notlogged' => '您需要登錄或註冊來插入影片。',
 	'wva-notallowed' => '您不能在這個wiki搜入影片',
-	'wva-protected' => '這個影片已被保護。',
+	'wva-protected' => '這咎影片被保護。',
 	'wva-thumbnail-upload-failed' => '影片嵌入失敗，無法獲取適當的縮圖',
 );

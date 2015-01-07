@@ -250,6 +250,11 @@ class ArticleCommentInit {
 			return true;
 		}
 
+		// Facebook connection needed
+		if ( self::isFbConnectionNeeded() ){
+			return false;
+		}
+
 		switch ($action) {
 			case 'move':
 			case 'move-target':
@@ -263,6 +268,32 @@ class ArticleCommentInit {
 				break;
 		}
 		return true;
+	}
+
+	/**
+	 * isFbConnectionNeeded -- checkes is everything OK with Facebook connection
+	 *
+	 * @access public
+	 * @author Jakub
+	 *
+	 * @return boolean
+	 */
+	static public function isFbConnectionNeeded() {
+		global $wgRequireFBConnectionToComment, $wgEnableFacebookConnectExt, $wgUser;
+
+		if ( !empty ( $wgRequireFBConnectionToComment ) &&
+				!empty ( $wgEnableFacebookConnectExt ) ) {
+			$fb = new FBConnectAPI();
+			$tmpArrFaceBookId = FBConnectDB::getFacebookIDs($wgUser);
+			$isFBConnectionProblem = (
+					( $fb->user() == 0 ) ||					// fb id or 0 if none is found.
+					!isset( $tmpArrFaceBookId[0] ) ||
+					( (int)$fb->user() != (int)$tmpArrFaceBookId[0] )	// current fb id different from fb id of currenty logged user.
+			);
+			return $isFBConnectionProblem;
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -383,7 +414,7 @@ class ArticleCommentInit {
 
 	public static function getUserNameFromRevision(Title $title) {
 		$rev = Revision::newFromId( $title->getLatestRevID() );
-
+		
 		if ( !empty( $rev ) ) {
 			$user = User::newFromId( $rev->getUser() );
 
@@ -393,15 +424,15 @@ class ArticleCommentInit {
 				$userName = self::getCommentByAnonMsg();
 			}
 		}
-
+		
 		return $userName;
 	}
-
+	
 	public static function getCommentByAnonMsg() {
 		if( is_null(self::$commentByAnonMsg) ) {
 			self::$commentByAnonMsg = wfMessage( 'article-comments-anonymous' )->text();
 		}
-
+		
 		return self::$commentByAnonMsg;
 	}
 }
