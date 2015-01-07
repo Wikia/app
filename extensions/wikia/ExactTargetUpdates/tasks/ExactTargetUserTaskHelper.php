@@ -127,8 +127,14 @@ class ExactTargetUserTaskHelper {
 			'ObjectType' => "DataExtensionObject[$sCustomerKey]",
 			'Properties' => [ 'user_id', 'wiki_id', 'contributions' ],
 		];
+
+		$sSimpleOperator = 'equals';
+		if ( sizeof( $aUsersIds ) > 1 ) {
+			$sSimpleOperator = 'IN';
+		}
+
 		$aApiParams[ 'SimpleFilterPart' ] = [
-			'SimpleOperator' => 'IN',
+			'SimpleOperator' => $sSimpleOperator,
 			'Property' => 'user_id',
 			'Value' => $aUsersIds
 		];
