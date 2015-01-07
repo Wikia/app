@@ -303,51 +303,6 @@ class NotificationsController extends WikiaController {
 	}
 
 	/**
-	 * Handle confirmations from Facebook Connect
-	 * @todo: Remove this function when we switch over to wgEnableFacebookClientExt
-	 */
-	public static function addFacebookConnectConfirmation(&$html) {
-		wfProfileIn(__METHOD__);
-		global $wgRequest, $wgUser;
-
-		// FBConnect messages
-		if ( F::app()->checkSkin( 'oasis' ) && class_exists('FBConnectHooks')) {
-
-			$preferencesUrl = SpecialPage::getTitleFor('Preferences')->getFullUrl();
-			$fbStatus = $wgRequest->getVal('fbconnected');
-
-			switch($fbStatus) {
-				// success
-				case 1:
-					$id = FBConnectDB::getFacebookIDs($wgUser, DB_MASTER);
-					if (count($id) > 0) {
-
-						global $wgEnableFacebookSync;
-						if ($wgEnableFacebookSync == true) {
-							$userURL = AvatarService::getUrl($wgUser->mName);
-							self::addConfirmation( wfMessage( 'fbconnect-connect-msg-sync-profile', $userURL )->text() );
-						}
-						else {
-							self::addConfirmation( wfMessage( 'fbconnect-connect-msg' )->text() );
-						}
-					}
-					break;
-
-				// error
-				case 2:
-					$fb = new FBConnectAPI();
-					if (strlen($fb->user()) < 1) {
-						self::addConfirmation(wfMsgExt('fbconnect-connect-error-msg', array('parseinline'), $preferencesUrl), self::CONFIRMATION_ERROR);
-					}
-					break;
-			}
-		}
-
-		wfProfileOut(__METHOD__);
-		return true;
-	}
-
-	/**
 	 * Handle confirmations about edit being saved
 	 */
 	public static function addSaveConfirmation($editPage, $code) {

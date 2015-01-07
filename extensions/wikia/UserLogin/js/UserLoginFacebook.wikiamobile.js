@@ -9,7 +9,6 @@ require(['track', 'wikia.querystring', 'toast', 'wikia.nirvana', 'JSMessages', '
 
 			return function () {
 				if (!initialized) {
-					//see fbconnect.js
 					window.FB.init({
 						appId: window.fbAppId,
 						status: true, // Check login status
