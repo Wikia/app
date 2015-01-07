@@ -31,10 +31,11 @@ class ExactTargetUpdateUserEditsPerWikiMaintenance {
 		$this->addEditsUpdateTask( $aUsersEditsData );
 	}
 
-	private function getUsersEditedRecently( $oStatsDBr, $sStartDate ) {
+	private function getUsersEditedRecently( DatabaseBase $oStatsDBr, $sStartDate ) {
 		$timeCondition = $this->prepareTimeCondition( $sStartDate );
 		// Get list of users that made edits in last period
 		$oUsersListResult = $oStatsDBr->query("SELECT distinct user_id from rollup_wiki_user_events where {$timeCondition} and user_id != 0;");
+
 		return $oUsersListResult;
 	}
 
@@ -46,12 +47,12 @@ class ExactTargetUpdateUserEditsPerWikiMaintenance {
 	 * Fetches user edits from statsDB from last period determined by prepareTimeCondition function
 	 * e.g. result
 	 * [ 12345 => [ 177 => 5 ] ]; It means user 12345 made 5 edits on 177 wiki
-	 * @param $oStatsDBr
-	 * @param $sStartDate
-	 * @param $oUsersListResult
+	 * @param DatabaseBase $oStatsDBr
+	 * @param string $sStartDate e.g. 2014-12-31
+	 * @param boolean|ResultWrapper $oUsersListResult
 	 * @return array
 	 */
-	private function getUserEdits( $oStatsDBr, $sStartDate, $oUsersListResult ) {
+	private function getUserEdits( DatabaseBase $oStatsDBr, $sStartDate, $oUsersListResult ) {
 		$timeCondition = $this->prepareTimeCondition( $sStartDate );
 		// Get user edits
 		$aUsersEditsData = [];
