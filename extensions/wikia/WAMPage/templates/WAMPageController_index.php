@@ -93,7 +93,7 @@
 
 			<? if($indexWikis['wam_index']): ?>
 				<? foreach ($indexWikis['wam_index'] as $wiki): ?>
-					<tr>
+					<tr data-vertical-id="<?= $wiki['vertical_id'] ?>">
 						<? if ( !$isSingleVertical ) : ?>
 							<td><?=$wiki['wam_rank']?></td>
 						<? else: ?>
