@@ -450,6 +450,11 @@ ve.init.mw.ViewPageTarget.prototype.onSurfaceReady = function () {
 
 	this.setupToolbarSaveButton();
 	this.attachToolbarSaveButton();
+
+	// Wikia change - add Cancel button
+	this.setupToolbarCancelButton();
+	this.attachToolbarCancelButton();
+
 	this.restoreScrollPosition();
 	this.restoreEditSection();
 	this.setupBeforeUnloadHandler();
@@ -1136,6 +1141,14 @@ ve.init.mw.ViewPageTarget.prototype.attachToolbarSaveButton = function () {
 		.append( this.toolbarSaveButton.$element );
 
 	this.toolbar.$actions.append( $actionTools, $pushButtons );
+};
+
+ve.init.mw.ViewPageTarget.prototype.setupToolbarCancelButton = function () {
+	// Must implement in subclass
+};
+
+ve.init.mw.ViewPageTarget.prototype.attachToolbarCancelButton = function () {
+	// Must implement in subclass
 };
 
 /**

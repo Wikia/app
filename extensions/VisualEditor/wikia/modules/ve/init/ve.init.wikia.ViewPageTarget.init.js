@@ -39,7 +39,7 @@
 				] ),
 				loadTargetDeferred
 			).done( function() {
-				var target = new ve.init.mw.ViewPageTarget();
+				var target = new ve.init.wikia.ViewPageTarget();
 				target.$element.insertAfter( '#mw-content-text' );
 
 				// Transfer methods

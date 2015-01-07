@@ -90,7 +90,7 @@ ve.init.wikia.ViewPageTarget.static.actionsToolbarConfig = [
 	}
 ];
 
-ve.init.wikia.ViewPageTarget.static.surfaceCommands.push( 'wikiaSourceMode' );
+//ve.init.wikia.ViewPageTarget.static.surfaceCommands.push( 'wikiaSourceMode' );
 
 ve.init.wikia.ViewPageTarget.prototype.getNonEditableUIElements = function () {
 	var $elements,
@@ -152,13 +152,8 @@ ve.init.wikia.ViewPageTarget.prototype.onToolbarCancelButtonClick = function () 
 		'value': ve.track.normalizeDuration( ve.now() - this.events.timings.surfaceReady )
 	} );
 	mw.hook( 've.cancelButton' ).fire();
-	/*
-	// Trigger Qualaroo survey for anonymous users abandoning edit
-	if ( mw.user.anonymous() && window._kiq ) {
-		_kiq.push( ['set', { 'event': 'abandon_ve_cancel' } ] );
-	}
-	*/
-	ve.init.mw.ViewPageTarget.prototype.onToolbarCancelButtonClick.call( this );
+
+	this.deactivate();
 };
 
 ve.init.wikia.ViewPageTarget.prototype.onToolbarMetaButtonClick = function () {
@@ -196,6 +191,19 @@ ve.init.wikia.ViewPageTarget.prototype.showPageContent = function () {
 	$( 'body' ).removeClass( 've' );
 };
 
+ve.init.wikia.ViewPageTarget.prototype.setupToolbarCancelButton = function () {
+	this.toolbarCancelButton = new OO.ui.ButtonWidget( {
+		'label': ve.msg( 'wikia-visualeditor-toolbar-cancel' ),
+		'flags': [ 'secondary' ]
+	} );
+	this.toolbarCancelButton.$element.addClass( 've-ui-toolbar-cancelButton' );
+	this.toolbarCancelButton.connect( this, { 'click': 'onToolbarCancelButtonClick' } );
+};
+
+ve.init.wikia.ViewPageTarget.prototype.attachToolbarCancelButton = function () {
+	$( '.ve-init-mw-viewPageTarget-toolbar-actions' ).prepend( this.toolbarCancelButton.$element );
+};
+
 ve.init.wikia.ViewPageTarget.prototype.updateToolbarSaveButtonState = function () {
 	ve.init.mw.ViewPageTarget.prototype.updateToolbarSaveButtonState.call( this );
 	if (
@@ -212,10 +220,6 @@ ve.init.wikia.ViewPageTarget.prototype.updateToolbarSaveButtonState = function (
 			'value': ve.track.normalizeDuration( ve.now() - this.events.timings.surfaceReady )
 		} );
 	}
-};
-
-ve.init.wikia.ViewPageTarget.prototype.getToolbar = function () {
-	return this.toolbar;
 };
 
 /**
