@@ -1,6 +1,6 @@
 <div class="wam-header wam-hero">
 	<div class="wam-top-gainers-cards">
-		<h2 class="wam-top-gainers-header"><?= wfMessage('wampage-top-gainers-header')->escaped(); ?><? if ( $isSingleVertical ) : ?>: <span class="vertical-<?= $verticalsShorts[ $selectedVerticalId ] ?>"><?= $filterVerticals[ $selectedVerticalId ] ?></span><? endif; ?></h2>
+		<h2 class="wam-top-gainers-header"><?= wfMessage('wampage-top-gainers-header')->escaped(); ?><? if ( $isSingleVertical ) : ?>: <span class="vertical-<?= Sanitizer::encodeAttribute( $verticalsShorts[ $selectedVerticalId ] ) ?>"><?= $filterVerticals[ $selectedVerticalId ] ?></span><? endif; ?></h2>
 		<div class="wam-cards">
 			<? 	$i = 1;
 				foreach( $visualizationWikis as $k => $wiki ):
@@ -10,7 +10,7 @@
 					$sWikiTitle = Sanitizer::encodeAttribute( $wiki['title'] );
 					$sWikiUrl = Sanitizer::encodeAttribute( $wiki['url'] );
 					$sWikiImageUrl = Sanitizer::encodeAttribute( $wiki['wiki_image'] );
-					$sWikiVerticalName = Sanitizer::encodeHtmlAllowEntities( $wiki['vertical_name'] );
+					$sWikiVerticalName = Sanitizer::escapeHtmlAllowEntities( $wiki['vertical_name'] );
 			?>
 				<a href="http://<?= $sWikiUrl ?>" class="wam-card card<?= $i++ ?>">
 					<figure>
@@ -19,7 +19,7 @@
 						<? endif ?>
 						<span><?= $sWikiTitle ?></span>
 					</figure>
-					<div class="wam-score vertical-bg-<?= $verticalsShorts[ $wiki['vertical_id'] ] ?> wam-<?= $wiki['change'] ?>">
+					<div class="wam-score vertical-bg-<?= Sanitizer::encodeAttribute( $verticalsShorts[ $wiki['vertical_id'] ] ) ?> wam-<?= $wiki['change'] ?>">
 						<?= $wg->ContLang->formatNum( number_format( $wiki['wam'], WAMPageModel::SCORE_ROUND_PRECISION ) ) ?>
 					</div>
 					<span class="wam-vertical"><?= $sWikiVerticalName ?></span>
@@ -29,7 +29,7 @@
 	</div>
 	<ol class="wam-top-gainers-list">
 		<?	foreach( $visualizationWikis as $k => $wiki ): ?>
-			<li class="wam-top-gainers-list-item"><?= Sanitizer::encodeHtmlAllowEntities( $wiki['title'] ) ?></li>
+			<li class="wam-top-gainers-list-item"><?= Sanitizer::escapeHtmlAllowEntities( $wiki['title'] ) ?></li>
 		<?	endforeach; ?>
 	</ol>
 </div>

@@ -39,8 +39,6 @@
 
 @mixin all-icons($selected) {
 	.icon-vertical-all {
-		color: $color-wam-blue;
-
 		&.icon-vertical-selected,
 		&:hover {
 			color: $color-wam-grey;
@@ -52,8 +50,6 @@
 	}
 
 	.icon-vertical-comics {
-		color: $color-wam-blue;
-
 		&.icon-vertical-selected,
 		&:hover {
 			color: $color-vertical-comics;
@@ -65,8 +61,6 @@
 	}
 
 	.icon-vertical-games {
-		color: $color-wam-blue;
-
 		&.icon-vertical-selected,
 		&:hover {
 			color: $color-vertical-games;
@@ -78,8 +72,6 @@
 	}
 
 	.icon-vertical-books {
-		color: $color-wam-blue;
-
 		&.icon-vertical-selected,
 		&:hover {
 			color: $color-vertical-books;
@@ -91,8 +83,6 @@
 	}
 
 	.icon-vertical-movies {
-		color: $color-wam-blue;
-
 		&.icon-vertical-selected,
 		&:hover {
 			color: $color-vertical-movies;
@@ -104,8 +94,6 @@
 	}
 
 	.icon-vertical-music {
-		color: $color-wam-blue;
-
 		&.icon-vertical-selected,
 		&:hover {
 			color: $color-vertical-music;
@@ -117,8 +105,6 @@
 	}
 
 	.icon-vertical-lifestyle {
-		color: $color-wam-blue;
-
 		&.icon-vertical-selected,
 		&:hover {
 			color: $color-vertical-lifestyle;
@@ -130,8 +116,6 @@
 	}
 
 	.icon-vertical-tv {
-		color: $color-wam-blue;
-
 		&.icon-vertical-selected,
 		&:hover {
 			color: $color-vertical-tv;

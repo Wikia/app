@@ -16,7 +16,7 @@ WAMPage.prototype = {
 			function(event) {
 				event.preventDefault();
 				var target = event.target;
-				if (target.tagName ==='A') {
+				if (target.tagName === 'A') {
 					WAMPage.filterWamIndexByVertical(target);
 				}
 			}

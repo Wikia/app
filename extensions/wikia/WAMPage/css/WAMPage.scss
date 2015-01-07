@@ -316,6 +316,10 @@ $color-wam-button: #092344;
 		@include all-icons(1);
 	}
 
+	.icon-vertical {
+		color: $color-wam-blue;
+	}
+
 	a {
 		display: block;
 		font-size: 12px;
