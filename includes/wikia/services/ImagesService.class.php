@@ -157,27 +157,41 @@ class ImagesService extends Service {
 	 */
 	public static function getThumbUrlFromFileUrl($imageUrl, $destSize, $newExtension = null) {
 		if (!empty($imageUrl)) {
-			if ( !self::IsExternalThumbnailUrl($imageUrl) ) {
-				$imageUrl = str_replace('/images/', '/images/thumb/', $imageUrl);
+			if ( VignetteRequest::isVignetteUrl( $imageUrl ) ) {
+				$generator = VignetteRequest::fromUrl( $imageUrl, true );
+
+				if ( strpos( $destSize, "px" ) !== false ) {
+					list( $width, $_ ) = explode( "px", $destSize );
+					$generator->scaleToWidth( $width );
+				} else {
+					list( $width, $height ) = explode( "x", $destSize );
+					$generator
+						->fixedAspectRatio()
+						->height( $height )
+						->width( $width );
+				}
+
+				$imageUrl = $generator->url();
 			} else {
-				$imageUrl = $imageUrl;
+				if ( !self::IsExternalThumbnailUrl( $imageUrl ) ) {
+					$imageUrl = str_replace( '/images/', '/images/thumb/', $imageUrl );
+				}
+
+				/**
+				 * url is virtual base for thumbnail, so
+				 *
+				 * - get last part of path
+				 * - add it as thumbnail file prefixed with widthpx
+				 */
+				$parts = explode( "/", $imageUrl );
+				$file = array_pop( $parts );
+
+				if ( ctype_digit( (string)$destSize ) ) {
+					$destSize .= 'px';
+				}
+
+				$imageUrl = sprintf( "%s/%s-%s", $imageUrl, $destSize, $file );
 			}
-
-
-			/**
-			 * url is virtual base for thumbnail, so
-			 *
-			 * - get last part of path
-			 * - add it as thumbnail file prefixed with widthpx
-			 */
-			$parts = explode( "/", $imageUrl );
-			$file = array_pop( $parts );
-
-			if ( ctype_digit( (string)$destSize ) ) {
-				$destSize .= 'px';
-			}
-
-			$imageUrl = sprintf( "%s/%s-%s", $imageUrl, $destSize, $file );
 
 			if ( !empty($newExtension) ) {
 				$imageUrl = self::overrideThumbnailFormat($imageUrl, $newExtension);
@@ -194,7 +208,9 @@ class ImagesService extends Service {
 	 * @return String new URL
 	 */
 	public static function getFileUrlFromThumbUrl( $thumbUrl ) {
-		if ( self::IsExternalThumbnailUrl( $thumbUrl ) ) {
+		if ( VignetteRequest::isVignetteUrl( $thumbUrl ) ) {
+			return VignetteRequest::fromUrl( $thumbUrl, true )->url();
+		} elseif ( self::IsExternalThumbnailUrl( $thumbUrl ) ) {
 			$imageUrl = str_replace( '/images/thumb/', '/images/', $thumbUrl );
 			return preg_replace( '~/[^/]+$~', '', $imageUrl );
 		} else {
@@ -210,7 +226,7 @@ class ImagesService extends Service {
 	 * @return boolean
 	 */
 	public static function IsExternalThumbnailUrl($url) {
-		return strpos($url, '/images/thumb/') !== false;
+		return VignetteRequest::isVignetteUrl( $url ) || strpos( $url, '/images/thumb/' ) !== false;
 	}
 
 	/**
