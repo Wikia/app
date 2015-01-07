@@ -52,7 +52,7 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 	}
 
 	/**
-	 * Task for updating number of user contributions on specific wiki
+	 * Task for incremental updating number of user contributions on specific wiki
 	 * @param array $aUsersEditsData should has following form:
 	 * Array (
 	 * 		{int user id} => [
@@ -69,10 +69,21 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 	 * 		]
 	 * )
 	 */
-	public function updateUserEdits( array $aUsersEditsData ) {
+	public function updateUsersEdits( array $aUsersEditsData ) {
+		$aUsersIds = array_keys( $aUsersEditsData );
+
+		// Get number of edits from ExactTarget
+		$oRetrieveUserHelper = $this->getRetrieveUserHelper();
+		$aUserEditsDataFromET = $oRetrieveUserHelper->retrieveUserEdits( $aUsersIds );
+
+		// Merge number of edits from ExactTarget with incremental data that came as a function parameter
 		$oHelper = $this->getUserHelper();
-		$aApiParams = $oHelper->prepareUserEditsUpdateParams( $aUsersEditsData );
+		$oHelper->mergeUsersEditsData( $aUsersEditsData, $aUserEditsDataFromET );
+
+		// Send update request to update number of edits
 		$oApiDataExtension = $this->getApiDataExtension();
+		$aApiParams = $oHelper->prepareUserEditsUpdateParams( $aUsersEditsData );
 		$oApiDataExtension->updateFallbackCreateRequest( $aApiParams );
 	}
+
 }

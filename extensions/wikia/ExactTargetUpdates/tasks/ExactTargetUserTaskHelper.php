@@ -112,6 +112,30 @@ class ExactTargetUserTaskHelper {
 	}
 
 	/**
+	 * Prepares array of params for ExactTarget API for retrieving UserID_WikiID DataExtension objects
+	 * @param array $aUsersIds Array consists of user ids in key. Value doesn't matter.
+	 * e.g. $aUsersIds = [ 321, 12345 ]
+	 * @return array
+	 */
+	public function prepareUserEditsRetrieveParams( array $aUsersIds ) {
+		/* Get Customer Keys specific for production or development */
+		$aCustomerKeys = $this->getCustomerKeys();
+		$sCustomerKey = $aCustomerKeys[ 'UserID_WikiID' ];
+		$aApiParams = [ 'DataExtension' => [] ];
+
+		$aApiParams[ 'DataExtension' ] = [
+			'ObjectType' => "DataExtensionObject[$sCustomerKey]",
+			'Properties' => [ 'user_id', 'wiki_id', 'contributions' ],
+		];
+		$aApiParams[ 'SimpleFilterPart' ] = [
+			'SimpleOperator' => 'IN',
+			'Property' => 'user_id',
+			'Value' => $aUsersIds
+		];
+		return $aApiParams;
+	}
+
+	/**
 	 * Prepares array of params for ExactTarget API for updating DataExtension objects for UserID_WikiID mapping
 	 * @param int $iUserId User id
 	 * @param array $aUsersEdits array of user ids and number of contributions on wikis
@@ -218,4 +242,22 @@ class ExactTargetUserTaskHelper {
 		];
 		return $aCustomerKeys;
 	}
+
+	/**
+	 * Foreach record retrieved from ExactTarget add number of contributions to UsersEditsData for update
+	 * requires parameters to have following structure
+	 * [ 1234 => [ 177 => 5500 ] ] That means user with id 1234 made 5500 edits on wiki with 177 id
+	 * @param array $aUsersEditsData
+	 * @param array $aUserEditsDataFromET
+	 */
+	public function mergeUsersEditsData( array &$aUsersEditsData, array $aUserEditsDataFromET ) {
+		foreach( $aUserEditsDataFromET as $iUserId => $aWikiContributions ) {
+			foreach( $aWikiContributions as $iWikiId => $iContributions ) {
+				if ( isset($aUsersEditsData[$iUserId][$iWikiId]) ) {
+					$aUsersEditsData[$iUserId][$iWikiId] += $iContributions;
+				}
+			}
+		}
+	}
+
 }

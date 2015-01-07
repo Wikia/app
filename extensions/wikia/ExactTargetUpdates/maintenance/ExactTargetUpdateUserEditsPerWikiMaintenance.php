@@ -92,7 +92,7 @@ class ExactTargetUpdateUserEditsPerWikiMaintenance {
 	private function addEditsUpdateTask( $aUsersEditsData ) {
 		/* Get and run the task */
 		$task = new \Wikia\ExactTarget\ExactTargetUpdateUserTask();
-		$task->call( 'updateUserEdits', $aUsersEditsData );
+		$task->call( 'updateUsersEdits', $aUsersEditsData );
 		$task->queue();
 	}
 
