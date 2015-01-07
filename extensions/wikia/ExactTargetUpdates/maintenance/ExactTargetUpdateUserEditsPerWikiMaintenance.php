@@ -34,7 +34,7 @@ class ExactTargetUpdateUserEditsPerWikiMaintenance {
 	private function getUsersEditedRecently( $oStatsDBr, $sStartDate ) {
 		$timeCondition = $this->prepareTimeCondition( $sStartDate );
 		// Get list of users that made edits in last period
-		$oUsersListResult = $oStatsDBr->query("SELECT distinct user_id from rollup_wiki_user_events where {$timeCondition} and user_id != 0 LIMIT 20;");//Remove limit
+		$oUsersListResult = $oStatsDBr->query("SELECT distinct user_id from rollup_wiki_user_events where {$timeCondition} and user_id != 0;");
 		return $oUsersListResult;
 	}
 
