@@ -269,6 +269,4 @@ $wgGroupPermissions['vstf']['wallmessagemove'] = true;
 $wgGroupPermissions['helper']['wallmessagemove'] = true;
 $wgGroupPermissions['staff']['wallmessagemove'] = true;
 
-// VOLDEV-79
- // edit messages of other users// close/reopen threads // remove threads/replies
-//$wgGroupPermissions['moderator']
+$wgAddGroups['bureaucrat']['moderator'] = true;
