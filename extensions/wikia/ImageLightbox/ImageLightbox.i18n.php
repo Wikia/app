@@ -636,10 +636,30 @@ $messages['kn'] = array(
  */
 $messages['ko'] = array(
 	'lightbox-forum' => '포럼',
+	'lightbox-standard-link' => '일반 링크',
+	'lightbox-blog-link' => '블로그 링크',
+	'lightbox-send' => '보내기',
+	'lightbox-share-description' => '$2의 $1 문서에서 사용된 그림',
+	'lightbox-share-email-subject' => '$1 사용자가 당신에게 그림을 보냈습니다',
+	'lightbox-share-email-body' => '안녕하세요,
+
+누군가 당신에게 보여주고 싶은 그림이 있다는 것 같네요. 이곳에서 확인하세요:
+
+$1
+
+- 위키아 팀',
 	'lightbox-share-button-email' => '이메일',
 	'lightbox-share-button-www' => '공유',
+	'lightbox-share-email-label' => '친구에게 이 그림 보내기',
+	'lightbox-share-email-page-label' => '친구에게 이 문서 보내기',
 	'lightbox-share-email-page-label-address' => '이메일 주소',
+	'lightbox-share-email-ok-caption' => '인증',
+	'lightbox-share-email-ok-content' => '이메일이 전송되었습니다.', # Fuzzy
 	'lightbox-share-email-error-caption' => '오류',
+	'lightbox-share-email-error-content' => '이메일 전송 오류.
+자세한 사항: $2', # Fuzzy
+	'lightbox-share-email-error-login' => '이메일을 보내기 위해선 로그인해야 합니다',
+	'lightbox-share-email-error-noaddress' => '이메일 주소를 입력해주세요.',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -1291,10 +1311,12 @@ $1
  * @author Ffaarr
  * @author Justincheng12345
  * @author LNDDYL
+ * @author Liuxinyu970226
  * @author Radish10cm
  */
 $messages['zh-hant'] = array(
 	'lightbox_details_tooltip' => '檢視圖片詳細資訊',
+	'lightbox-forum' => '論壇',
 	'lightbox-blog-link' => '部落格連結',
 	'lightbox-share-button-email' => '電子郵件',
 	'lightbox-share-button-www' => '分享',

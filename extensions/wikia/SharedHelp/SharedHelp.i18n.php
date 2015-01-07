@@ -79,10 +79,17 @@ $messages['br'] = array(
  * @author Unapersona
  */
 $messages['ca'] = array(
-	'sharedhelp-desc' => "Pren pàgines de [[w:Help:Contents|Community Central]] i incereix-los en l'espai de nom {{ns:help}} en aquest wiki", # Fuzzy
+	'sharedhelp-desc' => "Agafa les pàgines de la [[w:Ayuda:Contenidos|Comunitat Central]] i els afegeix a l'espai de noms {{ns:help}} d'aquest wiki.",
 	'sharedhelp-autotalkcreate-summary' => 'Pàgina de discussió creada automàticament',
 	'sharedhelp-searchprofile' => "Pàgines d'ajuda",
 	'sharedhelp-searchprofile-tooltip' => "Cercar pàgines d'ajuda",
+	'shared_help_info' => 'Dubtes? Pregunta al [[w:ca:Special:Forum|Fòrum comunitari]].', # Fuzzy
+	'shared_help_edit_info' => "El text dins d'aquesta caixa està emmagatzemat a [[w:c:comunidad:Ayuda:$1|Ajuda:$1]] al wiki $2. Vegeu [[Ajuda:Ajuda compartida]] per més informació.
+
+Qualsevol canvi que vulguis fer a ''tots'' els wikis s'ha de fer a la còpia del wiki $2. [[w:c:comunidad:Ayuda_discusión:$1|Suggeriu canvis aquí]].
+
+Només has d'afegir text en aquesta pàgina si vols especificar les polítiques i directrius de {{SITENAME}}. El text que afegiu en aquesta caixa d'edició es mostrarà a sobre de l'ajuda compartida.", # Fuzzy
+	'shared_help_search_info' => "Per buscar ajuda sobre l'edició, si us plau visita la [http://c.wikia.com/wiki/Special:Search?search=$1 Community Central]",
 	'shared_help_was_redirect' => 'Aquesta pàgina és una redirecció cap a $1',
 );
 
@@ -256,6 +263,13 @@ $messages['ja'] = array(
  */
 $messages['kn'] = array(
 	'sharedhelp-searchprofile' => 'ಸಹಾಯ ಪುಟಗಳು',
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'sharedhelp-searchprofile' => '도움말',
 );
 
 /** Colognian (Ripoarisch)
