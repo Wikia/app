@@ -313,7 +313,7 @@ class WallMessage {
 			return false;
 		}
 
-		if ( $this->can( $user, 'wallremove') ) {
+		if ( $this->can( $user, 'wallremove' ) ) {
 			return true;
 		}
 
@@ -395,7 +395,7 @@ class WallMessage {
 		if ( $this->isWallOwner( $user ) ) {
 			return !$this->isMarkInProps( WPP_WALL_MODERATORARCHIVE );
 		}
-	
+
 		return false;
 	}
 
@@ -912,7 +912,7 @@ class WallMessage {
 	}
 
 	public function canModerate(User $user) {
-		return $this->can($user, 'wallarchive') || $this->can($user, 'wallremove');
+		return $this->can( $user, 'wallarchive' ) || $this->can( $user, 'wallremove' );
 	}
 
 	public function isWallWatched(User $user) {
@@ -961,9 +961,9 @@ class WallMessage {
 	}
 
 	public function archive($user, $reason = '') {
-		$status = $this->markInProps(WPP_WALL_ARCHIVE);
+		$status = $this->markInProps( WPP_WALL_ARCHIVE );
 		if ( $this->can( $user, 'wallarchive' ) ) {
-			$this->markInProps(WPP_WALL_MODERATORARCHIVE); // VOLDEV-79
+			$this->markInProps( WPP_WALL_MODERATORARCHIVE ); // VOLDEV-79
 		}
 		$this->recordAdminHistory($user, $reason, WH_ARCHIVE);
 		$this->saveReason($user, $reason);

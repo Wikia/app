@@ -277,7 +277,7 @@ class WallExternalController extends WikiaController {
 			break;
 
 			case 'remove':
-				if (!$mw->canModerate($this->wg->User)) {
+				if ( !$mw->canModerate( $this->wg->User ) ) {
 					$mw->load(); // must do this to allow checking for wall owner/message author - data not loaded otherwise
 				}
 
@@ -370,7 +370,7 @@ class WallExternalController extends WikiaController {
 			return true;
 		}
 
-		if (!$mw->canModerate($this->wg->User)) {
+		if ( !$mw->canModerate( $this->wg->User ) ) {
 			$mw->load();
 		}
 
@@ -402,7 +402,7 @@ class WallExternalController extends WikiaController {
 			return true;
 		}
 
-		if (!$mw->canModerate($this->wg->User)) {
+		if ( !$mw->canModerate( $this->wg->User ) ) {
 			$mw->load();
 		}
 		if($mw->canRestore($this->wg->User)) {
