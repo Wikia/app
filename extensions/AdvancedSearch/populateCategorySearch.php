@@ -33,13 +33,10 @@ When the script has finished, it will make a note of this in the database, and
 will not run again without the --force option.
 
 Usage:
-    php populateCategorySearch.php [--max-slave-lag <seconds>]
-[--begin <pageID>] [--throttle <seconds>] [--force]
+    php populateCategorySearch.php [--begin <pageID>] [--throttle <seconds>] [--force]
 
     --begin: Only do pages with page IDs higher than this value.
 Default: empty (start from beginning).
-    --max-slave-lag: If slave lag exceeds this many seconds, wait until it
-drops before continuing.  Default: 10.
     --throttle: Wait this many milliseconds after each page.  Default: 0.
     --force: Run regardless of whether the database says it has been run already.
 TEXT;
@@ -48,12 +45,10 @@ TEXT;
 
 $defaults = array(
 	'begin' => '',
-	'max-slave-lag' => 10,
 	'throttle' => 0,
 	'force' => false
 );
 
 $options = array_merge( $defaults, $options );
 
-populateCategorySearch( $options['begin'], $options['max-slave-lag'],
-	$options['throttle'], $options['force'] );
+populateCategorySearch( $options['begin'], $options['throttle'], $options['force'] );

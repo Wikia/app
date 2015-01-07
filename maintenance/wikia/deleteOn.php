@@ -100,4 +100,4 @@ if ( $success ) {
 if ( $interval ) {
 	sleep( $interval );
 }
-wfWaitForSlaves( 5 );
+wfWaitForSlaves();
