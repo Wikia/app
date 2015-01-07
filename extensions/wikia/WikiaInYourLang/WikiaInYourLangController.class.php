@@ -6,8 +6,6 @@
 
 class WikiaInYourLangController extends WikiaController {
 
-	const WIKIAINYOURLANG_WIKIA_DOMAIN = 'wikia.com';
-
 	/**
 	 * Searches the city_list table for the given wikia in the target language.
 	 * Takes the currentUrl and targetLanguage parameters from the Request object.
@@ -37,34 +35,28 @@ class WikiaInYourLangController extends WikiaController {
 		 * 3. Get the native wikia's ID from the city_domains table
 		 */
 		$sWikiDomain = $this->getWikiDomain( $sCurrentUrl );
-		if ( $sWikiDomain !== false ) {
-			$sNativeWikiDomain = $this->getNativeWikiDomain( $sWikiDomain, $sTargetLanguage );
-			$iNativeWikiId = $this->getWikiIdByDomain( $sNativeWikiDomain );
+		$sNativeWikiDomain = $this->getNativeWikiDomain( $sWikiDomain, $sTargetLanguage );
+		$iNativeWikiId = $this->getWikiIdByDomain( $sNativeWikiDomain );
 
-			/**
-			 * If a wikia is found - send a response with its url and sitename.
-			 * Send success=false otherwise.
-			 */
-			if ( $iNativeWikiId > 0 ) {
-				$oNativeWiki = WikiFactory::getWikiById( $iNativeWikiId );
+		/**
+		 * If a wikia is found - send a response with its url and sitename.
+		 * Send success=false otherwise.
+		 */
+		if ( $iNativeWikiId > 0 ) {
+			$oNativeWiki = WikiFactory::getWikiById( $iNativeWikiId );
 
-				$aMessageParams = [
-					$sCurrentSitename,
-					$oNativeWiki->city_url,
-					$oNativeWiki->city_title,
-				];
+			$aMessageParams = [
+				$sCurrentSitename,
+				$oNativeWiki->city_url,
+				$oNativeWiki->city_title,
+			];
 
-				$sMessage = $this->prepareMessage( $sTargetLanguage, $aMessageParams );
+			$sMessage = $this->prepareMessage( $sTargetLanguage, $aMessageParams );
 
-				$this->response->setVal( 'success', true );
-				$this->response->setVal( 'message', $sMessage );
-			} else {
-				$this->response->setVal( 'success', false );
-				$this->response->setVal( 'error', 'A native wikia not found.' );
-			}
+			$this->response->setVal( 'success', true );
+			$this->response->setVal( 'message', $sMessage );
 		} else {
 			$this->response->setVal( 'success', false );
-			$this->response->setVal( 'error', 'An invalid URL passed for parsing.' );
 		}
 
 		/**
@@ -77,43 +69,12 @@ class WikiaInYourLangController extends WikiaController {
 
 	/**
 	 * Retrieves a domain (host) from a full URL
-	 * Using preg_match to handle all languages
-	 * e.g. get pad.wikia.com from zh.pad.wikia.com
 	 * @param  string $sCurrentUrl A full URL to parse
 	 * @return string              The retrieved domain
 	 */
-	public function getWikiDomain( $sCurrentUrl ) {
+	private function getWikiDomain( $sCurrentUrl ) {
 		$aParsed = parse_url( $sCurrentUrl );
-		// Assume false
-		$sWikiDomain = false;
-
-		if ( isset( $aParsed['host'] ) ) {
-			$sHost = $aParsed['host'];
-			$regExp = "/(([a-z]{2,3}|[a-z]{2}\-[a-z]{2})\.)?([^\.]+\.)(.*)/i";
-			/**
-			 * preg_match returns similar array as a third parameter:
-			 * [
-			 * 	0 => zh.example.wikia.com,
-			 * 	1 => (zh. | empty),
-			 * 	2 => (zh | empty),
-			 * 	3 => example.
-			 * 	4 => ( wikia.com | adamk.wikia-dev.com )
-			 * ]
-			 * [3] is a domain without the language prefix
-			 * @var Array
-			 */
-			$aMatches = [];
-			$iMatchesCount = preg_match( $regExp, $sHost, $aMatches );
-			/**
-			 * Domains are stored only with an original domain - wikia.com
-			 * This allows the extension to work on devboxes
-			 */
-			if ( $iMatchesCount == 1 ) {
-				$sWikiDomain = $aMatches[3] . self::WIKIAINYOURLANG_WIKIA_DOMAIN;
-			}
-		}
-
-		return $sWikiDomain;
+		return $aParsed['host'];
 	}
 
 	/**

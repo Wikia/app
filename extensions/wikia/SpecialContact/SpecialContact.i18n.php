@@ -254,7 +254,7 @@ $messages['diq'] = array(
 	'contact' => 'Wikia de irtıbat kewe',
 	'specialcontact-wikia' => 'Wikia de irtıbat kewe',
 	'specialcontact-pagetitle' => 'Wikia de irtıbat kewe',
-	'specialcontact-username' => 'Nameyê şımayê karberi',
+	'specialcontact-username' => 'Namey Karberi', # Fuzzy
 	'specialcontact-realname' => 'Nameyê şıma',
 	'specialcontact-yourmail' => 'Adresê e-posta',
 	'specialcontact-problem' => 'Mewzu',
@@ -412,13 +412,6 @@ Si vous préférez utiliser la messagerie électronique classique ou souhaitez j
 	'specialcontact-mailsubcc' => 'Copie du courriel de contact avec Wikia',
 	'specialcontact-ccheader' => 'Ceci est une copie du message qui a été envoyé au staff d’aide de Wikia',
 	'specialcontact-submitcomplete' => 'Merci d’avoir contacté Wikia.',
-);
-
-/** Western Frisian (Frysk)
- * @author Robin0van0der0vliet
- */
-$messages['fy'] = array(
-	'specialcontact-problem' => 'Ûnderwerp',
 );
 
 /** Galician (galego)

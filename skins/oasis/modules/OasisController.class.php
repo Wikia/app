@@ -302,7 +302,7 @@ class OasisController extends WikiaController {
 
 	// TODO: implement as a separate module?
 	private function loadJs() {
-		global $wgJsMimeType, $wgUser, $wgDevelEnvironment, $wgEnableAdEngineExt, $wgEnableGlobalNavExt, $wgAllInOne;
+		global $wgJsMimeType, $wgUser, $wgSpeedBox, $wgDevelEnvironment, $wgEnableAdEngineExt, $wgEnableGlobalNavExt, $wgAllInOne;
 		wfProfileIn(__METHOD__);
 
 		$this->jsAtBottom = self::JsAtBottom();
@@ -316,6 +316,10 @@ class OasisController extends WikiaController {
 		$blockingScripts = $this->assetsManager->getURL($jsAssetGroups);
 
 		foreach($blockingScripts as $blockingFile) {
+			if( $wgSpeedBox && $wgDevelEnvironment ) {
+				$blockingFile = $this->assetsManager->rewriteJSlinks( $blockingFile );
+			}
+
 			$this->globalBlockingScripts .= "<script type=\"$wgJsMimeType\" src=\"$blockingFile\"></script>";
 		}
 
@@ -334,6 +338,9 @@ class OasisController extends WikiaController {
 					$url = $s['url'];
 					if ( $wgAllInOne ) {
 						$url = $this->minifySingleAsset( $url );
+					}
+					if ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) {
+						$url = $this->assetsManager->rewriteJSlinks( $url );
 					}
 					$jsReferences[] = $url;
 				}
@@ -373,7 +380,14 @@ class OasisController extends WikiaController {
 		// disabled - not needed atm (and skipped in wsl-version anyway)
 		// $assets[] = $this->assetsManager->getURL( $isLoggedIn ? 'oasis_nojquery_shared_js_user' : 'oasis_nojquery_shared_js_anon' );
 
-		// add $jsReferences
+		// get urls
+		if (!empty($wgSpeedBox) && !empty($wgDevelEnvironment)) {
+			foreach ($assets as $index => $url) {
+				$assets[$index] = $this->assetsManager->rewriteJSlinks( $url );
+			}
+		}
+
+		// as $jsReferences
 		$assets = array_merge($assets, $jsReferences);
 
 		// generate direct script tags

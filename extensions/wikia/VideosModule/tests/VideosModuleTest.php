@@ -39,7 +39,8 @@ class VideosModuleTest extends WikiaBaseTest {
 	}
 
 	public function testIsBlackListed() {
-		$module = new VideosModule\Modules\Category( self::USER_REGION );
+
+		$module = new VideosModule( self::USER_REGION );
 
 		// Mock the blacklist so that it doesn't depend on changes to the wgVideosModuleBlackList global
 		$reflection = new ReflectionClass( $module );
@@ -55,7 +56,8 @@ class VideosModuleTest extends WikiaBaseTest {
 	}
 
 	public function testIsRegionallyRestricted() {
-		$module = new VideosModule\Modules\Category( self::USER_REGION );
+
+		$module = new VideosModule( self::USER_REGION );
 
 		$videoWithRestrictionsEU = [ "regionalRestrictions" => "GB, DE" ];
 		$videoWithRestrictionsNA = [ "regionalRestrictions" => "CA, US" ];
@@ -77,7 +79,7 @@ class VideosModuleTest extends WikiaBaseTest {
 	 * into database names (underscores instead of spaces)
 	 */
 	public function testTransformCatNames() {
-		$module = new VideosModule\Modules\Category( self::USER_REGION );
+		$module = new VideosModule( self::USER_REGION );
 
 		$reflection = new ReflectionClass( $module );
 		$tranformCatNames = $reflection->getMethod( 'transformCatNames' );
@@ -96,5 +98,6 @@ class VideosModuleTest extends WikiaBaseTest {
 		$this->assertEquals( $databaseNames[0], $result[0] );
 		$this->assertEquals( $databaseNames[1], $result[1] );
 	}
+
 }
 

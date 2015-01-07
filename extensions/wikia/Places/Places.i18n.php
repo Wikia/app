@@ -88,13 +88,6 @@ $messages['az'] = array(
 	'places-geolocation-modal-error-title' => 'Xəta',
 );
 
-/** Southern Balochi (بلوچی مکرانی)
- * @author Baloch Afghanistan
- */
-$messages['bcc'] = array(
-	'places-in-category' => 'جاگه بی $1 تهرِ تا',
-);
-
 /** Breton (brezhoneg)
  * @author Fohanno
  * @author Y-M D
@@ -295,14 +288,6 @@ $messages['fr'] = array(
 	'places-updated-geolocation' => 'Marquer géographiquement cet article',
 	'places-category-switch' => 'Désactiver le balisage géographique',
 	'places-category-switch-off' => 'Activer le balisage géographique',
-);
-
-/** Western Frisian (Frysk)
- * @author Robin0van0der0vliet
- */
-$messages['fy'] = array(
-	'places-editor-search' => 'Sykje',
-	'places-geolocation-modal-error-title' => 'Flater',
 );
 
 /** Galician (galego)
@@ -894,11 +879,4 @@ $messages['zh-hans'] = array(
 	'places-updated-geolocation' => '已在此页添加地理标签',
 	'places-category-switch' => '禁用地理标签',
 	'places-category-switch-off' => '启用地理标签',
-);
-
-/** Traditional Chinese (中文（繁體）‎)
- * @author Liuxinyu970226
- */
-$messages['zh-hant'] = array(
-	'places-editor-search' => '搜尋',
 );

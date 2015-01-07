@@ -182,11 +182,10 @@ $messages['de'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
- * @author Mirzali
  */
 $messages['diq'] = array(
-	'cloakcheck-form-username' => 'Nameyê karberi:',
-	'cloakcheck-process-username' => 'Nameyê karberi: $1',
+	'cloakcheck-form-username' => 'Namey Karberi:',
+	'cloakcheck-process-username' => 'Namey karberi: $1',
 );
 
 /** Greek (Ελληνικά)
@@ -811,7 +810,6 @@ $messages['sr-ec'] = array(
 
 /** Swedish (svenska)
  * @author Grytolle
- * @author Jopparn
  * @author Tobulos1
  * @author WikiPhoenix
  */
@@ -828,7 +826,7 @@ $messages['sv'] = array(
 	'cloakcheck-process-accountage-yes' => 'Kontot är gammalt nog.',
 	'cloakcheck-process-accountage-no' => 'Kontot är för nytt.',
 	'cloakcheck-process-emailconf-yes' => 'E-postadressen bekräftades.',
-	'cloakcheck-process-emailconf-no' => 'E-postadressen ej bekräftad.',
+	'cloakcheck-process-emailconf-no' => 'E-postadressen bekräftades inte.',
 	'cloakcheck-process-edits-yes' => 'Användaren har gjort nog med redigeringar.',
 	'cloakcheck-process-edits-no' => 'Användaren har inte gjort nog med redigeringar.',
 );

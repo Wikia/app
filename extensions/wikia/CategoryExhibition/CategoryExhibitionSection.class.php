@@ -372,7 +372,7 @@ class CategoryExhibitionSection {
 		};
 		$return = array();
 		foreach( $reqValues AS $key => $value ) {
-			$return[] = urlencode( $key ) . '=' . urlencode( $value );
+			$return[] = $key.'='.$value;
 		}
 
 		$url = $wgTitle->getFullURL().'?'.implode( '&', $return );

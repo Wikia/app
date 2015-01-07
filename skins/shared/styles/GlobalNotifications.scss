@@ -78,13 +78,6 @@
 		top: $global-navigation-height;
 	}
 
-	// global nav doesn't scroll with the page when the page is small
-	@media #{$below-small} {
-		&.float {
-			top: 0;
-		}
-	}
-
 	.msg {
 		font-size: 13px;
 		line-height: 16px;

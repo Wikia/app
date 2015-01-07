@@ -82,17 +82,14 @@ you should definitely check this out:
 );
 
 /** Message documentation (Message documentation)
- * @author Liuxinyu970226
  * @author PtM
  * @author Shirayuki
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'wikiamobile-search' => 'Label on a search button placed in Mobile skin top bar
-{{Identical|Search}}',
+	'wikiamobile-search' => 'Label on a search button placed in Mobile skin top bar',
 	'wikiamobile-search-this-wiki' => 'Placeholder in input on search field',
-	'wikiamobile-search-wiki' => 'Text indicating that scope for a search will be current wiki
-{{Identical|Wiki}}',
+	'wikiamobile-search-wiki' => 'Text indicating that scope for a search will be current wiki',
 	'wikiamobile-search-wikia' => 'Text indicating that scope for a search will be whole wikia network',
 	'wikiamobile-login' => 'Placeholder on input asking for password.
 {{Identical|Log in}}',
@@ -137,8 +134,7 @@ $messages['qqq'] = array(
 	'wikiamobile-sharing-email-text' => 'Email message with a shared page or media. $1 is the result of wikiamobile-sharing-modal-text or wikiamobile-sharing-page-text, please keep the empty space before $1',
 	'wikiamobile-media-group-footer' => 'Caption under a media-group/gallery, $1 contains the total amount of images/videos in the group',
 	'wikiamobile-unsupported-video-download' => 'Feedback message for browsers not supporting html5 videos with link to play the video in a native app (the video URL is in $1)',
-	'wikiamobile-video-views-counter' => 'Counter for the number of views for a video, $1 is an integer number, minimum 0; possibly it should be no more than 1 or 2 words
-{{Identical|View}}',
+	'wikiamobile-video-views-counter' => 'Counter for the number of views for a video, $1 is an integer number, minimum 0; possibly it should be no more than 1 or 2 words',
 	'wikiamobile-video-not-friendly-header' => 'Friendly message on a screen with a not supported video',
 	'wikiamobile-video-not-friendly' => "Message displayed in modal - to indicate that this video won't be loaded in mobile skin",
 	'wikiamobile-videos' => 'Generic translation of the word "videos". Mainly used as a navigation link.
@@ -272,13 +268,6 @@ $messages['az'] = array(
 	'wikiasmartbanner-view' => 'görünüş',
 );
 
-/** Southern Balochi (بلوچی مکرانی)
- * @author Baloch Afghanistan
- */
-$messages['bcc'] = array(
-	'wikiamobile-categories-tagline' => 'تهرِ تاکدیم',
-);
-
 /** Bulgarian (български)
  * @author DCLXVI
  * @author Ivanko
@@ -403,7 +392,6 @@ $messages['bxr'] = array(
  * @author Alvaro Vidal-Abarca
  * @author Gemmaa
  * @author Marcmpujol
- * @author Unapersona
  */
 $messages['ca'] = array(
 	'wikiamobile-search' => 'Cerca',
@@ -427,7 +415,6 @@ $messages['ca'] = array(
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Entreteniment]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Videojocs]]',
 	'wikiamobile-footer-link-licencing' => '[[w:Wikia:Licensing|Llicència]]',
-	'wikiamobile-footer-link-privacy' => '[[w:c:www:Privacy_Policy|Política de privacitat]]',
 	'mobile-full-site' => 'Lloc web complet',
 	'wikiamobile-categories-tagline' => 'Pàgina de la categoria',
 	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|article|articles}}',
@@ -448,7 +435,6 @@ hauries de visitar això:
 	'wikiamobile-video-views-counter' => '$1 {{PLURAL:$1|visita|visites}}',
 	'wikiamobile-video-not-friendly-header' => 'Vaja!',
 	'wikiamobile-video-not-friendly' => 'Ho sentim, aquest vídeo no està disponible en versió mòbil.',
-	'wikiamobile-videos' => 'Vídeos',
 	'wikiamobile-toc-header' => 'Taula de continguts',
 	'wikiamobile-image-not-loaded' => 'La imatge no està disponible',
 	'wikiamobile-shared-file-not-available' => 'Ui, aquest element ja no està disponible, però ja que hi ets aquí, explora la viqui!',
@@ -592,7 +578,7 @@ $messages['diq'] = array(
 	'wikiamobile-category-items-prev' => 'Verqayti barke',
 	'wikiamobile-categories-expand' => 'Pêron Bımocne',
 	'wikiamobile-categories-collapse' => 'Pêron bınımne',
-	'wikiamobile-sharing-media-image' => 'Resım',
+	'wikiamobile-sharing-media-image' => 'Resim',
 	'wikiamobile-sharing-page-text' => '$1 - $2',
 	'wikiamobile-sharing-modal-text' => '$1 ke $2 - $3',
 	'wikiamobile-sharing-email-text' => 'Hey,
@@ -839,7 +825,6 @@ $messages['fy'] = array(
 	'wikiamobile-search' => 'Sykje',
 	'wikiamobile-password' => 'Wachtwurd',
 	'wikiamobile-feedback' => 'Weromkeppeling',
-	'wikiamobile-back' => 'Foarige',
 	'wikiamobile-category-items-more' => 'Mear laden',
 );
 
@@ -1260,7 +1245,7 @@ $messages['mk'] = array(
 	'wikiamobile-shared-file-not-available' => 'Упс! Објектот повеќе не е достапен. Но, штом сте веќе тука, повелете, истражете го викито!',
 	'wikiamobile-page-not-found' => 'Упс! <b>$1</b> не постои.',
 	'wikiamobile-page-not-found-tap' => 'Тапнете го она што се крие зад пукнатината за да видите еден што работи.',
-	'wikiasmartbanner-appstore' => 'Во дуќанот за извршници',
+	'wikiasmartbanner-appstore' => 'Во дуќанот за прилози',
 	'wikiasmartbanner-googleplay' => 'На Google Play',
 	'wikiasmartbanner-price' => 'бесплатно',
 	'wikiasmartbanner-view' => 'погледајте',
@@ -1440,7 +1425,6 @@ $messages['nl'] = array(
 	'wikiamobile-last-edited-on' => 'Laatst gewijzigd op $1',
 	'wikiamobile-last-edited-by' => 'door $1',
 	'wikiamobile-anonymous-edited-by' => 'Anoniem',
-	'wikiamobile-trending-articles-heading' => "Populaire pagina's",
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Lifestyle]]',
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Vermaak]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Video Games]]',
@@ -2219,7 +2203,7 @@ $messages['zh-hans'] = array(
 $1',
 	'wikiamobile-media-group-footer' => '$1的1',
 	'wikiamobile-unsupported-video-download' => '您的浏览器不支持此视频格式，尝试<a href="$1">点此</a>',
-	'wikiamobile-video-views-counter' => '$1次{{PLURAL:$1|浏览}}',
+	'wikiamobile-video-views-counter' => '$1次{{PLURAL:$1|浏览|浏览}}',
 	'wikiamobile-video-not-friendly-header' => '哦买糕的！',
 	'wikiamobile-video-not-friendly' => '抱歉，此视频在移动端不可用。',
 	'wikiamobile-videos' => '视频',

@@ -221,7 +221,6 @@ $messages['ca'] = array(
 	'multilookuplink' => 'Enllaç de les contribucions',
 	'multilookupdetails' => 'Mostra detalls',
 	'multilookuplistwikiainfo' => "Llista de wikis amb pàgines editades pels usuaris amb l'adreça IP <b>$1</b>",
-	'multilookupinvaliduser' => '<p class="error">L\'adreça IP "<b>$1</b>" no existeix. Comprova la IP per possibles errors tipogràfics.</p>',
 	'multilookuplastedit' => "Última edició des d'aquesta adreça IP:",
 	'multilookupwikidbname' => 'Nom de DB',
 	'multilookupwikiurl' => 'URL',
@@ -240,7 +239,7 @@ $messages['ca'] = array(
 $messages['ce'] = array(
 	'multilookupgo' => 'Дехьа гӀо',
 	'multilookupnoresultfound' => 'ХӀума ца карийна',
-	'multilookuplink' => 'Къинхьегаме хьажорг',
+	'multilookuplink' => 'Къинхьегаме хьажораг',
 	'multilookupwikititle' => 'Корта',
 	'multilookupwikioptions' => 'Параметраш',
 );
@@ -592,8 +591,6 @@ $messages['kn'] = array(
  * @author Miri-Nae
  */
 $messages['ko'] = array(
-	'multilookupwiki' => '위키',
-	'multilookupwikidbname' => '데이터베이스 이름',
 	'multilookupwikiurl' => 'URL',
 	'multilookupwikititle' => '제목',
 	'multilookupwikioptions' => '설정',

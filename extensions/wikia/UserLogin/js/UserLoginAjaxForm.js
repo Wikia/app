@@ -11,7 +11,7 @@
 	UserLoginAjaxForm.prototype.init = function () {
 		this.cacheDOM();
 		this.wikiaForm = new WikiaForm(this.form);
-		this.inputs = this.wikiaForm.inputs;
+		this.setInputs();
 		this.retrieveLoginToken();
 		this.bindEvents();
 
@@ -35,6 +35,22 @@
 	UserLoginAjaxForm.prototype.bindEvents = function () {
 		this.form.on('submit', this.submitLogin.bind(this));
 		this.forgotPasswordLink.on('click', this.mailPassword.bind(this));
+	};
+
+	/**
+	 * Cache form inputs
+	 */
+	UserLoginAjaxForm.prototype.setInputs = function () {
+		this.inputs = {
+			username: this.form.find('input[name=username]'),
+			password: this.form.find('input[name=password]'),
+			keeploggedin: this.form.find('input[name=keeploggedin]'),
+			logintoken: this.form.find('input[name=loginToken]'),
+			returnto: this.form.find('input[name=returnto]'),
+			returntoquery: this.form.find('input[name=returntoquery]'),
+			returntourl: this.form.find('input[name=returntourl]'),
+			email: this.form.find('input[name=email]')
+		};
 	};
 
 	/**
@@ -170,7 +186,7 @@
 				'retrieveLoginToken',
 				function (res) {
 					this.loginToken = res.loginToken;
-					this.inputs.loginToken.val(res.loginToken);
+					this.inputs.logintoken.val(res.loginToken);
 				}.bind(this)
 			);
 		}

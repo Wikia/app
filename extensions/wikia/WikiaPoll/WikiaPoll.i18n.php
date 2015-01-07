@@ -186,7 +186,6 @@ $messages['br'] = array(
 /** Catalan (català)
  * @author BroOk
  * @author Marcmpujol
- * @author Unapersona
  */
 $messages['ca'] = array(
 	'wikiapoll-desc' => 'Proporciona una forma fàcil de crear i gestionar enquestes',
@@ -201,7 +200,7 @@ $messages['ca'] = array(
 	'wikiapoll-addnewitem-label' => 'Afegeix un element nou',
 	'wikiapoll-cancel-label' => 'Anuŀla',
 	'wikiapoll-publish-label' => 'Publica',
-	'wikiapoll-error-duplicate' => 'Ja existeix una enquesta amb aquest nom.',
+	'wikiapoll-error-duplicate' => 'Una enquesta amb aquest nom ja existeix.',
 	'wikiapoll-error-invalid-title' => 'Text de la pregunta no és vàlid.',
 	'wikiamobile-wikiapoll-open-poll' => 'Què et sembla?',
 	'wikiamobile-wikiapoll-thanks-voting' => 'Gràcies per votar!',
@@ -402,13 +401,6 @@ $messages['fr'] = array(
 	'wikiamobile-wikiapoll-thanks-voting' => "Merci d'avoir voté !",
 	'wikiamobile-wikiapoll-poll' => 'Sondage',
 	'wikiamobile-wikiapoll-user-voted' => 'Vous avez voté pour $1',
-);
-
-/** Western Frisian (Frysk)
- * @author Robin0van0der0vliet
- */
-$messages['fy'] = array(
-	'wikiapoll-cancel-label' => 'Annulearje',
 );
 
 /** Galician (galego)

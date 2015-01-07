@@ -1252,15 +1252,11 @@ $messages['ko'] = array(
 	'themedesigner-button-save-im-done' => '저장하고 완료',
 	'themedesigner-button-cancel' => '취소',
 	'themedesigner-button-ok' => '확인',
-	'themedesigner-button-upload' => '올리기',
-	'themedesigner-button-upload-wordmark' => '올리기',
 	'themedesigner-default' => '기본',
 	'themedesigner-font' => '글꼴',
 	'themedesigner-size' => '크기',
 	'themedesigner-button-save' => '저장',
 	'themedesigner-dont-use-a-graphic' => '제거',
-	'themedesigner-size-error' => '잘못된 파일 크기',
-	'themedesigner-type-error' => '잘못된 파일 형식',
 	'themedesigner-favicon-heading' => '파비콘',
 	'themedesigner-wodmark-preview' => '미리 보기',
 );
@@ -1618,7 +1614,7 @@ $messages['nl'] = array(
 	'themedesigner-wodmark-preview' => 'Voorvertoning',
 	'themedesigner-wordmark-preview-error' => 'De naam van de wiki mag niet leeg zijn.
 Geef een naam op voor de wiki.',
-	'themedesigner-upload-disabled' => 'We hebben uploads tijdelijk uitgeschakeld. Probeer het binnenkort opnieuw om veranderingen te maken.',
+	'themedesigner-upload-disabled' => 'Sorry, we hebben uploads tijdelijk uitgeschakeld. Probeer het binnenkort opnieuw om veranderingen te maken.',
 );
 
 /** Occitan (occitan)

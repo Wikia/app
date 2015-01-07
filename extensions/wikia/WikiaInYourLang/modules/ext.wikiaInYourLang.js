@@ -27,7 +27,7 @@ require(
 			targetLanguage = getTargetLanguage();
 
 		function init() {
-			if (targetLanguage !== false && targetLanguage != w.wgContentLanguage) {
+			if (targetLanguage !== false) {
 				// Check local browser cache to see if a request has been sent
 				// in the last month and if the notification has been shown to him.
 				// Both have to be !== true to continue.
@@ -119,21 +119,11 @@ require(
 		}
 
 		function onNotificationClosed() {
-			// Track closing of a notification
-			var trackingParams = {
-				trackingMethod: 'ga',
-				category: 'wikia-in-your-lang',
-				action: tracker.ACTIONS.CLOSE,
-				label: targetLanguage + '-notification-close',
-			};
-			tracker.track(trackingParams);
-
 			cache.set(targetLanguage + 'WikiaInYourLangMessage', null);
 			cache.set('wikiaInYourLangNotificationShown', true);
 		}
 
 		function onLinkClick() {
-			// Track a click on a notification link
 			var trackingParams = {
 				trackingMethod: 'ga',
 				category: 'wikia-in-your-lang',

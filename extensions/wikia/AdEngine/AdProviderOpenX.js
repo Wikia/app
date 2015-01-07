@@ -41,7 +41,7 @@ AdProviderOpenX.getUrl2 = function() {
 	}
 	url += "&target=_top";
 	url += "&cb=" + Math.floor(Math.random()*99999999);
-	url += "&hub=" + window.wgWikiVertical;
+	url += "&hub=" + window.cityShort;
 	url += "&skin_name=" + skin;
 	url += "&cont_lang=" + wgContentLanguage;
 	url += "&user_lang=" + wgUserLanguage;

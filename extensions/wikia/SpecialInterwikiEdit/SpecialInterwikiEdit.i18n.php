@@ -148,7 +148,7 @@ $messages['ce'] = array(
 	'iwedit-all-interwikis' => 'Массо юкъарвикеш',
 	'iwedit-update' => 'Карлаяккха',
 	'iwedit-error' => 'ГӀалат даьлла.',
-	'iwedit-success' => 'Хьажорг кхиамца кхоьллина.',
+	'iwedit-success' => 'Хьажораг кхиамца кхоьллина.',
 );
 
 /** Czech (čeština)
@@ -168,7 +168,6 @@ $messages['cs'] = array(
 /** German (Deutsch)
  * @author Claudia Hattitten
  * @author LWChris
- * @author Metalhead64
  */
 $messages['de'] = array(
 	'interwikiedit' => 'Interwiki-Editor',
@@ -178,8 +177,6 @@ $messages['de'] = array(
 	'iwedit-update' => 'Aktualisieren',
 	'iwedit-error' => 'Ein Fehler ist aufgetreten.',
 	'iwedit-success' => 'Link-Erzeugung erfolgreich.',
-	'iwedit-local' => 'Nur lokales Interwiki? (z.&nbsp;B. nicht global)',
-	'iwedit-trans' => 'Scary-Einbindung aktivieren',
 );
 
 /** Zazaki (Zazaki)
@@ -194,7 +191,6 @@ $messages['diq'] = array(
 );
 
 /** Spanish (español)
- * @author Macofe
  * @author Translationista
  * @author VegaDark
  */
@@ -205,9 +201,7 @@ $messages['es'] = array(
 	'iwedit-all-interwikis' => 'todos los interwikis',
 	'iwedit-update' => 'Actualizar',
 	'iwedit-error' => 'Se produjo un error.',
-	'iwedit-success' => 'El vínculo se creó correctamente.',
-	'iwedit-local' => '¿interwiki sólo local? (es decir, no global)',
-	'iwedit-trans' => 'Activar la transclusión temeraria',
+	'iwedit-success' => 'El vínculo se creado correctamente.',
 );
 
 /** Persian (فارسی)
@@ -247,7 +241,6 @@ $messages['fo'] = array(
 );
 
 /** French (français)
- * @author Gomoko
  * @author Peter17
  * @author Wyz
  */
@@ -259,8 +252,6 @@ $messages['fr'] = array(
 	'iwedit-update' => 'Mettre à jour',
 	'iwedit-error' => 'Une erreur est survenue.',
 	'iwedit-success' => 'Le lien a été créé avec succès.',
-	'iwedit-local' => 'Interwiki uniquement local (c’est-à-dire non global) ?',
-	'iwedit-trans' => 'Activer la traduction qui fait peur',
 );
 
 /** Galician (galego)
@@ -395,7 +386,7 @@ $messages['lb'] = array(
 	'iwedit-all-interwikis' => 'all Interwikien',
 	'iwedit-update' => 'Aktualiséieren',
 	'iwedit-error' => 'Et ass e Feeler geschitt.',
-	'iwedit-success' => 'De Link gouf ugeluecht.',
+	'iwedit-success' => 'De Link gouf ugeluecht',
 );
 
 /** لوری (لوری)
@@ -436,8 +427,6 @@ $messages['ms'] = array(
 	'iwedit-update' => 'Kemas kini',
 	'iwedit-error' => 'Berlakunya ralat.',
 	'iwedit-success' => 'Pautan berjaya dicipta.',
-	'iwedit-local' => 'Antarawiki tempatan sahaja? (iaitu bukan sejagat)',
-	'iwedit-trans' => 'Bolehkan transklusi menggerunkan',
 );
 
 /** Norwegian Bokmål (norsk bokmål)
@@ -464,8 +453,6 @@ $messages['nl'] = array(
 	'iwedit-update' => 'Bijwerken',
 	'iwedit-error' => 'Er is een fout opgetreden.',
 	'iwedit-success' => 'De koppeling is aangemaakt.',
-	'iwedit-local' => 'Alleen lokale interwiki? (dus niet globaal)',
-	'iwedit-trans' => 'Enge transclusie inschakelen',
 );
 
 /** Occitan (occitan)
@@ -568,7 +555,6 @@ $messages['roa-tara'] = array(
 /** Russian (русский)
  * @author Kuzura
  * @author Lockal
- * @author Okras
  */
 $messages['ru'] = array(
 	'interwikiedit' => 'Редактор интервики ссылок',
@@ -578,8 +564,6 @@ $messages['ru'] = array(
 	'iwedit-update' => 'Обновить',
 	'iwedit-error' => 'Произошла ошибка.',
 	'iwedit-success' => 'Ссылка успешно создана.',
-	'iwedit-local' => 'Локальная интервики? (т.е. не глобальная)',
-	'iwedit-trans' => 'Включить межвики-включения',
 );
 
 /** Sinhala (සිංහල)
@@ -618,8 +602,6 @@ $messages['sv'] = array(
 	'iwedit-update' => 'Uppdatera',
 	'iwedit-error' => 'Ett fel uppstod.',
 	'iwedit-success' => 'Länk skapad.',
-	'iwedit-local' => 'Endast lokal interwiki? (d.v.s. inte global)',
-	'iwedit-trans' => 'Aktivera skrämmande mallinkludering',
 );
 
 /** Telugu (తెలుగు)
@@ -683,7 +665,6 @@ $messages['vi'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Hydra
- * @author Liuxinyu970226
  */
 $messages['zh-hans'] = array(
 	'interwikiedit' => '跨维基连接编辑器',
@@ -693,7 +674,6 @@ $messages['zh-hans'] = array(
 	'iwedit-update' => '更新',
 	'iwedit-error' => '发生错误。',
 	'iwedit-success' => '链接创建成功。',
-	'iwedit-local' => '本地限定的跨wiki链接？（也就是说不是全域的）',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

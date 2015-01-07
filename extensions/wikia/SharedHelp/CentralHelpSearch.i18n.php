@@ -53,11 +53,10 @@ $messages['br'] = array(
 
 /** Catalan (català)
  * @author Marcmpujol
- * @author Unapersona
  */
 $messages['ca'] = array(
-	'centralhelpsearch-desc' => "Permet la inclusió d'un formulari per buscar ajuda a la Comunitat Central",
-	'centralhelpsearch-placeholder' => 'Buscar Ajuda...',
+	'centralhelpsearch-desc' => "Permèt la inclusió d'un formulari per buscar ajuda en Community Central",
+	'centralhelpsearch-placeholder' => 'Buscar en Ajuda...',
 );
 
 /** Czech (čeština)
