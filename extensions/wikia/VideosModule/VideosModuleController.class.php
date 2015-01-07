@@ -36,10 +36,4 @@ class VideosModuleController extends WikiaController {
 
 		wfProfileOut( __METHOD__ );
 	}
-
-	public function test() {
-		$helper = new UserLoginHelper();
-		$helper->sendConfirmationEmail( "james_test_en" );
-	}
-
 }
