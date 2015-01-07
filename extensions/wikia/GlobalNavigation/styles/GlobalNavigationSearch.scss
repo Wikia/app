@@ -3,6 +3,8 @@
 @import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/Venus/styles/typographyMixins';
 
+$default-height: 36px;
+
 .search-container {
 	@include grid-column-width('medium', 7, 2 * $medium-grid-gutter - 1px);
 }
@@ -50,10 +52,10 @@
 			line-height: 35px;
 			padding: 8px 10px;
 			white-space: initial;
+		}
 
-			&.selected {
-				background-color: $nav-background-light-gray-color;
-			}
+		.selected {
+			background-color: $nav-background-light-gray-color;
 		}
 
 		span {
@@ -90,26 +92,24 @@
 		top: 0;
 	}
 
-	.chevron {
-		border-style: solid;
-		width: 0;
+	.search-select-underlay {
+		display: inline-block;
+		position: relative;
 	}
 
-	.search-select-overlay {
-		display: inline-block;
+	.chevron {
+		border-color: $global-wikia-background-color;
+		border-style: solid;
+		border-top-color: $nav-border-color;
+		border-width: 5px;
+		margin-left: 2px;
+		margin-top: 13px;
+		position: relative;
+		top: 2px;
+		width: 0;
 
-		.chevron {
-			border-color: $global-wikia-background-color;
-			border-top-color: $nav-border-color;
-			border-width: 5px;
-			margin-left: 2px;
-			margin-top: 13px;
-			position: relative;
-			top: 2px;
-
-			&.dark {
-				border-top-color: $nav-foreground-dark-color;
-			}
+		&.dark {
+			border-top-color: $nav-foreground-dark-color;
 		}
 	}
 }
@@ -125,7 +125,7 @@
 		border-radius: 2px;
 		color: $nav-foreground-dark-color;
 		font-weight: bold;
-		height: 36px;
+		height: $default-height;
 		padding-left: 10px;
 		padding-right: 39px;
 		width: 100%;
@@ -135,11 +135,11 @@
 		background-color: transparent;
 		background-image: url('/extensions/wikia/GlobalNavigation/images/search_icon.svg'); /* base64 */
 		border: 0;
-		height: 36px;
+		height: $default-height;
 		padding: 0;
 		position: absolute;
 		right: 0;
-		width: 36px;
+		width: $default-height;
 	}
 
 	.autocomplete-container {

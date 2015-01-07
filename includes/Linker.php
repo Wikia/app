@@ -463,6 +463,10 @@ class Linker {
 	 * @return string
 	 */
 	private static function fnamePart( $url ) {
+		if (VignetteRequest::isVignetteUrl($url)) {
+			return VignetteRequest::getImageFilename($url);
+		}
+
 		$basename = strrchr( $url, '/' );
 		if ( false === $basename ) {
 			$basename = $url;
