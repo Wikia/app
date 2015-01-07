@@ -47,7 +47,6 @@ class Hooks
 				'additionalData' => $additionalData
 			] );
 
-			die;
 			return null;
 		};
 
