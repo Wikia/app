@@ -309,7 +309,19 @@ class WallMessage {
 	}
 
 	public function canRemove(User $user){
-		return $this->can($user, 'wallremove') || ( ( $this->isAuthor($user) || $this->isWallOwner($user) ) && !$this->isMarkInProps(WPP_WALL_MODERATORREMOVE) && !$user->isBlocked() );
+		if ( $user->isBlocked() ) {
+			return false;
+		}
+
+		if ( $this->can( $user, 'wallremove') ) {
+			return true;
+		}
+
+		if ( $this->isAuthor( $user ) || $this->isWallOwner( $user ) ) {
+			return !$this->isMarkInProps( WPP_WALL_MODERATORREMOVE );
+		}
+
+		return false;
 	}
 
 	public function canAdminDelete(User $user) {
@@ -328,11 +340,63 @@ class WallMessage {
 	 * archive is "close".
 	 */
 	public function canArchive(User $user) {
-		return in_array(MWNamespace::getSubject($this->title->getNamespace()), F::app()->wg->WallThreadCloseNS) && ( $this->can($user, 'wallarchive') || ( $this->isWallOwner( $user ) && !$this->isMarkInProps( WPP_WALL_MODERATORREOPEN ) ) ) && !$this->isRemove() && !$this->isArchive() && $this->isMain() && !$user->isBlocked();
+		if ( $user->isBlocked() ) {
+			return false;
+		}
+
+		if ( !in_array( MWNamespace::getSubject( $this->title->getNamespace() ), F::app()->wg->WallThreadCloseNS ) ) {
+			return false;
+		}
+
+		if ( !$this->isMain() ) {
+			return false;
+		}
+
+		if ( $this->isArchive() || $this->isRemove() ) {
+			return false;
+		}
+
+		if ( $this->can( $user, 'wallarchive' ) ) {
+			return true;
+		}
+
+		if ( $this->isWallOwner( $user ) ) {
+			return !$this->isMarkInProps( WPP_WALL_MODERATORREOPEN );
+		}
+
+		return false;
 	}
 
 	public function canReopen(User $user) {
-		return in_array(MWNamespace::getSubject($this->title->getNamespace()), F::app()->wg->WallThreadCloseNS) && ( $this->can($user, 'wallarchive') || ( $this->isWallOwner( $user ) && !$this->isMarkInProps( WPP_WALL_MODERATORARCHIVE ) ) ) && !$this->isRemove() && $this->isArchive() && $this->isMain() && !$user->isBlocked();
+		if ( $user->isBlocked() ) {
+			return false;
+		}
+
+		if ( !in_array( MWNamespace::getSubject( $this->title->getNamespace() ), F::app()->wg->WallThreadCloseNS ) ) {
+			return false;
+		}
+
+		if ( !$this->isMain() ) {
+			return false;
+		}
+
+		if ( !$this->isArchive() ) {
+			return false;
+		}
+
+		if ( $this->isRemove() ) {
+			return false;
+		}
+
+		if ( $this->can( $user, 'wallarchive' ) ) {
+			return true;
+		}
+
+		if ( $this->isWallOwner( $user ) ) {
+			return !$this->isMarkInProps( WPP_WALL_MODERATORARCHIVE );
+		}
+	
+		return false;
 	}
 
 	public function getMetaTitle() {
