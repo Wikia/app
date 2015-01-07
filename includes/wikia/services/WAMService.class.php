@@ -9,6 +9,7 @@ class WAMService extends Service {
 	const WAM_DEFAULT_ITEM_LIMIT_PER_PAGE = 20;
 	const WAM_BLACKLIST_EXT_VAR_NAME = 'wgEnableContentWarningExt';
 	const CACHE_DURATION = 86400; /* 24 hours */
+	const MEMCACHE_VER = '1.05';
 
 	protected $verticalIds = [
 		WikiFactoryHub::HUB_ID_OTHER,
@@ -53,7 +54,7 @@ class WAMService extends Service {
 	public function getCurrentWamScoreForWiki ($wikiId) {
 		wfProfileIn(__METHOD__);
 
-		$memKey = wfSharedMemcKey('datamart', 'wam', $wikiId);
+		$memKey = wfSharedMemcKey('datamart', self::MEMCACHE_VER, 'wam', $wikiId);
 
 		$getData = function () use ($wikiId) {
 			$db = $this->getDB();
@@ -188,7 +189,7 @@ class WAMService extends Service {
 		wfProfileIn( __METHOD__ );
 
 		$date = empty( $date ) ? strtotime( '00:00 -1 day' ) : strtotime( '00:00 -1 day', $date );
-		$memKey = wfSharedMemcKey( 'wam-languages', $date );
+		$memKey = wfSharedMemcKey( 'wam-languages', self::MEMCACHE_VER, $date );
 
 		$getData = function () use ( $date ) {
 			$db = $this->getDB();
@@ -357,6 +358,7 @@ class WAMService extends Service {
 			$blacklistIds = WikiaDataAccess::cache(
 				wfSharedMemcKey(
 					'wam_blacklist',
+					self::MEMCACHE_VER,
 					$blacklistExt->cv_id
 				),
 				self::CACHE_DURATION,
