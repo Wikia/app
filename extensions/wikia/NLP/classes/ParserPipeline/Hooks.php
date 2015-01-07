@@ -1,10 +1,6 @@
 <?php
 
 namespace Wikia\NLP\ParserPipeline;
-
-use PhpAmqpLib\Exception\AMQPRuntimeException;
-use PhpAmqpLib\Exception\AMQPTimeoutException;
-use Wikia\Logger\WikiaLogger;
 use Wikia\Tasks\Queues\NlpPipelineQueue;
 use Wikia\Tasks\AsyncBackendTaskList;
 use \Title, \User;
@@ -41,34 +37,14 @@ class Hooks
 	private static function parseEvent( $articleId, $titleUrl, $task ) {
 		global $wgCityId;
 
-		$logError = function( \Exception $e, $additionalData = [] ) {
-			WikiaLogger::instance()->critical( 'NLP Processing exception', [
-				'error' => $e->getMessage(),
-				'additionalData' => $additionalData
-			] );
+		$taskList = new AsyncBackendTaskList();
 
-			die;
-			return null;
-		};
-
-		try {
-			$taskList = new AsyncBackendTaskList();
-
-			$taskList->taskType( $task )
-				->add( $articleId )
-				->wikiId( $wgCityId )
-				->wikiUrl( preg_replace( '/\/wiki\/.*$/', '', $titleUrl ) )
-				->setPriority( NlpPipelineQueue::NAME )->queue();
-		} catch ( AMQPRuntimeException $e ) {
-			return $logError( $e, [
-				'city_id' => $wgCityId,
-				'article_id' => $articleId
-			] );
-		} catch ( AMQPTimeoutException $e ) {
-			return $logError( $e, [
-				'city_id' => $wgCityId,
-				'article_id' => $articleId
-			] );
-		}
+		$taskList->taskType( $task )
+				 ->add( $articleId )
+				 ->wikiId( $wgCityId )
+				 ->wikiUrl( preg_replace( '/\/wiki\/.*$/', '', $titleUrl ) )
+				 ->setPriority( NlpPipelineQueue::NAME )
+				 ->queue();
 	}
+
 }
