@@ -146,6 +146,37 @@ class ImagesService extends Service {
 		return substr($url, 0, strlen(static::DATA_TAG)) == static::DATA_TAG;
 	}
 
+	private static function parseThumbDestSize( $destSize ) {
+		$width = $height = null;
+
+		if ( strpos( $destSize, "px" ) !== false ) {
+			list( $width, $_ ) = explode( "px", $destSize );
+		} else {
+			list( $width, $height ) = explode( "x", $destSize );
+		}
+
+		return [ $width, $height ];
+	}
+
+	private static function vignetteOriginalToThumb( $imageUrl, $width, $height ) {
+		try {
+			$generator = VignetteRequest::fromUrl( $imageUrl );
+		} catch (Exception $e) {
+			return $imageUrl;
+		}
+
+		if ( $width && $height ) {
+			$generator
+				->fixedAspectRatio()
+				->height( $height )
+				->width( $width );
+		} else {
+			$generator->scaleToWidth( $width );
+		}
+
+		return $generator->url();
+	}
+
 	/**
 	 * @desc Returns thumbnail's URL made from normal image URL
 	 *
@@ -158,20 +189,8 @@ class ImagesService extends Service {
 	public static function getThumbUrlFromFileUrl($imageUrl, $destSize, $newExtension = null) {
 		if (!empty($imageUrl)) {
 			if ( VignetteRequest::isVignetteUrl( $imageUrl ) ) {
-				$generator = VignetteRequest::fromUrl( $imageUrl, true );
-
-				if ( strpos( $destSize, "px" ) !== false ) {
-					list( $width, $_ ) = explode( "px", $destSize );
-					$generator->scaleToWidth( $width );
-				} else {
-					list( $width, $height ) = explode( "x", $destSize );
-					$generator
-						->fixedAspectRatio()
-						->height( $height )
-						->width( $width );
-				}
-
-				$imageUrl = $generator->url();
+				list( $width, $height ) = self::parseThumbDestSize( $destSize );
+				$imageUrl = self::vignetteOriginalToThumb( $imageUrl, $width, $height );
 			} else {
 				if ( !self::IsExternalThumbnailUrl( $imageUrl ) ) {
 					$imageUrl = str_replace( '/images/', '/images/thumb/', $imageUrl );
