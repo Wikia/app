@@ -66,10 +66,14 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->wg->Out->setPageTitle(wfMessage('usersignup-page-title')->plain());
 		$this->response->addAsset('extensions/wikia/UserLogin/css/UserSignup.scss');
 
+		// TODO: find out why UserSignup.js isn't loaded via assets manager UC-196
+		// In the mean time, UserSignupMarketingOptIn is being included twice just to be safe
 		if ( F::app()->checkSkin( 'oasis' )) {
+			$this->response->addAsset('extensions/wikia/UserLogin/js/UserSignupMarketingOptIn.js');
 			$this->response->addAsset('extensions/wikia/UserLogin/js/UserSignup.js');
 		}
 
+		// TODO: change this to FacebookClient or remove the check if we're enabled globally UC-188
 		if ( !empty($this->wg->EnableFacebookConnectExt) ) {
 			$this->response->addAsset('extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js');
 		}

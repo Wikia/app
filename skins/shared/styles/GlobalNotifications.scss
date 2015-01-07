@@ -1,5 +1,7 @@
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/box-shadow';
+@import 'extensions/wikia/Venus/styles/variables';
+
 
 .global-notification {
 	@include box-shadow(0, 2px, 5px, darken($color-page, 12%));
@@ -73,7 +75,14 @@
 		left: 50%;
 		margin-left: -489px;
 		position: fixed;
-		top: 0;
+		top: $global-navigation-height;
+	}
+
+	// global nav doesn't scroll with the page when the page is small
+	@media #{$below-small} {
+		&.float {
+			top: 0;
+		}
 	}
 
 	.msg {

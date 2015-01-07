@@ -125,16 +125,25 @@ class ImagesService extends Service {
 	 * @return String new URL
 	 */
 	public static function overrideThumbnailFormat($thumbUrl, $newExtension) {
+		if (empty($thumbUrl) || !self::isValidThumbOverrideFormat($newExtension)) {
+			return $thumbUrl;
+		}
 
-		if ( !empty($thumbUrl)
-				&& in_array($newExtension, self::$allowedExtensionsList) // only change extension if it's allowed
-				&& !self::imageUrlHasExtension($thumbUrl, $newExtension) // only change extension if it's different that current one
-				&& (substr($thumbUrl, 0, strlen(static::DATA_TAG)) != static::DATA_TAG)
-			) {
+		if (VignetteRequest::isVignetteUrl($thumbUrl)) {
+			$thumbUrl = VignetteRequest::setThumbnailFormat($thumbUrl, $newExtension);
+		} elseif (!self::imageUrlHasExtension($thumbUrl, $newExtension) && !self::isDataTagImage($thumbUrl)) {
 			$thumbUrl .= $newExtension;
 		}
 
 		return $thumbUrl;
+	}
+
+	private static function isValidThumbOverrideFormat($extension) {
+		return in_array($extension, self::$allowedExtensionsList);
+	}
+
+	private static function isDataTagImage($url) {
+		return substr($url, 0, strlen(static::DATA_TAG)) == static::DATA_TAG;
 	}
 
 	/**

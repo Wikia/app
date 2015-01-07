@@ -427,9 +427,14 @@ class EditAccount extends SpecialPage {
 	 * @return void
 	 */
 	public static function disconnectFBConnect( User $user ) {
-		$fbIds = FBConnectDB::getFacebookIDs( $user );
-		if ( !empty( $fbIds ) ) {
-			FBConnectDB::removeFacebookID( $user );
+		global $wgEnableFacebookClientExt;
+		if ( !empty( $wgEnableFacebookClientExt ) ) {
+			FacebookMapModel::deleteFromWikiaID( $user->getId() );
+		} else {
+			$fbIds = FBConnectDB::getFacebookIDs( $user );
+			if ( !empty( $fbIds ) ) {
+				FBConnectDB::removeFacebookID( $user );
+			}
 		}
 	}
 

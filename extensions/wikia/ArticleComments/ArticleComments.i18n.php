@@ -297,13 +297,26 @@ $messages['az'] = array(
 
 /** South Azerbaijani (تورکجه)
  * @author E THP
+ * @author Koroğlu
  */
 $messages['azb'] = array(
+	'article-comments-post' => 'باخیش گؤندر',
+	'article-comments-cancel' => 'وازگئچ',
 	'article-comments-delete' => 'سیل',
 	'article-comments-edit' => 'دَییشدیر',
+	'article-comments-history' => 'گئچمیش',
+	'article-comments-toc-item' => 'باخیش‌لار',
 	'article-comments-reply' => 'یئنیدن',
 	'article-comments-prev-page' => 'اؤنجه‌کی',
 	'article-comments-next-page' => 'سونراکی',
+	'wikiamobile-article-comments-header' => 'باخیش‌لار',
+	'wikiamobile-article-comments-more' => 'آردی‌سی',
+	'wikiamobile-article-comments-none' => 'باخیش‌سیز',
+	'wikiamobile-article-comments-view' => 'یانیت‌لارا باخ',
+	'wikiamobile-article-comments-replies' => 'یانیت‌لار',
+	'wikiamobile-article-comments-post-reply' => 'بیر یانیت گؤندر',
+	'wikiamobile-article-comments-post' => 'گؤندر',
+	'wikiamobile-article-comments-placeholder' => 'باخیش گؤندر',
 );
 
 /** Bashkir (башҡортса)
@@ -892,6 +905,7 @@ $messages['de'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'Der übergeordnete Artikel / übergeordnete Kommentar wurde gelöscht.',
 	'article-comments-empty-comment' => 'Ein leerer Kommentar ist nicht möglich. <a href="$1">Stattdessen löschen?</a>',
+	'article-comments-show-more' => 'Weitere Kommentare anzeigen',
 	'wikiamobile-article-comments-counter' => '{{PLURAL:$1|Ein Kommentar|$1 Kommentare}}',
 	'wikiamobile-article-comments-header' => 'Kommentare',
 	'wikiamobile-article-comments-more' => 'Weitere laden',
@@ -957,7 +971,7 @@ $messages['diq'] = array(
 	'article-comments-delete' => 'bestere',
 	'article-comments-edit' => 'bıvurne',
 	'article-comments-history' => 'tarix',
-	'article-comments-error' => 'Mışewre qeyd nêbı',
+	'article-comments-error' => 'Mışewre qeyd nêbi',
 	'article-comments-rc-comment' => 'Vatışê wesiqe (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => 'Vatışê wesiqe da ([[$1]])',
 	'article-comments-rc-blog-comments' => 'Vatışê Blog da ([[$1]])',
@@ -971,25 +985,23 @@ $messages['diq'] = array(
 	'wikiamobile-article-comments-header' => 'vatışê',
 	'wikiamobile-article-comments-more' => 'Zêde bar ke',
 	'wikiamobile-article-comments-prev' => 'Bahdoyêni buwane',
-	'wikiamobile-article-comments-none' => 'Vatış çıno',
+	'wikiamobile-article-comments-none' => 'Mışewreyi çıniyê',
 	'wikiamobile-article-comments-view' => 'Cewabi bıvin',
 	'wikiamobile-article-comments-replies' => 'cewabi',
 	'wikiamobile-article-comments-post-reply' => 'Yew cewab bırışe',
 	'wikiamobile-article-comments-post' => 'Bırışe',
 	'wikiamobile-article-comments-placeholder' => 'Mışewre bırışe',
-	'wikiamobile-article-comments-login-post' => 'Mışewre rıştışi rê şıma ra recay ma qeyd bê',
-	'enotif_body_article_comment-HTML' => '<p>Bırayo  $WATCHINGUSERNAME,
+	'wikiamobile-article-comments-login-post' => 'Seba mışewrekerdene rê şıma gani qeyd bê.',
+	'enotif_body_article_comment-HTML' => '<p>Merheba $WATCHINGUSERNAME,
 <br /><br />
-$PAGEEDITOR ena vatış "$PAGETITLE".
+{{SITENAME}} de be nameyê $PAGETITLE ra yew mışewre esto. Seba vênayışê mışewreyan rê nê gıreyi bıgurenê: $PAGETITLE_URL#WikiaArticleComments
 <br /><br />
-weşte şıma {{SITENAME}} şi se: <a href="$PAGETITLE_URL">$PAGETITLE</a>
+- Peştiya Cemaetê Wikiya
 <br /><br />
-teneye vındere u bahdo bıvurne
-<br /><br />
-Wikia
-<br /><hr />
+___________________________________________
 <ul>
-<li>Şıma qayıle bewni re mesacan de xo se şı re? <a href="{{fullurl:Special:Preferences}}">newekerdışe malumata<a>.</li>
+<li>Merkezê Cemaeti ra şıma şenê peşti bıgêrê: <a href="http://community.wikia.com">http://community.wikia.com</a><li>
+<li>Şıma wazenê ke ma ra şenıkêr mesac bıgêrê? Tercihanê xoyê ke na adrese derê, inan ra abonemanê xo bıxelenê ya zi bıvurnê: <a href="http://community.wikia.com/Special:Preferences">http://community.wikia.com/Special:Preferences</a></li>
 </ul>
 </p>',
 );
@@ -1026,6 +1038,7 @@ $messages['el'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'Το κύριο άρθρο/κύριο σχόλιο έχει διαγραφεί.',
 	'article-comments-empty-comment' => "Δεν μπορείτε να δημοσιεύσετε ένα κενό σχόλιο. <a href='$1'>Αντ'αυτού να το διαγράψετε;</a>",
+	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|Σχόλιο|Σχόλια}}',
 	'wikiamobile-article-comments-header' => 'Σχόλια',
 	'wikiamobile-article-comments-more' => 'Φορτώστε περισσότερα',
 	'wikiamobile-article-comments-prev' => 'Φορτώστε τα προηγούμενα',
@@ -1102,6 +1115,7 @@ $messages['es'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'El artículo raíz / comentario raíz ha sido borrado.',
 	'article-comments-empty-comment' => "No puedes dejar un comentario en blanco. <a href='$1'>¿Quieres borrarlo?</a>",
+	'article-comments-show-more' => 'Mostrar más comentarios',
 	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|Comentario|Comentarios}}',
 	'wikiamobile-article-comments-header' => 'Comentarios',
 	'wikiamobile-article-comments-more' => 'Cargar más',
@@ -1387,6 +1401,7 @@ $messages['fr'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'La page ou le commentaire parent a été effacé.',
 	'article-comments-empty-comment' => "Vous ne pouvez pas poster un commentaire vide. <a href='$1'>Le supprimer ?</a>",
+	'article-comments-show-more' => 'Afficher plus de commentaires',
 	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|commentaire|commentaires}}',
 	'wikiamobile-article-comments-header' => 'Commentaires',
 	'wikiamobile-article-comments-more' => 'Lire la suite',
@@ -1991,6 +2006,7 @@ ___________________________________________
 /** Georgian (ქართული)
  * @author DevaMK
  * @author GeorgeBarnick
+ * @author MIKHEIL
  */
 $messages['ka'] = array(
 	'article-comments-anonymous' => 'ანონიმი მომხმარებელი',
@@ -2002,6 +2018,7 @@ $messages['ka'] = array(
 	'article-comments-toc-item' => 'კომენტარები',
 	'article-comments-reply' => 'პასუხი',
 	'article-comments-show-all' => 'ნახოთ ყველა კომენტარი',
+	'article-comments-show-more' => 'მეტი კომენტარების ნახვა',
 	'wikiamobile-article-comments-header' => 'კომენტარები',
 );
 
@@ -2087,6 +2104,7 @@ __________________________
 
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author Gusdud25
  * @author Hym411
  * @author Leehoy
  * @author Miri-Nae
@@ -2104,24 +2122,25 @@ $messages['ko'] = array(
 	'article-comments-delete' => '삭제',
 	'article-comments-edit' => '편집',
 	'article-comments-history' => '역사',
-	'article-comments-error' => '댓글을 저장할 수 없습니다',
+	'article-comments-error' => '덧글을 저장할 수 없습니다',
 	'article-comments-rc-comment' => '문서 댓글 (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-comments' => '문서 댓글 ([[$1]])',
-	'article-comments-fblogin' => '이 위키에 댓글을 남기기 위해선 <a href="$1" rel="nofollow">페이스북에 로그인</a>하세요',
-	'article-comments-fbconnect' => '댓글을 남기기 위해선 <a href="$1">페이스북과 계정을 연걸</a>하세요!',
+	'article-comments-fblogin' => '이 위키에 덧글을 남기려면 <a href="$1" rel="nofollow">로그인하고 페이스북과 연결</a>하세요!',
+	'article-comments-fbconnect' => '덧글을 남기려면 <a href="$1">이 계정을 페이스북과 연걸</a>하세요!',
 	'article-comments-rc-blog-comment' => '블로그 댓글 (<span class="plainlinks">[$1 $2]</span>)',
 	'article-comments-rc-blog-comments' => '블로그 댓글 ([[$1]])',
-	'article-comments-login' => '이 글에 댓글을 남기기 위해선 <a href="$1">로그인</a>해주세요.',
+	'article-comments-login' => '이 글에 덧글을 남기려면 <a href="$1">로그인</a>하세요.',
 	'article-comments-toc-item' => '댓글',
-	'article-comments-comment-cannot-add' => '문서에 댓글을 추가할 수 없습니다.',
+	'article-comments-comment-cannot-add' => '문서에 덧글을 추가할 수 없습니다.',
 	'article-comments-vote' => '투표하기',
 	'article-comments-reply' => '답글',
 	'article-comments-show-all' => '모든 댓글 보기',
 	'article-comments-prev-page' => '이전',
 	'article-comments-next-page' => '다음',
 	'article-comments-page-spacer' => '&#160...&#160',
-	'article-comments-delete-reason' => '상위 글/ 상위 댓글이 삭제됨',
-	'article-comments-empty-comment' => "빈 댓글은 쓸 수 없습니다. <a href='$1'>삭제 하시겠습니까?</a>",
+	'article-comments-delete-reason' => '상위 문서 / 상위 덧글이 삭제되었습니다.',
+	'article-comments-empty-comment' => "빈 덧글은 남길 수 없습니다. <a href='$1'>대신 삭제하겠습니까?</a>",
+	'article-comments-show-more' => '더 많은 코멘트 보기',
 	'wikiamobile-article-comments-counter' => '{{PLURAL:$1|의견}} $1개',
 	'wikiamobile-article-comments-header' => '댓글',
 	'wikiamobile-article-comments-more' => '더 불러오기',
@@ -2132,12 +2151,12 @@ $messages['ko'] = array(
 	'wikiamobile-article-comments-post-reply' => '답변 게시',
 	'wikiamobile-article-comments-post' => '게시',
 	'wikiamobile-article-comments-placeholder' => '댓글 남기기',
-	'wikiamobile-article-comments-login-post' => '댓글을 남기려면 로그인하세요.',
-	'wikiamobile-article-comments-post-fail' => '댓글을 저장하는 데에 실패했습니다. 잠시 후에 시도해 주세요.',
-	'enotif_subject_article_comment' => '$PAGEEDITOR 이(가) {{SITENAME}}의 "$PAGETITLE"에 댓글을 달았습니다',
+	'wikiamobile-article-comments-login-post' => '덧글을 남기려면 로그인하세요.',
+	'wikiamobile-article-comments-post-fail' => '덧글을 저장하는 데에 실패했습니다, 나중에 다시 시도해주세요',
+	'enotif_subject_article_comment' => '$PAGEEDITOR님이 {{SITENAME}}의 "$PAGETITLE"에 덧글을 남겼습니다',
 	'enotif_body_article_comment' => '$WATCHINGUSERNAME님 안녕하세요,
 
-{{SITENAME}}의 $PAGETITLE 에서 새 댓글이 있습니다. 모든 댓글을 보려면 다음 링크를 사용하세요: $PAGETITLE_URL#WikiaArticleComments
+{{SITENAME}}의 $PAGETITLE 에서 새 덧글이 있습니다. 모든 덧글을 보려면 다음 링크를 사용하세요: $PAGETITLE_URL#WikiaArticleComments
 
 - 위키아 커뮤니티 지원
 
@@ -2146,10 +2165,10 @@ ___________________________________________
 * 알림을 그만 받고 싶으신가요? 여기서 구독을 취소하거나 이메일 환경 설정을 바꿀 수 있습니다: http://community.wikia.com/Special:Preferences',
 	'enotif_body_article_comment-HTML' => '<p>안녕하세요.
 <br /><br />
-{{SITENAME}}의 $PAGETITLE에 새로운 댓글이 있습니다. 다음 링크를 통해 모든 댓글을 확인하세요:
+{{SITENAME}}의 $PAGETITLE에 새로운 덧글이 있습니다. 다음 링크를 통해 모든 덧글을 확인하세요:
 $PAGETITLE_URL#WikiaArticleComments
 <br /><br />
-- Wikia Community Support
+- 위키아 커뮤니티 지원
 <br /><br />
 ___________________________________________
 <ul>
@@ -2240,6 +2259,7 @@ $messages['lb'] = array(
 	'article-comments-prev-page' => 'Vireg',
 	'article-comments-next-page' => 'Nächst',
 	'article-comments-page-spacer' => '&#160...&#160',
+	'article-comments-show-more' => 'Méi Bemierkunge weisen',
 	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|Bemierkung|Bemierkungen}}',
 	'wikiamobile-article-comments-header' => 'Bemierkungen',
 	'wikiamobile-article-comments-more' => 'Méi lueden',
@@ -2913,6 +2933,7 @@ $messages['nl'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'De bovenliggende pagina is verwijderd.',
 	'article-comments-empty-comment' => "U kunt geen opmerking zonder inhoud plaatsen. <a href='$1'>In plaats daarvan verwijderen?</a>",
+	'article-comments-show-more' => 'Meer reacties weergeven',
 	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|Reactie|Reacties}}',
 	'wikiamobile-article-comments-header' => 'Reacties',
 	'wikiamobile-article-comments-more' => 'Meer laden',
@@ -3274,6 +3295,7 @@ ___________________________________________
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Caio1478
+ * @author Guilhermemau
  * @author JM Pessanha
  * @author Luckas
  * @author Luckas Blade
@@ -3308,6 +3330,7 @@ $messages['pt-br'] = array(
 	'article-comments-page-spacer' => '& # 160...&#160',
 	'article-comments-delete-reason' => 'O artigo raiz / comentário raiz foi deletado.',
 	'article-comments-empty-comment' => 'Você não pode postar um comentário vazio. <a href="$1">Excluí-lo em vez disso?</a>',
+	'article-comments-show-more' => 'Mostrar mais comentários',
 	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|Comentário|Comentários}}',
 	'wikiamobile-article-comments-header' => 'Comentários',
 	'wikiamobile-article-comments-more' => 'Carregar mais',
@@ -3638,6 +3661,7 @@ $messages['sv'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => 'Överordnade artikeln/kommentaren har tagits bort.',
 	'article-comments-empty-comment' => "Du kan inte skriva en tom kommentar. <a href='$1'>Radera det istället?</a>",
+	'article-comments-show-more' => 'Visa fler kommentarer',
 	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|kommentar|kommentarer}}',
 	'wikiamobile-article-comments-header' => 'Kommentarer',
 	'wikiamobile-article-comments-more' => 'Läs in fler',
@@ -4161,6 +4185,7 @@ $messages['zh-hans'] = array(
 	'article-comments-page-spacer' => '&#160...&#160',
 	'article-comments-delete-reason' => '源条目/源评论已被删除。',
 	'article-comments-empty-comment' => "您不能发布空白评论。<a href='$1'>是否删除它？</a>",
+	'article-comments-show-more' => '显示更多评论',
 	'wikiamobile-article-comments-counter' => '$1条评论',
 	'wikiamobile-article-comments-header' => '条评论',
 	'wikiamobile-article-comments-more' => '加载更多',
@@ -4204,11 +4229,12 @@ ___________________________________________
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  * @author LNDDYL
+ * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
 	'article-comments-file-page' => "<a href='$1'>評論由 $2</a> 於 <a href='$3'>$4</a> 發表",
 	'article-blog-comments-file-page' => "在<a href='$5'>$6</a>的部落格上的文章<a href='$3'>$4</a>有<a href='$1'>來自$2的評論</a>。",
-	'article-comments-anonymous' => '匿名用戶',
+	'article-comments-anonymous' => '匿名使用者',
 	'article-comments-comments' => '評論 ( $1 )',
 	'article-comments-post' => '發表評論',
 	'article-comments-cancel' => '取消',
