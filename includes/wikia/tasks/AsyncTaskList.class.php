@@ -299,7 +299,7 @@ class AsyncTaskList {
 		] );
 
 		if ( $channel === null ) {
-			$exception = null;
+			$exception = $connection = null;
 			try {
 				$connection = $this->connection();
 				$channel = $connection->channel();
@@ -310,6 +310,14 @@ class AsyncTaskList {
 				$exception = $e;
 			} catch ( AMQPTimeoutException $e ) {
 				$exception = $e;
+			}
+
+			if ( $channel !== null ) {
+				$channel->close();
+			}
+
+			if ( $connection !== null ) {
+				$connection->close();
 			}
 
 			if ( $exception !== null ) {
