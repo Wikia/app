@@ -158,7 +158,7 @@ define('bucky.resourceTiming', ['jquery', 'wikia.window', 'wikia.log', 'bucky'],
 		stats = getResourcesStats(window.performance.getEntriesByType('resource') || []);
 
 		// report to bucky
-		sink = bucky('ResourceTiming.' + eventName);
+		sink = bucky('resource_timing::' + eventName);
 		debug('Sending stats', eventName);
 
 		for (key in stats) {
