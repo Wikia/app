@@ -4,6 +4,12 @@ define('videosmodule.views.incontent', [
 ], function (RailView, sloth) {
 	'use strict';
 
+	/**
+	 * This module was developed to be responsible for
+	 * generating the Videos Module inside the article content.
+	 *
+	 * @extends RailView
+	 */
 	var VideosModule = function (options) {
 		// previousElement is the {DOM Node} element which fires the sloth loading of the Videos Module,
 		// if there's none, sloth is skipped and init is running immediately

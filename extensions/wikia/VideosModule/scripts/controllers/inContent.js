@@ -8,7 +8,17 @@ require([
 	'wikia.window',
 	'wikia.document',
 	'jquery'
-], function (InContentModule,VideoData, nodeFinderModule, Mustache, templates, buckyModule, win, doc, $) {
+], function (
+		InContentModule,
+		VideoData,
+		nodeFinderModule,
+		Mustache,
+		templates,
+		buckyModule,
+		win,
+		doc,
+		$
+	) {
 	'use strict';
 
 	// Make sure we're on an article page
