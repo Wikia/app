@@ -53,7 +53,7 @@ class WAMApiController extends WikiaApiController {
 	 * 		last_peak - the last time that the Wiki was at its peak_wam_rank
 	 * 		title - wiki title
 	 * 		url - wiki url
-	 * 		hub_id - wiki hub id
+	 * 		vertical_id - wiki vertical id
 	 * 		wam_change - wam score change from $wam_previous_day
 	 * 		wam_is_new - 1 if wiki wasn't classified on $wam_previous_day, 0 if this wiki was in index
 	 * @responseParam array $wam_results_total The total count of wikis available for provided params
