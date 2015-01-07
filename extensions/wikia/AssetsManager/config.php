@@ -628,10 +628,7 @@ $config['wikiamobile_js_body_full'] = array(
 		'//extensions/wikia/WikiaMobile/js/curtain.js',
 
 		//entrypoint
-		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
-
-		//Script for VDNA promotion
-		'//extensions/wikia/WikiaMobile/js/VDNA.js',
+		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js'
 	)
 );
 
