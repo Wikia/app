@@ -18,6 +18,9 @@ $wgExtensionCredits['other'][] = array(
 
 $dir = dirname(__FILE__);
 
+//i18n
+$wgExtensionMessagesFiles['JSMessages'] = $dir . '/JSMessages.i18n.php';
+
 // classes
 $wgAutoloadClasses['JSMessages'] =  $dir . '/JSMessages.class.php';
 $wgAutoloadClasses['JSMessagesHelper'] =  $dir . '/JSMessagesHelper.class.php';

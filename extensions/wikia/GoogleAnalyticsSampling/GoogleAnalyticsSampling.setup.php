@@ -13,9 +13,13 @@ if ( !defined('MEDIAWIKI') ) {
 
 $dir = dirname(__FILE__);
 
+//i18n
+$wgExtensionMessagesFiles['GoogleAnalyticsSampling'] = $dir . '/GoogleAnalyticsSampling.i18n.php';
+
 // WikiaApp
 $app = F::app();
 
 // autoloaded classes
 // $wgAutoloadClasses[ 'GoogleAnalyticsSampling'] =  "$dir/GoogleAnalyticsSampling.body.php" ;
-$wgAutoloadClasses[ 'GoogleAnalyticsSamplingController'] =  "$dir/GoogleAnalyticsSamplingController.class.php" ;
+$wgAutoloadClasses[ 'GoogleAnalyticsSamplingController'] =  "$dir/GoogleAnalyticsSamplingController.class.php";
+

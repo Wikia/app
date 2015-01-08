@@ -32,6 +32,9 @@ $dir = __DIR__;
 $wgAutoloadClasses['InstantGlobalsHooks'] = "{$dir}/InstantGlobalsHooks.class.php";
 $wgAutoloadClasses['InstantGlobalsModule'] = "{$dir}/InstantGlobalsModule.class.php";
 
+//i18n
+$wgExtensionMessagesFiles['InstantGlobals'] = $dir . '/InstantGlobals.i18n.php';
+
 /**
  * hooks
  */

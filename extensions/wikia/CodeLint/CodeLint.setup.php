@@ -25,6 +25,9 @@ $wgExtensionCredits['other'][] = array(
 
 $dir = dirname(__FILE__);
 
+//i18n
+$wgExtensionMessagesFiles['CodeLint'] = $dir . '/i18n/CodeLint.i18n.php';
+
 // WikiaApp
 $app = F::app();
 

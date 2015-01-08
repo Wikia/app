@@ -23,6 +23,9 @@ $wgExtensionCredits['parserhook'][] = array(
 	'author' => "[http://www.wikia.com/wiki/User:TOR Lucas 'TOR' Garczewski]"
 );
 
+//i18n
+$wgExtensionMessagesFiles['GoogleDocs4MW'] = __DIR__ . '/GoogleDocs.i18n.php';
+
 function wfGoogleDocs( Parser $parser ) {
 	$parser->setHook( "googlespreadsheet", "renderGoogleSpreadsheet" );
 	return true;
@@ -44,3 +47,4 @@ function renderGoogleSpreadsheet( $input, $argv ) {
 
 	return $output;
 }
+

@@ -20,6 +20,9 @@ $wgExtensionCredits['other'][] = array(
 	'version'		=> 1.0
 );
 
+//i18n
+$wgExtensionMessagesFiles['CityVisualization'] = $dir . 'i18n/CityVisualization.i18n.php';
+
 // helper hierarchy
 // row assigners
 $wgAutoloadClasses['WikiImageRowHelper'] = $dir.'classes/WikiImageRowHelper.class.php';

@@ -10,7 +10,7 @@ $wgAvailableRights[] = 'deletebatch';
 $wgGroupPermissions['staff']['deletebatch'] = true;
 
 $dir = dirname(__FILE__) . '/';
-$wgExtensionMessagesFiles['deletebatch'] = $dir.'SpecialDeleteBatch.i18n.php';
+$wgExtensionMessagesFiles['deletebatch'] = $dir . 'SpecialDeleteBatch.i18n.php';
 
 $wgExtensionCredits['specialpage'][] = array(
    'name' => 'Delete Batch',

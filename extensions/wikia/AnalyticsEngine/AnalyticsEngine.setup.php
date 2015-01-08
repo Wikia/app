@@ -21,6 +21,9 @@ $wgAutoloadClasses['AnalyticsProviderClarityRay'] = __DIR__ . '/AnalyticsProvide
 $wgAutoloadClasses['AnalyticsProviderPageFair'] = __DIR__ . '/AnalyticsProviderPageFair.php';
 $wgAutoloadClasses['AnalyticsProviderRubiconRTP'] = __DIR__ . '/AnalyticsProviderRubiconRTP.php';
 
+//i18n
+$wgExtensionMessagesFiles['AnalyticsEngine'] = __DIR__ . '/i18n/AnalyticsEngine.i18n.php';
+
 //hooks
 //register hook to inject gas js library (MW 1.19)
 $wgHooks['WikiaSkinTopScripts'][] = 'AnalyticsProviderGAS::onWikiaSkinTopScripts';

@@ -19,7 +19,7 @@ $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['MinimalMainPageHooks'] =  $dir . 'MinimalMainPageHooks.class.php';
 
 // i18n mapping
-$wgExtensionMessagesFiles['MinimalMainPage'] = $dir.'MinimalMainPage.i18n.php';
+$wgExtensionMessagesFiles['MinimalMainPage'] = $dir . 'MinimalMainPage.i18n.php';
 
 // hooks
 $wgHooks['ArticleFromTitle'][] = 'MinimalMainPageHooks::onArticleFromTitle';

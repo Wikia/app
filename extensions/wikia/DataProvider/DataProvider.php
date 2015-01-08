@@ -23,6 +23,8 @@ $wgExtensionCredits['other'][] = array(
 	'author' => 'Inez Korczyński, Tomasz Klim'
 );
 
+//i18n
+$wgExtensionMessagesFiles['DataProvider'] = __DIR__ . '/DataProvider.i18n.php';
 
 class DataProvider {
 	private $skin;
@@ -739,3 +741,4 @@ class DataProvider {
 	}
 
 }
+

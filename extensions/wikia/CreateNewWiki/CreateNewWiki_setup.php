@@ -6,7 +6,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'author' => array('Hyun Lim')
 );
 
-$dir = __DIR__.'/';
+$dir = __DIR__ . '/';
 
 // class autoloads mappings
 $wgAutoloadClasses['CreateNewWikiObfuscate'] = $dir . 'CreateNewWikiObfuscate.class.php';

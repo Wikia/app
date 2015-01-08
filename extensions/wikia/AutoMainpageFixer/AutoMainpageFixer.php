@@ -13,6 +13,9 @@ $wgExtensionCredits['parserhook'][] = array(
 	'description' => 'Keeps MediaWiki:Mainpage upto date as the main page is moved.',
 );
 
+//i18n
+$wgExtensionMessagesFiles['AutoMainpageFixer'] = __DIR__ . '/AutoMainpageFixer.i18n.php';
+
 $wgHooks['TitleMoveComplete'][] = 'fnAutoMWMainpageFixer';
 
 function fnAutoMWMainpageFixer( &$title, &$newtitle, &$user, $oldid, $newid ) {

@@ -29,7 +29,7 @@ $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['MostvisitedpagesPage']  = $dir . 'SpecialMostVisitedPages_body.php';
 
 #--- messages file
-$wgExtensionMessagesFiles["Mostvisitedpages"] = dirname(__FILE__) . '/SpecialMostVisitedPages.i18n.php';
+$wgExtensionMessagesFiles["Mostvisitedpages"] = $dir . 'SpecialMostVisitedPages.i18n.php';
 
 if ( !function_exists( 'extAddSpecialPage' ) ) {
     require_once ( "$IP/extensions/ExtensionFunctions.php" );
