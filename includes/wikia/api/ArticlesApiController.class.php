@@ -8,6 +8,7 @@ use Wikia\Search\Config;
 use Wikia\Search\QueryService\Factory;
 use Wikia\Search\QueryService\DependencyContainer;
 use Wikia\Util\GlobalStateWrapper;
+use Wikia\Logger\WikiaLogger;
 
 class ArticlesApiController extends WikiaApiController {
 
@@ -726,6 +727,13 @@ class ArticlesApiController extends WikiaApiController {
 					$collection[$id] = array_merge( $collection[ $id ], $fileData );
 					$articles[] = $id;
 					$this->wg->Memc->set( self::getCacheKey( $id, self::DETAILS_CACHE_ID ), $collection[$id], 86400 );
+				} else {
+					$dataLog = [
+						'titleText' => $t->getText(),
+						'articleId' => $t->getArticleID()
+					];
+
+					WikiaLogger::instance()->info( 'No revision found for article', $dataLog );
 				}
 
 			}
