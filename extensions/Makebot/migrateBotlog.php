@@ -48,7 +48,7 @@ class migrateBotlog extends Maintenance {
 			);
 			$batch++;
 			if( $batch == 100 ) {
-				wfWaitForSlaves( 5 );
+				wfWaitForSlaves();
 				$batch = 0;
 			}
 		}
