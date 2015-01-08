@@ -451,6 +451,9 @@ $messages['ca'] = array(
 	'scavengerhunt-button-export' => 'Exportar a CSV',
 	'scavengerhunt-form-error' => 'Si us plau, corregiu els errors següents:',
 	'scavengerhunt-form-error-invalid-title' => 'No s\'ha trobat el títol de la pàgina "$1".',
+	'scavengerhunt-form-error-no-article-title' => 'Si us plau introduïu tots els títol del articles (com a adreces URL vàlides).',
+	'scavengerhunt-form-error-invalid-url' => 'Si us plau, introduïu un URL vàlid.',
+	'scavengerhunt-form-error-clueColor' => 'Si us plau, proporcioneu un color vàlid en notació #XXX',
 	'scavengerhunt-entry-form-name' => 'El vostre nom:',
 	'scavengerhunt-entry-form-email' => 'La vostra adreça de correu electrònic:',
 	'scavengerhunt-entry-form-submit' => 'Enviar entrada',
@@ -1061,6 +1064,14 @@ $messages['fr'] = array(
 	'scavengerhunt-facebook-description' => 'Texte de partage Facebook',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'scavengerhunt-list-edit' => 'bewurkje',
+	'scavengerhunt-quit-game-button-cancel' => 'Annulearje',
+);
+
 /** Galician (galego)
  * @author Toliño
  */
@@ -1458,6 +1469,7 @@ $messages['kn'] = array(
 
 /** Korean (한국어)
  * @author Miri-Nae
+ * @author 아라
  */
 $messages['ko'] = array(
 	'scavengerhunt-list-header-name' => '게임 이름',
@@ -1466,7 +1478,7 @@ $messages['ko'] = array(
 	'scavengerhunt-list-disabled' => '비활성화',
 	'scavengerhunt-list-edit' => '편집',
 	'scavengerhunt-label-dialog-check' => '(시각편집기 표시 - 프리 알파, 아직 작동하지 않음)',
-	'scavengerhunt-label-image-check' => '(이미지 표시)',
+	'scavengerhunt-label-image-check' => '(그림 보이기)',
 	'scavengerhunt-label-general' => '일반',
 	'scavengerhunt-label-name' => '이름:',
 	'scavengerhunt-button-save' => '저장',
@@ -3233,7 +3245,9 @@ $messages['zh-hans'] = array(
 /** Traditional Chinese (中文（繁體）‎)
  * @author Justincheng12345
  * @author LNDDYL
+ * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
 	'scavengerhunt-entry-form-email' => '您的電郵位址：',
+	'scavengerhunt-label-clue-size' => '字型大小',
 );

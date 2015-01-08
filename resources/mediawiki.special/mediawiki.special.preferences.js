@@ -18,6 +18,22 @@ var $fieldsets = $preferences.children( 'fieldset' )
 var $legends = $fieldsets.children( 'legend' )
 	.addClass( 'mainLegend' );
 
+	/**
+	 * Wikia Function - @see UC-145
+	 * Make tabs distinguishable based on provided id
+	 * @param {Element} element
+	 * @param {string} selectedTabId
+	 */
+	var makeTabsTargetable = function (element, selectedTabId) {
+		'use strict';
+		var prefix = 'container',
+			classes = element[0].className.split(' ').filter(function (className) {
+				return className.lastIndexOf(prefix, 0) !== 0;
+			});
+		element[0].className = $.trim(classes.join(' '));
+		$preferences.addClass(selectedTabId.replace('mw-prefsection', prefix));
+	};
+
 // Populate the prefToc
 $legends.each( function( i, legend ) {
 	var $legend = $(legend);
@@ -43,6 +59,12 @@ $legends.each( function( i, legend ) {
 
 		$preftoc.find( 'li' ).removeClass( 'selected' );
 		$(this).parent().addClass( 'selected' );
+
+		/** Wikia change begin @see UC-145 */
+		// Make elements outside tabs targetable based on selected tab
+		makeTabsTargetable($preferences, ident);
+		/** Wikia change end */
+
 		$( '#preferences > fieldset' ).hide();
 		$( '#' + ident ).show();
 	});

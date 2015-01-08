@@ -564,6 +564,7 @@ $messages['br'] = array(
  * @author Fitoschido
  * @author Gemmaa
  * @author Paucabot
+ * @author Unapersona
  */
 $messages['ca'] = array(
 	'wmu-upload-image' => 'Carregar una imatge',
@@ -638,6 +639,10 @@ $messages['ca'] = array(
 	'wmu-alignment' => 'Alineació',
 	'wmu-file-protected' => 'Aquesta imatge està protegida',
 	'wmu-file-error' => 'Hi ha hagut un error durant el procés de càrrega. Intenta-ho de nou.',
+	'wmu-file-not-found' => "No s'ha trobat el fitxer",
+	'wmu-error-exact-height' => "L'alçada de la imatge ha de ser eactamanet $1 px (aquesta té $2 px)",
+	'wmu-error-exact-width' => "L'amplada de la imatge ha de ser exactament $1 (aquesta té $2 px)",
+	'wmu-error-exact-width-height' => 'La mida de la imatge ha de ser exactamanet $1 x $3 px (aquesta fa $2 x $4 px)',
 );
 
 /** Chechen (нохчийн)
@@ -970,8 +975,8 @@ $messages['de-formal'] = array(
  * @author Mirzali
  */
 $messages['diq'] = array(
-	'wmu-upload-image' => 'Resim Barke',
-	'wmu-title' => 'Resim Barke',
+	'wmu-upload-image' => 'Resım Bar ke',
+	'wmu-title' => 'Resım Bar ke',
 	'wmu-upload' => 'Bar ke',
 	'wmu-find' => 'Bıvin',
 	'wmu-thiswiki' => 'E na wiki',

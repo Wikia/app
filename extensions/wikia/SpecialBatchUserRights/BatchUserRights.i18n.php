@@ -105,6 +105,7 @@ $messages['bs'] = array(
 
 /** Catalan (català)
  * @author Marcmpujol
+ * @author Unapersona
  */
 $messages['ca'] = array(
 	'batchuserrights' => "Drets d'usuaris per lots",
@@ -116,9 +117,9 @@ Si us plau, pregunta a un administrador del sistema si necessites afegir altres 
 	'batchuserrights-single-progress-update' => 'Afegit {{PLURAL:$1|grup|grups}} a <strong>$2</strong>.',
 	'batchuserrights-add-groups' => 'Afegint {{PLURAL:$1|un usuari|$1 usuaris}} {{PLURAL:$2|al següent grup|als següents grups}}: <strong>$3</strong>.',
 	'batchuserrights-userload-error' => "No s'ha pogut carregar l'usuari \"'''\$1'''\".",
-	'batchuserrights-no-groups' => "No has triar cap grup.
+	'batchuserrights-no-groups' => "No has triat cap grup.
 D'aquesta manera no passarà res.
-La resta de la pàgina serà executada sol per a que puguis veure fàcilment si algun nom d'usuari no es pot carregar.",
+La resta de la pàgina estarà disponible per poder veure si hi han altres noms d'usuaris que no ha pogut ser carregats.",
 );
 
 /** Czech (čeština)
