@@ -56,6 +56,11 @@
 		handleCaptchaLoadError: function () {
 			this.wikiaForm.disableAll();
 			GlobalNotification.show($.msg('usersignup-page-captcha-load-fail'), 'error');
+			Wikia.tracker.track({
+				action: Wikia.tracker.actions.ERROR,
+				category: 'user-sign-up',
+				label: 'captcha-load-fail'
+			});
 		},
 
 		/**
