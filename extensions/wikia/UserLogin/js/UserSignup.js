@@ -14,7 +14,7 @@
 		init: function () {
 			this.wikiaForm = new WikiaForm('#WikiaSignupForm');
 			this.captchaField = this.useCaptcha ? 'recaptcha_response_field' : '';
-			if (!this.captchaLoaded()) {
+			if (this.captchaLoadError()) {
 				this.handleCaptchaLoadError();
 				return;
 			}
@@ -34,18 +34,19 @@
 		},
 
 		/**
-		 * Check if the captcha solution is loaded successfully (UC-202)
+		 * Check if the captcha solution fails to load, possibly due to google being blocked (UC-202)
 		 * @returns {boolean}
 		 */
-		captchaLoaded: function () {
+		captchaLoadError: function () {
 			var $captchaInput;
 
+			// if we don't need captcha on this form, there's nothing to fail
 			if (!this.useCaptcha) {
-				return true;
+				return false;
 			}
 
 			$captchaInput = $('#' + this.captchaField);
-			return !!$captchaInput.length;
+			return !$captchaInput.length;
 		},
 
 		/**
