@@ -113,7 +113,7 @@ require(
 			$('.global-notification.notify').click(function (event) {
 				if (event.target.parentElement.className.indexOf('close') !== -1) {
 					onNotificationClosed();
-				} else if (event.target.id.indexOf('wikia-in-your-lang-link') !== -1) {
+				} else if (event.target.className.indexOf('text') !== -1) {
 					onLinkClick();
 				}
 			})
