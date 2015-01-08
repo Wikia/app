@@ -6,14 +6,14 @@
  * inputsToValide - array of input names to be ok'ed before submission
  * submitButton - pointer to main submit button of the form
  */
-var UserSignupAjaxForm = function (wikiaForm, inputsToValidate, submitButton, notEmptyFields, captchaField) {
+var UserSignupAjaxForm = function (options) {
 	'use strict';
 
-	this.wikiaForm = wikiaForm;
-	this.inputsToValidate = inputsToValidate || [];
-	this.notEmptyFields = notEmptyFields || [];
-	this.captchaField = captchaField || '';
-	this.submitButton = $(submitButton);
+	this.wikiaForm = options.wikiaForm;
+	this.inputsToValidate = options.inputsToValidate || [];
+	this.notEmptyFields = options.notEmptyFields || [];
+	this.captchaField = options.captchaField || '';
+	this.submitButton = $(options.submitButton);
 
 	this.activateSubmit();
 };

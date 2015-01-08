@@ -157,7 +157,7 @@ class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 			$users = $this->getUsersForGroup();
 			if ( empty($users) ) 
 				$users = array(0);
-			$this->addWhere( 'u1.user_id IN (' . implode(",", array_keys($users)) . ') ' );
+			$this->addWhere( 'u1.user_id IN (' . $db->makeList( array_keys( $users ) ) . ') ' );
 		} 
 	
 		if ( !is_null( $this->params['from'] ) ) {

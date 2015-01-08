@@ -1,4 +1,5 @@
-(function () {
+/* global jQuery, mediaWiki */
+(function ($, mw) {
 	'use strict';
 
 	var fbPreferences = (function () {
@@ -8,6 +9,7 @@
 			$connectWrapper,
 			$disconnectWrapper,
 			$disconnectLink,
+			$disconnectButton,
 			$connectLink;
 
 		/**
@@ -19,6 +21,7 @@
 			$connectWrapper = $('#fbConnectPreferences');
 			$disconnectWrapper = $('#fbDisconnectPreferences');
 			$disconnectLink = $('#fbDisconnectLink').find('a');
+			$disconnectButton = $('.fb-disconnect');
 			$connectLink = $('.sso-login-facebook');
 
 			$.loadFacebookAPI(bindEvents);
@@ -89,6 +92,8 @@
 				controller: 'FacebookClient',
 				method: 'disconnectFromFB',
 				format: 'json',
+				data: {token: mw.user.tokens.get('editToken')},
+				type: 'POST',
 				callback: function (data) {
 					if (data.status === 'ok') {
 						window.GlobalNotification.show($.msg(disconnectMsg), 'confirm');
@@ -114,6 +119,7 @@
 		function bindEvents() {
 			$connectLink.on('click', connect);
 			$disconnectLink.on('click', disconnect);
+			$disconnectButton.on('click', disconnect);
 		}
 
 		/**
@@ -145,4 +151,4 @@
 
 	// instantiate singleton on DOM ready
 	$(fbPreferences.getInstance);
-})();
+})(jQuery, mediaWiki);

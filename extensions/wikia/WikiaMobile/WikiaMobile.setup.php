@@ -143,7 +143,6 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 
 			//ads legacy -- should be removed at some point
 			'adEnginePageType',
-			'cityShort',
 			'wgAdDriverUseAdsAfterInfobox',
 			'wgAdDriverWikiIsTop1000',
 			'wgDartCustomKeyValues',

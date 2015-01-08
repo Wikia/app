@@ -18,17 +18,17 @@ class StarWarsRssModel extends BaseRssModel {
 		$swProvider = new StarWarsDataProvider();
 		$swData = $swProvider->getData( $lastTimestamp );
 		$swData = $this->removeDuplicates( $swData, $duplicates );
-		$out = $this->finalizeRecords( $swData );
+		$out = $this->finalizeRecords( $swData, self::getFeedName()  );
 		return $out;
 	}
 
-	protected function finalizeRecords( $swData ) {
+	protected function finalizeRecords( $swData, $feedName ) {
 		$out = [ ];
 		foreach ( $swData as $item ) {
 			$out[ $item[ 'url' ] ] = $item;
 		}
 		$out = $this->fixDuplicatedTimestamps( $out );
-		$out = $this->addFeedsToDb( $out, self::getFeedName()  );
+		$out = $this->addFeedsToDb( $out, $feedName );
 		return $out;
 	}
 

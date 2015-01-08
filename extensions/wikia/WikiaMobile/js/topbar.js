@@ -230,7 +230,7 @@ function (
 			).fail(function () {
 				qs()
 					.setPath(w.wgArticlePath.replace('$1', 'Special:UserLogin'))
-					.setVal('returnto', createReturnToString(), true )
+					.setVal('returnto', createReturnToString(), true)
 					.goTo();
 			});
 		}
@@ -242,7 +242,8 @@ function (
 	 */
 	function createReturnToString() {
 		return w.wgCanonicalSpecialPageName &&
-			w.wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/) ?
+			// TODO: special page URL matching needs to be consolidated. @see UC-187
+			w.wgCanonicalSpecialPageName.match(/Userlogin|Userlogout|UserSignup/) ?
 			w.wgMainPageTitle :
 			w.wgPageName;
 	}

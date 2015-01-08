@@ -1,19 +1,19 @@
-@import "layout";
-@import "responsive-variables";
+@import 'layout';
+@import 'responsive-variables';
 
-@import "skins/shared/mixins/box-sizing";
-@import "skins/shared/mixins/calc";
+@import 'skins/shared/mixins/box-sizing';
+@import 'skins/shared/mixins/calc';
 
-@if ( $responsive-layout-enabled ) {
+@if ($responsive-layout-enabled) {
 	html {
 		overflow-y: auto;
 	}
 
-	body.skin-oasis {
+	.skin-oasis {
 		min-width: $width-outside-min;
 	}
 
-	body.skin-oasis > .global-notification,
+	.skin-oasis > .global-notification,
 	.WikiaHeader .page-width-container,
 	.WikiaPage {
 		max-width: $width-outside-max;
@@ -21,7 +21,7 @@
 
 	.global-notification,
 	.WikiaHeader .page-width-container {
-		@include box-sizing( border-box );
+		@include box-sizing(border-box);
 		width: $width-outside;
 	}
 
@@ -60,7 +60,7 @@
 	}
 
 	.WikiaMainContent {
-		margin-right: -( $width-rail + $width-gutter );
+		margin-right: -($width-rail + $width-gutter);
 		position: static;
 		width: 100%;
 	}
@@ -73,7 +73,7 @@
 	.oasis-one-column {
 		.WikiaMainContent {
 			margin-right: 0;
-			width: 100%
+			width: 100%;
 		}
 
 		.WikiaMainContentContainer {
@@ -89,7 +89,7 @@
 
 	.WikiaPageHeader,
 	.wikinav2 .WikiaPageHeader {
-		margin: 0 0 $width-padding 0;
+		margin: 0 0 $width-padding;
 		padding-bottom: $width-padding / 2;
 
 		.wikia-menu-button,
@@ -104,7 +104,7 @@
 	}
 
 	@media screen and (max-width: $breakpoint-min) {
-		body.skin-oasis {
+		.skin-oasis {
 			overflow-x: auto;
 		}
 	}
@@ -126,7 +126,7 @@
 		.WikiaRail {
 			float: none;
 			margin: 0;
-			padding: 13px 10px 0 10px;
+			padding: 13px 10px 0;
 			width: auto;
 
 			&.loaded,
@@ -152,13 +152,12 @@
 			}
 		}
 
-		.WikiaHeader li.start-a-wiki {
+		.WikiaHeader .start-a-wiki {
 			display: none;
 		}
 
 		.WikiHeader {
 			min-height: 154px;
-			padding-top: 0;
 
 			> nav {
 				left: 0;
@@ -183,7 +182,7 @@
 			width: auto;
 
 			input[type="text"] {
-				@include box-sizing( border-box );
+				@include box-sizing(border-box);
 				font-size: 15pt;
 				height: 40px !important;
 				left: 0;
@@ -233,6 +232,7 @@
 
 		.global-notification {
 			width: 100%;
+
 			&.float {
 				left: 0;
 				margin-left: 0;
@@ -242,10 +242,6 @@
 		.WikiaPage {
 			border: 0;
 			width: auto;
-		}
-
-		.WikiaPageContentWrapper {
-			padding-top: 20px;
 		}
 
 		.WikiaTopAds {
