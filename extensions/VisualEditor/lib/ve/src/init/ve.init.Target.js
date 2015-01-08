@@ -246,7 +246,7 @@ ve.init.Target.prototype.createSurface = function ( dmDoc, config ) {
 		),
 		importRules: this.constructor.static.importRules
 	}, config );
-	return new ve.ui.DesktopSurface( dmDoc, config );
+	return new ve.ui.DesktopSurface( dmDoc, config, this );
 };
 
 /**
