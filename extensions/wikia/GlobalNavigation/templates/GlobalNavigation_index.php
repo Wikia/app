@@ -8,10 +8,10 @@
 				<img src="<?= $wg->BlankImgUrl ?>"
 				     height="24"
 				     width="91"
-				     alt="<?= wfMessage('venus-wikia')->escaped() ?>"
-				     title="<?= wfMessage('venus-wikia')->escaped() ?>">
+				     alt="<?= wfMessage( 'venus-wikia' )->escaped() ?>"
+				     title="<?= wfMessage( 'venus-wikia' )->escaped() ?>">
 			</a>
-			<?= $app->renderView('GlobalNavigation', 'hubsMenu') ?>
+			<?= $app->renderView( 'GlobalNavigation', 'hubsMenu' ) ?>
 		</div>
 		<div class="global-navigation-item search-container">
 			<?= $app->renderView( 'GlobalNavigation', 'searchIndex' ); ?>
@@ -21,13 +21,13 @@
 				class="global-navigation-link start-wikia"
 				title="<?= wfMessage( 'global-navigation-create-wiki' )->escaped(); ?>"
 				data-id="start-wikia">
-				<span><?= nl2br(wfMessage( 'global-navigation-create-wiki' )->escaped()); ?></span>
+				<span><?= nl2br( wfMessage( 'global-navigation-create-wiki' )->escaped() ); ?></span>
 			</a>
 		</div>
 		<div class="global-navigation-item account-navigation-container">
 			<?= $app->renderView( 'GlobalNavigationAccountNavigation', 'index' ) ?>
 		</div>
-		<? if ($isGameStarLogoEnabled): ?>
+		<? if ( $isGameStarLogoEnabled ): ?>
 			<a class="gamestar-logo" href="http://gamestar.de/"></a>
 		<? endif; ?>
 	</div>
