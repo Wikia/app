@@ -738,43 +738,5 @@ class BaseRssModelTest extends WikiaBaseTest
 			);
 		return $processedData;
 	}
-
-	/**
-	 * @covers BaseRssModel::cleanDeadUrlsFromArray
-	 */
-	public function testCleanDeadUrlsFromArray() {
-		$mock = $this->getMockBuilder( 'BaseRssModel' )
-			->disableOriginalConstructor()
-			->setMethods( [ '__construct', 'checkURLExists','getFeedTitle', 'getFeedLanguage', 'getFeedDescription', 'loadData', 'formatTitle' ] )
-			->getMock();
-
-		$mock->expects( $this->any() )
-			->method( 'checkURLExists' )
-			->will( $this->returnCallback('BaseRssModelTest::mock_checkURLExists'));
-
-
-		$f = self::getFn( $mock, 'cleanDeadUrlsFromArray' );
-
-		$inputArray = [
-			'http://ASDF' => 'A',
-			'http://404'  => 'X',
-			'http://POIU' => 'B'
-		];
-
-		$expected = [
-			'http://ASDF' => 'A',
-			'http://POIU' => 'B'
-		];
-
-		$this->assertEquals($expected, $f($inputArray));
-	}
-
-	public static function mock_checkURLExists( $url ) {
-		if ( $url === 'http://404' ){
-			return false;
-		} else {
-			return true;
-		}
-	}
 }
 

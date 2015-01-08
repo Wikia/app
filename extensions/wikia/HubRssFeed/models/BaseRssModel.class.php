@@ -435,8 +435,7 @@ abstract class BaseRssModel extends WikiaService {
 	protected function finalizeRecords( $rawData, $feedName ) {
 		$this->cleanDeadUrlsInDB( $feedName );
 		$items = $this->processItems( $rawData );
-		$activeItems = $this->cleanDeadUrlsFromArray( $items );
-		return $this->addFeedsToDb( $activeItems, $feedName );
+		return $this->addFeedsToDb( $items, $feedName );
 	}
 
 	protected function makeBlogTitle( $item ) {
@@ -547,12 +546,13 @@ abstract class BaseRssModel extends WikiaService {
 
 	/**
 	 * Checks if response code is different than 404. WE don't care about 503 etc as they might change
-	 * @param $url
+	 * @param $wikiaid
+	 * @param $pageid
 	 * @return bool
 	 */
-	protected function checkURLExists( $url ) {
-		$req = Http::request( "HEAD", $url, [ 'returnInstance' => true, 'followRedirects' => true ] );
-		return $req->getStatus() != "404";
+	protected function checkTitleExists( $wikiaid, $pageid  ) {
+		$t = GlobalTitle::newFromId( $pageid , $wikiaid);
+		return ($t instanceof GlobalTitle) && $t->exists();
 	}
 
 	/**
@@ -562,26 +562,10 @@ abstract class BaseRssModel extends WikiaService {
 	protected function cleanDeadUrlsInDB( $feedName ) {
 		$urlsMap = $this->getFeedData();
 		foreach ( $urlsMap as $url => $item ) {
-			if ( $item[ 'wikia_id' ] && $item[ 'page_id' ] && !$this->checkURLExists( $url ) ) {
+			if ( $item[ 'wikia_id' ] && $item[ 'page_id' ] && !$this->checkTitleExists(  $item[ 'wikia_id' ], $item[ 'page_id' ]  ) ) {
 				$this->deleteRow( $item[ 'wikia_id' ], $item[ 'page_id' ], $feedName );
 			}
 		}
 	}
-
-	/**
-	 * Removes "dead" urls from array (keys)
-	 * @param $items
-	 * @return array
-	 */
-	protected function cleanDeadUrlsFromArray( $items ) {
-		foreach ( $items as $url => $data ) {
-			if ( !$this->checkURLExists( $url ) ) {
-				unset( $items[ $url ] );
-			}
-		}
-
-		return $items;
-	}
-
 
 }
