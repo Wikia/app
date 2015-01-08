@@ -3,6 +3,7 @@
 @import 'skins/shared/mixins/wordmark';
 @import 'skins/shared/color';
 @import 'skins/oasis/css/core/layout';
+@import 'skins/oasis/css/placeholders/bodytext';
 @import '../mixins/submitpane';
 @import '../mixins/divider';
 
@@ -210,4 +211,8 @@
 
 .WikiaMainContent {
 	float: none;
+}
+
+.captcha-load-error-modal {
+	@extend %bodytext;
 }

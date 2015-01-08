@@ -11,7 +11,8 @@ $messages['en'] = array(
 	'usersignup-page-title' => 'Join Wikia',
 	'usersignup-page-title-wikiamobile' => 'Create account',
 	'usersignup-page-captcha-label' => 'Blurry Word',
-	'usersignup-page-captcha-load-fail' => 'We\'re sorry, the blurry word test failed to load, and it is required for creating an account. It may not be availble in your region. Please try again later.',
+	'usersignup-page-captcha-load-fail-title' => 'Captcha not loaded',
+	'usersignup-page-captcha-load-fail-text' => 'We\'re sorry, the blurry word test failed to load, and it is required for creating an account. It may not be availble in your region. Please try again later.',
 
 	'usersignup-error-username-length' => "Oops, your username can't be more than {{PLURAL:$1|one character|$1 characters}}.",
 	'usersignup-error-invalid-user' => 'Invalid user. Please login first.',
