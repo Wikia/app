@@ -19,9 +19,6 @@ module.exports = function (config) {
 			'resources/wikia/ui_components/**/node_modules/**/*.js',
 		],
 		files: [
-			'tests/lib/jasmine/jasmine.async.js',
-			'tests/lib/jasmine/jasmine.dataprovider.js',
-
 			'resources/wikia/libraries/define.mock.js',
 			'tests/lib/jasmine/helpers.js',
 			'resources/jquery/jquery-1.8.2.js',
