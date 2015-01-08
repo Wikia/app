@@ -18,22 +18,6 @@
 ve.init.wikia.ViewPageTarget = function VeInitWikiaViewPageTarget() {
 	var boldItalicLink, toolbarDropdown, wikiaSourceMode;
 
-	if ( window.veSourceEntryPoint ) {
-		if ( window.veSourceEntryPoint.hideBoldItalicLink ) {
-			boldItalicLink = ve.init.wikia.ViewPageTarget.static.toolbarGroups.splice( 2, 1 );
-			ve.init.wikia.ViewPageTarget.static.toolbarGroups[ 2 ].include = [].concat(
-				boldItalicLink[ 0 ].include,
-				ve.init.wikia.ViewPageTarget.static.toolbarGroups[ 2 ].include
-			);
-		}
-		if ( window.veSourceEntryPoint.sourceButtonInToolbar ) {
-			toolbarDropdown = ve.init.wikia.ViewPageTarget.static.actionsToolbarConfig.pop();
-			wikiaSourceMode = toolbarDropdown.include.pop();
-			ve.init.wikia.ViewPageTarget.static.toolbarGroups.push( toolbarDropdown );
-			ve.init.wikia.ViewPageTarget.static.actionsToolbarConfig.push( { 'include': [ wikiaSourceMode ] } );
-		}
-	}
-
 	// Parent constructor
 	ve.init.wikia.ViewPageTarget.super.call( this );
 
