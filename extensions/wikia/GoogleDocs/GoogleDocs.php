@@ -18,9 +18,10 @@ if (!defined('MEDIAWIKI')){
 $wgHooks['ParserFirstCallInit'][] = "wfGoogleDocs";
 
 $wgExtensionCredits['parserhook'][] = array(
-	'name' => "[http://help.wikia.com/wiki/Help:Google_spreadsheets GoogleDocs4MW]",
-	'description' => "adds &lt;googlespreadsheet&gt; tag for Google Docs' spreadsheets display",
-	'author' => "[http://www.wikia.com/wiki/User:TOR Lucas 'TOR' Garczewski]"
+	'name' => "GoogleDocs4MW",
+	'descriptionmsg' => "googledocs-desc",
+	'author' => "[http://www.wikia.com/wiki/User:TOR Lucas 'TOR' Garczewski]",
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/GoogleDocs'
 );
 
 //i18n

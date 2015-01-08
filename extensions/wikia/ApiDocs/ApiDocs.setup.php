@@ -5,8 +5,9 @@ if ( ! defined( 'MEDIAWIKI' ) )
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'ApiDocs',
 	'author' => 'Artur Dwornik',
-//	'descriptionmsg' => 'imageserving-desc',
+	'descriptionmsg' => 'apidocs-desc',
 	'version' => '0.1',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ApiDocs',
 );
 
 $dir = __DIR__ . '/';

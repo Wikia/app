@@ -7,6 +7,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'wam-page-desc' => 'WAM Page',
 	'wam-html-title' => 'Wikia Activity Monitor (WAM) - Wikia.com/WAM',
 	'wampage-header' => 'Wam',
 	'wampage-header-faq' => 'Frequently asked questions',
@@ -62,6 +63,7 @@ Please contact community support at [mailto:support@wikia-inc.com support@wikia-
 );
 
 $messages['qqq'] = array(
+	'wam-page-desc' => '{{desc}}',
 	'wam-html-title' => 'Title for the WAM pages. For information about WAM visit http://www.wikia.com/WAM',
 	'wampage-header' => 'Header of the WAM page on corporate wiki. For information about WAM visit http://www.wikia.com/WAM',
 	'wampage-header-faq' => 'Header of the FAQ page for WAM page on corporate wiki. For information about WAM visit http://www.wikia.com/WAM',

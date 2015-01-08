@@ -21,7 +21,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['other'][] = array(
         'name' => 'ConfirmEmailPrompt',
         'author' => "[http://community.wikia.com/wiki/User:TOR Lucas 'TOR' Garczewski]",
-        'descriptionmsg' => 'confirmemailprompt-desc'
+        'descriptionmsg' => 'confirmemailprompt-desc',
+		'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ConfirmEmailPrompt',
 );
 
 $wgHooks['UserLoginComplete'][] = 'efConfirmEmailPrompt';

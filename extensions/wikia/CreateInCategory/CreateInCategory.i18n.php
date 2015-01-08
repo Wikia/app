@@ -10,3 +10,7 @@ $messages['en'] = array(
 	'createincategory-comment-new' => 'New article in category $1',
 );
 
+$messages['qqq'] = array(
+	'createincategory-desc' => '{{desc}}'
+);
+

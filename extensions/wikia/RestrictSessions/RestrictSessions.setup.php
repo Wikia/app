@@ -17,6 +17,7 @@ $wgExtensionCredits['other'][] = [
 		'[http://community.wikia.com/wiki/User:Grunny Daniel Grunwell (Grunny)]'
 	],
 	'license-name' => 'GPLv2',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/RestrictSessions'
 ];
 
 $wgAutoloadClasses['RestrictSessions\RestrictSessionsHooks'] =  __DIR__ . '/RestrictSessionsHooks.class.php';

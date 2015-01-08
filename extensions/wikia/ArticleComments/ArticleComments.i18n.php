@@ -9,6 +9,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'article-comments-desc' => 'Article comments for wiki pages',
 	'article-comments-file-page' => "<a href='$1'>Comment from $2</a> on <a href='$3'>$4</a>",
 	'article-blog-comments-file-page' => "<a href='$1'>Comment from $2</a> on <a href='$3'>$4</a> post on <a href='$5'>$6's</a> blog",
 
@@ -83,6 +84,7 @@ ___________________________________________
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'article-comments-desc' => '{{desc}}',
 	'article-comments-file-page' => 'Format of the file usage (see [[MediaWiki:Linkstoimage]]) entry on the file page if the file is used in an article comment.
 Parameters:
 * $1 - Full URL link to the comment that includes the image. $1 is placed inside an anchor tag, please do not alter.

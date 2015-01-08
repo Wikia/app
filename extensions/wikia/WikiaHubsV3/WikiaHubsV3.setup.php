@@ -12,9 +12,15 @@ $dir = dirname(__FILE__) . '/';
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'WikiaHubs V3',
-	'author' => 'Bartosz "V" Bentkowski, Damian Jóźwiak, Łukasz Konieczny, Sebastian Marzjan',
-	'description' => 'WikiaHubs V3',
-	'version' => 1.0
+	'author' => array(
+		'Bartosz "V" Bentkowski',
+		'Damian Jóźwiak', 
+		'Łukasz Konieczny',
+		'Sebastian Marzjan'
+	),
+	'descriptionmsg' => 'wikiahubs-v3-desc',
+	'version' => 1.0,
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaHubsV3'
 );
 
 $wgAutoloadClasses['WikiaHubsV3Page'] =  $dir . 'WikiaHubsV3Page.class.php';

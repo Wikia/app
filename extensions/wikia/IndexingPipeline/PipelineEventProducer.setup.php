@@ -1,5 +1,12 @@
 <?php
 
+$wgExtensionCredits[ 'other' ][ ] = array(
+	'name' => 'IndexingPipeline',
+	'author' => 'Wikia',
+	'descriptionmsg' => 'indexingpipeline-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/IndexingPipeline',
+);
+
 $dir = dirname( __FILE__ );
 
 //i18n

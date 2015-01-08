@@ -80,6 +80,7 @@ In generale, Wikia non esamina né approva il contenuto di questa o di qualsiasi
 );
 
 $messages['qqq'] = array(
+	'content-warning-desc' => '{{desc}}',
 	'content-warning-title' => 'The main title for content warning.',
 	'content-warning-body' => 'The body of content warning. $1 is domain name.',
 	'content-warning-button-continue' => 'Button to agree to the content.',

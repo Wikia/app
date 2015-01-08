@@ -1,5 +1,12 @@
 <?php
 
+$wgExtensionCredits[ 'other' ][ ] = array(
+	'name' => 'JsonFormat',
+	'author' => 'Wikia',
+	'descriptionmsg' => 'jsonformat-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/JsonFormat',
+);
+
 $dir = dirname(__FILE__);
 $app = F::app();
 
