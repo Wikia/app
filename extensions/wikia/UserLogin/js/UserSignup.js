@@ -1,19 +1,24 @@
-/* global WikiaForm, UserSignupAjaxForm */
+/* global WikiaForm, UserSignupAjaxForm, GlobalNotification */
 (function () {
 	'use strict';
 
 	var UserSignup = {
 		inputsToValidate: ['userloginext01', 'email', 'userloginext02', 'birthday'],
 		notEmptyFields: ['userloginext01', 'email', 'userloginext02', 'birthday', 'birthmonth', 'birthyear'],
-		captchaField: window.wgUserLoginDisableCaptcha ? '' : 'recaptcha_response_field',
 		invalidInputs: {},
+		useCaptcha: !window.wgUserLoginDisableCaptcha,
 
 		/**
 		 * Enable user signup form with ajax validation
 		 */
 		init: function () {
 			this.wikiaForm = new WikiaForm('#WikiaSignupForm');
-			this.submitButton = this.wikiaForm.inputs.submit;
+			this.captchaField = this.useCaptcha ? 'recaptcha_response_field' : '';
+			if (!this.captchaLoaded()) {
+				this.handleCaptchaLoadError();
+				return;
+			}
+
 			this.signupAjaxForm = new UserSignupAjaxForm({
 				wikiaForm: this.wikiaForm,
 				inputsToValidate: this.inputsToValidate,
@@ -22,35 +27,35 @@
 				captchaField: this.captchaField
 			});
 
-			this.checkCaptcha();
-
 			this.initOptIn();
 			this.setCountryValue();
 			this.setupValidation();
 			this.termsOpenNewTab();
 		},
 
-		checkCaptcha: function () {
-			var $captchaField = $('#' + this.captchaField),
-				$captchaImg,
-				captchaImgSrc,
-				testImg;
+		/**
+		 * Check if the captcha solution is loaded successfully (UC-202)
+		 * @returns {boolean}
+		 */
+		captchaLoaded: function () {
+			var $captchaInput;
 
-			if (!$captchaField.length) {
-				return;
+			if (!this.useCaptcha) {
+				return true;
 			}
 
-			$captchaImg = $('#recaptcha_challenge_image');
-			captchaImgSrc = $captchaImg.attr('src');
-			testImg = new Image();
-			testImg.src = captchaImgSrc;
-			testImg.style.display = 'none';
-			testImg.onerror = function () {
-				// handle error
-//				alert('error');
-			};
-			document.body.appendChild(testImg);
+			$captchaInput = $('#' + this.captchaField);
+			return !!$captchaInput.length;
+		},
 
+		/**
+		 * Captcha is required for signup, so if it fails to load, disable the form
+		 * fields and inform the user. Note, this is different from when a user
+		 * fails to match the blurry word.
+		 */
+		handleCaptchaLoadError: function () {
+			this.wikiaForm.disableAll();
+			GlobalNotification.show($.msg('usersignup-page-captcha-load-fail'), 'error');
 		},
 
 		/**

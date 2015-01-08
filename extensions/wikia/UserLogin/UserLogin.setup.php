@@ -43,7 +43,10 @@ $wgExtensionMessagesFiles['UserSignup'] = $dir . 'UserSignup.i18n.php';
 $wgExtensionMessagesFiles['UserSignupAliases'] = $dir . 'UserSignup.alias.php';
 $wgExtensionMessagesFiles['WikiaConfirmEmail'] = $dir . 'WikiaConfirmEmail.i18n.php';
 
-JSMessages::registerPackage('UserLogin', array('userlogin-login-*'));
+JSMessages::registerPackage('UserLogin', ['userlogin-login-*']);
+JSMessages::registerPackage('UserSignup', [
+	'usersignup-page-captcha-load-fail'
+]);
 
 // special pages
 $wgSpecialPages['Userlogin'] = 'UserLoginSpecialController';
