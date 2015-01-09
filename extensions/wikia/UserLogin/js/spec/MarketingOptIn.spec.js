@@ -11,13 +11,16 @@ describe('UserLogin Marketing Opt In', function () {
 				wpMarketingOptIn: {
 					length: 1
 				}
-			}
+			},
+			getInputGroup: $.noop
 		};
 
 	it ('should throw an exception', function () {
 		wikiaFormMock.inputs.wpMarketingOptIn.length = 0;
 		optIn = modules['usersignup.marketingOptIn'](geoMock);
-		expect(optIn.init(wikiaFormMock)).toThrow();
+		expect(function () {
+			optIn.init(wikiaFormMock);
+		}).toThrow();
 	});
 
 	it ('should check the box in the England', function () {
