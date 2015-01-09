@@ -25,13 +25,13 @@
 	 * Use deferreds to avoid loading and instantiating Target multiple times.
 	 * @returns {jQuery.Promise}
 	 */
-	// Wikia change - 
+	// Wikia change -
 	function getTarget() {
 		var resources, loadTargetDeferred;
 		if ( !targetDeferred ) {
 			targetDeferred = $.Deferred();
 			loadTargetDeferred = $.Deferred();
-			mw.loader.using( 'ext.visualEditor.viewPageTarget', loadTargetDeferred.resolve, loadTargetDeferred.reject );
+			mw.loader.using( 'ext.visualEditor.wikia.oasisViewPageTarget', loadTargetDeferred.resolve, loadTargetDeferred.reject );
 			$.when(
 				$.getResources( [
 					wgResourceBasePath + '/resources/wikia/libraries/vignette/vignette.js',
@@ -39,7 +39,7 @@
 				] ),
 				loadTargetDeferred
 			).done( function() {
-				var target = new ve.init.mw.ViewPageTarget();
+				var target = new ve.init.wikia.ViewPageTarget();
 				target.$element.insertAfter( '#mw-content-text' );
 
 				// Transfer methods

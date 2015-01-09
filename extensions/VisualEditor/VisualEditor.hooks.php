@@ -39,7 +39,7 @@ class VisualEditorHooks {
 	public static function onBeforePageDisplay( OutputPage &$output, Skin &$skin ) {
 		// Wikia change
 		if ( self::isAvailable( $skin ) ) {
-			$output->addModules( array( 'ext.visualEditor.wikiaViewPageTarget.init' ) );
+			$output->addModules( array( 'ext.visualEditor.wikia.viewPageTarget.init' ) );
 		}
 		//$output->addModules( array( 'ext.visualEditor.viewPageTarget.init' ) );
 		//$output->addModuleStyles( array( 'ext.visualEditor.viewPageTarget.noscript' ) );
