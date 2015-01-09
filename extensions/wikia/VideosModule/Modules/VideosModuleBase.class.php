@@ -122,7 +122,6 @@ abstract class Base extends \WikiaModel {
 	protected function getCacheKey() {
 		$cacheKey = wfSharedMemcKey(
 			self::CACHE_VERSION,
-			__CLASS__,
 			$this->userRegion,
 			$this->source
 		);
