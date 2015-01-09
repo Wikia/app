@@ -404,7 +404,7 @@ describe('AdLogicPageParams', function () {
 		expect(params.ref).toBe('direct');
 
 		params = getParams({}, {
-			document: { referrer: 'http://gta.wikia.com/wiki/Special:Search' },
+			document: { referrer: 'http://gta.wikia.com/wiki/Special:Search?search=text' },
 			hostname: 'gta.wikia.com'
 		});
 
@@ -418,7 +418,7 @@ describe('AdLogicPageParams', function () {
 		expect(params.ref).toBe('wiki');
 
 		params = getParams({}, {
-			document: { referrer: 'http://gaming.wikia.com/wiki/Special:Search' },
+			document: { referrer: 'http://gaming.wikia.com/wiki/Special:Search?search=text' },
 			hostname: 'gta.wikia.com'
 		});
 
@@ -432,6 +432,13 @@ describe('AdLogicPageParams', function () {
 		expect(params.ref).toBe('wikia');
 
 		params = getParams({}, {
+			document: { referrer: 'http://wowwiki.com/' },
+			hostname: 'gta.wikia.com'
+		});
+
+		expect(params.ref).toBe('wikia');
+
+		params = getParams({}, {
 			document: { referrer: 'http://www.google.com/' },
 			hostname: 'gta.wikia.com'
 		});
@@ -439,7 +446,7 @@ describe('AdLogicPageParams', function () {
 		expect(params.ref).toBe('external_search');
 
 		params = getParams({}, {
-			document: { referrer: 'http://yahoo.com' },
+			document: { referrer: 'http://yahoo.com/' },
 			hostname: 'gta.wikia.com'
 		});
 

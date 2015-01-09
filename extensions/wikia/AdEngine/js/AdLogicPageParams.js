@@ -137,28 +137,43 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 
 
 	function getRefParam() {
-		var ref = doc.referrer;
+		var ref = doc.referrer,
+			hostnameMatch,
+			refHostname,
+			wikiDomains = [
+				'ffxiclopedia.org', 'jedipedia.de',
+				'marveldatabase.com', 'memory-alpha.org', 'uncyclopedia.org',
+				'websitewiki.de', 'wowwiki.com', 'yoyowiki.org'
+			];
 
 		if (!ref || typeof ref !== 'string') {
 			return 'direct';
 		}
 
-		if (ref.indexOf(loc.origin) > -1 && ref.indexOf('Special:Search') > -1) {
-			return 'wiki_search';
+		refHostname = ref.match(/\/\/([^\/]+)\//);
+
+		if (refHostname) {
+			refHostname = refHostname[1];
 		}
 
-		if (ref.indexOf(loc.origin) > -1) {
+		hostnameMatch = refHostname === loc.hostname;
+
+		if (hostnameMatch && ref.indexOf('search=') > -1) {
+			return 'wiki_search';
+		}
+		if (hostnameMatch) {
 			return 'wiki';
 		}
 
-		if (ref.indexOf(win.wgCookieDomain) > -1 && ref.indexOf('Special:Search') > -1) {
+		hostnameMatch = refHostname.indexOf(win.wgCookieDomain) > -1 || wikiDomains.indexOf(refHostname) > -1;
+
+		if (hostnameMatch && ref.indexOf('search=') > -1) {
 			return 'wikia_search';
 		}
 
-		if (ref.indexOf(win.wgCookieDomain) > -1) {
+		if (hostnameMatch) {
 			return 'wikia';
 		}
-
 
 		if (/(google|search\.yahooo|bing|baidu|ask|yandex)/.test(ref)) {
 			return 'external_search';
@@ -215,7 +230,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		};
 
 		if (pvs) {
-			params.pv =  pvs.toString();
+			params.pv = pvs.toString();
 		}
 
 		if (options.includeRawDbName) {
