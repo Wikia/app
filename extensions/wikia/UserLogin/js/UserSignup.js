@@ -57,30 +57,33 @@
 		handleCaptchaLoadError: function () {
 			this.wikiaForm.disableAll();
 
+			function createModal(uiModal) {
+				var modalConfig = {
+					vars: {
+						id: 'catchaLoadErrorModal',
+						classes: ['captcha-load-error-modal'],
+						size: 'medium',
+						title: $.msg('usersignup-page-captcha-load-fail-title'),
+						content: $.msg('usersignup-page-captcha-load-fail-text')
+					}
+				};
+
+				uiModal.createComponent(modalConfig, function (captchaErrorModal) {
+					captchaErrorModal.show();
+				});
+			}
+
 			require(['wikia.ui.factory'], function (uiFactory) {
 				$.when(uiFactory.init('modal'))
-					.then(function (uiModal) {
-						var modalConfig = {
-							vars: {
-								id: 'catchaLoadErrorModal',
-								classes: ['captcha-load-error-modal'],
-								size: 'medium',
-								title: $.msg('usersignup-page-captcha-load-fail-title'),
-								content: $.msg('usersignup-page-captcha-load-fail-text')
-							}
-						};
-
-						uiModal.createComponent(modalConfig, function (captchaErrorModal) {
-							captchaErrorModal.show();
-						});
-					});
+					.then(createModal);
 			});
 
-			Wikia.tracker.track({
-				action: Wikia.tracker.actions.ERROR,
+			Wikia.Tracker.track({
+				action: Wikia.Tracker.ACTIONS.ERROR,
 				category: 'user-sign-up',
 				label: 'captcha-load-fail',
-				trackingMethod: 'both'
+				trackingMethod: 'both',
+				country: Wikia.geo.getCountryCode()
 			});
 		},
 
