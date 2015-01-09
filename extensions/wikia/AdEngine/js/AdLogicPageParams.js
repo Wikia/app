@@ -175,7 +175,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			return 'wikia';
 		}
 
-		if (/(google|search\.yahooo|bing|baidu|ask|yandex)/.test(ref)) {
+		if (/(google|search\.yahooo|bing|baidu|ask|yandex)/.test(refHostname)) {
 			return 'external_search';
 		}
 
