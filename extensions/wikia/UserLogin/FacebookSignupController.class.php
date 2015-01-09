@@ -183,8 +183,12 @@ class FacebookSignupController extends WikiaController {
 		$signupForm->addNewAccount();
 
 		$result = ( $signupForm->msgType == 'error' ) ? 'error' : 'ok' ;
-		if ( $result == 'ok' && !$signupForm->getHasConfirmedEmail() ) {
-			$result = 'unconfirm';
+		if ( $result == 'ok' ) {
+			\FacebookClientHelper::track( 'facebook-signup-join-wikia' );
+
+			if ( !$signupForm->getHasConfirmedEmail() ) {
+				$result = 'unconfirm';
+			}
 		}
 
 		$this->response->setData( [
