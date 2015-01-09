@@ -197,7 +197,6 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			zone1,
 			zone2,
 			params,
-			amazonParams,
 			targeting = adContext.getContext().targeting;
 
 		options = options || {};
