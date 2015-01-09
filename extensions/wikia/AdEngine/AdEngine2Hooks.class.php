@@ -12,7 +12,6 @@ class AdEngine2Hooks {
 	const ASSET_GROUP_ADENGINE_AMAZON_MATCH = 'adengine2_amazon_match_js';
 	const ASSET_GROUP_ADENGINE_TRACKING = 'adengine2_tracking_js';
 	const ASSET_GROUP_ADENGINE_LATE = 'adengine2_late_js';
-	const ASSET_GROUP_SPOTLIGHTS = 'adengine2_spotlights_js';
 	const ASSET_GROUP_LIFTIUM = 'liftium_ads_js';
 	const ASSET_GROUP_LIFTIUM_EXTRA = 'liftium_ads_extra_js';
 	const ASSET_GROUP_TOP_INCONTENT_JS = 'adengine2_top_in_content_boxad_js';
@@ -96,10 +95,6 @@ class AdEngine2Hooks {
 		// GA vars
 		$vars['wgGaHasAds'] = isset($adContext['opts']['showAds']);
 
-		if ($wg->EnableOpenXSPC) {
-			$vars['wgEnableOpenXSPC'] = $wg->EnableOpenXSPC;
-		}
-
 		return true;
 	}
 
@@ -123,14 +118,12 @@ class AdEngine2Hooks {
 		if ( AdEngine2Service::areAdsInHead() ) {
 			if ( AdEngine2Service::shouldLoadLateQueue() ) {
 				array_splice( $jsAssets, $coreGroupIndex + 1, 0, self::ASSET_GROUP_ADENGINE_LATE );
-				array_splice( $jsAssets, $coreGroupIndex + 2, 0, self::ASSET_GROUP_SPOTLIGHTS );
 			}
 			// The ASSET_GROUP_ADENGINE_LATE package was added to the blocking group
 		} else {
 			array_splice( $jsAssets, $coreGroupIndex + 1, 0, self::ASSET_GROUP_ADENGINE );
 			if ( AdEngine2Service::shouldLoadLateQueue() ) {
 				array_splice( $jsAssets, $coreGroupIndex + 2, 0, self::ASSET_GROUP_ADENGINE_LATE );
-				array_splice( $jsAssets, $coreGroupIndex + 3, 0, self::ASSET_GROUP_SPOTLIGHTS );
 			}
 		}
 
