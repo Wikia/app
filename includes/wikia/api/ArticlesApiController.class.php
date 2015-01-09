@@ -983,10 +983,10 @@ class ArticlesApiController extends WikiaApiController {
 			}
 
 			if ( $redirect !== 'no' && $article->getPage()->isRedirect() ) {
-				// this will be equal to false if redirect is not local
+				// false, Title object of local target or string with URL
 				$followRedirect = $article->getPage()->followRedirect();
 
-				if ( $followRedirect ) {
+				if ( $followRedirect && !is_string( $followRedirect ) ) {
 					$article = Article::newFromTitle( $followRedirect, RequestContext::getMain() );
 				}
 			}
