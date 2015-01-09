@@ -975,7 +975,12 @@ class ArticlesApiController extends WikiaApiController {
 			}
 
 			if ( $redirect !== 'no' && $article->getPage()->isRedirect() ) {
-				$article = Article::newFromTitle( $article->getPage()->followRedirect(), RequestContext::getMain() );
+				// false, Title object of local target or string with URL
+				$followRedirect = $article->getPage()->followRedirect();
+
+				if ( $followRedirect && !is_string( $followRedirect ) ) {
+					$article = Article::newFromTitle( $followRedirect, RequestContext::getMain() );
+				}
 			}
 
 			//Response is based on wikiamobile skin as this already removes inline style
