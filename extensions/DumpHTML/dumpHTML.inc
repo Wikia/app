@@ -190,7 +190,7 @@ class DumpHTML {
 		$mainPage = $mainPageObj->getPrefixedDBkey();
 
 		for ( $id = $start, $i = 0; $id <= $end; $id += $this->sliceDenominator, $i++ ) {
-			wfWaitForSlaves( 20 );
+			wfWaitForSlaves();
 			if ( !( $i % self::REPORTING_INTERVAL) ) {
 				print "Processing ID: $id\r";
 				$this->setCheckpoint( 'article', $id );
@@ -290,7 +290,7 @@ class DumpHTML {
 					continue;
 				}
 
-				wfWaitForSlaves( 10 );
+				wfWaitForSlaves();
 				if ( !( ++$i % self::REPORTING_INTERVAL ) ) {
 					print "{$row->img_name}\n";
 					if ( $row->img_name !== 'done' ) {
@@ -394,7 +394,7 @@ class DumpHTML {
 					continue;
 				}
 
-				wfWaitForSlaves( 10 );
+				wfWaitForSlaves();
 				if ( !(++$i % self::REPORTING_INTERVAL ) ) {
 					print "{$row->cl_to}\n";
 					if ( $row->cl_to != 'done' ) {

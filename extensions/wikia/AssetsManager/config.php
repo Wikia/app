@@ -628,10 +628,7 @@ $config['wikiamobile_js_body_full'] = array(
 		'//extensions/wikia/WikiaMobile/js/curtain.js',
 
 		//entrypoint
-		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
-
-		//Script for VDNA promotion
-		'//extensions/wikia/WikiaMobile/js/VDNA.js',
+		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js'
 	)
 );
 
@@ -2231,14 +2228,5 @@ $config['facebook_client_special_connect'] = [
 	'skin' => ['oasis'],
 	'assets' => [
 		'//extensions/wikia/FacebookClient/scripts/SpecialFacebookConnect.js',
-	]
-];
-
-// Deprecated Facebook code - remove when we've done a full switch to FacebookClient
-$config['fbconnect_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis', 'monobook'],
-	'assets' => [
-		'//extensions/FBConnect/fbconnect.js',
 	]
 ];

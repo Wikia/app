@@ -198,7 +198,7 @@ class GlobalWatchlistBot {
 		$aPages = array();
 
 		$dbr_wiki = wfGetDB( DB_SLAVE, 'stats', $sWikiDb );
-		wfWaitForSlaves( 5 );
+		wfWaitForSlaves();
 
 		if ( $dbr_wiki->tableExists( 'watchlist' ) ) {
 			$oResource = $dbr_wiki->select(
