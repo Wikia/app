@@ -118,54 +118,16 @@
 	};
 
 	/**
-	 * Load the facebook JS library, either v1.x or v2.x
+	 * Load the facebook JS library v2.x
 	 * @param {function} [callback] Function to be called after library is loaded
 	 * @returns {jQuery} Returns a jQuery promise
 	 */
 	$.loadFacebookAPI = function (callback) {
-		if (window.wgEnableFacebookClientExt) {
-			return loadFacebookV2(callback);
-		} else {
-			return loadFacebookV1(callback);
-		}
-	};
-
-	/**
-	 * Load the Facebook v1.x sdk
-	 * @private
-	 * @param {function} [callback] Function to be called after library is loaded
-	 * @todo Remove this once we've finished the upgrade to v2.x
-	 */
-	function loadFacebookV1(callback) {
-		return $.loadLibrary(
-			'Facebook API',
-			window.fbScript || '//connect.facebook.net/en_US/all.js',
-			typeof window.FB,
-			function () {
-				// always initialize FB API when SDK is loaded on-demand
-				if (window.onFBloaded) {
-					window.onFBloaded();
-				}
-
-				if (typeof callback === 'function') {
-					callback();
-				}
-			}
-		);
-	}
-
-	/**
-	 * Load the Facebook v2.x sdk
-	 * @private
-	 * @param {function} [callback] Function to be called after library is loaded
-	 * @todo This will be the public $.loadFacebookAPI function when we're done with the migration
-	 */
-	function loadFacebookV2(callback) {
 		var $deferred = $.Deferred();
 
 		// if library is already loaded, fbAsyncInit won't be called,
 		// so make sure callback function still gets called
-		if (window.FB){
+		if (window.FB) {
 			if (typeof callback === 'function') {
 				callback();
 			}
@@ -195,7 +157,7 @@
 		}
 
 		return $deferred;
-	}
+	};
 
 	/**
 	 * Load the facebook API on every page until the upgrade to v2.x is stable and parser cache has cleared.

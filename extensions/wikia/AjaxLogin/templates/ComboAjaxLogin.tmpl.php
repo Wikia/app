@@ -3,27 +3,6 @@ global $wgAuth, $wgUser, $wgEnableEmail,$wgStylePath,$wgBlankImgUrl;
 $isOasis = F::app()->checkSkin( ['oasis', 'venus'] );
 ?>
 <div id="AjaxLoginBox" title="<?php print wfMsg('comboajaxlogin-createlog') ?>">
-	<?php
-		global $wgEnableFacebookConnectExt;
-		if(!empty($wgEnableFacebookConnectExt)){
-			?><h1><?php
-				if( $isOasis ){
-					// Don't mention Facebook in the h1 on Oasis (doesn't look right).
-					print wfMsg("fbconnect-wikia-login-or-create");
-				} else {
-					print wfMsg("fbconnect-wikia-login-w-facebook");
-				}
-			?></h1>
-			<div id="AjaxLoginFBStart">
-				<?php print '<fb:login-button id="fbAjaxLoginConnect" size="large" length="short"'.FBConnect::getPermissionsAttribute().FBConnect::getOnLoginAttribute().'></fb:login-button>'; ?>
-			</div>
-			<div class="or-div">
-				<span><?php print wfMsg('fbconnect-or'); ?></span>
-			</div>
-			<?php
-		}
-	?>
-
 	<div class="<?= ( $isOasis ) ? 'modal-tabs' : 'wikia-tabs' ?>" id="AjaxLoginButtons">
 		<ul<?= ( $isOasis ) ? ' class="tabs"' : '' ?>>
 			<li class="accent <?php echo ($showLogin ? 'selected':''); ?> " id="wpGoLogin" onclick="AjaxLogin.showLogin(this); return false;"><a href="<? echo htmlspecialchars($loginaction); ?>" ><?php print wfMsg("login") ?></a><img class="chevron" src="<?= $wgBlankImgUrl; ?>"></li>

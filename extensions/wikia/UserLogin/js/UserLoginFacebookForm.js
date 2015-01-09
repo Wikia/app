@@ -12,7 +12,7 @@
 			var values = {
 				username: this.inputs.username.val(),
 				password: this.inputs.password.val(),
-				signupToken: this.inputs.logintoken.val()
+				signupToken: this.inputs.loginToken.val()
 			};
 
 			// cache redirect url for after form is complete

@@ -501,7 +501,7 @@ $messages['diq'] = array(
 	'wikiaquiz-moreinfoarticle-label' => 'Wesiqe',
 	'wikiaquiz-moreinfolinktext-label' => 'Metnê Gri',
 	'wikiaquiz-question-label' => 'Pers',
-	'wikiaquiz-image-label' => 'Resim (opsiyonel)',
+	'wikiaquiz-image-label' => 'Resım (opsiyonel)',
 	'wikiaquiz-quiz-label' => 'Quiz',
 	'wikiaquiz-questions-label' => 'Persi',
 	'wikiaquiz-answers-label' => 'Cıwab',
@@ -690,6 +690,13 @@ $messages['fr'] = array(
 	'wikiaquiz-game-email-error' => 'Une erreur est survenue à l’envoi de ce courriel : $1',
 	'wikiaquiz-game-challenge' => 'Défiez vos amis d’y participer !',
 	'wikiaquiz-game-mute' => 'Muet',
+);
+
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'wikiaquiz-cancel-label' => 'Annulearje',
 );
 
 /** Galician (galego)

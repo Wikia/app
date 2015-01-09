@@ -10,6 +10,15 @@ class FacebookSignupController extends WikiaController {
 	const SIGNUP_USERNAME_KEY = 'username';
 	const SIGNUP_PASSWORD_KEY = 'password';
 
+	/** @var \FacebookClientFactory */
+	protected $fbClientFactory;
+
+	public function __construct() {
+		parent::__construct();
+
+		$this->fbClientFactory = new \FacebookClientFactory();
+	}
+
 	/**
 	 * This method is called when user successfully logins using FB credentials
 	 *
@@ -21,11 +30,7 @@ class FacebookSignupController extends WikiaController {
 		$fbUserId = $this->getFacebookUserId();
 
 		// try to get connected Wikia account
-		if ( F::app()->wg->EnableFacebookClientExt ) {
-			$user = FacebookClient::getInstance()->getWikiaUser( $fbUserId );
-		} else {
-			$user = FBConnectDB::getUser( $fbUserId );
-		}
+		$user = FacebookClient::getInstance()->getWikiaUser( $fbUserId );
 
 		if ( ( $user instanceof User ) && ( $fbUserId !== 0 ) ) {
 			$this->errorMsg = '';
@@ -103,28 +108,14 @@ class FacebookSignupController extends WikiaController {
 			return false;
 		}
 
-		// The new FB SDK doesn't define contact_email
-		if ( $this->wg->EnableFacebookClientExt ) {
-			$this->fbEmail = $resp->getVal( 'email', false );
-		} else {
-			$this->fbEmail = $resp->getVal( 'contact_email', false );
-			$email = $resp->getVal( 'email', false );
-
-			// check for proxy email
-			if ( $this->fbEmail != $email ) {
-				$this->fbEmail = wfMessage( 'usersignup-facebook-proxy-email' )->escaped();
-			}
-		}
+		// Note: The FB SDK 1.* equivalent for email was contact_email
+		$this->fbEmail = $resp->getVal( 'email', false );
 
 		$returnTo = $this->wg->request->getVal( 'returnto' );
 		$returnToQuery = $this->wg->request->getVal( 'returntoquery' );
 
 		// Temporary code until we switch fully to FacebookClient
-		if ( F::app()->wg->EnableFacebookClientExt ) {
-			$returnToUrl = FacebookClient::getInstance()->getReturnToUrl( $returnTo, $returnToQuery );
-		} else {
-			$returnToUrl = FBConnect::getReturnToUrl( $returnTo, $returnToQuery );
-		}
+		$returnToUrl = FacebookClient::getInstance()->getReturnToUrl( $returnTo, $returnToQuery );
 
 		$returnToParams = 'returnto=' . $returnTo;
 		if ( $returnToQuery ) {
@@ -137,9 +128,6 @@ class FacebookSignupController extends WikiaController {
 		$this->returnToUrl = $returnToUrl;
 
 		$this->loginToken = UserLoginHelper::getSignupToken();
-
-		$specialPage = $this->wg->EnableFacebookClientExt ? 'FacebookConnect' : 'Connect';
-		$this->connectUrl = SpecialPage::getTitleFor( $specialPage )->getLocalUrl();
 	}
 
 	public function modalHeader() {
@@ -155,6 +143,15 @@ class FacebookSignupController extends WikiaController {
 	 */
 	public function signup() {
 
+		// Check that Facebook account is not in use!
+		$fbId = \FacebookClient::getInstance()->getUserId();
+		if ( $this->fbClientFactory->isFacebookIdInUse( $fbId ) ) {
+			$errorMessageKey = 'fbconnect-error-fb-account-in-use';
+			$messageParams = [ $this->request->getVal( 'username' ) ];
+			$this->setErrorResponse( $errorMessageKey, $messageParams );
+			return;
+		}
+
 		$signupResponse = $this->app->sendRequest( 'FacebookSignup', 'createAccount' )->getData();
 
 		switch ( $signupResponse['result'] ) {
@@ -167,7 +164,7 @@ class FacebookSignupController extends WikiaController {
 			case 'error':
 			default:
 				// pass errors to the frontend form
-				$this->response->setData($signupResponse);
+				$this->response->setData( $signupResponse );
 				break;
 		}
 	}
@@ -187,12 +184,14 @@ class FacebookSignupController extends WikiaController {
 
 		$result = ( $signupForm->msgType == 'error' ) ? 'error' : 'ok' ;
 		if ( $result == 'ok' && !$signupForm->getHasConfirmedEmail() ) {
-			$result = 'unconfirm'	;
+			$result = 'unconfirm';
 		}
 
-		$this->result = $result;
-		$this->msg = $signupForm->msg;
-		$this->errParam = $signupForm->errParam;
+		$this->response->setData( [
+			'result' => $result,
+			'msg' => $signupForm->msg,
+			'errParam' => $signupForm->errParam,
+		] );
 	}
 
 	/**
@@ -219,8 +218,10 @@ class FacebookSignupController extends WikiaController {
 			return;
 		}
 
-		$map = $this->createUserMap( $user->getId(), $fbUserId );
-		if ( !$map ) {
+		$status = $this->fbClientFactory->connectToFacebook( $user->getId(), $fbUserId );
+		if ( ! $status->isGood() ) {
+			list( $message, $params ) = $this->fbClientFactory->getStatusError( $status );
+			$this->setErrorResponse( $message, $params );
 			return;
 		}
 
@@ -242,48 +243,13 @@ class FacebookSignupController extends WikiaController {
 
 		if ( $fbUserId > 0 ) {
 
-			// Toggle on new/old FB client
-			if ( F::app()->wg->EnableFacebookClientExt ) {
-				$data = FacebookClient::getInstance()->getUserInfoAsArray( $fbUserId );
-			} else {
-				// call Facebook API
-				$FBApi = new FBConnectAPI();
-				$data  = $FBApi->getUserInfo( $this->fbUserId, array(
-					'first_name',
-					'name',
-					'sex',
-					'timezone',
-					'locale',
-					'username',
-					'contact_email',
-					'email',
-				) );
-			}
+			$data = FacebookClient::getInstance()->getUserInfoAsArray( $fbUserId );
 
 			// BugId:24400
 			if ( !empty( $data ) ) {
-				$this->response->setData($data);
+				$this->response->setData( $data );
 			}
 		}
-	}
-
-	/**
-	 * Create a user mapping to associate given Wikia user id with FB id
-	 *
-	 * @param $wikiaUserId
-	 * @param $fbUserId
-	 * @return FacebookMapModel|null
-	 */
-	protected function createUserMap( $wikiaUserId, $fbUserId ) {
-		// Returns an existing mapping or attempts to create one
-		$userMap = \FacebookMapModel::createUserMapping( $wikiaUserId, $fbUserId );
-
-		if ( !$userMap ) {
-			$this->setAjaxyErrorResponse( 'userlogin-error-fbconnect' );
-			return null;
-		}
-
-		return $userMap;
 	}
 
 	/**
@@ -294,7 +260,7 @@ class FacebookSignupController extends WikiaController {
 	protected function getValidFbUserId() {
 		$fbUserId = FacebookClient::getInstance()->getUserId();
 		if ( !$fbUserId ) {
-			$this->setAjaxyErrorResponse( 'userlogin-error-invalidfacebook', '' );
+			$this->setErrorResponse( 'userlogin-error-invalidfacebook' );
 			return null;
 		}
 
@@ -329,7 +295,7 @@ class FacebookSignupController extends WikiaController {
 		}
 
 		if ( $messageCode ) {
-			$this->setAjaxyErrorResponse( $messageCode, $errorParam );
+			$this->setErrorResponse( $messageCode, [], $errorParam );
 			return null;
 		}
 
@@ -358,13 +324,14 @@ class FacebookSignupController extends WikiaController {
 	/**
 	 * Set a normalized error response meant for Ajax calls
 	 *
-	 * @param string $messageKey an i18n message key
+	 * @param string $messageKey i18n error message key
+	 * @param array $messageParams message parameters
 	 * @param string|null $errorParam the error key
 	 */
-	protected function setAjaxyErrorResponse( $messageKey, $errorParam = null ) {
+	protected function setErrorResponse( $messageKey, array $messageParams = [], $errorParam = null ) {
 		$this->response->setData( [
 			'result' => 'error',
-			'msg' => wfMessage( $messageKey )->escaped(),
+			'msg' => wfMessage( $messageKey, $messageParams )->escaped(),
 			'errParam' => $errorParam,
 		] );
 	}
@@ -375,13 +342,6 @@ class FacebookSignupController extends WikiaController {
 	 * If no user is logged in, then an ID of 0 is returned.
 	 */
 	private function getFacebookUserId() {
-		// Toggle on new/old FB client
-		if ( F::app()->wg->EnableFacebookClientExt ) {
-			return FacebookClient::getInstance()->getUserId();
-		} else {
-			$fbApi = new FBConnectAPI();
-
-			return $fbApi->user();
-		}
+		return FacebookClient::getInstance()->getUserId();
 	}
 }

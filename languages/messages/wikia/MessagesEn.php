@@ -904,29 +904,6 @@ hu',
 # Local Wiki Email Preference
 'prefs-wikiemail' => '{{SITENAME}} Email Options',
 
-# Facebook Profile Sync and Connect
-'fb-sync-button' => 'Sync my profile',
-'fb-sync-realname' => 'Real Name',
-'fb-sync-birthday' => 'Birthday',
-'fb-sync-relationshipstatus' => 'Relationship Status',
-'fb-sync-languages' => 'Languages',
-'fb-sync-hometown' => 'Hometown',
-'fb-sync-currentlocation' => 'Current Location',
-'fb-sync-education' => 'Education',
-'fb-sync-work' => 'Work History',
-'fb-sync-work-at' => ' at ',
-'fb-sync-educationwith' => ' with: ',
-'fb-sync-gender' => 'Gender',
-'fb-sync-religiousviews' => 'Religious Views',
-'fb-sync-politicalviews' => 'Political Views',
-'fb-sync-website' => 'Website',
-'fb-sync-interestedin' => 'Interested in',
-'fb-sync-save' => 'Save in my Wikia profile',
-'fb-sync-permissionerror' => 'Please grant Wikia access to Facebook in order to sync your profile.',
-'fb-sync-success-message' => 'Your profile has been synced with Facebook.',
-
-
-
 #unsubscribe email
 'unsubscribe-email' => 'If you no longer want to receive email from Wikia you can unsubscribe here: $1',
 

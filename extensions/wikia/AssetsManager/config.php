@@ -384,6 +384,7 @@ $config['oasis_anon_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/Exitstitial.js',
+		'//extensions/wikia/UserLogin/js/UserSignupMarketingOptIn.js',
 		'//extensions/wikia/UserLogin/js/UserSignupFacebookForm.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
@@ -397,6 +398,7 @@ $config['oasis_anon_with_new_global_nav_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/Exitstitial.js',
+		'//extensions/wikia/UserLogin/js/UserSignupMarketingOptIn.js',
 		'//extensions/wikia/UserLogin/js/UserSignupFacebookForm.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
@@ -409,6 +411,7 @@ $config['oasis_user_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
+		'//extensions/wikia/UserLogin/js/UserSignupMarketingOptIn.js',
 		'//extensions/wikia/UserLogin/js/UserSignupFacebookForm.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
 	)
@@ -625,10 +628,7 @@ $config['wikiamobile_js_body_full'] = array(
 		'//extensions/wikia/WikiaMobile/js/curtain.js',
 
 		//entrypoint
-		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
-
-		//Script for VDNA promotion
-		'//extensions/wikia/WikiaMobile/js/VDNA.js',
+		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js'
 	)
 );
 
@@ -806,6 +806,7 @@ $config['wikiamobile_usersignup_js'] = array(
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
 		'//extensions/wikia/UserLogin/js/UserSignupAjaxForm.js',
+		'//extensions/wikia/UserLogin/js/UserSignupMarketingOptIn.js',
 		'//extensions/wikia/UserLogin/js/UserSignup.js'
 	)
 );
@@ -1518,7 +1519,7 @@ $config['wikiaphotogallery_slider_scss_wikiamobile'] = array(
 
 $config['wikia_photo_gallery_js'] = [
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis', 'venus'],
+	'skin' => ['oasis', 'venus', 'monobook'],
 	'assets' => [
 		'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js',
 	]
@@ -1526,7 +1527,7 @@ $config['wikia_photo_gallery_js'] = [
 
 $config['wikia_photo_gallery_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => ['oasis', 'venus'],
+	'skin' => ['oasis', 'venus', 'monobook'],
 	'assets' => [
 		'//extensions/wikia/WikiaPhotoGallery/css/gallery.scss',
 	]
@@ -1534,7 +1535,7 @@ $config['wikia_photo_gallery_scss'] = [
 
 $config['wikia_photo_gallery_slideshow_js'] = [
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis', 'venus'],
+	'skin' => ['oasis', 'venus', 'monobook'],
 	'assets' => [
 		'//resources/wikia/libraries/jquery/slideshow/jquery-slideshow-0.4.js',
 		'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slideshow.js',
@@ -1543,7 +1544,7 @@ $config['wikia_photo_gallery_slideshow_js'] = [
 
 $config['wikia_photo_gallery_slideshow_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => ['oasis', 'venus'],
+	'skin' => ['oasis', 'venus', 'monobook'],
 	'assets' => [
 		'//extensions/wikia/WikiaPhotoGallery/css/slideshow.scss',
 	]
@@ -1551,7 +1552,7 @@ $config['wikia_photo_gallery_slideshow_scss'] = [
 
 $config['wikia_photo_gallery_slider_js'] = [
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis', 'venus'],
+	'skin' => ['oasis', 'venus', 'monobook'],
 	'assets' => [
 		'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slider.js',
 	]
@@ -1559,7 +1560,7 @@ $config['wikia_photo_gallery_slider_js'] = [
 
 $config['wikia_photo_gallery_slider_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => ['oasis', 'venus'],
+	'skin' => ['oasis', 'venus', 'monobook'],
 	'assets' => [
 		'//extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.scss',
 	]
@@ -2227,14 +2228,5 @@ $config['facebook_client_special_connect'] = [
 	'skin' => ['oasis'],
 	'assets' => [
 		'//extensions/wikia/FacebookClient/scripts/SpecialFacebookConnect.js',
-	]
-];
-
-// Deprecated Facebook code - remove when we've done a full switch to FacebookClient
-$config['fbconnect_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis', 'monobook'],
-	'assets' => [
-		'//extensions/FBConnect/fbconnect.js',
 	]
 ];

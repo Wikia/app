@@ -52,7 +52,7 @@ class FixJobQueueExplosion extends WikimediaMaintenance {
 			$dbw->insert( 'job', $insertBatch, __METHOD__ );
 			$numBatchesDone++;
 
-			wfWaitForSlaves( 2 );
+			wfWaitForSlaves();
 			if ( $numBatchesDone % 1000 == 0 ) {
 				echo "$start\n";
 			} elseif ( $numBatchesDone % 10 == 0 ) {

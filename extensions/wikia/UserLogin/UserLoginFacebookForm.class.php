@@ -48,12 +48,25 @@ class UserLoginFacebookForm extends UserLoginForm {
 		return $userEmail;
 	}
 
-	function addNewAccount() {
+	/**
+	 * Create a new user account wrapping the code with method callWithCaptchaDisabled to disable
+	 * captcha checking.
+	 *
+	 * @return User A new user object
+	 */
+	public function addNewAccount() {
 		return UserLoginHelper::callWithCaptchaDisabled(function() {
 			return $this->addNewAccountInternal();
 		});
 	}
 
+	/**
+	 * Initialize the user object
+	 *
+	 * @param User $user
+	 * @param bool $autocreate
+	 * @return User
+	 */
 	public function initUser( User $user, $autocreate ) {
 
 		$user = parent::initUser( $user, $autocreate, $this->hasConfirmedEmail );
@@ -83,13 +96,10 @@ class UserLoginFacebookForm extends UserLoginForm {
 	private function connectWithFacebook( User $user ) {
 		$fbId = FacebookClient::getInstance()->getUserId();
 
-		if ( F::app()->wg->EnableFacebookClientExt ) {
-			$mapping = \FacebookMapModel::createUserMapping( $user->getId(), $fbId );
-			return !empty( $mapping );
-		}
+		$fbClientFactory = new \FacebookClientFactory();
+		$status = $fbClientFactory->connectToFacebook( $user->getId(), $fbId );
 
-		FBConnectDB::addFacebookID( $user, $fbId );
-		return true;
+		return $status->isGood();
 	}
 
 	/**
