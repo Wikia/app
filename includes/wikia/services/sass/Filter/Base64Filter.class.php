@@ -52,6 +52,8 @@ class Base64Filter extends Filter {
 		$parts = explode('.', $fileName);
 		$ext = end($parts);
 
+		$base64 = true;
+
 		switch ($ext) {
 			case 'gif':
 			case 'png':
@@ -61,7 +63,8 @@ class Base64Filter extends Filter {
 				$type = 'jpeg';
 				break;
 			case 'svg':
-				$type = 'svg+xml;charset=utf-8'; // include charset
+				$type = 'svg+xml;charset=utf-8,'; // include charset
+				$base64 = false;
 				break;
 			// not supported image type provided
 			default:
@@ -70,10 +73,19 @@ class Base64Filter extends Filter {
 		}
 
 		$content = file_get_contents($fileName);
-		$encoded = base64_encode($content);
+
+		$out = "'data:image/{$type}";
+		if ($base64) {
+			$out .= ';base64;';
+			$content = base64_encode($content);
+		} else {
+			$content = str_replace('#', '%23', $content);
+		}
+		$out .= $content;
+		$out .= "'";
 
 		wfProfileOut(__METHOD__);
-		return "data:image/{$type};base64,{$encoded}";
+		return $out;
 	}
 
 }
