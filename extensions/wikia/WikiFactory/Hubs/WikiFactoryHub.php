@@ -175,7 +175,6 @@ class WikiFactoryHub extends WikiaModel {
 	 */
 
 	public function getVerticalId( $city_id ) {
-
 		global $wgWikiaEnvironment;
 		if ( $wgWikiaEnvironment == WIKIA_ENV_INTERNAL ) {
 			$city_id = 11;
