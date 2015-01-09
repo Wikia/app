@@ -76,7 +76,7 @@ class Base64Filter extends Filter {
 
 		$out = "'data:image/{$type}";
 		if ($base64) {
-			$out .= ';base64;';
+			$out .= ';base64,';
 			$content = base64_encode($content);
 		} else {
 			$content = str_replace('#', '%23', $content);
