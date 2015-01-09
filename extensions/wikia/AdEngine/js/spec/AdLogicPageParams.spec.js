@@ -18,10 +18,15 @@ describe('AdLogicPageParams', function () {
 		};
 	}
 
-	function mockWindow(hostname, amzn_targs) {
+	function mockWindow(document, hostname, amzn_targs) {
+
+		hostname = hostname || 'example.org';
+
 		return {
-			location: {hostname: hostname || 'example.org'},
-			amzn_targs: amzn_targs
+			document: document || {},
+			location: { origin: 'http://' + hostname, hostname: hostname },
+			amzn_targs: amzn_targs,
+			wgCookieDomain: hostname.substr(hostname.indexOf('.'))
 		};
 	}
 
@@ -77,11 +82,14 @@ describe('AdLogicPageParams', function () {
 					return opts.abExperiments || [];
 				},
 				getGroup: function () { return; }
-			} : undefined;
+			} : undefined,
+			windowMock = mockWindow(opts.document, opts.hostname, opts.amzn_targs);
 
 		return modules['ext.wikia.adEngine.adLogicPageParams'](
 			logMock,
-			mockWindow(opts.hostname, opts.amzn_targs),
+			windowMock,
+			windowMock.document,
+			windowMock.location,
 			abTestMock,
 			mockAdContext(targeting),
 			mockPageViewCounter(opts.pvCount),
@@ -383,5 +391,60 @@ describe('AdLogicPageParams', function () {
 		var params = getParams({}, {pvCount: 13});
 
 		expect(params.pv).toBe('13');
+	});
+
+	it('getPageLevelParams ref param', function () {
+		var params;
+
+
+		params = getParams({}, { document: {
+			referrer: ''
+		}});
+
+		expect(params.ref).toBe('direct');
+
+		params = getParams({}, {
+			document: { referrer: 'http://gta.wikia.com/wiki/Special:Search' },
+			hostname: 'gta.wikia.com'
+		});
+
+		expect(params.ref).toBe('wiki_search');
+
+		params = getParams({}, {
+			document: { referrer: 'http://gta.wikia.com/wiki/Other_PAGE' },
+			hostname: 'gta.wikia.com'
+		});
+
+		expect(params.ref).toBe('wiki');
+
+		params = getParams({}, {
+			document: { referrer: 'http://gaming.wikia.com/wiki/Special:Search' },
+			hostname: 'gta.wikia.com'
+		});
+
+		expect(params.ref).toBe('wikia_search');
+
+		params = getParams({}, {
+			document: { referrer: 'http://gaming.wikia.com/wiki/Other_PAGE' },
+			hostname: 'gta.wikia.com'
+		});
+
+		expect(params.ref).toBe('wikia');
+
+		params = getParams({}, {
+			document: { referrer: 'http://www.google.com/' },
+			hostname: 'gta.wikia.com'
+		});
+
+		expect(params.ref).toBe('external_search');
+
+		params = getParams({}, {
+			document: { referrer: 'http://yahoo.com' },
+			hostname: 'gta.wikia.com'
+		});
+
+		expect(params.ref).toBe('external');
+
+
 	});
 });

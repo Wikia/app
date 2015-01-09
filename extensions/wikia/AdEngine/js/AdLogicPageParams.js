@@ -3,17 +3,19 @@
 define('ext.wikia.adEngine.adLogicPageParams', [
 	'wikia.log',
 	'wikia.window',
+	'wikia.document',
+	'wikia.location',
 	require.optional('wikia.abTest'),
 	'ext.wikia.adEngine.adContext',
 	require.optional('ext.wikia.adEngine.adLogicPageViewCounter'),
 	require.optional('ext.wikia.adEngine.amazonMatch'),
 	require.optional('ext.wikia.adEngine.amazonMatchOld'),
 	require.optional('ext.wikia.adEngine.krux')
-], function (log, win, abTest, adContext, pvCounter, amazonMatch, amazonMatchOld, Krux) {
+], function (log, win, doc, loc, abTest, adContext, pvCounter, amazonMatch, amazonMatchOld, Krux) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adLogicPageParams',
-		hostname = win.location.hostname.toString(), // TODO: move to wikia.location module
+		hostname = loc.hostname,
 		maxNumberOfCategories = 3,
 		maxNumberOfKruxSegments = 27, // keep the DART URL part for Krux segments below 500 chars
 		pvs = pvCounter && pvCounter.increment();
@@ -133,6 +135,38 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		return params;
 	}
 
+
+	function getRefParam() {
+		var ref = doc.referrer;
+
+		if (!ref || typeof ref !== 'string') {
+			return 'direct';
+		}
+
+		if (ref.indexOf(loc.origin) > -1 && ref.indexOf('Special:Search') > -1) {
+			return 'wiki_search';
+		}
+
+		if (ref.indexOf(loc.origin) > -1) {
+			return 'wiki';
+		}
+
+		if (ref.indexOf(win.wgCookieDomain) > -1 && ref.indexOf('Special:Search') > -1) {
+			return 'wikia_search';
+		}
+
+		if (ref.indexOf(win.wgCookieDomain) > -1) {
+			return 'wikia';
+		}
+
+
+		if (/(google|search\.yahooo|bing|baidu|ask|yandex)/.test(ref)) {
+			return 'external_search';
+		}
+
+		return 'external';
+	}
+
 	/**
 	 * options
 	 * @param options {includeRawDbName: bool}
@@ -176,7 +210,8 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			hostpre: getHostname(),
 			skin: targeting.skin,
 			lang: targeting.wikiLanguage || 'unknown',
-			wpage: targeting.pageName && targeting.pageName.toLowerCase()
+			wpage: targeting.pageName && targeting.pageName.toLowerCase(),
+			ref: getRefParam()
 		};
 
 		if (pvs) {
