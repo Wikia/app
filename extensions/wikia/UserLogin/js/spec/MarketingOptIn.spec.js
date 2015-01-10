@@ -2,42 +2,75 @@ describe('UserLogin Marketing Opt In', function () {
 	'use strict';
 
 	var optIn,
-		geoMock = {
-			getCountryCode: $.noop,
-			getContinentCode: $.noop
-		},
+		geo,
+		wikiaFormMock;
+
+	beforeEach(function () {
+		geo = modules['wikia.geo']();
+		spyOn(geo, 'getContinentCode').andReturn('');
+		spyOn(geo, 'getCountryCode').andReturn('');
+
 		wikiaFormMock = {
 			inputs: {
-				wpMarketingOptIn: {
-					length: 1
-				}
+				wpMarketingOptIn: $('<input type="checkbox" class="hidden">')
 			},
-			getInputGroup: $.noop
+			getInputGroup: function () {
+				var $div = $('<div></div>');
+				$div.length = 1;
+				return $div;
+			}
 		};
+		wikiaFormMock.inputs.wpMarketingOptIn.length = 1;
+
+		optIn = modules['usersignup.marketingOptIn'](geo);
+	});
 
 	it ('should throw an exception', function () {
 		wikiaFormMock.inputs.wpMarketingOptIn.length = 0;
-		optIn = modules['usersignup.marketingOptIn'](geoMock);
 		expect(function () {
 			optIn.init(wikiaFormMock);
 		}).toThrow();
 	});
 
-	it ('should check the box in the England', function () {
+	it ('should check the box in Europe', function () {
+		var checkedAttr;
 
+		geo.getContinentCode.andReturn('EU');
+		optIn.init(wikiaFormMock);
+		checkedAttr = wikiaFormMock.inputs.wpMarketingOptIn.attr('checked');
+
+		expect(checkedAttr).toBe('checked');
 	});
 
 	it ('should not check the box in Canada', function () {
+		var checkedAttr;
 
+		geo.getCountryCode.andReturn('CA');
+		optIn.init(wikiaFormMock);
+		checkedAttr = wikiaFormMock.inputs.wpMarketingOptIn.attr('checked');
+
+		expect(checkedAttr).toBe(undefined);
 	});
 
 	it ('should hide the box in the US', function () {
+		var isHidden;
 
+		geo.getCountryCode.andReturn('US');
+		optIn.init(wikiaFormMock);
+		isHidden = wikiaFormMock.inputs.wpMarketingOptIn.hasClass('hidden');
+
+		expect(isHidden)
+			.toBe(true);
 	});
 
-	it ('should not hide the box in England', function () {
+	it ('should not hide the box in Europe', function () {
+		var isHidden;
 
+		geo.getContinentCode.andReturn('EU');
+		optIn.init(wikiaFormMock);
+		isHidden = wikiaFormMock.inputs.wpMarketingOptIn.hasClass('hidden');
+
+		expect(isHidden)
+			.toBe(false);
 	});
-
-
 });
