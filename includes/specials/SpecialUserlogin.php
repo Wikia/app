@@ -590,153 +590,29 @@ class LoginForm extends SpecialPage {
 	 * creation.
 	 */
 	public function authenticateUserData() {
-		global $wgUser, $wgAuth;
-
+		global $wgUser, $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret;
 		$this->load();
 
-		/* Wikia change - begin */
-		// This might not be needed once we're upgraded to MW 1.19 since that throws new ReadOnlyError in a few spots (test that).
-		global $wgOut;
-		if ( wfReadOnly() ) {
-			if(is_object($wgOut)){
-				$wgOut->readOnlyPage();
-				return false;
-			} else {
-				$this->mAbortLoginErrorMsg = wfMsg( 'login-abort-readonly' ); // msg is in languages/messages/wikia/MessagesEn.php if we end up deleting this after the upgrade to MW 1.19
-				return self::ABORTED;
-			}
-		}
-		/* Wikia change - end */
+		$oHelios = new \Wikia\Helios\Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
 
-		if ( $this->mUsername == '' ) {
-			return self::NO_NAME;
-		}
+		try {
+			$oLogin = $oHelios->login( $this->mUsername, $this->mPassword );
 
-		// We require a login token to prevent login CSRF
-		// Handle part of this before incrementing the throttle so
-		// token-less login attempts don't count towards the throttle
-		// but wrong-token attempts do.
-		// If the user doesn't have a login token yet, set one.
-		if ( !self::getLoginToken() ) {
-			self::setLoginToken();
-			return self::NEED_TOKEN;
-		}
-		// If the user didn't pass a login token, tell them we need one
-		if ( !$this->mToken ) {
-			return self::NEED_TOKEN;
-		}
-
-		$throttleCount = self::incLoginThrottle( $this->mUsername );
-		if ( $throttleCount === true ) {
-			return self::THROTTLED;
-		}
-
-		// Validate the login token
-		if ( $this->mToken !== self::getLoginToken() ) {
-			return self::WRONG_TOKEN;
-		}
-
-		// Load the current user now, and check to see if we're logging in as
-		// the same name. This is necessary because loading the current user
-		// (say by calling getName()) calls the UserLoadFromSession hook, which
-		// potentially creates the user in the database. Until we load $wgUser,
-		// checking for user existence using User::newFromName($name)->getId() below
-		// will effectively be using stale data.
-		if ( $this->getUser()->getName() === $this->mUsername ) {
-			wfDebug( __METHOD__ . ": already logged in as {$this->mUsername}\n" );
-			return self::SUCCESS;
-		}
-
-		$this->mExtUser = ExternalUser_Wikia::newFromName( $this->mUsername );
-
-		global $wgExternalAuthType;
-		if ( $wgExternalAuthType
-		&& is_object( $this->mExtUser )
-		&& $this->mExtUser->authenticate( $this->mPassword ) ) {
-			# The external user and local user have the same name and
-			# password, so we assume they're the same.
-			$this->mExtUser->linkToLocal( $this->mExtUser->getId() );
-		}
-
-		# TODO: Allow some magic here for invalid external names, e.g., let the
-		# user choose a different wiki name.
-		$u = User::newFromName( $this->mUsername );
-		if( !( $u instanceof User ) || !User::isUsableName( $u->getName() ) ) {
-			return self::ILLEGAL;
-		}
-
-		$isAutoCreated = false;
-		if ( 0 == $u->getID() ) {
-			$status = $this->attemptAutoCreate( $u );
-			if ( $status !== self::SUCCESS ) {
-				return $status;
-			} else {
-				$isAutoCreated = true;
-			}
-		}
-
-		// Give general extensions, such as a captcha, a chance to abort logins
-		$abort = self::ABORTED;
-		if( !wfRunHooks( 'AbortLogin', array( $u, $this->mPassword, &$abort, &$this->mAbortLoginErrorMsg ) ) ) {
-			return $abort;
-		}
-
-		global $wgBlockDisablesLogin;
-		if ( !$u->checkPassword( $this->mPassword ) ) {
-			if( $u->checkTemporaryPassword( $this->mPassword ) ) {
-				// The e-mailed temporary password should not be used for actu-
-				// al logins; that's a very sloppy habit, and insecure if an
-				// attacker has a few seconds to click "search" on someone's o-
-				// pen mail reader.
-				//
-				// Allow it to be used only to reset the password a single time
-				// to a new value, which won't be in the user's e-mail ar-
-				// chives.
-				//
-				// For backwards compatibility, we'll still recognize it at the
-				// login form to minimize surprises for people who have been
-				// logging in with a temporary password for some time.
-				//
-				// As a side-effect, we can authenticate the user's e-mail ad-
-				// dress if it's not already done, since the temporary password
-				// was sent via e-mail.
-				if( !$u->isEmailConfirmed() ) {
-					$u->confirmEmail();
-					$u->saveSettings();
-				}
-
-				// At this point we just return an appropriate code/ indicating
-				// that the UI should show a password reset form; bot inter-
-				// faces etc will probably just fail cleanly here.
-				$retval = self::RESET_PASS;
-			} else {
-				$retval = ( $this->mPassword  == '' ) ? self::EMPTY_PASS : self::WRONG_PASS;
-			}
-		} elseif ( $wgBlockDisablesLogin && $u->isBlocked() ) {
-			// If we've enabled it, make it so that a blocked user cannot login
-			$retval = self::USER_BLOCKED;
-		} else {
-			$wgAuth->updateUser( $u );
-			$wgUser = $u;
-			// This should set it for OutputPage and the Skin
-			// which is needed or the personal links will be
-			// wrong.
-			$this->getContext()->setUser( $u );
-
-			// Please reset throttle for successful logins, thanks!
-			if ( $throttleCount ) {
-				self::clearLoginThrottle( $this->mUsername );
+			if ( $oLogin->access_token ) {
+				$u = User::newFromName( $this->mUsername );
+				$wgUser = $u;
+				$this->getContext()->setUser( $u );
+				return self::SUCCESS;
 			}
 
-			if ( $isAutoCreated ) {
-				// Must be run after $wgUser is set, for correct new user log
-				wfRunHooks( 'AuthPluginAutoCreate', array( $u ) );
-			}
-
-			$retval = self::SUCCESS;
+			return self::WRONG_PASS;
 		}
-		wfRunHooks( 'LoginAuthenticateAudit', array( $u, $this->mPassword, $retval ) );
-		return $retval;
+
+		catch ( \Wikia\Helios\ClientException $e ) {
+			return self::ABORTED;
+		}
+
+		return self::ABORTED;
 	}
 
 	/**
