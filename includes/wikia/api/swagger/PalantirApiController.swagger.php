@@ -137,7 +137,7 @@ use Swagger\Annotations as SWG;
  * 	)
  * 	@SWG\Property(
  * 		name="categories",
- * 		type="array",
+ * 		type="Array",
  * 		required="true",
  * 		description="Array of strings - category names"
  * 	)
@@ -159,7 +159,7 @@ use Swagger\Annotations as SWG;
  * 	)
  * @SWG\Property(
  * 		name="metadata",
- * 		type="array",
+ * 		type="Array",
  * 		items="$ref:Metadata"
  * )
  *
@@ -192,7 +192,7 @@ use Swagger\Annotations as SWG;
  * 	)
  *  @SWG\Property(
  * 		name="fingerprints",
- * 		type="array",
+ * 		type="Array",
  * 		required="false",
  * 		description="An array of fingerprint IDs"
  * 	)
@@ -205,7 +205,7 @@ use Swagger\Annotations as SWG;
  * 	@SWG\Property(
  *  	name="map_location",
  * 		required="false",
- * 		type="array",
+ * 		type="Array",
  * 		items="$ref:MapLocation"
  *  )
  *

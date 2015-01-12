@@ -9,7 +9,7 @@
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'UserLogin',
 );
- 
+
 $dir = dirname(__FILE__) . '/';
 
 //classes
@@ -34,7 +34,6 @@ $wgHooks['UserSendConfirmationMail'][] = 'UserLoginHooksHelper::onUserSendConfir
 $wgHooks['PreferencesGetEmailAuthentication'][] = 'UserLoginHooksHelper::onGetEmailAuthentication';
 $wgHooks['isValidEmailAddr'][] = 'UserLoginHooksHelper::isValidEmailAddr';
 $wgHooks['SavePreferences'][] = 'UserLoginHooksHelper::onSavePreferences';
-$wgHooks['AddNewAccount'][] = 'UserLoginHooksHelper::onAddNewAccount';
 $wgHooks['ConfirmEmailComplete'][] = 'UserLoginHooksHelper::onConfirmEmailComplete';
 $wgHooks['WikiaMobileAssetsPackages'][] = 'UserLoginHooksHelper::onWikiaMobileAssetsPackages';
 

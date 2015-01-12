@@ -389,10 +389,14 @@ $messages['kn'] = array(
 );
 
 /** Korean (한국어)
+ * @author Miri-Nae
  * @author 아라
  */
 $messages['ko'] = array(
 	'feed-title-blogposts' => '최근 블로그 게시물',
+	'feed-title-recent-badges' => '최근 배지',
+	'feed-title-recent-images' => '최근 그림',
+	'feed-title-leaderboard' => '배지 현황판',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
@@ -871,7 +875,7 @@ $messages['vi'] = array(
 $messages['zh-hans'] = array(
 	'partner-feed-achievements-leaderboard' => 'Wiki成就排行榜',
 	'partner-feed-earned-badges' => '最近在特定wiki获得的徽章',
-	'partner-feed-recent-changes' => '最新更改',
+	'partner-feed-recent-changes' => '最近更改',
 	'partnerfeed' => '合作伙伴订阅',
 	'feed-title-blogposts' => '最新博客帖子',
 	'feed-title-recent-badges' => '最新徽章',

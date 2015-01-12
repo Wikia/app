@@ -45,6 +45,8 @@ class WikiaPageType {
 			$type = 'forum';
 		} elseif ( self::isExtra() ) {
 			$type = 'extra';
+		} elseif ( self::isSpecial() ) {
+			$type = 'special';
 		} else {
 			$type = 'article';
 		}
@@ -141,6 +143,17 @@ class WikiaPageType {
 			( defined( 'NS_FORUM' ) && $title instanceof Title && $title->getNamespace() === NS_FORUM ) // old forum
 			|| ( F::app()->wg->EnableForumExt && ForumHelper::isForum() )                               // new forum
 		);
+	}
+
+	/**
+	 * Check if current page is a special page (Special:*)
+	 *
+	 * @return bool
+	 */
+	public static function isSpecial() {
+		$title = self::getTitle();
+
+		return $title->isSpecialPage();
 	}
 
 	/**

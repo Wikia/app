@@ -281,6 +281,10 @@ class UrlGenerator {
 		return $this->domainShard( $imagePath );
 	}
 
+	public function config() {
+		return $this->config;
+	}
+
 	/**
 	 * @return string
 	 */
@@ -332,12 +336,12 @@ class UrlGenerator {
 	 * @param string $mode one of the MODE_ constants defined above
 	 * @return $this
 	 */
-	private function mode($mode) {
+	public function mode($mode) {
 		$this->mode = $mode;
 		return $this;
 	}
 
-	private function format($format) {
+	public function format($format) {
 		$this->query['format'] = $format;
 		return $this;
 	}

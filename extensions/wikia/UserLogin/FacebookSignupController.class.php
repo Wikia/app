@@ -7,6 +7,18 @@
  */
 class FacebookSignupController extends WikiaController {
 
+	const SIGNUP_USERNAME_KEY = 'username';
+	const SIGNUP_PASSWORD_KEY = 'password';
+
+	/** @var \FacebookClientFactory */
+	protected $fbClientFactory;
+
+	public function __construct() {
+		parent::__construct();
+
+		$this->fbClientFactory = new \FacebookClientFactory();
+	}
+
 	/**
 	 * This method is called when user successfully logins using FB credentials
 	 *
@@ -48,9 +60,10 @@ class FacebookSignupController extends WikiaController {
 			}
 		} else {
 			$modal = $this->sendRequest('FacebookSignup', 'modal')->__toString();
+			$title = $this->sendRequest('FacebookSignup', 'modalHeader')->__toString();
 
 			// no account connected - show FB sign up modal
-			$this->title = wfMessage('usersignup-facebook-heading')->escaped();
+			$this->htmlTitle = $title;
 			$this->modal = !empty($modal) ? $modal : wfMessage('usersignup-facebook-problem')->escaped();
 			$this->cancelMsg = wfMessage('cancel')->escaped();
 		}
@@ -133,15 +146,29 @@ class FacebookSignupController extends WikiaController {
 		$this->returnToUrl = $returnToUrl;
 
 		$this->loginToken = UserLoginHelper::getSignupToken();
+	}
 
-		$specialPage = $this->wg->EnableFacebookClientExt ? 'FacebookConnect' : 'Connect';
-		$this->connectUrl = SpecialPage::getTitleFor( $specialPage )->getLocalUrl();
+	public function modalHeader() {
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+
+		$this->signupMsg = wfMessage( 'usersignup-facebook-signup-header' )->escaped();
+		$this->loginMsg = wfMessage( 'usersignup-facebook-login-header' )->escaped();
+		$this->orMsg = wfMessage( 'usersignup-facebook-or-header' )->escaped();
 	}
 
 	/**
 	 * Handle sign up requests from modal
 	 */
 	public function signup() {
+
+		// Check that Facebook account is not in use!
+		$fbId = \FacebookClient::getInstance()->getUserId();
+		if ( $this->fbClientFactory->isFacebookIdInUse( $fbId ) ) {
+			$errorMessageKey = 'fbconnect-error-fb-account-in-use';
+			$messageParams = [ $this->request->getVal( 'username' ) ];
+			$this->setErrorResponse( $errorMessageKey, $messageParams );
+			return;
+		}
 
 		$signupResponse = $this->app->sendRequest( 'FacebookSignup', 'createAccount' )->getData();
 
@@ -155,7 +182,7 @@ class FacebookSignupController extends WikiaController {
 			case 'error':
 			default:
 				// pass errors to the frontend form
-				$this->response->setData($signupResponse);
+				$this->response->setData( $signupResponse );
 				break;
 		}
 	}
@@ -175,12 +202,55 @@ class FacebookSignupController extends WikiaController {
 
 		$result = ( $signupForm->msgType == 'error' ) ? 'error' : 'ok' ;
 		if ( $result == 'ok' && !$signupForm->getHasConfirmedEmail() ) {
-			$result = 'unconfirm'	;
+			$result = 'unconfirm';
 		}
 
-		$this->result = $result;
-		$this->msg = $signupForm->msg;
-		$this->errParam = $signupForm->errParam;
+		$this->response->setData( [
+			'result' => $result,
+			'msg' => $signupForm->msg,
+			'errParam' => $signupForm->errParam,
+		] );
+	}
+
+	/**
+	 * Handler for Facebook Login (and connect) for users with a Wikia account
+	 *
+	 * @return null
+	 */
+	public function login() {
+		$wg = $this->wg;
+
+		$wikiaUserName = $wg->Request->getVal( self::SIGNUP_USERNAME_KEY );
+		$wikiaPassword = $wg->Request->getVal( self::SIGNUP_PASSWORD_KEY );
+
+		$user = $this->getValidWikiaUser( $wikiaUserName, $wikiaPassword );
+		if ( !$user ) {
+			return;
+		}
+
+		// Log the user in with existing wikia account
+		// Create the fb/Wikia user mapping if not already created
+
+		$fbUserId = $this->getValidFbUserId();
+		if ( !$fbUserId ) {
+			return;
+		}
+
+		$status = $this->fbClientFactory->connectToFacebook( $user->getId(), $fbUserId );
+		if ( ! $status->isGood() ) {
+			list( $message, $params ) = $this->fbClientFactory->getStatusError( $status );
+			$this->setErrorResponse( $message, $params );
+			return;
+		}
+
+		$this->setupUserSession( $user );
+
+		\FacebookClientHelper::track( 'facebook-link-existing' );
+
+		$this->response->setData( [
+			'result' => 'ok',
+			'msg' => 'success',
+		] );
 	}
 
 	/**
@@ -214,6 +284,90 @@ class FacebookSignupController extends WikiaController {
 				$this->response->setData($data);
 			}
 		}
+	}
+
+	/**
+	 * Retrieve and validate Facebook user id
+	 *
+	 * @return int|null
+	 */
+	protected function getValidFbUserId() {
+		$fbUserId = FacebookClient::getInstance()->getUserId();
+		if ( !$fbUserId ) {
+			$this->setErrorResponse( 'userlogin-error-invalidfacebook' );
+			return null;
+		}
+
+		return $fbUserId;
+	}
+
+	/**
+	 * Retrieves and validates the User object matching given credentials
+	 *
+	 * @param string $wikiaUserName
+	 * @param string $wikiaPassword
+	 * @return null|User
+	 */
+	protected function getValidWikiaUser( $wikiaUserName, $wikiaPassword ) {
+		if ( !$wikiaUserName ) {
+			$messageCode = 'userlogin-error-noname';
+			$errorParam = self::SIGNUP_USERNAME_KEY;
+		} else if ( !$wikiaPassword ) {
+			$messageCode = 'userlogin-error-wrongpasswordempty';
+			$errorParam = self::SIGNUP_PASSWORD_KEY;
+		} else {
+			$user = \User::newFromName( $wikiaUserName );
+			if ( !$user ) {
+				$messageCode = 'userlogin-error-nosuchuser';
+				$errorParam = self::SIGNUP_USERNAME_KEY;
+			} else {
+				if ( !$user->checkPassword( $wikiaPassword ) ) {
+					$messageCode = 'userlogin-error-wrongpassword';
+					$errorParam = self::SIGNUP_PASSWORD_KEY;
+				}
+			}
+		}
+
+		if ( $messageCode ) {
+			$this->setErrorResponse( $messageCode, [], $errorParam );
+			return null;
+		}
+
+		return $user;
+	}
+
+	/**
+	 * Setup session for user to be logged in
+	 *
+	 * @param User $user
+	 */
+	protected function setupUserSession( \User $user ) {
+		$wg = $this->wg;
+
+		// Setup the session as is done when a request first starts
+		if ( !$wg->SessionStarted ) {
+			wfSetupSession();
+		}
+
+		$user->setCookies();
+
+		// Store the user in the global user object
+		$wg->User = $user;
+	}
+
+	/**
+	 * Set a normalized error response meant for Ajax calls
+	 *
+	 * @param string $messageKey i18n error message key
+	 * @param array $messageParams message parameters
+	 * @param string|null $errorParam the error key
+	 */
+	protected function setErrorResponse( $messageKey, array $messageParams = [], $errorParam = null ) {
+		$this->response->setData( [
+			'result' => 'error',
+			'msg' => wfMessage( $messageKey, $messageParams )->escaped(),
+			'errParam' => $errorParam,
+		] );
 	}
 
 	/**

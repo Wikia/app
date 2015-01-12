@@ -2179,10 +2179,12 @@ $messages['kn'] = array(
 /** Korean (한국어)
  * @author Miri-Nae
  * @author 관인생략
+ * @author 아라
  */
 $messages['ko'] = array(
 	'forum-forum-title' => '포럼',
 	'forum-active-threads' => '활성화된 토론 $1개',
+	'forum-active-threads-on-topic' => "다음 주제에 대한 활발한 토론 $1개: '''[[$2]]'''",
 	'forum-header-total-threads' => '이 포럼에는 <em>$1</em>개의<br />토론이 있습니다',
 	'forum-header-active-threads' => '활발한 토론 <em>$1</em>개가<br />있습니다',
 	'forum-specialpage-heading' => '포럼',
@@ -2213,18 +2215,18 @@ $messages['ko'] = array(
 	'forum-discussion-placeholder-title' => '무엇에 대해 얘기하고 싶나요?',
 	'forum-discussion-placeholder-message' => '$1 게시판에 새 글을 작성합니다',
 	'forum-discussion-placeholder-message-short' => '새로운 메시지를 작성합니다',
-	'forum-notification-user1-reply-to-your' => '$1 사용자가 $3 게시판에 있는 당신의 토론에 댓글을 남겼습니다.',
-	'forum-notification-user2-reply-to-your' => '$1 사용자와 $2 사용자가 $3 게시판에 있는 당신의 토론에 댓글을 남겼습니다.',
-	'forum-notification-user3-reply-to-your' => '$1 사용자 및 다른 사용자들이 $3 게시판에 있는 당신의 토론에 댓글을 남겼습니다.',
-	'forum-notification-user1-reply-to-someone' => '$1 사용자가 $3 게시판에 댓글을 남겼습니다.',
-	'forum-notification-user2-reply-to-someone' => '$1 사용자와 $2 사용자가 $3 게시판에 댓글을 남겼습니다.',
-	'forum-notification-user3-reply-to-someone' => '$1 사용자 및 다른 사용자들이 $3 게시판에 댓글을 남겼습니다.',
+	'forum-notification-user1-reply-to-your' => '$1님이 $3 게시판에 있는 당신의 토론에 덧글을 남겼습니다.',
+	'forum-notification-user2-reply-to-your' => '$1님과 $2님이 $3 게시판에 있는 당신의 토론에 덧글을 남겼습니다.',
+	'forum-notification-user3-reply-to-your' => '$1님과 다른 사용자들이 $3 게시판에 있는 당신의 토론에 덧글을 남겼습니다',
+	'forum-notification-user1-reply-to-someone' => '$1님이 $3 게시판에 덧글을 {{GENDER:$1|남겼습니다}}.',
+	'forum-notification-user2-reply-to-someone' => '$1님과 $2님이 $3 게시판에 덧글을 남겼습니다',
+	'forum-notification-user3-reply-to-someone' => '$1님과 다른 사용자들이 $3 게시판에 덧글을 남겼습니다',
 	'forum-notification-newmsg-on-followed-wall' => '$1 사용자가 $2 게시판에 새 메시지를 남겼습니다',
 	'forum-mail-notification-new-someone' => '$AUTHOR_NAME 사용자가 $WIKI의 $BOARDNAME 게시판에 새 토론을 작성했습니다.',
 	'forum-mail-notification-new-your' => '$AUTHOR_NAME 사용자가 $WIKI의 $BOARDNAME 게시판에 새 토론을 작성했습니다.',
-	'forum-mail-notification-reply-your' => '$AUTHOR_NAME 사용자가 당신이 $WIKI의 $BOARDNAME 게시판에 작성한 토론에 댓글을 남겼습니다',
-	'forum-mail-notification-reply-his' => '$AUTHOR_NAME 사용자가 $WIKI의 $BOARDNAME 게시판에 댓글을 남겼습니다',
-	'forum-mail-notification-reply-someone' => '$AUTHOR_NAME 사용자가 $WIKI의 $BOARDNAME 게시판에 댓글을 남겼습니다',
+	'forum-mail-notification-reply-your' => '$AUTHOR_NAME님이 당신이 $WIKI의 $BOARDNAME 게시판에 작성한 토론에 덧글을 남겼습니다',
+	'forum-mail-notification-reply-his' => '$AUTHOR_NAME님이 $WIKI의 $BOARDNAME 게시판에 덧글을 남겼습니다',
+	'forum-mail-notification-reply-someone' => '$AUTHOR_NAME님이 $WIKI의 $BOARDNAME 게시판에 덧글을 남겼습니다',
 	'forum-mail-notification-html-greeting' => '안녕하세요, $1 사용자 님?',
 	'forum-mail-notification-html-button' => '대화 내역 보기',
 	'forum-mail-notification-subject' => '$1 -- $2',
@@ -2259,7 +2261,7 @@ ___________________________________________<br />
 	'forum-wiki-activity-msg-name' => '$1 게시판',
 	'forum-activity-module-heading' => '포럼 활동',
 	'forum-related-module-heading' => '관련 토론',
-	'forum-activity-module-posted' => '$1 사용자가 $2에 댓글을 남겼습니다',
+	'forum-activity-module-posted' => '$1 사용자가 $2에 덧글을 남겼습니다',
 	'forum-activity-module-started' => '$1 사용자가 $2에 토론을 시작했습니다',
 	'forum-contributions-line' => '[[$3|$4 board]] 게시판의 [[$1|$2]]',
 	'forum-recentchanges-new-message' => '[[$1|$2 게시판]]에서',
@@ -2272,6 +2274,7 @@ ___________________________________________<br />
 	'forum-recentchanges-deleted-reply' => '[[$3|$4 게시판]]의 "[[$1|$2]]" 댓글 삭제',
 	'forum-recentchanges-deleted-reply-title' => '글',
 	'forum-recentchanges-namespace-selector-message-wall' => '포럼 게시판',
+	'forum-recentchanges-thread-group' => '[[$2|$3 게시판]]의 $1',
 	'forum-recentchanges-history-link' => '게시판 역사',
 	'forum-recentchanges-thread-history-link' => '토론 역사',
 	'forum-board-history-title' => '게시판 역사',
@@ -2564,17 +2567,45 @@ keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preferences',
  */
 $messages['nl'] = array(
 	'forum-forum-title' => 'Forum',
-	'forum-active-threads' => '$1 {{PLURAL:$1|Actieve Discussie|Actieve Discussies}}',
-	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|Actieve Discussie|Actieve Discussies}} over: '''[[$2]]'''",
-	'forum-header-total-threads' => '<em>$1</em><span>{{PLURAL:$1|Draad<br />in dit Forum|Draden<br />in dit Forum}}</span>',
+	'forum-active-threads' => '$1 {{PLURAL:$1|Actief overleg|Actieve overleggen}}',
+	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|Actief overleg|Actieve overleggen}} over: '''[[$2]]'''",
+	'forum-header-total-threads' => '<em>$1</em><span>{{PLURAL:$1|Draad<br />in dit forum|Draden<br />in dit forum}}</span>',
 	'forum-header-active-threads' => '<em>$1</em><span>{{PLURAL:$1|Actieve<br />Discussie|Actieve<br />Discussies}}</span>',
 	'forum-specialpage-heading' => 'Forum',
 	'forum-specialpage-blurb-heading' => '<span style="display:none">forum-specialpage-blurb-heading U kunt het bewerken<span>',
 	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|draad|draden}}',
-	'forum-specialpage-board-posts' => '$1 bericht{{PLURAL:$1||en}}',
+	'forum-specialpage-board-posts' => '$1 {{PLURAL:$1|bericht|berichten}}',
 	'forum-specialpage-board-lastpostby' => 'Laatste bericht door',
 	'forum-specialpage-policies-edit' => 'Bewerken',
 	'forum-specialpage-policies' => 'Forumbeleid / FAQ',
+	'forum-policies-and-faq' => "==Forumbeleid==
+
+Houd alstublieft een aantal richtlijnen met betrekking tot gedrag in gedachten voordat u bijdraagt aan de forums van {{SITENAME}}:
+
+'''Ben aardig tegen mensen en behandel ze respectvol.'''
+: Mensen van over de hele wereld lezen en bewerken deze wiki en de bijbehorende forums. Net als in ieder project waarin wordt samengewerkt, kan niet iedereen het altijd met elkaar eens zijn. Houd overleg beleefd en sta open over andere meningen. We zijn hier allemaal omdat we om hetzelfde onderwerp geven.
+
+'''Probeer eerst bestaand overleg te vinden, maar heb geen angst om een nieuw overleg te starten.'''
+:Neem over de tijd om door de forums van {{SITENAME}} te bladeren en kijk of er al een bestaand overleg is over het onderwerp dat u wilt bespreken. Als u niets kunt vinden, begin dan een nieuw overleg!
+
+'''Vraag om hulp.'''
+:Ziet u iets dat niet klopt? Hebt u een vraag? Vraag hier op de forums om hulp! Als u hulp nodig hebt van medewerkers van Wikia, ga dan alstublieft naar [[w:c:community|Community Central]] of gebruik [[Special:Contact|de contactpagina]].
+
+'''Veel plezier!'''
+:De {{SITENAME}}-gemeenschap is blij dat u er bent. We zien u graag vaak terug bij dit onderwerp waar we allemaal om geven.
+
+==Veel gestelde vragen over het forum ==
+'''Hoe blijf ik op de hoogte over overleg waar ik in geïnteresseerd ben?'''
+: Als u een Wikiagebruiker hebt, kunt u specifiek overleg volgen en meldingen krijgen (op de website zelf of via e-mail) als er wijzigingen in het overleg zijn. Zorg dat u een [[Special:UserSignup|Wikiagebruiker registreert]] als u er niet al een hebt.
+
+'''Hoe verwijder ik vandalisme?'''
+: Als u ergens spam of vandalisme ziet in een overleg, beweeg dan met de muisaanwijzer over de tekst. U ziet dan een menu \"Meer\" verschijnen. Binnen het menu \"Meer\" ziet u \"Verwijderen\" staan. Zo kunt u vandalisme verwijderen en eventueel een beheerder waarschuwen.
+
+'''Wat zijn Kudos?'''
+: Als u een overleg of een reactie interessant, weloverwogen, of amusant vindt, dan kunt u uw waardering uitspreken door er Kudos aan te geven. Dit kan ook handig zijn als er gestemd wordt.
+
+'''Wat zijn onderwerpen?'''
+: Onderwerpen maken het mogelijk dat u een overleg op het forum koppelt aan een wikipagina. Het is een andere manier om forums te organiseren en om mensen te helpen interessant overleg te vinden. Als er bijvoorbeeld een forumonderwerp  is gelabeld met \"Heer Voldemort\" verschijnt het onderaan de pagina \"Heer Voldemort\".",
 	'forum-board-title' => 'Prikbord $1',
 	'forum-board-topic-title' => 'Discussies over $1',
 	'forum-board-topics' => 'Onderwerpen',
@@ -2590,7 +2621,7 @@ $messages['nl'] = array(
 	'forum-sorting-option-newest-replies' => 'Recente reacties',
 	'forum-sorting-option-popular-threads' => 'Meest populaire',
 	'forum-sorting-option-most-replies' => 'Meest actief in afgelopen week',
-	'forum-sorting-option-newest-threads' => 'Nieuwste onderwerpen',
+	'forum-sorting-option-newest-threads' => 'Nieuwste overleg',
 	'forum-sorting-option-oldest-threads' => 'Oudste onderwerpen',
 	'forum-discussion-post' => 'Opslaan',
 	'forum-discussion-highlight' => 'Onderwerp uitlichten',
@@ -2643,27 +2674,64 @@ e-mailvoorkeuren wijzingen: http://community.wikia.com/Special:Preferences',
 	'forum-wiki-activity-msg' => 'op de $1',
 	'forum-wiki-activity-msg-name' => 'prikbord $1',
 	'forum-activity-module-heading' => 'Forumactiviteit',
-	'forum-related-module-heading' => 'Gerelateerde onderwerpen',
+	'forum-related-module-heading' => 'Gerelateerd overleg',
 	'forum-activity-module-posted' => '$1 heeft $2 gereageerd',
 	'forum-activity-module-started' => '$1 heeft $2 een onderwerp geplaatst',
 	'forum-contributions-line' => '[[$1|$2]] op het [[$3|prikbord $4]]',
 	'forum-recentchanges-new-message' => 'op het [[$1|prikbord $2]]',
 	'forum-recentchanges-edit' => 'bericht bewerkt',
+	'forum-recentchanges-removed-thread' => 'heeft het overleg "[[$1|$2]]" van het [[$3|$4 bord]] verwijderd',
+	'forum-recentchanges-removed-reply' => 'heeft het antwoord "[[$1|$2]]" van het [[$3|$4 bord]] verwijderd',
+	'forum-recentchanges-restored-thread' => 'overleg "[[$1|$2]]" van het [[$3|$4 bord]] hersteld',
+	'forum-recentchanges-restored-reply' => 'heeft het antwoord "[[$1|$2]]" op het [[$3|$4 bord]] teruggeplaatst',
+	'forum-recentchanges-deleted-thread' => 'overleg "[[$1|$2]]" van het [[$3|$4 bord]] verwijderd',
+	'forum-recentchanges-deleted-reply' => 'heeft het antwoord "[[$1|$2]]" van het [[$3|$4 bord]] verwijderd',
 	'forum-recentchanges-deleted-reply-title' => 'Een bericht',
 	'forum-recentchanges-namespace-selector-message-wall' => 'Forumprikbord',
-	'forum-recentchanges-thread-history-link' => 'draadgeschiedenis',
+	'forum-recentchanges-thread-group' => '$1 op het [[$2|$3 bord]]',
+	'forum-recentchanges-history-link' => 'bordgeschiedenis',
+	'forum-recentchanges-thread-history-link' => 'overleggeschiedenis',
+	'forum-recentchanges-closed-thread' => 'overleg "[[$1|$2]]" van [[$3|$4]] gesloten',
+	'forum-recentchanges-reopened-thread' => 'heeft het overleg "[[$1|$2]]" van [[$3|$4]] heropend',
+	'forum-board-history-title' => 'bordgeschiedenis',
+	'forum-specialpage-oldforum-link' => 'Oude forumarchieven',
+	'forum-admin-page-breadcrumb' => 'Bordbeheer beheren',
+	'forum-admin-create-new-board-label' => 'Nieuw bord aanmaken',
+	'forum-admin-create-new-board-modal-heading' => 'Nieuw bord aanmaken',
+	'forum-admin-create-new-board-title' => 'Bordnaam',
+	'forum-admin-create-new-board-description' => 'Bordbeschrijving',
+	'forum-admin-edit-board-modal-heading' => 'Bord wijzigen: $1',
+	'forum-admin-edit-board-title' => 'Bordnaam',
+	'forum-admin-edit-board-description' => 'Bordbeschrijving',
+	'forum-admin-delete-and-merge-board-modal-heading' => 'Bord verwijderen: $1',
+	'forum-admin-delete-board-title' => 'Bevestig door de naam te typen van het bord dat u wilt verwijderen:',
+	'forum-admin-merge-board-warning' => 'Het overleg op dit bord wordt samengevoegd met een bestaand bord.',
+	'forum-admin-merge-board-destination' => 'Kies een bord om vandaan samen te voegen:',
 	'forum-admin-delete-and-merge-button-label' => 'Verwijderen en samenvoegen',
-	'forum-autoboard-title-1' => 'Algemene discussie',
-	'forum-autoboard-title-2' => 'Nieuws en Aankondigingen',
+	'forum-admin-link-label' => 'Borden beheren',
+	'forum-autoboard-title-1' => 'Algemeen overleg',
+	'forum-autoboard-body-1' => 'Dit bord bevat algemeen overleg over de wiki.',
+	'forum-autoboard-title-2' => 'Nieuws en aankondigingen',
+	'forum-autoboard-body-2' => 'Belangrijk nieuws en informatie!',
 	'forum-autoboard-title-3' => 'Nieuw op $1',
-	'forum-autoboard-body-3' => 'Wil je iets delen dat zojuist op de deze wiki is geplaatst, of wil je iemand feliciteren met een geweldige bijdrage? Dit is the juiste plaast!',
+	'forum-autoboard-body-3' => 'Wilt u iets delen dat zojuist op de deze wiki is geplaatst, of wilt u iemand feliciteren met een geweldige bijdrage? Dit is de juiste plaats!',
 	'forum-autoboard-title-4' => 'Vragen en Antwoorden',
-	'forum-autoboard-body-4' => 'Heb je een vraag over de wiki, of het onderwerp? Stel je vragen hier!',
-	'forum-old-notification-message' => 'Dit Forum is gearchiveerd',
-	'forum-old-notification-navigation-button' => 'Bezoek de nieuwe Fora',
-	'forum-related-discussion-heading' => 'Discussies over $1',
-	'forum-related-discussion-new-post-button' => 'Een discussie starten',
-	'forum-related-discussion-new-post-tooltip' => 'Start een nieuwe discussie over $1',
+	'forum-autoboard-body-4' => 'Hebt u een vraag over de wiki, of het onderwerp? Stel uw vragen hier!',
+	'forum-autoboard-title-5' => 'Pret en spelletjes',
+	'forum-autoboard-body-5' => 'Dit bord bevat overleg dat niet over de wiki gaat. Een plek om samen te komen met uw vrienden van $1.',
+	'forum-board-destination-empty' => '(Selecteer een bord)',
+	'forum-board-title-validation-invalid' => 'De bordnaam bevat ongeldige tekens.',
+	'forum-board-title-validation-length' => 'De bordnaam moet tenminste vier tekens bevatten.',
+	'forum-board-title-validation-exists' => 'Er bestaat al een bord met dezelfde naam.',
+	'forum-board-validation-count' => 'Het maximale aantal borden is $1',
+	'forum-board-description-validation-length' => 'Geef een beschrijving op voor dit bord',
+	'forum-board-id-validation-missing' => 'Het bord-ID ontbreekt.',
+	'forum-board-no-board-warning' => 'Er is geen bord gevonden met die naam. Hier is een lijst met forumborden.',
+	'forum-old-notification-message' => 'Dit forum is gearchiveerd',
+	'forum-old-notification-navigation-button' => 'Bezoek de nieuwe fora',
+	'forum-related-discussion-heading' => 'Oveleg over $1',
+	'forum-related-discussion-new-post-button' => 'Overleg starten',
+	'forum-related-discussion-new-post-tooltip' => 'Begin een nieuwe overleg over $1',
 	'forum-related-discussion-total-replies' => '{{PLURAL:$1|Eén bericht|$1 berichten}}',
 	'forum-related-discussion-see-more' => 'Meer discussies bekijken',
 	'forum-confirmation-board-deleted' => '"$1" is verwijderd.',
@@ -4432,6 +4500,7 @@ ___________________________________________<br />
 	'forum-admin-edit-board-description' => '版块描述',
 	'forum-admin-delete-and-merge-board-modal-heading' => '删除板块：$1',
 	'forum-admin-delete-board-title' => '请输入板块名以确认您想删除：',
+	'forum-admin-merge-board-warning' => '此版块的帖子将与一个现有版块合并。',
 	'forum-admin-merge-board-destination' => '选择板块合并至：',
 	'forum-admin-delete-and-merge-button-label' => '删除与合并',
 	'forum-admin-link-label' => '管理版块',
@@ -4443,10 +4512,11 @@ ___________________________________________<br />
 	'forum-autoboard-body-4' => '对这个wiki或者这个主题有问题？在这里提问！',
 	'forum-autoboard-title-5' => '娱乐与游戏',
 	'forum-board-destination-empty' => '（请选择面板）',
+	'forum-board-title-validation-invalid' => '版块名称包含无效字符',
 	'forum-board-title-validation-length' => '板块名应至少4个字符长',
 	'forum-board-title-validation-exists' => '已存在同名板块',
 	'forum-board-validation-count' => '板块最多可以有$1个',
-	'forum-board-id-validation-missing' => '板块id丢失',
+	'forum-board-id-validation-missing' => '板块ID丢失',
 	'forum-board-no-board-warning' => '我们找不到那个标题的板块。这里是论坛板块列表。',
 	'forum-old-notification-message' => '本论坛已存档',
 	'forum-old-notification-navigation-button' => '访问新论坛',
@@ -4461,6 +4531,7 @@ ___________________________________________<br />
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  * @author LNDDYL
+ * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
 	'forum-forum-title' => '論壇',
@@ -4544,7 +4615,7 @@ $messages['zh-hant'] = array(
 	'forum-related-module-heading' => '相關討論',
 	'forum-activity-module-posted' => '$1在$2發布了一條回覆',
 	'forum-activity-module-started' => '$1 在$2 發起了一個討論',
-	'forum-contributions-line' => '[[$1|$2]]在[[$3|$4板面]]',
+	'forum-contributions-line' => '[[$1|$2]] 在 [[$3|$4板面]]',
 	'forum-recentchanges-new-message' => '在[[$1|$2板面]]',
 	'forum-recentchanges-edit' => '編輯訊息',
 	'forum-recentchanges-removed-thread' => ' 從[[$3|$4 板面]]移除討論串 "[[$1|$2]]"',
@@ -4585,14 +4656,14 @@ $messages['zh-hant'] = array(
 	'forum-autoboard-title-4' => '問題與解答',
 	'forum-autoboard-body-4' => '有關於這個wiki或這個主題的問題嗎？在這裡提出你的問題！',
 	'forum-autoboard-title-5' => '娛樂和遊戲',
-	'forum-autoboard-body-5' => '這個板面是與本站主題不相關的聊天－可以和你的 $1朋友一起流連。',
+	'forum-autoboard-body-5' => '這個板面是與本站主題不相關的聊天－可以和你的 $1 朋友一起閒逛。',
 	'forum-board-destination-empty' => '（請選擇板面）',
 	'forum-board-title-validation-invalid' => '板面名稱包含無效字元',
 	'forum-board-title-validation-length' => '板面名稱應至少 4 個字元以上',
 	'forum-board-title-validation-exists' => '已存在相同名稱的板面',
 	'forum-board-validation-count' => '板面的上限數量是$1',
 	'forum-board-description-validation-length' => '請寫此板面的描述',
-	'forum-board-id-validation-missing' => '板面 id 消失',
+	'forum-board-id-validation-missing' => '板面 ID 消失',
 	'forum-board-no-board-warning' => '我們無法找到該標題的板面。這是論壇上板面的清單。',
 	'forum-old-notification-message' => '本論壇已存檔',
 	'forum-old-notification-navigation-button' => '訪問新論壇',

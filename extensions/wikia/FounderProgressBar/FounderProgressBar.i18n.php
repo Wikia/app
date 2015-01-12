@@ -1131,20 +1131,86 @@ $messages['kn'] = array(
  * @author 관인생략
  */
 $messages['ko'] = array(
+	'founderprogressbar-widget-label' => '{{SITENAME}}의 진행 상황',
+	'founderprogressbar-progress-label' => '달성률',
 	'founderprogressbar-progress-see-full-list' => '전체 목록 보기',
 	'founderprogressbar-progress-hide-full-list' => '전체 목록 숨기기',
+	'founderprogressbar-skip-for-now' => '건너뛰기',
 	'founderprogressbar-task-completed' => '완료',
+	'founderprogressbar-list-label' => '{{SITENAME}}의 과제 목록',
+	'founderprogressbar-list-description1' => '회원님의 위키를 성공의 반열에 올려놓을 준비가 되셨나요? 아래의 과제를 모두 달성해보세요! 위키의 모든 사용자가 참여할 수 있습니다.',
+	'founderprogressbar-list-description2' => "아래에는 회원님과 위키의 사용자들이 달성해야 할 과제의 목록입니다. 과제를 건너뛰게 되면 그 과제는 '건너뛴 과제' 영역에 포함되어 언제라도 그 과제를 달성할 수 있도록 해드립니다. 혹시 정말 달성할 수 없어서 건너뛴 과제가 있으신가요? 걱정하지 마세요. 건너뛴 과제만 남게되면 보너스 과제를 활성화해드립니다. 보너스 과제는 몇 번이고 달성할 수 있으므로 달성률이 100%에 도달할 때까지 계속 수행할 수 있습니다.",
+	'founderprogressbar-list-task-label' => '과제',
+	'founderprogressbar-list-skipped-task-label' => '건너뛴 과제',
+	'founderprogressbar-list-skipped-task-desc' => '건너뛴 과제는 어느 때라도 달성할 수 있습니다.',
+	'founderprogressbar-list-bonus-task-label' => '보너스 과제',
+	'founderprogressbar-list-bonus-task-desc' => '주어진 과제를 달성하여 보너스 과제를 활성화하세요',
+	'founderprogressbar-task-call-to-action' => '완수하기',
+	'founderprogressbar-bonus-task-notice' => '알림: 모든 보너스 과제는 한 번 이상 완료할 수 있습니다. 달성률이 100%에 다다를 때까지 최대한 많이 수행하세요.',
+	'founderprogressbar-page-add10-label' => '문서 수 $1개 달성하기',
+	'founderprogressbar-page-add10-description' => '위키 초창기 때 가장 좋은 방법은 위키에서 주로 다루는 내용에 대해 새 문서를 만드는 것입니다. 좋은 문서는 적어도 하나 이상의 단락과 연관된 다른 문서를 가리키는 링크를 포함하고 있습니다.',
+	'founderprogressbar-themedesigner-visit-label' => '위키의 테마 꾸미기',
+	'founderprogressbar-themedesigner-visit-description' => '테마 디자이너를 사용하면 이미 제작된 테마를 사용하거나, 직접 테마를 만들 수 있습니다. 테마 디자이너를 사용하여 독특한 위키를 연출해보세요.',
+	'founderprogressbar-mainpage-edit-label' => '대문 편집하기',
+	'founderprogressbar-mainpage-edit-description' => '위키의 방문자들에게 맨 처음 보여지는 문서가 바로 대문입니다. 대문에 위키에서 주로 다루는 주제, 도움을 줄 수 있는 방법, 질좋은 문서에 대한 요약 등이 잘 드러나도록 해주세요.',
+	'founderprogressbar-photo-add10-label' => '그림 수 $1장 달성하기',
+	'founderprogressbar-photo-add10-description' => '그림을 문서에 활용하면 문서에서 다루는 내용을 훨씬 더 구체화시킬 수 있습니다. 문서 하나의 적어도 한 장의 그림이 있는 것이 적당하나 많으면 많을수록 더욱 좋습니다.',
+	'founderprogressbar-category-add3-label' => '분류 $1개 달성하기',
+	'founderprogressbar-category-add3-description' => '분류 기능은 위키를 조직화하고 다른 사용자들이 문서를 찾기 용이하도록 만듭니다. 다른 사용자들이 혼란스러워하지 않도록 최대한 단순하게 해주세요.',
+	'founderprogressbar-commcentral-visit-label' => '설립자 및 관리자 모임 방문하기',
+	'founderprogressbar-commcentral-visit-description' => '회원님은 혼자가 아닙니다. 위키를 설립하거나 관리자 권한을 가진 사용자들을 위해 설립자 및 관리자 모임이 준비되어 있습니다. 이곳에서 도움말이나 위키 관리에 유용한 조언들을 구할 수 있고, 필요하면 위키아 스태프에게 연락할 수 있습니다.',
 	'founderprogressbar-wikiactivity-visit-label' => '위키 활동 내역 보기',
+	'founderprogressbar-wikiactivity-visit-description' => '위키 활동 내역은 위키에 무엇이 일어나고 있는지 보여줍니다. 어떤 사용자가 어떤 문서에 기여를 하는지 알아보세요.',
 	'founderprogressbar-profile-edit-label' => '당신의 프로필 페이지를 채워보세요',
+	'founderprogressbar-profile-edit-description' => '사용자 문서를 만들어 위키를 찾는 사용자들에게 회원님에 대해 알려주세요. 사용자들간의 관계를 형성하는 데 큰 힘이 됩니다.',
 	'founderprogressbar-photo-add20-label' => '그림 수 $1장 달성하기',
+	'founderprogressbar-photo-add20-description' => '하나의 문서에 그림을 하나씩 추가하고 계신가요? 그림을 많이 추가할수록 많은 사람들의 이목을 끌 수 있답니다!',
 	'founderprogressbar-total-edit75-label' => '문서 편집 75회 달성하기',
+	'founderprogressbar-total-edit75-description' => '문서 편집 횟수가 75회를 달성했다면 위키에 양질의 문서들을 많이 확보하셨을 것입니다. 대단해요! 편집을 계속하셔서 위키의 성공에 문제가 없도록 최선을 다해주세요.',
+	'founderprogressbar-page-add20-label' => '문서 수 $1개 달성하기',
+	'founderprogressbar-page-add20-description' => '위키가 위키에서 주로 다루는 것에 대한 포괄적인 데이터베이스가 될 수 있도록 열심히 노력하세요. 그저 문서 수를 늘리는 것이 아니라 각각의 문서에 양질의 내용이 담길 수 있도록 해주세요.',
+	'founderprogressbar-category-edit-label' => '분류 문서 만들기',
+	'founderprogressbar-category-edit-description' => '분류 문서는 그 분류에 속하는 문서들만 보여주지 않습니다. 분류 문서의 내용을 편집하여 그 분류가 정확히 어떤 문서를 포함하고 있는지와 어떤 문서를 포함해야 하는지 밝힐 수 있습니다. 또한 분류 문서를 만들게 되면 문서 하단의 분류 링크를 붉은색에서 지정된 색으로 바뀌게 됩니다.',
 	'founderprogressbar-wikialabs-visit-label' => '위키아 랩 방문하기',
 	'founderprogressbar-wikialabs-visit-description' => '위키아 실험실에서는 위키아의 새로운 기능 중 일부를 사용해 볼 수 있습니다. 아직 베타 버전이지만, 앞으로 나올 위키아 기능을 미리 알아보고, 체험하고 싶다면 위키아 실험실을 추천합니다.',
 	'founderprogressbar-fb-connect-label' => '페이스북 연동',
+	'founderprogressbar-fb-connect-description' => '위키에 하는 기여 내역을 친구들과 공유해보세요! Facebook 친구들과 공유하고 싶은 기여 내역을 관리할 수 있습니다. 이 과제를 달성하기 위해서는 위키의 관리자만 Facebook 연동 기능을 사용하면 됩니다.',
+	'founderprogressbar-category-add5-label' => '분류 $1개 달성하기',
+	'founderprogressbar-category-add5-description' => '문서 개수가 많아질수록 아마도 더 많은 분류가 필요하게 될 것입니다.',
 	'founderprogressbar-gallery-add-label' => '그림 갤러리 삽입하기',
+	'founderprogressbar-gallery-add-description' => '그림 갤러리는 많은 양의 사진들을 제한된 영역에 보여주기에 가장 좋은 방법입니다. 또한 사진이 보여지는 순서를 잘 조정하여 다른 사용자들에게 인상이 남도록 해주세요.',
 	'founderprogressbar-topnav-edit-label' => '내비게이션 관리하기',
+	'founderprogressbar-topnav-edit-description' => '워드마크 옆의 메뉴가 위키의 내비게이션입니다. 내비게이션에 방문자들이 문서를 찾기 쉽도록 링크를 적절히 배치해보세요. 어떻게 활용해야할지 잘 모르겠다면 다른 위키(위키아 중앙 커뮤니티 등)의 내비게이션을 참조하세요.',
+	'founderprogressbar-mainpage-addslider-label' => '대문 슬라이더 삽입하기',
+	'founderprogressbar-mainpage-addslider-description' => '대문에 넣을 수 있는 슬라이더는 대문을 더 전문적으로 꾸밀 수 있는 기능입니다. 그림 각각에 링크를 걸어 그림과 관련된 문서로 바로 연결되도록 할 수 있습니다. 대문 슬라이더에 넣을 그림 크기를 조절하는 방법에 대해서는 <a href="http://community.wikia.com/wiki/User_blog:Susan_Taylor/Tips_to_spruce_up_your_main_page">Susan Taylor의 블로그 글 (영어)</a>을 참조하세요.',
 	'founderprogressbar-commcorner-edit-label' => '커뮤니티 코너 편집하기',
+	'founderprogressbar-commcorner-edit-description' => '커뮤니티 코너를 편집하게 되면 사용자들에게 알림이 전송됩니다. 이 문서에 위키에서 주로 다루는 내용, 도움을 줄 수 있는 방법, 위키 전체에 알리는 내용 등을 적으세요.',
+	'founderprogressbar-video-add-label' => '문서에 동영상 삽입하기',
+	'founderprogressbar-video-add-description' => '동영상 기능은 사용자들의 주의를 끌 수 있는 그림과는 또다른 형태의 매체입니다. YouTube, Hulu 등의 사이트에서 적당한 동영상을 찾아 문서에 삽입해보세요.',
 	'founderprogressbar-user-add5-label' => '사용자 문서 수 5개 달성하기',
+	'founderprogressbar-user-add5-description' => '성공하는 위키의 저편에는 활성화된 사용자 모임이 있습니다. 성공하는 위키에는 기여하는 사용자들이 매우 많습니다. 막 시작한 위키에 5명의 활동하는 사용자가 있다면 위키가 지속적으로 성장하는 데 큰 도움이 될 것입니다.',
+	'founderprogressbar-recentchanges-visit-label' => '최근 바뀜 보기',
+	'founderprogressbar-recentchanges-visit-description' => "최근 바뀜 기능은 위키 활동 내역을 더 전문적으로 볼 수 있는 기능입니다. 문서의 판과 판의 '차이 보기'를 하여 바뀐 내용에 대해 상세히 알 수 있습니다. 위키의 변경점에 대해 더 많은 정보가 필요할 때 매우 유용합니다.",
+	'founderprogressbar-wordmark-edit-label' => '워드마크 올리기',
+	'founderprogressbar-wordmark-edit-description' => '워드마크는 위키의 핵심 기능으로 모든 문서에 보여지는 위키의 대표적인 그림입니다. 워드마크를 올려 위키의 고유 브랜드를 만들어보세요.',
+	'founderprogressbar-mostvisited-visit-label' => '방문이 많은 문서 알아보기',
+	'founderprogressbar-mostvisited-visit-description' => '위키의 방문자가 늘어나고 있다면 방문이 많은 문서를 주시하여 방문이 많은 문서의 질을 더 향상시켜 방문이 적은 문서를 가리키는 링크를 넣어보세요. 방문이 많은 문서를 파악하여 무엇이 위키의 일등공신인지 알아보고 다른 문서도 비슷하게 발전할 수 있도록 하세요.',
+	'founderprogressbar-toptenlist-add-label' => '상위 10 목록 만들기',
+	'founderprogressbar-toptenlist-add-description' => '상위 10 목록 기능을 사용하면 문서 편집에 소극적인 방문자들의 위키 참여를 유도할 수 있습니다. 일정 주제에 대한 항목의 순위를 매기거나 관련된 다른 항목을 추가하기 쉬우므로 사용자들의 의견을 파악하는 데도 큰 도움이 됩니다.',
+	'founderprogressbar-blogpost-add-label' => '블로그 글 작성하기',
+	'founderprogressbar-blogpost-add-description' => '위키에 있는 블로그 기능은 위키에 공지사항을 전달하거나 다른 사용자의 도움이 필요한 것에 대한 자세한 설명을 하거나 회원님의 의견을 피력하거나 다른 사용자에게 블로그 글을 쓸 수 있도록 장려하는 좋은 도구입니다. 블로그 글을 작성해보세요!',
+	'founderprogressbar-fb-likes3-label' => 'Facebook 좋아요 $1회 달성하기',
+	'founderprogressbar-fb-likes3-description' => "공유가 미덕이며 이는 위키를 알리는 데 큰 힘이 됩니다. 위키의 사용자들과 방문자들에게 대문에 있는 '좋아요' 버튼을 누를 수 있도록 장려하여 회원님의 위키의 존재가 널리 퍼지도록 해주세요.",
+	'founderprogressbar-uncategorized-visit-label' => '분류 안된 문서 보기',
+	'founderprogressbar-uncategorized-visit-description' => '위키에 문서가 많아질수록 조직화하기가 힘들어집니다. 분류되지 않은 문서들을 주시하셔서 위키가 조직화될 수 있도록 해주세요.',
+	'founderprogressbar-total-edit300-label' => '문서 편집 $1회 달성하기',
+	'founderprogressbar-total-edit300-description' => '편집 횟수 $1를 달성하는 것은 매우 많은 변화가 일어났다는 것을 보여주는 좋은 지표입니다. 이는 앞으로 위키가 성공하는 데 큰 도움이 될 것입니다.',
+	'founderprogressbar-bonus-photo-add10-label' => '그림 $1장 더 올리기',
+	'founderprogressbar-bonus-photo-add10-description' => '새 그림을 올리는 것은 위키를 성장시키는 데 굉장히 중요한 방법입니다. 새 그림 10장을 올리면 이 보너스 과제에 대한 크레딧 1개를 확보할 수 있습니다.',
+	'founderprogressbar-bonus-page-add5-label' => '문서 $1개 더 만들기',
+	'founderprogressbar-bonus-page-add5-description' => '위키의 기본적인 성공 비결은 많은 내용을 위키에 담는 것입니다. 문서 5개를 새로 만들면 이 보너스 과제에 대한 크레딧 1개를 확보하세요.',
+	'founderprogressbar-bonus-edit50-label' => '문서 편집 $1회 더 하기',
+	'founderprogressbar-bonus-edit50-description' => '문서 편집을 50회 더 하면 이 보너스 과제에 대한 크레딧 하나를 확보할 수 있습니다.',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -1541,7 +1607,7 @@ $messages['nl'] = array(
 	'founderprogressbar-mostvisited-visit-description' => "Als uw wiki echt op stoom komt, is het handig om te zien wat de meest populaire pagina's zijn, zodat u die kunt verbeteren en meer koppelingen kunt toevoegen naar pagina's die minder vaak bezocht worden. Kijk naar uw meest bezochte pagina's om een idee te krijgen van wat het beste werkt voor uw wiki zodat u soortgelijke verbeteringen kunt maken aan de andere pagina's!",
 	'founderprogressbar-toptenlist-add-label' => 'Top-10 lijst toevoegen',
 	'founderprogressbar-toptenlist-add-description' => 'Top-10 lijsten motiveren gebruikers die misschien wat terughoudend zijn om mee te werken aan uw wiki. Het is een leuke motivator voor de gemeenschap en het is makkelijk voor mensen die dingen die mensen aan lijsten toevoegen te waarderen.',
-	'founderprogressbar-blogpost-add-label' => 'Een blogpost schrijven',
+	'founderprogressbar-blogpost-add-label' => 'Een blogbericht schrijven',
 	'founderprogressbar-blogpost-add-description' => 'Blogberichten op uw wiki zijn een goede manier om aankondigingen te doen, aan te geven waar u hulp bij nodig hebt in uw wiki, uw mening te geven en andere mensen aan te moedigen hun eigen blogberichten te schrijven. Probeer het eens!',
 	'founderprogressbar-fb-likes3-label' => 'Bereik $1 keer "Vind ik leuk" op Facebook',
 	'founderprogressbar-fb-likes3-description' => 'Delen geeft aan dat u erom geeft en het helpt echt bij geven van meer bekendheid aan uw wiki. Moedig uw leden en lezers aan om op de knop "Vind ik leuk" te klikken op de pagina voor uw wiki op Facebook.',
@@ -1561,17 +1627,24 @@ $messages['nl'] = array(
 /** Occitan (occitan)
  * @author Cedric31
  * @author Hulothe
+ * @author LouisHP81
  */
 $messages['oc'] = array(
+	'founderprogressbar-credits' => 'Un centre de prètzfaches e guides pels novèls fondadors de wikias',
 	'founderprogressbar-widget-label' => 'Progression de {{SITENAME}}',
 	'founderprogressbar-progress-label' => 'Prètzfaches acomplits',
-	'founderprogressbar-progress-see-full-list' => 'Afichar la lista',
-	'founderprogressbar-progress-hide-full-list' => 'Amagar la lista',
+	'founderprogressbar-progress-see-full-list' => 'Afichar la tièira',
+	'founderprogressbar-progress-hide-full-list' => 'Amagar la tièira',
 	'founderprogressbar-skip-for-now' => 'Passar pel moment',
 	'founderprogressbar-task-completed' => 'Acabat',
 	'founderprogressbar-list-label' => 'Prètzfaches de {{SITENAME}}',
 	'founderprogressbar-list-task-label' => 'Prètzfaches',
+	'founderprogressbar-list-skipped-task-label' => 'Prètzfaches daissaits de caire',
+	'founderprogressbar-list-skipped-task-desc' => 'Los podètz completar quora que siá.',
+	'founderprogressbar-list-bonus-task-label' => 'Prètzfaches de bonification',
+	'founderprogressbar-list-bonus-task-desc' => 'Completatz la tièira de prètzfaches per desblocar los prètzfaches de bonification',
 	'founderprogressbar-page-add10-label' => 'Aténher $1 pagina{{PLURAL:$1||s}}',
+	'founderprogressbar-page-add10-description' => "Çò melhor per balhar al vòstre wikia de vam per partir plan es de començar a ajustar de paginas amb d'informations sul vòstre subjècte. Las melhoras paginas an al mens un o dos paragrafs e perque pas de ligams vèrs d'autras paginas.",
 	'founderprogressbar-wikialabs-visit-label' => 'Visitar Wikia Labs',
 	'founderprogressbar-fb-connect-label' => 'Connectar amb Facebook',
 	'founderprogressbar-recentchanges-visit-label' => 'Visitar los Darrièrs Cambiaments',
@@ -1969,6 +2042,7 @@ $messages['sr-ec'] = array(
 /** Swedish (svenska)
  * @author Geitost
  * @author Grytolle
+ * @author Jopparn
  * @author Rotsee
  * @author WikiPhoenix
  */
@@ -2015,7 +2089,7 @@ $messages['sv'] = array(
 	'founderprogressbar-page-add20-description' => 'Fortsätt arbeta för att göra din wiki en omfattande resurs om ditt ämne. Kom ihåg, skapa inte bara sidor -- se till att de har gott om innehåll i dem också.',
 	'founderprogressbar-category-edit-label' => 'Redigera en kategorisida',
 	'founderprogressbar-category-edit-description' => 'Kategorier visar inte bara länkar till alla sidor i kategorin; du kan även redigera dem för att berätta folk vad kategorin handlar om och låta dem veta vilka sidor som borde läggas till där. Dessutom, genom att redigera kategorisidan ändras den röda länken till en mer aktiv blåfärgad länk.',
-	'founderprogressbar-wikialabs-visit-label' => 'Besök Wikia-labs',
+	'founderprogressbar-wikialabs-visit-label' => 'Besök Wikia Labs',
 	'founderprogressbar-wikialabs-visit-description' => 'Wikia-labs låter dig aktivera de nyaste funktionerna från Wikia på din wiki. Dessa funktioner är alla i betastadiet, men det är alltid ett bra sätt att se vad som är på gång från Wikia och prova det själv.',
 	'founderprogressbar-fb-connect-label' => 'Facebook Connect',
 	'founderprogressbar-fb-connect-description' => 'Dela allt arbete du utför! Facebook Connect låter dig dela handlingar som du gör på din wiki med din Facebook-vänner. Du kan anpassa vilka åtgärder som ska postas på Facebook. Endast en administratör måste aktivera detta för att slutföra uppgiften.',
@@ -2502,6 +2576,7 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
 	'founderprogressbar-credits' => '一個為新維基創建者的任務與指南中心',
@@ -2514,7 +2589,7 @@ $messages['zh-hant'] = array(
 	'founderprogressbar-list-label' => '{{SITENAME}}的任務',
 	'founderprogressbar-list-description1' => '準備好要推動您的 wiki走上成功之路了嗎？ 完成的所有下面列出來的任務，讓您的進度條達到 100%！您的wiki上的任何人的貢獻都會加進這個任務清單中。',
 	'founderprogressbar-list-description2' => '任務區列出了所有您需要完成的任務。如果您跳過一個任務，它將移動到「已跳過的任務」之中，您仍可以在任何時候完成它們。您是否覺得列表上的某些任務永遠不適合您的維基嗎？别擔心--當只有「已跳過任務」仍未完成時，我們會解鎖您的獎勵任务。完成獎勵任務來彌補你要永遠跳過的任務，讓完成率達到夢寐以求的100%吧。',
-	'founderprogressbar-list-task-label' => '任務',
+	'founderprogressbar-list-task-label' => '工作',
 	'founderprogressbar-list-skipped-task-label' => '跳過的任務',
 	'founderprogressbar-list-skipped-task-desc' => '您可以在任何時候完成這些。',
 	'founderprogressbar-list-bonus-task-label' => '獎勵任務',
