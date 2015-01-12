@@ -35,7 +35,7 @@ $color-wam-button: #092344;
 }
 
 .wam-hero {
-	background-image: url('/extensions/wikia/WAMPage/images/hero.jpg'); /* base64 */
+	background-image: url('/extensions/wikia/WAMPage/images/hero.jpg'); /* inline */
 	h2 {
 		border: 0;
 		color: $color-wam-white;
@@ -148,7 +148,7 @@ $color-wam-button: #092344;
 			text-decoration: none;
 			width: 144px;
 			figure {
-				background: url('/extensions/wikia/WAMPage/images/wam-imgplaceholder.png'); /* base64 */;
+				background: url('/extensions/wikia/WAMPage/images/wam-imgplaceholder.png'); /* inline */;
 				height: 94px;
 				overflow: hidden;
 				position: relative;
@@ -172,13 +172,13 @@ $color-wam-button: #092344;
 				background-position: 5px 50%;
 			}
 			.wam-up {
-				background-image: url('/extensions/wikia/WAMPage/images/wam-up.png'); /* base64 */
+				background-image: url('/extensions/wikia/WAMPage/images/wam-up.png'); /* inline */
 			}
 			.wam-down {
-				background-image: url('/extensions/wikia/WAMPage/images/wam-down.png'); /* base64 */
+				background-image: url('/extensions/wikia/WAMPage/images/wam-down.png'); /* inline */
 			}
 			.wam-eq {
-				background-image: url('/extensions/wikia/WAMPage/images/wam-eq.png'); /* base64 */
+				background-image: url('/extensions/wikia/WAMPage/images/wam-eq.png'); /* inline */
 			}
 			.wam-vertical {
 				bottom: 3px;
@@ -218,7 +218,7 @@ $color-wam-button: #092344;
 	padding: 65px 60px;
 
 	.wam-content-logo {
-		background-image: url('/extensions/wikia/WAMPage/images/WAM-Logo.png'); /* base64 */
+		background-image: url('/extensions/wikia/WAMPage/images/WAM-Logo.png'); /* inline */
 		background-repeat: no-repeat;
 		display: inline;
 		float: left;
@@ -379,7 +379,7 @@ $color-wam-button: #092344;
 			vertical-align: middle;
 		}
 		img {
-			background-image: url('/extensions/wikia/WAMPage/images/wam-searchicon.png'); /* base64 */
+			background-image: url('/extensions/wikia/WAMPage/images/wam-searchicon.png'); /* inline */
 			height: 17px;
 			width: 16px;
 		}
@@ -465,13 +465,13 @@ $color-wam-button: #092344;
 				padding-left: 30px;
 
 				&.down {
-					background-image: url('/skins/oasis/images/wam/down.png'); /* base64 */
+					background-image: url('/skins/oasis/images/wam/down.png'); /* inline */
 				}
 				&.up {
-					background-image: url('/skins/oasis/images/wam/up.png'); /* base64 */
+					background-image: url('/skins/oasis/images/wam/up.png'); /* inline */
 				}
 				&.eq {
-					background-image: url('/skins/oasis/images/wam/nochange.png'); /* base64 */
+					background-image: url('/skins/oasis/images/wam/nochange.png'); /* inline */
 				}
 			}
 		}

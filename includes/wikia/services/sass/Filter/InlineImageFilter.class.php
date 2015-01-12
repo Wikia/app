@@ -22,7 +22,7 @@ class InlineImageFilter extends Filter {
 	public function process( $contents ) {
 		wfProfileIn(__METHOD__);
 
-		$contents = preg_replace_callback("/([, ]url[^\n]*?\))([^\n]*?)(\s*\/\*\s*base64\s*\*\/)/is", [$this, 'processMatches'], $contents);
+		$contents = preg_replace_callback("/([, ]url[^\n]*?\))([^\n]*?)(\s*\/\*\s*(base64|inline)\s*\*\/)/is", [$this, 'processMatches'], $contents);
 
 		wfProfileOut(__METHOD__);
 
@@ -37,7 +37,7 @@ class InlineImageFilter extends Filter {
 			return " url({$inlined}){$matches[2]}";
 		}
 		else {
-			throw new \Wikia\Sass\Exception("/* Base64 encoding failed: {$fileName} not found or not supported! */");
+			throw new \Wikia\Sass\Exception("/* Putting image inline failed: {$fileName} not found or not supported! */");
 		}
 	}
 

@@ -102,55 +102,55 @@
 	@if $imageName == 'carousel_arrow_dark' {
 		$image-width: 15px;
 		$image-height: 23px;
-		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/carousel_arrow_dark.png'); /* base64 */
+		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/carousel_arrow_dark.png'); /* inline */
 	}
 	// @autosprite-image-details: carousel_left_arrow_white.png@99,0,4e43cc714d64db8815ed589e2c571387
 	@if $imageName == 'carousel_left_arrow_white' {
 		$image-width: 42px;
 		$image-height: 55px;
-		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/carousel_left_arrow_white.png'); /* base64 */
+		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/carousel_left_arrow_white.png'); /* inline */
 	}
 	// @autosprite-image-details: carousel_right_arrow_white.png@153,0,76852cdbaea748c9ea832fea8991b4e3
 	@if $imageName == 'carousel_right_arrow_white' {
 		$image-width: 42px;
 		$image-height: 55px;
-		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/carousel_right_arrow_white.png'); /* base64 */
+		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/carousel_right_arrow_white.png'); /* inline */
 	}
 	// @autosprite-image-details: ico_anyclip.png@207,0,7f5a01073cdd282c51e020c86cdbed16
 	@if $imageName == 'ico_anyclip' {
 		$image-width: 82px;
 		$image-height: 30px;
-		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/ico_anyclip.png'); /* base64 */
+		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/ico_anyclip.png'); /* inline */
 	}
 	// @autosprite-image-details: ico_ign.png@301,0,7a185b3a2f9e2f21ed500b0172b5b5bc
 	@if $imageName == 'ico_ign' {
 		$image-width: 76px;
 		$image-height: 23px;
-		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/ico_ign.png'); /* base64 */
+		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/ico_ign.png'); /* inline */
 	}
 	// @autosprite-image-details: ico_iva.png@389,0,7510e435a389e8b25d0f900917c75a59
 	@if $imageName == 'ico_iva' {
 		$image-width: 85px;
 		$image-height: 38px;
-		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/ico_iva.png'); /* base64 */
+		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/ico_iva.png'); /* inline */
 	}
 	// @autosprite-image-details: ico_ooyala.png@486,0,179f4581bea111361206a824e53faf97
 	@if $imageName == 'ico_ooyala' {
 		$image-width: 107px;
 		$image-height: 18px;
-		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/ico_ooyala.png'); /* base64 */
+		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/ico_ooyala.png'); /* inline */
 	}
 	// @autosprite-image-details: ico_screenplay.png@605,0,cf4f575536b5f71cd83107c9648c674f
 	@if $imageName == 'ico_screenplay' {
 		$image-width: 35px;
 		$image-height: 40px;
-		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/ico_screenplay.png'); /* base64 */
+		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/ico_screenplay.png'); /* inline */
 	}
 	// @autosprite-image-details: logo_wikiavideo.png@652,0,39ddd3d3ae05b31a906d99cdd5a3ceb2
 	@if $imageName == 'logo_wikiavideo' {
 		$image-width: 187px;
 		$image-height: 37px;
-		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/logo_wikiavideo.png'); /* base64 */
+		background-image: url('/extensions/wikia/VideoPageTool/images/sprite-VideoPageTool/logo_wikiavideo.png'); /* inline */
 	}
 	@if $image-width != -1 {
 		$position-x: 0px;
