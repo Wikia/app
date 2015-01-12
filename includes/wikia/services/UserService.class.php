@@ -178,17 +178,18 @@ class UserService extends Service {
 		$value = F::app()->wg->memc->get( $cacheIdKey );
 
 		if ( $value !== false ) {
-			if ( $value instanceof User ) {
+			try {
 				//cache locally
 				$this->cacheLocalUser( $value );
 				return $value;
-			} else {
+			} catch ( Exception $e ) {
 				Wikia\Logger\WikiaLogger::instance()->debug(
 					'HG-519 MemCache returned invalid value from UserCache',
 					[
 						'id' => $id,
 						'cacheIdKey' => $cacheIdKey,
-						'value' => $value
+						'value' => $value,
+						'stack' => $e->getTraceAsString()
 					]
 				);
 			}
