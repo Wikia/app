@@ -175,10 +175,23 @@ class UserService extends Service {
 
 	private function getUserFromMemCacheById( $id ) {
 		$cacheIdKey = wfSharedMemcKey( "UserCache:".$id );
-		if ( ( $value = F::app()->wg->memc->get( $cacheIdKey ) ) !== false ) {
-			//cache locally
-			$this->cacheLocalUser( $value );
-			return $value;
+		$value = F::app()->wg->memc->get( $cacheIdKey );
+
+		if ( $value !== false ) {
+			if ( $value instanceof User ) {
+				//cache locally
+				$this->cacheLocalUser( $value );
+				return $value;
+			} else {
+				Wikia\Logger\WikiaLogger::instance()->debug(
+					'HG-519 MemCache returned invalid value from UserCache',
+					[
+						'id' => $id,
+						'cacheIdKey' => $cacheIdKey,
+						'value' => $value
+					]
+				);
+			}
 		}
 		return false;
 	}
@@ -210,7 +223,7 @@ class UserService extends Service {
 	/**
 	 * @param $user User
 	 */
-	private function cacheUser( $user ) {
+	private function cacheUser( User $user ) {
 		$cacheIdKey = wfSharedMemcKey( "UserCache:".$user->getId() );
 		$cacheNameKey = wfSharedMemcKey( "UserCache:".$user->getName() );
 		F::app()->wg->memc->set( $cacheIdKey, $user, static::CACHE_EXPIRATION );
@@ -222,7 +235,7 @@ class UserService extends Service {
 	/**
 	 * @param $user User
 	 */
-	private function cacheLocalUser( $user ) {
+	private function cacheLocalUser( User $user ) {
 		static::$userCacheMapping[ $user->getName() ] = $user->getId();
 		static::$userCache[ $user->getId() ] = $user;
 	}
