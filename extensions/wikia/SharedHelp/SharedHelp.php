@@ -160,7 +160,7 @@ function SharedHelpHook(&$out, &$text) {
 		$sharedArticleKey = wfSharedMemcKey(
 			'sharedArticles',
 			$wgHelpWikiId,
-			md5(MWNamespace::getCanonicalName( $wgTitle->getNamespace() ), $wgTitle->getDBkey()),
+			md5(MWNamespace::getCanonicalName( $wgTitle->getNamespace() ) . ':' . $wgTitle->getDBkey()),
 			SHAREDHELP_CACHE_VERSION
 		);
 		$sharedArticle = $wgMemc->get($sharedArticleKey);
@@ -326,7 +326,7 @@ function SharedHelpHook(&$out, &$text) {
 			$sharedRedirectsArticlesKey = wfSharedMemcKey(
 				'sharedRedirectsArticles',
 				$wgHelpWikiId,
-				md5( MWNamespace::getCanonicalName( $wgTitle->getNamespace() ), $wgTitle->getDBkey() )
+				md5( MWNamespace::getCanonicalName( $wgTitle->getNamespace() ) . ':' . $wgTitle->getDBkey() )
 			);
 			$articleLink = $wgMemc->get($sharedRedirectsArticlesKey, null);
 

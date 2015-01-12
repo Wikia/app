@@ -58,6 +58,7 @@ class AdEngine2Hooks {
 		// DR
 		$vars[] = 'wgSitewideDisableGpt';
 		$vars[] = 'wgSitewideDisableLiftium';
+		$vars[] = 'wgSitewideDisableNewGaAnalitycs';
 		$vars[] = 'wgSitewideDisableSevenOneMedia';
 		$vars[] = 'wgSitewideDisableRubiconRTP';
 

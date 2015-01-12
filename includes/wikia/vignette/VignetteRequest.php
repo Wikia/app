@@ -79,7 +79,7 @@ class VignetteRequest {
 	 * create a UrlGenerator object from a Vignette url
 	 * @param $url
 	 * @param $asOriginal
-	 * @return null|UrlGenerator
+	 * @return UrlGenerator
 	 */
 	public static function fromUrl($url, $asOriginal=false) {
 		return (new VignetteUrlToUrlGenerator($url, $asOriginal))
