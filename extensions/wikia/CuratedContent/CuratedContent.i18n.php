@@ -22,7 +22,8 @@ $messages[ 'en' ] = array(
 	'wikiacuratedcontent-content-empty-section' => 'This section needs some items',
 
 	'wikiacuratedcontent-content-description-items' => 'Add wiki "Items" and rename them as you\'d like them to appear in Curated Content with "Curated Content Names".',
-	'wikiacuratedcontent-content-description-supported-items-for-sections' => 'Categories are supported in all sections. "Featured" section supports: articles, blogs, videos (youtube and ooyala)',
+	'wikiacuratedcontent-content-description-supported-items-for-sections' => 'Categories are supported in all sections.Additionaly "Featured" section supports: articles, blogs, videos (youtube and ooyala)',
+	'wikiacuratedcontent-content-description-tag-needs-image' => 'Tag needs to have Image',
 	'wikiacuratedcontent-content-description-label-info' => 'When adding items label them (right field) and type names (left field) follow convention: article_name, Category:category_name, User blog:username/post_name, File:video_name',
 	'wikiacuratedcontent-content-description-section' => 'Does it make sense to group items under a game series installment? Add a "Section" and drag and drop wiki items under it.',
 	'wikiacuratedcontent-content-description-organize' => 'Feel free to delete or add more lines, and reorder them by dragging and dropping.',
@@ -63,6 +64,7 @@ $messages[ 'qqq' ] = array(
 
 	'wikiacuratedcontent-content-description-items' => 'Message describing a purpose and usage of the tool',
 	'wikiacuratedcontent-content-description-supported-items-for-sections' => 'Message describing a purpose and usage of the tool',
+	'wikiacuratedcontent-content-description-tag-needs-image' => 'Message describing a purpose and usage of the tool',
 	'wikiacuratedcontent-content-description-label-info' => 'Message describing a purpose and usage of the tool',
 	'wikiacuratedcontent-content-description-section' => 'Message describing a purpose and usage of the tool',
 	'wikiacuratedcontent-content-description-organize' => 'Message describing a purpose and usage of the tool',
