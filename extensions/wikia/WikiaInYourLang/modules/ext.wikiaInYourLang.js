@@ -44,7 +44,7 @@ require(
 				targetLanguage;
 
 
-			if (w.wgUserName !== 'null') {
+			if (w.wgUserName !== null) {
 				// Check if a user is logged and if so - use a lang from settings
 				targetLanguage = w.wgUserLanguage;
 			}
