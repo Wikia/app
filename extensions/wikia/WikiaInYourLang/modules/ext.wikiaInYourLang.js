@@ -44,7 +44,7 @@ require(
 				targetLanguage;
 
 
-			if (typeof w.wgUserName !== 'null') {
+			if (w.wgUserName !== 'null') {
 				// Check if a user is logged and if so - use a lang from settings
 				targetLanguage = w.wgUserLanguage;
 			}
@@ -111,9 +111,10 @@ require(
 
 		function bindEvents() {
 			$('.global-notification.notify').click(function (event) {
-				if (event.target.parentElement.className.indexOf('close') !== -1) {
+				var $target = $(event.target);
+				if ($target.parent().hasClass('close')) {
 					onNotificationClosed();
-				} else if (event.target.className.indexOf('text') !== -1) {
+				} else if ($target.hasClass('text')) {
 					onLinkClick();
 				}
 			})
