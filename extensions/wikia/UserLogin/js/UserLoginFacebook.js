@@ -170,19 +170,28 @@
 				this.loginCallback();
 			} else {
 				this.bucky.timer.start('loggedInCallback');
-				var qString = new QueryString(),
-				// TODO: special page URL matching needs to be consolidated. @see UC-187
-					returnTo = (wgCanonicalSpecialPageName &&
-						(wgCanonicalSpecialPageName.match(/Userlogin|Userlogout|UserSignup/))) ?
-						wgMainPageTitle : null;
+				var returnUrl = new QueryString(),
+					returnTo = returnUrl.getVal('returnto');
+
+				// See if we were passed a returnto URL.  If not and we're on a special page we shouldn't
+				// stay on, set returnto to be the main page
+				if (returnTo) {
+					returnUrl.removeVal('returnto');
+				} else if (
+					wgCanonicalSpecialPageName &&
+					wgCanonicalSpecialPageName.match(/Userlogin|Userlogout|UserSignup/)
+				) {
+					// TODO: special page URL matching needs to be consolidated. @see UC-187
+					returnTo = wgMainPageTitle;
+				}
 
 				if (returnTo) {
-					qString.setPath(wgArticlePath.replace('$1', returnTo));
+					returnUrl.setPath(wgArticlePath.replace('$1', returnTo));
 				}
 				// send bucky info immediately b/c the page is about to redirect
 				this.bucky.timer.stop('loggedInCallback');
 				this.bucky.flush();
-				qString.addCb().goTo();
+				returnUrl.addCb().goTo();
 			}
 		},
 
