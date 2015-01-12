@@ -60,7 +60,7 @@ class WikiaInYourLangController extends WikiaController {
 				$this->response->setVal( 'message', $sMessage );
 			} else {
 				$this->response->setVal( 'success', false );
-				$this->response->setVal( 'error', 'A native wikia not found.' );
+				$this->response->setVal( 'error', "A native wikia with a domain {$sNativeWikiDomain} not found." );
 			}
 		} else {
 			$this->response->setVal( 'success', false );
@@ -89,17 +89,18 @@ class WikiaInYourLangController extends WikiaController {
 
 		if ( isset( $aParsed['host'] ) ) {
 			$sHost = $aParsed['host'];
-			$regExp = "/(([a-z]{2,3}|[a-z]{2}\-[a-z]{2})\.)?([^\.]+\.)(.*)/i";
+			$regExp = "/(sandbox.{3}\.|preview\.|verify\.)?(([a-z]{2,3}|[a-z]{2}\-[a-z]{2})\.)?([^\.]+\.)(.*)/i";
 			/**
 			 * preg_match returns similar array as a third parameter:
 			 * [
-			 * 	0 => zh.example.wikia.com,
-			 * 	1 => (zh. | empty),
-			 * 	2 => (zh | empty),
-			 * 	3 => example.
-			 * 	4 => ( wikia.com | adamk.wikia-dev.com )
+			 * 	0 => sandbox-s3.zh.example.wikia.com,
+			 * 	1 => (sandbox-s3. | preview. | verify. | empty)
+			 * 	2 => (zh. | empty),
+			 * 	3 => (zh | empty),
+			 * 	4 => example.
+			 * 	5 => ( wikia.com | adamk.wikia-dev.com )
 			 * ]
-			 * [3] is a domain without the language prefix
+			 * [4] is a domain without the language prefix
 			 * @var Array
 			 */
 			$aMatches = [];
@@ -109,7 +110,7 @@ class WikiaInYourLangController extends WikiaController {
 			 * This allows the extension to work on devboxes
 			 */
 			if ( $iMatchesCount == 1 ) {
-				$sWikiDomain = $aMatches[3] . self::WIKIAINYOURLANG_WIKIA_DOMAIN;
+				$sWikiDomain = $aMatches[4] . self::WIKIAINYOURLANG_WIKIA_DOMAIN;
 			}
 		}
 
@@ -123,8 +124,13 @@ class WikiaInYourLangController extends WikiaController {
 	 * @return string                  A native wikia URL (e.g. ja.community.wikia.com)
 	 */
 	private function getNativeWikiDomain( $sWikiDomain, $sTargetLanguage ) {
-		$sNativeWikiDomain = $sTargetLanguage . '.' . $sWikiDomain;
-		return $sNativeWikiDomain;
+		if ( $sTargetLanguage !== 'en' ) {
+			$sNativeWikiDomain = $sTargetLanguage . '.' . $sWikiDomain;
+			return $sNativeWikiDomain;
+		}
+		else {
+			return $sWikiDomain;
+		}
 	}
 
 	/**
