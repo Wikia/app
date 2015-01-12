@@ -3,7 +3,7 @@
 namespace Wikia\Sass\Filter;
 
 /**
- * Base64 filter handles encoding and embedding files in CSS stylesheet
+ * Inline image filter handles encoding and embedding files in CSS stylesheet
  * for URLs marked to be processed that way.
  *
  * @author Inez Korczyński <korczynski@gmail.com>
@@ -11,7 +11,7 @@ namespace Wikia\Sass\Filter;
  * @author Władysław Bodzek <wladek@wikia-inc.com>
  * @author Bartosz V. Bentkowski <v@wikia-inc.com>
  */
-class Base64Filter extends Filter {
+class InlineImageFilter extends Filter {
 
 	protected $rootDir;
 
@@ -32,16 +32,16 @@ class Base64Filter extends Filter {
 	protected function processMatches($matches) {
 		$fileName = $this->rootDir . trim(substr($matches[1], 4, -1), '\'"() ');
 
-		$encoded = $this->encodeFile($fileName);
-		if ($encoded !== false) {
-			return " url({$encoded}){$matches[2]}";
+		$inlined = $this->inlineFile($fileName);
+		if ($inlined !== false) {
+			return " url({$inlined}){$matches[2]}";
 		}
 		else {
 			throw new \Wikia\Sass\Exception("/* Base64 encoding failed: {$fileName} not found or not supported! */");
 		}
 	}
 
-	protected function encodeFile( $fileName ) {
+	protected function inlineFile( $fileName ) {
 		wfProfileIn(__METHOD__);
 
 		if (!file_exists($fileName)) {
@@ -74,15 +74,15 @@ class Base64Filter extends Filter {
 
 		$content = file_get_contents($fileName);
 
-		$out = "'data:image/{$type}";
+		$out = "\"data:image/{$type}";
 		if ($base64) {
 			$out .= ';base64,';
 			$content = base64_encode($content);
 		} else {
-			$content = str_replace('#', '%23', $content);
+			$content =  rawurlencode($content);
 		}
 		$out .= $content;
-		$out .= "'";
+		$out .= '"';
 
 		wfProfileOut(__METHOD__);
 		return $out;

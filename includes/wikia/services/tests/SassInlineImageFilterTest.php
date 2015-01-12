@@ -1,18 +1,18 @@
 <?php
 
-class SassBase64FilterTest extends WikiaBaseTest
+class SassInlineImageFilterTest extends WikiaBaseTest
 {
 	/**
 	 * @dataProvider getProcessData
 	 */
 	public function testProcess($input, $output) {
-		$filter = $this->getMockBuilder( 'Wikia\Sass\Filter\Base64Filter' )
+		$filter = $this->getMockBuilder( 'Wikia\Sass\Filter\InlineImageFilter' )
 			->disableOriginalConstructor()
-			->setMethods( [ 'encodeFile' ] )
+			->setMethods( [ 'inlineFile' ] )
 			->getMock();
 
 		$filter
-			->method( 'encodeFile' )
+			->method( 'inlineFile' )
 			->will  ( $this->returnCallback( function($fileName) { return "data:@$fileName@"; } ) );
 
 		$this->assertEquals( $filter->process( $input ), $output );
