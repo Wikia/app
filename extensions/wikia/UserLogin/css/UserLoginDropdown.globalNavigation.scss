@@ -54,7 +54,7 @@
 	}
 
 	.WikiaForm {
-		padding: 0 $large-content-padding;
+		padding: 0 $large-content-padding $large-content-padding $large-content-padding;
 
 		.forgot-password {
 			color: $nav-foreground-bright-color;
@@ -66,7 +66,7 @@
 			@include box-sizing;
 			line-height: inherit;
 			margin: 0;
-			padding: 0px;
+			padding: 0;
 			width: 100%;
 
 			&.login-button {
@@ -227,7 +227,7 @@
 		}
 
 		.WikiaForm {
-			padding: 0 $small-content-padding;
+			padding: 0 $small-content-padding $small-content-padding $small-content-padding;
 		}
 	}
 }
@@ -246,7 +246,7 @@
 		}
 
 		.WikiaForm {
-			padding: 0 $medium-content-padding;
+			padding: 0 $medium-content-padding $medium-content-padding $medium-content-padding;
 		}
 	}
 }
