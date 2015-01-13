@@ -41,7 +41,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 		if ( !empty( $this->wg->EnableFacebookClientExt ) ) {
 			$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js' );
-			$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebook.js' );
+			$this->response->addAsset( 'extensions/wikia/UserLogin/js/FacebookLogin.js' );
 		}
 
 		$this->response->addAsset('extensions/wikia/UserLogin/js/UserLoginSpecial.js');

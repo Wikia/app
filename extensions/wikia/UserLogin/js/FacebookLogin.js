@@ -7,10 +7,9 @@ wgUserLanguage, GlobalNotification */
 (function () {
 	'use strict';
 
-	var tracker, QueryString, uiFactory, UserLoginFacebook;
+	var tracker, QueryString, uiFactory, FacebookLogin;
 
-	// TODO: change to FacebookLogin.js
-	UserLoginFacebook = {
+	FacebookLogin = {
 		modal: false,
 		form: false,
 		callbacks: {},
@@ -335,5 +334,5 @@ wgUserLanguage, GlobalNotification */
 		}
 	};
 
-	window.UserLoginFacebook = UserLoginFacebook;
+	window.FacebookLogin = FacebookLogin;
 })();

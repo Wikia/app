@@ -39,7 +39,7 @@
 					this.loginAjaxForm = new window.UserLoginAjaxForm(this.dropdown);
 
 					// lazy load jquery.wikia.tooltip.js (BugId:22143)
-					window.UserLoginFacebook.init(window.UserLoginFacebook.origins.DROPDOWN);
+					window.FacebookLogin.init(window.FacebookLogin.origins.DROPDOWN);
 				}
 
 				$('body').

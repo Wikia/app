@@ -387,7 +387,7 @@ $config['oasis_anon_js'] = array(
 		'//extensions/wikia/UserLogin/js/UserSignupMarketingOptIn.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormCreateUser.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormConnectUser.js',
-		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
+		'//extensions/wikia/UserLogin/js/FacebookLogin.js',
 		'//extensions/wikia/UserLogin/js/UserLoginDropdown.js',
 		'//skins/oasis/js/LatestActivity.js',
 	)
@@ -401,7 +401,7 @@ $config['oasis_anon_with_new_global_nav_js'] = array(
 		'//extensions/wikia/UserLogin/js/UserSignupMarketingOptIn.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormCreateUser.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormConnectUser.js',
-		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
+		'//extensions/wikia/UserLogin/js/FacebookLogin.js',
 		'//skins/oasis/js/LatestActivity.js',
 	)
 );
@@ -410,7 +410,7 @@ $config['oasis_anon_with_new_global_nav_js'] = array(
 $config['oasis_user_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
-		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
+		'//extensions/wikia/UserLogin/js/FacebookLogin.js',
 		'//extensions/wikia/UserLogin/js/UserSignupMarketingOptIn.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormCreateUser.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormConnectUser.js',
