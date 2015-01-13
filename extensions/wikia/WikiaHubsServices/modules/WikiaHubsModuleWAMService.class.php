@@ -69,7 +69,7 @@ class WikiaHubsModuleWAMService extends WikiaHubsModuleNonEditableService {
 				$lastTimestamp,
 				$this->skinName
 			),
-			6 * 60 * 60,
+			WikiaResponse::CACHE_SHORT,
 			function () use( $model, $params ) {
 				return $this->loadStructuredData($model, $params);
 			}
