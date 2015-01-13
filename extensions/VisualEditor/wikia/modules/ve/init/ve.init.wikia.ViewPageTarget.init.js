@@ -19,7 +19,59 @@
 ( function () {
 	var conf, tabMessages, uri, pageExists, viewUri, veEditUri, isViewPage,
 		init, support, targetDeferred, enable, userPrefEnabled,
-		plugins = [];
+		plugins = [],
+		spinnerTimeoutId = null;
+
+	function initSpinner() {
+		var $spinner = $( '<div>' )
+				.addClass( 've-spinner visible' )
+				.attr( 'data-type', 'loading' ),
+			$content = $( '<div>' ).addClass( 'content' ),
+			$icon = $( '<div>' ).addClass( 'loading' ),
+			$message = $( '<p>' )
+				.addClass( 'message' )
+				.text( mw.message( 'wikia-visualeditor-loading' ).plain() ),
+			$fade = $( '<div>' ).addClass( 've-spinner-fade');
+
+		$content
+			.append( $icon )
+			.append( $message );
+
+		$spinner
+			.append( $content )
+			.appendTo( $( 'body' ) )
+			.css( 'opacity', 1 )
+			.hide();
+
+		$fade.appendTo( '#WikiaArticle' ).hide();
+
+		// Cleanup spinner when hook is fired
+		mw.hook( 've.activationComplete' ).add( function hide() {
+			if ( spinnerTimeoutId ) {
+				clearTimeout( spinnerTimeoutId );
+				spinnerTimeoutId = null;
+			}
+		} );
+	}
+
+	function showSpinner() {
+		var $spinner = $( '.ve-spinner[data-type="loading"]' ),
+			$message = $spinner.find( 'p.message' ),
+			$fade = $( '.ve-spinner-fade' );
+
+		$message.hide();
+		$spinner.fadeIn( 400 );
+		$fade.show().css( 'opacity', 0.75 );
+
+		// Display a message if loading is taking longer than 3 seconds
+		spinnerTimeoutId = setTimeout( function () {
+			if ( $spinner.is( ':visible' ) ) {
+				$message.slideDown( 400 );
+			}
+		}, 3000 );
+	}
+
+	initSpinner();
 
 	/**
 	 * Use deferreds to avoid loading and instantiating Target multiple times.
@@ -27,18 +79,21 @@
 	 */
 	// Wikia change -
 	function getTarget() {
-		var resources, loadTargetDeferred;
+		var loadTargetDeferred;
+
+		showSpinner();
+
 		if ( !targetDeferred ) {
 			targetDeferred = $.Deferred();
 			loadTargetDeferred = $.Deferred();
 			mw.loader.using( 'ext.visualEditor.wikia.oasisViewPageTarget', loadTargetDeferred.resolve, loadTargetDeferred.reject );
 			$.when(
 				$.getResources( [
-					wgResourceBasePath + '/resources/wikia/libraries/vignette/vignette.js',
+					window.wgResourceBasePath + '/resources/wikia/libraries/vignette/vignette.js',
 					$.getSassCommonURL( '/extensions/VisualEditor/wikia/VisualEditor-Oasis.scss' )
 				] ),
 				loadTargetDeferred
-			).done( function() {
+			).done( function () {
 				var target = new ve.init.wikia.ViewPageTarget();
 				target.$element.insertAfter( '#mw-content-text' );
 
