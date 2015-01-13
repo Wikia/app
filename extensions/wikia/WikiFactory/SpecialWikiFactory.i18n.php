@@ -67,6 +67,7 @@ $messages['en'] = array(
 	"awc-metrics-select" => "Show Wikis:",
 	"awc-metrics-by-language" => "by language:",
 	"awc-metrics-category" => "and category:",
+	"awc-metrics-vertical" => "and vertical:",
 	"awc-metrics-all" => "all Wikis",
 	"awc-metrics-all-languages" => "all languages",
 	"awc-metrics-search" => "Search options:",

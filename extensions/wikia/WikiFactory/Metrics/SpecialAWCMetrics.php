@@ -23,6 +23,8 @@ class WikiMetrics {
 	private $mOffset;
 	private $cityIds;
 	private $mPageViews;
+	private $mCategories;
+	private $mVerticals;
 	/* const */
 	const START_DATE 		= '2009-04-02';
 	const DEF_DAYS_PVIEWS 	= 90;
@@ -37,7 +39,8 @@ class WikiMetrics {
     private $axFrom;
     private $axTo;
     private $axLanguage;
-    private $axHub;
+    private $axCategory;
+    private $axVertical;
     private $axDbname;
     private $axDomain;
     private $axExactDomain;
@@ -120,6 +123,11 @@ class WikiMetrics {
 
 		$this->mAction = empty($this->mAction) ? 'main' : $this->mAction;
 
+		// This data is needed for all the sub-forms so pre-load it
+		$hubs = WikiFactoryHub::getInstance();
+		$this->mCategories = $hubs->getAllCategories(false, true);
+		$this->mVerticals = $hubs->getAllVerticals();
+
 		if ( $this->mAction == 'main' ) {
 			$this->showMainForm();
 		} elseif ( $this->mAction == 'monthly' ) {
@@ -154,8 +162,9 @@ class WikiMetrics {
 		#---
 		$this->getLangs();
 		#---
-		$hubs = WikiFactoryHub::getInstance();
-		$aCategories = $hubs->getAllCategories();
+		#$hubs = WikiFactoryHub::getInstance();
+		#$aCategories = $hubs->getAllCategories(false, true);
+		#$aVerticals = $hubs->getAllVerticals();
 
 		$params = $wgRequest->getValues();
 		if ( empty($params['from']) ) {
@@ -174,7 +183,8 @@ class WikiMetrics {
             "oCloseWikiTitle"	=> $oCloseWikiTitle,
             "aLanguages" 		=> $this->mLanguages,
 			"aTopLanguages" 	=> $this->mTopLanguages,
-			"aCategories"		=> $aCategories,
+			"aCategories"		=> $this->mCategories,
+			"aVerticals"		=> $this->mVerticals,
 			"params"			=> $params,
 			"obj"				=> $this,
         ));
@@ -188,14 +198,16 @@ class WikiMetrics {
 		global $wgExtensionsPath, $wgRequest;
         wfProfileIn( __METHOD__ );
 		#---
-		$hubs = WikiFactoryHub::getInstance();
-		$aCategories = $hubs->getAllCategories();
+		#$hubs = WikiFactoryHub::getInstance();
+		#$aCategories = $hubs->getAllCategories(false, true);
+		#$aVerticals = $hubs->getAllVerticals();
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
 			"error"				=> $error,
             "wgContLang"		=> $wgContLang,
             "wgExtensionsPath" 	=> $wgExtensionsPath,
-			"aCategories"		=> $aCategories,
+			"aCategories"		=> $this->mCategories,
+			"aVerticals"		=> $this->mVerticals,
 			"obj"				=> $this,
         ));
         $wgOut->addHTML( $oTmpl->render("metrics-monthly-form") );
@@ -208,14 +220,16 @@ class WikiMetrics {
 		global $wgExtensionsPath, $wgRequest;
         wfProfileIn( __METHOD__ );
 		#---
-		$hubs = WikiFactoryHub::getInstance();
-		$aCategories = $hubs->getAllCategories();
+		#$hubs = WikiFactoryHub::getInstance();
+		#$aCategories = $hubs->getAllCategories(false, true);
+		#$aVerticals = $hubs->getAllVerticals();
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
 			"error"				=> $error,
             "wgContLang"		=> $wgContLang,
             "wgExtensionsPath" 	=> $wgExtensionsPath,
-			"aCategories"		=> $aCategories,
+			"aCategories"		=> $this->mCategories,
+			"aVerticals"		=> $this->mVerticals,
 			"obj"				=> $this,
         ));
         $wgOut->addHTML( $oTmpl->render("metrics-daily-form") );
@@ -354,8 +368,11 @@ class WikiMetrics {
 				$where[] = 'city_lang = ' . $dbr->addQuotes($this->axLanguage);
 			}
 		}
-		if ( !empty($this->axHub) ) {
-			$where[] = $city_id . ' in (select ccm1.city_id from wikicities.city_cat_mapping ccm1 where cat_id = '.intval($this->axHub).')';
+		if ( !empty($this->axCategory) ) {
+			$where[] = $city_id . ' in (select ccm1.city_id from wikicities.city_cat_mapping ccm1 where cat_id = '.intval($this->axCategory).')';
+		}
+		if ( !empty($this->axVertical) ) {
+			$where[] = 'city_vertical = ' . $dbr->addQuotes(intval($this->axVertical));
 		}
 		if ( !empty($this->axDbname) ) {
 			$where[] = 'city_dbname' . $dbr->buildLike( $dbr->anyString(), $this->axDbname, $dbr->anyString() );
@@ -582,7 +599,7 @@ class WikiMetrics {
 		}
 
 		$hubs = WikiFactoryHub::getInstance();
-		$aCategories = $hubs->getAllCategories();
+		$aCategories = $hubs->getAllCategories(false, true);
 
 		$AWCMetrics = array();
 		$AWCCitiesCount = 0;
