@@ -19,6 +19,18 @@ var $legends = $fieldsets.children( 'legend' )
 	.addClass( 'mainLegend' );
 
 	/**
+	 * Wikia Function - @see UC-206
+	 * Normalize given class name using the prefix
+	 * @param {string} prefix
+	 * @param {string} tabClass
+	 * @returns {string}
+	 */
+	var normalizeTabClass = function (prefix, tabClass) {
+		'use strict';
+		return tabClass.replace('mw-prefsection', prefix);
+	};
+
+	/**
 	 * Wikia Function - @see UC-145
 	 * Make tabs distinguishable based on provided id
 	 * @param {Element} element
@@ -31,7 +43,7 @@ var $legends = $fieldsets.children( 'legend' )
 				return className.lastIndexOf(prefix, 0) !== 0;
 			});
 		element[0].className = $.trim(classes.join(' '));
-		$preferences.addClass(selectedTabId.replace('mw-prefsection', prefix));
+		$preferences.addClass(normalizeTabClass(prefix, selectedTabId));
 	};
 
 // Populate the prefToc
@@ -42,8 +54,11 @@ $legends.each( function( i, legend ) {
 	}
 	var ident = $legend.parent().attr( 'id' );
 
-	var $li = $( '<li/>', {
-		'class' : ( i === 0 ) ? 'selected' : null
+	/** Wikia Change start - Add a class - @see UC-206 */
+	var $tabName = normalizeTabClass('tab', ident),
+		$li = $( '<li/>', {
+		'class' : $tabName + (( i === 0 ) ? ' selected' : '')
+		/** Wikia Change end */
 	});
 	var $a = $( '<a/>', {
 		text : $legend.text(),
@@ -70,6 +85,10 @@ $legends.each( function( i, legend ) {
 	});
 	$li.append( $a );
 	$preftoc.append( $li );
+
+	/** Wikia Change start - Add a custom event per tab - @see UC-206 */
+	$(document).trigger($tabName + '-complete');
+	/** Wikia Change end */
 } );
 
 // If we've reloaded the page or followed an open-in-new-window,
