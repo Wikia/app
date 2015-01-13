@@ -61,6 +61,7 @@ while ( $row = $dbr->fetchRow( $res ) ) {
 		$titlesToWatch[] = Title::newFromText( $text );
 	}
 
+	$status = false;
 	foreach ( $titlesToWatch as $title ) {
 		$logParams = [
 			'user_id' => $row['user_id'],
@@ -70,6 +71,8 @@ while ( $row = $dbr->fetchRow( $res ) ) {
 		];
 		if ( $title instanceof Title ) {
 			WatchAction::doWatch( $title, $user );
+			$status = true;
+
 			\Wikia\Logger\WikiaLogger::instance()->info( "AutoFollow: User {$user->getName()} added to watchlist of {$title->getText()}.", $logParams );
 		} else {
 			// Log error to check for typos etc. Can be deleted when tested in production enviroment.
@@ -77,6 +80,8 @@ while ( $row = $dbr->fetchRow( $res ) ) {
 		}
 	}
 
-	$user->setOption( $alreadyWatchedKey, 1 );
-	$user->saveSettings();
+	if ( $status ) {
+		$user->setOption( $alreadyWatchedKey, 1 );
+		$user->saveSettings();
+	}
 }
