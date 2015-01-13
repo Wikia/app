@@ -61,7 +61,7 @@ class Video implements IDataProvider {
 				'type' => self::VIDEO_TYPE,
 				'title' => $video[ 'title' ],
 				'url' => $video[ 'url' ],
-				'description' => '',
+				'description' => $video[ 'description' ],
 				'source' => self::VIDEO_SOURCE,
 				'media' => [
 					'thumbUrl' => $video[ 'thumbUrl' ],

@@ -18,16 +18,11 @@ require(
 	function ($, mw, w, geo, cache, tracker) {
 		'use strict';
 
-		/**
-		 * An array of language codes for which we want to look for a native wikia
-		 * @type {Array}
-		 */
-		var supportedLanguages = ['ja'],
-			// Get user's geographic data and a country code
-			targetLanguage = getTargetLanguage();
+		// Get user's geographic data and a country code
+		var targetLanguage = getTargetLanguage();
 
 		function init() {
-			if (targetLanguage !== false) {
+			if (targetLanguage !== false && targetLanguage !== w.wgContentLanguage) {
 				// Check local browser cache to see if a request has been sent
 				// in the last month and if the notification has been shown to him.
 				// Both have to be !== true to continue.
@@ -45,16 +40,22 @@ require(
 
 		function getTargetLanguage() {
 			var browserLanguage = window.navigator.language || window.navigator.userLanguage,
-				geoCountryCode = geo.getCountryCode().toLowerCase();
+				geoCountryCode = geo.getCountryCode().toLowerCase(),
+				targetLanguage;
 
-			// Check if a browser's language is one of the supported languages
-			if (typeof browserLanguage === 'string' && $.inArray(browserLanguage.substr(0, 2), supportedLanguages) !== -1) {
+
+			if (w.wgUserName !== null) {
+				// Check if a user is logged and if so - use a lang from settings
+				targetLanguage = w.wgUserLanguage;
+			}
+			else if (typeof browserLanguage === 'string') {
+				// Check if a browser's language is accessible
 				targetLanguage = browserLanguage.substr(0, 2);
-				// Check if the country code is one of the supported languages
-			} else if ($.inArray(geoCountryCode, supportedLanguages) !== -1) {
+			} else if (typeof geoCountryCode === 'string') {
+				// Check if a langcode from Geo cookie is accessible
 				targetLanguage = geoCountryCode;
-				// If neither - return an empty string
 			} else {
+				// If neither - return false
 				targetLanguage = false;
 			}
 
@@ -110,20 +111,31 @@ require(
 
 		function bindEvents() {
 			$('.global-notification.notify').click(function (event) {
-				if (event.target.parentElement.className.indexOf('close') !== -1) {
+				var $target = $(event.target);
+				if ($target.parent().hasClass('close')) {
 					onNotificationClosed();
-				} else if (event.target.id.indexOf('wikia-in-your-lang-link') !== -1) {
+				} else if ($target.hasClass('text')) {
 					onLinkClick();
 				}
 			})
 		}
 
 		function onNotificationClosed() {
+			// Track closing of a notification
+			var trackingParams = {
+				trackingMethod: 'ga',
+				category: 'wikia-in-your-lang',
+				action: tracker.ACTIONS.CLOSE,
+				label: targetLanguage + '-notification-close',
+			};
+			tracker.track(trackingParams);
+
 			cache.set(targetLanguage + 'WikiaInYourLangMessage', null);
 			cache.set('wikiaInYourLangNotificationShown', true);
 		}
 
 		function onLinkClick() {
+			// Track a click on a notification link
 			var trackingParams = {
 				trackingMethod: 'ga',
 				category: 'wikia-in-your-lang',

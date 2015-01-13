@@ -821,13 +821,9 @@ class GlobalTitle extends Title {
 	 * @return string
 	 */
 	private function memcKey() {
-		global $wgSharedDB, $wgDevelEnvironmentName;
+		global $wgSharedKeyPrefix, $wgDevelEnvironmentName;
 
-		$parts = array( $wgSharedDB, "globaltitle", $this->mCityId );
-
-		if (!empty($wgDevelEnvironmentName)) {
-			$parts[] = $wgDevelEnvironmentName;
-		}
+		$parts = array( $wgSharedKeyPrefix, "globaltitle", $this->mCityId, Wikia::getEnvironmentName() );
 
 		return implode(":", $parts);
 	}

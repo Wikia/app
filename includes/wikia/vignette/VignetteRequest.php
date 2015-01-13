@@ -76,7 +76,19 @@ class VignetteRequest {
 	}
 
 	/**
-	 * parse image bucket from a url. ex: http://images.wikia.com/muppet/images/a/ab/image.jpg will return "muppet"
+	 * create a UrlGenerator object from a Vignette url
+	 * @param $url
+	 * @param $asOriginal
+	 * @return UrlGenerator
+	 */
+	public static function fromUrl($url, $asOriginal=false) {
+		return (new VignetteUrlToUrlGenerator($url, $asOriginal))
+			->build();
+	}
+
+	/**
+	 * parse image bucket from a url. ex: http://images.wikia.com/muppet/images/a/ab/image.jpg will return "muppet".
+	 * It is safe to use this on a Vignette url.
 	 * @param $url
 	 * @return mixed
 	 */
@@ -91,7 +103,7 @@ class VignetteRequest {
 	}
 
 	/**
-	 * parse the path prefix from a url.
+	 * parse the path prefix from a legacy url. It is NOT safe to use this on a Vignette url.
 	 * http://images.wikia.com/walkingdead/ru/images -> "ru",
 	 * http://images.wikia.com/walkingdead/images -> null
 	 * http://images.wikia.com/p__/psychusa/zh/images -> psychusa/zh
@@ -109,8 +121,8 @@ class VignetteRequest {
 	}
 
 	/**
-	 * parse relative path from url. ex: http://images.wiukia.com/muppet/images/a/ab/image.jpg will
-	 * return "a/ab/image.jpg"
+	 * parse relative path from legacy url. ex: http://images.wikia.com/muppet/images/a/ab/image.jpg will
+	 * return "a/ab/image.jpg". It is NOT safe to use this ona Vignette url.
 	 * @param $url
 	 * @return mixed
 	 */
@@ -149,5 +161,24 @@ class VignetteRequest {
 		}
 
 		return $isVignetteUrl;
+	}
+
+	public static function setThumbnailFormat($url, $format) {
+		$format = ltrim($format, ".");
+
+		if ($url instanceof UrlGenerator) {
+			return $url->format($format);
+		} else if (!self::isVignetteUrl($url)) {
+			return $url;
+		}
+
+		$generator = self::fromUrl($url);
+		return $generator->format($format)->url();
+	}
+
+	public static function getImageFilename($url) {
+		$generator = self::fromUrl($url);
+		$pathParts = explode('/', $generator->config()->relativePath());
+		return array_pop($pathParts);
 	}
 }

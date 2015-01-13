@@ -38,6 +38,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	private function initializeTemplate() {
 		//Oasis/Monobook, will be filtered in AssetsManager :)
 		$this->response->addAsset( 'extensions/wikia/UserLogin/css/UserLogin.scss' );
+
+		// TODO: change this to FacebookClient or remove the check if we're enabled globally UC-188
 		if ( !empty($this->wg->EnableFacebookConnectExt) ) {
 			$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js' );
 			$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebook.js' );

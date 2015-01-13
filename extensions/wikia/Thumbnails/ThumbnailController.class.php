@@ -49,15 +49,15 @@ class ThumbnailController extends WikiaController {
 			$duration = null;
 		}
 
-		$this->duration = WikiaFileHelper::formatDuration( $duration );
-		$this->mediaType = 'video';
+		$this->response->setVal( 'duration', WikiaFileHelper::formatDuration( $duration ) );
+		$this->response->setVal( 'mediaType', 'video' );
 
 		$lazyLoaded = ThumbnailHelper::setLazyLoad( $this, $options );
 		if ( !$lazyLoaded ) {
 			// Only add RDF metadata when the thumb is not lazy loaded
-			$this->rdf = true;
+			$this->response->setVal( 'rdf', true );
 			if ( !empty( $duration ) ) {
-				$this->durationISO = WikiaFileHelper::formatDurationISO8601( $duration );
+				$this->response->setVal( 'durationISO', WikiaFileHelper::formatDurationISO8601( $duration ) );
 			}
 		}
 
@@ -70,7 +70,7 @@ class ThumbnailController extends WikiaController {
 	 * @requestParam array options - See ThumbnailHelper class for more detail
 	 */
 	public function image() {
-		$this->mediaType = 'image';
+		$this->response->setVal( 'mediaType', 'image' );
 
 		$thumb   = $this->getVal( 'thumb' );
 		$options = $this->getVal( 'options', [] );
@@ -91,14 +91,14 @@ class ThumbnailController extends WikiaController {
 	 * @requestParam array options This is here for consistency, it's not used yet
 	 */
 	public function gallery() {
-		$this->mediaType = 'image';
+		$this->response->setVal( 'mediaType', 'image' );
 
 		// Use the image template
 		$this->overrideTemplate( 'image' );
 
 		$thumb = $this->getVal( 'thumb' );
 
-		$this->linkHref = $thumb->file->getTitle()->getLinkURL();
+		$this->response->setVal( 'linkHref', $thumb->file->getTitle()->getLinkURL() );
 
 		ThumbnailHelper::setImageAttribs( $this, $thumb, [ 'fluid' => true ] );
 		ThumbnailHelper::setPictureTagInfo( $this, $thumb );
@@ -138,14 +138,16 @@ class ThumbnailController extends WikiaController {
 			$filePageLink = $file->getTitle()->getLocalURL();
 		}
 
-		$this->thumbnail = $thumbnail;
-		$this->title = $title;
-		$this->figureClass = $alignClass;
-		$this->url = $url;
-		$this->caption = $caption;
-		$this->width = $width;
-		$this->showInfoIcon = !empty( $filePageLink ) && $width >= self::MIN_INFO_ICON_WIDTH;
-		$this->filePageLink = $filePageLink;
+		$this->response->setData( [
+			'thumbnail' => $thumbnail,
+			'title' => $title,
+			'figureClass' => $alignClass,
+			'url' => $url,
+			'caption' => $caption,
+			'width' => $width,
+			'showInfoIcon' => ( !empty( $filePageLink ) && $width >= self::MIN_INFO_ICON_WIDTH ),
+			'filePageLink' => $filePageLink,
+		] );
 
 		wfProfileOut( __METHOD__ );
 	}

@@ -22,8 +22,4 @@ $wgExtensionMessagesFiles['EditorPreference'] = $dir . 'EditorPreference.i18n.ph
 $wgHooks['EditingPreferencesBefore'][] = 'EditorPreference::onEditingPreferencesBefore';
 $wgHooks['SkinTemplateNavigation'][] = 'EditorPreference::onSkinTemplateNavigation';
 $wgHooks['MakeGlobalVariablesScript'][] = 'EditorPreference::onMakeGlobalVariablesScript';
-$wgHooks['AddNewAccount'][] = 'EditorPreference::onAddNewAccount';
 $wgHooks['UserProfilePageAfterGetActionButtonData'][] = 'EditorPreference::onUserProfilePageAfterGetActionButtonData';
-
-// Default preference
-$wgDefaultUserOptions[PREFERENCE_EDITOR] = 0;

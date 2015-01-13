@@ -156,3 +156,13 @@ window.AdEngine_loadLateAds = function () {
 		}
 	});
 };
+
+// FPS meter
+require(['wikia.querystring', 'wikia.document'], function (qs, doc) {
+	'use strict';
+	if (qs().getVal('fps')) {
+		var s = doc.createElement('script');
+		s.src = 'https://raw.githubusercontent.com/Wikia/fps-meter/master/fps-meter.js';
+		doc.body.appendChild(s);
+	}
+});
