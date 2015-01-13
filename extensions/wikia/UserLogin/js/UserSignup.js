@@ -45,8 +45,8 @@
 				return false;
 			}
 
-			$captchaInput = $('#' + this.captchaField);
-			return !$captchaInput.length;
+			$captchaInput = this.wikiaForm.inputs[this.captchaField];
+			return !$captchaInput;
 		},
 
 		/**
