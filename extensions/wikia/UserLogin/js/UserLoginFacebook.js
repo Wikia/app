@@ -1,4 +1,5 @@
-/* global UserLoginModal, wgCanonicalSpecialPageName, wgMainPageTitle, wgArticlePath, wgScriptPath, wgUserLanguage */
+/* global UserLoginModal, wgCanonicalSpecialPageName, wgMainPageTitle, wgArticlePath, wgScriptPath,
+wgUserLanguage, GlobalNotification */
 
 /**
  * Handle signing in and signing up with Facebook
@@ -192,6 +193,11 @@
 		 * @param {Object} response Response object from FacebookSignupController::index
 		 */
 		setupModal: function (response) {
+			if (!response.modal) {
+				GlobalNotification.show($.msg('oasis-generic-error'), 'error');
+				return;
+			}
+
 			this.bucky.timer.start('loggedOutCallback');
 			$.when(
 				uiFactory.init('modal'),

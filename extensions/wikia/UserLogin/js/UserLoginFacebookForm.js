@@ -9,11 +9,7 @@
 
 		// Handles existing user login via modal
 		ajaxLogin: function () {
-			var values = {
-				username: this.inputs.username.val(),
-				password: this.inputs.password.val(),
-				signupToken: this.inputs.loginToken.val()
-			};
+			var formData = this.wikiaForm.form.serialize();
 
 			// cache redirect url for after form is complete
 			this.returnToUrl = this.inputs.returntourl.val();
@@ -21,7 +17,7 @@
 			$.nirvana.postJson(
 				'FacebookSignupController',
 				'login',
-				values,
+				formData,
 				this.submitLoginHandler.bind(this)
 			);
 		}
