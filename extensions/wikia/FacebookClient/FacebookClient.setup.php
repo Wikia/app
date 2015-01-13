@@ -71,5 +71,7 @@ JSMessages::registerPackage( 'FacebookClient', [
 	'fbconnect-preferences-connected-error',
 	'fbconnect-disconnect-info-existing',
 	'fbconnect-disconnect-info',
+	'fbconnect-error-fb-unavailable-title',
+	'fbconnect-error-fb-unavailable-text',
 ] );
 
