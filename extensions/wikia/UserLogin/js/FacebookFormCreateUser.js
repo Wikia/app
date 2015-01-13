@@ -2,8 +2,7 @@
 (function () {
 	'use strict';
 
-	// TODO: Base this off of UserSignupAjaxForm UC-200
-	var UserSignupFacebookForm = $.createClass(UserLoginAjaxForm, {
+	var FacebookFormCreateUser = $.createClass(UserLoginAjaxForm, {
 
 		init: function () {
 			UserLoginAjaxForm.prototype.init.call(this);
@@ -71,5 +70,5 @@
 
 	});
 
-	window.UserSignupFacebookForm = UserSignupFacebookForm;
+	window.FacebookFormCreateUser = FacebookFormCreateUser;
 })();

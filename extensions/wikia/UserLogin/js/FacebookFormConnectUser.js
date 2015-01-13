@@ -3,7 +3,7 @@
 (function () {
 	'use strict';
 
-	var UserLoginFacebookForm = $.createClass(UserLoginAjaxForm, {
+	var FacebookFormConnectUser = $.createClass(UserLoginAjaxForm, {
 		// login token is stored in hidden field, no need to send an extra request
 		retrieveLoginToken: function () {},
 
@@ -24,5 +24,5 @@
 	});
 
 	// Expose global
-	window.UserLoginFacebookForm = UserLoginFacebookForm;
+	window.FacebookFormConnectUser = FacebookFormConnectUser;
 })();

@@ -221,7 +221,8 @@ $VenusConfig[ 'global_navigation_facebook_login_js' ] = [
 	'skin' => [ 'venus'],
 	'assets' => [
 		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
-		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js'
+		'//extensions/wikia/UserLogin/js/FacebookFormConnectUser.js',
+		'//extensions/wikia/UserLogin/js/FacebookFormCreateUser.js',
 	]
 ];
 

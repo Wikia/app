@@ -9,6 +9,7 @@ wgUserLanguage, GlobalNotification */
 
 	var tracker, QueryString, uiFactory, UserLoginFacebook;
 
+	// TODO: change to FacebookLogin.js
 	UserLoginFacebook = {
 		modal: false,
 		form: false,
@@ -66,6 +67,7 @@ wgUserLanguage, GlobalNotification */
 			});
 		},
 
+		// TODO: replace with "bindEvents"
 		loginSetup: function () {
 			var self = this;
 
@@ -274,7 +276,7 @@ wgUserLanguage, GlobalNotification */
 		createSignupForm: function ($modal) {
 			var self = this;
 
-			this.signupForm = new window.UserSignupFacebookForm($modal.find('.UserLoginFacebookLeft'), {
+			this.signupForm = new window.FacebookFormCreateUser($modal.find('.UserLoginFacebookLeft'), {
 				ajaxLogin: true,
 				skipFocus: true,
 				callback: function () {
@@ -301,7 +303,7 @@ wgUserLanguage, GlobalNotification */
 		createLoginForm: function ($modal) {
 			var self = this;
 
-			this.loginForm = new window.UserLoginFacebookForm($modal.find('.UserLoginFacebookRight'), {
+			this.loginForm = new window.FacebookFormConnectUser($modal.find('.UserLoginFacebookRight'), {
 				ajaxLogin: true,
 				skipFocus: true,
 				callback: function () {
