@@ -161,10 +161,6 @@ class WikiMetrics {
         wfProfileIn( __METHOD__ );
 		#---
 		$this->getLangs();
-		#---
-		#$hubs = WikiFactoryHub::getInstance();
-		#$aCategories = $hubs->getAllCategories(false, true);
-		#$aVerticals = $hubs->getAllVerticals();
 
 		$params = $wgRequest->getValues();
 		if ( empty($params['from']) ) {
@@ -196,11 +192,7 @@ class WikiMetrics {
 	function showMonthlyForm ($error = "") {
 		global $wgOut, $wgContLang;
 		global $wgExtensionsPath, $wgRequest;
-        wfProfileIn( __METHOD__ );
-		#---
-		#$hubs = WikiFactoryHub::getInstance();
-		#$aCategories = $hubs->getAllCategories(false, true);
-		#$aVerticals = $hubs->getAllVerticals();
+
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
 			"error"				=> $error,
@@ -211,18 +203,13 @@ class WikiMetrics {
 			"obj"				=> $this,
         ));
         $wgOut->addHTML( $oTmpl->render("metrics-monthly-form") );
-        wfProfileOut( __METHOD__ );
 	}
 
 	/* draws the form itself  */
 	function showDailyForm ($error = "") {
 		global $wgOut, $wgContLang;
 		global $wgExtensionsPath, $wgRequest;
-        wfProfileIn( __METHOD__ );
-		#---
-		#$hubs = WikiFactoryHub::getInstance();
-		#$aCategories = $hubs->getAllCategories(false, true);
-		#$aVerticals = $hubs->getAllVerticals();
+
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
 			"error"				=> $error,
@@ -233,7 +220,6 @@ class WikiMetrics {
 			"obj"				=> $this,
         ));
         $wgOut->addHTML( $oTmpl->render("metrics-daily-form") );
-        wfProfileOut( __METHOD__ );
 	}
 
 	/* get languages */
@@ -247,7 +233,7 @@ class WikiMetrics {
 	/* make values of request params */
 	public function getRequestParams() {
 		global $wgRequest;
-		wfProfileIn( __METHOD__ );
+
 		$aValues = $wgRequest->getValues();
 		if ( !empty($aValues) && is_array($aValues) ) {
 			foreach ($aValues as $key => $value) {
@@ -260,12 +246,10 @@ class WikiMetrics {
 				}
 			}
 		}
-		wfProfileOut( __METHOD__ );
 	}
 
 	/* check session params */
 	public function getRequestParamsFromSession() {
-		wfProfileIn( __METHOD__ );
 		if ( !empty($_SESSION) && is_array($_SESSION) ) {
 			foreach ($_SESSION as $key => $value) {
 				if ( strpos($key, "awc-") !== false ) {
@@ -275,7 +259,6 @@ class WikiMetrics {
 				}
 			}
 		}
-		wfProfileOut( __METHOD__ );
 	}
 
 	/*
