@@ -23,6 +23,9 @@ $wgResourceModules += array(
 			'user.options',
 			'ext.visualEditor.track'
 		),
+		'messages' => array(
+			'wikia-visualeditor-loading'
+		),
 		'position' => 'top'
 	),
 	'ext.visualEditor.wikia.oasisViewPageTarget' => $wgVisualEditorWikiaResourceTemplate + array(
