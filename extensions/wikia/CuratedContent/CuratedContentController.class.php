@@ -203,6 +203,7 @@ class CuratedContentController extends WikiaController {
 			if ( empty( $section ) ) {
 				$this->cacheResponseFor( 14, self::DAYS );
 				$this->getSections( $content );
+				$this->getFeaturedSection( $content );
 			} else {
 				$this->getSectionItems( $content, $section );
 			}
@@ -281,33 +282,56 @@ class CuratedContentController extends WikiaController {
 	 *
 	 * @param $content
 	 * @param $requestSection
+	 * @param string $sectionName
 	 *
+	 * @throws CuratedContentSectionNotFoundException
 	 * @responseReturn Array|false Items or false if section was not found
 	 */
 	private function getSectionItems( $content, $requestSection ) {
 		$ret = false;
 
 		foreach ( $content as $section ) {
-			if ( $requestSection == $section[ 'title' ] ) {
+			if ( $requestSection == $section[ 'title' ] && $section[ 'featured' ] == false ) {
 				$ret = $section[ 'items' ];
 			}
 		}
 
 		if ( !empty( $ret ) ) {
-			foreach ( $ret as &$value ) {
-
-				list( $image_id, $image_url ) =
-					CuratedContentSpecialController::findImageIfNotSet(
-						$value[ 'image_id' ],
-						$value[ 'article_id' ] );
-				$value[ 'image_id' ] = $image_id;
-				$value[ 'image_url' ] = $image_url;
-			}
-
-			$this->response->setVal( 'items', $ret );
+			$this->setSectionItemsResponse( 'items', $ret );
 		} else if ( $requestSection !== '' ) {
 			throw new CuratedContentSectionNotFoundException( $requestSection );
 		}
+	}
+
+	private function getFeaturedSection( $content ) {
+		$ret = false;
+		foreach ( $content as $section ) {
+			if ( $section[ 'featured' ] ) {
+				$ret = $section[ 'items' ];
+			}
+		}
+		if ( !empty( $ret ) ) {
+			$this->setSectionItemsResponse( 'featured', $ret );
+		}
+	}
+
+
+	/**
+	 * @param $sectionName
+	 * @param $ret
+	 * @param $value
+	 * @return mixed
+	 */
+	private function setSectionItemsResponse( $sectionName, $ret ) {
+		foreach ( $ret as &$value ) {
+			list( $image_id, $image_url ) =
+				CuratedContentSpecialController::findImageIfNotSet(
+					$value[ 'image_id' ],
+					$value[ 'article_id' ] );
+			$value[ 'image_id' ] = $image_id;
+			$value[ 'image_url' ] = $image_url;
+		}
+		$this->response->setVal( $sectionName, $ret );
 	}
 
 	/**
@@ -323,7 +347,7 @@ class CuratedContentController extends WikiaController {
 			array_reduce(
 				$content,
 				function ( $ret, $item ) {
-					if ( $item[ 'title' ] !== '' ) {
+					if ( $item[ 'title' ] !== '' && $item[ 'featured' ] == false ) {
 						$imageId = $item[ 'image_id' ] != 0 ? $item[ 'image_id' ] : null;
 						$ret[ ] = [
 							'title' => $item[ 'title' ],
@@ -341,7 +365,6 @@ class CuratedContentController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
-
 	function getJsonItem( $titleName, $ns, $pageId, $type ) {
 		$title = Title::makeTitle( $ns, $titleName );
 
@@ -354,14 +377,16 @@ class CuratedContentController extends WikiaController {
 	}
 
 	/**
-	 * @brief Whenever data is saved in GG Content Managment Tool
-	 * purge Varnish cache for it
+	 * @brief Whenever data is saved in Curated Content Management Tool
+	 * purge Varnish cache for it and Game Guides
 	 *
 	 * @return bool
 	 */
 	static function onCuratedContentSave() {
 		self::purgeMethod( 'getList' );
-
+		if(class_exists( 'GameGuidesController' ) ) {
+			GameGuidesController::purgeMethod( 'getList' );
+		}
 		return true;
 	}
 }

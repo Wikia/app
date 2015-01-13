@@ -22,7 +22,9 @@ $messages[ 'en' ] = array(
 	'wikiacuratedcontent-content-empty-section' => 'This section needs some items',
 
 	'wikiacuratedcontent-content-description-items' => 'Add wiki "Items" and rename them as you\'d like them to appear in Curated Content with "Curated Content Names".',
-	'wikiacuratedcontent-content-description-supported-items' => 'Supported items are: articles, categories, blogs, videos (youtube and ooyala)',
+	'wikiacuratedcontent-content-description-supported-items-for-sections' => 'Categories are supported in all sections. Additionally "Featured" section supports: articles, blogs, videos (youtube and ooyala)',
+	'wikiacuratedcontent-content-description-tag-needs-image' => 'Tag needs to have Image',
+	'wikiacuratedcontent-content-description-label-info' => 'When adding items label them (right field) and type names (left field) follow convention: article_name, Category:category_name, User blog:username/post_name, File:video_name',
 	'wikiacuratedcontent-content-description-section' => 'Does it make sense to group items under a game series installment? Add a "Section" and drag and drop wiki items under it.',
 	'wikiacuratedcontent-content-description-organize' => 'Feel free to delete or add more lines, and reorder them by dragging and dropping.',
 	'wikiacuratedcontent-content-description-no-section' => 'Items without section or with empty section will be shown as last in Curated Content.',
@@ -31,7 +33,9 @@ $messages[ 'en' ] = array(
 	'wikiacuratedcontent-content-articlenotfound-error' => 'Article not found',
 	'wikiacuratedcontent-content-emptylabel-error' => 'Message shown to a user when he tries to save without putting a label',
 	'wikiacuratedcontent-content-videonotsupported-error' => 'This video file provider is not supported',
-	'wikiacuratedcontent-content-notsupportedtype-error' => 'This type is not supported'
+	'wikiacuratedcontent-content-notsupportedtype-error' => 'This type is not supported',
+	'wikiacuratedcontent-content-nocategoryintag-error' => 'You can put only category here',
+	'wikiacuratedcontent-featured-section-name' => 'Featured Content'
 
 
 );
@@ -59,7 +63,9 @@ $messages[ 'qqq' ] = array(
 	'wikiacuratedcontent-content-empty-section' => 'Message shown to a a user if he has not added any items to a section',
 
 	'wikiacuratedcontent-content-description-items' => 'Message describing a purpose and usage of the tool',
-	'wikiacuratedcontent-content-description-supported-items' => 'Message describing a purpose and usage of the tool',
+	'wikiacuratedcontent-content-description-supported-items-for-sections' => 'Message describing a purpose and usage of the tool',
+	'wikiacuratedcontent-content-description-tag-needs-image' => 'Message describing a purpose and usage of the tool',
+	'wikiacuratedcontent-content-description-label-info' => 'Message describing a purpose and usage of the tool',
 	'wikiacuratedcontent-content-description-section' => 'Message describing a purpose and usage of the tool',
 	'wikiacuratedcontent-content-description-organize' => 'Message describing a purpose and usage of the tool',
 	'wikiacuratedcontent-content-description-no-section' => 'Message describing a purpose and usage of the tool',
@@ -69,7 +75,9 @@ $messages[ 'qqq' ] = array(
 	'wikiacuratedcontent-content-articlenotfound-error' => 'Message shown to a user when he tries to save a item with no related article',
 	'wikiacuratedcontent-content-emptylabel-error' => 'Message shown to a user when he tries to save without putting a label',
 	'wikiacuratedcontent-content-videonotsupported-error' => 'Message shown to a user when he tries to save a video item that is not supported',
-	'wikiacuratedcontent-content-notsupportedtype-error' => 'Message shown to a user when he tries to save a item that have not supported type'
+	'wikiacuratedcontent-content-notsupportedtype-error' => 'Message shown to a user when he tries to save a item that have not supported type',
+	'wikiacuratedcontent-content-nocategoryintag-error' => 'Message shown to a user when he tries to save an item in simple tag that is not of type category',
+	'wikiacuratedcontent-featured-section-name' => 'Featured content section title'
 
 	//Sponsored Videos Managment Tools
 
