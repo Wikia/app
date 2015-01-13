@@ -54,10 +54,14 @@ class WikiaInYourLangController extends WikiaController {
 					$oNativeWiki->city_title,
 				];
 
-				$sMessage = $this->prepareMessage( $sTargetLanguage, $aMessageParams );
-
-				$this->response->setVal( 'success', true );
-				$this->response->setVal( 'message', $sMessage );
+				if ( $sCurrentUrl != $oNativeWiki->city_url ) {
+					$sMessage = $this->prepareMessage( $sTargetLanguage, $aMessageParams );
+					$this->response->setVal( 'success', true );
+					$this->response->setVal( 'message', $sMessage );
+				} else {
+					$this->response->setVal( 'success', false );
+					$this->response->setVal( 'error', "A native wikia with a domain {$sNativeWikiDomain} matches the original." );
+				}
 			} else {
 				$this->response->setVal( 'success', false );
 				$this->response->setVal( 'error', "A native wikia with a domain {$sNativeWikiDomain} not found." );
