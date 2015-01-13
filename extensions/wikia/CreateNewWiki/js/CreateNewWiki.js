@@ -88,10 +88,14 @@
 							UserLoginFacebook.closeSignupModal();
 						};
 					}
+
+					self.transition('NameWiki', true, '+');
+
 					// Load facebook assets before going to the login form
-					$.loadFacebookAPI(function () {
-						self.transition('NameWiki', true, '+');
-					});
+					$.loadFacebookAPI()
+						.done(function () {
+							$('.fb-loaded').removeClass('hidden');
+						});
 				}
 			});
 			this.wikiDomain.keyup(function () {

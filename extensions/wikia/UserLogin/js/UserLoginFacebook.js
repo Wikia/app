@@ -58,7 +58,10 @@
 				self.loginSetup();
 
 				// load when the login dropdown is shown or specific page is loaded
-				$.loadFacebookAPI();
+				$.loadFacebookAPI()
+					.done(function () {
+						$('.fb-loaded').removeClass('hidden');
+					});
 
 				self.log('init');
 				self.bucky.timer.stop('init');
