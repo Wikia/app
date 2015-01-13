@@ -76,7 +76,9 @@
 				}
 
 				if (type === 'js') {
-					$.getScript(resource, complete, failure);
+
+					$.getScript(resource, complete)
+						.fail(failure);
 
 				} else if (type === 'css' || type === 'scss') {
 					$.getCSS(resource, complete);
