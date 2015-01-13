@@ -34,6 +34,8 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * employees who have been given the right explicitly.
 	 */
 	public function index() {
+		JSMessages::enqueuePackage( 'UserSignup', JSMessages::EXTERNAL );
+
 		if ( $this->wg->User->isLoggedIn() && !$this->wg->User->isAllowed( 'createaccount' ) ) {
 			$this->forward( 'UserLoginSpecialController', 'loggedIn' );
 		} else {
