@@ -54,7 +54,7 @@ class WikiaInYourLangController extends WikiaController {
 					$oNativeWiki->city_title,
 				];
 
-				if ( $sCurrentUrl != $oNativeWiki->city_url ) {
+				if ( $sWikiDomain != $this->getWikiDomain( $oNativeWiki->city_url ) ) {
 					$sMessage = $this->prepareMessage( $sTargetLanguage, $aMessageParams );
 					$this->response->setVal( 'success', true );
 					$this->response->setVal( 'message', $sMessage );
