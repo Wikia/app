@@ -142,6 +142,7 @@
 			getInstance: function () {
 				if (!instance) {
 					instance = init();
+					console.log(instance);
 				}
 				return instance;
 			}

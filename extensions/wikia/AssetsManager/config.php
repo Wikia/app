@@ -198,6 +198,7 @@ $config['oasis_noads_extensions_js'] = array(
 		'#group_imglzy_js',
 		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
 		// We allow logged in users to change login without logging out
+		'//extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
 		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js',
 		// We allow logged in users to create account without logging out
 		'//extensions/wikia/UserLogin/js/UserSignupAjaxValidation.js',
@@ -385,6 +386,7 @@ $config['oasis_anon_js'] = array(
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/Exitstitial.js',
 		'//extensions/wikia/UserLogin/js/UserSignupMarketingOptIn.js',
+		'//extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormCreateUser.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormConnectUser.js',
 		'//extensions/wikia/UserLogin/js/FacebookLogin.js',
@@ -399,6 +401,7 @@ $config['oasis_anon_with_new_global_nav_js'] = array(
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/Exitstitial.js',
 		'//extensions/wikia/UserLogin/js/UserSignupMarketingOptIn.js',
+		'//extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormCreateUser.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormConnectUser.js',
 		'//extensions/wikia/UserLogin/js/FacebookLogin.js',
@@ -412,6 +415,7 @@ $config['oasis_user_js'] = array(
 	'assets' => array(
 		'//extensions/wikia/UserLogin/js/FacebookLogin.js',
 		'//extensions/wikia/UserLogin/js/UserSignupMarketingOptIn.js',
+		'//extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormCreateUser.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormConnectUser.js',
 	)

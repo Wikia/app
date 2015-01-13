@@ -1,74 +1,73 @@
-/* global UserLoginAjaxForm */
+/* global UserBaseAjaxForm */
 (function () {
 	'use strict';
 
-	var FacebookFormCreateUser = $.createClass(UserLoginAjaxForm, {
+	var FacebookFormCreateUser = function (el, options) {
+		UserBaseAjaxForm.call(this, el, options);
+	};
 
-		init: function () {
-			UserLoginAjaxForm.prototype.init.call(this);
-			this.initOptIn();
-			this.setCountryValue();
-		},
+	FacebookFormCreateUser.prototype = Object.create(UserBaseAjaxForm.prototype);
 
-		/**
-		 * Login token is stored in hidden field, no need to send an extra request
-		 */
-		retrieveLoginToken: function () {},
+	FacebookFormCreateUser.prototype.init = function () {
+		UserBaseAjaxForm.prototype.init.call(this);
+		this.initOptIn();
+		this.setCountryValue();
+	};
 
-		/**
-		 * Send ajax login request to FB controller. Overrides parent method.
-		 */
-		ajaxLogin: function () {
-			var formData = this.wikiaForm.form.serialize();
+	/**
+	 * Send ajax login request to FB controller. Overrides parent method.
+	 */
+	FacebookFormCreateUser.prototype.ajaxLogin = function () {
+		var formData = this.wikiaForm.form.serialize();
 
-			// cache redirect url for after form submission is complete
-			this.returnToUrl = this.inputs.returntourl.val();
+		// cache redirect url for after form submission is complete
+		this.returnToUrl = this.inputs.returntourl.val();
 
-			$.nirvana.postJson(
-				'FacebookSignupController',
-				'signup',
-				formData,
-				this.submitFbSignupHandler.bind(this)
-			);
-		},
+		$.nirvana.postJson(
+			'FacebookSignupController',
+			'signup',
+			formData,
+			this.submitLoginHandler.bind(this)
+		);
+	};
 
-		/**
-		 * Extends login handler callback for tracking and any additional work
-		 * @param {Object} response Response object from FacebookSignupController::signup
-		 */
-		submitFbSignupHandler: function (response) {
-			if (response.result === 'ok') {
-				window.Wikia.Tracker.track({
-					category: 'user-sign-up',
-					trackingMethod: 'both',
-					action: window.Wikia.Tracker.ACTIONS.SUCCESS,
-					label: 'facebook-signup'
-				});
-			}
-			this.submitLoginHandler(response);
-		},
-
-		/**
-		 * Handle marketing email opt-in for different locales
-		 * @todo: Once this is based off of UserSignupAjaxForm.js, put this in the base class (UC-200)
-		 */
-		initOptIn: function () {
-			var self = this;
-
-			require(['usersignup.marketingOptIn'], function (optIn) {
-				optIn.init(self.wikiaForm);
+	/**
+	 * Extends login handler callback for tracking and any additional work
+	 * @param {Object} response Response object from FacebookSignupController::signup
+	 */
+	FacebookFormCreateUser.prototype.submitLoginHandler = function (response) {
+		if (response.result === 'ok') {
+			window.Wikia.Tracker.track({
+				category: 'user-sign-up',
+				trackingMethod: 'both',
+				action: window.Wikia.Tracker.ACTIONS.SUCCESS,
+				label: 'facebook-signup'
 			});
-		},
-		/**
-		 * Send country code upon signup
-		 * @todo: Once this is based off of UserSignupAjaxForm.js, put this in the base class (UC-200)
-		 */
-		setCountryValue: function () {
-			var country = Wikia.geo.getCountryCode();
-			this.wikiaForm.inputs.wpRegistrationCountry.val(country);
 		}
 
-	});
+		UserBaseAjaxForm.prototype.submitLoginHandler.call(response);
+	};
+
+	/**
+	 * Handle marketing email opt-in for different locales
+	 * @todo: See if we can share this with UserSignup.js
+	 */
+	FacebookFormCreateUser.prototype.initOptIn = function () {
+		var self = this;
+
+		require(['usersignup.marketingOptIn'], function (optIn) {
+			optIn.init(self.wikiaForm);
+		});
+	};
+	/**
+	 * Send country code upon signup
+	 * @todo: See if we can share this with UserSignup.js
+	 */
+	FacebookFormCreateUser.prototype.setCountryValue = function () {
+		var country = Wikia.geo.getCountryCode();
+		this.wikiaForm.inputs.wpRegistrationCountry.val(country);
+	};
+
 
 	window.FacebookFormCreateUser = FacebookFormCreateUser;
 })();

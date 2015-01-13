@@ -207,6 +207,7 @@ $VenusConfig[ 'global_navigation_js' ] = [
 		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationSearch.js',
 		'//extensions/wikia/GlobalNavigation/scripts/SearchSuggestions.js',
 		'//extensions/wikia/UserLogin/js/UserLoginDropdown.globalNavigation.js',
+		'//extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
 		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js',
 		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
@@ -220,6 +221,7 @@ $VenusConfig[ 'global_navigation_facebook_login_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'venus'],
 	'assets' => [
+		'//extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
 		'//extensions/wikia/UserLogin/js/FacebookLogin.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormConnectUser.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormCreateUser.js',

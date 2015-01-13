@@ -1,4 +1,4 @@
-/*global WikiaEditor:true */
+/*global WikiaEditor:true, UserLoginModal */
 (function () {
 	'use strict';
 
@@ -12,8 +12,6 @@
 		},
 
 		rteForceLogin: function () {
-			var UserLoginModal = window.UserLoginModal;
-
 			//prevent onbeforeunload from being called when user is loging in
 			window.onbeforeunload = function () {};
 			UserLoginModal.show({
@@ -28,8 +26,6 @@
 		},
 
 		isForceLogIn: function () {
-			var UserLoginModal = window.UserLoginModal;
-
 			if (window.wgUserName === null) {
 				//prevent onbeforeunload from being called when user is loging in
 				window.onbeforeunload = function () {};
