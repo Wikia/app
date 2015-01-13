@@ -92,7 +92,6 @@ class WikiaDispatchedException extends WikiaException {
 	 *
 	 * @link  http://pl2.php.net/manual/en/exception.construct.php
 	 * @param string $message
-	 * @param int $code
 	 * @param Exception $original
 	 */
 	public function __construct($message = '',  Exception $original = null) {
