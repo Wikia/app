@@ -5,7 +5,7 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
-/*global confirm, alert */
+/*global confirm, alert, veTrack */
 
 /**
  * Initialization MediaWiki view page target.
@@ -123,6 +123,16 @@ ve.init.mw.ViewPageTarget = function VeInitMwViewPageTarget() {
 OO.inheritClass( ve.init.mw.ViewPageTarget, ve.init.mw.Target );
 
 /* Static Properties */
+
+ve.init.mw.ViewPageTarget.static.actionsToolbarConfig = [
+	{ include: [ 'help', 'notices' ] },
+	{
+		type: 'list',
+		icon: 'menu',
+		title: ve.msg( 'visualeditor-pagemenu-tooltip' ),
+		include: [ 'meta', 'settings', 'advancedSettings', 'categories', 'languages', 'editModeSource', 'findAndReplace' ]
+	}
+];
 
 /**
  * Compatibility map used with jQuery.client to black-list incompatible browsers.
@@ -436,18 +446,6 @@ ve.init.mw.ViewPageTarget.prototype.onSurfaceReady = function () {
 		this.getSurface().mwTocWidget = new ve.ui.MWTocWidget( this.getSurface() );
 	}
 
-	// Track how long it takes for the first transaction to happen
-	this.surface.getModel().getDocument().once( 'transact', function () {
-		ve.track( 'mwtiming.behavior.firstTransaction', { duration: ve.now() - surfaceReadyTime } );
-	} );
-
-	// Update UI
-	this.transformPageTitle();
-	this.changeDocumentTitle();
-	this.hidePageContent();
-
-	this.getSurface().getView().focus();
-
 	this.setupToolbarSaveButton();
 	this.attachToolbarSaveButton();
 
@@ -455,10 +453,51 @@ ve.init.mw.ViewPageTarget.prototype.onSurfaceReady = function () {
 	this.setupToolbarCancelButton();
 	this.attachToolbarCancelButton();
 
+	// Update UI
+	this.hideSpinner();
+	if ( this.timeout ) {
+		setTimeout( this.afterHideSpinner.bind( this, surfaceReadyTime ), this.timeout );
+	} else {
+		this.afterHideSpinner( surfaceReadyTime );
+	}
+};
+
+ve.init.mw.ViewPageTarget.prototype.afterHideSpinner = function ( surfaceReadyTime ) {
+	this.transformPageTitle();
+	this.changeDocumentTitle();
+	this.hidePageContent();
+
+	this.toolbar.initialize();
+	this.surface.getFocusWidget().$element.show();
+
+	this.surface.getView().focus();
+
 	this.restoreScrollPosition();
 	this.restoreEditSection();
 	this.setupBeforeUnloadHandler();
 	this.maybeShowDialogs();
+
+	$( '.ve-spinner-fade' ).css( 'opacity', 0 );
+	if ( this.timeout ) {
+		setTimeout( this.afterSpinnerFadeOpacityOut.bind( this, surfaceReadyTime ), this.timeout );
+	} else {
+		this.afterSpinnerFadeOpacityOut( surfaceReadyTime );
+	}
+};
+
+ve.init.mw.ViewPageTarget.prototype.afterSpinnerFadeOpacityOut = function ( surfaceReadyTime ) {
+	this.toolbar.$element.removeClass( 'transition' );
+	$( '.ve-spinner-fade' ).hide();
+
+	if ( window.veTrack ) {
+		veTrack( { action: 've-edit-page-stop' } );
+	}
+
+	// Track how long it takes for the first transaction to happen
+	this.surface.getModel().getDocument().once( 'transact', function () {
+		ve.track( 'mwtiming.behavior.firstTransaction', { duration: ve.now() - surfaceReadyTime } );
+	} );
+
 	this.activatingDeferred.resolve();
 	mw.hook( 've.activationComplete' ).fire();
 };
@@ -1122,15 +1161,7 @@ ve.init.mw.ViewPageTarget.prototype.attachToolbarSaveButton = function () {
 		$pushButtons = $( '<div>' ),
 		actions = new ve.ui.TargetToolbar( this );
 
-	actions.setup( [
-		{ include: [ 'help', 'notices' ] },
-		{
-			type: 'list',
-			icon: 'menu',
-			title: ve.msg( 'visualeditor-pagemenu-tooltip' ),
-			include: [ 'meta', 'settings', 'advancedSettings', 'categories', 'languages', 'editModeSource', 'findAndReplace' ]
-		}
-	], this.getSurface() );
+	actions.setup( this.constructor.static.actionsToolbarConfig, this.getSurface() );
 
 	$actionTools
 		.addClass( 've-init-mw-viewPageTarget-toolbar-utilities' )

@@ -43,6 +43,9 @@ $wgResourceModules += array(
 	'ext.visualEditor.wikia.core' => $wgVisualEditorWikiaResourceTemplate + array(
 		'scripts' => array(
 			've/ve.track.js',
+
+			// ui
+			've/ui/widgets/ve.ui.WikiaFocusWidget.js',
 		),
 		'messages' => array(
 			'oasis-content-picture-added-by',
