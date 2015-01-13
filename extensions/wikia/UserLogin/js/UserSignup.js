@@ -1,4 +1,4 @@
-/* global WikiaForm, UserSignupAjaxForm */
+/* global WikiaForm, UserSignupAjaxValidation */
 (function () {
 	'use strict';
 
@@ -19,7 +19,7 @@
 				return;
 			}
 
-			this.signupAjaxForm = new UserSignupAjaxForm({
+			this.signupAjaxForm = new UserSignupAjaxValidation({
 				wikiaForm: this.wikiaForm,
 				inputsToValidate: this.inputsToValidate,
 				submitButton: this.submitButton,

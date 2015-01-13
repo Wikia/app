@@ -200,7 +200,7 @@ $config['oasis_noads_extensions_js'] = array(
 		// We allow logged in users to change login without logging out
 		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js',
 		// We allow logged in users to create account without logging out
-		'//extensions/wikia/UserLogin/js/UserSignupAjaxForm.js',
+		'//extensions/wikia/UserLogin/js/UserSignupAjaxValidation.js',
 		// TODO: do we need to load this for logged-in?
 		'//extensions/wikia/UserLogin/js/UserLoginModal.js',
 		'//extensions/wikia/MiniEditor/js/MiniEditor.js',
@@ -805,7 +805,7 @@ $config['wikiamobile_usersignup_js'] = array(
 	'assets' => array(
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
-		'//extensions/wikia/UserLogin/js/UserSignupAjaxForm.js',
+		'//extensions/wikia/UserLogin/js/UserSignupAjaxValidation.js',
 		'//extensions/wikia/UserLogin/js/UserSignupMarketingOptIn.js',
 		'//extensions/wikia/UserLogin/js/UserSignup.js'
 	)
