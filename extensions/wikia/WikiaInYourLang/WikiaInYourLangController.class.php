@@ -48,13 +48,14 @@ class WikiaInYourLangController extends WikiaController {
 			if ( $iNativeWikiId > 0 ) {
 				$oNativeWiki = WikiFactory::getWikiById( $iNativeWikiId );
 
-				$aMessageParams = [
-					$sCurrentSitename,
-					$oNativeWiki->city_url,
-					$oNativeWiki->city_title,
-				];
+				// Check for false-positives - see CE-1216
+				if ( $oNativeWiki->city_lang == $sTargetLanguage ) {
+					$aMessageParams = [
+						$sCurrentSitename,
+						$oNativeWiki->city_url,
+						$oNativeWiki->city_title,
+					];
 
-				if ( $sWikiDomain != $this->getWikiDomain( $oNativeWiki->city_url ) ) {
 					$sMessage = $this->prepareMessage( $sTargetLanguage, $aMessageParams );
 					$this->response->setVal( 'success', true );
 					$this->response->setVal( 'message', $sMessage );
