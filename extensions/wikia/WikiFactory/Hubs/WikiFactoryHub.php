@@ -173,7 +173,6 @@ class WikiFactoryHub extends WikiaModel {
 	 * @param  $city_id Wiki Id
 	 * @return Integer vertical_id
 	 */
-
 	public function getVerticalId( $city_id ) {
 
 		$id = (new WikiaSQL())
@@ -184,6 +183,20 @@ class WikiFactoryHub extends WikiaModel {
 			->run( $this->getSharedDB(), function( $result ) { return $result->fetchObject(); });
 
 		return $id->city_vertical;
+	}
+
+	public function getVerticalNameMessage( $verticalId ) {
+		$message = false;
+		$verticals = $this->getAllVerticals();
+		if ( isset( $verticals[$verticalId] ) ) {
+			/*
+			 * Possible message keys: vertical-tv, vertical-games, vertical-books, vertical-comics,
+			 * vertical-lifestyle, vertical-music, vertical-movies
+			 */
+			$message = wfMessage( 'vertical-' . $verticals[$verticalId]['short'] );
+		}
+
+		return $message;
 	}
 
 	/**
