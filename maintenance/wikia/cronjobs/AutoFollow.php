@@ -13,18 +13,28 @@ $alreadyWatchedKey = 'autowatched-already';
 
 $titlesToWatch = [];
 $textsToWatch = [
+	'de' => ['Blog:Wikia_Deutschland_News'],
 	'en' => ['Blog:Wikia Staff Blog'],
-	'pl' => ['Blog:Wikia News'],
-	'zh' => ['博客:博客帖子'],
-	'ja' => ['ブログ:ウィキアスタッフブログ'],
-	'pt' => ['Blog_de_usuário:Macherie_ana'],
+	'es' => ['Blog:Comunidad'],
+	'fi' => ['Blogi:Wikia-uutiset'],
 	'fr' => ['Blog:Actualité_Wikia'],
 	'it' => ['Blog:Blog_ufficiale_di_Wikia_Italia'],
-	'ru' => ['Блог:Все_сообщения'],
+	'ja' => ['ブログ:ウィキアスタッフブログ'],
 	'nl' => ['Blog:Staff_blogs'],
-	'fi' => ['Blogi:Wikia-uutiset'],
-	'de' => ['Blog:Wikia_Deutschland_News'],
-	'es' => ['Blog:Comunidad'],
+	'pl' => ['Blog:Wikia News'],
+	'pt' => ['Blog:Notícias_da_Wikia'],
+	'ru' => ['Блог:Все_сообщения'],
+	'uk' => ['Блог:Все_сообщения'],
+	'zh' => ['博客:社区中心博客'],
+];
+
+/**
+ * This handles languages like uk which doesn't have its own
+ * community wikia to run the script at.
+ * @var Array
+ */
+$languageAliases = [
+	'uk' => 'ru',
 ];
 
 while ( $row = $dbr->fetchRow( $res ) ) {
@@ -39,8 +49,15 @@ while ( $row = $dbr->fetchRow( $res ) ) {
 		continue;
 	}
 
+	$userLanguage = strtolower( $user->getOption( 'language' ) );
 	// Include dialects like pt-br
-	$userLanguage = substr( $user->getOption( 'language' ), 0, 2 );
+	$userLanguageSplit = explode( "-", $userLanguage );
+	$userLanguage = $userLanguageSplit[0];
+	// Check for aliases
+	if ( isset( $languageAliases[$userLanguage] ) ) {
+		$userLanguage = $languageAliases[$userLanguage];
+	}
+
 	if ( $userLanguage != $contentLanguage ) {
 		continue;
 	}
@@ -67,13 +84,13 @@ while ( $row = $dbr->fetchRow( $res ) ) {
 			'user_id' => $row['user_id'],
 			'user_name' => $user->getName(),
 			'user_lang' => $userLanguage,
-			'title' => $title->getText(),
+			'title' => $title->getPrefixedText(),
 		];
 		if ( $title instanceof Title ) {
 			WatchAction::doWatch( $title, $user );
 			$status = true;
 
-			\Wikia\Logger\WikiaLogger::instance()->info( "AutoFollow: User {$user->getName()} added to watchlist of {$title->getText()}.", $logParams );
+			\Wikia\Logger\WikiaLogger::instance()->info( "AutoFollow: User {$user->getName()} added to watchlist of {$title->getPrefixedText()}.", $logParams );
 		} else {
 			// Log error to check for typos etc. Can be deleted when tested in production enviroment.
 			\Wikia\Logger\WikiaLogger::instance()->error( "AutoFollow: Invalid article name in {$userLanguage}", $logParams );
