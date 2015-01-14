@@ -26,16 +26,16 @@ class SassInlineImageFilterTest extends WikiaBaseTest
 				'background: url("file.png");',
 				'background: url("file.png");'
 			], [
-				'background: none; /* base64 */',
-				'background: none; /* base64 */'
+				'background: none; /* inline */',
+				'background: none; /* inline */'
 			], [
-				'background: url("file.jpg"); /* base64 */',
+				'background: url("file.jpg"); /* inline */',
 				'background: url(data:@file.jpg@);'
 			], [
-				'background: url(file.jpg) centered; /* base64 */',
+				'background: url(file.jpg) centered; /* inline */',
 				'background: url(data:@file.jpg@) centered;'
 			], [
-				'background: #fff url("/file/path/file.jpg") centered; /* base64 */',
+				'background: #fff url("/file/path/file.jpg") centered; /* inline */',
 				'background: #fff url(data:@/file/path/file.jpg@) centered;'
 			],
 			];
