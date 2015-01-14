@@ -3,7 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'apidocs-desc' => 'Api Documentation',
+	'apidocs-desc' => 'API Documentation',
 );
 
 $messages['qqq'] = array(
