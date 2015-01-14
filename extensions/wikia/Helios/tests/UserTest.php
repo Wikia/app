@@ -35,12 +35,43 @@ class UserTest extends \WikiaBaseTest {
 
 	public function testNewFromTokenAuthorizationGranted()
 	{
-		$this->assertTrue( true );
+		$this->oRequest->expects( $this->once() )
+			->method( 'getHeader' )
+			->with( 'AUTHORIZATION' )
+			->willReturn( 'Bearer qi8H8R7OM4xMUNMPuRAZxlY' );
+
+		$oUser = new \StdClass;
+		$oUser->user_id = 1;
+
+		$oClientMock = $this->getMock( 'Client', [ 'info' ], [], '', false );
+		$oClientMock->expects( $this->once() )
+			->method( 'info' )
+			->with( 'qi8H8R7OM4xMUNMPuRAZxlY' )
+			->willReturn( $oUser );
+
+		$this->mockClass( 'Wikia\Helios\Client', $oClientMock );
+
+		$this->assertEquals( User::newFromToken( $this->oRequest ), \User::newFromId( 1 ) );
 	}
 
 	public function testNewFromTokenAuthorizationDeclined()
 	{
-		$this->assertTrue( true );
+		$this->oRequest->expects( $this->once() )
+			->method( 'getHeader' )
+			->with( 'AUTHORIZATION' )
+			->willReturn( 'Bearer qi8H8R7OM4xMUNMPuRAZxlY' );
+
+		$oUser = new \StdClass;
+
+		$oClientMock = $this->getMock( 'Client', [ 'info' ], [], '', false );
+		$oClientMock->expects( $this->once() )
+			->method( 'info' )
+			->with( 'qi8H8R7OM4xMUNMPuRAZxlY' )
+			->willReturn( $oUser );
+
+		$this->mockClass( 'Wikia\Helios\Client', $oClientMock );
+
+		$this->assertNull( User::newFromToken( $this->oRequest ) );
 	}
 
 }

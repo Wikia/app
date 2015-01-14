@@ -12,6 +12,7 @@ class User {
 	 */
 	public static function newFromToken( \WebRequest $oRequest )
 	{
+
 		$sHeader = $oRequest->getHeader( 'AUTHORIZATION' );
 
 		if ( $sHeader ) {
@@ -23,12 +24,12 @@ class User {
 
 				global $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret;
 
-				$oHelios = new \Wikia\Helios\Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
+				$oHelios = new Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
 
 				try {
 					// Authenticate with the token and create a MediaWiki User object.
 					$oInfo = $oHelios->info( $aMatches[1] );
-					if ( $oInfo->user_id ) {
+					if ( !empty( $oInfo->user_id ) ) {
 						return \User::newFromId( $oInfo->user_id );
 					}
 				}
