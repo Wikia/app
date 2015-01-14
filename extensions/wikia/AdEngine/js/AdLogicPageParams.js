@@ -3,17 +3,19 @@
 define('ext.wikia.adEngine.adLogicPageParams', [
 	'wikia.log',
 	'wikia.window',
+	'wikia.document',
+	'wikia.location',
 	require.optional('wikia.abTest'),
 	'ext.wikia.adEngine.adContext',
 	require.optional('ext.wikia.adEngine.adLogicPageViewCounter'),
 	require.optional('ext.wikia.adEngine.amazonMatch'),
 	require.optional('ext.wikia.adEngine.amazonMatchOld'),
 	require.optional('ext.wikia.adEngine.krux')
-], function (log, win, abTest, adContext, pvCounter, amazonMatch, amazonMatchOld, Krux) {
+], function (log, win, doc, loc, abTest, adContext, pvCounter, amazonMatch, amazonMatchOld, Krux) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adLogicPageParams',
-		hostname = win.location.hostname.toString(), // TODO: move to wikia.location module
+		hostname = loc.hostname,
 		maxNumberOfCategories = 3,
 		maxNumberOfKruxSegments = 27, // keep the DART URL part for Krux segments below 500 chars
 		pvs = pvCounter && pvCounter.increment();
@@ -133,6 +135,55 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		return params;
 	}
 
+
+	function getRefParam() {
+		var hostnameMatch,
+			ref = doc.referrer,
+			refHostname,
+			searchDomains = /(google|search\.yahooo|bing|baidu|ask|yandex)/,
+			wikiDomains = [
+				'wikia.com', 'ffxiclopedia.org', 'jedipedia.de',
+				'memory-alpha.org', 'uncyclopedia.org',
+				'websitewiki.de', 'wowwiki.com', 'yoyowiki.org'
+			],
+			wikiDomainsRegex = new RegExp('(^|\\.)(' + wikiDomains.join('|').replace(/\./g, '\\.') + ')$');
+
+		if (!ref || typeof ref !== 'string') {
+			return 'direct';
+		}
+
+		refHostname = ref.match(/\/\/([^\/]+)\//);
+
+		if (refHostname) {
+			refHostname = refHostname[1];
+		}
+
+		hostnameMatch = refHostname === loc.hostname;
+
+		if (hostnameMatch && ref.indexOf('search=') > -1) {
+			return 'wiki_search';
+		}
+		if (hostnameMatch) {
+			return 'wiki';
+		}
+
+		hostnameMatch = wikiDomainsRegex.test(refHostname);
+
+		if (hostnameMatch && ref.indexOf('search=') > -1) {
+			return 'wikia_search';
+		}
+
+		if (hostnameMatch) {
+			return 'wikia';
+		}
+
+		if (searchDomains.test(refHostname)) {
+			return 'external_search';
+		}
+
+		return 'external';
+	}
+
 	/**
 	 * options
 	 * @param options {includeRawDbName: bool}
@@ -148,7 +199,6 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			zone1,
 			zone2,
 			params,
-			amazonParams,
 			targeting = adContext.getContext().targeting;
 
 		options = options || {};
@@ -176,11 +226,12 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			hostpre: getHostname(),
 			skin: targeting.skin,
 			lang: targeting.wikiLanguage || 'unknown',
-			wpage: targeting.pageName && targeting.pageName.toLowerCase()
+			wpage: targeting.pageName && targeting.pageName.toLowerCase(),
+			ref: getRefParam()
 		};
 
 		if (pvs) {
-			params.pv =  pvs.toString();
+			params.pv = pvs.toString();
 		}
 
 		if (options.includeRawDbName) {
