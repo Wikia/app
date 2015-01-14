@@ -28,7 +28,7 @@ $hub-arrow-icon-left-padding-large: $hub-menu-icon-left-padding-large + $hub-men
 	}
 
 	.icon {
-		background-image: url('/extensions/wikia/GlobalNavigation/images/#{$hub-name}.svg'); /* base64 */
+		background-image: url('/extensions/wikia/GlobalNavigation/images/#{$hub-name}.svg'); /* inline */
 	}
 }
 
@@ -37,7 +37,7 @@ $hub-arrow-icon-left-padding-large: $hub-menu-icon-left-padding-large + $hub-men
 }
 
 .hubs-entry-point {
-	background-image: url('/extensions/wikia/GlobalNavigation/images/hubs_entry_point.svg'); /* base64 */
+	background-image: url('/extensions/wikia/GlobalNavigation/images/hubs_entry_point.svg'); /* inline */
 	background-position: $hub-menu-icon-left-padding-medium center;
 	background-repeat: no-repeat;
 	cursor: pointer;
