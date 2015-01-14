@@ -31,7 +31,7 @@ $messages[ 'en' ] = array(
 	'wikiacuratedcontent-content-description-items-input' => 'When adding items label them (right field) and type names (left field) with following convention: article_name, {{ns:Category}}:category_name, {{ns:500}}:username/post_name, {{ns:File}}:video_name',
 
 	'wikiacuratedcontent-content-articlenotfound-error' => 'Article not found',
-	'wikiacuratedcontent-content-emptylabel-error' => 'Message shown to a user when he tries to save without putting a label',
+	'wikiacuratedcontent-content-emptylabel-error' => 'You need to enter a Curated Content Name for this item',
 	'wikiacuratedcontent-content-videonotsupported-error' => 'This video file provider is not supported',
 	'wikiacuratedcontent-content-notsupportedtype-error' => 'This type is not supported',
 	'wikiacuratedcontent-content-nocategoryintag-error' => 'You can put only category here',
