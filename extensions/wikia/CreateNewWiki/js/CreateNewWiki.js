@@ -95,6 +95,9 @@
 					$.loadFacebookAPI()
 						.done(function () {
 							$('.fb-loaded').removeClass('hidden');
+						})
+						.fail(function () {
+							// you can do something here if you want
 						});
 				}
 			});

@@ -16,19 +16,19 @@
 			files = (typeof files === 'string') ? [files] : files;
 
 			$.getResources(files, function () {
-				$().log(name + ' loaded', 'loadLibrary');
+					$().log(name + ' loaded', 'loadLibrary');
 
-				if (typeof callback === 'function') {
-					callback();
-				}
-			},failureFn).
+					if (typeof callback === 'function') {
+						callback();
+					}
+				}, failureFn).
 				// implement promise pattern
-				then(function () {
-					dfd.resolve();
-				}).
-				fail(function () {
-					dfd.reject();
-				});
+			then(function () {
+				dfd.resolve();
+			}).
+			fail(function () {
+				dfd.reject();
+			});
 		} else {
 			$().log(name + ' already loaded', 'loadLibrary');
 
@@ -101,14 +101,13 @@
 			};
 
 			// load GoogleMaps main JS and provide a name of the callback to be called when API is fully initialized
-			$.loadLibrary('GoogleMaps',
-				[{
-					url: 'http://maps.googleapis.com/maps/api/js?sensor=false&callback=onGoogleMapsLoaded',
-					type: 'js'
-				}],
-				typeof (window.google && window.google.maps)
-			).
-			// error handling
+			$.loadLibrary('GoogleMaps', [{
+						url: 'http://maps.googleapis.com/maps/api/js?sensor=false&callback=onGoogleMapsLoaded',
+						type: 'js'
+					}],
+					typeof (window.google && window.google.maps)
+				).
+				// error handling
 			fail(function () {
 				dfd.reject();
 			});
@@ -120,35 +119,46 @@
 	/**
 	 * Load the facebook JS library v2.x
 	 * @returns {jQuery} Returns a jQuery promise
+	 * @see https://developers.facebook.com/docs/javascript/quickstart/v2.2
 	 */
 	$.loadFacebookAPI = function () {
+		// create our own deferred object to resolve after FB.init finishes
 		var $deferred = $.Deferred();
 
-		// if library is already loaded, fbAsyncInit won't be called,
-		// so make sure callback function still gets called
-		if (window.FB) {
-			$deferred.resolve();
-		} else {
-			// Do not call this! To be invoked by Facebook library ONLY!
-			window.fbAsyncInit = function () {
-				window.FB.init({
-					appId: window.fbAppId,
-					xfbml: true,
-					cookie: true,
-					version: 'v2.1'
-				});
-
-				$deferred.resolve();
-			};
-
-			$.loadLibrary(
-				'Facebook API',
-				window.fbScript || '//connect.facebook.net/en_US/sdk.js',
-				typeof window.FB
-			).fail(function () {
-				$deferred.reject();
+		// This is invoked by Facebook once the SDK is loaded.
+		window.fbAsyncInit = function () {
+			window.FB.init({
+				appId: window.fbAppId,
+				xfbml: true,
+				cookie: true,
+				version: 'v2.1'
 			});
-		}
+			$deferred.resolve();
+		};
+
+		// originally adopted from facebook's developer pages but modified for clarity
+		(function (document) {
+			var fbScriptTag,
+				firstScriptTag = document.getElementsByTagName('script')[0],
+				id = 'facebook-jssdk';
+
+			if (document.getElementById(id)) {
+				if (window.FB) {
+					$deferred.resolve();
+				} else {
+					$deferred.reject();
+				}
+				return;
+			}
+
+			fbScriptTag = document.createElement('script');
+			fbScriptTag.id = id;
+			fbScriptTag.src = window.fbScript || '//connect.facebook.net/en_US/sdk.js';
+			fbScriptTag.onerror = function () {
+				$deferred.reject();
+			};
+			firstScriptTag.parentNode.insertBefore(fbScriptTag, firstScriptTag);
+		})(document);
 
 		return $deferred;
 	};
