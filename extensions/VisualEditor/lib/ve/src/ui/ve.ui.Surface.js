@@ -143,7 +143,7 @@ ve.ui.Surface.prototype.initialize = function () {
 	}
 
 	// Attach globalOverlay to the global <body>, not the local frame's <body>
-	$( 'body' ).append( this.globalOverlay.$element );
+	$body.append( this.globalOverlay.$element );
 
 	if ( ve.debug ) {
 		this.setupDebugBar();
