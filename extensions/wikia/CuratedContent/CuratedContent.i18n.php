@@ -23,7 +23,7 @@ $messages[ 'en' ] = array(
 
 	'wikiacuratedcontent-content-description-items' => 'Add wiki "Items" and rename them as you\'d like them to appear in Curated Content with "Curated Content Names".',
 	'wikiacuratedcontent-content-description-supported-items-for-sections' => 'Categories are supported in all sections. Additionally "Featured" section supports: articles, blogs, videos (youtube and ooyala)',
-	'wikiacuratedcontent-content-description-tag-needs-image' => 'Tag needs to have Image',
+	'wikiacuratedcontent-content-description-tag-needs-image' => 'Sections must have an image',
 	'wikiacuratedcontent-content-description-section' => 'Does it make sense to group items under a game series installment? Add a "Section" and drag and drop wiki items under it.',
 	'wikiacuratedcontent-content-description-organize' => 'Feel free to delete or add more lines, and reorder them by dragging and dropping.',
 	'wikiacuratedcontent-content-description-no-section' => 'Items without section or with empty section will be shown as last in Curated Content.',
