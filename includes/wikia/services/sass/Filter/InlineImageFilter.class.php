@@ -52,7 +52,7 @@ class InlineImageFilter extends Filter {
 		$parts = explode( '.', $fileName );
 		$ext = end( $parts );
 
-		$base64 = true;
+		$enableBase64 = true;
 
 		switch ( $ext ) {
 			case 'gif':
@@ -64,7 +64,7 @@ class InlineImageFilter extends Filter {
 				break;
 			case 'svg':
 				$type = 'svg+xml;charset=utf-8,'; // include charset
-				$base64 = false;
+				$enableBase64 = false;
 				break;
 			// not supported image type provided
 			default:
@@ -76,7 +76,7 @@ class InlineImageFilter extends Filter {
 		$content = $this->getFileContent( $fileName );
 
 		$out = "\"data:image/{$type}";
-		if ( $base64 ) {
+		if ($enableBase64) {
 			$out .= ';base64,';
 			$content = base64_encode( $content );
 		} else {
