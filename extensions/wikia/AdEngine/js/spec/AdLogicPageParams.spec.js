@@ -425,6 +425,13 @@ describe('AdLogicPageParams', function () {
 		expect(params.ref).toBe('wikia_search');
 
 		params = getParams({}, {
+			document: { referrer: 'http://wikia.com/wiki/Special:Search?search=text' },
+			hostname: 'gta.wikia.com'
+		});
+
+		expect(params.ref).toBe('wikia_search');
+
+		params = getParams({}, {
 			document: { referrer: 'http://gaming.wikia.com/wiki/Other_PAGE' },
 			hostname: 'gta.wikia.com'
 		});

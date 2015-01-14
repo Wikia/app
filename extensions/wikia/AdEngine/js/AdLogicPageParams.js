@@ -141,7 +141,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			hostnameMatch,
 			refHostname,
 			wikiDomains = [
-				'ffxiclopedia.org', 'jedipedia.de',
+				'wikia.com', 'ffxiclopedia.org', 'jedipedia.de',
 				'marveldatabase.com', 'memory-alpha.org', 'uncyclopedia.org',
 				'websitewiki.de', 'wowwiki.com', 'yoyowiki.org'
 			];
