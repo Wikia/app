@@ -18,33 +18,33 @@ var $fieldsets = $preferences.children( 'fieldset' )
 var $legends = $fieldsets.children( 'legend' )
 	.addClass( 'mainLegend' );
 
-	/**
-	 * Wikia Function - @see UC-206
-	 * Normalize given class name using the prefix
-	 * @param {string} prefix
-	 * @param {string} tabClass
-	 * @returns {string}
-	 */
-	var normalizeTabClass = function (prefix, tabClass) {
-		'use strict';
-		return tabClass.replace('mw-prefsection', prefix);
-	};
+/**
+ * Wikia Function - @see UC-206
+ * Normalize given class name using the prefix
+ * @param {string} prefix
+ * @param {string} tabClass
+ * @returns {string}
+ */
+var normalizeTabClass = function (prefix, tabClass) {
+	'use strict';
+	return tabClass.replace('mw-prefsection', prefix);
+};
 
-	/**
-	 * Wikia Function - @see UC-145
-	 * Make tabs distinguishable based on provided id
-	 * @param {Element} element
-	 * @param {string} selectedTabId
-	 */
-	var makeTabsTargetable = function (element, selectedTabId) {
-		'use strict';
-		var prefix = 'container',
-			classes = element[0].className.split(' ').filter(function (className) {
-				return className.lastIndexOf(prefix, 0) !== 0;
-			});
-		element[0].className = $.trim(classes.join(' '));
-		$preferences.addClass(normalizeTabClass(prefix, selectedTabId));
-	};
+/**
+ * Wikia Function - @see UC-145
+ * Make tabs distinguishable based on provided id
+ * @param {Element} element
+ * @param {string} selectedTabId
+ */
+var makeTabsTargetable = function (element, selectedTabId) {
+	'use strict';
+	var prefix = 'container',
+		classes = element[0].className.split(' ').filter(function (className) {
+			return className.lastIndexOf(prefix, 0) !== 0;
+		});
+	element[0].className = $.trim(classes.join(' '));
+	$preferences.addClass(normalizeTabClass(prefix, selectedTabId));
+};
 
 // Populate the prefToc
 $legends.each( function( i, legend ) {
