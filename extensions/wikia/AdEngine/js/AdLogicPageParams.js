@@ -137,14 +137,15 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 
 
 	function getRefParam() {
-		var ref = doc.referrer,
-			hostnameMatch,
+		var hostnameMatch,
+			ref = doc.referrer,
 			refHostname,
 			wikiDomains = [
 				'wikia.com', 'ffxiclopedia.org', 'jedipedia.de',
 				'memory-alpha.org', 'uncyclopedia.org',
 				'websitewiki.de', 'wowwiki.com', 'yoyowiki.org'
-			];
+			],
+			wikiDomainsRegex = new RegExp('(^|\\.)(' + wikiDomains.join('|').replace(/\./g, '\\.') + ')$');
 
 		if (!ref || typeof ref !== 'string') {
 			return 'direct';
@@ -165,13 +166,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			return 'wiki';
 		}
 
-		refHostname = ref.match(/\/\/([^\.]+\.)*(\w+\.\w+)\//);
-
-		if (refHostname) {
-			refHostname = refHostname[2];
-		}
-
-		hostnameMatch = refHostname.indexOf(win.wgCookieDomain) > -1 || wikiDomains.indexOf(refHostname) > -1;
+		hostnameMatch = wikiDomainsRegex.test(refHostname);
 
 		if (hostnameMatch && ref.indexOf('search=') > -1) {
 			return 'wikia_search';
