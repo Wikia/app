@@ -20,41 +20,41 @@ class InlineImageFilter extends Filter {
 	}
 
 	public function process( $contents ) {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
-		$contents = preg_replace_callback("/([, ]url[^\n]*?\))([^\n]*?)(\s*\/\*\s*(base64|inline)\s*\*\/)/is", [$this, 'processMatches'], $contents);
+		$contents = preg_replace_callback( "/([, ]url[^\n]*?\))([^\n]*?)(\s*\/\*\s*(base64|inline)\s*\*\/)/is", [$this, 'processMatches'], $contents );
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 
 		return $contents;
 	}
 
-	protected function processMatches($matches) {
-		$fileName = $this->rootDir . trim(substr($matches[1], 4, -1), '\'"() ');
+	protected function processMatches( $matches ) {
+		$fileName = $this->rootDir . trim( substr( $matches[1], 4, -1 ), '\'"() ' );
 
-		$inlined = $this->inlineFile($fileName);
-		if ($inlined !== false) {
+		$inlined = $this->inlineFile( $fileName );
+		if ( $inlined !== false ) {
 			return " url({$inlined}){$matches[2]}";
-		}
-		else {
-			throw new \Wikia\Sass\Exception("/* Putting image inline failed: {$fileName} not found or not supported! */");
+		} else {
+			throw new \Wikia\Sass\Exception( "/* Putting image inline failed: {$fileName} not found or not supported! */" );
 		}
 	}
 
 	protected function inlineFile( $fileName ) {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
-		if (!file_exists($fileName)) {
-			wfProfileOut(__METHOD__);
+		if ( !$this->checkFileExists( $fileName ) ) {
+			wfProfileOut( __METHOD__ );
+
 			return false;
 		}
 
-		$parts = explode('.', $fileName);
-		$ext = end($parts);
+		$parts = explode( '.', $fileName );
+		$ext = end( $parts );
 
 		$base64 = true;
 
-		switch ($ext) {
+		switch ( $ext ) {
 			case 'gif':
 			case 'png':
 				$type = $ext;
@@ -68,24 +68,34 @@ class InlineImageFilter extends Filter {
 				break;
 			// not supported image type provided
 			default:
-				wfProfileOut(__METHOD__);
+				wfProfileOut( __METHOD__ );
+
 				return false;
 		}
 
-		$content = file_get_contents($fileName);
+		$content = $this->getFileContent( $fileName );
 
 		$out = "\"data:image/{$type}";
-		if ($base64) {
+		if ( $base64 ) {
 			$out .= ';base64,';
-			$content = base64_encode($content);
+			$content = base64_encode( $content );
 		} else {
-			$content =  rawurlencode($content);
+			$content = rawurlencode( $content );
 		}
 		$out .= $content;
 		$out .= '"';
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
+
 		return $out;
+	}
+
+	protected function checkFileExists( $fileName ) {
+		return file_exists( $fileName );
+	}
+
+	protected function getFileContent( $fileName ) {
+		return file_get_contents( $fileName );
 	}
 
 }
