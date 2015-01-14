@@ -36,8 +36,6 @@ $wgAjaxExportList[] = 'AssetsManagerEntryPoint';
 $wgHooks['MakeGlobalVariablesScript'][] = 'AssetsManager::onMakeGlobalVariablesScript';
 $wgHooks['UserGetRights'][] = 'onUserGetRights';
 
-
-
 /**
  * Add read right to all am reqest.
  * That is solving problems with Loading Assets
@@ -57,4 +55,3 @@ function AssetsManagerEntryPoint() {
 	wfRunHooks('RestInPeace');
 	exit();
 }
-
