@@ -189,6 +189,10 @@ class WikiFactoryHub extends WikiaModel {
 		$message = false;
 		$verticals = $this->getAllVerticals();
 		if ( isset( $verticals[$verticalId] ) ) {
+			/*
+			 * Possible message keys: vertical-tv, vertical-games, vertical-books, vertical-comics,
+			 * vertical-lifestyle, vertical-music, vertical-movies
+			 */
 			$message = wfMessage( 'vertical-' . $verticals[$verticalId]['short'] );
 		}
 
