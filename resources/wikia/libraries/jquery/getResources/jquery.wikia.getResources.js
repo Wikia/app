@@ -5,6 +5,9 @@
 	 * Fetches a list of resources and fires a callback when they have all finished
 	 * loading. Supports CSS, JavaScript, Sass and AssetManager groups.
 	 *
+	 * This is not recommended for cross-domain JS script loading, as the failure function will not be called.
+	 * @see http://bugs.jquery.com/ticket/13735
+	 *
 	 * TODO: Right now, asset group file type is determined by searching for a
 	 * file type extension in the URI. Is there a better way to detect file type?
 	 *
