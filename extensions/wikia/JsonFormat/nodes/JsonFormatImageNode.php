@@ -31,6 +31,11 @@ class JsonFormatImageNode extends JsonFormatNode {
 	public function getSrc() {
 		return $this->src;
 	}
+	
+	public function isBlank() {
+		global $wgBlankImgUrl;
+		return ($this->src == $wgBlankImgUrl);
+	}
 
 	/**
 	 * @return array Returns json serializable "arrays of arrays" representation

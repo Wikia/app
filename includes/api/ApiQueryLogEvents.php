@@ -36,7 +36,7 @@ class ApiQueryLogEvents extends ApiQueryBase {
 	}
 
 	private $fld_ids = false, $fld_title = false, $fld_type = false,
-		$fld_action = false, $fld_user = false, $fld_userid = false,
+		$fld_user = false, $fld_userid = false,
 		$fld_timestamp = false, $fld_comment = false, $fld_parsedcomment = false,
 		$fld_details = false, $fld_tags = false;
 
@@ -49,7 +49,6 @@ class ApiQueryLogEvents extends ApiQueryBase {
 		$this->fld_ids = isset( $prop['ids'] );
 		$this->fld_title = isset( $prop['title'] );
 		$this->fld_type = isset( $prop['type'] );
-		$this->fld_action = isset ( $prop['action'] );
 		$this->fld_user = isset( $prop['user'] );
 		$this->fld_userid = isset( $prop['userid'] );
 		$this->fld_timestamp = isset( $prop['timestamp'] );
@@ -283,6 +282,9 @@ class ApiQueryLogEvents extends ApiQueryBase {
 			if ( LogEventsList::isDeleted( $row, LogPage::DELETED_ACTION ) ) {
 				$vals['actionhidden'] = '';
 			} else {
+				if ( $this->fld_type ) {
+					$vals['action'] = $row->log_action;
+				}
 				if ( $this->fld_title ) {
 					ApiQueryBase::addTitleInfo( $vals, $title );
 				}
@@ -292,7 +294,7 @@ class ApiQueryLogEvents extends ApiQueryBase {
 			}
 		}
 
-		if ( $this->fld_type || $this->fld_action ) {
+		if ( $this->fld_type ) {
 			$vals['type'] = $row->log_type;
 			$vals['action'] = $row->log_action;
 		}

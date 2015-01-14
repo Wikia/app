@@ -195,31 +195,3 @@ $fbExtendedPermissions = array(
 	//'sms',
 	//'xmpp_login',
 );
-
-/**
- * PUSH EVENTS
- *
- * This section allows controlling of whether push events are enabled, and which
- * of the push events to use.
- */
-$fbEnablePushToFacebook = false;
-if(!empty($fbEnablePushToFacebook)){
-	$fbPushDir = dirname(__FILE__) . '/pushEvents/';
-	
-	// Convenience loop for push event classes in the fbPushDir directory
-	// whose file-name corresponds to the class-name.  To add a push event
-	// which does not meet these criteria, just explicitly add it below.
-	$pushEventClassNames = array(
-		'FBPush_OnAddImage',
-		'FBPush_OnLargeEdit',
-		'FBPush_OnWatchArticle',
-	);
-	foreach($pushEventClassNames as $pClassName){
-		$fbPushEventClasses[] = $pClassName;
-		$wgAutoloadClasses[$pClassName] = $fbPushDir . "$pClassName.php";
-	}
-
-	// Example of explicitly adding a push event which doesn't meet the criteria above.
-	// $fbPushEventClasses[] = 'FBPush_OnEXAMPLE_CLASS';
-	// $wgAutoloadClasses['FBPush_OnEXAMPLE_CLASS'] = $fbPushDir . 'FBPush_OnEXAMPLE_version_1.php';
-}

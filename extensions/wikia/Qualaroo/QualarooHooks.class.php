@@ -8,9 +8,9 @@ class QualarooHooks {
 	* @return bool
 	*/
 	static public function onOasisSkinAssetGroups( &$assetsArray ) {
-		global $wgNoExternals;
+		global $wgNoExternals, $wgOut;
 
-		if ( empty( $wgNoExternals ) ) {
+		if ( empty( $wgNoExternals ) && $wgOut->getSkin()->getSkinName() == 'oasis' ) {
 			$assetsArray[] = 'qualaroo_js';
 		}
 
@@ -22,6 +22,16 @@ class QualarooHooks {
 
 		if ( empty( $wgNoExternals ) && $wgOut->getSkin()->getSkinName() == 'oasis' ) {
 			$scssPackages[] = 'wikia/Qualaroo/css/Qualaroo.scss';
+		}
+
+		return true;
+	}
+
+	static public function onOasisSkinAssetGroupsBlocking( &$jsAssetGroups ) {
+		global $wgNoExternals, $wgOut;
+
+		if ( empty( $wgNoExternals ) && $wgOut->getSkin()->getSkinName() == 'oasis' ) {
+			$jsAssetGroups[] = 'qualaroo_blocking_js';
 		}
 
 		return true;

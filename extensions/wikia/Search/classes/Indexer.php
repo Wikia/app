@@ -242,12 +242,12 @@ class Indexer
 	protected function getClient() {
 		if ( $this->client === null ) {
 			$mwService = $this->getMwService();
-			$master = $mwService->isOnDbCluster() ? $mwService->getGlobal( 'SolrMaster' ) : 'staff-search-s1';
+			$master = $mwService->getGlobal( 'SolrMaster' );
 			$params = array(
 					'adapter' => 'Solarium_Client_Adapter_Curl',
 					'adapteroptions' => array(
 							'host' => $master,
-							'port' => 8983,
+							'port' => $mwService->getGlobal( 'SolrDefaultPort' ),
 							'path' => '/solr/'
 							)
 					);

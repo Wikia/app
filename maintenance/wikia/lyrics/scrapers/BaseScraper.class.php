@@ -43,10 +43,12 @@ abstract class BaseScraper {
 	 * @param Array $result
 	 */
 	protected function addPairToResult( $row, &$result ) {
-		$keyValue = explode( '=', $row );
-		if ( count( $keyValue ) == 2 ) {
-			$result[trim( $keyValue[0] )] = trim( $keyValue[1] );
-		} // else not a key => value pair
+		$pos = mb_strpos( $row, '=' );
+		if ( $pos !== false ) {
+			$key = trim( mb_substr( $row, 0, $pos ) );
+			$value = trim( mb_substr( $row, $pos + 1 ) );
+			$result[$key] = trim( $value );
+		}
 	}
 
 	/**
@@ -107,10 +109,17 @@ abstract class BaseScraper {
 	 */
 	protected function getSongData( $songName, $number ) {
 		$songName = urldecode( $songName );
+		$songData = [
+			'title' => false,
+			'song' => $songName,
+			'number' => $number,
+		];
+
 		if ( preg_match( '#\[\[(.+?)\]\]#', $songName, $matches ) ) {
 			$songFields = explode( '|', $matches[1] );
+
 			if ( count( $songFields) > 1 ) {
-				return [
+				$songData = [
 					'title' => $songFields[0],
 					'song' => $songFields[1],
 					'number' => $number,
@@ -118,11 +127,7 @@ abstract class BaseScraper {
 			}
 		}
 
-		return [
-			'title' => false,
-			'song' => $songName,
-			'number' => $number,
-		];
+		return $songData;
 	}
 
 }

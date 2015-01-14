@@ -64,7 +64,7 @@ use Swagger\Annotations as SWG;
  *
  *
  *	@SWG\Api(
- *		path="/api/v1/User/Details",
+ *		path="/User/Details",
  *		description="Get details about one or more user",
  *		@SWG\Operations(
  *			@SWG\Operation(

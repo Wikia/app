@@ -25,9 +25,9 @@ if ( !empty( $result ) && $result == 'error' ) {
 		<div id=wkLgnMsg><?= $msg ;?></div>
 	<? endif ;?>
 	<form method=post action="<?= $formPostAction ?>">
-		<input type=hidden name=editToken value="<?= $editToken ;?>">
+		<input type=hidden name=editToken value="<?= Sanitizer::encodeAttribute( $editToken ) ;?>">
 		<input type=hidden name=username value="<?= htmlspecialchars($username) ;?>">
-		<input type=hidden name=returnto value="<?= $returnto ;?>">
+		<input type=hidden name=returnto value="<?= Sanitizer::encodeAttribute( $returnto );?>">
 
 		<label for=password><?= wfMessage( 'userlogin-oldpassword' )->escaped() ;?></label>
 		<input type=password name=password<?= ($password) ? ' value="'.htmlspecialchars($password).'"' : ''?><?= ($oldErr) ? ' class=inpErr' : ''?>>

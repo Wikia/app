@@ -7,7 +7,7 @@
 		- restore line wrapping for the last two table cells (description and size)
 	*/
 
-@import "color";
+@import "skins/shared/color";
 
 @if lightness($color-page) < 35 {
 

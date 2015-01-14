@@ -48,14 +48,18 @@ function getVideoThumbnailIva( $sourceId ) {
 
 /**
  * Update thumbnail in the wiki
+ *
+ * @param string $videoTitle - video title on the wiki
+ * @param string $thumbnailUrl
+ * @param integer $delayIndex
+ *
  * @global integer $failed
  * @global boolean $dryRun
  * @global string $msg
- * @param string $videoTitle - video title on the wiki
- * @param string $thumbnailUrl
+ *
  * @return boolean
  */
-function updateThumbnailWiki( $videoTitle, $thumbnailUrl ) {
+function updateThumbnailWiki( $videoTitle, $thumbnailUrl, $delayIndex ) {
 	global $failed, $dryRun, $msg;
 
 	$title = $videoTitle;
@@ -68,7 +72,7 @@ function updateThumbnailWiki( $videoTitle, $thumbnailUrl ) {
 
 	$helper = new VideoHandlerHelper();
 	if ( !$dryRun ) {
-		$status = $helper->resetVideoThumb( $file, $thumbnailUrl );
+		$status = $helper->resetVideoThumb( $file, $thumbnailUrl, $delayIndex );
 		if ( !$status->isGood() ) {
 			$failed++;
 			print( "$msg...FAILED (Error: Cannot reset video thumbnail in the wiki. Title: $videoTitle).\n" );
@@ -121,6 +125,8 @@ if ( isset( $options['help'] ) ) {
 
 $dryRun = isset( $options['dry-run'] );
 $extra = isset( $options['extra'] ) ? $options['extra'] : '';
+$videoId = isset( $options['videoId'] ) ? $options['videoId'] : '';
+$delayIndex = isset( $options['delayIndex'] ) ? $options['delayIndex'] : 0;
 
 $ooyala = new OoyalaAsset();
 
@@ -141,18 +147,27 @@ $page = 1;
 $total = 0;
 $failed = 0;
 $skipped = 0;
+const ERRNO = 1;
 
 do {
 	// connect to provider API
-	$url = OoyalaAsset::getApiUrlAssets( $apiPageSize, $nextPage, $extraCond );
-	echo "\nConnecting to $url...\n" ;
-
-	$response = OoyalaAsset::getApiContent( $url );
-	if ( $response === false ) {
-		exit();
+	if ( !empty( $videoId ) ) {
+		$response = OoyalaAsset::getAssetById( $videoId );
+	} else {
+		$url = OoyalaAsset::getApiUrlAssets( $apiPageSize, $nextPage, $extraCond );
+		echo "\nConnecting to $url...\n" ;
+		$response = OoyalaAsset::getApiContent( $url );
 	}
 
-	$videos = empty( $response['items'] ) ? array() : $response['items'];
+	if ( $response === false ) {
+		exit( ERRNO );
+	}
+
+	if ( !empty( $videoId ) ) {
+		$videos = [ $response ];
+	} else {
+		$videos = empty( $response['items'] ) ? array() : $response['items'];
+	}
 	$nextPage = empty( $response['next_page'] ) ? '' : $response['next_page'];
 
 	$total += count( $videos );
@@ -216,7 +231,7 @@ do {
 		}
 
 		// update thumbnail on the wiki
-		if ( !updateThumbnailWiki( $wikiVideoTitle, $data['$thumbnail'] ) ) {
+		if ( !updateThumbnailWiki( $wikiVideoTitle, $data['$thumbnail'], $delayIndex ) ) {
 			continue;
 		}
 
@@ -230,3 +245,7 @@ do {
 } while( !empty( $nextPage ) );
 
 echo "\nTotal videos: ".$total.", Success: ".( $total - $failed - $skipped ).", Failed: $failed, Skipped: $skipped\n\n";
+
+if ( $failed ) {
+	exit( ERRNO );
+}

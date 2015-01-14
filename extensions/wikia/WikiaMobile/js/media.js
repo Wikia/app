@@ -9,6 +9,7 @@ define('media', [
 	'modal',
 	'throbber',
 	'wikia.querystring',
+	'wikia.history',
 	require.optional( 'popover' ),
 	'track',
 	require.optional( 'share' ),
@@ -24,6 +25,7 @@ function(
 	modal,
 	throbber,
 	querystring,
+	history,
 	popover,
 	track,
 	share,
@@ -53,6 +55,7 @@ function(
 		currentMedia,
 		currentWrapper,
 		currentWrapperStyle,
+		disableSwipe,
 		wkMdlImages,
 		qs = querystring(),
 		shrImg = encodeURIComponent( qs.getVal( 'file', '' ) ) || null,
@@ -178,14 +181,14 @@ function(
 				// after a short delay so the user will know they are on an article page
 				setTimeout(function () {
 					clickSource = 'share';
-					qs.pushState();
+					history.pushState();
 					openModal( shrImgIdx );
 				}, 2000 );
 			} else {
 				// file specified in querystring doesn't exist on the page
 				toast.show( msg( 'wikiamobile-shared-file-not-available' ) );
 				if ( !Features.gameguides ) {
-					qs.removeVal( 'file' ).replaceState();
+					history.replaceState(null, null, qs.removeVal( 'file' ));
 				}
 			}
 		}
@@ -205,8 +208,17 @@ function(
 			if ( isMedia ) {
 				!inited && setup();
 
-				if ( className.indexOf( 'Wikia-video-thumb' ) > -1 ) {
+				if ( className.indexOf( 'video-thumbnail' ) > -1 ) {
 					track.event( 'video', track.CLICK, {label: 'article'});
+				}
+
+				// tracking call for S:Videos mobile
+				if ( document.body.className.indexOf( 'Special_Videos' ) ) {
+					track.event( 'special-videos', track.CLICK, {
+						label: 'thumbnail',
+						value: Array.prototype.indexOf.call( document.getElementsByClassName('media'), t ),
+						method: 'both'
+					});
 				}
 
 				openModal( ~~t.getAttribute( 'data-num' ) );
@@ -304,7 +316,7 @@ function(
 
 			// update url for sharing
 			if ( !Features.gameguides ) {
-				currQS.setVal( 'file', imgTitle, true )[stateAction]();
+				history[stateAction](null, null, currQS.setVal( 'file', imgTitle, true ));
 			}
 		} else if ( currentMedia.type == Media.types.IMAGE ){
 			var img = new Image();
@@ -344,7 +356,7 @@ function(
 
 			// update url for sharing
 			if ( !Features.gameguides ) {
-				currQS.setVal( 'file', imgTitle, true )[stateAction]();
+				history[stateAction](null, null, currQS.setVal( 'file', imgTitle, true ));
 			}
 		} else if ( currentMedia.type ) {//custom
 			var data = {
@@ -363,7 +375,7 @@ function(
 
 			// We're showing an ad or other custom media type.  Don't support sharing.
 			if ( !Features.gameguides ) {
-				currQS.removeVal( 'file' )[stateAction]();
+				history[stateAction](null, null, currQS.removeVal( 'file' ));
 			}
 		}
 
@@ -598,7 +610,7 @@ function(
 
 				// remove file=title from URL
 				if ( !Features.gameguides ) {
-					qs.removeVal( 'file' ).replaceState();
+					history.replaceState(null, null, qs.removeVal( 'file' ));
 				}
 				// reset tracking clickSource
 				clickSource = 'embed';
@@ -701,7 +713,8 @@ function(
 						refresh();
 					}
 				},
-				circle: true
+				circle: true,
+				disableSwipe: disableSwipe
 			} );
 
 			function tap ( ev ) {
@@ -752,7 +765,6 @@ function(
 	}
 
 	/** @public **/
-
 	return {
 		openModal: openModal,
 		getMedia: function ( whiteList ) {
@@ -786,6 +798,14 @@ function(
 				} )
 			}
 
+		},
+		reset: function () {
+			inited = false;
+			init(document.getElementsByClassName('media'));
+			setup();
+		},
+		disableSwipe: function () {
+			disableSwipe = true;
 		},
 		skip: function () {
 			if ( currentNum - lastNum > 0 ) {

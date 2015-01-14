@@ -81,9 +81,14 @@ class SearchApiController extends WikiaApiController {
 			$params = $this->getDetailsParams();
 		}
 
-		$resultSet = (new Factory)->getFromConfig( $this->getConfigCrossWiki() )->search();
+		$responseValues = (new Factory)->getFromConfig( $this->getConfigCrossWiki() )->searchAsApi( ['id', 'lang_s'], true );
+
+		if ( empty( $responseValues['items'] ) ) {
+			throw new NotFoundApiException();
+		}
+
 		$items = array();
-		foreach( $resultSet->getResults() as $result ) {
+		foreach( $responseValues['items'] as $result ) {
 			if ( $expand ) {
 				$items[] = $this->getWikiDetailsService()
 					->getWikiDetails( $result['id'], $params[ 'imageWidth' ], $params[ 'imageHeight' ], $params[ 'length' ] );
@@ -91,10 +96,15 @@ class SearchApiController extends WikiaApiController {
 				$items[] = [
 					'id' => (int) $result['id'],
 					'language' => $result['lang_s'],
-				];
+ 				];
 			}
 		}
-		$this->setResponseData( [ 'items' => $items ], 'image' );
+		$responseValues['items'] = $items;
+
+		$this->setResponseData(
+			$responseValues,
+			[ 'urlFields' => [ 'url', 'wordmark', 'image' ] ]
+		);
 	}
 
 	/**
@@ -137,7 +147,10 @@ class SearchApiController extends WikiaApiController {
 		$searchService = new CombinedSearchService();
 		$response = $searchService->search($query, $langs, $namespaces, $hubs, $limit, $minArticleQuality);
 
-		$this->setResponseData( $response, 'image' );
+		$this->setResponseData(
+			$response,
+			[ 'urlFields' =>  [ 'url', 'image' ] ]
+		);
 	}
 
 	/**
@@ -160,10 +173,12 @@ class SearchApiController extends WikiaApiController {
 			throw new NotFoundApiException();
 		}
 
-		$response = $this->getResponse();
-		$response->setValues( $responseValues );
 
-		$response->setCacheValidity(WikiaResponse::CACHE_STANDARD);
+		$this->setResponseData(
+			$responseValues,
+			[ 'urlFields' => 'url'  ],
+			WikiaResponse::CACHE_STANDARD
+		);
 	}
 	
 	/**

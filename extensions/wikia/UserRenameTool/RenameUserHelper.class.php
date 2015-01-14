@@ -63,7 +63,7 @@ class RenameUserHelper {
 			);
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 
 		return $result;
 	}
@@ -147,7 +147,7 @@ class RenameUserHelper {
 
 		wfDebugLog(__CLASS__.'::'.__METHOD__, "Cluster for wiki with ID {$wikiCityID} is '{$value}'" . ((empty($value) ? ' (main shared DB)' : null)));
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return (empty($value)) ? self::CLUSTER_DEFAULT : $value;
 	}
 
@@ -155,30 +155,27 @@ class RenameUserHelper {
 	 * testBlock
 	 *
 	 * performs a test of all available phalanx filters and returns warning message if there are any
-
 	 * @author Kamil Koterba <kamil@wikia-inc.com>
 	 *
 	 * @param $text String to match
 	 * @return String with HTML to display via AJAX
 	 */
 	public static function testBlock( $text ) {
-		wfProfileIn(__METHOD__);
-
+		wfProfileIn( __METHOD__ );
 
 		if ( !class_exists( 'PhalanxService' ) ) {
-			wfProfileOut(__METHOD__);
+			wfProfileOut( __METHOD__ );
 			return '';
 		}
 
 		$service = new PhalanxService();
-		$service->setLimit(20);
 
 		$blockFound = false;
 
-		foreach(Phalanx::getAllTypeNames() as $blockType) {
-			$res = $service->match($blockType, $text);
+		foreach( Phalanx::getAllTypeNames() as $blockType ) {
+			$res = $service->match( $blockType, $text );
 
-			if (!empty($res)) {
+			if ( !empty( $res ) ) {
 				$blockFound = true;
 				break;
 			}
@@ -192,7 +189,7 @@ class RenameUserHelper {
 			$warning = wfMessage( 'userrenametool-warning-phalanx-block', $text )->rawParams( $linkToTest )->escaped();
 		}
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $warning;
 	}
 

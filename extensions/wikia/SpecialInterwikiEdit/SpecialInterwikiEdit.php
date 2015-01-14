@@ -43,7 +43,7 @@ class InterwikiEdit extends SpecialPage {
 		$action = $wgRequest->getVal('action', 'choose');
 		//$lang_only = $wgRequest->getVal('lang_only', 1);
 
-		if ($action != 'choose') $ret = "<p class='subpages'>&lt; <a href=''>Back to menu</a></p>";
+		if ($action != 'choose') $ret = "<p class='subpages'>&lt; <a href='?'>Back to menu</a></p>";
 		else $ret = "";
 
 		switch ($action){
@@ -59,7 +59,7 @@ class InterwikiEdit extends SpecialPage {
 			default : $ret .= wfSIWEChooseAction();
 		}
 
-		$wgOut->setPageTitle(wfMsg('iwedit-title'));
+		$wgOut->setPageTitle(wfMessage( 'iwedit-title' )->text());
 		$wgOut->AddHTML ($ret);
 	} // end execute()
 
@@ -242,7 +242,7 @@ function wfSIWEEditInterwiki(){
 							<input type='hidden' name='iw_trans_conf' value='". $fields['iw_trans']. "' />
 							<input type='hidden' name='action' value='edit_interwiki' />
 							<input type='hidden' name='wikia_id' value='$wikiaID' />
-							<input type='submit' value='".wfMsg('yes')."' />
+							<input type='submit' value='" . wfMessage( 'yes' )->escaped() . "' />
 							</form>";
 					}else{
 						$ret .= "<p>Changeing interwiki...<br />\n";
@@ -347,9 +347,9 @@ function wfSIWEEditInterwiki(){
 	</script>";
 
 	$ret .= "<p>Editing interwiki table for <a href='$wikiaURL'>$wikiaURL</a><br />\n";
-    $ret .= "<form id='settings' action='' method='POST'>
-	<label for='from'>Show from: </label><input type='text' id='from' name='from' value= ". $db->addQuotes($from). " />
-	<input type='submit' value='". wfMsg('iwedit-update') ."' />
+	$ret .= "<form id='settings' action='' method='POST'>
+	<label for='from'>Show from: </label><input type='text' id='from' name='from' value= " . $db->addQuotes($from) . " />
+	<input type='submit' value='" . wfMessage( 'iwedit-update' )->escaped() . "' />
 	<input type='hidden' name='wikia_id' value='$wikiaID' />
 	<input type='hidden' name='action' value='Edit interwiki' />
 	</form> </p>";
@@ -359,7 +359,7 @@ function wfSIWEEditInterwiki(){
 #	foreach ( $lang_names as $lang_name){
 #	  $languages .= ", '$lang_name'";
 #	}
-	if ($from) $from = "WHERE iw_prefix like '". $db->escapeLike($from). "%'";
+	if ($from) $from = "WHERE iw_prefix like '". $db->escapeLike($from) . "%'";
 	$result = $db->query("SELECT * FROM `$wikiaDB`.`interwiki` $from;");
 
 	$ret .= "<p><select multiple='multiple' onchange='updateForm( this.value );'>\n";
@@ -389,7 +389,7 @@ function wfSIWEEditInterwiki(){
 		</tr>
 		<tr>
 			<td>
-				<label for='iw_local'>Local?</label>
+				<label for='iw_local'>" . wfMessage( 'iwedit-local' )->escaped() . "</label>
 			</td>
 			<td>
 				<input type='checkbox' name='iw_local' value='1' />
@@ -397,7 +397,7 @@ function wfSIWEEditInterwiki(){
 		</tr>
 		<tr>
 			<td>
-				<label for='iw_trans'>Trans?</label>
+				<label for='iw_trans'>" . wfMessage( 'iwedit-trans' )->escaped() . "</label>
 			</td>
 			<td>
 				<input type='checkbox' name='iw_trans' value='1' />
@@ -409,8 +409,8 @@ function wfSIWEEditInterwiki(){
 	<input type='hidden' name='wikia_id' value='$wikiaID' />
 	<input type='hidden' name='old_prefix' value='' />
 	<input type='hidden' name='old_url' value='' />
-	<input type='button' onclick='updateAction(\"edit\");' value='".wfMsg('save')."' /> &nbsp
-	<input type='button' onclick='updateAction(\"delete\");' value='".wfMsg('delete')."' />
+	<input type='button' onclick='updateAction(\"edit\");' value='" . wfMessage( 'save' )->escaped() . "' /> &nbsp
+	<input type='button' onclick='updateAction(\"delete\");' value='" . wfMessage( 'delete' )->escaped() . "' />
 	</form>";
 
 	return $ret;
@@ -452,7 +452,7 @@ function wfSIWELinkWikis(){
     <td>$wikiaURL</td>
     <td>$wikiaDB</td>
     <td>$ext_wikiaLang</td>
-    <td>". wfSIWEMakeInterlanguageUrl($ext_wikiaID). "</td>
+    <td>" . wfSIWEMakeInterlanguageUrl($ext_wikiaID) . "</td>
     <td>1</td>
     <td>0</td>
     </tr>
@@ -461,17 +461,17 @@ function wfSIWELinkWikis(){
     <td>$ext_wikiaURL</td>
     <td>$ext_wikiaDB</td>
     <td>$wikiaLang</td>
-    <td>". wfSIWEMakeInterlanguageUrl($wikiaID). "</td>
+    <td>" . wfSIWEMakeInterlanguageUrl($wikiaID) . "</td>
     <td>1</td>
     <td>0</td>
     </tr>
     </table>
 	<form id='chooseaction' action='' method='POST'>
 
-	<p>If the data above is correct, press ". wfMsg('yes'). ", otherwise go to Special:WikiFactory and modify
+	<p>If the data above is correct, press " . wfMessage( 'yes' )->escaped() . ", otherwise go to Special:WikiFactory and modify
 	\$wgArticlePath and \$wgServer</p>
 
-	<input type='submit' value='".wfMsg('yes')."' />
+	<input type='submit' value='" . wfMessage( 'yes' )->escaped() . "' />
 
 	<input type='hidden' name='action' value='commit_link' />
 	<input type='hidden' name='wikia_id' value='$wikiaID' />
@@ -485,12 +485,12 @@ function wfSIWELinkWikisCommit () {
 	list( , $wikiaID, , $ext_wikiaID) = wfSIWEGetRequestData();
 
 	if (wfSIWELinkWikisCommitProper ($wikiaID, $ext_wikiaID) && wfSIWELinkWikisCommitProper ($ext_wikiaID, $wikiaID)) {
-		$ret = wfMsg('iwedit-success');
+		$ret = wfMessage( 'iwedit-success' )->text();
 	} else {
-		$ret = wfMsg('iwedit-error');
+		$ret = wfMessage( 'iwedit-error' )->text();
 	}
 
-	return $ret;
+	return Xml::element( 'p', [], $ret );
 }
 
 function wfSIWEMakeInterlanguageUrl($wikiaID) {

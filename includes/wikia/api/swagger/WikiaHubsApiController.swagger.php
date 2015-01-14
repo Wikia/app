@@ -65,17 +65,53 @@ use Swagger\Annotations as SWG;
  * 		description="Image name"
  * 	)
  *
+ * @SWG\Model( id="WikiaHubsListResultSet" )
+ * 	@SWG\Property(
+ * 		name="HubInfo",
+ * 		type="List",
+ * 		items="$ref:HubInfo",
+ * 		required="true",
+ * 		description="Hubs collection"
+ * 	)
+ *
+ * @SWG\Model( id="HubInfo" )
+ * 	@SWG\Property(
+ * 		name="id",
+ * 		type="int",
+ * 		required="true",
+ * 		description="City ID"
+ * 	),
+ * 	@SWG\Property(
+ * 		name="name",
+ * 		type="string",
+ * 		required="true",
+ * 		description="City name"
+ * 	),
+ * 	@SWG\Property(
+ * 		name="url",
+ * 		type="string",
+ * 		required="true",
+ * 		description="The absolute URL of the hub"
+ * 	),
+ * 	@SWG\Property(
+ * 		name="language",
+ * 		type="string",
+ * 		required="true",
+ * 		description="Hub language code"
+ * 	)
+ *
+ *
  * @SWG\Api(
- * 	path="/api/v1/WikiaHubs/ModuleData",
- * 	description="Get explore module data from given date and city/vertical",
+ * 	path="/WikiaHubs/ModuleData",
+ * 	description="Get explore module data from given date and wiki",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
  * 			httpMethod="GET",
- * 			summary="Get explore module data from given date and city/vertical",
+ * 			summary="Get explore module data from given date and wiki",
  * 			nickname="getModuleData",
  * 			responseClass="WikiaHubsResultSet",
  * 			@SWG\ErrorResponses(
- * 				@SWG\ErrorResponse( code="400", reason="Module, city, vertical or timestamp not valid" )
+ * 				@SWG\ErrorResponse( code="400", reason="Module, city or timestamp not valid" )
  * 			),
  * 			@SWG\Parameters(
  * 				@SWG\Parameter(
@@ -88,28 +124,11 @@ use Swagger\Annotations as SWG;
  * 				),
  * 				@SWG\Parameter(
  * 					name="city",
- * 					description="City id (required if data should be puled from HubsV3)",
+ * 					description="City id",
  * 					paramType="query",
- * 					required="false",
+ * 					required="true",
  * 					allowMultiple="false",
  * 					dataType="int"
- * 				),
- * 				@SWG\Parameter(
- * 					name="vertical",
- * 					description="Vertical id (required if data should be puled from HubsV2)",
- * 					paramType="query",
- * 					required="false",
- * 					allowMultiple="false",
- * 					dataType="int"
- * 				),
- * 				@SWG\Parameter(
- * 					name="lang",
- * 					description="Language",
- * 					paramType="query",
- * 					required="false",
- * 					allowMultiple="false",
- * 					dataType="string",
- * 					defaultValue="en"
  * 				),
  * 				@SWG\Parameter(
  * 					name="ts",
@@ -125,63 +144,12 @@ use Swagger\Annotations as SWG;
  * )
  *
  * @SWG\Api(
- * 	path="/api/v1/WikiaHubs/ModuleDataV2",
- * 	description="Get explore module data from given date and vertical (from HubsV2)",
+ * 	path="/WikiaHubs/ModuleDataV3",
+ * 	description="Get explore module data from given date and wiki",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
  * 			httpMethod="GET",
- * 			summary="Get explore module data from given date and vertical (from HubsV2)",
- * 			nickname="getModuleDataV2",
- * 			responseClass="WikiaHubsResultSet",
- * 			@SWG\ErrorResponses(
- * 				@SWG\ErrorResponse( code="400", reason="Module, vertical or timestamp not valid" )
- * 			),
- * 			@SWG\Parameters(
- * 				@SWG\Parameter(
- * 					name="module",
- * 					description="Module id",
- * 					paramType="query",
- * 					required="true",
- * 					allowMultiple="false",
- * 					dataType="int"
- * 				),
- * 				@SWG\Parameter(
- * 					name="vertical",
- * 					description="Vertical id",
- * 					paramType="query",
- * 					required="true",
- * 					allowMultiple="false",
- * 					dataType="int"
- * 				),
- * 				@SWG\Parameter(
- * 					name="ts",
- * 					description="The Unix timestamp (in seconds)",
- * 					paramType="query",
- * 					required="false",
- * 					allowMultiple="false",
- * 					dataType="int"
- * 				),
- * 				@SWG\Parameter(
- * 					name="lang",
- * 					description="Language",
- * 					paramType="query",
- * 					required="false",
- * 					allowMultiple="false",
- * 					dataType="string",
- * 					defaultValue="en"
- * 				)
- * 			)
- * 		)
- * 	)
- * )
- *
- * @SWG\Api(
- * 	path="/api/v1/WikiaHubs/ModuleDataV3",
- * 	description="Get explore module data from given date and city (from HubsV3)",
- * 	@SWG\Operations(
- * 		@SWG\Operation(
- * 			httpMethod="GET",
- * 			summary="Get explore module data from given date and city (from HubsV3)",
+ * 			summary="Get explore module data from given date and wiki",
  * 			nickname="getModuleDataV3",
  * 			responseClass="WikiaHubsResultSet",
  * 			@SWG\ErrorResponses(
@@ -211,15 +179,29 @@ use Swagger\Annotations as SWG;
  * 					required="false",
  * 					allowMultiple="false",
  * 					dataType="int"
- * 				),
+ * 				)
+ * 			)
+ * 		)
+ * 	)
+ * )
+ *
+ * @SWG\Api(
+ * 	path="/WikiaHubs/HubsV3List",
+ * 	description="Get Hubs list",
+ * 	@SWG\Operations(
+ * 		@SWG\Operation(
+ * 			httpMethod="GET",
+ * 			summary="Get Hubs list",
+ * 			nickname="getHubsV3List",
+ * 			responseClass="WikiaHubsListResultSet",
+ * 			@SWG\Parameters(
  * 				@SWG\Parameter(
  * 					name="lang",
  * 					description="Language",
  * 					paramType="query",
  * 					required="false",
  * 					allowMultiple="false",
- * 					dataType="string",
- * 					defaultValue="en"
+ * 					dataType="string"
  * 				)
  * 			)
  * 		)

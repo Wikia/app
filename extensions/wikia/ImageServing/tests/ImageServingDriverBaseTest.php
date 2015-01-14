@@ -2,6 +2,7 @@
 /**
  * @author Adam Robak <adamr@wikia-inc.com>
  * @group Integration
+ * @group MediaFeatures
  */
 
 class ImageServingDriverBaseTest extends WikiaBaseTest {

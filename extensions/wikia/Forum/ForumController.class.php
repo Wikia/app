@@ -9,7 +9,13 @@ class ForumController extends WallBaseController {
 	}
 
 	public function init() {
-		$this->response->addAsset( 'extensions/wikia/Forum/css/Forum.scss' );
+		/**
+		 * Include Forum.scss only if
+		 * the method is called in a Forum context
+		 */
+		if ( ForumHelper::isForum() ) {
+			$this->response->addAsset( 'extensions/wikia/Forum/css/Forum.scss' );
+		}
 	}
 
 	public function board() {
@@ -31,6 +37,12 @@ class ForumController extends WallBaseController {
 		$this->response->addAsset( 'forum_js' );
 		$this->response->addAsset( 'extensions/wikia/Forum/css/ForumBoard.scss' );
 		$this->response->addAsset( 'extensions/wikia/Wall/css/MessageTopic.scss' );
+
+		// VOLDEV-36: separate monobook styling
+		if ( $this->app->checkSkin( 'monobook' ) ) {
+			$this->response->addAsset( 'extensions/wikia/Forum/css/monobook/ForumMonobook.scss' );
+			$this->response->addAsset( 'extensions/wikia/Forum/css/monobook/ForumBoardMonobook.scss' );
+		}
 
 		$this->addMiniEditorAssets();
 
@@ -151,7 +163,7 @@ class ForumController extends WallBaseController {
 		}
 
 		if ( $lastReply->getUser()->getId() == 0 ) {// anynymous contributor
-			$displayname = wfMsg( 'oasis-anon-user' );
+			$displayname = wfMessage( 'oasis-anon-user' )->escaped();
 			$displayname2 = $lastReply->getUser()->getName();
 			$url = Skin::makeSpecialUrl( 'Contributions' ) . '/' . $lastReply->getUser()->getName();
 		} else {
@@ -250,7 +262,7 @@ class ForumController extends WallBaseController {
 				//keys of sorting array are names of DOM elements' classes
 				//which are needed to click tracking
 				//if you change those keys here, do so in Wall.js file, please
-				$options = array( 'nf' => wfMsg( 'wall-history-sorting-newest-first' ), 'of' => wfMsg( 'wall-history-sorting-oldest-first' ), );
+				$options = array( 'nf' => wfMessage( 'wall-history-sorting-newest-first' )->escaped(), 'of' => wfMessage( 'wall-history-sorting-oldest-first' )->escaped(), );
 				break;
 			case 'index' :
 			default :

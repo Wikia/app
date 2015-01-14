@@ -42,23 +42,18 @@ class WikiaMobileService extends WikiaService {
 
 		$mobileAdService = new WikiaMobileAdService();
 
-		if ( $mobileAdService->shouldLoadAssets() ) {
-			$useGpt = $this->wg->Request->getBool( 'usegpt', $this->wg->AdDriverUseGptMobile );
-			$this->jsBodyPackages[] = $useGpt ? 'wikiamobile_ads_gpt_js' : 'wikiamobile_ads_js';
+		if ( $mobileAdService->shouldShowAds() ) {
+			$this->jsBodyPackages[] = 'wikiamobile_ads_js';
 
-			if ($this->wg->AdDriverTrackState) {
+			if ( $this->wg->AdDriverTrackState ) {
 				$this->globalVariables['wgAdDriverTrackState'] = $this->wg->AdDriverTrackState;
 			}
 
-			if ($useGpt && $this->wg->AdDriverEnableRemnantGptMobile) {
+			if ( $this->wg->AdDriverEnableRemnantGptMobile ) {
 				$this->globalVariables['wgAdDriverEnableRemnantGptMobile'] = $this->wg->AdDriverEnableRemnantGptMobile;
 			}
 
-			if ( $mobileAdService->shouldShowAds() ) {
-				$topLeaderBoardAd = $this->app->renderView( 'WikiaMobileAdService', 'topLeaderBoard' );
-				$this->globalVariables['wgShowAds'] = true;
-				$this->globalVariables['wgUsePostScribe'] = true; /** @see ADEN-666 */
-			}
+			$topLeaderBoardAd = $this->app->renderView( 'WikiaMobileAdService', 'topLeaderBoard' );
 		}
 
 		$this->response->setVal( 'topLeaderBoardAd', $topLeaderBoardAd );
@@ -72,7 +67,6 @@ class WikiaMobileService extends WikiaService {
 		$cssLinks = '';
 		$jsBodyFiles = '';
 		$jsExtensionFiles = '';
-		$styles = $this->skin->getStyles();
 		$scripts = $this->skin->getScripts();
 
 		if ( $type == 'preview' ) {
@@ -96,23 +90,16 @@ class WikiaMobileService extends WikiaService {
 			]
 		);
 
-		if ( is_array( $this->scssPackages ) ) {
-			//force main SCSS as first to make overriding it possible
-			foreach ( $this->assetsManager->getURL( $this->scssPackages ) as $s ) {
-				//packages/assets are enqueued via an hook, let's make sure we should actually let them through
-				if ( $this->assetsManager->checkAssetUrlForSkin( $s, $this->skin ) ) {
-					//W3C standard says type attribute and quotes (for single non-URI values) not needed, let's save on output size
-					$cssLinks .= "<link rel=stylesheet href='{$s}'/>";
-				}
+		// SASS files requested via WikiaMobileAssetsPackages hook
+		$sassFiles = [];
+		foreach ( $this->assetsManager->getURL( $this->scssPackages ) as $src ) {
+			if ( $this->assetsManager->checkAssetUrlForSkin( $src, $this->skin ) ) {
+				$sassFiles[] = $src;
 			}
 		}
 
-		if ( is_array( $styles ) ) {
-			foreach ( $styles as $s ) {
-				//safe URL's as getStyles performs all the required checks
-				$cssLinks .= "<link rel=stylesheet href='{$s['url']}'/>";//this is a strict skin, getStyles returns only elements with a set URL
-			}
-		}
+		// try to fetch all SASS files using a single request (CON-1487)
+		$cssLinks .= $this->skin->getStylesWithCombinedSASS($sassFiles);
 
 		if ( is_array( $this->jsExtensionPackages ) ) {
 			//core JS in the head section, definitely safe
@@ -153,8 +140,7 @@ class WikiaMobileService extends WikiaService {
 			$trackingCode .= AnalyticsEngine::track(
 					'QuantServe',
 					AnalyticsEngine::EVENT_PAGEVIEW,
-					[],
-					['extraLabels'=> ['mobilebrowser']]
+					['extraLabels'=> ['Category.MobileWeb.WikiaMobile']]
 				) .
 				AnalyticsEngine::track(
 					'Comscore',
@@ -162,6 +148,14 @@ class WikiaMobileService extends WikiaService {
 				) .
 				AnalyticsEngine::track(
 					'BlueKai',
+					AnalyticsEngine::EVENT_PAGEVIEW
+				) .
+				AnalyticsEngine::track(
+					'Datonics',
+					AnalyticsEngine::EVENT_PAGEVIEW
+				) .
+				AnalyticsEngine::track(
+					'ClarityRay',
 					AnalyticsEngine::EVENT_PAGEVIEW
 				);
 		}
@@ -186,14 +180,16 @@ class WikiaMobileService extends WikiaService {
 		wfProfileIn( __METHOD__ );
 
 		//Add GameGuides SmartBanner promotion on Gaming Vertical
-		if ( !empty( $this->wg->EnableWikiaMobileSmartBanner ) ) {
+		if ( !empty( $this->wg->EnableWikiaMobileSmartBanner )
+			&& !empty( $this->wg->WikiaMobileSmartBannerConfig )
+			&& empty( $this->wg->WikiaMobileSmartBannerConfig['disabled'] )
+		) {
 			$this->jsExtensionPackages[] = 'wikiamobile_smartbanner_init_js';
 
 			$this->globalVariables['wgAppName'] = $this->wg->WikiaMobileSmartBannerConfig['name'];
-			$this->globalVariables['wgAppAuthor'] = $this->wg->WikiaMobileSmartBannerConfig['author'];
 			$this->globalVariables['wgAppIcon'] = $this->wg->WikiaMobileSmartBannerConfig['icon'];
 
-			$this->response->setVal( 'smartBannerConfig', $this->wg->WikiaMobileSmartBannerConfig );
+			$this->response->setVal( 'smartBannerConfig', $this->wg->WikiaMobileSmartBannerConfig['meta'] );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -256,9 +252,15 @@ class WikiaMobileService extends WikiaService {
 		$this->response->setVal( 'toc', $toc );
 	}
 
+	private function disableSiteCSS() {
+		global $wgUseSiteCss;
+		$wgUseSiteCss = false;
+	}
+
 	public function index() {
 		wfProfileIn( __METHOD__ );
 
+		$this->disableSiteCSS();
 		$this->handleMessages();
 		$this->handleSmartBanner();
 		$this->handleContent();

@@ -10,6 +10,7 @@ class JsonFormatTest extends WikiaBaseTest {
 	public function setUp() {
 		global $IP;
 		$this->setupFile = "$IP/extensions/wikia/JsonFormat/JsonFormat.setup.php";
+	 	$this->mockGlobalVariable( 'wgTitle', Title::newFromText( 'TestPageDoesNotExist' ) );
 		parent::setUp();
 	}
 
@@ -22,8 +23,10 @@ class JsonFormatTest extends WikiaBaseTest {
 			}
 			//else leave it as it is
 		} else {
-			$this->hooks = $wgHooks['ThumbnailImageHTML'];
-			unset( $wgHooks['ThumbnailImageHTML'] );
+			if (array_key_exists('ThumbnailImageHTML', $wgHooks)) {
+				$this->hooks = $wgHooks['ThumbnailImageHTML'];
+				unset( $wgHooks['ThumbnailImageHTML'] );
+			}
 		}
 	}
 
@@ -88,8 +91,12 @@ class JsonFormatTest extends WikiaBaseTest {
 	protected function checkContent( $data, $content ) {
 		foreach ( $content as $key => $params ) {
 			if ( is_numeric( $key ) ) {
-				$element = $data[ $key ];
-				$this->checkContent( $element, $params );
+				if ( empty( $data[$key] ) ) {
+					$this->fail( "Key $key not found in data.  Expecting: " . print_r( [ $key => $params ], true ) );
+				} else {
+					$element = $data[ $key ];
+					$this->checkContent( $element, $params );
+				}
 			} else {
 				//do assertion
 				if ( $key == 'child' ) {
@@ -162,7 +169,7 @@ Nullam eros mi, mollis in sollicitudin non, tincidunt sed enim. Sed et felis met
 							1 => [
 								'child' => [
 									0 => [
-										'text' => "Nullam eros mi, mollis in sollicitudin non, tincidunt sed enim. Sed et felis metus, rhoncus ornare nibh. Ut at magna leo."
+										'text' => "Nullam eros mi, mollis in sollicitudin non, tincidunt sed enim. Sed et felis metus, rhoncus ornare nibh. Ut at magna leo. "
 									]
 								]
 							]
@@ -176,7 +183,7 @@ Nullam eros mi, mollis in sollicitudin non, tincidunt sed enim. Sed et felis met
 					0 => [
 						'child' => [
 							0 => [
-								'text' => "mollis in sollicitudin non"
+								'text' => "mollis in sollicitudin non "
 							]
 						]
 					]

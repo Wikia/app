@@ -1,0 +1,30 @@
+{
+	"@metadata": {
+		"authors": [
+			"AS",
+			"Aced",
+			"Ahonc",
+			"Andriykopanytsia",
+			"Base",
+			"Perohanych",
+			"RLuts",
+			"Sahran",
+			"Sergento",
+			"Steve.rusyn",
+			"SteveR",
+			"Tel'et",
+			"Tifinaghes",
+			"Ата"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Візуальний редактор]]",
+	"tag-visualeditor-description": "Редагування зроблено з використанням [[{{MediaWiki:visualeditor-descriptionpagelink}}|Візуального редактора]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Візуальний редактор: Перевірити]]",
+	"tag-visualeditor-needcheck-description": "Редагування з допомогою [[{{MediaWiki:visualeditor-descriptionpagelink}}|візуального редактора]], у якому система виявила вікітекст з, можливо, ненавмисними змінами.",
+	"tag-visualeditor-switched": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|Візуальний редактор: перемкнено]]",
+	"tag-visualeditor-switched-description": "Учасник почав редагувати за допомогою VisualEditor, а потім перейшов у редактор вікітексту.",
+	"visualeditor-feedback-link": "Project:VisualEditor/Відгуки",
+	"visualeditor-feedback-tool": "Залишити відгук",
+	"visualeditor-help-label": "Прочитайте посібник користувача",
+	"visualeditor-help-title": "Посібник користувача з використання редактора"
+}

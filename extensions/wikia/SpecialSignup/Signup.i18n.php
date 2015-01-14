@@ -169,6 +169,14 @@ $messages['ja'] = array(
 	'signup' => 'Signup',
 );
 
+/** Korean (한국어)
+ * @author 아라
+ */
+$messages['ko'] = array(
+	'signup-desc' => '[[{{#Special:UserLogin}}/signup]]을 위한 [[{{#Special:Signup}}]] 별칭을 추가합니다',
+	'signup' => '가입하기',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
@@ -262,10 +270,11 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Jefersonmoraes
  */
 $messages['pt-br'] = array(
-	'signup-desc' => 'Acrescenta o nome alternativo [[{{#Special:Signup}}]] para [[{{#Special:UserLogin}}/signup]]',
-	'signup' => 'Registar-se',
+	'signup-desc' => 'Adicione o nome alternativo [[{{#Special:Signup}}]] para [[{{#Special:UserLogin}}/signup]]',
+	'signup' => 'Registrar-se',
 );
 
 /** tarandíne (tarandíne)

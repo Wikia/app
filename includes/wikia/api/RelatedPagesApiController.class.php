@@ -3,7 +3,7 @@
 class RelatedPagesApiController extends WikiaApiController {
 	const PARAMETER_ARTICLE_IDS = 'ids';
 	const PARAMETER_LIMIT = 'limit';
-	const CACHE_DURATION = 10800;
+
 	/**
 	 * Get RelatedPages for a given article ID
 	 *
@@ -46,8 +46,8 @@ class RelatedPagesApiController extends WikiaApiController {
 
 			$this->setResponseData(
 				[ 'items' => $related, 'basepath' => $this->wg->Server ],
-				'imgUrl',
-				self::CACHE_DURATION
+				[ 'imgFields'=> 'imgUrl', 'urlFields' => [ 'imgUrl', 'url' ] ],
+				WikiaResponse::CACHE_SHORT
 			);
 
 

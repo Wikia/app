@@ -46,6 +46,7 @@ class WikiaHubsModel extends WikiaModel {
 
 	public function getVerticalId($cityId) {
 		$wikiFactoryHub = WikiFactoryHub::getInstance();
+		//FIXME: this needs to use getVerticalId after the new verticals are assigned
 		return $wikiFactoryHub->getCategoryId($cityId);
 	}
 }

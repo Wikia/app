@@ -33,7 +33,7 @@ $formSubmits = array(
 $nameInput = array(
 	'type' => 'hidden',
 	'name' => 'name',
-	'value' => $name,
+	'value' => htmlentities( $name, ENT_COMPAT ), // Escape at least double-quotes. see VID-1737
 );
 
 $form = array(

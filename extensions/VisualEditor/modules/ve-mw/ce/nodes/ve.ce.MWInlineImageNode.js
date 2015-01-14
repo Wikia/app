@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable MWInlineImageNode class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -17,7 +17,6 @@
  * @param {Object} [config] Configuration options
  */
 ve.ce.MWInlineImageNode = function VeCeMWInlineImageNode( model, config ) {
-	var valign;
 
 	// Parent constructor
 	ve.ce.LeafNode.call( this, model, config );
@@ -41,20 +40,16 @@ ve.ce.MWInlineImageNode = function VeCeMWInlineImageNode( model, config ) {
 		.attr( 'width', this.model.getAttribute( 'width' ) )
 		.attr( 'height', this.model.getAttribute( 'height' ) );
 
-	if ( this.model.getAttribute( 'border' ) ) {
-		this.$image.addClass( 'thumbborder' );
+	if ( this.$element.css( 'direction' ) === 'rtl' ) {
+		this.showHandles( ['sw'] );
+	} else {
+		this.showHandles( ['se'] );
 	}
 
-	valign = this.model.getAttribute( 'valign' );
-	if ( valign !== 'default' ) {
-		this.$image.css( 'vertical-align', valign );
-	}
+	this.updateClasses();
 
 	// DOM changes
 	this.$element.addClass( 've-ce-mwInlineImageNode' );
-
-	// Events
-	this.model.connect( this, { 'attributeChange': 'onAttributeChange' } );
 };
 
 /* Inheritance */
@@ -73,12 +68,26 @@ ve.ce.MWInlineImageNode.static.name = 'mwInlineImage';
 /* Methods */
 
 /**
- * Update the rendering of the 'src', 'width' and 'height' attributes when they change in the model.
+ * Update CSS classes based on current attributes
  *
- * @method
- * @param {string} key Attribute key
- * @param {string} from Old value
- * @param {string} to New value
+ */
+ve.ce.MWInlineImageNode.prototype.updateClasses = function () {
+	var valign = this.model.getAttribute( 'valign' );
+
+	// Border
+	this.$element.toggleClass( 'mw-image-border', !!this.model.getAttribute( 'borderImage' ) );
+
+	// default size
+	this.$element.toggleClass( 'mw-default-size', !!this.model.getAttribute( 'defaultSize' ) );
+
+	// valign
+	if ( valign !== 'default' ) {
+		this.$image.css( 'vertical-align', valign );
+	}
+};
+
+/**
+ * @inheritdoc
  */
 ve.ce.MWInlineImageNode.prototype.onAttributeChange = function ( key, from, to ) {
 	if ( key === 'height' || key === 'width' ) {
@@ -95,6 +104,7 @@ ve.ce.MWInlineImageNode.prototype.onAttributeChange = function ( key, from, to )
 				this.$image.css( 'height', to );
 				break;
 		}
+		this.updateClasses();
 	}
 };
 

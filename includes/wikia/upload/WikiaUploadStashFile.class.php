@@ -39,4 +39,14 @@ class WikiaUploadStashFile extends UploadStashFile {
 		}
 		return $path;
 	}
+
+	/**
+	 * Get an URL to access the original stashed file
+	 *
+	 * @return string
+	 */
+	public function getOriginalFileUrl() {
+		return $this->repo->getZoneUrl( 'temp' ) . '/' . $this->getUrlRel();
+	}
+
 }

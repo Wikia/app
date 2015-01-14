@@ -1,0 +1,21 @@
+{
+	"@metadata": {
+		"authors": [
+			"Cgtdk",
+			"Christian List",
+			"EileenSanda",
+			"Laketown",
+			"Palnatoke",
+			"Simeondahl",
+			"Tehnix"
+		]
+	},
+	"tag-visualeditor": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-description": "Redigeret ved hjælp af [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]]",
+	"tag-visualeditor-needcheck": "[[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor: Tjek]]",
+	"tag-visualeditor-needcheck-description": "Redigering foretaget ved hjælp af [[{{MediaWiki:visualeditor-descriptionpagelink}}|VisualEditor]] hvor systemet har registreret at wikiteksten muligvis har utilsigtede ændringer.",
+	"visualeditor-feedback-link": "Project:VisualEditor/Feedback",
+	"visualeditor-feedback-tool": "Giv feedback",
+	"visualeditor-help-label": "Læs brugervejledningen",
+	"visualeditor-help-title": "Brugervejledning til hvordan du bruger editoren"
+}

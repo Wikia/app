@@ -52,6 +52,7 @@ class BlogPage extends Article {
 		// nonexistent blog post
 		if ( !$this->getID() ) {
 			parent::view();
+			wfProfileOut( __METHOD__ );
 			return '';
 		}
 

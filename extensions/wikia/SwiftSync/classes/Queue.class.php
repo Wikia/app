@@ -97,16 +97,19 @@ class Queue {
 		
 		if ( !isset( $row->img_dest ) ) {
 			\Wikia\SwiftStorage::log( __METHOD__, 'Image destination is empty' );
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 		
 		if ( is_null( $row->city_id ) ) {
 			\Wikia\SwiftStorage::log( __METHOD__, 'Wikia identify is empty' );
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 		
 		if ( empty( $row->img_action ) ) {
 			\Wikia\SwiftStorage::log( __METHOD__, 'Sync action is empty' );
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 		

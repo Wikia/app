@@ -1,4 +1,5 @@
-var AdLogicDartSubdomain = function (Geo) {
+/*global define*/
+define('ext.wikia.adEngine.adLogicDartSubdomain', ['wikia.geo'], function (Geo) {
 	'use strict';
 
 	function getSubdomain() {
@@ -39,11 +40,4 @@ var AdLogicDartSubdomain = function (Geo) {
 	return {
 		getSubdomain: getSubdomain
 	};
-};
-
-(function (context) {
-	'use strict';
-	if (context.define && context.define.amd) {
-		context.define('ext.wikia.adengine.adlogic.subdomain', ['wikia.geo'], context.AdLogicDartSubdomain);
-	}
-}(this));
+});

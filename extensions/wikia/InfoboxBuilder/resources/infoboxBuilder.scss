@@ -1,0 +1,139 @@
+// Variables
+$infobox-builder-background-color: rgba(255, 255, 255, .75);
+$infobox-builder-color-header: #092140;
+$infobox-builder-color-label: #3c3c3c;
+$infobox-builder-color-lines: #ccc;
+$infobox-builder-color-link: #0a6eb4;
+$infobox-builder-color-text: #64696c;
+
+// Dimensions
+$infobox-builder-font-size-title: 1.25rem;
+$infobox-builder-font-size-header: 1rem;
+$infobox-builder-font-size-small: .8rem;
+
+$infobox-builder-margin-in: 1rem;
+$infobox-builder-margin-out: 1.5rem;
+
+$infobox-builder-padding: .75rem;
+$infobox-builder-padding-h: 1rem;
+$infobox-builder-padding-v: .5rem;
+
+$infobox-builder-width-container: 300px;
+$infobox-builder-width-left: 100px;
+$infobox-builder-width-right: 200px;
+
+// Styles
+
+// Errors dialog
+.infobox-builder-errors {
+	background-color: $infobox-builder-background-color;
+	clear: right;
+	color: $infobox-builder-color-text;
+	float: right;
+	margin: 0 0 $infobox-builder-margin-out $infobox-builder-margin-out;
+	padding: $infobox-builder-padding;
+	width: $infobox-builder-width-container;
+
+	h3 {
+		border: 0;
+		color: $infobox-builder-color-header;
+		font-size: $infobox-builder-font-size-header;
+	}
+
+	ul {
+		margin: $infobox-builder-margin-in 0;
+
+		li {
+			font-size: $infobox-builder-font-size-small;
+			list-style-type: none;
+		}
+	}
+}
+
+// Toggle content link
+
+.infobox-table {
+
+	span.mw-collapsible-toggle {
+		display: block;
+		float: none;
+	}
+}
+
+// Default infobox theme
+
+.default-infobox-container {
+	background-color: $infobox-builder-background-color;
+	clear: right;
+	color: $infobox-builder-color-text;
+	float: right;
+	margin: 0 0 $infobox-builder-margin-out $infobox-builder-margin-out;
+	padding: $infobox-builder-padding;
+	width: $infobox-builder-width-container;
+
+	table {
+		table-layout: fixed;
+		width: 100%;
+
+		tr:last-child {
+			td {
+				border-bottom: 0;
+			}
+		}
+	}
+
+	a {
+		color: $infobox-builder-color-link;
+
+		&:hover {
+			color: $infobox-builder-color-header;
+			text-decoration: none;
+		}
+
+		&:active {
+			color: $infobox-builder-color-link;
+		}
+	}
+
+	.default-infobox-title {
+		color: $infobox-builder-color-header;
+		font-size: $infobox-builder-font-size-title;
+		font-weight: normal;
+		margin: 0;
+		padding: $infobox-builder-padding-v 0;
+		text-align: left;
+	}
+
+	.default-infobox-main-image {
+		padding: $infobox-builder-padding-v 0;
+
+		img {
+			display: block;
+			height: auto;
+			max-width: 100%;
+		}
+	}
+
+	.default-infobox-header {
+		color: $infobox-builder-color-header;
+		font-size: $infobox-builder-font-size-header;
+		padding: $infobox-builder-padding-h 0 0;
+		text-align: center;
+	}
+
+	.default-infobox-line-left {
+		border-bottom: 1px solid $infobox-builder-color-lines;
+		color: $infobox-builder-color-label;
+		font-weight: 500;
+		padding: $infobox-builder-padding-v 0;
+		vertical-align: top;
+		width: $infobox-builder-width-left;
+	}
+
+	.default-infobox-line-right {
+		border-bottom: 1px solid $infobox-builder-color-lines;
+		padding: $infobox-builder-padding-v 0 $infobox-builder-padding-v $infobox-builder-padding-h;
+		vertical-align: top;
+		width: $infobox-builder-width-right;
+	}
+}

@@ -38,7 +38,7 @@ $wgAutoloadClasses['WikiaMobileHooks'] = "{$dir}/WikiaMobileHooks.class.php";
 $wgAutoloadClasses['WikiaMobileCategoryItem'] = "{$dir}/models/WikiaMobileCategoryModel.class.php";
 $wgAutoloadClasses['WikiaMobileCategoryItemsCollection'] = "{$dir}/models/WikiaMobileCategoryModel.class.php";
 $wgAutoloadClasses['WikiaMobileCategoryContents'] = "{$dir}/models/WikiaMobileCategoryModel.class.php";
-$wgAutoloadClasses['ResourceVariablesGetter'] = "{$dir}/ResourceVariablesGetter.class.php";
+$wgAutoloadClasses['ResourceVariablesGetter'] = "includes/wikia/resourceloader/ResourceVariablesGetter.class.php";
 
 /**
  * services
@@ -76,6 +76,7 @@ $wgAutoloadClasses['WikiaMobileController'] = "{$dir}/WikiaMobileController.clas
 $wgExtensionMessagesFiles['WikiaMobile'] = "{$dir}/WikiaMobile.i18n.php";
 
 JSMessages::registerPackage( 'WkMbl', array(
+	'adengine-advertisement',
 	'wikiamobile-hide-section',
 	'wikiamobile-sharing-media-image',
 	'wikiamobile-sharing-page-text',
@@ -126,7 +127,7 @@ if ( empty( $wgWikiaMobileNavigationBlacklist ) ) {
 	$wgWikiaMobileNavigationBlacklist = array( 'Chat', 'WikiActivity', 'NewFiles' );
 }
 
-//black list of JS globals
+// white list of JS globals
 if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 	$wgWikiaMobileIncludeJSGlobals =
 		[
@@ -137,11 +138,23 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'cscoreCat',
 
 			//ads
+			'ads',
+			'wgGaHasAds',
+
+			//ads legacy -- should be removed at some point
+			'adEnginePageType',
+			'wgAdDriverUseAdsAfterInfobox',
+			'wgAdDriverWikiIsTop1000',
 			'wgDartCustomKeyValues',
-			'cityShort',
+			'wgShowAds',
+			'wgUsePostScribe',
+			'wgWikiDirectedAtChildren',
 			'wikiaPageIsHub',
 			'wikiaPageType',
-			'wgAdVideoTargeting',
+
+			//vertical&categories
+			'wgWikiVertical',
+			'wgWikiCategories',
 
 			//server/wiki
 			'wgServer',
@@ -152,7 +165,6 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'wgCdnRootUrl',
 			'wgAssetsManagerQuery',
 			'wgContentLanguage',
-			'wgMedusaSlot',
 			'wgResourceBasePath',
 			'wgMainPageTitle',
 			'wgSitename',
@@ -189,22 +201,11 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			//skin
 			'skin',
 
-			//facebook login
+			//login
 			'fbAppId',
-			'fbUseMarkup'
-		];
-}
+			'wgLoginToken',
 
-//list of Videos provides that we support
-if ( empty( $wgWikiaMobileSupportedVideos ) ) {
-	$wgWikiaMobileSupportedVideos = [
-		'screenplay',
-		'ign',
-		'ooyala',
-		'youtube',
-		'dailymotion',
-		'vimeo',
-		'bliptv',
-		'uStream'
-	];
+			//AbTesting
+			'wgCdnApiUrl',
+		];
 }

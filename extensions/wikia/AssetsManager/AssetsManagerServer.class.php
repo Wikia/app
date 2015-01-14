@@ -46,11 +46,9 @@ class AssetsManagerServer {
 
 		// do not log illegal request type (one/group/groups/sass supported only) - not to pollute
 		// logs
-		if( function_exists( 'newrelic_name_transaction' ) ) {
-			if ( function_exists( 'newrelic_disable_autorum') ) {
-				newrelic_disable_autorum();
-			}
-			newrelic_name_transaction( "am/AssetManager/" . $type );
+		Transaction::setEntryPoint(Transaction::ENTRY_POINT_ASSETS_MANAGER);
+		if ( function_exists( 'newrelic_disable_autorum') ) {
+			newrelic_disable_autorum();
 		}
 
 		$headers = array();
@@ -86,6 +84,13 @@ class AssetsManagerServer {
 		}
 
 		$headers['Last-Modified'] = gmdate('D, d M Y H:i:s \G\M\T');
+
+		// Add X-Served-By and X-Backend-Response-Time response headers to MediaWiki pages
+		// See BAC-550 for details
+		// @macbre
+		global $wgRequestTime;
+		$headers['X-Served-By'] = wfHostname();
+		$headers['X-Backend-Response-Time'] = round(microtime( true ) - $wgRequestTime, 3);
 
 		foreach($headers as $k => $v) {
 			header($k . ': ' . $v);

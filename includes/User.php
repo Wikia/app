@@ -118,6 +118,7 @@ class User {
 		'deleterevision',
 		'edit',
 		'editinterface',
+		'editmyoptions',
 		'editusercssjs', #deprecated
 		'editusercss',
 		'edituserjs',
@@ -971,7 +972,6 @@ class User {
 	 * @return Bool True if the user is logged in, false otherwise.
 	 */
 	private function loadFromSession() {
-		global $wgExternalAuthType, $wgAutocreatePolicy;
 		$result = null;
 		wfRunHooks( 'UserLoadFromSession', array( $this, &$result ) );
 		if ( $result !== null ) {
@@ -1009,13 +1009,14 @@ class User {
 			return false;
 		}
 
-		// wikia change start
-		if ( $wgExternalAuthType && $wgAutocreatePolicy == 'view' ) {
-			$extUser = ExternalUser::newFromCookie();
-			if ( $extUser ) {
-				$extUser->linkToLocal( $sId );
-			}
-		}
+                // Wikia change start
+                global $wgExternalAuthType;
+                if ( $wgExternalAuthType ) { // in other words: unless Uncyclopedia
+                    $extUser = ExternalUser::newFromCookie();
+                    if ( $extUser ) {
+                            $extUser->linkToLocal( $sId );
+                    }
+                }
 
 		$passwordCorrect = FALSE;
 		// wikia change end
@@ -1185,8 +1186,8 @@ class User {
 		}
 
 		// Wikia. The following if/else statement has been added to reflect our user table layout.
-		if ( isset( $row->user_birthdate ) ) {
-			$this->mBirthDate = wfTimestamp( TS_DB, strtotime( $row->user_birthdate ) );
+		if ( isset( $row->user_birthdate ) && $row->user_birthdate !== '0000-00-00' ) {
+			$this->mBirthDate = $row->user_birthdate;
 		} else {
 			$all = false;
 		}
@@ -3150,7 +3151,7 @@ class User {
 			'user_real_name' => $user->mRealName,
 			'user_token' => strval( $user->mToken ),
 			'user_registration' => $dbw->timestamp( $user->mRegistration ),
-			'user_birthdate' => $dbw->timestampOrNull( $user->mBirthDate ), // Wikia. Added to reflect our user table layout.
+			'user_birthdate' => $user->mBirthDate, // Wikia. Added to reflect our user table layout.
 			'user_editcount' => 0,
 		);
 		foreach ( $params as $name => $value ) {
@@ -3191,7 +3192,7 @@ class User {
 				'user_real_name' => $this->mRealName,
 				'user_token' => strval( $this->mToken ),
 				'user_registration' => $dbw->timestamp( $this->mRegistration ),
-				'user_birthdate' => $dbw->timestampOrNull( $this->mBirthDate ), // Wikia. Added to reflect our user table layout.
+				'user_birthdate' => $this->mBirthDate, // Wikia. Added to reflect our user table layout.
 				'user_editcount' => 0,
 			), __METHOD__
 		);

@@ -56,7 +56,7 @@ use Swagger\Annotations as SWG;
  * 	)
  * 
  * @SWG\Api(
- * 	path="/api/v1/RelatedPages/List",
+ * 	path="/RelatedPages/List",
  * 	description="API to get related pages for given article ID",
  * 	@SWG\Operations(
  * 		@SWG\Operation(

@@ -1,7 +1,7 @@
 /*!
  * VisualEditor DataModel MWTransclusionContentModel class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -27,12 +27,17 @@ ve.dm.MWTransclusionContentModel = function VeDmMWTransclusionContentModel( tran
 
 OO.inheritClass( ve.dm.MWTransclusionContentModel, ve.dm.MWTransclusionPartModel );
 
+/* Events */
+
+/**
+ * @event change
+ */
+
 /* Methods */
 
 /**
  * Get content value.
  *
- * @method
  * @returns {string} Content value
  */
 ve.dm.MWTransclusionContentModel.prototype.getValue = function () {
@@ -42,16 +47,23 @@ ve.dm.MWTransclusionContentModel.prototype.getValue = function () {
 /**
  * Set content value.
  *
- * @method
  * @param {string} value Content value
  */
 ve.dm.MWTransclusionContentModel.prototype.setValue = function ( value ) {
 	this.value = value;
+	this.emit( 'change' );
 };
 
 /**
  * @inheritdoc
  */
 ve.dm.MWTransclusionContentModel.prototype.serialize = function () {
-	return this.getValue();
+	return this.value;
+};
+
+/**
+ * @inheritdoc
+ */
+ve.dm.MWTransclusionPartModel.prototype.getWikitext = function () {
+	return this.value;
 };

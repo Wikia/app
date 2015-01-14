@@ -1,0 +1,19 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ibrahim"
+		]
+	},
+	"visualeditor": "ВироишгариВизуалӣ",
+	"visualeditor-annotationbutton-bold-tooltip": "Ғафс",
+	"visualeditor-annotationbutton-code-tooltip": "Рамзи роёна",
+	"visualeditor-annotationbutton-italic-tooltip": "Каҷ",
+	"visualeditor-annotationbutton-language-tooltip": "Забон",
+	"visualeditor-annotationbutton-link-tooltip": "Пайванд",
+	"visualeditor-annotationbutton-strikethrough-tooltip": "Хаткашида",
+	"visualeditor-annotationbutton-subscript-tooltip": "Зернавис",
+	"visualeditor-annotationbutton-superscript-tooltip": "Болонавис",
+	"visualeditor-annotationbutton-underline-tooltip": "Зерхат",
+	"visualeditor-clearbutton-tooltip": "Покунии қолаббандӣ",
+	"visualeditor-clipboard-copy": "Рӯйнавискунӣ"
+}

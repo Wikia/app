@@ -1,7 +1,9 @@
-@import "skins/oasis/css/mixins/box-shadow";
-@import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/core/color";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/color";
 @import "extensions/wikia/TopLists/css/mixins";
+
+$color: #000; // was removed from /skins/shared/mixins/box-shadow
 
 $thumb-size-width: 130px;
 $thumb-size-height: 115px;
@@ -11,6 +13,7 @@ $thumb-border-left: 5px;
 $thumb-border-right: 6px;
 $details-fg-color: $color-button-text;
 $details-bg-color: $color-buttons;
+$color: #000;
 
 $color-inctive-button: mix($color-page, #000, 60%);
 @if lightness($color-page) < 50 {
@@ -297,11 +300,7 @@ $color-inctive-button: mix($color-page, #000, 60%);
 		margin-left: auto;
 		margin-right: auto;
 	}
-	
-	.Wikia-video-play-button {
-		margin: 5px;
-	}
-	
+
 	.title {
 		position: relative;
 		text-align: left;

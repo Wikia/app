@@ -233,6 +233,8 @@ $messages['es'] = array(
 $messages['fa'] = array(
 	'stafflog-filter-label' => 'پالایه',
 	'stafflog-filter-user' => 'کاربر:',
+	'stafflog-filter-type' => 'نوع:',
+	'stafflog-filter-apply' => 'اعمال پالایش',
 	'stafflog-filter-type-block' => 'بلوک‌ها',
 );
 
@@ -333,11 +335,36 @@ $messages['id'] = array(
 	'right-stafflog' => 'Dapat melihat stafflog',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'stafflog-filter-label' => 'ಶೋಧಕ',
+	'stafflog-filter-user' => 'ಬಳಕೆದಾರ:',
+	'stafflog-filter-type' => 'ನಮೂನೆ:',
+	'stafflog-filter-type-renameuser' => 'ಬಳಕೆದಾರ ಹೆಸರುಗಳು',
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'stafflog' => '스태프 로그',
+	'stafflog-filter-label' => '필터',
+	'stafflog-filter-user' => '사용자:',
+	'stafflog-filter-type' => '유형:',
+	'stafflog-filter-apply' => '필터 적용',
+	'stafflog-filter-type-block' => '차단',
+	'stafflog-filter-type-wikifactory' => '위키 통계',
+);
+
 /** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
  */
 $messages['lb'] = array(
 	'stafflog-desc' => 'Zentraliséiert Logge vun de Staff-Mataarbechter',
 	'stafflog-blockmsg' => '$1 $2 huet versicht de Staff-Mataarbechter $3 op der Wiki $4 ze spären: Grond: $5',
+	'stafflog-filter-user' => 'Benotzer:',
 );
 
 /** لوری (لوری)
@@ -702,18 +729,33 @@ $messages['vi'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
+ * @author Liuxinyu970226
  * @author StephDC
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'stafflog-desc' => '用于工作人员的集中登录',
+	'stafflog' => '工作人员日志',
 	'stafflog-blockmsg' => '$1 $2 试图封禁在维基系统 $4 上面的员工用户 $3，理由为 $5',
+	'stafflog-piggybackloginmsg' => '$1搭载——用户$2作为$3登录',
+	'stafflog-piggybacklogoutmsg' => '$1搭载——用户$2从账户$3退出',
 	'right-stafflog' => '可以查看stafflog',
 	'stafflog-wiki-status-change' => '$1 更改 $2 的状态到 $3。理由：$4',
 	'stafflog-filter-label' => '过滤器',
 	'stafflog-filter-user' => '用户：',
 	'stafflog-filter-type' => '类型：',
 	'stafflog-filter-apply' => '应用过滤器',
+	'stafflog-filter-type-block' => '封禁',
+	'stafflog-filter-type-piggyback' => '搭载',
 	'stafflog-filter-type-renameuser' => '重命名用户',
 	'stafflog-filter-type-wikifactory' => 'Wiki状态',
 	'action-stafflog' => '查看集中式的员工日志',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Liuxinyu970226
+ */
+$messages['zh-hant'] = array(
+	'stafflog-filter-label' => '篩選器',
+	'stafflog-filter-user' => '使用者：',
 );

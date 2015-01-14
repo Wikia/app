@@ -30,14 +30,9 @@ class VideoService extends WikiaModel {
 				$title = Title::newFromText( str_replace(array('[[',']]'),array('',''),$url), NS_FILE );
 			}
 			if ( !$title || !WikiaFileHelper::isFileTypeVideo($title) ) {
-				$transFileNS = wfMessage('nstab-image')->inContentLanguage()->text();
-
-				if ( ($pos = strpos($url, 'Video:')) !== false ) {
-					$title = Title::newFromText( substr($url,$pos), NS_FILE );
-				} elseif ( ($pos = strpos($url, 'File:')) !== false ) {
-					$title = Title::newFromText( substr($url,$pos), NS_FILE );
-				} elseif ( ($pos = strpos($url, $transFileNS.':')) !== false ) {
-					$title = Title::newFromText( substr($url,$pos), NS_FILE );
+				$file = $this->getVideoFileByUrl( $url );
+				if ( $file ) {
+					$title = $file->getTitle();
 				}
 			}
 			if ( $title && WikiaFileHelper::isFileTypeVideo($title) ) {
@@ -51,10 +46,10 @@ class VideoService extends WikiaModel {
 					return wfMessage( 'videohandler-non-premium' )->parse();
 				}
 				list($videoTitle, $videoPageId, $videoProvider) = $this->addVideoVideoHandlers( $url );
+				$file = wfFindFile( $videoTitle );
 			}
 
 			// Add a default description if available and one doesn't already exist
-			$file = wfFindFile( $videoTitle );
 			$vHelper = new VideoHandlerHelper();
 			$vHelper->addDefaultVideoDescription( $file );
 		} catch ( Exception $e ) {
@@ -111,6 +106,30 @@ class VideoService extends WikiaModel {
 		wfProfileOut( __METHOD__ );
 
 		return $result;
+	}
+
+	/**
+	 * Get Video file by given URL
+	 * @param string $url
+	 * @return File|null
+	 */
+	public function getVideoFileByUrl( $url ) {
+		global $wgContLang;
+
+		$file = null;
+
+		$nsFileTranslated = $wgContLang->getNsText( NS_FILE );
+
+		// added $nsFileTransladed to fix bugId:#48874
+		$pattern = '/(File:|' . $nsFileTranslated . ':)(.+)$/';
+		if ( preg_match( $pattern, $url, $matches ) ) {
+			$file = wfFindFile( $matches[2] );
+			if ( !$file && preg_match( $pattern, urldecode( $url ), $matches ) ) { // bugID: 26721
+				$file = wfFindFile( urldecode( $matches[2] ) );
+			}
+		}
+
+		return $file;
 	}
 
 }

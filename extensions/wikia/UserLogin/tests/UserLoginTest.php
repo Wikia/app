@@ -8,6 +8,7 @@
 		const TEST_USERID = 12345;
 		const TEST_EMAIL = 'devbox+test@wikia-inc.com';
 		const MAIN_PAGE_TITLE_TXT = 'Main_Page';
+		const LOGIN_TOKEN = '1234567890';
 
 		protected $skinOrg = null;
 
@@ -426,8 +427,7 @@
 		 */
 		public function testChangePassword($params, $mockWebRequestParams, $mockWgUserParams, $mockAuthParams, $mockUserParams, $mockHelperParams, $expResult, $expMsg) {
 			// setup
-			$params['loginToken'] = '1234567890';
-			$this->mockStaticMethod( 'UserLoginHelper', 'getLoginToken', $params['loginToken'] );
+			$this->mockStaticMethod( 'UserLoginHelper', 'getLoginToken', self::LOGIN_TOKEN );
 			$this->setUpMockObject( 'WebRequest', $mockWebRequestParams, false, 'wgRequest', $params );
 			$this->setUpMockObject( 'AuthPlugin', $mockAuthParams, false, 'wgAuth' );
 			$this->setUpMockObject( 'User', $mockWgUserParams, false, 'wgUser' );
@@ -455,6 +455,7 @@
 			// 1 do nothing -- GET
 			$params1 = array(
 				'username' => 'WikiaUser',
+				'loginToken' => self::LOGIN_TOKEN,
 			);
 			$mockWebRequest1 = array( 'wasPosted' => false );
 			$mockWgUserParams1 = null;
@@ -466,6 +467,7 @@
 			$params2 = array(
 				'username' => 'WikiaUser',
 				'fakeGet' => '1',
+				'loginToken' => self::LOGIN_TOKEN,
 			);
 			$mockWebRequest2 = array( 'wasPosted' => true, 'setVal' => null );
 
@@ -512,6 +514,7 @@
 				'username' => 'WikiaUser',
 				'newpassword' => 'testPasword',
 				'retype' => 'passwordTest',
+				'loginToken' => self::LOGIN_TOKEN,
 			);
 			$mockUserParams9 = array(
 				'load' => null,
@@ -525,6 +528,7 @@
 				'username' => 'WikiaUser',
 				'newpassword' => 'testPasword',
 				'retype' => 'testPasword',
+				'loginToken' => self::LOGIN_TOKEN,
 			);
 			$mockUserParams10 = array(
 				'load' => null,
@@ -603,7 +607,15 @@
 				'doRedirect' => null,
 			);
 
-			// 16 success -- temp user
+			// 16 error = token mismatch
+			$params16 = array(
+				'username' => 'WikiaUser',
+				'newpassword' => 'testPasword',
+				'retype' => 'testPasword',
+				'loginToken' => 'faked',
+			);
+			$expMsg16 = wfMessage( 'sessionfailure' )->escaped();
+
 
 
 			return array(
@@ -639,7 +651,8 @@
 				array( $params10, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockUserParams14, $mockHelperParams1, 'error', $expMsg14 ),
 				// 15 success -- real user
 				array( $params10, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockUserParams15, $mockHelperParams15, 'ok', $expMsg15 ),
-				// 16 success -- temp user
+				// 16 error = token mismatch
+				array( $params16, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockUserParams9, $mockHelperParams1, 'error', $expMsg16 ),
 
 			);
 		}

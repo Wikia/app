@@ -15,7 +15,7 @@ class JsonFormatTextNode extends JsonFormatNode {
 	 * @param string $text
 	 */
 	function __construct( $text ) {
-		$this->text = trim($text);
+		$this->text = $text;
 	}
 
 	/**

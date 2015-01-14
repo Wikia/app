@@ -79,7 +79,8 @@ class PlacesController extends WikiaController {
 			$this->setVal('markers', $this->prepareMarkers($aMarkers));
 
 			// generate modal caption
-			$this->setVal('caption', wfMsgExt('places-modal-go-to-special', array('parseinline', 'parsemag'), count($this->markers)));
+			$this->setVal('caption', wfMessage('places-modal-go-to-special',
+					count($this->markers))->parse());
 		}
 	}
 

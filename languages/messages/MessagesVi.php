@@ -64,6 +64,10 @@ $specialPageAliases = array(
 	'Booksources'               => array( 'Nguồn_sách' ),
 	'BrokenRedirects'           => array( 'Đổi_hướng_sai' ),
 	'Categories'                => array( 'Thể_loại' ),
+	// begin wikia change
+	// VOLDEV-94
+	'ChangeEmail'				=> array( 'Đổi_thư_điện_tử' ),
+	// end wikia change
 	'ChangePassword'            => array( 'Đổi_mật_khẩu' ),
 	'ComparePages'              => array( 'So_sánh_trang' ),
 	'Confirmemail'              => array( 'Xác_nhận_thư' ),
@@ -2576,6 +2580,7 @@ $1',
 'unblocked'                       => '[[User:$1|$1]] đã hết bị cấm',
 'unblocked-range'                 => '$1 đã được bỏ cấm',
 'unblocked-id'                    => '$1 đã hết bị cấm',
+'unblocked-ip'                    => '[[Special:Contributions/$1|$1]] đã được bỏ cấm.',
 'blocklist'                       => 'Những người dùng bị cấm',
 'ipblocklist'                     => 'Những người dùng bị cấm',
 'ipblocklist-legend'              => 'Tìm một thành viên bị cấm',

@@ -216,3 +216,18 @@ $messages['uk'] = array(
 $messages['vi'] = array(
 	'staffpowers-ipblock-abort' => 'Cấm Nhân viên Wikia, Hỗ trợ viên Wikia, hoặc thành viên trong nhóm tình nguyện viên chống phá hoại của chúng tôi (VSTF) là không thể. Xin vui lòng sử dụng [[Special:Contact|mẫu liên hệ này]] để báo cáo bất kỳ vấn đề hoặc sự cố về nhân viên của chúng tôi.',
 );
+
+/** Simplified Chinese (中文（简体）‎)
+ * @author Liuxinyu970226
+ */
+$messages['zh-hans'] = array(
+	'staffpowers-ipblock-abort' => '封禁Wikia工作人员、Wikia助理或我们志愿者破坏工作团队（VSTF）的成员是不可能的。请使用[[Special:Contact|联络表单]]汇报任何与我们工作人员相关的问题或建议。',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Ffaarr
+ */
+$messages['zh-hant'] = array(
+	'staffpowers-ipblock-abort' => '您無法封禁Wikia 工作人員、 Wikia Helper或VSTF成員
+，如有問題，請使用[[special:Contact|contact 表單]]向我們的工作人員報告。', # Fuzzy
+);

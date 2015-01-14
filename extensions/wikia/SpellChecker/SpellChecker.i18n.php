@@ -22,6 +22,7 @@ $messages['en'] = array(
  */
 $messages['qqq'] = array(
 	'spellchecker-info' => 'Special page description',
+	'spellchecker-info-provider' => '{{Identical|Provider}}',
 	'spellchecker-info-spellcheck-languages' => '{{Identical|Language}}',
 );
 
@@ -74,11 +75,12 @@ $messages['bg'] = array(
 );
 
 /** Breton (brezhoneg)
+ * @author Fohanno
  * @author Fulup
  */
 $messages['br'] = array(
 	'spellchecker-desc' => 'Pourchas a ra un etrefas gwiriañ ar reizhskrivañ evit ar vodulenn PHP enchant',
-	'enablespellchecker' => 'Gweredekaat ar reizhskriver', # Fuzzy
+	'enablespellchecker' => 'Gweredekaat ar reizhskriver er mod gwelet',
 	'spellchecker-info' => 'Titouroù war ar reizhskriver',
 	'spellchecker-info-languages' => 'Yezhoù hegerz ($1)',
 	'spellchecker-info-provider' => 'Pourvezer',
@@ -88,6 +90,22 @@ $messages['br'] = array(
 	'spellchecker-info-spellcheck-submit' => 'Gwiriañ ar skrid',
 	'spellchecker-info-spellcheck-is-correct' => 'Ar ger "$1" n\'eo ket skrivet mat anezhañ',
 	'spellchecker-info-spellcheck-suggestions' => 'Kinnigoù reizhskrivañ evit "$1" : $2',
+);
+
+/** Catalan (català)
+ * @author Unapersona
+ */
+$messages['ca'] = array(
+	'enablespellchecker' => 'Habilitar el corrector ortogràfic en mode visual.',
+	'spellchecker-info' => 'Informació del corrector ortogràfic',
+	'spellchecker-info-languages' => 'Idiomes disponibles ($1)',
+	'spellchecker-info-provider' => 'Proveïdor',
+	'spellchecker-info-dictionaries' => 'Diccionaris disponibles',
+	'spellchecker-info-spellcheck-text' => 'Text per ser comprovat',
+	'spellchecker-info-spellcheck-languages' => 'Idioma',
+	'spellchecker-info-spellcheck-submit' => "Revisa l'ortografia",
+	'spellchecker-info-spellcheck-is-correct' => 'La paraula "$1" està escrita correctament',
+	'spellchecker-info-spellcheck-suggestions' => 'Suggerències per "$1": $2',
 );
 
 /** Chechen (нохчийн)
@@ -199,6 +217,13 @@ $messages['fr'] = array(
 	'spellchecker-info-spellcheck-suggestions' => 'Suggestions d’orthographe pour « $1 » : $2',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'spellchecker-info-spellcheck-languages' => 'Taal',
+);
+
 /** Galician (galego)
  * @author Toliño
  */
@@ -259,15 +284,37 @@ $messages['inh'] = array(
 	'spellchecker-info-spellcheck-languages' => 'Мотт',
 );
 
+/** Japanese (日本語)
+ * @author Plover-Y
+ */
+$messages['ja'] = array(
+	'spellchecker-info-spellcheck-languages' => '言語',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'spellchecker-info-spellcheck-languages' => 'ಭಾಷೆ',
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'spellchecker-info-spellcheck-languages' => '언어',
+	'spellchecker-info-spellcheck-submit' => '맞춤법 검사',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
-	'spellchecker-info-languages' => 'De verfööschbaare Schprooche ($1)',
+	'spellchecker-info-languages' => 'De verfööschbaare Schprohche ($1)',
 	'spellchecker-info-provider' => 'Aanbeeder',
 	'spellchecker-info-dictionaries' => 'de verfööschbaare Wööterbööscher',
 	'spellchecker-info-spellcheck-text' => 'Dä Täx zom Prööve',
-	'spellchecker-info-spellcheck-languages' => 'Schprooch',
+	'spellchecker-info-spellcheck-languages' => 'Schprohch',
 	'spellchecker-info-spellcheck-submit' => 'de Ottojrafih prööve',
 	'spellchecker-info-spellcheck-is-correct' => 'Dat Woot „$1“ es reschtesch jeschrevve.',
 );

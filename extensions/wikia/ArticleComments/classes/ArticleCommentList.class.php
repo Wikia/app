@@ -600,7 +600,7 @@ class ArticleCommentList {
 	/**
 	 * Hook
 	 *
-	 * @param Article $article -- instance of Article class
+	 * @param WikiPage $wikiPage -- instance of WikiPage class
 	 * @param User    $user    -- current user
 	 * @param string  $reason  -- deleting reason
 	 * @param integer $error   -- error msg
@@ -610,10 +610,10 @@ class ArticleCommentList {
 	 *
 	 * @return true -- because it's a hook
 	 */
-	static public function articleDelete( &$article, &$user, &$reason, &$error ) {
+	static public function articleDelete( WikiPage &$wikiPage, &$user, &$reason, &$error ) {
 		wfProfileIn( __METHOD__ );
 
-		$title = $article->getTitle();
+		$title = $wikiPage->getTitle();
 
 		if ( empty( self::$mArticlesToDelete ) ) {
 			$listing = ArticleCommentList::newFromTitle($title);
@@ -657,7 +657,7 @@ class ArticleCommentList {
 	/**
 	 * Hook
 	 *
-	 * @param Article $article -- instance of Article class
+	 * @param WikiPage $wikiPage -- instance of Article class
 	 * @param User    $user    -- current user
 	 * @param string  $reason  -- deleting reason
 	 * @param integer $id      -- article id
@@ -667,11 +667,11 @@ class ArticleCommentList {
 	 *
 	 * @return boolean -- because it's a hook
 	 */
-	static public function articleDeleteComplete( &$article, &$user, $reason, $id ) {
+	static public function articleDeleteComplete( WikiPage &$wikiPage, &$user, $reason, $id ) {
 		global $wgOut, $wgRC2UDPEnabled, $wgMaxCommentsToDelete, $wgCityId, $wgUser, $wgEnableMultiDeleteExt;
 		wfProfileIn( __METHOD__ );
 
-		$title = $article->getTitle();
+		$title = $wikiPage->getTitle();
 
 		if (!MWNamespace::isTalk($title->getNamespace()) || !ArticleComment::isTitleComment($title)) {
 			if ( empty( self::$mArticlesToDelete ) ) {
@@ -745,8 +745,11 @@ class ArticleCommentList {
 						/* @var $oCommentTitle Title */
 						$data = $taskParams;
 						$data['page'] = $oCommentTitle->getFullText();
-						$thisTask = new MultiDeleteTask( $data );
-						$submit_id = $thisTask->submitForm();
+
+						$task = new \Wikia\Tasks\Tasks\MultiTask();
+						$task->call('delete', $data);
+						$submit_id = $task->queue();
+
 						Wikia::log( __METHOD__, 'deletecomment', "Added task ($submit_id) for {$data['page']} page" );
 					}
 				}

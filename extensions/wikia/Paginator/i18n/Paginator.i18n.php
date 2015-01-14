@@ -139,6 +139,14 @@ $messages['fr'] = array(
 	'paginator-back' => 'Précédent',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'paginator-next' => 'Folgjende',
+	'paginator-back' => 'Foarige',
+);
+
 /** Galician (galego)
  * @author Toliño
  */
@@ -176,6 +184,31 @@ $messages['ia'] = array(
 $messages['it'] = array(
 	'paginator-next' => 'Successivo',
 	'paginator-back' => 'Indietro',
+);
+
+/** Japanese (日本語)
+ * @author Plover-Y
+ */
+$messages['ja'] = array(
+	'paginator-next' => '次へ',
+	'paginator-back' => '戻る',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'paginator-next' => 'ನಂತರ',
+	'paginator-back' => 'ಹಿಂದಕ್ಕೆ',
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ * @author 아라
+ */
+$messages['ko'] = array(
+	'paginator-next' => '다음',
+	'paginator-back' => '뒤로',
 );
 
 /** Colognian (Ripoarisch)

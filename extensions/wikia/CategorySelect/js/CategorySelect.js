@@ -231,7 +231,7 @@
 					if ( options.popover ) {
 						$.extend( self.popover.options, {
 							content: $.msg( 'categoryselect-error-duplicate-category-name', existing.name ),
-							placement: 'right',
+							placement: 'top',
 							type: 'error'
 						});
 
@@ -302,7 +302,7 @@
 						uiFactory.init( [ 'modal' ] ).then( function( uiModal ) {
 							var categoryEditModalConfig = {
 								vars: {
-									id: 'CategorySelectEditModal',
+									id: 'categorySelectEditModal',
 									size: 'small',
 									content: Mustache.render( template.content, data ),
 									title: cached.messages.categoryEdit,
@@ -592,7 +592,7 @@
 
 			return template.content && template || $.Deferred(function( dfd ) {
 				Wikia.getMultiTypePackage({
-					mustache: 'extensions/wikia/CategorySelect/templates/CategorySelectController_' + name + '.mustache',
+					mustache: 'extensions/wikia/CategorySelect/templates/CategorySelect_' + name + '.mustache',
 					callback: function( pkg ) {
 						template.content = pkg.mustache[ 0 ];
 						dfd.resolve( template );
@@ -703,8 +703,7 @@
 				}
 			},
 			autocomplete: {
-				appendTo: '.CategorySelect',
-
+				appendTo: '.article-categories, .CategorySelect',
 				// Non-standard
 				limit: 6
 			},

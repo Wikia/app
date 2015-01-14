@@ -27,7 +27,7 @@ SCRIPT;
 
 			if (F::app()->wg->EnableDynamicYield
 				&& F::app()->wg->ShowAds
-				&& AdEngine2Controller::areAdsShowableOnPage()
+				&& AdEngine2Service::areAdsShowableOnPage()
 			) {
 				$code = self::$code;
 			}

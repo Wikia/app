@@ -1,32 +1,29 @@
 <section class=wkhome>
-	<h1><?= wfMsg('wikiahome-page-header-heading') ?></h1>
-	<h2><?= wfMsg('wikiahome-page-header-subheading') ?></h2>
-	<section class="wkhome-section wkhome-games">
-		<a href="<?= wfMsg('wikiahome-hubs-videogames-url') ?>" class=wkhome-hero>
-			<img class=wkhome-img src=<?= $hubImages[WikiFactoryHub::CATEGORY_ID_GAMING] ?>>
-			<h2><?= wfMsg('wikiahome-hubs-videogames-heading') ?></h2>
+	<h1><?= wfMessage('wikiahome-page-header-heading-mobile')->escaped() ?></h1>
+
+	<section class="wkhome-section">
+		<a href="//yearinfandom.wikia.com/wiki/Year_In_Fandom_Wiki" class=wkhome-hero>
+			<img class=wkhome-img src="<?= $wg->ExtensionsPath ?>/wikia/WikiaHomePage/images/YIF_HomePage_Mobile_R3.jpg">
+			<h2><?= wfMessage('wikiahome-page-section-yearinfandom')->escaped() ?></h2>
 		</a>
-		<p><?= wfMsg('wikiahome-hubs-videogames-creative') ?></p>
 	</section>
-	<section class="wkhome-section wkhome-entertainment">
-		<a href="<?= wfMsg('wikiahome-hubs-entertainment-url') ?>" class=wkhome-hero>
-			<img class=wkhome-img src=<?= $hubImages[WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT] ?>>
-			<h2><?= wfMsg('wikiahome-hubs-entertainment-heading') ?></h2>
-		</a>
-		<p><?= wfMsg('wikiahome-hubs-entertainment-creative') ?></p>
-	</section>
-	<section class="wkhome-section wkhome-lifestyle">
-		<a href="<?= wfMsg('wikiahome-hubs-lifestyle-url') ?>" class=wkhome-hero>
-			<img class=wkhome-img src=<?= $hubImages[WikiFactoryHub::CATEGORY_ID_LIFESTYLE] ?>>
-			<h2><?= wfMsg('wikiahome-hubs-lifestyle-heading') ?></h2>
-		</a>
-		<p><?= wfMsg('wikiahome-hubs-lifestyle-creative') ?></p>
-	</section>
-		<section class="wkhome-section wkhome-community  wkhome-community-<?= $lang ?>">
-		<a href="<?= wfMsg('wikiahome-community-column1-link') ?>" class=wkhome-hero>
+
+	<? foreach ( $hubsSlots as $hubsSlot ): ?>
+		<? if ( !empty($hubsSlot) ): ?>
+			<section class="wkhome-section <?= $hubsSlot['classname']?>">
+				<a href="<?= $hubsSlot['herourl'] ?>" class=wkhome-hero>
+					<img class=wkhome-img src=<?= $hubsSlot['heroimageurl'] ?>>
+					<h2><?= $hubsSlot['heading'] ?></h2>
+				</a>
+			</section>
+		<? endif ?>
+	<? endforeach ?>
+
+	<section class="wkhome-section wkhome-community  wkhome-community-<?= $lang ?>">
+		<a href="<?= wfMessage('wikiahome-community-column1-link')->escaped() ?>" class=wkhome-hero>
 			<img class=wkhome-img src="<?= $wg->BlankImgUrl ?>">
 		</a>
-		<p><?=wfMsg('wikiahome-community-column1-creative') ?></p>
+		<p><?=wfMessage('wikiahome-community-column1-creative')->escaped() ?></p>
 	</section>
 
 </section>

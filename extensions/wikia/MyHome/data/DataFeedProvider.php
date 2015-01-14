@@ -16,14 +16,15 @@ class DataFeedProvider {
 		if ($imageObj) {
 			$width = $imageObj->getWidth();
 			$height = $imageObj->getHeight();
+			$options = [ 'noLightbox' => true ];
 
 			if ($width > self::UPLOAD_THUMB_WIDTH || $height > self::UPLOAD_THUMB_WIDTH) {
 				$thumbObj = $imageObj->transform( array( 'width' => self::UPLOAD_THUMB_WIDTH, 'height' => self::UPLOAD_THUMB_WIDTH ) );
 				$width = $thumbObj->getWidth();
 				$height = $thumbObj->getHeight();
-				$html = $thumbObj->toHtml();
+				$html = $thumbObj->toHtml( $options );
 			} else {
-				$html = $imageObj->getUnscaledThumb()->toHtml();
+				$html = $imageObj->getUnscaledThumb()->toHtml( $options );
 			}
 
 			wfProfileOut(__METHOD__);
@@ -267,26 +268,41 @@ class DataFeedProvider {
 		wfProfileOut(__METHOD__);
 	}
 
-	private function filterHiddenCategories($categories) {
-		global $wgMemc;
+	/**
+	 * Get list of hidden categories (cached in memcached using WikiaDataAccess).
+	 *
+	 * Using WikiaDataAccess to limit number of processes regenerating cache and prevent delay when other
+	 * process is already regenerating data. The stalled data is returned in the latter case.
+	 *
+	 * @see https://wikia-inc.atlassian.net/browse/PLATFORM-615
+	 *
+	 * @return array
+	 */
+	private function getHiddenCategories() {
 		wfProfileIn(__METHOD__);
-
+		$fname = __METHOD__;
 		if (!is_array(self::$hiddenCategories)) {
-			$memcKey = wfMemcKey('hidden-categories');
-			self::$hiddenCategories = $wgMemc->get($memcKey);
-			if (!is_array(self::$hiddenCategories)) {
-				$dbr = wfGetDB(DB_SLAVE);
-				$res = $dbr->query("SELECT page_title FROM page JOIN page_props ON page_id=pp_page AND pp_propname='hiddencat';");
-				self::$hiddenCategories = array();
-				while($row = $dbr->fetchObject($res)) {
-					self::$hiddenCategories[] = $row->page_title;
-				}
-				$wgMemc->set($memcKey, self::$hiddenCategories, 60*60);
-			}
+			self::$hiddenCategories = WikiaDataAccess::cacheWithLock(wfMemcKey('hidden-categories-v2'),60*60,
+				function() use ($fname) {
+					$dbr = wfGetDB(DB_SLAVE);
+					$res = $dbr->query("SELECT page_title FROM page JOIN page_props ON page_id=pp_page AND pp_propname='hiddencat';",$fname);
+					$hiddenCategories = array();
+					while($row = $dbr->fetchObject($res)) {
+						$hiddenCategories[] = $row->page_title;
+					}
+					return $hiddenCategories;
+				});
 		}
-		$categories = array_values(array_diff($categories, self::$hiddenCategories));
-
 		wfProfileOut(__METHOD__);
+
+		return self::$hiddenCategories;
+	}
+
+	private function filterHiddenCategories($categories) {
+		wfProfileIn(__METHOD__);
+		$categories = array_values(array_diff($categories, $this->getHiddenCategories()));
+		wfProfileOut(__METHOD__);
+
 		return $categories;
 	}
 
@@ -325,7 +341,6 @@ class DataFeedProvider {
 		|| ($res['ns'] == NS_TEMPLATE && $this->proxyType == self::WL)
 		|| ($res['ns'] == NS_MEDIAWIKI && $this->proxyType == self::WL)
 		|| ($res['ns'] == NS_IMAGE && $this->proxyType == self::WL)
-		|| ($res['ns'] == NS_VIDEO && $this->proxyType == self::WL)
 		|| (defined('NS_TOPLIST') && $res['ns'] == NS_TOPLIST)) {
 			$item['title'] = $res['title'];
 			$item['url'] = $title->getLocalUrl();
@@ -344,13 +359,6 @@ class DataFeedProvider {
 				$item['articleComment'] = true;
 				$parts = ArticleComment::explode($res['title']);
 				$item['title'] = $parts['title'];
-			}
-
-		} elseif (defined('NS_RELATED_VIDEOS') && $res['ns'] == NS_RELATED_VIDEOS ) {
-			if ( class_exists( 'RelatedVideosService' ) ){
-				$oRVService = (new RelatedVideosService);
-				$item = $oRVService->editWikiActivityParams( $title, $res, $item );
-
 			}
 		}
 
@@ -422,9 +430,6 @@ class DataFeedProvider {
 		} elseif ( !empty($wgWallNS) && in_array(MWNamespace::getSubject($res['ns']), $wgWallNS) && $this->proxyType == self::AF ) {
 			$wh = (new WallHelper);
 			$item = $wh->wikiActivityFilterMessageWall($title, $res);
-		} elseif ( defined('NS_RELATED_VIDEOS') && $res['ns'] == NS_RELATED_VIDEOS ){
-			$oRVService = (new RelatedVideosService);
-			$item = $oRVService->createWikiActivityParams($title, $res, $item);
 		}
 
 		if (count($item) > 1) {

@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kening Aldgilles"
+		]
+	},
+	"visualeditor-dialog-action-goback": "Werom",
+	"visualeditor-formatdropdown-format-paragraph": "Paragraaf",
+	"visualeditor-historybutton-redo-tooltip": "Op 'e nij útfiere",
+	"visualeditor-historybutton-undo-tooltip": "Weromsette",
+	"visualeditor-toolbar-insert": "Ynfoegje"
+}

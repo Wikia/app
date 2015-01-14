@@ -33,8 +33,7 @@ var SpecialPromote = function () {
 	this.imageIndex = null;
 	this.status = {
 		title: false,
-		description: false,
-		mainPhoto: false
+		description: false
 	};
 
 	this.ADDITIONAL_IMAGES_LIMIT = 9;
@@ -176,20 +175,9 @@ SpecialPromote.prototype = {
 			$.msg( 'promote-error-more-characters-than-maximum', characterCount, maxChars )
 		);
 	},
-	checkMainImage: function () {
-		'use strict';
-
-		var image = $( '.large-photo img#curMainImageName' ).data( 'filename' );
-		if ( typeof image === 'undefined' ) {
-			this.status.mainPhoto = false;
-		} else {
-			this.status.mainPhoto = !(image === '' || image === null);
-		}
-	},
 	checkPublishButton: function () {
 		'use strict';
 
-		this.checkMainImage();
 		if ( this.validateData() ) {
 			this.enablePublish();
 		} else {

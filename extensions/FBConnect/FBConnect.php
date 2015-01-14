@@ -67,15 +67,8 @@ require_once $dir . 'config.php';
 require_once $dir . 'facebook-client/facebook.php';
 
 $wgExtensionFunctions[] = 'FBConnect::init';
-if(!empty($fbEnablePushToFacebook)){
-	// Need to include it explicitly instead of autoload since it has initialization code of its own.
-	// This should be done after FBConnect::init is added to wgExtensionFunctions so that FBConnect
-	// gets fully initialized first.
-	require_once $dir . 'FBConnectPushEvent.php';
-}
 
 $wgExtensionMessagesFiles['FBConnect'] =	$dir . 'FBConnect.i18n.php';
-$wgExtensionMessagesFiles['FBPushEvents'] = $dir . 'pushEvents/FBPushEvents.i18n.php';
 $wgExtensionMessagesFiles['FBConnectLanguage'] = $dir . 'FBConnectLanguage.i18n.php';
 $wgExtensionAliasesFiles['FBConnect'] =		$dir . 'FBConnect.alias.php';
 
@@ -101,12 +94,14 @@ JSMessages::registerPackage('FBConnect', array('fbconnect-logout-confirm'));
 define( 'APCOND_FB_INGROUP',   'fb*g' );
 define( 'APCOND_FB_ISOFFICER', 'fb*o' );
 define( 'APCOND_FB_ISADMIN',   'fb*a' );
+define( 'APCOND_FB_USER',      'fb*u' ); // Wikia change - Make fb-user a properly implicit group (CE-767)
 
 // Create a new group for Facebook users
 //$wgGroupPermissions['fb-user'] = $wgGroupPermissions['user'];
 //rt#68127 (dont give basic permissions to other groups, opens security holes)
 $wgGroupPermissions['fb-user'] = array('facebook-user'=>true);
 $wgImplicitGroups[] = 'fb-user';
+$wgAutopromote['fb-user'] = APCOND_FB_USER; // Wikia change - Make fb-user a properly implicit group (CE-767)
 
 // If we are configured to pull group info from Facebook, then create the group permissions
 if ($fbUserRightsFromGroup) {
@@ -127,7 +122,7 @@ $wgAjaxExportList[] = "SpecialConnect::getLoginButtonModal";
 $wgAjaxExportList[] = "SpecialConnect::checkCreateAccount";
 
 // These hooks need to be hooked up prior to init() because runhooks may be called for them before init is run.
-$fbHooksToAddImmediately = array( 'SpecialPage_initList' );
+$fbHooksToAddImmediately = array( 'SpecialPage_initList', 'AutopromoteCondition' );
 foreach( $fbHooksToAddImmediately as $hookName ) {
 	$wgHooks[$hookName][] = "FBConnectHooks::$hookName";
 }
@@ -166,6 +161,12 @@ class FBConnect {
 				$wgHooks[$hookName][] = "FBConnectHooks::$hookName";
 			}
 		}
+
+		/* Wikia change begin */
+		$wgHooks['SkinTemplatePageBeforeUserMsg'][] = 'NotificationsController::addFacebookConnectConfirmation';
+		$wgHooks['OasisSkinAssetGroups'][] = 'FBConnectHooks::onSkinAssetGroups';
+		$wgHooks['MonobookSkinAssetGroups'][] = 'FBConnectHooks::onSkinAssetGroups';
+		/* Wikia change end */
 
 		// Allow configurable over-riding of the onLogin handler.
 		global $fbOnLoginJsOverride;
@@ -294,6 +295,45 @@ class FBConnect {
 		}
 
 		return array('status' => "ok" );
+	}
+
+	/**
+	 * HACK: Copied from FacebookClient.class.php for backwards compatibility
+	 * Check if we should redirect back to the specified page by comparing it to this black list
+	 * @param Title|null $title
+	 * @return bool
+	 */
+	private static function isInvalidRedirectOnConnect( Title $title = null ) {
+		return (
+			!$title instanceof Title ||
+			$title->isSpecial( 'Userlogout' ) ||
+			$title->isSpecial( 'Signup' ) ||
+			$title->isSpecial( 'Connect' ) ||
+			$title->isSpecial( 'FacebookConnect' ) ||
+			$title->isSpecial( 'UserLogin' )
+		);
+	}
+
+	/**
+	 * HACK: Copied from FacebookClient.class.php for backwards compatibility
+	 * Get a fully resolved URL for redirecting after login/signup with facebook
+	 * @param $returnTo
+	 * @param $returnToQuery
+	 * @return string
+	 */
+	public static function getReturnToUrl( $returnTo, $returnToQuery ) {
+		$queryStr = '&fbconnected=1&cb=' . rand( 1, 10000 );
+		$titleObj = Title::newFromText( $returnTo );
+
+		if ( self::isInvalidRedirectOnConnect( $titleObj ) ) {
+			// Don't redirect if the location is no good.  Go to the main page instead
+			$titleObj = Title::newMainPage();
+		} else if ( $returnToQuery ) {
+			// Include the return to query string if its ok to redirect
+			$queryStr = urldecode( $returnToQuery ) . $queryStr;
+		}
+
+		return $titleObj->getFullURL( $queryStr );
 	}
 }
 		// probably need some logic to only display on user pages

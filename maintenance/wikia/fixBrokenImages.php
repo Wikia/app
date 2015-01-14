@@ -29,6 +29,8 @@ class FixBrokenImages extends Maintenance {
 	/* @var $repo LocalRepo */
 	private $repo;
 	private $isDryRun;
+	private $otherLocation;
+	private $foundMissing = [];
 
 	/* @var $dbr DatabaseMysql */
 	private $dbr;
@@ -39,6 +41,7 @@ class FixBrokenImages extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 		$this->addOption( 'dry-run', 'Don\'t perform any operations' );
+		$this->addOption( 'other-location', 'Check images in other location then MW images directory/DFS' );
 		$this->mDescription = 'This script tries to fix broken images';
 	}
 
@@ -83,6 +86,23 @@ class FixBrokenImages extends Maintenance {
 		}
 
 		return $titles;
+	}
+
+	private function checkOtherLocation( File $file ) {
+		global $wgUploadDirectory;
+		$srcPath = $this->otherLocation . '/' . $file->getUrlRel();
+
+		// check in other location
+		$candidates = [];
+		if ( file_exists( $srcPath ) ) {
+			$candidates[] = basename( $srcPath );
+			$orgSrcPath = $wgUploadDirectory . '/' . $file->getUrlRel();
+			if ( !$this->isDryRun ) {
+				copy( $srcPath, $orgSrcPath );
+			}
+			$this->foundMissing[] = $orgSrcPath;
+		}
+		return $candidates;
 	}
 
 	/**
@@ -157,6 +177,11 @@ class FixBrokenImages extends Maintenance {
 		// let's assume that given file was moved from A
 		// let's get all possible A's and try to find images for them
 		$candidates = $this->getCandidates( $file );
+		
+		if ( empty( $candidates ) && !empty( $this->otherLocation ) ) {
+			# check other location - maybe this file is there :)
+			$candidates = $this->checkOtherLocation( $file );
+		}
 
 		if ( !empty( $candidates ) ) {
 			$this->output( sprintf( "  %d candidate(s) found...\n", count( $candidates ) ) );
@@ -209,6 +234,7 @@ class FixBrokenImages extends Maintenance {
 		$wgUser = User::newFromName( self::USER );
 
 		$this->isDryRun = $this->hasOption( 'dry-run' );
+		$this->otherLocation = $this->getOption( 'other-location' );
 
 		$this->repo = RepoGroup::singleton()->getLocalRepo();
 		$this->dbr = $this->getDB( DB_SLAVE );
@@ -249,6 +275,11 @@ class FixBrokenImages extends Maintenance {
 		}
 
 		// summary
+		if ( !empty( $this->otherLocation ) ) {
+			$this->output( sprintf( "Restored %d images from second location \n", count( $this->foundMissing ) ) );
+			$this->output( "List of restored files: \n" );
+			$this->output( sprintf( "%s\n\n", implode( "\t\n", $this->foundMissing ) ) );
+		}
 		$this->output( sprintf( "Detected %d missing images (%.2f%% of %d images) and fixed %d images\n\n", $imagesMissing, ( $imagesMissing / $count ) * 100 , $count, $imagesFixed ) );
 	}
 }

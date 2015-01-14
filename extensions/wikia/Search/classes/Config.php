@@ -291,6 +291,12 @@ class Config
 	protected $combinedMediaSearchIsImageOnly = false;
 
 	/**
+	 * Specify minimal number of articles needed for wiki to appear in search results
+	 * @var int
+	 */
+	protected $xwikiArticleThreshold = 50;
+
+	/**
 	 * Constructor method
 	 * @param array $params
 	 */
@@ -349,9 +355,7 @@ class Config
 	 * @return integer
 	 */
 	public function getLength() {
-		return ( $this->hasMatch() && $this->getStart() === 0 )
-			? $this->limit - 1
-			: $this->limit;
+		return $this->limit - ( $this->getPage() <= 1 && $this->hasMatch()  ? 1 : 0 );
 	}
 
 
@@ -1045,7 +1049,19 @@ class Config
 	 */
 	public function getResultsFound() {
 		$results = $this->getResults();
-		return $results === null ? 0 : $results->getResultsFound();
+		if( $results ){
+			return $results->getResultsFound() + $this->mustAddMatchedRecords();
+		}else{
+			return 0;
+		}
+	}
+
+	/**
+	 * Compensation for manually added result
+	 * @return int
+	 */
+	public function mustAddMatchedRecords() {
+		return ( $this->getPage() > 1 && $this->hasMatch() ) ? 1 : 0;
 	}
 
 	/**
@@ -1305,5 +1321,19 @@ class Config
 	 */
 	public function getMainPage() {
 		return $this->mainPage;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getXwikiArticleThreshold() {
+		return $this->xwikiArticleThreshold;
+	}
+
+	/**
+	 * @param int $xwikiArticleThreshold
+	 */
+	public function setXwikiArticleThreshold( $xwikiArticleThreshold ) {
+		$this->xwikiArticleThreshold = $xwikiArticleThreshold;
 	}
 }

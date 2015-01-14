@@ -60,7 +60,7 @@ class UserLoginForm extends LoginForm {
 
 		// send confirmation email
 		$userLoginHelper = new UserLoginHelper();
-		$result = $userLoginHelper->sendConfirmationEmail( $this->mUsername, $u );
+		$result = $userLoginHelper->sendConfirmationEmail( $this->mUsername );
 		$this->mainLoginForm( $result['msg'], $result['result'] );
 
 		return $u;
@@ -197,23 +197,12 @@ class UserLoginForm extends LoginForm {
 	 * @return bool
 	 */
 	public function initValidationRegsPerEmail() {
-		global $wgAccountsPerEmail, $wgMemc;
-
 		$sEmail = $this->mEmail;
-		if ( isset( $wgAccountsPerEmail )
-			&& is_numeric( $wgAccountsPerEmail )
-			&& !UserLoginHooksHelper::isWikiaEmail( $sEmail )
-		) {
-			$key = wfSharedMemcKey( "UserLogin", "AccountsPerEmail", $sEmail );
-			$count = $wgMemc->get($key);
-			if ( $count !== false
-				&& (int)$count >= (int)$wgAccountsPerEmail
-			) {
-				$this->mainLoginForm( wfMessage( 'userlogin-error-userlogin-unable-info' )->escaped(), 'error', 'email' );
-				return false;
-			}
+		$result = UserLoginHelper::withinEmailRegLimit( $sEmail );
+		if (!$result) {
+			$this->mainLoginForm( wfMessage( 'userlogin-error-userlogin-unable-info' )->escaped(), 'error', 'email' );
 		}
-		return true;
+		return $result;
 	}
 
 	public function addNewAccountInternal() {

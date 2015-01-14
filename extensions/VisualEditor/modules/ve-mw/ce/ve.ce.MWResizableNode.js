@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable MWResizableNode class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -10,7 +10,7 @@
  *
  * @class
  * @abstract
- * @extends {ve.ce.ResizableNode}
+ * @extends ve.ce.ResizableNode
  *
  * @constructor
  * @param {jQuery} [$resizable=this.$element] Resizable DOM element

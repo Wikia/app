@@ -53,11 +53,21 @@ function wfHiscores_Magic( &$magicWords ) {
     return true;
 }
 
-#Skills: 0-Overall(Default), 1-Attack, 2-Defence, 3-Strength, 4-Constitution(formerly Hitpoints), 5-Ranged, 6-Prayer, 7-Magic, 8-Cooking, 9-Woodcutting, 10-Fletching, 11-Fishing,
-# 12-Firemaking, 13-Crafting, 14-Smithing, 15-Mining, 16-Herblore, 17-Agility, 18-Thieving, 19-Slayer, 20-Farming, 21-Runecrafting, 22-Hunter,
-# 23-Construction, 24-Summoning, 25-Dungeoneering, 26-Duel Tournament, 27-Bounty Hunter, 28-Bounty Hunter Rogue, 29-Fist of Guthix, 30-Mobilising Armies,
-# 31-B.A. Attacker, 32-B.A. Defender, 33-B.A. Collector, 34-B.A. Healer, 35-Castle Wars, 36-Conquest
-#Types: 0-Rank, 1-Level(Default), 2-Experience
+# Skills:
+#  0-Overall(Default), 1-Attack, 2-Defence, 3-Strength, 4-Constitution(formerly Hitpoints),
+#  5-Ranged, 6-Prayer, 7-Magic, 8-Cooking, 9-Woodcutting,
+#  10-Fletching, 11-Fishing, 12-Firemaking, 13-Crafting, 14-Smithing,
+#  15-Mining, 16-Herblore, 17-Agility, 18-Thieving, 19-Slayer,
+#  20-Farming, 21-Runecrafting, 22-Hunter, 23-Construction, 24-Summoning,
+#  25-Dungeoneering, 26-Divination,
+# Activities:
+#  27-Bounty Hunter, 28-Bounty Hunter Rogue, 29-Dominion Tower, 30-The Crucible, 31-Castle Wars Games,
+#  32-B.A. Attackers, 33-B.A. Defenders, 34-B.A. Collectors, 35-B.A. Healers, 36-Duel Tournament,
+#  37-Mobilising Armies, 38-Conquest, 39-Fist of Guthix, 40-GG: Resource Race, 41-GG: Athletics,
+#  42-WE2: Armadyl Lifetime Contribution, 43-WE2: Bandos Lifetime Contribution, 44-WE2: Armadyl PvP Kills, 45-WE2: Bandos PvP Kills,
+#  46-Heist Guard Level, 47-Heist Robber Level, 48-CFP: 5 Game Average
+# Types:
+#  0-Rank, 1-Level/Score(Default), 2-Experience
 
 # Function for the parser function
 function wfHiscores_Render( &$parser, $player = '', $skill = 0, $type = 1, $debug = false ) {

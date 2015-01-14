@@ -313,6 +313,7 @@ $wgAutoloadLocalClasses = array(
 	'ApiMain' => 'includes/api/ApiMain.php',
 	'ApiMove' => 'includes/api/ApiMove.php',
 	'ApiOpenSearch' => 'includes/api/ApiOpenSearch.php',
+	'ApiOptions' => 'includes/api/ApiOptions.php',
 	'ApiPageSet' => 'includes/api/ApiPageSet.php',
 	'ApiParamInfo' => 'includes/api/ApiParamInfo.php',
 	'ApiParse' => 'includes/api/ApiParse.php',
@@ -380,8 +381,6 @@ $wgAutoloadLocalClasses = array(
 	'FileDependency' => 'includes/cache/CacheDependency.php',
 	'GenderCache' => 'includes/cache/GenderCache.php',
 	'GlobalDependency' => 'includes/cache/CacheDependency.php',
-	'HTMLCacheUpdate' => 'includes/cache/HTMLCacheUpdate.php',
-	'HTMLCacheUpdateJob' => 'includes/cache/HTMLCacheUpdate.php',
 	'HTMLFileCache' => 'includes/cache/HTMLFileCache.php',
 	'LinkBatch' => 'includes/cache/LinkBatch.php',
 	'LinkCache' => 'includes/cache/LinkCache.php',
@@ -564,12 +563,7 @@ $wgAutoloadLocalClasses = array(
 
 	# includes/job
 	'DoubleRedirectJob' => 'includes/job/DoubleRedirectJob.php',
-	'EmaillingJob' => 'includes/job/EmaillingJob.php',
-	'EnotifNotifyJob' => 'includes/job/EnotifNotifyJob.php',
 	'Job' => 'includes/job/JobQueue.php',
-	'RefreshLinksJob' => 'includes/job/RefreshLinksJob.php',
-	'RefreshLinksJob2' => 'includes/job/RefreshLinksJob.php',
-	'UploadFromUrlJob' => 'includes/job/UploadFromUrlJob.php',
 
 	# includes/json
 	'FormatJson' => 'includes/json/FormatJson.php',
@@ -577,7 +571,7 @@ $wgAutoloadLocalClasses = array(
 	'Services_JSON_Error' => 'includes/json/Services_JSON.php',
 
 	# includes/libs
-	'CSSJanus' => 'includes/libs/CSSJanus.php',
+	'CSSJanus' => 'lib/composer/cssjanus/cssjanus/src/CSSJanus.php',
 	'CSSMin' => 'includes/libs/CSSMin.php',
 	'HttpStatus' => 'includes/libs/HttpStatus.php',
 	'IEContentAnalyzer' => 'includes/libs/IEContentAnalyzer.php',
@@ -730,6 +724,10 @@ $wgAutoloadLocalClasses = array(
 	'ResourceLoaderUserModule' => 'includes/resourceloader/ResourceLoaderUserModule.php',
 	'ResourceLoaderUserOptionsModule' => 'includes/resourceloader/ResourceLoaderUserOptionsModule.php',
 	'ResourceLoaderUserTokensModule' => 'includes/resourceloader/ResourceLoaderUserTokensModule.php',
+	'ResourceLoaderLanguageDataModule' =>
+		'includes/resourceloader/ResourceLoaderLanguageDataModule.php',
+	'ResourceLoaderLanguageNamesModule' =>
+		'includes/resourceloader/ResourceLoaderLanguageNamesModule.php',
 	'ResourceLoaderWikiModule' => 'includes/resourceloader/ResourceLoaderWikiModule.php',
 
 	# includes/revisiondelete
@@ -999,29 +997,7 @@ class AutoLoader {
 		} elseif ( isset( $wgAutoloadClasses[$className] ) ) {
 			$filename = $wgAutoloadClasses[$className];
 		} else {
-			// can't do lookup on whole array!
-			// better to fail and find cases which don't have
-			// correct case then pay performance penalty
 			return false;
-			# Try a different capitalisation
-			# The case can sometimes be wrong when unserializing PHP 4 objects
-			$filename = false;
-			$lowerClass = strtolower( $className );
-
-			foreach ( $wgAutoloadLocalClasses as $class2 => $file2 ) {
-				if ( strtolower( $class2 ) == $lowerClass ) {
-					$filename = $file2;
-				}
-			}
-
-			if ( !$filename ) {
-				if ( function_exists( 'wfDebug' ) ) {
-					wfDebug( "Class {$className} not found; skipped loading\n" );
-				}
-
-				# Give up
-				return false;
-			}
 		}
 
 		# Make an absolute path, this improves performance by avoiding some stat calls

@@ -2,7 +2,7 @@
 
 class JsonFormatService extends \WikiaService {
 
-	const SIMPLE_JSON_SCHEMA_VERSION = 1;
+	const SIMPLE_JSON_SCHEMA_VERSION = 3;
 	const SIMPLE_JSON_CACHE_EXPIRATION = 14400; //4 hour
 
 	private $htmlParser;
@@ -56,7 +56,19 @@ class JsonFormatService extends \WikiaService {
 		$cacheKey = wfMemcKey( "SimpleJson", $article->getPage()->getId(), self::SIMPLE_JSON_SCHEMA_VERSION );
 		$jsonSimple = $this->app->wg->memc->get( $cacheKey );
 		if ( $jsonSimple === false ) {
+
+			/**
+			 * Prevention from circular references, when parsing articles with tabs.
+			 *
+			 * E.g. when page contains tab, which is actually link to itself,
+			 * or if any tab contains tab, which referenced to given page.
+			 *
+			 * @see DivContainingHeadersVisitor::parseTabview
+			 */
+			\Wikia\JsonFormat\HtmlParser::markAsVisited( $article->getTitle()->getText() );
 			$jsonFormatRootNode = $this->getJsonFormatForArticle( $article );
+			// We have finished parsing of article, so we can clean array of visited articles
+			\Wikia\JsonFormat\HtmlParser::clearVisited();
 
 			$simplifier = new Wikia\JsonFormat\JsonFormatSimplifier;
 			$jsonSimple = $simplifier->simplify( $jsonFormatRootNode, $article->getTitle()->getText() );
@@ -66,5 +78,12 @@ class JsonFormatService extends \WikiaService {
 
 		$measurement->stop();
 		return $jsonSimple;
+	}
+
+	public function getArticleSnippet( $html ) {
+		$jsonSimple = $this->htmlParser->parse( $html );
+		$simplifier = new Wikia\JsonFormat\JsonFormatSimplifier();
+		$text = $simplifier->simplifyToSnippet( $jsonSimple );
+		return $text;
 	}
 }

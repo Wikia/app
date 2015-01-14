@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Class FastStats
+ *
+ * Get Licensed Video Swap (LVS) summary statistics for all wikis
+ */
 class FastStats {
 	public static function run( DatabaseMysql $db, $test = false, $verbose = false, $params ) {
 		$dbname = $params['dbname'];
@@ -67,6 +72,7 @@ class FastStats {
 			}
 		}
 
-		echo "$dbname,$local_count,$num_matching,$total_matches,$num_keeps,$num_swaps\n";
+		$url = WikiFactory::DBtoUrl( $dbname );
+		echo "$dbname,$url,$local_count,$num_matching,$total_matches,$num_keeps,$num_swaps\n";
 	}
 }

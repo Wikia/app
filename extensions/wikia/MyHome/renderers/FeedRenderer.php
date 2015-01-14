@@ -278,23 +278,6 @@ class FeedRenderer {
 	}
 
 	/**
-	 * Returns one row for related videos section
-	 *
-	 * @param $text
-	 * @return string
-	 *
-	 * @author Jakub Kurcek <jakub@wikia-inc.com>
-	 */
-	public static function formatRelatedVideosRow( $text ) {
-		$html = Xml::openElement('tr');
-		$html .= Xml::openElement('td');
-		$html .= $text;
-		$html .= Xml::closeElement('td');
-		$html .= Xml::closeElement('tr');
-		return $html;
-	}
-
-	/**
 	 * Returns rows with message wall comments
 	 *
 	 * @param Array $comments an array with comments
@@ -606,12 +589,7 @@ class FeedRenderer {
 			$html .= self::formatDetailsRow('move', Xml::element('a', array('href' => $row['to_url']), $row['to_title']), false);
 		}
 
-		// intro of new content
-		if ( defined('NS_RELATED_VIDEOS') && isset( $row['ns'] ) && $row['ns'] == NS_RELATED_VIDEOS && isset( $row['relatedVideosDescription'] ) ) {
-			$RelatedVideosService = new RelatedVideosService();
-			$html .= $RelatedVideosService->formatRelatedVideosRow($row['relatedVideosDescription']);
-			$row['comment'] = false;
-		} else if ( isset($row['intro']) ) {
+		if ( isset($row['intro']) ) {
 			// new blog post
 			if ( defined('NS_BLOG_ARTICLE') && $row['ns'] == NS_BLOG_ARTICLE ) {
 				$html .= self::formatDetailsRow('new-blog-post', self::formatIntro($row['intro']),false);

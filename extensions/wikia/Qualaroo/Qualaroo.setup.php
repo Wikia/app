@@ -17,6 +17,7 @@ $wgExtensionCredits['other'][] = array(
 $wgAutoloadClasses['QualarooHooks'] = $dir . 'QualarooHooks.class.php';
 
 // hooks
+$wgHooks['OasisSkinAssetGroupsBlocking'][] = 'QualarooHooks::onOasisSkinAssetGroupsBlocking';
 $wgHooks['OasisSkinAssetGroups'][] = 'QualarooHooks::onOasisSkinAssetGroups';
 $wgHooks['MakeGlobalVariablesScript'][] = 'QualarooHooks::onMakeGlobalVariablesScript';
 $wgHooks['WikiaAssetsPackages'][]  = 'QualarooHooks::onWikiaAssetsPackages';

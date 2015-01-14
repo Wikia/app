@@ -2,90 +2,106 @@
 
 class GlobalHeaderController extends WikiaController {
 	private $menuNodes;
+	const MAX_COUNT_OF_LEVEL1_NODES = 3;
+	const MAX_COUNT_OF_LEVEL2_NODES = 4;
+	const MAX_COUNT_OF_LEVEL3_NODES = 5;
 
 	public function init() {
+		wfProfileIn( __METHOD__ );
+
+		$this->menuNodes = $this->prepareMenuData( 'shared-Globalnavigation', self::MAX_COUNT_OF_LEVEL1_NODES );
+
+		wfProfileOut( __METHOD__ );
+	}
+
+	private function prepareMenuData( $messageName, $hubsCount ) {
 		global $wgCityId;
 
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
-		$category = WikiFactory::getCategory($wgCityId);
+		$category = WikiFactory::getCategory( $wgCityId );
 
-		$messageName = 'shared-Globalnavigation';
-		if ($category) {
+		if ( $category ) {
 			$messageNameWithCategory = $messageName . '-' . $category->cat_id;
-			if (!wfEmptyMsg($messageNameWithCategory, wfMsg($messageNameWithCategory))) {
+			if ( !wfEmptyMsg( $messageNameWithCategory, wfMsg( $messageNameWithCategory ) ) ) {
 				$messageName = $messageNameWithCategory;
 			}
 		}
 
-		$navigation = new NavigationModel(true /* useSharedMemcKey */);
+		$navigation = new NavigationModel( true /* useSharedMemcKey */ );
 		$menuNodes = $navigation->parse(
 			NavigationModel::TYPE_MESSAGE,
 			$messageName,
-			array(3, 4, 5),
+			[ $hubsCount, self::MAX_COUNT_OF_LEVEL2_NODES, self::MAX_COUNT_OF_LEVEL3_NODES ],
 			1800 /* 3 hours */
 		);
 
-		wfRunHooks('AfterGlobalHeader', array(&$menuNodes, $category, $messageName));
+		wfRunHooks( 'AfterGlobalHeader', [ &$menuNodes, $category, $messageName ] );
 
-		$this->menuNodes = $menuNodes;
+		wfProfileOut( __METHOD__ );
 
-		wfProfileOut(__METHOD__);
+		return $menuNodes;
 	}
 
 	public function index() {
+		Wikia::addAssetsToOutput( 'global_header_scss' );
 
 		$userLang = $this->wg->Lang->getCode();
 
 		// Link to Wikia home page
 		$centralUrl = 'http://www.wikia.com/Wikia';
-		if (!empty($this->wg->LangToCentralMap[$userLang])) {
-			$centralUrl = $this->wg->LangToCentralMap[$userLang];
+		if ( !empty( $this->wg->LangToCentralMap[ $userLang ] ) ) {
+			$centralUrl = $this->wg->LangToCentralMap[ $userLang ];
 		}
 
-		$createWikiUrl = 'http://www.wikia.com/Special:CreateNewWiki';
-		if ($userLang != 'en') {
+		$createWikiUrl = GlobalTitle::newFromText(
+			'CreateNewWiki',
+			NS_SPECIAL,
+			WikiService::WIKIAGLOBAL_CITY_ID
+		)->getFullURL();
+
+		if ( $userLang != 'en' ) {
 			$createWikiUrl .= '?uselang=' . $userLang;
 		}
 
-		$this->response->setVal('centralUrl', $centralUrl);
-		$this->response->setVal('createWikiUrl', $createWikiUrl);
-		$this->response->setVal('menuNodes', $this->menuNodes);
-		$this->response->setVal('menuNodesHash', !empty($this->menuNodes[0]) ? $this->menuNodes[0]['hash'] : null);
-		$this->response->setVal('topNavMenuItems', !empty($this->menuNodes[0]) ? $this->menuNodes[0]['children'] : null);
+		$this->response->setVal( 'centralUrl', $centralUrl );
+		$this->response->setVal( 'createWikiUrl', $createWikiUrl );
+		$this->response->setVal( 'menuNodes', $this->menuNodes );
+		$this->response->setVal( 'menuNodesHash', !empty( $this->menuNodes[ 0 ] ) ? $this->menuNodes[ 0 ][ 'hash' ] : null );
+		$this->response->setVal( 'topNavMenuItems', !empty( $this->menuNodes[ 0 ] ) ? $this->menuNodes[ 0 ][ 'children' ] : null );
 		$isGameStarLogoEnabled = $this->isGameStarLogoEnabled();
-		$this->response->setVal('isGameStarLogoEnabled', $isGameStarLogoEnabled);
-		if($isGameStarLogoEnabled) {
-			$this->response->addAsset('skins/oasis/css/modules/GameStarLogo.scss');
+		$this->response->setVal( 'isGameStarLogoEnabled', $isGameStarLogoEnabled );
+		if ( $isGameStarLogoEnabled ) {
+			$this->response->addAsset( 'skins/oasis/css/modules/GameStarLogo.scss' );
 		}
 		$this->response->setVal( 'altMessage', $this->wg->CityId % 5 == 1 ? '-alt' : '' );
 		$this->response->setVal( 'displayHeader', !$this->wg->HideNavigationHeaders );
 	}
 
 	public function menuItems() {
-		$index = $this->request->getVal('index', 0);
-		$this->response->setVal('menuNodes', $this->menuNodes);
-		$this->response->setVal('subNavMenuItems', $this->menuNodes[$index]['children']);
+		$index = $this->request->getVal( 'index', 0 );
+		$this->response->setVal( 'menuNodes', $this->menuNodes );
+		$this->response->setVal( 'subNavMenuItems', $this->menuNodes[ $index ][ 'children' ] );
 	}
 
 	public function menuItemsAll() {
-		$this->response->setFormat('json');
+		$this->response->setFormat( 'json' );
 
-		$indexes = $this->request->getVal('indexes', array());
+		$indexes = $this->request->getVal( 'indexes', array() );
 
 		$menuItems = array();
-		foreach($indexes as $index) {
-			$menuItems[$index] = $this->app->renderView('GlobalHeader', 'menuItems', array('index' => $index));
+		foreach ( $indexes as $index ) {
+			$menuItems[ $index ] = $this->app->renderView( 'GlobalHeader', 'menuItems', array( 'index' => $index ) );
 		}
 
-		$this->response->setData($menuItems);
+		$this->response->setData( $menuItems );
 
 		// Cache for 1 day
-		$this->response->setCacheValidity(WikiaResponse::CACHE_STANDARD);
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 	}
 
 	protected function isGameStarLogoEnabled() {
-		if($this->wg->contLang->getCode() == 'de') {
+		if ( $this->wg->contLang->getCode() == 'de' ) {
 			$result = true;
 		} else {
 			$result = false;

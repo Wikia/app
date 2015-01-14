@@ -49,6 +49,7 @@ $messages['en'] = array(
 	'videos-error-while-loading' => 'Error occurred while loading data. Please recheck your connection and refresh the page.',
 	'videos-error-admin-only' => 'Sorry, only admins of this wiki are permitted to add videos',
 	'videos-initial-upload-edit-summary' => 'created video',
+	'videos-update-edit-summary' => 'updated video',
 );
 
 /** Message documentation (Message documentation) */
@@ -81,7 +82,8 @@ $messages['qqq'] = array(
 	'videos-error-unknown' => 'Error message when an unknown error occurred',
 	'videos-error-old-type-video' => 'Error message when user tries to add a video of a type that is no longer supported.',
 	'videos-error-while-loading' => 'Error message when failing to add a video.',
-	'videos-error-admin-only' => 'Error message that shows up when the wgAllVideosAdminOnly is set to true and a non-admin attempts to upload a video'
+	'videos-error-admin-only' => 'Error message that shows up when the wgAllVideosAdminOnly is set to true and a non-admin attempts to upload a video',
+	'videos-update-edit-summary' => 'Edit summary used when updating a video in an article'
 );
 
 /** Afrikaans (Afrikaans)
@@ -304,6 +306,7 @@ $messages['hu'] = array(
 	'videos-add-video-label-name' => 'Írd be a teljes URL-címet valamely támogatott webhelyről.',
 	'videos-add-video-ok' => 'Hozzáadás',
 	'videos-add-video-label-all' => 'Összes megtekintése',
+	'videos-update-edit-summary' => 'Videó frissítve',
 );
 
 /** Armenian (Հայերեն)

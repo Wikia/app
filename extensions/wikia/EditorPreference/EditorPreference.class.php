@@ -6,7 +6,6 @@
  */
 
 class EditorPreference {
-	const OPTION_EDITOR_DEFAULT = 0;
 	const OPTION_EDITOR_SOURCE = 1;
 	const OPTION_EDITOR_VISUAL = 2;
 	const OPTION_EDITOR_CK = 3;
@@ -20,17 +19,20 @@ class EditorPreference {
 	 * @return bool
 	 */
 	public static function onEditingPreferencesBefore( $user, &$preferences ) {
+		global $wgVisualEditorNeverPrimary;
 		$preferences[PREFERENCE_EDITOR] = array(
 			'type' => 'select',
 			'label-message' => 'editor-preference',
 			'section' => 'editing/editing-experience',
 			'options' => array(
-				wfMessage( 'option-default-editor' )->text() => self::OPTION_EDITOR_DEFAULT,
 				wfMessage( 'option-visual-editor' )->text() => self::OPTION_EDITOR_VISUAL,
 				wfMessage( 'option-ck-editor' )->text() => self::OPTION_EDITOR_CK,
 				wfMessage( 'option-source-editor' )->text() => self::OPTION_EDITOR_SOURCE,
 			),
 		);
+		if ( $wgVisualEditorNeverPrimary ) {
+			$preferences[PREFERENCE_EDITOR]['help-message'] = 'editor-preference-help';
+		}
 		return true;
 	}
 
@@ -43,14 +45,14 @@ class EditorPreference {
 	 * @return bool true
 	 */
 	public static function onSkinTemplateNavigation( &$skin, &$links ) {
-		global $wgUser, $wgEnableRTEExt;
+		global $wgUser;
 
 		if ( !isset( $links['views']['edit'] ) || !self::shouldShowVisualEditorLink( $skin ) ) {
 			// There's no edit link OR the Visual Editor cannot be used, so there's no change to make
 			return true;
 		}
 
-		$primaryEditor = self::getPrimaryEditor();
+		$isVisualEditorPrimaryEditor = self::isVisualEditorPrimary();
 		$title = $skin->getRelevantTitle();
 		// Rebuild the 'views' links in this array
 		$newViews = array();
@@ -58,44 +60,45 @@ class EditorPreference {
 		foreach ( $links['views'] as $action => $data ) {
 			if ( $action === 'edit' ) {
 				$pageExists = $title->exists() || $title->getDefaultMessageText() !== false;
-				$veParams = $editParams = $skin->editUrlOptions();
 
-				// Message keys for VE tab and regular Edit tab
-				if ( $primaryEditor === self::OPTION_EDITOR_VISUAL ) {
+				// Message keys for VisualEditor tab and regular Edit tab
+				if ( $isVisualEditorPrimaryEditor ) {
 					if ( $pageExists ) {
-						$veMessageKey = 'edit';
+						$visualEditorMessageKey = 'edit';
 					} else {
-						$veMessageKey = 'create';
+						$visualEditorMessageKey = 'create';
 					}
 
-					if ( !$wgEnableRTEExt ) {
-						$editMessageKey = 'visualeditor-ca-editsource';
-					} else {
-						$editMessageKey = 'visualeditor-ca-classiceditor';
-					}
+					$editMessageKey = self::getDropdownEditMessageKey();
 				} else {
-					$veMessageKey = 'visualeditor-ca-ve-edit';
+					$visualEditorMessageKey = 'visualeditor-ca-ve-edit';
 					$editMessageKey = $pageExists ? 'edit' : 'create';
 				}
 
 				// Create the Visual Editor tab
-				unset( $veParams['action'] );
-				$veParams['veaction'] = 'edit';
-				$veTab = array(
-					'href' => $title->getLocalURL( $veParams ),
-					'text' => wfMessage( $veMessageKey )->setContext( $skin->getContext() )->text(),
+				$visualEditorTab = array(
+					'href' => self::getVisualEditorEditUrl(),
+					'text' => wfMessage( $visualEditorMessageKey )->setContext( $skin->getContext() )->text(),
 					'class' => '',
 					// Visual Editor is main Edit tab if...
-					'main' => $primaryEditor === self::OPTION_EDITOR_VISUAL
+					'main' => $isVisualEditorPrimaryEditor
 				);
 
 				// Alter the edit tab
 				$editTab = $data;
 				$editTab['text'] = wfMessage( $editMessageKey )->setContext( $skin->getContext() )->text();
-				$editTab['main'] = !$veTab['main'];
+				$editTab['main'] = !$visualEditorTab['main'];
+
+				if ( $isVisualEditorPrimaryEditor ) {
+					$visualEditorTab['accesskey'] = 'e';
+					$editTab['accesskey'] = 's';
+				} else {
+					$visualEditorTab['accesskey'] = 's';
+					$editTab['accesskey'] = 'e';
+				}
 
 				$newViews['edit'] = $editTab;
-				$newViews['ve-edit'] = $veTab;
+				$newViews['ve-edit'] = $visualEditorTab;
 			} else {
 				// Just pass through
 				$newViews[$action] = $data;
@@ -113,7 +116,9 @@ class EditorPreference {
 	 * @return bool true
 	 */
 	public static function onMakeGlobalVariablesScript( array &$vars, OutputPage $out ) {
-		$vars['wgVisualEditorPreferred'] = self::getPrimaryEditor() === self::OPTION_EDITOR_VISUAL;
+		global $wgUser, $wgTitle;
+		$vars['wgVisualEditorPreferred'] = ( self::getPrimaryEditor() === self::OPTION_EDITOR_VISUAL &&
+			!$wgUser->isBlockedFrom( $wgTitle ) );
 		return true;
 	}
 
@@ -123,10 +128,10 @@ class EditorPreference {
 	 * @return integer The editor option value
 	 */
 	public static function getPrimaryEditor() {
-		global $wgUser, $wgEnableVisualEditorUI, $wgEnableRTEExt, $wgForceVisualEditor;
+		global $wgUser, $wgEnableVisualEditorUI, $wgEnableRTEExt, $wgVisualEditorNeverPrimary;
 		$selectedOption = (int)$wgUser->getOption( PREFERENCE_EDITOR );
 
-		if ( $selectedOption === self::OPTION_EDITOR_VISUAL ) {
+		if ( !$wgVisualEditorNeverPrimary && $selectedOption === self::OPTION_EDITOR_VISUAL ) {
 			return self::OPTION_EDITOR_VISUAL;
 		}
 		elseif ( $selectedOption === self::OPTION_EDITOR_SOURCE ) {
@@ -137,17 +142,26 @@ class EditorPreference {
 		}
 		else {
 			// Default option based on other settings
-			if ( $wgEnableVisualEditorUI || ( $wgUser->isAnon() && $wgForceVisualEditor ) ) {
+			if ( !$wgVisualEditorNeverPrimary && ( $wgEnableVisualEditorUI || $wgUser->isAnon() ) ) {
 				return self::OPTION_EDITOR_VISUAL;
 			}
 			elseif ( !$wgEnableVisualEditorUI && $wgEnableRTEExt ) {
 				return self::OPTION_EDITOR_CK;
 			}
 			else {
-				// Both VE and CK editor are disabled
+				// Both VisualEditor and CK editor are disabled
 				return self::OPTION_EDITOR_SOURCE;
 			}
 		}
+	}
+
+	/**
+	 * Checks whether VisualEditor is the primary editor.
+	 *
+	 * @return boolean True if VisualEditor is primary and false otherwise
+	 */
+	private static function isVisualEditorPrimary() {
+		return self::getPrimaryEditor() === self::OPTION_EDITOR_VISUAL;
 	}
 
 	/**
@@ -157,8 +171,9 @@ class EditorPreference {
 	 * @return boolean
 	 */
 	public static function shouldShowVisualEditorLink( $skin ) {
-		global $wgTitle, $wgEnableVisualEditorExt, $wgVisualEditorNamespaces;
-		return $skin->getSkinName() === 'oasis' &&
+		global $wgTitle, $wgEnableVisualEditorExt, $wgVisualEditorNamespaces, $wgVisualEditorSupportedSkins, $wgUser;
+		return in_array( $skin->getSkinName(), $wgVisualEditorSupportedSkins ) &&
+			!$wgUser->isBlockedFrom( $wgTitle ) &&
 			!$wgTitle->isRedirect() &&
 			$wgEnableVisualEditorExt &&
 			( is_array( $wgVisualEditorNamespaces ) ?
@@ -166,20 +181,82 @@ class EditorPreference {
 	}
 
 	/**
-	 * Set the editor preference for newly-registered users.
+	 * Add a VisualEditor edit link to the user profile action dropdown.
 	 *
-	 * @param User $user The current user
+	 * @param array $actionButtonArray
+	 * @param integer $namespace
+	 * @param boolean $canRename
+	 * @param boolean $canProtect
+	 * @param boolean $canDelete
+	 * @param boolean $isUserPageOwner
 	 * @return boolean
 	 */
-	public static function onAddNewAccount( User $user ) {
-		global $wgForceVisualEditor;
-		if ( $wgForceVisualEditor ) {
-			// Force new users to set VE as preference
-			$user->setOption( PREFERENCE_EDITOR, self::OPTION_EDITOR_VISUAL );
-			$user->saveSettings();
+	public static function onUserProfilePageAfterGetActionButtonData( &$actionButtonArray, $namespace, $canRename,
+		$canProtect, $canDelete, $isUserPageOwner ) {
+		global $wgTitle;
+		// If namespace is not User namespace
+		if ( $namespace !== NS_USER ) {
+			return true;
 		}
-		// If the editor preference is not set here, the default preference
-		// is set in CommonSettings.
+
+		if ( $actionButtonArray['name'] === 'editprofile' ) {
+			if ( self::isVisualEditorPrimary() ) {
+				// Switch main edit button to use VisualEditor
+				$actionButtonArray['action']['href'] = self::getVisualEditorEditUrl();
+				$actionButtonArray['action']['id'] = 'ca-ve-edit';
+
+				// Append link to action dropdown for editing in CK or source editor
+				$actionButtonArray['dropdown'] = array( 'edit' => array(
+					'href' => self::getEditUrl(),
+					'text' => wfMessage( self::getDropdownEditMessageKey() )->text(),
+					'id'   => 'ca-edit'
+				) ) + $actionButtonArray['dropdown'];
+
+			} else {
+				// Prepend a VisualEditor link to the action dropdown
+				$actionButtonArray['dropdown'] = array( 've-edit' => array(
+					'href' => self::getVisualEditorEditUrl(),
+					'text' => wfMessage( 'visualeditor-ca-ve-edit' )->text(),
+					'id'   => 'ca-ve-edit'
+				) ) + $actionButtonArray['dropdown'];
+
+				$actionButtonArray['action']['id'] = 'ca-edit';
+			}
+		}
+
 		return true;
+	}
+
+	/**
+	 * Get the message key for a non-VisualEditor edit link in the actions dropdown.
+	 *
+	 * @return string
+	 */
+	private static function getDropdownEditMessageKey() {
+		global $wgEnableRTEExt;
+		return empty( $wgEnableRTEExt ) ? 'visualeditor-ca-editsource' : 'visualeditor-ca-classiceditor';
+	}
+
+	/**
+	 * Get the current page's edit URL for CK or source editor.
+	 *
+	 * @return string
+	 */
+	private static function getEditUrl() {
+		global $wgTitle, $wgUser;
+		return $wgTitle->getLocalURL( $wgUser->getSkin()->editUrlOptions() );
+	}
+
+	/**
+	 * Get the current page's edit URL for VisualEditor.
+	 *
+	 * @return string
+	 */
+	private static function getVisualEditorEditUrl() {
+		global $wgTitle, $wgUser;
+		$params = $wgUser->getSkin()->editUrlOptions();
+		unset( $params['action'] );
+		$params['veaction'] = 'edit';
+		return $wgTitle->getLocalURL( $params );
 	}
 }

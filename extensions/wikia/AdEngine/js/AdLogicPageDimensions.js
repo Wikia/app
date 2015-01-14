@@ -1,16 +1,22 @@
 /*jshint camelcase:false, maxdepth:4*/
-/*exported AdLogicPageDimensions*/
-var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
+/*global define*/
+define('ext.wikia.adEngine.adLogicPageDimensions', [
+	'wikia.window',
+	'wikia.document',
+	'wikia.log',
+	'ext.wikia.adEngine.slotTweaker',
+	'ext.wikia.adEngine.adHelper'
+], function (win, doc, log, slotTweaker, adHelper) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adengine.logic.pagedimensions',
+	var logGroup = 'ext.wikia.adEngine.adLogicPageDimensions',
 		initCalled = false,
 		wrappedAds = {},
 
 		/**
 		 * Slots based on page length
 		 */
-		preFootersThreshold = 2400,
+		preFootersThreshold = 1500,
 		slotsOnlyOnLongPages = {
 			LEFT_SKYSCRAPER_2: 2400,
 			LEFT_SKYSCRAPER_3: 4000,
@@ -25,7 +31,6 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 		slotsOnlyWithRail = {
 			LEFT_SKYSCRAPER_3: true
 		},
-		rightRailPresent = !!document.getElementById('WikiaRail'),
 
 		/**
 		 * Slots based on screen width
@@ -34,11 +39,13 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 		 * @see skins/oasis/css/core/responsive-background.scss
 		 */
 		mediaQueriesToCheck = {
+			twoColumns: 'screen and (min-width: 1024px)',
 			oneColumn: 'screen and (max-width: 1023px)',
 			noTopButton: 'screen and (max-width: 1030px)',
 			noSkins: 'screen and (max-width: 1260px)'
 		},
 		slotsToHideOnMediaQuery = {
+			TOP_INCONTENT_BOXAD: 'twoColumns',
 			TOP_BUTTON_WIDE: 'noTopButton',
 			'TOP_BUTTON_WIDE.force': 'noTopButton',
 			TOP_RIGHT_BOXAD: 'oneColumn',
@@ -51,18 +58,22 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 		mediaQueriesMet,
 		matchMedia;
 
+	function isRightRailPresent() {
+		return !!doc.getElementById('WikiaRail');
+	}
+
 	function matchMediaMoz(query) {
-		return window.matchMedia(query).matches;
+		return win.matchMedia(query).matches;
 	}
 
 	function matchMediaIe(query) {
-		return window.styleMedia.matchMedium(query);
+		return win.styleMedia.matchMedium(query);
 	}
 
 	// Chose proper implementation of machMedia
-	matchMedia = window.matchMedia && matchMediaMoz;
-	matchMedia = matchMedia || (window.styleMedia && window.styleMedia.matchMedium && matchMediaIe);
-	matchMedia = matchMedia || (window.media && window.media.matchMedium);
+	matchMedia = win.matchMedia && matchMediaMoz;
+	matchMedia = matchMedia || (win.styleMedia && win.styleMedia.matchMedium && matchMediaIe);
+	matchMedia = matchMedia || (win.media && win.media.matchMedium);
 
 	if (!matchMedia) {
 		log('No working matchMedia implementation found', 'user', logGroup);
@@ -79,11 +90,6 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 			wideEnough = false,
 			conflictingMediaQuery;
 
-		if (slotsOnlyWithRail[slotname]) {
-			if (!rightRailPresent) {
-				return false;
-			}
-		}
 		if (pageHeight) {
 			longEnough = !slotsOnlyOnLongPages[slotname] || pageHeight > slotsOnlyOnLongPages[slotname];
 		}
@@ -96,7 +102,17 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 			}
 		}
 
-		return longEnough && wideEnough;
+		if (!longEnough || !wideEnough) {
+			return false;
+		}
+
+		if (slotsOnlyWithRail[slotname]) {
+			if (!isRightRailPresent()) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/**
@@ -124,13 +140,13 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 			if (ad.state === 'none') {
 				log(['Hiding empty slot ' + ad.slotname, ad], 'info', logGroup);
 
-				slotTweaker.hide(ad.slotname, true);
+				slotTweaker.hide(ad.slotname);
 				ad.state = 'ready';
 
 			} else if (ad.state === 'shown') {
 				log(['Hiding slot ' + ad.slotname, ad], 'info', logGroup);
 
-				slotTweaker.hide(ad.slotname, true);
+				slotTweaker.hide(ad.slotname);
 				ad.state = 'hidden';
 			}
 		}
@@ -144,9 +160,10 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 		var slotname,
 			mediaQueryIndex;
 
-		pageHeight = document.documentElement.scrollHeight;
+		pageHeight = doc.documentElement.scrollHeight;
 
-		if (window.wgOasisResponsive) {
+		// All ads should be shown on non-responsive oasis and venus
+		if (win.wgOasisResponsive && win.skin !== 'venus') {
 			if (matchMedia) {
 				mediaQueriesMet = {};
 				for (mediaQueryIndex in mediaQueriesToCheck) {
@@ -171,17 +188,21 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 		}
 	}
 
+
 	/**
 	 * If supported, bind to resize event (and fire it once)
 	 */
 	function init() {
 		log('init', 'debug', logGroup);
-		if (window.addEventListener) {
+		if (win.addEventListener) {
 			onResize();
-			window.addEventListener('resize', onResize);
+			win.addEventListener('orientationchange', adHelper.throttle(onResize, 100));
+			win.addEventListener('resize', adHelper.throttle(onResize, 100));
 		} else {
 			log('No support for addEventListener. No dimension-dependent ads will be shown', 'error', logGroup);
 		}
+
+		initCalled = true;
 	}
 
 	/**
@@ -207,18 +228,6 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 	}
 
 	/**
-	 * Check if page should have prefooters (note it can change later)
-	 *
-	 * @returns {boolean}
-	 */
-	function hasPreFooters() {
-		log('hasPreFooters', 'debug', logGroup);
-		pageHeight = document.documentElement.scrollHeight;
-		log(['hasPreFooters', {pageHeight: pageHeight, preFootersThreshold: preFootersThreshold}], 'debug', logGroup);
-		return pageHeight > preFootersThreshold;
-	}
-
-	/**
 	 * Check if window size logic is applicable to the given slot
 	 *
 	 * @param slotname
@@ -236,7 +245,6 @@ var AdLogicPageDimensions = function (window, document, log, slotTweaker) {
 
 	return {
 		isApplicable: isApplicable,
-		addSlot: add,
-		hasPreFooters: hasPreFooters
+		addSlot: add
 	};
-};
+});

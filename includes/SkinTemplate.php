@@ -201,7 +201,10 @@ class SkinTemplate extends Skin {
 			$tpl->setRef( 'xhtmldefaultnamespace', $wgXhtmlDefaultNamespace );
 			$tpl->set( 'xhtmlnamespaces', $wgXhtmlNamespaces );
 			$tpl->set( 'html5version', $wgHtml5Version );
-			$tpl->set( 'headlinks', $out->getHeadLinks() );
+			// For Oasis getHeadlinks is called in OasisController.class.php
+			if ( !F::app()->checkSkin( 'oasis' ) ) {
+				$tpl->set( 'headlinks', $out->getHeadLinks() );
+			}
 			$tpl->set( 'csslinks', $out->buildCssLinks() );
 			$tpl->set( 'pageclass', $this->getPageClasses( $title ) );
 			$tpl->set( 'skinnameclass', ( 'skin-' . Sanitizer::escapeClass( $this->getSkinName() ) ) );
@@ -487,7 +490,7 @@ class SkinTemplate extends Skin {
 			$pageLang = $title->getPageLanguage();
 			$realBodyAttribs['lang'] = $pageLang->getHtmlCode();
 			$realBodyAttribs['dir'] = $pageLang->getDir();
-			$realBodyAttribs['class'] = 'mw-content-'.$pageLang->getDir();
+			$realBodyAttribs['class'] = 'mw-content-'.$pageLang->getDir().' mw-content-text';
 		}
 
 		$out->mBodytext = Html::rawElement( 'div', $realBodyAttribs, $out->mBodytext );

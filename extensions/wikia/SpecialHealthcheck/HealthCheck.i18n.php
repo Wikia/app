@@ -191,7 +191,7 @@ $messages['lb'] = array(
  * @author Bjankuloski06
  */
 $messages['mk'] = array(
-	'healthcheck-desc' => '[[Special:HealthCheck|Специјална страница]] за проверка на состојбата на опслужувачот',
+	'healthcheck-desc' => '[[Special:HealthCheck|Службена страница]] за проверка на состојбата на опслужувачот',
 );
 
 /** Malay (Bahasa Melayu)
@@ -322,7 +322,15 @@ $messages['vi'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
+ * @author Liuxinyu970226
  */
 $messages['zh-hans'] = array(
-	'healthcheck-desc' => '[[Special:HealthCheck|特页]]服务器状态检查',
+	'healthcheck-desc' => '用于服务器状态检查的[[Special:HealthCheck|特殊页面]]',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author Cwlin0416
+ */
+$messages['zh-hant'] = array(
+	'healthcheck-desc' => '用來檢查伺服器狀態的 [[Special:HealthCheck|特殊頁面]]',
 );

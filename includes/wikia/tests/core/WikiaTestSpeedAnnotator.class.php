@@ -63,15 +63,24 @@ class WikiaTestSpeedAnnotator {
 		self::initialize();
 	}
 
+	public static function isMarkedAsSlow( $annotations ) {
+		return !empty( $annotations['method'] ) && !empty( $annotations['method']['group'] )
+		&& in_array( 'Slow', $annotations['method']['group'] );
+	}
+
+	public static function getSlowExecutionTime( $annotations ) {
+		$executionTime = null;
+		if ( !empty( $annotations['method']['slowExecutionTime'][0] ) ) {
+			$executionTime = (float) $annotations['method']['slowExecutionTime'][0];
+		}
+
+		return $executionTime;
+	}
+
 	private static function cleanupEmptyDocComments( $filePath ) {
 		$fileContents = file_get_contents( $filePath );
 		$fileContents = preg_replace( self::REGEX_EMPTY_DOCCOMMENT, '', $fileContents );
 		file_put_contents( $filePath, $fileContents );
-	}
-
-	private static function isMarkedAsSlow( $annotations ) {
-		return !empty( $annotations['method'] ) && !empty( $annotations['method']['group'] )
-		&& in_array( 'Slow', $annotations['method']['group'] );
 	}
 
 	private static function removeSlowAnnotationFromDocComment( $docComment ) {

@@ -22,15 +22,17 @@ $wgAutoloadClasses['CloseMyAccountHooks'] =  __DIR__ . '/CloseMyAccountHooks.cla
 $wgAutoloadClasses['CloseMyAccountHelper'] =  __DIR__ . '/CloseMyAccountHelper.class.php';
 
 $wgExtensionMessagesFiles['CloseMyAccount'] = __DIR__ . '/CloseMyAccount.i18n.php' ;
+$wgExtensionMessagesFiles['CloseMyAccountAliases'] = __DIR__ . '/CloseMyAccount.aliases.php';
 
 $wgSpecialPages['CloseMyAccount'] = 'CloseMyAccountSpecialController';
 $wgSpecialPageGroups['CloseMyAccount'] = 'wikia';
 
 $wgHooks['WikiaUserLoginSuccess'][] = 'CloseMyAccountHooks::onWikiaUserLoginSuccess';
+$wgHooks['FacebookUserLoginSuccess'][] = 'CloseMyAccountHooks::onFacebookUserLoginSuccess';
 $wgHooks['UserSendConfirmationMail'][] = 'CloseMyAccountHooks::onUserSendConfirmationMail';
 
 $wgResourceModules['ext.closeMyAccount'] = [
 	'localBasePath' => __DIR__ . '/modules',
 	'remoteExtPath' => 'wikia/CloseMyAccount/modules',
-	'styles' => 'ext.closeMyAccount.css',
+	'styles' => 'ext.closeMyAccount.scss',
 ];

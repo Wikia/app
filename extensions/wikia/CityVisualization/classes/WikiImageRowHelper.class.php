@@ -1,11 +1,20 @@
 <?php
 
-class WikiImageRowHelper implements WikiImageRowAssigner {
-	public function returnParsedWikiImageRow($row) {
-		return array(
-			'image_name' => $row->image_name,
-			'image_index' => $row->image_index,
-			'image_reviewed' => $row->image_reviewed
-		);
+class WikiImageRowHelper {
+
+	public static function parseWikiImageRow($row) {
+		return new self($row);
+	}
+	public $name, $index, $reviewed, $review_status;
+
+	function __construct($row) {
+		$this->name = $row->image_name;
+		$this->index = $row->image_index;
+		if (!empty($row->image_reviewed)){
+			$this->reviewed = $row->image_reviewed;
+		}
+		if (!empty($row->image_review_status)){
+			$this->review_status = intval($row->image_review_status);
+		}
 	}
 }

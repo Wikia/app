@@ -1,5 +1,7 @@
 <?php
+
 class RelatedPagesController extends WikiaController {
+	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 	const MEMC_KEY_VER = '1.005';
 
 	/**
@@ -53,6 +55,5 @@ class RelatedPagesController extends WikiaController {
 
 		$this->mobileSkin = false;
 		$this->relatedPagesHeading = wfMessage( 'wikiarelatedpages-heading' )->plain();
-		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
 	}
 }

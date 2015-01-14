@@ -50,7 +50,9 @@ $wgExtensionMessagesFiles['AbTesting'] = "{$dir}/AbTesting.i18n.php";
 
 // Embed the experiment/treatment config in the head scripts.
 $wgHooks['WikiaSkinTopScripts'][] =  'AbTesting::onWikiaSkinTopScripts';
+$wgHooks['WikiaSkinTopShortTTLModules'][] =  'AbTesting::onWikiaSkinTopShortTTLModules';
 $wgHooks['WikiaMobileAssetsPackages'][] = 'AbTesting::onWikiaMobileAssetsPackages';
+$wgHooks['VenusAssetsPackages'][] = 'AbTesting::onVenusAssetsPackages';
 // Add js code in Oasis
 $wgHooks['OasisSkinAssetGroupsBlocking'][] = 'AbTesting::onOasisSkinAssetGroupsBlocking';
 

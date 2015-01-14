@@ -2,9 +2,20 @@
 /**
  * Lightbox setup
  *
- * @author Hyun Lim, Liz Lee
+ * @author Hyun Lim, Liz Lee, Saipetch Kongkatong
  *
  */
+
+$wgExtensionCredits['lightbox'][] = array(
+	'name' => 'Lightbox',
+	'author' => array(
+		'Hyun Lim',
+		'Liz Lee',
+		'Saipetch Kongkatong',
+		'Garth Webb',
+		'James Sutterfield',
+	),
+);
 
 $dir = dirname(__FILE__) . '/';
 

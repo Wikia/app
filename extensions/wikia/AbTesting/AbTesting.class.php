@@ -45,9 +45,21 @@ class AbTesting extends WikiaObject {
 		return true;
 	}
 
+	/**
+	 * Load AB Testing AssetsManager "blocking" group (i.e. in head section) on Venus
+	 *
+	 * @param array $jsHeadGroups
+	 * @param array $jsBodyGroups
+	 * @param array $cssGroups
+	 * @return bool true
+	 */
+	static public function onVenusAssetsPackages( Array &$jsHeadGroups, Array &$jsBodyGroups, Array &$cssGroups ) {
+		array_unshift( $jsHeadGroups, 'abtesting' );
+		return true;
+	}
+
 	static public function onWikiaSkinTopScripts( &$vars, &$scripts, $skin ) {
 		$app = F::app();
-		$wg = $app->wg;
 
 		if ( $app->checkSkin( 'wikiamobile', $skin ) ) {
 			//Add this mock as wikia.ext.abtesting relies on it and on WikiaMobile there is no mw object
@@ -55,11 +67,15 @@ class AbTesting extends WikiaObject {
 			$scripts .= '<script>var mw = {loader: {state: function(){}}}</script>';
 		}
 
-		if ( $app->checkSkin( ['oasis', 'wikiamobile'], $skin ) ) {
-			$scripts .= ResourceLoader::makeCustomLink( $wg->out, array( 'wikia.ext.abtesting' ), 'scripts' ) . "\n";
+		return true;
+	}
+
+	static public function onWikiaSkinTopShortTTLModules( Array &$modules, $skin) {
+		$app = F::app();
+
+		if ( $app->checkSkin( ['oasis', 'wikiamobile', 'venus'], $skin ) ) {
+			$modules[] = 'wikia.ext.abtesting';
 		}
-
-
 
 		return true;
 	}

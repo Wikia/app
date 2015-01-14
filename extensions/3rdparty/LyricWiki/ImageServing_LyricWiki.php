@@ -95,9 +95,13 @@ function lw_ImageServingFallback(ImageServing $imageServing, $n, &$out){
 		}
 
 		// Some of the titles were real pages, use ImageServing to get the results and store them (by reference) in '$out'.
-		if(count($articleIds) > 0){
-			$imageServing = new ImageServing( $articleIds );
-			$out = $imageServing->getImages( $n );
+		if ( count( $articleIds ) > 0 ) {
+			// the ImageServing::fallbackOnNoResults hook is triggered in ImageServing::getImages.
+			// we don't want to cycle through here repeatedly on the same article ids
+			if ( !$imageServing->hasArticleIds( $articleIds ) ) {
+				$imageServing = new ImageServing( $articleIds );
+				$out = $imageServing->getImages( $n );
+			}
 		}
 	}
 

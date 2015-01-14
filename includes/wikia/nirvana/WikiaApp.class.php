@@ -53,6 +53,12 @@ class WikiaApp {
 	protected $skinTemplateObj = null;
 
 	/**
+	 * WikiaApp is a singleton
+	 * @var WikiaApp
+	 */
+	protected static $appInstance;
+
+	/**
 	 * global MW variables helper accessor
 	 * @var $wg WikiaGlobalRegistry
 	 */
@@ -116,6 +122,17 @@ class WikiaApp {
 			}
 			error_log( __METHOD__ . ': ' . $message );
 		}
+	}
+
+	/**
+	 * get application object
+	 * @return WikiaApp
+	 */
+	public static function app() {
+		if (!isset(self::$appInstance)) {
+			self::$appInstance = new WikiaApp();
+		}
+		return self::$appInstance;
 	}
 
 	/**
@@ -586,7 +603,7 @@ class WikiaApp {
 	 * @param string $controllerName The name of the controller, without the 'Controller' or 'Model' suffix
 	 * @param string $methodName The name of the Controller method to call
 	 * @param array $params An array with the parameters to pass to the specified method
-	 * @param boolean whether it's an internal (PHP to PHP) or external request
+	 * @param boolean $internal whether it's an internal (PHP to PHP) or external request
 	 *
 	 * @return WikiaResponse a response object with the data produced by the method call
 	 */
@@ -747,3 +764,10 @@ class WikiaApp {
 		}
 	}
 }
+
+/**
+ * WikiaFactory class alias
+ *
+ */
+class F extends WikiaApp { }
+

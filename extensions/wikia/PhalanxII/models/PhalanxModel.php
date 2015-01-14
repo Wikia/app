@@ -32,6 +32,30 @@ abstract class PhalanxModel extends WikiaObject {
 	}
 
 	/**
+	 * Determines the Phalanx block type from a piece of content that
+	 * was not passed in with a specified type.
+	 *
+	 * @param $content string|Title|User content to guess type for
+	 * @return int
+	 */
+	public static function determineTypeId($content) {
+		// Allow extensions to pass in unspecified content types to
+		// eliminate dependence on Phalanx from other extensions;
+		// Phalanx is not enabled on the internal wiki and causes
+		// extensions with a dependency on it to fail hard (500 errors)
+		// See CE-377
+		// default to TYPE_CONTENT
+		$typeId = Phalanx::TYPE_CONTENT;
+		if ($content instanceof Title) {
+			$typeId = Phalanx::TYPE_TITLE;
+		} else if ($content instanceof User) {
+			$typeId = Phalanx::TYPE_USER;
+		}
+
+		return $typeId;
+	}
+
+	/**
 	 * Returns instence of a proper PhalanxModel based on provided block type (Phalanx::TYPE_*)
 	 *
 	 * @param $typeId int type ID

@@ -2,7 +2,7 @@
 
 abstract class UserLoginBaseTest extends WikiaBaseTest {
 
-	const TEST_CITY_ID = 79860;
+	const TEST_CITY_ID = 165;
 
 	protected $skinOrg = null;
 
@@ -85,7 +85,6 @@ abstract class UserLoginBaseTest extends WikiaBaseTest {
 				$this->mockClass( $objectName, $mockObject, 'newFromConfirmationCode' );
 				$this->mockClass( $objectName, $mockObject, 'newFromSession' );
 				$this->mockClass( $objectName, $mockObject, 'newFromRow' );
-				$this->mockClass( $objectName, true, 'loadOptions' );
 				$this->mockClass( $objectName, (isset($objectParams['params']['mId']) ? $objectParams['params']['mId'] : 0), 'idFromName' );
 			}
 			if ( !empty( $objectParams['mockStatic'] ) ) {

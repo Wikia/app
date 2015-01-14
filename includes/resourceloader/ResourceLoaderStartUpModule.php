@@ -95,15 +95,18 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 			'wgCookiePrefix' => $wgCookiePrefix,
 			'wgResourceLoaderMaxQueryLength' => $wgResourceLoaderMaxQueryLength,
 			'wgCaseSensitiveNamespaces' => $caseSensitiveNamespaces,
+			'wgLegalTitleChars' => Title::convertByteClassToUnicodeClass( Title::legalChars() ),
 			// Wikia - change begin - @author: wladek
 			'wgSassParams' => SassUtil::getSassSettings(),
 			// Wikia - change end
 		);
+
 		if ( $wgUseAjax && $wgEnableMWSuggest ) {
 			$vars['wgMWSuggestTemplate'] = SearchEngine::getMWSuggestTemplate();
 		}
 
 		wfRunHooks( 'ResourceLoaderGetConfigVars', array( &$vars ) );
+		wfRunHooks( 'ResourceLoaderGetConfigVarsWithContext', array( &$vars, $context ) );
 
 		return $vars;
 	}
@@ -241,19 +244,10 @@ class ResourceLoaderStartUpModule extends ResourceLoaderModule {
 			// Conditional script injection
 			// Wikia change - begin - @author: wladek
 //			$scriptTag = Html::linkedScript( $wgLoadScript . '?' . wfArrayToCGI( $query ) );
-			// get jquery from CDN if we have wsl and getJqueryUrl loaded
-			$modulesWithoutJquery = array_diff($modules,array('jquery'));
-			$scriptTagJquery = Xml::encodeJsVar(
+			$scriptTag = Xml::encodeJsVar(
 					Html::linkedScript( ResourceLoader::makeLoaderURL($modules, $query['lang'],
 					$query['skin'], null, $query['version'], $context->getDebug(), 'scripts') )
 			);
-			$scriptTagNoJquery = Xml::encodeJsVar(
-					Html::linkedScript( ResourceLoader::makeLoaderURL($modulesWithoutJquery, $query['lang'],
-					$query['skin'], null, $query['version'], $context->getDebug(), 'scripts') )
-			);
-			$scriptTag = <<<ENDSCRIPT
-( (window.wsl && window.getJqueryUrl && window.wgJqueryUrl) ? (wsl.buildScript(window.getJqueryUrl()) + $scriptTagNoJquery) : ($scriptTagJquery) )
-ENDSCRIPT;
 			$scriptTag = new XmlJsCode($scriptTag);
 			// Wikia change - end
 			$out .= "if ( isCompatible() ) {\n" .

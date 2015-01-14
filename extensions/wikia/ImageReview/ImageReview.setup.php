@@ -26,19 +26,18 @@ $dir = dirname(__FILE__) . '/';
 $app = F::app();
 
 // classes
-$wgAutoloadClasses['ImageReviewTask'] =  $dir . 'ImageReviewTask.php';
-if ( function_exists( 'extAddBatchTask' ) ) {
-	extAddBatchTask( $dir . "../ImageReview/ImageReviewTask.php", "imagereview", "ImageReviewTask" );
-}
+$wgAutoloadClasses['Wikia\\Tasks\\Tasks\\ImageReviewTask'] = "{$dir}ImageReviewTask.class.php";
 
 $wgAutoloadClasses['ImageReviewSpecialController'] =  $dir . 'ImageReviewSpecialController.class.php';
 $wgAutoloadClasses['ImageReviewHelperBase'] =  $dir . 'ImageReviewHelperBase.class.php';
 $wgAutoloadClasses['ImageReviewHelper'] =  $dir . 'ImageReviewHelper.class.php';
+$wgAutoloadClasses['ImageReviewDatabaseHelper'] =  $dir . 'ImageReviewDatabaseHelper.class.php';
+$wgAutoloadClasses['ImageReviewHooks'] =  $dir . 'ImageReview.hooks.php';
 
 $wgSpecialPages['ImageReview'] = 'ImageReviewSpecialController';
 
-// hooks
-$wgHooks['WikiFactoryPublicStatusChange'][] = 'ImageReviewHelper::onWikiFactoryPublicStatusChange' ;
+// hooks setup
+$wgExtensionFunctions[] = 'ImageReviewHooks::setupHooks';
 
 // rights
 $wgAvailableRights[] = 'imagereview';

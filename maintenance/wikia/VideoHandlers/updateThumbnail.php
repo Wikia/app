@@ -21,6 +21,7 @@ class UpdateThumbnail extends Maintenance {
 	protected $opt = '';
 	protected $startDate = '';
 	protected $endDate = '';
+	protected $provider = '';
 
 	protected static $opts = array( 'reupload', 'data' );
 
@@ -32,6 +33,7 @@ class UpdateThumbnail extends Maintenance {
 		$this->addOption( 'opt', 'Option [reupload or data]. (Reupload = reupload image for default image only. Data = update image data).', false, true, 'o' );
 		$this->addOption( 'start', 'Start date (timestamp); required for reupload option', false, true, 's' );
 		$this->addOption( 'end', 'End date (timestamp); required for reupload option', false, true, 'e' );
+		$this->addOption( 'provider', 'Provider name', false, true, 'p' );
 	}
 
 	public function execute() {
@@ -40,6 +42,7 @@ class UpdateThumbnail extends Maintenance {
 		$this->opt = $this->getOption( 'opt' );
 		$this->startDate = $this->getOption( 'start' );
 		$this->endDate = $this->getOption( 'end' );
+		$this->provider = $this->getOption( 'provider' );
 
 		if ( empty( $this->opt ) || !in_array( $this->opt, self::$opts ) ) {
 			die( "Error: invalid option. Please enter 'reupload' or 'data'.\n" );
@@ -94,7 +97,18 @@ class UpdateThumbnail extends Maintenance {
 			}
 
 			if ( $this->opt == 'reupload' ) {
-				$status = $helper->resetVideoThumb( $file );
+				if ( $this->provider == 'screenplay' ) {
+					$thumbUrl = ScreenplayApiWrapper::getThumbnailUrlFromAsset( $file->getVideoId() );
+					if ( empty( $thumbUrl ) ) {
+						echo " ... FAILED (Thumbnail URL not found)\n";
+						$failed++;
+						continue;
+					}
+				} else {
+					$thumbUrl = null;
+				}
+
+				$status = $helper->resetVideoThumb( $file, $thumbUrl );
 			} else if ( $this->opt == 'data' ) {
 				if ( file_exists( $file->getLocalRefPath() ) ) {
 					$status = $helper->updateThumbnailData( $file );
@@ -149,6 +163,10 @@ class UpdateThumbnail extends Maintenance {
 			$sqlWhere[] = "img_timestamp <= '{$db->timestamp( $this->endDate )}'";
 		}
 
+		if ( !empty( $this->provider ) ) {
+			$sqlWhere['img_minor_mime'] = $this->provider;
+		}
+
 		// size and hash from LegacyVideoApiWrapper::$THUMBNAIL_URL
 		$sqlWhere['img_size'] = 66162;
 		$sqlWhere['img_sha1'] = 'm03a6fnvxhk8oj5kgnt11t6j7phj5nh';
@@ -181,6 +199,7 @@ class UpdateThumbnail extends Maintenance {
 			echo $msg;
 		}
 	}
+
 }
 
 $maintClass = "UpdateThumbnail";

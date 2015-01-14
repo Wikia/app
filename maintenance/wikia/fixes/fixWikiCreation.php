@@ -8,9 +8,8 @@ class FixWikiCreation extends Maintenance {
 	private $listMode = false;
 	private $wikiaID = 0;
 	private $days = 1;
-	private $conf = '';
 	private $fix = false;
-	
+
 	public function __construct() {
 		parent::__construct();
 		$this->addOption( 'debug', 'Enable debug log' );
@@ -24,42 +23,40 @@ class FixWikiCreation extends Maintenance {
 
 	public function execute() {
 		global $wgExternalSharedDB;
-		
+
 		// options
 		if( $this->hasOption( 'debug' ) ) {
 			$this->debug = true;
-		} 
+		}
 		if ( $this->hasOption( 'list' ) ) {
 			$this->listMode = true;
 		}
 		if ( $this->hasOption( 'days' ) ) {
 			$this->days = (int) $this->getOption( 'days' );
-		} 
+		}
 		if ( $this->hasOption( 'wikia' ) ) {
 			$this->wikiaID = (int) $this->getOption( 'wikia' );
 		}
 		if ( $this->hasOption( 'tables' ) ) {
 			$this->tables = explode( ",", $this->getOption( 'tables' ) );
-		} 
+		}
 		if ( $this->hasOption( 'fix' ) ) {
 			$this->fix = true;
 		}
-		
+
 		if ( empty( $this->tables ) ) {
 			echo "There is no tables to check\n"; exit(1);
 		}
-		
-		$this->conf = $this->getOption('conf');
 
 		if ( $this->listMode || $this->fix ) {
 			$this->output( "Run script with --list option ... \n" );
-			
+
 			$startDate = date( 'Y-m-d 00:00:00', strtotime("-{$this->days} days") );
-			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB ); 
+			$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 			$oRes = $dbr->select(
 				array( "city_list" ),
 				array( "city_id, city_dbname, city_created" ),
-				array( 
+				array(
 					sprintf( "city_created between '%s' and now()", $startDate ),
 					( $this->wikiaID > 0 ) ? "city_id = {$this->wikiaID}" : "city_id > 0"
 				),
@@ -81,9 +78,9 @@ class FixWikiCreation extends Maintenance {
 			if ( $this->fix ) {
 				echo "List of Wikis fixed: \n";
 			} else {
-				echo "List of Wikis to fix: \n";				
+				echo "List of Wikis to fix: \n";
 			}
-			echo print_r( $wikisToFix, true ); 
+			echo print_r( $wikisToFix, true );
 			echo "Number of Wikis to fix: " . count( $wikisToFix ) . "\n";
 		} elseif ( $this->wikiaID > 0 ) {
 			$dbr = wfGetDB( DB_SLAVE );
@@ -96,20 +93,20 @@ class FixWikiCreation extends Maintenance {
 				}
 			} else {
 				if ( !empty( $this->tables ) ) {
-					foreach ( $this->tables as $table ) { 
+					foreach ( $this->tables as $table ) {
 						if ( !$dbr->tableExists( $table , __METHOD__ ) ) {
 							$tables_to_fix[] = $table;
 						}
 					}
 				}
 			}
-				
+
 			echo implode(",", $tables_to_fix);
 		}
 	}
-	
+
 	private function runCmd( $wiki_id, $wiki_name, $options = array() ) {
-		$cmd = sprintf( "SERVER_ID=%d php %s %s --wikia=%d --conf=%s", $wiki_id, __FILE__, implode(" ", $options), $wiki_id, $this->conf );
+		$cmd = sprintf( "SERVER_ID=%d php %s %s --wikia=%d", $wiki_id, __FILE__, implode(" ", $options), $wiki_id );
 		if ( $this->debug ) echo "\tRun $cmd ... ";
 		echo "\tCheck {$wiki_name} ({$wiki_id}) ... ";
 		$result = wfShellExec( $cmd, $retval );
@@ -122,22 +119,22 @@ class FixWikiCreation extends Maintenance {
 				echo $result . "\n";
 			}
 		}
-		
+
 		return $result;
 	}
-	
+
 	private function fixWikia( $wiki_id ) {
-		global $wgExternalSharedDB, $wgUser; 
-		
+		global $wgExternalSharedDB, $wgUser;
+
 		# read Wiki information from DB
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB ); 
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 		$oRow = $dbr->selectRow(
 			array( 'city_list' ),
 			array( '*' ),
 			array( 'city_id' => $wiki_id ),
-			__METHOD__ 
+			__METHOD__
 		);
-		
+
 		if ( !$oRow ) {
 			return false;
 		}
@@ -157,8 +154,8 @@ class FixWikiCreation extends Maintenance {
 			$id = ( !empty ( $map_keys[ $key ] ) ) ? $map_keys[ $key ] : $key;
 			$job_params->$id = $value;
 		}
-		
-		# set starter 
+
+		# set starter
 		$mStarters = array(
 			"*" => array(
 				"*"  => "aastarter",
@@ -172,7 +169,7 @@ class FixWikiCreation extends Maintenance {
 				"ru" => "rustarter",
 			)
 		);
-		
+
 		# dbstarter
 		$job_params->sDbStarter = ( isset( $mStarters[ "*" ][ $job_params->language ] ) )
 				? $mStarters[ "*" ][ $job_params->language ]
@@ -180,26 +177,26 @@ class FixWikiCreation extends Maintenance {
 
 		# type of Wiki
 		$job_params->type = '';
-			
+
 		# founderName
 		$wgUser = User::newFromId( $job_params->founderId );
 		if ( is_object( $wgUser ) ) {
 			$job_params->founderName = $wgUser->getName();
 		}
-		
+
 		# no welcome email
-		$job_params->disableWelcome = 1; 
+		$job_params->disableWelcome = 1;
 		# disable reminder
 		$job_params->disableReminder = 1;
 		# don't execute CreateWikiLocalJob-complete hook
 		$job_params->disableCompleteHook = 1;
-		
-		// run job 
-		$localJob = new CreateWikiLocalJob( 
-			Title::newFromText( NS_MAIN, "Main" ), 
+
+		// run job
+		$localJob = new CreateWikiLocalJob(
+			Title::newFromText( NS_MAIN, "Main" ),
 			$job_params
 		);
-		
+
 		$localJob->WFinsert( $job_params->city_id, $job_params->dbname );
 		wfDebugLog( "createwiki", __METHOD__ . ": New createWiki local job created \n", true );
 
@@ -218,7 +215,7 @@ class FixWikiCreation extends Maintenance {
 			TASK_QUEUED,
 			BatchTask::PRIORITY_HIGH
 		);
-		
+
 		return true;
 	}
 }

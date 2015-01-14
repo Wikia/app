@@ -80,11 +80,17 @@
 		return !!(current && current.groups[groupName]);
 	};
 
-	// Returns the GA slot that tracking should be reported to
+	/**
+	 * Returns the GA slot that tracking should be reported to
+	 *
+	 * @param expName
+	 * @returns {Number|undefined}
+	 */
 	AbTest.getGASlot = function( expName ) {
 		var exp = getExperiment(expName,'getGASlot'),
-			current = exp && exp.current;
-		return current && current.gaSlot;
+			current = exp && exp.current,
+			gaSlot = current && current.gaSlot;
+		return parseInt(gaSlot,10) || undefined;
 	};
 
 	// Returns list of active experiments with IDs and names of them and groups that user fell in
@@ -298,7 +304,7 @@
 		}
 		if ( externalIds.length > 0 ) {
 			log('init', 'Loading external configuration');
-			var url = '/wikia.php?controller=AbTesting&method=externalData&callback=Wikia.AbTest.loadExternalData&ids=';
+			var url = window.wgCdnApiUrl + '/wikia.php?controller=AbTesting&method=externalData&callback=Wikia.AbTest.loadExternalData&ids=';
 			url += externalIds.join(',');
 			document.write('<scr'+'ipt src="'+encodeURI(url)+'"></script>');
 		}
@@ -325,5 +331,4 @@
 
 	// Exports
 	Wikia.AbTest = AbTest;
-
 })( window );

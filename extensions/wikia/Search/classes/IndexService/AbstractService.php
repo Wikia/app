@@ -18,7 +18,7 @@ abstract class AbstractService
 	 * This allows us to abstract out logic core to MediaWiki. 
 	 * Eventually, we could have other 'drivers' for our logic interface here.
 	 * Sorry I didn't have a better name for this one -- maybe "driver"?
-	 * @var Wikia\Search\MediaWikiService
+	 * @var \Wikia\Search\MediaWikiService
 	 */
 	protected $service;
 	
@@ -89,27 +89,35 @@ abstract class AbstractService
 
 		foreach ( $this->pageIds as $pageId ) {
 			$this->currentPageId = $pageId;
-			$currId = $this->getCurrentDocumentId();
-			$actId = $this->getCurrentDocumentId(false);
-		    if (! $this->getService()->pageIdExists( $pageId ) ) {
-				$documents[] = array( "delete" => array( "id" =>$currId ) );
+			/**
+			 * For redirects,
+			 * $currentId represents the actual Id of the document taking into
+			 * consideration redirects;
+			 * $originalId is the Id of the document containing the redirect itself
+			 *
+			 * For non-redirects they are the same
+			 */
+			$currentId = $this->getCurrentDocumentId();
+			$originalId = $this->getCurrentDocumentId(false);
+
+			if ( $currentId != $originalId ) {
+				$documents[] = array( "delete" => array( "id" => $originalId ) );
 				continue;
 			}
 
-			if( $currId!=$actId)
-			{
-				$documents[] = array( "delete" => array( "id" => $actId ) );
+			if ( !$this->getService()->pageIdExists( $pageId ) ) {
+				$documents[] = array( "delete" => array( "id" => $currentId ) );
 				continue;
 			}
 
-			if ( in_array( $currId, $this->processedDocIds ) ) {
+			if ( in_array( $currentId, $this->processedDocIds ) ) {
 				continue;
 			}
 
 			try {
 				$response = $this->getResponse();
 
-				$this->processedDocIds[] = $actId;
+				$this->processedDocIds[] = $originalId;
 				if (! empty( $response ) ) {
 				    $documents[] = $this->getJsonDocumentFromResponse( $response );
 				}
@@ -157,6 +165,13 @@ abstract class AbstractService
 			$this->service = new MediaWikiService;
 		}
 		return $this->service;
+	}
+
+	/**
+	 * @param \Wikia\Search\MediaWikiService $service
+	 */
+	public function setService($service) {
+		$this->service = $service;
 	}
 	
 

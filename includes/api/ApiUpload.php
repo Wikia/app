@@ -263,23 +263,6 @@ class ApiUpload extends ApiBase {
 				'filekey', 'file', 'url', 'statuskey' );
 		}
 
-		if ( $this->mParams['statuskey'] ) {
-			$this->checkAsyncDownloadEnabled();
-
-			// Status request for an async upload
-			$sessionData = UploadFromUrlJob::getSessionData( $this->mParams['statuskey'] );
-			if ( !isset( $sessionData['result'] ) ) {
-				$this->dieUsage( 'No result in session data', 'missingresult' );
-			}
-			if ( $sessionData['result'] == 'Warning' ) {
-				$sessionData['warnings'] = $this->transformWarnings( $sessionData['warnings'] );
-				$sessionData['sessionkey'] = $this->mParams['statuskey'];
-			}
-			$this->getResult()->addValue( null, $this->getModuleName(), $sessionData );
-			return false;
-
-		}
-
 		// The following modules all require the filename parameter to be set
 		if ( is_null( $this->mParams['filename'] ) ) {
 			$this->dieUsageMsg( array( 'missingparam', 'filename' ) );
@@ -323,24 +306,8 @@ class ApiUpload extends ApiBase {
 				$this->dieUsageMsg( 'copyuploaddisabled' );
 			}
 
-			$async = false;
-			if ( $this->mParams['asyncdownload'] ) {
-				$this->checkAsyncDownloadEnabled();
-
-				if ( $this->mParams['leavemessage'] && !$this->mParams['ignorewarnings'] ) {
-					$this->dieUsage( 'Using leavemessage without ignorewarnings is not supported',
-						'missing-ignorewarnings' );
-				}
-
-				if ( $this->mParams['leavemessage'] ) {
-					$async = 'async-leavemessage';
-				} else {
-					$async = 'async';
-				}
-			}
 			$this->mUpload = new UploadFromUrl;
-			$this->mUpload->initialize( $this->mParams['filename'],
-				$this->mParams['url'], $async );
+			$this->mUpload->initialize( $this->mParams['filename'], $this->mParams['url'] );
 		}
 
 		return true;
@@ -515,16 +482,6 @@ class ApiUpload extends ApiBase {
 		$result['filename'] = $file->getName();
 
 		return $result;
-	}
-
-	/**
-	 * Checks if asynchronous copy uploads are enabled and throws an error if they are not.
-	 */
-	protected function checkAsyncDownloadEnabled() {
-		global $wgAllowAsyncCopyUploads;
-		if ( !$wgAllowAsyncCopyUploads ) {
-			$this->dieUsage( 'Asynchronous copy uploads disabled', 'asynccopyuploaddisabled');
-		}
 	}
 
 	public function mustBePosted() {

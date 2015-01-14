@@ -104,20 +104,20 @@ class SMWParseData {
 
 		// See if this property is a special one, such as e.g. "has type".
 		$propertyDv = SMWPropertyValue::makeUserProperty( $propertyName );
-		
+
 		if ( !$propertyDv->isValid() ) {
 			wfProfileOut( 'SMWParseData::addProperty (SMW)' );
 			return $propertyDv;
 		}
-		
+
 		$propertyDi = $propertyDv->getDataItem();
-		
+
 		// FIXME: this solves the issue of bug 29438, but is probably not what we want to do.
 		if ( $propertyDi instanceof SMWDIError ) {
 			wfProfileOut( 'SMWParseData::addProperty (SMW)' );
 			return $propertyDv;
 		}
-		
+
 		$semandticData = self::getSMWData( $parser );
 
 		$result = SMWDataValueFactory::newPropertyObjectValue(
@@ -131,7 +131,7 @@ class SMWParseData {
 			$result->addError( wfMsgForContent( 'smw_noinvannot' ) );
 		} elseif ( $storeAnnotation && !is_null( self::getSMWData( $parser ) ) ) {
 			$semandticData->addPropertyObjectValue( $propertyDi, $result->getDataItem() );
-			
+
 			// Take note of the error for storage (do this here and not in storage, thus avoiding duplicates).
 			if ( !$result->isValid() ) {
 				$semandticData->addPropertyObjectValue(
@@ -185,18 +185,18 @@ class SMWParseData {
 				if ( array_key_exists( $propId, $props ) ) {
 					continue;
 				}
-				
+
 				// Remember the property is processed.
-				$props[ $propId ] = true;              
+				$props[ $propId ] = true;
 				$prop = new SMWDIProperty( $propId );
-				
+
 				if ( count( $semdata->getPropertyValues( $prop ) ) > 0  ) {
 					continue;
 				}
-				
+
 				// Calculate property value.
 				$value = null;
-				
+
 				switch ( $propId ) {
 					case '_MDAT' :
 						$timestamp =  Revision::getTimeStampFromID( $title, $title->getLatestRevID() );
@@ -215,11 +215,11 @@ class SMWParseData {
 						$value = SMWDIWikiPage::newFromTitle( $user->getUserPage() );
 						break;
 				}
-				
+
 				if ( !is_null( $value ) ) {
-					$semdata->addPropertyObjectValue( $prop, $value );    
+					$semdata->addPropertyObjectValue( $prop, $value );
 				} // Issue error or warning?
-				
+
 			} // foreach
 		} else { // data found, but do all operations as if it was empty
 			$semdata = new SMWSemanticData( $semdata->getSubject() );
@@ -256,7 +256,11 @@ class SMWParseData {
 				foreach ( $subjects as $subject ) {
 					$subjectTitle = $subject->getTitle();
 					if ( !is_null( $subjectTitle ) ) {
-						$jobs[] = new SMWUpdateJob( $subjectTitle );
+						// wikia change start - jobqueue migration
+						$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+						$task->call( 'SMWUpdateJob', $subjectTitle );
+						$jobs[] = $task;
+						// wikia change end
 					}
 				}
 				wfRunHooks( 'smwUpdatePropertySubjects', array( &$jobs ) );
@@ -265,9 +269,13 @@ class SMWParseData {
 
 				foreach ( $subjects as $subject ) {
 					$subjectTitle = $subject->getTitle();
-					
+
 					if ( !is_null( $subjectTitle ) ) {
-						$jobs[] = new SMWUpdateJob( $subjectTitle );
+						// wikia change start - jobqueue migration
+						$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+						$task->call( 'SMWUpdateJob', $subjectTitle );
+						$jobs[] = $task;
+						// wikia change end
 					}
 				}
 			}
@@ -289,19 +297,27 @@ class SMWParseData {
 
 				foreach ( $proppages as $proppage ) {
 					$propertyTitle = $proppage->getTitle();
-					
+
 					if ( !is_null( $propertyTitle ) ) {
-						$jobs[] = new SMWUpdateJob( $propertyTitle );
+						// wikia change start - jobqueue migration
+						$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+						$task->call( 'SMWUpdateJob', $propertyTitle );
+						$jobs[] = $task;
+						// wikia change end
 					}
-					
+
 					$prop = new SMWDIProperty( $proppage->getDBkey() );
 					$subjects = $store->getAllPropertySubjects( $prop );
 
 					foreach ( $subjects as $subject ) {
 						$subjectTitle = $subject->getTitle();
-						
+
 						if ( !is_null( $subjectTitle ) ) {
-							$jobs[] = new SMWUpdateJob( $subjectTitle );
+							// wikia change start - jobqueue migration
+							$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+							$task->call( 'SMWUpdateJob', $subjectTitle );
+							$jobs[] = $task;
+							// wikia change end
 						}
 					}
 
@@ -312,9 +328,13 @@ class SMWParseData {
 
 					foreach ( $subjects as $subject ) {
 						$subjectTitle = $subject->getTitle();
-						
+
 						if ( !is_null( $subjectTitle ) ) {
-							$jobs[] = new SMWUpdateJob( $subject->getTitle() );
+							// wikia change start - jobqueue migration
+							$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+							$task->call( 'SMWUpdateJob', $subjectTitle );
+							$jobs[] = $task;
+							// wikia change end
 						}
 					}
 				}
@@ -330,7 +350,9 @@ class SMWParseData {
 
 		// Finally trigger relevant Updatejobs if necessary
 		if ( $updatejobflag ) {
-			Job::batchInsert( $jobs ); ///NOTE: this only happens if $smwgEnableUpdateJobs was true above
+			// wikia change start - jobqueue migration
+			\Wikia\Tasks\Tasks\BaseTask::batch( $jobs );
+			// wikia change end
 		}
 
 		return true;
@@ -396,7 +418,7 @@ class SMWParseData {
 		$pskey = new SMWDIProperty( '_SKEY' );
 		try {
 			$sortkeyDi = new SMWDIString( $sortkey );
-		} catch (SMWStringLengthException $e) { // cut it down to a reasonable length; no further bytes should be needed for sorting
+		} catch ( SMWStringLengthException $e ) { // cut it down to a reasonable length; no further bytes should be needed for sorting
 			$sortkey = substr( $sortkey, 0, $e->getMaxLength() );
 			$sortkeyDi = new SMWDIString( $sortkey );
 		}
@@ -415,17 +437,17 @@ class SMWParseData {
 	 * the purpose of adding information there. If the private access ever becomes a problem,
 	 * a global/static variable appears to be the only way to get more article data to
 	 * LinksUpdate.
-	 * 
+	 *
 	 * @param WikiPage|Article $article WikiPage on 1.19 and later
 	 * @param Revision $rev
 	 * @param integer $baseID
 	 * @param User $user
-	 * 
+	 *
 	 * @return true
 	 */
 	static public function onNewRevisionFromEditComplete( /* WikiPage */ $article, Revision $rev, $baseID, User $user ) {
 		global $smwgPageSpecialProperties;
-		
+
 		if ( ( $article->mPreparedEdit ) && ( $article->mPreparedEdit->output instanceof ParserOutput ) ) {
 			$output = $article->mPreparedEdit->output;
 			$title = $article->getTitle();
@@ -445,23 +467,23 @@ class SMWParseData {
 		if ( in_array( '_MDAT', $smwgPageSpecialProperties ) ) {
 			$timestamp = $article->getTimestamp();
 			$di = self::getDataItemFromMWTimestamp( $timestamp );
-			
+
 			if ( !is_null( $di ) ) {
 				$semdata->addPropertyObjectValue( new SMWDIProperty( '_MDAT' ), $di );
 			}
 		}
-		
+
 		if ( in_array( '_LEDT', $smwgPageSpecialProperties ) ) {
 			$di = SMWDIWikiPage::newFromTitle( $user->getUserPage() );
-			
+
 			if ( !is_null( $di ) ) {
 				$semdata->addPropertyObjectValue( new SMWDIProperty( '_LEDT' ), $di );
 			}
 		}
-		
+
 		if ( in_array( '_NEWP', $smwgPageSpecialProperties ) ) {
 			$semdata->addPropertyObjectValue(
-				new SMWDIProperty( '_NEWP' ), 
+				new SMWDIProperty( '_NEWP' ),
 				new SMWDIBoolean( is_null( $rev->getParentId() ) )
 			);
 		}

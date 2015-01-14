@@ -40,7 +40,8 @@ class OasisController extends WikiaController {
 		// initialize variables
 		$this->comScore = null;
 		$this->quantServe = null;
-		$this->amazonDirectTargetedBuy = null;
+		$this->amazonMatch = null;
+		$this->rubiconRtp = null;
 		$this->dynamicYield = null;
 		$this->ivw2 = null;
 
@@ -174,44 +175,12 @@ class OasisController extends WikiaController {
 		}
 
     	// Reset (this ensures no duplication in CSS links)
-		$this->cssLinks = '';
-		$this->cssPrintLinks = '';
+		$sassFiles = ['skins/oasis/css/oasis.scss'];
 
-		$sassFiles = [];
-		foreach ( $skin->getStyles() as $s ) {
-			if ( !empty($s['url']) ) {
-				$tag = $s['tag'];
-				if ( !empty( $wgAllInOne ) ) {
-					$url = $this->minifySingleAsset($s['url']);
-					if ($url !== $s['url']) {
-						$tag = str_replace($s['url'],$url,$tag);
-					}
-				}
+		$this->cssLinks = $skin->getStylesWithCombinedSASS($sassFiles);
 
-				// Print styles will be loaded separately at the bottom of the page
-				if ( stripos($tag, 'media="print"') !== false ) {
-					$this->cssPrintLinks .= $tag;
-				} elseif ($wgAllInOne && $this->assetsManager->isSassUrl($s['url'])) {
-					$sassFiles[] = $s['url'];
-				} else {
-					$this->cssLinks .= $tag;
-				}
-			} else {
-				$this->cssLinks .= $s['tag'];
-			}
-		}
-
-		$mainSassFile = 'skins/oasis/css/oasis.scss';
-		if (!empty($sassFiles)) {
-			array_unshift($sassFiles, $mainSassFile);
-			$sassFiles = $this->assetsManager->getSassFilePath($sassFiles);
-			$sassFilesUrl = $this->assetsManager->getSassesUrl($sassFiles);
-
-			$this->cssLinks = Html::linkedStyle($sassFilesUrl) . $this->cssLinks;
-			$this->bottomScripts .= Html::inlineScript("var wgSassLoadedScss = ".json_encode($sassFiles).";");
-		} else {
-			$this->cssLinks = Html::linkedStyle($this->assetsManager->getSassCommonURL($mainSassFile)) . $this->cssLinks;
-		}
+		// $sassFiles will be updated by getStylesWithCombinedSASS method will all extracted and concatenated SASS files
+		$this->bottomScripts .= Html::inlineScript("var wgSassLoadedScss = ".json_encode($sassFiles).";");
 
 		$this->headLinks = $wgOut->getHeadLinks();
 		$this->headItems = $skin->getHeadItems();
@@ -231,7 +200,7 @@ class OasisController extends WikiaController {
 			}
 		}
 
-		// setup loading of JS/CSS using WSL (WikiaScriptLoader)
+		// setup loading of JS/CSS
 		$this->loadJs();
 
 		// FIXME: create separate module for stats stuff?
@@ -265,7 +234,8 @@ class OasisController extends WikiaController {
 		if(!in_array($wgRequest->getVal('action'), array('edit', 'submit'))) {
 			$this->comScore = AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->quantServe = AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->amazonDirectTargetedBuy = AnalyticsEngine::track('AmazonDirectTargetedBuy', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->amazonMatch = AnalyticsEngine::track('AmazonMatch', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->rubiconRtp = AnalyticsEngine::track('RubiconRTP', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->ivw2 = AnalyticsEngine::track('IVW2', AnalyticsEngine::EVENT_PAGEVIEW);
 		}
@@ -277,41 +247,6 @@ class OasisController extends WikiaController {
 		}
 
 		wfProfileOut(__METHOD__);
-	}
-
-	private function rewriteJSlinks( $link ) {
-		global $IP;
-		wfProfileIn( __METHOD__ );
-
-		$parts = explode( "?cb=", $link ); // look for http://*/filename.js?cb=XXX
-
-		if ( count( $parts ) == 2 ) {
-			//$hash = md5(file_get_contents($IP . '/' . $parts[0]));
-			$fileName = $parts[0];
-			$fileName = preg_replace("#^(https?:)?//[^/]+#","",$fileName);
-			$hash = filemtime( $IP . '/' . $fileName);
-			$link = $parts[0].'?cb='.$hash;
-		} else {
-			$ret = preg_replace_callback(
-				'#(/__cb)([0-9]+)/([^ ]*)#', // look for http://*/__cbXXXXX/* type of URLs
-				function ( $matches ) {
-					global $IP, $wgStyleVersion;
-					$filename = explode('?',$matches[3]); // some filenames may additionaly end with ?$wgStyleVersion
-					//$hash = hexdec(substr(md5(file_get_contents( $IP . '/' . $filename[0])),0,6));
-					$hash = filemtime( $IP . '/' . $filename[0] );
-					return str_replace( $wgStyleVersion, $hash, $matches[0]);
-				},
-				$link
-			);
-
-			if ( $ret ) {
-				$link = $ret;
-			}
-		}
-		//error_log( $link );
-
-		wfProfileOut( __METHOD__ );
-		return $link;
 	}
 
 	/**
@@ -367,13 +302,13 @@ class OasisController extends WikiaController {
 
 	// TODO: implement as a separate module?
 	private function loadJs() {
-		global $wgJsMimeType, $wgUser, $wgSpeedBox, $wgDevelEnvironment, $wgEnableAbTesting, $wgAllInOne, $wgEnableRHonDesktop, $wgOasisDisableWikiaScriptLoader;
+		global $wgJsMimeType, $wgUser, $wgDevelEnvironment, $wgEnableAdEngineExt, $wgEnableGlobalNavExt, $wgAllInOne;
 		wfProfileIn(__METHOD__);
 
 		$this->jsAtBottom = self::JsAtBottom();
 
-		// load WikiaScriptLoader, AbTesting files, anything that's so mandatory that we're willing to make a blocking request to load it.
-		$this->wikiaScriptLoader = '';
+		// load AbTesting files, anything that's so mandatory that we're willing to make a blocking request to load it.
+		$this->globalBlockingScripts = '';
 		$jsReferences = array();
 
 		$jsAssetGroups = array( 'oasis_blocking' );
@@ -381,18 +316,14 @@ class OasisController extends WikiaController {
 		$blockingScripts = $this->assetsManager->getURL($jsAssetGroups);
 
 		foreach($blockingScripts as $blockingFile) {
-			if( $wgSpeedBox && $wgDevelEnvironment ) {
-				$blockingFile = $this->rewriteJSlinks( $blockingFile );
-			}
-
-			$this->wikiaScriptLoader .= "<script type=\"$wgJsMimeType\" src=\"$blockingFile\"></script>";
+			$this->globalBlockingScripts .= "<script type=\"$wgJsMimeType\" src=\"$blockingFile\"></script>";
 		}
 
-		// move JS files added to OutputPage to list of files to be loaded using WSL
+		// move JS files added to OutputPage to list of files to be loaded
 		$scripts = RequestContext::getMain()->getSkin()->getScripts();
 
-		foreach ( $scripts as $s ) {
-			//add inline scripts to jsFiles and move non-inline to WSL queue
+			foreach ( $scripts as $s ) {
+			//add inline scripts to jsFiles and move non-inline to the queue
 			if ( !empty( $s['url'] ) ) {
 				// FIXME: quick hack to load MW core JavaScript at the top of the page - really, please fix me!
 				// @author macbre
@@ -404,9 +335,6 @@ class OasisController extends WikiaController {
 					if ( $wgAllInOne ) {
 						$url = $this->minifySingleAsset( $url );
 					}
-					if ( !empty( $wgSpeedBox ) && !empty( $wgDevelEnvironment ) ) {
-						$url = $this->rewriteJSlinks( $url );
-					}
 					$jsReferences[] = $url;
 				}
 			} else {
@@ -416,7 +344,21 @@ class OasisController extends WikiaController {
 		$isLoggedIn = $wgUser->isLoggedIn();
 
 		$assetGroups = ['oasis_shared_core_js', 'oasis_shared_js'];
-		$assetGroups[] = $isLoggedIn ? 'oasis_user_js' : 'oasis_anon_js';
+
+		if ( empty( $wgEnableGlobalNavExt ) ) {
+			$assetGroups[] = 'global_header_js';
+		}
+
+		if ( $isLoggedIn ) {
+			$assetGroups[] = 'oasis_user_js';
+		} else {
+			if ( empty( $wgEnableGlobalNavExt ) ) {
+				$assetGroups[] = 'oasis_anon_js';
+			} else {
+				$assetGroups[] = 'oasis_anon_with_new_global_nav_js';
+			}
+		}
+
 
 		$jsLoader = '';
 
@@ -425,59 +367,19 @@ class OasisController extends WikiaController {
 		// add groups queued via OasisController::addSkinAssetGroup
 		$assetGroups = array_merge($assetGroups, self::$skinAssetGroups);
 
-		if ( empty($wgOasisDisableWikiaScriptLoader)) {
-			// Load the combined JS
-			$assets = [];
+		$assets = $this->assetsManager->getURL( $assetGroups ) ;
 
-			$assets['oasis_shared_js'] = $this->assetsManager->getURL($assetGroups);
+		// jQueryless version - appears only to be used by the ad-experiment at the moment.
+		// disabled - not needed atm (and skipped in wsl-version anyway)
+		// $assets[] = $this->assetsManager->getURL( $isLoggedIn ? 'oasis_nojquery_shared_js_user' : 'oasis_nojquery_shared_js_anon' );
 
-			// jQueryless version - appears only to be used by the ad-experiment at the moment.
-			$assets['oasis_nojquery_shared_js'] = $this->assetsManager->getURL($isLoggedIn ? 'oasis_nojquery_shared_js_user' : 'oasis_nojquery_shared_js_anon');
+		// add $jsReferences
+		$assets = array_merge($assets, $jsReferences);
 
-			if (!empty($wgSpeedBox) && !empty($wgDevelEnvironment)) {
-				foreach ($assets as $group => $urls) {
-					foreach ($urls as $index => $u) {
-						$assets[$group][$index] = $this->rewriteJSlinks($assets[$group][$index]);
-					}
-				}
-			}
-
-			$assets['references'] = $jsReferences;
-
-			// generate code to load JS files
-			$assets = json_encode($assets);
-			$jsLoader = <<<EOT
-<script type="text/javascript">
-	var wsl_assets = {$assets};
-	var toload = wsl_assets.oasis_shared_js.concat(wsl_assets.references);
-
-	(function(){ wsl.loadScript(toload); })();
-</script>
-EOT;
-		} else {
-			// skip WikiaScriptLoader
-
-			$assets = $this->assetsManager->getURL( $assetGroups ) ;
-
-			// jQueryless version - appears only to be used by the ad-experiment at the moment.
-			// disabled - not needed atm (and skipped in wsl-version anyway)
-			// $assets[] = $this->assetsManager->getURL( $isLoggedIn ? 'oasis_nojquery_shared_js_user' : 'oasis_nojquery_shared_js_anon' );
-
-			// get urls
-			if (!empty($wgSpeedBox) && !empty($wgDevelEnvironment)) {
-				foreach ($assets as $index => $url) {
-					$assets[$index] = $this->rewriteJSlinks( $url );
-				}
-			}
-
-			// as $jsReferences
-			$assets = array_merge($assets, $jsReferences);
-
-			// generate direct script tags
-			foreach ($assets as $url) {
-				$url = htmlspecialchars( $url );
-				$jsLoader .= "<script type=\"text/javascript\" src=\"{$url}\"></script>\n";
-			}
+		// generate direct script tags
+		foreach ($assets as $url) {
+			$url = htmlspecialchars( $url );
+			$jsLoader .= "<script src=\"{$url}\"></script>\n";
 		}
 
 		$tpl = $this->app->getSkinTemplateObj();
@@ -500,7 +402,7 @@ EOT;
 			$this->jsFiles = $jsFiles;
 		}
 
-		if (!$wgEnableRHonDesktop) {
+		if ($wgEnableAdEngineExt && AdEngine2Service::shouldLoadLiftium()) {
 			$this->jsFiles = AdEngine2Controller::getLiftiumOptionsScript() . $this->jsFiles;
 		}
 

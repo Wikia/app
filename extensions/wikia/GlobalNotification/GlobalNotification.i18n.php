@@ -27,6 +27,14 @@ $messages['ar'] = array(
 	'globalnotification-general-ajax-failure' => 'تعذر على المتصفح الدخول إلى ويكيا.  حاول مرة أخرى لاحقاً.',
 );
 
+/** Asturian (asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'globalnotification-desc' => 'Amuesa avisos del sistema pa socesos tales como fallos de AJAX',
+	'globalnotification-general-ajax-failure' => 'El restolador nun pudo coneutase con Wikia. Vuelvi a intentalo más sero.',
+);
+
 /** Bengali (বাংলা)
  * @author Aftab1995
  */

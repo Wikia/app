@@ -161,7 +161,12 @@ class ImageLightbox {
 
 			$maxWidth = $wgRequest->getInt('maxwidth', 500);
 
-			$embedCode = $image->getEmbedCode( $maxWidth, true, true );
+			$options = [
+				'autoplay' => true,
+				'isAjax' => true,
+			];
+
+			$embedCode = $image->getEmbedCode( $maxWidth, $options );
 
 			$tmpl = new EasyTemplate(dirname(__FILE__));
 

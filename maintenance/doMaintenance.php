@@ -65,6 +65,9 @@ if ( isset( $_SERVER['MW_COMPILED'] ) ) {
 
 # Stub the profiler
 require_once( MWInit::compiledPath( 'includes/profiler/Profiler.php' ) );
+// Wikia change - begin - use normal profiler
+require_once( "$IP/StartProfiler.php" );
+// Wikia change - end
 
 // Some other requires
 if ( !defined( 'MW_COMPILED' ) ) {
@@ -90,6 +93,23 @@ if ( defined( 'MW_CONFIG_CALLBACK' ) ) {
 	// Require the configuration (probably LocalSettings.php)
 	require( $maintenance->loadSettings() );
 }
+
+// Wikia change - begin - attach sink to the profiler (copied from WebStart.php)
+if ( $wgProfiler instanceof Profiler ) {
+	if ( empty($wgProfilerSendViaScribe) ) {
+		$sink = new ProfilerDataUdpSink();
+	} else {
+		$sink = new ProfilerDataScribeSink();
+	}
+	$wgProfiler->addSink( $sink );
+
+	// keep the legacy stream of Mediawiki profiler data via UDP
+	if ( ( $wgProfiler instanceof ProfilerSimpleDataCollector ) and !( $sink instanceof ProfilerDataUdpSink ) ) {
+		$wgProfiler->addSink( new ProfilerDataUdpSink() );
+	}
+}
+Transaction::setEntryPoint(Transaction::ENTRY_POINT_MAINTENANCE);
+// Wikia change - end
 
 if ( $maintenance->getDbType() === Maintenance::DB_ADMIN &&
 	is_readable( "$IP/AdminSettings.php" ) )

@@ -29,7 +29,7 @@ class Paginator extends Service{
 	/**
 	 * Creates a new Pagination object.
 	 *
-	 * @param   array  $aData
+	 * @param   array|integer  $aData
 	 * @return  Paginator
 	 */
 	public static function newFromArray( $aData, $iItemsPerPage = 8, $iDisplayedNeighbour = 3, $bCach = false, $sCacheKey = '', $maxItemsPerPage = 48 ){

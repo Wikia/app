@@ -150,6 +150,13 @@ $messages['km'] = array(
 	'scribeeventsrecords' => 'កំណត់ត្រា',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'scribeeventsrecords' => 'ದಾಖಲೆಗಳು',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */

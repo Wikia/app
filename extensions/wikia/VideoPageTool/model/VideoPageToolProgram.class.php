@@ -150,6 +150,7 @@ class VideoPageToolProgram extends WikiaModel {
 			wfProfileOut( __METHOD__ );
 			return $program;
 		} else {
+			wfProfileOut( __METHOD__ );
 			return null;
 		}
 	}
@@ -417,6 +418,11 @@ class VideoPageToolProgram extends WikiaModel {
 		if ( wfReadOnly() ) {
 			wfProfileOut( __METHOD__ );
 			return Status::newFatal( wfMessage( 'videos-error-readonly' )->plain() );
+		}
+
+		// Make sure we've got a publishedBy value here
+		if ( empty( $this->getPublishedBy ) ) {
+			$this->setPublishedBy( $this->wg->User->getId() );
 		}
 
 		$db = $this->getMasterDB();

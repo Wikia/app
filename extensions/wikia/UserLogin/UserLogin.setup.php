@@ -9,8 +9,9 @@
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'UserLogin',
 );
- 
+
 $dir = dirname(__FILE__) . '/';
+
 //classes
 $wgAutoloadClasses['FacebookButtonController'] =  $dir . 'FacebookButtonController.class.php';
 $wgAutoloadClasses['FacebookSignupController'] =  $dir . 'FacebookSignupController.class.php';
@@ -33,8 +34,9 @@ $wgHooks['UserSendConfirmationMail'][] = 'UserLoginHooksHelper::onUserSendConfir
 $wgHooks['PreferencesGetEmailAuthentication'][] = 'UserLoginHooksHelper::onGetEmailAuthentication';
 $wgHooks['isValidEmailAddr'][] = 'UserLoginHooksHelper::isValidEmailAddr';
 $wgHooks['SavePreferences'][] = 'UserLoginHooksHelper::onSavePreferences';
-$wgHooks['AddNewAccount'][] = 'UserLoginHooksHelper::onAddNewAccount';
 $wgHooks['ConfirmEmailComplete'][] = 'UserLoginHooksHelper::onConfirmEmailComplete';
+$wgHooks['WikiaMobileAssetsPackages'][] = 'UserLoginHooksHelper::onWikiaMobileAssetsPackages';
+
 // i18n mapping
 $wgExtensionMessagesFiles['UserLogin'] = $dir . 'UserLogin.i18n.php';
 $wgExtensionMessagesFiles['UserSignup'] = $dir . 'UserSignup.i18n.php';

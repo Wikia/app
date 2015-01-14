@@ -89,6 +89,8 @@ $messages['bg'] = array(
  */
 $messages['br'] = array(
 	'unsubscribe' => 'Digoumanantiñ',
+	'unsubscribe-badtoken' => 'Digarezit, ur gudenn zo bet gant ar jedouer surentez.',
+	'unsubscribe-bademail' => 'Digarezit, ur gudenn zo bet gant ar postel.',
 	'unsubscribe-nousers' => "N'eus bet kavet implijer ebet gant ar chomlec'h postel-se.",
 	'unsubscribe-noconfusers' => "N'eus bet kavet implijer kadarnaet ebet gant ar chomlec'h postel-se.",
 	'unsubscribe-confirm-legend' => 'Kadarnaat',
@@ -100,13 +102,22 @@ $messages['br'] = array(
 
 /** Catalan (català)
  * @author Light of Cosmos
+ * @author Unapersona
  */
 $messages['ca'] = array(
+	'unsubscribe' => 'Donar-se de baixa',
+	'unsubscribe-badaccess' => "Ho sentim, però aquesta pàgina no pot ser utilitzada directament. Si us plau, seguiu l'enllaç des de l'adreça d'e-mail.",
+	'unsubscribe-bademail' => "Ho sentim, hi havia un problema amb l'e-mail.",
 	'unsubscribe-nousers' => "No s'han trobat usuaris amb aquesta adreça electrònica.",
 	'unsubscribe-noconfusers' => "No s'han trobat usuaris confirmats amb aquesta adreça electrònica.",
 	'unsubscribe-confirm-legend' => 'Confirmar',
+	'unsubscribe-confirm-text' => 'Donar de baixa tots els comptes amb <code>$1</code>?',
 	'unsubscribe-confirm-button' => "Sí, n'estic segur.",
+	'unsubscribe-working' => 'Sonant de baixa $1 {{PLURAL:$1|compte|comptes}} per $2',
+	'unsubscribe-working-problem' => "problema carregant la informació d'usuari per: $1",
 	'unsubscribe-working-done' => 'Complet.',
+	'unsubscribe-preferences-toggle' => 'Donar-se de baixa de tots els correus electrònics de Wikia (desmarqueu per accedir a les opcions de sota)',
+	'unsubscribe-preferences-notice' => "Els missatges de correu electrònic han estat inhabilitades per al vostre compte. Vés a la pestanya del Perfil d'Usuari per a activar-les.",
 );
 
 /** Chechen (нохчийн)
@@ -159,10 +170,11 @@ $messages['de'] = array(
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'unsubscribe' => 'Abonin ra bıvıci',
-	'unsubscribe-confirm-legend' => 'Testiq ke',
+	'unsubscribe-confirm-legend' => 'Tesdiq ke',
 	'unsubscribe-confirm-button' => 'E, Me emel ke',
 	'unsubscribe-working-done' => 'Temamyayo',
 );
@@ -383,10 +395,10 @@ $messages['lv'] = array(
  */
 $messages['mk'] = array(
 	'unsubscribe' => 'Отпиши',
-	'unsubscribe-badaccess' => 'Нажалост, оваа страница не може да се користи директно. Стиснете на врската наведена во пораката што ви ја испративме по е-пошта.',
-	'unsubscribe-badtoken' => 'Нажалост, се појави проблем со безбедносната шифра.',
-	'unsubscribe-bademail' => 'Нажалост, се појави проблем со е-поштата.',
-	'unsubscribe-badtime' => 'Нажалост, врската истече. Врската не треба да е постара од 7 дена.',
+	'unsubscribe-badaccess' => 'За жал, оваа страница не може да се користи непосредно. Стиснете на врската наведена во пораката што ви ја испративме по е-пошта.',
+	'unsubscribe-badtoken' => 'За жал, се појави проблем со безбедносната шифра.',
+	'unsubscribe-bademail' => 'За жал, се појави проблем со е-поштата.',
+	'unsubscribe-badtime' => 'За жал, врската истече. Врската не треба да е постара од 7 дена.',
 	'unsubscribe-nousers' => 'Не пронајдов корисници со таа е-поштенска адреса.',
 	'unsubscribe-noconfusers' => 'Не пронајдов потврдени корисници со таа е-поштенска адреса.',
 	'unsubscribe-confirm-legend' => 'Потврди',
@@ -756,6 +768,7 @@ $messages['vi'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  * @author Hzy980512
+ * @author Liuxinyu970226
  */
 $messages['zh-hans'] = array(
 	'unsubscribe' => '取消订阅',
@@ -768,6 +781,8 @@ $messages['zh-hans'] = array(
 	'unsubscribe-confirm-legend' => '确定',
 	'unsubscribe-confirm-text' => '要利用<code>$1</code>取消订阅所有用户吗？',
 	'unsubscribe-confirm-button' => '是，我很确定',
+	'unsubscribe-working' => '为$2退订$1个账户',
+	'unsubscribe-working-problem' => '加载用户信息时出现问题：$1',
 	'unsubscribe-working-done' => '完成。',
 	'unsubscribe-preferences-toggle' => '不订阅Wikia的所有邮件（取消选定这个方块才能进入下列选项）',
 	'unsubscribe-preferences-notice' => '您的账户已禁用电邮。请访问用户配置文件选项卡以从新启用。',

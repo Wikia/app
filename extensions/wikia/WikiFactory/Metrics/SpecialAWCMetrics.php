@@ -155,7 +155,7 @@ class WikiMetrics {
 		$this->getLangs();
 		#---
 		$hubs = WikiFactoryHub::getInstance();
-		$aCategories = $hubs->getCategories();
+		$aCategories = $hubs->getAllCategories();
 
 		$params = $wgRequest->getValues();
 		if ( empty($params['from']) ) {
@@ -189,7 +189,7 @@ class WikiMetrics {
         wfProfileIn( __METHOD__ );
 		#---
 		$hubs = WikiFactoryHub::getInstance();
-		$aCategories = $hubs->getCategories();
+		$aCategories = $hubs->getAllCategories();
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
 			"error"				=> $error,
@@ -209,7 +209,7 @@ class WikiMetrics {
         wfProfileIn( __METHOD__ );
 		#---
 		$hubs = WikiFactoryHub::getInstance();
-		$aCategories = $hubs->getCategories();
+		$aCategories = $hubs->getAllCategories();
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
 			"error"				=> $error,
@@ -279,11 +279,11 @@ class WikiMetrics {
 
 		#---
 		list ($AWCCities, $AWCCitiesCount) = $this->getNewWikis();
-		
+
 		if ( !empty( $AWCCities ) ) {
-			#--- page views 
+			#--- page views
 			$wikiList = array_keys( $AWCCities );
-			
+
 			$startDate = date( 'Y-m-01', strtotime('-3 month') );
 			$endDate = date( 'Y-m-01', strtotime('now') );
 			$pageviews = DataMartService::getPageviewsMonthly( $startDate, $endDate, $wikiList );
@@ -466,7 +466,7 @@ class WikiMetrics {
 			/* number records */
 			$options = array();
 
-			$tables = array("wikicities.city_list", "stats.wikia_monthly_stats"); 
+			$tables = array("wikicities.city_list", "stats.wikia_monthly_stats");
 			$fields = array(
 				"city_id",
 				"city_dbname",
@@ -582,7 +582,7 @@ class WikiMetrics {
 		}
 
 		$hubs = WikiFactoryHub::getInstance();
-		$aCategories = $hubs->getCategories();
+		$aCategories = $hubs->getAllCategories();
 
 		$AWCMetrics = array();
 		$AWCCitiesCount = 0;
@@ -741,11 +741,11 @@ class WikiMetrics {
 			$startDate = date( 'Y-m-01', strtotime('-3 month') );
 			$endDate = date( 'Y-m-01', strtotime('now') );
 			$pageviews = DataMartService::getPageviewsMonthly( $startDate, $endDate, $this->cityIds );
-		
+
 			if ( empty( $pageviews ) ) {
 				foreach ( $pageviews as $wiki_id => $wiki_data ) {
 					#---
-					if ( $wiki_data['SUM'] > intval($pageViews) ) continue; 
+					if ( $wiki_data['SUM'] > intval($pageViews) ) continue;
 					$this->mPageViews[ $wiki_id ] = $wiki_data[ 'SUM' ];
 					$cities[] = $wiki_id;
 				}

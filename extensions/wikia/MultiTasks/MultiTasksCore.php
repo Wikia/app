@@ -389,8 +389,22 @@ class MultiTask extends SpecialPage {
 					$oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
 					$this->mTaskParams['page'] = $sTitle;
 
-					$thisTask = new $this->mTaskClass( $this->mTaskParams );
-					$submit_id = $thisTask->submitForm();
+					$task = new \Wikia\Tasks\Tasks\MultiTask();
+
+					switch ($this->mTaskClass) {
+						case 'MultiDeleteTask':
+							$taskAction = 'delete';
+							break;
+						case 'MultiWikiEditTask':
+							$taskAction = 'edit';
+							break;
+						default:
+							throw new InvalidArgumentException("unsupported modern class: {$this->mTaskClass}");
+					}
+
+					$task->call($taskAction, $this->mTaskParams);
+					$submit_id = $task->queue();
+					$submitLink = wfMsg ("multi_task_added_{$taskAction}", $submit_id);
 
 					$oTmpl->set_vars( array(
 						"modeText" 		=> $modeText,
@@ -402,6 +416,7 @@ class MultiTask extends SpecialPage {
 						"cat"			=> $cat,
 						"obj"			=> $this,
 						"submit_id"		=> $submit_id,
+						'submitLink' => $submitLink,
 						"error"			=> ($submit_id === false),
 					) );
 					$wgOut->addHTML( $oTmpl->render($this->mFinishForm) );

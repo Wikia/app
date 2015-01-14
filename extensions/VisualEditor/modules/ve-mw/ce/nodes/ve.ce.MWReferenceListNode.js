@@ -1,7 +1,7 @@
 /*!
  * VisualEditor ContentEditable MWReferenceListNode class.
  *
- * @copyright 2011-2013 VisualEditor Team and others; see AUTHORS.txt
+ * @copyright 2011-2014 VisualEditor Team and others; see AUTHORS.txt
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
@@ -10,7 +10,7 @@
  *
  * @class
  * @extends ve.ce.LeafNode
- * @mixins ve.ce.ProtectedNode
+ * @mixins ve.ce.FocusableNode
  *
  * @constructor
  * @param {ve.dm.MWReferenceListNode} model Model to observe
@@ -21,7 +21,6 @@ ve.ce.MWReferenceListNode = function VeCeMWReferenceListNode( model, config ) {
 	ve.ce.LeafNode.call( this, model, config );
 
 	// Mixin constructors
-	ve.ce.ProtectedNode.call( this );
 	ve.ce.FocusableNode.call( this );
 
 	// Properties
@@ -45,8 +44,6 @@ ve.ce.MWReferenceListNode = function VeCeMWReferenceListNode( model, config ) {
 
 OO.inheritClass( ve.ce.MWReferenceListNode, ve.ce.LeafNode );
 
-OO.mixinClass( ve.ce.MWReferenceListNode, ve.ce.ProtectedNode );
-
 OO.mixinClass( ve.ce.MWReferenceListNode, ve.ce.FocusableNode );
 
 /* Static Properties */
@@ -54,6 +51,17 @@ OO.mixinClass( ve.ce.MWReferenceListNode, ve.ce.FocusableNode );
 ve.ce.MWReferenceListNode.static.name = 'mwReferenceList';
 
 ve.ce.MWReferenceListNode.static.tagName = 'div';
+
+ve.ce.MWReferenceListNode.static.primaryCommandName = 'referenceList';
+
+/* Static Methods */
+
+/**
+ * @inheritdoc
+ */
+ve.ce.MWReferenceListNode.static.getDescription = function ( model ) {
+	return model.getAttribute( 'refGroup' );
+};
 
 /* Methods */
 
@@ -187,18 +195,27 @@ ve.ce.MWReferenceListNode.prototype.update = function () {
 
 			// Generate reference HTML from first item in key
 			modelNode = internalList.getItemNode( firstNode.getAttribute( 'listIndex' ) );
-			if ( modelNode.length ) {
+			if ( modelNode && modelNode.length ) {
 				viewNode = new ve.ce.InternalItemNode( modelNode );
 				// HACK: PHP parser doesn't wrap single lines in a paragraph
-				if ( viewNode.$element.children().length === 1 && viewNode.$element.children( 'p' ).length === 1 ) {
+				if (
+					viewNode.$element.children().length === 1 &&
+					viewNode.$element.children( 'p' ).length === 1
+				) {
 					// unwrap inner
-					viewNode.$element.children().replaceWith( viewNode.$element.children().contents() );
+					viewNode.$element.children().replaceWith(
+						viewNode.$element.children().contents()
+					);
 				}
 				$li.append(
 					this.$( '<span>' )
 						.addClass( 'reference-text' )
-						.append( viewNode.$element.clone().show() )
+						.append( viewNode.$element.show() )
 				);
+				// HACK: See bug 62682 - We happen to know that destroy doesn't abort async
+				// rendering for generated content nodes, but we really can't gaurantee that in the
+				// future - if you are here, debugging, because something isn't rendering properly,
+				// it's likely that something has changed and these assumptions are no longer valid
 				viewNode.destroy();
 			} else {
 				$li.append(

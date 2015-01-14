@@ -1,6 +1,4 @@
-
---
--- Not dumping tablespaces as no INFORMATION_SCHEMA.FILES table on this server
+-- Schema for WikiFactory tables
 --
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
@@ -11,28 +9,27 @@ CREATE TABLE `city_cat_mapping` (
   KEY `cat_id_idx` (`cat_id`),
   CONSTRAINT `city_cat_mapping_ibfk_1` FOREIGN KEY (`city_id`) REFERENCES `city_list` (`city_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-CREATE TABLE `city_cat_structure` (
-  `cat_id` int(11) default NULL,
-  `cat_parent_id` int(11) default NULL,
-  KEY `cat_id_idx` (`cat_id`),
-  KEY `cat_parent_id_idx` (`cat_parent_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
+
 CREATE TABLE `city_cats` (
   `cat_id` int(9) NOT NULL auto_increment,
   `cat_name` varchar(255) default NULL,
   `cat_url` text,
+  `cat_short` varchar(255) DEFAULT NULL,
+  `cat_deprecated` boolean DEFAULT 0,
+  `cat_active` boolean DEFAULT 0,
   PRIMARY KEY  (`cat_id`),
   KEY `cat_name_idx` (`cat_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `city_verticals` (
+  `vertical_id` int(9) NOT NULL auto_increment,
+  `vertical_name` varchar(255) default NULL,
+  `vertical_url` text,
+  `vertical_short` varchar(255) DEFAULT NULL,
+  PRIMARY KEY  (`vertical_id`),
+  KEY `vertical_name_idx` (`vertical_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 CREATE TABLE `city_domains` (
   `city_id` int(9) NOT NULL,
   `city_domain` varchar(255) NOT NULL default 'wikia.com',
@@ -40,9 +37,7 @@ CREATE TABLE `city_domains` (
   UNIQUE KEY `city_domains_idx_uniq` (`city_domain`),
   CONSTRAINT `city_domains_ibfk_1` FOREIGN KEY (`city_id`) REFERENCES `city_list` (`city_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
+
 CREATE TABLE `city_list` (
   `city_id` int(9) NOT NULL auto_increment,
   `city_path` varchar(255) NOT NULL default '/home/wikicities/cities/notreal',
@@ -68,7 +63,6 @@ CREATE TABLE `city_list` (
   `city_lastdump_timestamp` varchar(14) default '19700101000000',
   `city_factory_timestamp` varchar(14) default '19700101000000',
   `city_useshared` tinyint(1) default '1',
-  `ad_cat` char(4) NOT NULL default '',
   `city_flags` int(10) unsigned NOT NULL default '0',
   `city_cluster` varchar(255) default NULL,
   `city_last_timestamp` timestamp NOT NULL default CURRENT_TIMESTAMP,
@@ -79,10 +73,8 @@ CREATE TABLE `city_list` (
   KEY `urlidx` (`city_url`),
   KEY `city_flags` (`city_flags`),
   KEY `city_founding_ip` (`city_founding_ip`)
-) ENGINE=InnoDB AUTO_INCREMENT=88756 DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 CREATE TABLE `city_list_log` (
   `cl_city_id` int(9) NOT NULL,
   `cl_timestamp` timestamp NOT NULL default CURRENT_TIMESTAMP,
@@ -93,18 +85,14 @@ CREATE TABLE `city_list_log` (
   KEY `cl_type_idx` (`cl_type`),
   CONSTRAINT `city_list_log_ibfk_1` FOREIGN KEY (`cl_city_id`) REFERENCES `city_list` (`city_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-SET character_set_client = @saved_cs_client;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
+
 CREATE TABLE `city_tag` (
   `id` int(8) unsigned NOT NULL auto_increment,
   `name` varchar(255) default NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `city_tag_name_uniq` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
+
 CREATE TABLE `city_tag_map` (
   `city_id` int(9) NOT NULL,
   `tag_id` int(8) unsigned NOT NULL,
@@ -113,9 +101,7 @@ CREATE TABLE `city_tag_map` (
   CONSTRAINT `city_tag_map_ibfk_1` FOREIGN KEY (`city_id`) REFERENCES `city_list` (`city_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `city_tag_map_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `city_tag` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
+
 CREATE TABLE `city_variables` (
   `cv_city_id` int(9) NOT NULL,
   `cv_variable_id` smallint(5) unsigned NOT NULL default '0',
@@ -125,17 +111,13 @@ CREATE TABLE `city_variables` (
   CONSTRAINT `city_variables_ibfk_1` FOREIGN KEY (`cv_variable_id`) REFERENCES `city_variables_pool` (`cv_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `city_variables_ibfk_2` FOREIGN KEY (`cv_city_id`) REFERENCES `city_list` (`city_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
+
 CREATE TABLE `city_variables_groups` (
   `cv_group_id` int(11) NOT NULL auto_increment,
   `cv_group_name` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`cv_group_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
-SET character_set_client = @saved_cs_client;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 CREATE TABLE `city_variables_pool` (
   `cv_id` smallint(5) unsigned NOT NULL auto_increment,
   `cv_name` varchar(255) NOT NULL,
@@ -146,5 +128,5 @@ CREATE TABLE `city_variables_pool` (
   PRIMARY KEY  (`cv_id`),
   UNIQUE KEY `idx_name_unique` (`cv_name`),
   KEY `name_unique` (`cv_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=864 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 SET character_set_client = @saved_cs_client;

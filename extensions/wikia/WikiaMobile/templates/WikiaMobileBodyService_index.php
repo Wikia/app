@@ -16,12 +16,14 @@
 	<article id=wkMainCnt>
 		<?= $bodyContent ;?>
 		<footer id=wkMainCntFtr>
-			<nav id=wkRltdCnt>
+			<?= !empty( $afterBodyContent ) ? $afterBodyContent : ''; ?>
+			<nav id="wkRltdCnt">
+				<div id="RelatedPagesModuleWrapper"></div>
+				<div id="NATIVE_TABOOLA"></div>
 				<?= !empty( $trendingArticles ) ? $trendingArticles : ''; ?>
 				<?= !empty( $categoryLinks ) ? $categoryLinks : ''; ?>
 			</nav>
 			<?= !empty( $afterContentHookText ) ? $afterContentHookText : ''; ?>
-			<?= !empty( $afterBodyContent ) ? $afterBodyContent : ''; ?>
 		</footer>
 	</article>
 </section>

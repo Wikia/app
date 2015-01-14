@@ -39,6 +39,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	private $mockMessageCacheGet = null;
 
 	private static $testRunTime = 0;
+	private static $numberSlowTests = 0;
 
 	/**
 	 * Print out currently run test
@@ -51,6 +52,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		echo "\nRunning '{$testClass}'...";
 
 		self::$testRunTime = microtime( true );
+		self::$numberSlowTests = 0;
 
 		if ($wgAnnotateTestSpeed) {
 			WikiaTestSpeedAnnotator::initialize();
@@ -64,7 +66,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		global $wgAnnotateTestSpeed;
 
 		$time = round( ( microtime( true ) - self::$testRunTime ) * 1000, 2 );
-		echo "done in {$time} ms";
+		echo "done in {$time} ms [" . self::$numberSlowTests . ' slow tests]';
 
 		if ($wgAnnotateTestSpeed) {
 			WikiaTestSpeedAnnotator::execute();
@@ -101,6 +103,9 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 		$this->mockProxy->disable();
 		$this->mockProxy = null;
 
+		if ( WikiaTestSpeedAnnotator::isMarkedAsSlow($this->getAnnotations() ) ) {
+			self::$numberSlowTests++;
+		}
 
 		if ($wgAnnotateTestSpeed) {
 			WikiaTestSpeedAnnotator::add(get_class($this), $this->getName(false), microtime(true) - $this->startTime,
@@ -241,24 +246,14 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * @param $inputParams array
 	 * @throws Exception
 	 */
-	protected function mockGlobalFunction( $functionName, $returnValue, $callsNum = null, $inputParams = null ) {
-		// sanity check to prevent deprecated way of using this function
-		if ( !function_exists($functionName) && function_exists('wf'.ucfirst($functionName)) ) {
-			throw new Exception("You have to specify full global function name including 'wf' prefix");
-		}
-
-		if ( func_num_args() > 2 ) {
-			throw new Exception("You are using deprecated version of mockGlobalFunction");
-		}
+	protected function mockGlobalFunction( $functionName, $returnValue ) {
 
 		list( $namespace, $baseName ) = WikiaMockProxy::parseGlobalFunctionName( $functionName );
 
 		$mock = $this->getGlobalFunctionMock( $functionName );
-		$expect = $mock->expects( $callsNum !== null ? $this->exactly( $callsNum ) : $this->any() )
-			->method( $baseName );
-		if ( $inputParams !== null ) {
-			$expect = call_user_func_array( array( $expect, 'with' ), $inputParams );
-		}
+		$expect = $mock->expects( $this->any() )
+						->method( $baseName );
+
 		$expect->will( $this->returnValue( $returnValue ) );
 
 		$this->getMockProxy()->getGlobalFunction($functionName)
@@ -395,17 +390,6 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 */
 	protected function getCurrentInvocation() {
 		return WikiaMockProxyAction::currentInvocation();
-	}
-
-	/**
-	 * @deprecated
-	 */
-	protected function mockApp() {
-		// noop
-	}
-
-	protected function proxyClass() {
-		return call_user_func_array( array( $this, 'mockClass' ), func_get_args() );
 	}
 
 	private function unsetGlobals() {

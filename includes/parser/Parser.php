@@ -181,6 +181,18 @@ class Parser {
 	var $mUniqPrefix;
 
 	/**
+	 * Wikia change begin
+	 *
+	 * Wikia vars
+	 */
+
+	var $mIsMainParse;	# Is main article content currently parsed
+
+	/**
+	 * Wikia change end
+	 */
+
+	/**
 	 * Constructor
 	 *
 	 * @param $conf array
@@ -217,6 +229,15 @@ class Parser {
 		foreach ( $this as $name => $value ) {
 			unset( $this->$name );
 		}
+	}
+
+	/**
+	 * Allow extensions to clean up when the parser is cloned
+	 *
+	 * Wikia change - backported from MW 1.21 (CE-815)
+	 */
+	function __clone() {
+		wfRunHooks( 'ParserCloned', array( $this ) );
 	}
 
 	/**
@@ -325,6 +346,10 @@ class Parser {
 		$fname = __METHOD__.'-' . wfGetCaller();
 		wfProfileIn( __METHOD__ );
 		wfProfileIn( $fname );
+
+		// Wikia change begin - @author: wladek
+		$wikitextSize = strlen($text);
+		// Wikia change end
 
 		$this->startParse( $title, $options, self::OT_HTML, $clearState );
 
@@ -455,6 +480,9 @@ class Parser {
 		}
 
 		wfRunHooks( 'ParserAfterTidy', array( &$this, &$text ) );
+		// Wikia change begin - @author: wladek
+		$this->recordPerformanceStats( $wikitextSize, strlen($text) );
+		// Wikia change end
 
 		# Information on include size limits, for the benefit of users who try to skirt them
 		if ( $this->mOptions->getEnableLimitReport() ) {
@@ -472,8 +500,11 @@ class Parser {
 			// which looks much like the problematic '-'.
 			$limitReport = str_replace( array( '-', '&' ), array( '‐', '&amp;' ), $limitReport );
 
-			$text .= "\n<!-- \n$limitReport-->\n";
+			if ( !empty( $limitReport ) ) {
+				$text .= "\n<!-- \n$limitReport-->\n";
+			}
 		}
+
 		$this->mOutput->setText( $text );
 
 		$this->mRevisionId = $oldRevisionId;
@@ -1737,6 +1768,7 @@ class Parser {
 
 		$imagesfrom = $this->mOptions->getAllowExternalImagesFrom();
 		$imagesexception = !empty( $imagesfrom );
+		$isValidImageUrl = VignetteRequest::isVignetteUrl($url) || preg_match(self::EXT_IMAGE_REGEX, $url);
 		$text = false;
 		# $imagesfrom could be either a single string or an array of strings, parse out the latter
 		if ( $imagesexception && is_array( $imagesfrom ) ) {
@@ -1755,13 +1787,12 @@ class Parser {
 		if ( $this->mOptions->getAllowExternalImages()
 			 || ( !empty( $wgAllowExternalWhitelistImages ) && wfRunHooks( 'outputMakeExternalImage', array( &$url ) ) )
 			 || ( $imagesexception && $imagematch ) ) {
-			if ( preg_match( self::EXT_IMAGE_REGEX, $url ) ) {
+			if ( $isValidImageUrl ) {
 				# Image found
 				$text = Linker::makeExternalImage( $url );
 			}
 		}
-		if ( !$text && $this->mOptions->getEnableImageWhitelist()
-			 && preg_match( self::EXT_IMAGE_REGEX, $url ) ) {
+		if ( !$text && $this->mOptions->getEnableImageWhitelist() && $isValidImageUrl ) {
 			$whitelist = explode( "\n", wfMsgForContent( 'external_image_whitelist' ) );
 			foreach ( $whitelist as $entry ) {
 				# Sanitize the regex fragment, make it case-insensitive, ignore blank entries/comments
@@ -1984,7 +2015,7 @@ class Parser {
 
 			if ( $might_be_img ) { # if this is actually an invalid link
 				wfProfileIn( __METHOD__."-might_be_img" );
-				if ( ( $ns == NS_FILE || $ns == NS_VIDEO ) && $noforce ) { # but might be an image
+				if ( ( $ns == NS_FILE ) && $noforce ) { # but might be an image
 					$found = false;
 					while ( true ) {
 						# look at the next 'line' to see if we can close it there
@@ -4305,6 +4336,10 @@ class Parser {
 	function formatHeadings( $text, $origText, $isMain=true ) {
 		global $wgMaxTocLevel, $wgHtml5, $wgExperimentalHtmlIds;
 
+		// Wikia change start
+		$this->mIsMainParse = $isMain;
+		// Wikia change end
+
 		# Inhibit editsection links if requested in the page
 		if ( isset( $this->mDoubleUnderscores['noeditsection'] ) ) {
 			$maybeShowEditLink = $showEditLink = false;
@@ -5587,6 +5622,14 @@ class Parser {
 		}
 		$this->mOutput->setCacheTime( -1 ); // old style, for compatibility
 		$this->mOutput->updateCacheExpiry( 0 ); // new style, for consistency
+
+		// Wikia change - begin
+		Wikia\Logger\WikiaLogger::instance()->info(__METHOD__, [
+			'exception' => new Exception()
+		]);
+
+		Transaction::setAttribute( Transaction::PARAM_PARSER_CACHE_DISABLED, true );
+		// Wikia change - end
 	}
 
 	/**
@@ -6141,5 +6184,23 @@ class Parser {
 	 */
 	function isValidHalfParsedText( $data ) {
 		return isset( $data['version'] ) && $data['version'] == self::HALF_PARSED_VERSION;
+	}
+
+	/**
+	 * Records parser performance stats in ParserOutput object
+	 *
+	 * @author wladek
+	 *
+	 * @param $wikitextSize int Wikitext size
+	 * @param $htmlSize int HTML size
+	 */
+	function recordPerformanceStats( $wikitextSize, $htmlSize ) {
+		$parserOutput = $this->mOutput;
+		$parserOutput->setPerformanceStats('expFuncCount',   $this->mExpensiveFunctionCount);
+		$parserOutput->setPerformanceStats('nodeCount',      $this->mPPNodeCount);
+		$parserOutput->setPerformanceStats('postExpandSize', $this->mIncludeSizes['post-expand']);
+		$parserOutput->setPerformanceStats('tempArgSize',    $this->mIncludeSizes['arg']);
+		$parserOutput->setPerformanceStats('wikitextSize',   $wikitextSize);
+		$parserOutput->setPerformanceStats('htmlSize',       $htmlSize);
 	}
 }

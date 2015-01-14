@@ -1,40 +1,45 @@
-/*global define*/
+/*global define,require*/
+define('ext.wikia.adEngine.adConfigMobile', [
+	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.provider.directGptMobile',
+	'ext.wikia.adEngine.provider.remnantGptMobile',
+	require.optional('ext.wikia.adEngine.provider.taboola'),
+	require.optional('wikia.abTest')
+], function (adContext, adProviderDirectGptMobile, adProviderRemnantGptMobile, adProviderTaboola, abTest) {
+	'use strict';
 
-define(
-	'ext.wikia.adengine.config.mobile',
-	['wikia.log', 'wikia.window', 'ext.wikia.adengine.provider.directgptmobile','ext.wikia.adengine.provider.remnantgptmobile', 'ext.wikia.adengine.provider.null'],
-	function (log, window, adProviderDirectGpt, adProviderRemnantGpt, adProviderNull) {
-		'use strict';
+	var pageTypesWithAdsOnMobile = {
+			'all_ads': true,
+			'corporate': true
+		};
 
-		var logGroup = 'AdConfigMobile',
-			logLevel = log.levels.info;
+	function getProviderList(slotName) {
+		var context = adContext.getContext();
 
-		function getProvider(slot) {
-			var slotName = slot[0];
-
-			// if we need to hop to particular provider
-			switch(slot[2]) {
-				case 'Null':
-					return adProviderNull;
-				case 'RemnantGptMobile':
-					if (adProviderRemnantGpt.canHandleSlot(slotName)) {
-						return adProviderRemnantGpt;
-					}
-
-					return adProviderNull;
-				default:
-					if (adProviderDirectGpt.canHandleSlot(slotName)) {
-						return adProviderDirectGpt;
-					}
-			}
-
-			return adProviderNull;
-
+		// If wgShowAds set to false, hide slots
+		if (!context.opts.showAds) {
+			return [];
 		}
 
-		return {
-			getDecorators: function () { return []; },
-			getProvider: getProvider
-		};
+		// On pages with type other than all_ads (corporate, homepage_logged, maps), hide slots
+		// @see https://docs.google.com/a/wikia-inc.com/document/d/1Lxz0PQbERWSFvmXurvJqOjPMGB7eZR86V8tpnhGStb4/edit
+		if (!pageTypesWithAdsOnMobile[context.opts.pageType]) {
+			return [];
+		}
+
+		if (context.providers.taboola && adProviderTaboola && adProviderTaboola.canHandleSlot(slotName) ) {
+			return [adProviderTaboola];
+		}
+
+		if (context.providers.remnantGptMobile) {
+			return [adProviderDirectGptMobile, adProviderRemnantGptMobile];
+		}
+
+		return [adProviderDirectGptMobile];
 	}
-);
+
+	return {
+		getDecorators: function () { return []; },
+		getProviderList: getProviderList
+	};
+});

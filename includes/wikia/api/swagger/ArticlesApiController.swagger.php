@@ -585,7 +585,7 @@ use Swagger\Annotations as SWG;
  *
  *
  * @SWG\Api(
- * 	path="/api/v1/Articles/Top",
+ * 	path="/Articles/Top",
  * 	description="Get the most viewed articles on this wiki",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -615,13 +615,31 @@ use Swagger\Annotations as SWG;
  * 					allowMultiple="false",
  * 					dataType="string",
  * 					defaultValue=""
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="limit",
+ * 					description="Limit the number of result - maximum limit is 250",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="string",
+ * 					defaultValue=""
+ * 				),
+ *              @SWG\Parameter(
+ * 					name="baseArticleId",
+ * 					description="Trending and popular related to article with given id",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int",
+ * 					defaultValue=""
  * 				)
  * 			)
  * 		)
  * 	)
  * )
  * @SWG\Api(
- * 	path="/api/v1/Articles/New",
+ * 	path="/Articles/New",
  * 	description="Get list of new articles on this wiki",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -667,7 +685,7 @@ use Swagger\Annotations as SWG;
  * 	)
  * )
  * @SWG\Api(
- * 	path="/api/v1/Articles/Top?expand=1",
+ * 	path="/Articles/Top?expand=1",
  * 	description="Get the most viewed articles for this wiki (expanded results)",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -697,6 +715,24 @@ use Swagger\Annotations as SWG;
  * 					allowMultiple="false",
  * 					dataType="string",
  * 					defaultValue=""
+ * 				),
+ * 				@SWG\Parameter(
+ * 					name="limit",
+ * 					description="Limit the number of result - maximum limit is 250",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="string",
+ * 					defaultValue=""
+ * 				),
+ *              @SWG\Parameter(
+ * 					name="baseArticleId",
+ * 					description="Trending and popular related to article with given id",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int",
+ * 					defaultValue=""
  * 				)
  * 			)
  * 		)
@@ -705,7 +741,7 @@ use Swagger\Annotations as SWG;
  * 
  *
  * @SWG\Api(
- * 	path="/api/v1/Articles/MostLinked",
+ * 	path="/Articles/MostLinked",
  * 	description="Get the most linked articles on this wiki",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -722,7 +758,7 @@ use Swagger\Annotations as SWG;
  * )
  *
  *  @SWG\Api(
- * 	path="/api/v1/Articles/MostLinked?expand=1",
+ * 	path="/Articles/MostLinked?expand=1",
  * 	description="Get the most linked articles on this wiki (expanded results)",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -739,7 +775,7 @@ use Swagger\Annotations as SWG;
  * )
  *
  * @SWG\Api(
- * 	path="/api/v1/Articles/TopByHub",
+ * 	path="/Articles/TopByHub",
  * 	description="View the most popular wikis in a given hub. Available only on the www.wikia.com main domain.",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -784,7 +820,7 @@ use Swagger\Annotations as SWG;
  * 	)
  * )
  * @SWG\Api(
- * 	path="/api/v1/Articles/Popular?expand=1",
+ * 	path="/Articles/Popular?expand=1",
  * 	description="Get popular articles for the current wiki (from the beginning of time)",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -805,6 +841,15 @@ use Swagger\Annotations as SWG;
  * 					allowMultiple="false",
  * 					dataType="int",
  * 					defaultValue="10"
+ * 				),
+ *              @SWG\Parameter(
+ * 					name="baseArticleId",
+ * 					description="Trending and popular related to article with given id",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int",
+ * 					defaultValue=""
  * 				)
  * 			)
  * 		)
@@ -812,7 +857,7 @@ use Swagger\Annotations as SWG;
  * )
  *
  * @SWG\Api(
- * 	path="/api/v1/Articles/Popular",
+ * 	path="/Articles/Popular",
  * 	description="Get popular articles for the current wiki (from the beginning of time)",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -833,6 +878,15 @@ use Swagger\Annotations as SWG;
  * 					allowMultiple="false",
  * 					dataType="int",
  * 					defaultValue="10"
+ * 				),
+ *              @SWG\Parameter(
+ * 					name="baseArticleId",
+ * 					description="Trending and popular related to article with given id",
+ * 					paramType="query",
+ * 					required="false",
+ * 					allowMultiple="false",
+ * 					dataType="int",
+ * 					defaultValue=""
  * 				)
  * 			)
  * 		)
@@ -840,7 +894,7 @@ use Swagger\Annotations as SWG;
  * )
  *
  * @SWG\Api(
- * 	path="/api/v1/Articles/List",
+ * 	path="/Articles/List",
  * 	description="Get articles list in alphabetical order",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -894,7 +948,7 @@ use Swagger\Annotations as SWG;
  * 	)
  * )
  * @SWG\Api(
- * 	path="/api/v1/Articles/List?expand=1",
+ * 	path="/Articles/List?expand=1",
  * 	description="Get a list of pages on the current wiki",
  * 	@SWG\Operations(
  * 		@SWG\Operation(
@@ -949,7 +1003,7 @@ use Swagger\Annotations as SWG;
  * )
  * 
  * @SWG\Api(
- * 		path="/api/v1/Articles/Details",
+ * 		path="/Articles/Details",
  * 		description="Get top articles for the current wiki",
  * 		@SWG\Operations(
  * 			@SWG\Operation(
@@ -1012,7 +1066,7 @@ use Swagger\Annotations as SWG;
  * 		)
  * 	)
  * @SWG\Api(
- * 		path="/api/v1/Articles/AsSimpleJson",
+ * 		path="/Articles/AsSimpleJson",
  * 		description="Get simplified article contents in JSON format",
  * 		@SWG\Operations(
  * 			@SWG\Operation(

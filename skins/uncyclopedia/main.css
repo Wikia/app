@@ -410,6 +410,36 @@ table.small {
 	font-size: 94%;
 }
 
+/* Wikia changes to TOC */
+#toc {
+	display: table;
+}
+#toc h2 {
+	padding-right: 5px;
+}
+#toc > div {
+	padding: 5px;
+}
+#toc ol {
+	list-style: decimal;
+	counter-reset: item;
+}
+#toc > ol {
+	display: none;
+}
+#toc.show > ol {
+	display: block;
+}
+#toc li {
+	display: block;
+}
+#toc li:before {
+	content: counters(item, ".") " ";
+	counter-increment: item;
+}
+
+/* End of Wikia changes */
+
 .mw-warning {
 	margin-left: 50px;
 	margin-right: 50px;
@@ -487,6 +517,16 @@ div.tleft {
 	clear: left;
 	margin-right: .5em;
 	border-width: .5em 1.4em .8em 0;
+}
+
+figure.tright {
+	clear: right;
+	float: right;
+}
+
+figure.tleft {
+	float: left;
+	clear: left;
 }
 
 .hiddenStructure {
@@ -1130,7 +1170,7 @@ input.searchButton {
 	margin-right: 2em;
 }
 .prefsection legend {
-	font-weight: bold;   
+	font-weight: bold;
 }
 .prefsection table, .prefsection legend {
 	background-color: #F9F9F9;
@@ -1593,7 +1633,7 @@ tr.sv-space td { display: none; }
 */
 .TablePager_nav a { text-decoration: none; }
 .TablePager { border-collapse: collapse; }
-.TablePager, .TablePager td, .TablePager th { 
+.TablePager, .TablePager td, .TablePager th {
 	border: 0.15em solid #777777;
 	padding: 0 0.15em 0 0.15em;
 }
@@ -1639,9 +1679,9 @@ p.mw-ipb-conveniencelinks {
 
 /*
 	macbre: wikia addons
-	
-	- SendToAFriend CSS 
-	
+
+	- SendToAFriend CSS
+
 */
 #notifyForm
 {

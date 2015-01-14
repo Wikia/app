@@ -67,6 +67,8 @@ class Result extends ReadWrite {
 				$textAsString = $this->fixSnippeting( $textAsString, true );
 			}
 		}
+		// if title and description both start with the same File: prefix, remove the prefix from description
+		$textAsString = $this->removePrefix($this->findFilePrefix($this->getTitle(false)), $textAsString);
 		return $textAsString;
 	}
 
@@ -83,20 +85,45 @@ class Result extends ReadWrite {
 	 * @see    WikiaSearchResultTest::testTitleFieldMethods
 	 * @return string
 	 */
-	public function getTitle() {
+	public function getTitle($removeFilePrefix = true) {
+		$result = '';
 		if ( isset( $this->_fields[Utilities::field('title')] )  ) {
-			return $this->_fields[Utilities::field('title')];
+			$result = $this->_fields[Utilities::field('title')];
+		} else if ( isset( $this->_fields['title'] ) ) {
+			$result = $this->_fields['title'];
+		} else if ( isset( $this->_fields[Utilities::field('title', 'en')] )  ) { // for video wiki
+			$result = $this->_fields[Utilities::field('title', 'en')];
 		}
-
-		if ( isset( $this->_fields['title'] ) ) {
-			return $this->_fields['title'];
+		if ($removeFilePrefix) {
+			$result = $this->removePrefix($this->findFilePrefix($result), $result);
 		}
-
-		// for video wiki
-		if ( isset( $this->_fields[Utilities::field('title', 'en')] )  ) {
-			return $this->_fields[Utilities::field('title', 'en')];
+		return $result;
+	}
+	
+	public function removePrefix($prefix, $value) {
+		if ($prefix && (strpos($value, $prefix) === 0)) {
+			return substr($value, strlen($prefix));
+		} else {
+			return $value;
 		}
-
+	}
+	
+	/**
+	 * Find the file prefix in title, if result is in File namespace.
+	 * @param  string $value
+	 * @return string
+	 */
+	public function findFilePrefix($title) {
+		if (!empty($this->_fields['ns']) && $this->_fields['ns'] == \NS_FILE && strpos($title, ":") !== false) {
+			/**
+			 * find 'File:' prefix (in content language) in title
+			 * we could try to use Title class or wgContLang->getNsText here, but none of those actually
+			 * will allow us to get potentially i18n'ed namespace prefix in a simple and working way, while
+			  *a simple explode with limit will work
+			 */			
+			list ($prefix, $rest) = explode(":", $title, 2);
+			return $prefix . ':';
+		}
 		return '';
 	}
 

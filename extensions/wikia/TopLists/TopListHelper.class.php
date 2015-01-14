@@ -689,6 +689,7 @@ class TopListHelper {
 		$json = json_encode( $result );
 		$response = new AjaxResponse( $json );
 		$response->setContentType( 'application/json; charset=utf-8' );
+		$response->setCacheDuration(0);
 
 		return $response;
 	}

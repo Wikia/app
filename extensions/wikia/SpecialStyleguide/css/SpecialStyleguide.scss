@@ -1,5 +1,5 @@
-@import "./skins/oasis/css/core/color";
-@import "./skins/oasis/css/mixins/box-sizing";
+@import "skins/shared/color";
+@import "skins/shared/mixins/box-sizing";
 
 $alter-background-color: mix($color-page, #000, 90%);
 $page-width: 1030px;

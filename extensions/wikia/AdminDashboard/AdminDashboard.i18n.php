@@ -26,8 +26,6 @@ $messages['en'] = array(
 	'admindashboard-control-wiki-features-tooltip' => 'Wiki Features lets you enable additional features on your wiki.',
 	'admindashboard-control-page-layout-builder-label' => 'Page Layout Builder',
 	'admindashboard-control-page-layout-builder-tooltip' => 'Page Layout Builder allows you to create page outlines for users to choose from and use to create new pages.',
-	'admindashboard-control-admin-upload-tool-label' => 'Promote',
-	'admindashboard-control-admin-upload-tool-tooltip' => 'This page allows you to promote your wiki by making it eligible to appear on wikia.com!',
 	'admindashboard-control-special-css-label' => 'CSS',
 	'admindashboard-control-special-css-tooltip' => 'Customize your wiki with local CSS.',
 // Community Controls

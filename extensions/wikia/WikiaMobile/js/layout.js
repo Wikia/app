@@ -10,7 +10,7 @@ function ( sections, media, cache, loader, lazyload, $, sloth, topbar ) {
 	'use strict';
 
 	var d = document,
-		selector = 'table:not(.toc):not(.infobox)',
+		selector = 'table:not(.toc):not(.infobox):not(.infobox-table)',
 		tables = d.querySelectorAll( selector ),
 		tablesKey = 'wideTables',
 		ttl = 604800, //7days

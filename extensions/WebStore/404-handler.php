@@ -188,7 +188,7 @@ $errors
 </body>
 </html>
 EOT;
-				restore_error_handler();
+
 				break;
 			}
 
@@ -254,18 +254,9 @@ EOT;
 		}
 	}
 
-	function setErrorHandler() {
-		set_error_handler( array( $this, 'handleError' ) );
-	}
-
-	function handleError( $errno, $errstr, $errfile, $errline ) {
-		$callback = $this->getErrorCleanupFunction();
-		$this->phpErrors[] = call_user_func( $callback, "$errstr in $errfile line $errline" );
-	}
 }
 
 $h = new WebStore404Handler;
-$h->setErrorHandler();
 $h->execute();
 
 

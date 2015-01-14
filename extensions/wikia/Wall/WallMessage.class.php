@@ -309,7 +309,19 @@ class WallMessage {
 	}
 
 	public function canRemove(User $user){
-		return $this->can($user, 'wallremove');
+		if ( $user->isBlocked() ) {
+			return false;
+		}
+
+		if ( $this->can( $user, 'wallremove' ) ) {
+			return true;
+		}
+
+		if ( $this->isAuthor( $user ) || $this->isWallOwner( $user ) ) {
+			return !$this->isMarkInProps( WPP_WALL_MODERATORREMOVE );
+		}
+
+		return false;
 	}
 
 	public function canAdminDelete(User $user) {
@@ -328,11 +340,63 @@ class WallMessage {
 	 * archive is "close".
 	 */
 	public function canArchive(User $user) {
-		return in_array(MWNamespace::getSubject($this->title->getNamespace()), F::app()->wg->WallThreadCloseNS) && $this->can($user, 'wallarchive') && !$this->isRemove() && !$this->isArchive() && !$this->isRemove() && $this->isMain();
+		if ( $user->isBlocked() ) {
+			return false;
+		}
+
+		if ( !in_array( MWNamespace::getSubject( $this->title->getNamespace() ), F::app()->wg->WallThreadCloseNS ) ) {
+			return false;
+		}
+
+		if ( !$this->isMain() ) {
+			return false;
+		}
+
+		if ( $this->isArchive() || $this->isRemove() ) {
+			return false;
+		}
+
+		if ( $this->can( $user, 'wallarchive' ) ) {
+			return true;
+		}
+
+		if ( $this->isWallOwner( $user ) ) {
+			return !$this->isMarkInProps( WPP_WALL_MODERATORREOPEN );
+		}
+
+		return false;
 	}
 
 	public function canReopen(User $user) {
-		return in_array(MWNamespace::getSubject($this->title->getNamespace()), F::app()->wg->WallThreadCloseNS) && $this->can($user, 'wallarchive') && !$this->isRemove() && $this->isArchive() && $this->isMain();
+		if ( $user->isBlocked() ) {
+			return false;
+		}
+
+		if ( !in_array( MWNamespace::getSubject( $this->title->getNamespace() ), F::app()->wg->WallThreadCloseNS ) ) {
+			return false;
+		}
+
+		if ( !$this->isMain() ) {
+			return false;
+		}
+
+		if ( !$this->isArchive() ) {
+			return false;
+		}
+
+		if ( $this->isRemove() ) {
+			return false;
+		}
+
+		if ( $this->can( $user, 'wallarchive' ) ) {
+			return true;
+		}
+
+		if ( $this->isWallOwner( $user ) ) {
+			return !$this->isMarkInProps( WPP_WALL_MODERATORARCHIVE );
+		}
+
+		return false;
 	}
 
 	public function getMetaTitle() {
@@ -560,7 +624,7 @@ class WallMessage {
 		}
 
 		$id = $this->getMessagePageId();
-		
+
 		$postFix = $this->getPageUrlPostFix();
 		$postFix = empty($postFix) ? "":('#'.$postFix);
 		$title = Title::newFromText($id, NS_USER_WALL_MESSAGE);
@@ -847,6 +911,10 @@ class WallMessage {
 		return $this->getArticleComment()->isAuthor($user);
 	}
 
+	public function canModerate(User $user) {
+		return $this->can( $user, 'wallarchive' ) || $this->can( $user, 'wallremove' );
+	}
+
 	public function isWallWatched(User $user) {
 		return $user->isWatched( $this->getArticleTitle() );
 	}
@@ -893,7 +961,10 @@ class WallMessage {
 	}
 
 	public function archive($user, $reason = '') {
-		$status = $this->markInProps(WPP_WALL_ARCHIVE);
+		$status = $this->markInProps( WPP_WALL_ARCHIVE );
+		if ( $this->can( $user, 'wallarchive' ) ) {
+			$this->markInProps( WPP_WALL_MODERATORARCHIVE ); // VOLDEV-79
+		}
 		$this->recordAdminHistory($user, $reason, WH_ARCHIVE);
 		$this->saveReason($user, $reason);
 		$this->customActionNotifyRC($user, 'wall_archive', $reason);
@@ -902,6 +973,12 @@ class WallMessage {
 
 	public function reopen($user) {
 		$this->unMarkInProps(WPP_WALL_ARCHIVE);
+		if ( $this->isMarkInProps( WPP_WALL_MODERATORARCHIVE ) ) {
+			$this->unMarkInProps( WPP_WALL_MODERATORARCHIVE );
+		}
+		if ( $this->can( $user, 'wallarchive' ) ) {
+			$this->markInProps( WPP_WALL_MODERATORREOPEN );
+		}
 		$this->recordAdminHistory($user, '', WH_REOPEN);
 		$this->customActionNotifyRC($user, 'wall_reopen', '');
 		return true;
@@ -911,7 +988,16 @@ class WallMessage {
 		$this->saveReason($user, $reason);
 
 		$this->unMarkInProps(WPP_WALL_ARCHIVE);
+		if ( $this->isMarkInProps( WPP_WALL_MODERATORARCHIVE ) ) {
+			$this->unMarkInProps( WPP_WALL_MODERATORARCHIVE );
+		}
+		if ( $this->isMarkInProps( WPP_WALL_MODERATORREOPEN ) ) {
+			$this->unMarkInProps( WPP_WALL_MODERATORREOPEN );
+		}
 		$status = $this->markInProps(WPP_WALL_REMOVE);
+		if ( $this->can( $user, 'wallremove' ) ) {
+			$this->markInProps( WPP_WALL_MODERATORREMOVE );
+		}
 
 		if( $status === true ) {
 			$this->customActionNotifyRC($user, 'wall_remove', $reason);
@@ -939,24 +1025,30 @@ class WallMessage {
 	}
 
 	protected function getAdminNotificationEntity($user, $reason) {
+		$data = [];
+
 		$this->load();
 		$wikiId = $this->cityId;
-		$userIdRemoving = $user->getId();
-		$userIdWallOwner = $this->getWallOwner()->getId();
-		$parentPageId = $this->getArticleTitle()->getArticleId();
+		$data['userIdRemoving'] = $user->getId();
+		$data['userIdWallOwner'] = $this->getWallOwner()->getId();
+		$data['parentPageId'] = $this->getArticleTitle()->getArticleId();
 
-		$url = $this->getMessagePageUrl();
-		$title = $this->getMetaTitle();
-		$messageId = $this->getId();
+		$data['url'] = $this->getMessagePageUrl();
+		$data['title'] = $this->getMetaTitle();
+		$data['messageId'] = $this->getId();
+		$data['reason'] = $reason;
 
 		if( $this->isMain() ) {
-			$wnae = new WallNotificationAdminEntity($wikiId, $parentPageId, $userIdRemoving, $userIdWallOwner, $title, $url, $messageId, 0, false, $reason);
+			$data['parentId'] = 0;
+			$data['isReply'] = false;
+			$wnae = new WallNotificationAdminEntity($wikiId, $data);
 		} else {
 			$parent = $this->getTopParentObj();
 			$parent->load();
-			$parentMessageId = $parent->getId();
-			$title = $parent->getMetaTitle();
-			$wnae = new WallNotificationAdminEntity($wikiId, $parentPageId, $userIdRemoving, $userIdWallOwner, $title, $url, $messageId, $parentMessageId, true, $reason);
+			$data['parentId'] = $parent->getId();
+			$data['title'] = $parent->getMetaTitle();
+			$data['isReply'] = true;
+			$wnae = new WallNotificationAdminEntity($wikiId, $data);
 		}
 
 		return $wnae;
@@ -968,22 +1060,28 @@ class WallMessage {
 	}
 
 	protected function getOwnerNotificationEntity($user, $reason) {
+		$data = [];
+
 		$this->load();
 		$wikiId = $this->cityId;
-		$userIdRemoving = $user->getId();
-		$userIdWallOwner = $this->getWallOwner()->getId();
-		$url = $this->getMessagePageUrl();
-		$title = $this->getMetaTitle();
-		$messageId = $this->getId();
+		$data['userIdRemoving'] = $user->getId();
+		$data['userIdWallOwner'] = $this->getWallOwner()->getId();
+		$data['url'] = $this->getMessagePageUrl();
+		$data['title'] = $this->getMetaTitle();
+		$data['messageId'] = $this->getId();
+		$data['reason'] = $reason;
 
 		if( $this->isMain() ) {
-			$wnoe = new WallNotificationOwnerEntity($wikiId, $userIdRemoving, $userIdWallOwner, $title, $url, $messageId, 0, false, $reason);
+			$data['parentMessageId'] = 0;
+			$data['isReply'] = false;
+			$wnoe = new WallNotificationOwnerEntity($wikiId, $data);
 		} else {
 			$parent = $this->getTopParentObj();
 			$parent->load();
-			$parentMessageId = $parent->getId();
-			$title = $parent->getMetaTitle();
-			$wnoe = new WallNotificationOwnerEntity($wikiId, $userIdRemoving, $userIdWallOwner, $title, $url, $messageId, $parentMessageId, true, $reason);
+			$data['parentMessageId'] = $parent->getId();
+			$data['title'] = $parent->getMetaTitle();
+			$data['isReply'] = true;
+			$wnoe = new WallNotificationOwnerEntity($wikiId, $data);
 		}
 
 		return $wnoe;
@@ -1146,6 +1244,7 @@ class WallMessage {
 	public function restore($user, $reason = '') {
 		$this->unMarkInProps(WPP_WALL_REMOVE);
 		$this->unMarkInProps(WPP_WALL_ADMINDELETE);
+		$this->unMarkInProps( WPP_WALL_MODERATORREMOVE );
 		$this->customActionNotifyRC($user, 'wall_restore', $reason);
 
 		$wne = $this->getAdminNotificationEntity($user, $reason);
@@ -1284,7 +1383,7 @@ class WallMessage {
 		return false;
 	}
 
-	protected function setInCommentsIndex( $prop, $value, $useMaster = false ) {
+	public function setInCommentsIndex( $prop, $value, $useMaster = false ) {
 		$commentId = $this->getId();
 		if ( !empty($commentId) ) {
 			$commentsIndex = $this->getCommentsIndex();

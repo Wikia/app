@@ -32,7 +32,6 @@ else {
 	foreach ($thumbUrls as $i => $url) {?>
 
 		<li class="thumbs"><a class="image" href="<?= $url['file_url'] ?>">
-			<? if ( isset( $url['isVideoThumb'] ) && $url['isVideoThumb'] ) echo WikiaFileHelper::videoPlayButtonOverlay( LatestPhotosController::THUMB_SIZE, LatestPhotosController::THUMB_SIZE ); ?>
 			<img class="thumbimage" data-image-name="<?= htmlspecialchars(urlencode($url['image_name'])) ?>" data-image-key="<?= htmlspecialchars(urlencode($url['image_key'])) ?>" height="<?= LatestPhotosController::THUMB_SIZE; ?>" width="<?= LatestPhotosController::THUMB_SIZE; ?>" <?= $i < $load ? 'src' : "src='$wg->BlankImgUrl' data-src" ?>="<?= $url["thumb_url"] ?>" />
 		</a>
 

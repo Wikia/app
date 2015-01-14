@@ -52,13 +52,20 @@ abstract class WikiaBaseException extends MWException {
  */
 class WikiaException extends WikiaBaseException {
 	public function __construct($message = '', $code = 0, Exception $previous = null) {
-		global $wgRunningUnitTests, $wgNoDBUnits;
+		global $wgRunningUnitTests;
 		parent::__construct( $message, $code, $previous );
 
-		if (!$wgRunningUnitTests && $wgNoDBUnits) {
-			// log more details (macbre)
-		Wikia::log( 'exceptions-WIKIA', get_class($this), $message, true );
-			Wikia::logBacktrace( __METHOD__ );
+		if (!$wgRunningUnitTests) {
+			$exceptionClass = get_class($this);
+
+			// log on devboxes to /tmp/debug.log
+			wfDebug($exceptionClass . ": {$message}\n");
+
+			\Wikia\Logger\WikiaLogger::instance()->error($exceptionClass, [
+				'err' => $message,
+				'errno' => $code,
+				'exception' => $this,
+			]);
 		}
 	}
 }
@@ -170,6 +177,7 @@ abstract class WikiaHttpException extends WikiaBaseException {
 		wfDebug(get_class($this). " raised from " . wfGetAllCallers(2) . "\n");
 		if (!empty($details)) {
 			$this->details = $details;
+			wfDebug(get_class($this)  . ": {$this->details}\n");
 		}
 	}
 

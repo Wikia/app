@@ -118,7 +118,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 			'type' => $hasStarted ? 'display' : 'text',
 			'name' => 'name',
 			'label' => wfMsg('abtesting-heading-name'),
-			'value' => $experiment['name'],
+			'value' => htmlspecialchars( $experiment['name'] ),
 		);
 
 		$fields['description'] = array(
@@ -126,7 +126,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 			'class' => 'fullwidth',
 			'name' => 'description',
 			'label' => wfMsg('abtesting-heading-description'),
-			'value' => $experiment['description'],
+			'value' => htmlspecialchars( $experiment['description'] ),
 		);
 
 		$fields['version_id'] = array(
@@ -140,7 +140,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 			'name' => 'start_time',
 			'class' => 'datepicker',
 			'label' => wfMsg('abtesting-heading-start-time'),
-			'value' => $lastVersion ? $lastVersion['start_time'] : '',
+			'value' => $lastVersion ? htmlspecialchars( $lastVersion['start_time'] ) : '',
 		);
 
 		$fields['end_time'] = array(
@@ -148,14 +148,14 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 			'name' => 'end_time',
 			'class' => 'datepicker',
 			'label' => wfMsg('abtesting-heading-end-time'),
-			'value' => $lastVersion ? $lastVersion['end_time'] : '',
+			'value' => $lastVersion ? htmlspecialchars( $lastVersion['end_time'] ) : '',
 		);
 
 		$fields['ga_slot'] = array(
 			'type' => 'text',
 			'name' => 'ga_slot',
 			'label' => wfMsg('abtesting-heading-ga-slot'),
-			'value' => $lastVersion ? $lastVersion['ga_slot'] : '',
+			'value' => $lastVersion ? htmlspecialchars( $lastVersion['ga_slot'] ) : '',
 		);
 
 		$fields['flags_before'] = array(
@@ -197,7 +197,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 			$groups[] = array(
 				'type' => 'hidden',
 				'name' => 'groups[]',
-				'value' => $group['name'],
+				'value' => htmlspecialchars( $group['name'] ),
 				'attributes' => array(
 					'data-id' => $group['id']
 				)
@@ -208,7 +208,7 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 				'name' => 'ranges[]',
 				'class' => 'ranges',
 				'label' => $group['name'] . ' ' . $rangesInfo,
-				'value' => $ranges,
+				'value' => htmlspecialchars( $ranges ),
 			);
 
 			$groups[] = $this->getPopupButtonField('Styles','group-styles','styles[]',$styles);

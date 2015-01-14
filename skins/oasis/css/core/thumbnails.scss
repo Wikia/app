@@ -1,0 +1,102 @@
+@import 'skins/shared/mixins/background-opacity';
+@import 'skins/shared/mixins/border-opacity';
+@import 'skins/shared/mixins/infobox';
+@import 'skins/shared/color';
+
+// Import thumbnail video styles so all are contained within thumbnails scss
+@import 'skins/oasis/css/core/thumbnails-video';
+
+$color-subtle-text: mix($color-page, $color-alternate-text, 50%);
+
+.image-thumbnail,
+.video-thumbnail {
+	&.fluid {
+		width: 100%;
+
+		> img {
+			width: 100%;
+		}
+	}
+}
+
+// Generic title thumbnails
+.title-thumbnail {
+	.title {
+		font-size: 16px;
+	}
+}
+
+// Article thumbnails
+.article-thumb {
+	margin-bottom: 15px;
+	margin-top: 6px;
+
+	a, img {
+		display: block;
+	}
+
+	p, p + p {
+		font-size: 12px;
+		line-height: 16px;
+		margin: 0;
+		// use padding instead of margins to ensure height consistancy for info icon negative margins
+		padding-top: 5px;
+
+		&:last-child {
+			padding-bottom: 5px;
+		}
+	}
+
+	&.tright {
+		clear: right;
+		float: right;
+		margin-left: 20px;
+	}
+
+	&.tleft {
+		clear: left;
+		float: left;
+		margin-right: 20px;
+	}
+
+	.title {
+		font-weight: bold;
+	}
+
+	figcaption {
+		text-align: left;
+	}
+
+	.caption {
+		color: $color-alternate-text;
+
+		a, img {
+			display: inline;
+		}
+	}
+
+	&.show-info-icon {
+		.info-icon {
+			display: none;
+			float: right;
+			margin: -22px 5px 0 0;
+			position: relative; // makes icon appear above image in z axis
+		}
+
+		&:hover {
+			.info-icon {
+				display: block;
+			}
+
+			.duration {
+				display: none;
+			}
+		}
+	}
+
+	// don't show the icon when a video is playing inline
+	&.inline-video-playing:hover .info-icon {
+		display: none;
+	}
+}
+

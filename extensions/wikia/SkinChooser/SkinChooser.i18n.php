@@ -149,6 +149,20 @@ $messages['ja'] = array(
 	'site-layout' => 'サイトの外装',
 );
 
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'new-look' => 'ವಿಕಿಯಾ',
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'new-look' => '위키아',
+);
+
 /** لوری (لوری)
  * @author Mogoeilor
  */
@@ -292,6 +306,13 @@ $messages['tl'] = array(
 	'skinchooser-desc' => 'Nagpapahintulot sa mga tagagamit na pumili ng mga pabalat sa loob ng kanilang mga nais',
 	'new-look' => 'Wikia',
 	'site-layout' => 'Mga Latag ng Pook',
+);
+
+/** Turkish (Türkçe)
+ * @author Sucsuzz
+ */
+$messages['tr'] = array(
+	'new-look' => 'Wikia',
 );
 
 /** Ukrainian (українська)

@@ -225,6 +225,14 @@ $messages['fr'] = array(
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'Erreur : le corps de la page est nécessaire',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'contentfeeds-firstfewarticles-tag-title' => 'Titel',
+	'contentfeeds-firstfewarticles-tag-next' => 'Folgjende',
+);
+
 /** Galician (galego)
  * @author Toliño
  */
@@ -269,18 +277,23 @@ $messages['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author C5st4wr6ch
+ * @author Riemogerz
  */
 $messages['id'] = array(
 	'contentfeeds-desc' => 'Menyediakan informasi yang kaya dan mutakhir melalui berbagai tag atau "umpan balik"',
 	'contentfeeds-firstfewarticles-tag-header' => 'Buatlah beberapa halaman pertama Anda!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Judul',
+	'contentfeeds-firstfewarticles-tag-next' => 'Selanjutnya',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Kesalahan: Judul halaman disyaratkan',
 );
 
 /** Italian (italiano)
+ * @author PeppeAeco
  * @author Rippitippi
  */
 $messages['it'] = array(
+	'contentfeeds-desc' => 'Fornisce informazioni ricche e aggiornate attraverso vari tag o "feed"',
+	'contentfeeds-firstfewarticles-tag-header' => 'Creare il tuo primo paio di pagine!',
 	'contentfeeds-firstfewarticles-tag-title' => 'Titolo',
 	'contentfeeds-firstfewarticles-tag-next' => 'Successivo',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'Errore: Il titolo della pagina è necessario',
@@ -296,6 +309,29 @@ $messages['ja'] = array(
 	'contentfeeds-firstfewarticles-tag-next' => '次',
 	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'エラー: ページのタイトルが必要です',
 	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'エラー: ページ本体が必要です',
+);
+
+/** Kannada (ಕನ್ನಡ)
+ * @author VASANTH S.N.
+ */
+$messages['kn'] = array(
+	'contentfeeds-firstfewarticles-tag-header' => 'ನಿಮ್ಮ ಪ್ರಥಮ ಕೆಲವು ಪುಟಗಳನ್ನು ಸೃಜಿಸಿ!',
+	'contentfeeds-firstfewarticles-tag-title' => 'ಶೀರ್ಷಿಕೆ',
+	'contentfeeds-firstfewarticles-tag-next' => 'ನಂತರ',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => 'ದೋಷ:ಪುಟ ಶೀರ್ಷಿಕೆ ಅಗತ್ಯವಿದೆ',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => 'ದೋಷ:ಪಠ್ಯದ ವಿಷಯ ಅಗತ್ಯವಿದೆ',
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'contentfeeds-newimages-rss-title' => '{{#Special:NewFiles}}의 RSS 피드',
+	'contentfeeds-firstfewarticles-tag-header' => '문서를 몇 개 만들어 보세요!',
+	'contentfeeds-firstfewarticles-tag-title' => '제목',
+	'contentfeeds-firstfewarticles-tag-next' => '다음',
+	'contentfeeds-firstfewarticles-tag-empty-title-error' => '오류: 문서 제목 필요',
+	'contentfeeds-firstfewarticles-tag-empty-body-error' => '오류: 문서 내용 필요',
 );
 
 /** Colognian (Ripoarisch)

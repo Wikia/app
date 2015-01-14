@@ -15,17 +15,17 @@ var WikiaPhotoGallerySlider = {
 		currentImage.find('.description-background').show();
 
 		//bind events
-		sliderElem.find('.nav').click(function(e) {			
+		sliderElem.find('.nav').click(function(e) {
 			if ( sliderElem.find('.wikiaPhotoGallery-slider').queue().length == 0 ){
 				clearInterval(timer);
-				WikiaPhotoGallerySlider.scroll($(this));				
+				WikiaPhotoGallerySlider.scroll($(this));
 			}
 		});
-		
+
 		$('.wikiaPhotoGallery-slider-body ul li a').click(function() {
 			WikiaPhotoGallerySlider.sliderEnabled = false;
 		});
-		
+
 		// kill slider while closing preview in edit mode
 		$(window).bind('EditPagePreviewClosed', function() {
 			that.killSlider(timer);

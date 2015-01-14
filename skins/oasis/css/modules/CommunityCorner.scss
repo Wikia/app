@@ -1,5 +1,5 @@
-@import "../mixins/clearfix";
-@import "../mixins/bodytext";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/bodytext";
 
 .CommunityCornerModule {
 	@include clearfix;

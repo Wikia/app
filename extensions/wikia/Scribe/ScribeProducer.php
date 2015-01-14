@@ -48,20 +48,37 @@ class ScribeProducer {
 	function __construct( $key, $page_id, $rev_id = 0, $log_id = 0, $archive = 0 ) {
 		global $wgCityId, $wgServer;
 
-		switch ( $key ) {
-			case 'edit' 		: $this->mKey = self::EDIT_CATEGORY; break;
-			case 'create' 		: $this->mKey = self::CREATEPAGE_CATEGORY; break;
-			case 'delete' 		: $this->mKey = self::DELETE_CATEGORY; break;
-			case 'undelete'		: $this->mKey = self::UNDELETE_CATEGORY; break;
-			case 'reindex'		: $this->mKey = self::REINDEX_CATEGORY; break;
-		}
-
+		$this->mKey		= $this->get_category( $key );
 		$this->mCityId		= $wgCityId;
 		$this->mPageId		= $page_id;
 		$this->mRevId 		= $rev_id;
 		$this->mLogId		= $log_id;
 		$this->mServerName 	= $wgServer;
 		$this->mArchive		= $archive;
+	}
+
+	/**
+	 * This method generates category for Scribe event
+	 * It'll be prefixed by dev- for dev env
+	 *
+	 * @param $key
+	 */
+	private function get_category( $key ) {
+		global $wgDevelEnvironment;
+
+		switch ( $key ) {
+			case 'edit' 		: $result = self::EDIT_CATEGORY; break;
+			case 'create' 		: $result = self::CREATEPAGE_CATEGORY; break;
+			case 'delete' 		: $result = self::DELETE_CATEGORY; break;
+			case 'undelete'		: $result = self::UNDELETE_CATEGORY; break;
+			case 'reindex'		: $result = self::REINDEX_CATEGORY; break;
+		}
+
+		if ( !empty( $wgDevelEnvironment ) ) {
+			$result = $this->prefixCategory( WIKIA_ENV_DEV, self::REINDEX_CATEGORY );
+		}
+
+		return $result;
 	}
 
 	/**
@@ -451,19 +468,30 @@ class ScribeProducer {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
-	
+
 	/**
 	 * @see Wikia\Search\Indexer::reindexWiki
 	 */
 	public function reindexPage()
 	{
 		wfProfileIn( __METHOD__ );
-		if ( $this->mKey !== self::REINDEX_CATEGORY ) {
+
+		$reindexCategories = [
+			self::REINDEX_CATEGORY,
+			$this->prefixCategory( WIKIA_ENV_DEV, self::REINDEX_CATEGORY )
+		];
+
+		if ( !in_array($this->mKey, $reindexCategories ) ) {
 			$this->send_log();
 		} else {
 			throw new Exception( 'This method should only be called by ScribeProducer instances keyed for reindexing' );
 		}
+
 		wfProfileOut( __METHOD__ );
+	}
+
+	private function prefixCategory($prefix, $category) {
+		return implode( '-', [ $prefix, $category ] );
 	}
 }
 

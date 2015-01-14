@@ -353,7 +353,7 @@ class DataProvider {
 					$title = Title::newFromID($article_id);
 					if ( is_object($title) ) {
 						if ( wfMsg("mainpage") != $title->getText() ) {
-							$article = array( 
+							$article = array(
 								'url'	=> $title->getLocalUrl(),
 								'text'	=> $title->getPrefixedText(),
 								'count' => $row['pageviews']
@@ -673,40 +673,6 @@ class DataProvider {
 
 		wfProfileOut(__METHOD__);
 		return $output;
-	}
-
-	/**
-	 * @author Inez Korczynski <inez@wikia.com>
-	 */
-	public static function getCategoryList() {
-		wfProfileIn(__METHOD__);
-		global $wgCat;
-		$cat['text'] = isset($wgCat['name']) ? $wgCat['name'] : '';
-		$cat['href'] = isset($wgCat['url']) ? $wgCat['url'] : '';
-		$message_key = 'shared-Monaco-category-list';
-		$nodes = array();
-
-		if (!isset($wgCat['id']) || null == ($lines = getMessageForContentAsArray($message_key . '-' . $wgCat['id']))) {
-			wfDebugLog('monaco', $message_key . '-' . $wgCat['id'] . ' - seems to be empty');
-			if (null == ($lines = getMessageForContentAsArray($message_key))) {
-				wfDebugLog('monaco', $message_key . ' - seems to be empty');
-				wfProfileOut(__METHOD__);
-				return $nodes;
-			}
-		}
-
-		foreach ($lines as $line) {
-			$depth = strrpos($line, '*');
-			if ($depth === 0) {
-				$cat = parseItem($line);
-			} else {
-				if ($depth === 1) {
-					$nodes[] = parseItem($line);
-				}
-			}
-		}
-		wfProfileOut(__METHOD__);
-		return array('nodes' => $nodes, 'cat' => $cat);
 	}
 
 	public static function GetRecentlyUploadedImages($limit = 50, $includeThumbnails = true) {

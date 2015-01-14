@@ -5,7 +5,7 @@
 			<? $index = 0; ?>
 			<? foreach ( $assets as $videoData ): ?>
 				<li>
-					<div class="slide-image video wikia-video-thumbnail xlarge hide-play fluid" data-index="<?= $index ?>">
+					<div class="slide-image video video-thumbnail xlarge hide-play fluid" data-index="<?= $index ?>">
 						<span class="play-circle"></span>
 						<img src="<?= $videoData['largeThumbUrl'] ?>">
 						<div class="caption small-4 columns">

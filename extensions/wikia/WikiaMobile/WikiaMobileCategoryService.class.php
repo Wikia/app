@@ -21,6 +21,10 @@ class WikiaMobileCategoryService extends WikiaService {
 	}
 
 	public function index(){
+		if (WikiaPageType::isCorporatePage()) {
+			return false;
+		}
+
 		$categoryLinks = $this->request->getVal( 'categoryLinks', '' );
 
 		//$catlinks are always returned even empty

@@ -1,15 +1,9 @@
 <?php
 
 class JSSnippetsTest extends WikiaBaseTest {
-	public function testAppBuild() {
-		F::unsetInstance('JSSnippets');
-		$instance = F::build('JSSnippets');
-		$this->assertInstanceOf('JSSnippets', $instance);
-	}
 
 	public function testAddToStack() {
-		F::unsetInstance('JSSnippets');
-		$instance = F::build('JSSnippets');
+		$instance = new JSSnippets();
 
 		$snippet = $instance->addToStack(
 			array(

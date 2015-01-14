@@ -62,6 +62,7 @@ $wgSpecialPageGroups['Oversight'] = 'pagetools';
 $wgHooks['ArticleViewHeader'][] = 'hrArticleViewHeaderHook';
 $wgHooks['DiffViewHeader'][] = 'hrDiffViewHeaderHook';
 $wgHooks['UndeleteShowRevision'][] = 'hrUndeleteShowRevisionHook';
+$wgHooks['UserRename::Local'][] = 'hrUserRenameLocalHook';
 
 /**
  * Hook for article view, giving us a chance to insert a removal
@@ -99,6 +100,28 @@ function hrDiffViewHeaderHook( $diff, $oldRev, $newRev ) {
  */
 function hrUndeleteShowRevisionHook( $title, $rev ) {
 	hrInstallArchiveTab( $title, $rev->getTimestamp() );
+	return true;
+}
+
+/**
+ * Register tables that need to be updated when a user is renamed
+ *
+ * @param DatabaseBase $dbw
+ * @param int $userId
+ * @param string $oldUsername
+ * @param string $newUsername
+ * @param UserRenameProcess $process
+ * @param int $wgCityId
+ * @param array $tasks
+ * @return bool
+ */
+function hrUserRenameLocalHook( $dbw, $userId, $oldUsername, $newUsername, $process, $wgCityId, array &$tasks ) {
+	$tasks[] = array(
+		'table' => 'hidden',
+		'userid_column' => 'hidden_user',
+		'username_column' => 'hidden_user_text',
+	);
+
 	return true;
 }
 

@@ -1,0 +1,42 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kening Aldgilles"
+		]
+	},
+	"visualeditor-ca-editsource": "Boarne bewurkje",
+	"visualeditor-dialog-beta-welcome-action-continue": "Fierder",
+	"visualeditor-dialog-beta-welcome-content": "Hjir kinsto yn 'e kunde reitsje mei ús nije en simpele wize fan bewurkjen. Do sjochst no nei de beta-ferzje. Dêrom is it mooglik datsto net alle dielen fan dizze side bewurkje kinst. It is ek mooglik datsto earne fêstrinst en dat wy dêr earst noch nei sjen moatte. Wy soenen it tige wurdearje datsto dyn feroaringen goed neisjochst en melding makkest as de VisualEditor nuvere setten docht (foar it jaan fan feedback kliksto op \"{{int:visualeditor-help-tool}}\"). Do kinst de âlde tekstbewurker ek noch brûken asto op it tabblêd \"$1\" klikst.",
+	"visualeditor-dialog-beta-welcome-title": "{{GENDER:$1|Wolkom}} by de fisuele tekstbewurker",
+	"visualeditor-dialog-media-insert-button": "Media ynfoegje",
+	"visualeditor-dialog-media-insert-title": "Media ynfoegje",
+	"visualeditor-dialog-media-title": "Media ynstellingen",
+	"visualeditor-dialog-meta-categories-category": "Kategory",
+	"visualeditor-dialog-meta-categories-data-label": "Kategoryen",
+	"visualeditor-dialog-meta-categories-input-newcategorylabel": "Nije kategory",
+	"visualeditor-dialog-meta-categories-input-placeholder": "Kategory tafoegje",
+	"visualeditor-dialog-meta-categories-options": "Opsjes",
+	"visualeditor-dialog-meta-categories-section": "Kategoryen",
+	"visualeditor-dialog-meta-languages-code-label": "Taalkoade",
+	"visualeditor-dialog-meta-languages-label": "Talen",
+	"visualeditor-dialog-meta-languages-link-label": "Keppele side",
+	"visualeditor-dialog-meta-languages-name-label": "Taal",
+	"visualeditor-dialog-meta-languages-section": "Talen",
+	"visualeditor-dialog-meta-settings-label": "Side ynstellingen",
+	"visualeditor-dialog-reference-insert-button": "Referinsje ynfoegje",
+	"visualeditor-dialog-reference-insert-title": "Referinsje ynfoegje",
+	"visualeditor-dialog-referencelist-title": "List mei referinsjes",
+	"visualeditor-dialog-transclusion-title": "Transklúzje",
+	"visualeditor-dialogbutton-media-tooltip": "Media",
+	"visualeditor-dialogbutton-meta-tooltip": "Side ynstellingen",
+	"visualeditor-dialogbutton-reference-tooltip": "Referinsje",
+	"visualeditor-dialogbutton-referencelist-tooltip": "List mei referinsjes",
+	"visualeditor-dialogbutton-transclusion-tooltip": "Transklúzje",
+	"visualeditor-formatdropdown-format-mw-heading1": "Namme fan side",
+	"visualeditor-savedialog-label-save": "Fêstlizze",
+	"visualeditor-savedialog-label-warning": "Warskôging",
+	"visualeditor-savedialog-title-conflict": "Konflikt",
+	"visualeditor-savedialog-title-nochanges": "Gjin feroaringen sjen litte",
+	"visualeditor-toolbar-cancel": "Ofbrekke",
+	"visualeditor-toolbar-savedialog": "Fêstlizze"
+}

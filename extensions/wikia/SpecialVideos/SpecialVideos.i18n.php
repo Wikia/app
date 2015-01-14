@@ -26,10 +26,13 @@ $messages['en'] = array(
 	'specialvideos-meta-description-corporate' => '$1 has new videos that include the latest video clips, video reviews, video interviews and trailers. Watch now!',
 	'specialvideos-remove-modal-title' => 'Delete video',
 	'specialvideos-remove-modal-message' => 'Are you sure you want to delete this video from your wiki?',
-
+	'specialvideos-no-videos' => 'Sorry, there are no videos on {{SITENAME}} yet, but you can add one from the desktop site.',
 	'specialvideos-filter-games' => 'Trending in Games',
 	'specialvideos-filter-lifestyle' => 'Trending in Lifestyle',
 	'specialvideos-filter-entertainment' => 'Trending in Entertainment',
+	'specialvideos-btn-load-more' => 'Load More',
+	'specialvideos-posted-in-label' => 'Posted in',
+	'related-videos-tooltip-add' => 'Add a video to this wiki',
 );
 
 $messages['qqq'] = array(
@@ -51,10 +54,13 @@ $messages['qqq'] = array(
 	'specialvideos-meta-description-corporate' => 'Corporate hub description of videos page placed in the description meta tag for better SEO.  Placeholder is the wiki name',
 	'specialvideos-remove-modal-title' => 'Modal dialog title to delete video',
 	'specialvideos-remove-modal-message' => 'Modal dialog message to confirm whether or not user wants to delete',
+	'specialvideos-no-videos' => 'Message shown when there are no videos added to the wiki',
 
 	'specialvideos-filter-games' => 'Label that appears in sort/filter pulldown to show only trending gaming videos',
 	'specialvideos-filter-lifestyle' => 'Label that appears in sort/filter pulldown to show only trending lifestyle videos',
 	'specialvideos-filter-entertainment' => 'Label that appears in sort/filter pulldown to show only trending entertainment videos',
+	'specialvideos-btn-load-more' => 'Label for button that loads more videos when clicked',
+	'specialvideos-posted-in-label' => 'This is the label text that appears before a list of titles in which the video is posted. Due to design constraints, it comes before the list, so if, when translated, it would otherwise come after the list, please do your best to adjust accordingly. Think of it as a label or a heading followed by bullet points. ex: "Posted in: title1, title2, title3."  It is up to you if you want to include a colon at the end.',
 );
 
 $messages['de'] = array(
@@ -69,6 +75,7 @@ $messages['de'] = array(
 	'specialvideos-uploadby' => 'von $1',
 	'specialvideos-posted-in' => 'Veröffentlicht auf $1',
 	'special-videos-add-video' => 'Video hinzufügen',
+	'related-videos-tooltip-add' => 'Eine Video zu dieser Seite hinzufügen',
 );
 
 $messages['es'] = array(
@@ -83,6 +90,7 @@ $messages['es'] = array(
 	'specialvideos-uploadby' => 'por $1',
 	'specialvideos-posted-in' => 'Publicado en $1',
 	'special-videos-add-video' => 'Añade un video',
+	'related-videos-tooltip-add' => 'Añadir un vídeo a esta página',
 );
 
 $messages['fr'] = array(
@@ -97,6 +105,35 @@ $messages['fr'] = array(
 	'specialvideos-uploadby' => 'par $1',
 	'specialvideos-posted-in' => 'Postée sur $1',
 	'special-videos-add-video' => 'Ajouter une vidéo',
+	'related-videos-tooltip-add' => 'Ajouter une vidéo à cette page.',
+);
+
+$messages['gl'] = array(
+	'related-videos-tooltip-add' => 'Engadir un vídeo a esta páxina',
+);
+
+$messages['hu'] = array(
+	'related-videos-tooltip-add' => 'Videó hozzáadása az oldalhoz',
+);
+
+$messages['ia'] = array(
+	'related-videos-tooltip-add' => 'Adder un video a iste pagina',
+);
+
+$messages['mk'] = array(
+	'related-videos-tooltip-add' => 'Додај видео во страницава',
+);
+
+$messages['ms'] = array(
+	'related-videos-tooltip-add' => 'Letakkan video pada laman ini',
+);
+
+$messages['nb'] = array(
+	'related-videos-tooltip-add' => 'Legg til en video på denne siden',
+);
+
+$messages['nl'] = array(
+	'related-videos-tooltip-add' => 'Video aan deze pagina toevoegen',
 );
 
 $messages['pl'] = array(
@@ -111,6 +148,7 @@ $messages['pl'] = array(
 	'specialvideos-uploadby' => 'dodał(a) $1',
 	'specialvideos-posted-in' => 'Użyto w $1',
 	'special-videos-add-video' => 'Dodaj film',
+	'related-videos-tooltip-add' => 'Dodaj film do tej strony',
 );
 
 $messages['ru'] = array(
@@ -125,6 +163,15 @@ $messages['ru'] = array(
 	'specialvideos-uploadby' => 'от $1',
 	'specialvideos-posted-in' => 'Опубликовано в $1',
 	'special-videos-add-video' => 'Добавить видео',
+	'related-videos-tooltip-add' => 'Добавить видео на эту страницу',
+);
+
+$messages['sv'] = array(
+	'related-videos-tooltip-add' => 'Lägg till en video på denna sida',
+);
+
+$messages['tl'] = array(
+	'related-videos-tooltip-add' => 'Magdagdag ng isang bidyo sa pahinang ito',
 );
 
 $messages['it'] = array(

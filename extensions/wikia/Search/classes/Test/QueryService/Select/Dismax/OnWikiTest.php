@@ -6,6 +6,7 @@ namespace Wikia\Search\QueryService\Select\Dismax;
 use Wikia, ReflectionProperty, ReflectionMethod;
 /**
  * Tests on-wiki search functionality
+ * @group Broken
  */
 class OnWikiTest extends Wikia\Search\Test\BaseTest { 
 	
