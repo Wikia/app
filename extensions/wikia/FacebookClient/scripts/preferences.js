@@ -29,6 +29,9 @@
 					$('.fb-loaded').removeClass('hidden');
 
 					bindEvents();
+				})
+				.fail(function () {
+					facebookError();
 				});
 
 			return {};
@@ -141,6 +144,42 @@
 			window.GlobalNotification.show(msg, 'error');
 		}
 
+		function facebookError() {
+			$(document).on('tab-fbconnect-prefstext-complete', function () {
+				$('.tab-fbconnect-prefstext').on('click', function () {
+					var $tabContentContainer = $('#mw-prefsection-fbconnect-prefstext');
+
+					// Disable everything within the tab
+					$tabContentContainer
+						.find('input, button')
+						.attr('disabled', 'disabled');
+					$tabContentContainer
+						.find('a')
+						.css('pointer-events', 'none');
+
+					// Throw an error message up
+					function createModal(uiModal) {
+						var modalConfig = {
+							vars: {
+								id: 'FbErrorModal',
+								size: 'medium',
+								title: $.msg('fbconnect-error-fb-unavailable-title'),
+								content: $.msg('fbconnect-error-fb-unavailable-text')
+							}
+						};
+						uiModal.createComponent(modalConfig, function (errorModal) {
+							errorModal.show();
+						});
+					}
+
+					require(['wikia.ui.factory'], function (uiFactory) {
+						$.when(uiFactory.init('modal'))
+							.then(createModal);
+					});
+				});
+			});
+		}
+
 		/**
 		 * Return public methods
 		 */
@@ -151,51 +190,11 @@
 					instance = init();
 				}
 				return instance;
-			},
-			facebookError: function () {
-				if (!window.FB) {
-					$(document).on('tab-fbconnect-prefstext-complete', function () {
-						$('.tab-fbconnect-prefstext').on('click', function () {
-							var $tabContentContainer = $('#mw-prefsection-fbconnect-prefstext');
-
-							// Disable everything within the tab
-							$tabContentContainer
-								.find('input, button')
-								.attr('disabled', 'disabled');
-							$tabContentContainer
-								.find('a')
-								.css('pointer-events', 'none');
-
-							// Throw an error message up
-							function createModal(uiModal) {
-								var modalConfig = {
-									vars: {
-										id: 'FbErrorModal',
-										size: 'medium',
-										title: $.msg('fbconnect-error-fb-unavailable-title'),
-										content: $.msg('fbconnect-error-fb-unavailable-text')
-									}
-								};
-								uiModal.createComponent(modalConfig, function (errorModal) {
-									errorModal.show();
-								});
-							}
-
-							require(['wikia.ui.factory'], function (uiFactory) {
-								$.when(uiFactory.init('modal'))
-									.then(createModal);
-							});
-						});
-					});
-				}
 			}
 		};
 
 	})();
 
-	$( function () {
-		// instantiate singleton on DOM ready
-		fbPreferences.getInstance();
-		//fbInstance.always(fbPreferences.facebookError);
-	});
+	// instantiate singleton on DOM ready
+	$(fbPreferences.getInstance);
 })(jQuery, mediaWiki);
