@@ -14,8 +14,9 @@ class ExactSeriesSearchService extends EntitySearchService {
 
 		$phrase = $this->sanitizeQuery( $query );
 		$slang = $this->getLang();
-		$select->setQuery( "+(" . static::EXACT_MATCH_FIELD . ':"' . $phrase . '") AND +(lang_s:' . $slang . ')' );
+		$select->setQuery( "+(" . static::EXACT_MATCH_FIELD . ':"' . $phrase . '") AND +(lang:' . $slang . ')' );
 		$select->createFilterQuery( 'no_episodes' )->setQuery( '-(tv_episode_mv_em:*)' );
+		$select->addSort( 'article_quality_i', 'desc' );
 		$select->setRows( static::ARTICLES_LIMIT );
 
 		return $select;

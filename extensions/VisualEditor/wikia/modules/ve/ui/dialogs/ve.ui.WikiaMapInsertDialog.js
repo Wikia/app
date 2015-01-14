@@ -93,7 +93,7 @@ ve.ui.WikiaMapInsertDialog.prototype.setupResultsPanel = function () {
 	headlineButton.on( 'click', ve.bind( this.onCreateClick, this ) );
 
 	this.resultsWidget = new ve.ui.WikiaMediaResultsWidget( { '$': this.$ } );
-	this.resultsWidget.on( 'preview', ve.bind( this.onMapSelect, this ) );
+	this.resultsWidget.on( 'select', ve.bind( this.onMapSelect, this ) );
 	this.selectWidget = this.resultsWidget.getResults();
 
 	this.panels.results.$element.append( $headline, this.resultsWidget.$element );

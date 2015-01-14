@@ -42,3 +42,20 @@ $wgWikiaApiControllers['WikiaHubsApiController'] = "{$IP}/extensions/wikia/Wikia
 
 //message files
 $wgExtensionMessagesFiles['WikiaHubsServices'] = $dir . 'WikiaHubsServices.i18n.php';
+
+// foreign file repo
+$wgForeignFileRepos[] = array(
+	'class'            => 'WikiaForeignDBViaLBRepo',
+	'name'             => 'wikiahubsfiles',
+	'directory'        => $wgWikiaHubsFileRepoDirectory,
+	'url'              => 'http://images.wikia.com/' . $wgWikiaHubsFileRepoDBName . '/images',
+	'hashLevels'       => 2,
+	'thumbScriptUrl'   => '',
+	'transformVia404'  => true,
+	'hasSharedCache'   => true,
+	'descBaseUrl'      => $wgWikiaHubsFileRepoPath . 'wiki/File:',
+	'fetchDescription' => true,
+	'wiki'             => $wgWikiaHubsFileRepoDBName,
+	'checkRedirects'   => false,
+	'checkDuplicates'  => false,
+);

@@ -547,11 +547,19 @@ Rencana '''$1''' tidak dapat dijumpai.
 );
 
 /** Neapolitan (Napulitano)
+ * @author C.R.
  * @author Chelin
  */
 $messages['nap'] = array(
 	'our404handler' => 'Errore 404: Paggena nun truovata!',
 	'our404handler-oops' => "Chiste nun song 'e paggene cca stavi circando. Prosegue, ppe favore.",
+	'message404' => "'''Nuje simme ovveramente dispiaciute, ma pe' cocche mutivo 'a paggena c'avite cercato nun esiste.'''
+
+'A voce '''$1''' nun se può truvà.
+
+* Putite pruvà 'a voce [[$2]]
+* Putite ausà 'a casciulella 'e ricerche ô lato 'e smèrza d' 'a paggena
+* Vedite ncopp'a paggena prencepale 'e stu sito, fatte click a: [{{SERVER}} {{SITENAME}}]",
 );
 
 /** Norwegian Bokmål (norsk bokmål)
@@ -809,6 +817,13 @@ Artikeln '''$1''' kunde inte hittas.
 * Kanske artikeln [[$2]] kan hjälpa dig
 * Du kan använda sökfältet till vänster på sidan
 * För att gå till huvudsidan för denna sajten klickar du på länken: [{{SERVER}} {{SITENAME}}]",
+);
+
+/** Tamil (தமிழ்)
+ * @author ElangoRamanujam
+ */
+$messages['ta'] = array(
+	'our404handler' => 'பிழை 404: பக்கத்தைக் காணவில்லை!',
 );
 
 /** Telugu (తెలుగు)

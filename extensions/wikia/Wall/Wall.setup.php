@@ -40,9 +40,6 @@ $wgAutoloadClasses['WallBaseController'] =  $dir . '/WallBaseController.class.ph
 $wgAutoloadClasses['VoteHelper'] =  $dir . '/VoteHelper.class.php';
 $wgAutoloadClasses['WallRelatedPages'] =  $dir . '/WallRelatedPages.class.php';
 
-include($dir . '/notification/WallNotifications.setup.php');
-
-
 $wgExtensionMessagesFiles['Wall'] = $dir . '/Wall.i18n.php';
 
 $wgHooks['AccountNavigationModuleAfterDropdownItems'][] = 'WallHooksHelper::onAccountNavigationModuleAfterDropdownItems';
@@ -227,15 +224,20 @@ $wgGroupPermissions['staff']['wallarchive'] = true;
 $wgGroupPermissions['vstf']['wallarchive'] = true;
 $wgGroupPermissions['helper']['wallarchive'] = true;
 $wgGroupPermissions['sysop']['wallarchive'] = true;
+$wgGroupPermissions['moderator']['wallarchive'] = true;
 
 $wgGroupPermissions['*']['wallremove'] = false;
-$wgGroupPermissions['user']['wallremove'] = true;
+$wgGroupPermissions['staff']['wallremove'] = true;
+$wgGroupPermissions['vstf']['wallremove'] = true;
+$wgGroupPermissions['helper']['wallremove'] = true;
+$wgGroupPermissions['moderator']['wallremove'] = true;
 
 $wgGroupPermissions['*']['walledit'] = false;
 $wgGroupPermissions['staff']['walledit'] = true;
 $wgGroupPermissions['vstf']['walledit'] = true;
 $wgGroupPermissions['helper']['walledit'] = true;
 $wgGroupPermissions['sysop']['walledit'] = true;
+$wgGroupPermissions['moderator']['walledit'] = true;
 
 $wgGroupPermissions['*']['editwallarchivedpages'] = false;
 $wgGroupPermissions['sysop']['editwallarchivedpages'] = true;
@@ -251,6 +253,7 @@ $wgGroupPermissions['sysop']['notifyeveryone'] = true;
 $wgGroupPermissions['vstf']['notifyeveryone'] = true;
 $wgGroupPermissions['staff']['notifyeveryone'] = true;
 $wgGroupPermissions['helper']['notifyeveryone'] = true;
+$wgGroupPermissions['moderator']['notifyeveryone'] = true;
 
 $wgGroupPermissions['*']['wallfastadmindelete'] = false;
 $wgGroupPermissions['sysop']['wallfastadmindelete'] = false;
@@ -258,4 +261,10 @@ $wgGroupPermissions['vstf']['wallfastadmindelete'] = true;
 $wgGroupPermissions['staff']['wallfastadmindelete'] = true;
 
 $wgGroupPermissions['*']['wallmessagemove'] = false;
-$wgGroupPermissions['user']['wallmessagemove'] = true;
+$wgGroupPermissions['moderator']['wallmessagemove'] = true;
+$wgGroupPermissions['sysop']['wallmessagemove'] = true;
+$wgGroupPermissions['vstf']['wallmessagemove'] = true;
+$wgGroupPermissions['helper']['wallmessagemove'] = true;
+$wgGroupPermissions['staff']['wallmessagemove'] = true;
+
+$wgAddGroups['bureaucrat']['moderator'] = true;

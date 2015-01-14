@@ -1,36 +1,30 @@
 /* jshint maxparams: false, maxlen: 150 */
 /*global define*/
 define('ext.wikia.adEngine.provider.directGpt', [
+	'wikia.cache',
+	'wikia.geo',
 	'wikia.log',
 	'wikia.window',
-	'wikia.geo',
-	'wikia.cache',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.adLogicHighValueCountry',
 	'ext.wikia.adEngine.wikiaGptHelper',
 	'ext.wikia.adEngine.gptSlotConfig'
-], function (log, window, Geo, cacheStorage, adContext, slotTweaker, adLogicHighValueCountry, wikiaGpt, slotMapConfig) {
+], function (cacheStorage, Geo, log, window, adContext, slotTweaker, adLogicHighValueCountry, wikiaGpt, slotMapConfig) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.directGpt',
 		srcName = 'gpt',
-		slotMap,
+		slotMap = slotMapConfig.getConfig(srcName),
 		forgetAdsShownAfterTime = 3600, // an hour
 		country = Geo.getCountryCode(),
 		now = window.wgNow || new Date(),
-		maxCallsToDART,
-		isHighValueCountry,
+		maxCallsToDART = adLogicHighValueCountry.getMaxCallsToDART(country),
+		isHighValueCountry = adLogicHighValueCountry.isHighValueCountry(country),
 		leaderboardCalled = false, // save if leaderboard was called, so we know whether to call INVISIBLE slot as well
 		gptConfig,
-		gptFlushed = false;
-
-	maxCallsToDART = adLogicHighValueCountry.getMaxCallsToDART(country);
-	isHighValueCountry = adLogicHighValueCountry.isHighValueCountry(country);
-
-	// TODO: tile is not used, keys without apostrophes
-	// GPT: only loc, pos and size keys are used
-	slotMap = slotMapConfig.getConfig(srcName);
+		gptFlushed = false,
+		alwaysCallDart = adContext.getContext().opts.alwaysCallDart;
 
 	// TODO: integrate this array to slotMap if it makes sense
 	gptConfig = { // slots to use SRA with
@@ -118,11 +112,23 @@ define('ext.wikia.adEngine.provider.directGpt', [
 	function canHandleSlot(slotname) {
 		log(['canHandleSlot', slotname], 'debug', logGroup);
 
-		if (adContext.getContext().forceProviders.directGpt && slotMap[slotname]) {
+		if (!slotMap[slotname]) {
+			log(['canHandleSlot', slotname, 'no DART for this slot', false], 'info', logGroup);
+			return false;
+		}
+
+		if (alwaysCallDart) {
+			log(['canHandleSlot', slotname, 'always calling DART', true], 'info', logGroup);
 			return true;
 		}
 
-		if (!isHighValueCountry || !slotMap[slotname]) {
+		if (adContext.getContext().forceProviders.directGpt) {
+			log(['canHandleSlot', slotname, 'forced through adContext', true], 'info', logGroup);
+			return true;
+		}
+
+		if (!isHighValueCountry) {
+			log(['canHandleSlot', slotname, 'no high value country', false], 'info', logGroup);
 			return false;
 		}
 
@@ -169,7 +175,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 
 				// hop to Liftium
 				adInfo.method = 'hop';
-				hop(adInfo, 'Liftium');
+				hop(adInfo);
 			},
 			srcName
 		);

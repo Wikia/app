@@ -123,7 +123,7 @@ $wgGroupPermissions['staff']['forumadmin'] = true;
 $wgGroupPermissions['helper']['forumadmin'] = true;
 $wgGroupPermissions['sysop']['forumadmin'] = true;
 $wgGroupPermissions['helper']['forumadmin'] = true;
-
+$wgGroupPermissions['moderator']['forumadmin'] = true;
 
 JSMessages::registerPackage('Forum', array(
 	'back',

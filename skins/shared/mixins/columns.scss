@@ -1,5 +1,17 @@
 @mixin column-count( $count ) {
-	column-count: $count;
 	-webkit-column-count: $count;
 	-moz-column-count: $count;
+	column-count: $count;
+}
+
+@mixin column-rule( $rule ) {
+	-webkit-column-rule: $rule;
+	-moz-column-rule: $rule;
+	column-rule: $rule;
+}
+
+@mixin column-gap( $gap ) {
+	-webkit-column-gap: $gap;
+	-moz-column-gap: $gap;
+	column-gap: $gap;
 }

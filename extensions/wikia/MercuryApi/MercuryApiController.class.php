@@ -4,9 +4,9 @@ class MercuryApiController extends WikiaController {
 
 	const PARAM_ARTICLE_ID = 'id';
 	const PARAM_PAGE = 'page';
-	const PARAM_ARTICLE_TITLE = "title";
+	const PARAM_ARTICLE_TITLE = 'title';
 
-	const NUMBER_CONTRIBUTORS = 6;
+	const NUMBER_CONTRIBUTORS = 5;
 	const DEFAULT_PAGE = 1;
 
 	private $mercuryApi = null;
@@ -14,6 +14,41 @@ class MercuryApiController extends WikiaController {
 	public function __construct() {
 		parent::__construct();
 		$this->mercuryApi = new MercuryApi();
+	}
+
+	/**
+	 * @desc Gets smart banner config from WF and cleans it up
+	 */
+	private function getSmartBannerConfig() {
+		if ( !empty( $this->wg->EnableWikiaMobileSmartBanner )
+			&& !empty( $this->wg->WikiaMobileSmartBannerConfig )
+		) {
+			$smartBannerConfig = $this->wg->WikiaMobileSmartBannerConfig;
+
+			unset( $smartBannerConfig[ 'author' ] );
+
+			if ( !empty( $smartBannerConfig[ 'icon' ] )
+				&& !isset( parse_url( $smartBannerConfig[ 'icon' ] )[ 'scheme' ] ) //it differs per wiki
+			) {
+				$smartBannerConfig[ 'icon' ] = $this->wg->extensionsPath . $smartBannerConfig[ 'icon' ];
+			}
+
+			$meta = $smartBannerConfig[ 'meta' ];
+			unset( $smartBannerConfig[ 'meta' ] );
+			$smartBannerConfig[ 'appId' ] = [
+				'ios' => str_replace( 'app-id=', '', $meta[ 'apple-itunes-app' ] ),
+				'android' => str_replace( 'app-id=', '', $meta[ 'google-play-app' ] ),
+			];
+
+			$smartBannerConfig[ 'appScheme' ] = [
+				'ios' => $meta[ 'ios-scheme' ],
+				'android' => $meta[ 'android-scheme' ]
+			];
+
+			return $smartBannerConfig;
+		}
+
+		return null;
 	}
 
 	/**
@@ -61,6 +96,9 @@ class MercuryApiController extends WikiaController {
 	 * @return mixed
 	 */
 	private function getTopContributorsDetails( Array $ids ) {
+		if ( empty( $ids ) ) {
+			return [];
+		}
 		try {
 			return $this->sendRequest( 'UserApi', 'getDetails', [ 'ids' => implode( ',', $ids ) ] )
 				->getData()[ 'items' ];
@@ -69,7 +107,6 @@ class MercuryApiController extends WikiaController {
 			// and we want the article even if we don't have the contributors
 			return [];
 		}
-
 	}
 
 	/**
@@ -124,7 +161,7 @@ class MercuryApiController extends WikiaController {
 		}
 
 		if ( empty( $title ) ) {
-			throw new NotFoundApiException( "Unable to find any article" );
+			throw new NotFoundApiException( 'Unable to find any article' );
 		}
 
 		return $title;
@@ -157,7 +194,7 @@ class MercuryApiController extends WikiaController {
 		$comments = $this->mercuryApi->processArticleComments( $commentsData );
 
 		$this->response->setVal( 'payload', $comments );
-		$this->response->setVal( 'pagesCount', $commentsData['pagesCount'] );
+		$this->response->setVal( 'pagesCount', $commentsData[ 'pagesCount' ] );
 		$this->response->setVal( 'basePath', $this->wg->Server );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
@@ -167,8 +204,42 @@ class MercuryApiController extends WikiaController {
 	 *
 	 */
 	public function getWikiVariables() {
+		global $egFacebookAppId;
+
 		$wikiVariables = $this->mercuryApi->getWikiVariables();
-		$wikiVariables['navData'] = $this->getNavigationData();
+
+		try {
+			$wikiVariables[ 'navData' ] = $this->getNavigationData();
+		} catch (Exception $e) {
+			\Wikia\Logger\WikiaLogger::instance()->error( 'Fallback to empty navigation', [
+				'exception' => $e
+			] );
+			$wikiVariables[ 'navData' ] = [];
+		}
+
+		$wikiVariables[ 'vertical' ] = WikiFactoryHub::getInstance()->getWikiVertical( $this->wg->CityId )['short'];
+		$wikiVariables[ 'basePath' ] = $this->wg->Server;
+
+		// Used to determine GA tracking
+		if ( !empty( $this->wg->IsGASpecialWiki ) ) {
+			$wikiVariables[ 'isGASpecialWiki' ] = true;
+		}
+
+		if ( !empty( $this->wg->ArticlePath ) ) {
+			$wikiVariables[ 'articlePath' ] = str_replace('$1', '', $this->wg->ArticlePath);
+		} else {
+			$wikiVariables[ 'articlePath' ] = '/wiki/';
+		}
+
+		$smartBannerConfig = $this->getSmartBannerConfig();
+		if ( !is_null( $smartBannerConfig ) ) {
+			$wikiVariables[ 'smartBanner' ] = $smartBannerConfig;
+		}
+
+		if ( !is_null( $egFacebookAppId ) ) {
+			$wikiVariables[ 'facebookAppId' ] = $egFacebookAppId;
+		}
+
 		$this->response->setVal( 'data', $wikiVariables );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
@@ -178,28 +249,57 @@ class MercuryApiController extends WikiaController {
 	 * @throws BadRequestApiException
 	 */
 	public function getArticle(){
-		$title = $this->getTitleFromRequest();
-		$articleId = $title->getArticleId();
+		try {
+			$title = $this->getTitleFromRequest();
+			$articleId = $title->getArticleId();
 
-		$articleAsJson = $this->getArticleJson( $articleId );
+			$articleAsJson = $this->getArticleJson( $articleId );
 
-		$data = [
-			'details' => $this->getArticleDetails( $articleId ),
-			'topContributors' => $this->getTopContributorsDetails(
+			$data = [
+				'details' => $this->getArticleDetails( $articleId ),
+				'topContributors' => $this->getTopContributorsDetails(
 					$this->getTopContributorsPerArticle( $articleId )
 				),
-			'article' => $articleAsJson,
-			'adsContext' => $this->mercuryApi->getAdsContext( $title, $this->wg, $articleAsJson[ 'categories' ] ),
-			'basePath' => $this->wg->Server
-		];
+				'article' => $articleAsJson
+			];
 
-		$relatedPages = $this->getRelatedPages( $articleId );
-		if ( !empty( $relatedPages ) ) {
-			$data['relatedPages'] = $relatedPages;
+			$relatedPages = $this->getRelatedPages( $articleId );
+
+			if ( !empty( $relatedPages ) ) {
+				$data[ 'relatedPages' ] = $relatedPages;
+			}
+		} catch (WikiaHttpException $exception) {
+			$this->response->setCode( $exception->getCode() );
+
+			$data = [];
+
+			$this->response->setVal( 'exception', [
+				'message' => $exception->getMessage(),
+				'code' => $exception->getCode(),
+				'details' => $exception->getDetails()
+			] );
+
+			$title = $this->wg->Title;
 		}
 
+		$data['adsContext'] = $this->mercuryApi->getAdsContext( $title );
+
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 
 		$this->response->setVal( 'data', $data );
+	}
+
+	/**
+	 * @desc HG-377: Returns search suggestions
+	 *
+	 * @throws NotFoundApiException
+	 * @throws MissingParameterApiException
+	 */
+	public function getSearchSuggestions() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setValues(
+			$this->sendRequest( 'SearchSuggestionsApi', 'getList', $this->request->getParams() )->getData()
+		);
 	}
 }

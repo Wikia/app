@@ -666,6 +666,7 @@ class WikiService extends WikiaModel {
 				$wikis = $this->app->wg->Memc->get( $cacheKey );
 
 				if ( !is_array( $wikis ) ) {
+					$wikis = [];
 					$db = $this->getSharedDB();
 
 					$string = $db->addQuotes( "%{$string}%" );

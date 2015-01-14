@@ -1,5 +1,7 @@
 <?php
 
+use \Wikia\Logger\WikiaLogger;
+
 class PromoteImageReviewHelper extends ImageReviewHelperBase {
 
 	const LIMIT_IMAGES = 20;
@@ -318,14 +320,21 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 				__METHOD__
 			);
 			$commit = true;
-			error_log("PromoteImageReview : returning " . count($unusedImages) . " back to the queue");
+
+			WikiaLogger::instance()->info( "PromoteImageReview : returning unused images back to the queue", [
+				'method' => __METHOD__,
+				'count' => count( $unusedImages ),
+			] );
 		}
 
 		if ($commit) {
 			$db->commit();
 		}
 
-		error_log("PromoteImageReview : fetched new " . count($imageList) . " images");
+		WikiaLogger::instance()->info( "PromoteImageReview : fetched new images", [
+			'method' => __METHOD__,
+			'count' => count( $imageList ),
+		] );
 
 		wfProfileOut(__METHOD__);
 

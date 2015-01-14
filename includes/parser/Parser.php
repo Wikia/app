@@ -181,6 +181,18 @@ class Parser {
 	var $mUniqPrefix;
 
 	/**
+	 * Wikia change begin
+	 *
+	 * Wikia vars
+	 */
+
+	var $mIsMainParse;	# Is main article content currently parsed
+
+	/**
+	 * Wikia change end
+	 */
+
+	/**
 	 * Constructor
 	 *
 	 * @param $conf array
@@ -1756,6 +1768,7 @@ class Parser {
 
 		$imagesfrom = $this->mOptions->getAllowExternalImagesFrom();
 		$imagesexception = !empty( $imagesfrom );
+		$isValidImageUrl = VignetteRequest::isVignetteUrl($url) || preg_match(self::EXT_IMAGE_REGEX, $url);
 		$text = false;
 		# $imagesfrom could be either a single string or an array of strings, parse out the latter
 		if ( $imagesexception && is_array( $imagesfrom ) ) {
@@ -1774,13 +1787,12 @@ class Parser {
 		if ( $this->mOptions->getAllowExternalImages()
 			 || ( !empty( $wgAllowExternalWhitelistImages ) && wfRunHooks( 'outputMakeExternalImage', array( &$url ) ) )
 			 || ( $imagesexception && $imagematch ) ) {
-			if ( preg_match( self::EXT_IMAGE_REGEX, $url ) ) {
+			if ( $isValidImageUrl ) {
 				# Image found
 				$text = Linker::makeExternalImage( $url );
 			}
 		}
-		if ( !$text && $this->mOptions->getEnableImageWhitelist()
-			 && preg_match( self::EXT_IMAGE_REGEX, $url ) ) {
+		if ( !$text && $this->mOptions->getEnableImageWhitelist() && $isValidImageUrl ) {
 			$whitelist = explode( "\n", wfMsgForContent( 'external_image_whitelist' ) );
 			foreach ( $whitelist as $entry ) {
 				# Sanitize the regex fragment, make it case-insensitive, ignore blank entries/comments
@@ -4323,6 +4335,10 @@ class Parser {
 	 */
 	function formatHeadings( $text, $origText, $isMain=true ) {
 		global $wgMaxTocLevel, $wgHtml5, $wgExperimentalHtmlIds;
+
+		// Wikia change start
+		$this->mIsMainParse = $isMain;
+		// Wikia change end
 
 		# Inhibit editsection links if requested in the page
 		if ( isset( $this->mDoubleUnderscores['noeditsection'] ) ) {

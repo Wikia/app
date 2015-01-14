@@ -9,16 +9,20 @@ $messages = array();
 $messages['en'] = array(
 	'wam-html-title' => 'Wikia Activity Monitor (WAM) - Wikia.com/WAM',
 	'wampage-header' => 'Wam',
-	'wam-Gaming' => 'Video Games',
-	'wam-Entertainment' => 'Entertainment',
-	'wam-Lifestyle' => 'Lifestyle',
-	'wampage-header-faq' => 'Faq',
-	'wampage-header-wam' => 'What is WAM Score?',
-	'wampage-content' => 'Wikia Activity Monitor (WAM) is an indicator of a wikia’s health and vitality. WAM is a custom measurement developed by Wikia to capture a number of independent indicators into one overall index, like the Billboard or Parker score.
-
-The WAM is calculated daily for the top 5,000 Wikia sites and includes an overall and vertical rank as well as a score from 0 to 100. The WAM rankings are sensitive to real-world events and change frequently, so be sure to check back regularly to see the latest trends. The WAM can also be viewed daily on each of our [[Video Games]], [[Entertainment]] and [[Lifestyle]] hub pages.
-
-[[$1|Frequently Asked Questions]]',
+	'wampage-header-faq' => 'Frequently asked questions',
+	'wam-all' => 'All',
+	'wam-tv' => 'TV',
+	'wam-games' => 'Games',
+	'wam-books' => 'Books',
+	'wam-comics' => 'Comics',
+	'wam-lifestyle' => 'Lifestyle',
+	'wam-music' => 'Music',
+	'wam-movies' => 'Movies',
+	'wampage-top-gainers-header' => 'Top Gainers',
+	'wampage-header-wam' => 'WAM Score',
+	'wampage-subheader-wam' => 'WAM Score is an indicator of the strength and momentum of a Wikia fan community.',
+	'wampage-content' => 'The WAM is calculated daily for the top 5,000 Wikia sites and includes an overall and vertical rank as well as a score from 0 to 100. The WAM rankings are sensitive to real-world events and change frequently, so be sure to check back regularly to see the latest trends.',
+	'wampage-content-faq-link' => '[[$1|Frequently Asked Questions]]',
 	'wampage-faq' => '__NOTOC____NOEDITSECTION__===How is the WAM calculated?===
 	The WAM rank is a combination of traffic, engagement and growth. We are not able to provide the specifics because we do not want Wikis attempting to manipulate the rankings. But rest assured, we have included all the essential ingredients for a successful and thriving Wiki.
 ===Why should I care about the WAM?===
@@ -40,14 +44,13 @@ We encourage you to display your WAM score or rank on your Wiki, but we ask you 
 ===Who can I speak to if I have other questions about the WAM?===
 Please contact community support at [mailto:support@wikia-inc.com support@wikia-inc.com].
 	',
-
 	'wam-index-header-rank' => 'Rank',
 	'wam-index-header-score' => 'WAM Score',
 	'wam-index-header-wiki-name' => 'Wikia URL',
 	'wam-index-header-vertical' => 'Vertical',
 	'wam-index-header-vertical-rank' => 'Vertical Rank',
 	'wam-index-header-admins' => 'Admins',
-	'wampage-breadcrumb-back-to-wam' => 'WAM Score',
+	'wampage-breadcrumb-back-to-wam' => 'Back to WAM Score',
 	'wam-index-header-peak-rank' => 'Peak Rank',
 	'wam-index-no-results' => 'The wiki you searched for is not in the top 5000 for the date you selected. WAM rankings are updated daily, so check back frequently. [mailto:support@wikia-inc.com Contact Wikia Community Support] if you have any questions.',
 	'wam-index-filter-search-placeholder' => 'Search',
@@ -63,6 +66,18 @@ $messages['qqq'] = array(
 	'wampage-header' => 'Header of the WAM page on corporate wiki. For information about WAM visit http://www.wikia.com/WAM',
 	'wampage-header-faq' => 'Header of the FAQ page for WAM page on corporate wiki. For information about WAM visit http://www.wikia.com/WAM',
 	'wampage-content' => 'Content of the WAM page on corporate wiki. For information about WAM visit http://www.wikia.com/WAM',
+	'wampage-content-faq-link' => 'A link to the FAQ page with a URL as a parameter',
+	'wam-all' => 'Text for the tab selecting all verticals',
+	'wam-tv' => 'Text for the TV vertical tab',
+	'wam-games' => 'Text for the Games vertical tab',
+	'wam-books' => 'Text for the Books vertical tab',
+	'wam-comics' => 'Text for the Comics vertical tab',
+	'wam-lifestyle' => 'Text for the Lifestyle vertical tab',
+	'wam-music' => 'Text for the Music vertical tab',
+	'wam-movies' => 'Text for the Movies vertical tab',
+	'wampage-top-gainers-header' => 'Header of the main WAM Page with the fastest growing communities',
+	'wampage-header-wam' => 'The name of the WAM Score',
+	'wampage-subheader-wam' => 'The WAM Score explanation',
 	'wampage-faq' => 'Content of the FAQ page for WAM page on corporate wiki. For information about WAM visit http://www.wikia.com/WAM',
 	'wampage-breadcrumb-back-to-wam' => 'Content of an anchor which goes back to WAM page on corporate wiki. There is a "<" sign before this text. For information about WAM visit http://www.wikia.com/WAM',
 	'wam-index-no-results' => 'Information displayed in the table when there are no results found. It contains link to e-mail address of our support team. For information about WAM visit http://www.wikia.com/WAM',

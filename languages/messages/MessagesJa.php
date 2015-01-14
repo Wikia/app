@@ -75,8 +75,11 @@ $namespaceNames = array(
 	NS_MEDIA            => 'メディア',
 	NS_SPECIAL          => '特別',
 	NS_TALK             => 'トーク',
-	NS_USER             => '利用者',
-	NS_USER_TALK        => '利用者・トーク',
+	// begin wikia change
+	// VOLDEV-90
+	NS_USER             => 'ユーザー',
+	NS_USER_TALK        => 'ユーザー・トーク',
+	// end wikia change
 	NS_PROJECT_TALK     => '$1・トーク',
 	NS_FILE             => 'ファイル',
 	NS_FILE_TALK        => 'ファイル・トーク',
@@ -91,16 +94,21 @@ $namespaceNames = array(
 );
 
 $namespaceAliases = array(
-	'ノート'           => NS_TALK,
-	'利用者‐会話'        => NS_USER_TALK,
-	'$1‐ノート'        => NS_PROJECT_TALK,
-	'画像'            => NS_FILE,
-	'画像‐ノート'        => NS_FILE_TALK,
-	'ファイル‐ノート'      => NS_FILE_TALK,
-	'MediaWiki‐ノート' => NS_MEDIAWIKI_TALK,
-	'Template‐ノート'  => NS_TEMPLATE_TALK,
-	'Help‐ノート'      => NS_HELP_TALK,
-	'Category‐ノート'  => NS_CATEGORY_TALK
+	'ノート'			=> NS_TALK,
+	// begin wikia change
+	// VOLDEV-90
+	'利用者'			=> NS_USER,
+	'利用者・トーク'		=> NS_USER_TALK,
+	// end wikia change
+	'利用者‐会話'		=> NS_USER_TALK,
+	'$1‐ノート'		=> NS_PROJECT_TALK,
+	'画像'			=> NS_FILE,
+	'画像‐ノート'		=> NS_FILE_TALK,
+	'ファイル‐ノート'		=> NS_FILE_TALK,
+	'MediaWiki‐ノート'	=> NS_MEDIAWIKI_TALK,
+	'Template‐ノート'		=> NS_TEMPLATE_TALK,
+	'Help‐ノート'		=> NS_HELP_TALK,
+	'Category‐ノート'		=> NS_CATEGORY_TALK
 );
 
 $specialPageAliases = array(

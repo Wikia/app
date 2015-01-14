@@ -157,6 +157,7 @@ Referred to in:
 	'swm-label-mode-wikis-wiki-multi-hint' => 'Message explaining the format of the list of wikis.',
 	'swm-label-mode-users-user-hint' => 'Refers to option:
 *{{msg-wikia|Swm-label-recipient-wikis}}',
+	'swm-label-mode-users-anon' => '{{Identical|Anonymous user}}',
 	'swm-label-mode-users-anon-hint' => 'Refers to options:
 *{{msg-wikia|Swm-label-mode-wikis-all}}
 *{{msg-wikia|Swm-label-mode-wikis-wiki-multi}}
@@ -663,6 +664,7 @@ $messages['bs'] = array(
 
 /** Catalan (català)
  * @author Marcmpujol
+ * @author Unapersona
  */
 $messages['ca'] = array(
 	'swm-label-preview' => 'Previsualització',
@@ -675,6 +677,7 @@ $messages['ca'] = array(
 	'swm-label-recipient-users' => 'Usuaris',
 	'swm-label-expiration' => "Temps d'expiració",
 	'swm-label-mode-wikis-all' => 'Tots els wikis',
+	'swm-label-mode-wikis-hub' => 'Hub seleccionat',
 	'swm-label-mode-wikis-cluster' => 'Grup seleccionat',
 	'swm-label-mode-wikis-wiki' => 'Wiki seleccionat',
 	'swm-label-mode-wikis-wiki-multi' => 'Llista de wikis',
@@ -690,6 +693,7 @@ $messages['ca'] = array(
 	'swm-label-dismissed' => 'Descartat',
 	'swm-label-language' => 'Llengua',
 	'swm-button-lang-checkall' => '[ Verificar tots ]',
+	'swm-button-lang-checknone' => '[ No consultar ]',
 	'swm-button-preview' => '[ Previsualitzar ]',
 	'swm-button-send' => '[ Enviar ]',
 	'swm-button-save' => '[ Guardar ]',
@@ -715,6 +719,7 @@ $messages['ca'] = array(
 	'swm-list-table-hub' => 'Hub',
 	'swm-yes' => 'Sí',
 	'swm-no' => 'No',
+	'swm-error-no-such-wiki' => 'Aquest wiki no existeix!',
 	'swm-error-no-wiki-list' => 'Cal especificar com a mínim un wiki',
 	'swm-error-no-such-user' => "L'usuari especificat no existeix.",
 	'swm-error-no-user-list' => "Com a mínim has d'especificar un usuari",
@@ -722,6 +727,7 @@ $messages['ca'] = array(
 	'swm-error-long-message' => 'Els missatges són limitats a 500 caràcters.',
 	'swm-error-empty-group' => 'Introdueix el nom del grup.',
 	'swm-lang-other' => 'totes les llengües restants',
+	'swm-label-mode-users-registration' => 'Data de registre',
 	'swm-mode-users-registration-after' => 'Després',
 	'swm-mode-users-registration-before' => 'Abans',
 	'swm-mode-users-registration-between' => 'Entre',
@@ -730,6 +736,7 @@ $messages['ca'] = array(
 	'swm-mode-users-editcount-more' => 'Més',
 	'swm-mode-users-editcount-less' => 'Menys',
 	'swm-mode-users-editcount-between' => 'Entre',
+	'swm-error-editcount-notnumber' => "El comptador d'edicions ha de ser un nombre vàlid.",
 	'swm-label-mode-wikis-created' => 'Data de creació del wiki',
 	'swm-mode-wikis-created-after' => 'Després',
 	'swm-mode-wikis-created-before' => 'Abans',
@@ -742,12 +749,12 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
-	'swm-label-preview' => 'Хьалха муха ю хьажа',
+	'swm-label-preview' => 'Хьалха хьажар',
 	'swm-label-list' => 'МогӀа',
 	'swm-label-mode-users-active' => 'Жигара декъашхой',
 	'swm-label-content' => 'Чулацам',
 	'swm-label-language' => 'Мотт',
-	'swm-button-preview' => '[ Хьалха муха ю хьажа ]',
+	'swm-button-preview' => '[ Хьалха хьажар ]',
 	'swm-list-table-expire' => 'Чекхйолу',
 	'swm-list-table-content' => 'Чулацам',
 	'swm-list-table-tools' => 'ГӀирсаш',
@@ -1008,7 +1015,7 @@ $messages['diq'] = array(
 	'swm-label-mode-users-user' => 'Karber weçinê',
 	'swm-label-mode-users-user-multi' => 'Listey karberan',
 	'swm-label-content' => 'Tede este',
-	'swm-label-comment' => 'Vatış',
+	'swm-label-comment' => 'Mışewre',
 	'swm-label-language' => 'Zıwan',
 	'swm-button-preview' => '[ Verqayt ]',
 	'swm-button-send' => '[ Bırsê ]',
@@ -1206,7 +1213,10 @@ $messages['fa'] = array(
 	'swm-label-recipient-wikis' => 'ویکی‌ها',
 	'swm-label-recipient-users' => 'کاربران',
 	'swm-label-mode-wikis-all' => 'تمام ویکی‌های',
+	'swm-label-mode-wikis-wiki-multi' => 'فهرست ویکی‌ها',
 	'swm-label-mode-users-all' => 'تمام کاربران',
+	'swm-label-mode-users-active' => 'کاربران فعال',
+	'swm-label-mode-users-anon' => 'همه کاربران ناشناس',
 	'swm-label-content' => 'محتوا',
 	'swm-label-comment' => 'نظر',
 	'swm-label-language' => 'زبان',
@@ -1215,6 +1225,7 @@ $messages['fa'] = array(
 	'swm-list-table-wiki' => 'ویکی',
 	'swm-list-table-recipient' => 'گیرنده',
 	'swm-list-table-group' => 'گروه',
+	'swm-list-table-removed' => 'حذف شد',
 	'swm-list-table-content' => 'محتوا',
 	'swm-list-table-tools' => 'ابزارها',
 	'swm-list-table-lang' => 'زبان‌ها',
@@ -1223,6 +1234,7 @@ $messages['fa'] = array(
 	'swm-no' => 'خیر',
 	'swm-mode-users-registration-after' => 'پس از',
 	'swm-mode-users-registration-before' => 'قبل از',
+	'swm-label-mode-users-editcount' => 'شمارش ویرایش‌ها',
 	'swm-mode-users-editcount-more' => 'بیشتر',
 	'swm-mode-users-editcount-less' => 'کمتر',
 	'swm-mode-wikis-created-after' => 'پس از',
@@ -1436,6 +1448,18 @@ $messages['fr'] = array(
 	'swm-mode-wikis-created-between' => 'Entre',
 	'swm-label-mode-wikis-created-hint' => '<i>Les dates doivent être sous la forme 2012-04-01 00:00:00</i>',
 	'swm-error-created-tobeforefrom' => 'La date de fin de création du wiki est antérieure à sa date de démarrage.',
+);
+
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'swm-label-edit' => 'Bewurkje',
+	'swm-label-language' => 'Taal',
+	'swm-list-table-lang' => 'Talen',
+	'swm-yes' => 'Ja',
+	'swm-no' => 'Nee',
+	'swm-mode-users-editcount-more' => 'Mear',
 );
 
 /** Galician (galego)
@@ -1830,6 +1854,8 @@ $messages['it'] = array(
 
 /** Japanese (日本語)
  * @author Fryed-peach
+ * @author Los688
+ * @author Plover-Y
  * @author Shirayuki
  */
 $messages['ja'] = array(
@@ -1848,7 +1874,12 @@ $messages['ja'] = array(
 	'swm-label-recipient-wikis' => 'ウィキ',
 	'swm-label-recipient-users' => '利用者',
 	'swm-label-expiration' => '期限',
+	'swm-label-mode-wikis-all' => 'すべてのウィキ',
 	'swm-label-mode-wikis-wiki' => '指定したウィキ',
+	'swm-label-mode-wikis-wiki-multi' => 'ウィキの一覧',
+	'swm-label-mode-users-all' => 'すべての利用者',
+	'swm-label-mode-users-user-multi' => '利用者の一覧',
+	'swm-label-mode-users-anon' => 'すべての匿名利用者',
 	'swm-label-content' => '内容',
 	'swm-label-comment' => 'コメント',
 	'swm-label-language' => '言語',
@@ -1863,6 +1894,7 @@ $messages['ja'] = array(
 	'swm-link-dismiss' => 'メッセージを隠す',
 	'swm-dismiss-content' => '<p>メッセージが存在しませんでした。</p><p>%s</p>',
 	'swm-list-no-messages' => 'メッセージがありません',
+	'swm-list-table-id' => 'ID',
 	'swm-list-table-sender' => '送信者',
 	'swm-list-table-wiki' => 'ウィキ',
 	'swm-list-table-recipient' => '宛先',
@@ -1879,6 +1911,9 @@ $messages['ja'] = array(
 	'swm-error-no-such-user' => '指定された利用者が存在していません。',
 	'swm-error-empty-message' => 'メッセージを入力してください。',
 	'swm-error-empty-group' => 'グループ名を入力してください。',
+	'swm-label-mode-users-registration-hint' => '<i>日時は、次のような形式にする必要があります。2012-04-01 00:00:00</i>',
+	'swm-label-mode-users-editcount' => '編集回数',
+	'swm-label-mode-wikis-created-hint' => '<i>日時は、次のような形式にする必要があります。2012-04-01 00:00:00</i>',
 );
 
 /** Kannada (ಕನ್ನಡ)
@@ -1907,11 +1942,26 @@ $messages['kn'] = array(
 
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author Miri-Nae
  * @author 아라
  */
 $messages['ko'] = array(
+	'swm-label-preview' => '미리 보기',
+	'swm-label-edit' => '편집',
+	'swm-label-remove' => '제거',
+	'swm-label-list' => '목록',
+	'swm-label-recipient-wikis' => '위키',
+	'swm-label-recipient-users' => '사용자',
+	'swm-label-mode-users-active' => '활동적인 사용자',
+	'swm-label-comment' => '댓글',
 	'swm-label-language' => '언어',
 	'swm-button-save' => '[ 저장 ]',
+	'swm-list-table-id' => 'ID',
+	'swm-list-table-wiki' => '위키',
+	'swm-list-table-lang' => '언어',
+	'swm-list-table-hub' => '허브',
+	'swm-yes' => '예',
+	'swm-no' => '아니요',
 );
 
 /** Karachay-Balkar (къарачай-малкъар)
@@ -1955,6 +2005,7 @@ $messages['ku-latn'] = array(
 );
 
 /** Luxembourgish (Lëtzebuergesch)
+ * @author Les Meloures
  * @author Robby
  */
 $messages['lb'] = array(
@@ -1986,7 +2037,7 @@ $messages['lb'] = array(
 	'swm-no' => 'Neen',
 	'swm-error-no-such-wiki' => 'Et gëtt dës Wiki net!',
 	'swm-error-no-such-user' => 'De spezifizéierte Benotzer gëtt et net.',
-	'swm-error-empty-group' => 'Gitt den Numm vum Grupp an.',
+	'swm-error-empty-group' => 'Gitt den Numm vun der Grupp an.',
 	'swm-lang-other' => 'all weider Sproochen',
 	'swm-mode-users-registration-after' => 'Nom',
 	'swm-mode-users-registration-before' => 'Virum',
@@ -2502,6 +2553,59 @@ $messages['nl-informal'] = array(
 Dit kan niet ongedaan gemaakt worden.',
 );
 
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'swm-label-preview' => 'Previsualizar',
+	'swm-label-edit' => 'Modificar',
+	'swm-label-remove' => 'Levar',
+	'swm-label-sent' => 'Mandat',
+	'swm-label-list' => 'Lista',
+	'swm-label-recipient' => 'Destinataris',
+	'swm-label-recipient-wikis' => 'Wikis',
+	'swm-label-recipient-users' => 'Utilizaires',
+	'swm-label-expiration' => 'Durada d’expiracion',
+	'swm-label-mode-wikis-wiki-multi' => 'Lista dels wikis',
+	'swm-label-mode-users-all' => 'Totes los utilizaires',
+	'swm-label-mode-users-active' => 'Utilizaires actius',
+	'swm-label-mode-users-user' => 'Utilizaire seleccionat',
+	'swm-label-mode-users-user-multi' => 'Lista dels utilizaires',
+	'swm-label-content' => 'Contengut',
+	'swm-label-comment' => 'Comentari',
+	'swm-label-dismissed' => 'Regetat',
+	'swm-label-language' => 'Lenga',
+	'swm-button-preview' => '[ Previsualizar ]',
+	'swm-button-send' => '[ Mandar ]',
+	'swm-button-save' => '[ Salvar ]',
+	'swm-button-new' => '[ Novèl ]',
+	'swm-list-no-messages' => 'Pas cap de messatge.',
+	'swm-list-table-id' => 'ID',
+	'swm-list-table-sender' => 'Expeditor',
+	'swm-list-table-wiki' => 'Wiki',
+	'swm-list-table-recipient' => 'Destinatari',
+	'swm-list-table-group' => 'Grop',
+	'swm-list-table-expire' => 'Expira',
+	'swm-list-table-removed' => 'Levat',
+	'swm-list-table-content' => 'Contengut',
+	'swm-list-table-tools' => 'Aisinas',
+	'swm-list-table-lang' => 'Lengas',
+	'swm-list-table-hub' => 'Tèma',
+	'swm-yes' => 'Òc',
+	'swm-no' => 'Non',
+	'swm-error-invalid-time' => 'Durada provesida invalida.',
+	'swm-mode-users-registration-after' => 'Aprèp',
+	'swm-mode-users-registration-before' => 'Abans',
+	'swm-mode-users-registration-between' => 'Entre',
+	'swm-label-mode-users-editcount' => 'Comptador de modificacions',
+	'swm-mode-users-editcount-more' => 'Mai',
+	'swm-mode-users-editcount-less' => 'Mens',
+	'swm-mode-users-editcount-between' => 'Entre',
+	'swm-mode-wikis-created-after' => 'Aprèp',
+	'swm-mode-wikis-created-before' => 'Abans',
+	'swm-mode-wikis-created-between' => 'Entre',
+);
+
 /** Ossetic (Ирон)
  * @author Amikeco
  */
@@ -2882,19 +2986,20 @@ $messages['pt'] = array(
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
+ * @author Dianakc
  * @author Giro720
  * @author Jesielt
  * @author Luckas
  * @author Luckas Blade
  */
 $messages['pt-br'] = array(
-	'sitewidemessages' => 'Menssagens globais',
-	'swm-page-title-editor' => 'Menssagens globais :: Editor',
-	'swm-page-title-preview' => 'Menssagens globais :: Antevisão',
-	'swm-page-title-send' => 'Menssagens globais :: Enviar',
-	'swm-page-title-sent' => 'Menssagens globais :: Enviadas',
-	'swm-page-title-dismiss' => 'Menssagens globais :: Descartar',
-	'swm-page-title-list' => 'Menssagens globais :: Lista',
+	'sitewidemessages' => 'Mensagens globais',
+	'swm-page-title-editor' => 'Mensagens globais :: Editor',
+	'swm-page-title-preview' => 'Mensagens globais :: Pré-visualização',
+	'swm-page-title-send' => 'Mensagens globais :: Enviar',
+	'swm-page-title-sent' => 'Mensagens globais :: Enviadas',
+	'swm-page-title-dismiss' => 'Mensagens globais :: Descartar',
+	'swm-page-title-list' => 'Mensagens globais :: Lista',
 	'swm-label-preview' => 'Pré-visualizar',
 	'swm-label-edit' => 'Editar',
 	'swm-label-remove' => 'Remover',
@@ -3690,6 +3795,13 @@ $messages['yi'] = array(
  * @author Xiaomingyan
  */
 $messages['zh-hans'] = array(
+	'sitewidemessages' => '网站广域消息',
+	'swm-page-title-editor' => '网站广域消息 :: 编辑者',
+	'swm-page-title-preview' => '网站广域消息 :: 预览',
+	'swm-page-title-send' => '网站广域消息 :: 发送',
+	'swm-page-title-sent' => '网站广域消息 :: 已发送',
+	'swm-page-title-dismiss' => '网站广域消息 :: 丢失',
+	'swm-page-title-list' => '网站广域消息 :: 列表',
 	'swm-label-preview' => '预览',
 	'swm-label-edit' => '编辑',
 	'swm-label-remove' => '删除',
@@ -3707,6 +3819,7 @@ $messages['zh-hans'] = array(
 	'swm-label-mode-wikis-wiki-multi-hint' => '<i>每行输入一个wiki。</i>',
 	'swm-label-mode-users-all' => '所有用户',
 	'swm-label-mode-users-active' => '活跃用户',
+	'swm-label-mode-users-group' => '用户属于该组',
 	'swm-label-mode-users-user' => '选定用户',
 	'swm-label-mode-users-user-multi' => '用户列表',
 	'swm-label-mode-users-anon' => '任何匿名用户',
@@ -3720,6 +3833,7 @@ $messages['zh-hans'] = array(
 	'swm-button-send' => '[ 发送 ]',
 	'swm-button-save' => '[ 保存 ]',
 	'swm-button-new' => '[ 新 ]',
+	'swm-msg-sent-ok' => '<h3>消息已发送。</h3>',
 	'swm-msg-sent-err' => "<h3>此消息'''尚未'''发送。</h3>更多消息参见错误日志。",
 	'swm-msg-sent-task' => '发送消息的任务已创建：$1',
 	'swm-msg-remove' => '您确信要移除此消息？它不能被撤销！',
@@ -3750,6 +3864,7 @@ $messages['zh-hans'] = array(
 	'swm-error-empty-group' => '输入组名。',
 	'swm-error-invalid-time' => '提供的时间无效。',
 	'swm-lang-other' => '所有现存语言',
+	'action-messagetool' => '发送网站广域消息',
 	'swm-label-mode-users-registration' => '注册日期',
 	'swm-mode-users-registration-after' => '之后',
 	'swm-mode-users-registration-before' => '之前',
@@ -3772,5 +3887,11 @@ $messages['zh-hans'] = array(
  */
 $messages['zh-hant'] = array(
 	'sitewidemessages' => '全站訊息',
+	'swm-label-list' => '清單',
 	'swm-label-recipient-users' => '使用者',
+	'swm-label-mode-users-anon' => '所有匿名用戶',
+	'swm-label-content' => '內容',
+	'swm-label-language' => '語言',
+	'swm-list-table-content' => '內容',
+	'swm-list-table-tools' => '工具',
 );

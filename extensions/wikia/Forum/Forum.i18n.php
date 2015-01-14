@@ -358,10 +358,9 @@ Parameters:
 	'forum-activity-module-started' => 'Displays user activity in the Forum Activity module. Parameters:
 * $1 is the username
 * $2 is a translated time statement such as "20 seconds ago" or "20 hours ago" or "20 days ago"',
-	'forum-contributions-line' => "Contributions item. Parameters:
+	'forum-contributions-line' => 'Contributions item. Parameters:
 * $2 is the thread title
-* $4 is the board title
-",
+* $4 is the board title',
 	'forum-recentchanges-new-message' => 'The text added after the article link on recent changes entries. Parameters:
 * $2 is the board title',
 	'forum-recentchanges-edit' => 'Default edit summary text on recent changes',
@@ -454,7 +453,6 @@ Parameters:
 	'forum-related-discussion-new-post-tooltip' => 'Text of the button that appears in the related forums module at the bottom of article pages. Parameters:
 * $1 is the title of the article',
 	'forum-related-discussion-total-replies' => 'Label showing total number of replies in a discussion.  $1 is number of replies',
-
 	'forum-related-discussion-see-more' => 'See More link to topic page',
 	'forum-confirmation-board-deleted' => 'Board delete confirmation message. $1 is board name',
 );
@@ -636,7 +634,6 @@ ___________________________________________<br />
 	'forum-related-discussion-new-post-button' => 'ابدأ نقاشًا جديدًا',
 	'forum-related-discussion-new-post-tooltip' => 'ابدأ نقاشًا جديدًا عن $1',
 	'forum-related-discussion-total-replies' => '$1 رسائل',
-
 	'forum-related-discussion-see-more' => 'رؤية المزيد من النقاشات',
 	'forum-confirmation-board-deleted' => '"$1" قد حُذفت.',
 );
@@ -671,6 +668,7 @@ $messages['bg'] = array(
 
 /** Breton (brezhoneg)
  * @author Fohanno
+ * @author Gwenn-Ael
  */
 $messages['br'] = array(
 	'forum-forum-title' => 'Forom',
@@ -687,11 +685,13 @@ $messages['br'] = array(
 	'forum-board-topics' => 'Danvezioù',
 	'forum-board-thread-follow' => 'Heuliañ',
 	'forum-board-thread-following' => 'O Heuliañ',
+	'forum-board-thread-replies' => "{{PLURAL:$1|1 c'hemennad|$1 kemennadoù}}",
 	'forum-board-new-message-heading' => 'Kregiñ gant ur gaoz',
 	'forum-thread-reply-placeholder' => 'Postañ ur respont',
 	'forum-thread-reply-post' => 'Respont',
 	'forum-thread-deleted-return-to' => "Distreiñ d'an isforom $1",
 	'forum-sorting-option-newest-replies' => 'Respontoù diwezhañ',
+	'forum-sorting-option-popular-threads' => 'Gwellañ-deuet',
 	'forum-sorting-option-most-replies' => 'Ar re oberiantañ er 7 devezh diwezhañ',
 	'forum-sorting-option-newest-threads' => 'Neudennadoù nevesañ',
 	'forum-sorting-option-oldest-threads' => 'Neudennadoù koshañ',
@@ -738,6 +738,7 @@ ___________________________________________
 	'forum-related-module-heading' => 'Neudennadoù liammet',
 	'forum-activity-module-posted' => '$1 en deus postet ur respont $2',
 	'forum-activity-module-started' => '$1 en deus kroget gant ur gaoz $2',
+	'forum-contributions-line' => '[[$1|$2]] e [[$3|isforom $4]]',
 	'forum-recentchanges-new-message' => 'en [[$1|isforom $2]]',
 	'forum-recentchanges-edit' => 'kemennadenn aozet',
 	'forum-recentchanges-deleted-reply-title' => 'Ur gemennadenn',
@@ -781,15 +782,26 @@ ___________________________________________
 	'forum-related-discussion-new-post-button' => 'Kregiñ gant ur gaoz',
 	'forum-related-discussion-new-post-tooltip' => 'Kregiñ gant ur gaoz nevez diwaer-benn $1',
 	'forum-related-discussion-total-replies' => '$1 kemennadenn',
-	'forum-related-discussion-zero-state-creative' => "Gallout a rit kavout kendivizoù diwar-benn kement tra a denn d'ar wiki-mañ er [[Special:Forum|Forum {{SITENAME}} !]]",
 	'forum-related-discussion-see-more' => "Gwelet muioc'h a gaozioù",
 	'forum-confirmation-board-deleted' => 'Dilamet eo bet "$1".',
 );
 
+/** Iriga Bicolano (Iriga Bicolano)
+ * @author Filipinayzd
+ */
+$messages['bto'] = array(
+	'forum-specialpage-policies-edit' => 'Balyowan',
+	'forum-mail-notification-html-greeting' => 'Unta $1,',
+	'forum-mail-notification-subject' => '$1 -- $2',
+);
+
 /** Catalan (català)
+ * @author Fitoschido
  * @author Grondin
+ * @author Unapersona
  */
 $messages['ca'] = array(
+	'forum-forum-title' => 'Fòrum',
 	'forum-active-threads' => '$1 {{PLURAL:$1|discussió activa|discussions actives}}',
 	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|discussió activa|discussions actives}} sobre: '''[[$2]]'''",
 	'forum-header-total-threads' => '<em>$1</em><span>{{PLURAL:$1|fil<br />en aquest fòrum|fils<br />en aquest fòrum}}</span>',
@@ -797,13 +809,179 @@ $messages['ca'] = array(
 	'forum-specialpage-heading' => 'Fòrum',
 	'forum-specialpage-blurb-heading' => '<span style="display:none">forum-specialpage-blurb-heading Podeu editar-lo<span>',
 	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|fil|fils}}',
+	'forum-specialpage-board-posts' => '$1 {{PLURAL:$1|entrada|entrades}}',
 	'forum-specialpage-board-lastpostby' => 'Última tramesa per',
 	'forum-specialpage-policies-edit' => 'Edita',
 	'forum-specialpage-policies' => 'Política del fòrum / FAQ',
+	'forum-policies-and-faq' => "== Polítiques del fòrum ==
+Abans de contribuir als fòrums de {{SITENAME}}, tingueu en compte algunes bones pràctiques de conducta:
+
+'''Ser agradable i tractar les persones amb respecte. '''
+: Gent de tot el món pot llegir i editar aquest wiki i els seus fòrums. Com qualsevol altre projecte col·laboratiu, no tothom estarà d'acord amb tu sempre. S'han de mantenir debats civils i de ment oberta sobre diferents opinions. Tots estem aquí perquè ens agrada el mateix tema.
+
+'''Intenta trobar debats existents en primer lloc, però no tinguis por de començar un nou fil. '''
+: Abans d'iniciar un nou fil, assegura't que no n'hi ha cap de semblant a {{SITENAME}}. Si no trobeu el que busqueu, enceta un debat nou!
+
+'''Demanar ajuda. '''
+: Hi ha alguna cosa que et costa fer? O tens alguna pregunta? Demana ajuda aquí als fòrums! Si necessites ajuda del personal de Wikia, si us plau, contacta a la [[w:c:community|Comunitat Central]] o a [[Special:Contact]].
+
+'''Diverteix-te! '''
+: La comunitat de {{SITENAME}} és feliç de tenir-te aquí. Esperem veure't sovint als fòrums!.
+
+== PMF del Fòrum==
+'''Com puc mantenir-me informat sobre debats en els quals hi estic interessat?'''
+: Amb un compte d'usuari de Wikia, pots seguir converses concretes i llavors rebre missatges de notificació (presencials o per correu electrònic) quan una discussió té més activitat. [[Special:UserSignup|Crea't un compte de Wikia]], si no en tens un!
+
+'''Com puc eliminar el vandalisme? '''
+: Si notes algun missatge spam o vandalisme en un fil, posa el ratolí sobre el text en qüestió. Veuràs un botó ''Més'' que aparèixer. Dins el menú ''Més'', trobaràs ''Eliminar''. Això et permetrà treure el comentari i, opcionalment, informar-ne als administradors.
+
+'''Què són els temes? '''
+: Els temes permeten enllaçar un fòrum de discussió amb un article de la wiki. És una altra manera per mantenir fòrums organitzats i per ajudar a les persones a trobar discussions interessants. Per exemple, un fil de fòrum etiquetat amb \"Lord Voldemort\" apareixerà a la part inferior de l'article \"Lord Voldemort\".",
+	'forum-board-title' => '$1 Junta',
+	'forum-board-topic-title' => 'Discussions sobre $1',
+	'forum-board-topics' => 'Fils de discussió',
+	'forum-board-thread-follow' => 'Segueix',
+	'forum-board-thread-following' => 'Seguint',
+	'forum-board-thread-kudos' => '$1 Felicitacions',
+	'forum-board-thread-replies' => '$1 {{PLURAL:$1|missatge|missatges}}',
 	'forum-board-new-message-heading' => 'Inicia una discussió',
+	'forum-no-board-selection-error' => '← Si us plau seleccioni un lloc per penjar el fil',
 	'forum-thread-reply-placeholder' => 'Deixar una resposta',
 	'forum-thread-reply-post' => 'Contesta',
+	'forum-thread-deleted-return-to' => 'Torna al board $1',
+	'forum-sorting-option-newest-replies' => 'Respostes més recents',
+	'forum-sorting-option-popular-threads' => 'Més popular',
+	'forum-sorting-option-most-replies' => 'Més actius en 7 dies',
+	'forum-sorting-option-newest-threads' => 'Nous fils',
+	'forum-sorting-option-oldest-threads' => 'Discussions antigues',
+	'forum-discussion-post' => 'Publicar',
+	'forum-discussion-highlight' => 'Destaca aquesta discussió',
+	'forum-discussion-placeholder-title' => 'De què vols parlar?',
+	'forum-discussion-placeholder-message' => 'Publica un missatge nou en el mur $1',
+	'forum-discussion-placeholder-message-short' => 'Penja un missatge nou',
+	'forum-notification-user1-reply-to-your' => '$1 {{GENDER:$1|ha respost}} un fil teu al mur $3',
+	'forum-notification-user2-reply-to-your' => "$1 i $2 t'han respost al mur $3",
+	'forum-notification-user3-reply-to-your' => "$1 i altres t'han respost al mur $3",
+	'forum-notification-user1-reply-to-someone' => '$1 {{GENDER:$1|ha respost}} al mur $3',
+	'forum-notification-user2-reply-to-someone' => '$1 i $2 han respost al mur $3',
+	'forum-notification-user3-reply-to-someone' => '$1 i altres han respost al mur $3',
+	'forum-notification-newmsg-on-followed-wall' => '$1 {{GENDER:$1|ha penjat}} un nou missatge al mur $2',
+	'forum-mail-notification-new-someone' => '$AUTHOR_NAME ha iniciat un fil al mur $BOARDNAME de $WIKI.',
+	'forum-mail-notification-new-your' => '$AUTHOR_NAME ha iniciat un fil al mur $BOARDNAME de $WIKI.',
+	'forum-mail-notification-reply-your' => '$AUTHOR_NAME t\'ha respost al mur $BOARDNAME de $WIKI.',
+	'forum-mail-notification-reply-his' => '$AUTHOR_NAME ha respost al mur $BOARDNAME de $WIKI.',
+	'forum-mail-notification-reply-someone' => '$AUTHOR_NAME ha respost al mur $BOARDNAME de $WIKI.',
+	'forum-mail-notification-html-greeting' => 'Hola, $1:',
+	'forum-mail-notification-html-button' => 'Veure la discussió',
+	'forum-mail-notification-subject' => '$1 -- $2',
+	'forum-mail-notification-body' => 'Hola $WATCHER,
+
+$SUBJECT
+
+$METATITLE
+
+$MESSAGE_NO_HTML
+
+-- $AUTHOR
+
+Veure la conversa: ($MESSAGE_LINK)
+
+L\'Equip de Wikia
+
+___________________________________________
+* Vés a la Comunitat Central anglesa:
+http://community.wikia.com
+* Vés a la Comunitat Central catalana: 
+http://ca.wikia.com
+* No vols rebre missatges de Wikia? Us podeu donar de baixa seguint l\'enllaç següent: http://ca.wikia.com/Special:Preferences',
+	'forum-mail-notification-body-HTML' => 'Hola $WATCHER,
+<p>$SUBJECT.</p>
+<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
+<p>$MESSAGE_HTML</p>
+<p>-- $AUTHOR_SIGNATURE<p>
+<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Veure la discussió</a></p>
+<p>L\'equip de Wikia</p>
+___________________________________________<br />
+* Vés a la Comunitat Central anglesa:
+http://community.wikia.com
+* Vés a la Comunitat Central catalana: 
+http://ca.wikia.com
+* No vols rebre missatges de Wikia? Us podeu donar de baixa seguint l\'enllaç següent: http://ca.wikia.com/Special:Preferences',
+	'forum-wiki-activity-msg' => 'A $1',
+	'forum-wiki-activity-msg-name' => 'M$1ur',
+	'forum-activity-module-heading' => 'Activitat del fòrum',
+	'forum-related-module-heading' => 'Temes relacionats',
+	'forum-activity-module-posted' => '$1 ha respost fa $2',
+	'forum-activity-module-started' => '$1 ha iniciat una discussió fa $2',
+	'forum-contributions-line' => '[[$1|$2]] al [[$3|mur $4]]',
+	'forum-recentchanges-new-message' => 'Al [[$1|mur $2]]',
+	'forum-recentchanges-edit' => 'Missatge editat',
+	'forum-recentchanges-removed-thread' => 'Retirat el fil "[[$1|$2]]" del [[$3|mur $4]]',
+	'forum-recentchanges-removed-reply' => 'Retirada la resposta "[[$1|$2]]" del [[$3|mur $4]]',
+	'forum-recentchanges-restored-thread' => 'El fil "[[$1|$2]]" del [[$3|mur $4]] s\'ha restaurat',
+	'forum-recentchanges-restored-reply' => 'La resposta "[[$1|$2]]" al [[$3|mur $4]] s\'ha restaurat',
+	'forum-recentchanges-deleted-thread' => 'El fil "[[$1|$2]]" del [[$3|mur $4]] s\'ha esborrat',
+	'forum-recentchanges-deleted-reply' => 'La resposta "[[$1|$2]]" del [[$3|mur $4]] s\'ha retirat',
+	'forum-recentchanges-deleted-reply-title' => 'Una publicació',
+	'forum-recentchanges-namespace-selector-message-wall' => 'Subfòrum',
+	'forum-recentchanges-thread-group' => '$1 al <a href="$2">mur $3</a>',
+	'forum-recentchanges-history-link' => 'Historial del mur',
+	'forum-recentchanges-thread-history-link' => 'Historial del fil',
+	'forum-recentchanges-closed-thread' => 'El fil "[[$1|$2]]" de [[$3|$4]] s\'ha tancat',
+	'forum-recentchanges-reopened-thread' => 'El fil "[[$1|$2]]" de [[$3|$4]] s\'ha reobert',
+	'forum-board-history-title' => 'Historial del Mur',
+	'forum-specialpage-oldforum-link' => 'Arxius del Fòrum',
+	'forum-admin-page-breadcrumb' => 'Gestió Administrativa del Mur',
+	'forum-admin-create-new-board-label' => 'Crear nou mur',
+	'forum-admin-create-new-board-modal-heading' => 'Crea un nou mur',
+	'forum-admin-create-new-board-title' => 'Títol del mur',
+	'forum-admin-create-new-board-description' => 'Descripció del mur',
+	'forum-admin-edit-board-modal-heading' => 'Modifica el Mur: $1',
+	'forum-admin-edit-board-title' => 'Títol del mur',
+	'forum-admin-edit-board-description' => 'Descripció del mur',
+	'forum-admin-delete-and-merge-board-modal-heading' => 'Suprimir el mur $1',
+	'forum-admin-delete-board-title' => 'Confirmeu escrivint el nom del mur que voleu suprimir:',
+	'forum-admin-merge-board-warning' => 'Els fils en aquest mur es fusionaran en un mur existent.',
+	'forum-admin-merge-board-destination' => 'Trieu una mur per fusionar:',
+	'forum-admin-delete-and-merge-button-label' => 'Elimina i trasllada',
+	'forum-admin-link-label' => 'Gestionar murs',
+	'forum-autoboard-title-1' => 'Discussió general',
+	'forum-autoboard-body-1' => 'Aquest mur és per les discussions generals sobre el wiki.',
+	'forum-autoboard-title-2' => 'Notícies i anuncis',
+	'forum-autoboard-body-2' => 'Últimes notícies i informació!',
+	'forum-autoboard-title-3' => 'Nou a $1',
+	'forum-autoboard-body-3' => "Vols compartir una cosa que només s'ha penjat en aquest wiki, o felicitar a algú per una aportació rellevant? Aquest és el lloc!",
+	'forum-autoboard-title-4' => 'Preguntes i respostes',
+	'forum-autoboard-body-4' => 'Tens una pregunta sobre el Wiki? Fes la teva pregunta aquí!',
+	'forum-autoboard-title-5' => 'Diversió i jocs',
+	'forum-autoboard-body-5' => 'Aquest mur és per converses off-topic -- un lloc per parlar amb els teus amics de $1!',
+	'forum-board-destination-empty' => '(Seleccioneu un subfòrum)',
+	'forum-board-title-validation-invalid' => 'El nom del mur conté caràcters no vàlids',
+	'forum-board-title-validation-length' => 'El nom del mur ha de ser com a mínim de 4 cràcters',
+	'forum-board-title-validation-exists' => 'Ja existeix un tema amb el mateix nom',
+	'forum-board-validation-count' => 'El nombre màxim de temes és $1',
+	'forum-board-description-validation-length' => 'Si us plau, escriu una descripció per aquest tema',
+	'forum-board-id-validation-missing' => 'Falta la id del tema',
+	'forum-board-no-board-warning' => 'No hem trobat un tema amb aquest nom. Aquí hi ha la llista de temes del fòrum.',
+	'forum-old-notification-message' => 'Aquest Fòrum ha estat arxivat',
+	'forum-old-notification-navigation-button' => 'Visita el nou Fòrum',
+	'forum-related-discussion-heading' => 'Discussions sobre $1',
+	'forum-related-discussion-new-post-button' => 'Inicia una discussió',
+	'forum-related-discussion-new-post-tooltip' => 'Enceteu un debat nou sobre $1',
+	'forum-related-discussion-total-replies' => '$1 missatges',
+	'forum-related-discussion-see-more' => 'Mostra més discussions',
 	'forum-confirmation-board-deleted' => "S'ha suprimit “$1”.",
+);
+
+/** Chechen (нохчийн)
+ * @author Умар
+ */
+$messages['ce'] = array(
+	'forum-discussion-post' => 'Хаам',
+	'forum-contributions-line' => '[[$1|$2]] дакъанехь [[$3|$4]]',
+	'forum-recentchanges-new-message' => '[[$1|дакъанехь $2]]',
+	'forum-recentchanges-edit' => 'табина хаам',
+	'forum-recentchanges-deleted-reply-title' => 'Хаам',
 );
 
 /** Czech (čeština)
@@ -1031,12 +1209,12 @@ abmelden oder deine E-Mail-Einstellungen hier ändern: http://community.wikia.co
 	'forum-related-discussion-new-post-button' => 'Eine Diskussion starten',
 	'forum-related-discussion-new-post-tooltip' => 'Eine neue Diskussion über $1 starten',
 	'forum-related-discussion-total-replies' => '$1 Nachrichten',
-
 	'forum-related-discussion-see-more' => 'Weitere Diskussionen ansehen',
 	'forum-confirmation-board-deleted' => '„$1“ wurde gelöscht.',
 );
 
 /** British English (British English)
+ * @author Captaindogfish
  * @author Shirayuki
  */
 $messages['en-gb'] = array(
@@ -1067,19 +1245,21 @@ Before contributing to the {{SITENAME}} Forums, please keep in mind a few best p
 
 '''What are Topics?'''
 : Topics allow you to link a forum discussion with a wiki article. It's another way to keep Forums organised and to help people find interesting discussions. For example, a Forum thread tagged with \"Lord Voldemort\" will appear at the bottom of the \"Lord Voldemort\" article.",
+	'forum-recentchanges-thread-group' => '$1 on the [[$2|$3 Board]]',
 );
 
 /** Spanish (español)
  * @author Fitoschido
+ * @author Macofe
  * @author VegaDark
  * @author Vivaelcelta
  */
 $messages['es'] = array(
 	'forum-forum-title' => 'Foro',
-	'forum-active-threads' => '{{FORMATNUM:$1}} {{PLURAL:$1|Tema activo|Temas activos}}',
+	'forum-active-threads' => '$1 {{PLURAL:$1|tema activo|temas activos}}',
 	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|Tema activo|Temas activos}} sobre: '''[[$2]]'''",
-	'forum-header-total-threads' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|Tema<br /> en este foro|Temas<br /> en este foro}}</span>',
-	'forum-header-active-threads' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|Tema<br /> Activo|Temas<br /> Activos}}</span>',
+	'forum-header-total-threads' => '<em>$1</em><span>{{PLURAL:$1|tema|temas}}<br /> en este foro</span>',
+	'forum-header-active-threads' => '<em>$1</em><span>{{PLURAL:$1|Tema<br />activo|Temas<br />activos}}</span>',
 	'forum-specialpage-heading' => 'Foro',
 	'forum-specialpage-blurb-heading' => '<span style="display:none">forum-specialpage-blurb-heading Puedes editarlo<span>',
 	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|tema|temas}}',
@@ -1234,6 +1414,7 @@ $messages['fa'] = array(
 	'forum-forum-title' => 'فروم',
 	'forum-specialpage-heading' => 'فروم',
 	'forum-specialpage-policies-edit' => 'ویرایش',
+	'forum-board-topics' => 'تاپیکها',
 	'forum-board-thread-follow' => 'دنبال‌کردن',
 	'forum-board-thread-following' => 'دنبال‌کردن',
 	'forum-thread-reply-placeholder' => 'ارسال پاسخ',
@@ -1410,7 +1591,6 @@ ___________________________________________<br />
 	'forum-related-discussion-new-post-button' => 'Aloita keskustelu',
 	'forum-related-discussion-new-post-tooltip' => 'Aloita uusi keskustelu aiheesta $1',
 	'forum-related-discussion-total-replies' => '$1 viestiä',
-
 	'forum-related-discussion-see-more' => 'Katso lisää keskusteluja',
 	'forum-confirmation-board-deleted' => '"$1" on poistettu.',
 );
@@ -1422,8 +1602,8 @@ ___________________________________________<br />
  */
 $messages['fr'] = array(
 	'forum-forum-title' => 'Forum',
-	'forum-active-threads' => '{{FORMATNUM:$1}} {{PLURAL:$1|Discussion active|Discussions actives}}',
-	'forum-active-threads-on-topic' => '$1 {{PLURAL:$1|Discussion active|Discussions actives}} à propos de « [[$2]] »',
+	'forum-active-threads' => '$1 {{PLURAL:$1|discussion active|discussions actives}}',
+	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|discussion active|discussions actives}} à propos de « '''[[$2]]''' »",
 	'forum-header-total-threads' => '<em>$1</em><span>{{PLURAL:$1|discussion<br />sur ce forum|discussions<br />sur ce forum}}</span>',
 	'forum-header-active-threads' => '<em>$1</em><span>{{PLURAL:$1|discussion<br />active|discussions<br />actives}}</span>',
 	'forum-specialpage-heading' => 'Forum',
@@ -1589,9 +1769,19 @@ ___________________________________________
 	'forum-related-discussion-new-post-button' => 'Démarrer une discussion',
 	'forum-related-discussion-new-post-tooltip' => 'Démarrer une nouvelle discussion à propos de « $1 »',
 	'forum-related-discussion-total-replies' => '$1 messages',
-
 	'forum-related-discussion-see-more' => 'Voir plus de discussions',
 	'forum-confirmation-board-deleted' => '« $1 » a été supprimé.',
+);
+
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'forum-forum-title' => 'Foarum',
+	'forum-specialpage-heading' => 'Foarum',
+	'forum-specialpage-policies-edit' => 'Bewurkje',
+	'forum-mail-notification-html-greeting' => 'Hallo $1,',
+	'forum-mail-notification-subject' => '$1 -- $2',
 );
 
 /** Galician (galego)
@@ -1767,9 +1957,15 @@ as preferencias de correo electrónico aquí: http://community.wikia.com/Special
 	'forum-related-discussion-new-post-button' => 'Comezar un debate',
 	'forum-related-discussion-new-post-tooltip' => 'Comenzar un novo debate sobre "$1"',
 	'forum-related-discussion-total-replies' => '$1 mensaxes',
-
 	'forum-related-discussion-see-more' => 'Ver máis debates',
 	'forum-confirmation-board-deleted' => 'Borrouse "$1".',
+);
+
+/** Hebrew (עברית)
+ * @author Guycn2
+ */
+$messages['he'] = array(
+	'forum-recentchanges-thread-group' => '$1 ב[[$2|לוח של $3]]',
 );
 
 /** Hungarian (magyar)
@@ -1968,7 +2164,6 @@ ___________________________________________<br />
 	'forum-related-discussion-new-post-button' => 'スレッドを作成',
 	'forum-related-discussion-new-post-tooltip' => '$1 に関するスレッドを作成',
 	'forum-related-discussion-total-replies' => '$1 件の投稿',
-
 	'forum-related-discussion-see-more' => 'さらにスレッドを見る',
 	'forum-confirmation-board-deleted' => '「$1」を削除しました。',
 );
@@ -1982,10 +2177,148 @@ $messages['kn'] = array(
 );
 
 /** Korean (한국어)
+ * @author Miri-Nae
  * @author 관인생략
+ * @author 아라
  */
 $messages['ko'] = array(
 	'forum-forum-title' => '포럼',
+	'forum-active-threads' => '활성화된 토론 $1개',
+	'forum-active-threads-on-topic' => "다음 주제에 대한 활발한 토론 $1개: '''[[$2]]'''",
+	'forum-header-total-threads' => '이 포럼에는 <em>$1</em>개의<br />토론이 있습니다',
+	'forum-header-active-threads' => '활발한 토론 <em>$1</em>개가<br />있습니다',
+	'forum-specialpage-heading' => '포럼',
+	'forum-specialpage-board-threads' => '토론 $1개',
+	'forum-specialpage-board-posts' => '글 $1개',
+	'forum-specialpage-board-lastpostby' => '마지막 글 작성:',
+	'forum-specialpage-policies-edit' => '편집',
+	'forum-specialpage-policies' => '포럼 정책 및 FAQ',
+	'forum-board-title' => '$1 게시판',
+	'forum-board-topic-title' => '$1에 대한 토론',
+	'forum-board-topics' => '주제',
+	'forum-board-thread-follow' => '주시하기',
+	'forum-board-thread-following' => '주시 중',
+	'forum-board-thread-kudos' => '추천 $1개',
+	'forum-board-thread-replies' => '댓글 $1개',
+	'forum-board-new-message-heading' => '토론 시작하기',
+	'forum-no-board-selection-error' => '← 글을 작성할 게시판을 선택해주세요.',
+	'forum-thread-reply-placeholder' => '댓글 달기',
+	'forum-thread-reply-post' => '댓글',
+	'forum-thread-deleted-return-to' => '$1 게시판으로 돌아가기',
+	'forum-sorting-option-newest-replies' => '가장 최근 댓글',
+	'forum-sorting-option-popular-threads' => '인기순',
+	'forum-sorting-option-most-replies' => '최근 7일 댓글순',
+	'forum-sorting-option-newest-threads' => '최근 스레드',
+	'forum-sorting-option-oldest-threads' => '오래된 스레드',
+	'forum-discussion-post' => '게시물',
+	'forum-discussion-highlight' => '이 토론 강조하기',
+	'forum-discussion-placeholder-title' => '무엇에 대해 얘기하고 싶나요?',
+	'forum-discussion-placeholder-message' => '$1 게시판에 새 글을 작성합니다',
+	'forum-discussion-placeholder-message-short' => '새로운 메시지를 작성합니다',
+	'forum-notification-user1-reply-to-your' => '$1님이 $3 게시판에 있는 당신의 토론에 덧글을 남겼습니다.',
+	'forum-notification-user2-reply-to-your' => '$1님과 $2님이 $3 게시판에 있는 당신의 토론에 덧글을 남겼습니다.',
+	'forum-notification-user3-reply-to-your' => '$1님과 다른 사용자들이 $3 게시판에 있는 당신의 토론에 덧글을 남겼습니다',
+	'forum-notification-user1-reply-to-someone' => '$1님이 $3 게시판에 덧글을 {{GENDER:$1|남겼습니다}}.',
+	'forum-notification-user2-reply-to-someone' => '$1님과 $2님이 $3 게시판에 덧글을 남겼습니다',
+	'forum-notification-user3-reply-to-someone' => '$1님과 다른 사용자들이 $3 게시판에 덧글을 남겼습니다',
+	'forum-notification-newmsg-on-followed-wall' => '$1 사용자가 $2 게시판에 새 메시지를 남겼습니다',
+	'forum-mail-notification-new-someone' => '$AUTHOR_NAME 사용자가 $WIKI의 $BOARDNAME 게시판에 새 토론을 작성했습니다.',
+	'forum-mail-notification-new-your' => '$AUTHOR_NAME 사용자가 $WIKI의 $BOARDNAME 게시판에 새 토론을 작성했습니다.',
+	'forum-mail-notification-reply-your' => '$AUTHOR_NAME님이 당신이 $WIKI의 $BOARDNAME 게시판에 작성한 토론에 덧글을 남겼습니다',
+	'forum-mail-notification-reply-his' => '$AUTHOR_NAME님이 $WIKI의 $BOARDNAME 게시판에 덧글을 남겼습니다',
+	'forum-mail-notification-reply-someone' => '$AUTHOR_NAME님이 $WIKI의 $BOARDNAME 게시판에 덧글을 남겼습니다',
+	'forum-mail-notification-html-greeting' => '안녕하세요, $1 사용자 님?',
+	'forum-mail-notification-html-button' => '대화 내역 보기',
+	'forum-mail-notification-subject' => '$1 -- $2',
+	'forum-mail-notification-body' => '안녕하세요, $WATCHER 사용자 님?
+
+$SUBJECT
+
+$METATITLE
+
+$MESSAGE_NO_HTML
+
+-- $AUTHOR
+
+대화를 확인하세요: ($MESSAGE_LINK)
+
+위키아 팀
+
+___________________________________________
+* 중앙 커뮤니티에서 도움을 구하세요: http://community.wikia.com
+* 알림을 받고 싶지 않으신가요? 이곳에서 알림 설정을 변경할 수 있습니다: http://community.wikia.com/Special:Preferences',
+	'forum-mail-notification-body-HTML' => '안녕하세요, $WATCHER 사용자 님?
+<p>$SUBJECT</p>
+<p><a href="$MESSAGE_LINK">$METATITLE</a></p>
+<p>$MESSAGE_NO_HTML</p>
+<p>-- $AUTHOR</p>
+<p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">대화를 확인하세요</a></p>
+<p>위키아 팀</p>
+___________________________________________<br />
+* 중앙 커뮤니티에서 도움을 구하세요: http://community.wikia.com
+* 알림을 받고 싶지 않으신가요? 이곳에서 알림 설정을 변경할 수 있습니다: http://community.wikia.com/Special:Preferences',
+	'forum-wiki-activity-msg' => '$1 게시판에서',
+	'forum-wiki-activity-msg-name' => '$1 게시판',
+	'forum-activity-module-heading' => '포럼 활동',
+	'forum-related-module-heading' => '관련 토론',
+	'forum-activity-module-posted' => '$1 사용자가 $2에 덧글을 남겼습니다',
+	'forum-activity-module-started' => '$1 사용자가 $2에 토론을 시작했습니다',
+	'forum-contributions-line' => '[[$3|$4 board]] 게시판의 [[$1|$2]]',
+	'forum-recentchanges-new-message' => '[[$1|$2 게시판]]에서',
+	'forum-recentchanges-edit' => '메시지 편집',
+	'forum-recentchanges-removed-thread' => '[[$3|$4 게시판]]의 "[[$1|$2]]" 토론 삭제',
+	'forum-recentchanges-removed-reply' => '[[$3|$4 게시판]]의 "[[$1|$2]]" 댓글 삭제',
+	'forum-recentchanges-restored-thread' => '[[$3|$4 게시판]]의 "[[$1|$2]]" 토론 복구',
+	'forum-recentchanges-restored-reply' => '[[$3|$4 게시판]]의 "[[$1|$2]]" 댓글 복구',
+	'forum-recentchanges-deleted-thread' => '[[$3|$4 게시판]]의 "[[$1|$2]]" 토론 삭제',
+	'forum-recentchanges-deleted-reply' => '[[$3|$4 게시판]]의 "[[$1|$2]]" 댓글 삭제',
+	'forum-recentchanges-deleted-reply-title' => '글',
+	'forum-recentchanges-namespace-selector-message-wall' => '포럼 게시판',
+	'forum-recentchanges-thread-group' => '[[$2|$3 게시판]]의 $1',
+	'forum-recentchanges-history-link' => '게시판 역사',
+	'forum-recentchanges-thread-history-link' => '토론 역사',
+	'forum-board-history-title' => '게시판 역사',
+	'forum-specialpage-oldforum-link' => '과거 포럼 보관',
+	'forum-admin-page-breadcrumb' => '관리자 게시판 관리',
+	'forum-admin-create-new-board-label' => '새 게시판 만들기',
+	'forum-admin-create-new-board-modal-heading' => '새 게시판 만들기',
+	'forum-admin-create-new-board-title' => '게시판 이름',
+	'forum-admin-create-new-board-description' => '게시판 설명',
+	'forum-admin-edit-board-modal-heading' => '게시판 편집: $1',
+	'forum-admin-edit-board-title' => '게시판 이름',
+	'forum-admin-edit-board-description' => '게시판 설명',
+	'forum-admin-delete-and-merge-board-modal-heading' => '게시판 삭제: $1',
+	'forum-admin-delete-board-title' => '삭제할 게시판의 이름을 입력하면 완전히 삭제할 수 있습니다:',
+	'forum-admin-merge-board-warning' => '이 게시판에 속한 주제는 다른 게시판에 병합될 것입니다.',
+	'forum-admin-merge-board-destination' => '병합할 게시판을 선택해주세요:',
+	'forum-admin-delete-and-merge-button-label' => '삭제 및 병합',
+	'forum-admin-link-label' => '게시판 관리',
+	'forum-autoboard-title-1' => '종합 토론',
+	'forum-autoboard-body-1' => '이 게시판은 위키에 대한 일반적인 것들을 토론할 수 있는 게시판입니다.',
+	'forum-autoboard-title-2' => '새로운 소식',
+	'forum-autoboard-body-2' => '모두에게 알릴 만한 소식이 왔어요!',
+	'forum-autoboard-title-3' => '$1 뉴스',
+	'forum-autoboard-body-3' => '방금 올라온 게시글, 혹은 누군가의 위대한 기여를 다른 사람들에게 알리고 싶나요? 그럼 이곳으로 오세요!',
+	'forum-autoboard-title-4' => '질문과 답변',
+	'forum-autoboard-body-4' => '위키에 대해 궁금한 것들은 이곳에서 물어보세요!',
+	'forum-autoboard-title-5' => '재밌게 놀아요',
+	'forum-autoboard-body-5' => '이 게시판은 특정한 주제가 없습니다 -- $1의 친구들과 즐거운 시간을 보내세요.',
+	'forum-board-destination-empty' => '(게시판을 선택해주세요)',
+	'forum-board-title-validation-invalid' => '게시판 이름에 잘못된 글자가 포함되어 있습니다',
+	'forum-board-title-validation-length' => '게시판 이름은 최소 네 글자 이상이어야 합니다',
+	'forum-board-title-validation-exists' => '같은 이름의 게시판이 이미 존재합니다',
+	'forum-board-validation-count' => '만들 수 있는 게시판 수는 $1개가 최대입니다',
+	'forum-board-description-validation-length' => '게시판에 대한 설명을 입력해주세요',
+	'forum-board-id-validation-missing' => '게시판 ID가 없습니다',
+	'forum-board-no-board-warning' => '해당 이름의 게시판을 찾을 수 없습니다. 아래는 게시판의 목록입니다.',
+	'forum-old-notification-message' => '이 포럼은 보관되었습니다',
+	'forum-old-notification-navigation-button' => '새로운 포럼을 방문해보세요',
+	'forum-related-discussion-heading' => '$1에 대한 토론',
+	'forum-related-discussion-new-post-button' => '토론 시작하기',
+	'forum-related-discussion-new-post-tooltip' => '$1에 대한 새로운 토론 시작하기',
+	'forum-related-discussion-total-replies' => '메시지 $1개',
+	'forum-related-discussion-see-more' => '더 많은 토론 보기',
+	'forum-confirmation-board-deleted' => '"$1" 게시판이 삭제되었습니다.',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -1996,13 +2329,21 @@ $messages['lb'] = array(
 	'forum-active-threads' => '{{PLURAL:$1|Eng aktiv Diskussioun|$1 aktiv Diskussiounen}}',
 	'forum-active-threads-on-topic' => "{{PLURAL:$1|Eng aktiv Diskussioun|$1 aktiv Diskussiounen}} iwwer: '''[[$2]]'''",
 	'forum-specialpage-heading' => 'Forum',
+	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|Rubrik|Rubriken}}',
 	'forum-specialpage-policies-edit' => 'Änneren',
 	'forum-board-topic-title' => 'Diskussiounen iwwer $1',
 	'forum-board-topics' => 'Themen',
+	'forum-board-thread-replies' => '$1 {{PLURAL:$1|Message|Messagen}}',
 	'forum-board-new-message-heading' => 'Eng Diskussioun ufänken',
 	'forum-thread-reply-post' => 'Äntwerten',
 	'forum-sorting-option-most-replies' => 'Am aktivsten an de leschte 7 Deeg',
+	'forum-mail-notification-html-greeting' => 'Salut $1,',
+	'forum-mail-notification-subject' => '$1 – $2',
+	'forum-activity-module-started' => '$1 huet eng Diskussioun $2 ugefaang',
+	'forum-recentchanges-edit' => 'Message geännert',
 	'forum-autoboard-title-1' => 'Allgemeng Diskussioun',
+	'forum-autoboard-title-3' => 'Nei op $1',
+	'forum-old-notification-message' => 'Dëse Forum gouf archivéiert',
 	'forum-related-discussion-heading' => 'Diskussiounen iwwer $1',
 	'forum-related-discussion-new-post-button' => 'Eng Diskussioun ufänken',
 	'forum-related-discussion-new-post-tooltip' => 'Eng nei Diskussioun iwwer $1 ufänken',
@@ -2212,7 +2553,6 @@ keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preferences',
 	'forum-related-discussion-new-post-button' => 'Mulakan sebuah Perbincangan',
 	'forum-related-discussion-new-post-tooltip' => 'Memulakan perbincangan baru tentang $1',
 	'forum-related-discussion-total-replies' => '$1 pesanan',
-
 	'forum-related-discussion-see-more' => 'Lihat lebih banyak perbincangan',
 	'forum-confirmation-board-deleted' => '"$1" telah dihapuskan.',
 );
@@ -2222,21 +2562,50 @@ keutamaan e-mel anda di sini: http://community.wikia.com/Special:Preferences',
  * @author AvatarTeam
  * @author Flightmare
  * @author Siebrand
+ * @author Sjoerddebruin
  * @author Southparkfan
  */
 $messages['nl'] = array(
 	'forum-forum-title' => 'Forum',
-	'forum-active-threads' => '$1 {{PLURAL:$1|Actieve Discussie|Actieve Discussies}}',
-	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|Actieve Discussie|Actieve Discussies}} over: '''[[$2]]'''",
-	'forum-header-total-threads' => '<em>$1</em><span>{{PLURAL:$1|Draad<br />in dit Forum|Draden<br />in dit Forum}}</span>',
+	'forum-active-threads' => '$1 {{PLURAL:$1|Actief overleg|Actieve overleggen}}',
+	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|Actief overleg|Actieve overleggen}} over: '''[[$2]]'''",
+	'forum-header-total-threads' => '<em>$1</em><span>{{PLURAL:$1|Draad<br />in dit forum|Draden<br />in dit forum}}</span>',
 	'forum-header-active-threads' => '<em>$1</em><span>{{PLURAL:$1|Actieve<br />Discussie|Actieve<br />Discussies}}</span>',
 	'forum-specialpage-heading' => 'Forum',
 	'forum-specialpage-blurb-heading' => '<span style="display:none">forum-specialpage-blurb-heading U kunt het bewerken<span>',
 	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|draad|draden}}',
-	'forum-specialpage-board-posts' => '$1 bericht{{PLURAL:$1||en}}',
+	'forum-specialpage-board-posts' => '$1 {{PLURAL:$1|bericht|berichten}}',
 	'forum-specialpage-board-lastpostby' => 'Laatste bericht door',
 	'forum-specialpage-policies-edit' => 'Bewerken',
 	'forum-specialpage-policies' => 'Forumbeleid / FAQ',
+	'forum-policies-and-faq' => "==Forumbeleid==
+
+Houd alstublieft een aantal richtlijnen met betrekking tot gedrag in gedachten voordat u bijdraagt aan de forums van {{SITENAME}}:
+
+'''Ben aardig tegen mensen en behandel ze respectvol.'''
+: Mensen van over de hele wereld lezen en bewerken deze wiki en de bijbehorende forums. Net als in ieder project waarin wordt samengewerkt, kan niet iedereen het altijd met elkaar eens zijn. Houd overleg beleefd en sta open over andere meningen. We zijn hier allemaal omdat we om hetzelfde onderwerp geven.
+
+'''Probeer eerst bestaand overleg te vinden, maar heb geen angst om een nieuw overleg te starten.'''
+:Neem over de tijd om door de forums van {{SITENAME}} te bladeren en kijk of er al een bestaand overleg is over het onderwerp dat u wilt bespreken. Als u niets kunt vinden, begin dan een nieuw overleg!
+
+'''Vraag om hulp.'''
+:Ziet u iets dat niet klopt? Hebt u een vraag? Vraag hier op de forums om hulp! Als u hulp nodig hebt van medewerkers van Wikia, ga dan alstublieft naar [[w:c:community|Community Central]] of gebruik [[Special:Contact|de contactpagina]].
+
+'''Veel plezier!'''
+:De {{SITENAME}}-gemeenschap is blij dat u er bent. We zien u graag vaak terug bij dit onderwerp waar we allemaal om geven.
+
+==Veel gestelde vragen over het forum ==
+'''Hoe blijf ik op de hoogte over overleg waar ik in geïnteresseerd ben?'''
+: Als u een Wikiagebruiker hebt, kunt u specifiek overleg volgen en meldingen krijgen (op de website zelf of via e-mail) als er wijzigingen in het overleg zijn. Zorg dat u een [[Special:UserSignup|Wikiagebruiker registreert]] als u er niet al een hebt.
+
+'''Hoe verwijder ik vandalisme?'''
+: Als u ergens spam of vandalisme ziet in een overleg, beweeg dan met de muisaanwijzer over de tekst. U ziet dan een menu \"Meer\" verschijnen. Binnen het menu \"Meer\" ziet u \"Verwijderen\" staan. Zo kunt u vandalisme verwijderen en eventueel een beheerder waarschuwen.
+
+'''Wat zijn Kudos?'''
+: Als u een overleg of een reactie interessant, weloverwogen, of amusant vindt, dan kunt u uw waardering uitspreken door er Kudos aan te geven. Dit kan ook handig zijn als er gestemd wordt.
+
+'''Wat zijn onderwerpen?'''
+: Onderwerpen maken het mogelijk dat u een overleg op het forum koppelt aan een wikipagina. Het is een andere manier om forums te organiseren en om mensen te helpen interessant overleg te vinden. Als er bijvoorbeeld een forumonderwerp  is gelabeld met \"Heer Voldemort\" verschijnt het onderaan de pagina \"Heer Voldemort\".",
 	'forum-board-title' => 'Prikbord $1',
 	'forum-board-topic-title' => 'Discussies over $1',
 	'forum-board-topics' => 'Onderwerpen',
@@ -2252,7 +2621,7 @@ $messages['nl'] = array(
 	'forum-sorting-option-newest-replies' => 'Recente reacties',
 	'forum-sorting-option-popular-threads' => 'Meest populaire',
 	'forum-sorting-option-most-replies' => 'Meest actief in afgelopen week',
-	'forum-sorting-option-newest-threads' => 'Nieuwste onderwerpen',
+	'forum-sorting-option-newest-threads' => 'Nieuwste overleg',
 	'forum-sorting-option-oldest-threads' => 'Oudste onderwerpen',
 	'forum-discussion-post' => 'Opslaan',
 	'forum-discussion-highlight' => 'Onderwerp uitlichten',
@@ -2302,29 +2671,67 @@ ___________________________________________<br />
  * Vind hulp en advies op Community Central: http://community.wikia.com
  * Wilt u minder berichten ontvangen van ons? U kunt hier afmelden of uw
 e-mailvoorkeuren wijzingen: http://community.wikia.com/Special:Preferences',
+	'forum-wiki-activity-msg' => 'op de $1',
 	'forum-wiki-activity-msg-name' => 'prikbord $1',
 	'forum-activity-module-heading' => 'Forumactiviteit',
-	'forum-related-module-heading' => 'Gerelateerde onderwerpen',
+	'forum-related-module-heading' => 'Gerelateerd overleg',
 	'forum-activity-module-posted' => '$1 heeft $2 gereageerd',
 	'forum-activity-module-started' => '$1 heeft $2 een onderwerp geplaatst',
 	'forum-contributions-line' => '[[$1|$2]] op het [[$3|prikbord $4]]',
 	'forum-recentchanges-new-message' => 'op het [[$1|prikbord $2]]',
 	'forum-recentchanges-edit' => 'bericht bewerkt',
+	'forum-recentchanges-removed-thread' => 'heeft het overleg "[[$1|$2]]" van het [[$3|$4 bord]] verwijderd',
+	'forum-recentchanges-removed-reply' => 'heeft het antwoord "[[$1|$2]]" van het [[$3|$4 bord]] verwijderd',
+	'forum-recentchanges-restored-thread' => 'overleg "[[$1|$2]]" van het [[$3|$4 bord]] hersteld',
+	'forum-recentchanges-restored-reply' => 'heeft het antwoord "[[$1|$2]]" op het [[$3|$4 bord]] teruggeplaatst',
+	'forum-recentchanges-deleted-thread' => 'overleg "[[$1|$2]]" van het [[$3|$4 bord]] verwijderd',
+	'forum-recentchanges-deleted-reply' => 'heeft het antwoord "[[$1|$2]]" van het [[$3|$4 bord]] verwijderd',
 	'forum-recentchanges-deleted-reply-title' => 'Een bericht',
 	'forum-recentchanges-namespace-selector-message-wall' => 'Forumprikbord',
-	'forum-recentchanges-thread-history-link' => 'draadgeschiedenis',
+	'forum-recentchanges-thread-group' => '$1 op het [[$2|$3 bord]]',
+	'forum-recentchanges-history-link' => 'bordgeschiedenis',
+	'forum-recentchanges-thread-history-link' => 'overleggeschiedenis',
+	'forum-recentchanges-closed-thread' => 'overleg "[[$1|$2]]" van [[$3|$4]] gesloten',
+	'forum-recentchanges-reopened-thread' => 'heeft het overleg "[[$1|$2]]" van [[$3|$4]] heropend',
+	'forum-board-history-title' => 'bordgeschiedenis',
+	'forum-specialpage-oldforum-link' => 'Oude forumarchieven',
+	'forum-admin-page-breadcrumb' => 'Bordbeheer beheren',
+	'forum-admin-create-new-board-label' => 'Nieuw bord aanmaken',
+	'forum-admin-create-new-board-modal-heading' => 'Nieuw bord aanmaken',
+	'forum-admin-create-new-board-title' => 'Bordnaam',
+	'forum-admin-create-new-board-description' => 'Bordbeschrijving',
+	'forum-admin-edit-board-modal-heading' => 'Bord wijzigen: $1',
+	'forum-admin-edit-board-title' => 'Bordnaam',
+	'forum-admin-edit-board-description' => 'Bordbeschrijving',
+	'forum-admin-delete-and-merge-board-modal-heading' => 'Bord verwijderen: $1',
+	'forum-admin-delete-board-title' => 'Bevestig door de naam te typen van het bord dat u wilt verwijderen:',
+	'forum-admin-merge-board-warning' => 'Het overleg op dit bord wordt samengevoegd met een bestaand bord.',
+	'forum-admin-merge-board-destination' => 'Kies een bord om vandaan samen te voegen:',
 	'forum-admin-delete-and-merge-button-label' => 'Verwijderen en samenvoegen',
-	'forum-autoboard-title-1' => 'Algemene discussie',
-	'forum-autoboard-title-2' => 'Nieuws en Aankondigingen',
+	'forum-admin-link-label' => 'Borden beheren',
+	'forum-autoboard-title-1' => 'Algemeen overleg',
+	'forum-autoboard-body-1' => 'Dit bord bevat algemeen overleg over de wiki.',
+	'forum-autoboard-title-2' => 'Nieuws en aankondigingen',
+	'forum-autoboard-body-2' => 'Belangrijk nieuws en informatie!',
 	'forum-autoboard-title-3' => 'Nieuw op $1',
-	'forum-autoboard-body-3' => 'Wil je iets delen dat zojuist op de deze wiki is geplaatst, of wil je iemand feliciteren met een geweldige bijdrage? Dit is the juiste plaast!',
+	'forum-autoboard-body-3' => 'Wilt u iets delen dat zojuist op de deze wiki is geplaatst, of wilt u iemand feliciteren met een geweldige bijdrage? Dit is de juiste plaats!',
 	'forum-autoboard-title-4' => 'Vragen en Antwoorden',
-	'forum-autoboard-body-4' => 'Heb je een vraag over de wiki, of het onderwerp? Stel je vragen hier!',
-	'forum-old-notification-message' => 'Dit Forum is gearchiveerd',
-	'forum-old-notification-navigation-button' => 'Bezoek de nieuwe Fora',
-	'forum-related-discussion-heading' => 'Discussies over $1',
-	'forum-related-discussion-new-post-button' => 'Een discussie starten',
-	'forum-related-discussion-new-post-tooltip' => 'Start een nieuwe discussie over $1',
+	'forum-autoboard-body-4' => 'Hebt u een vraag over de wiki, of het onderwerp? Stel uw vragen hier!',
+	'forum-autoboard-title-5' => 'Pret en spelletjes',
+	'forum-autoboard-body-5' => 'Dit bord bevat overleg dat niet over de wiki gaat. Een plek om samen te komen met uw vrienden van $1.',
+	'forum-board-destination-empty' => '(Selecteer een bord)',
+	'forum-board-title-validation-invalid' => 'De bordnaam bevat ongeldige tekens.',
+	'forum-board-title-validation-length' => 'De bordnaam moet tenminste vier tekens bevatten.',
+	'forum-board-title-validation-exists' => 'Er bestaat al een bord met dezelfde naam.',
+	'forum-board-validation-count' => 'Het maximale aantal borden is $1',
+	'forum-board-description-validation-length' => 'Geef een beschrijving op voor dit bord',
+	'forum-board-id-validation-missing' => 'Het bord-ID ontbreekt.',
+	'forum-board-no-board-warning' => 'Er is geen bord gevonden met die naam. Hier is een lijst met forumborden.',
+	'forum-old-notification-message' => 'Dit forum is gearchiveerd',
+	'forum-old-notification-navigation-button' => 'Bezoek de nieuwe fora',
+	'forum-related-discussion-heading' => 'Oveleg over $1',
+	'forum-related-discussion-new-post-button' => 'Overleg starten',
+	'forum-related-discussion-new-post-tooltip' => 'Begin een nieuwe overleg over $1',
 	'forum-related-discussion-total-replies' => '{{PLURAL:$1|Eén bericht|$1 berichten}}',
 	'forum-related-discussion-see-more' => 'Meer discussies bekijken',
 	'forum-confirmation-board-deleted' => '"$1" is verwijderd.',
@@ -2335,9 +2742,72 @@ e-mailvoorkeuren wijzingen: http://community.wikia.com/Special:Preferences',
  * @author Hulothe
  */
 $messages['oc'] = array(
+	'forum-forum-title' => 'Forum',
+	'forum-active-threads' => '$1 {{PLURAL:$1|discussion activa|discussions activas}}',
+	'forum-active-threads-on-topic' => '$1 {{PLURAL:$1|discussion activa|discussions activas}}  a prepaus de : « [[$2]] »',
+	'forum-specialpage-heading' => 'Forum',
+	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|discussion|discussions}}',
+	'forum-specialpage-board-posts' => '$1 {{PLURAL:$1|messatge|messatges}}',
 	'forum-specialpage-board-lastpostby' => 'Darrièr messatge de',
+	'forum-specialpage-policies-edit' => 'Modificar',
+	'forum-specialpage-policies' => 'Règlas del forum / FAQ',
+	'forum-board-title' => 'Sosforum $1',
+	'forum-board-topic-title' => 'Discussions a prepaus de « $1 »',
+	'forum-board-topics' => 'Subjèctes',
+	'forum-board-thread-follow' => 'Seguir',
+	'forum-board-thread-following' => 'Seguiment',
+	'forum-board-thread-kudos' => '{{PLURAL:$1|1 seleccion|$1 seleccions}}',
+	'forum-board-thread-replies' => '{{PLURAL:$1|1 messatge|$1 messatges}}',
 	'forum-board-new-message-heading' => 'Començar una discussion',
+	'forum-no-board-selection-error' => '← Seleccionatz un sosforum sul qual postar',
+	'forum-thread-reply-placeholder' => 'Mandar una responsa',
+	'forum-thread-reply-post' => 'Respondre',
+	'forum-thread-deleted-return-to' => 'Tornar al sosforum $1',
+	'forum-sorting-option-newest-replies' => 'Responsas las mai recentas',
+	'forum-sorting-option-popular-threads' => 'Los mai populars',
+	'forum-sorting-option-most-replies' => 'Los mai actius pendent los 7 darrièrs jorns',
+	'forum-sorting-option-newest-threads' => 'Fials los mai recents en primièr',
+	'forum-sorting-option-oldest-threads' => 'Fials los mai ancians en primièr',
+	'forum-discussion-post' => 'Mandar',
+	'forum-discussion-highlight' => 'Espingolar la discussion',
+	'forum-discussion-placeholder-message-short' => 'Mandar un messatge novèl',
+	'forum-notification-user1-reply-to-your' => '$1 {{GENDER:$1|a respondut}} a vòstre fial sul sosforum $3',
+	'forum-mail-notification-html-greeting' => 'Bonjorn $1,',
+	'forum-mail-notification-html-button' => 'Veire la conversacion',
+	'forum-mail-notification-subject' => '$1 -- $2',
+	'forum-wiki-activity-msg' => 'sul $1',
+	'forum-wiki-activity-msg-name' => 'sosforum $1',
+	'forum-activity-module-heading' => 'Activitat del forum',
+	'forum-related-module-heading' => 'Discussions connèxas',
 	'forum-activity-module-started' => '$1 a començat una discussion $2',
+	'forum-recentchanges-new-message' => 'sul <a href="$1">sosforum $2</a>',
+	'forum-recentchanges-edit' => '(messatge modificat)',
+	'forum-recentchanges-deleted-reply-title' => 'Un messatge',
+	'forum-recentchanges-namespace-selector-message-wall' => 'Sosforum',
+	'forum-recentchanges-thread-group' => '$1 sul <a href="$2">sosforum $3</a>',
+	'forum-recentchanges-history-link' => 'istoric del sosforum',
+	'forum-recentchanges-thread-history-link' => 'istoric de la discussion',
+	'forum-recentchanges-closed-thread' => 'a tampat la discussion «&nbsp;[[$1|$2]]&nbsp;» de [[$3|$4]]',
+	'forum-recentchanges-reopened-thread' => 'a redobèrt la discussion «&nbsp;[[$1|$2]]&nbsp;» de [[$3|$4]]',
+	'forum-board-history-title' => 'istoric del sosforum',
+	'forum-specialpage-oldforum-link' => "Archius de l'ancian forum",
+	'forum-admin-page-breadcrumb' => 'Administracion dels sosforums',
+	'forum-admin-create-new-board-label' => 'Crear un novèl sosforum',
+	'forum-admin-create-new-board-modal-heading' => 'Crear un novèl sosforum',
+	'forum-admin-create-new-board-title' => 'Títol del sosforum',
+	'forum-admin-create-new-board-description' => 'Descripcion del sosforum',
+	'forum-admin-edit-board-modal-heading' => 'Modificar sosforum : $1',
+	'forum-admin-edit-board-title' => 'Títol del sosforum',
+	'forum-admin-edit-board-description' => 'Descripcion del sosforum',
+	'forum-admin-delete-and-merge-board-modal-heading' => 'Suprimir lo sosforum : $1',
+	'forum-admin-delete-and-merge-button-label' => 'Suprimir e fusionar',
+	'forum-admin-link-label' => 'Gerir los sosforums',
+	'forum-autoboard-title-1' => 'Discussion generala',
+	'forum-autoboard-title-3' => 'Novèl sus $1',
+	'forum-autoboard-title-5' => 'Jòcs e lésers',
+	'forum-board-destination-empty' => '(Seleccionatz un sosforum)',
+	'forum-related-discussion-new-post-button' => 'Començar una discussion',
+	'forum-related-discussion-total-replies' => '$1 messatges',
 );
 
 /** Polish (polski)
@@ -2345,6 +2815,7 @@ $messages['oc'] = array(
  * @author Cotidianis
  * @author Pan Cube
  * @author Pio387
+ * @author Py64
  * @author Rzuwig
  * @author Vuh
  */
@@ -2461,7 +2932,7 @@ ___________________________________________<br />
 	'forum-contributions-line' => '[[$1|$2]] na [[$3|subforum $4]]',
 	'forum-recentchanges-new-message' => 'na [[$1|subforum $2]]',
 	'forum-recentchanges-edit' => 'edytowano wiadomość',
-	'forum-recentchanges-removed-thread' => '{{GENDER:$5|usunął|usunęła}} wątek "[[$1|$2]]" z [[$3|subforum $4]]', # Fuzzy
+	'forum-recentchanges-removed-thread' => 'usunięto wątek "[[$1|$2]]" z [[$3|tablicy użytkownika $4]]',
 	'forum-recentchanges-removed-reply' => '{{GENDER:$5|usunął|usunęła}} odpowiedź z "[[$1|$2]]" na [[$3|subforum $4]]', # Fuzzy
 	'forum-recentchanges-restored-thread' => '{{GENDER:$5|przywrócił|przywróciła}} wątek "[[$1|$2]]" na [[$3|subforum $4]]', # Fuzzy
 	'forum-recentchanges-restored-reply' => '{{GENDER:$5|przywrócił|przywróciła}} odpowiedź w "[[$1|$2]]" na [[$3|subforum $4]]', # Fuzzy
@@ -2688,7 +3159,6 @@ ___________________________________________<br />
 	'forum-related-discussion-new-post-button' => 'Comece uma Discussão',
 	'forum-related-discussion-new-post-tooltip' => 'Comece uma discussão sobre $1',
 	'forum-related-discussion-total-replies' => '$1 mensagem',
-
 	'forum-related-discussion-see-more' => 'Veja mais discussões',
 	'forum-confirmation-board-deleted' => '"$1" foi deletado.',
 );
@@ -2775,7 +3245,6 @@ $messages['ru'] = array(
 	'forum-header-active-threads' => '<em>$1</em><span>{{PLURAL:$1|Активное<br />обсуждение|Активные<br />обсуждения}}</span>',
 	'forum-specialpage-heading' => 'Форум',
 	'forum-specialpage-blurb-heading' => '<span style="display:none">forum-specialpage-blurb-heading Вы можете редактировать его<span>',
-	'forum-specialpage-blurb' => '',
 	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|тема|темы|тем}}',
 	'forum-specialpage-board-posts' => '$1 {{PLURAL:$1|сообщение|сообщения|сообщений}}',
 	'forum-specialpage-board-lastpostby' => 'Последнее сообщение от',
@@ -2934,12 +3403,12 @@ ___________________________________________<br />
 	'forum-related-discussion-new-post-button' => 'Начать обсуждение',
 	'forum-related-discussion-new-post-tooltip' => 'Начать новое обсуждение о $1',
 	'forum-related-discussion-total-replies' => '$1 {{PLURAL:$1|сообщение|сообщения|сообщений}}',
-
 	'forum-related-discussion-see-more' => 'Посмотреть другие обсуждения',
 	'forum-confirmation-board-deleted' => '«$1» был удалён.',
 );
 
 /** Swedish (svenska)
+ * @author Lokal Profil
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -3063,7 +3532,7 @@ ___________________________________________<br />
 	'forum-recentchanges-deleted-reply' => 'raderade svar från "[[$1|$2]]" från [[$3|underforumet $4]]',
 	'forum-recentchanges-deleted-reply-title' => 'Ett inlägg',
 	'forum-recentchanges-namespace-selector-message-wall' => 'Underforum',
-	'forum-recentchanges-thread-group' => '$1 i [[$2|underforumet $3]]',
+	'forum-recentchanges-thread-group' => '$1 i [[$2|$3-forumet]]',
 	'forum-recentchanges-history-link' => 'underforumshistorik',
 	'forum-recentchanges-thread-history-link' => 'trådhistorik',
 	'forum-recentchanges-closed-thread' => 'stängde tråden "[[$1|$2]]" från [[$3|$4]]',
@@ -3108,9 +3577,15 @@ ___________________________________________<br />
 	'forum-related-discussion-new-post-button' => 'Starta en diskussion',
 	'forum-related-discussion-new-post-tooltip' => 'Starta en ny diskussion om $1',
 	'forum-related-discussion-total-replies' => '$1 meddelanden',
-
 	'forum-related-discussion-see-more' => 'Se fler diskussioner',
 	'forum-confirmation-board-deleted' => '"$1" har raderats.',
+);
+
+/** Tamil (தமிழ்)
+ * @author ElangoRamanujam
+ */
+$messages['ta'] = array(
+	'forum-forum-title' => 'கருத்துக்களம்',
 );
 
 /** Telugu (తెలుగు)
@@ -3308,7 +3783,6 @@ $messages['uk'] = array(
 	'forum-header-active-threads' => '<em>$1</em><span>{{PLURAL:$1|активне<br /> обговорення|активні<br /> обговорення|активних<br /> обговорень}}</span>',
 	'forum-specialpage-heading' => 'Форум',
 	'forum-specialpage-blurb-heading' => '<span style="display:none">forum-specialpage-blurb-heading Ви не можете це редагувати<span>',
-	'forum-specialpage-blurb' => 'опис форуму',
 	'forum-specialpage-board-threads' => '$1 {{PLURAL:$1|тема|теми|тем}}',
 	'forum-specialpage-board-posts' => '$1 {{PLURAL:$1|допис|дописи|дописів}}',
 	'forum-specialpage-board-lastpostby' => 'Останнє повідомлення від',
@@ -3467,13 +3941,13 @@ ___________________________________________<br />
 	'forum-related-discussion-new-post-button' => 'Розпочати обговорення',
 	'forum-related-discussion-new-post-tooltip' => 'Почати нове обговорення про $1',
 	'forum-related-discussion-total-replies' => '$1 повідомлень',
-
 	'forum-related-discussion-see-more' => 'Переглянути більше обговорень',
 	'forum-confirmation-board-deleted' => '"$1" було видалено.',
 );
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Rémy Lee
  */
 $messages['vi'] = array(
 	'forum-forum-title' => 'Diễn đàn',
@@ -3567,8 +4041,8 @@ Xem cuộc trò chuyện: ($MESSAGE_LINK)
 Đội Wikia
 
 ___________________________________________
-*Tìm trợ giúp và tư vấn trên community.wikia.com. Để nhận được sự hỗ trợ cho ngôn ngữ của bạn, truy cập vi.wikia.com
-*Muốn nhận được ít thư từ chúng tôi? Bạn có thể bỏ đăng ký hoặc thay đổi tuỳ chọn email của bạn ở đây: http://community.wikia.com/Special:Preferences',
+*Để nhận được sự hỗ trợ tư vấn cho ngôn ngữ của bạn, truy cập http://congdong.wikia.com
+*Muốn nhận được ít thư từ chúng tôi? Bạn có thể bỏ đăng ký hoặc thay đổi tuỳ chọn email của bạn ở đây: http://congdong.wikia.com/Đặc_biệt:Tùy_chọn',
 	'forum-mail-notification-body-HTML' => 'Chào $WATCHER,
 <p>$SUBJECT.</p>
 <p><a href="$MESSAGE_LINK">$METATITLE</a></p>
@@ -3577,9 +4051,8 @@ ___________________________________________
 <p><a style="padding: 4px 10px;background-color: #006CB0; color: #FFF !important;text-decoration: none;" href="$MESSAGE_LINK">Xem cuộc trò chuyện</a></p>
 <p>Wikia Team</p>
 ___________________________________________<br />
-*Tìm trợ giúp và tư vấn trên cộng đồng Trung tâm: http://community.wikia.com. Để nhận được sự hỗ trợ cho ngôn ngữ của bạn, truy cập vi.wikia.com
-*Muốn nhận được ít thư từ chúng tôi? Bạn có thể bỏ đăng ký hoặc thay đổi
- tuỳ chọn email của bạn ở đây: http://community.wikia.com/Special:Preferences',
+*Để nhận được sự hỗ trợ và tư vấn cho ngôn ngữ của bạn, truy cập http://congdong.wikia.com
+*Muốn nhận được ít thư từ chúng tôi? Bạn có thể bỏ đăng ký hoặc thay đổi tuỳ chọn email của bạn ở đây: http://congdong.wikia.com/Đặc_biệt:Tùy_chọn',
 	'forum-wiki-activity-msg' => 'trên $1',
 	'forum-wiki-activity-msg-name' => 'Board $1',
 	'forum-activity-module-heading' => 'Hoạt động gần đây trên diễn đàn',
@@ -3642,9 +4115,15 @@ ___________________________________________<br />
 	'forum-related-discussion-new-post-button' => 'Bắt đầu một cuộc thảo luận',
 	'forum-related-discussion-new-post-tooltip' => 'Bắt đầu một cuộc thảo luận mới về $1',
 	'forum-related-discussion-total-replies' => '$1 tin nhắn',
-
 	'forum-related-discussion-see-more' => 'Xem thêm các cuộc thảo luận',
 	'forum-confirmation-board-deleted' => "'''$1''' đã bị xóa.",
+);
+
+/** Yiddish (ייִדיש)
+ * @author פוילישער
+ */
+$messages['yi'] = array(
+	'forum-recentchanges-edit' => 'רעדאקטירטע מעלדונג',
 );
 
 /** Chinese
@@ -4021,6 +4500,7 @@ ___________________________________________<br />
 	'forum-admin-edit-board-description' => '版块描述',
 	'forum-admin-delete-and-merge-board-modal-heading' => '删除板块：$1',
 	'forum-admin-delete-board-title' => '请输入板块名以确认您想删除：',
+	'forum-admin-merge-board-warning' => '此版块的帖子将与一个现有版块合并。',
 	'forum-admin-merge-board-destination' => '选择板块合并至：',
 	'forum-admin-delete-and-merge-button-label' => '删除与合并',
 	'forum-admin-link-label' => '管理版块',
@@ -4032,10 +4512,11 @@ ___________________________________________<br />
 	'forum-autoboard-body-4' => '对这个wiki或者这个主题有问题？在这里提问！',
 	'forum-autoboard-title-5' => '娱乐与游戏',
 	'forum-board-destination-empty' => '（请选择面板）',
+	'forum-board-title-validation-invalid' => '版块名称包含无效字符',
 	'forum-board-title-validation-length' => '板块名应至少4个字符长',
 	'forum-board-title-validation-exists' => '已存在同名板块',
 	'forum-board-validation-count' => '板块最多可以有$1个',
-	'forum-board-id-validation-missing' => '板块id丢失',
+	'forum-board-id-validation-missing' => '板块ID丢失',
 	'forum-board-no-board-warning' => '我们找不到那个标题的板块。这里是论坛板块列表。',
 	'forum-old-notification-message' => '本论坛已存档',
 	'forum-old-notification-navigation-button' => '访问新论坛',
@@ -4050,6 +4531,7 @@ ___________________________________________<br />
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  * @author LNDDYL
+ * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
 	'forum-forum-title' => '論壇',
@@ -4133,7 +4615,7 @@ $messages['zh-hant'] = array(
 	'forum-related-module-heading' => '相關討論',
 	'forum-activity-module-posted' => '$1在$2發布了一條回覆',
 	'forum-activity-module-started' => '$1 在$2 發起了一個討論',
-	'forum-contributions-line' => '[[$1|$2]]在[[$3|$4板面]]',
+	'forum-contributions-line' => '[[$1|$2]] 在 [[$3|$4板面]]',
 	'forum-recentchanges-new-message' => '在[[$1|$2板面]]',
 	'forum-recentchanges-edit' => '編輯訊息',
 	'forum-recentchanges-removed-thread' => ' 從[[$3|$4 板面]]移除討論串 "[[$1|$2]]"',
@@ -4174,14 +4656,14 @@ $messages['zh-hant'] = array(
 	'forum-autoboard-title-4' => '問題與解答',
 	'forum-autoboard-body-4' => '有關於這個wiki或這個主題的問題嗎？在這裡提出你的問題！',
 	'forum-autoboard-title-5' => '娛樂和遊戲',
-	'forum-autoboard-body-5' => '這個板面是與本站主題不相關的聊天－可以和你的 $1朋友一起流連。',
+	'forum-autoboard-body-5' => '這個板面是與本站主題不相關的聊天－可以和你的 $1 朋友一起閒逛。',
 	'forum-board-destination-empty' => '（請選擇板面）',
 	'forum-board-title-validation-invalid' => '板面名稱包含無效字元',
 	'forum-board-title-validation-length' => '板面名稱應至少 4 個字元以上',
 	'forum-board-title-validation-exists' => '已存在相同名稱的板面',
 	'forum-board-validation-count' => '板面的上限數量是$1',
 	'forum-board-description-validation-length' => '請寫此板面的描述',
-	'forum-board-id-validation-missing' => '板面 id 消失',
+	'forum-board-id-validation-missing' => '板面 ID 消失',
 	'forum-board-no-board-warning' => '我們無法找到該標題的板面。這是論壇上板面的清單。',
 	'forum-old-notification-message' => '本論壇已存檔',
 	'forum-old-notification-navigation-button' => '訪問新論壇',

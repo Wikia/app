@@ -180,10 +180,11 @@ $messages['de'] = array(
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
  * @author Marmase
+ * @author Mirzali
  */
 $messages['diq'] = array(
 	'category-exhibition-alphabetical' => 'Alfabetik',
-	'category-exhibition-page-header' => 'Pelê ke kategoriya "$1" miyan derê',
+	'category-exhibition-page-header' => 'Pelê ke kategoriya "$1" derê',
 	'category-exhibition-subcategories-header' => 'Kategoriyê bınêni',
 );
 
@@ -223,6 +224,7 @@ $messages['fa'] = array(
 	'category-exhibition-recentedits' => 'ویرایش‌های اخیر',
 	'category-exhibition-page-header' => 'صفحه‌های موجود در این رده «$1»',
 	'category-exhibition-subcategories-header' => 'زیررده‌ها',
+	'category-exhibition-media-header' => 'پرونده‌های ردهٔ «$1»',
 	'category-exhibition-blogs-header' => 'پست‌های وبلاگ',
 );
 
@@ -271,6 +273,14 @@ $messages['fr'] = array(
 	'category-exhibition-blogs-header' => 'Billets de blog',
 	'category-exhibition-display-old' => 'Affichage de la catégorie en liste',
 	'category-exhibition-display-new' => 'Affichage de la catégorie en exposition',
+);
+
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'category-exhibition-alphabetical' => 'Alfabetysk',
+	'category-exhibition-subcategories-header' => 'Subkategoryen',
 );
 
 /** Galician (galego)
@@ -388,6 +398,7 @@ $messages['kn'] = array(
 
 /** Korean (한국어)
  * @author Leehoy
+ * @author Miri-Nae
  * @author 관인생략
  */
 $messages['ko'] = array(
@@ -399,6 +410,7 @@ $messages['ko'] = array(
 	'category-exhibition-subcategories-header' => '하위 분류',
 	'category-exhibition-media-header' => '"$1" 분류에 속하는 미디어',
 	'category-exhibition-blogs-header' => '블로그 게시물',
+	'category-exhibition-display-old' => '분류 목록 보기',
 );
 
 /** Luxembourgish (Lëtzebuergesch)

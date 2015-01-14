@@ -144,7 +144,7 @@ ve.ui.MWTemplateDialog.prototype.onAddParameter = function ( param ) {
 	var page, $parameterPages;
 
 	if ( param.getName() ) {
-		page = new ve.ui.MWParameterPage( param, param.getId(), { '$': this.$ } );
+		page = new ve.ui.WikiaParameterPage( param, param.getId(), { '$': this.$ } );
 	} else {
 		page = new ve.ui.MWParameterPlaceholderPage( param, param.getId(), { '$': this.$ } );
 	}
@@ -344,7 +344,7 @@ ve.ui.MWTemplateDialog.prototype.getSetupProcess = function ( data ) {
 
 			// Properties
 			this.loaded = false;
-			this.transclusionModel = new ve.dm.MWTransclusionModel();
+			this.transclusionModel = new ve.dm.WikiaTransclusionModel();
 
 			// Events
 			this.transclusionModel.connect( this, { 'replace': 'onReplacePart' } );
@@ -357,7 +357,7 @@ ve.ui.MWTemplateDialog.prototype.getSetupProcess = function ( data ) {
 						this.transclusionModel, data.template
 					);
 					promise = this.transclusionModel.addPart( template ).done( ve.bind( function () {
-						this.initialzeNewTemplateParameters();
+						this.initializeNewTemplateParameters();
 					}, this ) );
 				} else {
 					// New template placeholder
@@ -381,29 +381,24 @@ ve.ui.MWTemplateDialog.prototype.getSetupProcess = function ( data ) {
 
 /**
  * Initialize parameters for new template insertion
- * TODO: Wikia (ve-sprint-25): Re-implement to minimize amount of changes to core class.
- * Methods initialzeNewTemplateParameters and initializeTemplateParameters should be created
- * and pushed upstream. Former should call addPromptedParameters while latter should be empty.
- * In case of Wikia both should be overwriten in a subclass and both should call addUnusedParameters.
  *
  * @method
  */
-ve.ui.MWTemplateDialog.prototype.initialzeNewTemplateParameters = function () {
+ve.ui.MWTemplateDialog.prototype.initializeNewTemplateParameters = function () {
 	var i, parts = this.transclusionModel.getParts();
 	for ( i = 0; i < parts.length; i++ ) {
 		if ( parts[i] instanceof ve.dm.MWTemplateModel ) {
-			//parts[i].addPromptedParameters();
-			parts[i].addUnusedParameters();
+			parts[i].addPromptedParameters();
 		}
 	}
 };
 
 /**
- * Initialize parameters for existing template modification
+ * Intentionally empty. This is provided for Wikia extensibility.
  *
  * @method
  */
-ve.ui.MWTemplateDialog.prototype.initializeTemplateParameters = ve.ui.MWTemplateDialog.prototype.initialzeNewTemplateParameters;
+ve.ui.MWTemplateDialog.prototype.initializeTemplateParameters = function () {};
 
 /**
  * @inheritdoc

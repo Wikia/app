@@ -12,7 +12,7 @@ $messages['en'] = [
 	'oasis-corporatefooter-hub-Lifestyle-link' => 'http://www.wikia.com/Lifestyle',
 	'oasis-corporatefooter-hub-Food and Drink-link' => 'http://www.wikia.com/Recipes',
 	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About|<span>About</span>
-		*http://www.community.wikia.com|<span>Community Central</span>
+		*http://community.wikia.com|<span>Community Central</span>
 		*http://www.wikia.com/Careers|Careers
 		*http://www.wikia.com/Advertising|Advertise
 		*http://api.wikia.com/|<span>API</span>

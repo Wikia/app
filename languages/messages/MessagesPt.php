@@ -2615,6 +2615,7 @@ Consulte a [[Special:BlockList|lista de IPs bloqueados]] para rever os bloqueios
 'unblocked'                       => '[[User:$1|$1]] foi desbloqueado',
 'unblocked-range'                 => 'A gama $1 foi desbloqueada',
 'unblocked-id'                    => 'O bloqueio de $1 foi removido com sucesso',
+'unblocked-ip'                    => '[[Special:Contributions/$1|$1]] foi desbloqueado.',
 'blocklist'                       => 'Utilizadores bloqueados',
 'ipblocklist'                     => 'Utilizadores bloqueados',
 'ipblocklist-legend'              => 'Procurar um utilizador bloqueado',

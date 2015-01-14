@@ -27,13 +27,11 @@
 		</a>
 	<a href=#wkNavSrh id=wkSrhTgl class=tgl></a>
 	<a href=#wkNavMenu id=wkNavTgl class=tgl></a>
-	<? if ( $wg->EnableUserLoginExt ) {
-		if ( $loggedIn ) {
-			// This gives me image 50x50 but adds html attributes width and height with values 25
-			echo '<a id=wkPrfTgl class="tgl lgdin" href=#>' . AvatarService::renderAvatar( $userName, 25 ) . '</a>';
-		} else {
-			echo '<a id=wkPrfTgl class="tgl lgdout" href="' . SpecialPage::getTitleFor( 'UserLogin' )->getLocalURL() . '#"></a>';
-		}
+	<? if ( $loggedIn ) {
+		// This gives me image 50x50 but adds html attributes width and height with values 25
+		echo '<a id=wkPrfTgl class="tgl lgdin" href=#>' . AvatarService::renderAvatar( $userName, 25 ) . '</a>';
+	} else {
+		echo '<a id=wkPrfTgl class="tgl lgdout" href="' . SpecialPage::getTitleFor( 'UserLogin' )->getLocalURL() . '#"></a>';
 	}	?>
 	</div>
 	<div id=wkSrh>
@@ -46,7 +44,6 @@
 		<ul id=wkSrhSug class=wkLst></ul>
 	</div>
 	<div id=wkNav></div>
-	<? if ( $wg->EnableUserLoginExt ) : ?>
 	<div id=wkPrf>
 		<header class="wkPrfHead<?= ( !$loggedIn ) ? ' up' : '' ?>">
 		<? if( $loggedIn ) {
@@ -63,5 +60,4 @@
 		</ul>
 	<? endif; ?>
 	</div>
-	<? endif; ?>
 </section>

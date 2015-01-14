@@ -91,7 +91,6 @@ class Http {
 				$params[ 'statusMessage' ] = $status->getMessage();
 			}
 			\Wikia\Logger\WikiaLogger::instance()->debug( 'Http request' , $params );
-
 		}
 
 		// Wikia change - @author: nAndy - begin

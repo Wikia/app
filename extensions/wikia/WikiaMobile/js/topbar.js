@@ -213,10 +213,7 @@ function (
 					form.setAttribute('action',
 						qs(form.getAttribute('action'))
 						.setVal('returnto',
-							w.wgCanonicalSpecialPageName &&
-							w.wgCanonicalSpecialPageName.match(/Userlogin|Userlogout/) ?
-							w.wgMainPageTitle :
-							w.wgPageName,
+							createReturnToString(),
 							true
 						).setHash(hash)
 						.toString()
@@ -230,8 +227,25 @@ function (
 						}
 					});
 				}
-			);
+			).fail(function () {
+				qs()
+					.setPath(w.wgArticlePath.replace('$1', 'Special:UserLogin'))
+					.setVal('returnto', createReturnToString(), true)
+					.goTo();
+			});
 		}
+	}
+
+	/**
+	 *
+	 * @return {String} MainPage title or current page title
+	 */
+	function createReturnToString() {
+		return w.wgCanonicalSpecialPageName &&
+			// TODO: special page URL matching needs to be consolidated. @see UC-187
+			w.wgCanonicalSpecialPageName.match(/Userlogin|Userlogout|UserSignup/) ?
+			w.wgMainPageTitle :
+			w.wgPageName;
 	}
 
 	function showPage() {

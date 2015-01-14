@@ -1,21 +1,38 @@
+/*global window*/
 // AdsInContent2 a.k.a. AIC2
 var AIC2 = {
-	$placeHolder    : false,
-	fingerprint     : 'b',
-	called          : false,
-	startPosition   : 0,
-	stopPosition    : 0,
-	magicNumber     : 800,
-	isRightToLeft   : false,
-	visible         : false
+	$placeHolder         : false,
+	called               : false,
+	fingerprint          : 'b',
+	fixedGlobalNavHeight : 0,
+	startPosition        : 0,
+	stopPosition         : 0,
+	magicNumber          : 800,
+	isRightToLeft        : false,
+	visible              : false
 };
 
-AIC2.enabled = window.top === window.self
-	&& window.wgEnableAdsInContent
-	&& window.wgShowAds
-	&& !window.wgIsMainpage
-	&& !window.wikiaPageIsCorporate
-	&& (window.wgIsContentNamespace || window.wikiaPageType === 'search');
+AIC2.enabled = (function () {
+	'use strict';
+	try {
+		var isTopWindow = (window.top === window.self),
+			opts = window.ads.context.opts,
+			isEnabled = opts.showAds && opts.adsInContent,
+			targeting = window.ads.context.targeting,
+			isArticle = targeting.pageType === 'article' && window.wgIsContentNamespace,
+			isSearchPage = targeting.pageType === 'search',
+			isCorporate = targeting.wikiIsCorporate;
+
+		return isTopWindow &&
+			isEnabled &&
+			!isCorporate &&
+			(isArticle || isSearchPage);
+
+	} catch (e) {
+		AIC2.disabledReason = e;
+		return false;
+	}
+}());
 
 AIC2.init = function() {
 	if (!AIC2.enabled || AIC2.called) {
@@ -24,7 +41,8 @@ AIC2.init = function() {
 
 	AIC2.called = true;
 
-	var $window = $(window);
+	var $window = $(window),
+		$globalNavigation;
 
 	AIC2.$placeHolder = $('#WikiaAdInContentPlaceHolder');
 
@@ -42,6 +60,13 @@ AIC2.init = function() {
 		//Wikia.Tracker.track({eventName:'liftium.varia', 'ga_category':'varia/AIC2', 'ga_action':'too narrow', trackingMethod: 'ad'});
 		return;
 	}
+
+	$globalNavigation = $('#globalNavigation');
+
+	if ($globalNavigation.css('position') === 'fixed') {
+		AIC2.fixedGlobalNavHeight = $globalNavigation.outerHeight();
+	}
+
 
 	if (!AIC2.checkStartStopPosition()) { return; }
 
@@ -77,12 +102,12 @@ AIC2.checkStartStopPosition = function() {
 
 	try {
 		adHeight = parseInt($incontentBoxAd.height(), 10) || 0;
-		startPosition = parseInt(AIC2.$placeHolder.offset().top, 10);
-		stopPosition = parseInt($footer.offset().top, 10) - 10 - adHeight;
+		startPosition = parseInt(AIC2.$placeHolder.offset().top, 10) - AIC2.fixedGlobalNavHeight;
+		stopPosition = parseInt($footer.offset().top, 10) - 10 - adHeight - AIC2.fixedGlobalNavHeight;
 
 		if ($leftSkyScraper.is(':visible') && $leftSkyScraper.height() > 50) {
 			Liftium.d("AIC2: sky3 found", 3);
-			stopPosition = parseInt($leftSkyScraper.offset().top, 10) - 20 - adHeight;
+			stopPosition = parseInt($leftSkyScraper.offset().top, 10) - 20 - adHeight - AIC2.fixedGlobalNavHeight;
 		}
 	} catch (e) {
 		Liftium.d("AIC2: catched in start/stop:", 1, e);
@@ -140,7 +165,7 @@ AIC2.onScroll = function() {
 			}
 			$incontentBoxAd.css({
 				'position': 'fixed',
-				'top': '10px',
+				'top': (10 + AIC2.fixedGlobalNavHeight) + 'px',
 				'visibility': 'visible'
 			});
 

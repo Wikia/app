@@ -276,8 +276,8 @@ class LicensedVideoSwapSpecialController extends WikiaSpecialPageController {
 		$helper->moveSuggestionData( $articleId, $title->getArticleID() );
 
 		// add to log
-		$reason = wfMessage( 'lvs-log-swap', $file->getTitle()->getText(), $newFile->getTitle()->getText() )->text();
-		$helper->addLog( $file->getTitle(), 'licensedvideoswap_swap', $reason );
+		$reason = wfMessage( 'lvs-log-summary', $file->getTitle()->getText(), $newFile->getTitle()->getText() )->text();
+		$helper->addLog( $file->getTitle(), wfMessage( 'lvs-log-description' )->text(), $reason );
 
 		// clear cache for total videos
 		$helper->invalidateCacheTotalVideos();

@@ -1,64 +1,75 @@
-var UserLoginDropdown = {
-	dropdown: false,
-	loginAjaxForm: false,
-	init: function() {
-		// DOM cache
-		this.dropdown = $("#UserLoginDropdown");
+(function () {
+	'use strict';
 
-		$("#AccountNavigation .ajaxLogin")
-			.click($.proxy(function(ev) {
-				ev.preventDefault();
-				ev.stopPropagation(); // BugId:16984
-				this.show();
-			}, this))
-			.closest('li').hover(function(e) {
-				e.preventDefault();
-				UserLoginDropdown.hoverHandle = setTimeout(function() {
-					UserLoginDropdown.show();
-				}, 300);
-			}, function(e) {
-				// do nothing on hover out
-				clearTimeout(UserLoginDropdown.hoverHandle);
-			});
+	var UserLoginDropdown = {
+		dropdown: false,
+		loginAjaxForm: false,
+		bucky: window.Bucky('UserLoginDropdown'),
+		init: function () {
+			this.bucky.timer.start('init');
+			// DOM cache
+			this.dropdown = $('#UserLoginDropdown');
 
-		HoverMenuGlobal.menus.push(UserLoginDropdown);
-	},
-	show: function() {
-		if(!this.dropdown.hasClass('show')) {
-			this.dropdown.addClass('show');
-			this.dropdown.trigger('hovermenu-shown');
+			$('#AccountNavigation').find('.ajaxLogin')
+				.click($.proxy(function (ev) {
+					ev.preventDefault();
+					ev.stopPropagation(); // BugId:16984
+					this.show();
+				}, this))
+				.closest('li').hover(function (e) {
+					e.preventDefault();
+					UserLoginDropdown.hoverHandle = setTimeout(function () {
+						UserLoginDropdown.show();
+					}, 300);
+				}, function () {
+					// do nothing on hover out
+					clearTimeout(UserLoginDropdown.hoverHandle);
+				});
 
-			if(!this.loginAjaxForm) {
-				this.loginAjaxForm = new UserLoginAjaxForm(this.dropdown);
+			window.HoverMenuGlobal.menus.push(UserLoginDropdown);
+			this.bucky.timer.stop('init');
+		},
+		show: function () {
+			this.bucky.timer.start('show');
+			if (!this.dropdown.hasClass('show')) {
+				this.dropdown.addClass('show');
+				this.dropdown.trigger('hovermenu-shown');
 
-				// lazy load jquery.wikia.tooltip.js (BugId:22143)
-				UserLoginFacebook.init( UserLoginFacebook.origins.DROPDOWN );
-			}
+				if (!this.loginAjaxForm) {
+					this.loginAjaxForm = new window.UserLoginAjaxForm(this.dropdown);
 
-			$('body').
+					// lazy load jquery.wikia.tooltip.js (BugId:22143)
+					window.UserLoginFacebook.init(window.UserLoginFacebook.origins.DROPDOWN);
+				}
+
+				$('body').
 				unbind('.loginDropdown').
 				bind('click.loginDropdown', $.proxy(this.outsideClickHandler, this));
+			}
+			this.loginAjaxForm.inputs.username.focus();
+			this.bucky.timer.stop('show');
+		},
+		hide: function () {
+			this.dropdown.removeClass('show');
+			this.dropdown.trigger('hovermenu-hidden');
+
+			$('body').unbind('.loginDropdown');
+		},
+		outsideClickHandler: function (e) {
+			var target = $(e.target);
+
+			if (!target.closest('#AccountNavigation').exists()) {
+				this.hide();
+			}
+		},
+		hideNav: function () {
+			UserLoginDropdown.hide();
 		}
-		this.loginAjaxForm.inputs['username'].focus();
-	},
-	hide: function() {
-		this.dropdown.removeClass('show');
-		this.dropdown.trigger('hovermenu-hidden');
+	};
 
-		$('body').unbind('.loginDropdown');
-	},
-	outsideClickHandler: function(e) {
-		var target = $(e.target);
+	window.UserLoginDropdown = UserLoginDropdown;
 
-		if(!target.closest('#AccountNavigation').exists()) {
-			this.hide();
-		}
-	},
-	hideNav: function() {
-		UserLoginDropdown.hide();
-	}
-};
-
-$(function() {
-	UserLoginDropdown.init();
-});
+	$(function () {
+		UserLoginDropdown.init();
+	});
+})();

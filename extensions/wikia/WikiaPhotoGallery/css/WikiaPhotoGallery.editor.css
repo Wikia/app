@@ -41,7 +41,6 @@ img.WikiaPhotoGalleryProgress {
 
 /* slider from jQuery UI */
 #WikiaPhotoGalleryEditor .ui-slider {
-	-moz-border-radius: 4px;
 	border: solid 1px #aaa;
 	cursor: pointer;
 	display: inline-block;
@@ -330,8 +329,6 @@ img.WikiaPhotoGalleryProgress {
 .WikiaPhotoGalleryEditorPage .WikiaPhotoGalleryColorPickerPopUp {
 	background-color: #fff;
 	border: solid 1px #cacaca;
-	-moz-box-shadow: 0 0 10px 1px #aaa;
-	-webkit-box-shadow: 0 0 10px 1px #aaa;
 	display: none;
 	position: absolute;
 	padding: 5px 10px;

@@ -53,7 +53,8 @@ $messages['en'] = array(
 	'lvs-confirm-undo-keep-title' => 'Confirm Undo',
 	'lvs-confirm-undo-keep-message' => 'Are you sure you want to add this video back into the list?',
 	'lvs-no-matching-videos' => 'There are currently no premium videos related to this video',
-	'lvs-log-swap' => 'Swapped video from [[{{ns:File}}:$1]] to [[{{ns:File}}:$2]]',
+	'lvs-log-summary' => 'Swapped video from [[{{ns:File}}:$1]] to [[{{ns:File}}:$2]]',
+	'lvs-log-description' => 'swapped video',
 	'lvs-log-restore' => 'Restored swapped video ([[{{ns:File}}:$1]])',
 	'lvs-log-removed-redirected-link' => 'Removed redirected link',
 	'lvs-zero-state' => "At this time we have no matching videos from Wikia Video for videos on your wiki. Check back again soon!",
@@ -73,7 +74,7 @@ $messages['en'] = array(
 $messages['qqq'] = array(
 	'licensedvideoswap' => 'Licensed Video Swap short title (for special page listings)
 {{Identical|Licensed video swap}}',
-	'action-licensedvideoswap' => 'Sentence fragment MW injects into the following message when a permission error occurs: "You do not have permission to <action-licensedvideoswap>"',
+	'action-licensedvideoswap' => '{{doc|action}}',
 	'lvs-page-title' => 'This is the page header/title (h1 tag) that is displayed at the top of the page.
 {{Identical|Licensed video swap}}',
 	'lvs-history-page-title' => 'This is the LVS history page header/title (h1 tag) that is displayed at the top of the page.',
@@ -136,7 +137,8 @@ Preceded by the heading {{msg-wikia|Lvs-instructions-header}}.',
 {{Identical|Confirm undo}}',
 	'lvs-confirm-undo-keep-message' => 'This message is show in a modal to confirm that a user wants to un-keep a video, i.e. they chose to keep a non-premium but then decided to add it back into the list of videos with suggestions for swapping.',
 	'lvs-no-matching-videos' => 'Message shown when no video can be found that matches the title of the youtube video we intend to swap',
-	'lvs-log-swap' => 'log message shown in Special:RecentChanges for swapping video.',
+	'lvs-log-summary' => 'Summary of log message shown in Special:RecentChanges for swapping video.',
+	'lvs-log-description' => 'Description of action in Special:RecentChanges (x swapped video y (summary))',
 	'lvs-log-restore' => 'log message shown in Special:RecentChanges for restoring swapped video.',
 	'lvs-zero-state' => 'This message is displayed if there are no unlicenced videos to review on the licensed video swap page.',
 	'lvs-history-swapped' => 'Message shown on the LVS history page for a video that had been swapped for a premium video',
@@ -275,6 +277,7 @@ $messages['br'] = array(
 /** Catalan (català)
  * @author Alvaro Vidal-Abarca
  * @author Roxas Nobody 15
+ * @author Unapersona
  */
 $messages['ca'] = array(
 	'licensedvideoswap' => 'Llicència Vídeo Swap',
@@ -285,6 +288,7 @@ $messages['ca'] = array(
 	'lvs-history-button-text' => 'Historial',
 	'lvs-page-header-back-link' => 'De tornada a la Llicència de Vídeo Swap',
 	'lvs-callout-header' => 'Hemos encontrado los siguientes videos de tu wiki en Wikia Video. <br /> Sería buena idea reemplazar tus videos desde Wikia Video porque:',
+	'lvs-match-stats-description' => 'Vídeos<br />amb resultats',
 	'lvs-callout-title-licensed' => '100% Llicenciat',
 	'lvs-callout-reason-licensed' => "Wikia Vídeos compta amb llicència per a les nostres comunitats per a l'ús en el seu wikis",
 	'lvs-callout-title-quality' => 'Alta qualitat',
@@ -296,7 +300,9 @@ $messages['ca'] = array(
 	'lvs-instructions' => "Molts dels vídeos que permeten integrar en el seu wikis no estan disponibles quan es retira o baixat per violacions de drets d'autor. És per això que Wikia ha llicenciat [[w:c:video|thousands de vídeos]] per a l'ús en el seu wikis des de diversos socis de continguts. Aquesta pàgina Especial és una manera fàcil per a vostè per veure si tenim una llicència còpia de la mateixa o similar vídeos a la teva wikis. Si us plau, tingueu en compte que sovint el mateix vídeo pot tenir una altra miniatura del vídeo així que el millor és revisar els vídeos abans de prendre una decisió. Feliç el bescanvi!",
 	'lvs-button-keep' => 'Mantenir',
 	'lvs-button-swap' => 'Cambiar',
-	'lvs-more-suggestions' => 'més suggeriments',
+	'lvs-button-yes' => 'Sí',
+	'lvs-button-no' => 'No',
+	'lvs-more-suggestions' => 'Més suggeriments',
 	'lvs-best-match-label' => 'Millor amb Llicència Partit de Wikia Vídeo',
 	'lvs-undo-swap' => 'Desfés',
 	'lvs-undo-keep' => 'Desfés',
@@ -304,25 +310,32 @@ $messages['ca'] = array(
 	'lvs-keep-video-success' => "Heu seleccionat mantenir el seu corrent de vídeo. El vídeo serà eliminat d'aquesta llista.$1",
 	'lvs-restore-video-success' => "Vostè ha restaurat el vídeo d'aquesta llista.",
 	'lvs-error-permission' => 'No es pot intercanviar aquest vídeo.',
+	'lvs-error-permission-access' => 'No pots accedir a aquesta pàgina',
 	'lvs-error-invalid-page-status' => 'Vostè no pot restaurar aquest vídeo.',
+	'lvs-error-already-swapped' => "Aquest vídeo ja s'ha canviat.",
+	'lvs-error-already-kept-forever' => 'Aquest vídeo ja ha estat guardat.',
 	'lvs-posted-in-label' => 'Vídeo actual publicat a',
 	'lvs-posted-in-label-none' => 'Vídeo actual no està publicat a articles',
 	'lvs-posted-in-more' => 'més',
 	'lvs-confirm-keep-title' => 'Mantenir Vídeo',
-	'lvs-confirm-keep-message' => 'Heu seleccionat no substituir el seu vídeo actual amb un vídeo amb llicència de Wikia. Voleu continuar?', # Fuzzy
+	'lvs-confirm-keep-message' => 'Estem contínuament afegint nous vídeos amb llicència a <a href="http://video.wikia.com/" target="_blank">Wikia vídeo</a>. T\'agradaria veure vídeos relacionats amb aquest?',
 	'lvs-confirm-undo-swap-title' => 'Confirmar que vols desfer',
 	'lvs-confirm-undo-swap-message' => 'Esteu segur que voleu restaurar el vídeo original?',
 	'lvs-confirm-undo-keep-title' => 'Confirmar que vols desfer?',
 	'lvs-confirm-undo-keep-message' => 'Esteu segur que voleu afegir aquest vídeo nou a la llista?',
 	'lvs-no-matching-videos' => 'Actualment hi ha cap complement vídeos relacionats amb aquest vídeo',
-	'lvs-log-swap' => 'Canviat el vídeo de [[{{ns:File}}:<span class="notranslate" traduir="no">$1</span>]] a [[{{ns:File}}:<span class="notranslate" traduir="no">$2</span>]]', # Fuzzy
-	'lvs-log-restore' => 'Vídeo canviat restaurada ([[{{ns:File}}: $1 ]])', # Fuzzy
+	'lvs-log-summary' => 'Intercanviat el vídeo de [[{{ns:File}}:$1]] per [[{{ns:File}}:$2]]',
+	'lvs-log-description' => 'Vídeo intercambiat',
+	'lvs-log-restore' => "S'ha restaurat el vídeo canviat ([[{{ns:File}}:$1]])",
 	'lvs-log-removed-redirected-link' => "Eliminat l'enllaç redirigit",
 	'lvs-zero-state' => 'En aquest moment no disposem de cap coincidència vídeos de Wikia Vídeo per a vídeos en el seu wiki. Torna aviat!!!',
 	'lvs-history-swapped' => 'Intercanviats " $1 "amb" $2 "',
 	'lvs-history-swapped-exact' => 'Intercanviats " $1 " amb un vídeo del mateix nom',
 	'lvs-history-kept' => 'Manté "<span class="notranslate" traduir="no">$1</span>"',
+	'lvs-history-instructions' => "Per visualitzar l'historial de totes els canvis i reversions, aneu a $1.",
+	'lvs-no-monobook-support' => "Aquesta pàgina no és compatible amb Monobook. Per accedir a l'skin de Wikia, $1. Això no canviarà la seva preferència de skin",
 	'lvs-click-here' => 'feu clic aquí',
+	'lvs-new-flag' => 'Nou',
 );
 
 /** Chechen (нохчийн)
@@ -397,7 +410,8 @@ $messages['de'] = array(
 	'lvs-confirm-undo-keep-title' => 'Rückgängig machen bestätigen',
 	'lvs-confirm-undo-keep-message' => 'Bist du sicher, dass du dieses Video wieder zur Liste hinzufügen willst?',
 	'lvs-no-matching-videos' => 'Momentan gibt es keine ähnlichen Premium-Videos zu diesem Video',
-	'lvs-log-swap' => 'Video von [[{{ns:File}}:$1]] zu [[{{ns:File}}:$2]] ausgetauscht',
+	'lvs-log-summary' => 'Video von [[{{ns:File}}:$1]] zu [[{{ns:File}}:$2]] ausgetauscht',
+	'lvs-log-description' => 'getauschtes Video',
 	'lvs-log-restore' => 'Ausgetauschtes Video wiederhergestellt ([[{{ns:File}}:$1]])',
 	'lvs-log-removed-redirected-link' => 'Weiterleitung entfernt',
 	'lvs-zero-state' => 'Momentan haben wir keine passenden Videos in der Video-Bibliothek, die zu Videos in deinem Wiki passen. Schau bald wieder rein!',
@@ -438,6 +452,7 @@ $messages['en-gb'] = array(
 
 /** Spanish (español)
  * @author Bola
+ * @author Macofe
  * @author VegaDark
  */
 $messages['es'] = array(
@@ -485,7 +500,8 @@ $messages['es'] = array(
 	'lvs-confirm-undo-keep-title' => 'Confirmar que quieres deshacer',
 	'lvs-confirm-undo-keep-message' => '¿Seguro que quieres añadir este video de nuevo a la lista?',
 	'lvs-no-matching-videos' => 'Actualmente no hay videos premium relacionados con este video',
-	'lvs-log-swap' => 'Video cambiado de [[{{ns:File}}:$1]] a [[{{ns:File}}:$2]]',
+	'lvs-log-summary' => 'Video cambiado de [[{{ns:File}}:$1]] a [[{{ns:File}}:$2]]',
+	'lvs-log-description' => 'Video intercambiado',
 	'lvs-log-restore' => 'Restaurado video cambiado previamente, ([[{{ns:File}}:$1]])',
 	'lvs-log-removed-redirected-link' => 'Eliminado enlace de redirección',
 	'lvs-zero-state' => 'En este momento no hay resultados en Wikia Video para los videos de tu wiki. ¡Vuelve pronto para comprobarlo de nuevo!',
@@ -509,6 +525,7 @@ $messages['eu'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Alirezaaa
  * @author Reza1615
  */
 $messages['fa'] = array(
@@ -518,7 +535,7 @@ $messages['fa'] = array(
 	'lvs-undo-swap' => 'واگردانی',
 	'lvs-undo-keep' => 'واگردانی',
 	'lvs-posted-in-more' => 'بیشتر',
-	'lvs-new-flag' => 'جدید',
+	'lvs-new-flag' => 'تازه',
 );
 
 /** Finnish (suomi)
@@ -648,7 +665,8 @@ $messages['fr'] = array(
 	'lvs-confirm-undo-keep-title' => 'Confirmer l’annulation',
 	'lvs-confirm-undo-keep-message' => 'Êtes-vous sûr de vouloir de nouveau ajouter cette vidéo dans la liste ?',
 	'lvs-no-matching-videos' => 'Il n’y a actuellement aucune vidéo prémium associée à cette vidéo',
-	'lvs-log-swap' => 'Vidéo basculée de [[{{ns:File}}:$1]] à [[{{ns:File}}:$2]]',
+	'lvs-log-summary' => 'Vidéo basculée de [[{{ns:File}}:$1]] à [[{{ns:File}}:$2]]',
+	'lvs-log-description' => 'vidéo basculée',
 	'lvs-log-restore' => 'Vidéo basculée restaurée ([[{{ns:File}}:$1]])',
 	'lvs-log-removed-redirected-link' => 'Lien de redirection supprimé',
 	'lvs-zero-state' => 'Pour le moment, nous n’avons aucune vidéo de Wikia Vidéo correspondant à des vidéos sur votre wiki. Vérifiez de nouveau prochainement !',
@@ -659,6 +677,16 @@ $messages['fr'] = array(
 	'lvs-no-monobook-support' => 'Cette page n’est pas prise en charge par Monobook. Pour y accéder dans la disposition de Wikia, $1. Cela ne modifiera pas votre choix de disposition',
 	'lvs-click-here' => 'cliquer ici',
 	'lvs-new-flag' => 'Nouveau',
+);
+
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'lvs-history-button-text' => 'Skiednis',
+	'lvs-button-yes' => 'Ja',
+	'lvs-button-no' => 'Nee',
+	'lvs-posted-in-more' => 'mear',
 );
 
 /** Galician (galego)
@@ -689,7 +717,7 @@ $messages['gl'] = array(
 	'lvs-button-swap' => 'Intercambiar',
 	'lvs-button-yes' => 'Si',
 	'lvs-button-no' => 'Non',
-	'lvs-more-suggestions' => 'máis suxestións',
+	'lvs-more-suggestions' => 'máis suxestións', # Fuzzy
 	'lvs-best-match-label' => 'Mellor resultado de entre os vídeos do Wikia',
 	'lvs-undo-swap' => 'Desfacer',
 	'lvs-undo-keep' => 'Desfacer',
@@ -711,7 +739,7 @@ $messages['gl'] = array(
 	'lvs-confirm-undo-keep-title' => 'Confirmar que quere desfacer',
 	'lvs-confirm-undo-keep-message' => 'Está seguro de querer engadir de novo este vídeo á lista?',
 	'lvs-no-matching-videos' => 'Actualmente non hai vídeos premium relacionados con este vídeo.',
-	'lvs-log-swap' => 'Intercambiouse o vídeo "[[{{ns:File}}:$1]]" por "[[{{ns:File}}:$2]]"',
+	'lvs-log-summary' => 'Intercambiouse o vídeo "[[{{ns:File}}:$1]]" por "[[{{ns:File}}:$2]]"',
 	'lvs-log-restore' => 'Restaurouse o vídeo intercambiado ("[[{{ns:File}}:$1]]")',
 	'lvs-log-removed-redirected-link' => 'Eliminouse a ligazón de redirección',
 	'lvs-zero-state' => 'Neste momento non hai resultados entre os vídeos do Wikia que coincidan cos vídeos do seu wiki. Regresa máis adiante para comprobalo de novo!',
@@ -726,6 +754,7 @@ $messages['gl'] = array(
 
 /** Japanese (日本語)
  * @author Barrel0116
+ * @author Plover-Y
  * @author Tommy6
  */
 $messages['ja'] = array(
@@ -747,6 +776,7 @@ $messages['ja'] = array(
 	'lvs-undo-swap' => '元に戻す',
 	'lvs-undo-keep' => '元に戻す',
 	'lvs-click-here' => 'こちらをクリック',
+	'lvs-new-flag' => '新規',
 );
 
 /** Kannada (ಕನ್ನಡ)
@@ -761,6 +791,31 @@ $messages['kn'] = array(
 	'lvs-undo-keep' => 'ಕಳಚು',
 	'lvs-posted-in-more' => 'ಹೆಚ್ಚು',
 	'lvs-new-flag' => 'ಹೊಸ',
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'licensedvideoswap' => '허가받은 동영상 대체',
+	'lvs-page-title' => '허가받은 동영상 대체',
+	'lvs-history-page-title' => '허가받은 동영상 대체 역사',
+	'lvs-tooltip-history' => '허가받은 동영상 대체 버튼',
+	'lvs-history-button-text' => '역사',
+	'lvs-page-header-back-link' => '허가받은 동영상 대체로 돌아가기',
+	'lvs-callout-title-licensed' => '100% 허가받음',
+	'lvs-callout-title-quality' => '고화질',
+	'lvs-button-swap' => '대체',
+	'lvs-button-yes' => '예',
+	'lvs-button-no' => '아니요',
+	'lvs-undo-swap' => '되돌리기',
+	'lvs-undo-keep' => '되돌리기',
+	'lvs-error-permission' => '이 동영상을 대체할 수 없습니다.',
+	'lvs-error-permission-access' => '접속 권한이 없습니다.',
+	'lvs-error-already-swapped' => '이 동영상은 이미 대체되었습니다.',
+	'lvs-posted-in-more' => '더 보기',
+	'lvs-history-swapped' => '"$1" 동영상을 "$2" 동영상으로 대체함',
+	'lvs-history-swapped-exact' => '"$1" 동영상을 같음 이름의 동영상으로 대체함',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -842,7 +897,7 @@ $messages['ms'] = array(
 	'lvs-button-swap' => 'Tukar',
 	'lvs-button-yes' => 'Ya',
 	'lvs-button-no' => 'Tidak',
-	'lvs-more-suggestions' => 'cadangan lain',
+	'lvs-more-suggestions' => 'Cadangan Lain',
 	'lvs-best-match-label' => 'Padanan Berlesen Terbaik dari Wikia Video',
 	'lvs-undo-swap' => 'Buat asal',
 	'lvs-undo-keep' => 'Buat asal',
@@ -864,7 +919,8 @@ $messages['ms'] = array(
 	'lvs-confirm-undo-keep-title' => 'Sahkan Pengunduran',
 	'lvs-confirm-undo-keep-message' => 'Adakah anda benar-benar ingin menambahkan semula video ini ke dalam senarai?',
 	'lvs-no-matching-videos' => 'Kini tidak terdapat video premium yang berkaitan dengan video ini',
-	'lvs-log-swap' => 'Menukarkan video dari [[{{ns:File}}:$1]] ke [[{{ns:File}}:$2]]',
+	'lvs-log-summary' => 'Menukarkan video dari [[{{ns:File}}:$1]] ke [[{{ns:File}}:$2]]',
+	'lvs-log-description' => 'menukar video',
 	'lvs-log-restore' => 'Memulihkan video tertukar ([[{{ns:File}}:$1]])',
 	'lvs-log-removed-redirected-link' => 'Membuang pautan terlencong',
 	'lvs-zero-state' => 'Pada ketika ini, kami tidak mempunyai Wikia Video yang sepadan untuk video-video di wiki anda. Sila datang lagi kemudian!',
@@ -937,7 +993,8 @@ $messages['nl'] = array(
 	'lvs-confirm-undo-keep-title' => 'Ongedaan maken bevestigen',
 	'lvs-confirm-undo-keep-message' => 'Weet u zeker dat u deze video terug in de lijst wilt plaatsen?',
 	'lvs-no-matching-videos' => "Er zijn op het moment geen video's die gerelateerd zijn aan deze video",
-	'lvs-log-swap' => 'Video gewisseld van [[{{ns:File}}:$1]] naar [[{{ns:File}}:$2]]',
+	'lvs-log-summary' => 'Video gewisseld van [[{{ns:File}}:$1]] naar [[{{ns:File}}:$2]]',
+	'lvs-log-description' => 'gewisselde video',
 	'lvs-log-restore' => 'Gewisselde video teruggeplaatst ([[{{ns:File}}:$1]])',
 	'lvs-log-removed-redirected-link' => 'Doorverwezen koppeling verwijderd',
 	'lvs-zero-state' => 'Op dit moment is er geen video uit Wikia Video beschikbaar voor uw wiki. Controleer het binnenkort opnieuw!',
@@ -948,6 +1005,31 @@ $messages['nl'] = array(
 	'lvs-no-monobook-support' => 'Deze pagina wordt niet ondersteund in Monobook. Om deze te openen in de indeling van Wikia, $1. Dit zal uw voorkeurs-layout niet aanpassen.',
 	'lvs-click-here' => 'klik hier',
 	'lvs-new-flag' => 'Nieuw',
+);
+
+/** Occitan (occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'lvs-history-button-text' => 'Istoric',
+	'lvs-callout-title-quality' => 'Nauta qualitat',
+	'lvs-callout-title-collaborative' => 'Collaboratiu',
+	'lvs-button-keep' => 'Conservar',
+	'lvs-button-swap' => 'Bascuolar',
+	'lvs-button-yes' => 'Òc',
+	'lvs-button-no' => 'Non',
+	'lvs-more-suggestions' => 'Mai de suggestions',
+	'lvs-undo-swap' => 'Anullar',
+	'lvs-undo-keep' => 'Anullar',
+	'lvs-error-permission' => 'Podètz pas bascuolar aquesta vidèo.',
+	'lvs-error-permission-access' => 'Podètz pas accedir a aquesta pagina.',
+	'lvs-error-invalid-page-status' => 'Podètz pas restablir aquesta vidèo.',
+	'lvs-posted-in-more' => 'mai',
+	'lvs-confirm-keep-title' => 'Conservar la vidèo',
+	'lvs-confirm-undo-swap-title' => 'Confirmar l’anullacion',
+	'lvs-confirm-undo-keep-title' => 'Confirmar l’anullacion',
+	'lvs-history-kept' => '« $1 » conservat',
+	'lvs-new-flag' => 'Novèl',
 );
 
 /** Polish (polski)
@@ -999,7 +1081,7 @@ $messages['pl'] = array(
 	'lvs-confirm-undo-keep-title' => 'Potwierdź cofnięcie',
 	'lvs-confirm-undo-keep-message' => 'Czy na pewno dodać film z powrotem na tą listę?',
 	'lvs-no-matching-videos' => 'Obecnie nie ma dostępnych filmów powiązanych z tym.',
-	'lvs-log-swap' => 'Wymieniono film [[{{ns:File}}:$1]] na [[{{ns:File}}:$2]]',
+	'lvs-log-summary' => 'Wymieniono film [[{{ns:File}}:$1]] na [[{{ns:File}}:$2]]',
 	'lvs-log-restore' => 'Przywrócono wymieniony film ([[{{ns:File}}:$1]])',
 	'lvs-log-removed-redirected-link' => 'Usunięto link przekierowujący',
 	'lvs-zero-state' => 'Obecnie nie ma w Filmotece Wikii zamienników dla filmów wykorzystywanych na tej wiki. Sprawdź ponownie później!',
@@ -1025,13 +1107,14 @@ $messages['pt'] = array(
 );
 
 /** Brazilian Portuguese (português do Brasil)
+ * @author Jefersonmoraes
  * @author Luckas
  */
 $messages['pt-br'] = array(
 	'lvs-history-button-text' => 'Histórico',
 	'lvs-callout-title-quality' => 'Alta qualidade',
 	'lvs-button-keep' => 'Manter',
-	'lvs-more-suggestions' => 'mais sugestões',
+	'lvs-more-suggestions' => 'Mais Sugestões',
 	'lvs-undo-swap' => 'Desfazer',
 	'lvs-undo-keep' => 'Desfazer',
 	'lvs-posted-in-more' => 'mais',
@@ -1100,7 +1183,8 @@ $messages['ru'] = array(
 	'lvs-confirm-undo-keep-title' => 'Подтвердить отмену',
 	'lvs-confirm-undo-keep-message' => 'Вы уверены, что хотите добавить это видео обратно в список?',
 	'lvs-no-matching-videos' => 'В настоящее время нет премиум-видео, относящегося к этому видео',
-	'lvs-log-swap' => 'Видео, заменённое с [[{{ns:File}}:$1]] на [[{{ns:File}}:$2]]',
+	'lvs-log-summary' => 'Видео, заменённое с [[{{ns:File}}:$1]] на [[{{ns:File}}:$2]]',
+	'lvs-log-description' => 'заменённое видео',
 	'lvs-log-restore' => 'Восстановленное заменённое видео ([[{{ns:File}}:$1]])',
 	'lvs-log-removed-redirected-link' => 'Удалённые ссылки-перенаправления',
 	'lvs-zero-state' => 'На данный момент у нас нет подходящих видео в Wikia Video для видео-записей в вашей вики. Попробуйте проверить еще раз через некоторое время!',
@@ -1191,6 +1275,7 @@ $messages['sr-el'] = array(
 );
 
 /** Swedish (svenska)
+ * @author Lokal Profil
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
@@ -1216,7 +1301,7 @@ $messages['sv'] = array(
 	'lvs-button-swap' => 'Byt ut',
 	'lvs-button-yes' => 'Ja',
 	'lvs-button-no' => 'Nej',
-	'lvs-more-suggestions' => 'fler förslag',
+	'lvs-more-suggestions' => 'Fler förslag',
 	'lvs-best-match-label' => 'Bästa licensierade resultaten från Wikia Video',
 	'lvs-undo-swap' => 'Ångra',
 	'lvs-undo-keep' => 'Ångra',
@@ -1238,7 +1323,8 @@ $messages['sv'] = array(
 	'lvs-confirm-undo-keep-title' => 'Bekräfta ångring',
 	'lvs-confirm-undo-keep-message' => 'Vill du verkligen lägga tillbaka denna video i listan?',
 	'lvs-no-matching-videos' => 'Det finns för tillfället inga premiumvideoklipp relaterade till detta videoklipp',
-	'lvs-log-swap' => 'Bytte ut videon från [[{{ns:File}}:$1]] till [[{{ns:File}}:$2]]',
+	'lvs-log-summary' => 'Bytte ut videon från [[{{ns:File}}:$1]] till [[{{ns:File}}:$2]]',
+	'lvs-log-description' => 'bytte ut videon',
 	'lvs-log-restore' => 'Återställde den utbytta videon ([[{{ns:File}}:$1]])',
 	'lvs-log-removed-redirected-link' => 'Tog bort omdirigeringslänk',
 	'lvs-zero-state' => 'I denna stund har vi inga överensstämmande videoklipp från Wikia Video för videoklipp på din wiki. Kom tillbaka och kolla senare!',
@@ -1246,9 +1332,17 @@ $messages['sv'] = array(
 	'lvs-history-swapped-exact' => 'Bytte ut "$1" mot en video med samma namn',
 	'lvs-history-kept' => 'Behöll "$1"',
 	'lvs-history-instructions' => 'För att se historiken över alla utbytande och ångrande åtgärder, gå till $1.',
-	'lvs-no-monobook-support' => 'Denna sida stöds inte i Monobook. För att komma åt den i Wikia-layout, $1. Detta kommer inte att ändra dina utseendeinställningar.',
+	'lvs-no-monobook-support' => 'Denna sida stöds inte i MonoBook. För att komma åt den i Wikia-layout, $1. Detta kommer inte att ändra dina utseendeinställningar.',
 	'lvs-click-here' => 'klicka här',
 	'lvs-new-flag' => 'Ny',
+);
+
+/** Tamil (தமிழ்)
+ * @author ElangoRamanujam
+ */
+$messages['ta'] = array(
+	'lvs-posted-in-more' => 'மேலும்',
+	'lvs-new-flag' => 'புதிய',
 );
 
 /** Telugu (తెలుగు)
@@ -1359,7 +1453,7 @@ $messages['uk'] = array(
 	'lvs-confirm-undo-keep-title' => 'Підтвердити скасування',
 	'lvs-confirm-undo-keep-message' => 'Ви впевнені, що хочете додати це відео назад у список розсилки?',
 	'lvs-no-matching-videos' => "Наразі немає немає преміум відео, пов'язаного з цим відео",
-	'lvs-log-swap' => 'Поміняне відео з [[{{ns:File}}:$1]] на [[{{ns:File}}:$2]]',
+	'lvs-log-summary' => 'Поміняне відео з [[{{ns:File}}:$1]] на [[{{ns:File}}:$2]]',
 	'lvs-log-restore' => 'Відновлено поміняне відео ([[{{ns:File}}:$1]])',
 	'lvs-log-removed-redirected-link' => 'Вилучене перенаправлене посилання',
 	'lvs-zero-state' => 'На даний момент у нас немає збігів відео з Вікія відео для відео на вашому вікі. Зайдіть пізніше!',
@@ -1374,6 +1468,8 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Hallie1002
+ * @author Max20091
  * @author Thanhtai2009
  */
 $messages['vi'] = array(
@@ -1406,6 +1502,25 @@ $messages['vi'] = array(
 	'lvs-swap-video-success' => 'Xin chúc mừng. Video gốc của bạn đã bị xóa vĩnh viễn và các trường hợp trên video. Bao gồm thông tin nhung, đã đổi thành công với Wikia Video phù hợp. $1',
 	'lvs-keep-video-success' => 'Bạn đã chọn để giữ cho video của bạn. Video đã được xóa khỏi danh sách này. $1',
 	'lvs-restore-video-success' => 'Bạn đã khôi phục lại các video vào danh sách này.',
+	'lvs-error-permission' => 'Bạn không thể trao đổi video này.',
+	'lvs-error-permission-access' => 'Bạn không thể truy cập trang này.',
+	'lvs-error-invalid-page-status' => 'Bạn không thể khôi phục video này.',
+	'lvs-error-already-swapped' => 'Video này đã được đổi.',
+	'lvs-error-already-kept-forever' => 'Video này đã được lưu giữ.',
+	'lvs-posted-in-label' => 'Hiện tại video đăng trong',
+	'lvs-posted-in-label-none' => 'Video hiện tại không được đăng trong bất kỳ bài viết nào',
+	'lvs-posted-in-more' => 'Nhiều hơn',
+	'lvs-confirm-keep-title' => 'Giữ Video',
+	'lvs-confirm-undo-swap-title' => 'Xác nhận hoàn tác',
+	'lvs-confirm-undo-swap-message' => 'Bạn có chắc bạn muốn khôi phục video gốc?',
+	'lvs-confirm-undo-keep-title' => 'Xác nhận hoàn tác',
+	'lvs-confirm-undo-keep-message' => 'Bạn có chắc bạn muốn thêm video này trở lại vào danh sách?',
+	'lvs-log-restore' => 'Đã khôi phục video đã đổi ([[{{ns:File}}:$1]])',
+	'lvs-log-removed-redirected-link' => 'Đã gỡ bỏ liên kết chuyển hướng',
+	'lvs-history-swapped' => 'Đổi chỗ "$1" với "$2"',
+	'lvs-history-swapped-exact' => 'Đổi "$1" với một đoạn video của cùng tên',
+	'lvs-history-kept' => 'Giữ "$1"',
+	'lvs-history-instructions' => 'Để xem lịch sử cho tất cả các video đã hoán đổi và undo, vào $1 .',
 	'lvs-click-here' => 'nhấn vào đây',
 	'lvs-new-flag' => 'Mới',
 );
@@ -1423,6 +1538,7 @@ $messages['wuu'] = array(
 );
 
 /** Simplified Chinese (中文（简体）‎)
+ * @author Dimension
  * @author Hzy980512
  * @author Liuxinyu970226
  * @author Qiyue2001
@@ -1457,13 +1573,17 @@ $messages['zh-hans'] = array(
 	'lvs-error-already-swapped' => '此视频已被交换。',
 	'lvs-error-already-kept-forever' => '此视频已被保留。',
 	'lvs-posted-in-label' => '现有视频发布于',
+	'lvs-posted-in-label-none' => '当前视频未被任何条目引用',
 	'lvs-posted-in-more' => '更多',
 	'lvs-confirm-keep-title' => '保持视频',
 	'lvs-confirm-undo-swap-title' => '确认撤销',
+	'lvs-confirm-undo-swap-message' => '是否确定恢复原视频?',
 	'lvs-confirm-undo-keep-title' => '确认撤消',
-	'lvs-log-swap' => '已将视频由[[{{ns:File}}:$1]]转换为[[{{ns:File}}:$2]]',
+	'lvs-log-summary' => '从[[{{ns:File}}:$1]]至[[{{ns:File}}:$2]]交换的视频',
+	'lvs-log-description' => '被交换的视频',
 	'lvs-log-restore' => '恢复已交换的视频（[[{{ns:File}}:$1]]）',
 	'lvs-log-removed-redirected-link' => '被删除的重定向链接',
+	'lvs-zero-state' => '此时我们没有在您的 wiki 找到匹配的 Wikia 视频。请稍后重试！',
 	'lvs-history-swapped' => '已将“$1”和“$2”交换',
 	'lvs-history-swapped-exact' => '已将“$1”和同名视频交换',
 	'lvs-history-kept' => '保持"$1"',

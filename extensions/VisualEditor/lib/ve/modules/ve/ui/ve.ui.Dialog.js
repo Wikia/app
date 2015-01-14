@@ -127,6 +127,11 @@ ve.ui.Dialog.prototype.getTeardownProcess = function ( data ) {
 			if ( this.fragment ) {
 				this.fragment.select();
 			}
+
+			ve.track( 'wikia', {
+				'action': ve.track.actions.CLOSE,
+				'label': 'dialog-' + ve.track.nameToLabel( this.constructor.static.name )
+			} );
 		}, this );
 };
 

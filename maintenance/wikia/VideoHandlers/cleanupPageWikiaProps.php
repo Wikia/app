@@ -14,7 +14,7 @@
 
 class CleanupPageWikiaProps {
 
-	public static function run ( $db, $test = false, $verbose = false, $params ) {
+	public static function run ( DatabaseMysql $db, $test = false, $verbose = false, $params ) {
 		$dbname = $params['dbname'];
 
 		// Get all pages which have a status record with the swappable

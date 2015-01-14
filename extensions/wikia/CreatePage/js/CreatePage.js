@@ -5,8 +5,11 @@ var CreatePage = {
 	loading: false,
 	context: null,
 	wgArticlePath: mw.config.get( 'wgArticlePath' ),
-	canUseVisualEditor: ( mw.libs && mw.libs.ve ? mw.libs.ve.canCreatePageUsingVE() : false ),
 	redlinkParam: '',
+
+	canUseVisualEditor: function() {
+		return mw.libs && mw.libs.ve ? mw.libs.ve.canCreatePageUsingVE() : false;
+	},
 
 	checkTitle: function( title ) {
 		'use strict';
@@ -18,11 +21,11 @@ var CreatePage = {
 		function( response ) {
 			var articlePath;
 			if ( response.result === 'ok' ) {
-				if ( CreatePage.canUseVisualEditor && mw.libs.ve.isInValidNamespace( title ) ) {
+				if ( CreatePage.canUseVisualEditor() && mw.libs.ve.isInValidNamespace( title ) ) {
 					articlePath = CreatePage.wgArticlePath.replace( '$1', encodeURIComponent( title ) );
 					location.href = articlePath + '?veaction=edit' + CreatePage.redlinkParam;
 				} else {
-					location.href = CreatePage.options[ CreatePage.canUseVisualEditor ? 'blank' :
+					location.href = CreatePage.options[ CreatePage.canUseVisualEditor() ? 'blank' :
 						CreatePage.pageLayout ].submitUrl.replace( '$1', encodeURIComponent( title ) ) +
 						CreatePage.redlinkParam;
 				}
@@ -55,7 +58,7 @@ var CreatePage = {
 		}
 
 		// VE and <createbox>
-		if ( CreatePage.canUseVisualEditor && $( e.target ).hasClass( 'createboxButton' ) ) {
+		if ( CreatePage.canUseVisualEditor() && $( e.target ).hasClass( 'createboxButton' ) ) {
 			CreatePage.checkTitle( titleText );
 			return;
 		}
@@ -63,7 +66,7 @@ var CreatePage = {
 		if ( false === CreatePage.loading ) {
 			CreatePage.loading = true;
 
-			if ( CreatePage.canUseVisualEditor && titleText ) {
+			if ( CreatePage.canUseVisualEditor() && titleText ) {
 				rs = 'wfCreatePageAjaxGetVEDialog';
 				dialogCallback = CreatePage.openVEDialog;
 			} else {
@@ -219,7 +222,7 @@ var CreatePage = {
 					$( '#wpCreatePageDialogTitle' ).focus();
 
 					// Hide formats if ve is available
-					if ( CreatePage.canUseVisualEditor ) {
+					if ( CreatePage.canUseVisualEditor() ) {
 						$( '#CreatePageDialogChoose, #CreatePageDialogChoices' ).hide();
 					}
 					CreatePage.loading = false;
@@ -266,7 +269,7 @@ var CreatePage = {
 
 		CreatePage.redlinkParam = '&redlink=1';
 
-		if ( CreatePage.canUseVisualEditor ) {
+		if ( CreatePage.canUseVisualEditor() ) {
 			CreatePage.track( { action: 'click', label: 've-redlink-click' } );
 		}
 

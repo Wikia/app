@@ -174,7 +174,7 @@ class WikiaDispatcher {
 				}
 
 				if ( !$request->isInternal() ) {
-					$this->testIfUserHasPermissionsOrThrow($app, $controllerClassName, $method);
+					$this->testIfUserHasPermissionsOrThrow($app, $controller, $method);
 				}
 
 				// Initialize the RequestContext object if it is not already set
@@ -229,7 +229,7 @@ class WikiaDispatcher {
 
 				} else {
 					wfProfileOut($profilename);
-					$response->setException($e);					
+					$response->setException($e);
 					$response->setFormat( 'json' );
 					$response->setCode($e->getCode());
 
@@ -271,16 +271,16 @@ class WikiaDispatcher {
 
 	/**
 	 * @param WikiaApp $app
-	 * @param $controllerClassName
+	 * @param $controller WikiaController
 	 * @param $method
 	 * @throws PermissionsException
 	 */
-	private function testIfUserHasPermissionsOrThrow(WikiaApp $app, $controllerClassName, $method) {
+	private function testIfUserHasPermissionsOrThrow( WikiaApp $app, $controller, $method ) {
 		$nirvanaAccessRules = WikiaAccessRules::instance();
-		$permissions = $nirvanaAccessRules->getRequiredPermissionsFor($controllerClassName, $method);
-		foreach ($permissions as $permission) {
-			if (!$app->wg->User->isAllowed($permission)) {
-				throw new PermissionsException($permission);
+		$permissions = $nirvanaAccessRules->getRequiredPermissionsFor( get_class( $controller ), $method );
+		foreach ( $permissions as $permission ) {
+			if ( !( $app->wg->User->isAllowed( $permission ) || $controller->isAnonAccessAllowedInCurrentContext() ) ) {
+				throw new PermissionsException( $permission );
 			}
 		}
 	}

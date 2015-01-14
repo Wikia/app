@@ -1,0 +1,21 @@
+/*****************************
+Facebook style button
+******************************/
+a.wikia-button-facebook,
+a.wikia-button.wikia-button-facebook {
+	border-color: #afbdd6;
+	border-radius: 2px;
+	color: #fff;
+	font-weight: bold;
+	height: 21px;
+	padding: 0 6px;
+	&,
+	&:active,
+	&:hover {
+		@include linear-gradient(#5E7BB2, top, #5E7BB2, 0%, #3C62A1, 100%);
+	}
+	> img {
+		border-right: solid 1px #6381b4;
+		margin-right: 6px;
+	}
+}

@@ -50,16 +50,6 @@
 							</a>
 						</li>
 					<? } ?>
-					<? if ($displaySpecialPromote) { ?>
-						<li class="control" data-tooltip="<?= wfMessage("admindashboard-control-admin-upload-tool-tooltip")->text(); ?>">
-							<a href="<?= $urlGetPromoted ?>" class="set" data-tracking="promote-image-tool">
-								<span class="representation">
-									<span class="icon promoteimagetool"></span>
-								</span>
-								<?= wfMessage("admindashboard-control-admin-upload-tool-label")->text(); ?>
-							</a>
-						</li>
-					<? } ?>
 					<? if ($displaySpecialCss) { ?>
 						<li class="control" data-tooltip="<?= wfMessage("admindashboard-control-special-css-tooltip")->text(); ?>">
 							<a href="<?= $urlSpecialCss ?>" class="set" data-tracking="special-css">

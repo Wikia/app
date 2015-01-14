@@ -203,41 +203,6 @@ class ChooseNameTemplate extends QuickTemplate {
 				</div>
 			</td>
 		</tr>
-
-<?php global $fbEnablePushToFacebook; if(!empty($fbEnablePushToFacebook)){ ?>
-		<tr id='fbConnectPushEventBar'  >
-			<td colspan='2' class="fbConnectPushEventBar" >
-				<?php print wfMsg( 'fbconnect-prefsheader' ); ?>
-			</td>
-		</tr>
-		<tr>
-			<td colspan='2' id="fbConnectPushEventBarButton" class="fbConnectPushEventBarlink" >
-				<a id='fbConnectPushEventBar_show' href='#'><?php echo wfMsg("fbconnect-prefs-show"); ?></a>
-				<a id='fbConnectPushEventBar_hide' href='#' style='display:none'><?php echo wfMsg("fbconnect-prefs-hide"); ?></a>
-			</td>
-		</tr>
-		<tr>
-			<td class="fbConnectPushEventToggles" style='display:none' >
-				<?php echo wfMsg('fbconnect-prefs-post'); ?>
-				<br><br>
-			</td>
-		</tr>
-			<?php $prefs = FBConnectPushEvent::getPreferencesToggles(true); ?>
-			<?php foreach( $prefs as $key => $value ): ?>
-			<?php if( ($key % 2) == 0  ):?>
-				<tr class='wpAjaxLoginPreLine fbConnectPushEventToggles' style='display:none'>
-				<?php endif;?>
-					<td <?php if( !empty( $value['fullLine'] )):?> colspan=2 <?php endif;?>>
-						<input <?php if( !empty( $value['checked'] )):?>  checked="checked" <?php endif;?> type='checkbox' value='1' id="<?php echo $value['id']; ?>" name="<?php echo $value['name']; ?>"/>
-						<label for="<?php echo $value['id']; ?>"><?php echo $value['shortText']; ?></label>
-					</td>
-			<?php if( ($key % 2) == 1 || ( (count($prefs) - 1) ==  $key )):?>
-				</tr>
-			<?php endif;?>
-
-			<?php endforeach; ?>
-
-<?php } ?>
 	</table>
 
 	<input type="submit" value="Register" style="position: absolute; left: -10000px; width: 0" />
@@ -354,20 +319,6 @@ class ChooseNameTemplate extends QuickTemplate {
 		UserRegistration.checkUsername(function() {});
 		$('#wpFBName').change( function() { UserRegistration.checkUsername(function() {}); } );
 		$('#wpFBEmail').change( UserRegistration.checkEmail );
-
-		// Control show/hide of push-event preferences.
-		$('#fbConnectPushEventBar_show').click(function(){
-			$('#fbConnectPushEventBar_show').hide();
-			$('.fbConnectPushEventToggles').show();
-			$('#fbConnectPushEventBar_hide').show();
-			return false;
-		});
-		$('#fbConnectPushEventBar_hide').click(function(){
-			$('#fbConnectPushEventBar_hide').hide();
-			$('.fbConnectPushEventToggles').hide();
-			$('#fbConnectPushEventBar_show').show();
-			return false;
-		});
 	});
 </script>
 <?php

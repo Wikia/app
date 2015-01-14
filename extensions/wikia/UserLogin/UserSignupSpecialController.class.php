@@ -24,6 +24,24 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
+	 * Route the view based on logged in status
+	 *
+	 * The only logged in user who must not be re-routed away from
+	 * the signup form are those who have the right to create new
+	 * accounts (are members of the createaccount group and therefore
+	 * have the createaccount right. An example use case: Wikia One's
+	 * user accounts can be created by a limited group of Wikia
+	 * employees who have been given the right explicitly.
+	 */
+	public function index() {
+		if ( $this->wg->User->isLoggedIn() && !$this->wg->User->isAllowed( 'createaccount' ) ) {
+			$this->forward( 'UserLoginSpecialController', 'loggedIn' );
+		} else {
+			$this->forward( __CLASS__, 'signupForm' );
+		}
+	}
+
+	/**
 	 * @brief serves standalone signup page on GET.  if POSTed, parameters will be required.
 	 * @details
 	 *   on GET, template will render
@@ -44,14 +62,18 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string msg - result message
 	 * @responseParam string errParam - error param
 	 */
-	public function index() {
+	public function signupForm () {
 		$this->wg->Out->setPageTitle(wfMessage('usersignup-page-title')->plain());
 		$this->response->addAsset('extensions/wikia/UserLogin/css/UserSignup.scss');
 
+		// TODO: find out why UserSignup.js isn't loaded via assets manager UC-196
+		// In the mean time, UserSignupMarketingOptIn is being included twice just to be safe
 		if ( F::app()->checkSkin( 'oasis' )) {
+			$this->response->addAsset('extensions/wikia/UserLogin/js/UserSignupMarketingOptIn.js');
 			$this->response->addAsset('extensions/wikia/UserLogin/js/UserSignup.js');
 		}
 
+		// TODO: change this to FacebookClient or remove the check if we're enabled globally UC-188
 		if ( !empty($this->wg->EnableFacebookConnectExt) ) {
 			$this->response->addAsset('extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js');
 		}
@@ -62,6 +84,8 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->wg->SuppressFooter = true;
 		$this->wg->SuppressAds = true;
 		$this->wg->SuppressToolbar = true;
+
+		$this->getOutput()->disallowUserJs(); // just in case...
 
 		// form params
 		$this->username = $this->request->getVal( 'userloginext01', '' );
@@ -452,6 +476,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 					$abortError,
 					'email'
 				);
+				// FIXME: unreachable
 				$phalanxValid = false;
 			}
 			return $phalanxValid;

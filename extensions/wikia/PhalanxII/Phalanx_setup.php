@@ -85,6 +85,9 @@ $phalanxhooks = array(
 			'EditPhalanxBlock'                => 'onEditPhalanxBlock',
 			'DeletePhalanxBlock'              => 'onDeletePhalanxBlock',
 			'AfterFormatPermissionsErrorMessage' => 'onAfterFormatPermissionsErrorMessage',
+			// temp logging for PLATFORM-317
+			'GetBlockedStatus'                => 'onGetBlockedStatus',
+			'ContributionsLogEventsList'      => 'onContributionsLogEventsList',
 		)
 );
 

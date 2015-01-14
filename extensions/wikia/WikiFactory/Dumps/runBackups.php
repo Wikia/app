@@ -43,7 +43,7 @@ function runBackups( $from, $to, $full, $options ) {
 	/**
 	 * store backup in the system tmp dir
 	 */
-	$basedir = isset( $options['tmp'] ) ? sys_get_temp_dir() : '';
+	$use_temp = isset( $options['tmp'] );
 
 	/**
 	 * send backup to Amazon S3 and delete the local copy
@@ -120,10 +120,9 @@ function runBackups( $from, $to, $full, $options ) {
 		 * build command
 		 */
 		$status  = false;
-		
-		if ( '' == $basedir ) {
-			$basedir = getDirectory( $row->city_dbname, $hide );
-		}
+
+		$basedir = getDirectory( $row->city_dbname, $hide, $use_temp );
+
 		if( $full || $both ) {
 			$path = sprintf("%s/%s_pages_full.xml.gz", $basedir, $row->city_dbname );
 			$time = wfTime();
@@ -179,11 +178,10 @@ function runBackups( $from, $to, $full, $options ) {
  *
  * <root>/<first letter>/<two first letters>/<database>
  */
-function getDirectory( $database, $hide = false ) {
-	global $wgDevelEnvironment;
+function getDirectory( $database, $hide = false, $use_temp = false ) {
 
-	$folder     = empty( $wgDevelEnvironment ) ?  "raid" : "tmp";
-	$subfolder = $hide ? "dumps-hidden" : "dumps";
+	$folder     = $use_temp ?  sys_get_temp_dir() : "data";
+	$subfolder  = $hide ? "dumps-hidden" : "dumps";
 	$database   = strtolower( $database );
 
 	$directory = sprintf(

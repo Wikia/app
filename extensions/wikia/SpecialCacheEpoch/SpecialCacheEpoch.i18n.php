@@ -35,6 +35,16 @@ $messages['br'] = array(
 	'cacheepoch-submit' => 'Hizivaat an talvoudenn',
 );
 
+/** Catalan (català)
+ * @author Unapersona
+ */
+$messages['ca'] = array(
+	'cacheepoch-submit' => 'Actualitzar el valor',
+	'cacheepoch-updated' => 'wgCacheEpoch actualitzat a "$1".',
+	'cacheepoch-not-updated' => 'Problemes al actualitzar wgCacheEpoch.',
+	'cacheepoch-no-wf' => 'WikiFactory no està habilitat en aquest wiki. No es pot alterar el wgCacheEpoch.',
+);
+
 /** Czech (čeština)
  * @author Dontlietome7
  */

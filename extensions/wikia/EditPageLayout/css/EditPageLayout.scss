@@ -323,6 +323,7 @@ body {
 			clear: both;
 			padding: 0;
 			.ArticlePreview {
+				-webkit-overflow-scrolling:touch;
 				border: 1px solid $color-page-border;
 				overflow-y: scroll;
 				min-height: 320px;
@@ -550,7 +551,6 @@ body {
 	-webkit-overflow-scrolling: touch;
 	-webkit-transform: translate3d(0, 0, 0);
 
-	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 

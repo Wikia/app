@@ -84,39 +84,34 @@ ve.ui.WikiaTransclusionDialog.prototype.initialize = function () {
  * @inheritdoc
  */
 ve.ui.WikiaTransclusionDialog.prototype.onTransclusionReady = function () {
-	var zeroStatePage,
-		parts = this.transclusionModel.getParts(),
-		spec = parts[0].getSpec(),
-		name = spec.getLabel(),
-		getInfoPage = new ve.ui.WikiaTemplateGetInfoPage( spec, name, { '$': this.$ } );
+	var zeroStatePage, templateGetInfoWidget,
+		parts = this.transclusionModel.getParts();
 
 	// Parent method
 	ve.ui.WikiaTransclusionDialog.super.prototype.onTransclusionReady.call( this );
 
-	if ( parts.length === 1 && parts[0] instanceof ve.dm.MWTemplateModel ) {
+	if ( this.isSingleTemplateTransclusion() && Object.keys( parts[0].getParameters() ).length === 0 ) {
+		// Hide stuff
+		this.$filter.hide();
+		this.frame.$content.addClass( 'oo-ui-dialog-content-footless ve-ui-wikiaTransclusionDialog-zeroState' );
 
-		// Zero state
-		if ( Object.keys( parts[0].getParameters() ).length === 0 ) {
-			// Hide stuff
-			this.$filter.hide();
-			this.frame.$content.addClass( 'oo-ui-dialog-content-footless ve-ui-wikiaTransclusionDialog-zeroState' );
+		// Content
+		zeroStatePage = new OO.ui.PageLayout( 'zeroState', {} );
+		templateGetInfoWidget = new ve.ui.WikiaTemplateGetInfoWidget( { template: parts[0] } );
+		zeroStatePage.$element
+			.text( ve.msg( 'wikia-visualeditor-dialog-transclusion-zerostate' ) )
+			.append( templateGetInfoWidget.$element );
+		this.bookletLayout.addPages( [ zeroStatePage ] );
 
-			// Content
-			zeroStatePage = new OO.ui.PageLayout( 'zeroState', {} );
-			zeroStatePage.$element.text( ve.msg( 'wikia-visualeditor-dialog-transclusion-zerostate' ) );
-			this.bookletLayout.addPages( [ zeroStatePage ] );
+		// Position
+		this.position( true );
 
-			// Position
-			this.position( true );
+		// Track
+		ve.track( 'wikia', {
+			'action': ve.track.actions.OPEN,
+			'label': 'dialog-template-no-parameters'
+		} );
 
-			// Track
-			ve.track( 'wikia', {
-				'action': ve.track.actions.OPEN,
-				'label': 'dialog-template-no-parameters'
-			} );
-		}
-
-		this.bookletLayout.addPages( [ getInfoPage ] );
 	} else {
 		this.filterInput.focus();
 
@@ -126,6 +121,7 @@ ve.ui.WikiaTransclusionDialog.prototype.onTransclusionReady = function () {
 			this.transclusionModel.connect( this, { 'change': 'onParameterInputValueChange' } );
 		}, this ) );
 	}
+
 };
 
 /**
@@ -331,8 +327,6 @@ ve.ui.WikiaTransclusionDialog.prototype.position = function ( zeroState ) {
 
 /**
  * Handle the filter input change
- * TODO: Wikia (ve-sprint-25): Code in this method could be optimized in plenty of ways
- * but at this moment it's unknown if optimizing it is needed
  */
 ve.ui.WikiaTransclusionDialog.prototype.onFilterInputChange = function () {
 	var value = this.filterInput.getValue().toLowerCase().trim(),
@@ -371,8 +365,8 @@ ve.ui.WikiaTransclusionDialog.prototype.onFilterInputChange = function () {
 			}
 			// if there was no match among all parameters for the template then
 			// hide template page as well (so not only parameters)
-			page = this.bookletLayout.getPage( part.getId() );
 			if ( this.mode === 'multiple' ) {
+				page = this.bookletLayout.getPage( part.getId() );
 				if ( value !== '' && !parameterMatch ) {
 					page.$element.hide();
 				} else {
@@ -382,6 +376,27 @@ ve.ui.WikiaTransclusionDialog.prototype.onFilterInputChange = function () {
 		}
 	}
 };
+
+/**
+ * Initialize parameters for new template insertion
+ *
+ * @method
+ */
+ve.ui.WikiaTransclusionDialog.prototype.initializeNewTemplateParameters = function () {
+	var i, parts = this.transclusionModel.getParts();
+	for ( i = 0; i < parts.length; i++ ) {
+		if ( parts[i] instanceof ve.dm.MWTemplateModel ) {
+			parts[i].addUnusedParameters();
+		}
+	}
+};
+
+/**
+ * Initialize parameters for existing template modification
+ *
+ * @method
+ */
+ve.ui.WikiaTransclusionDialog.prototype.initializeTemplateParameters = ve.ui.WikiaTransclusionDialog.prototype.initializeNewTemplateParameters;
 
 /* Registration */
 

@@ -28,7 +28,8 @@
 
 			$this->setUpMockObject( 'stdClass', $memcParams, false, 'wgMemc' );
 
-			$this->mockGlobalVariable('wgCityId', self::TEST_CITY_ID);
+			$this->mockGlobalVariable( 'wgCityId', self::TEST_CITY_ID );
+			$this->mockGlobalVariable( 'wgAntiSpoofAccounts', false );
 
 			// "mock" IP
 			$this->originalServer = $_SERVER;
@@ -69,16 +70,16 @@
 			$objectName = 'ExternalUser_Wikia';
 			$mockObject = true;
 
-			$mockExternalUser = $this->getMock($objectName, ['initFromName', 'getLocalUser', 'getId'], [], '', false);;
+			$mockExternalUser = $this->getMock( $objectName, ['initFromName', 'getLocalUser', 'getId'], [], '', false );
 
 			$mockExternalUser->expects( $this->any() )->method( 'initFromName' )
-				->willReturn($mockObject);
+				->willReturn( $mockObject );
 			$mockExternalUser->expects( $this->any() )->method( 'getLocalUser' )
-				->willReturn($mockObject);
+				->willReturn( $mockObject );
 			$mockExternalUser->expects( $this->any() )->method( 'getId' )
-				->willReturn((isset($objectParams['params']['mId']) ? $objectParams['params']['mId'] : 0));
+				->willReturn( ( isset($objectParams['params']['mId'] ) ? $objectParams['params']['mId'] : 0 ) );
 
-			if ( !is_null($mockUserLoginFormParams) ) {
+			if ( !is_null( $mockUserLoginFormParams ) ) {
 				$this->setUpMockObject( 'UserLoginForm', $mockUserLoginFormParams, true, null, array(), false );
 			}
 
