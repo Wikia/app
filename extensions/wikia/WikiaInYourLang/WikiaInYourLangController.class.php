@@ -48,16 +48,21 @@ class WikiaInYourLangController extends WikiaController {
 			if ( $iNativeWikiId > 0 ) {
 				$oNativeWiki = WikiFactory::getWikiById( $iNativeWikiId );
 
-				$aMessageParams = [
-					$sCurrentSitename,
-					$oNativeWiki->city_url,
-					$oNativeWiki->city_title,
-				];
+				// Check for false-positives - see CE-1216
+				if ( $oNativeWiki->city_lang == $sTargetLanguage ) {
+					$aMessageParams = [
+						$sCurrentSitename,
+						$oNativeWiki->city_url,
+						$oNativeWiki->city_title,
+					];
 
-				$sMessage = $this->prepareMessage( $sTargetLanguage, $aMessageParams );
-
-				$this->response->setVal( 'success', true );
-				$this->response->setVal( 'message', $sMessage );
+					$sMessage = $this->prepareMessage( $sTargetLanguage, $aMessageParams );
+					$this->response->setVal( 'success', true );
+					$this->response->setVal( 'message', $sMessage );
+				} else {
+					$this->response->setVal( 'success', false );
+					$this->response->setVal( 'error', "A native wikia with a domain {$sNativeWikiDomain} matches the original." );
+				}
 			} else {
 				$this->response->setVal( 'success', false );
 				$this->response->setVal( 'error', "A native wikia with a domain {$sNativeWikiDomain} not found." );
