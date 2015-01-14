@@ -140,6 +140,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		var hostnameMatch,
 			ref = doc.referrer,
 			refHostname,
+			searchDomains = /(google|search\.yahooo|bing|baidu|ask|yandex)/,
 			wikiDomains = [
 				'wikia.com', 'ffxiclopedia.org', 'jedipedia.de',
 				'memory-alpha.org', 'uncyclopedia.org',
@@ -176,7 +177,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			return 'wikia';
 		}
 
-		if (/(google|search\.yahooo|bing|baidu|ask|yandex)/.test(refHostname)) {
+		if (searchDomains.test(refHostname)) {
 			return 'external_search';
 		}
 
