@@ -9,7 +9,8 @@
 $messages = array();
 
 $messages['en'] = array(
-	'article-comments-file-page' => "[[$1|Comment from $2]] on  [[$3]]",
+	'article-comments-desc' => 'Article comments for wiki pages',
+	'article-comments-file-page' => "[[$1|Comment from $2]] on [[$3]]",
 	'article-blog-comments-file-page' => "[[$1|Comment from $2]] on [[$3|$4]] post on [[$5|$5's]] blog",
 
 	'article-comments-anonymous' => 'Anonymous user',
@@ -83,6 +84,7 @@ ___________________________________________
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'article-comments-desc' => '{{desc}}',
 	'article-comments-file-page' => 'Format of the file usage (see [[MediaWiki:Linkstoimage]]) entry on the file page if the file is used in an article comment.
 Parameters:
 * $1 - Title of the comment that includes the image.

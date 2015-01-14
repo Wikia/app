@@ -9,12 +9,13 @@ $dir = dirname(__FILE__) . '/';
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'CSS Editor',
-	'description' => 'Admin tool for editing CSS files',
+	'descriptionmsg' => 'specialcss-desc',
 	'authors' => array(
 		'Andrzej "nAndy" Łukaszewski',
 		'Łukasz Konieczny',
 	),
-	'version' => 1.0
+	'version' => 1.0,
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialCss'
 );
 
 // models
@@ -44,7 +45,7 @@ $wgSpecialPages['CSS'] = 'SpecialCssController';
 $wgSpecialPageGroups['CSS'] = 'wikia';
 
 // message files
-$wgExtensionMessagesFiles['SpecialCss'] = $dir.'SpecialCss.i18n.php';
+$wgExtensionMessagesFiles['SpecialCss'] = $dir . 'SpecialCss.i18n.php';
 JSMessages::registerPackage( 'SpecialCss', array( 'special-css-*' ) );
 
 //mapping community central language to it's database name

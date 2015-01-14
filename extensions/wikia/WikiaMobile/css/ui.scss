@@ -98,7 +98,7 @@ body {
 	background-origin: content-box;
 	background-repeat: no-repeat;
 	background-size: 10px;
-	background-image:  url('/extensions/wikia/WikiaMobile/images/chevron-blue-right.png'); /* base64 */
+	background-image:  url('/extensions/wikia/WikiaMobile/images/chevron-blue-right.png'); /* inline */
 
 	a, span {
 		padding-right: 15px;
@@ -131,13 +131,13 @@ h2[data-count] {
 //classes with images to avoid loading them more than once
 .clsIco{
 	background-repeat: no-repeat;
-	background-image: url('/extensions/wikia/WikiaMobile/images/close.png'); /* base64 */
+	background-image: url('/extensions/wikia/WikiaMobile/images/close.png'); /* inline */
 }
 
 //chevrons
 .chg:before, .link .thumbcaption:before {
 	content:'';
-	background-image: url('/extensions/wikia/WikiaMobile/images/chevron-grey-down.png'); /* base64 */
+	background-image: url('/extensions/wikia/WikiaMobile/images/chevron-grey-down.png'); /* inline */
 	background-repeat: no-repeat;
 }
 

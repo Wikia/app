@@ -6,6 +6,13 @@
  * @author Lucas Garczewski <tor@wikia-inc.com>
  */
 
+$wgExtensionCredits[ 'other' ][ ] = array(
+	'name' => 'StaffPowers',
+	'author' => 'Lucas Garczewski <tor@wikia-inc.com>',
+	'descriptionmsg' => 'staffpowers-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/StaffPowers',
+);
+
 $wgExtensionMessagesFiles['StaffPowers'] = dirname(__FILE__) . '/StaffPowers.i18n.php';
 
 // Power: unblockableness

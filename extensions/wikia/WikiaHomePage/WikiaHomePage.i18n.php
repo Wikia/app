@@ -8,6 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'wikiahome-desc' => 'WikiaHomePage',
 	'wikiahome-page-header-heading' => 'Create. Collaborate. Be Original.',
 	'wikiahome-page-header-heading-mobile' => 'Create.
 Collaborate.
@@ -433,6 +434,7 @@ $messages['ja'] = array(
 
 
 $messages['qqq'] = array(
+	'wikiahome-desc' => '{{desc}}',
 	'wikiahome-page-header-heading' => 'The page title text in H1 tag on the top of the page',
 	'wikiahome-page-header-subheading' => 'The page subtitle text in H4 tag below H1 tag',
 	'wikiahome-page-header-create-wiki-button' => 'A button label',

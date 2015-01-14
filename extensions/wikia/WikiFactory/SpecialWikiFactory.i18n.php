@@ -8,6 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'wikifactory-desc' => 'Store MediaWiki settings in database',
 	'wikifactorypagetitle' => 'Wiki Factory Configurator',
 	'wikifactory' => 'Wiki Factory Configurator',
 	"closewiki" => "Close Wiki",
@@ -156,6 +157,7 @@ $messages['en'] = array(
  * @author Umherirrender
  */
 $messages['qqq'] = array(
+	'wikifactory-desc' => '{{desc}}',
 	'wf_city_url' => '{{Identical|Address}}',
 	'wf_city_id' => '{{Identical|ID}}',
 	'wf_city_title' => '{{Identical|Title}}',
