@@ -69,9 +69,9 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->response->addAsset('extensions/wikia/UserLogin/css/UserSignup.scss');
 
 		// TODO: find out why UserSignup.js isn't loaded via assets manager UC-196
-		// In the mean time, UserSignupMarketingOptIn is being included twice just to be safe
+		// In the mean time, MarketingOptIn is being included twice just to be safe
 		if ( F::app()->checkSkin( 'oasis' )) {
-			$this->response->addAsset('extensions/wikia/UserLogin/js/UserSignupMarketingOptIn.js');
+			$this->response->addAsset('extensions/wikia/UserLogin/js/MarketingOptIn.js');
 			$this->response->addAsset('extensions/wikia/UserLogin/js/UserSignup.js');
 		}
 
