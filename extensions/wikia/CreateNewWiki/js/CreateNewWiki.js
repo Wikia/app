@@ -94,7 +94,7 @@
 					// Load facebook assets before going to the login form
 					$.loadFacebookAPI()
 						.done(function () {
-							$('.fb-loaded').removeClass('hidden');
+							$('.sso-login').removeClass('hidden');
 						});
 				}
 			});

@@ -26,7 +26,7 @@
 
 			$.loadFacebookAPI()
 				.done(function () {
-					$('.fb-loaded').removeClass('hidden');
+					$('.sso-login').removeClass('hidden');
 					bindEvents();
 				})
 				.fail(facebookError);

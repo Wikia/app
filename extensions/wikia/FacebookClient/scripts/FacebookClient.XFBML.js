@@ -11,7 +11,7 @@ $(function () {
 	mw.hook('wikipage.content').add(function ($content) {
 		$.loadFacebookAPI()
 			.done(function () {
-				$('.fb-loaded').removeClass('hidden');
+				$('.sso-login').removeClass('hidden');
 
 				// scan the new content for any fb tags
 				FB.XFBML.parse($content[0]);

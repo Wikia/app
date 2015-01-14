@@ -60,7 +60,7 @@
 				// load when the login dropdown is shown or specific page is loaded
 				$.loadFacebookAPI()
 					.done(function () {
-						$('.fb-loaded').removeClass('hidden');
+						$('.sso-login').removeClass('hidden');
 					});
 
 				self.log('init');

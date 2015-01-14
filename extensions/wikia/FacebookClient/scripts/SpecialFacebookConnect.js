@@ -90,7 +90,7 @@ $(function () {
 	// loads the SDK and calls facebook init functions
 	$.loadFacebookAPI()
 		.done(function () {
-			$('.fb-loaded').removeClass('hidden');
+			$('.sso-login').removeClass('hidden');
 			new SpecialPage().init();
 		});
 });
