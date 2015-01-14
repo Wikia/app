@@ -15,12 +15,9 @@ describe('UserLogin Marketing Opt In', function () {
 				wpMarketingOptIn: $('<input type="checkbox" class="hidden">')
 			},
 			getInputGroup: function () {
-				var $div = $('<div></div>');
-				$div.length = 1;
-				return $div;
+				return $('<div></div>');
 			}
 		};
-		wikiaFormMock.inputs.wpMarketingOptIn.length = 1;
 
 		optIn = modules['usersignup.marketingOptIn'](geo);
 	});
