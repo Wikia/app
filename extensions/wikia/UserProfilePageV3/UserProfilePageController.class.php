@@ -670,7 +670,7 @@ class UserProfilePageController extends WikiaController {
 				break;
 
 			case UPLOAD_ERR_FORM_SIZE:
-				return wfMessage( 'user-identity-box-avatar-error-size', ( int )( self::AVATAR_MAX_SIZE / 1024 ) )->text();
+				return wfMessage( 'user-identity-box-avatar-error-size', ( int )( self::AVATAR_MAX_SIZE / 1024 ) )->escaped();
 				break;
 			case UPLOAD_ERR_EXTENSION;
 				return wfMessage( 'userprofilepage-avatar-error-type', $this->wg->Lang->listToText( ImageOperationsHelper::getAllowedMime() ) )->escaped();
