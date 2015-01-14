@@ -15,7 +15,7 @@ class Client
 	/**
 	 * The constructor.
 	 */
-	protected function __construct( $sBaseUri, $sClientId, $sClientSecret )
+	public function __construct( $sBaseUri, $sClientId, $sClientSecret )
 	{
 		$this->sBaseUri = $sBaseUri;
 		$this->sClientId = $sClientId;
