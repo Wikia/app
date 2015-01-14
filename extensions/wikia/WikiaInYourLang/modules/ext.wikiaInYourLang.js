@@ -110,14 +110,13 @@ require(
 		}
 
 		function bindEvents() {
-			$('.global-notification.notify').click(function (event) {
-				var $target = $(event.target);
-				if ($target.parent().hasClass('close')) {
+			$('.global-notification.notify')
+				.on('click', '.close', function() {
 					onNotificationClosed();
-				} else if ($target.hasClass('text')) {
+				})
+				.on('click', '.text', function() {
 					onLinkClick();
-				}
-			})
+				});
 		}
 
 		function onNotificationClosed() {
