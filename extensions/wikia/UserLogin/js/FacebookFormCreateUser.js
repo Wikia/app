@@ -45,7 +45,7 @@
 			});
 		}
 
-		UserBaseAjaxForm.prototype.submitLoginHandler.call(response);
+		UserBaseAjaxForm.prototype.submitLoginHandler.call(this, response);
 	};
 
 	/**
@@ -67,7 +67,6 @@
 		var country = Wikia.geo.getCountryCode();
 		this.wikiaForm.inputs.wpRegistrationCountry.val(country);
 	};
-
 
 	window.FacebookFormCreateUser = FacebookFormCreateUser;
 })();

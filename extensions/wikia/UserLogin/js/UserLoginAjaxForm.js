@@ -8,6 +8,11 @@
 
 	UserLoginAjaxForm.prototype = Object.create(UserBaseAjaxForm.prototype);
 
+	UserLoginAjaxForm.prototype.init = function () {
+		UserBaseAjaxForm.prototype.init.call(this);
+		this.retrieveLoginToken();
+	};
+
 	/**
 	 * Callback after ajax login
 	 * @param {Object} json Response from server after ajax login
@@ -15,11 +20,9 @@
 	UserLoginAjaxForm.prototype.submitLoginHandler = function (json) {
 		var result = json.result;
 
-		this.resetValidation();
+		UserBaseAjaxForm.prototype.submitLoginHandler.call(this, json);
 
-		if (result === 'ok') {
-			this.onOkayResponse();
-		} else if (result === 'resetpass') {
+		if (result === 'resetpass') {
 			this.onResetPasswordResponse();
 		} else if (result === 'unconfirm') {
 			this.onUnconfirmedEmailResponse();

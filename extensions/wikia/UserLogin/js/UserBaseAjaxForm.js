@@ -5,8 +5,8 @@
 	/**
 	 * Base class for ajaxy forms like user login, user signup, and connecting wikia accounts with facebook
 	 * @abstract
-	 * @param el
-	 * @param options
+	 * @param {HTMLElement|jQuery} el Wrapper element for form
+	 * @param {Object} options
 	 * @constructor
 	 */
 	var UserBaseAjaxForm = function (el, options) {
@@ -19,7 +19,6 @@
 		this.wikiaForm = new WikiaForm(this.el.find('form'));
 		this.inputs = this.wikiaForm.inputs;
 		this.cacheDOM();
-		this.retrieveLoginToken();
 		this.bindEvents();
 
 		if (!this.options.skipFocus) {
@@ -82,10 +81,11 @@
 	UserBaseAjaxForm.prototype.submitLoginHandler = function (json) {
 		this.resetValidation();
 
-		if (json.response === 'ok') {
-			this.onOkayResponse();
-		} else if (json.response === 'error') {
-			this.onErrorResponse();
+		// Default okay and error functions. Child classes can add more handling for different response types.
+		if (json.result === 'ok') {
+			this.onOkayResponse(json);
+		} else if (json.result === 'error') {
+			this.onErrorResponse(json);
 		}
 	};
 
@@ -106,7 +106,7 @@
 		}
 	};
 
-	UserBaseAjaxForm.prototype.onErrorResponse = function () {
+	UserBaseAjaxForm.prototype.onErrorResponse = function (json) {
 		this.submitButton.removeAttr('disabled');
 		this.errorValidation(json);
 	};
@@ -137,7 +137,7 @@
 	/**
 	 * Reload the current page with an added "cb" (cachebuster) value, usually after a login.
 	 */
-	UserLoginAjaxForm.prototype.reloadPage = function () {
+	UserBaseAjaxForm.prototype.reloadPage = function () {
 		require(['wikia.querystring'], function (QuerySring) {
 			var qs = new QuerySring();
 			qs.addCb().goTo();
