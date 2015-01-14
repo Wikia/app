@@ -8,10 +8,20 @@
  * @author Maciej Brencz (Macbre) <macbre at wikia-inc.com>
  */
 
+$wgExtensionCredits[ 'other' ][ ] = array(
+	'name' => 'PerformanceMetrics',
+	'author' => 'Maciej Brencz (Macbre) <macbre at wikia-inc.com>',
+	'descriptionmsg' => 'performance-metrics-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/PerformanceMetrics',
+);
+
 $dir = dirname(__FILE__);
 
 // WikiaApp
 $app = F::app();
+
+//i18n
+$wgExtensionMessagesFiles['PerformanceMetrics'] = $dir . '/PerformanceMetrics.i18n.php';
 
 // generic classes
 $wgAutoloadClasses['PerformanceMetrics'] =  $dir . '/PerformanceMetrics.class.php';

@@ -36,8 +36,8 @@ define ("WIKISTATS_ANON_ARRAY_LGTH", 30);
 
 $wgExtensionCredits['specialpage'][] = array(
     'name' => 'WikiStats',
-    'url' => 'http://help.wikia.com/wiki/Help:WikiaStats',
-    "description" => "Gathers a wide array of statistics for this wiki and adds an GUI to browse them. Inspired by and partially based on the original [http://meta.wikimedia.org/wiki/Wikistats WikiStats] written by Erik Zachte",
+    'url' => 'http://community.wikia.com/wiki/Help:WikiaStats',
+    "descriptionmsg" => "wikistats-desc",
     "author" => "Piotr Molski (moli) <moli@wikia-inc.com>"
 );
 

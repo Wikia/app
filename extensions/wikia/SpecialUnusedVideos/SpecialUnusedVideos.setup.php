@@ -6,7 +6,9 @@
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'SpecialUnusedVideos',
-	'author' => array( 'Garth Webb', 'Hyun Lim', 'Liz Lee', 'Saipetch Kongkatong' )
+	'author' => array( 'Garth Webb', 'Hyun Lim', 'Liz Lee', 'Saipetch Kongkatong' ),
+	'descriptionmsg' => 'unusedvideos-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialUnusedVideos'
 );
 
 $dir = dirname(__FILE__) . '/';
