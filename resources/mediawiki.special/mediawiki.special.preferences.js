@@ -75,9 +75,12 @@ $legends.each( function( i, legend ) {
 		$preftoc.find( 'li' ).removeClass( 'selected' );
 		$(this).parent().addClass( 'selected' );
 
-		/** Wikia change begin @see UC-145 */
-		// Make elements outside tabs targetable based on selected tab
+		/** Wikia change begin */
+		// Make elements outside tabs targetable based on selected tab - @see UC-145
 		makeTabsTargetable($preferences, ident);
+
+		// Add a custom event per tab - @see UC-206
+		$(document).trigger($tabName + '-click');
 		/** Wikia change end */
 
 		$( '#preferences > fieldset' ).hide();
@@ -85,10 +88,6 @@ $legends.each( function( i, legend ) {
 	});
 	$li.append( $a );
 	$preftoc.append( $li );
-
-	/** Wikia Change start - Add a custom event per tab - @see UC-206 */
-	$(document).trigger($tabName + '-complete');
-	/** Wikia Change end */
 } );
 
 // If we've reloaded the page or followed an open-in-new-window,

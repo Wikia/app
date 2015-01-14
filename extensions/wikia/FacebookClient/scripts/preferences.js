@@ -27,12 +27,9 @@
 			$.loadFacebookAPI()
 				.done(function () {
 					$('.fb-loaded').removeClass('hidden');
-
 					bindEvents();
 				})
-				.fail(function () {
-					facebookError();
-				});
+				.fail(facebookError);
 
 			return {};
 		}
@@ -145,37 +142,32 @@
 		}
 
 		function facebookError() {
-			$(document).on('tab-fbconnect-prefstext-complete', function () {
-				$('.tab-fbconnect-prefstext').on('click', function () {
-					var $tabContentContainer = $('#mw-prefsection-fbconnect-prefstext');
+			$(document).on('tab-fbconnect-prefstext-click', function () {
+				var $tabContentContainer = $('#mw-prefsection-fbconnect-prefstext');
 
-					// Disable everything within the tab
-					$tabContentContainer
-						.find('input, button')
-						.attr('disabled', 'disabled');
-					$tabContentContainer
-						.find('a')
-						.css('pointer-events', 'none');
+				// Disable all links within the tab
+				$tabContentContainer
+					.find('a')
+					.css('pointer-events', 'none');
 
-					// Throw an error message up
-					function createModal(uiModal) {
-						var modalConfig = {
-							vars: {
-								id: 'FbErrorModal',
-								size: 'medium',
-								title: $.msg('fbconnect-error-fb-unavailable-title'),
-								content: $.msg('fbconnect-error-fb-unavailable-text')
-							}
-						};
-						uiModal.createComponent(modalConfig, function (errorModal) {
-							errorModal.show();
-						});
-					}
-
-					require(['wikia.ui.factory'], function (uiFactory) {
-						$.when(uiFactory.init('modal'))
-							.then(createModal);
+				// Throw an error message up
+				function createModal(uiModal) {
+					var modalConfig = {
+						vars: {
+							id: 'fbErrorModal',
+							size: 'medium',
+							title: $.msg('fbconnect-error-fb-unavailable-title'),
+							content: $.msg('fbconnect-error-fb-unavailable-text')
+						}
+					};
+					uiModal.createComponent(modalConfig, function (errorModal) {
+						errorModal.show();
 					});
+				}
+
+				require(['wikia.ui.factory'], function (uiFactory) {
+					$.when(uiFactory.init('modal'))
+						.then(createModal);
 				});
 			});
 		}
