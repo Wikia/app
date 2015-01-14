@@ -51,7 +51,7 @@ while ( $row = $dbr->fetchRow( $res ) ) {
 
 	$userLanguage = strtolower( $user->getOption( 'language' ) );
 	// Include dialects like pt-br
-	$userLanguageSplit = explode( "-", $userLanguage );
+	$userLanguageSplit = explode( '-', $userLanguage );
 	$userLanguage = $userLanguageSplit[0];
 	// Check for aliases
 	if ( isset( $languageAliases[$userLanguage] ) ) {
