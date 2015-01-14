@@ -45,6 +45,8 @@ $wgGroupPermissions['util']['imagereview'] = true;
 $wgGroupPermissions['vstf']['imagereview'] = true;
 
 $wgGroupPermissions['reviewer']['imagereview'] = true;
+$wgGroupPermissions['reviewer']['deletedhistory'] = true;
+$wgGroupPermissions['reviewer']['deletedtext'] = true;
 $wgGroupPermissions['reviewer']['edit'] = false;
 
 $wgAvailableRights[] = 'questionableimagereview';
