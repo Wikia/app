@@ -142,7 +142,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			refHostname,
 			wikiDomains = [
 				'wikia.com', 'ffxiclopedia.org', 'jedipedia.de',
-				'marveldatabase.com', 'memory-alpha.org', 'uncyclopedia.org',
+				'memory-alpha.org', 'uncyclopedia.org',
 				'websitewiki.de', 'wowwiki.com', 'yoyowiki.org'
 			];
 
@@ -163,6 +163,12 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		}
 		if (hostnameMatch) {
 			return 'wiki';
+		}
+
+		refHostname = ref.match(/\/\/([^\.]+\.)*(\w+\.\w+)\//);
+
+		if (refHostname) {
+			refHostname = refHostname[2];
 		}
 
 		hostnameMatch = refHostname.indexOf(win.wgCookieDomain) > -1 || wikiDomains.indexOf(refHostname) > -1;
