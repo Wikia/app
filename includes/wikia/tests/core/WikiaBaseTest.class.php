@@ -457,7 +457,7 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * Mocks global $wgMemc->get() so it always returns null
 	 */
-	public function disableMemCache() {
+	protected function disableMemCache() {
 		$wgMemcMock = $this->getMockBuilder( 'MWMemcached' )
 			->disableOriginalConstructor()
 			->setMethods( [ 'get' ] )
