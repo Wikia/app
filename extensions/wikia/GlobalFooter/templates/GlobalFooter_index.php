@@ -4,7 +4,7 @@
 			<a class="wikia-logo" href="<?=Sanitizer::encodeAttribute( $logoLink ); ?>">
 				<img src="<?= $wg->BlankImgUrl; ?>">
 				<?php if( !$isCorporate && !empty( $verticalShort ) ): ?>
-					<span>[ <?=$verticalNameMessage->escaped() // TODO URL?> ]</span>
+					<span>[ <?=$verticalNameMessage->escaped(); ?> ]</span>
 				<?php endif; ?>
 			</a>
 		</div>
