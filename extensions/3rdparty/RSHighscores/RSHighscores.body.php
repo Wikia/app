@@ -140,6 +140,9 @@ class RSHiscores {
 			// Get the hiscores data from the site.
 			$data = self::retrieveHiscores( $hs, $player );
 
+			// escape the result as it's from an external API
+			$data = htmlspecialchars( $data, ENT_QUOTES );
+
 			// Add the hiscores data to the cache.
 			self::$cache[$hs][$player] = $data;
 
