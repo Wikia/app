@@ -11,6 +11,13 @@ if ( !defined('MEDIAWIKI') ) {
  *
  * To use this extension $wgEnablePaginatorExt = true
  */
+ 
+$wgExtensionCredits[ 'other' ][ ] = array(
+	'name' => 'Paginator',
+	'author' => 'Jakub Kurcek',
+	'descriptionmsg' => 'paginator-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Paginator',
+);
 
 $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['Paginator']	= $dir . 'Paginator.body.php';

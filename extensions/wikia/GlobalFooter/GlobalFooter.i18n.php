@@ -10,6 +10,7 @@ $messages['en'] = [
 	'global-footer-vertical-books-link' => 'http://bookshub.wikia.com/wiki/Books_Hub',
 	'global-footer-vertical-games-link' => 'http://gameshub.wikia.com/wiki/Games_Hub',
 	'global-footer-vertical-lifestyle-link' => 'http://lifestylehub.wikia.com/wiki/Lifestyle_Hub',
+	'global-footer-desc' => 'GlobalFooter',
 	'shared-Oasis-footer-wikia-links' => '*http://www.wikia.com/About|<span>About</span>
 		*http://community.wikia.com|<span>Community Central</span>
 		*http://www.wikia.com/Careers|Careers
@@ -266,6 +267,7 @@ $messages['qqq'] = [
 	'global-footer-vertical-books-link' => 'URL to books hub wiki',
 	'global-footer-vertical-games-link' => 'URL to games hub wiki',
 	'global-footer-vertical-lifestyle-link' => 'URL to lifestyle hub wiki',
+	'global-footer-desc' => '{{desc}}',
 	'shared-Oasis-footer-wikia-links' => 'All global footer links written in wiki text',
 	'shared-Monobook-footer-wikia-links' => 'All global footer links written
 	in wiki text displayed on Monobook skin'

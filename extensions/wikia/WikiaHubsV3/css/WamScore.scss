@@ -12,7 +12,7 @@
 			}
 			img {
 				background-color: $color-wikiahome-hubcolor;
-				background-image: url("/extensions/wikia/WikiaHubsV3/images/headicon.png"); /* base64 */
+				background-image: url("/extensions/wikia/WikiaHubsV3/images/headicon.png"); /* inline */
 				display: block;
 				float: left;
 				height: 25px;
@@ -54,13 +54,13 @@
 					width: 11px;
 				}
 				.down {
-					background-image: url("/skins/oasis/images/wam/down.png"); /* base64 */
+					background-image: url("/skins/oasis/images/wam/down.png"); /* inline */
 				}
 				.up {
-					background-image: url("/skins/oasis/images/wam/up.png"); /* base64 */
+					background-image: url("/skins/oasis/images/wam/up.png"); /* inline */
 				}
 				.nochange {
-					background-image: url("/skins/oasis/images/wam/nochange.png"); /* base64 */
+					background-image: url("/skins/oasis/images/wam/nochange.png"); /* inline */
 				}
 			}
 			.url {
@@ -72,7 +72,7 @@
 				width: 48px;
 			}
 			.wiki-thumb img {
-				background: url("/extensions/wikia/WikiaHubsV3/images/image-placeholder.png"); /* base64 */;
+				background: url("/extensions/wikia/WikiaHubsV3/images/image-placeholder.png"); /* inline */;
 			}
 		}
 	}

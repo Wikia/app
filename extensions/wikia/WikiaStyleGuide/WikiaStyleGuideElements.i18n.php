@@ -8,6 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'wikiastyleguide-desc' => 'WikiaStyleGuide extension',
 	'wikiastyleguide-dropdown-all' => 'All',
 	'wikiastyleguide-dropdown-select-all' => 'Select All',
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 and $2 more',
@@ -19,6 +20,7 @@ $messages['en'] = array(
  * @author Shirayuki
  */
 $messages['qqq'] = array(
+	'wikiastyleguide-desc' => '{{desc}}',
 	'wikiastyleguide-dropdown-all' => 'This is for a custom multiple choice dropdown (essentially a more powerful and more easily styled <select> element). Text shown when all items are selected.
 {{Identical|All}}',
 	'wikiastyleguide-dropdown-select-all' => 'Shown next to checkbox in toolbar. Used for selecting all other checkboxes.
