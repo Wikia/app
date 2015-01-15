@@ -26,7 +26,7 @@ class GlobalTitleTest extends WikiaBaseTest {
 				[ 'wgServer', 490, 'http://www.wowwiki.com' ],
 				[ 'wgServer', 1686, 'http://spolecznosc.wikia.com' ],
 				/** @see testUrlsMainNSonWoW **/
-				[ 'wgArticlePath', 490, '/wiki/$1' ],
+				[ 'wgArticlePath', 490, '/$1' ],
 				[ 'wgExtraNamespacesLocal', 490, [ 116 => 'Portal' ] ],
 			] );
 
@@ -73,7 +73,7 @@ class GlobalTitleTest extends WikiaBaseTest {
 
 	function testUrlsMainNSonWoW() {
 		$title = GlobalTitle::newFromText( "Main", 116, 490); # wowwiki
-		$url = "http://www.wowwiki.com/wiki/Portal:Main";
+		$url = "http://www.wowwiki.com/Portal:Main";
 		$this->assertTrue( $title->getFullURL() === $url, sprintf("%s = %s, NOT MATCH", $title->getFullURL(), $url ) );
 	}
 
