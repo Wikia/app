@@ -215,8 +215,32 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 	 * @param $retVal mixed result to be returned by mocked method
 	 */
 	protected function mockStaticMethod($className, $methodName, $retVal) {
-		$this->getMockProxy()->getStaticMethod($className,$methodName)
+		$this->getMockProxy()
+			->getStaticMethod($className, $methodName)
 			->willReturn($retVal);
+	}
+
+	/**
+	 * Mock a static method using callback
+	 *
+	 * Examples:
+	 *
+	 * $this->mockStaticMethod('Http', 'post', function() {
+	 *     return json_encode(['foo' => 'bar']);
+	 * });
+	 *
+	 * $this->mockStaticMethod('Http', 'post', function( $value ) {
+	 *     return json_encode(['foo' => $value]);
+	 * });
+	 *
+	 * @param $className string class name
+	 * @param $methodName string method name
+	 * @param $callback callable which imitate original method
+	 */
+	protected function mockStaticMethodWithCallback($className, $methodName, $callback) {
+		$this->getMockProxy()
+			->getStaticMethod($className, $methodName)
+			->willCall($callback);
 	}
 
 	/**
