@@ -163,6 +163,12 @@ class VignetteRequest {
 		return $isVignetteUrl;
 	}
 
+	/**
+	 * @param $url
+	 * @param $format
+	 * @return UrlGenerator|string
+	 * @throws InvalidArgumentException if $url does not have a proper vignette path
+	 */
 	public static function setThumbnailFormat($url, $format) {
 		$format = ltrim($format, ".");
 
@@ -176,6 +182,11 @@ class VignetteRequest {
 		return $generator->format($format)->url();
 	}
 
+	/**
+	 * @param $url
+	 * @return string
+	 * @throws InvalidArgumentException if $url does not have a proper vignette path
+	 */
 	public static function getImageFilename($url) {
 		$generator = self::fromUrl($url);
 		$pathParts = explode('/', $generator->config()->relativePath());
