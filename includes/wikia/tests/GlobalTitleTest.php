@@ -3,10 +3,25 @@
 class GlobalTitleTest extends WikiaBaseTest {
 	private $wgDevelEnv;
 	private $wgDevelEnvName;
-	
+
 	function setUp() {
 		parent::setUp();
-		
+
+		$this->disableMemCache();
+		$this->getStaticMethodMock( 'WikiFactory', 'getVarValueByName' )
+			->expects( $this->any() )
+			->method( 'getVarValueByName' )
+			->willReturnMap( [
+				// basically all tests where GlobalTitle::load() is executed
+				[ 'wgServer', 177, 'http://community.wikia.com' ],
+				[ 'wgServer', 113, 'http://en.memory-alpha.org' ],
+				[ 'wgServer', 490, 'http://www.wowwiki.com' ],
+				[ 'wgServer', 1686, 'http://spolecznosc.wikia.com' ],
+				/** @see testUrlsMainNSonWoW **/
+				[ 'wgArticlePath', 490, '/$1' ],
+				[ 'wgExtraNamespacesLocal', 490, [ 116 => 'Portal' ] ],
+			] );
+
 		global $wgDevelEnvironment,$wgDevelEnvironmentName;
 		$this->wgDevelEnv = $wgDevelEnvironment;
 		$this->wgDevelEnvName = $wgDevelEnvironmentName;
@@ -22,9 +37,6 @@ class GlobalTitleTest extends WikiaBaseTest {
 		parent::tearDown();
 	}
 
-	/**
-	 * @group UsingDB
-	 */
 	function testNewFromText1() {
 		$title = GlobalTitle::newFromText( "Test", NS_MAIN, 177 );
 		$this->assertTrue( $title->getNamespace() === NS_MAIN );
@@ -32,12 +44,9 @@ class GlobalTitleTest extends WikiaBaseTest {
 		$this->assertTrue( $title->getText() === "Test" );
 
 		$title = GlobalTitle::newFromText( "Test_Ze_Spacjami", NS_MAIN, 177 );
-		$this->assertTrue( $title->getText() === "Test Ze Spacjami", "Underscores, spaces expected" );
+		$this->assertEquals( "Test Ze Spacjami", $title->getText(), "Underscores, spaces expected" );
 	}
 
-	/**
-	 * @group UsingDB
-	 */
 	function testNewFromText2() {
 		$title = GlobalTitle::newFromText( "Test", NS_TALK, 177 );
 		$this->assertTrue( $title->getNamespace() === NS_TALK );
@@ -45,50 +54,49 @@ class GlobalTitleTest extends WikiaBaseTest {
 		$this->assertTrue( $title->getText() === "Test" );
 
 		$title = GlobalTitle::newFromText( "Test_Ze_Spacjami", NS_TALK, 177 );
-		$this->assertTrue( $title->getText() === "Test Ze Spacjami", "Underscores, spaces expected" );
+		$this->assertEquals( "Test Ze Spacjami", $title->getText(), "Underscores, spaces expected" );
 	}
 
-	/**
-	 * @group UsingDB
-	 */
 	function testUrlsMainNS() {
 		$title = GlobalTitle::newFromText( "Timeline", NS_MAIN, 113 ); # memory-alpha
-		$url = "http://en.memory-alpha.org/wiki/Timeline";
-		$this->assertTrue( $title->getFullURL() === $url, sprintf("%s = %s, NOT MATCH", $title->getFullURL(), $url ) );
+		$expectedUrl = "http://en.memory-alpha.org/wiki/Timeline";
+		$this->assertEquals( $expectedUrl, $title->getFullURL() );
 	}
 
-	/**
-	 * @group UsingDB
-	 */
 	function testUrlsMainNSonWoW() {
 		$title = GlobalTitle::newFromText( "Main", 116, 490); # wowwiki
-		$url = "http://www.wowwiki.com/Portal:Main";
-		$this->assertTrue( $title->getFullURL() === $url, sprintf("%s = %s, NOT MATCH", $title->getFullURL(), $url ) );
+		$expectedUrl = "http://www.wowwiki.com/Portal:Main";
+		$this->assertEquals( $expectedUrl, $title->getFullURL() );
 	}
 
-	/**
-	 * @group UsingDB
-	 */
 	function testUrlsSpacebars() {
 		$title = GlobalTitle::newFromText( "Test Ze Spacjami", NS_TALK, 177 );
-		$url = "http://community.wikia.com/wiki/Talk:Test_Ze_Spacjami";
-		$this->assertTrue( $title->getFullURL() === $url, sprintf("%s = %s, NOT MATCH", $title->getFullURL(), $url ) );
+		$expectedUrl = "http://community.wikia.com/wiki/Talk:Test_Ze_Spacjami";
+		$this->assertEquals( $expectedUrl, $title->getFullURL() );
 	}
 
-	/**
-	 * @group UsingDB
-	 */
-	function testUrlsPolishWiki() {
+	function testUrlsSpecialNS() {
 		$title = GlobalTitle::newFromText( "WikiFactory", NS_SPECIAL, 1686 ); # pl.wikia.com
-		$url = "http://spolecznosc.wikia.com/wiki/Special:WikiFactory";
-		$this->assertTrue( $title->getFullURL() === $url, sprintf("%s = %s, NOT MATCH", $title->getFullURL(), $url ) );
+		$expectedUrl = "http://spolecznosc.wikia.com/wiki/Special:WikiFactory";
+		$this->assertEquals( $expectedUrl, $title->getFullURL() );
+	}
 
-		$url = "http://spolecznosc.wikia.com/wiki/Special:WikiFactory?diff=0&oldid=500";
-		$this->assertTrue( $title->getFullURL( wfArrayToCGI(array( "diff" => 0, "oldid" => 500 ) ) ) === $url, sprintf("%s = %s, NOT MATCH", $title->getFullURL(), $url ) );
+	function testUrlsWithQueryParams() {
+		$title = GlobalTitle::newFromText( "WikiFactory", NS_SPECIAL, 1686 ); # pl.wikia.com
+		$this->assertStringEndsWith(
+			"?diff=0&oldid=500",
+			$title->getFullURL( wfArrayToCGI( [ "diff" => 0, "oldid" => 500 ] ) ),
+			"verify if special pages namespace was used"
+		);
+	}
 
+	function testUrlsWithUtf8() {
 		$title = GlobalTitle::newFromText( "Strona główna", false, 1686 ); # pl.wikia.com
-		$url = "http://spolecznosc.wikia.com/wiki/Strona_g%C5%82%C3%B3wna?diff=0&oldid=500";
-		$this->assertTrue( $title->getFullURL( wfArrayToCGI(array( "diff" => 0, "oldid" => 500 ) ) ) === $url, "NOT MATCH" );
+		$this->assertStringEndsWith(
+			"Strona_g%C5%82%C3%B3wna?diff=0&oldid=500",
+			$title->getFullURL( wfArrayToCGI( [ "diff" => 0, "oldid" => 500 ] ) ),
+			"verify if special pages namespace was used"
+		);
 	}
 
 	/**
