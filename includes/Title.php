@@ -1130,12 +1130,10 @@ class Title {
 		// begin wikia change
 		// @author Cqm
 		// VOLDEV-66
-		global $wgEnableWallExt;
-		if ( !$this->isSubpage() && $this->getNamespace() == NS_USER && !empty( $wgEnableWallExt ) ) {
-			return Title::makeTitle( NS_USER_WALL, $this->getDBKey() );
-		}
+		$talkPageTitle = Title::makeTitle( MWNamespace::getTalk( $this->getNamespace() ), $this->getDBkey() );
+		wfRunHooks( 'GetTalkPage', array( $this, $talkPageTitle ) );
+		return $talkPageTitle;
 		// end wikia change
-		return Title::makeTitle( MWNamespace::getTalk( $this->getNamespace() ), $this->getDBkey() );
 	}
 
 	/**
