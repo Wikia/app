@@ -6,6 +6,15 @@ class GlobalTitleTest extends WikiaBaseTest {
 	
 	function setUp() {
 		parent::setUp();
+
+		$wgMemcMock = $this->getMockBuilder( 'MWMemcached' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'get' ] )
+			->getMock();
+		$wgMemcMock->expects( $this->any() )
+			->method( 'get' )
+			->willReturn( null );
+		$this->mockGlobalVariable( 'wgMemc', $wgMemcMock );
 		
 		global $wgDevelEnvironment,$wgDevelEnvironmentName;
 		$this->wgDevelEnv = $wgDevelEnvironment;
