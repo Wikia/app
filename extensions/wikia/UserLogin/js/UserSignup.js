@@ -19,7 +19,7 @@
 				return;
 			}
 
-			this.signupAjaxForm = new UserSignupAjaxValidation({
+			this.validator = new UserSignupAjaxValidation({
 				wikiaForm: this.wikiaForm,
 				inputsToValidate: this.inputsToValidate,
 				submitButton: this.submitButton,
@@ -27,12 +27,12 @@
 				captchaField: this.captchaField
 			});
 
-			this.initOptIn();
-			this.termsOpenNewTab();
-
 			// imported via UserSignupMixin
 			this.setCountryValue(this.wikiaForm);
-			this.setupValidation(this.wikiaForm);
+			this.initOptIn(this.wikiaForm);
+
+			this.termsOpenNewTab();
+			this.setupValidation();
 		},
 
 		/**

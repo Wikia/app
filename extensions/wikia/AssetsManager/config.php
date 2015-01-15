@@ -381,47 +381,45 @@ $config['oasis_nojquery_shared_js'] = array(
 //anon JS
 // Note: Owen moved getSiteJS call from both anon_js and user_js to OasisController::loadJS
 // so that common.js is loaded last so it has less chance of breaking other things
-$config['oasis_anon_js'] = array(
+$config['oasis_anon_js'] = [
 	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
+	'assets' => [
+		'#group_user_login_signup_js',
 		'//extensions/wikia/AdEngine/js/Exitstitial.js',
-		'//extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
-		'//extensions/wikia/UserLogin/js/MarketingOptIn.js',
-		'//extensions/wikia/UserLogin/js/mixins/UserSignup.mixin.js',
-		'//extensions/wikia/UserLogin/js/FacebookFormCreateUser.js',
-		'//extensions/wikia/UserLogin/js/FacebookFormConnectUser.js',
-		'//extensions/wikia/UserLogin/js/FacebookLogin.js',
 		'//extensions/wikia/UserLogin/js/UserLoginDropdown.js',
 		'//skins/oasis/js/LatestActivity.js',
-	)
-);
+	]
+];
 
 // TODO: cleanup this after Global Navigation global release
-$config['oasis_anon_with_new_global_nav_js'] = array(
+$config['oasis_anon_with_new_global_nav_js'] = [
 	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
+	'assets' => [
+		'#group_user_login_signup_js',
 		'//extensions/wikia/AdEngine/js/Exitstitial.js',
+		'//skins/oasis/js/LatestActivity.js',
+	]
+];
+
+$config['user_login_signup_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/UserLogin/js/FacebookLogin.js',
 		'//extensions/wikia/UserLogin/js/MarketingOptIn.js',
 		'//extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
 		'//extensions/wikia/UserLogin/js/mixins/UserSignup.mixin.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormCreateUser.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormConnectUser.js',
-		'//extensions/wikia/UserLogin/js/FacebookLogin.js',
-		'//skins/oasis/js/LatestActivity.js',
-	)
-);
+	]
+];
 
-//user JS
+/**
+ * For logged in users in oasis
+ * @todo Remove this and clean up references UC-228
+ */
 $config['oasis_user_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/UserLogin/js/FacebookLogin.js',
-		'//extensions/wikia/UserLogin/js/MarketingOptIn.js',
-		'//extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
-		'//extensions/wikia/UserLogin/js/mixins/UserSignup.mixin.js',
-		'//extensions/wikia/UserLogin/js/FacebookFormCreateUser.js',
-		'//extensions/wikia/UserLogin/js/FacebookFormConnectUser.js',
-	)
+	'assets' => []
 );
 
 /** GameGuides */
