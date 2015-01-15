@@ -112,12 +112,12 @@ $config['adengine2_late_js'] = array(
 	),
 );
 
-$config['adengine2_spotlights_js'] = array(
+$config['spotlights_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		// ads
-		'//extensions/wikia/AdEngine/AdProviderOpenX.js',
-		'//extensions/wikia/AdEngine/LazyLoadAds.js',
+		'//extensions/wikia/Spotlights/js/AdProviderOpenX.js',
+		'//extensions/wikia/Spotlights/js/LazyLoadAds.js',
 	),
 );
 
@@ -879,8 +879,7 @@ $config['monobook_js'] = array(
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
 		'#group_imglzy_js',
-		'//extensions/wikia/AdEngine/AdProviderOpenX.js',
-		'//extensions/wikia/AdEngine/LazyLoadAds.js',
+		'#group_spotlights_js',
 		'//resources/wikia/libraries/ghostwriter/gw.min.js',
 		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
 		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',

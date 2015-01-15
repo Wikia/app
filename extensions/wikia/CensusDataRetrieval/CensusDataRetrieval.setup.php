@@ -1,5 +1,12 @@
 <?php
 
+$wgExtensionCredits[ 'other' ][ ] = array(
+	'name' => 'CensusDataRetrieval',
+	'author' => 'Wikia',
+	'descriptionmsg' => 'censusdataretrieval-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CensusDataRetrieval',
+);
+
 //$wgHooks['EditFormPreloadText'][] = 'CensusDataRetrieval::retrieveFromName';
 //static run
 $wgHooks['EditPage::showEditForm:initial'][] = 'CensusDataRetrieval::retrieveFromName';

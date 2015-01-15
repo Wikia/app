@@ -12,7 +12,8 @@ $wgExtensionCredits['specialpage'][] = array(
 		'Maciej Brencz',
 		"[http://community.wikia.com/wiki/User:TOR Lucas 'TOR' Garczewski]",
 	),
-	'description' => 'Adds forms to help people add recipes and ingredients pages to Recipes wikis'
+	'descriptionmsg' => 'recipiestemplate-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/RecipesTemplate'
 );
 
 $dir = dirname(__FILE__) . '/';

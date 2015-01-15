@@ -22,6 +22,7 @@ $wgExtensionCredits['parserhook'][] = array(
 	'name' => 'InfoboxBuilder',
 	'descriptionmsg' => 'infoboxbuilder-desc',
 	'author' => 'Adam Karmiński <adamk@wikia-inc.com>',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/InfoboxBuilder'
 );
 
 /**

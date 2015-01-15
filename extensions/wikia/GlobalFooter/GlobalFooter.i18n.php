@@ -3,6 +3,7 @@
 $messages = [];
 
 $messages['en'] = [
+	'global-footer-desc' => 'GlobalFooter',
 	//Oasis
 	'oasis-corporatefooter-navigation-header' => 'Wikia Inc Navigation',
 	'oasis-corporatefooter-hub-Entertainment-link' => 'http://www.wikia.com/Entertainment',
@@ -275,6 +276,7 @@ $messages['gl'] = [
 ];
 
 $messages['qqq'] = [
+	'global-footer-desc' => '{{desc}}',
 	'oasis-corporatefooter-navigation-header' => 'Global footer navigation header',
 	'oasis-corporatefooter-hub-Entertainment-link' => 'Link to Entertainment hub',
 	'oasis-corporatefooter-hub-Gaming-link' => 'Link to Gaming hub',

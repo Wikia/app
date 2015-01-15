@@ -15,7 +15,7 @@ if ( empty( $cityId ) ) {
 	die( "Error: Invalid wiki id." );
 }
 
-$statusEnabled = WikiFactory::setVarByName( 'wgEnableCuratedContentExt', $cityId, $app->wg->GameGuidesContentForAdmins );
+$statusEnabled = WikiFactory::setVarByName( 'wgEnableCuratedContentExt', $cityId, true);
 if ( $statusEnabled == 0 ) {
 	die( "Error: Cannot Set EnableCuratedContentExt Variable" );
 }

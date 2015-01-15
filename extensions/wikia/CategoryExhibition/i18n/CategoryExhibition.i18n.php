@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'category-exhibition-desc'              => 'New look to category page',
 	'category-exhibition-sorttype'			=> 'Sorting type:',
 	'category-exhibition-alphabetical'		=> 'Alphabetical',
 	'category-exhibition-mostvisited'		=> 'Most visited',
@@ -19,6 +20,7 @@ $messages['en'] = array(
  * @author Shirayuki
  */
 $messages['qqq'] = array(
+	'category-exhibition-desc'                 => '{{desc}}',
 	'category-exhibition-subcategories-header' => '{{Identical|Subcategory}}',
 );
 

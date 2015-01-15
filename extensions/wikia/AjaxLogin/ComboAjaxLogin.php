@@ -17,6 +17,7 @@ $wgExtensionCredits['other'][] = array(
 	'description' => 'Dynamic box which allow users to login and remind password and register users',
 	'author' => 'Tomasz Odrobny',
 	'descriptionmsg' => 'comboajaxlogin-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AjaxLogin',
 );
 
 $wgAjaxExportList[] = 'GetComboAjaxLogin';

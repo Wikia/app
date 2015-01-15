@@ -51,20 +51,6 @@ OO.inheritClass( ve.ui.WikiaMediaPreviewWidget, OO.ui.Widget );
 /* Methods */
 
 /**
- * Resize image after it's loaded if it's too tall for the screen
- * @method
- */
-ve.ui.WikiaMediaPreviewWidget.prototype.onImageLoad = function () {
-	// TODO: Add image aspect ratio to model (sorta the same comment from WikiaMediaPageWidget)
-	// thumbnailer.js only let's you restrict by width, not by height, so we'll do that here.
-	if ( this.$image.height() > this.maxImgHeight ) {
-		this.$image.height( this.maxImgHeight );
-	}
-
-	this.verticallyAlign( this.$image );
-};
-
-/**
  * @method
  */
 ve.ui.WikiaMediaPreviewWidget.prototype.verticallyAlign = function ( $element ) {
@@ -164,7 +150,7 @@ ve.ui.WikiaMediaPreviewWidget.prototype.openForImage = function ( title, url ) {
 	this.$image.attr( 'src', Vignette.getThumbURL( url, 'thumbnail-down', this.maxImgWidth, this.maxImgHeight ) );
 
 	this.$image
-		.load( ve.bind( this.onImageLoad, this ) )
+		.load( ve.bind( this.verticallyAlign, this, this.$image ) )
 		.appendTo( this.$element );
 };
 

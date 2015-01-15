@@ -11,7 +11,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name'           => 'WikiaNewFiles',
 	'author'         => 'Garth Webb',
 	'descriptionmsg' => 'wikianewfiles-desc',
-	'url'            => 'http://www.wikia.com',
+	'url'            => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaNewFiles',
 );
 
 $dir = dirname( __FILE__ );

@@ -8,6 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'wikifactory-desc' => 'Store MediaWiki settings in database',
 	'wikifactorypagetitle' => 'Wiki Factory Configurator',
 	'wikifactory' => 'Wiki Factory Configurator',
 	"closewiki" => "Close Wiki",
@@ -67,6 +68,7 @@ $messages['en'] = array(
 	"awc-metrics-select" => "Show Wikis:",
 	"awc-metrics-by-language" => "by language:",
 	"awc-metrics-category" => "and category:",
+	"awc-metrics-vertical" => "and vertical:",
 	"awc-metrics-all" => "all Wikis",
 	"awc-metrics-all-languages" => "all languages",
 	"awc-metrics-search" => "Search options:",
@@ -156,6 +158,7 @@ $messages['en'] = array(
  * @author Umherirrender
  */
 $messages['qqq'] = array(
+	'wikifactory-desc' => '{{desc}}',
 	'wf_city_url' => '{{Identical|Address}}',
 	'wf_city_id' => '{{Identical|ID}}',
 	'wf_city_title' => '{{Identical|Title}}',

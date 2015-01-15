@@ -894,6 +894,15 @@ hu',
 'hub-Wikia' => 'Wikia',
 'hub-Food_and_Drink' => 'Food and Drink',
 
+# vertical names
+'vertical-tv' => 'TV',
+'vertical-games' => 'Games',
+'vertical-books' => 'Books',
+'vertical-comics' => 'Comics',
+'vertical-lifestyle' => 'Lifestyle',
+'vertical-music' => 'Music',
+'vertical-movies' => 'Movies',
+
 # Mobile skin
 'oasis-mobile-site' => 'Mobile site',
 'mobile-show' => 'Show',
