@@ -1,4 +1,4 @@
-/* global UserLoginModal, wgCanonicalSpecialPageName, wgMainPageTitle, wgArticlePath, wgScriptPath, wgUserLanguage */
+/* global UserLoginModal, wgScriptPath, wgUserLanguage */
 
 /**
  * Handle signing in and signing up with Facebook
@@ -92,6 +92,8 @@
 		 * @param {Object} response Response object sent from Facebook after login attempt
 		 */
 		onFBLogin: function (response) {
+			var pageUrl;
+
 			// There was a connection error or something went horribly wrong.
 			if (typeof response !== 'object') {
 				this.track({
@@ -111,10 +113,12 @@
 				// begin ajax call performance tracking
 				this.bucky.timer.start('loginCallbackAjax');
 
+				pageUrl = new QueryString();
+
 				// now check FB account (is it connected with Wikia account?)
 				$.nirvana.postJson('FacebookSignupController', 'index', {
-						returnto: encodeURIComponent(window.wgPageName),
-						returntoquery: encodeURIComponent(window.location.search.substring(1))
+						returnto: pageUrl.getVal('returnto'),
+						returntoquery: pageUrl.getVal('returntoquery')
 					},
 					$.proxy(this.checkAccountCallback, this)
 				);
@@ -142,7 +146,7 @@
 
 			// logged in using FB account, reload the page or callback
 			if (response.loggedIn) {
-				this.loggedInCallback();
+				window.location = response.returnUrl;
 
 			// some error occurred
 			} else if (response.loginAborted) {
@@ -159,39 +163,6 @@
 			// user not logged in, show the login/signup modal
 			} else {
 				this.setupModal(response);
-			}
-		},
-
-		/**
-		 * This runs after has signed in with facebook and is already registered with Wikia.
-		 */
-		loggedInCallback: function () {
-			if (this.loginCallback) {
-				this.loginCallback();
-			} else {
-				this.bucky.timer.start('loggedInCallback');
-				var returnUrl = new QueryString(),
-					returnTo = returnUrl.getVal('returnto');
-
-				// See if we were passed a returnto URL.  If not and we're on a special page we shouldn't
-				// stay on, set returnto to be the main page
-				if (returnTo) {
-					returnUrl.removeVal('returnto');
-				} else if (
-					wgCanonicalSpecialPageName &&
-					wgCanonicalSpecialPageName.match(/Userlogin|Userlogout|UserSignup/)
-				) {
-					// TODO: special page URL matching needs to be consolidated. @see UC-187
-					returnTo = wgMainPageTitle;
-				}
-
-				if (returnTo) {
-					returnUrl.setPath(wgArticlePath.replace('$1', returnTo));
-				}
-				// send bucky info immediately b/c the page is about to redirect
-				this.bucky.timer.stop('loggedInCallback');
-				this.bucky.flush();
-				returnUrl.addCb().goTo();
 			}
 		},
 
