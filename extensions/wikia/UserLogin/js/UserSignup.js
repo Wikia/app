@@ -30,9 +30,9 @@
 			this.initOptIn();
 			this.termsOpenNewTab();
 
-			// imported via mixin
-			this.setCountryValue();
-			this.setupValidation();
+			// imported via UserSignupMixin
+			this.setCountryValue(this.wikiaForm);
+			this.setupValidation(this.wikiaForm);
 		},
 
 		/**

@@ -14,9 +14,9 @@
 	FacebookFormCreateUser.prototype.init = function () {
 		UserBaseAjaxForm.prototype.init.call(this);
 
-		// imported via mixin
-		this.initOptIn();
-		this.setCountryValue();
+		// imported via UserSignupMixin
+		this.initOptIn(this.wikiaForm);
+		this.setCountryValue(this.wikiaForm);
 	};
 
 	/**
