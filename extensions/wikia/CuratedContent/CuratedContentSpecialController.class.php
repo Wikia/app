@@ -122,31 +122,24 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function featuredSection() {
-		$this->response->setTemplateEngine( self::TEMPLATE_ENGINE );
-
-		$id = $this->request->getVal( 'image_id', 0 );
-
-		$this->response->setVal( 'value', wfMessage( 'wikiacuratedcontent-featured-section-name' ) );
-		$this->response->setVal( 'image_id', $id );
-		$this->response->setVal( 'image_url', $this->getImage( $id ) );
-		if ( $id != 0 ) {
-			$this->response->setVal( 'image_set', true );
-		}
+		$this->sectionBase( wfMessage( 'wikiacuratedcontent-featured-section-name' ) );
 	}
 
 	public function section() {
+		$this->sectionBase( $this->request->getVal( 'value' ) );
+		$this->response->setVal( 'section_placeholder', wfMessage( 'wikiacuratedcontent-content-section' ) );
+	}
+
+	public function sectionBase( $value ) {
 		$this->response->setTemplateEngine( self::TEMPLATE_ENGINE );
 
 		$id = $this->request->getVal( 'image_id', 0 );
-
-		$this->response->setVal( 'value', $this->request->getVal( 'value' ), '' );
+		$this->response->setVal( 'value', $value );
 		$this->response->setVal( 'image_id', $id );
 		$this->response->setVal( 'image_url', $this->getImage( $id ) );
 		if ( $id != 0 ) {
 			$this->response->setVal( 'image_set', true );
 		}
-
-		$this->response->setVal( 'section_placeholder', wfMessage( 'wikiacuratedcontent-content-section' ) );
 	}
 
 	/*
