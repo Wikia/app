@@ -135,7 +135,6 @@ class FacebookSignupController extends WikiaController {
 			return;
 		}
 
-		// Temporary code until we switch fully to FacebookClient
 		$returnToUrl = $this->userLoginHelper->getRedirectUrl( 'fbconnected=1' );
 
 		$returnTo = $this->wg->request->getVal( 'returnto' );
