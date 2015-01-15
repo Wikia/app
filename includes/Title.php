@@ -1127,7 +1127,13 @@ class Title {
 	 * @return Title the object for the talk page
 	 */
 	public function getTalkPage() {
-		return Title::makeTitle( MWNamespace::getTalk( $this->getNamespace() ), $this->getDBkey() );
+		// begin wikia change
+		// @author Cqm
+		// VOLDEV-66
+		$talkPageTitle = Title::makeTitle( MWNamespace::getTalk( $this->getNamespace() ), $this->getDBkey() );
+		wfRunHooks( 'GetTalkPage', array( $this, $talkPageTitle ) );
+		return $talkPageTitle;
+		// end wikia change
 	}
 
 	/**
