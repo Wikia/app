@@ -44,7 +44,7 @@ class GlobalTitleTest extends WikiaBaseTest {
 		$this->assertTrue( $title->getText() === "Test" );
 
 		$title = GlobalTitle::newFromText( "Test_Ze_Spacjami", NS_MAIN, 177 );
-		$this->assertTrue( $title->getText() === "Test Ze Spacjami", "Underscores, spaces expected" );
+		$this->assertEquals( "Test Ze Spacjami", $title->getText(), "Underscores, spaces expected" );
 	}
 
 	function testNewFromText2() {
@@ -54,31 +54,31 @@ class GlobalTitleTest extends WikiaBaseTest {
 		$this->assertTrue( $title->getText() === "Test" );
 
 		$title = GlobalTitle::newFromText( "Test_Ze_Spacjami", NS_TALK, 177 );
-		$this->assertTrue( $title->getText() === "Test Ze Spacjami", "Underscores, spaces expected" );
+		$this->assertEquals( "Test Ze Spacjami", $title->getText(), "Underscores, spaces expected" );
 	}
 
 	function testUrlsMainNS() {
 		$title = GlobalTitle::newFromText( "Timeline", NS_MAIN, 113 ); # memory-alpha
-		$url = "http://en.memory-alpha.org/wiki/Timeline";
-		$this->assertTrue( $title->getFullURL() === $url, sprintf("%s = %s, NOT MATCH", $title->getFullURL(), $url ) );
+		$expectedUrl = "http://en.memory-alpha.org/wiki/Timeline";
+		$this->assertEquals( $expectedUrl, $title->getFullURL() );
 	}
 
 	function testUrlsMainNSonWoW() {
 		$title = GlobalTitle::newFromText( "Main", 116, 490); # wowwiki
-		$url = "http://www.wowwiki.com/Portal:Main";
-		$this->assertTrue( $title->getFullURL() === $url, sprintf("%s = %s, NOT MATCH", $title->getFullURL(), $url ) );
+		$expectedUrl = "http://www.wowwiki.com/Portal:Main";
+		$this->assertEquals( $expectedUrl, $title->getFullURL() );
 	}
 
 	function testUrlsSpacebars() {
 		$title = GlobalTitle::newFromText( "Test Ze Spacjami", NS_TALK, 177 );
-		$url = "http://community.wikia.com/wiki/Talk:Test_Ze_Spacjami";
-		$this->assertTrue( $title->getFullURL() === $url, sprintf("%s = %s, NOT MATCH", $title->getFullURL(), $url ) );
+		$expectedUrl = "http://community.wikia.com/wiki/Talk:Test_Ze_Spacjami";
+		$this->assertEquals( $expectedUrl, $title->getFullURL() );
 	}
 
 	function testUrlsSpecialNS() {
 		$title = GlobalTitle::newFromText( "WikiFactory", NS_SPECIAL, 1686 ); # pl.wikia.com
-		$url = "http://spolecznosc.wikia.com/wiki/Special:WikiFactory";
-		$this->assertTrue( $title->getFullURL() === $url, sprintf("%s = %s, NOT MATCH", $title->getFullURL(), $url ) );
+		$expectedUrl = "http://spolecznosc.wikia.com/wiki/Special:WikiFactory";
+		$this->assertEquals( $expectedUrl, $title->getFullURL() );
 	}
 
 	function testUrlsWithQueryParams() {
