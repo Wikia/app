@@ -53,6 +53,12 @@ class FacebookSignupController extends WikiaController {
 				$user->setCookies();
 				$this->loggedIn = true;
 				$this->userName = $user->getName();
+
+				// Retrieve user email from Facebook if missing
+				$email = $user->getEmail();
+				if ( empty( $email ) ) {
+					$this->saveEmailAsynchronously( $user->getId() );
+				}
 			}
 		} else {
 			$modal = $this->sendRequest('FacebookSignup', 'modal')->__toString();
@@ -63,6 +69,17 @@ class FacebookSignupController extends WikiaController {
 			$this->modal = !empty($modal) ? $modal : wfMessage('usersignup-facebook-problem')->escaped();
 			$this->cancelMsg = wfMessage('cancel')->escaped();
 		}
+	}
+
+	/**
+	 * Kick off an asynch job to update user's email to be what's reported by Facebook
+	 * @param $userId
+	 */
+	protected function saveEmailAsynchronously( $userId ) {
+		$task = new \Wikia\Tasks\Tasks\FacebookTask();
+		$task->dupCheck();
+		$task->call( 'updateEmailFromFacebook', $userId );
+		$task->queue();
 	}
 
 	/**
@@ -97,19 +114,15 @@ class FacebookSignupController extends WikiaController {
 		}
 
 		// get an email from Facebook API
-		$resp = $this->sendRequest( 'FacebookSignup', 'getFacebookData', [
-			'fbUserId' => $fbUserId,
-		] );
+		$email = \FacebookClient::getInstance()->getEmail( $fbUserId );
 
 		// BugId:24400
-		$data = $resp->getData();
-		if ( empty( $data ) ) {
+		if ( !$email ) {
 			$this->skipRendering();
 			return false;
 		}
 
-		// Note: The FB SDK 1.* equivalent for email was contact_email
-		$this->fbEmail = $resp->getVal( 'email', false );
+		$this->fbEmail = $email;
 
 		$returnTo = $this->wg->request->getVal( 'returnto' );
 		$returnToQuery = $this->wg->request->getVal( 'returntoquery' );
@@ -237,23 +250,6 @@ class FacebookSignupController extends WikiaController {
 			'result' => 'ok',
 			'msg' => 'success',
 		] );
-	}
-
-	/**
-	 * Return Facebook account data like email, gender, real name
-	 */
-	public function getFacebookData() {
-		$fbUserId = $this->request->getVal( 'fbUserId' );
-
-		if ( $fbUserId > 0 ) {
-
-			$data = FacebookClient::getInstance()->getUserInfoAsArray( $fbUserId );
-
-			// BugId:24400
-			if ( !empty( $data ) ) {
-				$this->response->setData( $data );
-			}
-		}
 	}
 
 	/**
