@@ -74,6 +74,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			$this->response->addAsset('extensions/wikia/UserLogin/js/MarketingOptIn.js');
 			$this->response->addAsset('extensions/wikia/UserLogin/js/mixins/UserSignup.mixin.js');
 			$this->response->addAsset('extensions/wikia/UserLogin/js/UserSignup.js');
+		}
 
 		if ( !empty($this->wg->EnableFacebookClientExt ) ) {
 			$this->response->addAsset('extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js');
