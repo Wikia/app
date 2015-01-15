@@ -7,15 +7,7 @@ class GlobalTitleTest extends WikiaBaseTest {
 	function setUp() {
 		parent::setUp();
 
-		$wgMemcMock = $this->getMockBuilder( 'MWMemcached' )
-			->disableOriginalConstructor()
-			->setMethods( [ 'get' ] )
-			->getMock();
-		$wgMemcMock->expects( $this->any() )
-			->method( 'get' )
-			->willReturn( null );
-		$this->mockGlobalVariable( 'wgMemc', $wgMemcMock );
-
+		$this->disableMemCache();
 		$this->getStaticMethodMock( 'WikiFactory', 'getVarValueByName' )
 			->expects( $this->any() )
 			->method( 'getVarValueByName' )

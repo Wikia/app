@@ -453,4 +453,18 @@ abstract class WikiaBaseTest extends PHPUnit_Framework_TestCase {
 			return [ ltrim( substr( $functionName, 0, $last + 1 ), '\\' ), substr( $functionName, $last + 1 ) ];
 		}
 	}
+
+	/**
+	 * Mocks global $wgMemc->get() so it always returns null
+	 */
+	public function disableMemCache() {
+		$wgMemcMock = $this->getMockBuilder( 'MWMemcached' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'get' ] )
+			->getMock();
+		$wgMemcMock->expects( $this->any() )
+			->method( 'get' )
+			->willReturn( null );
+		$this->mockGlobalVariable( 'wgMemc', $wgMemcMock );
+	}
 }
