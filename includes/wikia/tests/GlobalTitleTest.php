@@ -3,6 +3,12 @@
 class GlobalTitleTest extends WikiaBaseTest {
 	private $wgDevelEnv;
 	private $wgDevelEnvName;
+	private $wikiUrlsMock = [
+		177 => 'http://community.wikia.com',
+		113 => 'http://en.memory-alpha.org',
+		490 => 'http://www.wowwiki.com',
+		1686 => 'http://spolecznosc.wikia.com',
+	];
 	
 	function setUp() {
 		parent::setUp();
@@ -15,6 +21,19 @@ class GlobalTitleTest extends WikiaBaseTest {
 			->method( 'get' )
 			->willReturn( null );
 		$this->mockGlobalVariable( 'wgMemc', $wgMemcMock );
+
+		$this->mockStaticMethodWithCallback( 'WikiFactory', 'getVarValueByName', function( $cvName, $cityId ) {
+			$mockedReturnValue = null;
+
+			if ( $cvName === 'wgExtraNamespacesLocal' ) {
+				/** @see testUrlsMainNSonWoW **/
+				$mockedReturnValue = [ 116 => 'Portal' ];
+			} else if ( $cvName === 'wgServer' ) {
+				$mockedReturnValue = $this->wikiUrlsMock[$cityId];
+			}
+
+			return $mockedReturnValue;
+		} );
 		
 		global $wgDevelEnvironment,$wgDevelEnvironmentName;
 		$this->wgDevelEnv = $wgDevelEnvironment;
@@ -31,9 +50,6 @@ class GlobalTitleTest extends WikiaBaseTest {
 		parent::tearDown();
 	}
 
-	/**
-	 * @group UsingDB
-	 */
 	function testNewFromText1() {
 		$title = GlobalTitle::newFromText( "Test", NS_MAIN, 177 );
 		$this->assertTrue( $title->getNamespace() === NS_MAIN );
@@ -44,9 +60,6 @@ class GlobalTitleTest extends WikiaBaseTest {
 		$this->assertTrue( $title->getText() === "Test Ze Spacjami", "Underscores, spaces expected" );
 	}
 
-	/**
-	 * @group UsingDB
-	 */
 	function testNewFromText2() {
 		$title = GlobalTitle::newFromText( "Test", NS_TALK, 177 );
 		$this->assertTrue( $title->getNamespace() === NS_TALK );
@@ -57,41 +70,28 @@ class GlobalTitleTest extends WikiaBaseTest {
 		$this->assertTrue( $title->getText() === "Test Ze Spacjami", "Underscores, spaces expected" );
 	}
 
-	/**
-	 * @group UsingDB
-	 */
 	function testUrlsMainNS() {
 		$title = GlobalTitle::newFromText( "Timeline", NS_MAIN, 113 ); # memory-alpha
-		$this->assertStringEndsWith(
-			"/Timeline",
-			$title->getFullURL(),
-			"verify if there is no namespace if regular main namespace is being used"
-		);
+		$url = "http://en.memory-alpha.org/wiki/Timeline";
+		$this->assertTrue( $title->getFullURL() === $url, sprintf("%s = %s, NOT MATCH", $title->getFullURL(), $url ) );
 	}
 
-	/**
-	 * @group UsingDB
-	 */
 	function testUrlsMainNSonWoW() {
 		$title = GlobalTitle::newFromText( "Main", 116, 490); # wowwiki
-		$this->assertStringEndsWith( "Portal:Main", $title->getFullURL(), "verify if WOW Wikia namespace was used" );
+		$url = "http://www.wowwiki.com/wiki/Portal:Main";
+		$this->assertTrue( $title->getFullURL() === $url, sprintf("%s = %s, NOT MATCH", $title->getFullURL(), $url ) );
 	}
 
-	/**
-	 * @group UsingDB
-	 */
 	function testUrlsSpacebars() {
 		$title = GlobalTitle::newFromText( "Test Ze Spacjami", NS_TALK, 177 );
-		$this->assertStringEndsWith( "Talk:Test_Ze_Spacjami", $title->getFullURL(), "verify if whitespaces changed to underscores" );
+		$url = "http://community.wikia.com/wiki/Talk:Test_Ze_Spacjami";
+		$this->assertTrue( $title->getFullURL() === $url, sprintf("%s = %s, NOT MATCH", $title->getFullURL(), $url ) );
 	}
 
 	function testUrlsSpecialNS() {
 		$title = GlobalTitle::newFromText( "WikiFactory", NS_SPECIAL, 1686 ); # pl.wikia.com
-		$this->assertStringEndsWith(
-			"Special:WikiFactory",
-			$title->getFullURL(),
-			"verify if special pages namespace was used"
-		);
+		$url = "http://spolecznosc.wikia.com/wiki/Special:WikiFactory";
+		$this->assertTrue( $title->getFullURL() === $url, sprintf("%s = %s, NOT MATCH", $title->getFullURL(), $url ) );
 	}
 
 	function testUrlsWithQueryParams() {
@@ -103,9 +103,6 @@ class GlobalTitleTest extends WikiaBaseTest {
 		);
 	}
 
-	/**
-	 * @group UsingDB
-	 */
 	function testUrlsWithUtf8() {
 		$title = GlobalTitle::newFromText( "Strona główna", false, 1686 ); # pl.wikia.com
 		$this->assertStringEndsWith(
