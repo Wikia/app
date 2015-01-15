@@ -3,13 +3,7 @@
 class GlobalTitleTest extends WikiaBaseTest {
 	private $wgDevelEnv;
 	private $wgDevelEnvName;
-	private $wikiUrlsMock = [
-		177 => 'http://community.wikia.com',
-		113 => 'http://en.memory-alpha.org',
-		490 => 'http://www.wowwiki.com',
-		1686 => 'http://spolecznosc.wikia.com',
-	];
-	
+
 	function setUp() {
 		parent::setUp();
 
@@ -22,19 +16,20 @@ class GlobalTitleTest extends WikiaBaseTest {
 			->willReturn( null );
 		$this->mockGlobalVariable( 'wgMemc', $wgMemcMock );
 
-		$this->mockStaticMethodWithCallback( 'WikiFactory', 'getVarValueByName', function( $cvName, $cityId ) {
-			$mockedReturnValue = null;
-
-			if ( $cvName === 'wgExtraNamespacesLocal' ) {
+		$this->getStaticMethodMock( 'WikiFactory', 'getVarValueByName' )
+			->expects( $this->any() )
+			->method( 'getVarValueByName' )
+			->willReturnMap( [
+				// basically all tests where GlobalTitle::load() is executed
+				[ 'wgServer', 177, 'http://community.wikia.com' ],
+				[ 'wgServer', 113, 'http://en.memory-alpha.org' ],
+				[ 'wgServer', 490, 'http://www.wowwiki.com' ],
+				[ 'wgServer', 1686, 'http://spolecznosc.wikia.com' ],
 				/** @see testUrlsMainNSonWoW **/
-				$mockedReturnValue = [ 116 => 'Portal' ];
-			} else if ( $cvName === 'wgServer' ) {
-				$mockedReturnValue = $this->wikiUrlsMock[$cityId];
-			}
+				[ 'wgArticlePath', 490, '/wiki/$1' ],
+				[ 'wgExtraNamespacesLocal', 490, [ 116 => 'Portal' ] ],
+			] );
 
-			return $mockedReturnValue;
-		} );
-		
 		global $wgDevelEnvironment,$wgDevelEnvironmentName;
 		$this->wgDevelEnv = $wgDevelEnvironment;
 		$this->wgDevelEnvName = $wgDevelEnvironmentName;
