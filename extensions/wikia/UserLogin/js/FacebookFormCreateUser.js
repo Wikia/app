@@ -1,4 +1,4 @@
-/* global UserBaseAjaxForm */
+/* global UserBaseAjaxForm, UserSignupMixin */
 (function () {
 	'use strict';
 
@@ -8,8 +8,13 @@
 
 	FacebookFormCreateUser.prototype = Object.create(UserBaseAjaxForm.prototype);
 
+	// Add common user signup mixin functions for use in this class
+	UserSignupMixin.call(FacebookFormCreateUser.prototype);
+
 	FacebookFormCreateUser.prototype.init = function () {
 		UserBaseAjaxForm.prototype.init.call(this);
+
+		// imported via mixin
 		this.initOptIn();
 		this.setCountryValue();
 	};
@@ -46,26 +51,6 @@
 		}
 
 		UserBaseAjaxForm.prototype.submitLoginHandler.call(this, response);
-	};
-
-	/**
-	 * Handle marketing email opt-in for different locales
-	 * @todo: See if we can share this with UserSignup.js
-	 */
-	FacebookFormCreateUser.prototype.initOptIn = function () {
-		var self = this;
-
-		require(['usersignup.marketingOptIn'], function (optIn) {
-			optIn.init(self.wikiaForm);
-		});
-	};
-	/**
-	 * Send country code upon signup
-	 * @todo: See if we can share this with UserSignup.js
-	 */
-	FacebookFormCreateUser.prototype.setCountryValue = function () {
-		var country = Wikia.geo.getCountryCode();
-		this.wikiaForm.inputs.wpRegistrationCountry.val(country);
 	};
 
 	window.FacebookFormCreateUser = FacebookFormCreateUser;

@@ -387,6 +387,7 @@ $config['oasis_anon_js'] = array(
 		'//extensions/wikia/AdEngine/js/Exitstitial.js',
 		'//extensions/wikia/UserLogin/js/UserSignupMarketingOptIn.js',
 		'//extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
+		'//extensions/wikia/UserLogin/js/mixins/UserSignup.mixin.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormCreateUser.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormConnectUser.js',
 		'//extensions/wikia/UserLogin/js/FacebookLogin.js',
@@ -402,6 +403,7 @@ $config['oasis_anon_with_new_global_nav_js'] = array(
 		'//extensions/wikia/AdEngine/js/Exitstitial.js',
 		'//extensions/wikia/UserLogin/js/UserSignupMarketingOptIn.js',
 		'//extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
+		'//extensions/wikia/UserLogin/js/mixins/UserSignup.mixin.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormCreateUser.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormConnectUser.js',
 		'//extensions/wikia/UserLogin/js/FacebookLogin.js',
@@ -416,6 +418,7 @@ $config['oasis_user_js'] = array(
 		'//extensions/wikia/UserLogin/js/FacebookLogin.js',
 		'//extensions/wikia/UserLogin/js/UserSignupMarketingOptIn.js',
 		'//extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
+		'//extensions/wikia/UserLogin/js/mixins/UserSignup.mixin.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormCreateUser.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormConnectUser.js',
 	)
@@ -811,7 +814,8 @@ $config['wikiamobile_usersignup_js'] = array(
 		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
 		'//extensions/wikia/UserLogin/js/UserSignupAjaxValidation.js',
 		'//extensions/wikia/UserLogin/js/UserSignupMarketingOptIn.js',
-		'//extensions/wikia/UserLogin/js/UserSignup.js'
+		'//extensions/wikia/UserLogin/js/mixins/UserSignup.mixin.js',
+		'//extensions/wikia/UserLogin/js/UserSignup.js',
 	)
 );
 
