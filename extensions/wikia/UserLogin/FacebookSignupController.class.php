@@ -301,8 +301,6 @@ class FacebookSignupController extends WikiaController {
 	 * @return null|User
 	 */
 	protected function getValidWikiaUser( $wikiaUserName, $wikiaPassword ) {
-		$errorParam = null;
-		$user = null;
 
 		if ( !$wikiaUserName ) {
 			$this->setErrorResponse( 'userlogin-error-noname', [], self::SIGNUP_USERNAME_KEY);
