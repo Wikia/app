@@ -58,6 +58,7 @@ $messages['en'] = array(
 	'user-identity-box-group-adminmentor' => 'Admin Mentor',
 	'user-identity-box-group-wikiastars' => 'Wikia Star',
 	'user-identity-box-group-voldev' => 'Volunteer Developer',
+	'user-identity-box-group-moderator' => 'Moderator',
 
 	'user-identity-box-zero-state-location' => 'Location',
 	'user-identity-box-zero-state-birthday' => 'Birthday',
@@ -158,6 +159,7 @@ $messages['qqq'] = array(
 	'user-identity-box-group-adminmentor' => 'Group name shown on user profile for users who are Admin Mentors.',
 	'user-identity-box-group-wikiastars' => 'Wikiaster',
 	'user-identity-box-group-voldev' => 'Group name shown on user profile for users who are Volunteer Developers',
+	'user-identity-box-group-moderator' => 'Group name shown on user profile for users who are Moderators',
 	'user-identity-box-join-more-wikis' => 'Message in user profile for when said user has not yet edited in wikis which could be displayed as his favourites',
 	'user-identity-remove-confirmation' => 'appears when user is trying to remove avatar',
 	'user-identity-remove-fail' => 'appears in alert box when there ware some when removing the avatar',
