@@ -9,6 +9,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'wikiamobile-desc' => 'Mobile Skin for Wikia',
 	'wikiamobile-search' => 'Search',
 	'wikiamobile-search-this-wiki' => 'Search this wiki',
 	'wikiamobile-search-wiki' => 'Wiki',
@@ -88,8 +89,8 @@ you should definitely check this out:
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'wikiamobile-search' => 'Label on a search button placed in Mobile skin top bar
-{{Identical|Search}}',
+	'wikiamobile-desc' => '{{desc}}',
+	'wikiamobile-search' => 'Label on a search button placed in Mobile skin top bar',
 	'wikiamobile-search-this-wiki' => 'Placeholder in input on search field',
 	'wikiamobile-search-wiki' => 'Text indicating that scope for a search will be current wiki
 {{Identical|Wiki}}',

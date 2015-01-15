@@ -8,6 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'lookupcontribs-desc' => 'Displays user contributions on multiple wikis',
 	'lookupcontribs' => 'Lookup Contribs',
 	'lookupcontribstitle' => 'Lookup Contribs',
 	'lookupcontribsrecentcontributions' => 'Recent contributions for $1',
@@ -68,6 +69,7 @@ Check given username for possible typos.</p>',
  * @author Umherirrender
  */
 $messages['qqq'] = array(
+	'lookupcontribs-desc' => '{{desc}}',
 	'lookupcontribslinks' => '{{Identical|Contribution link}}',
 	'lookupcontribsgo' => '{{Identical|Go}}',
 	'lookupcontribswiki' => '{{Identical|Wiki}}',

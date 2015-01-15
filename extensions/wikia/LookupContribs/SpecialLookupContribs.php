@@ -12,8 +12,9 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 $wgExtensionCredits['specialpage'][] = array(
     "name" => "LookupContribs",
-    "description" => "Displays user contributions on multiple wikis",
-    "author" => "Bartek Lapinski, Piotr Molski"
+    "descriptionmsg" => "lookupcontribs-desc",
+    "author" => array("Bartek Lapinski", "Piotr Molski"),
+	"url" => "https://github.com/Wikia/app/tree/dev/extensions/wikia/LookupContribs",
 );
 define("LC_TEST", 0);
 define("LC_LIMIT", 25);

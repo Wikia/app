@@ -23,6 +23,13 @@ if (!defined('MEDIAWIKI'))
 	exit( 1 ) ;
 }
 
+$wgExtensionCredits[ 'specialpage' ][ ] = array(
+	'name' => 'WhatIsMyIP',
+	'author' => 'Lukasz Galezewski <lukasz@wikia.com>',
+	'descriptionmsg' => 'whatismyip-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WhatIsMyIP',
+);
+
 $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['WhatIsMyIP'] = $dir . 'whatismyip.php'; # Tell MediaWiki to load the extension body.
 $wgExtensionMessagesFiles['WhatIsMyIP'] = $dir . 'WhatIsMyIP.i18n.php';

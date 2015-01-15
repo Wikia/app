@@ -112,12 +112,12 @@ $config['adengine2_late_js'] = array(
 	),
 );
 
-$config['adengine2_spotlights_js'] = array(
+$config['spotlights_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		// ads
-		'//extensions/wikia/AdEngine/AdProviderOpenX.js',
-		'//extensions/wikia/AdEngine/LazyLoadAds.js',
+		'//extensions/wikia/Spotlights/js/AdProviderOpenX.js',
+		'//extensions/wikia/Spotlights/js/LazyLoadAds.js',
 	),
 );
 
@@ -385,8 +385,8 @@ $config['oasis_anon_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/Exitstitial.js',
-		'//extensions/wikia/UserLogin/js/UserSignupMarketingOptIn.js',
 		'//extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
+		'//extensions/wikia/UserLogin/js/MarketingOptIn.js',
 		'//extensions/wikia/UserLogin/js/mixins/UserSignup.mixin.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormCreateUser.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormConnectUser.js',
@@ -401,7 +401,7 @@ $config['oasis_anon_with_new_global_nav_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/Exitstitial.js',
-		'//extensions/wikia/UserLogin/js/UserSignupMarketingOptIn.js',
+		'//extensions/wikia/UserLogin/js/MarketingOptIn.js',
 		'//extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
 		'//extensions/wikia/UserLogin/js/mixins/UserSignup.mixin.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormCreateUser.js',
@@ -416,7 +416,7 @@ $config['oasis_user_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/UserLogin/js/FacebookLogin.js',
-		'//extensions/wikia/UserLogin/js/UserSignupMarketingOptIn.js',
+		'//extensions/wikia/UserLogin/js/MarketingOptIn.js',
 		'//extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
 		'//extensions/wikia/UserLogin/js/mixins/UserSignup.mixin.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormCreateUser.js',
@@ -813,7 +813,7 @@ $config['wikiamobile_usersignup_js'] = array(
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
 		'//extensions/wikia/UserLogin/js/UserSignupAjaxValidation.js',
-		'//extensions/wikia/UserLogin/js/UserSignupMarketingOptIn.js',
+		'//extensions/wikia/UserLogin/js/MarketingOptIn.js',
 		'//extensions/wikia/UserLogin/js/mixins/UserSignup.mixin.js',
 		'//extensions/wikia/UserLogin/js/UserSignup.js',
 	)
@@ -887,8 +887,7 @@ $config['monobook_js'] = array(
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
 		'#group_imglzy_js',
-		'//extensions/wikia/AdEngine/AdProviderOpenX.js',
-		'//extensions/wikia/AdEngine/LazyLoadAds.js',
+		'#group_spotlights_js',
 		'//resources/wikia/libraries/ghostwriter/gw.min.js',
 		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
 		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',

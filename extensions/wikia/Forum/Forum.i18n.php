@@ -8,6 +8,8 @@
 $messages = array();
 
 $messages['en'] = array(
+	'forum-desc' => 'Wikia\'s Special:Forum extension',
+	'forum-disabled-desc' => 'Wikia\'s Special:Forum extension; disabled',
 	'forum-forum-title' => 'Forum',
 	'forum-active-threads' => '$1 {{PLURAL:$1|Active Discussion|Active Discussions}}',
 	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|Active Discussion|Active Discussions}} about: '''[[$2]]'''",
@@ -237,6 +239,8 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'forum-desc' => '{{desc}}',
+	'forum-disabled-desc' => '{{desc}}',
 	'forum-forum-title' => 'The main title for the forum.
 {{Identical|Forum}}',
 	'forum-active-threads' => 'Total number of active threads in a forum board. Appears above the list of all threads in a forum board. Parameters:

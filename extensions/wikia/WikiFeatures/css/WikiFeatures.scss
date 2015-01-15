@@ -242,12 +242,12 @@
 .star-rating {
 	@include clearfix;
 	>img {
-		background: url('/extensions/wikia/WikiFeatures/images/star-inactive.png'); /* base64 */
+		background: url('/extensions/wikia/WikiFeatures/images/star-inactive.png'); /* inline */
 		height: 16px;
 		float: left;
 		width: 16px;
 		&.active {
-			background: url('/extensions/wikia/WikiFeatures/images/star-active.png'); /* base64 */
+			background: url('/extensions/wikia/WikiFeatures/images/star-active.png'); /* inline */
 		}
 	}
 }

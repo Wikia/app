@@ -15,7 +15,6 @@ class WAMApiController extends WikiaApiController {
 	const DEFAULT_WIKI_IMAGE_WIDTH = 150;
 	const DEFAULT_WIKI_ADMINS_LIMIT = 5;
 	const WAM_RESPONSE_CACHE_VALIDITY = 21600;
-	const MEMCACHE_VER = '1.05';
 
 	/**
 	 * A method to get WAM index (list of wikis with their WAM ranks)
@@ -66,7 +65,7 @@ class WAMApiController extends WikiaApiController {
 		$wamIndex = WikiaDataAccess::cacheWithLock(
 			wfSharedMemcKey(
 				'wam_index_table',
-				self::MEMCACHE_VER,
+				WAMService::MEMCACHE_VER,
 				$app->wg->ContLang->getCode(),
 				implode(':', $options)
 			),
@@ -152,7 +151,7 @@ class WAMApiController extends WikiaApiController {
 		$wamDates = WikiaDataAccess::cache(
 			wfSharedMemcKey(
 				'wam_minmax_date',
-				self::MEMCACHE_VER
+				WAMService::MEMCACHE_VER
 			),
 			2 * 60 * 60,
 			function () {

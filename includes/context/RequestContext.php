@@ -195,6 +195,12 @@ class RequestContext implements IContextSource {
 	 * @return User
 	 */
 	public function getUser() {
+		// Wikia change - begin - @author: Michał Roszka
+		global $wgEnableHeliosExt;
+		if ( $wgEnableHeliosExt ) {
+			$this->user = \Wikia\Helios\User::newFromToken( $this->getRequest() );
+		}
+		// Wikia change - end
 		// Wikia change - begin - @author: wladek
 		global $wgUserForceAnon;
 		if ( $this->user === null && $wgUserForceAnon ) {

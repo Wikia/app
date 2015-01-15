@@ -7,6 +7,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'author' => 'Tomasz Odrobny',
 	'descriptionmsg' => 'follow-desc',
 	'version' => '1.0.0',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Follow'
 );
 
 $dir = dirname(__FILE__) . '/';
