@@ -273,6 +273,21 @@ class FacebookClient {
 	}
 
 	/**
+	 * Returns user's email address from Facebook
+	 *
+	 * @param int $userId Facebook User id
+	 * @return string|null email address if exists
+	 */
+	public function getEmail( $userId ) {
+		$userInfo = $this->getUserInfo( $userId );
+		if ( !$userInfo ) {
+			return null;
+		}
+
+		return $userInfo->getProperty( 'email' );
+	}
+
+	/**
 	 * Returns a Wikia User object for the current (or passed) Facebook ID
 	 *
 	 * @param int|null $fbId [optional] A Facebook ID
