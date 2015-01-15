@@ -2209,4 +2209,26 @@ class WallHooksHelper {
 		return true;
 	}
 
+	/**
+	 * @desc Fix User_talk links for profile page diff on wall enabled wikis
+	 *
+	 * @param Title $title
+	 * @param Title $talkPageTitle
+	 *
+	 * @return bool
+	 */
+	public static function onGetTalkPage( $title, $talkPageTitle ) {
+		global $wgEnableWallExt;
+
+		if (
+			!$title->isSubpage() &&
+			$title->getNamespace() == NS_USER &&
+			!empty( $wgEnableWallExt )
+		) {
+			$talkPageTitle = Title::makeTitle( NS_USER_WALL, $title->getDBkey() );
+		}
+
+		return true;
+	}
+
 }
