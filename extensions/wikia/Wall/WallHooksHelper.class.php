@@ -2217,7 +2217,7 @@ class WallHooksHelper {
 	 *
 	 * @return bool
 	 */
-	public static function onGetTalkPage( &$title, &$talkPageTitle ) {
+	public static function onGetTalkPage( $title, &$talkPageTitle ) {
 		global $wgEnableWallExt;
 
 		if (
