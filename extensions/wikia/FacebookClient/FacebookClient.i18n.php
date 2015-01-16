@@ -16,6 +16,8 @@ $messages['en'] = [
 	'prefs-fbconnect-disconnect-prefstext' => 'Disconnect from Facebook',
 	'fbconnect-error-already-connected' => 'This Wikia account is already connected to Facebook. Please disconnect the original Facebook account prior to connecting another account.',
 	'fbconnect-error-fb-account-in-use' => 'This Facebook account is already connected to another Wikia user account. Please connect with a different account or log in with Facebook and disconnect the original Wikia account prior to connecting the $1 account.',
+	'fbconnect-error-fb-unavailable-title' => 'Error connecting to Facebook',
+	'fbconnect-error-fb-unavailable-text' => 'Facebook seems to be unavailable at this time. Please try again later.',
 
 	// Keys copied from FBConnect and in use
 
@@ -53,9 +55,7 @@ You can use the same username and password as you did before you connected.
 Thanks,
 
 The Wikia Community Team',
-	'fbconnect-wikia-login-w-facebook' => 'Log in / Sign up with Facebook Connect',
 	'fbconnect-wikia-signup-w-facebook' => 'Sign up with Facebook',
-	'fbconnect-wikia-login-or-create' => 'Log in / Create an account',
 	'fbconnect-logout-confirm' => 'Choosing to cancel will log you out of Wikia and Facebook. Do you want to continue?',
 	'prefs-fbconnect-prefstext' => 'Facebook Connect',
 	'prefs-fbconnect-status-prefstext' => 'Status',
@@ -82,6 +82,8 @@ $messages['qqq'] = [
 	'fbconnect-error-already-connected' => 'Error message stating that Wikia account user is trying to connected to Facebook is already connected.',
 	'fbconnect-error-fb-account-in-use' => "Error message stating that another Wikia account is already connected to the Facebook account user is trying to connect to. Parameter:
 * $1 is a username.",
+	'fbconnect-error-fb-unavailable-title' => 'Error message title when Facebook is not reachable.',
+	'fbconnect-error-fb-unavailable-text' => 'Error message stating that Facebook is not available. Please ask user to try again later.',
 
 	'fbconnect-desc' => 'Short description of the FBConnect extension, shown in [[Special:Version]]. Do not translate or change links.',
 	'fbconnect-or' => 'This is just the word "OR" in English, used to separate the Facebook Connect login option from the normal Wikia login options on the AJAX login dialog box.',
@@ -103,8 +105,6 @@ $messages['qqq'] = [
 	'fbconnect-prefstext' => '',
 	'fbconnect-prefstext/fbconnect-status-prefstext' => '',
 	'fbconnect-unknown-error' => '',
-	'fbconnect-wikia-login-or-create' => '',
-	'fbconnect-wikia-login-w-facebook' => '',
 	'fbconnect-wikia-signup-w-facebook' => '',
 	'fbconnect-logout-confirm' => 'Message shown if a user attempts to cancel process of connecting Wikia account with Facebook account. It informs the user that proceeding with this action will result in logout from Facebook and asks for confirmation.',
 	'fbconnect-preferences-connected' => 'Notifies user when they have successfully connected their facebook and wikia accounts via Special:Preferences',

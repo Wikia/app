@@ -10,6 +10,10 @@ class MakerstudiosVideoHandler extends VideoHandler {
 		$height =  $this->getHeight( $width );
 		$sizeString = $this->getSizeString( $width, $height );
 		$url = $this->getEmbedUrl();
+		if ( !empty( $options['autoplay'] ) ) {
+			$url .= '?autoplay=true';
+		}
+
 		$html = <<< EOF
 <iframe class='videoplayer' src='$url' $sizeString style='border:0; overflow:hidden;' allowfullscreen seamless scrolling='no'></iframe>
 EOF;

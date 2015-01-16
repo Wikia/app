@@ -134,7 +134,6 @@ class ListusersData {
 					if ( !empty($group) ) {
 						if ( $group == Listusers::DEF_GROUP_NAME ) {
 							$whereGroup[] = " all_groups = '' ";
-							$whereGroup[] = " all_groups = 'fb-user' ";
 						} else {
 							$whereGroup[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), $group );
 							$whereGroup[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), sprintf("%s;", $group), $dbs->anyString() );
@@ -388,7 +387,7 @@ class ListusersData {
 					if ( $key != Listusers::DEF_GROUP_NAME ) {
 						$where[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), $key ) . " OR all_groups " . $dbs->buildLike( $dbs->anyString(), sprintf("%s;", $key), $dbs->anyString() );
 					} else {
-						$where[] = " all_groups = '' OR all_groups = 'fb-user' ";
+						$where[] = " all_groups = '' ";
 					}
 
 					$unions[] = $dbs->selectSQLText(

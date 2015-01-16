@@ -18,7 +18,7 @@
 	display: none;
 	font-size: 12px;
 	list-style: none;
-	padding: 0;
+	padding: 0 0 $large-content-padding 0;
 	position: relative;
 	right: $large-grid-column + $large-grid-gutter + $large-grid-column-padding + 1;
 	z-index: 5000100;
@@ -66,7 +66,7 @@
 			@include box-sizing;
 			line-height: inherit;
 			margin: 0;
-			padding: 0px;
+			padding: 0;
 			width: 100%;
 
 			&.login-button {
@@ -157,7 +157,7 @@
 	}
 
 	.sso-login {
-		padding: 0 $large-content-padding $large-content-padding;
+		padding: 0 $large-content-padding;
 
 		.sso-login-divider {
 			border-top: solid 1px $nav-border-color;
@@ -219,7 +219,7 @@
 		right: 2 * $small-grid-column + 1;
 
 		.sso-login {
-			padding: 0 $small-content-padding $small-content-padding;
+			padding: 0 $small-content-padding;
 		}
 
 		.ajaxRegisterContainer {
@@ -238,7 +238,7 @@
 		right: $medium-grid-column + $medium-grid-gutter + $medium-grid-column-padding + 1;
 
 		.sso-login {
-			padding: 0 $medium-content-padding $medium-content-padding;
+			padding: 0 $medium-content-padding;
 		}
 
 		.ajaxRegisterContainer {

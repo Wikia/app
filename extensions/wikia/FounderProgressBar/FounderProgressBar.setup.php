@@ -21,7 +21,6 @@ $wgHooks[ 'ArticleSaveComplete' ][] = 'FounderProgressBarHooks::onArticleSaveCom
 $wgHooks[ 'UploadComplete' ][] = 'FounderProgressBarHooks::onUploadComplete';
 $wgHooks[ 'UploadWordmarkComplete' ][] = 'FounderProgressBarHooks::onUploadWordmarkComplete';
 $wgHooks[ 'AddNewAccount' ][] = 'FounderProgressBarHooks::onAddNewAccount';
-$wgHooks['FounderProgressBarOnFacebookConnect'][] = 'FounderProgressBarHooks::onFacebookConnect';
 $wgHooks['AfterVideoFileUploaderUpload'][] = 'FounderProgressBarHooks::onAfterVideoFileUploaderUpload';
 
 // On wiki creation or WikiFactory enable add db columns
