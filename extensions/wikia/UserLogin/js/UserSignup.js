@@ -2,6 +2,9 @@
 (function () {
 	'use strict';
 
+	/**
+	 * JS for signing up with a new account, both on mobile and desktop
+	 */
 	var UserSignup = {
 		inputsToValidate: ['userloginext01', 'email', 'userloginext02', 'birthday'],
 		notEmptyFields: ['userloginext01', 'email', 'userloginext02', 'birthday', 'birthmonth', 'birthyear'],
@@ -42,7 +45,8 @@
 			var $captchaInput;
 
 			// if we don't need captcha on this form, there's nothing to fail
-			if (!this.useCaptcha) {
+			// Temporary skin check fix until we sort out captcha on mobile UC-162
+			if (!this.useCaptcha || window.skin === 'wikiamobile') {
 				return false;
 			}
 
