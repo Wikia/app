@@ -374,7 +374,11 @@ class GameGuidesController extends WikiaController {
 		return $content;
 	}
 
-	public function curatedContentToGameGuides( $wikiaCuratedContent ) {
+	/**
+	 * @param array $wikiaCuratedContent
+	 * @return array
+	 */
+	public function curatedContentToGameGuides( array $wikiaCuratedContent ) {
 		$gameGuideContent = [ ];
 		foreach ( $wikiaCuratedContent as $CCTag ) {
 			if ( !empty( $CCTag ) && empty( $CCTag[ 'featured' ] ) ) {
