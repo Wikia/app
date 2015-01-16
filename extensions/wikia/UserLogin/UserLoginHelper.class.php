@@ -135,10 +135,11 @@ class UserLoginHelper extends WikiaModel {
 	/**
 	 * Redirect the user to the appropriate page after login.
 	 *
-	 * @requestParam string returnUrl
+	 * @param string $extraReturnToQuery Use this to add any additional parameters to the query string
+	 * @param int $cbVal Send a specific CB value (mostly for testing)
 	 */
-	public function doRedirect() {
-		$this->wg->out->redirect( $this->getRedirectUrl() );
+	public function doRedirect( $extraReturnToQuery = '', $cbVal = 0 ) {
+		$this->wg->out->redirect( $this->getRedirectUrl( $extraReturnToQuery, $cbVal ) );
 	}
 
 	/**
@@ -160,7 +161,7 @@ class UserLoginHelper extends WikiaModel {
 			$titleObj = Title::newMainPage();
 		}
 
-		$cbParam = "cb=" . ( $cbVal ? $cbVal : rand( 1, 10000 ) );
+		$cbParam = 'cb=' . ( $cbVal ? $cbVal : rand( 1, 10000 ) );
 		$returnParams = $this->wg->Request->getVal( 'returntoquery', '' );
 
 		if ( !empty( $extraReturnToQuery ) ) {

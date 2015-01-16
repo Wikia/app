@@ -788,9 +788,9 @@ class UserLoginTest extends UserLoginBaseTest {
 	 * @param Title $actualTitle
 	 * @param string $actualQueryString
 	 *
-	 * @dataProvider getReturnToUrlDataProvider
+	 * @dataProvider getRedirectUrlDataProvider
 	 */
-	public function testGetReturnToUrl( $page, $queryString, $extraQueryString, $cbVal, Title $actualTitle, $actualQueryString ) {
+	public function testGetRedirectUrl( $page, $queryString, $extraQueryString, $cbVal, Title $actualTitle, $actualQueryString ) {
 		$request = F::app()->wg->Request;
 		$request->setVal( 'returnto', $page );
 		$request->setVal( 'returntoquery', $queryString );
@@ -803,7 +803,7 @@ class UserLoginTest extends UserLoginBaseTest {
 		$this->assertEquals( $testUrl, $actualUrl );
 	}
 
-	public function getReturnToUrlDataProvider() {
+	public function getRedirectUrlDataProvider() {
 		return [
 			// test title w/o query string
 			[
