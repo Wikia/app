@@ -130,9 +130,9 @@ class ImagesService extends Service {
 		}
 
 		if (VignetteRequest::isVignetteUrl($thumbUrl)) {
-			$thumbUrl = VignetteRequest::setThumbnailFormat( $thumbUrl, $newExtension );
-			if ( $thumbUrl ) {
-				return $thumbUrl;
+			$vignetteUrl = VignetteRequest::setThumbnailFormat( $thumbUrl, $newExtension );
+			if ( $vignetteUrl ) {
+				return $vignetteUrl;
 			}
 		}
 
