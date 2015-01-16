@@ -189,5 +189,5 @@ if ( $wgUser->isAnon() ) {
 	if ( $interval ) {
 		sleep( $interval );
 	}
-	wfWaitForSlaves( 5 );
+	wfWaitForSlaves();
 ?>

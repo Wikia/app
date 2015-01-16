@@ -8,6 +8,9 @@
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'UserLogin',
+	'author' => array('Hyun Lim', 'Saipetch Kongkatong'),
+	'descriptionmsg' => 'userlogin-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/UserLogin'
 );
 
 $dir = dirname(__FILE__) . '/';
@@ -43,7 +46,11 @@ $wgExtensionMessagesFiles['UserSignup'] = $dir . 'UserSignup.i18n.php';
 $wgExtensionMessagesFiles['UserSignupAliases'] = $dir . 'UserSignup.alias.php';
 $wgExtensionMessagesFiles['WikiaConfirmEmail'] = $dir . 'WikiaConfirmEmail.i18n.php';
 
-JSMessages::registerPackage('UserLogin', array('userlogin-login-*'));
+JSMessages::registerPackage('UserLogin', ['userlogin-login-*']);
+JSMessages::registerPackage('UserSignup', [
+	'usersignup-page-captcha-load-fail-title',
+	'usersignup-page-captcha-load-fail-text',
+]);
 
 // special pages
 $wgSpecialPages['Userlogin'] = 'UserLoginSpecialController';

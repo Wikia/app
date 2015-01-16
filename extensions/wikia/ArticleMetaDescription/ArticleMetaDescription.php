@@ -20,9 +20,13 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['other'][] = [
     'name' => 'ArticleMetaDescription',
     'version' => '1.1',
-    'author' => '[http://www.wikia.com/wiki/User:Adi3ek Adrian \'ADi\' Wieczorek], [http://seancolombo.com Sean Colombo]',
-    'description' => 'adding meta-description tag containing snippet of the Article, provided by the ArticleService'
+    'author' => array('[http://www.wikia.com/wiki/User:Adi3ek Adrian \'ADi\' Wieczorek]', '[http://seancolombo.com Sean Colombo]'),
+    'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ArticleMetaDescription',
+    'descriptionmsg' => 'articlemetadescription-desc'
 ];
+
+//i18n
+$wgExtensionMessagesFiles['ArticleMetaDescription'] = __DIR__ . '/ArticleMetaDescription.i18n.php';
 
 $wgHooks['OutputPageBeforeHTML'][] = 'wfArticleMetaDescription';
 

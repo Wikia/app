@@ -1,6 +1,6 @@
 define(
-	'wikia.globalnavigation.lazyload', ['jquery', 'wikia.nirvana', 'wikia.querystring', 'wikia.window'],
-	function lazyLoad($, nirvana, Querystring, win) {
+	'wikia.globalnavigation.lazyload', ['jquery', 'wikia.nirvana', 'wikia.window'],
+	function lazyLoad($, nirvana, win) {
 		'use strict';
 
 		var menuLoading = false,
@@ -46,9 +46,9 @@ define(
 		 * @desc loads hub menu sections
 		 */
 		function getHubLinks() {
-			var lang,
-				data = {
-					cb: win.wgStyleVersion
+			var data = {
+					cb: win.wgStyleVersion,
+					uselang: win.wgUserLanguage
 				};
 
 			if (isMenuWorking()) {
@@ -56,11 +56,6 @@ define(
 			}
 
 			menuLoading = true;
-
-			lang = new Querystring().getVal('uselang');
-			if (lang) {
-				data.uselang = lang;
-			}
 
 			nirvana.sendRequest({
 				controller: 'GlobalNavigationController',

@@ -189,7 +189,11 @@ module.exports = function (config) {
 			'extensions/wikia/MediaGallery/scripts/views/media.js',
 			'extensions/wikia/MediaGallery/scripts/views/toggler.js',
 			'extensions/wikia/MediaGallery/scripts/views/gallery.js',
-			'extensions/wikia/MediaGallery/scripts/spec/**/*.spec.js'
+			'extensions/wikia/MediaGallery/scripts/spec/**/*.spec.js',
+
+			// User Login and Signup
+			'extensions/wikia/UserLogin/js/MarketingOptIn.js',
+			'extensions/wikia/UserLogin/js/spec/MarketingOptIn.spec.js'
 		]
 	});
 };

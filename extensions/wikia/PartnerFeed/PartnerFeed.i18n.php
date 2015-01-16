@@ -13,6 +13,7 @@ $messages = array();
  * @return array
  */
 $messages['en'] = array(
+	'partner-feed-desc'                 => 'Partner Feed extension',
 	'partner-feed-achievements-leaderboard' => 'Wikis achievements leaderboard',
 	'partner-feed-earned-badges'		=> 'Recently earned badges for a specific Wiki',
 	'partner-feed-recent-blog-posts'	=> 'Recent blog posts related to a promotion',
@@ -40,6 +41,7 @@ $messages['en'] = array(
  * @author Shirayuki
  */
 $messages['qqq'] = array(
+	'partner-feed-desc' => '{{desc}}',
 	'partner-feed-hotcontent' => 'Both terms "Hub" and "verticals" have the same meaning in this context. The meaning is "Portals", i.e. the grouping of wikis by their theme. Examples of portals are "Gaming", "Entertainment", "Education", "Music", etc.',
 	'partner-feed-recent-changes' => '{{Identical|Recent changes}}',
 	'blog-posts-from-listing' => 'Parameters:

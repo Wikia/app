@@ -88,7 +88,9 @@ $(function () {
 	};
 
 	// loads the SDK and calls facebook init functions
-	$.loadFacebookAPI(function () {
-		new SpecialPage().init();
-	});
+	$.loadFacebookAPI()
+		.done(function () {
+			$('.sso-login').removeClass('hidden');
+			new SpecialPage().init();
+		});
 });

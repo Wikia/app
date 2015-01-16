@@ -16,9 +16,10 @@ if (!defined('MEDIAWIKI')) {
 
 $wgExtensionCredits['other'][] = array(
 	'author' => 'Maciej Brencz',
-	'description-msg' => 'timeagomessaging-desc',
+	'descriptionmsg' => 'timeagomessaging-desc',
 	'name' => 'TimeAgo Messaging',
 	'version' => '1.0',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/TimeAgoMessaging'
 );
 
 $dir = dirname(__FILE__);

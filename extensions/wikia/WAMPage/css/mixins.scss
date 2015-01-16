@@ -25,15 +25,15 @@
 		}
 		.vertical-bg-#{$vertical-name} {
 			@include verticals-colors('background-color', $vertical-name);
-		}	
+		}
 	}
 }
 
 @mixin vertical-icon($icon-name, $selected) {
 	@if $selected == 1 {
-		background-image: url("/extensions/wikia/WAMPage/images/#{$icon-name}-active.svg"); /* base64 */
+		background-image: url("/extensions/wikia/WAMPage/images/#{$icon-name}-active.svg"); /* inline */
 	} @else if $selected == 0 {
-		background-image: url("/extensions/wikia/WAMPage/images/#{$icon-name}.svg"); /* base64 */
+		background-image: url("/extensions/wikia/WAMPage/images/#{$icon-name}.svg"); /* inline */
 	}
 }
 

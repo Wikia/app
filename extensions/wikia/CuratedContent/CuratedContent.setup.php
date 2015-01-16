@@ -2,6 +2,14 @@
 /**
  * Curated Content API setup file
  */
+ 
+$wgExtensionCredits[ 'specialpage' ][ ] = array(
+	'name' => 'CuratedContent',
+	'author' => 'Wikia',
+	'descriptionmsg' => 'wikiacuratedcontent-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CuratedContent',
+);
+
 $dir = dirname( __FILE__ );
 /**
  * classes
@@ -44,7 +52,8 @@ JSMessages::registerPackage( 'CuratedContentMsg', [
 	'wikiacuratedcontent-content-articlenotfound-error',
 	'wikiacuratedcontent-content-emptylabel-error',
 	'wikiacuratedcontent-content-videonotsupported-error',
-	'wikiacuratedcontent-content-notsupportedtype-error'
+	'wikiacuratedcontent-content-notsupportedtype-error',
+	'wikiacuratedcontent-content-nocategoryintag-error',
 ] );
 
 //hooks

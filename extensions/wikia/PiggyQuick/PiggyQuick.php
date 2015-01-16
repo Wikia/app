@@ -24,7 +24,7 @@ $wgExtensionCredits['other'][] = array(
 	'descriptionmsg'	=> 'piggyquick-desc',
 	'version'		=> '1.0',
 	'author'		=> array( '[http://community.wikia.com/wiki/User:Mroszka Michał Roszka (Mix)]' ),
-	'url'			=> 'http://trac.wikia-code.com/browser/wikia/trunk/extensions/wikia/PiggyQuick/',
+	'url'			=> 'https://github.com/Wikia/app/tree/dev/extensions/wikia/PiggyQuick',
 );
 
 

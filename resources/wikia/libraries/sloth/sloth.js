@@ -77,7 +77,7 @@
 
 		Branch.prototype.isVisible = function () {
 			var elem = this.elem,
-				mayBeVisible = elem.scrollHeight || elem.scrollWidth,
+				mayBeVisible = elem.offsetHeight || elem.offsetWidth,
 				height,
 				threshold,
 				top,
