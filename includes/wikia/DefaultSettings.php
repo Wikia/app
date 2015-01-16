@@ -1296,6 +1296,12 @@ $wgAdDriverAlwaysCallDartInCountries = [];
 $wgAdDriverUseBottomLeaderboard = false;
 
 /**
+ * @name $wgAdDriverUseInterstitial
+ * Whether to enable new interstitial ad MODAL_INTERSTITIAL_5
+ */
+$wgAdDriverUseInterstitial = false;
+
+/**
  * @name $wgAdDriverUseTopInContentBoxad
  * Whether to enable new in-content top ad TOP_IN_CONTENT_BOXAD
  */
