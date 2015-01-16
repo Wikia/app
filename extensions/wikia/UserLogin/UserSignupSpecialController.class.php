@@ -458,28 +458,26 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * @desc Checks if the user/email is not blocked in phalanx and sets the proper response if not
+	 * @desc Checks if the user/email is blocked in phalanx and sets the proper response if so
 	 *
 	 * @param $user
 	 * @return bool
 	 */
-	private function isNotBlockedByPhalanx( $user ) {
+	private function isBlockedByPhalanx( $user ) {
+		$abortError = '';
 
-		return UserLoginHelper::callWithCaptchaDisabled(function($params) {
-			$abortError = '';
-			$phalanxValid = true;
+		// abortNewAccount returns false if the user/email is blocked, true if they are not blocked
+		$blockedByPhalanx = !PhalanxUserBlock::abortNewAccount( $user, $abortError );
 
-			if( !wfRunHooks( 'AbortNewAccount', array( $params['user'], &$abortError ) ) ) {
-				return $this->setResponseFields(
-					'error',
-					$abortError,
-					'email'
-				);
-				// FIXME: unreachable
-				$phalanxValid = false;
-			}
-			return $phalanxValid;
-		}, array( 'user' => $user ) );
+		if ( $blockedByPhalanx ) {
+			$this->setResponseFields(
+				'error',
+				$abortError,
+				'email'
+			);
+		}
+
+		return $blockedByPhalanx;
 	}
 
 	/**
@@ -524,7 +522,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			$user->setEmail( $email );
 
 			// CONN-471: Call AbortNewAccount to validate username/password with Phalanx
-			if ( !$this->isNotBlockedByPhalanx( $user ) ) {
+			if ( $this->isBlockedByPhalanx( $user ) ) {
 				return;
 			}
 
