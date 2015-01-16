@@ -12,11 +12,15 @@ class UserToolsController extends WikiaController {
 
 	public function executeToolbarSave( $params ) {
 		$status = false;
-		$service = $this->getToolbarService();
-		if ( isset( $params['toolbar'] ) && is_array( $params['toolbar'] ) ) {
-			$data = $service->jsonToList( $params['toolbar'] );
-			if ( !empty( $data ) ) {
-				$status = $service->save( $data );
+		if ( $this->request->wasPosted()
+			&& $this->wg->User->matchEditToken( $this->request->getVal( 'token' ) )
+		) {
+			$service = $this->getToolbarService();
+			if ( isset( $params['toolbar'] ) && is_array( $params['toolbar'] ) ) {
+				$data = $service->jsonToList( $params['toolbar'] );
+				if ( !empty( $data ) ) {
+					$status = $service->save( $data );
+				}
 			}
 		}
 		$this->response->setVal( 'status', $status );
