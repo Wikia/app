@@ -28,6 +28,10 @@ wgUserLanguage, GlobalNotification */
 			$().log(msg, 'UserLoginFacebook');
 		},
 
+		/**
+		 * Initialize functionality needed to log in or sign up for a new account with facebook
+		 * @param {Object} origin Possible values are from FacebookLogin.origins. For tracking how a user got here.
+		 */
 		init: function (origin) {
 			var self = this;
 
@@ -37,9 +41,7 @@ wgUserLanguage, GlobalNotification */
 
 			this.bucky.timer.start('init');
 
-			// requiring these variables here instead of at the top of the page to avoid race conditions until we can
-			// turn this file into a proper AMD module
-			// @todo: Turn this file into a proper AMD module
+			// requiring these variables here instead of at the top of the page to avoid race conditions
 			require([
 				'wikia.tracker',
 				'wikia.querystring',
@@ -57,7 +59,7 @@ wgUserLanguage, GlobalNotification */
 				});
 
 				self.initialized = true;
-				self.loginSetup();
+				self.bindEvents();
 
 				// load when the login dropdown is shown or specific page is loaded
 				$.loadFacebookAPI()
@@ -70,8 +72,10 @@ wgUserLanguage, GlobalNotification */
 			});
 		},
 
-		// TODO: replace with "bindEvents"
-		loginSetup: function () {
+		/**
+		 * Set click handlers for the facebook button
+		 */
+		bindEvents: function () {
 			var self = this;
 
 			this.bucky.timer.start('loginSetup');

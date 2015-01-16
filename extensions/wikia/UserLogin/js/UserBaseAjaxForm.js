@@ -15,6 +15,9 @@
 		this.init();
 	};
 
+	/**
+	 * Setup functions for this module
+	 */
 	UserBaseAjaxForm.prototype.init = function () {
 		this.wikiaForm = new WikiaForm(this.el.find('form'));
 		this.inputs = this.wikiaForm.inputs;
@@ -89,11 +92,18 @@
 		}
 	};
 
+	/**
+	 * Removes any validation error messages already displayed on the form
+	 */
 	UserBaseAjaxForm.prototype.resetValidation = function () {
 		this.form.find('.error-msg').remove();
 		this.form.find('.input-group').removeClass('error');
 	};
 
+	/**
+	 * Called after a user has submitted the form and the response from the server was 'ok'
+	 * @param {Object} json Response data
+	 */
 	UserBaseAjaxForm.prototype.onOkayResponse = function (json) {
 		var callback = this.options.callback || '';
 		window.wgUserName = json.wgUserName;
@@ -106,11 +116,19 @@
 		}
 	};
 
+	/**
+	 * Called after a user has submitted the form and the response from the server was 'error'
+	 * @param {Object} json Response data
+	 */
 	UserBaseAjaxForm.prototype.onErrorResponse = function (json) {
 		this.submitButton.removeAttr('disabled');
 		this.errorValidation(json);
 	};
 
+	/**
+	 * Initialize front end validation messages based on error data returns from server.
+	 * @param {Object} json
+	 */
 	UserBaseAjaxForm.prototype.errorValidation = function (json) {
 		if (json.errParam) {
 			this.wikiaForm.showInputError(json.errParam, json.msg);
@@ -119,6 +137,10 @@
 		}
 	};
 
+	/**
+	 * Called when a user clicks the forgot password link in a login form
+	 * @param {Event} e Click event
+	 */
 	UserBaseAjaxForm.prototype.mailPassword = function (e) {
 		e.preventDefault();
 		this.form.find('.input-group').removeClass('error');

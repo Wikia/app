@@ -2,12 +2,26 @@
 (function () {
 	'use strict';
 
+	/**
+	 * Handle any login forms that are shown dynamically with JS
+	 * @param {jQuery} el Wrapping element for the form
+	 * @param {Object} options Configuration options for the module
+	 * @constructor
+	 * @extends UserBaseAjaxForm
+	 */
 	var UserLoginAjaxForm = function (el, options) {
 		UserBaseAjaxForm.call(this, el, options);
 	};
 
+	/**
+	 * Pull in the base class's functionality
+	 * @type {UserBaseAjaxForm.prototype}
+	 */
 	UserLoginAjaxForm.prototype = Object.create(UserBaseAjaxForm.prototype);
 
+	/**
+	 * Set up module functionality
+	 */
 	UserLoginAjaxForm.prototype.init = function () {
 		UserBaseAjaxForm.prototype.init.call(this);
 		this.retrieveLoginToken();
@@ -33,6 +47,10 @@
 		}
 	};
 
+	/**
+	 * Called when a user has requested a password change
+	 * @param {Object} json Response from server
+	 */
 	UserLoginAjaxForm.prototype.onResetPasswordResponse = function (json) {
 		var callback = this.options.resetpasscallback || '';
 		if (callback && typeof callback === 'function') {
@@ -63,6 +81,10 @@
 		});
 	};
 
+	/**
+	 * Called after a user has requested an account closer.
+	 * @TODO: Not sure what user actions are taken for this to be called.
+	 */
 	UserLoginAjaxForm.prototype.onAccountClosureReqestResponse = function () {
 		$.post(wgScriptPath + '/wikia.php', {
 			controller: 'UserLoginSpecial',
@@ -73,6 +95,10 @@
 		});
 	};
 
+	/**
+	 * Replace modal's content based on HTML sent from the server.
+	 * @param {string} html
+	 */
 	UserLoginAjaxForm.prototype.retrieveTemplateCallback = function (html) {
 		var content = $('<div>').hide().append(html),
 			form = this.form;
@@ -84,7 +110,7 @@
 	};
 
 	/**
-	 * Get login token from back end
+	 * Get login token from back end and update the form field value
 	 * @param {Object} [params]
 	 */
 	UserLoginAjaxForm.prototype.retrieveLoginToken = function (params) {
