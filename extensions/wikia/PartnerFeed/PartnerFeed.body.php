@@ -129,6 +129,8 @@ class PartnerFeed extends SpecialPage {
 					if ( ( $maxNumberOfBlogComments-- ) == 0){
 						break;
 					}
+					//make sure all data is loaded
+					$commentPage['level1']->load();
 					$tmpArticleComment = $commentPage['level1']->getData();
 
 					$feedArray[] = array(
