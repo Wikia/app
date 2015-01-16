@@ -130,19 +130,22 @@ class PartnerFeed extends SpecialPage {
 						break;
 					}
 					//make sure all data is loaded
-					$commentPage['level1']->load();
-					$tmpArticleComment = $commentPage['level1']->getData();
+					if ( $commentPage[ 'level1' ]->load() ) {
+						$tmpArticleComment = $commentPage[ 'level1' ]->getData();
 
-					$feedArray[] = array(
-						'title' => '',
-						'description' => $tmpArticleComment['text'],
-						'url' => $oTitle->getFullURL(),
-						'date' => $commentPage['level1']->mFirstRevision->getTimestamp(),
-						'author' => $tmpArticleComment['author']->getName(),
-						'otherTags' => array(
-							'image' => AvatarService::getAvatarUrl( $commentPage['level1']->mUser->getName(), $userAvatarSize )
-						)
-					);
+						$feedArray[ ] = array(
+							'title' => '',
+							'description' => $tmpArticleComment[ 'text' ],
+							'url' => $oTitle->getFullURL(),
+							'date' => $commentPage[ 'level1' ]->mFirstRevision->getTimestamp(),
+							'author' => $tmpArticleComment[ 'author' ]->getName(),
+							'otherTags' => array(
+								'image' => AvatarService::getAvatarUrl( $commentPage[ 'level1' ]->mUser->getName(), $userAvatarSize )
+							)
+						);
+					} else {
+						\Wikia\Logger\WikiaLogger::instance()->error('Comment page loading failed', $commentPage);
+					}
 				}
 
 				$this->showFeed( $format , wfMsg( 'feed-title-blogcomments', $oTitle->getFullText() ),  $feedArray);
