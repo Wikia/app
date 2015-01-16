@@ -167,8 +167,7 @@ class VignetteRequest {
 	/**
 	 * @param $url
 	 * @param $format
-	 * @return UrlGenerator|string
-	 * @throws InvalidArgumentException if $url does not have a proper vignette path
+	 * @return UrlGenerator|string|null
 	 */
 	public static function setThumbnailFormat($url, $format) {
 		$format = ltrim($format, ".");
@@ -179,18 +178,25 @@ class VignetteRequest {
 			return $url;
 		}
 
-		$generator = self::fromUrl($url);
-		return $generator->format($format)->url();
+		try {
+			$generator = self::fromUrl($url);
+			return $generator->format($format)->url();
+		} catch (Exception $e) {
+			return null;
+		}
 	}
 
 	/**
 	 * @param $url
-	 * @return string
-	 * @throws InvalidArgumentException if $url does not have a proper vignette path
+	 * @return string|null
 	 */
 	public static function getImageFilename($url) {
-		$generator = self::fromUrl($url);
-		$pathParts = explode('/', $generator->config()->relativePath());
-		return array_pop($pathParts);
+		try {
+			$generator = self::fromUrl($url);
+			$pathParts = explode('/', $generator->config()->relativePath());
+			return array_pop($pathParts);
+		} catch (Exception $e) {
+			return null;
+		}
 	}
 }
