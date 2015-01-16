@@ -13,6 +13,7 @@
 		 */
 		init: function () {
 			this.wikiaForm = new WikiaForm('#WikiaSignupForm');
+			this.submitButton = this.wikiaForm.inputs.submit;
 			this.captchaField = this.useCaptcha ? 'recaptcha_response_field' : '';
 			if (this.captchaLoadError()) {
 				this.handleCaptchaLoadError();
