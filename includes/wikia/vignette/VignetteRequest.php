@@ -79,7 +79,8 @@ class VignetteRequest {
 	 * create a UrlGenerator object from a Vignette url
 	 * @param $url
 	 * @param $asOriginal
-	 * @return null|UrlGenerator
+	 * @return UrlGenerator
+	 * @throws InvalidArgumentException if the url cannot be parsed as a valid vignette url
 	 */
 	public static function fromUrl($url, $asOriginal=false) {
 		return (new VignetteUrlToUrlGenerator($url, $asOriginal))
