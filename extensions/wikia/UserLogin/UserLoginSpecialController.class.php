@@ -44,8 +44,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			$this->response->addAsset( 'extensions/wikia/UserLogin/js/FacebookLogin.js' );
 		}
 
-		$this->response->addAsset('extensions/wikia/UserLogin/js/UserLoginSpecial.js');
-		$this->response->addAsset('extensions/wikia/WikiaStyleGuide/js/Form.js');
+		$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginSpecial.js' );
 
 		//Wikiamobile, will be filtered in AssetsManager by config :)
 		$this->response->addAsset(

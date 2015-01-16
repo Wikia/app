@@ -3,6 +3,7 @@ wgUserLanguage, GlobalNotification */
 
 /**
  * Handle signing in and signing up with Facebook
+ * Only for logged out users. Logged in users can connect with facebook on their preferences page.
  */
 (function () {
 	'use strict';
@@ -30,7 +31,7 @@ wgUserLanguage, GlobalNotification */
 		init: function (origin) {
 			var self = this;
 
-			if (this.initialized) {
+			if (this.initialized || window.wgUserName) {
 				return;
 			}
 

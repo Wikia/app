@@ -197,13 +197,6 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/Lightbox/scripts/LightboxLoader.js',
 		'#group_imglzy_js',
 		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
-		// We allow logged in users to change login without logging out
-		'//extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
-		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js',
-		// We allow logged in users to create account without logging out
-		'//extensions/wikia/UserLogin/js/UserSignupAjaxValidation.js',
-		// TODO: do we need to load this for logged-in?
-		'//extensions/wikia/UserLogin/js/UserLoginModal.js',
 		'//extensions/wikia/MiniEditor/js/MiniEditor.js',
 		// needs to load after MiniEditor
 		'#group_articlecomments_js',
@@ -384,7 +377,7 @@ $config['oasis_nojquery_shared_js'] = array(
 $config['oasis_anon_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-		'#group_user_login_signup_js',
+		'#group_user_login_js_anon',
 		'//extensions/wikia/AdEngine/js/Exitstitial.js',
 		'//extensions/wikia/UserLogin/js/UserLoginDropdown.js',
 		'//skins/oasis/js/LatestActivity.js',
@@ -395,14 +388,15 @@ $config['oasis_anon_js'] = [
 $config['oasis_anon_with_new_global_nav_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-		'#group_user_login_signup_js',
+		'#group_user_login_js_anon',
 		'//extensions/wikia/AdEngine/js/Exitstitial.js',
 		'//skins/oasis/js/LatestActivity.js',
 	]
 ];
 
-$config['user_login_signup_js'] = [
+$config['user_login_js_anon'] = [
 	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus'],
 	'assets' => [
 		'//extensions/wikia/UserLogin/js/FacebookLogin.js',
 		'//extensions/wikia/UserLogin/js/MarketingOptIn.js',
@@ -410,6 +404,19 @@ $config['user_login_signup_js'] = [
 		'//extensions/wikia/UserLogin/js/mixins/UserSignup.mixin.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormCreateUser.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormConnectUser.js',
+	]
+];
+
+/**
+ * We allow logged in users to create account without logging out
+ */
+$config['user_signup_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/UserLogin/js/UserSignupAjaxValidation.js',
+		'//extensions/wikia/UserLogin/js/MarketingOptIn.js',
+		'//extensions/wikia/UserLogin/js/mixins/UserSignup.mixin.js',
+		'//extensions/wikia/UserLogin/js/UserSignup.js',
 	]
 ];
 

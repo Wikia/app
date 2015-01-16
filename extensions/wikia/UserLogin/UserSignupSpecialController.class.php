@@ -65,19 +65,16 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string errParam - error param
 	 */
 	public function signupForm () {
-		$this->wg->Out->setPageTitle(wfMessage('usersignup-page-title')->plain());
-		$this->response->addAsset('extensions/wikia/UserLogin/css/UserSignup.scss');
+		$this->wg->Out->setPageTitle( wfMessage('usersignup-page-title' )->plain() );
+		$this->response->addAsset( 'extensions/wikia/UserLogin/css/UserSignup.scss' );
 
-		// TODO: find out why UserSignup.js isn't loaded via assets manager UC-228
-		// In the mean time, associated files are being included twice just to be safe
-		if ( F::app()->checkSkin( 'oasis' )) {
-			$this->response->addAsset('extensions/wikia/UserLogin/js/MarketingOptIn.js');
-			$this->response->addAsset('extensions/wikia/UserLogin/js/mixins/UserSignup.mixin.js');
-			$this->response->addAsset('extensions/wikia/UserLogin/js/UserSignup.js');
+		if ( F::app()->checkSkin( 'oasis' ) ) {
+			$this->response->addAsset( 'user_signup_js' );
 		}
 
-		if ( !empty($this->wg->EnableFacebookClientExt ) ) {
-			$this->response->addAsset('extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js');
+		// We're not supporting connecting with facebook from this page while logged in
+		if ( !empty($this->wg->EnableFacebookClientExt ) && !$this->wg->User->isLoggedIn() ) {
+			$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js' );
 		}
 
 		// hide things in the skin
