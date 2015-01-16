@@ -370,14 +370,14 @@ class ArticleComment {
 			$articleTitle = Title::makeTitle( MWNamespace::getSubject( $this->mNamespace ), $parts['title'] );
 			$commentingAllowed = ArticleComment::canComment( $articleTitle );
 
-			if ( ( count( $parts['partsStripped'] ) == 1 ) && $commentingAllowed && !ArticleCommentInit::isFbConnectionNeeded() ) {
+			if ( ( count( $parts['partsStripped'] ) == 1 ) && $commentingAllowed ) {
 				$replyButton = '<button type="button" class="article-comm-reply wikia-button secondary actionButton">' . wfMsg('article-comments-reply') . '</button>';
 			}
 			if( defined('NS_QUESTION_TALK') && ( $title->getNamespace() == NS_QUESTION_TALK ) ) {
 				$replyButton = '';
 			}
 
-			if ( $canDelete && !ArticleCommentInit::isFbConnectionNeeded() ) {
+			if ( $canDelete ) {
 				$img = '<img class="remove sprite" alt="" src="'. $wgBlankImgUrl .'" width="16" height="16" />';
 				$buttons[] = $img . '<a href="' . $title->getLocalUrl('redirect=no&action=delete') . '" class="article-comm-delete">' . wfMsg('article-comments-delete') . '</a>';
 
@@ -385,7 +385,7 @@ class ArticleComment {
 			}
 
 			//due to slave lag canEdit() can return false negative - we are hiding it by CSS and force showing by JS
-			if ( $wgUser->isLoggedIn() && $commentingAllowed && !ArticleCommentInit::isFbConnectionNeeded() ) {
+			if ( $wgUser->isLoggedIn() && $commentingAllowed ) {
 				$display = $this->canEdit() ? 'test=' : ' style="display:none"';
 				$img = '<img class="edit-pencil sprite" alt="" src="' . $wgBlankImgUrl . '" width="16" height="16" />';
 				$buttons[] = "<span class='edit-link'$display>" . $img . '<a href="#comment' . $commentId . '" class="article-comm-edit actionButton" id="comment' . $commentId . '">' . wfMsg('article-comments-edit') . '</a></span>';
@@ -627,7 +627,7 @@ class ArticleComment {
 
 		$text = '';
 		$this->load(true);
-		if ($this->canEdit() && !ArticleCommentInit::isFbConnectionNeeded()) {
+		if ( $this->canEdit() ) {
 			$vars = array(
 				'canEdit'				=> $this->canEdit(),
 				'comment'				=> htmlentities(ArticleCommentsAjax::getConvertedContent($this->mLastRevision->getText())),
@@ -659,7 +659,7 @@ class ArticleComment {
 
 		$this->load(true);
 
-		if ( $force || ($this->canEdit() && !ArticleCommentInit::isFbConnectionNeeded()) ) {
+		if ( $force || $this->canEdit() ) {
 
 			if ( wfReadOnly() ) {
 				wfProfileOut( __METHOD__ );

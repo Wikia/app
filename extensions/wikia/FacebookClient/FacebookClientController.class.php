@@ -15,6 +15,8 @@ class FacebookClientController extends WikiaController {
 	}
 
 	public function preferences() {
+		JSMessages::enqueuePackage( 'FacebookClient', JSMessages::EXTERNAL );
+
 		$this->response->addAsset( 'facebook_client_preferences_scss' );
 
 		$isUserConnected = $this->getVal( 'isConnected', false );

@@ -30,11 +30,7 @@ class FacebookSignupController extends WikiaController {
 		$fbUserId = $this->getFacebookUserId();
 
 		// try to get connected Wikia account
-		if ( F::app()->wg->EnableFacebookClientExt ) {
-			$user = FacebookClient::getInstance()->getWikiaUser( $fbUserId );
-		} else {
-			$user = FBConnectDB::getUser( $fbUserId );
-		}
+		$user = FacebookClient::getInstance()->getWikiaUser( $fbUserId );
 
 		if ( ( $user instanceof User ) && ( $fbUserId !== 0 ) ) {
 			$this->errorMsg = '';
@@ -57,6 +53,12 @@ class FacebookSignupController extends WikiaController {
 				$user->setCookies();
 				$this->loggedIn = true;
 				$this->userName = $user->getName();
+
+				// Retrieve user email from Facebook if missing
+				$email = $user->getEmail();
+				if ( empty( $email ) ) {
+					$this->saveEmailAsynchronously( $user->getId() );
+				}
 			}
 		} else {
 			$modal = $this->sendRequest('FacebookSignup', 'modal')->__toString();
@@ -67,6 +69,17 @@ class FacebookSignupController extends WikiaController {
 			$this->modal = !empty($modal) ? $modal : wfMessage('usersignup-facebook-problem')->escaped();
 			$this->cancelMsg = wfMessage('cancel')->escaped();
 		}
+	}
+
+	/**
+	 * Kick off an asynch job to update user's email to be what's reported by Facebook
+	 * @param $userId
+	 */
+	protected function saveEmailAsynchronously( $userId ) {
+		$task = new \Wikia\Tasks\Tasks\FacebookTask();
+		$task->dupCheck();
+		$task->call( 'updateEmailFromFacebook', $userId );
+		$task->queue();
 	}
 
 	/**
@@ -101,39 +114,19 @@ class FacebookSignupController extends WikiaController {
 		}
 
 		// get an email from Facebook API
-		$resp = $this->sendRequest( 'FacebookSignup', 'getFacebookData', [
-			'fbUserId' => $fbUserId,
-		] );
-
+		$userInfo = \FacebookClient::getInstance()->getUserInfo( $fbUserId );
 		// BugId:24400
-		$data = $resp->getData();
-		if ( empty( $data ) ) {
+		if ( !$userInfo ) {
 			$this->skipRendering();
 			return false;
 		}
-
-		// The new FB SDK doesn't define contact_email
-		if ( $this->wg->EnableFacebookClientExt ) {
-			$this->fbEmail = $resp->getVal( 'email', false );
-		} else {
-			$this->fbEmail = $resp->getVal( 'contact_email', false );
-			$email = $resp->getVal( 'email', false );
-
-			// check for proxy email
-			if ( $this->fbEmail != $email ) {
-				$this->fbEmail = wfMessage( 'usersignup-facebook-proxy-email' )->escaped();
-			}
-		}
+		$this->fbEmail = $userInfo->getProperty( 'email' );
 
 		$returnTo = $this->wg->request->getVal( 'returnto' );
 		$returnToQuery = $this->wg->request->getVal( 'returntoquery' );
 
 		// Temporary code until we switch fully to FacebookClient
-		if ( F::app()->wg->EnableFacebookClientExt ) {
-			$returnToUrl = FacebookClient::getInstance()->getReturnToUrl( $returnTo, $returnToQuery );
-		} else {
-			$returnToUrl = FBConnect::getReturnToUrl( $returnTo, $returnToQuery );
-		}
+		$returnToUrl = FacebookClient::getInstance()->getReturnToUrl( $returnTo, $returnToQuery );
 
 		$returnToParams = 'returnto=' . $returnTo;
 		if ( $returnToQuery ) {
@@ -201,8 +194,12 @@ class FacebookSignupController extends WikiaController {
 		$signupForm->addNewAccount();
 
 		$result = ( $signupForm->msgType == 'error' ) ? 'error' : 'ok' ;
-		if ( $result == 'ok' && !$signupForm->getHasConfirmedEmail() ) {
-			$result = 'unconfirm';
+		if ( $result == 'ok' ) {
+			\FacebookClientHelper::track( 'facebook-signup-join-wikia' );
+
+			if ( !$signupForm->getHasConfirmedEmail() ) {
+				$result = 'unconfirm';
+			}
 		}
 
 		$this->response->setData( [
@@ -251,39 +248,6 @@ class FacebookSignupController extends WikiaController {
 			'result' => 'ok',
 			'msg' => 'success',
 		] );
-	}
-
-	/**
-	 * Return Facebook account data like email, gender, real name
-	 */
-	public function getFacebookData() {
-		$fbUserId = $this->request->getVal( 'fbUserId' );
-
-		if ( $fbUserId > 0 ) {
-
-			// Toggle on new/old FB client
-			if ( F::app()->wg->EnableFacebookClientExt ) {
-				$data = FacebookClient::getInstance()->getUserInfoAsArray( $fbUserId );
-			} else {
-				// call Facebook API
-				$FBApi = new FBConnectAPI();
-				$data  = $FBApi->getUserInfo( $this->fbUserId, array(
-					'first_name',
-					'name',
-					'sex',
-					'timezone',
-					'locale',
-					'username',
-					'contact_email',
-					'email',
-				) );
-			}
-
-			// BugId:24400
-			if ( !empty( $data ) ) {
-				$this->response->setData($data);
-			}
-		}
 	}
 
 	/**
@@ -376,13 +340,6 @@ class FacebookSignupController extends WikiaController {
 	 * If no user is logged in, then an ID of 0 is returned.
 	 */
 	private function getFacebookUserId() {
-		// Toggle on new/old FB client
-		if ( F::app()->wg->EnableFacebookClientExt ) {
-			return FacebookClient::getInstance()->getUserId();
-		} else {
-			$fbApi = new FBConnectAPI();
-
-			return $fbApi->user();
-		}
+		return FacebookClient::getInstance()->getUserId();
 	}
 }

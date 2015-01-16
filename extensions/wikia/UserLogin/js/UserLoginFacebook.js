@@ -58,7 +58,10 @@
 				self.loginSetup();
 
 				// load when the login dropdown is shown or specific page is loaded
-				$.loadFacebookAPI();
+				$.loadFacebookAPI()
+					.done(function () {
+						$('.sso-login').removeClass('hidden');
+					});
 
 				self.log('init');
 				self.bucky.timer.stop('init');
@@ -83,20 +86,24 @@
 						UserLoginModal.$modal.trigger('close');
 					}
 				});
+			this.bucky.timer.stop('loginSetup');
 		},
 
 		/**
-		 * Callback function after Facebook Login
+		 * Callback function after Facebook Login.
+		 * @see https://developers.facebook.com/docs/reference/javascript/FB.login/v2.2
 		 * @param {Object} response Response object sent from Facebook after login attempt
 		 */
 		onFBLogin: function (response) {
-			if (typeof response !== 'object' || !response.status) {
-				this.bucky.timer.stop('loginSetup');
-				return;
-			}
-			this.log(response);
-			switch (response.status) {
-			case 'connected':
+			// There was a connection error or something went horribly wrong.
+			if (typeof response !== 'object') {
+				this.track({
+					action: this.actions.ERROR,
+					label: 'facebook-login'
+				});
+
+			// User successfully logged in with FB and granted permissions
+			} else if (response.authResponse) {
 				this.log('FB.login successful');
 
 				this.track({
@@ -112,23 +119,16 @@
 						returnto: encodeURIComponent(window.wgPageName),
 						returntoquery: encodeURIComponent(window.location.search.substring(1))
 					},
-					$.proxy(this.checkAccountCallback, this));
-				break;
-			case 'not_authorized':
-				// Not logged into the Wikia FB app
+					$.proxy(this.checkAccountCallback, this)
+				);
+
+			// The user didn't grant permissions
+			} else {
 				this.track({
 					action: this.actions.SUCCESS,
 					label: 'facebook-login-not-auth'
 				});
-				break;
-			default:
-				// Track FB Connect Error
-				this.track({
-					action: this.actions.ERROR,
-					label: 'facebook-login'
-				});
 			}
-			this.bucky.timer.stop('loginSetup');
 		},
 
 		/**

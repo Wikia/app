@@ -11,6 +11,8 @@ $messages['en'] = array(
 	'usersignup-page-title' => 'Join Wikia',
 	'usersignup-page-title-wikiamobile' => 'Create account',
 	'usersignup-page-captcha-label' => 'Blurry Word',
+	'usersignup-page-captcha-load-fail-title' => 'Captcha not loaded',
+	'usersignup-page-captcha-load-fail-text' => 'We\'re sorry, the blurry word test failed to load, and it is required for creating an account. It may not be availble in your region. Please try again later.',
 
 	'usersignup-error-username-length' => "Oops, your username can't be more than {{PLURAL:$1|one character|$1 characters}}.",
 	'usersignup-error-invalid-user' => 'Invalid user. Please login first.',
@@ -258,6 +260,8 @@ $messages['qqq'] = array(
 	'usersignup-page-title' => 'Page title for Special:UserSignup',
 	'usersignup-page-title-wikiamobile' => 'Page title for Special:UserSignup on Mobile skin',
 	'usersignup-page-captcha-label' => 'Label for captcha on signup form',
+	'usersignup-page-captcha-load-fail-title' => 'This is the title for the modal that a user sees when the captcha, aka "blurry word", fails to load. It may happen if google is blocked in the user\'s region, or is experiencing an outage.',
+	'usersignup-page-captcha-load-fail' => 'This is a message a user sees when the captcha, aka "blurry word", fails to load. It may happen if google is blocked in the user\'s region, or is experiencing an outage.',
 	'usersignup-error-username-length' => 'Error message stating that username is too long and over $1 amount of characters.',
 	'usersignup-error-invalid-user' => 'Generic error message when the user has been invalidated in the session for security reasons.',
 	'usersignup-error-invalid-email' => 'Error message stating that e-mail address is invalid.',
