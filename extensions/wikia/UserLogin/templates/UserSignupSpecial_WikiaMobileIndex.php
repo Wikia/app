@@ -13,13 +13,13 @@
 				'type' => 'hidden',
 				'name' => 'username',
 				'value' => '',
-				'label' => wfMessage( 'yourname' )->text(),
+				'label' => wfMessage( 'yourname' )->escaped(),
 			],
 			[ //actual username field
 				'type' => 'text',
 				'name' => 'userloginext01',
 				'value' => htmlspecialchars( $username ),
-				'placeholder' => wfMessage( 'yourname' )->text(),
+				'placeholder' => wfMessage( 'yourname' )->escaped(),
 				'isRequired' => true,
 				'isInvalid' => ( !empty( $errParam ) && $errParam === 'username' ),
 				'errorMsg' => ( !empty( $msg ) ? $msg : '' )
@@ -28,7 +28,7 @@
 				'type' => 'email',
 				'name' => 'email',
 				'value' => Sanitizer::encodeAttribute( $email ),
-				'placeholder' => wfMessage( 'email' )->text(),
+				'placeholder' => wfMessage( 'email' )->escaped(),
 				'isRequired' => true,
 				'isInvalid' => ( !empty( $errParam ) && $errParam === 'email' ),
 				'errorMsg' => ( !empty( $msg ) ? $msg : '' )
@@ -37,13 +37,13 @@
 				'type' => 'hidden',
 				'name' => 'password',
 				'value' => '',
-				'label' => wfMessage( 'yourpassword' )->text(),
+				'label' => wfMessage( 'yourpassword' )->escaped(),
 			],
 			[ //actual password field
 				'type' => 'password',
 				'name' => 'userloginext02',
 				'value' => '',
-				'placeholder' => wfMessage( 'yourpassword' )->text(),
+				'placeholder' => wfMessage( 'yourpassword' )->escaped(),
 				'isRequired' => true,
 				'isInvalid' => ( !empty( $errParam ) && $errParam === 'password' ),
 				'errorMsg' => ( !empty( $msg ) ? $msg : '' )
@@ -59,9 +59,8 @@
 				'view' => 'birthday',
 				'isRequired' => true,
 				'class' => 'birthday-group',
-				'isInvalid' => ( !empty( $errParam ) && $errParam === 'birthyear' ) ||
-					( !empty( $errParam ) && $errParam === 'birthmonth' ) ||
-					( !empty( $errParam ) && $errParam === 'birthday' ),
+				'isInvalid' => ( !empty( $errParam )  ) &&
+					( $errParam === 'birthyear' || $errParam === 'birthmonth' || $errParam === 'birthday' ),
 				'errorMsg' => ( !empty( $msg ) ? $msg : '' ),
 				'params' => [
 					'birthyear' => $birthyear,
