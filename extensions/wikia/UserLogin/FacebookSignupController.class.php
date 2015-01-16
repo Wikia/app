@@ -114,15 +114,13 @@ class FacebookSignupController extends WikiaController {
 		}
 
 		// get an email from Facebook API
-		$email = \FacebookClient::getInstance()->getEmail( $fbUserId );
-
+		$userInfo = \FacebookClient::getInstance()->getUserInfo( $fbUserId );
 		// BugId:24400
-		if ( !$email ) {
+		if ( !$userInfo ) {
 			$this->skipRendering();
 			return false;
 		}
-
-		$this->fbEmail = $email;
+		$this->fbEmail = $userInfo->getProperty( 'email' );
 
 		$returnTo = $this->wg->request->getVal( 'returnto' );
 		$returnToQuery = $this->wg->request->getVal( 'returntoquery' );
