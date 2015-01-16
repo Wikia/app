@@ -58,7 +58,8 @@ ve.ui.WindowAction.prototype.open = function ( name, data ) {
 	data = ve.extendObject( { dir: dir }, data, { fragment: fragment } );
 
 	surface.getView().deactivate();
-	if ( windowType === 'toolbar' ) {
+
+	if ( windowType === 'toolbar' || name === 'wikiaSourceMode' ) {
 		data = ve.extendObject( data, { surface: surface } );
 	}
 

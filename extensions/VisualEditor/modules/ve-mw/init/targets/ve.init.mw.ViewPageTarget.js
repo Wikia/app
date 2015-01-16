@@ -1349,6 +1349,9 @@ ve.init.mw.ViewPageTarget.prototype.hideReadOnlyContent = function () {
  * @method
  */
 ve.init.mw.ViewPageTarget.prototype.tearDownToolbar = function () {
+	this.toolbar.destroy();
+	this.toolbar = null;
+	return;
 	this.toolbar.$bar.slideUp( 'fast', function () {
 		this.toolbar.destroy();
 		this.toolbar = null;
