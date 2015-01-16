@@ -19,7 +19,7 @@ fieldset {
 .input-group {
 	margin: 0 0 10px 0;
 
-	input {
+	input:not([type=checkbox]) {
 		background-color: $transparent;
 		border: {
 			radius: 2px;

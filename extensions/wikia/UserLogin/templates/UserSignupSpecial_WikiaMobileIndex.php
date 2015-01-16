@@ -71,6 +71,12 @@
 				],
 			],
 			[
+				'class' => 'opt-in-container hidden',
+				'type' => 'checkbox',
+				'name' => 'wpMarketingOptIn',
+				'label' => wfMessage( 'userlogin-opt-in-label' )->escaped(),
+			],
+			[
 				'type' => 'nirvanaview',
 				'controller' => 'UserSignupSpecial',
 				'view' => 'WikiaMobileSubmit',
