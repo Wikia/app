@@ -622,6 +622,7 @@ class Message {
  * is preserved.
  *
  * @since 1.21
+ * Backported by Adam Karmiński <adamk@wikia-inc.com>
  */
 class RawMessage extends Message {
 	/**
