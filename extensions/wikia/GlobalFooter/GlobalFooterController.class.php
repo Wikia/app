@@ -65,14 +65,12 @@ class GlobalFooterController extends WikiaController {
 
 	private function getVerticalShortName() {
 		global $wgCityId;
-		$out = null;
 
 		$wikiVertical = WikiFactoryHub::getInstance()->getWikiVertical( $wgCityId );
 		if ( $wikiVertical['id'] ) {
-			$out = $wikiVertical['short'];
+			return $wikiVertical['short'];
 		}
-
-		return $out;
+		return null;
 	}
 
 	private function verticalNameMessage() {
