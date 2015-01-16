@@ -136,6 +136,7 @@ $color-wam-button: #092344;
 		margin: 42px 0 0 10px;
 		overflow: hidden;
 		position: relative;
+
 		.wam-card {
 			background-color: #f1f2f2;
 			bottom: 0;
@@ -147,12 +148,16 @@ $color-wam-button: #092344;
 			position: absolute;
 			text-decoration: none;
 			width: 144px;
+
 			figure {
-				background: url('/extensions/wikia/WAMPage/images/wam-imgplaceholder.png'); /* inline */;
+				background-image: url('/extensions/wikia/WAMPage/images/placeholder.svg'); /* inline */
+				background-position: center center;
+				background-repeat: no-repeat;
 				height: 94px;
 				overflow: hidden;
 				position: relative;
 				width: 144px;
+
 				span {
 					background-color: rgba(0,0,0,0.5 );
 					line-height: 1;
@@ -162,6 +167,32 @@ $color-wam-button: #092344;
 					bottom: 0;
 				}
 			}
+
+			.placeholder-all {
+				background-color: $color-vertical-all;
+			}
+			.placeholder-books {
+				@include verticals-colors('background-color', 'books');
+			}
+			.placeholder-comics {
+				@include verticals-colors('background-color', 'comics');
+			}
+			.placeholder-lifestyle {
+				@include verticals-colors('background-color', 'lifestyle');
+			}
+			.placeholder-games {
+				@include verticals-colors('background-color', 'games');
+			}
+			.placeholder-movies {
+				@include verticals-colors('background-color', 'movies');
+			}
+			.placeholder-music {
+				@include verticals-colors('background-color', 'music');
+			}
+			.placeholder-tv {
+				@include verticals-colors('background-color', 'tv');
+			}
+
 			.wam-score {
 				height: 18px;
 				line-height: 1;
