@@ -404,6 +404,7 @@ $config['user_login_js_anon'] = [
 		'//extensions/wikia/UserLogin/js/mixins/UserSignup.mixin.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormCreateUser.js',
 		'//extensions/wikia/UserLogin/js/FacebookFormConnectUser.js',
+		'//extensions/wikia/UserLogin/js/UserLoginModal.js',
 	]
 ];
 
