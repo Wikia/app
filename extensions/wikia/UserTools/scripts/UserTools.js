@@ -1,5 +1,5 @@
 /* global define */
-define('wikia.toolsCustomization', ['wikia.window', 'wikia.browserDetect', 'jquery', 'wikia.ui.factory'], function(win, browserDetect, $, uiFactory) {
+define('wikia.toolsCustomization', ['wikia.window', 'wikia.browserDetect', 'jquery', 'wikia.ui.factory', 'mw'], function(win, browserDetect, $, uiFactory, mw) {
 	'use strict';
 
 		win.ToolbarCustomize = win.ToolbarCustomize || {};
@@ -519,7 +519,8 @@ define('wikia.toolsCustomization', ['wikia.window', 'wikia.browserDetect', 'jque
 					method: 'ToolbarSave',
 					data: {
 						title: win.wgPageName,
-						toolbar: toolbar
+						toolbar: toolbar,
+						token: mw.user.tokens.get('editToken')
 					},
 					callback: $.proxy( function( data, status ) {
 						this.afterSave( toolsConfigModal, data, status );
