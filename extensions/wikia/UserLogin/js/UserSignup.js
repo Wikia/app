@@ -2,6 +2,9 @@
 (function () {
 	'use strict';
 
+	/**
+	 * JS for signing up with a new account, both on mobile and desktop
+	 */
 	var UserSignup = {
 		inputsToValidate: ['userloginext01', 'email', 'userloginext02', 'birthday'],
 		notEmptyFields: ['userloginext01', 'email', 'userloginext02', 'birthday', 'birthmonth', 'birthyear'],
