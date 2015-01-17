@@ -16,6 +16,7 @@ The cron job which runs is the [ingestPartnerWithVideoData.php script](https://g
 It iterates over our list of currently active premium providers, instantiates the corresponding feedingester class for
 the provider, and kicks off the ingestion process.
 
+## Remote Assets
 Within premium videos there's a distinction between whether a video is a remote asset or not. A video which is not a
 remote asset is one which is hosted by the provider themselves. For example, all of our CrunchyRoll videos are hosted
 on CrunchyRoll servers and are played using CrunchyRoll's player. IGN is the same. All IGN's videos are hosted on IGN
