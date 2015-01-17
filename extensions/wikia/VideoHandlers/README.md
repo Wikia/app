@@ -31,7 +31,7 @@ Here's a document on Wikia One which has a diagram for the overall process:
 ## Video Handlers
 A first thing to note is that Wikia does not store any videos on our servers. Instead we store metadata about the video in
 the video151 database (the database for video.wikia.com). The exact tables which we store information in can be found in
-the [Feed Ingestion Architecture](https://one.wikia-inc.com/wiki/Video/Technical_Documentation/Feed_Ingestion_Architecture?file=Ingestion.jpg) link.
+the [Feed Ingestion Architecture](https://one.wikia-inc.com/wiki/Video/Technical_Documentation/Feed_Ingestion_Architecture) link.
 Because we don't have the physical files ourselves, we have VideoHandler classes which are in charge of determining how to
 play the video based on its provider. In some cases this involves loading a javascript player (as is the case with videos
 ingested from Ooyala), and in others it involves just using an iframe (as is the case for videos ingested from Maker Studios).
