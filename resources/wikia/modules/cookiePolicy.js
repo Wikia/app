@@ -7,7 +7,7 @@ require(['wikia.cookies', 'wikia.geo'], function (cookies, geo) {
 	 * on our site, per EU law. Users can dismiss the notification and will not be shown again, unless
 	 * they clear their cookies.
 	 */
-	function initCookNotification() {
+	function initCookieNotification() {
 		if (shouldShowBanner()) {
 			showBanner();
 		}
@@ -51,5 +51,5 @@ require(['wikia.cookies', 'wikia.geo'], function (cookies, geo) {
 		cookies.set('euCookiePolicy', '1');
 	}
 
-	$(initCookNotification);
+	$(initCookieNotification);
 });
