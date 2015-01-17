@@ -6,8 +6,8 @@ Non-premium videos are videos that we allow users to upload onto the site. These
 vimeo, dailymotion, etc. The full list of non-premium providers we support can be found [here](https://one.wikia-inc.com/wiki/Video/Video_Providers).
 
 Premium videos are those that we license. We have a cron job which runs 4 times a day and polls each of our premium providers
-to see if they have any new content. If they do, we upload those videos onto our video wiki found at [video.wikia.com](video.wikia.com).
-Once those videos have been added to video wiki, users can then embed them in their local wikis (eg, thelastofus.wikia.com,
+to see if they have any new content. If they do, we upload those videos onto our video wikia found at [video.wikia.com](video.wikia.com).
+Once those videos have been added to video wiki, users can then embed them in their local wikias (eg, thelastofus.wikia.com,
 callofduty.wikia.com, disney.wikia.com, etc). The FeedIngester classes found in this extension are part of the ETL process
 for each of these providers. Each one will check its corresponding provider's api, then normalize the data before uploading
 it onto our site.
