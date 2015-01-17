@@ -28,7 +28,7 @@ require(['wikia.cookies', 'wikia.geo'], function (cookies, geo) {
 	 */
 	function showBanner() {
 		var message = $.msg('oasis-eu-cookie-policy-notification-message') +
-			'<a href="http://www.wikia.com/Privacy_Policy" target="_blank">' +
+			'<a href="http://www.wikia.com/Privacy_Policy#Cookies" target="_blank">' +
 			$.msg('oasis-eu-cookie-policy-notification-link') +
 			'</a>';
 
