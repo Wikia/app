@@ -191,6 +191,8 @@ ___________________________________________
 * Find help and advice on Community Central: http://community.wikia.com
 * Want to receive fewer messages from us? You can unsubscribe or change
 your email preferences here: http://community.wikia.com/Special:Preferences',
+	'oasis-eu-cookie-policy-notification-message' => 'Wikia uses cookies to give you the best experience on our websites. By continuing to use Wikia, we assume that you accept our use of cookies.',
+	'oasis-eu-cookie-policy-notification-link' => 'Read more about cookies'
 );
 
 /** Message documentation (Message documentation)
