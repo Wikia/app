@@ -117,7 +117,7 @@ class MonetizationModuleHelper extends WikiaModel {
 		if ( !empty( $json_results ) ) {
 			$log->info( "MonetizationModule: memcache hit.", $loggingParams );
 			wfProfileOut( __METHOD__ );
-			return $this->setThemeSettings( $json_results, $cacheKey );
+			return $this->getData( $json_results, $cacheKey, $params );
 		}
 
 		$log->info( "MonetizationModule: memcache miss.", $loggingParams );
@@ -147,7 +147,7 @@ class MonetizationModuleHelper extends WikiaModel {
 			];
 			$log->debug( "MonetizationModule: cannot get monetization units.", $loggingParams );
 		} else if ( !empty( $result ) ) {
-			$result = $this->setThemeSettings( $result, $cacheKey );
+			$result = $this->getData( $result, $cacheKey, $params );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -156,50 +156,96 @@ class MonetizationModuleHelper extends WikiaModel {
 	}
 
 	/**
+	 * Get data for the ad units
+	 * @param string $data - data from API (json format)
+	 * @param string $memcKey
+	 * @param array $params - API parameters
+	 * @return mixed
+	 */
+	public function getData( $data, $memcKey, $params ) {
+		$found = strpos( $data, self::KEYWORD_PREFIX );
+		$data = json_decode( $data, true );
+		if ( !is_array( $data ) ) {
+			return $data;
+		}
+
+		// for page specific module
+		if ( !empty( $data['special_instructions'] ) && $data['special_instructions'] == 'page_specific' ) {
+			$this->setMemcache( $memcKey, $data, [ 'method' => __METHOD__ ] );
+			$params['page_id'] = $this->wg->Title->getArticleID();
+			return $this->getMonetizationUnits( $params );
+		}
+
+		if ( $found === false ) {
+			return $data;
+		}
+
+		$setMemc = ( !array_key_exists( 'page_id', $params ) );
+		$data = $this->setThemeSettings( $data, $memcKey, $setMemc );
+
+		// for blocked page
+		if ( !empty( $data['blocked_pages'] ) && in_array( $this->wg->title->getArticleID(), $data['blocked_pages'] ) ) {
+			return '';
+		}
+
+		return $data;
+	}
+
+	/**
 	 * Set wiki theme setting to the ad units
 	 * @param array $adUnits
 	 * @param string $memcKey
+	 * @param boolean $setMemc - set to true to set data to memcache
 	 * @return array
 	 */
-	public function setThemeSettings( $adUnits, $memcKey ) {
+	public function setThemeSettings( $adUnits, $memcKey, $setMemc = true ) {
 		wfProfileIn( __METHOD__ );
 
-		$found = strpos( $adUnits, self::KEYWORD_PREFIX );
-		$adUnits = json_decode( $adUnits, true );
-		if ( $found !== false && is_array( $adUnits ) ) {
-			$adTitle = $this->wf->Message( 'monetization-module-ad-title' )->escaped();
-			$adUnits = str_replace( self::KEYWORD_AD_TITLE, $adTitle, $adUnits );
+		$adTitle = $this->wf->Message( 'monetization-module-ad-title' )->escaped();
+		$adUnits = str_replace( self::KEYWORD_AD_TITLE, $adTitle, $adUnits );
 
-			$ecommTitle = $this->wf->Message( 'monetization-module-ecommerce-title' )->escaped();
-			$adUnits = str_replace( self::KEYWORD_ECOMMERCE_TITLE, $ecommTitle, $adUnits );
+		$ecommTitle = $this->wf->Message( 'monetization-module-ecommerce-title' )->escaped();
+		$adUnits = str_replace( self::KEYWORD_ECOMMERCE_TITLE, $ecommTitle, $adUnits );
 
-			$theme = SassUtil::getOasisSettings();
-			if ( SassUtil::isThemeDark() ) {
-				$theme['color'] = self::FONT_COLOR_DARK_THEME;
-			} else {
-				$theme['color'] = self::FONT_COLOR_LIGHT_THEME;
+		$theme = SassUtil::getOasisSettings();
+		if ( SassUtil::isThemeDark() ) {
+			$theme['color'] = self::FONT_COLOR_DARK_THEME;
+		} else {
+			$theme['color'] = self::FONT_COLOR_LIGHT_THEME;
+		}
+
+		$adSettings = '';
+		foreach ( self::$mapThemeSettings as $key => $value ) {
+			if ( !empty( $theme[$value] ) ) {
+				$adSettings .= $key.'="'.$theme[$value].'" ';
 			}
+		}
 
-			$adSettings = '';
-			foreach( self::$mapThemeSettings as $key => $value ) {
-				if ( !empty( $theme[$value] ) ) {
-					$adSettings .= $key.'="'.$theme[$value].'" ';
-				}
-			}
+		$adUnits = str_replace( self::KEYWORD_THEME_SETTINGS, $adSettings, $adUnits );
 
-			$adUnits = str_replace( self::KEYWORD_THEME_SETTINGS, $adSettings, $adUnits );
-
-			// set cache
-			$cacheTtl = mt_rand( self::CACHE_TTL_MIN, self::CACHE_TTL_MAX );
-			$this->wg->Memc->set( $memcKey, json_encode( $adUnits ), $cacheTtl );
-
-			$loggingParams = [ 'method' => __METHOD__, 'memcKey' => $memcKey, 'cacheTtl' => $cacheTtl ];
-			WikiaLogger::instance()->info( "MonetizationModule: memcache write.", $loggingParams );
+		// set cache
+		if ( $setMemc ) {
+			$this->setMemcache( $memcKey, $adUnits, [ 'method' => __METHOD__ ] );
 		}
 
 		wfProfileOut( __METHOD__ );
 
 		return $adUnits;
+	}
+
+	/**
+	 * Set memcache data (json format)
+	 * @param string $memcKey
+	 * @param array $data
+	 * @param array $loggingParams
+	 */
+	public function setMemcache( $memcKey, $data, $loggingParams ) {
+		$cacheTtl = mt_rand( self::CACHE_TTL_MIN, self::CACHE_TTL_MAX );
+		$this->wg->Memc->set( $memcKey, json_encode( $data ), $cacheTtl );
+
+		$loggingParams['memcKey'] = $memcKey;
+		$loggingParams['cacheTtl'] = $cacheTtl;
+		WikiaLogger::instance()->info( "MonetizationModule: memcache write.", $loggingParams );
 	}
 
 	/**
