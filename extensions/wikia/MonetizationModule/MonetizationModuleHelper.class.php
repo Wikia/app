@@ -183,11 +183,6 @@ class MonetizationModuleHelper extends WikiaModel {
 		$setMemc = ( !array_key_exists( 'page_id', $params ) );
 		$data = $this->setThemeSettings( $data, $memcKey, $setMemc );
 
-		// for blocked page
-		if ( !empty( $data['blocked_pages'] ) && in_array( $this->wg->title->getArticleID(), $data['blocked_pages'] ) ) {
-			return '';
-		}
-
 		return $data;
 	}
 
