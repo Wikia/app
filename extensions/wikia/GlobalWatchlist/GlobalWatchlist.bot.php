@@ -7,7 +7,6 @@ class GlobalWatchlistBot {
 	private $mUseDB;
 	private $mStartTime;
 	private $mWatchlisters;
-	private $mWikiData = array();
 	private $iEmailsSent;
 	private $mCityList;
 
@@ -47,7 +46,6 @@ class GlobalWatchlistBot {
 	 * run watchlist
 	 */
 	public function run() {
-		global $wgExternalDatawareDB;
 
 		$this->mStartTime = time();
 		$this->printDebug( "Script started. (" . date( 'Y-m-d H:i:s' ) . ")" );
@@ -63,7 +61,6 @@ class GlobalWatchlistBot {
 	 * run watchlist
 	 */
 	public function regenerate() {
-		global $wgExternalDatawareDB;
 
 		$this->mStartTime = time();
 		$this->printDebug( "Script started. (" . date( 'Y-m-d H:i:s' ) . ")" );
@@ -115,7 +112,6 @@ class GlobalWatchlistBot {
 		$aWhereClause = array( 
 			"gwa_user_id > 0",
 			"gwa_timestamp is not null",
-			/*"gwa_timestamp <= gwa_rev_timestamp",*/
 		);
 		if ( count( $this->mUsers ) ) {
 			// get only users passed by --users argument
@@ -266,7 +262,7 @@ class GlobalWatchlistBot {
 	 * update user watchlist
 	 */
 	private function updateUserWatchlist( $iUserId ) {
-		global $wgExternalDatawareDB, $wgDefaultUserOptions, $wgExternalSharedDB, $IP, $wgWikiaLocalSettingsPath;
+		global $wgExternalDatawareDB, $wgDefaultUserOptions, $IP, $wgWikiaLocalSettingsPath;
 		
 		$wgDefaultUserOptions['watchlistdigestclear'] = 0;
 		
@@ -321,7 +317,7 @@ class GlobalWatchlistBot {
 	 * list of Wikis
 	 */
 	private function getWikisFromDigestList() {
-		global $wgExternalDatawareDB, $wgExternalSharedDB;
+		global $wgExternalDatawareDB;
 		$dbs = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
 				
 		$oResource = $dbs->query( "SELECT distinct gwa_city_id FROM global_watchlist ORDER BY gwa_city_id" );		
@@ -343,8 +339,7 @@ class GlobalWatchlistBot {
 	 * update local watchlist 
 	 */
 	private function updateLocalWatchlistForUser( $iUserId, $sTitle, $iNamespace ) {
-		$dbw = wfGetDB( DB_MASTER );
-	
+
 		$oUser = User::newFromId( $iUserId );
 		if ( !is_object( $oUser ) ) {
 			return false;
@@ -365,7 +360,6 @@ class GlobalWatchlistBot {
 	 * compose digest email for user
 	 */
 	function composeMail ( $oUser, $aDigestsData, $isDigestLimited ) {
-		global $wgGlobalWatchlistMaxDigestedArticlesPerWiki;
 
 		$sDigests = "";
 		$sDigestsHTML = "";
@@ -863,8 +857,12 @@ class GlobalWatchlistBot {
 
 		$this->printDebug( "Gathering all watchlist data ... done! (time: " . $this->calculateDuration( time() - $this->mStartTime ) . ")" );
 		return $wlNbr;
-	}	
-	
+	}
+
+	/**
+	 * Update the noretemp.script_log table with the today's date to mark the last time
+	 * weekly_digest has run
+	 */
 	public function updateLog () {
 		global $wgStatsDB;
 		$dbw = wfGetDB( DB_MASTER, array(), $wgStatsDB );

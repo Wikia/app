@@ -87,7 +87,7 @@ class WeeklyDigest extends Maintenance {
 			} else {
 				$this->output( "Run weekly digest ...\n" );
 				$oWatchlistBot->updateLog( );
-				$emailsSent = $oWatchlistBot->run();
+				$oWatchlistBot->run();
 				//
 				$oUser = User::newFromId(115748); //Moli.wikia
 				$oUser->load();

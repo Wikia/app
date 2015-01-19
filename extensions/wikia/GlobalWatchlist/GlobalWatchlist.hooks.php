@@ -7,10 +7,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 class GlobalWatchlistHook {
 	
-	function __construct() {
-		// nothing to do
-	}
-	
 	public static function getPreferences( /*User*/ $user, /*Array*/ &$defaultPreferences ) {
 		wfProfileIn( __METHOD__ );		
 
