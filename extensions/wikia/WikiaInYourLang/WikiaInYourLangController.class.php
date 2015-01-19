@@ -130,7 +130,7 @@ class WikiaInYourLangController extends WikiaController {
 	 * @return string                A core of the language code
 	 */
 	public function getLanguageCore( $sFullLangCode ) {
-		return array_values( explode( '-', $sFullLangCode ) )[0];
+		return explode( '-', $sFullLangCode )[0];
 	}
 
 	/**

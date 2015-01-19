@@ -22,7 +22,7 @@ require(
 		var targetLanguage = getTargetLanguage(),
 			// Per request we should unify dialects like pt and pt-br
 			// @see CE-1220
-			contentLanguage = w.wgContentLanguage.split("-")[0];
+			contentLanguage = w.wgContentLanguage.split('-')[0];
 
 		function init() {
 			if (targetLanguage !== false && targetLanguage !== contentLanguage) {
