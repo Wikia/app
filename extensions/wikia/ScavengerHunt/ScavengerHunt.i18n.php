@@ -3181,6 +3181,7 @@ $messages['uk'] = array(
  * @author Hydra
  * @author Liuxinyu970226
  * @author Sam Wang
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'scavengerhunt-desc' => '允许在一个维基上创建一个清道夫狩猎游戏',
@@ -3219,15 +3220,24 @@ $messages['zh-hans'] = array(
 	'scavengerhunt-button-export' => '导出为CSV',
 	'scavengerhunt-button-remove-section' => '移除此步',
 	'scavengerhunt-form-error' => '请更正以下错误：',
+	'scavengerhunt-form-error-no-landing-title' => '请输入登陆页面名称（URL有效）。',
+	'scavengerhunt-form-error-invalid-title' => '下列页面标题未找到：“$1”。',
+	'scavengerhunt-form-error-landing-button-text' => '请输入登陆页面按钮文本。',
+	'scavengerhunt-form-error-landing-button-position' => '请输入登陆页面按钮位置。',
+	'scavengerhunt-form-error-invalid-url' => '请提供一个有效的URL。',
 	'scavengerhunt-form-error-clueColor' => '请提供有效的颜色格式（#XXX）',
+	'scavengerhunt-edit-token-mismatch' => '编辑令牌不正确 - 请重试。',
 	'scavengerhunt-entry-form-name' => '您的名字：',
 	'scavengerhunt-entry-form-email' => '您的电子邮件地址：',
 	'scavengerhunt-entry-form-submit' => '提交文章',
+	'scavengerhunt-label-sprite-img' => 'Sprite图像路径',
+	'scavengerhunt-label-sprite-X' => '元素位置',
 	'scavengerhunt-label-sprite-X1' => '魔鬼左上角',
 	'scavengerhunt-label-sprite-X2' => '魔鬼右下角',
 	'scavengerhunt-game-has-been-deleted' => '狩猎游戏已删除',
 	'scavengerhunt-game-more-to-go' => '只有#更多可走。',
 	'scavengerhunt-label-progress-bar' => '进度栏',
+	'scavengerhunt-quit-game-content' => '您确定要退出Scavenger Hunt吗？',
 	'scavengerhunt-quit-game-button-quit' => '退出',
 	'scavengerhunt-quit-game-button-cancel' => '取消',
 	'scavengerhunt-quit-game-button-stay' => '保持游戏',

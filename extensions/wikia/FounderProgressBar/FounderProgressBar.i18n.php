@@ -681,6 +681,7 @@ $messages['fo'] = array(
 
 /** French (français)
  * @author Balzac 40
+ * @author Fujimaru-kun
  * @author Gomoko
  * @author Verdy p
  * @author Wyz
@@ -716,6 +717,7 @@ $messages['fr'] = array(
 	'founderprogressbar-category-add3-description' => 'Les catégories sont l’un des meilleurs moyens d’organiser votre wiki et d’aider les gens à trouver les pages qu’ils recherchent. Faites simple toutefois, trop de catégories peut rendre les choses confuses.',
 	'founderprogressbar-commcentral-visit-label' => 'Visiter le centre des administrateurs',
 	'founderprogressbar-commcentral-visit-description' => 'Vous n’êtes pas seul(e) ! Le centre des administrateurs est l’endroit où les administrateurs de communautés sur Wikia se réunissent pour partager des conseils et astuces, vous y trouverez aussi des articles d’aide, des guides et et les moyens de contacter le staff de Wikia.',
+	'founderprogressbar-commcentral-visit-url' => 'http://communaute.wikia.com/wiki/Centre_des_administrateurs:Accueil',
 	'founderprogressbar-wikiactivity-visit-label' => 'Visiter l’Activité du wiki',
 	'founderprogressbar-wikiactivity-visit-description' => 'L’Activité du wiki vous permet de voir tout ce qui s’est passé sur votre wiki. Elle vous montre quels utilisateurs ont effectué des modifications et vous permet d’accéder facilement aux pages qui ont été modifiées.',
 	'founderprogressbar-profile-edit-label' => 'Remplir votre page de profil',
@@ -2567,7 +2569,7 @@ $messages['zh-hant'] = array(
 	'founderprogressbar-photo-add20-description' => '你有在每個頁面至少放一張圖片嗎？大家都喜歡圖片，它可以讓你的wiki更受歡迎。',
 	'founderprogressbar-total-edit75-label' => '達到 75 次編輯',
 	'founderprogressbar-total-edit75-description' => '一旦你達到75次編輯，你的wiki可能已經有很多內容囉，太好了！這是你的wiki走向成功的一個里程碑。',
-	'founderprogressbar-page-add20-label' => '達到 $1 個{{PLURAL:$1|page|頁面}}',
+	'founderprogressbar-page-add20-label' => '達到 $1 個頁面',
 	'founderprogressbar-page-add20-description' => '持續努力讓你的wiki在你的主題上有廣泛的內容。記住，不要只是增加頁面，也要確認它們有一些好的內容。',
 	'founderprogressbar-category-edit-label' => '編輯一個分類頁',
 	'founderprogressbar-category-edit-description' => '分類不只能展示該分類中頁面的連結，你也可以編輯以便告訴大家該分類的意義，以及那些頁面應該放進這個分類。此外，編輯分類頁會使它們從紅色連結變為一個看起來活回的藍色連結。',

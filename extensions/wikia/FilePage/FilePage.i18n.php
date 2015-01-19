@@ -869,6 +869,8 @@ $messages['roa-tara'] = array(
 	'video-page-global-file-list-header' => 'Iesse sus a ste uicchi',
 	'video-page-from-provider' => 'Da $1',
 	'video-page-expires' => "Condenute ca scade 'u $1",
+	'video-page-regional-restrictions-viewable' => 'Stu video jè ristrette reggionalmende',
+	'video-page-regional-restrictions-unviewable' => "Stu video non se pò vedè jndr'à 'u paese tune",
 	'video-page-views' => '$1 {{PLURAL:$1|Viste}}',
 	'video-page-see-more-info' => "Fà vedè cchiù 'mbormaziune",
 	'video-page-see-less-info' => "Fà vedè mene 'mbormaziune",
@@ -1150,7 +1152,7 @@ $messages['zh-hant'] = array(
 	'file-page-replace-button' => '取代',
 	'file-page-tab-about' => '關於',
 	'file-page-tab-history' => '檔案歷史',
-	'file-page-tab-metadata' => '元數據',
+	'file-page-tab-metadata' => '後設資料',
 	'file-page-more-links' => '查看完整清單',
 );
 

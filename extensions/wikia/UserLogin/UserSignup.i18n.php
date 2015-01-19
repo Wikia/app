@@ -261,7 +261,6 @@ $messages['qqq'] = array(
 	'usersignup-page-title-wikiamobile' => 'Page title for Special:UserSignup on Mobile skin',
 	'usersignup-page-captcha-label' => 'Label for captcha on signup form',
 	'usersignup-page-captcha-load-fail-title' => 'This is the title for the modal that a user sees when the captcha, aka "blurry word", fails to load. It may happen if google is blocked in the user\'s region, or is experiencing an outage.',
-	'usersignup-page-captcha-load-fail' => 'This is a message a user sees when the captcha, aka "blurry word", fails to load. It may happen if google is blocked in the user\'s region, or is experiencing an outage.',
 	'usersignup-error-username-length' => 'Error message stating that username is too long and over $1 amount of characters.',
 	'usersignup-error-invalid-user' => 'Generic error message when the user has been invalidated in the session for security reasons.',
 	'usersignup-error-invalid-email' => 'Error message stating that e-mail address is invalid.',
@@ -544,6 +543,13 @@ $messages['azb'] = array(
  */
 $messages['bg'] = array(
 	'usersignup-confirmation-reminder-email-signature' => 'Екипът на Wikia',
+);
+
+/** Bengali (বাংলা)
+ * @author Aftabuzzaman
+ */
+$messages['bn'] = array(
+	'usersignup-facebook-or-header' => 'অথবা',
 );
 
 /** Breton (brezhoneg)
@@ -2449,6 +2455,8 @@ ___________________________________________
  * @author MIKHEIL
  */
 $messages['ka'] = array(
+	'usersignup-facebook-signup-header' => 'გსურთ შექმნათ ახალი ანგარიში?',
+	'usersignup-facebook-login-header' => 'უკვე რეგისტრირებული ხართ?',
 	'usersignup-facebook-or-header' => 'ან',
 );
 
@@ -2901,6 +2909,9 @@ ___________________________________________
 To check out the latest happenings on Wikia, visit http://community.wikia.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-facebook-problem' => 'Timbulnya masalah ketika berhubung dengan Facebook. Sila cuba lagi nanti.',
+	'usersignup-facebook-signup-header' => 'Nak buka akaun baru?',
+	'usersignup-facebook-login-header' => 'Sudah ada akaun?',
+	'usersignup-facebook-or-header' => 'atau',
 );
 
 /** Norwegian Bokmål (norsk bokmål)
@@ -3326,6 +3337,13 @@ Wilt u bepalen welke e-mails u ontvangt? Ga dan naar {{fullurl:{{ns:special}}:Pr
 	'usersignup-facebook-signup-header' => 'Nieuwe gebruiker registreren?',
 	'usersignup-facebook-login-header' => 'Hebt u al een gebruiker?',
 	'usersignup-facebook-or-header' => 'of',
+);
+
+/** Norwegian Nynorsk (norsk nynorsk)
+ * @author Gaute
+ */
+$messages['nn'] = array(
+	'usersignup-facebook-or-header' => 'eller',
 );
 
 /** Occitan (occitan)
@@ -3865,6 +3883,7 @@ $messages['pt'] = array(
 	'usersignup-confirmation-reminder-email_subject' => 'Não seja um estranho...',
 	'usersignup-confirmation-reminder-email-greeting' => 'Olá $USERNAME',
 	'usersignup-confirmation-reminder-email-signature' => 'A Equipa da Wikia',
+	'usersignup-facebook-login-header' => 'Já possui uma conta?',
 	'usersignup-facebook-or-header' => 'ou',
 );
 
@@ -3995,6 +4014,7 @@ $messages['roa-tara'] = array(
  * @author DCamer
  * @author Kuzura
  * @author Okras
+ * @author Tourorist
  */
 $messages['ru'] = array(
 	'usersignup-page-title' => 'Присоединиться к Викия',
@@ -4205,6 +4225,8 @@ ___________________________________________
 Чтобы проверить последние события на Викия, посетите http://community.wikia.com
 Хотите настроить email рассылку? Перейдите к {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-facebook-problem' => 'Есть проблема со связью с Facebook. Пожалуйста, попробуйте ещё раз позже.',
+	'usersignup-facebook-signup-header' => 'Создать новую учётную запись?',
+	'usersignup-facebook-login-header' => 'Вы уже зарегистрированы?',
 	'usersignup-facebook-or-header' => 'или',
 );
 
