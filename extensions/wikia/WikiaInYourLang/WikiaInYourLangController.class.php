@@ -49,7 +49,9 @@ class WikiaInYourLangController extends WikiaController {
 				$oNativeWiki = WikiFactory::getWikiById( $iNativeWikiId );
 
 				// Check for false-positives - see CE-1216
-				if ( $oNativeWiki->city_lang == $sTargetLanguage ) {
+				// Per request we should unify dialects like pt and pt-br
+				// @see CE-1220
+				if ( array_values( explode( '-', $oNativeWiki->city_lang ) )[0] == $sTargetLanguage ) {
 					$aMessageParams = [
 						$sCurrentSitename,
 						$oNativeWiki->city_url,
@@ -120,6 +122,15 @@ class WikiaInYourLangController extends WikiaController {
 		}
 
 		return $sWikiDomain;
+	}
+
+	/**
+	 * Returns a core of a full language code (e.g. pt from pt-br)
+	 * @param  string $sFullLangCode Full language code
+	 * @return string                A core of the language code
+	 */
+	public function getLanguageCore( $sFullLangCode ) {
+		return array_values( explode( '-', $sFullLangCode ) )[0];
 	}
 
 	/**

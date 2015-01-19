@@ -19,10 +19,13 @@ require(
 		'use strict';
 
 		// Get user's geographic data and a country code
-		var targetLanguage = getTargetLanguage();
+		var targetLanguage = getTargetLanguage(),
+			// Per request we should unify dialects like pt and pt-br
+			// @see CE-1220
+			contentLanguage = w.wgContentLanguage.split("-")[0];
 
 		function init() {
-			if (targetLanguage !== false && targetLanguage !== w.wgContentLanguage) {
+			if (targetLanguage !== false && targetLanguage !== contentLanguage) {
 				// Check local browser cache to see if a request has been sent
 				// in the last month and if the notification has been shown to him.
 				// Both have to be !== true to continue.
@@ -50,7 +53,7 @@ require(
 			}
 			else if (typeof browserLanguage === 'string') {
 				// Check if a browser's language is accessible
-				targetLanguage = browserLanguage.substr(0, 2);
+				targetLanguage = browserLanguage.split('-')[0];
 			} else if (typeof geoCountryCode === 'string') {
 				// Check if a langcode from Geo cookie is accessible
 				targetLanguage = geoCountryCode;
@@ -59,7 +62,9 @@ require(
 				targetLanguage = false;
 			}
 
-			return targetLanguage;
+			// Per request we should unify dialects like pt and pt-br
+			// @see CE-1220
+			return targetLanguage.split('-')[0];
 		}
 
 		function getNativeWikiaInfo() {
