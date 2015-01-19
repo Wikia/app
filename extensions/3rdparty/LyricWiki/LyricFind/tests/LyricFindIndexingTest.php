@@ -32,20 +32,10 @@ class LyricFindIndexingTest extends WikiaBaseTest {
 	public function indexPolicyProvider() {
 		return [
 			[
-				'ns' => 222, // NS_LYRICFIND
-				'inMainNS' => true,
-				'expectedResult' => false
-			],
-			[
-				'ns' => 222, // NS_LYRICFIND
-				'inMainNS' => false,
-				'expectedResult' => true
-			],
-			[
 				'ns' => NS_MAIN,
 				'inMainNS' => true,
 				'expectedResult' => true
-			],
+			]
 		];
 	}
 }

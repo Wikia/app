@@ -14,15 +14,6 @@ $wgExtensionCredits['other'][] = array(
 
 $dir = __DIR__;
 
-// LYR-9 - deleting LW and GN namespaces
-	// for backward compatibility
-	//if (!defined('NS_GRACENOTE')) define('NS_GRACENOTE', 220);
-	// LyricFind namespace setup
-	//define('NS_LYRICFIND', 222);
-	//$wgExtraNamespaces[NS_LYRICFIND] = 'LyricFind';
-	//$wgNamespacesWithSubpages[NS_LYRICFIND] = false;
-	//$wgContentNamespaces[] = NS_LYRICFIND;
-
 // common code
 $wgAutoloadClasses['LyricFindHooks'] =  $dir . '/LyricFindHooks.class.php';
 $wgExtensionMessagesFiles['LyricFind'] = $dir . '/LyricFind.i18n.php';
@@ -40,7 +31,6 @@ $wgLyricFindTrackingNamespaces = [
 ];
 
 // LyricFind indexing
-$wgHooks['BeforePageDisplay'][] = 'LyricFindHooks::onBeforePageDisplay';
 $wgHooks['ParserBeforeStrip'][] = 'LyricFindHooks::onParserBeforeStrip';
 
 // edit permissions & view-source protection
@@ -51,7 +41,7 @@ $wgGroupPermissions['sysop']['editlyricfind'] = true;
 
 $wgHooks['AlternateEdit'][] = 'LyricFindHooks::onAlternateEdit';
 
-// parser hhok
+// parser hook
 $wgHooks['ParserFirstCallInit'][] = 'LyricFindHooks::onParserFirstCallInit';
 $wgHooks['ParserAfterTidy'][] = 'LyricFindHooks::onParserAfterTidy';
 $wgAutoloadClasses['LyricFindParserController'] =  $dir . '/LyricFindParserController.class.php';
