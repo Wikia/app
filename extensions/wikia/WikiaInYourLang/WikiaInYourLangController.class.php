@@ -25,10 +25,10 @@ class WikiaInYourLangController extends WikiaController {
 		 */
 		$sCurrentSitename = $this->wg->Sitename;
 		/**
-		 * The language code for the wfMessage
+		 * A language code's core for the wfMessage
 		 * @var string
 		 */
-		$sTargetLanguage = $this->request->getVal( 'targetLanguage' );
+		$sTargetLanguage = $this->getLanguageCore( $this->request->getVal( 'targetLanguage' ) );
 
 		/**
 		 * Steps to get the native wikia's ID:
@@ -51,7 +51,7 @@ class WikiaInYourLangController extends WikiaController {
 				// Check for false-positives - see CE-1216
 				// Per request we should unify dialects like pt and pt-br
 				// @see CE-1220
-				if ( array_values( explode( '-', $oNativeWiki->city_lang ) )[0] == $sTargetLanguage ) {
+				if ( $this->getLanguageCore( $oNativeWiki->city_lang ) == $sTargetLanguage ) {
 					$aMessageParams = [
 						$sCurrentSitename,
 						$oNativeWiki->city_url,
