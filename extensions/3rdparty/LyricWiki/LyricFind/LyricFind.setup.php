@@ -36,9 +36,7 @@ $wgHooks['MonobookSkinAssetGroups'][] = 'LyricFindHooks::onSkinAssetGroups';
 $wgHooks['WikiaMobileAssetsPackages'][] = 'LyricFindHooks::onSkinAssetGroups';
 
 $wgLyricFindTrackingNamespaces = [
-	NS_MAIN,
-	NS_GRACENOTE,
-	NS_LYRICFIND
+	NS_MAIN
 ];
 
 // LyricFind indexing
