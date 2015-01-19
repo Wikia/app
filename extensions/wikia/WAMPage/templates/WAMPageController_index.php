@@ -13,7 +13,7 @@
 					$sWikiVerticalName = wfMessage( $verticalsNamesMsgKeys[$wiki['vertical_id']] )->escaped();
 			?>
 				<a href="http://<?= $sWikiUrl ?>" class="wam-card card<?= $i++ ?>">
-					<figure>
+					<figure class="vertical-bg-<?= Sanitizer::encodeAttribute( $verticalsShorts[ $wiki['vertical_id'] ] ) ?>">
 						<? if( !empty( $sWikiImageUrl ) ): ?>
 							<img src="<?= $sWikiImageUrl ?>" alt="<?= $sWikiTitle ?>" title="<?= $sWikiTitle ?>" />
 						<? endif ?>
