@@ -40,11 +40,11 @@ class GlobalWatchlistHook {
 			return true;
 		}
 		
-		if ( $oWatchItem->id == 0 ) {
+		if ( $oWatchItem->userID == 0 ) {
 			return true;			
 		}
 		
-		$oTitle = Title::makeTitle( $oWatchItem->ns, $oWatchItem->ti );
+		$oTitle = Title::makeTitle( $oWatchItem->nameSpace, $oWatchItem->databaseKey );
 		if ( !is_object( $oTitle ) ) {
 			return true;
 		}
@@ -54,11 +54,11 @@ class GlobalWatchlistHook {
 			return true;
 		}
 				
-		foreach ( array ( MWNamespace::getSubject( $oWatchItem->ns ), MWNamespace::getTalk( $oWatchItem->ns ) ) as $ns ) {
+		foreach ( array ( MWNamespace::getSubject( $oWatchItem->nameSpace ), MWNamespace::getTalk( $oWatchItem->nameSpace ) ) as $nameSpace ) {
 			$params = array (
-				'wl_user' => $oWatchItem->id,
-				'wl_namespace' => $ns,
-				'wl_title' => $oWatchItem->ti,
+				'wl_user' => $oWatchItem->userID,
+				'wl_namespace' => $nameSpace,
+				'wl_title' => $oWatchItem->databaseKey,
 				'wl_notificationtimestamp' => null,
 				'wl_wikia' => $wgCityId,
 				'wl_revision' => $oRevision->getId(),
@@ -103,15 +103,15 @@ class GlobalWatchlistHook {
 			return true;
 		}
 
-		if ( $oWatchItem->id == 0 ) {
+		if ( $oWatchItem->userID == 0 ) {
 			return true;
 		}
 
-		foreach ( array ( MWNamespace::getSubject( $oWatchItem->ns ), MWNamespace::getTalk( $oWatchItem->ns ) ) as $ns ) {
+		foreach ( array ( MWNamespace::getSubject( $oWatchItem->nameSpace ), MWNamespace::getTalk( $oWatchItem->nameSpace ) ) as $nameSpace ) {
 			$params = array (
-				'wl_user' => $oWatchItem->id,
-				'wl_namespace' => $ns,
-				'wl_title' => $oWatchItem->ti,
+				'wl_user' => $oWatchItem->userID,
+				'wl_namespace' => $nameSpace,
+				'wl_title' => $oWatchItem->databaseKey,
 				'wl_wikia' => $wgCityId
 			);
 
@@ -153,7 +153,7 @@ class GlobalWatchlistHook {
 			return true;
 		}
 
-		$oTitle = Title::makeTitle( $oWatchItem->ns, $oWatchItem->ti );
+		$oTitle = Title::makeTitle( $oWatchItem->nameSpace, $oWatchItem->databaseKey );
 		if ( !is_object( $oTitle ) ) {
 			return true;
 		}
@@ -179,8 +179,8 @@ class GlobalWatchlistHook {
 					'wl_rev_timestamp' => $rev_timestamp
 				),
 				'where' => array (
-					'wl_title' => $oWatchItem->ti,
-					'wl_namespace' => $oWatchItem->ns,
+					'wl_title' => $oWatchItem->databaseKey,
+					'wl_namespace' => $oWatchItem->nameSpace,
 					'wl_user' => $user_id,
 				),
 				'wl_wikia' => $wgCityId
