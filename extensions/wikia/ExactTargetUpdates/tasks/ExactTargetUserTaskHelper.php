@@ -173,7 +173,7 @@ class ExactTargetUserTaskHelper {
 		];
 
 		$sSimpleOperator = 'equals';
-		if ( sizeof( $aUsersIds ) > 1 ) {
+		if ( count( $aUsersIds ) > 1 ) {
 			$sSimpleOperator = 'IN';
 		}
 

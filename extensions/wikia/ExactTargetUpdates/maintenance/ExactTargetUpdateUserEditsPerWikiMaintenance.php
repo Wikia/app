@@ -10,9 +10,9 @@
  *
  */
 
-require_once( __DIR__ . "/../../../../maintenance/commandLine.inc" );
+require_once( __DIR__.'/../../../../maintenance/Maintenance.php' );
 
-class ExactTargetUpdateUserEditsPerWikiMaintenance {
+class ExactTargetUpdateUserEditsPerWikiMaintenance extends Maintenance {
 
 	private $aBotsList = NULL;
 
@@ -24,7 +24,7 @@ class ExactTargetUpdateUserEditsPerWikiMaintenance {
 	public function execute() {
 		global $wgDWStatsDB;
 		// Get DB
-		$oStatsDBr = wfGetDB( DB_SLAVE, array(), $wgDWStatsDB );
+		$oStatsDBr = wfGetDB( DB_SLAVE, [], $wgDWStatsDB );
 		$sStartDate = $this->getLastDayDate();
 		$oUsersListResult = $this->getUsersEditedRecently( $oStatsDBr, $sStartDate );
 		$aUsersEditsData = $this->getUserEdits( $oStatsDBr, $sStartDate, $oUsersListResult );
@@ -82,7 +82,7 @@ class ExactTargetUpdateUserEditsPerWikiMaintenance {
 
 	private function loadBotsIds() {
 		global $wgExternalSharedDB;
-		$oExternalSharedDBr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+		$oExternalSharedDBr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 		$oBotsResult = $oExternalSharedDBr->query( "SELECT ug_user from user_groups where ug_group IN ('bot', 'bot-global');" );
 		$this->aBotsList = [];
 		foreach( $oBotsResult as $bot ) {
@@ -105,5 +105,5 @@ class ExactTargetUpdateUserEditsPerWikiMaintenance {
 	}
 }
 
-$updateUserEditsPerWiki = new ExactTargetUpdateUserEditsPerWikiMaintenance();
-$updateUserEditsPerWiki->execute();
+$maintClass = "ExactTargetUpdateUserEditsPerWikiMaintenance";
+require_once( RUN_MAINTENANCE_IF_MAIN );
