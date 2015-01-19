@@ -365,7 +365,11 @@ var UserProfilePage = {
 		UserProfilePage.bucky.timer.start('saveUserDataSuccess');
 		UserProfilePage.bucky.timer.start('saveUserDataFail');
 
-		var userData = UserProfilePage.getFormData();
+		var userData = UserProfilePage.getFormData(),
+			saveButton = $('button[data-event=save]');
+
+		//prevent from multiple clicks on 'save' button
+		saveButton.prop('disabled', true);
 
 		if (UserProfilePage.newAvatar) {
 			userData.avatarData = UserProfilePage.newAvatar;
@@ -375,11 +379,12 @@ var UserProfilePage = {
 			type: 'POST',
 			url: this.ajaxEntryPoint + '&method=saveUserData',
 			dataType: 'json',
-			data: {'userId' : UserProfilePage.userId, 'data' : JSON.stringify(userData)},
+			data: {'userId': UserProfilePage.userId, 'data': JSON.stringify(userData)},
 			success: function (data) {
 				if (data.status === 'error') {
 					UserProfilePage.error(data.errMsg);
 					UserProfilePage.bucky.timer.stop('saveUserDataFail');
+					saveButton.prop('disabled', false);
 				} else {
 					UserProfilePage.userData = null;
 					UserProfilePage.wasDataChanged = false;
@@ -389,7 +394,10 @@ var UserProfilePage = {
 					window.location = UserProfilePage.reloadUrl;
 				}
 			},
-			error: UserProfilePage.error
+			error: function (msg) {
+				saveButton.prop('disabled', false);
+				UserProfilePage.error(msg);
+			}
 		});
 	},
 
