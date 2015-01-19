@@ -34,7 +34,7 @@ class ExactTargetUpdateUserEditsPerWikiMaintenance extends Maintenance {
 
 	private function getUsersEditedRecently( DatabaseBase $oStatsDBr, $sStartDate ) {
 		// Get list of users that made edits in last period
-		$sql = (new WikiaSQL())
+		$sql = ( new WikiaSQL() )
 			->SELECT()
 			->DISTINCT( 'user_id' )
 			->FROM( 'rollup_wiki_user_events' )
@@ -43,13 +43,9 @@ class ExactTargetUpdateUserEditsPerWikiMaintenance extends Maintenance {
 			->AND_( 'user_id' )->NOT_EQUAL_TO( 0 );
 
 		/* @var ResultWrapper $oUsersListResult */
-		$oUsersListResult = $sql->run($oStatsDBr);
+		$oUsersListResult = $sql->run( $oStatsDBr );
 
 		return $oUsersListResult;
-	}
-
-	private function prepareTimeCondition( $sStartDate ) {
-		return "time_id>'{$sStartDate}' and period_id=1";
 	}
 
 	/**
@@ -62,12 +58,23 @@ class ExactTargetUpdateUserEditsPerWikiMaintenance extends Maintenance {
 	 * @return array
 	 */
 	private function getUserEdits( DatabaseBase $oStatsDBr, $sStartDate, $oUsersListResult ) {
-		$timeCondition = $this->prepareTimeCondition( $sStartDate );
 		// Get user edits
 		$aUsersEditsData = [];
 		foreach ( $oUsersListResult as $oUserResult ) {
 			if ( !$this->isUserBot( $oUserResult->user_id ) ) {
-				$oUserEditCountWikisResult = $oStatsDBr->query("SELECT user_id, wiki_id, ( sum( edits )+sum( creates ) ) as editcount from rollup_wiki_user_events where {$timeCondition} and user_id = {$oUserResult->user_id} group by wiki_id");
+				$sql = ( new WikiaSQL() )
+					->SELECT( 'user_id' )
+						->FIELD('wiki_id')
+						->FIELD('sum( edits ) + sum( creates )')->AS_( 'editcount' )
+					->FROM( 'rollup_wiki_user_events' )
+					->WHERE( 'time_id' )->GREATER_THAN( $sStartDate )
+					->AND_( 'period_id' )->EQUAL_TO( self::DAILY_PERIOD )
+					->AND_( 'user_id' )->EQUAL_TO( $oUserResult->user_id )
+					->GROUP_BY( 'wiki_id' );
+
+				/* @var ResultWrapper $oUsersListResult */
+				$oUserEditCountWikisResult = $sql->run( $oStatsDBr );
+
 				foreach ( $oUserEditCountWikisResult as $oUserEditCountWikiResult ) {
 					$aUsersEditsData[ $oUserEditCountWikiResult->user_id ][ $oUserEditCountWikiResult->wiki_id ] =
 						intval( $oUserEditCountWikiResult->editcount );
