@@ -14,6 +14,7 @@ require_once( __DIR__.'/../../../../maintenance/Maintenance.php' );
 
 class ExactTargetUpdateUserEditsPerWikiMaintenance extends Maintenance {
 
+	const DAILY_PERIOD = 1;
 	private $aBotsList = NULL;
 
 	/**
@@ -32,9 +33,17 @@ class ExactTargetUpdateUserEditsPerWikiMaintenance extends Maintenance {
 	}
 
 	private function getUsersEditedRecently( DatabaseBase $oStatsDBr, $sStartDate ) {
-		$timeCondition = $this->prepareTimeCondition( $sStartDate );
 		// Get list of users that made edits in last period
-		$oUsersListResult = $oStatsDBr->query("SELECT distinct user_id from rollup_wiki_user_events where {$timeCondition} and user_id != 0;");
+		$sql = (new WikiaSQL())
+			->SELECT()
+			->DISTINCT( 'user_id' )
+			->FROM( 'rollup_wiki_user_events' )
+			->WHERE( 'time_id' )->GREATER_THAN( $sStartDate )
+			->AND_( 'period_id' )->EQUAL_TO( self::DAILY_PERIOD )
+			->AND_( 'user_id' )->NOT_EQUAL_TO( 0 );
+
+		/* @var ResultWrapper $oUsersListResult */
+		$oUsersListResult = $sql->run($oStatsDBr);
 
 		return $oUsersListResult;
 	}
