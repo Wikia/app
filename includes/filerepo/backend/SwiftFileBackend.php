@@ -976,17 +976,12 @@ class SwiftFileBackend extends FileBackendStore {
 			return;
 		}
 
-		\Wikia\SwiftStorage::log(
-			__CLASS__ . '::exception',
-			"[$wgFSSwiftServer] " .
-			get_class( $e ) . " in '{$func}' (given '" . serialize( $params ) . "')" .
-				( $e instanceof InvalidResponseException
-					? ": {$e->getMessage()}"
-					: ""
-				)
-		);
-
-		\Wikia::logBacktrace(get_class($e) . " [$wgFSSwiftServer]");
+		\Wikia\Logger\WikiaLogger::instance()->error( __CLASS__, [
+			'exception' => $e,
+			'func' => $func,
+			'params' => $params,
+			'swift_server' => $wgFSSwiftServer
+		]);
 		// Wikia change - end
 	}
 	
