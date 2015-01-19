@@ -64,15 +64,15 @@ class ExactTargetUpdateUserEditsPerWikiMaintenance extends Maintenance {
 			if ( !$this->isUserBot( $oUserResult->user_id ) ) {
 				$sql = ( new WikiaSQL() )
 					->SELECT( 'user_id' )
-						->FIELD('wiki_id')
-						->FIELD('sum( edits ) + sum( creates )')->AS_( 'editcount' )
+						->FIELD( 'wiki_id' )
+						->FIELD( 'sum( edits ) + sum( creates )' )->AS_( 'editcount' )
 					->FROM( 'rollup_wiki_user_events' )
 					->WHERE( 'time_id' )->GREATER_THAN( $sStartDate )
 					->AND_( 'period_id' )->EQUAL_TO( self::DAILY_PERIOD )
 					->AND_( 'user_id' )->EQUAL_TO( $oUserResult->user_id )
 					->GROUP_BY( 'wiki_id' );
 
-				/* @var ResultWrapper $oUsersListResult */
+				/* @var ResultWrapper $oUserEditCountWikisResult */
 				$oUserEditCountWikisResult = $sql->run( $oStatsDBr );
 
 				foreach ( $oUserEditCountWikisResult as $oUserEditCountWikiResult ) {
@@ -99,7 +99,14 @@ class ExactTargetUpdateUserEditsPerWikiMaintenance extends Maintenance {
 	private function loadBotsIds() {
 		global $wgExternalSharedDB;
 		$oExternalSharedDBr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
-		$oBotsResult = $oExternalSharedDBr->query( "SELECT ug_user from user_groups where ug_group IN ('bot', 'bot-global');" );
+		$sql = ( new WikiaSQL() )
+			->SELECT( 'ug_user' )
+			->FROM( 'user_groups' )
+			->WHERE( 'ug_group' )->IN( [ 'bot', 'bot-global' ] );
+
+		/* @var ResultWrapper $oBotsResult */
+		$oBotsResult = $sql->run( $oExternalSharedDBr );
+
 		$this->aBotsList = [];
 		foreach( $oBotsResult as $bot ) {
 			$this->aBotsList[ $bot->ug_user ] = true;
