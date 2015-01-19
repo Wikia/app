@@ -37,9 +37,6 @@ $wgResourceModules['ext.wikiaInYourLang'] = [
 	'localBasePath' => __DIR__ . '/modules',
 	'remoteExtPath' => 'wikia/WikiaInYourLang/modules',
 	'scripts' => 'ext.wikiaInYourLang.js',
-	'messages' => [
-		'wikia-in-your-lang-available',
-	],
 	'dependencies' => [
 		'wikia.cache',
 		'wikia.geo',
