@@ -62,7 +62,7 @@ class ExactTargetUpdateUserEditsPerWikiMaintenance extends Maintenance {
 		$aUsersEditsData = [];
 		foreach ( $oUsersListResult as $oUserResult ) {
 			if ( !$this->isUserBot( $oUserResult->user_id ) ) {
-				$sql = ( new WikiaSQL() )
+				$aUsersEditsData[ $oUserResult->user_id ] = ( new WikiaSQL() )
 					->SELECT( 'user_id' )
 						->FIELD( 'wiki_id' )
 						->FIELD( 'sum( edits ) + sum( creates )' )->AS_( 'editcount' )
@@ -70,15 +70,11 @@ class ExactTargetUpdateUserEditsPerWikiMaintenance extends Maintenance {
 					->WHERE( 'time_id' )->GREATER_THAN( $sStartDate )
 					->AND_( 'period_id' )->EQUAL_TO( self::DAILY_PERIOD )
 					->AND_( 'user_id' )->EQUAL_TO( $oUserResult->user_id )
-					->GROUP_BY( 'wiki_id' );
-
-				/* @var ResultWrapper $oUserEditCountWikisResult */
-				$oUserEditCountWikisResult = $sql->run( $oStatsDBr );
-
-				foreach ( $oUserEditCountWikisResult as $oUserEditCountWikiResult ) {
-					$aUsersEditsData[ $oUserEditCountWikiResult->user_id ][ $oUserEditCountWikiResult->wiki_id ] =
-						intval( $oUserEditCountWikiResult->editcount );
-				}
+					->GROUP_BY( 'wiki_id' )
+					->runLoop( $oStatsDBr, function( &$aUsersEditsOnWiki, $oUserEditCountWikiResult ) {
+						$aUsersEditsOnWiki[ $oUserEditCountWikiResult->wiki_id ] =
+							intval( $oUserEditCountWikiResult->editcount );
+					});
 			}
 		}
 		return $aUsersEditsData;
@@ -99,18 +95,13 @@ class ExactTargetUpdateUserEditsPerWikiMaintenance extends Maintenance {
 	private function loadBotsIds() {
 		global $wgExternalSharedDB;
 		$oExternalSharedDBr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
-		$sql = ( new WikiaSQL() )
+		$this->aBotsList = ( new WikiaSQL() )
 			->SELECT( 'ug_user' )
 			->FROM( 'user_groups' )
-			->WHERE( 'ug_group' )->IN( [ 'bot', 'bot-global' ] );
-
-		/* @var ResultWrapper $oBotsResult */
-		$oBotsResult = $sql->run( $oExternalSharedDBr );
-
-		$this->aBotsList = [];
-		foreach( $oBotsResult as $bot ) {
-			$this->aBotsList[ $bot->ug_user ] = true;
-		}
+			->WHERE( 'ug_group' )->IN( [ 'bot', 'bot-global' ] )
+			->runLoop( $oExternalSharedDBr, function( &$aResultList, $oBot ) {
+				$aResultList[ $oBot->ug_user ] = true;
+			});
 	}
 
 	private function addEditsUpdateTask( $aUsersEditsData ) {
