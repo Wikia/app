@@ -3,7 +3,7 @@
 $messages = array_merge( $messages, array(
 # vertical names
 'vertical-tv' => 'TV',
-'vertical-games' => 'Juegas',
+'vertical-games' => 'Juegos',
 'vertical-books' => 'Libros',
 'vertical-comics' => 'Cómics',
 'vertical-lifestyle' => 'Estilo de vida',
