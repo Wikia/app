@@ -151,8 +151,8 @@ $color-wam-button: #092344;
 
 			figure {
 				background-image: url('/extensions/wikia/WAMPage/images/placeholder.svg'); /* inline */
-				background-position: center;
 				background-repeat: no-repeat;
+				background-position: center;
 				height: 94px;
 				overflow: hidden;
 				position: relative;
@@ -166,31 +166,6 @@ $color-wam-button: #092344;
 					left: 0;
 					bottom: 0;
 				}
-			}
-
-			.placeholder-all {
-				background-color: $color-vertical-all;
-			}
-			.placeholder-books {
-				@include verticals-colors('background-color', 'books');
-			}
-			.placeholder-comics {
-				@include verticals-colors('background-color', 'comics');
-			}
-			.placeholder-lifestyle {
-				@include verticals-colors('background-color', 'lifestyle');
-			}
-			.placeholder-games {
-				@include verticals-colors('background-color', 'games');
-			}
-			.placeholder-movies {
-				@include verticals-colors('background-color', 'movies');
-			}
-			.placeholder-music {
-				@include verticals-colors('background-color', 'music');
-			}
-			.placeholder-tv {
-				@include verticals-colors('background-color', 'tv');
 			}
 
 			.wam-score {
