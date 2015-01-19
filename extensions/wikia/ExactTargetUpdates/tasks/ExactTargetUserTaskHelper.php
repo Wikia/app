@@ -302,8 +302,8 @@ class ExactTargetUserTaskHelper {
 	 * @param array $aUserEditsDataFromET
 	 */
 	public function mergeUsersEditsData( array &$aUsersEditsData, array $aUserEditsDataFromET ) {
-		foreach( $aUserEditsDataFromET as $iUserId => $aWikiContributions ) {
-			foreach( $aWikiContributions as $iWikiId => $iContributions ) {
+		foreach ( $aUserEditsDataFromET as $iUserId => $aWikiContributions ) {
+			foreach ( $aWikiContributions as $iWikiId => $iContributions ) {
 				if ( isset($aUsersEditsData[$iUserId][$iWikiId]) ) {
 					$aUsersEditsData[$iUserId][$iWikiId] += $iContributions;
 				}
