@@ -384,7 +384,6 @@ var UserProfilePage = {
 				if (data.status === 'error') {
 					UserProfilePage.error(data.errMsg);
 					UserProfilePage.bucky.timer.stop('saveUserDataFail');
-					saveButton.prop('disabled', false);
 				} else {
 					UserProfilePage.userData = null;
 					UserProfilePage.wasDataChanged = false;
@@ -394,9 +393,9 @@ var UserProfilePage = {
 					window.location = UserProfilePage.reloadUrl;
 				}
 			},
-			error: function (msg) {
+			error: UserProfilePage.error,
+			complete: function () {
 				saveButton.prop('disabled', false);
-				UserProfilePage.error(msg);
 			}
 		});
 	},
