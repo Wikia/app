@@ -85,7 +85,7 @@ $messages['qqq'] = array(
 	'fbconnect-error' => '',
 	'fbconnect-errortext' => '',
 	'fbconnect-passwordremindertext' => '',
-	'0' => 'fbconnect-passwordremindertext-exist => ',
+	'fbconnect-passwordremindertext-exist' => '',
 	'fbconnect-passwordremindertitle' => '',
 	'fbconnect-passwordremindertitle-exist' => '',
 	'fbconnect-prefstext' => '',
