@@ -378,6 +378,10 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
 	'wall-topic-edit' => 'Edit Topics',
 	'wall-topic-edit-save' => 'Save',
 	'wall-topic-edit-cancel' => 'Cancel',
+
+	'group-threadmoderator' => 'Moderators',
+	'group-threadmoderator-member' => 'Moderator',
+	'grouppage-threadmoderator' => 'w:c:community:Help:Moderators',
 );
 
 /** Message documentation (Message documentation)
@@ -840,6 +844,9 @@ checkbox on Special:Block',
 {{Identical|Save}}',
 	'wall-topic-edit-cancel' => 'Edit Topics - Cancel button.
 {{Identical|Cancel}}',
+	'group-threadmoderator' => '{{doc-group|threadmoderator}}',
+	'group-threadmoderator-member' => '{{doc-group|threadmoderator|member}}',
+	'grouppage-threadmoderator' => '{{doc-group|threadmoderator|page}}',
 );
 
 /** Old English (Ænglisc)
