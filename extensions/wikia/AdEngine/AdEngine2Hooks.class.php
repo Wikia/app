@@ -242,7 +242,7 @@ class AdEngine2Hooks {
 		}
 
 		if ($wgEnableKruxOnMobile === true) {
-			array_splice( $jsStaticPackages, $coreGroupIndex, 0, self::ASSET_GROUP_KRUX_MOBILE );
+			$jsStaticPackages[] = self::ASSET_GROUP_KRUX_MOBILE;
 		}
 
 		return true;
