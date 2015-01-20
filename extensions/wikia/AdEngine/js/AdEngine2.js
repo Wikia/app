@@ -42,7 +42,6 @@ define('ext.wikia.adEngine.adEngine', [
 				// Success callback
 				log(['success', provider.name, slotName, extra], 'debug', logGroup);
 				aSlotTracker.track('success', extra);
-
 				if (slot.success) {
 					slot.success(slot, provider);
 				}
@@ -50,7 +49,6 @@ define('ext.wikia.adEngine.adEngine', [
 				// Hop callback
 				log(['hop', provider.name, slotName, extra], 'debug', logGroup);
 				aSlotTracker.track('hop', extra);
-
 				nextProvider();
 			});
 		}
