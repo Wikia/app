@@ -62,6 +62,10 @@ define('ext.wikia.adEngine.adEngine', [
 		function fillInSlot(slot) {
 			log(['fillInSlot', slot], 'debug', logGroup);
 
+			if (Object.prototype.toString.call(slot) === '[object Array]') {
+				slot = slot[0];
+			}
+
 			slot = typeof slot !== 'string' ? slot : {
 				slotname: slot
 			};
