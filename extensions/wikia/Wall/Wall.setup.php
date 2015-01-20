@@ -224,20 +224,20 @@ $wgGroupPermissions['staff']['wallarchive'] = true;
 $wgGroupPermissions['vstf']['wallarchive'] = true;
 $wgGroupPermissions['helper']['wallarchive'] = true;
 $wgGroupPermissions['sysop']['wallarchive'] = true;
-$wgGroupPermissions['moderator']['wallarchive'] = true;
+$wgGroupPermissions['threadmoderator']['wallarchive'] = true;
 
 $wgGroupPermissions['*']['wallremove'] = false;
 $wgGroupPermissions['staff']['wallremove'] = true;
 $wgGroupPermissions['vstf']['wallremove'] = true;
 $wgGroupPermissions['helper']['wallremove'] = true;
-$wgGroupPermissions['moderator']['wallremove'] = true;
+$wgGroupPermissions['threadmoderator']['wallremove'] = true;
 
 $wgGroupPermissions['*']['walledit'] = false;
 $wgGroupPermissions['staff']['walledit'] = true;
 $wgGroupPermissions['vstf']['walledit'] = true;
 $wgGroupPermissions['helper']['walledit'] = true;
 $wgGroupPermissions['sysop']['walledit'] = true;
-$wgGroupPermissions['moderator']['walledit'] = true;
+$wgGroupPermissions['threadmoderator']['walledit'] = true;
 
 $wgGroupPermissions['*']['editwallarchivedpages'] = false;
 $wgGroupPermissions['sysop']['editwallarchivedpages'] = true;
@@ -253,7 +253,7 @@ $wgGroupPermissions['sysop']['notifyeveryone'] = true;
 $wgGroupPermissions['vstf']['notifyeveryone'] = true;
 $wgGroupPermissions['staff']['notifyeveryone'] = true;
 $wgGroupPermissions['helper']['notifyeveryone'] = true;
-$wgGroupPermissions['moderator']['notifyeveryone'] = true;
+$wgGroupPermissions['threadmoderator']['notifyeveryone'] = true;
 
 $wgGroupPermissions['*']['wallfastadmindelete'] = false;
 $wgGroupPermissions['sysop']['wallfastadmindelete'] = false;
@@ -261,10 +261,10 @@ $wgGroupPermissions['vstf']['wallfastadmindelete'] = true;
 $wgGroupPermissions['staff']['wallfastadmindelete'] = true;
 
 $wgGroupPermissions['*']['wallmessagemove'] = false;
-$wgGroupPermissions['moderator']['wallmessagemove'] = true;
+$wgGroupPermissions['threadmoderator']['wallmessagemove'] = true;
 $wgGroupPermissions['sysop']['wallmessagemove'] = true;
 $wgGroupPermissions['vstf']['wallmessagemove'] = true;
 $wgGroupPermissions['helper']['wallmessagemove'] = true;
 $wgGroupPermissions['staff']['wallmessagemove'] = true;
 
-$wgAddGroups['bureaucrat']['moderator'] = true;
+$wgAddGroups['bureaucrat'][] = 'threadmoderator';
