@@ -7,7 +7,8 @@ define('ext.wikia.adEngine.slot.interstitial', [
 ], function (log, win, doc, uiFactory) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.slot.interstitial',
+	var slotDiv,
+		logGroup = 'ext.wikia.adEngine.slot.interstitial',
 		slotName = 'MODAL_INTERSTITIAL_5',
 		modalConfig = {
 			vars: {
@@ -20,23 +21,27 @@ define('ext.wikia.adEngine.slot.interstitial', [
 			}
 		};
 
-	function onModalReady(modal) {
-		var div = doc.createElement('div');
-		div.id = slotName;
-		div.className = 'wikia-ad noprint';
-		doc.getElementById(logGroup + '.content').appendChild(div);
-		win.adslots2.push({
-			slotname: slotName,
-			success: function(){
-				modal.show();
-			}
+	function onAdSuccess() {
+		uiFactory.init('modal').then(function (uiModal) {
+			uiModal.createComponent(modalConfig, function(modal) {
+					doc.getElementById(logGroup + '.content').appendChild(slotDiv);
+					modal.show();
+				}
+			);
 		});
 	}
 
 	function init() {
 		log(['init', slotName], 'debug', logGroup);
-		uiFactory.init('modal').then(function (uiModal) {
-			uiModal.createComponent(modalConfig, onModalReady);
+
+		slotDiv = doc.createElement('div');
+		slotDiv.id = slotName;
+		slotDiv.className = 'wikia-ad noprint';
+		doc.querySelector('body').appendChild(slotDiv);
+
+		win.adslots2.push({
+			slotname: slotName,
+			success: onAdSuccess
 		});
 	}
 
