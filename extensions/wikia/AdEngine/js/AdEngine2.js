@@ -82,6 +82,12 @@ define('ext.wikia.adEngine.adEngine', [
 					provider = providerList.shift();
 
 					if (!provider) {
+						delete slot.success;
+
+						if (slot.error) {
+							slot.error(slot, adProviderNull);
+						}
+
 						return fillInSlotUsingProvider(slot, adProviderNull, noop);
 					}
 
