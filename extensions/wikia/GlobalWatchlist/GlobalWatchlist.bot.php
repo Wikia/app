@@ -177,8 +177,7 @@ class GlobalWatchlistBot {
 
 				unset($oUser);
 			}
-			$dbr->freeResult( $oResource );
-			$this->printDebug( "$iWatchlisters global watchilster(s) found. (time: " . $this->calculateDuration( time() - $this->mStartTime ) . ")" );
+			$this->printDebug( "$iWatchlisters global watchlister(s) found. (time: " . $this->calculateDuration( time() - $this->mStartTime ) . ")" );
 		}
 		else {
 			$this->printDebug( "No global watchlist users were found.", true );

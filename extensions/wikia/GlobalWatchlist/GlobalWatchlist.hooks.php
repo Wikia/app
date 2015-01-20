@@ -7,7 +7,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 class GlobalWatchlistHook {
 	
-	public static function getPreferences( &$defaultPreferences ) {
+	public static function getPreferences( $user, &$defaultPreferences ) {
 
 		$defaultPreferences['watchlistdigest'] = array(
 			'type' => 'toggle',
