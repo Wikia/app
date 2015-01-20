@@ -22,7 +22,7 @@ class SampleController extends \WikiaController
 		$this->response->setFormat( 'json' );
 		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
 
-		if ( ! $this->request->wasPosted() ) {
+		if ( $this->getVal( 'secret' ) != $this->wg->TheSchwartzSecretToken || ! $this->request->wasPosted() ) {
 			$this->response->setVal( 'data', $oResponseData );
 			return;
 		}
@@ -30,10 +30,9 @@ class SampleController extends \WikiaController
 		$sTitle = $this->getVal( 'title' );
 		$oResponseData->title = $sTitle;
 		$oTitle = \Title::newFromText( $sTitle );
-
 		\Wikia\Util\Assert::true( $oTitle instanceof \Title );
-		$oArticle = new \Article( $oTitle );
 
+		$oArticle = new \Article( $oTitle );
 		\Wikia\Util\Assert::true( $oArticle instanceof \Article );
 
 		$sText = $this->getVal( 'text' );
