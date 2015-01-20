@@ -126,7 +126,7 @@
 		// create our own deferred object to resolve after FB.init finishes
 		var $deferred = $.Deferred();
 
-		if (typeof(callback) === 'function') {
+		if (typeof callback === 'function') {
 			$deferred.done(callback);
 		}
 
