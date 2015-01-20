@@ -71,6 +71,9 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window', 'wikia.thumbnaile
 					src = src.replace(/\.[^\./]+$/, '.webp');
 				}
 				else {
+					// remove the existing format parameter
+					src = src.replace(/[\?&]format=\w+/, '');
+
 					// add "format=webp" to Vignette URL
 					src += src.indexOf('?') ? '&' : '?';
 					src += 'format=webp';
