@@ -8,7 +8,8 @@ define('ext.wikia.adEngine.adEngine', [
 ], function (log, LazyQueue, slotTracker, eventDispatcher, adProviderNull) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.adEngine';
+	var logGroup = 'ext.wikia.adEngine.adEngine',
+		toString = Object.prototype.toString;
 
 	function decorate(func, decorators) {
 		log(['decorate', func, decorators], 'debug', logGroup);
@@ -62,13 +63,13 @@ define('ext.wikia.adEngine.adEngine', [
 		function fillInSlot(slot) {
 			log(['fillInSlot', slot], 'debug', logGroup);
 
-			if (Object.prototype.toString.call(slot) === '[object Array]') {
+			if (toString.call(slot) === '[object Array]') {
 				slot = slot[0];
 			}
 
-			slot = typeof slot !== 'string' ? slot : {
-				slotname: slot
-			};
+			if (typeof slot === 'string') {
+				slot = { slotname: slot };
+			}
 
 			var slotName = slot.slotname,
 				providerList = adConfig.getProviderList(slotName).slice(); // Get a copy of the array
