@@ -25,6 +25,7 @@ define('ext.wikia.adEngine.slot.interstitial', [
 		uiFactory.init('modal').then(function (uiModal) {
 			uiModal.createComponent(modalConfig, function(modal) {
 					doc.getElementById(logGroup + '.content').appendChild(slotDiv);
+					slotDiv.removeAttribute('style');
 					modal.show();
 				}
 			);
@@ -37,6 +38,7 @@ define('ext.wikia.adEngine.slot.interstitial', [
 		slotDiv = doc.createElement('div');
 		slotDiv.id = slotName;
 		slotDiv.className = 'wikia-ad noprint';
+		slotDiv.setAttribute('style', 'position:absolute;visibility:hidden');
 		doc.querySelector('body').appendChild(slotDiv);
 
 		win.adslots2.push({
