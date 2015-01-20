@@ -268,3 +268,4 @@ $wgGroupPermissions['helper']['wallmessagemove'] = true;
 $wgGroupPermissions['staff']['wallmessagemove'] = true;
 
 $wgAddGroups['bureaucrat'][] = 'threadmoderator';
+$wgRemoveGroups['bureaucrat'][] = 'threadmoderator';
