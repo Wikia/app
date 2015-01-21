@@ -26,9 +26,7 @@ $wgHooks['OasisSkinAssetGroups'][] = 'LyricFindHooks::onSkinAssetGroups';
 $wgHooks['MonobookSkinAssetGroups'][] = 'LyricFindHooks::onSkinAssetGroups';
 $wgHooks['WikiaMobileAssetsPackages'][] = 'LyricFindHooks::onSkinAssetGroups';
 
-$wgLyricFindTrackingNamespaces = [
-	NS_MAIN
-];
+$wgLyricFindTrackingNamespaces = [NS_MAIN];
 
 // LyricFind indexing
 $wgHooks['ParserBeforeStrip'][] = 'LyricFindHooks::onParserBeforeStrip';
