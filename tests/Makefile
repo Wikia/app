@@ -6,7 +6,7 @@ CMD_PHPUNIT=php run-test.php \
 	--configuration=phpunit.xml
 
 # command to run karma
-CMD_KARMA=karma start \
+CMD_KARMA=../node_modules/karma/bin/karma start \
 	--single-run \
 	--no-auto-watch \
 	--reporters progress,junit,coverage
