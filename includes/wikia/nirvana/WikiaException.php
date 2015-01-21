@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 /**
  * WikiaBaseException
  *
@@ -61,10 +63,10 @@ class WikiaException extends WikiaBaseException {
 			// log on devboxes to /tmp/debug.log
 			wfDebug($exceptionClass . ": {$message}\n");
 
-			\Wikia\Logger\WikiaLogger::instance()->error($exceptionClass, [
+			WikiaLogger::instance()->error($exceptionClass, [
 				'err' => $message,
 				'errno' => $code,
-				'exception' => $this,
+				'exception' => $previous instanceof Exception ? $previous : $this,
 			]);
 		}
 	}
@@ -90,7 +92,6 @@ class WikiaDispatchedException extends WikiaException {
 	 *
 	 * @link  http://pl2.php.net/manual/en/exception.construct.php
 	 * @param string $message
-	 * @param int $code
 	 * @param Exception $original
 	 */
 	public function __construct($message = '',  Exception $original = null) {
@@ -130,32 +131,16 @@ class WikiaDispatchedException extends WikiaException {
 	 * Override WikiaException report() and write exceptions to error_log
 	 */
 	function report() {
-		global $wgRequest;
-		$info = '';
-
-		if ( !empty( $this->_original ) ) {
-			$file = $this->_original->getFile();
-			$line = $this->_original->getLine();
-			$message = $this->_original->getMessage();
-
-			$info = "exception has occurred at line {$line} of {$file}: {$message}";
-		} else {
-			$info = "unknown exception has occurred";
-		}
-
-		$url = '[no URL]';
-
-		if ( isset( $wgRequest ) ) {
-			$url = $wgRequest->getFullRequestURL();
-		}
-
-		// Display normal mediawiki eror page for mediawiki exceptions
+		// Display normal mediawiki error page for mediawiki exceptions
 		if ( $this->_original instanceof MWException ) {
 			$this->_original->report();
 		}
-
+		// Wikia-specific exceptions will be sent to Logstash
 		else {
-			trigger_error("[REPORT: {$this->getMessage()}] WikiaDispatcher reports an {$info}  (URL: {$url}) [REPORT: End]", E_USER_ERROR);
+			WikiaLogger::instance()->error(__CLASS__, [
+				'err' => $this->getMessage(),
+				'exception' => $this->getOriginal(),
+			]);
 		}
 	}
 }
