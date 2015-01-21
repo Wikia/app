@@ -8,6 +8,7 @@ use Wikia\Search\Config;
 use Wikia\Search\QueryService\Factory;
 use Wikia\Search\QueryService\DependencyContainer;
 use Wikia\Util\GlobalStateWrapper;
+use Wikia\Logger\WikiaLogger;
 
 class ArticlesApiController extends WikiaApiController {
 
@@ -726,6 +727,13 @@ class ArticlesApiController extends WikiaApiController {
 					$collection[$id] = array_merge( $collection[ $id ], $fileData );
 					$articles[] = $id;
 					$this->wg->Memc->set( self::getCacheKey( $id, self::DETAILS_CACHE_ID ), $collection[$id], 86400 );
+				} else {
+					$dataLog = [
+						'titleText' => $t->getText(),
+						'articleId' => $t->getArticleID()
+					];
+
+					WikiaLogger::instance()->info( 'No revision found for article', $dataLog );
 				}
 
 			}
@@ -975,7 +983,12 @@ class ArticlesApiController extends WikiaApiController {
 			}
 
 			if ( $redirect !== 'no' && $article->getPage()->isRedirect() ) {
-				$article = Article::newFromTitle( $article->getPage()->followRedirect(), RequestContext::getMain() );
+				// false, Title object of local target or string with URL
+				$followRedirect = $article->getPage()->followRedirect();
+
+				if ( $followRedirect && !is_string( $followRedirect ) ) {
+					$article = Article::newFromTitle( $followRedirect, RequestContext::getMain() );
+				}
 			}
 
 			//Response is based on wikiamobile skin as this already removes inline style
@@ -1012,6 +1025,7 @@ class ArticlesApiController extends WikiaApiController {
 				'media' => $articleContent->media,
 				'users' => $articleContent->users,
 				'categories' => $categories,
+				'description' => $this->getArticleDescription( $article )
 			];
 
 			$this->setResponseData( $result, '', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
@@ -1337,5 +1351,35 @@ class ArticlesApiController extends WikiaApiController {
 			$message = wfMessage( 'invalid-parameter-basearticleid', $baseArticleId )->text();
 			throw new BadRequestApiException( $message );
 		}
+	}
+
+	/**
+	 * Returns description for the article's meta tag.
+	 *
+	 * This is mostly copied from the ArticleMetaDescription extension.
+	 *
+	 * @param Article $article
+	 * @param int $descLength
+	 * @return string
+	 * @throws WikiaException
+	 */
+	protected function getArticleDescription( Article $article, $descLength = 100 ) {
+		$title = $article->getTitle();
+		$sMessage = null;
+
+		if ( $title->isMainPage() ) {
+			// we're on Main Page, check MediaWiki:Description message
+			$sMessage = wfMessage( 'Description' )->text();
+		}
+
+		if ( ( $sMessage == null ) || wfEmptyMsg( 'Description', $sMessage ) ) {
+			$articleService = new ArticleService( $article );
+			$description = $articleService->getTextSnippet( $descLength );
+		} else {
+			// MediaWiki:Description message found, use it
+			$description = $sMessage;
+		}
+
+		return $description;
 	}
 }

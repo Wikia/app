@@ -34,7 +34,7 @@ class FixUsabilityPrefs extends WikimediaMaintenance {
 				__METHOD__ );
 			$dbw->commit();
 			$allIds = array_merge( $allIds, $ids );
-			wfWaitForSlaves( 10 );
+			wfWaitForSlaves();
 		}
 
 		echo "Fixing wikieditor-*\n";
@@ -60,7 +60,7 @@ class FixUsabilityPrefs extends WikimediaMaintenance {
 				__METHOD__ );
 			$dbw->commit();
 			$allIds = array_merge( $allIds, $ids );
-			wfWaitForSlaves( 10 );
+			wfWaitForSlaves();
 		}
 
 		$allIds = array_unique( $allIds );
@@ -77,7 +77,7 @@ class FixUsabilityPrefs extends WikimediaMaintenance {
 			$dbw->commit();
 			$i++;
 			if ( $i % 1000 == 0 ) {
-				wfWaitForSlaves( 10 );
+				wfWaitForSlaves();
 			}
 		}
 

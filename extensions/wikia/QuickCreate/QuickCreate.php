@@ -11,6 +11,7 @@ $wgExtensionCredits['parserhook'][] = array(
 	'descriptionmsg' => 'quickcreate-desc',
 	'version' => '1,0',
 	'author' => array( 'Bartek Lapinski' ),
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/QuickCreate'
 );
 
 $wgExtensionMessagesFiles['QuickCreate'] = dirname(__FILE__) . '/QuickCreate.i18n.php';

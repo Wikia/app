@@ -65,7 +65,7 @@ function create_cu_changes( $db, $cutoff = null ) {
 		}
 		$blockStart += BATCH_SIZE - 1;
 		$blockEnd += BATCH_SIZE - 1;
-		wfWaitForSlaves( 5 );
+		wfWaitForSlaves();
 	}
 	$db->commit();
 

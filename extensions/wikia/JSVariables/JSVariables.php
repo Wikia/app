@@ -2,6 +2,16 @@
 /*
  * Author: Inez Korczyński (inez@wikia.com)
  */
+ 
+$wgExtensionCredits[ 'other' ][ ] = array(
+	'name' => 'JSVariables',
+	'author' => 'Inez Korczyński (inez@wikia.com)',
+	'descriptionmsg' => 'jsvariables-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/JSVariables',
+);
+
+//i18n
+$wgExtensionMessagesFiles[ 'JSVariables' ] = __DIR__ . '/JSVariables.i18n.php';
 
 $wgHooks['MakeGlobalVariablesScript'][] = 'wfMakeGlobalVariablesScript';
 $wgHooks['WikiaSkinTopScripts'][] = 'wfJSVariablesTopScripts';
@@ -149,3 +159,4 @@ function wfMakeGlobalVariablesScript(Array &$vars, OutputPage $out) {
 	wfProfileOut(__METHOD__);
 	return true;
 }
+

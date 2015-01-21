@@ -60,10 +60,6 @@ $image-max-columns-medium-and-large: 10;
 }
 
 .article {
-	.image-thumbnail img {
-		margin: 10px;
-	}
-
 	.thumbborder {
 		border: 1px solid $color-page-border;
 	}
@@ -78,7 +74,7 @@ $image-max-columns-medium-and-large: 10;
 
 	.show-info-icon {
 		.info-icon {
-			background: url('/extensions/wikia/Venus/images/info_icon.png') 0 0; /* base64 */
+			background: url('/extensions/wikia/Venus/images/info_icon.png') 0 0; /* inline */
 			display: none;
 			float: right;
 			height: 17px;

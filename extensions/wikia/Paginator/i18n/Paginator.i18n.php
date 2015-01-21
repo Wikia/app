@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'paginator-desc'    => 'Paginator extension',
 	'paginator-next'	=> 'Next',
 	'paginator-back'	=> 'Back',
 );
@@ -11,6 +12,7 @@ $messages['en'] = array(
  * @author Shirayuki
  */
 $messages['qqq'] = array(
+	'paginator-desc' => '{{desc}}',
 	'paginator-next' => '{{Identical|Next}}',
 	'paginator-back' => '{{Identical|Back}}',
 );
@@ -144,6 +146,7 @@ $messages['fr'] = array(
  */
 $messages['fy'] = array(
 	'paginator-next' => 'Folgjende',
+	'paginator-back' => 'Foarige',
 );
 
 /** Galician (galego)

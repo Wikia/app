@@ -207,6 +207,7 @@ $messages['an'] = array(
  * @author Achraf94
  * @author Claw eg
  * @author Gagnabil
+ * @author Khaled
  * @author Kuwaity26
  * @author Meno25
  * @author OsamaK
@@ -242,16 +243,18 @@ $messages['ar'] = array(
 	'cnw-userauth-marketing-heading' => 'ليس لديك حساب؟',
 	'cnw-userauth-marketing-body' => 'أنت بحاجة إلى حساب لإنشاء ويكي على ويكيا. التسجيل يستغرق سوى دقيقة!',
 	'cnw-userauth-signup-button' => 'التسجيل',
-	'cnw-desc-headline' => 'ماهو موضوع الويكي؟',
-	'cnw-desc-creative' => 'قم بوصف الموضوع الخاص بالويكي',
+	'cnw-desc-headline' => 'ماهو موضوع الويكيا؟',
+	'cnw-desc-creative' => 'يساعد الوصف الناس لكي يجدوا الويكي الخاصة بك',
 	'cnw-desc-placeholder' => 'سوف يظهر هذا عل الصفحة الرئيسية في الويكي',
 	'cnw-desc-tip1' => 'نصيحة',
-	'cnw-desc-tip1-creative' => 'استخدم هذه المساحة لتقول للناس حول الويكي الخاصة بك في جملة أو اثنين',
+	'cnw-desc-tip1-creative' => 'استخدم هذه المساحة لتقول للناس حول الويكيا الخاصة بك في جملة أو اثنين',
 	'cnw-desc-tip2' => 'ملاحظة',
 	'cnw-desc-tip2-creative' => 'قم بإعطاء الزوار بعض التفاصيل حول موضوع هذه الويكي',
+	'cnw-desc-select-vertical' => 'اختر المحور',
+	'cnw-desc-select-categories' => 'أختر تصنيفات اضافية',
 	'cnw-desc-select-one' => 'إختر واحدة',
-	'cnw-desc-all-ages' => 'جميع الأعمار',
-	'cnw-desc-tip-all-ages' => 'هل هذه الويكي عن موضوع للأطفال؟ لأجل مساعدتنا للامتثال للقانون الأمريكي، نستمر بمتابعة الويكي التي تناسب مواضيعها مباشرة الأطفال بسن 12 أو أقل.',
+	'cnw-desc-all-ages' => 'هل هذه الويكيا مجعولة من أجل الأطفال؟',
+	'cnw-desc-tip-all-ages' => 'هل هذه الويكيا عن موضوع للأطفال؟ لأجل مساعدتنا للامتثال للقانون الأمريكي، نستمر بمتابعة الويكيات التي تناسب مواضيعها مباشرة الأطفال بسن 12 أو أقل.',
 	'cnw-desc-default-lang' => 'سوف تكون هذه الويكي باللغة $1',
 	'cnw-desc-change-lang' => 'تغيير',
 	'cnw-desc-lang' => 'اللغة',
@@ -348,6 +351,36 @@ $messages['az'] = array(
 	'cnw-login' => 'Daxil ol',
 	'cnw-auth-headline' => 'Daxil ol',
 	'cnw-desc-lang' => 'Dil',
+);
+
+/** South Azerbaijani (تورکجه)
+ * @author Koroğlu
+ */
+$messages['azb'] = array(
+	'cnw-next' => 'سونراکی',
+	'cnw-back' => 'دالی',
+	'cnw-or' => 'یا دا',
+	'cnw-title' => 'یئنی ویکی یارات',
+	'cnw-name-wiki-headline' => 'یئنی بیر ویکی باشلات',
+	'cnw-name-wiki-label' => 'ویکینیزین آدی',
+	'cnw-name-wiki-wiki' => 'ویکی',
+	'cnw-name-wiki-domain-label' => 'ویکینیزی بیر آدرس سئچینیز',
+	'cnw-login' => 'گیر',
+	'cnw-signup' => 'حساب یارات',
+	'cnw-signup-prompt' => 'بیر حسابا احتیاجینیز وارمی؟',
+	'cnw-call-to-signup' => 'بورادان آد یازدیر',
+	'cnw-login-prompt' => 'اؤنجه‌دن حسابینیز وارمی؟',
+	'cnw-call-to-login' => 'بورادان گیرینیز',
+	'cnw-auth-headline' => 'گیر',
+	'cnw-auth-headline2' => 'آد یازدیر',
+	'cnw-userauth-headline' => 'حسابینیز وارمی؟',
+	'cnw-userauth-creative' => 'گیریش',
+	'cnw-userauth-marketing-heading' => 'حسابینیز یوخ‌دورمو؟',
+	'cnw-userauth-signup-button' => 'آد یازدیر',
+	'cnw-desc-tip1' => 'قیلاووز',
+	'cnw-desc-select-one' => 'بیرینی سئچ',
+	'cnw-desc-change-lang' => 'دَییشیک',
+	'cnw-desc-lang' => 'دیل',
 );
 
 /** Bavarian (Boarisch)
@@ -634,6 +667,7 @@ $messages['cs'] = array(
 	'cnw-error-general-heading' => 'Omlouváme se',
 	'cnw-error-wiki-limit-header' => 'Dosažen limit Wiki',
 	'cnw-error-blocked-header' => 'Účet zablokován',
+	'cnw-error-anon-user-header' => 'Přihlaste se prosím',
 	'cnw-error-bot-header' => 'Byli jste detekováni jako bot',
 	'cnw-error-unconfirmed-email-header' => 'Váš e-mail nebyl potvrzen',
 	'cnw-error-unconfirmed-email' => 'Váš e-mail musí být potvrzen před vytvořením Wiki.',
@@ -1097,6 +1131,7 @@ $messages['fr'] = array(
  */
 $messages['fy'] = array(
 	'cnw-next' => 'Folgjende',
+	'cnw-back' => 'Foarige',
 	'cnw-or' => 'of',
 	'cnw-name-wiki-wiki' => 'Wiki',
 	'cnw-desc-tip2' => 'Psst',
@@ -1104,6 +1139,7 @@ $messages['fy'] = array(
 );
 
 /** Galician (galego)
+ * @author Elisardojm
  * @author Toliño
  * @author Vivaelcelta
  */
@@ -1136,16 +1172,17 @@ $messages['gl'] = array(
 	'cnw-userauth-marketing-heading' => 'Non está rexistrado?',
 	'cnw-userauth-marketing-body' => 'Necesita unha conta para crear un wiki en Wikia. Leva un minuto rexistrarse!',
 	'cnw-userauth-signup-button' => 'Rexístrese',
-	'cnw-desc-headline' => 'De que vai o seu wiki?',
-	'cnw-desc-creative' => 'Describa o seu tema',
+	'cnw-desc-headline' => 'De que vai o seu wiki?', # Fuzzy
+	'cnw-desc-creative' => 'Describa o seu tema', # Fuzzy
 	'cnw-desc-placeholder' => 'Isto aparecerá na páxina principal do seu wiki.',
 	'cnw-desc-tip1' => 'Suxestión',
-	'cnw-desc-tip1-creative' => 'Use este espazo para contar á xente de que vai o wiki nunha ou dúas oracións',
+	'cnw-desc-tip1-creative' => 'Use este espazo para contar á xente de que vai o wiki nunha ou dúas oracións', # Fuzzy
 	'cnw-desc-tip2' => 'Consello',
 	'cnw-desc-tip2-creative' => 'Dea aos visitantes algúns detalles específicos sobre o tema',
+	'cnw-desc-select-vertical' => 'Seleccione unha categoría Hub',
 	'cnw-desc-select-one' => 'Seleccione unha',
-	'cnw-desc-all-ages' => 'Todas as idades',
-	'cnw-desc-tip-all-ages' => 'Este wiki trata un tema de interese para os nenos? Para axudarnos a cumprir coa lei dos EUA, levamos un seguimento dos wikis sobre temas dirixidos directamente a cativos de 12 anos ou menos.',
+	'cnw-desc-all-ages' => 'Todas as idades', # Fuzzy
+	'cnw-desc-tip-all-ages' => 'Este wiki trata un tema de interese para os nenos? Para axudarnos a cumprir coa lei dos EUA, levamos un seguimento dos wikis sobre temas dirixidos directamente a cativos de 12 anos ou menos.', # Fuzzy
 	'cnw-desc-default-lang' => 'O seu wiki será en $1',
 	'cnw-desc-change-lang' => 'cambiar',
 	'cnw-desc-lang' => 'Lingua',
@@ -2113,9 +2150,9 @@ $messages['ms'] = array(
  * @author C.R.
  */
 $messages['nap'] = array(
-	'createnewwiki-desc' => "Procedura guidata p&#39;'a criazione 'e na wiki",
-	'cnw-error-unconfirmed-email-header' => "Ll'e-mail d&#39;'o tujo nun è stato cunfermato",
-	'cnw-error-unconfirmed-email' => "Ll'e-mail d&#39;'o tujo s'ha dda cunfermà pe' crià 'a Wiki.",
+	'createnewwiki-desc' => "Procedura guidata p' 'a criazione 'e na wiki",
+	'cnw-error-unconfirmed-email-header' => "Ll'e-mail d' 'o tujo nun è stato cunfermato",
+	'cnw-error-unconfirmed-email' => "Ll'e-mail d' 'o tujo s'ha dda cunfermà pe' crià 'a Wiki.",
 );
 
 /** Norwegian Bokmål (norsk bokmål)
@@ -2201,6 +2238,7 @@ $messages['ne'] = array(
 );
 
 /** Dutch (Nederlands)
+ * @author Robin0van0der0vliet
  * @author Siebrand
  * @author Sjoerddebruin
  * @author Trijnstel
@@ -2222,7 +2260,7 @@ $messages['nl'] = array(
 	'cnw-signup' => 'Registreren',
 	'cnw-signup-prompt' => 'Wilt u zich registreren?',
 	'cnw-call-to-signup' => 'Hier aanmelden',
-	'cnw-login-prompt' => 'Hebt u al een account?',
+	'cnw-login-prompt' => 'Hebt u al een gebruiker?',
 	'cnw-call-to-login' => 'Hier aanmelden',
 	'cnw-auth-headline' => 'Aanmelden',
 	'cnw-auth-headline2' => 'Registreren',
@@ -2230,21 +2268,23 @@ $messages['nl'] = array(
 	'cnw-auth-signup-creative' => 'U hebt een gebruiker nodig om door te kunnen gaan met het bouwen van uw wiki.<br />Registreren kost maar een minuutje van uw tijd!',
 	'cnw-auth-facebook-signup' => 'Aanmelden met Facebook',
 	'cnw-auth-facebook-login' => 'Aanmelden met Facebook',
-	'cnw-userauth-headline' => 'Hebt u een account?',
+	'cnw-userauth-headline' => 'Hebt u een gebruiker?',
 	'cnw-userauth-creative' => 'Aanmelden',
-	'cnw-userauth-marketing-heading' => 'Hebt u geen account?',
+	'cnw-userauth-marketing-heading' => 'Hebt u geen gebruiker?',
 	'cnw-userauth-marketing-body' => 'U hebt een gebruiker nodig om een wiki aan te maken bij Wikia. Het kost u slechts een minuutje om te registreren.',
 	'cnw-userauth-signup-button' => 'Registreren',
 	'cnw-desc-headline' => 'Waar gaat uw wikia over?',
-	'cnw-desc-creative' => 'Beschrijf uw onderwerp', # Fuzzy
+	'cnw-desc-creative' => 'Uw beschrijving helpt bij het zoeken naar uw wikia',
 	'cnw-desc-placeholder' => 'Dit wordt weergegeven op de hoofdpagina van uw wiki.',
 	'cnw-desc-tip1' => 'Tip',
-	'cnw-desc-tip1-creative' => 'Gebruik deze ruimte om mensen over uw wiki te vertellen in een paar zinnen', # Fuzzy
+	'cnw-desc-tip1-creative' => 'Gebruik deze ruimte om mensen over uw Wikia te vertellen in een paar zinnen',
 	'cnw-desc-tip2' => 'Pst!',
 	'cnw-desc-tip2-creative' => 'Geef uw bezoeker wat details over uw onderwerp',
+	'cnw-desc-select-vertical' => 'Selecteer een Hubcategorie',
+	'cnw-desc-select-categories' => 'Selecteer extra categorieën',
 	'cnw-desc-select-one' => 'Maak een keuze',
 	'cnw-desc-all-ages' => 'Is deze wikia bedoeld voor kinderen?',
-	'cnw-desc-tip-all-ages' => "Gaat deze wiki over een onderwerp waar kinderen interesse in hebben? Om ons aan de Amerikaanse wetgeving te houden, houden we bij welke wiki's over onderwerpen gaan waar kinderen van 12 jaar en jonger interesse in hebben.", # Fuzzy
+	'cnw-desc-tip-all-ages' => "Gaat dit over een onderwerp waar kinderen interesse in hebben? Om ons aan de Amerikaanse wetgeving te houden, houden we bij welke wikia's over onderwerpen gaan waar kinderen van 12 jaar en jonger interesse in hebben.",
 	'cnw-desc-default-lang' => 'De hoofdtaal van uw wiki is: $1',
 	'cnw-desc-change-lang' => 'wijzigen',
 	'cnw-desc-lang' => 'Taal',
@@ -2265,7 +2305,7 @@ $messages['nl'] = array(
 	'cnw-error-blocked-header' => 'Gebruiker geblokkeerd',
 	'cnw-error-blocked' => 'U bent geblokkeerd door $1. De reden die gegeven is: $2. (Blokkadenummer voor referentie: $3)',
 	'cnw-error-anon-user-header' => 'Meld u aan',
-	'cnw-error-anon-user' => "Het aanmaken voor wiki's is uitgeschakeld voor anonieme gebruikers. [[Special:UserLogin|Meld je aan]] en probeer opnieuw.",
+	'cnw-error-anon-user' => "Het aanmaken voor wiki's is uitgeschakeld voor anonieme gebruikers. [[Special:UserLogin|Meld u aan]] en probeer het opnieuw.",
 	'cnw-error-torblock' => "Wiki's aanmaken via het Tor Network is niet toegestaan.",
 	'cnw-error-bot' => 'We denken dat u wellicht een geautomatiseerd programma bent. Als deze aanname onjuist is, neem dan [http://www.wikia.com/Special:Contact/general contact met ons op], en geef aan waarop u denk dat u onterecht bent aangemerkt als een robot. Dit stelt ons in staat u verder te helpen met het aanmaken van uw wiki.',
 	'cnw-error-bot-header' => 'U bent geïdentificeerd als een geautomatiseerd proces',
@@ -2545,6 +2585,7 @@ $messages['ps'] = array(
  * @author Luckas
  * @author Malafaya
  * @author SandroHc
+ * @author Vitorvicentevalente
  * @author Waldir
  */
 $messages['pt'] = array(
@@ -2559,13 +2600,13 @@ $messages['pt'] = array(
 	'cnw-name-wiki-wiki' => 'Wiki',
 	'cnw-name-wiki-domain-label' => 'Dá um endereço à tua wiki',
 	'cnw-name-wiki-submit-error' => 'Para continuar tens de preencher ambas as caixas acima.',
-	'cnw-login' => 'Iniciar sessão',
+	'cnw-login' => 'Entrar',
 	'cnw-signup' => 'Criar conta',
 	'cnw-signup-prompt' => 'Precisas de uma conta?',
 	'cnw-call-to-signup' => 'Regista-te aqui',
 	'cnw-login-prompt' => 'Já tens uma conta?',
 	'cnw-call-to-login' => 'Inicia uma sessão aqui',
-	'cnw-auth-headline' => 'Iniciar sessão',
+	'cnw-auth-headline' => 'Entrar',
 	'cnw-auth-headline2' => 'Registar-te',
 	'cnw-auth-creative' => 'Entra a tua conta para continuar a criar a wiki',
 	'cnw-auth-signup-creative' => 'Precisas de ter uma conta para continuar a construir a tua wiki.<br />Só leva um minuto a registar-te!',
@@ -2605,7 +2646,7 @@ $messages['pt'] = array(
 	'cnw-error-wiki-limit' => 'Olá, estás limitado à criação de $1 {{PLURAL:$1|wiki|wikis}} por dia. Aguarda 24 horas antes de criar outra wiki.',
 	'cnw-error-blocked-header' => 'Conta bloqueada',
 	'cnw-error-blocked' => 'Foi bloqueado por $1. O motivo apresentado foi: $2. (Identificação do bloqueio para referência: $3)',
-	'cnw-error-anon-user-header' => 'Inicia uma sessão, faz favor.',
+	'cnw-error-anon-user-header' => 'Por favor, inicie sessão.',
 	'cnw-error-anon-user' => 'A criação de wikis para utilizadores sem registar-se está desativada. Faz favor, [[Special:UserLogin|regista-te]] e tenta-o de novo.',
 	'cnw-error-torblock' => 'Não é permitido criar wikis através da rede Tor.',
 	'cnw-error-bot' => 'Detetámos que podes ser um robô. Se errámos, contata-nos descrevendo esta falsa identificação e podemos ajudar-te a criar a tua wiki: [http://www.wikia.com/Special:Contact/general Contate-nos]',
@@ -2754,12 +2795,12 @@ $messages['roa-tara'] = array(
 	'cnw-userauth-marketing-body' => "Tu è abbesògne de 'nu cunde pe ccrejà 'na uicchi sus a Uicchia. Te serve sulamende 'nu minute pe reggistrarte.",
 	'cnw-userauth-signup-button' => 'Reggistrate',
 	'cnw-desc-headline' => "Sus a ce ccose jè 'a uicchi toje?",
-	'cnw-desc-creative' => "Descrive l'argomende tune",
+	'cnw-desc-creative' => "'A descriziona toje dè 'na màne a le crestiane ca volene cu iacchiane 'a uicchi toje",
 	'cnw-desc-tip1' => 'Consiglie',
 	'cnw-desc-tip1-creative' => "Ause stu spazie pe dicere a le crestiane sus 'a uicchi toje jndr'à 'na frase o doje",
 	'cnw-desc-tip2' => 'Psst',
 	'cnw-desc-select-one' => 'Scacchie une',
-	'cnw-desc-all-ages' => 'Tutte le età',
+	'cnw-desc-all-ages' => 'Sta uicchi è pe le piccinne?',
 	'cnw-desc-change-lang' => 'cange',
 	'cnw-desc-lang' => 'Lènghe',
 	'cnw-desc-wiki-submit-error' => "Pe piacere scacchie 'na categorije",
@@ -3660,6 +3701,8 @@ $messages['zh-hans'] = array(
  * @author Anakmalaysia
  * @author Cwlin0416
  * @author Ffaarr
+ * @author LNDDYL
+ * @author Liuxinyu970226
  * @author Oapbtommy
  * @author Wrightbus
  */
@@ -3676,7 +3719,7 @@ $messages['zh-hant'] = array(
 	'cnw-name-wiki-domain-label' => '給您的 wiki 的一個網址',
 	'cnw-name-wiki-submit-error' => '啊！您需要填寫上面兩欄之後才能繼續。',
 	'cnw-login' => '登入',
-	'cnw-signup' => '創建帳號',
+	'cnw-signup' => '建立帳號',
 	'cnw-signup-prompt' => '需要一個帳戶嗎？',
 	'cnw-call-to-signup' => '在此處註冊',
 	'cnw-login-prompt' => '已擁有帳戶嗎？',
@@ -3692,23 +3735,23 @@ $messages['zh-hant'] = array(
 	'cnw-userauth-marketing-heading' => '沒有帳戶嗎？',
 	'cnw-userauth-marketing-body' => '您需要帳戶才能在wikia創建wiki。只需要一分鐘即可註冊!',
 	'cnw-userauth-signup-button' => '註冊',
-	'cnw-desc-headline' => '你的wiki是關於什麼？',
-	'cnw-desc-creative' => '描述您的主題',
+	'cnw-desc-headline' => '你的wiki是關於什麼？', # Fuzzy
+	'cnw-desc-creative' => '描述您的主題', # Fuzzy
 	'cnw-desc-placeholder' => '這將顯示你的 wiki 的首頁上。',
 	'cnw-desc-tip1' => '提示',
-	'cnw-desc-tip1-creative' => '使用此空間以一兩句話來向其他人講述你的 wiki。',
+	'cnw-desc-tip1-creative' => '使用此空間以一兩句話來向其他人講述你的 wiki。', # Fuzzy
 	'cnw-desc-tip2-creative' => '向訪問者提供一些有關你的主題的特定詳細資訊',
 	'cnw-desc-select-one' => '請選擇一項',
-	'cnw-desc-all-ages' => '所有年齡',
-	'cnw-desc-tip-all-ages' => '這個Wiki有關於孩子們感興趣的話題嗎？为了遵守美國法律，我們持續追縱直接與12歲及以下兒童相關主題的wiki。',
-	'cnw-desc-default-lang' => '你的 wiki 將使用$1',
+	'cnw-desc-all-ages' => '所有年齡', # Fuzzy
+	'cnw-desc-tip-all-ages' => '這個Wiki有關於孩子們感興趣的話題嗎？为了遵守美國法律，我們持續追縱直接與12歲及以下兒童相關主題的wiki。', # Fuzzy
+	'cnw-desc-default-lang' => '您的 wiki 將位於 $1',
 	'cnw-desc-change-lang' => '變更',
 	'cnw-desc-lang' => '語言',
 	'cnw-desc-wiki-submit-error' => '請選擇一個分類',
 	'cnw-theme-headline' => '選擇一個主題',
 	'cnw-theme-creative' => '選擇下面其中一個樣式，選擇之後您可以看到每個樣式的預覽。',
-	'cnw-theme-instruction' => '您還可以稍後通過"我的工具"設計您自己的樣式。',
-	'cnw-welcome-headline' => '恭喜 ！ $1 已創建',
+	'cnw-theme-instruction' => '您還可以稍後透過"我的工具"設計您自己的樣式。',
+	'cnw-welcome-headline' => '恭喜！ $1 已建立',
 	'cnw-welcome-instruction1' => '按一下下面的按鈕以開始將頁面添加到你的 wiki。',
 	'cnw-welcome-instruction2' => '你會在你的 wiki 各頁面看到此按鈕，任何時候可使用它來新加頁面。',
 	'cnw-welcome-help' => '要找尋解答、建議以及其他，可到 <a href="http://community.wikia.com">社群中心</a>.',

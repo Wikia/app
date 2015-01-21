@@ -2,6 +2,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'ircgate-desc' => 'Lets users insert IRC login form on any page',
 	'ircgate-username' => 'Username:',
 	'ircgate-channel'  => 'Channel:',
 	'ircgate-channellist' => '* #wikia
@@ -24,6 +25,7 @@ $messages['en'] = array(
  * @author EugeneZelenko
  */
 $messages['qqq'] = array(
+	'ircgate-desc' => '{{desc}}',
 	'ircgate-username' => '{{Identical|Username}}',
 );
 
@@ -197,6 +199,13 @@ $messages['fi'] = array(
 $messages['fr'] = array(
 	'ircgate-username' => 'Nom d’utilisateur :',
 	'ircgate-channel' => 'Canal :',
+);
+
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'ircgate-username' => 'Brûkersnamme:',
 );
 
 /** Galician (galego)

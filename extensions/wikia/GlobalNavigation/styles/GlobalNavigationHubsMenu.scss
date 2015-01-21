@@ -5,6 +5,15 @@
 @import 'skins/shared/mixins/columns';
 @import 'GlobalNavigationColors';
 
+$hub-menu-icon-width: 16px;
+$hub-menu-icon-arrow-space: 6px;
+$hub-menu-icon-left-padding-small: 27px;
+$hub-menu-icon-left-padding-medium: 13px;
+$hub-menu-icon-left-padding-large: 8px;
+$hub-arrow-icon-left-padding-small: $hub-menu-icon-left-padding-small + $hub-menu-icon-width + $hub-menu-icon-arrow-space;
+$hub-arrow-icon-left-padding-medium: $hub-menu-icon-left-padding-medium + $hub-menu-icon-width + $hub-menu-icon-arrow-space;
+$hub-arrow-icon-left-padding-large: $hub-menu-icon-left-padding-large + $hub-menu-icon-width + $hub-menu-icon-arrow-space;
+
 @mixin hub-background-border-icon($color, $secondary-color, $hub-name) {
 	background: linear-gradient(to right, $color 99%, $hubsmenu-background-color);
 
@@ -19,7 +28,7 @@
 	}
 
 	.icon {
-		background-image: url('/extensions/wikia/GlobalNavigation/images/#{$hub-name}.svg'); /* base64 */
+		background-image: url('/extensions/wikia/GlobalNavigation/images/#{$hub-name}.svg'); /* inline */
 	}
 }
 
@@ -28,11 +37,11 @@
 }
 
 .hubs-entry-point {
-	background-image: url('/extensions/wikia/GlobalNavigation/images/hubs_entry_point.svg'); /* base64 */
-	background-position: 16px center;
+	background-image: url('/extensions/wikia/GlobalNavigation/images/hubs_entry_point.svg'); /* inline */
+	background-position: $hub-menu-icon-left-padding-medium center;
 	background-repeat: no-repeat;
 	cursor: pointer;
-	padding: 0 17px 0 38px;
+	padding: 0 $medium-grid-gutter 0 $hub-arrow-icon-left-padding-medium;
 
 	&:after {
 		border: 5px solid $global-wikia-background-color;
@@ -250,7 +259,8 @@
 
 @media #{$small-only} {
 	.hubs-entry-point {
-		padding-right: 22px;
+		background-position: $hub-menu-icon-left-padding-small center;
+		padding: 0 $small-grid-gutter 0 $hub-arrow-icon-left-padding-small;
 	}
 
 	.hubs-menu {
@@ -275,7 +285,8 @@
 
 @media #{$large-up} {
 	.hubs-entry-point {
-		padding-right: 23px;
+		background-position: $hub-menu-icon-left-padding-large center;
+		padding: 0 $large-grid-gutter 0 $hub-arrow-icon-left-padding-large;
 	}
 
 	.hubs-menu {

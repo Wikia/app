@@ -984,7 +984,7 @@ $messages['de-formal'] = array(
 $messages['diq'] = array(
 	'rte-ck-bucket-controls' => 'Qontroli',
 	'rte-ck-errorPopupTitle' => 'Xeta!',
-	'rte-ck-hoverPreview-comment-title' => 'Vatış',
+	'rte-ck-hoverPreview-comment-title' => 'Mışewre',
 	'rte-ck-hoverPreview-delete' => 'bestere',
 	'rte-ck-hoverPreview-edit' => 'bıvurne',
 	'rte-ck-image-add' => 'Yew resım cı ke',
@@ -2050,6 +2050,8 @@ $messages['kn'] = array(
  */
 $messages['ko'] = array(
 	'rte-ck-errorPopupTitle' => '오류!',
+	'rte-ck-hoverPreview-comment-title' => '댓글',
+	'rte-ck-hoverPreview-confirmDelete' => '이것을 삭제하시겠습니까?',
 	'rte-ck-hoverPreview-delete' => '삭제',
 	'rte-ck-hoverPreview-edit' => '편집',
 	'rte-ck-hoverPreview-media-notExisting' => '이 그림, 혹은 파일이 존재하지 않습니다!',
@@ -2106,7 +2108,7 @@ $messages['ko'] = array(
 	'rte-ck-table-invalidCols' => '세로줄의 수는 0보다 커야 합니다.',
 	'rte-ck-table-invalidRows' => '가로줄의 수는 0보다 커야 합니다.',
 	'rte-ck-table-toolbarTooltip' => '표 추가',
-	'rte-ck-templateDropDown-showUsedList' => '틀을 사용하는 문서들 표시',
+	'rte-ck-templateDropDown-showUsedList' => '사용한 틀 목록 보이기',
 	'rte-ck-templateDropDown-label' => '틀',
 	'rte-ck-templateDropDown-title' => '틀을 선택해주세요',
 	'rte-ck-templateEditor-dialog-insert' => '삽입',
@@ -2343,7 +2345,7 @@ $messages['mk'] = array(
 	'rte-ck-poll-confirmDeleteTitle' => 'Да ја отстранам анкетава?',
 	'rte-ck-spellchecker-moreSuggestions' => 'Повеќе предлози',
 	'rte-ck-pasteText-title' => 'Вметнете го текстот',
-	'rte-ck-clipboard-pasteMsg' => 'Од безбедносни причини, уредникот не може директно да дојде до она што го ископиравте. Копирањето направете го во полето подолу користејќи тастатурни кратенки (Ctrl/Cmd+V) и стиснете на „ОК“.<br /><br />Напомена: форматирањето на вашиот текст ќе биде отстрането за да се избегне добивање на сложен викитекст.',
+	'rte-ck-clipboard-pasteMsg' => 'Од безбедносни причини, уредникот не може непосредно да дојде до она што го ископиравте. Копирањето направете го во полето подолу користејќи тастатурни кратенки (Ctrl/Cmd+V) и стиснете на „ОК“.<br /><br />Напомена: форматирањето на вашиот текст ќе биде отстрането за да се избегне добивање на сложен викитекст.',
 	'rte-ck-format-tag_p' => 'Нормален текст',
 	'rte-ck-format-tag_pre' => 'Код (претформатиран текст)',
 	'rte-ck-format-tag_h2' => 'Наслов 2',
@@ -3541,6 +3543,13 @@ $messages['ru'] = array(
 	'rte-ck-format-tag_h5' => 'Заголовок 5',
 );
 
+/** Rusyn (русиньскый)
+ * @author Tkalyn
+ */
+$messages['rue'] = array(
+	'rte-ck-link-add' => 'Придати одказ',
+);
+
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  */
@@ -4244,11 +4253,11 @@ $messages['zh-hans'] = array(
 	'rte-ck-hoverPreview-delete' => '删除',
 	'rte-ck-hoverPreview-edit' => '编辑',
 	'rte-ck-hoverPreview-media-notExisting' => '该图片不或文件不存在！',
-	'rte-ck-hoverPreview-template-intro' => '这是一个模版',
-	'rte-ck-hoverPreview-template-notExisting' => '该模版不存在！',
+	'rte-ck-hoverPreview-template-intro' => '这是一个模板。',
+	'rte-ck-hoverPreview-template-notExisting' => '这个模板不存在！',
 	'rte-ck-hoverPreview-video-notExisting' => '此视频不存在！',
 	'rte-ck-image-add' => '添加一个照片',
-	'rte-ck-image-photo' => '图片',
+	'rte-ck-image-photo' => '照片',
 	'rte-ck-image-confirmDelete' => '确定从此页中删除图片?',
 	'rte-ck-image-confirmDeleteTitle' => '删除此图片？',
 	'rte-ck-imagePlaceholder-confirmDelete' => '确定从此页中删除图像位置？',
@@ -4301,25 +4310,25 @@ $messages['zh-hans'] = array(
 	'rte-ck-table-invalidCols' => '列数必须大于0。',
 	'rte-ck-table-invalidRows' => '行数必须大于0。',
 	'rte-ck-table-toolbarTooltip' => '添加表格',
-	'rte-ck-templateDropDown-chooseAnotherTpl' => '其他模版 ／  魔字',
-	'rte-ck-templateDropDown-showUsedList' => '显示以使用的模版列表',
+	'rte-ck-templateDropDown-chooseAnotherTpl' => '其他模板 / 魔术字',
+	'rte-ck-templateDropDown-showUsedList' => '显示使用了的模板列表',
 	'rte-ck-templateDropDown-makeLayout' => '从此页创立布局',
-	'rte-ck-templateDropDown-label' => '模版',
-	'rte-ck-templateDropDown-title' => '选择模版',
-	'rte-ck-templateEditor-dialog-browse' => '浏览模版',
+	'rte-ck-templateDropDown-label' => '模板',
+	'rte-ck-templateDropDown-title' => '选择一个模板',
+	'rte-ck-templateEditor-dialog-browse' => '浏览模板',
 	'rte-ck-templateEditor-dialog-insert' => '插入',
 	'rte-ck-templateEditor-dialog-magicWords' => '魔字',
 	'rte-ck-templateEditor-dialog-magicWordsLink' => 'Help:魔字',
 	'rte-ck-templateEditor-dialog-mostFrequentlyUsed' => '最常使用',
-	'rte-ck-templateEditor-dialog-search' => '搜索模版',
-	'rte-ck-templateEditor-editor-chooseAnotherTpl' => '选择其他模版',
+	'rte-ck-templateEditor-dialog-search' => '搜索模板',
+	'rte-ck-templateEditor-editor-chooseAnotherTpl' => '选择其他模板',
 	'rte-ck-templateEditor-editor-intro' => '改变左边的数值并且点击预览。完成编辑之后请点击"OK"。',
 	'rte-ck-templateEditor-editor-parameters' => '参数',
 	'rte-ck-templateEditor-editor-previewButton' => '预览',
 	'rte-ck-templateEditor-editor-previewTitle' => '预览',
-	'rte-ck-templateEditor-editor-viewTemplate' => '（查看模版页面－打开新窗口）',
-	'rte-ck-templateEditor-usedTemplates-title' => '以使用模版列表',
-	'rte-ck-templateEditor-title' => '模版编辑器',
+	'rte-ck-templateEditor-editor-viewTemplate' => '（查看模板页面－打开新窗口）',
+	'rte-ck-templateEditor-usedTemplates-title' => '使用了的模版列表',
+	'rte-ck-templateEditor-title' => '模板编辑器',
 	'rte-ck-unlink' => '删除链接',
 	'rte-ck-video-add' => '添加视频',
 	'rte-ck-video-video' => '视频',
@@ -4351,9 +4360,11 @@ $messages['zh-hans'] = array(
  */
 $messages['zh-hant'] = array(
 	'rte-ck-hoverPreview-delete' => '刪除',
-	'rte-ck-templateDropDown-label' => '樣板',
+	'rte-ck-image-photo' => '照片',
+	'rte-ck-templateDropDown-label' => '模板',
 	'rte-ck-templateEditor-editor-previewButton' => '預覽',
 	'rte-ck-templateEditor-editor-previewTitle' => '預覽',
+	'rte-ck-video-video' => '影片',
 	'rte-ck-mut-add' => '添加影片 （測試版）',
 	'rte-ck-mut-mut' => '影片 （測試版）',
 );

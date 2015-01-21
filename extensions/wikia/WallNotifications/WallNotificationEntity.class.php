@@ -14,6 +14,14 @@ class WallNotificationEntity {
 	/*
 	 *	Public Interface
 	 */
+
+	/**
+	 * @param Revision $rev
+	 * @param $wikiId
+	 * @param bool $master
+	 *
+	 * @return WallNotificationEntity
+	 */
 	public static function createFromRev( Revision $rev, $wikiId, $master = false ) {
 		$wn = new WallNotificationEntity();
 		if( $wn->loadDataFromRev( $rev, $wikiId, $master ) ) {

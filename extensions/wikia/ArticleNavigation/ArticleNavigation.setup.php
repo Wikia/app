@@ -9,7 +9,8 @@
 $wgExtensionCredits[ 'specialpage' ][] = [
 	'name' => 'ArticleNavigation',
 	'author' => 'Bogna "bognix" Knychała',
-	'description' => 'ArticleNavigation',
+	'descriptionmsg' => 'article-navigation-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ArticleNavigation',
 	'version' => 1.0
 ];
 

@@ -2611,37 +2611,18 @@ $templates
 		if ( $wgUseAjax ) {
 			# macbre: following files are part of merged JS for following skins - don't load them from here
 			$skinName = get_class( $skin );
-			$skipWikiaSkins = array(
-/*
-				'SkinMonoBook',
-				'SkinUncyclopedia',
-				'SkinMonaco',
-				'SkinAnswers',
-				'SkinCorporate',
-				'SkinCorporateHome',
-				'SkinCorporateHubs',
-				'SkinLyricsMinimal',
-*/
-//				'SkinOasis',
-            );
 
-			if( !in_array( $skinName, $skipWikiaSkins ) ) {
-				$this->addModules( 'mediawiki.legacy.ajax' );
-			}
+			$this->addModules( 'mediawiki.legacy.ajax' );
 
 			wfRunHooks( 'AjaxAddScript', array( &$this ) );
 
 
-			if( !in_array( $skinName, $skipWikiaSkins ) ) {
-				if( $wgAjaxWatch && $this->getUser()->isLoggedIn() ) {
-					$this->addModules( 'mediawiki.action.watch.ajax' );
-				}
+			if( $wgAjaxWatch && $this->getUser()->isLoggedIn() ) {
+				$this->addModules( 'mediawiki.action.watch.ajax' );
 			}
 
-			if( !in_array( $skinName, $skipWikiaSkins ) ) {
-				if ( $wgEnableMWSuggest && !$this->getUser()->getOption( 'disablesuggest', false ) ) {
-					$this->addModules( 'mediawiki.legacy.mwsuggest' );
-				}
+			if ( $wgEnableMWSuggest && !$this->getUser()->getOption( 'disablesuggest', false ) ) {
+				$this->addModules( 'mediawiki.legacy.mwsuggest' );
 			}
 		}
 

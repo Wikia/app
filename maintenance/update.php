@@ -89,7 +89,7 @@ class UpdateMediaWiki extends Maintenance {
 
 		$this->output( "MediaWiki {$wgVersion} Updater\n\n" );
 
-		wfWaitForSlaves( 5 ); // let's not kill databases, shall we? ;) --tor
+		wfWaitForSlaves(); // let's not kill databases, shall we? ;) --tor
 
 		if ( !$this->hasOption( 'skip-compat-checks' ) ) {
 			$this->compatChecks();

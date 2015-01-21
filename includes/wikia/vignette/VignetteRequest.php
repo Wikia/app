@@ -76,7 +76,20 @@ class VignetteRequest {
 	}
 
 	/**
-	 * parse image bucket from a url. ex: http://images.wikia.com/muppet/images/a/ab/image.jpg will return "muppet"
+	 * create a UrlGenerator object from a Vignette url
+	 * @param $url
+	 * @param $asOriginal
+	 * @return UrlGenerator
+	 * @throws InvalidArgumentException if the url cannot be parsed as a valid vignette url
+	 */
+	public static function fromUrl($url, $asOriginal=false) {
+		return (new VignetteUrlToUrlGenerator($url, $asOriginal))
+			->build();
+	}
+
+	/**
+	 * parse image bucket from a url. ex: http://images.wikia.com/muppet/images/a/ab/image.jpg will return "muppet".
+	 * It is safe to use this on a Vignette url.
 	 * @param $url
 	 * @return mixed
 	 */
@@ -91,7 +104,7 @@ class VignetteRequest {
 	}
 
 	/**
-	 * parse the path prefix from a url.
+	 * parse the path prefix from a legacy url. It is NOT safe to use this on a Vignette url.
 	 * http://images.wikia.com/walkingdead/ru/images -> "ru",
 	 * http://images.wikia.com/walkingdead/images -> null
 	 * http://images.wikia.com/p__/psychusa/zh/images -> psychusa/zh
@@ -109,8 +122,8 @@ class VignetteRequest {
 	}
 
 	/**
-	 * parse relative path from url. ex: http://images.wiukia.com/muppet/images/a/ab/image.jpg will
-	 * return "a/ab/image.jpg"
+	 * parse relative path from legacy url. ex: http://images.wikia.com/muppet/images/a/ab/image.jpg will
+	 * return "a/ab/image.jpg". It is NOT safe to use this ona Vignette url.
 	 * @param $url
 	 * @return mixed
 	 */
@@ -151,6 +164,11 @@ class VignetteRequest {
 		return $isVignetteUrl;
 	}
 
+	/**
+	 * @param $url
+	 * @param $format
+	 * @return UrlGenerator|string|null
+	 */
 	public static function setThumbnailFormat($url, $format) {
 		$format = ltrim($format, ".");
 
@@ -160,10 +178,25 @@ class VignetteRequest {
 			return $url;
 		}
 
-		$parts = parse_url($url);
-		parse_str($parts['query'], $query);
-		$query['format'] = $format;
-		$parts['query'] = http_build_query($query);
-		return http_build_url($url, $parts);
+		try {
+			$generator = self::fromUrl($url);
+			return $generator->format($format)->url();
+		} catch (Exception $e) {
+			return null;
+		}
+	}
+
+	/**
+	 * @param $url
+	 * @return string|null
+	 */
+	public static function getImageFilename($url) {
+		try {
+			$generator = self::fromUrl($url);
+			$pathParts = explode('/', $generator->config()->relativePath());
+			return array_pop($pathParts);
+		} catch (Exception $e) {
+			return null;
+		}
 	}
 }

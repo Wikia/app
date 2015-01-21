@@ -451,6 +451,9 @@ $messages['ca'] = array(
 	'scavengerhunt-button-export' => 'Exportar a CSV',
 	'scavengerhunt-form-error' => 'Si us plau, corregiu els errors següents:',
 	'scavengerhunt-form-error-invalid-title' => 'No s\'ha trobat el títol de la pàgina "$1".',
+	'scavengerhunt-form-error-no-article-title' => 'Si us plau introduïu tots els títol del articles (com a adreces URL vàlides).',
+	'scavengerhunt-form-error-invalid-url' => 'Si us plau, introduïu un URL vàlid.',
+	'scavengerhunt-form-error-clueColor' => 'Si us plau, proporcioneu un color vàlid en notació #XXX',
 	'scavengerhunt-entry-form-name' => 'El vostre nom:',
 	'scavengerhunt-entry-form-email' => 'La vostra adreça de correu electrònic:',
 	'scavengerhunt-entry-form-submit' => 'Enviar entrada',
@@ -1061,6 +1064,14 @@ $messages['fr'] = array(
 	'scavengerhunt-facebook-description' => 'Texte de partage Facebook',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'scavengerhunt-list-edit' => 'bewurkje',
+	'scavengerhunt-quit-game-button-cancel' => 'Annulearje',
+);
+
 /** Galician (galego)
  * @author Toliño
  */
@@ -1458,6 +1469,7 @@ $messages['kn'] = array(
 
 /** Korean (한국어)
  * @author Miri-Nae
+ * @author 아라
  */
 $messages['ko'] = array(
 	'scavengerhunt-list-header-name' => '게임 이름',
@@ -1466,7 +1478,7 @@ $messages['ko'] = array(
 	'scavengerhunt-list-disabled' => '비활성화',
 	'scavengerhunt-list-edit' => '편집',
 	'scavengerhunt-label-dialog-check' => '(시각편집기 표시 - 프리 알파, 아직 작동하지 않음)',
-	'scavengerhunt-label-image-check' => '(이미지 표시)',
+	'scavengerhunt-label-image-check' => '(그림 보이기)',
 	'scavengerhunt-label-general' => '일반',
 	'scavengerhunt-label-name' => '이름:',
 	'scavengerhunt-button-save' => '저장',
@@ -3169,6 +3181,7 @@ $messages['uk'] = array(
  * @author Hydra
  * @author Liuxinyu970226
  * @author Sam Wang
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'scavengerhunt-desc' => '允许在一个维基上创建一个清道夫狩猎游戏',
@@ -3207,15 +3220,24 @@ $messages['zh-hans'] = array(
 	'scavengerhunt-button-export' => '导出为CSV',
 	'scavengerhunt-button-remove-section' => '移除此步',
 	'scavengerhunt-form-error' => '请更正以下错误：',
+	'scavengerhunt-form-error-no-landing-title' => '请输入登陆页面名称（URL有效）。',
+	'scavengerhunt-form-error-invalid-title' => '下列页面标题未找到：“$1”。',
+	'scavengerhunt-form-error-landing-button-text' => '请输入登陆页面按钮文本。',
+	'scavengerhunt-form-error-landing-button-position' => '请输入登陆页面按钮位置。',
+	'scavengerhunt-form-error-invalid-url' => '请提供一个有效的URL。',
 	'scavengerhunt-form-error-clueColor' => '请提供有效的颜色格式（#XXX）',
+	'scavengerhunt-edit-token-mismatch' => '编辑令牌不正确 - 请重试。',
 	'scavengerhunt-entry-form-name' => '您的名字：',
 	'scavengerhunt-entry-form-email' => '您的电子邮件地址：',
 	'scavengerhunt-entry-form-submit' => '提交文章',
+	'scavengerhunt-label-sprite-img' => 'Sprite图像路径',
+	'scavengerhunt-label-sprite-X' => '元素位置',
 	'scavengerhunt-label-sprite-X1' => '魔鬼左上角',
 	'scavengerhunt-label-sprite-X2' => '魔鬼右下角',
 	'scavengerhunt-game-has-been-deleted' => '狩猎游戏已删除',
 	'scavengerhunt-game-more-to-go' => '只有#更多可走。',
 	'scavengerhunt-label-progress-bar' => '进度栏',
+	'scavengerhunt-quit-game-content' => '您确定要退出Scavenger Hunt吗？',
 	'scavengerhunt-quit-game-button-quit' => '退出',
 	'scavengerhunt-quit-game-button-cancel' => '取消',
 	'scavengerhunt-quit-game-button-stay' => '保持游戏',
@@ -3233,7 +3255,9 @@ $messages['zh-hans'] = array(
 /** Traditional Chinese (中文（繁體）‎)
  * @author Justincheng12345
  * @author LNDDYL
+ * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
 	'scavengerhunt-entry-form-email' => '您的電郵位址：',
+	'scavengerhunt-label-clue-size' => '字型大小',
 );

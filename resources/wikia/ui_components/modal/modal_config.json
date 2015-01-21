@@ -3,7 +3,7 @@
 	"templateVars": {
 		"default": {
 			"required": [ "id", "size", "content", "closeText" ],
-			"optional": [ "classes", "title", "altLink", "buttons" ]
+			"optional": [ "classes", "title", "htmlTitle", "altLink", "buttons" ]
 		}
 	},
 	"dependencies": {

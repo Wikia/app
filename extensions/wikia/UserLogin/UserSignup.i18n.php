@@ -11,6 +11,8 @@ $messages['en'] = array(
 	'usersignup-page-title' => 'Join Wikia',
 	'usersignup-page-title-wikiamobile' => 'Create account',
 	'usersignup-page-captcha-label' => 'Blurry Word',
+	'usersignup-page-captcha-load-fail-title' => 'Captcha not loaded',
+	'usersignup-page-captcha-load-fail-text' => 'We\'re sorry, the blurry word test failed to load, and it is required for creating an account. It may not be availble in your region. Please try again later.',
 
 	'usersignup-error-username-length' => "Oops, your username can't be more than {{PLURAL:$1|one character|$1 characters}}.",
 	'usersignup-error-invalid-user' => 'Invalid user. Please login first.',
@@ -243,10 +245,14 @@ To check out the latest happenings on Wikia, visit http://community.wikia.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-confirmation-reminder-email_body-HTML' => '',
 	'usersignup-facebook-problem' => 'There was a problem communicating with Facebook. Please try again later.',
+	'usersignup-facebook-signup-header' => 'Creating a new account?',
+	'usersignup-facebook-login-header' => 'Already have an account?',
+	'usersignup-facebook-or-header' => 'or',
 );
 
 /** Message documentation (Message documentation)
  * @author McDutchie
+ * @author Robby
  * @author Shirayuki
  * @author Siebrand
  */
@@ -254,6 +260,7 @@ $messages['qqq'] = array(
 	'usersignup-page-title' => 'Page title for Special:UserSignup',
 	'usersignup-page-title-wikiamobile' => 'Page title for Special:UserSignup on Mobile skin',
 	'usersignup-page-captcha-label' => 'Label for captcha on signup form',
+	'usersignup-page-captcha-load-fail-title' => 'This is the title for the modal that a user sees when the captcha, aka "blurry word", fails to load. It may happen if google is blocked in the user\'s region, or is experiencing an outage.',
 	'usersignup-error-username-length' => 'Error message stating that username is too long and over $1 amount of characters.',
 	'usersignup-error-invalid-user' => 'Generic error message when the user has been invalidated in the session for security reasons.',
 	'usersignup-error-invalid-email' => 'Error message stating that e-mail address is invalid.',
@@ -367,6 +374,9 @@ Page content for confirm page when byemail=1 is used.  Parameters:
 	'usersignup-confirmation-reminder-email-signature' => 'Confirmation email signature that is sent 7 days after user has started the signup process without confirming.',
 	'usersignup-confirmation-reminder-email_body' => 'Text-only version of confirmation email that is sent 7 days after user has started the signup process without confirming.  $1 is username, $2 is confirmation url.',
 	'usersignup-confirmation-reminder-email_body-HTML' => 'Stand-alone HTML version of confirmation email that is sent 7 days after user has started the signup process without confirming.  $1 is username, $2 is confirmation url.',
+	'usersignup-facebook-signup-header' => 'Message used in conjunction with usersignup-facebook-login-header and usersignup-facebook-or-header. The full message, in english, reads: Create a new account? or Already have an account?',
+	'usersignup-facebook-login-header' => 'Message used in conjunction with usersignup-facebook-signup-header and usersignup-facebook-or-header. The full message, in english, reads: Create a new account? or Already have an account?',
+	'usersignup-facebook-or-header' => '{{Identical|Or}}',
 );
 
 /** Arabic (العربية)
@@ -535,6 +545,13 @@ $messages['bg'] = array(
 	'usersignup-confirmation-reminder-email-signature' => 'Екипът на Wikia',
 );
 
+/** Bengali (বাংলা)
+ * @author Aftabuzzaman
+ */
+$messages['bn'] = array(
+	'usersignup-facebook-or-header' => 'অথবা',
+);
+
 /** Breton (brezhoneg)
  * @author Fohanno
  * @author Y-M D
@@ -611,9 +628,11 @@ Klikit war al liamm kadarnaat en ho postel evit echuiñ da grouiñ ho kont.',
  * @author Alvaro Vidal-Abarca
  * @author Marcmpujol
  * @author Toniher
+ * @author Unapersona
  */
 $messages['ca'] = array(
 	'usersignup-page-title' => 'Uneix-te a Wikia',
+	'usersignup-page-title-wikiamobile' => 'Crear compte',
 	'usersignup-page-captcha-label' => 'Paraula borrosa',
 	'usersignup-error-username-length' => 'Vaja, el teu nom no pot ser més de {{PLURAL:$1|un caràcter |$1 caràcters}}.',
 	'usersignup-error-invalid-user' => "L'usuari no és vàlid. Si us plau identifique't primer.",
@@ -642,6 +661,7 @@ $messages['ca'] = array(
 	'usersignup-confirm-email-unconfirmed-emailnotauthenticated' => "Oh, no! La teva adreça electrònica no està confirmada. Hem enviat un correu electrònic, fes clic a l'enllaç de confirmació per confirmar.",
 	'usersignup-user-pref-confirmemail_noemail' => 'Sembla que no tenim una adreça de correu electrònic per tu. Vés a [[Special:Preferences| preferències]] per introduir-hi una.',
 	'usersignup-confirm-page-title' => 'Confirma la teva adreça electrònica',
+	'usersignup-confirm-page-title-wikiamobile' => 'Comprovar correu electrònic',
 	'usersignup-confirm-email-resend-email' => "Enviar-me una altra confirmació d'adreça electrònica",
 	'usersignup-confirm-email-change-email-content' => 'Vull utilitzar una adreça electrònica diferent.',
 	'usersignup-confirm-email-change-email' => 'Canviar la meva adreça electrònica',
@@ -653,11 +673,15 @@ $messages['ca'] = array(
 	'usersignup-confirm-page-heading-confirmed-user' => 'Felicitats!',
 	'usersignup-confirm-page-subheading-confirmed-user' => 'Ja estàs confirmat',
 	'usersignup-confirmation-heading' => 'Ja gairebé!',
+	'usersignup-confirmation-heading-wikiamobile' => 'Comprova el teu correu electrònic',
 	'usersignup-confirmation-heading-email-resent' => 'Nou correu electrònic enviat',
 	'usersignup-confirmation-subheading' => 'Comprova el teu correu electrònic',
 	'usersignup-confirmation-email-sent' => "Hem enviat un correu electrònic a '''$1'''.
 
 Fes clic en l'enllaç de confirmació en la teva adreça per a acabar de crear el teu compte.",
+	'usersignup-confirmation-email-sent-wikiamobile' => "Hem enviat un correu electrònic a '''$1'''.
+
+Fes clic en l'enllaç de confirmació en la teva adreça per a acabar de crear el teu compte. Gràcies!",
 	'usersignup-confirmation-email_subject' => 'Ja gairebé! Confirma el teu compte de Wikia',
 	'usersignup-confirmation-email-greeting' => 'Hola $USERNAME,',
 	'usersignup-confirmation-email-content' => 'Ets a un pas de crear el teu compte en Wikia! Fes clic a l\'enllaç de sota per confirmar la teva adreça de correu electrònic i començar a editar.
@@ -1126,6 +1150,9 @@ ___________________________________________
 Um dich zu Wikia auf dem aktuellen Stand zu halten, besuche http://de.community.wikia.com
 Steuere, welche E-Mails du von uns erhalten willst, auf {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-facebook-problem' => 'Es gab ein Problem bei der Kommunikation mit Facebook. Bitte später noch einmal probieren.',
+	'usersignup-facebook-signup-header' => 'Ein neues Benutzerkonto erstellen?',
+	'usersignup-facebook-login-header' => 'Hast du bereits ein Benutzerkonto?',
+	'usersignup-facebook-or-header' => 'oder',
 );
 
 /** Zazaki (Zazaki)
@@ -1371,6 +1398,9 @@ ___________________________________________
 Para ver las noticias más recientes en Wikia, visita http://es.wikia.com
 ¿Quieres controlar los mensajes que recibes?? Ve a: {{fullurl:{{ns:special}}:Preferencias}}',
 	'usersignup-facebook-problem' => 'Hubo un problema de comunicación con Facebook. Por favor, inténtalo otra vez más tarde.',
+	'usersignup-facebook-signup-header' => '¿Creando una cuenta nueva?',
+	'usersignup-facebook-login-header' => '¿Ya tienes una cuenta?',
+	'usersignup-facebook-or-header' => 'o',
 );
 
 /** Persian (فارسی)
@@ -1694,6 +1724,9 @@ ___________________________________________
 To check out the latest happenings on Wikia, visit http://community.wikia.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}",
 	'usersignup-facebook-problem' => 'Il y a eu un problème de communication avec Facebook. Veuillez essayer ultérieurement.',
+	'usersignup-facebook-signup-header' => 'Créer un nouveau compte ?',
+	'usersignup-facebook-login-header' => 'Vous avez déjà un compte ?',
+	'usersignup-facebook-or-header' => 'ou',
 );
 
 /** Western Frisian (Frysk)
@@ -1701,6 +1734,7 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
  */
 $messages['fy'] = array(
 	'usersignup-marketing-global-heading' => 'Oanmeitsje',
+	'usersignup-facebook-or-header' => 'of',
 );
 
 /** Galician (galego)
@@ -2417,7 +2451,17 @@ ___________________________________________
 	'usersignup-facebook-problem' => 'Facebook との通信中に問題が発生しました。しばらくしてからもう一度お試しください。',
 );
 
+/** Georgian (ქართული)
+ * @author MIKHEIL
+ */
+$messages['ka'] = array(
+	'usersignup-facebook-signup-header' => 'გსურთ შექმნათ ახალი ანგარიში?',
+	'usersignup-facebook-login-header' => 'უკვე რეგისტრირებული ხართ?',
+	'usersignup-facebook-or-header' => 'ან',
+);
+
 /** Korean (한국어)
+ * @author Gusdud25
  * @author Miri-Nae
  */
 $messages['ko'] = array(
@@ -2427,6 +2471,7 @@ $messages['ko'] = array(
 	'usersignup-welcome-email-signature' => '위키아 팀',
 	'usersignup-account-creation-email-signature' => '위키아 팀',
 	'usersignup-confirmation-reminder-email-signature' => '위키아 팀',
+	'usersignup-facebook-or-header' => '또는',
 );
 
 /** Karachay-Balkar (къарачай-малкъар)
@@ -2435,6 +2480,13 @@ $messages['ko'] = array(
 $messages['krc'] = array(
 	'usersignup-facebook-create-account' => 'Аккаунт къурау',
 	'usersignup-confirm-email-update' => 'Джангырт',
+);
+
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'usersignup-facebook-or-header' => 'oder',
 );
 
 /** Macedonian (македонски)
@@ -2857,6 +2909,9 @@ ___________________________________________
 To check out the latest happenings on Wikia, visit http://community.wikia.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-facebook-problem' => 'Timbulnya masalah ketika berhubung dengan Facebook. Sila cuba lagi nanti.',
+	'usersignup-facebook-signup-header' => 'Nak buka akaun baru?',
+	'usersignup-facebook-login-header' => 'Sudah ada akaun?',
+	'usersignup-facebook-or-header' => 'atau',
 );
 
 /** Norwegian Bokmål (norsk bokmål)
@@ -3091,7 +3146,7 @@ $messages['nl'] = array(
 	'usersignup-facebook-heading' => 'Registratie afronden',
 	'usersignup-facebook-create-account' => 'Registreren',
 	'usersignup-facebook-email-tooltip' => 'Als u een ander e-mailadres wilt gebruiken, kunt u dat later in uw voorkeuren wijzigen.',
-	'usersignup-facebook-have-an-account-heading' => 'Hebt u al een account?',
+	'usersignup-facebook-have-an-account-heading' => 'Hebt u al een gebruiker?',
 	'usersignup-facebook-have-an-account' => 'Uw huidige Wikigebruiker met Facebook koppelen.',
 	'usersignup-facebook-proxy-email' => 'Anonieme e-mailadres van Facebook',
 	'usersignup-user-pref-emailconfirmlink' => 'Nieuwe bevestiging laten e-mailen',
@@ -3215,7 +3270,7 @@ Wilt u bepalen welke e-mails u ontvangt? Ga dan naar {{fullurl:{{ns:special}}:Pr
 	'usersignup-heading' => 'Word vandaag lid van Wikia',
 	'usersignup-heading-byemail' => 'Maak een gebruiker aan voor iemand anders',
 	'usersignup-marketing-wikia' => 'Begin met samenwerken met miljoenen mensen van over de hele wereld die samenkomen om te delen wat ze weten en waar ze passie voor hebben.',
-	'usersignup-marketing-login' => 'Hebt u al een account?[[Special:UserLogin|Meld u aan]]',
+	'usersignup-marketing-login' => 'Hebt u al een gebruiker?[[Special:UserLogin|Meld u aan]]',
 	'usersignup-marketing-benefits' => 'Doe mee aan iets groots',
 	'usersignup-marketing-community-heading' => 'Samenwerken',
 	'usersignup-marketing-community' => 'Ontdek en verken onderwerpen van videogames tot films en televisie. Ontmoet mensen met gelijke interesses en passies.',
@@ -3279,6 +3334,16 @@ ___________________________________________
 Ga naar http://community.wikia.com voor het laatste nieuws over Wikia.
 Wilt u bepalen welke e-mails u ontvangt? Ga dan naar {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-facebook-problem' => 'Er is een probleem opgetreden in de communicatie met Facebook. Probeer het later opnieuw.',
+	'usersignup-facebook-signup-header' => 'Nieuwe gebruiker registreren?',
+	'usersignup-facebook-login-header' => 'Hebt u al een gebruiker?',
+	'usersignup-facebook-or-header' => 'of',
+);
+
+/** Norwegian Nynorsk (norsk nynorsk)
+ * @author Gaute
+ */
+$messages['nn'] = array(
+	'usersignup-facebook-or-header' => 'eller',
 );
 
 /** Occitan (occitan)
@@ -3787,6 +3852,7 @@ $messages['ps'] = array(
  * @author Josep Maria 15.
  * @author Luckas
  * @author SandroHc
+ * @author Vitorvicentevalente
  */
 $messages['pt'] = array(
 	'usersignup-page-title' => 'Junta-te à Wikia',
@@ -3817,6 +3883,8 @@ $messages['pt'] = array(
 	'usersignup-confirmation-reminder-email_subject' => 'Não seja um estranho...',
 	'usersignup-confirmation-reminder-email-greeting' => 'Olá $USERNAME',
 	'usersignup-confirmation-reminder-email-signature' => 'A Equipa da Wikia',
+	'usersignup-facebook-login-header' => 'Já possui uma conta?',
+	'usersignup-facebook-or-header' => 'ou',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -3946,6 +4014,7 @@ $messages['roa-tara'] = array(
  * @author DCamer
  * @author Kuzura
  * @author Okras
+ * @author Tourorist
  */
 $messages['ru'] = array(
 	'usersignup-page-title' => 'Присоединиться к Викия',
@@ -4156,6 +4225,9 @@ ___________________________________________
 Чтобы проверить последние события на Викия, посетите http://community.wikia.com
 Хотите настроить email рассылку? Перейдите к {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-facebook-problem' => 'Есть проблема со связью с Facebook. Пожалуйста, попробуйте ещё раз позже.',
+	'usersignup-facebook-signup-header' => 'Создать новую учётную запись?',
+	'usersignup-facebook-login-header' => 'Вы уже зарегистрированы?',
+	'usersignup-facebook-or-header' => 'или',
 );
 
 /** Swedish (svenska)
@@ -4370,6 +4442,9 @@ ___________________________________________
 För att kolla in de senaste händelserna på Wikia, besök http://community.wikia.com
 Vill du kontrollera vilka e-postmeddelanden du får? Gå till: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-facebook-problem' => 'Det gick inte att kommunicera med Facebook. Försök igen senare.',
+	'usersignup-facebook-signup-header' => 'Skapa ett nytt konto?',
+	'usersignup-facebook-login-header' => 'Har redan ett konto?',
+	'usersignup-facebook-or-header' => 'eller',
 );
 
 /** Thai (ไทย)
@@ -5252,6 +5327,9 @@ ___________________________________________
 查看Wikia的最新信息请访问http://community.wikia.com
 想控制接收那些电子邮件？请查看：{{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-facebook-problem' => '与脸谱链接出错，请稍后再试。',
+	'usersignup-facebook-signup-header' => '创建一个新的账户？',
+	'usersignup-facebook-login-header' => '已有帐户？',
+	'usersignup-facebook-or-header' => '或',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
