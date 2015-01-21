@@ -7,6 +7,7 @@
  * @version 1.0
  * @author Adam Karminski <adamk@wikia-inc.com>
  * @see https://github.com/Wikia/app/tree/dev/extensions/wikia/AutoFollow/
+ * @tags: autofollow, auto, follow, staff, blog
  */
 
 /**
@@ -24,9 +25,28 @@ $wgExtensionCredits['other'][] = array(
 	'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/AutoFollow/',
 );
 
-$wgExtensionMessagesFiles['AutoFollow'] = __DIR__ . '/AutoFollow.i18n.php';
-
 $wgAutoloadClasses['Wikia\AutoFollow\AutoFollowHooks'] = __DIR__ . '/AutoFollow.hooks.php';
-$wgAutoloadClasses['Wikia\AutoFollow\AutoFollowTasks'] = __DIR__ . '/AutoFollowTasks.class.php';
+$wgAutoloadClasses['Wikia\AutoFollow\AutoFollowTask'] = __DIR__ . '/AutoFollowTask.class.php';
 
 $wgHooks['ConfirmEmailComplete'][] = "Wikia\AutoFollow\AutoFollowHooks::onConfirmEmailComplete";
+
+/**
+ * @global Array A language code to its community wikia's city_id map
+ */
+$wgAutoFollowLangCityIdMap = [
+	'de' => 1779,
+	'en' => 177,
+	'es' => 3487,
+	'fi' => 3083,
+	'fr' => 10261,
+	'ja' => 3439,
+	'it' => 11250,
+	'nl' => 10466,
+	'pl' => 1686,
+	'pt' => 696403,
+	'ru' => 3321,
+	'uk' => 3321, // Add Ukrainian users to the blog in Russian
+	'zh' => 4079,
+];
+
+$wgAutoFollowFlag = 'autowatched-already';
