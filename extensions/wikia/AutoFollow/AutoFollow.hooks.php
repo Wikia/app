@@ -14,7 +14,8 @@ class AutoFollowHooks {
 	 * @return {bool} true
 	 */
 	public static function onSignupConfirmEmailComplete( \User $oUser ) {
-		$this->addAutoFollowTask( $oUser );
+		$instance = new self;
+		$instance->addAutoFollowTask( $oUser );
 		return true;
 	}
 
@@ -28,7 +29,7 @@ class AutoFollowHooks {
 		) {
 			$iCityId = $wgAutoFollowLangCityIdMap[ $sUserLanguage ];
 			$oAutoFollowTasks = new AutoFollowTask();
-			$oAutoFollowTasks->call( 'addUserToDefaultWatchlistTask', $oUser );
+			$oAutoFollowTasks->call( 'addUserToDefaultWatchlistTask', $oUser->getId() );
 			$oAutoFollowTasks->wikiId( $iCityId );
 			$oAutoFollowTasks->queue();
 		}

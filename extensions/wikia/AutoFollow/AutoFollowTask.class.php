@@ -7,27 +7,30 @@ use Wikia\Logger\WikiaLogger;
 
 class AutoFollowTask extends BaseTask {
 
-	public function addUserToDefaultWatchlistTask( \User $oUser ) {
+	public function addUserToDefaultWatchlistTask( $iUserId ) {
 		global $wgAutoFollowWatchlist;
 
-		$aWatchSuccess = $aWatchFail = [];
+		if ( !empty( $wgAutoFollowWatchlist ) ) {
+			$oUser = \User::newFromId( $iUserId );
+			$aWatchSuccess = $aWatchFail = [];
 
-		foreach ( $wgAutoFollowWatchlist as $sTitleText ) {
-			$oTitle = Title::newFromText( $sTitleText );
+			foreach ( $wgAutoFollowWatchlist as $sTitleText ) {
+				$oTitle = \Title::newFromText( $sTitleText );
 
-			if ( $oTitle instanceof Title ) {
-				WatchAction::doWatch( $oTitle, $oUser );
-				$aWatchSuccess[] = $sTitleText;
-			} else {
-				$aWatchFail[] = $sTitleText;
+				if ( $oTitle instanceof \Title ) {
+					\WatchAction::doWatch( $oTitle, $oUser );
+					$aWatchSuccess[] = $sTitleText;
+				} else {
+					$aWatchFail[] = $sTitleText;
+				}
 			}
-		}
 
-		if ( count( $aWatchFail ) === 0 ) {
-			$this->setFlag( $oUser );
-		}
+			if ( count( $aWatchFail ) === 0 ) {
+				$this->setFlag( $oUser );
+			}
 
-		$this->logResults( $oUser, $aWatchSuccess, $aWatchFail );
+			$this->logResults( $oUser, $aWatchSuccess, $aWatchFail );
+		}
 	}
 
 	private function setFlag( \User $oUser ) {
