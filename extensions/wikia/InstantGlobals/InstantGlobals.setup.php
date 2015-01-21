@@ -49,6 +49,10 @@ $wgResourceModules['wikia.ext.instantGlobals'] = [
 	'class' => 'InstantGlobalsModule',
 ];
 
+/**
+ * Register Resource Loader module for querystring-based
+ * overriding tool for InstantGlobals
+ */
 $wgResourceModules['wikia.ext.instantGlobalsOverride'] = [
 	'scripts' => "extensions/wikia/InstantGlobals/js/instantGlobalsOverride.js"
 ];

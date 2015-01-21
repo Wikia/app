@@ -1,3 +1,7 @@
+/**
+ * Module for overriding boolean InstantGlobals
+ * based on querystring params
+ */
 (function () {
 	'use strict';
 	window.location.search.replace(
