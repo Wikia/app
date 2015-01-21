@@ -33,6 +33,7 @@ $dir = __DIR__;
 
 $wgAutoloadClasses['InstantGlobalsHooks'] = "{$dir}/InstantGlobalsHooks.class.php";
 $wgAutoloadClasses['InstantGlobalsModule'] = "{$dir}/InstantGlobalsModule.class.php";
+$wgAutoloadClasses['InstantGlobalsOverrideModule'] = "{$dir}/InstantGlobalsOverrideModule.class.php";
 
 //i18n
 $wgExtensionMessagesFiles['InstantGlobals'] = $dir . '/InstantGlobals.i18n.php';
@@ -47,5 +48,9 @@ $wgHooks['WikiaSkinTopShortTTLModules'][] =  'InstantGlobalsHooks::onWikiaSkinTo
  */
 $wgResourceModules['wikia.ext.instantGlobals'] = [
 	'class' => 'InstantGlobalsModule',
+];
+
+$wgResourceModules['wikia.ext.instantGlobalsOverride'] = [
+	'class' => 'InstantGlobalsOverrideModule',
 ];
 
