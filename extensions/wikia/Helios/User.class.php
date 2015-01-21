@@ -58,7 +58,7 @@ class User {
 	public static function comparePasswords( &$sHash, &$sPassword, &$iUserId, &$bResult )
 	{
 		// Get the user's name from the request context.
-		$sUserName= \RequestContext->getMain()->getRequest()->getText( 'wpName' );
+		$sUserName= \RequestContext::getMain()->getRequest()->getText( 'wpName' );
 
 		global $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret;
 		$oHelios = new Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
