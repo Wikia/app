@@ -4,7 +4,7 @@
   "private": true,
   "version": "0.0.1",
   "scripts": {
-    "test": "cd tests/ && ./js-allgit "
+    "test": "cd tests/ && ./js-all"
   },
   "repository": {
     "type": "git",
