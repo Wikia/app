@@ -55,6 +55,7 @@ define('videohomepage.views.featured', [
 
 			this.timeout = 0;
 			this.initSlider();
+			this.slider.redrawSlider();
 
 			$(window).on('resize', _.bind(this.collection.resetEmbedData, this.collection))
 				.on('lightboxOpened', this.reloadVideo);
