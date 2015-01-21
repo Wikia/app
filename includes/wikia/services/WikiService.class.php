@@ -479,7 +479,7 @@ class WikiService extends WikiaModel {
 	public function getMostActiveAdmins($wikiId, $avatarSize) {
 		$edits = $ids = $lastRevision = [];
 		$admins = $this->getWikiAdmins($wikiId, $avatarSize);
-		$ids = array_map(function($item) { return isset( $item['userId'] ) ? $item['userId'] : 0; }, $admins);
+		$ids = array_map(function( Array $item ) { return isset( $item['userId'] ) ? $item['userId'] : 0; }, $admins);
 
 		$adminsEdits = DataMartService::getUserEditsByWikiId( $ids, $wikiId);
 
