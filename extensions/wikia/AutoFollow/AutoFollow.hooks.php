@@ -35,12 +35,12 @@ class AutoFollowHooks {
 		}
 	}
 
-	public function checkAutoFollowConditions( \User $oUser ) {
+	private function checkAutoFollowConditions( \User $oUser ) {
 		global $wgAutoFollowFlag;
 
-		if ( $oUser->getOption( $wgAutoFollowFlag ) === 1 ) {
+		if ( intval( $oUser->getOption( $wgAutoFollowFlag ) ) === 1 ) {
 			return false;
-		} elseif ( $oUser->getOption( 'marketingallowed' ) === 1 ) {
+		} elseif ( $oUser->getOption( 'marketingallowed' ) === 0 ) {
 			return false;
 		}
 

@@ -1,0 +1,96 @@
+<?php
+
+namespace Wikia\AutoFollow\Test;
+
+use Wikia\AutoFollow\AutoFollowHooks;
+
+class AutoFollowHooksTest extends \WikiaBaseTest {
+
+	public function setUp() {
+		$this->setupFile = __DIR__ . '/../AutoFollow.setup.php';
+		parent::setUp();
+	}
+
+	/**
+	 * @dataProvider getUsersAllowedLanguages
+	 */
+	function testAddAutoFollowTask( $sLanguage ) {
+		global $wgAutoFollowFlag;
+
+		$newUser = new \User();
+		$newUser->setOption( 'language', $sLanguage );
+		$newUser->setOption( 'marketingallowed', 1 );
+		$newUser->setOption( $wgAutoFollowFlag, 0 );
+
+		$task = $this->getMock( 'Wikia\AutoFollow\AutoFollowTask', ['queue'] );
+		$task->expects( $this->once() )
+			->method( 'queue' )
+			->will( $this->returnValue( true ) );
+
+		$this->mockClass( 'Wikia\AutoFollow\AutoFollowTask', $task );
+
+		$oAutoFollowHooks = new AutoFollowHooks();
+		$oAutoFollowHooks->addAutoFollowTask( $newUser );
+	}
+
+	function getUsersAllowedLanguages() {
+		return [
+			['de'],
+			['en'],
+			['es'],
+			['fi'],
+			['fr'],
+			['it'],
+			['ja'],
+			['nl'],
+			['nl-informal'],
+			['pl'],
+			['pt'],
+			['pt-br'],
+			['ru'],
+			['uk'],
+			['zh'],
+			['zh-classical'],
+			['zh-cn'],
+			['zh-hans'],
+			['zh-hant'],
+			['zh-hk'],
+			['zh-min-nan'],
+			['zh-mo'],
+			['zh-my'],
+			['zh-sg'],
+			['zh-tw'],
+			['zh-yue'],
+		];
+	}
+
+	/**
+	 * @dataProvider getUsersFaultyOptions
+	 */
+	function testDoNotAddAutoFollowTask( $sLanguage, $iMarketingAllowed, $iAutoFollowFlag ) {
+		global $wgAutoFollowFlag;
+
+		$newUser = new \User();
+		$newUser->setOption( 'language', $sLanguage );
+		$newUser->setOption( 'marketingallowed', $iMarketingAllowed );
+		$newUser->setOption( $wgAutoFollowFlag, $iAutoFollowFlag );
+
+		$task = $this->getMock( 'Wikia\AutoFollow\AutoFollowTask', ['queue'] );
+		$task->expects( $this->never() )
+			->method( 'queue' );
+
+		$this->mockClass( 'Wikia\AutoFollow\AutoFollowTask', $task );
+
+		$oAutoFollowHooks = new AutoFollowHooks();
+		$oAutoFollowHooks->addAutoFollowTask( $newUser );
+	}
+
+	function getUsersFaultyOptions() {
+		return [
+			['en', 0, 0],
+			['en', 0, 1],
+			['en', 1, 1],
+			['xyz', 1, 0],
+		];
+	}
+}
