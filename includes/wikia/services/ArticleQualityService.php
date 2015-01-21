@@ -1,5 +1,6 @@
 <?php
 
+use \Wikia\Logger;
 class ArticleQualityService extends Service {
 
 	const SQL_CACHE_TIME = 86399; // 12h
@@ -157,6 +158,18 @@ class ArticleQualityService extends Service {
 			}
 			$article = new Article( $title );
 			$parser = $article->getParserOutput();
+
+			if ( !$parser ) {
+				//MAIN-3592
+				WikiaLogger::instance()->error(
+					__METHOD__,
+					[
+						'message' => 'Article::getParserOutput returned false',
+						'articleId' => $this->articleId,
+					]
+				);
+				return null;
+			}
 
 			$inputs = [
 				'outbound' => 0,
