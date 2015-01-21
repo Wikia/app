@@ -74,4 +74,43 @@ class UserTest extends \WikiaBaseTest {
 		$this->assertNull( User::newFromToken( $this->oRequest ) );
 	}
 
+	public function testComparePasswordsAuthenticationFailed()
+	{
+		$sHash = '3cBPVuC7oI';
+		$sPassword = 'Password';
+		$iUserId = '42';
+		$bResult = false;
+
+		$bReturn = User::comparePasswords( $sHash, $sPassword, $iUserId, $bResult );
+
+		$this->assertFalse( $bReturn );
+		$this->assertFalse( $bResult );
+	}
+
+	public function testComparePasswordsAuthenticationImpossible()
+	{
+		$sHash = '3cBPVuC7oI';
+		$sPassword = 'Password';
+		$iUserId = '42';
+		$bResult = false;
+
+		$bReturn = User::comparePasswords( $sHash, $sPassword, $iUserId, $bResult );
+
+		$this->assertTrue( $bReturn );
+		$this->assertFalse( $bResult );
+	}
+
+	public function testComparePasswordsAuthenticationSucceded()
+	{
+		$sHash = '3cBPVuC7oI';
+		$sPassword = 'Password';
+		$iUserId = '42';
+		$bResult = false;
+
+		$bReturn = User::comparePasswords( $sHash, $sPassword, $iUserId, $bResult );
+
+		$this->assertFalse( $bReturn );
+		$this->assertTrue( $bResult );
+	}
+
 }
