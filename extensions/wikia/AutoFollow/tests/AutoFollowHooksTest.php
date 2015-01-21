@@ -1,4 +1,8 @@
 <?php
+/**
+ * @package Wikia\extensions\AutoFollow
+ * @author Adam Karmiński <adamk@wikia-inc.com>
+ */
 
 namespace Wikia\AutoFollow\Test;
 
@@ -9,6 +13,26 @@ class AutoFollowHooksTest extends \WikiaBaseTest {
 	public function setUp() {
 		$this->setupFile = __DIR__ . '/../AutoFollow.setup.php';
 		parent::setUp();
+
+		$this->mockGlobalVariable( 'wgAutoFollowFlag', 'autowatched-already' );
+		$this->mockGlobalVariable(
+			'wgAutoFollowLangCityIdMap',
+			[
+				'de' => 1779,
+				'en' => 177,
+				'es' => 3487,
+				'fi' => 3083,
+				'fr' => 10261,
+				'it' => 11250,
+				'ja' => 3439,
+				'nl' => 10466,
+				'pl' => 1686,
+				'pt' => 696403,
+				'ru' => 3321,
+				'uk' => 3321,
+				'zh' => 4079,
+			]
+		);
 	}
 
 	/**
@@ -17,11 +41,18 @@ class AutoFollowHooksTest extends \WikiaBaseTest {
 	function testAddAutoFollowTask( $sLanguage ) {
 		global $wgAutoFollowFlag;
 
+		/**
+		 * Mocked User object with necessary options set
+		 * @var object User
+		 */
 		$newUser = new \User();
 		$newUser->setOption( 'language', $sLanguage );
 		$newUser->setOption( 'marketingallowed', 1 );
 		$newUser->setOption( $wgAutoFollowFlag, 0 );
 
+		/**
+		 * For the given set of data a task should be queued once
+		 */
 		$task = $this->getMock( 'Wikia\AutoFollow\AutoFollowTask', ['queue'] );
 		$task->expects( $this->once() )
 			->method( 'queue' )
@@ -70,11 +101,18 @@ class AutoFollowHooksTest extends \WikiaBaseTest {
 	function testDoNotAddAutoFollowTask( $sLanguage, $iMarketingAllowed, $iAutoFollowFlag ) {
 		global $wgAutoFollowFlag;
 
+		/**
+		 * Mocked User object with necessary options set
+		 * @var object User
+		 */
 		$newUser = new \User();
 		$newUser->setOption( 'language', $sLanguage );
 		$newUser->setOption( 'marketingallowed', $iMarketingAllowed );
 		$newUser->setOption( $wgAutoFollowFlag, $iAutoFollowFlag );
 
+		/**
+		 * For the given set of data a task shouldn't be queued
+		 */
 		$task = $this->getMock( 'Wikia\AutoFollow\AutoFollowTask', ['queue'] );
 		$task->expects( $this->never() )
 			->method( 'queue' );

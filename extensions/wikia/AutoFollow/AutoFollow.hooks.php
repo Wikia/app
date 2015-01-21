@@ -8,17 +8,19 @@ namespace Wikia\AutoFollow;
 
 class AutoFollowHooks {
 
-	/**
-	 * Check if a user's language in one of the sanctioned ones
-	 * @param  User object The user's object
-	 * @return {bool} true
-	 */
 	public static function onSignupConfirmEmailComplete( \User $oUser ) {
 		$instance = new self;
 		$instance->addAutoFollowTask( $oUser );
 		return true;
 	}
 
+	/**
+	 * Checks if a user's language in one of the sanctioned ones
+	 * and has agreed to receive marketing information.
+	 * If yes it adds a task to add the user to watchlists.
+	 * @param  User object The user's object
+	 * @return {bool} true
+	 */
 	public function addAutoFollowTask( \User $oUser ) {
 		global $wgAutoFollowLangCityIdMap;
 		// Check only a core of the language code
@@ -35,6 +37,12 @@ class AutoFollowHooks {
 		}
 	}
 
+	/**
+	 * Check if the user hasn't been subscribed to a watchlist
+	 * and if he agreed to receive marketing information
+	 * @param  User   $oUser A user's object
+	 * @return {bool}        true is the conditions are met
+	 */
 	private function checkAutoFollowConditions( \User $oUser ) {
 		global $wgAutoFollowFlag;
 

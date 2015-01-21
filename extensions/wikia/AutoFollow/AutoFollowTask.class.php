@@ -1,4 +1,9 @@
 <?php
+/**
+ * Class creating a subscribing task for a given user
+ * @package Wikia\extensions\AutoFollow
+ * @author Adam Karmiński <adamk@wikia-inc.com>
+ */
 
 namespace Wikia\AutoFollow;
 
@@ -7,6 +12,11 @@ use Wikia\Logger\WikiaLogger;
 
 class AutoFollowTask extends BaseTask {
 
+	/**
+	 * Adds a user to watchlists of all articles defined in the
+	 * global $wgAutoFollowWatchlist variable.
+	 * @param integer $iUserId The user's ID
+	 */
 	public function addUserToDefaultWatchlistTask( $iUserId ) {
 		global $wgAutoFollowWatchlist;
 
@@ -33,6 +43,10 @@ class AutoFollowTask extends BaseTask {
 		}
 	}
 
+	/**
+	 * Sets the 'autowatched-already' option to 1
+	 * @param User $oUser A user's object
+	 */
 	private function setFlag( \User $oUser ) {
 		global $wgAutoFollowFlag;
 
@@ -40,6 +54,12 @@ class AutoFollowTask extends BaseTask {
 		$oUser->saveSettings();
 	}
 
+	/**
+	 * Logs the results of all add-to-watchlist actions
+	 * @param  User   $oUser         A user's object
+	 * @param  Array  $aWatchSuccess An array of successfully watched articles' titles
+	 * @param  Array  $aWatchFail    An array of articles' titles that failed from being watched
+	 */
 	private function logResults( \User $oUser, Array $aWatchSuccess, Array $aWatchFail ) {
 		global $wgSitename;
 
