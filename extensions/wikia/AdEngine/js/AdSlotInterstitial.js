@@ -24,7 +24,7 @@ define('ext.wikia.adEngine.slot.interstitial', [
 	function onAdSuccess() {
 		uiFactory.init('modal').then(function (uiModal) {
 			uiModal.createComponent(modalConfig, function(modal) {
-					doc.getElementById(logGroup + '.content').appendChild(slotDiv);
+					modal.$content[0].children[0].appendChild(slotDiv);
 					slotDiv.removeAttribute('style');
 					modal.show();
 				}
