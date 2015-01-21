@@ -113,14 +113,20 @@ class MonetizationModuleHelper extends WikiaModel {
 		$cacheKey = $this->getMemcKey( $params );
 		$log->debug( "MonetizationModule: lookup with cache key: $cacheKey", $loggingParams );
 
-		$json_results = $this->wg->Memc->get( $cacheKey );
-		if ( !empty( $json_results ) ) {
-			$log->info( "MonetizationModule: memcache hit.", $loggingParams );
-			wfProfileOut( __METHOD__ );
-			return $this->getData( $json_results, $cacheKey, $params );
-		}
+		if ( $this->isPageSpecificRequest( $params ) ) {
+			$log->info( "MonetizationModule: page specific request.", $loggingParams );
+		} else {
+			$log->info( "MonetizationModule: non page specific request.", $loggingParams );
 
-		$log->info( "MonetizationModule: memcache miss.", $loggingParams );
+			$json_results = $this->wg->Memc->get( $cacheKey );
+			if ( empty( $json_results ) ) {
+				$log->info( "MonetizationModule: memcache miss.", $loggingParams );
+			} else {
+				$log->info( "MonetizationModule: memcache hit.", $loggingParams );
+				wfProfileOut( __METHOD__ );
+				return $this->processData( $json_results, $cacheKey, $params );
+			}
+		}
 
 		$url = $this->wg->MonetizationServiceUrl;
 		if ( !endsWith( $url, '/' ) ) {
@@ -147,7 +153,7 @@ class MonetizationModuleHelper extends WikiaModel {
 			];
 			$log->debug( "MonetizationModule: cannot get monetization units.", $loggingParams );
 		} else if ( !empty( $result ) ) {
-			$result = $this->getData( $result, $cacheKey, $params );
+			$result = $this->processData( $result, $cacheKey, $params );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -156,13 +162,13 @@ class MonetizationModuleHelper extends WikiaModel {
 	}
 
 	/**
-	 * Get data for the ad units
+	 * Process data for the ad units
 	 * @param string $data - data from API (json format)
 	 * @param string $memcKey
 	 * @param array $params - API parameters
 	 * @return mixed
 	 */
-	public function getData( $data, $memcKey, $params ) {
+	public function processData( $data, $memcKey, $params ) {
 		$found = strpos( $data, self::KEYWORD_PREFIX );
 		$data = json_decode( $data, true );
 		if ( !is_array( $data ) ) {
@@ -180,7 +186,7 @@ class MonetizationModuleHelper extends WikiaModel {
 			return $data;
 		}
 
-		$setMemc = ( !array_key_exists( 'page_id', $params ) );
+		$setMemc = ( !$this->isPageSpecificRequest( $params ) );
 		$data = $this->setThemeSettings( $data, $memcKey, $setMemc );
 
 		return $data;
@@ -267,6 +273,15 @@ class MonetizationModuleHelper extends WikiaModel {
 			$defaultVersion
 		);
 		return $version;
+	}
+
+	/**
+	 * Check for page specific request
+	 * @param array $params
+	 * @return bool
+	 */
+	public function isPageSpecificRequest( $params ) {
+		return array_key_exists( 'page_id', $params );
 	}
 
 	/**
