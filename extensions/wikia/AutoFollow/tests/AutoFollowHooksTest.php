@@ -9,6 +9,26 @@ class AutoFollowHooksTest extends \WikiaBaseTest {
 	public function setUp() {
 		$this->setupFile = __DIR__ . '/../AutoFollow.setup.php';
 		parent::setUp();
+
+		$this->mockGlobalVariable( 'wgAutoFollowFlag', 'autowatched-already' );
+		$this->mockGlobalVariable(
+			'wgAutoFollowLangCityIdMap',
+			[
+				'de' => 1779,
+				'en' => 177,
+				'es' => 3487,
+				'fi' => 3083,
+				'fr' => 10261,
+				'it' => 11250,
+				'ja' => 3439,
+				'nl' => 10466,
+				'pl' => 1686,
+				'pt' => 696403,
+				'ru' => 3321,
+				'uk' => 3321,
+				'zh' => 4079,
+			]
+		);
 	}
 
 	/**
