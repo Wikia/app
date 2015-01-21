@@ -41,4 +41,22 @@ class User {
 		}
 	}
 
+	/**
+	 * Hooked to the UserComparePasswords event, authenticates a user.
+	 *
+	 * Sets &$bResult to false and returns false if the authentication fails.
+	 * Sets &$bResult to false and returns true if the authentication cannot be done.
+	 * Sets &$bResult to true and returns false if the authentication succeeds.
+	 *
+	 * @param string &$sHash string of the password hash (from the database)
+	 * @param string &$password string of the plaintext password the user entered
+	 * @param integer &$userId integer of the user's ID or Boolean false if the user ID was not supplied
+	 * @param boolean &$result on false returned, this value will be checked to determine if the password was valid
+	 *
+	 * @return boolean false if the authentication has been done, true otherwise (yeah, I know...)
+	 */
+	public static function comparePasswords( &$sHash, &$sPassword, &$iUserId, &$bResult )
+	{
+	}
+
 }
