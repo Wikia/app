@@ -71,11 +71,12 @@ class Client
 	{
 		return $this->request(
 			'token',
+			[ 'grant_type'	=> 'password' ],
 			[
-				'grant_type'	=> 'password',
 				'username'	=> $sUsername,
 				'password'	=> $sPassword
-			]
+			],
+			[ 'method'	=> 'POST' ]
 		);
 	}
 
