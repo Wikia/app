@@ -7,7 +7,7 @@ class InstantGlobalsOverrideModule extends ResourceLoaderModule {
 
 	public function getScript( ResourceLoaderContext $context ) {
 
-		return sprintf( 'Wikia.InstantGlobals = %s', json_encode( $variables ) );
+		return 'window.sampleSomething = "something"';
 	}
 
 }
