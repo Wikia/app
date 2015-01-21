@@ -39,7 +39,7 @@ define('ext.wikia.adEngine.slot.interstitial', [
 		slotDiv.id = slotName;
 		slotDiv.className = 'wikia-ad noprint';
 		slotDiv.setAttribute('style', 'position:absolute;visibility:hidden');
-		doc.querySelector('body').appendChild(slotDiv);
+		doc.body.appendChild(slotDiv);
 
 		win.adslots2.push({
 			slotname: slotName,
