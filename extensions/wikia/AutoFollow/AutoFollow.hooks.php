@@ -13,7 +13,7 @@ class AutoFollowHooks {
 	 * @param  User object The user's object
 	 * @return {bool} true
 	 */
-	public static function onConfirmEmailComplete( \User $oUser ) {
+	public static function onSignupConfirmEmailComplete( \User $oUser ) {
 		$this->addAutoFollowTask( $oUser );
 		return true;
 	}

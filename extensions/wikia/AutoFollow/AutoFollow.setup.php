@@ -28,7 +28,7 @@ $wgExtensionCredits['other'][] = array(
 $wgAutoloadClasses['Wikia\AutoFollow\AutoFollowHooks'] = __DIR__ . '/AutoFollow.hooks.php';
 $wgAutoloadClasses['Wikia\AutoFollow\AutoFollowTask'] = __DIR__ . '/AutoFollowTask.class.php';
 
-$wgHooks['ConfirmEmailComplete'][] = "Wikia\AutoFollow\AutoFollowHooks::onConfirmEmailComplete";
+$wgHooks['SignupConfirmEmailComplete'][] = "Wikia\AutoFollow\AutoFollowHooks::onSignupConfirmEmailComplete";
 
 /**
  * @global Array A language code to its community wikia's city_id map
@@ -49,4 +49,7 @@ $wgAutoFollowLangCityIdMap = [
 	'zh' => 4079,
 ];
 
+/**
+ * @global Array A key of a flag set by the extension
+ */
 $wgAutoFollowFlag = 'autowatched-already';
