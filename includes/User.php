@@ -4246,15 +4246,25 @@ class User {
 
 		if ( $type == ':A:' ) {
 			# Unsalted
-			return md5( $password ) === substr( $hash, 3 );
+			$bCheck = md5( $password ) === substr( $hash, 3 );
 		} elseif ( $type == ':B:' ) {
 			# Salted
 			list( $salt, $realHash ) = explode( ':', substr( $hash, 3 ), 2 );
-			return md5( $salt.'-'.md5( $password ) ) === $realHash;
+			$bCheck = md5( $salt.'-'.md5( $password ) ) === $realHash;
 		} else {
 			# Old-style
-			return self::oldCrypt( $password, $userId ) === $hash;
+			$bCheck = self::oldCrypt( $password, $userId ) === $hash;
 		}
+
+		if ( $bCheck != $result ) {
+			\Wikia\Logger\WikiaLogger::instance()->error(
+				'HELIOS_LOGIN',
+				[ 'method' => __METHOD__, 'type' => $type, 'hash' => $hash,
+				  'user_id' => $userId, 'exception' => new Exception ]
+			);
+		}
+
+		return $bCheck;
 	}
 
 	/**
