@@ -177,7 +177,6 @@ describe('ext.wikia.adEngine.adTracker', function () {
 		});
 
 		expect(trackerMock.track.calls.mostRecent().args[0].ga_value).not.toBeLessThan(888);
-		expect(trackerMock.track.calls.mostRecent().args[0].ga_value).not.toBeLessThan(888);
 	});
 
 	it('measureTime: no track call after measure', function () {
