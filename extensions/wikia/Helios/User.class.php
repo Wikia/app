@@ -57,6 +57,12 @@ class User {
 	 */
 	public static function comparePasswords( &$sHash, &$sPassword, &$iUserId, &$bResult )
 	{
+		// Only proceed for the given percentage of login attempts.
+		global $wgHeliosLoginSamplingRate;
+		if ( rand(0, 100) > $wgHeliosLoginSamplingRate ) {
+			return false;
+		}
+		
 		// Get the user's name from the request context.
 		$sUserName= \RequestContext::getMain()->getRequest()->getText( 'username' );
 
@@ -65,13 +71,14 @@ class User {
 
 		// Authenticate with username and password.
 		try {
+			global $wgHeliosLoginShadowMode;
 			$oLogin = $oHelios->login( $sUserName, $sPassword );
-			$bResult = !empty( $oLogin->access_token );
+			$bResult = !empty( $oLogin->access_token ) && empty( $wgHeliosShadowMode );
 		}
 
 		catch ( \Wikia\Helios\ClientException $e ) {
 			\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [ 'exception' => $e ] );
-			return true;
+			return empty ( $wgHeliosShadowMode );
 		}
 
 		return false;
