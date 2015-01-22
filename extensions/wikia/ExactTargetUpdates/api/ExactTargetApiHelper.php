@@ -75,7 +75,11 @@ class ExactTargetApiHelper {
 	public function wrapSimpleFilterPart( Array $aSimpleFilterParams ) {
 		$oSimpleFilterPart = new \ExactTarget_SimpleFilterPart();
 		$oSimpleFilterPart->Value = $aSimpleFilterParams['Value'];
-		$oSimpleFilterPart->SimpleOperator = \ExactTarget_SimpleOperators::equals;
+		if ( isset( $aSimpleFilterParams['SimpleOperator'] ) ) {
+			$oSimpleFilterPart->SimpleOperator = $this->getProperSimpleOperator( $aSimpleFilterParams['SimpleOperator'] );
+		} else {
+			$oSimpleFilterPart->SimpleOperator = \ExactTarget_SimpleOperators::equals;
+		}
 		$oSimpleFilterPart->Property = $aSimpleFilterParams['Property'];
 		return $oSimpleFilterPart;
 	}
@@ -202,5 +206,20 @@ class ExactTargetApiHelper {
 		}
 
 		return $aSubscribers;
+	}
+
+	/**
+	 * Uses proper compare operator from ExactTarget_SimpleOperators class
+	 * @param string $sSimpleOperator
+	 * @return null|string
+	 */
+	protected function getProperSimpleOperator( $sSimpleOperator ) {
+		switch( $sSimpleOperator ) {
+			case 'equals':
+				return \ExactTarget_SimpleOperators::equals;
+			case 'IN':
+				return \ExactTarget_SimpleOperators::IN;
+		}
+		return null;
 	}
 }

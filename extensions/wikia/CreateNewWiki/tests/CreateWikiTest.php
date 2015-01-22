@@ -46,7 +46,7 @@ class CreateWikiTest extends WikiaBaseTest {
 			'0' => [ '0', '0' ],
 			'muppet' => [ 'muppet', 'muppet' ],
 			'with trailing underscores' => [ 'x__', 'x__0' ],
-			'with dots' => [ 'ru.google', 'ru_google' ],
+			'with dots' => [ 'ru.google', 'ru.google' ],
 			'with spaces' => [ 'save earth save life', 'save_earth_save_life' ],
 			'with parenthesis' => [ 'roman_empire_(the rebirth of rome)', 'roman_empire__the_rebirth_of_rome_0' ],
 			'long' => [ '012345678901234567890123456789012345678901234567890123456789', '0123456789012345678901234567890123456789012345678901234' ],
