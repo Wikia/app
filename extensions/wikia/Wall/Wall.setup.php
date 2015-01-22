@@ -230,6 +230,7 @@ $wgGroupPermissions['*']['wallremove'] = false;
 $wgGroupPermissions['staff']['wallremove'] = true;
 $wgGroupPermissions['vstf']['wallremove'] = true;
 $wgGroupPermissions['helper']['wallremove'] = true;
+$wgGroupPermissions['sysop']['wallremove'] = true;
 $wgGroupPermissions['threadmoderator']['wallremove'] = true;
 
 $wgGroupPermissions['*']['walledit'] = false;
@@ -269,3 +270,5 @@ $wgGroupPermissions['staff']['wallmessagemove'] = true;
 
 $wgAddGroups['bureaucrat'][] = 'threadmoderator';
 $wgRemoveGroups['bureaucrat'][] = 'threadmoderator';
+$wgAddGroups['sysop'][] = 'threadmoderator';
+$wgRemoveGroups['sysop'][] = 'threadmoderator';
