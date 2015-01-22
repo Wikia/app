@@ -52,17 +52,13 @@ class Client
 
 		// Response handling.
 		if ( !$oStatus->isGood() ) {
-			$e = new ClientException('Request failed.');
-			\Wikia\Logger\WikiaLogger::instance()->error( 'HELIOS_CLIENT', [ 'exception' => $e ] );
-			throw $e;
+			throw new ClientException('Request failed.');
 		}
 
 		$sOutput = json_decode( $oRequest->getContent() );
 		
 		if ( !$sOutput ) {
-			$e = new ClientException('Invalid response.');
-			\Wikia\Logger\WikiaLogger::instance()->error( 'HELIOS_CLIENT' , [ 'exception' => $e ] );
-			throw $e;
+			throw new ClientException('Invalid response.');
 		}
 
 		return $sOutput;
@@ -116,5 +112,10 @@ class Client
  */
 class ClientException extends \Exception
 {
+	use \Wikia\Logger\Loggable;
 
+	public function __construct( $message = null, $code = 0, Exception $previous = null ) {
+		parent::__construct( $message, $code, $previous );
+		$this->error( 'HELIOS_CLIENT' , [ 'exception' => $this ] );
+	}
 }
