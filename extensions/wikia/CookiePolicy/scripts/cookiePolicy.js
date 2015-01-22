@@ -27,9 +27,10 @@ require(['wikia.cookies', 'wikia.geo'], function (cookies, geo) {
 	 * Display the cookie policy message to the user
 	 */
 	function showBanner() {
-		var message = $.msg('oasis-eu-cookie-policy-notification-message') +
+		var message = mw.message('oasis-eu-cookie-policy-notification-message').escaped() +
+			' ' +
 			'<a href="http://www.wikia.com/Privacy_Policy#Cookies" target="_blank">' +
-			$.msg('oasis-eu-cookie-policy-notification-link') +
+			mw.message('oasis-eu-cookie-policy-notification-link-text').escaped() +
 			'</a>';
 
 		GlobalNotification.show(message, 'confirm');

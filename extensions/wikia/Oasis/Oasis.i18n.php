@@ -191,8 +191,6 @@ ___________________________________________
 * Find help and advice on Community Central: http://community.wikia.com
 * Want to receive fewer messages from us? You can unsubscribe or change
 your email preferences here: http://community.wikia.com/Special:Preferences',
-	'oasis-eu-cookie-policy-notification-message' => 'Wikia uses cookies to give you the best experience on our websites. By continuing to use Wikia, we assume that you accept our use of cookies.',
-	'oasis-eu-cookie-policy-notification-link' => 'Read more about cookies'
 );
 
 /** Message documentation (Message documentation)
@@ -281,10 +279,6 @@ Example output: deleted by Avatar 3 hours ago',
 	'oasis-global-page-header' => 'Global (corporate) header for whole HTML page - first <h1> in <body>',
 	'oasis-generic-error' => 'This is a generic error message that shows up when something unexpected went wrong in the code.',
 	'oasis-upload-photos-overwrite-file' => 'Label for the option in the image upload modal to overwrite a file, if a file by the same name already exists on the wiki',
-
-	'oasis-eu-cookie-policy-notification-message' => 'Note letting users know that we use cookies on our site. Per European Union law.',
-	'oasis-eu-cookie-policy-notification-link' => 'Text for link to our privacy policy'
-
 );
 
 /** Afrikaans (Afrikaans)

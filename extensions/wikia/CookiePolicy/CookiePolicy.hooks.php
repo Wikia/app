@@ -1,12 +1,12 @@
 <?php
 /**
- * @package Wikia\extensions\WikiaInYourLang
- * @author Adam Karmiński <adamk@wikia-inc.com>
+ * @package Wikia\extensions\CookiePolicy
+ * @author Liz Lee <liz@wikia-inc.com>
  */
 
-namespace Wikia\WikiaInYourLang;
+namespace Wikia\CookiePolicy;
 
-class WikiaInYourLangHooks {
+class CookiePolicyHooks {
 
 	/**
 	 * Add JS module to the output
@@ -14,7 +14,7 @@ class WikiaInYourLangHooks {
 	 * @return bool
 	 */
 	public static function onBeforePageDisplay( \OutputPage $out ) {
-		$out->addModules( 'ext.wikiaInYourLang' );
+		$out->addModules( 'ext.cookiePolicy' );
 		return true;
 	}
 }
