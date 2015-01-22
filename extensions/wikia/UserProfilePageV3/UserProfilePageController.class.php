@@ -492,7 +492,7 @@ class UserProfilePageController extends WikiaController {
 				case 'sample':
 					$user->setOption( 'avatar', $data->file );
 					// remove old avatar file
-					Masthead::newFromUser($user)->removeFile(true);
+					Masthead::newFromUser($user)->removeFile( false );
 					break;
 				case 'uploaded':
 					$errorMsg = wfMessage( 'userprofilepage-interview-save-internal-error' )->escaped();
