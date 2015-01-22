@@ -100,7 +100,7 @@ make karma-unit
 
 Single run of integration tests
 ```
-karma-integration
+make karma-integration
 ```
 
 For more info see [docs on internal](https://internal.wikia-inc.com/wiki/Unit_Testing/JS)
