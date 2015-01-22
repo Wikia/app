@@ -357,7 +357,7 @@ class UserLoginHelper extends WikiaModel {
 		$passwordThrottled = false;
 
 		if ( is_array( $this->wg->PasswordAttemptThrottle ) ) {
-			$throttleKey = wfMemcKey( 'password-throttle', $this->wg->Request->getIP(), md5( $username ) );
+			$throttleKey = $this->getPasswordThrottleCacheKey( $username );
 			$count = $this->wg->PasswordAttemptThrottle['count'];
 			$period = $this->wg->PasswordAttemptThrottle['seconds'];
 
@@ -401,8 +401,18 @@ class UserLoginHelper extends WikiaModel {
 	 * @param string $username
 	 */
 	public function clearPasswordThrottle( $username ) {
-		$key = wfMemcKey( 'password-throttle', $this->wg->Request->getIP(), md5( $username ) );
+		$key = $this->getPasswordThrottleCacheKey( $username );
 		$this->wg->Memc->delete( $key );
+	}
+
+	/**
+	 * @param $username
+	 *
+	 * @return String
+	 * @throws MWException
+	 */
+	public function getPasswordThrottleCacheKey( $username ) {
+		return wfMemcKey( 'password-throttle', $this->wg->Request->getIP(), md5( $username ) );
 	}
 
 	/**
