@@ -1703,8 +1703,12 @@ Liftium.loadScript = function(url, noblock, callback) {
 			return s;
 		}
 		else {
-			Liftium.d("Using $.getScript", 5);
-			$.getScript(url, callback);
+			Liftium.d("Using $.ajax", 5);
+			$.ajax({
+				dataType: "script",
+				url: url,
+				complete: callback
+			});
 			return true;
 		}
 	}
@@ -1791,8 +1795,11 @@ Liftium.normalizeColor = function(input){
 
 
 Liftium.onLoadHandler = function () {
+
+	var win = window;
+
 	//Liftium.trackEvent(["onload", Liftium.formatTrackTime(Liftium.debugTime(), 30)], "UA-17475676-7");
-	if (window.Wikia && window.Wikia.InstantGlobals && window.Wikia.InstantGlobals.wgSitewideDisableLiftium) {
+	if (win.Wikia && win.Wikia.InstantGlobals && win.Wikia.InstantGlobals.wgSitewideDisableLiftium) {
 		Liftium.d('(Fake) Liftium Disaster Recovery enabled.', 1);
 		return;
 	}
@@ -1803,16 +1810,20 @@ Liftium.onLoadHandler = function () {
 	} else if (Liftium.loadDelay < Liftium.maxLoadDelay){
 		// Check again in a bit. Keep increasing the time
 		Liftium.loadDelay += Liftium.loadDelay;
-		window.setTimeout(Liftium.onLoadHandler, Liftium.loadDelay);
+		win.setTimeout(Liftium.onLoadHandler, Liftium.loadDelay);
 	} else {
 		var config_status = Liftium.e(Liftium.config) ? 'no config' : 'config loaded';
 		Liftium.d("Gave up waiting for ads to load (" + config_status + "), sending beacon now", 1);
-		Wikia.Tracker.track({
+		win.Wikia.Tracker.track({
 			eventName: 'liftium.errors',
 			ga_category: 'errors/gave_up_waiting_for_ads',
 			ga_action: config_status,
 			trackingMethod: 'ad'
 		});
+		if (window.AdEngine_loadLateAds) {
+			Liftium.d("AdEngine_run_later", 1);
+			window.AdEngine_loadLateAds();
+		}
 		Liftium.sendBeacon();
 	}
 };
