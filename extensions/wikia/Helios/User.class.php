@@ -88,7 +88,7 @@ class User {
 			return true;
 		}
 
-		return !empty( $wgHeliosShadowMode ); // true when in shadow mode, false otherwise
+		return !empty( $wgHeliosLoginShadowMode ); // true when in shadow mode, false otherwise
 
 		// when true is returned, the original password comparison will be executed
 	}
