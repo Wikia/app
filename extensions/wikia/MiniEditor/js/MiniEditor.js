@@ -241,21 +241,29 @@ var MiniEditor = {
 					wikiaEditor.on('ck-mode', function () {
 						if (wikiaEditor.ck.mode !== 'wysiwyg') {
 							// load the module only if the user actually switches to source
-							mw.loader.using('ext.wikia.LinkSuggest', function() {
-								$wrapper.find( 'textarea.cke_source' ).linksuggest();
-							});
+							MiniEditor.initLinkSuggest($wrapper, 'textarea.cke_source');
 						}
 					});
 				} else {
 					// mweditor
-					mw.loader.using('ext.wikia.LinkSuggest', function() {
-						$wrapper.find('#' + wikiaEditor.instanceId).linksuggest();
-					});
+					this.initLinkSuggest($wrapper, '#' + wikiaEditor.instanceId);
 				}
 			}
 
 			$element.addClass('wikiaEditor').triggerHandler('editorInit', [wikiaEditor, event]);
 		}
+	},
+
+	/**
+	 * @desc VOLDEV-25: Loads and initializes linksuggest for a given element
+	 * @param {object} $wrapper jQuery object for MiniEditor wrapper
+	 * @param {string} selector CSS selector for the target element
+	 * @author TK-999
+	 */
+	initLinkSuggest: function ($wrapper, selector) {
+		mw.loader.using('ext.wikia.LinkSuggest', function() {
+			$wrapper.find(selector).linksuggest();
+		});
 	},
 
 	// Return the startup mode for an editor instance
