@@ -80,7 +80,7 @@ class AutoFollowTask extends BaseTask {
 				$aLogParams
 			);
 		} else {
-			WikiaLogger::instance()->info(
+			WikiaLogger::instance()->error(
 				"AutoFollow log: {$iFailures} happened when adding {$sUserName} to watchlist at {$wgSitename}.",
 				$aLogParams
 			);

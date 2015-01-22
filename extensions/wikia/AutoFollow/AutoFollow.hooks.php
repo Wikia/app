@@ -30,10 +30,10 @@ class AutoFollowHooks {
 			$this->checkAutoFollowConditions( $oUser )
 		) {
 			$iCityId = $wgAutoFollowLangCityIdMap[ $sUserLanguage ];
-			$oAutoFollowTasks = new AutoFollowTask();
-			$oAutoFollowTasks->call( 'addUserToDefaultWatchlistTask', $oUser->getId() );
-			$oAutoFollowTasks->wikiId( $iCityId );
-			$oAutoFollowTasks->queue();
+			$oAutoFollowTask = new AutoFollowTask();
+			$oAutoFollowTask->call( 'addUserToDefaultWatchlistTask', $oUser->getId() );
+			$oAutoFollowTask->wikiId( $iCityId );
+			$oAutoFollowTask->queue();
 		}
 	}
 
