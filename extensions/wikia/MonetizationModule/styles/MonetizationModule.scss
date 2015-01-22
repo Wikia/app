@@ -48,6 +48,10 @@
 
 		.product-button {
 			float: right;
+
+			&.non-prime {
+				padding-top: 7px;
+			}
 		}
 
 		.product-btn {
