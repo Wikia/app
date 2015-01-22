@@ -110,22 +110,19 @@ class MonetizationModuleHelper extends WikiaModel {
 		$log = WikiaLogger::instance();
 		$loggingParams = [ 'method' => __METHOD__, 'params' => $params ];
 
-		$cacheKey = $this->getMemcKey( $params );
-		$log->debug( "MonetizationModule: lookup with cache key: $cacheKey", $loggingParams );
-
-		if ( $this->isPageSpecificRequest( $params ) ) {
-			$log->info( "MonetizationModule: page specific request.", $loggingParams );
-		} else {
-			$log->info( "MonetizationModule: non page specific request.", $loggingParams );
+		// get data from cache for non page specific module only
+		if ( !$this->isPageSpecificRequest( $params ) ) {
+			$cacheKey = $this->getMemcKey( $params );
+			$log->debug( "MonetizationModule: lookup with cache key: $cacheKey", $loggingParams );
 
 			$json_results = $this->wg->Memc->get( $cacheKey );
-			if ( empty( $json_results ) ) {
-				$log->info( "MonetizationModule: memcache miss.", $loggingParams );
-			} else {
+			if ( !empty( $json_results ) ) {
 				$log->info( "MonetizationModule: memcache hit.", $loggingParams );
 				wfProfileOut( __METHOD__ );
-				return $this->processData( $json_results, $cacheKey, $params );
+				return $this->processData( $json_results, $params, false );
 			}
+
+			$log->info( "MonetizationModule: memcache miss.", $loggingParams );
 		}
 
 		$url = $this->wg->MonetizationServiceUrl;
@@ -153,7 +150,7 @@ class MonetizationModuleHelper extends WikiaModel {
 			];
 			$log->debug( "MonetizationModule: cannot get monetization units.", $loggingParams );
 		} else if ( !empty( $result ) ) {
-			$result = $this->processData( $result, $cacheKey, $params );
+			$result = $this->processData( $result, $params );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -162,30 +159,34 @@ class MonetizationModuleHelper extends WikiaModel {
 	}
 
 	/**
-	 * Process data for the ad units
+	 * Process data for the ad units (include logic to handle the data)
 	 * @param string $data - data from API (json format)
-	 * @param string $memcKey
 	 * @param array $params - API parameters
+	 * @param boolean $setMemc - set to true to set to memcache
 	 * @return mixed
 	 */
-	public function processData( $data, $memcKey, $params ) {
+	public function processData( $data, $params, $setMemc = true ) {
 		$found = strpos( $data, self::KEYWORD_PREFIX );
 		$data = json_decode( $data, true );
 		if ( !is_array( $data ) ) {
 			return $data;
 		}
 
+		$memcKey = $this->getMemcKey( $params );
+
 		// for page specific module
-		if ( !empty( $data['special_instructions'] ) && $data['special_instructions'] == 'page_specific' ) {
-			$this->setMemcache( $memcKey, $data, [ 'method' => __METHOD__ ] );
+		if ( $this->isPageSpecificResponse( $data ) ) {
+			$this->setMemcache( $memcKey, $data, [ 'method' => __METHOD__ ], $setMemc );
 			$params['page_id'] = $this->wg->Title->getArticleID();
 			return $this->getMonetizationUnits( $params );
 		}
 
+		// check for placeholder
 		if ( $found === false ) {
 			return $data;
 		}
 
+		// set to cache for non page specific
 		$setMemc = ( !$this->isPageSpecificRequest( $params ) );
 		$data = $this->setThemeSettings( $data, $memcKey, $setMemc );
 
@@ -224,10 +225,8 @@ class MonetizationModuleHelper extends WikiaModel {
 
 		$adUnits = str_replace( self::KEYWORD_THEME_SETTINGS, $adSettings, $adUnits );
 
-		// set cache
-		if ( $setMemc ) {
-			$this->setMemcache( $memcKey, $adUnits, [ 'method' => __METHOD__ ] );
-		}
+		// set data to cache
+		$this->setMemcache( $memcKey, $adUnits, [ 'method' => __METHOD__ ], $setMemc );
 
 		wfProfileOut( __METHOD__ );
 
@@ -239,8 +238,13 @@ class MonetizationModuleHelper extends WikiaModel {
 	 * @param string $memcKey
 	 * @param array $data
 	 * @param array $loggingParams
+	 * @param boolean $setMemc - set to true to set data to memcache
 	 */
-	public function setMemcache( $memcKey, $data, $loggingParams ) {
+	public function setMemcache( $memcKey, $data, $loggingParams, $setMemc = true ) {
+		if ( !$setMemc ) {
+			return;
+		}
+
 		$cacheTtl = mt_rand( self::CACHE_TTL_MIN, self::CACHE_TTL_MAX );
 		$this->wg->Memc->set( $memcKey, json_encode( $data ), $cacheTtl );
 
@@ -282,6 +286,15 @@ class MonetizationModuleHelper extends WikiaModel {
 	 */
 	public function isPageSpecificRequest( $params ) {
 		return array_key_exists( 'page_id', $params );
+	}
+
+	/**
+	 * Check for page specific response
+	 * @param array $data
+	 * @return bool
+	 */
+	public function isPageSpecificResponse( $data ) {
+		return ( !empty( $data['special_instructions'] ) && $data['special_instructions'] == 'page_specific' );
 	}
 
 	/**
