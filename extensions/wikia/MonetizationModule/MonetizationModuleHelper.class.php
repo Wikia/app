@@ -176,7 +176,10 @@ class MonetizationModuleHelper extends WikiaModel {
 
 		// for page specific module
 		if ( $this->isPageSpecificResponse( $data ) ) {
-			$this->setMemcache( $memcKey, $data, [ 'method' => __METHOD__ ], $setMemc );
+			if ( $setMemc ) {
+				$this->setMemcache( $memcKey, $data, ['method' => __METHOD__] );
+			}
+
 			$params['page_id'] = $this->wg->Title->getArticleID();
 			return $this->getMonetizationUnits( $params );
 		}
@@ -226,7 +229,9 @@ class MonetizationModuleHelper extends WikiaModel {
 		$adUnits = str_replace( self::KEYWORD_THEME_SETTINGS, $adSettings, $adUnits );
 
 		// set data to cache
-		$this->setMemcache( $memcKey, $adUnits, [ 'method' => __METHOD__ ], $setMemc );
+		if ( $setMemc ) {
+			$this->setMemcache( $memcKey, $adUnits, [ 'method' => __METHOD__ ] );
+		}
 
 		wfProfileOut( __METHOD__ );
 
@@ -238,13 +243,8 @@ class MonetizationModuleHelper extends WikiaModel {
 	 * @param string $memcKey
 	 * @param array $data
 	 * @param array $loggingParams
-	 * @param boolean $setMemc - set to true to set data to memcache
 	 */
-	public function setMemcache( $memcKey, $data, $loggingParams, $setMemc = true ) {
-		if ( !$setMemc ) {
-			return;
-		}
-
+	public function setMemcache( $memcKey, $data, $loggingParams ) {
 		$cacheTtl = mt_rand( self::CACHE_TTL_MIN, self::CACHE_TTL_MAX );
 		$this->wg->Memc->set( $memcKey, json_encode( $data ), $cacheTtl );
 
