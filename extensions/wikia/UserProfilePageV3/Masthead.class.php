@@ -463,35 +463,6 @@ class Masthead {
 			$res = file_exists( $sImageFull ) && unlink( $sImageFull );
 		}
 
-		if ( $res ) {
-			// remove thumbnails
-			$this->purgeThumbnails();
-		}
-
-		wfProfileOut(__METHOD__);
-		return $res;
-	}
-
-	/**
-	 * Check if avatar file exists
-	 *
-	 * @return bool
-	 */
-	public function fileExists() {
-		wfProfileIn(__METHOD__);
-
-		global $wgAvatarsUseSwiftStorage;
-		if ( !empty( $wgAvatarsUseSwiftStorage ) ) {
-			$swift = $this->getSwiftStorage();
-
-			$avatarRemotePath = $this->getLocalPath();
-			$res = $swift->exists($avatarRemotePath);
-		}
-		else {
-			$sImageFull = $this->getFullPath();
-			$res = file_exists( $sImageFull );
-		}
-
 		wfProfileOut(__METHOD__);
 		return $res;
 	}
@@ -508,7 +479,7 @@ class Masthead {
 
 		wfProfileIn( __METHOD__ );
 
-		$result = !$this->fileExists() || $this->doRemoveFile();
+		$result = $this->doRemoveFile();
 
 		if ($result === false) {
 			Wikia::log( __METHOD__, false, 'cannot remove avatar - ' . $this->getLocalPath() );
@@ -535,6 +506,9 @@ class Masthead {
 				$sImageFull = $this->getFullPath();
 				UploadInfo::log( $this->mUser->getUserPage(), $sImageFull, $this->getLocalPath(), "", "r" );
 			}
+
+			// remove thumbnails
+			$this->purgeThumbnails();
 		}
 		wfProfileOut( __METHOD__ );
 		return $result;
