@@ -73,7 +73,7 @@ class User {
 		try {
 			global $wgHeliosLoginShadowMode;
 			$oLogin = $oHelios->login( $sUserName, $sPassword );
-			$bResult = !empty( $oLogin->access_token ) && empty( $wgHeliosShadowMode );
+			$bResult = !empty( $oLogin->access_token ) && empty( $wgHeliosShadowMode ); // always false (so unchanged)  when in shadow mode
 		}
 
 		catch ( \Wikia\Helios\ClientException $e ) {
@@ -81,7 +81,9 @@ class User {
 			return true;
 		}
 
-		return !empty( $wgHeliosShadowMode );
+		return !empty( $wgHeliosShadowMode ); // always true when in shadow mode
+
+		// when true is returned, the original password comparison will be executed
 	}
 
 }
