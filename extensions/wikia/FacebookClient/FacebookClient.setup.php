@@ -34,7 +34,6 @@ $wgAutoloadClasses['FacebookClientLocale'] =  $dir . 'FacebookClientLocale.class
 $wgAutoloadClasses['FacebookMapModel'] =  $dir . 'FacebookMapModel.class.php';
 $wgAutoloadClasses['FacebookClientFactory'] =  $dir . 'FacebookClientFactory.php';
 $wgAutoloadClasses['FacebookClientController'] =  $dir . 'FacebookClientController.class.php';
-$wgAutoloadClasses['SpecialFacebookConnectController'] =  $dir . 'SpecialFacebookConnectController.class.php';
 $wgAutoloadClasses['FacebookClientXFBML'] = $dir . 'FacebookClientXFBML.php';
 
 /**
@@ -48,9 +47,6 @@ $wgHooks['OasisSkinAssetGroups'][] = 'FacebookClientHooks::onSkinAssetGroups';
 $wgHooks['MonobookSkinAssetGroups'][] = 'FacebookClientHooks::onSkinAssetGroups';
 $wgHooks['ParserFirstCallInit'][] = 'FacebookClientHooks::setupParserHook';
 $wgHooks['SkinTemplatePageBeforeUserMsg'][] = 'FacebookClientHooks::onSkinTemplatePageBeforeUserMsg';
-
-// special pages
-$wgSpecialPages[ 'FacebookConnect' ] =  'SpecialFacebookConnectController';
 
 /**
  * messages

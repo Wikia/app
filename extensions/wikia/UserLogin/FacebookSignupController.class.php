@@ -133,10 +133,9 @@ class FacebookSignupController extends WikiaController {
 			$returnToParams .= '&returntoquery=' . htmlspecialchars( $returnToQuery );
 		}
 
-		// query string is neaded for redirects after Special:FacebookConnect
-		$this->queryString = $returnToParams;
 		// return to url is needed for modal signup completion
 		$this->returnToUrl = $returnToUrl;
+		$this->queryString = $returnToParams;
 
 		$this->loginToken = UserLoginHelper::getSignupToken();
 	}
