@@ -9,8 +9,10 @@ class UserTest extends \WikiaBaseTest {
 	public function setUp()
 	{
 		$this->setupFile =  __DIR__ . '/../Helios.setup.php';
-		parent::setUp();
 		$this->oRequest = $this->getMock( '\WebRequest', [ 'getHeader' ], [], '', false );
+		$this->mockGlobalVariable( 'wgHeliosLoginSamplingRate', 100 );
+		$this->mockGlobalVariable( 'wgHeliosLoginShadowMode', false );
+		parent::setUp();
 	}
 
 	public function testNewFromTokenNoAuthorizationHeader()
