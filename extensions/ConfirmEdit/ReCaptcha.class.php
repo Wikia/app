@@ -10,51 +10,44 @@ class ReCaptcha extends SimpleCaptcha {
 	 *
 	 */
 	function getForm() {
-		global $wgReCaptchaPublicKey, $wgReCaptchaTheme;
+		global $wgReCaptchaPublicKey;
 
-		$useHttps = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] == 'on' );
-		$js = 'var RecaptchaOptions = ' . Xml::encodeJsVar( array( 'theme' => $wgReCaptchaTheme /*Wikia change */ /*, 'tabindex' => 1 */ /*Wikia change end*/) );
-
-		return Html::inlineScript( $js ) . recaptcha_get_html( $wgReCaptchaPublicKey, $this->recaptcha_error, $useHttps );
+		return '<div class="g-recaptcha" data-sitekey="' .
+			$wgReCaptchaPublicKey .
+			'" data-theme="' . ( SassUtil::isThemeDark() ? 'dark' : 'light') .
+			'"></div>';
 	}
 
 	/**
 	 * Calls the library function recaptcha_check_answer to verify the users input.
 	 * Sets $this->recaptcha_error if the user is incorrect.
 	 * @return boolean
-	 *
 	 */
 	function passCaptcha() {
 		global $wgReCaptchaPrivateKey, $wgRequest;
 
-		// API is hardwired to return wpCaptchaId and wpCaptchaWord, so use that if the standard two are empty
-		$challenge = $wgRequest->getVal( 'recaptcha_challenge_field', $wgRequest->getVal( 'wpCaptchaId' ) );
-		$response = $wgRequest->getVal( 'recaptcha_response_field', $wgRequest->getVal( 'wpCaptchaWord' ) );
-
-		if ( $response === null ) {
-			// new captcha session
-			return false;
-		}
-
 		// Compat: WebRequest::getIP is only available since MW 1.19.
 		$ip = method_exists( $wgRequest, 'getIP' ) ? $wgRequest->getIP() : wfGetIP();
 
-		$recaptcha_response = recaptcha_check_answer(
-			$wgReCaptchaPrivateKey,
-			$ip,
-			$challenge,
-			$response
-		);
+		$verifyUrl = 'https://www.google.com/recaptcha/api/siteverify?secret=' .
+			$wgReCaptchaPrivateKey .
+			'&response=' . $wgRequest->getText('g-recaptcha-response') .
+			'&remoteip=' . $ip;
 
-		if ( !$recaptcha_response->is_valid ) {
-			$this->recaptcha_error = $recaptcha_response->error;
-			return false;
+		$responseObj = Http::get($verifyUrl, 'default', [
+			'noProxy' => true,
+			'returnInstance' => true
+		]);
+
+		if( $responseObj->getStatus() === 200 ) {
+			$response = json_decode($responseObj->getContent());
+
+			if( $response->success === true ) {
+				return true;
+			}
 		}
 
-		$recaptcha_error = null;
-
-		return true;
-
+		return false;
 	}
 
 	function addCaptchaAPI( &$resultArr ) {
@@ -75,11 +68,11 @@ class ReCaptcha extends SimpleCaptcha {
 	 */
 	function getMessage( $action ) {
 		$name = 'recaptcha-' . $action;
-		$text = wfMsg( $name );
+		$text = wfMessage( $name )->escaped();
 
 		# Obtain a more tailored message, if possible, otherwise, fall back to
 		# the default for edits
-		return wfEmptyMsg( $name, $text ) ? wfMsg( 'recaptcha-edit' ) : $text;
+		return wfMessage( $name )->isBlank() ? wfMessage( 'recaptcha-edit' )->escaped() : $text;
 	}
 
 	public function APIGetAllowedParams( &$module, &$params ) {

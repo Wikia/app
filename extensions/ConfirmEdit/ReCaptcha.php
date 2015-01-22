@@ -1,13 +1,11 @@
 <?php
 
 /**
- * Captcha class using the reCAPTCHA widget.
- * Stop Spam. Read Books.
+ * Captcha class using the Google reCAPTCHA/noCAPTCHA
  *
  * @addtogroup Extensions
- * @author Mike Crawford <mike.crawford@gmail.com>
- * @copyright Copyright (c) 2007 reCAPTCHA -- http://recaptcha.net
- * @licence MIT/X11
+ * @author Andrzej 'nAndy' Łukaszewski <nandy@wikia-inc.com>
+ * @copyright Copyright (c) 2014 reCAPTCHA -- http://recaptcha.net
  */
 
 if ( !defined( 'MEDIAWIKI' ) ) {
@@ -23,11 +21,11 @@ $wgExtensionMessagesFiles['ReCaptcha'] = $dir . '/ReCaptcha.i18n.php';
 
 $wgAutoloadClasses['ReCaptcha'] = $dir . '/ReCaptcha.class.php';
 
-require_once( 'recaptchalib.php' );
+$wgHooks['BeforePageDisplay'][] = 'efReCaptchaOnBeforePageDisplay';
 
 // Set these in LocalSettings.php
-# $wgReCaptchaPublicKey = '';
-# $wgReCaptchaPrivateKey = '';
+$wgReCaptchaPublicKey = '6Lduj_8SAAAAAMjr7vGPC7oODOjgwLi-EmU7NWwz'; // called site key on Google Recaptcha Admin site
+$wgReCaptchaPrivateKey = '6Lduj_8SAAAAAAMTdBfXb90dTkWsiI8JUZafO3Ts'; // called secret key on Google Recaptcha Admin site
 // For backwards compatibility
 # $recaptcha_public_key = '';
 # $recaptcha_private_key = '';
@@ -62,4 +60,9 @@ function efReCaptcha() {
 				"use the reCAPTCHA plugin. You can sign up for a key <a href='" .
 				htmlentities( recaptcha_get_signup_url ( str_replace( 'http://', '', $wgServer ), "mediawiki" ) ) . "'>here</a>." );
 	}
+}
+
+function efReCaptchaOnBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
+	$out->addScript( '<script src="https://www.google.com/recaptcha/api.js?hl=' . $out->getContext()->getLanguage()->getCode() . '" async defer></script>' );
+	return true;
 }
