@@ -62,6 +62,9 @@ class User {
 		if ( rand(0, 100) > $wgHeliosLoginSamplingRate ) {
 			return true;
 		}
+
+		$oLogger = \Wikia\Logger\WikiaLogger::instance();
+		$oLogger->info( 'HELIOS_LOGIN', [ 'method' => __METHOD__ ] );
 		
 		// Get the user's name from the request context.
 		$sUserName= \RequestContext::getMain()->getRequest()->getText( 'username' );
@@ -73,15 +76,19 @@ class User {
 		try {
 			global $wgHeliosLoginShadowMode;
 			$oLogin = $oHelios->login( $sUserName, $sPassword );
-			$bResult = !empty( $oLogin->access_token ) && empty( $wgHeliosShadowMode ); // always false (so unchanged)  when in shadow mode
+			$bResult = !empty( $oLogin->access_token );
 		}
 
 		catch ( \Wikia\Helios\ClientException $e ) {
-			\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [ 'exception' => $e ] );
+			$oLogger->error(
+				'HELIOS_LOGIN',
+				[ 'exception' => $e, 'username' => $sUsername,
+				'user_id' => $sUserId, 'method' => __METHOD__ ]
+			);
 			return true;
 		}
 
-		return !empty( $wgHeliosShadowMode ); // always true when in shadow mode
+		return !empty( $wgHeliosShadowMode ); // true when in shadow mode, false otherwise
 
 		// when true is returned, the original password comparison will be executed
 	}
