@@ -611,6 +611,7 @@ $config['wikiamobile_js_body_full'] = array(
 		'//resources/wikia/libraries/mustache/mustache.js',
 		'//resources/wikia/libraries/sloth/sloth.js',
 		'//resources/wikia/modules/thumbnailer.js',
+		'//resources/wikia/modules/instantGlobals.js',
 		'//extensions/wikia/WikiaMobile/js/lazyload.js',
 		'//extensions/wikia/WikiaMobile/js/track.js',
 		'//extensions/wikia/WikiaMobile/js/infobox.js',
