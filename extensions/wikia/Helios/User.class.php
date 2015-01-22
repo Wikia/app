@@ -82,8 +82,8 @@ class User {
 		catch ( \Wikia\Helios\ClientException $e ) {
 			$oLogger->error(
 				'HELIOS_LOGIN',
-				[ 'exception' => $e, 'username' => $sUsername,
-				'user_id' => $sUserId, 'method' => __METHOD__ ]
+				[ 'exception' => $e, 'username' => $sUserName,
+				'user_id' => $iUserId, 'method' => __METHOD__ ]
 			);
 			return true;
 		}
