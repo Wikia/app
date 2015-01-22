@@ -54,7 +54,7 @@ class RelatedPagesApiController extends WikiaApiController {
 			wfProfileOut( __METHOD__ );
 		} else {
 			wfProfileOut( __METHOD__ );
-			throw new NotFoundApiException( 'Related Pages extension not available' );
+			throw new NotFoundApiException( wfMessage( 'related-pages-extension-not-available' )->text() );
 		}
 	}
 }

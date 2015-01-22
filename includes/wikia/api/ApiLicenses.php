@@ -41,15 +41,15 @@ class ApiLicenses extends ApiBase {
 
 	public function getDescription() {
 		return array (
-			'Get media license dropdown HTML.'
+			wfMessage( 'media-license-dropdown-html' )->text()
 		);
 	}
 
 	public function getParamDescription() {
 		return array (
-			'default' => 'The default (selected) value',
-			'id' => 'The value for the "id" attribute',
-			'name' => 'The value for the "name" attribute'
+			'default' => wfMessage( 'default-selected-value' )->text(),
+			'id' => wfMessage( 'value-for-attr', 'id' )->text(),
+			'name' => wfMessage( 'value-for-attr', 'name' )->text()
 		);
 	}
 
