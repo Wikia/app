@@ -60,7 +60,7 @@ class User {
 		// Only proceed for the given percentage of login attempts.
 		global $wgHeliosLoginSamplingRate;
 		if ( rand(0, 100) > $wgHeliosLoginSamplingRate ) {
-			return false;
+			return true;
 		}
 		
 		// Get the user's name from the request context.
@@ -78,10 +78,10 @@ class User {
 
 		catch ( \Wikia\Helios\ClientException $e ) {
 			\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [ 'exception' => $e ] );
-			return empty ( $wgHeliosShadowMode );
+			return true;
 		}
 
-		return false;
+		return !empty( $wgHeliosShadowMode );
 	}
 
 }
