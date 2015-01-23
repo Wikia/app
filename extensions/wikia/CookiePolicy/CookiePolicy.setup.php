@@ -30,8 +30,12 @@ $wgResourceModules['ext.cookiePolicy'] = [
 		'cookie-policy-notification-message',
 	],
 	'dependencies' => [
+		'jquery',
+		'mediawiki',
+		'wikia.window',
 		'wikia.cookies',
 		'wikia.geo',
+		// needed for message wikitext parsing
 		'mediawiki.jqueryMsg',
 	],
 ];
