@@ -1,5 +1,10 @@
 {
   "swagger": "2.0",
+  "host": "www.wikia.com",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
   "info": {
     "version": "1",
     "title": "Title was not specified"
@@ -1866,11 +1871,6 @@
       }
     }
   },
-  "host": "www.wikia.com",
-  "basePath": "/",
-  "schemes": [
-    "http"
-  ],
   "definitions": {
     "ActivityResponseResult": {
       "id": "ActivityResponseResult",
