@@ -10,6 +10,15 @@ class RTEStatisticsHooks {
 	const RTE_WYSIWYG_MODE_TAG = 'rte-wysiwyg';
 
 	/**
+	 * Registers tags for listing purposes
+	 */
+	public static function onListDefinedTags( &$tags ) {
+		$tags[] = self::RTE_SOURCE_MODE_TAG;
+		$tags[] = self::RTE_WYSIWYG_MODE_TAG;
+		return true;
+	}
+
+	/**
 	 * Handle tagging new revisions made from RTE
 	 */
 	public static function onArticleSaveComplete( &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
