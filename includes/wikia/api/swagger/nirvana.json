@@ -1934,7 +1934,7 @@
       ],
       "properties": {
         "wiki": {
-          "type": "Wikia",
+          "$ref": "#/definitions/Wikia",
           "description": "Wikia info object"
         },
         "articles": {
@@ -2111,7 +2111,7 @@
           "description": "Quality score of the article, ranges from 0 (low quality) to 99 (high quality)"
         },
         "original_dimensions": {
-          "type": "OriginalDimension",
+          "$ref": "#/definitions/OriginalDimension",
           "description": "The original dimensions of the thumbnail for the article, if available"
         },
         "url": {
@@ -2128,7 +2128,7 @@
           "description": "A snippet of text from the beginning of the article"
         },
         "creator": {
-          "type": "Creator",
+          "$ref": "#/definitions/Creator",
           "description": "Data about the author of the article (creator of the first revision)"
         },
         "thumbnail": {
@@ -2277,7 +2277,7 @@
           "description": "A snippet of text from the beginning of the article"
         },
         "revision": {
-          "type": "Revision",
+          "$ref": "#/definitions/Revision",
           "description": "The latest revision for this article"
         },
         "id": {
@@ -2320,7 +2320,7 @@
       ],
       "properties": {
         "original_dimensions": {
-          "type": "OriginalDimension",
+          "$ref": "#/definitions/OriginalDimension",
           "description": "The original dimensions of the thumbnail for the article, if available"
         },
         "url": {
@@ -2341,7 +2341,7 @@
           "description": "The absolute URL of the thumbnail"
         },
         "revision": {
-          "type": "Revision",
+          "$ref": "#/definitions/Revision",
           "description": "The latest revision for this article"
         },
         "id": {
@@ -2467,7 +2467,10 @@
         },
         "elements": {
           "type": "array",
-          "description": "Array containing nested list elements"
+          "description": "Array containing nested list elements",
+          "items": {
+            "$ref": "#/definitions/ListElement"
+          }
         }
       }
     },
@@ -2568,7 +2571,7 @@
       ],
       "properties": {
         "sections": {
-          "type": "Section",
+          "$ref": "#/definitions/Section",
           "description": "Article section data container"
         }
       }
@@ -2617,7 +2620,7 @@
       ],
       "properties": {
         "navigation": {
-          "type": "NavigationItem",
+          "$ref": "#/definitions/NavigationItem",
           "description": "Wrapper for navigation objects"
         }
       }
@@ -2700,7 +2703,10 @@
         },
         "fingerprints": {
           "type": "array",
-          "description": "An array of fingerprint IDs"
+          "description": "An array of fingerprint IDs",
+          "items": {
+            "type": "string"
+          }
         },
         "quest_id": {
           "type": "string",
@@ -2776,7 +2782,7 @@
       ],
       "properties": {
         "original_dimensions": {
-          "type": "OriginalDimension",
+          "$ref": "#/definitions/OriginalDimension",
           "description": "The original dimensions of the thumbnail for the article, if available"
         },
         "url": {
@@ -2797,7 +2803,7 @@
           "description": "The absolute URL of the thumbnail"
         },
         "revision": {
-          "type": "Revision",
+          "$ref": "#/definitions/Revision",
           "description": "The latest revision for this article"
         },
         "id": {
@@ -2807,7 +2813,10 @@
         },
         "categories": {
           "type": "array",
-          "description": "Array of strings - category names"
+          "description": "Array of strings - category names",
+          "items": {
+            "type": "string"
+          }
         },
         "metadata": {
           "type": "array",
@@ -2993,11 +3002,11 @@
           "description": "Description about Wikia content"
         },
         "stats": {
-          "type": "WikiaStats",
+          "$ref": "#/definitions/WikiaStats",
           "description": "Wikia title"
         },
         "original_dimensions": {
-          "type": "ImageDimensions",
+          "$ref": "#/definitions/ImageDimensions",
           "description": "Object containing original image dimensions"
         },
         "url": {
@@ -3010,7 +3019,10 @@
         },
         "flags": {
           "type": "array",
-          "description": "Array with flags"
+          "description": "Array with flags",
+          "items": {
+            "type": "string"
+          }
         },
         "wam_score": {
           "type": "number",
@@ -3024,7 +3036,10 @@
         },
         "topUsers": {
           "type": "array",
-          "description": "Array with ten top contributors"
+          "description": "Array with ten top contributors",
+          "items": {
+            "type": "string"
+          }
         },
         "wordmark": {
           "type": "string",
@@ -3069,7 +3084,6 @@
         "url",
         "lang",
         "quality",
-        "type",
         "snippet",
         "image"
       ],
@@ -3105,7 +3119,7 @@
           "description": "Language of the article"
         },
         "type": {
-          "type": "string|null",
+          "type": "string",
           "description": "Type of article ( book | character | comic_book | location | movie | person | tv_episode | tv_season | tv_series | other | video_game )"
         },
         "articleId": {
@@ -3457,7 +3471,7 @@
       ],
       "properties": {
         "min_max_dates": {
-          "type": "MinMaxDatesItem",
+          "$ref": "#/definitions/MinMaxDatesItem",
           "description": "Object containing minimal and maximal dates for wam index results"
         }
       }
@@ -3868,11 +3882,11 @@
           "description": "Wikia name"
         },
         "stats": {
-          "type": "WikiaStats",
+          "$ref": "#/definitions/WikiaStats",
           "description": "Wikia title"
         },
         "original_dimensions": {
-          "type": "ImageDimensions",
+          "$ref": "#/definitions/ImageDimensions",
           "description": "Object containing original image dimensions"
         },
         "url": {
@@ -3885,7 +3899,10 @@
         },
         "flags": {
           "type": "array",
-          "description": "Array with flags"
+          "description": "Array with flags",
+          "items": {
+            "type": "string"
+          }
         },
         "domain": {
           "type": "string",
@@ -3907,7 +3924,10 @@
         },
         "topUsers": {
           "type": "array",
-          "description": "Array with ten top contributors"
+          "description": "Array with ten top contributors",
+          "items": {
+            "type": "string"
+          }
         },
         "hub": {
           "type": "string",
