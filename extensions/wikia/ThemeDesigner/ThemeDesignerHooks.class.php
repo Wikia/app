@@ -70,14 +70,6 @@ class ThemeDesignerHooks {
 		return true;
 	}
 
-	public static function onBeforePageDisplay( $out, $skin ) {
-		global $wgExtensionsPath;
-
-		$out->addScript('<script src="'.$wgExtensionsPath.'/wikia/ThemeDesigner/js/BetterColor.js"></script>');
-
-		return true;
-	}
-
 	/**
 	 * @param $title Title
 	 * @return bool
