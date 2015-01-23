@@ -110,9 +110,9 @@
 
 			if (
 				window.wgUserLoginDisableCaptcha !== true &&
-				inputs['g-recaptcha-response'] // jshint ignore:line
+				inputs['g-recaptcha-response']
 			) {
-				inputs['g-recaptcha-response'] // jshint ignore:line
+				inputs['g-recaptcha-response']
 					.on('keyup.UserSignup', this.signupAjaxForm.activateSubmit.bind(this.signupAjaxForm));
 			}
 		},
