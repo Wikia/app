@@ -56,12 +56,12 @@ class DumpsOnDemand {
 		}
 
 		$tmpl->set( "curr", array(
-			"url" => 'http://s3.amazonaws.com/wikia_xml_dumps/' . self::getPath( "{$wgDBname}_pages_current.xml.gz" ),
+			"url" => 'http://s3.amazonaws.com/wikia_xml_dumps/' . self::getPath( "{$wgDBname}_pages_current.xml.7z" ),
 			"timestamp" => $sTimestamp
 		));
 
 		$tmpl->set( "full", array(
-			"url" => 'http://s3.amazonaws.com/wikia_xml_dumps/' . self::getPath( "{$wgDBname}_pages_full.xml.gz" ),
+			"url" => 'http://s3.amazonaws.com/wikia_xml_dumps/' . self::getPath( "{$wgDBname}_pages_full.xml.7z" ),
 			"timestamp" => $sTimestamp
 		));
 
@@ -162,7 +162,7 @@ class DumpsOnDemand {
 	static public function getPath( $sName ) {
 		/*
 		 * Get the actual name:
-		 *    * 'muppet' for 'muppet.xml.gz'
+		 *    * 'muppet' for 'muppet.xml.7z'
 		 *    * 'muppet' for 'muppet'
 		 *    * 'htaccess' for '.htaccess'
 		 * The name will be in $aMatches[1].
