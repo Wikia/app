@@ -1,5 +1,11 @@
 /* global GlobalNotification */
-require(['wikia.cookies', 'wikia.geo'], function (cookies, geo) {
+require([
+	'jquery',
+	'mw',
+	'wikia.window',
+	'wikia.cookies',
+	'wikia.geo'
+], function ($, mw, window, cookies, geo) {
 	'use strict';
 
 	/**
