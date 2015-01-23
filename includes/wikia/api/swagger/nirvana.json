@@ -84,6 +84,7 @@
             "name": "limit",
             "required": false,
             "type": "integer",
+            "format": "int32",
             "default": 10
           },
           {
@@ -91,7 +92,7 @@
             "description": "Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
             "name": "namespaces",
             "required": false,
-            "type": "array",
+            "type": "string",
             "default": "0"
           },
           {
@@ -126,6 +127,7 @@
             "name": "limit",
             "required": false,
             "type": "integer",
+            "format": "int32",
             "default": 10
           },
           {
@@ -133,7 +135,7 @@
             "description": "Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
             "name": "namespaces",
             "required": false,
-            "type": "array",
+            "type": "string",
             "default": "0"
           },
           {
@@ -174,6 +176,7 @@
             "name": "id",
             "required": true,
             "type": "integer",
+            "format": "int32",
             "default": 50
           }
         ]
@@ -202,7 +205,7 @@
             "description": "Comma-separated list of article ids",
             "name": "ids",
             "required": true,
-            "type": "array",
+            "type": "string",
             "default": "50"
           },
           {
@@ -219,6 +222,7 @@
             "name": "abstract",
             "required": false,
             "type": "integer",
+            "format": "int32",
             "default": 100,
             "maximum": 500,
             "minimum": 0
@@ -229,6 +233,7 @@
             "name": "width",
             "required": false,
             "type": "integer",
+            "format": "int32",
             "default": 200
           },
           {
@@ -237,6 +242,7 @@
             "name": "height",
             "required": false,
             "type": "integer",
+            "format": "int32",
             "default": 200
           }
         ]
@@ -276,7 +282,7 @@
             "description": "Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
             "name": "namespaces",
             "required": false,
-            "type": "array",
+            "type": "string",
             "default": ""
           },
           {
@@ -285,6 +291,7 @@
             "name": "limit",
             "required": false,
             "type": "integer",
+            "format": "int32",
             "default": 25
           },
           {
@@ -332,7 +339,7 @@
             "description": "Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
             "name": "namespaces",
             "required": false,
-            "type": "array",
+            "type": "string",
             "default": ""
           },
           {
@@ -341,6 +348,7 @@
             "name": "limit",
             "required": false,
             "type": "integer",
+            "format": "int32",
             "default": 25
           },
           {
@@ -424,7 +432,7 @@
             "description": "Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
             "name": "namespaces",
             "required": false,
-            "type": "array",
+            "type": "string",
             "default": ""
           },
           {
@@ -432,8 +440,9 @@
             "description": "Limit the number of result - maximum limit is 100",
             "name": "limit",
             "required": false,
-            "type": "string",
-            "default": "20"
+            "type": "integer",
+            "format": "int32",
+            "default": 20
           },
           {
             "in": "query",
@@ -441,6 +450,7 @@
             "name": "minArticleQuality",
             "required": false,
             "type": "integer",
+            "format": "int32",
             "default": 10,
             "maximum": 99,
             "minimum": 0
@@ -475,6 +485,7 @@
             "name": "limit",
             "required": false,
             "type": "integer",
+            "format": "int32",
             "default": 10
           },
           {
@@ -483,6 +494,7 @@
             "name": "baseArticleId",
             "required": false,
             "type": "integer",
+            "format": "int32",
             "default": ""
           }
         ]
@@ -515,6 +527,7 @@
             "name": "limit",
             "required": false,
             "type": "integer",
+            "format": "int32",
             "default": 10
           },
           {
@@ -523,6 +536,7 @@
             "name": "baseArticleId",
             "required": false,
             "type": "integer",
+            "format": "int32",
             "default": ""
           }
         ]
@@ -554,7 +568,7 @@
             "description": "Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
             "name": "namespaces",
             "required": false,
-            "type": "array",
+            "type": "string",
             "default": ""
           },
           {
@@ -570,8 +584,9 @@
             "description": "Limit the number of result - maximum limit is 250",
             "name": "limit",
             "required": false,
-            "type": "string",
-            "default": ""
+            "type": "integer",
+            "format": "int32",
+            "default": 10
           },
           {
             "in": "query",
@@ -579,6 +594,7 @@
             "name": "baseArticleId",
             "required": false,
             "type": "integer",
+            "format": "int32",
             "default": ""
           }
         ]
@@ -610,7 +626,7 @@
             "description": "Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
             "name": "namespaces",
             "required": false,
-            "type": "array",
+            "type": "string",
             "default": ""
           },
           {
@@ -626,8 +642,9 @@
             "description": "Limit the number of result - maximum limit is 250",
             "name": "limit",
             "required": false,
-            "type": "string",
-            "default": ""
+            "type": "integer",
+            "format": "int32",
+            "default": 10
           },
           {
             "in": "query",
@@ -635,6 +652,7 @@
             "name": "baseArticleId",
             "required": false,
             "type": "integer",
+            "format": "int32",
             "default": ""
           }
         ]
@@ -666,7 +684,7 @@
             "description": "The name of the vertical (e.g. Gaming)",
             "name": "hub",
             "required": true,
-            "type": "array",
+            "type": "string",
             "default": "gaming"
           },
           {
@@ -682,7 +700,7 @@
             "description": "Comma-separated namespace ids, see more: http://community.wikia.com/wiki/Help:Namespaces",
             "name": "namespaces",
             "required": false,
-            "type": "array",
+            "type": "string",
             "default": ""
           }
         ]
@@ -747,6 +765,7 @@
             "name": "radius",
             "required": false,
             "type": "integer",
+            "format": "int32",
             "default": ""
           },
           {
@@ -763,6 +782,7 @@
             "name": "limit",
             "required": false,
             "type": "integer",
+            "format": "int32",
             "default": 25
           }
         ]
@@ -819,6 +839,7 @@
             "name": "limit",
             "required": false,
             "type": "integer",
+            "format": "int32",
             "default": 25
           }
         ]
@@ -851,6 +872,7 @@
             "name": "id",
             "required": true,
             "type": "integer",
+            "format": "int32",
             "default": ""
           },
           {
@@ -859,6 +881,7 @@
             "name": "limit",
             "required": false,
             "type": "integer",
+            "format": "int32",
             "default": 9
           }
         ]
@@ -890,7 +913,7 @@
             "description": "Comma-separated list of article ids",
             "name": "ids",
             "required": true,
-            "type": "array",
+            "type": "string",
             "default": "50"
           },
           {
@@ -899,6 +922,7 @@
             "name": "limit",
             "required": false,
             "type": "integer",
+            "format": "int32",
             "default": 3
           }
         ]
@@ -943,7 +967,7 @@
             "description": "Comma-separated list of verticals (e.g. Gaming, Entertainment, Lifestyle)",
             "name": "hubs",
             "required": false,
-            "type": "integer",
+            "type": "string",
             "default": ""
           },
           {
@@ -960,6 +984,7 @@
             "name": "limit",
             "required": false,
             "type": "integer",
+            "format": "int32",
             "default": 6,
             "maximum": 15,
             "minimum": 0
@@ -970,6 +995,7 @@
             "name": "minArticleQuality",
             "required": false,
             "type": "integer",
+            "format": "int32",
             "default": 80,
             "maximum": 99,
             "minimum": 0
@@ -1033,6 +1059,7 @@
             "name": "limit",
             "required": false,
             "type": "integer",
+            "format": "int32",
             "default": 25
           },
           {
@@ -1041,7 +1068,8 @@
             "name": "batch",
             "required": false,
             "type": "integer",
-            "default": ""
+            "format": "int32",
+            "default": 1
           }
         ]
       }
@@ -1102,6 +1130,7 @@
             "name": "limit",
             "required": false,
             "type": "integer",
+            "format": "int32",
             "default": 25
           },
           {
@@ -1110,28 +1139,32 @@
             "name": "batch",
             "required": false,
             "type": "integer",
-            "default": ""
+            "format": "int32",
+            "default": 1
           },
           {
             "in": "query",
             "description": "The desired height for the thumbnail",
             "name": "height",
             "required": false,
-            "type": "integer"
+            "type": "integer",
+            "format": "int32"
           },
           {
             "in": "query",
             "description": "The desired width for the thumbnail",
             "name": "width",
             "required": false,
-            "type": "integer"
+            "type": "integer",
+            "format": "int32"
           },
           {
             "in": "query",
             "description": "Maximum number of words returned in description",
             "name": "snippet",
             "required": false,
-            "type": "integer"
+            "type": "integer",
+            "format": "int32"
           }
         ]
       }
@@ -1186,6 +1219,7 @@
             "name": "limit",
             "required": false,
             "type": "integer",
+            "format": "int32",
             "default": 25
           },
           {
@@ -1194,6 +1228,7 @@
             "name": "minArticleQuality",
             "required": false,
             "type": "integer",
+            "format": "int32",
             "default": 10,
             "maximum": 99,
             "minimum": 0
@@ -1204,7 +1239,8 @@
             "name": "batch",
             "required": false,
             "type": "integer",
-            "default": ""
+            "format": "int32",
+            "default": 1
           },
           {
             "in": "query",
@@ -1275,7 +1311,7 @@
             "description": "Comma-separated list of user ids. Maximum size of id list is 100.",
             "name": "ids",
             "required": true,
-            "type": "array",
+            "type": "string",
             "default": ""
           },
           {
@@ -1284,6 +1320,7 @@
             "name": "size",
             "required": false,
             "type": "integer",
+            "format": "int32",
             "default": ""
           }
         ]
@@ -1328,14 +1365,16 @@
             "description": "day for which the WAM scores are displayed",
             "name": "wam_day",
             "required": false,
-            "type": "integer"
+            "type": "integer",
+            "format": "int32"
           },
           {
             "in": "query",
             "description": "day from which the difference in WAM scores is calculated",
             "name": "wam_previous_day",
             "required": false,
-            "type": "integer"
+            "type": "integer",
+            "format": "int32"
           },
           {
             "in": "query",
@@ -1343,6 +1382,7 @@
             "name": "vertical_id",
             "required": false,
             "type": "integer",
+            "format": "int32",
             "default": 2
           },
           {
@@ -1357,7 +1397,8 @@
             "description": "Id of specific wiki to pull",
             "name": "wiki_id",
             "required": false,
-            "type": "integer"
+            "type": "integer",
+            "format": "int32"
           },
           {
             "in": "query",
@@ -1395,6 +1436,7 @@
             "name": "offset",
             "required": false,
             "type": "integer",
+            "format": "int32",
             "default": 0
           },
           {
@@ -1403,6 +1445,7 @@
             "name": "limit",
             "required": false,
             "type": "integer",
+            "format": "int32",
             "default": 20,
             "maximum": 20,
             "minimum": 0
@@ -1420,7 +1463,8 @@
             "description": "Size of admin avatars in pixels if fetch_admins is enabled",
             "name": "avatar_size",
             "required": false,
-            "type": "integer"
+            "type": "integer",
+            "format": "int32"
           },
           {
             "in": "query",
@@ -1435,14 +1479,16 @@
             "description": "Width of wiki image in pixels if fetch_wiki_images is enabled",
             "name": "wiki_image_width",
             "required": false,
-            "type": "integer"
+            "type": "integer",
+            "format": "int32"
           },
           {
             "in": "query",
             "description": "Height of wiki image in pixels if fetch_wiki_images is enabled. You can pass here -1 to keep aspect ratio",
             "name": "wiki_image_height",
             "required": false,
-            "type": "integer"
+            "type": "integer",
+            "format": "int32"
           }
         ]
       }
@@ -1467,7 +1513,8 @@
             "description": "Unix timestamp (in seconds) of the day for the requested language code list",
             "name": "wam_day",
             "required": false,
-            "type": "integer"
+            "type": "integer",
+            "format": "int32"
           }
         ]
       }
@@ -1520,21 +1567,24 @@
             "description": "Module id",
             "name": "module",
             "required": true,
-            "type": "integer"
+            "type": "integer",
+            "format": "int32"
           },
           {
             "in": "query",
             "description": "City id",
             "name": "city",
             "required": true,
-            "type": "integer"
+            "type": "integer",
+            "format": "int32"
           },
           {
             "in": "query",
             "description": "The Unix timestamp (in seconds)",
             "name": "ts",
             "required": false,
-            "type": "integer"
+            "type": "integer",
+            "format": "int32"
           }
         ]
       }
@@ -1562,21 +1612,24 @@
             "description": "Module id",
             "name": "module",
             "required": true,
-            "type": "integer"
+            "type": "integer",
+            "format": "int32"
           },
           {
             "in": "query",
             "description": "City id",
             "name": "city",
             "required": true,
-            "type": "integer"
+            "type": "integer",
+            "format": "int32"
           },
           {
             "in": "query",
             "description": "The Unix timestamp (in seconds)",
             "name": "ts",
             "required": false,
-            "type": "integer"
+            "type": "integer",
+            "format": "int32"
           }
         ]
       }
@@ -1621,23 +1674,25 @@
             "description": "The comma-separated list of language codes (e.g. en,de,fr,es,it, etc.) to use as a filter",
             "name": "lang",
             "required": false,
-            "type": "array"
+            "type": "string"
           },
           {
             "in": "query",
             "description": "The maximum number of results to fetch",
             "name": "limit",
             "required": false,
-            "type": "array",
-            "default": "25"
+            "type": "integer",
+            "format": "int32",
+            "default": 25
           },
           {
             "in": "query",
             "description": "The batch/page index to retrieve",
             "name": "batch",
             "required": false,
-            "type": "array",
-            "default": "1"
+            "type": "integer",
+            "format": "int32",
+            "default": 1
           },
           {
             "in": "query",
@@ -1690,23 +1745,25 @@
             "description": "The comma-separated list of language codes (e.g. en,de,fr,es,it, etc.) to use as a filter",
             "name": "lang",
             "required": false,
-            "type": "array"
+            "type": "string"
           },
           {
             "in": "query",
             "description": "The maximum number of results to fetch",
             "name": "limit",
             "required": false,
-            "type": "array",
-            "default": "25"
+            "type": "integer",
+            "format": "int32",
+            "default": 25
           },
           {
             "in": "query",
             "description": "The batch/page index to retrieve",
             "name": "batch",
             "required": false,
-            "type": "array",
-            "default": "1"
+            "type": "integer",
+            "format": "int32",
+            "default": 1
           },
           {
             "in": "query",
@@ -1739,31 +1796,34 @@
         "parameters": [
           {
             "in": "query",
-            "description": "The list of wiki ids that will be fetched",
+            "description": "Comma-separated list of wiki ids that will be fetched",
             "name": "ids",
             "required": true,
-            "type": "array"
+            "type": "string"
           },
           {
             "in": "query",
             "description": "Thumbnail height in pixels",
             "name": "height",
             "required": false,
-            "type": "integer"
+            "type": "integer",
+            "format": "int32"
           },
           {
             "in": "query",
             "description": "Thumbnail width in pixels",
             "name": "width",
             "required": false,
-            "type": "integer"
+            "type": "integer",
+            "format": "int32"
           },
           {
             "in": "query",
             "description": "Maximum number of words returned in description",
             "name": "snippet",
             "required": false,
-            "type": "integer"
+            "type": "integer",
+            "format": "int32"
           }
         ]
       }
@@ -1798,23 +1858,25 @@
             "description": "The comma-separated list of language codes (e.g. en,de,fr,es,it, etc.) to use as a filter",
             "name": "lang",
             "required": false,
-            "type": "array"
+            "type": "string"
           },
           {
             "in": "query",
             "description": "The maximum number of results to fetch",
             "name": "limit",
             "required": false,
-            "type": "array",
-            "default": "25"
+            "type": "integer",
+            "format": "int32",
+            "default": 25
           },
           {
             "in": "query",
             "description": "The batch/page index to retrieve",
             "name": "batch",
             "required": false,
-            "type": "array",
-            "default": "1"
+            "type": "integer",
+            "format": "int32",
+            "default": 1
           }
         ]
       }
@@ -1849,23 +1911,25 @@
             "description": "The comma-separated list of language codes (e.g. en,de,fr,es,it, etc.) to use as a filter",
             "name": "lang",
             "required": false,
-            "type": "array"
+            "type": "string"
           },
           {
             "in": "query",
             "description": "The maximum number of results to fetch",
             "name": "limit",
             "required": false,
-            "type": "array",
-            "default": "25"
+            "type": "integer",
+            "format": "int32",
+            "default": 25
           },
           {
             "in": "query",
             "description": "The batch/page index to retrieve",
             "name": "batch",
             "required": false,
-            "type": "array",
-            "default": "1"
+            "type": "integer",
+            "format": "int32",
+            "default": 1
           }
         ]
       }
