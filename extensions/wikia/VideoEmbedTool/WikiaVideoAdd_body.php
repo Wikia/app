@@ -77,7 +77,7 @@ class WikiaVideoAddForm extends SpecialPage {
 			'wpWikiaVideoAddName' => $wpWikiaVideoAddName,
 			'wpWikiaVideoAddUrl' => $wpWikiaVideoAddUrl,
 		) );
-		$wgOut->addHTML( $oTmpl->render('quickform') );
+		$wgOut->addHTML( $oTmpl->render( 'quickform' ) );
 	}
 
 	public function doSubmit() {
