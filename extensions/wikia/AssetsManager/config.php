@@ -728,6 +728,15 @@ $config['mobile_base_ads_js'] = array(
 	)
 );
 
+$config['mobile_krux_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//resources/wikia/modules/scriptwriter.js',
+		'//extensions/wikia/AdEngine/js/Krux.js',
+		'//extensions/wikia/AdEngine/js/Krux.run.js',
+	)
+);
+
 $config['mercury_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
