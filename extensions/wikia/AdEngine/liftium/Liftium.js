@@ -1795,11 +1795,8 @@ Liftium.normalizeColor = function(input){
 
 
 Liftium.onLoadHandler = function () {
-
-	var win = window;
-
 	//Liftium.trackEvent(["onload", Liftium.formatTrackTime(Liftium.debugTime(), 30)], "UA-17475676-7");
-	if (win.Wikia && win.Wikia.InstantGlobals && win.Wikia.InstantGlobals.wgSitewideDisableLiftium) {
+	if (window.Wikia && window.Wikia.InstantGlobals && window.Wikia.InstantGlobals.wgSitewideDisableLiftium) {
 		Liftium.d('(Fake) Liftium Disaster Recovery enabled.', 1);
 		return;
 	}
@@ -1810,20 +1807,16 @@ Liftium.onLoadHandler = function () {
 	} else if (Liftium.loadDelay < Liftium.maxLoadDelay){
 		// Check again in a bit. Keep increasing the time
 		Liftium.loadDelay += Liftium.loadDelay;
-		win.setTimeout(Liftium.onLoadHandler, Liftium.loadDelay);
+		window.setTimeout(Liftium.onLoadHandler, Liftium.loadDelay);
 	} else {
 		var config_status = Liftium.e(Liftium.config) ? 'no config' : 'config loaded';
 		Liftium.d("Gave up waiting for ads to load (" + config_status + "), sending beacon now", 1);
-		win.Wikia.Tracker.track({
+		Wikia.Tracker.track({
 			eventName: 'liftium.errors',
 			ga_category: 'errors/gave_up_waiting_for_ads',
 			ga_action: config_status,
 			trackingMethod: 'ad'
 		});
-		if (window.AdEngine_loadLateAds) {
-			Liftium.d("AdEngine_run_later", 1);
-			window.AdEngine_loadLateAds();
-		}
 		Liftium.sendBeacon();
 	}
 };
