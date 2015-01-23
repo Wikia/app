@@ -118,17 +118,6 @@
 		},
 
 		/**
-		 * Duplicating target=_blank functionality for link that is part of core and created via wikitext
-		 */
-		termsOpenNewTab: function () {
-			$('.wikia-terms > a').on('click', function (event) {
-				var url = $(this).attr('href');
-				event.preventDefault();
-				window.open(url, '_blank');
-			});
-		},
-
-		/**
 		 * Handle marketing email opt-in for different locales
 		 */
 		initOptIn: function () {
