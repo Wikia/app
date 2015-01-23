@@ -7,7 +7,7 @@
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'CookiePolicy',
-	'descriptionmsg' => 'wikia-in-your-lang-description',
+	'descriptionmsg' => 'cookie-policy-description',
 	'version' => '1.0',
 	'author' => [
 		'Liz Lee <liz@wikia-inc.com>'
