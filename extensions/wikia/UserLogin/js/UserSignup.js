@@ -34,7 +34,6 @@
 			this.initOptIn();
 			this.setCountryValue();
 			this.setupValidation();
-			this.termsOpenNewTab();
 		},
 
 		/**
