@@ -33,7 +33,7 @@ require(['wikia.cookies', 'wikia.geo'], function (cookies, geo) {
 			mw.message('oasis-eu-cookie-policy-notification-link-text').escaped() +
 			'</a>';
 
-		GlobalNotification.show(message, 'confirm');
+		GlobalNotification.show(message, 'notify');
 		setCookie();
 	}
 
