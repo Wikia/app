@@ -81,6 +81,9 @@ ve.ui.Surface = function VeUiSurface( dataOrDoc, config, target ) {
 	this.view.$element.after( this.localOverlay.$element );
 	this.localOverlay.$element.append( this.$selections, this.$blockers, this.$controls, this.$menus );
 	this.globalOverlay.$element.append( this.dialogs.$element );
+
+	// Make instance globally accessible for debugging
+	ve.instances.push( this );
 };
 
 /* Inheritance */

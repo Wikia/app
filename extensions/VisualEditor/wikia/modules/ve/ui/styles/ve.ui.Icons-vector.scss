@@ -1,0 +1,8 @@
+@import "mixins/ve-icon";
+
+/*
+ * wikia
+ */
+.oo-ui-icon-keyboard {
+	@include ve-icon(keyboard, wikia);
+}
