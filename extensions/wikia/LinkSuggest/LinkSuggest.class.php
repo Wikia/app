@@ -354,7 +354,7 @@ class LinkSuggest {
 				if ( !in_array( $redirTitleFormatted, $results ) ) {
 
 					$results[] = $redirTitleFormatted;
-					$redirects[$redirTitleFormatted] = $titleFormatted;
+					$redirects[$titleFormatted] = $redirTitleFormatted;
 
 				}
 
