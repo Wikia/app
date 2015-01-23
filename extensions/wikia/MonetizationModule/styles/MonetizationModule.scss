@@ -158,6 +158,21 @@
 		background-repeat: no-repeat;
 		height: 34px;
 	}
+
+	.rating-bar {
+		background: url('/extensions/wikia/MonetizationModule/images/star-inactive.png');
+		background-repeat: repeat-x;
+		height: 16px;
+		text-align: left;
+		width: 80px;
+	}
+
+	.rating {
+		background: url('/extensions/wikia/MonetizationModule/images/star-active.png');
+		background-repeat: repeat-x;
+		height: 16px;
+		width: 0;
+	}
 }
 
 .ecommerce-multiple-product {
@@ -406,19 +421,4 @@
 		height: 20px;
 		padding: 10px 0 11px;
 	}
-}
-
-.rating-bar {
-	background: url('/extensions/wikia/MonetizationModule/images/star-inactive.png');
-	background-repeat: repeat-x;
-	height: 16px;
-	text-align: left;
-	width: 80px;
-}
-
-.rating {
-	background: url('/extensions/wikia/MonetizationModule/images/star-active.png');
-	background-repeat: repeat-x;
-	height: 16px;
-	width: 0;
 }
