@@ -180,7 +180,7 @@ class LinkSuggest {
 				$pageTitlePrefilter = "( page_title " . $db->buildLike(strtoupper($queryLower[0]) , $db->anyString() ) . " ) AND ";
 			}
 			// TODO: use $db->select helper method
-			$sql = "SELECT page_len, page_id, page_title, rd_title, page_namespace, page_is_redirect
+			$sql = "SELECT page_len, page_id, page_title, rd_title, page_namespace, rd_namespace, page_is_redirect
 						FROM page
 						LEFT JOIN redirect ON page_is_redirect = 1 AND page_id = rd_from
 						LEFT JOIN querycache ON qc_title = page_title AND qc_type = 'BrokenRedirects'
@@ -349,7 +349,7 @@ class LinkSuggest {
 
 			} else {
 
-				$redirTitleFormatted = self::formatTitle($row->page_namespace, $row->rd_title);
+				$redirTitleFormatted = self::formatTitle($row->rd_namespace, $row->rd_title);
 
 				if ( !in_array( $redirTitleFormatted, $results ) ) {
 
