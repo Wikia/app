@@ -26,7 +26,7 @@ class AdEngine2Hooks {
 
 		// TODO: review top and bottom vars (important for adsinhead)
 
-		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd,
+		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd, $wgAdDriverUseInterstitial,
 			   $wgLiftiumOnLoad, $wgNoExternals, $wgEnableKruxTargeting,
 			   $wgAdEngineDisableLateQueue, $wgLoadAdsInHead, $wgLoadLateAdsAfterPageLoad;
 
@@ -37,6 +37,7 @@ class AdEngine2Hooks {
 
 		$wgAdDriverForceDirectGptAd = $request->getBool( 'forcedirectgpt', $wgAdDriverForceDirectGptAd );
 		$wgAdDriverForceLiftiumAd = $request->getBool( 'forceliftium', $wgAdDriverForceLiftiumAd );
+		$wgAdDriverUseInterstitial = $request->getBool( 'interstitial', $wgAdDriverUseInterstitial );
 
 		$wgLoadAdsInHead = $request->getBool( 'adsinhead', $wgLoadAdsInHead );
 		$wgLoadLateAdsAfterPageLoad = $request->getBool( 'lateadsafterload', $wgLoadLateAdsAfterPageLoad );
