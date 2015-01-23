@@ -27,12 +27,12 @@ $wgResourceModules['ext.cookiePolicy'] = [
 	'remoteExtPath' => 'wikia/CookiePolicy/scripts',
 	'scripts' => 'cookiePolicy.js',
 	'messages' => [
-		'oasis-eu-cookie-policy-notification-message',
-		'oasis-eu-cookie-policy-notification-link-text',
+		'cookie-policy-notification-message',
 	],
 	'dependencies' => [
 		'wikia.cookies',
 		'wikia.geo',
+		'mediawiki.jqueryMsg',
 	],
 ];
 
