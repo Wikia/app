@@ -7,15 +7,12 @@ class ReCaptcha extends SimpleCaptcha {
 	/**
 	 * Displays the reCAPTCHA widget.
 	 * If $this->recaptcha_error is set, it will display an error in the widget.
-	 *
 	 */
 	function getForm() {
-		global $wgReCaptchaPublicKey;
+		$siteKey = F::app()->wg->ReCaptchaPublicKey;
+		$theme = SassUtil::isThemeDark() ? 'dark' : 'light';
 
-		return '<div class="g-recaptcha" data-sitekey="' .
-			$wgReCaptchaPublicKey .
-			'" data-theme="' . ( SassUtil::isThemeDark() ? 'dark' : 'light') .
-			'"></div>';
+		return '<div class="g-recaptcha" data-sitekey="' . $siteKey . '" data-theme="' . $theme . '"></div>';
 	}
 
 	/**
@@ -24,25 +21,26 @@ class ReCaptcha extends SimpleCaptcha {
 	 * @return boolean
 	 */
 	function passCaptcha() {
-		global $wgReCaptchaPrivateKey, $wgRequest;
+		$wg = F::app()->wg;
 
-		// Compat: WebRequest::getIP is only available since MW 1.19.
-		$ip = method_exists( $wgRequest, 'getIP' ) ? $wgRequest->getIP() : wfGetIP();
+		$secret = $wg->ReCaptchaPrivateKey;
+		$response = $wg->Request->getText( 'g-recaptcha-response' );
+		$ip = $wg->Request->getIP();
 
-		$verifyUrl = 'https://www.google.com/recaptcha/api/siteverify?secret=' .
-			$wgReCaptchaPrivateKey .
-			'&response=' . $wgRequest->getText('g-recaptcha-response') .
+		$verifyUrl = 'https://www.google.com/recaptcha/api/siteverify' .
+			'?secret=' . $secret .
+			'&response=' . $response .
 			'&remoteip=' . $ip;
 
-		$responseObj = Http::get($verifyUrl, 'default', [
+		$responseObj = Http::get( $verifyUrl, 'default', [
 			'noProxy' => true,
 			'returnInstance' => true
-		]);
+		] );
 
-		if( $responseObj->getStatus() === 200 ) {
-			$response = json_decode($responseObj->getContent());
+		if ( $responseObj->getStatus() === 200 ) {
+			$response = json_decode( $responseObj->getContent() );
 
-			if( $response->success === true ) {
+			if ( $response->success === true ) {
 				return true;
 			}
 		}
@@ -51,11 +49,9 @@ class ReCaptcha extends SimpleCaptcha {
 	}
 
 	function addCaptchaAPI( &$resultArr ) {
-		global $wgReCaptchaPublicKey;
-
 		$resultArr['captcha']['type'] = 'recaptcha';
 		$resultArr['captcha']['mime'] = 'image/png';
-		$resultArr['captcha']['key'] = $wgReCaptchaPublicKey;
+		$resultArr['captcha']['key'] = F::app()->wg->ReCaptchaPublicKey;
 		$resultArr['captcha']['error'] = $this->recaptcha_error;
 	}
 
@@ -67,11 +63,11 @@ class ReCaptcha extends SimpleCaptcha {
 	 * @return string
 	 */
 	function getMessage( $action ) {
+		// Possible keys for easy grepping: recaptcha-edit, recaptcha-addurl, recaptcha-createaccount, recaptcha-create
 		$name = 'recaptcha-' . $action;
 		$text = wfMessage( $name )->escaped();
 
-		# Obtain a more tailored message, if possible, otherwise, fall back to
-		# the default for edits
+		// Obtain a more tailored message, if possible, otherwise, fall back to the default for edits
 		return wfMessage( $name )->isBlank() ? wfMessage( 'recaptcha-edit' )->escaped() : $text;
 	}
 

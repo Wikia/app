@@ -23,13 +23,6 @@ $wgAutoloadClasses['ReCaptcha'] = $dir . '/ReCaptcha.class.php';
 
 $wgHooks['BeforePageDisplay'][] = 'efReCaptchaOnBeforePageDisplay';
 
-// Set these in LocalSettings.php
-$wgReCaptchaPublicKey = '6Lduj_8SAAAAAMjr7vGPC7oODOjgwLi-EmU7NWwz'; // called site key on Google Recaptcha Admin site
-$wgReCaptchaPrivateKey = '6Lduj_8SAAAAAAMTdBfXb90dTkWsiI8JUZafO3Ts'; // called secret key on Google Recaptcha Admin site
-// For backwards compatibility
-# $recaptcha_public_key = '';
-# $recaptcha_private_key = '';
-
 /**
  * Sets the theme for ReCaptcha
  *
@@ -41,28 +34,25 @@ $wgExtensionFunctions[] = 'efReCaptcha';
 
 /**
  * Make sure the keys are defined.
+ *
+ * @throws Exception
  */
 function efReCaptcha() {
-	global $wgReCaptchaPublicKey, $wgReCaptchaPrivateKey;
-	global $recaptcha_public_key, $recaptcha_private_key;
-	global $wgServer;
+	$wg = F::app()->wg;
 
-	// Backwards compatibility
-	if ( $wgReCaptchaPublicKey == '' ) {
-		$wgReCaptchaPublicKey = $recaptcha_public_key;
-	}
-	if ( $wgReCaptchaPrivateKey == '' ) {
-		$wgReCaptchaPrivateKey = $recaptcha_private_key;
-	}
-
-	if ( $wgReCaptchaPublicKey == '' || $wgReCaptchaPrivateKey == '' ) {
-		die ( 'You need to set $wgReCaptchaPrivateKey and $wgReCaptchaPublicKey in LocalSettings.php to ' .
-				"use the reCAPTCHA plugin. You can sign up for a key <a href='" .
-				htmlentities( recaptcha_get_signup_url ( str_replace( 'http://', '', $wgServer ), "mediawiki" ) ) . "'>here</a>." );
+	if ( $wg->ReCaptchaPublicKey == '' || $wg->ReCaptchaPrivateKey == '' ) {
+		throw new Exception( wfMessage( 'recaptcha-misconfigured' ) );
 	}
 }
 
+/**
+ * @param OutputPage $out
+ * @param Skin $skin
+ *
+ * @return bool
+ */
 function efReCaptchaOnBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
-	$out->addScript( '<script src="https://www.google.com/recaptcha/api.js?hl=' . $out->getContext()->getLanguage()->getCode() . '" async defer></script>' );
+	$langCode = $out->getContext()->getLanguage()->getCode();
+	$out->addScript( '<script src="https://www.google.com/recaptcha/api.js?hl=' . $langCode . '" async defer></script>' );
 	return true;
 }

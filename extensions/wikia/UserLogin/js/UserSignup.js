@@ -17,7 +17,7 @@
 		init: function () {
 			this.wikiaForm = new WikiaForm('#WikiaSignupForm');
 			this.submitButton = this.wikiaForm.inputs.submit;
-			this.captchaField = this.useCaptcha ? 'recaptcha_response_field' : '';
+			this.captchaField = this.useCaptcha ? 'g-recaptcha-response' : '';
 			if (this.captchaLoadError()) {
 				this.handleCaptchaLoadError();
 				return;
@@ -110,9 +110,9 @@
 
 			if (
 				window.wgUserLoginDisableCaptcha !== true &&
-				inputs.recaptcha_response_field // jshint ignore:line
+				inputs['g-recaptcha-response'] // jshint ignore:line
 			) {
-				inputs.recaptcha_response_field // jshint ignore:line
+				inputs['g-recaptcha-response'] // jshint ignore:line
 					.on('keyup.UserSignup', this.signupAjaxForm.activateSubmit.bind(this.signupAjaxForm));
 			}
 		},
