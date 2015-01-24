@@ -27,7 +27,7 @@
 
 		isForceLogIn: function () {
 			if (window.wgUserName === null) {
-				//prevent onbeforeunload from being called when user is loging in
+				//prevent onbeforeunload from being called when user is logging in
 				window.onbeforeunload = function () {};
 				UserLoginModal.show({
 					origin: 'editor'

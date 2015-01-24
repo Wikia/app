@@ -3,7 +3,7 @@
 	'use strict';
 
 	/**
-	 * UserSignupAjaxValidation is contains business logic for ajax signup validation
+	 * UserSignupAjaxValidation contains business logic for ajax signup validation
 	 *
 	 * @param {object} options
 	 * - wikiaForm: instance of WikiaForm
@@ -33,29 +33,26 @@
 	UserSignupAjaxValidation.prototype.validateInput = function (e) {
 		var el = $(e.target),
 			paramName = el.attr('name'),
-			params = this.getDefaultParamsForAjax(),
-			proxyObj;
+			params = this.getDefaultParamsForAjax();
 
 		params.field = paramName;
 		params[paramName] = el.val();
 
-		proxyObj = {
-			'paramName': paramName,
-			'form': this
-		};
-
-		$.get(wgScriptPath + '/wikia.php', params, $.proxy(this.validationHandler, proxyObj));
+		$.get(
+			wgScriptPath + '/wikia.php',
+			params,
+			this.validationHandler.bind(this, paramName)
+		);
 	};
 
-	UserSignupAjaxValidation.prototype.validationHandler = function (res) {
-		var form = this.form;	// instance of UserSignupAjaxValidation
-		if (res.result === 'ok') {
-			form.wikiaForm.clearInputError(this.paramName);
+	UserSignupAjaxValidation.prototype.validationHandler = function (paramName, response) {
+		if (response.result === 'ok') {
+			this.wikiaForm.clearInputError(paramName);
 		} else {
-			form.wikiaForm.showInputError(this.paramName, res.msg);
+			this.wikiaForm.showInputError(paramName, response.msg);
 		}
 
-		this.form.activateSubmit();
+		this.activateSubmit();
 	};
 
 	UserSignupAjaxValidation.prototype.validateBirthdate = function (e) {
