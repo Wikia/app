@@ -4,9 +4,12 @@
 
 	/**
 	 * UserSignupAjaxValidation is contains business logic for ajax signup validation
-	 * wikiaForm - instance of WikiaForm
-	 * inputsToValide - array of input names to be ok'ed before submission
-	 * submitButton - pointer to main submit button of the form
+	 *
+	 * @param {object} options
+	 * - wikiaForm: instance of WikiaForm
+	 * - inputsToValide: array of input names to be ok'ed before submission
+	 * - submitButton: pointer to main submit button of the form
+	 * @constructor
 	 */
 	var UserSignupAjaxValidation = function (options) {
 		this.wikiaForm = options.wikiaForm;
@@ -16,6 +19,15 @@
 		this.submitButton = $(options.submitButton);
 
 		this.activateSubmit();
+	};
+
+	UserSignupAjaxValidation.prototype.activateSubmit = function () {
+		var isvalid = this.checkFieldsValid();
+		if (isvalid) {
+			this.submitButton.removeAttr('disabled');
+		} else {
+			this.submitButton.attr('disabled', 'disabled');
+		}
 	};
 
 	UserSignupAjaxValidation.prototype.validateInput = function (e) {
@@ -103,15 +115,6 @@
 
 	UserSignupAjaxValidation.prototype.checkFieldEmpty = function (field) {
 		return field && ((field.is('input') && field.val() === '') || (field.is('select') && field.val() === -1));
-	};
-
-	UserSignupAjaxValidation.prototype.activateSubmit = function () {
-		var isvalid = this.checkFieldsValid();
-		if (isvalid) {
-			this.submitButton.removeAttr('disabled');
-		} else {
-			this.submitButton.attr('disabled', 'disabled');
-		}
 	};
 
 	window.UserSignupAjaxValidation = UserSignupAjaxValidation;

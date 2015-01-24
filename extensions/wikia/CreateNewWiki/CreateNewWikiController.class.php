@@ -21,7 +21,7 @@ class CreateNewWikiController extends WikiaController {
 		$this->wg->atCreateNewWikiPage = true;
 
 		if ( !$this->wg->User->isLoggedIn() && !empty( $this->wg->EnableFacebookClientExt ) ) {
-			// reuiqred for FB Connect to work
+			// required for FB Connect to work
 			$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js' );
 		}
 

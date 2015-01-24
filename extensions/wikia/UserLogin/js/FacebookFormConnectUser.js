@@ -9,7 +9,9 @@
 
 	FacebookFormConnectUser.prototype = Object.create(UserBaseAjaxForm.prototype);
 
-		// Handles existing user login via modal
+	/**
+	 * Handles existing user login via modal
+	 */
 	FacebookFormConnectUser.prototype.ajaxLogin = function () {
 		var formData = this.wikiaForm.form.serialize();
 
