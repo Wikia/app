@@ -4240,7 +4240,10 @@ class User {
 		$type = substr( $hash, 0, 3 );
 
 		$result = false;
-		if( !wfRunHooks( 'UserComparePasswords', array( &$hash, &$password, &$userId, &$result ) ) ) {
+
+		$bHeliosCheck = false;
+
+		if( !wfRunHooks( 'UserComparePasswords', array( &$hash, &$password, &$userId, &$resulti, &$bHeliosCheck ) ) ) {
 			return $result;
 		}
 
@@ -4256,13 +4259,7 @@ class User {
 			$bCheck = self::oldCrypt( $password, $userId ) === $hash;
 		}
 
-		if ( $bCheck != $result ) {
-			\Wikia\Logger\WikiaLogger::instance()->error(
-				'HELIOS_LOGIN',
-				[ 'method' => __METHOD__, 'type' => $type, 'hash' => $hash,
-				  'user_id' => $userId, 'exception' => new Exception ]
-			);
-		}
+		wfRunHooks( 'UserAfterComparePasswords', array( $bHeliosCheck, $bCheck, $result, $type, $hash, $userId ) );
 
 		return $bCheck;
 	}
