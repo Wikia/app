@@ -92,7 +92,6 @@
 		 * @param {Object} response Response object sent from Facebook after login attempt
 		 */
 		onFBLogin: function (response) {
-			var pageUrl;
 
 			// There was a connection error or something went horribly wrong.
 			if (typeof response !== 'object') {
@@ -113,12 +112,10 @@
 				// begin ajax call performance tracking
 				this.bucky.timer.start('loginCallbackAjax');
 
-				pageUrl = new QueryString();
-
 				// now check FB account (is it connected with Wikia account?)
 				$.nirvana.postJson('FacebookSignupController', 'index', {
-						returnto: pageUrl.getVal('returnto'),
-						returntoquery: pageUrl.getVal('returntoquery')
+						returnto: encodeURIComponent(window.wgPageName),
+						returntoquery: encodeURIComponent(window.location.search.substring(1))
 					},
 					$.proxy(this.checkAccountCallback, this)
 				);
@@ -146,8 +143,11 @@
 
 			// logged in using FB account, reload the page or callback
 			if (response.loggedIn) {
-				window.location = response.returnUrl;
-
+				if (this.loginCallback) {
+					this.loginCallback();
+				} else {
+					window.location = response.returnUrl;
+				}
 			// some error occurred
 			} else if (response.loginAborted) {
 				window.GlobalNotification.show(response.errorMsg, 'error');

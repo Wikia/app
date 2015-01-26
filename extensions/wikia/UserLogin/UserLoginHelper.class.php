@@ -144,7 +144,7 @@ class UserLoginHelper extends WikiaModel {
 
 	/**
 	 * Determine the URL that should be redirected to after the current login action.  If
-	 * there is a returnto URL and its valid then send them there.  Otherwise send the
+	 * there is a returnto URL and it's valid then send them there.  Otherwise send the
 	 * user to the wikia's main page.
 	 *
 	 * @param string $extraReturnToQuery Use this to add any additional parameters to the query string

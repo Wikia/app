@@ -62,8 +62,7 @@
 			}
 		}
 
-		.avatars,
-		.wikis {
+		.avatars {
 			float: left;
 			height: 74px;
 			list-style: none;
@@ -75,20 +74,6 @@
 				float: left;
 				margin: 0 5px 5px 0;
 				padding: 0;
-			}
-
-			.wiki {
-				border: 1px solid $color-page-border;
-				height: 18px;
-				margin: 0 0 5px 0;
-				padding: 0;
-				width: 65px;
-
-				img {
-					margin: 0;
-					padding: 0;
-					vertical-align: top;
-				}
 			}
 		}
 
@@ -112,7 +97,7 @@
 			margin-left: 80px;
 		}
 
-		@if ( $responsive-layout-enabled ) {
+		@if ($responsive-layout-enabled) {
 			@media screen and (max-width: 910px) {
 				margin-top: 35px;
 				width: 100%;
@@ -132,8 +117,9 @@
 
 		.input-group {
 			width: 318px;
+
 			label {
-				display:block;
+				display: block;
 			}
 		}
 
@@ -141,6 +127,7 @@
 		input[type=password] {
 			width: 299px;
 		}
+
 		.captcha {
 
 			.fancy-captcha {
@@ -165,11 +152,12 @@
 				}
 			}
 		}
+
 		.submit-pane {
 			@include submitpane;
 		}
 
-		@if ( $responsive-layout-enabled ) {
+		@if ($responsive-layout-enabled) {
 			@media screen and (max-width: 910px) {
 				padding-left: 2%;
 				width: 52%;
