@@ -207,7 +207,7 @@ class CloseWikiPage extends SpecialPage {
 			if( !$city_id ) {
 				Wikia::log( __METHOD__, "domain doesn't exist" );
 				$valid = false;
-				$this->mErrors[] = $this->mRedirect;
+				$this->mErrors[] = "Redirect URL does not point to any existing wiki: \"{$this->mRedirect}\"";
 			} else {
 				$newWiki = $city_id;
 			}
