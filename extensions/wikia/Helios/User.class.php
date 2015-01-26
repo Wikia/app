@@ -93,4 +93,17 @@ class User {
 		// when true is returned, the original password comparison will be executed
 	}
 
+	public static function comparePasswordCheck( $bHelios, $bMediaWiki, $sType, $sHash, $iUserId ) {
+
+		if ( $bHelios != $bMediaWiki ) {
+			\Wikia\Logger\WikiaLogger::instance()->error(
+				'HELIOS_LOGIN',
+				[ 'method' => __METHOD__, 'type' => $sType,
+				'hash' => $sHash, 'user_id' => $iUserId ]
+			);
+		}
+
+		return true;
+	}
+
 }
