@@ -561,7 +561,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	protected function getSearchConfigFromRequest() {
 		$searchConfig = new Wikia\Search\Config();
-		$resultsPerPage = $this->isCorporateWiki() ? self::INTERWIKI_RESULTS_PER_PAGE : self::RESULTS_PER_PAGE;
+		$resultsPerPage = $this->isWikiaHomePage() ? self::INTERWIKI_RESULTS_PER_PAGE : self::RESULTS_PER_PAGE;
 		$resultsPerPage = empty( $this->wg->SearchResultsPerPage ) ? $resultsPerPage : $this->wg->SearchResultsPerPage;
 		$searchConfig
 			->setQuery                   ( $this->getVal( 'query', $this->getVal( 'search' ) ) )
@@ -570,13 +570,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			->setPage                    ( $this->getVal( 'page', 1) )
 			->setRank                    ( $this->getVal( 'rank', 'default' ) )
 			->setHub                     ( $this->getVal( 'hub', false ) )
-			->setInterWiki               ( $this->isCorporateWiki() )
+			->setInterWiki               ( $this->isWikiaHomePage() )
 			->setVideoSearch             ( $this->getVal( 'videoSearch', false ) )
 			->setFilterQueriesFromCodes  ( $this->getVal( 'filters', array() ) )
 			->setBoostGroup			 ( $this->getVal( 'ab' ) )
 		;
 
-		if ( $this->isCorporateWiki() ) {
+		if ( $this->isWikiaHomePage() ) {
 			$searchConfig->setLanguageCode( $this->getVal( 'resultsLang' ) );
 			if ( $searchConfig->getLanguageCode() !== 'en' ) {
 				$threshold = self::DEFAULT_NON_ENGLISH_WIKI_ARTICLE_THRESHOLD;
@@ -639,12 +639,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$this->setVal( 'hub',                   $searchConfig->getHub() );
 		$this->setVal( 'hasArticleMatch',       $searchConfig->hasArticleMatch() );
 		$this->setVal( 'isMonobook',            $isMonobook );
-		$this->setVal( 'isCorporateWiki',       $this->isCorporateWiki() );
 		$this->setVal( 'wgExtensionsPath',      $this->wg->ExtensionsPath);
 		$this->setVal( 'isGridLayoutEnabled',   $isGridLayoutEnabled);
 		$this->setVal( 'shownResultsBegin', $this->resultsPerPage * $this->currentPage - $this->resultsPerPage + 1 );
 
-		if ( $this->isCorporateWiki() ) {
+		if ( $this->isWikiaHomePage() ) {
 			$resultsLang = $searchConfig->getLanguageCode();
 			if ( $resultsLang != $this->app->wg->ContLang->getCode() ) {
 				$this->setVal( 'resultsLang', $resultsLang );
@@ -737,7 +736,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		global $wgCityId;
 		$this->wg->Out->addHTML( JSSnippets::addToStack( array( "/extensions/wikia/Search/js/WikiaSearch.js" ) ) );
 		$this->wg->SuppressRail = true;
-		if ( $this->isCorporateWiki() ) {
+		if ( $this->isWikiaHomePage() ) {
 			OasisController::addBodyClass('inter-wiki-search');
 
 			$this->setVal('corporateWikiId', $wgCityId );
@@ -794,9 +793,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	/**
 	 * Determines whether we are on the corporate wiki
-	 * @see SearchControllerTest::testIsCorporateWiki
 	 */
-	protected function  isCorporateWiki() {
+	protected function  isWikiaHomePage() {
 	    return WikiaPageType::isWikiaHomePage();
 	}
 

@@ -1199,7 +1199,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 
 		$mockSearchController	=	$this->getMockBuilder( 'WikiaSearchController' )
 										->disableOriginalConstructor()
-										->setMethods( array( 'overrideTemplate', 'isCorporateWiki' ) )
+										->setMethods( array( 'overrideTemplate', 'isWikiaHomePage' ) )
 										->getMock();
 
 		$mockSkinMonoBook		=	$this->getMockBuilder( 'SkinMonoBook' )
@@ -1252,7 +1252,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		;
 		$mockSearchController
 			->expects	( $this->any() )
-			->method	( 'isCorporateWiki' )
+			->method	( 'isWikiaHomePage' )
 			->will      ( $this->returnValue( true ) )
 		;
 
@@ -1799,7 +1799,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	public function testGetSearchConfigFromRequest() {return;
 		$mockController = $this->getMockBuilder( 'WikiaSearchController' )
 		                       ->disableOriginalConstructor()
-		                       ->setMethods( array( 'getVal', 'getRequest', 'setNamespacesFromRequest', 'isCorporateWiki', 'getResponse' ) )
+		                       ->setMethods( array( 'getVal', 'getRequest', 'setNamespacesFromRequest', 'isWikiaHomePage', 'getResponse' ) )
 		                       ->getMock();
 
 		$mockRequest = $this->getMockBuilder( 'WikiaRequest' )
@@ -1837,7 +1837,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 
 		$mockController
 		    ->expects( $this->at( $controllerIncr++ ) )
-		    ->method ( 'isCorporateWiki' )
+		    ->method ( 'isWikiaHomePage' )
 		    ->will   ( $this->returnValue( false ) )
 		;
 		$mockController
@@ -1931,7 +1931,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		;
 		$mockController
 		    ->expects( $this->at( $controllerIncr++ ) )
-		    ->method ( 'isCorporateWiki' )
+		    ->method ( 'isWikiaHomePage' )
 		    ->will   ( $this->returnValue( false ) )
 		;
 		$mockConfig
@@ -2011,7 +2011,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	public function testGetSearchConfigFromRequestWithJson() {return;
 		$mockController = $this->getMockBuilder( 'WikiaSearchController' )
 		                       ->disableOriginalConstructor()
-		                       ->setMethods( array( 'getVal', 'getRequest', 'setNamespacesFromRequest', 'isCorporateWiki', 'getResponse' ) )
+		                       ->setMethods( array( 'getVal', 'getRequest', 'setNamespacesFromRequest', 'isWikiaHomePage', 'getResponse' ) )
 		                       ->getMock();
 
 		$mockRequest = $this->getMockBuilder( 'WikiaRequest' )
@@ -2050,7 +2050,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 
 		$mockController
 		    ->expects( $this->at( $controllerIncr++ ) )
-		    ->method ( 'isCorporateWiki' )
+		    ->method ( 'isWikiaHomePage' )
 		    ->will   ( $this->returnValue( false ) )
 		;
 		$mockController
@@ -2144,7 +2144,7 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 		;
 		$mockController
 		    ->expects( $this->at( $controllerIncr++ ) )
-		    ->method ( 'isCorporateWiki' )
+		    ->method ( 'isWikiaHomePage' )
 		    ->will   ( $this->returnValue( false ) )
 		;
 		$mockConfig
