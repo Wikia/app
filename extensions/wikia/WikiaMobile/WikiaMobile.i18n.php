@@ -121,7 +121,8 @@ $messages['qqq'] = array(
 	'wikiamobile-footer-link-entertainment' => 'Interwiki link, please translate only the last parameter after the last "|" if that makes sense',
 	'wikiamobile-footer-link-videogames' => 'Interwiki link, please translate only the last parameter after the last "|" if that makes sense',
 	'wikiamobile-footer-link-licencing' => 'Label for the link pointing to content licensing information',
-	'wikiamobile-footer-link-privacy' => 'Link leading to the Privacy Policy page',
+	'wikiamobile-footer-link-privacy' => 'Link leading to the Privacy Policy page
+{{Identical|Privacy policy}}',
 	'mobile-full-site' => 'Link to reload a page and load desktop skin',
 	'wikiamobile-categories-tagline' => 'Tagline that appears next to the category page title, please keep it really short',
 	'wikiamobile-categories-items-total' => 'Message above list of articles in a category. $1 is the total number of articles in the category',
@@ -504,6 +505,7 @@ $messages['cs'] = array(
  * @author Tiin
  */
 $messages['de'] = array(
+	'wikiamobile-desc' => 'Mobile Benutzeroberfläche für Wikia',
 	'wikiamobile-search' => 'Suche',
 	'wikiamobile-search-this-wiki' => 'Im Wiki suchen',
 	'wikiamobile-search-wiki' => 'Wiki',
@@ -615,10 +617,12 @@ $messages['en-gb'] = array(
  * @author Ciencia Al Poder
  * @author Ihojose
  * @author Kflorence
+ * @author Macofe
  * @author VegaDark
  * @author Vivaelcelta
  */
 $messages['es'] = array(
+	'wikiamobile-desc' => 'Apariencia Mobile para Wikia',
 	'wikiamobile-search' => 'Buscar',
 	'wikiamobile-search-this-wiki' => 'Buscar en este wiki',
 	'wikiamobile-search-wiki' => 'Wiki',
@@ -677,7 +681,31 @@ $1',
  * @author Subi
  */
 $messages['eu'] = array(
+	'wikiamobile-search' => 'Bilatu',
+	'wikiamobile-search-this-wiki' => 'Bilatu wiki honetan',
+	'wikiamobile-search-wiki' => 'Wiki',
+	'wikiamobile-search-wikia' => 'Wikia',
+	'wikiamobile-password' => 'Pasahitza',
+	'wikiamobile-menu' => 'Menua',
+	'wikiamobile-article-categories' => 'Kategoriak',
+	'wikiamobile-back' => 'Atzera',
+	'wikiamobile-hide-section' => 'ezkutatu',
+	'wikiamobile-profile' => 'Profila',
+	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Bizimodua]]',
+	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|Entretenimendua]]',
+	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Bideo-jokoak]]',
+	'wikiamobile-footer-link-licencing' => '[[w:Wikia:Licensing|Lizentzia]]',
+	'wikiamobile-footer-link-privacy' => '[[w:c:www:Privacy_Policy|Pribatutasun politika]]',
+	'wikiamobile-categories-items-total' => '{{PLURAL:$1|Artkulu bat|$1 artikulu}}',
+	'wikiamobile-category-items-more' => 'Gehiago kargatu',
+	'wikiamobile-categories-expand' => 'Dena erakutsi',
+	'wikiamobile-categories-collapse' => 'Dena ezkutatu',
+	'wikiamobile-unsupported-video-download' => 'Zure nabigatzaileak ez du bideo formatu hau onartzen, saia zaitez <a href="$1">hemen</a> klik eginez',
+	'wikiamobile-video-views-counter' => '{{PLURAL:$1|Ikustaldi 1|$1 ikustaldi}}',
+	'wikiamobile-videos' => 'Bideoak',
 	'wikiasmartbanner-googleplay' => 'Google Play-n',
+	'wikiasmartbanner-price' => 'dohainik',
+	'wikiasmartbanner-view' => 'ikusi',
 );
 
 /** Persian (فارسی)
@@ -786,6 +814,7 @@ tú burdi heilt sikkurt hugt eftir hesum:
  * @author Wyz
  */
 $messages['fr'] = array(
+	'wikiamobile-desc' => 'Habillage mobile pour Wikia',
 	'wikiamobile-search' => 'Rechercher',
 	'wikiamobile-search-this-wiki' => 'Rechercher sur ce wiki',
 	'wikiamobile-search-wiki' => 'Wiki',
@@ -1309,6 +1338,7 @@ $messages['mr'] = array(
  * @author SNN95
  */
 $messages['ms'] = array(
+	'wikiamobile-desc' => 'Rupa untuk Wikia dalam peranti mudah alih',
 	'wikiamobile-search' => 'Cari',
 	'wikiamobile-search-this-wiki' => 'Cari dalam wiki ini',
 	'wikiamobile-search-wiki' => 'Wiki',
@@ -1522,6 +1552,7 @@ $messages['oc'] = array(
  * @author Woytecr
  */
 $messages['pl'] = array(
+	'wikiamobile-desc' => 'Mobilna skórka dla Wikii',
 	'wikiamobile-search' => 'Szukaj',
 	'wikiamobile-search-this-wiki' => 'Przeszukaj wiki',
 	'wikiamobile-search-wiki' => 'Wiki',
@@ -1657,6 +1688,7 @@ você deve definitivamente verificar isso:
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'wikiamobile-desc' => 'Skin Mobbile pe Uicchia',
 	'wikiamobile-search' => 'Cirche',
 	'wikiamobile-search-this-wiki' => 'Cirche sta uicchi',
 	'wikiamobile-search-wiki' => 'Uicchi',
@@ -1838,6 +1870,7 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'wikiamobile-desc' => 'Mobilt utseende för Wikia',
 	'wikiamobile-search' => 'Sök',
 	'wikiamobile-search-this-wiki' => 'Sök på denna wiki',
 	'wikiamobile-search-wiki' => 'Wiki',
@@ -2195,6 +2228,7 @@ $messages['yi'] = array(
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'wikiamobile-desc' => '适用于Wikia的移动版皮肤',
 	'wikiamobile-search' => '搜索',
 	'wikiamobile-search-this-wiki' => '搜索此维基',
 	'wikiamobile-search-wiki' => '维基',
@@ -2276,6 +2310,7 @@ $messages['zh-hant'] = array(
 	'wikiamobile-footer-link-entertainment' => '[[w:c:www:Entertainment|娛樂]]',
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|電玩遊戲]]',
 	'wikiamobile-footer-link-licencing' => '[[w:Wikia:Licensing|授權]]',
+	'wikiamobile-footer-link-privacy' => '[[w:c:www:Privacy_Policy|隱私政策]]',
 	'mobile-full-site' => '完整網站',
 	'wikiamobile-categories-tagline' => '分類頁面',
 	'wikiamobile-categories-items-total' => '$1個{{PLURAL:$1|條目|條目}}',

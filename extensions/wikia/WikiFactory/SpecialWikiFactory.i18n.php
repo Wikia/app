@@ -1472,6 +1472,7 @@ $messages['da'] = array(
  * @author Yottabyte
  */
 $messages['de'] = array(
+	'wikifactory-desc' => 'Speichert die MediaWiki-Einstellungen in eine Datenbank',
 	'wikifactorypagetitle' => 'Wiki Factory: Konfigurator',
 	'wikifactory' => 'Wiki-Factory-Konfigurator',
 	'closewiki' => 'Wiki schließen',
@@ -1528,6 +1529,7 @@ $messages['de'] = array(
 	'awc-metrics-select' => 'Wikis anzeigen:',
 	'awc-metrics-by-language' => 'nach Sprache:',
 	'awc-metrics-category' => 'und Kategorie:',
+	'awc-metrics-vertical' => 'und vertikal:',
 	'awc-metrics-all' => 'alle Wikis',
 	'awc-metrics-all-languages' => 'alle Sprachen',
 	'awc-metrics-search' => 'Suchoptionen:',
@@ -1741,6 +1743,7 @@ $messages['en-gb'] = array(
  * @author VegaDark
  */
 $messages['es'] = array(
+	'wikifactory-desc' => 'Almacena la configuración MediaWiki en la base de datos',
 	'wikifactorypagetitle' => 'Configurador de Wiki Factory',
 	'wikifactory' => 'Configurador de Wiki Factory',
 	'closewiki' => 'Cerrar Wiki',
@@ -1797,6 +1800,7 @@ $messages['es'] = array(
 	'awc-metrics-select' => 'Mostrar Wikis:',
 	'awc-metrics-by-language' => 'por idioma:',
 	'awc-metrics-category' => 'y categoría:',
+	'awc-metrics-vertical' => 'y vertical:',
 	'awc-metrics-all' => 'todos los Wikis',
 	'awc-metrics-all-languages' => 'todos los idiomas',
 	'awc-metrics-search' => 'Opciones de búsqueda:',
@@ -2042,6 +2046,7 @@ $messages['fi'] = array(
  * @author Wyz
  */
 $messages['fr'] = array(
+	'wikifactory-desc' => 'Stocker les paramètres de MédiaWiki dans la base de données',
 	'wikifactorypagetitle' => "Configurateur de l'usine à wikis",
 	'wikifactory' => "Configurateur de l'usine à wikis",
 	'closewiki' => 'Fermer le wiki',
@@ -2099,6 +2104,7 @@ $messages['fr'] = array(
 	'awc-metrics-select' => 'Affichage des wikis :',
 	'awc-metrics-by-language' => 'par langue :',
 	'awc-metrics-category' => 'et catégorie :',
+	'awc-metrics-vertical' => 'et vertical :',
 	'awc-metrics-all' => 'tous les wikis',
 	'awc-metrics-all-languages' => 'toutes les langues',
 	'awc-metrics-search' => 'Options de recherche :',
@@ -2955,6 +2961,20 @@ $messages['ko'] = array(
 	'wf_cc_name' => '분류',
 	'wikifactory-label-hubs' => '허브',
 	'closewiki-unknown' => '알 수 없음',
+	'awc-metrics-one-week' => '생성됨 < 1주 전',
+	'awc-metrics-two-weeks' => '생성됨 < 2주 전',
+	'awc-metrics-three-weeks' => '생성됨 < 3주 전',
+	'awc-metrics-one-months' => '생성됨 < 한 달 전',
+	'awc-metrics-two-months' => '생성됨 < 두 달 전',
+	'awc-metrics-three-months' => '생성됨 < 세 달 전',
+	'awc-metrics-half-year' => '생성됨 < 여섯 달 전',
+	'awc-metrics-wikians' => '위키아 사용자<br />(>10회 편집)',
+	'awc-metrics-edits' => '편집',
+	'closed-wiki-info' => '이 위키는 폐쇄되었습니다',
+	'disabled-wiki-info' => '이 위키는 비활성화되었습니다',
+	'closed-wiki-dump-noexists' => '이 위키는 폐쇄되었습니다. 24시간 내로 콘텐츠 덤프가 가능할 것입니다. 잠시 후 다시 확인해 주세요.',
+	'closed-wiki-create-wiki' => '새 위키 만들기',
+	'closed-wiki-policy' => '위키아 폐쇄 정책 보기',
 	'closed-reason' => '이유:',
 );
 
@@ -3400,6 +3420,7 @@ $messages['mr'] = array(
  * @author SNN95
  */
 $messages['ms'] = array(
+	'wikifactory-desc' => 'Simpan tetapan MediaWiki dalam pangkalan data',
 	'wikifactorypagetitle' => 'Alat Tatarajah Kilang Wiki',
 	'wikifactory' => 'Alat Tatarajah Kilang Wiki',
 	'closewiki' => 'Tutup Wiki',
@@ -3456,6 +3477,7 @@ $messages['ms'] = array(
 	'awc-metrics-select' => 'Paparkan Wiki:',
 	'awc-metrics-by-language' => 'mengikut bahasa:',
 	'awc-metrics-category' => 'dan kategori:',
+	'awc-metrics-vertical' => 'dan menegak:',
 	'awc-metrics-all' => 'semua Wiki',
 	'awc-metrics-all-languages' => 'semua bahasa',
 	'awc-metrics-search' => 'Pilihan carian:',
@@ -3934,12 +3956,14 @@ $messages['pdc'] = array(
 /** Polish (polski)
  * @author BeginaFelicysym
  * @author Marcin Łukasz Kiejzik
+ * @author Matik7
  * @author Py64
  * @author Sovq
  * @author Sp5uhe
  * @author Vengir
  */
 $messages['pl'] = array(
+	'wikifactory-desc' => 'Przechowuj ustawienia MediaWiki w bazie danych',
 	'wikifactorypagetitle' => 'Konfiguracja WikiFactory',
 	'wikifactory' => 'Konfiguracja WikiFactory',
 	'closewiki' => 'Zamknij wiki',
@@ -4955,6 +4979,7 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'wikifactory-desc' => 'Lagrar MediaWiki-inställningar i databasen',
 	'wikifactorypagetitle' => 'Wiki Factory Konfigurator',
 	'wikifactory' => 'Wiki Factory Konfigurator',
 	'closewiki' => 'Stäng Wiki',
@@ -5011,6 +5036,7 @@ $messages['sv'] = array(
 	'awc-metrics-select' => 'Visa Wikis:',
 	'awc-metrics-by-language' => 'efter språk:',
 	'awc-metrics-category' => 'och kategori:',
+	'awc-metrics-vertical' => 'och vertikalt:',
 	'awc-metrics-all' => 'alla Wikis',
 	'awc-metrics-all-languages' => 'alla språk',
 	'awc-metrics-search' => 'Sökalternativ:',
@@ -5610,6 +5636,7 @@ $messages['yi'] = array(
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'wikifactory-desc' => '在数据库中存储MediaWiki设置',
 	'wikifactorypagetitle' => 'Wiki出厂配置',
 	'wikifactory' => 'Wiki出厂配置',
 	'closewiki' => '关闭维基',
@@ -5666,6 +5693,7 @@ $messages['zh-hans'] = array(
 	'awc-metrics-select' => '显示Wiki：',
 	'awc-metrics-by-language' => '按语言：',
 	'awc-metrics-category' => '和分类：',
+	'awc-metrics-vertical' => '和垂直线：',
 	'awc-metrics-all' => '所有维基',
 	'awc-metrics-all-languages' => '所有语言',
 	'awc-metrics-search' => '搜索选项：',

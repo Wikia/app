@@ -164,6 +164,7 @@ $messages['cs'] = array(
  * @author ✓
  */
 $messages['de'] = array(
+	'partner-feed-desc' => 'Partner-Feed-Erweiterung',
 	'partner-feed-achievements-leaderboard' => 'Wiki Rangliste',
 	'partner-feed-earned-badges' => 'Kürzlich verdiente Abzeichen für ein bestimmtes Wiki',
 	'partner-feed-recent-blog-posts' => 'Letzte Blog-Beiträge in Verbindung mit einer Förderung',
@@ -203,6 +204,7 @@ $messages['diq'] = array(
  * @author VegaDark
  */
 $messages['es'] = array(
+	'partner-feed-desc' => 'Extensión de Partner Feed',
 	'partner-feed-achievements-leaderboard' => 'Tabla de líderes con más logros',
 	'partner-feed-earned-badges' => 'Logros recientemente ganados para un wiki específico',
 	'partner-feed-recent-blog-posts' => 'Entradas de blog recientes relacionadas con una promoción',
@@ -275,12 +277,14 @@ $messages['fi'] = array(
 );
 
 /** French (français)
+ * @author Gomoko
  * @author Jean-Frédéric
  * @author Peter17
  * @author Verdy p
  * @author Wyz
  */
 $messages['fr'] = array(
+	'partner-feed-desc' => 'Extension de flux partenaire',
 	'partner-feed-achievements-leaderboard' => 'Tableau des challenges des wikis',
 	'partner-feed-earned-badges' => 'Badges récemment gagnés pour un wiki donné',
 	'partner-feed-recent-blog-posts' => 'Billets de blog récemment postés pour une promotion',
@@ -479,6 +483,7 @@ $messages['ml'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'partner-feed-desc' => 'Sambungan Partner Feed',
 	'partner-feed-achievements-leaderboard' => 'Papan teraju pencapaian Wiki',
 	'partner-feed-earned-badges' => 'Lencana-lencana yang baru diraih untuk Wiki tertentu',
 	'partner-feed-recent-blog-posts' => 'Kiriman blog terkini yang berkenaan promosi',
@@ -875,6 +880,7 @@ $messages['vi'] = array(
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'partner-feed-desc' => '合作伙伴订阅点扩展',
 	'partner-feed-achievements-leaderboard' => 'Wiki成就排行榜',
 	'partner-feed-earned-badges' => '最近在特定wiki获得的徽章',
 	'partner-feed-recent-blog-posts' => '最近有关宣传的博客文章',
@@ -882,8 +888,8 @@ $messages['zh-hans'] = array(
 	'partner-feed-hotcontent' => '门户中的“热门内容”是通过编辑次数排名',
 	'partner-feed-recent-blog-comments' => '有关指定博客文章的最近的评论。',
 	'partner-feed-recent-changes' => '最近更改',
-	'partnerfeed' => '合作伙伴订阅',
-	'error-no-article' => '错误：未传递"article"参数',
+	'partnerfeed' => '合作伙伴订阅点',
+	'error-no-article' => '错误：未传递“article”参数',
 	'feed-title-blogposts' => '最近的博客文章',
 	'feed-title-recent-badges' => '最新徽章',
 	'feed-title-recent-images' => '最近的图片',
@@ -894,7 +900,7 @@ $messages['zh-hans'] = array(
 	'feed-title-hot-content' => '热点内容 - $1',
 	'feed-title-blogcomments' => '评论 $1',
 	'feed-title-recentchanges' => '最近更改',
-	'partner-feed-error-no-blogpost-found' => '<b>错误：</b>博客文章 $1 不存在。',
+	'partner-feed-error-no-blogpost-found' => '<b>错误：</b>博客文章$1不存在。',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

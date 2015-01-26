@@ -302,10 +302,11 @@ ___________________________________________
 /** Azerbaijani (azərbaycanca)
  * @author Cekli829
  * @author Khan27
+ * @author Wertuose
  */
 $messages['az'] = array(
 	'userlogin-login-heading' => 'Daxil ol',
-	'userlogin-forgot-password' => 'Şifrəni unutmusan?',
+	'userlogin-forgot-password' => 'Parolunuzu unutmusunuz?',
 	'userlogin-forgot-password-button' => 'Davam et',
 	'userlogin-forgot-password-go-to-login' => 'Artıq şifrəniz var? [[Special:UserLogin|Daxil olun]]',
 	'userlogin-remembermypassword' => 'Girişdə qal', # Fuzzy
@@ -570,6 +571,7 @@ $messages['cy'] = array(
  * @author MtaÄ
  */
 $messages['de'] = array(
+	'userlogin-desc' => 'UserLogin-Erweiterung',
 	'userlogin-login-heading' => 'Anmelden',
 	'userlogin-forgot-password' => 'Passwort vergessen?',
 	'userlogin-forgot-password-button' => 'Fortfahren',
@@ -683,6 +685,7 @@ $messages['en-gb'] = array(
  * @author VegaDark
  */
 $messages['es'] = array(
+	'userlogin-desc' => 'Extensión UserLogin',
 	'userlogin-login-heading' => 'Iniciar sesión',
 	'userlogin-forgot-password' => '¿Olvidaste tu contraseña?',
 	'userlogin-forgot-password-button' => 'Continuar',
@@ -761,6 +764,14 @@ Para comprobar los acontecimientos más recientes en Wikia, visita http://comuni
 	'wikiamobile-go-to-login' => '¿Tienes una cuenta? [[Special:UserLogin|Inicia sesión >]]',
 	'userlogin-logged-in-title' => '¡Te damos la bienvenida a {{SITENAME}}, $1!',
 	'userlogin-logged-in-message' => 'Has iniciado sesión. Dirígete a la [[$1|portada]] para ver lo más reciente o revisa tu [[$2|perfil]].',
+);
+
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'userlogin-forgot-password' => 'Zure pasahitza ahaztu duzu?',
+	'userlogin-forgot-password-button' => 'Jarraitu',
 );
 
 /** Persian (فارسی)
@@ -902,6 +913,7 @@ $messages['fo'] = array(
  * @author Wyz
  */
 $messages['fr'] = array(
+	'userlogin-desc' => 'Extension UserLogin',
 	'userlogin-login-heading' => 'Connexion',
 	'userlogin-forgot-password' => 'Vous avez oublié votre mot de passe ?',
 	'userlogin-forgot-password-button' => 'Continuer',
@@ -1570,6 +1582,7 @@ $messages['mr'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'userlogin-desc' => 'Sambungan UserLogin',
 	'userlogin-login-heading' => 'Log masuk',
 	'userlogin-forgot-password' => 'Lupa kata laluan anda?',
 	'userlogin-forgot-password-button' => 'Sambung',
@@ -1725,6 +1738,7 @@ Vil du kontrollere hva slags e-post du mottar? Gå til: <a href="{{fullurl:Speci
 
 /** Dutch (Nederlands)
  * @author HanV
+ * @author Robin0van0der0vliet
  * @author Siebrand
  * @author Southparkfan
  */
@@ -1747,9 +1761,9 @@ $messages['nl'] = array(
 	'userlogin-error-userexists' => 'Deze naam is al in gebruik. Kies een andere.',
 	'userlogin-error-invalidemailaddress' => 'Geef een geldig e-mailadres op.',
 	'userlogin-error-wrongcredentials' => 'Deze combinatie van gebruikersnaam en wachtwoord is niet correct. Probeer het opnieuw.',
-	'userlogin-error-invalidfacebook' => 'Er is een probleem opgetreden tijdens het detecteren van uw Facebookgebruiker. Meld u aan bij Facebook en probeer het opnieuw.',
+	'userlogin-error-invalidfacebook' => 'Er is een probleem opgetreden tijdens het detecteren van uw Facebook-account. Meld u aan bij Facebook en probeer het opnieuw.',
 	'userlogin-error-fbconnect' => 'Er is een probleem opgetreden tijdens het koppelen van uw Wikiagebruiker aan Facebook.',
-	'userlogin-get-account' => 'Hebt u nog geen gebruiker? <a href="$1" tabindex="$2">Registreren</a>',
+	'userlogin-get-account' => 'Hebt u nog geen account? <a href="$1" tabindex="$2">Registreren</a>',
 	'userlogin-error-invalid-username' => 'Ongeldige gebruikersnaam',
 	'userlogin-error-userlogin-unable-info' => 'Het is helaas niet mogelijk uw gebruiker op dit moment te registreren.',
 	'userlogin-error-user-not-allowed' => 'Deze gebruikersnaam is niet toegestaan.',
@@ -1801,7 +1815,7 @@ Om in te stellen welke e-mails u wilt ontvangen, gaat u naar {{fullurl:{{ns:spec
 	'userlogin-loginreqlink' => 'aanmelden',
 	'userlogin-changepassword-needlogin' => 'U moet $1 om uw wachtwoord te kunnen wijzigen.',
 	'wikiamobile-sendpassword-label' => 'Nieuw wachtwoord sturen',
-	'wikiamobile-facebook-connect-fail' => 'Uw Facebookgebruiker is op het moment niet gekoppeld met uw Wikiagebruiker.',
+	'wikiamobile-facebook-connect-fail' => 'Uw Facebook-account is op het moment niet gekoppeld met uw Wikia-account.',
 	'wikiamobile-go-to-login' => 'Heeft u een gebruiker? [[Special:UserLogin|Log nu in >]]',
 	'userlogin-logged-in-title' => 'Welkom bij {{SITENAME}}, $1!',
 	'userlogin-logged-in-message' => 'U bent aangemeld. Ga naar de [[$1|startpagina]] om de laatste stand van zaken te bekijken of ga naar uw [[$2|profiel]].',
@@ -1825,6 +1839,7 @@ $messages['oc'] = array(
 
 /** Polish (polski)
  * @author Chrumps
+ * @author Matik7
  * @author Nandy
  * @author Pio387
  * @author Sovq
@@ -1848,6 +1863,7 @@ $messages['pl'] = array(
 	'userlogin-error-cantcreateaccount-text' => 'Nie możesz zakładać nowych kont z adresu IP, którego obecnie używasz.',
 	'userlogin-error-userexists' => 'Ktoś już używa takiej nazwy użytkownika. Spróbuj innej!',
 	'userlogin-error-invalidemailaddress' => 'Wprowadź prawidłowy adres e-mail.',
+	'userlogin-error-wrongcredentials' => 'Nieprawidłowe połączenie pseudonimu i hasła. Prosimy spróbować ponownie.',
 	'userlogin-get-account' => 'Nie masz jeszcze konta? <a href="$1" tabindex="$2">Zarejestruj się</a>',
 	'userlogin-error-invalid-username' => 'Nieprawidłowa nazwa użytkownika',
 	'userlogin-error-userlogin-unable-info' => 'Przykro nam. Nie jesteśmy w stanie zarejestrować Twojego konta w tym momencie.',
@@ -1857,6 +1873,7 @@ $messages['pl'] = array(
 	'userlogin-error-externaldberror' => 'Przepraszamy! Pojawiły się problemy na naszej stronie. Prosimy spróbować ponownie później.',
 	'userlogin-error-noemailtitle' => 'Wprowadź prawidłowy adres e-mail.',
 	'userlogin-error-acct_creation_throttle_hit' => 'Przepraszamy, ten adres IP stworzył dzisiaj już zbyt dużo nowych kont. Prosimy spróbować ponownie później.',
+	'userlogin-opt-in-label' => 'Chcę otrzymywać maile z wydarzeniami i nowościami na Wikii',
 	'userlogin-error-resetpass_forbidden' => 'Hasła nie mogą zostać zmienione',
 	'userlogin-error-blocked-mailpassword' => 'Nie możesz prosić o nowe hasło ponieważ Twój adres IP został zablokowany przez Wikię.',
 	'userlogin-error-throttled-mailpassword' => 'Wysłaliśmy już przypomnienie z hasłem tego konta w ciągu {{PLURAL:$1|ostatniej godziny|ostatnich $1 godzin}}. Sprawdź swoją skrzynkę e-mail.',
@@ -1903,6 +1920,8 @@ Chcesz zmienić ustawienia otrzymywanych powiadomień? Zajrzyj tutaj: {{fullurl:
 	'wikiamobile-sendpassword-label' => 'Wyślij nowe hasło',
 	'wikiamobile-facebook-connect-fail' => 'Przepraszamy, Twoje konto na Facebooku nie jest obecnie połączone z kontem na Wikii.',
 	'wikiamobile-go-to-login' => 'Masz konto? [[Special:UserLogin|Zaloguj się >]]',
+	'userlogin-logged-in-title' => 'Witaj na {{SITENAME}}, $1!',
+	'userlogin-logged-in-message' => 'Zostałeś zalogowany. Przejdź do [[$1|strony głównej]] by zobaczyć nowości lub zobacz swój [[$2|profil]].',
 );
 
 /** Piedmontese (Piemontèis)
@@ -2388,6 +2407,7 @@ ___________________________________________
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'userlogin-desc' => 'UserLogin-tillägget',
 	'userlogin-login-heading' => 'Logga in',
 	'userlogin-forgot-password' => 'Glömt ditt lösenord?',
 	'userlogin-forgot-password-button' => 'Fortsätt',
@@ -2899,10 +2919,11 @@ Muốn kiểm soát email mà bạn nhận được? Đi đến: {{fullurl:{{ns:
  * @author 乌拉跨氪
  */
 $messages['zh-hans'] = array(
+	'userlogin-desc' => '用户登录扩展',
 	'userlogin-login-heading' => '登录',
 	'userlogin-forgot-password' => '忘记密码？',
 	'userlogin-forgot-password-button' => '继续',
-	'userlogin-forgot-password-go-to-login' => '你已经有密码了吗？[[Special:UserLogin|登录]]',
+	'userlogin-forgot-password-go-to-login' => '您已经有密码了吗？[[Special:UserLogin|登录]]',
 	'userlogin-remembermypassword' => '保持登录状态',
 	'userlogin-error-noname' => '请输入用户名',
 	'userlogin-error-sessionfailure' => '登陆超时，请重新登录。',
