@@ -4243,7 +4243,7 @@ class User {
 
 		$bHeliosCheck = false;
 
-		if( !wfRunHooks( 'UserComparePasswords', array( &$hash, &$password, &$userId, &$resulti, &$bHeliosCheck ) ) ) {
+		if( !wfRunHooks( 'UserComparePasswords', array( &$hash, &$password, &$userId, &$result, &$bHeliosCheck ) ) ) {
 			return $result;
 		}
 
