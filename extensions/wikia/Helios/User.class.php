@@ -52,16 +52,19 @@ class User {
 	 * @param string &$sPassword string of the plaintext password the user entered
 	 * @param integer &$iUserId integer of the user's ID or Boolean false if the user ID was not supplied
 	 * @param boolean &$bResult on false returned, this value will be checked to determine if the password was valid
+	 * @param boolean &$bHeliosCheck inform the calling code whether Helios' password comparison was actually done
 	 *
 	 * @return boolean false if the authentication has been done, true otherwise (yeah, I know...)
 	 */
-	public static function comparePasswords( &$sHash, &$sPassword, &$iUserId, &$bResult )
+	public static function comparePasswords( &$sHash, &$sPassword, &$iUserId, &$bResult, &$bHeliosCheck )
 	{
 		// Only proceed for the given percentage of login attempts.
 		global $wgHeliosLoginSamplingRate;
 		if ( rand(0, 100) > $wgHeliosLoginSamplingRate ) {
 			return true;
 		}
+
+		$bHeliosCheck = true;
 
 		$oLogger = \Wikia\Logger\WikiaLogger::instance();
 		$oLogger->info( 'HELIOS_LOGIN', [ 'method' => __METHOD__ ] );
@@ -91,6 +94,22 @@ class User {
 		return !empty( $wgHeliosLoginShadowMode ); // true when in shadow mode, false otherwise
 
 		// when true is returned, the original password comparison will be executed
+	}
+
+	/**
+	 * Compares Helios' password comparison result with MediaWiki's and logs details if different.
+	 */
+	public static function comparePasswordCheck( $bHeliosCheck, $bHelios, $bMediaWiki, $sType, $sHash, $iUserId ) {
+
+		if ( $bHeliosCheck && $bHelios != $bMediaWiki ) {
+			\Wikia\Logger\WikiaLogger::instance()->error(
+				'HELIOS_LOGIN',
+				[ 'method' => __METHOD__, 'type' => $sType,
+				'hash' => $sHash, 'user_id' => $iUserId ]
+			);
+		}
+
+		return true;
 	}
 
 }
