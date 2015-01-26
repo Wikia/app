@@ -113,6 +113,12 @@ class WikiaPageType {
 	public static function isSearch() {
 		$title = self::getTitle();
 
+		if ( !( $title instanceof Title ) ) {
+			Wikia\Logger\WikiaLogger::instance()->debug( 'ADEN-1692: ' . __METHOD__, [
+				'exception' => new Exception(),
+			] );
+		}
+
 		$searchPageNames = array( 'Search', 'WikiaSearch' );
 		$pageNames = SpecialPageFactory::resolveAlias( $title->getDBkey() );
 
