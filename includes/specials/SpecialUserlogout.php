@@ -33,6 +33,8 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 	}
 
 	function execute( $par ) {
+		global $wgUser;		/* wikia change */
+
 		/**
 		 * Some satellite ISPs use broken precaching schemes that log people out straight after
 		 * they're logged in (bug 17790). Luckily, there's a way to detect such requests.
@@ -48,6 +50,16 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 		$user = $this->getUser();
 		$oldName = $user->getName();
 		$user->logout();
+
+		/*
+		 * Special pages use the new-style context-based user object.  However, much of the rest of the world
+		 * (e.g. Global Nav) uses the old-style global wgUser object.  As such, when we log out we need to
+		 * ensure that both copies of the user object are properly addressed, or else parts of the page will still
+		 * believe they have an authenticated user object.
+		 *
+		 * Once the old-style global wgUser object is fully deprecated, this line can be removed.
+		*/
+		$wgUser->logout();	 /* wikia change */
 
 		$out = $this->getOutput();
 		$out->addWikiMsg( 'logouttext' );

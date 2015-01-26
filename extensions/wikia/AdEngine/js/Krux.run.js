@@ -17,7 +17,7 @@ require([
 	};
 
 	if (adContext.getContext().targeting.enableKruxTargeting) {
-		$(window).load(function () {
+		$(window).on('load', function () {
 			scriptWriter.callLater(function () {
 				var targeting = adContext.getContext().targeting,
 					siteId = skinSites[targeting.skin];

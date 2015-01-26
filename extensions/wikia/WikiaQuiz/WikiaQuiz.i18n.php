@@ -589,6 +589,15 @@ $messages['es'] = array(
 	'wikiaquiz-game-mute' => 'Mudo',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'wikiaquiz-questions-label' => 'Galderak',
+	'wikiaquiz-answers-label' => 'Erantzunak',
+	'wikiaquiz-answer-label' => 'Erantzuna',
+);
+
 /** Persian (فارسی)
  * @author Mjbmr
  * @author Reza1615

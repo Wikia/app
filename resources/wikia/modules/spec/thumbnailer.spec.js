@@ -10,8 +10,14 @@ describe('thumbnailer', function () {
 	it('identifies thumbnails', function () {
 		expect(thumbnailer.isThumbUrl(legacyThumbnailerUrl)).toBe(true);
 		expect(thumbnailer.isThumbUrl(thumbnailerUrl)).toBe(true);
+		expect(thumbnailer.isThumbUrl(thumbnailerUrl.replace('vignette2', 'vignette-poz'))).toBe(true); // Poznań devbox
 		expect(thumbnailer.isThumbUrl(fullSizeImageUrl)).toBe(false);
 		expect(thumbnailer.isThumbUrl(articleUrl)).toBe(false);
+	});
+
+	it('detects old and new URL format', function() {
+		expect(thumbnailer.isLegacyThumbnailerUrl(legacyThumbnailerUrl)).toBe(true);
+		expect(thumbnailer.isLegacyThumbnailerUrl(thumbnailerUrl)).toBe(false);
 	});
 
 	it('returns proper nocrop thumbnail URL', function () {

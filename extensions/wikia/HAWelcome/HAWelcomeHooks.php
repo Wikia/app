@@ -18,6 +18,7 @@ class HAWelcomeHooks {
 		$task->call( 'sendWelcomeMessage', $aParams );
 		$task->wikiId( $wgCityId );
 		$task->title( $oTitle ); // use $this->title in the job
+		$task->prioritize();
 		$task->queue();
 	}
 

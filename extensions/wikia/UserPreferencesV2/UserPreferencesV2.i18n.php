@@ -1615,6 +1615,7 @@ $messages['zh-hans'] = array(
 	'preferences-v2-redirect-wiki-activity' => 'Wiki活动',
 	'preferences-v2-redirect-main-page' => '首页',
 	'preferences-v2-redirect-recent-changes' => '最近更改',
+	'preferences-v2-redirect-explanation' => '登陆页面选项允许您选择当您在浏览器中输入$1后最终抵达的页面。',
 	'prefs-monobookv2' => 'MonoBook',
 	'prefs-under-the-hood' => '高级选项',
 	'prefs-recent-changesv2' => '最近的变化、历史和日志',
