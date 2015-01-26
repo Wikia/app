@@ -1347,18 +1347,6 @@ $wgSitewideDisableIVW2 = false;
 $wgSitewideDisableLiftium = false;
 
 /**
- * @name $wgSitewideDisableNewGaAnalitycs
- * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
- * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableNewGaAnalitycs
- * @link https://support.google.com/analytics/answer/2444872?hl=en
- *
- * Disable new Google Analitycs integration sitewide in case a disaster happens.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
- */
-$wgSitewideDisableNewGaAnalitycs = false;
-
-/**
  * @name $wgSitewideDisableRubiconRTP
  * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
  * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableRubiconRTP
