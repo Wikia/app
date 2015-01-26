@@ -71,11 +71,12 @@ class Client
 	{
 		return $this->request(
 			'token',
+			[ 'grant_type'	=> 'password' ],
 			[
-				'grant_type'	=> 'password',
 				'username'	=> $sUsername,
 				'password'	=> $sPassword
-			]
+			],
+			[ 'method'	=> 'POST' ]
 		);
 	}
 
@@ -111,5 +112,10 @@ class Client
  */
 class ClientException extends \Exception
 {
+	use \Wikia\Logger\Loggable;
 
+	public function __construct( $message = null, $code = 0, Exception $previous = null ) {
+		parent::__construct( $message, $code, $previous );
+		$this->error( 'HELIOS_CLIENT' , [ 'exception' => $this ] );
+	}
 }

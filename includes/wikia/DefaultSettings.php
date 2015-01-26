@@ -1296,6 +1296,12 @@ $wgAdDriverAlwaysCallDartInCountries = [];
 $wgAdDriverUseBottomLeaderboard = false;
 
 /**
+ * @name $wgAdDriverUseInterstitial
+ * Whether to enable new interstitial ad MODAL_INTERSTITIAL_5
+ */
+$wgAdDriverUseInterstitial = false;
+
+/**
  * @name $wgAdDriverUseTopInContentBoxad
  * Whether to enable new in-content top ad TOP_IN_CONTENT_BOXAD
  */
@@ -1339,18 +1345,6 @@ $wgSitewideDisableIVW2 = false;
  * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
  */
 $wgSitewideDisableLiftium = false;
-
-/**
- * @name $wgSitewideDisableNewGaAnalitycs
- * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
- * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableNewGaAnalitycs
- * @link https://support.google.com/analytics/answer/2444872?hl=en
- *
- * Disable new Google Analitycs integration sitewide in case a disaster happens.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
- */
-$wgSitewideDisableNewGaAnalitycs = false;
 
 /**
  * @name $wgSitewideDisableRubiconRTP
@@ -1434,6 +1428,12 @@ $wgAdDriverRubiconRTPConfig = null;
  * Only set this variable through Wiki Factory on community wiki. The setting then applies globally.
  */
 $wgAdDriverRubiconRTPCountries = null;
+
+/**
+ * @name $wgAdDriverEnableKruxOnMobile
+ * Whether to enable Krux on wikiamobile skin
+ */
+$wgEnableKruxOnMobile = false;
 
 /**
  * @name $wgHighValueCountries

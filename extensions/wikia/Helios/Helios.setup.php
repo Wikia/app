@@ -14,6 +14,13 @@ $wgExtensionCredits['other'][] = [
  */
 $wgAutoloadClasses["Wikia\\Helios\\User"]   = __DIR__ . "/User.class.php";
 $wgAutoloadClasses["Wikia\\Helios\\Client"] = __DIR__ . "/Client.class.php";
+$wgAutoloadClasses["Wikia\\Helios\\SampleController"] = __DIR__ . "/SampleController.class.php";
+
+/**
+ * Hooks.
+ */
+$wgHooks['UserComparePasswords'][] = "Wikia\\Helios\\User::comparePasswords";
+$wgHooks['UserAfterComparePasswords'][] = "Wikia\\Helios\\User::comparePasswordCheck";
 
 /**
  * Internationalisation.

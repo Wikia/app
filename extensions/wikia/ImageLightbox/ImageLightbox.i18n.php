@@ -281,7 +281,7 @@ $messages['diq'] = array(
 	'lightbox-share-button-www' => 'Vıla ke',
 	'lightbox-share-button-embed' => 'Embed',
 	'lightbox-share-email-page-label-address' => 'Adresê e-posta',
-	'lightbox-share-email-ok-caption' => 'Tesdiqiye',
+	'lightbox-share-email-ok-caption' => 'Tesdiq',
 	'lightbox-share-email-error-caption' => 'Xeta',
 );
 

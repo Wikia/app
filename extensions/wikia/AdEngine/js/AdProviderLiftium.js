@@ -65,7 +65,7 @@ define('ext.wikia.adEngine.provider.liftium', [
 		if (slotname.indexOf('LEADERBOARD') !== -1) {
 			log('LEADERBOARD-ish slot handled by Liftium. Running the forced TOP_BUTTON_WIDE now', 2, logGroup);
 
-			window.adslots2.push(['TOP_BUTTON_WIDE.force', null, 'Liftium']);
+			window.adslots2.push('TOP_BUTTON_WIDE.force');
 		}
 		// END of hack
 		if (!document.getElementById(slotname)) {

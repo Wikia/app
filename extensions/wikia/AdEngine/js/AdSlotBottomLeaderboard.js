@@ -65,7 +65,7 @@ define('ext.wikia.adEngine.slot.bottomLeaderboard', [
 				$slot.hide();
 				$slot.appendTo('.WikiaSiteWrapper');
 
-				window.adslots2.push([slotName]);
+				window.adslots2.push(slotName);
 			} else {
 				log(['Impression capped. Not requesting the ad', slotName], 'debug', logGroup);
 

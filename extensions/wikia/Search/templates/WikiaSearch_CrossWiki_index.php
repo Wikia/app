@@ -1,4 +1,4 @@
-<section class="Search all-wikia WikiaGrid clearfix">
+<section class="Search all-wikia WikiaGrid clearfix search-tracking">
 	<? if ( empty( $wg->EnableGlobalNavExt ) ): ?>
 	<form class="WikiaSearch" id="search-v2-form" action="<?=$specialSearchUrl;?>">
 		<div class="SearchInput">

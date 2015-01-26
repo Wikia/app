@@ -79,7 +79,7 @@
 			// Init ads in Lightbox
 			if ($('#MODAL_RECTANGLE').length && Lightbox.ads.showAds()) {
 				Lightbox.openModal.lightbox.addClass('show-ads');
-				window.adslots2.push(['MODAL_RECTANGLE']);
+				window.adslots2.push('MODAL_RECTANGLE');
 				Lightbox.ads.adModalRectangleShown = true;
 			}
 
@@ -575,7 +575,7 @@
 			preloadAds: function () {
 				if (!this.adWasPreloaded) {
 					this.adWasPreloaded = true;
-					window.adslots2.push([this.getSlotName()]);
+					window.adslots2.push(this.getSlotName());
 				}
 			},
 			// Determine if we should show an ad
