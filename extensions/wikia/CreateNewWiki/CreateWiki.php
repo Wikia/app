@@ -721,6 +721,10 @@ class CreateWiki {
 	 * @return string Sanitized name
 	 */
 	private static function sanitizeS3BucketName( $name ) {
+		if ( $name == 'admin' ) {
+			$name .= 'x';
+		}
+
 		$RE_VALID = "/^[a-z0-9](?:[-_a-z0-9]{0,53}[a-z0-9])?(?:[a-z0-9](?:\\.[-_a-z0-9]{0,53}[a-z0-9])?)*\$/";
 		# check if it's already valid
 		$name = mb_strtolower($name);

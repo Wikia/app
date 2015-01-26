@@ -55,6 +55,7 @@ class CreateWikiTest extends WikiaBaseTest {
 			'polish' => [ 'ąćśę', 'c485c487c59bc499' ],
 			'long-polish' => [ '012345678901234567890123456789012345678901234567890123ą', '012345678901234567890123456789012345678901234567890123c' ],
 			'chinese' => [ '不論支持與否', 'e4b88de8ab96e694afe68c81e88887e590a6' ],
+			'admin' => [ 'admin', 'adminx' ],
 		];
 	}
 
