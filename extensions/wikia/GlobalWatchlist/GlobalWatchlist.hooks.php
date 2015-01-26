@@ -6,7 +6,16 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 class GlobalWatchlistHook {
-	
+
+	const tableName = 'global_watchlist';
+	const columnUserID = 'gwa_user_id';
+	const columnCityID = 'gwa_city_id';
+	const columnNameSpace = 'gwa_namespace';
+	const columnTitle = 'gwa_title';
+	const columnRevisionID = 'gwa_rev_id';
+	const columnTimeStamp = 'gwa_timestamp';
+	const columnRevisionTimeStamp = 'gwa_rev_timestamp';
+
 	public static function getPreferences( $user, &$defaultPreferences ) {
 
 		$defaultPreferences['watchlistdigest'] = array(
@@ -26,75 +35,56 @@ class GlobalWatchlistHook {
 	
 	/**
 	 * Hook function calls when watch was added to database
-	 * @param $oWatchItem WatchedItem: object
+	 * @param $watchItem WatchedItem: object
 	 * @return bool (always true)
 	 */
-	static public function addGlobalWatch ( $oWatchItem ) {
-		global $wgEnableScribeReport, $wgCityId;
+	static public function addGlobalWatch ( $watchItem ) {
+		global $wgExternalDatawareDB, $wgCityId;
 
-		if ( empty($wgEnableScribeReport) ) {
+		if ( !$watchItem instanceof WatchedItem ) {
 			return true;
 		}
-		
-		if ( !$oWatchItem instanceof WatchedItem ) {
+
+		if ( $watchItem->userID == 0 ) {
 			return true;
 		}
-		
-		if ( $oWatchItem->userID == 0 ) {
-			return true;			
-		}
-		
-		$oTitle = Title::makeTitle( $oWatchItem->nameSpace, $oWatchItem->databaseKey );
-		if ( !is_object( $oTitle ) ) {
+
+		$title = Title::makeTitle( $watchItem->nameSpace, $watchItem->databaseKey );
+		if ( !is_object( $title ) ) {
 			return true;
 		}
-		
-		$oRevision = Revision::newFromTitle( $oTitle );
-		if ( !is_object( $oRevision ) ) {
+
+		$revision = Revision::newFromTitle( $title );
+		if ( !is_object( $revision ) ) {
 			return true;
 		}
-				
-		foreach ( array ( MWNamespace::getSubject( $oWatchItem->nameSpace ), MWNamespace::getTalk( $oWatchItem->nameSpace ) ) as $nameSpace ) {
-			$params = array (
-				'wl_user' => $oWatchItem->userID,
-				'wl_namespace' => $nameSpace,
-				'wl_title' => $oWatchItem->databaseKey,
-				'wl_notificationtimestamp' => null,
-				'wl_wikia' => $wgCityId,
-				'wl_revision' => $oRevision->getId(),
-				'wl_rev_timestamp' =>  $oRevision->getTimestamp()
-			);
-	
-			try {
-				$message = array(
-					'method' => 'addWatch',
-					'params' => $params
-				);
-				$data = json_encode( $message );
-				WScribeClient::singleton('trigger')->send($data);
-			}
-			catch( Exception $e ) {
-				Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
-			}
+
+		foreach ( array ( MWNamespace::getSubject( $watchItem->nameSpace ), MWNamespace::getTalk( $watchItem->nameSpace ) ) as $nameSpace ) {
+			$db = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
+			( new WikiaSQL() )
+				->INSERT()->INTO( static::tableName )
+				->SET( static::columnUserID, $watchItem->userID )
+				->SET( static::columnCityID, $wgCityId )
+				->SET( static::columnTitle, $watchItem->databaseKey )
+				->SET( static::columnNameSpace, $nameSpace )
+				->SET( static::columnRevisionID, $revision->getId() )
+				->SET( static::columnRevisionTimeStamp, $revision->getTimestamp() )
+				->run( $db );
 		}
 
 		return true;
 	}
-	
+
 	/**
 	 * Hook function calls when watch was removed from database
-	 * @param $oWatchItem WatchedItem: object
+	 * @param $watchItem WatchedItem: object
 	 * @param $success Boolean: removed successfully
 	 * @return bool (always true)
 	 */		
-	static public function removeGlobalWatch( $oWatchItem, $success ) {
-		global $wgEnableScribeReport, $wgCityId;
+	static public function removeGlobalWatch( $watchItem, $success ) {
+		global $wgExternalDatawareDB, $wgCityId;
 
-		if ( empty($wgEnableScribeReport) ) {
-			return true;
-		}
-
-		if ( !$oWatchItem instanceof WatchedItem ) {
+		if ( !$watchItem instanceof WatchedItem ) {
 			return true;
 		}
 
@@ -103,29 +93,19 @@ class GlobalWatchlistHook {
 			return true;
 		}
 
-		if ( $oWatchItem->userID == 0 ) {
+		if ( $watchItem->userID == 0 ) {
 			return true;
 		}
 
-		foreach ( array ( MWNamespace::getSubject( $oWatchItem->nameSpace ), MWNamespace::getTalk( $oWatchItem->nameSpace ) ) as $nameSpace ) {
-			$params = array (
-				'wl_user' => $oWatchItem->userID,
-				'wl_namespace' => $nameSpace,
-				'wl_title' => $oWatchItem->databaseKey,
-				'wl_wikia' => $wgCityId
-			);
-
-			try {
-				$message = array(
-					'method' => 'removeWatch',
-					'params' => $params
-				);
-				$data = json_encode( $message );
-				WScribeClient::singleton('trigger')->send($data);
-			}
-			catch( Exception $e ) {
-				Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
-			}
+		foreach ( array ( MWNamespace::getSubject( $watchItem->nameSpace ), MWNamespace::getTalk( $watchItem->nameSpace ) ) as $nameSpace ) {
+			$db = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
+			( new WikiaSQL() )
+				->DELETE()->FROM( static::tableName )
+				->WHERE( static::columnUserID )->EQUAL_TO( $watchItem->userID )
+				->AND_( static::columnCityID )->EQUAL_TO( $wgCityId )
+				->AND_( static::columnTitle )->EQUAL_TO( $watchItem->databaseKey )
+				->AND_( static::columnNameSpace )->EQUAL_TO( $nameSpace )
+				->run( $db );
 		}
 
 		return true;
@@ -133,71 +113,43 @@ class GlobalWatchlistHook {
 
 	/**
 	 * Hook function calls when watch was updated in database
-	 * @param $oWatchItem WatchedItem: object
-	 * @param $user Array or Integer: array of user IDs or user ID
+	 * @param $watchItem WatchedItem: object
+	 * @param $users Array or Integer: array of user IDs or user ID
 	 * @param $timestamp Datetime or null
 	 * @return bool (always true)
 	 */
-	static public function updateGlobalWatch( $oWatchItem, $user, $timestamp ) {
-		global $wgEnableScribeReport, $wgCityId;
+	static public function updateGlobalWatch( $watchItem, $users, $timestamp ) {
+		global $wgExternalDatawareDB, $wgCityId;
 
-		if ( empty($wgEnableScribeReport) ) {
+		if ( !$watchItem instanceof WatchedItem ) {
 			return true;
 		}
 
-		if ( !$oWatchItem instanceof WatchedItem ) {
+		$title = Title::makeTitle( $watchItem->nameSpace, $watchItem->databaseKey );
+		if ( !is_object( $title ) ) {
 			return true;
 		}
 
-		if ( empty($user) ) {
+		$revision = Revision::newFromTitle( $title );
+		if ( !is_object( $revision ) ) {
 			return true;
 		}
 
-		$oTitle = Title::makeTitle( $oWatchItem->nameSpace, $oWatchItem->databaseKey );
-		if ( !is_object( $oTitle ) ) {
-			return true;
-		}
+		$users = wfReturnArray( $users );
+		$rev_id = $revision->getId();
+		$rev_timestamp = $revision->getTimestamp();
 
-		$oRevision = Revision::newFromTitle( $oTitle );
-		if ( !is_object( $oRevision ) ) {
-			return true;
-		}
-
-		if ( !is_array($user) ) {
-			$user = array( $user );
-		}
-
-		$rev_id = $oRevision->getId();
-		$rev_timestamp = $oRevision->getTimestamp();
-
-		foreach ( $user as $user_id ) {
-
-			$params = array (
-				'update' => array (
-					'wl_notificationtimestamp' => $timestamp,
-					'wl_revision' => $rev_id,
-					'wl_rev_timestamp' => $rev_timestamp
-				),
-				'where' => array (
-					'wl_title' => $oWatchItem->databaseKey,
-					'wl_namespace' => $oWatchItem->nameSpace,
-					'wl_user' => $user_id,
-				),
-				'wl_wikia' => $wgCityId
-			);
-
-			try {
-				$message = array(
-					'method' => 'updateWatch',
-					'params' => $params
-				);
-				$data = json_encode( $message );
-				WScribeClient::singleton('trigger')->send($data);
-			}
-			catch( Exception $e ) {
-				Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
-			}
-		}
+		$db = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
+		( new WikiaSQL() )
+			->UPDATE( static::tableName )
+			->SET( static::columnRevisionID, $rev_id )
+			->SET( static::columnRevisionTimeStamp, $rev_timestamp )
+			->SET( static::columnTimeStamp, $timestamp )
+			->WHERE( static::columnCityID )->EQUAL_TO( $wgCityId )
+			->AND_( static::columnNameSpace )->EQUAL_TO( $watchItem->nameSpace )
+			->AND_( static::columnTitle )->EQUAL_TO( $watchItem->databaseKey )
+			->AND_( static::columnUserID )->IN( $users )
+			->run( $db );
 
 		return true;
 	}
@@ -215,11 +167,7 @@ class GlobalWatchlistHook {
 	 * @return bool (always true)
 	 */
 	static public function replaceGlobalWatch( $oldTitle, $newTitle, $rows ) {
-		global $wgEnableScribeReport, $wgCityId;
-
-		if ( empty($wgEnableScribeReport) ) {
-			return true;
-		}
+		global $wgExternalDatawareDB, $wgCityId;
 
 		if ( !$oldTitle instanceof Title ) {
 			return true;
@@ -233,45 +181,35 @@ class GlobalWatchlistHook {
 			return true;
 		}
 
+		$db = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
 		foreach ( $rows as $row ) {
 			if ( empty($row['wl_user']) ) {
 				continue;
 			}
 
-			$oTitle = Title::makeTitle( $row['wl_namespace'], $row['wl_title'] );
-			if ( !is_object( $oTitle ) ) {
+			$title = Title::makeTitle( $row['wl_namespace'], $row['wl_title'] );
+			if ( !is_object( $title ) ) {
 				continue;
 			}
 
-			$oRevision = Revision::newFromTitle( $oTitle );
-			if ( !is_object( $oRevision ) ) {
+			$revision = Revision::newFromTitle( $title );
+			if ( !is_object( $revision ) ) {
 				continue;
 			}
 
-			$row['wl_revision'] = $oRevision->getId();
-			$row['wl_rev_timestamp'] = $oRevision->getTimestamp();
-
-			$params = array (
-				'update' => $row,
-				'where' => array(
-					'wl_title' => $oldTitle->getDBkey(),
-					'wl_namespace' => $oldTitle->getNamespace(),
-					'wl_user' => $row['wl_user']
-				),
-				'wl_wikia' => $wgCityId
-			);
-
-			try {
-				$message = array(
-					'method' => 'updateWatch',
-					'params' => $params
-				);
-				$data = json_encode( $message );
-				WScribeClient::singleton('trigger')->send($data);
-			}
-			catch( Exception $e ) {
-				Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
-			}
+			$revisionID = $revision->getId();
+			$revisionTimeStamp = $revision->getTimestamp();
+			( new WikiaSQL() )
+				->UPDATE( static::tableName )
+				->SET( static::columnNameSpace, $row['wl_namespace'] )
+				->SET( static::columnTitle, $row['wl_title'] )
+				->SET( static::columnRevisionID, $revisionID )
+				->SET( static::columnRevisionTimeStamp, $revisionTimeStamp )
+				->WHERE( static::columnCityID )->EQUAL_TO( $wgCityId )
+				->AND_( static::columnTitle )->EQUAL_TO( $oldTitle->getDBkey() )
+				->AND_( static::columnNameSpace )->EQUAL_TO( $oldTitle->getNamespace() )
+				->AND_( static::columnUserID )->EQUAL_TO( $row['wl_user'] )
+				->run( $db );
 		}
 
 		return true;
@@ -279,42 +217,28 @@ class GlobalWatchlistHook {
 
 	/**
 	 * Hook function to delete all watches for User
-	 * @param $oUser User: object
+	 * @param $user User: object
 	 * @return bool (always true)
 	 */
-	static public function clearGlobalWatch( $oUser) {
-		global $wgEnableScribeReport, $wgCityId;
+	static public function clearGlobalWatch( $user) {
+		global $wgExternalDatawareDB, $wgCityId;
 
-		if ( empty($wgEnableScribeReport) ) {
+		if ( !$user instanceof User ) {
 			return true;
 		}
 
-		if ( !$oUser instanceof User ) {
+		$userID = $user->getId();
+
+		if ( empty( $userID ) ) {
 			return true;
 		}
 
-		$user_id = $oUser->getId();
-
-		if ( empty( $user_id ) ) {
-			return true;
-		}
-
-		$params = array(
-			'wl_user' => $user_id,
-			'wl_wikia' => $wgCityId
-		);
-
-		try {
-			$message = array(
-				'method' => 'removeWatch',
-				'params' => array( $params )
-			);
-			$data = json_encode( $message );
-			WScribeClient::singleton('trigger')->send($data);
-		}
-		catch( Exception $e ) {
-			Wikia::log( __METHOD__, 'scribeClient exception', $e->getMessage() );
-		}
+		$db = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
+		( new WikiaSQL() )
+			->DELETE()->FROM( static::tableName )
+			->WHERE( static::columnCityID )->EQUAL_TO( $wgCityId )
+			->AND_( static::columnUserID )->EQUAL_TO( $userID )
+			->run( $db );
 
 		return true;
 	}
@@ -326,11 +250,16 @@ class GlobalWatchlistHook {
 	 * @return bool (always true)
 	 */
 	static public function resetGlobalWatch( $user_id ) {
+		global $wgExternalDatawareDB, $wgCityId;
 
-		$oUser = User::newFromId( $user_id );
-		$result = self::clearGlobalWatch( $oUser );
+		$db = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
+		( new WikiaSQL() )
+			->UPDATE( static::tableName )
+			->SET( static::columnTimeStamp, null )
+			->WHERE( static::columnCityID )->EQUAL_TO( $wgCityId )
+			->AND_( static::columnUserID )->EQUAL_TO( $user_id )
+			->run( $db );
 
-
-		return $result;
+		return true;
 	}	
 }
