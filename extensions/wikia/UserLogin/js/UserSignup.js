@@ -1,4 +1,4 @@
-/* global WikiaForm, UserSignupAjaxForm */
+/* global WikiaForm, UserSignupAjaxValidation, UserSignupMixin */
 (function () {
 	'use strict';
 
@@ -23,7 +23,7 @@
 				return;
 			}
 
-			this.signupAjaxForm = new UserSignupAjaxForm({
+			this.validator = new UserSignupAjaxValidation({
 				wikiaForm: this.wikiaForm,
 				inputsToValidate: this.inputsToValidate,
 				submitButton: this.submitButton,
@@ -31,10 +31,12 @@
 				captchaField: this.captchaField
 			});
 
-			this.initOptIn();
-			this.setCountryValue();
-			this.setupValidation();
+			// imported via UserSignupMixin
+			this.setCountryValue(this.wikiaForm);
+			this.initOptIn(this.wikiaForm);
+
 			this.termsOpenNewTab();
+			this.setupValidation();
 		},
 
 		/**
@@ -50,8 +52,8 @@
 				return false;
 			}
 
-			$captchaInput = $('#' + this.captchaField);
-			return !$captchaInput.length;
+			$captchaInput = this.wikiaForm.inputs[this.captchaField];
+			return !$captchaInput;
 		},
 
 		/**
@@ -101,19 +103,19 @@
 			inputs.userloginext01
 				.add(inputs.email)
 				.add(inputs.userloginext02)
-				.on('blur.UserSignup', this.signupAjaxForm.validateInput.bind(this.signupAjaxForm));
+				.on('blur.UserSignup', this.validator.validateInput.bind(this.validator));
 
 			inputs.birthday
 				.add(inputs.birthmonth)
 				.add(inputs.birthyear)
-				.on('change.UserSignup', this.signupAjaxForm.validateBirthdate.bind(this.signupAjaxForm));
+				.on('change.UserSignup', this.validator.validateBirthdate.bind(this.validator));
 
 			if (
 				window.wgUserLoginDisableCaptcha !== true &&
 				inputs.recaptcha_response_field // jshint ignore:line
 			) {
 				inputs.recaptcha_response_field // jshint ignore:line
-					.on('keyup.UserSignup', this.signupAjaxForm.activateSubmit.bind(this.signupAjaxForm));
+					.on('keyup.UserSignup', this.validator.activateSubmit.bind(this.validator));
 			}
 		},
 
@@ -126,26 +128,11 @@
 				event.preventDefault();
 				window.open(url, '_blank');
 			});
-		},
-
-		/**
-		 * Handle marketing email opt-in for different locales
-		 */
-		initOptIn: function () {
-			var self = this;
-
-			require(['usersignup.marketingOptIn'], function (optIn) {
-				optIn.init(self.wikiaForm);
-			});
-		},
-		/**
-		 * Send country code upon signup
-		 */
-		setCountryValue: function () {
-			var country = Wikia.geo.getCountryCode();
-			this.wikiaForm.inputs.wpRegistrationCountry.val(country);
 		}
 	};
+
+	// Add common user signup mixin functions for use in this class
+	UserSignupMixin.call(UserSignup);
 
 	// expose global
 	window.UserSignup = UserSignup;
