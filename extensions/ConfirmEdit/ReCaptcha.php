@@ -23,13 +23,6 @@ $wgAutoloadClasses['ReCaptcha'] = $dir . '/ReCaptcha.class.php';
 
 $wgHooks['BeforePageDisplay'][] = 'efReCaptchaOnBeforePageDisplay';
 
-/**
- * Sets the theme for ReCaptcha
- *
- * See http://code.google.com/apis/recaptcha/docs/customization.html
- */
-$wgReCaptchaTheme = 'white';
-
 $wgExtensionFunctions[] = 'efReCaptcha';
 
 /**
@@ -41,7 +34,7 @@ function efReCaptcha() {
 	$wg = F::app()->wg;
 
 	if ( $wg->ReCaptchaPublicKey == '' || $wg->ReCaptchaPrivateKey == '' ) {
-		throw new Exception( wfMessage( 'recaptcha-misconfigured' ) );
+		throw new Exception( wfMessage( 'recaptcha-misconfigured' )->escaped() );
 	}
 }
 
