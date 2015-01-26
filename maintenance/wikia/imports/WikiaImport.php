@@ -22,7 +22,7 @@ abstract class WikiaImport {
 		while( $this->proceed() && $this->getSource() ) {
 			if ( $this->getContent() ) {
 				if ( $this->translate() ) {
-					wfWaitForSlaves( 5 );
+					wfWaitForSlaves();
 					$this->save();
 				}
 			}

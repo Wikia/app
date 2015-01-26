@@ -96,17 +96,10 @@ class UserLoginFacebookForm extends UserLoginForm {
 	private function connectWithFacebook( User $user ) {
 		$fbId = FacebookClient::getInstance()->getUserId();
 
-		if ( F::app()->wg->EnableFacebookClientExt ) {
-			$fbClientFactory = new \FacebookClientFactory();
-			$status = $fbClientFactory->connectToFacebook( $user->getId(), $fbId );
-			if ( ! $status->isGood() ) {
-				return false;
-			}
-		} else {
-			FBConnectDB::addFacebookID( $user, $fbId );
-		}
+		$fbClientFactory = new \FacebookClientFactory();
+		$status = $fbClientFactory->connectToFacebook( $user->getId(), $fbId );
 
-		return true;
+		return $status->isGood();
 	}
 
 	/**

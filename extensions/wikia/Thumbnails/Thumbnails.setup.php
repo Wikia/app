@@ -1,4 +1,5 @@
-<?
+<?php
+
 $wgExtensionCredits['videohandlers'][] = [
 	'name' => 'Thumbnails',
 	'author' => [
@@ -9,6 +10,7 @@ $wgExtensionCredits['videohandlers'][] = [
 		"James Sutterfield <james at wikia-inc.com>",
 	],
 	'descriptionmsg' => 'thumbnails-extension-description',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Thumbnails'
 ];
 
 $dir = dirname( __FILE__ ) . '/';

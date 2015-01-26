@@ -37,7 +37,7 @@ class unsuppressCrossWiki extends WikimediaMaintenance {
 			}
 			$lb->reuseConnection( $dbw ); // not really needed
 			# Don't lag too bad
-			wfWaitForSlaves( 5 );
+			wfWaitForSlaves();
 		}
 	}
 }

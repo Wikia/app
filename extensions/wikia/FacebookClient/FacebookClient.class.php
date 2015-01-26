@@ -226,41 +226,6 @@ class FacebookClient {
 	}
 
 	/**
-	 * Same as FacebookClient::getUserInfo but returns the data as an array rather than a Facebook\GraphUser object.
-	 *
-	 * @param int $userId
-	 *
-	 * @return array
-	 */
-	public function getUserInfoAsArray( $userId = 0 ) {
-		$userInfo = $this->getUserInfo( $userId );
-		if ( ! $userInfo instanceof Facebook\GraphUser ) {
-			return [];
-		}
-
-		$properties = [
-			'email',
-			'first_name',
-			'middle_name',
-			'last_name',
-			'gender',
-			'link',
-			'locale',
-			'name',
-			'timezone',
-			'updated_time',
-			'verified'
-		];
-		$data = [];
-
-		foreach ( $properties as $prop ) {
-			$data[ $prop ] = $userInfo->getProperty( $prop );
-		}
-
-		return $data;
-	}
-
-	/**
 	 * Returns what Facebook reports as the full user name for the current user.
 	 *
 	 * @param int $user
@@ -270,6 +235,21 @@ class FacebookClient {
 	public function getFullName( $user = 0 ) {
 		$userInfo = $this->getUserInfo( $user );
 		return $userInfo->getName();
+	}
+
+	/**
+	 * Returns user's email address from Facebook
+	 *
+	 * @param int $userId Facebook User id
+	 * @return string|null email address if exists
+	 */
+	public function getEmail( $userId ) {
+		$userInfo = $this->getUserInfo( $userId );
+		if ( !$userInfo ) {
+			return null;
+		}
+
+		return $userInfo->getProperty( 'email' );
 	}
 
 	/**

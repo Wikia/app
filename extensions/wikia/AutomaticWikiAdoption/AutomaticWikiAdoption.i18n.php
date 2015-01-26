@@ -120,6 +120,7 @@ Helpful Tools:
  * @author TK-999
  */
 $messages['qqq'] = array(
+	'wikiadoption-desc' => '{{desc}}',
 	'tog-adoptionmails' => 'Parameters:
 * $1 is the wiki name potentially up for adoption.',
 	'wikiadoption-pref-label' => 'This message is located within the Email tab of Special:Preferences. Parameters:
@@ -982,6 +983,7 @@ $messages['fo'] = array(
 );
 
 /** French (français)
+ * @author 0x010C
  * @author Balzac 40
  * @author Notafish
  * @author Urhixidur
@@ -994,7 +996,7 @@ $messages['fr'] = array(
 	'wikiadoption-desc' => 'Une extension AutomaticWikiAdoption pour MediaWiki',
 	'wikiadoption-header' => 'Adopter ce wiki',
 	'wikiadoption-button-adopt' => 'Oui, je veux adopter {{SITENAME}} !',
-	'wikiadoption-adopt-inquiry' => 'Pour en savoir plus !',
+	'wikiadoption-adopt-inquiry' => 'En savoir plus !',
 	'wikiadoption-description' => '$1, prêt à adopter {{SITENAME}} ?
 <br /><br />
 Il n’y a pas eu d’administrateur actif sur {{SITENAME}} depuis un moment et nous recherchons un nouveau responsable pour aider à développer le contenu de ce wiki et en agrandir la communauté ! En tant que personne ayant déjà contribué à {{SITENAME}}, nous nous demandons si vous aimeriez ce travail.
@@ -1067,8 +1069,8 @@ L’utilisateur ayant adopté #WIKINAME y aura maintenant les statuts de bureauc
 L’équipe Wikia<br /><br />
 
 Vous pouvez <a href="$3">vous désabonner</a> des mises à jour de cette liste.',
-	'tog-adoptionmails' => "Envoyez-moi un message si $1 devient disponible pour l'adoption",
-	'tog-adoptionmails-v2' => '...le wiki devient disponible à l’adoption',
+	'tog-adoptionmails' => "Envoyez-moi un message si $1 devient disponible à l'adoption",
+	'tog-adoptionmails-v2' => '...si le wiki devient disponible à l’adoption',
 	'wikiadoption-pref-label' => 'La modification de ces préférences affectera seulement les courriels de $1.',
 	'wikiadoption-welcome-header' => 'Félicitations ! Vous avez adopté {{SITENAME}} !',
 	'wikiadoption-welcome-body' => 'Vous êtes maintenant bureaucrate sur ce wiki. Avec votre nouveau statut, vous avez maintenant accès à tous les outils qui vous aideront à gérer {{SITENAME}}.
@@ -2582,6 +2584,7 @@ $messages['ps'] = array(
  * @author Hamilton Abreu
  * @author Pttraduc
  * @author Rhaijin
+ * @author Vitorvicentevalente
  */
 $messages['pt'] = array(
 	'wikiadoption' => 'Adoção automática de wikis',
@@ -2597,7 +2600,7 @@ Ao adotar a wiki será promovido a administrador e burocrata para que tenha aces
 <br /><br />
 Está preparado(a) para dar os próximos passos e ajudar a {{SITENAME}}?',
 	'wikiadoption-know-more-header' => 'Quer saber mais?',
-	'wikiadoption-know-more-description' => 'Para mais informações visite estes links. E claro, contacte-nos se tiver alguma pergunta!',
+	'wikiadoption-know-more-description' => 'Para mais informações visite estas ligações. E claro, contacte-nos se tiver alguma pergunta!',
 	'wikiadoption-adoption-successed' => 'Parabéns! Agora é administrador desta wiki!',
 	'wikiadoption-adoption-failed' => 'Infelizmente, tentámos torná-lo administrador desta wiki mas não funcionou. [http://community.wikia.com/Special:Contact Contacte-nos] e tentaremos ajudá-lo.',
 	'wikiadoption-not-allowed' => 'Desculpe. Não pode adotar esta wiki agora.',

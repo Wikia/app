@@ -236,6 +236,17 @@ abstract class BaseRssModel extends WikiaService {
 		return $wikisData;
 	}
 
+	protected function deleteRow( $wikiaId, $pageId, $feed ){
+		$feed = self::getStagingPrefix() . $feed;
+		$db = wfGetDB( DB_MASTER, null,  $this->getDbMaster() );
+		( new WikiaSQL() )
+			->DELETE( "wikia_rss_feeds" )
+			->WHERE( "wrf_wikia_id" )->EQUAL_TO( $wikiaId )
+			->AND_( 'wrf_page_id' )->EQUAL_TO( $pageId )
+			->AND_( 'wrf_feed' )->EQUAL_TO( $feed )
+			->run( $db );
+	}
+
 	protected function getWikiService() {
 		return new WikiService();
 	}
@@ -422,8 +433,9 @@ abstract class BaseRssModel extends WikiaService {
 	}
 
 	protected function finalizeRecords( $rawData, $feedName ) {
-		$out = $this->processItems( $rawData );
-		return $this->addFeedsToDb( $out, $feedName );
+		$this->cleanDeadUrlsInDB( $feedName );
+		$items = $this->processItems( $rawData );
+		return $this->addFeedsToDb( $items, $feedName );
 	}
 
 	protected function makeBlogTitle( $item ) {
@@ -530,6 +542,30 @@ abstract class BaseRssModel extends WikiaService {
 			$newTimestamp++;
 		}
 		return $newTimestamp;
+	}
+
+	/**
+	 * Checks if response code is different than 404. WE don't care about 503 etc as they might change
+	 * @param $wikiaid
+	 * @param $pageid
+	 * @return bool
+	 */
+	protected function checkTitleExists( $wikiaid, $pageid  ) {
+		$t = GlobalTitle::newFromId( $pageid , $wikiaid);
+		return ($t instanceof GlobalTitle) && $t->exists();
+	}
+
+	/**
+	 * Removes "dead" urls from DB
+	 * @param $feedName
+	 */
+	protected function cleanDeadUrlsInDB( $feedName ) {
+		$urlsMap = $this->getFeedData();
+		foreach ( $urlsMap as $url => $item ) {
+			if ( $item[ 'wikia_id' ] && $item[ 'page_id' ] && !$this->checkTitleExists(  $item[ 'wikia_id' ], $item[ 'page_id' ]  ) ) {
+				$this->deleteRow( $item[ 'wikia_id' ], $item[ 'page_id' ], $feedName );
+			}
+		}
 	}
 
 }

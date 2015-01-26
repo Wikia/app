@@ -3,6 +3,16 @@
 /**
  * switch colocation cookie
  */
+ 
+$wgExtensionCredits[ 'specialpage' ][ ] = array(
+	'name' => 'Datacenter',
+	'author' => 'Wikia',
+	'descriptionmsg' => 'datacenter-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Datacenter',
+);
+
+//i18n
+$wgExtensionMessagesFiles['Datacenter'] = __DIR__ . '/Datacenter.i18n.php';
 
 
 $wgSpecialPages[ "Datacenter" ] = "SpecialDatacenter";

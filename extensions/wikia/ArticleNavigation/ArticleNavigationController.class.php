@@ -92,11 +92,19 @@ class ArticleNavigationController extends WikiaController {
 					'accesskey' => $contentAction['accesskey']
 				];
 
-				if ( $wgUser->isAnon() &&
+				// Check if edit or viewsource link should be displayed.
+				// In case of viewsource without namespace and cascade protection
+				// we don't want to display user login modal
+				if (
+					$action == 'viewsource' &&
+					$wgUser->isAnon() &&
 					!$wgUser->isBlocked() &&
 					!$wgTitle->userCan( 'edit' ) &&
-					$this->isEdit($contentAction)
+					!$wgTitle->isProtected() &&
+					!$wgTitle->isNamespaceProtected( $wgUser ) &&
+					!$wgTitle->isCascadeProtected()
 				) {
+					$data[ 'title' ] = wfMessage( 'edit' )->text();
 					$data[ 'class' ] = 'force-user-login';
 				}
 
@@ -108,6 +116,7 @@ class ArticleNavigationController extends WikiaController {
 					$data['title'] = $commentsTalk['title'] . " <span class='comments-talk-counter'>" . $commentsTalk['formattedCount'] . "</span>";
 					$data['href'] = $commentsTalk['href'];
 					$data['tooltip'] = $commentsTalk['title'];
+					$data['rawTitle'] = true;
 				}
 
 				if ( isset( $contentAction['rel'] ) ) {
@@ -257,9 +266,5 @@ class ArticleNavigationController extends WikiaController {
 		}
 
 		return $renderedData;
-	}
-
-	private function isEdit($data) {
-		return !empty($data['id']) && ($data['id'] == 'ca-viewsource');
 	}
 }

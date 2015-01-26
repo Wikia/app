@@ -18,7 +18,7 @@ $wgExtensionCredits['other'][] = array(
 	"name" => "Top 10 lists",
 	"description" => "Top 10 lists",
 	"descriptionmsg" => "toplists-desc",
-	"url" => "http://help.wikia.com/wiki/Help:Top_lists",
+	"url" => "http://community.wikia.com/wiki/Help:Top_lists",
 	"author" => array(
 		'Federico "Lox" Lucignano <federico@wikia-inc.com>',
 		'Adrian Wieczorek <adi@wikia-inc.com>'
@@ -134,7 +134,6 @@ $wgHooks[ 'ArticleRevisionUndeleted' ][] = 'TopListHelper::onArticleRevisionUnde
 $wgHooks[ 'TitleMoveComplete' ][] = 'TopListHelper::onTitleMoveComplete';
 $wgHooks[ 'UserGetRights' ][] = 'TopListHelper::onUserGetRights';
 $wgHooks[ 'getUserPermissionsErrors' ][] = 'TopListHelper::onGetUserPermissionsErrors';
-$wgHooks[ 'FBConnect::BeforePushEvent' ][] = 'TopListHelper::onBeforePushEvent';
 $wgHooks[ 'ArticleService::getTextSnippet::beforeStripping' ][] = 'TopListHelper::onArticleServiceBeforeStripping';
 
 //parser functions, tags and attributes

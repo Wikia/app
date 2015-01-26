@@ -18,7 +18,7 @@ $messages['en'] = [
  */
 $messages['qqq'] = [
 	'wikia-in-your-lang-description' => '{{desc}}',
-	'wikia-in-your-lang-available' => 'A message to show when a wikia is available in a user\'s native language.',
+	'wikia-in-your-lang-available' => 'A message to show when a wikia is available in a user\'s native language. Parameters are: 1 - visited wikia sitename, 2 - target wikia url, 3 - target wikia sitename.',
 ];
 
 /**

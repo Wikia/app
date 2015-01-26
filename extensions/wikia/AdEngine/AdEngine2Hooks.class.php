@@ -6,13 +6,14 @@ class AdEngine2Hooks {
 	const ASSET_GROUP_CORE = 'oasis_shared_core_js';
 	const ASSET_GROUP_ADENGINE = 'adengine2_js';
 	const ASSET_GROUP_VENUS_ADS = 'adengine2_venus_ads_js';
-	const ASSET_GROUP_ADENGINE_RUBICON_RTP = 'adengine2_rubicon_rtp_js';
-	const ASSET_GROUP_ADENGINE_MOBILE = 'wikiamobile_ads_js';
-	const ASSET_GROUP_ADENGINE_TABOOLA = 'adengine2_taboola_js';
 	const ASSET_GROUP_ADENGINE_AMAZON_MATCH = 'adengine2_amazon_match_js';
-	const ASSET_GROUP_ADENGINE_TRACKING = 'adengine2_tracking_js';
+	const ASSET_GROUP_ADENGINE_INTERSTITIAL = 'adengine2_interstitial_js';
+	const ASSET_GROUP_ADENGINE_MOBILE = 'wikiamobile_ads_js';
 	const ASSET_GROUP_ADENGINE_LATE = 'adengine2_late_js';
-	const ASSET_GROUP_SPOTLIGHTS = 'adengine2_spotlights_js';
+	const ASSET_GROUP_ADENGINE_RUBICON_RTP = 'adengine2_rubicon_rtp_js';
+	const ASSET_GROUP_ADENGINE_TABOOLA = 'adengine2_taboola_js';
+	const ASSET_GROUP_ADENGINE_TRACKING = 'adengine2_tracking_js';
+	const ASSET_GROUP_KRUX_MOBILE = 'mobile_krux_js';
 	const ASSET_GROUP_LIFTIUM = 'liftium_ads_js';
 	const ASSET_GROUP_LIFTIUM_EXTRA = 'liftium_ads_extra_js';
 	const ASSET_GROUP_TOP_INCONTENT_JS = 'adengine2_top_in_content_boxad_js';
@@ -26,9 +27,10 @@ class AdEngine2Hooks {
 
 		// TODO: review top and bottom vars (important for adsinhead)
 
-		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd,
+		global $wgAdDriverForceDirectGptAd, $wgAdDriverForceLiftiumAd, $wgAdDriverUseInterstitial,
 			   $wgLiftiumOnLoad, $wgNoExternals, $wgEnableKruxTargeting,
-			   $wgAdEngineDisableLateQueue, $wgLoadAdsInHead, $wgLoadLateAdsAfterPageLoad;
+			   $wgAdEngineDisableLateQueue, $wgLoadAdsInHead, $wgLoadLateAdsAfterPageLoad,
+			   $wgEnableKruxOnMobile;
 
 		$wgNoExternals = $request->getBool( 'noexternals', $wgNoExternals );
 		$wgLiftiumOnLoad = $request->getBool( 'liftiumonload', (bool)$wgLiftiumOnLoad );
@@ -37,11 +39,13 @@ class AdEngine2Hooks {
 
 		$wgAdDriverForceDirectGptAd = $request->getBool( 'forcedirectgpt', $wgAdDriverForceDirectGptAd );
 		$wgAdDriverForceLiftiumAd = $request->getBool( 'forceliftium', $wgAdDriverForceLiftiumAd );
+		$wgAdDriverUseInterstitial = $request->getBool( 'interstitial', $wgAdDriverUseInterstitial );
 
 		$wgLoadAdsInHead = $request->getBool( 'adsinhead', $wgLoadAdsInHead );
 		$wgLoadLateAdsAfterPageLoad = $request->getBool( 'lateadsafterload', $wgLoadLateAdsAfterPageLoad );
 
 		$wgEnableKruxTargeting = !$wgAdEngineDisableLateQueue && !$wgNoExternals && $wgEnableKruxTargeting;
+		$wgEnableKruxOnMobile = $request->getBool( 'enablekrux', $wgEnableKruxOnMobile );
 
 		return true;
 	}
@@ -58,6 +62,7 @@ class AdEngine2Hooks {
 		// DR
 		$vars[] = 'wgSitewideDisableGpt';
 		$vars[] = 'wgSitewideDisableLiftium';
+		$vars[] = 'wgSitewideDisableNewGaAnalitycs';
 		$vars[] = 'wgSitewideDisableSevenOneMedia';
 		$vars[] = 'wgSitewideDisableRubiconRTP';
 
@@ -96,10 +101,6 @@ class AdEngine2Hooks {
 		// GA vars
 		$vars['wgGaHasAds'] = isset($adContext['opts']['showAds']);
 
-		if ($wg->EnableOpenXSPC) {
-			$vars['wgEnableOpenXSPC'] = $wg->EnableOpenXSPC;
-		}
-
 		return true;
 	}
 
@@ -112,7 +113,8 @@ class AdEngine2Hooks {
 	 */
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
 
-		global $wgAdDriverUseBottomLeaderboard, $wgAdDriverUseTopInContentBoxad, $wgAdDriverUseTaboola;
+		global $wgAdDriverUseInterstitial, $wgAdDriverUseBottomLeaderboard,
+			$wgAdDriverUseTopInContentBoxad, $wgAdDriverUseTaboola;
 
 		$coreGroupIndex = array_search( self::ASSET_GROUP_CORE, $jsAssets );
 		if ( $coreGroupIndex === false ) {
@@ -123,20 +125,22 @@ class AdEngine2Hooks {
 		if ( AdEngine2Service::areAdsInHead() ) {
 			if ( AdEngine2Service::shouldLoadLateQueue() ) {
 				array_splice( $jsAssets, $coreGroupIndex + 1, 0, self::ASSET_GROUP_ADENGINE_LATE );
-				array_splice( $jsAssets, $coreGroupIndex + 2, 0, self::ASSET_GROUP_SPOTLIGHTS );
 			}
 			// The ASSET_GROUP_ADENGINE_LATE package was added to the blocking group
 		} else {
 			array_splice( $jsAssets, $coreGroupIndex + 1, 0, self::ASSET_GROUP_ADENGINE );
 			if ( AdEngine2Service::shouldLoadLateQueue() ) {
 				array_splice( $jsAssets, $coreGroupIndex + 2, 0, self::ASSET_GROUP_ADENGINE_LATE );
-				array_splice( $jsAssets, $coreGroupIndex + 3, 0, self::ASSET_GROUP_SPOTLIGHTS );
 			}
 		}
 
 		if ( AdEngine2Service::shouldLoadLiftium() ) {
 			$jsAssets[] = self::ASSET_GROUP_LIFTIUM;
 			$jsAssets[] = self::ASSET_GROUP_LIFTIUM_EXTRA;
+		}
+
+		if ( $wgAdDriverUseInterstitial === true ) {
+			$jsAssets[] = self::ASSET_GROUP_ADENGINE_INTERSTITIAL;
 		}
 
 		if ( $wgAdDriverUseTopInContentBoxad ) {
@@ -224,7 +228,7 @@ class AdEngine2Hooks {
 	 */
 	public static function onWikiaMobileAssetsPackages( array &$jsStaticPackages, array &$jsExtensionPackages, array &$scssPackages ) {
 
-		global $wgAdDriverUseTaboola;
+		global $wgAdDriverUseTaboola, $wgEnableKruxOnMobile;
 
 		$coreGroupIndex = array_search( self::ASSET_GROUP_ADENGINE_MOBILE, $jsStaticPackages );
 
@@ -235,6 +239,10 @@ class AdEngine2Hooks {
 
 		if ( $wgAdDriverUseTaboola === true ) {
 			array_splice( $jsStaticPackages, $coreGroupIndex, 0, self::ASSET_GROUP_ADENGINE_TABOOLA );
+		}
+
+		if ($wgEnableKruxOnMobile === true) {
+			$jsStaticPackages[] = self::ASSET_GROUP_KRUX_MOBILE;
 		}
 
 		return true;

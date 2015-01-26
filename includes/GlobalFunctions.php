@@ -3772,10 +3772,9 @@ function wfGetNull() {
  *
  * Wikia note: provide external DB name in $wiki parameter to wait for external DB
  *
- * @param $maxLag Integer (deprecated)
  * @param $wiki mixed Wiki identifier accepted by wfGetLB
  */
-function wfWaitForSlaves( $maxLag = false, $wiki = false ) {
+function wfWaitForSlaves( $wiki = false ) {
 	$lb = wfGetLB( $wiki );
 	// bug 27975 - Don't try to wait for slaves if there are none
 	// Prevents permission error when getting master position
@@ -3783,7 +3782,7 @@ function wfWaitForSlaves( $maxLag = false, $wiki = false ) {
 		/* Wikia change - added array() and $wiki parameters to getConnection to be able to wait for various DBs */
 		$dbw = $lb->getConnection( DB_MASTER, array(), $wiki );
 		$pos = $dbw->getMasterPos();
-		$lb->waitForAll( $pos );
+		$lb->waitForAll( $pos, $wiki );
 	}
 }
 

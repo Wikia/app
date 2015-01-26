@@ -91,8 +91,8 @@ describe('AdEngine2', function () {
 			},
 			adConfigMock = mockAdConfig([fakeProvider]),
 			lazyQueueMock = mockLazyQueue(function (callback) {
-				callback(['slot1']);
-				callback(['slot2', null, null, 'Provider2']); // the Provider2 should be ignored
+				callback('slot1');
+				callback('slot2');
 			}),
 			adEngine;
 
@@ -124,8 +124,8 @@ describe('AdEngine2', function () {
 			},
 			adConfigMock = mockAdConfig([fakeProvider]),
 			lazyQueueMock = mockLazyQueue(function (callback) {
-				callback(['slot1']);
-				callback(['slot2', null, null, 'Provider2']); // the Provider2 should be ignored
+				callback('slot1');
+				callback('slot2');
 			}),
 			adEngine;
 

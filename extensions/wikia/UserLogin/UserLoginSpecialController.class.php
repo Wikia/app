@@ -39,8 +39,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		//Oasis/Monobook, will be filtered in AssetsManager :)
 		$this->response->addAsset( 'extensions/wikia/UserLogin/css/UserLogin.scss' );
 
-		// TODO: change this to FacebookClient or remove the check if we're enabled globally UC-188
-		if ( !empty($this->wg->EnableFacebookConnectExt) ) {
+		if ( !empty( $this->wg->EnableFacebookClientExt ) ) {
 			$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js' );
 			$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebook.js' );
 		}
@@ -50,7 +49,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 		//Wikiamobile, will be filtered in AssetsManager by config :)
 		$this->response->addAsset(
-				( $this->wg->request->getInt( 'recover' ) === 1 || empty( $this->wg->EnableFacebookConnectExt ) ) ?
+				( $this->wg->request->getInt( 'recover' ) === 1 || empty( $this->wg->EnableFacebookClientExt ) ) ?
 					'userlogin_js_wikiamobile' :
 					'userlogin_js_wikiamobile_fbconnect'
 		);
@@ -330,7 +329,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->response->setVal( 'requestType',  $this->request->getVal( 'requestType', '' ) );
 
 		// don't render FBconnect button when the extension is disabled
-		if ( empty( $this->wg->EnableFacebookConnectExt ) ) {
+		if ( empty( $this->wg->EnableFacebookClientExt ) ) {
 			$this->skipRendering();
 		}
 
@@ -345,7 +344,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->response->setVal( 'requestType',  $this->request->getVal( 'requestType', '' ) );
 
 		// don't render FBconnect button when the extension is disabled
-		if ( empty( $this->wg->EnableFacebookConnectExt ) ) {
+		if ( empty( $this->wg->EnableFacebookClientExt ) ) {
 			$this->skipRendering();
 		}
 

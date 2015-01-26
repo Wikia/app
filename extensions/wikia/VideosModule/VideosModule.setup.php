@@ -23,6 +23,7 @@ $wgExtensionCredits['videosmodule'][] = array(
 		"Mateusz Warkocki <warkot at wikia-inc.com>",
 	),
 	'descriptionmsg' => 'wikia-videosmodule-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/VideosModule'
 );
 
 $dir = dirname( __FILE__ ) . '/';

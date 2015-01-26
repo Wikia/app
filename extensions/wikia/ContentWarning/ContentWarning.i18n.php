@@ -8,6 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'content-warning-desc' => 'Provides a content warning to wikis that may contain objectionable content.',
 	'content-warning-title' => 'Content Warning',
 	'content-warning-body' => 'The wiki at $1 may contain objectionable content such as depictions of violence, sexual suggestion, dark humor parody, or other materials not intended for a general audience.
 
@@ -79,6 +80,7 @@ In generale, Wikia non esamina né approva il contenuto di questa o di qualsiasi
 );
 
 $messages['qqq'] = array(
+	'content-warning-desc' => '{{desc}}',
 	'content-warning-title' => 'The main title for content warning.',
 	'content-warning-body' => 'The body of content warning. $1 is domain name.',
 	'content-warning-button-continue' => 'Button to agree to the content.',

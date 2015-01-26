@@ -4240,21 +4240,28 @@ class User {
 		$type = substr( $hash, 0, 3 );
 
 		$result = false;
-		if( !wfRunHooks( 'UserComparePasswords', array( &$hash, &$password, &$userId, &$result ) ) ) {
+
+		$bHeliosCheck = false;
+
+		if( !wfRunHooks( 'UserComparePasswords', array( &$hash, &$password, &$userId, &$resulti, &$bHeliosCheck ) ) ) {
 			return $result;
 		}
 
 		if ( $type == ':A:' ) {
 			# Unsalted
-			return md5( $password ) === substr( $hash, 3 );
+			$bCheck = md5( $password ) === substr( $hash, 3 );
 		} elseif ( $type == ':B:' ) {
 			# Salted
 			list( $salt, $realHash ) = explode( ':', substr( $hash, 3 ), 2 );
-			return md5( $salt.'-'.md5( $password ) ) === $realHash;
+			$bCheck = md5( $salt.'-'.md5( $password ) ) === $realHash;
 		} else {
 			# Old-style
-			return self::oldCrypt( $password, $userId ) === $hash;
+			$bCheck = self::oldCrypt( $password, $userId ) === $hash;
 		}
+
+		wfRunHooks( 'UserAfterComparePasswords', array( $bHeliosCheck, $bCheck, $result, $type, $hash, $userId ) );
+
+		return $bCheck;
 	}
 
 	/**

@@ -179,5 +179,11 @@
 		}
 	};
 
+	WikiaForm.prototype.disableAll = function () {
+		$.each(this.inputs, function () {
+			this.attr('disabled', true);
+		});
+	};
+
 	window.WikiaForm = WikiaForm;
 })();

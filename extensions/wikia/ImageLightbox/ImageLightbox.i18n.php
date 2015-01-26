@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'imagelightbox-desc' => 'Add lightbox preview for images within article',
 	'lightbox_details_tooltip' => 'View photo details',
 	'lightbox-forum' => 'Forum',
 	'lightbox-standard-link' => 'Standard link',
@@ -38,6 +39,7 @@ $1
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'imagelightbox-desc' => '{{desc}}',
 	'lightbox-forum' => '{{Identical|Forum}}',
 	'lightbox-send' => '{{Identical|Send}}',
 	'lightbox-share-description' => 'Parameters:
@@ -279,7 +281,7 @@ $messages['diq'] = array(
 	'lightbox-share-button-www' => 'Vıla ke',
 	'lightbox-share-button-embed' => 'Embed',
 	'lightbox-share-email-page-label-address' => 'Adresê e-posta',
-	'lightbox-share-email-ok-caption' => 'Tesdiqiye',
+	'lightbox-share-email-ok-caption' => 'Tesdiq',
 	'lightbox-share-email-error-caption' => 'Xeta',
 );
 

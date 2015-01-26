@@ -299,10 +299,10 @@ class AsyncTaskList {
 		] );
 
 		if ( $channel === null ) {
-			$exception = null;
-			$connection = $this->connection();
-			$channel = $connection->channel();
+			$exception = $connection = null;
 			try {
+				$connection = $this->connection();
+				$channel = $connection->channel();
 				$channel->basic_publish( $message, '', $this->getQueue()->name() );
 			} catch ( AMQPRuntimeException $e ) {
 				$exception = $e;
@@ -310,8 +310,13 @@ class AsyncTaskList {
 				$exception = $e;
 			}
 
-			$channel->close();
-			$connection->close();
+			if ( $channel !== null ) {
+				$channel->close();
+			}
+
+			if ( $connection !== null ) {
+				$connection->close();
+			}
 
 			if ( $exception !== null ) {
 				WikiaLogger::instance()->critical( "Failed to queue task", [ 'error' => $exception->getMessage() ] );
@@ -326,6 +331,8 @@ class AsyncTaskList {
 
 	/**
 	 * @return AMQPConnection connection to message broker
+	 * @throws AMQPRuntimeException
+	 * @throws AMQPTimeoutException
 	 */
 	protected function connection() {
 		global $wgTaskBroker;

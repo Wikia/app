@@ -8,6 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'specialcontact-desc' => 'Wikia\'s contact [[Special:Contact]] form',
 	/* special page */
 	'contact' => 'Contact Wikia',
 	'specialcontact-wikia' => 'Contact Wikia',

@@ -2,11 +2,14 @@
 (function () {
 	'use strict';
 
+	/**
+	 * JS for signing up with a new account, both on mobile and desktop
+	 */
 	var UserSignup = {
 		inputsToValidate: ['userloginext01', 'email', 'userloginext02', 'birthday'],
 		notEmptyFields: ['userloginext01', 'email', 'userloginext02', 'birthday', 'birthmonth', 'birthyear'],
-		captchaField: window.wgUserLoginDisableCaptcha ? '' : 'recaptcha_response_field',
 		invalidInputs: {},
+		useCaptcha: !window.wgUserLoginDisableCaptcha,
 
 		/**
 		 * Enable user signup form with ajax validation
@@ -14,6 +17,12 @@
 		init: function () {
 			this.wikiaForm = new WikiaForm('#WikiaSignupForm');
 			this.submitButton = this.wikiaForm.inputs.submit;
+			this.captchaField = this.useCaptcha ? 'recaptcha_response_field' : '';
+			if (this.captchaLoadError()) {
+				this.handleCaptchaLoadError();
+				return;
+			}
+
 			this.signupAjaxForm = new UserSignupAjaxForm({
 				wikiaForm: this.wikiaForm,
 				inputsToValidate: this.inputsToValidate,
@@ -26,6 +35,61 @@
 			this.setCountryValue();
 			this.setupValidation();
 			this.termsOpenNewTab();
+		},
+
+		/**
+		 * Check if the captcha solution fails to load, possibly due to google being blocked (UC-202)
+		 * @returns {boolean}
+		 */
+		captchaLoadError: function () {
+			var $captchaInput;
+
+			// if we don't need captcha on this form, there's nothing to fail
+			// Temporary skin check fix until we sort out captcha on mobile UC-162
+			if (!this.useCaptcha || window.skin === 'wikiamobile') {
+				return false;
+			}
+
+			$captchaInput = $('#' + this.captchaField);
+			return !$captchaInput.length;
+		},
+
+		/**
+		 * Captcha is required for signup, so if it fails to load, disable the form
+		 * fields and inform the user. Note, this is different from when a user
+		 * fails to match the blurry word.
+		 */
+		handleCaptchaLoadError: function () {
+			this.wikiaForm.disableAll();
+
+			function createModal(uiModal) {
+				var modalConfig = {
+					vars: {
+						id: 'catchaLoadErrorModal',
+						classes: ['captcha-load-error-modal'],
+						size: 'medium',
+						title: $.msg('usersignup-page-captcha-load-fail-title'),
+						content: $.msg('usersignup-page-captcha-load-fail-text')
+					}
+				};
+
+				uiModal.createComponent(modalConfig, function (captchaErrorModal) {
+					captchaErrorModal.show();
+				});
+			}
+
+			require(['wikia.ui.factory'], function (uiFactory) {
+				$.when(uiFactory.init('modal'))
+					.then(createModal);
+			});
+
+			Wikia.Tracker.track({
+				action: Wikia.Tracker.ACTIONS.ERROR,
+				category: 'user-sign-up',
+				label: 'captcha-load-fail',
+				trackingMethod: 'both',
+				country: Wikia.geo.getCountryCode()
+			});
 		},
 
 		/**

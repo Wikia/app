@@ -8,6 +8,8 @@
 $messages = array();
 
 $messages['en'] = array(
+	'forum-desc' => 'Wikia\'s Special:Forum extension',
+	'forum-disabled-desc' => 'Wikia\'s Special:Forum extension; disabled',
 	'forum-forum-title' => 'Forum',
 	'forum-active-threads' => '$1 {{PLURAL:$1|Active Discussion|Active Discussions}}',
 	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|Active Discussion|Active Discussions}} about: '''[[$2]]'''",
@@ -237,6 +239,8 @@ your email preferences here: http://community.wikia.com/Special:Preferences',
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'forum-desc' => '{{desc}}',
+	'forum-disabled-desc' => '{{desc}}',
 	'forum-forum-title' => 'The main title for the forum.
 {{Identical|Forum}}',
 	'forum-active-threads' => 'Total number of active threads in a forum board. Appears above the list of all threads in a forum board. Parameters:
@@ -1402,6 +1406,7 @@ ___________________________________________ <br />
  * @author Subi
  */
 $messages['eu'] = array(
+	'forum-board-topics' => 'Gaiak',
 	'forum-board-thread-replies' => '{{PLURAL:$1|Mezu bat|$1 mezu}}',
 	'forum-thread-reply-post' => 'Erantzun',
 );
@@ -2992,11 +2997,12 @@ ___________________________________________<br />
 /** Portuguese (português)
  * @author Imperadeiro98
  * @author Josep Maria 15.
+ * @author Vitorvicentevalente
  */
 $messages['pt'] = array(
 	'forum-forum-title' => 'Fórum',
 	'forum-active-threads' => '$1 {{PLURAL:$1|Discussão ativa|Discussões ativas}}',
-	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|Discussão Ativa|Discussões Ativas}} sobre: '''[[$2]]'''",
+	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|Discussão ativa|Discussões ativas}} sobre: '''[[$2]]'''",
 	'forum-header-total-threads' => '<em>$1</em><span>{{PLURAL:$1|Conversa<br />nesse Fórum|Conversas<br />nesse Fórum}}</span>',
 	'forum-header-active-threads' => '<em>$1</em><span>{{PLURAL:$1|Ativa<br />Discussão|Ativas<br />Discussões}}</span>',
 	'forum-specialpage-heading' => 'Fórum',
@@ -4505,17 +4511,21 @@ ___________________________________________<br />
 	'forum-admin-delete-and-merge-button-label' => '删除与合并',
 	'forum-admin-link-label' => '管理版块',
 	'forum-autoboard-title-1' => '一般讨论',
+	'forum-autoboard-body-1' => '此板块是有关于此wiki的一般话题。',
 	'forum-autoboard-title-2' => '新闻和公告',
 	'forum-autoboard-body-2' => '重大消息信息',
 	'forum-autoboard-title-3' => '$1上的新鲜事',
+	'forum-autoboard-body-3' => '想要分享刚在此wiki上发出的内容，或者想表扬某人作出的杰出贡献吗？就在这里！',
 	'forum-autoboard-title-4' => '问答',
 	'forum-autoboard-body-4' => '对这个wiki或者这个主题有问题？在这里提问！',
 	'forum-autoboard-title-5' => '娱乐与游戏',
+	'forum-autoboard-body-5' => '此板块用于题外话——可以与你的 $1 朋友闲聊的地方。',
 	'forum-board-destination-empty' => '（请选择面板）',
 	'forum-board-title-validation-invalid' => '版块名称包含无效字符',
 	'forum-board-title-validation-length' => '板块名应至少4个字符长',
 	'forum-board-title-validation-exists' => '已存在同名板块',
 	'forum-board-validation-count' => '板块最多可以有$1个',
+	'forum-board-description-validation-length' => '请写下此板块的描述',
 	'forum-board-id-validation-missing' => '板块ID丢失',
 	'forum-board-no-board-warning' => '我们找不到那个标题的板块。这里是论坛板块列表。',
 	'forum-old-notification-message' => '本论坛已存档',
