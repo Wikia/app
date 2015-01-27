@@ -18,7 +18,8 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function init() {
-		$this->isMonobookOrUncyclo = ( $this->wg->User->getSkin() instanceof SkinMonoBook || $this->wg->User->getSkin() instanceof SkinUncyclopedia );
+		$this->isMonobookOrUncyclo = ( $this->wg->User->getSkin() instanceof SkinMonoBook ||
+			$this->wg->User->getSkin() instanceof SkinUncyclopedia );
 		$this->isEn = ( $this->wg->Lang->getCode() == 'en' ) ? true : false;
 		$this->userLoginHelper = ( new UserLoginHelper );
 	}
@@ -73,7 +74,11 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		}
 
 		// We're not supporting connecting with facebook from this page while logged in
-		if ( !empty( $this->wg->EnableFacebookClientExt ) && !$this->wg->User->isLoggedIn() ) {
+		if (
+			!empty( $this->wg->EnableFacebookClientExt ) &&
+			!$this->wg->User->isLoggedIn() &&
+			!$this->isMonobookOrUncyclo
+		) {
 			$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js' );
 		}
 

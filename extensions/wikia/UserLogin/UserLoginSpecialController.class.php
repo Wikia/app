@@ -36,24 +36,22 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	}
 
 	private function initializeTemplate() {
-		//Oasis/Monobook, will be filtered in AssetsManager :)
-		$this->response->addAsset( 'extensions/wikia/UserLogin/css/UserLogin.scss' );
-
-		if ( !empty( $this->wg->EnableFacebookClientExt ) ) {
+		// Load Facebook JS if extension is enabled and skin supports it
+		if ( !empty( $this->wg->EnableFacebookClientExt ) && !$this->isMonobookOrUncyclo ) {
 			$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js' );
-			$this->response->addAsset( 'extensions/wikia/UserLogin/js/FacebookLogin.js' );
 		}
 
+		$this->response->addAsset( 'extensions/wikia/UserLogin/css/UserLogin.scss' );
 		$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginSpecial.js' );
 
-		//Wikiamobile, will be filtered in AssetsManager by config :)
+		// Wikiamobile, will be filtered in AssetsManager by config :)
 		$this->response->addAsset(
 				( $this->wg->request->getInt( 'recover' ) === 1 || empty( $this->wg->EnableFacebookClientExt ) ) ?
 					'userlogin_js_wikiamobile' :
 					'userlogin_js_wikiamobile_fbconnect'
 		);
 
-		//Wikiamobile, will be filtered in AssetsManager by config :)
+		// Wikiamobile, will be filtered in AssetsManager by config :)
 		$this->response->addAsset( 'userlogin_scss_wikiamobile' );
 
 		// hide things in the skin
