@@ -69,13 +69,19 @@ class Client
 	 */
 	public function login( $sUsername, $sPassword )
 	{
+		// Convert the array to URL-encoded query string, so the Content-Type
+		// for the POST request is application/x-www-form-urlencoded.
+		// It would be multipart/form-data which is not supported
+		// by the Helios service.
+		$aPostData = http_build_query([
+			'username'	=> $sUsername,
+			'password'	=> $sPassword
+		]);
+
 		return $this->request(
 			'token',
 			[ 'grant_type'	=> 'password' ],
-			[
-				'username'	=> $sUsername,
-				'password'	=> $sPassword
-			],
+			$aPostData,
 			[ 'method'	=> 'POST' ]
 		);
 	}
