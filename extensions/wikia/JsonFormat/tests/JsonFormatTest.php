@@ -10,6 +10,7 @@ class JsonFormatTest extends WikiaBaseTest {
 	public function setUp() {
 		global $IP;
 		$this->setupFile = "$IP/extensions/wikia/JsonFormat/JsonFormat.setup.php";
+	 	$this->mockGlobalVariable( 'wgTitle', Title::newFromText( 'TestPageDoesNotExist' ) );
 		parent::setUp();
 	}
 
@@ -90,8 +91,12 @@ class JsonFormatTest extends WikiaBaseTest {
 	protected function checkContent( $data, $content ) {
 		foreach ( $content as $key => $params ) {
 			if ( is_numeric( $key ) ) {
-				$element = $data[ $key ];
-				$this->checkContent( $element, $params );
+				if ( empty( $data[$key] ) ) {
+					$this->fail( "Key $key not found in data.  Expecting: " . print_r( [ $key => $params ], true ) );
+				} else {
+					$element = $data[ $key ];
+					$this->checkContent( $element, $params );
+				}
 			} else {
 				//do assertion
 				if ( $key == 'child' ) {

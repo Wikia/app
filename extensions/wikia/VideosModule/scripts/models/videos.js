@@ -1,11 +1,14 @@
 define('videosmodule.models.videos', [
-	'wikia.nirvana'
-], function (nirvana) {
+	'wikia.nirvana',
+	'wikia.geo',
+	'bucky'
+], function (nirvana, geo, bucky) {
 	'use strict';
+
+	bucky = bucky('videosmodule.models.videos');
 
 	var VideosData = function () {
 		this.data = null;
-		this.articleId = window.wgArticleId || null;
 	};
 
 	VideosData.prototype.fetch = function () {
@@ -15,10 +18,12 @@ define('videosmodule.models.videos', [
 		if (this.data !== null) {
 			ret = this.data;
 		} else {
+			bucky.timer.start('fetch');
 			ret = nirvana.getJson('VideosModuleController', 'index', {
-				articleId: this.articleId
+				userRegion: geo.getCountryCode()
 			}).done(function (data) {
 				self.data = data;
+				bucky.timer.stop('fetch');
 			});
 		}
 

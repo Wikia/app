@@ -16,13 +16,9 @@ define('wikia.hubs', ['wikia.window', 'jquery'], function wikiaHubs(window, $) {
 			var WikiaFrame = $( '.WikiaFrame' );
 			if ( WikiaFrame.length > 0 ) {
 				WikiaFrame.on( 'click', 'a', WikiaHubs.iframeLinkChanger );
-				window.onFBloaded = function() {
-					window.FB.init();
-					window.FB.XFBML.parse();
-					window.FB.Canvas.setAutoGrow();
-				};
 			}
 
+			$('.tooltip-icon ').tooltip();
 			$( 'body' ).on( 'click', '.modalWrapper', WikiaHubs.modalClickTrackingHandler );
 		},
 

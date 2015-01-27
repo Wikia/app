@@ -3,7 +3,8 @@
 		"authors": [
 			"Gazeb",
 			"Gmelfi",
-			"HalanTul"
+			"HalanTul",
+			"Gloria sah"
 		]
 	},
 	"visualeditor": "VisualEditor",
@@ -21,6 +22,7 @@
 	"visualeditor-dialog-action-apply": "Applica li canciamenti",
 	"visualeditor-dialog-action-cancel": "Annulla",
 	"visualeditor-dialog-action-goback": "Narreri",
+	"visualeditor-dialog-error-dismiss": "Narreri",
 	"visualeditor-formatdropdown-format-heading1": "Tìtulu 1",
 	"visualeditor-formatdropdown-format-heading2": "Tìtulu 2",
 	"visualeditor-formatdropdown-format-heading3": "Tìtulu 3",
@@ -34,10 +36,11 @@
 	"visualeditor-historybutton-undo-tooltip": "Annulla",
 	"visualeditor-indentationbutton-indent-tooltip": "Aumenta la ndintazzioni",
 	"visualeditor-indentationbutton-outdent-tooltip": "Arridduci la ndintazzioni",
-	"visualeditor-inspector-close-tooltip": "Chiudi",
+	"visualeditor-inspector-close-tooltip": "Chiùi",
 	"visualeditor-inspector-remove-tooltip": "Lèva",
 	"visualeditor-languageinspector-block-tooltip": "Bloccu di lingua",
 	"visualeditor-languageinspector-title": "Lingua",
+	"visualeditor-languageinspector-widget-changelang": "Cancia la lingua",
 	"visualeditor-languageinspector-widget-label-direction": "Dirizzioni",
 	"visualeditor-languageinspector-widget-label-langcode": "Codici dâ lingua",
 	"visualeditor-languageinspector-widget-label-language": "Lingua",

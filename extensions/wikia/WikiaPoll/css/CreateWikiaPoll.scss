@@ -1,4 +1,4 @@
-@import "../../../../skins/oasis/css/core/color";
+@import "skins/shared/color";
 $color-poll-label: lighten($color-text, 30%);
 @if lightness($color-page) < 50 {
 	$color-poll-label: darken($color-text, 30%);

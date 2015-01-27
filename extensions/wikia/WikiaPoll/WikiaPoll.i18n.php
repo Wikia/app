@@ -28,6 +28,7 @@ $messages['en'] = array(
 );
 
 /** Message documentation (Message documentation)
+ * @author Liuxinyu970226
  * @author Shirayuki
  */
 $messages['qqq'] = array(
@@ -41,10 +42,12 @@ $messages['qqq'] = array(
 	'wikiapoll-vote' => 'Button text to vote in a poll.
 {{Identical|Vote}}',
 	'wikiapoll-votes' => 'Parameter:
-* $1 is the number of votes cast.',
+* $1 is the number of votes cast.
+{{Identical|Vote}}',
 	'wikiapoll-createpoll-headline' => 'Headline for Create Poll Special Page.
 {{Identical|Create poll}}',
-	'wikiapoll-editpoll-headline' => 'Headline for Edit Poll Special Page',
+	'wikiapoll-editpoll-headline' => 'Headline for Edit Poll Special Page
+{{Identical|Edit poll}}',
 	'wikiapoll-question-label' => 'Form Label for Special Page.
 {{Identical|Question}}',
 	'wikiapoll-addnewitem-label' => 'Special Page text next to button for a new item to a poll',
@@ -177,12 +180,13 @@ $messages['br'] = array(
 	'wikiamobile-wikiapoll-open-poll' => 'Petra a soñjit ?',
 	'wikiamobile-wikiapoll-thanks-voting' => "Trugarez deoc'h da vezañ votet !",
 	'wikiamobile-wikiapoll-poll' => 'Sontadeg',
-	'wikiamobile-wikiapoll-user-voted' => 'Votet ho peus war "$1"',
+	'wikiamobile-wikiapoll-user-voted' => 'Votet hoc\'h eus evit "$1"',
 );
 
 /** Catalan (català)
  * @author BroOk
  * @author Marcmpujol
+ * @author Unapersona
  */
 $messages['ca'] = array(
 	'wikiapoll-desc' => 'Proporciona una forma fàcil de crear i gestionar enquestes',
@@ -197,7 +201,7 @@ $messages['ca'] = array(
 	'wikiapoll-addnewitem-label' => 'Afegeix un element nou',
 	'wikiapoll-cancel-label' => 'Anuŀla',
 	'wikiapoll-publish-label' => 'Publica',
-	'wikiapoll-error-duplicate' => 'Una enquesta amb aquest nom ja existeix.',
+	'wikiapoll-error-duplicate' => 'Ja existeix una enquesta amb aquest nom.',
 	'wikiapoll-error-invalid-title' => 'Text de la pregunta no és vàlid.',
 	'wikiamobile-wikiapoll-open-poll' => 'Què et sembla?',
 	'wikiamobile-wikiapoll-thanks-voting' => 'Gràcies per votar!',
@@ -319,6 +323,7 @@ $messages['es'] = array(
 
 /** Basque (euskara)
  * @author An13sa
+ * @author Subi
  * @author Xabier Armendaritz
  */
 $messages['eu'] = array(
@@ -336,6 +341,9 @@ $messages['eu'] = array(
 	'wikiapoll-publish-label' => 'Argitaratu',
 	'wikiapoll-error-duplicate' => 'Izen hori duen bozketa existitzen da.',
 	'wikiapoll-error-invalid-title' => 'Galderaren testua ez da onartzen.',
+	'wikiamobile-wikiapoll-open-poll' => 'Zer deritzozu?',
+	'wikiamobile-wikiapoll-thanks-voting' => 'Mila esker bozkatzeagatik!',
+	'wikiamobile-wikiapoll-poll' => 'Inkesta',
 );
 
 /** Persian (فارسی)
@@ -347,6 +355,7 @@ $messages['fa'] = array(
 	'wikiapoll-question-mark-after' => '؟',
 	'wikiapoll-question-label' => 'پرسش',
 	'wikiapoll-cancel-label' => 'لغو',
+	'wikiapoll-publish-label' => 'انتشار',
 	'wikiamobile-wikiapoll-thanks-voting' => 'از رای دادنتان متشکریم!',
 );
 
@@ -397,6 +406,13 @@ $messages['fr'] = array(
 	'wikiamobile-wikiapoll-thanks-voting' => "Merci d'avoir voté !",
 	'wikiamobile-wikiapoll-poll' => 'Sondage',
 	'wikiamobile-wikiapoll-user-voted' => 'Vous avez voté pour $1',
+);
+
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'wikiapoll-cancel-label' => 'Annulearje',
 );
 
 /** Galician (galego)
@@ -498,6 +514,19 @@ $messages['ja'] = array(
 	'wikiamobile-wikiapoll-thanks-voting' => 'ご投票ありがとうございます!',
 	'wikiamobile-wikiapoll-poll' => '投票',
 	'wikiamobile-wikiapoll-user-voted' => '「$1」に投票しました',
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'wikiapoll-createpoll-headline' => '설문 조사 생성',
+	'wikiapoll-editpoll-headline' => '설문 조사 편집',
+	'wikiapoll-question-label' => '질문',
+	'wikiapoll-addnewitem-label' => '새 항목 추가',
+	'wikiapoll-cancel-label' => '취소',
+	'wikiapoll-publish-label' => '저장',
+	'wikiamobile-wikiapoll-poll' => '설문 조사',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
@@ -1069,43 +1098,53 @@ $messages['vi'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
  * @author Dimension
+ * @author Ffaarr
  * @author Hydra
  * @author Hzy980512
  */
 $messages['zh-hans'] = array(
-	'wikiapoll-desc' => '提供一个创建与管理民意调查的简单方法',
+	'wikiapoll-desc' => '提供一个创建与管理投票（民意调查）的简单方法',
 	'wikiapoll-people-voted' => '$1个人已投票',
 	'wikiapoll-question' => '$1？',
 	'wikiapoll-thanks-for-vote' => '谢谢！',
 	'wikiapoll-vote' => '投票！',
 	'wikiapoll-votes' => '$1票',
 	'wikiapoll-question-mark-after' => '？',
-	'wikiapoll-createpoll-headline' => '发起调查',
-	'wikiapoll-editpoll-headline' => '编辑调查',
+	'wikiapoll-createpoll-headline' => '发起投票',
+	'wikiapoll-editpoll-headline' => '编辑投票',
 	'wikiapoll-question-label' => '问题',
 	'wikiapoll-addnewitem-label' => '添加新项目',
 	'wikiapoll-cancel-label' => '取消',
 	'wikiapoll-publish-label' => '发表',
-	'wikiapoll-error-duplicate' => '同名的民意调查已存在。',
+	'wikiapoll-error-duplicate' => '同名的投票已存在。',
 	'wikiapoll-error-invalid-title' => '问题文本无效。',
 	'wikiamobile-wikiapoll-open-poll' => '你觉得怎么样？',
 	'wikiamobile-wikiapoll-thanks-voting' => '感谢投票！',
-	'wikiamobile-wikiapoll-poll' => '民意调查',
+	'wikiamobile-wikiapoll-poll' => '投票',
 	'wikiamobile-wikiapoll-user-voted' => '您投给了$1',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
+	'wikiapoll-desc' => '提供一個創建與管理投票（民意調查）的簡單方法',
+	'wikiapoll-people-voted' => '$1個人已投票',
+	'wikiapoll-question' => '$1?',
 	'wikiapoll-thanks-for-vote' => '謝謝！',
 	'wikiapoll-vote' => '投票 ！',
-	'wikiapoll-votes' => '{{PLURAL:$1|$1 vote|$1 票}}',
-	'wikiapoll-createpoll-headline' => '創建民調',
-	'wikiapoll-editpoll-headline' => '編輯民調',
+	'wikiapoll-votes' => '$1 票',
+	'wikiapoll-createpoll-headline' => '創建投票',
+	'wikiapoll-editpoll-headline' => '編輯投票',
 	'wikiapoll-question-label' => '問題',
+	'wikiapoll-addnewitem-label' => '增加新項目',
 	'wikiapoll-cancel-label' => '取消',
 	'wikiapoll-publish-label' => '發佈',
-	'wikiapoll-error-duplicate' => '已存在同名的民調',
+	'wikiapoll-error-duplicate' => '已存在同名的投票',
 	'wikiapoll-error-invalid-title' => '問題文本無效。',
+	'wikiamobile-wikiapoll-open-poll' => '你覺得怎麼樣？',
+	'wikiamobile-wikiapoll-thanks-voting' => '感謝您的投票 ！',
+	'wikiamobile-wikiapoll-poll' => '投票',
+	'wikiamobile-wikiapoll-user-voted' => '您投給了$1',
 );

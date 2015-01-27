@@ -13,9 +13,9 @@ class RelatedForumDiscussionController extends WikiaController {
 		$this->messages = $this->getVal( 'messages' );
 
 		// loading assets in Monobook that would normally load in oasis
-		if($this->app->checkSkin('monobook')) {
-			$this->response->addAsset( 'skins/oasis/css/core/sprite.scss' );
-			$this->response->addAsset( 'extensions/wikia/Forum/css/RelatedForumDiscussion.scss' );
+		if ( $this->app->checkSkin( 'monobook' ) ) {
+			$this->response->addAsset( 'skins/shared/styles/sprite.scss' );
+			$this->response->addAsset( 'extensions/wikia/Forum/css/monobook/RelatedForumMonobook.scss' );
 		}
 
 		$title = $this->getContext()->getTitle();
@@ -30,6 +30,13 @@ class RelatedForumDiscussionController extends WikiaController {
 
 		$this->seeMoreUrl = $topicTitle->getFullUrl();
 		$this->seeMoreText = wfMessage( 'forum-related-discussion-see-more' )->escaped();
+
+		// TODO: move classes to template when Venus will be live on all wikis
+		$this->venusBtnClasses = '';
+		if ($this->app->checkSkin( 'venus' ) ) {
+			$this->venusBtnClasses = 'wikia-button secondary';
+			Wikia::addAssetsToOutput( 'related_forum_discussion_css' );
+		}
 	}
 
 	/**

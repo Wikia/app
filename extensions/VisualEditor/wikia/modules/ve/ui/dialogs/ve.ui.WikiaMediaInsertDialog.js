@@ -14,8 +14,12 @@
  * @param {Object} [config] Config options
  */
 ve.ui.WikiaMediaInsertDialog = function VeUiMWMediaInsertDialog( config ) {
+	config =  $.extend( config, {
+		width: '840px'
+	} );
+
 	// Parent constructor
-	ve.ui.Dialog.call( this, config );
+	ve.ui.WikiaMediaInsertDialog.super.call( this, config );
 };
 
 /* Inheritance */
@@ -41,10 +45,10 @@ ve.ui.WikiaMediaInsertDialog.static.pages = [ 'main', 'search' ];
  * @returns {jQuery}
  */
 ve.ui.WikiaMediaInsertDialog.static.formatPolicy = function ( html ) {
-	 return $( '<div>' )
+	return $( '<div>' )
 		.html( html )
 		.find( '*' )
-			.each( function() {
+			.each( function () {
 				if ( this.tagName.toLowerCase() === 'a' ) {
 					$( this ).attr( 'target', '_blank' );
 				} else {
@@ -113,8 +117,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.$policyReadMoreLink = this.$( '<a>' )
 		.html( ve.msg( 'wikia-visualeditor-dialog-wikiamediainsert-read-more' ) );
 	this.$policyReadMore.append( this.$policyReadMoreLink );
-	// Core VE used to pass VeUiSurface to this constructor. Getting it now with DOM traversal.
-	this.$globalOverlay = this.$frame.closest('.ve-ui-surface-overlay-global');
 
 	// Events
 	this.cartModel.connect( this, {
@@ -122,7 +124,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 		'remove': 'onCartModelRemove'
 	} );
 	this.cart.on( 'select', ve.bind( this.onCartSelect, this ) );
-	this.insertButton.connect( this, { 'click': [ 'close', 'insert' ] } );
+	this.insertButton.connect( this, { 'click': [ 'close', { 'action': 'insert' } ] } );
 	this.pages.on( 'set', ve.bind( this.onPageSet, this ) );
 	this.query.connect( this, {
 		'requestSearchDone': 'onQueryRequestSearchDone',
@@ -136,7 +138,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.search.connect( this, {
 		'nearingEnd': 'onSearchNearingEnd',
 		'check': 'onSearchCheck',
-		'preview': 'onMediaPreview'
+		'select': 'onMediaPreview'
 	} );
 	this.upload.connect( this, uploadEvents );
 	this.queryUpload.connect( this, uploadEvents );
@@ -161,9 +163,8 @@ ve.ui.WikiaMediaInsertDialog.prototype.initialize = function () {
 	this.frame.$content.addClass( 've-ui-wikiaMediaInsertDialog' );
 	this.$foot.append( this.insertButton.$element );
 	this.$frame.prepend( this.dropTarget.$element );
-	this.$globalOverlay.append( this.mediaPreview.$element );
+	this.surface.getGlobalOverlay().append( this.mediaPreview.$element );
 };
-
 
 /**
  * Handle clicking the media policy read more link.
@@ -186,7 +187,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.onReadMoreLinkClick = function ( e ) {
 ve.ui.WikiaMediaInsertDialog.prototype.onFileDropped = function ( file ) {
 	this.upload.$file.trigger( 'change', file );
 };
-
 
 /**
  * Handle query input changes.
@@ -223,7 +223,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onQueryInputKeydown =
  * @param {Object} items An object containing items to add to the search results
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onQueryRequestSearchDone = function ( items ) {
-	items.forEach( function( item ) {
+	items.forEach( function ( item ) {
 		if ( item.type === 'video' ) {
 			item.provider = 'wikia';
 		}
@@ -267,20 +267,19 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchNearingEnd = function () {
  * Handle check/uncheck of items in search results.
  *
  * @method
- * @param {Object} item The search result item data.
+ * @param {Object} item The search result item.
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onSearchCheck = function ( item ) {
-	var cartItem;
-
-	cartItem = this.cart.getItemFromData( item.title );
+	var data = item.getData(),
+		cartItem = this.cart.getItemFromData( data.title );
 
 	if ( cartItem ) {
 		this.cartModel.removeItems( [ cartItem.getModel() ] );
 	} else {
-		if ( item.type === 'video' ) {
-			this.addCartItem( new ve.dm.WikiaCartItem( item.title, item.url, item.type, undefined, 'wikia' ) );
+		if ( data.type === 'video' ) {
+			this.addCartItem( new ve.dm.WikiaCartItem( data.title, data.url, data.type, undefined, 'wikia' ) );
 		} else {
-			this.addCartItem( new ve.dm.WikiaCartItem( item.title, item.url, item.type ) );
+			this.addCartItem( new ve.dm.WikiaCartItem( data.title, data.url, data.type ) );
 		}
 	}
 };
@@ -292,11 +291,11 @@ ve.ui.WikiaMediaInsertDialog.prototype.onSearchCheck = function ( item ) {
  * @param {Object|null} item The item to preview or `null` if closing the preview.
  */
 ve.ui.WikiaMediaInsertDialog.prototype.onMediaPreview = function ( item ) {
-	var model = item.getModel();
-	if ( model.type === 'photo' ) {
-		this.mediaPreview.openForImage( model.title, model.url );
-	} else {
-		this.mediaPreview.openForVideo( model.title, model.provider, model.videoId );
+	var data = item.getData();
+	if ( data.type === 'photo' ) {
+		this.mediaPreview.openForImage( data.title, data.url );
+	} else if ( data.type === 'video' ) {
+		this.mediaPreview.openForVideo( data.title, data.provider, data.videoId );
 	}
 };
 
@@ -405,17 +404,17 @@ ve.ui.WikiaMediaInsertDialog.prototype.onMediaPageRemove = function ( item ) {
  *
  * @method
  */
-ve.ui.WikiaMediaInsertDialog.prototype.setup = function () {
-	// Parent method
-	ve.ui.Dialog.prototype.setup.call( this );
-	this.pages.setPage( 'main' );
-
-	// If the policy height (which has a max-height property set) is the same as the first child of the policy
-	// then there is no more of the policy to show and the read more link can be hidden.
-	if ( this.$policy.height() === this.$policy.children().first().height() ) {
-		this.$policyReadMore.hide();
-	}
-	this.dropTarget.setup();
+ve.ui.WikiaMediaInsertDialog.prototype.getSetupProcess = function ( data ) {
+	return ve.ui.WikiaMediaInsertDialog.super.prototype.getSetupProcess.call( this, data )
+		.next( function () {
+			this.pages.setPage( 'main' );
+			// If the policy height (which has a max-height property set) is the same as the first child of the policy
+			// then there is no more of the policy to show and the read more link can be hidden.
+			if ( this.$policy.height() === this.$policy.children().first().height() ) {
+				this.$policyReadMore.hide();
+			}
+			this.dropTarget.setup();
+		}, this );
 };
 
 /**
@@ -438,16 +437,16 @@ ve.ui.WikiaMediaInsertDialog.prototype.onPageSet = function () {
  * @method
  * @param {string} action Which action is being performed on close.
  */
-ve.ui.WikiaMediaInsertDialog.prototype.teardown = function ( action ) {
-	if ( action === 'insert' ) {
-		this.insertMedia( ve.copy( this.cartModel.getItems() ), this.fragment );
-	}
-	this.cartModel.clearItems();
-	this.queryInput.setValue( '' );
-	this.dropTarget.teardown();
-
-	// Parent method
-	ve.ui.Dialog.prototype.teardown.call( this, action );
+ve.ui.WikiaMediaInsertDialog.prototype.getTeardownProcess = function ( data ) {
+	return ve.ui.WikiaMediaInsertDialog.super.prototype.getTeardownProcess.call( this, data )
+		.first( function () {
+			if ( data.action === 'insert' ) {
+				this.insertMedia( ve.copy( this.cartModel.getItems() ), this.fragment );
+			}
+			this.cartModel.clearItems();
+			this.queryInput.setValue( '' );
+			this.dropTarget.teardown();
+		}, this );
 };
 
 /**
@@ -508,7 +507,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertMedia = function ( cartItems, fragm
 		}
 	}
 
-	$.when.apply( $, promises ).done( ve.bind( function() {
+	$.when.apply( $, promises ).done( ve.bind( function () {
 		this.insertPermanentMedia( cartItems, fragment );
 	}, this ) );
 };
@@ -526,8 +525,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.insertPermanentMedia = function ( cartIte
 			'video': []
 		},
 		cartItem,
-		i,
-		title;
+		i;
 
 	// Populates attributes, items.video and items.photo
 	for ( i = 0; i < cartItems.length; i++ ) {
@@ -679,7 +677,7 @@ ve.ui.WikiaMediaInsertDialog.prototype.onGetImageInfoSuccess = function ( deferr
 	for ( i = 0; i < data.query.pageids.length; i++ ) {
 		item = data.query.pages[ data.query.pageids[i] ];
 		results.push( {
-			'title': item.title,
+			'title': 'File:' + ( new mw.Title( item.title ) ).getMainText(),
 			'height': item.imageinfo[0].thumbheight,
 			'width': item.imageinfo[0].thumbwidth,
 			'url': item.imageinfo[0].thumburl
@@ -759,7 +757,6 @@ ve.ui.WikiaMediaInsertDialog.prototype.onFrameDocumentKeyDown = function ( e ) {
 	ve.ui.Dialog.prototype.onFrameDocumentKeyDown.call( this, e );
 };
 
-
 /* Registration */
 
-ve.ui.dialogFactory.register( ve.ui.WikiaMediaInsertDialog );
+ve.ui.windowFactory.register( ve.ui.WikiaMediaInsertDialog );

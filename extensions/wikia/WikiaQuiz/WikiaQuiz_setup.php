@@ -19,6 +19,7 @@ $wgExtensionCredits['other'][] = array(
 	'version' => '0.1',
 	'author' => array('Will Lee', 'Hyun Lim'),
 	'descriptionmsg' => 'wikiaquiz-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaQuiz'
 );
 
 $dir = dirname(__FILE__);

@@ -12,6 +12,7 @@ define('ext.wikia.adEngine.template.skin', [
 	 * @param params {
 	 *   skinImage
 	 *   backgroundColor
+	 *   middleColor
 	 *   destUrl
 	 *   pixels
 	 * }
@@ -25,13 +26,13 @@ define('ext.wikia.adEngine.template.skin', [
 			var adSkin = document.getElementById('ad-skin'),
 				adSkinStyle = adSkin.style,
 				wikiaSkin = document.getElementById('WikiaPageBackground'),
-				wikiaSkinStyle = wikiaSkin.style,
+				wikiaSkinStyle = wikiaSkin && wikiaSkin.style,
 				i,
 				len,
 				pixelElement,
 				pixelUrl;
 
-			if (window.wgOasisResponsive) {
+			if (window.wgOasisResponsive || window.skin === 'venus') {
 				require(['wikia.backgroundchanger'], function (backgroundchanger) {
 					var bcParams = {
 						skinImage: params.skinImage,
@@ -53,6 +54,8 @@ define('ext.wikia.adEngine.template.skin', [
 				adSkinStyle.background = 'url("' + params.skinImage + '") no-repeat top center #' + params.backgroundColor;
 			}
 
+			document.body.className += ' background-ad';
+
 			adSkinStyle.position = 'fixed';
 			adSkinStyle.height = '100%';
 			adSkinStyle.width = '100%';
@@ -61,7 +64,9 @@ define('ext.wikia.adEngine.template.skin', [
 			adSkinStyle.zIndex = 0;
 			adSkinStyle.cursor = 'pointer';
 
-			wikiaSkinStyle.opacity = 1;
+			if (wikiaSkinStyle) {
+				wikiaSkinStyle.opacity = 1;
+			}
 
 			adSkin.onclick = function () {
 				log('Click on skin', 'user', logGroup);

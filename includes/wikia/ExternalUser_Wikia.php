@@ -1,6 +1,7 @@
 <?php
 
 class ExternalUser_Wikia extends ExternalUser {
+	static private $recentlyUpdated = array();
 	private $mRow, $mDb, $mUser;
 
 	protected function initFromName( $name ) {
@@ -30,13 +31,25 @@ class ExternalUser_Wikia extends ExternalUser {
 
 		wfDebug( __METHOD__ . ": init User from cond: " . wfArrayToString( $cond ) . " \n" );
 
-		$this->mDb = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-		$row = $this->mDb->selectRow(
-			'`user`',
-			array( '*' ),
-			$cond,
-			__METHOD__
-		);
+		# PLATFORM-624: do not use slave if we just updated this user
+		if ( array_key_exists('user_id',$cond) && isset(self::$recentlyUpdated[$cond['user_id']]) ) {
+			$row = null;
+		} else {
+			$this->mDb = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
+			$row = $this->mDb->selectRow(
+				'`user`',
+				array( '*' ),
+				$cond,
+				__METHOD__
+			);
+		}
+
+		# PLATFORM-624: force read from master for users updated recently
+		# note: if we had a condition for name we could still have fetched a user that
+		# was recently updated
+		if ( $row && isset(self::$recentlyUpdated[$row->user_id]) ) {
+			$row = null;
+		}
 
 		if( !$row ) {
 			$this->mDb = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
@@ -212,7 +225,7 @@ class ExternalUser_Wikia extends ExternalUser {
 	 * @return bool
 	 */
 	protected function addToDatabase( $User, $password, $email, $realname ) {
-		global $wgExternalSharedDB, $wgEnableUserLoginExt;
+		global $wgExternalSharedDB;
 		wfProfileIn( __METHOD__ );
 
 		if( wfReadOnly() ) { // Change to wgReadOnlyDbMode if we implement that
@@ -220,11 +233,12 @@ class ExternalUser_Wikia extends ExternalUser {
 		} else {
 			wfDebug( __METHOD__ . ": add user to the $wgExternalSharedDB database: " . $User->getName() . " [ " . $User->getId() . " ] \n" );
 
+			/** PLATFORM-508 - logging for Helios project - begin */
+			\Wikia\Logger\WikiaLogger::instance()->debug( 'PLATFORM-508', [ 'method' => __METHOD__ ] );
+			/** PLATFORM-508 - logging for Helios project - end */
+
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			$seqVal = $dbw->nextSequenceValue( 'user_user_id_seq' );
-			if( empty( $wgEnableUserLoginExt ) ) {
-				$User->setPassword( $password );
-			}
 			$User->setToken();
 
 			$dbw->insert(
@@ -364,6 +378,10 @@ class ExternalUser_Wikia extends ExternalUser {
 		} else {
 			wfDebug( __METHOD__ . ": update central user data \n" );
 
+			/** PLATFORM-508 - logging for Helios project - begin */
+			\Wikia\Logger\WikiaLogger::instance()->debug( 'PLATFORM-508', [ 'method' => __METHOD__ ] );
+			/** PLATFORM-508 - logging for Helios project - end */
+
 			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
 			$this->mUser->mTouched = User::newTouchedTimestamp();
 			$dbw->update(
@@ -388,6 +406,10 @@ class ExternalUser_Wikia extends ExternalUser {
 				__METHOD__
 			);
 			$dbw->commit( __METHOD__ );
+
+			if ( $this->mUser->mId ) { // sanity check
+				self::$recentlyUpdated[$this->mUser->mId] = true;
+			}
 		}
 		wfProfileOut( __METHOD__ );
 	}

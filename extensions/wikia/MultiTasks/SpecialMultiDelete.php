@@ -15,8 +15,9 @@ require_once ( dirname(__FILE__) . '/MultiTasksCore.php' );
 
 $wgExtensionCredits['specialpage'][] = array(
     "name" => "Multi Wiki Delete",
-    "description" => "Special Multi Wiki Delete",
-    "author" => "Bartek Łapiński, Piotr Molski"
+    "descriptionmsg" => "multidelete-desc",
+    "author" => "Bartek Łapiński, Piotr Molski",
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/MultiTasks'
 );
 
 $wgExtensionMessagesFiles["Multidelete"] = dirname(__FILE__) . '/MultiTasks.i18n.php';
@@ -30,8 +31,5 @@ $wgGroupPermissions['vstf']['multidelete'] = true;
 extAddSpecialPage( dirname(__FILE__) . '/SpecialMultiDelete_body.php', 'Multidelete', 'Multidelete' );
 
 require_once( $IP . "/extensions/wikia/TaskManager/BatchTask.php" );
-extAddBatchTask( dirname(__FILE__)."/Tasks/MultiDeleteTask.php", "multidelete", "MultiDeleteTask" );
-# add multi move page here
-extAddBatchTask( dirname(__FILE__)."/Tasks/MultiMoveTask.php", "multimove", "MultiMoveTask" );
 
 $wgSpecialPageGroups['Multidelete'] = 'pagetools';

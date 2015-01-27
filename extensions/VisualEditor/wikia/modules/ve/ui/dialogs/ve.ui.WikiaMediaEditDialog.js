@@ -13,7 +13,7 @@
  */
 ve.ui.WikiaMediaEditDialog = function VeUiWikiaMediaEditDialog( config ) {
 	// Parent constructor
-	ve.ui.MWMediaEditDialog.call( this, config );
+	ve.ui.WikiaMediaEditDialog.super.call( this, config );
 };
 
 /* Inheritance */
@@ -45,11 +45,13 @@ ve.ui.WikiaMediaEditDialog.static.toolbarGroups = [
 
 /* Methods */
 
-ve.ui.WikiaMediaEditDialog.prototype.setup = function ( data ) {
-	ve.ui.MWMediaEditDialog.prototype.setup.call( this, data );
-	this.captionSurface.$element.addClass( 'WikiaArticle' );
+ve.ui.WikiaMediaEditDialog.prototype.getSetupProcess = function ( data ) {
+	return ve.ui.WikiaMediaEditDialog.super.prototype.getSetupProcess.call( this, data )
+		.next( function () {
+			this.captionSurface.$element.addClass( 'WikiaArticle' );
+		}, this );
 };
 
 /* Registration */
 
-ve.ui.dialogFactory.register( ve.ui.WikiaMediaEditDialog );
+ve.ui.windowFactory.register( ve.ui.WikiaMediaEditDialog );

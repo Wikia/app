@@ -195,6 +195,7 @@ Alternatively, you can click "$2" to see the page in its updated form.',
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
  * @author LWChris
+ * @author Liuxinyu970226
  * @author Shirayuki
  * @author Siebrand
  * @author Umherirrender
@@ -207,7 +208,8 @@ $messages['qqq'] = array(
 	'wikiaPhotoGallery-feed-caption' => 'Parameters:
 * $1 is an image caption
 * $2 is a source URL
-* $3 is the protocol used to upload',
+* $3 is the protocol used to upload
+{{Identical|Via}}',
 	'wikiaPhotoGallery-lightbox-caption' => 'Parameters:
 * $1 is a feed title',
 	'wikiaPhotoGallery-error-caption' => '{{Identical|Error}}',
@@ -252,7 +254,7 @@ $messages['qqq'] = array(
 	'wikiaPhotoGallery-slideshowpreview-position-center' => '{{Identical|Center}}',
 	'wikiaPhotoGallery-slideshowpreview-position-right' => '{{Identical|Right}}',
 	'wikiaPhotoGallery-sliderpreview-addphoto' => '{{Identical|Add photo}}',
-	'wikiaPhotoGallery-upload-uploadtitle' => '{{Identical|Upload}}',
+	'wikiaPhotoGallery-upload-uploadtitle' => '',
 	'wikiaPhotoGallery-upload-existingtext-onarticle' => '{{Identical|This page}}',
 	'wikiaPhotoGallery-upload-selectbutton' => '{{Identical|Select}}',
 	'galery-slider-read-more' => '{{Identical|Read more}}',
@@ -1593,7 +1595,7 @@ $messages['diq'] = array(
 	'wikiaPhotoGallery-photooptions-done' => 'Qeyd kerd',
 	'wikiaPhotoGallery-preview-hover-modify' => 'bıvurne',
 	'wikiaPhotoGallery-preview-hover-delete' => 'bestere',
-	'wikiaPhotoGallery-preview-add-photo' => 'Fotraf deke',
+	'wikiaPhotoGallery-preview-add-photo' => 'Yew fotraf cı ke',
 	'wikiaPhotoGallery-preview-tab-layout' => 'Ca gınayiş',
 	'wikiaPhotoGallery-preview-px' => 'px',
 	'wikiaPhotoGallery-preview-position-left' => 'Çep',
@@ -1616,24 +1618,24 @@ $messages['diq'] = array(
 	'wikiaPhotoGallery-preview-captions-left' => 'Çep',
 	'wikiaPhotoGallery-preview-captions-center' => 'Merkez',
 	'wikiaPhotoGallery-preview-captions-right' => 'Raşt',
-	'wikiaPhotoGallery-slideshow-view-addphoto' => 'Resim Deke',
+	'wikiaPhotoGallery-slideshow-view-addphoto' => 'Resım cı ke',
 	'wikiaPhotoGallery-slideshow-view-next-tooltip' => 'Resimo peyên',
-	'wikiaPhotoGallery-slideshow-view-title' => 'Slaytşow',
+	'wikiaPhotoGallery-slideshow-view-title' => 'Slaydşow',
 	'wikiaPhotoGallery-slideshow-view-number' => '$1 be $2 ra',
 	'wikiaPhotoGallery-slideshow-view-startslideshow' => 'Slaytşowi kayfiye',
 	'wikiaPhotoGallery-slideshow-view-stopslideshow' => 'Slaytşowi vındarnê',
 	'wikiaPhotoGallery-slideshow-view-details-tooltip' => 'teferruatê resimi bıvin',
 	'wikiaPhotoGallery-slideshow-view-link-overlay' => 'Şo $1',
-	'wikiaPhotoGallery-choice-title' => 'Slaytşow ya zi galeriye vıraze',
-	'wikiaPhotoGallery-choice-slideshow' => 'Slaytşow deke',
+	'wikiaPhotoGallery-choice-title' => 'Slaydşow ya zi galeriye vıraze',
+	'wikiaPhotoGallery-choice-slideshow' => 'Slaydşow vıraze',
 	'wikiaPhotoGallery-choice-gallery' => 'Galeriye vıraze',
-	'wikiaPhotoGallery-slideshowpreview-addphoto' => 'Fotraf deke',
+	'wikiaPhotoGallery-slideshowpreview-addphoto' => 'Yew fotraf cı ke',
 	'wikiaPhotoGallery-slideshowpreview-position-left' => 'Çep',
 	'wikiaPhotoGallery-slideshowpreview-position-center' => 'Merkezi',
 	'wikiaPhotoGallery-slideshowpreview-position-right' => 'Raşt',
-	'wikiaPhotoGallery-sliderpreview-addphoto' => 'Fotraf deke',
+	'wikiaPhotoGallery-sliderpreview-addphoto' => 'Yew fotraf cıke',
 	'wikiaPhotoGallery-upload-uploadtitle' => 'Fotrafê xo bıvêne',
-	'wikiaPhotoGallery-upload-uploadbutton' => 'Resim Barke',
+	'wikiaPhotoGallery-upload-uploadbutton' => 'Resım bar ke',
 	'wikiaPhotoGallery-upload-existingtext-onarticle' => 'ena pele',
 	'wikiaPhotoGallery-upload-selectbutton' => 'Weçine',
 	'wikiaPhotoGallery-photooptions-description' => 'Teferruatê Resimi',
@@ -1714,6 +1716,7 @@ $messages['eo'] = array(
  * @author Crazymadlover
  * @author Diego Grez
  * @author Drini
+ * @author Fitoschido
  * @author Mor
  * @author Translationista
  * @author VegaDark
@@ -1886,13 +1889,23 @@ De forma alternativa puedes hacer clic en "$2" para ver la página actualizada.'
 Describe esta imagen.",
 	'wikiaPhotoGallery-photooptions-linktitle' => 'Enlazar una página',
 	'wikiaPhotoGallery-photooptions-linksub' => "'''Opcional.''' Cuando se haga clic en esta imagen, ir a esta página.",
-	'wikiaPhotoGallery-photooptions-linktext' => 'Texto a mostrar para el enlace',
+	'wikiaPhotoGallery-photooptions-linktext' => 'Texto que mostrar en el enlace.',
 	'wikiaPhotoGallery-photooptions-linkurl' => 'Enlazar a (pegar nombre de página o URL)',
 	'wikiaPhotoGallery-photooptions-description' => 'Detalles de imagen.',
 	'wikiaPhotoGallery-search-tooltip' => 'Buscar imágenes en esta wiki',
 	'wikiaPhotoGallery-upload-image-size' => 'Las imágenes deberían de ser de 670px por 360px o superior',
 	'wikiaPhotoGallery-not-displayed' => 'No mostrado',
 	'galery-slider-read-more' => 'Leer más >',
+);
+
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'wikiaPhotoGallery-slideshow-view-addphoto' => 'Gehitu argazkia',
+	'wikiaPhotoGallery-slideshow-view-next-tooltip' => 'Hurrengo argazkia',
+	'wikiaPhotoGallery-slideshow-view-prev-tooltip' => 'Aurreko argazkia',
+	'galery-slider-read-more' => 'Irakurri gehiago >',
 );
 
 /** Persian (فارسی)
@@ -1909,10 +1922,19 @@ $messages['fa'] = array(
 	'wikiaPhotoGallery-upload-error-conflict-insert' => 'درج',
 	'wikiaPhotoGallery-upload-select-images' => 'انتخاب',
 	'wikiaPhotoGallery-photooptions-done' => 'انجام شد',
+	'wikiaPhotoGallery-preview-hover-modify' => 'تغییر',
 	'wikiaPhotoGallery-preview-hover-delete' => 'حذف',
+	'wikiaPhotoGallery-preview-add-description' => 'افزودن توضیحات',
+	'wikiaPhotoGallery-preview-tab-layout' => 'چیدمان',
+	'wikiaPhotoGallery-preview-position-left' => 'سمت چپ',
+	'wikiaPhotoGallery-preview-position-center' => 'مرکز',
+	'wikiaPhotoGallery-preview-position-right' => 'درست',
 	'wikiaPhotoGallery-preview-spacing-small' => 'کوچک',
 	'wikiaPhotoGallery-preview-spacing-medium' => 'متوسط',
 	'wikiaPhotoGallery-preview-spacing-large' => 'بزرگ',
+	'wikiaPhotoGallery-preview-captionalignment-left' => 'سمت چپ',
+	'wikiaPhotoGallery-preview-captionalignment-center' => 'مرکز',
+	'wikiaPhotoGallery-preview-captionalignment-right' => 'درست',
 	'wikiaPhotoGallery-preview-captionsize-small' => 'کوچک',
 	'wikiaPhotoGallery-preview-captionsize-medium' => 'متوسط',
 	'wikiaPhotoGallery-preview-captionsize-large' => 'بزرگ',
@@ -1920,6 +1942,14 @@ $messages['fa'] = array(
 	'wikiaPhotoGallery-preview-bordersize-small' => 'کوچک',
 	'wikiaPhotoGallery-preview-bordersize-medium' => 'متوسط',
 	'wikiaPhotoGallery-preview-bordersize-large' => 'بزرگ',
+	'wikiaPhotoGallery-preview-captions' => 'عناوین:',
+	'wikiaPhotoGallery-preview-captions-left' => 'سمت چپ',
+	'wikiaPhotoGallery-preview-captions-center' => 'مرکز',
+	'wikiaPhotoGallery-preview-captions-right' => 'درست',
+	'wikiaPhotoGallery-slideshow-view-number' => '$1 از $2',
+	'wikiaPhotoGallery-slideshowpreview-position-left' => 'سمت چپ',
+	'wikiaPhotoGallery-slideshowpreview-position-center' => 'مرکز',
+	'wikiaPhotoGallery-slideshowpreview-position-right' => 'درست',
 	'wikiaPhotoGallery-upload-selectbutton' => 'انتخاب',
 );
 
@@ -2278,6 +2308,24 @@ Décrivez cette photo.",
 	'galery-slider-read-more' => 'En savoir plus &gt;',
 );
 
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'wikiaPhotoGallery-back' => 'Foarige',
+	'wikiaPhotoGallery-error-caption' => 'Flater',
+	'wikiaPhotoGallery-upload-findtitle' => 'Sykje',
+	'wikiaPhotoGallery-upload-findbutton' => 'Sykje',
+	'wikiaPhotoGallery-upload-page-next' => 'Folgjende 8',
+	'wikiaPhotoGallery-upload-page-prev' => 'Foarige 8',
+	'wikiaPhotoGallery-preview-spacing-small' => 'Lyts',
+	'wikiaPhotoGallery-preview-spacing-large' => 'Grut',
+	'wikiaPhotoGallery-preview-captionsize-small' => 'Lyts',
+	'wikiaPhotoGallery-preview-captionsize-large' => 'Grut',
+	'wikiaPhotoGallery-preview-bordersize-small' => 'Lyts',
+	'wikiaPhotoGallery-preview-bordersize-large' => 'Grut',
+);
+
 /** Galician (galego)
  * @author Toliño
  * @author Vivaelcelta
@@ -2287,7 +2335,7 @@ $messages['gl'] = array(
 	'wikiaPhotoGallery-back' => 'Volver',
 	'wikiaPhotoGallery-finish' => 'Rematar',
 	'wikiaPhotoGallery-feed-caption' => '$1, mediante <a href="$2">$3</a>',
-	'wikiaPhotoGallery-lightbox-caption' => 'Mediante $1',
+	'wikiaPhotoGallery-lightbox-caption' => 'A través de $1',
 	'wikiaPhotoGallery-add-gallery' => 'Inserir unha galería de fotos ou presentación de diapositivas',
 	'wikiaPhotoGallery-viewmode-addphoto' => 'Engadir unha foto a esta galería',
 	'wikiaPhotoGallery-edit-abort' => 'Un asociador da extensión impediu a modificación que intentou realizar',
@@ -2648,6 +2696,7 @@ $messages['he'] = array(
  * @author Alquen
  * @author Dani
  * @author Glanthor Reviol
+ * @author Samat
  * @author TK-999
  */
 $messages['hu'] = array(
@@ -2761,7 +2810,7 @@ Másik lehetőségként a(z) "$2"-re kattintva megtekintheted az oldalt frissít
 	'wikiaPhotoGallery-preview-delete-title' => 'Eltávolítod ezt a képet?',
 	'wikiaPhotoGallery-preview-delete' => 'Biztosan el szeretnéd távolítani ezt a képet ebből a galériából?',
 	'wikiaPhotoGallery-preview-saving-title' => 'Mentés folyamatban',
-	'wikiaPhotoGallery-preview-saving-intro' => 'Várj, amíg elmentjük a galériádat.',
+	'wikiaPhotoGallery-preview-saving-intro' => 'Várj, amíg elmentjük a galériádat!',
 	'wikiaPhotoGallery-quit-title' => 'Kilépés a galéria-szerkesztőből',
 	'wikiaPhotoGallery-quit-intro' => 'Biztos vagy benne, hogy ki szeretnél lépni a galéria-szerkesztőből?',
 	'wikiaPhotoGallery-quit-savequit' => 'Mentés és kilépés',
@@ -3371,11 +3420,46 @@ $messages['kn'] = array(
 );
 
 /** Korean (한국어)
+ * @author Miri-Nae
  * @author 아라
  */
 $messages['ko'] = array(
+	'wikiaPhotoGallery-error-caption' => '오류',
 	'wikiaPhotoGallery-upload-findtitle' => '찾기',
 	'wikiaPhotoGallery-upload-findbutton' => '찾기',
+	'wikiaPhotoGallery-photooptions-done' => '완료',
+	'wikiaPhotoGallery-preview-hover-modify' => '수정',
+	'wikiaPhotoGallery-preview-hover-delete' => '삭제',
+	'wikiaPhotoGallery-preview-px' => 'px',
+	'wikiaPhotoGallery-preview-position' => '갤러리 위치',
+	'wikiaPhotoGallery-preview-position-left' => '왼쪽',
+	'wikiaPhotoGallery-preview-position-center' => '가운데',
+	'wikiaPhotoGallery-preview-position-right' => '오른쪽',
+	'wikiaPhotoGallery-preview-spacing-small' => '작게',
+	'wikiaPhotoGallery-preview-spacing-medium' => '보통',
+	'wikiaPhotoGallery-preview-spacing-large' => '크게',
+	'wikiaPhotoGallery-preview-captionalignment-left' => '왼쪽',
+	'wikiaPhotoGallery-preview-captionalignment-center' => '가운데',
+	'wikiaPhotoGallery-preview-captionalignment-right' => '오른쪽',
+	'wikiaPhotoGallery-preview-captionsize' => '설명 크기',
+	'wikiaPhotoGallery-preview-captionsize-small' => '작게',
+	'wikiaPhotoGallery-preview-captionsize-medium' => '보통',
+	'wikiaPhotoGallery-preview-captionsize-large' => '크게',
+	'wikiaPhotoGallery-preview-captioncolor' => '설명 색상',
+	'wikiaPhotoGallery-preview-bordersize-small' => '작게',
+	'wikiaPhotoGallery-preview-bordersize-medium' => '보통',
+	'wikiaPhotoGallery-preview-bordersize-large' => '크게',
+	'wikiaPhotoGallery-preview-size' => '그림 크기',
+	'wikiaPhotoGallery-preview-captions' => '설명',
+	'wikiaPhotoGallery-preview-captions-left' => '왼쪽',
+	'wikiaPhotoGallery-preview-captions-center' => '가운데',
+	'wikiaPhotoGallery-preview-captions-right' => '오른쪽',
+	'wikiaPhotoGallery-quit-quitonly' => '바뀐 내용을 버리고 끝내기',
+	'wikiaPhotoGallery-slideshow-view-title' => '슬라이드쇼',
+	'wikiaPhotoGallery-slideshowpreview-position-left' => '왼쪽',
+	'wikiaPhotoGallery-slideshowpreview-position-center' => '가운데',
+	'wikiaPhotoGallery-slideshowpreview-position-right' => '오른쪽',
+	'galery-slider-read-more' => '더 읽어보기 >',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
@@ -3454,7 +3538,7 @@ $messages['lb'] = array(
 	'wikiaPhotoGallery-upload-page-prev' => 'Vireg 8',
 	'wikiaPhotoGallery-upload-filesinsert' => 'Dës Photo drasetzen',
 	'wikiaPhotoGallery-upload-error-bad-extension' => 'Dëse Fichierstyp kann net benotzt ginn.',
-	'wikiaPhotoGallery-upload-error-conflict-rename' => 'Är Photo ëmbenennen',
+	'wikiaPhotoGallery-upload-error-conflict-rename' => 'Är Foto ëmbenennen',
 	'wikiaPhotoGallery-upload-error-conflict-insert' => 'Drasetzen',
 	'wikiaPhotoGallery-upload-select-images' => 'Eraussichen',
 	'wikiaPhotoGallery-photooptions-done' => 'Fäerdeg',
@@ -3503,6 +3587,7 @@ $messages['lb'] = array(
 	'wikiaPhotoGallery-upload-selectbutton' => 'Eraussichen',
 	'wikiaPhotoGallery-photooptions-captionsub' => 'Dës Photo beschreiwen',
 	'wikiaPhotoGallery-photooptions-linktitle' => 'Eng Säit verlinken',
+	'galery-slider-read-more' => 'Méi liesen >',
 );
 
 /** Lithuanian (lietuvių)
@@ -5056,6 +5141,7 @@ Em alternativa, pode clicar "$2" para ver a página na forma atualizada.',
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
+ * @author Dianakc
  * @author Luckas
  * @author Luckas Blade
  */
@@ -5106,7 +5192,7 @@ O que pretende fazer?',
 	'wikiaPhotoGallery-preview-title' => 'Criador de galerias',
 	'wikiaPhotoGallery-preview-hover-modify' => 'modificar',
 	'wikiaPhotoGallery-preview-hover-delete' => 'apagar',
-	'wikiaPhotoGallery-preview-previewtitle' => 'Antevisão da galeria',
+	'wikiaPhotoGallery-preview-previewtitle' => 'Pré-visualização da galeria',
 	'wikiaPhotoGallery-preview-add-photo' => 'Adicionar uma foto',
 	'wikiaPhotoGallery-preview-add-caption' => 'Adicionar um título',
 	'wikiaPhotoGallery-preview-add-description' => 'Adicione uma descrição',
@@ -5443,6 +5529,13 @@ $messages['ru'] = array(
 	'wikiaPhotoGallery-upload-image-size' => 'Изображения должны быть 670 пикселей на 360 пикселей или больше.',
 	'wikiaPhotoGallery-not-displayed' => 'Не отображается',
 	'galery-slider-read-more' => 'Читать подробнее >',
+);
+
+/** Rusyn (русиньскый)
+ * @author Tkalyn
+ */
+$messages['rue'] = array(
+	'wikiaPhotoGallery-preview-add-link' => 'Придати одказ',
 );
 
 /** Sinhala (සිංහල)
@@ -5786,7 +5879,7 @@ Alternativt kan du klicka på "$2" för att se sidan i sin uppdaterade form.',
 	'wikiaPhotoGallery-slideshowpreview-recentuploads' => 'Skapa ett automatiskt uppdaterat bildspel med nya bilder',
 	'wikiaPhotoGallery-slideshowpreview-photostitle' => 'Bildspelsbilder',
 	'wikiaPhotoGallery-slideshowpreview-addphoto' => 'Lägg till ett foto',
-	'wikiaPhotoGallery-slideshowpreview-position' => 'Bildspels-position',
+	'wikiaPhotoGallery-slideshowpreview-position' => 'Bildspelets position',
 	'wikiaPhotoGallery-slideshowpreview-position-left' => 'Vänster',
 	'wikiaPhotoGallery-slideshowpreview-position-center' => 'Center',
 	'wikiaPhotoGallery-slideshowpreview-position-right' => 'Höger',
@@ -6129,6 +6222,14 @@ Ilarawan ang litratong ito.",
  */
 $messages['tr'] = array(
 	'wikiaPhotoGallery-feed-caption' => '$1, sera <a href="$2">$3</a>',
+);
+
+/** Tuvinian (тыва дыл)
+ * @author Agilight
+ */
+$messages['tyv'] = array(
+	'wikiaPhotoGallery-upload-findtitle' => 'Диле',
+	'wikiaPhotoGallery-quit-title' => 'Чуруктар эдикчизинден үнер',
 );
 
 /** Ukrainian (українська)
@@ -6522,84 +6623,88 @@ $messages['yi'] = array(
  * @author 乌拉跨氪
  */
 $messages['zh-hans'] = array(
-	'wikiaphotogallery-desc' => '提供一个界面以供在页面中管理画廊和幻灯片',
+	'wikiaphotogallery-desc' => '提供一个接口以供管理在页面中的画廊和幻灯片',
 	'wikiaPhotoGallery-back' => '返回',
 	'wikiaPhotoGallery-finish' => '完成',
-	'wikiaPhotoGallery-feed-caption' => '$1, 通过 <超链接="$2">$3</a>',
+	'wikiaPhotoGallery-feed-caption' => '$1，通过<a href="$2">$3</a>',
 	'wikiaPhotoGallery-lightbox-caption' => '通过$1',
 	'wikiaPhotoGallery-add-gallery' => '插入照片库或幻灯片',
 	'wikiaPhotoGallery-viewmode-addphoto' => '在此图库中添加照片',
 	'wikiaPhotoGallery-edit-abort' => '您所尝试的修改被一个扩展钩子所取消。',
 	'wikiaPhotoGallery-edit-summary' => '编辑图库',
 	'wikiaPhotoGallery-error-caption' => '错误',
-	'wikiaPhotoGallery-error-outdated' => '您刚刚查看的库已被编辑。
+	'wikiaPhotoGallery-error-outdated' => '您查看的图库已被编辑。
 请刷新页面，然后再试。',
-	'wikiaPhotoGallery-error-wrong-title' => '没有为提供的文章id的标题',
+	'wikiaPhotoGallery-error-wrong-title' => '提供的文章ID没有标题',
 	'wikiaPhotoGallery-error-user-rights' => '用户权限错误。',
-	'wikiaPhotoGallery-upload-title' => '查找&上传图片',
+	'wikiaPhotoGallery-upload-title' => '查找和上传图片',
 	'wikiaPhotoGallery-upload-info-choose-list' => "'''或者''' 选择:",
 	'wikiaPhotoGallery-upload-info-images-label' => '此页面中的图像',
 	'wikiaPhotoGallery-upload-info-upload' => "''' 或者 ''' 从您的电脑上传一张图片",
 	'wikiaPhotoGallery-upload-info-uploaded-label' => '最近图片',
-	'wikiaPhotoGallery-upload-findtitle' => '寻找',
-	'wikiaPhotoGallery-upload-findbutton' => '寻找',
+	'wikiaPhotoGallery-upload-findtitle' => '查找',
+	'wikiaPhotoGallery-upload-findbutton' => '查找',
 	'wikiaPhotoGallery-upload-filestitle-pre' => '最近上传的文件',
 	'wikiaPhotoGallery-upload-filestitle-post' => '本维基上的图片（$1条结果）',
 	'wikiaPhotoGallery-upload-page-next' => '后 8 个',
-	'wikiaPhotoGallery-upload-page-prev' => '前 8 个',
+	'wikiaPhotoGallery-upload-page-prev' => '前8个',
 	'wikiaPhotoGallery-upload-filesinsert' => '插入这张照片',
 	'wikiaPhotoGallery-upload-error-title' => '您的上传无法完成',
 	'wikiaPhotoGallery-upload-error-bad-extension' => '此文件类型不能使用。',
 	'wikiaPhotoGallery-upload-error-filename-incorrect' => '文件名包含页面标题中不允许使用的字符。
 请重命名该文件，然后再试。',
-	'wikiaPhotoGallery-upload-error-filetype-incorrect' => '该文件的扩展无效',
-	'wikiaPhotoGallery-upload-error-filetype missing' => '该文件缺少其扩展名。',
+	'wikiaPhotoGallery-upload-error-filetype-incorrect' => '该文件的扩展名无效。',
+	'wikiaPhotoGallery-upload-error-filetype missing' => '该文件缺少扩展名。',
 	'wikiaPhotoGallery-upload-error-readonly' => '您无法上传图片，因为本维基处于只读状态。',
-	'wikiaPhotoGallery-upload-error-conflict-intro' => '具有此名称的文件已存在!
-你想要做什么？',
-	'wikiaPhotoGallery-upload-error-filetype-missing' => '上传的文件缺少其扩展名。',
+	'wikiaPhotoGallery-upload-error-conflict-intro' => '此名称的文件已存在！
+您想要怎么处理？',
+	'wikiaPhotoGallery-upload-error-filetype-missing' => '上传的文件缺少扩展名。',
 	'wikiaPhotoGallery-upload-error-conflict-rename' => '重命名您的照片',
 	'wikiaPhotoGallery-upload-error-conflict-reuse' => '使用现有的照片',
-	'wikiaPhotoGallery-upload-error-conflict-overwrite' => '使用您的图片覆盖现有文件',
+	'wikiaPhotoGallery-upload-error-conflict-overwrite' => '使用您的文件覆盖现有的照片',
 	'wikiaPhotoGallery-upload-error-conflict-insert' => '插入',
-	'wikiaPhotoGallery-upload-select-images' => '选',
+	'wikiaPhotoGallery-upload-select-images' => '选择',
 	'wikiaPhotoGallery-photooptions-title' => '照片选项',
-	'wikiaPhotoGallery-photooptions-done' => '好了',
-	'wikiaPhotoGallery-preview-no-images' => '在被选定的目前已发现的RSS源中没有图片',
-	'wikiaPhotoGallery-preview-title' => '库生成器',
+	'wikiaPhotoGallery-photooptions-done' => '完成',
+	'wikiaPhotoGallery-preview-no-images' => '在选定的RSS源中目前没有发现照片',
+	'wikiaPhotoGallery-preview-title' => '图库生成器',
 	'wikiaPhotoGallery-preview-hover-modify' => '修改',
 	'wikiaPhotoGallery-preview-hover-delete' => '删除',
-	'wikiaPhotoGallery-preview-previewtitle' => '库预览',
-	'wikiaPhotoGallery-preview-add-photo' => '添加图片',
+	'wikiaPhotoGallery-preview-previewtitle' => '图库预览',
+	'wikiaPhotoGallery-preview-add-photo' => '添加照片',
 	'wikiaPhotoGallery-preview-add-caption' => '添加标题',
 	'wikiaPhotoGallery-preview-add-description' => '添加说明',
 	'wikiaPhotoGallery-preview-add-link' => '添加链接',
 	'wikiaPhotoGallery-preview-placeholder-caption' => '标题将显示在此处',
-	'wikiaPhotoGallery-preview-link-tooltip' => '图片链接到" $1 "',
-	'wikiaPhotoGallery-preview-feed-label' => '来自RSS源的URL：',
+	'wikiaPhotoGallery-preview-link-tooltip' => '图片链接到“$1”',
+	'wikiaPhotoGallery-preview-feed-label' => '从RSS源URL：',
 	'wikiaPhotoGallery-preview-tab-layout' => '布局',
 	'wikiaPhotoGallery-preview-px' => '像素',
 	'wikiaPhotoGallery-preview-size-smaller' => '缩小',
 	'wikiaPhotoGallery-preview-size-larger' => '放大',
 	'wikiaPhotoGallery-preview-columns' => '列数',
 	'wikiaPhotoGallery-preview-columns-dynamic' => '适合页面',
-	'wikiaPhotoGallery-preview-position' => '库位置',
+	'wikiaPhotoGallery-preview-position' => '图库位置',
 	'wikiaPhotoGallery-preview-position-left' => '左',
-	'wikiaPhotoGallery-preview-position-center' => '中间',
+	'wikiaPhotoGallery-preview-position-center' => '中',
 	'wikiaPhotoGallery-preview-position-right' => '右',
 	'wikiaPhotoGallery-preview-spacing' => '照片间距',
 	'wikiaPhotoGallery-preview-spacing-small' => '小',
 	'wikiaPhotoGallery-preview-spacing-medium' => '中',
 	'wikiaPhotoGallery-preview-spacing-large' => '大',
 	'wikiaPhotoGallery-preview-orientation' => '照片方向',
-	'wikiaPhotoGallery-preview-orientation-square-tooltip' => '剪裁照片以放置它们在所有空间',
+	'wikiaPhotoGallery-preview-orientation-square-tooltip' => '裁剪照片以使它们全变为方形',
+	'wikiaPhotoGallery-preview-orientation-landscape-tooltip' => '裁剪照片使它们更加广阔',
+	'wikiaPhotoGallery-preview-orientation-portrait-tooltip' => '裁剪照片使他们成为肖像照',
+	'wikiaPhotoGallery-preview-orientation-none-tooltip' => '保持照片原有的形状',
+	'wikiaPhotoGallery-preview-crop-sub' => '裁剪图像以适应网格',
 	'wikiaPhotoGallery-preview-tab-theme' => '边框和标题',
 	'wikiaPhotoGallery-preview-captionposition' => '标题位置',
 	'wikiaPhotoGallery-preview-captionposition-within' => '内照片',
 	'wikiaPhotoGallery-preview-captionposition-below' => '图片下方',
 	'wikiaPhotoGallery-preview-captionalignment' => '标题对齐方式',
 	'wikiaPhotoGallery-preview-captionalignment-left' => '左',
-	'wikiaPhotoGallery-preview-captionalignment-center' => '中间',
+	'wikiaPhotoGallery-preview-captionalignment-center' => '中',
 	'wikiaPhotoGallery-preview-captionalignment-right' => '右',
 	'wikiaPhotoGallery-preview-captionsize' => '标题大小',
 	'wikiaPhotoGallery-preview-captionsize-small' => '小',
@@ -6614,16 +6719,23 @@ $messages['zh-hans'] = array(
 	'wikiaPhotoGallery-preview-bordercolor' => '照片边框颜色',
 	'wikiaPhotoGallery-preview-colorpicker-title' => '拾色器',
 	'wikiaPhotoGallery-preview-colorpicker-hex' => '十六进制代码',
-	'wikiaPhotoGallery-preview-size' => '图片尺寸',
+	'wikiaPhotoGallery-preview-size' => '照片尺寸',
 	'wikiaPhotoGallery-preview-captions' => '标题',
 	'wikiaPhotoGallery-preview-captions-left' => '左',
-	'wikiaPhotoGallery-preview-captions-center' => '中间',
+	'wikiaPhotoGallery-preview-captions-center' => '中',
 	'wikiaPhotoGallery-preview-captions-right' => '右',
+	'wikiaPhotoGallery-conflict-title' => '发生了编辑冲突',
+	'wikiaPhotoGallery-conflict-help' => '我们在下面提供了您创建的内容的wikitext。
+您可以复制此文本，点击“$1”并粘贴它到正确的位置以恢复您的更改。
+或者，您可以点击“$2”以查看此页面更新后的形式。',
 	'wikiaPhotoGallery-conflict-edit' => '访问编辑模式',
 	'wikiaPhotoGallery-conflict-view' => '查看当前页面',
 	'wikiaPhotoGallery-preview-delete-title' => '删除该图片？',
+	'wikiaPhotoGallery-preview-delete' => '您确定您希望从此图库中移除照片吗？',
 	'wikiaPhotoGallery-preview-saving-title' => '正在保存',
-	'wikiaPhotoGallery-preview-saving-intro' => '请等待到图库保存完毕',
+	'wikiaPhotoGallery-preview-saving-intro' => '请等待到图库保存完毕。',
+	'wikiaPhotoGallery-quit-title' => '退出图库编辑器',
+	'wikiaPhotoGallery-quit-intro' => '您确定要退出图库编辑器吗？',
 	'wikiaPhotoGallery-quit-savequit' => '保存并退出',
 	'wikiaPhotoGallery-quit-quitonly' => '放弃更改并退出',
 	'wikiaPhotoGallery-slideshow-view-popout-tooltip' => '展开幻灯片',
@@ -6634,47 +6746,77 @@ $messages['zh-hans'] = array(
 	'wikiaPhotoGallery-slideshow-view-number' => '$2的$1',
 	'wikiaPhotoGallery-slideshow-view-startslideshow' => '播放幻灯片',
 	'wikiaPhotoGallery-slideshow-view-stopslideshow' => '停止幻灯片',
-	'wikiaPhotoGallery-slideshow-view-details-tooltip' => '查看图片细节',
-	'wikiaPhotoGallery-slideshow-view-link-overlay' => '到达$1',
-	'wikiaPhotoGallery-choice-slideshow' => '制作幻灯片',
-	'wikiaPhotoGallery-choice-gallery' => '新建图库',
+	'wikiaPhotoGallery-slideshow-view-details-tooltip' => '查看图片详情',
+	'wikiaPhotoGallery-slideshow-view-link-overlay' => '转至$1',
+	'wikiaPhotoGallery-choice-title' => '添加幻灯片或图库',
+	'wikiaPhotoGallery-choice-intro' => '您想创建一个幻灯片或照片图库吗？',
+	'wikiaPhotoGallery-choice-slideshow' => '创建幻灯片',
+	'wikiaPhotoGallery-choice-gallery' => '创建图库',
+	'wikiaPhotoGallery-choice-slider' => '创建主页滑块',
 	'wikiaPhotoGallery-slideshowpreview-title' => '幻灯片创建器',
 	'wikiaPhotoGallery-slideshowpreview-optionstitle' => '幻灯片设置',
 	'wikiaPhotoGallery-slideshowpreview-size' => '幻灯片宽度：',
 	'wikiaPhotoGallery-slideshowpreview-size-smaller' => '更小',
 	'wikiaPhotoGallery-slideshowpreview-size-larger' => '更大',
+	'wikiaPhotoGallery-slideshowpreview-crop' => '使用智能裁剪以消除空白',
+	'wikiaPhotoGallery-slideshowpreview-recentuploads' => '创建一个自动更新新照片的幻灯片',
+	'wikiaPhotoGallery-slideshowpreview-photostitle' => '幻灯片照片',
 	'wikiaPhotoGallery-slideshowpreview-addphoto' => '添加一个照片',
+	'wikiaPhotoGallery-slideshowpreview-position' => '幻灯片位置',
 	'wikiaPhotoGallery-slideshowpreview-position-left' => '左',
-	'wikiaPhotoGallery-slideshowpreview-position-center' => '中间',
+	'wikiaPhotoGallery-slideshowpreview-position-center' => '中',
 	'wikiaPhotoGallery-slideshowpreview-position-right' => '右',
+	'wikiaPhotoGallery-sliderpreview-photostitle' => '滚动照片',
+	'wikiaPhotoGallery-sliderpreview-optionstitle' => '滚动选项',
+	'wikiaPhotoGallery-sliderpreview-choosetype' => '滚动菜单位置',
+	'wikiaPhotoGallery-sliderpreview-choosetype-bottom-tooltip' => '水平缩略图',
+	'wikiaPhotoGallery-sliderpreview-choosetype-right-tooltip' => '垂直缩略图',
 	'wikiaPhotoGallery-sliderpreview-addphoto' => '添加一个照片',
 	'wikiaPhotoGallery-sliderpreview-title' => '幻灯片创建器',
+	'wikiaPhotoGallery-upload-title-slideshow' => '幻灯片生成器 - 找到和上传照片',
+	'wikiaPhotoGallery-upload-title-gallery' => '图库生成器 - 找到和上传照片',
+	'wikiaPhotoGallery-upload-title-slider' => '滚动生成器 - 找到和上传照片',
 	'wikiaPhotoGallery-upload-uploadtitle' => '找到您的图片',
+	'wikiaPhotoGallery-upload-uploadtext' => "'''要么'''从您的电脑上传图像",
 	'wikiaPhotoGallery-upload-uploadbutton' => '上传图片',
+	'wikiaPhotoGallery-upload-existingtext' => "'''要么'''从下面点击图像：",
 	'wikiaPhotoGallery-upload-existingtext-onarticle' => '这个页面',
+	'wikiaPhotoGallery-upload-existingtext-recentupload' => '最近上传',
 	'wikiaPhotoGallery-upload-selectbutton' => '选择',
+	'wikiaPhotoGallery-photooptions-title-slideshow' => '幻灯片生成器 - 添加标题和链接',
+	'wikiaPhotoGallery-photooptions-title-gallery' => '图库生成器 - 添加标题和链接',
+	'wikiaPhotoGallery-photooptions-captiontitle' => '给您的照片添加标题（可选）',
 	'wikiaPhotoGallery-photooptions-captionsub' => '描述该图片。',
+	'wikiaPhotoGallery-photooptions-linktitle' => '连接您的图像（可选）',
+	'wikiaPhotoGallery-photooptions-linksub' => '点击此照片时，转到此页面。',
+	'wikiaPhotoGallery-photooptions-linktext' => '链接显示的文本',
+	'wikiaPhotoGallery-photooptions-linkurl' => '链接到（粘贴页面名称或URL）。',
 	'wikiaPhotoGallery-photooptions-description' => '图像的详细信息。',
-	'wikiaPhotoGallery-search-tooltip' => '在该维基搜索图片',
-	'wikiaPhotoGallery-upload-image-size' => '图片尺寸必须为长670px宽360px或更大',
+	'wikiaPhotoGallery-search-tooltip' => '在该维基搜索照片',
+	'wikiaPhotoGallery-upload-image-size' => '照片尺寸必须为670像素x360像素或更大',
 	'wikiaPhotoGallery-not-displayed' => '无法显示',
 	'galery-slider-read-more' => '了解更多 >',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
+ * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
+	'wikiaphotogallery-desc' => '提供管理圖片冊和幻燈片的介面',
 	'wikiaPhotoGallery-back' => '返回',
 	'wikiaPhotoGallery-finish' => '完成',
-	'wikiaPhotoGallery-feed-caption' => '$1, 通過 <超链接="$2">$3</a>',
-	'wikiaPhotoGallery-lightbox-caption' => '通過$1',
+	'wikiaPhotoGallery-feed-caption' => '$1，透過 <a href="$2">$3</a>',
+	'wikiaPhotoGallery-lightbox-caption' => '透過$1',
 	'wikiaPhotoGallery-add-gallery' => '插入照片庫或幻燈片',
-	'wikiaPhotoGallery-viewmode-addphoto' => '在庫中增加圖片',
-	'wikiaPhotoGallery-edit-summary' => '編輯一個圖庫',
+	'wikiaPhotoGallery-viewmode-addphoto' => '在圖片冊中增加圖片',
+	'wikiaPhotoGallery-edit-abort' => '您所嘗試的修改被一個擴展鉤子取消',
+	'wikiaPhotoGallery-edit-summary' => '編輯一個圖片冊',
 	'wikiaPhotoGallery-error-caption' => '錯誤',
 	'wikiaPhotoGallery-error-outdated' => '您查看的圖片庫已經被編輯。
 請刷新頁面並再試一次。',
+	'wikiaPhotoGallery-error-wrong-title' => '該id文章沒有標題',
 	'wikiaPhotoGallery-error-user-rights' => '用戶權限錯誤。',
 	'wikiaPhotoGallery-upload-title' => '查找&上傳圖片',
 	'wikiaPhotoGallery-upload-info-choose-list' => '「或」選擇：',
@@ -6684,16 +6826,16 @@ $messages['zh-hant'] = array(
 	'wikiaPhotoGallery-upload-findtitle' => '尋找',
 	'wikiaPhotoGallery-upload-findbutton' => '搜尋',
 	'wikiaPhotoGallery-upload-filestitle-pre' => '最近上傳的檔案',
-	'wikiaPhotoGallery-upload-filestitle-post' => '本維基上的圖片（$1條结果）',
+	'wikiaPhotoGallery-upload-filestitle-post' => '本 wiki 上的圖片（$1條结果）',
 	'wikiaPhotoGallery-upload-page-next' => '後 8 個',
-	'wikiaPhotoGallery-upload-page-prev' => '前8個',
+	'wikiaPhotoGallery-upload-page-prev' => '前 8 筆',
 	'wikiaPhotoGallery-upload-filesinsert' => '插入這張照片',
 	'wikiaPhotoGallery-upload-error-title' => '您的上傳無法完成',
 	'wikiaPhotoGallery-upload-error-bad-extension' => '此檔案類型不能使用。',
 	'wikiaPhotoGallery-upload-error-filename-incorrect' => '檔案名包含有頁面標題所禁止的字符。請改名後再試。',
 	'wikiaPhotoGallery-upload-error-filetype-incorrect' => '這個上傳的副檔名不正確',
 	'wikiaPhotoGallery-upload-error-filetype missing' => '該檔案缺少副檔名。',
-	'wikiaPhotoGallery-upload-error-readonly' => '您不能上傳圖片，本維基處於唯讀狀態。',
+	'wikiaPhotoGallery-upload-error-readonly' => '您不能上傳圖片，本 wiki 處於唯讀狀態。',
 	'wikiaPhotoGallery-upload-error-conflict-intro' => '具有此名稱的檔案已存在！
 你要怎麼辦？',
 	'wikiaPhotoGallery-upload-error-filetype-missing' => '上傳的檔案缺少副檔名。',
@@ -6716,10 +6858,12 @@ $messages['zh-hant'] = array(
 	'wikiaPhotoGallery-preview-placeholder-caption' => '標題將顯示在此處',
 	'wikiaPhotoGallery-preview-link-tooltip' => '圖片連結到" $1 "',
 	'wikiaPhotoGallery-preview-feed-label' => '從 RSS feed 的網址：',
-	'wikiaPhotoGallery-preview-tab-layout' => '布局',
+	'wikiaPhotoGallery-preview-tab-layout' => '佈局',
 	'wikiaPhotoGallery-preview-px' => '像素',
 	'wikiaPhotoGallery-preview-size-smaller' => '縮小',
 	'wikiaPhotoGallery-preview-size-larger' => '放大',
+	'wikiaPhotoGallery-preview-columns' => '列數',
+	'wikiaPhotoGallery-preview-columns-dynamic' => '適合頁面',
 	'wikiaPhotoGallery-preview-position' => '圖片庫位置',
 	'wikiaPhotoGallery-preview-position-left' => '左',
 	'wikiaPhotoGallery-preview-position-center' => '中間',
@@ -6729,8 +6873,14 @@ $messages['zh-hant'] = array(
 	'wikiaPhotoGallery-preview-spacing-medium' => '中',
 	'wikiaPhotoGallery-preview-spacing-large' => '大',
 	'wikiaPhotoGallery-preview-orientation' => '圖片方向',
+	'wikiaPhotoGallery-preview-orientation-square-tooltip' => '剪裁圖片使它們都是方形',
+	'wikiaPhotoGallery-preview-orientation-landscape-tooltip' => '剪裁照片使它們美化',
+	'wikiaPhotoGallery-preview-orientation-portrait-tooltip' => '剪裁圖片使之成為肖像',
+	'wikiaPhotoGallery-preview-orientation-none-tooltip' => '讓圖片維持原來的形狀',
+	'wikiaPhotoGallery-preview-crop-sub' => '剪裁圖片以使之適合網格',
 	'wikiaPhotoGallery-preview-tab-theme' => '邊框和標題',
 	'wikiaPhotoGallery-preview-captionposition' => '標題位置',
+	'wikiaPhotoGallery-preview-captionposition-within' => '在圖片內',
 	'wikiaPhotoGallery-preview-captionposition-below' => '圖片下方',
 	'wikiaPhotoGallery-preview-captionalignment' => '標題對齊方式',
 	'wikiaPhotoGallery-preview-captionalignment-left' => '左',
@@ -6755,6 +6905,7 @@ $messages['zh-hant'] = array(
 	'wikiaPhotoGallery-preview-captions-center' => '中間',
 	'wikiaPhotoGallery-preview-captions-right' => '右',
 	'wikiaPhotoGallery-conflict-title' => '發生編輯衝突',
+	'wikiaPhotoGallery-conflict-help' => '我們提供了您在下面創建編輯的 wiki文本。您可以複製該文本，點擊" $1 "並將其貼在正確的位置 ！或者，您也可以按一下" $2 "以查看該頁最新的版本。',
 	'wikiaPhotoGallery-conflict-edit' => '進入編輯模式',
 	'wikiaPhotoGallery-conflict-view' => '檢視當前頁面',
 	'wikiaPhotoGallery-preview-delete-title' => '移除此圖片？',
@@ -6765,6 +6916,7 @@ $messages['zh-hant'] = array(
 	'wikiaPhotoGallery-quit-intro' => '確定要退出圖片庫編輯器嗎？',
 	'wikiaPhotoGallery-quit-savequit' => '儲存並退出',
 	'wikiaPhotoGallery-quit-quitonly' => '放棄變更並退出',
+	'wikiaPhotoGallery-slideshow-view-popout-tooltip' => '展開幻燈片',
 	'wikiaPhotoGallery-slideshow-view-addphoto' => '新增圖片',
 	'wikiaPhotoGallery-slideshow-view-next-tooltip' => '下一張圖片',
 	'wikiaPhotoGallery-slideshow-view-prev-tooltip' => '上一張圖片',
@@ -6772,7 +6924,7 @@ $messages['zh-hant'] = array(
 	'wikiaPhotoGallery-slideshow-view-number' => '$2的$1',
 	'wikiaPhotoGallery-slideshow-view-startslideshow' => '播放幻燈片',
 	'wikiaPhotoGallery-slideshow-view-stopslideshow' => '停止幻燈片',
-	'wikiaPhotoGallery-slideshow-view-details-tooltip' => '查看圖片詳細資訊',
+	'wikiaPhotoGallery-slideshow-view-details-tooltip' => '檢視圖片詳細資訊',
 	'wikiaPhotoGallery-slideshow-view-link-overlay' => '到達$1',
 	'wikiaPhotoGallery-choice-title' => '增加幻燈片或圖庫',
 	'wikiaPhotoGallery-choice-intro' => '你想創建幻燈片或圖片庫嗎？',
@@ -6784,6 +6936,8 @@ $messages['zh-hant'] = array(
 	'wikiaPhotoGallery-slideshowpreview-size' => '幻燈片寬度:',
 	'wikiaPhotoGallery-slideshowpreview-size-smaller' => '更小',
 	'wikiaPhotoGallery-slideshowpreview-size-larger' => '更大',
+	'wikiaPhotoGallery-slideshowpreview-crop' => '使用智慧裁剪，以消除空白',
+	'wikiaPhotoGallery-slideshowpreview-recentuploads' => '創建新照片自動更新的幻燈片',
 	'wikiaPhotoGallery-slideshowpreview-photostitle' => '幻燈片圖片',
 	'wikiaPhotoGallery-slideshowpreview-addphoto' => '新增圖片',
 	'wikiaPhotoGallery-slideshowpreview-position' => '幻燈片位置',
@@ -6792,6 +6946,34 @@ $messages['zh-hant'] = array(
 	'wikiaPhotoGallery-slideshowpreview-position-right' => '右',
 	'wikiaPhotoGallery-sliderpreview-photostitle' => '滑塊圖片',
 	'wikiaPhotoGallery-sliderpreview-optionstitle' => '滑塊選項',
+	'wikiaPhotoGallery-sliderpreview-choosetype' => '滑塊選單位置',
+	'wikiaPhotoGallery-sliderpreview-choosetype-bottom-tooltip' => '水平縮略圖',
+	'wikiaPhotoGallery-sliderpreview-choosetype-right-tooltip' => '垂直縮略圖',
+	'wikiaPhotoGallery-sliderpreview-addphoto' => '新增圖片',
+	'wikiaPhotoGallery-sliderpreview-title' => '滑塊產生器',
+	'wikiaPhotoGallery-upload-title-slideshow' => '幻燈片產生器-找到並上傳照片',
+	'wikiaPhotoGallery-upload-title-gallery' => '圖片冊產生器-尋找並上傳圖片',
+	'wikiaPhotoGallery-upload-title-slider' => '滑塊產生器-找到並上傳照片',
+	'wikiaPhotoGallery-upload-uploadtitle' => '找尋您的圖片',
+	'wikiaPhotoGallery-upload-uploadtext' => '「或者」 從您的電腦上傳一張圖片',
+	'wikiaPhotoGallery-upload-uploadbutton' => '上傳圖片',
+	'wikiaPhotoGallery-upload-existingtext' => '「或」從以下點選圖片：',
+	'wikiaPhotoGallery-upload-existingtext-onarticle' => '此頁面',
+	'wikiaPhotoGallery-upload-existingtext-recentupload' => '最近上傳',
+	'wikiaPhotoGallery-upload-selectbutton' => '選擇',
+	'wikiaPhotoGallery-photooptions-title-slideshow' => '幻燈片產生器-添加標題和連結',
+	'wikiaPhotoGallery-photooptions-title-gallery' => '圖片冊產生器-添加標題和連結',
+	'wikiaPhotoGallery-photooptions-captiontitle' => '給你的照片的標題 （可選）',
+	'wikiaPhotoGallery-photooptions-captionsub' => '描述該圖片',
+	'wikiaPhotoGallery-photooptions-linktitle' => '連結你的圖片 （可選）',
+	'wikiaPhotoGallery-photooptions-linksub' => '點擊這張圖片時，轉到此頁。',
+	'wikiaPhotoGallery-photooptions-linktext' => '連結顯示的文字。',
+	'wikiaPhotoGallery-photooptions-linkurl' => '連結到 （貼上頁面名稱或 URL）。',
+	'wikiaPhotoGallery-photooptions-description' => '圖片詳細訊息',
+	'wikiaPhotoGallery-search-tooltip' => '搜尋此 wiki 上的圖片',
+	'wikiaPhotoGallery-upload-image-size' => '圖片應該是 670px*360px 或更大',
+	'wikiaPhotoGallery-not-displayed' => '不顯示',
+	'galery-slider-read-more' => '讀更多 >',
 );
 
 /** Chinese (Hong Kong) (中文（香港）‎)

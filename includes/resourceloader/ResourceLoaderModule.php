@@ -370,6 +370,37 @@ abstract class ResourceLoaderModule {
 	}
 
 	/**
+	 * Helper method for calculating when the module's hash (if it has one) changed.
+	 *
+	 * @param ResourceLoaderContext $context
+	 * @return int UNIX timestamp or 0 if no hash was provided
+	 *  by getModifiedHash()
+	 */
+	public function getHashMtime( ResourceLoaderContext $context ) {
+		$hash = $this->getModifiedHash( $context );
+		if ( !is_string( $hash ) ) {
+			return 0;
+		}
+
+		$cache = wfGetCache( CACHE_ANYTHING );
+		$key = wfMemcKey( 'resourceloader', 'modulemodifiedhash', $this->getName(), $hash );
+
+		$data = $cache->get( $key );
+		if ( is_array( $data ) && $data['hash'] === $hash ) {
+			// Hash is still the same, re-use the timestamp of when we first saw this hash.
+			return $data['timestamp'];
+		}
+
+		$timestamp = wfTimestamp();
+		$cache->set( $key, array(
+			'hash' => $hash,
+			'timestamp' => $timestamp,
+		) );
+
+		return $timestamp;
+	}
+
+	/**
 	 * Check whether this module is known to be empty. If a child class
 	 * has an easy and cheap way to determine that this module is
 	 * definitely going to be empty, it should override this method to

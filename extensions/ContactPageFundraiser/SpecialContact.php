@@ -268,7 +268,7 @@ class EmailContactForm {
 
 	function doSubmit( ) {
 		global $wgOut, $wgRequest;
-		global $wgUserEmailUseReplyTo, $wgEmergencyContact;
+		global $wgEmergencyContact;
 		global $wgContactSender, $wgContactSenderName;
 
 		$csender = $wgContactSender ? $wgContactSender : $wgEmergencyContact;
@@ -283,10 +283,6 @@ class EmailContactForm {
 
 		if ( !$this->fromaddress ) {
 			$from = new MailAddress( $csender, $cname );
-		}
-		elseif ( $wgUserEmailUseReplyTo ) {
-			$from = new MailAddress( $csender, $cname );
-			$replyto = new MailAddress( $this->fromaddress, $this->fromname );
 		}
 		else {
 			$from = new MailAddress( $this->fromaddress, $this->fromname );

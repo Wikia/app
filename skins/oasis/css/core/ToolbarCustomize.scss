@@ -1,12 +1,12 @@
 // core
-@import "color";
+@import "skins/shared/color";
 
 // mixins
-@import "../mixins/box-sizing-border-box";
-@import "../mixins/calc";
-@import "../mixins/gradient";
-@import "../mixins/clearfix";
-@import "../mixins/menus";
+@import "skins/shared/mixins/box-sizing-border-box";
+@import "skins/shared/mixins/calc";
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/menus";
 
 // rename item modal styles
 .toolbar-edit-rename-item {
@@ -146,7 +146,7 @@
 		}
 
 		img {
-			background: url(/skins/oasis/images/icon_return_6.png); /* base64 */
+			background: url(/skins/oasis/images/icon_return_6.png); /* inline */
 			background-repeat: no-repeat;
 			background-position: top left;
 			height: 6px;
@@ -211,7 +211,7 @@
 		}
 
 		.folder-icon {
-			background-image: url(/skins/oasis/images/icon_folder_16.png); /* base64 */
+			background-image: url(/skins/oasis/images/icon_folder_16.png); /* inline */
 			verical-align: middle;
 			height: 16px;
 			width: 16px;

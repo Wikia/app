@@ -4,7 +4,8 @@
 			"Jayarathina",
 			"Sank",
 			"Shanmugamp7",
-			"மதனாஹரன்"
+			"மதனாஹரன்",
+			"Kalyanasundar"
 		]
 	},
 	"visualeditor-annotationbutton-bold-tooltip": "தடித்த",
@@ -30,9 +31,10 @@
 	"visualeditor-inspector-close-tooltip": "மூடுக",
 	"visualeditor-inspector-remove-tooltip": "நீக்குக",
 	"visualeditor-languageinspector-title": "மொழி",
+	"visualeditor-languageinspector-widget-changelang": "மொழியை கண்டுபிடி",
 	"visualeditor-languageinspector-widget-label-langcode": "மொழிக் குறியீடு:",
 	"visualeditor-languageinspector-widget-label-language": "மொழி",
-	"visualeditor-linkinspector-title": "மீத்தொடுப்பு",
+	"visualeditor-linkinspector-title": "இணைப்பு ,தொடுப்பு",
 	"visualeditor-listbutton-bullet-tooltip": "குண்டுக்குறிப் பட்டியல்",
 	"visualeditor-listbutton-number-tooltip": "எண்களுடன் வரிசை"
 }

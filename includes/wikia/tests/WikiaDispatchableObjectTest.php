@@ -17,17 +17,20 @@ class WikiaDispatchableObjectTest extends WikiaBaseTest {
 	//data provider for testGetUrl
 	public function getUrlProvider() {
 		return [
-			// methodName, params, encodedParams
-			['test', null, null],
-			['testParamsOrdered', ['a' => 1, 'b' => 2], '&a=1&b=2'],
-			['testParamsUnordered', ['c' => 1, 'a' => 2, 'b' => 3], '&a=2&b=3&c=1']
+			// methodName, params, format, encodedParams
+			['test', null, null, null],
+			['testParamsOrdered', ['a' => 1, 'b' => 2], null, '&a=1&b=2'],
+			['testParamsUnordered', ['c' => 1, 'a' => 2, 'b' => 3], null, '&a=2&b=3&c=1'],
+			['testParamsUnordered', ['c' => 1, 'a' => 2, 'b' => 3], WikiaResponse::FORMAT_JSON, '&a=2&b=3&c=1&format=json'],
+			['testParamsUnordered', ['c' => 1, 'a' => 2, 'b' => 3], WikiaResponse::FORMAT_JSONP, '&a=2&b=3&c=1&format=jsonp'],
+			['testParamsUnordered', ['c' => 1, 'a' => 2, 'b' => 3], WikiaResponse::FORMAT_RAW, '&a=2&b=3&c=1&format=raw'],
 		];
 	}
 
 	/**
 	 * @dataProvider getUrlProvider
 	 */
-	public function testGetUrl( $methodName, $params, $encodedParams ) {
+	public function testGetUrl( $methodName, $params, $format, $encodedParams ) {
 		$className = get_class( $this->dispatchableMock );
 		$serverName = "test-server";
 		$scriptPath = "/test-path";
@@ -36,7 +39,32 @@ class WikiaDispatchableObjectTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgServer', $serverName );
 		$this->mockGlobalVariable( 'wgScriptPath', $scriptPath );
 
-		$this->assertEquals( $requestURI, $className::getUrl( $methodName, $params ) );
+		$this->assertEquals( $requestURI, $className::getUrl( $methodName, $params, $format ) );
+	}
+
+	/**
+	 * @dataProvider getUrlProvider
+	 */
+	public function testGetLocalUrl( $methodName, $params, $format, $encodedParams ) {
+		$className = get_class( $this->dispatchableMock );
+		$requestURI = "/wikia.php?controller={$className}&method={$methodName}{$encodedParams}";
+
+		$this->assertEquals( $requestURI, $className::getLocalUrl( $methodName, $params, $format ) );
+	}
+
+	/**
+	 * @dataProvider getUrlProvider
+	 */
+	public function testGetNoCookieUrl( $methodName, $params, $format, $encodedParams ) {
+		$className = get_class( $this->dispatchableMock );
+		$mockCdnApiUrl = "api.nocookie.test-server";
+		$scriptPath = "/test-path";
+		$requestURI = "{$mockCdnApiUrl}{$scriptPath}/wikia.php?controller={$className}&method={$methodName}{$encodedParams}";
+
+		$this->mockGlobalVariable( 'wgCdnApiUrl', $mockCdnApiUrl );
+		$this->mockGlobalVariable( 'wgScriptPath', $scriptPath );
+
+		$this->assertEquals( $requestURI, $className::getNoCookieUrl( $methodName, $params, $format ) );
 	}
 
 	/**

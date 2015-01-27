@@ -1,5 +1,5 @@
 # encoding: UTF-8
-@ie6-bug  @ie7-bug  @ie8-bug @ie9-bug @ie10-bug @en.wikipedia.beta.wmflabs.org @test2.wikipedia.org @login
+@chrome @edit_user_page_login @en.wikipedia.beta.wmflabs.org @firefox @login @test2.wikipedia.org
 Feature: VisualEditor multi-edit workflow
 
   Goal of the test is to make sure the "Save" and "Review Changes"
@@ -10,7 +10,6 @@ Feature: VisualEditor multi-edit workflow
   Not implemented as a Scenario outline since the goal is
   to test multiple page edits within a single session.
 
-  @edit_user_page
   Scenario: Make multiple edits to the same article
     Given I enter and save the first edit
     And I enter and save a second edit

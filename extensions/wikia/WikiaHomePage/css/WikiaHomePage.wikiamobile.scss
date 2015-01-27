@@ -1,10 +1,11 @@
-@import '../../../../skins/oasis/css/core/color';
-@import '../../../../skins/oasis/css/mixins/clearfix';
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/clearfix';
 
 .wkhome {
 	>h1 {
 		font-size: 1.6em;
 		line-height: 1.2em;
+		white-space: pre-line;
 	}
 	>h2 {
 		font-size: 1.05em;
@@ -12,22 +13,20 @@
 	.wkhome-section {
 		@include clearfix;
 		margin-top: 10px;
-		&.wkhome-games .wkhome-hero {
-			border-top: 5px solid $color-wikiahome-videogames;
+
+		@for $i from 1 through 10 {
+			&.hub-slot-#{$i} .wkhome-hero{
+				border-top: 5px solid get_command_line_param("hub-color-slot-#{$i}", $color-wikiahome-community);
+			}
 		}
-		&.wkhome-entertainment .wkhome-hero {
-			border-top: 5px solid $color-wikiahome-entertainment;
-		}
-		&.wkhome-lifestyle .wkhome-hero {
-			border-top: 5px solid $color-wikiahome-lifestyle;
-		}
+
 		&.wkhome-community .wkhome-hero {
 			background-color: #f4f4f4;
 			border-top: 5px solid $color-wikiahome-community;
 			height: 100px;
 			width: 100%;
 			img {
-				background-image: url('/extensions/wikia/WikiaHomePage/images/communitycentral-en-mobile.png'); /* base64 */
+				background-image: url('/extensions/wikia/WikiaHomePage/images/communitycentral-en-mobile.png'); /* inline */
 				background-position: 0 0;
 				background-repeat: no-repeat;
 				height: 62px;
@@ -117,7 +116,7 @@
 
 #wkTopBar {
 	&:before {
-		background-image: url('/extensions/wikia/WikiaHomePage/images/wikialogo-mobile.png'); /* base64 */
+		background-image: url('/extensions/wikia/WikiaHomePage/images/wikialogo-mobile.png'); /* inline */
 		background-position: 0 0px;
 		background-repeat: no-repeat;
 		content: "";

@@ -6,23 +6,16 @@ define('videosmodule.views.bottomModule', [
 	'videosmodule.views.titleThumbnail',
 	'wikia.mustache',
 	'videosmodule.templates.mustache',
-	'wikia.tracker'
-], function (sloth, TitleThumbnailView, Mustache, templates, Tracker) {
+], function (sloth, TitleThumbnailView, Mustache, templates) {
 	'use strict';
 
-	var track, groupParams;
+	var groupParams;
 
 	// mock test data for now
 	groupParams = {
 		rows: 2,
 		position: 1
 	};
-
-	track = Tracker.buildTrackingFunction({
-		category: 'videos-module-bottom',
-		trackingMethod: 'both',
-		action: Tracker.ACTIONS.IMPRESSION
-	});
 
 	function VideoModule(options) {
 		// Note that this.el refers to the DOM element that the videos module should be inserted before or after,
@@ -55,7 +48,6 @@ define('videosmodule.views.bottomModule', [
 
 	/**
 	 * Handle logic to display videos module or not based on related pages module
-	 * Also used for tracking related pages impressions
 	 */
 	VideoModule.prototype.handleRelatedPages = function () {
 		var self = this;
@@ -77,9 +69,6 @@ define('videosmodule.views.bottomModule', [
 	 * Called when related pages loads and is visible
 	 */
 	VideoModule.prototype.onRelatedPagesLoad = function () {
-		track({
-			label: 'related-pages-impression'
-		});
 		this.render();
 	};
 
@@ -143,9 +132,6 @@ define('videosmodule.views.bottomModule', [
 			});
 		});
 
-		track({
-			label: 'module-impression'
-		});
 	};
 
 	return VideoModule;

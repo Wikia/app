@@ -20,4 +20,4 @@ foreach( $split as $table ) {
 	$dbw->query( $table );
 }
 
-wfWaitForSlaves(2);
+wfWaitForSlaves();

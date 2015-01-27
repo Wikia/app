@@ -3,10 +3,10 @@
 
 	var EditHub = {
 		disableArrow: function () {
-			var toolboxForm = $('#edit-hub-form').find('.module-box');
-			toolboxForm.find('button.navigation').removeAttr('disabled');
-			toolboxForm.filter(':first').find('.nav-up').attr('disabled', 'disabled');
-			toolboxForm.filter(':last').find('.nav-down').attr('disabled', 'disabled');
+			var editHubForm = $('#edit-hub-form').find('.module-box');
+			editHubForm.find('button.navigation').removeAttr('disabled');
+			editHubForm.filter(':first').find('.nav-up').attr('disabled', 'disabled');
+			editHubForm.filter(':last').find('.nav-down').attr('disabled', 'disabled');
 		},
 
 		init: function () {
@@ -60,7 +60,7 @@
 												$.loadMustache(),
 												Wikia.getMultiTypePackage({
 													mustache: 'extensions/wikia/WikiaHubsServices/modules/templates/' +
-														'MarketingToolbox_popularVideoRow.mustache'
+														'WikiaHubs_popularVideoRow.mustache'
 												})
 											).done(function (libData, packagesData) {
 												initThis.popularVideosAdd(packagesData[0].mustache[0], response);

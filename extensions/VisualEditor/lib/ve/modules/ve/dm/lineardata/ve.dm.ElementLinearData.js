@@ -439,8 +439,8 @@ ve.dm.ElementLinearData.prototype.getAnnotationsFromRange = function ( range, al
 			if ( right.isEmpty() ) {
 				return new ve.dm.AnnotationSet( this.getStore() );
 			}
-			// Exclude annotations that are in left but not right
-			left.removeNotInSet( right );
+			// Exclude comparable annotations that are in left but not right
+			left = left.getComparableAnnotationsFromSet( right );
 			// If we've reduced left down to nothing, just stop looking
 			if ( left.isEmpty() ) {
 				break;
@@ -893,8 +893,28 @@ ve.dm.ElementLinearData.prototype.cloneElements = function () {
 	var i, len, node;
 	for ( i = 0, len = this.getLength(); i < len; i++ ) {
 		if ( this.isOpenElementData( i ) ) {
-			node = ve.dm.nodeFactory.create( this.getType( i ), [], this.getData( i ) );
+			node = ve.dm.nodeFactory.create( this.getType( i ), this.getData( i ) );
 			this.data[i] = node.getClonedElement();
 		}
 	}
+};
+
+/**
+ * Counts all elements that aren't between internalList and /internalList
+ * @returns {number} Number of elements that aren't in internalList
+ */
+ve.dm.ElementLinearData.prototype.countNoninternalElements = function () {
+	var i, internalDepth = 0, count = 0;
+	for ( i = 0; i < this.data.length; i++ ) {
+		if ( this.getType( i ) && ve.dm.nodeFactory.isNodeInternal( this.getType( i ) ) ) {
+			if ( this.isOpenElementData( i ) ) {
+				internalDepth++;
+			} else {
+				internalDepth--;
+			}
+		} else if ( !internalDepth ) {
+			count++;
+		}
+	}
+	return count;
 };

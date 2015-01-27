@@ -19,10 +19,13 @@
 	color: #BA0000;
 }
 
+.ve-ui-mwLinkTargetInputWidget-menu .oo-ui-menuItemWidget[rel=externalLink] {
+	color: #36b;
+}
+
 .ve-ui-mwLinkTargetInputWidget-menu .oo-ui-menuItemWidget[rel=existingPage],
 .ve-ui-mwLinkTargetInputWidget-menu .oo-ui-menuItemWidget[rel=matchingPage],
 .ve-ui-mwLinkTargetInputWidget-menu .oo-ui-menuItemWidget[rel=disambigPage],
-.ve-ui-mwLinkTargetInputWidget-menu .oo-ui-menuItemWidget[rel=redirectPage],
-.ve-ui-mwLinkTargetInputWidget-menu .oo-ui-menuItemWidget[rel=externalLink] {
+.ve-ui-mwLinkTargetInputWidget-menu .oo-ui-menuItemWidget[rel=redirectPage] {
 	color: #0645AD;
 }

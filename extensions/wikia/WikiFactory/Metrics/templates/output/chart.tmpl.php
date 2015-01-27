@@ -9,8 +9,8 @@ if( !empty( $showActionsButton ) ){ ?>
 	<div class="sponsorship-dashboard-actions">
 		<?
 			$dropdown = array(
-				array("href" => "#", "text" => wfMsg('sponsorship-dashboard-download-chart')),
-				array("href" => $path, "text" => wfMsg('sponsorship-dashboard-download-csv'))
+				array("href" => "#", "text" => wfMsg('sponsorship-dashboard-download-chart'), "id" => 'sponsorshipDashboardDownloadChartPNG'),
+				array("href" => "#", "text" => wfMsg('sponsorship-dashboard-download-csv'), "id" => 'sponsorshipDashboardDownloadChartCSV')
 			);
 		?>
 		<?= F::app()->renderView('MenuButton',

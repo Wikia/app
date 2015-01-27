@@ -160,7 +160,10 @@
 	window.Wikia.Tracker = tracker( window );
 
 	if ( window.define && window.define.amd ) {
-		window.define( 'wikia.tracker', [ 'wikia.window' ], tracker );
+		window.define( 'wikia.tracker', function() {
+			// Returning Wikia.Tracker instance, in order to spooled events to work with AMD module.
+			return Wikia.Tracker;
+		});
 	}
 
 })( window, undefined );
@@ -183,7 +186,7 @@ function veTrack( data ) {
 		// isRedlink
 		try {
 			uri = new mw.Uri( location.href );
-			defaultData.isRedlink = !!uri.query.redlink ? 'yes' : 'no'
+			defaultData.isRedlink = !!uri.query.redlink ? 'yes' : 'no';
 		} catch ( e ) {
 			defaultData.isRedlink = 'unknown';
 		}
@@ -203,7 +206,21 @@ function veTrack( data ) {
 		} catch ( e ) {
 			defaultData.userLanguage = 'unknown';
 		}
-		
+
+		// Orientation dialog
+		if ( window.veOrientationEnabled === undefined ) {
+			defaultData.orientationEnabled = 'unknown';
+		} else {
+			defaultData.orientationEnabled = !!window.veOrientationEnabled ? 'yes' : 'no';
+		}
+
+		// anon edit warning
+		if ( window.anoneditwarning === undefined ) {
+			defaultData.anonEditWarning = 'unknown';
+		} else {
+			defaultData.anonEditWarning = !!window.anoneditwarning ? 'yes' : 'no';
+		}
+
 		finalData = $.extend( {}, defaultData, data );
 	} catch( e ) {
 		finalData = { failed: true };

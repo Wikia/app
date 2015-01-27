@@ -235,7 +235,7 @@ class UserLoginHelper extends WikiaModel {
 	 * @param string $username
 	 * @return array result { array( 'result' => result status[error/ok/invalidsession/confirmed], 'msg' => result message ) }
 	 */
-	public function sendConfirmationEmail( $username, $user=null ) {
+	public function sendConfirmationEmail( $username ) {
 		global $wgExternalSharedDB;
 		if ( empty($username) ) {
 			$result['result'] = 'error';
@@ -245,7 +245,7 @@ class UserLoginHelper extends WikiaModel {
 
 		// Check whether user already exists or is already confirmed
 		wfWaitForSlaves(); // Wait for local DB - Wikis that keep user data in local DB (e.g. Uncyclopedia/Internal)
-		wfWaitForSlaves( false, $wgExternalSharedDB ); // Wait for external shared DB
+		wfWaitForSlaves( $wgExternalSharedDB ); // Wait for external shared DB
 		$user = User::newFromName( $username );
 		if ( !($user instanceof User) || $user->getID() == 0 ) {
 			// User doesn't exist
@@ -537,6 +537,7 @@ class UserLoginHelper extends WikiaModel {
 		$user->setOption( UserLoginSpecialController::SIGNED_UP_ON_WIKI_OPTION_NAME, null );
 		$user->saveSettings();
 		$user->saveToCache();
+		wfRunHooks( 'SignupConfirmEmailComplete', array( $user ) );
 		return true;
 	}
 

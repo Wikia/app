@@ -117,7 +117,7 @@ ve.init.mw.LinkCache.prototype.processQueue = function () {
 	this.queue = [];
 	while ( queue.length ) {
 		subqueue = queue.splice( 0, 50 ).map( normalizeTitle );
-		ve.init.mw.Target.static.apiRequest( {
+		ve.init.target.constructor.static.apiRequest( {
 				'action': 'query',
 				'prop': 'info',
 				'titles': subqueue.join( '|' )

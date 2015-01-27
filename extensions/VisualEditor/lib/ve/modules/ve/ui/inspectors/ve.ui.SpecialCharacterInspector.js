@@ -63,6 +63,8 @@ ve.ui.SpecialCharacterInspector = function VeUiSpecialCharacterInspector( fragme
 			'§': '§'
 		}
 	};
+
+	this.$element.addClass( 've-ui-specialCharacterInspector' );
 };
 
 /* Inheritance */
@@ -73,7 +75,7 @@ OO.inheritClass( ve.ui.SpecialCharacterInspector, ve.ui.Inspector );
 
 ve.ui.SpecialCharacterInspector.static.name = 'specialcharacter';
 
-ve.ui.SpecialCharacterInspector.static.icon = 'specialcharacter';
+ve.ui.SpecialCharacterInspector.static.icon = 'special-character';
 
 ve.ui.SpecialCharacterInspector.static.title =
 	OO.ui.deferMsg( 'visualeditor-specialcharacterinspector-title' );
@@ -89,9 +91,9 @@ ve.ui.SpecialCharacterInspector.static.removable = false;
  */
 ve.ui.SpecialCharacterInspector.prototype.initialize = function () {
 	// Parent method
-	ve.ui.Inspector.prototype.initialize.call( this );
+	ve.ui.SpecialCharacterInspector.super.prototype.initialize.call( this );
 
-	this.$spinner = this.$( '<div>' ).addClass( 've-specialchar-spinner' );
+	this.$spinner = this.$( '<div>' ).addClass( 've-ui-specialCharacterInspector-spinner' );
 	this.$form.append( this.$spinner );
 };
 
@@ -101,25 +103,27 @@ ve.ui.SpecialCharacterInspector.prototype.initialize = function () {
  * @method
  * @param {Object} [data] Inspector opening data
  */
-ve.ui.SpecialCharacterInspector.prototype.setup = function ( data ) {
-	var inspector = this;
-	// Parent method
-	ve.ui.Inspector.prototype.setup.call( this, data );
+ve.ui.SpecialCharacterInspector.prototype.getSetupProcess = function ( data ) {
+	return ve.ui.SpecialCharacterInspector.super.prototype.getSetupProcess.call( this, data )
+		.next( function () {
+			// Preserve initial selection so we can collapse cursor position
+			// after we're done adding
+			this.initialSelection = this.getFragment().getRange();
 
-	// Preserve initial selection so we can collapse cursor position
-	// after we're done adding
-	this.initialSelection = this.getFragment().getRange();
-
-	// Don't request the character list again if we already have it
-	if ( !this.characters ) {
-		this.$spinner.show();
-		this.fetchCharList().done( function () {
-			inspector.buildButtonList();
-		} ).always( function () {
-			inspector.$spinner.hide();
-		} );
-		// TODO: show error message on fetchCharList().fail
-	}
+			// Don't request the character list again if we already have it
+			if ( !this.characters ) {
+				this.$spinner.show();
+				this.fetchCharList()
+					.done( ve.bind( function () {
+						this.buildButtonList();
+					}, this ) )
+					// TODO: show error message on fetchCharList().fail
+					.always( ve.bind( function () {
+						// TODO: generalize push/pop pending, like we do in Dialog
+						this.$spinner.hide();
+					}, this ) );
+			}
+		}, this );
 };
 
 /**
@@ -155,15 +159,15 @@ ve.ui.SpecialCharacterInspector.prototype.fetchCharList = function () {
  */
 ve.ui.SpecialCharacterInspector.prototype.buildButtonList = function () {
 	var category, character, characters, $categoryButtons,
-		$list = this.$( '<div>' ).addClass( 've-specialchar-list' );
+		$list = this.$( '<div>' ).addClass( 've-ui-specialCharacterInspector-list' );
 
 	for ( category in this.characters ) {
 		characters = this.characters[category];
-		$categoryButtons = $( '<div>' ).addClass( 've-specialchar-list-group' );
+		$categoryButtons = $( '<div>' ).addClass( 've-ui-specialCharacterInspector-list-group' );
 		for ( character in characters ) {
 			$categoryButtons.append(
 				$( '<div>' )
-					.addClass( 've-specialchar-list-character' )
+					.addClass( 've-ui-specialCharacterInspector-list-character' )
 					.data( 'character', characters[character] )
 					.text( character )
 			);
@@ -192,4 +196,4 @@ ve.ui.SpecialCharacterInspector.prototype.onListClick = function ( e ) {
 
 /* Registration */
 
-ve.ui.inspectorFactory.register( ve.ui.SpecialCharacterInspector );
+ve.ui.windowFactory.register( ve.ui.SpecialCharacterInspector );

@@ -19,6 +19,7 @@ class JSSnippets {
 	 * @param string $callback name of the JS function to be called when dependencies will be loaded
 	 * @param array $options set of options to be passed to JS callback
 	 * @return string JS snippet
+	 * @throws WikiaException
 	 *
 	 * @description
 	 * ( new JSSnippets )->addToStack(array(
@@ -35,8 +36,16 @@ class JSSnippets {
 	 */
 
 	static public function addToStack( $dependencies, $loaders = array(), $callback = null, $options = null ) {
-		wfProfileIn( __METHOD__ );
+		global $wgArticleAsJson;
 		$js = "";
+
+		// HG-97: Don't include script tags when the article is requested as Json
+		if ( !empty( $wgArticleAsJson ) ) {
+			return $js;
+		}
+		
+		wfProfileIn( __METHOD__ );
+		
 		$assetsManager = AssetsManager::getInstance();
 		$skin = RequestContext::getMain()->getSkin();
 		$isWikiaSkin = ( $skin instanceof WikiaSkin );
@@ -119,41 +128,10 @@ class JSSnippets {
 	 * @brief Adds JS stack for dependencies in <head> section of the page
 	 *
 	 * @param array $vars list of JS variables in <head> section
+	 * @return bool
 	 */
 	static public function onMakeGlobalVariablesScript(Array &$vars) {
 		$vars['JSSnippetsStack'] = array();
-		return true;
-	}
-
-	/**
-	 * @brief Return <script> tag loading JSSnippets main JS on-demand
-	 *
-	 * @return string <script> tag
-	 */
-	static private function getBottomScript() {
-		$src = AssetsManager::getInstance()->getOneCommonURL('extensions/wikia/JSSnippets/js/JSSnippets.js');
-		return Html::inlineScript("if (JSSnippetsStack.length) $.getScript('{$src}');");
-	}
-
-	/**
-	 * @brief Loads JSSnippets main JS if there's any item on the stack
-	 *
-	 * @param Skin $skin MW skin instance
-	 * @param string $text content of bottom scripts
-	 */
-	static public function onSkinAfterBottomScripts($skin, &$text) {
-		$text .= self::getBottomScript();
-		return true;
-	}
-
-	/**
-	 * @brief Loads JSSnippets main JS inside preview modal
-	 *
-	 * @param Title $title article preview is generated for
-	 * @param string $html preview content
-	 */
-	static public function onEditPageLayoutModifyPreview(Title $title, &$html) {
-		$html .= self::getBottomScript();
 		return true;
 	}
 }

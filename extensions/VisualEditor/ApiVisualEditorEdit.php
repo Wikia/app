@@ -89,7 +89,7 @@ class ApiVisualEditorEdit extends ApiVisualEditor {
 		$editStatus = $saveresult['edit']['result'];
 
 		// Error
-		if ( !isset( $saveresult['edit']['result'] ) || $editStatus !== 'Success' ) {
+		if ( $editStatus !== 'Success' ) {
 			$result = array(
 				'result' => 'error',
 				'edit' => $saveresult['edit']
@@ -112,10 +112,11 @@ class ApiVisualEditorEdit extends ApiVisualEditor {
 
 			// Return result of parseWikitext instead of saveWikitext so that the
 			// frontend can update the page rendering without a refresh.
-			$result = $this->parseWikitext( $page );
+			$result = $this->parseWikitext( $page, $params['useskin'] );
 			if ( $result === false ) {
 				$this->dieUsage( 'Error contacting the Parsoid server', 'parsoidserver' );
 			}
+			$result['isRedirect'] = $page->isRedirect();
 
 			if ( isset( $saveresult['edit']['newrevid'] ) ) {
 				$result['newrevid'] = intval( $saveresult['edit']['newrevid'] );

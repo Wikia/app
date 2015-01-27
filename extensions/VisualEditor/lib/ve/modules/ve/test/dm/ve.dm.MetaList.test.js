@@ -128,7 +128,7 @@ QUnit.test( 'onTransact', function ( assert ) {
 				],
 				'msg': 'Transaction adding and removing text and metadata'
 			}
-	];
+		];
 	// HACK: This works because most transactions above don't change the document length, and the
 	// ones that do change it cancel out
 	QUnit.expect( cases.length * ( 8 * doc.metadata.getTotalDataLength() + 2 ) );

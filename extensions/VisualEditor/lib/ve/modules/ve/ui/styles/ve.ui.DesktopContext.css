@@ -11,6 +11,10 @@
 	position: absolute;
 }
 
+.ve-ui-desktopContext-menu {
+	font-size: 0.8em;
+}
+
 .ve-ui-desktopContext-menu .oo-ui-toolbar-bar {
 	white-space: nowrap;
 	border: none;

@@ -227,7 +227,7 @@ ve.dm.Model.matchesAttributeSpec = function ( attribute, spec ) {
 			specArray = [ specArray ];
 		}
 		for ( i = 0, len = specArray.length; i < len; i++ ) {
-			if  ( matches( specArray[i] ) ) {
+			if ( matches( specArray[i] ) ) {
 				return true;
 			}
 		}

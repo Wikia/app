@@ -22,7 +22,9 @@ ve.ui.Context = function VeUiContext( surface, config ) {
 
 	// Properties
 	this.surface = surface;
-	this.inspectors = new ve.ui.WindowSet( ve.ui.inspectorFactory, { '$': this.$, '$contextOverlay': this.$element } );
+	this.inspectors = new ve.ui.WindowSet(
+		ve.ui.windowFactory, { '$': this.$, '$contextOverlay': this.$element }
+	);
 };
 
 /* Inheritance */
@@ -50,6 +52,17 @@ ve.ui.Context.prototype.getSurface = function () {
  */
 ve.ui.Context.prototype.getInspector = function ( name ) {
 	return this.inspectors.getWindow( name );
+};
+
+/**
+ * Close the current inspector if there is one.
+ *
+ * @method
+ */
+ve.ui.Context.prototype.closeCurrentInspector = function () {
+	if ( this.inspectors.getCurrentWindow() ) {
+		this.inspectors.getCurrentWindow().close( { 'action': 'back' } );
+	}
 };
 
 /**

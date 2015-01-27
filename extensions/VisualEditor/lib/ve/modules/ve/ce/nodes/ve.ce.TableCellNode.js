@@ -20,6 +20,9 @@ ve.ce.TableCellNode = function VeCeTableCellNode( model, config ) {
 
 	// Events
 	this.model.connect( this, { 'update': 'onUpdate' } );
+
+	// DOM changes
+	this.$element.addClass( 've-ce-tableCellNode' );
 };
 
 /* Inheritance */

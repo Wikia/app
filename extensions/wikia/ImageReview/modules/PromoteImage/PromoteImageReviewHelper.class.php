@@ -1,5 +1,7 @@
 <?php
 
+use \Wikia\Logger\WikiaLogger;
+
 class PromoteImageReviewHelper extends ImageReviewHelperBase {
 
 	const LIMIT_IMAGES = 20;
@@ -95,15 +97,7 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 	}
 
 	protected function createUploadTask($taskAdditionList) {
-		if (!empty($taskAdditionList)) {
-			$task = new PromoteImageReviewTask();
-			$task->createTask(
-				array(
-					'upload_list' => $taskAdditionList,
-				),
-				TASK_QUEUED
-			);
-		}
+		wfRunHooks('CreatePromoImageReviewTask', ['upload', $taskAdditionList]);
 	}
 
 	protected function saveStats($statsInsert, $sqlWhere, $action) {
@@ -326,14 +320,21 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 				__METHOD__
 			);
 			$commit = true;
-			error_log("PromoteImageReview : returning " . count($unusedImages) . " back to the queue");
+
+			WikiaLogger::instance()->info( "PromoteImageReview : returning unused images back to the queue", [
+				'method' => __METHOD__,
+				'count' => count( $unusedImages ),
+			] );
 		}
 
 		if ($commit) {
 			$db->commit();
 		}
 
-		error_log("PromoteImageReview : fetched new " . count($imageList) . " images");
+		WikiaLogger::instance()->info( "PromoteImageReview : fetched new images", [
+			'method' => __METHOD__,
+			'count' => count( $imageList ),
+		] );
 
 		wfProfileOut(__METHOD__);
 
@@ -508,5 +509,37 @@ class PromoteImageReviewHelper extends ImageReviewHelperBase {
 				$ret = 'last_edited desc';
 		}
 		return $ret;
+	}
+
+	public static function onCreatePromoteImageReviewTask($type, $list) {
+		if (empty($list)) {
+			return true;
+		}
+
+		if (TaskRunner::isModern('PromoteImageReviewTask')) {
+			$batch = [];
+
+			foreach ($list as $targetWikiId => $wikis) {
+				$taskList = new \Wikia\Tasks\AsyncTaskList();
+				$task = new \Wikia\Tasks\Tasks\PromoteImageReviewTask();
+
+				$call = $task->call($type, $targetWikiId, $wikis);
+				$taskList->add($call);
+
+				$batch []= $taskList;
+			}
+
+			\Wikia\Tasks\AsyncTaskList::batch($batch);
+		} else {
+			$task = new PromoteImageReviewTask();
+			$key = $type == 'delete' ? 'deletion_list' : 'upload_list';
+			$params = [
+				$key => $list,
+			];
+
+			$task->createTask($params, TASK_QUEUED);
+		}
+
+		return true;
 	}
 }

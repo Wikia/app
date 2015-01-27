@@ -1,0 +1,89 @@
+// Monobook skin specific styling
+// Avoid loading Oasis asset
+@import "skins/shared/color";
+
+.RelatedForumDiscussion {
+	clear: both;
+	font-size: 12px;
+	line-height: 16px;
+
+	// style resets
+	h4 {
+		font-weight: bold;
+		margin: 0;
+	}
+	ul {
+		margin: 0;
+		li {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+	}
+
+	// real stuff
+	h2 {
+		margin-bottom: 0;
+		padding-top: 3px;
+		line-height: 21px;
+		.forum-new-post {
+			float: right;
+			position: relative;
+			top: -3px;
+		}
+	}
+
+	.forum-discussions {
+		.forum-thread {
+			border-bottom: dotted 1px $color-page-border;
+			line-height: 16px;
+			padding: 15px 0 15px 40px;
+			position: relative;
+			.forum-total-replies {
+				color: $color-text;
+				margin-top: 4px;
+			}
+			.talk-two {
+				left: 0;
+				position: absolute;
+				top: 12px;
+			}
+		}
+	}
+
+	.forum-message-body {
+		p {
+			display: inline;
+		}
+	}
+
+	.forum-replies {
+		.forum-reply {
+			margin-top: 10px;
+			padding-left: 40px;
+			position: relative;
+			.forum-timestamp {
+				color: $color-text;
+				margin-left: 1em;
+			}
+			.forum-user-avatar {
+				border: 1px solid $color-page-border;
+				height: 30px;
+				left: 0;
+				position: absolute;
+				top: 3px;
+				width: 30px;
+			}
+		}
+	}
+
+	.forum-see-more {
+		margin-top: 5px;
+		text-align: right;
+	}
+
+	.forum-user-name {
+		font-weight: bold;
+	}
+
+}

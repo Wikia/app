@@ -1,20 +1,23 @@
+@firefox
 Feature: VisualEditor on production wikis
 
   Verify that VisualEditor is available as
   expected on production wiki sites.
 
-  Exclusions (see Bugzilla 60842):
+  Exclusion:
 
-  http://bpy.wikipedia.org
-  http://cv.wikipedia.org
-  http://mzn.wikipedia.org
-  http://new.wikipedia.org
+  http://sv.wiktionary.org - only enabled in NS_USER for now.
 
   Scenario Outline: VisualEditor production availability
     Given I visit a non-existent page at <wiki>
     Then I should see the Visual Editor editing surface
   Examples:
     | wiki                    |
+    | test.wikipedia.org      |
+    | test2.wikipedia.org     |
+    | www.mediawiki.org       |
+    | meta.wikimedia.org      |
+    | incubator.wikimedia.org |
     | aa.wikipedia.org        |
     | ab.wikipedia.org        |
     | ace.wikipedia.org       |
@@ -34,8 +37,10 @@ Feature: VisualEditor on production wikis
     | az.wikipedia.org        |
     | ba.wikipedia.org        |
     | bar.wikipedia.org       |
+    | bat-smg.wikipedia.org   |
     | bcl.wikipedia.org       |
     | be.wikipedia.org        |
+    | be-x-old.wikipedia.org  |
     | bg.wikipedia.org        |
     | bh.wikipedia.org        |
     | bi.wikipedia.org        |
@@ -43,11 +48,13 @@ Feature: VisualEditor on production wikis
     | bm.wikipedia.org        |
     | bn.wikipedia.org        |
     | bo.wikipedia.org        |
+    | bpy.wikipedia.org       |
     | br.wikipedia.org        |
     | bs.wikipedia.org        |
     | bug.wikipedia.org       |
     | bxr.wikipedia.org       |
     | ca.wikipedia.org        |
+    | cbk-zam.wikipedia.org   |
     | cdo.wikipedia.org       |
     | ce.wikipedia.org        |
     | ceb.wikipedia.org       |
@@ -62,6 +69,7 @@ Feature: VisualEditor on production wikis
     | cs.wikipedia.org        |
     | csb.wikipedia.org       |
     | cu.wikipedia.org        |
+    | cv.wikipedia.org        |
     | cy.wikipedia.org        |
     | da.wikipedia.org        |
     | de.wikipedia.org        |
@@ -81,6 +89,7 @@ Feature: VisualEditor on production wikis
     | fa.wikipedia.org        |
     | ff.wikipedia.org        |
     | fi.wikipedia.org        |
+    | fiu-vro.wikipedia.org   |
     | fj.wikipedia.org        |
     | fo.wikipedia.org        |
     | fr.wikipedia.org        |
@@ -160,6 +169,7 @@ Feature: VisualEditor on production wikis
     | lt.wikipedia.org        |
     | ltg.wikipedia.org       |
     | lv.wikipedia.org        |
+    | map-bms.wikipedia.org   |
     | mdf.wikipedia.org       |
     | mg.wikipedia.org        |
     | mh.wikipedia.org        |
@@ -176,12 +186,16 @@ Feature: VisualEditor on production wikis
     | mt.wikipedia.org        |
     | mus.wikipedia.org       |
     | mwl.wikipedia.org       |
+    | my.wikipedia.org        |
     | myv.wikipedia.org       |
+    | mzn.wikipedia.org       |
     | na.wikipedia.org        |
     | nah.wikipedia.org       |
     | nap.wikipedia.org       |
+    | nds-nl.wikipedia.org    |
     | nds.wikipedia.org       |
     | ne.wikipedia.org        |
+    | new.wikipedia.org       |
     | ng.wikipedia.org        |
     | nl.wikipedia.org        |
     | nn.wikipedia.org        |
@@ -209,14 +223,14 @@ Feature: VisualEditor on production wikis
     | pnb.wikipedia.org       |
     | pnt.wikipedia.org       |
     | ps.wikipedia.org        |
-    | pt.wikibooks.org        |
     | pt.wikipedia.org        |
-    | pt.wikiversity.org      |
     | qu.wikipedia.org        |
     | rm.wikipedia.org        |
     | rmy.wikipedia.org       |
     | rn.wikipedia.org        |
     | ro.wikipedia.org        |
+    | roa-rup.wikipedia.org   |
+    | roa-tara.wikipedia.org  |
     | ru.wikipedia.org        |
     | rue.wikipedia.org       |
     | rw.wikipedia.org        |
@@ -226,7 +240,6 @@ Feature: VisualEditor on production wikis
     | scn.wikipedia.org       |
     | sco.wikipedia.org       |
     | sd.wikipedia.org        |
-    | se.wikimedia.org        |
     | se.wikipedia.org        |
     | sg.wikipedia.org        |
     | sh.wikipedia.org        |
@@ -249,8 +262,6 @@ Feature: VisualEditor on production wikis
     | szl.wikipedia.org       |
     | ta.wikipedia.org        |
     | te.wikipedia.org        |
-    | test.wikipedia.org      |
-    | test2.wikipedia.org     |
     | tet.wikipedia.org       |
     | tg.wikipedia.org        |
     | th.wikipedia.org        |
@@ -282,7 +293,6 @@ Feature: VisualEditor on production wikis
     | war.wikipedia.org       |
     | wo.wikipedia.org        |
     | wuu.wikipedia.org       |
-    | www.mediawiki.org       |
     | xal.wikipedia.org       |
     | xh.wikipedia.org        |
     | xmf.wikipedia.org       |
@@ -290,5 +300,15 @@ Feature: VisualEditor on production wikis
     | yo.wikipedia.org        |
     | za.wikipedia.org        |
     | zea.wikipedia.org       |
+    | zh-classical.wikipedia.org |
+    | zh-min-nan.wikipedia.org |
+    | zh-yue.wikipedia.org    |
     | zh.wikipedia.org        |
     | zu.wikipedia.org        |
+    | fr.wiktionary.org       |
+    | fr.wikibooks.org        |
+    | pt.wikibooks.org        |
+    | fr.wikiversity.org      |
+    | pt.wikiversity.org      |
+    | fr.wikinews.org         |
+    | se.wikimedia.org        |

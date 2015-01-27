@@ -47,6 +47,7 @@ QUnit.test( 'queueItemHtml/getItemHtmlQueue', 5, function ( assert ) {
 
 QUnit.test( 'convertToData', 2, function ( assert ) {
 	var doc = ve.dm.example.createExampleDocument(),
+		htmlDoc = doc.getHtmlDocument(),
 		internalList = doc.getInternalList(),
 		expectedData = [
 			{ 'type': 'internalList' },
@@ -65,14 +66,14 @@ QUnit.test( 'convertToData', 2, function ( assert ) {
 
 	// Mimic convert state setup (as done in ve.dm.Converter#getDataFromDom)
 	// TODO: The test should not (directly) reference the global instance
-	ve.dm.converter.doc = doc;
+	ve.dm.converter.doc = htmlDoc;
 	ve.dm.converter.store = doc.getStore();
 	ve.dm.converter.internalList = internalList;
 	ve.dm.converter.contextStack = [];
 
 	internalList.queueItemHtml( 'reference', 'foo', 'Bar' );
 	internalList.queueItemHtml( 'reference', 'bar', 'Baz' );
-	assert.deepEqual( internalList.convertToData( ve.dm.converter, doc ), expectedData, 'Data matches' );
+	assert.deepEqual( internalList.convertToData( ve.dm.converter, htmlDoc ), expectedData, 'Data matches' );
 	assert.deepEqual( internalList.getItemHtmlQueue(), [], 'Items html is emptied after conversion' );
 } );
 

@@ -344,7 +344,6 @@ class UserMailer {
 			self::$mErrorString = '';
 			$html_errors = ini_get( 'html_errors' );
 			ini_set( 'html_errors', '0' );
-			set_error_handler( 'UserMailer::errorHandler' );
 
 			$safeMode = wfIniGetBool( 'safe_mode' );
 			foreach ( $to as $recip ) {
@@ -360,7 +359,6 @@ class UserMailer {
 				}
 			}
 
-			restore_error_handler();
 			ini_set( 'html_errors', $html_errors );
 
 			if ( self::$mErrorString ) {
@@ -374,16 +372,6 @@ class UserMailer {
 				return Status::newGood();
 			}
 		}
-	}
-
-	/**
-	 * Set the mail error message in self::$mErrorString
-	 *
-	 * @param $code Integer: error number
-	 * @param $string String: error message
-	 */
-	static function errorHandler( $code, $string ) {
-		self::$mErrorString = preg_replace( '/^mail\(\)(\s*\[.*?\])?: /', '', $string );
 	}
 
 	/**
@@ -477,7 +465,7 @@ class EmailNotification {
 	 * @param $otherParam(Wikia)
 	 */
 	public function notifyOnPageChange( $editor, $title, $timestamp, $summary, $minorEdit, $oldid = false, $action = '', $otherParam = array() ) {
-		global $wgEnotifUseJobQ, $wgEnotifWatchlist, $wgShowUpdatedMarker, $wgEnotifMinorEdits,
+		global $wgEnotifWatchlist, $wgShowUpdatedMarker, $wgEnotifMinorEdits,
 			$wgUsersNotifiedOnAllChanges, $wgEnotifUserTalk;
 
 		if ( $title->getNamespace() < 0 ) {
@@ -553,36 +541,7 @@ class EmailNotification {
 		if ( !$sendEmail ) {
 			return;
 		}
-		if ( $wgEnotifUseJobQ ) {
-			/*
- 			 * @TODO if $watchers array is too big it won't fit in job_params (blob) field in job table,
-			 * probably a good idea will be to slice it and add couple of jobs
-			 */
-			#<Wikia>
-			/* extract only plain data instead of whole objects to add as parameters to job queue */
-			$otherParamForJob = array(
-				'childTitle' => $otherParam['childTitle']->getText(),
-				'childTitleId' => $otherParam['childTitle']->getArticleId()
-			);
-			#<Wikia>
-			$params = array(
-				'editor' => $editor->getName(),
-				'editorID' => $editor->getID(),
-				'timestamp' => $timestamp,
-				'summary' => $summary,
-				'minorEdit' => $minorEdit,
-				'oldid' => $oldid,
-				'watchers' => $watchers,
-				#<Wikia>
-				'action' => $action,
-				'otherParam' => $otherParamForJob
-				#</Wikia>
-			);
-			$job = new EnotifNotifyJob( $title, $params );
-			$job->insert();
-		} else {
-			$this->actuallyNotifyOnPageChange( $editor, $title, $timestamp, $summary, $minorEdit, $oldid, $watchers, $action, $otherParam);
-		}
+		$this->actuallyNotifyOnPageChange( $editor, $title, $timestamp, $summary, $minorEdit, $oldid, $watchers, $action, $otherParam );
 	}
 
 	/**

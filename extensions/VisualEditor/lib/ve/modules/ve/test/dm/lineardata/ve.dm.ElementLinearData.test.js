@@ -120,216 +120,216 @@ QUnit.test( 'getAnnotationsFromOffset', 1, function ( assert ) {
 QUnit.test( 'getAnnotationsFromRange', 1, function ( assert ) {
 	var i, data, doc,
 		cases = [
-		{
-			'msg': 'single annotations',
-			'data': [
-				['a', [ { 'type': 'textStyle/bold' } ] ],
-				['b', [ { 'type': 'textStyle/bold' } ] ]
-			],
-			'expected': [ { 'type': 'textStyle/bold' } ]
-		},
-		{
-			'msg': 'multiple annotations',
-			'data': [
-				[
-					'a',
+			{
+				'msg': 'single annotations',
+				'data': [
+					['a', [ { 'type': 'textStyle/bold' } ] ],
+					['b', [ { 'type': 'textStyle/bold' } ] ]
+				],
+				'expected': [ { 'type': 'textStyle/bold' } ]
+			},
+			{
+				'msg': 'multiple annotations',
+				'data': [
 					[
-						{ 'type': 'textStyle/bold' },
-						{ 'type': 'textStyle/italic' }
+						'a',
+						[
+							{ 'type': 'textStyle/bold' },
+							{ 'type': 'textStyle/italic' }
+						]
+					],
+					[
+						'b',
+						[
+							{ 'type': 'textStyle/bold' },
+							{ 'type': 'textStyle/italic' }
+						]
 					]
 				],
-				[
-					'b',
-					[
-						{ 'type': 'textStyle/bold' },
-						{ 'type': 'textStyle/italic' }
-					]
+				'expected': [
+					{ 'type': 'textStyle/bold' },
+					{ 'type': 'textStyle/italic' }
 				]
-			],
-			'expected': [
-				{ 'type': 'textStyle/bold' },
-				{ 'type': 'textStyle/italic' }
-			]
-		},
-		{
-			'msg': 'lowest common coverage',
-			'data': [
-				[
-					'a',
+			},
+			{
+				'msg': 'lowest common coverage',
+				'data': [
 					[
-						{ 'type': 'textStyle/bold' },
-						{ 'type': 'textStyle/italic' }
+						'a',
+						[
+							{ 'type': 'textStyle/bold' },
+							{ 'type': 'textStyle/italic' }
+						]
+					],
+					[
+						'b',
+						[
+							{ 'type': 'textStyle/bold' },
+							{ 'type': 'textStyle/italic' },
+							{ 'type': 'textStyle/underline' }
+						]
 					]
 				],
-				[
-					'b',
-					[
-						{ 'type': 'textStyle/bold' },
-						{ 'type': 'textStyle/italic' },
-						{ 'type': 'textStyle/underline' }
-					]
+				'expected': [
+					{ 'type': 'textStyle/bold' },
+					{ 'type': 'textStyle/italic' }
 				]
-			],
-			'expected': [
-				{ 'type': 'textStyle/bold' },
-				{ 'type': 'textStyle/italic' }
-			]
-		},
-		{
-			'msg': 'no common coverage due to plain character at the start',
-			'data': [
-				'a',
-				[
-					'b',
-					[
-						{ 'type': 'textStyle/bold' },
-						{ 'type': 'textStyle/italic' },
-						{ 'type': 'textStyle/underline' }
-					]
-				],
-				[
-					'c',
-					[
-						{ 'type': 'textStyle/bold' },
-						{ 'type': 'textStyle/italic' }
-					]
-			]
-			],
-			'expected': []
-		},
-		{
-			'msg': 'no common coverage due to plain character in the middle',
-			'data': [
-				[
+			},
+			{
+				'msg': 'no common coverage due to plain character at the start',
+				'data': [
 					'a',
 					[
-						{ 'type': 'textStyle/bold' },
-						{ 'type': 'textStyle/italic' },
-						{ 'type': 'textStyle/underline' }
+						'b',
+						[
+							{ 'type': 'textStyle/bold' },
+							{ 'type': 'textStyle/italic' },
+							{ 'type': 'textStyle/underline' }
+						]
+					],
+					[
+						'c',
+						[
+							{ 'type': 'textStyle/bold' },
+							{ 'type': 'textStyle/italic' }
+						]
 					]
 				],
-				['b'],
-				[
-					'c',
+				'expected': []
+			},
+			{
+				'msg': 'no common coverage due to plain character in the middle',
+				'data': [
 					[
-						{ 'type': 'textStyle/bold' },
-						{ 'type': 'textStyle/italic' }
+						'a',
+						[
+							{ 'type': 'textStyle/bold' },
+							{ 'type': 'textStyle/italic' },
+							{ 'type': 'textStyle/underline' }
+						]
+					],
+					['b'],
+					[
+						'c',
+						[
+							{ 'type': 'textStyle/bold' },
+							{ 'type': 'textStyle/italic' }
+						]
 					]
+				],
+				'expected': []
+			},
+			{
+				'msg': 'no common coverage due to plain character at the end',
+				'data': [
+					[
+						'a',
+						[
+							{ 'type': 'textStyle/bold' },
+							{ 'type': 'textStyle/italic' }
+						]
+					],
+					[
+						'b',
+						[
+							{ 'type': 'textStyle/bold' },
+							{ 'type': 'textStyle/italic' },
+							{ 'type': 'textStyle/underline' }
+						]
+					],
+					['c']
+				],
+				'expected': []
+			},
+			{
+				'msg': 'no common coverage due to mismatched annotations',
+				'data': [
+					['a', [ { 'type': 'textStyle/bold' } ] ],
+					['b', [ { 'type': 'textStyle/italic' } ] ]
+				],
+				'expected': []
+			},
+			{
+				'msg': 'no common coverage due to un-annotated content node',
+				'data': [
+					['a', [ { 'type': 'textStyle/bold' } ] ],
+					{ 'type': 'image' },
+					{ 'type': '/image' }
+				],
+				'expected': []
+			},
+			{
+				'msg': 'branch node is ignored',
+				'data': [
+					['a', [ { 'type': 'textStyle/bold' } ] ],
+					{ 'type': 'paragraph' },
+					{ 'type': '/paragraph' }
+				],
+				'expected': [ { 'type': 'textStyle/bold' } ]
+			},
+			{
+				'msg': 'annotations are collected using all with mismatched annotations',
+				'data': [
+					['a', [ { 'type': 'textStyle/bold' } ] ],
+					['b', [ { 'type': 'textStyle/italic' } ] ]
+				],
+				'all': true,
+				'expected': [
+					{ 'type': 'textStyle/bold' },
+					{ 'type': 'textStyle/italic' }
 				]
-			],
-			'expected': []
-		},
-		{
-			'msg': 'no common coverage due to plain character at the end',
-			'data': [
-				[
+			},
+			{
+				'msg': 'annotations are collected using all, even with a plain character at the start',
+				'data': [
 					'a',
-					[
-						{ 'type': 'textStyle/bold' },
-						{ 'type': 'textStyle/italic' }
-					]
+					['b', [ { 'type': 'textStyle/bold' } ] ],
+					['c', [ { 'type': 'textStyle/italic' } ] ]
 				],
-				[
+				'all': true,
+				'expected': [
+					{ 'type': 'textStyle/bold' },
+					{ 'type': 'textStyle/italic' }
+				]
+			},
+			{
+				'msg': 'annotations are collected using all, even with a plain character in the middle',
+				'data': [
+					['a', [ { 'type': 'textStyle/bold' } ] ],
 					'b',
-					[
-						{ 'type': 'textStyle/bold' },
-						{ 'type': 'textStyle/italic' },
-						{ 'type': 'textStyle/underline' }
-					]
+					['c', [ { 'type': 'textStyle/italic' } ] ]
 				],
-				['c']
-			],
-			'expected': []
-		},
-		{
-			'msg': 'no common coverage due to mismatched annotations',
-			'data': [
-				['a', [ { 'type': 'textStyle/bold' } ] ],
-				['b', [ { 'type': 'textStyle/italic' } ] ]
-			],
-			'expected': []
-		},
-		{
-			'msg': 'no common coverage due to un-annotated content node',
-			'data': [
-				['a', [ { 'type': 'textStyle/bold' } ] ],
-				{ 'type': 'image' },
-				{ 'type': '/image' }
-			],
-			'expected': []
-		},
-		{
-			'msg': 'branch node is ignored',
-			'data': [
-				['a', [ { 'type': 'textStyle/bold' } ] ],
-				{ 'type': 'paragraph' },
-				{ 'type': '/paragraph' }
-			],
-			'expected': [ { 'type': 'textStyle/bold' } ]
-		},
-		{
-			'msg': 'annotations are collected using all with mismatched annotations',
-			'data': [
-				['a', [ { 'type': 'textStyle/bold' } ] ],
-				['b', [ { 'type': 'textStyle/italic' } ] ]
-			],
-			'all': true,
-			'expected': [
-				{ 'type': 'textStyle/bold' },
-				{ 'type': 'textStyle/italic' }
-			]
-		},
-		{
-			'msg': 'annotations are collected using all, even with a plain character at the start',
-			'data': [
-				'a',
-				['b', [ { 'type': 'textStyle/bold' } ] ],
-				['c', [ { 'type': 'textStyle/italic' } ] ]
-			],
-			'all': true,
-			'expected': [
-				{ 'type': 'textStyle/bold' },
-				{ 'type': 'textStyle/italic' }
-			]
-		},
-		{
-			'msg': 'annotations are collected using all, even with a plain character in the middle',
-			'data': [
-				['a', [ { 'type': 'textStyle/bold' } ] ],
-				'b',
-				['c', [ { 'type': 'textStyle/italic' } ] ]
-			],
-			'all': true,
-			'expected': [
-				{ 'type': 'textStyle/bold' },
-				{ 'type': 'textStyle/italic' }
-			]
-		},
-		{
-			'msg': 'annotations are collected using all, even with a plain character at the end',
-			'data': [
-				['a', [ { 'type': 'textStyle/bold' } ] ],
-				['b', [ { 'type': 'textStyle/italic' } ] ],
-				'c'
-			],
-			'all': true,
-			'expected': [
-				{ 'type': 'textStyle/bold' },
-				{ 'type': 'textStyle/italic' }
-			]
-		},
-		{
-			'msg': 'no common coverage from all plain characters',
-			'data': ['a', 'b'],
-			'expected': {}
-		},
-		{
-			'msg': 'no common coverage using all from all plain characters',
-			'data': ['a', 'b'],
-			'all': true,
-			'expected': {}
-		}
-	];
+				'all': true,
+				'expected': [
+					{ 'type': 'textStyle/bold' },
+					{ 'type': 'textStyle/italic' }
+				]
+			},
+			{
+				'msg': 'annotations are collected using all, even with a plain character at the end',
+				'data': [
+					['a', [ { 'type': 'textStyle/bold' } ] ],
+					['b', [ { 'type': 'textStyle/italic' } ] ],
+					'c'
+				],
+				'all': true,
+				'expected': [
+					{ 'type': 'textStyle/bold' },
+					{ 'type': 'textStyle/italic' }
+				]
+			},
+			{
+				'msg': 'no common coverage from all plain characters',
+				'data': ['a', 'b'],
+				'expected': {}
+			},
+			{
+				'msg': 'no common coverage using all from all plain characters',
+				'data': ['a', 'b'],
+				'all': true,
+				'expected': {}
+			}
+		];
 
 	QUnit.expect( cases.length );
 
@@ -347,96 +347,96 @@ QUnit.test( 'getAnnotationsFromRange', 1, function ( assert ) {
 QUnit.test( 'getAnnotatedRangeFromOffset', 1, function ( assert ) {
 	var i, data, doc,
 		cases = [
-		{
-			'msg': 'a bold word',
-			'data': [
-				// 0
-				'a',
-				// 1
-				['b', [ { 'type': 'textStyle/bold' } ]],
-				// 2
-				['o', [ { 'type': 'textStyle/bold' } ]],
-				// 3
-				['l', [ { 'type': 'textStyle/bold' } ]],
-				// 4
-				['d', [ { 'type': 'textStyle/bold' } ]],
-				// 5
-				'w',
-				// 6
-				'o',
-				// 7
-				'r',
-				// 8
-				'd'
-			],
-			'annotation': { 'type': 'textStyle/bold' },
-			'offset': 3,
-			'expected': new ve.Range( 1, 5 )
-		},
-		{
-			'msg': 'a linked',
-			'data': [
-				// 0
-				'x',
-				// 1
-				'x',
-				// 2
-				'x',
-				// 3
-				['l', [ { 'type': 'link' } ]],
-				// 4
-				['i', [ { 'type': 'link' } ]],
-				// 5
-				['n', [ { 'type': 'link' } ]],
-				// 6
-				['k', [ { 'type': 'link' } ]],
-				// 7
-				'x',
-				// 8
-				'x',
-				// 9
-				'x'
-			],
-			'annotation': { 'type': 'link' },
-			'offset': 3,
-			'expected': new ve.Range( 3, 7 )
-		},
-		{
-			'msg': 'bold over an annotated leaf node',
-			'data': [
-				// 0
-				'h',
-				// 1
-				['b', [ { 'type': 'textStyle/bold' } ]],
-				// 2
-				['o', [ { 'type': 'textStyle/bold' } ]],
-				// 3
-				{
-					'type': 'image',
-					'attributes': { 'src': ve.dm.example.imgSrc },
-					'annotations': [ { 'type': 'textStyle/bold' }]
-				},
-				// 4
-				{ 'type': '/image' },
-				// 5
-				['l', [ { 'type': 'textStyle/bold' } ]],
-				// 6
-				['d', [ { 'type': 'textStyle/bold' } ]],
-				// 7
-				'i'
-			],
-			'annotation': { 'type': 'textStyle/bold' },
-			'offset': 3,
-			'expected': new ve.Range( 1, 7 )
-		}
-	];
+			{
+				'msg': 'a bold word',
+				'data': [
+					// 0
+					'a',
+					// 1
+					['b', [ { 'type': 'textStyle/bold' } ]],
+					// 2
+					['o', [ { 'type': 'textStyle/bold' } ]],
+					// 3
+					['l', [ { 'type': 'textStyle/bold' } ]],
+					// 4
+					['d', [ { 'type': 'textStyle/bold' } ]],
+					// 5
+					'w',
+					// 6
+					'o',
+					// 7
+					'r',
+					// 8
+					'd'
+				],
+				'annotation': { 'type': 'textStyle/bold' },
+				'offset': 3,
+				'expected': new ve.Range( 1, 5 )
+			},
+			{
+				'msg': 'a linked',
+				'data': [
+					// 0
+					'x',
+					// 1
+					'x',
+					// 2
+					'x',
+					// 3
+					['l', [ { 'type': 'link' } ]],
+					// 4
+					['i', [ { 'type': 'link' } ]],
+					// 5
+					['n', [ { 'type': 'link' } ]],
+					// 6
+					['k', [ { 'type': 'link' } ]],
+					// 7
+					'x',
+					// 8
+					'x',
+					// 9
+					'x'
+				],
+				'annotation': { 'type': 'link' },
+				'offset': 3,
+				'expected': new ve.Range( 3, 7 )
+			},
+			{
+				'msg': 'bold over an annotated leaf node',
+				'data': [
+					// 0
+					'h',
+					// 1
+					['b', [ { 'type': 'textStyle/bold' } ]],
+					// 2
+					['o', [ { 'type': 'textStyle/bold' } ]],
+					// 3
+					{
+						'type': 'image',
+						'attributes': { 'src': ve.dm.example.imgSrc },
+						'annotations': [ { 'type': 'textStyle/bold' }]
+					},
+					// 4
+					{ 'type': '/image' },
+					// 5
+					['l', [ { 'type': 'textStyle/bold' } ]],
+					// 6
+					['d', [ { 'type': 'textStyle/bold' } ]],
+					// 7
+					'i'
+				],
+				'annotation': { 'type': 'textStyle/bold' },
+				'offset': 3,
+				'expected': new ve.Range( 1, 7 )
+			}
+		];
 
 	QUnit.expect( cases.length );
 
 	for ( i = 0; i < cases.length; i++ ) {
 		data = ve.dm.example.preprocessAnnotations( cases[i].data );
 		doc = new ve.dm.Document( data );
-		assert.deepEqual(
+		assert.equalRange(
 			doc.data.getAnnotatedRangeFromOffset( cases[i].offset,
 				ve.dm.example.createAnnotation( cases[i].annotation ) ),
 			cases[i].expected,
@@ -702,27 +702,27 @@ QUnit.test( 'isStructuralOffset', function ( assert ) {
 QUnit.test( 'isContentData', 1, function ( assert ) {
 	var i, data,
 		cases = [
-		{
-			'msg': 'simple paragraph',
-			'data': [{ 'type': 'paragraph' }, 'a', { 'type': '/paragraph' }],
-			'expected': false
-		},
-		{
-			'msg': 'plain text',
-			'data': ['a', 'b', 'c'],
-			'expected': true
-		},
-		{
-			'msg': 'annotated text',
-			'data': [['a', { '{"type:"bold"}': { 'type': 'bold' } } ]],
-			'expected': true
-		},
-		{
-			'msg': 'non-text leaf',
-			'data': ['a', { 'type': 'image' }, { 'type': '/image' }, 'c'],
-			'expected': true
-		}
-	];
+			{
+				'msg': 'simple paragraph',
+				'data': [{ 'type': 'paragraph' }, 'a', { 'type': '/paragraph' }],
+				'expected': false
+			},
+			{
+				'msg': 'plain text',
+				'data': ['a', 'b', 'c'],
+				'expected': true
+			},
+			{
+				'msg': 'annotated text',
+				'data': [['a', { '{"type:"bold"}': { 'type': 'bold' } } ]],
+				'expected': true
+			},
+			{
+				'msg': 'non-text leaf',
+				'data': ['a', { 'type': 'image' }, { 'type': '/image' }, 'c'],
+				'expected': true
+			}
+		];
 	QUnit.expect( cases.length );
 	for ( i = 0; i < cases.length; i++ ) {
 		data = new ve.dm.ElementLinearData( new ve.dm.IndexValueStore(), cases[i].data );
@@ -774,109 +774,109 @@ QUnit.test( 'getRelativeContentOffset', function ( assert ) {
 	var i,
 		doc = ve.dm.example.createExampleDocument(),
 		cases = [
-		{
-			'msg': 'invalid starting offset with zero distance gets corrected',
-			'offset': 0,
-			'distance': 0,
-			'expected': 1
-		},
-		{
-			'msg': 'invalid starting offset with zero distance gets corrected',
-			'offset': 61,
-			'distance': 0,
-			'expected': 60
-		},
-		{
-			'msg': 'valid offset with zero distance returns same offset',
-			'offset': 2,
-			'distance': 0,
-			'expected': 2
-		},
-		{
-			'msg': 'invalid starting offset gets corrected',
-			'offset': 0,
-			'distance': -1,
-			'expected': 1
-		},
-		{
-			'msg': 'invalid starting offset gets corrected',
-			'offset': 61,
-			'distance': 1,
-			'expected': 60
-		},
-		{
-			'msg': 'stop at left edge if already valid',
-			'offset': 1,
-			'distance': -1,
-			'expected': 1
-		},
-		{
-			'msg': 'stop at right edge if already valid',
-			'offset': 60,
-			'distance': 1,
-			'expected': 60
-		},
-		{
-			'msg': 'first content offset is farthest left',
-			'offset': 2,
-			'distance': -2,
-			'expected': 1
-		},
-		{
-			'msg': 'last content offset is farthest right',
-			'offset': 59,
-			'distance': 2,
-			'expected': 60
-		},
-		{
-			'msg': '1 right within text',
-			'offset': 1,
-			'distance': 1,
-			'expected': 2
-		},
-		{
-			'msg': '2 right within text',
-			'offset': 1,
-			'distance': 2,
-			'expected': 3
-		},
-		{
-			'msg': '1 left within text',
-			'offset': 2,
-			'distance': -1,
-			'expected': 1
-		},
-		{
-			'msg': '2 left within text',
-			'offset': 3,
-			'distance': -2,
-			'expected': 1
-		},
-		{
-			'msg': '1 right over elements',
-			'offset': 4,
-			'distance': 1,
-			'expected': 10
-		},
-		{
-			'msg': '2 right over elements',
-			'offset': 4,
-			'distance': 2,
-			'expected': 11
-		},
-		{
-			'msg': '1 left over elements',
-			'offset': 10,
-			'distance': -1,
-			'expected': 4
-		},
-		{
-			'msg': '2 left over elements',
-			'offset': 10,
-			'distance': -2,
-			'expected': 3
-		}
-	];
+			{
+				'msg': 'invalid starting offset with zero distance gets corrected',
+				'offset': 0,
+				'distance': 0,
+				'expected': 1
+			},
+			{
+				'msg': 'invalid starting offset with zero distance gets corrected',
+				'offset': 61,
+				'distance': 0,
+				'expected': 60
+			},
+			{
+				'msg': 'valid offset with zero distance returns same offset',
+				'offset': 2,
+				'distance': 0,
+				'expected': 2
+			},
+			{
+				'msg': 'invalid starting offset gets corrected',
+				'offset': 0,
+				'distance': -1,
+				'expected': 1
+			},
+			{
+				'msg': 'invalid starting offset gets corrected',
+				'offset': 61,
+				'distance': 1,
+				'expected': 60
+			},
+			{
+				'msg': 'stop at left edge if already valid',
+				'offset': 1,
+				'distance': -1,
+				'expected': 1
+			},
+			{
+				'msg': 'stop at right edge if already valid',
+				'offset': 60,
+				'distance': 1,
+				'expected': 60
+			},
+			{
+				'msg': 'first content offset is farthest left',
+				'offset': 2,
+				'distance': -2,
+				'expected': 1
+			},
+			{
+				'msg': 'last content offset is farthest right',
+				'offset': 59,
+				'distance': 2,
+				'expected': 60
+			},
+			{
+				'msg': '1 right within text',
+				'offset': 1,
+				'distance': 1,
+				'expected': 2
+			},
+			{
+				'msg': '2 right within text',
+				'offset': 1,
+				'distance': 2,
+				'expected': 3
+			},
+			{
+				'msg': '1 left within text',
+				'offset': 2,
+				'distance': -1,
+				'expected': 1
+			},
+			{
+				'msg': '2 left within text',
+				'offset': 3,
+				'distance': -2,
+				'expected': 1
+			},
+			{
+				'msg': '1 right over elements',
+				'offset': 4,
+				'distance': 1,
+				'expected': 10
+			},
+			{
+				'msg': '2 right over elements',
+				'offset': 4,
+				'distance': 2,
+				'expected': 11
+			},
+			{
+				'msg': '1 left over elements',
+				'offset': 10,
+				'distance': -1,
+				'expected': 4
+			},
+			{
+				'msg': '2 left over elements',
+				'offset': 10,
+				'distance': -2,
+				'expected': 3
+			}
+		];
 	QUnit.expect( cases.length );
 	for ( i = 0; i < cases.length; i++ ) {
 		assert.strictEqual(
@@ -891,48 +891,48 @@ QUnit.test( 'getNearestContentOffset', function ( assert ) {
 	var i,
 		doc = ve.dm.example.createExampleDocument(),
 		cases = [
-		{
-			'msg': 'unspecified direction results in shortest distance',
-			'offset': 0,
-			'direction': 0,
-			'expected': 1
-		},
-		{
-			'msg': 'unspecified direction results in shortest distance',
-			'offset': 5,
-			'direction': 0,
-			'expected': 4
-		},
-		{
-			'msg': 'positive direction results in next valid offset to the right',
-			'offset': 5,
-			'direction': 1,
-			'expected': 10
-		},
-		{
-			'msg': 'negative direction results in next valid offset to the left',
-			'offset': 5,
-			'direction': -1,
-			'expected': 4
-		},
-		{
-			'msg': 'valid offset without direction returns same offset',
-			'offset': 1,
-			'expected': 1
-		},
-		{
-			'msg': 'valid offset with positive direction returns same offset',
-			'offset': 1,
-			'direction': 1,
-			'expected': 1
-		},
-		{
-			'msg': 'valid offset with negative direction returns same offset',
-			'offset': 1,
-			'direction': -1,
-			'expected': 1
-		}
-	];
+			{
+				'msg': 'unspecified direction results in shortest distance',
+				'offset': 0,
+				'direction': 0,
+				'expected': 1
+			},
+			{
+				'msg': 'unspecified direction results in shortest distance',
+				'offset': 5,
+				'direction': 0,
+				'expected': 4
+			},
+			{
+				'msg': 'positive direction results in next valid offset to the right',
+				'offset': 5,
+				'direction': 1,
+				'expected': 10
+			},
+			{
+				'msg': 'negative direction results in next valid offset to the left',
+				'offset': 5,
+				'direction': -1,
+				'expected': 4
+			},
+			{
+				'msg': 'valid offset without direction returns same offset',
+				'offset': 1,
+				'expected': 1
+			},
+			{
+				'msg': 'valid offset with positive direction returns same offset',
+				'offset': 1,
+				'direction': 1,
+				'expected': 1
+			},
+			{
+				'msg': 'valid offset with negative direction returns same offset',
+				'offset': 1,
+				'direction': -1,
+				'expected': 1
+			}
+		];
 	QUnit.expect( cases.length );
 	for ( i = 0; i < cases.length; i++ ) {
 		assert.strictEqual(
@@ -947,101 +947,101 @@ QUnit.test( 'getRelativeStructuralOffset', function ( assert ) {
 	var i,
 		doc = ve.dm.example.createExampleDocument(),
 		cases = [
-		{
-			'msg': 'invalid starting offset with zero distance gets corrected',
-			'offset': 1,
-			'distance': 0,
-			'expected': 5
-		},
-		{
-			'msg': 'invalid starting offset with zero distance gets corrected',
-			'offset': 60,
-			'distance': 0,
-			'expected': 61
-		},
-		{
-			'msg': 'valid offset with zero distance returns same offset',
-			'offset': 0,
-			'distance': 0,
-			'expected': 0
-		},
-		{
-			'msg': 'invalid starting offset gets corrected',
-			'offset': 2,
-			'distance': -1,
-			'expected': 0
-		},
-		{
-			'msg': 'invalid starting offset gets corrected',
-			'offset': 59,
-			'distance': 1,
-			'expected': 61
-		},
-		{
-			'msg': 'first structural offset is farthest left',
-			'offset': 5,
-			'distance': -2,
-			'expected': 0
-		},
-		{
-			'msg': 'last structural offset is farthest right',
-			'offset': 62,
-			'distance': 2,
-			'expected': 63
-		},
-		{
-			'msg': '1 right',
-			'offset': 0,
-			'distance': 1,
-			'expected': 5
-		},
-		{
-			'msg': '1 right, unrestricted',
-			'offset': 5,
-			'distance': 1,
-			'unrestricted': true,
-			'expected': 9
-		},
-		{
-			'msg': '2 right',
-			'offset': 0,
-			'distance': 2,
-			'expected': 6
-		},
-		{
-			'msg': '2 right, unrestricted',
-			'offset': 0,
-			'distance': 2,
-			'unrestricted': true,
-			'expected': 9
-		},
-		{
-			'msg': '1 left',
-			'offset': 61,
-			'distance': -1,
-			'expected': 58
-		},
-		{
-			'msg': '1 left, unrestricted',
-			'offset': 9,
-			'distance': -1,
-			'unrestricted': true,
-			'expected': 5
-		},
-		{
-			'msg': '2 left',
-			'offset': 61,
-			'distance': -2,
-			'expected': 55
-		},
-		{
-			'msg': '2 left, unrestricted',
-			'offset': 9,
-			'distance': -2,
-			'unrestricted': true,
-			'expected': 0
-		}
-	];
+			{
+				'msg': 'invalid starting offset with zero distance gets corrected',
+				'offset': 1,
+				'distance': 0,
+				'expected': 5
+			},
+			{
+				'msg': 'invalid starting offset with zero distance gets corrected',
+				'offset': 60,
+				'distance': 0,
+				'expected': 61
+			},
+			{
+				'msg': 'valid offset with zero distance returns same offset',
+				'offset': 0,
+				'distance': 0,
+				'expected': 0
+			},
+			{
+				'msg': 'invalid starting offset gets corrected',
+				'offset': 2,
+				'distance': -1,
+				'expected': 0
+			},
+			{
+				'msg': 'invalid starting offset gets corrected',
+				'offset': 59,
+				'distance': 1,
+				'expected': 61
+			},
+			{
+				'msg': 'first structural offset is farthest left',
+				'offset': 5,
+				'distance': -2,
+				'expected': 0
+			},
+			{
+				'msg': 'last structural offset is farthest right',
+				'offset': 62,
+				'distance': 2,
+				'expected': 63
+			},
+			{
+				'msg': '1 right',
+				'offset': 0,
+				'distance': 1,
+				'expected': 5
+			},
+			{
+				'msg': '1 right, unrestricted',
+				'offset': 5,
+				'distance': 1,
+				'unrestricted': true,
+				'expected': 9
+			},
+			{
+				'msg': '2 right',
+				'offset': 0,
+				'distance': 2,
+				'expected': 6
+			},
+			{
+				'msg': '2 right, unrestricted',
+				'offset': 0,
+				'distance': 2,
+				'unrestricted': true,
+				'expected': 9
+			},
+			{
+				'msg': '1 left',
+				'offset': 61,
+				'distance': -1,
+				'expected': 58
+			},
+			{
+				'msg': '1 left, unrestricted',
+				'offset': 9,
+				'distance': -1,
+				'unrestricted': true,
+				'expected': 5
+			},
+			{
+				'msg': '2 left',
+				'offset': 61,
+				'distance': -2,
+				'expected': 55
+			},
+			{
+				'msg': '2 left, unrestricted',
+				'offset': 9,
+				'distance': -2,
+				'unrestricted': true,
+				'expected': 0
+			}
+		];
 	QUnit.expect( cases.length );
 	for ( i = 0; i < cases.length; i++ ) {
 		assert.strictEqual(
@@ -1058,108 +1058,108 @@ QUnit.test( 'getNearestStructuralOffset', function ( assert ) {
 	var i,
 		doc = ve.dm.example.createExampleDocument(),
 		cases = [
-		{
-			'msg': 'unspecified direction results in shortest distance',
-			'offset': 1,
-			'direction': 0,
-			'expected': 0
-		},
-		{
-			'msg': 'unspecified direction results in shortest distance',
-			'offset': 4,
-			'direction': 0,
-			'expected': 5
-		},
-		{
-			'msg': 'unspecified direction results in shortest distance, unrestricted',
-			'offset': 8,
-			'direction': 0,
-			'unrestricted': true,
-			'expected': 9
-		},
-		{
-			'msg': 'unspecified direction results in shortest distance, unrestricted',
-			'offset': 6,
-			'direction': 0,
-			'unrestricted': true,
-			'expected': 5
-		},
-		{
-			'msg': 'positive direction results in next valid offset to the right',
-			'offset': 1,
-			'direction': 1,
-			'expected': 5
-		},
-		{
-			'msg': 'positive direction results in next valid offset to the right',
-			'offset': 4,
-			'direction': 1,
-			'expected': 5
-		},
-		{
-			'msg': 'positive direction results in next valid offset to the right, unrestricted',
-			'offset': 7,
-			'direction': 1,
-			'unrestricted': true,
-			'expected': 9
-		},
-		{
-			'msg': 'negative direction results in next valid offset to the left',
-			'offset': 1,
-			'direction': -1,
-			'expected': 0
-		},
-		{
-			'msg': 'negative direction results in next valid offset to the left',
-			'offset': 4,
-			'direction': -1,
-			'expected': 0
-		},
-		{
-			'msg': 'negative direction results in next valid offset to the left, unrestricted',
-			'offset': 6,
-			'direction': -1,
-			'unrestricted': true,
-			'expected': 5
-		},
-		{
-			'msg': 'valid offset without direction returns same offset',
-			'offset': 0,
-			'expected': 0
-		},
-		{
-			'msg': 'valid offset with positive direction returns same offset',
-			'offset': 0,
-			'direction': 1,
-			'expected': 0
-		},
-		{
-			'msg': 'valid offset with negative direction returns same offset',
-			'offset': 0,
-			'direction': -1,
-			'expected': 0
-		},
-		{
-			'msg': 'valid offset without direction returns same offset, unrestricted',
-			'offset': 0,
-			'unrestricted': true,
-			'expected': 0
-		},
-		{
-			'msg': 'valid offset with positive direction returns same offset, unrestricted',
-			'offset': 0,
-			'direction': 1,
-			'unrestricted': true,
-			'expected': 0
-		},
-		{
-			'msg': 'valid offset with negative direction returns same offset, unrestricted',
-			'offset': 0,
-			'direction': -1,
-			'unrestricted': true,
-			'expected': 0
-		}
-	];
+			{
+				'msg': 'unspecified direction results in shortest distance',
+				'offset': 1,
+				'direction': 0,
+				'expected': 0
+			},
+			{
+				'msg': 'unspecified direction results in shortest distance',
+				'offset': 4,
+				'direction': 0,
+				'expected': 5
+			},
+			{
+				'msg': 'unspecified direction results in shortest distance, unrestricted',
+				'offset': 8,
+				'direction': 0,
+				'unrestricted': true,
+				'expected': 9
+			},
+			{
+				'msg': 'unspecified direction results in shortest distance, unrestricted',
+				'offset': 6,
+				'direction': 0,
+				'unrestricted': true,
+				'expected': 5
+			},
+			{
+				'msg': 'positive direction results in next valid offset to the right',
+				'offset': 1,
+				'direction': 1,
+				'expected': 5
+			},
+			{
+				'msg': 'positive direction results in next valid offset to the right',
+				'offset': 4,
+				'direction': 1,
+				'expected': 5
+			},
+			{
+				'msg': 'positive direction results in next valid offset to the right, unrestricted',
+				'offset': 7,
+				'direction': 1,
+				'unrestricted': true,
+				'expected': 9
+			},
+			{
+				'msg': 'negative direction results in next valid offset to the left',
+				'offset': 1,
+				'direction': -1,
+				'expected': 0
+			},
+			{
+				'msg': 'negative direction results in next valid offset to the left',
+				'offset': 4,
+				'direction': -1,
+				'expected': 0
+			},
+			{
+				'msg': 'negative direction results in next valid offset to the left, unrestricted',
+				'offset': 6,
+				'direction': -1,
+				'unrestricted': true,
+				'expected': 5
+			},
+			{
+				'msg': 'valid offset without direction returns same offset',
+				'offset': 0,
+				'expected': 0
+			},
+			{
+				'msg': 'valid offset with positive direction returns same offset',
+				'offset': 0,
+				'direction': 1,
+				'expected': 0
+			},
+			{
+				'msg': 'valid offset with negative direction returns same offset',
+				'offset': 0,
+				'direction': -1,
+				'expected': 0
+			},
+			{
+				'msg': 'valid offset without direction returns same offset, unrestricted',
+				'offset': 0,
+				'unrestricted': true,
+				'expected': 0
+			},
+			{
+				'msg': 'valid offset with positive direction returns same offset, unrestricted',
+				'offset': 0,
+				'direction': 1,
+				'unrestricted': true,
+				'expected': 0
+			},
+			{
+				'msg': 'valid offset with negative direction returns same offset, unrestricted',
+				'offset': 0,
+				'direction': -1,
+				'unrestricted': true,
+				'expected': 0
+			}
+		];
 	QUnit.expect( cases.length );
 	for ( i = 0; i < cases.length; i++ ) {
 		assert.strictEqual(
@@ -1176,133 +1176,133 @@ QUnit.test( 'getNearestWordRange', function ( assert ) {
 	var i, data, range, word,
 		store = new ve.dm.IndexValueStore(),
 		cases = [
-		{
-			'phrase': 'visual editor test',
-			'msg': 'simple Latin word',
-			'offset': 10,
-			'expected': 'editor'
-		},
-		{
-			'phrase': 'visual editor test',
-			'msg': 'cursor at start of word',
-			'offset': 7,
-			'expected': 'editor'
-		},
-		{
-			'phrase': 'visual editor test',
-			'msg': 'cursor at end of word',
-			'offset': 13,
-			'expected': 'editor'
-		},
-		{
-			'phrase': 'visual editor test',
-			'msg': 'cursor at start of text',
-			'offset': 0,
-			'expected': 'visual'
-		},
-		{
-			'phrase': 'visual editor test',
-			'msg': 'cursor at end of text',
-			'offset': 18,
-			'expected': 'test'
-		},
-		{
-			'phrase': 'Computer-aided design',
-			'msg': 'hyphenated Latin word',
-			'offset': 12,
-			'expected': 'aided'
-		},
-		{
-			'phrase': 'Water (l\'eau) is',
-			'msg': 'apostrophe and parentheses (Latin)',
-			'offset': 8,
-			'expected': 'l\'eau'
-		},
-		{
-			'phrase': 'Water (H2O) is',
-			'msg': 'number in word (Latin)',
-			'offset': 9,
-			'expected': 'H2O'
-		},
-		{
-			'phrase': 'The \'word\' is',
-			'msg': 'apostrophes as single quotes',
-			'offset': 7,
-			'expected': 'word'
-		},
-		{
-			'phrase': 'Some "double" quotes',
-			'msg': 'double quotes',
-			'offset': 8,
-			'expected': 'double'
-		},
-		{
-			'phrase': 'Wikipédia l\'encyclopédie libre',
-			'msg': 'extended Latin word',
-			'offset': 15,
-			'expected': 'l\'encyclopédie'
-		},
-		{
-			'phrase': 'Wikipédia l\'encyclopédie libre',
-			'msg': 'Extend characters (i.e. letter + accent)',
-			'offset': 15,
-			'expected': 'l\'encyclopédie'
-		},
-		{
-			'phrase': 'Википедия свободная энциклопедия',
-			'msg': 'Cyrillic word',
-			'offset': 14,
-			'expected': 'свободная'
-		},
-		{
-			'phrase': 'την ελεύθερη εγκυκλοπαίδεια',
-			'msg': 'Greek word',
-			'offset': 7,
-			'expected': 'ελεύθερη'
-		},
-		{
-			'phrase': '우리 모두의 백과사전',
-			'msg': 'Hangul word',
-			'offset': 4,
-			'expected': '모두의'
-		},
-		{
-			'phrase': 'This: ٠١٢٣٤٥٦٧٨٩ means 0123456789',
-			'msg': 'Eastern Arabic numerals',
-			'offset': 13,
-			'expected': '٠١٢٣٤٥٦٧٨٩'
-		},
-		{
-			'phrase': 'Latinカタカナwrapped',
-			'msg': 'Latin-wrapped Katakana word',
-			'offset': 7,
-			'expected': 'カタカナ'
-		},
-		{
-			'phrase': '维基百科',
-			'msg': 'Hanzi characters (cursor in middle)',
-			'offset': 2,
-			'expected': ''
-		},
-		{
-			'phrase': '维基百科',
-			'msg': 'Hanzi characters (cursor at end)',
-			'offset': 4,
-			'expected': ''
-		},
-		{
-			'phrase': 'Costs £1,234.00 each',
-			'msg': 'formatted number sequence',
-			'offset': 11,
-			'expected': '1,234.00'
-		},
-		{
-			'phrase': 'Reset index_of variable',
-			'msg': 'underscore-joined word',
-			'offset': 8,
-			'expected': 'index_of'
-		}
-	];
+			{
+				'phrase': 'visual editor test',
+				'msg': 'simple Latin word',
+				'offset': 10,
+				'expected': 'editor'
+			},
+			{
+				'phrase': 'visual editor test',
+				'msg': 'cursor at start of word',
+				'offset': 7,
+				'expected': 'editor'
+			},
+			{
+				'phrase': 'visual editor test',
+				'msg': 'cursor at end of word',
+				'offset': 13,
+				'expected': 'editor'
+			},
+			{
+				'phrase': 'visual editor test',
+				'msg': 'cursor at start of text',
+				'offset': 0,
+				'expected': 'visual'
+			},
+			{
+				'phrase': 'visual editor test',
+				'msg': 'cursor at end of text',
+				'offset': 18,
+				'expected': 'test'
+			},
+			{
+				'phrase': 'Computer-aided design',
+				'msg': 'hyphenated Latin word',
+				'offset': 12,
+				'expected': 'aided'
+			},
+			{
+				'phrase': 'Water (l\'eau) is',
+				'msg': 'apostrophe and parentheses (Latin)',
+				'offset': 8,
+				'expected': 'l\'eau'
+			},
+			{
+				'phrase': 'Water (H2O) is',
+				'msg': 'number in word (Latin)',
+				'offset': 9,
+				'expected': 'H2O'
+			},
+			{
+				'phrase': 'The \'word\' is',
+				'msg': 'apostrophes as single quotes',
+				'offset': 7,
+				'expected': 'word'
+			},
+			{
+				'phrase': 'Some "double" quotes',
+				'msg': 'double quotes',
+				'offset': 8,
+				'expected': 'double'
+			},
+			{
+				'phrase': 'Wikipédia l\'encyclopédie libre',
+				'msg': 'extended Latin word',
+				'offset': 15,
+				'expected': 'l\'encyclopédie'
+			},
+			{
+				'phrase': 'Wikipédia l\'encyclopédie libre',
+				'msg': 'Extend characters (i.e. letter + accent)',
+				'offset': 15,
+				'expected': 'l\'encyclopédie'
+			},
+			{
+				'phrase': 'Википедия свободная энциклопедия',
+				'msg': 'Cyrillic word',
+				'offset': 14,
+				'expected': 'свободная'
+			},
+			{
+				'phrase': 'την ελεύθερη εγκυκλοπαίδεια',
+				'msg': 'Greek word',
+				'offset': 7,
+				'expected': 'ελεύθερη'
+			},
+			{
+				'phrase': '우리 모두의 백과사전',
+				'msg': 'Hangul word',
+				'offset': 4,
+				'expected': '모두의'
+			},
+			{
+				'phrase': 'This: ٠١٢٣٤٥٦٧٨٩ means 0123456789',
+				'msg': 'Eastern Arabic numerals',
+				'offset': 13,
+				'expected': '٠١٢٣٤٥٦٧٨٩'
+			},
+			{
+				'phrase': 'Latinカタカナwrapped',
+				'msg': 'Latin-wrapped Katakana word',
+				'offset': 7,
+				'expected': 'カタカナ'
+			},
+			{
+				'phrase': '维基百科',
+				'msg': 'Hanzi characters (cursor in middle)',
+				'offset': 2,
+				'expected': ''
+			},
+			{
+				'phrase': '维基百科',
+				'msg': 'Hanzi characters (cursor at end)',
+				'offset': 4,
+				'expected': ''
+			},
+			{
+				'phrase': 'Costs £1,234.00 each',
+				'msg': 'formatted number sequence',
+				'offset': 11,
+				'expected': '1,234.00'
+			},
+			{
+				'phrase': 'Reset index_of variable',
+				'msg': 'underscore-joined word',
+				'offset': 8,
+				'expected': 'index_of'
+			}
+		];
 	QUnit.expect( cases.length );
 	for ( i = 0; i < cases.length; i++ ) {
 		data = new ve.dm.ElementLinearData( store, cases[i].phrase.split( '' ) );
@@ -1351,7 +1351,7 @@ QUnit.test( 'sanitize', function ( assert ) {
 					{ 'type': 'internalList' },
 					{ 'type': '/internalList' }
 				],
-				'rules': { 'blacklist': ['alienInline','image'] },
+				'rules': { 'blacklist': ['alienInline', 'image'] },
 				'msg': 'Blacklisted nodes removed'
 			},
 			{
@@ -1384,7 +1384,7 @@ QUnit.test( 'sanitize', function ( assert ) {
 				'html': '<p style="font-size: 2em;"><b style="color:red;">Foo</b></p>',
 				'data': [
 					{ 'type': 'paragraph' },
-					['F',[0]], ['o',[0]], ['o',[0]],
+					['F', [0]], ['o', [0]], ['o', [0]],
 					{ 'type': '/paragraph' },
 					{ 'type': 'internalList' },
 					{ 'type': '/internalList' }
@@ -1402,7 +1402,7 @@ QUnit.test( 'sanitize', function ( assert ) {
 							'values': { 'class': 'foo' }
 						} ]
 					},
-					['F',[0]], ['o',[0]], ['o',[0]],
+					['F', [0]], ['o', [0]], ['o', [0]],
 					{ 'type': '/paragraph' },
 					{ 'type': 'internalList' },
 					{ 'type': '/internalList' }
@@ -1453,6 +1453,46 @@ QUnit.test( 'sanitize', function ( assert ) {
 		if ( cases[i].store ) {
 			assert.deepEqualWithDomElements( data.getStore().valueStore, cases[i].store, cases[i].msg + ': store' );
 		}
+	}
+} );
+
+QUnit.test( 'countNoninternalElements', function ( assert ) {
+	var i, d,
+		cases = [
+			{
+				'data': [
+					{ 'type': 'paragraph' },
+					'F', ['o', [0]], 'o',
+					{ 'type': '/paragraph' },
+					{ 'type': 'internalList' },
+					{ 'type': '/internalList' }
+				],
+				'expected': 5,
+				'msg': 'Counting non-internal elements - no internal data'
+			},
+			{
+				'data': [
+					{ 'type': 'paragraph' },
+					'F', 'o',
+					{ 'type': '/paragraph' },
+					{ 'type': 'internalList' },
+					{ 'type': 'internalItem' },
+					{ 'type': 'paragraph' },
+					'a',
+					{ 'type': '/paragraph' },
+					{ 'type': '/internalItem' },
+					{ 'type': '/internalList' }
+				],
+				'expected': 4,
+				'msg': 'Counting non-internal elements'
+			}
+		];
+
+	QUnit.expect( cases.length );
+
+	for ( i = 0; i < cases.length; i++ ) {
+		d = new ve.dm.ElementLinearData( new ve.dm.IndexValueStore(), cases[i].data );
+		assert.strictEqual( d.countNoninternalElements(), cases[i].expected, cases[i].msg );
 	}
 } );
 

@@ -46,10 +46,17 @@ class CategorySelectController extends WikiaController {
 
 		$categoriesLink = Linker::link( Title::newFromText( $categoriesLinkPage ), $categoriesLinkText, $categoriesLinkAttributes );
 
+		Wikia::addAssetsToOutput( 'category_select_css' );
+		Wikia::addAssetsToOutput( 'category_select_js' );
+
 		$this->response->setVal( 'categories', $categories );
 		$this->response->setVal( 'categoriesLink', $categoriesLink );
 		$this->response->setVal( 'showHidden', $showHidden );
 		$this->response->setVal( 'userCanEdit', $userCanEdit );
+
+		if ( $this->app->checkSkin( 'venus' ) ) {
+			$this->overrideTemplate( 'articlePageVenus' );
+		}
 
 		wfProfileOut( __METHOD__ );
 	}

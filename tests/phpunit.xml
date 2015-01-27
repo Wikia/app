@@ -18,9 +18,6 @@
 	<testsuite name="Wikia ResourceLoader Test Suite">
 		<directory>../includes/resourceloader/wikia/</directory>
 	</testsuite>
-	<testsuite name="Facebook Connect Extension">
-		<directory>../extensions/FBConnect/</directory>
-	</testsuite>
 	<testsuite name="Wikia Extensions Test Suite">
 		<directory>../extensions/wikia/</directory>
 	</testsuite>
@@ -48,15 +45,18 @@
 		</exclude>
 	</groups>
 	<filter>
+		<!-- Exclude the following from code coverage reports -->
 		<blacklist>
 			<directory>../bin</directory>
 			<directory>../config</directory>
 			<directory>../docs</directory>
 			<directory>../images</directory>
 			<directory>../languages</directory>
-			<directory>../lib</directory>
+			<directory>../lib/composer</directory>
+			<directory>../lib/vendor</directory>
 			<directory>../maintenance</directory>
 			<directory>../math</directory>
+			<directory>../resources</directory>
 			<directory>../serialized</directory>
 			<directory>../static</directory>
 			<directory>../t</directory>

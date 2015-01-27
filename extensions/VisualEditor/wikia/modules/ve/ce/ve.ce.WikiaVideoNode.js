@@ -43,7 +43,7 @@ ve.ce.WikiaVideoNode.static = {};
  * @param width
  * @returns {string}
  */
-ve.ce.WikiaVideoNode.static.getSizeString = function( width ) {
+ve.ce.WikiaVideoNode.static.getSizeString = function ( width ) {
 	var size;
 
 	if ( width < 100 ) {
@@ -62,7 +62,6 @@ ve.ce.WikiaVideoNode.static.getSizeString = function( width ) {
 
 	return size;
 };
-
 
 /* Methods */
 

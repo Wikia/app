@@ -31,10 +31,10 @@ ve.ce.MWBlockImageNode = function VeCeMWBlockImageNode( model, config ) {
 
 	// DOM Hierarchy for BlockImageNode:
 	// <div> this.$element
-	//   <figure> this.$figure (ve-ce-mwBlockImageNode-type (thumb) (tright/tleft/etc))
+	//   <figure> this.$figure (ve-ce-mwBlockImageNode-{type})
 	//     <a> this.$a
-	//       <img> this.$image (thumbimage)
-	//     <figcaption> this.caption.view.$element (thumbcaption)
+	//       <img> this.$image
+	//     <figcaption> this.caption.view.$element
 
 	// Build DOM:
 	this.$a = this.$( '<a>' )
@@ -48,7 +48,7 @@ ve.ce.MWBlockImageNode = function VeCeMWBlockImageNode( model, config ) {
 	this.$figure = this.$( '<figure>' )
 		.appendTo( this.$element )
 		.append( this.$a )
-		.addClass( 've-ce-mwBlockImageNode-type-' + type )
+		.addClass( 've-ce-mwBlockImageNode ve-ce-mwBlockImageNode-type-' + type )
 		// 'typeof' should appear with the proper Parsoid-generated
 		// type. The model deals with converting it
 		.attr( 'typeof', this.typeToRdfa[ type ] );
@@ -139,7 +139,8 @@ ve.ce.MWBlockImageNode.prototype.updateCaption = function () {
 		}
 	}
 	if ( this.$caption ) {
-		this.$caption.toggle( this.captionVisible );
+		// Don't use show() as it sets display to block, overriding the stylesheet.
+		this.$caption.css( 'display', this.captionVisible ? '' : 'none' );
 	}
 };
 
@@ -207,14 +208,13 @@ ve.ce.MWBlockImageNode.prototype.updateSize = function ( dimensions ) {
 
 	this.$image.css( dimensions );
 
+	// Make sure $figure is sharing the dimensions, otherwise 'middle' and 'none'
+	// positions don't work properly
 	this.$figure.css( {
-		// If we have a border then the width is increased by 2
 		'width': dimensions.width + ( this.captionVisible ? 2 : 0 ),
 		'height': this.captionVisible ? 'auto' : dimensions.height
 	} );
-
 	this.$figure.toggleClass( 'mw-default-size', !!this.model.getAttribute( 'defaultSize' ) );
-
 };
 
 /**

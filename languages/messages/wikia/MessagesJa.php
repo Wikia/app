@@ -151,13 +151,12 @@ $messages = array_merge( $messages , array(
 'hub-Lifestyle' => 'ライフスタイル',
 'hub-Wikia' => 'Wikia',
 
-# former shared-* messages
-'shared-Oasis-footer-wikia-links' => "*http://ja.wikia.com/ウィキアについて|<span>ウィキアについて</span>
-*http://www.wikia.com/Hiring|キャリア
-*http://www.wikia.com/Advertising|広告
-*Special:Contact|コンタクト
-*http://ja.community.wikia.com/wiki/Wikia:ウィキアの利用規約|<span>ウィキアの利用規約</span>
-*http://ja.wikia.com/個人情報保護に関する方針|個人情報保護に関する方針　
-*http://www.wikia.com/Special:CreateWiki?uselang=ja|ウィキアを始める
-*_LICENSE_",
+
+# vertical names
+'vertical-tv' => 'テレビ番組',
+'vertical-games' => 'ゲーム',
+'vertical-books' => '性格診断テスト',
+'vertical-comics' => '漫画',
+'vertical-lifestyle' => 'ライフスタイル',
+'vertical-movies' => '映画',
 ));

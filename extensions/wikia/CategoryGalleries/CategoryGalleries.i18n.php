@@ -156,6 +156,13 @@ $messages['ia'] = array(
 	'categorygalleries-desc' => 'Monstra un galeria de paginas in paginas de categoria',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Riemogerz
+ */
+$messages['id'] = array(
+	'categorygalleries-desc' => 'Tampilkan galeri gambar mini pada halaman kategori',
+);
+
 /** Italian (italiano)
  * @author Pietrodn
  */
@@ -168,6 +175,13 @@ $messages['it'] = array(
  */
 $messages['ja'] = array(
 	'categorygalleries-desc' => 'カテゴリページでページをギャラリー形式で表示する',
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'categorygalleries-desc' => '분류 페이지에 갤러리 표시',
 );
 
 /** Colognian (Ripoarisch)

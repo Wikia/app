@@ -18,7 +18,7 @@
  */
 ve.ui.MWCommandHelpDialog = function VeUiMWCommandHelpDialog( config ) {
 	// Parent constructor
-	ve.ui.CommandHelpDialog.call( this, config );
+	ve.ui.MWCommandHelpDialog.super.call( this, config );
 };
 
 /* Inheritance */
@@ -27,9 +27,11 @@ OO.inheritClass( ve.ui.MWCommandHelpDialog, ve.ui.CommandHelpDialog );
 
 /* Static methods */
 
-/** */
+/**
+ * @inheritdoc
+ */
 ve.ui.MWCommandHelpDialog.static.getCommandGroups = function () {
-	var commandGroups = ve.ui.CommandHelpDialog.static.getCommandGroups.call( this ),
+	var commandGroups = ve.ui.MWCommandHelpDialog.super.static.getCommandGroups.call( this ),
 		accessKeyPrefix = mw.util.tooltipAccessKeyPrefix.toUpperCase().replace( /-/g, ' + ' ),
 		save = ve.msg( 'accesskey-save' );
 
@@ -47,4 +49,4 @@ ve.ui.MWCommandHelpDialog.static.getCommandGroups = function () {
 
 /* Registration */
 
-ve.ui.dialogFactory.register( ve.ui.MWCommandHelpDialog );
+ve.ui.windowFactory.register( ve.ui.MWCommandHelpDialog );

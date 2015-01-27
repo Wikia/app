@@ -32,6 +32,11 @@ ve.ui.Toolbar = function VeUiToolbar( surface, options ) {
 	this.$window = null;
 	this.$surfaceView = null;
 	this.elementOffset = null;
+	// isMobileDevice logic copied from ve.init.mw.Target.js:
+	this.isMobileDevice = (
+		'ontouchstart' in window ||
+			( window.DocumentTouch && document instanceof window.DocumentTouch )
+	);
 	this.windowEvents = {
 		// jQuery puts a guid on our prototype function when we use ve.bind,
 		// we don't want that because that means calling $window.off( toolbarB.windowEvents )
@@ -68,11 +73,8 @@ OO.inheritClass( ve.ui.Toolbar, OO.ui.Toolbar );
 
 /**
  * @event updateState
- * @see ve.dm.SurfaceFragment#getAnnotations
- * @param {ve.dm.Node[]} nodes List of nodes covered by the current selection
- * @param {ve.dm.AnnotationSet} full Annotations that cover all of the current selection
- * @param {ve.dm.AnnotationSet} partial Annotations that cover some or all of the current selection
- * @param {ve.Range|null} range The surface range
+ * @param {ve.dm.SurfaceFragment} fragment Surface fragment
+ * @param {Object} direction Context direction with 'inline' & 'block' properties
  */
 
 /**
@@ -114,9 +116,7 @@ ve.ui.Toolbar.prototype.onWindowScroll = function () {
  * @param {jQuery.Event} e Window scroll event
  */
 ve.ui.Toolbar.prototype.onWindowResize = function () {
-	var parent, parentOffset,
-		update = {},
-		offset = this.elementOffset;
+	var $parent, parentOffset, update = {}, offset = this.elementOffset;
 
 	// Update right offset after resize (see #float)
 	offset.right = this.$window.width() - this.$element.outerWidth() - offset.left;
@@ -163,18 +163,17 @@ ve.ui.Toolbar.prototype.onSurfaceViewKeyUp = function () {
  * @fires updateState
  */
 ve.ui.Toolbar.prototype.onContextChange = function () {
-	var i, len, leafNodes, dirInline, dirBlock, fragmentAnnotation,
-		fragment = this.surface.getModel().getFragment( null, false ),
-		nodes = [];
+	this.updateToolState();
+};
 
-	leafNodes = fragment.getLeafNodes();
-	for ( i = 0, len = leafNodes.length; i < len; i++ ) {
-		if ( len === 1 || !leafNodes[i].range || leafNodes[i].range.getLength() ) {
-			nodes.push( leafNodes[i].node );
-		}
-	}
+/**
+ * Update the state of the tools
+ */
+ve.ui.Toolbar.prototype.updateToolState = function () {
+	var dirInline, dirBlock, fragmentAnnotation,
+		fragment = this.surface.getModel().getFragment( null, false );
+
 	// Update context direction for button icons UI
-
 	// by default, inline and block directions are the same
 	if ( !fragment.isNull() ) {
 		dirInline = dirBlock = this.surface.getView().documentView.getDirectionFromRange( fragment.getRange() );
@@ -197,7 +196,7 @@ ve.ui.Toolbar.prototype.onContextChange = function () {
 			this.contextDirection.block = dirBlock;
 		}
 	}
-	this.emit( 'updateState', nodes, fragment.getAnnotations(), fragment.getAnnotations( true ), fragment.getRange() );
+	this.emit( 'updateState', fragment, this.contextDirection );
 };
 
 /**
@@ -261,6 +260,8 @@ ve.ui.Toolbar.prototype.initialize = function () {
 		'floating': false,
 		'offset': this.elementOffset
 	} );
+	// Initial state
+	this.updateToolState();
 
 	if ( this.floatable ) {
 		this.$window.on( this.windowEvents );
@@ -289,24 +290,37 @@ ve.ui.Toolbar.prototype.destroy = function () {
  * @fires position
  */
 ve.ui.Toolbar.prototype.float = function () {
-	var update, parent, parentOffset;
-	if ( !this.floating ) {
+	var update, $parent, parentOffset;
+
+	if ( !this.floating || this.isMobileDevice ) {
 		// When switching into floating mode, set the height of the wrapper and
 		// move the bar to the same offset as the in-flow element
-		parent = this.$element.parent();
-		parentOffset = parent.offset();
-		update = {
-			'css': {
-				'left': parentOffset.left,
-				'right': this.$window.width() - parent.outerWidth() - parentOffset.left
-			},
-			'floating': true
-		};
+		$parent = this.$element.parent();
+		parentOffset = $parent.offset();
+
+		if ( this.isMobileDevice ) {
+			update = {
+				'css': {
+					'left': parentOffset.left,
+					'position': 'absolute',
+					'top': this.$window.scrollTop() - this.$element.offset().top,
+					'width': this.$element.width()
+				}
+			};
+		} else {
+			update = {
+				'css': {
+					'left': parentOffset.left,
+					'right': this.$window.width() - $parent.outerWidth() - parentOffset.left
+				}
+			};
+		}
+
 		this.$element
 			.css( 'height', this.$element.height() )
 			.addClass( 've-ui-toolbar-floating' );
 		this.$bar.css( update.css );
-		this.floating = true;
+		this.floating = update.floating = true;
 
 		this.emit( 'position', this.$bar, update );
 	}
@@ -322,7 +336,11 @@ ve.ui.Toolbar.prototype.unfloat = function () {
 		this.$element
 			.css( 'height', '' )
 			.removeClass( 've-ui-toolbar-floating' );
-		this.$bar.css( { 'left': '', 'right': '' } );
+		if ( this.isMobileDevice ) {
+			this.$bar.css( { 'left': '', 'position': '', 'top': '', 'width': '' } );
+		} else {
+			this.$bar.css( { 'left': '', 'right': '' } );
+		}
 		this.floating = false;
 
 		this.emit( 'position', this.$bar, { 'floating': false } );

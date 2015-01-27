@@ -1,6 +1,7 @@
-@import "skins/oasis/css/mixins/arrow";
-@import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/core/color";
+@import "skins/shared/mixins/arrow";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/color";
+@import "extensions/wikia/VideoHandlers/css/crunchyrollWidget";
 
 .page-listings {
 	@include clearfix;
@@ -48,7 +49,7 @@
 			max-width: 160px;
 			&.no-image {
 				background-color: #f0f0f0;
-				background-image: url(/extensions/wikia/VideoHandlers/images/Brackets.png);	/* base64 */
+				background-image: url(/extensions/wikia/VideoHandlers/images/Brackets.png);	/* inline */
 				background-position: 50px 25px;
 				background-repeat: no-repeat;
 				height: 90px;
@@ -90,11 +91,18 @@
 		font-size: 18px;
 		margin: 0;
 	}
-	.expire-date {
+	span.expire-date {
+		&:before {
+			content: '•';
+			margin: 0 5px;
+		}
+	}
+	.regional-restriction {
 		clear: both;
-		font-size: 11px;
-		line-height: 11px;
-		padding-top: 10px;
+		font-size: 12px;
+		color: $color-alternate-text;
+		line-height: 18px;
+		width: 460px;
 	}
 	.inner {
 		width: 670px;
@@ -132,4 +140,12 @@ ul.tabs {
 	ul.tabs {
 		display: none;
 	}
+}
+
+p.hidden {
+  display: none;
+}
+
+.WikiaArticle {
+	@include crunchyrollWidget;
 }

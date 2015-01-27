@@ -69,9 +69,10 @@
 <?= $comScore ?>
 <?= $quantServe ?>
 <?= $googleAnalytics ?>
-<?= $amazonDirectTargetedBuy ?>
+<?= $amazonMatch ?>
 <?= $dynamicYield ?>
 <?= $ivw2 ?>
+<?= $rubiconRtp ?>
 <div class="WikiaSiteWrapper">
 	<?= $body ?>
 
@@ -104,7 +105,6 @@
 <script type="text/javascript">/*<![CDATA[*/ if (typeof AdEngine_trackPageInteractive === 'function') {wgAfterContentAndJS.push(AdEngine_trackPageInteractive);} /*]]>*/</script>
 <?php } ?>
 <?= $bottomScripts ?>
-<?= $cssPrintLinks ?>
 
 </body>
 

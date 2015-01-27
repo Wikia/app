@@ -10,7 +10,7 @@ class ArticleComment {
 	const AVATAR_BIG_SIZE = 50;
 	const AVATAR_SMALL_SIZE = 30;
 
-	const CACHE_VERSION = 1;
+	const CACHE_VERSION = 2;
 	const AN_HOUR = 3600;
 
 	/**
@@ -83,8 +83,7 @@ class ArticleComment {
 	 * @static
 	 * @access public
 	 *
-	 * @param Title $title -- Title object connected to comment
-	 *
+	 * @param Article $article object connected to comment
 	 * @return ArticleComment object
 	 */
 	static public function newFromArticle( Article $article ) {
@@ -247,7 +246,10 @@ class ArticleComment {
 
 		$parser->ac_metadata = [];
 
-		$head = $parser->parse( $rawtext, $this->mTitle, ParserOptions::newFromContext( RequestContext::getMain() ) );
+		// VOLDEV-68: Remove broken section edit links
+		$opts = ParserOptions::newFromContext( RequestContext::getMain() );
+		$opts->setEditSection( false );
+		$head = $parser->parse( $rawtext, $this->mTitle, $opts );
 
 		$this->mText = wfFixMalformedHTML( $head->getText() );
 
@@ -358,7 +360,8 @@ class ArticleComment {
 
 			$parts = self::explode( $title->getDBkey() );
 
-			$buttons = array();
+			$buttons = []; // action links with full markup (used in Oasis)
+			$links = []; // action links with only a URL
 			$replyButton = '';
 
 			//this is for blogs we want to know if commenting on it is enabled
@@ -367,27 +370,33 @@ class ArticleComment {
 			$articleTitle = Title::makeTitle( MWNamespace::getSubject( $this->mNamespace ), $parts['title'] );
 			$commentingAllowed = ArticleComment::canComment( $articleTitle );
 
-			if ( ( count( $parts['partsStripped'] ) == 1 ) && $commentingAllowed && !ArticleCommentInit::isFbConnectionNeeded() ) {
+			if ( ( count( $parts['partsStripped'] ) == 1 ) && $commentingAllowed ) {
 				$replyButton = '<button type="button" class="article-comm-reply wikia-button secondary actionButton">' . wfMsg('article-comments-reply') . '</button>';
 			}
 			if( defined('NS_QUESTION_TALK') && ( $title->getNamespace() == NS_QUESTION_TALK ) ) {
 				$replyButton = '';
 			}
 
-			if ( $canDelete && !ArticleCommentInit::isFbConnectionNeeded() ) {
+			if ( $canDelete ) {
 				$img = '<img class="remove sprite" alt="" src="'. $wgBlankImgUrl .'" width="16" height="16" />';
 				$buttons[] = $img . '<a href="' . $title->getLocalUrl('redirect=no&action=delete') . '" class="article-comm-delete">' . wfMsg('article-comments-delete') . '</a>';
+
+				$links['delete'] = $title->getLocalUrl('redirect=no&action=delete');
 			}
 
 			//due to slave lag canEdit() can return false negative - we are hiding it by CSS and force showing by JS
-			if ( $wgUser->isLoggedIn() && $commentingAllowed && !ArticleCommentInit::isFbConnectionNeeded() ) {
+			if ( $wgUser->isLoggedIn() && $commentingAllowed ) {
 				$display = $this->canEdit() ? 'test=' : ' style="display:none"';
 				$img = '<img class="edit-pencil sprite" alt="" src="' . $wgBlankImgUrl . '" width="16" height="16" />';
 				$buttons[] = "<span class='edit-link'$display>" . $img . '<a href="#comment' . $commentId . '" class="article-comm-edit actionButton" id="comment' . $commentId . '">' . wfMsg('article-comments-edit') . '</a></span>';
+
+				$links['edit'] = '#comment' . $commentId;
 			}
 
 			if ( !$this->mTitle->isNewPage(Title::GAID_FOR_UPDATE) ) {
 				$buttons[] = RequestContext::getMain()->getSkin()->makeKnownLinkObj( $title, wfMsgHtml('article-comments-history'), 'action=history', '', '', 'class="article-comm-history"' );
+
+				$links['history'] = $title->getLocalUrl('action=history');
 			}
 
 			$rawmwtimestamp = $this->mFirstRevision->getTimestamp();
@@ -403,6 +412,7 @@ class ArticleComment {
 				'userurl' =>  AvatarService::getUrl($this->mUser->getName()),
 				'isLoggedIn' => $this->mUser->isLoggedIn(),
 				'buttons' => $buttons,
+				'links' => $links,
 				'replyButton' => $replyButton,
 				'sig' => $sig,
 				'text' => $this->mText,
@@ -459,19 +469,10 @@ class ArticleComment {
 	 * @access public
 	 */
 	public function doDeleteComment( $reason, $suppress = false ){
-		global $wgUser;
-		if(empty($this->mArticle)) {
-			$this->mArticle = new Article($this->mTitle, 0);
-		}
-		$error = '';
-		$id = $this->mArticle->getId();
-		//we need to run all the hook manual :/
-		if ( wfRunHooks( 'ArticleDelete', array( &$this->mArticle, &$wgUser, &$reason, &$error ) ) ) {
-			if( $this->mArticle->doDeleteArticle( $reason, $suppress ) ) {
-				$this->mTitle->getPrefixedText();
-				wfRunHooks( 'ArticleDeleteComplete', array( &$this->mArticle, &$wgUser, $reason, $id) );
-				return true;
-			}
+		$wikiPage = new WikiPage( $this->mTitle );
+
+		if ( $wikiPage->doDeleteArticle( $reason, $suppress ) ) {
+			return true;
 		}
 
 		return false;
@@ -626,7 +627,7 @@ class ArticleComment {
 
 		$text = '';
 		$this->load(true);
-		if ($this->canEdit() && !ArticleCommentInit::isFbConnectionNeeded()) {
+		if ( $this->canEdit() ) {
 			$vars = array(
 				'canEdit'				=> $this->canEdit(),
 				'comment'				=> htmlentities(ArticleCommentsAjax::getConvertedContent($this->mLastRevision->getText())),
@@ -658,7 +659,7 @@ class ArticleComment {
 
 		$this->load(true);
 
-		if ( $force || ($this->canEdit() && !ArticleCommentInit::isFbConnectionNeeded()) ) {
+		if ( $force || $this->canEdit() ) {
 
 			if ( wfReadOnly() ) {
 				wfProfileOut( __METHOD__ );
@@ -899,6 +900,7 @@ class ArticleComment {
 
 	/**
 	 * @param Title $title
+	 * @return array
 	 */
 	public static function getSquidURLs( Title $title ) {
 		$urls = [];
@@ -924,16 +926,15 @@ class ArticleComment {
 	/**
 	 * @static
 	 * @param $status
-	 * @param $article Article
+	 * @param $article WikiPage
 	 * @param int $parentId
 	 * @return array
 	 */
-
 	static public function doAfterPost( $status, $article, $parentId = 0 ) {
 		global $wgUser, $wgDBname;
 
 		wfRunHooks( 'ArticleCommentAfterPost', array( $status, &$article ) );
-		$commentId = $article->getID();
+		$commentId = $article->getId();
 		$error = false;
 		$id = 0;
 
@@ -942,8 +943,17 @@ class ArticleComment {
 			case EditPage::AS_SUCCESS_NEW_ARTICLE:
 				$comment = ArticleComment::newFromArticle( $article );
 				$app = F::app();
+
+				if ( $app->checkSkin( 'wikiamobile' ) ) {
+					$viewName = 'WikiaMobileComment';
+				} elseif ( $app->checkSkin( 'venus' ) ) {
+					$viewName = 'VenusComment';
+				} else {
+					$viewName = 'Comment';
+				}
+
 				$text = $app->getView( 'ArticleComments',
-					( $app->checkSkin( 'wikiamobile' ) ) ? 'WikiaMobileComment' : 'Comment',
+					$viewName,
 					array('comment' => $comment->getData(true),
 						'commentId' => $commentId,
 						'rowClass' => '',
@@ -1124,8 +1134,11 @@ class ArticleComment {
 
 		$taskParams['page'] = $oCommentTitle->getFullText();
 		$taskParams['newpage'] = $newCommentTitle->getFullText();
-		$thisTask = new MultiMoveTask( $taskParams );
-		$submit_id = $thisTask->submitForm();
+
+		$task = new \Wikia\Tasks\Tasks\MultiTask();
+		$task->call('move', $taskParams);
+		$submit_id = $task->queue();
+
 		Wikia::log( __METHOD__, 'deletecomment', "Added move task ($submit_id) for {$taskParams['page']} page" );
 
 		wfProfileOut( __METHOD__ );
@@ -1417,7 +1430,7 @@ class ArticleComment {
 	 */
 	static public function isMiniEditorEnabled() {
 		$app = F::app();
-		return $app->wg->EnableMiniEditorExtForArticleComments && $app->checkSkin( 'oasis' );
+		return $app->wg->EnableMiniEditorExtForArticleComments && $app->checkSkin( [ 'oasis', 'venus' ] );
 	}
 
 	/**

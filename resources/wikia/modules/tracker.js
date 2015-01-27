@@ -269,6 +269,12 @@
 			browserEvent = data.browserEvent || browserEvent;
 			eventName = data.eventName || eventName;
 			trackingMethod = data.trackingMethod || trackingMethod;
+
+			// AN-672: temporarily sending all data to internal warehouse
+			if (trackingMethod === 'ga') {
+				trackingMethod = 'both';
+			}
+
 			tracking[ trackingMethod ] = true;
 
 			if ( tracking.both ) {
@@ -343,12 +349,7 @@
 		};
 	}
 
-	// UMD
+	// Extending Wikia.Tracker, which is also exported as the AMD module
 	extend( trackerStub, tracker( window ) );
-
-	// AMD
-	require( [ 'wikia.tracker' ], function( trackerStub ) {
-		extend( trackerStub, tracker( window ) );
-	});
 
 }(window, undefined));

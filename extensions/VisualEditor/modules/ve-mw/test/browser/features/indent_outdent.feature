@@ -1,12 +1,14 @@
-@ie6-bug  @ie7-bug  @ie8-bug  @ie9-bug @ie10-bug @en.wikipedia.beta.wmflabs.org @test2.wikipedia.org @login
+@chrome @en.wikipedia.beta.wmflabs.org @firefox @login @test2.wikipedia.org
 Feature: VisualEditor Indent, Outdent
 
-@make_selectable_line
- Scenario: Check indentation controls disabled by default
+  Background:
+    Given I go to the "Indent Outdent VisualEditor Test" page with content "Indent Outdent VisualEditor Test"
+      And I make the text "Indent Outdent" be selected
+
+  Scenario: Check indentation controls disabled by default
     Then Decrease indentation should be disabled
       And Increase indentation should be disabled
 
-@make_selectable_line
   Scenario Outline: check indent and outdent enable and disable
     When I click <control>
     Then Decrease indentation should be <initial_state>

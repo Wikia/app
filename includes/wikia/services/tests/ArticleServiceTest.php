@@ -18,7 +18,7 @@ class ArticleServiceTest extends WikiaBaseTest {
 		$mockTitle = $this->getMock( 'Title' );
 		$mockCache = $this->getMock( 'MemCachedClientforWiki', array( 'get', 'set' ), array( array() ) );
 		$mockPage = $this->getMock( 'WikiPage', array( 'getParserOutput', 'makeParserOptions' ), array( $mockTitle ) );
-		$mockOutput = $this->getMock( 'OutputPage', array( 'getText' ), array() );
+		$mockOutput = $this->getMock( 'ParserOutput', array( 'getText' ), array() );
 		$mockArticle = $this->getMock( 'Article', array( 'getPage', 'getID' ), array( $mockTitle ) );
 
 		$mockCache->expects( $this->any() )
@@ -135,17 +135,17 @@ class ArticleServiceTest extends WikiaBaseTest {
 		$mockResult
 		    ->expects( $this->once() )
 		    ->method ( 'offsetExists' )
-		    ->with   ( Wikia\Search\Utilities::field( 'html' ) )
+		    ->with   ( 'snippet_s' )
 		    ->will   ( $this->returnValue( true ) )
 		;
 		$mockResult
-		    ->expects( $this->once() )
+		    ->expects( $this->any() )
 		    ->method ( 'offsetGet' )
-		    ->with   ( Wikia\Search\Utilities::field( 'html' ) )
+		    ->with   ( 'snippet_s' )
 		    ->will   ( $this->returnValue( 'foo' ) )
 		;
 
-		$this->proxyClass( 'SolrDocumentService', $mockDocumentService );
+		$this->mockClass( 'SolrDocumentService', $mockDocumentService );
 
 		$this->assertEquals(
 				'foo',

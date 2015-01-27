@@ -38,10 +38,14 @@ $messages['en'] = array(
 	'listusers-username' => 'User name',
 	'listusers-blocked' => 'Blocked',
 	'listusers-nonegroup' => 'none',
+	'listusers-select-all' => 'Select all',
+	'listusers-deselect-all' => 'Deselect all',
 );
 
 $messages['qqq'] = array(
 	'listusers-desc' => '{{desc}}',
+	'listusers-select-all' => 'Text for button to select all user group checkboxes',
+	'listusers-deselect-all' => 'Text for button to deselect all user group checkboxes'
 );
 
 $messages['de'] = array(

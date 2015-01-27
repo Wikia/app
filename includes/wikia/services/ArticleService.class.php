@@ -6,7 +6,8 @@
  */
 class ArticleService extends WikiaObject {
 	const MAX_LENGTH = 500;
-	const CACHE_VERSION = 8;
+	const CACHE_VERSION = 9;
+	const SOLR_SNIPPETS_FIELD = 'snippet_s';
 
 	/** @var Article $article */
 	private $article = null;
@@ -181,9 +182,18 @@ class ArticleService extends WikiaObject {
 		//get standard parser cache for anons,
 		//99% of the times it will be available but
 		//generate it in case is not
+		$content = '';
 		$page = $this->article->getPage();
 		$opts = $page->makeParserOptions( new User() );
-		$content = $page->getParserOutput( $opts )->getText();
+		$parserOutput = $page->getParserOutput( $opts );
+		try {
+			$content = $this->getContentFromParser($parserOutput);
+		} catch ( Exception $e ) {
+			\Wikia\Logger\WikiaLogger::instance()->error(
+				'ArticleService, not parser output object found',
+				[ 'parserOutput' => $parserOutput, 'parserOptions' => $opts, 'page' => $page, 'exception' => $e ]
+			);
+		}
 
 		//Run hook to allow wikis to modify the content (ie: customize their snippets) before the stripping and length limitations are done.
 		wfRunHooks( 'ArticleService::getTextSnippet::beforeStripping', array( &$this->article, &$content, ArticleService::MAX_LENGTH ) );
@@ -213,6 +223,10 @@ class ArticleService extends WikiaObject {
 		return $content;
 	}
 
+	private function getContentFromParser(ParserOutput $output) {
+		return $output->getText();
+	}
+
 	/**
 	 * Gets a plain text of an article using Solr.
 	 *
@@ -229,8 +243,12 @@ class ArticleService extends WikiaObject {
 		$document = $service->getResult();
 
 		$text = '';
-		if ( ( $document !== null ) && ( isset( $document[$htmlField] ) ) ) {
-			$text = $document[$htmlField];
+		if ( $document !== null ) {
+			if ( !empty( $document[ static::SOLR_SNIPPETS_FIELD ] ) ) {
+				$text = $document[ static::SOLR_SNIPPETS_FIELD ];
+			} elseif ( isset( $document[$htmlField] ) ) {
+				$text = $document[$htmlField];
+			}
 		}
 		return $text;
 	}

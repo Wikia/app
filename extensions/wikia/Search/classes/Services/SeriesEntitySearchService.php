@@ -4,57 +4,85 @@ namespace Wikia\Search\Services;
 
 class SeriesEntitySearchService extends EntitySearchService {
 
-	const XWIKI_CORE = 'xwiki';
-	const WIKI_LIMIT = 1;
-	const MINIMAL_WIKIA_ARTICLES = 20;
-	const MINIMAL_WIKIA_SCORE = 1;
+	const DEFAULT_NAMESPACE = 0;
+	const ARTICLES_LIMIT = 1;
+	const MINIMAL_ARTICLE_SCORE = 5;
+	const API_URL = 'api/v1/Articles/AsSimpleJson?id=';
+	const SERIES_TYPE = 'tv_series';
 	const DEFAULT_SLOP = 1;
 
-	private static $EXCLUDED_WIKIS = [ '*fanon.wikia.com', '*answers.wikia.com' ];
-
-	protected function getCore() {
-		return static::XWIKI_CORE;
-	}
+	private static $ARTICLE_TYPES_SUPPORTED_LANGS = [ 'en', 'de', 'es' ];
 
 	protected function prepareQuery( $query ) {
 		$select = $this->getSelect();
 
 		$phrase = $this->sanitizeQuery( $query );
 		$slang = $this->sanitizeQuery( $this->getLang() );
+		$preparedQuery = $this->createQuery( $phrase );
 
 		$dismax = $select->getDisMax();
 		$dismax->setQueryParser( 'edismax' );
 
-		$select->setQuery( '+("' . $phrase . '") AND +(lang_s:' . $slang . ')' );
-		$select->setRows( static::WIKI_LIMIT );
+		$select->setQuery( $preparedQuery );
+		$limit = $this->getRowLimit();
+		$select->setRows( isset( $limit ) ? $limit : static::ARTICLES_LIMIT );
 
-		$excluded = [ ];
-		foreach ( static::$EXCLUDED_WIKIS as $ex ) {
-			$excluded[ ] = "-(hostname_s:{$ex})";
+		$namespaces = $this->getNamespace() ? $this->getNamespace() : static::DEFAULT_NAMESPACE;
+		$namespaces = is_array( $namespaces ) ? $namespaces : [ $namespaces ];
+
+		$select = $this->getBlacklist()->applyFilters( $select );
+
+		$select->createFilterQuery( 'ns' )->setQuery( '+(ns:(' . implode( ' ', $namespaces ) . '))' );
+		$select->createFilterQuery( 'main_page' )->setQuery( '-(is_main_page:true)' );
+		if ( in_array( strtolower( $slang ), static::$ARTICLE_TYPES_SUPPORTED_LANGS ) ) {
+			$select->createFilterQuery( 'type' )->setQuery( '+(article_type_s:' . static::SERIES_TYPE . ')' );
 		}
-		$select->createFilterQuery( 'A&F' )->setQuery( implode( ' AND ', $excluded ) );
-		$select->createFilterQuery( 'articles' )->setQuery( 'articles_i:[' . static::MINIMAL_WIKIA_ARTICLES . ' TO *]' );
 
-		$dismax->setQueryFields( 'series_mv_tm^15 description_txt categories_txt top_categories_txt top_articles_txt ' .
-			'sitename_txt^2 all_domains_mv_wd^5' );
-		$dismax->setPhraseFields( 'series_mv_tm^15 sitename_txt^2 all_domains_mv_wd^5' );
+		$dismax->setQueryFields( implode( ' ', [
+			'title_em^8',
+			'titleStrict',
+			$this->withLang( 'title', $slang ),
+			$this->withLang( 'redirect_titles_mv', $slang ),
+		] ) );
+		$dismax->setPhraseFields( implode( ' ', [
+			'title_em^8',
+			'titleStrict^8',
+			$this->withLang( 'title', $slang ) . '^2',
+			$this->withLang( 'redirect_titles_mv', $slang ) . '^2',
+		] ) );
 
-		$dismax->setBoostFunctions( 'wam_i^2' );
-
-		$dismax->setQueryPhraseSlop(static::DEFAULT_SLOP);
-		$dismax->setPhraseSlop(static::DEFAULT_SLOP);
+		$dismax->setQueryPhraseSlop( static::DEFAULT_SLOP );
+		$dismax->setPhraseSlop( static::DEFAULT_SLOP );
 
 		return $select;
 	}
 
 	protected function consumeResponse( $response ) {
-		$result = [ ];
-		foreach ( $response as $doc ) {
-			if ( ( $doc[ 'id' ] && $doc[ 'url' ] ) && $doc[ 'score' ] > static::MINIMAL_WIKIA_SCORE ) {
-				$result[ ] = [ 'id' => $doc[ 'id' ] ];
+		foreach ( $response as $item ) {
+			if ( $item[ 'score' ] > static::MINIMAL_ARTICLE_SCORE ) {
+				return [
+					'wikiId' => $item[ 'wid' ],
+					'articleId' => $item[ 'pageid' ],
+					'title' => $item[ 'title_' . $this->getLang() ],
+					'url' => $this->replaceHostUrl( $item[ 'url' ] ),
+					'quality' => $item[ 'article_quality_i' ],
+					'contentUrl' => $this->replaceHostUrl( 'http://' . $item[ 'host' ] . '/' . self::API_URL . $item[ 'pageid' ] ),
+				];
 			}
 		}
-		return $result;
+		return null;
+	}
+
+	protected function createQuery( $query ) {
+		$options = [ ];
+		if ( $this->getQuality() !== null ) {
+			$options[ ] = '+(article_quality_i:[' . $this->getQuality() . ' TO *])';
+		}
+		if ( $this->getWikiId() !== null ) {
+			$options[ ] = '+(wid:' . $this->getWikiId() . ')';
+		}
+		$options = !empty( $options ) ? ' AND ' . implode( ' AND ', $options ) : '';
+		return '+("' . $query . '")' . $options;
 	}
 
 }

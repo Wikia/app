@@ -16,11 +16,6 @@
 		'instances': []
 	};
 
-	/* Static Properties */
-
-	rSpecialChars = /[^\w\d\s]/g;
-	rWhiteSpace = /\s/g;
-
 	/* Static Methods */
 
 	/**
@@ -667,44 +662,48 @@
 	};
 
 	/**
-	 * Check whether a given DOM element is of a block or inline type.
+	 * Check whether a given DOM element has a block element type.
 	 *
-	 * @param {HTMLElement} element
-	 * @returns {boolean} True if element is block, false if it is inline
+	 * @param {HTMLElement|string} element Element or element name
+	 * @returns {boolean} Element is a block element
 	 */
 	ve.isBlockElement = function ( element ) {
-		return ve.isBlockElementType( element.nodeName.toLowerCase() );
+		var elementName = typeof element === 'string' ? element : element.nodeName;
+		return ve.indexOf( elementName.toLowerCase(), ve.elementTypes.block ) !== -1;
 	};
 
 	/**
-	 * Check whether a given tag name is a block or inline tag.
+	 * Check whether a given DOM element is a void element (can't have children).
 	 *
-	 * @param {string} nodeName All-lowercase HTML tag name
-	 * @returns {boolean} True if block, false if inline
+	 * @param {HTMLElement|string} element Element or element name
+	 * @returns {boolean} Element is a void element
 	 */
-	ve.isBlockElementType = function ( nodeName ) {
-		return ve.indexOf( nodeName, ve.isBlockElementType.blockTypes ) !== -1;
+	ve.isVoidElement = function ( element ) {
+		var elementName = typeof element === 'string' ? element : element.nodeName;
+		return ve.indexOf( elementName.toLowerCase(), ve.elementTypes.void ) !== -1;
 	};
 
-	/**
-	 * Private data for #isBlockElementType.
-	 *
-	 */
-	ve.isBlockElementType.blockTypes = [
-		'div', 'p',
-		// tables
-		'table', 'tbody', 'thead', 'tfoot', 'caption', 'th', 'tr', 'td',
-		// lists
-		'ul', 'ol', 'li', 'dl', 'dt', 'dd',
-		// HTML5 heading content
-		'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hgroup',
-		// HTML5 sectioning content
-		'article', 'aside', 'body', 'nav', 'section', 'footer', 'header', 'figure',
-		'figcaption', 'fieldset', 'details', 'blockquote',
-		// other
-		'hr', 'button', 'canvas', 'center', 'col', 'colgroup', 'embed',
-		'map', 'object', 'pre', 'progress', 'video'
-	];
+	ve.elementTypes = {
+		'block': [
+			'div', 'p',
+			// tables
+			'table', 'tbody', 'thead', 'tfoot', 'caption', 'th', 'tr', 'td',
+			// lists
+			'ul', 'ol', 'li', 'dl', 'dt', 'dd',
+			// HTML5 heading content
+			'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hgroup',
+			// HTML5 sectioning content
+			'article', 'aside', 'body', 'nav', 'section', 'footer', 'header', 'figure',
+			'figcaption', 'fieldset', 'details', 'blockquote',
+			// other
+			'hr', 'button', 'canvas', 'center', 'col', 'colgroup', 'embed',
+			'map', 'object', 'pre', 'progress', 'video'
+		],
+		'void': [
+			'area', 'base', 'br', 'col', 'command', 'embed', 'hr', 'img',
+			'input', 'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr'
+		]
+	};
 
 	/**
 	 * Create an HTMLDocument from an HTML string.
@@ -765,17 +764,21 @@
 		newDocument.open();
 		// Handle JavaScript errors inside the iframe. Note that the placement of this function
 		// here is intentional, it MUST be defined after the call to .open()!
-		newWindow.onerror = function( message ) {
+		newWindow.onerror = function ( message ) {
 			ve.track( 'error.createdocumentfromhtml', {
 				message: message
 					.toLowerCase()
-					.replace( rSpecialChars, '' )
-					.replace( rWhiteSpace, '-' )
+					.replace( /[^\w\d\s]/g, '' )
+					.replace( /\s/g, '-' )
 			} );
 
 			// Suppress in-browser errors
 			return true;
 		};
+		// Wikia change: Remove all script tags to fix Safari bug that removes all HTML after them.
+		// Scripts should not be executed in the editor anyway. This uses regex because removing with
+		// DOM manipulation on the newDocument results in the same bug.
+		html = html.replace( /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '' );
 		// Write the HTML to it
 		newDocument.write( html ); // Party like it's 1995!
 		newDocument.close();
@@ -908,7 +911,7 @@
 	ve.contains = function ( containers, contained, matchContainers ) {
 		var i;
 		if ( !ve.isArray( containers ) ) {
-			containers = [containers];
+			containers = [ containers ];
 		}
 		for ( i = containers.length - 1; i >= 0; i-- ) {
 			if ( ( matchContainers && contained === containers[i] ) || $.contains( containers[i], contained ) ) {
@@ -933,6 +936,13 @@
 		return navStart && typeof perf.now === 'function' ?
 			function () { return navStart + perf.now(); } : Date.now;
 	}() );
+
+	/**
+	 * DEPRECATED: Detect Internet Explorer
+	 *
+	 * Code still using this should be fixed to use specific feature detection.
+	 */
+	ve.isMsie = navigator.userAgent.indexOf( 'MSIE' ) !== -1;
 
 	// Expose
 	window.ve = ve;

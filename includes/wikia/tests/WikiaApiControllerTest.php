@@ -1,6 +1,6 @@
 <?php
 
-class WikiaAppControllerTest extends PHPUnit_Framework_TestCase {
+class WikiaApiControllerTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @var Boolean
 	 */
@@ -120,50 +120,275 @@ class WikiaAppControllerTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * @covers WikiaApiController::setResponseData
-	 * @dataProvider dp_setResponseData
+	 * @dataProvider setResponse_Provider
 	 */
-	public function testSetResponseData( $data, $imageFields, $serveImages, $cacheValidity, $expectedDataOut ) {
-		$responseMock = $this->getMockBuilder( 'WikiaResponse' )
-			->setMethods( [ 'setData', 'setCacheValidity' ] )
-			->disableOriginalConstructor()
-			->getMock();
-
+	public function testSetResponseData( $data, $fields, $expected, $refValue, $serveImages, $cacheValid = 0 ) {
 		$mock = $this->getMockBuilder( 'WikiaApiController' )
-			->setMethods( [ '__construct', 'serveImages' ] )
 			->disableOriginalConstructor()
+			->setMethods( [ 'serveImages', 'getRequest', 'getResponse' ] )
 			->getMock();
-
-		$mock->expects( $this->once() )
+		$mock->expects( $this->any() )
 			->method( 'serveImages' )
 			->will( $this->returnValue( $serveImages ) );
 
-		if ( $cacheValidity ) {
-			$responseMock->expects( $this->once() )
+		$mockResponse = $this->getMockBuilder( 'StdClass' )
+			->setMethods( [ 'setData', 'setCacheValidity' ] )
+			->getMock();
+
+		$mockResponse->expects( $this->once() )
+			->method( 'setData' )
+			->with( $expected );
+
+		if ( $cacheValid > 0 ) {
+			$mockResponse->expects( $this->once() )
 				->method( 'setCacheValidity' )
-				->with( $cacheValidity );
-		} else {
-			$responseMock->expects( $this->never() )
-				->method( 'setCacheValidity' );
+				->with( $cacheValid );
 		}
 
-		$responseMock->expects( $this->once() )
-			->method( 'setData' )
-			->with( $expectedDataOut );
-		$mock->setResponse( $responseMock );
-		$refl = new ReflectionMethod( $mock, 'setResponseData' );
-		$refl->setAccessible( true );
-		$refl->invoke( $mock, $data, $imageFields, $cacheValidity );
+		$mockResponse->expects( $this->any() )
+			->method( 'getVal' )
+			->will( $this->returnValue( null ) );
+
+		$mockRequest = $this->getMockBuilder( 'StdClass' )
+			->setMethods( [ 'getVal', 'isInternal' ] )
+			->getMock();
+
+		$mockRequest->expects( $this->any() )
+			->method( 'isInternal' )
+			->will( $this->returnValue( false ) );
+
+		if ( $refValue ) {
+			$mockRequest->expects( $this->any() )
+				->method( 'getVal' )
+				->with( WikiaApiController::REF_URL_ARGUMENT )
+				->will( $this->returnValue( $refValue ) );
+		} else {
+			$mockRequest->expects( $this->any() )
+				->method( 'getVal' )
+				->with( WikiaApiController::REF_URL_ARGUMENT )
+				->will( $this->returnValue( null ) );
+		}
+
+		$mockRequest->expects( $this->any() )
+			->method( 'getVal' )
+			->will( $this->returnValue( null ) );
+
+		$mock->expects( $this->any() )
+			->method( 'getResponse' )
+			->will( $this->returnValue( $mockResponse ) );
+
+		$mock->expects( $this->any() )
+			->method( 'getRequest' )
+			->will( $this->returnValue( $mockRequest ) );
+		$method = new ReflectionMethod( $mock, 'setResponseData' );
+		$method->setAccessible( true );
+
+		$method->invoke( $mock, $data, $fields, $cacheValid );
 	}
 
-	public function dp_setResponseData() {
+	public function setResponse_Provider() {
 		return [
-			//test for cache sets
-			[ [ ], '', true, 0, [ ] ],
-			[ [ ], '', true, 123456, [ ] ],
-			//test for removing images
-			[ [ 'A' => 'a', 'B' => [ 'b', 'c' ], 'D' => 'd' ], 'D', false, 0, [ 'A' => 'a', 'B' => [ 'b', 'c' ], 'D' => null ] ],
-			[ [ 'A' => 'a', 'B' => [ 'b', 'c' ], 'D' => 'd' ], [ 'A', 'B' ], false, 0, [ 'A' => null, 'B' => [ ], 'D' => 'd' ] ],
-			[ [ 'A' => 'a', 'B' => [ 'b', 'c' ], 'D' => 'd' ], '', false, 0, [ 'A' => 'a', 'B' => [ 'b', 'c' ], 'D' => 'd' ] ]
+			[
+				[ "items" => [ [ 'title' => 't0', 'url' => 'http://a1.a', 'img' => 'www.img1.a/a.png' ] ] ],
+				[ ],
+				[ "items" => [ [ 'title' => 't0', 'url' => 'http://a1.a', 'img' => 'www.img1.a/a.png' ] ] ],
+				null,
+				true,
+				12334
+			],
+			[
+				[ "items" => [ [ 'title' => 't1', 'url' => 'http://a1.a', 'img' => 'www.img1.a/a.png' ] ] ],
+				[ ],
+				[ "items" => [ [ 'title' => 't1', 'url' => 'http://a1.a', 'img' => 'www.img1.a/a.png' ] ] ],
+				null,
+				true
+			],
+			[
+				[ "items" => [ [ 'title' => 't2', 'url' => 'http://a2.a', 'img' => 'www.img2.a/a.png' ] ] ],
+				[ 'imgFields' => 'img', 'urlFields' => [ 'img', 'url' ] ],
+				[ "items" => [ [ 'title' => 't2', 'url' => 'http://a2.a', 'img' => 'www.img2.a/a.png' ] ] ],
+				null,
+				true
+			],
+			//now call it like ....?ref=noideawhat
+			[
+				[ "items" => [ [ 'title' => 't1', 'url' => 'http://a1.a', 'img' => 'www.img1.a/a.png' ] ] ],
+				[ ],
+				[ "items" => [ [ 'title' => 't1', 'url' => 'http://a1.a', 'img' => 'www.img1.a/a.png' ] ] ],
+				'noideawhat',
+				true
+			],
+			[
+				[ "items" => [ [ 'title' => 't3', 'url' => 'http://a2.a', 'img' => 'www.img2.a/a.png' ] ] ],
+				[ 'imgFields' => 'img', 'urlFields' => [ 'img', 'url' ] ],
+				[ "items" => [ [ 'title' => 't3', 'url' => 'http://a2.a?ref=noideawhat', 'img' => 'www.img2.a/a.png?ref=noideawhat' ] ] ],
+				'noideawhat',
+				true
+			],
+			[
+				[ "items" => [ [ 'title' => 't4', 'url' => 'http://a2.a', 'img' => 'www.img2.a/a.png?par=val' ] ] ],
+				[ 'imgFields' => 'img', 'urlFields' => [ 'img', 'url' ] ],
+				[ "items" => [ [ 'title' => 't4', 'url' => 'http://a2.a?ref=noideawhat', 'img' => 'www.img2.a/a.png?par=val&ref=noideawhat' ] ] ],
+				'noideawhat',
+				true
+			],
+			[
+				[ "items" => [ [ 'title' => 't5', 'url' => [ 'http://a2.a' ], 'img' => 'www.img2.a/a.png?par=val' ] ] ],
+				[ 'imgFields' => 'img', 'urlFields' => [ 'img', 'url' ] ],
+				[ "items" => [ [ 'title' => 't5', 'url' => [ 'http://a2.a?ref=noideawhat' ], 'img' => 'www.img2.a/a.png?par=val&ref=noideawhat' ] ] ],
+				'noideawhat',
+				true
+			],
+			//now call it like ....?ref=noideawhat AND disable images
+			[
+				[ "items" => [ [ 'title' => 't6', 'url' => 'http://a1.a', 'img' => 'www.img1.a/a.png' ] ] ],
+				[ ],
+				[ "items" => [ [ 'title' => 't6', 'url' => 'http://a1.a', 'img' => 'www.img1.a/a.png' ] ] ],
+				'noideawhat',
+				false
+			],
+			[
+				[ "items" => [ [ 'title' => 't8', 'url' => 'http://a2.a', 'img' => 'www.img2.a/a.png' ] ] ],
+				[ 'imgFields' => 'img', 'urlFields' => [ 'img', 'url' ] ],
+				[ "items" => [ [ 'title' => 't8', 'url' => 'http://a2.a?ref=noideawhat', 'img' => null ] ] ],
+				'noideawhat',
+				false
+			],
+			[
+				[ "items" => [ [ 'title' => 't9', 'url' => 'http://a2.a', 'img' => 'www.img2.a/a.png?par=val' ] ] ],
+				[ 'imgFields' => 'img', 'urlFields' => [ 'img', 'url' ] ],
+				[ "items" => [ [ 'title' => 't9', 'url' => 'http://a2.a?ref=noideawhat', 'img' => null ] ] ],
+				'noideawhat',
+				false
+			],
+			[
+				[ "items" => [ [ 'title' => 't10', 'url' => 'http://a2.a', 'img' => [ 'www.img2.a/a.png?par=val' ] ] ] ],
+				[ 'imgFields' => 'img', 'urlFields' => [ 'img', 'url' ] ],
+				[ "items" => [ [ 'title' => 't10', 'url' => 'http://a2.a?ref=noideawhat', 'img' => [ ] ] ] ],
+				'noideawhat',
+				false
+			],
 		];
 	}
+
+
+	/**
+	 * @covers WikiaApiController::setResponseData
+	 * @dataProvider setResponseFields_Provider
+	 */
+	public function testSetResponseData_FieldTypes( $data,$expected, $fieldTypes, $internal) {
+		$mock = $this->getMockBuilder( 'WikiaApiController' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'serveImages', 'getRequest', 'getResponse' ] )
+			->getMock();
+		$mock->expects( $this->any() )
+			->method( 'serveImages' )
+			->will( $this->returnValue( true ) );
+
+		$mockResponse = $this->getMockBuilder( 'StdClass' )
+			->setMethods( [ 'setData', 'setCacheValidity' ] )
+			->getMock();
+
+		$mockResponse->expects( $this->once() )
+			->method( 'setData' )
+			->with( $expected );
+
+		$mockResponse->expects( $this->any() )
+			->method( 'getVal' )
+			->will( $this->returnValue( null ) );
+
+		$mockRequest = $this->getMockBuilder( 'StdClass' )
+			->setMethods( [ 'getVal', 'isInternal' ] )
+			->getMock();
+
+		$mockRequest->expects( $this->any() )
+				->method( 'getVal' )
+				->with( WikiaApiController::REF_URL_ARGUMENT )
+				->will( $this->returnValue( null ) );
+
+		$mockRequest->expects( $this->any() )
+			->method( 'isInternal' )
+			->will( $this->returnValue( $internal ) );
+
+		$mockRequest->expects( $this->any() )
+			->method( 'getVal' )
+			->will( $this->returnValue( null ) );
+
+		$mock->expects( $this->any() )
+			->method( 'getResponse' )
+			->will( $this->returnValue( $mockResponse ) );
+
+		$mock->expects( $this->any() )
+			->method( 'getRequest' )
+			->will( $this->returnValue( $mockRequest ) );
+
+		$setOutputFieldTypes = new ReflectionMethod( $mock, 'setOutputFieldTypes' );
+		$setOutputFieldTypes->setAccessible( true );
+		$setOutputFieldTypes->invoke($mock,$fieldTypes);
+
+		$method = new ReflectionMethod( $mock, 'setResponseData' );
+		$method->setAccessible( true );
+
+
+
+		$method->invoke( $mock, $data);
+	}
+
+	public function setResponseFields_Provider() {
+		$itemsObj = new StdClass();
+		$itemsObj->ii = 12;
+		$itemsObj->xx = "aa";
+		return [
+			[
+				[ "items" => [ [ 'title' => 't0', 'url' => 'http://a1.a', 'img' => 'www.img1.a/a.png' ] ] ],
+				[ "items" => [ [ 'title' => 't0', 'url' => 'http://a1.a', 'img' => 'www.img1.a/a.png' ] ] ],
+				[],
+				false
+			],
+			[
+				[ "items" => [ [ 'ii' => '12-3', 'xx' => 'aa' ] ] ],
+				[ "items" => [ [ 'ii' => 12, 'xx' => 'aa' ] ] ],
+				[ 'ii' => WikiaApiController::OUTPUT_FIELD_TYPE_INT ],
+				false
+			],
+			[
+				[ "items" => [ [ 'ii' => '12-3', 'xx' => 'aa' ] ] ],
+				[ "items" => [ [ 'ii' => '12-3', 'xx' => 'aa' ] ] ],
+				[ 'ii' => WikiaApiController::OUTPUT_FIELD_TYPE_INT ],
+				true
+			],
+			[
+				[ "items" => [ [ 'ii' => '12.3', 'xx' => 'bb' ] ] ],
+				[ "items" => [ [ 'ii' => 12.3, 'xx' => 'bb' ] ] ],
+				[ 'ii' => WikiaApiController::OUTPUT_FIELD_TYPE_FLOAT ],
+				false
+			],
+			[
+				[ "items" => [ [ 'ii' => [ "str" => 12 ], 'xx' => 'aa' ] ] ],
+				[ "items" => [ [ 'ii' => [ "str" => "12" ], 'xx' => 'aa' ] ] ],
+				[ 'str' => WikiaApiController::OUTPUT_FIELD_TYPE_STRING ],
+				false
+			],
+			[
+				[ "items" => [ [ 'ii' => null, 'xx' => 'aa' ] ] ],
+				[ "items" => [ [ 'ii' => null, 'xx' => 'aa' ] ] ],
+				[ 'ii' => WikiaApiController::OUTPUT_FIELD_TYPE_FLOAT ],
+				false
+			],
+			[
+				[ "items" => [ [ 'ii' => null, 'xx' => 'aa' ] ] ],
+				[ "items" => [ [ 'ii' => 0, 'xx' => 'aa' ] ] ],
+				[ 'ii' => WikiaApiController::OUTPUT_FIELD_TYPE_INT | WikiaApiController::OUTPUT_FIELD_CAST_NULLS ],
+				false
+			],
+			[
+				[ "items" => [ 'ii' => '12', 'xx' => 'aa' ] ] ,
+				[ "items" => $itemsObj ],
+				[ 'ii' => WikiaApiController::OUTPUT_FIELD_TYPE_INT , 'items' =>WikiaApiController::OUTPUT_FIELD_TYPE_OBJECT ],
+				false
+			],
+		];
+	}
+
+
 }

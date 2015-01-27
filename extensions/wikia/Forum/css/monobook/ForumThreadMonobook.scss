@@ -1,0 +1,12 @@
+// Monobook skin specific styling
+
+#Wall.Thread {
+	.comments >.message {
+		>.speech-bubble-message {
+			.edited-by {
+				left: 0;
+				top: 0;
+			}
+		}
+	}
+}

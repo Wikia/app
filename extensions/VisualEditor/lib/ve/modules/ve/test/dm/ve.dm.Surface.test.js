@@ -75,7 +75,8 @@ QUnit.test( 'breakpoint', 7, function ( assert ) {
 	assert.equal( surface.breakpoint(), true, 'Returns true after transaction applied' );
 	assert.equal( surface.breakpoint(), false, 'Returns false if no transactions applied since last breakpoint' );
 
-	assert.deepEqual( surface.undoStack, [ {
+	assert.deepEqual(
+		surface.undoStack, [ {
 			'transactions': [tx],
 			'selection': tx.translateRange( selection ),
 			'selectionBefore': selection

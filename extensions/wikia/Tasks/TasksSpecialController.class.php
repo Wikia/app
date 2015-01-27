@@ -8,8 +8,8 @@
  */
 
 class TasksSpecialController extends WikiaSpecialPageController {
-	use PreventBlockedUsersThrowsError;
-	use UserAllowedRequirementThrowsError;
+	use PreventBlockedUsersThrowsErrorTrait;
+	use UserAllowedRequirementThrowsErrorTrait;
 
 	/** @var TasksModel */
 	private $model;
@@ -33,11 +33,28 @@ class TasksSpecialController extends WikiaSpecialPageController {
 		$this->response->addAsset('extensions/wikia/Tasks/js/special_tasks.js');
 		$this->response->addAsset('extensions/wikia/Tasks/css/special_tasks.css');
 
+		if ( $this->getPar() ) {
+			$this->forward( 'TasksSpecialController', $this->getPar() );
+			return;
+		}
+
 		$this->setVal('createableTaskList', $this->model->getTaskClasses());
 		$this->setVal('flowerUrl', $this->flowerUrl);
 
 		$this->response->setJsVar('wgFlowerUrl', $this->flowerUrl);
 		$this->response->setJsVar('wgAjaxLoadingIndicator', $this->wg->ExtensionsPath.'/wikia/Tasks/images/ajax-loader.gif');
+	}
+
+	public function log() {
+		global $wgFlowerUrl;
+
+		$taskId = $this->request->getVal('id');
+		$taskLogs = json_decode( Http::get( "{$wgFlowerUrl}/api/task/get-logs/{$taskId}", 'default', [
+			'noProxy' => true,
+		] ), true);
+
+		$this->wg->Out->setPageTitle( wfMsg('tasks-log-title') );
+		$this->setVal('taskLogs', $taskLogs);
 	}
 
 	public function getMethods() {

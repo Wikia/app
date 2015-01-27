@@ -14,17 +14,18 @@ class SearchApiControllerTest extends BaseTest
 	 * @slowExecutionTime 0.07828 ms
 	 * @covers SearchApiController::getList
 	 */
+
 	public function testGetListWithTerms() {
 		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
 		                   ->disableOriginalConstructor()
 		                   ->setMethods( [ 'getQuery' ] )
 		                   ->getMock();
-		
+
 		$mockController = $this->getMockBuilder( 'SearchApiController' )
 		                       ->disableOriginalConstructor()
 		                       ->setMethods( [ 'setResponseFromConfig', 'getConfigFromRequest' ] )
 		                       ->getMock();
-		
+
 		$mockController
 		    ->expects( $this->once() )
 		    ->method ( 'getConfigFromRequest' )
@@ -37,7 +38,7 @@ class SearchApiControllerTest extends BaseTest
 		;
 		$mockController->getList();
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08631 ms
@@ -48,24 +49,24 @@ class SearchApiControllerTest extends BaseTest
 		                    ->disableOriginalConstructor()
 		                    ->setMethods( [ 'getVal', 'getInt' ] )
 		                    ->getMock();
-		
+
 		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
 		                   ->disableOriginalConstructor()
 		                   ->setMethods( [ 'setQuery', 'setLimit', 'setPage', 'setRank', 'setVideoSearch', 'setMinArticleQuality' ] )
 		                   ->getMock();
-		
+
 		$mockController = $this->getMockBuilder( 'SearchApiController' )
 		                       ->disableOriginalConstructor()
 		                       ->setMethods( [ 'getRequest', 'validateNamespacesForConfig' ] )
 		                       ->getMock();
-		
+
 		$this->mockClass( 'Wikia\Search\Config', $mockConfig );
 
 		$requestIncr = 0;
 		$configIncr = 0;
-		
+
 		$mockController
-		    ->expects( $this->once() )
+		    ->expects( $this->any() )
 		    ->method ( 'getRequest' )
 		    ->will   ( $this->returnValue( $mockRequest ) )
 		;
@@ -154,7 +155,7 @@ class SearchApiControllerTest extends BaseTest
 				$get->invoke( $mockController )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07758 ms
@@ -165,17 +166,17 @@ class SearchApiControllerTest extends BaseTest
 		                   ->disableOriginalConstructor()
 		                   ->setMethods( [ 'setNamespaces' ] )
 		                   ->getMock();
-		
+
 		$mockRequest = $this->getMockBuilder( 'WikiaRequest' )
 		                    ->disableOriginalConstructor()
 		                    ->setMethods( [ 'getArray' ] )
 		                    ->getMock();
-		
+
 		$mockController = $this->getMockBuilder( 'SearchApiController' )
 		                       ->disableOriginalConstructor()
 		                       ->setMethods( [ 'getRequest' ] )
 		                       ->getMock();
-		
+
 		$mockController
 		    ->expects( $this->any() )
 		    ->method ( 'getRequest' )
@@ -198,7 +199,7 @@ class SearchApiControllerTest extends BaseTest
 				$validate->invoke( $mockController, $mockConfig )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07744 ms
@@ -209,17 +210,17 @@ class SearchApiControllerTest extends BaseTest
 		                   ->disableOriginalConstructor()
 		                   ->setMethods( [ 'setNamespaces' ] )
 		                   ->getMock();
-		
+
 		$mockRequest = $this->getMockBuilder( 'WikiaRequest' )
 		                    ->disableOriginalConstructor()
 		                    ->setMethods( [ 'getArray' ] )
 		                    ->getMock();
-		
+
 		$mockController = $this->getMockBuilder( 'SearchApiController' )
 		                       ->disableOriginalConstructor()
 		                       ->setMethods( [ 'getRequest' ] )
 		                       ->getMock();
-		
+
 		$mockController
 		    ->expects( $this->any() )
 		    ->method ( 'getRequest' )
@@ -243,7 +244,7 @@ class SearchApiControllerTest extends BaseTest
 				$validate->invoke( $mockController, $mockConfig )
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07736 ms
@@ -254,17 +255,17 @@ class SearchApiControllerTest extends BaseTest
 		                   ->disableOriginalConstructor()
 		                   ->setMethods( [ 'setNamespaces' ] )
 		                   ->getMock();
-		
+
 		$mockRequest = $this->getMockBuilder( 'WikiaRequest' )
 		                    ->disableOriginalConstructor()
 		                    ->setMethods( [ 'getArray' ] )
 		                    ->getMock();
-		
+
 		$mockController = $this->getMockBuilder( 'SearchApiController' )
 		                       ->disableOriginalConstructor()
 		                       ->setMethods( [ 'getRequest' ] )
 		                       ->getMock();
-		
+
 		$mockController
 		    ->expects( $this->any() )
 		    ->method ( 'getRequest' )
@@ -276,7 +277,7 @@ class SearchApiControllerTest extends BaseTest
 		    ->with   ( 'namespaces', [] )
 		    ->will   ( $this->returnValue( [ NS_MAIN, 'crap' ] ) )
 		;
-		
+
 		$validate = new \ReflectionMethod( 'SearchApiController', 'validateNamespacesForConfig' );
 		$validate->setAccessible( true );
 		try {
@@ -287,7 +288,7 @@ class SearchApiControllerTest extends BaseTest
 				$e
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.07725 ms
@@ -295,17 +296,17 @@ class SearchApiControllerTest extends BaseTest
 	 */
 	public function testSetResponseFromConfigNoTerms() {
 		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', [ 'hasTerms' ], [ 'foo' ] );
-		
+
 		$mockController = $this->getMockBuilder( 'SearchApiController' )
 		                       ->disableOriginalConstructor()
 		                       ->setMethods( [ 'getRequest' ] )
 		                       ->getMock();
-		
+
 		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
 		                   ->disableOriginalConstructor()
 		                   ->setMethods( [ 'getQuery' ] )
 		                   ->getMock();
-		
+
 		$mockConfig
 		    ->expects( $this->once() )
 		    ->method ( 'getQuery' )
@@ -316,19 +317,19 @@ class SearchApiControllerTest extends BaseTest
 		    ->method ( 'hasTerms' )
 		    ->will   ( $this->returnValue( false ) )
 		;
-		
+
 		$set = new \ReflectionMethod( 'SearchApiController', 'setResponseFromConfig' );
 		$set->setAccessible( true );
 		try {
 			$set->invoke( $mockController, $mockConfig );
 		} catch ( \InvalidParameterApiException $e ) { }
-		
+
 		$this->assertInstanceOf(
 				'InvalidParameterApiException',
 				$e
 		);
 	}
-	
+
 	/**
 	 * @group Slow
 	 * @slowExecutionTime 0.08567 ms
@@ -336,78 +337,76 @@ class SearchApiControllerTest extends BaseTest
 	 */
 	public function testSetResponseFromConfigWithTerms() {
 		$mockQuery = $this->getMock( 'Wikia\Search\Query\Select', [ 'hasTerms' ], [ 'foo' ] );
-		
+
 		$mockController = $this->getMockBuilder( 'SearchApiController' )
-		                       ->disableOriginalConstructor()
-		                       ->setMethods( [ 'getRequest', 'getResponse' ] )
-		                       ->getMock();
-		
+			->disableOriginalConstructor()
+			->setMethods( [ 'getRequest', 'getResponse', 'setResponseData' ] )
+			->getMock();
+
 		$mockConfig = $this->getMockBuilder( 'Wikia\Search\Config' )
-		                   ->disableOriginalConstructor()
-		                   ->setMethods( [ 'getQuery', 'getLimit', 'getResultsFound', 'getNumPages', 'getPage' ] )
-		                   ->getMock();
-		
+			->disableOriginalConstructor()
+			->setMethods( [ 'getQuery', 'getLimit', 'getResultsFound', 'getNumPages', 'getPage' ] )
+			->getMock();
+
 		$mockFactory = $this->getMock( 'Wikia\Search\QueryService\Factory', [ 'getFromConfig' ] );
-		
+
 		$mockService = $this->getMockBuilder( 'Wikia\Search\QueryService\Select\OnWiki' )
-		                    ->disableOriginalConstructor()
-		                    ->setMethods( [ 'searchAsApi' ] )
-		                    ->getMock();
-		
+			->disableOriginalConstructor()
+			->setMethods( [ 'searchAsApi' ] )
+			->getMock();
+
+		$mockRequest = $this->getMockBuilder( 'WikiaRequest' )
+			->disableOriginalConstructor()
+			->setMethods( [ '__construct' ] )
+			->getMock();
+
 		$mockResponse = $this->getMockBuilder( 'WikiaResponse' )
-		                     ->disableOriginalConstructor()
-		                     ->setMethods( [ 'setValues', 'setCacheValidity' ] )
-		                     ->getMock();
-		
+			->disableOriginalConstructor()
+			->setMethods( [ 'setValues', 'setCacheValidity' ] )
+			->getMock();
+
 		$mockResultSet = $this->getMockBuilder( 'Wikia\Search\ResultSet\Base' )
-		                      ->disableOriginalConstructor()
-		                      ->setMethods( [ 'toArray' ] )
-		                      ->getMock();
-		
+			->disableOriginalConstructor()
+			->setMethods( [ 'toArray' ] )
+			->getMock();
+
 		$resultArray = [ [ 'id' => 123, 'title' => 'foo', 'url' => 'http://www.wikia.com/wiki/Foo', 'ns' => 0 ] ];
-		
+
 		$mockConfig
-		    ->expects( $this->once() )
-		    ->method ( 'getQuery' )
-		    ->will   ( $this->returnValue( $mockQuery ) )
-		;
+			->expects( $this->once() )
+			->method( 'getQuery' )
+			->will( $this->returnValue( $mockQuery ) );
 		$mockQuery
-		    ->expects( $this->once() )
-		    ->method ( 'hasTerms' )
-		    ->will   ( $this->returnValue( true ) )
-		;
+			->expects( $this->once() )
+			->method( 'hasTerms' )
+			->will( $this->returnValue( true ) );
 		$mockFactory
-		    ->expects( $this->once() )
-		    ->method ( 'getFromConfig' )
-		    ->with   ( $mockConfig )
-		    ->will   ( $this->returnValue( $mockService ) )
-		;
+			->expects( $this->once() )
+			->method( 'getFromConfig' )
+			->with( $mockConfig )
+			->will( $this->returnValue( $mockService ) );
 		$mockService
-		    ->expects( $this->once() )
-		    ->method ( 'searchAsApi' )
-		    ->will   ( $this->returnValue( [ 'items' => $resultArray, 'next' => 20, 'total' => 100, 'batches' => 5, 'currentBatch' => 1 ] ) )
-		;
+			->expects( $this->once() )
+			->method( 'searchAsApi' )
+			->will( $this->returnValue( [ 'items' => $resultArray, 'next' => 20, 'total' => 100, 'batches' => 5, 'currentBatch' => 1 ] ) );
 		$mockController
-		    ->expects( $this->once() )
-		    ->method ( 'getResponse' )
-		    ->will   ( $this->returnValue( $mockResponse ) )
-		;
-		$mockResponse
-		    ->expects( $this->once() )
-		    ->method ( 'setValues' )
-		    ->with   ( [ 'items' => $resultArray, 'next' => 20, 'total' => 100, 'batches' => 5, 'currentBatch' => 1 ] )
-		;
-		$mockResponse
-		    ->expects( $this->once() )
-		    ->method ( 'setCacheValidity' )
-		    ->with   ( 86400 )
-		;
-		
+			->expects( $this->any() )
+			->method( 'getResponse' )
+			->will( $this->returnValue( $mockResponse ) );
+		$mockController
+			->expects( $this->any() )
+			->method( 'getRequest' )
+			->will( $this->returnValue( $mockRequest ) );
+		$mockController
+			->expects( $this->once() )
+			->method( 'setResponseData' )
+			->with( [ 'items' => $resultArray, 'next' => 20, 'total' => 100, 'batches' => 5, 'currentBatch' => 1 ] );
+
 		$this->mockClass( 'Wikia\Search\QueryService\Factory', $mockFactory );
 
 		$set = new \ReflectionMethod( 'SearchApiController', 'setResponseFromConfig' );
 		$set->setAccessible( true );
 		$set->invoke( $mockController, $mockConfig );
-		
+
 	}
 }

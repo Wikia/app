@@ -9,7 +9,7 @@
  * ContentEditable MediaWiki alien extension node.
  *
  * @class
- * @extends ve.ce.MWExtensionNode
+ * @extends ve.ce.MWBlockExtensionNode
  *
  * @constructor
  * @param {ve.dm.MWAlienExtensionNode} model Model to observe
@@ -17,7 +17,7 @@
  */
 ve.ce.MWAlienExtensionNode = function VeCeMWAlienExtensionNode( model, config ) {
 	// Parent constructor
-	ve.ce.MWExtensionNode.call( this, model, config );
+	ve.ce.MWBlockExtensionNode.call( this, model, config );
 
 	// DOM changes
 	this.$element.addClass( 've-ce-mwAlienExtensionNode' );
@@ -25,7 +25,7 @@ ve.ce.MWAlienExtensionNode = function VeCeMWAlienExtensionNode( model, config ) 
 
 /* Inheritance */
 
-OO.inheritClass( ve.ce.MWAlienExtensionNode, ve.ce.MWExtensionNode );
+OO.inheritClass( ve.ce.MWAlienExtensionNode, ve.ce.MWBlockExtensionNode );
 
 /* Static Properties */
 

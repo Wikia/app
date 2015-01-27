@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Candalua",
-			"GatoSelvadego"
+			"GatoSelvadego",
+			"Gloria sah"
 		]
 	},
 	"visualeditor": "VisualEditor",
@@ -24,6 +25,7 @@
 	"visualeditor-dialog-action-apply": "Salva canbiamenti",
 	"visualeditor-dialog-action-cancel": "Anùla",
 	"visualeditor-dialog-action-goback": "Torna indrìo",
+	"visualeditor-dialog-error-dismiss": "Torna indrìo",
 	"visualeditor-dialog-command-help-title": "Scavesagne da tastiera",
 	"visualeditor-formatdropdown-format-heading-label": "Intestasion (1-6)",
 	"visualeditor-formatdropdown-format-heading1": "Tìtoło 1",
@@ -44,6 +46,7 @@
 	"visualeditor-inspector-remove-tooltip": "Cava",
 	"visualeditor-languageinspector-block-tooltip": "Bloco de lengua",
 	"visualeditor-languageinspector-title": "Lengua",
+	"visualeditor-languageinspector-widget-changelang": "Canbia lengua",
 	"visualeditor-languageinspector-widget-label-direction": "Diresion",
 	"visualeditor-languageinspector-widget-label-langcode": "Còdexe lengua",
 	"visualeditor-languageinspector-widget-label-language": "Lengua",

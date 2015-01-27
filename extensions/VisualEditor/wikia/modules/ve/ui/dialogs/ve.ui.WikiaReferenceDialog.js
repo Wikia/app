@@ -13,7 +13,7 @@
  */
 ve.ui.WikiaReferenceDialog = function VeUiWikiaReferenceDialog( config ) {
 	// Parent constructor
-	ve.ui.MWReferenceDialog.call( this, config );
+	ve.ui.WikiaReferenceDialog.super.call( this, config );
 };
 
 /* Inheritance */
@@ -39,10 +39,10 @@ ve.ui.WikiaReferenceDialog.static.toolbarGroups = [
 /* Methods */
 
 ve.ui.WikiaReferenceDialog.prototype.setup = function ( data ) {
-	ve.ui.MWReferenceDialog.prototype.setup.call( this, data );
+	ve.ui.WikiaReferenceDialog.super.prototype.setup.call( this, data );
 	this.referenceSurface.$element.addClass( 'WikiaArticle' );
 };
 
 /* Registration */
 
-ve.ui.dialogFactory.register( ve.ui.WikiaReferenceDialog );
+ve.ui.windowFactory.register( ve.ui.WikiaReferenceDialog );

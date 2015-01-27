@@ -23,6 +23,8 @@ class WikiMetrics {
 	private $mOffset;
 	private $cityIds;
 	private $mPageViews;
+	private $mCategories;
+	private $mVerticals;
 	/* const */
 	const START_DATE 		= '2009-04-02';
 	const DEF_DAYS_PVIEWS 	= 90;
@@ -37,7 +39,8 @@ class WikiMetrics {
     private $axFrom;
     private $axTo;
     private $axLanguage;
-    private $axHub;
+    private $axCategory;
+    private $axVertical;
     private $axDbname;
     private $axDomain;
     private $axExactDomain;
@@ -120,6 +123,11 @@ class WikiMetrics {
 
 		$this->mAction = empty($this->mAction) ? 'main' : $this->mAction;
 
+		// This data is needed for all the sub-forms so pre-load it
+		$hubs = WikiFactoryHub::getInstance();
+		$this->mCategories = $hubs->getAllCategories(false, true);
+		$this->mVerticals = $hubs->getAllVerticals();
+
 		if ( $this->mAction == 'main' ) {
 			$this->showMainForm();
 		} elseif ( $this->mAction == 'monthly' ) {
@@ -153,9 +161,6 @@ class WikiMetrics {
         wfProfileIn( __METHOD__ );
 		#---
 		$this->getLangs();
-		#---
-		$hubs = WikiFactoryHub::getInstance();
-		$aCategories = $hubs->getCategories();
 
 		$params = $wgRequest->getValues();
 		if ( empty($params['from']) ) {
@@ -174,7 +179,8 @@ class WikiMetrics {
             "oCloseWikiTitle"	=> $oCloseWikiTitle,
             "aLanguages" 		=> $this->mLanguages,
 			"aTopLanguages" 	=> $this->mTopLanguages,
-			"aCategories"		=> $aCategories,
+			"aCategories"		=> $this->mCategories,
+			"aVerticals"		=> $this->mVerticals,
 			"params"			=> $params,
 			"obj"				=> $this,
         ));
@@ -186,40 +192,34 @@ class WikiMetrics {
 	function showMonthlyForm ($error = "") {
 		global $wgOut, $wgContLang;
 		global $wgExtensionsPath, $wgRequest;
-        wfProfileIn( __METHOD__ );
-		#---
-		$hubs = WikiFactoryHub::getInstance();
-		$aCategories = $hubs->getCategories();
+
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
 			"error"				=> $error,
             "wgContLang"		=> $wgContLang,
             "wgExtensionsPath" 	=> $wgExtensionsPath,
-			"aCategories"		=> $aCategories,
+			"aCategories"		=> $this->mCategories,
+			"aVerticals"		=> $this->mVerticals,
 			"obj"				=> $this,
         ));
         $wgOut->addHTML( $oTmpl->render("metrics-monthly-form") );
-        wfProfileOut( __METHOD__ );
 	}
 
 	/* draws the form itself  */
 	function showDailyForm ($error = "") {
 		global $wgOut, $wgContLang;
 		global $wgExtensionsPath, $wgRequest;
-        wfProfileIn( __METHOD__ );
-		#---
-		$hubs = WikiFactoryHub::getInstance();
-		$aCategories = $hubs->getCategories();
+
         $oTmpl = new EasyTemplate( dirname( __FILE__ ) . "/templates/" );
         $oTmpl->set_vars( array(
 			"error"				=> $error,
             "wgContLang"		=> $wgContLang,
             "wgExtensionsPath" 	=> $wgExtensionsPath,
-			"aCategories"		=> $aCategories,
+			"aCategories"		=> $this->mCategories,
+			"aVerticals"		=> $this->mVerticals,
 			"obj"				=> $this,
         ));
         $wgOut->addHTML( $oTmpl->render("metrics-daily-form") );
-        wfProfileOut( __METHOD__ );
 	}
 
 	/* get languages */
@@ -233,7 +233,7 @@ class WikiMetrics {
 	/* make values of request params */
 	public function getRequestParams() {
 		global $wgRequest;
-		wfProfileIn( __METHOD__ );
+
 		$aValues = $wgRequest->getValues();
 		if ( !empty($aValues) && is_array($aValues) ) {
 			foreach ($aValues as $key => $value) {
@@ -246,12 +246,10 @@ class WikiMetrics {
 				}
 			}
 		}
-		wfProfileOut( __METHOD__ );
 	}
 
 	/* check session params */
 	public function getRequestParamsFromSession() {
-		wfProfileIn( __METHOD__ );
 		if ( !empty($_SESSION) && is_array($_SESSION) ) {
 			foreach ($_SESSION as $key => $value) {
 				if ( strpos($key, "awc-") !== false ) {
@@ -261,7 +259,6 @@ class WikiMetrics {
 				}
 			}
 		}
-		wfProfileOut( __METHOD__ );
 	}
 
 	/*
@@ -279,11 +276,11 @@ class WikiMetrics {
 
 		#---
 		list ($AWCCities, $AWCCitiesCount) = $this->getNewWikis();
-		
+
 		if ( !empty( $AWCCities ) ) {
-			#--- page views 
+			#--- page views
 			$wikiList = array_keys( $AWCCities );
-			
+
 			$startDate = date( 'Y-m-01', strtotime('-3 month') );
 			$endDate = date( 'Y-m-01', strtotime('now') );
 			$pageviews = DataMartService::getPageviewsMonthly( $startDate, $endDate, $wikiList );
@@ -354,8 +351,11 @@ class WikiMetrics {
 				$where[] = 'city_lang = ' . $dbr->addQuotes($this->axLanguage);
 			}
 		}
-		if ( !empty($this->axHub) ) {
-			$where[] = $city_id . ' in (select ccm1.city_id from wikicities.city_cat_mapping ccm1 where cat_id = '.intval($this->axHub).')';
+		if ( !empty($this->axCategory) ) {
+			$where[] = $city_id . ' in (select ccm1.city_id from wikicities.city_cat_mapping ccm1 where cat_id = '.intval($this->axCategory).')';
+		}
+		if ( !empty($this->axVertical) ) {
+			$where[] = 'city_vertical = ' . $dbr->addQuotes(intval($this->axVertical));
 		}
 		if ( !empty($this->axDbname) ) {
 			$where[] = 'city_dbname' . $dbr->buildLike( $dbr->anyString(), $this->axDbname, $dbr->anyString() );
@@ -466,7 +466,7 @@ class WikiMetrics {
 			/* number records */
 			$options = array();
 
-			$tables = array("wikicities.city_list", "stats.wikia_monthly_stats"); 
+			$tables = array("wikicities.city_list", "stats.wikia_monthly_stats");
 			$fields = array(
 				"city_id",
 				"city_dbname",
@@ -582,7 +582,7 @@ class WikiMetrics {
 		}
 
 		$hubs = WikiFactoryHub::getInstance();
-		$aCategories = $hubs->getCategories();
+		$aCategories = $hubs->getAllCategories(false, true);
 
 		$AWCMetrics = array();
 		$AWCCitiesCount = 0;
@@ -741,11 +741,11 @@ class WikiMetrics {
 			$startDate = date( 'Y-m-01', strtotime('-3 month') );
 			$endDate = date( 'Y-m-01', strtotime('now') );
 			$pageviews = DataMartService::getPageviewsMonthly( $startDate, $endDate, $this->cityIds );
-		
+
 			if ( empty( $pageviews ) ) {
 				foreach ( $pageviews as $wiki_id => $wiki_data ) {
 					#---
-					if ( $wiki_data['SUM'] > intval($pageViews) ) continue; 
+					if ( $wiki_data['SUM'] > intval($pageViews) ) continue;
 					$this->mPageViews[ $wiki_id ] = $wiki_data[ 'SUM' ];
 					$cities[] = $wiki_id;
 				}

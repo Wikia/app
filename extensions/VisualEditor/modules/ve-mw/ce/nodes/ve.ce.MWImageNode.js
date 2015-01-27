@@ -5,15 +5,15 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
+/*global mw */
+
 /**
  * ContentEditable MediaWiki image node.
  *
  * @class
  * @abstract
  * @extends ve.ce.GeneratedContentNode
- * @mixins ve.ce.ProtectedNode
  * @mixins ve.ce.FocusableNode
- * @mixins ve.ce.RelocatableNode
  * @mixins ve.ce.MWResizableNode
  *
  * @constructor
@@ -34,11 +34,8 @@ ve.ce.MWImageNode = function VeCeMWImageNode( $figure, $image, config ) {
 	this.$image = $image;
 
 	// Mixin constructors
-	ve.ce.ProtectedNode.call( this, this.$figure, config );
 	ve.ce.FocusableNode.call( this, this.$figure, config );
-	ve.ce.RelocatableNode.call( this, this.$figure, config );
 	ve.ce.MWResizableNode.call( this, this.$image, config );
-	ve.ce.ClickableNode.call( this );
 
 	// Events
 	this.model.connect( this, { 'attributeChange': 'onAttributeChange' } );
@@ -48,22 +45,26 @@ ve.ce.MWImageNode = function VeCeMWImageNode( $figure, $image, config ) {
 
 OO.inheritClass( ve.ce.MWImageNode, ve.ce.GeneratedContentNode );
 
-OO.mixinClass( ve.ce.MWImageNode, ve.ce.ProtectedNode );
-
 OO.mixinClass( ve.ce.MWImageNode, ve.ce.FocusableNode );
-
-OO.mixinClass( ve.ce.MWImageNode, ve.ce.RelocatableNode );
 
 // Need to mixin base class as well
 OO.mixinClass( ve.ce.MWImageNode, ve.ce.ResizableNode );
 
 OO.mixinClass( ve.ce.MWImageNode, ve.ce.MWResizableNode );
 
-OO.mixinClass( ve.ce.MWImageNode, ve.ce.ClickableNode );
-
 /* Static Properties */
 
 ve.ce.MWImageNode.static.primaryCommandName = 'mediaEdit';
+
+/* Static Methods */
+
+/**
+ * @inheritdoc ve.ce.Node
+ */
+ve.ce.MWImageNode.static.getDescription = function ( model ) {
+	var title = new mw.Title( model.getFilename() );
+	return title.getMain();
+};
 
 /* Methods */
 
@@ -82,13 +83,13 @@ ve.ce.MWImageNode.prototype.onAttributeChange = function () {};
 ve.ce.MWImageNode.prototype.generateContents = function () {
 	var xhr, deferred = $.Deferred();
 
-	xhr = ve.init.mw.Target.static.apiRequest( {
+	xhr = ve.init.target.constructor.static.apiRequest( {
 			'action': 'query',
 			'prop': 'imageinfo',
 			'iiprop': 'url',
 			'iiurlwidth': this.getModel().getAttribute( 'width' ),
 			'iiurlheight': this.getModel().getAttribute( 'height' ),
-			'titles': this.getModel().getAttribute( 'resource' ).replace( /^(.+\/)*/, '' )
+			'titles': this.getModel().getFilename()
 	} )
 		.done( ve.bind( this.onParseSuccess, this, deferred ) )
 		.fail( ve.bind( this.onParseError, this, deferred ) );

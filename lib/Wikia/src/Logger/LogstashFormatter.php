@@ -8,6 +8,7 @@
  */
 
 namespace Wikia\Logger;
+use Exception;
 
 
 class LogstashFormatter extends \Monolog\Formatter\LogstashFormatter implements DevModeFormatterInterface {
@@ -32,17 +33,16 @@ class LogstashFormatter extends \Monolog\Formatter\LogstashFormatter implements 
 		);
 
 		if (!empty($record['extra'])) {
-			$message['@fields'] = [];
-			foreach ($record['extra'] as $key => $val) {
-				$message['@fields'][$key] = $val;
-			}
+			$message['@fields'] = $record['extra'];
 		}
 
 		if (!empty($record['context'])) {
-			$message['@context'] = [];
-			foreach ($record['context'] as $key => $val) {
-				$message['@context'][$key] = $val;
+			if (!empty($record['context']['exception'])) {
+				$message['@exception'] = $record['context']['exception'];
+				unset($record['context']['exception']);
 			}
+
+			$message['@context'] = $record['context'];
 		}
 
 		if ($this->isInDevMode()) {
@@ -50,5 +50,33 @@ class LogstashFormatter extends \Monolog\Formatter\LogstashFormatter implements 
 		}
 
 		return $message;
+	}
+
+	protected function normalizeException(Exception $e) {
+		$data = array(
+			'class' => get_class($e),
+			'message' => $e->getMessage(),
+			'file' => $e->getFile().':'.$e->getLine(),
+		);
+
+		$trace = $e->getTrace();
+		foreach ($trace as $frame) {
+			if (isset($frame['file'])) {
+				$data['trace'][] = $frame['file'].':'.$frame['line'];
+			} else {
+				// prevent huge json blobs from preventing message parsing (because of split message) and flooding file logs
+				if (isset($frame['args'])) {
+					unset($frame['args']);
+				}
+
+				$data['trace'][] = json_encode($frame);
+			}
+		}
+
+		if ($previous = $e->getPrevious()) {
+			$data['previous'] = $this->normalizeException($previous);
+		}
+
+		return $data;
 	}
 }

@@ -102,7 +102,7 @@ var WikiPreviewInterstitial = {
 			WikiPreviewInterstitial.hide();
 		});
 
-        $('.tooltip-icon').tooltip();
+		$('.tooltip-icon').tooltip();
 
 	},
 	loadContent: function (wikiId) {

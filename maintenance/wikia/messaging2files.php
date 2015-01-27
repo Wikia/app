@@ -1,52 +1,72 @@
 <?php
+putenv( 'SERVER_ID=4036' );
+require_once( realpath( __DIR__ . '/../commandLine.inc' ) );
 
-include( '/usr/wikia/source/trunk/maintenance/commandLine.inc' );
+$USAGE =
+	"Usage:\tphp messaging2files.php -f messages.i18n.php [[-v [--json]]\n" .
+	"\toptions:\n" .
+	"\t\t--help      show this message\n" .
+	"\t\t-f          i18n file to which the messages from messaging will be imported\n" .
+	"\t\t-v          display messages on the screen instead of writing to the file\n" .
+	"\t\t--json      works ONLY with -v parameter returns messages in JSON format" .
+	"\n";
 
-$basePath = '/usr/wikia/source/trunk/extensions/wikia/';
+$opts = getopt( 'f:v::', [ 'json' ] );
+if( empty( $opts ) ) die( $USAGE );
 
-$filesRaw = $basePath . 'CreatePage/CreatePage.i18n.php';
+$file = $opts['f'];
+if( array_key_exists( 'f', $opts ) ) {
+	if( !file_exists( $file ) ) {
+		die( 'ERROR: The i18n file does not exist' . "\n" );
+	}
+} else {
+	die( 'ERROR: No -f parameter passed' );
+}
 
-$files = explode( "\n", $filesRaw );
+$noWrite = false;
+if( array_key_exists( 'v', $opts ) ) {
+	$noWrite = true;
+}
 
 $dbr = wfGetDB( DB_SLAVE );
 
-foreach ( $files as $file ) {
-	$file = trim( $file );
+$file = trim( $file );
 
-	echo "Handling file: " . $file . "\n";
+echo "Handling file: " . $file . "\n";
 
-	# clear state
-	$messages  = array();
-	$collected = array();
+# clear state
+$messages  = array();
+$collected = array();
 
-	# include file here
-	include_once( $file );
+# include file here
+include_once( $file );
 
-	# should never happen ;)
-	if ( empty( $messages ) )
-		continue;
+# should never happen ;)
+if ( empty( $messages ) )
+	die( 'No messages!' . "\n" );
 
-	foreach ( $messages['en'] as $key => $text ) {
-		echo "Fetching articles from messaging for key = $key... ";
+foreach ( $messages['en'] as $key => $text ) {
+	echo "Fetching articles from messaging for key = $key... ";
 
-		$ucKey = ucfirst( $key );
+	$ucKey = ucfirst( $key );
 
-		$query = "SELECT page_id AS id, page_title AS title FROM page WHERE page_namespace = 8 AND page_title LIKE '" .
-                        $dbr->escapeLike( $ucKey ) . "/%'";
+	$query = "SELECT page_id AS id, page_title AS title FROM page WHERE page_namespace = 8 AND page_title LIKE '" .
+                    $dbr->escapeLike( $ucKey ) . "/%'";
 
-		$res = $dbr->query( $query );
+	$res = $dbr->query( $query );
 
-		echo "Got " . $dbr->numRows( $res ) . " articles.\n";
+	echo "Got " . $dbr->numRows( $res ) . " articles.\n";
 
-		while ( $row = $dbr->fetchObject( $res ) ) {
-			list( $cKey, $cLang ) = explode( '/', $row->title );
-			$cKey = strtolower( $cKey );
-			$oArticle = Article::newFromID( $row->id );
+	while ( $row = $dbr->fetchObject( $res ) ) {
+		list( $cKey, $cLang ) = explode( '/', $row->title );
+		$cKey = strtolower( $cKey );
+		$oArticle = Article::newFromID( $row->id );
 #			echo "Collected $cLang version of $cKey\n";
-			$collected[$cLang][$cKey] = $oArticle->getContent();
-		}
+		$collected[$cLang][$cKey] = $oArticle->getContent();
 	}
+}
 
+if( !$noWrite ) {
 	$fh = fopen( $file, "a" );
 
 	echo "\n*** WRITING TO FILE $file...\n";
@@ -76,4 +96,16 @@ foreach ( $files as $file ) {
 	echo "\nDONE!\n";
 
 	fclose( $fh );
+} else {
+	echo "\n";
+
+	$collected = array_merge( $messages, $collected );
+	if( array_key_exists( 'json', $opts ) ) {
+		$jsonOutput[ 'messages' ] = $collected;
+		echo json_encode( $jsonOutput, JSON_UNESCAPED_UNICODE );
+	} else {
+		print_r( $collected );
+	}
+
+	echo "\nDONE!\n";
 }

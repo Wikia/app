@@ -894,6 +894,15 @@ hu',
 'hub-Wikia' => 'Wikia',
 'hub-Food_and_Drink' => 'Food and Drink',
 
+# vertical names
+'vertical-tv' => 'TV',
+'vertical-games' => 'Games',
+'vertical-books' => 'Books',
+'vertical-comics' => 'Comics',
+'vertical-lifestyle' => 'Lifestyle',
+'vertical-music' => 'Music',
+'vertical-movies' => 'Movies',
+
 # Mobile skin
 'oasis-mobile-site' => 'Mobile site',
 'mobile-show' => 'Show',
@@ -903,29 +912,6 @@ hu',
 
 # Local Wiki Email Preference
 'prefs-wikiemail' => '{{SITENAME}} Email Options',
-
-# Facebook Profile Sync and Connect
-'fb-sync-button' => 'Sync my profile',
-'fb-sync-realname' => 'Real Name',
-'fb-sync-birthday' => 'Birthday',
-'fb-sync-relationshipstatus' => 'Relationship Status',
-'fb-sync-languages' => 'Languages',
-'fb-sync-hometown' => 'Hometown',
-'fb-sync-currentlocation' => 'Current Location',
-'fb-sync-education' => 'Education',
-'fb-sync-work' => 'Work History',
-'fb-sync-work-at' => ' at ',
-'fb-sync-educationwith' => ' with: ',
-'fb-sync-gender' => 'Gender',
-'fb-sync-religiousviews' => 'Religious Views',
-'fb-sync-politicalviews' => 'Political Views',
-'fb-sync-website' => 'Website',
-'fb-sync-interestedin' => 'Interested in',
-'fb-sync-save' => 'Save in my Wikia profile',
-'fb-sync-permissionerror' => 'Please grant Wikia access to Facebook in order to sync your profile.',
-'fb-sync-success-message' => 'Your profile has been synced with Facebook.',
-
-
 
 #unsubscribe email
 'unsubscribe-email' => 'If you no longer want to receive email from Wikia you can unsubscribe here: $1',
@@ -1022,14 +1008,6 @@ hu',
 ***w:c:coffee:Main_Page|Coffee
 ***homepage:Lifestyle|More...
 ",
-'shared-Oasis-footer-wikia-links' => "*http://www.wikia.com/About_Us|<span>About Us</span>
-*http://www.wikia.com/Hiring|Careers
-*http://www.wikia.com/Advertising|Advertise
-*Special:Contact|Contact
-*http://www.wikia.com/Terms_of_Use|Terms of Use
-*http://www.wikia.com/Privacy_Policy|Privacy Policy
-*_LICENSE_
-*http://www.wikia.com/Special:CreateWiki|Create a wiki",
 'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
 * [http://www.wikia.com/wiki/Wikia:About About Wikia]
 * [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]

@@ -234,23 +234,26 @@ class SpecialContributions extends SpecialPage {
 			// Show a note if the user is blocked and display the last block log entry.
 			if ( $userObj->isBlocked() ) {
 				$out = $this->getOutput(); // showLogExtract() wants first parameter by reference
-				LogEventsList::showLogExtract(
-					$out,
-					'block',
-					$nt,
-					'',
-					array(
-						'lim' => 1,
-						'showIfEmpty' => false,
-						'msgKey' => array(
-							$userObj->isAnon() ?
-								'sp-contributions-blocked-notice-anon' :
-								'sp-contributions-blocked-notice',
-							$userObj->getName() # Support GENDER in 'sp-contributions-blocked-notice'
-						),
-						'offset' => '' # don't use WebRequest parameter offset
-					)
-				);
+				//If user is blocked globally we do not show local log extract as it doesn't contain information about this block
+				if ( wfRunHooks('ContributionsLogEventsList', array( $out, $userObj) ) ) {
+					LogEventsList::showLogExtract(
+						$out,
+						'block',
+						$nt,
+						'',
+						array(
+							'lim' => 1,
+							'showIfEmpty' => false,
+							'msgKey' => array(
+								$userObj->isAnon() ?
+									'sp-contributions-blocked-notice-anon' :
+									'sp-contributions-blocked-notice',
+								$userObj->getName() # Support GENDER in 'sp-contributions-blocked-notice'
+							),
+							'offset' => '' # don't use WebRequest parameter offset
+						)
+					);
+				}
 			}
 		}
 

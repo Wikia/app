@@ -14,7 +14,7 @@
  * @constructor
  * @param {Object} [config] Configuration options
  */
-ve.ui.MWCategoryPopupWidget = function VeUiMWCategoryPopupWidget ( config ) {
+ve.ui.MWCategoryPopupWidget = function VeUiMWCategoryPopupWidget( config ) {
 	// Configuration initialization
 	config = ve.extendObject( { 'autoClose': true }, config );
 

@@ -42,12 +42,12 @@ ve.test.utils.runFormatConverterTest = function ( assert, range, type, attribute
 	formatAction.convert( type, attributes );
 
 	assert.deepEqual( surface.getModel().getDocument().getFullData(), data, msg + ': data models match' );
-	assert.deepEqual( surface.getModel().getSelection(), expectedSelection, msg + ': selections match' );
+	assert.equalRange( surface.getModel().getSelection(), expectedSelection, msg + ': selections match' );
 
 	surface.getModel().undo();
 
 	assert.deepEqual( surface.getModel().getDocument().getFullData(), originalData, msg + ' (undo): data models match' );
-	assert.deepEqual( surface.getModel().getSelection(), range, msg + ' (undo): selections match' );
+	assert.equalRange( surface.getModel().getSelection(), range, msg + ' (undo): selections match' );
 
 	surface.destroy();
 };
@@ -132,6 +132,6 @@ ve.test.utils.createSurfaceFromHtml = function ( html ) {
  */
 ve.test.utils.createSurfaceFromDocument = function ( doc ) {
 	var target = new ve.init.sa.Target( $( '#qunit-fixture' ), doc );
-	target.setup();
+	target.setup( doc );
 	return target.surface;
 };

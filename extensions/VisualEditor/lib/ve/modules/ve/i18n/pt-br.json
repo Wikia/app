@@ -12,7 +12,7 @@
 			555
 		]
 	},
-	"visualeditor": "VisualEditor",
+	"visualeditor": "Editor Visual",
 	"visualeditor-aliennode-tooltip": "Desculpe, por enquanto esse elemento só pode ser editado no código-fonte.",
 	"visualeditor-annotationbutton-bold-tooltip": "Negrito",
 	"visualeditor-annotationbutton-code-tooltip": "Código de computador",
@@ -51,6 +51,7 @@
 	"visualeditor-inspector-remove-tooltip": "Remover",
 	"visualeditor-languageinspector-block-tooltip": "Bloco de Idioma",
 	"visualeditor-languageinspector-title": "Idioma",
+	"visualeditor-languageinspector-widget-changelang": "Encontrar idioma",
 	"visualeditor-languageinspector-widget-label-direction": "Direção",
 	"visualeditor-languageinspector-widget-label-langcode": "Código do idioma",
 	"visualeditor-languageinspector-widget-label-language": "Idioma",

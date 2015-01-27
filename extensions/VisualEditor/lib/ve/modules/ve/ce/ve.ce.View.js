@@ -152,7 +152,7 @@ ve.ce.View.prototype.isLive = function () {
  */
 ve.ce.View.prototype.setLive = function ( live ) {
 	this.live = live;
-	this.emit( 'live' );
+	this.emit( 'live', this.live );
 	if ( this.live ) {
 		this.emit( 'setup' );
 	} else {

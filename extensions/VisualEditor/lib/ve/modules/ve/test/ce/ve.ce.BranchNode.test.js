@@ -51,9 +51,10 @@ QUnit.test( 'canHaveChildrenNotContent', 1, function ( assert ) {
 
 QUnit.test( 'updateTagName', 4, function ( assert ) {
 	var attributes = { 'style': 'a' },
-		node = new ve.ce.BranchNodeStub( new ve.dm.BranchNodeStub( [], {
-		'type': 'branch-stub', 'attributes': attributes
-	} ) );
+		node = new ve.ce.BranchNodeStub( new ve.dm.BranchNodeStub( {
+			'type': 'branch-stub',
+			'attributes': attributes
+		} ) );
 
 	// Add content to the node
 	node.$element.text( 'hello' );

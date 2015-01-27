@@ -1,5 +1,5 @@
 <div class="toolbar">
 	<ul class="tools">
-		<?= F::app()->renderView('Footer','Toolbar'); ?>
+		<?= F::app()->renderView('UserTools','Toolbar'); ?>
 	</ul>
 </div>

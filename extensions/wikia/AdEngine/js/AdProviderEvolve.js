@@ -8,23 +8,26 @@ define('ext.wikia.adEngine.provider.evolve', [
 	'wikia.document',
 	'wikia.scriptwriter',
 	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.adEngine.adLogicPageParamsLegacy',
-	'ext.wikia.adEngine.krux',
 	'ext.wikia.adEngine.evolveHelper',
 	'ext.wikia.adEngine.evolveSlotConfig'
-], function (log, window, document, scriptWriter, slotTweaker, adLogicPageParamsLegacy, Krux, evolveHelper, evolveSlotConfig) {
+], function (log, window, document, scriptWriter, slotTweaker, evolveHelper, evolveSlotConfig) {
 	'use strict';
 
 	var slotMap,
 		logGroup = 'ext.wikia.adEngine.provider.evolve',
 		ord = Math.round(Math.random() * 23456787654),
+		tile = 0,
 		slotForSkin = 'INVISIBLE_SKIN',
 		hoppedSlots = {},
-		hopTo = 'Liftium',
 		iface,
 		undef;
 
 	slotMap = evolveSlotConfig.getConfig();
+
+	function getTileKv() {
+		tile += 1;
+		return 'tile=' + tile + ';';
+	}
 
 	function hasEmbed(slot) {
 		log(['hasEmbed', slot], 5, logGroup);
@@ -39,7 +42,7 @@ define('ext.wikia.adEngine.provider.evolve', [
 	 * TODO: in future we should rely entirely on offsetHeight, so the actual ad should be loaded
 	 * in a div with no paddings and margins.
 	 *
-	 * @param {DomElement} slot
+	 * @param {Element} slot
 	 * @return {Number}
 	 */
 	function getHeight(slot) {
@@ -75,9 +78,7 @@ define('ext.wikia.adEngine.provider.evolve', [
 			'sect=' + sect + ';' +
 			'mtfInline=true;' +
 			'pos=' + slotname + ';' +
-			's1=_' + (window.wgDBname || 'wikia').replace('/[^0-9A-Z_a-z]/', '_') + ';' +
-			adLogicPageParamsLegacy.getCustomKeyValues() +
-			adLogicPageParamsLegacy.getKruxKeyValues();
+			evolveHelper.getTargeting();
 	}
 
 	function getReskinAndSilverScript(slotname) {
@@ -96,7 +97,7 @@ define('ext.wikia.adEngine.provider.evolve', [
 		//script += '<script type="text/javascript">' + '\n';
 		script += "if ((typeof(f406815)=='undefined' || f406815 > 0) ) {" + '\n';
 		script += "document.write('<scr'+'ipt src=\"http://n4403ad.doubleclick.net/adj/gn.wikia4.com/";
-		script += kv + ";sz=1000x1000;tile=1;ord=" + ord + "?\" type=\"text/javascript\"></scr'+'ipt>');" + '\n';
+		script += kv + "sz=1000x1000;" + getTileKv() + "ord=" + ord + "?\" type=\"text/javascript\"></scr'+'ipt>');" + '\n';
 		script += '}' + '\n';
 		//script += '</script>' + '\n';
 
@@ -104,7 +105,7 @@ define('ext.wikia.adEngine.provider.evolve', [
 		//script += '<script type="text/javascript">' + '\n';
 		script += "if ((typeof(f406785)=='undefined' || f406785 > 0) ) {" + '\n';
 		script += "document.write('<scr'+'ipt src=\"http://n4403ad.doubleclick.net/adj/gn.wikia4.com/";
-		script += kv + ";sz=47x47;tile=2;ord=" + ord + "?\" type=\"text/javascript\"></scr'+'ipt>');" + '\n';
+		script += kv + "sz=47x47;" + getTileKv() + "ord=" + ord + "?\" type=\"text/javascript\"></scr'+'ipt>');" + '\n';
 		script += '}' + '\n';
 		//script += '</script>' + '\n';
 
@@ -127,12 +128,10 @@ define('ext.wikia.adEngine.provider.evolve', [
 			'adj' + '/' +
 			'gn.wikia4.com' + '/' +
 			getKv(slotname) +
-			adLogicPageParamsLegacy.getDomainKV() +
-			adLogicPageParamsLegacy.getHostnamePrefix() +
 			'sz=' + size + ';' +
 			(dcopt ? 'dcopt=' + dcopt + ';' : '') +
 			'type=pop;type=int;' + // TODO remove?
-			'tile=' + tile + ';' +
+			getTileKv() +
 			'ord=' + ord + '?';
 
 		log(url, 7, logGroup);
@@ -193,7 +192,7 @@ define('ext.wikia.adEngine.provider.evolve', [
 					height;
 
 				if (hoppedSlots[slotname]) {
-					pHop({method: 'hop'}, hopTo);
+					pHop({method: 'hop'});
 					return;
 				}
 
@@ -213,7 +212,7 @@ define('ext.wikia.adEngine.provider.evolve', [
 
 				slotTweaker.addDefaultHeight(slotname);
 				log('Evolve did not hop, but returned 1x1 ad instead for slot ' + slotname, 1, logGroup);
-				pHop({method: '1x1'}, hopTo);
+				pHop({method: '1x1'});
 			});
 		}
 	}

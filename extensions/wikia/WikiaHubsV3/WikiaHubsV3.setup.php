@@ -12,9 +12,15 @@ $dir = dirname(__FILE__) . '/';
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'WikiaHubs V3',
-	'author' => 'Bartosz "V" Bentkowski, Damian Jóźwiak, Łukasz Konieczny, Sebastian Marzjan',
-	'description' => 'WikiaHubs V3',
-	'version' => 1.0
+	'author' => array(
+		'Bartosz "V" Bentkowski',
+		'Damian Jóźwiak', 
+		'Łukasz Konieczny',
+		'Sebastian Marzjan'
+	),
+	'descriptionmsg' => 'wikiahubs-v3-desc',
+	'version' => 1.0,
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaHubsV3'
 );
 
 $wgAutoloadClasses['WikiaHubsV3Page'] =  $dir . 'WikiaHubsV3Page.class.php';
@@ -33,32 +39,10 @@ $wgAutoloadClasses['WikiaHubsModel'] =  $dir . '../WikiaHubsServices/models/Wiki
 
 $wgAutoloadClasses['WikiaHubsV3SuggestModel'] =  $dir . 'models/WikiaHubsV3SuggestModel.class.php';
 
-$wgAutoloadClasses['WikiaHubsParserHelper'] =  $dir . 'WikiaHubsParserHelper.class.php';
-
 // i18n mapping
 $wgExtensionMessagesFiles['WikiaHubsV3'] = $dir . 'WikiaHubsV3.i18n.php';
-// TODO: We need this to support both hub versions. Remove after hubs v3 release @WikiaHubsV2Remove tag
-$wgExtensionMessagesFiles['WikiaHubsV2'] = $dir . '../WikiaHubsV2/WikiaHubsV2.i18n.php';
 
 // hooks
 $wgHooks['ArticleFromTitle'][] = 'WikiaHubsV3Hooks::onArticleFromTitle';
 $wgHooks['WikiaCanonicalHref'][] = 'WikiaHubsV3Hooks::onWikiaCanonicalHref';
-$wgHooks['ParserFirstCallInit'][] = 'WikiaHubsV3Hooks::onParserFirstCallInit';
-
-// foreign file repo
-$wgForeignFileRepos[] = array(
-	'class'            => 'WikiaForeignDBViaLBRepo',
-	'name'             => 'wikiahubsfiles',
-	'directory'        => $wgWikiaHubsFileRepoDirectory,
-	'url'              => 'http://images.wikia.com/' . $wgWikiaHubsFileRepoDBName . '/images',
-	'hashLevels'       => 2,
-	'thumbScriptUrl'   => '',
-	'transformVia404'  => true,
-	'hasSharedCache'   => true,
-	'descBaseUrl'      => $wgWikiaHubsFileRepoPath . 'wiki/File:',
-	'fetchDescription' => true,
-	'wiki'             => $wgWikiaHubsFileRepoDBName,
-	'checkRedirects'   => false,
-	'checkDuplicates'  => false,
-);
 

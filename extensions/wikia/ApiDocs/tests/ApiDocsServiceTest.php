@@ -33,7 +33,7 @@ class ApiDocsServiceTest extends \WikiaBaseTest {
 			->method( "getRegistry" )
 			->will( $this->returnValue([ $resource ]) );
 
-		$apiDocsService = new ApiDocsService( $swaggerMock, function($foo) { return "path_for_$foo"; } );
+		$apiDocsService = new ApiDocsService( $swaggerMock, function($foo) { return "path_for_$foo"; }, '' );
 		$result = $apiDocsService->getDocList();
 
 		$this->assertEquals( "bar_version", $result["apiVersion"] );

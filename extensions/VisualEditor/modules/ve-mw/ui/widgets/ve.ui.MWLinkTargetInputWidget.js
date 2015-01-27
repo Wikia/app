@@ -93,7 +93,6 @@ ve.ui.MWLinkTargetInputWidget.prototype.getLookupRequest = function () {
 		}
 	} } );
 };
-
 /**
  * Get lookup cache item from server response data.
  *

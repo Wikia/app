@@ -2,26 +2,28 @@ class VisualEditorPage
   include PageObject
 
   include URL
-  page_url URL.url("User:#{ENV['MEDIAWIKI_USER']}/#{ENV['BROWSER']}?vehidebetadialog=true")
-
+  page_url URL.url("User:#{ENV['MEDIAWIKI_USER']}/#{ENV['BROWSER']}?vehidebetadialog=true&veaction=edit")
+  span(:bullet_number_selector, class: "oo-ui-iconedElement-icon oo-ui-icon-bullet-list")
   div(:container_disabled, class: "oo-ui-widget oo-ui-widget-disabled oo-ui-flaggableElement-constructive oo-ui-.oo-ui-buttonedElement-framed")
-  div(:content, class: "ve-ce-documentNode ve-ce-branchNode")
+  div(:content, class: "ve-ce-branchNode")
   span(:decrease_indentation, class: "oo-ui-iconedElement-icon oo-ui-icon-outdent-list")
-  a(:decrease_indentation_on, title: /Decrease indentation/)
   span(:downarrow, class: "oo-ui-indicatedElement-indicator oo-ui-indicator-down")
   a(:edit_ve, title: /Edit this page with VisualEditor/)
   a(:edit_wikitext, title: /You can edit this page\./)
   a(:heading, text: /Heading/)
+  span(:hamburger_menu, css: "div.oo-ui-listToolGroup:nth-child(2) > span:nth-child(1) > span:nth-child(3)")
   span(:increase_indentation, class: "oo-ui-iconedElement-icon oo-ui-icon-indent-list")
-  a(:increase_indentation_on, title: /Increase indentation/)
   span(:insert_menu, text: "Insert")
   div(:insert_references, class: "oo-ui-window-title")
   span(:internal_linksuggestion, text: "Main Page")
   div(:ip_warning, class: "ve-ui-mwNoticesPopupTool-item")
   span(:linksuggestion, text: "http://www.example.com")
   span(:looks_good, class: "oo-ui-labeledElement-label", text: "Looks good to me")
+  div(:medium_dialog, class: "oo-ui-window oo-ui-dialog oo-ui-dialog-open oo-ui-dialog-medium")
   span(:newpage_linksuggestion, text: "DoesNotExist")
+  span(:options_in_hamburger, class: "oo-ui-tool-title", text: "Options")
   div(:page_text, id: "mw-content-text")
+  div(:page_text_after_save, class: "ve-ce-documentNode mw-content-ltr ve-ce-branchNode noime")
   a(:page_title, text: /Page title/)
   a(:paragraph, text: /Paragraph/)
   a(:preformatted, text: /Preformatted/)
@@ -41,7 +43,7 @@ class VisualEditorPage
   end
 
   span(:ve_bold_text, class: "oo-ui-iconedElement-icon oo-ui-icon-bold-b")
-  span(:ve_bullets, class: "oo-ui-iconedElement-icon oo-ui-icon-bullet-list")
+  span(:ve_bullets, class: "oo-ui-iconedElement-icon oo-ui-icon-bullet-list", index: 1)
   span(:ve_computer_code, class: "oo-ui-iconedElement-icon oo-ui-icon-code")
   div(:ve_heading_menu, class: "oo-ui-iconedElement-icon oo-ui-icon-down")
   span(:ve_link_icon, class: "oo-ui-iconedElement-icon oo-ui-icon-link")
@@ -55,8 +57,10 @@ class VisualEditorPage
   span(:ve_text_style, class: "oo-ui-iconedElement-icon oo-ui-icon-text-style")
   span(:ve_underline, class: "oo-ui-iconedElement-icon oo-ui-icon-underline-u")
   div(:visual_editor_toolbar, class: "oo-ui-toolbar-tools")
-  span(:transclusion, class: "oo-ui-iconedElement-icon oo-ui-icon-template")
+  a(:transclusion, css: "span.oo-ui-widget.oo-ui-iconedElement.oo-ui-tool.oo-ui-tool-name-transclusion.oo-ui-widget-enabled > a")
   text_area(:wikitext_editor, id: "wpTextbox1")
+  a(:first_reference, text: "[1]", index: 1)
+  a(:second_reference, text: "[1]", index: 2)
 
   in_iframe(index: 0) do |frame|
     a(:beta_warning, title: "Close", frame: frame)
@@ -64,14 +68,16 @@ class VisualEditorPage
     span(:leftarrowclose, class: "oo-ui-iconedElement-icon oo-ui-icon-previous", frame: frame)
     text_field(:link_textfield, index: 0, frame: frame)
     span(:another_save_page, class: "oo-ui-labeledElement-label", text: "Save page", frame: frame)
+    div(:options_page_title, class: "oo-ui-window-title", text: "Options", frame: frame)
     div(:ve_link_ui, class: "oo-ui-window-title", frame: frame)
   end
 
   # not having beta warning makes iframes off by one
   in_iframe(index: 0) do |frame|
-    span(:add_parameter, text: "Add parameter", frame: frame)
+    span(:add_parameter, text: "Add more information", frame: frame)
     span(:add_template, text: "Add template", frame: frame)
     span(:insert_template, text: "Insert template", frame: frame)
+    a(:confirm_switch, css: "div.oo-ui-widget:nth-child(1) > a:nth-child(1) > span:nth-child(2)", frame: frame)
     div(:content_box, class: "ve-ce-documentNode ve-ce-branchNode", frame: frame)
     text_area(:describe_change, index: 0, frame: frame)
     div(:diff_view, class: "ve-ui-mwSaveDialog-viewer", frame: frame)
@@ -82,10 +88,11 @@ class VisualEditorPage
     checkbox(:minor_edit, id: "wpMinoredit", frame: frame)
     text_field(:parameter_box, index: 0, frame: frame)
     div(:parameter_icon, text: "q", frame: frame)
-    a(:remove_parameter, title: "Remove parameter", frame: frame)
+    a(:remove_parameter, title: "Remove field", frame: frame)
     a(:remove_template, title: "Remove template", frame: frame)
     span(:return_to_save, class: "oo-ui-labeledElement-label", text: "Return to save form", frame: frame)
     span(:review_changes, class: "oo-ui-labeledElement-label", text: "Review your changes", frame: frame)
+    div(:review_failed, class: "oo-ui-window-title", frame: frame)
     span(:second_save_page, class: "oo-ui-labeledElement-label", text: "Save page", frame: frame)
     unordered_list(:suggestion_list, class: "ve-ui-mwTitleInputWidget-menu", frame: frame)
     div(:template_header, class: "ve-ui-mwTransclusionDialog-single", frame: frame)
@@ -93,6 +100,8 @@ class VisualEditorPage
     div(:title, class: "oo-ui-window-title", frame: frame)
     text_area(:transclusion_textarea, index: 0, frame: frame)
     text_field(:transclusion_textfield, index: 0, frame: frame)
+    span(:existing_reference, text: "Use an existing reference", frame: frame)
+    div(:extension_reference, class: "ve-ui-mwReferenceResultWidget-shield", frame: frame)
   end
 
   # not having beta warning makes iframes off by one

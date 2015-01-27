@@ -2,6 +2,12 @@
 	"requireCurlyBraces": ["if", "else", "for", "while", "do"],
 	"requireSpaceAfterKeywords": ["if", "else", "for", "while", "do", "switch", "case", "catch", "return", "function"],
 	"requireParenthesesAroundIIFE": true,
+	"requireSpacesInConditionalExpression": {
+		"afterTest": true,
+		"beforeConsequent": true,
+		"afterConsequent": true,
+		"beforeAlternate": true
+	},
 	"requireSpacesInFunctionExpression": {
 		"beforeOpeningCurlyBrace": true
 	},
@@ -12,14 +18,12 @@
 	"disallowSpaceAfterObjectKeys": true,
 	"requireCommaBeforeLineBreak": true,
 	"requireOperatorBeforeLineBreak": ["?", "+", "-", "/", "*", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<="],
-	"disallowLeftStickedOperators": ["?", "+", "/", "*", "-", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<="],
-	"disallowRightStickedOperators": ["?", "/", "*", ":", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<="],
-	"requireRightStickedOperators": ["!"],
-	"requireLeftStickedOperators": [","],
+	"disallowSpaceAfterBinaryOperators": ["!"],
+	"disallowSpaceBeforeBinaryOperators": [","],
 	"disallowSpaceAfterPrefixUnaryOperators": ["++", "--", "+", "-", "~"],
 	"disallowSpaceBeforePostfixUnaryOperators": ["++", "--"],
-	"requireSpaceBeforeBinaryOperators": ["+", "-", "/", "*", "=", "==", "===", "!=", "!=="],
-	"requireSpaceAfterBinaryOperators": ["+", "-", "/", "*", "=", "==", "===", "!=", "!=="],
+	"requireSpaceBeforeBinaryOperators": ["+", "-", "/", "*", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<="],
+	"requireSpaceAfterBinaryOperators": ["+", "-", "/", "*", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<="],
 	"disallowKeywords": [ "with" ],
 	"disallowMultipleLineStrings": true,
 	"disallowMultipleLineBreaks": true,
@@ -39,6 +43,7 @@
 	},
 	"excludeFiles": [
 		"**/node_modules/**",
-		"**/lib/**"
+		"**/lib/**",
+		"**/*.mustache.js"
 	]
 }

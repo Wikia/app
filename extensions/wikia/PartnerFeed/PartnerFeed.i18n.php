@@ -13,6 +13,7 @@ $messages = array();
  * @return array
  */
 $messages['en'] = array(
+	'partner-feed-desc'                 => 'Partner Feed extension',
 	'partner-feed-achievements-leaderboard' => 'Wikis achievements leaderboard',
 	'partner-feed-earned-badges'		=> 'Recently earned badges for a specific Wiki',
 	'partner-feed-recent-blog-posts'	=> 'Recent blog posts related to a promotion',
@@ -40,6 +41,7 @@ $messages['en'] = array(
  * @author Shirayuki
  */
 $messages['qqq'] = array(
+	'partner-feed-desc' => '{{desc}}',
 	'partner-feed-hotcontent' => 'Both terms "Hub" and "verticals" have the same meaning in this context. The meaning is "Portals", i.e. the grouping of wikis by their theme. Examples of portals are "Gaming", "Entertainment", "Education", "Music", etc.',
 	'partner-feed-recent-changes' => '{{Identical|Recent changes}}',
 	'blog-posts-from-listing' => 'Parameters:
@@ -162,6 +164,7 @@ $messages['cs'] = array(
  * @author ✓
  */
 $messages['de'] = array(
+	'partner-feed-desc' => 'Partner-Feed-Erweiterung',
 	'partner-feed-achievements-leaderboard' => 'Wiki Rangliste',
 	'partner-feed-earned-badges' => 'Kürzlich verdiente Abzeichen für ein bestimmtes Wiki',
 	'partner-feed-recent-blog-posts' => 'Letzte Blog-Beiträge in Verbindung mit einer Förderung',
@@ -201,6 +204,7 @@ $messages['diq'] = array(
  * @author VegaDark
  */
 $messages['es'] = array(
+	'partner-feed-desc' => 'Extensión de Partner Feed',
 	'partner-feed-achievements-leaderboard' => 'Tabla de líderes con más logros',
 	'partner-feed-earned-badges' => 'Logros recientemente ganados para un wiki específico',
 	'partner-feed-recent-blog-posts' => 'Entradas de blog recientes relacionadas con una promoción',
@@ -273,12 +277,14 @@ $messages['fi'] = array(
 );
 
 /** French (français)
+ * @author Gomoko
  * @author Jean-Frédéric
  * @author Peter17
  * @author Verdy p
  * @author Wyz
  */
 $messages['fr'] = array(
+	'partner-feed-desc' => 'Extension de flux partenaire',
 	'partner-feed-achievements-leaderboard' => 'Tableau des challenges des wikis',
 	'partner-feed-earned-badges' => 'Badges récemment gagnés pour un wiki donné',
 	'partner-feed-recent-blog-posts' => 'Billets de blog récemment postés pour une promotion',
@@ -371,11 +377,32 @@ $messages['it'] = array(
 	'partner-feed-achievements-leaderboard' => 'Classifica dei successi nella wiki',
 );
 
+/** Japanese (日本語)
+ * @author Barrel0116
+ * @author Plover-Y
+ */
+$messages['ja'] = array(
+	'partner-feed-recent-changes' => '最近の変更',
+	'all-blog-posts' => 'すべてのカテゴリ',
+	'feed-title-recentchanges' => '最近の更新',
+);
+
 /** Kannada (ಕನ್ನಡ)
  * @author VASANTH S.N.
  */
 $messages['kn'] = array(
 	'partner-feed-recent-changes' => 'ಇತ್ತೀಚಿನ ಬದಲಾವಣೆಗಳು',
+);
+
+/** Korean (한국어)
+ * @author Miri-Nae
+ * @author 아라
+ */
+$messages['ko'] = array(
+	'feed-title-blogposts' => '최근 블로그 게시물',
+	'feed-title-recent-badges' => '최근 배지',
+	'feed-title-recent-images' => '최근 그림',
+	'feed-title-leaderboard' => '배지 현황판',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
@@ -456,6 +483,7 @@ $messages['ml'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'partner-feed-desc' => 'Sambungan Partner Feed',
 	'partner-feed-achievements-leaderboard' => 'Papan teraju pencapaian Wiki',
 	'partner-feed-earned-badges' => 'Lencana-lencana yang baru diraih untuk Wiki tertentu',
 	'partner-feed-recent-blog-posts' => 'Kiriman blog terkini yang berkenaan promosi',
@@ -783,6 +811,13 @@ $messages['tl'] = array(
 	'feed-title-recentchanges' => 'Kamakailang mga pagbabago',
 );
 
+/** Turkish (Türkçe)
+ * @author Sucsuzz
+ */
+$messages['tr'] = array(
+	'feed-title-recentchanges' => 'Son değişiklikler',
+);
+
 /** Ukrainian (українська)
  * @author A1
  * @author Andriykopanytsia
@@ -845,10 +880,17 @@ $messages['vi'] = array(
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'partner-feed-desc' => '合作伙伴订阅点扩展',
 	'partner-feed-achievements-leaderboard' => 'Wiki成就排行榜',
 	'partner-feed-earned-badges' => '最近在特定wiki获得的徽章',
-	'partner-feed-recent-changes' => '最新更改',
-	'feed-title-blogposts' => '最新博客帖子',
+	'partner-feed-recent-blog-posts' => '最近有关宣传的博客文章',
+	'partner-feed-latest-images' => '图片库中的最新图像已被更新',
+	'partner-feed-hotcontent' => '门户中的“热门内容”是通过编辑次数排名',
+	'partner-feed-recent-blog-comments' => '有关指定博客文章的最近的评论。',
+	'partner-feed-recent-changes' => '最近更改',
+	'partnerfeed' => '合作伙伴订阅点',
+	'error-no-article' => '错误：未传递“article”参数',
+	'feed-title-blogposts' => '最近的博客文章',
 	'feed-title-recent-badges' => '最新徽章',
 	'feed-title-recent-images' => '最近的图片',
 	'feed-title-leaderboard' => '成就排行榜',
@@ -858,5 +900,13 @@ $messages['zh-hans'] = array(
 	'feed-title-hot-content' => '热点内容 - $1',
 	'feed-title-blogcomments' => '评论 $1',
 	'feed-title-recentchanges' => '最近更改',
-	'partner-feed-error-no-blogpost-found' => '<b>错误：</b>博客文章 $1 不存在。',
+	'partner-feed-error-no-blogpost-found' => '<b>错误：</b>博客文章$1不存在。',
+);
+
+/** Traditional Chinese (中文（繁體）‎)
+ * @author EagerLin
+ */
+$messages['zh-hant'] = array(
+	'partner-feed-recent-changes' => '近期變更',
+	'feed-title-recentchanges' => '近期變更',
 );

@@ -18,8 +18,8 @@ require_once( __DIR__ . '/../../includes/wikia/swift/all.php' );
  */
 class SyncSwiftImagesBetweeenDC extends Maintenance {
 
-	const SOURCE_DC_DEFAULT = 'sjc';
-	const DESTINATION_DC_DEFAULT = 'res';
+	const SOURCE_DC_DEFAULT = WIKIA_DC_SJC;
+	const DESTINATION_DC_DEFAULT = WIKIA_DC_RES;
 
 	const LOG_SYNC_ERRORS = 'swift-dc-sync-errors';
 

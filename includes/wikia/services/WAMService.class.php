@@ -8,16 +8,29 @@ class WAMService extends Service {
 
 	const WAM_DEFAULT_ITEM_LIMIT_PER_PAGE = 20;
 	const WAM_BLACKLIST_EXT_VAR_NAME = 'wgEnableContentWarningExt';
+	const CACHE_DURATION = 86400; /* 24 hours */
+	const MEMCACHE_VER = '1.05';
+
+	protected $verticalIds = [
+		WikiFactoryHub::HUB_ID_OTHER,
+		WikiFactoryHub::HUB_ID_TV,
+		WikiFactoryHub::HUB_ID_VIDEO_GAMES,
+		WikiFactoryHub::HUB_ID_BOOKS,
+		WikiFactoryHub::HUB_ID_COMICS,
+		WikiFactoryHub::HUB_ID_LIFESTYLE,
+		WikiFactoryHub::HUB_ID_MUSIC,
+		WikiFactoryHub::HUB_ID_MOVIES,
+	];
 
 	protected static $verticalNames = [
-		WikiFactoryHub::CATEGORY_ID_GAMING => 'Gaming',
-		WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT => 'Entertainment',
-		WikiFactoryHub::CATEGORY_ID_LIFESTYLE => 'Lifestyle'
-	];
-	protected static $verticalIds = [
-		'Gaming' => WikiFactoryHub::CATEGORY_ID_GAMING,
-		'Entertainment' => WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
-		'Lifestyle' => WikiFactoryHub::CATEGORY_ID_LIFESTYLE
+		WikiFactoryHub::HUB_ID_OTHER => 'Other',
+		WikiFactoryHub::HUB_ID_TV => 'TV',
+		WikiFactoryHub::HUB_ID_VIDEO_GAMES => 'Games',
+		WikiFactoryHub::HUB_ID_BOOKS => 'Books',
+		WikiFactoryHub::HUB_ID_COMICS => 'Comics',
+		WikiFactoryHub::HUB_ID_LIFESTYLE => 'Lifestyle',
+		WikiFactoryHub::HUB_ID_MUSIC => 'Music',
+		WikiFactoryHub::HUB_ID_MOVIES => 'Movies',
 	];
 
 	protected $defaultIndexOptions = array(
@@ -38,14 +51,13 @@ class WAMService extends Service {
 	 * @param int $wikiId
 	 * @return number
 	 */
-	public static function getCurrentWamScoreForWiki ($wikiId) {
-		$app = F::app();
+	public function getCurrentWamScoreForWiki ($wikiId) {
 		wfProfileIn(__METHOD__);
 
-		$memKey = wfSharedMemcKey('datamart', 'wam', $wikiId);
+		$memKey = wfSharedMemcKey('datamart', self::MEMCACHE_VER, 'wam', $wikiId);
 
-		$getData = function () use ($app, $wikiId) {
-			$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
+		$getData = function () use ($wikiId) {
+			$db = $this->getDB();
 
 			$result = $db->select(
 				array('fact_wam_scores'),
@@ -65,7 +77,7 @@ class WAMService extends Service {
 			return ($row = $db->fetchObject($result)) ? $row->wam : 0;
 		};
 
-		$wamScore = WikiaDataAccess::cacheWithLock($memKey, 86400 /* 24 hours */, $getData);
+		$wamScore = WikiaDataAccess::cacheWithLock($memKey, self::CACHE_DURATION, $getData);
 		wfProfileOut(__METHOD__);
 		return $wamScore;
 	}
@@ -84,7 +96,7 @@ class WAMService extends Service {
 	 *
 	 * @return array
 	 */
-	public function getWamIndex ($inputOptions) {
+	public function getWamIndex($inputOptions) {
 		$inputOptions += $this->defaultIndexOptions;
 
 		$inputOptions['currentTimestamp'] = $inputOptions['currentTimestamp'] ? strtotime('00:00 -1 day', $inputOptions['currentTimestamp']) : strtotime('00:00 -1 day');
@@ -92,51 +104,49 @@ class WAMService extends Service {
 			? strtotime('00:00 -1 day', $inputOptions['previousTimestamp'])
 			: $inputOptions['currentTimestamp'] - 60 * 60 * 24;
 
-		$app = F::app();
 		wfProfileIn(__METHOD__);
 
 		$wamIndex = array(
 			'wam_index' => array(),
 			'wam_results_total' => 0
 		);
-		if (!empty($app->wg->StatsDBEnabled)) {
-			$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
 
-			$tables = $this->getWamIndexTables();
-			$fields = $this->getWamIndexFields();
-			$countFields = $this->getWamIndexCountFields();
-			$conds = $this->getWamIndexConditions($inputOptions, $db);
-			$options = $this->getWamIndexOptions($inputOptions);
-			$join_conds = $this->getWamIndexJoinConditions($inputOptions);
+		$db = $this->getDB();
 
-			$result = $db->select(
-				$tables,
-				$fields,
-				$conds,
-				__METHOD__,
-				$options,
-				$join_conds
-			);
+		$tables = $this->getWamIndexTables();
+		$fields = $this->getWamIndexFields();
+		$countFields = $this->getWamIndexCountFields();
+		$conds = $this->getWamIndexConditions($inputOptions, $db);
+		$options = $this->getWamIndexOptions($inputOptions);
+		$join_conds = $this->getWamIndexJoinConditions($inputOptions);
 
-			$resultCount = $db->select(
-				$tables,
-				$countFields,
-				$conds,
-				__METHOD__,
-				array(),
-				$join_conds
-			);
+		$result = $db->select(
+			$tables,
+			$fields,
+			$conds,
+			__METHOD__,
+			$options,
+			$join_conds
+		);
 
-			/* @var $db DatabaseMysql */
-			while ($row = $db->fetchObject($result)) {
-				$row = (array)$row;
-				$row['hub_id'] = $this->getVerticalId($row['hub_name']);
-				$wamIndex['wam_index'][$row['wiki_id']] = $row;
-			}
-			$count = $resultCount->fetchObject();
-			$wamIndex['wam_results_total'] = $count->wam_results_total;
-			$wamIndex['wam_index_date'] = $inputOptions['currentTimestamp'];
+		$resultCount = $db->select(
+			$tables,
+			$countFields,
+			$conds,
+			__METHOD__,
+			array(),
+			$join_conds
+		);
+
+		/* @var $db DatabaseMysql */
+		while ( $row = $db->fetchObject( $result ) ) {
+			$row = ( array )$row;
+			$row['vertical_name'] = $this->getVerticalName( $row['vertical_id'] );
+			$wamIndex['wam_index'][$row['wiki_id']] = $row;
 		}
+		$count = $resultCount->fetchObject();
+		$wamIndex['wam_results_total'] = $count->wam_results_total;
+		$wamIndex['wam_index_date'] = $inputOptions['currentTimestamp'];
 
 		wfProfileOut(__METHOD__);
 
@@ -149,31 +159,63 @@ class WAMService extends Service {
 			'min_date' => null
 		);
 
-		$app = F::app();
 		wfProfileIn(__METHOD__);
 
-		if (!empty($app->wg->StatsDBEnabled)) {
-			$db = wfGetDB(DB_SLAVE, array(), $app->wg->DWStatsDB);
+		$db = $this->getDB();
 
-			$fields = array(
-				'MAX(time_id) AS max_date',
-				'MIN(time_id) AS min_date'
-			);
+		$fields = array(
+			'MAX(time_id) AS max_date',
+			'MIN(time_id) AS min_date'
+		);
 
-			$result = $db->select(
-				'fact_wam_scores',
-				$fields
-			);
+		$result = $db->select(
+			'fact_wam_scores',
+			$fields,
+			'',
+			__METHOD__
+		);
 
-			$row = $db->fetchRow($result);
+		$row = $db->fetchRow($result);
 
-			$dates['max_date'] = strtotime('+1 day', strtotime($row['max_date']));
-			$dates['min_date'] = strtotime('+1 day', strtotime($row['min_date']));
-		}
+		$dates['max_date'] = strtotime('+1 day', strtotime($row['max_date']));
+		$dates['min_date'] = strtotime('+1 day', strtotime($row['min_date']));
 
 		wfProfileOut(__METHOD__);
 
 		return $dates;
+	}
+
+	public function getWAMLanguages( $date ) {
+		wfProfileIn( __METHOD__ );
+
+		$date = empty( $date ) ? strtotime( '00:00 -1 day' ) : strtotime( '00:00 -1 day', $date );
+		$memKey = wfSharedMemcKey( 'wam-languages', self::MEMCACHE_VER, $date );
+
+		$getData = function () use ( $date ) {
+			$db = $this->getDB();
+			$result = $db->select(
+				[
+					'fw1' => 'fact_wam_scores',
+					'dw' => 'dimension_wikis'
+				],
+				'DISTINCT dw.lang',
+				'fw1.time_id = FROM_UNIXTIME(' . $date . ')',
+				__METHOD__,
+				[ 'ORDER BY' => 'dw.lang ASC' ],
+				[ 'fw1' => [ 'INNER JOIN', 'dw.wiki_id = fw1.wiki_id' ] ]
+			);
+
+			$languages = [];
+			while ( $row = $db->fetchObject( $result ) ) {
+				$languages[] = $row->lang;
+			}
+
+			return $languages;
+		};
+
+		$wamLanguages = WikiaDataAccess::cache( $memKey, self::CACHE_DURATION, $getData );
+		wfProfileOut( __METHOD__ );
+		return $wamLanguages;
 	}
 
 	protected function getWamIndexJoinConditions ($options) {
@@ -220,6 +262,11 @@ class WAMService extends Service {
 		return $options;
 	}
 
+	/**
+	 * @param Array $options
+	 * @param DatabaseBase $db
+	 * @return array
+	 */
 	protected function getWamIndexConditions ($options, $db) {
 		$conds = array(
 			'fw1.time_id = FROM_UNIXTIME(' . $options['currentTimestamp'] . ')'
@@ -234,16 +281,12 @@ class WAMService extends Service {
 						"OR dw.title like '%" . $db->strencode($options['wikiWord']) . "%'";
 		}
 
-		if ($options['verticalId']) {
-			$vericals = $options['verticalId'];
+		if ( $options['verticalId'] ) {
+			$verticals = $options['verticalId'];
 		} else {
-			$vericals = array(
-				WikiFactoryHub::CATEGORY_ID_GAMING,
-				WikiFactoryHub::CATEGORY_ID_ENTERTAINMENT,
-				WikiFactoryHub::CATEGORY_ID_LIFESTYLE
-			);
+			$verticals = $this->verticalIds;
 		}
-		$conds['fw1.hub_name'] = $this->translateVerticalsNames($vericals);
+		$conds['fw1.vertical_id'] = $verticals;
 
 		if (!is_null($options['wikiLang'])) {
 			$conds ['dw.lang'] = $db->strencode($options['wikiLang']);
@@ -267,13 +310,16 @@ class WAMService extends Service {
 			'fw1.wam',
 			'fw1.wam_rank',
 			'fw1.hub_wam_rank',
+			'fw1.vertical_wam_rank',
 			'fw1.peak_wam_rank',
 			'fw1.peak_hub_wam_rank',
+			'fw1.peak_vertical_wam_rank',
 			'fw1.top_1k_days',
 			'fw1.top_1k_weeks',
 			'fw1.first_peak',
 			'fw1.last_peak',
 			'fw1.hub_name',
+			'fw1.vertical_id',
 			'dw.title',
 			'dw.url',
 			'fw1.wam - IFNULL(fw2.wam, 0) as wam_change',
@@ -312,9 +358,10 @@ class WAMService extends Service {
 			$blacklistIds = WikiaDataAccess::cache(
 				wfSharedMemcKey(
 					'wam_blacklist',
+					self::MEMCACHE_VER,
 					$blacklistExt->cv_id
 				),
-				24 * 60 * 60,
+				self::CACHE_DURATION,
 				function () use ( $blacklistExt ) {
 					$blacklistWikis = WikiFactory::getListOfWikisWithVar( $blacklistExt->cv_id, 'bool', '=', true, true );
 					return array_keys( $blacklistWikis );
@@ -336,15 +383,17 @@ class WAMService extends Service {
 		return $verticals;
 	}
 
-	protected function getVerticalName($verticalId) {
-		if (isset(self::$verticalNames[$verticalId])) {
-			return self::$verticalNames[$verticalId];
+	protected function getVerticalName( $verticalId ) {
+		if ( isset( self::$verticalNames[ $verticalId ] ) ) {
+			return self::$verticalNames[ $verticalId ];
 		}
 	}
 
-	protected function getVerticalId($verticalName) {
-		if (isset(self::$verticalIds[$verticalName])) {
-			return self::$verticalIds[$verticalName];
-		}
+	protected function getDB() {
+		$app = F::app();
+		wfGetLB( $app->wg->DatamartDB )->allowLagged(true);
+		$db = wfGetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
+		$db->clearFlag( DBO_TRX );
+		return $db;
 	}
 }

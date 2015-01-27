@@ -5,6 +5,8 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
+/*global mw*/
+
 /**
  * DataModel MediaWiki transclusion node.
  *
@@ -14,12 +16,11 @@
  * @mixins ve.dm.GeneratedContentNode
  *
  * @constructor
- * @param {number} [length] Length of content data in document; ignored and overridden to 0
  * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.MWTransclusionNode = function VeDmMWTransclusionNode( length, element ) {
+ve.dm.MWTransclusionNode = function VeDmMWTransclusionNode() {
 	// Parent constructor
-	ve.dm.LeafNode.call( this, 0, element );
+	ve.dm.LeafNode.apply( this, arguments );
 
 	// Mixin constructors
 	ve.dm.GeneratedContentNode.call( this );
@@ -230,13 +231,34 @@ ve.dm.MWTransclusionNode.prototype.onAttributeChange = function ( key ) {
 /**
  * Check if transclusion contains only a single template.
  *
- * @param {string} [template] Name of single template, omit to allow any template name
- * @return {boolean} Transclusion only contains a single template
+ * @param {string|string[]} [templates] Names of templates to allow, omit to allow any template name
+ * @return {boolean} Transclusion only contains a single template, which is one of the ones in templates
  */
-ve.dm.MWTransclusionNode.prototype.isSingleTemplate = function ( template ) {
-	var partsList = this.getPartsList();
-	return partsList.length === 1 &&
-		( template === undefined || partsList[0].template === template );
+ve.dm.MWTransclusionNode.prototype.isSingleTemplate = function ( templates ) {
+	function normalizeTitle( name ) {
+		var title = mw.Title.newFromText( name );
+		return title ? title.getPrefixedText() : name;
+	}
+
+	var i, len, partsList = this.getPartsList();
+	if ( partsList.length !== 1 ) {
+		return false;
+	}
+	if ( templates === undefined ) {
+		return true;
+	}
+	if ( typeof templates === 'string' ) {
+		templates = [ templates ];
+	}
+	for ( i = 0, len = templates.length; i < len; i++ ) {
+		if (
+			partsList[0].template &&
+			normalizeTitle( partsList[0].template ) === normalizeTitle( templates[i] )
+		) {
+			return true;
+		}
+	}
+	return false;
 };
 
 /**
@@ -315,13 +337,13 @@ ve.dm.MWTransclusionNode.prototype.getClonedElement = function () {
  *
  * @class
  * @extends ve.dm.MWTransclusionNode
+ *
  * @constructor
- * @param {number} [length] Length of content data in document; ignored and overridden to 0
  * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.MWTransclusionBlockNode = function VeDmMWTransclusionBlockNode( length, element ) {
+ve.dm.MWTransclusionBlockNode = function VeDmMWTransclusionBlockNode() {
 	// Parent constructor
-	ve.dm.MWTransclusionNode.call( this, length, element );
+	ve.dm.MWTransclusionNode.apply( this, arguments );
 };
 
 OO.inheritClass( ve.dm.MWTransclusionBlockNode, ve.dm.MWTransclusionNode );
@@ -335,13 +357,13 @@ ve.dm.MWTransclusionBlockNode.static.name = 'mwTransclusionBlock';
  *
  * @class
  * @extends ve.dm.MWTransclusionNode
+ *
  * @constructor
- * @param {number} [length] Length of content data in document; ignored and overridden to 0
  * @param {Object} [element] Reference to element in linear model
  */
-ve.dm.MWTransclusionInlineNode = function VeDmMWTransclusionInlineNode( length, element ) {
+ve.dm.MWTransclusionInlineNode = function VeDmMWTransclusionInlineNode() {
 	// Parent constructor
-	ve.dm.MWTransclusionNode.call( this, length, element );
+	ve.dm.MWTransclusionNode.apply( this, arguments );
 };
 
 OO.inheritClass( ve.dm.MWTransclusionInlineNode, ve.dm.MWTransclusionNode );

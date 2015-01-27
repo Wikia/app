@@ -237,9 +237,14 @@ class ParserCache {
 			// Wikia change - begin
 			// @author macbre - BAC-1172
 			#$info = "Saved in parser cache with key $parserOutputKey and timestamp $now";
-			$info = "Saved in parser cache with key $parserOutputKey";
+			global $wgArticleAsJson;
 
-			$parserOutput->mText .= "\n<!-- $info -->\n";
+			if ( !$wgArticleAsJson ) {
+				$info = "Saved in parser cache with key $parserOutputKey";
+
+				$parserOutput->mText .= "\n<!-- $info -->\n";
+			}
+
 			wfDebug( "$info\n" );
 			// Wikia change - end
 

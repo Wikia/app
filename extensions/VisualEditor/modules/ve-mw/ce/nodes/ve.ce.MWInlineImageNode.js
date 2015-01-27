@@ -17,7 +17,6 @@
  * @param {Object} [config] Configuration options
  */
 ve.ce.MWInlineImageNode = function VeCeMWInlineImageNode( model, config ) {
-	var valign;
 
 	// Parent constructor
 	ve.ce.LeafNode.call( this, model, config );
@@ -41,20 +40,13 @@ ve.ce.MWInlineImageNode = function VeCeMWInlineImageNode( model, config ) {
 		.attr( 'width', this.model.getAttribute( 'width' ) )
 		.attr( 'height', this.model.getAttribute( 'height' ) );
 
-	if ( this.model.getAttribute( 'border' ) ) {
-		this.$image.addClass( 'thumbborder' );
-	}
-
-	valign = this.model.getAttribute( 'valign' );
-	if ( valign !== 'default' ) {
-		this.$image.css( 'vertical-align', valign );
-	}
-
 	if ( this.$element.css( 'direction' ) === 'rtl' ) {
 		this.showHandles( ['sw'] );
 	} else {
 		this.showHandles( ['se'] );
 	}
+
+	this.updateClasses();
 
 	// DOM changes
 	this.$element.addClass( 've-ce-mwInlineImageNode' );
@@ -76,6 +68,25 @@ ve.ce.MWInlineImageNode.static.name = 'mwInlineImage';
 /* Methods */
 
 /**
+ * Update CSS classes based on current attributes
+ *
+ */
+ve.ce.MWInlineImageNode.prototype.updateClasses = function () {
+	var valign = this.model.getAttribute( 'valign' );
+
+	// Border
+	this.$element.toggleClass( 'mw-image-border', !!this.model.getAttribute( 'borderImage' ) );
+
+	// default size
+	this.$element.toggleClass( 'mw-default-size', !!this.model.getAttribute( 'defaultSize' ) );
+
+	// valign
+	if ( valign !== 'default' ) {
+		this.$image.css( 'vertical-align', valign );
+	}
+};
+
+/**
  * @inheritdoc
  */
 ve.ce.MWInlineImageNode.prototype.onAttributeChange = function ( key, from, to ) {
@@ -93,6 +104,7 @@ ve.ce.MWInlineImageNode.prototype.onAttributeChange = function ( key, from, to )
 				this.$image.css( 'height', to );
 				break;
 		}
+		this.updateClasses();
 	}
 };
 

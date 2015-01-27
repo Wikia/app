@@ -1,10 +1,10 @@
 # encoding: UTF-8
-@ie6-bug  @ie7-bug  @ie8-bug @ie9-bug @ie10-bug @en.wikipedia.beta.wmflabs.org @test2.wikipedia.org @login
+@chrome @en.wikipedia.beta.wmflabs.org @firefox @login @test2.wikipedia.org
 Feature: VisualEditor
 
   Background:
     Given I am logged in
-      And I am at my user page
+      And I go to the browser specific edit page page
 
   Scenario Outline: Edit with strings
     When I edit the page with <input_string>

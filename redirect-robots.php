@@ -282,8 +282,8 @@ function deny( ) {
  */
 $headers = function_exists('apache_request_headers') ? apache_request_headers() : array();
 
-$isdeny = isset( $headers[ "X-Staging" ] ) &&
-	( $headers[ "X-Staging" ] === "preview" || $headers[ "X-Staging" ] === "verify" )
+$isdeny = !empty( $headers[ "X-Staging" ] ) &&
+	preg_match("@^(sandbox|preview$|verify$)@", $headers["X-Staging"])
 	? true
 	: false;
 

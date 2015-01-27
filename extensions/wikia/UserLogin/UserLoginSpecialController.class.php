@@ -38,7 +38,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	private function initializeTemplate() {
 		//Oasis/Monobook, will be filtered in AssetsManager :)
 		$this->response->addAsset( 'extensions/wikia/UserLogin/css/UserLogin.scss' );
-		if ( !empty($this->wg->EnableFacebookConnectExt) ) {
+
+		if ( !empty( $this->wg->EnableFacebookClientExt ) ) {
 			$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js' );
 			$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebook.js' );
 		}
@@ -48,7 +49,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 		//Wikiamobile, will be filtered in AssetsManager by config :)
 		$this->response->addAsset(
-				( $this->wg->request->getInt( 'recover' ) === 1 || empty( $this->wg->EnableFacebookConnectExt ) ) ?
+				( $this->wg->request->getInt( 'recover' ) === 1 || empty( $this->wg->EnableFacebookClientExt ) ) ?
 					'userlogin_js_wikiamobile' :
 					'userlogin_js_wikiamobile_fbconnect'
 		);
@@ -62,6 +63,42 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->wg->SuppressFooter = false;
 		$this->wg->SuppressAds = true;
 		$this->wg->SuppressToolbar = true;
+
+		$this->getOutput()->disallowUserJs(); // just in case...
+	}
+
+	/**
+	 * Route the view based on logged in status
+	 */
+	public function index() {
+		if ( $this->wg->User->isLoggedIn() ) {
+			$this->forward( __CLASS__, 'loggedIn' );
+		} else {
+			$this->forward( __CLASS__, 'loginForm' );
+		}
+	}
+
+	/**
+	 * Shown for both Special:UserLogin and Special:UserSignup when visited logged in.
+	 */
+	public function loggedIn() {
+		// don't show "special page" text
+		$this->wg->SupressPageSubtitle = true;
+		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );
+
+		$userName = $this->wg->user->getName();
+		$mainPage = Title::newMainPage()->getText();
+		$userPage = Title::newFromText( $userName, NS_USER )->getFullText();
+
+		$title = wfMessage( 'userlogin-logged-in-title' )
+			->params( $userName )
+			->text();
+		$message = wfMessage( 'userlogin-logged-in-message' )
+			->params( $mainPage, $userPage )
+			->parse();
+
+		$this->wg->Out->setPageTitle($title);
+		$this->message = $message;
 	}
 
 	/**
@@ -82,13 +119,18 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string errParam - error param
 	 * @responseParam string editToken - token for changing password
 	 */
-	public function index() {
+	public function loginForm() {
+		$returnTo = urldecode( $this->request->getVal( 'returnto', '' ) );
+		$returnToQuery = urldecode( $this->request->getVal( 'returntoquery', '' ) );
 
 		// redirect if signup
 		$type = $this->request->getVal('type', '');
 		if ($type === 'signup' || $this->getPar() == 'signup') {
 			$title = SpecialPage::getTitleFor( 'UserSignup' );
-			$this->wg->Out->redirect( $title->getFullURL() );
+			$this->wg->Out->redirect( $title->getFullURL( [
+				['returnto' => $returnTo],
+				['returntoquery' => $returnToQuery],
+			] ) );
 			return false;
 		}
 
@@ -102,8 +144,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->password = $this->request->getVal( 'password', '' );
 		$this->keeploggedin = $this->request->getCheck( 'keeploggedin' );
 		$this->loginToken = UserLoginHelper::getLoginToken();
-		$this->returnto = htmlentities($this->request->getVal( 'returnto', '' ), ENT_QUOTES, "UTF-8");
-		$this->returntoquery = htmlentities($this->request->getVal( 'returntoquery', '' ), ENT_QUOTES, "UTF-8");
+		$this->returnto = $returnTo;
+		$this->returntoquery = $returnToQuery;
 
 		// process login
 		if ( $this->wg->request->wasPosted() ) {
@@ -229,6 +271,14 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 		$this->returnto = $this->getReturnToFromQuery( $query );
 		$this->returntoquery = $this->getReturnToQueryFromQuery( $query );
+
+		$requestParams = $this->getRequest()->getParams();
+		if ( !empty( $requestParams[ 'registerLink' ] ) ) {
+			$this->registerLink = $requestParams[ 'registerLink' ];
+		}
+		if ( !empty( $requestParams[ 'template' ] ) ) {
+			$this->overrideTemplate( $requestParams[ 'template' ] );
+		}
 	}
 
 	public function getMainPagePartialUrl() {
@@ -279,7 +329,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->response->setVal( 'requestType',  $this->request->getVal( 'requestType', '' ) );
 
 		// don't render FBconnect button when the extension is disabled
-		if ( empty( $this->wg->EnableFacebookConnectExt ) ) {
+		if ( empty( $this->wg->EnableFacebookClientExt ) ) {
 			$this->skipRendering();
 		}
 
@@ -294,7 +344,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->response->setVal( 'requestType',  $this->request->getVal( 'requestType', '' ) );
 
 		// don't render FBconnect button when the extension is disabled
-		if ( empty( $this->wg->EnableFacebookConnectExt ) ) {
+		if ( empty( $this->wg->EnableFacebookClientExt ) ) {
 			$this->skipRendering();
 		}
 
@@ -352,6 +402,13 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		}
 
 		$loginCase = $loginForm->authenticateUserData();
+
+		/** PLATFORM-508 - logging for Helios project - begin */
+		\Wikia\Logger\WikiaLogger::instance()->debug(
+			'PLATFORM-508',
+			[ 'method' => __METHOD__, 'login_case' => (string) $loginCase ]
+		);
+		/** PLATFORM-508 - logging for Helios project - end */
 
 		switch ( $loginCase ) {
 			case LoginForm::SUCCESS:

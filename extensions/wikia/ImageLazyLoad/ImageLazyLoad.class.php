@@ -78,7 +78,6 @@ class ImageLazyLoad  {
 				// not used here, still important for regular images
 				// which are not part of galleries
 				$wgParser->lazyLoadedImagesCount += 1;
-
 			}
 
 			$image['thumbnail-src'] = wfBlankImgUrl();
@@ -131,18 +130,14 @@ class ImageLazyLoad  {
 	}
 
 	/**
-	 * Set attributes for lazy loading (for video thumbnail)
-	 * @param string $dataSrc
-	 * @param string $imgSrc
-	 * @param string $imgClass
-	 * @param array $imgAttribs
+	 * Update thumbnail img attributes when lazy loading
+	 * @param WikiaController $controller
 	 */
-	public static function setLazyLoadingAttribs( &$dataSrc, &$imgSrc, &$imgClass, &$imgAttribs ) {
-		$imgClass = self::getImgClass( [ 'class' => $imgClass ] );
-		$dataSrc = $imgSrc;
-		$imgSrc = wfBlankImgUrl();
-		$attribs = ThumbnailHelper::getAttribs( [ 'onload' => self::IMG_ONLOAD ] );
-		$imgAttribs = array_merge( $imgAttribs, $attribs );
+	public static function setLazyLoadingAttribs( WikiaController $controller ) {
+		$controller->onLoad = self::IMG_ONLOAD;
+		$controller->imgClass = array_merge( $controller->imgClass, explode( ' ', self::LAZY_IMAGE_CLASSES ) );
+		$controller->dataSrc = $controller->imgSrc;
+		$controller->imgSrc = wfBlankImgUrl();
 	}
 
 	/**

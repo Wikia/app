@@ -12,7 +12,7 @@ $wgExtensionCredits['other'][] = array(
 	"name" => "BlogArticles",
 	"description" => "Blog Articles",
 	"descriptionmsg" => "blogs-desc",
-	"url" => "http://help.wikia.com/wiki/Help:Blog_article",
+	"url" => "https://github.com/Wikia/app/tree/dev/extensions/wikia/Blogs",
 	"svn-date" => '$LastChangedDate$',
 	"svn-revision" => '$LastChangedRevision$',
 	"author" => array('[http://www.wikia.com/wiki/User:Eloy.wikia Krzysztof Krzyżaniak (eloy)]', 'Piotr Molski', 'Adrian Wieczorek', '[http://www.wikia.com/wiki/User:Ppiotr Przemek Piotrowski (Nef)]', '[http://www.wikia.com/wiki/User:Marooned Maciej Błaszkowski (Marooned)]')
@@ -152,18 +152,3 @@ $wgHooks['FilePageImageUsageSingleLink'][] = 'BlogsHelper::onFilePageImageUsageS
 include( __DIR__ . "/BlogTemplate.php");
 include( __DIR__ . "/BlogArticle.php");
 include( __DIR__ . "/BlogLockdown.php");
-include( __DIR__ . "/BloglistDeferredPurgeJob.class.php" );
-
-/**
- * add task
- */
-if( function_exists( "extAddBatchTask" ) ) {
-	extAddBatchTask( __DIR__ . "/BlogTask.php", "blog", "BlogTask" );
-}
-
-/**
- * associated jobs
- */
-$wgJobClasses['bloglistDeferredPurge'] = 'BloglistDeferredPurgeJob';
-
-$wgAutoloadClasses['Wikia\\Blogs\\BlogTask'] = __DIR__.'/BlogTask.class.php';

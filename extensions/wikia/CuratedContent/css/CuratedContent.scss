@@ -1,0 +1,367 @@
+@font-face {
+  font-family: 'GGSerif';
+  src: local('Droid Serif'), local('DroidSerif'), url(extensions/wikia/CuratedContent/fonts/DroidSerif.ttf) format('truetype');
+  font-weight: 400;
+}
+
+//@font-face {
+//	font-family: 'Roboto-Thin';
+//	//src: local('Roboto Thin'), local('RobotoThin'), url(extensions/wikia/CuratedContent/fonts/RobotoThin.ttf), url(file:///android_asset/fonts/RobotoThin.ttf) format('truetype');
+//	font-weight: 100;
+//}
+
+@import "../../WikiaMobile/css/variables";
+
+//dependencies
+@import "../../WikiaMobile/css/ui";
+@import "../../WikiaMobile/css/sections";
+@import "../../WikiaMobile/css/images";
+@import "../../WikiaMobile/css/videos";
+@import "../../WikiaMobile/css/image_stack";
+@import "../../WikiaMobile/css/infobox";
+@import '../../WikiaMobile/css/modal';
+@import '../../WikiaMobile/css/media_modal';
+@import "../../WikiaMobile/css/mediagallery";
+@import '../../WikiaMobile/css/throbber';
+
+//main colors
+$mainGreen: #8CA038;
+$halfMainGreen: rgba(171,197,97, .5);
+
+//light mode
+$lightBackgroundColor: white;
+$lightTextColor: rgb(58, 58, 58);
+$lightHeaderColor: rgb(140, 160, 56);
+$lightLinkColor: $lightHeaderColor;
+$lightChevronsColor: rgb(204, 204, 204);
+$lightSectionGrey: rgb(170, 170, 170);
+
+//dark mode
+$darkBackgroundColor: rgb(20, 20, 20);
+$darkLinkColor: rgb(172, 172, 172);
+$darkTextColor: rgb(233, 233, 233);
+$darkHeaderColor: $darkTextColor;
+$darkChevronsColor: $lightChevronsColor;
+$darkSectionGrey: rgb(41, 41, 41);
+
+html {
+  background-color: $darkBackgroundColor;
+  color: $darkTextColor;
+
+  font-size: 1em;
+
+  font-family: 'Helvetica-Light', Helvetica, 'Lucida Grande', Aria, sans-serif;
+
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+
+  &.light {
+    background-color: $lightBackgroundColor;
+    color: $lightTextColor;
+  }
+
+  &.serif {
+    font-family: Palatino, "GGSerif", "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
+  }
+
+  &.full {
+    text-align: justify;
+  }
+}
+
+#wkCurtain {
+  display: none;
+}
+
+body {
+  padding: 10px 20px;
+
+  line-height: 1.7em;
+
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+h1, h2, h3{
+  margin: 10px 0 0 0;
+  font-weight: 100;
+}
+
+#pageName {
+  color: $darkHeaderColor;
+
+  .light & {
+    color: $lightHeaderColor;
+  }
+
+  font-weight: 800;
+  font-size: 1.2em;
+}
+
+h2, h3, .collSec {
+  color: $darkTextColor;
+
+  .light & {
+    color: $lightTextColor;
+  }
+}
+
+.collSec {
+  border-top: none;
+
+  padding-bottom: 10px;
+  padding-top: 0;
+
+  font-size: 1.1em;
+  text-transform: uppercase;
+
+  background-repeat: no-repeat;
+  background-position: 100% 100%;
+  background-size: 300% 1px;
+  background-image: -webkit-gradient(linear, left top, right top, color-stop( 30%, $mainGreen ), color-stop( 50%, $darkSectionGrey ));
+  background-image: -webkit-linear-gradient(left, $mainGreen 30%, $darkSectionGrey 50%);
+  background-image: linear-gradient(to right, $mainGreen 30%, $darkSectionGrey 50%);
+
+  .light & {
+    background-image: -webkit-gradient(linear, left top, right top, color-stop( 30%, $mainGreen ), color-stop( 50%, $lightSectionGrey ));
+    background-image: -webkit-linear-gradient(left, $mainGreen 30%, $lightSectionGrey 50%);
+    background-image: linear-gradient(to right, $mainGreen 30%, $lightSectionGrey 50%);
+  }
+
+  -webkit-transition: background-position .3s linear;
+  -webkit-transition-delay: .1s;
+
+  -webkit-transform: translateZ(0);
+
+  font-family: inherit;
+
+  &.open {
+    color: $mainGreen;
+    background-position: 0 100%;
+  }
+
+  .chev {
+    top: 6px;
+    width: 0;
+    height: 0;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: $darkTextColor;
+
+  pointer-events: none;
+
+  img:not(.media), span {
+    pointer-events: none;
+  }
+
+  .light & {
+    color: $lightTextColor;
+  }
+
+  &:not(.external):not(.extiw):not(.disabled) {
+    color: $darkLinkColor;
+    border-bottom: 1px dotted $darkLinkColor;
+
+    pointer-events: auto;
+
+    .light & {
+      color: $lightLinkColor;
+      border-bottom-color:  $lightLinkColor;
+    }
+
+    *:not(.media) {
+      //slow
+      //but still faster than looking for it in JS
+      //see CuratedContent.js and listener on html
+      //I expect there section a and if something is inside
+      //it passes the Ponto and go to link directly
+      pointer-events: none;
+    }
+  }
+
+  .thumb & {
+    border-bottom: none !important;
+  }
+}
+
+.reference {
+  display: none;
+}
+
+dd {
+  margin-left: 15px;
+}
+
+//hmmm
+#va-titleicons, #toc {
+  display: none;
+}
+
+$size: 11;
+$width: 1.5;
+
+.chev {
+  position: relative;
+
+  width: 0;
+  height: 0;
+  border: $size + px solid;
+  border-color: $darkChevronsColor transparent transparent transparent;
+
+  -webkit-transition: -webkit-transform .3s;
+  -webkit-transition-delay: .1s;
+  -webkit-transform-origin: 50% 25%;
+
+  .light & {
+    border-top-color: $lightChevronsColor;
+
+    &:after {
+      border-top-color: $lightBackgroundColor;
+    }
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+
+    left: ( -$size + $width ) + px;
+    top: ( -$size - .6 ) + px;
+    width: 0;
+    height: 0;
+
+    border: ( $size - $width ) + px solid;
+    border-color: $darkBackgroundColor transparent transparent transparent;
+  }
+}
+
+.open .chev {
+  border-top-color: $mainGreen;
+  -webkit-transform: rotateZ(-180deg);
+}
+
+table {
+  font-size: 1em;
+  line-height: inherit;
+  text-align: inherit;
+}
+
+//handling wide Tables
+.bigTable{
+  position: relative;
+
+  max-width: 100%;
+  padding: 5px;
+  margin-top: $page-padding;
+
+  border-right: 1px solid $halfMainGreen;
+
+  background-color: #222;
+
+  .light & {
+    background-color: $lightBackgroundColor;
+  }
+
+  font-size: .8em;
+
+  -webkit-transition: border .2s;
+  transition: border .2s;
+
+  table {
+    pointer-events: none;
+  }
+
+  &.active {
+    table {
+      pointer-events: auto;
+    }
+  }
+}
+
+//if native scroll is available:
+.overflow .bigTable {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+//if not
+.no-overflow .bigTable {
+  overflow: hidden;
+}
+
+//images
+figure {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+
+  .thumbcaption {
+    position: relative;
+
+    background: none;
+
+    white-space: normal;
+    color: $darkTextColor;
+
+    .light & {
+      color: $lightTextColor;
+    }
+  }
+}
+
+.imgPlcHld, .wkSlider img, .lazy {
+  background-image: url('/extensions/wikia/CuratedContent/images/img_placeholder_light.png'); /* inline */
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.lazy {
+  background-size: 50%;
+  display: none;
+
+  .js & {
+    display: inline;
+  }
+}
+
+//this is rather long selector but at least image is transfered once
+.galPlc.img,
+.galPlcHld,
+.light .imgPlcHld,
+.light .wkSlider img,
+.light .lazy {
+  background-image: url('/extensions/wikia/CuratedContent/images/img_placeholder_dark.png'); /* inline */
+}
+
+.galPlc.img, .galPlcHld {
+  background-repeat: no-repeat;
+  background-position: center;
+
+  &.this {
+    border: 4px solid $mainGreen;
+  }
+}
+
+#wkGalPag {
+  .dot.curr {
+    background-color: $mainGreen;
+  }
+}
+
+.wkMedGal {
+  #wkGalTgl {
+    background-image: url('/extensions/wikia/CuratedContent/images/gallery_green.png'); /* inline */
+  }
+}
+
+table.infobox {
+  box-shadow: none;
+}
+
+//don't expand sliders wider then screen
+.wkSlider {
+  max-width: 100%;
+
+  figure {
+    max-width: 48%;
+  }
+}

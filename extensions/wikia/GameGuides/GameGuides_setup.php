@@ -4,6 +4,14 @@
  * 
  * @author Federico "Lox" Lucignano
  */
+ 
+$wgExtensionCredits[ 'specialpage' ][ ] = array(
+	'name' => 'Game Guides',
+	'author' => 'Federico "Lox" Lucignano',
+	'descriptionmsg' => 'wikiagameguides-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/GameGuides',
+);
+
 $dir = dirname( __FILE__ );
 
 /**

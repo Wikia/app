@@ -13,6 +13,7 @@ use \Wikia\Logger\WikiaLogger;
  */
 class WikiaSearchController extends WikiaSpecialPageController {
 
+	const DEFAULT_NON_ENGLISH_WIKI_ARTICLE_THRESHOLD = 25;
 	use Wikia\Search\Traits\NamespaceConfigurable;
 
 	/**
@@ -316,8 +317,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			}
 
 			$queryService = $this->queryServiceFactory->getFromConfig( $searchConfig );
-			if ( ( $minDuration = $this->getVal( 'minseconds' ) ) && ( $maxDuration = $this->getVal( 'maxseconds' ) ) ) {
-				$queryService->setMinDuration( $minDuration)->setMaxDuration( $maxDuration );
+			$minDuration = $this->getVal( 'minseconds' );
+			$maxDuration = $this->getVal( 'maxseconds' );
+			if ( $minDuration && $maxDuration ) {
+				$queryService->setMinDuration( $minDuration )->setMaxDuration( $maxDuration );
 			}
 
 			$log = WikiaLogger::instance();
@@ -557,30 +560,38 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @return \Wikia\Search\Config
 	 */
 	protected function getSearchConfigFromRequest() {
+		$request = $this->getRequest();
 		$searchConfig = new Wikia\Search\Config();
 		$resultsPerPage = $this->isCorporateWiki() ? self::INTERWIKI_RESULTS_PER_PAGE : self::RESULTS_PER_PAGE;
 		$resultsPerPage = empty( $this->wg->SearchResultsPerPage ) ? $resultsPerPage : $this->wg->SearchResultsPerPage;
 		$searchConfig
-			->setQuery                   ( $this->getVal( 'query', $this->getVal( 'search' ) ) )
+			->setQuery                   ( $request->getVal( 'query', $request->getVal( 'search' ) ) )
 			->setCityId                  ( $this->wg->CityId )
-			->setLimit                   ( $this->getVal( 'limit', $resultsPerPage ) )
-			->setPage                    ( $this->getVal( 'page', 1) )
-			->setRank                    ( $this->getVal( 'rank', 'default' ) )
-			->setHub                     ( $this->getVal( 'hub', false ) )
+			->setLimit                   ( $request->getInt( 'limit', $resultsPerPage ) )
+			->setPage                    ( $request->getVal( 'page', 1) )
+			->setRank                    ( $request->getVal( 'rank', 'default' ) )
+			->setHub                     ( $request->getVal( 'hub', false ) )
 			->setInterWiki               ( $this->isCorporateWiki() )
-			->setVideoSearch             ( $this->getVal( 'videoSearch', false ) )
-			->setFilterQueriesFromCodes  ( $this->getVal( 'filters', array() ) )
-			->setBoostGroup			 ( $this->getVal( 'ab' ) )
+			->setVideoSearch             ( $request->getVal( 'videoSearch', false ) )
+			->setFilterQueriesFromCodes  ( $request->getVal( 'filters', array() ) )
+			->setBoostGroup              ( $request->getVal( 'ab' ) )
 		;
 
 		if ( $this->isCorporateWiki() ) {
-			$searchConfig->setLanguageCode($this->getVal('resultsLang'));
+			$searchConfig->setLanguageCode( $request->getVal( 'resultsLang' ) );
+			if ( $searchConfig->getLanguageCode() !== 'en' ) {
+				$threshold = self::DEFAULT_NON_ENGLISH_WIKI_ARTICLE_THRESHOLD;
+				if ( in_array( 'staff', $this->wg->user->getEffectiveGroups() ) ) {
+					$threshold = $request->getVal( 'minArticleCount', self::DEFAULT_NON_ENGLISH_WIKI_ARTICLE_THRESHOLD );
+				}
+				$searchConfig->setXwikiArticleThreshold( $threshold );
+			}
 		}
 
 		$this->setNamespacesFromRequest( $searchConfig, $this->wg->User );
 		if ( substr( $this->getResponse()->getFormat(), 0, 4 ) == 'json' ) {
 			$requestedFields = $searchConfig->getRequestedFields();
-			$searchConfig->setRequestedFields( explode( ',', $this->getVal( 'jsonfields', '' ) ) );
+			$searchConfig->setRequestedFields( explode( ',', $request->getVal( 'jsonfields', '' ) ) );
 		}
 		return $searchConfig;
 	}
@@ -737,7 +748,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( $skin instanceof SkinMonoBook ) {
 		    $this->response->addAsset ('extensions/wikia/Search/monobook/monobook.scss' );
 		}
-		if ( $skin instanceof SkinOasis ) {
+		if ( $skin instanceof SkinOasis || $skin instanceof SkinVenus ) {
 		    $this->response->addAsset( 'extensions/wikia/Search/css/WikiaSearch.scss' );
 		}
 		if ( $skin instanceof SkinWikiaMobile ) {
@@ -784,10 +795,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	/**
 	 * Determines whether we are on the corporate wiki
-	 * @see WikiaSearchControllerTest::testIsCorporateWiki
+	 * @see SearchControllerTest::testIsCorporateWiki
 	 */
 	protected function  isCorporateWiki() {
-	    return !empty($this->wg->EnableWikiaHomePageExt);
+	    return WikiaPageType::isCorporatePage();
 	}
 
 	/**
@@ -796,7 +807,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	/**
 	 * This is how we generate the subtemplate for the advanced search box.
-	 * @see    WikiaSearchControllerTest::testAdvancedBox
+	 * @see    SearchControllerTest::testAdvancedBox
 	 * @throws Exception
 	 */
 	public function advancedBox() {
@@ -817,7 +828,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	/**
 	 * This is how we generate the search type tabs in the left-hand rail
-	 * @see    WikiaSearchControllerTest::tabs
+	 * @see    SearchControllerTest::tabs
 	 * @throws Exception
 	 */
 	public function tabs() {
@@ -860,7 +871,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	/**
 	 * This handles pagination via a template script.
-	 * @see    WikiaSearchControllerTest::testPagination
+	 * @see    SearchControllerTest::testPagination
 	 * @throws Exception
 	 * @return boolean|null (false if we don't want pagination, fully routed to view via sendSelfRequest if we do want pagination)
 	 */

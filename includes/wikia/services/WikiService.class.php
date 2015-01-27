@@ -359,7 +359,7 @@ class WikiService extends WikiaModel {
 		try {
 			$db = wfGetDB( DB_SLAVE, array(), $this->wg->ExternalSharedDB );
 			$tables = array( 'city_visualization' );
-			$fields = array( 'city_id', 'city_main_image' );
+			$fields = array( 'city_id', 'city_lang_code', 'city_main_image' );
 			$conds = array( 'city_id' => $wikiIds );
 			$results = $db->select( $tables, $fields, $conds, __METHOD__, array(), array() );
 
@@ -367,7 +367,8 @@ class WikiService extends WikiaModel {
 				$promoImage = PromoImage::fromPathname($row->city_main_image);
 				$promoImage->ensureCityIdIsSet($row->city_id);
 
-				$file = $promoImage->corporateFileByLang($this->wg->ContLanguageCode);
+				$file = $promoImage->corporateFileByLang($row->city_lang_code);
+
 				if ( $file->exists() ) {
 					$imageServing = new ImageServing( null, $imageWidth, $imageHeight );
 					$images[ $row->city_id ] = ImagesService::overrideThumbnailFormat(
@@ -479,7 +480,7 @@ class WikiService extends WikiaModel {
 	public function getMostActiveAdmins($wikiId, $avatarSize) {
 		$edits = $ids = $lastRevision = [];
 		$admins = $this->getWikiAdmins($wikiId, $avatarSize);
-		$ids = array_map(function($item) { return $item['userId']; }, $admins);
+		$ids = array_map(function( Array $item ) { return $item['userId']; }, $admins);
 
 		$adminsEdits = DataMartService::getUserEditsByWikiId( $ids, $wikiId);
 
@@ -666,6 +667,7 @@ class WikiService extends WikiaModel {
 				$wikis = $this->app->wg->Memc->get( $cacheKey );
 
 				if ( !is_array( $wikis ) ) {
+					$wikis = [];
 					$db = $this->getSharedDB();
 
 					$string = $db->addQuotes( "%{$string}%" );

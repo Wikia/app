@@ -24,6 +24,7 @@
 
 require_once( dirname( __FILE__ ) . '/Maintenance.php' );
 
+// TODO jobqueue remove this when migrated UpdateSpecialPagesTask is verified production-safe
 class UpdateSpecialPages extends Maintenance {
 	public function __construct() {
 		parent::__construct();

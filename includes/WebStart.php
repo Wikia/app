@@ -146,6 +146,23 @@ if ( $wgEnableSelenium ) {
 }
 
 // Wikia change - begin - @author: wladek
+// attach sink to the profiler
+if ( $wgProfiler instanceof Profiler ) {
+	if ( empty($wgProfilerSendViaScribe) ) {
+		$sink = new ProfilerDataUdpSink();
+	} else {
+		$sink = new ProfilerDataScribeSink();
+	}
+	$wgProfiler->addSink( $sink );
+
+	// keep the legacy stream of Mediawiki profiler data via UDP
+	if ( ( $wgProfiler instanceof ProfilerSimpleDataCollector ) and !( $sink instanceof ProfilerDataUdpSink ) ) {
+		$wgProfiler->addSink( new ProfilerDataUdpSink() );
+	}
+}
+// Wikia change - end
+
+// Wikia change - begin - @author: wladek
 // Catch all output
 $initialOutput = ob_get_clean();
 // Wikia change - end
@@ -197,3 +214,5 @@ EOD;
 
 	}
 }
+
+Transaction::setAttribute(Transaction::PARAM_WIKI,$wgDBname);

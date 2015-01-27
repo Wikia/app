@@ -89,14 +89,14 @@ ve.ce.GeneratedContentNode.prototype.onGeneratedContentNodeUpdate = function () 
  * Handler for the setup event
  */
 ve.ce.GeneratedContentNode.prototype.onGeneratedContentSetup = function () {
-	this.$element.addClass( 've-ce-generatedContentNode' );
+	this.$element.addClass( 've-ce-generatedContentNode ve-ce-noHighlight' );
 };
 
 /**
  * Handler for the teardown event
  */
 ve.ce.GeneratedContentNode.prototype.onGeneratedContentTeardown = function () {
-	this.$element.removeClass( 've-ce-generatedContentNode' );
+	this.$element.removeClass( 've-ce-generatedContentNode ve-ce-noHighlight' );
 	this.abortGenerating();
 };
 
@@ -171,7 +171,15 @@ ve.ce.GeneratedContentNode.prototype.render = function ( generatedContents ) {
  * @fires rerender
  */
 ve.ce.GeneratedContentNode.prototype.afterRender = function () {
+	var focusWidget;
 	this.emit( 'rerender' );
+	// Wikia change: Adjust focus widget size after node is rerendered
+	// TODO: Find a more elegant way to do this, perhaps using a re-emitted event. Focus widget should
+	// preferably not be manipulated from this class.
+	focusWidget = this.surface.getSurface().getFocusWidget();
+	if ( focusWidget ) {
+		focusWidget.adjustLayout();
+	}
 };
 
 /**

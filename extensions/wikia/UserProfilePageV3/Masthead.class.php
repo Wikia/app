@@ -524,7 +524,7 @@ class Masthead {
 	}
 
 	private function getThumbPath( $dir ) {
-		return str_replace( "/avatars/", "/avatars/thumb/", $dir );		
+		return str_replace( "/avatars/", "/avatars/thumb/", $dir );
 	}
 
 	/**
@@ -717,23 +717,13 @@ class Masthead {
 
 				// errors handling
 				$errorNo = $res->isOK() ? UPLOAD_ERR_OK : UPLOAD_ERR_CANT_WRITE;
-				
+
 				// synchronize between DC
 				if ($res->isOK()) {
-					$mwStorePath = sprintf( 'mwstore://swift-backend/%s%s%s', 
+					$mwStorePath = sprintf( 'mwstore://swift-backend/%s%s%s',
 						$wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix, $this->getLocalPath() );
-					Wikia\SwiftSync\Queue::newFromParams( [
-						'city_id' => 0,
-						'op' => 'store',
-						'src' => $sFilePath,
-						'dst' => $mwStorePath
-					] )->add();
-				}
 
-				// sync with NFS
-				global $wgEnableSwithSyncToLocalFS;
-				if (!empty($wgEnableSwithSyncToLocalFS)) {
-					copy($sFilePath, $this->getFullPath());
+					wfRunHooks("Masthead::AvatarSavedToSwift", array ( $sFilePath, $mwStorePath) );
 				}
 			}
 

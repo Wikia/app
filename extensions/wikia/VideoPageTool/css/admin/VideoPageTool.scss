@@ -1,8 +1,8 @@
-@import "skins/oasis/css/core/color";
-@import "skins/oasis/css/mixins/arrow-hollow";
-@import "skins/oasis/css/mixins/box-sizing-border-box";
-@import "skins/oasis/css/mixins/clearfix";
-@import "skins/oasis/css/mixins/curation-elements";
+@import "skins/shared/color";
+@import "skins/shared/mixins/arrow-hollow";
+@import "skins/shared/mixins/box-sizing-border-box";
+@import "skins/shared/mixins/clearfix";
+@import "skins/shared/mixins/curation-elements";
 
 $color-toolbox-datepicker-published-background: #deedbd;
 $color-toolbox-datepicker-inprog-background: #d4ecf7;

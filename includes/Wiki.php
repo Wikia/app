@@ -177,6 +177,8 @@ class MediaWiki {
 				wfProfileOut( __METHOD__ );
 				return;
 		}
+
+		Transaction::setAttribute( Transaction::PARAM_SKIN, $user->getSkin()->getSkinName() );
 		// Wikia end
 
 		$unused = null; // To pass it by reference
@@ -582,6 +584,28 @@ class MediaWiki {
 		return true;
 	}
 
+	/**
+	 * Added by Wikia
+	 *
+	 * Sets metric parameters for the current request
+	 *
+	 * @param $title Title object
+	 * @param $action String name of the action
+	 */
+	private function setMetricParameters($title, $action) {
+		global $wgUser;
+
+		if ($title->isSpecialPage()) {
+			Transaction::setEntryPoint( Transaction::ENTRY_POINT_SPECIAL_PAGE );
+		} else {
+			Transaction::setEntryPoint( Transaction::ENTRY_POINT_PAGE );
+			Transaction::setAttribute( Transaction::PARAM_NAMESPACE, $title->getNamespace() );
+		}
+
+		Transaction::setAttribute( Transaction::PARAM_LOGGED_IN, $wgUser->isLoggedIn() );
+		Transaction::setAttribute( Transaction::PARAM_ACTION, $action );
+	}
+
 	private function main() {
 		global $wgUseFileCache, $wgTitle, $wgUseAjax;
 
@@ -613,49 +637,9 @@ class MediaWiki {
 		$action = $this->getAction();
 		$wgTitle = $title;
 
-		/*
-		 * Wikia Change - begin
-		 */
-		if( function_exists( 'newrelic_name_transaction' ) ) {
-			global $wgUser, $wgVersion;
-			global $wgContLang;
-			global $wgExtraNamespaces;
-
-			$loggedIn = $wgUser->isLoggedIn() ? 'user' : 'anon';
-			$ns = $title->getNamespace();
-			if( $wgExtraNamespaces[$ns] ) {
-				$nsKey = 'custom';
-			} else {
-				$nsKey = MWNamespace::getCanonicalName( $ns );
-				if ( $nsKey === false ) {
-					$nsKey = $ns;
-				} else {
-					$nsKey = $wgContLang->lc( $nsKey );
-				}
-				if ( $nsKey == '' ) {
-					$nsKey = 'main';
-				}
-			}
-
-			if( $title->isSpecialPage() ) {
-				list( $thisName, /* $subpage */ ) = SpecialPageFactory::resolveAlias( $title->getDBkey() );
-				if(is_string($thisName)) {
-					newrelic_name_transaction('mw/'.$loggedIn.'/'.$nsKey.'/'.$thisName);
-				} else {
-					newrelic_name_transaction('mw/'.$loggedIn.'/Namespace/'.$nsKey);
-				}
-			} else {
-				newrelic_name_transaction('mw/'.$loggedIn.'/Namespace/'.$nsKey);
-			}
-			if ( function_exists( 'newrelic_add_custom_parameter' ) ) {
-				newrelic_add_custom_parameter( 'loggedIn', $loggedIn );
-				newrelic_add_custom_parameter( 'action', $action );
-				newrelic_add_custom_parameter( 'version', $wgVersion );
-			}
-		}
-		/*
-		 * Wikia Change - end
-		 */
+		//Wikia Change
+		$this->setMetricParameters($title, $action);
+		//Wikia Change End
 
 		if ( $wgUseFileCache && $title->getNamespace() >= 0 ) {
 			wfProfileIn( 'main-try-filecache' );

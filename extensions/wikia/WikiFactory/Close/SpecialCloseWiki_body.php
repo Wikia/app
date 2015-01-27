@@ -21,6 +21,8 @@ class CloseWikiPage extends SpecialPage {
 
 	const CLOSED_WIKI_DOMAIN_PREFIX = 'old';
 
+	public $closedWiki;
+
 	private
 		$mTitle,
 		$mWikis     	= array(),
@@ -207,7 +209,7 @@ class CloseWikiPage extends SpecialPage {
 			if( !$city_id ) {
 				Wikia::log( __METHOD__, "domain doesn't exist" );
 				$valid = false;
-				$this->mErrors[] = $this->mRedirect;
+				$this->mErrors[] = wfMsg('closed-wiki-invalid-redirect-url',$this->mRedirect);
 			} else {
 				$newWiki = $city_id;
 			}
@@ -354,6 +356,10 @@ class CloseWikiPage extends SpecialPage {
 		);
 
 		$wgOut->addHtml( $output );
+		$aHookParams = [
+			'city_id' => $wiki->city_id,
+		];
+		wfRunHooks( 'WikiFactoryWikiClosed', array( $aHookParams ) );
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -392,7 +398,8 @@ class CloseWikiPage extends SpecialPage {
 		$bShowDumps = false;
 		$aFiles = array();
 
-		if ( $this->closedWiki->city_lastdump_timestamp >= DumpsOnDemand::S3_MIGRATION ) {
+		if ( !($this->closedWiki->city_flags & WikiFactory::FLAG_HIDE_DB_IMAGES)
+				&& $this->closedWiki->city_lastdump_timestamp >= DumpsOnDemand::S3_MIGRATION ) {
 			$aFiles = array(
 				'pages_current'	=> '_pages_current.xml.gz',
 				'pages_full'	=> '_pages_full.xml.gz',

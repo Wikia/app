@@ -13,10 +13,8 @@
  * @extends ve.ui.Surface
  *
  * @constructor
- * @param {HTMLDocument|Array|ve.dm.LinearData|ve.dm.Document} dataOrDoc Document data to edit
- * @param {Object} [config] Configuration options
  */
-ve.ui.DesktopSurface = function VeUiDesktopSurface( dataOrDoc, config, target ) {
+ve.ui.DesktopSurface = function VeUiDesktopSurface() {
 	// Parent constructor
 	ve.ui.Surface.apply( this, arguments );
 

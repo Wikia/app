@@ -1,11 +1,11 @@
-@import "skins/oasis/css/core/color";
+@import "skins/shared/color";
 @import "skins/oasis/css/core/layout";
 @import "skins/oasis/css/core/responsive-variables";
-@import "skins/oasis/css/mixins/menus";
-@import "skins/oasis/css/mixins/box-shadow";
-@import "skins/oasis/css/mixins/gradient";
-@import "skins/oasis/css/mixins/transition";
-@import "skins/oasis/css/mixins/transform";
+@import "skins/shared/mixins/menus";
+@import "skins/shared/mixins/box-shadow";
+@import "skins/shared/mixins/gradient";
+@import "skins/shared/mixins/transition";
+@import "skins/shared/mixins/transform";
 
 $animationSpeed: 200ms;
 
@@ -41,7 +41,7 @@ $animationSpeed: 200ms;
 		}
 	}
 	.wikia-bar {
-		background-image: url(/skins/oasis/images/checkers.png); /* base64 */
+		background-image: url(/skins/oasis/images/checkers.png); /* inline */
 		height: 25px;
 		margin: auto;
 		text-align: center;
@@ -106,7 +106,7 @@ $animationSpeed: 200ms;
 		width: 100%;
 	}
 	.arrow {
-		background-image: url(/extensions/wikia/WikiaBar/images/arrowDown.png); /* base64 */
+		background-image: url(/extensions/wikia/WikiaBar/images/arrowDown.png); /* inline */
 		background-position: center;
 		background-repeat: no-repeat;
 		bottom: 0;
@@ -121,7 +121,7 @@ $animationSpeed: 200ms;
 
 .WikiaBarCollapseWrapper {
 	background-color: $color-header-alt;
-	background-image: url(/extensions/wikia/WikiaBar/images/arrowUp.png); /* base64 */
+	background-image: url(/extensions/wikia/WikiaBar/images/arrowUp.png); /* inline */
 	background-position: center;
 	background-repeat: no-repeat;
 	bottom: 0;
@@ -139,7 +139,7 @@ $animationSpeed: 200ms;
 		float: right;
 		height: 25px;
 		width: 23px;
-		background-image: url(/skins/oasis/images/checkers.png); /* base64 */
+		background-image: url(/skins/oasis/images/checkers.png); /* inline */
 	}
 }
 

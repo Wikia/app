@@ -1245,7 +1245,8 @@ class WikiPage extends Page {
 	 *
 	 *  Compatibility note: this function previously returned a boolean value indicating success/failure
 	 */
-	public function doEdit( $text, $summary, $flags = 0, $baseRevId = false, $user = null ) {
+	public function doEdit( $text, $summary, $flags = 0, $baseRevId = false, $user = null,
+							$forcePatrolled = false) {
 		global $wgUser, $wgDBtransactions, $wgUseAutomaticEditSummaries;
 
 		# Low-level sanity check
@@ -1375,7 +1376,7 @@ class WikiPage extends Page {
 						# Add RC row to the DB
 						$rc = RecentChange::notifyEdit( $now, $this->mTitle, $isminor, $user, $summary,
 							$oldid, $this->getTimestamp(), $bot, '', $oldsize, $newsize,
-							$revisionId, $patrolled
+							$revisionId, $patrolled || $forcePatrolled
 						);
 
 						# Log auto-patrolled edits
@@ -1461,7 +1462,7 @@ class WikiPage extends Page {
 					$this->mTitle->getUserPermissionsErrors( 'autopatrol', $user ) );
 				# Add RC row to the DB
 				$rc = RecentChange::notifyNew( $now, $this->mTitle, $isminor, $user, $summary, $bot,
-					'', strlen( $text ), $revisionId, $patrolled );
+					'', strlen( $text ), $revisionId, $patrolled || $forcePatrolled);
 
 				# Log auto-patrolled edits
 				if ( $patrolled ) {
@@ -2392,8 +2393,15 @@ class WikiPage extends Page {
 
 		# Images
 		if ( $title->getNamespace() == NS_FILE ) {
-			$update = new HTMLCacheUpdate( $title, 'imagelinks' );
-			$update->doUpdate();
+			// Wikia Change Start @author Scott Rabin (srabin@wikia-inc.com)
+			global $wgCityId;
+
+			$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
+				->wikiId( $wgCityId )
+				->title( $title );
+			$task->call( 'purge', 'imagelinks' );
+			$task->queue();
+			// Wikia Change End
 		}
 
 		# User talk pages
@@ -2415,12 +2423,17 @@ class WikiPage extends Page {
 	 * @todo:  verify that $title is always a Title object (and never false or null), add Title hint to parameter $title
 	 */
 	public static function onArticleEdit( $title ) {
-		// Invalidate caches of articles which include this page
-		DeferredUpdates::addHTMLCacheUpdate( $title, 'templatelinks' );
+		// Wikia Change Start @author Scott Rabin (srabin@wikia-inc.com)
+		global $wgCityId;
 
-
-		// Invalidate the caches of all pages which redirect here
-		DeferredUpdates::addHTMLCacheUpdate( $title, 'redirect' );
+		$task = ( new \Wikia\Tasks\Tasks\HTMLCacheUpdateTask() )
+			->wikiId( $wgCityId )
+			->title( $title );
+		// Invalidate caches of articles which include this page and those
+		// that redirect to it
+		$task->call( 'purge', ['templatelinks', 'redirect'] );
+		$task->queue();
+		// Wikia Change End
 
 		# Purge squid for this page only
 		$title->purgeSquid();
@@ -2994,6 +3007,14 @@ class PoolWorkArticleView extends PoolCounterWork {
 
 		# <Wikia>
 		$this->parserOutput->setPerformanceStats( 'time', $time );
+		Transaction::addEvent( Transaction::EVENT_ARTICLE_PARSE, array(
+			'real' => $time,
+			'article' => $this->page->getTitle()->getPrefixedDBkey(),
+			'input_length' => strlen($text),
+			'options_used' => implode(',',$this->parserOutput->getUsedOptions()),
+			'options_hash' => $this->parserOptions->optionsHash($this->parserOutput->getUsedOptions()),
+			'output_cacheable' => $this->parserOutput->isCacheable() && !$this->parserOutput->containsOldMagic(),
+		));
 		# </Wikia>
 
 		# Timing hack

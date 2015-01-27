@@ -11,7 +11,7 @@ class WikiaHubsV3Hooks {
 		wfProfileIn(__METHOD__);
 		$app = F::app();
 
-		if( WikiaPageType::isWikiaHubMain() || $title->isSubpageOf(Title::newMainPage()) ) { /* TODO decide what to do with offshots */
+		if( WikiaPageType::isWikiaHubMain() || $title->isSubpageOf(Title::newMainPage()) ) {
 			$model = new WikiaHubsV3HooksModel();
 
 			$dbKeyName = $title->getDBKey();
@@ -27,29 +27,9 @@ class WikiaHubsV3Hooks {
 				$article = new WikiaHubsV3Article($title, $hubTimestamp);
 			}
 		}
-/*
-		if( $isHubPage && self::isOffShotPage($title) ) {
-			OasisController::addBodyClass('WikiaHubPage');
-
-			$am = AssetsManager::getInstance();
-			$app->wg->Out->addStyle($am->getSassCommonURL('extensions/wikia/WikiaHubsV3/css/WikiaHubsV3.scss'));
-
-		}
-*/
 		wfProfileOut(__METHOD__);
 		return true;
 
-	}
-
-	/**
-	 * Off-shot pages are real subpages of a hub (real articles [Video_Games/Video_Game_Olympics/]
-	 * instead of specific day's versions of a hub page [Video_Games/19-03-2013/])
-	 * 
-	 * @param Title $title
-	 * @return bool
-	 */
-	static protected function isOffShotPage(Title $title) {
-		return $title->isSubpage() && $title->exists();
 	}
 
 	/**
@@ -68,34 +48,6 @@ class WikiaHubsV3Hooks {
 
 		if ( $title instanceof Title && $title->isSubpageOf($mainPageTitle) ) {
 			$url = $mainPageTitle->getFullURL();
-		}
-
-		wfProfileOut(__METHOD__);
-		return true;
-	}
-
-	/**
-	 * Backward compatibility for old hubs off-shot pages
-	 *
-	 * @param Parser parser
-	 * @return true
-	 */
-	static public function onParserFirstCallInit( Parser $parser ) {
-		wfProfileIn(__METHOD__);
-
-		$app = F::app();
-		$title = $app->wg->title;
-
-		if ($title instanceof Title) {
-			$dbKeyName = $title->getDBKey();
-			$dbKeyNameSplit = explode('/', $dbKeyName);
-
-			$model = new WikiaHubsV3HooksModel();
-			$hubName = isset($dbKeyNameSplit[0]) ? $dbKeyNameSplit[0] : null;
-
-			if( WikiaPageType::isWikiaHub() && self::isOffShotPage($title) ) {
-				$parser->setHook('hubspopularvideos', array(new WikiaHubsParserHelper(), 'renderTag'));
-			}
 		}
 
 		wfProfileOut(__METHOD__);

@@ -2645,6 +2645,7 @@ Consultez la [[Special:BlockList|liste des adresses IP et comptes bloqués]] pou
 'unblocked'                       => '[[User:$1|$1]] a été débloqué',
 'unblocked-range'                 => '$1 a été débloqué',
 'unblocked-id'                    => 'Le blocage $1 a été enlevé',
+'unblocked-ip'                    => '[[Special:Contributions/$1|$1]] a été débloqué.',
 'blocklist'                       => 'Utilisateurs bloqués',
 'ipblocklist'                     => 'Utilisateurs bloqués',
 'ipblocklist-legend'              => 'Chercher un utilisateur bloqué',

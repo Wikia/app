@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 /**
  * WikiaBaseException
  *
@@ -52,13 +54,20 @@ abstract class WikiaBaseException extends MWException {
  */
 class WikiaException extends WikiaBaseException {
 	public function __construct($message = '', $code = 0, Exception $previous = null) {
-		global $wgRunningUnitTests, $wgNoDBUnits;
+		global $wgRunningUnitTests;
 		parent::__construct( $message, $code, $previous );
 
-		if (!$wgRunningUnitTests && $wgNoDBUnits) {
-			// log more details (macbre)
-		Wikia::log( 'exceptions-WIKIA', get_class($this), $message, true );
-			Wikia::logBacktrace( __METHOD__ );
+		if (!$wgRunningUnitTests) {
+			$exceptionClass = get_class($this);
+
+			// log on devboxes to /tmp/debug.log
+			wfDebug($exceptionClass . ": {$message}\n");
+
+			WikiaLogger::instance()->error($exceptionClass, [
+				'err' => $message,
+				'errno' => $code,
+				'exception' => $previous instanceof Exception ? $previous : $this,
+			]);
 		}
 	}
 }
@@ -83,7 +92,6 @@ class WikiaDispatchedException extends WikiaException {
 	 *
 	 * @link  http://pl2.php.net/manual/en/exception.construct.php
 	 * @param string $message
-	 * @param int $code
 	 * @param Exception $original
 	 */
 	public function __construct($message = '',  Exception $original = null) {
@@ -123,32 +131,16 @@ class WikiaDispatchedException extends WikiaException {
 	 * Override WikiaException report() and write exceptions to error_log
 	 */
 	function report() {
-		global $wgRequest;
-		$info = '';
-
-		if ( !empty( $this->_original ) ) {
-			$file = $this->_original->getFile();
-			$line = $this->_original->getLine();
-			$message = $this->_original->getMessage();
-
-			$info = "exception has occurred at line {$line} of {$file}: {$message}";
-		} else {
-			$info = "unknown exception has occurred";
-		}
-
-		$url = '[no URL]';
-
-		if ( isset( $wgRequest ) ) {
-			$url = $wgRequest->getFullRequestURL();
-		}
-
-		// Display normal mediawiki eror page for mediawiki exceptions
+		// Display normal mediawiki error page for mediawiki exceptions
 		if ( $this->_original instanceof MWException ) {
 			$this->_original->report();
 		}
-
+		// Wikia-specific exceptions will be sent to Logstash
 		else {
-			trigger_error("[REPORT: {$this->getMessage()}] WikiaDispatcher reports an {$info}  (URL: {$url}) [REPORT: End]", E_USER_ERROR);
+			WikiaLogger::instance()->error(__CLASS__, [
+				'err' => $this->getMessage(),
+				'exception' => $this->getOriginal(),
+			]);
 		}
 	}
 }
@@ -170,6 +162,7 @@ abstract class WikiaHttpException extends WikiaBaseException {
 		wfDebug(get_class($this). " raised from " . wfGetAllCallers(2) . "\n");
 		if (!empty($details)) {
 			$this->details = $details;
+			wfDebug(get_class($this)  . ": {$this->details}\n");
 		}
 	}
 

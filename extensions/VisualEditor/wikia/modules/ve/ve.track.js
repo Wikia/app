@@ -175,8 +175,32 @@ require( ['wikia.tracker'], function ( tracker ) {
 			return;
 		}
 
+		// Funnel tracking
+		handleFunnel( data );
+
 		// Send off to Wikia.Tracker
 		tracker.track( ve.extendObject( params, data ) );
+	}
+
+	/**
+	 * Track fake pageviews in GA for certain events
+	 * @method
+	 * @param {Object} data The tracking data
+	 */
+	function handleFunnel( data ) {
+		var funnelEvents = [
+			'edit-page-ready/impression',
+			'button-publish/enable',
+			'button-cancel/click',
+			'button-publish/click',
+			'dialog-save-publish/click',
+			'publish/success'
+		],
+		funnelEvent = data.label + '/' + data.action;
+
+		if ( funnelEvents.indexOf( funnelEvent ) !== -1 ) {
+			window.gaTrackPageview( '/fake-visual-editor/' + funnelEvent, 've' );
+		}
 	}
 
 	/**
@@ -193,7 +217,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 	// Track time to init when accessing directly from the URI via ?veaction=edit
 	if ( mw.libs.ve.activateOnPageLoad ) {
 		mw.hook( 've.activationComplete' ).add( function () {
-			ve.track( 'wikia' , {
+			ve.track( 'wikia', {
 				'action': actions.IMPRESSION,
 				'label': 'edit-page-ready-from-page-load',
 				'value': normalizeDuration( ve.now() - window.wgNow )

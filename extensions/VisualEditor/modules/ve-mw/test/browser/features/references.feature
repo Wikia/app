@@ -1,12 +1,20 @@
-@ie6-bug  @ie7-bug  @ie8-bug @ie9-bug @ie10-bug @en.wikipedia.beta.wmflabs.org @test2.wikipedia.org @login
+@chrome @en.wikipedia.beta.wmflabs.org @firefox @login @test2.wikipedia.org
 Feature: VisualEditor References
 
-  Scenario: VisualEditor References
-    Given I am logged in
-      And I am at my user page
-    When I click Edit for VisualEditor
-      And I click Reference
+  Background:
+    Given I go to a page that has references
+      And I click in the editable part
+
+  Scenario: Creating VisualEditor Reference
+    Given I click Reference
       And I can see the References User Interface
-      And I enter THIS IS CONTENT into Content box
+    When I enter THIS IS CONTENT into Content box
       And I click Insert reference
     Then link to Insert menu should be visible
+
+  Scenario: Reusing an existing reference
+    When I edit the page with Some content related to existing reference
+      And I create a reference using existing reference
+    Then first link to reference should be visible
+      And second link to reference should be visible
+

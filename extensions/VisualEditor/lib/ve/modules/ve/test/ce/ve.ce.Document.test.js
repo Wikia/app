@@ -79,80 +79,80 @@ QUnit.test( 'getRelativeOffset', function ( assert ) {
 QUnit.test( 'getRelativeRange', function ( assert ) {
 	var documentModel, surface, documentView, i, j, expectCount = 0,
 		tests = [
-		{
-			data: [
-				/* 0 */ { type: 'paragraph' },
-				/* 1 */ 'a',
-				/* 2 */ { type: 'image' },
-				/* 3 */ { type: '/image' },
-				/* 4 */ 'b',
-				/* 5 */ { type: '/paragraph' }
-			],
-			cases: [
-				{
-					direction: 1,
-					expand: false,
-					given: new ve.Range( 1 ),
-					expected: new ve.Range( 2 )
-				},
-				{
-					direction: 1,
-					expand: false,
-					given: new ve.Range( 2 ),
-					expected: new ve.Range( 2, 4 )
-				},
-				{
-					direction: 1,
-					expand: false,
-					given: new ve.Range( 2, 4 ),
-					expected: new ve.Range( 4 )
-				},
+			{
+				data: [
+					/* 0 */ { type: 'paragraph' },
+					/* 1 */ 'a',
+					/* 2 */ { type: 'image' },
+					/* 3 */ { type: '/image' },
+					/* 4 */ 'b',
+					/* 5 */ { type: '/paragraph' }
+				],
+				cases: [
+					{
+						direction: 1,
+						expand: false,
+						given: new ve.Range( 1 ),
+						expected: new ve.Range( 2 )
+					},
+					{
+						direction: 1,
+						expand: false,
+						given: new ve.Range( 2 ),
+						expected: new ve.Range( 2, 4 )
+					},
+					{
+						direction: 1,
+						expand: false,
+						given: new ve.Range( 2, 4 ),
+						expected: new ve.Range( 4 )
+					},
 
-				{
-					direction: 1,
-					expand: true,
-					given: new ve.Range( 1 ),
-					expected: new ve.Range( 1, 2 )
-				},
-				{
-					direction: 1,
-					expand: true,
-					given: new ve.Range( 1, 2 ),
-					expected: new ve.Range( 1, 4 )
-				},
-				{
-					direction: 1,
-					expand: true,
-					given: new ve.Range( 1, 4 ),
-					expected: new ve.Range( 1, 5 )
-				}
-			]
-		},
-		{
-			data: [
-				/* 0 */ { type: 'paragraph' },
-				/* 1 */ { type: 'image' },
-				/* 2 */ { type: '/image' },
-				/* 3 */ { type: 'image' },
-				/* 4 */ { type: '/image' },
-				/* 5 */ { type: '/paragraph' }
-			],
-			cases: [
-				{
-					direction: 1,
-					expand: false,
-					given: new ve.Range( 3 ),
-					expected: new ve.Range( 3, 5 )
-				},
-				{
-					direction: 1,
-					expand: true,
-					given: new ve.Range( 1, 3 ),
-					expected: new ve.Range( 1, 5 )
-				}
-			]
-		}
-	];
+					{
+						direction: 1,
+						expand: true,
+						given: new ve.Range( 1 ),
+						expected: new ve.Range( 1, 2 )
+					},
+					{
+						direction: 1,
+						expand: true,
+						given: new ve.Range( 1, 2 ),
+						expected: new ve.Range( 1, 4 )
+					},
+					{
+						direction: 1,
+						expand: true,
+						given: new ve.Range( 1, 4 ),
+						expected: new ve.Range( 1, 5 )
+					}
+				]
+			},
+			{
+				data: [
+					/* 0 */ { type: 'paragraph' },
+					/* 1 */ { type: 'image' },
+					/* 2 */ { type: '/image' },
+					/* 3 */ { type: 'image' },
+					/* 4 */ { type: '/image' },
+					/* 5 */ { type: '/paragraph' }
+				],
+				cases: [
+					{
+						direction: 1,
+						expand: false,
+						given: new ve.Range( 3 ),
+						expected: new ve.Range( 3, 5 )
+					},
+					{
+						direction: 1,
+						expand: true,
+						given: new ve.Range( 1, 3 ),
+						expected: new ve.Range( 1, 5 )
+					}
+				]
+			}
+		];
 	for ( i = 0; i < tests.length; i++ ) {
 		documentModel = new ve.dm.Document( tests[i].data );
 		surface = ve.test.utils.createSurfaceFromDocument( documentModel );

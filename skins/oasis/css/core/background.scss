@@ -1,7 +1,7 @@
-@import "color";
+@import "skins/shared/color";
 @import "layout";
 @import "responsive-variables";
-@import "../mixins/calc";
+@import "skins/shared/mixins/calc";
 
 // Background
 // TODO: we might want to consider pre-calculating all of the background

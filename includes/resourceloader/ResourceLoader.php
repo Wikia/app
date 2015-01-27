@@ -320,6 +320,7 @@ class ResourceLoader {
 		// Since it must be ready before any of the test suites are executed.
 		foreach( $testModules['qunit'] as $moduleName => $moduleProps ) {
 			$testModules['qunit'][$moduleName]['dependencies'][] = 'mediawiki.tests.qunit.testrunner';
+			$testModules['qunit'][$moduleName]['position'] = 'top';
 		}
 
 		foreach( $testModules as $id => $names ) {

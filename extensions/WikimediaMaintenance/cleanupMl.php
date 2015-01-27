@@ -84,7 +84,7 @@ while ( !feof( $file ) ) {
 
 	$dbw->commit();
 	sleep( 1 );
-	wfWaitForSlaves( 5 );
+	wfWaitForSlaves();
 }
 
 

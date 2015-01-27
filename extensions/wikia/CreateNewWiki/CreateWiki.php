@@ -15,7 +15,7 @@
 class CreateWiki {
 
 	/* @var $mDBw DatabaseMysql */
-	private $mName, $mDomain, $mLanguage, $mHub, $mStarters, $mIP,
+	private $mName, $mDomain, $mLanguage, $mVertical, $mCategories, $mStarters, $mIP,
 		$mPHPbin, $mMYSQLbin, $mMYSQLdump, $mNewWiki, $mFounder,
 		$mLangSubdomain, $mDBw, $mWFSettingVars, $mWFVars,
 		$mDefaultTables, $mAdditionalTables,
@@ -41,7 +41,6 @@ class CreateWiki {
 	const IMGROOT              = "/images/";
 	const IMAGEURL             = "http://images.wikia.com/";
 	const CREATEWIKI_LOGO      = "http://images.wikia.com/central/images/2/22/Wiki_Logo_Template.png";
-	const CREATEWIKI_ICON      = "http://images.wikia.com/central/images/6/64/Favicon.ico";
 	const DEFAULT_STAFF        = "Angela";
 	const DEFAULT_USER         = 'Default';
 	const DEFAULT_DOMAIN       = "wikia.com";
@@ -50,8 +49,8 @@ class CreateWiki {
 	const DEFAULT_NAME         = "Wiki";
 	const DEFAULT_WIKI_TYPE    = "";
 	const DEFAULT_WIKI_LOGO    = '$wgUploadPath/b/bc/Wiki.png';
-	const DEFAULT_WIKI_FAVICON = '$wgUploadPath/6/64/Favicon.ico';
 
+	const SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH = 55;
 
 	/**
 	 * constructor
@@ -59,9 +58,8 @@ class CreateWiki {
 	 * @param string $name - name of wiki (set later as $wgSiteinfo)
 	 * @param string $domain - domain part without '.wikia.com'
 	 * @param string $language - language code
-	 * @param integer $hub - category/hub which should be set for created wiki
 	 */
-	public function __construct( $name, $domain, $language, $hub ) {
+	public function __construct( $name, $domain, $language, $vertical, $categories ) {
 		global $wgUser, $IP, $wgAutoloadClasses, $wgRequest;
 
 		// wiki containter
@@ -70,7 +68,8 @@ class CreateWiki {
 		$this->mDomain = $domain;
 		$this->mName = $name;
 		$this->mLanguage = $language;
-		$this->mHub = $hub;
+		$this->mVertical = $vertical;
+		$this->mCategories = $categories;
 		$this->mIP = $IP;
 
 		// founder of wiki
@@ -86,15 +85,17 @@ class CreateWiki {
 		$this->mStarters = array(
 			"*" => array(
 				"*"  => "aastarter",
-				"en" => "starter",
-				"ja" => "jastarter",
 				"de" => "destarter",
-				"fr" => "frstarter",
-				"nl" => "nlstarter",
+				"en" => "starter",
 				"es" => "esstarter",
+				"fi" => "fistarter",
+				"fr" => "starterbeta",
+				"it" => "italianstarter",
+				"ja" => "jastarter",
+				"ko" => "starterko",
+				"nl" => "nlstarter",
 				"pl" => "plstarter",
 				"ru" => "rustarter",
-				"it" => "italianstarter",
 			)
 		);
 
@@ -153,6 +154,11 @@ class CreateWiki {
 	 */
 	public function create() {
 		global $wgWikiaLocalSettingsPath, $wgExternalSharedDB, $wgSharedDB, $wgUser;
+
+		// Set this flag to ensure that all select operations go against master
+		// Slave lag can cause random errors during wiki creation process
+		global $wgForceMasterDatabase;
+		$wgForceMasterDatabase = true;
 
 		wfProfileIn( __METHOD__ );
 
@@ -295,13 +301,6 @@ class CreateWiki {
 			return self::ERROR_SQL_FILE_BROKEN;
 		}
 
-		// Hack to slow down the devbox database creation because createTables() returns
-		// before the tables are created on the slave, and the uploadImage function hits the slave
-		global $wgDevelEnvironment;
-		if (isset($wgDevelEnvironment)) {
-			sleep(15);
-		}
-
 		/**
 		 * import language starter
 		 */
@@ -324,7 +323,7 @@ class CreateWiki {
 		$this->mNewWiki->dbw->insert( "site_stats", array( "ss_row_id" => "1"), __METHOD__ );
 
 		/**
-		 * copy default logo & favicon
+		 * copy default logo
 		 */
 
 
@@ -333,13 +332,6 @@ class CreateWiki {
 			wfDebugLog( "createwiki", __METHOD__ . ": Default logo has been uploaded\n", true );
 		} else {
 			wfDebugLog( "createwiki", __METHOD__ . ": Default logo has not been uploaded - " . print_r($res['errors'], true) . "\n", true );
-		}
-
-		$res = ImagesService::uploadImageFromUrl( self::CREATEWIKI_ICON, (object) ['name' => 'Favicon.ico'], $uploader );
-		if (  $res['status'] == true  ) {
-			wfDebugLog( "createwiki", __METHOD__ . ": Default favicon has been uploaded\n", true );
-		} else {
-			wfDebugLog( "createwiki", __METHOD__ . ": Default favicon has not been uploaded - " . print_r($res['errors'], true) . "\n", true );
 		}
 
 		/**
@@ -368,12 +360,14 @@ class CreateWiki {
 		wfDebugLog( "createwiki", __METHOD__ . ": Database changes commited \n", true );
 		$wgSharedDB = $tmpSharedDB;
 
-		/**
-		 * set hub/category
-		 */
+
 		$oHub = WikiFactoryHub::getInstance();
-		$oHub->setCategory( $this->mNewWiki->city_id, $this->mNewWiki->hub, "CW Setup" );
-		wfDebugLog( "createwiki", __METHOD__ . ": Wiki added to the category hub: {$this->mNewWiki->hub} \n", true );
+		$oHub->setVertical( $this->mNewWiki->city_id, $this->mNewWiki->vertical, "CW Setup" );
+		wfDebugLog( "createwiki", __METHOD__ . ": Wiki added to the vertical: {$this->mNewWiki->vertical} \n", true );
+		for($i = 0; $i < count($this->mNewWiki->categories); $i++) {
+			$oHub->addCategory( $this->mNewWiki->city_id, $this->mNewWiki->categories[$i] );
+			wfDebugLog( "createwiki", __METHOD__ . ": Wiki added to the category: {$this->mNewWiki->categories[$i]} \n", true );
+		}
 
 		/**
 		 * define wiki type
@@ -428,8 +422,6 @@ class CreateWiki {
 			$tags->addTagsByName( $langTag );
 		}
 
-		$tags->addTagsByName( $this->mNewWiki->hub );
-
 		/**
 		 * move main page -> this code exists in CreateWikiLocalJob - so it is not needed anymore
 		 */
@@ -444,7 +436,7 @@ class CreateWiki {
 		unset($oldUser);
 
 		if (TaskRunner::isModern('CreateWikiLocalJob')) {
-			$creationTask = new CreateNewWikiTask();
+			$creationTask = new \Wikia\Tasks\Tasks\CreateNewWikiTask();
 
 			(new \Wikia\Tasks\AsyncTaskList())
 				->wikiId($this->mNewWiki->city_id)
@@ -588,8 +580,18 @@ class CreateWiki {
 		$this->mDomain = preg_replace( "/^(\-)+/", "", $this->mDomain );
 		$this->mNewWiki->domain = strtolower( trim( $this->mDomain ) );
 
-		// hub
-		$this->mNewWiki->hub = $this->mHub;
+		$this->mNewWiki->vertical = $this->mVertical;
+
+		// Map new verticals to old categories while in transition so that "hub" code still works
+		// If a user selects a vertical we will also add the old category that matches best with it
+		// This code can be removed after we are fully using the new verticals (PLATFORM-403)
+
+		// uses array_unshift to make sure hub category is first, because we take the first cat from SQL
+		if ( $this->mVertical == 2 ) array_unshift($this->mCategories, 2);	// Video games
+		if ( in_array( $this->mVertical, [1,3,4,6,7] ) ) array_unshift($this->mCategories, 3); // Entertainment
+		if ( $this->mVertical == 5 ) array_unshift($this->mCategories, 9);	// Lifestyle
+
+		$this->mNewWiki->categories = $this->mCategories;
 
 		// name
 		$this->mNewWiki->name = strtolower( trim( $this->mDomain ) );
@@ -648,7 +650,27 @@ class CreateWiki {
 	}
 
 	/**
-	 * check folder exists
+	 * Check if the given upload directory name is available for use.
+	 *
+	 * @access public
+	 * @author Michał Roszka <michal@wikia-inc.com>
+	 *
+	 * @param $sDirectoryName the path to check
+	 */
+	public static function wgUploadDirectoryExists( $sDirectoryName ) {
+		wfProfileIn( __METHOD__ );
+		$iVarId = WikiFactory::getVarIdByName( 'wgUploadDirectory' );
+
+		// Crash immediately if $iVarId is not a positive integer!
+		\Wikia\Util\Assert::true( $iVarId );
+
+		$aCityIds = WikiFactory::getCityIDsFromVarValue( $iVarId, $sDirectoryName, '=' );
+		wfProfileOut( __METHOD__ );
+		return !empty( $aCityIds );
+	}
+
+	/**
+	 * "calculates" the value for wgUploadDirectory
 	 *
 	 * @access private
 	 * @author Piotr Molski (Moli)
@@ -661,8 +683,8 @@ class CreateWiki {
 		wfDebug( __METHOD__ . ": Checking {$name} folder" );
 
 		$isExist = false; $suffix = "";
-		$prefix = strtolower( substr( $name, 0, 1 ) );
-		$dir_base = $name;
+		$dir_base = self::sanitizeS3BucketName($name);
+		$prefix = strtolower( substr( $dir_base, 0, 1 ) );
 		$dir_lang = ( isset( $language ) && $language !== "en" )
 				? "/" . strtolower( $language )
 				: "";
@@ -670,7 +692,7 @@ class CreateWiki {
 		while ( $isExist == false ) {
 			$dirName = self::IMGROOT . $prefix . "/" . $dir_base . $suffix . $dir_lang . "/images";
 
-			if ( file_exists( $dirName ) ) {
+			if ( self::wgUploadDirectoryExists($dirName) ) {
 				$suffix = rand(1, 9999);
 			}
 			else {
@@ -679,8 +701,62 @@ class CreateWiki {
 			}
 		}
 
+		wfDebug( __METHOD__ . ": Returning '{$dir_base}'\n" );
 		wfProfileOut( __METHOD__ );
 		return $dir_base;
+	}
+
+	/**
+	 * Sanitizes a name to be a valid S3 bucket name. It means it can contain only letters and numbers
+	 * and optionally hyphens in the middle. Maximum length is 63 characters, we're trimming it to 55
+	 * characters here as some random suffix may be added to solve duplicates.
+	 *
+	 * Note that different arguments may lead to the same results so the conflicts need to be solved
+	 * at a later stage of processing.
+	 *
+	 * @see http://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html
+	 *      Wikia change: We accept underscores wherever hyphens are allowed.
+	 *
+	 * @param $name string Directory name
+	 * @return string Sanitized name
+	 */
+	private static function sanitizeS3BucketName( $name ) {
+		if ( $name == 'admin' ) {
+			$name .= 'x';
+		}
+
+		$RE_VALID = "/^[a-z0-9](?:[-_a-z0-9]{0,53}[a-z0-9])?(?:[a-z0-9](?:\\.[-_a-z0-9]{0,53}[a-z0-9])?)*\$/";
+		# check if it's already valid
+		$name = mb_strtolower($name);
+		if ( preg_match( $RE_VALID, $name ) && strlen($name) <= self::SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH ) {
+			return $name;
+		}
+
+		# try fixing the simplest and most popular cases
+		$check_name = str_replace(['.',' ','(',')'],'_',$name);
+		if ( in_array( substr($check_name,-1), [ '-', '_' ] ) ) {
+			$check_name .= '0';
+		}
+		if ( preg_match( $RE_VALID, $check_name ) && strlen($check_name) <= self::SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH ) {
+			return $check_name;
+		}
+
+		# replace invalid ASCII characters with their hex values
+		$s = '';
+		for ($i=0;$i<strlen($name);$i++) {
+			$c = $name[$i];
+			if ( $c >= 'a' && $c <= 'z' || $c >= '0' && $c <= '9' ) {
+				$s .= $c;
+			} else {
+				$s .= bin2hex($c);
+			}
+			if ( strlen($s) >= self::SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH ) {
+				break;
+			}
+		}
+		$name = substr($s, 0, self::SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH);
+
+		return $name;
 	}
 
 	/**
@@ -918,7 +994,6 @@ class CreateWiki {
 		$this->mWFSettingVars['wgLocalInterwiki']         = $this->mNewWiki->sitename;
 		$this->mWFSettingVars['wgLanguageCode']           = $this->mNewWiki->language;
 		$this->mWFSettingVars['wgServer']                 = rtrim( $this->mNewWiki->url, "/" );
-		$this->mWFSettingVars['wgFavicon']                = self::DEFAULT_WIKI_FAVICON;
 		$this->mWFSettingVars['wgEnableSectionEdit']      = true;
 		$this->mWFSettingVars['wgEnableSwiftFileBackend'] = true;
 		$this->mWFSettingVars['wgOasisLoadCommonCSS']     = true;

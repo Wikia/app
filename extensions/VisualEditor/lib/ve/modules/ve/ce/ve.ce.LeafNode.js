@@ -15,15 +15,15 @@
  * @mixins ve.LeafNode
  *
  * @constructor
- * @param {ve.dm.LeafNode} model Model to observe
- * @param {Object} [config] Configuration options
+ * @param {ve.dm.LeafNode} model
+ * @param {Object} [config]
  */
-ve.ce.LeafNode = function VeCeLeafNode( model, config ) {
+ve.ce.LeafNode = function VeCeLeafNode( model ) {
 	// Mixin constructor
 	ve.LeafNode.call( this );
 
 	// Parent constructor
-	ve.ce.Node.call( this, model, config );
+	ve.ce.Node.apply( this, arguments );
 
 	// DOM changes
 	if ( model.isWrapped() ) {

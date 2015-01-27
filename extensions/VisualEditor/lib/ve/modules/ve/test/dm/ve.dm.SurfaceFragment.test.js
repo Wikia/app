@@ -20,7 +20,7 @@ QUnit.test( 'constructor', 8, function ( assert ) {
 	// Default range and autoSelect
 	assert.strictEqual( fragment.getSurface(), surface, 'surface reference is stored' );
 	assert.strictEqual( fragment.getDocument(), doc, 'document reference is stored' );
-	assert.deepEqual( fragment.getRange(), new ve.Range( 1 ), 'range is taken from surface' );
+	assert.equalRange( fragment.getRange(), new ve.Range( 1 ), 'range is taken from surface' );
 	assert.strictEqual( fragment.willAutoSelect(), true, 'auto select by default' );
 	assert.strictEqual( fragment.isNull(), false, 'valid fragment is not null' );
 	// Invalid range and autoSelect
@@ -39,13 +39,13 @@ QUnit.test( 'update', 3, function ( assert ) {
 	fragment1.wrapNodes(
 		[{ 'type': 'list', 'attributes': { 'style': 'bullet' } }, { 'type': 'listItem' }]
 	);
-	assert.deepEqual(
+	assert.equalRange(
 		fragment2.getRange(),
 		new ve.Range( 55, 69 ),
 		'fragment range changes after wrapNodes'
 	);
 	surface.undo();
-	assert.deepEqual(
+	assert.equalRange(
 		fragment3.getRange(),
 		new ve.Range( 55, 61 ),
 		'fragment range restored after undo'
@@ -63,7 +63,7 @@ QUnit.test( 'update', 3, function ( assert ) {
 
 	surface.undo();
 	fragment1.insertContent( '5678' );
-	assert.deepEqual(
+	assert.equalRange(
 		fragment2.getRange(),
 		new ve.Range( 3, 7 ),
 		'Range created during truncated undo point still translates correctly'
@@ -77,8 +77,8 @@ QUnit.test( 'adjustRange', 4, function ( assert ) {
 		fragment = new ve.dm.SurfaceFragment( surface, new ve.Range( 20, 21 ) ),
 		adjustedFragment = fragment.adjustRange( -19, 35 );
 	assert.ok( fragment !== adjustedFragment, 'adjustRange produces a new fragment' );
-	assert.deepEqual( fragment.getRange(), new ve.Range( 20, 21 ), 'old fragment is not changed' );
-	assert.deepEqual( adjustedFragment.getRange(), new ve.Range( 1, 56 ), 'new range is used' );
+	assert.equalRange( fragment.getRange(), new ve.Range( 20, 21 ), 'old fragment is not changed' );
+	assert.equalRange( adjustedFragment.getRange(), new ve.Range( 1, 56 ), 'new range is used' );
 
 	adjustedFragment = fragment.adjustRange();
 	assert.deepEqual( adjustedFragment, fragment, 'fragment is clone if no parameters supplied' );
@@ -90,13 +90,13 @@ QUnit.test( 'collapseRangeToStart/End', 6, function ( assert ) {
 		fragment = new ve.dm.SurfaceFragment( surface, new ve.Range( 20, 21 ) ),
 		collapsedFragment = fragment.collapseRangeToStart();
 	assert.ok( fragment !== collapsedFragment, 'collapseRangeToStart produces a new fragment' );
-	assert.deepEqual( fragment.getRange(), new ve.Range( 20, 21 ), 'old fragment is not changed' );
-	assert.deepEqual( collapsedFragment.getRange(), new ve.Range( 20, 20 ), 'new range is used' );
+	assert.equalRange( fragment.getRange(), new ve.Range( 20, 21 ), 'old fragment is not changed' );
+	assert.equalRange( collapsedFragment.getRange(), new ve.Range( 20, 20 ), 'new range is used' );
 
 	collapsedFragment = fragment.collapseRangeToEnd();
 	assert.ok( fragment !== collapsedFragment, 'collapseRangeToEnd produces a new fragment' );
-	assert.deepEqual( fragment.getRange(), new ve.Range( 20, 21 ), 'old fragment is not changed' );
-	assert.deepEqual( collapsedFragment.getRange(), new ve.Range( 21, 21 ), 'range is at end when collapseToEnd is set' );
+	assert.equalRange( fragment.getRange(), new ve.Range( 20, 21 ), 'old fragment is not changed' );
+	assert.equalRange( collapsedFragment.getRange(), new ve.Range( 21, 21 ), 'range is at end when collapseToEnd is set' );
 } );
 
 QUnit.test( 'expandRange (closest)', 1, function ( assert ) {
@@ -160,7 +160,7 @@ QUnit.test( 'removeContent', 6, function ( assert ) {
 		expectedData,
 		'removing content drops fully covered nodes and strips partially covered ones'
 	);
-	assert.deepEqual(
+	assert.equalRange(
 		fragment.getRange(),
 		new ve.Range( 1, 3 ),
 		'removing content results in a fragment covering just remaining structure'
@@ -171,7 +171,7 @@ QUnit.test( 'removeContent', 6, function ( assert ) {
 		originalDoc.getData(),
 		'content restored after undo'
 	);
-	assert.deepEqual(
+	assert.equalRange(
 		fragment.getRange(),
 		new ve.Range( 1, 56 ),
 		'range restored after undo'
@@ -187,14 +187,14 @@ QUnit.test( 'removeContent', 6, function ( assert ) {
 		],
 		'removing content empties node'
 	);
-	assert.deepEqual(
+	assert.equalRange(
 		fragment.getRange(),
 		new ve.Range( 1, 1 ),
 		'removing content collapses range'
 	);
 } );
 
-QUnit.test( 'insertContent', 4, function ( assert ) {
+QUnit.test( 'insertContent', 8, function ( assert ) {
 	var doc = ve.dm.example.createExampleDocument(),
 		surface = new ve.dm.Surface( doc ),
 		fragment = new ve.dm.SurfaceFragment( surface, new ve.Range( 1, 4 ) );
@@ -204,7 +204,7 @@ QUnit.test( 'insertContent', 4, function ( assert ) {
 		['1', '2', '3'],
 		'inserting content replaces selection with new content'
 	);
-	assert.deepEqual(
+	assert.equalRange(
 		fragment.getRange(),
 		new ve.Range( 1, 4 ),
 		'inserting content results in range around content'
@@ -221,10 +221,40 @@ QUnit.test( 'insertContent', 4, function ( assert ) {
 
 	surface.undo();
 	fragment.getRange();
-	assert.deepEqual(
+	assert.equalRange(
 		fragment.getRange(),
 		new ve.Range( 4 ),
 		'range restored after undo'
+	);
+
+	fragment = new ve.dm.SurfaceFragment( surface, new ve.Range( 1 ) );
+	fragment.insertContent( [ { 'type': 'table' }, { 'type': '/table' } ] );
+	assert.deepEqual(
+		doc.getData( new ve.Range( 0, 2 ) ),
+		[ { 'type': 'table' }, { 'type': '/table' } ],
+		'table insertion at start of heading is moved outside of heading'
+	);
+	assert.equalRange(
+		fragment.getRange(),
+		new ve.Range( 0, 2 ),
+		'range covers inserted content in moved position (left)'
+	);
+
+	// Set up document and surface from scratch
+	doc = ve.dm.example.createExampleDocument();
+	surface = new ve.dm.Surface( doc );
+
+	fragment = new ve.dm.SurfaceFragment( surface, new ve.Range( 4 ) );
+	fragment.insertContent( [ { 'type': 'list' }, { 'type': '/list' } ] );
+	assert.deepEqual(
+		doc.getData( new ve.Range( 5, 7 ) ),
+		[ { 'type': 'list' }, { 'type': '/list' } ],
+		'list insertion at end of heading is moved outside of heading'
+	);
+	assert.equalRange(
+		fragment.getRange(),
+		new ve.Range( 5, 7 ),
+		'range covers inserted content in moved position (right)'
 	);
 } );
 
@@ -276,11 +306,11 @@ QUnit.test( 'wrapNodes/unwrapNodes', 10, function ( assert ) {
 		],
 		'wrapping nodes can add multiple levels of wrapping to multiple elements'
 	);
-	assert.deepEqual( fragment.getRange(), new ve.Range( 55, 69 ), 'new range contains wrapping elements' );
+	assert.equalRange( fragment.getRange(), new ve.Range( 55, 69 ), 'new range contains wrapping elements' );
 
 	fragment.unwrapNodes( 0, 2 );
 	assert.deepEqual( doc.getData(), originalDoc.getData(), 'unwrapping 2 levels restores document to original state' );
-	assert.deepEqual( fragment.getRange(), new ve.Range( 55, 61 ), 'range after unwrapping is same as original range' );
+	assert.equalRange( fragment.getRange(), new ve.Range( 55, 61 ), 'range after unwrapping is same as original range' );
 
 	// Make a 1 paragraph into 1 list with 1 item
 	fragment = new ve.dm.SurfaceFragment( surface, new ve.Range( 9, 12 ) );
@@ -303,16 +333,16 @@ QUnit.test( 'wrapNodes/unwrapNodes', 10, function ( assert ) {
 		],
 		'wrapping nodes can add multiple levels of wrapping to a single element'
 	);
-	assert.deepEqual( fragment.getRange(), new ve.Range( 9, 16 ), 'new range contains wrapping elements' );
+	assert.equalRange( fragment.getRange(), new ve.Range( 9, 16 ), 'new range contains wrapping elements' );
 
 	fragment.unwrapNodes( 0, 2 );
 	assert.deepEqual( doc.getData(), originalDoc.getData(), 'unwrapping 2 levels restores document to original state' );
-	assert.deepEqual( fragment.getRange(), new ve.Range( 9, 12 ), 'range after unwrapping is same as original range' );
+	assert.equalRange( fragment.getRange(), new ve.Range( 9, 12 ), 'range after unwrapping is same as original range' );
 
 	fragment = new ve.dm.SurfaceFragment( surface, new ve.Range( 8, 34 ) );
 	fragment.unwrapNodes( 3, 1 );
 	assert.deepEqual( fragment.getData(), doc.getData( new ve.Range( 5, 29 ) ), 'unwrapping multiple outer nodes and an inner node' );
-	assert.deepEqual( fragment.getRange(), new ve.Range( 5, 29 ), 'new range contains inner elements' );
+	assert.equalRange( fragment.getRange(), new ve.Range( 5, 29 ), 'new range contains inner elements' );
 } );
 
 QUnit.test( 'rewrapNodes', 4, function ( assert ) {
@@ -349,7 +379,7 @@ QUnit.test( 'rewrapNodes', 4, function ( assert ) {
 		expectedDoc.getData(),
 		'rewrapping multiple nodes via a valid intermediate state produces the same document as unwrapping then wrapping'
 	);
-	assert.deepEqual( fragment.getRange(), expectedFragment.getRange(), 'new range contains rewrapping elements' );
+	assert.equalRange( fragment.getRange(), expectedFragment.getRange(), 'new range contains rewrapping elements' );
 
 	// Rewrap paragrphs as headings
 	// The intermediate stage (plain text attached to the document) would be invalid
@@ -365,7 +395,7 @@ QUnit.test( 'rewrapNodes', 4, function ( assert ) {
 	expectedData.splice( 64, 1, { 'type': '/heading' } );
 
 	assert.deepEqual( doc.getData(), expectedData, 'rewrapping paragraphs as headings' );
-	assert.deepEqual( fragment.getRange(), new ve.Range( 59, 65 ), 'new range contains rewrapping elements' );
+	assert.equalRange( fragment.getRange(), new ve.Range( 59, 65 ), 'new range contains rewrapping elements' );
 } );
 
 QUnit.test( 'wrapAllNodes', 10, function ( assert ) {
@@ -398,11 +428,11 @@ QUnit.test( 'wrapAllNodes', 10, function ( assert ) {
 		],
 		'wrapping nodes can add multiple levels of wrapping to multiple elements'
 	);
-	assert.deepEqual( fragment.getRange(), new ve.Range( 55, 65 ), 'new range contains wrapping elements' );
+	assert.equalRange( fragment.getRange(), new ve.Range( 55, 65 ), 'new range contains wrapping elements' );
 
 	fragment.unwrapNodes( 0, 2 );
 	assert.deepEqual( doc.getData(), originalDoc.getData(), 'unwrapping 2 levels restores document to original state' );
-	assert.deepEqual( fragment.getRange(), new ve.Range( 55, 61 ), 'range after unwrapping is same as original range' );
+	assert.equalRange( fragment.getRange(), new ve.Range( 55, 61 ), 'range after unwrapping is same as original range' );
 
 	// Make a 1 paragraph into 1 list with 1 item
 	fragment = new ve.dm.SurfaceFragment( surface, new ve.Range( 9, 12 ) );
@@ -425,11 +455,11 @@ QUnit.test( 'wrapAllNodes', 10, function ( assert ) {
 		],
 		'wrapping nodes can add multiple levels of wrapping to a single element'
 	);
-	assert.deepEqual( fragment.getRange(), new ve.Range( 9, 16 ), 'new range contains wrapping elements' );
+	assert.equalRange( fragment.getRange(), new ve.Range( 9, 16 ), 'new range contains wrapping elements' );
 
 	fragment.unwrapNodes( 0, 2 );
 	assert.deepEqual( doc.getData(), originalDoc.getData(), 'unwrapping 2 levels restores document to original state' );
-	assert.deepEqual( fragment.getRange(), new ve.Range( 9, 12 ), 'range after unwrapping is same as original range' );
+	assert.equalRange( fragment.getRange(), new ve.Range( 9, 12 ), 'range after unwrapping is same as original range' );
 
 	fragment = new ve.dm.SurfaceFragment( surface, new ve.Range( 5, 37 ) );
 
@@ -472,7 +502,7 @@ QUnit.test( 'rewrapAllNodes', 6, function ( assert ) {
 		expectedDoc.getData(),
 		'rewrapping multiple nodes via a valid intermediate state produces the same document as unwrapping then wrapping'
 	);
-	assert.deepEqual( fragment.getRange(), expectedFragment.getRange(), 'new range contains rewrapping elements' );
+	assert.equalRange( fragment.getRange(), expectedFragment.getRange(), 'new range contains rewrapping elements' );
 
 	// Reverse of first test
 	fragment.rewrapAllNodes(
@@ -491,7 +521,7 @@ QUnit.test( 'rewrapAllNodes', 6, function ( assert ) {
 		expectedData,
 		'rewrapping multiple nodes via a valid intermediate state produces the same document as unwrapping then wrapping'
 	);
-	assert.deepEqual( fragment.getRange(), new ve.Range( 5, 37 ), 'new range contains rewrapping elements' );
+	assert.equalRange( fragment.getRange(), new ve.Range( 5, 37 ), 'new range contains rewrapping elements' );
 
 	// Rewrap a heading as a paragraph
 	// The intermediate stage (plain text attached to the document) would be invalid
@@ -503,7 +533,7 @@ QUnit.test( 'rewrapAllNodes', 6, function ( assert ) {
 	expectedData.splice( 4, 1, { 'type': '/paragraph' } );
 
 	assert.deepEqual( doc.getData(), expectedData, 'rewrapping a heading as a paragraph' );
-	assert.deepEqual( fragment.getRange(), new ve.Range( 0, 5 ), 'new range contains rewrapping elements' );
+	assert.equalRange( fragment.getRange(), new ve.Range( 0, 5 ), 'new range contains rewrapping elements' );
 } );
 
 QUnit.test( 'isolateAndUnwrap', 1, function ( assert ) {

@@ -131,28 +131,28 @@ ve.ui.triggerRegistry.register(
 );
 // Ctrl+0-7 below are not mapped to Cmd+0-7 on Mac because Chrome reserves those for switching tabs
 ve.ui.triggerRegistry.register(
-	'paragraph', { 'mac': new ve.ui.Trigger( 'ctrl+0' ), 'pc': new ve.ui.Trigger ( 'ctrl+0' ) }
+	'paragraph', new ve.ui.Trigger( 'ctrl+0' )
 );
 ve.ui.triggerRegistry.register(
-	'heading1', { 'mac': new ve.ui.Trigger( 'ctrl+1' ), 'pc': new ve.ui.Trigger ( 'ctrl+1' ) }
+	'heading1', new ve.ui.Trigger ( 'ctrl+1' )
 );
 ve.ui.triggerRegistry.register(
-	'heading2', { 'mac': new ve.ui.Trigger( 'ctrl+2' ), 'pc': new ve.ui.Trigger ( 'ctrl+2' ) }
+	'heading2', new ve.ui.Trigger ( 'ctrl+2' )
 );
 ve.ui.triggerRegistry.register(
-	'heading3', { 'mac': new ve.ui.Trigger( 'ctrl+3' ), 'pc': new ve.ui.Trigger ( 'ctrl+3' ) }
+	'heading3', new ve.ui.Trigger ( 'ctrl+3' )
 );
 ve.ui.triggerRegistry.register(
-	'heading4', { 'mac': new ve.ui.Trigger( 'ctrl+4' ), 'pc': new ve.ui.Trigger ( 'ctrl+4' ) }
+	'heading4', new ve.ui.Trigger ( 'ctrl+4' )
 );
 ve.ui.triggerRegistry.register(
-	'heading5', { 'mac': new ve.ui.Trigger( 'ctrl+5' ), 'pc': new ve.ui.Trigger ( 'ctrl+5' ) }
+	'heading5', new ve.ui.Trigger ( 'ctrl+5' )
 );
 ve.ui.triggerRegistry.register(
-	'heading6', { 'mac': new ve.ui.Trigger( 'ctrl+6' ), 'pc': new ve.ui.Trigger ( 'ctrl+6' ) }
+	'heading6', new ve.ui.Trigger ( 'ctrl+6' )
 );
 ve.ui.triggerRegistry.register(
-	'preformatted', { 'mac': new ve.ui.Trigger( 'ctrl+7' ), 'pc': new ve.ui.Trigger ( 'ctrl+7' ) }
+	'preformatted', new ve.ui.Trigger ( 'ctrl+7' )
 );
 ve.ui.triggerRegistry.register(
 	'pasteSpecial', { 'mac': new ve.ui.Trigger( 'cmd+shift+v' ), 'pc': new ve.ui.Trigger ( 'ctrl+shift+v' ) }

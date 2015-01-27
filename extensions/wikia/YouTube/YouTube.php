@@ -46,12 +46,18 @@ $wgHooks['EditPage::importFormData'][] = 'upgradeYouTubeTag';
 
 $wgExtensionCredits['parserhook'][] = array
 (
-	'name'        => 'YouTube',
-	'version'     => '1.10',
-	'author'      => 'Przemek Piotrowski, Sean Colombo',
-	'url'         => 'http://help.wikia.com/wiki/Help:YouTube',
-	'description' => 'embeds YouTube and Google Video movies + Archive.org audio and video + WeGame and Gametrailers video + Tangler forum + GoGreenTube video + Crispy Gamer',
+	'name'    	     => 'YouTube',
+	'version'  	     => '1.10',
+	'author'   	     => array(
+		'Przemek Piotrowski', 
+		'Sean Colombo'
+	),
+	'url'      	     => 'http://community.wikia.com/wiki/Help:YouTube',
+	'descriptionmsg' => 'youtube-desc',
 );
+
+//i18n
+$wgExtensionMessagesFiles['YouTube'] = __DIR__ . '/YouTube.i18n.php';
 
 // Define the tallest a video can be to qualify as audio only
 define('AUDIO_ONLY_HEIGHT', 30);

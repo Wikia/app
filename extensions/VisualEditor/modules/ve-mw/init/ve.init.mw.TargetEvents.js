@@ -86,11 +86,7 @@ ve.init.mw.TargetEvents.prototype.onSaveInitated = function () {
 ve.init.mw.TargetEvents.prototype.onSaveComplete = function () {
 	this.track( 'performance.user.saveComplete', { 'duration': ve.now() - this.timings.saveInitiated } );
 	this.timings.saveRetries = 0;
-	ve.track( 'wikia', {
-		'action': ve.track.actions.CLICK,
-		'label': 'dialog-save-publish',
-		'duration': ve.now() - this.timings.saveInitiated
-	} );};
+};
 
 /**
  * Track a save error by type
@@ -173,7 +169,9 @@ ve.init.mw.TargetEvents.prototype.onSaveErrorUnknown = function () {
 };
 
 ve.init.mw.TargetEvents.prototype.onSurfaceReady = function () {
-	this.track( 'performance.system.activation', { 'duration': ve.now() - this.timings.activationStart } );
+	if ( this.target.wikitext === null ) {
+		this.track( 'performance.system.activation', { 'duration': ve.now() - this.timings.activationStart } );
+	}
 	this.target.surface.getModel().getDocument().connect( this, {
 		'transact': 'recordLastTransactionTime'
 	} );

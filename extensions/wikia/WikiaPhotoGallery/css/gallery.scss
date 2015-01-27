@@ -1,4 +1,4 @@
-@import 'skins/oasis/css/core/color';
+@import 'skins/shared/color';
 
 .wikia-gallery-item {
 	// mimicking paragraph tags
@@ -15,6 +15,9 @@
 
 	.lightbox-caption {
 		@extend %p;
-		color: $color-alternate-text;
 	}
+}
+
+.wikia-gallery-caption-below .lightbox-caption {
+	color: $color-alternate-text;
 }

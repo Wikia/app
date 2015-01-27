@@ -48,7 +48,12 @@ class VideoEmbedTool {
 			return wfMessage( 'vet-non-existing' )->plain();
 		}
 
-		$embedCode = $file->getEmbedCode( VIDEO_PREVIEW, false, false, true );
+		$options = [
+			'autoplay' => false,
+			'isAjax' => false,
+		];
+
+		$embedCode = $file->getEmbedCode( VIDEO_PREVIEW, $options );
 
 		// Loading this to deal with video descriptions
 		$vHelper = new VideoHandlerHelper();
@@ -68,7 +73,7 @@ class VideoEmbedTool {
 	}
 
 	function insertVideo() {
-		global $wgRequest, $wgUser, $wgContLang;
+		global $wgRequest, $wgUser;
 
 		wfProfileIn( __METHOD__ );
 
@@ -97,6 +102,11 @@ class VideoEmbedTool {
 			$nonPremiumException = $e;
 		}
 
+		$embedOptions = [
+			'autoplay' => false,
+			'isAjax' => false,
+		];
+
 		if ( !empty( $apiwrapper ) ) { // try ApiWrapper first - is it from a supported 3rd party ( non-premium ) provider?
 			$provider = $apiwrapper->getMimeType();
 
@@ -114,25 +124,14 @@ class VideoEmbedTool {
 			$props['description'] = $vHelper->getVideoDescription( $file );
 			$props['provider'] = $provider;
 
-			$embed_code = $file->getEmbedCode( VIDEO_PREVIEW, false, false, true );
+			$embed_code = $file->getEmbedCode( VIDEO_PREVIEW, $embedOptions );
 			$props['code'] = json_encode( $embed_code );
 		} else { // if not a supported 3rd party ( non-premium ) video, try to parse link for File:
-			$file = null;
-			// get the video name
-			$nsFileTranslated = $wgContLang->getNsText( NS_FILE );
-			// added $nsFileTransladed to fix bugId:#48874
-			$pattern = '/(File:|Video:|'.$nsFileTranslated.':)(.+)$/';
-			if ( preg_match( $pattern, $url, $matches ) ) {
-				$file = wfFindFile( $matches[2] );
-				if ( !$file ) { // bugID: 26721
-					$file = wfFindFile( urldecode( $matches[2] ) );
-				}
-			} elseif ( preg_match( $pattern, urldecode( $url ), $matches ) ) {
-				$file = wfFindFile( $matches[2] );
-				if ( !$file ) { // bugID: 26721
-					$file = wfFindFile( $matches[2] );
-				}
-			} else {
+			// get the video file
+			$videoService = new VideoService();
+			$file = $videoService->getVideoFileByUrl( $url );
+
+			if ( !$file ) {
 				header( 'X-screen-type: error' );
 				if ( $nonPremiumException ) {
 					if ( empty( F::app()->wg->allowNonPremiumVideos ) ) {
@@ -150,16 +149,10 @@ class VideoEmbedTool {
 				return wfMessage( 'vet-bad-url' )->plain();
 			}
 
-			if ( !$file ) {
-				header( 'X-screen-type: error' );
-				wfProfileOut( __METHOD__ );
-				return wfMessage( 'vet-non-existing' )->plain();
-			}
-
 			// Loading this to deal with video descriptions
 			$vHelper = new VideoHandlerHelper();
 
-			$embedCode = $file->getEmbedCode( VIDEO_PREVIEW, false, false, true );
+			$embedCode = $file->getEmbedCode( VIDEO_PREVIEW, $embedOptions );
 
 			$props['provider'] = 'FILE';
 			$props['id'] = $file->getHandler()->getVideoId();
@@ -310,7 +303,7 @@ class VideoEmbedTool {
 					'html' => $embed_code,
 				);
 
-				$embed_code = F::app()->renderView( 'ThumbnailController', 'articleThumbnail', $params );
+				$embed_code = F::app()->renderView( 'ThumbnailController', 'articleBlock', $params );
 
 				// Make output match what's in a saved article
 				if ( $layout == 'center' ) {

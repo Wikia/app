@@ -28,26 +28,16 @@ class AutoCreateWikiTest extends WikiaBaseTest {
 				->will( $this->returnValue( 'mocked-string' ) );
 		}
 
-		$autoCreateWikiMock = $this->getMock('AutoCreateWiki', array('checkBadWords', 'checkDomainExists', 'getLanguageNames'));
-		$autoCreateWikiMock->staticExpects($this->any())
-			->method('checkBadWords')
-			->will($this->returnValue(true));
-		$autoCreateWikiMock->staticExpects($this->any())
-			->method('checkDomainExists')
-			->will($this->returnValue(false));
-		$autoCreateWikiMock->staticExpects($this->any())
-			->method('getLanguageNames')
-			->will($this->returnValue(
-				array(
-					'pl' => 'pl',
-					'en' => 'en',
-					'def' => 'def',
-					'zzz' => 'zzz',
-				)
-			)
-		);
+		$this->mockStaticMethod('AutoCreateWiki', 'checkBadWords', true);
+		$this->mockStaticMethod('AutoCreateWiki', 'checkDomainExists', false);
+		$this->mockStaticMethod('AutoCreateWiki', 'getLanguageNames', array(
+			'pl' => 'pl',
+			'en' => 'en',
+			'def' => 'def',
+			'zzz' => 'zzz',
+		));
 
-		$result = $autoCreateWikiMock::checkDomainIsCorrect($domainName, $lang);
+		$result = AutoCreateWiki::checkDomainIsCorrect($domainName, $lang);
 
 		if ($isCorrect) {
 			$this->assertEquals('', $result);
@@ -88,20 +78,12 @@ class AutoCreateWikiTest extends WikiaBaseTest {
 			->with( $this->equalTo( 'autocreatewiki-violate-policy' ) )
 			->will( $this->returnValue( 'mocked-string' ) );
 
-		$autoCreateWikiMock = $this->getMock('AutoCreateWiki', array('checkBadWords', 'getLanguageNames'));
-		$autoCreateWikiMock->staticExpects($this->any())
-			->method('checkBadWords')
-			->will($this->returnValue(false));
-		$autoCreateWikiMock->staticExpects($this->any())
-			->method('getLanguageNames')
-			->will($this->returnValue(
-				array(
-					'pl' => 'pl',
-				)
-			)
-		);
+		$this->mockStaticMethod('AutoCreateWiki', 'checkBadWords', false);
+		$this->mockStaticMethod('AutoCreateWiki', 'getLanguageNames', array(
+			'pl' => 'pl',
+		));
 
-		$result = $autoCreateWikiMock::checkDomainIsCorrect('woohooo', 'pl');
+		$result = AutoCreateWiki::checkDomainIsCorrect('woohooo', 'pl');
 
 		$this->assertEquals('mocked-string', $result);
 	}
@@ -117,23 +99,13 @@ class AutoCreateWikiTest extends WikiaBaseTest {
 			->with( $this->equalTo( 'autocreatewiki-name-taken' ) )
 			->will( $this->returnValue( 'mocked-string' ) );
 
-		$autoCreateWikiMock = $this->getMock('AutoCreateWiki', array('checkBadWords', 'getLanguageNames', 'checkDomainExists'));
-		$autoCreateWikiMock->staticExpects($this->any())
-			->method('checkBadWords')
-			->will($this->returnValue(true));
-		$autoCreateWikiMock->staticExpects($this->any())
-			->method('getLanguageNames')
-			->will($this->returnValue(
-				array(
-					'pl' => 'pl',
-				)
-			)
-		);
-		$autoCreateWikiMock->staticExpects($this->any())
-			->method('checkDomainExists')
-			->will($this->returnValue(true));
+		$this->mockStaticMethod('AutoCreateWiki', 'checkBadWords', true);
+		$this->mockStaticMethod('AutoCreateWiki', 'checkDomainExists', true);
+		$this->mockStaticMethod('AutoCreateWiki', 'getLanguageNames', array(
+			'pl' => 'pl',
+		));
 
-		$result = $autoCreateWikiMock::checkDomainIsCorrect('woohooo', 'pl');
+		$result = AutoCreateWiki::checkDomainIsCorrect('woohooo', 'pl');
 
 		$this->assertEquals('mocked-string', $result);
 	}

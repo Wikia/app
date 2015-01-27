@@ -21,7 +21,7 @@ var ImageLightbox = {
 			return;
 		}
 
-		if (window.skin == 'oasis') {
+		if (window.skin == 'oasis' || window.skin == 'venus') {
 			article = $('#WikiaArticle, .LatestPhotosModule, #article-comments');
 		}
 		else {
@@ -252,7 +252,7 @@ var ImageLightbox = {
 
 	setTopPosition: function() {
 		var lightbox = $('#lightbox');
-		if (window.skin == 'oasis') {
+		if (window.skin == 'oasis' || window.skin == 'venus') {
 			lightbox.css('top', lightbox.getModalTopOffset());
 		}
 	},
@@ -276,7 +276,7 @@ var ImageLightbox = {
 		var maxWidth = $(window).width();
 		var maxHeight = $(window).height();
 
-		if (window.skin == 'oasis') {
+		if (window.skin == 'oasis' || window.skin == 'venus') {
 			maxHeight -= 75;
 			maxWidth = 850;
 		}
@@ -449,7 +449,7 @@ var ImageLightbox = {
 	trackingTimeout: false
 };
 
-if ( typeof window.skin != 'undefined' && window.skin == 'oasis' ) {
+if ( typeof window.skin != 'undefined' && (window.skin == 'oasis' || window.skin == 'oasis') ) {
 	$(function() {
 		ImageLightbox.init.call(ImageLightbox);
 		var image = $('#' + $.getUrlVar('image'));

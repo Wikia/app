@@ -9,6 +9,14 @@ class RssFeedService {
 	protected $feedUrl = "";
 	protected $feedLang = "en";
 	protected $data = [];
+	protected $ref = "";
+
+	/**
+	 * @param string $ref
+	 */
+	public function setRef( $ref ) {
+		$this->ref = $ref;
+	}
 
 	/**
 	 * @param string $feedDescription
@@ -105,15 +113,15 @@ class RssFeedService {
 			$itemNode = $channel->appendChild( new DOMElement('item') );
 			self::appendCDATA( $doc, $itemNode, 'title', $item[ 'title' ] );
 			self::appendCDATA( $doc, $itemNode, 'description', $item[ 'description' ] );
-			self::appendTextNode( $doc, $itemNode, 'link', $url );
-			self::appendTextNode( $doc, $itemNode, 'guid', $url );
+			self::appendTextNode( $doc, $itemNode, 'link', $this->makeUrlWithRef( $url ) );
+			self::appendTextNode( $doc, $itemNode, 'guid', $this->makeUrlWithRef( $url ) );
 			$itemNode->appendChild( new DOMElement('pubDate', date( self::DATE_FORMAT, $item[ 'timestamp' ] )) );
 			$itemNode->appendChild( new DOMElement('creator', 'Wikia', 'http://purl.org/dc/elements/1.1/') );
 
 			if ( isset($item[ 'img' ]) ) {
 				$img = $doc->createElementNS( 'http://search.yahoo.com/mrss/', 'content' );
 				$img->setAttribute( 'type', 'image/jpeg' );
-				$img->setAttribute( 'url', $item[ 'img' ][ 'url' ] );
+				$img->setAttribute( 'url', $this->makeUrlWithRef( $item[ 'img' ][ 'url' ] ) );
 				$img->setAttribute( 'width', $item[ 'img' ][ 'width' ] );
 				$img->setAttribute( 'height', $item[ 'img' ][ 'height' ] );
 				$itemNode->appendChild( $img );
@@ -121,6 +129,38 @@ class RssFeedService {
 
 		}
 		return $doc->saveXML();
+	}
+
+	/**
+	 * Appends $this->'ref' parameter to $url
+	 * If $this->'ref' is empty - returns unchanged $url
+	 * Works correctly whenever $url contains any parameters, or not
+	 *
+	 * @param $url - valid URL
+	 * @return string
+	 */
+	protected function makeUrlWithRef( $url ) {
+
+		if( empty( $url ) ) {
+			return '';
+		}
+
+		if( empty( $this->ref ) ) {
+			return $url;
+		}
+
+		if( strpos( $url, '?' ) !== FALSE ) {
+			// Check if $url already contains some parameters
+			// e.g. http://test.com?key=value
+			$url .= '&';
+		} else {
+			// Or, $url doesn't contain any parameters
+			// e.g. http://test.com
+			$url .= '?';
+		}
+		$url .= 'ref='.$this->ref;
+
+		return $url;
 	}
 
 	private static function appendCDATA( DOMDocument $doc, DOMElement $node, $name, $data = '' ) {

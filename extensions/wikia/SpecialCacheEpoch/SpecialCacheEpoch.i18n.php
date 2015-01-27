@@ -35,6 +35,16 @@ $messages['br'] = array(
 	'cacheepoch-submit' => 'Hizivaat an talvoudenn',
 );
 
+/** Catalan (català)
+ * @author Unapersona
+ */
+$messages['ca'] = array(
+	'cacheepoch-submit' => 'Actualitzar el valor',
+	'cacheepoch-updated' => 'wgCacheEpoch actualitzat a "$1".',
+	'cacheepoch-not-updated' => 'Problemes al actualitzar wgCacheEpoch.',
+	'cacheepoch-no-wf' => 'WikiFactory no està habilitat en aquest wiki. No es pot alterar el wgCacheEpoch.',
+);
+
 /** Czech (čeština)
  * @author Dontlietome7
  */
@@ -380,6 +390,7 @@ $messages['vi'] = array(
 );
 
 /** Simplified Chinese (中文（简体）‎)
+ * @author Liuxinyu970226
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
@@ -387,7 +398,7 @@ $messages['zh-hans'] = array(
 	'cacheepoch' => 'Cache Epoch接口',
 	'cacheepoch-header' => '增加wgCacheEpoch',
 	'cacheepoch-value' => 'wgCacheEpoch的当前值是“$1”。按下按钮将其设置为当前的时间戳。',
-	'cacheepoch-submit' => '更新该值',
+	'cacheepoch-submit' => '更新值',
 	'cacheepoch-updated' => 'wgCacheEpoch已更新为“$1”',
 	'cacheepoch-not-updated' => '更新wgCacheEpoch失败。',
 	'cacheepoch-wf-reason' => '通过 Special:CacheEpoch 更新数值',

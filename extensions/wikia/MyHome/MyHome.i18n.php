@@ -103,6 +103,7 @@ For example, you could:
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author Liuxinyu970226
  * @author McDutchie
  * @author Shirayuki
  * @author Siebrand
@@ -122,7 +123,9 @@ $messages['qqq'] = array(
 	'myhome-feed-summary-details' => '{{Identical|Summary}}',
 	'myhome-feed-new-blog-comment-details' => '{{Identical|Comment}}',
 	'myhome-feed-new-article-comment-details' => '{{Identical|Comment}}',
+	'myhome-feed-move-details' => '{{Identical|Renamed}}',
 	'myhome-feed-redirect-details' => '{{Identical|Redirect}}',
+	'myhome-feed-inserted-category-details' => '{{Identical|Add category}}',
 	'myhome-hot-spots-number-of-editors' => '{{Identical|Editor}}',
 	'myhome-namespace-blog' => '{{Identical|Blog}}',
 	'oasis-myhome-community-corner-edit' => '{{Identical|Edit message}}',
@@ -892,16 +895,16 @@ $messages['diq'] = array(
 	'myhome-feed-added-by' => 'terefê $1 ra bi cı',
 	'myhome-feed-edited-by' => 'terefê $1 ra vuriya',
 	'myhome-feed-posted-by' => 'terefê $1 ra rışiya',
-	'myhome-feed-comment-by' => 'terefê $1 ra xulasa',
+	'myhome-feed-comment-by' => 'terefê $1 ra mışewre',
 	'myhome-feed-deleted-by' => 'terefê $1 ra esteriya',
 	'myhome-feed-moved-by' => 'terefê $1 ra berd',
-	'myhome-feed-article-comment-created-by' => 'terefê $1 ra vatışo newe',
+	'myhome-feed-article-comment-created-by' => 'terefê $1 ra mışewreyo newe',
 	'myhome-feed-article-comment-edited-by' => 'terefê $1 ra xulasa vurnê',
 	'myhome-feed-by' => 'terefê $1 ra',
 	'myhome-feed-new-page-details' => 'Pela newiye',
 	'myhome-feed-summary-details' => 'Xulasa',
-	'myhome-feed-new-blog-comment-details' => 'Vatış',
-	'myhome-feed-new-article-comment-details' => 'Vacayış',
+	'myhome-feed-new-blog-comment-details' => 'Mışewre',
+	'myhome-feed-new-article-comment-details' => 'Mışewre',
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Resime ke debyay|Resime ke debyay}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Videoye ke debyay|Videoye ke debyay}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Kategoriye ke debyay|Kategoriye ke debyay}}',
@@ -1200,6 +1203,7 @@ $messages['eu'] = array(
 );
 
 /** Persian (فارسی)
+ * @author Alirezaaa
  * @author BlueDevil
  * @author Ebraminio
  * @author Wayiran
@@ -1218,11 +1222,11 @@ $messages['fa'] = array(
 	'myhome-user-contributions-feed' => 'مشارکت‌ها',
 	'myhome-hot-spots-feed' => 'نقاط داغ',
 	'myhome-hot-spots-feed-empty' => "این ویکی در انتظار مشارکت شماست.
-بر '''[[Special:CreatePage|صفحهٔ جدید]]''' برای شروع نوشتن کلیک کنید!",
-	'myhome-hot-spots-newest' => 'صفحات جدید بر ویکی',
+بر '''[[Special:CreatePage|صفحهٔ تازه]]''' برای شروع نوشتن کلیک کنید!",
+	'myhome-hot-spots-newest' => 'صفحات تازه بر ویکی',
 	'tog-userlandingpage' => 'صفحهٔ فرود:',
 	'prefs-myhome' => 'خانه من',
-	'myhome-feed-newpage' => 'صفحهٔ جدید',
+	'myhome-feed-newpage' => 'صفحهٔ تازه',
 	'myhome-feed-edit' => 'ویرایش',
 	'myhome-feed-move' => 'صفحه منتقل شد',
 	'myhome-feed-talkpage' => 'صفحهٔ بحث',
@@ -1242,10 +1246,10 @@ $messages['fa'] = array(
 	'myhome-feed-article-comment-edited-by' => 'نظر ویرایش‌شده توسط $1',
 	'myhome-feed-by' => 'توسط $1',
 	'myhome-feed-diff-alt' => 'تغییرات در این صفحه را نشانم بده',
-	'myhome-feed-new-page-details' => 'صفحهٔ جدید',
+	'myhome-feed-new-page-details' => 'صفحهٔ تازه',
 	'myhome-feed-summary-details' => 'خلاصه',
 	'myhome-feed-section-edit-details' => 'بخش را ویرایش کرد',
-	'myhome-feed-new-blog-post-details' => 'وبلاگ جدید',
+	'myhome-feed-new-blog-post-details' => 'وبلاگ تازه',
 	'myhome-feed-new-blog-comment-details' => 'نظر',
 	'myhome-feed-new-article-comment-details' => 'نظر',
 	'myhome-feed-move-details' => 'تغییر نام',
@@ -1376,7 +1380,7 @@ Jos olet tämän wikin perustaja tai olet ylläpitäjänä tässä wikissä, voi
 * Antaa koko yhteisön tietää muokkaajasta, joka on lisännyt wikiin jotain erityistä.
 
 * Tai vain lähettää muutamia rohkaisevia sanoja!",
-	'myhome-hot-spots-definition' => 'Sivut, joilla eniten muokkaajia viime {{PLURAL:$1|päivän|$1 päivän}} aikana.',
+	'myhome-hot-spots-definition' => 'Sivut, joilla eniten muokkaajia viimeisen {{PLURAL:$1|päivän|$1 päivän}} aikana.',
 	'myhome-default-view-checkbox' => 'Tee sivusta $1 oletusnäkymäni.',
 	'myhome-default-view-success' => 'Ok, tämä on uusi oletusnäkymäsi nyt.',
 	'tooltip-pt-myhome' => 'Palaa kotisivulle',
@@ -1474,6 +1478,13 @@ Si vous êtes le fondateur ou bien un administrateur de ce wiki, vous pouvez cha
 	'tooltip-pt-myhome' => 'Aller à Mon Accueil',
 	'activityfeed' => 'Flux d’activité',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|un message|$1 messages}}',
+);
+
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'myhome-feed-edit' => 'bewurkje',
 );
 
 /** Galician (galego)
@@ -1954,7 +1965,7 @@ $messages['it'] = array(
 	'myhome-feed-by' => 'da $1',
 	'myhome-feed-diff-alt' => 'visualizza le modifiche di questa pagina',
 	'myhome-feed-new-page-details' => 'Nuova pagina',
-	'myhome-feed-summary-details' => 'Oggetto della modifica',
+	'myhome-feed-summary-details' => 'Oggetto',
 	'myhome-feed-section-edit-details' => 'Sezione modificata',
 	'myhome-feed-new-blog-post-details' => 'Nuovo blog',
 	'myhome-feed-new-blog-comment-details' => 'Commento',
@@ -2121,8 +2132,27 @@ $messages['kn'] = array(
 
 /** Korean (한국어)
  * @author Cafeinlove
+ * @author Miri-Nae
  */
 $messages['ko'] = array(
+	'wikiactivity' => '위키 활동 내역',
+	'myhome-activity-more' => '더 많은 활동 내역 보기',
+	'myhome-feed-newpage' => '새 문서',
+	'myhome-feed-edit' => '편집',
+	'myhome-feed-created-by' => '$1의 생성',
+	'myhome-feed-added-by' => '$1의 추가',
+	'myhome-feed-edited-by' => '$1의 편집',
+	'myhome-feed-posted-by' => '$1의 게시',
+	'myhome-feed-comment-by' => '$1의 댓글',
+	'myhome-feed-deleted-by' => '$1의 삭제',
+	'myhome-feed-moved-by' => '$1의 이동',
+	'myhome-feed-article-comment-created-by' => '$1의 새 댓글',
+	'myhome-feed-article-comment-edited-by' => '$1의 댓글 편집',
+	'myhome-feed-new-page-details' => '새 문서',
+	'myhome-feed-new-blog-comment-details' => '댓글',
+	'myhome-feed-new-article-comment-details' => '댓글',
+	'myhome-feed-redirect-details' => '넘겨주기',
+	'myhome-hot-spots-number-of-editors' => '편집자',
 	'myhome-namespace-blog' => '블로그',
 );
 
@@ -2156,6 +2186,7 @@ $messages['ku-latn'] = array(
 $messages['lb'] = array(
 	'myhome' => 'Meng Haaptsäit',
 	'myhome-watchlist-feed' => 'Iwwerwaachungslëscht',
+	'myhome-user-contributions-feed' => 'Kontributiounen',
 	'myhome-hot-spots-newest' => 'Nei Säiten op der Wiki',
 	'prefs-myhome' => 'Meng Haaptsäit',
 	'myhome-feed-newpage' => 'nei Säit',
@@ -2263,7 +2294,7 @@ $messages['mk'] = array(
 	'myhome-community-corner-header' => 'Пораки на заедницата',
 	'oasis-myhome-community-corner-edit' => 'уреди порака &gt;',
 	'myhome-community-corner-edit' => 'уреди порака',
-	'community-corner' => "'''Добредојдовте на Вашата домашна страница!'''
+	'community-corner' => "'''Добре дојдовте на Вашата домашна страница!'''
 
 Оваа страница ќе ви помогне да бидете во тек со случувањата на викито.
 
@@ -3981,13 +4012,14 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Rémy Lee
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
 $messages['vi'] = array(
 	'myhome-desc' => 'Trang riêng này dành cho thành viên đã đăng nhập',
 	'myhome' => 'Nhà của tôi',
-	'wikiactivity' => 'Hoạt động của Wiki',
+	'wikiactivity' => 'Hoạt động wiki',
 	'myhome-activity-more' => 'xem nhiều hơn hoạt động gần đây',
 	'myhome-activity-feed' => 'Hoạt động nguồn cấp dữ liệu',
 	'myhome-activity-feed-empty' => "Wiki này đang chờ bạn tham gia.
@@ -4080,6 +4112,7 @@ $messages['zh'] = array(
  * @author Hydra
  * @author Hzy980512
  * @author Liangent
+ * @author Liuxinyu970226
  * @author Yanmiao liu
  * @author Yfdyh000
  */
@@ -4131,7 +4164,7 @@ $messages['zh-hans'] = array(
 	'myhome-feed-redirect-details' => '重定向',
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|添加的照片|添加的照片}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|添加的视频|添加的视频}}',
-	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|添加的类别|添加的类别}}',
+	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|已添加的分类}}',
 	'myhome-user-contributions-empty' => '您可以通过点击任何页面上的"{{int:editthispage}}"来参与本维基，并添加您所知道的。
 每个人都可以进行更改，添加信息或纠正错误。
 维基是由社团建立的，一旦您点击“编辑”按钮，您也是社团的一部分。
@@ -4170,6 +4203,7 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
  */
 $messages['zh-hant'] = array(
 	'myhome' => '我的首頁',
@@ -4177,7 +4211,7 @@ $messages['zh-hant'] = array(
 	'myhome-activity-more' => '查看更多最新動作',
 	'myhome-activity-feed-empty' => "本wiki在等待您的參與。
 點擊'''[[Special:CreatePage|新頁面]]'''開始撰寫！",
-	'myhome-watchlist-feed' => '監視列表',
+	'myhome-watchlist-feed' => '監視清單',
 	'myhome-user-contributions-feed' => '貢獻',
 	'myhome-hot-spots-feed' => '熱點',
 	'myhome-hot-spots-feed-empty' => "本wiki在等待您的參與。

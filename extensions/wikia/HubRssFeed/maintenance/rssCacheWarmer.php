@@ -7,54 +7,36 @@ echo "Rss cache warmer start: " . date("Y-m-d H:i:s") . PHP_EOL;
 
 require_once( dirname( __FILE__ ) .'/../../../../maintenance/Maintenance.php' );
 
-class MaintenanceRss extends Maintenance {
+class MaintenanceRssWarmer extends Maintenance {
 	const DATE_FORMAT = 'Y-m-d H:i:s';
 	function __construct() {
 		parent::__construct();
 	}
 
 	function execute() {
-		$this->warmTv();
-		$this->warmGames();
-		$this->warmLifestyleHubOnly();
-		$this->warmEntertainmentHubOnly();
+		$this->warm();
 		$this->purgeVarnish();
 	}
 
-	function warmTv() {
-		echo "| Warming TV cache..." . PHP_EOL;
-		$feed = new TvRssModel();
-		$feed->setForceRegenerateFeed( true );
-		$data = $feed->getFeedData();
-		$row = reset($data);
-		echo "| Got ". count($data) . " entries,  last from: " . date( self::DATE_FORMAT, $row['timestamp']) . PHP_EOL;
-	}
+	protected function warm() {
+		global $wgHubRssFeeds;
+		global $wgLanguageCode;
 
-	function warmGames() {
-		echo "| Warming GAMES cache..." . PHP_EOL;
-		$feed = new GamesRssModel();
-		$feed->setForceRegenerateFeed( true );
-		$data = $feed->getFeedData();
-		$row = reset($data);
-		echo "| Got ". count($data) . " entries,  last from: " . date( self::DATE_FORMAT, $row['timestamp']) . PHP_EOL;
-	}
+		foreach ( $wgHubRssFeeds as $feedName ) {
+			echo "| Warming '$feedName' cache..." . PHP_EOL;
+			$langExtFeedName = $feedName . $wgLanguageCode;
+			$feed = BaseRssModel::newFromName( $langExtFeedName );
+			if ( $feed instanceof BaseRssModel ) {
+				$time = time();
+				$numRows = $feed->generateFeedData();
+				echo "| Got " . $numRows . " new entries " . PHP_EOL;
+				\Wikia\Logger\WikiaLogger::instance()
+					->info( __CLASS__ . ' '. $feedName . 'time (s): ' . ( time() - $time ) );
+			} else {
+				echo "| Feed not found: " . $feedName . PHP_EOL;
+			}
+		}
 
-	function warmLifestyleHubOnly() {
-		echo "| Warming LIFESTYLE cache..." . PHP_EOL;
-		$feed = new LifestyleHubOnlyRssModel();
-		$feed->setForceRegenerateFeed( true );
-		$data = $feed->getFeedData();
-		$row = reset($data);
-		echo "| Got ". count($data) . " entries,  last from: " . date( self::DATE_FORMAT, $row['timestamp']) . PHP_EOL;
-	}
-
-	function warmEntertainmentHubOnly() {
-		echo "| Warming ENTERTAINMENT cache..." . PHP_EOL;
-		$feed = new EntertainmentHubOnlyRssModel();
-		$feed->setForceRegenerateFeed( true );
-		$data = $feed->getFeedData();
-		$row = reset($data);
-		echo "| Got ". count($data) . " entries,  last from: " . date( self::DATE_FORMAT, $row['timestamp']) . PHP_EOL;
 	}
 
 	public function purgeVarnish() {
@@ -74,6 +56,6 @@ class MaintenanceRss extends Maintenance {
 	}
 }
 
-$maintClass = 'MaintenanceRss';
+$maintClass = 'MaintenanceRssWarmer';
 require_once( RUN_MAINTENANCE_IF_MAIN );
 

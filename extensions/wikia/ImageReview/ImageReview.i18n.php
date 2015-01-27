@@ -8,6 +8,7 @@ $messages['en'] = array(
 	'imagereview-header' => 'Images awaiting review',
 	'imagereview-header-questionable' => 'Questionable images awaiting staff review',
 	'imagereview-header-rejected' => 'Rejected images awaiting staff review',
+	'imagereview-header-invalid' => 'Invalid images awaiting staff review',
 	'imagereview-noresults' => 'No images found.',
 
 	'imagereview-state-0' => 'Unreviewed',

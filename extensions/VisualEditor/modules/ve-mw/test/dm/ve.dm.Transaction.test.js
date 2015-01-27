@@ -55,7 +55,7 @@ QUnit.test( 'newFromDocumentInsertion with references', function ( assert ) {
 						'removeMetadata': complexDoc.getMetadata( new ve.Range( 0, 7 ) ),
 						'insertMetadata': []
 					},
-					{ 'type': 'retain', 'length': 26 },
+					{ 'type': 'retain', 'length': 26 }
 				],
 				'expectedOps': [
 					{
