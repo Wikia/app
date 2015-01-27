@@ -82,6 +82,7 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//extensions/wikia/JSSnippets/js/JSSnippets.js',
 		'//extensions/wikia/AssetsManager/js/AssetsManager.js',
 
+		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
 		'//extensions/wikia/UserLogin/js/UserLogin.js',
 		'//extensions/wikia/UserLogin/js/UserLoginModal.js',
 
@@ -207,8 +208,8 @@ $VenusConfig[ 'global_navigation_js' ] = [
 		'//extensions/wikia/GlobalNavigation/scripts/GlobalNavigationSearch.js',
 		'//extensions/wikia/GlobalNavigation/scripts/SearchSuggestions.js',
 		'//extensions/wikia/UserLogin/js/UserLoginDropdown.globalNavigation.js',
+		'//extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
 		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js',
-		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		//This asset is only for prototype version. It shouldn't be loaded by default.
 		//It is used for Optimizely A/B tests
@@ -218,10 +219,13 @@ $VenusConfig[ 'global_navigation_js' ] = [
 
 $VenusConfig[ 'global_navigation_facebook_login_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'venus'],
+	'skin' => [ 'venus' ],
 	'assets' => [
-		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
-		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js'
+		'//extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
+		'//extensions/wikia/UserLogin/js/FacebookLogin.js',
+		'//extensions/wikia/UserLogin/js/mixins/UserSignup.mixin.js',
+		'//extensions/wikia/UserLogin/js/FacebookFormConnectUser.js',
+		'//extensions/wikia/UserLogin/js/FacebookFormCreateUser.js',
 	]
 ];
 
