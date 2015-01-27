@@ -127,6 +127,7 @@ $messages['en'] = array(
 	"closed-wiki-dump-noexists" => "This wiki has been closed. Content dump will be available within 24 hours. Please check back.",
 	"closed-wiki-create-wiki" => "Create a new wiki",
 	"closed-wiki-policy" => "View Wikia's Close Policy",
+	"closed-wiki-invalid-redirect-url" => "Error: Redirect URL does not point to any existing wiki: \"\$1\"",
 	"closed-create-dump" => "Create a database dump",
 	"closed-create-image-archive" => "Create an image archive",
 	"closed-delete-database-images" => "Delete the database and images",

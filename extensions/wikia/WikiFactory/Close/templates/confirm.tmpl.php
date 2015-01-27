@@ -105,7 +105,7 @@ function close_allowToSave() {
 		<? if ($errors) { ?>
 		<ul style="list-style:none;padding:1px 10px;color:red">
 			<? foreach ($errors as $error) { ?>
-			<li>Error: <?= $error ?></li>
+			<li><?= $error ?></li>
 			<? } ?>
 		</ul>
 		<? } ?>
