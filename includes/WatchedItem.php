@@ -172,7 +172,7 @@ class WatchedItem {
 		
 		$user = ( !empty($watchers) ) ? $watchers : $this->userID;
 		$ts = ( !is_null( $timestamp ) ) ? $dbw->timestamp( $timestamp ) : null;
-		
+
 		$dbw->begin();
 		$dbw->update( 'watchlist',
 				array( /* SET */
@@ -213,43 +213,22 @@ class WatchedItem {
 	/**
 	 * Handle duplicate entries. Backend for duplicateEntries().
 	 *
-	 * @param $ot Title
-	 * @param $nt Title
+	 * @param $oldTitle Title
+	 * @param $newTitle Title
 	 *
 	 * @return bool
+	 * TODO Make sure that this logic is still the same!
 	 */
-	private static function doDuplicateEntries( $ot, $nt ) {	
-		$oldnamespace = $ot->getNamespace();
-		$newnamespace = $nt->getNamespace();
-		$oldtitle = $ot->getDBkey();
-		$newtitle = $nt->getDBkey();
+	private static function doDuplicateEntries( $oldTitle, $newTitle ) {
 
-		$dbw = wfGetDB( DB_MASTER );
-		$res = $dbw->select( 'watchlist', 'wl_user',
-			array( 'wl_namespace' => $oldnamespace, 'wl_title' => $oldtitle ),
-			__METHOD__, 'FOR UPDATE'
-		);
-		# Construct array to replace into the watchlist
-		$values = array();
-		foreach ( $res as $s ) {
-			$values[] = array(
-				'wl_user' => $s->wl_user,
-				'wl_namespace' => $newnamespace,
-				'wl_title' => $newtitle
-			);
-		}
+		( new WikiaSQL() )
+			->UPDATE( 'watchlist' )
+			->SET( 'wl_title', $newTitle->getDBkey() )
+			->SET( 'wl_namespace', $newTitle->getNamespace() )
+			->WHERE( 'wl_title' )->EQUAL_TO( $oldTitle->getDBkey() )
+			->AND_( 'wl_namespace' )->EQUAL_TO( $oldTitle->getNamespace() );
 
-		if( empty( $values ) ) {
-			// Nothing to do
-			return true;
-		}
-
-		# Perform replace
-		# Note that multi-row replace is very efficient for MySQL but may be inefficient for
-		# some other DBMSes, mostly due to poor simulation by us
-		$dbw->replace( 'watchlist', array( array( 'wl_user', 'wl_namespace', 'wl_title' ) ), $values, __METHOD__ );
-		
-		wfRunHooks( 'WatchedItem::replaceWatch', array ( $ot, $nt, $values ) );
+		wfRunHooks( 'WatchedItem::replaceWatch', [ $oldTitle, $newTitle ] );
 				
 		return true;
 	}
