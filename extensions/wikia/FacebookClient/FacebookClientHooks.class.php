@@ -59,7 +59,7 @@ class FacebookClientHooks {
 	 * Create disconnect button and other things in pref
 	 *
 	 * @param User $user
-	 * @param $preferences
+	 * @param array $preferences
 	 * @return bool
 	 */
 	static function GetPreferences( $user, &$preferences ) {
