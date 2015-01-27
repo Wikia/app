@@ -624,8 +624,9 @@ function axWFactoryDomainQuery() {
 		/**
 		 * maybe not very effective but used only by staff anyway
 		 */
+		$query = strtolower( $query );
 		$dbr = WikiFactory::db( DB_SLAVE );
-		$cityDomainLike = $dbr->buildLike( $dbr->anyString(), strtolower( $query ), $dbr->anyString() );
+		$cityDomainLike = $dbr->buildLike( $dbr->anyString(), $query, $dbr->anyString() );
 
 		$sth = $dbr->select(
 			[ "city_domains" ],
