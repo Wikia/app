@@ -3,9 +3,6 @@ $messages = array();
 
 $messages['en'] = array(
 	'fbconnect-connect-existing' => 'Connect account with Facebook',
-	'fbconnect-connect-login-legend' => 'Login to your existing account',
-	'fbconnect-connect-username-label' => 'Username:',
-	'fbconnect-connect-password-label' => 'Password:',
 	'fbconnect-wrong-pass-msg' => 'The password you have entered is incorrect',
 	'fbconnect-graphapi-not-configured' => 'Facebook App ID and App secret missing from configuration.',
 	'prefs-fbconnect-disconnect-prefstext' => 'Disconnect from Facebook',
@@ -53,15 +50,11 @@ The Wikia Community Team",
 	'fbconnect-cancel' => 'Action cancelled',
 	'fbconnect-canceltext' => 'The previous action was cancelled by the user.',
 	'fbconnect-preferences-connected' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
-	'fbconnect-preferences-connected-error' => "We're sorry, we couldn't complete your connection. Please make sure you are logged in to your Wikia account and have given Wikia permission to connect with Facebook.",
 	'fbconnect-connect-msg' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
 );
 
 $messages['qqq'] = array(
 	'fbconnect-connect-existing' => 'Title for page that asks a user to login to their Wikia account and link it to their Facebook account',
-	'fbconnect-connect-login-legend' => 'Text that shows as a label for a box containing Wikia username and password text fields',
-	'fbconnect-connect-username-label' => 'Label for the Wikia username field on the login box to link your Wikia account to Facebook',
-	'fbconnect-connect-password-label' => 'Label for the Wikia password field on the login box to link your Wikia account to Facebook',
 	'fbconnect-wrong-pass-msg' => 'Error text that appears when the user has entered their username/password incorrectly',
 	'fbconnect-graphapi-not-configured' => 'Text that appears when the Facebook credentials within the Wikia app are incorrect.',
 	'prefs-fbconnect-disconnect-prefstext' => 'Caption text for Facebook disconnect button; Please keep this very short.',
@@ -92,15 +85,11 @@ $messages['qqq'] = array(
 	'fbconnect-unknown-error' => '',
 	'fbconnect-wikia-signup-w-facebook' => '',
 	'fbconnect-preferences-connected' => 'Notifies user when they have successfully connected their facebook and wikia accounts via Special:Preferences',
-	'fbconnect-preferences-connected-error' => 'Notifies user if there was an error while trying to connect their facebook and wikia accounts via Special:Preferences',
 	'fbconnect-connect-msg' => 'Message users see when they have successfully signed up for facebook',
 );
 
 $messages['de'] = array(
 	'fbconnect-connect-existing' => 'Connect account with Facebook',
-	'fbconnect-connect-login-legend' => 'Login to your existing account',
-	'fbconnect-connect-username-label' => 'Username:',
-	'fbconnect-connect-password-label' => 'Password:',
 	'fbconnect-wrong-pass-msg' => 'The password you have entered is incorrect',
 	'fbconnect-graphapi-not-configured' => 'Facebook App ID and App secret missing from configuration.',
 	'prefs-fbconnect-disconnect-prefstext' => 'Disconnect from Facebook',
@@ -148,15 +137,11 @@ The Wikia Community Team",
 	'fbconnect-cancel' => 'Action cancelled',
 	'fbconnect-canceltext' => 'The previous action was cancelled by the user.',
 	'fbconnect-preferences-connected' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
-	'fbconnect-preferences-connected-error' => "We're sorry, we couldn't complete your connection. Please make sure you are logged in to your Wikia account and have given Wikia permission to connect with Facebook.",
 	'fbconnect-connect-msg' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
 );
 
 $messages['es'] = array(
 	'fbconnect-connect-existing' => 'Connect account with Facebook',
-	'fbconnect-connect-login-legend' => 'Login to your existing account',
-	'fbconnect-connect-username-label' => 'Username:',
-	'fbconnect-connect-password-label' => 'Password:',
 	'fbconnect-wrong-pass-msg' => 'The password you have entered is incorrect',
 	'fbconnect-graphapi-not-configured' => 'Facebook App ID and App secret missing from configuration.',
 	'prefs-fbconnect-disconnect-prefstext' => 'Disconnect from Facebook',
@@ -204,15 +189,11 @@ The Wikia Community Team",
 	'fbconnect-cancel' => 'Action cancelled',
 	'fbconnect-canceltext' => 'The previous action was cancelled by the user.',
 	'fbconnect-preferences-connected' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
-	'fbconnect-preferences-connected-error' => "We're sorry, we couldn't complete your connection. Please make sure you are logged in to your Wikia account and have given Wikia permission to connect with Facebook.",
 	'fbconnect-connect-msg' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
 );
 
 $messages['fr'] = array(
 	'fbconnect-connect-existing' => 'Connect account with Facebook',
-	'fbconnect-connect-login-legend' => 'Login to your existing account',
-	'fbconnect-connect-username-label' => 'Username:',
-	'fbconnect-connect-password-label' => 'Password:',
 	'fbconnect-wrong-pass-msg' => 'The password you have entered is incorrect',
 	'fbconnect-graphapi-not-configured' => 'Facebook App ID and App secret missing from configuration.',
 	'prefs-fbconnect-disconnect-prefstext' => 'Disconnect from Facebook',
@@ -260,15 +241,11 @@ The Wikia Community Team",
 	'fbconnect-cancel' => 'Action cancelled',
 	'fbconnect-canceltext' => 'The previous action was cancelled by the user.',
 	'fbconnect-preferences-connected' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
-	'fbconnect-preferences-connected-error' => "We're sorry, we couldn't complete your connection. Please make sure you are logged in to your Wikia account and have given Wikia permission to connect with Facebook.",
 	'fbconnect-connect-msg' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
 );
 
 $messages['it'] = array(
 	'fbconnect-connect-existing' => 'Connect account with Facebook',
-	'fbconnect-connect-login-legend' => 'Login to your existing account',
-	'fbconnect-connect-username-label' => 'Username:',
-	'fbconnect-connect-password-label' => 'Password:',
 	'fbconnect-wrong-pass-msg' => 'The password you have entered is incorrect',
 	'fbconnect-graphapi-not-configured' => 'Facebook App ID and App secret missing from configuration.',
 	'prefs-fbconnect-disconnect-prefstext' => 'Disconnect from Facebook',
@@ -316,15 +293,11 @@ The Wikia Community Team",
 	'fbconnect-cancel' => 'Action cancelled',
 	'fbconnect-canceltext' => 'The previous action was cancelled by the user.',
 	'fbconnect-preferences-connected' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
-	'fbconnect-preferences-connected-error' => "We're sorry, we couldn't complete your connection. Please make sure you are logged in to your Wikia account and have given Wikia permission to connect with Facebook.",
 	'fbconnect-connect-msg' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
 );
 
 $messages['ja'] = array(
 	'fbconnect-connect-existing' => 'Connect account with Facebook',
-	'fbconnect-connect-login-legend' => 'Login to your existing account',
-	'fbconnect-connect-username-label' => 'Username:',
-	'fbconnect-connect-password-label' => 'Password:',
 	'fbconnect-wrong-pass-msg' => 'The password you have entered is incorrect',
 	'fbconnect-graphapi-not-configured' => 'Facebook App ID and App secret missing from configuration.',
 	'prefs-fbconnect-disconnect-prefstext' => 'Disconnect from Facebook',
@@ -372,15 +345,11 @@ The Wikia Community Team",
 	'fbconnect-cancel' => 'Action cancelled',
 	'fbconnect-canceltext' => 'The previous action was cancelled by the user.',
 	'fbconnect-preferences-connected' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
-	'fbconnect-preferences-connected-error' => "We're sorry, we couldn't complete your connection. Please make sure you are logged in to your Wikia account and have given Wikia permission to connect with Facebook.",
 	'fbconnect-connect-msg' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
 );
 
 $messages['nl'] = array(
 	'fbconnect-connect-existing' => 'Connect account with Facebook',
-	'fbconnect-connect-login-legend' => 'Login to your existing account',
-	'fbconnect-connect-username-label' => 'Username:',
-	'fbconnect-connect-password-label' => 'Password:',
 	'fbconnect-wrong-pass-msg' => 'The password you have entered is incorrect',
 	'fbconnect-graphapi-not-configured' => 'Facebook App ID and App secret missing from configuration.',
 	'prefs-fbconnect-disconnect-prefstext' => 'Disconnect from Facebook',
@@ -428,15 +397,11 @@ The Wikia Community Team",
 	'fbconnect-cancel' => 'Action cancelled',
 	'fbconnect-canceltext' => 'The previous action was cancelled by the user.',
 	'fbconnect-preferences-connected' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
-	'fbconnect-preferences-connected-error' => "We're sorry, we couldn't complete your connection. Please make sure you are logged in to your Wikia account and have given Wikia permission to connect with Facebook.",
 	'fbconnect-connect-msg' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
 );
 
 $messages['pl'] = array(
 	'fbconnect-connect-existing' => 'Connect account with Facebook',
-	'fbconnect-connect-login-legend' => 'Login to your existing account',
-	'fbconnect-connect-username-label' => 'Username:',
-	'fbconnect-connect-password-label' => 'Password:',
 	'fbconnect-wrong-pass-msg' => 'The password you have entered is incorrect',
 	'fbconnect-graphapi-not-configured' => 'Facebook App ID and App secret missing from configuration.',
 	'prefs-fbconnect-disconnect-prefstext' => 'Disconnect from Facebook',
@@ -484,15 +449,11 @@ The Wikia Community Team",
 	'fbconnect-cancel' => 'Action cancelled',
 	'fbconnect-canceltext' => 'The previous action was cancelled by the user.',
 	'fbconnect-preferences-connected' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
-	'fbconnect-preferences-connected-error' => "We're sorry, we couldn't complete your connection. Please make sure you are logged in to your Wikia account and have given Wikia permission to connect with Facebook.",
 	'fbconnect-connect-msg' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
 );
 
 $messages['pt'] = array(
 	'fbconnect-connect-existing' => 'Connect account with Facebook',
-	'fbconnect-connect-login-legend' => 'Login to your existing account',
-	'fbconnect-connect-username-label' => 'Username:',
-	'fbconnect-connect-password-label' => 'Password:',
 	'fbconnect-wrong-pass-msg' => 'The password you have entered is incorrect',
 	'fbconnect-graphapi-not-configured' => 'Facebook App ID and App secret missing from configuration.',
 	'prefs-fbconnect-disconnect-prefstext' => 'Disconnect from Facebook',
@@ -540,15 +501,11 @@ The Wikia Community Team",
 	'fbconnect-cancel' => 'Action cancelled',
 	'fbconnect-canceltext' => 'The previous action was cancelled by the user.',
 	'fbconnect-preferences-connected' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
-	'fbconnect-preferences-connected-error' => "We're sorry, we couldn't complete your connection. Please make sure you are logged in to your Wikia account and have given Wikia permission to connect with Facebook.",
 	'fbconnect-connect-msg' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
 );
 
 $messages['ru'] = array(
 	'fbconnect-connect-existing' => 'Connect account with Facebook',
-	'fbconnect-connect-login-legend' => 'Login to your existing account',
-	'fbconnect-connect-username-label' => 'Username:',
-	'fbconnect-connect-password-label' => 'Password:',
 	'fbconnect-wrong-pass-msg' => 'The password you have entered is incorrect',
 	'fbconnect-graphapi-not-configured' => 'Facebook App ID and App secret missing from configuration.',
 	'prefs-fbconnect-disconnect-prefstext' => 'Disconnect from Facebook',
@@ -596,15 +553,11 @@ The Wikia Community Team",
 	'fbconnect-cancel' => 'Action cancelled',
 	'fbconnect-canceltext' => 'The previous action was cancelled by the user.',
 	'fbconnect-preferences-connected' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
-	'fbconnect-preferences-connected-error' => "We're sorry, we couldn't complete your connection. Please make sure you are logged in to your Wikia account and have given Wikia permission to connect with Facebook.",
 	'fbconnect-connect-msg' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
 );
 
 $messages['zh-hans'] = array(
 	'fbconnect-connect-existing' => 'Connect account with Facebook',
-	'fbconnect-connect-login-legend' => 'Login to your existing account',
-	'fbconnect-connect-username-label' => 'Username:',
-	'fbconnect-connect-password-label' => 'Password:',
 	'fbconnect-wrong-pass-msg' => 'The password you have entered is incorrect',
 	'fbconnect-graphapi-not-configured' => 'Facebook App ID and App secret missing from configuration.',
 	'prefs-fbconnect-disconnect-prefstext' => 'Disconnect from Facebook',
@@ -652,15 +605,11 @@ The Wikia Community Team",
 	'fbconnect-cancel' => 'Action cancelled',
 	'fbconnect-canceltext' => 'The previous action was cancelled by the user.',
 	'fbconnect-preferences-connected' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
-	'fbconnect-preferences-connected-error' => "We're sorry, we couldn't complete your connection. Please make sure you are logged in to your Wikia account and have given Wikia permission to connect with Facebook.",
 	'fbconnect-connect-msg' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
 );
 
 $messages['zh-tw'] = array(
 	'fbconnect-connect-existing' => 'Connect account with Facebook',
-	'fbconnect-connect-login-legend' => 'Login to your existing account',
-	'fbconnect-connect-username-label' => 'Username:',
-	'fbconnect-connect-password-label' => 'Password:',
 	'fbconnect-wrong-pass-msg' => 'The password you have entered is incorrect',
 	'fbconnect-graphapi-not-configured' => 'Facebook App ID and App secret missing from configuration.',
 	'prefs-fbconnect-disconnect-prefstext' => 'Disconnect from Facebook',
@@ -708,7 +657,6 @@ The Wikia Community Team",
 	'fbconnect-cancel' => 'Action cancelled',
 	'fbconnect-canceltext' => 'The previous action was cancelled by the user.',
 	'fbconnect-preferences-connected' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
-	'fbconnect-preferences-connected-error' => "We're sorry, we couldn't complete your connection. Please make sure you are logged in to your Wikia account and have given Wikia permission to connect with Facebook.",
 	'fbconnect-connect-msg' => 'Congratulations! Your Wikia and Facebook accounts are now connected.',
 );
 
