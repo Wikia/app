@@ -1,24 +1,9 @@
 <?php
 
 class GlobalWatchlistBot {
-	private $mDebugMode;
-	private $mDebugMailTo = '';
-	private $mUsers;
-	private $mUseDB;
-	private $iEmailsSent;
 
-	const MAX_LAG = 5;
-	const RECORDS_SLEEP = 1000;
-	const EMAILS = 100;
-
-	public function __construct( $bDebugMode = false, $aUsers = array(), $useDB = array() ) {
+	public function __construct() {
 		global $wgExtensionMessagesFiles;
-
-		$this->mDebugMode = $bDebugMode;
-		$this->mUsers = $aUsers;
-		$this->mUseDB = $useDB;
-		$this->iEmailsSent = 0;
-
 		$wgExtensionMessagesFiles['GlobalWatchlist'] = dirname( __FILE__ ) . '/GlobalWatchlist.i18n.php';
 	}
 
@@ -58,6 +43,131 @@ class GlobalWatchlistBot {
 			->SET( 'gwa_timestamp', null )
 			->WHERE( 'gwa_user_id' )->EQUAL_TO( $userID )
 			->run( $db );
+	}
+
+	/**
+	 * send email to user
+	 */
+	public function sendDigestToUser( $iUserId ) {
+		global $wgExternalDatawareDB, $wgGlobalWatchlistMaxDigestedArticlesPerWiki;
+
+		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
+
+		$oResource = $dbr->select(
+			array ( "global_watchlist" ),
+			array ( "gwa_id", "gwa_user_id", "gwa_city_id", "gwa_namespace", "gwa_title", "gwa_rev_id", "gwa_timestamp" ),
+			array (
+				"gwa_user_id" => intval( $iUserId ),
+				"gwa_timestamp <= gwa_rev_timestamp",
+				"gwa_timestamp is not null"
+			),
+			__METHOD__,
+			array (
+				"ORDER BY" => "gwa_timestamp, gwa_city_id"
+			)
+		);
+
+		$records = $dbr->numRows( $oResource );
+		$bTooManyPages = ( $records > $wgGlobalWatchlistMaxDigestedArticlesPerWiki ) ? true : false;
+		$iWikiId = $loop = 0;
+		$aDigestData = array();
+		$aWikiDigest = array( 'pages' => array() );
+		$aRemove = array();
+		while ( $oResultRow = $dbr->fetchObject( $oResource ) ) {
+			# ---
+			if ( $loop >= $wgGlobalWatchlistMaxDigestedArticlesPerWiki ) {
+				break;
+			}
+
+			$oWikia = WikiFactory::getWikiByID( $oResultRow->gwa_city_id );
+			if ( empty( $oWikia ) || empty( $oWikia->city_public ) ) {
+				continue;
+			}
+
+			if ( $iWikiId != $oResultRow->gwa_city_id ) {
+
+				if ( count( $aWikiDigest['pages'] ) ) {
+					$aDigestData[ $iWikiId ] = $aWikiDigest;
+				}
+
+				$iWikiId = $oResultRow->gwa_city_id;
+
+				if ( isset( $aDigestData[ $iWikiId ] ) ) {
+					$aWikiDigest = $aDigestData[ $iWikiId ];
+				} else {
+					$aWikiDigest = array(
+						'wikiName' => $oWikia->city_title,
+						'wikiLangCode' => $oWikia->city_lang,
+						'pages' => array()
+					);
+				}
+			} // if
+
+			if ( in_array( $oResultRow->gwa_namespace, array( NS_BLOG_ARTICLE_TALK, NS_BLOG_ARTICLE ) ) ) {
+				# blogs
+				$aWikiBlogs[$iWikiId][] = $oResultRow;
+				$this->makeBlogsList( $aWikiDigest, $iWikiId, $oResultRow );
+			} else {
+				$oGlobalTitle = GlobalTitle::newFromText( $oResultRow->gwa_title, $oResultRow->gwa_namespace, $iWikiId );
+				if ( $oGlobalTitle->exists() ) {
+					$aWikiDigest[ 'pages' ][] = array(
+						'title' => GlobalTitle::newFromText( $oResultRow->gwa_title, $oResultRow->gwa_namespace, $iWikiId ),
+						'revisionId' => $oResultRow->gwa_rev_id
+					);
+				} else {
+					$aRemove[] = $oResultRow->gwa_id;
+				}
+			}
+
+			$loop++;
+
+		} // while
+		$dbr->freeResult( $oResource );
+
+		$cnt = count( $aWikiDigest['pages'] );
+		if ( isset( $aWikiDigest['blogs'] ) ) {
+			$cnt += count( $aWikiDigest['blogs'] );
+		}
+		if ( !empty( $cnt ) ) {
+			$aDigestData[ $iWikiId ] = $aWikiDigest;
+		}
+
+		$iEmailsSent = 0;
+		if ( count( $aDigestData ) ) {
+			$iEmailsSent++;
+			$this->sendMail( $iUserId, $aDigestData, $bTooManyPages );
+		}
+
+		if ( count( $aRemove ) ) {
+			$dbs = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
+			foreach ( $aRemove as $gwa_id ) {
+				$dbs->delete( 'global_watchlist', array( 'gwa_user_id' => $iUserId, 'gwa_id' => $gwa_id ), __METHOD__ );
+			}
+			$dbs->commit();
+		}
+
+		return $iEmailsSent;
+	}
+
+	/**
+	 * send email
+	 */
+	private function sendMail( $iUserId, $aDigestData, $isDigestLimited ) {
+		$oUser = User::newFromId( $iUserId );
+		$oUser->load();
+
+		$sEmailSubject = $this->getLocalizedMsg( 'globalwatchlist-digest-email-subject', $oUser->getOption( 'language' ) );
+		list( $sEmailBody, $sEmailBodyHTML ) = $this->composeMail( $oUser, $aDigestData, $isDigestLimited );
+
+		$sFrom = 'Wikia <community@wikia.com>';
+		// yes this needs to be a MA object, not string (the docs for sendMail are wrong)
+		$oReply = new MailAddress( 'noreply@wikia.com' );
+
+		if ( empty( $this->mDebugMailTo ) ) {
+			$oUser->sendMail( $sEmailSubject, $sEmailBody, $sFrom, $oReply, 'GlobalWatchlist', $sEmailBodyHTML );
+		} else {
+			UserMailer::send( new MailAddress( $this->mDebugMailTo ), new MailAddress( $sFrom ), $sEmailSubject, $sEmailBody, null, null, 'GlobalWatchlist' );
+		}
 	}
 
 	/**
@@ -179,14 +289,15 @@ class GlobalWatchlistBot {
 
 		return array( $sBody, $sBodyHTML );
 	}
-	function cutOutPart($message, $startMarker, $endMarker, $replacement = " ") {
-	 // this is a quick way to skip some parts of email message without remaking all the i18n messages.
-	 $startPos = strpos($message, $startMarker);
-	 $endPos = strpos($message, $endMarker);
-	 if ($startPos !== FALSE && $endPos !== FALSE) {
-	   $message = substr($message, 0, $startPos + strlen($startMarker)) . $replacement . substr($message, $endPos);
-	 }
-	 return $message;
+
+	private function cutOutPart($message, $startMarker, $endMarker, $replacement = " ") {
+		// this is a quick way to skip some parts of email message without remaking all the i18n messages.
+		$startPos = strpos($message, $startMarker);
+		$endPos = strpos($message, $endMarker);
+		if ($startPos !== FALSE && $endPos !== FALSE) {
+			$message = substr($message, 0, $startPos + strlen($startMarker)) . $replacement . substr($message, $endPos);
+		}
+		return $message;
 	}
 
 	private function getLocalizedMsg( $sMsgKey, $sLangCode ) {
@@ -202,110 +313,6 @@ class GlobalWatchlistBot {
 		}
 
 		return $sBody;
-	}
-
-	/**
-	 * send email to user
-	 */
-	public function sendDigestToUser( $iUserId ) {
-		global $wgExternalDatawareDB, $wgGlobalWatchlistMaxDigestedArticlesPerWiki;
-
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
-
-		$oResource = $dbr->select(
-			array ( "global_watchlist" ),
-			array ( "gwa_id", "gwa_user_id", "gwa_city_id", "gwa_namespace", "gwa_title", "gwa_rev_id", "gwa_timestamp" ),
-			array (
-				"gwa_user_id" => intval( $iUserId ),
-				"gwa_timestamp <= gwa_rev_timestamp",
-				"gwa_timestamp is not null"
-			),
-			__METHOD__,
-			array (
-				"ORDER BY" => "gwa_timestamp, gwa_city_id"
-			)
-		);
-
-		$records = $dbr->numRows( $oResource );
-		$bTooManyPages = ( $records > $wgGlobalWatchlistMaxDigestedArticlesPerWiki ) ? true : false;
-		$iWikiId = $loop = 0;
-		$aDigestData = array();
-		$aWikiDigest = array( 'pages' => array() );
-		$aRemove = array();
-		while ( $oResultRow = $dbr->fetchObject( $oResource ) ) {
-			# ---
-			if ( $loop >= $wgGlobalWatchlistMaxDigestedArticlesPerWiki ) {
-				break;
-			}
-			
-			$oWikia = WikiFactory::getWikiByID( $oResultRow->gwa_city_id );
-			if ( empty( $oWikia ) || empty( $oWikia->city_public ) ) {
-				continue;
-			}
-
-			if ( $iWikiId != $oResultRow->gwa_city_id ) {
-
-				if ( count( $aWikiDigest['pages'] ) ) {
-					$aDigestData[ $iWikiId ] = $aWikiDigest;
-				}
-
-				$iWikiId = $oResultRow->gwa_city_id;
-
-				if ( isset( $aDigestData[ $iWikiId ] ) ) {
-					$aWikiDigest = $aDigestData[ $iWikiId ];
-				} else {
-					$aWikiDigest = array(
-						'wikiName' => $oWikia->city_title,
-						'wikiLangCode' => $oWikia->city_lang,
-						'pages' => array()
-					);
-				}
-			} // if
-
-			if ( in_array( $oResultRow->gwa_namespace, array( NS_BLOG_ARTICLE_TALK, NS_BLOG_ARTICLE ) ) ) {
-				# blogs
-				$aWikiBlogs[$iWikiId][] = $oResultRow;
-				$this->makeBlogsList( $aWikiDigest, $iWikiId, $oResultRow );
-			} else {
-				$oGlobalTitle = GlobalTitle::newFromText( $oResultRow->gwa_title, $oResultRow->gwa_namespace, $iWikiId );
-				if ( $oGlobalTitle->exists() ) {
-					$aWikiDigest[ 'pages' ][] = array(
-						'title' => GlobalTitle::newFromText( $oResultRow->gwa_title, $oResultRow->gwa_namespace, $iWikiId ),
-						'revisionId' => $oResultRow->gwa_rev_id
-					);
-				} else {
-					$aRemove[] = $oResultRow->gwa_id;
-				}
-			}
-			
-			$loop++;
-
-		} // while
-		$dbr->freeResult( $oResource );
-
-		$cnt = count( $aWikiDigest['pages'] );
-		if ( isset( $aWikiDigest['blogs'] ) ) {
-			$cnt += count( $aWikiDigest['blogs'] );
-		}
-		if ( !empty( $cnt ) ) {
-			$aDigestData[ $iWikiId ] = $aWikiDigest;
-		}
-
-		$iEmailsSent = 0;
-		if ( count( $aDigestData ) ) {
-			$iEmailsSent++;
-			$this->sendMail( $iUserId, $aDigestData, $bTooManyPages );
-		}
-
-		if ( count( $aRemove ) ) {
-			$dbs = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
-			foreach ( $aRemove as $gwa_id ) {
-				$dbs->delete( 'global_watchlist', array( 'gwa_user_id' => $iUserId, 'gwa_id' => $gwa_id ), __METHOD__ );
-			}
-			$dbs->commit();
-		}
-		
-		return $iEmailsSent;
 	}
 
 	/**
@@ -362,26 +369,4 @@ class GlobalWatchlistBot {
 		}
 	}
 
-	/**
-	 * send email
-	 */
-	private function sendMail( $iUserId, $aDigestData, $isDigestLimited ) {
-		$oUser = User::newFromId( $iUserId );
-		$oUser->load();
-
-		$sEmailSubject = $this->getLocalizedMsg( 'globalwatchlist-digest-email-subject', $oUser->getOption( 'language' ) );
-		list( $sEmailBody, $sEmailBodyHTML ) = $this->composeMail( $oUser, $aDigestData, $isDigestLimited );
-
-		$sFrom = 'Wikia <community@wikia.com>';
-		// yes this needs to be a MA object, not string (the docs for sendMail are wrong)
-		$oReply = new MailAddress( 'noreply@wikia.com' );
-
-		if ( empty( $this->mDebugMailTo ) ) {
-			$oUser->sendMail( $sEmailSubject, $sEmailBody, $sFrom, $oReply, 'GlobalWatchlist', $sEmailBodyHTML );
-		} else {
-			UserMailer::send( new MailAddress( $this->mDebugMailTo ), new MailAddress( $sFrom ), $sEmailSubject, $sEmailBody, null, null, 'GlobalWatchlist' );
-		}
-
-		$this->iEmailsSent++;
-	}
 }
