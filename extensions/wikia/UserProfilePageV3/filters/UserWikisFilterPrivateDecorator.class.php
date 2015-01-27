@@ -9,10 +9,10 @@ class UserWikisFilterPrivateDecorator extends UserWikisFilterDecorator {
 	public function getFiltered() {
 		$filtered = $this->filter->getFiltered();
 
-		foreach( $filtered as $key => $wikiData ) {
-			$wikiId = (int) $wikiData['id'];
+		foreach ( $filtered as $key => $wikiData ) {
+			$wikiId = ( int ) $wikiData['id'];
 
-			if( WikiFactory::getVarValueByName( 'wgIsPrivateWiki', $wikiId ) === true ) {
+			if ( WikiFactory::getVarValueByName( 'wgIsPrivateWiki', $wikiId ) ) {
 				unset( $filtered[$key] );
 			}
 		}
