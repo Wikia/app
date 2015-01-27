@@ -35,7 +35,6 @@
 			this.setCountryValue(this.wikiaForm);
 			this.initOptIn(this.wikiaForm);
 
-			this.termsOpenNewTab();
 			this.setupValidation();
 		},
 
@@ -117,17 +116,6 @@
 				inputs.recaptcha_response_field // jshint ignore:line
 					.on('keyup.UserSignup', this.validator.activateSubmit.bind(this.validator));
 			}
-		},
-
-		/**
-		 * Duplicating target=_blank functionality for link that is part of core and created via wikitext
-		 */
-		termsOpenNewTab: function () {
-			$('.wikia-terms > a').on('click', function (event) {
-				var url = $(this).attr('href');
-				event.preventDefault();
-				window.open(url, '_blank');
-			});
 		}
 	};
 
