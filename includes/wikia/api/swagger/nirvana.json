@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "host": "www.wikia.com",
-  "basePath": "/",
+  "basePath": "/api/v1",
   "schemes": [
     "http"
   ],
