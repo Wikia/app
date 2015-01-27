@@ -158,7 +158,7 @@ class FacebookSignupController extends WikiaController {
 		}
 
 		$this->response->setData( [
-			'fbEmail' => $resp->getVal( 'email' ),
+			'fbEmail' => $userInfo->getProperty( 'email' ),
 			'returnToUrl' => $returnToUrl,
 			'queryString' => $returnToParams,
 			'loginToken' => UserLoginHelper::getSignupToken(),
