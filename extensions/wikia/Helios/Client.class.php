@@ -25,7 +25,7 @@ class Client
 	/**
 	 * The general method for handling the communication with the service.
 	 */
-	public function request( $sResource, $aGetData = [], $aPostData = [], $aCustomOptions = [] )
+	public function request( $sResource, $aGetData = [], $mPostData = [], $aCustomOptions = [] )
 	{
 		// Crash if we cannot make HTTP requests.
 		\Wikia\Util\Assert::true( \MWHttpRequest::canMakeRequests() );
@@ -41,7 +41,7 @@ class Client
 		$aDefaultOptions = [
 			'method'		=> 'GET',
 			'timeout'		=> 5,
-			'postData'		=> $aPostData,
+			'postData'		=> $mPostData,
 			'noProxy'		=> true,
 			'followRedirects'	=> false,
 			'returnInstance'	=> true
@@ -76,7 +76,7 @@ class Client
 		// for the POST request is application/x-www-form-urlencoded.
 		// It would be multipart/form-data which is not supported
 		// by the Helios service.
-		$aPostData = http_build_query([
+		$sPostData = http_build_query([
 			'username'	=> $sUsername,
 			'password'	=> $sPassword
 		]);
@@ -84,7 +84,7 @@ class Client
 		return $this->request(
 			'token',
 			[ 'grant_type'	=> 'password' ],
-			$aPostData,
+			$sPostData,
 			[ 'method'	=> 'POST' ]
 		);
 	}
