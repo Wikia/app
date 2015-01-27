@@ -543,8 +543,10 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author Hamilton Abreu
  * @author Leon saudanha
+ * @author Vitorvicentevalente
  */
 $messages['pt'] = array(
+	'adengine-advertisement' => 'anúncio',
 	'adengine-exitstitial-title-template' => 'Está a sair da wiki $1...',
 	'adengine-exitstitial-redirecting' => 'O browser vai reencaminhá-lo para a página solicitada dentro de segundos.',
 	'adengine-exitstitial-go-back' => 'Quer regressar?',

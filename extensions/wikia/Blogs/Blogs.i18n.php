@@ -136,6 +136,7 @@ Avatar6.jpg",
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author Liuxinyu970226
  * @author Lloffiwr
  * @author Shirayuki
  * @author Siebrand
@@ -182,6 +183,7 @@ Parameters:
 	'blog-comment-unhide' => '{{Identical|Unhide}}',
 	'blog-comment-history' => '{{Identical|History}}',
 	'blog-comment-edit' => '{{Identical|Edit}}',
+	'blog-avatar-defaults' => '{{doc-important|Do not translate ".jpg"}}',
 	'blog-avatar-preferences-title' => '{{Identical|Avatar}}',
 	'blog-create-listing-label' => '{{Identical|Create blog listing}}',
 	'blog-refresh-label' => '{{Identical|Refresh}}',
@@ -4499,6 +4501,7 @@ $messages['ps'] = array(
  * @author Polyethylen
  * @author Rhaijin
  * @author SandroHc
+ * @author Vitorvicentevalente
  * @author Waldir
  */
 $messages['pt'] = array(
@@ -4561,7 +4564,7 @@ Crie páginas de listagem de blogues para categorias, tais como "Barack Obama" o
 	'blog-emptyparam' => 'O nome do parâmetro não pode estar em branco',
 	'blog-defaulttitle' => 'Blogues',
 	'blog-continuereading' => 'Continuar a ler &raquo;',
-	'blog-readfullpost' => 'Mais',
+	'blog-readfullpost' => 'Ler mais',
 	'blog-olderposts' => 'Entradas mais antigas',
 	'blog-newerposts' => 'Entradas mais recentes',
 	'blog-nbrcomments' => '{{PLURAL:$1|Um comentário|$1 comentários}}',
@@ -6075,6 +6078,7 @@ $messages['wa'] = array(
  * @author Hydra
  * @author Hzy980512
  * @author Liangent
+ * @author Liuxinyu970226
  * @author Wilsonmess
  */
 $messages['zh-hans'] = array(

@@ -35,16 +35,14 @@
 				this.dropdown.addClass('show');
 				this.dropdown.trigger('hovermenu-shown');
 
-				if (!this.loginAjaxForm) {
+				if (!this.loginAjaxForm && !window.wgUserName) {
 					this.loginAjaxForm = new window.UserLoginAjaxForm(this.dropdown);
-
-					// lazy load jquery.wikia.tooltip.js (BugId:22143)
-					window.UserLoginFacebook.init(window.UserLoginFacebook.origins.DROPDOWN);
+					window.FacebookLogin.init(window.FacebookLogin.origins.DROPDOWN);
 				}
 
-				$('body').
-				unbind('.loginDropdown').
-				bind('click.loginDropdown', $.proxy(this.outsideClickHandler, this));
+				$('body')
+					.unbind('.loginDropdown')
+					.bind('click.loginDropdown', $.proxy(this.outsideClickHandler, this));
 			}
 			this.loginAjaxForm.inputs.username.focus();
 			this.bucky.timer.stop('show');

@@ -298,7 +298,7 @@ jQuery(function ($) {
 			suggestionShowed = false,
 			$topModule = $('.top-wiki-articles'),
 			$categoryModule = $('.category-articles'),
-			$wikiaSearch = $('.WikiaSearch'),
+			$wikiaSearch = $('.search-tracking'),
 			$noResults = $('.results-wrapper .no-result');
 
 		if ($body.hasClass('page-Special_Search')) {

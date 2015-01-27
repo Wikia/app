@@ -565,6 +565,8 @@ $messages['roa-tara'] = array(
 	'iwedit-update' => 'Aggiorne',
 	'iwedit-error' => "S'ha verificate 'n'errore.",
 	'iwedit-success' => 'Collegamende ccrejate cu successe.',
+	'iwedit-local' => 'Sulamende inderuicchi locale? (p.e. none globbale)',
+	'iwedit-trans' => "Abbilite 'nglusione paurose",
 );
 
 /** Russian (русский)
@@ -686,16 +688,18 @@ $messages['vi'] = array(
  * @author Dimension
  * @author Hydra
  * @author Liuxinyu970226
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
-	'interwikiedit' => '跨维基连接编辑器',
-	'iwedit-title' => '跨维基连接编辑器',
+	'interwikiedit' => '跨维基链接编辑器',
+	'iwedit-title' => '跨维基链接编辑器',
 	'iwedit-language-interwikis' => '只有语言跨维基链接而已',
 	'iwedit-all-interwikis' => '所有跨维基链接',
 	'iwedit-update' => '更新',
 	'iwedit-error' => '发生错误。',
 	'iwedit-success' => '链接创建成功。',
 	'iwedit-local' => '本地限定的跨wiki链接？（也就是说不是全域的）',
+	'iwedit-trans' => '启用危险的嵌入（scary transclusion）',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

@@ -41,11 +41,10 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 		if ( !empty( $this->wg->EnableFacebookClientExt ) ) {
 			$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js' );
-			$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebook.js' );
+			$this->response->addAsset( 'extensions/wikia/UserLogin/js/FacebookLogin.js' );
 		}
 
-		$this->response->addAsset('extensions/wikia/UserLogin/js/UserLoginSpecial.js');
-		$this->response->addAsset('extensions/wikia/WikiaStyleGuide/js/Form.js');
+		$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginSpecial.js' );
 
 		//Wikiamobile, will be filtered in AssetsManager by config :)
 		$this->response->addAsset(
@@ -154,12 +153,14 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				$action === wfMessage('userlogin-forgot-password')->escaped() ||
 				$action === wfMessage('wikiamobile-sendpassword-label')->escaped() ||
 				$type === 'forgotPassword'
-			) {	// send temporary password
+			) {
+				// send temporary password
 				$response = $this->app->sendRequest( 'UserLoginSpecial', 'mailPassword' );
 
 				$this->result = $response->getVal( 'result', '' );
 				$this->msg = $response->getVal( 'msg', '' );
-			} else if ($action === wfMessage('resetpass_submit')->escaped() ) {	// change password
+			} else if ($action === wfMessage('resetpass_submit')->escaped() ) {
+				// change password
 				$this->editToken = $this->wg->request->getVal( 'editToken', '' );
 				$this->loginToken = $this->wg->Request->getVal( 'loginToken', '' );
 				$params = array(
@@ -179,7 +180,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 				$this->response->getView()->setTemplate( 'UserLoginSpecial', 'changePassword' );
 
-			} else {	// login
+			} else {
+				// login
 				$response = $this->app->sendRequest( 'UserLoginSpecial', 'login' );
 
 				$this->result = $response->getVal( 'result', '' );

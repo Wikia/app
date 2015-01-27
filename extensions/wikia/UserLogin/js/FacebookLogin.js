@@ -1,14 +1,16 @@
-/* global UserLoginModal, wgCanonicalSpecialPageName, wgMainPageTitle, wgArticlePath, wgScriptPath, wgUserLanguage */
+/* global UserLoginModal, wgCanonicalSpecialPageName, wgMainPageTitle, wgArticlePath, wgScriptPath,
+wgUserLanguage, GlobalNotification */
 
 /**
  * Handle signing in and signing up with Facebook
+ * Only for logged out users. Logged in users can connect with facebook on their preferences page.
  */
 (function () {
 	'use strict';
 
-	var tracker, QueryString, uiFactory, UserLoginFacebook;
+	var tracker, QueryString, uiFactory, FacebookLogin;
 
-	UserLoginFacebook = {
+	FacebookLogin = {
 		modal: false,
 		form: false,
 		callbacks: {},
@@ -26,18 +28,20 @@
 			$().log(msg, 'UserLoginFacebook');
 		},
 
+		/**
+		 * Initialize functionality needed to log in or sign up for a new account with facebook
+		 * @param {Object} origin Possible values are from FacebookLogin.origins. For tracking how a user got here.
+		 */
 		init: function (origin) {
 			var self = this;
 
-			if (this.initialized) {
+			if (this.initialized || window.wgUserName) {
 				return;
 			}
 
 			this.bucky.timer.start('init');
 
-			// requiring these variables here instead of at the top of the page to avoid race conditions until we can
-			// turn this file into a proper AMD module
-			// @todo: Turn this file into a proper AMD module
+			// requiring these variables here instead of at the top of the page to avoid race conditions
 			require([
 				'wikia.tracker',
 				'wikia.querystring',
@@ -55,7 +59,7 @@
 				});
 
 				self.initialized = true;
-				self.loginSetup();
+				self.bindEvents();
 
 				// load when the login dropdown is shown or specific page is loaded
 				$.loadFacebookAPI()
@@ -68,7 +72,10 @@
 			});
 		},
 
-		loginSetup: function () {
+		/**
+		 * Set click handlers for the facebook button
+		 */
+		bindEvents: function () {
 			var self = this;
 
 			this.bucky.timer.start('loginSetup');
@@ -195,6 +202,11 @@
 		 * @param {Object} response Response object from FacebookSignupController::index
 		 */
 		setupModal: function (response) {
+			if (!response.modal) {
+				GlobalNotification.show($.msg('oasis-generic-error'), 'error');
+				return;
+			}
+
 			this.bucky.timer.start('loggedOutCallback');
 			$.when(
 				uiFactory.init('modal'),
@@ -271,7 +283,7 @@
 		createSignupForm: function ($modal) {
 			var self = this;
 
-			this.signupForm = new window.UserSignupFacebookForm($modal.find('.UserLoginFacebookLeft'), {
+			this.signupForm = new window.FacebookFormCreateUser($modal.find('.UserLoginFacebookLeft'), {
 				ajaxLogin: true,
 				skipFocus: true,
 				callback: function () {
@@ -298,7 +310,7 @@
 		createLoginForm: function ($modal) {
 			var self = this;
 
-			this.loginForm = new window.UserLoginFacebookForm($modal.find('.UserLoginFacebookRight'), {
+			this.loginForm = new window.FacebookFormConnectUser($modal.find('.UserLoginFacebookRight'), {
 				ajaxLogin: true,
 				skipFocus: true,
 				callback: function () {
@@ -330,5 +342,5 @@
 		}
 	};
 
-	window.UserLoginFacebook = UserLoginFacebook;
+	window.FacebookLogin = FacebookLogin;
 })();

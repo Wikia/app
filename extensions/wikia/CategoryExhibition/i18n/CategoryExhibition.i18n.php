@@ -20,7 +20,7 @@ $messages['en'] = array(
  * @author Shirayuki
  */
 $messages['qqq'] = array(
-	'category-exhibition-desc'                 => '{{desc}}',
+	'category-exhibition-desc' => '{{desc}}',
 	'category-exhibition-subcategories-header' => '{{Identical|Subcategory}}',
 );
 
@@ -580,11 +580,12 @@ $messages['ps'] = array(
 );
 
 /** Portuguese (português)
+ * @author Vitorvicentevalente
  */
 $messages['pt'] = array(
 	'category-exhibition-sorttype' => 'Tipo de ordenação:',
 	'category-exhibition-alphabetical' => 'Alfabética',
-	'category-exhibition-mostvisited' => 'Mais visitas',
+	'category-exhibition-mostvisited' => 'Mais visitadas',
 	'category-exhibition-recentedits' => 'Editadas recentemente',
 	'category-exhibition-page-header' => 'Páginas na categoria "$1"',
 	'category-exhibition-subcategories-header' => 'Subcategorias',
