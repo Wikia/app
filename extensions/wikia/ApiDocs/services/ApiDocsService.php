@@ -9,7 +9,7 @@ namespace Wikia\ApiDocs\Services;
  */
 class ApiDocsService implements IApiDocsService {
 	/**
-	 * @var \Swagger\Swagger
+	 * @var \Swagger
 	 * Original swagger object
 	 */
 	private $swagger;
@@ -48,7 +48,7 @@ class ApiDocsService implements IApiDocsService {
 					'apis' => []
 				];
 			}
-			/** @var \Swagger\Annotations\Resource $resource  */
+			/** @var \SwaggerResource $resource  */
 			$cb = $this->pathBuilder;
 			$path = $cb( $resource->resourcePath );
 

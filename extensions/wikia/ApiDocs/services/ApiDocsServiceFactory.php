@@ -1,8 +1,6 @@
 <?php
 namespace Wikia\ApiDocs\Services;
 
-use Swagger\Swagger;
-
 /**
  * Class ApiDocsServiceFactory
  * @package Wikia\ApiDocs\Services
