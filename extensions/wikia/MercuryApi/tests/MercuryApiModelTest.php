@@ -12,19 +12,21 @@ class MercuryApiModelTest extends WikiaBaseTest {
 	 */
 	private function setupGlobals() {
 		$this->mockGlobalVariable('wgLoadAdsInHead', true);
+		$this->mockGlobalVariable('wgAdDriverBottomLeaderboardImpressionCapping', false);
+		$this->mockGlobalVariable('wgAdDriverEnableRemnantGptMobile', true);
+		$this->mockGlobalVariable('wgAdDriverSevenOneMediaOverrideSub2Site', true);
+		$this->mockGlobalVariable('wgAdDriverTrackState', true);
 		$this->mockGlobalVariable('wgAdEngineDisableLateQueue', true);
 		$this->mockGlobalVariable('wgLoadLateAdsAfterPageLoad', true);
-		$this->mockGlobalVariable('wgAdDriverTrackState', true);
 		$this->mockGlobalVariable('wgEnableWikiaHubsV3Ext', true);
-		$this->mockGlobalVariable('wgAdDriverSevenOneMediaOverrideSub2Site', true);
 		$this->mockGlobalVariable('wgWikiDirectedAtChildren', true);
 		$this->mockGlobalVariable('wgAdDriverUseSevenOneMedia', false);
 		$this->mockGlobalVariable('wgWikiDirectedAtChildrenByStaff', true);
 		$this->mockGlobalVariable('wgCityId', 3355); // recipes
 		$this->mockGlobalVariable('wgDBname', 'mydbname');
 		$this->mockGlobalVariable('wgDartCustomKeyValues', 'a=b;c=d');
-		$this->mockGlobalVariable('wgAdDriverEnableRemnantGptMobile', true);
 		$this->mockGlobalVariable('wgAdPageLevelCategoryLangs', ['en']);
+
 	}
 
 	/**

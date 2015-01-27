@@ -65,6 +65,7 @@ class AdEngine2ContextService {
 					'taboola' => !!$wg->AdDriverUseTaboola,
 				] ),
 				'slots' => $this->filterOutEmptyItems( [
+					'bottomLeaderboardImpressionCapping' => $wg->AdDriverBottomLeaderboardImpressionCapping
 				] ),
 				// TODO: make it like forceadprovider=liftium
 				'forceProviders' => $this->filterOutEmptyItems( [
