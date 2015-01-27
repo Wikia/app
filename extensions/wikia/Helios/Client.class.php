@@ -29,10 +29,13 @@ class Client
 	{
 		// Crash if we cannot make HTTP requests.
 		\Wikia\Util\Assert::true( \MWHttpRequest::canMakeRequests() );
+
+		// Add client_id and client_secret to the GET data.
+		$aGetData['client_id'] = $this->sClientId;
+		$aGetData['client_secret'] = $this->sClientSecret;
 		
 		// Request URI pre-processing.
-		$sUri = "{$this->sBaseUri}{$sResource}?client_id={$this->sClientId}&client_secret={$this->sClientSecret}&";
-		$sUri .= http_build_query($aGetData);
+		$sUri = "{$this->sBaseUri}{$sResource}?" . http_build_query($aGetData);
 		
 		// Request options pre-processing.
 		$aDefaultOptions = [
