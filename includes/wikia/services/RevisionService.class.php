@@ -264,7 +264,7 @@ class RevisionService {
 		if( isset( $this->filterMethods[ $method ] ) ) {
 			$this->filterMethod = $method;
 		} else {
-			$this->filterMethod = false;
+			throw new \Exception('Invalid filtering method');
 		}
 	}
 
