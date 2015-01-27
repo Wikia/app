@@ -57,7 +57,7 @@
 
 	UserSignupAjaxValidation.prototype.validateBirthdate = function (e) {
 		var el = $(e.target),
-			proxyObj = {'paramName':el.attr('name'), 'form': this},
+			paramName = el.attr('name'),
 			params = this.getDefaultParamsForAjax();
 
 		if (UserSignup.deferred && typeof UserSignup.deferred.reject === 'function') {
@@ -74,7 +74,7 @@
 		UserSignup.deferred = $.post(
 			wgScriptPath + '/wikia.php',
 			params,
-			$.proxy(this.validationHandler, proxyObj)
+			this.validationHandler.bind(this, paramName)
 		);
 	};
 
