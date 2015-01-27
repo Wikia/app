@@ -258,19 +258,19 @@ function InfoboxBuilderView.render( input, vars )
 		:attr( 'cellpadding', '0' )
 		:addClass( 'infobox-table' )
 
-	-- Iterate over each field and render a row
+	-- Iterate over each field and render a row if a value is not empty
 	for index, field in ipairs( fields ) do
 		if field.Type == "Line" and not HF.isempty( field.Value ) then
 			table:node( addRowLine( field ) )
 		elseif field.Type == "Header" and input.sections[index] == "On" then
 			table:node( addRowHeader( field ) )
-		elseif field.Type == "Title" then
+		elseif field.Type == "Title" and not HF.isempty( field.Value ) then
 			table:node( addRowTitle( field ) )
-		elseif field.Type == "MainImage" then
+		elseif field.Type == "MainImage" and not HF.isempty( field.Value ) then
 			table:node( addRowMainImage( field ) )
-		elseif field.Type == "Image" then
+		elseif field.Type == "Image" and not HF.isempty( field.Value ) then
 			table:node( addRowImage( field ) )
-		elseif field.Type == "Footer" then
+		elseif field.Type == "Footer" and not HF.isempty( field.Value ) then
 			table:node( addRowFooter( field ) )
 		elseif field.Type == "Split" then
 			table:node( addRowSplit( field ) )
