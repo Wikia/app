@@ -138,7 +138,7 @@ class VenusHooks {
 	 * @return bool
 	 */
 	public static function onBeforeSkinLoad( &$userSkin, $useskin, Title $title ) {
-		if ( (!$useskin || $useskin == 'venus') && self::showVenusSkin( $title ) ) {
+		if ( ( !$useskin || $useskin == 'venus' ) && self::showVenusSkin( $title ) ) {
 			$userSkin = 'venus';
 		}
 
@@ -154,15 +154,15 @@ class VenusHooks {
 	public static function showVenusSkin( Title $title ) {
 		global $wgEnableVenusSkin, $wgEnableVenusSpecialSearch, $wgEnableVenusArticle, $wgRequest;
 
-		$action = $wgRequest->getVal('action');
-		$diff = $wgRequest->getVal('diff');
+		$action = $wgRequest->getVal( 'action' );
+		$diff = $wgRequest->getVal( 'diff' );
 
 		$isSpecialSearch = WikiaPageType::isSearch() && $wgEnableVenusSpecialSearch;
 		$isSpecialVenusTest = $title->isSpecialPage() && $title->getText() == 'VenusTest';
 		$isVenusArticle = WikiaPageType::isArticlePage() &&
 			$wgEnableVenusArticle &&
-			(empty($action) || $action == 'view') &&
-			empty($diff);
+			( empty( $action ) || $action == 'view' ) &&
+			empty( $diff );
 
 		return $wgEnableVenusSkin && ( $isSpecialSearch || $isSpecialVenusTest || $isVenusArticle );
 	}
