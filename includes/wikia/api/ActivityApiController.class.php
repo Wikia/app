@@ -83,14 +83,15 @@ class ActivityApiController extends WikiaApiController {
 	 * @return string
 	 */
 	private function getFilterMethodByCaller( $caller ) {
-		$method = 'filterPassThrough';
-
 		switch( $caller ) {
 			case 'ActivityApiController::getLatestActivity':
 				$method = 'filterDuplicates';
 				break;
 			case 'ActivityApiController::getRecentlyChangedArticles':
 				$method = 'filterByArticle';
+				break;
+			default:
+				$method = 'filterPassThrough';
 				break;
 		}
 
