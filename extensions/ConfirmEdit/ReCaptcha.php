@@ -46,6 +46,8 @@ function efReCaptcha() {
  */
 function efReCaptchaOnBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
 	$langCode = $out->getContext()->getLanguage()->getCode();
-	$out->addScript( '<script src="https://www.google.com/recaptcha/api.js?hl=' . $langCode . '" async defer></script>' );
+
+	$src = str_replace( '$1', $langCode, ReCaptcha::API_URL_TEMPLATE );
+	$out->addScript( '<script src="'.$src.'" async defer></script>' );
 	return true;
 }

@@ -1,12 +1,12 @@
 <?php
 
 class ReCaptcha extends SimpleCaptcha {
-	// reCAPTHCA error code returned from recaptcha_check_answer
-	private $recaptcha_error = null;
+
+	const VERIFY_URL = 'https://www.google.com/recaptcha/api/siteverify';
+	const API_URL_TEMPLATE = 'https://www.google.com/recaptcha/api.js?hl=$1';
 
 	/**
 	 * Displays the reCAPTCHA widget.
-	 * If $this->recaptcha_error is set, it will display an error in the widget.
 	 */
 	function getForm() {
 		$siteKey = F::app()->wg->ReCaptchaPublicKey;
@@ -16,21 +16,12 @@ class ReCaptcha extends SimpleCaptcha {
 	}
 
 	/**
-	 * Calls the library function recaptcha_check_answer to verify the users input.
-	 * Sets $this->recaptcha_error if the user is incorrect.
+	 * Calls the API method siteverify to verify the users input.
+	 *
 	 * @return boolean
 	 */
-	function passCaptcha() {
-		$wg = F::app()->wg;
-
-		$secret = $wg->ReCaptchaPrivateKey;
-		$response = $wg->Request->getText( 'g-recaptcha-response' );
-		$ip = $wg->Request->getIP();
-
-		$verifyUrl = 'https://www.google.com/recaptcha/api/siteverify' .
-			'?secret=' . $secret .
-			'&response=' . $response .
-			'&remoteip=' . $ip;
+	public function passCaptcha() {
+		$verifyUrl = $this->getVerifyUrl();
 
 		$responseObj = Http::get( $verifyUrl, 'default', [
 			'noProxy' => true,
@@ -48,11 +39,22 @@ class ReCaptcha extends SimpleCaptcha {
 		return false;
 	}
 
-	function addCaptchaAPI( &$resultArr ) {
+	protected function getVerifyUrl() {
+		$wg = F::app()->wg;
+		$secret = $wg->ReCaptchaPrivateKey;
+		$response = $wg->Request->getText( 'g-recaptcha-response' );
+		$ip = $wg->Request->getIP();
+
+		return self::VERIFY_URL .
+			'?secret=' . $secret .
+			'&response=' . $response .
+			'&remoteip=' . $ip;
+	}
+
+	public function addCaptchaAPI( &$resultArr ) {
 		$resultArr['captcha']['type'] = 'recaptcha';
 		$resultArr['captcha']['mime'] = 'image/png';
 		$resultArr['captcha']['key'] = F::app()->wg->ReCaptchaPublicKey;
-		$resultArr['captcha']['error'] = $this->recaptcha_error;
 	}
 
 	/**
@@ -62,7 +64,7 @@ class ReCaptcha extends SimpleCaptcha {
 	 * @param $action Action being performed
 	 * @return string
 	 */
-	function getMessage( $action ) {
+	public function getMessage( $action ) {
 		// Possible keys for easy grepping: recaptcha-edit, recaptcha-addurl, recaptcha-createaccount, recaptcha-create
 		$name = 'recaptcha-' . $action;
 		$text = wfMessage( $name )->escaped();
