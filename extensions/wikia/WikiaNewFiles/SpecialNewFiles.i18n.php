@@ -96,6 +96,13 @@ $messages['es'] = array(
 	'wikianewfiles-more' => 'más...',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'wikianewfiles-more' => 'gehiago...',
+);
+
 /** French (français)
  * @author Gomoko
  */

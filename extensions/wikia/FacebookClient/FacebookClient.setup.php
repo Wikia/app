@@ -20,6 +20,7 @@ $wgExtensionCredits['facebookclient'][] = array(
 		"Armon Rabiyan <armon@wikia-inc.com>",
 	),
 	'descriptionmsg' => 'fbconnect-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/FacebookClient'
 );
 
 $dir = dirname( __FILE__ ) . '/';
@@ -41,7 +42,7 @@ $wgAutoloadClasses['FacebookClientXFBML'] = $dir . 'FacebookClientXFBML.php';
  */
 $wgAutoloadClasses['FacebookClientHooks'] =  $dir . 'FacebookClientHooks.class.php';
 $wgHooks['MakeGlobalVariablesScript'][] = 'FacebookClientHooks::MakeGlobalVariablesScript';
-$wgHooks['SkinAfterBottomScripts'][] = 'FacebookClientHooks::SkinAfterBottomScripts';
+$wgHooks['GetHTMLAfterBody'][] = 'FacebookClientHooks::onGetHTMLAfterBody';
 $wgHooks['GetPreferences'][] = 'FacebookClientHooks::GetPreferences';
 $wgHooks['OasisSkinAssetGroups'][] = 'FacebookClientHooks::onSkinAssetGroups';
 $wgHooks['MonobookSkinAssetGroups'][] = 'FacebookClientHooks::onSkinAssetGroups';
@@ -71,5 +72,7 @@ JSMessages::registerPackage( 'FacebookClient', [
 	'fbconnect-preferences-connected-error',
 	'fbconnect-disconnect-info-existing',
 	'fbconnect-disconnect-info',
+	'fbconnect-error-fb-unavailable-title',
+	'fbconnect-error-fb-unavailable-text',
 ] );
 

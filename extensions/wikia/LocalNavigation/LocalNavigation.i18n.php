@@ -2,6 +2,7 @@
 $messages = [];
 
 $messages['en'] = [
+	'local-navigation-desc' => 'Local Navigation',
 	'local-navigation-more-of' => 'More $1',
 ];
 
@@ -10,5 +11,6 @@ $messages['es'] = [
 ];
 
 $messages['qqq'] = [
+	'local-navigation-desc' => '{{desc}}',
 	'local-navigation-more-of' => 'Local Navigation Menu - Link that goes to specific page; for an item that has existing submenu. First parameter is menu item\'s name.',
 ];

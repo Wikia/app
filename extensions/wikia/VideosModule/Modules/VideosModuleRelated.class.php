@@ -39,5 +39,11 @@ class Related extends Base {
 
 		return $this->videos;
 	}
+
+	public function getCacheKey() {
+		$cacheKey = parent::getCacheKey();
+
+		return $cacheKey . ':' . $this->wg->DBname;
+	}
 }
 

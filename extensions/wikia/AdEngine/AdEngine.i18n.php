@@ -8,6 +8,7 @@ $messages['en'] = array(
 	'adengine-exitstitial-redirecting' => 'Your browser will redirect you to the page you requested in a few seconds.',
 	'adengine-exitstitial-go-back' => 'Want to go back?',
 	'adengine-exitstitial-button' => 'Skip this Ad',
+	'adengine-desc' => 'Wikia\'s Ad Engine',
 );
 
 /** Message documentation (Message documentation)
@@ -20,6 +21,7 @@ $messages['qqq'] = array(
 	'adengine-exitstitial-redirecting' => 'Text displayed in the box showing up when you click on link to outside the wiki',
 	'adengine-exitstitial-go-back' => 'Text of the link/button that you can close the box with and get back to the content',
 	'adengine-exitstitial-button' => 'Text of the link/button that you can close the box with and get directly to the link target',
+	'adengine-desc' => '{{desc}}',
 );
 
 /** Arabic (العربية)
@@ -541,8 +543,10 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author Hamilton Abreu
  * @author Leon saudanha
+ * @author Vitorvicentevalente
  */
 $messages['pt'] = array(
+	'adengine-advertisement' => 'anúncio',
 	'adengine-exitstitial-title-template' => 'Está a sair da wiki $1...',
 	'adengine-exitstitial-redirecting' => 'O browser vai reencaminhá-lo para a página solicitada dentro de segundos.',
 	'adengine-exitstitial-go-back' => 'Quer regressar?',

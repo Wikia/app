@@ -85,16 +85,17 @@ class CreateWiki {
 		$this->mStarters = array(
 			"*" => array(
 				"*"  => "aastarter",
-				"en" => "starter",
-				"ja" => "jastarter",
 				"de" => "destarter",
-				"fr" => "frstarter",
-				"nl" => "nlstarter",
+				"en" => "starter",
 				"es" => "esstarter",
+				"fi" => "fistarter",
+				"fr" => "starterbeta",
+				"it" => "italianstarter",
+				"ja" => "jastarter",
+				"ko" => "starterko",
+				"nl" => "nlstarter",
 				"pl" => "plstarter",
 				"ru" => "rustarter",
-				"it" => "italianstarter",
-				'fi' => 'fistarter',
 			)
 		);
 
@@ -720,10 +721,14 @@ class CreateWiki {
 	 * @return string Sanitized name
 	 */
 	private static function sanitizeS3BucketName( $name ) {
-		$RE_VALID = "/^[a-z0-9](?:[-_a-z0-9]{0,53}[a-z0-9])?\$/";
+		if ( $name == 'admin' ) {
+			$name .= 'x';
+		}
+
+		$RE_VALID = "/^[a-z0-9](?:[-_a-z0-9]{0,53}[a-z0-9])?(?:[a-z0-9](?:\\.[-_a-z0-9]{0,53}[a-z0-9])?)*\$/";
 		# check if it's already valid
 		$name = mb_strtolower($name);
-		if ( preg_match( $RE_VALID, $name ) ) {
+		if ( preg_match( $RE_VALID, $name ) && strlen($name) <= self::SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH ) {
 			return $name;
 		}
 
@@ -732,7 +737,7 @@ class CreateWiki {
 		if ( in_array( substr($check_name,-1), [ '-', '_' ] ) ) {
 			$check_name .= '0';
 		}
-		if ( preg_match( $RE_VALID, $check_name ) ) {
+		if ( preg_match( $RE_VALID, $check_name ) && strlen($check_name) <= self::SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH ) {
 			return $check_name;
 		}
 

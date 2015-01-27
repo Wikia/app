@@ -9,6 +9,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'wikiamobile-desc' => 'Mobile Skin for Wikia',
 	'wikiamobile-search' => 'Search',
 	'wikiamobile-search-this-wiki' => 'Search this wiki',
 	'wikiamobile-search-wiki' => 'Wiki',
@@ -88,8 +89,8 @@ you should definitely check this out:
  * @author Siebrand
  */
 $messages['qqq'] = array(
-	'wikiamobile-search' => 'Label on a search button placed in Mobile skin top bar
-{{Identical|Search}}',
+	'wikiamobile-desc' => '{{desc}}',
+	'wikiamobile-search' => 'Label on a search button placed in Mobile skin top bar',
 	'wikiamobile-search-this-wiki' => 'Placeholder in input on search field',
 	'wikiamobile-search-wiki' => 'Text indicating that scope for a search will be current wiki
 {{Identical|Wiki}}',
@@ -670,6 +671,13 @@ $1',
 	'wikiasmartbanner-googleplay' => 'En Google Play',
 	'wikiasmartbanner-price' => 'gratis',
 	'wikiasmartbanner-view' => 'ver',
+);
+
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'wikiasmartbanner-googleplay' => 'Google Play-n',
 );
 
 /** Persian (فارسی)
@@ -1662,10 +1670,15 @@ $messages['roa-tara'] = array(
 	'wikiamobile-back' => 'Rrete',
 	'wikiamobile-hide-section' => 'scunne',
 	'wikiamobile-profile' => 'Profile',
+	'wikiamobile-last-edited-on' => "Urteme cangiamedne 'u $1",
+	'wikiamobile-last-edited-by' => 'da $1',
+	'wikiamobile-anonymous-edited-by' => 'Anonime',
+	'wikiamobile-trending-articles-heading' => 'Vôsce cchiù seguite',
 	'wikiamobile-footer-link-lifestyle' => '[[w:c:www:Lifestyle|Stile de vite]]',
 	'wikiamobile-footer-link-entertainment' => "[[w:c:www:Entertainment|'Ndrattenimende]]",
 	'wikiamobile-footer-link-videogames' => '[[w:c:www:Video_Games|Video Sciuèche]]',
 	'wikiamobile-footer-link-licencing' => '[[w:Wikia:Licensing|Licenze]]',
+	'wikiamobile-footer-link-privacy' => "[[w:c:www:Privacy_Policy|Regole d'a privacy]]",
 	'mobile-full-site' => 'Site comblete',
 	'wikiamobile-categories-tagline' => "Pàgene d'a categorije",
 	'wikiamobile-categories-items-total' => '$1 {{PLURAL:$1|vôsce}}',
@@ -1673,6 +1686,7 @@ $messages['roa-tara'] = array(
 	'wikiamobile-category-items-prev' => "Careche 'u precedende",
 	'wikiamobile-categories-expand' => 'Fà vedè tutte',
 	'wikiamobile-categories-collapse' => 'Scunne tutte',
+	'wikiamobile-categories-blogs' => "Messàgge d'u blog",
 	'wikiamobile-sharing-media-image' => 'Fote',
 	'wikiamobile-sharing-page-text' => '$1 - $2',
 	'wikiamobile-sharing-modal-text' => '$1 sus a $2 - $3',
@@ -1685,6 +1699,7 @@ Tu avissa verificà definitivamende quiste:
 	'wikiamobile-video-views-counter' => '$1 {{PLURAL:$1|visite}}',
 	'wikiamobile-video-not-friendly-header' => "Oh 'u scatte!",
 	'wikiamobile-video-not-friendly' => "Ne despiace, stu video non g'è disponibbile sus a 'u mobile.",
+	'wikiamobile-videos' => 'Video',
 	'wikiamobile-toc-header' => 'Tabbelle de le condenute',
 	'wikiamobile-image-not-loaded' => 'Immaggine non disponibbile',
 	'wikiamobile-shared-file-not-available' => "Uè, sta vôsce non g'è cchiù disponibbile, ma mò ca tu si aqquà, navighe sus a sta uicchi!",
@@ -2243,7 +2258,7 @@ $1',
 $messages['zh-hant'] = array(
 	'wikiamobile-search' => '搜尋',
 	'wikiamobile-search-this-wiki' => '搜尋此 wiki',
-	'wikiamobile-search-wiki' => '維基',
+	'wikiamobile-search-wiki' => 'Wiki',
 	'wikiamobile-search-wikia' => 'Wikia',
 	'wikiamobile-login' => '登入',
 	'wikiamobile-password' => '密碼',

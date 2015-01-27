@@ -11,7 +11,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'Create Page',
 	'author' => array( 'Bartek Lapinski', 'Adrian Wieczorek' ),
-	'url' => 'http://www.wikia.com' ,
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CreatePage',
 	'descriptionmsg' => 'createpage-desc',
 );
 

@@ -16,7 +16,7 @@ class UserLoginForm extends LoginForm {
 	function load() {
 		parent::load();
 		$request = $this->mOverrideRequest;
-		// Note: if these change make sure to update UserLoginFacebookForm class also
+
 		if ( $request->getText( 'userloginext01', '' ) != '' ) {
 			$this->mUsername = $request->getText( 'userloginext01', '' );
 		}

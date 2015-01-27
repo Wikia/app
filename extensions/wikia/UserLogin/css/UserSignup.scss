@@ -3,6 +3,7 @@
 @import 'skins/shared/mixins/wordmark';
 @import 'skins/shared/color';
 @import 'skins/oasis/css/core/layout';
+@import 'skins/oasis/css/placeholders/bodytext';
 @import '../mixins/submitpane';
 @import '../mixins/divider';
 
@@ -68,13 +69,13 @@
 			list-style: none;
 			margin: 0;
 			width: 74px;
+		}
 
-			.avatar {
-				border: 1px solid $color-page-border;
-				float: left;
-				margin: 0 5px 5px 0;
-				padding: 0;
-			}
+		.avatar {
+			border: 1px solid $color-page-border;
+			float: left;
+			margin: 0 5px 5px 0;
+			padding: 0;
 		}
 
 		h2 {
@@ -123,33 +124,30 @@
 			}
 		}
 
-		input[type=text],
-		input[type=password] {
+		[type=text],
+		[type=password] {
 			width: 299px;
 		}
 
-		.captcha {
+		.fancy-captcha {
 
-			.fancy-captcha {
+			p {
+				margin: 0;
+			}
 
-				p {
-					margin: 0;
-				}
+			#wpCaptchaWord {
+				@include wikia-form-input-field;
+				display: inline;
+				width: 105px;
+			}
 
-				#wpCaptchaWord {
-					@include wikia-form-input-field;
-					display: inline;
-					width: 105px;
-				}
-
-				img {
-					background-color: white;
-					border: 1px solid $color-page-border;
-					float: right;
-					height: 32px;
-					text-align: center;
-					width: 122px;
-				}
+			img {
+				background-color: white;
+				border: 1px solid $color-page-border;
+				float: right;
+				height: 32px;
+				text-align: center;
+				width: 122px;
 			}
 		}
 
@@ -198,4 +196,8 @@
 
 .WikiaMainContent {
 	float: none;
+}
+
+.captcha-load-error-modal {
+	@extend %bodytext;
 }

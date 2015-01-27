@@ -1,6 +1,6 @@
 <div class="wam-header wam-hero">
 	<div class="wam-top-gainers-cards">
-		<h2 class="wam-top-gainers-header"><?= wfMessage('wampage-top-gainers-header')->escaped(); ?><? if ( $isSingleVertical ) : ?>: <span class="vertical-<?= Sanitizer::encodeAttribute( $verticalsShorts[ $selectedVerticalId ] ) ?>"><?= $filterVerticals[ $selectedVerticalId ] ?></span><? endif; ?></h2>
+		<h2 class="wam-top-gainers-header"><?= wfMessage('wampage-top-gainers-header')->escaped(); ?><? if ( $isSingleVertical ) : ?>: <span class="vertical-<?= Sanitizer::encodeAttribute( $verticalsShorts[ $selectedVerticalId ] ) ?>"><?= wfMessage( $verticalsNamesMsgKeys[$selectedVerticalId] )->escaped() ?></span><? endif; ?></h2>
 		<div class="wam-cards">
 			<? 	$i = 1;
 				foreach( $visualizationWikis as $k => $wiki ):
@@ -10,10 +10,10 @@
 					$sWikiTitle = Sanitizer::encodeAttribute( $wiki['title'] );
 					$sWikiUrl = Sanitizer::encodeAttribute( $wiki['url'] );
 					$sWikiImageUrl = Sanitizer::encodeAttribute( $wiki['wiki_image'] );
-					$sWikiVerticalName = Sanitizer::escapeHtmlAllowEntities( $wiki['vertical_name'] );
+					$sWikiVerticalName = wfMessage( $verticalsNamesMsgKeys[$wiki['vertical_id']] )->escaped();
 			?>
 				<a href="http://<?= $sWikiUrl ?>" class="wam-card card<?= $i++ ?>">
-					<figure>
+					<figure class="vertical-bg-<?= Sanitizer::encodeAttribute( $verticalsShorts[ $wiki['vertical_id'] ] ) ?>">
 						<? if( !empty( $sWikiImageUrl ) ): ?>
 							<img src="<?= $sWikiImageUrl ?>" alt="<?= $sWikiTitle ?>" title="<?= $sWikiTitle ?>" />
 						<? endif ?>
@@ -48,10 +48,10 @@
 	<form method="get" action="" class="wam-index-search" id="wam-index-search">
 		<div class="wam-verticals-tabs">
 			<ul>
-			<? foreach ( $filterVerticals as $verticalId => $verticalName ) : ?>
+			<? foreach ( $verticalsShorts as $verticalId => $verticalShort ) : ?>
 				<li class="wam-filtering-tab <? if ( $verticalId == $selectedVerticalId ) : ?> selected<? endif; ?>">
-					<a href="#" class="icon-vertical icon-vertical-<?= Sanitizer::encodeAttribute( $verticalsShorts[ $verticalId ] ) ?> <? if ( $verticalId == $selectedVerticalId ) : ?>icon-vertical-selected<? endif; ?>" data-vertical-id="<?= $verticalId ?>">
-						<?= $verticalName ?>
+					<a href="#" class="icon-vertical icon-vertical-<?= Sanitizer::encodeAttribute( $verticalShort ) ?> <? if ( $verticalId == $selectedVerticalId ) : ?>icon-vertical-selected<? endif; ?>" data-vertical-id="<?= $verticalId ?>">
+						<?= wfMessage( $verticalsNamesMsgKeys[$verticalId] )->escaped() ?>
 					</a>
 				</li>
 			<? endforeach; ?>

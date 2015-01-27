@@ -13,6 +13,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'answers-desc' => 'Wikia\'s Answer site extension',
 	'answer_title' => 'Answer',
 	'answered_by' => 'Answered by',
 	'unregistered' => 'Unregistered',
@@ -155,6 +156,7 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'answers-desc' => '{{desc}}',
 	'answers-category-count-answered' => 'Parameters:
 * $1 is the number of answered questions.',
 	'answers-category-count-unanswered' => 'Parameters:

@@ -219,6 +219,21 @@ class WAMPageModel extends WikiaModel {
 		return $aVerticalsShorts;
 	}
 
+	/**
+	 * Generate message keys from verticals' short names:
+	 * wam-all, wam-tv, wam-games, wam-books, wam-comics, wam-lifestyle,
+	 * wam-music, wam-movies (see WAMPage.i18n.php)
+	 * @param  Array  $aShorts An array of verticals' short names
+	 * @return Array           An array of message keys
+	 */
+	public function generateVerticalsNamesMsgKeys( $aShortNames ) {
+		$aMsgKeys = [];
+		foreach ( $aShortNames as $iCityId => $sShortName ) {
+			$aMsgKeys[$iCityId] = "wam-{$sShortName}";
+		}
+		return $aMsgKeys;
+	}
+
 	protected function prepareIndex( $aWamWikis, $iTabIndex ) {
 		$sWamScoreName = ( $iTabIndex != self::TAB_INDEX_BIGGEST_GAINERS ) ? 'wam' : 'wam_change';
 		foreach ( $aWamWikis as &$aWiki ) {

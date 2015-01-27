@@ -3,6 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'wmu-desc' => 'WikiaMiniUpload extension',
 	'wmu-upload-image' => 'Upload Photo',
 	'wmu-title' => 'Upload Photo',
 	'wmu-upload' => 'Upload',
@@ -89,6 +90,7 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'wmu-desc' => '{{desc}}',
 	'wmu-upload' => '{{Identical|Upload}}',
 	'wmu-find' => 'Text of a heading (H1)
 {{Identical|Find}}',
@@ -3428,10 +3430,15 @@ $messages['zh-hans'] = array(
 	'wmu-file-protected' => '本图片受到保护',
 	'wmu-file-error' => '抱歉，上传过程中出错了。请再试一次。',
 	'wmu-file-not-found' => '无法找到文件',
+	'wmu-error-exact-height' => '图像高度必须刚好是 $1 像素（得到的是 $2 像素）',
+	'wmu-error-exact-width' => '图像宽度必须刚好是 $1 像素（得到的是 $2 像素）',
+	'wmu-error-exact-width-height' => '图像宽度和高度必须刚好是 $1 x $3 像素（得到的是 $2 x $4 像素）',
+	'wmu-error-bad-aspect-ratio' => '纵横比不正确（$1 x $2 像素）',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author LNDDYL
  */
 $messages['zh-hant'] = array(
 	'wmu-upload-image' => '上傳圖片',
@@ -3439,11 +3446,11 @@ $messages['zh-hant'] = array(
 	'wmu-upload' => '上傳',
 	'wmu-notlogged' => '登入或註冊後從您的電腦中上傳圖片',
 	'wmu-find' => '尋找',
-	'wmu-thiswiki' => '本維基',
+	'wmu-thiswiki' => '本 wiki',
 	'wmu-flickr' => 'Flickr',
 	'wmu-upload-btn' => '上傳',
 	'wmu-find-btn' => '尋找',
-	'wmu-flickr-inf' => '在Flickr搜尋適合的自由授權圖片並將之導入你的維基中',
+	'wmu-flickr-inf' => '在 Flickr 搜尋適合的自由授權圖片並將之匯入你的 wiki 中。',
 	'wmu-conflict-inf' => '<h1>抱歉，這個檔案名已存在。</h1>您打算如何處理<b>$1</b>?',
 	'wmu-rename' => '重命名您的圖片',
 	'wmu-existing' => '使用已有圖片',
@@ -3468,7 +3475,7 @@ $messages['zh-hant'] = array(
 	'wmu-flickr2' => 'Flickr圖片（$1個{{PLURAL:$1|結果|結果}}）',
 	'wmu-insert3' => '插入這個圖片',
 	'wmu-recent-inf' => '最近上傳的圖片',
-	'wmu-thiswiki2' => '本維基圖片 ($1個 {{PLURAL:$1|result|結果}})',
+	'wmu-thiswiki2' => '本 wiki 圖片 ($1個 {{PLURAL:$1|result|結果}})',
 	'wmu-success' => '<h1>成功</h1>您已插入圖片。',
 	'wmu-success-placeholder' => '<h1>成功</h1>',
 	'wmu-return' => '返回到編輯',
@@ -3485,12 +3492,12 @@ $messages['zh-hant'] = array(
 	'wmu-hide-license-msg' => '隱藏授權文本',
 	'wmu-show-license-msg' => '顯示授權文本',
 	'wmu-max-thumb' => '縮圖尺寸過大，恢復為原來的尺寸',
-	'wmu-notallowed' => '您不能在本維基中上傳圖片',
-	'wmu-readonly' => '您不能上傳圖片，本維基處於唯讀狀態。',
+	'wmu-notallowed' => '您不能在本 wiki 中上傳圖片',
+	'wmu-readonly' => '您不能上傳圖片，本 wiki 處於唯讀狀態。',
 	'wmu-gallery' => '圖庫',
 	'wmu-columns' => '$1{{PLURAL:$1|列|列}}',
 	'wmu-column' => '列數',
-	'wmu-uploaddisabled' => '本維基禁止了檔案的上傳',
+	'wmu-uploaddisabled' => '本 wiki 禁止了檔案的上傳',
 	'wmu-gallery-success' => '您将新圖片增加到了一個新的圖庫中。點擊下面以增加更多的圖片或者插入圖庫',
 	'wmu-gallery-btn1' => '增加另一張圖片',
 	'wmu-gallery-btn2' => '將圖庫插入文章中',

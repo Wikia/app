@@ -240,6 +240,13 @@ $messages['ku-latn'] = array(
 	'wikiaconfirmemail-username' => 'Navê bikarhêner',
 );
 
+/** Luxembourgish (Lëtzebuergesch)
+ * @author Robby
+ */
+$messages['lb'] = array(
+	'wikiaconfirmemail-username' => 'Benotzernumm',
+);
+
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */

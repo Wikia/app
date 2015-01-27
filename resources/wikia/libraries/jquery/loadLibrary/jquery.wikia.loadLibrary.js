@@ -16,19 +16,19 @@
 			files = (typeof files === 'string') ? [files] : files;
 
 			$.getResources(files, function () {
-				$().log(name + ' loaded', 'loadLibrary');
+					$().log(name + ' loaded', 'loadLibrary');
 
-				if (typeof callback === 'function') {
-					callback();
-				}
-			},failureFn).
+					if (typeof callback === 'function') {
+						callback();
+					}
+				}, failureFn).
 				// implement promise pattern
-				then(function () {
-					dfd.resolve();
-				}).
-				fail(function () {
-					dfd.reject();
-				});
+			then(function () {
+				dfd.resolve();
+			}).
+			fail(function () {
+				dfd.reject();
+			});
 		} else {
 			$().log(name + ' already loaded', 'loadLibrary');
 
@@ -101,17 +101,17 @@
 			};
 
 			// load GoogleMaps main JS and provide a name of the callback to be called when API is fully initialized
-			$.loadLibrary('GoogleMaps',
+			$.loadLibrary(
+				'GoogleMaps',
 				[{
 					url: 'http://maps.googleapis.com/maps/api/js?sensor=false&callback=onGoogleMapsLoaded',
 					type: 'js'
 				}],
 				typeof (window.google && window.google.maps)
 			).
-			// error handling
-			fail(function () {
-				dfd.reject();
-			});
+				fail(function () {
+					dfd.reject();
+				});
 		}
 
 		return dfd.promise();
@@ -119,57 +119,54 @@
 
 	/**
 	 * Load the facebook JS library v2.x
-	 * @param {function} [callback] Function to be called after library is loaded
 	 * @returns {jQuery} Returns a jQuery promise
+	 * @see https://developers.facebook.com/docs/javascript/quickstart/v2.2
 	 */
 	$.loadFacebookAPI = function (callback) {
+		// create our own deferred object to resolve after FB.init finishes
 		var $deferred = $.Deferred();
 
-		// if library is already loaded, fbAsyncInit won't be called,
-		// so make sure callback function still gets called
-		if (window.FB) {
-			if (typeof callback === 'function') {
-				callback();
+		if (typeof callback === 'function') {
+			$deferred.done(callback);
+		}
+
+		// This is invoked by Facebook once the SDK is loaded.
+		window.fbAsyncInit = function () {
+			window.FB.init({
+				appId: window.fbAppId,
+				xfbml: true,
+				cookie: true,
+				version: 'v2.1'
+			});
+			$deferred.resolve();
+		};
+
+		// originally adopted from facebook's developer pages but modified for clarity
+		(function (document) {
+			var fbScriptTag,
+				firstScriptTag = document.getElementsByTagName('script')[0],
+				id = 'facebook-jssdk';
+
+			if (document.getElementById(id)) {
+				if (window.FB) {
+					$deferred.resolve();
+				} else {
+					$deferred.reject();
+				}
+				return;
 			}
 
-			$deferred.resolve();
-		} else {
-			window.fbAsyncInit = function () {
-				window.FB.init({
-					appId: window.fbAppId,
-					xfbml: true,
-					cookie: true,
-					version: 'v2.1'
-				});
-
-				if (typeof callback === 'function') {
-					callback();
-				}
-
-				$deferred.resolve();
+			fbScriptTag = document.createElement('script');
+			fbScriptTag.id = id;
+			fbScriptTag.src = window.fbScript || '//connect.facebook.net/en_US/sdk.js';
+			fbScriptTag.onerror = function () {
+				$deferred.reject();
 			};
-
-			$.loadLibrary(
-				'Facebook API',
-				window.fbScript || '//connect.facebook.net/en_US/sdk.js',
-				typeof window.FB
-			);
-		}
+			firstScriptTag.parentNode.insertBefore(fbScriptTag, firstScriptTag);
+		})(document);
 
 		return $deferred;
 	};
-
-	/**
-	 * Load the facebook API on every page until the upgrade to v2.x is stable and parser cache has cleared.
-	 * Needed for XFBML tags to render with stale parser cache.
-	 * DO NOT rely on this library always being loaded.
-	 * Estimated removal date: Dec. 10 2014 (https://wikia-inc.atlassian.net/browse/UC-82)
-	 */
-	$(function () {
-		if (!window.wgNoExternals) {
-			$.loadFacebookAPI();
-		}
-	});
 
 	$.loadGooglePlusAPI = function (callback) {
 		return $.loadLibrary('Google Plus API',

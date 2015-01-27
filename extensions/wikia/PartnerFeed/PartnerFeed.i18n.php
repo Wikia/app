@@ -13,6 +13,7 @@ $messages = array();
  * @return array
  */
 $messages['en'] = array(
+	'partner-feed-desc'                 => 'Partner Feed extension',
 	'partner-feed-achievements-leaderboard' => 'Wikis achievements leaderboard',
 	'partner-feed-earned-badges'		=> 'Recently earned badges for a specific Wiki',
 	'partner-feed-recent-blog-posts'	=> 'Recent blog posts related to a promotion',
@@ -40,6 +41,7 @@ $messages['en'] = array(
  * @author Shirayuki
  */
 $messages['qqq'] = array(
+	'partner-feed-desc' => '{{desc}}',
 	'partner-feed-hotcontent' => 'Both terms "Hub" and "verticals" have the same meaning in this context. The meaning is "Portals", i.e. the grouping of wikis by their theme. Examples of portals are "Gaming", "Entertainment", "Education", "Music", etc.',
 	'partner-feed-recent-changes' => '{{Identical|Recent changes}}',
 	'blog-posts-from-listing' => 'Parameters:
@@ -875,9 +877,14 @@ $messages['vi'] = array(
 $messages['zh-hans'] = array(
 	'partner-feed-achievements-leaderboard' => 'Wiki成就排行榜',
 	'partner-feed-earned-badges' => '最近在特定wiki获得的徽章',
+	'partner-feed-recent-blog-posts' => '最近有关宣传的博客文章',
+	'partner-feed-latest-images' => '图片库中的最新图像已被更新',
+	'partner-feed-hotcontent' => '门户中的“热门内容”是通过编辑次数排名',
+	'partner-feed-recent-blog-comments' => '有关指定博客文章的最近的评论。',
 	'partner-feed-recent-changes' => '最近更改',
 	'partnerfeed' => '合作伙伴订阅',
-	'feed-title-blogposts' => '最新博客帖子',
+	'error-no-article' => '错误：未传递"article"参数',
+	'feed-title-blogposts' => '最近的博客文章',
 	'feed-title-recent-badges' => '最新徽章',
 	'feed-title-recent-images' => '最近的图片',
 	'feed-title-leaderboard' => '成就排行榜',
