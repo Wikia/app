@@ -2,7 +2,7 @@
 class AvatarService extends Service {
 
 	const AVATAR_SIZE_SMALL = 20;
-	const AVATAR_SIZE_SMALL_PLUS = 36;
+	const AVATAR_SIZE_SMALL_PLUS = 30;
 	const AVATAR_SIZE_MEDIUM = 50;
 	const AVATAR_SIZE_LARGE = 150;
 

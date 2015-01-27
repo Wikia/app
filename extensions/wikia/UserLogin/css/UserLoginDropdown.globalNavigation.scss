@@ -19,8 +19,9 @@
 	font-size: 12px;
 	list-style: none;
 	padding: 0 0 $large-content-padding 0;
-	position: relative;
-	right: $large-grid-column + $large-grid-gutter + $large-grid-column-padding + 1;
+	position: absolute;
+	top: 100%;
+	right: 9px;
 	z-index: 5000100;
 
 	.ajaxRegisterContainer {
@@ -216,7 +217,6 @@
 @media #{$small-only} {
 	.UserLoginDropdown {
 		@include grid-column-width('small', 3, - $small-grid-column-padding + $small-content-padding);
-		right: 2 * $small-grid-column + 1;
 
 		.sso-login {
 			padding: 0 $small-content-padding;
@@ -235,7 +235,6 @@
 @media #{$medium-only} {
 	.UserLoginDropdown {
 		@include grid-column-width('medium', 2, $medium-grid-column-padding + $medium-grid-gutter + $medium-content-padding);
-		right: $medium-grid-column + $medium-grid-gutter + $medium-grid-column-padding + 1;
 
 		.sso-login {
 			padding: 0 $medium-content-padding;

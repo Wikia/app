@@ -4,16 +4,17 @@
 
 .global-navigation {
 	background-color: $global-wikia-background-color;
-	border-bottom: 1px solid $nav-border-color;
+	border-bottom: 2px solid rgba(151, 151, 151, 0.3);
 	color: $nav-foreground-dark-color;
+	height: $global-navigation-height;
 	position: fixed;
 	width: 100%;
 	z-index: $global-navigation-z-index;
 
 	.page-width {
 		@include clearfix;
-
-		border-right: 1px solid $nav-border-color;
+		display: table;
+		white-space: nowrap;
 	}
 }
 
@@ -27,60 +28,43 @@
 }
 
 .global-navigation-item {
-	border-left: 1px solid $nav-border-color;
-	float: left;
+	display: table-cell;
 	height: $global-navigation-height;
-	position: relative;
+	vertical-align: middle;
+	width: 0;
+}
+
+.wikia-logo-container {
+	padding-right: 40px;
 }
 
 .global-navigation-link {
 	color: $nav-border-color;
-	display: table-cell;
 	font-size: $font-size-base-big-screen;
 	font-weight: bold;
 	height: $global-navigation-height;
-	vertical-align: middle;
-}
-
-.wikia-logo-container {
-	@include grid-column-width('medium', 2, $medium-content-padding);
-
-	.wikia-logo {
-		padding: 0 0 0 $medium-content-padding + $medium-grid-gutter - $content-border-width;
-		img {
-			margin-left: -2px; /* Shift logo img as svg conatins 2px padding itself */
-		}
-	}
-}
-
-.start-wikia-container {
-	@include grid-column-width('medium', 2);
 }
 
 .start-wikia {
-	text-align: center;
-	width: inherit;
+	font-size: 12px;
+	color: rgb(101, 110, 120);
+	display: inline-block;
+	height: 30px;
+	line-height: 30px;
+	margin-bottom: 8px;
+	margin-top: 8px;
+	padding: 0 10px;
+	font-weight: bold;
+	border: solid 1px rgb(101, 110, 120);
 
 	&:hover {
-		background-color: $nav-foreground-dark-color;
+		background-color: rgb(9, 35, 68);
 		color: $global-wikia-background-color;
 		text-decoration: none;
 	}
 }
 
 @media #{$small-only} {
-	.wikia-logo-container {
-		@include grid-column-width('small', 3, $small-content-padding);
-
-		.wikia-logo {
-			padding: 0 $small-grid-column-padding 0 $small-content-padding + $small-grid-column-padding - $content-border-width;
-		}
-	}
-
-	.start-wikia-container {
-		@include grid-column-width('small', 1);
-	}
-
 	.start-wikia {
 		&:after {
 			content: '+';
@@ -90,20 +74,6 @@
 		span {
 			display: none;
 		}
-	}
-}
-
-@media #{$large-up} {
-	.wikia-logo-container {
-		@include grid-column-width('large', 2, $large-content-padding);
-
-		.wikia-logo {
-			padding: 0 $large-content-padding 0 $large-content-padding + $large-grid-column-padding - $content-border-width;
-		}
-	}
-
-	.start-wikia-container {
-		@include grid-column-width('large', 2);
 	}
 }
 

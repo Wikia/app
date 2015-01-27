@@ -18,11 +18,11 @@ $black-half-transparent: rgba(0, 0, 0, .6);
 
 
 .bubbles {
-	background-color: $white;
+	background-color: rgb(196, 206, 217);
 	border-radius: 10px;
 	display: none;
 	height: 20px;
-	left: 21px;
+	left: 10px;
 	min-width: 20px;
 	padding: 2px;
 	position: absolute;
@@ -35,10 +35,10 @@ $black-half-transparent: rgba(0, 0, 0, .6);
 
 .bubbles-count {
 	@include font-size-xxs;
-	background-color: red;
+	background-color: $white;
 	border-radius: 8px;
-	color: $white;
-	font-weight: normal;
+	color: rgb(196, 206, 217);
+	font-weight: bold;
 	height: 16px;
 	line-height: 16px;
 	min-width: 16px;
@@ -302,10 +302,6 @@ $black-half-transparent: rgba(0, 0, 0, .6);
 
 
 @media #{$large-up} {
-	.bubbles {
-		left: 30px;
-	}
-
 	#GlobalNavigationWallNotifications {
 		@include grid-position('large', 2, 'right', $large-content-padding - 2);
 		@include grid-column-width('large', 4, $large-content-padding);
