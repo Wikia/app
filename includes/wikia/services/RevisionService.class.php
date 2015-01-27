@@ -6,6 +6,12 @@
 
 class RevisionService {
 	/**
+	 * One of the methods in $filterMethods array
+	 * @see $filterMethods
+	 */
+	const DEFAULT_FILTERING_METHOD = 'filterPassThrough';
+
+	/**
 	 * @var DatabaseBase
 	 */
 	private $databaseConnection;
@@ -37,7 +43,7 @@ class RevisionService {
 		$this->cacheTime = $cacheTime;
 		$this->databaseConnection = $databaseConnection;
 		$this->queryLimit = 200;
-		$this->filterMethod = false;
+		$this->filterMethod = 'filterPassThrough';
 	}
 
 	public function getFirstRevisionByArticleId( $articles ) {
@@ -69,7 +75,7 @@ class RevisionService {
 		});
 
 		$filterMethod = $this->getFilterMethod();
-		if( is_string( $filterMethod ) ) {
+		if( $filterMethod !== self::DEFAULT_FILTERING_METHOD ) {
 			$listOfRevisions = $this->$filterMethod( $listOfRevisions );
 		}
 
@@ -259,6 +265,7 @@ class RevisionService {
 	 * If a method is in RevisionService::$filterMethods it'll get assigned to RevisionService::$filterMethod field
 	 * If it isn't there false will get assigned to the field
 	 * @param integer $method one of RevisionService::$filterMethods indexes
+	 * @throws Exception when filtering method isn't supported
 	 */
 	public function setFilterMethod( $method ) {
 		if( isset( $this->filterMethods[ $method ] ) ) {

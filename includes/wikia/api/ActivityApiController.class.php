@@ -81,6 +81,7 @@ class ActivityApiController extends WikiaApiController {
 	/**
 	 * @param string $caller name of method which executes service query
 	 * @return string
+	 * @see RevisionService::DEFAULT_FILTERING_METHOD
 	 */
 	private function getFilterMethodByCaller( $caller ) {
 		switch( $caller ) {
@@ -91,7 +92,7 @@ class ActivityApiController extends WikiaApiController {
 				$method = 'filterByArticle';
 				break;
 			default:
-				$method = 'filterPassThrough';
+				$method = RevisionService::DEFAULT_FILTERING_METHOD;
 				break;
 		}
 
