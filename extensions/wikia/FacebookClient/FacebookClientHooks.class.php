@@ -43,30 +43,23 @@ class FacebookClientHooks {
 	}
 
 	/**
-	 * Add Facebook SDK loading code at the bottom of the page
-	 *
-	 * Fixes IE issue (RT #140425)
-	 *
-	 * @param $skin Skin
-	 * @param $scripts
-	 *
+	 * Add Facebook div at the bottom of the page so we don't get JS console messages from FB about it.
+	 * @param Skin $skin
+	 * @param string $html
 	 * @return bool
 	 */
-	static function SkinAfterBottomScripts( $skin, &$scripts ) {
-		global $fbScript, $wgNoExternals;
-
-		if ( !empty( $fbScript ) && empty( $wgNoExternals ) ) {
-			$scripts .= '<div id="fb-root"></div>';
-		}
+	public static function onGetHTMLAfterBody($skin, &$html) {
+		$html .= '<div id="fb-root"></div>';
 
 		return true;
 	}
 
+
 	/**
 	 * Create disconnect button and other things in pref
 	 *
-	 * @param $user User
-	 *
+	 * @param User $user
+	 * @param array $preferences
 	 * @return bool
 	 */
 	static function GetPreferences( $user, &$preferences ) {
