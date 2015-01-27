@@ -24,7 +24,7 @@ class ApiDocsService implements IApiDocsService {
 
 
 	/**
-	 * @param /Swagger/Swagger $swagger
+	 * @param \Swagger $swagger
 	 * @param callable $pathBuilder
 	 */
 	function __construct( $swagger, $pathBuilder, $pathPrefix) {
@@ -67,7 +67,7 @@ class ApiDocsService implements IApiDocsService {
 	 * @return array
 	 */
 	function getDoc( $name ) {
-		$result = $this->swagger->getResource( $name, false, false );
+		$result = $this->swagger->getResource( $name );
 		foreach ($result['apis'] as &$api) {
 			$api['path'] = $this->pathPrefix . $api['path'];
 		}
