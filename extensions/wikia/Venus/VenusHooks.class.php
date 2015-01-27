@@ -1,6 +1,7 @@
 <?php
 
 use \Wikia\Logger\WikiaLogger;
+use \Wikia\Util\GlobalStateWrapper;
 
 class VenusHooks {
 
@@ -154,12 +155,24 @@ class VenusHooks {
 	public static function showVenusSkin( Title $title ) {
 		global $wgEnableVenusSkin, $wgEnableVenusSpecialSearch, $wgEnableVenusArticle, $wgRequest;
 
+		$wrapper = new GlobalStateWrapper( [
+			'wgTitle' => $title,
+		] );
+
+		$isSearch = false;
+		$isArticlePage = false;
+
+		$wrapper->wrap( function () use ( &$isSearch, &$isArticlePage ) {
+			$isSearch = WikiaPageType::isSearch();
+			$isArticlePage = WikiaPageType::isArticlePage();
+		} );
+
 		$action = $wgRequest->getVal( 'action' );
 		$diff = $wgRequest->getVal( 'diff' );
 
-		$isSpecialSearch = WikiaPageType::isSearch() && $wgEnableVenusSpecialSearch;
+		$isSpecialSearch = $isSearch && $wgEnableVenusSpecialSearch;
 		$isSpecialVenusTest = $title->isSpecialPage() && $title->getText() == 'VenusTest';
-		$isVenusArticle = WikiaPageType::isArticlePage() &&
+		$isVenusArticle = $isArticlePage  &&
 			$wgEnableVenusArticle &&
 			( empty( $action ) || $action == 'view' ) &&
 			empty( $diff );
