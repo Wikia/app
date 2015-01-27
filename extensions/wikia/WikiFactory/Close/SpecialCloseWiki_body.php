@@ -21,6 +21,8 @@ class CloseWikiPage extends SpecialPage {
 
 	const CLOSED_WIKI_DOMAIN_PREFIX = 'old';
 
+	public $closedWiki;
+
 	private
 		$mTitle,
 		$mWikis     	= array(),
@@ -396,7 +398,8 @@ class CloseWikiPage extends SpecialPage {
 		$bShowDumps = false;
 		$aFiles = array();
 
-		if ( $this->closedWiki->city_lastdump_timestamp >= DumpsOnDemand::S3_MIGRATION ) {
+		if ( !($this->closedWiki->city_flags & WikiFactory::FLAG_HIDE_DB_IMAGES)
+				&& $this->closedWiki->city_lastdump_timestamp >= DumpsOnDemand::S3_MIGRATION ) {
 			$aFiles = array(
 				'pages_current'	=> '_pages_current.xml.gz',
 				'pages_full'	=> '_pages_full.xml.gz',
