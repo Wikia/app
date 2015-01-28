@@ -128,4 +128,31 @@ describe('AdContext', function () {
 		});
 		expect(adContext.getContext().opts.alwaysCallDart).toBeFalsy();
 	});
+
+	it('makes targeting.enableKruxTargeting false when disaster recovery instant global variable is set to true', function () {
+		var adContext;
+
+		adContext = modules['ext.wikia.adEngine.adContext']({}, {}, geoMock, {});
+		expect(adContext.getContext().targeting.enableKruxTargeting).toBeUndefined();
+
+		adContext = modules['ext.wikia.adEngine.adContext']({}, {}, geoMock, {
+			wgSitewideDisableKrux: false
+		});
+		expect(adContext.getContext().targeting.enableKruxTargeting).toBeUndefined();
+
+		adContext = modules['ext.wikia.adEngine.adContext']({},  {}, geoMock, {
+			wgSitewideDisableKrux: true
+		});
+		expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();
+
+		adContext = modules['ext.wikia.adEngine.adContext']({}, {}, geoMock, {
+			wgSitewideDisableKrux: 0
+		});
+		expect(adContext.getContext().targeting.enableKruxTargeting).toBeUndefined();
+
+		adContext = modules['ext.wikia.adEngine.adContext']({},  {}, geoMock, {
+			wgSitewideDisableKrux: 1
+		});
+		expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();
+	});
 });
