@@ -113,6 +113,20 @@ class WikiaMapsPoiControllerTest extends WikiaBaseTest {
 				'expected' => true,
 			],
 			[
+				'not empty, valid URL - HTML5 URL encoded',
+				'urlMock' => 'http://www.wikia.com/%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F',
+				'isValidCalledTimes' => 'once',
+				'isValidMock' => true,
+				'expected' => true,
+			],
+			[
+				'not empty, valid URL with UTF8 characters',
+				'urlMock' => 'http://www.wikia.com/Служебная',
+				'isValidCalledTimes' => 'once',
+				'isValidMock' => true,
+				'expected' => true,
+			],
+			[
 				'not empty and invalid URL',
 				'urlMock' => 'This is not an URL',
 				'isValidCalledTimes' => 'once',

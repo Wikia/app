@@ -1196,6 +1196,8 @@ $messages['eu'] = array(
 	'swm-button-preview' => ' [ Aurrikusi ]',
 	'swm-button-send' => '[ Bidali ]',
 	'swm-button-save' => '[ Gorde ]',
+	'swm-button-new' => '[ Berria ]',
+	'swm-msg-sent-ok' => '<h3>Mezua bidali da.</h3>',
 	'swm-list-table-wiki' => 'Wiki',
 	'swm-list-table-tools' => 'Tresnak',
 	'swm-list-table-lang' => 'Hizkuntzak',
@@ -3795,6 +3797,7 @@ $messages['yi'] = array(
  * @author Liuxinyu970226
  * @author Sam Wang
  * @author Xiaomingyan
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'sitewidemessages' => '网站广域消息',
@@ -3823,7 +3826,9 @@ $messages['zh-hans'] = array(
 	'swm-label-mode-users-active' => '活跃用户',
 	'swm-label-mode-users-group' => '用户属于该组',
 	'swm-label-mode-users-user' => '选定用户',
+	'swm-label-mode-users-user-hint' => '<i>此选项会忽略在组“Wikis”中的选择。</i>',
 	'swm-label-mode-users-user-multi' => '用户列表',
+	'swm-label-mode-users-user-multi-hint' => '<i>请在每行输入一个用户名。此选项会忽略在组“Wikis”中的选择。</i>',
 	'swm-label-mode-users-anon' => '任何匿名用户',
 	'swm-label-content' => '内容',
 	'swm-label-comment' => '评语',
@@ -3831,6 +3836,7 @@ $messages['zh-hans'] = array(
 	'swm-label-language' => '语言',
 	'swm-button-lang-checkall' => '[ 检查全部 ]',
 	'swm-button-lang-checknone' => '[ 全不检查 ]',
+	'swm-taskmanager-hint' => '<i>请注意，某些选项更加耗时，并且将在任务管理器中排队等候。</i>',
 	'swm-button-preview' => '[ 预览 ]',
 	'swm-button-send' => '[ 发送 ]',
 	'swm-button-save' => '[ 保存 ]',
@@ -3872,15 +3878,19 @@ $messages['zh-hans'] = array(
 	'swm-mode-users-registration-before' => '之前',
 	'swm-mode-users-registration-between' => '之间',
 	'swm-label-mode-users-registration-hint' => '<i>日期必须匹配格式：2012-04-01 00:00:00</i>',
+	'swm-error-registered-tobeforefrom' => '用户注册的结束日期早于开始日期。',
 	'swm-label-mode-users-editcount' => '编辑数',
 	'swm-mode-users-editcount-more' => '更多',
 	'swm-mode-users-editcount-less' => '更少',
 	'swm-mode-users-editcount-between' => '之间',
+	'swm-error-editcount-tolessthanfrom' => '用户编辑数量的上限小于下限。',
+	'swm-error-editcount-notnumber' => '编辑数量必须是有效的数字。',
 	'swm-label-mode-wikis-created' => '维基创立日期',
 	'swm-mode-wikis-created-after' => '之后',
 	'swm-mode-wikis-created-before' => '之前',
 	'swm-mode-wikis-created-between' => '之间',
 	'swm-label-mode-wikis-created-hint' => '<i>日期必须匹配格式：2012-04-01 00:00:00</i>',
+	'swm-error-created-tobeforefrom' => 'wiki创建的结束日期早于开始日期。',
 );
 
 /** Traditional Chinese (中文（繁體）‎)

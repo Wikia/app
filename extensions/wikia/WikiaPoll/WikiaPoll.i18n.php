@@ -323,6 +323,7 @@ $messages['es'] = array(
 
 /** Basque (euskara)
  * @author An13sa
+ * @author Subi
  * @author Xabier Armendaritz
  */
 $messages['eu'] = array(
@@ -340,6 +341,9 @@ $messages['eu'] = array(
 	'wikiapoll-publish-label' => 'Argitaratu',
 	'wikiapoll-error-duplicate' => 'Izen hori duen bozketa existitzen da.',
 	'wikiapoll-error-invalid-title' => 'Galderaren testua ez da onartzen.',
+	'wikiamobile-wikiapoll-open-poll' => 'Zer deritzozu?',
+	'wikiamobile-wikiapoll-thanks-voting' => 'Mila esker bozkatzeagatik!',
+	'wikiamobile-wikiapoll-poll' => 'Inkesta',
 );
 
 /** Persian (فارسی)

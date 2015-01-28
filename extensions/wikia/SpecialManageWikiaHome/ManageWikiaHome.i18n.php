@@ -253,6 +253,7 @@ Parameters:
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author Claw eg
  * @author Kuwaity26
  */
@@ -262,6 +263,9 @@ $messages['ar'] = array(
 	'manage-wikia-home-wikis-in-slots-heading' => 'إعداد فتحات',
 	'manage-wikia-home-wikis-in-slots-total' => 'العدد الكلي للفتحات: $1',
 	'manage-wikia-home-visualization-wikis' => 'شركات ويكي مصورة:',
+	'manage-wikia-home-hubs-slot-heading' => 'تعديل أماكن المحاور',
+	'manage-wikia-home-hubs-slot-success' => 'تم حفظ أماكن المحاور.',
+	'manage-wikia-home-hubs-slot-error' => 'لقد حدث خطأ أثناء التسجيل. الرجاء المحاولة مرة أخرى.',
 	'manage-wikia-home-hubs-slot' => 'خانة $1',
 	'manage-wikia-home-hubs-slot-name' => 'اسم النادي',
 	'manage-wikia-home-hubs-slot-description' => 'وصف النادي',
@@ -800,6 +804,7 @@ $messages['es'] = array(
  * @author Subi
  */
 $messages['eu'] = array(
+	'manage-wikia-home-wiki-filter-reset' => 'Garbitu',
 	'manage-wikia-home-wiki-list-blocked-no' => 'Ez',
 	'manage-wikia-home-wiki-list-blocked-yes' => 'Bai',
 	'manage-wikia-home-wiki-list-promoted-no' => 'Ez',
@@ -2268,4 +2273,5 @@ $messages['zh-hant'] = array(
 	'managewikiahome' => '管理Wikia首頁',
 	'manage-wikia-home-wrong-rights' => '您可能已登出，或者您没有權限使用此特殊頁面。',
 	'manage-wikia-home-wiki-filter' => '篩選器',
+	'manage-wikia-home-stats-edits-default-label' => '變更今天的備選',
 );

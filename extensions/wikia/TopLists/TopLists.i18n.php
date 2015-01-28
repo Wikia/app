@@ -2606,6 +2606,7 @@ $messages['vi'] = array(
  * @author Hydra
  * @author Hzy980512
  * @author Liuxinyu970226
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'toplists-desc' => '前10列表',
@@ -2616,14 +2617,21 @@ $messages['zh-hans'] = array(
 	'createtoplist' => '创建新的前10列表',
 	'edittoplist' => '编辑前10列表',
 	'toplists-category' => '前10列表',
+	'toplists-error-invalid-title' => '提供的文本无效。',
 	'toplists-error-invalid-picture' => '当前选中图片无效。',
 	'toplists-error-title-exists' => '此页面已存在。您可前往<a href="$2" target="_blank">$1</a>或提供一个不同的名字。',
+	'toplists-error-title-spam' => '提供的文本含有某些被识别为垃圾信息的内容。',
+	'toplists-error-article-blocked' => '您无权以此名称创建页面。抱歉。',
 	'toplists-error-article-not-exists' => '“$1”不存在。您是否希望<a href="$2" target="_blank">创建它</a>？',
 	'toplists-error-picture-not-exists' => '“$1”不存在。您是否希望<a href="$2" target="_blank">上传它</a>？',
 	'toplists-error-duplicated-entry' => '该名称不可重复使用。',
+	'toplists-error-empty-item-name' => '现有项目的名称不能为空。',
 	'toplists-item-cannot-delete' => '删除此项失败。',
 	'toplists-error-image-already-exists' => '已存在同名图片。',
+	'toplists-error-add-item-anon' => '匿名用户无权限添加项目到列表。请<a class="ajaxLogin" id="login" href="$1">登录</a>或<a href="$2">注册一个新账户</a>。',
+	'toplists-error-add-item-permission' => '权限错误：您的账户未被授权创建新项。',
 	'toplists-error-add-item-list-not-exists' => '前10列表“$1”不存在。',
+	'toplists-upload-error-unknown' => '处理上传请求时出错。请重试。',
 	'action-toplists-create-edit-list' => '创建和编辑前10列表页面',
 	'toplists-editor-title-label' => '列表名称',
 	'toplists-editor-title-placeholder' => '为列表命名',
