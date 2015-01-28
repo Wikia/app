@@ -16,7 +16,54 @@ class GlobalWatchlistTask extends BaseTask {
 	public function sendWeeklyDigest( $user ) {
 		$globalWatchlistBot = new GlobalWatchlistBot();
 		$globalWatchlistBot->sendDigestToUser( $user );
-		$globalWatchlistBot->clearWatchLists( $user );
+		$this->clearWatchLists( $user );
+	}
+
+	private function clearWatchLists( $userID ) {
+		$this->clearLocalWatchlists( $userID );
+		$this->clearGlobalWatchlist( $userID, $clearAllWikis = true );
+	}
+
+	private function clearLocalWatchlists( $userID ) {
+		global $wgExternalDatawareDB;
+
+		$db = wfGetDB( DB_SLAVE, [], $wgExternalDatawareDB );
+		$wikiIDs = ( new WikiaSQL() )
+			->SELECT( self::columnCityID )
+			->FROM( self::tableName )
+			->WHERE( self::columnUserID )->EQUAL_TO( $userID )
+			->AND_( self::columnTimeStamp )->IS_NOT_NULL()
+			->runLoop( $db, function ( &$wikiIDs, $row ) {
+				$wikiIDs[] = $row->gwa_city_id;
+			} );
+
+		foreach ( $wikiIDs as $wikiID ) {
+			$db = wfGetDB( DB_MASTER, [], WikiFactory::IDtoDB( $wikiID ) );
+			( new WikiaSQL() )
+				->UPDATE( 'watchlist' )
+				->SET( 'wl_notificationtimestamp', null )
+				->WHERE( 'wl_user' )->EQUAL_TO( $userID )
+				->run( $db );
+		}
+	}
+
+	/**
+	 * @param $userID
+	 * @param $clearAllWikis bool
+	 */
+	public function clearGlobalWatchlist( $userID, $clearAllWikis = false ) {
+		global $wgExternalDatawareDB, $wgCityId;
+
+		$db = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
+		$sql = ( new WikiaSQL() )
+			->DELETE()->FROM( static::tableName )
+			->WHERE( static::columnUserID )->EQUAL_TO( $userID );
+
+		if ( !$clearAllWikis ) {
+			$sql->AND_( static::columnCityID )->EQUAL_TO( $wgCityId );
+		}
+
+		$sql->run( $db );
 	}
 
 	/**
@@ -60,20 +107,6 @@ class GlobalWatchlistTask extends BaseTask {
 			->AND_( static::columnCityID )->EQUAL_TO( $wgCityId )
 			->AND_( static::columnTitle )->EQUAL_TO( $databaseKey )
 			->AND_( static::columnNameSpace )->EQUAL_TO( $nameSpace )
-			->run( $db );
-	}
-
-	/**
-	 * @param $userID
-	 */
-	public function clearGlobalWatchlist( $userID ) {
-		global $wgExternalDatawareDB, $wgCityId;
-
-		$db = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
-		( new WikiaSQL() )
-			->DELETE()->FROM( static::tableName )
-			->WHERE( static::columnCityID )->EQUAL_TO( $wgCityId )
-			->AND_( static::columnUserID )->EQUAL_TO( $userID )
 			->run( $db );
 	}
 

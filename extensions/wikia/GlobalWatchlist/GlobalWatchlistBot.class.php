@@ -9,44 +9,6 @@ class GlobalWatchlistBot {
 		$wgExtensionMessagesFiles['GlobalWatchlist'] = dirname( __FILE__ ) . '/GlobalWatchlist.i18n.php';
 	}
 
-	public function clearWatchLists( $userID ) {
-		$this->clearLocalWatchlists( $userID );
-		$this->clearGlobalWatchlist( $userID );
-	}
-
-	private function clearLocalWatchlists( $userID ) {
-		global $wgExternalDatawareDB;
-
-		$db = wfGetDB( DB_SLAVE, [], $wgExternalDatawareDB );
-		$wikiIDs = ( new WikiaSQL() )
-			->SELECT( 'gwa_city_id' )
-			->FROM( 'global_watchlist' )
-			->WHERE( 'gwa_user_id' )->EQUAL_TO( $userID )
-			->AND_( 'gwa_timestamp' )->IS_NOT_NULL()
-			->runLoop( $db, function ( &$wikiIDs, $row ) {
-				$wikiIDs[] = $row->gwa_city_id;
-			} );
-
-		foreach ( $wikiIDs as $wikiID ) {
-			$db = wfGetDB( DB_MASTER, [], WikiFactory::IDtoDB( $wikiID ) );
-			( new WikiaSQL() )
-				->UPDATE( 'watchlist' )
-				->SET( 'wl_notificationtimestamp', null )
-				->WHERE( 'wl_user' )->EQUAL_TO( $userID )
-				->run( $db );
-		}
-	}
-
-	private function clearGlobalWatchlist( $userID ) {
-		global $wgExternalDatawareDB;
-		$db = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
-		( new WikiaSQL() )
-			->UPDATE( 'global_watchlist' )
-			->SET( 'gwa_timestamp', null )
-			->WHERE( 'gwa_user_id' )->EQUAL_TO( $userID )
-			->run( $db );
-	}
-
 	/**
 	 * send email to user
 	 */
@@ -370,5 +332,4 @@ class GlobalWatchlistBot {
 			$aWikiDigest[ 'blogs' ][ $blogTitle ]['own_comments']++;
 		}
 	}
-
 }
