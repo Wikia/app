@@ -184,8 +184,16 @@
 		height: 285px;
 	}
 
+	.affiliate-header {
+		margin-top: 5px;
+	}
+
 	.module-title {
-		color: #000;
+		@if $is-dark-wiki {
+			color: #fff;
+		} @else {
+			color: #000;
+		}
 		font-size: 30px;
 	}
 
@@ -240,10 +248,10 @@
 		} @else {
 			background-image: url('/extensions/wikia/MonetizationModule/images/amazon-logo-black.png');
 		}
+		background-position: 0 -3px;
 		background-size: cover;
 		display: inline-block;
 		margin-left: 6px;
-		top: 16px;
 		vertical-align: top;
 		width: 160px;
 	}
@@ -390,7 +398,8 @@
 
 		img {
 			border: 0;
-			width: 160px;
+			max-height: 132px;
+			max-width: 160px;
 		}
 	}
 
@@ -421,4 +430,8 @@
 		height: 20px;
 		padding: 10px 0 11px;
 	}
+}
+
+#monetization-amazon_video-above_title {
+	margin-top: 0;
 }
