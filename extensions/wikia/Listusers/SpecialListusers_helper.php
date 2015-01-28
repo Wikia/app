@@ -70,12 +70,17 @@ class ListusersData {
 			$orders = array( Listusers::DEF_ORDER );
 		}
 
+		$validSortDirections = [
+			'asc',
+			'desc',
+		];
+
 		# order by
 		$this->mOrder = array();
-		if ( !empty($orders) ) {
+		if ( !empty( $orders ) ) {
 			foreach ( $orders as $order ) {
 				list ( $orderName, $orderDesc ) = explode( ":", $order );
-				if ( isset( $this->mOrderOptions[$orderName] ) ) {
+				if ( isset( $this->mOrderOptions[$orderName] ) && in_array( $orderDesc, $validSortDirections ) ) {
 					foreach ( $this->mOrderOptions[$orderName] as $orderStr ) {
 						$this->mOrder[] = sprintf( $orderStr, $orderDesc );
 					}
@@ -83,8 +88,8 @@ class ListusersData {
 				}
 			}
 		}
-		if ( empty($this->mOrder) ) {
-			$this->mOrder[] = sprintf( $this->mOrderOptions[Listusers::DEF_ORDER] );
+		if ( empty( $this->mOrder ) ) {
+			$this->mOrder[] = 'user_name ASC';
 		}
 	}
 
