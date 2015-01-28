@@ -8,7 +8,6 @@ $config['oasis_shared_core_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'#group_oasis_wikia_js',
-		'#group_adengine2_venus_ads_js',
 		'//resources/wikia/libraries/sloth/sloth.js',
 		'//resources/wikia/libraries/mustache/mustache.js',
 		'//resources/wikia/modules/browserDetect.js',
@@ -162,12 +161,12 @@ $config['adengine2_top_in_content_boxad_js'] = array(
 	),
 );
 
-$config['adengine2_venus_ads_js'] = array(
+$config['adengine2_in_content_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'venus',
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/AdPlacementChecker.js',
-		'//extensions/wikia/AdEngine/js/AdSlotsVenus.js',
+		'//extensions/wikia/AdEngine/js/AdSlotsInContent.js',
 	),
 );
 

@@ -5,7 +5,7 @@
 class AdEngine2Hooks {
 	const ASSET_GROUP_CORE = 'oasis_shared_core_js';
 	const ASSET_GROUP_ADENGINE = 'adengine2_js';
-	const ASSET_GROUP_VENUS_ADS = 'adengine2_venus_ads_js';
+	const ASSET_GROUP_IN_CONTENT_ADS = 'adengine2_in_content_ads_js';
 	const ASSET_GROUP_ADENGINE_AMAZON_MATCH = 'adengine2_amazon_match_js';
 	const ASSET_GROUP_ADENGINE_INTERSTITIAL = 'adengine2_interstitial_js';
 	const ASSET_GROUP_ADENGINE_MOBILE = 'wikiamobile_ads_js';
@@ -144,7 +144,7 @@ class AdEngine2Hooks {
 		}
 
 		if ( $wgAdDriverUseTopInContentBoxad ) {
-			$jsAssets[] = self::ASSET_GROUP_TOP_INCONTENT_JS;
+			$jsAssets[] = self::ASSET_GROUP_IN_CONTENT_ADS;
 		}
 
 		if ( $wgAdDriverUseBottomLeaderboard === true ) {
@@ -277,7 +277,7 @@ class AdEngine2Hooks {
 	public static function onVenusAssetsPackages( array &$jsHeadGroups, array &$jsBodyGroups, array &$cssGroups ) {
 		$jsHeadGroups[] = self::ASSET_GROUP_ADENGINE_TRACKING;
 		$jsHeadGroups[] = self::ASSET_GROUP_ADENGINE;
-		$jsHeadGroups[] = self::ASSET_GROUP_VENUS_ADS;
+		$jsHeadGroups[] = self::ASSET_GROUP_IN_CONTENT_ADS;
 
 		if ( AnalyticsProviderRubiconRTP::isEnabled() ) {
 			$jsHeadGroups[] = self::ASSET_GROUP_ADENGINE_RUBICON_RTP;
