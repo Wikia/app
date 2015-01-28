@@ -10,11 +10,12 @@ class RTEStatisticsHooks {
 	const RTE_WYSIWYG_MODE_TAG = 'rte-wysiwyg';
 
 	/**
-	 * Registers tags for listing purposes
+	 * Removes tags from listings
 	 */
-	public static function onListDefinedTags( &$tags ) {
-		$tags[] = self::RTE_SOURCE_MODE_TAG;
-		$tags[] = self::RTE_WYSIWYG_MODE_TAG;
+	public static function onFormatSummaryRow( &$tags ) {
+		$tagBlacklist = [ self::RTE_SOURCE_MODE_TAG, self::RTE_WYSIWYG_MODE_TAG ];
+		$tags = array_diff( $tags, $tagBlacklist );
+
 		return true;
 	}
 
@@ -53,12 +54,7 @@ class RTEStatisticsHooks {
 	 */
 	protected static function AddRevisionTag( $revision_id, $tag ) {
 		if ( !ChangeTags::addTags( $tag, null, $revision_id ) ) {
-			\Wikia\Logger\WikiaLogger::instance()->error( 'Failed to add tag to revision',
-				[
-					'revision_id' => $revision_id,
-					'tag' => $tag
-				]
-			);
+			\Wikia\Logger\WikiaLogger::instance()->error( 'Failed to add tag to revision', [ 'revision_id' => $revision_id, 'tag' => $tag ] );
 		}
 	}
 }
