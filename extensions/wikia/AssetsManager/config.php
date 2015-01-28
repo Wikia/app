@@ -2254,11 +2254,3 @@ $config['facebook_client_preferences_scss'] = [
 		'//extensions/wikia/FacebookClient/styles/preferences.scss',
 	]
 ];
-
-$config['facebook_client_special_connect'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis'],
-	'assets' => [
-		'//extensions/wikia/FacebookClient/scripts/SpecialFacebookConnect.js',
-	]
-];
