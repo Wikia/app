@@ -19,7 +19,7 @@
 		margin-bottom: 40px;
 	}
 
-	&.amazon_video {
+	&.amazon-video {
 		background-color: #535353;
 		border-radius: 3px;
 		clear: both;
@@ -27,6 +27,10 @@
 		font-family: Helvetica,sans-serif;
 		margin-bottom: 25px;
 		margin-top: 25px;
+
+		&.above-title {
+			margin-top: 0;
+		}
 
 		a {
 			color: #fff;
@@ -184,8 +188,16 @@
 		height: 285px;
 	}
 
+	.affiliate-header {
+		margin-top: 5px;
+	}
+
 	.module-title {
-		color: #000;
+		@if $is-dark-wiki {
+			color: #fff;
+		} @else {
+			color: #000;
+		}
 		font-size: 30px;
 	}
 
@@ -240,10 +252,10 @@
 		} @else {
 			background-image: url('/extensions/wikia/MonetizationModule/images/amazon-logo-black.png');
 		}
+		background-position: 0 -3px;
 		background-size: cover;
 		display: inline-block;
 		margin-left: 6px;
-		top: 16px;
 		vertical-align: top;
 		width: 160px;
 	}
@@ -337,7 +349,7 @@
 	}
 }
 
-.amazon_video-light {
+.amazon-video-light {
 	padding: 7px;
 
 	.affiliate {
@@ -376,7 +388,7 @@
 	}
 }
 
-.amazon_video-full {
+.amazon-video-full {
 	padding: 15px;
 
 	.affiliate {
@@ -390,7 +402,8 @@
 
 		img {
 			border: 0;
-			width: 160px;
+			max-height: 132px;
+			max-width: 160px;
 		}
 	}
 
