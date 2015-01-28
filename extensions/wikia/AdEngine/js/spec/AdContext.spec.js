@@ -130,27 +130,36 @@ describe('AdContext', function () {
 	});
 
 	it('makes targeting.enableKruxTargeting false when disaster recovery instant global variable is set to true', function () {
-		var adContext;
+		var adContext,
+			getWindowMock = function() {
+				return {ads: {
+					context: {
+						targeting: {
+							enableKruxTargeting: true
+						}
+					}
+				}};
+			};
 
-		adContext = modules['ext.wikia.adEngine.adContext']({}, {}, geoMock, {});
-		expect(adContext.getContext().targeting.enableKruxTargeting).toBeUndefined();
+		adContext = modules['ext.wikia.adEngine.adContext'](getWindowMock(), {}, geoMock, {});
+		expect(adContext.getContext().targeting.enableKruxTargeting).toBeTruthy();
 
-		adContext = modules['ext.wikia.adEngine.adContext']({}, {}, geoMock, {
+		adContext = modules['ext.wikia.adEngine.adContext'](getWindowMock(), {}, geoMock, {
 			wgSitewideDisableKrux: false
 		});
-		expect(adContext.getContext().targeting.enableKruxTargeting).toBeUndefined();
+		expect(adContext.getContext().targeting.enableKruxTargeting).toBeTruthy();
 
-		adContext = modules['ext.wikia.adEngine.adContext']({},  {}, geoMock, {
+		adContext = modules['ext.wikia.adEngine.adContext'](getWindowMock(),  {}, geoMock, {
 			wgSitewideDisableKrux: true
 		});
 		expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();
 
-		adContext = modules['ext.wikia.adEngine.adContext']({}, {}, geoMock, {
+		adContext = modules['ext.wikia.adEngine.adContext'](getWindowMock(), {}, geoMock, {
 			wgSitewideDisableKrux: 0
 		});
-		expect(adContext.getContext().targeting.enableKruxTargeting).toBeUndefined();
+		expect(adContext.getContext().targeting.enableKruxTargeting).toBeTruthy();
 
-		adContext = modules['ext.wikia.adEngine.adContext']({},  {}, geoMock, {
+		adContext = modules['ext.wikia.adEngine.adContext'](getWindowMock(),  {}, geoMock, {
 			wgSitewideDisableKrux: 1
 		});
 		expect(adContext.getContext().targeting.enableKruxTargeting).toBeFalsy();
