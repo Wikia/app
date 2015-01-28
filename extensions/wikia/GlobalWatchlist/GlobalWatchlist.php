@@ -21,9 +21,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/GlobalWatchlist'
 );
 
-// configuration
-$wgGlobalWatchlistMaxDigestedArticlesPerWiki = 50;
-
 // message file
 $wgExtensionMessagesFiles['GlobalWatchlist'] = dirname( __FILE__ ) . '/GlobalWatchlist.i18n.php';
 

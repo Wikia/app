@@ -2,6 +2,8 @@
 
 class GlobalWatchlistBot {
 
+	const MAX_ARTICLES_PER_WIKI = 50;
+
 	public function __construct() {
 		global $wgExtensionMessagesFiles;
 		$wgExtensionMessagesFiles['GlobalWatchlist'] = dirname( __FILE__ ) . '/GlobalWatchlist.i18n.php';
@@ -49,7 +51,7 @@ class GlobalWatchlistBot {
 	 * send email to user
 	 */
 	public function sendDigestToUser( $iUserId ) {
-		global $wgExternalDatawareDB, $wgGlobalWatchlistMaxDigestedArticlesPerWiki;
+		global $wgExternalDatawareDB;
 
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
 
@@ -68,14 +70,14 @@ class GlobalWatchlistBot {
 		);
 
 		$records = $dbr->numRows( $oResource );
-		$bTooManyPages = ( $records > $wgGlobalWatchlistMaxDigestedArticlesPerWiki ) ? true : false;
+		$bTooManyPages = ( $records > self::MAX_ARTICLES_PER_WIKI ) ? true : false;
 		$iWikiId = $loop = 0;
 		$aDigestData = array();
 		$aWikiDigest = array( 'pages' => array() );
 		$aRemove = array();
 		while ( $oResultRow = $dbr->fetchObject( $oResource ) ) {
 			# ---
-			if ( $loop >= $wgGlobalWatchlistMaxDigestedArticlesPerWiki ) {
+			if ( $loop >= self::MAX_ARTICLES_PER_WIKI ) {
 				break;
 			}
 
