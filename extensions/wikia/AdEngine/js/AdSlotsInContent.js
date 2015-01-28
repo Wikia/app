@@ -7,7 +7,7 @@ define('ext.wikia.adEngine.adSlotsInContent',[
 ], function ($, log, win, adPlacementChecker) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.slot.venus',
+	var logGroup = 'ext.wikia.adEngine.slot.inContent',
 		selector = '#mw-content-text > h2, #mw-content-text > h3, #mw-content-text > section > h2',
 		inContentMedrecs = [
 			['INCONTENT_1C', 'INCONTENT_1B', 'INCONTENT_1A'],
@@ -58,7 +58,6 @@ define('ext.wikia.adEngine.adSlotsInContent',[
 	}
 
 	function pushSlot(type, slot, header, headerNext) {
-		//Set headerOffset to 0 for the prepended null
 		var headerOffset = header ? header.offsetTop : 0;
 
 		if (!isValidOffset(headerOffset)) {
