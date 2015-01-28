@@ -28,9 +28,9 @@ $wgGlobalWatchlistMaxDigestedArticlesPerWiki = 50;
 $wgExtensionMessagesFiles['GlobalWatchlist'] = dirname( __FILE__ ) . '/GlobalWatchlist.i18n.php';
 
 // classes
-$wgAutoloadClasses['GlobalWatchlistBot'] = dirname( __FILE__ ) . '/GlobalWatchlist.bot.php';
-$wgAutoloadClasses['GlobalWatchlistHook'] = dirname( __FILE__ ) . '/GlobalWatchlist.hooks.php';
-$wgAutoloadClasses['GlobalWatchlistTask'] = dirname( __FILE__ ) . '/GlobalWatchlistTask.php';
+$wgAutoloadClasses['GlobalWatchlistBot'] = dirname( __FILE__ ) . '/GlobalWatchlistBot.class.php';
+$wgAutoloadClasses['GlobalWatchlistHooks'] = dirname( __FILE__ ) . '/GlobalWatchlistHooks.class.php';
+$wgAutoloadClasses['GlobalWatchlistTask'] = dirname( __FILE__ ) . '/GlobalWatchlistTask.class.php';
 
 // hooks
 $wgHooks[ 'GetPreferences' ][] = 'GlobalWatchlistHook::getPreferences';

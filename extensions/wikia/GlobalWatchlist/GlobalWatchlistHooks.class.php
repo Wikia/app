@@ -2,7 +2,7 @@
 
 use \Wikia\Tasks\AsyncTaskList;
 
-class GlobalWatchlistHook {
+class GlobalWatchlistHooks {
 
 	public static function getPreferences( $user, &$defaultPreferences ) {
 
