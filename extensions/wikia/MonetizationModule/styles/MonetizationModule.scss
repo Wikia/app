@@ -28,6 +28,10 @@
 		margin-bottom: 25px;
 		margin-top: 25px;
 
+		&.above_title {
+			margin-top: 0;
+		}
+
 		a {
 			color: #fff;
 		}
@@ -430,8 +434,4 @@
 		height: 20px;
 		padding: 10px 0 11px;
 	}
-}
-
-#monetization-amazon_video-above_title {
-	margin-top: 0;
 }
