@@ -19,8 +19,9 @@ require([
 		slotsAdded = 0,
 		maxSlots = 3,
 		minOffset = 1100,
-		offsetMap = [ [ -minOffset, minOffset ] ],
-		adHtml = '<div class="ad-in-content"><div id="%%ID%%" class="wikia-ad default-height"></div></div>',
+		offsetMap = [[0, minOffset]],
+		adHtml = '<div class="ad-in-content" style="clear:right;float:right;">' +
+			'<div id="%%ID%%" class="wikia-ad default-height"></div></div>',
 		labelHtml = '<label class="wikia-ad-label"></label>',
 
 		container,
@@ -56,7 +57,8 @@ require([
 	}
 
 	function pushSlot(type, slot, header, headerNext) {
-		var headerOffset = header.offsetTop;
+		//Set headerOffset to 0 for the prepended null
+		var headerOffset = header ? header.offsetTop : 0;
 
 		if (!isValidOffset(headerOffset)) {
 			return false;
@@ -83,13 +85,13 @@ require([
 			len,
 			slot;
 
-		inContentMedrecs.forEach(function(remainingSlots, index) {
+		inContentMedrecs.forEach(function (remainingSlots, index) {
 			for (i = 0, len = headers.length; i < len && slotsAdded < maxSlots; i += 1) {
 				remainingSlots = inContentMedrecs[index].slice();
 				for (j = remainingSlots.length - 1; j >= 0; j -= 1) {
 					slot = getSlotParams(remainingSlots.shift());
 					if (pushSlot('medrec', slot, headers[i], headers[i + 1])) {
-						return ;
+						return;
 					}
 				}
 			}
@@ -115,7 +117,8 @@ require([
 		log(['init'], 'debug', logGroup);
 
 		container = $('#mw-content-text');
-		headers = $(headersSelector);
+		headers = $(headersSelector).get();
+		headers.unshift(null);
 		labelText = $('.wikia-ad-label').html();
 
 		addMedrecs();
