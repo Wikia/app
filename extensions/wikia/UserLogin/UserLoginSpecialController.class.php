@@ -17,7 +17,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	/* @const SIGNED_UP_ON_WIKI_OPTION_NAME Name of user option containing id of wiki where user signed up */
 	const SIGNED_UP_ON_WIKI_OPTION_NAME = 'SignedUpOnWiki';
 
-	/* @var $userLoginHelper UserLoginHelper */
+	/* @var UserLoginHelper $userLoginHelper */
 	private $userLoginHelper = null;
 
 	// let's keep this fields private for security reasons
@@ -31,30 +31,29 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	public function init() {
 		$loginTitle = SpecialPage::getTitleFor( 'UserLogin' );
 		$this->formPostAction = $loginTitle->getLocalUrl();
-		$this->isMonobookOrUncyclo = ( $this->wg->User->getSkin() instanceof SkinMonoBook || $this->wg->User->getSkin() instanceof SkinUncyclopedia );
-		$this->userLoginHelper = (new UserLoginHelper);
+
+		$skin = $this->wg->User->getSkin();
+		$this->isMonobookOrUncyclo = ( $skin instanceof SkinMonoBook || $skin instanceof SkinUncyclopedia );
+		$this->userLoginHelper = new UserLoginHelper();
 	}
 
 	private function initializeTemplate() {
-		//Oasis/Monobook, will be filtered in AssetsManager :)
-		$this->response->addAsset( 'extensions/wikia/UserLogin/css/UserLogin.scss' );
-
-		if ( !empty( $this->wg->EnableFacebookClientExt ) ) {
+		// Load Facebook JS if extension is enabled and skin supports it
+		if ( !empty( $this->wg->EnableFacebookClientExt ) && !$this->isMonobookOrUncyclo ) {
 			$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js' );
-			$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebook.js' );
 		}
 
-		$this->response->addAsset('extensions/wikia/UserLogin/js/UserLoginSpecial.js');
-		$this->response->addAsset('extensions/wikia/WikiaStyleGuide/js/Form.js');
+		$this->response->addAsset( 'extensions/wikia/UserLogin/css/UserLogin.scss' );
+		$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginSpecial.js' );
 
-		//Wikiamobile, will be filtered in AssetsManager by config :)
+		// Wikiamobile, will be filtered in AssetsManager by config :)
 		$this->response->addAsset(
 				( $this->wg->request->getInt( 'recover' ) === 1 || empty( $this->wg->EnableFacebookClientExt ) ) ?
 					'userlogin_js_wikiamobile' :
 					'userlogin_js_wikiamobile_fbconnect'
 		);
 
-		//Wikiamobile, will be filtered in AssetsManager by config :)
+		// Wikiamobile, will be filtered in AssetsManager by config :)
 		$this->response->addAsset( 'userlogin_scss_wikiamobile' );
 
 		// hide things in the skin
@@ -154,12 +153,14 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				$action === wfMessage('userlogin-forgot-password')->escaped() ||
 				$action === wfMessage('wikiamobile-sendpassword-label')->escaped() ||
 				$type === 'forgotPassword'
-			) {	// send temporary password
+			) {
+				// send temporary password
 				$response = $this->app->sendRequest( 'UserLoginSpecial', 'mailPassword' );
 
 				$this->result = $response->getVal( 'result', '' );
 				$this->msg = $response->getVal( 'msg', '' );
-			} else if ($action === wfMessage('resetpass_submit')->escaped() ) {	// change password
+			} else if ($action === wfMessage('resetpass_submit')->escaped() ) {
+				// change password
 				$this->editToken = $this->wg->request->getVal( 'editToken', '' );
 				$this->loginToken = $this->wg->Request->getVal( 'loginToken', '' );
 				$params = array(
@@ -179,7 +180,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 				$this->response->getView()->setTemplate( 'UserLoginSpecial', 'changePassword' );
 
-			} else {	// login
+			} else {
+				// login
 				$response = $this->app->sendRequest( 'UserLoginSpecial', 'login' );
 
 				$this->result = $response->getVal( 'result', '' );
@@ -671,5 +673,4 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			}
 		}
 	}
-
 }

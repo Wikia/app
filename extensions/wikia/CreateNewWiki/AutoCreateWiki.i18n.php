@@ -33,7 +33,7 @@ $messages['en'] = array(
 	"autocreatewiki-info-realname" => "If you choose to provide it, this will be used for giving you attribution for your work.",
 	"autocreatewiki-info-birthdate" => "Wikia requires all users to provide their real date of birth as both a safety precaution and as a means of preserving the integrity of the site while complying with federal regulations.",
 	"autocreatewiki-info-blurry-word" => "To help protect against automated account creation, please type the blurry word that you see into this field.",
-	"autocreatewiki-info-terms-agree" => "By creating a wiki and a user account, you agree to the <a href=\"http://www.wikia.com/wiki/Terms_of_use\">Wikia's Terms of Use</a>",
+	"autocreatewiki-info-terms-agree" => "By creating a wiki and a user account, you agree to the {{#NewWindowLink: w:Terms of use | Wikia's Terms of Use}}",
 	"autocreatewiki-info-staff-username" => "<b>Staff only:</b> The specified user will be listed as the founder.",
 	"autocreatewiki-title-template" => "$1 Wiki",
 	"autocreatewiki-tagline" => "",
@@ -115,11 +115,11 @@ ___________________________________________
 	"autocreatewiki-welcometalk-wall-title" => "Welcome!",
         "autocreatewiki-welcometalk-wall" => "Hello, We're excited to have {{subst:SITENAME}} as part of the Wikia community!
 
-There's still a lot to do; here are some helpful tips and links to get your wiki going:
-*Check out [[Special:WikiFeatures|Wiki Features]] to see which features you can enable on your wiki, including Chat, Achievements and many more.
-*Customize your wiki's look by visiting the [[Special:ThemeDesigner|Theme Designer]], where you can add color and style to your background and wordmark.
+There's still a lot to do; here are some helpful tips and links to get your wikia going:
+*Check out [[Special:WikiFeatures|Wiki Features]] to see which features you can enable on your wikia, including Chat, Achievements and many more.
+*Customize your wikia's look by visiting the [[Special:ThemeDesigner|Theme Designer]], where you can add color and style to your background and wordmark.
 *Stop by [[w:c:community|Community Central]] to stay informed through our [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]], ask questions on our [[w:c:community:Special:Forum|community forum]], participate in our [[w:c:community:Help:Webinars|webinar series]], or [[w:c:community:Special:Chat|chat live]] with fellow Wikians.
-*Lastly, visit our [[Help:Contents|help pages]] to learn the ins and outs of using Wikia, including [[Help:New page|how to add a new page to your wiki]], [[Help:Attracting contributors|how to attract contributors]], and [[Help:User access levels|how to add other admins]].
+*Lastly, visit our [[Help:Contents|help pages]] to learn the ins and outs of using Wikia, including [[Help:New page|how to add a new page to your wikia]], [[Help:Attracting contributors|how to attract contributors]], and [[Help:User access levels|how to add other admins]].
 * You can also use all of these tools by visiting your Admin Dashboard, which can by found by clicking \"Admin\" on the bottom toolbar.
 
 All of the above links are a great place to start exploring, and have fun!",
@@ -127,9 +127,9 @@ All of the above links are a great place to start exploring, and have fun!",
 	"autocreatewiki-welcometalk" => "==Welcome!==
 Hey there!
 
-We're excited to have $4 as part of the Wikia community! There's still a lot to do; here are some helpful tips and links to get your wiki going:
+We're excited to have $4 as part of the Wikia community! There's still a lot to do; here are some helpful tips and links to get your wikia going:
 
-*Check out [[Special:WikiFeatures|Wiki Features]] to see which features you can enable on your wiki, including chat, achievements and much more.
+*Check out [[Special:WikiFeatures|Wiki Features]] to see which features you can enable on your wikia, including chat, achievements and much more.
 *Stop by [[w:c:community|Community Central]] to stay informed through our [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]], ask questions on our [[w:c:community:Special:Forum|community forum]], participate in our [[w:c:community:Help:Webinars|webinar series]], or chat live with fellow Wikians
 *Lastly, visit our [[Help:Contents|help pages]] to learn the ins and outs of using Wikia
 
@@ -160,7 +160,7 @@ $messages['qqq'] = array(
 	'autocreatewiki-title-template' => 'This will be the sitename of the wiki, i.e. the text that shows up in the TITLE element as well as in other places on the site.',
 	'autocreatewiki-category-other' => '{{Identical|Other}}',
 	'autocreatewiki-set-username' => 'If user does not provide a username when attempting to log in, an error message appears prompting a username to be provided',
-	'autocreatewiki-welcometalk' => 'Text of the welcome message left for wiki founder upon wiki creation. 
+	'autocreatewiki-welcometalk' => 'Text of the welcome message left for wiki founder upon wiki creation.
 Parameters:
 
 * $1 - User name of wiki founder
@@ -1333,7 +1333,7 @@ ___________________________________________
 ¡Estamos encantados de que {{subst:SITENAME}} forme parte de la comunidad de Wikia! Todavía queda mucho por hacer, así que aquí tienes algunos consejos y enlaces para mejorar tu wiki:
 *¿No estás seguro de por dónde empezar? ¡Pásate por la [[w:c:community:Admin_Central:Main_Page|Comunidad de administradores]] y consulta el [[w:c:comunidad:Blog:Trucos y consejos|blog]] para encontrar consejos para comenzar tu wiki y hacerlo crecer!
  *Visita el [[w:c:comunidad:Wikia|wiki central de la comunidad]] para hacer amigos a través del [[w:c:comunidad:Special:Chat|chat]], consigue más información sobre las nuevas características y mantente actualizado con las novedades y características futuras de Wikia en el [[w:c:comunidad:Blog:Actualizaciones técnicas|blog del personal]]. 
-*Echa una ojeada a nuestra [[w:c:community:Help:Webinars|serie web]], a la que te puedes subscribir para estar en contacto con el personal de Wikia, así como para revisar las sesiones anteriores. 
+*Echa una ojeada a nuestra [[w:c:community:Help:Webinars|serie web]], a la que te puedes subscribir para estar en contacto con el personal de Wikia, así como para revisar las sesiones anteriores.
 *¡Asegúrate de consultar las [[Special:WikiFeatures|características del wiki]] para ver las características que puedes activar en tu wiki!
  *Explora nuestros [[w:c:comunidad:Especial:Foro|foros]] en la Central de administración para ver lo que preguntan los administradores de otros wikis. 
 *Por último, visita nuestras [[w:c:ayuda:Ayuda:Contenidos|páginas de ayuda]] para encontrar las respuestas a cualquier pregunta específica que puedas tener.
@@ -1749,7 +1749,7 @@ L’équipe Wikia
 Il y a encore beaucoup à faire; voici quelques liens et astuces utiles pour gérer votre wiki:
 *Consulter [[Special:WikiFeatures|Fonctionnalités du Wiki]] pour voir quelles fonctionnalités vous pouvez activer sur votre wiki, comme la discussion, les réussites, et bien d’autres.
 *Arrêtez-vous sur le [[w:c:community|centre de la communauté]] pour rester informé via le [[w:c:community:Blog:Wikia_Staff_Blog|blog de notre équipe]], posez vos questions sur notre [[w:c:community:Special:Forum|forum de communauté]], participez à nos [[w:c:community:Help:Webinars|séries de webinar]], ou discutez en direct avec d’autres Wikiens.
-*Enfin, reportez-vous à nos [[Help:Contents|pages d’aide]] pour connaître les tenants et aboutissants de l’utilisation de Wikia. 
+*Enfin, reportez-vous à nos [[Help:Contents|pages d’aide]] pour connaître les tenants et aboutissants de l’utilisation de Wikia.
 
 Tous les liens ci-dessus sont un endroit important pour commencer à découvrir, et à s’amuser!',
 	'autocreatewiki-welcometalk' => '== Bienvenue! ==
@@ -1759,7 +1759,7 @@ Nous sommes ravis que $4 fasse partie de la communauté Wikia! Il y a encore bea
 
 *Consultez [[Special:WikiFeatures|Fonctionnalités du Wiki]] pour voir quelles fonctionnalités vous pouvez activer sur votre wiki, comme la discussion, les réussites, et bien d’autres.
 *Arrêtez-vous sur le [[w:c:community|centre de la communauté]] pour rester informé via le [[w:c:community:Blog:Wikia_Staff_Blog|blog de notre équipe]], posez vos questions sur notre [[w:c:community:Special:Forum|forum de communauté]], participez à nos [[w:c:community:Help:Webinars|séries de webinar]], ou discutez en direct avec d’autres Wikiens.
-*Enfin, reportez-vous à nos [[Help:Contents|pages d’aide]] pour connaître les tenants et aboutissants de l’utilisation de Wikia. 
+*Enfin, reportez-vous à nos [[Help:Contents|pages d’aide]] pour connaître les tenants et aboutissants de l’utilisation de Wikia.
 
 Tous les liens ci-dessus sont un endroit important pour commencer à découvrir, et à s’amuser!
 
@@ -1923,7 +1923,7 @@ $messages['hi'] = array(
 	'autocreatewiki-page-title-answers' => 'एक नए जवाब साइट बनाएँ',
 	'createwiki' => 'बनाएँ एक नई wiki',
 	'autocreatewiki-chooseone' => 'एक को चुनें',
-	'autocreatewiki-required' => '$1 = 	
+	'autocreatewiki-required' => '$1 =
 चाहा हुआ',
 	'autocreatewiki-web-address' => 'आईपी पता:',
 	'autocreatewiki-category-select' => 'एक का चयन करें',
@@ -2224,9 +2224,9 @@ $messages['id'] = array(
 	'autocreatewiki-category-label' => 'Kategori:',
 	'autocreatewiki-category-other' => 'Lainnya',
 	'autocreatewiki-set-username' => 'Atur nama pengguna lebih dulu.',
-	'autocreatewiki-invalid-category' => 'Nilai tidak sah dari kategori. 
+	'autocreatewiki-invalid-category' => 'Nilai tidak sah dari kategori.
 Silakan pilih yang benar dari daftar pilihan.',
-	'autocreatewiki-invalid-language' => 'Nilai tidak sah dari bahasa. 
+	'autocreatewiki-invalid-language' => 'Nilai tidak sah dari bahasa.
 Silakan pilih yang benar dari daftar pilihan.',
 	'autocreatewiki-invalid-retype-passwd' => 'Silahkan ketik kembali kata kunci yang sama seperti di atas',
 	'autocreatewiki-invalid-birthday' => 'Tanggal lahir tidak sah',
@@ -2255,35 +2255,35 @@ Silakan pilih yang benar dari daftar pilihan.',
 	'autocreatewiki-step7-error' => 'Tidak dapat menyalin basisdata pemulai untuk bahasa!',
 	'autocreatewiki-protect-reason' => 'Bagian dari antarmuka resmi',
 	'autocreatewiki-welcomesubject' => '$1 telah dibuat!',
-	'autocreatewiki-welcomebody' => 'Halo, $2, 
+	'autocreatewiki-welcomebody' => 'Halo, $2,
 
-Permintaan Wikia Anda sekarang tersedia di <$1> Kami berharap dapat melihat Anda meyunting disana segera! 
+Permintaan Wikia Anda sekarang tersedia di <$1> Kami berharap dapat melihat Anda meyunting disana segera!
 
-Kami telah menambahkan beberapa Informasi dan Tips pada halaman Pembicaraan Pengguna Anda (<$5>) untuk membantu Anda memulai. 
+Kami telah menambahkan beberapa Informasi dan Tips pada halaman Pembicaraan Pengguna Anda (<$5>) untuk membantu Anda memulai.
 
-Jika Anda memiliki masalah, Anda dapat meminta bantuan komunitas di wiki di <http://www.wikia.com/wiki/Forum:Help_desk> , Atau melalui surel ke community@wikia.com. Anda juga dapat mengunjungi kami ruang obrolan IRC #wikia <http://irc.wikia.com> . 
+Jika Anda memiliki masalah, Anda dapat meminta bantuan komunitas di wiki di <http://www.wikia.com/wiki/Forum:Help_desk> , Atau melalui surel ke community@wikia.com. Anda juga dapat mengunjungi kami ruang obrolan IRC #wikia <http://irc.wikia.com> .
 
-Saya dapat dihubungi langsung melalui email atau di halaman pembicaraan saya, jika Anda memiliki pertanyaan atau masalah. 
+Saya dapat dihubungi langsung melalui email atau di halaman pembicaraan saya, jika Anda memiliki pertanyaan atau masalah.
 
-Semoga berhasil dengan proyek ini! 
+Semoga berhasil dengan proyek ini!
 
-$3 
+$3
 
-Tim Komunitas Wikia 
+Tim Komunitas Wikia
 
 <http://www.wikia.com/wiki/User:$4>', # Fuzzy
 	'autocreatewiki-welcometalk' => "== Selamat Datang! ==
-<div style=\"font-size:120%; line-height:1.2em;\">Hi \$1 -- kami sangat gembira untuk memiliki '''\$4''' sebagai bagian dari komunitas Wikia! 
+<div style=\"font-size:120%; line-height:1.2em;\">Hi \$1 -- kami sangat gembira untuk memiliki '''\$4''' sebagai bagian dari komunitas Wikia!
 
-Sekarang Anda punya website secara utuh untuk diisi dengan informasi, gambar dan video tentang topik kesukaan Anda. Tapi sekarang, itu hanya halaman kosong mengunggu anda ... Menyeramkan, bukan? Berikut adalah beberapa cara untuk memulai. 
+Sekarang Anda punya website secara utuh untuk diisi dengan informasi, gambar dan video tentang topik kesukaan Anda. Tapi sekarang, itu hanya halaman kosong mengunggu anda ... Menyeramkan, bukan? Berikut adalah beberapa cara untuk memulai.
 
-*'''Mengenalkan topik Anda''' di halaman depan. Ini adalah kesempatan Anda untuk menjelaskan kepada pembaca tentang topik Anda. Menulis sebanyak yang Anda inginkan! deskripsi Anda dapat menghubungkan ke semua halaman yang penting di situs Anda. 
+*'''Mengenalkan topik Anda''' di halaman depan. Ini adalah kesempatan Anda untuk menjelaskan kepada pembaca tentang topik Anda. Menulis sebanyak yang Anda inginkan! deskripsi Anda dapat menghubungkan ke semua halaman yang penting di situs Anda.
 
-*'''Mulai beberapa halaman baru''' - hanya satu atau dua kalimat baik untuk memulai. Jangan biarkan halaman kosong menunggu! Wiki adalah semua tentang menambah dan mengubah hal-hal selama Anda pergi. Anda juga dapat menambahkan gambar dan video, untuk mengisi halaman dan membuatnya lebih menarik. 
+*'''Mulai beberapa halaman baru''' - hanya satu atau dua kalimat baik untuk memulai. Jangan biarkan halaman kosong menunggu! Wiki adalah semua tentang menambah dan mengubah hal-hal selama Anda pergi. Anda juga dapat menambahkan gambar dan video, untuk mengisi halaman dan membuatnya lebih menarik.
 
-Dan kemudian teruskan! Orang-orang senang mengunjungi wiki ketika ada banyak hal untuk dibaca dan dilihat, sehingga terus menambahkan hal-hal lain, dan Anda akan menarik pembaca dan penyunting. Ada banyak yang harus dilakukan, tapi jangan khawatir - hari ini hari pertama Anda, dan Anda punya banyak waktu. Setiap wiki dimulai dengan cara yang sama - sedikit demi sedikit, dimulai dengan beberapa halaman pertama, sampai tumbuh menjadi situs yang besar dan sibuk. 
+Dan kemudian teruskan! Orang-orang senang mengunjungi wiki ketika ada banyak hal untuk dibaca dan dilihat, sehingga terus menambahkan hal-hal lain, dan Anda akan menarik pembaca dan penyunting. Ada banyak yang harus dilakukan, tapi jangan khawatir - hari ini hari pertama Anda, dan Anda punya banyak waktu. Setiap wiki dimulai dengan cara yang sama - sedikit demi sedikit, dimulai dengan beberapa halaman pertama, sampai tumbuh menjadi situs yang besar dan sibuk.
 
-Jika Anda punya pertanyaan, Anda dapat mengirim kami sur-el melalui [[Special:Contact|formulir]]. Selamat bersenang-senang! 
+Jika Anda punya pertanyaan, Anda dapat mengirim kami sur-el melalui [[Special:Contact|formulir]]. Selamat bersenang-senang!
 
 -- [[User:\$2|\$3]] <staff /></div>", # Fuzzy
 );
@@ -2395,13 +2395,13 @@ Per favore scegliene uno dal menu a comparsa.',
 
 Il tuo wiki è stato creato ed è ora disponibile su <$1>.<br />
 
-Pronto ad iniziare? Abbiamo aggiunto alcuni link alla tua pagina di discussione (<$5>) per aiutarti e per farti esplorare tutte le aree di Wikia. Per qualunque domanda o problema, puoi chiedere aiuto alla community alla pagina <http://it.community.wikia.com/wiki/Forum:Index> o contattare lo staff per email all'indirizzo community@wikia.com. 
+Pronto ad iniziare? Abbiamo aggiunto alcuni link alla tua pagina di discussione (<$5>) per aiutarti e per farti esplorare tutte le aree di Wikia. Per qualunque domanda o problema, puoi chiedere aiuto alla community alla pagina <http://it.community.wikia.com/wiki/Forum:Index> o contattare lo staff per email all'indirizzo community@wikia.com.
 
 Puoi inoltre visitare il blog Founder & Admin <http://community.wikia.com/wiki/Blog%3AWikia_Founders_%26_Admins> e il blog dello staff di Wikia <http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog> dove puoi trovare suggerimenti e trucchi, oltre alle info sulle novità di Wikia.
 
 Buon progetto!
 
-$3 
+$3
 
 Wikia Community Team
 <http://www.wikia.com/wiki/User:$4>
@@ -2430,7 +2430,7 @@ Più pagine e link vengono creati e più velocemente la tua wiki diventerà popo
 
 Per qualunque altre domanda, puoi leggere le [[w:c:Aiuto:Aiuto_Wiki|pagine di aiuto]], oppure spedirci un'e-mail attraverso il nostro [[Special:Contact|modulo dei contatti]]. Non dimenticare di controllare le altre wiki su [[wikia:Wikia|Wikia]] per idee, template, layout e molto altro!
 
-Buona fortuna! 
+Buona fortuna!
 
 [[User:\$2|\$3]] <staff /></div>", # Fuzzy
 );
@@ -2904,7 +2904,7 @@ $messages['mk'] = array(
 Со среќа!
 
 $3
-Поддршка на заедницата на Викимедија 
+Поддршка на заедницата на Викимедија
 <http://community.wikia.com/wiki/User:$4>',
 	'autocreatewiki-welcometalk-wall-title' => 'Добредојдовте!',
 	'autocreatewiki-welcometalk-wall' => 'Здраво!
@@ -3195,16 +3195,16 @@ Vi er stolte over å ha {{subst:SITENAME}} som en del av Wikia-fellesskapet! Det
 *Til slutt, besøk [[w:c:community:Help:Contents|hjelpesidene våre]] for å få svar på de spesifikke spørsmålene du måtte ha.
 Alle lenkene ovenfor er gode steder å begynne å utforske Wikia på. Hvis du setter deg fast eller har spørsmål du ikke finner svar på -- vennligst kontakt oss [[Special:Contact|her]]. Men viktigst av alt, ha det gøy! :)
 Gledelig redigering!', # Fuzzy
-	'autocreatewiki-welcometalk' => "== Velkommen! == 
-<div style=\"font-size:120%; line-height:1.2em;\">Hei \$1 -- vi er glade over å ha '''\$4''' som en del av Wikia Fellesskapet! 
+	'autocreatewiki-welcometalk' => "== Velkommen! ==
+<div style=\"font-size:120%; line-height:1.2em;\">Hei \$1 -- vi er glade over å ha '''\$4''' som en del av Wikia Fellesskapet!
 
 Nå har du en hel nettside å fylle opp med informasjon, bilder og video om yndlingstemaet ditt. Men akkurat nå er det bare tomme sider som stirrer på deg... Skremmende, eller hva? Her er noen måter å komme i gang på.
 
 * '''Introduser temaet ditt''' på forsiden. Dette er din mulighet til å forklare leserne mer om hva temaet handler om. Skriv så mye du vil! Beskrivelsen din kan lenke til alle slags viktige artikler på siden din.
 
-* '''Opprett noen nye sider''' -- bare en setning eller to er flott i begynnelsen. Ikke la de tomme sidene stirre deg i senk! En wiki handler om å legge til og endre ting som det faller seg. Du kan også legge til bilder og video for å fylle siden og gjøre den mer interessant. 
+* '''Opprett noen nye sider''' -- bare en setning eller to er flott i begynnelsen. Ikke la de tomme sidene stirre deg i senk! En wiki handler om å legge til og endre ting som det faller seg. Du kan også legge til bilder og video for å fylle siden og gjøre den mer interessant.
 
-Så er det bare å fortsette! Folk liker å besøke wikier med en masse å lese og se på, så fortsett å legge til ting, og du vil tiltrekke nye lesere og bidragsytere. Det er en masse å gjøre, men slapp av -- i dag er den første dagen, og du har masser av tid. Hver eneste wiki starter på samme måte -- litt om gangen, fra de første få sidene, til en stor og travel side. 
+Så er det bare å fortsette! Folk liker å besøke wikier med en masse å lese og se på, så fortsett å legge til ting, og du vil tiltrekke nye lesere og bidragsytere. Det er en masse å gjøre, men slapp av -- i dag er den første dagen, og du har masser av tid. Hver eneste wiki starter på samme måte -- litt om gangen, fra de første få sidene, til en stor og travel side.
 
 Hvis du har spørsmål, kan du sende oss en e-post gjennom vårt [[Special:Contact|kontaktskjema]]. Ha det gøy!
 
@@ -3308,7 +3308,7 @@ Uw wiki is aangemaakt! Ga maar kijken op <$1>
 Bent u klaar om te beginnen? We hebben een aantal koppelingen op uw overlegpagina toegevoegd (<$5>) om u op weg te helpen en om u aan te moedigen om de vele handige bronnen rondom Wikia te verkennen. Als u vragen hebt of een beetje de weg kwijt bent, antwoord dan op deze e-mail of kijk op onze hulpppagina's: <http://help.wikia.com>.
 
 U kunt ook op onze blog voor Oprichters en beheerders kijken <http://community.wikia.com/wiki/Blog%3AWikia_Founders_%26_Admins> of op de blog van Wikiamedewerkers <http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog>. Daar vindt u tips en trucs, informatie over nieuwe functies en ander nieuws over Wikia.
- 
+
 Succes met uw project!
 
 $3
@@ -3363,7 +3363,7 @@ Je wiki is aangemaakt! Ga maar kijken op <$1>
 Ben je klaar om te beginnen? We hebben een aantal koppelingen op je overlegpagina toegevoegd (<$5>) om je op weg te helpen en om je aan te moedigen om de vele handige bronnen rondom Wikia te verkennen. Als je vragen hebt of een beetje de weg kwijt bent, antwoord dan op deze e-mail of kijk op onze hulpppagina's: <http://help.wikia.com>.
 
 Je kunt ook op onze blog voor Oprichters en beheerders kijken <http://community.wikia.com/wiki/Blog%3AWikia_Founders_%26_Admins> of op de blog van Wikiamedewerkers <http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog>. Daar vindt je tips en trucs, informatie over nieuwe functies en ander nieuws over Wikia.
- 
+
 Succes met je project!
 
 $3
@@ -3474,9 +3474,9 @@ $messages['pl'] = array(
 	'autocreatewiki-category-label' => 'Kategoria:',
 	'autocreatewiki-category-other' => 'Inne',
 	'autocreatewiki-set-username' => 'Najpierw określ nazwę użytkownika.',
-	'autocreatewiki-invalid-category' => 'Nieprawidłowa kategoria. 
+	'autocreatewiki-invalid-category' => 'Nieprawidłowa kategoria.
 Wybierz prawidłową z listy rozwijanej.',
-	'autocreatewiki-invalid-language' => 'Nieprawidłowy język. 
+	'autocreatewiki-invalid-language' => 'Nieprawidłowy język.
 Wybierz prawidłowy z listy rozwijanej.',
 	'autocreatewiki-invalid-retype-passwd' => 'Przepisz hasło tak aby było identyczne z powyższym',
 	'autocreatewiki-invalid-birthday' => 'Nieprawidłowa data urodzenia',
@@ -4260,9 +4260,9 @@ $messages['sv'] = array(
 	'autocreatewiki-category-label' => 'Kategori:',
 	'autocreatewiki-category-other' => 'Annat',
 	'autocreatewiki-set-username' => 'Sätt ett användarnamn först.',
-	'autocreatewiki-invalid-category' => 'Ogiltigt värde på kategori. 
+	'autocreatewiki-invalid-category' => 'Ogiltigt värde på kategori.
 Välj rätt från rullgardinsmenyn.',
-	'autocreatewiki-invalid-language' => 'Ogiltigt värde av språk. 
+	'autocreatewiki-invalid-language' => 'Ogiltigt värde av språk.
 Välj rätt från rullgardinsmenyn.',
 	'autocreatewiki-invalid-retype-passwd' => 'Vänligen skriv in samma lösenord som ovan',
 	'autocreatewiki-invalid-birthday' => 'Ogiltigt födelsedatum',
@@ -4633,9 +4633,9 @@ $messages['tt-cyrl'] = array(
 
 Сезнең вики төзелде! Күз салыгыз: <$1>
 
-Башларга әзерсезме? Без сезнең фикер алышу сәхифәсенә (<$5>) берничә сылтама өстәдек, алар сезгә эшне башларга ярдәм итәрләр һәм Викиянең күп санлы файдалы өлкәләрен күрсәтерләр. Әгәр дә сезнең нинди дә булса сорауларыгыз була икән, яки үзегезне югалып калгандай хис итәсез икән, бу хатка җавап языгыз яисә безнең Белешмәлек <http://help.wikia.com> белән танышыгыз. 
+Башларга әзерсезме? Без сезнең фикер алышу сәхифәсенә (<$5>) берничә сылтама өстәдек, алар сезгә эшне башларга ярдәм итәрләр һәм Викиянең күп санлы файдалы өлкәләрен күрсәтерләр. Әгәр дә сезнең нинди дә булса сорауларыгыз була икән, яки үзегезне югалып калгандай хис итәсез икән, бу хатка җавап языгыз яисә безнең Белешмәлек <http://help.wikia.com> белән танышыгыз.
 
-Шулай ук  сез, файдалы киңәшләр, Викиянең яңа мөмкинлекләре һәм яңа кушымталар турында мәгълүмат табар өчен,  Үзәк Викидә идарәчеләр өчен блогны <http://community.wikia.com/wiki/Blog%3AWikia_Founders_%26_Admins> яки Викия хезмәткәрләре блогын  <http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog>  карый аласыз. 
+Шулай ук  сез, файдалы киңәшләр, Викиянең яңа мөмкинлекләре һәм яңа кушымталар турында мәгълүмат табар өчен,  Үзәк Викидә идарәчеләр өчен блогны <http://community.wikia.com/wiki/Blog%3AWikia_Founders_%26_Admins> яки Викия хезмәткәрләре блогын  <http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog>  карый аласыз.
 
 Хәерле сәгатьтә!
 
@@ -4647,9 +4647,9 @@ $3
 ___________________________________________
 * Бездән хатларның азрак килүен телисезме? Сез шәхси көйләнмәләр битендә (http://community.wikia.com/Special:Preferences ) таратылмага  язылуны туктата яки үзгәртә аласыз.',
 	'autocreatewiki-welcometalk' => "== Рәхим итегез! ==
-<div style=\"font-size:120%; line-height:1.2em;\">Исәнмесез, \$1 — Без '''\$4''' Wikia җәмгыятенең бер өлеше булуына шатбыз! 
+<div style=\"font-size:120%; line-height:1.2em;\">Исәнмесез, \$1 — Без '''\$4''' Wikia җәмгыятенең бер өлеше булуына шатбыз!
 
-Хәзер сезнең яраткан темагызга  мәгълүмат, фотографияләр һәм видео өстәү өчен тулы бер сайт бар. Ләкин хәзер сезгә буш битләр карап торалар... Куркыныч, әйеме? Менә эшне башлау өчен кайбер ысуллар. 
+Хәзер сезнең яраткан темагызга  мәгълүмат, фотографияләр һәм видео өстәү өчен тулы бер сайт бар. Ләкин хәзер сезгә буш битләр карап торалар... Куркыныч, әйеме? Менә эшне башлау өчен кайбер ысуллар.
 
 * '''Беренче биттә темагызны күрсәтегез'''. Бу сезнең укучыларыгызга темагызның ни хакында булуын аңлатыр өчен мөмкинлек. Күпме телисез – шулкадәр языгыз! Сезнең тасвирламагыз сезнең сайттагы барлык мөһим битләрне бәйли ала.
 
@@ -4783,7 +4783,7 @@ $messages['uk'] = array(
 
 Тепер вам слід розпочати роботу. Ось деякі поради:
 
-* '''Опишіть свою тему''' на першій сторінці, нехай читачі одразу зрозуміють, що на них очікує! 
+* '''Опишіть свою тему''' на першій сторінці, нехай читачі одразу зрозуміють, що на них очікує!
 
 * '''Створіть кілька сторінок''' — можна почати з кількох речень, а потім додавати картинки і відео.
 

@@ -41,8 +41,8 @@
 					self.uiFactory = uiFactory;
 					self.packagesData = packagesData;
 
-					if (window.UserLoginFacebook) {
-						window.UserLoginFacebook.init(window.UserLoginFacebook.origins.MODAL);
+					if (window.FacebookLogin) {
+						window.FacebookLogin.init(window.FacebookLogin.origins.MODAL);
 					}
 
 					self.buildModal(options);

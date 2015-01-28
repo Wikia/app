@@ -1272,6 +1272,7 @@ $messages['fo'] = array(
 );
 
 /** French (français)
+ * @author Fujimaru-kun
  * @author Gomoko
  * @author IAlex
  * @author McDutchie
@@ -1354,6 +1355,7 @@ $messages['fr'] = array(
 	'grouppage-chatmoderator' => 'w:c:aide:Aide:Tchat',
 	'group-bannedfromchat' => 'Bannis du tchat',
 	'group-bannedfromchat-member' => 'banni du tchat',
+	'grouppage-bannedfromchat' => 'w:c:communauté:Aide:Chat',
 	'chat-ban-option-list' => '2 heures:2 hours,1 jour:1 day,3 jours:3 days,1 semaine:1 week,2 semaines:2 weeks,1 mois:1 month,3 mois:3 months,6 mois:6 months,1 an:1 year, indéfiniment:infinite',
 	'chat-ban-log-change-ban-link' => 'modifier bannissement',
 	'chat-chatconnect-log' => 'Journal de connexion du tchat',

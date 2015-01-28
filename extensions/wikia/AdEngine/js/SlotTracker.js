@@ -44,6 +44,7 @@ define('ext.wikia.adEngine.slotTracker', [
 			MODAL_INTERSTITIAL_2:   'interstitial',
 			MODAL_INTERSTITIAL_3:   'interstitial',
 			MODAL_INTERSTITIAL_4:   'interstitial',
+			MODAL_INTERSTITIAL_5:   'interstitial',
 			LEFT_SKYSCRAPER_2:      'skyscraper',
 			LEFT_SKYSCRAPER_3:      'skyscraper',
 			PREFOOTER_LEFT_BOXAD:   'prefooter',

@@ -11,9 +11,9 @@ require([
 		return false;
 	}
 
-	eventDispatcher.bind('ext.wikia.adEngine fillInSlot', function(slot, provider) {
+	eventDispatcher.bind('ext.wikia.adEngine fillInSlot', function(slotName, provider) {
 
-		if (slot[0].indexOf('LEADERBOARD') !== -1 && (slot[2] === 'Liftium' || provider.name === 'Later')) {
+		if (slotName.indexOf('LEADERBOARD') !== -1 && (provider.name === 'Liftium' || provider.name === 'Later')) {
 
 			log(['Found call to liftium for leaderboard, launching', 'BOTTOM_LEADERBOARD'], 'debug', 'ext.wikia.adEngine.slot.bottomLeaderboard');
 

@@ -75,4 +75,39 @@ class ExactTargetUpdateUserTask extends ExactTargetTask {
 		$oApiDataExtension->updateRequest( $aApiParams );
 	}
 
+	/**
+	 * Task for incremental updating number of user contributions on specific wiki
+	 * @param array $aUsersEditsData should has following form:
+	 * Array (
+	 * 		{int user id} => [
+	 * 			[
+	 * 				'wiki_id' => {wiki id},
+	 * 				'contributions' => {number of edits}
+	 * 			],
+	 * 			[
+	 * 				...
+	 * 			]
+	 * 		],
+	 * 		{int user id} => [
+	 * 				...
+	 * 		]
+	 * )
+	 */
+	public function updateUsersEdits( array $aUsersEditsData ) {
+		$aUsersIds = array_keys( $aUsersEditsData );
+
+		// Get number of edits from ExactTarget
+		$oRetrieveUserHelper = $this->getRetrieveUserHelper();
+		$aUserEditsDataFromET = $oRetrieveUserHelper->retrieveUserEdits( $aUsersIds );
+
+		// Merge number of edits from ExactTarget with incremental data that came as a function parameter
+		$oHelper = $this->getUserHelper();
+		$oHelper->mergeUsersEditsData( $aUsersEditsData, $aUserEditsDataFromET );
+
+		// Send update request to update number of edits
+		$oApiDataExtension = $this->getApiDataExtension();
+		$aApiParams = $oHelper->prepareUserEditsUpdateParams( $aUsersEditsData );
+		$oApiDataExtension->updateFallbackCreateRequest( $aApiParams );
+	}
+
 }

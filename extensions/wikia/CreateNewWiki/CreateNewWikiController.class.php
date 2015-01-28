@@ -18,10 +18,12 @@ class CreateNewWikiController extends WikiaController {
 		$wgSuppressToolbar = true;
 
 		// store the fact we're on CNW
-		F::app()->wg->atCreateNewWikiPage = true;
+		$this->wg->atCreateNewWikiPage = true;
 
-		// reuiqred for FB Connect to work
-		$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js' );
+		if ( !$this->wg->User->isLoggedIn() && !empty( $this->wg->EnableFacebookClientExt ) ) {
+			// required for FB Connect to work
+			$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js' );
+		}
 
 		// fbconnected means user has gone through step 2 to login via facebook.
 		// Therefore, we need to reload some values and start at the step after signup/login

@@ -1358,6 +1358,7 @@ $messages['ext'] = array(
 
 /** Persian (فارسی)
  * @author Alirezaaa
+ * @author Calak
  * @author Ebraminio
  * @author Huji
  * @author Mjbmr
@@ -1392,7 +1393,7 @@ $messages['fa'] = array(
 	'userrenametool-logpagetext' => 'این سیاههٔ تغییر نام کاربران است',
 	'userrenametool-logentry' => 'نام $1 را به $2 تغییر داد',
 	'userrenametool-log' => '{{PLURAL:$1|۱ ویرایش|$1 ویرایش}}. دلیل: $2',
-	'userrenametool-move-log' => 'صفحه در ضمن تغییر نام «[[User:$1|$1]]» به «[[User:$2|$2]]» به طور خودکار انتقال داده شد.',
+	'userrenametool-move-log' => 'صفحه در ضمن تغییر نام کاربر «[[User:$1|$1]]» به «[[User:$2|$2]]» به طور خودکار منتقل شد',
 	'right-renameuser' => 'تغییر نام کاربران',
 	'action-renameuser' => 'تغییر نام کاربران',
 );
@@ -4847,7 +4848,7 @@ $messages['zh-hans'] = array(
 	'userrenametool-old' => '当前用户名：',
 	'userrenametool-new' => '新用户名：',
 	'userrenametool-encoded' => 'URL 编码：',
-	'userrenametool-reason' => '重命名的原因:',
+	'userrenametool-reason' => '重命名的原因：',
 	'userrenametool-move' => '移动用户页及其对话页（包括各子页）到新的名字',
 	'userrenametool-reserve' => '封禁旧用户名，使之不能在日后使用',
 	'userrenametool-notify-renamed' => '完成时发邮件给被重命名的用户',

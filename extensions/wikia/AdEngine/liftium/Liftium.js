@@ -1703,8 +1703,12 @@ Liftium.loadScript = function(url, noblock, callback) {
 			return s;
 		}
 		else {
-			Liftium.d("Using $.getScript", 5);
-			$.getScript(url, callback);
+			Liftium.d("Using $.ajax", 5);
+			$.ajax({
+				dataType: "script",
+				url: url,
+				complete: callback
+			});
 			return true;
 		}
 	}

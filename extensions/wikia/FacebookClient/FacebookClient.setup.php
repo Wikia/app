@@ -41,7 +41,7 @@ $wgAutoloadClasses['FacebookClientXFBML'] = $dir . 'FacebookClientXFBML.php';
  */
 $wgAutoloadClasses['FacebookClientHooks'] =  $dir . 'FacebookClientHooks.class.php';
 $wgHooks['MakeGlobalVariablesScript'][] = 'FacebookClientHooks::MakeGlobalVariablesScript';
-$wgHooks['SkinAfterBottomScripts'][] = 'FacebookClientHooks::SkinAfterBottomScripts';
+$wgHooks['GetHTMLAfterBody'][] = 'FacebookClientHooks::onGetHTMLAfterBody';
 $wgHooks['GetPreferences'][] = 'FacebookClientHooks::GetPreferences';
 $wgHooks['OasisSkinAssetGroups'][] = 'FacebookClientHooks::onSkinAssetGroups';
 $wgHooks['MonobookSkinAssetGroups'][] = 'FacebookClientHooks::onSkinAssetGroups';
