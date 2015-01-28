@@ -202,9 +202,8 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 		wfRunHooks( 'UserLoginComplete', [ &$user, &$inject_html ] );
 		$wg->User = $user;
 
-		$returnTo = $wg->request->getVal( 'returnto' );
-		$returnToQuery = $wg->request->getVal( 'returntoquery' );
-		$returnToUrl = FacebookClient::getInstance()->getReturnToUrl( $returnTo, $returnToQuery );
+		$userLoginHelper = new UserLoginHelper();
+		$returnToUrl = $userLoginHelper->getRedirectUrl( 'fbconnected=1' );
 
 		$wg->Out->redirect( $returnToUrl );
 	}

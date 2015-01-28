@@ -1,5 +1,4 @@
-/* global UserLoginModal, wgCanonicalSpecialPageName, wgMainPageTitle, wgArticlePath, wgScriptPath,
-wgUserLanguage, GlobalNotification */
+/* global UserLoginModal, wgScriptPath, wgUserLanguage, GlobalNotification */
 
 /**
  * Handle signing in and signing up with Facebook
@@ -102,6 +101,7 @@ wgUserLanguage, GlobalNotification */
 		 * @param {Object} response Response object sent from Facebook after login attempt
 		 */
 		onFBLogin: function (response) {
+
 			// There was a connection error or something went horribly wrong.
 			if (typeof response !== 'object') {
 				this.track({
@@ -152,8 +152,11 @@ wgUserLanguage, GlobalNotification */
 
 			// logged in using FB account, reload the page or callback
 			if (response.loggedIn) {
-				this.loggedInCallback();
-
+				if (this.loginCallback) {
+					this.loginCallback();
+				} else {
+					window.location = response.returnUrl;
+				}
 			// some error occurred
 			} else if (response.loginAborted) {
 				window.GlobalNotification.show(response.errorMsg, 'error');
@@ -169,30 +172,6 @@ wgUserLanguage, GlobalNotification */
 			// user not logged in, show the login/signup modal
 			} else {
 				this.setupModal(response);
-			}
-		},
-
-		/**
-		 * This runs after has signed in with facebook and is already registered with Wikia.
-		 */
-		loggedInCallback: function () {
-			if (this.loginCallback) {
-				this.loginCallback();
-			} else {
-				this.bucky.timer.start('loggedInCallback');
-				var qString = new QueryString(),
-				// TODO: special page URL matching needs to be consolidated. @see UC-187
-					returnTo = (wgCanonicalSpecialPageName &&
-						(wgCanonicalSpecialPageName.match(/Userlogin|Userlogout|UserSignup/))) ?
-						wgMainPageTitle : null;
-
-				if (returnTo) {
-					qString.setPath(wgArticlePath.replace('$1', returnTo));
-				}
-				// send bucky info immediately b/c the page is about to redirect
-				this.bucky.timer.stop('loggedInCallback');
-				this.bucky.flush();
-				qString.addCb().goTo();
 			}
 		},
 

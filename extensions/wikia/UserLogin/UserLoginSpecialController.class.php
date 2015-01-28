@@ -17,7 +17,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	/* @const SIGNED_UP_ON_WIKI_OPTION_NAME Name of user option containing id of wiki where user signed up */
 	const SIGNED_UP_ON_WIKI_OPTION_NAME = 'SignedUpOnWiki';
 
-	/* @var $userLoginHelper UserLoginHelper */
+	/* @var UserLoginHelper $userLoginHelper */
 	private $userLoginHelper = null;
 
 	// let's keep this fields private for security reasons
@@ -34,8 +34,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 		$skin = $this->wg->User->getSkin();
 		$this->isMonobookOrUncyclo = ( $skin instanceof SkinMonoBook || $skin instanceof SkinUncyclopedia );
-
-		$this->userLoginHelper = (new UserLoginHelper);
+		$this->userLoginHelper = new UserLoginHelper();
 	}
 
 	private function initializeTemplate() {
@@ -674,5 +673,4 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			}
 		}
 	}
-
 }

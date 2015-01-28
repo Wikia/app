@@ -105,7 +105,6 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 
 		//fb#38260 -- removed uselang
 		$this->avatars = $this->userLoginHelper->getRandomAvatars();
-		$this->popularWikis = $this->userLoginHelper->getRandomWikis();
 
 		// template params
 		$this->pageHeading = wfMessage( 'usersignup-heading' )->escaped();
