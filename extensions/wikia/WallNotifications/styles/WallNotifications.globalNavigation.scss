@@ -15,10 +15,11 @@ $white-transparent: rgba(255, 255, 255, 0);
 $white: #fff;
 $black-transparent: rgba(0, 0, 0, 0);
 $black-half-transparent: rgba(0, 0, 0, .6);
+$notification-bubble-color: rgb(196, 206, 217);
 
 
 .bubbles {
-	background-color: rgb(196, 206, 217);
+	background-color: $notification-bubble-color;
 	border-radius: 10px;
 	display: none;
 	height: 20px;
@@ -37,7 +38,7 @@ $black-half-transparent: rgba(0, 0, 0, .6);
 	@include font-size-xxs;
 	background-color: $white;
 	border-radius: 8px;
-	color: rgb(196, 206, 217);
+	color: $notification-bubble-color;
 	font-weight: bold;
 	height: 16px;
 	line-height: 16px;

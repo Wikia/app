@@ -435,7 +435,6 @@ $messages['es'] = [
 ***http://coffee.wikia.com/wiki/Main_Page|Coffee
 ***http://lifestylehub.wikia.com/wiki/Lifestyle_Hub|More...
 ",
-	'global-navigation-global-search' => 'En todas las wikis',
 ];
 
 $messages['qqq'] = [

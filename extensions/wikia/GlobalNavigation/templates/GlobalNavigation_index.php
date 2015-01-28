@@ -1,8 +1,8 @@
 <nav class="global-navigation" id="globalNavigation">
 	<div class="page-width">
-		<div class="global-navigation-item wikia-logo-container">
+		<div class="wikia-logo-container table-cell">
 			<a href="<?= htmlspecialchars( $centralUrl ) ?>"
-				class="global-navigation-link wikia-logo"
+				class="wikia-logo"
 				rel="nofollow"
 				data-id="wikia-logo">
 				<img src="<?= $wg->BlankImgUrl ?>"
@@ -12,16 +12,16 @@
 					title="<?= wfMessage( 'venus-wikia' )->escaped() ?>">
 			</a>
 		</div>
-		<div class="global-navigation-item hubs-container" id="hubsEntryPoint">
+		<div class="hubs-container table-cell" id="hubsEntryPoint">
 			<?= $app->renderView( 'GlobalNavigation', 'hubsMenu' ) ?>
 		</div>
-		<div class="global-navigation-item search-container">
+		<div class="search-container table-cell">
 			<?= $app->renderView( 'GlobalNavigation', 'searchIndex' ); ?>
 		</div>
-		<div class="global-navigation-item account-navigation-container">
+		<div class="account-navigation-container table-cell">
 			<?= $app->renderView( 'GlobalNavigationAccountNavigation', 'index' ) ?>
 		</div>
-		<div class="global-navigation-item start-wikia-container">
+		<div class="start-wikia-container table-cell">
 			<a href="<?= htmlspecialchars( $createWikiUrl ) ?>"
 			   class="start-wikia"
 			   title="<?= wfMessage( 'global-navigation-create-wiki' )->escaped(); ?>"

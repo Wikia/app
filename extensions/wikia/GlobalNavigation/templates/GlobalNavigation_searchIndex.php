@@ -5,7 +5,7 @@
 				<div class="search-select-underlay">
 					<button class="search-submit"></button>
 					<? if (empty($disableLocalSearchOptions)): ?>
-							<img class="chevron" id="searchFormChevron" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"/>
+							<img class="chevron" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"/>
 							<select class="search-select" id="searchSelect">
 								<option value="local" selected="selected" data-placeholder="<?= Sanitizer::encodeAttribute($localSearchPlaceholder); ?>" data-search-url="<?= Sanitizer::encodeAttribute( $localSearchUrl ); ?>"><?= wfMessage( 'global-navigation-local-search' )->escaped(); ?></option>
 								<option value="global" data-placeholder="<?=wfMessage( 'global-navigation-global-search' )->escaped(); ?>" data-search-url="<?= Sanitizer::encodeAttribute( $globalSearchUrl ); ?>"><?= wfMessage( 'global-navigation-global-search' )->escaped(); ?></option>

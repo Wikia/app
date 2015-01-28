@@ -2,63 +2,47 @@
 @import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/Venus/styles/typographyMixins';
 @import 'GlobalNavigationColors';
+@import 'GlobalNavigationVariables';
 
 .account-navigation-container {
-	padding-right: 9px;
+	padding-right: $account-navigation-container-padding-right;
 	position: relative;
 }
 
 .AccountNavigation {
-	padding: 0 20px;
+	height: $global-navigation-height;
+	padding: 0 round($global-navigation-items-spacing / 2);
 	margin: 0;
-	display: table-cell;
-	vertical-align: middle;
-	height: 46px;
 
 	&.active {
-		background-color: rgb(230, 235, 242);
+		background-color: $grey-background;
 		.user-menu {
 			display: table;
 			table-layout: fixed;
 		}
-
-		> li {
-			> a:after {
-				border-top-color: $nav-foreground-dark-color;
-			}
-		}
 	}
 
-	> li {
-		border: 0;
+	.account-navigation-first-item {
 		list-style: none;
-		padding: 0;
 
 		.links-container {
-			height: 30px;
 			display: table-row;
-			overflow: hidden;
+			height: $global-navigation-height-without-margin;
 
 			.chevron {
 				border: 5px solid;
-				border-top-color: rgb(9, 35, 68);
+				border-top-color: $dark-blue;
 				color: transparent;
 				display: inline-block;
 				margin-left: 10px;
 				margin-top: 12px;
 			}
-
-			.ajaxLogin {
-				display: table-cell;
-				vertical-align: middle;
-			}
 		}
 
 		.avatar-container {
-			float: left;
-			height: 30px;
+			height: $avatar-size;
 			overflow: hidden;
-			width: 30px;
+			width: $avatar-size;
 
 			&.anon-avatar-placeholder,
 			&.logged-avatar-placeholder {
@@ -74,11 +58,10 @@
 	}
 
 	.ajaxRegister {
-		color: rgb(101, 110, 120);
-		font-size: 12px;
+		@include font-size-xxs;
+		color: $dark-grey;
 		display: table-cell;
 		vertical-align: middle;
-		height: 100%;
 
 		&:hover {
 			text-decoration: none;
@@ -91,8 +74,8 @@
 		border: 1px solid $nav-border-color;
 		display: none;
 		padding: 0;
-		right: 9px;
 		position: absolute;
+		right: $account-navigation-container-padding-right;
 		top: 100%;
 
 		> li {

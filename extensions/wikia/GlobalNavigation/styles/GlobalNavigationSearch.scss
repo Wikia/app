@@ -1,19 +1,19 @@
 @import 'GlobalNavigationColors';
+@import 'GlobalNavigationVariables';
 @import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/Venus/styles/typographyMixins';
 
-$default-height: 30px;
+$search-input-size: 30px;
+$autocomplete-item-height: 44px;
 
 .search-container {
-	padding-right: 20px;
+	padding-right: round($global-navigation-items-spacing / 2);
 	width: 100%;
 }
 
 .search-form-wrapper {
-	font-size: $font-size-base-big-screen;
-	margin-bottom: 8px;
-	margin-top: 8px;
+	margin: $global-navigation-margin-size 0;
 	width: 100%;
 
 	.search-form {
@@ -21,25 +21,26 @@ $default-height: 30px;
 	}
 
 	.autocomplete {
-		font-size: 14px;
-		color: rgb(9, 35, 68);
+		@include font-size-xs;
 		background-color: $global-wikia-background-color;
-		border: 2px solid rgba(0,0,0, 0.2);
+		border: 2px solid rgba(0, 0, 0, 0.2);
 		border-top: none;
+		color: $dark-blue;
 		line-height: 18px;
 		margin-top: 10px;
 
 		div {
+			@include font-size-xs;
 			border-bottom: 1px solid rgb(230, 235, 250);
 			cursor: pointer;
-			height: 44px;
+			height: $autocomplete-item-height;
 			line-height: 23px;
 			padding: 8px 10px;
 			white-space: initial;
 		}
 
 		.selected {
-			background-color: rgb(230, 235, 242);
+			background-color: $grey-background;
 		}
 
 		span {
@@ -66,6 +67,7 @@ $default-height: 30px;
 	width: 0;
 
 	.search-select {
+		@include font-size-xs;
 		border: 0;
 		cursor: pointer;
 		height: 100%;
@@ -79,23 +81,19 @@ $default-height: 30px;
 	.search-select-underlay {
 		display: inline-block;
 		position: relative;
-		width: 31px;
-		height: 30px;
+		width: $search-input-size;
+		height: $search-input-size;
 	}
 
 	.chevron {
 		border-color: transparent;
 		border-style: solid;
-		border-top-color: rgb(9, 35, 68);
+		border-top-color: $dark-blue;
 		border-width: 5px;
 		left: 100%;
 		margin-top: 13px;
 		position: relative;
 		width: 0;
-
-		&.dark {
-			border-top-color: $nav-foreground-dark-color;
-		}
 	}
 }
 
@@ -104,27 +102,15 @@ $default-height: 30px;
 	width: 100%;
 
 	.search-input {
+		@include font-size-xs;
 		background-color: rgb(242, 246, 250);
 		border: solid 1px rgb(197, 206, 217);
 		border-radius: 2px;
 		color: rgba(101, 110, 120, 0.75);
-		font-size: 14px;
 		font-weight: bold;
-		height: $default-height;
+		height: $search-input-size;
 		padding-left: 56px;
 		width: 100%;
-
-		&::-webkit-input-placeholder {
-			color:rgba(101, 110, 120, 0.75);
-		}
-
-		&::-moz-placeholder {
-			color:rgba(101, 110, 120, 0.75);
-		}
-
-		&:-ms-input-placeholder {
-			color:rgba(101, 110, 120, 0.75);
-		}
 	}
 
 	.search-submit {
@@ -132,10 +118,10 @@ $default-height: 30px;
 		background-image: url('/extensions/wikia/GlobalNavigation/images/search_icon.svg'); /* inline */
 		background-position: center;
 		border: 0;
-		height: $default-height;
+		height: $search-input-size;
 		padding: 0;
 		position: absolute;
-		width: $default-height;
+		width: $search-input-size;
 	}
 
 	.autocomplete-container {

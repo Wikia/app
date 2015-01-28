@@ -5,6 +5,7 @@
 @import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationColors';
+@import 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationVariables';
 
 .AccountNavigation.active .UserLoginDropdown {
 	display: block;
@@ -20,8 +21,8 @@
 	list-style: none;
 	padding: 0 0 $large-content-padding 0;
 	position: absolute;
+	right: $account-navigation-container-padding-right;
 	top: 100%;
-	right: 9px;
 	z-index: 5000100;
 
 	.ajaxRegisterContainer {

@@ -48,19 +48,20 @@ $hub-arrow-icon-left-padding-large: $hub-menu-icon-left-padding-large + $hub-men
 	background-repeat: no-repeat;
 	cursor: pointer;
 	display: inline-block;
+	height: $global-navigation-height;
 	width: 36px;
 
 	&:after {
 		border: 5px solid $global-wikia-background-color;
-		border-top-color: rgb(9, 35, 68);
+		border-top-color: $dark-blue;
 		content: ' ';
 		display: inline-block;
+		margin-left: $hub-menu-icon-width + 10px;
 		margin-top: 21px;
-		margin-left: 26px;
 	}
 }
 
-.global-navigation-item.active {
+.hubs-container.active {
 	.hubs-menu {
 		display: block;
 	}
