@@ -1,6 +1,7 @@
 <?php
 
 use Wikia\Tasks\Tasks\BaseTask;
+use \Wikia\Tasks\AsyncTaskList;
 
 class GlobalWatchlistTask extends BaseTask {
 
@@ -56,11 +57,11 @@ class GlobalWatchlistTask extends BaseTask {
 
 		$db = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
 		$sql = ( new WikiaSQL() )
-			->DELETE()->FROM( static::tableName )
-			->WHERE( static::columnUserID )->EQUAL_TO( $userID );
+			->DELETE()->FROM( self::tableName )
+			->WHERE( self::columnUserID )->EQUAL_TO( $userID );
 
 		if ( !$clearAllWikis ) {
-			$sql->AND_( static::columnCityID )->EQUAL_TO( $wgCityId );
+			$sql->AND_( self::columnCityID )->EQUAL_TO( $wgCityId );
 		}
 
 		$sql->run( $db );
@@ -80,16 +81,26 @@ class GlobalWatchlistTask extends BaseTask {
 		$db = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
 		foreach ( $watchers as $watcher ) {
 			( new WikiaSQL() )
-				->INSERT()->INTO( static::tableName )
-				->SET( static::columnUserID, $watcher )
-				->SET( static::columnCityID, $wgCityId )
-				->SET( static::columnTitle, $databaseKey )
-				->SET( static::columnNameSpace, $nameSpace )
-				->SET( static::columnRevisionID, $revision->getId() )
-				->SET( static::columnRevisionTimeStamp, $revision->getTimestamp() )
-				->SET( static::columnTimeStamp, $revision->getTimestamp() )
+				->INSERT()->INTO( self::tableName )
+				->SET( self::columnUserID, $watcher )
+				->SET( self::columnCityID, $wgCityId )
+				->SET( self::columnTitle, $databaseKey )
+				->SET( self::columnNameSpace, $nameSpace )
+				->SET( self::columnRevisionID, $revision->getId() )
+				->SET( self::columnRevisionTimeStamp, $revision->getTimestamp() )
+				->SET( self::columnTimeStamp, $revision->getTimestamp() )
 				->run( $db );
+			$this->scheduleWeeklyDigest( $watcher );
 		}
+	}
+
+	private function scheduleWeeklyDigest( $userID ) {
+		$task = new self();
+		( new AsyncTaskList() )
+			->add( $task->call( 'sendWeeklyDigest', $userID ) )
+			->delay( '3 minutes' )
+			->dupCheck()
+			->queue();
 	}
 
 	/**
@@ -102,11 +113,11 @@ class GlobalWatchlistTask extends BaseTask {
 
 		$db = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
 		( new WikiaSQL() )
-			->DELETE()->FROM( static::tableName )
-			->WHERE( static::columnUserID )->IN( $watchers )
-			->AND_( static::columnCityID )->EQUAL_TO( $wgCityId )
-			->AND_( static::columnTitle )->EQUAL_TO( $databaseKey )
-			->AND_( static::columnNameSpace )->EQUAL_TO( $nameSpace )
+			->DELETE()->FROM( self::tableName )
+			->WHERE( self::columnUserID )->IN( $watchers )
+			->AND_( self::columnCityID )->EQUAL_TO( $wgCityId )
+			->AND_( self::columnTitle )->EQUAL_TO( $databaseKey )
+			->AND_( self::columnNameSpace )->EQUAL_TO( $nameSpace )
 			->run( $db );
 	}
 
@@ -119,12 +130,12 @@ class GlobalWatchlistTask extends BaseTask {
 
 		$db = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
 		( new WikiaSQL() )
-			->UPDATE( static::tableName )
-			->SET( static::columnTitle, $newTitleValues['databaseKey'] )
-			->SET( static::columnNameSpace, $newTitleValues['nameSpace'] )
-			->WHERE( static::columnTitle )->EQUAL_TO( $oldTitleValues['databaseKey'] )
-			->AND_( static::columnNameSpace )->EQUAL_TO( $oldTitleValues['nameSpace'] )
-			->AND_( static::columnCityID )->EQUAL_TO( $wgCityId )
+			->UPDATE( self::tableName )
+			->SET( self::columnTitle, $newTitleValues['databaseKey'] )
+			->SET( self::columnNameSpace, $newTitleValues['nameSpace'] )
+			->WHERE( self::columnTitle )->EQUAL_TO( $oldTitleValues['databaseKey'] )
+			->AND_( self::columnNameSpace )->EQUAL_TO( $oldTitleValues['nameSpace'] )
+			->AND_( self::columnCityID )->EQUAL_TO( $wgCityId )
 			->run( $db );
 	}
 }

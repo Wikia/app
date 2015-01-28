@@ -65,24 +65,6 @@ class GlobalWatchlistHooks {
 			->add( $task->call( 'addWatchers', $watchedItem->databaseKey, $watchedItem->nameSpace, $watchers ) )
 			->dupCheck()
 			->queue();
-
-		self::scheduleWeeklyDigest( $watchers );
-	}
-
-	/**
-	 * Schedule a weekly digest to be sent to the user 7 days from now
-	 * @param $watchers
-	 */
-	static public function scheduleWeeklyDigest( $watchers ) {
-		foreach ( $watchers as $watcher ) {
-			$task = new GlobalWatchlistTask();
-			( new AsyncTaskList() )
-				->wikiId( F::app()->wg->CityId )
-				->add( $task->call( 'sendWeeklyDigest', $watcher ) )
-				->dupCheck()
-				->delay( '1 week' )
-				->queue();
-		}
 	}
 
 	/**
