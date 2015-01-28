@@ -553,6 +553,14 @@ Seejärel saad kergesti sisse logida, kasutades mis tahes Facebook Connect nuppu
 Palun proovige uuesti või [[Eri:Ilmuta|teavita sellest]].', # Fuzzy
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'comboajaxlogin-connectmarketing-back' => '« Atzera',
+	'comboajaxlogin-connectmarketing-forward' => 'Has zaitez »',
+);
+
 /** Persian (فارسی)
  * @author Ebraminio
  * @author Huji
@@ -1982,10 +1990,16 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (中文（繁體）‎)
+ * @author Citizen01
  * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
+	'comboajaxlogin-createlog' => '登入或建立帳號',
+	'comboajaxlogin-actionmsg' => '您需要先登入或建立帳號才能執行此操作',
+	'comboajaxlogin-actionmsg-protected' => '您需要先登入或建立帳號才能執行此操作。',
+	'comboajaxlogin-connectmarketing-back' => '← 返回',
 	'comboajaxlogin-connectmarketing-forward' => '入門 »',
+	'comboajaxlogin-ajaxerror' => 'Wikia 沒有回應。請確認您的網路連接狀態。',
 );
 
 /** Chinese (Hong Kong) (中文（香港）‎)

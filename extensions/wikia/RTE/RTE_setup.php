@@ -46,7 +46,8 @@ $wgHooks['LinkerMakeExternalLink'][] = 'RTELinkerHooks::onLinkerMakeExternalLink
 
 // tagging RTE edits
 $wgHooks['ArticleSaveComplete'][] = 'RTEStatisticsHooks::onArticleSaveComplete';
-$wgHooks['ListDefinedTags'][] = 'RTEStatisticsHooks::onListDefinedTags';
+$wgHooks['FormatSummaryRow'][] = 'RTEStatisticsHooks::onFormatSummaryRow';
+$wgHooks['SpecialTags::UsedTags'][] = 'RTEStatisticsHooks::onUsedTags';
 
 // i18n
 $wgExtensionMessagesFiles['RTE'] = $dir.'/i18n/RTE.i18n.php';

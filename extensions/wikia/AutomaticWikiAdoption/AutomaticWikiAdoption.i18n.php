@@ -834,6 +834,7 @@ Kasulikud tööriistad:
 $messages['eu'] = array(
 	'wikiadoption-adopt-inquiry' => 'Jakin ezazu gehiago!',
 	'wikiadoption-know-more-header' => 'Gehiago jakin nahi duzu?',
+	'wikiadoption-adoption-successed' => 'Zorionak! Wiki honetako administratzailea zara orain!',
 );
 
 /** Persian (فارسی)
@@ -3512,6 +3513,7 @@ Wikia团队<br /><br />
 );
 
 /** Traditional Chinese (中文（繁體）‎)
+ * @author Citizen01
  * @author Ffaarr
  */
 $messages['zh-hant'] = array(
@@ -3524,4 +3526,7 @@ $messages['zh-hant'] = array(
 	'wikiadoption-adoption-failed' => '我們很抱歉。我們試圖使您成為管理員，但它並不成功。請 [http://community.wikia.com/Special:Contact 聯繫我們]，我們會儘量幫助你。',
 	'wikiadoption-not-allowed' => '很抱歉。你現在不能認領此 wiki。',
 	'wikiadoption-not-enough-edits' => '哎呀 ！您需要有超過 10 次對本wiki的編輯才能認領它。',
+	'wikiadoption-log-reason' => '自動 Wiki 認領',
+	'wikiadoption-mail-first-subject' => '我們有一段時間沒有看到你',
+	'wikiadoption-welcome-header' => '恭喜！您已認領 {{SITENAME}}！',
 );

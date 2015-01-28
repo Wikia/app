@@ -948,6 +948,8 @@ $messages['de'] = array(
 	'usersignup-page-title' => 'Wikia beitreten',
 	'usersignup-page-title-wikiamobile' => 'Benutzerkonto erstellen',
 	'usersignup-page-captcha-label' => 'Spam-Schutz:',
+	'usersignup-page-captcha-load-fail-title' => 'Captcha nicht geladen',
+	'usersignup-page-captcha-load-fail-text' => 'Leider konnte der verschwommene Worttest nicht geladen werden. Er ist zum Erstellen eines Benutzerkontos erforderlich und könnte für deine Region nicht verfügbar sein. Bitte später erneut versuchen.',
 	'usersignup-error-username-length' => 'Der Benutzername darf nicht länger als {{PLURAL:$1|ein Zeichen|$1 Zeichen}} sein.',
 	'usersignup-error-invalid-user' => 'Ungültiger Benutzer. Bitte zuerst anmelden.',
 	'usersignup-error-invalid-email' => 'Bitte eine gültige E-Mail-Adresse angeben.',
@@ -1195,6 +1197,8 @@ $messages['es'] = array(
 	'usersignup-page-title' => 'Únete a Wikia',
 	'usersignup-page-title-wikiamobile' => 'Crear una cuenta',
 	'usersignup-page-captcha-label' => 'Palabra borrosa',
+	'usersignup-page-captcha-load-fail-title' => 'No se cargó el Captcha',
+	'usersignup-page-captcha-load-fail-text' => 'Lo sentimos, la palabra borrosa falló al cargar y se requiere para crear una cuenta. Puede que no estén disponibles en tu región. Inténtalo de nuevo más tarde.',
 	'usersignup-error-username-length' => 'Vaya, tu nombre no puede ser más de {{PLURAL:$1|un caracter|$1 caracteres}}.',
 	'usersignup-error-invalid-user' => 'El usuario no es válido. Inicia sesión primero.',
 	'usersignup-error-invalid-email' => 'Por favor escribe una dirección de correo electrónico válida.',
@@ -1519,6 +1523,8 @@ $messages['fr'] = array(
 	'usersignup-page-title' => 'Rejoindre Wikia',
 	'usersignup-page-title-wikiamobile' => 'Créer un compte',
 	'usersignup-page-captcha-label' => 'Mot flou',
+	'usersignup-page-captcha-load-fail-title' => 'Captcha non chargé',
+	'usersignup-page-captcha-load-fail-text' => 'Nous sommes désolés, le test de mot flouté n’a pas pu se charger, et il est nécessaire pour créer un compte. Il peut ne pas être disponible dans votre région. Veuillez réessayer ultérieurement.',
 	'usersignup-error-username-length' => "Oups, votre nom d'utilisateur ne peut pas dépasser {{PLURAL:$1|un caractère|$1 caractères}}.",
 	'usersignup-error-invalid-user' => "Utilisateur non valide. Veuillez d'abord vous connecter.",
 	'usersignup-error-invalid-email' => 'Veuillez entrer une adresse de courriel valide.',
@@ -2466,10 +2472,15 @@ $messages['ka'] = array(
  */
 $messages['ko'] = array(
 	'usersignup-user-pref-unconfirmed-emailnotauthenticated' => '이런! 당신의 이메일은 인증되지 않았습니다. 이메일 주소를 인증하기 전까지 이메일과 관련된 기능은 작동하지 않을 것입니다.',
+	'usersignup-confirmation-email-greeting' => '안녕하세요, $USERNAME 님.',
 	'usersignup-confirmation-email-signature' => '위키아 팀',
+	'usersignup-reconfirmation-email-greeting' => '안녕하세요, $USERNAME 님',
 	'usersignup-reconfirmation-email-signature' => '위키아 팀',
+	'usersignup-welcome-email-greeting' => '안녕하세요, $USERNAME 님',
 	'usersignup-welcome-email-signature' => '위키아 팀',
+	'usersignup-account-creation-email-greeting' => '안녕하세요,',
 	'usersignup-account-creation-email-signature' => '위키아 팀',
+	'usersignup-confirmation-reminder-email-greeting' => '안녕하세요, $USERNAME 님',
 	'usersignup-confirmation-reminder-email-signature' => '위키아 팀',
 	'usersignup-facebook-or-header' => '또는',
 );
@@ -2704,6 +2715,8 @@ $messages['ms'] = array(
 	'usersignup-page-title' => 'Sertai Wikia',
 	'usersignup-page-title-wikiamobile' => 'Buka akaun',
 	'usersignup-page-captcha-label' => 'Kata Kabur',
+	'usersignup-page-captcha-load-fail-title' => 'Captcha tidak dimuatkan',
+	'usersignup-page-captcha-load-fail-text' => 'Maafkan kami kerana ujian kata kabur yang diperlukan untuk membuka akaun telah gagal dimuatkan. Ia mungkin tidak terdapat di kawasan anda. Sila cuba lagi nanti.',
 	'usersignup-error-username-length' => 'Maaf, nama pengguna anda tidak boleh melebihi {{PLURAL:$1|satu aksara|$1 aksara}}.',
 	'usersignup-error-invalid-user' => 'Pengguna tidak sah. Sila log masuk terlebih dahulu.',
 	'usersignup-error-invalid-email' => 'Sila berikan alamat e-mel yang sah.',
@@ -3123,6 +3136,7 @@ Vil du kontrollere hva slags e-post du får? Gå til: {{fullurl:{{ns:special}}:P
 /** Dutch (Nederlands)
  * @author AvatarTeam
  * @author HanV
+ * @author Robin0van0der0vliet
  * @author SPQRobin
  * @author Siebrand
  * @author Southparkfan
@@ -3146,7 +3160,7 @@ $messages['nl'] = array(
 	'usersignup-facebook-heading' => 'Registratie afronden',
 	'usersignup-facebook-create-account' => 'Registreren',
 	'usersignup-facebook-email-tooltip' => 'Als u een ander e-mailadres wilt gebruiken, kunt u dat later in uw voorkeuren wijzigen.',
-	'usersignup-facebook-have-an-account-heading' => 'Hebt u al een gebruiker?',
+	'usersignup-facebook-have-an-account-heading' => 'Hebt u al een account?',
 	'usersignup-facebook-have-an-account' => 'Uw huidige Wikigebruiker met Facebook koppelen.',
 	'usersignup-facebook-proxy-email' => 'Anonieme e-mailadres van Facebook',
 	'usersignup-user-pref-emailconfirmlink' => 'Nieuwe bevestiging laten e-mailen',
@@ -3270,7 +3284,7 @@ Wilt u bepalen welke e-mails u ontvangt? Ga dan naar {{fullurl:{{ns:special}}:Pr
 	'usersignup-heading' => 'Word vandaag lid van Wikia',
 	'usersignup-heading-byemail' => 'Maak een gebruiker aan voor iemand anders',
 	'usersignup-marketing-wikia' => 'Begin met samenwerken met miljoenen mensen van over de hele wereld die samenkomen om te delen wat ze weten en waar ze passie voor hebben.',
-	'usersignup-marketing-login' => 'Hebt u al een gebruiker?[[Special:UserLogin|Meld u aan]]',
+	'usersignup-marketing-login' => 'Hebt u al een account?[[Special:UserLogin|Meld u aan]]',
 	'usersignup-marketing-benefits' => 'Doe mee aan iets groots',
 	'usersignup-marketing-community-heading' => 'Samenwerken',
 	'usersignup-marketing-community' => 'Ontdek en verken onderwerpen van videogames tot films en televisie. Ontmoet mensen met gelijke interesses en passies.',
@@ -3404,6 +3418,7 @@ Volètz verificar quins corrièrs electronics recebètz ? Anatz sus {{fullurl:{{
 );
 
 /** Polish (polski)
+ * @author Matik7
  * @author Pio387
  * @author Sovq
  * @author Vengir
@@ -3412,6 +3427,7 @@ $messages['pl'] = array(
 	'usersignup-page-title' => 'Dołącz do Wikii',
 	'usersignup-page-title-wikiamobile' => 'Załóż nowe konto',
 	'usersignup-page-captcha-label' => 'Zamazany tekst',
+	'usersignup-page-captcha-load-fail-title' => 'Nie załadowano Captcha',
 	'usersignup-error-username-length' => 'Twoja nazwa użytkownika nie może mieć więcej niż {{PLURAL:$1|jeden znak|$1 znaków}}.',
 	'usersignup-error-invalid-user' => 'Niewłaściwy użytkownik. Zaloguj się.',
 	'usersignup-error-invalid-email' => 'Wprowadź prawidłowy adres e-mail.',
@@ -3615,6 +3631,9 @@ ___________________________________________
 Aby zapoznać się z nowościami, odwiedź http://spolecznosc.wikia.com
 Chcesz zmienić ustawienia otrzymywanych powiadomień? Zajrzyj tutaj: {{fullurl:{{ns:special}}:Preferences}}',
 	'usersignup-facebook-problem' => 'Wystąpił problem podczas łączenia z Facebookiem. Spróbuj póżniej.',
+	'usersignup-facebook-signup-header' => 'Utworzyć nowe konto?',
+	'usersignup-facebook-login-header' => 'Masz już konto?',
+	'usersignup-facebook-or-header' => 'czy',
 );
 
 /** Piedmontese (Piemontèis)
@@ -4237,6 +4256,7 @@ $messages['sv'] = array(
 	'usersignup-page-title' => 'Gå med i Wikia',
 	'usersignup-page-title-wikiamobile' => 'Skapa konto',
 	'usersignup-page-captcha-label' => 'Suddigt ord',
+	'usersignup-page-captcha-load-fail-title' => 'Captcha lästes inte in',
 	'usersignup-error-username-length' => 'Hoppsan, ditt användarnamn kan inte vara mer än {{PLURAL:$1|ett tecken|$1 tecken}}.',
 	'usersignup-error-invalid-user' => 'Ogiltig användare. Var god logga in först.',
 	'usersignup-error-invalid-email' => 'Var god ange en giltig e-postadress.',
@@ -5124,11 +5144,14 @@ Ahiver on novea conte',
  * @author Dimension
  * @author Liuxinyu970226
  * @author Sam Wang
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'usersignup-page-title' => '加入Wikia',
 	'usersignup-page-title-wikiamobile' => '创建账户',
 	'usersignup-page-captcha-label' => '模糊单词',
+	'usersignup-page-captcha-load-fail-title' => '验证码未载入',
+	'usersignup-page-captcha-load-fail-text' => '我们很抱歉，但模糊单词测试加载失败，并且它是创建一个账户所必需的。它可能在您的地理区域不可用。请稍后再试。',
 	'usersignup-error-username-length' => '您的用户名不能超过{{PLURAL:$1|一个字符|$1字符}}。',
 	'usersignup-error-invalid-user' => '无效用户，请先登录。',
 	'usersignup-error-invalid-email' => '请输入有效的电子邮箱地址。',

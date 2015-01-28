@@ -1346,6 +1346,7 @@ $messages['ko'] = array(
 	'toplists-desc' => '상위 10개 목록',
 	'toplists-category' => '상위 10개 목록',
 	'toplists-cancel-button' => '취소',
+	'toplists-createpage-dialog-label' => '상위 10개 목록',
 	'toplists-oasis-only' => '모노북 스킨에는 상위 10 목록이 적용되지 않습니다. 이 기능을 체험하고 싶으시다면 스킨을 위키아 스킨으로 바꿔주세요.',
 );
 

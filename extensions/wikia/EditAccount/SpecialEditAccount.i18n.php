@@ -160,6 +160,7 @@ $messages['ang'] = array(
  * @author Achraf94
  * @author Claw eg
  * @author Kuwaity26
+ * @author Test Create account
  * @author ترجمان05
  */
 $messages['ar'] = array(
@@ -221,6 +222,7 @@ $messages['ar'] = array(
 	'editaccount-closure-requested' => 'من المقرر أن يتم إغلاق هذا الحساب حسب طلبهم.',
 	'editaccount-submit-clearclosurerequest' => 'إبطال عملية الإغلاق',
 	'editaccount-error-clearclosurerequest' => 'خطأ: الحساب مغلق مسبقا أو ليس من المقرر إغلاقه.',
+	'editaccount-success-clearclosurerequest' => 'غلق طلبات المسح لـ$1.',
 	'editaccount-log' => 'سجل حسابات المستخدم',
 	'editaccount-log-header' => 'هذه الصفحة تسرد التغييرات التي تم إجراؤها على معلومات المستخدم من قبل موظفي ويكيا.',
 	'editaccount-log-entry-email' => 'قام بتغيير  بريد المستخدم $2 الإلكتروني',
@@ -1469,6 +1471,8 @@ $messages['ko'] = array(
 	'editaccount-invalid-email' => '"$1"은 올바른 이메일 주소가 아닙니다!',
 	'editaccount-nouser' => '"$1" 계정이 존재하지 않습니다!',
 	'editaccount-not-loaded' => '오류: 사용자 데이터를 불러오는 데 실패했습니다. 페이지를 새로고침 해주세요.',
+	'editaccount-requested' => '알림: 이 사용자는 계정 폐쇄를 요청했습니다',
+	'editaccount-not-requested' => '경고: 이 사용자는 계정 폐쇄를 요청하지 않았습니다',
 	'editaccount-labal-account-status' => '계정 상태',
 	'editaccount-labal-email-status' => '이메일 상태',
 	'editaccount-status-confirmed' => '확인됨',
@@ -1476,6 +1480,9 @@ $messages['ko'] = array(
 	'editaccount-status-realuser' => '활동적인 사용자',
 	'editaccount-status-tempuser' => '비활동적인 사용자',
 	'editaccount-error-tempuser-email' => '비활동적인 사용자는 이메일 주소를 비울 수 없습니다. 이메일 주소를 입력해주세요.',
+	'editaccount-closure-requested' => '이 계정은 당사자의 요청에 따라 폐쇄될 예정입니다.',
+	'editaccount-submit-clearclosurerequest' => '폐쇄 요청 초기화',
+	'editaccount-error-clearclosurerequest' => '오류: 이 계정은 이미 폐쇄되었거나 아직 폐쇄가 예정되지 않았습니다.',
 	'editaccount-log' => '사용자 계정 로그',
 	'editaccount-log-entry-email' => '$2 사용자의 이메일 주소를 변경했습니다',
 	'editaccount-log-entry-pass' => '$2 사용자의 비밀번호를 변경했습니다',
@@ -3024,7 +3031,7 @@ $messages['zh-hans'] = array(
 	'editaccount-frame-usage' => '注意',
 	'editaccount-usage' => '用户数据被每个Wiki分别储存。当您修改密码或电子邮箱时，只会在修改的Wiki上生效。请直接使用新密码登入该Wiki，以避免缓存问题。',
 	'editaccount-label-select' => '选择一个用户',
-	'editaccount-submit-account' => '管理用户',
+	'editaccount-submit-account' => '管理账户',
 	'editaccount-frame-account' => '编辑用户帐户:$1',
 	'editaccount-frame-close' => '禁用用户帐户：$1',
 	'editaccount-label-email' => '设置新电子邮件地址',
@@ -3073,7 +3080,7 @@ $messages['zh-hans'] = array(
 	'editaccount-error-tempuser-email' => '临时用户不能有空白的电子邮件地址字段，请输入一个电子邮件地址。',
 	'editaccount-email-change-requested' => '用户在用户设置里请求了将电子邮件更改为$1。为确认该用户的电子邮件更改请求，请您在下面输入请求的电子邮件地址，并点击“保存并确认”。',
 	'editaccount-closure-requested' => '已经依据帐户自身的请求而计划关闭此帐户。',
-	'editaccount-submit-clearclosurerequest' => '清晰的关闭申请',
+	'editaccount-submit-clearclosurerequest' => '清除关闭请求',
 	'editaccount-error-clearclosurerequest' => '错误: 该帐户已关闭或并不计划关闭。',
 	'editaccount-success-clearclosurerequest' => '删除账户 $1 已成功。',
 	'editaccount-log' => '用户帐户日志',

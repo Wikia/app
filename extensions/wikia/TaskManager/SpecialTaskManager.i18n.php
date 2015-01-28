@@ -107,10 +107,12 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author LWChris
+ * @author Metalhead64
  * @author PtM
  */
 $messages['de'] = array(
 	'taskmanager' => 'Anzeige und Verwaltung von Hintergrund-Aufgaben',
+	'taskmanager-desc' => 'Zeigt Hintergrundaufgaben an und verwaltet sie',
 	'taskmanager_title' => 'Anzeige und Verwaltung von Hintergrund-Aufgaben',
 	'taskmanager_tasklist' => 'Zurück zur Aufgaben-Liste',
 	'right-taskmanager' => 'Darf Hintergrund-Tasks anzeigen',
@@ -133,6 +135,7 @@ $messages['diq'] = array(
  */
 $messages['es'] = array(
 	'taskmanager' => 'Muestra y administra tareas en segundo plano',
+	'taskmanager-desc' => 'Muestra y administra tareas en segundo plano',
 	'taskmanager_title' => 'Muestra y administra tareas en segundo plano',
 	'taskmanager_tasklist' => 'Volver al listado de tareas',
 	'right-taskmanager' => 'Puede mostrar tareas en segundo plano',
@@ -169,6 +172,7 @@ $messages['fi'] = array(
  */
 $messages['fr'] = array(
 	'taskmanager' => "Afficher et gérer les tâches d'arrière-plan",
+	'taskmanager-desc' => 'Afficher et gérer les tâches d’arrière-plan',
 	'taskmanager_title' => "Afficher et gérer les tâches d'arrière-plan",
 	'taskmanager_tasklist' => 'Retourner à la liste des tâches',
 	'right-taskmanager' => 'Peut afficher les tâches en arrière-plan',
@@ -298,6 +302,7 @@ $messages['mk'] = array(
  */
 $messages['ms'] = array(
 	'taskmanager' => 'Paparkan dan uruskan tugas-tugas latar belakang',
+	'taskmanager-desc' => 'Paparkan dan uruskan tugas-tugas latar belakang',
 	'taskmanager_title' => 'Paparkan dan uruskan tugas-tugas latar belakang',
 	'taskmanager_tasklist' => 'Kembali ke Senarai Tugas',
 	'right-taskmanager' => 'Boleh memaparkan tugasan latar belakang',
@@ -348,10 +353,12 @@ $messages['oc'] = array(
 
 /** Polish (polski)
  * @author BeginaFelicysym
+ * @author Matik7
  * @author Sovq
  */
 $messages['pl'] = array(
 	'taskmanager' => 'Zarządzanie zadaniami uruchamianymi w tle',
+	'taskmanager-desc' => 'Pokaż i zarządzaj zadaniami w tle',
 	'taskmanager_title' => 'Zarządzanie zadaniami uruchamianymi w tle',
 	'taskmanager_tasklist' => 'Wróc do listy zadań',
 	'right-taskmanager' => 'Może wyświetlić zadania w tle',
@@ -410,6 +417,7 @@ $messages['pt-br'] = array(
  */
 $messages['roa-tara'] = array(
 	'taskmanager' => "Fà vedè e gestisce le combite sus a 'u sfonde",
+	'taskmanager-desc' => 'Fà vedè e gestisce le combite de rete',
 	'taskmanager_title' => "Fà vedè e gestisce le combite sus a 'u sfonde",
 	'taskmanager_tasklist' => "Tuèrne a l'elenghe de le combite",
 	'right-taskmanager' => 'Puà fà vedè le combite de sfonde',
@@ -460,6 +468,7 @@ $messages['sr-ec'] = array(
  */
 $messages['sv'] = array(
 	'taskmanager' => 'Visa och hantera bakgrundsuppgifter',
+	'taskmanager-desc' => 'Visa och hantera bakgrundsuppgifter',
 	'taskmanager_title' => 'Visa och hantera bakgrundsuppgifter',
 	'taskmanager_tasklist' => 'Återgå till uppgiftslistan',
 	'right-taskmanager' => 'Kan visa bakgrundsaktiviteter',
@@ -531,6 +540,7 @@ $messages['vi'] = array(
  */
 $messages['zh-hans'] = array(
 	'taskmanager' => '显示和管理后台任务',
+	'taskmanager-desc' => '现实和管理后台任务',
 	'taskmanager_title' => '显示和管理后台任务',
 	'taskmanager_tasklist' => '返回任务列表',
 	'right-taskmanager' => '可以显示后台任务',

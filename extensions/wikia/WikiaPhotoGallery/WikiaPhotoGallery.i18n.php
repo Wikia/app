@@ -1902,6 +1902,9 @@ Describe esta imagen.",
  * @author Subi
  */
 $messages['eu'] = array(
+	'wikiaPhotoGallery-slideshow-view-addphoto' => 'Gehitu argazkia',
+	'wikiaPhotoGallery-slideshow-view-next-tooltip' => 'Hurrengo argazkia',
+	'wikiaPhotoGallery-slideshow-view-prev-tooltip' => 'Aurreko argazkia',
 	'galery-slider-read-more' => 'Irakurri gehiago >',
 );
 
@@ -3456,6 +3459,7 @@ $messages['ko'] = array(
 	'wikiaPhotoGallery-slideshowpreview-position-left' => '왼쪽',
 	'wikiaPhotoGallery-slideshowpreview-position-center' => '가운데',
 	'wikiaPhotoGallery-slideshowpreview-position-right' => '오른쪽',
+	'galery-slider-read-more' => '더 읽어보기 >',
 );
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
@@ -5875,7 +5879,7 @@ Alternativt kan du klicka på "$2" för att se sidan i sin uppdaterade form.',
 	'wikiaPhotoGallery-slideshowpreview-recentuploads' => 'Skapa ett automatiskt uppdaterat bildspel med nya bilder',
 	'wikiaPhotoGallery-slideshowpreview-photostitle' => 'Bildspelsbilder',
 	'wikiaPhotoGallery-slideshowpreview-addphoto' => 'Lägg till ett foto',
-	'wikiaPhotoGallery-slideshowpreview-position' => 'Bildspels-position',
+	'wikiaPhotoGallery-slideshowpreview-position' => 'Bildspelets position',
 	'wikiaPhotoGallery-slideshowpreview-position-left' => 'Vänster',
 	'wikiaPhotoGallery-slideshowpreview-position-center' => 'Center',
 	'wikiaPhotoGallery-slideshowpreview-position-right' => 'Höger',
@@ -6643,7 +6647,7 @@ $messages['zh-hans'] = array(
 	'wikiaPhotoGallery-upload-filestitle-pre' => '最近上传的文件',
 	'wikiaPhotoGallery-upload-filestitle-post' => '本维基上的图片（$1条结果）',
 	'wikiaPhotoGallery-upload-page-next' => '后 8 个',
-	'wikiaPhotoGallery-upload-page-prev' => '前 8 个',
+	'wikiaPhotoGallery-upload-page-prev' => '前8个',
 	'wikiaPhotoGallery-upload-filesinsert' => '插入这张照片',
 	'wikiaPhotoGallery-upload-error-title' => '您的上传无法完成',
 	'wikiaPhotoGallery-upload-error-bad-extension' => '此文件类型不能使用。',
@@ -6824,7 +6828,7 @@ $messages['zh-hant'] = array(
 	'wikiaPhotoGallery-upload-filestitle-pre' => '最近上傳的檔案',
 	'wikiaPhotoGallery-upload-filestitle-post' => '本 wiki 上的圖片（$1條结果）',
 	'wikiaPhotoGallery-upload-page-next' => '後 8 個',
-	'wikiaPhotoGallery-upload-page-prev' => '前8個',
+	'wikiaPhotoGallery-upload-page-prev' => '前 8 筆',
 	'wikiaPhotoGallery-upload-filesinsert' => '插入這張照片',
 	'wikiaPhotoGallery-upload-error-title' => '您的上傳無法完成',
 	'wikiaPhotoGallery-upload-error-bad-extension' => '此檔案類型不能使用。',

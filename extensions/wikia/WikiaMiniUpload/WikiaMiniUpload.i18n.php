@@ -653,7 +653,7 @@ $messages['ca'] = array(
  */
 $messages['ce'] = array(
 	'wmu-upload' => 'Чуяккха',
-	'wmu-find' => 'Лаха',
+	'wmu-find' => 'Лахар',
 	'wmu-upload-btn' => 'Чуяккха',
 	'wmu-find-btn' => 'Каро',
 	'wmu-insert' => 'Чуйилла',
@@ -822,6 +822,7 @@ $messages['cy'] = array(
  * @author Tiin
  */
 $messages['de'] = array(
+	'wmu-desc' => 'WikiaMiniUpload-Erweiterung',
 	'wmu-upload-image' => 'Bild hochladen',
 	'wmu-title' => 'Foto hochladen',
 	'wmu-upload' => 'Hochladen',
@@ -1042,6 +1043,7 @@ $messages['eo'] = array(
  * @author VegaDark
  */
 $messages['es'] = array(
+	'wmu-desc' => 'Extensión WikiaMiniUpload',
 	'wmu-upload-image' => 'Subir una imagen',
 	'wmu-title' => 'Subir imagen',
 	'wmu-upload' => 'Subir',
@@ -1224,6 +1226,7 @@ $messages['fi'] = array(
  * @author Wyz
  */
 $messages['fr'] = array(
+	'wmu-desc' => 'Extension WikiaMiniUpload',
 	'wmu-upload-image' => 'Téléverser une image',
 	'wmu-title' => 'Importer une image',
 	'wmu-upload' => 'Importer',
@@ -1820,7 +1823,12 @@ $messages['kn'] = array(
  * @author 아라
  */
 $messages['ko'] = array(
+	'wmu-upload-image' => '그림 올리기',
+	'wmu-title' => '그림 올리기',
+	'wmu-upload' => '올리기',
 	'wmu-find' => '찾기',
+	'wmu-flickr' => '플리커',
+	'wmu-upload-btn' => '올리기',
 	'wmu-find-btn' => '찾기',
 	'wmu-license' => '라이선스',
 	'wmu-licensing' => '라이선스',
@@ -2002,6 +2010,7 @@ $messages['mk'] = array(
  * @author SNN95
  */
 $messages['ms'] = array(
+	'wmu-desc' => 'Sambungan WikiaMiniUpload',
 	'wmu-upload-image' => 'Muat Naik Gambar',
 	'wmu-title' => 'Muat Naik Gambar',
 	'wmu-upload' => 'Muat naik',
@@ -3357,6 +3366,7 @@ $messages['yi'] = array(
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'wmu-desc' => 'WikiaMiniUpload扩展',
 	'wmu-upload-image' => '上载图片',
 	'wmu-title' => '上载图片',
 	'wmu-upload' => '上载',

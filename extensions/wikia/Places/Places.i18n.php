@@ -152,7 +152,7 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
-	'places-editor-search' => 'Лаха',
+	'places-editor-search' => 'Лахар',
 	'places-editor-geoposition' => 'ХӀинца йолу меттиг',
 );
 

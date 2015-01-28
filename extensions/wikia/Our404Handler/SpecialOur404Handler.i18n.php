@@ -25,6 +25,14 @@ Article '''$1''' could not be found.
 * To go on to the main page of this site, click the link: [{{SERVER}} {{SITENAME}}]"
 );
 
+/** Tunisian Spoken Arabic (تونسي)
+ * @author Csisc
+ */
+$messages['aeb'] = array(
+	'our404handler' => "Erreur' 404: el page ma fammech",
+	'our404handler-oops' => ' hedħouma ma houmech el pajet illi tlawej għalihom. ħawwel igħaychek',
+);
+
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
@@ -167,9 +175,11 @@ $messages['cs'] = array(
  * @author LWChris
  * @author McDutchie
  * @author Merlissimo
+ * @author Metalhead64
  * @author Tim 'Avatar' Bartel
  */
 $messages['de'] = array(
+	'our404handler-desc' => 'Unser 404-Handler für nicht vorhandene Seitentricks',
 	'our404handler' => 'Fehler 404: Seite nicht gefunden!',
 	'our404handler-oops' => 'Dies sind nicht die Seiten, die du gesucht hast. Versuche eine andere.',
 	'message404' => "'''Es tut uns leid, aber die Seite, die du angefordert hast, existiert nicht.'''
@@ -213,8 +223,10 @@ $messages['el'] = array(
 /** Spanish (español)
  * @author Bola
  * @author Fitoschido
+ * @author VegaDark
  */
 $messages['es'] = array(
+	'our404handler-desc' => 'Nuestro manejador 404 de páginas inexistentes',
 	'our404handler' => 'Error 404: No se encontró la página.',
 	'our404handler-oops' => 'Aquí no están las páginas que buscas. Puedes seguir tu camino.',
 	'message404' => "'''Lo sentimos mucho, pero por alguna razón la página que buscas no existe.'''
@@ -231,6 +243,13 @@ No se encontró el artículo '''$1'''.
  */
 $messages['et'] = array(
 	'our404handler' => 'Tõrge 404: Lehte ei leitud!',
+);
+
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'our404handler' => '404 errorea: Ez da orrialdea aurkitu!',
 );
 
 /** Persian (فارسی)
@@ -275,10 +294,12 @@ $messages['fo'] = array(
 );
 
 /** French (français)
+ * @author Gomoko
  * @author Peter17
  * @author Polytherion
  */
 $messages['fr'] = array(
+	'our404handler-desc' => 'Notre gestionnaire 404 pour les astuces de pages non existantes',
 	'our404handler' => 'Erreur 404 : Page non-trouvée !',
 	'our404handler-oops' => "Ceci ne sont pas les pages que vous cherchez. Circulez, s'il-vous-plaît.",
 	'message404' => "'''Désolé, mais pour une raison ou une autre la page demandée n'existe pas.'''
@@ -731,6 +752,7 @@ $messages['rm'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'our404handler-desc' => "'U gestore 404 nuèstre pe le pàggene ca non g'esistone",
 	'our404handler' => 'Errore 404: Pàgene none acchiate!',
 	'our404handler-oops' => 'Non ge stonne le pàggene ca ste cirche. Spuèstete sus, pe piacere.',
 	'message404' => "'''Nuje sime avveramende dispiaciute, ma pe quacche mutive 'a pàgene ca tu è cercate non g'esiste.'''
@@ -900,8 +922,10 @@ Bài viết '''$1''' không tìm thấy.
 /** Simplified Chinese (中文（简体）‎)
  * @author Liuxinyu970226
  * @author Wilsonmess
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'our404handler-desc' => 'Our 404 handler为不存在的页面提供处理接口',
 	'our404handler' => '错误404：找不到该页面',
 	'our404handler-oops' => '找不到您要查看的页面。请继续当前操作。',
 	'message404' => "'''我们深感抱歉，但是由于某些原因您所请求的页面并不存在。'''
