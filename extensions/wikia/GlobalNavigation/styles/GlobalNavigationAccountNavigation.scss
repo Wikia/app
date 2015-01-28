@@ -7,6 +7,8 @@
 	@include grid-column-width('medium', 1, $medium-grid-gutter + $medium-content-padding - 1px);
 }
 
+$user-menu-shift: 20px;
+
 .AccountNavigation {
 	margin: 0;
 	padding: 0;
@@ -75,16 +77,16 @@
 
 	.user-menu {
 		@include grid-column-width('medium', 2, $medium-content-padding);
-		@include font-size-s;
+		@include font-size-xs;
 		border: 1px solid $nav-border-color;
 		display: none;
 		padding: 0;
 		position: relative;
-		right: $medium-grid-column + 1px;
+		right: $medium-grid-column + $user-menu-shift + 1px;
 
 		> li {
 			display: table-row;
-			height: 51px;
+			height: 40px;
 			list-style: none;
 
 			> a {
@@ -129,7 +131,7 @@
 
 		.user-menu {
 			@include grid-column-width('small', 3, $small-content-padding);
-			right: 2 * $small-grid-column + $small-grid-gutter + 1px;
+			right: 2 * $small-grid-column + $small-grid-gutter + $user-menu-shift + 1px;
 		}
 	}
 }
@@ -152,7 +154,7 @@
 
 		.user-menu {
 			@include grid-column-width('large', 2, $large-content-padding);
-			right: $large-grid-column + 1px;
+			right: $large-grid-column + $user-menu-shift + 1px;
 		}
 	}
 }

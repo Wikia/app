@@ -16,6 +16,12 @@ $white: #fff;
 $black-transparent: rgba(0, 0, 0, 0);
 $black-half-transparent: rgba(0, 0, 0, .6);
 
+$markasread-color: #fff;
+$markasread-bg-color: rgb(9, 35, 68);
+$notifications-divider-color: rgb(197, 206, 217);
+$notifications-header-color: rgb(57, 66, 77);
+$notifications-header-bg-color: rgb(230, 235, 242);
+$time-color: rgba($notifications-header-color, .5);
 
 .bubbles {
 	background-color: $white;
@@ -55,7 +61,7 @@ $black-half-transparent: rgba(0, 0, 0, .6);
 }
 
 #GlobalNavigationWallNotifications {
-	@include grid-position('medium', 2, 'right', $medium-content-padding - 2);
+	@include grid-position('medium', 2, 'right', $medium-content-padding - 20px - 2px);
 	@include grid-column-width('medium', 4, $medium-content-padding);
 	background-color: $white;
 	border: 1px solid $border-color;
@@ -111,8 +117,7 @@ $black-half-transparent: rgba(0, 0, 0, .6);
 	header {
 		font-weight: bold;
 		height: auto;
-		min-height: 51px;
-		padding: 15px 20px 0;
+		padding: 12px 20px;
 	}
 
 	ul {
@@ -125,29 +130,18 @@ $black-half-transparent: rgba(0, 0, 0, .6);
 
 	.notifications-header {
 		@include clearfix;
-		background-color: $header-bg-color;
-		color: $border-color;
+		background-color: $notifications-header-bg-color;
+		color: $notifications-header-color;
 	}
 
 	.notifications-markasread {
 		@include font-size-xxs;
-		float: right;
 		font-weight: normal;
-		text-align: right;
-
-		span {
-			cursor: pointer;
-			margin-left: 10px;
-		}
-
-		div {
-			display: none;
-			margin: 10px 0;
-		}
-
-		&.show div {
-			display: block;
-		}
+		text-align: center;
+		background-color: $markasread-bg-color;
+		border-top: 1px solid $notifications-divider-color;
+		color: $markasread-color;
+		cursor: pointer;
 	}
 
 	.notifications-for-wiki {
@@ -176,14 +170,14 @@ $black-half-transparent: rgba(0, 0, 0, .6);
 		}
 
 		.notifications-wiki-header {
-			background-color: $wiki-header-bg-color;
-			border-top: 1px solid $border-color;
-			color: $wiki-header-color;
+			background-color: $notifications-header-bg-color;
+			border-top: 1px solid $notifications-divider-color;
+			color: $notifications-header-color;
 			cursor: pointer;
 			padding-right: 38px;
 
 			&:hover .chevron {
-				border-top-color: $wiki-header-color;
+				color: $notifications-header-color;
 			}
 		}
 
@@ -198,15 +192,16 @@ $black-half-transparent: rgba(0, 0, 0, .6);
 	}
 
 	.notification {
-		border-top: 1px solid $border-color;
-		line-height: 22px;
-		padding: 20px 0;
+		@include font-size-xxs;
+		border-top: 1px solid $notifications-divider-color;
+		line-height: 20px;
+		padding: 12px 0;
 		position: relative;
 
 		.notification-message {
-			@include grid-column-width('medium', 3);
-
 			display: inline-block;
+			padding-left: 70px;
+			padding-right: 20px;
 
 			p {
 				margin: 0;
@@ -214,11 +209,13 @@ $black-half-transparent: rgba(0, 0, 0, .6);
 		}
 
 		.avatars {
-			@include grid-column-width('medium', 1);
-
 			display: inline-block;
+			left: 20px;
+			position: absolute;
 			text-align: center;
+			top: 12px;
 			vertical-align: top;
+			width: 40px;
 
 			.avatar {
 				border-radius: 50%;
@@ -226,14 +223,14 @@ $black-half-transparent: rgba(0, 0, 0, .6);
 		}
 
 		h4 {
-			@include font-size-s;
+			@include font-size-xs;
 			font-weight: bold;
 			margin: 0;
 		}
 
 		time {
 			@include font-size-xxs;
-			color: $border-color;
+			color: $time-color;
 		}
 
 		&.empty, &.admin-notification {
@@ -286,16 +283,6 @@ $black-half-transparent: rgba(0, 0, 0, .6);
 		#notificationsContainer {
 			@include grid-column-width('small', 6, $small-content-padding + 18);
 		}
-
-		.notification {
-			.avatars {
-				@include grid-column-width('small', 1);
-			}
-
-			.notification-message {
-				@include grid-column-width('small', 5);
-			}
-		}
 	}
 }
 
@@ -312,16 +299,6 @@ $black-half-transparent: rgba(0, 0, 0, .6);
 
 		#notificationsContainer {
 			@include grid-column-width('large', 4, $large-content-padding + 18);
-		}
-
-		.notification {
-			.avatars {
-				@include grid-column-width('large', 1);
-			}
-
-			.notification-message {
-				@include grid-column-width('large', 3);
-			}
 		}
 	}
 }
