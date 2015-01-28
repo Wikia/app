@@ -70,7 +70,8 @@ $fieldset-padding: 12px;
 		float: none;
 
 		[type=text],
-		[type=password] {
+		[type=password],
+		[type=email] {
 			box-sizing: border-box;
 			width: 100%;
 		}
