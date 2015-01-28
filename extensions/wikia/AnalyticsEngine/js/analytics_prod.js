@@ -141,6 +141,30 @@
 		['_setCustomVar', 5, 'LoginStatus',
 			!!window.wgUserName ? 'user' : 'anon', 3] );
 
+	/*
+	 * Remove when SOC-217 ABTest is finished
+	 */
+	/**
+	 * Get unconfirmed email AbTest user type
+	 * @returns {string}
+	 */
+	function getUnconfirmedEmailUserType() {
+		if ( !window.wgUserName ) {
+			return 'anon';
+		} else {
+			if ( window.wgNotConfirmedEmail === null ) {
+				return 'old user';
+			} else if ( window.wgNotConfirmedEmail === 1 ) {
+				return 'unconfirmed';
+			} else {
+				return 'confirmed';
+			}
+		}
+	}
+	/*
+	 * end remove
+	 */
+
 	/**** Medium-Priority CVs ****/
 	_gaqWikiaPush( ['_setCustomVar', 8, 'PageType', window.wikiaPageType, 3],
 		['_setCustomVar', 9, 'CityId', window.wgCityId, 3],
@@ -148,7 +172,15 @@
 		['_setCustomVar', 15, 'IsCorporatePage', window.wikiaPageIsCorporate ? 'Yes' : 'No', 3],
 		['_setCustomVar', 16, 'Krux Segment', getKruxSegment(), 3],
 		['_setCustomVar', 17, 'Vertical', window.wgWikiVertical, 3],
-		['_setCustomVar', 18, 'Categories', window.wgWikiCategories.join(','), 3]
+		['_setCustomVar', 18, 'Categories', window.wgWikiCategories.join(','), 3],
+
+		/*
+		 * Remove when SOC-217 ABTest is finished
+		 */
+		['_setCustomVar', 39, 'UnconfirmedEmailUserType', getUnconfirmedEmailUserType(), 3]
+		/*
+		 * end remove
+		 */
 	);
 
 	/**** Include A/B testing status ****/
