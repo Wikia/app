@@ -109,9 +109,7 @@ class WatchedItem {
 		);
 		
 		$dbw->insert( 'watchlist', $rows, __METHOD__, 'IGNORE' );
-		
-		wfRunHooks( 'WatchedItem::addWatch', array ( $this ) );
-		
+
 		return true;
 	}
 
@@ -169,8 +167,8 @@ class WatchedItem {
 	 */
 	public function updateWatch( $watchers = null, $timestamp = null ) {
 		$dbw = wfGetDB( DB_MASTER );
-		
-		$user = ( !empty($watchers) ) ? $watchers : $this->userID;
+
+		$watchers = ( !empty( $watchers ) ) ? $watchers : $this->userID;
 		$ts = ( !is_null( $timestamp ) ) ? $dbw->timestamp( $timestamp ) : null;
 
 		$dbw->begin();
@@ -180,14 +178,14 @@ class WatchedItem {
 				), array( /* WHERE */
 					'wl_title' => $this->databaseKey,
 					'wl_namespace' => $this->nameSpace,
-					'wl_user' => $user
+					'wl_user' => $watchers
 				), __METHOD__
 		);
 		$dbw->commit();
-		
-		wfRunHooks( 'WatchedItem::updateWatch', array ( $this, $user, $ts ) );
-		
-		return true;	
+
+		wfRunHooks( 'WatchedItem::updateWatch', array ( $this, $watchers, $ts ) );
+
+		return true;
 	}
 	
 	/**
@@ -221,12 +219,14 @@ class WatchedItem {
 	 */
 	private static function doDuplicateEntries( $oldTitle, $newTitle ) {
 
+		$db = wfGetDB( DB_MASTER );
 		( new WikiaSQL() )
 			->UPDATE( 'watchlist' )
 			->SET( 'wl_title', $newTitle->getDBkey() )
 			->SET( 'wl_namespace', $newTitle->getNamespace() )
 			->WHERE( 'wl_title' )->EQUAL_TO( $oldTitle->getDBkey() )
-			->AND_( 'wl_namespace' )->EQUAL_TO( $oldTitle->getNamespace() );
+			->AND_( 'wl_namespace' )->EQUAL_TO( $oldTitle->getNamespace() )
+			->run( $db );
 
 		wfRunHooks( 'WatchedItem::replaceWatch', [ $oldTitle, $newTitle ] );
 				

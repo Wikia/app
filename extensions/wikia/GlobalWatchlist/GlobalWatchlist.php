@@ -34,9 +34,8 @@ $wgAutoloadClasses['GlobalWatchlistTask'] = dirname( __FILE__ ) . '/GlobalWatchl
 
 // hooks
 $wgHooks[ 'GetPreferences' ][] = 'GlobalWatchlistHook::getPreferences';
-$wgHooks[ 'WatchedItem::addWatch' ][] = 'GlobalWatchlistHook::addGlobalWatch';
-$wgHooks[ 'WatchedItem::removeWatch' ][] = 'GlobalWatchlistHook::removeGlobalWatch';
-$wgHooks[ 'WatchedItem::updateWatch' ][] = 'GlobalWatchlistHook::updateGlobalWatch';
-$wgHooks[ 'WatchedItem::replaceWatch'][] = 'GlobalWatchlistHook::replaceGlobalWatch';
+$wgHooks[ 'WatchedItem::removeWatch' ][] = 'GlobalWatchlistHook::removeWatchers';
+$wgHooks[ 'WatchedItem::updateWatch' ][] = 'GlobalWatchlistHook::updateGlobalWatchList';
+$wgHooks[ 'WatchedItem::replaceWatch'][] = 'GlobalWatchlistHook::renameTitleInGlobalWatchlist';
 $wgHooks[ 'SpecialEditWatchlist::clearWatchlist'][] = 'GlobalWatchlistHook::clearGlobalWatch';
-$wgHooks[ 'User::resetWatch' ][] = 'GlobalWatchlistHook::resetGlobalWatch';
+$wgHooks[ 'User::resetWatch' ][] = 'GlobalWatchlistHook::clearGlobalWatch';

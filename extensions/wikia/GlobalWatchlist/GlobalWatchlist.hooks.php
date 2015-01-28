@@ -20,58 +20,100 @@ class GlobalWatchlistHook {
 		
 		return true;
 	}
-	
+
 	/**
-	 * Hook function calls when watch was added to database
-	 * @param $watchItem WatchedItem: object
+	 * Hook function calls when watch was updated in database
+	 * @param $watchedItem WatchedItem: object
+	 * @param $watchers Array or Integer: array of user IDs or user ID
+	 * @param $timestamp Datetime or null
 	 * @return bool (always true)
 	 */
-	static public function addGlobalWatch ( $watchItem ) {
-		$task = new GlobalWatchlistTask();
-		( new AsyncTaskList() )
-			->wikiId( F::app()->wg->CityId )
-			->add( $task->call( 'addToGlobalWatchlist', $watchItem ) )
-			->dupCheck()
-			->queue();
+	static public function updateGlobalWatchList( WatchedItem $watchedItem, $watchers, $timestamp ) {
+		$watchers = wfReturnArray( $watchers );
+		if ( is_null( $timestamp ) ) {
+			self::removeWatchers( $watchedItem, $watchers );
+		} else {
+			self::addWatchers( $watchedItem, $watchers );
+		}
 
 		return true;
 	}
 
 	/**
+	 * Remove watchers from the global_watchlist table
+	 * @param $watchedItem WatchedItem
+	 * @param $watchers
+	 */
+	static public function removeWatchers( WatchedItem $watchedItem, array $watchers ) {
+		$task = new GlobalWatchlistTask();
+		( new AsyncTaskList() )
+			->wikiId( F::app()->wg->CityId )
+			->add( $task->call( 'removeWatchers', $watchedItem->databaseKey, $watchedItem->nameSpace, $watchers ) )
+			->dupCheck()
+			->queue();
+	}
+
+	/**
+	 * Add watchers to the global_watchlist table
+	 * @param $watchedItem
+	 * @param $watchers
+	 */
+	static public function addWatchers( WatchedItem $watchedItem, array $watchers ) {
+		$task = new GlobalWatchlistTask();
+		( new AsyncTaskList() )
+			->wikiId( F::app()->wg->CityId )
+			->add( $task->call( 'addWatchers', $watchedItem->databaseKey, $watchedItem->nameSpace, $watchers ) )
+			->dupCheck()
+			->queue();
+
+		self::scheduleWeeklyDigest( $watchers );
+	}
+
+	/**
+	 * Schedule a weekly digest to be sent to the user 7 days from now
+	 * @param $watchers
+	 */
+	static public function scheduleWeeklyDigest( $watchers ) {
+		foreach ( $watchers as $watcher ) {
+			$task = new GlobalWatchlistTask();
+			( new AsyncTaskList() )
+				->wikiId( F::app()->wg->CityId )
+				->add( $task->call( 'sendWeeklyDigest', $watcher ) )
+				->dupCheck()
+				->delay( '1 week' )
+				->queue();
+		}
+	}
+
+	/**
 	 * Hook function calls when watch was removed from database
-	 * @param $watchItem WatchedItem: object
+	 * @param $watchedItem WatchedItem: object
 	 * @param $success Boolean: removed successfully
 	 * @return bool (always true)
 	 */		
-	static public function removeGlobalWatch( $watchItem, $success ) {
+	static public function removeGlobalWatch( $watchedItem, $success ) {
 
 		if ( !$success ) {
 			/* some errors when update in local watchlist table */
 			return true;
 		}
 
-		$task = new GlobalWatchlistTask();
-		( new AsyncTaskList() )
-			->wikiId( F::app()->wg->CityId )
-			->add( $task->call( 'removeFromGlobalWatchlist', $watchItem ) )
-			->dupCheck()
-			->queue();
+		self::removeWatchers( $watchedItem, [ $watchedItem->userID ] );
 
 		return true;
 	}
 
 	/**
-	 * Hook function calls when watch was updated in database
-	 * @param $watchItem WatchedItem: object
-	 * @param $users Array or Integer: array of user IDs or user ID
-	 * @param $timestamp Datetime or null
+	 * Hook function to delete all watches for User
+	 * @param $userID integer
 	 * @return bool (always true)
 	 */
-	static public function updateGlobalWatch( $watchItem, $users, $timestamp ) {
+	static public function clearGlobalWatch( $userID ) {
+
 		$task = new GlobalWatchlistTask();
 		( new AsyncTaskList() )
 			->wikiId( F::app()->wg->CityId )
-			->add( $task->call( 'updateGlobalWatchlist', $watchItem, $users, $timestamp ) )
+			->add( $task->call( 'clearGlobalWatchlist', $userID ) )
 			->dupCheck()
 			->queue();
 
@@ -84,49 +126,23 @@ class GlobalWatchlistHook {
 	 * @param $newTitle Title
 	 * @return bool (always true)
 	 */
-	static public function replaceGlobalWatch( $oldTitle, $newTitle ) {
+	static public function renameTitleInGlobalWatchlist( $oldTitle, $newTitle ) {
+		$oldTitleValues = [
+			'databaseKey' => $oldTitle->getDBkey(),
+			'nameSpace' => $oldTitle->getNamespace()
+		];
+		$newTitleValues = [
+			'databaseKey' => $newTitle->getDBkey(),
+			'nameSpace' => $newTitle->getNamespace()
+		];
+
 		$task = new GlobalWatchlistTask();
 		( new AsyncTaskList() )
 			->wikiId( F::app()->wg->CityId )
-			->add( $task->call( 'replaceWatchlist', $oldTitle, $newTitle ) )
+			->add( $task->call( 'renameTitleInGlobalWatchlist', $oldTitleValues, $newTitleValues ) )
 			->dupCheck()
 			->queue();
 
 		return true;
 	}
-
-	/**
-	 * Hook function to delete all watches for User
-	 * @param $user User: object
-	 * @return bool (always true)
-	 */
-	static public function clearGlobalWatch( $user) {
-
-		$userID = $user->getId();
-		$task = new GlobalWatchlistTask();
-		( new AsyncTaskList() )
-			->wikiId( F::app()->wg->CityId )
-			->add( $task->call( 'clearGlobalWatchlist', $userID ) )
-			->dupCheck()
-			->queue();
-
-		return true;
-	}
-
-	/**
-	 * Hook function to reset all watches for User
-	 * @param $userID Integer: User ID
-	 * @return bool (always true)
-	 */
-	static public function resetGlobalWatch( $userID ) {
-
-		$task = new GlobalWatchlistTask();
-		( new AsyncTaskList() )
-			->wikiId( F::app()->wg->CityId )
-			->add( $task->call( 'resetGlobalWatchlist', $userID ) )
-			->dupCheck()
-			->queue();
-
-		return true;
-	}	
 }

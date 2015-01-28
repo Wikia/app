@@ -26,7 +26,7 @@ class GlobalWatchlistBot {
 			} );
 
 		foreach ( $wikiIDs as $wikiID ) {
-			$db = wfGetDB( DB_MASTER, [], $wikiID );
+			$db = wfGetDB( DB_MASTER, [], WikiFactory::IDtoDB( $wikiID ) );
 			( new WikiaSQL() )
 				->UPDATE( 'watchlist' )
 				->SET( 'wl_notificationtimestamp', null )
