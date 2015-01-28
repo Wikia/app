@@ -362,17 +362,17 @@ class WAMService extends Service {
 				$contentWarningWikis = $excludedWikis = [];
 
 				// Exlude wikias with ContentWarning extension enabled
-				$blacklistExt = WikiFactory::getVarByName( self::WAM_BLACKLIST_EXT_VAR_NAME, null );
-				if ( is_object( $blacklistExt ) ) {
+				$blacklistExtVarId = WikiFactory::getVarIdByName( self::WAM_BLACKLIST_EXT_VAR_NAME );
+				if ( $blacklistExtVarId ) {
 					$contentWarningWikis = array_keys(
-						WikiFactory::getListOfWikisWithVar($blacklistExt->cv_id, 'bool', '=', true )
+						WikiFactory::getListOfWikisWithVar($blacklistExtVarId, 'bool', '=', true )
 					);
 				}
 				// Exclude wikias with an exclusion flag set to true
-				$blacklistFlag = WikiFactory::getVarByName( self::WAM_EXCLUDE_FLAG_NAME, null );
-				if ( is_object( $blacklistFlag ) ) {
+				$blacklistFlagVarId = WikiFactory::getVarIdByName( self::WAM_EXCLUDE_FLAG_NAME );
+				if ( $blacklistFlagVarId ) {
 					$excludedWikis = array_keys(
-						WikiFactory::getListOfWikisWithVar( $blacklistFlag->cv_id, 'bool', '=', true )
+						WikiFactory::getListOfWikisWithVar( $blacklistFlagVarId, 'bool', '=', true )
 					);
 				}
 
