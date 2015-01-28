@@ -172,7 +172,7 @@ class WAMApiController extends WikiaApiController {
 		$options['wikiLang'] = $this->request->getVal('wiki_lang', null);
 		$options['wikiId'] = $this->request->getInt('wiki_id', null);
 		$options['wikiWord'] = $this->request->getVal('wiki_word', null);
-		$options['excludeBlacklist'] = $this->request->getVal('exclude_blacklist', false);
+		$options['excludeBlacklist'] = $this->request->getVal('exclude_blacklist', true);
 		$options['excludeNonCommercial'] = $this->hideNonCommercialContent();
 		$options['fetchAdmins'] = $this->request->getBool('fetch_admins', false);
 		$options['avatarSize'] = $this->request->getInt('avatar_size', self::DEFAULT_AVATAR_SIZE);
