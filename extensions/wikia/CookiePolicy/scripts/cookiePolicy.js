@@ -59,7 +59,9 @@ require([
 	 */
 	function setCookie() {
 		cookies.set('euCookiePolicy', '1', {
-			domain: window.wgCookieDomain
+			domain: window.wgCookieDomain,
+			path: '/',
+			expires: 'never'
 		});
 	}
 
