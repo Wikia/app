@@ -3772,6 +3772,6 @@ Used on [[Special:Tags]]. Verb. Used as display text on a link to create/edit a 
 
 {{Identical|Other}}',
 
-'uploadnologintext' => 'Information that the user has to log in to upload files or add videos. Displayed for non-logged in users that perform upload action. 1st parameter is LogIn page link.',
+'uploadnologintext' => 'Information that the user has to log in to upload files or add videos. Displayed for non-logged in users that perform upload action. 1st parameter is LogIn page link including already translated anchor text - EN example: $1 = "<a [...]>log in</a>".',
 
 );
