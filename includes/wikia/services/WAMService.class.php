@@ -365,7 +365,7 @@ class WAMService extends Service {
 				$blacklistExtVarId = WikiFactory::getVarIdByName( self::WAM_BLACKLIST_EXT_VAR_NAME );
 				if ( $blacklistExtVarId ) {
 					$contentWarningWikis = array_keys(
-						WikiFactory::getListOfWikisWithVar($blacklistExtVarId, 'bool', '=', true )
+						WikiFactory::getListOfWikisWithVar( $blacklistExtVarId, 'bool', '=', true )
 					);
 				}
 				// Exclude wikias with an exclusion flag set to true
