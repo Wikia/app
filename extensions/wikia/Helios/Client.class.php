@@ -25,20 +25,23 @@ class Client
 	/**
 	 * The general method for handling the communication with the service.
 	 */
-	public function request( $sResource, $aGetData = [], $aPostData = [], $aCustomOptions = [] )
+	public function request( $sResource, $aGetData = [], $mPostData = [], $aCustomOptions = [] )
 	{
 		// Crash if we cannot make HTTP requests.
 		\Wikia\Util\Assert::true( \MWHttpRequest::canMakeRequests() );
+
+		// Add client_id and client_secret to the GET data.
+		$aGetData['client_id'] = $this->sClientId;
+		$aGetData['client_secret'] = $this->sClientSecret;
 		
 		// Request URI pre-processing.
-		$sUri = "{$this->sBaseUri}{$sResource}?client_id={$this->sClientId}&client_secret={$this->sClientSecret}&";
-		$sUri .= http_build_query($aGetData);
+		$sUri = "{$this->sBaseUri}{$sResource}?" . http_build_query($aGetData);
 		
 		// Request options pre-processing.
 		$aDefaultOptions = [
 			'method'		=> 'GET',
 			'timeout'		=> 5,
-			'postData'		=> $aPostData,
+			'postData'		=> $mPostData,
 			'noProxy'		=> true,
 			'followRedirects'	=> false,
 			'returnInstance'	=> true
@@ -69,13 +72,19 @@ class Client
 	 */
 	public function login( $sUsername, $sPassword )
 	{
+		// Convert the array to URL-encoded query string, so the Content-Type
+		// for the POST request is application/x-www-form-urlencoded.
+		// It would be multipart/form-data which is not supported
+		// by the Helios service.
+		$sPostData = http_build_query([
+			'username'	=> $sUsername,
+			'password'	=> $sPassword
+		]);
+
 		return $this->request(
 			'token',
 			[ 'grant_type'	=> 'password' ],
-			[
-				'username'	=> $sUsername,
-				'password'	=> $sPassword
-			],
+			$sPostData,
 			[ 'method'	=> 'POST' ]
 		);
 	}
