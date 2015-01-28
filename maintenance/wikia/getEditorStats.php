@@ -50,8 +50,8 @@ class GetRevisionWithTags extends Maintenance {
 	}
 
 	private function createrevisionsQuery() {
-		$timeStampStart = date('YMDHIs', strtotime($_SERVER['START_DATE']));
-		$timeStampEnd = date('YMDHIs', strtotime($_SERVER['END_DATE']));
+		$timeStampStart = date('YmdHis', strtotime($_SERVER['START_DATE']));
+		$timeStampEnd = date('YmdHis', strtotime($_SERVER['END_DATE']));
 
 		return (new WikiaSQL())
 			->SELECT()
