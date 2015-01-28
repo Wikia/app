@@ -48,6 +48,12 @@ define('ext.wikia.adEngine.adContext', [
 		// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
 		context.opts.usePostScribe = context.opts.usePostScribe || context.providers.sevenOneMedia;
 
+		// Always call DART in specific countries
+		var alwaysCallDartInCountries = instantGlobals.wgAdDriverAlwaysCallDartInCountries || [];
+		if (alwaysCallDartInCountries.indexOf(geo.getCountryCode()) > -1) {
+			context.opts.alwaysCallDart = true;
+		}
+
 		// Targeting by page categories
 		if (context.targeting.enablePageCategories) {
 			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();
@@ -62,12 +68,6 @@ define('ext.wikia.adEngine.adContext', [
 		if (context.providers.taboola) {
 			context.providers.taboola = abTest && abTest.inGroup('NATIVE_ADS_TABOOLA', 'YES') &&
 			(context.targeting.pageType === 'article' || context.targeting.pageType === 'home');
-		}
-
-		// Always call DART in specific countries
-		var alwaysCallDartInCountries = instantGlobals.wgAdDriverAlwaysCallDartInCountries || [];
-		if (alwaysCallDartInCountries.indexOf(geo.getCountryCode()) > -1) {
-			context.opts.alwaysCallDart = true;
 		}
 
 		// Export the context back to ads.context
