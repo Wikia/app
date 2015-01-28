@@ -8,8 +8,9 @@ class WAMService extends Service {
 
 	const WAM_DEFAULT_ITEM_LIMIT_PER_PAGE = 20;
 	const WAM_BLACKLIST_EXT_VAR_NAME = 'wgEnableContentWarningExt';
+	const WAM_EXCLUDE_FLAG_NAME = 'wgExcludeFromWAM';
 	const CACHE_DURATION = 86400; /* 24 hours */
-	const MEMCACHE_VER = '1.05';
+	const MEMCACHE_VER = '1.06';
 
 	protected $verticalIds = [
 		WikiFactoryHub::HUB_ID_OTHER,
@@ -351,23 +352,29 @@ class WAMService extends Service {
 	}
 
 	protected function getIdsBlacklistedWikis() {
-		$blacklistIds = array();
-		$blacklistExt = WikiFactory::getVarByName(self::WAM_BLACKLIST_EXT_VAR_NAME, null);
+		$blacklistIds = WikiaDataAccess::cache(
+			wfSharedMemcKey(
+				'wam_blacklist',
+				self::MEMCACHE_VER
+			),
+			self::CACHE_DURATION,
+			function () {
+				$contentWarningWikis = $excludedWikis = [];
 
-		if( $blacklistExt->cv_id ) {
-			$blacklistIds = WikiaDataAccess::cache(
-				wfSharedMemcKey(
-					'wam_blacklist',
-					self::MEMCACHE_VER,
-					$blacklistExt->cv_id
-				),
-				self::CACHE_DURATION,
-				function () use ( $blacklistExt ) {
-					$blacklistWikis = WikiFactory::getListOfWikisWithVar( $blacklistExt->cv_id, 'bool', '=', true, true );
-					return array_keys( $blacklistWikis );
+				// Exlude wikias with ContentWarning extension enabled
+				$blacklistExt = WikiFactory::getVarByName( self::WAM_BLACKLIST_EXT_VAR_NAME, null );
+				if ( is_object( $blacklistExt ) ) {
+					$contentWarningWikis = array_keys( WikiFactory::getListOfWikisWithVar($blacklistExt->cv_id, 'bool', '=', true ) );
 				}
-			);
-		}
+				// Exclude wikias with an exclusion flag set to true
+				$blacklistFlag = WikiFactory::getVarByName( self::WAM_EXCLUDE_FLAG_NAME, null );
+				if ( is_object( $blacklistFlag ) ) {
+					$excludedWikis = array_keys( WikiFactory::getListOfWikisWithVar( $blacklistFlag->cv_id, 'bool', '=', true ) );
+				}
+
+				return array_merge( $contentWarningWikis, $excludedWikis );
+			}
+		);
 
 		return $blacklistIds;
 	}
