@@ -9,12 +9,32 @@ class RTEStatisticsHooks {
 	const RTE_SOURCE_MODE_TAG = 'rte-source';
 	const RTE_WYSIWYG_MODE_TAG = 'rte-wysiwyg';
 
+	static $tagBlacklist = [ self::RTE_SOURCE_MODE_TAG, self::RTE_WYSIWYG_MODE_TAG ];
+
 	/**
 	 * Removes tags from listings
 	 */
 	public static function onFormatSummaryRow( &$tags ) {
-		$tagBlacklist = [ self::RTE_SOURCE_MODE_TAG, self::RTE_WYSIWYG_MODE_TAG ];
-		$tags = array_diff( $tags, $tagBlacklist );
+		$tags = array_diff( $tags, self::$tagBlacklist );
+
+		return true;
+	}
+
+	/**
+	 * Removes tags from Listings like Special:Tags
+	 * each tag is an array structured:
+	 * [ 'ct_tag' => TAG_NAME, 'hitcount' => TAG_USAGES ]
+	 */
+	public static function onUsedTags( &$tags ) {
+		$remainingTags = [];
+
+		foreach ( $tags as $tag ) {
+			if ( !in_array( $tag['ct_tag'], self::$tagBlacklist ) ) {
+				$remainingTags [] = $tag;
+			}
+		}
+
+		$tags = $remainingTags;
 
 		return true;
 	}
