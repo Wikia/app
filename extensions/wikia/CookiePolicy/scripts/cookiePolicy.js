@@ -55,24 +55,11 @@ require([
 	}
 
 	/**
-	 * Get url for the cookie's "domain" value based on environment.
-	 * It would be nice to add this to the cookies module at some point.
-	 * @returns {string}
-	 */
-	function getCookieDomain() {
-		if (mw.config.get('wgDevelEnvironment')) {
-			return 'wikia-dev.com';
-		} else {
-			return 'wikia.com';
-		}
-	}
-
-	/**
 	 * Set a cookie so we know not to show the policy banner again.
 	 */
 	function setCookie() {
 		cookies.set('euCookiePolicy', '1', {
-			domain: getCookieDomain()
+			domain: window.wgCookieDomain
 		});
 	}
 
