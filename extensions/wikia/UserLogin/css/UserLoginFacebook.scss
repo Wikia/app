@@ -69,9 +69,9 @@ $fieldset-padding: 12px;
 	.input-group {
 		float: none;
 
-		[type=text],
-		[type=password],
-		[type=email] {
+		[type='text'],
+		[type='password'],
+		[type='email'] {
 			box-sizing: border-box;
 			width: 100%;
 		}

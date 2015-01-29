@@ -21,10 +21,10 @@ $success-color: #3d8d42;
 		margin-bottom: 5px;
 		padding: 5px 7px;
 
-		[type=text],
-		[type=url],
-		[type=password],
-		[type=email],
+		[type='text'],
+		[type='url'],
+		[type='password'],
+		[type='email'],
 		textarea {
 			@include wikia-form-input-field;
 		}
@@ -81,7 +81,7 @@ $success-color: #3d8d42;
 		clear: both;
 	}
 
-	[type=submit].link {
+	[type='submit'].link {
 		background: none;
 		border: 0;
 		border-radius: 0;
