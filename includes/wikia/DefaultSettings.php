@@ -445,6 +445,7 @@ $wgDebugLogGroups = [
 	'poolcounter' => true,  // errors from PoolCounterWork
 	'replication' => true,  // replication errros / excessive lags
 	'squid' => true,        // timeouts and errors from SquidPurgeClient
+	'createwiki' => true,   // CreateWiki process
 ];
 
 // Register \Wikia\Sass namespace
