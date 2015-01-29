@@ -1,6 +1,5 @@
 <?php
 ini_set('display_errors', 'stderr');
-putenv("SERVER_ID=177");
 
 /**
  * Class NfcNormalizeVideos
@@ -10,8 +9,14 @@ putenv("SERVER_ID=177");
  * @see VID-2153 & http://unicode.org/reports/tr15/
  */
 class NfcNormalizeVideos {
+	protected static $metadataFieldsContainingName = [
+		'title',
+		'name',
+		'keywords',
+	];
+
 	/**
-	 * Used by runOnCluster to Normalize video titles
+	 * Used by runOnCluster to Normalize video titles and metadata
 	 *
 	 * @param DatabaseMysql $db
 	 * @param bool $test
@@ -46,7 +51,7 @@ class NfcNormalizeVideos {
 	 */
 	protected static function getVideoRows( DatabaseMysql $db ) {
 		return ( new WikiaSQL() )
-			->SELECT( 'img_name', 'img_sha1' )
+			->SELECT( 'img_name', 'img_metadata', 'img_sha1' )
 			->FROM( 'image' )
 			->WHERE( 'img_media_type' )->EQUAL_TO( 'VIDEO' )
 			->AND_( FluentSql\StaticSQL::RAW( 'img_name <> CONVERT(img_name USING ASCII)' ) )
@@ -56,7 +61,7 @@ class NfcNormalizeVideos {
 	}
 
 	/**
-	 * Update title for videos with titles not in normalized NFC form
+	 * Update title and metadata for videos with titles not in normalized NFC form
 	 *
 	 * @param stdClass $video
 	 * @param DatabaseMysql $db
@@ -73,17 +78,22 @@ class NfcNormalizeVideos {
 			return;
 		}
 
-		$affectedImage = 0;
-		$affectedVideoInfo = 0;
+		// This is also required because PHP unserialize fails otherwise
+		$metadata = self::getNormalizedMetadata( $video );
+
+		$affectedImage = 'NOT';
+		$affectedVideoInfo = 'NOT';
 
 		if ( !$test ) {
 			$sql = new WikiaSQL();
 			$sql->UPDATE( 'image' )
 				->SET( 'img_name', $name )
+				->SET( 'img_metadata', $metadata )
 				->WHERE( 'img_name' )->EQUAL_TO( $originalName )
 				->run( $db );
 			$affectedImage = $db->affectedRows() ? '' : 'NOT';
 
+			$sql = new WikiaSQL();
 			$sql->UPDATE( 'video_info' )
 				->SET( 'video_title', $name )
 				->WHERE( 'video_title' )->EQUAL_TO( $originalName )
@@ -96,8 +106,25 @@ class NfcNormalizeVideos {
 			. "for: $originalName img_sha1: {$video->img_sha1}\n";
 
 		if ( $verbose ) {
-			echo "\tNew title: $name\n";
+			echo "\tNew title: $name"
+				. "\n\tNew metadata: $metadata\n";
 		}
 	}
 
+	/**
+	 * Get Normalized metadata in PHP-serialized form
+	 *
+	 * @param stdClass $video
+	 * @return string
+	 */
+	protected static function getNormalizedMetadata( $video ) {
+		// image.img_metadata
+		$metadata = unserialize( $video->img_metadata );
+		foreach ( self::$metadataFieldsContainingName as $field ) {
+			if ( isset( $metadata[ $field ] ) ) {
+				$metadata[ $field ] = \UtfNormal::toNFC( $metadata[ $field ] );
+			}
+		}
+		return serialize( $metadata );
+	}
 }
