@@ -262,6 +262,19 @@ $messages['br'] = array(
 	'quickstats-number-shortening-billions' => '$1Mrd',
 );
 
+/** Bosnian (bosanski)
+ * @author Palapa
+ */
+$messages['bs'] = array(
+	'quickstats-header-photos' => 'Fotografije',
+	'quickstats-header-likes' => 'Lajkovi',
+	'quickstats-totals-label' => 'Ukupno',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Pogledajte više statistike]]',
+	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
+);
+
 /** Iriga Bicolano (Iriga Bicolano)
  * @author Filipinayzd
  */
@@ -277,6 +290,7 @@ $messages['bto'] = array(
 /** Catalan (català)
  * @author Andriykopanytsia
  * @author CuBaN VeRcEttI
+ * @author Paynekiller92
  * @author Solde
  */
 $messages['ca'] = array(
@@ -286,9 +300,10 @@ $messages['ca'] = array(
 	'quickstats-header-edits' => 'Edicions',
 	'quickstats-header-photos' => 'Fotos',
 	'quickstats-header-likes' => 'Gustos',
+	'quickstats-date-format' => 'M d',
 	'quickstats-totals-label' => 'Totals',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Veure més estadístiques]]',
-	'quickstats-number-shortening' => '$1 тис.',
+	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1M',
 	'quickstats-number-shortening-billions' => '
 $1B',
@@ -476,6 +491,7 @@ $messages['et'] = array(
 $messages['eu'] = array(
 	'quickstats-header-date' => 'Data',
 	'quickstats-header-photos' => 'Argazkiak',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Ikusi estatistika gehiago]]',
 	'quickstats-number-shortening' => '$1 K',
 	'quickstats-number-shortening-millions' => '$1 M',
 );

@@ -7,6 +7,7 @@
 
 $messages = Array();
 $messages["en"] = Array(
+	'deletebatch-desc' => 'deletes a batch of pages',
 	'deletebatch' => 'Delete batch of pages',
 	'deletebatch_button' => 'DELETE' , /* */
 	'deletebatch_help' => 'Delete a batch of pages. You can either perform a single delete, or delete pages listed in a file.  Choose a user that will be shown in deletion logs. Uploaded file should contain page name and optional reason separated by | character in each line.' ,
@@ -32,5 +33,6 @@ $messages["en"] = Array(
 );
 
 $messages["qqq"] = Array(
+	'deletebatch-desc' => '{{desc}}',
 	'deletebatch_button' => "Make it an irritably big button, on purpose."
 );

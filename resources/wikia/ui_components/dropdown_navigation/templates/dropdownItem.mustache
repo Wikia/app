@@ -9,6 +9,11 @@
 		{{/dataAttr}}
 		{{#class}} class="{{class}}" {{/class}}
 	>
-		{{{title}}}
+		{{#rawTitle}}
+			{{{title}}}
+		{{/rawTitle}}
+		{{^rawTitle}}
+			{{title}}
+		{{/rawTitle}}
 	</a>
 </li>

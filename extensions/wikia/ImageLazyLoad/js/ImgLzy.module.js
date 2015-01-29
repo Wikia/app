@@ -3,13 +3,12 @@
 /* Lazy loading for images inside articles (skips wikiamobile)
  * @author Piotr Bablok <pbablok@wikia-inc.com>
  */
-define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window'], function ($, log, w) {
+define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window', 'wikia.thumbnailer'], function ($, log, w, thumbnailer) {
 	'use strict';
 
 	var ImgLzy,
-		// allow WebP thumbnails for JPG and PNG files only (exclude video thumbnails)
-		// e.g. /muppet/images/thumb/9/98/BBC1_promos_for_Muppets_Tonight/150px-BBC1_promos_for_Muppets_Tonight.jpg
-		thumbCheckRegExp = /\/images\/thumb\/[0-9a-f]\/[0-9a-f]{2}\/[^/]+\.(jpg|jpeg|jpe|png)(\/)/i;
+		// allow WebP thumbnails for JPG and PNG files only
+		thumbExtCheckRegExp = /\.(jpg|jpeg|jpe|png)(\/)/i;
 
 	function logger(msg) {
 		log(msg, log.levels.info, 'ImgLzy');
@@ -67,8 +66,18 @@ define('wikia.ImgLzy', ['jquery', 'wikia.log', 'wikia.window'], function ($, log
 
 		// rewrite the URL to request WebP thumbnails (if enabled on this wiki and supported by the browser)
 		rewriteURLForWebP: function (src) {
-			if (w.wgEnableWebPThumbnails === true && this.browserSupportsWebP && thumbCheckRegExp.test(src)) {
-				src = src.replace(/\.[^\./]+$/, '.webp');
+			if (w.wgEnableWebPThumbnails === true && this.browserSupportsWebP && thumbExtCheckRegExp.test(src) && thumbnailer.isThumbUrl(src)) {
+				if (thumbnailer.isLegacyThumbnailerUrl(src)) {
+					src = src.replace(/\.[^\./]+$/, '.webp');
+				}
+				else {
+					// remove the existing format parameter
+					src = src.replace(/[\?&]format=\w+/, '');
+
+					// add "format=webp" to Vignette URL
+					src += src.indexOf('?') ? '&' : '?';
+					src += 'format=webp';
+				}
 			}
 			return src;
 		},

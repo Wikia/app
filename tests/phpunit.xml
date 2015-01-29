@@ -18,9 +18,6 @@
 	<testsuite name="Wikia ResourceLoader Test Suite">
 		<directory>../includes/resourceloader/wikia/</directory>
 	</testsuite>
-	<testsuite name="Facebook Connect Extension">
-		<directory>../extensions/FBConnect/</directory>
-	</testsuite>
 	<testsuite name="Wikia Extensions Test Suite">
 		<directory>../extensions/wikia/</directory>
 	</testsuite>

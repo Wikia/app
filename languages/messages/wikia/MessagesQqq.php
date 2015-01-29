@@ -9,5 +9,15 @@ $messages = array_merge( $messages, array(
 'group-voldev' => '{{doc-group|voldev}}',
 'group-voldev-member' => '{{doc-group|voldev|member}}',
 'grouppage-voldev' => '{{doc-group|voldev|page}}',
+
+# vertical names
+'vertical-tv' => 'TV vertical name',
+'vertical-games' => 'Games vertical name',
+'vertical-books' => 'Books vertical name',
+'vertical-comics' => 'Comics vertical name',
+'vertical-lifestyle' => 'Lifestyle vertical name',
+'vertical-music' => 'Music vertical name',
+'vertical-movies' => 'Movies vertical name',
+
 ) );
 

@@ -13,6 +13,7 @@ $messages = array();
  */
 $messages['en'] = array(
 	'unsubscribe' => 'Unsubscribe',
+	'unsubscribe-desc' => 'Single email unbsubscribe point',
 
 	'unsubscribe-badaccess' => 'Sorry, this page cannot be used directly. Please follow the link from your e-mail.',
 	'unsubscribe-badtoken' => 'Sorry, there was a problem with the security token.',
@@ -44,6 +45,7 @@ $messages['en'] = array(
  * @author Shirayuki
  */
 $messages['qqq'] = array(
+	'unsubscribe-desc' => '{{desc}}',
 	'unsubscribe-working-done' => '{{Identical|Complete}}',
 	'unsubscribe-preferences-toggle' => 'zugehörige Adresse: http://de.wikia.com/Spezial:Einstellungen',
 );
@@ -102,13 +104,22 @@ $messages['br'] = array(
 
 /** Catalan (català)
  * @author Light of Cosmos
+ * @author Unapersona
  */
 $messages['ca'] = array(
+	'unsubscribe' => 'Donar-se de baixa',
+	'unsubscribe-badaccess' => "Ho sentim, però aquesta pàgina no pot ser utilitzada directament. Si us plau, seguiu l'enllaç des de l'adreça d'e-mail.",
+	'unsubscribe-bademail' => "Ho sentim, hi havia un problema amb l'e-mail.",
 	'unsubscribe-nousers' => "No s'han trobat usuaris amb aquesta adreça electrònica.",
 	'unsubscribe-noconfusers' => "No s'han trobat usuaris confirmats amb aquesta adreça electrònica.",
 	'unsubscribe-confirm-legend' => 'Confirmar',
+	'unsubscribe-confirm-text' => 'Donar de baixa tots els comptes amb <code>$1</code>?',
 	'unsubscribe-confirm-button' => "Sí, n'estic segur.",
+	'unsubscribe-working' => 'Sonant de baixa $1 {{PLURAL:$1|compte|comptes}} per $2',
+	'unsubscribe-working-problem' => "problema carregant la informació d'usuari per: $1",
 	'unsubscribe-working-done' => 'Complet.',
+	'unsubscribe-preferences-toggle' => 'Donar-se de baixa de tots els correus electrònics de Wikia (desmarqueu per accedir a les opcions de sota)',
+	'unsubscribe-preferences-notice' => "Els missatges de correu electrònic han estat inhabilitades per al vostre compte. Vés a la pestanya del Perfil d'Usuari per a activar-les.",
 );
 
 /** Chechen (нохчийн)
@@ -140,9 +151,11 @@ $messages['cs'] = array(
 /** German (Deutsch)
  * @author HvW
  * @author LWChris
+ * @author Metalhead64
  */
 $messages['de'] = array(
 	'unsubscribe' => 'Abonnement beenden',
+	'unsubscribe-desc' => 'Einfacher E-Mail-Abbestellungspunkt',
 	'unsubscribe-badaccess' => 'Sorry, diese Seite kann leider nicht direkt verwendet werden. Bitte verwende den Link aus deiner E-Mail.',
 	'unsubscribe-badtoken' => 'Sorry, es gab ein Problem mit dem Security Token.',
 	'unsubscribe-bademail' => 'Sorry, es gab ein Problem mit der E-Mail.',
@@ -177,6 +190,7 @@ $messages['diq'] = array(
  */
 $messages['es'] = array(
 	'unsubscribe' => 'Darse de baja',
+	'unsubscribe-desc' => 'Un solo correo electrónico para darse de baja',
 	'unsubscribe-badaccess' => 'Lo sentimos, esta página no puede ser usada directamente. Por favor sigue el enlace desde tu correo electrónico.',
 	'unsubscribe-badtoken' => 'Lo sentimos, hubo un problema con la seguridad.',
 	'unsubscribe-bademail' => 'Lo sentimos, hubo un problema con el correo electrónico.',
@@ -230,10 +244,12 @@ $messages['fo'] = array(
 );
 
 /** French (français)
+ * @author Gomoko
  * @author Wyz
  */
 $messages['fr'] = array(
 	'unsubscribe' => 'Se désabonner',
+	'unsubscribe-desc' => 'Point unique de désinscription des courriels',
 	'unsubscribe-badaccess' => 'Désolé, cette page ne peut pas être utilisée directement. Veuillez suivre le lien qui se trouve dans votre courriel.',
 	'unsubscribe-badtoken' => 'Désolé, il y a eu un problème avec le jeton de sécurité.',
 	'unsubscribe-bademail' => 'Désolé, il y a eu un problème avec le courriel.',
@@ -386,7 +402,7 @@ $messages['lv'] = array(
  */
 $messages['mk'] = array(
 	'unsubscribe' => 'Отпиши',
-	'unsubscribe-badaccess' => 'За жал, оваа страница не може да се користи директно. Стиснете на врската наведена во пораката што ви ја испративме по е-пошта.',
+	'unsubscribe-badaccess' => 'За жал, оваа страница не може да се користи непосредно. Стиснете на врската наведена во пораката што ви ја испративме по е-пошта.',
 	'unsubscribe-badtoken' => 'За жал, се појави проблем со безбедносната шифра.',
 	'unsubscribe-bademail' => 'За жал, се појави проблем со е-поштата.',
 	'unsubscribe-badtime' => 'За жал, врската истече. Врската не треба да е постара од 7 дена.',
@@ -600,6 +616,7 @@ $messages['pt-br'] = array(
  */
 $messages['roa-tara'] = array(
 	'unsubscribe' => 'Scangillate',
+	'unsubscribe-desc' => "Punde de scangellazione de 'na mail singole",
 	'unsubscribe-badaccess' => "Ne despiace, sta pàgene non ge pò essere ausate direttamende. Pe piacere segue 'u collegamende da l'email toje.",
 	'unsubscribe-badtoken' => "Ne despiace, ste 'nu probbleme cu 'u gettone de securezze.",
 	'unsubscribe-bademail' => "Ne despiace, ste 'nu probbleme cu l'email.",
@@ -760,9 +777,11 @@ $messages['vi'] = array(
  * @author Hydra
  * @author Hzy980512
  * @author Liuxinyu970226
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'unsubscribe' => '取消订阅',
+	'unsubscribe-desc' => '单封电子邮件退订点',
 	'unsubscribe-badaccess' => '抱歉，此页不能直接应用。请跟随您的电邮的链接。',
 	'unsubscribe-badtoken' => '抱歉，安全令牌出现问题。',
 	'unsubscribe-bademail' => '抱歉，电邮出现问题。',

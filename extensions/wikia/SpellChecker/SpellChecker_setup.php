@@ -19,6 +19,7 @@ $wgExtensionCredits['other'][] = array(
 	'author' => 'Maciej Brencz',
 	'description' => 'Provides spell checking interface for enchant PHP module',
 	'descriptionmsg' => 'spellchecker-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpellChecker'
 );
 
 $dir = dirname(__FILE__);

@@ -340,36 +340,10 @@ class VideoHandlerController extends WikiaController {
 	public function getVideoList() {
 		wfProfileIn( __METHOD__ );
 
-		$sort = $this->getVal( 'sort', 'recent' );
-		$limit = $this->getVal( 'limit', 1 );
-		$page = $this->getVal( 'page', 1 );
-		$providers = $this->getVal( 'providers', array() );
-		$category = $this->getVal( 'category', '' );
-		$width = $this->getVal( 'width', self::DEFAULT_THUMBNAIL_WIDTH );
-		$height = $this->getVal( 'height', self::DEFAULT_THUMBNAIL_HEIGHT );
-		$detail = $this->getVal( 'detail', 0 );
-
-		$filter = 'all';
-		if ( is_string( $providers ) ) {
-			// get providers for mobile
-			if ( $providers == 'mobile' ) {
-				$providers = $this->wg->WikiaMobileSupportedVideos;
-			} elseif ( $providers == 'mobileApp' ) {
-				$providers = $this->wg->WikiaMobileAppSupportedVideos;
-			} else {
-				$providers = [ $providers ];
-			}
-		}
-
-		// set maximum limit
-		if ( $limit > self::VIDEO_LIMIT ) {
-			$limit = self::VIDEO_LIMIT;
-		}
+		$params = $this->getVideoListParams();
 
 		// Key to cache the data under in memcache
-		$memcKey = wfMemcKey( __CLASS__, __FUNCTION__, md5( serialize( [
-			$sort, $filter, $limit, $page, $providers, $category, $width, $height, $detail,
-		] ) ) );
+		$cacheKey = $this->getVideoListCacheKey( $params );
 
 		$cacheOptions = [
 			'cacheTTL' => \WikiaResponse::CACHE_STANDARD,
@@ -378,16 +352,23 @@ class VideoHandlerController extends WikiaController {
 
 		// Retrieve the result and if not null, cache it
 		$videoList = \WikiaDataAccess::cacheWithOptions(
-			$memcKey,
-			function() use ( $sort, $filter, $limit, $page, $providers, $category, $width, $height, $detail ) {
+			$cacheKey,
+			function() use ( $params ) {
 				$mediaService = new \MediaQueryService();
-				$videoList = $mediaService->getVideoList( $sort, $filter, $limit, $page, $providers, $category );
+				$videoList = $mediaService->getVideoList(
+					$params['sort'],
+					$params['filter'],
+					$params['limit'],
+					$params['page'],
+					$params['providers'],
+					$params['category']
+				);
 
 				// get video detail
-				if ( !empty( $detail ) ) {
+				if ( !empty( $params['detail'] ) ) {
 					$videoOptions = [
-						'thumbWidth' => $width,
-						'thumbHeight' => $height,
+						'thumbWidth' => $params['width'],
+						'thumbHeight' => $params['height'],
 					];
 					$helper = new \VideoHandlerHelper();
 					foreach ( $videoList as &$videoInfo ) {
@@ -404,9 +385,68 @@ class VideoHandlerController extends WikiaController {
 			$cacheOptions
 		);
 
-		$this->videos = $videoList;
+		$this->response->setVal( 'videos', $videoList );
 		$this->response->setCacheValidity( \WikiaResponse::CACHE_STANDARD );
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	protected function getVideoListParams() {
+		return [
+			'sort' => $this->getVal( 'sort', 'recent' ),
+			'limit' => $this->getVideoListLimit(),
+			'page' => $this->getVal( 'page', 1 ),
+			'providers' => $this->getVideoListProviders(),
+			'category' => $this->getVal( 'category', '' ),
+			'width' => $this->getVal( 'width', self::DEFAULT_THUMBNAIL_WIDTH ),
+			'height' => $this->getVal( 'height', self::DEFAULT_THUMBNAIL_HEIGHT ),
+			'detail' => $this->getVal( 'detail', 0 ),
+			'filter' => 'all',
+		];
+	}
+
+	protected function getVideoListProviders() {
+		$providers = $this->getVal( 'providers', [] );
+		if ( is_string( $providers ) ) {
+			// get providers for mobile
+			if ( $providers == 'mobile' ) {
+				$providers = $this->wg->WikiaMobileSupportedVideos;
+			} elseif ( $providers == 'mobileApp' ) {
+				$providers = $this->wg->WikiaMobileAppSupportedVideos;
+			} else {
+				$providers = [ $providers ];
+			}
+		}
+		return $providers;
+	}
+
+	protected function getVideoListLimit() {
+		$limit = $this->getVal( 'limit', 1 );
+
+		// set maximum limit
+		if ( $limit > self::VIDEO_LIMIT ) {
+			$limit = self::VIDEO_LIMIT;
+		}
+		return $limit;
+	}
+
+	protected function getVideoListCacheKey( $params ) {
+		return wfMemcKey( __METHOD__, md5( serialize( $params ) ) );
+	}
+
+	/**
+	 * Clears the cache created by the getVideoList method. As such this takes the same request parameters
+	 * as that method.
+	 */
+	public function clearVideoListCache() {
+		$params = $this->getVideoListParams();
+		$cacheKey = $this->getVideoListCacheKey( $params );
+
+		\WikiaDataAccess::cachePurge( $cacheKey );
+
+		$this->response->setData([
+			'status' => 'ok',
+			'msg' => '',
+		]);
 	}
 }

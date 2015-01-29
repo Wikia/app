@@ -83,7 +83,8 @@ class DefaultContent extends AbstractService
 				'page_images'                => count( $response['parse']['images'] ),
 				'iscontent'                  => $service->isPageIdContent( $pageId ) ? 'true' : 'false',
 				'is_main_page'               => $service->isPageIdMainPage( $pageId ) ? 'true' : 'false',
-				];
+				'indexed'                    => gmdate("Y-m-d\TH:i:s\Z")
+		];
 
 		$returnValue = array_merge(
 				$this->getPageContentFromParseResponse( $response ),

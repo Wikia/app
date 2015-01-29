@@ -9,8 +9,13 @@
 class SpecialFacebookConnectController extends WikiaSpecialPageController {
 	const DEFAULT_TEMPLATE_ENGINE = WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
+	/** @var \FacebookClientFactory */
+	protected $fbClientFactory;
+
 	public function __construct() {
 		parent::__construct( 'FacebookConnect', '', false );
+
+		$this->fbClientFactory = new \FacebookClientFactory();
 	}
 
 	/**
@@ -77,10 +82,10 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 			return true;
 		}
 
-		$mapping = \FacebookMapModel::createUserMapping( $user->getId(), $fbUserId );
-		if ( empty( $mapping ) ) {
-			// TODO/FIXME: show proper error message @see UC-116
-			F::app()->wg->Out->showErrorPage( 'fbconnect-error', 'fbconnect-errortext' );
+		// Create user mapping
+		$status = $this->fbClientFactory->connectToFacebook( $wg->User->getId(), $fbUserId );
+		if ( ! $status->isGood() ) {
+			$this->showErrorPage( $status );
 			$this->skipRendering();
 			return true;
 		}
@@ -118,10 +123,10 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 			return true;
 		}
 
-		$mapping = \FacebookMapModel::createUserMapping( $wg->User->getId(), $fbUserId );
-		if ( empty( $mapping ) ) {
-			// TODO/FIXME: show proper error message @see UC-116
-			F::app()->wg->Out->showErrorPage( 'fbconnect-error', 'fbconnect-errortext' );
+		// Create user mapping
+		$status = $this->fbClientFactory->connectToFacebook( $wg->User->getId(), $fbUserId );
+		if ( ! $status->isGood() ) {
+			$this->showErrorPage( $status );
 			$this->skipRendering();
 			return true;
 		}
@@ -254,4 +259,22 @@ class SpecialFacebookConnectController extends WikiaSpecialPageController {
 		$this->status = 'ok';
 	}
 
+	/**
+	 * Displays an error page with error messages in status
+	 * Wraps the OutputPage class
+	 * @param Status $status
+	 */
+	protected function showErrorPage( \Status $status ) {
+		if ( ! $status->isGood() ) {
+			$errors = $status->getErrorsByType( 'error' );
+			if ( ! empty( $errors[0]['message'] ) ) {
+				$message = $errors[0]['message'];
+				$params = $errors[0]['params'];
+			} else {
+				$message = 'fbconnect-error';
+				$params = [];
+			}
+			F::app()->wg->Out->showErrorPage( 'fbconnect-error', $message, $params );
+		}
+	}
 }

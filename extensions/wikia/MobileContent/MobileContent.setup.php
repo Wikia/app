@@ -27,6 +27,7 @@ $app->wg->append(
 			"[http://www.wikia.com/wiki/User:TOR Łukasz 'TOR' Garczewski]",
 			'Federico',
 		),
+		'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/MobileContent'
 	),
 	'parserhook'
 );

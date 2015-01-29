@@ -46,7 +46,7 @@ class CreateWikiTest extends WikiaBaseTest {
 			'0' => [ '0', '0' ],
 			'muppet' => [ 'muppet', 'muppet' ],
 			'with trailing underscores' => [ 'x__', 'x__0' ],
-			'with dots' => [ 'ru.google', 'ru_google' ],
+			'with dots' => [ 'ru.google', 'ru.google' ],
 			'with spaces' => [ 'save earth save life', 'save_earth_save_life' ],
 			'with parenthesis' => [ 'roman_empire_(the rebirth of rome)', 'roman_empire__the_rebirth_of_rome_0' ],
 			'long' => [ '012345678901234567890123456789012345678901234567890123456789', '0123456789012345678901234567890123456789012345678901234' ],
@@ -55,6 +55,7 @@ class CreateWikiTest extends WikiaBaseTest {
 			'polish' => [ 'ąćśę', 'c485c487c59bc499' ],
 			'long-polish' => [ '012345678901234567890123456789012345678901234567890123ą', '012345678901234567890123456789012345678901234567890123c' ],
 			'chinese' => [ '不論支持與否', 'e4b88de8ab96e694afe68c81e88887e590a6' ],
+			'admin' => [ 'admin', 'adminx' ],
 		];
 	}
 

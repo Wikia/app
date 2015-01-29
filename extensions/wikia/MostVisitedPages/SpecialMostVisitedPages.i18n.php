@@ -9,6 +9,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'mostvisitedpages-desc' => 'Get list of most visited pages',
 	'mostvisitedpages' => 'Most visited pages',
 	'mostvisitedpagessearchtext' => 'Article\'s name:',
 	'mostvisitedpagessearchbtn' => 'search',
@@ -22,6 +23,7 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'mostvisitedpages-desc' => '{{desc}}',
 	'mostvisitedpagessearchbtn' => '{{Identical|Search}}',
 	'mostvisitedpageslatest' => '',
 );
@@ -87,6 +89,7 @@ $messages['bg'] = array(
 
 /** Bengali (বাংলা)
  * @author Aftab1995
+ * @author Aftabuzzaman
  */
 $messages['bn'] = array(
 	'mostvisitedpages' => 'সর্বাধিক দেখা পাতাসমূহ',
@@ -126,7 +129,7 @@ $messages['ca'] = array(
  * @author Умар
  */
 $messages['ce'] = array(
-	'mostvisitedpagessearchbtn' => 'лаха',
+	'mostvisitedpagessearchbtn' => 'лахар',
 );
 
 /** Czech (čeština)
@@ -144,9 +147,11 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author LWChris
+ * @author Metalhead64
  * @author Umherirrender
  */
 $messages['de'] = array(
+	'mostvisitedpages-desc' => 'Ruft eine Liste der meistbesuchtesten Seiten ab',
 	'mostvisitedpages' => 'Häufig aufgerufene Seiten',
 	'mostvisitedpagessearchtext' => 'Artikelname:',
 	'mostvisitedpagessearchbtn' => 'Suchen',
@@ -182,6 +187,7 @@ $messages['dsb'] = array(
  * @author VegaDark
  */
 $messages['es'] = array(
+	'mostvisitedpages-desc' => 'Obtiene la lista de las páginas más visitadas',
 	'mostvisitedpages' => 'Páginas más visitadas',
 	'mostvisitedpagessearchtext' => 'Nombre del artículo:',
 	'mostvisitedpagessearchbtn' => 'buscar',
@@ -223,16 +229,25 @@ $messages['fo'] = array(
 );
 
 /** French (français)
+ * @author Gomoko
  * @author IAlex
  * @author Peter17
  */
 $messages['fr'] = array(
+	'mostvisitedpages-desc' => 'Obtenir la liste des pages les plus visitées',
 	'mostvisitedpages' => 'Pages les plus visitées',
 	'mostvisitedpagessearchtext' => "Nom de l'article :",
 	'mostvisitedpagessearchbtn' => 'chercher',
 	'mostvisitedpageslatest' => 'dans les $1 dernières minutes',
 	'mostvisitedpageslatestlink' => 'Voir les dernières pages consultées',
 	'mostvisitedpagesalllink' => 'Voir pages les plus consultées',
+);
+
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'mostvisitedpagessearchbtn' => 'Sykje',
 );
 
 /** Galician (galego)
@@ -372,6 +387,7 @@ $messages['kn'] = array(
  * @author Miri-Nae
  */
 $messages['ko'] = array(
+	'mostvisitedpages' => '가장 많이 읽힌 문서',
 	'mostvisitedpagessearchtext' => '문서 이름:',
 	'mostvisitedpagessearchbtn' => '검색',
 );
@@ -428,6 +444,7 @@ $messages['ml'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'mostvisitedpages-desc' => 'Dapatkan senarai kategori paling banyak dikunjungi',
 	'mostvisitedpages' => 'Laman yang paling kerap dikunjungi',
 	'mostvisitedpagessearchtext' => 'Tajuk rencana:',
 	'mostvisitedpagessearchbtn' => 'cari',
@@ -456,7 +473,7 @@ $messages['nl'] = array(
 	'mostvisitedpages' => "Meest bezochte pagina's",
 	'mostvisitedpagessearchtext' => 'Paginanaam:',
 	'mostvisitedpagessearchbtn' => 'zoeken',
-	'mostvisitedpageslatest' => 'in de laatste $1 minuten',
+	'mostvisitedpageslatest' => 'in de laatste {{PLURAL:$1|minuut|$1 minuten}}',
 	'mostvisitedpageslatestlink' => "Recent bezochte pagina's bekijken",
 	'mostvisitedpagesalllink' => "Meest bezochte pagina's bekijken",
 );
@@ -483,10 +500,12 @@ $messages['oc'] = array(
 );
 
 /** Polish (polski)
+ * @author Matik7
  * @author Sovq
  * @author Sp5uhe
  */
 $messages['pl'] = array(
+	'mostvisitedpages-desc' => 'Lista najczęściej wyświetlanych stron',
 	'mostvisitedpages' => 'Najczęściej odwiedzane strony',
 	'mostvisitedpagessearchtext' => 'Nazwa artykułu',
 	'mostvisitedpagessearchbtn' => 'szukaj',
@@ -549,6 +568,7 @@ $messages['pt-br'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'mostvisitedpages-desc' => "Pigghie l'elenghe de le pàggene cchiù visitate",
 	'mostvisitedpages' => 'Pàggene cchiù visitate',
 	'mostvisitedpagessearchtext' => "Nome d'a vôsce:",
 	'mostvisitedpagessearchbtn' => 'cirche',
@@ -601,6 +621,7 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'mostvisitedpages-desc' => 'Hämta listan över de mest besökta sidorna',
 	'mostvisitedpages' => 'Sidor med flest besök',
 	'mostvisitedpagessearchtext' => 'Artikelns namn:',
 	'mostvisitedpagessearchbtn' => 'sök',
@@ -717,8 +738,10 @@ $messages['vi'] = array(
  * @author Hydra
  * @author Liuxinyu970226
  * @author Xiaomingyan
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'mostvisitedpages-desc' => '获取访问量最多的页面名单',
 	'mostvisitedpages' => '最多访问页面',
 	'mostvisitedpagessearchtext' => '条目名称：',
 	'mostvisitedpagessearchbtn' => '搜索',

@@ -12,6 +12,7 @@ $messages = array();
  * @author Łukasz Garczewski (TOR) <tor@wikia-inc.com>
  */
 $messages['en'] = array(
+	'staffpowers-desc' => 'Gives Staff various superpowers like unblockable.',
 	'staffpowers-ipblock-abort' => 'Blocking Wikia Staff, Wikia Helpers, or members of our Volunteer Spam Task Force user team (VSTF) is not possible. Please use the [[Special:Contact|contact form]] to report any issues or problems with our staff.'
 );
 
@@ -19,6 +20,7 @@ $messages['en'] = array(
  * @author Lloffiwr
  */
 $messages['qqq'] = array(
+	'staffpowers-desc' => '{{desc}}',
 	'staffpowers-ipblock-abort' => "Do not translate (but do add additional text if you like) <nowiki>[[Special:Contact</nowiki>'''|optional additional text'''<nowiki>]]</nowiki>.",
 );
 
@@ -44,9 +46,11 @@ $messages['cs'] = array(
 );
 
 /** German (Deutsch)
+ * @author Metalhead64
  * @author PtM
  */
 $messages['de'] = array(
+	'staffpowers-desc' => 'Gibt Mitarbeitern verschiedene Superkräfte wie unsperrbar.',
 	'staffpowers-ipblock-abort' => 'Sperren von Wikia-Personal, Wikia-Helfern oder Mitgliedern des VSTF-Teams (Spam-Task-Force-Volunteer) ist nicht möglich. Bitte benutze das [[Special:Contact|Kontaktformular]], um irgendwelche Fragen oder Probleme mit einem unserer Mitarbeiter zu melden.',
 );
 
@@ -55,6 +59,7 @@ $messages['de'] = array(
  * @author VegaDark
  */
 $messages['es'] = array(
+	'staffpowers-desc' => 'Otorga al Staff varios privilegios como imbloqueable.',
 	'staffpowers-ipblock-abort' => 'No es posible bloquear al Staff de Wikia, a los Helpers ni a los miembros del VSTF. Por favor utiliza el [[Special:Contact|formulario de contacto]] para informar de cualquier problema con  nuestro staff.',
 );
 
@@ -64,6 +69,7 @@ $messages['es'] = array(
  * @author Wyz
  */
 $messages['fr'] = array(
+	'staffpowers-desc' => 'Donne à l’équipe divers super-pouvoirs comme l’impossibilité de bloquer.',
 	'staffpowers-ipblock-abort' => 'Bloquer des membres du staff de Wikia, des Assistant ou des membres de l’équipe VSTF n’est pas possible. Veuillez utiliser le [[Special:Contact|formulaire de contact]] pour signaler tout problème avec notre équipe.',
 );
 
@@ -120,6 +126,7 @@ $messages['mk'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'staffpowers-desc' => "Memberikan pelbagai kuasa istimewa kepada kakitangan seperti 'boleh dinyahsekat'.",
 	'staffpowers-ipblock-abort' => 'Anda tidak boleh menyekat Kakitangan Wikia, Pembantu Wikia, atau para sukarelawan Pasukan Pembasmi Spam (PPS). Sila gunakan [[Special:Contact|borang ini]] untuk melaporkan sebarang isu atau masalah berkenaan kakitangan kami.',
 );
 
@@ -178,6 +185,7 @@ $messages['pt-br'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'staffpowers-desc' => "Dèje a 'u staff 'nu sbuènne de superpotere cumme sbloccabbele.",
 	'staffpowers-ipblock-abort' => "Bloccà 'u Staff de Uicchia, l'Aiutande de Uicchia, o membre d'a nostra Squadre condre a 'u Spam (VSTF) non g'è possibbele. Pe piacere ause 'u [[Special:Contact|module de le condatte]] pe segnalà ogne probbleme cu 'a nostra squadre.",
 );
 
@@ -219,8 +227,10 @@ $messages['vi'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Liuxinyu970226
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'staffpowers-desc' => '向职员提供像是解封之类的能力。',
 	'staffpowers-ipblock-abort' => '封禁Wikia工作人员、Wikia助理或我们志愿者破坏工作团队（VSTF）的成员是不可能的。请使用[[Special:Contact|联络表单]]汇报任何与我们工作人员相关的问题或建议。',
 );
 

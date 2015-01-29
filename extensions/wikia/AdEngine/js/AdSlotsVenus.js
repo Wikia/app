@@ -72,7 +72,7 @@ require([
 
 		slotsAdded += 1;
 		offsetMap.push([headerOffset - minOffset, headerOffset + minOffset]);
-		win.adslots2.push([slot.name]);
+		win.adslots2.push(slot.name);
 
 		return true;
 	}

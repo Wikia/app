@@ -20,6 +20,7 @@ $wgAutoloadClasses['RTEMarker'] = "$dir/RTEMarker.class.php";
 $wgAutoloadClasses['RTEParser'] = "$dir/RTEParser.class.php";
 $wgAutoloadClasses['RTEReverseParser'] = "$dir/RTEReverseParser.class.php";
 $wgAutoloadClasses['RTEController'] = "$dir/RTEController.class.php";
+$wgAutoloadClasses['RTEStatisticsHooks'] = "$dir/RTEStatisticsHooks.class.php";
 
 // hooks
 $wgHooks['EditPage::showEditForm:initial'][] = 'RTE::init';
@@ -42,6 +43,11 @@ $wgHooks['EditPage::getContent::end'][] = 'RTEMagicWord::checkEditPageContent';
 $wgHooks['MakeHeadline'][] = 'RTELinkerHooks::onMakeHeadline';
 $wgHooks['LinkEnd'][] = 'RTELinkerHooks::onLinkEnd';
 $wgHooks['LinkerMakeExternalLink'][] = 'RTELinkerHooks::onLinkerMakeExternalLink';
+
+// tagging RTE edits
+$wgHooks['ArticleSaveComplete'][] = 'RTEStatisticsHooks::onArticleSaveComplete';
+$wgHooks['FormatSummaryRow'][] = 'RTEStatisticsHooks::onFormatSummaryRow';
+$wgHooks['SpecialTags::UsedTags'][] = 'RTEStatisticsHooks::onUsedTags';
 
 // i18n
 $wgExtensionMessagesFiles['RTE'] = $dir.'/i18n/RTE.i18n.php';

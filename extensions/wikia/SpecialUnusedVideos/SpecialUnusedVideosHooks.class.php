@@ -12,7 +12,7 @@ class SpecialUnusedVideosHooks {
 	 * @return true
 	 */
 	public static function registerUnusedVideos( &$wgQueryPages ) {
-		$wgQueryPages[] = array( 'UnusedVideos', 'UnusedVideos' );
+		$wgQueryPages[] = array( 'SpecialUnusedVideos', 'UnusedVideos' );
 		return true;
 	}
 

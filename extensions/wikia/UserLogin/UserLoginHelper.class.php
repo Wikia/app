@@ -245,7 +245,7 @@ class UserLoginHelper extends WikiaModel {
 
 		// Check whether user already exists or is already confirmed
 		wfWaitForSlaves(); // Wait for local DB - Wikis that keep user data in local DB (e.g. Uncyclopedia/Internal)
-		wfWaitForSlaves( false, $wgExternalSharedDB ); // Wait for external shared DB
+		wfWaitForSlaves( $wgExternalSharedDB ); // Wait for external shared DB
 		$user = User::newFromName( $username );
 		if ( !($user instanceof User) || $user->getID() == 0 ) {
 			// User doesn't exist
