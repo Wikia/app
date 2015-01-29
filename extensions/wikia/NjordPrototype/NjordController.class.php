@@ -7,6 +7,22 @@ class NjordController extends WikiaController {
 
 	const MAINPAGE_PAGE = 'mainpage';
 
+	private static $wikiDataModel = null;
+
+	public function __construct() {
+		parent::__construct();
+
+		self::$wikiDataModel = $this->getWikiDataModel();
+	}
+
+	private function getWikiDataModel() {
+		$wikiDataModel = new WikiDataModel( Title::newMainPage()->getText() );
+		$wikiDataModel->getFromProps();
+
+		return $wikiDataModel;
+	}
+
+
 	public function getWikiMarkup() {
 		$articleWikiMarkup = '';
 		$articleTitle = $this->getRequest()->getVal( 'articleTitle' );
@@ -35,19 +51,19 @@ class NjordController extends WikiaController {
 
 	public function index() {
 		global $wgTitle, $wgUser, $wgBlankImgUrl;
-		$wikiDataModel = new WikiDataModel( Title::newMainPage()->getText() );
-		$wikiDataModel->getFromProps();
+		$wikiDataModel = self::$wikiDataModel;
+
 		if ( !$wgUser->isLoggedIn() && $wikiDataModel->isEmpty() ) {
 			return $this->skipRendering();
 		}
 		$this->wg->SupressPageTitle = true;
+
 		$this->wg->out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/NjordPrototype/css/Njord.scss' ) );
 		$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . '/wikia/NjordPrototype/scripts/jquery-ui-1.10.4.js' );
 		$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . '/wikia/NjordPrototype/scripts/jquery.caret.js' );
 		$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . '/wikia/NjordPrototype/scripts/Njord.js' );
 //		$this->wg->out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/NjordPrototype/css/Mom.scss' ) );
 //		$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . '/wikia/NjordPrototype/scripts/Mom.js' );
-
 
 		$wikiDataModel->imageSet = true;
 		if ( !isset( $wikiDataModel->imagePath ) ) {
@@ -58,6 +74,19 @@ class NjordController extends WikiaController {
 
 		//TODO: remove this before release (thumbs from stash broken on devbox)
 		$wikiDataModel->imagePath = 'http://img1.wikia.nocookie.net/__cb20150129114437/mediawiki116/images/thumb/4/48/Wikia-hero-image/1200px-0%2C1200%2C0%2C300';
+
+		// template vars
+		$this->wikiData = $wikiDataModel;
+		$this->isAllowedToEdit = $this->wg->user->isAllowed( 'njordeditmode' );
+	}
+
+	public function summary() {
+		global $wgUser;
+		$wikiDataModel = self::$wikiDataModel;
+
+		if ( !$wgUser->isLoggedIn() && $wikiDataModel->isEmpty() ) {
+			return $this->skipRendering();
+		}
 
 		// template vars
 		$this->wikiData = $wikiDataModel;
