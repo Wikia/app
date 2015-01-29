@@ -9,6 +9,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'author' => "[http://www.wikia.com/wiki/User:TOR Lucas 'TOR' Garczewski]",
 	'descriptionmsg' => 'transstats-desc',
 	'description' => 'Provides statistics for translations done using the Translate extension',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/TranslationStatistics'
 );
 
 $dir = dirname( __FILE__ ) . '/';

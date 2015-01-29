@@ -83,7 +83,7 @@ foreach( $tables as $table => $columns ) {
 				$sql .= " AND $column = ". $dbw->addQuotes( $row[ $index ] );
 			}
 			if( $write ) {
-				wfWaitForSlaves(3);
+				wfWaitForSlaves();
 				$dbw->begin( );
 				$dbw->query( $sql, __METHOD__ );
 				$dbw->commit( );

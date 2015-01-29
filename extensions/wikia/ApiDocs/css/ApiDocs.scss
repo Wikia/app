@@ -71,7 +71,7 @@ select {
 	-moz-appearance: none;
 	-webkit-appearance: none;
 	background-color: #ffffff;
-	background-image: url(/extensions/wikia/ApiDocs/files/arrow-01.png); /* base64 */
+	background-image: url(/extensions/wikia/ApiDocs/files/arrow-01.png); /* inline */
 	background-position: 134px 10px;
 	background-repeat: no-repeat;
 	overflow: hidden;
@@ -90,11 +90,11 @@ select {
 
 .resource.active div.heading .collapse-expand-button,
 .endpoint.active .collapse-expand-button {
-	background-image: url(/extensions/wikia/ApiDocs/files/collapse_up.png); /* base64 */
+	background-image: url(/extensions/wikia/ApiDocs/files/collapse_up.png); /* inline */
 }
 
 .collapse-expand-button {
-	background-image: url(/extensions/wikia/ApiDocs/files/collapse_down.png); /* base64 */
+	background-image: url(/extensions/wikia/ApiDocs/files/collapse_down.png); /* inline */
 }
 
 h1 {

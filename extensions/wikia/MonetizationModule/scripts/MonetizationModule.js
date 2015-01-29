@@ -48,7 +48,7 @@ require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 			});
 
 			this.initEllipses();
-			this.initClickTrackingEcommerce();
+			this.initClickTracking();
 		},
 		initEllipses: function () {
 			$(window)
@@ -59,25 +59,30 @@ require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 				})
 				.trigger('resize.monetizationmodule');
 		},
-		initClickTrackingEcommerce: function () {
-			var elements = [
+		initClickTracking: function () {
+			var containers = [
+				'.monetization-module.ecommerce',
+				'.monetization-module.amazon_video'
+			],
+				elements = [
 				'.module-title',
 				'.product-thumb',
 				'.product-name',
-				'.product-price'
+				'.product-price',
+				'.amazon-logo',
+				'.product-btn'
 			];
 
-			$('.monetization-module.ecommerce').on('click', elements.join(', '), function () {
+			$(containers.join(', ')).on('click', elements.join(', '), function () {
 				var $this = $(this),
 					$module = $this.closest('.monetization-module'),
 					$products = $module.find('.affiliate'),
-					elementName = $this.attr('class').split(' ')[0],
+					monType = $module.attr('data-mon-type'),
+					elementName = $this.attr('class'),
 					productUrl = $this.attr('href') || $this.find('a').attr('href'),
-					$product;
-
-				if (elementName === 'module-title') {
 					$product = $products.first();
-				} else {
+
+				if (monType !== 'amazon_video' && elementName !== 'module-title') {
 					$product = $this.parent();
 				}
 
@@ -85,7 +90,7 @@ require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 					action: Tracker.ACTIONS.CLICK + '-' + $module.attr('id') + '-' + elementName,
 					label: $product.attr('data-mon-ptag'),
 					value: $products.index($product),
-					type: $module.attr('data-mon-type'),
+					type: monType,
 					slot: $module.attr('data-mon-slot'),
 					title: $product.attr('data-mon-pname'),
 					pid: $product.attr('data-mon-pid'),

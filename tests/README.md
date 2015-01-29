@@ -42,7 +42,6 @@ will run all tests marked as ``@group MediaFeatures``.  Any number of groups can
 These commands will run all tests (unit, infrastructure and integration) from ``tests`` subdirectories of:
 
 * /includes/wikia
-* /extensions/FBConnect
 * /extensions/wikia
 
 excluding the following groups: ``Broken, Stub, Monitoring, Hack``.

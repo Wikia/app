@@ -11,6 +11,18 @@
 $dir = dirname(__FILE__) . '/';
 $app = F::app();
 
+$wgExtensionCredits[ 'other' ][ ] = array(
+	'name' => 'WikiaHubsServices',
+	'author' => array(
+		'Andrzej \'nAndy\' Łukaszewski',
+		'Damian Jóźwiak',
+		'Marcin Maciejewski',
+		'Sebastian Marzjan'
+	),
+	'descriptionmsg' => 'wikia-hub-services-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaHubsServices',
+);
+
 $wgAutoloadClasses['EditHubModel'] =  $dir . 'models/EditHubModel.class.php';
 $wgAutoloadClasses['WikiaHubsExploreModel'] =  $dir . 'models/WikiaHubsExploreModel.class.php';
 $wgAutoloadClasses['WikiaHubsFeaturedvideoModel'] =  $dir . 'models/WikiaHubsFeaturedvideoModel.class.php';

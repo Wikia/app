@@ -8,6 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'managewikiahome-desc' => 'Internal tool to manage corporate pages\'s visualization aka. remix feature',
 	'managewikiahome' => 'Manage Wikia Home',
 	'manage-wikia-home-wrong-rights' => "You are probably logged-out or you don't have permissions to use this special page.",
 
@@ -120,6 +121,7 @@ $messages['en'] = array(
  * @author Siebrand
  */
 $messages['qqq'] = array(
+	'managewikiahome-desc' => '{{desc}}',
 	'managewikiahome' => "Page title visible as browser window's title; Content of <title /> tag in HTML",
 	'manage-wikia-home-wrong-rights' => "A message displayed to a user if he doesn't have rights to use this special page",
 	'manage-wikia-home-wikis-in-slots-heading' => "Header of slots' configuration container; this container have input fields which we use to configure amounts of images per vertical we're showing in the visualization on corporate main page",
@@ -251,6 +253,7 @@ Parameters:
 );
 
 /** Arabic (العربية)
+ * @author Achraf94
  * @author Claw eg
  * @author Kuwaity26
  */
@@ -260,6 +263,9 @@ $messages['ar'] = array(
 	'manage-wikia-home-wikis-in-slots-heading' => 'إعداد فتحات',
 	'manage-wikia-home-wikis-in-slots-total' => 'العدد الكلي للفتحات: $1',
 	'manage-wikia-home-visualization-wikis' => 'شركات ويكي مصورة:',
+	'manage-wikia-home-hubs-slot-heading' => 'تعديل أماكن المحاور',
+	'manage-wikia-home-hubs-slot-success' => 'تم حفظ أماكن المحاور.',
+	'manage-wikia-home-hubs-slot-error' => 'لقد حدث خطأ أثناء التسجيل. الرجاء المحاولة مرة أخرى.',
 	'manage-wikia-home-hubs-slot' => 'خانة $1',
 	'manage-wikia-home-hubs-slot-name' => 'اسم النادي',
 	'manage-wikia-home-hubs-slot-description' => 'وصف النادي',
@@ -579,6 +585,7 @@ $messages['cs'] = array(
  * @author Metalhead64
  */
 $messages['de'] = array(
+	'managewikiahome-desc' => 'Internes Werkzeug zum Verwalten der Visualisierung von Unternehmensseiten, aka Remix-Funktion',
 	'managewikiahome' => 'Wikia Home verwalten',
 	'manage-wikia-home-wrong-rights' => 'Du bist vermutlich abgemeldet oder hast keine Berechtigung, diese Spezialseite zu verwenden.',
 	'manage-wikia-home-wikis-in-slots-heading' => 'Slotkonfiguration',
@@ -701,6 +708,7 @@ $messages['en-gb'] = array(
  * @author VegaDark
  */
 $messages['es'] = array(
+	'managewikiahome-desc' => 'Herramienta interna para administrar la visualización de páginas corporativas',
 	'managewikiahome' => 'Administrar Wikia Home',
 	'manage-wikia-home-wrong-rights' => 'Probablemente no has iniciado sesión o no tienes los permisos para usar esta página especial.',
 	'manage-wikia-home-wikis-in-slots-heading' => 'Configuración de espacios',
@@ -798,6 +806,7 @@ $messages['es'] = array(
  * @author Subi
  */
 $messages['eu'] = array(
+	'manage-wikia-home-wiki-filter-reset' => 'Garbitu',
 	'manage-wikia-home-wiki-list-blocked-no' => 'Ez',
 	'manage-wikia-home-wiki-list-blocked-yes' => 'Bai',
 	'manage-wikia-home-wiki-list-promoted-no' => 'Ez',
@@ -882,6 +891,7 @@ $messages['fo'] = array(
  * @author Wyz
  */
 $messages['fr'] = array(
+	'managewikiahome-desc' => 'Outil interne pour gérer la visualisation des pages dites d’entreprise. Fonctionnalité remixée',
 	'managewikiahome' => 'Gérer l’accueil de Wikia',
 	'manage-wikia-home-wrong-rights' => 'Vous êtes sans doute déconnecté ou n’avez pas les droits pour utiliser cette page spéciale.',
 	'manage-wikia-home-wikis-in-slots-heading' => 'Paramétrage des emplacements',
@@ -1203,6 +1213,7 @@ $messages['lb'] = array(
 	'manage-wikia-home-wiki-list-official-yes' => 'Jo',
 	'manage-wikia-home-modal-button-no' => 'Neen',
 	'manage-wikia-home-modal-button-yes' => 'Jo',
+	'manage-wikia-home-modal-button-okay' => 'OK',
 	'manage-wikia-home-collections-setup-save-button' => 'Späicheren',
 	'manage-wikia-home-stats-visitors-label' => 'Visiteure pro Mount',
 	'manage-wikia-home-stats-mobile-percentage-label' => '% Mobil Visiteuren',
@@ -1248,6 +1259,7 @@ $messages['mk'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'managewikiahome-desc' => 'Alatan dalaman untuk menguruskan visualisasi laman korporat, iaitu ciri-ciri remix',
 	'managewikiahome' => 'Uruskan Wikia Home',
 	'manage-wikia-home-wrong-rights' => 'Anda mungkin sudah log keluar ataupun tidak mempunyai keizinan untuk menggunakan halaman khas ini.',
 	'manage-wikia-home-wikis-in-slots-heading' => 'Persediaan slot',
@@ -1370,6 +1382,7 @@ $messages['nb'] = array(
 /** Dutch (Nederlands)
  * @author Bluyten
  * @author Flightmare
+ * @author Robin0van0der0vliet
  * @author Siebrand
  * @author Sjoerddebruin
  */
@@ -1379,13 +1392,25 @@ $messages['nl'] = array(
 	'manage-wikia-home-wikis-in-slots-heading' => 'Instellingen voor plaatsen',
 	'manage-wikia-home-wikis-in-slots-total' => 'Totaal aantal plaatsen: $1',
 	'manage-wikia-home-visualization-wikis' => "Bedrijfswiki's met visualisatie:",
-	'manage-wikia-home-wikis-in-slots-success' => 'Het aantal slots werd gewijzigd.',
-	'manage-wikia-home-collections-success' => 'Collecties werden opgeslagen.',
+	'manage-wikia-home-hubs-slot-heading' => 'Plaatsinstellingen voor hubs',
+	'manage-wikia-home-hubs-slot-success' => 'Plaatsinstellingen voor hubs zijn opgeslagen.',
+	'manage-wikia-home-hubs-slot-error' => 'Er is een fout opgetreden tijdens het opslaan. Probeer het opnieuw.',
+	'manage-wikia-home-hubs-slot' => 'Positie $1',
+	'manage-wikia-home-hubs-slot-name' => 'Hubnaam',
+	'manage-wikia-home-hubs-slot-description' => 'Hubbeschrijving',
+	'manage-wikia-home-hubs-slot-more-links' => '"Meer in..."-koppelingen',
+	'manage-wikia-home-hubs-slot-empty-option' => '-- Lege positie --',
+	'manage-wikia-home-wikis-in-slots-success' => 'Het aantal slots is gewijzigd.',
+	'manage-wikia-home-collections-success' => 'Collecties zijn opgeslagen.',
 	'manage-wikia-home-collections-add-success' => 'De wiki is toegevoegd aan de verzameling.',
 	'manage-wikia-home-collections-add-failure-already-exists' => 'De wiki is al onderdeel van deze verzameling.',
 	'manage-wikia-home-collections-add-failure-image' => '$1 kan niet toegevoegd worden aan deze verzameling omdat de hoofdafbeelding is geweigerd.',
 	'manage-wikia-home-collections-remove-success' => 'De wiki is verwijderd uit de verzameling.',
 	'manage-wikia-home-collections-invalid-action' => 'Die handeling bestaat niet.',
+	'manage-wikia-home-marketing-invalid-width' => 'De afbeeldingsbreedte mag maximaal $maxWidth pixels zijn.',
+	'manage-wikia-home-marketing-invalid-height' => 'De afbeeldingshoogte mag maximaal $maxWidth pixels zijn.',
+	'manage-wikia-home-marketing-invalid-size' => 'De afbeeldingsafmetingen mogen maximaal $maxWidth x $maxHeight pixels zijn.',
+	'manage-wikia-home-marketing-not-complete' => 'Om een marketingpositie te gebruiken, moeten alle velden zijn ingevuld.',
 	'manage-wikia-home-verticals-proportions' => "Aantal wiki's per verticaal",
 	'manage-wikia-home-error-invalid-total-no-of-slots' => 'Ongeldige plaatsen in totaal ($1). Zorg ervoor dat het totaal aantal plaatsen voor iedere hub gelijk is aan het totale aantal plaatsen ($2).',
 	'manage-wikia-home-error-negative-slots-number-not-allowed' => 'Een negatief aantal plaatsen is niet toegestaan',
@@ -1396,6 +1421,8 @@ $messages['nl'] = array(
 	'manage-wikia-home-wiki-name-filter' => 'Begin met het invoeren van een wikinaam en de lijst wordt korter:',
 	'manage-wikia-home-wiki-filter' => 'Filteren',
 	'manage-wikia-home-wiki-filter-reset' => 'Wissen',
+	'manage-wikia-home-wiki-list-download' => 'Volledige lijst downloaden',
+	'manage-wikia-home-wiki-list-download-tooltip' => "Door komma's gescheiden waarden (CSV-bestand) met UTF-8-codering.",
 	'manage-wikia-home-wiki-list-id' => 'ID',
 	'manage-wikia-home-wiki-list-vertical' => 'Verticaal',
 	'manage-wikia-home-wiki-list-headline' => 'Wikinaam',
@@ -1442,10 +1469,15 @@ $messages['nl'] = array(
 	'manage-wikia-home-collection-hero-image-tooltip' => 'Deze afbeelding hoort de volgende afmetingen te hebben: $1×$2px',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'Deze afbeelding hoort de volgende afmetingen te hebben: $1×$2px',
 	'manage-wikia-home-collection-add-file-button' => 'Afbeelding toevoegen',
+	'manage-wikia-home-stats-header' => 'Hoofdpaginastatistieken voor bedrijven',
+	'manage-wikia-home-stats-text' => 'Die statistieken worden weergegeven op alle bedrijvensites zonder taalonderscheid.',
 	'manage-wikia-home-stats-visitors-label' => 'Maandelijkse bezoekers',
 	'manage-wikia-home-stats-mobile-percentage-label' => '% Mobiele bezoekers',
-	'manage-wikia-home-stats-success' => 'Statistieken succesvol bijgewerkt!',
+	'manage-wikia-home-stats-edits-default-label' => 'Terugval voor Wijzigingen van vandaag',
+	'manage-wikia-home-stats-total-pages-label' => "Terugval voor Totaal aantal pagina's",
+	'manage-wikia-home-stats-success' => 'Statistieken bijgewerkt!',
 	'manage-wikia-home-stats-failure' => 'Gegevens niet opgeslagen. Corrigeer fouten in het formulier en probeer het nogmaals.',
+	'manage-wikia-home-stats-permissions-error' => 'De gegevens zijn niet opgeslagen. Zorg ervoor dat u de juiste rechten hebt om dit formulier te bewerken.',
 );
 
 /** Occitan (occitan)
@@ -2113,15 +2145,46 @@ $messages['uk'] = array(
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
+ * @author Dinhxuanduyet
+ * @author Max20091
  */
 $messages['vi'] = array(
+	'managewikiahome' => 'Quản lý Wikia Home',
+	'manage-wikia-home-wrong-rights' => 'Bạn có lẽ đã đăng xuất hoặc bạn không có quyền sử dụng trang đặc biệt này.',
+	'manage-wikia-home-wikis-in-slots-heading' => 'Cài đặt slot',
+	'manage-wikia-home-wikis-in-slots-total' => 'Tổng số slot: $1',
+	'manage-wikia-home-hubs-slot-empty-option' => '--Slot rỗng--',
+	'manage-wikia-home-change-button' => 'Thay đổi',
+	'manage-wikia-home-wiki-filter' => 'Lọc',
+	'manage-wikia-home-wiki-filter-reset' => 'Xóa',
+	'manage-wikia-home-wiki-list-download' => 'Danh sách download xong',
+	'manage-wikia-home-wiki-list-headline' => 'Tên wiki',
+	'manage-wikia-home-wiki-list-blocked' => 'Cấm',
 	'manage-wikia-home-wiki-list-promoted' => 'Quảng cáo',
+	'manage-wikia-home-wiki-list-official' => 'chính thức',
+	'manage-wikia-home-wiki-list-collection' => 'Tập hợp:',
+	'manage-wikia-home-wiki-list-blocked-no' => 'Không',
 	'manage-wikia-home-wiki-list-blocked-yes' => 'Có',
 	'manage-wikia-home-wiki-list-promoted-no' => 'Không',
 	'manage-wikia-home-wiki-list-promoted-yes' => 'Có',
 	'manage-wikia-home-wiki-list-official-no' => 'Không',
 	'manage-wikia-home-wiki-list-official-yes' => 'Có',
+	'manage-wikia-home-wiki-list-all-collections' => 'Tất cả các bộ sưu tập',
+	'manage-wikia-home-modal-title' => 'Thay đổi trạng thái của wiki',
 	'manage-wikia-home-modal-content-add-promoted' => 'Bạn có muốn thúc đẩy wiki này trong hình dung wiki?',
+	'manage-wikia-home-modal-content-add-blocked-wiki-warning' => 'Bạn không thể thêm wiki đã bị khóa vào một tập hợp',
+	'manage-wikia-home-modal-content-blocked-wiki-in-collection-warning' => 'Trang wiki này không thể nằm trong bộ sưu tập bởi vì nó bị khóa. Nó sẽ bị gỡ bỏ trong bộ sưu tập.',
+	'manage-wikia-home-modal-content-blocked-wiki-title' => 'Wiki này đã bị chặn',
+	'manage-wikia-home-modal-button-no' => 'Không',
+	'manage-wikia-home-modal-button-yes' => 'Có',
+	'manage-wikia-home-modal-button-okay' => 'OK',
+	'manage-wikia-home-collections-setup-header' => 'Cài đặt bộ sưu tập',
+	'manage-wikia-home-collections-setup-save-button' => 'Lưu',
+	'manage-wikia-home-collections-enabled-field-label' => 'Kích hoạt',
+	'manage-wikia-home-collections-name-field-label' => 'Tên bộ sưu tập',
+	'manage-wikia-home-collections-sponsor-url-field-label' => 'URL nhà tài trợ',
+	'manage-wikia-home-collection-add-file-button' => 'Thêm hình ảnh',
+	'manage-wikia-home-stats-visitors-label' => 'Khách viếng thăm hàng tháng',
 );
 
 /** Simplified Chinese (中文（简体）‎)
@@ -2130,26 +2193,38 @@ $messages['vi'] = array(
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'managewikiahome-desc' => '内部工具来管理企业页面的可视化，又称混搭（remix）工具。',
 	'managewikiahome' => '管理Wikia首页',
 	'manage-wikia-home-wrong-rights' => '您可能已登出，或者您没有权限使用此特殊页面。',
 	'manage-wikia-home-wikis-in-slots-heading' => '插槽部署',
 	'manage-wikia-home-wikis-in-slots-total' => '插槽总计：$1',
+	'manage-wikia-home-visualization-wikis' => '具有可视化的企业wiki：',
 	'manage-wikia-home-hubs-slot-heading' => '集线器插槽配置',
 	'manage-wikia-home-hubs-slot-success' => '集线器插槽已保存。',
+	'manage-wikia-home-hubs-slot-error' => '保存时出错。请重试。',
 	'manage-wikia-home-hubs-slot' => '插槽$1',
 	'manage-wikia-home-hubs-slot-name' => '集线器名',
 	'manage-wikia-home-hubs-slot-description' => '集线器描述',
 	'manage-wikia-home-hubs-slot-more-links' => '“更多...”连接',
 	'manage-wikia-home-hubs-slot-empty-option' => '-- 空插槽 --',
 	'manage-wikia-home-wikis-in-slots-success' => '数字插槽已被更改。',
-	'manage-wikia-home-collections-add-failure-image' => '$1不能加进此收藏因为它的主页已被拒绝。',
+	'manage-wikia-home-collections-success' => '收藏已保存。',
+	'manage-wikia-home-collections-add-success' => 'Wiki已成功添加到收藏。',
+	'manage-wikia-home-collections-add-failure-already-exists' => 'Wiki在收藏中已存在。',
+	'manage-wikia-home-collections-add-failure-image' => '$1不能被添加到此收藏，因为它的主页已被拒绝。',
 	'manage-wikia-home-collections-remove-success' => '从收藏移除wiki成功。',
 	'manage-wikia-home-collections-invalid-action' => '此操作不存在。',
-	'manage-wikia-home-marketing-invalid-width' => '图像宽度应为$maxWidth像素。',
+	'manage-wikia-home-marketing-invalid-width' => '图片宽度应为$maxWidth像素。',
+	'manage-wikia-home-marketing-invalid-height' => '图片高度应为$maxHeight像素。',
+	'manage-wikia-home-marketing-invalid-size' => '图片大小应为$maxWidth x $maxHeight像素。',
+	'manage-wikia-home-marketing-not-complete' => '要使用销售槽，所有字段需要填写。',
 	'manage-wikia-home-verticals-proportions' => '每纵列的wiki数量',
+	'manage-wikia-home-error-negative-slots-number-not-allowed' => '插槽数量不允许负数',
+	'manage-wikia-home-error-wikifactory-failure' => '保存该变量时出现错误。请重试。',
 	'manage-wikia-home-collections-validation-error' => '保存中出错，请检查您输入的内容。',
 	'manage-wikia-home-change-button' => '更改',
 	'manage-wikia-home-wikis-in-visualization-heading' => '已实现可视化的维基列表',
+	'manage-wikia-home-wiki-name-filter' => '开始输入wiki名称，并且此列表将会变短：',
 	'manage-wikia-home-wiki-filter' => '过滤器',
 	'manage-wikia-home-wiki-filter-reset' => '清除',
 	'manage-wikia-home-wiki-list-download' => '下载完整列表',
@@ -2172,9 +2247,15 @@ $messages['zh-hans'] = array(
 	'manage-wikia-home-wiki-list-all-verticals' => '所有垂直',
 	'manage-wikia-home-modal-title' => '更改维基状态',
 	'manage-wikia-home-modal-title-collection' => '编辑维基集合',
+	'manage-wikia-home-modal-content-add-blocked' => '您想排除此wiki出现在wiki可视化中吗？',
+	'manage-wikia-home-modal-content-remove-blocked' => '您想在wiki可视化中包括此wiki吗？',
+	'manage-wikia-home-modal-content-add-promoted' => '您想在wiki可视化中提升此wiki吗？',
+	'manage-wikia-home-modal-content-remove-promoted' => '您想在wiki可视化中降低此wiki吗？',
+	'manage-wikia-home-modal-content-add-official' => '您想在wiki可视化中为此wiki添加一个官方标志吗？',
+	'manage-wikia-home-modal-content-remove-official' => '您想移除此wiki在wiki可视化中的官方标志吗？',
 	'manage-wikia-home-modal-content-add-collection' => '您希望将此wiki加入收藏么？',
 	'manage-wikia-home-modal-content-remove-collection' => '您希望将此wiki从收藏中移除么？',
-	'manage-wikia-home-modal-content-add-blocked-wiki-warning' => '您不能向集合中添加被锁定的维基。',
+	'manage-wikia-home-modal-content-add-blocked-wiki-warning' => '您不能向收藏中添加被锁定的维基。',
 	'manage-wikia-home-modal-content-blocked-wiki-in-collection-warning' => '此wiki不应该收藏因为它已被封禁。它将从收藏中移除。',
 	'manage-wikia-home-modal-content-blocked-wiki-title' => '本维基被封禁',
 	'manage-wikia-home-modal-content-removed-blocked-in-collection' => '此wiki现在作为收藏的一部分并不能被封禁。',
@@ -2182,7 +2263,7 @@ $messages['zh-hans'] = array(
 	'manage-wikia-home-modal-button-no' => '否',
 	'manage-wikia-home-modal-button-yes' => '是',
 	'manage-wikia-home-modal-button-okay' => '好',
-	'manage-wikia-home-collections-setup-header' => '收集设置',
+	'manage-wikia-home-collections-setup-header' => '收藏设置',
 	'manage-wikia-home-collections-setup-save-button' => '保存',
 	'manage-wikia-home-collections-enabled-field-label' => '已启用',
 	'manage-wikia-home-collections-name-field-label' => '收藏名称',
@@ -2211,4 +2292,6 @@ $messages['zh-hant'] = array(
 	'managewikiahome' => '管理Wikia首頁',
 	'manage-wikia-home-wrong-rights' => '您可能已登出，或者您没有權限使用此特殊頁面。',
 	'manage-wikia-home-wiki-filter' => '篩選器',
+	'manage-wikia-home-wiki-list-blocked' => '已封鎖',
+	'manage-wikia-home-stats-edits-default-label' => '變更今天的備選',
 );

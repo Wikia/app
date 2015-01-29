@@ -112,12 +112,12 @@ $config['adengine2_late_js'] = array(
 	),
 );
 
-$config['adengine2_spotlights_js'] = array(
+$config['spotlights_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		// ads
-		'//extensions/wikia/AdEngine/AdProviderOpenX.js',
-		'//extensions/wikia/AdEngine/LazyLoadAds.js',
+		'//extensions/wikia/Spotlights/js/AdProviderOpenX.js',
+		'//extensions/wikia/Spotlights/js/LazyLoadAds.js',
 	),
 );
 
@@ -126,6 +126,14 @@ $config['adengine2_bottom_leaderboard_js'] = array(
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/AdSlotBottomLeaderboard.js',
 		'//extensions/wikia/AdEngine/js/AdSlotBottomLeaderboard.run.js',
+	),
+);
+
+$config['adengine2_interstitial_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/AdSlotInterstitial.js',
+		'//extensions/wikia/AdEngine/js/AdSlotInterstitial.run.js',
 	),
 );
 
@@ -384,8 +392,10 @@ $config['oasis_anon_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/Exitstitial.js',
-		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
+		'//extensions/wikia/UserLogin/js/MarketingOptIn.js',
+		'//extensions/wikia/UserLogin/js/UserSignupFacebookForm.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
+		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
 		'//extensions/wikia/UserLogin/js/UserLoginDropdown.js',
 		'//skins/oasis/js/LatestActivity.js',
 	)
@@ -396,8 +406,10 @@ $config['oasis_anon_with_new_global_nav_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/Exitstitial.js',
-		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
+		'//extensions/wikia/UserLogin/js/MarketingOptIn.js',
+		'//extensions/wikia/UserLogin/js/UserSignupFacebookForm.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
+		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
 		'//skins/oasis/js/LatestActivity.js',
 	)
 );
@@ -407,6 +419,8 @@ $config['oasis_user_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
 		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
+		'//extensions/wikia/UserLogin/js/MarketingOptIn.js',
+		'//extensions/wikia/UserLogin/js/UserSignupFacebookForm.js',
 		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
 	)
 );
@@ -622,10 +636,7 @@ $config['wikiamobile_js_body_full'] = array(
 		'//extensions/wikia/WikiaMobile/js/curtain.js',
 
 		//entrypoint
-		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js',
-
-		//Script for VDNA promotion
-		'//extensions/wikia/WikiaMobile/js/VDNA.js',
+		'//extensions/wikia/WikiaMobile/js/WikiaMobile.js'
 	)
 );
 
@@ -695,6 +706,7 @@ $config['mobile_base_ads_js'] = array(
 		// Modules
 		'//resources/wikia/modules/lazyqueue.js',
 		'//extensions/wikia/AdEngine/js/MessageListener.js',
+		'//resources/wikia/modules/instantGlobals.js',
 
 		// Advertisement libs
 		'//extensions/wikia/AdEngine/js/EventDispatcher.js',
@@ -714,6 +726,15 @@ $config['mobile_base_ads_js'] = array(
 
 		// Video ads
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
+	)
+);
+
+$config['mobile_krux_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//resources/wikia/modules/scriptwriter.js',
+		'//extensions/wikia/AdEngine/js/Krux.js',
+		'//extensions/wikia/AdEngine/js/Krux.run.js',
 	)
 );
 
@@ -803,6 +824,7 @@ $config['wikiamobile_usersignup_js'] = array(
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
 		'//extensions/wikia/UserLogin/js/UserSignupAjaxForm.js',
+		'//extensions/wikia/UserLogin/js/MarketingOptIn.js',
 		'//extensions/wikia/UserLogin/js/UserSignup.js'
 	)
 );
@@ -875,8 +897,7 @@ $config['monobook_js'] = array(
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
 		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
 		'#group_imglzy_js',
-		'//extensions/wikia/AdEngine/AdProviderOpenX.js',
-		'//extensions/wikia/AdEngine/LazyLoadAds.js',
+		'#group_spotlights_js',
 		'//resources/wikia/libraries/ghostwriter/gw.min.js',
 		'//extensions/wikia/GlobalNotification/GlobalNotification.js',
 		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
@@ -1515,7 +1536,7 @@ $config['wikiaphotogallery_slider_scss_wikiamobile'] = array(
 
 $config['wikia_photo_gallery_js'] = [
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis', 'venus'],
+	'skin' => ['oasis', 'venus', 'monobook'],
 	'assets' => [
 		'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.view.js',
 	]
@@ -1523,7 +1544,7 @@ $config['wikia_photo_gallery_js'] = [
 
 $config['wikia_photo_gallery_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => ['oasis', 'venus'],
+	'skin' => ['oasis', 'venus', 'monobook'],
 	'assets' => [
 		'//extensions/wikia/WikiaPhotoGallery/css/gallery.scss',
 	]
@@ -1531,7 +1552,7 @@ $config['wikia_photo_gallery_scss'] = [
 
 $config['wikia_photo_gallery_slideshow_js'] = [
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis', 'venus'],
+	'skin' => ['oasis', 'venus', 'monobook'],
 	'assets' => [
 		'//resources/wikia/libraries/jquery/slideshow/jquery-slideshow-0.4.js',
 		'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slideshow.js',
@@ -1540,7 +1561,7 @@ $config['wikia_photo_gallery_slideshow_js'] = [
 
 $config['wikia_photo_gallery_slideshow_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => ['oasis', 'venus'],
+	'skin' => ['oasis', 'venus', 'monobook'],
 	'assets' => [
 		'//extensions/wikia/WikiaPhotoGallery/css/slideshow.scss',
 	]
@@ -1548,7 +1569,7 @@ $config['wikia_photo_gallery_slideshow_scss'] = [
 
 $config['wikia_photo_gallery_slider_js'] = [
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis', 'venus'],
+	'skin' => ['oasis', 'venus', 'monobook'],
 	'assets' => [
 		'//extensions/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.slider.js',
 	]
@@ -1556,7 +1577,7 @@ $config['wikia_photo_gallery_slider_js'] = [
 
 $config['wikia_photo_gallery_slider_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => ['oasis', 'venus'],
+	'skin' => ['oasis', 'venus', 'monobook'],
 	'assets' => [
 		'//extensions/wikia/WikiaPhotoGallery/css/WikiaPhotoGallery.slidertag.scss',
 	]
@@ -1983,6 +2004,7 @@ $config['bucky_js'] = array(
 	'assets' => array(
 		'//extensions/wikia/Bucky/vendor/BuckyClient/bucky.js',
 		'//extensions/wikia/Bucky/js/bucky_init.js',
+		'//extensions/wikia/Bucky/js/bucky_resources_timing.js',
 		'//extensions/wikia/Bucky/js/bucky_metrics.js',
 	)
 );
@@ -2224,14 +2246,5 @@ $config['facebook_client_special_connect'] = [
 	'skin' => ['oasis'],
 	'assets' => [
 		'//extensions/wikia/FacebookClient/scripts/SpecialFacebookConnect.js',
-	]
-];
-
-// Deprecated Facebook code - remove when we've done a full switch to FacebookClient
-$config['fbconnect_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis', 'monobook'],
-	'assets' => [
-		'//extensions/FBConnect/fbconnect.js',
 	]
 ];

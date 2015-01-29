@@ -9,6 +9,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'mostpopularcategories-desc' => 'Get list of most popular categories',
 	'mostpopularcategories' => 'Most popular categories',
 );
 
@@ -98,8 +99,10 @@ $messages['cs'] = array(
 );
 
 /** German (Deutsch)
+ * @author Metalhead64
  */
 $messages['de'] = array(
+	'mostpopularcategories-desc' => 'Ruft eine Liste der beliebtesten Kategorien ab',
 	'mostpopularcategories' => 'Beliebteste Kategorien',
 );
 
@@ -118,8 +121,10 @@ $messages['el'] = array(
 );
 
 /** Spanish (español)
+ * @author Macofe
  */
 $messages['es'] = array(
+	'mostpopularcategories-desc' => 'Obtener una lista de las categorías más populares',
 	'mostpopularcategories' => 'Categorías más populares',
 );
 
@@ -151,9 +156,11 @@ $messages['fo'] = array(
 );
 
 /** French (français)
+ * @author Gomoko
  * @author Peter17
  */
 $messages['fr'] = array(
+	'mostpopularcategories-desc' => 'Obtenir la liste des catégories les plus populaires',
 	'mostpopularcategories' => 'Catégories les plus populaires',
 );
 
@@ -241,6 +248,13 @@ $messages['kn'] = array(
 	'mostpopularcategories' => 'ಅತ್ಯಂತ ಜನಪ್ರಿಯ ವರ್ಗಗಳು',
 );
 
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'mostpopularcategories' => '가장 많이 사용된 분류',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
@@ -262,6 +276,13 @@ $messages['lb'] = array(
 	'mostpopularcategories' => 'Beléifst Kategorien',
 );
 
+/** Lithuanian (lietuvių)
+ * @author Gediminas
+ */
+$messages['lt'] = array(
+	'mostpopularcategories' => 'Populiariausios kategorijos',
+);
+
 /** Latvian (latviešu)
  * @author Xil
  */
@@ -280,6 +301,7 @@ $messages['mk'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'mostpopularcategories-desc' => 'Dapatkan senarai kategori paling popular',
 	'mostpopularcategories' => 'Kategori paling popular',
 );
 
@@ -311,9 +333,11 @@ $messages['oc'] = array(
 );
 
 /** Polish (polski)
+ * @author Matik7
  * @author Sp5uhe
  */
 $messages['pl'] = array(
+	'mostpopularcategories-desc' => 'Lista najpopularniejszych kategorii',
 	'mostpopularcategories' => 'Najbardziej popularne kategorie',
 );
 
@@ -356,6 +380,7 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'mostpopularcategories-desc' => "Pigghie l'elenghe de le categorije cchiù famose",
 	'mostpopularcategories' => 'Categorije cchiù popolare',
 );
 
@@ -402,8 +427,10 @@ $messages['su'] = array(
 
 /** Swedish (svenska)
  * @author Per
+ * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'mostpopularcategories-desc' => 'Hämta listan över de populäraste kategorier',
 	'mostpopularcategories' => 'Populäraste kategorierna',
 );
 
@@ -465,8 +492,10 @@ $messages['vi'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'mostpopularcategories-desc' => '获取最流行的分类名单',
 	'mostpopularcategories' => '最受欢迎的类别',
 );
 

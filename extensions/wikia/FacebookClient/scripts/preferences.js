@@ -1,4 +1,5 @@
-(function () {
+/* global jQuery, mediaWiki */
+(function ($, mw) {
 	'use strict';
 
 	var fbPreferences = (function () {
@@ -8,6 +9,7 @@
 			$connectWrapper,
 			$disconnectWrapper,
 			$disconnectLink,
+			$disconnectButton,
 			$connectLink;
 
 		/**
@@ -19,9 +21,17 @@
 			$connectWrapper = $('#fbConnectPreferences');
 			$disconnectWrapper = $('#fbDisconnectPreferences');
 			$disconnectLink = $('#fbDisconnectLink').find('a');
+			$disconnectButton = $('.fb-disconnect');
 			$connectLink = $('.sso-login-facebook');
 
-			$.loadFacebookAPI(bindEvents);
+			$.loadFacebookAPI()
+				.done(function () {
+					$('.sso-login').removeClass('hidden');
+					bindEvents();
+				})
+				.fail(facebookError);
+
+			return {};
 		}
 
 		/**
@@ -89,6 +99,8 @@
 				controller: 'FacebookClient',
 				method: 'disconnectFromFB',
 				format: 'json',
+				data: {token: mw.user.tokens.get('editToken')},
+				type: 'POST',
 				callback: function (data) {
 					if (data.status === 'ok') {
 						window.GlobalNotification.show($.msg(disconnectMsg), 'confirm');
@@ -114,6 +126,7 @@
 		function bindEvents() {
 			$connectLink.on('click', connect);
 			$disconnectLink.on('click', disconnect);
+			$disconnectButton.on('click', disconnect);
 		}
 
 		/**
@@ -126,6 +139,37 @@
 			}
 
 			window.GlobalNotification.show(msg, 'error');
+		}
+
+		function facebookError() {
+			$(document).on('tab-fbconnect-prefstext-click', function () {
+				var $tabContentContainer = $('#mw-prefsection-fbconnect-prefstext');
+
+				// Disable all links within the tab
+				$tabContentContainer
+					.find('a')
+					.css('pointer-events', 'none');
+
+				// Throw an error message up
+				function createModal(uiModal) {
+					var modalConfig = {
+						vars: {
+							id: 'fbErrorModal',
+							size: 'medium',
+							title: $.msg('fbconnect-error-fb-unavailable-title'),
+							content: $.msg('fbconnect-error-fb-unavailable-text')
+						}
+					};
+					uiModal.createComponent(modalConfig, function (errorModal) {
+						errorModal.show();
+					});
+				}
+
+				require(['wikia.ui.factory'], function (uiFactory) {
+					$.when(uiFactory.init('modal'))
+						.then(createModal);
+				});
+			});
 		}
 
 		/**
@@ -145,4 +189,4 @@
 
 	// instantiate singleton on DOM ready
 	$(fbPreferences.getInstance);
-})();
+})(jQuery, mediaWiki);

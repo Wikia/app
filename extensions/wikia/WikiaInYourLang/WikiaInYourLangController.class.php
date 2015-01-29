@@ -25,10 +25,10 @@ class WikiaInYourLangController extends WikiaController {
 		 */
 		$sCurrentSitename = $this->wg->Sitename;
 		/**
-		 * The language code for the wfMessage
+		 * A language code's core for the wfMessage
 		 * @var string
 		 */
-		$sTargetLanguage = $this->request->getVal( 'targetLanguage' );
+		$sTargetLanguage = $this->getLanguageCore( $this->request->getVal( 'targetLanguage' ) );
 
 		/**
 		 * Steps to get the native wikia's ID:
@@ -48,19 +48,26 @@ class WikiaInYourLangController extends WikiaController {
 			if ( $iNativeWikiId > 0 ) {
 				$oNativeWiki = WikiFactory::getWikiById( $iNativeWikiId );
 
-				$aMessageParams = [
-					$sCurrentSitename,
-					$oNativeWiki->city_url,
-					$oNativeWiki->city_title,
-				];
+				// Check for false-positives - see CE-1216
+				// Per request we should unify dialects like pt and pt-br
+				// @see CE-1220
+				if ( $this->getLanguageCore( $oNativeWiki->city_lang ) == $sTargetLanguage ) {
+					$aMessageParams = [
+						$sCurrentSitename,
+						$oNativeWiki->city_url,
+						$oNativeWiki->city_title,
+					];
 
-				$sMessage = $this->prepareMessage( $sTargetLanguage, $aMessageParams );
-
-				$this->response->setVal( 'success', true );
-				$this->response->setVal( 'message', $sMessage );
+					$sMessage = $this->prepareMessage( $sTargetLanguage, $aMessageParams );
+					$this->response->setVal( 'success', true );
+					$this->response->setVal( 'message', $sMessage );
+				} else {
+					$this->response->setVal( 'success', false );
+					$this->response->setVal( 'error', "A native wikia with a domain {$sNativeWikiDomain} matches the original." );
+				}
 			} else {
 				$this->response->setVal( 'success', false );
-				$this->response->setVal( 'error', 'A native wikia not found.' );
+				$this->response->setVal( 'error', "A native wikia with a domain {$sNativeWikiDomain} not found." );
 			}
 		} else {
 			$this->response->setVal( 'success', false );
@@ -68,9 +75,9 @@ class WikiaInYourLangController extends WikiaController {
 		}
 
 		/**
-		 * Cache the response aggresively
+		 * Cache the response for a day
 		 */
-		$this->response->setCacheValidity( WikiaResponse::CACHE_LONG );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -89,17 +96,18 @@ class WikiaInYourLangController extends WikiaController {
 
 		if ( isset( $aParsed['host'] ) ) {
 			$sHost = $aParsed['host'];
-			$regExp = "/(([a-z]{2,3}|[a-z]{2}\-[a-z]{2})\.)?([^\.]+\.)(.*)/i";
+			$regExp = "/(sandbox.{3}\.|preview\.|verify\.)?(([a-z]{2,3}|[a-z]{2}\-[a-z]{2})\.)?([^\.]+\.)(.*)/i";
 			/**
 			 * preg_match returns similar array as a third parameter:
 			 * [
-			 * 	0 => zh.example.wikia.com,
-			 * 	1 => (zh. | empty),
-			 * 	2 => (zh | empty),
-			 * 	3 => example.
-			 * 	4 => ( wikia.com | adamk.wikia-dev.com )
+			 * 	0 => sandbox-s3.zh.example.wikia.com,
+			 * 	1 => (sandbox-s3. | preview. | verify. | empty)
+			 * 	2 => (zh. | empty),
+			 * 	3 => (zh | empty),
+			 * 	4 => example.
+			 * 	5 => ( wikia.com | adamk.wikia-dev.com )
 			 * ]
-			 * [3] is a domain without the language prefix
+			 * [4] is a domain without the language prefix
 			 * @var Array
 			 */
 			$aMatches = [];
@@ -109,11 +117,20 @@ class WikiaInYourLangController extends WikiaController {
 			 * This allows the extension to work on devboxes
 			 */
 			if ( $iMatchesCount == 1 ) {
-				$sWikiDomain = $aMatches[3] . self::WIKIAINYOURLANG_WIKIA_DOMAIN;
+				$sWikiDomain = $aMatches[4] . self::WIKIAINYOURLANG_WIKIA_DOMAIN;
 			}
 		}
 
 		return $sWikiDomain;
+	}
+
+	/**
+	 * Returns a core of a full language code (e.g. pt from pt-br)
+	 * @param  string $sFullLangCode Full language code
+	 * @return string                A core of the language code
+	 */
+	public function getLanguageCore( $sFullLangCode ) {
+		return explode( '-', $sFullLangCode )[0];
 	}
 
 	/**
@@ -123,8 +140,13 @@ class WikiaInYourLangController extends WikiaController {
 	 * @return string                  A native wikia URL (e.g. ja.community.wikia.com)
 	 */
 	private function getNativeWikiDomain( $sWikiDomain, $sTargetLanguage ) {
-		$sNativeWikiDomain = $sTargetLanguage . '.' . $sWikiDomain;
-		return $sNativeWikiDomain;
+		if ( $sTargetLanguage !== 'en' ) {
+			$sNativeWikiDomain = $sTargetLanguage . '.' . $sWikiDomain;
+			return $sNativeWikiDomain;
+		}
+		else {
+			return $sWikiDomain;
+		}
 	}
 
 	/**

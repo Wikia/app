@@ -13,6 +13,8 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'Image Placeholder (Add Images)',
 	'author' => 'Bartek Łapiński',
 	'version' => '0.61',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ImagePlaceholder',
+	'descriptionmsg' => 'imgplc-desc'
 );
 
 global $wgWikiaImagesFoundInTemplates;
@@ -32,7 +34,7 @@ $wgExtensionFunctions[] = 'ImagePlaceholder_init';
 /**
  * message files
  */
-$wgExtensionMessagesFiles['ImagePlaceholder'] = $dir.'/ImagePlaceholder.i18n.php';
+$wgExtensionMessagesFiles['ImagePlaceholder'] = $dir . 'ImagePlaceholder.i18n.php';
 
 JSMessages::registerPackage('ImagePlaceholder', array('imgplc-*'));
 JSMessages::enqueuePackage('ImagePlaceholder', JSMessages::EXTERNAL);

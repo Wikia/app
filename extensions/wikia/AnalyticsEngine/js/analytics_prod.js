@@ -300,13 +300,19 @@
 
 }( window ));
 
-(function() {
-	if ( !window.wgNoExternals ) {
-		var ga = document.createElement( 'script' );
+(function (win, doc) {
+	'use strict';
+	if (!win.wgNoExternals) {
+		// Choose old (ga.js) or new (dc.js) analytics script as per ADEN-1589
+		// https://support.google.com/analytics/answer/2444872?hl=en
+
+		var ga = doc.createElement('script'),
+			firstScript = doc.getElementsByTagName('script')[0];
+
 		ga.type = 'text/javascript';
 		ga.async = true;
-		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-		var s = document.getElementsByTagName( 'script' )[0];
-		s.parentNode.insertBefore( ga, s );
+		ga.src = ('https:' === doc.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+
+		firstScript.parentNode.insertBefore(ga, firstScript);
 	}
-})();
+})(window, document);

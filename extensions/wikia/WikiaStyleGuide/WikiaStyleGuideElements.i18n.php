@@ -8,6 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
+	'wikiastyleguide-desc' => 'WikiaStyleGuide extension',
 	'wikiastyleguide-dropdown-all' => 'All',
 	'wikiastyleguide-dropdown-select-all' => 'Select All',
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 and $2 more',
@@ -19,6 +20,7 @@ $messages['en'] = array(
  * @author Shirayuki
  */
 $messages['qqq'] = array(
+	'wikiastyleguide-desc' => '{{desc}}',
 	'wikiastyleguide-dropdown-all' => 'This is for a custom multiple choice dropdown (essentially a more powerful and more easily styled <select> element). Text shown when all items are selected.
 {{Identical|All}}',
 	'wikiastyleguide-dropdown-select-all' => 'Shown next to checkbox in toolbar. Used for selecting all other checkboxes.
@@ -78,6 +80,7 @@ $messages['ca'] = array(
  * @author Metalhead64
  */
 $messages['de'] = array(
+	'wikiastyleguide-desc' => 'WikiaStyleGuide-Erweiterung',
 	'wikiastyleguide-dropdown-all' => 'Alle',
 	'wikiastyleguide-dropdown-select-all' => 'Alle auswählen',
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 und $2 weitere',
@@ -87,9 +90,17 @@ $messages['de'] = array(
  * @author VegaDark
  */
 $messages['es'] = array(
+	'wikiastyleguide-desc' => 'Extensión WikiaStyleGuide',
 	'wikiastyleguide-dropdown-all' => 'Todo',
 	'wikiastyleguide-dropdown-select-all' => 'Seleccionar todo',
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 y $2 más',
+);
+
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'wikiastyleguide-dropdown-selected-items-list' => '$1 eta $2 gehiago',
 );
 
 /** Persian (فارسی)
@@ -115,6 +126,7 @@ $messages['fi'] = array(
  * @author Wyz
  */
 $messages['fr'] = array(
+	'wikiastyleguide-desc' => 'Extension WikiaStyleGuide',
 	'wikiastyleguide-dropdown-all' => 'Tous',
 	'wikiastyleguide-dropdown-select-all' => 'Tout sélectionner',
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 et $2 restants',
@@ -173,6 +185,7 @@ $messages['mk'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'wikiastyleguide-desc' => 'Sambungan WikiaStyleGuide',
 	'wikiastyleguide-dropdown-all' => 'Semua',
 	'wikiastyleguide-dropdown-select-all' => 'Pilih Semua',
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 (dan $2 lagi)',
@@ -236,6 +249,7 @@ $messages['pt-br'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'wikiastyleguide-desc' => 'Estenzione UicchiaGuideDeStile',
 	'wikiastyleguide-dropdown-all' => 'Tutte',
 	'wikiastyleguide-dropdown-select-all' => 'Scacchie Tutte',
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 e $2 e de cchiù',
@@ -254,6 +268,7 @@ $messages['ru'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'wikiastyleguide-desc' => 'WikiaStyleGuide-tillägg',
 	'wikiastyleguide-dropdown-all' => 'Alla',
 	'wikiastyleguide-dropdown-select-all' => 'Markera alla',
 	'wikiastyleguide-dropdown-selected-items-list' => '$1 och $2 fler',
@@ -279,8 +294,10 @@ $messages['vi'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Liuxinyu970226
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'wikiastyleguide-desc' => 'WikiaStyleGuide扩展',
 	'wikiastyleguide-dropdown-all' => '全部',
 	'wikiastyleguide-dropdown-select-all' => '全选',
 	'wikiastyleguide-dropdown-selected-items-list' => '$1与$2以及更多',

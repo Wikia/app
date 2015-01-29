@@ -91,6 +91,7 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 
 		// Flags
 		$this->mockGlobalVariable( 'wgAdDriverAlwaysCallDart', false );
+		$this->mockGlobalVariable( 'wgAdDriverBottomLeaderboardImpressionCapping', false );
 		$this->mockGlobalVariable( 'wgAdDriverEnableAdsInMaps', false );
 		$this->mockGlobalVariable( 'wgAdDriverEnableRemnantGptMobile', false );
 		$this->mockGlobalVariable( 'wgAdDriverTrackState', false );
