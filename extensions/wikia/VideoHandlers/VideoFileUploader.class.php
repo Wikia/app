@@ -79,30 +79,20 @@ class VideoFileUploader {
 	 *
 	 * @param $oTitle - A title object that will be set if this call is successful
 	 * @return FileRepoStatus|Status - A status object representing the result of this call
+	 * @throws Exception
 	 */
 	public function upload( &$oTitle ) {
-
-		wfProfileIn(__METHOD__);
-
 		// Some providers will sometimes return error codes when attempting
-		// to fetch a thumbnnail
+		// to fetch a thumbnail
 		try {
 			$upload = $this->uploadBestThumbnail( $this->getApiWrapper()->getThumbnailUrl() );
 		} catch ( Exception $e ) {
-			Wikia::Log(__METHOD__, false, $e->getMessage());
+			Wikia::Log( __METHOD__, false, $e->getMessage() );
 
-			wfProfileOut(__METHOD__);
 			return Status::newFatal( $e->getMessage() );
 		}
 
-		/* create a reference to article that will contain uploaded file */
-		$titleText =  $this->getDestinationTitle();
-		if ( !($this->getApiWrapper()->isIngestion() ) ) {
-			// only sanitize name for external uploads
-			// video ingestion handles sanitization by itself
-			$titleText = self::sanitizeTitle( $titleText );
-		}
-		$oTitle = Title::newFromText( $titleText, NS_FILE );
+		$oTitle = Title::newFromText( $this->getNormalizedDestinationTitle(), NS_FILE );
 
 		// Check if the user has the proper permissions
 		// Mimicks Special:Upload's behavior
@@ -119,7 +109,6 @@ class VideoFileUploader {
 			$permErrors = array_merge( $permErrors, wfArrayDiff2( $permErrorsUpload, $permErrors ) );
 			$permErrors = array_merge( $permErrors, wfArrayDiff2( $permErrorsCreate, $permErrors ) );
 			$msgKey = array_shift( $permErrors[0] );
-			wfProfileOut( __METHOD__ );
 			throw new Exception( wfMessage( $msgKey, $permErrors[0] )->parse()  );
 		}
 
@@ -163,8 +152,34 @@ class VideoFileUploader {
 
 		wfRunHooks('AfterVideoFileUploaderUpload', array($file, $result));
 
-		wfProfileOut(__METHOD__);
 		return $result;
+	}
+
+	/**
+	 * Get the normalized composed version of the title
+	 *
+	 * @return string
+	 */
+	public function getNormalizedDestinationTitle() {
+		return \UtfNormal::toNFC( $this->getSanitizedTitleText() );
+	}
+
+	/**
+	 * Get the sanitized title caption
+	 *
+	 * @return string
+	 */
+	public function getSanitizedTitleText() {
+		$isIngestion = $this->getApiWrapper()->isIngestion();
+		// Create a reference to article that will contain uploaded file
+		$titleText = $this->getDestinationTitle();
+		if ( !$isIngestion ) {
+			// only sanitize name for external uploads
+			// video ingestion handles sanitization by itself
+			$titleText = self::sanitizeTitle( $titleText );
+		}
+
+		return $titleText;
 	}
 
 	/**
