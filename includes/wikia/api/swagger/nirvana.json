@@ -2635,8 +2635,11 @@
       ],
       "properties": {
         "sections": {
-          "$ref": "#/definitions/Section",
-          "description": "Article section data container"
+          "type": "array",
+          "description": "Article section data container",
+          "items": {
+            "$ref": "#/definitions/Section",
+          }
         }
       }
     },
