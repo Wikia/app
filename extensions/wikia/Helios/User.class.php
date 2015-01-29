@@ -80,6 +80,14 @@ class User {
 			global $wgHeliosLoginShadowMode;
 			$oLogin = $oHelios->login( $sUserName, $sPassword );
 			$bResult = !empty( $oLogin->access_token );
+
+			if ( !empty( $oLogin->error ) ) {
+				$oLogger->error(
+					'HELIOS_LOGIN',
+					[ 'response' => $e, 'username' => $sUserName,
+					'user_id' => $iUserId, 'method' => __METHOD__ ]
+				);
+			}
 		}
 
 		catch ( \Wikia\Helios\ClientException $e ) {
@@ -99,16 +107,12 @@ class User {
 	/**
 	 * Compares Helios' password comparison result with MediaWiki's and logs details if different.
 	 */
-	public static function comparePasswordCheck( $bHeliosCheck, $bHelios, $bMediaWiki, $sType, $sPassword, $iUserId ) {
+	public static function comparePasswordCheck( $bHeliosCheck, $bHelios, $bMediaWiki, $sType, $sHash, $iUserId ) {
 
 		if ( $bHeliosCheck && $bHelios != $bMediaWiki ) {
 
 			// Get the user's name from the request context.
 			$sUserName= \RequestContext::getMain()->getRequest()->getText( 'username' );
-
-			// Log the password as an encrypted string.
-			global $wgTheSchwartzSecretToken;
-			$sHash = crypt( $sPassword, $wgTheSchwartzSecretToken );
 
 			\Wikia\Logger\WikiaLogger::instance()->error(
 				'HELIOS_LOGIN',
