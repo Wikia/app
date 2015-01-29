@@ -48,6 +48,6 @@ function efReCaptchaOnBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
 	$langCode = $out->getContext()->getLanguage()->getCode();
 
 	$src = str_replace( '$1', $langCode, ReCaptcha::API_URL_TEMPLATE );
-	$out->addScript( '<script src="'.$src.'" async defer></script>' );
+	$out->addScript( '<script src="'.$src.'"></script>' );
 	return true;
 }
