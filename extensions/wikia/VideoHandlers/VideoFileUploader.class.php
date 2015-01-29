@@ -138,21 +138,36 @@ class VideoFileUploader {
 
 		/* ingestion video won't be able to load anything so we need to spoon feed it the correct data */
 		if ( $this->getApiWrapper()->isIngestion() ) {
-			$meta = $this->getApiWrapper()->getMetadata();
-			$file->forceMetadata( serialize($meta) );
+			$file->forceMetadata( serialize( $this->getNormalizedMetadata() ) );
 		}
 
+		$file->getMetadata();
 		/* real upload */
 		$result = $file->upload(
 			$upload->getTempPath(),
 			wfMessage( 'videos-initial-upload-edit-summary' )->inContentLanguage()->text(),
-			$this->getDescription(),
+			\UtfNormal::toNFC( $this->getDescription() ),
 			File::DELETE_SOURCE
 		);
 
 		wfRunHooks('AfterVideoFileUploaderUpload', array($file, $result));
 
 		return $result;
+	}
+
+	/**
+	 * Get the normalized composed version of ApiWrapper metadata
+	 *
+	 * @return string
+	 */
+	public function getNormalizedMetadata() {
+		$metadata = $this->getApiWrapper()->getMetadata();
+
+		// Flatten metadata, normalize it, and restore in original structure
+		$metadata = json_encode( $metadata );
+		$metadata = \UtfNormal::toNFC( $metadata );
+
+		return json_decode( $metadata );
 	}
 
 	/**
