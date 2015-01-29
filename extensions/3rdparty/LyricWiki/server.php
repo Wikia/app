@@ -525,7 +525,6 @@ function searchArtists($searchString){
 		$debug = true;
 	}
 	$artist = lw_fmtArtist($artist);
-	$artist = str_replace("'", "\'", $artist);
 
 	print (!$debug?"":"Starting title: \"$artist\".\n");
 
@@ -544,19 +543,23 @@ function searchArtists($searchString){
 			print (!$debug?"":"After trimming '%'s off: \"$artist\".\n");
 
 			// TODO: Is it even worth trying this initial query before the SimpleSearch service?
-			$db = lw_connect_readOnly();
-			$ns = NS_MAIN;
-			$queryString = "SELECT page_title FROM page WHERE page_namespace=$ns AND page_title NOT LIKE '%:%' AND page_title LIKE '$artist' LIMIT $MAX_RESULTS";
-			if($result = mysql_query($queryString, $db)){
-				if(($numRows = mysql_num_rows($result)) && ($numRows > 0)){
-					for($cnt=0; $cnt<$numRows; $cnt++){
-						$retVal[] = mysql_result($result, $cnt, "page_title");
-					}
-				} else {
-					print (!$debug?"":"No matches for page_title LIKE \"$artist\".\n");
-				}
-			} else {
-				print (!$debug?"":"Error with query: \"$queryString\"\nmysql_error: ".mysql_error());
+			$db = wfGetDB( DB_SLAVE );
+			$result = $db->select(
+				[ 'page' ],
+				[ 'page_title' ],
+				[
+					'page_namespace' => NS_MAIN,
+					'page_title NOT ' . $db->buildLike( $db->anyString(), ':' , $db->anyString() ),
+					'page_title' => $artist,
+				],
+				__METHOD__,
+				[
+					'LIMIT' => $MAX_RESULTS,
+				]
+			);
+
+			foreach ( $result as $row ) {
+				$retVal[] = $row->page_title;
 			}
 
 			// If there were no results at all, look for some with a more liberal query.
@@ -2245,13 +2248,9 @@ function lw_pageExists($pageTitle, $ns=NS_MAIN, $debug=false){
 		print (!$debug?"":"Using cached value for $ns:$pageTitle\n");
 		$retVal = $EXIST_CACHE["$ns:$pageTitle"];
 	} else {
-		$queryTitle = str_replace("'", "\'", $pageTitle);
+		$pageTitleObj = Title::newFromText( $pageTitle, $ns );
 
-		// the page_namespace='$ns' speeds it up significantly since it can then use the index on page_namespace,page_title
-		$queryString = "SELECT /* LyricWiki API server.php::lw_pageExists() */ COUNT(*) FROM page WHERE page_title='$queryTitle' AND page_namespace='$ns'";
-		print (!$debug?"":"Query for looking up the page:\n$queryString\n");
-
-		$retVal = (0 < lw_simpleQuery($queryString));
+		$retVal = $pageTitleObj instanceof Title && $pageTitleObj->exists();
 		$EXIST_CACHE["$ns:$pageTitle"] = $retVal;
 	}
 	print (!$debug?"":"Page exists: ".($retVal?"yes":"no")."\n");
@@ -2555,7 +2554,7 @@ function requestFinished($id){
 function removeWikitextFromLyrics($lyrics){
 	// Clean up wikipedia template to be plaintext
 	$lyrics = preg_replace("/\{\{wp.*\|(.*?)\}\}/", "$1", $lyrics);
-	
+
 	// Clean up links & category-links to be plaintext
 	$lyrics = preg_replace("/\[\[([^\|\]]*)\]\]/", "$1", $lyrics); // links with no alias (no pipe)
 	$lyrics = preg_replace("/\[\[.*\|(.*?)\]\]/", "$1", $lyrics);
