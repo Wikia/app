@@ -68,6 +68,11 @@
 			display: none;
 		}
 	}
+
+	.global-navigation .page-width {
+		margin: 0 10px;
+		width: calc(100% - 20px);
+	}
 }
 
 @media #{$below-small} {
