@@ -704,8 +704,8 @@ class ArticlesApiController extends WikiaApiController {
 				} elseif ( $t->getNamespace() == NS_CATEGORY ) {
 					$fileData = [ 'type' => static::CATEGORY_TYPE ];
 				}
-				$id = $t->getArticleID();
-				$revId = $t->getLatestRevID();
+				$id = $t->getArticleID( Title::GAID_FOR_UPDATE );
+				$revId = $t->getLatestRevID( Title::GAID_FOR_UPDATE );
 				$rev = Revision::newFromId( $revId );
 
 				if ( !empty( $rev ) ) {
