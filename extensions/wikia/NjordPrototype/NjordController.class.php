@@ -48,12 +48,17 @@ class NjordController extends WikiaController {
 //		$this->wg->out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/NjordPrototype/css/Mom.scss' ) );
 //		$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . '/wikia/NjordPrototype/scripts/Mom.js' );
 
+
 		$wikiDataModel->imageSet = true;
 		if ( !isset( $wikiDataModel->imagePath ) ) {
 			$wikiDataModel->imageSet = false;
 			$wikiDataModel->imagePath = $wgBlankImgUrl;
 			$wikiDataModel->originalImagePath = $wgBlankImgUrl;
 		}
+
+		//TODO: remove this before release (thumbs from stash broken on devbox)
+		$wikiDataModel->imagePath = 'http://img1.wikia.nocookie.net/__cb20150129114437/mediawiki116/images/thumb/4/48/Wikia-hero-image/1200px-0%2C1200%2C0%2C300';
+
 		// template vars
 		$this->wikiData = $wikiDataModel;
 		$this->isAllowedToEdit = $this->wg->user->isAllowed( 'njordeditmode' );
