@@ -6,6 +6,10 @@
 
 $search-input-size: 30px;
 $autocomplete-item-height: 44px;
+$autocomplete-border-bottom: rgb(230, 235, 250);
+$search-input-background-color: rgb(242, 246, 250);
+$search-input-border-color: rgb(197, 206, 217);
+$search-input-text-color: rgba(101, 110, 120, 0.75);
 
 .search-container {
 	padding-right: round($global-navigation-items-spacing / 2);
@@ -25,13 +29,13 @@ $autocomplete-item-height: 44px;
 		background-color: $global-wikia-background-color;
 		border: 2px solid rgba(0, 0, 0, 0.2);
 		border-top: none;
-		color: $dark-blue;
+		color: $global-navigation-active-color;
 		line-height: 18px;
 		margin-top: 10px;
 
 		div {
 			@include font-size-xs;
-			border-bottom: 1px solid rgb(230, 235, 250);
+			border-bottom: 1px solid $autocomplete-border-bottom;
 			cursor: pointer;
 			height: $autocomplete-item-height;
 			line-height: 23px;
@@ -40,7 +44,7 @@ $autocomplete-item-height: 44px;
 		}
 
 		.selected {
-			background-color: $grey-background;
+			background-color: $global-navigation-background-color;
 		}
 
 		span {
@@ -88,10 +92,10 @@ $autocomplete-item-height: 44px;
 	.chevron {
 		border-color: transparent;
 		border-style: solid;
-		border-top-color: $dark-blue;
+		border-top-color: $global-navigation-active-color;
 		border-width: 5px;
 		left: 100%;
-		margin-top: 13px;
+		margin-top: 12px;
 		position: relative;
 		width: 0;
 	}
@@ -103,10 +107,10 @@ $autocomplete-item-height: 44px;
 
 	.search-input {
 		@include font-size-xs;
-		background-color: rgb(242, 246, 250);
-		border: solid 1px rgb(197, 206, 217);
+		background-color: $search-input-background-color;
+		border: solid 1px $search-input-border-color;
 		border-radius: 2px;
-		color: rgba(101, 110, 120, 0.75);
+		color: $search-input-text-color;
 		font-weight: bold;
 		height: $search-input-size;
 		padding-left: 56px;

@@ -8,15 +8,15 @@
 				<div class="avatar-container<?= $avatarContainerAdditionalClass ?>">
 					<?= $profileAvatar ?>
 				</div>
-				<?php if ($isAnon) : ?>
-					<?= $registerLink ?>
-				<? endif; ?>
 			</a>
+			<?php if ($isAnon) : ?>
+				<span class="sign-in-label"><?= wfMessage( 'global-navigation-sign-in' )->escaped(); ?></span>
+			<? endif; ?>
 			<img class="chevron" src="data:image/gif;base64,R0lGODlhAQABAIABAAAAAP///yH5BAEAAAEALAAAAAABAAEAQAICTAEAOw%3D%3D"/>
 		</div>
 		<?php if ( !$isAnon ): ?>
 		<ul class="user-menu subnav">
-			<?= $app->renderView('GlobalNavigationWallNotifications', 'Index'); ?>
+			<?= $app->renderView( 'GlobalNavigationWallNotifications', 'Index' ); ?>
 			<?php foreach( $userDropdown as $link ): ?>
 				<li><?= $link ?></li>
 			<?php endforeach; ?>

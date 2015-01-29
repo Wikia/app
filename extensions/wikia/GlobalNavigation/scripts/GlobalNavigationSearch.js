@@ -15,7 +15,7 @@ require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], funct
 		$inputResultLang = $('#searchInputResultLang');
 		$formElement = $('#searchForm');
 		$selectElement = $('#searchSelect');
-		isLocalSearchDisabled = $selectElement.length < 1;
+		isLocalSearchDisabled = !!$selectElement.length;
 		$searchInput = $('#searchInput');
 		$globalNav = $('#globalNavigation');
 	}

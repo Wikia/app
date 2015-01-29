@@ -53,7 +53,7 @@ $hub-arrow-icon-left-padding-large: $hub-menu-icon-left-padding-large + $hub-men
 
 	&:after {
 		border: 5px solid $global-wikia-background-color;
-		border-top-color: $dark-blue;
+		border-top-color: $global-navigation-active-color;
 		content: ' ';
 		display: inline-block;
 		margin-left: $hub-menu-icon-width + 10px;

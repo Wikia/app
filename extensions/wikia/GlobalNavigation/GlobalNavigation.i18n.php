@@ -5,6 +5,7 @@ $messages['en'] = [
 	'global-navigation-desc' => 'Wikia\'s Global Navigation',
 	'global-navigation-create-wiki' => 'Start a wikia',
 	'global-navigation-hubs-menu-more-of' => 'More $1',
+	'global-navigation-sign-in' => 'Sign in',
 	'global-navigation-hubs-menu' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
 
 **#|Hot off the Press
@@ -216,7 +217,7 @@ $messages['en'] = [
 ***http://coffee.wikia.com/wiki/Main_Page|Coffee
 ***http://lifestylehub.wikia.com/wiki/Lifestyle_Hub|More...
 ",
-	'global-navigation-local-search-placeholder' => 'Search within $1',
+	'global-navigation-local-search-placeholder' => 'Search within $1...',
 	'global-navigation-local-search' => 'Search this wikia',
 	'global-navigation-global-search' => 'Search all of Wikia',
 ];

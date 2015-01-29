@@ -34,8 +34,8 @@
 
 	.start-wikia {
 		@include font-size-xxs;
-		border: solid 1px $dark-grey;
-		color: $dark-grey;
+		border: solid 1px $global-navigation-text-color;
+		color: $global-navigation-text-color;
 		display: inline-block;
 		font-weight: bold;
 		height: $global-navigation-height-without-margin;
@@ -45,7 +45,7 @@
 		padding: 0 10px;
 
 		&:hover {
-			background-color: $dark-blue;
+			background-color: $global-navigation-active-color;
 			color: $global-wikia-background-color;
 			text-decoration: none;
 		}

@@ -5,17 +5,17 @@
 @import 'GlobalNavigationVariables';
 
 .account-navigation-container {
-	padding-right: $account-navigation-container-padding-right;
+	padding-right: round($global-navigation-items-spacing / 2);
 	position: relative;
 }
 
 .AccountNavigation {
 	height: $global-navigation-height;
-	padding: 0 round($global-navigation-items-spacing / 2);
+	padding: 0 9px 0 round($global-navigation-items-spacing / 2);
 	margin: 0;
 
 	&.active {
-		background-color: $grey-background;
+		background-color: $global-navigation-background-color;
 		.user-menu {
 			display: table;
 			table-layout: fixed;
@@ -31,7 +31,7 @@
 
 			.chevron {
 				border: 5px solid;
-				border-top-color: $dark-blue;
+				border-top-color: $global-navigation-active-color;
 				color: transparent;
 				display: inline-block;
 				margin-left: 10px;
@@ -57,9 +57,9 @@
 		}
 	}
 
-	.ajaxRegister {
+	.sign-in-label {
 		@include font-size-xxs;
-		color: $dark-grey;
+		color: $global-navigation-text-color;
 		display: table-cell;
 		vertical-align: middle;
 
