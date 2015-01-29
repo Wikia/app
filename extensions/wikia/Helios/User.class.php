@@ -71,6 +71,9 @@ class User {
 		
 		// Get the user's name from the request context.
 		$sUserName= \RequestContext::getMain()->getRequest()->getText( 'username' );
+		// Convert to a valid MediaWiki user name, as the original login does it.
+		$sUserName = \User::getCanonicalName( $sUserName, 'valid' );
+		// TODO: handle invalid user names without sending requests to the service.
 
 		global $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret;
 		$oHelios = new Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
