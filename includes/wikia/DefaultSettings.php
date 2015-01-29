@@ -1302,12 +1302,6 @@ $wgAdDriverUseBottomLeaderboard = false;
 $wgAdDriverUseInterstitial = false;
 
 /**
- * @name $wgAdDriverUseTopInContentBoxad
- * Whether to enable new in-content top ad TOP_IN_CONTENT_BOXAD
- */
-$wgAdDriverUseTopInContentBoxad = true;
-
-/**
  * @name $wgAdDriverBottomLeaderboardImpressionCapping
  * Impression capping for BOTTOM_LEADERBOARD. Array with the numbers of the potential ad calls.
  */

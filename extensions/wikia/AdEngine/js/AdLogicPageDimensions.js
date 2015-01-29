@@ -45,7 +45,6 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 			noSkins: 'screen and (max-width: 1260px)'
 		},
 		slotsToHideOnMediaQuery = {
-			TOP_INCONTENT_BOXAD: 'twoColumns',
 			INCONTENT_1A: 'twoColumns',
 			INCONTENT_1B: 'twoColumns',
 			INCONTENT_1C: 'twoColumns',
