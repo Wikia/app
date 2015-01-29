@@ -22,21 +22,23 @@ require(
 		var targetLanguage = getTargetLanguage(),
 			// Per request we should unify dialects like pt and pt-br
 			// @see CE-1220
-			contentLanguage = w.wgContentLanguage.split('-')[0];
+			contentLanguage = w.wgContentLanguage.split('-')[0],
+			// Cache version
+			cacheVersion = '1.01';
 
 		function init() {
 			if (targetLanguage !== false && targetLanguage !== contentLanguage) {
 				// Check local browser cache to see if a request has been sent
 				// in the last month and if the notification has been shown to him.
 				// Both have to be !== true to continue.
-				if (cache.get('wikiaInYourLangRequestSent') !== true && cache.get('wikiaInYourLangNotificationShown') !== true) {
+				if (cache.get('wikiaInYourLangRequestSent' + cacheVersion) !== true && cache.get('wikiaInYourLangNotificationShown' + cacheVersion) !== true) {
 					// Update JS cache and set the notification shown indicator to true
-					var ttl = 60 * 60 * 24 * 30; // Cache for a month
-					cache.set('wikiaInYourLangRequestSent', true, ttl);
+					var ttl = 60 * 60 * 24; // Cache for a day
+					cache.set('wikiaInYourLangRequestSent' + cacheVersion, true, ttl);
 
 					getNativeWikiaInfo();
-				} else if (typeof cache.get(targetLanguage + 'WikiaInYourLangMessage') === 'string') {
-					displayNotification(cache.get(targetLanguage + 'WikiaInYourLangMessage'));
+				} else if (typeof cache.get(targetLanguage + 'WikiaInYourLangMessage' + cacheVersion) === 'string') {
+					displayNotification(cache.get(targetLanguage + 'WikiaInYourLangMessage' + cacheVersion));
 				}
 			}
 		}
@@ -91,7 +93,8 @@ require(
 						displayNotification(results.message);
 
 						// Save the message in cache to display until a user closes it
-						cache.set(targetLanguage + 'WikiaInYourLangMessage', results.message);
+						var ttl = 60 * 60 * 24; // Cache for a day
+						cache.set(targetLanguage + 'WikiaInYourLangMessage' + cacheVersion, results.message, ttl);
 					}
 				}
 			});
@@ -134,8 +137,9 @@ require(
 			};
 			tracker.track(trackingParams);
 
-			cache.set(targetLanguage + 'WikiaInYourLangMessage', null);
-			cache.set('wikiaInYourLangNotificationShown', true);
+			var ttl = 60 * 60 * 24 * 30; // Cache for a month
+			cache.set(targetLanguage + 'WikiaInYourLangMessage' + cacheVersion, null);
+			cache.set('wikiaInYourLangNotificationShown' + cacheVersion, true, ttl);
 		}
 
 		function onLinkClick() {
