@@ -2638,7 +2638,7 @@
           "type": "array",
           "description": "Article section data container",
           "items": {
-            "$ref": "#/definitions/Section",
+            "$ref": "#/definitions/Section"
           }
         }
       }
