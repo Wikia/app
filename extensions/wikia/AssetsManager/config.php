@@ -152,21 +152,30 @@ $config['adengine2_interactive_maps_js'] = array(
 	),
 );
 
-$config['adengine2_top_in_content_boxad_js'] = array(
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'venus',
-	'assets' => array(
-		'//extensions/wikia/AdEngine/js/AdPlacementChecker.js',
-		'//extensions/wikia/AdEngine/js/AdDecoratorTopInContent.js',
-	),
-);
-
 $config['adengine2_in_content_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'venus',
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/AdPlacementChecker.js',
 		'//extensions/wikia/AdEngine/js/AdSlotsInContent.js',
+	),
+);
+
+$config['adengine2_venus_ads_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'venus',
+	'assets' => array(
+		'#group_adengine2_in_content_ads_js',
+		'//extensions/wikia/AdEngine/js/AdSlotsVenus.js',
+	),
+);
+
+$config['adengine2_oasis_ads_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'venus',
+	'assets' => array(
+		'#group_adengine2_in_content_ads_js',
+		'//extensions/wikia/AdEngine/js/AdSlotsOasis.js',
 	),
 );
 

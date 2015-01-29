@@ -1,5 +1,5 @@
-/*global require*/
-require([
+/*global define*/
+define('ext.wikia.adEngine.adSlotsInContent',[
 	'jquery',
 	'wikia.document',
 	'wikia.log',
@@ -9,7 +9,7 @@ require([
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.venus',
-		headersSelector = '#mw-content-text > h2, #mw-content-text > h3, #mw-content-text > section > h2',
+		selector = '#mw-content-text > h2, #mw-content-text > h3, #mw-content-text > section > h2',
 		inContentMedrecs = [
 			['INCONTENT_1C', 'INCONTENT_1B', 'INCONTENT_1A'],
 			['INCONTENT_2C', 'INCONTENT_2B', 'INCONTENT_2A'],
@@ -25,7 +25,7 @@ require([
 		labelHtml = '<label class="wikia-ad-label"></label>',
 
 		container,
-		headers,
+		elementsBeforeSlots,
 		labelText;
 
 	function isValidOffset(offset) {
@@ -86,11 +86,11 @@ require([
 			slot;
 
 		inContentMedrecs.forEach(function (remainingSlots, index) {
-			for (i = 0, len = headers.length; i < len && slotsAdded < maxSlots; i += 1) {
+			for (i = 0, len = elementsBeforeSlots.length; i < len && slotsAdded < maxSlots; i += 1) {
 				remainingSlots = inContentMedrecs[index].slice();
 				for (j = remainingSlots.length - 1; j >= 0; j -= 1) {
 					slot = getSlotParams(remainingSlots.shift());
-					if (pushSlot('medrec', slot, headers[i], headers[i + 1])) {
+					if (pushSlot('medrec', slot, elementsBeforeSlots[i], elementsBeforeSlots[i + 1])) {
 						return;
 					}
 				}
@@ -106,21 +106,19 @@ require([
 
 		remainingSlots = inContentLeaderboards.slice();
 		slot = getSlotParams(remainingSlots.shift());
-		for (i = 0, len = headers.length; i < len && slot && slotsAdded < maxSlots; i += 1) {
-			if (pushSlot('leaderboard', slot, headers[i])) {
+		for (i = 0, len = elementsBeforeSlots.length; i < len && slot && slotsAdded < maxSlots; i += 1) {
+			if (pushSlot('leaderboard', slot, elementsBeforeSlots[i])) {
 				slot = getSlotParams(remainingSlots.shift());
 			}
 		}
 	}
 
-	function init() {
+	function init(elements) {
 		log(['init'], 'debug', logGroup);
 
 		container = $('#mw-content-text');
-		headers = $(headersSelector).get();
-		headers.unshift(null);
 		labelText = $('.wikia-ad-label').html();
-
+		elementsBeforeSlots = elements;
 		addMedrecs();
 		addLeaderBoards();
 
@@ -128,4 +126,9 @@ require([
 	}
 
 	$(doc).ready(init);
+
+	return {
+		init: init,
+		selector: selector
+	};
 });
