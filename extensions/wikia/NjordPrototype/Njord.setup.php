@@ -29,3 +29,8 @@ $wgGroupPermissions[ 'bureaucrat' ][ 'njordeditmode' ] = true;
 $wgGroupPermissions[ 'helper' ][ 'njordeditmode' ] = true;
 
 NjordHooks::$templateDir = $dir . '/templates';
+
+/**
+ * Force additional extensions to be enabled
+ */
+$wgEnableLocalNavExt = true;
