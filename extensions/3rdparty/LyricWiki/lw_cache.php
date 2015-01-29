@@ -21,16 +21,16 @@ class DurableCache {
 	function fetch( $key ) {
 		$retVal = null;
 		$dbr = wfGetDB( DB_SLAVE );
-		$result = $dbr->selectRow(
+		$result = $dbr->selectField(
 			[ 'lw_map' ],
-			[ 'value' ],
+			'value',
 			[
 				'keyName' => $key,
 			],
 			__METHOD__
 		);
 		if ( $result !== false ) {
-			$retVal = $result->value;
+			$retVal = $result;
 		}
 		return $retVal;
 	}
