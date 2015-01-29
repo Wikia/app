@@ -52,7 +52,9 @@ class GlobalNavigationController extends WikiaController {
 		$localSearchUrl = SpecialPage::getTitleFor( 'Search' )->getFullUrl();
 		$fulltext = $wgUser->getOption( 'enableGoSearch' ) ? 0 : 'Search';
 		$query = $wgRequest->getVal( 'search', $wgRequest->getVal( 'query', '' ) );
-		$localSearchPlaceholder = wfMessage( 'global-navigation-local-search-placeholder', $wgSitename )->parse();
+		$localSearchPlaceholder = html_entity_decode(
+			wfMessage( 'global-navigation-local-search-placeholder', $wgSitename )->parse()
+		);
 		if ( WikiaPageType::isCorporatePage() && !WikiaPageType::isWikiaHub() ) {
 			$this->response->setVal( 'disableLocalSearchOptions', true );
 			$this->response->setVal( 'defaultSearchPlaceholder', wfMessage( 'global-navigation-global-search')->escaped() );
