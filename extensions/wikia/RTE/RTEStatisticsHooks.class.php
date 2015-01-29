@@ -9,12 +9,33 @@ class RTEStatisticsHooks {
 	const RTE_SOURCE_MODE_TAG = 'rte-source';
 	const RTE_WYSIWYG_MODE_TAG = 'rte-wysiwyg';
 
+	static $tagBlacklist = [ self::RTE_SOURCE_MODE_TAG, self::RTE_WYSIWYG_MODE_TAG ];
+
 	/**
-	 * Registers tags for listing purposes
+	 * Removes tags from listings
 	 */
-	public static function onListDefinedTags( &$tags ) {
-		$tags[] = self::RTE_SOURCE_MODE_TAG;
-		$tags[] = self::RTE_WYSIWYG_MODE_TAG;
+	public static function onFormatSummaryRow( &$tags ) {
+		$tags = array_diff( $tags, self::$tagBlacklist );
+
+		return true;
+	}
+
+	/**
+	 * Removes tags from Listings like Special:Tags
+	 * each tag is an array structured:
+	 * [ 'ct_tag' => TAG_NAME, 'hitcount' => TAG_USAGES ]
+	 */
+	public static function onUsedTags( &$tags ) {
+		$remainingTags = [];
+
+		foreach ( $tags as $tag ) {
+			if ( !in_array( $tag['ct_tag'], self::$tagBlacklist ) ) {
+				$remainingTags [] = $tag;
+			}
+		}
+
+		$tags = $remainingTags;
+
 		return true;
 	}
 
@@ -53,12 +74,7 @@ class RTEStatisticsHooks {
 	 */
 	protected static function AddRevisionTag( $revision_id, $tag ) {
 		if ( !ChangeTags::addTags( $tag, null, $revision_id ) ) {
-			\Wikia\Logger\WikiaLogger::instance()->error( 'Failed to add tag to revision',
-				[
-					'revision_id' => $revision_id,
-					'tag' => $tag
-				]
-			);
+			\Wikia\Logger\WikiaLogger::instance()->error( 'Failed to add tag to revision', [ 'revision_id' => $revision_id, 'tag' => $tag ] );
 		}
 	}
 }

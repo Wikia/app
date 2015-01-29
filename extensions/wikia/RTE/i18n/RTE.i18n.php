@@ -21,10 +21,6 @@ $messages['en'] = array(
 	'rte-enablerichtexteditormessage' => 'Rich Text Editor enabled!',
 	'rte-first-run-notice' => 'We have made some improvements to the editor. To learn more, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news read the announcement].',
 	'prefs-rte' => 'Rich Text Editor',
-	'tag-rte-source' => 'Rich Text Editor: source mode',
-	'tag-rte-source-description' => 'Edit made using source mode of Wikia\'s Rich Text Editor',
-	'tag-rte-wysiwyg' => 'Rich Text Editor: WYSIWYG mode',
-	'tag-rte-wysiwyg-description' => 'Edit made using WYSIWYG mode of Wikia\'s Rich Text Editor',
 );
 
 /** Message documentation (Message documentation)
@@ -37,10 +33,6 @@ $messages['qqq'] = array(
 	'rte-edgecase-triplecurls' => '{{Identical|Template parameter}}',
 	'rte-edgecase-redirect' => '{{Identical|Redirect}}',
 	'enablerichtexteditor' => '{{Related|Source mode (wikia)}}',
-	'tag-rte-source' => 'Rich Text Editor: source mode',
-	'tag-rte-source-description' => 'Edit made using source mode of Wikia\'s Rich Text Editor',
-	'tag-rte-wysiwyg' => 'Rich Text Editor: WYSIWYG mode',
-	'tag-rte-wysiwyg-description' => 'Edit made using WYSIWYG mode of Wikia\'s Rich Text Editor',
 );
 
 /** Afrikaans (Afrikaans)
