@@ -70,6 +70,7 @@ $time-color: rgba($notifications-header-color, .5);
 	overflow: hidden;
 	padding: 0;
 	position: absolute;
+	top: -1px;
 
 	#notificationsContainer {
 		@include grid-column-width('medium', 4, $medium-content-padding + 18);
