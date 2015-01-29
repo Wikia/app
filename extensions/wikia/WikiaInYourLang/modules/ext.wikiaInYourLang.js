@@ -33,8 +33,8 @@ require(
 				// Both have to be !== true to continue.
 				if (cache.get('wikiaInYourLangRequestSent' + cacheVersion) !== true && cache.get('wikiaInYourLangNotificationShown' + cacheVersion) !== true) {
 					// Update JS cache and set the notification shown indicator to true
-					var ttl = 60 * 60 * 24; // Cache for a day
-					cache.set('wikiaInYourLangRequestSent' + cacheVersion, true, ttl);
+					// Cache for a day
+					cache.set('wikiaInYourLangRequestSent' + cacheVersion, true, cache.CACHE_STANDARD);
 
 					getNativeWikiaInfo();
 				} else if (typeof cache.get(targetLanguage + 'WikiaInYourLangMessage' + cacheVersion) === 'string') {
@@ -93,8 +93,8 @@ require(
 						displayNotification(results.message);
 
 						// Save the message in cache to display until a user closes it
-						var ttl = 60 * 60 * 24; // Cache for a day
-						cache.set(targetLanguage + 'WikiaInYourLangMessage' + cacheVersion, results.message, ttl);
+						// Cache for a day
+						cache.set(targetLanguage + 'WikiaInYourLangMessage' + cacheVersion, results.message, cache.CACHE_STANDARD);
 					}
 				}
 			});
@@ -137,9 +137,9 @@ require(
 			};
 			tracker.track(trackingParams);
 
-			var ttl = 60 * 60 * 24 * 30; // Cache for a month
 			cache.set(targetLanguage + 'WikiaInYourLangMessage' + cacheVersion, null);
-			cache.set('wikiaInYourLangNotificationShown' + cacheVersion, true, ttl);
+			// Cache for 2 weeks
+			cache.set('wikiaInYourLangNotificationShown' + cacheVersion, true, cache.CACHE_LONG);
 		}
 
 		function onLinkClick() {
