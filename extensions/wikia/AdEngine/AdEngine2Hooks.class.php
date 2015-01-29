@@ -59,17 +59,21 @@ class AdEngine2Hooks {
 	 */
 	public static function onInstantGlobalsGetVariables( array &$vars )
 	{
-		// DR
-		$vars[] = 'wgSitewideDisableGpt';
-		$vars[] = 'wgSitewideDisableLiftium';
-		$vars[] = 'wgSitewideDisableSevenOneMedia';
-		$vars[] = 'wgSitewideDisableRubiconRTP';
+		$vars[] = 'wgAdDriverAlwaysCallDartInCountries';
 
-		$vars[] = 'wgHighValueCountries';
 		$vars[] = 'wgAmazonMatchCountries';
 		$vars[] = 'wgAmazonMatchOldCountries';
+		$vars[] = 'wgHighValueCountries';
 
-		$vars[] = 'wgAdDriverAlwaysCallDartInCountries';
+		/**
+		 * Disaster Recovery
+		 * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+		 */
+		$vars[] = 'wgSitewideDisableGpt';
+		$vars[] = 'wgSitewideDisableKrux';
+		$vars[] = 'wgSitewideDisableLiftium';
+		$vars[] = 'wgSitewideDisableRubiconRTP';
+		$vars[] = 'wgSitewideDisableSevenOneMedia';
 
 		return true;
 	}
