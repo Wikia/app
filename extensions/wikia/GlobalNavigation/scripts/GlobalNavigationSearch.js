@@ -1,12 +1,10 @@
 require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], function ($, browserDetect, scrollFix) {
 	'use strict';
 	var $selectElement,
-		$chevron,
 		$searchInput,
 		$globalNav,
 		$inputResultLang,
 		$formElement,
-		$searchLabel,
 		isLocalSearchDisabled,
 		$autocompleteObj;
 
@@ -16,10 +14,8 @@ require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], funct
 	function setElements() {
 		$inputResultLang = $('#searchInputResultLang');
 		$formElement = $('#searchForm');
-		$searchLabel = $('#searchLabelInline');
-		isLocalSearchDisabled = $('#searchLabelSingle').length > 0;
 		$selectElement = $('#searchSelect');
-		$chevron = $('#searchFormChevron');
+		isLocalSearchDisabled = !!$selectElement.length;
 		$searchInput = $('#searchInput');
 		$globalNav = $('#globalNavigation');
 	}
@@ -29,7 +25,7 @@ require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], funct
 	 */
 	function setFormOptions() {
 		var $selectedOption = $selectElement.find('option:selected');
-		$searchLabel.text($selectedOption.text());
+		$searchInput.attr('placeholder', $selectedOption.data('placeholder'));
 		$formElement.attr('action', $selectedOption.attr('data-search-url'));
 		//Setting reference to jQuery search autocomplete object
 		$autocompleteObj = $autocompleteObj || $searchInput.data('autocomplete');
@@ -63,12 +59,6 @@ require(['jquery', 'wikia.browserDetect', 'GlobalNavigationiOSScrollFix'], funct
 			$selectElement
 				.on('change keyup keydown', function () {
 					setFormOptions();
-				})
-				.on('focus', function () {
-					$chevron.addClass('dark');
-				})
-				.on('blur', function () {
-					$chevron.removeClass('dark');
 				});
 		}
 

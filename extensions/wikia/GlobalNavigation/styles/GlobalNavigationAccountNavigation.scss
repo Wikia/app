@@ -2,77 +2,70 @@
 @import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/Venus/styles/typographyMixins';
 @import 'GlobalNavigationColors';
+@import 'GlobalNavigationVariables';
 
 .account-navigation-container {
-	@include grid-column-width('medium', 1, $medium-grid-gutter + $medium-content-padding - 1px);
+	padding-right: round($global-navigation-items-spacing / 2);
+	position: relative;
 }
 
-$user-menu-shift: 20px;
-
 .AccountNavigation {
+	height: $global-navigation-height;
+	padding: 0 9px 0 round($global-navigation-items-spacing / 2);
 	margin: 0;
-	padding: 0;
-	width: 100%;
 
 	&.active {
+		background-color: $global-navigation-background-color;
 		.user-menu {
 			display: table;
 			table-layout: fixed;
 		}
-
-		> li {
-			background-color: $nav-background-light-gray-color;
-
-			> a:after {
-				border-top-color: $nav-foreground-dark-color;
-			}
-		}
 	}
 
-	> li {
-		border: 0;
+	.account-navigation-first-item {
 		list-style: none;
-		margin-top: 0;
-		padding: 0;
 
-		> a {
-			@include grid-column-width('medium', 1, $medium-grid-gutter + $medium-content-padding - 2px);
+		.links-container {
+			display: table-row;
+			height: $global-navigation-height-without-margin;
 
-			position: relative;
-
-			&:after {
+			.chevron {
 				border: 5px solid;
-				border-top-color: $nav-border-color;
+				border-top-color: $global-navigation-active-color;
 				color: transparent;
-				content: ' ';
-				float: left;
-				margin-top: 16px;
+				display: inline-block;
+				margin-left: 10px;
+				margin-top: 12px;
 			}
 		}
 
 		.avatar-container {
-			border-radius: 50%;
-			float: left;
-			height: 36px;
-			margin: 0 6px 0 29px;
+			height: $avatar-size;
 			overflow: hidden;
-			width: 36px;
+			width: $avatar-size;
 
 			&.anon-avatar-placeholder,
 			&.logged-avatar-placeholder {
 				background-image: url('/extensions/wikia/GlobalNavigation/images/avatar.svg'); /* inline */
+				background-position: center;
 				background-repeat: no-repeat;
 			}
 
-			&.anon-avatar-placeholder {
-				background-color: $nav-border-color;
-			}
-
-			&.logged-avatar-placeholder {
-				background-color: $nav-foreground-dark-color;
+			&.logged-avatar {
+				border-radius: 50%;
 			}
 		}
+	}
 
+	.sign-in-label {
+		@include font-size-xxs;
+		color: $global-navigation-text-color;
+		display: table-cell;
+		vertical-align: middle;
+
+		&:hover {
+			text-decoration: none;
+		}
 	}
 
 	.user-menu {
@@ -81,8 +74,9 @@ $user-menu-shift: 20px;
 		border: 1px solid $nav-border-color;
 		display: none;
 		padding: 0;
-		position: relative;
-		right: $medium-grid-column + $user-menu-shift + 1px;
+		position: absolute;
+		right: $account-navigation-container-padding-right;
+		top: 100%;
 
 		> li {
 			display: table-row;
@@ -114,47 +108,17 @@ $user-menu-shift: 20px;
 }
 
 @media #{$small-only} {
-	.account-navigation-container {
-		@include grid-column-width('small', 1, $small-grid-gutter + $small-content-padding - 1px);
-	}
-
 	.AccountNavigation {
-		> li {
-			> a {
-				@include grid-column-width('small', 1, $small-grid-gutter + $small-content-padding - 2px);
-			}
-
-			.avatar-container {
-				margin-left: $small-grid-column-padding + $small-grid-gutter;
-			}
-		}
-
 		.user-menu {
 			@include grid-column-width('small', 3, $small-content-padding);
-			right: 2 * $small-grid-column + $small-grid-gutter + $user-menu-shift + 1px;
 		}
 	}
 }
 
 @media #{$large-up} {
-	.account-navigation-container {
-		@include grid-column-width('large', 1, $large-grid-gutter + $large-content-padding - 1px);
-	}
-
 	.AccountNavigation {
-		> li {
-			> a {
-				@include grid-column-width('large', 1, $large-grid-gutter + $large-content-padding - 2px);
-			}
-
-			.avatar-container {
-				margin-left: 38px;
-			}
-		}
-
 		.user-menu {
 			@include grid-column-width('large', 2, $large-content-padding);
-			right: $large-grid-column + $user-menu-shift + 1px;
 		}
 	}
 }

@@ -3,7 +3,11 @@
  * The AMD module to hold all the context needed for the client-side scripts to run.
  */
 define('ext.wikia.adEngine.adContext', [
-	'wikia.window', 'wikia.document', 'wikia.geo', require.optional('wikia.instantGlobals'),  require.optional('wikia.abTest')
+	'wikia.window',
+	'wikia.document',
+	'wikia.geo',
+	'wikia.instantGlobals',
+	require.optional('wikia.abTest')
 ], function (w, doc, geo, instantGlobals, abTest) {
 	'use strict';
 

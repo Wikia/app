@@ -706,6 +706,7 @@ $config['mobile_base_ads_js'] = array(
 		// Modules
 		'//resources/wikia/modules/lazyqueue.js',
 		'//extensions/wikia/AdEngine/js/MessageListener.js',
+		'//resources/wikia/modules/instantGlobals.js',
 
 		// Advertisement libs
 		'//extensions/wikia/AdEngine/js/EventDispatcher.js',
