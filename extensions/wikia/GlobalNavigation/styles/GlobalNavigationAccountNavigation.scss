@@ -92,7 +92,7 @@
 				text-decoration: none;
 				vertical-align: middle;
 				width: 100%;
-				word-break: break-word;
+				white-space: initial;
 
 				&:hover {
 					background-color: $nav-foreground-bright-color;

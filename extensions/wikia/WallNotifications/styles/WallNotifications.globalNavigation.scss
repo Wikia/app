@@ -61,7 +61,7 @@ $wiki-header-color: #2b54b5;
 }
 
 #GlobalNavigationWallNotifications {
-	@include grid-position('medium', 2, 'right', $medium-content-padding - 22);
+	@include grid-position('medium', 2, 'right', $medium-content-padding - 2);
 	@include grid-column-width('medium', 4, $medium-content-padding);
 	background-color: $white;
 	border: 1px solid $border-color;
@@ -73,8 +73,6 @@ $wiki-header-color: #2b54b5;
 	top: -1px;
 
 	#notificationsContainer {
-		@include grid-column-width('medium', 4, $medium-content-padding + 18);
-
 		overflow: auto;
 
 		&::-webkit-scrollbar {
@@ -200,9 +198,9 @@ $wiki-header-color: #2b54b5;
 		position: relative;
 
 		.notification-message {
-			display: inline-block;
 			padding-left: 70px;
 			padding-right: 20px;
+			white-space: initial;
 
 			p {
 				margin: 0;
@@ -280,10 +278,6 @@ $wiki-header-color: #2b54b5;
 	#GlobalNavigationWallNotifications {
 		@include grid-position('small', 3, 'right', $small-content-padding - 2);
 		@include grid-column-width('small', 6, $small-content-padding);
-
-		#notificationsContainer {
-			@include grid-column-width('small', 6, $small-content-padding + 18);
-		}
 	}
 }
 
@@ -293,9 +287,5 @@ $wiki-header-color: #2b54b5;
 	#GlobalNavigationWallNotifications {
 		@include grid-position('large', 2, 'right', $large-content-padding - 2);
 		@include grid-column-width('large', 4, $large-content-padding);
-
-		#notificationsContainer {
-			@include grid-column-width('large', 4, $large-content-padding + 18);
-		}
 	}
 }
