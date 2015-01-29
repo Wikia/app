@@ -138,7 +138,7 @@ require(
 			tracker.track(trackingParams);
 
 			cache.set(targetLanguage + 'WikiaInYourLangMessage' + cacheVersion, null);
-			// Cache for 2 weeks
+			// Cache for a month
 			cache.set('wikiaInYourLangNotificationShown' + cacheVersion, true, cache.CACHE_LONG);
 		}
 
