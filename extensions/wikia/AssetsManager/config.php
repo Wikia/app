@@ -172,7 +172,7 @@ $config['adengine2_venus_ads_js'] = array(
 
 $config['adengine2_oasis_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'skin' => 'venus',
+	'skin' => 'oasis',
 	'assets' => array(
 		'#group_adengine2_in_content_ads_js',
 		'//extensions/wikia/AdEngine/js/AdSlotsOasis.js',
