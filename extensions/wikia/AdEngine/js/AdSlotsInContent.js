@@ -1,11 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.adSlotsInContent',[
 	'jquery',
-	'wikia.document',
 	'wikia.log',
 	'wikia.window',
 	'ext.wikia.adEngine.adPlacementChecker'
-], function ($, doc, log, win, adPlacementChecker) {
+], function ($, log, win, adPlacementChecker) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.venus',
@@ -76,7 +75,7 @@ define('ext.wikia.adEngine.adSlotsInContent',[
 
 		slotsAdded += 1;
 		offsetMap.push([headerOffset - minOffset, headerOffset + minOffset]);
-		win.adslots2.push(slot.name);
+		win.adslots2.push([slot.name]);
 
 		return true;
 	}
@@ -86,7 +85,6 @@ define('ext.wikia.adEngine.adSlotsInContent',[
 			j,
 			len,
 			slot;
-
 		inContentMedrecs.forEach(function (remainingSlots, index) {
 			for (i = 0, len = elementsBeforeSlots.length; i < len && slotsAdded < maxSlots; i += 1) {
 				remainingSlots = inContentMedrecs[index].slice();
@@ -126,8 +124,6 @@ define('ext.wikia.adEngine.adSlotsInContent',[
 
 		$('.wikia-ad', container).prepend($(labelHtml).text(labelText));
 	}
-
-	$(doc).ready(init);
 
 	return {
 		init: init,

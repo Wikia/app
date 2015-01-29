@@ -7,7 +7,6 @@ require([
 	'ext.wikia.adEngine.adSlotsInContent'
 ], function (log, document, adContext, adPlacementChecker, adSlotsInContent) {
 	'use strict';
-	var elementsBeforeSlots = $(adSlotsInContent.selector);
 
 	function doesNotBreakContent() {
 		var adPlace,
@@ -40,12 +39,16 @@ require([
 
 	}
 
-	if (doesNotBreakContent()) {
-		//adding null element will cause the ad slot to render on the
-		// top of the zero section
-		elementsBeforeSlots = elementsBeforeSlots.get();
-		elementsBeforeSlots.unshift(null);
+	function init () {
+		var elementsBeforeSlots;
+		if (doesNotBreakContent()) {
+			//adding null element will cause the ad slot to render on the
+			// top of the zero section
+			elementsBeforeSlots = $(adSlotsInContent.selector).get();
+			elementsBeforeSlots.unshift(null);
+			adSlotsInContent.init(elementsBeforeSlots);
+		}
 	}
 
-	adSlotsInContent.init(elementsBeforeSlots);
+	$(document).ready(init);
 });

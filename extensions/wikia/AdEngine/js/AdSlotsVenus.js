@@ -1,7 +1,14 @@
 /*global require*/
 require([
+	'jquery',
+	'wikia.document',
 	'ext.wikia.adEngine.adSlotsInContent'
-], function (adSlotsInContent) {
+], function ($, document, adSlotsInContent) {
 	'use strict';
-	adSlotsInContent.init($(adSlotsInContent.selector));
+
+	function init () {
+		adSlotsInContent.init($(adSlotsInContent.selector));
+	}
+
+	$(document).ready(init);
 });
