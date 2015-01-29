@@ -20,6 +20,11 @@
 	<div class="WikiaPageContentWrapper">
 		<?= $app->renderView( 'Notifications', 'Confirmation' ) ?>
 		<?php
+		if ( !empty( $wg->EnableNjordExt ) && WikiaPageType::isMainPage() ) {
+			echo $app->renderView( 'Njord', 'Index' );
+		}
+		?>
+		<?php
 			if ( empty( $wg->SuppressWikiHeader ) ) {
 				if ( empty( $wg->EnableLocalNavExt ) ) {
 					echo $app->renderView( 'WikiHeader', 'Index' );
@@ -30,7 +35,7 @@
 		?>
 		<?php
 		if ( !empty( $wg->EnableNjordExt ) && WikiaPageType::isMainPage() ) {
-			echo $app->renderView( 'Njord', 'Index' );
+			echo $app->renderView( 'Njord', 'Summary' );
 		}
 		?>
 		<?php
