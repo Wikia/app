@@ -10,14 +10,8 @@ putenv("SERVER_ID=177");
  * @see VID-2153 & http://unicode.org/reports/tr15/
  */
 class NfcNormalizeVideos {
-	protected static $metadataFieldsContainingName = [
-		'title',
-		'name',
-		'keywords',
-	];
-
 	/**
-	 * Used by runOnCluster to Normalize video titles and metadata
+	 * Used by runOnCluster to Normalize video titles
 	 *
 	 * @param DatabaseMysql $db
 	 * @param bool $test
@@ -27,7 +21,7 @@ class NfcNormalizeVideos {
 	public static function run( DatabaseMysql $db, $test, $verbose = false, $params ) {
 
 		if ( !$db->tableExists( 'image' ) || !$db->tableExists( 'video_info' ) ) {
-			echo "ERROR: $params[dbname] (ID:$params[cityId]): image/video_info table not exist.\n";
+			echo "ERROR: $params[dbname] (ID:$params[cityId]): image/video_info table does not exist.\n";
 			return;
 		}
 
@@ -52,7 +46,7 @@ class NfcNormalizeVideos {
 	 */
 	protected static function getVideoRows( DatabaseMysql $db ) {
 		return ( new WikiaSQL() )
-			->SELECT( 'img_name', 'img_metadata', 'img_sha1' )
+			->SELECT( 'img_name', 'img_sha1' )
 			->FROM( 'image' )
 			->WHERE( 'img_media_type' )->EQUAL_TO( 'VIDEO' )
 			->AND_( FluentSql\StaticSQL::RAW( 'img_name <> CONVERT(img_name USING ASCII)' ) )
@@ -62,7 +56,7 @@ class NfcNormalizeVideos {
 	}
 
 	/**
-	 * Update title and other meta data for videos with titles not in normalized NFC form
+	 * Update title for videos with titles not in normalized NFC form
 	 *
 	 * @param stdClass $video
 	 * @param DatabaseMysql $db
@@ -79,8 +73,6 @@ class NfcNormalizeVideos {
 			return;
 		}
 
-		$metadata = self::getNormalizedMetadata( $video );
-
 		$affectedImage = 0;
 		$affectedVideoInfo = 0;
 
@@ -88,43 +80,24 @@ class NfcNormalizeVideos {
 			$sql = new WikiaSQL();
 			$sql->UPDATE( 'image' )
 				->SET( 'img_name', $name )
-				->SET( 'img_metadata', $metadata )
-				->WHERE( 'video_title' )->EQUAL_TO( $originalName )
+				->WHERE( 'img_name' )->EQUAL_TO( $originalName )
 				->run( $db );
-			$affectedImage = $db->affectedRows();
+			$affectedImage = $db->affectedRows() ? '' : 'NOT';
 
 			$sql->UPDATE( 'video_info' )
 				->SET( 'video_title', $name )
 				->WHERE( 'video_title' )->EQUAL_TO( $originalName )
 				->run( $db );
-			$affectedVideoInfo = $db->affectedRows();
+			$affectedVideoInfo = $db->affectedRows() ? '' : 'NOT';
 		}
 
-		echo "Updated $affectedImage image "
-			. "and $affectedVideoInfo video_info "
+		echo "image $affectedImage updated, "
+			. "video_info $affectedVideoInfo updated "
 			. "for: $originalName img_sha1: {$video->img_sha1}\n";
 
 		if ( $verbose ) {
-			echo "\tNew title: $name"
-				. "\n\tNew metadata: $metadata\n";
+			echo "\tNew title: $name\n";
 		}
 	}
 
-	/**
-	 * Get Normalized metadata in PHP-serialized form
-	 *
-	 * @param stdClass $video
-	 * @return string
-	 */
-	protected static function getNormalizedMetadata( $video ) {
-		// image.img_metadata
-		$metadata = unserialize( $video->img_metadata );
-		foreach ( self::$metadataFieldsContainingName as $field ) {
-			if ( isset( $metadata[ $field ] ) ) {
-				$metadata[ $field ] = \UtfNormal::toNFC( $metadata[ $field ] );
-			}
-		}
-
-		return serialize( $metadata );
-	}
 }

@@ -17,7 +17,7 @@ class VideoFileUploaderTest extends WikiaBaseTest {
 			$this->assertNotEquals( $expectedTitle, $title );
 		}
 
-		$videoFileUploader = $this->getMock( 'VideoFileUploader', array( 'getSanitizedTitleText' ) );
+		$videoFileUploader = $this->getMock( 'VideoFileUploader', [ 'getSanitizedTitleText' ] );
 		$videoFileUploader->expects( $this->once() )
 			->method( 'getSanitizedTitleText' )
 			->will( $this->returnValue( $title ) );
