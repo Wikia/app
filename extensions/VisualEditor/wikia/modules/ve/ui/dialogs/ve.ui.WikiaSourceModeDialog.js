@@ -149,7 +149,7 @@ ve.ui.WikiaSourceModeDialog.prototype.DONE = function ( response ) {
 		target.toolbarSaveButton.disconnect( target );
 		target.toolbarSaveButton.$element.detach();
 		target.getToolbar().$actions.empty();
-		target.tearDownSurface().done(function() {
+		target.tearDownSurface( true ).done(function() {
 			target.deactivating = false;
 			target.wikitext = _this.sourceModeTextarea.getValue();
 			target.activating = true;

@@ -506,6 +506,7 @@ class ApiVisualEditor extends ApiBase {
 					);
 				}
 				break;
+
 			case 'parsefragment':
 				$wikitext = $params['wikitext'];
 				if ( $params['pst'] ) {

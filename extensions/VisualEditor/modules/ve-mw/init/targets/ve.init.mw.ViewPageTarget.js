@@ -1059,13 +1059,14 @@ ve.init.mw.ViewPageTarget.prototype.getSaveOptions = function () {
  * Switch to viewing mode.
  *
  * @method
+ * @param {boolean} [noAnimate] Don't animate toolbar teardown
  * @return {jQuery.Promise} Promise resolved when surface is torn down
  */
-ve.init.mw.ViewPageTarget.prototype.tearDownSurface = function () {
+ve.init.mw.ViewPageTarget.prototype.tearDownSurface = function ( noAnimate ) {
 	var promises = [];
 
 	// Update UI
-	this.tearDownToolbar();
+	this.tearDownToolbar( noAnimate );
 	this.tearDownDebugBar();
 	this.restoreDocumentTitle();
 	if ( this.getSurface().mwTocWidget ) {
@@ -1347,15 +1348,19 @@ ve.init.mw.ViewPageTarget.prototype.hideReadOnlyContent = function () {
  * Hide the toolbar.
  *
  * @method
+ * @param {boolean} [noAnimate] Don't animate
  */
-ve.init.mw.ViewPageTarget.prototype.tearDownToolbar = function () {
-	this.toolbar.destroy();
-	this.toolbar = null;
-	return;
-	this.toolbar.$bar.slideUp( 'fast', function () {
+ve.init.mw.ViewPageTarget.prototype.tearDownToolbar = function ( noAnimate ) {
+	var tearDownToolbar = function () {
 		this.toolbar.destroy();
 		this.toolbar = null;
-	}.bind( this ) );
+	}.bind( this );
+
+	if ( noAnimate ) {
+		tearDownToolbar();
+	} else {
+		this.toolbar.$bar.slideUp( 'fast', tearDownToolbar );
+	}
 };
 
 /**
