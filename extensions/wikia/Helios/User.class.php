@@ -84,7 +84,7 @@ class User {
 			if ( !empty( $oLogin->error ) ) {
 				$oLogger->error(
 					'HELIOS_LOGIN',
-					[ 'response' => $e, 'username' => $sUserName,
+					[ 'response' => $oLogin, 'username' => $sUserName,
 					'user_id' => $iUserId, 'method' => __METHOD__ ]
 				);
 			}
