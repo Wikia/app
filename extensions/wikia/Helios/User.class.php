@@ -80,6 +80,14 @@ class User {
 			global $wgHeliosLoginShadowMode;
 			$oLogin = $oHelios->login( $sUserName, $sPassword );
 			$bResult = !empty( $oLogin->access_token );
+
+			if ( !empty( $oLogin->error ) ) {
+				$oLogger->error(
+					'HELIOS_LOGIN',
+					[ 'response' => $oLogin, 'username' => $sUserName,
+					'user_id' => $iUserId, 'method' => __METHOD__ ]
+				);
+			}
 		}
 
 		catch ( \Wikia\Helios\ClientException $e ) {
@@ -102,10 +110,14 @@ class User {
 	public static function comparePasswordCheck( $bHeliosCheck, $bHelios, $bMediaWiki, $sType, $sHash, $iUserId ) {
 
 		if ( $bHeliosCheck && $bHelios != $bMediaWiki ) {
+
+			// Get the user's name from the request context.
+			$sUserName= \RequestContext::getMain()->getRequest()->getText( 'username' );
+
 			\Wikia\Logger\WikiaLogger::instance()->error(
 				'HELIOS_LOGIN',
-				[ 'method' => __METHOD__, 'type' => $sType,
-				'hash' => $sHash, 'user_id' => $iUserId ]
+				[ 'method' => __METHOD__, 'type' => $sType, 'hash' => $sHash,
+				'user_id' => $iUserId, 'username' => $sUserName ]
 			);
 		}
 
