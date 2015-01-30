@@ -1,4 +1,4 @@
-<h3 class="wordmark-container">
+<h3 class="wordmark-container <?= !empty( $wordmarkUrl ) ? 'wordmark-icon' : ''; ?>">
 	<span>
 		<a class="wordmark" accesskey="z" href="<?= htmlspecialchars( $mainPageURL ) ?>">
 			<? if ( !empty( $wordmarkUrl ) ) { ?>
