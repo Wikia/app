@@ -425,7 +425,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		switch ( $loginCase ) {
 			case LoginForm::SUCCESS:
 				// first check if user has confirmed email after sign up
-				if ( $this->wg->User->getOption( self::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) == true &&
+				if ( $this->wg->User->getOption( self::NOT_CONFIRMED_SIGNUP_OPTION_NAME ) &&
 					/*
 					 * Remove when SOC-217 ABTest is finished
 					 */

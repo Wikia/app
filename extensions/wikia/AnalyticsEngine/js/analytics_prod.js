@@ -148,16 +148,17 @@
 	 * Get unconfirmed email AbTest user type
 	 * @returns {string}
 	 */
-	function getUnconfirmedEmailUserType() {
-		if ( !window.wgUserName ) {
+	function getUnconfirmedEmailUserType () {
+		if (!window.wgUserName) {
 			return 'anon';
 		} else {
-			if ( window.wgNotConfirmedEmail === null ) {
-				return 'old user';
-			} else if ( window.wgNotConfirmedEmail === 1 ) {
-				return 'unconfirmed';
-			} else {
-				return 'confirmed';
+			switch (window.wgNotConfirmedEmail) {
+				case '1':
+					return 'unconfirmed';
+				case '2':
+					return 'confirmed';
+				default:
+					return 'old user';
 			}
 		}
 	}
