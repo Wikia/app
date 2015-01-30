@@ -77,6 +77,7 @@
 		position: absolute;
 		right: $account-navigation-container-padding-right;
 		top: 100%;
+		white-space: normal;
 
 		> li {
 			display: table-row;
@@ -92,7 +93,6 @@
 				text-decoration: none;
 				vertical-align: middle;
 				width: 100%;
-				white-space: normal;
 
 				&:hover {
 					background-color: $nav-foreground-bright-color;
