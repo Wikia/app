@@ -1,5 +1,6 @@
 @import "skins/shared/color";
 @import "skins/shared/mixins/gradient";
+@import "skins/oasis/css/core/responsive-variables";
 
 .MainPageHero {
 	background-color: $color-buttons;
@@ -133,6 +134,14 @@
 	&.hero-image-wrapper {
 		margin: -1px -1px 0;
 		overflow: hidden;
+	}
+
+	.WikiaArticle & {
+		padding-right: 330px;
+
+		@media screen and (max-width: $breakpoint-small) {
+			padding-right: 30px;
+		}
 	}
 
 	.title-wrap {
