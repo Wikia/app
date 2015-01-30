@@ -38,6 +38,16 @@ body {
 	}
 }
 
+#editarea {
+	min-height: 300px;
+	width: 100%;
+}
+
+.codepage-publish-button {
+	width: calc(100% - 22px);
+}
+
+
 .WikiaPage {
 	border-bottom: none;
 	@if ( $responsive-layout-enabled == false) {

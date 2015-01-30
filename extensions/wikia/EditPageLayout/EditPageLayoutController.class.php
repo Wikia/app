@@ -29,9 +29,21 @@ class EditPageLayoutController extends WikiaController {
 		// temporary grid transition code, remove after transition
 		OasisController::addBodyClass('WikiaGrid');
 
+
+
 		// render Oasis module
 		$this->html = F::app()->renderView( 'Oasis', 'Index', array('body' => $body) );
 	}
+
+	public function executeButtons() {
+		$helper = EditPageLayoutHelper::getInstance();
+		$editPage = $helper->getEditPage();
+
+		// extra buttons
+		$this->buttons = $editPage->getControlButtons();
+	}
+
+	public function executeCodeButtons() {}
 
 	/**
 	 * Render template for <body> tag content
@@ -42,15 +54,26 @@ class EditPageLayoutController extends WikiaController {
 		$helper = EditPageLayoutHelper::getInstance();
 		$editPage = $helper->getEditPage();
 
-		if ($helper->fullScreen) {
+		$this->pagetype = 'editpage';
+
+		if ( $helper->fullScreen ) {
+			$wgJsMimeType = $this->wg->JsMimeType;
+
 			// add stylesheet
 			$this->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/EditPageLayout/css/EditPageLayout.scss'));
-			$packageName = 'epl';
-			if (class_exists('RTE') && RTE::isEnabled() && !$editPage->isReadOnlyPage()) {
-				$packageName = 'eplrte';
+
+			if ( $helper->isCodePage( $editPage->getTitle(), $editPage->getTitle()->getNamespace()) ) {
+				$this->pagetype = 'codepage';
+				$this->wg->Out->addScript("<script type=\"{$wgJsMimeType}\" src=\"/resources/Ace/ace.js\"></script>");
+				$srcs = AssetsManager::getInstance()->getGroupCommonURL('ace_editor_js');
+			} else {
+				$packageName = 'epl';
+				if (class_exists('RTE') && RTE::isEnabled() && !$editPage->isReadOnlyPage()) {
+					$packageName = 'eplrte';
+				}
+				$srcs = AssetsManager::getInstance()->getGroupCommonURL($packageName);
 			}
-			$srcs = AssetsManager::getInstance()->getGroupCommonURL($packageName);
-			$wgJsMimeType = $this->wg->JsMimeType;
+
 			foreach($srcs as $src) {
 				$this->wg->Out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$src}\"></script>");
 			}
@@ -63,7 +86,6 @@ class EditPageLayoutController extends WikiaController {
 		$this->wordmark = $response->getData();
 
 		// render global and user navigation
-
 		if ( !empty( $this->wg->EnableGlobalNavExt ) ) {
 			$this->header = F::app()->renderView('GlobalNavigation', 'index');
 		} else {
@@ -131,9 +153,6 @@ class EditPageLayoutController extends WikiaController {
 
 		// summary box
 		$this->summaryBox = $editPage->renderSummaryBox();
-
-		// extra buttons
-		$this->buttons = $editPage->getControlButtons();
 
 		// extra checkboxes
 		$this->customCheckboxes = $editPage->getCustomCheckboxes();
