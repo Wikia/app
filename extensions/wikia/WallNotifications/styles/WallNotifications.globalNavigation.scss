@@ -152,7 +152,7 @@ $wiki-header-color: #2b54b5;
 			}
 
 			.notifications-wiki-header:hover .chevron {
-				border-bottom-color: $wiki-header-color;
+				border-bottom-color: $notifications-header-color;
 			}
 
 			.notifications-for-wiki-list {
@@ -164,8 +164,9 @@ $wiki-header-color: #2b54b5;
 			border: 5px solid transparent;
 			border-bottom: 0;
 			border-top-color: $border-color;
-			float: right;
-			margin-top: 10px;
+			position: absolute;
+			right: 20px;
+			top: 50%;
 		}
 
 		.notifications-wiki-header {
@@ -174,6 +175,7 @@ $wiki-header-color: #2b54b5;
 			color: $notifications-header-color;
 			cursor: pointer;
 			padding-right: 38px;
+			position: relative;
 
 			&:hover .chevron {
 				color: $notifications-header-color;
