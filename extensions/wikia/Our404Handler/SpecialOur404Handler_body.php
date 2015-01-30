@@ -19,11 +19,13 @@ class Our404HandlerPage extends UnlistedSpecialPage {
 
 	public $mTitle;
 
+	const NAME = 'Our404Handler';
+
 	/**
 	 * Constructor
 	 */
 	public function  __construct() {
-		parent::__construct( 'Our404Handler'/*class*/ );
+		parent::__construct( self::NAME );
 	}
 
 	/**
@@ -112,5 +114,27 @@ class Our404HandlerPage extends UnlistedSpecialPage {
 		$info = wfMsgForContent( 'message404', $uri, urldecode( $title ) );
 		$wgOut->addHTML( '<h2>'.wfMsg( 'our404handler-oops' ).'</h2>
 						<div>'. $wgOut->parse( $info ) .'</div>' );
+	}
+
+	/**
+	 * This hook is called when about to force a redirect to a canonical URL
+	 * for a title when we have no other parameters on the URL.
+	 *
+	 * Return false when we want to prevent the redirect to the canonical URL
+	 * for Our404Handler special page
+	 *
+	 * @see PLATFORM-811
+	 *
+	 * @param WebRequest $request
+	 * @param Title $title
+	 * @param OutputPage $output
+	 * @return bool
+	 */
+	public static function onTestCanonicalRedirect( WebRequest $request, Title $title, OutputPage $output) {
+		if ( $title->isSpecial( self::NAME ) ) {
+			return false;
+		}
+
+		return true;
 	}
 };
