@@ -2510,11 +2510,21 @@ OO.ui.Dialog.prototype.initialize = function () {
 		'title': OO.ui.msg( 'ooui-dialog-action-close' )
 	} );
 
+	// Events
+	this.closeButton.connect( this, { 'click': 'onCloseButtonClick' } );
+
 	// Initialization
 	this.$content.addClass( 'oo-ui-dialog-content' );
 	this.setPendingElement( this.$head );
 	this.closeButton.$element.addClass( 'oo-ui-window-closeButton' );
 	this.$head.append( this.closeButton.$element );
+};
+
+/**
+ * Handle close button click events.
+ */
+OO.ui.Dialog.prototype.onCloseButtonClick = function () {
+	this.close( { 'action': 'cancel' } );
 };
 
 /**
