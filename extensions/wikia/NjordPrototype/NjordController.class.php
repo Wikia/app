@@ -12,16 +12,15 @@ class NjordController extends WikiaController {
 	public function __construct() {
 		parent::__construct();
 
-		self::$wikiDataModel = $this->getWikiDataModel();
+		$this->initWikiDataModel();
 	}
 
-	private function getWikiDataModel() {
-		$wikiDataModel = new WikiDataModel( Title::newMainPage()->getText() );
-		$wikiDataModel->getFromProps();
-
-		return $wikiDataModel;
+	private function initWikiDataModel() {
+		if (self::$wikiDataModel === null) {
+			self::$wikiDataModel = new WikiDataModel(Title::newMainPage()->getText());
+			self::$wikiDataModel->getFromProps();
+		}
 	}
-
 
 	public function getWikiMarkup() {
 		$articleWikiMarkup = '';
@@ -72,7 +71,7 @@ class NjordController extends WikiaController {
 			$wikiDataModel->originalImagePath = $wgBlankImgUrl;
 		}
 
-		//TODO: remove this before release (thumbs from stash broken on devbox)
+		//FIXME: remove this before release (thumbs from stash broken on devbox)
 		$wikiDataModel->imagePath = 'http://img1.wikia.nocookie.net/__cb20150129114437/mediawiki116/images/thumb/4/48/Wikia-hero-image/1200px-0%2C1200%2C0%2C300';
 
 		// template vars
