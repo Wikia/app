@@ -18,47 +18,26 @@
 			this.wikiaForm = new WikiaForm('#WikiaSignupForm');
 			this.submitButton = this.wikiaForm.inputs.submit;
 			this.captchaField = this.useCaptcha ? 'g-recaptcha-response' : '';
-			if (this.captchaLoadError()) {
-				this.handleCaptchaLoadError();
-				return;
-			}
-
-			this.validator = new UserSignupAjaxValidation({
-				wikiaForm: this.wikiaForm,
-				inputsToValidate: this.inputsToValidate,
-				submitButton: this.submitButton,
-				notEmptyFields: this.notEmptyFields,
-				captchaField: this.captchaField
-			});
+			this.loadCaptcha();
 
 			// imported via UserSignupMixin
 			this.setCountryValue(this.wikiaForm);
 			this.initOptIn(this.wikiaForm);
+		},
 
-			this.setupValidation();
+		loadCaptcha: function () {
+			$.loadCaptcha()
+				.done(function () {
+					this.setupValidation();
+				}.bind(this))
+				.fail(this.handleCaptchaLoadError);
+
 		},
 
 		/**
-		 * Check if the captcha solution fails to load, possibly due to google being blocked (UC-202)
-		 * @returns {boolean}
-		 */
-		captchaLoadError: function () {
-			var $captchaInput;
-
-			// if we don't need captcha on this form, there's nothing to fail
-			// Temporary skin check fix until we sort out captcha on mobile UC-162
-			if (!this.useCaptcha || window.skin === 'wikiamobile') {
-				return false;
-			}
-
-			$captchaInput = this.wikiaForm.inputs[this.captchaField];
-			return !$captchaInput;
-		},
-
-		/**
-		 * Captcha is required for signup, so if it fails to load, disable the form
-		 * fields and inform the user. Note, this is different from when a user
-		 * fails to match the blurry word.
+		 * Captcha is required for signup, so if it fails to load (possibly b/c google is blocked in China)
+		 * disable the form fields and inform the user. Note, this is different from when a user
+		 * fails the captcha test itself.
 		 */
 		handleCaptchaLoadError: function () {
 			this.wikiaForm.disableAll();
@@ -99,6 +78,14 @@
 		setupValidation: function () {
 			var inputs = this.wikiaForm.inputs;
 
+			this.validator = new UserSignupAjaxValidation({
+				wikiaForm: this.wikiaForm,
+				inputsToValidate: this.inputsToValidate,
+				submitButton: this.submitButton,
+				notEmptyFields: this.notEmptyFields,
+				captchaField: this.captchaField
+			});
+
 			inputs.userloginext01
 				.add(inputs.email)
 				.add(inputs.userloginext02)
@@ -125,7 +112,5 @@
 	// expose global
 	window.UserSignup = UserSignup;
 
-	$(window).on('load', function () {
-		UserSignup.init();
-	});
+	$(UserSignup.init);
 })();
