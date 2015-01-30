@@ -54,7 +54,7 @@ require([
 		win.transparentOut.bindClick(closeMenu);
 
 		$entryPoint = $('#AccountNavigation');
-		$entryPoint.on('click', '.ajaxLogin', function (ev) {
+		$entryPoint.on('click', '.account-navigation-first-item', function (ev) {
 			ev.preventDefault();
 			ev.stopImmediatePropagation();
 
