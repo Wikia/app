@@ -52,7 +52,7 @@ ve.ui.WikiaSourceModeDialog.static.actions = [
  * @inheritdoc
  */
 ve.ui.WikiaSourceModeDialog.prototype.getBodyHeight = function () {
-	return 400;
+	return 600;
 };
 
 /**
