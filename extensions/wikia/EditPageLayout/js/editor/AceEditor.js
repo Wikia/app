@@ -1,7 +1,8 @@
 define('wikia.editpage.ace.editor', ['wikia.ace.editor'], function(ace){
 	'use strict';
 
-	var inputAttr = {
+	var theme = 'solarized_light',
+	inputAttr = {
 		name: 'wpTextbox1',
 		id: 'wpTextbox1'
 	},
@@ -11,11 +12,12 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor'], function(ace){
 	};
 
 	function init() {
+		checkTheme();
 		initConfig();
 		beforeInit();
 		ace.init( 'editarea', inputAttr );
 		initOptions();
-		ace.setTheme( 'solarized_light');
+		ace.setTheme( theme );
 		ace.setMode( window.aceMode );
 
 		initSubmit();
@@ -48,6 +50,12 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor'], function(ace){
 
 			e.preventDefault();
 		});
+	}
+
+	function checkTheme() {
+		if (window.wgIsDarkTheme) {
+			theme = 'solarized_dark';
+		}
 	}
 
 	function initDiffModal() {

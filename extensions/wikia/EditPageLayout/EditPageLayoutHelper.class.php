@@ -90,6 +90,7 @@ class EditPageLayoutHelper {
 			$this->addJsVariable('aceScriptsPath', $aceUrlParts['path']);
 
 			$this->addJsVariable('wgIsCodePage', true);
+			$this->addJsVariable('wgIsDarkTheme', SassUtil::isThemeDark());
 
 			if ( $editedArticleTitleNS === NS_MEDIAWIKI ) {
 				if ( $editedArticleTitle->isCssPage() ) {
