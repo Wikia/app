@@ -17,7 +17,6 @@
 		init: function () {
 			this.wikiaForm = new WikiaForm('#WikiaSignupForm');
 			this.submitButton = this.wikiaForm.inputs.submit;
-			this.captchaField = this.useCaptcha ? 'g-recaptcha-response' : '';
 			this.loadCaptcha();
 
 			// imported via UserSignupMixin
@@ -26,7 +25,7 @@
 		},
 
 		loadCaptcha: function () {
-			$.loadCaptcha()
+			$.loadReCaptcha()
 				.done(function () {
 					this.setupValidation();
 				}.bind(this))
@@ -83,7 +82,7 @@
 				inputsToValidate: this.inputsToValidate,
 				submitButton: this.submitButton,
 				notEmptyFields: this.notEmptyFields,
-				captchaField: this.captchaField
+				useCaptcha: this.useCaptcha
 			});
 
 			inputs.userloginext01
@@ -112,5 +111,7 @@
 	// expose global
 	window.UserSignup = UserSignup;
 
-	$(UserSignup.init);
+	$(function () {
+		UserSignup.init();
+	});
 })();

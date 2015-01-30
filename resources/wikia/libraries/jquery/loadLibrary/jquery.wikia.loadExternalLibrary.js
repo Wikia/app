@@ -78,13 +78,7 @@
 
 	$.loadReCaptcha = function () {
 		var url = 'https://www.google.com/recaptcha/api.js?hl=' + window.wgUserLanguage;
-		$.loadExternalLibrary('ReCaptcha', url, typeof window.recapcha)
-			.done(function () {
-				console.log('recaptcha loaded');
-			})
-			.fail(function () {
-				console.log('recaptcha not loaded');
-			});
+		return $.loadExternalLibrary('ReCaptcha', url, typeof window.recapcha);
 	};
 
 })(jQuery);
