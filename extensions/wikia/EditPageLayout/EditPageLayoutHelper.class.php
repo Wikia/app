@@ -83,6 +83,26 @@ class EditPageLayoutHelper {
 			$this->out->disallowUserJs();
 		}
 
+		// Add Ace Editor assets for pages to edit code (css, js, lua)
+		if ( $this->isCodePage( $editedArticleTitle, $editedArticleTitleNS ) ) {
+			$aceUrl = AssetsManager::getInstance()->getOneCommonURL('/resources/Ace');
+			$aceUrlParts = parse_url($aceUrl);
+			$this->addJsVariable('aceScriptsPath', $aceUrlParts['path']);
+
+			$this->addJsVariable('wgIsCodePage', true);
+
+			if ( $editedArticleTitleNS === NS_MEDIAWIKI ) {
+				if ( $editedArticleTitle->isCssPage() ) {
+					$mode = 'css';
+				} elseif ( $editedArticleTitle->isJsPage() ) {
+					$mode = 'javascript';
+				}
+			} elseif ( $editedArticleTitleNS === NS_MODULE ) {
+				$mode = 'lua';
+			}
+			$this->addJsVariable('aceMode', $mode);
+		}
+
 		// initialize custom edit page
 		$this->editPage = new EditPageLayout($editedArticle);
 		$editedTitle = $this->editPage->getEditedTitle();
@@ -157,6 +177,20 @@ class EditPageLayoutHelper {
 		return $this->editPage;
 	}
 
+	/**
+	 * Check if edited page is a code page
+	 * (page to edit CSS, JS or Lua code)
+	 *
+	 * @param Title $articleTitle page title
+	 * @param $namespace page namespace
+	 * @return bool
+	 */
+	function isCodePage( Title $articleTitle, $namespace ) {
+		return $articleTitle->isCssOrJsPage()
+				// Lua module
+				|| $namespace === NS_MODULE;
+	}
+
 	/*
 	 * adding js variable
 	 */
@@ -191,9 +225,6 @@ class EditPageLayoutHelper {
 			'resources/jquery.ui/jquery.ui.autocomplete.js',
 			'resources/wikia/libraries/jquery/md5/jquery.md5.js',
 			'resources/wikia/libraries/mustache/mustache.js',
-			//'resources/wikia/modules/uniqueId.js', // REQUIRED by RestoreEdit.js only
-			// >> editor stack loaders and configurers
-			'extensions/wikia/EditPageLayout/js/loaders/EditPageEditorLoader.js',
 			// >> editor core
 			'extensions/wikia/EditPageLayout/js/editor/WikiaEditor.js',
 			'extensions/wikia/EditPageLayout/js/editor/WikiaEditorStorage.js',
@@ -216,8 +247,6 @@ class EditPageLayoutHelper {
 			'extensions/wikia/EditPageLayout/js/plugins/Widescreen.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Preloads.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Leaveconfirm.js',
-			'extensions/wikia/EditPageLayout/js/plugins/SyntaxHighlighter.js',
-			//'extensions/wikia/EditPageLayout/js/plugins/RestoreEdit.js',
 			// >> extras (mainly things which should be moved elsewhere)
 			'extensions/wikia/EditPageLayout/js/extras/Buttons.js',
 			// >> visual modules - toolbars etc.
