@@ -875,7 +875,7 @@ ve.init.mw.ViewPageTarget.prototype.onToolbarMetaButtonClick = function () {
 ve.init.mw.ViewPageTarget.prototype.updateToolbarSaveButtonState = function () {
 	var isDisabled;
 
-	this.edited = this.getSurface().getModel().hasBeenModified();
+	this.edited = this.getSurface().getModel().hasBeenModified() || this.wikitext !== null;
 	// Disable the save button if we have no history or if the sanity check is not finished
 	isDisabled = ( !this.edited && !this.restoring ) || !this.sanityCheckFinished;
 	this.toolbarSaveButton.setDisabled( isDisabled );

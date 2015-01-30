@@ -619,7 +619,6 @@ class ApiVisualEditor extends ApiBase {
 			'paction' => array(
 				ApiBase::PARAM_REQUIRED => true,
 				ApiBase::PARAM_TYPE => array(
-					'parsewt',
 					'parse',
 					'parsefragment',
 					'serialize',
