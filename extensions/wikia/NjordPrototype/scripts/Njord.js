@@ -21,7 +21,7 @@
 	};
 
 	var
-		HERO_ASPECT_RATIO = 4 / 16,
+		HERO_ASPECT_RATIO = 3.89 / 16,
 		States = {
 			list: [
 				'zero-state',
@@ -320,7 +320,7 @@
 			$heroModule.trigger('resize');
 			trackDragOnlyOncePerImage = false;
 		}, onResize = function () {
-			$heroModule.outerHeight($heroModule.width() * HERO_ASPECT_RATIO);
+			$heroModule.outerHeight(Math.floor($heroModule.width() * HERO_ASPECT_RATIO));
 		}, onDraggingEnabled = function () {
 			var heroHeight = $heroModuleImage.height(),
 				heroModuleHeight = $heroModule.height(),
