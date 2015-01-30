@@ -3,14 +3,17 @@
 @import 'extensions/wikia/Venus/styles/typographyMixins';
 @import 'GlobalNavigationColors';
 @import 'GlobalNavigationVariables';
+@import 'GlobalNavigationMixins';
 
 .account-navigation-container {
-	padding-right: round($global-navigation-items-spacing / 2);
+	//2px - container size is decreased by 2px because of global navigation border
+	padding: 0 round($global-navigation-items-spacing / 2) 2px 0;
 	position: relative;
 }
 
 .AccountNavigation {
-	height: $global-navigation-height;
+	cursor: pointer;
+	height: $global-navigation-height - 2px;
 	padding: 0 9px 0 round($global-navigation-items-spacing / 2);
 	margin: 0;
 
@@ -30,12 +33,9 @@
 			height: $global-navigation-height-without-margin;
 
 			.chevron {
-				border: 5px solid;
-				border-top-color: $global-navigation-active-color;
-				color: transparent;
-				display: inline-block;
-				margin-left: 10px;
-				margin-top: 12px;
+				@include global-nav-chevron;
+				margin-left: 2px;
+				margin-top: 13px;
 			}
 		}
 
@@ -46,7 +46,7 @@
 
 			&.anon-avatar-placeholder,
 			&.logged-avatar-placeholder {
-				background-image: url('/extensions/wikia/GlobalNavigation/images/avatar.svg'); /* inline */
+				background-image: url('/extensions/wikia/GlobalNavigation/images/signin_icon.svg'); /* inline */
 				background-position: center;
 				background-repeat: no-repeat;
 			}

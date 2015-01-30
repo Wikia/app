@@ -4,15 +4,13 @@
 @import 'skins/shared/mixins/chevron';
 @import 'skins/shared/mixins/columns';
 @import 'GlobalNavigationColors';
+@import 'GlobalNavigationMixins';
 
 $hub-menu-icon-width: 16px;
 $hub-menu-icon-arrow-space: 6px;
 $hub-menu-icon-left-padding-small: 16px;
 $hub-menu-icon-left-padding-medium: 13px;
 $hub-menu-icon-left-padding-large: 8px;
-$hub-arrow-icon-left-padding-small: $hub-menu-icon-left-padding-small + $hub-menu-icon-width + $hub-menu-icon-arrow-space;
-$hub-arrow-icon-left-padding-medium: $hub-menu-icon-left-padding-medium + $hub-menu-icon-width + $hub-menu-icon-arrow-space;
-$hub-arrow-icon-left-padding-large: $hub-menu-icon-left-padding-large + $hub-menu-icon-width + $hub-menu-icon-arrow-space;
 
 @mixin hub-background-border-icon($color, $secondary-color, $hub-name) {
 	background: linear-gradient(to right, $color 99%, $hubsmenu-background-color);
@@ -49,14 +47,11 @@ $hub-arrow-icon-left-padding-large: $hub-menu-icon-left-padding-large + $hub-men
 	cursor: pointer;
 	display: inline-block;
 	height: $global-navigation-height;
-	width: 36px;
+	width: 30px;
 
 	&:after {
-		border: 5px solid $global-wikia-background-color;
-		border-top-color: $global-navigation-active-color;
-		content: ' ';
-		display: inline-block;
-		margin-left: $hub-menu-icon-width + 10px;
+		@include global-nav-chevron;
+		margin-left: $hub-menu-icon-width + 5px;
 		margin-top: 21px;
 	}
 }

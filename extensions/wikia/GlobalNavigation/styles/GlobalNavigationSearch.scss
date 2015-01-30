@@ -1,10 +1,10 @@
 @import 'GlobalNavigationColors';
 @import 'GlobalNavigationVariables';
+@import 'GlobalNavigationMixins';
 @import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/Venus/styles/typographyMixins';
 
-$search-input-size: 30px;
 $autocomplete-item-height: 44px;
 $autocomplete-border-bottom: rgb(230, 235, 250);
 $search-input-background-color: rgb(242, 246, 250);
@@ -12,7 +12,8 @@ $search-input-border-color: rgb(197, 206, 217);
 $search-input-text-color: rgba(101, 110, 120, 0.75);
 
 .search-container {
-	padding-right: round($global-navigation-items-spacing / 2);
+	//-2px because user avatar is nested inside table cell and table row which add 1 pixel each.
+	padding-right: round($global-navigation-items-spacing / 2) - 2px;
 	width: 100%;
 }
 
@@ -79,23 +80,20 @@ $search-input-text-color: rgba(101, 110, 120, 0.75);
 		opacity: 0;
 		position: absolute;
 		top: 0;
-		width: 46px;
+		width: 42px;
 	}
 
 	.search-select-underlay {
 		display: inline-block;
 		position: relative;
-		width: $search-input-size;
-		height: $search-input-size;
+		width: 22px;
+		height: $global-navigation-height-without-margin;
 	}
 
 	.chevron {
-		border-color: transparent;
-		border-style: solid;
-		border-top-color: $global-navigation-active-color;
-		border-width: 5px;
+		@include global-nav-chevron;
 		left: 100%;
-		margin-top: 12px;
+		margin-top: 13px;
 		position: relative;
 		width: 0;
 	}
@@ -111,9 +109,8 @@ $search-input-text-color: rgba(101, 110, 120, 0.75);
 		border: solid 1px $search-input-border-color;
 		border-radius: 2px;
 		color: $search-input-text-color;
-		font-weight: bold;
-		height: $search-input-size;
-		padding-left: 56px;
+		height: $global-navigation-height-without-margin;
+		padding-left: 41px;
 		width: 100%;
 	}
 
@@ -121,11 +118,14 @@ $search-input-text-color: rgba(101, 110, 120, 0.75);
 		background-color: transparent;
 		background-image: url('/extensions/wikia/GlobalNavigation/images/search_icon.svg'); /* inline */
 		background-position: center;
+		background-size: 24px;
+		background-repeat: no-repeat;
 		border: 0;
-		height: $search-input-size;
+		height: $global-navigation-height-without-margin;
 		padding: 0;
 		position: absolute;
-		width: $search-input-size;
+		margin-left: 8px;
+		width: 14px;
 	}
 
 	.autocomplete-container {
