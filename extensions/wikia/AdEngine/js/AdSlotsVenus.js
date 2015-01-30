@@ -3,12 +3,12 @@ require([
 	'jquery',
 	'wikia.document',
 	'ext.wikia.adEngine.adSlotsInContent'
-], function ($, document, adSlotsInContent) {
+], function ($, doc, adSlotsInContent) {
 	'use strict';
 
 	function init () {
 		adSlotsInContent.init($(adSlotsInContent.selector));
 	}
 
-	$(document).ready(init);
+	$(doc).ready(init);
 });

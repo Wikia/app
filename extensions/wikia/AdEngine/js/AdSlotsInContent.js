@@ -16,7 +16,7 @@ define('ext.wikia.adEngine.adSlotsInContent',[
 		],
 		inContentLeaderboards = ['INCONTENT_LEADERBOARD_1', 'INCONTENT_LEADERBOARD_2', 'INCONTENT_LEADERBOARD_3'],
 		slotsAdded = 0,
-		maxSlots = 3,
+		maxSlots,
 		minOffset = 1100,
 		offsetMap = [[0, minOffset]],
 		adHtml = '<div class="ad-in-content" style="">' +
@@ -112,9 +112,14 @@ define('ext.wikia.adEngine.adSlotsInContent',[
 		}
 	}
 
-	function init(elements) {
+	/**
+	 * @param {array} elements
+	 * @param {number} maxSlotsNumber
+	 */
+	function init(elements, maxSlotsNumber) {
 		log(['init'], 'debug', logGroup);
-
+		//Default number of available slots is 3
+		maxSlots = maxSlotsNumber || 3;
 		container = $('#mw-content-text');
 		labelText = $('.wikia-ad-label').html();
 		elementsBeforeSlots = elements;
