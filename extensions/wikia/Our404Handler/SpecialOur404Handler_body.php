@@ -34,7 +34,6 @@ class Our404HandlerPage extends UnlistedSpecialPage {
 	 * @param $subpage Mixed: subpage of SpecialPage
 	 */
 	public function execute( $subpage ) {
-		global $wgRequest;
 		$this->setHeaders();
 		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'Our404Handler' );
 		$this->doRender404();
@@ -90,12 +89,14 @@ class Our404HandlerPage extends UnlistedSpecialPage {
 				/**
 				 * these namespaces are special and don't have articles
 				 */
+				header( "X-Redirected-By: Our404Handler" );
 				header( sprintf( "Location: %s", $oTitle->getFullURL() ), true, 301 );
 				exit( 0 );
 
 			} else {
 				$oArticle = new Article( $oTitle );
 				if( $oArticle->exists() ) {
+					header( "X-Redirected-By: Our404Handler" );
 					header( sprintf( "Location: %s", $oArticle->mTitle->getFullURL() ), true, 301 );
 					exit( 0 );
 				}
