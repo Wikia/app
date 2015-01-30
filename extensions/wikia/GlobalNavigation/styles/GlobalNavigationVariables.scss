@@ -1,7 +1,7 @@
 @import 'extensions/wikia/Venus/styles/variables';
 
 $global-navigation-margin-size: 8px;
-$global-navigation-height-without-margin: $global-navigation-height - 2($global-navigation-margin-size);
+$global-navigation-height-without-margin: $global-navigation-height - (2 * $global-navigation-margin-size);
 $global-navigation-items-spacing: 40px;
-$avatar-size: 30px;
+$avatar-size: 20px;
 $account-navigation-container-padding-right: 20px;

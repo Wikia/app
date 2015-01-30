@@ -4,9 +4,11 @@
 @import 'GlobalNavigationColors';
 @import 'GlobalNavigationVariables';
 
+$start-a-wikia-logo-size: 30px;
+
 .global-navigation {
 	background-color: $global-wikia-background-color;
-	border-bottom: 2px solid rgba(151, 151, 151, 0.3);
+	border-bottom: 2px solid rgba(0, 0, 0, 0.3);
 	color: $nav-foreground-dark-color;
 	height: $global-navigation-height;
 	position: fixed;
@@ -30,6 +32,10 @@
 
 	.wikia-logo-container {
 		padding-right: $global-navigation-items-spacing;
+
+		.wikia-logo img {
+			background-position: right center;
+		}
 	}
 
 	.start-wikia {
@@ -37,11 +43,10 @@
 		border: solid 1px $global-navigation-text-color;
 		color: $global-navigation-text-color;
 		display: inline-block;
-		font-weight: bold;
-		height: $global-navigation-height-without-margin;
-		line-height: $global-navigation-height-without-margin;
-		margin-bottom: $global-navigation-margin-size;
-		margin-top: $global-navigation-margin-size;
+		height: $start-a-wikia-logo-size;
+		line-height: 28px;
+		margin-bottom: $global-navigation-margin-size + 1px;
+		margin-top: $global-navigation-margin-size + 1px;
 		padding: 0 10px;
 
 		&:hover {
@@ -59,6 +64,9 @@
 
 @media #{$small-only} {
 	.start-wikia {
+		width: $start-a-wikia-logo-size;
+		//-2px because of borders
+		line-height: $start-a-wikia-logo-size - 2px;
 		&:after {
 			content: '+';
 			display: block;
