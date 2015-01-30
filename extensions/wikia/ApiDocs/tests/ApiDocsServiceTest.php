@@ -12,7 +12,7 @@ class ApiDocsServiceTest extends \WikiaBaseTest {
 	}
 
 	public function testGetDocList() {
-		$swaggerMock = $this->getMockBuilder( '\Swagger\Swagger' )
+		$swaggerMock = $this->getMockBuilder( '\Swagger' )
 			->disableOriginalConstructor()->getMock();
 
 		$swaggerMock->expects( $this->once() )
