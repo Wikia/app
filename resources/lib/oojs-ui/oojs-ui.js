@@ -2370,6 +2370,13 @@ OO.ui.Dialog.static.escapable = true;
 /* Methods */
 
 /**
+ * Handle close button click events.
+ */
+OO.ui.Dialog.prototype.onCloseButtonClick = function () {
+	this.close( { 'action': 'cancel' } );
+};
+
+/**
  * Handle frame document key down events.
  *
  * @param {jQuery.Event} e Key down event
@@ -2504,10 +2511,30 @@ OO.ui.Dialog.prototype.initialize = function () {
 	// Properties
 	this.title = new OO.ui.LabelWidget( { $: this.$ } );
 
+	this.closeButton = new OO.ui.ButtonWidget( {
+		'$': this.$,
+		'framed': false,
+		'icon': 'close',
+		'title': OO.ui.msg( 'ooui-dialog-action-close' )
+	} );
+
+	// Events
+	this.closeButton.connect( this, { 'click': 'onCloseButtonClick' } );
+
 	// Initialization
 	this.$content.addClass( 'oo-ui-dialog-content' );
 	this.setPendingElement( this.$head );
+	this.closeButton.$element.addClass( 'oo-ui-window-closeButton' );
+	this.$head.append( this.closeButton.$element );
 };
+
+/**
+ * Handle close button click events.
+ */
+OO.ui.Dialog.prototype.onCloseButtonClick = function () {
+	this.close( { 'action': 'cancel' } );
+};
+
 
 /**
  * Attach action actions.
@@ -6672,9 +6699,9 @@ OO.ui.ProcessDialog.prototype.initialize = function () {
 		.append( this.$errors );
 	this.$navigation
 		.addClass( 'oo-ui-processDialog-navigation' )
-		.append( this.$safeActions, this.$location, this.$primaryActions );
+		.append( this.$location );
 	this.$head.append( this.$navigation );
-	this.$foot.append( this.$otherActions );
+	this.$foot.append( this.$primaryActions, this.$safeActions, this.$otherActions );
 };
 
 /**
