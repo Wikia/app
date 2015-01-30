@@ -1289,6 +1289,13 @@ $wgAdDriverUseTaboola = false;
 $wgAdDriverAlwaysCallDartInCountries = [];
 
 /**
+ * @name $wgAdDriverAlwaysCallDartInCountriesMobile
+ * Enable Remnant GPT call in those countries on wikiamobile skin.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverAlwaysCallDartInCountriesMobile = [];
+
+/**
  * @name $wgAdDriverUseBottomLeaderboard
  * Whether to enable new fancy footer ad BOTTOM_LEADERBOARD
  */
