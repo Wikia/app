@@ -73,6 +73,7 @@ $wiki-header-color: #2b54b5;
 	top: -1px;
 
 	#notificationsContainer {
+		margin-right: -18px; //NOTE: Hide native scrollbar
 		overflow: auto;
 
 		&::-webkit-scrollbar {
