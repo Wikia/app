@@ -170,7 +170,7 @@ class EditPageLayoutHooks {
 	static function onBeforeDisplayingTextbox(EditPage $editPage, &$hidden) {
 		$app = F::app();
 		if ( $app->checkSkin( 'oasis' ) ) {
-			$app->wg->Out->addHtml('<div class="editpage-editarea" data-space-type="editarea">');
+			$app->wg->Out->addHtml('<div id="editarea" class="editpage-editarea" data-space-type="editarea">');
 		}
 
 		return true;
