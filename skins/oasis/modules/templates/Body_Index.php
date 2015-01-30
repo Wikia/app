@@ -87,7 +87,9 @@
 								echo $app->renderView( 'UserProfilePage', 'renderActionButton', array() );
 							}
 						} else {
-							echo $app->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams );
+							if ( !$runNjord ) {
+								echo $app->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams );
+							}
 						}
 					}
 				?>
@@ -121,6 +123,8 @@
 					<?php
 					if ( $runNjord ) {
 						echo $app->renderView( 'Njord', 'Summary' );
+						echo $app->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams );
+
 					}
 					?>
 					<?php
