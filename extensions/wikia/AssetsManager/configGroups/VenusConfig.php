@@ -72,6 +72,8 @@ $VenusConfig[ 'venus_body_js' ] = [
 		'//resources/wikia/libraries/jquery/modal/jquery.wikia.modal.js',
 		'//resources/wikia/libraries/jquery/expirystorage/jquery.expirystorage.js',
 		'//resources/wikia/libraries/jquery/focusNoScroll/jquery.focusNoScroll.js',
+		'//resources/wikia/libraries/menu-aim/menu-aim.js',
+		'//resources/wikia/libraries/delayed-hover/js-delayed-hover.js',
 
 		// libraries loaders
 		'//resources/wikia/libraries/jquery/getResources/jquery.wikia.getResources.js',
@@ -194,8 +196,6 @@ $VenusConfig[ 'global_navigation_js' ] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'venus', 'oasis' ],
 	'assets' => [
-		'//resources/wikia/libraries/menu-aim/menu-aim.js',
-		'//resources/wikia/libraries/delayed-hover/js-delayed-hover.js',
 		'//resources/wikia/modules/scrollToLink.js',
 		'//skins/shared/scripts/transparent-out.js',
 		'//extensions/wikia/Venus/scripts/layout.js',
