@@ -25,6 +25,12 @@
 		<?= $app->renderView( 'Notifications', 'Confirmation' ) ?>
 		<?php
 			$runNjord = ( !empty( $wg->EnableNjordExt ) && WikiaPageType::isMainPage() );
+
+			if ( $runNjord ) {
+				echo $app->renderView( 'Njord', 'Index' );
+
+			}
+
 			if ( empty( $wg->SuppressWikiHeader ) ) {
 				if ( !empty( $wg->EnableLocalNavExt ) || $runNjord ) {
 					echo $app->renderView( 'LocalNavigation', 'Index' );
@@ -34,9 +40,9 @@
 			}
 		?>
 		<?php
-		if ( $runNjord ) {
-			echo $app->renderView( 'Njord', 'Index' );
-		}
+			if ( $runNjord ) {
+				echo $app->renderView( 'Njord', 'Summary' );
+			}
 		?>
 		<?php
 			if ( !empty( $wg->EnableWikiAnswers ) ) {

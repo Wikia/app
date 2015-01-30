@@ -7,6 +7,21 @@ class NjordController extends WikiaController {
 
 	const MAINPAGE_PAGE = 'mainpage';
 
+	private static $wikiDataModel = null;
+
+	public function __construct() {
+		parent::__construct();
+
+		$this->initWikiDataModel();
+	}
+
+	private function initWikiDataModel() {
+		if (self::$wikiDataModel === null) {
+			self::$wikiDataModel = new WikiDataModel(Title::newMainPage()->getText());
+			self::$wikiDataModel->getFromProps();
+		}
+	}
+
 	public function getWikiMarkup() {
 		$articleWikiMarkup = '';
 		$articleTitle = $this->getRequest()->getVal( 'articleTitle' );
@@ -35,12 +50,13 @@ class NjordController extends WikiaController {
 
 	public function index() {
 		global $wgTitle, $wgUser, $wgBlankImgUrl;
-		$wikiDataModel = new WikiDataModel( Title::newMainPage()->getText() );
-		$wikiDataModel->getFromProps();
+		$wikiDataModel = self::$wikiDataModel;
+
 		if ( !$wgUser->isLoggedIn() && $wikiDataModel->isEmpty() ) {
 			return $this->skipRendering();
 		}
 		$this->wg->SupressPageTitle = true;
+
 		$this->wg->out->addStyle( AssetsManager::getInstance()->getSassCommonURL( 'extensions/wikia/NjordPrototype/css/Njord.scss' ) );
 		$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . '/wikia/NjordPrototype/scripts/jquery-ui-1.10.4.js' );
 		$this->wg->Out->addScriptFile( $this->wg->ExtensionsPath . '/wikia/NjordPrototype/scripts/jquery.caret.js' );
@@ -54,6 +70,23 @@ class NjordController extends WikiaController {
 			$wikiDataModel->imagePath = $wgBlankImgUrl;
 			$wikiDataModel->originalImagePath = $wgBlankImgUrl;
 		}
+
+		//FIXME: remove this before release (thumbs from stash broken on devbox)
+		$wikiDataModel->imagePath = 'http://img1.wikia.nocookie.net/__cb20150129114437/mediawiki116/images/thumb/4/48/Wikia-hero-image/1200px-0%2C1200%2C0%2C300';
+
+		// template vars
+		$this->wikiData = $wikiDataModel;
+		$this->isAllowedToEdit = $this->wg->user->isAllowed( 'njordeditmode' );
+	}
+
+	public function summary() {
+		global $wgUser;
+		$wikiDataModel = self::$wikiDataModel;
+
+		if ( !$wgUser->isLoggedIn() && $wikiDataModel->isEmpty() ) {
+			return $this->skipRendering();
+		}
+
 		// template vars
 		$this->wikiData = $wikiDataModel;
 		$this->isAllowedToEdit = $this->wg->user->isAllowed( 'njordeditmode' );
