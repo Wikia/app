@@ -6,20 +6,16 @@
  *
  * @author Adrian 'ADi' Wieczorek <adi(at)wikia.com>
  * @author Piotr 'Moli' Molski <moli(at)wikia.com>
+ * @author James Sutterfield <james@wikia-inc.com>
  *
  */
 
-if ( !defined( 'MEDIAWIKI' ) ) {
-	echo( "This file is an extension to the MediaWiki software and cannot be used standalone.\n" );
-	exit( 1 ) ;
-}
-
-$wgExtensionCredits['specialpage'][] = array(
+$wgExtensionCredits['specialpage'][] = [
 	'name' => 'GlobalWatchlist',
-	'author' => array('[http://www.wikia.com/wiki/User:Adi3ek Adrian \'ADi\' Wieczorek]', '[http://www.wikia.com/wiki/User:Moli.wikia Piotr Molski]'),
+	'author' => ['[http://www.wikia.com/wiki/User:Adi3ek Adrian \'ADi\' Wieczorek]', '[http://www.wikia.com/wiki/User:Moli.wikia Piotr Molski]'],
 	'descriptionmsg' => 'globalwatchlist-desc',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/GlobalWatchlist'
-);
+];
 
 // message file
 $wgExtensionMessagesFiles['GlobalWatchlist'] = dirname( __FILE__ ) . '/GlobalWatchlist.i18n.php';
@@ -30,8 +26,9 @@ $wgAutoloadClasses['GlobalWatchlistHooks'] = dirname( __FILE__ ) . '/GlobalWatch
 $wgAutoloadClasses['GlobalWatchlistTask'] = dirname( __FILE__ ) . '/GlobalWatchlistTask.class.php';
 
 // hooks
-$wgHooks[ 'GetPreferences' ][] = 'GlobalWatchlistHooks::getPreferences';
-$wgHooks[ 'WatchedItem::removeWatch' ][] = 'GlobalWatchlistHooks::removeWatchers';
+$wgHooks[ 'GetPreferences' ][] = 'GlobalWatchlistHooks::getPreferences'; // good
+$wgHooks[ 'SavePreferences' ][] = 'GlobalWatchlistHooks::savePreferences'; // good
+$wgHooks[ 'WatchedItem::removeWatch' ][] = 'GlobalWatchlistHooks::removeWatcher';
 $wgHooks[ 'WatchedItem::updateWatch' ][] = 'GlobalWatchlistHooks::updateGlobalWatchList';
 $wgHooks[ 'WatchedItem::replaceWatch'][] = 'GlobalWatchlistHooks::renameTitleInGlobalWatchlist';
 $wgHooks[ 'SpecialEditWatchlist::clearWatchlist'][] = 'GlobalWatchlistHooks::clearGlobalWatch';

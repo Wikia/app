@@ -6,19 +6,63 @@ class GlobalWatchlistHooks {
 
 	public static function getPreferences( $user, &$defaultPreferences ) {
 
-		$defaultPreferences['watchlistdigest'] = array(
+		$defaultPreferences['watchlistdigest'] = [
 			'type' => 'toggle',
 			'label-message' => 'tog-watchlistdigest',
 			'section' => 'watchlist/advancedwatchlist',
-		);
+		];
 
-		$defaultPreferences['watchlistdigestclear'] = array(
+		$defaultPreferences['watchlistdigestclear'] = [
 			'type' => 'toggle',
 			'label-message' => 'tog-watchlistdigestclear',
 			'section' => 'watchlist/advancedwatchlist',
-		);
+		];
 		
 		return true;
+	}
+
+	/**
+	 * Check if the user is unsubscribing from either the weekly digest or email altogether and, if so,
+	 * clears all their entries from the global_watchlist table.
+	 * @param $formData
+	 * @param $error
+	 * @return bool
+	 */
+	static public function savePreferences( &$formData, &$error ) {
+
+		if ( self::userUnsubscribingFromAllEmail( $formData ) || self::userUnsubscribingFromWeeklyDigest( $formData ) ) {
+			$task = new GlobalWatchlistTask();
+			( new AsyncTaskList() )
+				->wikiId( F::app()->wg->CityId )
+				->add( $task->call( 'clearGlobalWatchlistAll', F::app()->wg->User->getId() ) )
+				->queue();
+		}
+
+		return true;
+	}
+
+	/**
+	 * Returns if the user is unsubscribing from all email from Wikia.
+	 * @param $formData
+	 * @return bool
+	 */
+	static private function userUnsubscribingFromAllEmail ( $formData ) {
+		return (
+			$formData['unsubscribed'] == true &&
+			F::app()->wg->User->getBoolOption( 'unsubscribed' ) == false
+		);
+	}
+
+	/**
+	 * Returns if the user is unsubscribing from the weekly digest.
+	 * @param $formData
+	 * @return bool
+	 */
+	static private function userUnsubscribingFromWeeklyDigest( $formData ) {
+		return (
+			$formData['watchlistdigest'] == false &&
+			F::app()->wg->User->getBoolOption( 'watchlistdigest' ) == true
+		);
 	}
 
 	/**
@@ -73,10 +117,10 @@ class GlobalWatchlistHooks {
 	 * @param $success Boolean: removed successfully
 	 * @return bool (always true)
 	 */		
-	static public function removeGlobalWatch( $watchedItem, $success ) {
+	static public function removeWatcher( $watchedItem, $success ) {
 
+		// some errors when update in local watchlist table
 		if ( !$success ) {
-			/* some errors when update in local watchlist table */
 			return true;
 		}
 

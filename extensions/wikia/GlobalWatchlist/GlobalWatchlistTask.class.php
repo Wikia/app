@@ -22,7 +22,7 @@ class GlobalWatchlistTask extends BaseTask {
 
 	private function clearWatchLists( $userID ) {
 		$this->clearLocalWatchlists( $userID );
-		$this->clearGlobalWatchlist( $userID, $clearAllWikis = true );
+		$this->clearGlobalWatchlistAll( $userID );
 	}
 
 	private function clearLocalWatchlists( $userID ) {
@@ -50,21 +50,29 @@ class GlobalWatchlistTask extends BaseTask {
 
 	/**
 	 * @param $userID
-	 * @param $clearAllWikis bool
 	 */
-	public function clearGlobalWatchlist( $userID, $clearAllWikis = false ) {
+	public function clearGlobalWatchlist( $userID ) {
 		global $wgExternalDatawareDB, $wgCityId;
 
 		$db = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
-		$sql = ( new WikiaSQL() )
+		( new WikiaSQL() )
 			->DELETE()->FROM( self::tableName )
-			->WHERE( self::columnUserID )->EQUAL_TO( $userID );
+			->WHERE( self::columnUserID )->EQUAL_TO( $userID )
+			->AND_( self::columnCityID )->EQUAL_TO( $wgCityId )
+			->run( $db );
+	}
 
-		if ( !$clearAllWikis ) {
-			$sql->AND_( self::columnCityID )->EQUAL_TO( $wgCityId );
-		}
+	/**
+	 * @param $userID
+	 */
+	public function clearGlobalWatchlistAll( $userID ) {
+		global $wgExternalDatawareDB;
 
-		$sql->run( $db );
+		$db = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
+		( new WikiaSQL() )
+			->DELETE()->FROM( self::tableName )
+			->WHERE( self::columnUserID )->EQUAL_TO( $userID )
+			->run( $db );
 	}
 
 	/**
@@ -77,12 +85,18 @@ class GlobalWatchlistTask extends BaseTask {
 
 		$titleObj = Title::newFromText( $databaseKey, $nameSpace );
 		$revision = Revision::newFromTitle( $titleObj );
+		$globalWatchlistBot = new GlobalWatchlistBot();
 
 		$db = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
-		foreach ( $watchers as $watcher ) {
+		foreach ( $watchers as $watcherID ) {
+			if ( $globalWatchlistBot->shouldNotSendDigest( $watcherID ) ) {
+				$this->clearGlobalWatchlistAll( $watcherID );
+				continue;
+			}
+
 			( new WikiaSQL() )
 				->INSERT()->INTO( self::tableName )
-				->SET( self::columnUserID, $watcher )
+				->SET( self::columnUserID, $watcherID )
 				->SET( self::columnCityID, $wgCityId )
 				->SET( self::columnTitle, $databaseKey )
 				->SET( self::columnNameSpace, $nameSpace )
@@ -90,7 +104,7 @@ class GlobalWatchlistTask extends BaseTask {
 				->SET( self::columnRevisionTimeStamp, $revision->getTimestamp() )
 				->SET( self::columnTimeStamp, $revision->getTimestamp() )
 				->run( $db );
-			$this->scheduleWeeklyDigest( $watcher );
+			$this->scheduleWeeklyDigest( $watcherID );
 		}
 	}
 

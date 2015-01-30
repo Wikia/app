@@ -1,5 +1,7 @@
 <?php
 
+use \Wikia\Tasks\AsyncTaskList;
+
 class GlobalWatchlistBot {
 
 	const MAX_ARTICLES_PER_WIKI = 50;
@@ -12,8 +14,13 @@ class GlobalWatchlistBot {
 	/**
 	 * send email to user
 	 */
-	public function sendDigestToUser( $iUserId ) {
+	public function sendDigestToUser( $userID ) {
 		global $wgExternalDatawareDB;
+
+		if ( $this->shouldNotSendDigest( $userID ) ) {
+			$this->clearUserFromGlobalWatchlist( $userID );
+			return;
+		}
 
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
 
@@ -21,7 +28,7 @@ class GlobalWatchlistBot {
 			array ( "global_watchlist" ),
 			array ( "gwa_id", "gwa_user_id", "gwa_city_id", "gwa_namespace", "gwa_title", "gwa_rev_id", "gwa_timestamp" ),
 			array (
-				"gwa_user_id" => intval( $iUserId ),
+				"gwa_user_id" => intval( $userID ),
 				"gwa_timestamp <= gwa_rev_timestamp",
 				"gwa_timestamp is not null"
 			),
@@ -96,21 +103,108 @@ class GlobalWatchlistBot {
 			$aDigestData[ $iWikiId ] = $aWikiDigest;
 		}
 
-		$iEmailsSent = 0;
 		if ( count( $aDigestData ) ) {
-			$iEmailsSent++;
-			$this->sendMail( $iUserId, $aDigestData, $bTooManyPages );
+			$this->sendMail( $userID, $aDigestData, $bTooManyPages );
 		}
 
 		if ( count( $aRemove ) ) {
 			$dbs = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 			foreach ( $aRemove as $gwa_id ) {
-				$dbs->delete( 'global_watchlist', array( 'gwa_user_id' => $iUserId, 'gwa_id' => $gwa_id ), __METHOD__ );
+				$dbs->delete( 'global_watchlist', array( 'gwa_user_id' => $userID, 'gwa_id' => $gwa_id ), __METHOD__ );
 			}
 			$dbs->commit();
 		}
+	}
 
-		return $iEmailsSent;
+	/**
+	 * @param $userID
+	 * @return bool
+	 */
+	public function shouldNotSendDigest( $userID ) {
+		$user = $this->getUserObject( $userID );
+		try {
+			$this->checkIfValidUser( $user );
+			$this->checkIfEmailUnSubscribed( $user );
+			$this->checkIfEmailConfirmed( $user );
+			$this->checkIfSubscribedToWeeklyDigest( $user );
+		} catch ( Exception $e ) {
+			echo "There was this exception for user $userID" . $e->getMessage();
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * @param $userID
+	 * @return null|User
+	 */
+	private function getUserObject( $userID ) {
+		global $wgExternalAuthType;
+
+		if ( $wgExternalAuthType ) {
+			$mExtUser = ExternalUser::newFromId( $userID );
+			if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
+				$mExtUser->linkToLocal( $mExtUser->getId() );
+				$user = $mExtUser->getLocalUser();
+			} else {
+				$user = null;
+			}
+		} else {
+			$user = User::newFromId ( $userID );
+		}
+
+		return $user;
+	}
+
+	/**
+	 * @param $user
+	 * @throws Exception
+	 */
+	private function checkIfValidUser( $user ) {
+		if ( !$user instanceof User ) {
+			throw new Exception( 'Invalid user object.' );
+		}
+	}
+
+	/**
+	 * @param $user User
+	 * @throws Exception
+	 */
+	private function checkIfEmailUnSubscribed( $user ) {
+		if ( $user->getBoolOption( 'unsubscribed' ) ) {
+			throw new Exception( 'Email is unsubscribed.' );
+		}
+	}
+
+	/**
+	 * @param $user User
+	 * @throws Exception
+	 */
+	private function checkIfEmailConfirmed( $user ) {
+		if ( !$user->isEmailConfirmed() ) {
+			throw new Exception( 'Email is not confirmed.' );
+		}
+	}
+
+	/**
+	 * @param $user User
+	 * @throws Exception
+	 */
+	private function checkIfSubscribedToWeeklyDigest( $user ) {
+		if ( !$user->getBoolOption( 'watchlistdigest' ) ) {
+			throw new Exception( 'Not subscribed to weekly digest' );
+		}
+	}
+
+	/**
+	 * @param $userID
+	 */
+	private function clearUserFromGlobalWatchlist( $userID ) {
+		$task = new GlobalWatchlistTask();
+		( new AsyncTaskList() )
+			->wikiId( F::app()->wg->CityId )
+			->add( $task->call( 'clearGlobalWatchlistAll', $userID ) )
+			->queue();
 	}
 
 	/**
