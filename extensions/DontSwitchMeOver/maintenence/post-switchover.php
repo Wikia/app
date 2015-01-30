@@ -13,13 +13,11 @@ class PostSwitchover extends Maintenance {
 		parent::__construct();
 		$this->mDescription = "Migrate users that indicated they didn't want to be switched over back to the old defaults.";
 		$this->addArg( 'start', "User ID to start from. Use this to resume an aborted run", false );
-		$this->addOption( 'maxlag', 'Maximum database slave lag in seconds (5 by default)', false, true );
 	}
 
 	public function execute() {
 		$start = intval( $this->getOption( 'start', 0 ) );
-		$maxlag = intval( $this->getOption( 'maxlag', 5 ) );
-		
+
 		$dbr = wfGetDb( DB_SLAVE );
 		$maxUserID = $dbr->selectField( 'user', 'MAX(user_id)', false );
 		
@@ -28,7 +26,7 @@ class PostSwitchover extends Maintenance {
 			$this->fixUser( $i );
 			if ( $i % self::REPORTING_INTERVAL == 0 ) {
 				$this->output( "$i\n" );
-				wfWaitForSlaves( $maxlag );
+				wfWaitForSlaves();
 			}
 		}
 		$this->output( "All done\n" );

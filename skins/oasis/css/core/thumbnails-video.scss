@@ -7,7 +7,7 @@
 	$url: '/skins/oasis/images/videoPlayButtons/' + $size + 'x' + $size + '_hover.png';
 
 	&:hover .play-circle {
-		background-image: url($url); /* base64 */
+		background-image: url($url); /* inline */
 	}
 }
 
@@ -20,7 +20,7 @@
 	// play button styles
 	// defaults to 'medium' size
 	.play-circle {
-		background-image: url('/skins/oasis/images/videoPlayButtons/50x50.png'); /* base64 */
+		background-image: url('/skins/oasis/images/videoPlayButtons/50x50.png'); /* inline */
 		background-size: 100%;
 		display: block;
 		height: 50px; // only for medium
@@ -34,7 +34,7 @@
 	&.xsmall, &.xxsmall {
 		@include hoverState('27');
 		.play-circle{
-			background-image: url('/skins/oasis/images/videoPlayButtons/27x27.png'); /* base64 */
+			background-image: url('/skins/oasis/images/videoPlayButtons/27x27.png'); /* inline */
 			height: 27px;
 			width: 27px;
 			bottom: 10px;
@@ -54,7 +54,7 @@
 	&.small {
 		@include hoverState('35');
 		.play-circle{
-			background-image: url('/skins/oasis/images/videoPlayButtons/35x35.png'); /* base64 */
+			background-image: url('/skins/oasis/images/videoPlayButtons/35x35.png'); /* inline */
 			height: 35px;
 			width: 35px;
 			bottom: 10px;
@@ -66,7 +66,7 @@
 	&.large {
 		@include hoverState('70');
 		.play-circle{
-			background-image: url('/skins/oasis/images/videoPlayButtons/70x70.png'); /* base64 */
+			background-image: url('/skins/oasis/images/videoPlayButtons/70x70.png'); /* inline */
 			height: 70px;
 			margin: -35px 0 0 -35px;
 			width: 70px;
@@ -76,7 +76,7 @@
 	&.xlarge {
 		@include hoverState('90');
 		.play-circle{
-			background-image: url('/skins/oasis/images/videoPlayButtons/90x90.png'); /* base64 */
+			background-image: url('/skins/oasis/images/videoPlayButtons/90x90.png'); /* inline */
 			height: 90px;
 			margin: -45px 0 0 -45px;
 			width: 90px;

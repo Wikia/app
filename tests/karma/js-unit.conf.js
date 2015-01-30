@@ -67,6 +67,8 @@ module.exports = function (config) {
 
 			// Performance
 			'extensions/wikia/Bucky/js/spec/bucky.mock.js',
+			'extensions/wikia/Bucky/js/bucky_resources_timing.js',
+			'extensions/wikia/Bucky/js/spec/*.spec.js',
 
 			//UI Repo JS API
 			'resources/wikia/modules/uicomponent.js',
@@ -189,7 +191,11 @@ module.exports = function (config) {
 			'extensions/wikia/MediaGallery/scripts/views/media.js',
 			'extensions/wikia/MediaGallery/scripts/views/toggler.js',
 			'extensions/wikia/MediaGallery/scripts/views/gallery.js',
-			'extensions/wikia/MediaGallery/scripts/spec/**/*.spec.js'
+			'extensions/wikia/MediaGallery/scripts/spec/**/*.spec.js',
+
+			// User Login and Signup
+			'extensions/wikia/UserLogin/js/MarketingOptIn.js',
+			'extensions/wikia/UserLogin/js/spec/MarketingOptIn.spec.js'
 		]
 	});
 };

@@ -186,11 +186,12 @@ class ArticleService extends WikiaObject {
 		$page = $this->article->getPage();
 		$opts = $page->makeParserOptions( new User() );
 		$parserOutput = $page->getParserOutput( $opts );
-		if ( isset( $parserOutput ) ) {
-			$content = $parserOutput->getText();
-		} else {
+		try {
+			$content = $this->getContentFromParser($parserOutput);
+		} catch ( Exception $e ) {
 			\Wikia\Logger\WikiaLogger::instance()->error(
-				'ArticleService, no parser output found', [ 'parserOptions' => $opts, 'page' => $page ]
+				'ArticleService, not parser output object found',
+				[ 'parserOutput' => $parserOutput, 'parserOptions' => $opts, 'page' => $page, 'exception' => $e ]
 			);
 		}
 
@@ -220,6 +221,10 @@ class ArticleService extends WikiaObject {
 			}
 		}
 		return $content;
+	}
+
+	private function getContentFromParser(ParserOutput $output) {
+		return $output->getText();
 	}
 
 	/**

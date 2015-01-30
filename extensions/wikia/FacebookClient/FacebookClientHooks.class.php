@@ -102,10 +102,14 @@ class FacebookClientHooks {
 	 * @return bool
 	 */
 	public static function onSkinAssetGroups( &$assetsArray ) {
-		$title = F::app()->wg->Title;
+		$app = F::app();
+		$title = $app->wg->Title;
 
 		// Special:Preferences
-		if ( $title instanceof Title && $title->isSpecial( 'Preferences' ) ) {
+		if ( $title instanceof Title &&
+			$title->isSpecial( 'Preferences' ) &&
+			$app->wg->User->isLoggedIn()
+		) {
 			$assetsArray[] = 'facebook_client_preferences_js';
 		}
 

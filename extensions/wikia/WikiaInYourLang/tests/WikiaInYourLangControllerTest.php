@@ -12,7 +12,15 @@ class WikiaInYourLangControllerTest extends WikiaBaseTest {
 	 */
 	public function testGetWikiDomain( $sDomainToParse, $sParsedDomain ) {
 		$oController = new WikiaInYourLangController();
-		$this->assertEquals( $sParsedDomain, $oController->getWikiDomain( $sDomainToParse ) );
+		$this->assertSame( $sParsedDomain, $oController->getWikiDomain( $sDomainToParse ) );
+	}
+
+	/**
+	 * @dataProvider getLanguagesList
+	 */
+	public function testGetLanguageCore( $sFullLanguageCode, $sLanguageCore ) {
+		$oController = new WikiaInYourLangController();
+		$this->assertSame( $sLanguageCore, $oController->getLanguageCore( $sLanguageCore ) );
 	}
 
 	public function getDomainsList() {
@@ -20,9 +28,28 @@ class WikiaInYourLangControllerTest extends WikiaBaseTest {
 			['http://naruto.wikia.com', 'naruto.wikia.com'],
 			['http://zh.naruto.wikia.com', 'naruto.wikia.com'],
 			['http://pt-br.naruto.wikia.com', 'naruto.wikia.com'],
-			['http://zh.zh-pad.wikia.com', 'zh-pad.wikia.com'],
-			['http://de.engelpedia.wikia.com', 'engelpedia.wikia.com'],
+			['http://sandbox-s3.naruto.wikia.com', 'naruto.wikia.com'],
+			['http://sandbox-s3.zh.naruto.wikia.com', 'naruto.wikia.com'],
+			['http://sandbox-s3.pt-br.naruto.wikia.com', 'naruto.wikia.com'],
+			['http://preview.naruto.wikia.com', 'naruto.wikia.com'],
+			['http://preview.zh.naruto.wikia.com', 'naruto.wikia.com'],
+			['http://preview.pt-br.naruto.wikia.com', 'naruto.wikia.com'],
+			['http://verify.naruto.wikia.com', 'naruto.wikia.com'],
+			['http://verify.zh.naruto.wikia.com', 'naruto.wikia.com'],
+			['http://verify.pt-br.naruto.wikia.com', 'naruto.wikia.com'],
 			['Just a random string', false],
+		];
+	}
+
+	public function getLanguagesList() {
+		return [
+			['en', 'en'],
+			['be-tarask', 'be'],
+			['crh-latin', 'crh'],
+			['crh-cyrl', 'crh'],
+			['zh', 'zh'],
+			['zh-classical', 'zh'],
+			['zh-cn', 'zh'],
 		];
 	}
 }

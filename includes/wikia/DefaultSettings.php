@@ -377,7 +377,6 @@ $wgAutoloadClasses['AdController'] = $IP.'/skins/oasis/modules/AdController.clas
 $wgAutoloadClasses['FollowedPagesController'] = $IP.'/skins/oasis/modules/FollowedPagesController.class.php';
 $wgAutoloadClasses['MyToolsController'] = $IP.'/skins/oasis/modules/MyToolsController.class.php';
 $wgAutoloadClasses['UserPagesHeaderController'] = $IP.'/skins/oasis/modules/UserPagesHeaderController.class.php';
-$wgAutoloadClasses['SpotlightsController'] = $IP.'/skins/oasis/modules/SpotlightsController.class.php';
 $wgAutoloadClasses['MenuButtonController'] = $IP.'/skins/oasis/modules/MenuButtonController.class.php';
 $wgAutoloadClasses['CommentsLikesController'] = $IP.'/skins/oasis/modules/CommentsLikesController.class.php';
 $wgAutoloadClasses['BlogListingController'] = $IP.'/skins/oasis/modules/BlogListingController.class.php';
@@ -432,6 +431,10 @@ $wgHooks['Debug'][] = 'Wikia\\Logger\\Hooks::onDebug';
 $wgHooks['WikiFactory::execute'][] = 'Wikia\\Logger\\Hooks::onWikiFactoryExecute';
 $wgHooks['WikiFactory::onExecuteComplete'][] = 'Wikia\\Logger\\Hooks::onWikiFactoryExecuteComplete';
 
+// memcache stats (PLATFORM-292)
+$wgAutoloadClasses['Wikia\\Memcached\\MemcachedStats'] = "$IP/includes/wikia/memcached/MemcachedStats.class.php";
+$wgHooks['RestInPeace'][] = 'Wikia\\Memcached\\MemcachedStats::onRestInPeace';
+
 # list of groups for wfDebugLog calls that will be logged using WikiaLogger
 # @see PLATFORM-424
 $wgDebugLogGroups = [
@@ -441,6 +444,7 @@ $wgDebugLogGroups = [
 	'poolcounter' => true,  // errors from PoolCounterWork
 	'replication' => true,  // replication errros / excessive lags
 	'squid' => true,        // timeouts and errors from SquidPurgeClient
+	'createwiki' => true,   // CreateWiki process
 ];
 
 // Register \Wikia\Sass namespace
@@ -491,7 +495,6 @@ $wgAutoloadClasses[ "WikiaApiQuerySiteInfo"         ] = "$IP/extensions/wikia/Wi
 $wgAutoloadClasses[ "WikiaApiQueryPageinfo"         ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryPageinfo.php";
 $wgAutoloadClasses[ "WikiaApiCreatorReminderEmail"  ] = "$IP/extensions/wikia/CreateNewWiki/WikiaApiCreatorReminderEmail.php";
 $wgAutoloadClasses[ "WikiFactoryTags"               ] = "$IP/extensions/wikia/WikiFactory/Tags/WikiFactoryTags.php";
-$wgAutoloadClasses[ "WikiaApiQueryEventsData"       ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryEventsData.php";
 $wgAutoloadClasses[ "WikiaApiQueryAllUsers"         ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryAllUsers.php";
 $wgAutoloadClasses[ "WikiaApiQueryLastEditors"      ] = "$IP/extensions/wikia/WikiaApi/WikiaApiQueryLastEditors.php";
 $wgAutoloadClasses[ "WikiaApiResetPasswordTime"     ] = "$IP/extensions/wikia/WikiaApi/WikiaApiResetPasswordTime.php";
@@ -561,7 +564,6 @@ global $wgAjaxExportList;
  */
 global $wgAPIPropModules;
 $wgAPIPropModules[ "info"         ] = "WikiaApiQueryPageinfo";
-$wgAPIPropModules[ "wkevinfo"     ] = "WikiaApiQueryEventsData";
 $wgAPIPropModules[ "wklasteditors"] = "WikiaApiQueryLastEditors";
 
 /*
@@ -1299,6 +1301,12 @@ $wgAdDriverAlwaysCallDartInCountries = [];
 $wgAdDriverUseBottomLeaderboard = false;
 
 /**
+ * @name $wgAdDriverUseInterstitial
+ * Whether to enable new interstitial ad MODAL_INTERSTITIAL_5
+ */
+$wgAdDriverUseInterstitial = false;
+
+/**
  * @name $wgAdDriverUseTopInContentBoxad
  * Whether to enable new in-content top ad TOP_IN_CONTENT_BOXAD
  */
@@ -1366,6 +1374,17 @@ $wgSitewideDisableRubiconRTP = false;
 $wgSitewideDisableSevenOneMedia = false;
 
 /**
+ * @name $wgSitewideDisableKrux
+ * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableKrux
+ *
+ * Disable Krux sitewide in case a disaster happens.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ */
+$wgSitewideDisableKrux = false;
+
+/**
  * @name $wgAdDriverUseSevenOneMedia
  * Whether to use SevenOne Media ads (true) or the other ads (false)
  * Null means true for languages within $wgAdDriverUseSevenOneMediaInLanguages
@@ -1425,6 +1444,12 @@ $wgAdDriverRubiconRTPConfig = null;
  * Only set this variable through Wiki Factory on community wiki. The setting then applies globally.
  */
 $wgAdDriverRubiconRTPCountries = null;
+
+/**
+ * @name $wgAdDriverEnableKruxOnMobile
+ * Whether to enable Krux on wikiamobile skin
+ */
+$wgEnableKruxOnMobile = false;
 
 /**
  * @name $wgHighValueCountries
@@ -1611,6 +1636,14 @@ $wgBuckyEnabledSkins = [
 	'venus',
 	'uncyclopedia',
 ];
+
+/**
+ * @name wgMemcacheStatsSampling
+ * Sets the sampling rate for Memcache stats reporting, sampling applied at each page view
+ *
+ * Unit: percent (0-100)
+ */
+$wgMemcacheStatsSampling = 1;
 
 /*
  * @name wgXhprofUDPHost

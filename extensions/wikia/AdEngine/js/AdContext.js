@@ -3,7 +3,11 @@
  * The AMD module to hold all the context needed for the client-side scripts to run.
  */
 define('ext.wikia.adEngine.adContext', [
-	'wikia.window', 'wikia.document', 'wikia.geo', require.optional('wikia.instantGlobals'),  require.optional('wikia.abTest')
+	'wikia.window',
+	'wikia.document',
+	'wikia.geo',
+	'wikia.instantGlobals',
+	require.optional('wikia.abTest')
 ], function (w, doc, geo, instantGlobals, abTest) {
 	'use strict';
 
@@ -44,21 +48,26 @@ define('ext.wikia.adEngine.adContext', [
 		// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
 		context.opts.usePostScribe = context.opts.usePostScribe || context.providers.sevenOneMedia;
 
-		// Targeting by page categories
-		if (context.targeting.enablePageCategories) {
-			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();
-		}
-
 		// Always call DART in specific countries
 		var alwaysCallDartInCountries = instantGlobals.wgAdDriverAlwaysCallDartInCountries || [];
 		if (alwaysCallDartInCountries.indexOf(geo.getCountryCode()) > -1) {
 			context.opts.alwaysCallDart = true;
 		}
 
+		// Targeting by page categories
+		if (context.targeting.enablePageCategories) {
+			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();
+		}
+
+		// Krux integration
+		if (instantGlobals.wgSitewideDisableKrux) {
+			context.targeting.enableKruxTargeting = false;
+		}
+
 		// Taboola integration
 		if (context.providers.taboola) {
 			context.providers.taboola = abTest && abTest.inGroup('NATIVE_ADS_TABOOLA', 'YES') &&
-				(context.targeting.pageType === 'article' || context.targeting.pageType === 'home');
+			(context.targeting.pageType === 'article' || context.targeting.pageType === 'home');
 		}
 
 		// Export the context back to ads.context

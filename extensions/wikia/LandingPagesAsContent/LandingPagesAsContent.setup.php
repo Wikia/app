@@ -26,7 +26,8 @@ $app->wg->append(
 		"author" => array(
 			'Federico "Lox" Lucignano <federico(at)wikia-inc.com>',
 			'Łukasz \'TOR\' Garczewski <tor(at)wikia-inc.com>'
-		)
+		),
+		"url" => "https://github.com/Wikia/app/tree/dev/extensions/wikia/LandingPagesAsContent"
 	),
 	'other'
 );

@@ -21,10 +21,10 @@ if( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'Evergreens',
-	'description' => 'Logging entry point for the Wikia Evergreens extension for Google Chrome. Wikia Evergreens is a stale page cache detection and reporting tool.',
 	'descriptionmsg' => 'evergreens-desc',
 	'author' => 'Michał ‘Mix’ Roszka <mix@wikia-inc.com>',
 	'license-name' => 'MIT',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Evergreens'
 );
 
 /**

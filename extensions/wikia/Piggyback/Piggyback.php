@@ -15,6 +15,7 @@ $wgExtensionCredits['specialpage'][] = array(
 	'author' => 'Tomasz Odrobny',
 	'descriptionmsg' => 'piggyback-desc',
 	'version' => '0.0.1',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Piggyback'
 );
 
 $dir = dirname(__FILE__) . '/';

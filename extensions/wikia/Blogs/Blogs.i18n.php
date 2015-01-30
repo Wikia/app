@@ -136,6 +136,7 @@ Avatar6.jpg",
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
+ * @author Liuxinyu970226
  * @author Lloffiwr
  * @author Shirayuki
  * @author Siebrand
@@ -182,6 +183,7 @@ Parameters:
 	'blog-comment-unhide' => '{{Identical|Unhide}}',
 	'blog-comment-history' => '{{Identical|History}}',
 	'blog-comment-edit' => '{{Identical|Edit}}',
+	'blog-avatar-defaults' => '{{doc-important|Do not translate ".jpg"}}',
 	'blog-avatar-preferences-title' => '{{Identical|Avatar}}',
 	'blog-create-listing-label' => '{{Identical|Create blog listing}}',
 	'blog-refresh-label' => '{{Identical|Refresh}}',
@@ -794,7 +796,9 @@ $messages['bto'] = array(
 
 /** Catalan (català)
  * @author BroOk
+ * @author Paynekiller92
  * @author SMP
+ * @author Unapersona
  */
 $messages['ca'] = array(
 	'blog-file-page' => "<a href='$1'>$2</a> publicació en el blog de <a href='$3'>$4</a>",
@@ -873,7 +877,7 @@ $messages['ca'] = array(
 	'blog-comments-save' => 'Guardar comentari al blog',
 	'blog-comments-label' => 'Comentaris',
 	'blog-voting-label' => 'Votació',
-	'blog-comments-info' => 'Fes servir aquesta caixa per a deixar un comentari. Li pots donar estil de wikitext.',
+	'blog-comments-info' => 'Aquesta caixa utilitza codi wikitext',
 	'blog-comments-login' => '<a href="$1" rel="nofollow">Inicia sessió</a> per a deixar un comentari',
 	'blog-comments-dsc' => 'Nous comentaris al principi',
 	'blog-comments-asc' => 'Nous comentaris al final',
@@ -885,6 +889,7 @@ $messages['ca'] = array(
 	'blog-comment-edit' => 'editar',
 	'blog-comment-error' => "El comentari no s'ha pogut desar",
 	'blog-comment-cannot-add' => 'No pots afegir un comentari al blog.',
+	'blug-cut-sign' => '...',
 	'blog-avatar-preferences-title' => 'Avatar',
 	'blog-page-rate' => 'Valora aquesta entrada:',
 	'blog-create-post-label' => 'Crear una entrada',
@@ -1193,7 +1198,7 @@ $messages['diq'] = array(
 	'create-blog-no-login' => 'Şıma cıkewtış nêvıraşto',
 	'create-blog-categories-textinput' => 'Yew kategoriya newiye cı ke',
 	'create-blog-categories-submit' => 'Bırışe',
-	'create-blog-save' => 'Perer qeyd ke',
+	'create-blog-save' => 'Pele qeyd ke',
 	'create-blog-preview' => 'Verasayışi bıvin',
 	'create-blog-listing-page-title' => 'Listeyê blog de pela sernami',
 	'create-blog-listing-preview' => 'Verqayt',
@@ -1210,7 +1215,7 @@ $messages['diq'] = array(
 	'blog-added' => 'Debiya',
 	'blog-edited' => 'vurneya',
 	'blog-page' => 'Blog',
-	'blog-zero-comments' => 'Vatış nê vacya yo',
+	'blog-zero-comments' => 'Hewna mışewre çıniyo!',
 	'blog-comments' => 'Vatışi',
 	'blog-comments-label' => 'Vatışkerden',
 	'blog-voting-label' => 'Deya',
@@ -1543,8 +1548,11 @@ $messages['eu'] = array(
 	'blog-page' => 'Bloga',
 	'blog-zero-comments' => 'Oraindik ez dago iruzkinik!',
 	'blog-comments' => 'Iruzkinak',
+	'blog-comments-anonymous' => 'Erabiltzaile anonimoa',
 	'blog-comment-delete' => 'ezabatu',
 	'blog-comment-hide' => 'ezkutatu',
+	'blog-comment-unhide' => 'erakutsi',
+	'blog-comment-history' => 'historia',
 	'blog-refresh-label' => 'Eguneratu',
 	'blog-comment-sending' => 'Bidaltzen...',
 	'blogs-searchprofile' => 'Blogak',
@@ -3118,6 +3126,7 @@ $messages['ko'] = array(
 	'create-blog-listing-output-as-page' => '새로운 페이지에 목록 추가',
 	'blog-header' => '"$1" 분류의 게시글',
 	'blog-subheader' => '이 분류에 속하는 블로그 글은 {{PLURAL:$1|$1개|$1개}}입니다.',
+	'blog-subheader-all' => '{{PLURAL:$1|이 분류에 한 개의 블로그 글이 속해 있습니다.|전체 블로그 글 $2 개 중, $1 개가 이 분류에 속해 있습니다.}}',
 	'blog-invalidparam' => "알려지지 않은 매개 변수 '$1'는 무시되었습니다. 정상적인 매개 변수를 사용해주세요: <code>$2</code>.",
 	'blog-emptyparam' => '매개 변수의 이름은 공백일 수 없습니다',
 	'blog-defaulttitle' => '블로그',
@@ -3132,15 +3141,16 @@ $messages['ko'] = array(
 	'blog-added' => '추가됨',
 	'blog-edited' => '편집됨',
 	'blog-page' => '블로그',
-	'blog-zero-comments' => '댓글이 없습니다!',
+	'blog-zero-comments' => '아직 덧글이 없습니다!',
 	'blog-comment-post' => '덧글 남기기',
 	'blog-comments' => '덧글',
 	'blog-rc-comments' => '블로그 덧글',
-	'blog-comments-new' => '블로그에 새 댓글이 있습니다',
+	'blog-comments-new' => '블로그의 새 덧글',
 	'blog-comments-save' => '블로그에 댓글 저장',
 	'blog-comments-label' => '의견',
 	'blog-voting-label' => '투표',
-	'blog-comments-login' => '댓글을 남기려면 <a href="$1" rel="nofollow">로그인</a>하세요',
+	'blog-comments-info' => '이 상자는 위키 문법 입력 방식을 사용합니다',
+	'blog-comments-login' => '덧글을 남기려면 <a href="$1" rel="nofollow">로그인하세요</a>',
 	'blog-comments-dsc' => '최근 항목순',
 	'blog-comments-asc' => '오래된 항목순',
 	'blog-comments-anonymous' => '익명의 사용자',
@@ -3149,8 +3159,8 @@ $messages['ko'] = array(
 	'blog-comment-unhide' => '숨기기 취소',
 	'blog-comment-history' => '역사',
 	'blog-comment-edit' => '편집',
-	'blog-comment-error' => '댓글을 저장할 수 없습니다',
-	'blog-comment-cannot-add' => '블로그에 댓글을 남길 수 없습니다.',
+	'blog-comment-error' => '덧글을 저장할 수 없습니다',
+	'blog-comment-cannot-add' => '블로그에 덧글을 추가할 수 없습니다.',
 	'blog-avatar-preferences-title' => '아바타',
 	'blog-page-rate' => '이 글을 평가하기',
 	'blog-create-post-label' => '블로그 글 생성',
@@ -3996,7 +4006,7 @@ Gebruik een van de beschikbare parameters: <code>$2</code>.',
 	'blog-rc-comments' => 'Opmerkingen bij blog',
 	'blog-comments-new' => 'Nieuwe reactie in blog',
 	'blog-comments-save' => 'Reactie in blog opslaan',
-	'blog-comments-label' => 'Opmerkingen',
+	'blog-comments-label' => 'Reacties',
 	'blog-voting-label' => 'Stemmen',
 	'blog-comments-info' => 'In dit venster kunt u wikitekst gebruiken',
 	'blog-comments-login' => 'U moet <a href="$1" rel="nofollow">aanmelden</a> om opmerkingen te kunnen plaatsen',
@@ -4496,6 +4506,7 @@ $messages['ps'] = array(
  * @author Polyethylen
  * @author Rhaijin
  * @author SandroHc
+ * @author Vitorvicentevalente
  * @author Waldir
  */
 $messages['pt'] = array(
@@ -4558,7 +4569,7 @@ Crie páginas de listagem de blogues para categorias, tais como "Barack Obama" o
 	'blog-emptyparam' => 'O nome do parâmetro não pode estar em branco',
 	'blog-defaulttitle' => 'Blogues',
 	'blog-continuereading' => 'Continuar a ler &raquo;',
-	'blog-readfullpost' => 'Mais',
+	'blog-readfullpost' => 'Ler mais',
 	'blog-olderposts' => 'Entradas mais antigas',
 	'blog-newerposts' => 'Entradas mais recentes',
 	'blog-nbrcomments' => '{{PLURAL:$1|Um comentário|$1 comentários}}',
@@ -5171,6 +5182,7 @@ $messages['sr-ec'] = array(
 );
 
 /** Swedish (svenska)
+ * @author Jopparn
  * @author Lokal Profil
  * @author Tobulos1
  * @author WikiPhoenix
@@ -5284,7 +5296,7 @@ Skapa blogglistor för kategorier som "Barack Obama", "Fan Fiction", eller kombi
 	'right-blog-articles-edit' => 'Redigera bloggartiklar',
 	'right-blog-articles-move' => 'Flytta bloggartiklar',
 	'blogs-recent-url-text' => 'Senaste blogginlägg',
-	'blog-desc' => 'Bloggartiklarna',
+	'blog-desc' => 'Bloggartiklar',
 	'blog-movepage-badtitle' => 'Ogiltig titel för blogginlägget.',
 	'blog-comment-sending' => 'Skickar...',
 	'blog-by' => '$1 av $2',
@@ -6071,6 +6083,7 @@ $messages['wa'] = array(
  * @author Hydra
  * @author Hzy980512
  * @author Liangent
+ * @author Liuxinyu970226
  * @author Wilsonmess
  */
 $messages['zh-hans'] = array(
@@ -6193,6 +6206,7 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (中文（繁體）‎)
+ * @author Citizen01
  * @author Ffaarr
  * @author Liuxinyu970226
  */
@@ -6217,8 +6231,13 @@ $messages['zh-hant'] = array(
 	'create-blog-no-login' => '未登入',
 	'create-blog-login-required' => '您必須 [{{fullurl:Special:Signup|$1}} 登入]才能部落格文章或列表。',
 	'create-blog-categories-title' => '這篇文章添加到這些分類 （按一下可選擇）',
+	'create-blog-categories-textinput' => '新增分類',
+	'create-blog-categories-submit' => '送出',
 	'create-blog-save' => '儲存頁面',
 	'create-blog-preview' => '顯示預覽',
+	'create-blog-listing-preview' => '預覽',
+	'create-blog-listing-matches-calculate' => '計算',
+	'create-blog-listing-matches-recalculate' => '重新計算',
 	'create-blog-listing-sortby' => '排序依',
 	'create-blog-listing-sortby-date' => '最新',
 	'create-blog-listing-sortby-author' => '作者',
@@ -6247,7 +6266,7 @@ $messages['zh-hant'] = array(
 	'blog-voting-label' => '投票',
 	'blog-comments-dsc' => '從最近的開始',
 	'blog-comments-asc' => '最新的排最後',
-	'blog-comments-anonymous' => '匿名用戶',
+	'blog-comments-anonymous' => '匿名使用者',
 	'blog-comment-delete' => '刪除',
 	'blog-comment-hide' => '隱藏',
 	'blog-comment-unhide' => '取消隱藏',

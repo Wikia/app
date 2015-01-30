@@ -49,7 +49,8 @@ class LoginForm extends SpecialPage {
 	var $mType, $mReason, $mName, $mRealName;
 	var $mAbortLoginErrorMsg = 'login-abort-generic';
 	private $mLoaded = false;
-	var $mMarketingOptIn, $wpBirthYear, $wpBirthMonth, $wpBirthDay, $wpMsgPrefix;
+	var $mMarketingOptIn, $mRegistrationCountry;
+	var $wpBirthYear, $wpBirthMonth, $wpBirthDay, $wpMsgPrefix;
 	var $wpUserLoginExt, $wpUserBirthDay;
 
 	/**
@@ -108,6 +109,7 @@ class LoginForm extends SpecialPage {
 		$this->mRemember = $request->getCheck( 'wpRemember' );
 		$this->mStickHTTPS = $request->getCheck( 'wpStickHTTPS' );
 		$this->mMarketingOptIn = $request->getCheck( 'wpMarketingOptIn' );
+		$this->mRegistrationCountry = $request->getVal( 'wpRegistrationCountry' );
 		$this->mLanguage = $request->getText( 'uselang' );
 		$this->mSkipCookieCheck = $request->getCheck( 'wpSkipCookieCheck' );
 		$this->mToken = ( $this->mType == 'signup' ) ? $request->getVal( 'wpCreateaccountToken' ) : $request->getVal( 'wpLoginToken' );
@@ -569,7 +571,8 @@ class LoginForm extends SpecialPage {
 
 		$u->setOption( 'rememberpassword', $this->mRemember ? 1 : 0 );
 		$u->setOption( 'marketingallowed', $this->mMarketingOptIn ? 1 : 0 );
-		$u->setOption('skinoverwrite', 1);
+		$u->setOption( 'registrationCountry', $this->mRegistrationCountry );
+		$u->setOption( 'skinoverwrite', 1 );
 		$u->saveSettings();
 
 		# Update user count
@@ -1057,9 +1060,9 @@ class LoginForm extends SpecialPage {
 		}
 		/* Wikia change begin - @author: Marooned */
 		/* HTML e-mails functionality */
+		$userLanguage = $u->getOption( 'language' );
 		$priority = 2;  // Password emails are higher than default priority of 0 and confirmation emails priority of 1
 		if (empty($wgEnableRichEmails)) {
-			$userLanguage = $u->getOption( 'language' );
 			$m = $this->msg( $emailText, $ip, $u->getName(), $np, $wgServer . $wgScript,
 				round( $wgNewPasswordExpiry / 86400 ) )->inLanguage( $userLanguage )->text();
 			$result = $u->sendMail( $this->msg( $emailTitle )->inLanguage( $userLanguage )->text(), $m, null, $nr, 'TemporaryPassword', $priority );
@@ -1073,7 +1076,8 @@ class LoginForm extends SpecialPage {
 				);
 				$mHTML = strtr($emailTextTemplate, $emailParams);
 			}
-			$result = $u->sendMail( $this->msg( $emailTitle )->text(), $m, null, $nr, 'TemporaryPassword', $mHTML, $priority );
+			$result = $u->sendMail( $this->msg( $emailTitle )->inLanguage( $userLanguage )->text(), $m, null,
+				$nr, 'TemporaryPassword', $mHTML, $priority );
 		}
 
 		return $result;
