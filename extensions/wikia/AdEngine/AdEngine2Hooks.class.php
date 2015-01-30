@@ -60,6 +60,7 @@ class AdEngine2Hooks {
 	public static function onInstantGlobalsGetVariables( array &$vars )
 	{
 		$vars[] = 'wgAdDriverAlwaysCallDartInCountries';
+		$vars[] = 'wgAdDriverAlwaysCallDartInCountriesMobile';
 
 		$vars[] = 'wgAmazonMatchCountries';
 		$vars[] = 'wgAmazonMatchOldCountries';
