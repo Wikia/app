@@ -18,6 +18,7 @@ $wgGroupPermissions['autoconfirmed']['dumpsondemand'] = true;
 class DumpsOnDemand {
 
 	const BASEURL = "http://dumps.wikia.net";
+	const DEFAULT_COMPRESSION_FORMAT = '7zip';
 
     /**
      * From this moment on we use Amazon S3 storage for the dumps.

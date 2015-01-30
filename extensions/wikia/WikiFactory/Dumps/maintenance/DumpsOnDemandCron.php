@@ -65,7 +65,7 @@ class DumpsOnDemandCron extends Maintenance {
             'dumps',
             array(
                 'dump_completed' => wfTimestampNow(),
-                'dump_compression' => '7zip' // keep in sync with compression format in runBackups.php
+                'dump_compression' => DumpsOnDemand::DEFAULT_COMPRESSION_FORMAT,
             ),
             array(
                 'dump_wiki_id' => $sWikiaId,

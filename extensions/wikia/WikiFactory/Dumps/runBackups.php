@@ -137,7 +137,7 @@ function runBackups( $from, $to, $full, $options ) {
 				"--xml",
 				"--quiet",
 				"--server=$server",
-				"--output=7zip:{$path}" // keep in sync with compression format in DumpsOnDemandCron.php
+				"--output=".DumpsOnDemand::DEFAULT_COMPRESSION_FORMAT.":{$path}"
 			);
 			wfShellExec( implode( " ", $cmd ), $status );
 			$time = Wikia::timeDuration( wfTime() - $time );
@@ -161,7 +161,7 @@ function runBackups( $from, $to, $full, $options ) {
 				"--xml",
 				"--quiet",
 				"--server=$server",
-				"--output=7zip:{$path}" // keep in sync with compression format in DumpsOnDemandCron.php
+				"--output=".DumpsOnDemand::DEFAULT_COMPRESSION_FORMAT.":{$path}"
 			);
 			wfShellExec( implode( " ", $cmd ), $status );
 			$time = Wikia::timeDuration( wfTime() - $time );
