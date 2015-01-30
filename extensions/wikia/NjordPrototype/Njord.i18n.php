@@ -7,6 +7,8 @@ $messages['en'] = array(
 	'hero-image-update-image' => 'click to update an image',
 	'hero-image-dd-image' => 'or drag and drop here',
 	'hero-image-position-image' => 'drag to reposition this image',
+	'hero-image-delete-btn' => 'Delete',
+	'hero-image-edit-btn' => 'Edit',
 	'hero-image-discard-btn' => 'Discard',
 	'hero-image-publish-btn' => 'Publish',
 	'hero-image-default-title' => 'Your wikia\'s name',
@@ -23,6 +25,10 @@ $messages['qqq'] = array(
 	'hero-image-update-image' => 'Call to action message link displayed when hero image is set, after click will open upload image window. Hero image is a part of main page above the textual content, representing the topic of the wiki.',
 	'hero-image-dd-image' => 'Information message displayed on hero image module about drag & drop function being enabled. Hero image is a part of main page above the textual content, representing the topic of the wiki.',
 	'hero-image-position-image' => 'Call to action message, displayed on hero image module after image upload is completed and reposition is enabled. Hero image is a part of main page above the textual content, representing the topic of the wiki.',
+	'hero-image-delete-btn' => 'vHero image module delete button label. Hero image is a part of main page above the
+	textual content, representing the topic of the wiki.',
+	'hero-image-edit-btn' => 'Hero image module edit button label. Hero image is a part of main page above the
+	textual content, representing the topic of the wiki.',
 	'hero-image-discard-btn' => 'Hero image module discard button label. Hero image is a part of main page above the textual content, representing the topic of the wiki.',
 	'hero-image-publish-btn' => 'Hero image module publish button label. Hero image is a part of main page above the textual content, representing the topic of the wiki.',
 	'hero-image-default-title' => 'Hero image module default main title, displayed when title not provided. Hero image is a part of main page above the textual content, representing the topic of the wiki.',

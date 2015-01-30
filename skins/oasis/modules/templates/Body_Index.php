@@ -24,23 +24,25 @@
 	<div class="WikiaPageContentWrapper">
 		<?= $app->renderView( 'Notifications', 'Confirmation' ) ?>
 		<?php
-		if ( !empty( $wg->EnableNjordExt ) && WikiaPageType::isMainPage() ) {
-			echo $app->renderView( 'Njord', 'Index' );
-		}
-		?>
-		<?php
+			$runNjord = ( !empty( $wg->EnableNjordExt ) && WikiaPageType::isMainPage() );
+
+			if ( $runNjord ) {
+				echo $app->renderView( 'Njord', 'Index' );
+
+			}
+
 			if ( empty( $wg->SuppressWikiHeader ) ) {
-				if ( empty( $wg->EnableLocalNavExt ) ) {
-					echo $app->renderView( 'WikiHeader', 'Index' );
-				} else {
+				if ( !empty( $wg->EnableLocalNavExt ) || $runNjord ) {
 					echo $app->renderView( 'LocalNavigation', 'Index' );
+				} else {
+					echo $app->renderView( 'WikiHeader', 'Index' );
 				}
 			}
 		?>
 		<?php
-		if ( !empty( $wg->EnableNjordExt ) && WikiaPageType::isMainPage() ) {
-			echo $app->renderView( 'Njord', 'Summary' );
-		}
+			if ( $runNjord ) {
+				echo $app->renderView( 'Njord', 'Summary' );
+			}
 		?>
 		<?php
 			if ( !empty( $wg->EnableWikiAnswers ) ) {
