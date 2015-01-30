@@ -136,14 +136,6 @@
 		overflow: hidden;
 	}
 
-	.WikiaArticle & {
-		padding-right: 330px;
-
-		@media screen and (max-width: $breakpoint-small) {
-			padding-right: 30px;
-		}
-	}
-
 	.title-wrap {
 		margin: 40px 0 30px 30px;
 		text-align: left;
@@ -197,12 +189,6 @@
 	}
 	.edit-btn {
 		cursor: pointer;
-	}
-
-	.hero-description {
-		margin: 30px 30px 60px;
-		word-wrap: break-word;
-
 	}
 
 	.hero-description-text {
@@ -433,5 +419,16 @@
 
 	.local-navigation {
 		border-bottom: none;
+	}
+}
+
+.WikiaArticle {
+	.hero-description {
+		margin: 30px 330px 60px 30px;
+		word-wrap: break-word;
+
+		@media screen and (max-width: $breakpoint-small) {
+			margin-right: 30px;
+		}
 	}
 }
