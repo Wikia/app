@@ -48,6 +48,9 @@ $wgResourceModules += array(
 			've/ve.track.js',
 
 			// ui
+			've/ui/ve.ui.WikiaCommandRegistry.js',
+			've/ui/dialogs/ve.ui.WikiaSourceModeDialog.js',
+			've/ui/tools/ve.ui.WikiaDialogTool.js',
 			've/ui/widgets/ve.ui.WikiaFocusWidget.js',
 		),
 		'messages' => array(

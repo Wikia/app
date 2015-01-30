@@ -875,7 +875,7 @@ ve.init.mw.ViewPageTarget.prototype.onToolbarMetaButtonClick = function () {
 ve.init.mw.ViewPageTarget.prototype.updateToolbarSaveButtonState = function () {
 	var isDisabled;
 
-	this.edited = this.getSurface().getModel().hasBeenModified();
+	this.edited = this.getSurface().getModel().hasBeenModified() || this.wikitext !== null;
 	// Disable the save button if we have no history or if the sanity check is not finished
 	isDisabled = ( !this.edited && !this.restoring ) || !this.sanityCheckFinished;
 	this.toolbarSaveButton.setDisabled( isDisabled );
@@ -1059,13 +1059,14 @@ ve.init.mw.ViewPageTarget.prototype.getSaveOptions = function () {
  * Switch to viewing mode.
  *
  * @method
+ * @param {boolean} [noAnimate] Don't animate toolbar teardown
  * @return {jQuery.Promise} Promise resolved when surface is torn down
  */
-ve.init.mw.ViewPageTarget.prototype.tearDownSurface = function () {
+ve.init.mw.ViewPageTarget.prototype.tearDownSurface = function ( noAnimate ) {
 	var promises = [];
 
 	// Update UI
-	this.tearDownToolbar();
+	this.tearDownToolbar( noAnimate );
 	this.tearDownDebugBar();
 	this.restoreDocumentTitle();
 	if ( this.getSurface().mwTocWidget ) {
@@ -1347,12 +1348,19 @@ ve.init.mw.ViewPageTarget.prototype.hideReadOnlyContent = function () {
  * Hide the toolbar.
  *
  * @method
+ * @param {boolean} [noAnimate] Don't animate
  */
-ve.init.mw.ViewPageTarget.prototype.tearDownToolbar = function () {
-	this.toolbar.$bar.slideUp( 'fast', function () {
+ve.init.mw.ViewPageTarget.prototype.tearDownToolbar = function ( noAnimate ) {
+	var tearDownToolbar = function () {
 		this.toolbar.destroy();
 		this.toolbar = null;
-	}.bind( this ) );
+	}.bind( this );
+
+	if ( noAnimate ) {
+		tearDownToolbar();
+	} else {
+		this.toolbar.$bar.slideUp( 'fast', tearDownToolbar );
+	}
 };
 
 /**
