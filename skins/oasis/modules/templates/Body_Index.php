@@ -33,10 +33,6 @@
 					echo $app->renderView( 'WikiHeader', 'Index' );
 				}
 			}
-
-			if ( $runNjord ) {
-				echo $app->renderView('Njord', 'Summary');
-			}
 		?>
 		<?php
 			if ( !empty( $wg->EnableWikiAnswers ) ) {
@@ -112,7 +108,11 @@
 						}
 					?>
 					</div>
-
+					<?php
+					if ( $runNjord ) {
+						echo $app->renderView( 'Njord', 'Summary' );
+					}
+					?>
 					<?php
 					// for InfoBox-Testing
 					if ( $wg->EnableInfoBoxTest ) {
