@@ -6,17 +6,22 @@
 @import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/Venus/styles/typographyMixins';
 
-$header-bg-color: #092140;
+$black-half-transparent: rgba(0, 0, 0, .6);
+$black-transparent: rgba(0, 0, 0, 0);
 $border-color: #c7d1d8;
-$wiki-header-color: #2b54b5;
-$wiki-header-bg-color: rgba(113, 133, 148, .2);
+$header-bg-color: #092140;
+$markasread-bg-color: rgb(9, 35, 68);
+$markasread-color: #fff;
+$notification-bubble-color: rgb(196, 206, 217);
 $notification-hover: rgba(164, 182, 191, .2);
+$notifications-divider-color: rgb(197, 206, 217);
+$notifications-header-bg-color: rgb(230, 235, 242);
+$notifications-header-color: rgb(57, 66, 77);
+$time-color: rgba($notifications-header-color, .5);
 $white-transparent: rgba(255, 255, 255, 0);
 $white: #fff;
-$black-transparent: rgba(0, 0, 0, 0);
-$black-half-transparent: rgba(0, 0, 0, .6);
-$notification-bubble-color: rgb(196, 206, 217);
-
+$wiki-header-bg-color: rgba(113, 133, 148, .2);
+$wiki-header-color: #2b54b5;
 
 .bubbles {
 	background-color: $notification-bubble-color;
@@ -65,10 +70,9 @@ $notification-bubble-color: rgb(196, 206, 217);
 	overflow: hidden;
 	padding: 0;
 	position: absolute;
+	top: -1px;
 
 	#notificationsContainer {
-		@include grid-column-width('medium', 4, $medium-content-padding + 18);
-
 		overflow: auto;
 
 		&::-webkit-scrollbar {
@@ -112,8 +116,7 @@ $notification-bubble-color: rgb(196, 206, 217);
 	header {
 		font-weight: bold;
 		height: auto;
-		min-height: 51px;
-		padding: 15px 20px 0;
+		padding: 12px 20px;
 	}
 
 	ul {
@@ -126,29 +129,18 @@ $notification-bubble-color: rgb(196, 206, 217);
 
 	.notifications-header {
 		@include clearfix;
-		background-color: $header-bg-color;
-		color: $border-color;
+		background-color: $notifications-header-bg-color;
+		color: $notifications-header-color;
 	}
 
 	.notifications-markasread {
 		@include font-size-xxs;
-		float: right;
 		font-weight: normal;
-		text-align: right;
-
-		span {
-			cursor: pointer;
-			margin-left: 10px;
-		}
-
-		div {
-			display: none;
-			margin: 10px 0;
-		}
-
-		&.show div {
-			display: block;
-		}
+		text-align: center;
+		background-color: $markasread-bg-color;
+		border-top: 1px solid $notifications-divider-color;
+		color: $markasread-color;
+		cursor: pointer;
 	}
 
 	.notifications-for-wiki {
@@ -177,14 +169,14 @@ $notification-bubble-color: rgb(196, 206, 217);
 		}
 
 		.notifications-wiki-header {
-			background-color: $wiki-header-bg-color;
-			border-top: 1px solid $border-color;
-			color: $wiki-header-color;
+			background-color: $notifications-header-bg-color;
+			border-top: 1px solid $notifications-divider-color;
+			color: $notifications-header-color;
 			cursor: pointer;
 			padding-right: 38px;
 
 			&:hover .chevron {
-				border-top-color: $wiki-header-color;
+				color: $notifications-header-color;
 			}
 		}
 
@@ -199,15 +191,16 @@ $notification-bubble-color: rgb(196, 206, 217);
 	}
 
 	.notification {
-		border-top: 1px solid $border-color;
-		line-height: 22px;
-		padding: 20px 0;
+		@include font-size-xxs;
+		border-top: 1px solid $notifications-divider-color;
+		line-height: 20px;
+		padding: 12px 0;
 		position: relative;
 
 		.notification-message {
-			@include grid-column-width('medium', 3);
-
-			display: inline-block;
+			padding-left: 70px;
+			padding-right: 20px;
+			white-space: initial;
 
 			p {
 				margin: 0;
@@ -215,11 +208,13 @@ $notification-bubble-color: rgb(196, 206, 217);
 		}
 
 		.avatars {
-			@include grid-column-width('medium', 1);
-
 			display: inline-block;
+			left: 20px;
+			position: absolute;
 			text-align: center;
+			top: 12px;
 			vertical-align: top;
+			width: 40px;
 
 			.avatar {
 				border-radius: 50%;
@@ -227,14 +222,14 @@ $notification-bubble-color: rgb(196, 206, 217);
 		}
 
 		h4 {
-			@include font-size-s;
+			@include font-size-xs;
 			font-weight: bold;
 			margin: 0;
 		}
 
 		time {
 			@include font-size-xxs;
-			color: $border-color;
+			color: $time-color;
 		}
 
 		&.empty, &.admin-notification {
@@ -283,20 +278,6 @@ $notification-bubble-color: rgb(196, 206, 217);
 	#GlobalNavigationWallNotifications {
 		@include grid-position('small', 3, 'right', $small-content-padding - 2);
 		@include grid-column-width('small', 6, $small-content-padding);
-
-		#notificationsContainer {
-			@include grid-column-width('small', 6, $small-content-padding + 18);
-		}
-
-		.notification {
-			.avatars {
-				@include grid-column-width('small', 1);
-			}
-
-			.notification-message {
-				@include grid-column-width('small', 5);
-			}
-		}
 	}
 }
 
@@ -306,19 +287,5 @@ $notification-bubble-color: rgb(196, 206, 217);
 	#GlobalNavigationWallNotifications {
 		@include grid-position('large', 2, 'right', $large-content-padding - 2);
 		@include grid-column-width('large', 4, $large-content-padding);
-
-		#notificationsContainer {
-			@include grid-column-width('large', 4, $large-content-padding + 18);
-		}
-
-		.notification {
-			.avatars {
-				@include grid-column-width('large', 1);
-			}
-
-			.notification-message {
-				@include grid-column-width('large', 3);
-			}
-		}
 	}
 }

@@ -70,7 +70,7 @@
 
 	.user-menu {
 		@include grid-column-width('medium', 2, $medium-content-padding);
-		@include font-size-s;
+		@include font-size-xs;
 		border: 1px solid $nav-border-color;
 		display: none;
 		padding: 0;
@@ -80,7 +80,7 @@
 
 		> li {
 			display: table-row;
-			height: 51px;
+			height: 40px;
 			list-style: none;
 
 			> a {
@@ -92,7 +92,7 @@
 				text-decoration: none;
 				vertical-align: middle;
 				width: 100%;
-				word-break: break-word;
+				white-space: initial;
 
 				&:hover {
 					background-color: $nav-foreground-bright-color;
