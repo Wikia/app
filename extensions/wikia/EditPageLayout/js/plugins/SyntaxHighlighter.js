@@ -365,7 +365,7 @@ define('WikiTextSyntaxHighlighter', function() {
 				var fragment = document.createDocumentFragment();
 				do
 				{
-					fragment.appendChild(document.createElement("span")).id = "s" + ++maxSpanNumber;
+					fragment.appendChild(document.createElement("span")).id = "s" + (++maxSpanNumber);
 				}
 				while (maxSpanNumber < spanNumber)
 				wpTextbox0.appendChild(fragment);
