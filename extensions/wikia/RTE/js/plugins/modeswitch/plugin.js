@@ -35,6 +35,7 @@ CKEDITOR.plugins.add('rte-modeswitch',
 		editor.on('dataReady', $.proxy(this.dataReady, this));
 		editor.on('wysiwygModeReady', $.proxy(this.wysiwygModeReady, this));
 		editor.on('sourceModeReady', $.proxy(this.sourceModeReady, this));
+		editor.on('sourceModeReady', $.proxy(this.sourceModeReadyInitSyntaxHighlighting, this));
 	},
 
 	modeSwitch: function(ev) {
@@ -164,6 +165,12 @@ CKEDITOR.plugins.add('rte-modeswitch',
 
 	sourceModeReady: function(ev) {
 		RTE.log('sourceModeReady');
+	},
+
+	sourceModeReadyInitSyntaxHighlighting: function(ev) {
+		require(['WikiTextSyntaxHighlighter'],function(WikiTextSyntaxHighlighter){
+			WikiTextSyntaxHighlighter.init(ev.editor.textarea);
+		});
 	},
 
 	updateModeInfo: function(ev) {

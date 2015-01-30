@@ -93,10 +93,6 @@ CKEDITOR.plugins.add( 'sourcearea',
 									editor.focusManager.focus();
 								});
 
-							require(['WikiTextSyntaxHighlighter'],function(WikiTextSyntaxHighlighter){
-								var temp = WikiTextSyntaxHighlighter.init(textarea);
-							});
-
 							// The editor data "may be dirty" after this point.
 							editor.mayBeDirty = true;
 
