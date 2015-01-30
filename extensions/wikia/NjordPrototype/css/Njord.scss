@@ -1,5 +1,6 @@
 @import "skins/shared/color";
 @import "skins/shared/mixins/gradient";
+@import "skins/oasis/css/core/responsive-variables";
 
 .MainPageHero {
 	background-color: $color-buttons;
@@ -188,12 +189,6 @@
 	}
 	.edit-btn {
 		cursor: pointer;
-	}
-
-	.hero-description {
-		margin: 30px 30px 60px;
-		word-wrap: break-word;
-
 	}
 
 	.hero-description-text {
@@ -401,6 +396,17 @@
 		}
 		.hero-description-default-text {
 			display: inline-block;
+		}
+	}
+}
+
+.WikiaArticle {
+	.hero-description {
+		margin: 30px 330px 60px 30px;
+		word-wrap: break-word;
+
+		@media screen and (max-width: $breakpoint-small) {
+			margin-right: 30px;
 		}
 	}
 }

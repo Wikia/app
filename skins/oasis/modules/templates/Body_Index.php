@@ -40,11 +40,6 @@
 			}
 		?>
 		<?php
-			if ( $runNjord ) {
-				echo $app->renderView( 'Njord', 'Summary' );
-			}
-		?>
-		<?php
 			if ( !empty( $wg->EnableWikiAnswers ) ) {
 				echo $app->renderView( 'WikiAnswers', 'QuestionBox' );
 			}
@@ -123,7 +118,11 @@
 
 					?>
 					</div>
-
+					<?php
+					if ( $runNjord ) {
+						echo $app->renderView( 'Njord', 'Summary' );
+					}
+					?>
 					<?php
 					// for InfoBox-Testing
 					if ( $wg->EnableInfoBoxTest ) {
