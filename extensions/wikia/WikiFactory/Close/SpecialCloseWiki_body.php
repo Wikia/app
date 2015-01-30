@@ -29,6 +29,7 @@ class CloseWikiPage extends SpecialPage {
 		$mTmpl,
 		$mStep      	= 1,
 		$mAction,
+		$mReason,
 		$mErrors    	= array(),
 		$mRedirects 	= array(),
 		$mRedirect		= "",
@@ -400,9 +401,11 @@ class CloseWikiPage extends SpecialPage {
 
 		if ( !($this->closedWiki->city_flags & WikiFactory::FLAG_HIDE_DB_IMAGES)
 				&& $this->closedWiki->city_lastdump_timestamp >= DumpsOnDemand::S3_MIGRATION ) {
+			$dumpInfo = DumpsOnDemand::getLatestDumpInfo($this->closedWiki->city_id);
+			$extension = DumpsOnDemand::getExtensionFromCompression($dumpInfo?$dumpInfo['compression']:false);
 			$aFiles = array(
-				'pages_current'	=> '_pages_current.xml.7z',
-				'pages_full'	=> '_pages_full.xml.7z',
+				'pages_current'	=> "_pages_current.xml{$extension}",
+				'pages_full'	=> "_pages_full.xml{$extension}",
 			);
 
 			foreach ( $aFiles as $sKey => $sValue ) {

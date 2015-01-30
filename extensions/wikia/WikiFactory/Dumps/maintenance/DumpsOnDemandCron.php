@@ -63,13 +63,18 @@ class DumpsOnDemandCron extends Maintenance {
 
         $oDB->update(
             'dumps',
-            array( 'dump_completed' => wfTimestampNow() ),
+            array(
+                'dump_completed' => wfTimestampNow(),
+                'dump_compression' => '7zip' // keep in sync with compression format in runBackups.php
+            ),
             array(
                 'dump_wiki_id' => $sWikiaId,
                 'dump_completed IS NULL'
             ),
             __METHOD__
         );
+
+        DumpsOnDemand::purgeLatestDumpInfo(intval($sWikiaId));
 
         $this->output( "Done.\n" );
         unlink( self::PIDFILE );

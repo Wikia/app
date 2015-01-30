@@ -1,6 +1,6 @@
 <?php
 /**
- * simple hook for displaying additional informations in Special:Statistics
+ * Simple hook for displaying additional information in Special:Statistics
  * 
  * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
  * @author Michał ‘Mix’ Roszka <mix@wikia-inc.com>
@@ -48,7 +48,9 @@ class DumpsOnDemand {
 		$tmpl->set( "title", $wgTitle );
 		$tmpl->set( "isAnon", $wgUser->isAnon() );
 
-		$sTimestamp = self::getLatestDumpTimestamp( $wgCityId );
+		$dumpInfo = self::getLatestDumpInfo( $wgCityId );
+		$sTimestamp = $dumpInfo ? $dumpInfo['timestamp'] : false;
+		$sDumpExtension = self::getExtensionFromCompression($dumpInfo ? $dumpInfo['compression'] : false);
 		$tmpl->set( 'nolink', false);
 		if ( empty( $sTimestamp ) ) {
 			$sTimestamp = wfMessage( 'dump-database-last-unknown' )->escaped();
@@ -56,12 +58,12 @@ class DumpsOnDemand {
 		}
 
 		$tmpl->set( "curr", array(
-			"url" => 'http://s3.amazonaws.com/wikia_xml_dumps/' . self::getPath( "{$wgDBname}_pages_current.xml.7z" ),
+			"url" => 'http://s3.amazonaws.com/wikia_xml_dumps/' . self::getPath( "{$wgDBname}_pages_current.xml{$sDumpExtension}" ),
 			"timestamp" => $sTimestamp
 		));
 
 		$tmpl->set( "full", array(
-			"url" => 'http://s3.amazonaws.com/wikia_xml_dumps/' . self::getPath( "{$wgDBname}_pages_full.xml.7z" ),
+			"url" => 'http://s3.amazonaws.com/wikia_xml_dumps/' . self::getPath( "{$wgDBname}_pages_full.xml{$sDumpExtension}" ),
 			"timestamp" => $sTimestamp
 		));
 
@@ -103,15 +105,15 @@ class DumpsOnDemand {
 		);
 	}
         
-        /**
-         * @static
-         * @access public
-         * @deprecated
-         */
-        static public function sendMail( $sDbName = null, $iCityId = null, $bHidden = false, $bClose = false ) {
-            trigger_error( sprintf( 'Using of deprecated method %s.', __METHOD__ ) , E_USER_WARNING );
-            self::queueDump( $iCityId, $bHidden, $bClose );
-        }
+	/**
+	 * @static
+	 * @access public
+	 * @deprecated
+	 */
+	static public function sendMail( $sDbName = null, $iCityId = null, $bHidden = false, $bClose = false ) {
+		trigger_error( sprintf( 'Using of deprecated method %s.', __METHOD__ ) , E_USER_WARNING );
+		self::queueDump( $iCityId, $bHidden, $bClose );
+	}
 
 	/**
 	 * @static
@@ -208,17 +210,25 @@ class DumpsOnDemand {
 	}
 
 	/**
-	 * Gets the timestamp of the latest dump.
+	 * Get the timestamp and compression format of the latest completed dump for given wikia.
+	 *
+	 * Returns false or an associative array with "timestamp" and "compression" keys.
+	 *
+	 * @param $iWikiaId int Wikia ID
+	 * @return array|bool Latest dump info or false
 	 */
-	static public function getLatestDumpTimestamp( $iWikiaId ) {
+	static public function getLatestDumpInfo( $iWikiaId ) {
 		global $wgMemc;
-		$sKey = wfSharedMemcKey( $iWikiaId, 'latest_dump_timestamp' );
-		$sTimestamp = $wgMemc->get( $sKey );
-		if ( !$sTimestamp ) {
+		$sKey = wfSharedMemcKey( $iWikiaId, 'latest_dump_info' );
+		$dumpInfo = $wgMemc->get( $sKey );
+		if ( !$dumpInfo ) {
 			$oDB = wfGetDB( DB_SLAVE, array(), 'wikicities' );
-			$sTimestamp = (string) $oDB->selectField(
+			$row = $oDB->selectRow(
 				'dumps',
-				'dump_completed',
+				array(
+					'dump_completed',
+					'dump_compression'
+				),
 				array(
 					'dump_completed IS NOT NULL',
 					'dump_wiki_id' => $iWikiaId
@@ -229,10 +239,40 @@ class DumpsOnDemand {
 					'LIMIT' => 1
 				)
 			);
-			if ( $sTimestamp ) {
-				$wgMemc->set( $sKey, $sTimestamp, 7*24*60*60 ); // a week
+			if ( $row ) {
+				$dumpInfo = array(
+					'timestamp' => $row->dump_completed,
+					'compression' => $row->dump_compression,
+				);
+			}
+			if ( $dumpInfo ) {
+				$wgMemc->set( $sKey, $dumpInfo, 7*24*60*60 ); // a week
 			}
 		}
-		return $sTimestamp;
+		return $dumpInfo;
+	}
+
+	/**
+	 * Purge information about latest dump for a given wikia.
+	 *
+	 * @param $iWikiaId int Wikia ID
+	 */
+	static public function purgeLatestDumpInfo( $iWikiaId ) {
+		global $wgMemc;
+		$sKey = wfSharedMemcKey( $iWikiaId, 'latest_dump_info' );
+		$wgMemc->delete($sKey);
+	}
+
+	/**
+	 * Get file extension from compression format.
+	 *
+	 * @param $compression string Compression format (should be one of "gzip" or "7zip")
+	 * @return string File extension (including dot)
+	 */
+	static public function getExtensionFromCompression( $compression ) {
+		if ( $compression == 'gzip' ) { # old compression format
+			return '.gz';
+		}
+		return '.7z';
 	}
 }
