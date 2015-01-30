@@ -40,7 +40,7 @@ $search-input-text-color: rgba(101, 110, 120, 0.75);
 			height: $autocomplete-item-height;
 			line-height: 23px;
 			padding: 8px 10px;
-			white-space: initial;
+			white-space: normal;
 		}
 
 		.selected {
