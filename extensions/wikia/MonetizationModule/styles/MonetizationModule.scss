@@ -300,12 +300,13 @@
 		box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
 		float: left;
 		height: 180px;
-		min-width: 256px;
 		text-align: center;
+		width: 256px;
 
 		img {
 			border: 0;
 			height: 180px;
+			max-width: 256px;
 		}
 	}
 
@@ -404,6 +405,7 @@
 			border: 0;
 			max-height: 132px;
 			max-width: 160px;
+			min-height: 110px;
 		}
 	}
 
