@@ -2503,21 +2503,23 @@ OO.ui.Dialog.prototype.initialize = function () {
 
 	// Properties
 	this.title = new OO.ui.LabelWidget( { $: this.$ } );
-	this.closeButton = new OO.ui.ButtonWidget( {
-		'$': this.$,
-		'framed': false,
-		'icon': 'close',
-		'title': OO.ui.msg( 'ooui-dialog-action-close' )
-	} );
 
-	// Events
-	this.closeButton.connect( this, { 'click': 'onCloseButtonClick' } );
+	if ( this instanceof OO.ui.ProcessDialog ) {
+		this.closeButton = new OO.ui.ButtonWidget( {
+			'$': this.$,
+			'framed': false,
+			'icon': 'close',
+			'title': OO.ui.msg( 'ooui-dialog-action-close' )
+		} );
+		this.closeButton.connect( this, { 'click': 'onCloseButtonClick' } );
+		this.closeButton.$element
+			.addClass( 'oo-ui-window-closeButton' )
+			.appendTo( this.$head );
+	}
 
 	// Initialization
 	this.$content.addClass( 'oo-ui-dialog-content' );
 	this.setPendingElement( this.$head );
-	this.closeButton.$element.addClass( 'oo-ui-window-closeButton' );
-	this.$head.append( this.closeButton.$element );
 };
 
 /**
