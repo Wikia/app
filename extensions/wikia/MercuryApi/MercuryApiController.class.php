@@ -2,6 +2,7 @@
 
 class MercuryApiController extends WikiaController {
 
+	const PARAM_URI = 'uri';
 	const PARAM_ARTICLE_ID = 'id';
 	const PARAM_PAGE = 'page';
 	const PARAM_ARTICLE_TITLE = 'title';
@@ -165,6 +166,55 @@ class MercuryApiController extends WikiaController {
 		}
 
 		return $title;
+	}
+
+	/**
+	 * @desc Returns resource type for URI
+	 *
+	 * @throws BadRequestApiException
+	 */
+	public function getResourceType() {
+		$uri = $this->request->getVal( self::PARAM_URI, NULL );
+		if ( empty( $uri ) ) {
+			throw new BadRequestApiException( 'You need to pass resource URI' );
+		}
+
+		// TODO Should we encode $uriWithoutPrefix?
+		// Should it be encoded by client?
+
+		if ( !empty( $this->wg->ArticlePath ) ) {
+			$uriPrefix = str_replace( '$1', '', $this->wg->ArticlePath );
+		} else {
+			$uriPrefix = '/wiki/';
+		}
+		$uriPrefixLength = strlen( $uriPrefix );
+
+		// Cut everything <= $urlPrefixLength
+		if ( $uriPrefix === substr( $uri, 0, strlen( $uriPrefix ) ) ) {
+			$uriWithoutPrefix = substr( $uri, $uriPrefixLength );
+		} else if ( substr( $uri, 0, 1 ) === '/' ) {
+			$uriWithoutPrefix = substr( $uri, 1 );
+		} else {
+			$uriWithoutPrefix = $uri;
+		}
+
+		// TODO Should we do this?
+		// Cut everything >= '?'
+		$queryPosition = strpos( $uriWithoutPrefix, '?' );
+		if ( $queryPosition !== false ) {
+			$uriWithoutQuery = substr( $uriWithoutPrefix, 0, $queryPosition );
+		} else {
+			$uriWithoutQuery = $uriWithoutPrefix;
+		}
+
+		// TODO Title::newFromText caches titles with CACHE_MAX = 1000
+		// Is it good for us?
+		$title = Title::newFromText( $uriWithoutQuery, NS_MAIN );
+
+		// TODO What exactly do we need? Is the namespace enough?
+		// Right now it returns all values of Title object.
+		$this->response->setVal( 'title', $title );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 
 	/**
