@@ -133,24 +133,24 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 				$signupForm = new UserLoginForm( $this->wg->request );
 
 				if ( $signupForm->isAllowedRegisterUnconfirmed() ) {
-					$u = User::newFromName( $this->username );
+					$user = User::newFromName( $this->username );
 					// Get and clear redirect page
-					$userSignupRedirect = $u->getOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME );
-					$u->setOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, null );
+					$userSignupRedirect = $user->getOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME );
+					$user->setOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, null );
 
-					$u->saveSettings();
+					$user->saveSettings();
 
 					// redirect user
 					if ( !empty( $userSignupRedirect ) ) {
 						// Redirect user to the point where he finished (when signup on create wiki)
-						$titleObj = SpecialPage::getTitleFor( 'CreateNewWiki' );
+						$title = SpecialPage::getTitleFor( 'CreateNewWiki' );
 						$query = $userSignupRedirect;
 					} else {
-						$titleObj = $u->getUserPage();
+						$title = $user->getUserPage();
 						$query = '';
 					}
 
-					$redirectUrl = $titleObj->getFullURL( $query );
+					$redirectUrl = $title->getFullURL( $query );
 				} else {
 				/*
 				 * end remove
