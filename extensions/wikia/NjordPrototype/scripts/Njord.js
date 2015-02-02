@@ -222,8 +222,6 @@
 			});
 		},
 		editDescription = function () {
-			//turn off title editing
-			//revertTitle();
 			States.setState($descriptionElement, 'edit-state');
 
 			//FIXME: fix onChange event, caret at end on focus
