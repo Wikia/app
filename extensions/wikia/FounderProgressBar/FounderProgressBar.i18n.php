@@ -616,6 +616,17 @@ $messages['et'] = array(
 	'founderprogressbar-uncategorized-visit-label' => 'Kategoriseerimata leheküljed',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'founderprogressbar-progress-see-full-list' => 'Ikusi zerrenda osoa',
+	'founderprogressbar-progress-hide-full-list' => 'Ezkutatu zerrenda osoa',
+	'founderprogressbar-bonus-photo-add10-label' => 'Gehitu $1 argazki gehiago',
+	'founderprogressbar-bonus-page-add5-label' => 'Gehitu {{PLURAL:$1|orrialde $1 gehiago|$1 orrialde gehiago}}',
+	'founderprogressbar-browse-page-name' => 'Arakatu',
+);
+
 /** Persian (فارسی)
  * @author Reza1615
  */

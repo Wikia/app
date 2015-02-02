@@ -150,7 +150,7 @@ class RecentChange {
 			# resetArticleID clears this memcached key when its likely we
 			# just set it earlier in this request.  BugID 42735
 			global $wgEnableFastLinkCache;
-			if (!$wgEnableFastLinkCache) {
+			if (empty($wgEnableFastLinkCache)) {
 				# Make sure the correct page ID is process cached
 				$this->mTitle->resetArticleID( $this->mAttribs['rc_cur_id'] );
 			}

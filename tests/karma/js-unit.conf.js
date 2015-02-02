@@ -64,6 +64,8 @@ module.exports = function (config) {
 
 			// Performance
 			'extensions/wikia/Bucky/js/spec/bucky.mock.js',
+			'extensions/wikia/Bucky/js/bucky_resources_timing.js',
+			'extensions/wikia/Bucky/js/spec/*.spec.js',
 
 			//UI Repo JS API
 			'resources/wikia/modules/uicomponent.js',

@@ -72,6 +72,7 @@ define('ext.wikia.adEngine.adConfig', [
 		'MODAL_INTERSTITIAL_2': true,
 		'MODAL_INTERSTITIAL_3': true,
 		'MODAL_INTERSTITIAL_4': true,
+		'MODAL_INTERSTITIAL_5': true,
 		'TEST_HOME_TOP_RIGHT_BOXAD': true,
 		'TEST_TOP_RIGHT_BOXAD': true,
 		'TOP_LEADERBOARD': true,

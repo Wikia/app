@@ -283,6 +283,13 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'No se encontró ninguna página de blog.',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'globalwatchlist-blog-page-title-comment' => '$1 ({{PLURAL:$2|iruzkin $2|$2 iruzkin}})',
+);
+
 /** Finnish (suomi)
  * @author Centerlink
  * @author Crt

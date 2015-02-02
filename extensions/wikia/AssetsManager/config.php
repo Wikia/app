@@ -129,6 +129,14 @@ $config['adengine2_bottom_leaderboard_js'] = array(
 	),
 );
 
+$config['adengine2_interstitial_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/AdEngine/js/AdSlotInterstitial.js',
+		'//extensions/wikia/AdEngine/js/AdSlotInterstitial.run.js',
+	),
+);
+
 $config['adengine2_taboola_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis', 'venus', 'wikiamobile' ],
@@ -698,6 +706,7 @@ $config['mobile_base_ads_js'] = array(
 		// Modules
 		'//resources/wikia/modules/lazyqueue.js',
 		'//extensions/wikia/AdEngine/js/MessageListener.js',
+		'//resources/wikia/modules/instantGlobals.js',
 
 		// Advertisement libs
 		'//extensions/wikia/AdEngine/js/EventDispatcher.js',
@@ -717,6 +726,15 @@ $config['mobile_base_ads_js'] = array(
 
 		// Video ads
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
+	)
+);
+
+$config['mobile_krux_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//resources/wikia/modules/scriptwriter.js',
+		'//extensions/wikia/AdEngine/js/Krux.js',
+		'//extensions/wikia/AdEngine/js/Krux.run.js',
 	)
 );
 
@@ -1986,6 +2004,7 @@ $config['bucky_js'] = array(
 	'assets' => array(
 		'//extensions/wikia/Bucky/vendor/BuckyClient/bucky.js',
 		'//extensions/wikia/Bucky/js/bucky_init.js',
+		'//extensions/wikia/Bucky/js/bucky_resources_timing.js',
 		'//extensions/wikia/Bucky/js/bucky_metrics.js',
 	)
 );

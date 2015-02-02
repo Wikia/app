@@ -547,6 +547,15 @@ class Message {
 				"Invalid message parameter: " . htmlspecialchars( serialize( $param ) ),
 				E_USER_WARNING
 			);
+
+			// Wikia change - start (@author macbre)
+			// log more details for PLATFORM-733
+			\Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
+				'exception' => new Exception( 'Invalid message parameter' ),
+				'param' => serialize( $param ),
+			]);
+			// Wikia change - end
+
 			return array( 'before', '[INVALID]' );
 		}
 	}
@@ -557,7 +566,13 @@ class Message {
 	 * @return string Wikitext parsed into HTML
 	 */
 	protected function parseText( $string ) {
-		return MessageCache::singleton()->parse( $string, $this->title, /*linestart*/true, $this->interface, $this->language )->getText();
+		// Wikia change - start
+		// MessageCache::parse can return a string (PLATFORM-807)
+		$parserOutput = MessageCache::singleton()->parse( $string, $this->title, /*linestart*/true, $this->interface, $this->language );
+		Wikia\Util\Assert::true( $parserOutput instanceof ParserOutput, 'Message::parseText: parse() did not return ParserOutput' );
+
+		return $parserOutput->getText();
+		// Wikia change - end
 	}
 
 	/**

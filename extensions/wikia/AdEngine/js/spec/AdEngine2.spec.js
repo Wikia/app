@@ -132,6 +132,39 @@ describe('AdEngine2', function () {
 		}
 	);
 
+	it('Calls AdConfig2 getProviderList canHandleSlot and then fillInSlot for slots provider in the passed array', function () {
+		var fakeProvider = {
+				name: 'FakeProvider',
+				fillInSlot: noop,
+				canHandleSlot: noop
+			},
+			adConfigMock = mockAdConfig([fakeProvider]),
+			lazyQueueMock = mockLazyQueue(function (callback) {
+				callback('slot1');
+				callback('slot2');
+			}),
+			adEngine;
+
+		spyOn(adConfigMock, 'getProviderList').and.callThrough().and.callThrough();
+		spyOn(fakeProvider, 'fillInSlot');
+		spyOn(fakeProvider, 'canHandleSlot').and.returnValue(true);
+
+		adEngine = modules['ext.wikia.adEngine.adEngine'](logMock, lazyQueueMock, slotTrackerMock, eventDispatcher, adProviderNullMock);
+		adEngine.run(adConfigMock, []);
+
+		expect(adConfigMock.getProviderList.calls.count()).toBe(2, 'adConfig.getProviderList called 2 times');
+		expect(adConfigMock.getProviderList.calls.argsFor(0)).toEqual(['slot1'], 'adConfig.getProviderList called for slot1');
+		expect(adConfigMock.getProviderList.calls.argsFor(2)).toEqual(['slot2'], 'adConfig.getProviderList called for slot2');
+
+		expect(fakeProvider.canHandleSlot.calls.count()).toBe(2, 'AdProvider*.canHandleSlot called 2 times');
+		expect(fakeProvider.canHandleSlot.calls.argsFor(0)).toEqual(['slot1'], 'AdProvider*.canHandleSlot called for slot1');
+		expect(fakeProvider.canHandleSlot.calls.argsFor(1)).toEqual(['slot2'], 'AdProvider*.canHandleSlot called for slot2');
+
+		expect(fakeProvider.fillInSlot.calls.count()).toBe(2, 'AdProvider*.fillInSlot called 2 times');
+		expect(fakeProvider.fillInSlot.calls.argsFor(0)).toEqual(['slot1', jasmine.any(Function), jasmine.any(Function)], 'AdProvider*.fillInSlot called for slot1');
+		expect(fakeProvider.fillInSlot.calls.argsFor(1)).toEqual(['slot2', jasmine.any(Function), jasmine.any(Function)], 'AdProvider*.fillInSlot called for slot2');
+	});
+
 	it('Calls AdConfig2 getProviderList canHandleSlot and not fillInSlot when canHandleSlot = false', function () {
 		var fakeProvider = {
 				name: 'FakeProvider',
@@ -140,8 +173,8 @@ describe('AdEngine2', function () {
 			},
 			adConfigMock = mockAdConfig([fakeProvider]),
 			lazyQueueMock = mockLazyQueue(function (callback) {
-				callback(['slot1']);
-				callback(['slot2', null, null, 'Provider2']); // the Provider2 should be ignored
+				callback('slot1');
+				callback('slot2');
 			}),
 			adEngine;
 

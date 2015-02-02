@@ -211,8 +211,10 @@ $messages['da'] = array(
 /** German (Deutsch)
  * @author Claudia Hattitten
  * @author LWChris
+ * @author Metalhead64
  */
 $messages['de'] = array(
+	'ajaxpoll-desc' => 'Umfrageerweiterung für MediaWiki, gesteuert durch Ajax-Anfragen',
 	'ajaxpoll-percentVotes' => '$1%&nbsp;aller Stimmen',
 	'ajaxpoll-thankyou' => 'Vielen Dank für deine Stimme!',
 	'ajaxpoll-error' => 'Es gab ein Problem bei der Verarbeitung deiner Stimme. Probiere es bitte noch einmal.',
@@ -271,8 +273,10 @@ $messages['eo'] = array(
  * @author Bola
  * @author Fitoschido
  * @author Macofe
+ * @author VegaDark
  */
 $messages['es'] = array(
+	'ajaxpoll-desc' => 'Extensión de encuestas para MediaWiki impulsada por las peticiones Ajax',
 	'ajaxpoll-percentVotes' => '$1%&nbsp; de todos los votos',
 	'ajaxpoll-thankyou' => '¡Gracias por tu voto!',
 	'ajaxpoll-error' => 'Hubo un problema al procesar tu voto, por favor, inténtalo de nuevo.',
@@ -343,10 +347,12 @@ $messages['fo'] = array(
 );
 
 /** French (français)
+ * @author Gomoko
  * @author Jean-Frédéric
  * @author Wyz
  */
 $messages['fr'] = array(
+	'ajaxpoll-desc' => 'Extension de sondage pour Médiawiki basé sur des requêtes Ajax',
 	'ajaxpoll-percentVotes' => '$1% de tous les votes',
 	'ajaxpoll-thankyou' => 'Merci pour votre vote !',
 	'ajaxpoll-error' => 'Une erreur est survenue lors du traitement de votre vote, veuillez réessayer.',
@@ -514,6 +520,7 @@ $messages['kn'] = array(
  * @author 아라
  */
 $messages['ko'] = array(
+	'ajaxpoll-desc' => 'AJAX 요청에 의해 작동하는 설문조사 확장 기능',
 	'ajaxpoll-percentVotes' => '전체 투표 중 $1%',
 	'ajaxpoll-thankyou' => '투표해 주셔서 감사합니다!',
 	'ajaxpoll-error' => '투표를 처리하는 도중 문제가 발생했습니다. 다시 시도하세요.',
@@ -632,6 +639,7 @@ $messages['mr'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'ajaxpoll-desc' => 'Sambungan tinjauan yang didorong oleh permohonan Ajax untuk MediaWiki',
 	'ajaxpoll-percentVotes' => '$1 % daripada semua undian',
 	'ajaxpoll-thankyou' => 'Terima kasih kerana mengundi!',
 	'ajaxpoll-error' => 'Ada masalah dengan pemprosesan undian anda, sila cuba lagi.',
@@ -834,6 +842,7 @@ $messages['ro'] = array(
  * @author Reder
  */
 $messages['roa-tara'] = array(
+	'ajaxpoll-desc' => "Estenzione d'u sondagge pe MediaUicchi pe le richieste de Ajax",
 	'ajaxpoll-percentVotes' => '$1%&nbsp;de totte le vote',
 	'ajaxpoll-thankyou' => "Grazzie p'u vote tue!",
 	'ajaxpoll-error' => "N'è state 'nu prubbleme cu l'elaborazione d'u vote tue, pe' piacere vote arrète",
@@ -885,6 +894,7 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'ajaxpoll-desc' => 'Omröstningstillägg för MediaWiki som drivs av Ajax-förfrågningar',
 	'ajaxpoll-percentVotes' => '$1%&nbsp;av alla röster',
 	'ajaxpoll-thankyou' => 'Tack för din röst!',
 	'ajaxpoll-error' => 'Det uppstod ett problem med bearbetningen av din röst, var god försök igen.',
@@ -1005,8 +1015,10 @@ $messages['zh'] = array(
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
  * @author Wilsonmess
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'ajaxpoll-desc' => '基于AJAX请求面向MediaWiki的投票扩展',
 	'ajaxpoll-percentVotes' => '所有投票的 $1',
 	'ajaxpoll-thankyou' => '感谢您的投票！',
 	'ajaxpoll-error' => '在处理您的投票信息时出现了问题，请再试一次。',

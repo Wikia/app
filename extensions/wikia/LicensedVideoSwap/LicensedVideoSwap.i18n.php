@@ -372,6 +372,7 @@ $messages['cs'] = array(
  * @author Metalhead64
  */
 $messages['de'] = array(
+	'licensedvideoswap-desc' => 'Lizenzierte Videotauscherweiterung',
 	'licensedvideoswap' => 'Lizenzierter Videoaustausch',
 	'action-licensedvideoswap' => 'unlizenziertes Video austauschen',
 	'lvs-page-title' => 'Finde passende lizenzierte Videos',
@@ -462,6 +463,7 @@ $messages['en-gb'] = array(
  * @author VegaDark
  */
 $messages['es'] = array(
+	'licensedvideoswap-desc' => 'Extensión de intercambio de videos autorizados',
 	'licensedvideoswap' => 'Intercambio de videos autorizados',
 	'action-licensedvideoswap' => 'intercambiar videos autorizados',
 	'lvs-page-title' => 'Intercambio de videos autorizados',
@@ -627,6 +629,7 @@ $messages['fo'] = array(
  * @author Urhixidur
  */
 $messages['fr'] = array(
+	'licensedvideoswap-desc' => 'Extension d’échange de vidéo sous licence',
 	'licensedvideoswap' => 'Bascule de vidéo sous licence',
 	'action-licensedvideoswap' => 'bascule de vidéo sans licence',
 	'lvs-page-title' => 'Bascule de vidéo sous licence',
@@ -803,6 +806,7 @@ $messages['kn'] = array(
  * @author Miri-Nae
  */
 $messages['ko'] = array(
+	'licensedvideoswap-desc' => '허가받은 동영상 대체 확장 기능',
 	'licensedvideoswap' => '허가받은 동영상 대체',
 	'lvs-page-title' => '허가받은 동영상 대체',
 	'lvs-history-page-title' => '허가받은 동영상 대체 역사',
@@ -822,6 +826,7 @@ $messages['ko'] = array(
 	'lvs-posted-in-more' => '더 보기',
 	'lvs-history-swapped' => '"$1" 동영상을 "$2" 동영상으로 대체함',
 	'lvs-history-swapped-exact' => '"$1" 동영상을 같음 이름의 동영상으로 대체함',
+	'lvs-new-flag' => '신규',
 );
 
 /** Luxembourgish (Lëtzebuergesch)
@@ -881,6 +886,7 @@ $messages['ml'] = array(
  * @author SNN95
  */
 $messages['ms'] = array(
+	'licensedvideoswap-desc' => 'Sambungan Pertukaran Video berlesen',
 	'licensedvideoswap' => 'Pertukaran Video Berlesen',
 	'action-licensedvideoswap' => 'tukarkan video tak berlesen',
 	'lvs-page-title' => 'Pertukaran Video Berlesen',
@@ -1039,6 +1045,7 @@ $messages['oc'] = array(
 );
 
 /** Polish (polski)
+ * @author Matik7
  * @author Pio387
  * @author Sovq
  */
@@ -1088,6 +1095,7 @@ $messages['pl'] = array(
 	'lvs-confirm-undo-keep-message' => 'Czy na pewno dodać film z powrotem na tą listę?',
 	'lvs-no-matching-videos' => 'Obecnie nie ma dostępnych filmów powiązanych z tym.',
 	'lvs-log-summary' => 'Wymieniono film [[{{ns:File}}:$1]] na [[{{ns:File}}:$2]]',
+	'lvs-log-description' => 'zmieniono wideo',
 	'lvs-log-restore' => 'Przywrócono wymieniony film ([[{{ns:File}}:$1]])',
 	'lvs-log-removed-redirected-link' => 'Usunięto link przekierowujący',
 	'lvs-zero-state' => 'Obecnie nie ma w Filmotece Wikii zamienników dla filmów wykorzystywanych na tej wiki. Sprawdź ponownie później!',
@@ -1560,6 +1568,7 @@ $messages['wuu'] = array(
  * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'licensedvideoswap-desc' => '已授权视频交换扩展',
 	'licensedvideoswap' => '授权视频剪辑',
 	'action-licensedvideoswap' => '交换未授权的视频',
 	'lvs-page-title' => '授权视频剪辑',
