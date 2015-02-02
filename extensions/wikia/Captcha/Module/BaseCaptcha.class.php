@@ -10,11 +10,18 @@ use Wikia\Logger\WikiaLogger;
  *
  * @package Captcha\Module
  */
-class BaseCaptcha {
+abstract class BaseCaptcha {
 
 	public $action;
 
 	public $actionDetail;
+
+	/**
+	 * Called to determine what field to look for when validating if the captcha has loaded
+	 *
+	 * @return string
+	 */
+	abstract function checkCaptchaField();
 
 	function isValid() {
 		return true;

@@ -10,6 +10,12 @@ namespace Captcha\Module;
 class FancyCaptcha extends BaseCaptcha {
 
 	const DIRECTORY_LEVELS = 0;
+	const CAPTCHA_LOADED_ID = 'wpCaptchaWord';
+	const CAPTCHA_FIELD = 'wpCaptchaWord';
+
+	public function checkCaptchaField() {
+		return self::CAPTCHA_FIELD;
+	}
 
 	/**
 	 * Check if the submitted form matches the captcha session data provided
@@ -20,7 +26,7 @@ class FancyCaptcha extends BaseCaptcha {
 	 *
 	 * @return bool
 	 */
-	function keyMatch( $answer, $info ) {
+	public function keyMatch( $answer, $info ) {
 		$wg = \F::app()->wg;
 
 		$digest = $wg->CaptchaSecret . $info['salt'] . $answer . $wg->CaptchaSecret . $info['salt'];
@@ -35,24 +41,45 @@ class FancyCaptcha extends BaseCaptcha {
 		}
 	}
 
-	function addCaptchaAPI( &$resultArr ) {
+	/**
+	 * @param array $resultArr
+	 */
+	public function addCaptchaAPI( Array &$resultArr ) {
 		$info = $this->pickImage();
 		if ( !$info ) {
 			$resultArr['captcha']['error'] = 'Out of images';
 			return;
 		}
 		$index = $this->storeCaptcha( $info );
-		$title = \SpecialPage::getTitleFor( 'Captcha', 'image' );
+
 		$resultArr['captcha']['type'] = 'image';
 		$resultArr['captcha']['mime'] = 'image/png';
 		$resultArr['captcha']['id'] = $index;
-		$resultArr['captcha']['url'] = $title->getLocalUrl( 'wpCaptchaId=' . urlencode( $index ) );
+		$resultArr['captcha']['url'] = $this->getImageURL( $index );
+	}
+
+	/**
+	 * @param int $index
+	 *
+	 * @return string
+	 */
+	public function getImageURL( $index ) {
+		return \F::app()->wg->Server . '/wikia.php?' . implode( '&', [
+			'controller=Captcha',
+			'method=showImage',
+			'wpCaptchaId=' . urlencode( $index ),
+		] );
 	}
 
 	/**
 	 * Insert the captcha prompt into the edit form.
+	 *
+	 * @param string $class
+	 *
+	 * @return string
+	 * @throws \MWException
 	 */
-	function getForm( /*Wikia change */ $class = null /*Wikia change end*/ ) {
+	public function getForm( $class = null ) {
 		$info = $this->pickImage();
 		if ( !$info ) {
 			throw new \MWException( "Ran out of captcha images" );
@@ -63,13 +90,11 @@ class FancyCaptcha extends BaseCaptcha {
 		// go through without extra pain.
 		$index = $this->storeCaptcha( $info );
 
-		wfDebug( "Captcha id $index using hash ${info['hash']}, salt ${info['salt']}.\n" );
-
-		$title = \SpecialPage::getTitleFor( 'Captcha', 'image' );
+		$this->log( "Captcha id $index using hash ${info['hash']}, salt ${info['salt']}.\n" );
 
 		return "<p>" .
 			\Xml::element( 'img', [
-				'src'    => $title->getLocalUrl( 'wpCaptchaId=' . urlencode( $index ) ),
+				'src'    => $this->getImageURL( $index ),
 				'width'  => $info['width'],
 				'height' => $info['height'],
 				'alt'    => '',
@@ -100,14 +125,20 @@ class FancyCaptcha extends BaseCaptcha {
 	 *
 	 * @return mixed tuple of (salt key, text hash) or false if no image to find
 	 */
-	function pickImage() {
+	public function pickImage() {
 		return $this->pickImageDir(
 			\F::app()->wg->CaptchaDirectory,
 			self::DIRECTORY_LEVELS
 		);
 	}
 
-	function pickImageDir( $directory, $levels ) {
+	/**
+	 * @param $directory
+	 * @param $levels
+	 *
+	 * @return array|bool
+	 */
+	public function pickImageDir( $directory, $levels ) {
 		if ( $levels ) {
 			$dirs = [];
 
@@ -140,7 +171,12 @@ class FancyCaptcha extends BaseCaptcha {
 		}
 	}
 
-	function pickImageFromDir( $directory ) {
+	/**
+	 * @param string $directory
+	 *
+	 * @return array|bool
+	 */
+	public function pickImageFromDir( $directory ) {
 		if ( !is_dir( $directory ) ) {
 			return false;
 		}
@@ -178,7 +214,7 @@ class FancyCaptcha extends BaseCaptcha {
 	 *
 	 * @return int
 	 */
-	function countFiles( $dirName ) {
+	public function countFiles( $dirName ) {
 		$dir = opendir( $dirName );
 		$count = 0;
 		while ( false !== ( $entry = readdir( $dir ) ) ) {
@@ -195,7 +231,7 @@ class FancyCaptcha extends BaseCaptcha {
 	 *
 	 * @throws \MWException
 	 */
-	function showImage() {
+	public function showImage() {
 		$wg = \F::app()->wg;
 		$error = null;
 
@@ -232,7 +268,7 @@ class FancyCaptcha extends BaseCaptcha {
 	 *
 	 * @return string
 	 */
-	function imagePath( $salt, $hash ) {
+	public function imagePath( $salt, $hash ) {
 		$file = \F::app()->wg->CaptchaDirectory;
 		$file .= DIRECTORY_SEPARATOR;
 		for ( $i = 0; $i < self::DIRECTORY_LEVELS; $i++ ) {
@@ -251,7 +287,7 @@ class FancyCaptcha extends BaseCaptcha {
 	 *
 	 * @return string
 	 */
-	function getMessage( $action ) {
+	public function getMessage( $action ) {
 		$name = 'fancycaptcha-' . $action;
 		$text = wfMsg( $name );
 		# Obtain a more tailored message, if possible, otherwise, fall back to
@@ -264,12 +300,11 @@ class FancyCaptcha extends BaseCaptcha {
 	 *
 	 * @return bool
 	 */
-	function passCaptcha() {
-
+	public function passCaptcha() {
 		$info = $this->retrieveCaptcha(); // get the captcha info before it gets deleted
 		$pass = parent::passCaptcha();
 
-		if ( $pass ) {
+		if ( $pass && \F::app()->wg->CaptchaDeleteOnSolve ) {
 			$filename = $this->imagePath( $info['salt'], $info['hash'] );
 			if ( file_exists( $filename ) ) {
 				unlink( $filename );

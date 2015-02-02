@@ -11,6 +11,11 @@ class ReCaptcha extends BaseCaptcha {
 
 	const VERIFY_URL = 'https://www.google.com/recaptcha/api/siteverify';
 	const API_URL_TEMPLATE = 'https://www.google.com/recaptcha/api.js?hl=$1';
+	const CAPTCHA_FIELD = 'g-recaptcha-response';
+
+	public function checkCaptchaField() {
+		return self::CAPTCHA_FIELD;
+	}
 
 	/**
 	 * Displays the reCAPTCHA widget.

@@ -43,6 +43,7 @@ Hit the 'back' button in your browser to return to the page editor.",
 
 	'right-skipcaptcha'          => 'Perform CAPTCHA-triggering actions without having to go through the CAPTCHA',
 	'captcha-input-placeholder'  => 'Enter text here',
+	'captcha-no-image' => 'No captcha image could be found',
 
 	// Recaptcha
 	'recaptcha-desc' => 'reCAPTCHA module for Confirm Edit',

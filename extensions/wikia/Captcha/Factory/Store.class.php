@@ -24,7 +24,7 @@ class Store {
 		$wg = \F::app()->wg;
 
 		if ( !self::$instance instanceof Captcha\Store\Base ) {
-			if ( in_array( 'CaptchaStore', class_parents( $wg->CaptchaStorageClass ) ) ) {
+			if ( in_array( 'Captcha\Store\Base', class_parents( $wg->CaptchaStorageClass ) ) ) {
 				self::$instance = new $wg->CaptchaStorageClass;
 			} else {
 				throw new \MWException( "Invalid CaptchaStore class $wg->CaptchaStorageClass" );

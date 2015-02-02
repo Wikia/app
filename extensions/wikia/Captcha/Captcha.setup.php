@@ -113,6 +113,7 @@ $wgCaptchaRegexes = [];
 $dir = dirname( __FILE__ );
 $wgExtensionMessagesFiles['Captcha'] = "$dir/Captcha.i18n.php";
 
+// Captcha Hooks
 $wgHooks['EditFilterMerged'][] = 'Captcha\Hooks::confirmEditMerged';
 $wgHooks['UserCreateForm'][] = 'Captcha\Hooks::injectUserCreate';
 $wgHooks['AbortNewAccount'][] = 'Captcha\Hooks::confirmUserCreate';
@@ -122,10 +123,13 @@ $wgHooks['UserLoginForm'][] = 'Captcha\Hooks::injectUserLogin';
 $wgHooks['EmailUserForm'][] = 'Captcha\Hooks::injectEmailUser';
 $wgHooks['EmailUser'][] = 'Captcha\Hooks::confirmEmailUser';
 
-# Register API hook
+// Register API hook
 $wgHooks['APIEditBeforeSave'][] = 'Captcha\Hooks::confirmEditAPI';
 $wgHooks['APIGetAllowedParams'][] = 'Captcha\Hooks::APIGetAllowedParams';
 $wgHooks['APIGetParamDescription'][] = 'Captcha\Hooks::APIGetParamDescription';
+
+// General hooks
+$wgHooks['MakeGlobalVariablesScript'][] = 'Captcha\Hooks::onMakeGlobalVariablesScript';
 
 /**
  * Autoload classes
@@ -138,6 +142,7 @@ $wgAutoloadClasses['Captcha\Factory\Store'] = "$dir/Factory/Store.class.php";
 // Load captcha modules
 $wgAutoloadClasses['Captcha\Module\BaseCaptcha'] = "$dir/Module/BaseCaptcha.class.php";
 $wgAutoloadClasses['Captcha\Module\ReCaptcha'] = "$dir/Module/ReCaptcha.class.php";
+$wgAutoloadClasses['Captcha\Module\FancyCaptcha'] = "$dir/Module/FancyCaptcha.class.php";
 
 // Load storage modules
 $wgAutoloadClasses['Captcha\Store\Base'] = "$dir/Store/Base.class.php";
@@ -150,7 +155,8 @@ $wgAutoloadClasses['CaptchaController'] = "$dir/CaptchaController.class.php";
 $wgAutoloadClasses['Captcha\Hooks'] = "$dir/CaptchaHooks.class.php";
 
 $wgCaptchaPrecedence = [
-	'Captcha\Module\ReCaptcha'
+	'Captcha\Module\ReCaptcha',
+	'Captcha\Module\FancyCaptcha',
 ];
 
 // Always load the recaptcha shiz ... for now
