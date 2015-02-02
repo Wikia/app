@@ -47,6 +47,19 @@ $wgResourceModules += array(
 		'scripts' => array(
 			've/ve.track.js',
 
+			// dm
+			've/dm/ve.dm.WikiaBlockMediaNode.js',
+			've/dm/ve.dm.WikiaBlockVideoNode.js',
+			've/dm/ve.dm.WikiaMediaCaptionNode.js',
+			've/dm/ve.dm.WikiaVideoCaptionNode.js',
+
+			// ce
+			've/ce/ve.ce.WikiaVideoNode.js',
+			've/ce/ve.ce.WikiaBlockMediaNode.js',
+			've/ce/ve.ce.WikiaBlockVideoNode.js',
+			've/ce/ve.ce.WikiaMediaCaptionNode.js',
+			've/ce/ve.ce.WikiaVideoCaptionNode.js',
+
 			// ui
 			've/ui/ve.ui.WikiaCommandRegistry.js',
 			've/ui/dialogs/ve.ui.WikiaSourceModeDialog.js',
