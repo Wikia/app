@@ -7,7 +7,7 @@
 	 * @param {string} name Name of the library being loaded (used for logging)
 	 * @param {string} url URL of library file to be loaded
 	 * @param {*} typeCheck Expression to check if library is already loaded
-	 * @returns {jQuery} Returns a jQuery promise
+	 * @returns {jQuery} Returns a jQuery deferred object
 	 */
 	$.loadExternalLibrary = function (name, url, typeCheck) {
 		var scriptTag,
@@ -78,7 +78,7 @@
 
 	$.loadReCaptcha = function () {
 		var url = 'https://www.google.com/recaptcha/api.js?hl=' + window.wgUserLanguage;
-		return $.loadExternalLibrary('ReCaptcha', url, typeof window.recapcha);
+		return $.loadExternalLibrary('ReCaptcha', url, typeof window.grecapcha);
 	};
 
 })(jQuery);
