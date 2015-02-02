@@ -1083,6 +1083,7 @@ class ArticleCommentList {
 
 	/**
 	 * Enables commenting for an article if it is moved to a namespace that allows it
+	 * and disables it if it does not.
 	 * @param object Title $oOldTitle An object for the old article's name
 	 * @param object Title $oNewTitle An object for the new article's name
 	 * @param object User $oUser
@@ -1096,6 +1097,8 @@ class ArticleCommentList {
 
 		if ( ArticleComment::isBlog( $oNewTitle ) || in_array( $oNewTitle->getNamespace(), $wgArticleCommentsNamespaces ) ) {
 			BlogArticle::setProps( $oNewTitle->getArticleID(), ['commenting' => 1] );
+		} else {
+			BlogArticle::setProps( $oNewTitle->getArticleID(), ['commenting' => 0] );
 		}
 
 		wfProfileOut( __METHOD__ );
