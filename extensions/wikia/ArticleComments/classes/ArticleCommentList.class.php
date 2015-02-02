@@ -1095,10 +1095,10 @@ class ArticleCommentList {
 		global $wgArticleCommentsNamespaces;
 		wfProfileIn( __METHOD__ );
 
-		if ( ArticleComment::isBlog( $oNewTitle ) || in_array( $oNewTitle->getNamespace(), $wgArticleCommentsNamespaces ) ) {
+		if ( in_array( $oNewTitle->getNamespace(), $wgArticleCommentsNamespaces ) &&
+			in_array( $oOldTitle->getNamespace(), $wgArticleCommentsNamespaces )
+		) {
 			BlogArticle::setProps( $oNewTitle->getArticleID(), ['commenting' => 1] );
-		} else {
-			BlogArticle::setProps( $oNewTitle->getArticleID(), ['commenting' => 0] );
 		}
 
 		wfProfileOut( __METHOD__ );
