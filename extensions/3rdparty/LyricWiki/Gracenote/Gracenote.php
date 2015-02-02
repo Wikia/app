@@ -7,14 +7,6 @@
 // are intended to be used in more than one extension.
 ////
 
-
-if (!defined('NS_GRACENOTE')) define('NS_GRACENOTE', 220);
-define('NS_GRACENOTE_TALK', 221);
-$wgExtraNamespaces[NS_GRACENOTE] = "Gracenote";
-$wgExtraNamespaces[NS_GRACENOTE_TALK] = "Gracenote_talk";
-$wgGroupPermissions['*']['editgracenote'] = false;
-$wgGroupPermissions['staff']['editgracenote'] = true;
-
 // Definitions for which type of page to track with GoogleAnalytics.
 define('GRACENOTE_VIEW_GRACENOTE_LYRICS', 'ViewGracenote');
 define('GRACENOTE_VIEW_OTHER_LYRICS', 'ViewOther');

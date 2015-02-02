@@ -19,6 +19,7 @@
  *
  * //Wikia Change Start - helping PHP lint
  * @property Title mTitle
+ * @method exists
  * //Wikia Change End
  */
 class Article extends Page {

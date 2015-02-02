@@ -15,29 +15,6 @@ class LyricFindHooks {
 	}
 
 	/**
-	 * Checks whether given page can be indexed by web crawlers
-	 *
-	 * @param Title $title page to check
-	 * @return bool is trackable?
-	 */
-	static public function pageIsIndexable(Title $title) {
-		wfProfileIn(__METHOD__);
-		$res = true;
-
-		if ($title->getNamespace() === NS_LYRICFIND) {
-			$mainNStitle = Title::newFromText($title->getText(), NS_MAIN);
-
-			// the same lyric exists in main namespace, prevent indexing of LyricFind version
-			if ($mainNStitle->exists()) {
-				$res = false;
-			}
-		}
-
-		wfProfileOut(__METHOD__);
-		return $res;
-	}
-
-	/**
 	 * Loads page views tracking code (in Oasis, mobile skin and monobook)
 	 *
 	 * @param array $jsAssetGroups AssetsManager groups to load
@@ -67,13 +44,8 @@ class LyricFindHooks {
 		$wf = F::app()->wf;
 		$title = $editPage->getTitle();
 
-		// Block view-source on the LyricFind namespace.
-		$isLyricFind = $title->getNamespace() === NS_LYRICFIND;
-		$isNotAllowedToEdit = $title->isNamespaceProtected($wg->User);
-		$blockEdit = ($isLyricFind && $isNotAllowedToEdit);
-		if ($blockEdit) {
-			$wg->Out->addHTML(Wikia::errorbox(wfMessage('lyricfind-edit-blocked')));
-		} else if($title->exists()){
+		// Block view-source on the certain pages.
+		if($title->exists()){
 			// Look at the page-props to see if this page is blocked.
 			if(!$wg->user->isAllowed( 'editlyricfind' )){ // some users (staff/admin) will be allowed to edit these to prevent vandalism/spam issues.
 				$removedProp = $wf->GetWikiaPageProp(WPP_LYRICFIND_MARKED_FOR_REMOVAL, $title->getArticleID());
@@ -113,23 +85,6 @@ class LyricFindHooks {
 	 */
 	static public function onParserAfterTidy(Parser $parser, &$text) {
 		$text = strtr($text, LyricFindParserController::$markers);
-		return true;
-	}
-
-	/**
-	 * Prevent indexing of articles in NS_LYRICFIND if the same lyric exists in main namespace.
-	 *
-	 * Also: 
-	 *
-	 * @param OutputPage $out
-	 * @param Skin $skin
-	 * @return bool true
-	 */
-	static public function onBeforePageDisplay(OutputPage $out, Skin $skin ) {
-		if (!self::pageIsIndexable($out->getTitle())) {
-			$out->setRobotPolicy('noindex,follow');
-		}
-		
 		return true;
 	}
 

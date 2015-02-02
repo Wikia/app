@@ -171,7 +171,7 @@ class GlobalNavigationWallNotificationsController extends WikiaController {
 				'username' => $notify_entity->data->msg_author_username,
 				'avatar' => AvatarService::renderAvatar(
 						$firstNotify->data->msg_author_username,
-						AvatarService::AVATAR_SIZE_SMALL_PLUS
+						AvatarService::AVATAR_SIZE_SMALL
 					)
 			];
 		}
