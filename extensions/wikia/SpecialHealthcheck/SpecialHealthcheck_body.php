@@ -60,7 +60,7 @@ class HealthCheck extends UnlistedSpecialPage {
 
 
 		$maxLoad = $wgRequest->getVal('maxload');
-		$cpuCount = rtrim( shell_exec('cat /proc/cpuinfo | grep processor | wc -l') );
+		$cpuCount = wfShellExec('cat /proc/cpuinfo | grep processor | wc -l');
 		$load = sys_getloadavg();
 
 
