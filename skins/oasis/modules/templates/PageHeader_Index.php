@@ -69,4 +69,4 @@
 	if ( !empty( $wg->EnableMonetizationModuleExt ) && !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_TITLE] ) ) {
 		echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_TITLE];
 	}
-} // !$runNjord ?>
+} ?>
