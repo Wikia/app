@@ -199,17 +199,27 @@
 			text-transform: uppercase;
 			z-index: 1;
 
+			&::before {
+				background-color: $color-links;
+				border-radius: 50px;
+				content: '';
+				display: block;
+				height: 35px;
+				left: 0;
+				position: absolute;
+				top: -9px;
+				width: 35px;
+			}
+
 			&::after {
 				@include venus-icons-font;
 
-				background-color: $color-links;
-				border-radius: 50px;
 				color: $color-page;
 				content: '\f002';
 				display: block;
-				font-size: 35px;
-				left: 0;
-				padding: 8px 1px;
+				font-size: 49px;
+				left: -7px;
+				padding: 8px 0;
 				position: absolute;
 				top: -9px;
 			}
