@@ -215,7 +215,7 @@
 					$titleEditElement.stopThrobbing();
 				},
 				onErrorCallback: function () {
-					revertTitle();
+					revertDescriptionAndTitle();
 					$titleEditElement.stopThrobbing();
 					trackMom(saveTitleFailLabel, trackerActionError);
 				}
