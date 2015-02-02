@@ -182,7 +182,7 @@ class BaseCaptcha {
 	 * Pass the returned id value into the edit form as wpCaptchaId.
 	 *
 	 * @param array $info data to store
-	 * 
+	 *
 	 * @return string captcha ID key
 	 */
 	public function storeCaptcha( $info ) {
@@ -196,7 +196,7 @@ class BaseCaptcha {
 
 	/**
 	 * Fetch this session's captcha info.
-	 * 
+	 *
 	 * @return mixed array of info, or false if missing
 	 */
 	public function retrieveCaptcha() {

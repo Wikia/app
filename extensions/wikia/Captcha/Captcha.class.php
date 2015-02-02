@@ -62,13 +62,13 @@ class Handler {
 
 			$message = '';
 			wfRunHooks( 'GetConfirmEditMessage', [ $this, &$message ] );
-			if ( empty($message) ) {
+			if ( empty( $message ) ) {
 				$message = $this->captcha->getMessage( 'createaccount' );
 			}
 			$template->set( 'captcha',
 				"<div class='captcha'>" .
 				$this->captcha->getForm() .
-				'<p class="captchadesc" >' . $message .'</p>'.
+				'<p class="captchadesc" >' . $message . '</p>' .
 				"</div>\n" );
 		}
 		return true;
@@ -411,7 +411,7 @@ class Handler {
 	 * @param string $newText
 	 * @param string $section
 	 * @param bool $merged
-	 * 
+	 *
 	 * @return bool true to continue saving, false to abort and show a captcha form
 	 */
 	public function confirmEdit( $editPage, $newText, $section, $merged = false ) {
@@ -436,7 +436,7 @@ class Handler {
 
 	/**
 	 * Insert the captcha prompt into an edit form.
-	 * 
+	 *
 	 * @param \OutputPage $out
 	 */
 	public function editCallback( &$out ) {
