@@ -46,7 +46,9 @@ define('ext.wikia.adEngine.adContext', [
 		}
 
 		// Use PostScribe for ScriptWriter implementation when SevenOne Media ads are enabled
-		context.opts.usePostScribe = context.opts.usePostScribe || context.providers.sevenOneMedia;
+		if (context.providers.sevenOneMedia) {
+			context.opts.usePostScribe = true;
+		}
 
 		// Always call DART in specific countries
 		// TODO: make mobile code compatible with desktop (currently one uses opts and the other providers)
