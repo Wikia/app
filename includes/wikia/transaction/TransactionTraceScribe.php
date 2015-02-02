@@ -72,7 +72,8 @@ class TransactionTraceScribe {
 
 		// send raw events with the minimal context
 		self::send(Transaction::getRawEvents(), [
-			Transaction::PSEUDO_PARAM_TYPE => Transaction::getType()
+			Transaction::PSEUDO_PARAM_TYPE => Transaction::getType(),
+			Transaction::PARAM_ENVIRONMENT => Transaction::getAttribute(Transaction::PARAM_ENVIRONMENT),
 		]);
 	}
 

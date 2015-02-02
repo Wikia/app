@@ -24,15 +24,15 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 		if ( $this->isAnon ) {
 			$this->navItemLinkOpeningTag = $this->renderPersonalUrl( 'login', true );
 			$this->avatarContainerAdditionalClass = ' anon-avatar-placeholder';
-			$this->registerLink = $this->renderPersonalUrl( 'register' );
-			$this->loginDropdown = F::app()->renderView( 'UserLoginSpecial', 'dropdown', [ 'template' => 'globalNavigationDropdown', 'registerLink' => $this->registerLink ] );
+			$this->loginDropdown = F::app()->renderView( 'UserLoginSpecial', 'dropdown', [ 'template' => 'globalNavigationDropdown', 'registerLink' => $this->renderPersonalUrl( 'register' ) ] );
 		} else {
 			$this->navItemLinkOpeningTag = $this->renderPersonalUrl( 'userpage', true );
 
 			if ( AvatarService::isEmptyOrFirstDefault( $this->username ) ) {
 				$this->avatarContainerAdditionalClass = ' logged-avatar-placeholder';
 			} else {
-				$this->profileAvatar = AvatarService::renderAvatar( $this->username, AvatarService::AVATAR_SIZE_SMALL_PLUS );
+				$this->avatarContainerAdditionalClass = ' logged-avatar';
+				$this->profileAvatar = AvatarService::renderAvatar( $this->username, AvatarService::AVATAR_SIZE_SMALL );
 			}
 
 			$possibleItems = [ 'mytalk', 'following', 'preferences' ];
@@ -144,10 +144,10 @@ class GlobalNavigationAccountNavigationController extends WikiaController {
 			}
 			$returnto = wfGetReturntoParam( $returnto );
 
-			$this->personalUrls[ 'login' ] = [ 'title' => wfMessage( 'login' )->text(), 'href' => Skin::makeSpecialUrl( 'UserLogin', $returnto ), 'class' => 'ajaxLogin global-navigation-link' ];
+			$this->personalUrls[ 'login' ] = [ 'title' => wfMessage( 'login' )->text(), 'href' => Skin::makeSpecialUrl( 'UserLogin', $returnto ), 'class' => 'ajaxLogin table-cell' ];
 			$this->personalUrls[ 'register' ] = [ 'text' => wfMessage( 'oasis-signup' )->text(), 'href' => Skin::makeSpecialUrl( 'UserSignup' ), 'class' => 'ajaxRegister' ];
 		} else {
-			$this->personalUrls[ 'userpage' ] = [ 'title' => $this->username . ' - ' . wfMessage( 'mypage' )->text(), 'href' => AvatarService::getUrl( $this->username ), 'class' => 'ajaxLogin global-navigation-link' ];
+			$this->personalUrls[ 'userpage' ] = [ 'title' => $this->username . ' - ' . wfMessage( 'mypage' )->text(), 'href' => AvatarService::getUrl( $this->username ), 'class' => 'ajaxLogin table-cell' ];
 		}
 	}
 }
