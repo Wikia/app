@@ -1080,4 +1080,16 @@ class ArticleCommentList {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
+
+	public static function onTitleMoveComplete( Title &$oOldTitle, Title &$oNewTitle, User &$oUser, $iOldId, $iNewId, $oNewTitle) {
+		global $wgArticleCommentsNamespaces;
+		wfProfileIn( __METHOD__ );
+
+		if ( ArticleComment::isBlog( $oNewTitle ) || in_array( $oNewTitle->getNamespace(), $wgArticleCommentsNamespaces ) ) {
+			BlogArticle::setProps( $oNewTitle->getArticleID(), ['commenting' => 1] );
+		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
 }
