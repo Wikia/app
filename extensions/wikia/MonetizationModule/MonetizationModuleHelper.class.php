@@ -33,6 +33,8 @@ class MonetizationModuleHelper extends WikiaModel {
 	const KEYWORD_AD_TITLE = '$setAdTitle';
 	const KEYWORD_ECOMMERCE_TITLE = '$setEcommTitle';
 
+	const PAGE_SPECIFIC = 'page_specific';
+
 	protected static $mapThemeSettings = [
 		'data-color-bg'     => 'color-page',
 		'data-color-border' => 'color-page',
@@ -294,7 +296,17 @@ class MonetizationModuleHelper extends WikiaModel {
 	 * @return bool
 	 */
 	public function isPageSpecificResponse( $data ) {
-		return ( !empty( $data['special_instructions'] ) && $data['special_instructions'] == 'page_specific' );
+		// TODO: remove after service is updated
+		if ( !empty( $data['special_instructions'] ) ) {
+			if ( is_array( $data['special_instructions'] ) ) {
+				return ( in_array( self::PAGE_SPECIFIC, $data['special_instructions'] ) );
+			} else {
+				return ( $data['special_instructions'] == self::PAGE_SPECIFIC );
+			}
+		}
+
+		return false;
+		// return ( !empty( $data['special_instructions'] ) && in_array( self::PAGE_SPECIFIC, $data['special_instructions'] ) );
 	}
 
 	/**

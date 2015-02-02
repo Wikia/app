@@ -29,6 +29,7 @@ class CloseWikiPage extends SpecialPage {
 		$mTmpl,
 		$mStep      	= 1,
 		$mAction,
+		$mReason,
 		$mErrors    	= array(),
 		$mRedirects 	= array(),
 		$mRedirect		= "",
@@ -326,10 +327,10 @@ class CloseWikiPage extends SpecialPage {
 					WikiFactory::setFlags($wiki->city_id, $city_flags);
 				}
 
-                                // Let's request the XML dump if needed
-                                if ( isset( $this->mFlags[WikiFactory::FLAG_CREATE_DB_DUMP] ) ) {
-                                    DumpsOnDemand::queueDump( $wiki->city_id, isset( $this->mFlags[WikiFactory::FLAG_HIDE_DB_IMAGES] ), true );
-                                }
+				// Let's request the XML dump if needed
+				if ( isset( $this->mFlags[WikiFactory::FLAG_CREATE_DB_DUMP] ) ) {
+					DumpsOnDemand::queueDump( $wiki->city_id, isset( $this->mFlags[WikiFactory::FLAG_HIDE_DB_IMAGES] ), true );
+				}
 
 				if ( empty($this->mReason) ) {
 					$this->mReason = "-";
@@ -400,9 +401,11 @@ class CloseWikiPage extends SpecialPage {
 
 		if ( !($this->closedWiki->city_flags & WikiFactory::FLAG_HIDE_DB_IMAGES)
 				&& $this->closedWiki->city_lastdump_timestamp >= DumpsOnDemand::S3_MIGRATION ) {
+			$dumpInfo = DumpsOnDemand::getLatestDumpInfo($this->closedWiki->city_id);
+			$extension = DumpsOnDemand::getExtensionFromCompression($dumpInfo?$dumpInfo['compression']:false);
 			$aFiles = array(
-				'pages_current'	=> '_pages_current.xml.gz',
-				'pages_full'	=> '_pages_full.xml.gz',
+				'pages_current'	=> "_pages_current.xml{$extension}",
+				'pages_full'	=> "_pages_full.xml{$extension}",
 			);
 
 			foreach ( $aFiles as $sKey => $sValue ) {
