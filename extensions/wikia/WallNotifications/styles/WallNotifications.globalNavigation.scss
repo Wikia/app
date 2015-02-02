@@ -108,6 +108,10 @@ $wiki-header-color: #2b54b5;
 				padding-right: 20px;
 			}
 		}
+
+		&.scrollable .chevron {
+			right: 25px;
+		}
 	}
 
 	&.show {
@@ -166,7 +170,7 @@ $wiki-header-color: #2b54b5;
 			border-bottom: 0;
 			border-top-color: $border-color;
 			position: absolute;
-			right: 20px;
+			right: 42px;
 			top: 50%;
 		}
 
