@@ -17,8 +17,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 class Our404HandlerPage extends UnlistedSpecialPage {
 
-	public $mTitle;
-
 	const NAME = 'Our404Handler';
 
 	/**
@@ -37,30 +35,26 @@ class Our404HandlerPage extends UnlistedSpecialPage {
 	 */
 	public function execute( $subpage ) {
 		$this->setHeaders();
-		$this->mTitle = Title::makeTitle( NS_SPECIAL, 'Our404Handler' );
 		$this->doRender404();
 	}
 
 
 	/**
 	 * Just render some simple 404 page
-	 *
-	 * @access public
 	 */
-	public function doRender404( $uri = null ) {
+	public function doRender404() {
 		global $wgOut, $wgContLang, $wgCanonicalNamespaceNames;
 
 		/**
 		 * check, maybe we have article with that title, if yes 301redirect to
 		 * this article
 		 */
-		if( $uri === null ) {
-			$uri = $_SERVER['REQUEST_URI'];
-			if ( !preg_match( '!^https?://!', $uri ) ) {
-				$uri = 'http://unused' . $uri;
-			}
-			$uri = substr( parse_url( $uri, PHP_URL_PATH ), 1 );
+		$uri = $_SERVER['REQUEST_URI'];
+		if ( !preg_match( '!^https?://!', $uri ) ) {
+			$uri = 'http://unused' . $uri;
 		}
+		$uri = substr( parse_url( $uri, PHP_URL_PATH ), 1 );
+
 		Wikia::log( __METHOD__, false,  isset($_SERVER[ 'HTTP_REFERER' ])?$_SERVER[ 'HTTP_REFERER' ]:"[no referer]" );
 		$title = $wgContLang->ucfirst( urldecode( ltrim( $uri, "/" ) ) );
 		$namespace = NS_MAIN;
@@ -99,7 +93,7 @@ class Our404HandlerPage extends UnlistedSpecialPage {
 				$oArticle = new Article( $oTitle );
 				if( $oArticle->exists() ) {
 					header( "X-Redirected-By: Our404Handler" );
-					header( sprintf( "Location: %s", $oArticle->mTitle->getFullURL() ), true, 301 );
+					header( sprintf( "Location: %s", $oArticle->getTitle()->getFullURL() ), true, 301 );
 					exit( 0 );
 				}
 			}
