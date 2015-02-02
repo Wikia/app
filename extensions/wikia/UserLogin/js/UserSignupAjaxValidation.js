@@ -1,4 +1,4 @@
-/* global  wgScriptPath, UserSignup, grecaptcha */
+/* global  wgScriptPath, UserSignup */
 (function () {
 	'use strict';
 
@@ -101,12 +101,6 @@
 				this.wikiaForm.getInputGroup(inputsToValidate[i]).hasClass('error')) {
 				isValid = false;
 				break;
-			}
-		}
-
-		if (this.useCaptcha) {
-			if (!window.grecaptcha || grecaptcha.getResponse() === '') {
-				isValid = false;
 			}
 		}
 

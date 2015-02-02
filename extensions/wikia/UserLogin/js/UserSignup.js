@@ -29,7 +29,7 @@
 				.done(function () {
 					this.setupValidation();
 				}.bind(this))
-				.fail(this.handleCaptchaLoadError);
+				.fail(this.handleCaptchaLoadError.bind(this));
 
 		},
 
@@ -39,28 +39,10 @@
 		 * fails the captcha test itself.
 		 */
 		handleCaptchaLoadError: function () {
-			this.wikiaForm.disableAll();
-
-			function createModal(uiModal) {
-				var modalConfig = {
-					vars: {
-						id: 'catchaLoadErrorModal',
-						classes: ['captcha-load-error-modal'],
-						size: 'medium',
-						title: $.msg('usersignup-page-captcha-load-fail-title'),
-						content: $.msg('usersignup-page-captcha-load-fail-text')
-					}
-				};
-
-				uiModal.createComponent(modalConfig, function (captchaErrorModal) {
-					captchaErrorModal.show();
-				});
-			}
-
 			require(['wikia.ui.factory'], function (uiFactory) {
 				$.when(uiFactory.init('modal'))
-					.then(createModal);
-			});
+					.then(this.createCaptchaLoadErrorModal.bind(this));
+			}.bind(this));
 
 			Wikia.Tracker.track({
 				action: Wikia.Tracker.ACTIONS.ERROR,
@@ -68,6 +50,22 @@
 				label: 'captcha-load-fail',
 				trackingMethod: 'both',
 				country: Wikia.geo.getCountryCode()
+			});
+		},
+
+		createCaptchaLoadErrorModal: function (uiModal) {
+			var modalConfig = {
+				vars: {
+					id: 'catchaLoadErrorModal',
+					classes: ['captcha-load-error-modal'],
+					size: 'medium',
+					title: $.msg('usersignup-page-captcha-load-fail-title'),
+					content: $.msg('usersignup-page-captcha-load-fail-text')
+				}
+			};
+
+			uiModal.createComponent(modalConfig, function (captchaErrorModal) {
+				captchaErrorModal.show();
 			});
 		},
 
