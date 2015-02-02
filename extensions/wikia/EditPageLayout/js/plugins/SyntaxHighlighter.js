@@ -2,7 +2,7 @@
 //See [[User:Remember the dot/Syntax highlighter]] for more information
 
 define('WikiTextSyntaxHighlighter', function() {
-	var init = function (evi) {
+	var init = function (textarea) {
 		"use strict";
 
 		console.log('start syntax');
@@ -527,9 +527,9 @@ define('WikiTextSyntaxHighlighter', function() {
 			highlightSyntax(textarea);
 		}
 
-		function queueSetup(evi) {
+		function queueSetup(textarea) {
 			setTimeout(function() {
-				setup(evi);
+				setup(textarea);
 			}, 0);
 		}
 
@@ -547,10 +547,10 @@ define('WikiTextSyntaxHighlighter', function() {
 			 queue, so that the setup function runs after any other triggers set
 			 on the load event. */
 			if (document.readyState == "complete") {
-				queueSetup(evi);
+				queueSetup(textarea);
 			}
 			else {
-				$(window).load(queueSetup(evi));
+				$(window).load(queueSetup(textarea));
 			}
 		}
 		return {

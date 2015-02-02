@@ -216,6 +216,7 @@ class EditPageLayoutHelper {
 			'extensions/wikia/EditPageLayout/js/plugins/Widescreen.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Preloads.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Leaveconfirm.js',
+			'extensions/wikia/EditPageLayout/js/plugins/SyntaxHighlighterQueueInit.js',
 			'extensions/wikia/EditPageLayout/js/plugins/SyntaxHighlighter.js',
 			//'extensions/wikia/EditPageLayout/js/plugins/RestoreEdit.js',
 			// >> extras (mainly things which should be moved elsewhere)
