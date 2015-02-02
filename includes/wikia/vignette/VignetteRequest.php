@@ -199,4 +199,51 @@ class VignetteRequest {
 			return null;
 		}
 	}
+
+	/**
+	 * apply a legacy thumb definition to a vignette url generator. ex: takes $legacyDefinition = /500px-someFilename.jpg
+	 * and applies ->scaleToWidth(500); to $generator;
+	 * @param UrlGenerator $generator
+	 * @param $legacyDefinition
+	 * @return UrlGenerator
+	 */
+	public static function applyLegacyThumbDefinition(UrlGenerator $generator, $legacyDefinition) {
+		$legacyDefinition = urldecode($legacyDefinition);
+
+		if (preg_match('/^(\d+)px-/', $legacyDefinition, $matches)) {
+			$generator->scaleToWidth($matches[1]);
+		} elseif (preg_match('/^(\d+)x(\d+)-/', $legacyDefinition, $matches)) {
+			$generator
+				->fixedAspectRatio()
+				->width($matches[1])
+				->height($matches[2]);
+		} elseif (preg_match('/^(\d+)x(\d+)x(\d+)-/', $legacyDefinition, $matches)) {
+			$generator
+				->zoomCrop()
+				->width($matches[1])
+				->height($matches[2]);
+		}
+
+		if (preg_match('/-(-{0,1}\d+),(\d+),(-{0,1}\d+),(\d+)-/', $legacyDefinition, $matches)) {
+			if ($generator->getMode() == UrlGenerator::MODE_SCALE_TO_WIDTH) {
+				$generator->windowCrop();
+			} else {
+				$generator->windowCropFixed();
+			}
+
+			$generator
+				->xOffset($matches[1])
+				->yOffset($matches[3])
+				->windowWidth($matches[2] - $matches[1])
+				->windowHeight($matches[4] - $matches[3]);
+		}
+
+		if (preg_match('/\.([a-z]+)$/i', $legacyDefinition, $matches)) {
+			$generator = self::setThumbnailFormat($generator, $matches[1]);
+		}
+
+		// vignette TODO: add images/temp to image-type regex
+
+		return $generator;
+	}
 }
