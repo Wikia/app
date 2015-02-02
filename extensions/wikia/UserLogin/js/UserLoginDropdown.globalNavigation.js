@@ -55,12 +55,13 @@ require([
 
 		$entryPoint = $('#AccountNavigation');
 		$entryPoint.on('click', '.links-container', function (ev) {
+			var $this = $(this);
 			ev.preventDefault();
 			ev.stopImmediatePropagation();
 
 			if ($entryPoint.hasClass('active')) {
 				if (!!win.wgUserName) {
-					win.location = $(this).attr('href');
+					win.location = $this.attr('href') || $this.children('a').attr('href');
 				} else {
 					closeMenu();
 				}
