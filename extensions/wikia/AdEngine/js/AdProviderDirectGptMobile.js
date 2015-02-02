@@ -17,16 +17,11 @@ define('ext.wikia.adEngine.provider.directGptMobile', [
 	function fillInSlot(slotname, success, hop) {
 		log(['fillInSlot', slotname], 'debug', logGroup);
 
-		function showAdAndCallSuccess() {
-			document.getElementById(slotname).className += ' show';
-			success();
-		}
-
 		function doHop() {
 			hop({method: 'hop'});
 		}
 
-		wikiaGpt.pushAd(slotname, showAdAndCallSuccess, doHop, 'mobile');
+		wikiaGpt.pushAd(slotname, success, doHop, 'mobile');
 		wikiaGpt.flushAds();
 	}
 

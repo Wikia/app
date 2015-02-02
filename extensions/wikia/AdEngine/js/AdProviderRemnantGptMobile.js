@@ -22,12 +22,7 @@ define('ext.wikia.adEngine.provider.remnantGptMobile', [
 			hop({method: 'hop'});
 		}
 
-		function showAdAndCallSuccess() {
-			document.getElementById(slotname).className += ' show';
-			success();
-		}
-
-		wikiaGpt.pushAd(slotname, showAdAndCallSuccess, hopToNull, 'mobile_remnant');
+		wikiaGpt.pushAd(slotname, success, hopToNull, 'mobile_remnant');
 		wikiaGpt.flushAds();
 	}
 

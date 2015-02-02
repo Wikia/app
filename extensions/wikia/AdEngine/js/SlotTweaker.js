@@ -12,8 +12,14 @@ define('ext.wikia.adEngine.slotTweaker', [
 		standardLeaderboardSizeClass = 'standard-leaderboard';
 
 	function removeClass(element, cls) {
-		var elClasses = ' ' + element.className.replace(rclass, ' ') + ' ',
-			newClasses = elClasses.replace(' ' + cls + ' ', ' ');
+		var oldClasses,
+			newClasses = ' ' + element.className.replace(rclass, ' ') + ' ';
+
+		// Remove all instances of class in the className string
+		while (oldClasses !== newClasses) {
+			oldClasses = newClasses;
+			newClasses = oldClasses.replace(' ' + cls + ' ', ' ');
+		}
 
 		log(['removeClass ' + cls, element], 8, logGroup);
 		element.className = newClasses;

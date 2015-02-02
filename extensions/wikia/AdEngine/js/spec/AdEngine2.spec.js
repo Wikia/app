@@ -8,6 +8,7 @@ describe('AdEngine2', function () {
 	var eventDispatcher = { trigger: function () { return true; }},
 		noop = function () { return; },
 		slotTrackerMock = function () { return {track: noop}; },
+		slotTweakerMock = {show: noop},
 		logMock = noop,
 		adProviderNullMock = {
 			name: 'Null',
@@ -45,7 +46,7 @@ describe('AdEngine2', function () {
 			lazyQueueMock = mockLazyQueue(),
 			adEngine;
 
-		adEngine = modules['ext.wikia.adEngine.adEngine'](logMock, lazyQueueMock, slotTrackerMock, eventDispatcher);
+		adEngine = modules['ext.wikia.adEngine.adEngine'](logMock, lazyQueueMock, eventDispatcher, adProviderNullMock, slotTrackerMock, slotTweakerMock);
 
 		expect(function () {
 			adEngine.run(adConfigMock, [], 'queue-name');
@@ -76,7 +77,7 @@ describe('AdEngine2', function () {
 			}
 		};
 
-		adEngine = modules['ext.wikia.adEngine.adEngine'](logMock, lazyQueueMock, slotTrackerMock, eventDispatcher);
+		adEngine = modules['ext.wikia.adEngine.adEngine'](logMock, lazyQueueMock, eventDispatcher, adProviderNullMock, slotTrackerMock, slotTweakerMock);
 		adEngine.run(adConfigMock, slotsMock);
 
 		expect(makeQueueCalledOn).toBe(slotsMock, 'Made LazyQueue from the slot array provided to adEngine.run');
@@ -102,8 +103,7 @@ describe('AdEngine2', function () {
 			spyOn(fakeProvider, 'fillInSlot');
 			spyOn(fakeProvider, 'canHandleSlot').and.returnValue(true);
 
-			adEngine = modules['ext.wikia.adEngine.adEngine'](logMock, lazyQueueMock, slotTrackerMock, eventDispatcher,
-				adProviderNullMock);
+			adEngine = modules['ext.wikia.adEngine.adEngine'](logMock, lazyQueueMock, eventDispatcher, adProviderNullMock, slotTrackerMock, slotTweakerMock);
 			adEngine.run(adConfigMock, []);
 
 			expect(adConfigMock.getProviderList.calls.count()).toBe(2, 'adConfig.getProviderList called 2 times');
@@ -149,7 +149,7 @@ describe('AdEngine2', function () {
 		spyOn(fakeProvider, 'fillInSlot');
 		spyOn(fakeProvider, 'canHandleSlot').and.returnValue(true);
 
-		adEngine = modules['ext.wikia.adEngine.adEngine'](logMock, lazyQueueMock, slotTrackerMock, eventDispatcher, adProviderNullMock);
+		adEngine = modules['ext.wikia.adEngine.adEngine'](logMock, lazyQueueMock, eventDispatcher, adProviderNullMock, slotTrackerMock, slotTweakerMock);
 		adEngine.run(adConfigMock, []);
 
 		expect(adConfigMock.getProviderList.calls.count()).toBe(2, 'adConfig.getProviderList called 2 times');
@@ -182,8 +182,7 @@ describe('AdEngine2', function () {
 		spyOn(fakeProvider, 'fillInSlot');
 		spyOn(fakeProvider, 'canHandleSlot').and.returnValue(false);
 
-		adEngine = modules['ext.wikia.adEngine.adEngine'](logMock, lazyQueueMock, slotTrackerMock, eventDispatcher,
-			adProviderNullMock);
+		adEngine = modules['ext.wikia.adEngine.adEngine'](logMock, lazyQueueMock, eventDispatcher, adProviderNullMock, slotTrackerMock, slotTweakerMock);
 		adEngine.run(adConfigMock, []);
 
 		expect(adConfigMock.getProviderList.calls.count()).toBe(2, 'adConfig.getProviderList called 2 times');
@@ -237,8 +236,7 @@ describe('AdEngine2', function () {
 		spyOn(fakeProvider3, 'canHandleSlot').and.returnValue(true);
 		spyOn(fakeNullProvider, 'canHandleSlot').and.returnValue(true);
 
-		adEngine = modules['ext.wikia.adEngine.adEngine'](logMock, lazyQueueMock, slotTrackerMock, eventDispatcher,
-			fakeNullProvider);
+		adEngine = modules['ext.wikia.adEngine.adEngine'](logMock, lazyQueueMock, eventDispatcher, fakeNullProvider, slotTrackerMock, slotTweakerMock);
 		adEngine.run(adConfigMock, []);
 
 		expect(fakeProvider1.fillInSlot).toHaveBeenCalled();

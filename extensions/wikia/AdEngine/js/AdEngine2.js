@@ -2,10 +2,11 @@
 define('ext.wikia.adEngine.adEngine', [
 	'wikia.log',
 	'wikia.lazyqueue',
-	'ext.wikia.adEngine.slotTracker',
 	'ext.wikia.adEngine.eventDispatcher',
-	'ext.wikia.adEngine.provider.null'
-], function (log, LazyQueue, slotTracker, eventDispatcher, adProviderNull) {
+	'ext.wikia.adEngine.provider.null',
+	'ext.wikia.adEngine.slotTracker',
+	'ext.wikia.adEngine.slotTweaker'
+], function (log, LazyQueue, eventDispatcher, adProviderNull, slotTracker, slotTweaker) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adEngine';
@@ -66,6 +67,8 @@ define('ext.wikia.adEngine.adEngine', [
 
 			var slotName = slot.slotname,
 				providerList = adConfig.getProviderList(slotName).slice(); // Get a copy of the array
+
+			slotTweaker.show(slotName);
 
 			log(['fillInSlot', slot, 'provider list', JSON.stringify(providerList)], 'debug', logGroup);
 
