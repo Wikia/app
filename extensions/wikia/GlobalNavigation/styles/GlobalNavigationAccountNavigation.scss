@@ -6,8 +6,7 @@
 @import 'GlobalNavigationMixins';
 
 .account-navigation-container {
-	//2px - container size is decreased by 2px because of global navigation border
-	padding: 0 round($global-navigation-items-spacing / 2) 2px 0;
+	padding: 0 30px 2px 0;
 	position: relative;
 }
 
@@ -35,7 +34,7 @@
 			.chevron {
 				@include global-nav-chevron;
 				margin-left: 2px;
-				margin-top: 13px;
+				margin-top: 15px;
 			}
 		}
 
@@ -61,6 +60,7 @@
 		@include font-size-xxs;
 		color: $global-navigation-text-color;
 		display: table-cell;
+		padding-top: 2px;
 		vertical-align: middle;
 
 		&:hover {
@@ -108,6 +108,10 @@
 }
 
 @media #{$small-only} {
+	.account-navigation-container {
+		padding: 0 18px 2px 0;
+	}
+
 	.AccountNavigation {
 		.user-menu {
 			@include grid-column-width('small', 3, $small-content-padding);
