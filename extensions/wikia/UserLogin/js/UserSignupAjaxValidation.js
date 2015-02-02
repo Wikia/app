@@ -9,14 +9,12 @@
 	 * - wikiaForm: instance of WikiaForm
 	 * - inputsToValide: array of input names to be ok'ed before submission
 	 * - submitButton: pointer to main submit button of the form
-	 * - useCaptcha: whether or not this form includes a captcha test
 	 * @constructor
 	 */
 	var UserSignupAjaxValidation = function (options) {
 		this.wikiaForm = options.wikiaForm;
 		this.inputsToValidate = options.inputsToValidate || [];
 		this.notEmptyFields = options.notEmptyFields || [];
-		this.useCaptcha = options.useCaptcha || false;
 		this.submitButton = $(options.submitButton);
 
 		this.activateSubmit();

@@ -3,7 +3,7 @@
 	'use strict';
 
 	/**
-	 * JS for signing up with a new account, both on mobile and desktop
+	 * JS for signing up with a new account, on BOTH MOBILE and DESKTOP
 	 */
 	var UserSignup = {
 		inputsToValidate: ['userloginext01', 'email', 'userloginext02', 'birthday'],
@@ -18,6 +18,7 @@
 			this.wikiaForm = new WikiaForm('#WikiaSignupForm');
 			this.submitButton = this.wikiaForm.inputs.submit;
 			this.loadCaptcha();
+			this.setupValidation();
 
 			// imported via UserSignupMixin
 			this.setCountryValue(this.wikiaForm);
@@ -25,18 +26,14 @@
 		},
 
 		loadCaptcha: function () {
-			$.loadReCaptcha()
-				.done(function () {
-					this.setupValidation();
-				}.bind(this))
-				.fail(this.handleCaptchaLoadError.bind(this));
-
+			if (this.useCaptcha) {
+				$.loadReCaptcha().fail(this.handleCaptchaLoadError.bind(this));
+			}
 		},
 
 		/**
 		 * Captcha is required for signup, so if it fails to load (possibly b/c google is blocked in China)
-		 * disable the form fields and inform the user. Note, this is different from when a user
-		 * fails the captcha test itself.
+		 * inform the user with a modal. Note, this is different from when a user fails the captcha test itself.
 		 */
 		handleCaptchaLoadError: function () {
 			require(['wikia.ui.factory'], function (uiFactory) {
@@ -79,8 +76,7 @@
 				wikiaForm: this.wikiaForm,
 				inputsToValidate: this.inputsToValidate,
 				submitButton: this.submitButton,
-				notEmptyFields: this.notEmptyFields,
-				useCaptcha: this.useCaptcha
+				notEmptyFields: this.notEmptyFields
 			});
 
 			inputs.userloginext01

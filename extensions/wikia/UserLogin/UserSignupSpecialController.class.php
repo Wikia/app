@@ -589,8 +589,13 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 
 	private function disableCaptcha() {
 		global $wgHooks;
+
+		$isMobile = $this->app->checkSkin( 'wikiamobile' );
+		$isAutomatedTest = in_array( $this->wg->Request->getIP(), $this->wg->AutomatedTestsIPsList );
+		$isNoCaptchaTest = $this->wg->Request->getInt( 'nocaptchatest' ) == 1;
+
 		//Disable captcha for automated tests and wikia mobile
-		if ( $this->app->checkSkin( 'wikiamobile' ) || ( in_array( $this->wg->Request->getIP(), $this->wg->AutomatedTestsIPsList ) && $this->wg->Request->getInt( 'nocaptchatest' ) == 1 ) ) {
+		if ( $isMobile || ( $isAutomatedTest && $isNoCaptchaTest ) ) {
 			//Switch off global var
 			$this->wg->WikiaEnableConfirmEditExt = false;
 			//Remove hook function
