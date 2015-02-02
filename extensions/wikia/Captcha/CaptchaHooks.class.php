@@ -3,49 +3,63 @@
 namespace Captcha;
 
 class Hooks {
-	static function confirmEditMerged( $editPage, $newtext ) {
-		return Factory::getInstance()->confirmEditMerged( $editPage, $newtext );
+
+	protected static $handler;
+
+	/**
+	 * Get the global Captcha instance
+	 *
+	 * @return Handler
+	 */
+	static function getInstance() {
+		if ( !self::$handler ) {
+			self::$handler = new Handler();
+		}
+
+		return self::$handler;
 	}
 
-	static function confirmEditAPI( $editPage, $newtext, &$resultArr ) {
-		return Factory::getInstance()->confirmEditAPI( $editPage, $newtext, $resultArr );
+	public static function confirmEditMerged( $editPage, $newtext ) {
+		return self::getInstance()->confirmEditMerged( $editPage, $newtext );
 	}
 
-	static function injectUserCreate( &$template ) {
-gmark();
-		return Factory::getInstance()->injectUserCreate( $template );
+	public static function confirmEditAPI( $editPage, $newtext, &$resultArr ) {
+		return self::getInstance()->confirmEditAPI( $editPage, $newtext, $resultArr );
 	}
 
-	static function confirmUserCreate( $u, &$message ) {
-gmark();
-		return Factory::getInstance()->confirmUserCreate( $u, $message );
+	public static function injectUserCreate( &$template ) {
+		return self::getInstance()->injectUserCreate( $template );
 	}
 
-	static function triggerUserLogin( $user, $password, $retval ) {
-		return Factory::getInstance()->triggerUserLogin( $user, $password, $retval );
+	public static function confirmUserCreate( $u, &$message ) {
+		return self::getInstance()->confirmUserCreate( $u, $message );
 	}
 
-	static function injectUserLogin( &$template ) {
-		return Factory::getInstance()->injectUserLogin( $template );
+	public static function triggerUserLogin( $user, $password, $retval ) {
+		return self::getInstance()->triggerUserLogin( $user, $password, $retval );
 	}
 
-	static function confirmUserLogin( $u, $pass, &$retval ) {
-		return Factory::getInstance()->confirmUserLogin( $u, $pass, $retval );
+	public static function injectUserLogin( &$template ) {
+		return self::getInstance()->injectUserLogin( $template );
 	}
 
-	static function injectEmailUser( &$form ) {
-		return Factory::getInstance()->injectEmailUser( $form );
+	public static function confirmUserLogin( $u, $pass, &$retval ) {
+		return self::getInstance()->confirmUserLogin( $u, $pass, $retval );
 	}
 
-	static function confirmEmailUser( $from, $to, $subject, $text, &$error ) {
-		return Factory::getInstance()->confirmEmailUser( $from, $to, $subject, $text, $error );
+	public static function injectEmailUser( &$form ) {
+		return self::getInstance()->injectEmailUser( $form );
+	}
+
+	public static function confirmEmailUser( $from, $to, $subject, $text, &$error ) {
+		return self::getInstance()->confirmEmailUser( $from, $to, $subject, $text, $error );
 	}
 
 	public static function APIGetAllowedParams( &$module, &$params ) {
-		return Factory::getInstance()->APIGetAllowedParams( $module, $params );
+		return self::getInstance()->APIGetAllowedParams( $module, $params );
 	}
 
 	public static function APIGetParamDescription( &$module, &$desc ) {
-		return Factory::getInstance()->APIGetParamDescription( $module, $desc );
+		return self::getInstance()->APIGetParamDescription( $module, $desc );
 	}
 }

@@ -1,0 +1,592 @@
+<?php
+
+namespace Captcha;
+
+use Captcha\Factory;
+
+class Handler {
+
+	protected $action;
+
+	protected $trigger;
+
+	/** @var \Captcha\Module\BaseCaptcha */
+	protected $captcha;
+
+	public function __construct() {
+		$this->captcha = Factory\Module::getInstance();
+	}
+
+	/**
+	 * Inject whazawhoo
+	 *
+	 * @fixme if multiple thingies insert a header, could break
+	 *
+	 * @param \HTMLForm $form
+	 *
+	 * @return bool whether to keep running callbacks
+	 */
+	public function injectEmailUser( &$form ) {
+		$wg = \F::app()->wg;
+		if ( $wg->CaptchaTriggers['sendemail'] ) {
+			if ( $wg->User->isAllowed( 'skipcaptcha' ) ) {
+				wfDebug( "ConfirmEdit: user group allows skipping captcha on email sending\n" );
+				return true;
+			}
+			$form->addFooterText(
+				"<div class='captcha'>" .
+				$wg->Out->parse( $this->captcha->getMessage( 'sendemail' ) ) .
+				$this->captcha->getForm() .
+				"</div>\n" );
+		}
+		return true;
+	}
+
+	/**
+	 * Inject whazawhoo
+	 *
+	 * @fixme if multiple thingies insert a header, could break
+	 *
+	 * @param \QuickTemplate $template
+	 *
+	 * @return bool whether to keep running callbacks
+	 */
+	public function injectUserCreate( &$template ) {
+		$wg = \F::app()->wg;
+		if ( $wg->CaptchaTriggers['createaccount'] ) {
+			if ( $wg->User->isAllowed( 'skipcaptcha' ) ) {
+				wfDebug( "ConfirmEdit: user group allows skipping captcha on account creation\n" );
+				return true;
+			}
+
+			$message = '';
+			wfRunHooks( 'GetConfirmEditMessage', array( $this, &$message) );
+			if ( empty($message) ) {
+				$message = $this->captcha->getMessage( 'createaccount' );
+			}
+			$template->set( 'captcha',
+				"<div class='captcha'>" .
+				$this->captcha->getForm() .
+				'<p class="captchadesc" >' . $message .'</p>'.
+				"</div>\n" );
+		}
+		return true;
+	}
+
+	/**
+	 * Inject a captcha into the user login form after a failed
+	 * password attempt as a speedbump for mass attacks.
+	 *
+	 * @fixme if multiple thingies insert a header, could break
+	 *
+	 * @param \QuickTemplate $template
+	 *
+	 * @return bool whether to keep running callbacks
+	 */
+	public function injectUserLogin( &$template ) {
+		if ( $this->isBadLoginTriggered() ) {
+			$template->set( 'header',
+				"<div class='captcha'>" .
+				F::app()->wg->Out->parse( $this->captcha->getMessage( 'badlogin' ) ) .
+				$this->captcha->getForm() .
+				"</div>\n" );
+		}
+		return true;
+	}
+
+	/**
+	 * When a bad login attempt is made, increment an expiring counter
+	 * in the memcache cloud. Later checks for this may trigger a
+	 * captcha display to prevent too many hits from the same place.
+	 *
+	 * @param \User $user
+	 * @param string $password
+	 * @param int $retval authentication return value
+	 *
+	 * @return bool whether to keep running callbacks
+	 */
+	public function triggerUserLogin( $user, $password, $retval ) {
+		$wg = \F::app()->wg;
+		if ( $retval == \LoginForm::WRONG_PASS && $wg->CaptchaTriggers['badlogin'] ) {
+			$key = $this->badLoginKey();
+			$count = $wg->Memc->get( $key );
+			if ( !$count ) {
+				$wg->Memc->add( $key, 0, $wg->CaptchaBadLoginExpiration );
+			}
+			$wg->Memc->incr( $key );
+		}
+		return true;
+	}
+
+	/**
+	 * Check if a bad login has already been registered for this
+	 * IP address. If so, require a captcha.
+	 *
+	 * @return bool
+	 */
+	private function isBadLoginTriggered() {
+		$wg = \F::app()->wg;
+		return $wg->CaptchaTriggers['badlogin'] && intval( $wg->Memc->get( $this->badLoginKey() ) ) >= $wg->CaptchaBadLoginAttempts;
+	}
+
+	/**
+	 * Check if the IP is allowed to skip captchas
+	 */
+	public function isIPWhitelisted() {
+		$wg = \F::app()->wg;
+
+		if ( $wg->CaptchaWhitelistIP ) {
+			$wg = \F::app()->wg;
+
+			$ip = $wg->Request->getIP();
+
+			foreach ( $wg->CaptchaWhitelistIP as $range ) {
+				if ( \IP::isInRange( $ip, $range ) ) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Internal cache key for badlogin checks.
+	 *
+	 * @return string
+	 */
+	private function badLoginKey() {
+		$ip = F::app()->wg->Request->getIP();
+		return wfMemcKey( 'captcha', 'badlogin', 'ip', $ip );
+	}
+
+	/**
+	 * @param \EditPage $editPage
+	 * @param string $action (edit/create/addurl...)
+	 *
+	 * @return bool true if action triggers captcha on editPage's namespace
+	 */
+	public function captchaTriggers( &$editPage, $action ) {
+		$wg = \F::app()->wg;
+		$ns = $editPage->mTitle->getNamespace();
+
+		// Special config for this NS?
+		if ( isset( $wg->CaptchaTriggersOnNamespace[$ns][$action] ) )
+			return $wg->CaptchaTriggersOnNamespace[$ns][$action];
+
+		return ( !empty( $wg->CaptchaTriggers[$action] ) ); // Default
+	}
+
+	/**
+	 * @param \EditPage $editPage
+	 * @param string $newText
+	 * @param string $section
+	 *
+	 * @return bool true if the captcha should run
+	 */
+	public function shouldCheck( &$editPage, $newText, $section, $merged = false ) {
+		$wg = \F::app()->wg;
+		$this->trigger = '';
+		$title = $editPage->mArticle->getTitle();
+
+		if ( $wg->User->isAllowed( 'skipcaptcha' ) ) {
+			wfDebug( "ConfirmEdit: user group allows skipping captcha\n" );
+			return false;
+		}
+		if ( $this->isIPWhitelisted() ) {
+			return false;
+		}
+
+		if ( $wg->EmailAuthentication && $wg->AllowConfirmedEmail &&
+			$wg->User->isEmailConfirmed() ) {
+			wfDebug( "ConfirmEdit: user has confirmed mail, skipping captcha\n" );
+			return false;
+		}
+
+		if ( $this->captchaTriggers( $editPage, 'edit' ) ) {
+			// Check on all edits
+			$this->trigger = sprintf( "edit trigger by '%s' at [[%s]]",
+				$wg->User->getName(),
+				$title->getPrefixedText() );
+			$this->action = 'edit';
+			wfDebug( "ConfirmEdit: checking all edits...\n" );
+			return true;
+		}
+
+		if ( $this->captchaTriggers( $editPage, 'create' )  && !$editPage->mTitle->exists() ) {
+			// Check if creating a page
+			$this->trigger = sprintf( "Create trigger by '%s' at [[%s]]",
+				$wg->User->getName(),
+				$title->getPrefixedText() );
+			$this->action = 'create';
+			wfDebug( "ConfirmEdit: checking on page creation...\n" );
+			return true;
+		}
+
+		if ( $this->captchaTriggers( $editPage, 'addurl' ) ) {
+			// Only check edits that add URLs
+			if ( $merged ) {
+				// Get links from the database
+				$oldLinks = $this->getLinksFromTracker( $title );
+				// Share a parse operation with Article::doEdit()
+				$editInfo = $editPage->mArticle->prepareTextForEdit( $newText );
+				$newLinks = array_keys( $editInfo->output->getExternalLinks() );
+			} else {
+				// Get link changes in the slowest way known to man
+				$oldText = $this->loadText( $editPage, $section );
+				$oldLinks = $this->findLinks( $editPage, $oldText );
+				$newLinks = $this->findLinks( $editPage, $newText );
+			}
+
+			$unknownLinks = array_filter( $newLinks, array( &$this, 'filterLink' ) );
+			$addedLinks = array_diff( $unknownLinks, $oldLinks );
+			$numLinks = count( $addedLinks );
+
+			if ( $numLinks > 0 ) {
+				$this->trigger = sprintf( "%dx url trigger by '%s' at [[%s]]: %s",
+					$numLinks,
+					$wg->User->getName(),
+					$title->getPrefixedText(),
+					implode( ", ", $addedLinks ) );
+				$this->action = 'addurl';
+				return true;
+			}
+		}
+
+		if ( $wg->CaptchaRegexes ) {
+			// Custom regex checks
+			$oldText = $this->loadText( $editPage, $section );
+
+			foreach ( $wg->CaptchaRegexes as $regex ) {
+				$newMatches = array();
+				if ( preg_match_all( $regex, $newText, $newMatches ) ) {
+					$oldMatches = array();
+					preg_match_all( $regex, $oldText, $oldMatches );
+
+					$addedMatches = array_diff( $newMatches[0], $oldMatches[0] );
+
+					$numHits = count( $addedMatches );
+					if ( $numHits > 0 ) {
+						$this->trigger = sprintf( "%dx %s at [[%s]]: %s",
+							$numHits,
+							$regex,
+							$wg->User->getName(),
+							$title->getPrefixedText(),
+							implode( ", ", $addedMatches ) );
+						$this->action = 'edit';
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Filter callback function for URL whitelisting
+	 *
+	 * @param string $url URL to check
+	 *
+	 * @return bool true if unknown, false if whitelisted
+	 */
+	private function filterLink( $url ) {
+		$wg = \F::app()->wg;
+		$source = wfMsgForContent( 'captcha-addurl-whitelist' );
+
+		$whitelist = wfEmptyMsg( 'captcha-addurl-whitelist', $source )
+			? false
+			: $this->buildRegexes( explode( "\n", $source ) );
+
+		$cwl = $wg->CaptchaWhitelist !== false ? preg_match( $wg->CaptchaWhitelist, $url ) : false;
+		$wl  = $whitelist          !== false ? preg_match( $whitelist, $url )          : false;
+
+		return !( $cwl || $wl );
+	}
+
+	/**
+	 * Build regex from white-list
+	 *
+	 * @param string $lines Lines from [[MediaWiki:Captcha-addurl-whitelist]]
+	 *
+	 * @return string Regex or bool false if white-list is empty
+	 */
+	private function buildRegexes( $lines ) {
+		# Code duplicated from the SpamBlacklist extension (r19197)
+
+		# Strip comments and whitespace, then remove blanks
+		$lines = array_filter( array_map( 'trim', preg_replace( '/#.*$/', '', $lines ) ) );
+
+		# No lines, don't make a regex which will match everything
+		if ( count( $lines ) == 0 ) {
+			wfDebug( "No lines\n" );
+			return false;
+		} else {
+			# Make regex
+			# It's faster using the S modifier even though it will usually only be run once
+			// $regex = 'http://+[a-z0-9_\-.]*(' . implode( '|', $lines ) . ')';
+			// return '/' . str_replace( '/', '\/', preg_replace('|\\\*/|', '/', $regex) ) . '/Si';
+			$regexes = '';
+			$regexStart = '/^https?:\/\/+[a-z0-9_\-.]*(';
+			$regexEnd = ')/Si';
+			$regexMax = 4096;
+			$build = false;
+			foreach ( $lines as $line ) {
+				// FIXME: not very robust size check, but should work. :)
+				if ( $build === false ) {
+					$build = $line;
+				} elseif ( strlen( $build ) + strlen( $line ) > $regexMax ) {
+					$regexes .= $regexStart .
+						str_replace( '/', '\/', preg_replace( '|\\\*/|', '/', $build ) ) .
+						$regexEnd;
+					$build = $line;
+				} else {
+					$build .= '|' . $line;
+				}
+			}
+			if ( $build !== false ) {
+				$regexes .= $regexStart .
+					str_replace( '/', '\/', preg_replace( '|\\\*/|', '/', $build ) ) .
+					$regexEnd;
+			}
+			return $regexes;
+		}
+	}
+
+	/**
+	 * Load external links from the externallinks table
+	 *
+	 * @param \Title $title
+	 *
+	 * @return Array
+	 */
+	public function getLinksFromTracker( $title ) {
+		$dbr = wfGetDB( DB_SLAVE );
+		$id = $title->getArticleID(); // should be zero queries
+		$res = $dbr->select( 'externallinks', array( 'el_to' ),
+			array( 'el_from' => $id ), __METHOD__ );
+		$links = array();
+		foreach ( $res as $row ) {
+			/** @var \stdClass $row */
+			$links[] = $row->el_to;
+		}
+		return $links;
+	}
+
+	/**
+	 * Backend function for confirmEdit() and confirmEditAPI()
+	 *
+	 * @return bool false if the CAPTCHA is rejected, true otherwise
+	 */
+	private function doConfirmEdit( $editPage, $newText, $section, $merged = false ) {
+		$wg = \F::app()->wg;
+		if ( $wg->Request->getVal( 'captchaid' ) ) {
+			$wg->Request->setVal( 'wpCaptchaId', $wg->Request->getVal( 'captchaid' ) );
+		}
+		if ( $wg->Request->getVal( 'captchaword' ) ) {
+			$wg->Request->setVal( 'wpCaptchaWord', $wg->Request->getVal( 'captchaword' ) );
+		}
+		if ( $this->shouldCheck( $editPage, $newText, $section, $merged ) ) {
+			return \Captcha\Factory\Module::getInstance()->passCaptcha();
+		} else {
+			wfDebug( "ConfirmEdit: no need to show captcha.\n" );
+			return true;
+		}
+	}
+
+	/**
+	 * The main callback run on edit attempts.
+	 *
+	 * @param \EditPage $editPage
+	 * @param string $newText
+	 * @param string $section
+	 * @param bool $merged
+	 * 
+	 * @return bool true to continue saving, false to abort and show a captcha form
+	 */
+	public function confirmEdit( $editPage, $newText, $section, $merged = false ) {
+		if ( defined( 'MW_API' ) ) {
+			# API mode
+			# The CAPTCHA was already checked and approved
+			return true;
+		}
+
+		$result = null;
+		if( !wfRunHooks( 'ConfirmEdit::onConfirmEdit', array( &$this, &$editPage, $newText, $section, $merged, &$result ) ) ) {
+			return $result;
+		}
+
+		if ( !$this->doConfirmEdit( $editPage, $newText, $section, $merged ) ) {
+			$editPage->showEditForm( array( &$this, 'editCallback' ) );
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Insert the captcha prompt into an edit form.
+	 * 
+	 * @param \OutputPage $out
+	 */
+	public function editCallback( &$out ) {
+		$out->addWikiText( $this->captcha->getMessage( $this->action ) );
+		$out->addHTML( $this->captcha->getForm() );
+	}
+
+	/**
+	 * A more efficient edit filter callback based on the text after section merging
+	 *
+	 * @param \EditPage $editPage
+	 * @param string $newText
+	 *
+	 * @return bool
+	 */
+	public function confirmEditMerged( $editPage, $newText ) {
+		return $this->confirmEdit( $editPage, $newText, false, true );
+	}
+
+	public function confirmEditAPI( $editPage, $newText, &$resultArr ) {
+		if ( !$this->doConfirmEdit( $editPage, $newText, false, false ) ) {
+			$this->captcha->addCaptchaAPI( $resultArr );
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Hook for user creation form submissions.
+	 *
+	 * @param \User $u
+	 * @param string $message
+	 *
+	 * @return bool true to continue, false to abort user creation
+	 */
+	public function confirmUserCreate( $u, &$message ) {
+		$wg = \F::app()->wg;
+		if ( $wg->CaptchaTriggers['createaccount'] ) {
+			/*	Wikia edit, fbId::47248 No one will be allowed to skip captcha for user creation.
+				Commenting this section out, but feel free to uncomment it if situation changes.
+			if ( $wg->User->isAllowed( 'skipcaptcha' ) ) {
+				wfDebug( "ConfirmEdit: user group allows skipping captcha on account creation\n" );
+				return true;
+			}
+			end Wikia edit fbId::47248 */
+			if ( $this->isIPWhitelisted() )
+				return true;
+
+			$this->trigger = "new account '" . $u->getName() . "'";
+			if ( !$this->captcha->passCaptcha() ) {
+				$message = wfMsg( 'captcha-createaccount-fail' );
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Hook for user login form submissions.
+	 *
+	 * @param \User $u
+	 * @param $pass
+	 * @param $retval
+	 *
+	 * @return bool true to continue, false to abort user creation
+	 */
+	public function confirmUserLogin( $u, $pass, &$retval ) {
+		if ( $this->isBadLoginTriggered() ) {
+			if ( $this->isIPWhitelisted() )
+				return true;
+
+			$this->trigger = "post-badlogin login '" . $u->getName() . "'";
+			if ( !$this->captcha->passCaptcha() ) {
+				// Emulate a bad-password return to confuse the shit out of attackers
+				$retval = \LoginForm::WRONG_PASS;
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Check the captcha on Special:EmailUser
+	 *
+	 * @param \MailAddress $from
+	 * @param \MailAddress $to
+	 * @param string $subject
+	 * @param string $text
+	 * @param string $error reference
+	 *
+	 * @return Bool true to continue saving, false to abort and show a captcha form
+	 */
+	public function confirmEmailUser( $from, $to, $subject, $text, &$error ) {
+		$wg = \F::app()->wg;
+		if ( $wg->CaptchaTriggers['sendemail'] ) {
+			if ( $wg->User->isAllowed( 'skipcaptcha' ) ) {
+				wfDebug( "ConfirmEdit: user group allows skipping captcha on email sending\n" );
+				return true;
+			}
+			if ( $this->isIPWhitelisted() ) {
+				return true;
+			}
+
+			if ( defined( 'MW_API' ) ) {
+				# API mode
+				# Asking for captchas in the API is really silly
+				$error = wfMsg( 'captcha-disabledinapi' );
+				return false;
+			}
+			$this->trigger = "{$wg->User->getName()} sending email";
+			if ( !$this->captcha->passCaptcha() ) {
+				$error = wfMsg( 'captcha-sendemail-fail' );
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Log the status and any triggering info for debugging or statistics
+	 *
+	 * @param string $message
+	 */
+	public function log( $message ) {
+		wfDebugLog( 'captcha', 'ConfirmEdit: ' . $message . '; ' .  $this->trigger );
+	}
+
+	/**
+	 * Retrieve the current version of the page or section being edited...
+	 *
+	 * @param \EditPage $editPage
+	 * @param string $section
+	 *
+	 * @return string
+	 */
+	private function loadText( $editPage, $section ) {
+		$rev = \Revision::newFromTitle( $editPage->mTitle );
+		if ( is_null( $rev ) ) {
+			return "";
+		} else {
+			$text = $rev->getText();
+			if ( $section != '' ) {
+				return \F::app()->wg->Parser->getSection( $text, $section );
+			} else {
+				return $text;
+			}
+		}
+	}
+
+	/**
+	 * Extract a list of all recognized HTTP links in the text.
+	 * @param string $text
+	 * @return array of strings
+	 */
+	public function findLinks( &$editpage, $text ) {
+		$wg = \F::app()->wg;
+
+		$options = new \ParserOptions();
+		$text = $wg->Parser->preSaveTransform( $text, $editpage->mTitle, $wg->User, $options );
+		$out = $wg->Parser->parse( $text, $editpage->mTitle, $options );
+
+		return array_keys( $out->getExternalLinks() );
+	}
+}
