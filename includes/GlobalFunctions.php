@@ -2885,11 +2885,11 @@ function wfEscapeShellArg( ) {
  * Execute a shell command, with time and memory limits mirrored from the PHP
  * configuration if supported.
  * @param $cmd String Command line, properly escaped for shell.
- * @param &$retval optional, will receive the program's exit code.
+ * @param &$retval int optional, will receive the program's exit code.
  *                 (non-zero is usually failure)
  * @param $environ Array optional environment variables which should be
  *                 added to the executed command environment.
- * @return collected stdout as a string (trailing newlines stripped)
+ * @return string collected stdout as a string (trailing newlines stripped)
  */
 function wfShellExec( $cmd, &$retval = null, $environ = array() ) {
 	global $IP, $wgMaxShellMemory, $wgMaxShellFileSize, $wgMaxShellTime;
