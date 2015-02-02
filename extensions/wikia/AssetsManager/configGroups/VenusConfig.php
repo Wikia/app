@@ -186,7 +186,8 @@ $VenusConfig[ 'global_navigation_scss' ] = [
 		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationAccountNavigation.scss',
 		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationHubsMenu.scss',
 		'//extensions/wikia/UserLogin/css/UserLoginDropdown.globalNavigation.scss',
-		'//extensions/wikia/WallNotifications/styles/WallNotifications.globalNavigation.scss'
+		'//extensions/wikia/WallNotifications/styles/WallNotifications.globalNavigation.scss',
+		'//skins/shared/styles/transparent-out.scss'
 	]
 ];
 
