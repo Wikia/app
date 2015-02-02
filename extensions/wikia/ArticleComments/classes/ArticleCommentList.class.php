@@ -1096,7 +1096,7 @@ class ArticleCommentList {
 		wfProfileIn( __METHOD__ );
 
 		if ( in_array( $oNewTitle->getNamespace(), $wgArticleCommentsNamespaces ) &&
-			in_array( $oOldTitle->getNamespace(), $wgArticleCommentsNamespaces )
+			!in_array( $oOldTitle->getNamespace(), $wgArticleCommentsNamespaces )
 		) {
 			BlogArticle::setProps( $oNewTitle->getArticleID(), ['commenting' => 1] );
 		}
