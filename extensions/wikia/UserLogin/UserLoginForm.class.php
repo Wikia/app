@@ -238,7 +238,7 @@ class UserLoginForm extends LoginForm {
 		/*
 		 * Remove when SOC-217 ABTest is finished
 		 */
-		$isAllowRegisterUnconfirmed = $this->IsAllowRegisterUnconfirmed();
+		$isAllowRegisterUnconfirmed = $this->isAllowedRegisterUnconfirmed();
 		/*
 		 * end remove
 		 */
@@ -312,7 +312,7 @@ class UserLoginForm extends LoginForm {
 	 *
 	 * @return bool
 	 */
-	protected function IsAllowRegisterUnconfirmed() {
+	public function isAllowedRegisterUnconfirmed() {
 		global $wgEnableRegisterUnconfirmed;
 		$registerUnconfirmedCookie = $this->getRequest()->getCookie( 'RegisterUnconfirmed' );
 

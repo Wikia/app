@@ -126,12 +126,43 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			$this->errParam = $response->getVal( 'errParam', '' );
 
 			if ( $this->result == 'ok' ) {
-				$params = [
-					'method' => 'sendConfirmationEmail',
-					'username' => $this->username,
-					'byemail' => intval( $this->byemail ),
-				];
-				$redirectUrl = $this->wg->title->getFullUrl( $params );
+
+				/*
+				 * Remove when SOC-217 ABTest is finished
+				 */
+				$signupForm = new UserLoginForm( $this->wg->request );
+
+				if ( $signupForm->isAllowedRegisterUnconfirmed() ) {
+					$u = User::newFromName( $this->username );
+					// Get and clear redirect page
+					$userSignupRedirect = $u->getOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME );
+					$u->setOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, null );
+
+					$u->saveSettings();
+
+					// redirect user
+					if ( !empty( $userSignupRedirect ) ) {
+						// Redirect user to the point where he finished (when signup on create wiki)
+						$titleObj = SpecialPage::getTitleFor( 'CreateNewWiki' );
+						$query = $userSignupRedirect;
+					} else {
+						$titleObj = $u->getUserPage();
+						$query = '';
+					}
+
+					$redirectUrl = $titleObj->getFullURL( $query );
+				} else {
+				/*
+				 * end remove
+				 */
+					$params = [
+						'method' => 'sendConfirmationEmail',
+						'username' => $this->username,
+						'byemail' => intval( $this->byemail ),
+					];
+					$redirectUrl = $this->wg->title->getFullUrl( $params );
+				}
+
 				$this->wg->out->redirect( $redirectUrl );
 			}
 
