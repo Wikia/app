@@ -129,7 +129,7 @@ class GlobalWatchlistBot {
 			$this->checkIfSubscribedToWeeklyDigest( $user );
 		} catch ( Exception $e ) {
 			if ( $sendLogging ) {
-				WikiaLogger::instance()->info( 'Skipped Weekly Digest', [
+				WikiaLogger::instance()->info( 'Weekly Digest Skipped', [
 					'reason' => $e->getMessage(),
 					'userID' => $userID
 				]);
@@ -228,7 +228,7 @@ class GlobalWatchlistBot {
 
 		$oUser->sendMail( $sEmailSubject, $sEmailBody, $sFrom, $oReply, 'GlobalWatchlist', $sEmailBodyHTML );
 
-		WikiaLogger::instance()->info( 'Sent Weekly Digest', [ 'userID' => $iUserId ] );
+		WikiaLogger::instance()->info( 'Weekly Digest Sent', [ 'userID' => $iUserId ] );
 	}
 
 	/**

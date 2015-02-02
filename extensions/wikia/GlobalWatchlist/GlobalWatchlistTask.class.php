@@ -45,7 +45,7 @@ class GlobalWatchlistTask extends BaseTask {
 
 		$db = wfGetDB( DB_SLAVE, [], $wgExternalDatawareDB );
 		$wikiIDs = ( new WikiaSQL() )
-			->SELECT( self::columnCityID )
+			->SELECT()->DISTINCT( self::columnCityID )
 			->FROM( self::tableName )
 			->WHERE( self::columnUserID )->EQUAL_TO( $userID )
 			->AND_( self::columnTimeStamp )->IS_NOT_NULL()
@@ -64,6 +64,21 @@ class GlobalWatchlistTask extends BaseTask {
 	}
 
 	/**
+	 * Clears all watched pages from all wikis for the given user in
+	 * the global_watchlist table.
+	 * @param $userID
+	 */
+	public function clearGlobalWatchlistAll( $userID ) {
+		global $wgExternalDatawareDB;
+
+		$db = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
+		( new WikiaSQL() )
+			->DELETE()->FROM( self::tableName )
+			->WHERE( self::columnUserID )->EQUAL_TO( $userID )
+			->run( $db );
+	}
+
+	/**
 	 * Clears all watched pages from the current wiki for the given
 	 * user in the global_watchlist table.
 	 * @param $userID
@@ -76,21 +91,6 @@ class GlobalWatchlistTask extends BaseTask {
 			->DELETE()->FROM( self::tableName )
 			->WHERE( self::columnUserID )->EQUAL_TO( $userID )
 			->AND_( self::columnCityID )->EQUAL_TO( $wgCityId )
-			->run( $db );
-	}
-
-	/**
-	 * Clears all watched pages from all wikis for the given user in
-	 * the global_watchlist table.
-	 * @param $userID
-	 */
-	public function clearGlobalWatchlistAll( $userID ) {
-		global $wgExternalDatawareDB;
-
-		$db = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
-		( new WikiaSQL() )
-			->DELETE()->FROM( self::tableName )
-			->WHERE( self::columnUserID )->EQUAL_TO( $userID )
 			->run( $db );
 	}
 

@@ -46,8 +46,8 @@ User B however will receive a notification email, and the table will be updated 
 	+----------+--------------+-----------+--------------------------+-------------------------+
 	Ex 3
 
-As soon as User A revisits the page however, their `wl_notificationtimestamp` is set back to NULL and they will receive
-a notification for the next time the page is edited.
+As soon as User A revisits the page, their `wl_notificationtimestamp` is set back to NULL and they will receive a
+notification the next time the page is edited.
 
 	+----------+--------------+-----------+--------------------------+-------------------------+
 	| wl_user  | wl_namespace | wl_title  | wl_notificationtimestamp | wl_wikia_addedtimestamp |
@@ -104,3 +104,9 @@ When that job finally runs which sends out the weekly notifications, the `global
 The digest is then prepared and sent out to them. At that point those rows are deleted from the `global_watchlist` table,
 and the corresponding rows in the local watchlist tables have their `wl_notificationtimestamp` fields set to null (which
 means the user will be notified about the next change going forward).
+
+If a user ever unsubscribes from the Weekly Digest, or unsubscribes from all email from Wikia, all of their rows will be
+deleted from the `global_watchlist` table. New rows will not be added for them until they resubscribe, and any scheduled
+jobs to send out the Weekly Digest for that user will not actually send out the digest.
+
+Logging and stats for the Weekly Digest can be found [here](https://kibana.wikia-inc.com/index.html#/dashboard/elasticsearch/Weekly%20Digest)
