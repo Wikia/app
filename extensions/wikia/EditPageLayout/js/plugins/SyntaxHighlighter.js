@@ -69,7 +69,7 @@ define('WikiTextSyntaxHighlighter', function() {
 
 		function highlightSyntax(textarea) {
 
-			lastText = textarea.$.value;
+			lastText = textarea.value;
 			/* Backslashes and apostrophes are CSS-escaped at the beginning and all
 			 parsing regexes and functions are designed to match. On the other hand,
 			 newlines are not escaped until written so that in the regexes ^ and $
@@ -391,8 +391,8 @@ define('WikiTextSyntaxHighlighter', function() {
 
 		//this function runs once every 500ms to detect changes to wpTextbox1's text that the input event does not catch
 		//this happens when another script changes the text without knowing that the syntax highlighter needs to be informed
-		function highlightSyntaxIfNeeded(textbox) {
-			if (textbox.$.value != lastText) {
+		function highlightSyntaxIfNeeded(textarea) {
+			if (textarea.value != lastText) {
 				highlightSyntax(textbox);
 			}
 			if (wpTextbox1.scrollLeft != wpTextbox0.scrollLeft) {
@@ -446,7 +446,7 @@ define('WikiTextSyntaxHighlighter', function() {
 
 			var textboxContainer = document.createElement("div");
 			wpTextbox0 = document.createElement("div");
-			wpTextbox1 = textarea.$;
+			wpTextbox1 = textarea;
 			var syntaxStyleElement = document.createElement("style");
 			syntaxStyleTextNode = syntaxStyleElement.appendChild(document.createTextNode(""));
 
@@ -514,11 +514,11 @@ define('WikiTextSyntaxHighlighter', function() {
 
 			document.head.appendChild(syntaxStyleElement);
 
-			textarea.on( 'input', function() {
+			$(wpTextbox1).on( 'input', function() {
 				highlightSyntax(this);
 			});
-			textarea.$.addEventListener("scroll", syncScrollX);
-			textarea.$.addEventListener("scroll", syncScrollY);
+			wpTextbox1.addEventListener("scroll", syncScrollX);
+			wpTextbox1.addEventListener("scroll", syncScrollY);
 			attributeObserver = new MutationObserver(syncTextDirection);
 			attributeObserver.observe(wpTextbox1, {attributes: true});
 			highlightSyntaxIfNeededIntervalID = setInterval(function(){

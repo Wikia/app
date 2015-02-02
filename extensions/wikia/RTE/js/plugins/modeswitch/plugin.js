@@ -169,7 +169,7 @@ CKEDITOR.plugins.add('rte-modeswitch',
 
 	sourceModeReadyInitSyntaxHighlighting: function(ev) {
 		require(['WikiTextSyntaxHighlighter'],function(WikiTextSyntaxHighlighter){
-			WikiTextSyntaxHighlighter.init(ev.editor.textarea);
+			WikiTextSyntaxHighlighter.init(ev.editor.textarea.$);
 		});
 	},
 
