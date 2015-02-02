@@ -1,27 +1,4 @@
 <? if ( $user->isLoggedIn() ) : ?>
-	<li>
-		<header class="notifications-header">
-			<? if ( $wikiCount > 1): ?>
-				<?= wfMessage('wall-notifications-all')->text() ?>
-			<? else: ?>
-				<?= wfMessage('wall-notifications')->text() ?>
-			<? endif; ?>
-
-			<? if( !empty( $count ) ): ?>
-				<div class="notifications-markasread">
-				<? if( $wikiCount == 0 || $notificationCounts[0]['unread'] == 0 ): ?>
-					<span id="markasread-this-wiki"><?= wfMessage('wall-notifications-markasread')->text() ?></span>
-				<? else: ?>
-					<span id="markasread-sub"><?= wfMessage('wall-notifications-markasread')->text() ?></span>
-					<div>
-						<span id="markasread-this-wiki"><?= wfMessage('wall-notifications-markasread-this-wiki')->text() ?></span>
-						<span id="markasread-all-wikis"><?= wfMessage('wall-notifications-markasread-all-wikis')->text() ?></span>
-					</div>
-				<? endif; ?>
-				</div>
-			<? endif; ?>
-		</header>
-	</li>
 	<li id="notificationsContainer">
 		<ul>
 			<? if (!empty( $notificationCounts) ) : ?>
@@ -55,6 +32,13 @@
 						</li>
 					<? endif ?>
 				<? endforeach; ?>
+				<? if( !empty( $count ) ): ?>
+					<li>
+						<header class="notifications-markasread">
+							<?= wfMessage('wall-notifications-markasread')->text() ?>
+						</header>
+					</li>
+				<? endif; ?>
 			<? else : ?>
 				<li class="notification empty"><?= wfMessage('wall-notifications-empty')->text() ?></li>
 			<? endif ?>
