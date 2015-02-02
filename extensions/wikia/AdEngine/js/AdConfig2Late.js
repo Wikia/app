@@ -49,8 +49,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 		dartDirectBtfSlots = {
 			'LEFT_SKYSCRAPER_3': true,
 			'PREFOOTER_LEFT_BOXAD': true,
-			'PREFOOTER_RIGHT_BOXAD': true,
-			'TOP_INCONTENT_BOXAD': true
+			'PREFOOTER_RIGHT_BOXAD': true
 		},
 		alwaysCallDart = context.opts.alwaysCallDart && !instantGlobals.wgSitewideDisableGpt,
 		decorators = adDecoratorTopInContent ? [adDecoratorTopInContent] : [];
@@ -116,11 +115,7 @@ define('ext.wikia.adEngine.adConfigLate', [
 		}
 
 		// Load GPT and Liftium ads in TOP_INCONTENT_BOXAD
-		if (slotname === 'TOP_INCONTENT_BOXAD') {
-			return [adProviderDirectGpt, adProviderLiftium];
-		}
-
-		if (context.targeting.skin === 'venus' && slotname === 'INCONTENT_BOXAD_1') {
+		if (context.targeting.skin === 'venus' && slotname.indexOf('INCONTENT') !== -1) {
 			return [];
 		}
 
