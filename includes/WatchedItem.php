@@ -81,6 +81,7 @@ class WatchedItem {
 	 * @return bool (always true)
 	 */
 	public function addWatch() {
+		jtrace();
 
 		// Only loggedin user can have a watchlist
 		if ( wfReadOnly() || $this->mUser->isAnon() ) {
@@ -150,11 +151,10 @@ class WatchedItem {
 			), __METHOD__
 		);
 
+		// No errors, update the global_watchlist table.
 		if ( $dbw->affectedRows() ) {
-			$success = true;
+			wfRunHooks( 'WatchedItem::updateWatch', array ( $this, $this->userID ) );
 		}
-
-		wfRunHooks( 'WatchedItem::removeWatch', array ( $this, $success ) );
 
 		return $success;
 	}

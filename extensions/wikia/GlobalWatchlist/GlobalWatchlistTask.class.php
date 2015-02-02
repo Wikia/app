@@ -14,17 +14,32 @@ class GlobalWatchlistTask extends BaseTask {
 	const columnTimeStamp = 'gwa_timestamp';
 	const columnRevisionTimeStamp = 'gwa_rev_timestamp';
 
-	public function sendWeeklyDigest( $user ) {
+	/**
+	 * Sends the weekly digest to the user
+	 * @param $userID
+	 */
+	public function sendWeeklyDigest( $userID ) {
 		$globalWatchlistBot = new GlobalWatchlistBot();
-		$globalWatchlistBot->sendDigestToUser( $user );
-		$this->clearWatchLists( $user );
+		$globalWatchlistBot->sendDigestToUser( $userID );
+		$this->clearWatchLists( $userID );
 	}
 
+	/**
+	 * Clear the global_watchlist and local watchlists for a given user.
+	 * This is done after we send them the weekly digest which effectively
+	 * means they have "seen" all the watched pages and will receive notifications
+	 * for new edits.
+	 * @param $userID
+	 */
 	private function clearWatchLists( $userID ) {
 		$this->clearLocalWatchlists( $userID );
 		$this->clearGlobalWatchlistAll( $userID );
 	}
 
+	/**
+	 * Clears the local watchlist tables for a given user.
+	 * @param $userID
+	 */
 	private function clearLocalWatchlists( $userID ) {
 		global $wgExternalDatawareDB;
 
@@ -49,6 +64,8 @@ class GlobalWatchlistTask extends BaseTask {
 	}
 
 	/**
+	 * Clears all watched pages from the current wiki for the given
+	 * user in the global_watchlist table.
 	 * @param $userID
 	 */
 	public function clearGlobalWatchlist( $userID ) {
@@ -63,6 +80,8 @@ class GlobalWatchlistTask extends BaseTask {
 	}
 
 	/**
+	 * Clears all watched pages from all wikis for the given user in
+	 * the global_watchlist table.
 	 * @param $userID
 	 */
 	public function clearGlobalWatchlistAll( $userID ) {
@@ -76,6 +95,10 @@ class GlobalWatchlistTask extends BaseTask {
 	}
 
 	/**
+	 * Adds entries for watched pages in the global_watchlist table. This
+	 * also kicks off a job to send the weekly digest 7 days from now. Since
+	 * that job does a dedup check, any subsequent attempts to schedule that
+	 * weekly digest job will be ignored until the initial one is sent.
 	 * @param $databaseKey String
 	 * @param $nameSpace String
 	 * @param $watchers
@@ -108,6 +131,12 @@ class GlobalWatchlistTask extends BaseTask {
 		}
 	}
 
+	/**
+	 * Schedules the weekly digest to be sent to the given user
+	 * in 7 days. A dedup check is performed to prevent additional
+	 * weekly digests to be scheduled until we send the initial one.
+	 * @param $userID
+	 */
 	private function scheduleWeeklyDigest( $userID ) {
 		$task = new self();
 		( new AsyncTaskList() )
@@ -118,6 +147,8 @@ class GlobalWatchlistTask extends BaseTask {
 	}
 
 	/**
+	 * Clears all records in the global_watchlist table with the given name, namespace,
+	 * and watchers.
 	 * @param $databaseKey
 	 * @param $nameSpace
 	 * @param array $watchers
@@ -136,6 +167,8 @@ class GlobalWatchlistTask extends BaseTask {
 	}
 
 	/**
+	 * Updates records in the global_watchlist table when a page has been renamed,
+	 * aka, moved.
 	 * @param $oldTitleValues array
 	 * @param $newTitleValues array
 	 */

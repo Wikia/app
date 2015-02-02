@@ -66,7 +66,9 @@ class GlobalWatchlistHooks {
 	}
 
 	/**
-	 * Hook function calls when watch was updated in database
+	 * Called when a watched item is being updated. If the timestamp is null, this indicates the
+	 * watchers have seen the page so the watch can be cleared. If the time stamp is not null,
+	 * this indicates the watchers need to be notified and should be added to the global_watchlist.
 	 * @param $watchedItem WatchedItem: object
 	 * @param $watchers Array or Integer: array of user IDs or user ID
 	 * @param $timestamp Datetime or null
@@ -112,25 +114,7 @@ class GlobalWatchlistHooks {
 	}
 
 	/**
-	 * Hook function calls when watch was removed from database
-	 * @param $watchedItem WatchedItem: object
-	 * @param $success Boolean: removed successfully
-	 * @return bool (always true)
-	 */		
-	static public function removeWatcher( $watchedItem, $success ) {
-
-		// some errors when update in local watchlist table
-		if ( !$success ) {
-			return true;
-		}
-
-		self::removeWatchers( $watchedItem, [ $watchedItem->userID ] );
-
-		return true;
-	}
-
-	/**
-	 * Hook function to delete all watches for User
+	 * Delete all watches for the given user on this wiki from the global_watchlist table.
 	 * @param $userID integer
 	 * @return bool (always true)
 	 */
@@ -147,7 +131,8 @@ class GlobalWatchlistHooks {
 	}
 
 	/**
-	 * Hook function to replace watch records in database
+	 * Updates records in the global_watchlist table when a page has been renamed,
+	 * aka, moved.
 	 * @param $oldTitle Title
 	 * @param $newTitle Title
 	 * @return bool (always true)

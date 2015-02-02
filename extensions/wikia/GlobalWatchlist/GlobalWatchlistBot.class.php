@@ -1,6 +1,7 @@
 <?php
 
 use \Wikia\Tasks\AsyncTaskList;
+use \Wikia\Logger\WikiaLogger;
 
 class GlobalWatchlistBot {
 
@@ -17,7 +18,7 @@ class GlobalWatchlistBot {
 	public function sendDigestToUser( $userID ) {
 		global $wgExternalDatawareDB;
 
-		if ( $this->shouldNotSendDigest( $userID ) ) {
+		if ( $this->shouldNotSendDigest( $userID, $logReasonForNotSending = true ) ) {
 			$this->clearUserFromGlobalWatchlist( $userID );
 			return;
 		}
@@ -29,8 +30,6 @@ class GlobalWatchlistBot {
 			array ( "gwa_id", "gwa_user_id", "gwa_city_id", "gwa_namespace", "gwa_title", "gwa_rev_id", "gwa_timestamp" ),
 			array (
 				"gwa_user_id" => intval( $userID ),
-				"gwa_timestamp <= gwa_rev_timestamp",
-				"gwa_timestamp is not null"
 			),
 			__METHOD__,
 			array (
@@ -118,9 +117,10 @@ class GlobalWatchlistBot {
 
 	/**
 	 * @param $userID
+	 * @param $logReasonForNotSending
 	 * @return bool
 	 */
-	public function shouldNotSendDigest( $userID ) {
+	public function shouldNotSendDigest( $userID, $logReasonForNotSending = false ) {
 		$user = $this->getUserObject( $userID );
 		try {
 			$this->checkIfValidUser( $user );
@@ -128,7 +128,12 @@ class GlobalWatchlistBot {
 			$this->checkIfEmailConfirmed( $user );
 			$this->checkIfSubscribedToWeeklyDigest( $user );
 		} catch ( Exception $e ) {
-			echo "There was this exception for user $userID" . $e->getMessage();
+			if ( $logReasonForNotSending ) {
+				WikiaLogger::instance()->info( 'Skipped Weekly Digest', [
+					'reason' => $e->getMessage(),
+					'userID' => $userID
+				]);
+			}
 			return true;
 		}
 		return false;
@@ -221,11 +226,9 @@ class GlobalWatchlistBot {
 		// yes this needs to be a MA object, not string (the docs for sendMail are wrong)
 		$oReply = new MailAddress( 'noreply@wikia.com' );
 
-		if ( empty( $this->mDebugMailTo ) ) {
-			$oUser->sendMail( $sEmailSubject, $sEmailBody, $sFrom, $oReply, 'GlobalWatchlist', $sEmailBodyHTML );
-		} else {
-			UserMailer::send( new MailAddress( $this->mDebugMailTo ), new MailAddress( $sFrom ), $sEmailSubject, $sEmailBody, null, null, 'GlobalWatchlist' );
-		}
+		$oUser->sendMail( $sEmailSubject, $sEmailBody, $sFrom, $oReply, 'GlobalWatchlist', $sEmailBodyHTML );
+
+		WikiaLogger::instance()->info( 'Sent Weekly Digest', [ 'userID' => $iUserId ] );
 	}
 
 	/**
