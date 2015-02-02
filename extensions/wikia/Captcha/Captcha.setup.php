@@ -41,9 +41,6 @@ $wgAvailableRights[] = 'skipcaptcha';
  */
 $wgCaptchaWhitelistIP = false;
 
-$wgCaptcha = null;
-$wgCaptchaClass = 'SimpleCaptcha';
-
 /**
  * Actions which can trigger a captcha
  *
@@ -89,35 +86,10 @@ $wgCaptchaTriggersOnNamespace = [];
 $wgCaptchaStorageClass = 'Captcha\Store\Session';
 
 /**
- * Number of seconds a captcha session should last in the data cache
- * before expiring when managing through CaptchaCacheStore class.
- *
- * Default is a half hour.
- */
-$wgCaptchaSessionExpiration = 30 * 60;
-
-/**
- * Number of seconds after a bad login that a captcha will be shown to
- * that client on the login form to slow down password-guessing bots.
- *
- * Has no effect if 'badlogin' is disabled in $wgCaptchaTriggers or
- * if there is not a caching engine enabled.
- *
- * Default is five minutes.
- */
-$wgCaptchaBadLoginExpiration = 5 * 60;
-
-/**
  * Allow users who have confirmed their e-mail addresses to post
  * URL links without being harassed by the captcha.
  */
 $wgAllowConfirmedEmail = false;
-
-/**
- * Number of bad login attempts before triggering the captcha.  0 means the
- * captcha is presented on the first login.
- */
-$wgCaptchaBadLoginAttempts = 3;
 
 /**
  * Regex to whitelist URLs to known-good sites...

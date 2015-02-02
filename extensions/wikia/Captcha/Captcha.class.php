@@ -7,6 +7,14 @@ use Wikia\Logger\WikiaLogger;
 
 class Handler {
 
+	// Number of seconds after a bad login that a captcha will be shown to that client on the login
+	// form to slow down password-guessing bots. Set to five minutes.
+	const BAD_LOGIN_TTL = 300;
+
+	// Number of bad login attempts before triggering the captcha.  0 means the captcha is presented
+	// on the first login.
+	const MAX_BAD_LOGIN_ATTEMPTS = 3;
+
 	protected $action;
 
 	protected $trigger;
@@ -112,7 +120,7 @@ class Handler {
 			$key = $this->badLoginKey();
 			$count = $wg->Memc->get( $key );
 			if ( !$count ) {
-				$wg->Memc->add( $key, 0, $wg->CaptchaBadLoginExpiration );
+				$wg->Memc->add( $key, 0, self::BAD_LOGIN_TTL );
 			}
 			$wg->Memc->incr( $key );
 		}
@@ -127,7 +135,13 @@ class Handler {
 	 */
 	private function isBadLoginTriggered() {
 		$wg = \F::app()->wg;
-		return $wg->CaptchaTriggers['badlogin'] && intval( $wg->Memc->get( $this->badLoginKey() ) ) >= $wg->CaptchaBadLoginAttempts;
+
+		if ( empty( $wg->CaptchaTriggers['badlogin'] ) ) {
+			return false;
+		}
+
+		$loginAttempts = $wg->Memc->get( $this->badLoginKey() );
+		return $loginAttempts >= self::MAX_BAD_LOGIN_ATTEMPTS;
 	}
 
 	/**

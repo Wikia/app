@@ -9,15 +9,22 @@ namespace Captcha\Store;
  */
 class Cache extends Base {
 
+	// Set to 30 minutes
+	const CACHE_TTL = 1800;
+
+	/** @var \MemcachedPhpBagOStuff */
+	private $memc;
+
+	public function __construct() {
+		$this->memc = \F::app()->wg->Memc;
+	}
+
 	public function store( $index, $info ) {
-		global $wgMemc, $wgCaptchaSessionExpiration;
-		$wgMemc->set( wfMemcKey( 'captcha', $index ), $info,
-			$wgCaptchaSessionExpiration );
+		$this->memc->set( $this->getMemKey( $index ), $info, self::CACHE_TTL );
 	}
 
 	public function retrieve( $index ) {
-		global $wgMemc;
-		$info = $wgMemc->get( wfMemcKey( 'captcha', $index ) );
+		$info = $this->memc->get( $this->getMemKey( $index ) );
 		if ( $info ) {
 			return $info;
 		} else {
@@ -26,8 +33,11 @@ class Cache extends Base {
 	}
 
 	public function clear( $index ) {
-		global $wgMemc;
-		$wgMemc->delete( wfMemcKey( 'captcha', $index ) );
+		$this->memc->delete( $this->getMemKey( $index ) );
+	}
+
+	public function getMemKey( $index ) {
+		return wfMemcKey( 'captcha', $index );
 	}
 
 	public function cookiesNeeded() {
