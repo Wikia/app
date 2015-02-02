@@ -78,7 +78,6 @@ class AssetsManagerBaseBuilder {
 	public function getCacheDuration() {
 		global $wgResourceLoaderMaxage, $wgStyleVersion;
 		if($this->mCb > $wgStyleVersion) {
-			Wikia::log(__METHOD__, false, "shorter TTL set for {$this->mOid}", true);
 			return $wgResourceLoaderMaxage['unversioned'];
 		} else {
 			return $wgResourceLoaderMaxage['versioned'];
@@ -102,12 +101,12 @@ class AssetsManagerBaseBuilder {
 
 		if($useYUI) {
 			$tempOutFile = tempnam(sys_get_temp_dir(), 'AMOut');
-			shell_exec("nice -n 15 java -jar {$IP}/lib/vendor/yuicompressor-2.4.2.jar --type js -o {$tempOutFile} {$tempInFile}");
+			wfShellExec("nice -n 15 java -jar {$IP}/lib/vendor/yuicompressor-2.4.2.jar --type js -o {$tempOutFile} {$tempInFile}");
 			$out = file_get_contents($tempOutFile);
 			unlink($tempOutFile);
 		} else {
 			$jsmin = "{$IP}/lib/vendor/jsmin";
-			$out = shell_exec("cat $tempInFile | $jsmin");
+			$out = wfShellExec("cat $tempInFile | $jsmin");
 		}
 
 		unlink($tempInFile);
@@ -117,14 +116,9 @@ class AssetsManagerBaseBuilder {
 	}
 
 	private function minifyCSS($content) {
-		$minifyTimeStart = microtime(true);
-
 		wfProfileIn(__METHOD__);
 		$out = CSSMin::minify($content);
 		wfProfileOut(__METHOD__);
-
-		\Wikia::log('sass-minify-WIKIA', false,
-			sprintf('%s: took %.2f ms', $this->mOid, ((microtime(true) - $minifyTimeStart) * 1000)), true /* $force */);
 
 		return $out;
 	}
