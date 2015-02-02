@@ -36,8 +36,7 @@ class WikiaUploadStashFile extends UploadStashFile {
 		global $wgEnableVignette;
 
 		if ($wgEnableVignette) {
-			$generator = $this->getUrlGenerator();
-			VignetteRequest::applyLegacyThumbDefinition($generator, $suffix);
+			$generator = VignetteRequest::applyLegacyThumbDefinition($this->getUrlGenerator(), $suffix);
 			$path = $generator->url();
 		} else {
 			$path = $this->repo->getZoneUrl( 'thumb' ) . '/temp/' . $this->getUrlRel();

@@ -242,8 +242,6 @@ class VignetteRequest {
 			$generator = self::setThumbnailFormat($generator, $matches[1]);
 		}
 
-		// vignette TODO: add images/temp to image-type regex
-
 		return $generator;
 	}
 }
