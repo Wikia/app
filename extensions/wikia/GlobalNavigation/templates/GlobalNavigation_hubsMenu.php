@@ -1,4 +1,4 @@
-<a class="hubs-entry-point global-navigation-link"></a>
+<a class="hubs-entry-point"></a>
 <nav id="hubs" class="hubs-menu">
 	<ul class="hub-list">
 		<? foreach( $menuNodes as $index => $hub ): ?>
