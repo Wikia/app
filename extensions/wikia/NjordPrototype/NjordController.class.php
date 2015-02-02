@@ -178,27 +178,25 @@ class NjordController extends WikiaController {
 		}
 	}
 
-	public function saveHeroTitle() {
+	public function saveTitleAndDescription() {
 		$title = $this->getRequest()->getVal( 'title', false );
-		$success = false;
-
-		if ( $title ) {
-			$wikiDataModel = $this->getWikiData();
-			$wikiDataModel->title = $title;
-			$success = $this->setWikiData( $wikiDataModel );
-		}
-		$this->getResponse()->setVal( 'success', $success );
-		$this->getResponse()->setVal( 'wikiData', $wikiDataModel );
-	}
-
-	public function saveHeroDescription() {
 		$description = $this->getRequest()->getVal( 'description', false );
+
 		$success = false;
 		$wikiDataModel = $this->getWikiData();
+
+		if ( $title ) {
+			$wikiDataModel->title = $title;
+		}
+
 		if ( $description ) {
 			$wikiDataModel->description = $description;
+		}
+
+		if ( $title || $description ) {
 			$success = $this->setWikiData( $wikiDataModel );
 		}
+
 		$this->getResponse()->setVal( 'success', $success );
 		$this->getResponse()->setVal( 'wikiData', $wikiDataModel );
 	}
