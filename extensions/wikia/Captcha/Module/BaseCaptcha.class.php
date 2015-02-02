@@ -3,6 +3,7 @@
 namespace Captcha\Module;
 
 use Captcha\Factory;
+use Wikia\Logger\WikiaLogger;
 
 /**
  * Class BaseCaptcha
@@ -161,7 +162,10 @@ class BaseCaptcha {
 	 * @param string $message
 	 */
 	public function log( $message ) {
-		wfDebugLog( 'captcha', 'ConfirmEdit: ' . $message . '; ' .  $this->trigger );
+		$log = WikiaLogger::instance();
+		$log->info( 'Captcha: ' . $message, [
+			'type' => __CLASS__,
+		] );
 	}
 
 	/**

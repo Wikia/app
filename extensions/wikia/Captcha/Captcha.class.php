@@ -3,6 +3,7 @@
 namespace Captcha;
 
 use Captcha\Factory;
+use Wikia\Logger\WikiaLogger;
 
 class Handler {
 
@@ -30,7 +31,7 @@ class Handler {
 		$wg = \F::app()->wg;
 		if ( $wg->CaptchaTriggers['sendemail'] ) {
 			if ( $wg->User->isAllowed( 'skipcaptcha' ) ) {
-				wfDebug( "ConfirmEdit: user group allows skipping captcha on email sending\n" );
+				$this->log( "user group allows skipping captcha on email sending\n" );
 				return true;
 			}
 			$form->addFooterText(
@@ -55,7 +56,7 @@ class Handler {
 		$wg = \F::app()->wg;
 		if ( $wg->CaptchaTriggers['createaccount'] ) {
 			if ( $wg->User->isAllowed( 'skipcaptcha' ) ) {
-				wfDebug( "ConfirmEdit: user group allows skipping captcha on account creation\n" );
+				$this->log( "user group allows skipping captcha on account creation\n" );
 				return true;
 			}
 
@@ -189,7 +190,7 @@ class Handler {
 		$title = $editPage->mArticle->getTitle();
 
 		if ( $wg->User->isAllowed( 'skipcaptcha' ) ) {
-			wfDebug( "ConfirmEdit: user group allows skipping captcha\n" );
+			$this->log( "user group allows skipping captcha\n" );
 			return false;
 		}
 		if ( $this->isIPWhitelisted() ) {
@@ -198,7 +199,7 @@ class Handler {
 
 		if ( $wg->EmailAuthentication && $wg->AllowConfirmedEmail &&
 			$wg->User->isEmailConfirmed() ) {
-			wfDebug( "ConfirmEdit: user has confirmed mail, skipping captcha\n" );
+			$this->log( "user has confirmed mail, skipping captcha\n" );
 			return false;
 		}
 
@@ -208,7 +209,7 @@ class Handler {
 				$wg->User->getName(),
 				$title->getPrefixedText() );
 			$this->action = 'edit';
-			wfDebug( "ConfirmEdit: checking all edits...\n" );
+			$this->log( "checking all edits...\n" );
 			return true;
 		}
 
@@ -218,7 +219,7 @@ class Handler {
 				$wg->User->getName(),
 				$title->getPrefixedText() );
 			$this->action = 'create';
-			wfDebug( "ConfirmEdit: checking on page creation...\n" );
+			$this->log( "checking on page creation...\n" );
 			return true;
 		}
 
@@ -318,7 +319,7 @@ class Handler {
 
 		# No lines, don't make a regex which will match everything
 		if ( count( $lines ) == 0 ) {
-			wfDebug( "No lines\n" );
+			$this->log( "No lines\n" );
 			return false;
 		} else {
 			# Make regex
@@ -388,7 +389,7 @@ class Handler {
 		if ( $this->shouldCheck( $editPage, $newText, $section, $merged ) ) {
 			return \Captcha\Factory\Module::getInstance()->passCaptcha();
 		} else {
-			wfDebug( "ConfirmEdit: no need to show captcha.\n" );
+			$this->log( "no need to show captcha.\n" );
 			return true;
 		}
 	}
@@ -467,7 +468,7 @@ class Handler {
 			/*	Wikia edit, fbId::47248 No one will be allowed to skip captcha for user creation.
 				Commenting this section out, but feel free to uncomment it if situation changes.
 			if ( $wg->User->isAllowed( 'skipcaptcha' ) ) {
-				wfDebug( "ConfirmEdit: user group allows skipping captcha on account creation\n" );
+				$this->log( "user group allows skipping captcha on account creation\n" );
 				return true;
 			}
 			end Wikia edit fbId::47248 */
@@ -522,7 +523,7 @@ class Handler {
 		$wg = \F::app()->wg;
 		if ( $wg->CaptchaTriggers['sendemail'] ) {
 			if ( $wg->User->isAllowed( 'skipcaptcha' ) ) {
-				wfDebug( "ConfirmEdit: user group allows skipping captcha on email sending\n" );
+				$this->log( "user group allows skipping captcha on email sending\n" );
 				return true;
 			}
 			if ( $this->isIPWhitelisted() ) {
@@ -550,7 +551,11 @@ class Handler {
 	 * @param string $message
 	 */
 	public function log( $message ) {
-		wfDebugLog( 'captcha', 'ConfirmEdit: ' . $message . '; ' .  $this->trigger );
+		$log = WikiaLogger::instance();
+		$log->info( 'Captcha: ' . $message, [
+			'action' => $this->action,
+			'detail' => $this->trigger,
+		] );
 	}
 
 	/**
