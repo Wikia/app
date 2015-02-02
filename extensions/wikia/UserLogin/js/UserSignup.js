@@ -9,6 +9,10 @@
 		inputsToValidate: ['userloginext01', 'email', 'userloginext02', 'birthday'],
 		notEmptyFields: ['userloginext01', 'email', 'userloginext02', 'birthday', 'birthmonth', 'birthyear'],
 		invalidInputs: {},
+
+		/**
+		 * WikiaMobile, Wikia One, and some automated tests do not use captcha
+		 */
 		useCaptcha: !window.wgUserLoginDisableCaptcha,
 
 		/**
