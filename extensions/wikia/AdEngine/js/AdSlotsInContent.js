@@ -19,7 +19,7 @@ define('ext.wikia.adEngine.adSlotsInContent',[
 		maxSlots,
 		minOffset = 1100,
 		offsetMap = [[0, minOffset]],
-		adHtml = '<div class="ad-in-content" style="">' +
+		adHtml = '<div class="ad-in-content">' +
 			'<div id="%%ID%%" class="wikia-ad default-height"></div></div>',
 		labelHtml = '<label class="wikia-ad-label"></label>',
 
@@ -47,8 +47,6 @@ define('ext.wikia.adEngine.adSlotsInContent',[
 
 		if (/leaderboard/i.test(slotName)) {
 			html = html.replace('ad-in-content', 'ad-in-content-lb');
-		} else {
-			html = html.replace('style=""', 'style="clear:right;float:right;"');
 		}
 
 		return {
