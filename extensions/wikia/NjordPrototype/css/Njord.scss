@@ -137,7 +137,7 @@
 	}
 
 	.title-wrap {
-		margin: 60px 0 30px 30px;
+		margin: 40px 0 30px 30px;
 		text-align: left;
 		width: 425px;
 
@@ -400,6 +400,27 @@
 	}
 }
 
+.mainpage {
+	.wordmark-container {
+		&.wordmark-icon {
+			background-color: $color-page;
+			height: 110px;
+			left: -29px;
+			padding-left: 30px;
+			padding-right: 30px;
+			position: relative;
+			top: -110px;
+		}
+
+		&:not(.wordmark-icon) {
+			visibility: hidden;
+		}
+	}
+
+	.local-navigation {
+		border-bottom: none;
+	}
+}
 .WikiaArticle {
 	.hero-description {
 		margin: 30px 330px 60px 30px;
