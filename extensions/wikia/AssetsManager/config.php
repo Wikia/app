@@ -204,7 +204,6 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
 		'//extensions/wikia/Lightbox/scripts/LightboxLoader.js',
 		'#group_imglzy_js',
-		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
 		// We allow logged in users to change login without logging out
 		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js',
 		// We allow logged in users to create account without logging out
@@ -895,7 +894,6 @@ $config['monobook_js'] = array(
 		'//skins/monobook/main.js',
 		'//resources/wikia/modules/lazyqueue.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
-		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
 		'#group_imglzy_js',
 		'#group_spotlights_js',
 		'//resources/wikia/libraries/ghostwriter/gw.min.js',

@@ -346,11 +346,6 @@ function WMU_loadMainFromView() {
 				$('#ImageUploadTextCont').hide();
 				$('#ImageUploadMessageLink').html('[' + wmu_show_message  + ']');
 			}
-
-			// macbre: RT #19150
-			if ( window.wgEnableAjaxLogin == true && $('#ImageUploadLoginMsg').length ) {
-				$('#ImageUploadLoginMsg').click(openLogin).css('cursor', 'pointer').log('WMU: ajax login enabled');
-			}
 		}
 	}
 
@@ -548,11 +543,6 @@ function WMU_loadMain() {
 		if (cookieMsg > -1 && document.cookie.charAt(cookieMsg + 12) == 0) {
 			$('#ImageUploadTextCont').hide();
 			$('#ImageUploadMessageLink').html('[' + wmu_show_message  + ']');
-		}
-
-		// macbre: RT #19150
-		if ( window.wgEnableAjaxLogin == true && $('#ImageUploadLoginMsg').exists() ) {
-			$('#ImageUploadLoginMsg').click(openLogin).css('cursor', 'pointer').log('WMU: ajax login enabled');
 		}
 	}
 	WMU_indicator(1, true);

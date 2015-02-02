@@ -45,13 +45,6 @@ td.mw-label {
 	vertical-align: middle;
 }
 
-//hide facebook description
-#AjaxLoginConnectMarketing div {
-	h1:nth-of-type(2), ul {
-		display: none;
-	}
-}
-
 //fixes for register form
 //TODO: Remove the hacks and do it properly
 #wpName2, #wpEmail, #uselang, #wpBirthYear {
@@ -71,9 +64,6 @@ td.mw-label {
 	.mw-input label {
 		position: relative;
 		top: -9px;
-	}
-	.wpAjaxLoginInput {
-		padding-bottom: 10px;
 	}
 	.captcha {
 		img {
