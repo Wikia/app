@@ -1081,7 +1081,16 @@ class ArticleCommentList {
 		return true;
 	}
 
-	public static function onTitleMoveComplete( Title &$oOldTitle, Title &$oNewTitle, User &$oUser, $iOldId, $iNewId, $oNewTitle) {
+	/**
+	 * Enables commenting for an article if it is moved to a namespace that allows it
+	 * @param object Title $oOldTitle An object for the old article's name
+	 * @param object Title $oNewTitle An object for the new article's name
+	 * @param object User $oUser
+	 * @param integer $iOldId
+	 * @param integer $iNewId
+	 * @return bool
+	 */
+	public static function onTitleMoveComplete( Title &$oOldTitle, Title &$oNewTitle, User &$oUser, $iOldId, $iNewId ) {
 		global $wgArticleCommentsNamespaces;
 		wfProfileIn( __METHOD__ );
 
