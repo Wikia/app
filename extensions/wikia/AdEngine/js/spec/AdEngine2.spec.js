@@ -154,7 +154,7 @@ describe('AdEngine2', function () {
 
 		expect(adConfigMock.getProviderList.calls.count()).toBe(2, 'adConfig.getProviderList called 2 times');
 		expect(adConfigMock.getProviderList.calls.argsFor(0)).toEqual(['slot1'], 'adConfig.getProviderList called for slot1');
-		expect(adConfigMock.getProviderList.calls.argsFor(2)).toEqual(['slot2'], 'adConfig.getProviderList called for slot2');
+		expect(adConfigMock.getProviderList.calls.argsFor(1)).toEqual(['slot2'], 'adConfig.getProviderList called for slot2');
 
 		expect(fakeProvider.canHandleSlot.calls.count()).toBe(2, 'AdProvider*.canHandleSlot called 2 times');
 		expect(fakeProvider.canHandleSlot.calls.argsFor(0)).toEqual(['slot1'], 'AdProvider*.canHandleSlot called for slot1');
