@@ -137,15 +137,13 @@
 	}
 
 	.title-wrap {
-		margin: 40px 0 30px 30px;
+		margin: 40px 330px 30px 30px;
 		text-align: left;
-		width: 425px;
 
 		.edit-box {
 			background-color: rgba(0, 0, 0, .2);
 			bottom: -64px;
 			display: none;
-			position: absolute;
 			width: 100%;
 		}
 		.hero-title {
@@ -180,7 +178,6 @@
 	.edit-box {
 		background-color: rgba(0, 0, 0, .03);
 		display: none;
-		position: relative;
 		.edited-text {
 			outline: none;
 			min-height: 1.2em;
