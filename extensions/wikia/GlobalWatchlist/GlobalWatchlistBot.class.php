@@ -18,7 +18,7 @@ class GlobalWatchlistBot {
 	public function sendDigestToUser( $userID ) {
 		global $wgExternalDatawareDB;
 
-		if ( $this->shouldNotSendDigest( $userID, $logReasonForNotSending = true ) ) {
+		if ( $this->shouldNotSendDigest( $userID, $sendLogging = true ) ) {
 			$this->clearUserFromGlobalWatchlist( $userID );
 			return;
 		}
@@ -117,10 +117,10 @@ class GlobalWatchlistBot {
 
 	/**
 	 * @param $userID
-	 * @param $logReasonForNotSending
+	 * @param $sendLogging
 	 * @return bool
 	 */
-	public function shouldNotSendDigest( $userID, $logReasonForNotSending = false ) {
+	public function shouldNotSendDigest( $userID, $sendLogging = false ) {
 		$user = $this->getUserObject( $userID );
 		try {
 			$this->checkIfValidUser( $user );
@@ -128,7 +128,7 @@ class GlobalWatchlistBot {
 			$this->checkIfEmailConfirmed( $user );
 			$this->checkIfSubscribedToWeeklyDigest( $user );
 		} catch ( Exception $e ) {
-			if ( $logReasonForNotSending ) {
+			if ( $sendLogging ) {
 				WikiaLogger::instance()->info( 'Skipped Weekly Digest', [
 					'reason' => $e->getMessage(),
 					'userID' => $userID

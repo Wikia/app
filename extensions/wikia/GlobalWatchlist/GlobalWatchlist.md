@@ -1,90 +1,106 @@
 # Global Watchlist
 
-The global watchlist is used to send out a weekly digest of changes to pages a user is watching across all of wikia.
-The general architecture is when a change is made on a watched page, the watchlist table is updated on that wiki. Following
-that, a hook inside of GlobalWatchlist.hooks.php fires off which sends a message via scribe. There are 3 possible messages
-which get sent:
-
-* addGlobalWatchlist
-```
-	{"method":"addWatch","params":{"wl_user":5654074,"wl_namespace":0,"wl_title":"NewPage","wl_notificationtimestamp":null,"wl_wikia":"435087","wl_revision":53613,"wl_rev_timestamp":"20150122013007"}}
-	{"method":"addWatch","params":{"wl_user":5654074,"wl_namespace":1,"wl_title":"NewPage","wl_notificationtimestamp":null,"wl_wikia":"435087","wl_revision":53613,"wl_rev_timestamp":"20150122013007"}}
-```
-	* This is sent when a user first makes an edit to the page and starts watching it.
-	Is this even used?
-* removeGlobalWatch
-```
-	{"method":"removeWatch","params":{"wl_user":5654074,"wl_namespace":0,"wl_title":"Gallery","wl_wikia":"435087"}}
-    {"method":"removeWatch","params":{"wl_user":5654074,"wl_namespace":1,"wl_title":"Gallery","wl_wikia":"435087"}}
-    delete from global_watchlist where gwa_city_id = 435087 and gwa_namespace = 0 and gwa_title = "Gallery" and gwa_user_id = 565407
-```
-* updateGlobalWatch
-```
-	{"method":"updateWatch","params":{"update":{"wl_notificationtimestamp":null,"wl_revision":53612,"wl_rev_timestamp":"20150120224112"},"where":{"wl_title":"Gallery","wl_namespace":0,"wl_user":5654074},"wl_wikia":"435087"}}
-```
+The global watchlist is used to send out a weekly digest of changes to all pages a user is watching across Wikia. It
+works using a combination of hooks built into the local watchlist flow and the [Job Queue](https://one.wikia-inc.com/wiki/Engineering/Job_Queue).
+To understand how the system works, it helps to have a quick overview of how the local watchlist system works:
 
 ## Local Watchlist
-When a user edits a page, they automatically started watching it. 2 entires are added into the watchlist table for them for that page.
-The table looks like this:
+When a user (let's call them User A) makes an edit to a page or explicitly starts following a page, they are added to the local
+watchlist table for that wiki. That entry looks something like this:
 
 	+----------+--------------+-----------+--------------------------+-------------------------+
 	| wl_user  | wl_namespace | wl_title  | wl_notificationtimestamp | wl_wikia_addedtimestamp |
 	+----------+--------------+-----------+--------------------------+-------------------------+
-	| 23910443 |            1 | Watchlist | NULL                     |  2015-01-20 23:19:21    |
+	| 23910443 |            0 | TestPage  | NULL                     |   2015-02-02 15:37:09   | User A
 	+----------+--------------+-----------+--------------------------+-------------------------+
+	Ex 1
 
+Note the value of `NULL` for the `wl_notificationtimestamp` field. This is used to indicate that User A is watching the
+page, but has seen the latest version. When a second user, User B, comes along and edits that page, three things
+happen. First, an email is sent to User A informing them the page they were watching has changed. Next, a new entry
+is added to the local watchlist table for User B indicating that they are now watching the page. Finally, the row for
+User A is updated with the current timestamp to indicate they were notified about the change.
 
-If the user visits the page, or is the last person to edit it, their wl_notificationtimestamp is set to NULL. If someone else edits
-the page, that user receives an email alerting them that the page has changed. The wl_notificationtimestamp is then updated to reflect
-the timestamp when that user was sent the email. If subsequent edits are made, that user is not notified via email until wl_notificationtimestamp
-is NULL (ie, they visit the page).
+	+----------+--------------+-----------+--------------------------+-------------------------+
+	| wl_user  | wl_namespace | wl_title  | wl_notificationtimestamp | wl_wikia_addedtimestamp |
+	+----------+--------------+-----------+--------------------------+-------------------------+
+	| 23910443 |            0 | TestPage  | 20150202153859           |  2015-01-20 23:19:21    | User A
+	+----------+--------------+-----------+--------------------------+-------------------------+
+	| 23910444 |            0 | TestPage  | NULL                     |  2015-02-02 15:38:59    | User B
+	+----------+--------------+-----------+--------------------------+-------------------------+
+	Ex 2
 
-Following an edit to this local watchlist table, a hook is fired inside of GlobalWatchlist hooks. There are 3 hooks:
+If a third user, User C, comes along and edits the page, the process is similar but for one key difference. Because
+User A has already been notified about the last change (and therefore has a time stamp in their `wl_notificationtimestamp`
+field), they will not be sent an email a second time informing them of the change. Nothing effectively happens for that user.
+User B however will receive a notification email, and the table will be updated accordingly.
 
-# Global Watchlisters:
-	## Get the users to send the digest to:
-		SELECT  distinct gwa_user_id  FROM `global_watchlist`  WHERE (gwa_user_id > 0) AND (gwa_timestamp is not null)  ORDER BY gwa_user_id LIMIT 10
-	## Get notifications to send to user:
-		SELECT gwa_id,gwa_user_id,gwa_city_id,gwa_namespace,gwa_title,gwa_rev_id,gwa_timestamp  FROM `global_watchlist`  WHERE gwa_user_id = '<userId>' AND (gwa_timestamp <= gwa_rev_timestamp) AND (gwa_timestamp is not null)  ORDER BY gwa_timestamp, gwa_city_id;
+	+----------+--------------+-----------+--------------------------+-------------------------+
+	| wl_user  | wl_namespace | wl_title  | wl_notificationtimestamp | wl_wikia_addedtimestamp |
+	+----------+--------------+-----------+--------------------------+-------------------------+
+	| 23910443 |            0 | TestPage  | 20150202153859           |  2015-02-02 15:37:09    | User A
+	+----------+--------------+-----------+--------------------------+-------------------------+
+	| 23910444 |            0 | TestPage  | 20150202154342           |  2015-02-02 15:38:59    | User B
+	+----------+--------------+-----------+--------------------------+-------------------------+
+	| 23910445 |            0 | TestPage  | NULL                     |  2015-02-02 15:43:43    | User C
+	+----------+--------------+-----------+--------------------------+-------------------------+
+	Ex 3
 
-+----------+--------------+
-| user_id  | user_name    |
-+----------+--------------+
-| 24055122 | Jsutterfield |
-| 26033468 | Jbutterfield |
-| 26033488 | JCutterfield |
-+----------+--------------+
+As soon as User A revisits the page however, their `wl_notificationtimestamp` is set back to NULL and they will receive
+a notification for the next time the page is edited.
 
-Adding a new page seems to just trigger an update: (jSutterfield adds and edits a page)
-	// jsutterfield
-	{"method":"addWatch","params":{"wl_user":24055122,"wl_namespace":0,"wl_title":"NewPage1","wl_notificationtimestamp":null,"wl_wikia":"869155","wl_revision":4208,"wl_rev_timestamp":"20150122192708"}}
-	{"method":"addWatch","params":{"wl_user":24055122,"wl_namespace":1,"wl_title":"NewPage1","wl_notificationtimestamp":null,"wl_wikia":"869155","wl_revision":4208,"wl_rev_timestamp":"20150122192708"}}
-	{"method":"updateWatch","params":{"update":{"wl_notificationtimestamp":null,"wl_revision":4208,"wl_rev_timestamp":"20150122192708"},"where":{"wl_title":"NewPage1","wl_namespace":0,"wl_user":24055122},"wl_wikia":"869155"}}
-But then when a new user comes and edits that page, an addWatch takes places (jButterfield edits that page)
-	// jsutterfield
-	{"method":"updateWatch","params":{"update":{"wl_notificationtimestamp":"20150122193244","wl_revision":4209,"wl_rev_timestamp":"20150122193244"},"where":{"wl_title":"NewPage1","wl_namespace":0,"wl_user":24055122},"wl_wikia":"869155"}}
-	// jbutterfield
-	{"method":"addWatch","params":{"wl_user":26033468,"wl_namespace":0,"wl_title":"NewPage1","wl_notificationtimestamp":null,"wl_wikia":"869155","wl_revision":4209,"wl_rev_timestamp":"20150122193244"}}
-	{"method":"addWatch","params":{"wl_user":26033468,"wl_namespace":1,"wl_title":"NewPage1","wl_notificationtimestamp":null,"wl_wikia":"869155","wl_revision":4209,"wl_rev_timestamp":"20150122193244"}}
-	{"method":"updateWatch","params":{"update":{"wl_notificationtimestamp":null,"wl_revision":4209,"wl_rev_timestamp":"20150122193244"},"where":{"wl_title":"NewPage1","wl_namespace":0,"wl_user":26033468},"wl_wikia":"869155"}}
-And then another comes and edits that page (JCutterfield edits the page)
-	// jbutterfield
-	{"method":"updateWatch","params":{"update":{"wl_notificationtimestamp":"20150122193708","wl_revision":4210,"wl_rev_timestamp":"20150122193708"},"where":{"wl_title":"NewPage1","wl_namespace":0,"wl_user":26033468},"wl_wikia":"869155"}}
-	// jcutterfield
-	{"method":"addWatch","params":{"wl_user":26033488,"wl_namespace":0,"wl_title":"NewPage1","wl_notificationtimestamp":null,"wl_wikia":"869155","wl_revision":4210,"wl_rev_timestamp":"20150122193708"}}
-	{"method":"addWatch","params":{"wl_user":26033488,"wl_namespace":1,"wl_title":"NewPage1","wl_notificationtimestamp":null,"wl_wikia":"869155","wl_revision":4210,"wl_rev_timestamp":"20150122193708"}}
-	{"method":"updateWatch","params":{"update":{"wl_notificationtimestamp":null,"wl_revision":4210,"wl_rev_timestamp":"20150122193708"},"where":{"wl_title":"NewPage1","wl_namespace":0,"wl_user":26033488},"wl_wikia":"869155"}}
-And then another edit comes from jdutterfield
-	// jcutterfield
-	{"method":"updateWatch","params":{"update":{"wl_notificationtimestamp":"20150122213336","wl_revision":4211,"wl_rev_timestamp":"20150122213336"},"where":{"wl_title":"NewPage1","wl_namespace":0,"wl_user":26033488},"wl_wikia":"869155"}}
-		delete from global_watchlist where gwa_city_id = '869155' and gwa_namespace = '0' and gwa_title = 'NewPage1' and gwa_user_id = '24055122'
-		insert  IGNORE  into global_watchlist (gwa_city_id,gwa_namespace,gwa_title,gwa_user_id) values( '869155', '0', 'NewPage1', '24055122')
-		update global_watchlist set gwa_rev_id = 4211,gwa_timestamp = 20150122213336,gwa_rev_timestamp = 20150122213336 where gwa_city_id = '869155' and gwa_namespace = '0' and gwa_title = 'NewPage1' and gwa_user_id = '24055122'
-	// jdutterfield
-	{"method":"addWatch","params":{"wl_user":26033821,"wl_namespace":0,"wl_title":"NewPage1","wl_notificationtimestamp":null,"wl_wikia":"869155","wl_revision":4211,"wl_rev_timestamp":"20150122213336"}}
-	{"method":"addWatch","params":{"wl_user":26033821,"wl_namespace":1,"wl_title":"NewPage1","wl_notificationtimestamp":null,"wl_wikia":"869155","wl_revision":4211,"wl_rev_timestamp":"20150122213336"}}
-	{"method":"updateWatch","params":{"update":{"wl_notificationtimestamp":null,"wl_revision":4211,"wl_rev_timestamp":"20150122213336"},"where":{"wl_title":"NewPage1","wl_namespace":0,"wl_user":26033821},"wl_wikia":"869155"}}
-jsutterfield then visits the page
-	{"method":"updateWatch","params":{"update":{"wl_notificationtimestamp":null,"wl_revision":4211,"wl_rev_timestamp":"20150122213336"},"where":{"wl_title":"NewPage1","wl_namespace":0,"wl_user":24055122},"wl_wikia":"869155"}}
-		delete from global_watchlist where gwa_city_id = '869155' and gwa_namespace = '0' and gwa_title = 'NewPage1' and gwa_user_id = '24055122'
+	+----------+--------------+-----------+--------------------------+-------------------------+
+	| wl_user  | wl_namespace | wl_title  | wl_notificationtimestamp | wl_wikia_addedtimestamp |
+	+----------+--------------+-----------+--------------------------+-------------------------+
+	| 23910443 |            0 | TestPage  | NULL                     |  2015-02-02 15:37:09    | User A
+	+----------+--------------+-----------+--------------------------+-------------------------+
+	| 23910444 |            0 | TestPage  | 20150202154342           |  2015-02-02 15:38:59    | User B
+	+----------+--------------+-----------+--------------------------+-------------------------+
+	| 23910445 |            0 | TestPage  | NULL                     |  2015-02-02 15:43:43    | User C
+	+----------+--------------+-----------+--------------------------+-------------------------+
+	Ex 4
 
+## Global Watchlist
+The global watchlist ties into the local watchlist process described above. It serves as a central record for all pages
+across Wikia a user is watching which have changed, but they have not visited yet. Here's the general flow:
+
+Whenever a page is updated, all user's who had seen the latest version up to that point are notified via email and have
+their `wl_notificationtimestamp` field updated in the `watchlist` table (Ex 2 above). At that point, a hook is fired
+which sends a job via the Job Queue to have that user added to the `global_watchlist` table. After Ex 2 above, the
+`global_watchlist` table would look something like this:
+
+	+--------+-------------+-------------+---------------+----------------+------------+----------------+-------------------+
+	| gwa_id | gwa_user_id | gwa_city_id | gwa_namespace | gwa_title      | gwa_rev_id | gwa_timestamp  | gwa_rev_timestamp |
+	+--------+-------------+-------------+---------------+----------------+------------+----------------+-------------------+
+	|     86 |   23910443  |      435087 |             0 | TestPage       |      53755 | 20150202153859 |  20150202153859   | User A
+	+--------+-------------+-------------+---------------+----------------+------------+----------------+-------------------+
+
+Once that row has been added to `global_watchlist`, a job is scheduled to kick off exactly 7 days in the future which will
+send that user a weekly digest of all the changes they haven't seen on their watched pages. So if 2 other pages User A
+is watching are changed later on, the `global_watchlist` is updated with 2 additional rows.
+
+	+--------+-------------+-------------+---------------+----------------+------------+----------------+-------------------+
+	| gwa_id | gwa_user_id | gwa_city_id | gwa_namespace | gwa_title      | gwa_rev_id | gwa_timestamp  | gwa_rev_timestamp |
+	+--------+-------------+-------------+---------------+----------------+------------+----------------+-------------------+
+	|     86 |    23910443 |      435087 |             0 | TestPage       |      53755 | 20150202153859 |  20150202153859   | User A
+	+--------+-------------+-------------+---------------+----------------+------------+----------------+-------------------+
+	|     88 |    23910443 |       26337 |             0 | GleeTestPage   |    2540196 | 20150202184358 | 20150202184358    | User A
+	+--------+-------------+-------------+---------------+----------------+------------+----------------+-------------------+
+	|     89 |    23910443 |         831 |             0 | MuppetTestPage |     773845 | 20150202184620 | 20150202184620    | User A
+	+--------+-------------+-------------+---------------+----------------+------------+----------------+-------------------+
+
+If user A visits any of those pages before the weekly digest is run, that row will be deleted from the global_watchlist table.
+So if they were to visit the MuppetTestPage, the table would then look like:
+
+	+--------+-------------+-------------+---------------+----------------+------------+----------------+-------------------+
+	| gwa_id | gwa_user_id | gwa_city_id | gwa_namespace | gwa_title      | gwa_rev_id | gwa_timestamp  | gwa_rev_timestamp |
+	+--------+-------------+-------------+---------------+----------------+------------+----------------+-------------------+
+	|     86 |    23910443 |      435087 |             0 | TestPage       |      53755 | 20150202153859 |  20150202153859   | User A
+	+--------+-------------+-------------+---------------+----------------+------------+----------------+-------------------+
+	|     88 |    23910443 |       26337 |             0 | GleeTestPage   |    2540196 | 20150202184358 | 20150202184358    | User A
+	+--------+-------------+-------------+---------------+----------------+------------+----------------+-------------------+
+
+When that job finally runs which sends out the weekly notifications, the `global_watchlist` table is queried for all rows for User A.
+The digest is then prepared and sent out to them. At that point those rows are deleted from the `global_watchlist` table,
+and the corresponding rows in the local watchlist tables have their `wl_notificationtimestamp` fields set to null (which
+means the user will be notified about the next change going forward).

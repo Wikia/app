@@ -132,9 +132,8 @@ class GlobalWatchlistTask extends BaseTask {
 	}
 
 	/**
-	 * Schedules the weekly digest to be sent to the given user
-	 * in 7 days. A dedup check is performed to prevent additional
-	 * weekly digests to be scheduled until we send the initial one.
+	 * Schedules the weekly digest to be sent to the given user in 7 days. A dedup check is
+	 * performed to prevent additional weekly digests from being scheduled.
 	 * @param $userID
 	 */
 	private function scheduleWeeklyDigest( $userID ) {

@@ -86,7 +86,7 @@ class GlobalWatchlistHooks {
 	}
 
 	/**
-	 * Remove watchers from the global_watchlist table
+	 * Remove watchers from the global_watchlist table for the given page.
 	 * @param $watchedItem WatchedItem
 	 * @param $watchers
 	 */
@@ -100,7 +100,7 @@ class GlobalWatchlistHooks {
 	}
 
 	/**
-	 * Add watchers to the global_watchlist table
+	 * Add watchers to the global_watchlist table for the given page.
 	 * @param $watchedItem
 	 * @param $watchers
 	 */
@@ -114,7 +114,7 @@ class GlobalWatchlistHooks {
 	}
 
 	/**
-	 * Delete all watches for the given user on this wiki from the global_watchlist table.
+	 * Delete all watches from the global_watchlist table for the given user on this wiki
 	 * @param $userID integer
 	 * @return bool (always true)
 	 */

@@ -81,7 +81,6 @@ class WatchedItem {
 	 * @return bool (always true)
 	 */
 	public function addWatch() {
-		jtrace();
 
 		// Only loggedin user can have a watchlist
 		if ( wfReadOnly() || $this->mUser->isAnon() ) {
@@ -215,7 +214,6 @@ class WatchedItem {
 	 * @param $newTitle Title
 	 *
 	 * @return bool
-	 * TODO Make sure that this logic is still the same!
 	 */
 	private static function doDuplicateEntries( $oldTitle, $newTitle ) {
 
