@@ -37,7 +37,7 @@ $wgAvailableRights[] = 'skipcaptcha';
  *
  * Specific IP addresses or CIDR-style ranges may be used,
  * for instance:
- * $wgCaptchaWhitelistIP = array('192.168.1.0/24', '10.1.0.0/16');
+ * $wgCaptchaWhitelistIP = [ '192.168.1.0/24', '10.1.0.0/16' ];
  */
 $wgCaptchaWhitelistIP = false;
 
@@ -58,7 +58,7 @@ $wgCaptchaClass = 'SimpleCaptcha';
  * The captcha code should not use $wgCaptchaTriggers, but CaptchaTriggers()
  * which also takes into account per namespace triggering.
  */
-$wgCaptchaTriggers = array();
+$wgCaptchaTriggers = [];
 $wgCaptchaTriggers['edit']          = false; // Would check on every edit
 $wgCaptchaTriggers['create']        = false; // Check on page creation.
 $wgCaptchaTriggers['sendemail']     = false; // Special:Emailuser
@@ -74,7 +74,7 @@ $wgCaptchaTriggers['badlogin']      = true;  // Special:Userlogin after failure
  *
  * Shall not be used with 'createaccount' (it is not checked).
  */
-$wgCaptchaTriggersOnNamespace = array();
+$wgCaptchaTriggersOnNamespace = [];
 
 /**
  * Indicate how to store per-session data required to match up the
@@ -136,7 +136,7 @@ $wgCaptchaWhitelist = false;
  *
  * @fixme Add a message for local admins to add items as well.
  */
-$wgCaptchaRegexes = array();
+$wgCaptchaRegexes = [];
 
 $dir = dirname( __FILE__ );
 $wgExtensionMessagesFiles['Captcha'] = "$dir/Captcha.i18n.php";

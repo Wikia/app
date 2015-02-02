@@ -56,10 +56,10 @@ class Hooks {
 	}
 
 	public static function APIGetAllowedParams( &$module, &$params ) {
-		return self::getInstance()->APIGetAllowedParams( $module, $params );
+		return Factory\Module::getInstance()->APIGetAllowedParams( $module, $params );
 	}
 
 	public static function APIGetParamDescription( &$module, &$desc ) {
-		return self::getInstance()->APIGetParamDescription( $module, $desc );
+		return Factory\Module::getInstance()->APIGetParamDescription( $module, $desc );
 	}
 }

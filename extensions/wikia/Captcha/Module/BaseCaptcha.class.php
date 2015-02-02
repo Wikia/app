@@ -32,7 +32,10 @@ class BaseCaptcha {
 		// directionality.
 		$test = "$a$op$b";
 		$answer = ( $op == '+' ) ? ( $a + $b ) : ( $a - $b );
-		return array( 'question' => $test, 'answer' => $answer );
+		return [
+			'question' => $test,
+			'answer' => $answer
+		];
 	}
 
 	public function addCaptchaAPI( &$resultArr ) {
@@ -58,16 +61,18 @@ class BaseCaptcha {
 		$index = $this->storeCaptcha( $captcha );
 
 		return "<p><label for=\"wpCaptchaWord\">{$captcha['question']}</label> = " .
-		\Xml::element( 'input', array(
+		\Xml::element( 'input', [
 			'name' => 'wpCaptchaWord',
 			'id'   => 'wpCaptchaWord',
-			'tabindex' => 1 ) ) . // tab in before the edit textarea
+			'tabindex' => 1,
+		] ) . // tab in before the edit textarea
 		"</p>\n" .
-		\Xml::element( 'input', array(
+		\Xml::element( 'input', [
 			'type'  => 'hidden',
 			'name'  => 'wpCaptchaId',
 			'id'    => 'wpCaptchaId',
-			'value' => $index ) );
+			'value' => $index,
+		] );
 	}
 
 	/**
@@ -202,8 +207,10 @@ class BaseCaptcha {
 	/**
 	 * Clear out existing captcha info from the session, to ensure
 	 * it can't be reused.
+	 *
+	 * @param array $info
 	 */
-	public function clearCaptcha( $info ) {
+	public function clearCaptcha( Array $info ) {
 		Factory\Store::getInstance()->clear( $info['index'] );
 	}
 

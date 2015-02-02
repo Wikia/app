@@ -61,7 +61,7 @@ class Handler {
 			}
 
 			$message = '';
-			wfRunHooks( 'GetConfirmEditMessage', array( $this, &$message) );
+			wfRunHooks( 'GetConfirmEditMessage', [ $this, &$message ] );
 			if ( empty($message) ) {
 				$message = $this->captcha->getMessage( 'createaccount' );
 			}
@@ -88,7 +88,7 @@ class Handler {
 		if ( $this->isBadLoginTriggered() ) {
 			$template->set( 'header',
 				"<div class='captcha'>" .
-				F::app()->wg->Out->parse( $this->captcha->getMessage( 'badlogin' ) ) .
+				\F::app()->wg->Out->parse( $this->captcha->getMessage( 'badlogin' ) ) .
 				$this->captcha->getForm() .
 				"</div>\n" );
 		}
@@ -156,7 +156,7 @@ class Handler {
 	 * @return string
 	 */
 	private function badLoginKey() {
-		$ip = F::app()->wg->Request->getIP();
+		$ip = \F::app()->wg->Request->getIP();
 		return wfMemcKey( 'captcha', 'badlogin', 'ip', $ip );
 	}
 
@@ -181,6 +181,7 @@ class Handler {
 	 * @param \EditPage $editPage
 	 * @param string $newText
 	 * @param string $section
+	 * @param bool $merged
 	 *
 	 * @return bool true if the captcha should run
 	 */
@@ -238,7 +239,7 @@ class Handler {
 				$newLinks = $this->findLinks( $editPage, $newText );
 			}
 
-			$unknownLinks = array_filter( $newLinks, array( &$this, 'filterLink' ) );
+			$unknownLinks = array_filter( $newLinks, [ &$this, 'filterLink' ] );
 			$addedLinks = array_diff( $unknownLinks, $oldLinks );
 			$numLinks = count( $addedLinks );
 
@@ -258,9 +259,9 @@ class Handler {
 			$oldText = $this->loadText( $editPage, $section );
 
 			foreach ( $wg->CaptchaRegexes as $regex ) {
-				$newMatches = array();
+				$newMatches = [];
 				if ( preg_match_all( $regex, $newText, $newMatches ) ) {
-					$oldMatches = array();
+					$oldMatches = [];
 					preg_match_all( $regex, $oldText, $oldMatches );
 
 					$addedMatches = array_diff( $newMatches[0], $oldMatches[0] );
@@ -292,14 +293,14 @@ class Handler {
 	 */
 	private function filterLink( $url ) {
 		$wg = \F::app()->wg;
-		$source = wfMsgForContent( 'captcha-addurl-whitelist' );
+		$source = wfMessage( 'captcha-addurl-whitelist' )->inContentLanguage()->text();
 
 		$whitelist = wfEmptyMsg( 'captcha-addurl-whitelist', $source )
 			? false
 			: $this->buildRegexes( explode( "\n", $source ) );
 
 		$cwl = $wg->CaptchaWhitelist !== false ? preg_match( $wg->CaptchaWhitelist, $url ) : false;
-		$wl  = $whitelist          !== false ? preg_match( $whitelist, $url )          : false;
+		$wl = $whitelist !== false ? preg_match( $whitelist, $url ) : false;
 
 		return !( $cwl || $wl );
 	}
@@ -363,9 +364,13 @@ class Handler {
 	public function getLinksFromTracker( $title ) {
 		$dbr = wfGetDB( DB_SLAVE );
 		$id = $title->getArticleID(); // should be zero queries
-		$res = $dbr->select( 'externallinks', array( 'el_to' ),
-			array( 'el_from' => $id ), __METHOD__ );
-		$links = array();
+		$res = $dbr->select(
+			'externallinks',
+			[ 'el_to' ],
+			[ 'el_from' => $id ],
+			__METHOD__
+		);
+		$links = [];
 		foreach ( $res as $row ) {
 			/** @var \stdClass $row */
 			$links[] = $row->el_to;
@@ -375,6 +380,11 @@ class Handler {
 
 	/**
 	 * Backend function for confirmEdit() and confirmEditAPI()
+	 *
+	 * @param \EditPage $editPage
+	 * @param string $newText
+	 * @param string $section
+	 * @param bool $merged
 	 *
 	 * @return bool false if the CAPTCHA is rejected, true otherwise
 	 */
@@ -387,7 +397,7 @@ class Handler {
 			$wg->Request->setVal( 'wpCaptchaWord', $wg->Request->getVal( 'captchaword' ) );
 		}
 		if ( $this->shouldCheck( $editPage, $newText, $section, $merged ) ) {
-			return \Captcha\Factory\Module::getInstance()->passCaptcha();
+			return Factory\Module::getInstance()->passCaptcha();
 		} else {
 			$this->log( "no need to show captcha.\n" );
 			return true;
@@ -412,12 +422,13 @@ class Handler {
 		}
 
 		$result = null;
-		if( !wfRunHooks( 'ConfirmEdit::onConfirmEdit', array( &$this, &$editPage, $newText, $section, $merged, &$result ) ) ) {
+		$hookParams = [ &$this, &$editPage, $newText, $section, $merged, &$result ];
+		if ( !wfRunHooks( 'ConfirmEdit::onConfirmEdit', $hookParams ) ) {
 			return $result;
 		}
 
 		if ( !$this->doConfirmEdit( $editPage, $newText, $section, $merged ) ) {
-			$editPage->showEditForm( array( &$this, 'editCallback' ) );
+			$editPage->showEditForm( [ &$this, 'editCallback' ] );
 			return false;
 		}
 		return true;
@@ -582,15 +593,18 @@ class Handler {
 
 	/**
 	 * Extract a list of all recognized HTTP links in the text.
+	 *
+	 * @param \EditPage $editPage
 	 * @param string $text
+	 *
 	 * @return array of strings
 	 */
-	public function findLinks( &$editpage, $text ) {
+	public function findLinks( &$editPage, $text ) {
 		$wg = \F::app()->wg;
 
 		$options = new \ParserOptions();
-		$text = $wg->Parser->preSaveTransform( $text, $editpage->mTitle, $wg->User, $options );
-		$out = $wg->Parser->parse( $text, $editpage->mTitle, $options );
+		$text = $wg->Parser->preSaveTransform( $text, $editPage->mTitle, $wg->User, $options );
+		$out = $wg->Parser->parse( $text, $editPage->mTitle, $options );
 
 		return array_keys( $out->getExternalLinks() );
 	}
