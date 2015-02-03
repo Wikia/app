@@ -30,6 +30,7 @@ class Handler {
 	 * Inject whazawhoo
 	 *
 	 * @fixme if multiple thingies insert a header, could break
+	 * https://wikia-inc.atlassian.net/browse/SOC-289
 	 *
 	 * @param \HTMLForm $form
 	 *
@@ -55,6 +56,7 @@ class Handler {
 	 * Inject whazawhoo
 	 *
 	 * @fixme if multiple thingies insert a header, could break
+	 * https://wikia-inc.atlassian.net/browse/SOC-289
 	 *
 	 * @param \QuickTemplate $template
 	 *
@@ -87,6 +89,7 @@ class Handler {
 	 * password attempt as a speedbump for mass attacks.
 	 *
 	 * @fixme if multiple thingies insert a header, could break
+	 * https://wikia-inc.atlassian.net/browse/SOC-289
 	 *
 	 * @param \QuickTemplate $template
 	 *
@@ -185,8 +188,9 @@ class Handler {
 		$ns = $editPage->mTitle->getNamespace();
 
 		// Special config for this NS?
-		if ( isset( $wg->CaptchaTriggersOnNamespace[$ns][$action] ) )
-			return $wg->CaptchaTriggersOnNamespace[$ns][$action];
+		if ( isset( $wg->CaptchaTriggersOnNamespace[$ns][$action] ) ) {
+			return $wg->CaptchaTriggersOnNamespace[ $ns ][ $action ];
+		}
 
 		return ( !empty( $wg->CaptchaTriggers[$action] ) ); // Default
 	}
@@ -490,13 +494,6 @@ class Handler {
 	public function confirmUserCreate( $u, &$message ) {
 		$wg = \F::app()->wg;
 		if ( $wg->CaptchaTriggers['createaccount'] ) {
-			/*	Wikia edit, fbId::47248 No one will be allowed to skip captcha for user creation.
-				Commenting this section out, but feel free to uncomment it if situation changes.
-			if ( $wg->User->isAllowed( 'skipcaptcha' ) ) {
-				$this->log( "user group allows skipping captcha on account creation\n" );
-				return true;
-			}
-			end Wikia edit fbId::47248 */
 			if ( $this->isIPWhitelisted() )
 				return true;
 

@@ -10,6 +10,7 @@ class CaptchaController extends WikiaController {
 
 	public function __construct() {
 		$this->captcha = Captcha\Factory\Module::getInstance();
+		parent::__construct();
 	}
 
 	/**
