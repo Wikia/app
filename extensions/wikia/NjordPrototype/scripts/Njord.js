@@ -337,7 +337,7 @@
 
 			} else {
 				trackMom(imageLoadedFailLabel, trackerActionError);
-				window.GlobalNotification.show(data.errMessage, 'error', $('.WikiaPageContentWrapper'));
+				window.GlobalNotification.show(data.errMessage, 'error');
 				$heroModule.stopThrobbing();
 			}
 		},
