@@ -1,16 +1,39 @@
-#editarea {
-	min-height: 300px;
-	width: 100%;
-}
+.codeeditor {
+	#editarea {
+		min-height: 300px;
+		width: 100%;
+	}
 
-#EditPageToolbar.ace-editor-wide {
-	height: 42px;
-}
+	#EditPageToolbar.ace-editor-wide {
+		height: 42px;
+	}
 
-.ace_editor {
-	font-size: 14px;
-}
+	.editpage-sourcewidemode.mode-source.editpage-sourcewidemode-on .EditPageRail .module_page_controls {
+		.wikia-menu-button {
+			right: 50px;
+			top: 10px;
+		}
 
-.codepage-publish-button {
-	width: calc(100% - 22px);
+		#wpSave {
+			position: static;
+		}
+
+		.checkboxes {
+			left: 285px;
+			position: absolute;
+			top: 0;
+		}
+
+		label {
+			position: static;
+		}
+	}
+
+	.ace_editor {
+		font-size: 14px;
+	}
+
+	.codepage-publish-button {
+		width: calc(100% - 22px);
+	}
 }

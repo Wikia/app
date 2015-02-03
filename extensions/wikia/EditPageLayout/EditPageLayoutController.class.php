@@ -71,6 +71,8 @@ class EditPageLayoutController extends WikiaController {
 				$this->pagetype = 'codepage';
 				$this->wg->Out->addScript("<script type=\"{$wgJsMimeType}\" src=\"/resources/Ace/ace.js\"></script>");
 				$srcs = AssetsManager::getInstance()->getGroupCommonURL('ace_editor_js');
+
+				OasisController::addBodyClass('codeeditor');
 			} else {
 				$packageName = 'epl';
 				if (class_exists('RTE') && RTE::isEnabled() && !$editPage->isReadOnlyPage()) {
