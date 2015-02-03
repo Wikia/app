@@ -54,34 +54,34 @@ $branding-color: #000;
 					background: $branding-color center / 60px 15px no-repeat url('/skins/shared/images/wikia_logo_white.svg'); /* inline */
 				}
 			}
-		}
 
-		&.vertical-books a {
-			background-color: $color-vertical-books;
-		}
+			&.vertical-books a {
+				background-color: $color-vertical-books;
+			}
 
-		&.vertical-comics a {
-			background-color: $color-vertical-comics;
-		}
+			&.vertical-comics a {
+				background-color: $color-vertical-comics;
+			}
 
-		&.vertical-games a {
-			background-color: $color-vertical-games;
-		}
+			&.vertical-games a {
+				background-color: $color-vertical-games;
+			}
 
-		&.vertical-lifestyle a {
-			background-color: $color-vertical-lifestyle;
-		}
+			&.vertical-lifestyle a {
+				background-color: $color-vertical-lifestyle;
+			}
 
-		&.vertical-movies a {
-			background-color: $color-vertical-movies;
-		}
+			&.vertical-movies a {
+				background-color: $color-vertical-movies;
+			}
 
-		&.vertical-music a {
-			background-color: $color-vertical-music;
-		}
+			&.vertical-music a {
+				background-color: $color-vertical-music;
+			}
 
-		&.vertical-tv a {
-			background-color: $color-vertical-tv;
+			&.vertical-tv a {
+				background-color: $color-vertical-tv;
+			}
 		}
 	}
 
