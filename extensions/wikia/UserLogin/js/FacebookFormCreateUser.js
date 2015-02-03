@@ -57,18 +57,23 @@
 
 	FacebookFormCreateUser.prototype.setupAjaxValidation = function () {
 		// userloginext0* are spam prevention names for username and password
-		var notEmptyFields = ['userloginext01', 'userloginext02'];
+		var notEmptyFields = ['userloginext01', 'userloginext02'],
+			inputs = this.wikiaForm.inputs;
 
-		if (this.wikiaForm.inputs.email) {
+		if (inputs.email) {
 			notEmptyFields.push('email');
 		}
 
 		this.validator = new UserSignupAjaxValidation({
 			wikiaForm: this.wikiaForm,
-			submitButton: this.wikiaForm.inputs.submit,
+			submitButton: inputs.submit,
 			notEmptyFields: notEmptyFields
 		});
 
+		inputs.userloginext01
+			.add(inputs.email)
+			.add(inputs.userloginext02)
+			.on('blur', this.validator.validateInput.bind(this.validator));
 	};
 
 	window.FacebookFormCreateUser = FacebookFormCreateUser;

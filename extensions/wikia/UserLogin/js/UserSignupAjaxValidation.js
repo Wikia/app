@@ -19,17 +19,6 @@
 
 		// used for tracking ajax calls in progress
 		this.deferred = false;
-
-		this.activateSubmit();
-	};
-
-	UserSignupAjaxValidation.prototype.activateSubmit = function () {
-		var isvalid = this.checkFieldsValid();
-		if (isvalid) {
-			this.submitButton.removeAttr('disabled');
-		} else {
-			this.submitButton.attr('disabled', 'disabled');
-		}
 	};
 
 	UserSignupAjaxValidation.prototype.validateInput = function (e) {
@@ -53,8 +42,6 @@
 		} else {
 			this.wikiaForm.showInputError(paramName, response.msg);
 		}
-
-		this.activateSubmit();
 	};
 
 	UserSignupAjaxValidation.prototype.validateBirthdate = function (e) {

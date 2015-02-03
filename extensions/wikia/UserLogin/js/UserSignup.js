@@ -105,14 +105,6 @@
 				.add(inputs.birthmonth)
 				.add(inputs.birthyear)
 				.on('change.UserSignup', this.validator.validateBirthdate.bind(this.validator));
-
-			if (
-				window.wgUserLoginDisableCaptcha !== true &&
-				inputs['g-recaptcha-response']
-			) {
-				inputs['g-recaptcha-response']
-					.on('keyup.UserSignup', this.validator.activateSubmit.bind(this.validator));
-			}
 		}
 	};
 
