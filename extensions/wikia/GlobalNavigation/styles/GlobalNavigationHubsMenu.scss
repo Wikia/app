@@ -4,15 +4,13 @@
 @import 'skins/shared/mixins/chevron';
 @import 'skins/shared/mixins/columns';
 @import 'GlobalNavigationColors';
+@import 'GlobalNavigationMixins';
 
 $hub-menu-icon-width: 16px;
 $hub-menu-icon-arrow-space: 6px;
-$hub-menu-icon-left-padding-small: 27px;
+$hub-menu-icon-left-padding-small: 16px;
 $hub-menu-icon-left-padding-medium: 13px;
 $hub-menu-icon-left-padding-large: 8px;
-$hub-arrow-icon-left-padding-small: $hub-menu-icon-left-padding-small + $hub-menu-icon-width + $hub-menu-icon-arrow-space;
-$hub-arrow-icon-left-padding-medium: $hub-menu-icon-left-padding-medium + $hub-menu-icon-width + $hub-menu-icon-arrow-space;
-$hub-arrow-icon-left-padding-large: $hub-menu-icon-left-padding-large + $hub-menu-icon-width + $hub-menu-icon-arrow-space;
 
 @mixin hub-background-border-icon($color, $secondary-color, $hub-name) {
 	background: linear-gradient(to right, $color 99%, $hubsmenu-background-color);
@@ -32,27 +30,33 @@ $hub-arrow-icon-left-padding-large: $hub-menu-icon-left-padding-large + $hub-men
 	}
 }
 
+.hubs-container {
+	padding-right: 26px;
+	position: relative;
+	white-space: normal;
+}
+
 .global-navigation {
 	line-height: 23px;
 }
 
 .hubs-entry-point {
 	background-image: url('/extensions/wikia/GlobalNavigation/images/hubs_entry_point.svg'); /* inline */
-	background-position: $hub-menu-icon-left-padding-medium center;
+	background-position: 0 center;
 	background-repeat: no-repeat;
 	cursor: pointer;
-	padding: 0 $medium-grid-gutter 0 $hub-arrow-icon-left-padding-medium;
+	display: inline-block;
+	height: $global-navigation-height;
+	width: 30px;
 
 	&:after {
-		border: 5px solid $global-wikia-background-color;
-		border-top-color: $nav-border-color;
-		content: ' ';
-		display: inline-block;
-		margin-top: 12px;
+		@include global-nav-chevron;
+		margin-left: $hub-menu-icon-width + 5px;
+		margin-top: 21px;
 	}
 }
 
-.global-navigation-item.active {
+.hubs-container.active {
 	.hubs-menu {
 		display: block;
 	}
@@ -258,12 +262,12 @@ $hub-arrow-icon-left-padding-large: $hub-menu-icon-left-padding-large + $hub-men
 }
 
 @media #{$small-only} {
-	.hubs-entry-point {
-		background-position: $hub-menu-icon-left-padding-small center;
-		padding: 0 $small-grid-gutter 0 $hub-arrow-icon-left-padding-small;
+	.hubs-container {
+		position: static;
 	}
 
 	.hubs-menu {
+		right: 0;
 		.hub-link {
 			&.active {
 				&:before {
@@ -284,11 +288,6 @@ $hub-arrow-icon-left-padding-large: $hub-menu-icon-left-padding-large + $hub-men
 }
 
 @media #{$large-up} {
-	.hubs-entry-point {
-		background-position: $hub-menu-icon-left-padding-large center;
-		padding: 0 $large-grid-gutter 0 $hub-arrow-icon-left-padding-large;
-	}
-
 	.hubs-menu {
 		width: 788px;
 

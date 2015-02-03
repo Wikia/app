@@ -46,7 +46,8 @@ $(function ($) {
 	 * @returns {string|boolean}
 	 */
 	function getLabelByIdentifier($element) {
-		var identifier = $element.data('id'),
+		//Get element's data id or get data-id from closest element with this attribute
+		var dataId = $element.data('id') || $element.closest('[data-id]').data('id'),
 			map = {
 				'logout': 'user-menu-logout',
 				'help': 'user-menu-help',
@@ -62,7 +63,7 @@ $(function ($) {
 				})()
 			};
 
-		return map[identifier] || false;
+		return map[dataId] || false;
 	}
 
 	/**

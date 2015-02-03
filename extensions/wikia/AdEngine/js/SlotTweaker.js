@@ -102,12 +102,27 @@ define('ext.wikia.adEngine.slotTweaker', [
 		}
 	}
 
+	/**
+	 * Triggers repaint to hide empty slot placeholders in Chrome
+	 * This is a temporary workaround
+	 * @param {string} slotId
+	 */
+	function hackChromeRefresh(slotId) {
+		var parent = document.getElementById(slotId).parentElement;
+		if (parent) {
+			parent.style.display = 'none';
+			parent.offsetHeight;
+			parent.style.display = '';
+		}
+	}
+
 	return {
 		addDefaultHeight: addDefaultHeight,
 		removeDefaultHeight: removeDefaultHeight,
 		removeTopButtonIfNeeded: removeTopButtonIfNeeded,
 		adjustLeaderboardSize: adjustLeaderboardSize,
 		hide: hide,
-		show: show
+		show: show,
+		hackChromeRefresh: hackChromeRefresh
 	};
 });
