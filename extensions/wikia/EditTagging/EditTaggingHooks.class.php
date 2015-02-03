@@ -1,15 +1,16 @@
 <?php
 
 /**
- * This class contains hook handlers used to store additional tags on RTE rdits
+ * This class contains hook handlers used to store additional tags on edits
  */
-class RTEStatisticsHooks {
+class EditTaggingHooks {
 	const RTE_SOURCE_MODE = 'source';
 	const RTE_WYSIWYG_MODE = 'wysiwyg';
 	const RTE_SOURCE_MODE_TAG = 'rte-source';
 	const RTE_WYSIWYG_MODE_TAG = 'rte-wysiwyg';
+	const API_EDIT_TAG = 'apiedit';
 
-	static $tagBlacklist = [ self::RTE_SOURCE_MODE_TAG, self::RTE_WYSIWYG_MODE_TAG ];
+	static $tagBlacklist = [ self::RTE_SOURCE_MODE_TAG, self::RTE_WYSIWYG_MODE_TAG, self::API_EDIT_TAG ];
 
 	/**
 	 * Removes tags from listings
@@ -38,6 +39,15 @@ class RTEStatisticsHooks {
 
 		return true;
 	}
+
+    /**
+     * Handle tagging new revisions made from API
+     */
+    public static function onSuccessfulApiEdit( $revision_id ) {
+        self::AddRevisionTag( $revision_id, self::API_EDIT_TAG );
+        return true;
+    }
+
 
 	/**
 	 * Handle tagging new revisions made from RTE
