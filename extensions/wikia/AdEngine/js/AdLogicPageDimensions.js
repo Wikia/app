@@ -152,12 +152,14 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 				log(['Hiding empty slot ' + ad.slotname, ad], 'info', logGroup);
 
 				slotTweaker.hide(ad.slotname);
+				slotTweaker.hackChromeRefresh(ad.slotname);
 				ad.state = 'ready';
 
 			} else if (ad.state === 'shown') {
 				log(['Hiding slot ' + ad.slotname, ad], 'info', logGroup);
 
 				slotTweaker.hide(ad.slotname);
+				slotTweaker.hackChromeRefresh(ad.slotname);
 				ad.state = 'hidden';
 			}
 		}

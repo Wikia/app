@@ -3,8 +3,9 @@ define('ext.wikia.adEngine.adSlotsInContent',[
 	'jquery',
 	'wikia.log',
 	'wikia.window',
-	'ext.wikia.adEngine.adPlacementChecker'
-], function ($, log, win, adPlacementChecker) {
+	'ext.wikia.adEngine.adPlacementChecker',
+	'ext.wikia.adEngine.slotTweaker'
+], function ($, log, win, adPlacementChecker, slotTweaker) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.inContent',
@@ -73,7 +74,7 @@ define('ext.wikia.adEngine.adSlotsInContent',[
 		slotsAdded += 1;
 		offsetMap.push([headerOffset - minOffset, headerOffset + minOffset]);
 		win.adslots2.push([slot.name]);
-
+		slotTweaker.hackChromeRefresh(slot.name);
 		return true;
 	}
 

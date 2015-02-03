@@ -102,11 +102,6 @@ define('ext.wikia.adEngine.adConfigLate', [
 			return evolveProvidersForSlot;
 		}
 
-		// Don't load ads in TOP_INCONTENT_BOXAD if adDecoratorTopInContent is not available
-		if (slotname === 'TOP_INCONTENT_BOXAD' && !adDecoratorTopInContent) {
-			return [];
-		}
-
 		if (alwaysCallDart) {
 			if (dartDirectBtfSlots[slotname]) {
 				return [adProviderDirectGpt, adProviderRemnantGpt, adProviderLiftium];
