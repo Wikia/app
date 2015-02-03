@@ -19,6 +19,7 @@
 @import "mixins/sprite-edit-mw-toolbar";
 // Core
 @import "core/buttons";
+@import "core/codepage";
 @import "core/dimensions";
 @import "core/dropdowns";
 @import "core/header";
@@ -37,24 +38,6 @@ body {
 		overflow-y: auto;
 	}
 }
-
-#editarea {
-	min-height: 300px;
-	width: 100%;
-}
-
-#EditPageToolbar.ace-editor-wide {
-	height: 42px;
-}
-
-.ace_editor {
-	font-size: 14px;
-}
-
-.codepage-publish-button {
-	width: calc(100% - 22px);
-}
-
 
 .WikiaPage {
 	border-bottom: none;

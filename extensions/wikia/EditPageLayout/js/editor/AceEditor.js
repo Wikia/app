@@ -11,27 +11,28 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor'], function(ace){
 		$editPageToolbar = $('#EditPageToolbar'),
 		wideClassName = 'editpage-sourcewidemode-on',
 		narrowClassName = 'editpage-sourcewidemode-off',
-		beforeInit = function(){
+		beforeEditorInit = function(){
 			$('.loading-indicator').remove();
 			$('#wpSave').removeAttr( 'disabled' );
 			$editPage.addClass('editpage-sourcewidemode mode-source ' + narrowClassName);
 		};
 
 	function init() {
-		checkTheme();
+		chooseTheme();
 		initConfig();
-		beforeInit();
+		beforeEditorInit();
 		ace.init( 'editarea', inputAttr );
 		initOptions();
 		initStyles();
 		ace.setTheme( theme );
-		ace.setMode( window.aceMode );
+		ace.setMode( window.codePageType );
 
 		initEvents();
-		initSubmit();
-		initDiffModal();
 	}
 
+	/**
+	 * Init ace editor config
+	 */
 	function initConfig() {
 		var config = {
 				workerPath: window.aceScriptsPath
@@ -40,6 +41,9 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor'], function(ace){
 		ace.setConfig( config );
 	}
 
+	/**
+	 * Init ace editor options
+	 */
 	function initOptions() {
 		var options = {
 			showPrintMargin: false
@@ -48,12 +52,18 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor'], function(ace){
 		ace.setOptions( options );
 	}
 
+	/**
+	 * Init ace editor custom styles
+	 */
 	function initStyles() {
 		var editor = ace.getEditor();
 
 		editor.css('fontSize', '14px');
 	}
 
+	/**
+	 * Init submit action
+	 */
 	function initSubmit() {
 		$( '#editform' ).submit(function(e) {
 			var $form = $( this ),
@@ -66,12 +76,18 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor'], function(ace){
 		});
 	}
 
-	function checkTheme() {
+	/**
+	 * Choose ace editor theme depending on wiki theme (light or dark)
+	 */
+	function chooseTheme() {
 		if (window.wgIsDarkTheme) {
 			theme = 'solarized_dark';
 		}
 	}
 
+	/**
+	 * Init modal showing difference between last saved and currently edited code
+	 */
 	function initDiffModal() {
 		var previewModalConfig = {
 				vars: {
@@ -96,11 +112,13 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor'], function(ace){
 			};
 
 		$('#wpDiff').click(function(){
-			ace.showDiff(previewModalConfig, $.proxy(modalCallback, self));
+			ace.showDiff(previewModalConfig, modalCallback);
 		});
 	}
 
-	// send AJAX request
+	/**
+	 * Send AJAX request
+	 */
 	function ajax( method, params, callback, skin ) {
 		var url = window.wgEditPageHandler.replace( '$1', encodeURIComponent( window.wgEditedTitle ) );
 
@@ -121,6 +139,12 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor'], function(ace){
 		}, 'json' );
 	}
 
+	/**
+	 * Prepare content with difference between last saved and currently edited code
+	 *
+	 * @param previewModal modal box instance
+	 * @param content current edited content
+	 */
 	function prepareDiffContent(previewModal, content) {
 		var section = $.getUrlVar( 'section' ) || 0,
 			extraData = {
@@ -142,6 +166,9 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor'], function(ace){
 		});
 	}
 
+	/**
+	 * Change editor mode (narrow/wide)
+	 */
 	function editorModeChange() {
 		if (isEditorWide) {
 			$editPage.removeClass(wideClassName).addClass(narrowClassName);
@@ -156,7 +183,13 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor'], function(ace){
 		}
 	}
 
+	/**
+	 * Init ace editor events
+	 */
 	function initEvents() {
+		initSubmit();
+		initDiffModal();
+
 		$('.editpage-widemode-trigger').click(editorModeChange);
 	}
 

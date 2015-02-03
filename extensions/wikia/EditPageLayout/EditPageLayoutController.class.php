@@ -29,12 +29,13 @@ class EditPageLayoutController extends WikiaController {
 		// temporary grid transition code, remove after transition
 		OasisController::addBodyClass('WikiaGrid');
 
-
-
 		// render Oasis module
 		$this->html = F::app()->renderView( 'Oasis', 'Index', array('body' => $body) );
 	}
 
+	/**
+	 * Render HTML for edit page buttons
+	 */
 	public function executeButtons() {
 		$helper = EditPageLayoutHelper::getInstance();
 		$editPage = $helper->getEditPage();
@@ -43,6 +44,10 @@ class EditPageLayoutController extends WikiaController {
 		$this->buttons = $editPage->getControlButtons();
 	}
 
+	/**
+	 * Render basic edit buttons for code pages (js, css, lua)
+	 * Extra buttons are not needed
+	 */
 	public function executeCodeButtons() {}
 
 	/**
@@ -62,7 +67,7 @@ class EditPageLayoutController extends WikiaController {
 			// add stylesheet
 			$this->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/EditPageLayout/css/EditPageLayout.scss'));
 
-			if ( $helper->isCodePage( $editPage->getTitle(), $editPage->getTitle()->getNamespace()) ) {
+			if ( $helper->isCodePage( $editPage->getTitle() ) ) {
 				$this->pagetype = 'codepage';
 				$this->wg->Out->addScript("<script type=\"{$wgJsMimeType}\" src=\"/resources/Ace/ace.js\"></script>");
 				$srcs = AssetsManager::getInstance()->getGroupCommonURL('ace_editor_js');

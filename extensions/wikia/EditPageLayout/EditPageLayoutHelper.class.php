@@ -83,25 +83,9 @@ class EditPageLayoutHelper {
 			$this->out->disallowUserJs();
 		}
 
-		// Add Ace Editor assets for pages to edit code (css, js, lua)
-		if ( $this->isCodePage( $editedArticleTitle, $editedArticleTitleNS ) ) {
-			$aceUrl = AssetsManager::getInstance()->getOneCommonURL('/resources/Ace');
-			$aceUrlParts = parse_url($aceUrl);
-			$this->addJsVariable('aceScriptsPath', $aceUrlParts['path']);
-
-			$this->addJsVariable('wgIsCodePage', true);
-			$this->addJsVariable('wgIsDarkTheme', SassUtil::isThemeDark());
-
-			if ( $editedArticleTitleNS === NS_MEDIAWIKI ) {
-				if ( $editedArticleTitle->isCssPage() ) {
-					$mode = 'css';
-				} elseif ( $editedArticleTitle->isJsPage() ) {
-					$mode = 'javascript';
-				}
-			} elseif ( $editedArticleTitleNS === NS_MODULE ) {
-				$mode = 'lua';
-			}
-			$this->addJsVariable('aceMode', $mode);
+		// Add variables for pages to edit code (css, js, lua)
+		if ( $this->isCodePage( $editedArticleTitle ) ) {
+			$this->prepareVarsForCodePage( $editedArticleTitle );
 		}
 
 		// initialize custom edit page
@@ -183,13 +167,42 @@ class EditPageLayoutHelper {
 	 * (page to edit CSS, JS or Lua code)
 	 *
 	 * @param Title $articleTitle page title
-	 * @param $namespace page namespace
 	 * @return bool
 	 */
-	function isCodePage( Title $articleTitle, $namespace ) {
+	static public function isCodePage( Title $articleTitle ) {
+		$namespace = $articleTitle->getNamespace();
+
 		return $articleTitle->isCssOrJsPage()
 				// Lua module
 				|| $namespace === NS_MODULE;
+	}
+
+	/**
+	 * Prepare variables to init and support edit code pages
+	 *
+	 * @param Title $title
+	 */
+	private function prepareVarsForCodePage( Title $title ) {
+		$namespace = $title->getNamespace();
+		$type = '';
+
+		$aceUrl = AssetsManager::getInstance()->getOneCommonURL('/resources/Ace');
+		$aceUrlParts = parse_url($aceUrl);
+		$this->addJsVariable('aceScriptsPath', $aceUrlParts['path']);
+
+		$this->addJsVariable('wgIsCodePage', true);
+		$this->addJsVariable('wgIsDarkTheme', SassUtil::isThemeDark());
+
+		if ( $namespace === NS_MEDIAWIKI ) {
+			if ( $title->isCssPage() ) {
+				$type = 'css';
+			} elseif ( $title->isJsPage() ) {
+				$type = 'javascript';
+			}
+		} elseif ( $namespace === NS_MODULE ) {
+			$type = 'lua';
+		}
+		$this->addJsVariable('codePageType', $type);
 	}
 
 	/*
