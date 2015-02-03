@@ -76,7 +76,7 @@ class EditPageLayoutController extends WikiaController {
 				OasisController::addBodyClass( 'codeeditor' );
 			} else {
 				$packageName = 'epl';
-				if (class_exists( 'RTE' ) && RTE::isEnabled() && !$editPage->isReadOnlyPage()) {
+				if ( class_exists( 'RTE' ) && RTE::isEnabled() && !$editPage->isReadOnlyPage() ) {
 					$packageName = 'eplrte';
 				}
 				$srcs = AssetsManager::getInstance()->getGroupCommonURL( $packageName );
