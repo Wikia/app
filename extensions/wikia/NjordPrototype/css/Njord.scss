@@ -138,11 +138,12 @@
 		overflow: hidden;
 	}
 
-	& + .wikia-menu-button, {
+	& + nav.wikia-menu-button, {
 		background-color: $color-page;
 		background-image: none;
 		border: none;
 		border-radius: 0;
+		cursor: auto;
 		display: block;
 		margin-bottom: 30px;
 		margin-right: 320px;
@@ -176,6 +177,7 @@
 
 		.drop {
 			background-color: $color-page;
+			cursor: pointer;
 			float: left;
 			position: relative;
 			z-index: 1;
