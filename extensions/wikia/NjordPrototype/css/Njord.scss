@@ -166,8 +166,8 @@
 
 	.btn-bar {
 		align-items: center;
-		border-top: 1px solid $color-page-border-subtle;
-		border-bottom: 1px solid $color-page-border-subtle;
+		border-top: 1px solid $color-page-border;
+		border-bottom: 1px solid $color-page-border;
 		background-color: white;
 		display: flex;
 		display: -webkit-flex;
@@ -200,7 +200,7 @@
 
 	.image-save-bar {
 		align-items: center;
-		border-bottom: 1px solid #092140;
+		border-bottom: 1px solid $color-page-border;
 		box-shadow: 4px 4px 10px rgba(0, 0, 0, .25);
 		box-sizing: border-box;
 		background-color: white;
