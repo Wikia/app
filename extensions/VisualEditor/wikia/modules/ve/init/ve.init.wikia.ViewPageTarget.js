@@ -16,8 +16,6 @@
  * @constructor
  */
 ve.init.wikia.ViewPageTarget = function VeInitWikiaViewPageTarget() {
-	var boldItalicLink, toolbarDropdown, wikiaSourceMode;
-
 	// Parent constructor
 	ve.init.wikia.ViewPageTarget.super.call( this );
 
