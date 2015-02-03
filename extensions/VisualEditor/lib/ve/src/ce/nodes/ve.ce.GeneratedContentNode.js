@@ -19,8 +19,8 @@ ve.ce.GeneratedContentNode = function VeCeGeneratedContentNode() {
 	// Events
 	this.model.connect( this, { update: 'onGeneratedContentNodeUpdate' } );
 	this.connect( this, {
-		'setup': 'onGeneratedContentSetup',
-		'teardown': 'onGeneratedContentTeardown'
+		setup: 'onGeneratedContentSetup',
+		teardown: 'onGeneratedContentTeardown'
 	} );
 
 	// Initialization
