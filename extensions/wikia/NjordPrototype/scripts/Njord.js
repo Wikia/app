@@ -88,6 +88,7 @@
 		$heroModuleInput = $('#MainPageHero .upload input[name="file"]'),
 		$heroModuleImage = $('#MainPageHero .hero-image'),
 		$heroPositionText = $('#MainPageHero .position-info'),
+		$wordmark = $('#localNavigation .wordmark-icon'),
 
 		$wikiaArticle = $('#WikiaArticle'),
 
@@ -151,6 +152,7 @@
 					} else {
 						revertImage();
 					}
+					$wordmark.css('top', '-110px');
 					$imageElement.stopThrobbing();
 				},
 				onErrorCallback: function () {
@@ -356,6 +358,8 @@
 				$heroModule.trigger('resize');
 				$heroModule.trigger('change', [data.url, data.filename]);
 				trackMom(imageLoadedLabel, trackerActionSuccess);
+
+				$wordmark.css('top', '-174px');
 			} else {
 				trackMom(imageLoadedFailLabel, trackerActionError);
 				$.showModal(data.errTitle, data.errMessage);
