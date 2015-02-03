@@ -71,9 +71,6 @@ class NjordController extends WikiaController {
 			$wikiDataModel->originalImagePath = $wgBlankImgUrl;
 		}
 
-		//FIXME: remove this before release (thumbs from stash broken on devbox)
-		$wikiDataModel->imagePath = 'http://img1.wikia.nocookie.net/__cb20150129114437/mediawiki116/images/thumb/4/48/Wikia-hero-image/1200px-0%2C1200%2C0%2C300';
-
 		// template vars
 		$this->wikiData = $wikiDataModel;
 		$this->isAllowedToEdit = $this->wg->user->isAllowed( 'njordeditmode' );
