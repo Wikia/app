@@ -7,10 +7,6 @@
 	<h1 class="title-wrap sg-title <?php if ( isset( $wikiData->title ) ) : ?>filled-state<? else : ?>zero-state<?php endif; ?>">
 		<div class="edit-box">
 			<div class="hero-title" contenteditable="true"><?= htmlspecialchars( $wikiData->title ) ?></div>
-			<div class="btn-bar">
-				<div class="new-btn discard-btn sg-sub"><?= wfMessage('hero-image-discard-btn')->escaped(); ?></div>
-				<div class="new-btn save-btn sg-sub"><?= wfMessage('hero-image-publish-btn')->escaped(); ?></div>
-			</div>
 		</div>
 		<span class="title-text"><?= htmlspecialchars( $wikiData->title ) ?></span>
 		<span class="title-default-text"><?= wfMessage('hero-image-default-title')->escaped(); ?></span>
@@ -34,9 +30,6 @@
 		<?php if ( !isset ( $wikiData->description ) ) { ?>
 			<span class="hero-description-default-text sg-main"><?= wfMessage('hero-image-default-description')->escaped(); ?></span>
 		<? } ?>
-		<? if ($isAllowedToEdit): ?>
-		<img class="edit-btn" src="/extensions/wikia/NjordPrototype/images/pencil_b.svg"/>
-		<? endif; ?>
 	</div>
 </header>
 

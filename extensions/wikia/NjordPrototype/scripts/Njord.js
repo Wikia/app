@@ -64,13 +64,9 @@
 		$imageSaveBtn = $('.MainPageHeroHeader .image-save-bar .save-btn'),
 
 		$titleEditBtn = $('.MainPageHeroHeader .title-wrap .title-edit-btn'),
-		$titleSaveBtn = $('.MainPageHeroHeader .title-wrap .save-btn'),
-		$titleDiscardBtn = $('.MainPageHeroHeader .title-wrap .discard-btn'),
 		$titleText = $('.MainPageHeroHeader .title-wrap .title-text'),
 
 		$descriptionElement = $('.MainPageHeroHeader .hero-description'),
-		$descriptionEditElement = $('.MainPageHeroHeader .hero-description .edit-box'),
-		$descriptionEditBtn = $('.MainPageHeroHeader .hero-description .edit-btn'),
 		$descriptionSaveBtn = $('.MainPageHeroHeader .hero-description .save-btn'),
 		$descriptionDiscardBtn = $('.MainPageHeroHeader .hero-description .discard-btn'),
 		$descriptionEditBoxText = $('.MainPageHeroHeader .hero-description .edit-box .edited-text'),
@@ -80,7 +76,7 @@
 		$heroHeader = $('.MainPageHeroHeader'),
 		$overlay = $('#MainPageHero .overlay'),
 		$heroModule = $('#MainPageHero'),
-		$heroModuleTitle = $('#MainPageHero .hero-title'),
+		$heroModuleTitle = $('.MainPageHeroHeader .hero-title'),
 		$heroModuleUpload = $('#MainPageHero .upload'),
 		$heroModuleUploadMask = $('#MainPageHero .upload-mask'),
 		$heroModuleAddButton = $('#MainPageHero .upload .upload-btn'),
@@ -181,37 +177,11 @@
 			}
 		},
 		editTitle = function () {
-			//turn off description editing
-			revertDescription();
 			States.setState($titleElement, 'edit-state');
 			$heroModuleTitle.focus();
 			$heroModuleTitle.change();
 			placeCaretAtEnd($titleEditBoxText.get(0));
-		},
-		saveTitle = function () {
-			$titleEditElement.startThrobbing();
-			$.nirvana.sendRequest({
-				controller: 'NjordController',
-				method: 'saveHeroTitle',
-				type: 'POST',
-				data: {
-					'title': heroData.title
-				},
-				callback: function (data) {
-					if (data.success) {
-						$titleText.text(heroData.oTitle = heroData.title);
-						States.setState($titleElement, 'filled-state');
-					} else {
-						revertTitle();
-					}
-					$titleEditElement.stopThrobbing();
-				},
-				onErrorCallback: function () {
-					revertTitle();
-					$titleEditElement.stopThrobbing();
-					trackMom(saveTitleFailLabel, trackerActionError);
-				}
-			});
+			editDescription();
 		},
 		revertTitle = function () {
 			$heroModuleTitle.text(heroData.oTitle);
@@ -222,35 +192,36 @@
 				States.setState($titleElement, 'filled-state');
 			}
 		},
-		saveDescription = function () {
-			$descriptionEditElement.startThrobbing();
+		saveTitleAndDescription = function() {
+			$titleEditElement.startThrobbing();
 			$.nirvana.sendRequest({
 				controller: 'NjordController',
-				method: 'saveHeroDescription',
+				method: 'saveTitleAndDescription',
 				type: 'POST',
 				data: {
+					'title': heroData.title,
 					'description': heroData.description
 				},
 				callback: function (data) {
 					if (data.success) {
+						$titleText.text(heroData.oTitle = heroData.title);
+						States.setState($titleElement, 'filled-state');
 						States.setState($descriptionElement, 'filled-state');
 						heroData.oDescription = heroData.description;
 						$descriptionText.text(heroData.description);
 					} else {
-						revertDescription();
+						revertDescriptionAndTitle();
 					}
-					$descriptionEditElement.stopThrobbing();
+					$titleEditElement.stopThrobbing();
 				},
 				onErrorCallback: function () {
-					revertDescription();
-					$descriptionEditElement.stopThrobbing();
-					trackMom(saveSummaryFailLabel, trackerActionPost);
+					revertDescriptionAndTitle();
+					$titleEditElement.stopThrobbing();
+					trackMom(saveTitleFailLabel, trackerActionError);
 				}
 			});
 		},
 		editDescription = function () {
-			//turn off title editing
-			revertTitle();
 			States.setState($descriptionElement, 'edit-state');
 
 			//FIXME: fix onChange event, caret at end on focus
@@ -259,7 +230,7 @@
 			$descriptionEditBoxText.change();
 			placeCaretAtEnd($descriptionEditBoxText.get(0));
 		},
-		revertDescription = function () {
+		revertDescriptionAndTitle = function () {
 			heroData.description = heroData.oDescription;
 			if (heroData.oDescription == undefined || heroData.oDescription.trim() === "") {
 				States.setState($descriptionElement, 'zero-state');
@@ -267,6 +238,7 @@
 				States.setState($descriptionElement, 'filled-state');
 			}
 			$descriptionEditBoxText.text(heroData.oDescription);
+			revertTitle()
 		},
 
 		initializeData = function () {
@@ -392,15 +364,6 @@
 				.on('click', function () {
 					trackMom(editTitleLabel, trackerActionClick);
 				});
-			$titleSaveBtn.on('click', saveTitle)
-				.on('click', function () {
-					trackMom(saveTitleLabel, trackerActionClick);
-				});
-			$titleDiscardBtn.on('click', revertTitle)
-				.on('click', function () {
-					trackMom(revertTitleFailLabel, trackerActionClick);
-				});
-
 			$heroModuleTitle.on('focus', onFocus)
 				.on('blur keyup paste input', onInput)
 				.on('paste', onPaste)
@@ -416,15 +379,11 @@
 				.on('blur keyup paste input', onInput)
 				.on('change', onChange);
 
-			$descriptionEditBtn.on('click', editDescription)
-				.on('click', function () {
-					trackMom(editSummaryLabel, trackerActionClick);
-				});
-			$descriptionDiscardBtn.on('click', revertDescription)
+			$descriptionDiscardBtn.on('click', revertDescriptionAndTitle)
 				.on('click', function () {
 					trackMom(revertSummaryLabel, trackerActionClick);
 				});
-			$descriptionSaveBtn.on('click', saveDescription)
+			$descriptionSaveBtn.on('click', saveTitleAndDescription)
 				.on('click', function () {
 					trackMom(saveSummaryLabel, trackerActionClick);
 				});
