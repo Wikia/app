@@ -84,6 +84,7 @@
 		$heroModuleInput = $('#MainPageHero .upload input[name="file"]'),
 		$heroModuleImage = $('#MainPageHero .hero-image'),
 		$heroPositionText = $('#MainPageHero .position-info'),
+		$wordmark = $('#localNavigation .wordmark-icon'),
 
 		$wikiaArticle = $('#WikiaArticle'),
 
@@ -126,6 +127,7 @@
 		},
 		saveImage = function () {
 			States.setState($imageSaveElement, 'filled-state');
+			$wordmark.css('top', '-110px');
 			$imageElement.startThrobbing();
 			$.nirvana.sendRequest({
 				controller: 'NjordController',
@@ -175,6 +177,7 @@
 				States.setState($imageElement, 'filled-state');
 				States.setState($imageSaveElement, 'filled-state');
 			}
+			$wordmark.css('top', '-110px');
 		},
 		editTitle = function () {
 			States.setState($titleElement, 'edit-state');
@@ -320,6 +323,7 @@
 		onAfterSendForm = function (data) {
 			if (data.isOk) {
 				$heroModuleImage.bind('load', function () {
+					$wordmark.css('top', '-174px');
 					States.setState($imageElement, 'upload-state');
 					States.setState($imageSaveElement, 'upload-state');
 					$heroModule.trigger('enableDragging');
@@ -330,9 +334,10 @@
 				$heroModule.trigger('resize');
 				$heroModule.trigger('change', [data.url, data.filename]);
 				trackMom(imageLoadedLabel, trackerActionSuccess);
+
 			} else {
 				trackMom(imageLoadedFailLabel, trackerActionError);
-				$.showModal(data.errTitle, data.errMessage);
+				window.GlobalNotification.show(data.errMessage, 'error');
 				$heroModule.stopThrobbing();
 			}
 		},
