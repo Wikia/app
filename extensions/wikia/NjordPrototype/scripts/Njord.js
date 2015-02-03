@@ -335,7 +335,7 @@
 
 			} else {
 				trackMom(imageLoadedFailLabel, trackerActionError);
-				$.showModal(data.errTitle, data.errMessage);
+				window.GlobalNotification.show(data.errMessage, 'error');
 				$heroModule.stopThrobbing();
 			}
 		},
