@@ -34,24 +34,15 @@
 	.image-window {
 		height: 100%;
 		overflow: hidden;
-		&:after {
-			@include linear-gradient(transparent, top, transparent, 0%, rgba(0,0,0,0.7), 100%);
-
-			content: "";
-			display: block;
-			width: 100%;
-			height: 110px;
-			position: absolute;
-			bottom: 0;
-		}
+		@include linear-gradient(rgba(0,0,0,0.1), top, rgba(0,0,0,0.1), 20%, rgba(0,0,0,0.6), 100%);
 	}
 
-	.image-wrap {
+	.image-wrap:not(.zero-state) {
 		height: 100%;
+	}
 
-		&.zero-state {
-			height: 130px;
-		}
+	.image-wrap.zero-state {
+		height: 130px;
 	}
 
 	.hero-image {
@@ -508,7 +499,6 @@
 			display: none;
 		}
 		.upload {
-			border: 1px dashed white;
 			display: flex;
 			display: -webkit-flex;
 			height: 97.1%;
