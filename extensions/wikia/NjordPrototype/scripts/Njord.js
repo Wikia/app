@@ -349,6 +349,7 @@
 		onAfterSendForm = function (data) {
 			if (data.isOk) {
 				$heroModuleImage.bind('load', function () {
+					$wordmark.css('top', '-174px');
 					States.setState($imageElement, 'upload-state');
 					States.setState($imageSaveElement, 'upload-state');
 					$heroModule.trigger('enableDragging');
@@ -368,7 +369,6 @@
 		},
 		sendForm = function (formdata) {
 			$heroModule.startThrobbing();
-			$wordmark.css('top', '-174px');
 			$.nirvana.sendRequest({
 				controller: 'NjordController',
 				method: 'upload',
