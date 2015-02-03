@@ -5,10 +5,6 @@
  * @ingroup Extensions
  */
 
-if ( !defined( 'MEDIAWIKI' ) ) {
-	exit;
-}
-
 $wgExtensionCredits['captcha'][] = [
 	'path' => __FILE__,
 	'name' => 'Captcha',
@@ -24,11 +20,9 @@ $wgExtensionCredits['captcha'][] = [
  * By default, sysops and registered bot accounts will be
  * able to skip, while others have to go through it.
  */
-$wgGroupPermissions['*'            ]['skipcaptcha'] = false;
-$wgGroupPermissions['user'         ]['skipcaptcha'] = false;
-$wgGroupPermissions['autoconfirmed']['skipcaptcha'] = false;
-$wgGroupPermissions['bot'          ]['skipcaptcha'] = true; // registered bots
-$wgGroupPermissions['sysop'        ]['skipcaptcha'] = true;
+$wgGroupPermissions['*']['skipcaptcha'] = false;
+$wgGroupPermissions['bot']['skipcaptcha'] = true; // registered bots
+$wgGroupPermissions['sysop']['skipcaptcha'] = true;
 $wgAvailableRights[] = 'skipcaptcha';
 
 /**
@@ -56,12 +50,12 @@ $wgCaptchaWhitelistIP = false;
  * which also takes into account per namespace triggering.
  */
 $wgCaptchaTriggers = [];
-$wgCaptchaTriggers['edit']          = false; // Would check on every edit
-$wgCaptchaTriggers['create']        = false; // Check on page creation.
-$wgCaptchaTriggers['sendemail']     = false; // Special:Emailuser
-$wgCaptchaTriggers['addurl']        = true;  // Check on edits that add URLs
+$wgCaptchaTriggers['edit'] = false; // Would check on every edit
+$wgCaptchaTriggers['create'] = false; // Check on page creation.
+$wgCaptchaTriggers['sendemail'] = false; // Special:Emailuser
+$wgCaptchaTriggers['addurl'] = true;  // Check on edits that add URLs
 $wgCaptchaTriggers['createaccount'] = true;  // Special:Userlogin&type=signup
-$wgCaptchaTriggers['badlogin']      = true;  // Special:Userlogin after failure
+$wgCaptchaTriggers['badlogin'] = true;  // Special:Userlogin after failure
 
 /**
  * You may wish to apply special rules for captcha triggering on some namespaces.

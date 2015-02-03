@@ -147,7 +147,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$captchaObj = Captcha\Factory\Module::getInstance();
 		if( !empty( $captchaObj ) ) {
 			$this->rawHtml = $captchaObj->getForm();
-			$this->isFancyCaptcha = ( class_exists( 'FancyCaptcha' ) && $captchaObj instanceof FancyCaptcha );
+			$this->isFancyCaptcha = ( class_exists( 'FancyCaptcha' ) && $captchaObj instanceof Captcha\Module\FancyCaptcha );
 		}
 	}
 

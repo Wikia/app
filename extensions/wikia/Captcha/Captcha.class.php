@@ -189,7 +189,7 @@ class Handler {
 
 		// Special config for this NS?
 		if ( isset( $wg->CaptchaTriggersOnNamespace[$ns][$action] ) ) {
-			return $wg->CaptchaTriggersOnNamespace[ $ns ][ $action ];
+			return $wg->CaptchaTriggersOnNamespace[$ns][$action];
 		}
 
 		return ( !empty( $wg->CaptchaTriggers[$action] ) ); // Default
@@ -232,7 +232,7 @@ class Handler {
 			return true;
 		}
 
-		if ( $this->captchaTriggers( $editPage, 'create' )  && !$editPage->mTitle->exists() ) {
+		if ( $this->captchaTriggers( $editPage, 'create' ) && !$editPage->mTitle->exists() ) {
 			// Check if creating a page
 			$this->trigger = sprintf( "Create trigger by '%s' at [[%s]]",
 				$wg->User->getName(),
@@ -517,12 +517,13 @@ class Handler {
 	 */
 	public function confirmUserLogin( $u, $pass, &$retval ) {
 		if ( $this->isBadLoginTriggered() ) {
-			if ( $this->isIPWhitelisted() )
+			if ( $this->isIPWhitelisted() ) {
 				return true;
+			}
 
 			$this->trigger = "post-badlogin login '" . $u->getName() . "'";
 			if ( !$this->captcha->passCaptcha() ) {
-				// Emulate a bad-password return to confuse the shit out of attackers
+				// Emulate a bad-password return
 				$retval = \LoginForm::WRONG_PASS;
 				return false;
 			}
