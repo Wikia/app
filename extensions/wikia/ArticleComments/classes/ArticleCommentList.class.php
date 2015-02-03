@@ -1080,31 +1080,4 @@ class ArticleCommentList {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
-
-	/**
-	 * Enables commenting for an article if it is moved to a namespace that allows it
-	 * and disables it if it does not.
-	 * @param object Title $oOldTitle An object for the old article's name
-	 * @param object Title $oNewTitle An object for the new article's name
-	 * @param object User $oUser
-	 * @param integer $iOldId
-	 * @param integer $iNewId
-	 * @return bool
-	 */
-	public static function onTitleMoveComplete( Title &$oOldTitle, Title &$oNewTitle, User &$oUser, $iOldId, $iNewId ) {
-		global $wgArticleCommentsNamespaces;
-		wfProfileIn( __METHOD__ );
-		$iId = $oNewTitle->getArticleID();
-
-		// Check if commenting is allowed in the new namespace
-		// and if commenting has not been disabled on purpose
-		if ( in_array( $oNewTitle->getNamespace(), $wgArticleCommentsNamespaces ) &&
-			Wikia::getProps( $iId, 'commenting' ) !== "0"
-		) {
-			Wikia::setProps( $iId, ['commenting' => 1] );
-		}
-
-		wfProfileOut( __METHOD__ );
-		return true;
-	}
 }

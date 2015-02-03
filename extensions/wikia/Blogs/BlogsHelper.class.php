@@ -120,4 +120,29 @@ class BlogsHelper {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
+
+	/**
+	 * Enables commenting for a blog post that has been moved from another namespace
+	 * @param object Title $oOldTitle An object for the old article's name
+	 * @param object Title $oNewTitle An object for the new article's name
+	 * @param object User $oUser
+	 * @param integer $iOldId
+	 * @param integer $iNewId
+	 * @return bool
+	 */
+	public static function onTitleMoveComplete( Title &$oOldTitle, Title &$oNewTitle, User &$oUser, $iOldId, $iNewId ) {
+		global $wgArticleCommentsNamespaces;
+		wfProfileIn( __METHOD__ );
+
+		// If commenting is enabled in the new namespace
+		// and is not in the old one - enable comments.
+		if ( in_array( $oNewTitle->getNamespace(), $wgArticleCommentsNamespaces ) &&
+			!in_array( $oOldTitle->getNamespace(), $wgArticleCommentsNamespaces )
+		) {
+			BlogArticle::setProps( $oNewTitle->getArticleID(), ['commenting' => '1'] );
+		}
+
+		wfProfileOut( __METHOD__ );
+		return true;
+	}
 }
