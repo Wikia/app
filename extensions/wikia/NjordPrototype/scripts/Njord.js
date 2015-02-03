@@ -337,7 +337,8 @@
 
 			} else {
 				trackMom(imageLoadedFailLabel, trackerActionError);
-				$.showModal(data.errTitle, data.errMessage);
+				window.GlobalNotification.show( data.errMessage, 'error' );
+				//$.showModal(data.errTitle, data.errMessage);
 				$heroModule.stopThrobbing();
 			}
 		},
