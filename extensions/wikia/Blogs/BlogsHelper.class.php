@@ -123,9 +123,9 @@ class BlogsHelper {
 
 	/**
 	 * Enables commenting for a blog post that has been moved from another namespace
-	 * @param object Title $oOldTitle An object for the old article's name
-	 * @param object Title $oNewTitle An object for the new article's name
-	 * @param object User $oUser
+	 * @param Title $oOldTitle An object for the old article's name
+	 * @param Title $oNewTitle An object for the new article's name
+	 * @param User $oUser
 	 * @param integer $iOldId
 	 * @param integer $iNewId
 	 * @return bool
@@ -141,7 +141,7 @@ class BlogsHelper {
 			in_array( $oNewTitle->getNamespace(), $wgArticleCommentsNamespaces ) &&
 			$oOldTitle->getNamespace() !== $oNewTitle->getNamespace()
 		) {
-			BlogArticle::setProps( $oNewTitle->getArticleID(), ['commenting' => '1'] );
+			BlogArticle::setProps( $oNewTitle->getArticleID(), [ 'commenting' => '1' ] );
 		}
 
 		wfProfileOut( __METHOD__ );
