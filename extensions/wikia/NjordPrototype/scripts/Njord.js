@@ -292,7 +292,9 @@
 			$heroModule.trigger('resize');
 			trackDragOnlyOncePerImage = false;
 		}, onResize = function () {
-			$heroModule.outerHeight(Math.floor($heroModule.width() * HERO_ASPECT_RATIO));
+			if (!$imageElement.hasClass('zero-state')) {
+				$heroModule.outerHeight(Math.floor($heroModule.width() * HERO_ASPECT_RATIO));
+			}
 		}, onDraggingEnabled = function () {
 			var heroHeight = $heroModuleImage.height(),
 				heroModuleHeight = $heroModule.height(),

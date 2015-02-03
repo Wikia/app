@@ -46,6 +46,10 @@
 
 	.image-wrap {
 		height: 100%;
+
+		&.zero-state {
+			height: 130px;
+		}
 	}
 
 	.hero-image {
