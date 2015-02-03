@@ -140,7 +140,7 @@ class GlobalWatchlistTask extends BaseTask {
 		$task = new self();
 		( new AsyncTaskList() )
 			->add( $task->call( 'sendWeeklyDigest', $userID ) )
-			->delay( '3 minutes' )
+			->delay( '7 days' )
 			->dupCheck()
 			->queue();
 	}
