@@ -28,7 +28,7 @@ class EditPageLayoutHelper {
 	}
 
 	static function getInstance() {
-		if (!isset(self::$instance)) {
+		if ( !isset( self::$instance ) ) {
 			self::$instance = new self();
 		}
 		return self::$instance;
@@ -49,26 +49,26 @@ class EditPageLayoutHelper {
 	 *
 	 * @author macbre
 	 */
-	function setupEditPage(Article $editedArticle, $fullScreen = true, $class = false) {
+	function setupEditPage( Article $editedArticle, $fullScreen = true, $class = false ) {
 		global $wgHooks;
 
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
 		$user = $this->app->wg->User;
 
 		// don't render edit area when we're in read only mode
-		if (wfReadOnly()) {
+		if ( wfReadOnly() ) {
 			// set correct page title
-			$this->out->setPageTitle(wfMsg('editing', $this->app->getGlobal('wgTitle')->getPrefixedText()));
-			wfProfileOut(__METHOD__);
+			$this->out->setPageTitle( wfMessage( 'editing', $this->app->getGlobal( 'wgTitle' )->getPrefixedText())->escaped() );
+			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
 		// use "reskined" edit page layout
 		$this->fullScreen = $fullScreen;
-		if ($fullScreen) {
+		if ( $fullScreen ) {
 			// set Oasis entry-point
-			Wikia::setVar('OasisEntryControllerName', 'EditPageLayout');
+			Wikia::setVar( 'OasisEntryControllerName', 'EditPageLayout' );
 		}
 
 		// Disable custom JS while loading the edit page on MediaWiki JS pages and user subpages (BugID: 41449)
@@ -89,43 +89,43 @@ class EditPageLayoutHelper {
 		}
 
 		// initialize custom edit page
-		$this->editPage = new EditPageLayout($editedArticle);
+		$this->editPage = new EditPageLayout( $editedArticle );
 		$editedTitle = $this->editPage->getEditedTitle();
 
 		$formCustomHandler = $this->editPage->getCustomFormHandler();
 
-		$this->addJsVariable('wgIsEditPage', true);
-		$this->addJsVariable('wgEditedTitle', $editedTitle->getPrefixedText());
+		$this->addJsVariable( 'wgIsEditPage', true );
+		$this->addJsVariable( 'wgEditedTitle', $editedTitle->getPrefixedText() );
 
-		$this->addJsVariable('wgEditPageClass', $class ? $class:'SpecialCustomEditPage' );
+		$this->addJsVariable( 'wgEditPageClass', $class ? $class:'SpecialCustomEditPage' );
 
-		$this->addJsVariable('wgEditPageHandler',  !is_null($formCustomHandler)
-			? $formCustomHandler->getLocalUrl('wpTitle=$1')
-			: $this->app->getGlobal('wgScript') . '?action=ajax&rs=EditPageLayoutAjax&title=$1' );
+		$this->addJsVariable( 'wgEditPageHandler',  !is_null( $formCustomHandler )
+			? $formCustomHandler->getLocalUrl( 'wpTitle=$1' )
+			: $this->app->getGlobal( 'wgScript' ) . '?action=ajax&rs=EditPageLayoutAjax&title=$1' );
 
-		$this->addJsVariable('wgEditPagePopularTemplates', TemplateService::getPromotedTemplates());
-		$this->addJsVariable('wgEditPageIsWidePage', $this->isWidePage() );
+		$this->addJsVariable( 'wgEditPagePopularTemplates', TemplateService::getPromotedTemplates() );
+		$this->addJsVariable( 'wgEditPageIsWidePage', $this->isWidePage() );
 
-		if ($user->isLoggedIn()) {
+		if ( $user->isLoggedIn() ) {
 			global $wgRTEDisablePreferencesChange;
 			$wgRTEDisablePreferencesChange = true;
-			$this->addJsVariable('wgEditPageWideSourceMode', (bool)$user->getOption( 'editwidth' ) );
-			unset($wgRTEDisablePreferencesChange);
+			$this->addJsVariable( 'wgEditPageWideSourceMode', (bool)$user->getOption( 'editwidth' ) );
+			unset( $wgRTEDisablePreferencesChange );
 		}
 
-		$this->addJsVariableRef('wgEditPageFormType', $this->editPage->formtype);
-		$this->addJsVariableRef('wgEditPageIsConflict', $this->editPage->isConflict);
-		$this->addJsVariable('wgEditPageIsReadOnly', $this->editPage->isReadOnlyPage());
-		$this->addJsVariableRef('wgEditPageHasEditPermissionError', $this->editPage->mHasPermissionError);
-		$this->addJsVariableRef('wgEditPageSection', $this->editPage->section);
+		$this->addJsVariableRef( 'wgEditPageFormType', $this->editPage->formtype );
+		$this->addJsVariableRef( 'wgEditPageIsConflict', $this->editPage->isConflict );
+		$this->addJsVariable( 'wgEditPageIsReadOnly', $this->editPage->isReadOnlyPage() );
+		$this->addJsVariableRef( 'wgEditPageHasEditPermissionError', $this->editPage->mHasPermissionError );
+		$this->addJsVariableRef( 'wgEditPageSection', $this->editPage->section );
 
 		// data for license module (BugId:6967)
 		$titleLicensing = GlobalTitle::newFromText( 'Community_Central:Licensing', null, 177 );
-		$this->addJsVariable('wgEditPageLicensingUrl', $titleLicensing->getFullUrl());
-		$this->addJsVariable('wgRightsText', $this->app->wg->RightsText);
+		$this->addJsVariable( 'wgEditPageLicensingUrl', $titleLicensing->getFullUrl() );
+		$this->addJsVariable( 'wgRightsText', $this->app->wg->RightsText );
 
 		// copyright warning for notifications (BugId:7951)
-		$this->addJsVariable('wgCopywarn', $this->editPage->getCopyrightNotice());
+		$this->addJsVariable( 'wgCopywarn', $this->editPage->getCopyrightNotice() );
 
 		// extra hooks for edit page
 		$wgHooks['MakeGlobalVariablesScript'][] = 'EditPageLayoutHooks::onMakeGlobalVariablesScript';
@@ -133,7 +133,7 @@ class EditPageLayoutHelper {
 
 		$this->helper = self::getInstance();
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 		return $this->editPage;
 	}
 
@@ -143,19 +143,19 @@ class EditPageLayoutHelper {
 		// Custom edit pages are mostly using special pages
 		// and the default Oasis logic is not to show any rail modules
 		// there so we need to tweak it
-		if ($wgTitle->getNamespace() == NS_SPECIAL) {
+		if ( $wgTitle->getNamespace() == NS_SPECIAL ) {
 			return false;
 		}
 
 		// Some nasty trick to make BodyModule think we are not
 		// on edit page so it will make proper list of modules
-		$action = $this->request->setVal('action',null);
-		$diff = $this->request->setVal('diff',null);
+		$action = $this->request->setVal( 'action',null );
+		$diff = $this->request->setVal( 'diff',null );
 		$railModuleList = (new BodyController)->getRailModuleList();
-		$this->request->setVal('action',$action);
-		$this->request->setVal('diff',$diff);
+		$this->request->setVal( 'action',$action );
+		$this->request->setVal( 'diff',$diff );
 
-		return empty($railModuleList);
+		return empty( $railModuleList );
 	}
 
 	function getEditPage() {
@@ -187,12 +187,12 @@ class EditPageLayoutHelper {
 		$namespace = $title->getNamespace();
 		$type = '';
 
-		$aceUrl = AssetsManager::getInstance()->getOneCommonURL('/resources/Ace');
-		$aceUrlParts = parse_url($aceUrl);
-		$this->addJsVariable('aceScriptsPath', $aceUrlParts['path']);
+		$aceUrl = AssetsManager::getInstance()->getOneCommonURL( '/resources/Ace' );
+		$aceUrlParts = parse_url( $aceUrl );
+		$this->addJsVariable( 'aceScriptsPath', $aceUrlParts['path'] );
 
-		$this->addJsVariable('wgIsCodePage', true);
-		$this->addJsVariable('wgIsDarkTheme', SassUtil::isThemeDark());
+		$this->addJsVariable( 'wgIsCodePage', true );
+		$this->addJsVariable( 'wgIsDarkTheme', SassUtil::isThemeDark() );
 
 		if ( $namespace === NS_MODULE ) {
 			$type = 'lua';
@@ -202,22 +202,22 @@ class EditPageLayoutHelper {
 			$type = 'javascript';
 		}
 
-		$this->addJsVariable('codePageType', $type);
+		$this->addJsVariable( 'codePageType', $type );
 	}
 
 	/*
 	 * adding js variable
 	 */
-	function addJsVariable($name, $value) {
-		if($this->jsVarsPrinted) {
-			throw new Exception('addJsVariable: too late to add js var' );
+	function addJsVariable( $name, $value ) {
+		if( $this->jsVarsPrinted ) {
+			throw new Exception( 'addJsVariable: too late to add js var' );
 		}
 		$this->jsVars[$name] = $value;
 	}
 
-	function addJsVariableRef($name, &$value) {
-		if($this->jsVarsPrinted) {
-			throw new Exception('addJsVariable: too late to add js var' );
+	function addJsVariableRef( $name, &$value ) {
+		if( $this->jsVarsPrinted ) {
+			throw new Exception( 'addJsVariable: too late to add js var' );
 		}
 		$this->jsVars[$name] = $value;
 	}

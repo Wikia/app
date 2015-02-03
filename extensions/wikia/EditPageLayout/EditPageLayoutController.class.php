@@ -54,7 +54,7 @@ class EditPageLayoutController extends WikiaController {
 	 * Render template for <body> tag content
 	 */
 	public function executeEditPage() {
-		wfProfileIn(__METHOD__);
+		wfProfileIn( __METHOD__ );
 
 		$helper = EditPageLayoutHelper::getInstance();
 		$editPage = $helper->getEditPage();
@@ -65,43 +65,44 @@ class EditPageLayoutController extends WikiaController {
 			$wgJsMimeType = $this->wg->JsMimeType;
 
 			// add stylesheet
-			$this->wg->Out->addStyle( AssetsManager::getInstance()->getSassCommonURL('extensions/wikia/EditPageLayout/css/EditPageLayout.scss'));
+			$this->wg->Out->addStyle( AssetsManager::getInstance()
+				->getSassCommonURL( 'extensions/wikia/EditPageLayout/css/EditPageLayout.scss' ) );
 
 			if ( $helper->isCodePage( $editPage->getTitle() ) ) {
 				$this->pagetype = 'codepage';
-				$this->wg->Out->addScript("<script type=\"{$wgJsMimeType}\" src=\"/resources/Ace/ace.js\"></script>");
-				$srcs = AssetsManager::getInstance()->getGroupCommonURL('ace_editor_js');
+				$this->wg->Out->addScript( "<script type=\"{$wgJsMimeType}\" src=\"/resources/Ace/ace.js\"></script>" );
+				$srcs = AssetsManager::getInstance()->getGroupCommonURL( 'ace_editor_js' );
 
-				OasisController::addBodyClass('codeeditor');
+				OasisController::addBodyClass( 'codeeditor' );
 			} else {
 				$packageName = 'epl';
-				if (class_exists('RTE') && RTE::isEnabled() && !$editPage->isReadOnlyPage()) {
+				if (class_exists( 'RTE' ) && RTE::isEnabled() && !$editPage->isReadOnlyPage()) {
 					$packageName = 'eplrte';
 				}
-				$srcs = AssetsManager::getInstance()->getGroupCommonURL($packageName);
+				$srcs = AssetsManager::getInstance()->getGroupCommonURL( $packageName );
 			}
 
-			foreach($srcs as $src) {
-				$this->wg->Out->addScript("<script type=\"{$wgJsMimeType}\" src=\"{$src}\"></script>");
+			foreach( $srcs as $src ) {
+				$this->wg->Out->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$src}\"></script>" );
 			}
 		}
 
 		// render WikiLogo
-		$response = $this->app->sendRequest('WikiHeader', 'Wordmark');
+		$response = $this->app->sendRequest( 'WikiHeader', 'Wordmark' );
 
 		// move wordmark data
 		$this->wordmark = $response->getData();
 
 		// render global and user navigation
 		if ( !empty( $this->wg->EnableGlobalNavExt ) ) {
-			$this->header = F::app()->renderView('GlobalNavigation', 'index');
+			$this->header = F::app()->renderView( 'GlobalNavigation', 'index' );
 		} else {
-			$this->header = F::app()->renderView('GlobalHeader', 'Index');
+			$this->header = F::app()->renderView( 'GlobalHeader', 'Index' );
 		}
 
 		// Editing [foo]
 		$this->title = $editPage->getEditedTitle();
-		$section = $this->wg->Request->getVal('section');
+		$section = $this->wg->Request->getVal( 'section' );
 
 		// Is user logged in?
 		$this->isLoggedIn = $this->wg->User->isLoggedIn();
@@ -119,7 +120,7 @@ class EditPageLayoutController extends WikiaController {
 			// If adding new section to page, change label text (BugId: 7243)
 			$wpSummaryLabelText = 'editpagelayout-subject-headline-label';
 		}
-		else if (is_numeric($section)) {
+		else if ( is_numeric( $section ) ) {
 			$msgKey = 'editingsection';
 		}
 		else {
@@ -134,20 +135,20 @@ class EditPageLayoutController extends WikiaController {
 		}
 
 		// limit title length
-		if (mb_strlen($this->titleText) > self::TITLE_MAX_LENGTH) {
-			$this->titleShortText = htmlspecialchars(mb_substr($this->titleText, 0, self::TITLE_MAX_LENGTH)) . '&hellip;';
+		if ( mb_strlen( $this->titleText ) > self::TITLE_MAX_LENGTH ) {
+			$this->titleShortText = htmlspecialchars( mb_substr( $this->titleText, 0, self::TITLE_MAX_LENGTH ) ) . '&hellip;';
 		}
 		else {
-			$this->titleShortText = htmlspecialchars($this->titleText);
+			$this->titleShortText = htmlspecialchars( $this->titleText );
 		}
 
-		$this->editing = wfMsg($msgKey, '');
+		$this->editing = wfMessage( $msgKey, '' )->escaped();
 
-		$this->wpSummaryLabelText = wfMsg($wpSummaryLabelText);
+		$this->wpSummaryLabelText = wfMessage( $wpSummaryLabelText )->escaped();
 
 		// render help link and point the link to new tab
-		$this->helpLink = wfMsgExt( 'editpagelayout-helpLink', array('parseinline') );
-		$this->helpLink = str_replace('<a ', '<a target="_blank" ', $this->helpLink);
+		$this->helpLink = wfMessage( 'editpagelayout-helpLink' )->parse();
+		$this->helpLink = str_replace( '<a ', '<a target="_blank" ', $this->helpLink );
 
 		// action for edit form
 		$this->editFormAction = $editPage->getFormAction();
@@ -156,7 +157,7 @@ class EditPageLayoutController extends WikiaController {
 		$this->editPagePreloads = $editPage->getEditPagePreloads();
 
 		// minor edit checkbox (BugId:6461)
-		$this->minorEditCheckbox = !empty($editPage->minoredit);
+		$this->minorEditCheckbox = !empty( $editPage->minoredit );
 
 		// summary box
 		$this->summaryBox = $editPage->renderSummaryBox();
@@ -170,15 +171,15 @@ class EditPageLayoutController extends WikiaController {
 
 		// notifications link (BugId:7951)
 		$this->notificationsLink =
-			(count($this->notices) == 0)
-			? wfMsg('editpagelayout-notificationsLink-none')
-			: wfMsgExt('editpagelayout-notificationsLink', array('parsemag'), count($this->notices));
+			( count( $this->notices ) == 0 )
+			? wfMessage( 'editpagelayout-notificationsLink-none' )->escaped()
+			: wfMessage( 'editpagelayout-notificationsLink', count( $this->notices ) )->escaped();
 
 		// check if we're in read only mode
 		// disable edit form when in read-only mode
-		if (wfReadOnly()) {
-			$this->bodytext = '<div id="mw-read-only-warning" class="WikiaArticle">'.
-					wfMsg('oasis-editpage-readonlywarning', wfReadOnlyReason() ).
+		if ( wfReadOnly() ) {
+			$this->bodytext = '<div id="mw-read-only-warning" class="WikiaArticle">' .
+					wfMessage('oasis-editpage-readonlywarning', wfReadOnlyReason() )->escaped() .
 					'</div>';
 
 			wfDebug(__METHOD__ . ": edit form disabled because read-only mode is on\n");
@@ -186,8 +187,8 @@ class EditPageLayoutController extends WikiaController {
 
 		$this->hideTitle = $editPage->hideTitle;
 
-		wfRunHooks('EditPageLayoutExecute', array($this));
+		wfRunHooks( 'EditPageLayoutExecute', array( $this ) );
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 	}
 }
