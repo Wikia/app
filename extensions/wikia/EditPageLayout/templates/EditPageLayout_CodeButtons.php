@@ -1,15 +1,15 @@
 <?php
 $dropdown = array(array(
 	"id" => "wpDiff",
-	"accesskey" => wfMsg('accesskey-diff'),
-	"text" => wfMsg('showdiff')
+	"accesskey" => wfMessage('accesskey-diff')->escaped(),
+	"text" => wfMessage('showdiff')->escaped()
 ));
 ?>
 <?= F::app()->renderView('MenuButton',
 	'Index',
 	array(
 		'action' => array(
-			'text' => wfMessage('special-css-publish-button'),
+			'text' => wfMessage('savearticle')->escaped(),
 			'class' => 'codepage-publish-button',
 			'id' => 'wpSave',
 		),

@@ -8,7 +8,7 @@
 	<?php switch( $buttonType ):
 		// The odd formatting here is intentional, see: https://bugs.php.net/bug.php?id=36729
 		case 'save': ?>
-			<input class="<?=$buttonClasses?>" tabindex="22" id="wpSave" name="wpSave" type="submit" value="<?= wfMsg('savearticle') ?>" accesskey="<?=wfMsg('accesskey-save');?>" />
+			<input class="<?=$buttonClasses?>" tabindex="22" id="wpSave" name="wpSave" type="submit" value="<?= wfMessage('savearticle')->escaped() ?>" accesskey="<?=wfMessage('accesskey-save')->escaped();?>" />
 			<!-- If JavaScript is enabled, disable the save button immediately. -->
 			<script type="text/javascript">document.getElementById('wpSave').disabled=true;</script>
 			<?php break ?>
@@ -16,14 +16,14 @@
 			<?php
 			$dropdown = array(array(
 				"id" => "wpDiff",
-				"accesskey" => wfMsg('accesskey-diff'),
-				"text" => wfMsg('showdiff')
+				"accesskey" => wfMessage('accesskey-diff')->escaped(),
+				"text" => wfMessage('showdiff')->escaped()
 			));
 			?>
 			<?= $app->renderView( 'MenuButton', 'Index', array(
 				'action' => array(
 					'href' => '#',
-					'text' => wfMsg( 'preview' ),
+					'text' => wfMessage( 'preview' )->escaped(),
 					'id' => 'wpPreview',
 					'tabindex' => 23
 				),
