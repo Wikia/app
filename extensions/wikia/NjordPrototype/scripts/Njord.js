@@ -177,6 +177,7 @@
 				States.setState($imageElement, 'filled-state');
 				States.setState($imageSaveElement, 'filled-state');
 			}
+			$wordmark.css('top', '-110px');
 		},
 		editTitle = function () {
 			States.setState($titleElement, 'edit-state');
@@ -331,7 +332,6 @@
 				$heroModule.trigger('change', [data.url, data.filename]);
 				trackMom(imageLoadedLabel, trackerActionSuccess);
 
-				$wordmark.css('top', '-174px');
 			} else {
 				trackMom(imageLoadedFailLabel, trackerActionError);
 				$.showModal(data.errTitle, data.errMessage);
@@ -340,6 +340,7 @@
 		},
 		sendForm = function (formdata) {
 			$heroModule.startThrobbing();
+			$wordmark.css('top', '-174px');
 			$.nirvana.sendRequest({
 				controller: 'NjordController',
 				method: 'upload',
