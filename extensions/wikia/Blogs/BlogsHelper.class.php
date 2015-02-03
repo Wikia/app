@@ -136,7 +136,8 @@ class BlogsHelper {
 
 		// If commenting is enabled in the new namespace
 		// and is not in the old one - enable comments.
-		if ( in_array( $oNewTitle->getNamespace(), $wgArticleCommentsNamespaces ) &&
+		if ( ArticleComment::isBlog( $oNewTitle ) &&
+			in_array( $oNewTitle->getNamespace(), $wgArticleCommentsNamespaces ) &&
 			!in_array( $oOldTitle->getNamespace(), $wgArticleCommentsNamespaces )
 		) {
 			BlogArticle::setProps( $oNewTitle->getArticleID(), ['commenting' => '1'] );
