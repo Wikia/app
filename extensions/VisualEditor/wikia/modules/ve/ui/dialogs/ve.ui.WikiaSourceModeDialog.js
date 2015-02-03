@@ -2,7 +2,7 @@
  * VisualEditor user interface WikiaSourceModeDialog class.
  */
 
-/*global alert */
+/*global alert, veTrack */
 
 /**
  * Dialog for editing wikitext in source mode.
