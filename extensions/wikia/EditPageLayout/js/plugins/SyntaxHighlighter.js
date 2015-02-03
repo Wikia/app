@@ -530,29 +530,19 @@ define('WikiTextSyntaxHighlighter', function() {
 			}, 0);
 		}
 
+		/* The highlighter has to run after any other script (such as the
+		 editing toolbar) that reparents wpTextbox1. We make sure that
+		 everything else has run by waiting for the page to completely load
+		 and then adding a call to the setup function to the end of the event
+		 queue, so that the setup function runs after any other triggers set
+		 on the load event. */
+		if (document.readyState == "complete") {
+			queueSetup(textarea);
+		}
+		else {
+			$(window).load(queueSetup(textarea));
+		}
 
-		// Enable the highlighter only when editing wikitext pages
-		// In the future a separate parser could be added for CSS and JS pages
-		// Blacklist Internet Explorer, it's just too broken
-		var wgAction = mw.config.get("wgAction");
-		if ((wgAction == "edit" || wgAction == "submit") && $.client.profile().layout != "trident") {
-			/* The highlighter has to run after any other script (such as the
-			 editing toolbar) that reparents wpTextbox1. We make sure that
-			 everything else has run by waiting for the page to completely load
-			 and then adding a call to the setup function to the end of the event
-			 queue, so that the setup function runs after any other triggers set
-			 on the load event. */
-			if (document.readyState == "complete") {
-				queueSetup(textarea);
-			}
-			else {
-				$(window).load(queueSetup(textarea));
-			}
-		}
-		return {
-			setup: setup,
-			highlightSyntax:highlightSyntax
-		}
 	};
 
 	return {
