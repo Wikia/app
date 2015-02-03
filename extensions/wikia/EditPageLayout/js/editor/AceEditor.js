@@ -2,14 +2,20 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor'], function(ace){
 	'use strict';
 
 	var theme = 'solarized_light',
-	inputAttr = {
-		name: 'wpTextbox1',
-		id: 'wpTextbox1'
-	},
-	beforeInit = function(){
-		$('.loading-indicator').remove();
-		$( '#wpSave' ).removeAttr( 'disabled' );
-	};
+		isEditorWide = false,
+		inputAttr = {
+			name: 'wpTextbox1',
+			id: 'wpTextbox1'
+		},
+		$editPage = $('#EditPage'),
+		$editPageToolbar = $('#EditPageToolbar'),
+		wideClassName = 'editpage-sourcewidemode-on',
+		narrowClassName = 'editpage-sourcewidemode-off',
+		beforeInit = function(){
+			$('.loading-indicator').remove();
+			$('#wpSave').removeAttr( 'disabled' );
+			$editPage.addClass('editpage-sourcewidemode mode-source ' + narrowClassName);
+		};
 
 	function init() {
 		checkTheme();
@@ -17,9 +23,11 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor'], function(ace){
 		beforeInit();
 		ace.init( 'editarea', inputAttr );
 		initOptions();
+		initStyles();
 		ace.setTheme( theme );
 		ace.setMode( window.aceMode );
 
+		initEvents();
 		initSubmit();
 		initDiffModal();
 	}
@@ -38,6 +46,12 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor'], function(ace){
 		};
 
 		ace.setOptions( options );
+	}
+
+	function initStyles() {
+		var editor = ace.getEditor();
+
+		editor.css('fontSize', '14px');
 	}
 
 	function initSubmit() {
@@ -126,6 +140,24 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor'], function(ace){
 			previewModal.$content.find( '.ArticlePreview .ArticlePreviewInner' ).html( html );
 			previewModal.activate();
 		});
+	}
+
+	function editorModeChange() {
+		if (isEditorWide) {
+			$editPage.removeClass(wideClassName).addClass(narrowClassName);
+			$editPageToolbar.removeClass('ace-editor-wide');
+			ace.getEditorInstance().resize();
+			isEditorWide = false;
+		} else {
+			$editPage.removeClass(narrowClassName).addClass(wideClassName);
+			$editPageToolbar.addClass('ace-editor-wide');
+			ace.getEditorInstance().resize();
+			isEditorWide = true;
+		}
+	}
+
+	function initEvents() {
+		$('.editpage-widemode-trigger').click(editorModeChange);
 	}
 
 	return {

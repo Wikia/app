@@ -45,6 +45,10 @@ define( 'wikia.ace.editor', ['wikia.window'], function(win){
 		}
 	}
 
+	function getEditor() {
+		return $editor;
+	}
+
 	function getEditorInstance() {
 		return editorInstance;
 	}
@@ -108,14 +112,13 @@ define( 'wikia.ace.editor', ['wikia.window'], function(win){
 		});
 	}
 
-
-
 	/**
 	 * Public API
 	 */
 	return {
 		init: init,
 		getContent: getContent,
+		getEditor: getEditor,
 		getEditorInstance: getEditorInstance,
 		getInput: getInput,
 		setTheme: setTheme,
