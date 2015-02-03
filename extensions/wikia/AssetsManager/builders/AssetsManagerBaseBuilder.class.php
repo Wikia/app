@@ -4,6 +4,8 @@
  * @author Inez Korczyński <korczynski@gmail.com>
  */
 
+use Wikia\Util\GlobalStateWrapper;
+
 class AssetsManagerBaseBuilder {
 
 	protected $mOid;
@@ -108,13 +110,27 @@ class AssetsManagerBaseBuilder {
 		$retval = 1;
 
 		if($useYUI) {
-			$tempOutFile = tempnam(sys_get_temp_dir(), 'AMOut');
-			wfShellExec("nice -n 15 java -jar {$IP}/lib/vendor/yuicompressor-2.4.2.jar --type js -o {$tempOutFile} {$tempInFile}", $retval);
-			$out = file_get_contents($tempOutFile);
-			unlink($tempOutFile);
+			wfProfileIn(__METHOD__ . '::yui');
+
+			$wrapper = new GlobalStateWrapper( [
+				'wgMaxShellMemory' => 0, // because Java is hungry
+			] );
+
+			$out = $wrapper->wrap( function () use ( $IP, &$retval, $tempInFile ) {
+				$tempOutFile = tempnam(sys_get_temp_dir(), 'AMOut');
+				wfShellExec("nice -n 15 java -jar {$IP}/lib/vendor/yuicompressor-2.4.2.jar --type js -o {$tempOutFile} {$tempInFile}", $retval);
+				$out = file_get_contents($tempOutFile);
+				unlink($tempOutFile);
+
+				return $out;
+			});
+
+			wfProfileOut(__METHOD__ . '::yui');
 		} else {
+			wfProfileIn(__METHOD__ . '::jsmin');
 			$jsmin = "{$IP}/lib/vendor/jsmin";
 			$out = wfShellExec("cat $tempInFile | $jsmin", $retval);
+			wfProfileOut(__METHOD__ . '::jsmin');
 		}
 
 		unlink($tempInFile);

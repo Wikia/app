@@ -78,16 +78,20 @@ class CategorySelectController extends WikiaController {
 			$name = is_array( $category ) ? $category[ 'name' ] : $category;
 			$originalName = $name;
 			$title = Title::makeTitleSafe( NS_CATEGORY, $name );
-			$this->wg->ContLang->findVariantLink( $name, $title, true );
-			if ( $name != $originalName && array_key_exists( $name, $data ) ) {
-				continue;
+			if ( $title != null ) {
+				$this->wg->ContLang->findVariantLink( $name, $title, true );
+				if ( $name != $originalName && array_key_exists( $name, $data ) ) {
+					continue;
+				}
+				$text = $this->wg->ContLang->convertHtml( $title->getText() );
+				$data[ $name ] = array(
+					'link' => Linker::link( $title, $text ),
+					'name' => $text,
+					'type' => CategoryHelper::getCategoryType( $originalName ),
+				);
+			} else {
+				\Wikia\Logger\WikiaLogger::instance()->warning( "Unsafe category provided", [ 'name' => $name ] );
 			}
-			$text = $this->wg->ContLang->convertHtml( $title->getText() );
-			$data[ $name ] = array(
-				'link' => Linker::link( $title, $text ),
-				'name' => $text,
-				'type' => CategoryHelper::getCategoryType( $originalName ),
-			);
 		}
 
 		$this->response->setVal( 'categories', $data );
