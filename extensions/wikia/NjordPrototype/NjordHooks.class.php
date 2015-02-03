@@ -36,4 +36,15 @@ class NjordHooks {
 		}
 		return F::app()->renderView( 'Njord', 'modula', $attributes );
 	}
+
+	public static function onSkinAfterBottomScripts( $skin, &$text ) {
+		if ( WikiaPageType::isMainPage() ) {
+			$scripts = AssetsManager::getInstance()->getURL( 'njord_js' );
+
+			foreach ( $scripts as $script ) {
+				$text .= Html::linkedScript( $script );
+			}
+		}
+		return true;
+	}
 }

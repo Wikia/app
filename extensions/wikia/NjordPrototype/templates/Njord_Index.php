@@ -25,7 +25,6 @@
 								<img class="upload-icon" src="/extensions/wikia/NjordPrototype/images/addImage.svg">
 							</div>
 							<input name="file" type="file" hidden/>
-							<span class="upload-desc sg-sub"><?= wfMessage('hero-image-dd-image')->escaped(); ?></span>
 						</div>
 					</div>
 				</div>

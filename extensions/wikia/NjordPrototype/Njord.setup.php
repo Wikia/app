@@ -19,6 +19,8 @@ $wgAutoloadClasses['WikiDataModel'] =  $dir . '/models/WikiDataModel.class.php';
 $wgAutoloadClasses['NjordController'] =  $dir . '/NjordController.class.php';
 
 $wgHooks[ 'ParserFirstCallInit' ][ ] = 'NjordHooks::onParserFirstCallInit';
+$wgHooks[ 'SkinAfterBottomScripts' ][] = 'NjordHooks::onSkinAfterBottomScripts';
+
 
 $wgAvailableRights[] = 'njordeditmode';
 
