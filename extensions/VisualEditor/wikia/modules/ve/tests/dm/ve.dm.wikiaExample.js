@@ -14,7 +14,6 @@ ve.dm.wikiaExample.createExampleDocument = function ( name, store ) {
 };
 
 ve.dm.wikiaExample.domToDataCases = {
-	/*
 	'thumb image': {
 		'body': '<figure typeof="mw:Image/Thumb" class="mw-halign-right foobar" data-mw=\'{"user":"Foo"}\'><a href="Foo"><img src="Bar" width="1" height="2" resource="FooBar"></a><figcaption>abc</figcaption></figure>',
 		'data': [
@@ -48,7 +47,6 @@ ve.dm.wikiaExample.domToDataCases = {
 			{ 'type': '/internalList' }
 		]
 	},
-	*/
 	'thumb video': {
 		'body': '<figure typeof="mw:Video/Thumb" class="mw-halign-right foobar" data-mw=\'{"user":"Foo"}\'><a href="Foo"><img src="Bar" width="1" height="2" resource="FooBar"></a><figcaption>abc</figcaption></figure>',
 		'data': [

@@ -12,7 +12,7 @@ QUnit.test( 'getModelFromDom', function ( assert ) {
 	// TODO: this is a hack similar to one in ve.test.utils.js to make
 	// WikiaBlockImageNode and WikiaBlockVideoNode the most recently registered,
 	// instead of the MW version
-	//ve.dm.modelRegistry.register( ve.dm.WikiaBlockImageNode );
+	ve.dm.modelRegistry.register( ve.dm.WikiaBlockImageNode );
 	ve.dm.modelRegistry.register( ve.dm.WikiaBlockVideoNode );
 
 	QUnit.expect( ve.test.utils.countGetModelFromDomTests( cases ) );
