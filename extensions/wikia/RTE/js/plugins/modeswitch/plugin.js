@@ -169,7 +169,11 @@ CKEDITOR.plugins.add('rte-modeswitch',
 
 	sourceModeReadyInitSyntaxHighlighting: function(ev) {
 		require(['WikiTextSyntaxHighlighter'],function(WikiTextSyntaxHighlighter){
-			WikiTextSyntaxHighlighter.init(ev.editor.textarea.$);
+			// textarea exists only on switching from Rich Text Editor to Source
+			// and we want to init only in this case
+			if (ev.editor.textarea != null) {
+				WikiTextSyntaxHighlighter.init(ev.editor.textarea.$);
+			}
 		});
 	},
 
