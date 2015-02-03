@@ -1,20 +1,21 @@
-//Syntax highlighter with various advantages
-//See [[User:Remember the dot/Syntax highlighter]] for more information
+/**
+ * Wikitext Syntax highlighter
+ * http://www.mediawiki.org/wiki/User:Remember_the_dot/Syntax_highlighter
+ * @author [[mw:User:Remember_the_dot]]
+ */
 
 define('WikiTextSyntaxHighlighter', function() {
 	var init = function (textarea) {
 		"use strict";
 
-		console.log('start syntax');
-
-		//variables that are preserved between function calls
-		var wpTextbox0;
-		var wpTextbox1;
-		var syntaxStyleTextNode;
-		var lastText;
-		var maxSpanNumber = -1; //the number of the last span available, used to tell if creating additional spans is necessary
-		var highlightSyntaxIfNeededIntervalID;
-		var attributeObserver;
+		// Variables that are preserved between function calls
+		var wpTextbox0,
+			wpTextbox1,
+			syntaxStyleTextNode,
+			lastText,
+			maxSpanNumber = -1, //the number of the last span available, used to tell if creating additional spans is necessary
+			highlightSyntaxIfNeededIntervalID,
+			attributeObserver;
 
 		/* Define context-specific regexes, one for every common token that ends the
 		 current context.
@@ -96,12 +97,12 @@ define('WikiTextSyntaxHighlighter', function() {
 			var assumedBold = false;
 			var assumedItalic = false;
 
-			//writes text into to-be-created span elements of wpTextbox0 using :before and :after pseudo-elements
-			//both :before and :after are used because using two pseudo-elements per span is significantly faster than doubling the number of spans required
+			// Writes text into to-be-created span elements of wpTextbox0 using :before and :after pseudo-elements
+			// both :before and :after are used because using two pseudo-elements per span is significantly faster than doubling the number of spans required
 			function writeText(text, color) {
-				//no need to use another span if using the same color
+				// No need to use another span if using the same color
 				if (color != lastColor) {
-					//whitespace is omitted in the hope of increasing performance
+					// Whitespace is omitted in the hope of increasing performance
 					css += "'}#s" + spanNumber; //spans will be created with IDs s0 through sN
 					if (before) {
 						css += ":before{";
@@ -113,7 +114,7 @@ define('WikiTextSyntaxHighlighter', function() {
 						++spanNumber;
 					}
 					if (color) {
-						//"background-color" is 6 characters longer than "background" but the browser processes it faster
+						// "background-color" is 6 characters longer than "background" but the browser processes it faster
 						css += "background-color:" + color + ";";
 					}
 					css += "content:'";
@@ -127,7 +128,7 @@ define('WikiTextSyntaxHighlighter', function() {
 
 				for (breakerRegex.lastIndex = i; match = breakerRegex.exec(text); breakerRegex.lastIndex = i) {
 					if (match[1]) {
-						//end token found
+						// End token found
 						writeText(text.substring(i, breakerRegex.lastIndex), color);
 						i = breakerRegex.lastIndex;
 						return;
@@ -145,12 +146,12 @@ define('WikiTextSyntaxHighlighter', function() {
 					{
 						case "[":
 							if (match[0].charAt(1) == "[") {
-								//wikilink
+								// wikilink
 								writeText("[[", syntaxHighlighterConfig.wikilinkColor || color);
 								highlightBlock(syntaxHighlighterConfig.wikilinkColor || color, wikilinkBreakerRegex);
 							}
 							else {
-								//named external link
+								// named external link
 								writeText(match[0], syntaxHighlighterConfig.externalLinkColor || color);
 								highlightBlock(syntaxHighlighterConfig.externalLinkColor || color, namedExternalLinkBreakerRegex);
 							}
@@ -158,49 +159,49 @@ define('WikiTextSyntaxHighlighter', function() {
 						case "{":
 							if (match[0].charAt(1) == "{") {
 								if (match[0].length == 3) {
-									//parameter
+									// parameter
 									writeText("{{{", syntaxHighlighterConfig.parameterColor || color);
 									highlightBlock(syntaxHighlighterConfig.parameterColor || color, parameterBreakerRegex);
 								}
 								else {
-									//template
+									// template
 									writeText("{{", syntaxHighlighterConfig.templateColor || color);
 									highlightBlock(syntaxHighlighterConfig.templateColor || color, templateBreakerRegex);
 								}
 							}
-							else //|
+							else // |
 							{
-								//table
+								// table
 								writeText("{|", syntaxHighlighterConfig.tableColor || color);
 								highlightBlock(syntaxHighlighterConfig.tableColor || color, tableBreakerRegex);
 							}
 							break;
 						case "<":
 							if (match[0].charAt(1) == "!") {
-								//comment tag
+								// comment tag
 								writeText(match[0], syntaxHighlighterConfig.commentColor || color);
 								break;
 							}
 							else {
-								//some other kind of tag, search for its end
-								//the search is made easier because XML attributes may not contain the character ">"
+								// Some other kind of tag, search for its end
+								// the search is made easier because XML attributes may not contain the character ">"
 								var tagEnd = text.indexOf(">", i) + 1;
 								if (tagEnd == 0) {
-									//not a tag, just a "<" with some text after it
+									// Not a tag, just a "<" with some text after it
 									writeText("<", color);
 									i = i - match[0].length + 1;
 									break;
 								}
 
 								if (text.charAt(tagEnd - 2) == "/") {
-									//empty tag
+									// empty tag
 									writeText(text.substring(i - match[0].length, tagEnd), syntaxHighlighterConfig.tagColor || color);
 									i = tagEnd;
 								}
 								else {
 									var tagName = match[0].substring(1);
 
-									//again, cases are ordered from most common to least common
+									// Again, cases are ordered from most common to least common
 									if (/^(?:nowiki|pre|math|syntaxhighlight|source|timeline|hiero)$/.test(tagName)) {
 										//tag that can contain only plain text
 										var stopAfter = "</" + tagName + ">";
@@ -215,7 +216,7 @@ define('WikiTextSyntaxHighlighter', function() {
 										i = endIndex;
 									}
 									else {
-										//ordinary tag
+										// ordinary tag
 										writeText(text.substring(i - match[0].length, tagEnd), syntaxHighlighterConfig.tagColor || color);
 										i = tagEnd;
 										if (!tagBreakerRegexCache[tagName]) {
@@ -229,13 +230,13 @@ define('WikiTextSyntaxHighlighter', function() {
 						case "h":
 						case "f":
 						case "m":
-							//bare external link
+							// bare external link
 							writeText(match[0], syntaxHighlighterConfig.externalLinkColor || color);
 							break;
 						case "=":
 							if (/[^=]=+$/.test(text.substring(i, text.indexOf("\n", i)))) //the line begins and ends with an equals sign and has something else in the middle
 							{
-								//heading
+								// heading
 								writeText("=", syntaxHighlighterConfig.headingColor || color);
 								highlightBlock(syntaxHighlighterConfig.headingColor || color, headingBreakerRegex);
 							}
@@ -246,71 +247,70 @@ define('WikiTextSyntaxHighlighter', function() {
 						case "*":
 						case "#":
 						case ":":
-							//unordered list, ordered list, indent, small heading
-							//just highlight the marker
+							// unordered list, ordered list, indent, small heading
+							// just highlight the marker
 							writeText(match[0], syntaxHighlighterConfig.listOrIndentColor || color);
 							break;
 						case ";":
-							//small heading
+							// small heading
 							writeText(";", syntaxHighlighterConfig.headingColor || color);
 							highlightBlock(syntaxHighlighterConfig.headingColor || color, headingBreakerRegex);
 							break;
 						case "-":
-							//horizontal line
+							// horizontal line
 							writeText(match[0], syntaxHighlighterConfig.hrColor || color);
 							break;
 						case "\\":
 							writeText(match[0], syntaxHighlighterConfig.boldOrItalicColor || color);
 							if (match[0].length == 6) {
-								//bold
+								// bold
 								if (assumedBold) {
-									//end tag
+									// end tag
 									assumedBold = false;
 									return;
 								}
 								else {
-									//start tag
+									// start tag
 									assumedBold = true;
 									highlightBlock(syntaxHighlighterConfig.boldOrItalicColor || color, defaultBreakerRegex);
 								}
 							}
 							else {
-								//italic
+								// italic
 								if (assumedItalic) {
-									//end tag
+									// end tag
 									assumedItalic = false;
 									return;
 								}
 								else {
-									//start tag
+									// start tag
 									assumedItalic = true;
 									highlightBlock(syntaxHighlighterConfig.boldOrItalicColor || color, defaultBreakerRegex);
 								}
 							}
 							break;
 						case "&":
-							//entity
+							// entity
 							writeText(match[0], syntaxHighlighterConfig.entityColor || color);
 							break;
 						case "~":
-							//username, signature, timestamp
+							// username, signature, timestamp
 							writeText(match[0], syntaxHighlighterConfig.signatureColor || color);
 					}
 				}
 			}
 
 
-			//start!
+			// Start!
 			var startTime = Date.now();
-			console.log('start work');
 			highlightBlock("", defaultBreakerRegex);
 
-			//output the leftovers (if any) to make sure whitespace etc. matches
+			// Output the leftovers (if any) to make sure whitespace etc. matches
 			if (i < text.length) {
 				writeText(text.substring(i), "");
 			}
 
-			//if highlighting took too long, disable it.
+			// If highlighting took too long, disable it.
 			var endTime = Date.now();
 			/*if (typeof(bestTime) == "undefined")
 			 {
@@ -359,8 +359,8 @@ define('WikiTextSyntaxHighlighter', function() {
 				return;
 			}
 
-			//do we have enough span elements to match the generated CSS?
-			//this step isn't included in the above benchmark because it takes a highly variable amount of time
+			// Do we have enough span elements to match the generated CSS?
+			// This step isn't included in the above benchmark because it takes a highly variable amount of time
 			if (maxSpanNumber < spanNumber) {
 				var fragment = document.createDocumentFragment();
 				do
@@ -371,7 +371,7 @@ define('WikiTextSyntaxHighlighter', function() {
 				wpTextbox0.appendChild(fragment);
 			}
 
-			/* finish CSS: move the extra '} from the beginning to the end and CSS-
+			/* Finish CSS: move the extra '} from the beginning to the end and CSS-
 			 escape newlines. CSS ignores the space after the hex code of the
 			 escaped character */
 			syntaxStyleTextNode.nodeValue = css.substring(2).replace(/\n/g, "\\A ") + "'}";
@@ -389,8 +389,8 @@ define('WikiTextSyntaxHighlighter', function() {
 			wpTextbox0.dir = wpTextbox1.dir;
 		}
 
-		//this function runs once every 500ms to detect changes to wpTextbox1's text that the input event does not catch
-		//this happens when another script changes the text without knowing that the syntax highlighter needs to be informed
+		// This function runs once every 500ms to detect changes to wpTextbox1's text that the input event does not catch.
+		// This happens when another script changes the text without knowing that the syntax highlighter needs to be informed
 		function highlightSyntaxIfNeeded() {
 			if (wpTextbox1.value != lastText) {
 				highlightSyntax(wpTextbox1);
@@ -407,7 +407,6 @@ define('WikiTextSyntaxHighlighter', function() {
 		}
 
 		function setup(textarea) {
-			console.log('start setup');
 
 			function configureColor(parameterName, hardcodedFallback) {
 				if (syntaxHighlighterConfig[parameterName] == "normal") {
@@ -450,17 +449,17 @@ define('WikiTextSyntaxHighlighter', function() {
 			var syntaxStyleElement = document.createElement("style");
 			syntaxStyleTextNode = syntaxStyleElement.appendChild(document.createTextNode(""));
 
-			//the styling of the textbox and the background div must be kept very similar
+			// The styling of the textbox and the background div must be kept very similar
 			var wpTextbox1Style = window.getComputedStyle(wpTextbox1);
 			var scrollTop = wpTextbox1.scrollTop;
 			var focus = (document.activeElement == wpTextbox1);
 
 			wpTextbox0.dir = wpTextbox1.dir;
-			wpTextbox0.lang = wpTextbox1.lang; //lang determines which font "monospace" is
+			wpTextbox0.lang = wpTextbox1.lang; // Lang determines which font "monospace" is
 			wpTextbox0.style.backgroundColor = wpTextbox1Style.backgroundColor;
 			wpTextbox0.style.border = "1px solid transparent";
 			wpTextbox0.style.boxSizing = "border-box";
-			wpTextbox0.style.color = "transparent"; //makes it look just a little bit smoother
+			wpTextbox0.style.color = "transparent"; // Makes it look just a little bit smoother
 			wpTextbox0.style.fontFamily = wpTextbox1Style.fontFamily;
 			wpTextbox0.style.fontSize = wpTextbox1Style.fontSize;
 			wpTextbox0.style.lineHeight = "normal";
@@ -470,17 +469,17 @@ define('WikiTextSyntaxHighlighter', function() {
 			wpTextbox0.style.marginTop = wpTextbox1Style.marginTop;
 			wpTextbox0.style.overflowX = "auto";
 			wpTextbox0.style.overflowY = "scroll";
-			//horizontal resize would look horribly choppy, better to make the user resize the browser window instead
+			// Horizontal resize would look horribly choppy, better to make the user resize the browser window instead
 			wpTextbox0.style.resize = (wpTextbox1Style.resize == "vertical" || wpTextbox1Style.resize == "both" ? "vertical" : "none");
 			wpTextbox0.style.tabSize = wpTextbox1Style.tabSize;
 			wpTextbox0.style.whiteSpace = "pre-wrap";
 			wpTextbox0.style.width = "100%";
-			wpTextbox0.style.wordWrap = "normal"; //see below
+			wpTextbox0.style.wordWrap = "normal"; // See below
 
 			wpTextbox1.style.backgroundColor = "transparent";
 			wpTextbox1.style.border = "1px inset gray";
 			wpTextbox1.style.boxSizing = "border-box";
-			wpTextbox1.style.fontSize = wpTextbox1Style.fontSize; //resolves alignment problems on mobile chrome
+			wpTextbox1.style.fontSize = wpTextbox1Style.fontSize; // Resolves alignment problems on mobile chrome
 			wpTextbox1.style.lineHeight = "normal";
 			wpTextbox1.style.left = "0";
 			wpTextbox1.style.margin = "0";
@@ -491,9 +490,9 @@ define('WikiTextSyntaxHighlighter', function() {
 			wpTextbox1.style.resize = wpTextbox0.style.resize;
 			wpTextbox1.style.top = "0";
 			wpTextbox1.style.width = "100%";
-			wpTextbox1.style.wordWrap = "normal"; //overall more visually appealing
+			wpTextbox1.style.wordWrap = "normal"; // Overall more visually appealing
 
-			//lock both heights to pixel values so that the browser zoom feature works better
+			// Lock both heights to pixel values so that the browser zoom feature works better
 			wpTextbox0.style.height = wpTextbox1.offsetHeight + "px";
 			wpTextbox1.style.height = wpTextbox0.style.height;
 
@@ -504,12 +503,12 @@ define('WikiTextSyntaxHighlighter', function() {
 			textboxContainer.appendChild(wpTextbox1);
 			textboxContainer.appendChild(wpTextbox0);
 
-			//changing the parent resets scrollTop to 0 and removes focus, so we have to bring that back
+			// Changing the parent resets scrollTop to 0 and removes focus, so we have to bring that back
 			wpTextbox0.scrollTop = scrollTop;
 			wpTextbox1.scrollTop = scrollTop;
 			if (focus) wpTextbox1.focus();
 
-			//fix drop-downs in editing toolbar
+			// Fix drop-downs in editing toolbar
 			$('.tool-select *').css({zIndex: 5});
 
 			document.head.appendChild(syntaxStyleElement);
@@ -532,11 +531,10 @@ define('WikiTextSyntaxHighlighter', function() {
 		}
 
 
-		//enable the highlighter only when editing wikitext pages
-		//in the future a separate parser could be added for CSS and JS pages
-		//blacklist Internet Explorer, it's just too broken
+		// Enable the highlighter only when editing wikitext pages
+		// In the future a separate parser could be added for CSS and JS pages
+		// Blacklist Internet Explorer, it's just too broken
 		var wgAction = mw.config.get("wgAction");
-		console.log(wgAction, mw.config.get("wgPageContentModel"), $.client.profile().layout);
 		if ((wgAction == "edit" || wgAction == "submit") && $.client.profile().layout != "trident") {
 			/* The highlighter has to run after any other script (such as the
 			 editing toolbar) that reparents wpTextbox1. We make sure that
