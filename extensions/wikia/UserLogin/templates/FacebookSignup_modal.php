@@ -6,13 +6,13 @@ $baseForm = [
 	'inputs' => [
 		[
 			'type' => 'text',
-			'name' => 'username',
+			'name' => 'userloginext01',
 			'isRequired' => true,
 			'label' => wfMessage( 'yourname' )->escaped(),
 		],
 		[
 			'type' => 'password',
-			'name' => 'password',
+			'name' => 'userloginext02',
 			'isRequired' => true,
 			'label' => wfMessage( 'yourpassword' )->escaped(),
 		],

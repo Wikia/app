@@ -13,10 +13,12 @@
 	 */
 	var UserSignupAjaxValidation = function (options) {
 		this.wikiaForm = options.wikiaForm;
-		this.inputsToValidate = options.inputsToValidate || [];
 		this.notEmptyFields = options.notEmptyFields || [];
 		this.captchaField = options.captchaField || '';
 		this.submitButton = $(options.submitButton);
+
+		// used for tracking ajax calls in progress
+		this.deferred = false;
 
 		this.activateSubmit();
 	};
@@ -60,7 +62,7 @@
 			paramName = el.attr('name'),
 			params = this.getDefaultParamsForAjax();
 
-		if (UserSignup.deferred && typeof UserSignup.deferred.reject === 'function') {
+		if (this.deferred && typeof this.deferred.reject === 'function') {
 			UserSignup.deferred.reject();
 		}
 
@@ -71,7 +73,7 @@
 			birthday: this.wikiaForm.inputs.birthday.val()
 		});
 
-		UserSignup.deferred = $.post(
+		this.deferred = $.post(
 			wgScriptPath + '/wikia.php',
 			params,
 			this.validationHandler.bind(this, paramName)
@@ -85,7 +87,7 @@
 	UserSignupAjaxValidation.prototype.getDefaultParamsForAjax = function () {
 		return {
 			controller: 'UserSignupSpecial',
-			method: 'formValidation',
+			method: 'formAjaxValidation',
 			format: 'json'
 		};
 	};

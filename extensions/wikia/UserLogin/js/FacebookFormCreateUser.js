@@ -1,4 +1,4 @@
-/* global UserBaseAjaxForm, UserSignupMixin */
+/* global UserBaseAjaxForm, UserSignupMixin, UserSignupAjaxValidation */
 (function () {
 	'use strict';
 
@@ -17,6 +17,8 @@
 		// imported via UserSignupMixin
 		this.initOptIn(this.wikiaForm);
 		this.setCountryValue(this.wikiaForm);
+
+		this.setupAjaxValidation();
 	};
 
 	/**
@@ -51,6 +53,22 @@
 		}
 
 		UserBaseAjaxForm.prototype.submitLoginHandler.call(this, response);
+	};
+
+	FacebookFormCreateUser.prototype.setupAjaxValidation = function () {
+		// userloginext0* are spam prevention names for username and password
+		var notEmptyFields = ['userloginext01', 'userloginext02'];
+
+		if (this.wikiaForm.inputs.email) {
+			notEmptyFields.push('email');
+		}
+
+		this.validator = new UserSignupAjaxValidation({
+			wikiaForm: this.wikiaForm,
+			submitButton: this.wikiaForm.inputs.submit,
+			notEmptyFields: notEmptyFields
+		});
+
 	};
 
 	window.FacebookFormCreateUser = FacebookFormCreateUser;

@@ -6,9 +6,7 @@
 	 * JS for signing up with a new account, both on mobile and desktop
 	 */
 	var UserSignup = {
-		inputsToValidate: ['userloginext01', 'email', 'userloginext02', 'birthday'],
 		notEmptyFields: ['userloginext01', 'email', 'userloginext02', 'birthday', 'birthmonth', 'birthyear'],
-		invalidInputs: {},
 		useCaptcha: !window.wgUserLoginDisableCaptcha,
 
 		/**
@@ -25,7 +23,6 @@
 
 			this.validator = new UserSignupAjaxValidation({
 				wikiaForm: this.wikiaForm,
-				inputsToValidate: this.inputsToValidate,
 				submitButton: this.submitButton,
 				notEmptyFields: this.notEmptyFields,
 				captchaField: this.captchaField
@@ -35,7 +32,7 @@
 			this.setCountryValue(this.wikiaForm);
 			this.initOptIn(this.wikiaForm);
 
-			this.setupValidation();
+			this.setupAjaxValidation();
 		},
 
 		/**
@@ -96,7 +93,7 @@
 		/**
 		 * Applying ajax validation to the form fields that have been cached via WikiaForm
 		 */
-		setupValidation: function () {
+		setupAjaxValidation: function () {
 			var inputs = this.wikiaForm.inputs;
 
 			inputs.userloginext01

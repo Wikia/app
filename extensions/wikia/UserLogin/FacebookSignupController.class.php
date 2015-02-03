@@ -7,8 +7,8 @@
  */
 class FacebookSignupController extends WikiaController {
 
-	const SIGNUP_USERNAME_KEY = 'username';
-	const SIGNUP_PASSWORD_KEY = 'password';
+	const SIGNUP_USERNAME_KEY = 'userloginext01';
+	const SIGNUP_PASSWORD_KEY = 'userloginext02';
 
 	/** @var \FacebookClientFactory */
 	protected $fbClientFactory;
@@ -162,6 +162,8 @@ class FacebookSignupController extends WikiaController {
 			'returnToUrl' => $returnToUrl,
 			'queryString' => $returnToParams,
 			'loginToken' => UserLoginHelper::getSignupToken(),
+			'usernameKey' => self::SIGNUP_USERNAME_KEY,
+			'passwordKey' => self::SIGNUP_PASSWORD_KEY,
 		] );
 	}
 

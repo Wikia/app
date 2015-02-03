@@ -161,9 +161,8 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * @brief ajax call for signup.  returns status code
-	 * @details
-	 *   for use with ajax call or standalone data call only
+	 * Ajax call for signup.  returns status code
+	 * For use with ajax call or standalone data call only
 	 * @requestParam string userloginext01 //CE-413 signup spam attack - changing username field to userloginext01
 	 * @requestParam string email
 	 * @requestParam string userloginext02 //CE-413 signup spam attack - changing password field to userloginext02
@@ -549,11 +548,12 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * validate form
+	 * Back end for ajax form validation. Not to be used with actual form submission.
+	 * Note: userloginex0* fields are from CE-413 signup spam attack
 	 * @requestParam string field [userloginext01/userloginext02/email/birthdate]
-	 * @requestParam string userloginext01 //CE-413 signup spam attack - changing username field to userloginext01
+	 * @requestParam string userloginext01 (aka username)
 	 * @requestParam string email
-	 * @requestParam string userloginext02 //CE-413 signup spam attack - changing password field to userloginext02
+	 * @requestParam string userloginext02 (aka password)
 	 * @requestParam string birthmonth
 	 * @requestParam string birthday
 	 * @requestParam string birthyear
@@ -561,24 +561,26 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string msg - result message
 	 * @responseParam string errParam - error param
 	 */
-	public function formValidation() {
+	public function formAjaxValidation() {
 		$field = $this->request->getVal( 'field', '' );
 		$signupForm = new UserLoginForm( $this->wg->request );
 		$signupForm->load();
 
 		switch( $field ) {
-			case 'userloginext01' :
-				$response = $signupForm->initValidationUsername();
+			// username field
+			case 'userloginext01':
+				$signupForm->initValidationUsername();
 				break;
-			case 'userloginext02' :
-				$response = $signupForm->initValidationPassword();
+			// password field
+			case 'userloginext02':
+				$signupForm->initValidationPassword();
 				break;
-			case 'email' :
-				$response = $signupForm->initValidationEmail()
+			case 'email':
+				$signupForm->initValidationEmail()
 					&& $signupForm->initValidationRegsPerEmail();
 				break;
-			case 'birthdate' :
-				$response = $signupForm->initValidationBirthdate();
+			case 'birthdate':
+				$signupForm->initValidationBirthdate();
 				break;
 		}
 
