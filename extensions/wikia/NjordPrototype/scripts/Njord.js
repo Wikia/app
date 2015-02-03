@@ -131,6 +131,7 @@
 		},
 		saveImage = function () {
 			States.setState($imageSaveElement, 'filled-state');
+			$wordmark.css('top', '-110px');
 			$imageElement.startThrobbing();
 			$.nirvana.sendRequest({
 				controller: 'NjordController',
@@ -152,7 +153,6 @@
 					} else {
 						revertImage();
 					}
-					$wordmark.css('top', '-110px');
 					$imageElement.stopThrobbing();
 				},
 				onErrorCallback: function () {
