@@ -130,7 +130,7 @@ class BlogsHelper {
 	 * @param integer $iNewId
 	 * @return bool
 	 */
-	public static function onTitleMoveComplete( Title &$oOldTitle, Title &$oNewTitle, User &$oUser, $iOldId, $iNewId ) {
+	public static function onTitleMoveComplete( Title $oOldTitle, Title $oNewTitle, User $oUser, $iOldId, $iNewId ) {
 		global $wgArticleCommentsNamespaces;
 		wfProfileIn( __METHOD__ );
 
