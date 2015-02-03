@@ -1,6 +1,17 @@
 <?php
 
+/* Setup */
+
+$wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
+	'name' => 'VisualEditor for Wikia'
+);
+
 $dir = dirname( __FILE__ ) . '/';
+
+/* Classes */
+
+$wgAutoloadClasses['VisualEditorWikiaHooks'] = $dir . 'VisualEditor.hooks.php';
 
 /* Resource Loader Modules */
 
@@ -158,3 +169,6 @@ $wgVisualEditorPluginModules[] = 'ext.visualEditor.wikia.core';
 
 $wgExtensionMessagesFiles['VisualEditorWikia'] = $dir . 'VisualEditor.i18n.php';
 
+/* Hooks */
+
+$wgHooks['ResourceLoaderTestModules'][] = 'VisualEditorWikiaHooks::onResourceLoaderTestModules';
