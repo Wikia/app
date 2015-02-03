@@ -173,6 +173,7 @@ class EditPageLayoutHelper {
 		$namespace = $articleTitle->getNamespace();
 
 		return $articleTitle->isCssOrJsPage()
+				|| $articleTitle->isCssJsSubpage()
 				// Lua module
 				|| $namespace === NS_MODULE;
 	}
@@ -193,15 +194,14 @@ class EditPageLayoutHelper {
 		$this->addJsVariable('wgIsCodePage', true);
 		$this->addJsVariable('wgIsDarkTheme', SassUtil::isThemeDark());
 
-		if ( $namespace === NS_MEDIAWIKI ) {
-			if ( $title->isCssPage() ) {
-				$type = 'css';
-			} elseif ( $title->isJsPage() ) {
-				$type = 'javascript';
-			}
-		} elseif ( $namespace === NS_MODULE ) {
+		if ( $namespace === NS_MODULE ) {
 			$type = 'lua';
+		} elseif ( $title->isCssPage() || $title->isCssSubpage() ) {
+			$type = 'css';
+		} elseif ( $title->isJsPage() || $title->isJsSubpage() ) {
+			$type = 'javascript';
 		}
+
 		$this->addJsVariable('codePageType', $type);
 	}
 
