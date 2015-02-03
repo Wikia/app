@@ -303,22 +303,12 @@
 (function (win, doc) {
 	'use strict';
 	if (!win.wgNoExternals) {
-		// Choose old (ga.js) or new (dc.js) analytics script as per ADEN-1589
-		// https://support.google.com/analytics/answer/2444872?hl=en
-
 		var ga = doc.createElement('script'),
-			firstScript = doc.getElementsByTagName('script')[0],
-			useOldAnalytics = win.Wikia && win.Wikia.InstantGlobals &&
-				win.Wikia.InstantGlobals.wgSitewideDisableNewGaAnalitycs;
+			firstScript = doc.getElementsByTagName('script')[0];
 
 		ga.type = 'text/javascript';
 		ga.async = true;
-
-		if (useOldAnalytics) {
-			ga.src = ('https:' === doc.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-		} else {
-			ga.src = ('https:' === doc.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
-		}
+		ga.src = ('https:' === doc.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
 
 		firstScript.parentNode.insertBefore(ga, firstScript);
 	}

@@ -470,8 +470,11 @@ $messages['ang'] = array(
 
 /** Arabic (العربية)
  * @author Claw eg
+ * @author Test Create account
  */
 $messages['ar'] = array(
+	'forum-desc' => "Wikia's Special:إضافات المنتدى",
+	'forum-disabled-desc' => "Wikia's Special:إضافات المنتدى; معطلة",
 	'forum-forum-title' => 'منتدى',
 	'forum-active-threads' => '$1 {{PLURAL:$1|نقاش نشط|نقاشات نشطة}}',
 	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|نقاش نشط|نقاشات نشطة}} عن: '''[[$2]]'''",
@@ -1046,6 +1049,8 @@ $messages['cs'] = array(
  * @author Metalhead64
  */
 $messages['de'] = array(
+	'forum-desc' => 'Forum-Erweiterung von Wikia',
+	'forum-disabled-desc' => 'Forum-Erweiterung von Wikia; deaktiviert',
 	'forum-forum-title' => 'Forum',
 	'forum-active-threads' => '{{PLURAL:$1|Eine aktive Diskussion|$1 aktive Diskussionen}}',
 	'forum-active-threads-on-topic' => "{{PLURAL:$1|Eine aktive Diskussion|$1 aktive Diskussionen}} über: '''[[$2]]'''",
@@ -1259,6 +1264,8 @@ Before contributing to the {{SITENAME}} Forums, please keep in mind a few best p
  * @author Vivaelcelta
  */
 $messages['es'] = array(
+	'forum-desc' => 'Extensión Especial:Foro de Wikia',
+	'forum-disabled-desc' => 'Extensión Especial:Foro de Wikia; desactivada',
 	'forum-forum-title' => 'Foro',
 	'forum-active-threads' => '$1 {{PLURAL:$1|tema activo|temas activos}}',
 	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|Tema activo|Temas activos}} sobre: '''[[$2]]'''",
@@ -1409,6 +1416,8 @@ $messages['eu'] = array(
 	'forum-board-topics' => 'Gaiak',
 	'forum-board-thread-replies' => '{{PLURAL:$1|Mezu bat|$1 mezu}}',
 	'forum-thread-reply-post' => 'Erantzun',
+	'forum-related-discussion-total-replies' => '$1 mezu',
+	'forum-related-discussion-see-more' => 'Ikusi eztabaida gehiago',
 );
 
 /** Persian (فارسی)
@@ -1606,6 +1615,8 @@ ___________________________________________<br />
  * @author Wyz
  */
 $messages['fr'] = array(
+	'forum-desc' => 'Extension Special:Forum de Wikia',
+	'forum-disabled-desc' => 'Extension Special:Forum de Wikia ; désactivée',
 	'forum-forum-title' => 'Forum',
 	'forum-active-threads' => '$1 {{PLURAL:$1|discussion active|discussions actives}}',
 	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|discussion active|discussions actives}} à propos de « '''[[$2]]''' »",
@@ -2000,6 +2011,14 @@ $messages['id'] = array(
 	'forum-discussion-placeholder-message-short' => 'Kirim pesan baru',
 );
 
+/** Italian (italiano)
+ * @author Gloria sah
+ */
+$messages['it'] = array(
+	'forum-forum-title' => 'Forum',
+	'forum-specialpage-heading' => 'Forum',
+);
+
 /** Japanese (日本語)
  * @author BryghtShadow
  * @author Tommy6
@@ -2187,6 +2206,8 @@ $messages['kn'] = array(
  * @author 아라
  */
 $messages['ko'] = array(
+	'forum-desc' => '위키아 특수기능:포럼 확장 기능',
+	'forum-disabled-desc' => '위키아 특수기능:포럼 확장 기능; 비활성',
 	'forum-forum-title' => '포럼',
 	'forum-active-threads' => '활성화된 토론 $1개',
 	'forum-active-threads-on-topic' => "다음 주제에 대한 활발한 토론 $1개: '''[[$2]]'''",
@@ -2391,6 +2412,8 @@ $messages['mk'] = array(
  * @author SNN95
  */
 $messages['ms'] = array(
+	'forum-desc' => 'Sambungan Special:Forum Wikia',
+	'forum-disabled-desc' => 'Sambungan Special:Forum Wikia; dimatikan',
 	'forum-forum-title' => 'Forum',
 	'forum-active-threads' => '$1 {{PLURAL:$1|Perbincangan yang Aktif|Perbincangan yang aktif}}',
 	'forum-active-threads-on-topic' => "$1 {{PLURAL:$1|Perbincangan yang Aktif|Perbincangan yang aktif}} tentang: '''[[$2]]'''",
@@ -4369,6 +4392,8 @@ ___________________________________________<br />
  * @author 御坂美琴
  */
 $messages['zh-hans'] = array(
+	'forum-desc' => 'Wikia的 特殊:论坛 扩展',
+	'forum-disabled-desc' => 'Wikia的 特殊:论坛 扩展；已禁用',
 	'forum-forum-title' => '论坛',
 	'forum-active-threads' => '$1{{PLURAL:$1|条活跃讨论|条活跃讨论}}',
 	'forum-active-threads-on-topic' => "$1{{PLURAL:$1|条活跃讨论|条活跃讨论}}有关：'''[[$2]]'''",

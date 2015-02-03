@@ -98,7 +98,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 		}
 		if (isLeaderboard(slotname) && isStandardLeaderboardSize(slotname)) {
 			log('pushing TOP_BUTTON_WIDE.force to Liftium2 queue', 2, logGroup);
-			window.adslots2.push(['TOP_BUTTON_WIDE.force', null, 'Liftium2']);
+			window.adslots2.push('TOP_BUTTON_WIDE.force');
 		}
 	}
 

@@ -752,6 +752,7 @@ $messages['cs'] = array(
  * @author PtM
  * @author SVG
  * @author Tiin
+ * @author Yottabyte
  */
 $messages['de'] = array(
 	'chat' => 'Chat',
@@ -793,7 +794,7 @@ $messages['de'] = array(
 	'chat-ban-modal-end-ban' => 'Bann beenden',
 	'chat-log-reason-banchange' => 'Kein Grund angegeben',
 	'chat-log-reason-banremove' => 'Kein Grund angegeben',
-	'chat-ban-cant-ban-moderator' => 'Du kannst einen anderen Moderator nicht rauswerfen.',
+	'chat-ban-cant-ban-moderator' => 'Du kannst einen anderen Chat-Moderator nicht rauswerfen.',
 	'chat-ban-already-banned' => '$1 ist bereits aus dem Chat verbannt.',
 	'chat-ban-you-need-permission' => 'Du verfügst nicht über die Berechtigung $1, die erforderlich ist, um einen Benutzer zu entfernen/verbannen.',
 	'chat-missing-required-parameter' => '"$1" ist notwendig, wurde aber in der Anfrage nicht gefunden.',
@@ -1002,10 +1003,14 @@ Por favor, contáctalo para más información.',
  * @author Subi
  */
 $messages['eu'] = array(
+	'chat-private-messages' => 'Mezu pribatuak',
 	'chat-user-was-kicked' => '$2(e)k $1 kanporatu du.',
 	'chat-you-were-kicked' => '$1(e)k kanporatu zaitu.',
+	'chat-ban-modal-label-reason' => 'Arrazoia',
 	'chat-log-reason-undo' => 'desegin',
 	'chat-ban-undolink' => 'desegin',
+	'chat-user-menu-contribs' => 'Ekarpenak',
+	'chat-user-menu-private' => 'Mezu pribatua',
 	'chat-user-menu-kick' => 'Kanporatu',
 );
 
@@ -1355,7 +1360,7 @@ $messages['fr'] = array(
 	'grouppage-chatmoderator' => 'w:c:aide:Aide:Tchat',
 	'group-bannedfromchat' => 'Bannis du tchat',
 	'group-bannedfromchat-member' => 'banni du tchat',
-	'grouppage-bannedfromchat' => 'w:c:communauté:Aide:Chat',
+	'grouppage-bannedfromchat' => 'w:c:communaute:Aide:Tchat',
 	'chat-ban-option-list' => '2 heures:2 hours,1 jour:1 day,3 jours:3 days,1 semaine:1 week,2 semaines:2 weeks,1 mois:1 month,3 mois:3 months,6 mois:6 months,1 an:1 year, indéfiniment:infinite',
 	'chat-ban-log-change-ban-link' => 'modifier bannissement',
 	'chat-chatconnect-log' => 'Journal de connexion du tchat',
@@ -2071,6 +2076,7 @@ $messages['ko'] = array(
 	'chat-contributions-ban-notice' => '{{GENDER:$1|이}} 사용자는 채팅에서 차단되었습니다. 최근 채팅 차단 기록은 아래에서 볼 수 있습니다:',
 	'chat-browser-is-notsupported' => '해당 브라우저를 지원하지 않습니다. 원활한 이용을 위해 <a href="http://community.wikia.com/wiki/Help:Supported_browsers">최신 브라우저</a>를 사용해주세요.',
 	'chat-checkuser-join-action' => '참여한 채팅방',
+	'chat-status-away' => '잠수',
 );
 
 /** Kyrgyz (Кыргызча)

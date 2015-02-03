@@ -67,7 +67,6 @@ class CuratedContentSpecialController extends WikiaSpecialPageController {
 		$this->response->setVal( 'descriptions', [
 			wfMessage( 'wikiacuratedcontent-content-description-items' ),
 			wfMessage( 'wikiacuratedcontent-content-description-supported-items-for-sections' ),
-			wfMessage( 'wikiacuratedcontent-content-description-label-info' ),
 			wfMessage( 'wikiacuratedcontent-content-description-tag-needs-image' ),
 			wfMessage( 'wikiacuratedcontent-content-description-section' ),
 			wfMessage( 'wikiacuratedcontent-content-description-organize' ),

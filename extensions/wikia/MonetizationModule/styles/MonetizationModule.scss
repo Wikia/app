@@ -19,6 +19,61 @@
 		margin-bottom: 40px;
 	}
 
+	&.amazon-video {
+		background-color: #535353;
+		border-radius: 3px;
+		clear: both;
+		color: #fff;
+		font-family: Helvetica,sans-serif;
+		margin-bottom: 25px;
+		margin-top: 25px;
+
+		&.above-title {
+			margin-top: 0;
+		}
+
+		a {
+			color: #fff;
+		}
+
+		.affiliate-header {
+			float: left;
+		}
+
+		.product-name {
+			float: left;
+		}
+
+		.product-title {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.product-button {
+			float: right;
+
+			&.non-prime {
+				padding-top: 7px;
+			}
+		}
+
+		.product-btn {
+			background-image: url('/extensions/wikia/MonetizationModule/images/watch-now-btn.png');
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: 178px 45px;
+			display: block;
+			height: 45px;
+			width: 178px;
+		}
+
+		.product-price {
+			font-size: 12px;
+			margin-left: 5px;
+		}
+	}
+
 	.ad-header {
 		color: $color-alternate-text;
 		font-size: 10px;
@@ -107,6 +162,21 @@
 		background-repeat: no-repeat;
 		height: 34px;
 	}
+
+	.rating-bar {
+		background: url('/extensions/wikia/MonetizationModule/images/star-inactive.png');
+		background-repeat: repeat-x;
+		height: 16px;
+		text-align: left;
+		width: 80px;
+	}
+
+	.rating {
+		background: url('/extensions/wikia/MonetizationModule/images/star-active.png');
+		background-repeat: repeat-x;
+		height: 16px;
+		width: 0;
+	}
 }
 
 .ecommerce-multiple-product {
@@ -118,8 +188,16 @@
 		height: 285px;
 	}
 
+	.affiliate-header {
+		margin-top: 5px;
+	}
+
 	.module-title {
-		color: #000;
+		@if $is-dark-wiki {
+			color: #fff;
+		} @else {
+			color: #000;
+		}
 		font-size: 30px;
 	}
 
@@ -174,10 +252,10 @@
 		} @else {
 			background-image: url('/extensions/wikia/MonetizationModule/images/amazon-logo-black.png');
 		}
+		background-position: 0 -3px;
 		background-size: cover;
 		display: inline-block;
 		margin-left: 6px;
-		top: 16px;
 		vertical-align: top;
 		width: 160px;
 	}
@@ -222,12 +300,13 @@
 		box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
 		float: left;
 		height: 180px;
-		min-width: 256px;
 		text-align: center;
+		width: 256px;
 
 		img {
 			border: 0;
 			height: 180px;
+			max-width: 256px;
 		}
 	}
 
@@ -268,5 +347,93 @@
 		background-position: center;
 		background-size: 160px 34px;
 		display: block;
+	}
+}
+
+.amazon-video-light {
+	padding: 7px;
+
+	.affiliate {
+		height: 60px;
+	}
+
+	.affiliate-header {
+		padding: 13px;
+		width: 139px;
+	}
+
+	.amazon-logo {
+		background-image: url('/extensions/wikia/MonetizationModule/images/amazon-logo-video.png');
+		background-position: center;
+		background-size: 139px 36px;
+		display: block;
+	}
+
+	.product-name {
+		font-size: 15px;
+		line-height: 1.2;
+		padding: 0 0 0 7px;
+		width: 47%;
+	}
+
+	.product-title {
+		font-size: 22px;
+	}
+
+	.product-detail {
+		color: #c6c6c6;
+	}
+
+	.product-type {
+		font-weight: bold;
+	}
+}
+
+.amazon-video-full {
+	padding: 15px;
+
+	.affiliate {
+		height: 135px;
+	}
+
+	.product-thumb {
+		box-shadow: 5px 5px 5px rgba(0, 0, 0, .5);
+		float: left;
+		text-align: center;
+
+		img {
+			border: 0;
+			max-height: 132px;
+			max-width: 160px;
+			min-height: 110px;
+		}
+	}
+
+	.product-name {
+		font-size: 16px;
+		line-height: 1.4;
+		padding: 10px 0 0 15px;
+		width: 45%;
+	}
+
+	.product-title {
+		font-size: 26px;
+	}
+
+	.product-detail {
+		color: #c6c6c6;
+	}
+
+	.product-type {
+		font-size: 20px;
+	}
+
+	.amazon-logo {
+		background-image: url('/extensions/wikia/MonetizationModule/images/amazon-logo-video-horz.png');
+		background-position: center;
+		background-size: 141px 20px;
+		display: block;
+		height: 20px;
+		padding: 10px 0 11px;
 	}
 }

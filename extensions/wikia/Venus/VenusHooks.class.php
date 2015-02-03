@@ -1,6 +1,7 @@
 <?php
 
 use \Wikia\Logger\WikiaLogger;
+use \Wikia\Util\GlobalStateWrapper;
 
 class VenusHooks {
 
@@ -138,7 +139,7 @@ class VenusHooks {
 	 * @return bool
 	 */
 	public static function onBeforeSkinLoad( &$userSkin, $useskin, Title $title ) {
-		if ( (!$useskin || $useskin == 'venus') && self::showVenusSkin( $title ) ) {
+		if ( ( !$useskin || $useskin == 'venus' ) && self::showVenusSkin( $title ) ) {
 			$userSkin = 'venus';
 		}
 
@@ -154,15 +155,27 @@ class VenusHooks {
 	public static function showVenusSkin( Title $title ) {
 		global $wgEnableVenusSkin, $wgEnableVenusSpecialSearch, $wgEnableVenusArticle, $wgRequest;
 
-		$action = $wgRequest->getVal('action');
-		$diff = $wgRequest->getVal('diff');
+		$wrapper = new GlobalStateWrapper( [
+			'wgTitle' => $title,
+		] );
 
-		$isSpecialSearch = WikiaPageType::isSearch() && $wgEnableVenusSpecialSearch;
+		$isSearch = false;
+		$isArticlePage = false;
+
+		$wrapper->wrap( function () use ( &$isSearch, &$isArticlePage ) {
+			$isSearch = WikiaPageType::isSearch();
+			$isArticlePage = WikiaPageType::isArticlePage();
+		} );
+
+		$action = $wgRequest->getVal( 'action' );
+		$diff = $wgRequest->getVal( 'diff' );
+
+		$isSpecialSearch = $isSearch && $wgEnableVenusSpecialSearch;
 		$isSpecialVenusTest = $title->isSpecialPage() && $title->getText() == 'VenusTest';
-		$isVenusArticle = WikiaPageType::isArticlePage() &&
+		$isVenusArticle = $isArticlePage  &&
 			$wgEnableVenusArticle &&
-			(empty($action) || $action == 'view') &&
-			empty($diff);
+			( empty( $action ) || $action == 'view' ) &&
+			empty( $diff );
 
 		return $wgEnableVenusSkin && ( $isSpecialSearch || $isSpecialVenusTest || $isVenusArticle );
 	}

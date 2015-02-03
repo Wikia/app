@@ -159,8 +159,8 @@ AIC2.onScroll = function() {
 		if (!AIC2.visible) {
 			Liftium.d("AIC2.showAd", 5);
 			if (!AIC2.checkStartStopPosition()) { return; }
-			if ($incontentBoxAd.hasClass('wikia-ad') == false) {
-				window.adslots2.push(['INCONTENT_BOXAD_1', null, 'AdEngine2', null]);
+			if ($incontentBoxAd.hasClass('wikia-ad') === false) {
+				window.adslots2.push('INCONTENT_BOXAD_1');
 				$incontentBoxAd.addClass('wikia-ad');
 			}
 			$incontentBoxAd.css({

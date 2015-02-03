@@ -478,9 +478,10 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author Liuxinyu970226
  */
 $messages['zh-hant'] = array(
 	'userdata' => '獲取使用者資料',
 	'userdata-userid-label' => '提供使用者 ID：',
-	'userdata-submit' => '獲取資料',
+	'userdata-submit' => '取得資料',
 );
