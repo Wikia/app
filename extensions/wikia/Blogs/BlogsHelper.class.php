@@ -134,11 +134,12 @@ class BlogsHelper {
 		global $wgArticleCommentsNamespaces;
 		wfProfileIn( __METHOD__ );
 
-		// If commenting is enabled in the new namespace
-		// and is not in the old one - enable comments.
+		// Enables comments if an article has been moved to
+		// a Blog namespace from a non-blog one
+		// and if the new namespace has comments enabled.
 		if ( ArticleComment::isBlog( $oNewTitle ) &&
 			in_array( $oNewTitle->getNamespace(), $wgArticleCommentsNamespaces ) &&
-			!in_array( $oOldTitle->getNamespace(), $wgArticleCommentsNamespaces )
+			$oOldTitle->getNamespace() !== $oNewTitle->getNamespace()
 		) {
 			BlogArticle::setProps( $oNewTitle->getArticleID(), ['commenting' => '1'] );
 		}
