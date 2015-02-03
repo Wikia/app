@@ -1094,11 +1094,14 @@ class ArticleCommentList {
 	public static function onTitleMoveComplete( Title &$oOldTitle, Title &$oNewTitle, User &$oUser, $iOldId, $iNewId ) {
 		global $wgArticleCommentsNamespaces;
 		wfProfileIn( __METHOD__ );
+		$iId = $oNewTitle->getArticleID();
 
+		// Check if commenting is allowed in the new namespace
+		// and if commenting has not been disabled on purpose
 		if ( in_array( $oNewTitle->getNamespace(), $wgArticleCommentsNamespaces ) &&
-			!in_array( $oOldTitle->getNamespace(), $wgArticleCommentsNamespaces )
+			Wikia::getProps( $iId, 'commenting' ) !== "0"
 		) {
-			BlogArticle::setProps( $oNewTitle->getArticleID(), ['commenting' => 1] );
+			Wikia::setProps( $iId, ['commenting' => 1] );
 		}
 
 		wfProfileOut( __METHOD__ );
