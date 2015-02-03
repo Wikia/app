@@ -1,6 +1,8 @@
 @import "skins/shared/color";
 @import "skins/shared/mixins/gradient";
 @import "skins/oasis/css/core/responsive-variables";
+@import "extensions/wikia/Venus/styles/fonts/venus-icons";
+@import "extensions/wikia/Venus/styles/mixins";
 
 .MainPageHero {
 	background-color: $color-buttons;
@@ -136,6 +138,100 @@
 		overflow: hidden;
 	}
 
+	& + nav.wikia-menu-button, {
+		background-color: $color-page;
+		background-image: none;
+		border: none;
+		border-radius: 0;
+		cursor: auto;
+		display: block;
+		margin-bottom: 30px;
+		margin-right: 320px;
+		position: relative;
+
+		@media screen and (max-width: $breakpoint-small) {
+			margin-right: 20px;
+		}
+
+		&::after {
+			background-color: $color-links;
+			content: '';
+			display: block;
+			height: 1px;
+			position: absolute;
+			top: 7px;
+			width: 100%;
+		}
+
+		ul {
+			left: 0;
+			min-width: 100px !important;
+		}
+
+		.chevron,
+		.chevron:hover {
+			background-color: $color-page;
+			border-top-color: $color-links;
+			padding-right: 2px;
+		}
+
+		.drop {
+			background-color: $color-page;
+			cursor: pointer;
+			float: left;
+			position: relative;
+			z-index: 1;
+		}
+
+		.drop:hover,
+		> a:hover {
+			background-color: $color-page;
+			background-image: none;
+		}
+
+		> a {
+			background-color: $color-page;
+			border: none;
+			border-radius: 0;
+			float: left;
+			font-weight: bold;
+			color: $color-links;
+			padding-left: 42px;
+			position: relative;
+			text-transform: uppercase;
+			z-index: 1;
+
+			&::before {
+				background-color: $color-links;
+				border-radius: 50px;
+				content: '';
+				display: block;
+				height: 35px;
+				left: 0;
+				position: absolute;
+				top: -9px;
+				width: 35px;
+			}
+
+			&::after {
+				@include venus-icons-font;
+
+				color: $color-page;
+				content: '\f002';
+				display: block;
+				font-size: 49px;
+				left: -7px;
+				padding: 8px 0;
+				position: absolute;
+				top: -9px;
+			}
+
+			img {
+				display: none;
+			}
+		}
+	}
+
 	.title-wrap {
 		margin: 40px 330px 30px 30px;
 		text-align: left;
@@ -153,7 +249,35 @@
 		}
 		.title-edit-btn {
 			cursor: pointer;
-			height: 24px;
+			display: inline-block;
+			position: relative;
+			top: -30px;
+			left: 3px;
+
+			&::before {
+				background-color: $color-links;
+				border-radius: 50px;
+				content: '';
+				display: block;
+				height: 35px;
+				left: 0;
+				position: absolute;
+				width: 35px;
+			}
+
+			&::after {
+				@include venus-icons-font;
+
+				color: $color-page;
+				content: '\f002';
+				display: block;
+				font-size: 49px;
+				left: -7px;
+				padding: 8px 0;
+				position: absolute;
+				top: -10px;
+			}
+
 		}
 		.title-text {
 			max-width: 400px;
@@ -421,11 +545,11 @@
 }
 .WikiaArticle {
 	.hero-description {
-		margin: 30px 330px 60px 30px;
+		margin: 30px 320px 60px 30px;
 		word-wrap: break-word;
 
 		@media screen and (max-width: $breakpoint-small) {
-			margin-right: 30px;
+			margin-right: 20px;
 		}
 	}
 }

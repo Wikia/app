@@ -2,6 +2,14 @@
 		if ( !empty( $wg->EnableMonetizationModuleExt ) && !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_TITLE] ) ) {
 			echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_TITLE];
 	}
+
+	$runNjord = ( !empty( $wg->EnableNjordExt ) && WikiaPageType::isMainPage() );
+	if ( $runNjord ) {
+		// edit button with actions dropdown
+		if (!empty($action)) {
+			echo F::app()->renderView('MenuButton', 'Index', array('action' => $action, 'image' => $actionImage, 'dropdown' => $dropdown, 'name' => $actionName));
+		}
+	} else {
 ?>
 <header id="WikiaPageHeader" class="WikiaPageHeader">
     <h1><?= !empty($displaytitle) ? $title : htmlspecialchars($title) ?></h1>
@@ -71,3 +79,6 @@ if ( $showSearchBox && empty( $wg->EnableGlobalNavExt ) ):
 	<?=  F::app()->renderView('Search', 'Index', array('searchFormId' => 'WikiaSearch')) ?>
 </section>
 <?php endif; ?>
+
+
+<?php } // !$runNjord ?>

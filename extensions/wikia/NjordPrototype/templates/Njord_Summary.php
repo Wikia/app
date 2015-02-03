@@ -11,7 +11,7 @@
 		<span class="title-text"><?= htmlspecialchars( $wikiData->title ) ?></span>
 		<span class="title-default-text"><?= wfMessage('hero-image-default-title')->escaped(); ?></span>
 		<? if ($isAllowedToEdit): ?>
-			<img class="title-edit-btn" src="/extensions/wikia/NjordPrototype/images/pencil_b.svg">
+			<span class="title-edit-btn"></span>
 		<?endif;?>
 	</h1>
 	<div class="hero-description <?php if ( isset( $wikiData->description ) ) : ?>filled-state<? else : ?>zero-state<?php endif; ?>">
