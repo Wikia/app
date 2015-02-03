@@ -168,7 +168,7 @@ class Handler {
 	}
 
 	/**
-	 * Internal cache key for badlogin checks.
+	 * Internal cache key for 'badlogin' checks.
 	 *
 	 * @return string
 	 */
