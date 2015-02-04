@@ -2975,6 +2975,7 @@ function wfShellExec( $cmd, &$retval = null, $environ = array() ) {
 	if ( $retval > 0 ) {
 		Wikia\Logger\WikiaLogger::instance()->error( 'wfShellExec failed', [
 			'exception' => new Exception( $cmd, $retval ),
+			'output' => $output,
 			'load_avg' => implode( ', ', sys_getloadavg() ),
 		]);
 	}
