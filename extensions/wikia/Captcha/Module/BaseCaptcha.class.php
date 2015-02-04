@@ -91,6 +91,7 @@ abstract class BaseCaptcha extends \WikiaObject {
 	 * @return string
 	 */
 	public function getMessage( $action ) {
+		// Possible keys for easy grepping: captcha-edit, captcha-addurl, captcha-createaccount, captcha-create
 		$name = 'captcha-' . $action;
 		$text = wfMessage( $name )->escaped();
 		# Obtain a more tailored message, if possible, otherwise, fall back to

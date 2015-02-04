@@ -285,6 +285,7 @@ class FancyCaptcha extends BaseCaptcha {
 	 * @return string
 	 */
 	public function getMessage( $action ) {
+		// Possible keys for easy grepping: fancycaptcha-edit, fancycaptcha-addurl, fancycaptcha-createaccount, fancycaptcha-create
 		$name = 'fancycaptcha-' . $action;
 		$text = wfMessage( $name )->escaped();
 		# Obtain a more tailored message, if possible, otherwise, fall back to
