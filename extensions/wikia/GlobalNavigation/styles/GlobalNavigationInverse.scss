@@ -6,10 +6,8 @@ $global-nav-inverse-text-color: rgb(255,255,255);
 		background-color: $global-nav-inverse-background;
 		border-bottom-color: rgba(0,0,0,0);
 
-		.wikia-logo-container {
-			.wikia-logo img {
+		.wikia-logo-container img {
 				background-image: url('/skins/shared/images/wikia_logo_white.svg'); /* inline */
-			}
 		}
 
 		.start-wikia-container {
