@@ -35,10 +35,7 @@ require(
 					.mouseenter( this.proxy( this.fetchForCurrentWiki ) );
 
 				this.$wallNotifications.add( $('#pt-wall-notifications') )
-					.on('click', '#markasread-sub', this.proxy( this.markAllAsReadPrompt ))
-					.on('click', '#markasread-this-wiki', this.proxy( this.markAllAsRead ))
-					.on('click', '#markasread-all-wikis', this.proxy( this.markAllAsReadAllWikis ));
-
+					.on('click', '.notifications-markasread', this.proxy( this.markAllAsReadAllWikis ));
 
 				$('#AccountNavigation .user-menu').one('mouseenter', this.proxy(this.setNotificationsHeight));
 
@@ -184,15 +181,6 @@ require(
 						this.bucky.timer.stop('markAllAsReadRequest');
 					})
 				});
-			},
-
-			markAllAsReadPrompt: function(e) {
-				$(e.target).parent().addClass('show');
-			},
-
-			markAllAsRead: function(e) {
-				this.markAllAsReadRequest( false );
-				return false;
 			},
 
 			markAllAsReadAllWikis: function(e) {

@@ -36,7 +36,6 @@ define('ext.wikia.adEngine.gptSlotConfig', function () {
 		MODAL_RECTANGLE:            {size: '300x100', loc: 'modal'},
 		PREFOOTER_LEFT_BOXAD:       {size: '300x250', loc: 'footer'},
 		PREFOOTER_RIGHT_BOXAD:      {size: '300x250', loc: 'footer'},
-		TOP_INCONTENT_BOXAD:        {size: '300x250', loc: 'top'},
 		TOP_LEADERBOARD:            {size: '728x90,1030x130,1030x65,1030x250,970x250,970x90,970x66,970x180,980x150', loc: 'top'},
 		TOP_RIGHT_BOXAD:            {size: '300x250,300x600,300x1050', loc: 'top'},
 		WIKIA_BAR_BOXAD_1:          {size: '320x50,320x70,320x100', loc: 'bottom'},
@@ -69,7 +68,6 @@ define('ext.wikia.adEngine.gptSlotConfig', function () {
 			LEFT_SKYSCRAPER_3:          desktopSlots.LEFT_SKYSCRAPER_3,
 			PREFOOTER_LEFT_BOXAD:       desktopSlots.PREFOOTER_LEFT_BOXAD,
 			PREFOOTER_RIGHT_BOXAD:      desktopSlots.PREFOOTER_RIGHT_BOXAD,
-			TOP_INCONTENT_BOXAD:        desktopSlots.TOP_INCONTENT_BOXAD,
 			TOP_LEADERBOARD:            desktopSlots.TOP_LEADERBOARD,
 			TOP_RIGHT_BOXAD:            desktopSlots.TOP_RIGHT_BOXAD,
 			WIKIA_BAR_BOXAD_1:          desktopSlots.WIKIA_BAR_BOXAD_1
