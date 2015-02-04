@@ -1,7 +1,10 @@
+$global-nav-inverse-background: rgba(0,0,0,.65);
+$global-nav-inverse-text-color: rgb(255,255,255);
+
 .global-navigation {
 	&.inverse {
-		background-color: rgba(0, 0, 0, .65);
-		border-bottom: none;
+		background-color: $global-nav-inverse-background;
+		border-bottom-color: rgba(0,0,0,0);
 
 		.wikia-logo-container {
 			.wikia-logo img {
@@ -11,8 +14,8 @@
 
 		.start-wikia-container {
 			.start-wikia {
-				border: solid 1px rgb(255,255,255);
-				color: rgb(255,255,255);
+				border: solid 1px $global-nav-inverse-text-color;
+				color: $global-nav-inverse-text-color;
 			}
 		}
 
@@ -21,7 +24,7 @@
 				background-image: url('/extensions/wikia/GlobalNavigation/images/hubs_entry_point_white.svg'); /* inline */
 
 				&:after {
-					border-top-color: rgb(255,255,255);
+					border-top-color: $global-nav-inverse-text-color;
 				}
 			}
 		}
@@ -32,7 +35,7 @@
 			}
 
 			.logged-avatar, .logged-avatar-placeholder {
-				border: 1px solid rgb(255,255,255);
+				border: 1px solid $global-nav-inverse-text-color;
 				height: 21px;
 				width: 21px;
 			}
@@ -42,11 +45,11 @@
 			}
 
 			.sign-in-label {
-				color: rgb(255, 255, 255);
+				color: $global-nav-inverse-text-color;
 			}
 
 			.chevron {
-				border-top-color: rgb(255,255,255);
+				border-top-color: $global-nav-inverse-text-color;
 			}
 		}
 	}
