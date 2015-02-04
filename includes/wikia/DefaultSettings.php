@@ -289,6 +289,14 @@ $wgAutoloadClasses[ 'UrlGeneratorInterface'           ] = "{$IP}/includes/wikia/
 $wgAutoloadClasses[ 'VignetteUrlToUrlGenerator'       ] = "{$IP}/includes/wikia/vignette/VignetteUrlToUrlGenerator.php";
 $wgAutoloadClasses[ 'Wikia\\Cache\\AsyncCacheTask'    ] = "$IP/includes/wikia/AsyncCacheTask.php";
 $wgAutoloadClasses[ 'Wikia\\Cache\\AsyncCache'        ] = "$IP/includes/wikia/AsyncCache.php";
+$wgAutoloadClasses['Swagger'] = "$IP/includes/wikia/swagger/Swagger.php";
+$wgAutoloadClasses['SwaggerResource'] = "$IP/includes/wikia/swagger/SwaggerResource.php";
+$wgAutoloadClasses['SwaggerApi'] = "$IP/includes/wikia/swagger/SwaggerApi.php";
+$wgAutoloadClasses['SwaggerOperation'] = "$IP/includes/wikia/swagger/SwaggerOperation.php";
+$wgAutoloadClasses['SwaggerParameter'] = "$IP/includes/wikia/swagger/SwaggerParameter.php";
+$wgAutoloadClasses['SwaggerModel'] = "$IP/includes/wikia/swagger/SwaggerModel.php";
+$wgAutoloadClasses['SwaggerModelProperty'] = "$IP/includes/wikia/swagger/SwaggerModelProperty.php";
+$wgAutoloadClasses['SwaggerErrorResponse'] = "$IP/includes/wikia/swagger/SwaggerErrorResponse.php";
 
 /**
  * Resource Loader enhancements
@@ -445,6 +453,7 @@ $wgDebugLogGroups = [
 	'poolcounter' => true,  // errors from PoolCounterWork
 	'replication' => true,  // replication errros / excessive lags
 	'squid' => true,        // timeouts and errors from SquidPurgeClient
+	'createwiki' => true,   // CreateWiki process
 ];
 
 // Register \Wikia\Sass namespace
@@ -1120,7 +1129,7 @@ $wgResourceLoaderAssetsSkinMapping = [
  * @see https://wikia.fogbugz.com/default.asp?36946
  * core mediawiki feature variable
  */
-$wgArticleCountMethod = "comma";
+$wgArticleCountMethod = "any";
 
 /**
  * Javascript minifier used by ResourceLoader
@@ -1288,6 +1297,13 @@ $wgAdDriverUseTaboola = false;
 $wgAdDriverAlwaysCallDartInCountries = [];
 
 /**
+ * @name $wgAdDriverAlwaysCallDartInCountriesMobile
+ * Enable Remnant GPT call in those countries on wikiamobile skin.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverAlwaysCallDartInCountriesMobile = [];
+
+/**
  * @name $wgAdDriverUseBottomLeaderboard
  * Whether to enable new fancy footer ad BOTTOM_LEADERBOARD
  */
@@ -1365,6 +1381,17 @@ $wgSitewideDisableRubiconRTP = false;
  * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
  */
 $wgSitewideDisableSevenOneMedia = false;
+
+/**
+ * @name $wgSitewideDisableKrux
+ * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableKrux
+ *
+ * Disable Krux sitewide in case a disaster happens.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+ */
+$wgSitewideDisableKrux = false;
 
 /**
  * @name $wgAdDriverUseSevenOneMedia

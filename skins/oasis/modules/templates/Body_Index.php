@@ -113,11 +113,6 @@
 								'pageTypes' => ['homepage_logged', 'corporate', 'all_ads']
 							] );
 						}
-
-						if ( !WikiaPageType::isCorporatePage() && !WikiaPageType::isMainPage() && $wg->AdDriverUseTopInContentBoxad ) {
-							echo $app->renderView( 'Ad', 'Index', ['slotName' => 'TOP_INCONTENT_BOXAD'] );
-						}
-
 					?>
 					</div>
 					<?php

@@ -142,10 +142,10 @@ class LoadBalancer {
 		foreach ( $lags as $i => $lag ) {
 			if ( $i != 0 ) {
 				if ( $lag === false ) {
-					wfDebugLog( 'replication', "Server #$i is not replicating\n" );
+					wfDebugLog( 'replication', "Server #$i ({$this->mServers[$i]['host']}) is not replicating\n" );
 					unset( $loads[$i] );
 				} elseif ( isset( $this->mServers[$i]['max lag'] ) && $lag > $this->mServers[$i]['max lag'] ) {
-					wfDebugLog( 'replication', "Server #$i is excessively lagged ($lag seconds)\n" );
+					wfDebugLog( 'replication', "Server #$i ({$this->mServers[$i]['host']}) is excessively lagged ($lag seconds)\n" );
 					unset( $loads[$i] );
 				}
 			}
@@ -264,7 +264,7 @@ class LoadBalancer {
 				$conn = $this->openConnection( $i, $wiki );
 
 				if ( !$conn ) {
-					wfDebugLog( 'connect', __METHOD__.": Failed connecting to $i/$wiki\n" );
+					wfDebugLog( 'connect', __METHOD__.": Failed connecting to $i/$wiki ({$this->mServers[$i]['host']})\n" );
 					unset( $nonErrorLoads[$i] );
 					unset( $currentLoads[$i] );
 					continue;

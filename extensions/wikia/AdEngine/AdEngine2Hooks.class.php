@@ -6,6 +6,7 @@ class AdEngine2Hooks {
 	const ASSET_GROUP_CORE = 'oasis_shared_core_js';
 	const ASSET_GROUP_ADENGINE = 'adengine2_js';
 	const ASSET_GROUP_VENUS_ADS = 'adengine2_venus_ads_js';
+	const ASSET_GROUP_OASIS_ADS = 'adengine2_oasis_ads_js';
 	const ASSET_GROUP_ADENGINE_AMAZON_MATCH = 'adengine2_amazon_match_js';
 	const ASSET_GROUP_ADENGINE_INTERSTITIAL = 'adengine2_interstitial_js';
 	const ASSET_GROUP_ADENGINE_MOBILE = 'wikiamobile_ads_js';
@@ -16,7 +17,6 @@ class AdEngine2Hooks {
 	const ASSET_GROUP_KRUX_MOBILE = 'mobile_krux_js';
 	const ASSET_GROUP_LIFTIUM = 'liftium_ads_js';
 	const ASSET_GROUP_LIFTIUM_EXTRA = 'liftium_ads_extra_js';
-	const ASSET_GROUP_TOP_INCONTENT_JS = 'adengine2_top_in_content_boxad_js';
 
 	/**
 	 * Handle URL parameters and set proper global variables early enough
@@ -59,17 +59,22 @@ class AdEngine2Hooks {
 	 */
 	public static function onInstantGlobalsGetVariables( array &$vars )
 	{
-		// DR
-		$vars[] = 'wgSitewideDisableGpt';
-		$vars[] = 'wgSitewideDisableLiftium';
-		$vars[] = 'wgSitewideDisableSevenOneMedia';
-		$vars[] = 'wgSitewideDisableRubiconRTP';
+		$vars[] = 'wgAdDriverAlwaysCallDartInCountries';
+		$vars[] = 'wgAdDriverAlwaysCallDartInCountriesMobile';
 
-		$vars[] = 'wgHighValueCountries';
 		$vars[] = 'wgAmazonMatchCountries';
 		$vars[] = 'wgAmazonMatchOldCountries';
+		$vars[] = 'wgHighValueCountries';
 
-		$vars[] = 'wgAdDriverAlwaysCallDartInCountries';
+		/**
+		 * Disaster Recovery
+		 * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
+		 */
+		$vars[] = 'wgSitewideDisableGpt';
+		$vars[] = 'wgSitewideDisableKrux';
+		$vars[] = 'wgSitewideDisableLiftium';
+		$vars[] = 'wgSitewideDisableRubiconRTP';
+		$vars[] = 'wgSitewideDisableSevenOneMedia';
 
 		return true;
 	}
@@ -143,7 +148,7 @@ class AdEngine2Hooks {
 		}
 
 		if ( $wgAdDriverUseTopInContentBoxad ) {
-			$jsAssets[] = self::ASSET_GROUP_TOP_INCONTENT_JS;
+			$jsAssets[] = self::ASSET_GROUP_OASIS_ADS;
 		}
 
 		if ( $wgAdDriverUseBottomLeaderboard === true ) {

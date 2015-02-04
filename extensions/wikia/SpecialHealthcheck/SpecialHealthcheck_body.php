@@ -29,6 +29,19 @@ class HealthCheck extends UnlistedSpecialPage {
 	}
 
 	/**
+	 * Get the number of CPU cores
+	 *
+	 * Performs "cat /proc/cpuinfo | grep processor | wc -l" in PHP
+	 *
+	 * @return int number of cores
+	 */
+	private function getCpuCount() {
+		$cpuInfo = file_get_contents( '/proc/cpuinfo' );
+		$matches = preg_match_all( '#^processor#m', $cpuInfo );
+		return $matches;
+	}
+
+	/**
 	 * Show the special page
 	 *
 	 * @param $par Mixed: parameter passed to the page or null
@@ -46,9 +59,9 @@ class HealthCheck extends UnlistedSpecialPage {
 		$statusCode = 200;
 		$statusMsg = self::STATUS_MESSAGE_OK;
 
-		if ( $wgRequest->wasPosted() && $wgRequest->getVal(self::POST_PARAM_GET) ) {
-			$testValue = $wgRequest->getVal(self::POST_PARAM_GET);
-			if ( empty($testValue) || $testValue != $wgRequest->getVal(self::POST_PARAM_POST) ) {
+		if ( $wgRequest->wasPosted() && $wgRequest->getVal( self::POST_PARAM_GET ) ) {
+			$testValue = $wgRequest->getVal( self::POST_PARAM_GET );
+			if ( empty( $testValue ) || $testValue != $wgRequest->getVal( self::POST_PARAM_POST ) ) {
 				$statusCode = 503;
 				$statusMsg = "Server status is: NOT OK - POST data incorrect";
 			}
@@ -57,20 +70,17 @@ class HealthCheck extends UnlistedSpecialPage {
 			return;
 		}
 
-
-
-		$maxLoad = $wgRequest->getVal('maxload');
-		$cpuCount = rtrim( shell_exec('cat /proc/cpuinfo | grep processor | wc -l') );
+		$maxLoad = $wgRequest->getVal( 'maxload' );
+		$cpuCount = $this->getCpuCount();
 		$load = sys_getloadavg();
 
-
-		if ( $cpuRatio = $wgRequest->getVal('cpuratio') ) {
+		if ( $cpuRatio = $wgRequest->getVal( 'cpuratio' ) ) {
 		    $maxLoad = $cpuCount * $cpuRatio;
 		}
 
-		$wgRequest->response()->header("Cpu-Count: $cpuCount");
-		$wgRequest->response()->header("Load: " . implode(", ", $load));
-		$wgRequest->response()->header("Max-Load: $maxLoad");
+		$wgRequest->response()->header( "Cpu-Count: $cpuCount" );
+		$wgRequest->response()->header( "Load: " . implode( ", ", $load ) );
+		$wgRequest->response()->header( "Max-Load: $maxLoad" );
 
 		if ( $maxLoad ) {
 		    if ( $load[0] > $maxLoad ||
@@ -93,8 +103,8 @@ class HealthCheck extends UnlistedSpecialPage {
 		// Varnish should respond with a 200 for any request to any host with this path
 		// The Http class takes care of the proxying through varnish for us.
 		if ( empty( $wgDevelEnvironment ) ) {
-			$content = Http::get("http://x/__varnish_nagios_check");
-			if (!$content) {
+			$content = Http::get( "http://x/__varnish_nagios_check" );
+			if ( !$content ) {
 				$statusCode = 503;
 				$statusMsg  = 'Server status is: NOT OK - Varnish not responding';
 			}
@@ -102,17 +112,17 @@ class HealthCheck extends UnlistedSpecialPage {
 
 
 		// don't check POST on Iowa (i.e. when ready only mode is on)
-		if (wfReadOnly()) {
+		if ( wfReadOnly() ) {
 			$statusMsg  = 'Server status is: POST check disabled';
 		}
 		else {
-			$content = Http::post('http://'.$_SERVER['SERVER_NAME'].'/index.php?title=Special:HealthCheck&'.self::POST_PARAM_GET.'=1234',array(
+			$content = Http::post( 'http://' . $_SERVER['SERVER_NAME'] . '/index.php?title=Special:HealthCheck&' . self::POST_PARAM_GET . '=1234', array(
 				'proxy' => '127.0.0.1:80',
 				'postData' => array(
 					self::POST_PARAM_POST => '1234',
 				),
-			));
-			if ( substr( (string)$content, 0, strlen(self::STATUS_MESSAGE_OK) ) != self::STATUS_MESSAGE_OK ) {
+			) );
+			if ( substr( (string)$content, 0, strlen( self::STATUS_MESSAGE_OK ) ) != self::STATUS_MESSAGE_OK ) {
 				$statusCode = 503;
 				$statusMsg  = 'Server status is: NOT OK - POST request failed';
 			}
