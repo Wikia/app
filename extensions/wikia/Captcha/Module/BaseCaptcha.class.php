@@ -121,12 +121,10 @@ abstract class BaseCaptcha extends \WikiaObject {
 	 * @return bool
 	 */
 	public function APIGetAllowedParams( &$module, &$params ) {
-		if ( !$module instanceof \ApiEditPage ) {
-			return true;
+		if ( $module instanceof \ApiEditPage ) {
+			$params['captchaword'] = null;
+			$params['captchaid'] = null;
 		}
-		$params['captchaword'] = null;
-		$params['captchaid'] = null;
-
 		return true;
 	}
 
@@ -136,11 +134,10 @@ abstract class BaseCaptcha extends \WikiaObject {
 	 * @return bool
 	 */
 	public function APIGetParamDescription( &$module, &$desc ) {
-		if ( !$module instanceof \ApiEditPage ) {
-			return true;
+		if ( $module instanceof \ApiEditPage ) {
+			$desc['captchaid'] = 'CAPTCHA ID from previous request';
+			$desc['captchaword'] = 'Answer to the CAPTCHA';
 		}
-		$desc['captchaid'] = 'CAPTCHA ID from previous request';
-		$desc['captchaword'] = 'Answer to the CAPTCHA';
 
 		return true;
 	}
