@@ -46,13 +46,13 @@ ve.ui.WikiaFocusWidget = function VeUiWikiaFocusWidget( surface ) {
 	// Events
 	this.surface.getView().getDocument().getDocumentNode()
 		.connect( this, {
-			'setup': this.onDocumentSetup,
-			'teardown': this.onDocumentTeardown
+			setup: this.onDocumentSetup,
+			teardown: this.onDocumentTeardown
 		} );
 	this.$window
 		.on( {
-			'resize': this.adjustLayout.bind( this ),
-			'scroll': $.throttle( 250, this.adjustLayout.bind( this ) )
+			resize: this.adjustLayout.bind( this ),
+			scroll: $.throttle( 250, this.adjustLayout.bind( this ) )
 		} );
 	this.surface.getModel().getDocument()
 		.on( 'transact', this.adjustLayout.bind( this ) );
@@ -167,22 +167,22 @@ ve.ui.WikiaFocusWidget.prototype.getLayoutForArticle = function ( surfaceOffset,
 		);
 
 	return {
-		'top': {
-			'height': topEdge,
-			'width': documentDimensions.width
+		top: {
+			height: topEdge,
+			width: documentDimensions.width
 		},
-		'right': {
-			'height': documentDimensions.height,
-			'width': documentDimensions.width - surfaceEdges.right - this.spacing
+		right: {
+			height: documentDimensions.height,
+			width: documentDimensions.width - surfaceEdges.right - this.spacing
 		},
-		'bottom': {
-			'top': surfaceEdges.bottom,
-			'height': documentDimensions.height - surfaceEdges.bottom + this.spacing,
-			'width': documentDimensions.width
+		bottom: {
+			top: surfaceEdges.bottom,
+			height: documentDimensions.height - surfaceEdges.bottom + this.spacing,
+			width: documentDimensions.width
 		},
-		'left': {
-			'height': documentDimensions.height,
-			'width': surfaceEdges.left - this.spacing
+		left: {
+			height: documentDimensions.height,
+			width: surfaceEdges.left - this.spacing
 		}
 	};
 };
@@ -199,22 +199,22 @@ ve.ui.WikiaFocusWidget.prototype.getLayoutForNode = function ( surfaceOffset, su
 	var bounds = this.node.getBoundingRect();
 
 	return {
-		'top': {
-			'height': surfaceOffset.top + bounds.top,
-			'width': documentDimensions.width
+		top: {
+			height: surfaceOffset.top + bounds.top,
+			width: documentDimensions.width
 		},
-		'right': {
-			'height': documentDimensions.height,
-			'width': documentDimensions.width - surfaceEdges.left - bounds.right
+		right: {
+			height: documentDimensions.height,
+			width: documentDimensions.width - surfaceEdges.left - bounds.right
 		},
-		'bottom': {
-			'top': surfaceEdges.top + bounds.bottom,
-			'height': documentDimensions.height - bounds.bottom - surfaceEdges.top,
-			'width': documentDimensions.width
+		bottom: {
+			top: surfaceEdges.top + bounds.bottom,
+			height: documentDimensions.height - bounds.bottom - surfaceEdges.top,
+			width: documentDimensions.width
 		},
-		'left': {
-			'height': documentDimensions.height,
-			'width': surfaceEdges.left + bounds.left
+		left: {
+			height: documentDimensions.height,
+			width: surfaceEdges.left + bounds.left
 		}
 	};
 };
@@ -284,8 +284,8 @@ ve.ui.WikiaFocusWidget.prototype.hideDistractions = function () {
 		.each( function () {
 			var $ad = $( this );
 			$ad.css( {
-				'height': $ad.height(),
-				'width': $ad.width()
+				height: $ad.height(),
+				width: $ad.width()
 			} );
 		} )
 		.addClass( 've-hidden-ad' );
@@ -303,8 +303,8 @@ ve.ui.WikiaFocusWidget.prototype.showDistractions = function () {
 	this.$pageHeaderElements.css( 'visibility', 'visible' );
 	this.$wikiaAds
 		.css( {
-			'height': 'auto',
-			'width': 'auto'
+			height: 'auto',
+			width: 'auto'
 		} )
 		.removeClass( 've-hidden-ad' );
 };

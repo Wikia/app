@@ -1,6 +1,17 @@
 <?php
 
+/* Setup */
+
+$wgExtensionCredits['other'][] = array(
+	'path' => __FILE__,
+	'name' => 'VisualEditor for Wikia'
+);
+
 $dir = dirname( __FILE__ ) . '/';
+
+/* Classes */
+
+$wgAutoloadClasses['VisualEditorWikiaHooks'] = $dir . 'VisualEditor.hooks.php';
 
 /* Resource Loader Modules */
 
@@ -46,6 +57,25 @@ $wgResourceModules += array(
 	'ext.visualEditor.wikia.core' => $wgVisualEditorWikiaResourceTemplate + array(
 		'scripts' => array(
 			've/ve.track.js',
+
+			// dm
+			've/dm/ve.dm.WikiaBlockMediaNode.js',
+			've/dm/ve.dm.WikiaBlockVideoNode.js',
+			've/dm/ve.dm.WikiaMediaCaptionNode.js',
+			've/dm/ve.dm.WikiaVideoCaptionNode.js',
+			've/dm/ve.dm.WikiaInlineVideoNode.js',
+			've/dm/ve.dm.WikiaBlockImageNode.js',
+			've/dm/ve.dm.WikiaImageCaptionNode.js',
+
+			// ce
+			've/ce/ve.ce.WikiaVideoNode.js',
+			've/ce/ve.ce.WikiaBlockMediaNode.js',
+			've/ce/ve.ce.WikiaBlockVideoNode.js',
+			've/ce/ve.ce.WikiaMediaCaptionNode.js',
+			've/ce/ve.ce.WikiaVideoCaptionNode.js',
+			've/ce/ve.ce.WikiaInlineVideoNode.js',
+			've/ce/ve.ce.WikiaBlockImageNode.js',
+			've/ce/ve.ce.WikiaImageCaptionNode.js',
 
 			// ui
 			've/ui/ve.ui.WikiaCommandRegistry.js',
@@ -145,3 +175,6 @@ $wgVisualEditorPluginModules[] = 'ext.visualEditor.wikia.core';
 
 $wgExtensionMessagesFiles['VisualEditorWikia'] = $dir . 'VisualEditor.i18n.php';
 
+/* Hooks */
+
+$wgHooks['ResourceLoaderTestModules'][] = 'VisualEditorWikiaHooks::onResourceLoaderTestModules';

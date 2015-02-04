@@ -117,7 +117,8 @@ ve.ce.MWImageNode.prototype.onParseSuccess = function ( deferred, response ) {
 
 /** */
 ve.ce.MWImageNode.prototype.render = function ( generatedContents ) {
-	this.$image.attr( 'src', generatedContents );
+	this.$image.attr( 'src', ve.resolveUrl( generatedContents, this.getModelHtmlDocument() ) );
+
 	if ( this.live ) {
 		this.afterRender();
 	}
