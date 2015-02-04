@@ -42,8 +42,8 @@ ve.ui.WikiaFocusWidget = function VeUiWikiaFocusWidget( surface ) {
 	if ( mw.config.get( 'WikiaBar' ) && !mw.config.get( 'WikiaBar' ).isWikiaBarHidden() ) {
 		this.showWikiaBar = true;
 	}
-	this.$njordHeroModule = this.$('header.MainPageHeroHeader')
-	this.$njordPageEditButton = this.$('#WikiaArticle nav.wikia-menu-button')
+	this.$njordHeroModule = this.$('header.MainPageHeroHeader');
+	this.$njordPageEditButton = this.$('#WikiaArticle nav.wikia-menu-button');
 
 	// Events
 	this.surface.getView().getDocument().getDocumentNode()
