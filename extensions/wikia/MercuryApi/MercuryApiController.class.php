@@ -190,7 +190,7 @@ class MercuryApiController extends WikiaController {
 		$uriPrefixLength = strlen( $uriPrefix );
 
 		// Cut everything <= $urlPrefixLength
-		if ( $uriPrefix === substr( $uri, 0, strlen( $uriPrefix ) ) ) {
+		if ( $uriPrefix === substr( $uri, 0, $uriPrefixLength ) ) {
 			$uriWithoutPrefix = substr( $uri, $uriPrefixLength );
 		} else if ( substr( $uri, 0, 1 ) === '/' ) {
 			$uriWithoutPrefix = substr( $uri, 1 );
@@ -198,7 +198,6 @@ class MercuryApiController extends WikiaController {
 			$uriWithoutPrefix = $uri;
 		}
 
-		// TODO Should we do this?
 		// Cut everything >= '?'
 		$queryPosition = strpos( $uriWithoutPrefix, '?' );
 		if ( $queryPosition !== false ) {
@@ -210,10 +209,10 @@ class MercuryApiController extends WikiaController {
 		// TODO Title::newFromText caches titles with CACHE_MAX = 1000
 		// Is it good for us?
 		$title = Title::newFromText( $uriWithoutQuery, NS_MAIN );
+		$namespace = $title->getNamespace();
+		$isArticle = in_array( $namespace, $this->wg->ContentNamespaces ) && $title->mInterwiki === '';
 
-		// TODO What exactly do we need? Is the namespace enough?
-		// Right now it returns all values of Title object.
-		$this->response->setVal( 'title', $title );
+		$this->response->setVal( 'isArticle', $isArticle );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 
