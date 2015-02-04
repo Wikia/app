@@ -3311,9 +3311,10 @@ $wgHiddenPrefs = array();
 /**
  * Characters to prevent during new account creations.
  * This is used in a regular expression character class during
- * registration (regex metacharacters like / are escaped).
+ * registration.
+ * Wikia: Added filtering circled latin characters
  */
-$wgInvalidUsernameCharacters = '/@|[\x{2460}-\x{2468}]|[\x{24B6}-\x{24EA}]/u';
+$wgInvalidUsernameCharacters = '/@|[\x{24B6}-\x{24E9}]|[\x{1F150}-\x{1F169}]/u';
 
 /**
  * Character used as a delimiter when testing for interwiki userrights
