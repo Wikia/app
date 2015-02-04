@@ -349,7 +349,7 @@ require(
 
 				if ( isDropdownOpen ) {
 
-					if ( this.notificationsMarkAsReadHeight <= 0 ) {
+					if ( this.notificationsMarkAsReadHeight === 0 ) {
 						this.notificationsMarkAsReadHeight = $('.notifications-markasread').outerHeight();
 					}
 
