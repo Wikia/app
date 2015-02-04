@@ -2,7 +2,7 @@
 /*
  * Author: Inez Korczyński (inez@wikia.com)
  */
- 
+
 $wgExtensionCredits[ 'other' ][ ] = array(
 	'name' => 'JSVariables',
 	'author' => 'Inez Korczyński (inez@wikia.com)',
@@ -49,6 +49,14 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 		$vars['wgUserName'] = null;
 	} else {
 		$vars['wgUserName'] = $user->getName();
+
+		/*
+		 * Remove when SOC-217 ABTest is finished
+		 */
+		$vars['wgNotConfirmedEmail'] = $user->getOption( UserLoginSpecialController::NOT_CONFIRMED_LOGIN_OPTION_NAME );
+		/*
+		 * End remove
+		 */
 	}
 	if ($out->isArticle()) {
 		$vars['wgArticleId'] = $out->getWikiPage()->getId();
