@@ -119,7 +119,7 @@ class SMWSQLStore2 extends SMWStore {
 	);
 
 	public function __construct() {
-		$this->m_idCache = new SMWSqlStore2IdCache( wfGetDB( DB_SLAVE ) );
+		$this->m_idCache = new SMWSqlStore2IdCache( wfGetDB( DB_SLAVE, 'smw' ) );
 	}
 
 ///// Reading methods /////
@@ -291,7 +291,7 @@ class SMWSQLStore2 extends SMWStore {
 
 		wfProfileIn( "SMWSQLStore2::fetchSemanticData-" . $proptable->name .  " (SMW)" );
 		$result = array();
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 
 		// ***  First build $from, $select, and $where for the DB query  ***//
 		$from   = $db->tableName( $proptable->name ); // always use actual table
@@ -420,7 +420,7 @@ class SMWSQLStore2 extends SMWStore {
 
 		$proptables = self::getPropertyTables();
 		$proptable = $proptables[$tableid];
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 
 		if ( $proptable->idsubject ) { // join in smw_ids to get title data
 			$from = $db->tableName( 'smw_ids' ) . " INNER JOIN " . $db->tableName( $proptable->name ) . " AS t1 ON t1.s_id=smw_id";
@@ -477,7 +477,7 @@ class SMWSQLStore2 extends SMWStore {
 	 * @param integer $tableindex
 	 */
 	protected function prepareValueQuery( &$from, &$where, $proptable, $value, $tableindex = 1 ) {
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 
 		if ( $value instanceof SMWDIContainer ) { // recursive handling of containers
 			$keys = array_keys( $proptable->objectfields );
@@ -561,7 +561,7 @@ class SMWSQLStore2 extends SMWStore {
 			return array();
 		}
 
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 		$result = array();
 
 		if ( $requestoptions !== null ) { // potentially need to get more results, since options apply to union
@@ -632,7 +632,7 @@ class SMWSQLStore2 extends SMWStore {
 	public function getInProperties( SMWDataItem $value, $requestoptions = null ) {
 		wfProfileIn( "SMWSQLStore2::getInProperties (SMW)" );
 
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 		$result = array();
 
 		// Potentially need to get more results, since options apply to union.
@@ -698,7 +698,7 @@ class SMWSQLStore2 extends SMWStore {
 		$this->updateRedirects( $subject->getDBkey(), $subject->getNamespace() ); // also delete redirects, may trigger update jobs!
 
 		if ( $subject->getNamespace() == SMW_NS_CONCEPT ) { // make sure to clear caches
-			$db = wfGetDB( DB_MASTER );
+			$db = wfGetDB( DB_MASTER, 'smw' );
 			$id = $this->getSMWPageID( $subject->getDBkey(), $subject->getNamespace(), $subject->getInterwiki(), '', false );
 			$db->delete( 'smw_conc2', array( 's_id' => $id ), 'SMW::deleteSubject::Conc2' );
 			$db->delete( 'smw_conccache', array( 'o_id' => $id ), 'SMW::deleteSubject::Conccache' );
@@ -747,7 +747,7 @@ class SMWSQLStore2 extends SMWStore {
 		$updates = array(); // collect data for bulk updates; format: tableid => updatearray
 		$this->prepareDBUpdates( $updates, $data, $sid, $subject );
 
-		$db = wfGetDB( DB_MASTER );
+		$db = wfGetDB( DB_MASTER, 'smw' );
 		foreach ( $updates as $tablename => $uvals ) {
 			if ( $tablename != 'smw_conc2' ) $db->insert( $tablename, $uvals, "SMW::updateData$tablename" );
 		}
@@ -917,7 +917,7 @@ class SMWSQLStore2 extends SMWStore {
 		// get IDs but do not resolve redirects:
 		$sid = $this->getSMWPageID( $oldtitle->getDBkey(), $oldtitle->getNamespace(), '', '', false );
 		$tid = $this->getSMWPageID( $newtitle->getDBkey(), $newtitle->getNamespace(), '', '', false );
-		$db = wfGetDB( DB_MASTER );
+		$db = wfGetDB( DB_MASTER, 'smw' );
 
 		// Easy case: target not used anywhere yet, just hijack its title for our current id
 		if ( ( $tid == 0 ) && ( $smwgQEqualitySupport != SMW_EQ_NONE ) ) {
@@ -1008,7 +1008,7 @@ class SMWSQLStore2 extends SMWStore {
 		global $smwgIP;
 		include_once( "$smwgIP/includes/storage/compatSQLStore/SMW_SQLStore2_Queries.php" );
 
-		$qe = new SMWSQLStore2QueryEngine( $this, wfGetDB( DB_SLAVE ) );
+		$qe = new SMWSQLStore2QueryEngine( $this, wfGetDB( DB_SLAVE, 'smw' ) );
 		$result = $qe->getQueryResult( $query );
 		wfProfileOut( 'SMWSQLStore2::getQueryResult (SMW)' );
 
@@ -1023,7 +1023,7 @@ class SMWSQLStore2 extends SMWStore {
 	 */
 	public function getPropertiesSpecial( $requestoptions = null ) {
 		wfProfileIn( "SMWSQLStore2::getPropertiesSpecial (SMW)" );
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 		// the query needs to do the filtering of internal properties, else LIMIT is wrong
 		$queries = array();
 
@@ -1070,7 +1070,7 @@ class SMWSQLStore2 extends SMWStore {
 		global $wgDBtype;
 
 		wfProfileIn( "SMWSQLStore2::getUnusedPropertiesSpecial (SMW)" );
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 
 		// we use a temporary table for executing this costly operation on the DB side
 		$smw_tmp_unusedprops = $db->tableName( 'smw_tmp_unusedprops' );
@@ -1093,11 +1093,30 @@ class SMWSQLStore2 extends SMWStore {
 
 		$db->query( $sql, __METHOD__ );
 
-		$db->insertSelect( $smw_tmp_unusedprops, 'page', array( 'title' => 'page_title' ),
-		                  array( "page_namespace" => SMW_NS_PROPERTY ),  __METHOD__ );
+		// Wikia change - hack for smw+ separation
+		// $db->insertSelect( $smw_tmp_unusedprops, 'page', array( 'title' => 'page_title' ),
+		//                   array( "page_namespace" => SMW_NS_PROPERTY ),  __METHOD__ );
+		$dbl = wfGetDB( DB_SLAVE );
+		$localResult = $dbl->select(
+			[ 'page' ],
+			[ 'page_title' ],
+			[ 'page_namespace' => SMW_NS_PROPERTY ],
+			$fname
+		);
+		$titles = [];
+		foreach ( $localResult as $row ) {
+			$titles[] = [ 'title' => $row->page_title ];
+		}
+		// multi insert is faster
+		$chunks = array_chunk( $titles, 300 );
+		foreach ( $chunks as $chunk ) {
+			$db->insert( $smw_tmp_unusedprops, $chunk, $fname );
+		}
+		// Wikia change - end
 
 		$smw_ids = $db->tableName( 'smw_ids' );
 
+		// @todo eloy, check if not crossed connections
 		// all predefined properties are assumed to be used:
 		$db->deleteJoin( $smw_tmp_unusedprops, $smw_ids, 'title', 'smw_title', array( 'smw_iw' => SMW_SQL2_SMWPREDEFIW ), __METHOD__ );
 
@@ -1183,18 +1202,47 @@ class SMWSQLStore2 extends SMWStore {
 		$result = array();
 
 		if ( $proptable->fixedproperty == false ) { // anything else would be crazy, but let's fail gracefully even if the whole world is crazy
-			$db = wfGetDB( DB_SLAVE );
+			// Wikia change - hack for smw+
+			// $db = wfGetDB( DB_SLAVE );
+
+			// $options = $this->getSQLOptions( $requestoptions, 'title' );
+			// $options['ORDER BY'] = 'count DESC';
+
+			// $res = $db->select( // TODO: this is not how JOINS should be specified in the select function
+			// 	$db->tableName( $proptable->name ) . ' INNER JOIN ' .
+			// 		$db->tableName( 'smw_ids' ) . ' ON p_id=smw_id LEFT JOIN ' .
+			// 		$db->tableName( 'page' ) . ' ON (page_namespace=' .
+			// 		$db->addQuotes( SMW_NS_PROPERTY ) . ' AND page_title=smw_title)',
+			// 	'smw_title, COUNT(*) as count',
+			// 	'smw_id > 50 AND page_id IS NULL GROUP BY smw_title',
+			// 	'SMW::getWantedPropertiesSpecial',
+			// 	$options
+			// );
+
+			$db = wfGetDB( DB_SLAVE, 'smw' );
+			$dbl = wfGetDB( DB_SLAVE ); // local connection
+			$res = $dbl->select(
+				$dbl->tableName( 'page' ),
+				'page_title',
+				[
+					'page_namespace' => SMW_NS_PROPERTY,
+				],
+				__METHOD__
+			);
+			$titles = [];
+			foreach ( $res as $row ) {
+				$titles[] = $row->page_title;
+			}
+			$condition = !empty( $titles )
+				? ' AND smw_title NOT IN (' . $dbl->makeList( $titles ) . ')'
+				: '';
 
 			$options = $this->getSQLOptions( $requestoptions, 'title' );
 			$options['ORDER BY'] = 'count DESC';
-
-			$res = $db->select( // TODO: this is not how JOINS should be specified in the select function
-				$db->tableName( $proptable->name ) . ' INNER JOIN ' .
-					$db->tableName( 'smw_ids' ) . ' ON p_id=smw_id LEFT JOIN ' .
-					$db->tableName( 'page' ) . ' ON (page_namespace=' .
-					$db->addQuotes( SMW_NS_PROPERTY ) . ' AND page_title=smw_title)',
+			$res = $db->select( $db->tableName( $proptable->name ) . ' INNER JOIN ' .
+				$db->tableName( 'smw_ids' ) . ' ON p_id=smw_id',
 				'smw_title, COUNT(*) as count',
-				'smw_id > 50 AND page_id IS NULL GROUP BY smw_title',
+				"smw_id > 50 {$condition} GROUP BY smw_title",
 				'SMW::getWantedPropertiesSpecial',
 				$options
 			);
@@ -1212,7 +1260,7 @@ class SMWSQLStore2 extends SMWStore {
 	public function getStatistics() {
 		wfProfileIn( 'SMWSQLStore2::getStatistics (SMW)' );
 
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 		$result = array();
 		$proptables = self::getPropertyTables();
 
@@ -1259,7 +1307,7 @@ class SMWSQLStore2 extends SMWStore {
 		$this->reportProgress( "Setting up standard database configuration for SMW ...\n\n", $verbose );
 		$this->reportProgress( "Selected storage engine is \"SMWSQLStore2\" (or an extension thereof)\n\n", $verbose );
 
-		$db = wfGetDB( DB_MASTER );
+		$db = wfGetDB( DB_MASTER, 'smw' );
 
 		$this->setupTables( $verbose, $db );
 		$this->setupPredefinedProperties( $verbose, $db );
@@ -1458,7 +1506,7 @@ class SMWSQLStore2 extends SMWStore {
 		global $wgDBtype;
 
 		$this->reportProgress( "Deleting all database content and tables generated by SMW ...\n\n", $verbose );
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER, 'smw' );
 		$tables = array( 'smw_ids', 'smw_conccache' );
 
 		foreach ( self::getPropertyTables() as $proptable ) {
@@ -1502,13 +1550,18 @@ class SMWSQLStore2 extends SMWStore {
 
 		foreach ( $titles as $title ) {
 			if ( ( $namespaces == false ) || ( in_array( $title->getNamespace(), $namespaces ) ) ) {
-				$updatejobs[] = new SMWUpdateJob( $title );
+				// wikia change start - jobqueue migration
+				$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+				$task->call( 'SMWUpdateJob', $title );
+				$updatejobs[] = $task;
+				// wikia change end
+
 				$emptyrange = false;
 			}
 		}
 
 		// update by internal SMW id --> make sure we get all objects in SMW
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
 
 		$res = $dbr->select(
 			'smw_ids',
@@ -1533,7 +1586,11 @@ class SMWSQLStore2 extends SMWStore {
 				$title = Title::makeTitleSafe( $row->smw_namespace, $row->smw_title );
 
 				if ( $title !== null && !$title->exists() ) {
-					$updatejobs[] = new SMWUpdateJob( $title );
+					// wikia change start - jobqueue migration
+					$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+					$task->call( 'SMWUpdateJob', $title );
+					$updatejobs[] = $task;
+					// wikia change end
 				}
 			} elseif ( $row->smw_iw == SMW_SQL2_SMWIW_OUTDATED ) { // remove outdated internal object references
 				foreach ( self::getPropertyTables() as $proptable ) {
@@ -1553,22 +1610,36 @@ class SMWSQLStore2 extends SMWStore {
 		wfRunHooks('smwRefreshDataJobs', array(&$updatejobs));
 
 		if ( $usejobs ) {
-			Job::batchInsert( $updatejobs );
+			// wikia change start - jobqueue migration
+			\Wikia\Tasks\Tasks\BaseTask::batch( $updatejobs );
+			// wikia change end
 		} else {
 			foreach ( $updatejobs as $job ) {
-				$job->run();
+				// wikia change start - jobqueue migration
+				/** @var \Wikia\Tasks\Tasks\JobWrapperTask $job */
+				try {
+					$job->init();
+				} catch ( Exception $e ) {
+					continue;
+				}
+
+				$job->wrap( 'SMWUpdateJob' );
+				// wikia change end
 			}
 		}
 
 		$nextpos = $index + $count;
 
+		// smw+ wikia change, handler to local database
+		$dbl = wfGetDB( DB_SLAVE );
+
 		if ( $emptyrange ) { // nothing found, check if there will be more pages later on
-			$next1 = $dbr->selectField( 'page', 'page_id', "page_id >= $nextpos", __METHOD__, array( 'ORDER BY' => "page_id ASC" ) );
+			$next1 = $dbl->selectField( 'page', 'page_id', "page_id >= $nextpos", __METHOD__, array( 'ORDER BY' => "page_id ASC" ) );
 			$next2 = $dbr->selectField( 'smw_ids', 'smw_id', "smw_id >= $nextpos", __METHOD__, array( 'ORDER BY' => "smw_id ASC" ) );
 			$nextpos = $next2 != 0 && $next2 < $next1 ? $next2 : $next1;
 		}
 
-		$max1 = $dbr->selectField( 'page', 'MAX(page_id)', '', __METHOD__ );
+		$max1 = $dbl->selectField( 'page', 'MAX(page_id)', '', __METHOD__ );
 		$max2 = $dbr->selectField( 'smw_ids', 'MAX(smw_id)', '', __METHOD__ );
 		$index = $nextpos ? $nextpos : -1;
 
@@ -1631,7 +1702,7 @@ class SMWSQLStore2 extends SMWStore {
 	public function getConceptCacheStatus( $concept ) {
 		wfProfileIn( 'SMWSQLStore2::getConceptCacheStatus (SMW)' );
 
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 		$cid = $this->getSMWPageID( $concept->getDBkey(), $concept->getNamespace(), '', '', false );
 
 		$row = $db->selectRow( 'smw_conc2',
@@ -1980,7 +2051,7 @@ class SMWSQLStore2 extends SMWStore {
 
 		global $smwgQEqualitySupport;
 
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 
 		if ( $iw !== '' && !is_null( $iw ) ) { // external page; no need to think about redirects
 			$iwCond = 'smw_iw=' . $db->addQuotes( $iw );
@@ -2016,7 +2087,7 @@ class SMWSQLStore2 extends SMWStore {
 	}
 
 	public function getRedirectId( $title, $namespace ) {
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 		$row = $db->selectRow( 'smw_redi2', 'o_id',
 			array( 's_title' => $title, 's_namespace' => $namespace ), __METHOD__ );
 		return ( $row === false ) ? 0 : $row->o_id;
@@ -2043,7 +2114,7 @@ class SMWSQLStore2 extends SMWStore {
 		}
 
 		if ( $id == 0 ) {
-			$db = wfGetDB( DB_MASTER );
+			$db = wfGetDB( DB_MASTER, 'smw' );
 			$sortkey = $sortkey ? $sortkey : ( str_replace( '_', ' ', $title ) );
 
 			$db->insert(
@@ -2063,7 +2134,7 @@ class SMWSQLStore2 extends SMWStore {
 
 			$this->m_idCache->setId( $title, $namespace, $iw, $subobjectName, $id );
 		} elseif ( ( $sortkey !== '' ) && ( $sortkey != $oldsort ) ) {
-			$db = wfGetDB( DB_MASTER );
+			$db = wfGetDB( DB_MASTER, 'smw' );
 			$db->update( 'smw_ids', array( 'smw_sortkey' => $sortkey ), array( 'smw_id' => $id ), __METHOD__ );
 		}
 
@@ -2130,7 +2201,7 @@ class SMWSQLStore2 extends SMWStore {
 	 * moved to an id that is still in use somewhere).
 	 */
 	protected function moveSMWPageID( $curid, $targetid = 0 ) {
-		$db = wfGetDB( DB_MASTER );
+		$db = wfGetDB( DB_MASTER, 'smw' );
 
 		$row = $db->selectRow( 'smw_ids', '*', array( 'smw_id' => $curid ), __METHOD__ );
 
@@ -2195,7 +2266,7 @@ class SMWSQLStore2 extends SMWStore {
 	 */
 	protected function changeSMWPageID( $oldid, $newid, $oldnamespace = -1,
 				$newnamespace = -1, $sdata = true, $podata = true ) {
-		$db = wfGetDB( DB_MASTER );
+		$db = wfGetDB( DB_MASTER, 'smw' );
 
 		// Change all id entries in property tables:
 		foreach ( self::getPropertyTables() as $proptable ) {
@@ -2245,7 +2316,7 @@ class SMWSQLStore2 extends SMWStore {
 	protected function deleteSemanticData( SMWDIWikiPage $subject ) {
 		if ( $subject->getSubobjectName() !== '' ) return; // not needed, and would mess up data
 
-		$db = wfGetDB( DB_MASTER );
+		$db = wfGetDB( DB_MASTER, 'smw' );
 
 		$id = $this->getSMWPageID( $subject->getDBkey(), $subject->getNamespace(), $subject->getInterwiki(), '', false );
 
@@ -2332,7 +2403,7 @@ class SMWSQLStore2 extends SMWStore {
 		/// NOTE: $sid can be 0 here; this is useful to know since it means that fewer table updates are needed
 		$new_tid = $curtarget_t ? ( $this->makeSMWPageID( $curtarget_t, $curtarget_ns, '', '', false ) ) : 0; // real id of new target, if given
 
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 		$row = $db->selectRow( array( 'smw_redi2' ), 'o_id',
 				array( 's_title' => $subject_t, 's_namespace' => $subject_ns ), __METHOD__ );
 		$old_tid = ( $row !== false ) ? $row->o_id : 0; // real id of old target, if any
@@ -2344,7 +2415,7 @@ class SMWSQLStore2 extends SMWStore {
 
 		// *** Make relevant changes in property tables (don't write the new redirect yet) ***//
 
-		$db = wfGetDB( DB_MASTER ); // now we need to write something
+		$db = wfGetDB( DB_MASTER, 'smw' ); // now we need to write something
 
 		if ( ( $old_tid == 0 ) && ( $sid != 0 ) && ( $smwgQEqualitySupport != SMW_EQ_NONE ) ) { // new redirect
 			// $smwgQEqualitySupport requires us to change all tables' page references from $sid to $new_tid.
@@ -2377,7 +2448,11 @@ class SMWSQLStore2 extends SMWStore {
 						foreach ( $res as $row ) {
 							$title = Title::makeTitleSafe( $row->ns, $row->t );
 							if ( !is_null( $title ) ) {
-								$jobs[] = new SMWUpdateJob( $title );
+								// wikia change start - jobqueue migration
+								$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+								$task->call( 'SMWUpdateJob', $title );
+								$jobs[] = $task;
+								// wikia change end
 							}
 						}
 						$db->freeResult( $res );
@@ -2390,7 +2465,11 @@ class SMWSQLStore2 extends SMWStore {
 							foreach ( $res as $row ) {
 								$title = Title::makeTitleSafe( $row->ns, $row->t );
 								if ( !is_null( $title ) ) {
-									$jobs[] = new SMWUpdateJob( $title );
+									// wikia change start - jobqueue migration
+									$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+									$task->call( 'SMWUpdateJob', $title );
+									$jobs[] = $task;
+									// wikia change end
 								}
 							}
 							$db->freeResult( $res );
@@ -2401,7 +2480,7 @@ class SMWSQLStore2 extends SMWStore {
 				/// NOTE: we do not update the concept cache here; this remains an offline task
 
 				/// NOTE: this only happens if $smwgEnableUpdateJobs was true above:
-				Job::batchInsert( $jobs );
+				\Wikia\Tasks\Tasks\BaseTask::batch( $jobs );
 			}
 		}
 
