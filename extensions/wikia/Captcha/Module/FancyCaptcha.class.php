@@ -157,9 +157,9 @@ class FancyCaptcha extends BaseCaptcha {
 			// cycle through next digits...
 			for ( $j = 0; $j < count( $dirs ); $j++ ) {
 				$char = $dirs[( $place + $j ) % count( $dirs )];
-				$return = $this->pickImageDir( "$directory/$char", $levels - 1 );
-				if ( $return ) {
-					return $return;
+				$imageDir = $this->pickImageDir( "$directory/$char", $levels - 1 );
+				if ( $imageDir ) {
+					return $imageDir;
 				}
 			}
 			// Didn't find any images in this directory... empty?
