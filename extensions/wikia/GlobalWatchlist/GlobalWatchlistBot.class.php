@@ -10,12 +10,12 @@ class GlobalWatchlistBot {
 	const REPLY_ADDRESS = 'noreply@wikia.com';
 
 	public function __construct() {
-		global $wgExtensionMessagesFiles;
-		$wgExtensionMessagesFiles['GlobalWatchlist'] = dirname( __FILE__ ) . '/GlobalWatchlist.i18n.php';
+		\F::app()->wg->ExtensionMessagesFiles['GlobalWatchlist'] = dirname( __FILE__ ) . '/GlobalWatchlist.i18n.php';
 	}
 
 	/**
 	 * send email to user
+	 * TODO Break this method up a bit. It does way way too many things.
 	 */
 	public function sendDigestToUser( $userID ) {
 		global $wgExternalDatawareDB;
@@ -153,9 +153,8 @@ class GlobalWatchlistBot {
 	 * @return null|User
 	 */
 	private function getUserObject( $userID ) {
-		global $wgExternalAuthType;
 
-		if ( $wgExternalAuthType ) {
+		if (\F::app()->wg->ExternalAuthType ) {
 			$mExtUser = ExternalUser::newFromId( $userID );
 			if ( is_object( $mExtUser ) && ( 0 != $mExtUser->getId() ) ) {
 				$mExtUser->linkToLocal( $mExtUser->getId() );
@@ -241,6 +240,7 @@ class GlobalWatchlistBot {
 
 	/**
 	 * compose digest email for user
+	 * TODO Break this method up a bit. It does way way too many things.
 	 */
 	function composeMail ( $oUser, $aDigestsData, $isDigestLimited ) {
 

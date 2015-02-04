@@ -138,7 +138,7 @@ class GlobalWatchlistHooks {
 	 * @param $newTitle Title
 	 * @return bool (always true)
 	 */
-	public static function renameTitleInGlobalWatchlist( $oldTitle, $newTitle ) {
+	public static function renameTitleInGlobalWatchlist( \Title $oldTitle, \Title $newTitle ) {
 		$oldTitleValues = [
 			'databaseKey' => $oldTitle->getDBkey(),
 			'nameSpace' => $oldTitle->getNamespace()
