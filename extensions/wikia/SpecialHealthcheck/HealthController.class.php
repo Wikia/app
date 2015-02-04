@@ -41,6 +41,11 @@ class HealthController extends WikiaController {
 		if ( $this->messages ) {
 			$this->setVal( 'messages', $this->messages );
 		}
+
+		$this->setVal('readWrite',[
+			'status' => !wfReadOnly(),
+			'reason' => wfReadOnlyReason(),
+		]);
 	}
 
 	/**
