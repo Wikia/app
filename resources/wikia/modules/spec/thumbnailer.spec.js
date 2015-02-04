@@ -38,6 +38,12 @@ describe('thumbnailer', function () {
 		expect(thumbnailer.getThumbURL(fullSizeImageUrl, 'image', 90, 55)).toBe('http://img2.wikia.nocookie.net/__cb20140419225924/thelastofus/images/thumb/f/ff/Joel.png/90x55x2-Joel.png');
 	});
 
+	it('returns proper full image URL', function () {
+		expect(thumbnailer.getImageURL(legacyThumbnailerUrl)).toBe('http://images2.wikia.nocookie.net/__cb20111213221641/poznan/pl/images/0/06/Gzik.jpg');
+		expect(thumbnailer.getImageURL(thumbnailerUrl)).toBe('http://vignette2.wikia.nocookie.net/arresteddevelopment/f/fb/1x08_My_Mother_the_Car_%2822%29.png/revision/latest?cb=20120214071005');
+		expect(thumbnailer.getImageURL(fullSizeImageUrl)).toBe(fullSizeImageUrl);
+	});
+
 	it('test 0 height image for legacy thumbnail', function () {
 		expect(thumbnailer.getThumbURL(legacyThumbnailerUrl, 'image', 500, 0)).toBe('http://images2.wikia.nocookie.net/__cb20111213221641/poznan/pl/images/thumb/0/06/Gzik.jpg/500px-x2-Gzik.png');
 	});
