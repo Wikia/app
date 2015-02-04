@@ -3313,7 +3313,7 @@ $wgHiddenPrefs = array();
  * This is used in a regular expression character class during
  * registration (regex metacharacters like / are escaped).
  */
-$wgInvalidUsernameCharacters = '@';
+$wgInvalidUsernameCharacters = '/@|[\x{2460}-\x{2468}]|[\x{24B6}-\x{24EA}]/u';
 
 /**
  * Character used as a delimiter when testing for interwiki userrights

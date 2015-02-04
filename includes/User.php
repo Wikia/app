@@ -671,7 +671,7 @@ class User {
 
 		// Preg yells if you try to give it an empty string
 		if( $wgInvalidUsernameCharacters !== '' ) {
-			if( preg_match( '/[' . preg_quote( $wgInvalidUsernameCharacters, '/' ) . ']/', $name ) ) {
+			if( preg_match( $wgInvalidUsernameCharacters, $name ) ) {
 				wfDebugLog( 'username', __METHOD__ .
 					": '$name' invalid due to wgInvalidUsernameCharacters" );
 				return false;
