@@ -32,7 +32,7 @@
 		function getThumbURL(url, type, width, height) {
 			url = url || '';
 			height = height || 0;
-			width = (width || 50) + (height ? '' : 'px');
+			width = (width || 50);
 
 			if (isLegacyThumbnailerUrl(url)) {
 				// URL points to a thumbnail, remove crop and size
