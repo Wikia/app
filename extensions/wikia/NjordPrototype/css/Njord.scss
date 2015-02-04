@@ -34,7 +34,30 @@
 	.image-window {
 		height: 100%;
 		overflow: hidden;
-		@include linear-gradient(rgba(0,0,0,0.1), top, rgba(0,0,0,0.1), 20%, rgba(0,0,0,0.6), 100%);
+
+		picture {
+			height: 100%;
+
+			&::before,
+			&::after {
+				content: '';
+				height: 100%;
+				left: 0;
+				position: absolute;
+				top: 0;
+				width: 100%;
+				z-index: 1;
+			}
+
+			&::after {
+				@include linear-gradient(transparent, top, rgba(0, 0, 0, 0.1), 20%, rgba(0, 0, 0, 0.6), 100%);
+			}
+
+			&::before {
+				background-color: rgba($color-buttons, 0.3);
+			}
+
+		}
 	}
 
 	.image-wrap:not(.zero-state) {
@@ -52,15 +75,16 @@
 	.position-info {
 		cursor: move;
 		display: none;
+		height: 100%;
 		position: absolute;
 		padding-top: 15px;
 		width: 100%;
-		z-index: 1;
+		z-index: 2;
 		.position-text {
 			background-color: #C7D1D8;
 			border-radius: 3px;
 			color: #092140;
-			margin: auto;
+			display: inline-block;
 			padding: 5px 10px;
 			text-transform: uppercase;
 		}
@@ -69,7 +93,7 @@
 	.upload-group {
 		color: #fff;
 		width: 100%;
-		z-index: 1;
+		z-index: 2;
 
 		.update-btn,
 		.upload-btn {
@@ -467,7 +491,7 @@
 		}
 		.upload-group {
 			position: absolute;
-			z-index: 1;
+			z-index: 2;
 		}
 		.hero-description-default-text {
 			display: none;
@@ -479,8 +503,8 @@
 			display: none;
 		}
 		.position-info {
-			display: flex;
-			display: -webkit-flex;
+			display: block;
+			text-align: center;
 		}
 		.upload-wrap {
 			display: none;
@@ -526,6 +550,7 @@
 			padding-right: 30px;
 			position: relative;
 			top: -110px;
+			z-index: 1;
 		}
 
 		&:not(.wordmark-icon) {
