@@ -92,10 +92,10 @@ abstract class BaseCaptcha extends \WikiaObject {
 	 */
 	public function getMessage( $action ) {
 		$name = 'captcha-' . $action;
-		$text = wfMsg( $name );
+		$text = wfMessage( $name )->escaped();
 		# Obtain a more tailored message, if possible, otherwise, fall back to
 		# the default for edits
-		return wfEmptyMsg( $name, $text ) ? wfMsg( 'captcha-edit' ) : $text;
+		return wfEmptyMsg( $name, $text ) ? wfMessage( 'captcha-edit' )->escaped() : $text;
 	}
 
 	/**
@@ -225,10 +225,10 @@ abstract class BaseCaptcha extends \WikiaObject {
 	 * Show a page explaining what this wacky thing is.
 	 */
 	public function showHelp() {
-		$this->wg->Out->setPageTitle( wfMsg( 'captchahelp-title' ) );
-		$this->wg->Out->addWikiText( wfMsg( 'captchahelp-text' ) );
+		$this->wg->Out->setPageTitle( wfMessage( 'captchahelp-title' )->escaped() );
+		$this->wg->Out->addWikiText( wfMessage( 'captchahelp-text' )->text() );
 		if ( Factory\Store::getInstance()->cookiesNeeded() ) {
-			$this->wg->Out->addWikiText( wfMsg( 'captchahelp-cookies-needed' ) );
+			$this->wg->Out->addWikiText( wfMessage( 'captchahelp-cookies-needed' )->text() );
 		}
 	}
 }

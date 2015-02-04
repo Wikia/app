@@ -487,7 +487,7 @@ class Handler extends \WikiaObject {
 
 			$this->trigger = "new account '" . $u->getName() . "'";
 			if ( !$this->captcha->passCaptcha() ) {
-				$message = wfMsg( 'captcha-createaccount-fail' );
+				$message = wfMessage( 'captcha-createaccount-fail' )->escaped();
 				return false;
 			}
 		}
@@ -543,12 +543,12 @@ class Handler extends \WikiaObject {
 			if ( defined( 'MW_API' ) ) {
 				# API mode
 				# Asking for captchas in the API is really silly
-				$error = wfMsg( 'captcha-disabledinapi' );
+				$error = wfMessage( 'captcha-disabledinapi' )->escaped();
 				return false;
 			}
 			$this->trigger = "{$this->wg->User->getName()} sending email";
 			if ( !$this->captcha->passCaptcha() ) {
-				$error = wfMsg( 'captcha-sendemail-fail' );
+				$error = wfMessage( 'captcha-sendemail-fail' )->escaped();
 				return false;
 			}
 		}

@@ -286,10 +286,10 @@ class FancyCaptcha extends BaseCaptcha {
 	 */
 	public function getMessage( $action ) {
 		$name = 'fancycaptcha-' . $action;
-		$text = wfMsg( $name );
+		$text = wfMessage( $name )->escaped();
 		# Obtain a more tailored message, if possible, otherwise, fall back to
 		# the default for edits
-		return wfEmptyMsg( $name, $text ) ? wfMsg( 'fancycaptcha-edit' ) : $text;
+		return wfEmptyMsg( $name, $text ) ? wfMessage( 'fancycaptcha-edit' )->escaped() : $text;
 	}
 
 	/**
