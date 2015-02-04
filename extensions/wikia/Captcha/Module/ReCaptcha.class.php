@@ -21,7 +21,7 @@ class ReCaptcha extends BaseCaptcha {
 	 * Displays the reCAPTCHA widget.
 	 */
 	public function getForm() {
-		$siteKey = \F::app()->wg->ReCaptchaPublicKey;
+		$siteKey = $this->wg->ReCaptchaPublicKey;
 		$theme = \SassUtil::isThemeDark() ? 'dark' : 'light';
 
 		$form = '<div class="g-recaptcha" data-sitekey="' . $siteKey . '" data-theme="' . $theme . '"></div>';
@@ -54,10 +54,9 @@ class ReCaptcha extends BaseCaptcha {
 	}
 
 	protected function getVerifyUrl() {
-		$wg = \F::app()->wg;
-		$secret = $wg->ReCaptchaPrivateKey;
-		$response = $wg->Request->getText( 'g-recaptcha-response' );
-		$ip = $wg->Request->getIP();
+		$secret = $this->wg->ReCaptchaPrivateKey;
+		$response = $this->wg->Request->getText( 'g-recaptcha-response' );
+		$ip = $this->wg->Request->getIP();
 
 		return self::VERIFY_URL .
 		'?secret=' . $secret .
@@ -68,7 +67,7 @@ class ReCaptcha extends BaseCaptcha {
 	public function addCaptchaAPI( &$resultArr ) {
 		$resultArr['captcha']['type'] = 'recaptcha';
 		$resultArr['captcha']['mime'] = 'image/png';
-		$resultArr['captcha']['key'] = \F::app()->wg->ReCaptchaPublicKey;
+		$resultArr['captcha']['key'] = $this->wg->ReCaptchaPublicKey;
 	}
 
 	/**

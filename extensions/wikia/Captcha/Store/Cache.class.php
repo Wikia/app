@@ -12,19 +12,12 @@ class Cache extends Base {
 	// Set to 30 minutes
 	const CACHE_TTL = 1800;
 
-	/** @var \MemcachedPhpBagOStuff */
-	private $memc;
-
-	public function __construct() {
-		$this->memc = \F::app()->wg->Memc;
-	}
-
 	public function store( $index, $info ) {
-		$this->memc->set( $this->getMemKey( $index ), $info, self::CACHE_TTL );
+		$this->wg->Memc->set( $this->getMemKey( $index ), $info, self::CACHE_TTL );
 	}
 
 	public function retrieve( $index ) {
-		$info = $this->memc->get( $this->getMemKey( $index ) );
+		$info = $this->wg->Memc->get( $this->getMemKey( $index ) );
 		if ( $info ) {
 			return $info;
 		} else {
@@ -33,7 +26,7 @@ class Cache extends Base {
 	}
 
 	public function clear( $index ) {
-		$this->memc->delete( $this->getMemKey( $index ) );
+		$this->wg->Memc->delete( $this->getMemKey( $index ) );
 	}
 
 	public function getMemKey( $index ) {

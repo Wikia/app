@@ -5,7 +5,7 @@ namespace Captcha;
 use Captcha\Factory;
 use Wikia\Logger\WikiaLogger;
 
-class Handler {
+class Handler extends \WikiaObject {
 
 	// Number of seconds after a bad login that a captcha will be shown to that client on the login
 	// form to slow down password-guessing bots. Set to five minutes.
@@ -24,6 +24,7 @@ class Handler {
 
 	public function __construct() {
 		$this->captcha = Factory\Module::getInstance();
+		parent::__construct();
 	}
 
 	/**
@@ -37,15 +38,14 @@ class Handler {
 	 * @return bool whether to keep running callbacks
 	 */
 	public function injectEmailUser( &$form ) {
-		$wg = \F::app()->wg;
-		if ( $wg->CaptchaTriggers['sendemail'] ) {
-			if ( $wg->User->isAllowed( 'skipcaptcha' ) ) {
+		if ( $this->wg->CaptchaTriggers['sendemail'] ) {
+			if ( $this->wg->User->isAllowed( 'skipcaptcha' ) ) {
 				$this->log( "user group allows skipping captcha on email sending\n" );
 				return true;
 			}
 			$form->addFooterText(
 				"<div class='captcha'>" .
-				$wg->Out->parse( $this->captcha->getMessage( 'sendemail' ) ) .
+				$this->wg->Out->parse( $this->captcha->getMessage( 'sendemail' ) ) .
 				$this->captcha->getForm() .
 				"</div>\n" );
 		}
@@ -63,9 +63,8 @@ class Handler {
 	 * @return bool whether to keep running callbacks
 	 */
 	public function injectUserCreate( &$template ) {
-		$wg = \F::app()->wg;
-		if ( $wg->CaptchaTriggers['createaccount'] ) {
-			if ( $wg->User->isAllowed( 'skipcaptcha' ) ) {
+		if ( $this->wg->CaptchaTriggers['createaccount'] ) {
+			if ( $this->wg->User->isAllowed( 'skipcaptcha' ) ) {
 				$this->log( "user group allows skipping captcha on account creation\n" );
 				return true;
 			}
@@ -118,14 +117,13 @@ class Handler {
 	 * @return bool whether to keep running callbacks
 	 */
 	public function triggerUserLogin( $user, $password, $retval ) {
-		$wg = \F::app()->wg;
-		if ( $retval == \LoginForm::WRONG_PASS && $wg->CaptchaTriggers['badlogin'] ) {
+		if ( $retval == \LoginForm::WRONG_PASS && $this->wg->CaptchaTriggers['badlogin'] ) {
 			$key = $this->badLoginKey();
-			$count = $wg->Memc->get( $key );
+			$count = $this->wg->Memc->get( $key );
 			if ( !$count ) {
-				$wg->Memc->add( $key, 0, self::BAD_LOGIN_TTL );
+				$this->wg->Memc->add( $key, 0, self::BAD_LOGIN_TTL );
 			}
-			$wg->Memc->incr( $key );
+			$this->wg->Memc->incr( $key );
 		}
 		return true;
 	}
@@ -137,13 +135,11 @@ class Handler {
 	 * @return bool
 	 */
 	private function isBadLoginTriggered() {
-		$wg = \F::app()->wg;
-
-		if ( empty( $wg->CaptchaTriggers['badlogin'] ) ) {
+		if ( empty( $this->wg->CaptchaTriggers['badlogin'] ) ) {
 			return false;
 		}
 
-		$loginAttempts = $wg->Memc->get( $this->badLoginKey() );
+		$loginAttempts = $this->wg->Memc->get( $this->badLoginKey() );
 		return $loginAttempts >= self::MAX_BAD_LOGIN_ATTEMPTS;
 	}
 
@@ -151,14 +147,10 @@ class Handler {
 	 * Check if the IP is allowed to skip captchas
 	 */
 	public function isIPWhitelisted() {
-		$wg = \F::app()->wg;
+		if ( $this->wg->CaptchaWhitelistIP ) {
+			$ip = $this->wg->Request->getIP();
 
-		if ( $wg->CaptchaWhitelistIP ) {
-			$wg = \F::app()->wg;
-
-			$ip = $wg->Request->getIP();
-
-			foreach ( $wg->CaptchaWhitelistIP as $range ) {
+			foreach ( $this->wg->CaptchaWhitelistIP as $range ) {
 				if ( \IP::isInRange( $ip, $range ) ) {
 					return true;
 				}
@@ -184,15 +176,14 @@ class Handler {
 	 * @return bool true if action triggers captcha on editPage's namespace
 	 */
 	public function captchaTriggers( &$editPage, $action ) {
-		$wg = \F::app()->wg;
 		$ns = $editPage->mTitle->getNamespace();
 
 		// Special config for this NS?
-		if ( isset( $wg->CaptchaTriggersOnNamespace[$ns][$action] ) ) {
-			return $wg->CaptchaTriggersOnNamespace[$ns][$action];
+		if ( isset( $this->wg->CaptchaTriggersOnNamespace[$ns][$action] ) ) {
+			return $this->wg->CaptchaTriggersOnNamespace[$ns][$action];
 		}
 
-		return ( !empty( $wg->CaptchaTriggers[$action] ) ); // Default
+		return ( !empty( $this->wg->CaptchaTriggers[$action] ) ); // Default
 	}
 
 	/**
@@ -204,20 +195,20 @@ class Handler {
 	 * @return bool true if the captcha should run
 	 */
 	public function shouldCheck( &$editPage, $newText, $section, $merged = false ) {
-		$wg = \F::app()->wg;
 		$this->trigger = '';
 		$title = $editPage->mArticle->getTitle();
 
-		if ( $wg->User->isAllowed( 'skipcaptcha' ) ) {
+		if ( $this->wg->User->isAllowed( 'skipcaptcha' ) ) {
 			$this->log( "user group allows skipping captcha\n" );
 			return false;
 		}
+
 		if ( $this->isIPWhitelisted() ) {
 			return false;
 		}
 
-		if ( $wg->EmailAuthentication && $wg->AllowConfirmedEmail &&
-			$wg->User->isEmailConfirmed() ) {
+		if ( $this->wg->EmailAuthentication && $this->wg->AllowConfirmedEmail &&
+			$this->wg->User->isEmailConfirmed() ) {
 			$this->log( "user has confirmed mail, skipping captcha\n" );
 			return false;
 		}
@@ -225,7 +216,7 @@ class Handler {
 		if ( $this->captchaTriggers( $editPage, 'edit' ) ) {
 			// Check on all edits
 			$this->trigger = sprintf( "edit trigger by '%s' at [[%s]]",
-				$wg->User->getName(),
+				$this->wg->User->getName(),
 				$title->getPrefixedText() );
 			$this->action = 'edit';
 			$this->log( "checking all edits...\n" );
@@ -235,7 +226,7 @@ class Handler {
 		if ( $this->captchaTriggers( $editPage, 'create' ) && !$editPage->mTitle->exists() ) {
 			// Check if creating a page
 			$this->trigger = sprintf( "Create trigger by '%s' at [[%s]]",
-				$wg->User->getName(),
+				$this->wg->User->getName(),
 				$title->getPrefixedText() );
 			$this->action = 'create';
 			$this->log( "checking on page creation...\n" );
@@ -264,7 +255,7 @@ class Handler {
 			if ( $numLinks > 0 ) {
 				$this->trigger = sprintf( "%dx url trigger by '%s' at [[%s]]: %s",
 					$numLinks,
-					$wg->User->getName(),
+					$this->wg->User->getName(),
 					$title->getPrefixedText(),
 					implode( ", ", $addedLinks ) );
 				$this->action = 'addurl';
@@ -272,11 +263,11 @@ class Handler {
 			}
 		}
 
-		if ( $wg->CaptchaRegexes ) {
+		if ( $this->wg->CaptchaRegexes ) {
 			// Custom regex checks
 			$oldText = $this->loadText( $editPage, $section );
 
-			foreach ( $wg->CaptchaRegexes as $regex ) {
+			foreach ( $this->wg->CaptchaRegexes as $regex ) {
 				$newMatches = [];
 				if ( preg_match_all( $regex, $newText, $newMatches ) ) {
 					$oldMatches = [];
@@ -289,7 +280,7 @@ class Handler {
 						$this->trigger = sprintf( "%dx %s at [[%s]]: %s",
 							$numHits,
 							$regex,
-							$wg->User->getName(),
+							$this->wg->User->getName(),
 							$title->getPrefixedText(),
 							implode( ", ", $addedMatches ) );
 						$this->action = 'edit';
@@ -310,14 +301,13 @@ class Handler {
 	 * @return bool true if unknown, false if whitelisted
 	 */
 	private function filterLink( $url ) {
-		$wg = \F::app()->wg;
 		$source = wfMessage( 'captcha-addurl-whitelist' )->inContentLanguage()->text();
 
 		$whitelist = wfEmptyMsg( 'captcha-addurl-whitelist', $source )
 			? false
 			: $this->buildRegexes( explode( "\n", $source ) );
 
-		$cwl = $wg->CaptchaWhitelist !== false ? preg_match( $wg->CaptchaWhitelist, $url ) : false;
+		$cwl = $this->wg->CaptchaWhitelist !== false ? preg_match( $this->wg->CaptchaWhitelist, $url ) : false;
 		$wl = $whitelist !== false ? preg_match( $whitelist, $url ) : false;
 
 		return !( $cwl || $wl );
@@ -407,12 +397,11 @@ class Handler {
 	 * @return bool false if the CAPTCHA is rejected, true otherwise
 	 */
 	private function doConfirmEdit( $editPage, $newText, $section, $merged = false ) {
-		$wg = \F::app()->wg;
-		if ( $wg->Request->getVal( 'captchaid' ) ) {
-			$wg->Request->setVal( 'wpCaptchaId', $wg->Request->getVal( 'captchaid' ) );
+		if ( $this->wg->Request->getVal( 'captchaid' ) ) {
+			$this->wg->Request->setVal( 'wpCaptchaId', $this->wg->Request->getVal( 'captchaid' ) );
 		}
-		if ( $wg->Request->getVal( 'captchaword' ) ) {
-			$wg->Request->setVal( 'wpCaptchaWord', $wg->Request->getVal( 'captchaword' ) );
+		if ( $this->wg->Request->getVal( 'captchaword' ) ) {
+			$this->wg->Request->setVal( 'wpCaptchaWord', $this->wg->Request->getVal( 'captchaword' ) );
 		}
 		if ( $this->shouldCheck( $editPage, $newText, $section, $merged ) ) {
 			return Factory\Module::getInstance()->passCaptcha();
@@ -492,8 +481,7 @@ class Handler {
 	 * @return bool true to continue, false to abort user creation
 	 */
 	public function confirmUserCreate( $u, &$message ) {
-		$wg = \F::app()->wg;
-		if ( $wg->CaptchaTriggers['createaccount'] ) {
+		if ( $this->wg->CaptchaTriggers['createaccount'] ) {
 			if ( $this->isIPWhitelisted() )
 				return true;
 
@@ -543,9 +531,8 @@ class Handler {
 	 * @return Bool true to continue saving, false to abort and show a captcha form
 	 */
 	public function confirmEmailUser( $from, $to, $subject, $text, &$error ) {
-		$wg = \F::app()->wg;
-		if ( $wg->CaptchaTriggers['sendemail'] ) {
-			if ( $wg->User->isAllowed( 'skipcaptcha' ) ) {
+		if ( $this->wg->CaptchaTriggers['sendemail'] ) {
+			if ( $this->wg->User->isAllowed( 'skipcaptcha' ) ) {
 				$this->log( "user group allows skipping captcha on email sending\n" );
 				return true;
 			}
@@ -559,7 +546,7 @@ class Handler {
 				$error = wfMsg( 'captcha-disabledinapi' );
 				return false;
 			}
-			$this->trigger = "{$wg->User->getName()} sending email";
+			$this->trigger = "{$this->wg->User->getName()} sending email";
 			if ( !$this->captcha->passCaptcha() ) {
 				$error = wfMsg( 'captcha-sendemail-fail' );
 				return false;
@@ -612,11 +599,9 @@ class Handler {
 	 * @return array of strings
 	 */
 	public function findLinks( &$editPage, $text ) {
-		$wg = \F::app()->wg;
-
 		$options = new \ParserOptions();
-		$text = $wg->Parser->preSaveTransform( $text, $editPage->mTitle, $wg->User, $options );
-		$out = $wg->Parser->parse( $text, $editPage->mTitle, $options );
+		$text = $this->wg->Parser->preSaveTransform( $text, $editPage->mTitle, $this->wg->User, $options );
+		$out = $this->wg->Parser->parse( $text, $editPage->mTitle, $options );
 
 		return array_keys( $out->getExternalLinks() );
 	}

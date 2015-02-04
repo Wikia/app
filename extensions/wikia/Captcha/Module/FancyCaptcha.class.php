@@ -27,9 +27,7 @@ class FancyCaptcha extends BaseCaptcha {
 	 * @return bool
 	 */
 	public function keyMatch( $answer, $info ) {
-		$wg = \F::app()->wg;
-
-		$digest = $wg->CaptchaSecret . $info['salt'] . $answer . $wg->CaptchaSecret . $info['salt'];
+		$digest = $this->wg->CaptchaSecret . $info['salt'] . $answer . $this->wg->CaptchaSecret . $info['salt'];
 		$answerHash = substr( md5( $digest ), 0, 16 );
 
 		if ( $answerHash == $info['hash'] ) {
@@ -64,7 +62,7 @@ class FancyCaptcha extends BaseCaptcha {
 	 * @return string
 	 */
 	public function getImageURL( $index ) {
-		return \F::app()->wg->Server . '/wikia.php?' . implode( '&', [
+		return $this->wg->Server . '/wikia.php?' . implode( '&', [
 			'controller=Captcha',
 			'method=showImage',
 			'wpCaptchaId=' . urlencode( $index ),
@@ -127,7 +125,7 @@ class FancyCaptcha extends BaseCaptcha {
 	 */
 	public function pickImage() {
 		return $this->pickImageDir(
-			\F::app()->wg->CaptchaDirectory,
+			$this->wg->CaptchaDirectory,
 			self::DIRECTORY_LEVELS
 		);
 	}
@@ -232,10 +230,9 @@ class FancyCaptcha extends BaseCaptcha {
 	 * @throws \MWException
 	 */
 	public function showImage() {
-		$wg = \F::app()->wg;
 		$error = null;
 
-		$wg->Out->disable();
+		$this->wg->Out->disable();
 
 		$info = $this->retrieveCaptcha();
 		if ( $info ) {
@@ -269,7 +266,7 @@ class FancyCaptcha extends BaseCaptcha {
 	 * @return string
 	 */
 	public function imagePath( $salt, $hash ) {
-		$file = \F::app()->wg->CaptchaDirectory;
+		$file = $this->wg->CaptchaDirectory;
 		$file .= DIRECTORY_SEPARATOR;
 		for ( $i = 0; $i < self::DIRECTORY_LEVELS; $i++ ) {
 			$file .= $hash { $i } ;
@@ -304,7 +301,7 @@ class FancyCaptcha extends BaseCaptcha {
 		$info = $this->retrieveCaptcha(); // get the captcha info before it gets deleted
 		$pass = parent::passCaptcha();
 
-		if ( $pass && \F::app()->wg->CaptchaDeleteOnSolve ) {
+		if ( $pass && $this->wg->CaptchaDeleteOnSolve ) {
 			$filename = $this->imagePath( $info['salt'], $info['hash'] );
 			if ( file_exists( $filename ) ) {
 				unlink( $filename );

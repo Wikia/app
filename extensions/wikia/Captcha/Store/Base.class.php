@@ -7,7 +7,7 @@ namespace Captcha\Store;
  *
  * @package Captcha\Store
  */
-abstract class Base {
+abstract class Base extends \WikiaObject {
 	/**
 	 * Store the correct answer for a given captcha
 	 * @param  $index String

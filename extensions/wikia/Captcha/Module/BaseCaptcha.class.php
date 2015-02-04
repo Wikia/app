@@ -10,7 +10,7 @@ use Wikia\Logger\WikiaLogger;
  *
  * @package Captcha\Module
  */
-abstract class BaseCaptcha {
+abstract class BaseCaptcha extends \WikiaObject {
 
 	public $action;
 
@@ -153,7 +153,7 @@ abstract class BaseCaptcha {
 	public function passCaptcha() {
 		$info = $this->retrieveCaptcha();
 		if ( $info ) {
-			if ( $this->keyMatch( \F::app()->wg->Request->getVal( 'wpCaptchaWord' ), $info ) ) {
+			if ( $this->keyMatch( $this->wg->Request->getVal( 'wpCaptchaWord' ), $info ) ) {
 				$this->log( "passed" );
 				$this->clearCaptcha( $info );
 				return true;
@@ -207,7 +207,7 @@ abstract class BaseCaptcha {
 	 * @return mixed array of info, or false if missing
 	 */
 	public function retrieveCaptcha() {
-		$index = \F::app()->wg->Request->getVal( 'wpCaptchaId' );
+		$index = $this->wg->Request->getVal( 'wpCaptchaId' );
 		return Factory\Store::getInstance()->retrieve( $index );
 	}
 
@@ -225,11 +225,10 @@ abstract class BaseCaptcha {
 	 * Show a page explaining what this wacky thing is.
 	 */
 	public function showHelp() {
-		$wg = \F::app()->wg;
-		$wg->Out->setPageTitle( wfMsg( 'captchahelp-title' ) );
-		$wg->Out->addWikiText( wfMsg( 'captchahelp-text' ) );
+		$this->wg->Out->setPageTitle( wfMsg( 'captchahelp-title' ) );
+		$this->wg->Out->addWikiText( wfMsg( 'captchahelp-text' ) );
 		if ( Factory\Store::getInstance()->cookiesNeeded() ) {
-			$wg->Out->addWikiText( wfMsg( 'captchahelp-cookies-needed' ) );
+			$this->wg->Out->addWikiText( wfMsg( 'captchahelp-cookies-needed' ) );
 		}
 	}
 }
