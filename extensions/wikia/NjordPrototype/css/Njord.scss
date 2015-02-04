@@ -50,7 +50,7 @@
 			}
 
 			&::after {
-				@include linear-gradient(rgba(0, 0, 0, 0.1), top, rgba(0, 0, 0, 0.1), 20%, rgba(0, 0, 0, 0.6), 100%);
+				@include linear-gradient(transparent, top, rgba(0, 0, 0, 0.1), 20%, rgba(0, 0, 0, 0.6), 100%);
 			}
 
 			&::before {
@@ -549,6 +549,7 @@
 			padding-right: 30px;
 			position: relative;
 			top: -110px;
+			z-index: 1;
 		}
 
 		&:not(.wordmark-icon) {
