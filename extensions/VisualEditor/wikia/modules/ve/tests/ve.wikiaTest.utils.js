@@ -278,5 +278,5 @@ ve.wikiaTest = ( function () {
 	};
 
 	// Exports
-	return { 'utils': utils };
+	return { utils: utils };
 }() );

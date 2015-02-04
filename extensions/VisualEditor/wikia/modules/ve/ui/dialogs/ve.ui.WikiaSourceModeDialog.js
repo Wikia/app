@@ -68,8 +68,8 @@ ve.ui.WikiaSourceModeDialog.prototype.initialize = function () {
 	this.openCount = 0; // tracking
 	this.timings = {}; // tracking
 	this.sourceModeTextarea = new OO.ui.TextInputWidget({
-		'$': this.$,
-		'multiline': true
+		$: this.$,
+		multiline: true
 	});
 
 	this.initLinkSuggest();
@@ -87,7 +87,7 @@ ve.ui.WikiaSourceModeDialog.prototype.initLinkSuggest = function () {
 		// jquery.ui.autocomplete.js
 		this.sourceModeTextarea.$input.css( {
 			'z-index': 9999999,
-			'position': 'relative'
+			position: 'relative'
 		} );
 		mw.loader.using(
 			'ext.wikia.LinkSuggest',
@@ -127,9 +127,9 @@ ve.ui.WikiaSourceModeDialog.prototype.onSerialize = function ( wikitext ) {
 	this.$content.stopThrobbing();
 
 	ve.track( 'wikia', {
-		'action': ve.track.actions.SUCCESS,
-		'label': 'dialog-source-serialize',
-		'value': ve.now() - this.timings.serializeStart
+		action: ve.track.actions.SUCCESS,
+		label: 'dialog-source-serialize',
+		value: ve.now() - this.timings.serializeStart
 	} );
 };
 
@@ -146,22 +146,22 @@ ve.ui.WikiaSourceModeDialog.prototype.getActionProcess = function ( action ) {
 	return ve.ui.WikiaSourceModeDialog.super.prototype.getActionProcess.call( this, action );
 };
 
-ve.ui.WikiaSourceModeDialog.prototype.parse = function() {
+ve.ui.WikiaSourceModeDialog.prototype.parse = function () {
 	return $.ajax( {
-		'url': mw.util.wikiScript( 'api' ),
-		'data': {
-			'action': 'visualeditor',
-			'paction': 'parsefragment',
-			'page': mw.config.get( 'wgRelevantPageName' ),
-			'wikitext': this.sourceModeTextarea.getValue(),
-			'token': mw.user.tokens.get( 'editToken' ),
-			'format': 'json'
+		url: mw.util.wikiScript( 'api' ),
+		data: {
+			action: 'visualeditor',
+			paction: 'parsefragment',
+			page: mw.config.get( 'wgRelevantPageName' ),
+			wikitext: this.sourceModeTextarea.getValue(),
+			token: mw.user.tokens.get( 'editToken' ),
+			format: 'json'
 		},
-		'dataType': 'json',
-		'type': 'POST',
+		dataType: 'json',
+		type: 'POST',
 		// Wait up to 100 seconds before giving up
-		'timeout': 100000,
-		'cache': 'false'
+		timeout: 100000,
+		cache: 'false'
 	} );
 };
 
@@ -169,17 +169,17 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseDone = function ( response ) {
 	if ( !response ||
 		response.error ||
 		!response.visualeditor ||
-		response.visualeditor.result !== 'success'||
+		response.visualeditor.result !== 'success' ||
 		response.visualeditor.content === false ) {
 		return this.onParseFail.call( this );
 	}
-	this.close().done( function() {
+	this.close().done( function () {
 		var target = this.surface.getTarget();
 		target.deactivating = true;
 		target.toolbarSaveButton.disconnect( target );
 		target.toolbarSaveButton.$element.detach();
 		target.getToolbar().$actions.empty();
-		target.tearDownSurface( true ).done( function() {
+		target.tearDownSurface( true ).done( function () {
 			target.deactivating = false;
 			target.wikitext = this.sourceModeTextarea.getValue();
 			target.activating = true;
@@ -197,9 +197,9 @@ ve.ui.WikiaSourceModeDialog.prototype.onParseDone = function ( response ) {
 
 ve.ui.WikiaSourceModeDialog.prototype.onParseFail = function ( ) {
 	ve.track( 'wikia', {
-		'action': ve.track.actions.ERROR,
-		'label': 'dialog-source-parse',
-		'value': ve.now() - this.timings.parseStart
+		action: ve.track.actions.ERROR,
+		label: 'dialog-source-parse',
+		value: ve.now() - this.timings.parseStart
 	} );
 	if ( window.veTrack ) {
 		veTrack( {

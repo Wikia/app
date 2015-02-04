@@ -31,44 +31,44 @@ OO.inheritClass( ve.init.wikia.ViewPageTarget, ve.init.mw.ViewPageTarget );
 
 ve.init.wikia.ViewPageTarget.static.toolbarGroups = [
 	// History
-	{ 'include': [ 'undo' ] },
+	{ include: [ 'undo' ] },
 	// Format
 	{
-		'type': 'menu',
-		'indicator': 'down',
-		'title': OO.ui.deferMsg( 'visualeditor-toolbar-format-tooltip' ),
-		'include': [ { 'group': 'format' } ],
-		'promote': [ 'paragraph' ],
-		'demote': [ 'preformatted' ],
-		'exclude': [ 'heading1' ]
+		type: 'menu',
+		indicator: 'down',
+		title: OO.ui.deferMsg( 'visualeditor-toolbar-format-tooltip' ),
+		include: [ { group: 'format' } ],
+		promote: [ 'paragraph' ],
+		demote: [ 'preformatted' ],
+		exclude: [ 'heading1' ]
 	},
 	// Style
-	{ 'include': [ 'bold', 'italic', 'link' ] },
+	{ include: [ 'bold', 'italic', 'link' ] },
 	{
-		'type': 'list',
-		'icon': 'text-style',
-		'indicator': 'down',
-		'title': OO.ui.deferMsg( 'visualeditor-toolbar-style-tooltip' ),
-		'include': [ 'subscript', 'superscript', 'strikethrough', 'underline', 'indent', 'outdent', 'clear' ]
+		type: 'list',
+		icon: 'text-style',
+		indicator: 'down',
+		title: OO.ui.deferMsg( 'visualeditor-toolbar-style-tooltip' ),
+		include: [ 'subscript', 'superscript', 'strikethrough', 'underline', 'indent', 'outdent', 'clear' ]
 	},
 	// Insert
 	{
-		'type': 'list',
-		'label': OO.ui.deferMsg( 'visualeditor-toolbar-insert' ),
-		'indicator': 'down',
-		'include': [ 'wikiaMediaInsert', 'wikiaSingleMedia', 'wikiaMapInsert', 'number', 'bullet', 'wikiaTemplateInsert', 'reference', 'referenceList' ]
+		type: 'list',
+		label: OO.ui.deferMsg( 'visualeditor-toolbar-insert' ),
+		indicator: 'down',
+		include: [ 'wikiaMediaInsert', 'wikiaSingleMedia', 'wikiaMapInsert', 'number', 'bullet', 'wikiaTemplateInsert', 'reference', 'referenceList' ]
 	}
 ];
 
 ve.init.wikia.ViewPageTarget.static.actionsToolbarConfig = [
 	{
-		'include': [ 'notices' ]
+		include: [ 'notices' ]
 	},
 	{
-		'type': 'list',
-		'icon': 'menu',
-		'indicator': 'down',
-		'include': [ 'wikiaMeta', 'categories', 'wikiaHelp', 'wikiaCommandHelp', 'wikiaSourceMode' ]
+		type: 'list',
+		icon: 'menu',
+		indicator: 'down',
+		include: [ 'wikiaMeta', 'categories', 'wikiaHelp', 'wikiaCommandHelp', 'wikiaSourceMode' ]
 	}
 ];
 
@@ -115,9 +115,9 @@ ve.init.wikia.ViewPageTarget.prototype.mutePageContent = function () {
 ve.init.wikia.ViewPageTarget.prototype.onSaveDialogReview = function () {
 	ve.init.mw.ViewPageTarget.prototype.onSaveDialogReview.call( this );
 	ve.track( 'wikia', {
-		'action': ve.track.actions.CLICK,
-		'label': 'dialog-save-review-changes-button',
-		'value': ve.track.normalizeDuration( this.events.timings.saveReview - this.events.timings.saveWorkflowBegin )
+		action: ve.track.actions.CLICK,
+		label: 'dialog-save-review-changes-button',
+		value: ve.track.normalizeDuration( this.events.timings.saveReview - this.events.timings.saveWorkflowBegin )
 	} );
 };
 
@@ -129,9 +129,9 @@ ve.init.wikia.ViewPageTarget.prototype.onToolbarCancelButtonClick = function () 
 		} );
 	}
 	ve.track( 'wikia', {
-		'action': ve.track.actions.CLICK,
-		'label': 'button-cancel',
-		'value': ve.track.normalizeDuration( ve.now() - this.events.timings.surfaceReady )
+		action: ve.track.actions.CLICK,
+		label: 'button-cancel',
+		value: ve.track.normalizeDuration( ve.now() - this.events.timings.surfaceReady )
 	} );
 	mw.hook( 've.cancelButton' ).fire();
 
@@ -139,7 +139,7 @@ ve.init.wikia.ViewPageTarget.prototype.onToolbarCancelButtonClick = function () 
 };
 
 ve.init.wikia.ViewPageTarget.prototype.onToolbarMetaButtonClick = function () {
-	ve.track( 'wikia', { 'action': ve.track.actions.CLICK, 'label': 'tool-page-settings' } );
+	ve.track( 'wikia', { action: ve.track.actions.CLICK, label: 'tool-page-settings' } );
 	ve.init.mw.ViewPageTarget.prototype.onToolbarMetaButtonClick.call( this );
 };
 
@@ -154,9 +154,9 @@ ve.init.wikia.ViewPageTarget.prototype.onToolbarSaveButtonClick = function () {
 	}
 
 	ve.track( 'wikia', {
-		'action': ve.track.actions.CLICK,
-		'label': 'button-publish',
-		'value': ve.track.normalizeDuration( ve.now() - this.events.timings.surfaceReady )
+		action: ve.track.actions.CLICK,
+		label: 'button-publish',
+		value: ve.track.normalizeDuration( ve.now() - this.events.timings.surfaceReady )
 	} );
 	ve.init.mw.ViewPageTarget.prototype.onToolbarSaveButtonClick.call( this );
 };
@@ -175,11 +175,11 @@ ve.init.wikia.ViewPageTarget.prototype.showPageContent = function () {
 
 ve.init.wikia.ViewPageTarget.prototype.setupToolbarCancelButton = function () {
 	this.toolbarCancelButton = new OO.ui.ButtonWidget( {
-		'label': ve.msg( 'wikia-visualeditor-toolbar-cancel' ),
-		'flags': [ 'secondary' ]
+		label: ve.msg( 'wikia-visualeditor-toolbar-cancel' ),
+		flags: [ 'secondary' ]
 	} );
 	this.toolbarCancelButton.$element.addClass( 've-ui-toolbar-cancelButton' );
-	this.toolbarCancelButton.connect( this, { 'click': 'onToolbarCancelButtonClick' } );
+	this.toolbarCancelButton.connect( this, { click: 'onToolbarCancelButtonClick' } );
 };
 
 ve.init.wikia.ViewPageTarget.prototype.attachToolbarCancelButton = function () {
@@ -197,9 +197,9 @@ ve.init.wikia.ViewPageTarget.prototype.updateToolbarSaveButtonState = function (
 			window.optimizely.push( ['trackEvent', 've-save-button-enable'] );
 		}
 		ve.track( 'wikia', {
-			'action': ve.track.actions.ENABLE,
-			'label': 'button-publish',
-			'value': ve.track.normalizeDuration( ve.now() - this.events.timings.surfaceReady )
+			action: ve.track.actions.ENABLE,
+			label: 'button-publish',
+			value: ve.track.normalizeDuration( ve.now() - this.events.timings.surfaceReady )
 		} );
 	}
 };

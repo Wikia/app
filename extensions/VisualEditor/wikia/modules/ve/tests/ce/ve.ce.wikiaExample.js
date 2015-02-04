@@ -20,30 +20,30 @@ ve.ce.wikiaExample = ( function ( utils ) {
 	/* Data */
 
 	media.data = {
-		'defaultWidth': defaultThumbWidth,
-		'defaultHeight': defaultThumbHeight
+		defaultWidth: defaultThumbWidth,
+		defaultHeight: defaultThumbHeight
 	};
 
 	media.data.cssClasses = {
-		'htmlAlign': {
-			'frame': {
-				'left': 'tleft',
-				'right': 'tright',
-				'center': 'tnone',
-				'none': 'tnone'
+		htmlAlign: {
+			frame: {
+				left: 'tleft',
+				right: 'tright',
+				center: 'tnone',
+				none: 'tnone'
 			},
-			'none': {
-				'left': 'floatleft',
-				'right': 'floatright',
-				'center': 'floatnone',
-				'none': 'floatnone'
+			none: {
+				left: 'floatleft',
+				right: 'floatright',
+				center: 'floatnone',
+				none: 'floatnone'
 			}
 		},
-		'htmlDomAlign': {
-			'center': 'mw-halign-center',
-			'left': 'mw-halign-left',
-			'none': 'mw-halign-none',
-			'right': 'mw-halign-right'
+		htmlDomAlign: {
+			center: 'mw-halign-center',
+			left: 'mw-halign-left',
+			none: 'mw-halign-none',
+			right: 'mw-halign-right'
 		}
 	};
 
@@ -51,20 +51,20 @@ ve.ce.wikiaExample = ( function ( utils ) {
 	media.data.cssClasses.htmlAlign.thumb = media.data.cssClasses.htmlAlign.frame;
 
 	media.data.testCases = {
-		'block': {
+		block: {
 			'mw:Image': {
-				'align': [ 'center', 'default', 'left', 'none', 'right' ],
-				'height': [ media.data.defaultHeight, 1 ],
-				'type': [ 'frame', 'frameless', 'none', 'thumb' ],
-				'width': [ media.data.defaultWidth, 2 ]
+				align: [ 'center', 'default', 'left', 'none', 'right' ],
+				height: [ media.data.defaultHeight, 1 ],
+				type: [ 'frame', 'frameless', 'none', 'thumb' ],
+				width: [ media.data.defaultWidth, 2 ]
 			}
 		},
-		'inline': {
+		inline: {
 			'mw:Video': {
-				'align': [ 'none' ],
-				'height': [ media.data.defaultHeight ],
-				'type': [ 'frameless', 'none' ],
-				'width': [ media.data.defaultWidth ]
+				align: [ 'none' ],
+				height: [ media.data.defaultHeight ],
+				type: [ 'frameless', 'none' ],
+				width: [ media.data.defaultWidth ]
 			}
 		}
 	};
@@ -76,15 +76,15 @@ ve.ce.wikiaExample = ( function ( utils ) {
 	media.html = { };
 
 	media.html.block = {
-		'caption':
+		caption:
 			'<figcaption class="ve-ce-branchNode">' +
 				'<p class="ve-ce-paragraphNode ve-ce-generated-wrapper caption ve-ce-branchNode">abc</p>' +
 			'</figcaption>',
-		'frame':
+		frame:
 			'<figure class="article-thumb" style="">' +
 				'<a class="image" href="' + fakeLinkUrlResolved + '"><img src="' + fakeImageUrlResolved + '"></a>' +
 			'</figure>',
-		'frameless':
+		frameless:
 			'<div class="" style="">' +
 				'<a class="image" href="' + fakeLinkUrlResolved + '"><img src="' + fakeImageUrlResolved + '"></a>' +
 			'</div>'
@@ -94,7 +94,7 @@ ve.ce.wikiaExample = ( function ( utils ) {
 	media.html.block.thumb = media.html.block.frame;
 
 	media.html.inline = {
-		'frameless':
+		frameless:
 			'<a class="image mw-default-size ve-ce-mwInlineImageNode ve-ce-leafNode ve-ce-noHighlight ve-ce-focusableNode" contenteditable="false">' +
 				'<img src="' + fakeImageUrlResolved + '" width="" height="">' +
 			'</a>'
@@ -103,24 +103,24 @@ ve.ce.wikiaExample = ( function ( utils ) {
 	media.html.inline.none = media.html.inline.frameless;
 
 	media.html.video = {
-		'playButton':
+		playButton:
 			'<span class="play-circle ve-no-shield"></span>'
 	};
 
 	media.html.video.block = {
-		'title':
+		title:
 			'<p class="title ve-no-shield">FooBar</p>'
 	};
 
 	/* Mock HTMLDOM */
 
 	media.htmlDom = {
-		'block':
+		block:
 			'<figure data-mw=\'{"user":"Foo"}\'>' +
 				'<a href="' + fakeLinkUrl + '"><img src="' + fakeImageUrl + '" resource="FooBar"></a>' +
 				'<figcaption>abc</figcaption>' +
 			'</figure>',
-		'inline':
+		inline:
 			'<span data-mw=\'{"user":"Foo"}\'>' +
 				'<a href="' + fakeLinkUrl + '"><img src="' + fakeImageUrl + '" resource="FooBar"></a>' +
 			'</span>'
@@ -347,5 +347,5 @@ ve.ce.wikiaExample = ( function ( utils ) {
 	};
 
 	// Exports
-	return { 'media': media };
+	return { media: media };
 }( ve.wikiaTest.utils ) );

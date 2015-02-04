@@ -24,8 +24,8 @@ ve.ce.WikiaVideoNode = function VeCeWikiaVideoNode( $image ) {
 
 	// Events
 	this.connect( this, {
-		'setup': 'onWikiaVideoSetup',
-		'teardown': 'onWikiaVideoTeardown'
+		setup: 'onWikiaVideoSetup',
+		teardown: 'onWikiaVideoTeardown'
 	} );
 };
 
