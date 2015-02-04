@@ -307,18 +307,24 @@ class UserLoginForm extends LoginForm {
 		return false;
 	}
 
+
+	/*
+	 * Remove when SOC-217 ABTest is finished
+	 */
 	/**
 	 * Check if user is allowed to register account without email confirmation
 	 *
 	 * @return bool
 	 */
 	public function isAllowedRegisterUnconfirmed() {
-		global $wgEnableRegisterUnconfirmed;
 		$registerUnconfirmedCookie = $this->getRequest()->getCookie( 'RegisterUnconfirmed' );
 
-		if ( !empty( $wgEnableRegisterUnconfirmed ) && !empty( $registerUnconfirmedCookie ) ) {
+		if ( !empty( F::app()->wg->EnableRegisterUnconfirmed ) && !empty( $registerUnconfirmedCookie ) ) {
 			return true;
 		}
 		return false;
 	}
+	/*
+	 * end remove
+	 */
 }
