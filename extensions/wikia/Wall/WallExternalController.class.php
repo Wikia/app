@@ -667,7 +667,7 @@ class WallExternalController extends WikiaController {
 	 * @return string status - success/failure
 	 */
 	public function getFormattedQuoteText() {
-		$messageId = $this->request->getVal('messageId', '');
+		$messageId = $this->request->getVal( 'messageId', '' );
 		$markup = '';
 		$status = 'failure';
 
@@ -680,7 +680,7 @@ class WallExternalController extends WikiaController {
 
 			$username = $mw->getUser()->getName();
 
-			$convertToFormat = $this->request->getVal('convertToFormat', '');
+			$convertToFormat = $this->request->getVal( 'convertToFormat', '' );
 
 			if ( $convertToFormat == 'wikitext' ) {
 				$markup = '<div class="quote">'
@@ -689,14 +689,14 @@ class WallExternalController extends WikiaController {
 			} else {
 				$markup = $this->getConvertedContent( '<div class="quote">'
 					. wfMsgForContent( 'wall-quote-author', $username )
-					. "<br>" . $mw->getRawText() . "\n</div><br>");
+					. "<br>" . $mw->getRawText() . "\n</div><br>" );
 			}
 
 			$status = 'success';
 		}
 
-		$this->response->setVal('markup', $markup);
-		$this->response->setVal('status', $status);
+		$this->response->setVal( 'markup', $markup );
+		$this->response->setVal( 'status', $status );
 	}
 
 	/**
