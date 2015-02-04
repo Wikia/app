@@ -48,7 +48,7 @@ class SMWSQLStore3SpecialPageHandlers {
 	 */
 	public function getPropertiesSpecial( SMWRequestOptions $requestoptions = null, $unusedProperties = false ) {
 		wfProfileIn( "SMWSQLStore3::getPropertiesSpecial (SMW)" );
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
 		// the query needs to do the filtering of internal properties, else LIMIT is wrong
 
 		$options = array( 'ORDER BY' => 'smw_sortkey' );
@@ -127,18 +127,49 @@ class SMWSQLStore3SpecialPageHandlers {
 		$result = array();
 
 		if ( !$proptable->isFixedPropertyTable() ) { // anything else would be crazy, but let's fail gracefully even if the whole world is crazy
-			$dbr = wfGetDB( DB_SLAVE );
+			// Wikia change - hack for smw+
+			// $dbr = wfGetDB( DB_SLAVE );
+
+			// $options = $this->store->getSQLOptions( $requestoptions, 'title' );
+			// $options['ORDER BY'] = 'count DESC';
+
+			// $res = $dbr->select( // TODO: this is not how JOINS should be specified in the select function
+			// 	$dbr->tableName( $proptable->getName() ) . ' INNER JOIN ' .
+			// 		$dbr->tableName( SMWSql3SmwIds::tableName ) . ' ON p_id=smw_id LEFT JOIN ' .
+			// 		$dbr->tableName( 'page' ) . ' ON (page_namespace=' .
+			// 		$dbr->addQuotes( SMW_NS_PROPERTY ) . ' AND page_title=smw_title)',
+			// 	'smw_title, COUNT(*) as count',
+			// 	'smw_id > 50 AND page_id IS NULL GROUP BY smw_title',
+			// 	'SMW::getWantedPropertiesSpecial',
+			// 	$options
+			// );
+
+			$dbr = wfGetDB( DB_SLAVE, 'smw' );
+			$dbl = wfGetDB( DB_SLAVE ); // local connection
+			$res = $dbl->select(
+				$dbl->tableName( 'page' ),
+				'page_title',
+				[
+					'page_namespace' => SMW_NS_PROPERTY,
+				],
+				__METHOD__
+			);
+			$titles = [];
+			foreach ( $res as $row ) {
+				$titles[] = $row->page_title;
+			}
+			$condition = !empty( $titles )
+				? ' AND smw_title NOT IN (' . $dbl->makeList( $titles ) . ')'
+				: '';
 
 			$options = $this->store->getSQLOptions( $requestoptions, 'title' );
 			$options['ORDER BY'] = 'count DESC';
 
 			$res = $dbr->select( // TODO: this is not how JOINS should be specified in the select function
 				$dbr->tableName( $proptable->getName() ) . ' INNER JOIN ' .
-					$dbr->tableName( SMWSql3SmwIds::tableName ) . ' ON p_id=smw_id LEFT JOIN ' .
-					$dbr->tableName( 'page' ) . ' ON (page_namespace=' .
-					$dbr->addQuotes( SMW_NS_PROPERTY ) . ' AND page_title=smw_title)',
+					$dbr->tableName( SMWSql3SmwIds::tableName ) . ' ON p_id=smw_id',
 				'smw_title, COUNT(*) as count',
-				'smw_id > 50 AND page_id IS NULL GROUP BY smw_title',
+				"smw_id > 50 {$condition} GROUP BY smw_title",
 				'SMW::getWantedPropertiesSpecial',
 				$options
 			);
@@ -156,7 +187,7 @@ class SMWSQLStore3SpecialPageHandlers {
 	public function getStatistics() {
 		wfProfileIn( 'SMWSQLStore3::getStatistics (SMW)' );
 
-		$dbr = wfGetDB( DB_SLAVE );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
 		$result = array();
 		$proptables = SMWSQLStore3::getPropertyTables();
 
