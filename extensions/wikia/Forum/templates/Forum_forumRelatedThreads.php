@@ -6,7 +6,7 @@
 			<li>
 				<?= AvatarService::renderAvatar($message['message']->getUser()->getName(), 20); ?>
 				<em>
-					<a href="<?= $message['message']->getMessagePageUrl(); ?>" title="<?= htmlspecialchars( $message['message']->getMetaTitle() ); ?>"><?= htmlspecialchars( $message['message']->getMetaTitle() ); ?></a>
+					<a href="<?= $message['message']->getMessagePageUrl(); ?>" title="<?= Sanitizer::encodeAttribute( $message['message']->getMetaTitle() ); ?>"><?= htmlspecialchars( $message['message']->getMetaTitle() ); ?></a>
 				</em>
 				<div class="edited-by">
 
