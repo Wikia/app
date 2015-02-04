@@ -259,7 +259,7 @@ class SMWSQLStore3Readers {
 
 		wfProfileIn( "SMWSQLStore3::fetchSemanticData-" . $proptable->getName() .  " (SMW)" );
 		$result = array();
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 
 		$diHandler = $this->store->getDataItemHandlerForDIType( $proptable->getDiType() );
 
@@ -391,7 +391,7 @@ class SMWSQLStore3Readers {
 
 		$proptables = SMWSQLStore3::getPropertyTables();
 		$proptable = $proptables[$tableid];
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 
 		if ( $proptable->usesIdSubject() ) { // join with ID table to get title data
 			$from = $db->tableName( SMWSql3SmwIds::tableName ) . " INNER JOIN " . $db->tableName( $proptable->getName() ) . " AS t1 ON t1.s_id=smw_id";
@@ -454,7 +454,7 @@ class SMWSQLStore3Readers {
 	 * @param integer $tableindex
 	 */
 	protected function prepareValueQuery( &$from, &$where, $proptable, $value, $tableindex = 1 ) {
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 
 		if ( $value instanceof SMWDIContainer ) { // recursive handling of containers
 			$keys = array_keys( $proptable->getFields( $this->store ) );
@@ -523,7 +523,7 @@ class SMWSQLStore3Readers {
 			return array();
 		}
 
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 		$result = array();
 
 		if ( $requestoptions !== null ) { // potentially need to get more results, since options apply to union
@@ -586,7 +586,7 @@ class SMWSQLStore3Readers {
 	public function getInProperties( SMWDataItem $value, $requestoptions = null ) {
 		wfProfileIn( "SMWSQLStore3::getInProperties (SMW)" );
 
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 		$result = array();
 
 		// Potentially need to get more results, since options apply to union.

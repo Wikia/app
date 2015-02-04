@@ -54,7 +54,7 @@ class SMWSQLStore3Writers {
 		$this->doDataUpdate( $emptySemanticData );
 
 		if ( $subject->getNamespace() == SMW_NS_CONCEPT ) { // make sure to clear caches
-			$db = wfGetDB( DB_MASTER );
+			$db = wfGetDB( DB_MASTER, 'smw' );
 			$id = $this->store->smwIds->getSMWPageID( $subject->getDBkey(), $subject->getNamespace(), $subject->getInterwiki(), '', false );
 			$db->delete( 'smw_fpt_conc', array( 's_id' => $id ), 'SMW::deleteSubject::Conc' );
 			$db->delete( SMWSQLStore3::CONCEPT_CACHE_TABLE, array( 'o_id' => $id ), 'SMW::deleteSubject::Conccache' );
@@ -79,7 +79,7 @@ class SMWSQLStore3Writers {
 		wfProfileIn( "SMWSQLStore3::updateData (SMW)" );
 		wfRunHooks( 'SMWSQLStore3::updateDataBefore', array( $this->store, $data ) );
 
-		$dbw = wfGetDB( DB_MASTER );
+		$dbw = wfGetDB( DB_MASTER, 'smw' );
 
 		// Update data about our main subject
 		$this->doFlatDataUpdate( $data, $dbw );
@@ -611,7 +611,7 @@ class SMWSQLStore3Writers {
 		// get IDs but do not resolve redirects:
 		$sid = $this->store->smwIds->getSMWPageID( $oldtitle->getDBkey(), $oldtitle->getNamespace(), '', '', false );
 		$tid = $this->store->smwIds->getSMWPageID( $newtitle->getDBkey(), $newtitle->getNamespace(), '', '', false );
-		$db = wfGetDB( DB_MASTER );
+		$db = wfGetDB( DB_MASTER, 'smw' );
 
 		// Easy case: target not used anywhere yet, just hijack its title for our current id
 		if ( ( $tid == 0 ) && ( $smwgQEqualitySupport != SMW_EQ_NONE ) ) {
@@ -751,7 +751,7 @@ class SMWSQLStore3Writers {
 		/// NOTE: $sid can be 0 here; this is useful to know since it means that fewer table updates are needed
 		$new_tid = $curtarget_t ? ( $this->store->smwIds->makeSMWPageID( $curtarget_t, $curtarget_ns, '', '', false ) ) : 0; // real id of new target, if given
 
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 		$row = $db->selectRow( array( 'smw_fpt_redi' ), 'o_id',
 				array( 's_title' => $subject_t, 's_namespace' => $subject_ns ), __METHOD__ );
 		$old_tid = ( $row !== false ) ? $row->o_id : 0; // real id of old target, if any
@@ -763,7 +763,7 @@ class SMWSQLStore3Writers {
 
 		// *** Make relevant changes in property tables (don't write the new redirect yet) ***//
 
-		$db = wfGetDB( DB_MASTER ); // now we need to write something
+		$db = wfGetDB( DB_MASTER, 'smw' ); // now we need to write something
 
 		if ( ( $old_tid == 0 ) && ( $sid != 0 ) && ( $smwgQEqualitySupport != SMW_EQ_NONE ) ) { // new redirect
 			// $smwgQEqualitySupport requires us to change all tables' page references from $sid to $new_tid.
@@ -799,7 +799,11 @@ class SMWSQLStore3Writers {
 						foreach ( $res as $row ) {
 							$title = Title::makeTitleSafe( $row->ns, $row->t );
 							if ( !is_null( $title ) ) {
-								$jobs[] = new SMWUpdateJob( $title );
+								// wikia change start - jobqueue migration
+								$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+								$task->call( 'SMWUpdateJob', $title );
+								$jobs[] = $task;
+								// wikia change end
 							}
 						}
 						$db->freeResult( $res );
@@ -812,7 +816,11 @@ class SMWSQLStore3Writers {
 							foreach ( $res as $row ) {
 								$title = Title::makeTitleSafe( $row->ns, $row->t );
 								if ( !is_null( $title ) ) {
-									$jobs[] = new SMWUpdateJob( $title );
+									// wikia change start - jobqueue migration
+									$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+									$task->call( 'SMWUpdateJob', $title );
+									$jobs[] = $task;
+									// wikia change end
 								}
 							}
 							$db->freeResult( $res );
@@ -823,7 +831,7 @@ class SMWSQLStore3Writers {
 				/// NOTE: we do not update the concept cache here; this remains an offline task
 
 				/// NOTE: this only happens if $smwgEnableUpdateJobs was true above:
-				Job::batchInsert( $jobs );
+				\Wikia\Tasks\Tasks\BaseTask::batch( $jobs );
 			}
 		}
 

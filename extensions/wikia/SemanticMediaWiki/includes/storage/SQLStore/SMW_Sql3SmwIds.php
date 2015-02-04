@@ -254,7 +254,7 @@ class SMWSql3SmwIds {
 			$smwgQEqualitySupport != SMW_EQ_NONE && $subobjectName === '' ) {
 			$id = $this->getRedirectId( $title, $namespace );
 			if ( $id != 0 ) {
-				$db = wfGetDB( DB_SLAVE );
+				$db = wfGetDB( DB_SLAVE, 'smw' );
 				if ( $fetchHashes ) {
 					$select = array( 'smw_sortkey', 'smw_proptable_hash' );
 				} else {
@@ -275,7 +275,7 @@ class SMWSql3SmwIds {
 			}
 			$this->setCache( $title, $namespace, $iw, $subobjectName, $id, $sortkey );
 		} else {
-			$db = wfGetDB( DB_SLAVE );
+			$db = wfGetDB( DB_SLAVE, 'smw' );
 			if ( $fetchHashes ) {
 				$select = array( 'smw_id', 'smw_sortkey', 'smw_proptable_hash' );
 			} else {
@@ -339,7 +339,7 @@ class SMWSql3SmwIds {
 	 * @return integer
 	 */
 	protected function getRedirectId( $title, $namespace ) {
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 		$row = $db->selectRow( 'smw_fpt_redi', 'o_id',
 			array( 's_title' => $title, 's_namespace' => $namespace ), __METHOD__ );
 		$this->selectrow_redi_debug++;
@@ -402,7 +402,7 @@ class SMWSql3SmwIds {
 		$id = $this->getDatabaseIdAndSort( $title, $namespace, $iw, $subobjectName, $oldsort, $canonical, $fetchHashes );
 
 		if ( $id == 0 ) {
-			$db = wfGetDB( DB_MASTER );
+			$db = wfGetDB( DB_MASTER, 'smw' );
 			$sortkey = $sortkey ? $sortkey : ( str_replace( '_', ' ', $title ) );
 
 			$db->insert(
@@ -436,7 +436,7 @@ class SMWSql3SmwIds {
 				$this->setPropertyTableHashesCache( $id, null );
 			}
 		} elseif ( $sortkey !== '' && $sortkey != $oldsort ) {
-			$db = wfGetDB( DB_MASTER );
+			$db = wfGetDB( DB_MASTER, 'smw' );
 			$db->update( SMWSql3SmwIds::tableName, array( 'smw_sortkey' => $sortkey ), array( 'smw_id' => $id ), __METHOD__ );
 			$this->setCache( $title, $namespace, $iw, $subobjectName, $id, $sortkey );
 		}
@@ -567,7 +567,7 @@ class SMWSql3SmwIds {
 	 * @param integer $targetid
 	 */
 	public function moveSMWPageID( $curid, $targetid = 0 ) {
-		$db = wfGetDB( DB_MASTER );
+		$db = wfGetDB( DB_MASTER, 'smw' );
 
 		$row = $db->selectRow( SMWSql3SmwIds::tableName, '*', array( 'smw_id' => $curid ), __METHOD__ );
 
@@ -817,7 +817,7 @@ class SMWSql3SmwIds {
 			$hash = $this->hashCacheContents;
 		} elseif ( $sid !== 0 ) {
 			//print "Cache miss! $sid is not {$this->hashCacheId} " . $this->misscount++ . "\n";
-			$db = wfGetDB( DB_SLAVE );
+			$db = wfGetDB( DB_SLAVE, 'smw' );
 			$row = $db->selectRow(
 				SMWSql3SmwIds::tableName,
 				array( 'smw_proptable_hash' ),
@@ -846,7 +846,7 @@ class SMWSql3SmwIds {
 	 * @param array of hash values with tablename as keys
 	 */
 	public function setPropertyTableHashes( $sid, array $newTableHashes ) {
-		$db = wfGetDB( DB_MASTER );
+		$db = wfGetDB( DB_MASTER, 'smw' );
 		$propertyTableHash = serialize( $newTableHashes );
 		$db->update(
 			SMWSql3SmwIds::tableName,

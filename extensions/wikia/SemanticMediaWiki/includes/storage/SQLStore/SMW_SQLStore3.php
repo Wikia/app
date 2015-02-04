@@ -350,7 +350,7 @@ class SMWSQLStore3 extends SMWStore {
 	public function getQueryResult( SMWQuery $query ) {
 		wfProfileIn( 'SMWSQLStore3::getQueryResult (SMW)' );
 
-		$qe = new SMWSQLStore3QueryEngine( $this, wfGetDB( DB_SLAVE ) );
+		$qe = new SMWSQLStore3QueryEngine( $this, wfGetDB( DB_SLAVE, 'smw' ) );
 		$result = $qe->getQueryResult( $query );
 		wfProfileOut( 'SMWSQLStore3::getQueryResult (SMW)' );
 
@@ -417,7 +417,7 @@ class SMWSQLStore3 extends SMWStore {
 	public function refreshConceptCache( Title $concept ) {
 		wfProfileIn( 'SMWSQLStore3::refreshConceptCache (SMW)' );
 
-		$qe = new SMWSQLStore3QueryEngine( $this, wfGetDB( DB_MASTER ) );
+		$qe = new SMWSQLStore3QueryEngine( $this, wfGetDB( DB_MASTER, 'smw' ) );
 		$result = $qe->refreshConceptCache( $concept );
 
 		wfProfileOut( 'SMWSQLStore3::refreshConceptCache (SMW)' );
@@ -434,7 +434,7 @@ class SMWSQLStore3 extends SMWStore {
 	public function deleteConceptCache( $concept ) {
 		wfProfileIn( 'SMWSQLStore3::deleteConceptCache (SMW)' );
 
-		$qe = new SMWSQLStore3QueryEngine( $this, wfGetDB( DB_MASTER ) );
+		$qe = new SMWSQLStore3QueryEngine( $this, wfGetDB( DB_MASTER, 'smw' ) );
 		$result = $qe->deleteConceptCache( $concept );
 
 		wfProfileOut( 'SMWSQLStore3::deleteConceptCache (SMW)' );
@@ -457,7 +457,7 @@ class SMWSQLStore3 extends SMWStore {
 	public function getConceptCacheStatus( $concept ) {
 		wfProfileIn( 'SMWSQLStore3::getConceptCacheStatus (SMW)' );
 
-		$db = wfGetDB( DB_SLAVE );
+		$db = wfGetDB( DB_SLAVE, 'smw' );
 		$cid = $this->smwIds->getSMWPageID( $concept->getDBkey(), $concept->getNamespace(), '', '', false );
 
 		$row = $db->selectRow( 'smw_fpt_conc',
@@ -745,7 +745,7 @@ class SMWSQLStore3 extends SMWStore {
 	 */
 	public function changeSMWPageID( $oldid, $newid, $oldnamespace = -1,
 				$newnamespace = -1, $sdata = true, $podata = true ) {
-		$db = wfGetDB( DB_MASTER );
+		$db = wfGetDB( DB_MASTER, 'smw' );
 
 		// Change all id entries in property tables:
 		foreach ( self::getPropertyTables() as $proptable ) {
