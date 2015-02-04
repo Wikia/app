@@ -6,6 +6,8 @@ use \Wikia\Logger\WikiaLogger;
 class GlobalWatchlistBot {
 
 	const MAX_ARTICLES_PER_WIKI = 50;
+	const FROM_ADDRESS = 'Wikia <community@wikia.com>';
+	const REPLY_ADDRESS = 'noreply@wikia.com';
 
 	public function __construct() {
 		global $wgExtensionMessagesFiles;
@@ -26,19 +28,23 @@ class GlobalWatchlistBot {
 		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
 
 		$oResource = $dbr->select(
-			array ( "global_watchlist" ),
-			array ( "gwa_id", "gwa_user_id", "gwa_city_id", "gwa_namespace", "gwa_title", "gwa_rev_id", "gwa_timestamp" ),
-			array (
-				"gwa_user_id" => intval( $userID ),
-			),
+			[ GlobalWatchlistTable::TABLE_NAME ],
+			[
+				GlobalWatchlistTable::COLUMN_ID,
+				GlobalWatchlistTable::COLUMN_USER_ID,
+				GlobalWatchlistTable::COLUMN_CITY_ID,
+				GlobalWatchlistTable::COLUMN_NAMESPACE,
+				GlobalWatchlistTable::COLUMN_TITLE,
+				GlobalWatchlistTable::COLUMN_REVISION_ID,
+				GlobalWatchlistTable::COLUMN_TIMESTAMP
+			],
+			[ GlobalWatchlistTable::COLUMN_USER_ID => $userID ],
 			__METHOD__,
-			array (
-				"ORDER BY" => "gwa_timestamp, gwa_city_id"
-			)
+			[ "ORDER BY" => GlobalWatchlistTable::COLUMN_TIMESTAMP . ", " . GlobalWatchlistTable::COLUMN_CITY_ID ]
 		);
 
 		$records = $dbr->numRows( $oResource );
-		$bTooManyPages = ( $records > self::MAX_ARTICLES_PER_WIKI ) ? true : false;
+		$bTooManyPages = ( $records > self::MAX_ARTICLES_PER_WIKI );
 		$iWikiId = $loop = 0;
 		$aDigestData = array();
 		$aWikiDigest = array( 'pages' => array() );
@@ -50,7 +56,7 @@ class GlobalWatchlistBot {
 			}
 
 			$oWikia = WikiFactory::getWikiByID( $oResultRow->gwa_city_id );
-			if ( empty( $oWikia ) || empty( $oWikia->city_public ) ) {
+			if ( empty( $oWikia->city_public ) ) {
 				continue;
 			}
 
@@ -109,9 +115,12 @@ class GlobalWatchlistBot {
 		if ( count( $aRemove ) ) {
 			$dbs = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
 			foreach ( $aRemove as $gwa_id ) {
-				$dbs->delete( 'global_watchlist', array( 'gwa_user_id' => $userID, 'gwa_id' => $gwa_id ), __METHOD__ );
+				$dbs->delete(
+					GlobalWatchlistTable::TABLE_NAME,
+					[ GlobalWatchlistTable::COLUMN_USER_ID => $userID, GlobalWatchlistTable::COLUMN_ID => $gwa_id ],
+					__METHOD__
+				);
 			}
-			$dbs->commit();
 		}
 	}
 
@@ -132,7 +141,7 @@ class GlobalWatchlistBot {
 				WikiaLogger::instance()->info( 'Weekly Digest Skipped', [
 					'reason' => $e->getMessage(),
 					'userID' => $userID
-				]);
+				] );
 			}
 			return true;
 		}
@@ -175,7 +184,7 @@ class GlobalWatchlistBot {
 	 * @param $user User
 	 * @throws Exception
 	 */
-	private function checkIfEmailUnSubscribed( $user ) {
+	private function checkIfEmailUnSubscribed( \User $user ) {
 		if ( $user->getBoolOption( 'unsubscribed' ) ) {
 			throw new Exception( 'Email is unsubscribed.' );
 		}
@@ -185,7 +194,7 @@ class GlobalWatchlistBot {
 	 * @param $user User
 	 * @throws Exception
 	 */
-	private function checkIfEmailConfirmed( $user ) {
+	private function checkIfEmailConfirmed( \User $user ) {
 		if ( !$user->isEmailConfirmed() ) {
 			throw new Exception( 'Email is not confirmed.' );
 		}
@@ -195,7 +204,7 @@ class GlobalWatchlistBot {
 	 * @param $user User
 	 * @throws Exception
 	 */
-	private function checkIfSubscribedToWeeklyDigest( $user ) {
+	private function checkIfSubscribedToWeeklyDigest( \User $user ) {
 		if ( !$user->getBoolOption( 'watchlistdigest' ) ) {
 			throw new Exception( 'Not subscribed to weekly digest' );
 		}
@@ -222,11 +231,10 @@ class GlobalWatchlistBot {
 		$sEmailSubject = $this->getLocalizedMsg( 'globalwatchlist-digest-email-subject', $oUser->getOption( 'language' ) );
 		list( $sEmailBody, $sEmailBodyHTML ) = $this->composeMail( $oUser, $aDigestData, $isDigestLimited );
 
-		$sFrom = 'Wikia <community@wikia.com>';
 		// yes this needs to be a MA object, not string (the docs for sendMail are wrong)
-		$oReply = new MailAddress( 'noreply@wikia.com' );
+		$oReply = new MailAddress( self::REPLY_ADDRESS );
 
-		$oUser->sendMail( $sEmailSubject, $sEmailBody, $sFrom, $oReply, 'GlobalWatchlist', $sEmailBodyHTML );
+		$oUser->sendMail( $sEmailSubject, $sEmailBody, self::FROM_ADDRESS, $oReply, 'GlobalWatchlist', $sEmailBodyHTML );
 
 		WikiaLogger::instance()->info( 'Weekly Digest Sent', [ 'userID' => $iUserId ] );
 	}
@@ -331,7 +339,7 @@ class GlobalWatchlistBot {
 		);
 
 		$sMessage = $this->getLocalizedMsg( 'globalwatchlist-digest-email-body', $oUserLanguage ) . "\n";
-		if (empty($aEmailArgs[2])) $sMessage = $this->cutOutPart($sMessage, '$2', '$3');
+		if ( empty( $aEmailArgs[2] ) ) $sMessage = $this->cutOutPart( $sMessage, '$2', '$3' );
 		$sBody = wfMsgReplaceArgs( $sMessage, $aEmailArgs );
 		if ( $usehtmlemail ) {
 			// rebuild the $ args using the HTML text we've built
@@ -343,7 +351,7 @@ class GlobalWatchlistBot {
 
 			$sMessageHTML = $this->getLocalizedMsg( 'globalwatchlist-digest-email-body-html', $oUserLanguage );
 			if ( !wfEmptyMsg( 'globalwatchlist-digest-email-body-html', $sMessageHTML ) ) {
-				if (empty($aEmailArgs[2])) $sMessageHTML = $this->cutOutPart($sMessageHTML, '$2', '$3');
+				if ( empty( $aEmailArgs[2] ) ) $sMessageHTML = $this->cutOutPart( $sMessageHTML, '$2', '$3' );
 				$sBodyHTML = wfMsgReplaceArgs( $sMessageHTML, $aEmailArgs );
 			}
 		}
@@ -351,12 +359,12 @@ class GlobalWatchlistBot {
 		return array( $sBody, $sBodyHTML );
 	}
 
-	private function cutOutPart($message, $startMarker, $endMarker, $replacement = " ") {
+	private function cutOutPart( $message, $startMarker, $endMarker, $replacement = " " ) {
 		// this is a quick way to skip some parts of email message without remaking all the i18n messages.
-		$startPos = strpos($message, $startMarker);
-		$endPos = strpos($message, $endMarker);
-		if ($startPos !== FALSE && $endPos !== FALSE) {
-			$message = substr($message, 0, $startPos + strlen($startMarker)) . $replacement . substr($message, $endPos);
+		$startPos = strpos( $message, $startMarker );
+		$endPos = strpos( $message, $endMarker );
+		if ( $startPos !== FALSE && $endPos !== FALSE ) {
+			$message = substr( $message, 0, $startPos + strlen( $startMarker ) ) . $replacement . substr( $message, $endPos );
 		}
 		return $message;
 	}
@@ -386,10 +394,10 @@ class GlobalWatchlistBot {
 			$parts = ArticleComment::explode( $oResultRow->gwa_title );
 			$blogTitle = $parts['title'];
 		}
-		
+
 		if ( empty( $blogTitle ) ) {
 			return false;
-		}		
+		}
 
 		if ( empty( $aWikiDigest[ 'blogs' ][ $blogTitle ] ) ) {
 			$wikiDB = WikiFactory::IDtoDB( $oResultRow->gwa_city_id );
@@ -414,12 +422,12 @@ class GlobalWatchlistBot {
 						'blogpage' => GlobalTitle::newFromText( $blogTitle, NS_BLOG_ARTICLE, $iWikiId ),
 						'own_comments' => 0
 					);
-					
+
 					if ( !in_array( $wikiDB, array( 'wikicities', 'messaging' ) ) ) {
 						$db_wiki->close();
-					}		
-				}	
-			}		
+					}
+				}
+			}
 		}
 
 		if (

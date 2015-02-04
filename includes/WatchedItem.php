@@ -35,8 +35,8 @@ class WatchedItem {
 	 * @param $title Title: the title we're going to (un)watch
 	 * @return WatchedItem object
 	 */
-	public static function fromUserTitle( $user, $title ) {
-		$watchedItem = new WatchedItem;
+	public static function fromUserTitle( \User $user, \Title $title ) {
+		$watchedItem = new WatchedItem();
 		$watchedItem->mUser = $user;
 		$watchedItem->mTitle = $title;
 		$watchedItem->userID = $user->getId();
@@ -87,26 +87,26 @@ class WatchedItem {
 			return false;
 		}
 
-		$rows = array();
+		$rows = [];
 
 		// Use INSERT IGNORE to avoid overwriting the notification timestamp
 		// if there's already an entry for this page
 		$dbw = wfGetDB( DB_MASTER );
 		$timestamp = null;
 		
-		$rows[] = array(
+		$rows[] =[
 			'wl_user' => $this->userID,
 			'wl_namespace' => MWNamespace::getSubject( $this->nameSpace ),
 			'wl_title' => $this->databaseKey,
 			'wl_notificationtimestamp' => $timestamp
-		);
+		];
 		
-		$rows[] = array(
+		$rows[] = [
 			'wl_user' => $this->userID,
 			'wl_namespace' => MWNamespace::getTalk($this->nameSpace),
 			'wl_title' => $this->databaseKey,
 			'wl_notificationtimestamp' => $timestamp
-		);
+		];
 		
 		$dbw->insert( 'watchlist', $rows, __METHOD__, 'IGNORE' );
 
@@ -215,7 +215,7 @@ class WatchedItem {
 	 *
 	 * @return bool
 	 */
-	private static function doDuplicateEntries( $oldTitle, $newTitle ) {
+	private static function doDuplicateEntries( \Title $oldTitle, \Title $newTitle ) {
 
 		$db = wfGetDB( DB_MASTER );
 		( new WikiaSQL() )

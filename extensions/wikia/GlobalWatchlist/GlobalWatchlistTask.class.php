@@ -5,15 +5,6 @@ use \Wikia\Tasks\AsyncTaskList;
 
 class GlobalWatchlistTask extends BaseTask {
 
-	const tableName = 'global_watchlist';
-	const columnUserID = 'gwa_user_id';
-	const columnCityID = 'gwa_city_id';
-	const columnNameSpace = 'gwa_namespace';
-	const columnTitle = 'gwa_title';
-	const columnRevisionID = 'gwa_rev_id';
-	const columnTimeStamp = 'gwa_timestamp';
-	const columnRevisionTimeStamp = 'gwa_rev_timestamp';
-
 	/**
 	 * Sends the weekly digest to the user
 	 * @param $userID
@@ -41,14 +32,12 @@ class GlobalWatchlistTask extends BaseTask {
 	 * @param $userID
 	 */
 	private function clearLocalWatchlists( $userID ) {
-		global $wgExternalDatawareDB;
-
-		$db = wfGetDB( DB_SLAVE, [], $wgExternalDatawareDB );
+		$db = wfGetDB( DB_SLAVE, [], \F::app()->wg->ExternalDatawareDB );
 		$wikiIDs = ( new WikiaSQL() )
-			->SELECT()->DISTINCT( self::columnCityID )
-			->FROM( self::tableName )
-			->WHERE( self::columnUserID )->EQUAL_TO( $userID )
-			->AND_( self::columnTimeStamp )->IS_NOT_NULL()
+			->SELECT()->DISTINCT( GlobalWatchlistTable::COLUMN_CITY_ID )
+			->FROM( GlobalWatchlistTable::TABLE_NAME )
+			->WHERE( GlobalWatchlistTable::COLUMN_USER_ID )->EQUAL_TO( $userID )
+			->AND_( GlobalWatchlistTable::COLUMN_TIMESTAMP )->IS_NOT_NULL()
 			->runLoop( $db, function ( &$wikiIDs, $row ) {
 				$wikiIDs[] = $row->gwa_city_id;
 			} );
@@ -69,12 +58,10 @@ class GlobalWatchlistTask extends BaseTask {
 	 * @param $userID
 	 */
 	public function clearGlobalWatchlistAll( $userID ) {
-		global $wgExternalDatawareDB;
-
-		$db = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
+		$db = wfGetDB( DB_MASTER, [], \F::app()->wg->ExternalDatawareDB );
 		( new WikiaSQL() )
-			->DELETE()->FROM( self::tableName )
-			->WHERE( self::columnUserID )->EQUAL_TO( $userID )
+			->DELETE()->FROM( GlobalWatchlistTable::TABLE_NAME )
+			->WHERE( GlobalWatchlistTable::COLUMN_USER_ID )->EQUAL_TO( $userID )
 			->run( $db );
 	}
 
@@ -84,13 +71,11 @@ class GlobalWatchlistTask extends BaseTask {
 	 * @param $userID
 	 */
 	public function clearGlobalWatchlist( $userID ) {
-		global $wgExternalDatawareDB, $wgCityId;
-
-		$db = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
+		$db = wfGetDB( DB_MASTER, [], \F::app()->wg->ExternalDatawareDB );
 		( new WikiaSQL() )
-			->DELETE()->FROM( self::tableName )
-			->WHERE( self::columnUserID )->EQUAL_TO( $userID )
-			->AND_( self::columnCityID )->EQUAL_TO( $wgCityId )
+			->DELETE()->FROM( GlobalWatchlistTable::TABLE_NAME )
+			->WHERE( GlobalWatchlistTable::COLUMN_USER_ID )->EQUAL_TO( $userID )
+			->AND_( GlobalWatchlistTable::COLUMN_CITY_ID )->EQUAL_TO( \F::app()->wg->CityId )
 			->run( $db );
 	}
 
@@ -104,13 +89,11 @@ class GlobalWatchlistTask extends BaseTask {
 	 * @param $watchers
 	 */
 	public function addWatchers( $databaseKey, $nameSpace, array $watchers ) {
-		global $wgExternalDatawareDB, $wgCityId;
-
 		$titleObj = Title::newFromText( $databaseKey, $nameSpace );
 		$revision = Revision::newFromTitle( $titleObj );
 		$globalWatchlistBot = new GlobalWatchlistBot();
 
-		$db = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
+		$db = wfGetDB( DB_MASTER, [], \F::app()->wg->ExternalDatawareDB );
 		foreach ( $watchers as $watcherID ) {
 			if ( $globalWatchlistBot->shouldNotSendDigest( $watcherID ) ) {
 				$this->clearGlobalWatchlistAll( $watcherID );
@@ -118,14 +101,14 @@ class GlobalWatchlistTask extends BaseTask {
 			}
 
 			( new WikiaSQL() )
-				->INSERT()->INTO( self::tableName )
-				->SET( self::columnUserID, $watcherID )
-				->SET( self::columnCityID, $wgCityId )
-				->SET( self::columnTitle, $databaseKey )
-				->SET( self::columnNameSpace, $nameSpace )
-				->SET( self::columnRevisionID, $revision->getId() )
-				->SET( self::columnRevisionTimeStamp, $revision->getTimestamp() )
-				->SET( self::columnTimeStamp, $revision->getTimestamp() )
+				->INSERT()->INTO( GlobalWatchlistTable::TABLE_NAME )
+				->SET( GlobalWatchlistTable::COLUMN_USER_ID, $watcherID )
+				->SET( GlobalWatchlistTable::COLUMN_CITY_ID, \F::app()->wg->CityId )
+				->SET( GlobalWatchlistTable::COLUMN_TITLE, $databaseKey )
+				->SET( GlobalWatchlistTable::COLUMN_NAMESPACE, $nameSpace )
+				->SET( GlobalWatchlistTable::COLUMN_REVISION_ID, $revision->getId() )
+				->SET( GlobalWatchlistTable::COLUMN_REVISION_TIMESTAMP, $revision->getTimestamp() )
+				->SET( GlobalWatchlistTable::COLUMN_TIMESTAMP, $revision->getTimestamp() )
 				->run( $db );
 			$this->scheduleWeeklyDigest( $watcherID );
 		}
@@ -153,15 +136,13 @@ class GlobalWatchlistTask extends BaseTask {
 	 * @param array $watchers
 	 */
 	public function removeWatchers( $databaseKey, $nameSpace, array $watchers ) {
-		global $wgExternalDatawareDB, $wgCityId;
-
-		$db = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
+		$db = wfGetDB( DB_MASTER, [], \F::app()->wg->ExternalDatawareDB );
 		( new WikiaSQL() )
-			->DELETE()->FROM( self::tableName )
-			->WHERE( self::columnUserID )->IN( $watchers )
-			->AND_( self::columnCityID )->EQUAL_TO( $wgCityId )
-			->AND_( self::columnTitle )->EQUAL_TO( $databaseKey )
-			->AND_( self::columnNameSpace )->EQUAL_TO( $nameSpace )
+			->DELETE()->FROM( GlobalWatchlistTable::TABLE_NAME )
+			->WHERE( GlobalWatchlistTable::COLUMN_USER_ID )->IN( $watchers )
+			->AND_( GlobalWatchlistTable::COLUMN_CITY_ID )->EQUAL_TO( \F::app()->wg->CityId )
+			->AND_( GlobalWatchlistTable::COLUMN_TITLE )->EQUAL_TO( $databaseKey )
+			->AND_( GlobalWatchlistTable::COLUMN_NAMESPACE )->EQUAL_TO( $nameSpace )
 			->run( $db );
 	}
 
@@ -172,16 +153,14 @@ class GlobalWatchlistTask extends BaseTask {
 	 * @param $newTitleValues array
 	 */
 	public function renameTitleInGlobalWatchlist( array $oldTitleValues, array $newTitleValues ) {
-		global $wgExternalDatawareDB, $wgCityId;
-
-		$db = wfGetDB( DB_MASTER, [], $wgExternalDatawareDB );
+		$db = wfGetDB( DB_MASTER, [], \F::app()->wg->ExternalDatawareDB );
 		( new WikiaSQL() )
-			->UPDATE( self::tableName )
-			->SET( self::columnTitle, $newTitleValues['databaseKey'] )
-			->SET( self::columnNameSpace, $newTitleValues['nameSpace'] )
-			->WHERE( self::columnTitle )->EQUAL_TO( $oldTitleValues['databaseKey'] )
-			->AND_( self::columnNameSpace )->EQUAL_TO( $oldTitleValues['nameSpace'] )
-			->AND_( self::columnCityID )->EQUAL_TO( $wgCityId )
+			->UPDATE( GlobalWatchlistTable::TABLE_NAME )
+			->SET( GlobalWatchlistTable::COLUMN_TITLE, $newTitleValues['databaseKey'] )
+			->SET( GlobalWatchlistTable::COLUMN_NAMESPACE, $newTitleValues['nameSpace'] )
+			->WHERE( GlobalWatchlistTable::COLUMN_TITLE )->EQUAL_TO( $oldTitleValues['databaseKey'] )
+			->AND_( GlobalWatchlistTable::COLUMN_NAMESPACE )->EQUAL_TO( $oldTitleValues['nameSpace'] )
+			->AND_( GlobalWatchlistTable::COLUMN_CITY_ID )->EQUAL_TO( \F::app()->wg->CityId )
 			->run( $db );
 	}
 }

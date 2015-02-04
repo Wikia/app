@@ -24,6 +24,7 @@ $wgExtensionMessagesFiles['GlobalWatchlist'] = dirname( __FILE__ ) . '/GlobalWat
 $wgAutoloadClasses['GlobalWatchlistBot'] = dirname( __FILE__ ) . '/GlobalWatchlistBot.class.php';
 $wgAutoloadClasses['GlobalWatchlistHooks'] = dirname( __FILE__ ) . '/GlobalWatchlistHooks.class.php';
 $wgAutoloadClasses['GlobalWatchlistTask'] = dirname( __FILE__ ) . '/GlobalWatchlistTask.class.php';
+$wgAutoloadClasses['GlobalWatchlistTable'] = dirname( __FILE__ ) . '/GlobalWatchlistTable.class.php';
 
 // hooks
 $wgHooks['GetPreferences'][] = 'GlobalWatchlistHooks::getPreferences';

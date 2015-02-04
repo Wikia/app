@@ -28,13 +28,14 @@ class GlobalWatchlistHooks {
 	 * @param $error
 	 * @return bool
 	 */
-	static public function savePreferences( &$formData, &$error ) {
+	public static function savePreferences( &$formData, &$error ) {
 
 		if ( self::userUnsubscribingFromAllEmail( $formData ) || self::userUnsubscribingFromWeeklyDigest( $formData ) ) {
+			$wg = \F::app()->wg;
 			$task = new GlobalWatchlistTask();
 			( new AsyncTaskList() )
-				->wikiId( F::app()->wg->CityId )
-				->add( $task->call( 'clearGlobalWatchlistAll', F::app()->wg->User->getId() ) )
+				->wikiId( $wg->CityId )
+				->add( $task->call( 'clearGlobalWatchlistAll', $wg->User->getId() ) )
 				->queue();
 		}
 
@@ -46,7 +47,7 @@ class GlobalWatchlistHooks {
 	 * @param $formData
 	 * @return bool
 	 */
-	static private function userUnsubscribingFromAllEmail ( $formData ) {
+	private static function userUnsubscribingFromAllEmail ( array $formData ) {
 		return (
 			$formData['unsubscribed'] == true &&
 			F::app()->wg->User->getBoolOption( 'unsubscribed' ) == false
@@ -58,7 +59,7 @@ class GlobalWatchlistHooks {
 	 * @param $formData
 	 * @return bool
 	 */
-	static private function userUnsubscribingFromWeeklyDigest( $formData ) {
+	private static function userUnsubscribingFromWeeklyDigest( array $formData ) {
 		return (
 			$formData['watchlistdigest'] == false &&
 			F::app()->wg->User->getBoolOption( 'watchlistdigest' ) == true
@@ -74,7 +75,7 @@ class GlobalWatchlistHooks {
 	 * @param $timestamp Datetime or null
 	 * @return bool (always true)
 	 */
-	static public function updateGlobalWatchList( WatchedItem $watchedItem, $watchers, $timestamp ) {
+	public static function updateGlobalWatchList( WatchedItem $watchedItem, $watchers, $timestamp ) {
 		$watchers = wfReturnArray( $watchers );
 		if ( is_null( $timestamp ) ) {
 			self::removeWatchers( $watchedItem, $watchers );
@@ -90,7 +91,7 @@ class GlobalWatchlistHooks {
 	 * @param $watchedItem WatchedItem
 	 * @param $watchers
 	 */
-	static public function removeWatchers( WatchedItem $watchedItem, array $watchers ) {
+	public static function removeWatchers( WatchedItem $watchedItem, array $watchers ) {
 		$task = new GlobalWatchlistTask();
 		( new AsyncTaskList() )
 			->wikiId( F::app()->wg->CityId )
@@ -104,7 +105,7 @@ class GlobalWatchlistHooks {
 	 * @param $watchedItem
 	 * @param $watchers
 	 */
-	static public function addWatchers( WatchedItem $watchedItem, array $watchers ) {
+	public static function addWatchers( WatchedItem $watchedItem, array $watchers ) {
 		$task = new GlobalWatchlistTask();
 		( new AsyncTaskList() )
 			->wikiId( F::app()->wg->CityId )
@@ -118,7 +119,7 @@ class GlobalWatchlistHooks {
 	 * @param $userID integer
 	 * @return bool (always true)
 	 */
-	static public function clearGlobalWatch( $userID ) {
+	public static function clearGlobalWatch( $userID ) {
 
 		$task = new GlobalWatchlistTask();
 		( new AsyncTaskList() )
@@ -137,7 +138,7 @@ class GlobalWatchlistHooks {
 	 * @param $newTitle Title
 	 * @return bool (always true)
 	 */
-	static public function renameTitleInGlobalWatchlist( $oldTitle, $newTitle ) {
+	public static function renameTitleInGlobalWatchlist( $oldTitle, $newTitle ) {
 		$oldTitleValues = [
 			'databaseKey' => $oldTitle->getDBkey(),
 			'nameSpace' => $oldTitle->getNamespace()
