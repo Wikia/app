@@ -19,6 +19,23 @@ $start-a-wikia-logo-size: 30px;
 		position: absolute;
 	}
 
+	&.inverse {
+		background-color: rgba(0, 0, 0, .65);
+
+		.wikia-logo img {
+			background-image: url('/skins/shared/images/wikia_logo_white.svg'); /* inline */
+		}
+
+		.start-wikia {
+			border: solid 1px rgb(255,255,255);
+			color: rgb(255,255,255);
+		}
+
+		.hubs-entry-point {
+			background-image: url('/extensions/wikia/GlobalNavigation/images/hubs_entry_point_white.svg'); /* inline */
+		}
+	}
+
 	.page-width {
 		@include clearfix;
 		display: table;

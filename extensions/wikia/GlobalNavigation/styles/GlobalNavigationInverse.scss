@@ -1,0 +1,53 @@
+.global-navigation {
+	&.inverse {
+		background-color: rgba(0, 0, 0, .65);
+		border-bottom: none;
+
+		.wikia-logo-container {
+			.wikia-logo img {
+				background-image: url('/skins/shared/images/wikia_logo_white.svg'); /* inline */
+			}
+		}
+
+		.start-wikia-container {
+			.start-wikia {
+				border: solid 1px rgb(255,255,255);
+				color: rgb(255,255,255);
+			}
+		}
+
+		.hubs-container {
+			.hubs-entry-point {
+				background-image: url('/extensions/wikia/GlobalNavigation/images/hubs_entry_point_white.svg'); /* inline */
+
+				&:after {
+					border-top-color: rgb(255,255,255);
+				}
+			}
+		}
+
+		.account-navigation-container {
+			.anon-avatar-placeholder, .logged-avatar-placeholder {
+				background-image: url('/extensions/wikia/GlobalNavigation/images/signin_icon_white.svg'); /* inline */
+			}
+
+			.logged-avatar, .logged-avatar-placeholder {
+				border: 1px solid rgb(255,255,255);
+				height: 21px;
+				width: 21px;
+			}
+
+			.logged-avatar-placeholder {
+				border-radius: 50%;
+			}
+
+			.sign-in-label {
+				color: rgb(255, 255, 255);
+			}
+
+			.chevron {
+				border-top-color: rgb(255,255,255);
+			}
+		}
+	}
+}
