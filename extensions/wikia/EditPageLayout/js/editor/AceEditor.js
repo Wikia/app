@@ -1,4 +1,4 @@
-define('wikia.editpage.ace.editor', ['wikia.ace.editor'], function(ace){
+define('wikia.editpage.ace.editor', ['wikia.ace.editor', 'wikia.window'], function(ace, win){
 	'use strict';
 
 	var theme = 'solarized_light',
@@ -10,22 +10,17 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor'], function(ace){
 		$editPage = $('#EditPage'),
 		$editPageToolbar = $('#EditPageToolbar'),
 		wideClassName = 'editpage-sourcewidemode-on',
-		narrowClassName = 'editpage-sourcewidemode-off',
-		beforeEditorInit = function(){
-			$('.loading-indicator').remove();
-			$('#wpSave').removeAttr( 'disabled' );
-			$editPage.addClass('editpage-sourcewidemode mode-source ' + narrowClassName);
-		};
+		narrowClassName = 'editpage-sourcewidemode-off';
 
 	function init() {
 		chooseTheme();
 		initConfig();
 		beforeEditorInit();
-		ace.init( 'editarea', inputAttr );
+		ace.init('editarea', inputAttr);
 		initOptions();
 		initStyles();
-		ace.setTheme( theme );
-		ace.setMode( window.codePageType );
+		ace.setTheme(theme);
+		ace.setMode(win.codePageType);
 
 		initEvents();
 	}
@@ -35,10 +30,16 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor'], function(ace){
 	 */
 	function initConfig() {
 		var config = {
-				workerPath: window.aceScriptsPath
+				workerPath: win.aceScriptsPath
 			};
 
-		ace.setConfig( config );
+		ace.setConfig(config);
+	}
+
+	function beforeEditorInit() {
+		$('.loading-indicator').remove();
+		$('#wpSave').removeAttr('disabled');
+		$editPage.addClass('editpage-sourcewidemode mode-source ' + narrowClassName);
 	}
 
 	/**
@@ -49,7 +50,7 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor'], function(ace){
 			showPrintMargin: false
 		};
 
-		ace.setOptions( options );
+		ace.setOptions(options);
 	}
 
 	/**
@@ -65,14 +66,12 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor'], function(ace){
 	 * Init submit action
 	 */
 	function initSubmit() {
-		$( '#editform' ).submit(function(e) {
-			var $form = $( this ),
-				hiddenInput = ace.getInput().val( ace.getContent() );
-
-			$form.append( hiddenInput );
-			$form.submit();
+		$('#editform').submit(function(e) {
+			var hiddenInput = ace.getInput().val(ace.getContent());
 
 			e.preventDefault();
+
+			$(this).append(hiddenInput).submit();
 		});
 	}
 
@@ -80,7 +79,7 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor'], function(ace){
 	 * Choose ace editor theme depending on wiki theme (light or dark)
 	 */
 	function chooseTheme() {
-		if (window.wgIsDarkTheme) {
+		if (win.wgIsDarkTheme) {
 			theme = 'solarized_dark';
 		}
 	}
@@ -92,7 +91,7 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor'], function(ace){
 		var previewModalConfig = {
 				vars: {
 					id: 'EditPageDialog',
-					title: $.msg( 'editpagelayout-pageControls-changes' ),
+					title: $.msg('editpagelayout-pageControls-changes'),
 					content: '<div class="ArticlePreview modalContent"><div class="ArticlePreviewInner">' +
 						'</div></div>',
 					size: 'large'
@@ -101,9 +100,9 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor'], function(ace){
 			modalCallback = function(previewModal) {
 				previewModal.deactivate();
 
-				previewModal.$content.bind( 'click', function( event ) {
-					var target = $( event.target );
-					target.closest( 'a' ).not( '[href^="#"]' ).attr( 'target', '_blank' );
+				previewModal.$content.bind('click', function(event) {
+					var target = $(event.target);
+					target.closest('a').not('[href^="#"]').attr('target', '_blank');
 				});
 
 				prepareDiffContent(previewModal, ace.getContent());
@@ -119,22 +118,22 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor'], function(ace){
 	/**
 	 * Send AJAX request
 	 */
-	function ajax( method, params, callback, skin ) {
-		var url = window.wgEditPageHandler.replace( '$1', encodeURIComponent( window.wgEditedTitle ) );
+	function ajax(method, params, callback, skin) {
+		var url = win.wgEditPageHandler.replace('$1', encodeURIComponent(win.wgEditedTitle));
 
 		params = $.extend({
-			page: window.wgEditPageClass ? window.wgEditPageClass : "",
+			page: win.wgEditPageClass ? win.wgEditPageClass : "",
 			method: method,
 			mode: 'ace'
-		}, params );
+		}, params);
 
-		if ( skin ) {
-			url += '&type=full&skin=' + encodeURIComponent( skin );
+		if (skin) {
+			url += '&type=full&skin=' + encodeURIComponent(skin);
 		}
 
-		return jQuery.post( url, params, function ( data ) {
-			if ( typeof callback === 'function' ) {
-				callback( data );
+		return jQuery.post(url, params, function (data) {
+			if (typeof callback === 'function') {
+				callback(data);
 			}
 		}, 'json' );
 	}
@@ -146,22 +145,22 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor'], function(ace){
 	 * @param content current edited content
 	 */
 	function prepareDiffContent(previewModal, content) {
-		var section = $.getUrlVar( 'section' ) || 0,
+		var section = $.getUrlVar('section') || 0,
 			extraData = {
 				content: content,
-				section: parseInt( section, 10 )
+				section: parseInt(section, 10)
 			};
 
 		$.when(
 			// get wikitext diff
-			ajax( 'diff' , extraData ),
+			ajax('diff' , extraData),
 
 			// load CSS for diff
-			window.mw.loader.use( 'mediawiki.action.history.diff' )
-		).done(function( ajaxData ) {
+			win.mw.loader.use('mediawiki.action.history.diff')
+		).done(function(ajaxData) {
 			var data = ajaxData[ 0 ],
-				html = '<h1 class="pagetitle">' + window.wgEditedTitle + '</h1>' + data.html;
-			previewModal.$content.find( '.ArticlePreview .ArticlePreviewInner' ).html( html );
+				html = '<h1 class="pagetitle">' + win.wgEditedTitle + '</h1>' + data.html;
+			previewModal.$content.find('.ArticlePreview .ArticlePreviewInner').html(html);
 			previewModal.activate();
 		});
 	}
