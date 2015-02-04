@@ -1533,7 +1533,7 @@ class Wikia {
 	 * @return mixed true - it's a hook
 	 */
 	static public function onTitleGetSquidURLs(Title $title, Array &$urls) {
-		global $wgUseSiteJs, $wgAllowUserJs, $wgUseSiteCss, $wgAllowUserCss;
+		global $wgUseSiteJs, $wgUseUserJs, $wgUseSiteCss, $wgUseUserCss;
 		global $wgOut;
 		wfProfileIn(__METHOD__);
 
@@ -1550,11 +1550,11 @@ class Wikia {
 				$link = $wgOut->makeResourceLoaderLink( 'site', ResourceLoaderModule::TYPE_STYLES );
 			}
 		}
-		if( $wgAllowUserJs && $title->isJsSubpage() ) {
+		if( $wgUseUserJs && $title->isJsSubpage() ) {
 			$wgOut->setAllowedModules( ResourceLoaderModule::TYPE_SCRIPTS, ResourceLoaderModule::ORIGIN_ALL );
 			$link = $wgOut->makeResourceLoaderLink( 'user', ResourceLoaderModule::TYPE_SCRIPTS );
 		}
-		if( $wgAllowUserCss && $title->isCssSubpage() ) {
+		if( $wgUseUserCss && $title->isCssSubpage() ) {
 			$wgOut->setAllowedModules( ResourceLoaderModule::TYPE_STYLES, ResourceLoaderModule::ORIGIN_ALL );
 			$link = $wgOut->makeResourceLoaderLink( 'user', ResourceLoaderModule::TYPE_STYLES );
 		}
@@ -1601,7 +1601,7 @@ class Wikia {
 	 */
 	static public function onAfterInitialize($title, $article, $output, $user, WebRequest $request, $wiki) {
 		// allinone
-		global $wgResourceLoaderDebug, $wgAllInOne, $wgUseSiteJs, $wgUseSiteCss, $wgAllowUserJs, $wgAllowUserCss, $wgBuckySampling;
+		global $wgResourceLoaderDebug, $wgAllInOne, $wgUseSiteJs, $wgUseSiteCss, $wgUseUserJs, $wgUseUserCss, $wgBuckySampling;
 
 		$wgAllInOne = $request->getBool('allinone', $wgAllInOne) !== false;
 		if ($wgAllInOne === false) {
@@ -1611,8 +1611,8 @@ class Wikia {
 
 		$wgUseSiteJs = $request->getBool( 'usesitejs', $wgUseSiteJs ) !== false;
 		$wgUseSiteCss = $request->getBool( 'usesitecss', $wgUseSiteCss ) !== false;
-		$wgAllowUserJs = $request->getBool( 'allowuserjs', $wgAllowUserJs ) !== false;
-		$wgAllowUserCss = $request->getBool( 'allowusercss', $wgAllowUserCss ) !== false;
+		$wgUseUserJs = $request->getBool( 'allowuserjs', $wgUseUserJs ) !== false;
+		$wgUseUserCss = $request->getBool( 'allowusercss', $wgUseUserCss ) !== false;
 		$wgBuckySampling = $request->getInt( 'buckysampling', $wgBuckySampling );
 
 		return true;
