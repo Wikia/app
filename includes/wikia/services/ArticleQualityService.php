@@ -1,8 +1,8 @@
 <?php
 
-use \Wikia\Logger;
 
 class ArticleQualityService extends Service {
+	use Wikia\Logger\Loggable;
 
 	const SQL_CACHE_TIME = 86399; // 24h - 1s
 
@@ -162,7 +162,7 @@ class ArticleQualityService extends Service {
 
 			if ( !$parserOutput ) {
 				//MAIN-3592
-				WikiaLogger::instance()->error(
+				$this->error(
 					__METHOD__,
 					[
 						'message' => 'Article::getParserOutput returned false',

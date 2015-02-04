@@ -1,4 +1,4 @@
-/* global UserLoginModal, wgScriptPath, wgUserLanguage, GlobalNotification */
+/* global UserLoginModal, wgScriptPath, GlobalNotification */
 
 /**
  * Handle signing in and signing up with Facebook
@@ -216,7 +216,6 @@
 		buildModal: function (response, uiModal) {
 			// show the "or" circle only for languages where it makes sense
 			var self = this,
-				langClass = 'lang-' + wgUserLanguage,
 				modalConfig = {
 					vars: {
 						id: 'FacebookSignUp',
@@ -224,8 +223,7 @@
 						content: response.modal,
 						htmlTitle: response.htmlTitle,
 						classes: [
-							'facebook-signup-modal',
-							langClass
+							'facebook-signup-modal'
 						]
 					}
 				};

@@ -170,7 +170,6 @@ class FacebookSignupController extends WikiaController {
 
 		$this->signupMsg = wfMessage( 'usersignup-facebook-signup-header' )->escaped();
 		$this->loginMsg = wfMessage( 'usersignup-facebook-login-header' )->escaped();
-		$this->orMsg = wfMessage( 'usersignup-facebook-or-header' )->escaped();
 	}
 
 	/**

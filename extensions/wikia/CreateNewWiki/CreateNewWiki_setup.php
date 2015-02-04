@@ -16,6 +16,7 @@ $wgAutoloadClasses['CreateWiki'] = $dir."/CreateWiki.php";
 $wgAutoloadClasses['AutoCreateWiki'] = $dir."/AutoCreateWiki.php";
 $wgAutoloadClasses['CreateNewWikiController'] = $dir . 'CreateNewWikiController.class.php';
 $wgAutoloadClasses['SpecialCreateNewWiki'] = $dir . 'SpecialCreateNewWiki.class.php';
+$wgAutoloadClasses['CreateWikiException'] = $dir . 'CreateWikiException.class.php';
 
 // special page mapping
 $wgSpecialPages['CreateNewWiki'] = 'SpecialCreateNewWiki';

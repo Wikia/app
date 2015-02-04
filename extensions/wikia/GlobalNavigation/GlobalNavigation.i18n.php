@@ -5,6 +5,7 @@ $messages['en'] = [
 	'global-navigation-desc' => 'Wikia\'s Global Navigation',
 	'global-navigation-create-wiki' => 'Start a wikia',
 	'global-navigation-hubs-menu-more-of' => 'More $1',
+	'global-navigation-sign-in' => 'Sign in',
 	'global-navigation-hubs-menu' => "*http://comicshub.wikia.com/wiki/Comics_Hub|Comics|comics
 
 **#|Hot off the Press
@@ -216,9 +217,9 @@ $messages['en'] = [
 ***http://coffee.wikia.com/wiki/Main_Page|Coffee
 ***http://lifestylehub.wikia.com/wiki/Lifestyle_Hub|More...
 ",
-	'global-navigation-search-label' => 'Search',
-	'global-navigation-local-search' => 'this wikia',
-	'global-navigation-global-search' => 'all of Wikia',
+	'global-navigation-local-search-placeholder' => 'Search within $1...',
+	'global-navigation-local-search' => 'Search this wikia',
+	'global-navigation-global-search' => 'Search all of Wikia',
 ];
 
 $messages['es'] = [
@@ -435,9 +436,6 @@ $messages['es'] = [
 ***http://coffee.wikia.com/wiki/Main_Page|Coffee
 ***http://lifestylehub.wikia.com/wiki/Lifestyle_Hub|More...
 ",
-	'global-navigation-search-label' => 'Buscar',
-	'global-navigation-local-search' => 'En esta wiki',
-	'global-navigation-global-search' => 'En todas las wikis',
 ];
 
 $messages['qqq'] = [
@@ -445,7 +443,7 @@ $messages['qqq'] = [
 	'global-navigation-create-wiki' => 'Label on create new wikia button on Global Navigation - top bar',
 	'global-navigation-hubs-menu-more-of' => 'Global Navigation Hubs Menu - Link that goes to specific hub\'s mainpage. First parameter is hub\'s name (Video Games, Life, etc.)',
 	'global-navigation-hubs-menu' => 'Global Navigation Hubs Menu structure. For example see English translation.',
-	'global-navigation-search-label' => 'Label for Search input - common part for local and global search',
-	'global-navigation-local-search' => 'Label for Search input when local search is selected',
-	'global-navigation-global-search' => 'Label for Search input when global search is selected',
+	'global-navigation-local-search-placeholder' => 'Placeholder in search input in global nav',
+	'global-navigation-local-search' => 'Local search value in search dropdown',
+	'global-navigation-global-search' => 'Local search value in search dropdown',
 ];
