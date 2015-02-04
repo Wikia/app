@@ -51,7 +51,6 @@ define('ext.wikia.adEngine.slotTracker', [
 			PREFOOTER_RIGHT_BOXAD:  'prefooter',
 			TOP_BUTTON_WIDE:        'button',
 			TOP_LEADERBOARD:        'leaderboard',
-			TOP_INCONTENT_BOXAD:    'medrec',
 			TOP_RIGHT_BOXAD:        'medrec',
 			WIKIA_BAR_BOXAD_1:      'wikiabar'
 		};

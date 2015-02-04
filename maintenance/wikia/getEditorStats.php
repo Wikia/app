@@ -55,13 +55,16 @@ class GetRevisionWithTags extends Maintenance {
 
 		return (new WikiaSQL())
 			->SELECT()
-			->FIELD('rev_id')
-			->FROM('revision')
-			->LEFT_JOIN('tag_summary')
-			->ON('ts_rev_id', 'rev_id')
-			->FIELD('ts_tags')
-			->WHERE('rev_timestamp')
-			->BETWEEN($timeStampStart, $timeStampEnd);
+			->FIELD( 'rev_id' )
+			->FROM( 'page' )
+			->JOIN( 'revision' )
+			->ON( 'rev_page', 'page_id' )
+			->LEFT_JOIN( 'tag_summary' )
+			->ON( 'ts_rev_id', 'rev_id' )
+			->FIELD( 'ts_tags' )
+			->WHERE( 'rev_timestamp' )
+			->BETWEEN( $timeStampStart, $timeStampEnd )
+			->AND_( 'page_namespace' )->EQUAL_TO( 0 );
 	}
 
 	private function createRevisionEntry($row) {

@@ -32,7 +32,9 @@ define('ext.wikia.adEngine.provider.liftium', [
 		// TOP_BUTTON_WIDE after TOP_LEADERBOARD hack:
 		'TOP_BUTTON_WIDE.force': 'hack',
 
-		'TOP_INCONTENT_BOXAD': {'size': '300x250'},
+		'INCONTENT_1A': {'size': '300x250'},
+		'INCONTENT_1B': {'size': '300x250'},
+		'INCONTENT_1C': {'size': '300x250'},
 		'TOP_LEADERBOARD': {'size': '728x90'},
 		'TOP_RIGHT_BOXAD': {'size': '300x250'},
 		'PREFOOTER_LEFT_BOXAD': {'size': '300x250'},
