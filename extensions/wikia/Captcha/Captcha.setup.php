@@ -21,8 +21,6 @@ $wgExtensionCredits['captcha'][] = [
  * able to skip, while others have to go through it.
  */
 $wgGroupPermissions['*']['skipcaptcha'] = false;
-$wgGroupPermissions['user']['skipcaptcha'] = false;
-$wgGroupPermissions['autoconfirmed']['skipcaptcha'] = false;
 $wgGroupPermissions['bot']['skipcaptcha'] = true; // registered bots
 $wgGroupPermissions['sysop']['skipcaptcha'] = true;
 $wgAvailableRights[] = 'skipcaptcha';
