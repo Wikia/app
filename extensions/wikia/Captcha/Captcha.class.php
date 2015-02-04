@@ -495,31 +495,6 @@ class Handler extends \WikiaObject {
 	}
 
 	/**
-	 * Hook for user login form submissions.
-	 *
-	 * @param \User $u
-	 * @param $pass
-	 * @param $retval
-	 *
-	 * @return bool true to continue, false to abort user creation
-	 */
-	public function confirmUserLogin( $u, $pass, &$retval ) {
-		if ( $this->isBadLoginTriggered() ) {
-			if ( $this->isIPWhitelisted() ) {
-				return true;
-			}
-
-			$this->trigger = "post-badlogin login '" . $u->getName() . "'";
-			if ( !$this->captcha->passCaptcha() ) {
-				// Emulate a bad-password return
-				$retval = \LoginForm::WRONG_PASS;
-				return false;
-			}
-		}
-		return true;
-	}
-
-	/**
 	 * Check the captcha on Special:EmailUser
 	 *
 	 * @param \MailAddress $from

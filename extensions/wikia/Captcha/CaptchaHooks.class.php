@@ -43,10 +43,6 @@ class Hooks {
 		return self::getInstance()->injectUserLogin( $template );
 	}
 
-	public static function confirmUserLogin( $u, $pass, &$retval ) {
-		return self::getInstance()->confirmUserLogin( $u, $pass, $retval );
-	}
-
 	public static function injectEmailUser( &$form ) {
 		return self::getInstance()->injectEmailUser( $form );
 	}

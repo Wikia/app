@@ -113,7 +113,6 @@ $wgHooks['UserCreateForm'][] = 'Captcha\Hooks::injectUserCreate';
 $wgHooks['AbortNewAccount'][] = 'Captcha\Hooks::confirmUserCreate';
 $wgHooks['LoginAuthenticateAudit'][] = 'Captcha\Hooks::triggerUserLogin';
 $wgHooks['UserLoginForm'][] = 'Captcha\Hooks::injectUserLogin';
-// $wgHooks['AbortLogin'][] = 'Captcha\Hooks::confirmUserLogin';
 $wgHooks['EmailUserForm'][] = 'Captcha\Hooks::injectEmailUser';
 $wgHooks['EmailUser'][] = 'Captcha\Hooks::confirmEmailUser';
 
