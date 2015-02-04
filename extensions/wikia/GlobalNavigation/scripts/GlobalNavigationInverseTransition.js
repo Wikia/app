@@ -3,10 +3,13 @@ require(['jquery', 'wikia.window'], function($, win) {
 	var $globalNav = $('#globalNavigation');
 
 	function changeStateOnScroll() {
-		if (win.pageYOffset === 0 && $globalNav.hasClass('inverse')) {
-			$globalNav.removeClass('inverse');
-		} else if  (win.pageYOffset > 200) {
-			$globalNav.addClass('inverse');
+		var scrollTop = win.pageYOffset,
+			inversedStateClass = 'inverse';
+
+		if (scrollTop === 0 && $globalNav.hasClass(inversedStateClass)) {
+			$globalNav.removeClass(inversedStateClass);
+		} else if (scrollTop > 200) {
+			$globalNav.addClass(inversedStateClass);
 		}
 	}
 
