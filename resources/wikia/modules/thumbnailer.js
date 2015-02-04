@@ -218,7 +218,7 @@
 			// on the tokenization here.
 			tokens.push(
 				width +
-				(height ? 'x' + height : '-') +
+				(height ? 'x' + height : 'px-') +
 				((type === 'video' || type === 'nocrop') ? '-' :  'x2-') +
 				last +
 				'.png'
