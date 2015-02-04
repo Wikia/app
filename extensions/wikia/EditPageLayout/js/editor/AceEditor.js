@@ -1,4 +1,4 @@
-define('wikia.editpage.ace.editor', ['wikia.ace.editor', 'wikia.window'], function(ace, win){
+define('wikia.editpage.ace.editor', ['wikia.ace.editor', 'wikia.window'], function (ace, win) {
 	'use strict';
 
 	var theme = 'solarized_light',
