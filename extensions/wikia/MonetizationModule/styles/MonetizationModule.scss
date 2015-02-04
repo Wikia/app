@@ -17,6 +17,11 @@
 		font-family: Helvetica,sans-serif;
 		line-height: 1.8em;
 		margin-bottom: 40px;
+
+		.default-thumb {
+			background-image: url('/extensions/wikia/MonetizationModule/images/no_image_commerce.png');
+			width: 100%;
+		}
 	}
 
 	&.amazon-video {
@@ -71,6 +76,11 @@
 		.product-price {
 			font-size: 12px;
 			margin-left: 5px;
+		}
+
+		.default-thumb {
+			background-image: url('/extensions/wikia/MonetizationModule/images/no_image_video.png');
+			width: 170px;
 		}
 	}
 
@@ -142,6 +152,13 @@
 
 	.product-thumb {
 		padding: 0;
+	}
+
+
+	.default-thumb {
+		background-position: center;
+		background-repeat: no-repeat;
+		display: block;
 	}
 
 	.product-name {
