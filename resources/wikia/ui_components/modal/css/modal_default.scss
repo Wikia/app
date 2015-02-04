@@ -218,6 +218,17 @@ body.with-blackout {
 		}
 	}
 
+	&.skin-venus {
+		.global-navigation {
+			//GlobalNavigation height
+			margin-bottom: -57px;
+		}
+	}
+
+	.global-navigation {
+		position: static;
+	}
+
 	.WikiaSiteWrapper {
 		position: fixed;
 		width: 100%;

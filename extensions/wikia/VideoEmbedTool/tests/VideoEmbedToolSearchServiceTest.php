@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Class VideoEmbedToolSearchServiceTest
+ *
+ * @group MediaFeatures
+ */
 class VideoEmbedToolSearchServiceTest extends WikiaBaseTest {
 	
 	/**

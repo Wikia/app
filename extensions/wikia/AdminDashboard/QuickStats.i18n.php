@@ -170,6 +170,14 @@ $messages['bcl'] = array(
 	'quickstats-number-shortening-billions' => '$1 na bilyon',
 );
 
+/** Belarusian (беларуская)
+ * @author Чаховіч Уладзіслаў
+ */
+$messages['be'] = array(
+	'quickstats-header-views' => 'Праглядаў',
+	'quickstats-header-edits' => 'Правак',
+);
+
 /** Bulgarian (български)
  * @author Aquilax
  * @author DCLXVI
@@ -218,9 +226,9 @@ $messages['bn'] = array(
 	'quickstats-header-likes' => 'পছন্দসমূহ',
 	'quickstats-totals-label' => 'মোট',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|আরও পরিসংখ্যান দেখুন]]',
-	'quickstats-number-shortening' => '$১ হাজার', # Fuzzy
-	'quickstats-number-shortening-millions' => '$১০ লাখ', # Fuzzy
-	'quickstats-number-shortening-billions' => '$১০০ কোটি', # Fuzzy
+	'quickstats-number-shortening' => '$1 হাজার',
+	'quickstats-number-shortening-millions' => '$1 মিলিয়ন',
+	'quickstats-number-shortening-billions' => '$1 বিলিয়ন',
 );
 
 /** Tibetan (བོད་ཡིག)
@@ -254,9 +262,35 @@ $messages['br'] = array(
 	'quickstats-number-shortening-billions' => '$1Mrd',
 );
 
+/** Bosnian (bosanski)
+ * @author Palapa
+ */
+$messages['bs'] = array(
+	'quickstats-header-photos' => 'Fotografije',
+	'quickstats-header-likes' => 'Lajkovi',
+	'quickstats-totals-label' => 'Ukupno',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Pogledajte više statistike]]',
+	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1M',
+	'quickstats-number-shortening-billions' => '$1B',
+);
+
+/** Iriga Bicolano (Iriga Bicolano)
+ * @author Filipinayzd
+ */
+$messages['bto'] = array(
+	'quickstats-header-date' => 'Petsa',
+	'quickstats-header-views' => 'Mga silung',
+	'quickstats-header-edits' => 'Mga pagbalyow',
+	'quickstats-number-shortening' => '$1,000',
+	'quickstats-number-shortening-millions' => '$1 Milyon',
+	'quickstats-number-shortening-billions' => '$1 Bilyon',
+);
+
 /** Catalan (català)
  * @author Andriykopanytsia
  * @author CuBaN VeRcEttI
+ * @author Paynekiller92
  * @author Solde
  */
 $messages['ca'] = array(
@@ -266,9 +300,10 @@ $messages['ca'] = array(
 	'quickstats-header-edits' => 'Edicions',
 	'quickstats-header-photos' => 'Fotos',
 	'quickstats-header-likes' => 'Gustos',
+	'quickstats-date-format' => 'M d',
 	'quickstats-totals-label' => 'Totals',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Veure més estadístiques]]',
-	'quickstats-number-shortening' => '$1 тис.',
+	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1M',
 	'quickstats-number-shortening-billions' => '
 $1B',
@@ -456,6 +491,7 @@ $messages['et'] = array(
 $messages['eu'] = array(
 	'quickstats-header-date' => 'Data',
 	'quickstats-header-photos' => 'Argazkiak',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Ikusi estatistika gehiago]]',
 	'quickstats-number-shortening' => '$1 K',
 	'quickstats-number-shortening-millions' => '$1 M',
 );
@@ -532,6 +568,16 @@ $messages['fr'] = array(
 	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1 M',
 	'quickstats-number-shortening-billions' => '$1 Mrd',
+);
+
+/** Western Frisian (Frysk)
+ * @author Robin0van0der0vliet
+ */
+$messages['fy'] = array(
+	'quickstats-header-date' => 'Datum',
+	'quickstats-number-shortening' => '$1K',
+	'quickstats-number-shortening-millions' => '$1*10ˆ6',
+	'quickstats-number-shortening-billions' => '$1*10ˆ9',
 );
 
 /** Galician (galego)
@@ -642,6 +688,7 @@ $messages['hrx'] = array(
 );
 
 /** Hungarian (magyar)
+ * @author Csega
  * @author TK-999
  */
 $messages['hu'] = array(
@@ -650,12 +697,12 @@ $messages['hu'] = array(
 	'quickstats-header-views' => 'Megtekintések',
 	'quickstats-header-edits' => 'Szerkesztések',
 	'quickstats-header-photos' => 'Képek',
-	'quickstats-header-likes' => 'kedvelés',
+	'quickstats-header-likes' => 'Kedvelések',
 	'quickstats-totals-label' => 'Összesítés',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Részletes statisztika]]',
-	'quickstats-number-shortening' => '$1,000',
+	'quickstats-number-shortening' => '$1 ezer',
 	'quickstats-number-shortening-millions' => '$1 millió',
-	'quickstats-number-shortening-billions' => '$1 mrd',
+	'quickstats-number-shortening-billions' => '$1 milliárd',
 );
 
 /** Interlingua (interlingua)
@@ -760,6 +807,7 @@ $messages['kn'] = array(
  * @author Daisy2002
  * @author Excalibur777
  * @author Hym411
+ * @author Revi
  * @author 아라
  * @author 한글화담당
  */
@@ -886,6 +934,17 @@ $messages['lv'] = array(
 	'quickstats-number-shortening' => '$1K',
 	'quickstats-number-shortening-millions' => '$1M',
 	'quickstats-number-shortening-billions' => '$1B',
+);
+
+/** Literary Chinese (文言)
+ * @author Jason924tw
+ */
+$messages['lzh'] = array(
+	'quickstats-header-date' => '期',
+	'quickstats-header-views' => '覽',
+	'quickstats-header-edits' => '纂',
+	'quickstats-number-shortening' => '$1千',
+	'quickstats-number-shortening-millions' => '$1百萬',
 );
 
 /** Basa Banyumasan (Basa Banyumasan)
@@ -1136,12 +1195,13 @@ $messages['ps'] = array(
 /** Portuguese (português)
  * @author Hamilton Abreu
  * @author Malafaya
+ * @author Pjcaldeira
  * @author SandroHc
  */
 $messages['pt'] = array(
-	'quickstats-header-label' => 'Estatísticas Rápidas',
+	'quickstats-header-label' => 'Estatísticas',
 	'quickstats-header-date' => 'Data',
-	'quickstats-header-views' => 'Visionamentos',
+	'quickstats-header-views' => 'Visualizações',
 	'quickstats-header-edits' => 'Edições',
 	'quickstats-header-photos' => 'Imagens',
 	'quickstats-header-likes' => 'Gostos',

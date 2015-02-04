@@ -87,5 +87,3 @@ if ( $isLoggedIn && $hasEmail ) {
 <input type="hidden" id="wpBrowser" name="wpBrowser" value="<?= htmlspecialchars( $_SERVER['HTTP_USER_AGENT'] ); ?>" />
 <input type="hidden" id="wpAbTesting" name="wpAbTesting" value="[unknown]" />
 </form>
-
-<p><?= wfMessage( 'specialcontact-noform-footer' )->parse() ?></p>

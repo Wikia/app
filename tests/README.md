@@ -21,6 +21,18 @@ make phpunit-single test=../extensions/wikia/AssetsManager/tests/AssetsManagerTe
 
 will run all tests (except of ``@group Broken``) from ``/extensions/wikia/FooExtension``.
 
+### Running all tests for a given group or groups
+
+```
+./php-group MediaFeatures
+```
+
+will run all tests marked as ``@group MediaFeatures``.  Any number of groups can be added, e.g.:
+
+```
+./php-group MediaFeatures UsingDB
+```
+
 ### Running all unit tests
 
 ```
@@ -30,7 +42,6 @@ will run all tests (except of ``@group Broken``) from ``/extensions/wikia/FooExt
 These commands will run all tests (unit, infrastructure and integration) from ``tests`` subdirectories of:
 
 * /includes/wikia
-* /extensions/FBConnect
 * /extensions/wikia
 
 excluding the following groups: ``Broken, Stub, Monitoring, Hack``.

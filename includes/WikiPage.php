@@ -1245,7 +1245,8 @@ class WikiPage extends Page {
 	 *
 	 *  Compatibility note: this function previously returned a boolean value indicating success/failure
 	 */
-	public function doEdit( $text, $summary, $flags = 0, $baseRevId = false, $user = null ) {
+	public function doEdit( $text, $summary, $flags = 0, $baseRevId = false, $user = null,
+							$forcePatrolled = false) {
 		global $wgUser, $wgDBtransactions, $wgUseAutomaticEditSummaries;
 
 		# Low-level sanity check
@@ -1375,7 +1376,7 @@ class WikiPage extends Page {
 						# Add RC row to the DB
 						$rc = RecentChange::notifyEdit( $now, $this->mTitle, $isminor, $user, $summary,
 							$oldid, $this->getTimestamp(), $bot, '', $oldsize, $newsize,
-							$revisionId, $patrolled
+							$revisionId, $patrolled || $forcePatrolled
 						);
 
 						# Log auto-patrolled edits
@@ -1461,7 +1462,7 @@ class WikiPage extends Page {
 					$this->mTitle->getUserPermissionsErrors( 'autopatrol', $user ) );
 				# Add RC row to the DB
 				$rc = RecentChange::notifyNew( $now, $this->mTitle, $isminor, $user, $summary, $bot,
-					'', strlen( $text ), $revisionId, $patrolled );
+					'', strlen( $text ), $revisionId, $patrolled || $forcePatrolled);
 
 				# Log auto-patrolled edits
 				if ( $patrolled ) {
@@ -3009,6 +3010,10 @@ class PoolWorkArticleView extends PoolCounterWork {
 		Transaction::addEvent( Transaction::EVENT_ARTICLE_PARSE, array(
 			'real' => $time,
 			'article' => $this->page->getTitle()->getPrefixedDBkey(),
+			'input_length' => strlen($text),
+			'options_used' => implode(',',$this->parserOutput->getUsedOptions()),
+			'options_hash' => $this->parserOptions->optionsHash($this->parserOutput->getUsedOptions()),
+			'output_cacheable' => $this->parserOutput->isCacheable() && !$this->parserOutput->containsOldMagic(),
 		));
 		# </Wikia>
 

@@ -18,24 +18,24 @@ class QuestDetailsSearchService extends EntitySearchService {
 
 	const METADATA_ONLY_CRITERIA = 'metadataOnly';
 
-	const SOLR_FINGERPRINT_FIELD = 'metadata_fingerprint_ids_ss';
+	const SOLR_FINGERPRINT_FIELD = 'fingerprint_ids_mv_s';
 
-	const SOLR_QUEST_ID_FIELD = 'metadata_quest_id_s';
+	const SOLR_QUEST_ID_FIELD = 'quest_id_s';
 
 	const SOLR_CATEGORY_FIELD = 'categories_mv_en';
 
 	const SOLR_ID_FIELD = 'id';
 
-	const SOLR_WIKI_ID = 'wid';
+	const SOLR_WIKI_ID = 'wid_i';
 
 	const SOLR_AND = ' AND ';
+
+	const ARTICLE_METADATA_CORE = "article_metadata";
 
 	/**
 	 * @var QuestDetailsSolrHelper
 	 */
 	protected $solrHelper;
-
-	protected $extractMetadataOnly;
 
 	protected $conditions = [ ];
 
@@ -43,11 +43,14 @@ class QuestDetailsSearchService extends EntitySearchService {
 
 	protected $limit = self::DEFAULT_LIMIT_SOLR_RESPONSE;
 
+	protected function getCore(){
+		return self::ARTICLE_METADATA_CORE;
+	}
+
 	public function newQuery() {
 		$this->conditions = [ ];
 		$this->limit = self::DEFAULT_LIMIT_SOLR_RESPONSE;
-		$this->requiredFields = $this->getSolrHelper()->getRequiredSolrFields();
-		$this->extractMetadataOnly = false;
+		$this->requiredFields = "*";
 		return $this;
 	}
 
@@ -96,12 +99,6 @@ class QuestDetailsSearchService extends EntitySearchService {
 		return $idsWithWikiId;
 	}
 
-	public function metadataOnly() {
-		$this->requiredFields = [ 'pageid', 'metadata_*' ];
-		$this->extractMetadataOnly = true;
-		return $this;
-	}
-
 	public function limit( $limit ) {
 		if( !empty( $limit ) ) {
 			$this->limit = $limit;
@@ -133,7 +130,12 @@ class QuestDetailsSearchService extends EntitySearchService {
 	}
 
 	public function consumeResponse( $response ) {
-		return $this->getSolrHelper()->consumeResponse( $response, $this->extractMetadataOnly );
+		$data = [ ];
+		foreach ( $response as $item ) {
+			$data[ $item[ "id" ] ] = $item->getFields();
+		}
+
+		return $data;
 	}
 
 	public function setSolrHelper( $solrHelper ) {

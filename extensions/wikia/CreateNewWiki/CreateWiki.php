@@ -50,6 +50,7 @@ class CreateWiki {
 	const DEFAULT_WIKI_TYPE    = "";
 	const DEFAULT_WIKI_LOGO    = '$wgUploadPath/b/bc/Wiki.png';
 
+	const SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH = 55;
 
 	/**
 	 * constructor
@@ -84,16 +85,17 @@ class CreateWiki {
 		$this->mStarters = array(
 			"*" => array(
 				"*"  => "aastarter",
-				"en" => "starter",
-				"ja" => "jastarter",
 				"de" => "destarter",
-				"fr" => "frstarter",
-				"nl" => "nlstarter",
+				"en" => "starter",
 				"es" => "esstarter",
+				"fi" => "fistarter",
+				"fr" => "starterbeta",
+				"it" => "italianstarter",
+				"ja" => "jastarter",
+				"ko" => "starterko",
+				"nl" => "nlstarter",
 				"pl" => "plstarter",
 				"ru" => "rustarter",
-				"it" => "italianstarter",
-				'fi' => 'fistarter',
 			)
 		);
 
@@ -152,6 +154,11 @@ class CreateWiki {
 	 */
 	public function create() {
 		global $wgWikiaLocalSettingsPath, $wgExternalSharedDB, $wgSharedDB, $wgUser;
+
+		// Set this flag to ensure that all select operations go against master
+		// Slave lag can cause random errors during wiki creation process
+		global $wgForceMasterDatabase;
+		$wgForceMasterDatabase = true;
 
 		wfProfileIn( __METHOD__ );
 
@@ -292,13 +299,6 @@ class CreateWiki {
 			wfDebugLog( "createwiki", __METHOD__ . ": Creating tables not finished\n", true );
 			wfProfileOut( __METHOD__ );
 			return self::ERROR_SQL_FILE_BROKEN;
-		}
-
-		// Hack to slow down the devbox database creation because createTables() returns
-		// before the tables are created on the slave, and the uploadImage function hits the slave
-		global $wgDevelEnvironment;
-		if (isset($wgDevelEnvironment)) {
-			sleep(15);
 		}
 
 		/**
@@ -650,7 +650,27 @@ class CreateWiki {
 	}
 
 	/**
-	 * check folder exists
+	 * Check if the given upload directory name is available for use.
+	 *
+	 * @access public
+	 * @author Michał Roszka <michal@wikia-inc.com>
+	 *
+	 * @param $sDirectoryName the path to check
+	 */
+	public static function wgUploadDirectoryExists( $sDirectoryName ) {
+		wfProfileIn( __METHOD__ );
+		$iVarId = WikiFactory::getVarIdByName( 'wgUploadDirectory' );
+
+		// Crash immediately if $iVarId is not a positive integer!
+		\Wikia\Util\Assert::true( $iVarId );
+
+		$aCityIds = WikiFactory::getCityIDsFromVarValue( $iVarId, $sDirectoryName, '=' );
+		wfProfileOut( __METHOD__ );
+		return !empty( $aCityIds );
+	}
+
+	/**
+	 * "calculates" the value for wgUploadDirectory
 	 *
 	 * @access private
 	 * @author Piotr Molski (Moli)
@@ -663,8 +683,8 @@ class CreateWiki {
 		wfDebug( __METHOD__ . ": Checking {$name} folder" );
 
 		$isExist = false; $suffix = "";
-		$prefix = strtolower( substr( $name, 0, 1 ) );
-		$dir_base = $name;
+		$dir_base = self::sanitizeS3BucketName($name);
+		$prefix = strtolower( substr( $dir_base, 0, 1 ) );
 		$dir_lang = ( isset( $language ) && $language !== "en" )
 				? "/" . strtolower( $language )
 				: "";
@@ -672,7 +692,7 @@ class CreateWiki {
 		while ( $isExist == false ) {
 			$dirName = self::IMGROOT . $prefix . "/" . $dir_base . $suffix . $dir_lang . "/images";
 
-			if ( file_exists( $dirName ) ) {
+			if ( self::wgUploadDirectoryExists($dirName) ) {
 				$suffix = rand(1, 9999);
 			}
 			else {
@@ -681,8 +701,62 @@ class CreateWiki {
 			}
 		}
 
+		wfDebug( __METHOD__ . ": Returning '{$dir_base}'\n" );
 		wfProfileOut( __METHOD__ );
 		return $dir_base;
+	}
+
+	/**
+	 * Sanitizes a name to be a valid S3 bucket name. It means it can contain only letters and numbers
+	 * and optionally hyphens in the middle. Maximum length is 63 characters, we're trimming it to 55
+	 * characters here as some random suffix may be added to solve duplicates.
+	 *
+	 * Note that different arguments may lead to the same results so the conflicts need to be solved
+	 * at a later stage of processing.
+	 *
+	 * @see http://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html
+	 *      Wikia change: We accept underscores wherever hyphens are allowed.
+	 *
+	 * @param $name string Directory name
+	 * @return string Sanitized name
+	 */
+	private static function sanitizeS3BucketName( $name ) {
+		if ( $name == 'admin' ) {
+			$name .= 'x';
+		}
+
+		$RE_VALID = "/^[a-z0-9](?:[-_a-z0-9]{0,53}[a-z0-9])?(?:[a-z0-9](?:\\.[-_a-z0-9]{0,53}[a-z0-9])?)*\$/";
+		# check if it's already valid
+		$name = mb_strtolower($name);
+		if ( preg_match( $RE_VALID, $name ) && strlen($name) <= self::SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH ) {
+			return $name;
+		}
+
+		# try fixing the simplest and most popular cases
+		$check_name = str_replace(['.',' ','(',')'],'_',$name);
+		if ( in_array( substr($check_name,-1), [ '-', '_' ] ) ) {
+			$check_name .= '0';
+		}
+		if ( preg_match( $RE_VALID, $check_name ) && strlen($check_name) <= self::SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH ) {
+			return $check_name;
+		}
+
+		# replace invalid ASCII characters with their hex values
+		$s = '';
+		for ($i=0;$i<strlen($name);$i++) {
+			$c = $name[$i];
+			if ( $c >= 'a' && $c <= 'z' || $c >= '0' && $c <= '9' ) {
+				$s .= $c;
+			} else {
+				$s .= bin2hex($c);
+			}
+			if ( strlen($s) >= self::SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH ) {
+				break;
+			}
+		}
+		$name = substr($s, 0, self::SANITIZED_BUCKET_NAME_MAXIMUM_LENGTH);
+
+		return $name;
 	}
 
 	/**

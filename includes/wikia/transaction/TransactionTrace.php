@@ -10,6 +10,7 @@ class TransactionTrace {
 	protected $attributes = array();
 
 	protected $events = array();
+	protected $rawEvents = array();
 
 	protected $plugins = array();
 	protected $classifier;
@@ -43,6 +44,14 @@ class TransactionTrace {
 		}
 	}
 
+	private function formatEvent( $eventName, $data ) {
+		return [
+			'time' => microtime( true ),
+			'event' => $eventName,
+			'data' => $data,
+		];
+	}
+
 	/**
 	 * Records an event
 	 *
@@ -50,12 +59,22 @@ class TransactionTrace {
 	 * @param array $data Event data
 	 */
 	public function addEvent( $eventName, $data ) {
-		$event = array(
-			'time' => microtime( true ),
-			'event' => $eventName,
-			'data' => $data,
-		);
+		$event = self::formatEvent( $eventName, $data );
 		$this->events[] = $event;
+		$this->notify( 'onEvent', $event );
+	}
+
+	/**
+	 * Records a raw event
+	 *
+	 * Raw means that an event will be reported without any context data
+	 *
+	 * @param string $eventName Event name
+	 * @param array $data Event data
+	 */
+	public function addRawEvent( $eventName, $data ) {
+		$event = self::formatEvent( $eventName, $data );
+		$this->rawEvents[] = $event;
 		$this->notify( 'onEvent', $event );
 	}
 
@@ -86,6 +105,15 @@ class TransactionTrace {
 	 */
 	public function getEvents() {
 		return $this->events;
+	}
+
+	/**
+	 * Returns array with all recorded raw events
+	 *
+	 * @return array
+	 */
+	public function getRawEvents() {
+		return $this->rawEvents;
 	}
 
 	/**

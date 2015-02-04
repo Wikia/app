@@ -8,8 +8,11 @@
 
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'UserLogin',
+	'author' => array('Hyun Lim', 'Saipetch Kongkatong'),
+	'descriptionmsg' => 'userlogin-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/UserLogin'
 );
- 
+
 $dir = dirname(__FILE__) . '/';
 
 //classes
@@ -34,7 +37,6 @@ $wgHooks['UserSendConfirmationMail'][] = 'UserLoginHooksHelper::onUserSendConfir
 $wgHooks['PreferencesGetEmailAuthentication'][] = 'UserLoginHooksHelper::onGetEmailAuthentication';
 $wgHooks['isValidEmailAddr'][] = 'UserLoginHooksHelper::isValidEmailAddr';
 $wgHooks['SavePreferences'][] = 'UserLoginHooksHelper::onSavePreferences';
-$wgHooks['AddNewAccount'][] = 'UserLoginHooksHelper::onAddNewAccount';
 $wgHooks['ConfirmEmailComplete'][] = 'UserLoginHooksHelper::onConfirmEmailComplete';
 $wgHooks['WikiaMobileAssetsPackages'][] = 'UserLoginHooksHelper::onWikiaMobileAssetsPackages';
 
@@ -44,7 +46,11 @@ $wgExtensionMessagesFiles['UserSignup'] = $dir . 'UserSignup.i18n.php';
 $wgExtensionMessagesFiles['UserSignupAliases'] = $dir . 'UserSignup.alias.php';
 $wgExtensionMessagesFiles['WikiaConfirmEmail'] = $dir . 'WikiaConfirmEmail.i18n.php';
 
-JSMessages::registerPackage('UserLogin', array('userlogin-login-*'));
+JSMessages::registerPackage('UserLogin', ['userlogin-login-*']);
+JSMessages::registerPackage('UserSignup', [
+	'usersignup-page-captcha-load-fail-title',
+	'usersignup-page-captcha-load-fail-text',
+]);
 
 // special pages
 $wgSpecialPages['Userlogin'] = 'UserLoginSpecialController';

@@ -6,6 +6,14 @@
  */
 class ThumbnailHelper extends WikiaModel {
 
+	// Smaller thumbnail size used by picture tag.
+	const SMALL_THUMB_SIZE = .8;
+
+	// The 3 pixel size breakpoints used by the new grid.
+	const SMALL_BREAKPOINT = 768;
+	const MEDIUM_BREAKPOINT = 1024;
+	const LARGE_BREAKPOINT = 1280;
+
 	/**
 	 * Get attributes for mustache template
 	 * Don't use this for values that need to be escaped.
@@ -90,15 +98,16 @@ class ThumbnailHelper extends WikiaModel {
 	 *      valign
 	 *      img-class
 	 */
-	public static function setImageAttribs( WikiaController &$controller, MediaTransformOutput $thumb, array $options ) {
+	public static function setImageAttribs( WikiaController $controller, MediaTransformOutput $thumb, array $options ) {
 		/** @var Title $title */
 		$title = $thumb->file->getTitle();
-		$titleText = '';
 
 		if ( $title instanceof Title ) {
 			$titleText = $title->getText();
 			$controller->mediaKey = htmlspecialchars( urlencode( $title->getDBKey() ) );
 			$controller->mediaName = htmlspecialchars( $titleText );
+		} else {
+			$titleText = '';
 		}
 
 		$controller->alt = Sanitizer::encodeAttribute(
@@ -133,18 +142,10 @@ class ThumbnailHelper extends WikiaModel {
 	 *      desc-link
 	 *      file-link
 	 */
-	public static function setImageLinkAttribs( WikiaController &$controller, MediaTransformOutput $thumb, array $options ) {
+	public static function setImageLinkAttribs( WikiaController $controller, MediaTransformOutput $thumb, array $options ) {
 		$href = false;
 		$title = false;
 		$target = false;
-
-		// If we have the details icon enabled, have the anchor wrapping the image link to the
-		// raw file.  If not, keep previous behavior and link to the file page
-		if ( F::app()->wg->ShowArticleThumbDetailsIcon && !F::app()->checkSkin( 'monobook' ) ) {
-			$defaultHref = $thumb->file->getUrl();
-		} else {
-			$defaultHref = $thumb->file->getTitle()->getLocalURL();
-		}
 
 		if ( !empty( $options['custom-url-link'] ) ) {
 			$href = $options['custom-url-link'];
@@ -164,18 +165,36 @@ class ThumbnailHelper extends WikiaModel {
 			);
 
 		} elseif ( !empty( $options['desc-link'] ) ) {
-			$href = $defaultHref;
+			$href = self::getContextualFileUrl( $thumb );
 			if ( !empty( $options['title'] ) ) {
 				$title = Sanitizer::encodeAttribute( $options['title'] );
 			}
 
 		} elseif ( !empty( $options['file-link'] ) ) {
-			$href = $defaultHref;
+			$href = self::getContextualFileUrl( $thumb );
 		}
 
 		$controller->linkHref = $href;
 		$controller->title = $title;
 		$controller->target = $target;
+	}
+
+	/**
+	 * Get the proper file URL for given thumb
+	 *
+	 * @param MediaTransformOutput $thumb
+	 * @return String
+	 */
+	public static function getContextualFileUrl( MediaTransformOutput $thumb ) {
+		// If skin is not monobook, have the anchor wrapping the image link to the
+		// raw file. If not, keep previous behavior and link to the file page
+		if ( !F::app()->checkSkin( 'monobook' ) ) {
+			$defaultHref = $thumb->file->getUrl();
+		} else {
+			$defaultHref = $thumb->file->getTitle()->getLocalURL();
+		}
+
+		return $defaultHref;
 	}
 
 	/**
@@ -191,7 +210,7 @@ class ThumbnailHelper extends WikiaModel {
 	 *      src
 	 *      dataParams
 	 */
-	public static function setVideoImgAttribs( WikiaController &$controller, MediaTransformOutput $thumb, array $options ) {
+	public static function setVideoImgAttribs( WikiaController $controller, MediaTransformOutput $thumb, array $options ) {
 		// get alt for img tag
 		$file = $thumb->file;
 		$title = $file->getTitle();
@@ -228,7 +247,7 @@ class ThumbnailHelper extends WikiaModel {
 	 *  Keys:
 	 *      id
 	 */
-	public static function setVideoLinkAttribs( WikiaController &$controller, MediaTransformOutput $thumb, array $options ) {
+	public static function setVideoLinkAttribs( WikiaController $controller, MediaTransformOutput $thumb, array $options ) {
 		// Get href for a tag
 		$file = $thumb->file;
 		$title = $file->getTitle();
@@ -261,7 +280,7 @@ class ThumbnailHelper extends WikiaModel {
 	 *      fluid
 	 *      forceSize
 	 */
-	public static function setVideoLinkClasses( WikiaController &$controller, MediaTransformOutput $thumb, array &$options ) {
+	public static function setVideoLinkClasses( WikiaController $controller, MediaTransformOutput $thumb, array &$options ) {
 		$linkClasses = [];
 
 		if ( empty( $options['noLightbox'] ) ) {
@@ -294,7 +313,7 @@ class ThumbnailHelper extends WikiaModel {
 	 * @param $controller
 	 * @param array $options
 	 */
-	public static function setImageLinkClasses( &$controller, array &$options ) {
+	public static function setImageLinkClasses( $controller, array &$options ) {
 		$linkClasses = [];
 
 		if ( !empty( $options['custom-title-link'] ) ) {
@@ -313,7 +332,7 @@ class ThumbnailHelper extends WikiaModel {
 	 * @param WikiaController $controller
 	 * @param array $options
 	 */
-	public static function setExtraImgAttribs( WikiaController &$controller, array $options ) {
+	public static function setExtraImgAttribs( WikiaController $controller, array $options ) {
 		// Let extensions add any link attributes
 		if ( isset( $options['imgAttribs'] ) && is_array( $options['imgAttribs'] ) ) {
 			$controller->extraImgAttrs = self::getAttribs( $options['imgAttribs'] );
@@ -326,7 +345,7 @@ class ThumbnailHelper extends WikiaModel {
 	 * @param WikiaController $controller
 	 * @param array $options
 	 */
-	public static function setExtraLinkAttribs( WikiaController &$controller, array $options ) {
+	public static function setExtraLinkAttribs( WikiaController $controller, array $options ) {
 		if ( isset( $options['linkAttribs'] ) && is_array( $options['linkAttribs'] ) ) {
 			$controller->extraLinkAttrs = self::getAttribs( $options['linkAttribs'] );
 		}
@@ -338,10 +357,9 @@ class ThumbnailHelper extends WikiaModel {
 	 * @param array $options
 	 * @return bool
 	 */
-	public static function setLazyLoad( WikiaController &$controller, array $options = [] ) {
-		$lazyLoaded = false;
-		if ( self::shouldLazyLoad( $controller, $options ) ) {
-			$lazyLoaded = true;
+	public static function setLazyLoad( WikiaController $controller, array $options = [] ) {
+		$lazyLoaded = self::shouldLazyLoad( $controller, $options );
+		if ( $lazyLoaded ) {
 			$controller->noscript = $controller->app->renderView(
 				'ThumbnailController',
 				'imgTag',
@@ -393,5 +411,31 @@ class ThumbnailHelper extends WikiaModel {
 			$linkClasses = array_merge( $linkClasses, $classes );
 			unset( $options['linkAttribs']['class'] );
 		}
+	}
+
+	/**
+	 * Set urls to be used for <picture> tags. Sets both thumbnails in the original format (jpeg, png, etc),
+	 * and WebP to be used if the browser supports it.
+	 * @param WikiaController $controller
+	 * @param MediaTransformOutput $thumb
+	 */
+	public static function setPictureTagInfo( WikiaController $controller, MediaTransformOutput $thumb ) {
+		$file = $thumb->file;
+		$fullSizeDimension = max( $thumb->getWidth(), $thumb->getHeight() );
+		$smallSizeDimension = $fullSizeDimension * self::SMALL_THUMB_SIZE;
+		$useWebP = true;
+
+		// get small images (original and WebP)
+		$controller->smallUrl = WikiaFileHelper::getSquaredThumbnailUrl( $file, $smallSizeDimension );
+		$controller->smallUrlWebP = WikiaFileHelper::getSquaredThumbnailUrl( $file, $smallSizeDimension, $useWebP );
+
+		// Set the breakpoint used by the <picture> tag to determine which image to load
+		$controller->breakPoint = self::MEDIUM_BREAKPOINT;
+
+		// get full size WebP image
+		$controller->imgSrcWebP = WikiaFileHelper::getSquaredThumbnailUrl( $file, $fullSizeDimension, $useWebP );
+
+		// Let image template know to use <picture> tag instead of <img> tag
+		$controller->usePictureTag = true;
 	}
 }

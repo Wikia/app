@@ -14,6 +14,7 @@ $wgExtensionCredits['specialpage'][] = [
 	'author' => [
 		'[http://community.wikia.com/wiki/User:Grunny Daniel Grunwell (Grunny)]'
 	],
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CloseMyAccount',
 	'license-name' => 'GPLv2',
 ];
 
@@ -22,6 +23,7 @@ $wgAutoloadClasses['CloseMyAccountHooks'] =  __DIR__ . '/CloseMyAccountHooks.cla
 $wgAutoloadClasses['CloseMyAccountHelper'] =  __DIR__ . '/CloseMyAccountHelper.class.php';
 
 $wgExtensionMessagesFiles['CloseMyAccount'] = __DIR__ . '/CloseMyAccount.i18n.php' ;
+$wgExtensionMessagesFiles['CloseMyAccountAliases'] = __DIR__ . '/CloseMyAccount.aliases.php';
 
 $wgSpecialPages['CloseMyAccount'] = 'CloseMyAccountSpecialController';
 $wgSpecialPageGroups['CloseMyAccount'] = 'wikia';

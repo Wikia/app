@@ -14,7 +14,7 @@
 
 $wikiahubs-line-height: 16px;
 
-.WikiaArticleCategories {
+.article-categories {
 	display: none;
 }
 
@@ -70,13 +70,13 @@ $wikiahubs-line-height: 16px;
 			width: 20px;
 		}
 		.facebook {
-			background-image: url("/extensions/wikia/WikiaHubsV3/images/fb.png"); /* base64 */
+			background-image: url("/extensions/wikia/WikiaHubsV3/images/fb.png"); /* inline */
 		}
 		.twitter {
-			background-image: url("/extensions/wikia/WikiaHubsV3/images/twitter.png"); /* base64 */
+			background-image: url("/extensions/wikia/WikiaHubsV3/images/twitter.png"); /* inline */
 		}
 		.gplus {
-			background-image: url("/extensions/wikia/WikiaHubsV3/images/gplus.png"); /* base64 */
+			background-image: url("/extensions/wikia/WikiaHubsV3/images/gplus.png"); /* inline */
 		}
 	}
 }

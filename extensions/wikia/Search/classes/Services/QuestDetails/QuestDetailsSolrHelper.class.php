@@ -8,6 +8,8 @@ class QuestDetailsSolrHelper {
 
 	const DEFAULT_THUMBNAIL_HEIGHT = 200;
 
+	const SQL_CACHE_TIME = 600;
+
 	private $imageDimensionFields = [
 		'width',
 		'height'
@@ -18,6 +20,8 @@ class QuestDetailsSolrHelper {
 	 */
 	protected $abstractLength = self::DEFAULT_ABSTRACT_LENGTH;
 
+	protected $metadataBlacklistFields = [ "id" => true, "wid_i"=>true, "_version_" => true ];
+
 	/**
 	 * @param int $abstractLength
 	 */
@@ -26,52 +30,93 @@ class QuestDetailsSolrHelper {
 	}
 
 	public function getRequiredSolrFields() {
-		return [ 'pageid', 'title_*', 'url', 'ns', 'article_type_s', 'categories_*', 'html_*', 'metadata_*' ];
+		return [ 'pageid', 'title_*', 'url', 'ns', 'article_type_s', 'categories_*', 'html_*' ];
 	}
 
-	public function consumeResponse( $response, $metadataOnly = false ) {
-		$result = [ ];
-		foreach ( $response as $item ) {
-
-			if( $metadataOnly ) {
-				$id = $item[ 'pageid' ];
-				$result[ $id ] = $this->getMetadata( $item );
-			} else {
-				$resultItem = [
-					// These fields must be present always
-					'id' => $item[ 'pageid' ],
-					'title' => $this->findFirstValueByKeyPrefix( $item, 'title_', '' ),
-					'url' => $item[ 'url' ],
-					'ns' => $item[ 'ns' ],
-					'revision' => $this->getRevision( $item )
-				];
-
-				$comments = $this->getCommentsNumber( $item );
-				if( isset( $comments ) ) {
-					$resultItem[ 'comments' ] = $comments;
-				}
-
-				$type = $item[ 'article_type_s' ];
-				$this->addIfNotEmpty( $resultItem, 'type', $type );
-
-				$categories = $this->findFirstValueByKeyPrefix( $item, 'categories_', [ ] );
-				$this->addIfNotEmpty( $resultItem, 'categories', $categories );
-
-				$abstract = $this->getAbstract( $item );
-				$this->addIfNotEmpty( $resultItem, 'abstract', $abstract );
-
-				$metadata = $this->getMetadata( $item );
-				$this->addIfNotEmpty( $resultItem, 'metadata', $metadata );
-
-				$result[ ] = $resultItem;
+	public function processMetadata( $metadata ) {
+		$out = [ ];
+		foreach ( $metadata as $id => $row ) {
+			$meta = $this->getMetadata( $row );
+			if ( !empty( $meta ) ) {
+				$out[ $id ] = $meta;
 			}
 		}
+		return $out;
+	}
 
-		if( !$metadataOnly ) {
-			$this->addThumbnailsInfo( $result );
+	public function consumeResponse( $response ) {
+		$result = [ ];
+		foreach ( $response as $item ) {
+			$resultItem = [
+				// These fields must be present always
+				'id' => $item[ 'pageid' ],
+				'title' => $this->findFirstValueByKeyPrefix( $item, 'title_', '' ),
+				'url' => $item[ 'url' ],
+				'ns' => $item[ 'ns' ],
+				'revision' => $this->getRevision( $item )
+			];
+
+			$comments = $this->getCommentsNumber( $item );
+			if( isset( $comments ) ) {
+				$resultItem[ 'comments' ] = $comments;
+			}
+
+			$type = $item[ 'article_type_s' ];
+			$this->addIfNotEmpty( $resultItem, 'type', $type );
+
+			$categories = $this->findFirstValueByKeyPrefix( $item, 'categories_', [ ] );
+			$this->addIfNotEmpty( $resultItem, 'categories', $categories );
+
+			$abstract = $this->getAbstract( $item );
+			$this->addIfNotEmpty( $resultItem, 'abstract', $abstract );
+
+			$metadata = $this->getMetadata( $item["metadata"] );
+			$this->addIfNotEmpty( $resultItem, 'metadata', $metadata );
+
+			$result[ ] = $resultItem;
 		}
 
+		$this->addThumbnailsInfo( $result );
+
 		return $result;
+	}
+
+	public function addCategories( $resultArray, $categoriesArray ) {
+		foreach ( $resultArray as $key => $item ) {
+			if ( isset( $categoriesArray[ $item[ 'id' ] ] ) ) {
+				$resultArray[ $key ][ 'categories' ] = $categoriesArray[ $item[ 'id' ] ];
+			}
+		}
+		return $resultArray;
+	}
+
+	public function filterIdsByCategory( array $categriesIDArray, $category ) {
+		foreach ( $categriesIDArray as $id => $categories ) {
+			if ( !in_array( $category, $categories ) ) {
+				unset ( $categriesIDArray[ $id ] );
+			}
+		}
+		return $categriesIDArray;
+	}
+
+	public function findCategoriesForIds( array $ids ) {
+		$db = wfGetDB( DB_SLAVE );
+		$out = ( new WikiaSQL() )
+			->SELECT( "cl_to, cl_from" )
+			->FROM( 'categorylinks' )
+			->WHERE( 'cl_from' )->IN( $ids )
+			->cache( self::SQL_CACHE_TIME )
+			->runLoop( $db, function ( &$out, $row ) {
+				$out[ $row->cl_from ][ ] = $row->cl_to;
+			} );
+		return $out;
+	}
+
+	public function fixUrls( array $results, $basepath ) {
+		foreach ( $results as $k => &$item ) {
+			$item[ "url" ] = $basepath . $item[ "url" ];
+		}
+		return $results;
 	}
 
 	/**
@@ -119,97 +164,47 @@ class QuestDetailsSolrHelper {
 	 *      ]
 	 * ]
 	 */
-	protected function getMetadata( $item ) {
+	protected function getMetadata( $metadata ) {
 
-		$metadata = [ ];
-		foreach ( $item as $key => $value ) {
-			if ( startsWith( $key, 'metadata_' )
-				&& !startsWith( $key, 'metadata_map_' )
-			) {
+		$output = [ "map_location" => [ ] ];
+		foreach ( $metadata as $field => $value ) {
+			if ( is_array( $value ) ) {
+				$value = $this->removeEmptyItems( $value );
+			}
 
-				if ( endsWith( $key, '_s' ) ) {
+			if ( empty( $value ) ) {
+				continue;
+			}
 
-					$metadataKey = $this->cutPrefixAndSuffix( $key, 'metadata_', '_s' );
+			if ( isset( $this->metadataBlacklistFields[ $field ] ) ) {
+				continue;
+			}
 
-					$this->addIfNotEmpty( $metadata, $metadataKey, $value );
-
-				} else if ( endsWith( $key, '_ss' ) ) {
-
-					$metadataKey = $this->cutPrefixAndSuffix( $key, 'metadata_', '_ss' );
-
-					if ( $metadataKey == 'fingerprint_ids' ) {
-						$metadataKey = 'fingerprints';
-					}
-
-					$this->addIfNotEmpty( $metadata, $metadataKey, $value );
+			$newName = preg_replace( "~(.*?)(_mv){0,1}(_[a-z]{1,2})$~i", "\\1", $field );
+			if ( strpos( $newName, "map_" ) === 0 ) {
+				$newName = substr( $newName, 4 );
+				if ( $newName === "location" ) {
+					$coordinates = $this->parseCoordinates( $value );
+					$output[ "map_location" ][ 'latitude' ] = $coordinates[ 'x' ];
+					$output[ "map_location" ][ 'longitude' ] = $coordinates[ 'y' ];
+				}else{
+					$output[ "map_location" ] [ $newName ] = $value;
 				}
+			} else {
+				if ( $newName == "fingerprint_ids" ) {
+					$newName = "fingerprints";
+				}
+				$output[ $newName ] = $value;
 			}
 		}
 
-		$metadataMap = $this->getMetadataMap( $item );
-
-		if( !empty( $metadataMap ) ) {
-			$metadata[ 'map_location' ] = $metadataMap;
+		if ( empty( $output[ "map_location" ] ) ) {
+			unset( $output[ "map_location" ] );
 		}
 
-		return $metadata;
+		return $output;
 	}
 
-	/**
-	 * Searches for fields, which starts with prefix 'metadata_map_'
-	 * (e.g. 'metadata_map_location_sr', 'metadata_map_region_s')
-	 * and groups these fields into separate object.
-	 *
-	 * Prefix 'metadata_map_' and suffixes '_s' (or '_sr') - will be removed.
-	 *
-	 * If field has suffix '_s' - it will be copied as is.
-	 *
-	 * If field has suffix '_sr' - it will be parsed, in the following way:
-	 * '12.3, 45.6' -> will be parsed to float numbers 12.3 and 45.6
-	 * first number - will get suffix '_x', and second number will get suffix '_y'.
-	 *
-	 * Example:
-	 *
-	 * Input:
-	 * [
-	 *      'metadata_map_location_cr' => '12.3, 45.6',
-	 *      'metadata_map_region_s' => 'Test',
-	 *      'some_other_field' => 'test'
-	 * ]
-	 *
-	 * Output:
-	 * [
-	 *      'location_x' => 12.3,
-	 *      'location_y' => 45.6,
-	 *      'region' => 'Test'
-	 * ]
-	 */
-	protected function getMetadataMap( $item ) {
-		$map = [ ];
-		foreach ( $item as $key => $value ) {
-			if ( startsWith( $key, 'metadata_map_' ) ) {
-
-				if ( endsWith( $key, '_s' ) ) {
-
-					$mapKey = $this->cutPrefixAndSuffix( $key, 'metadata_map_', '_s' );
-
-					$this->addIfNotEmpty( $map, $mapKey, $value );
-
-				} else if ( endsWith( $key, '_sr' ) ) {
-
-					$mapKey = $this->cutPrefixAndSuffix( $key, 'metadata_map_', '_sr' );
-
-					if( !empty( $value ) ) {
-						$coordinates = $this->parseCoordinates( $value );
-
-						$map[ 'latitude' ] = $coordinates[ 'x' ];
-						$map[ 'longitude' ] = $coordinates[ 'y' ];
-					}
-				}
-			}
-		}
-		return $map;
-	}
 
 	/**
 	 * Parsing string with coordinates

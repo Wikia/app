@@ -1,7 +1,6 @@
 <?php
 
 class HandlebarsService {
-
 	const PARTIALS_DIRECTORY = 'partials';
 	const PARTIALS_PREFIX = '_';
 	const TEMPLATES_DIRECTORY = 'templates';
@@ -77,7 +76,6 @@ class HandlebarsService {
 		wfProfileOut( __METHOD__ . " - template: {$path}" );
 
 		wfProfileOut( __METHOD__ );
-
 		return $contents;
 	}
 

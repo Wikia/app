@@ -17,7 +17,8 @@ $wgExtensionCredits['monetizationmodule'][] = [
 		'Saipetch Kongkatong',
 		'Ted Gill',
 	],
-	'description' => 'Monetization Module',
+	'descriptionmsg' => 'monetizationmodule-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/MonetizationModule'
 ];
 
 $dir = dirname( __FILE__ ) . '/';
@@ -31,5 +32,4 @@ $wgAutoloadClasses['MonetizationModuleHooks'] = $dir . 'MonetizationModuleHooks.
 $wgExtensionMessagesFiles['MonetizationModule'] = $dir . 'MonetizationModule.i18n.php';
 
 // hooks
-$wgHooks['WikiaSkinTopScripts'][] = 'MonetizationModuleHooks::onWikiaSkinTopScripts';
-
+$wgHooks['OasisSkinAssetGroupsBlocking'][] = 'MonetizationModuleHooks::onOasisSkinAssetGroupsBlocking';

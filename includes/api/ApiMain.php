@@ -79,6 +79,7 @@ class ApiMain extends ApiBase {
 		'patrol' => 'ApiPatrol',
 		'import' => 'ApiImport',
 		'userrights' => 'ApiUserrights',
+		'options' => 'ApiOptions',
 	);
 
 	/**
@@ -653,12 +654,17 @@ class ApiMain extends ApiBase {
 	 * @param $module ApiBase An Api module
 	 */
 	protected function checkExecutePermissions( $module ) {
+
+		$accessAllowedByController = $this->accessAllowedByController();
+
 		$user = $this->getUser();
 		if ( $module->isReadMode() && !in_array( 'read', User::getGroupPermissions( array( '*' ) ), true ) &&
-			!$user->isAllowed( 'read' ) )
+			!$user->isAllowed( 'read' ) && !$accessAllowedByController )
 		{
 			$this->dieUsageMsg( 'readrequired' );
 		}
+
+		// TODO: do we have to take into account $accessAllowedByController for write mode?
 		if ( $module->isWriteMode() ) {
 			if ( !$this->mEnableWrite ) {
 				$this->dieUsageMsg( 'writedisabled' );
@@ -1058,6 +1064,46 @@ class ApiMain extends ApiBase {
 	 */
 	public function getFormats() {
 		return $this->mFormats;
+	}
+
+	/**
+	 * Gets controller from request, and delegates to given controller - checking of access permissions
+	 *
+	 * @return bool
+	 * @throws WikiaException
+	 * @throws ControllerNotFoundException
+	 */
+	protected function accessAllowedByController() {
+
+		// Code for instantination of controller copied from method WikiaDispatcher::dispatch
+
+		$originalRequest = RequestContext::getMain()->getRequest();
+		$app = WikiaApp::app();
+
+		global $wgAutoloadClasses;
+		// Determine the "base" name for the controller, stripping off Controller/Service/Module
+		$controllerName = $app->getBaseName( $originalRequest->getVal( 'controller' ) );
+		if ( empty( $controllerName ) ) {
+			return false;
+		}
+
+		// Service classes must be dispatched by full name otherwise we look for a controller.
+		if ( $app->isService( $originalRequest->getVal( 'controller' ) ) ) {
+			$controllerClassName = $app->getServiceClassName( $controllerName );
+		} else {
+			$controllerClassName = $app->getControllerClassName( $controllerName );
+		}
+
+		if ( empty( $wgAutoloadClasses[ $controllerClassName ] ) ) {
+			return false;
+		}
+
+		// Determine the final name for the controller and method based on any routing rules
+		$controller = new $controllerClassName; /* @var $controller WikiaController */
+
+		$accessAllowedByController = $controller->isAnonAccessAllowedInCurrentContext();
+
+		return $accessAllowedByController;
 	}
 }
 

@@ -63,7 +63,7 @@ OO.inheritClass( ve.dm.MWTemplateModel, ve.dm.MWTransclusionPartModel );
  */
 ve.dm.MWTemplateModel.newFromData = function ( transclusion, data ) {
 	var key,
-		template = new ve.dm.MWTemplateModel( transclusion, data.target, 'data' );
+		template = new ve.dm.WikiaTemplateModel( transclusion, data.target, 'data' );
 
 	for ( key in data.params ) {
 		template.addParameter(
@@ -96,7 +96,7 @@ ve.dm.MWTemplateModel.newFromName = function ( transclusion, name ) {
 	// TODO: Do we need to account for the title being invalid?
 	href = new mw.Title( href ).getPrefixedText();
 
-	return new ve.dm.MWTemplateModel( transclusion, { 'href': href, 'wt': name }, 'user' );
+	return new ve.dm.WikiaTemplateModel( transclusion, { 'href': href, 'wt': name }, 'user' );
 };
 
 /* Methods */
@@ -308,24 +308,6 @@ ve.dm.MWTemplateModel.prototype.addPromptedParameters = function () {
 };
 
 /**
- * Add all unused parameters, if any.
- * TODO: Wikia (ve-sprint-25): Re-implement without modifying core class
- *
- * @method
- */
-ve.dm.MWTemplateModel.prototype.addUnusedParameters = function () {
-	var i, len,
-		spec = this.getSpec(),
-		names = spec.getParameterNames();
-
-	for ( i = 0, len = names.length; i < len; i++ ) {
-		if ( !this.hasParameter( names[i] ) ) {
-			this.addParameter( new ve.dm.MWParameterModel( this, names[i] ) );
-		}
-	}
-};
-
-/**
  * Set original data, to be used as a base for serialization.
  *
  * @returns {Object} Template data
@@ -344,16 +326,8 @@ ve.dm.MWTemplateModel.prototype.serialize = function () {
 		),
 		params = this.getParameters();
 
-	if ( !template.originalParams ) {
-		template.originalParams = this.originalData ? Object.keys( this.originalData.params ) : [];
-	}
-
 	for ( name in params ) {
 		if ( name === '' ) {
-			continue;
-		}
-		// TODO: Wikia (ve-sprint-25): Re-implement without modifying core class
-		if ( params[name].getValue() === '' && template.originalParams.indexOf( name ) === -1 ) {
 			continue;
 		}
 		template.params[params[name].getOriginalName()] = { 'wt': params[name].getValue() };
@@ -368,15 +342,10 @@ ve.dm.MWTemplateModel.prototype.serialize = function () {
 ve.dm.MWTemplateModel.prototype.getWikitext = function () {
 	var param,
 		wikitext = this.getTarget().wt,
-		params = this.getParameters(),
-		originalParams = this.originalData ? Object.keys( this.originalData.params ) : [];
+		params = this.getParameters();
 
 	for ( param in params ) {
 		if ( param === '' ) {
-			continue;
-		}
-		// TODO: Wikia (ve-sprint-25): Re-implement without modifying core class
-		if ( params[param].getValue() === '' && originalParams.indexOf( param ) === -1 ) {
 			continue;
 		}
 		wikitext += '|' + param + '=' +

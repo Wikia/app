@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * Class VideoThumbnailTest
+ *
+ * @group MediaFeatures
+ */
 class VideoThumbnailTest extends WikiaBaseTest {
 
 	const TEST_CITY_ID = 79860;

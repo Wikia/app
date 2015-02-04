@@ -61,12 +61,12 @@ class CategorySelectHelper {
 			$viewModeActions = array( 'view', 'purge' );
 			$editModeActions = array( 'edit', 'submit' );
 			$supportedActions = array_merge( $viewModeActions, $editModeActions );
-			$supportedSkins = array( 'SkinAnswers', 'SkinOasis' );
+			$supportedSkins = array( 'SkinAnswers', 'SkinOasis', 'SkinVenus' );
 
 			$isViewMode = in_array( $action, $viewModeActions );
 			$isEditMode = in_array( $action, $editModeActions );
-			$extraNamespacesOnView = array( NS_FILE, NS_CATEGORY, NS_VIDEO );
-			$extraNamespacesOnEdit = array( NS_FILE, NS_CATEGORY, NS_VIDEO, NS_USER, NS_SPECIAL );
+			$extraNamespacesOnView = array( NS_FILE, NS_CATEGORY );
+			$extraNamespacesOnEdit = array( NS_FILE, NS_CATEGORY, NS_USER, NS_SPECIAL );
 
 			$isEnabled = true;
 

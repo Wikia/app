@@ -37,6 +37,18 @@ class WikiaHubsV3Controller extends WikiaController {
 	 * Main method for displaying hub pages
 	 */
 	public function index() {
+		global $wgCityId;
+
+		$wikiFactoryHub = WikiFactoryHub::getInstance();
+		$verticalId = $wikiFactoryHub->getVerticalId($wgCityId);
+
+		$currentHub = '';
+		$allVerticals = $wikiFactoryHub->getAllVerticals();
+		if ( isset( $allVerticals[$verticalId]['short'] ) ) {
+			$currentHub = $allVerticals[$verticalId]['short'];
+		}
+		$this->setVal( 'currentHub', $currentHub );
+
 		if (!$this->checkAccess()) {
 			$titleText = $this->getContext()->getTitle()->getText();
 			$titleTextSplit = explode('/', $titleText);

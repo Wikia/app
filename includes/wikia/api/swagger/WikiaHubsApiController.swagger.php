@@ -67,8 +67,8 @@ use Swagger\Annotations as SWG;
  *
  * @SWG\Model( id="WikiaHubsListResultSet" )
  * 	@SWG\Property(
- * 		name="list",
- * 		type="HubInfo",
+ * 		name="HubInfo",
+ * 		type="List",
  * 		items="$ref:HubInfo",
  * 		required="true",
  * 		description="Hubs collection"

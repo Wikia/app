@@ -74,7 +74,7 @@ ve.init.mw.WikiaViewPageTarget.static.toolbarGroups = [
 		'type': 'list',
 		'label': OO.ui.deferMsg( 'visualeditor-toolbar-insert' ),
 		'indicator': 'down',
-		'include': [ 'wikiaMediaInsert', 'wikiaMapInsert', 'number', 'bullet', 'transclusion', 'reference', 'referenceList' ]
+		'include': [ 'wikiaMediaInsert', 'wikiaSingleMedia', 'wikiaMapInsert', 'number', 'bullet', 'wikiaTemplateInsert', 'reference', 'referenceList' ]
 	}
 ];
 
@@ -113,7 +113,7 @@ ve.init.mw.WikiaViewPageTarget.prototype.getNonEditableUIElements = function () 
 		$elements = $( '#mw-content-text' );
 	}
 
-	$elements = $elements.add( '.WikiaArticleCategories' );
+	$elements = $elements.add( '.article-categories' );
 
 	return $elements;
 };
@@ -222,10 +222,25 @@ ve.init.mw.WikiaViewPageTarget.prototype.getToolbar = function () {
  * @inheritdoc
  */
 ve.init.mw.WikiaViewPageTarget.prototype.hideSpinner = function () {
-	var $spinner = $( '.ve-spinner[data-type="loading"]' );
+	var $spinner = $( '.ve-spinner[data-type="loading"]' ),
+		$throbber = $spinner.children(),
+		$fade = $( '.ve-spinner-fade' );
+
 	if ( $spinner.is( ':visible' ) ) {
-		$spinner.fadeOut( 400 );
+		$throbber.hide();
+		$fade.css( 'opacity', 1 );
+
+		if ( this.timeout ) {
+			setTimeout ( ve.bind( this.afterSpinnerFadeOpacityIn, this, $spinner, $throbber ), this.timeout );
+		} else {
+			this.afterSpinnerFadeOpacityIn( $spinner, $throbber );
+		}
 	}
+};
+
+ve.init.mw.WikiaViewPageTarget.prototype.afterSpinnerFadeOpacityIn = function ( $spinner, $throbber ) {
+	$spinner.hide();
+	$throbber.show();
 };
 
 /**
@@ -335,4 +350,16 @@ ve.init.mw.WikiaViewPageTarget.prototype.onSaveError = function ( doc, saveData,
 		} );
 	}
 	ve.init.mw.WikiaViewPageTarget.super.prototype.onSaveError.call( this, doc, saveData, jqXHR, status, data );
+};
+
+/**
+ * @inheritdoc
+ */
+ve.init.mw.WikiaViewPageTarget.prototype.maybeShowDialogs = function () {
+	// Parent method
+	ve.init.mw.WikiaViewPageTarget.super.prototype.maybeShowDialogs.call( this );
+	if ( parseInt( mw.config.get( 'showVisualEditorTransitionDialog' ) ) === 1 ) {
+		this.surface.getDialogs().getWindow( 'wikiaPreference' ).open( null, null, this.surface );
+	}
+	//this.surface.getDialogs().getWindow( 'wikiaSingleMedia' ).open( null, null, this.surface );
 };

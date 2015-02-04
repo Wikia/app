@@ -1,5 +1,6 @@
 /*global define, setTimeout, clearTimeout*/
 /*jshint camelcase:false*/
+/*jshint maxlen:127*/
 define('ext.wikia.adEngine.wikiaGptAdDetect', [
 	'wikia.log',
 	'wikia.window',
@@ -33,9 +34,15 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 	}
 
 	function findAdInIframe(slotname, iframe, adCallback, noAdCallback) {
-		var iframeHeight, iframeContentHeight, iframeId, iframeDoc;
+		var iframeHeight, iframeContentHeight, iframeDoc;
 
-		iframeDoc = iframe.contentWindow.document;
+		try {
+			iframeDoc = iframe.contentWindow.document;
+		} catch (e) {
+			// Frame with origin "http://tpc.googlesyndication.com" is used for SafeFrame ads
+			log(['findAdInIframe', slotname, 'ad iframe not accessible (or not found): assuming success'], 'error', logGroup);
+			return adCallback();
+		}
 
 		// Because Chrome reports document.body.offsetHeight as the outer
 		// iframe height, we're setting the outer height to 0, so the innerHeight
@@ -84,7 +91,14 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 
 		log(['getAdType', slotname], 'info', logGroup);
 
-		if (iframe && iframe.contentWindow && iframe.contentWindow.AdEngine_adType) {
+		try {
+			iframeOk = !!iframe.contentWindow.document.querySelector;
+		} catch (e) {
+			// Frame with origin "http://tpc.googlesyndication.com" is used for SafeFrame ads
+			log(['getAdType', slotname, 'ad iframe not accessible (or not found)'], 'error', logGroup);
+		}
+
+		if (iframeOk && iframe.contentWindow.AdEngine_adType) {
 			log(['getAdType', slotname, 'iframe AdEngine_adType = ', iframe.contentWindow.AdEngine_adType], 'info', logGroup);
 
 			return iframe.contentWindow.AdEngine_adType;
@@ -107,16 +121,8 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 			return 'always_success';
 		}
 
-		try {
-			iframeOk = !!iframe.contentWindow.document.querySelector;
-		} catch (e) {}
-
 		if (!iframeOk) {
-			log(
-				['getAdType', slotname, 'running ad callback (no ad iframe found)'],
-				'error',
-				logGroup
-			);
+			log(['getAdType', slotname, 'running ad callback (!iframeOk)'], 'error', logGroup);
 			return 'always_success';
 		}
 
@@ -134,19 +140,26 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 		var adType = getAdType(slotname, gptEvent, iframe),
 			shouldPollForSuccess = false,
 			expectAsyncHop = false,
+			expectAsyncHopWithSlotName = false,
 			expectAsyncSuccess = false,
 			successTimer;
 
-		function noop() {}
+		function noop() { return; }
 
-		function callAdCallback() {
+		function callAdCallback(extra) {
+			extra = extra || {};
+			extra.adType = adType;
+
 			clearTimeout(successTimer);
-			adCallback({adType: adType});
+			adCallback(extra);
 		}
 
-		function callNoAdCallback() {
+		function callNoAdCallback(extra) {
+			extra = extra || {};
+			extra.adType = adType;
+
 			clearTimeout(successTimer);
-			noAdCallback({adType: adType});
+			noAdCallback(extra);
 		}
 
 		function pollForSuccess() {
@@ -158,11 +171,11 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 		}
 
 		function msgCallback(data) {
-			log(['msgCallback', slotname, 'caught message' , data.status], 'info', logGroup);
+			log(['msgCallback', slotname, 'caught message', data], 'info', logGroup);
 
 			if (data.status === 'success') {
 				if (expectAsyncSuccess) {
-					callAdCallback();
+					callAdCallback(data.extra);
 				} else {
 					log(
 						['msgCallback', slotname, 'Got asynchronous success message, while not expecting it'],
@@ -173,8 +186,8 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 			}
 
 			if (data.status === 'hop') {
-				if (expectAsyncHop) {
-					callNoAdCallback();
+				if (expectAsyncHop || expectAsyncHopWithSlotName) {
+					callNoAdCallback(data.extra);
 				} else {
 					log(
 						['msgCallback', slotname, 'Got asynchronous hop message, while not expecting it'],
@@ -195,7 +208,12 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 			expectAsyncSuccess = true;
 		}
 
-		log(['onAdLoad', slotname, 'adType' , adType], 'info', logGroup);
+		if (adType === 'gumgum') {
+			expectAsyncHopWithSlotName = true;
+			shouldPollForSuccess = true; // TODO: there's no way to detect the GumGum success :-(
+		}
+
+		log(['onAdLoad', slotname, 'adType', adType], 'info', logGroup);
 
 		if (adType === 'forced_success' || adType === 'always_success') {
 			return callAdCallback();
@@ -215,6 +233,10 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 
 		if (expectAsyncHop || expectAsyncSuccess) {
 			messageListener.register({source: iframe.contentWindow, dataKey: 'status'}, msgCallback);
+		}
+
+		if (expectAsyncHopWithSlotName) {
+			messageListener.register({dataKey: 'slot_' + slotname}, msgCallback);
 		}
 
 		if (expectAsyncHop && (shouldPollForSuccess || expectAsyncSuccess)) {

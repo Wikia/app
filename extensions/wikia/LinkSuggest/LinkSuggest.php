@@ -29,6 +29,7 @@ $wgExtensionCredits['other'][] = array(
 		'Jesús Martínez Novo', 'Jack Phoenix', 'Sean Colombo', 'Robert Elwell',
 	),
 	'descriptionmsg' => 'linksuggest-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/LinkSuggest'
 );
 
 // ResourceLoader support (MW 1.17+)

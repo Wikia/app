@@ -17,7 +17,6 @@ $color-input-field-shadow: mix($color-input-field, #000, 95%);
 	outline: 0;
 	padding: 3px;
 	margin: 0;
-	-webkit-box-sizing: content-box;
 	-webkit-appearance: textfield;
 	&::-webkit-input-placeholder {
 		color: mix($color-page, $color-text, 30%);
@@ -46,7 +45,6 @@ $color-input-field-shadow: mix($color-input-field, #000, 95%);
 	font-size: 13px;
 	margin: 0;
 	padding: 8px;
-	-webkit-box-sizing: content-box;
 	-webkit-appearance: textfield;
 	&:focus {
 		background-color: mix($color-page-opposite, $color-page, 6%);

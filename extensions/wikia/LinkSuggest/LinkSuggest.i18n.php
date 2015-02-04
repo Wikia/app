@@ -97,6 +97,13 @@ $messages['es'] = array(
 	'tog-redirected-from' => '&ndash; redirigido desde $1',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'linksuggest-desc' => 'پیوندهای پیشنهادشده به ویراستاران برای نمایش ویرایش',
+);
+
 /** Finnish (suomi)
  * @author Centerlink
  * @author Nedergard
@@ -456,10 +463,11 @@ $messages['zh-hans'] = array(
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  * @author Frankou
+ * @author LNDDYL
  * @author Lauhenry
  */
 $messages['zh-hant'] = array(
-	'linksuggest-desc' => '在編輯畫面中提供編輯者一些鏈接建議',
-	'tog-disablelinksuggest' => '源代碼模式時不顯示鏈接建議',
+	'linksuggest-desc' => '在編輯畫面中提供編輯者一些連結建議',
+	'tog-disablelinksuggest' => '原始碼模式時不顯示連結建議',
 	'tog-redirected-from' => '&ndash;重定向自$1',
 );

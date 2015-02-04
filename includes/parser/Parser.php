@@ -181,6 +181,18 @@ class Parser {
 	var $mUniqPrefix;
 
 	/**
+	 * Wikia change begin
+	 *
+	 * Wikia vars
+	 */
+
+	var $mIsMainParse;	# Is main article content currently parsed
+
+	/**
+	 * Wikia change end
+	 */
+
+	/**
 	 * Constructor
 	 *
 	 * @param $conf array
@@ -488,8 +500,11 @@ class Parser {
 			// which looks much like the problematic '-'.
 			$limitReport = str_replace( array( '-', '&' ), array( '‐', '&amp;' ), $limitReport );
 
-			$text .= "\n<!-- \n$limitReport-->\n";
+			if ( !empty( $limitReport ) ) {
+				$text .= "\n<!-- \n$limitReport-->\n";
+			}
 		}
+
 		$this->mOutput->setText( $text );
 
 		$this->mRevisionId = $oldRevisionId;
@@ -1753,6 +1768,7 @@ class Parser {
 
 		$imagesfrom = $this->mOptions->getAllowExternalImagesFrom();
 		$imagesexception = !empty( $imagesfrom );
+		$isValidImageUrl = VignetteRequest::isVignetteUrl($url) || preg_match(self::EXT_IMAGE_REGEX, $url);
 		$text = false;
 		# $imagesfrom could be either a single string or an array of strings, parse out the latter
 		if ( $imagesexception && is_array( $imagesfrom ) ) {
@@ -1771,13 +1787,12 @@ class Parser {
 		if ( $this->mOptions->getAllowExternalImages()
 			 || ( !empty( $wgAllowExternalWhitelistImages ) && wfRunHooks( 'outputMakeExternalImage', array( &$url ) ) )
 			 || ( $imagesexception && $imagematch ) ) {
-			if ( preg_match( self::EXT_IMAGE_REGEX, $url ) ) {
+			if ( $isValidImageUrl ) {
 				# Image found
 				$text = Linker::makeExternalImage( $url );
 			}
 		}
-		if ( !$text && $this->mOptions->getEnableImageWhitelist()
-			 && preg_match( self::EXT_IMAGE_REGEX, $url ) ) {
+		if ( !$text && $this->mOptions->getEnableImageWhitelist() && $isValidImageUrl ) {
 			$whitelist = explode( "\n", wfMsgForContent( 'external_image_whitelist' ) );
 			foreach ( $whitelist as $entry ) {
 				# Sanitize the regex fragment, make it case-insensitive, ignore blank entries/comments
@@ -2000,7 +2015,7 @@ class Parser {
 
 			if ( $might_be_img ) { # if this is actually an invalid link
 				wfProfileIn( __METHOD__."-might_be_img" );
-				if ( ( $ns == NS_FILE || $ns == NS_VIDEO ) && $noforce ) { # but might be an image
+				if ( ( $ns == NS_FILE ) && $noforce ) { # but might be an image
 					$found = false;
 					while ( true ) {
 						# look at the next 'line' to see if we can close it there
@@ -4321,6 +4336,10 @@ class Parser {
 	function formatHeadings( $text, $origText, $isMain=true ) {
 		global $wgMaxTocLevel, $wgHtml5, $wgExperimentalHtmlIds;
 
+		// Wikia change start
+		$this->mIsMainParse = $isMain;
+		// Wikia change end
+
 		# Inhibit editsection links if requested in the page
 		if ( isset( $this->mDoubleUnderscores['noeditsection'] ) ) {
 			$maybeShowEditLink = $showEditLink = false;
@@ -5608,6 +5627,8 @@ class Parser {
 		Wikia\Logger\WikiaLogger::instance()->info(__METHOD__, [
 			'exception' => new Exception()
 		]);
+
+		Transaction::setAttribute( Transaction::PARAM_PARSER_CACHE_DISABLED, true );
 		// Wikia change - end
 	}
 

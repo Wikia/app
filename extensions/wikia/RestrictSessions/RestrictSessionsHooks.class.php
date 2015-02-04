@@ -55,25 +55,44 @@ class RestrictSessionsHooks extends \ContextSource {
 			return true;
 		}
 
-		$restrictSession = false;
+		$cookieUser = User::newFromId( $cookieUserId );
 
-		if ( $cookieUserId === $sessionUserId ) {
-			$restrictSession = User::newFromId( $cookieUserId )->isAllowed( 'restrictsession' );
-		} else {
-			// Check both cookie and session for the user because the user
-			// can be loaded from both
-			$cookieUser = User::newFromId( $cookieUserId );
-			$sessionUser = User::newFromId( $sessionUserId );
+		if ( $cookieUser->isAnon() ) {
+			// Don't load a staff session from just a session cookie.
+			if ( $sessionUserId !== null ) {
+				$sessionUser = User::newFromId( $sessionUserId );
+				if ( $sessionUser->isAllowed( 'restrictsession' ) ) {
+					$user->loadDefaults();
+					$result = false;
+				}
+			}
 
-			$restrictSession = $cookieUser->isAllowed( 'restrictsession' )
-				|| $sessionUser->isAllowed( 'restrictsession' );
+			return true;
+		} elseif ( $sessionUserId !== null && $cookieUserId != $sessionUserId ) {
+			$user->loadDefaults();
+			$result = false;
+			return true;
 		}
 
+		$restrictSession = $cookieUser->isAllowed( 'restrictsession' );
+
 		if ( $restrictSession ) {
-			$ipAddr = $request->getSessionData( self::IP_SESSION_KEY );
 			$reqIp = $request->getIP();
+			$cookieToken = $request->getCookie( 'Token' );
+
+			if ( $sessionUserId === null && $cookieToken !== null ) {
+				// If the user has opted to remember their login, check the token
+				// and update session data
+				$token = rtrim( $cookieUser->getToken( false ) );
+				if ( strlen( $token ) && \hash_equals( $token, $cookieToken ) ) {
+					$request->setSessionData( self::IP_SESSION_KEY, $reqIp );
+				}
+			}
+
+			$ipAddr = $request->getSessionData( self::IP_SESSION_KEY );
 
 			if ( $reqIp !== $ipAddr && !$this->isWhiteListedIP( $reqIp ) ) {
+				$user->loadDefaults();
 				$result = false;
 			}
 		}

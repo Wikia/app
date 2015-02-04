@@ -43,7 +43,7 @@ class WikiaHomePageController extends WikiaController {
 	const REMIX_GRID_IMG_BIG_WIDTH = 330;
 	const REMIX_GRID_IMG_BIG_HEIGHT = 320;
 	const hubsGridImgWidth = 330;
-	const hubsGridImgHeight = 160;
+	const hubsGridImgHeight = 210;
 	// skin change values end
 
 	const INITIAL_BATCHES_NUMBER = 3;
@@ -442,6 +442,7 @@ class WikiaHomePageController extends WikiaController {
 	 */
 	public function getHubV3Images( $cityId ) {
 		$imageUrl = null;
+		$destSize = $this->getHubsImgWidth() . 'x' . $this->getHubsImgHeight();
 		$sliderData = $this->getHubSliderData( [ 'city' => $cityId ] );
 
 		if ( isset( $sliderData['data']['slides'][0]['photoName'] ) ) {
@@ -451,7 +452,7 @@ class WikiaHomePageController extends WikiaController {
 			if ( $title !== null ) {
 				$file = new GlobalFile( $title );
 				if ( $file !== null ) {
-					$imageUrl = $file->getUrl();
+					$imageUrl = ImagesService::getThumbUrlFromFileUrl( $file->getUrl(), $destSize );
 				}
 			}
 		}

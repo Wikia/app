@@ -10,10 +10,11 @@
  */
 
 $wgExtensionCredits['other'][] = array(
-	'name'			=> 'SpecialPromote',
-	'author'		=> 'Andrzej "nAndy" Łukaszewski, Marcin Maciejewski, Sebastian Marzjan',
-	'description'	=> 'SpecialPromote page is enable for admins to add information about their wiki. After review of those informations it can show up on wikia.com',
-	'version'		=> 1.0
+	'name'				=> 'SpecialPromote',
+	'author'			=> 'Andrzej "nAndy" Łukaszewski, Marcin Maciejewski, Sebastian Marzjan',
+	'descriptionmsg'	=> 'promote-desc',
+	'version'			=> 1.0,
+	'url'           	=> 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialPromote'
 );
 
 $dir = dirname(__FILE__) . '/';
@@ -42,9 +43,9 @@ JSMessages::registerPackage('SpecialPromote', array('promote-*'));
 // special pages
 $wgSpecialPages['Promote'] = 'SpecialPromoteController';
 
-$wgAvailableRights[] = 'promote';
-$wgGroupPermissions['*']['promote'] = false;
-$wgGroupPermissions['staff']['promote'] = true;
-$wgGroupPermissions['helper']['promote'] = true;
-$wgGroupPermissions['sysop']['promote'] = true;
-$wgGroupPermissions['bureaucrat']['promote'] = true;
+$wgAvailableRights[] = 'restricted_promote';
+$wgGroupPermissions['*']['restricted_promote'] = false;
+$wgGroupPermissions['staff']['restricted_promote'] = true;
+$wgGroupPermissions['helper']['restricted_promote'] = true;
+$wgGroupPermissions['sysop']['restricted_promote'] = false;
+$wgGroupPermissions['bureaucrat']['restricted_promote'] = false;

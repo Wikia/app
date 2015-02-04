@@ -124,7 +124,7 @@ class CityVisualization extends WikiaModel {
 
 		$mdb = wfGetDB(DB_MASTER, array(), $app->wg->ExternalSharedDB);
 
-		$category = HubService::getComscoreCategory($cityId);
+		$category = HubService::getCategoryInfoForCity($cityId);
 
 		$table = self::CITY_VISUALIZATION_TABLE_NAME;
 		$data = array(

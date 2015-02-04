@@ -72,26 +72,44 @@ class UploadFromUrl extends UploadBase {
 		global $wgUser;
 
 		$url = $request->getVal( 'wpUploadFileURL' );
-		return !empty( $url )
-			&& Http::isValidURI( $url )
-			&& $wgUser->isAllowed( 'upload_by_url' );
+		return !empty( $url ) && UploadFromUrl::isValidURI( $url ) && $wgUser->isAllowed( 'upload_by_url' );
+	}
+
+	public static function isValidURI( $url ) {
+		return Http::isValidURI( $url ) || UploadFromUrl::isValidBase64( $url );
+	}
+
+	public static function isValidBase64( $url ) {
+		$base64 = UploadFromUrl::getBase64( $url );
+		return preg_match(
+			'|^\s*(?:(?:[A-Za-z0-9+/]{4})+\s*)*[A-Za-z0-9+/]*={0,2}\s*$|',
+			$base64
+		);
+	}
+
+	public static function getBase64( $url ) {
+		$encoded = explode( ',', $url );
+		return isset( $encoded[ 1 ] ) ? $encoded[ 1 ] : $encoded[ 0 ];
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getSourceType() { return 'url'; }
+	public function getSourceType() {
+		return 'url';
+	}
 
 	/**
 	 * @return Status
 	 */
 	public function fetchFile() {
-		if ( !Http::isValidURI( $this->mUrl ) ) {
+		if ( !UploadFromUrl::isValidURI( $this->mUrl ) ) {
 			return Status::newFatal( 'http-invalid-url' );
 		}
 
 		return $this->reallyFetchFile();
 	}
+
 	/**
 	 * Create a new temporary file in the URL subdirectory of wfTempDir().
 	 *
@@ -144,11 +162,15 @@ class UploadFromUrl extends UploadBase {
 		/* Wikia change - begin */
 		$options = array( 'followRedirects' => true );
 		wfRunHooks( 'UploadFromUrlReallyFetchFile', array( &$options ) );
-		$req = MWHttpRequest::factory( $this->mUrl, $options );
-		/* Wikia change - end */
+		if ( UploadFromUrl::isValidBase64( $this->mUrl ) ) {
+			$status = $this->saveTempBase64();
+		} else {
+			$req = MWHttpRequest::factory( $this->mUrl, $options );
 
-		$req->setCallback( array( $this, 'saveTempFileChunk' ) );
-		$status = $req->execute();
+			$req->setCallback( array( $this, 'saveTempFileChunk' ) );
+			$status = $req->execute();
+		}
+		/* Wikia change - end */
 
 		if ( $this->mTmpHandle ) {
 			// File got written ok...
@@ -164,6 +186,12 @@ class UploadFromUrl extends UploadBase {
 		}
 
 		return $status;
+	}
+
+	protected function saveTempBase64() {
+		$buffer = base64_decode( UploadFromUrl::getBase64( $this->mUrl ) );
+		$this->saveTempFileChunk( null, $buffer );
+		return new Status();
 	}
 
 	/**

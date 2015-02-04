@@ -32,13 +32,6 @@
 						</div>
 					<? endif; ?>
 
-					<? if( $isUserPageOwner ): ?>
-						<div class ="input-group" id="facebookConnectAvatar">
-							<label><?= wfMsg('user-identity-box-avatar-fb-import-avatar'); ?></label>
-							<?= $fbAvatarConnectButton; ?>
-						</div>
-					<? endif; ?>
-
 					<? if( !empty($defaultAvatars) ): ?>
 						<div class ="input-group">
 							<label><?= wfMsg('user-identity-box-avatar-choose-avatar'); ?></label>
@@ -95,18 +88,6 @@
 					<label for="gender"><?= wfMsg('user-identity-box-about-gender'); ?></label>
 					<input type="text" name="gender" value="<?= $user['gender']; ?>" maxlength="<?= $charLimits['gender']; ?>" />
 				</div>
-				<? if( $isUserPageOwner ): ?>
-					<div class="input-group" id="facebookConnect"  <? if( !empty($user['fbPage']) ): ?>style="display: none;"<? endif; ?> >
-						<label><?= wfMsg('user-identity-box-import-from-fb'); ?></label>
-							<?= $fbConnectButton; ?>
-					</div>
-					<div class="input-group" id="facebookPage" <? if( empty($user['fbPage']) ): ?>style="display: none;"<? endif;
-					?>>
-						<label for="fbPage"><?= wfMsg('user-identity-box-fb-page'); ?></label>
-						<input type="text" name="fbPage" value="<?= $user['fbPage']; ?>"><br>
-						<a href="<?= $facebookPrefsLink ?>#mw-prefsection-fbconnect-prefstext"><?= wfMsg('user-identity-box-fb-prefs'); ?></a>
-					</div>
-				<? endif; ?>
 				<div class="input-group">
 					<label for="website"><?= wfMsg('user-identity-box-about-website'); ?></label>
 					<input type="text" name="website" value="<?= $user['website']; ?>">

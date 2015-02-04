@@ -11,7 +11,8 @@
 	}
 
 	function checkGallery() {
-		return typeof window.WikiaPhotoGallery !== 'undefined';
+		// if the new galleries are enabled, don't show these buttons b/c there's no wysiwyg tool for them yet.
+		return typeof window.WikiaPhotoGallery !== 'undefined' && !window.wgEnableMediaGalleryExt;
 	}
 
 	function getTextarea() {
@@ -152,7 +153,8 @@
 			});
 		}
 
-		if (window.wgEnableWikiaPhotoGalleryExt) {
+		// if the new galleries are enabled, don't show these buttons b/c there's no wysiwyg tool for them yet.
+		if (window.wgEnableWikiaPhotoGalleryExt && !window.wgEnableMediaGalleryExt) {
 			mediawikiButtons.push({
 				imageFile: extensionsPath + '/wikia/WikiaPhotoGallery/images/gallery_add.png',
 				speedTip: window.WikiaPhotoGalleryAddGallery,

@@ -13,6 +13,7 @@ use \Wikia\Logger\WikiaLogger;
  */
 class WikiaSearchController extends WikiaSpecialPageController {
 
+	const DEFAULT_NON_ENGLISH_WIKI_ARTICLE_THRESHOLD = 25;
 	use Wikia\Search\Traits\NamespaceConfigurable;
 
 	/**
@@ -576,7 +577,14 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		;
 
 		if ( $this->isCorporateWiki() ) {
-			$searchConfig->setLanguageCode($this->getVal('resultsLang'));
+			$searchConfig->setLanguageCode( $this->getVal( 'resultsLang' ) );
+			if ( $searchConfig->getLanguageCode() !== 'en' ) {
+				$threshold = self::DEFAULT_NON_ENGLISH_WIKI_ARTICLE_THRESHOLD;
+				if ( in_array( 'staff', $this->wg->user->getEffectiveGroups() ) ) {
+					$threshold = $this->getVal( 'minArticleCount', self::DEFAULT_NON_ENGLISH_WIKI_ARTICLE_THRESHOLD );
+				}
+				$searchConfig->setXwikiArticleThreshold( $threshold );
+			}
 		}
 
 		$this->setNamespacesFromRequest( $searchConfig, $this->wg->User );
@@ -739,7 +747,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( $skin instanceof SkinMonoBook ) {
 		    $this->response->addAsset ('extensions/wikia/Search/monobook/monobook.scss' );
 		}
-		if ( $skin instanceof SkinOasis ) {
+		if ( $skin instanceof SkinOasis || $skin instanceof SkinVenus ) {
 		    $this->response->addAsset( 'extensions/wikia/Search/css/WikiaSearch.scss' );
 		}
 		if ( $skin instanceof SkinWikiaMobile ) {

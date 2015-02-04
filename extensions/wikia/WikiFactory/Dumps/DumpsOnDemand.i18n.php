@@ -293,6 +293,14 @@ $messages['eu'] = array(
 	'dump-database-info-more' => 'Mesedez <a href="http://community.wikia.com/wiki/Help:Database_download">ikusi</a> informazio gehiagorako',
 );
 
+/** Persian (فارسی)
+ * @author Reza1615
+ */
+$messages['fa'] = array(
+	'dump-database-request-submit' => 'ارسال درخواست',
+	'dump-database-last-unknown' => 'ناشناس',
+);
+
 /** Finnish (suomi)
  * @author Centerlink
  * @author Crt
@@ -923,6 +931,7 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
+ * @author Liuxinyu970226
  * @author Wrightbus
  */
 $messages['zh-hant'] = array(
@@ -938,5 +947,5 @@ $messages['zh-hant'] = array(
 	'dump-database-request-already-submitted' => '轉存已在最近申請（7天内）',
 	'dump-database-request-requested' => '資料庫轉存的申請已發送',
 	'dump-database-info-more' => '請至<a href="http://community.wikia.com/wiki/Help:Database_download">查看</a>更多的資訊',
-	'dump-database-last-unknown' => '未知',
+	'dump-database-last-unknown' => '不明',
 );

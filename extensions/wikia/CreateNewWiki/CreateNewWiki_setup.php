@@ -3,10 +3,11 @@
 $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'CreateNewWiki',
 	'descriptionmsg' => 'createnewwiki-desc',
-	'author' => array('Hyun Lim')
+	'author' => 'Hyun Lim',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/CreateNewWiki'
 );
 
-$dir = __DIR__.'/';
+$dir = __DIR__ . '/';
 
 // class autoloads mappings
 $wgAutoloadClasses['CreateNewWikiObfuscate'] = $dir . 'CreateNewWikiObfuscate.class.php';
@@ -29,7 +30,6 @@ $wgAvailableRights[] = 'createnewwiki';
 $wgGroupPermissions['*']['createnewwiki'] = true;
 $wgGroupPermissions['staff']['createnewwiki'] = true;
 
-$wgAvailableRights[] = 'createwikimakefounder'; // user can give another's name as founder
 $wgAvailableRights[] = 'createwikilimitsexempt'; // user not bound by creation throttle
 $wgGroupPermissions['staff']['createwikilimitsexempt'] = true;
 

@@ -107,7 +107,7 @@ class MigrateScreenplayVidsToOoyala extends Maintenance {
 		$metadata['provider'] = 'screenplay';
 
 		$screenPlayIngester = new ScreenplayFeedIngester();
-		$metadata = $screenPlayIngester->generateRemoteAssetData( $videoFile->getTitle()->getText(), $metadata );
+		$metadata = $screenPlayIngester->prepareMetaDataForOoyala( $videoFile->getTitle()->getText(), $metadata );
 
 		return $metadata;
 	}

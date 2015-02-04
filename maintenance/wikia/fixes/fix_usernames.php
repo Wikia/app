@@ -15,7 +15,7 @@ while ( $row = $dbr->fetchObject( $res ) ) {
 		continue;
 	}
 
-	wfWaitForSlaves( 5 );
+	wfWaitForSlaves();
 
 	$name = $dbg->selectField( 'wikicities.user', 'user_name', array( 'user_id' => $row->rev_user ) );
 

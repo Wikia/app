@@ -11,6 +11,18 @@
 $dir = dirname(__FILE__) . '/';
 $app = F::app();
 
+$wgExtensionCredits[ 'other' ][ ] = array(
+	'name' => 'WikiaHubsServices',
+	'author' => array(
+		'Andrzej \'nAndy\' Łukaszewski',
+		'Damian Jóźwiak',
+		'Marcin Maciejewski',
+		'Sebastian Marzjan'
+	),
+	'descriptionmsg' => 'wikia-hub-services-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WikiaHubsServices',
+);
+
 $wgAutoloadClasses['EditHubModel'] =  $dir . 'models/EditHubModel.class.php';
 $wgAutoloadClasses['WikiaHubsExploreModel'] =  $dir . 'models/WikiaHubsExploreModel.class.php';
 $wgAutoloadClasses['WikiaHubsFeaturedvideoModel'] =  $dir . 'models/WikiaHubsFeaturedvideoModel.class.php';
@@ -42,3 +54,20 @@ $wgWikiaApiControllers['WikiaHubsApiController'] = "{$IP}/extensions/wikia/Wikia
 
 //message files
 $wgExtensionMessagesFiles['WikiaHubsServices'] = $dir . 'WikiaHubsServices.i18n.php';
+
+// foreign file repo
+$wgForeignFileRepos[] = array(
+	'class'            => 'WikiaForeignDBViaLBRepo',
+	'name'             => 'wikiahubsfiles',
+	'directory'        => $wgWikiaHubsFileRepoDirectory,
+	'url'              => 'http://images.wikia.com/' . $wgWikiaHubsFileRepoDBName . '/images',
+	'hashLevels'       => 2,
+	'thumbScriptUrl'   => '',
+	'transformVia404'  => true,
+	'hasSharedCache'   => true,
+	'descBaseUrl'      => $wgWikiaHubsFileRepoPath . 'wiki/File:',
+	'fetchDescription' => true,
+	'wiki'             => $wgWikiaHubsFileRepoDBName,
+	'checkRedirects'   => false,
+	'checkDuplicates'  => false,
+);

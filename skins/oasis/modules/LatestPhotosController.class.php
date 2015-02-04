@@ -83,17 +83,22 @@ class LatestPhotosController extends WikiaController {
 	}
 
 	private function getTemplateData($element) {
+		global $wgEnableVignette;
 
 		if (! isset($element['file'])) return array();
 
 		$file = $element['file'];
 		$fileTitle = $file->getTitle();
-		// crop the images correctly using extension:imageservice
-		$is = new ImageServing(array(), self::THUMB_SIZE);
-		$thumb_url = $is->getThumbnails(array($file));
-		$thumb_url = array_pop($thumb_url);
-		$thumb_url = $thumb_url['url'];
 		$userName = $file->user_text;
+		if ( $wgEnableVignette ) {
+			$thumb_url = $file->getUrlGenerator()->width( self::THUMB_SIZE )->zoomCrop();
+		} else {
+			// crop the images correctly using extension:imageservice
+			$is = new ImageServing(array(), self::THUMB_SIZE);
+			$thumb_url = $is->getThumbnails(array($file));
+			$thumb_url = array_pop($thumb_url);
+			$thumb_url = $thumb_url['url'];
+		}
 
 		$retval = array (
 			"file_url" => $element['url'],

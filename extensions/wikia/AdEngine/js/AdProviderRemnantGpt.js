@@ -36,7 +36,7 @@ define('ext.wikia.adEngine.provider.remnantGpt', [
 				log(slotname + ' was not filled by DART', 'info', logGroup);
 
 				adInfo.method = 'hop';
-				hop(adInfo, 'Liftium');
+				hop(adInfo);
 			},
 			srcName
 		);

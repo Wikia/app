@@ -370,12 +370,13 @@ class LoadBalancer {
 	/**
 	 * Set the master wait position and wait for ALL slaves to catch up to it
 	 * @param $pos int
+	 * @param $wiki
 	 */
-	public function waitForAll( $pos ) {
+	public function waitForAll( $pos, $wiki ) {
 		wfProfileIn( __METHOD__ );
 		$this->mWaitForPos = $pos;
 		for ( $i = 1; $i < count( $this->mServers ); $i++ ) {
-			$this->doWait( $i , true );
+			$this->doWait( $i , true, $wiki );
 		}
 		wfProfileOut( __METHOD__ );
 	}
@@ -400,9 +401,10 @@ class LoadBalancer {
 	 * Wait for a given slave to catch up to the master pos stored in $this
 	 * @param $index
 	 * @param $open bool
+	 * @param $wiki
 	 * @return bool
 	 */
-	function doWait( $index, $open = false ) {
+	function doWait( $index, $open = false, $wiki = false ) {
 		# Find a connection to wait on
 		$conn = $this->getAnyOpenConnection( $index );
 		if ( !$conn ) {
@@ -410,7 +412,7 @@ class LoadBalancer {
 				wfDebug( __METHOD__ . ": no connection open\n" );
 				return false;
 			} else {
-				$conn = $this->openConnection( $index );
+				$conn = $this->openConnection( $index, $wiki );
 				if ( !$conn ) {
 					wfDebug( __METHOD__ . ": failed to open connection\n" );
 					return false;
@@ -444,6 +446,10 @@ class LoadBalancer {
 	public function &getConnection( $i, $groups = array(), $wiki = false ) {
 		wfProfileIn( __METHOD__ );
 
+		// Set this flag to ensure that all select operations go against master
+		// Slave lag can cause random errors during wiki creation process
+		global $wgForceMasterDatabase;
+
 		if ( $i == DB_LAST ) {
 			throw new MWException( 'Attempt to call ' . __METHOD__ . ' with deprecated server index DB_LAST' );
 		} elseif ( $i === null || $i === false ) {
@@ -455,7 +461,7 @@ class LoadBalancer {
 		}
 
 		# Query groups
-		if ( $i == DB_MASTER ) {
+		if ( $i == DB_MASTER || $wgForceMasterDatabase ) {
 			$i = $this->getWriterIndex();
 		} elseif ( !is_array( $groups ) ) {
 			$groupIndex = $this->getReaderIndex( $groups, $wiki );
@@ -582,10 +588,8 @@ class LoadBalancer {
 	 * error will be available via $this->mErrorConnection.
 	 *
 	 * @param $i Integer server index
-	 * @param $wiki String wiki ID to open
+	 * @param $wiki String|bool wiki ID to open
 	 * @return DatabaseBase
-	 *
-	 * @access private
 	 */
 	function openConnection( $i, $wiki = false ) {
 		wfProfileIn( __METHOD__ );

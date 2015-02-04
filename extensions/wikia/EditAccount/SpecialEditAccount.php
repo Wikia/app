@@ -23,7 +23,8 @@ $wgExtensionCredits['specialpage'][] = array(
 	'name' => 'EditAccount',
 	'version' => '1.0',
 	'author' => "[http://www.wikia.com/wiki/User:TOR Łukasz 'TOR' Garczewski]",
-	'descriptionmsg' => 'editaccount-desc'
+	'descriptionmsg' => 'editaccount-desc',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/EditAccount'
 );
 
 // New user right, required to use the extension.

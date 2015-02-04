@@ -9,7 +9,13 @@ class ForumController extends WallBaseController {
 	}
 
 	public function init() {
-		$this->response->addAsset( 'extensions/wikia/Forum/css/Forum.scss' );
+		/**
+		 * Include Forum.scss only if
+		 * the method is called in a Forum context
+		 */
+		if ( ForumHelper::isForum() ) {
+			$this->response->addAsset( 'extensions/wikia/Forum/css/Forum.scss' );
+		}
 	}
 
 	public function board() {

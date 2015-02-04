@@ -152,7 +152,7 @@ Wikia
  * @author Умар
  */
 $messages['ce'] = array(
-	'tog-watchlistdigestclear' => 'Билгал йе еша сана сан тергаме могӀам чура агӀонаш',
+	'tog-watchlistdigestclear' => 'Билгалъе еша сана сан тергаме могӀам чура агӀонаш',
 );
 
 /** Czech (čeština)
@@ -281,6 +281,13 @@ Wikia
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|comentario|comentarios}})',
 	'globalwatchlist-no-page-found' => 'No se encontró ninguna página.',
 	'globalwatchlist-no-blog-page-found' => 'No se encontró ninguna página de blog.',
+);
+
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'globalwatchlist-blog-page-title-comment' => '$1 ({{PLURAL:$2|iruzkin $2|$2 iruzkin}})',
 );
 
 /** Finnish (suomi)
@@ -565,6 +572,15 @@ Wikia
 	'globalwatchlist-no-blog-page-found' => 'ブログページは見つかりませんでした。',
 );
 
+/** Korean (한국어)
+ * @author Miri-Nae
+ */
+$messages['ko'] = array(
+	'globalwatchlist-digest-email-subject' => '주간 주시문서 편집 내역',
+	'globalwatchlist-no-page-found' => '문서를 찾을 수 없습니다.',
+	'globalwatchlist-no-blog-page-found' => '블로그 글을 찾을 수 없습니다.',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
@@ -599,7 +615,7 @@ $messages['mk'] = array(
 	'globalwatchlist-desc' => 'Испраќа неделен преглед на набљудувани страници од сите викија по е-пошта',
 	'tog-watchlistdigest' => 'Испраќај ми Неделен преглед на набљудувани страници',
 	'tog-watchlistdigestclear' => 'Означи ги сите страници од мојот Неделен преглед како посетени',
-	'globalwatchlist-see-more' => 'Проверете ги вашите локални списоци на набљудувања за повеќе промени',
+	'globalwatchlist-see-more' => 'Проверете ги вашите месни списоци на набљудувања за повеќе промени',
 	'globalwatchlist-digest-email-subject' => 'Неделен преглед',
 	'globalwatchlist-digest-email-body' => 'Почитуван $1,
 
@@ -718,7 +734,7 @@ Groet, Wikia
 
 * Op de pagina http://www.wikia.com/wiki/Special:Preferences kunt u uw instellingen wijzigen voor volglijste-mails.
 * Zie het tabblad "Volglijst" in uw voorkeuren om alle pagina\'s uit deze wekelijkse samenvatting als gelezen te markeren.',
-	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|opmerking|opmerkingen}})',
+	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|reactie|reacties}})',
 	'globalwatchlist-no-page-found' => 'Geen pagina aangetroffen.',
 	'globalwatchlist-no-blog-page-found' => 'Geen blogpagina aangetroffen.',
 );
@@ -1033,6 +1049,13 @@ Wikia
 	'globalwatchlist-blog-page-title-comment' => '$1 ($2 {{PLURAL:$2|kommentar|kommentarer}})',
 	'globalwatchlist-no-page-found' => 'Ingen sida hittades.',
 	'globalwatchlist-no-blog-page-found' => 'Ingen bloggsida hittades.',
+);
+
+/** Tamil (தமிழ்)
+ * @author ElangoRamanujam
+ */
+$messages['ta'] = array(
+	'globalwatchlist-no-page-found' => 'பக்கங்கள் ஏதும் காணப்படவில்லை',
 );
 
 /** Telugu (తెలుగు)

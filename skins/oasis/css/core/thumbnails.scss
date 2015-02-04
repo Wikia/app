@@ -31,11 +31,7 @@ $color-subtle-text: mix($color-page, $color-alternate-text, 50%);
 	margin-bottom: 15px;
 	margin-top: 6px;
 
-	// target the thumbnail image and parent anchor only
-	a.image-thumbnail,
-	a.video-thumbnail,
-	img[data-image-key],
-	img[data-video-key] {
+	a, img {
 		display: block;
 	}
 
@@ -73,21 +69,22 @@ $color-subtle-text: mix($color-page, $color-alternate-text, 50%);
 
 	.caption {
 		color: $color-alternate-text;
+
+		a, img {
+			display: inline;
+		}
 	}
 
 	&.show-info-icon {
 		.info-icon {
-			background-image: url('/skins/oasis/images/info_icon.png');
 			display: none;
 			float: right;
-			height: 17px;
 			margin: -22px 5px 0 0;
 			position: relative; // makes icon appear above image in z axis
-			width: 17px;
 		}
 
 		&:hover {
-			a.info-icon {
+			.info-icon {
 				display: block;
 			}
 
@@ -95,6 +92,11 @@ $color-subtle-text: mix($color-page, $color-alternate-text, 50%);
 				display: none;
 			}
 		}
+	}
+
+	// don't show the icon when a video is playing inline
+	&.inline-video-playing:hover .info-icon {
+		display: none;
 	}
 }
 

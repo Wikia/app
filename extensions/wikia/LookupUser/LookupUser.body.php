@@ -136,7 +136,7 @@ EOT
 	 * @param $target Mixed: user whose info we're looking up
 	 */
 	function showInfo( $target, $emailUser = "" ) {
-		global $wgOut, $wgLang, $wgScript, $wgEnableWallExt, $wgEnableUserLoginExt, $wgExternalSharedDB, $wgExternalAuthType;
+		global $wgOut, $wgLang, $wgScript, $wgEnableWallExt, $wgExternalSharedDB, $wgExternalAuthType;
 		//Small Stuff Week - adding table from Special:LookupContribs --nAndy
 		global $wgExtensionsPath, $wgJsMimeType, $wgResourceBasePath, $wgEnableLookupContribsExt;
 
@@ -279,7 +279,7 @@ EOT
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-touched', $wgLang->timeanddate( $user->mTouched, true ) )->text() );
 		$wgOut->addWikiText( '*' . wfMessage( 'lookupuser-info-authenticated', $authenticated )->text() );
 		if ( isset( $user->mBirthDate ) ) {
-			$birthDate = $wgLang->date( strtotime( $user->mBirthDate ) );
+			$birthDate = $wgLang->date( date( 'Y-m-d H:i:s', strtotime( $user->mBirthDate ) ) );
 		} else {
 			$birthDate = wfMessage( 'lookupuser-no-birthdate' )->text();
 		}

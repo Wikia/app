@@ -8,4 +8,5 @@ $baseDir = dirname(dirname($vendorDir));
 return array(
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'FluentSql\\' => array($vendorDir . '/wikia/fluent-sql-php/src'),
+    'Facebook\\' => array($vendorDir . '/facebook/php-sdk-v4/src/Facebook'),
 );

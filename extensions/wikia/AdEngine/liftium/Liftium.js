@@ -1438,12 +1438,8 @@ Liftium.init = function (callback) {
 		return false;
 	}
 
-	Wikia.Tracker.track({
-		eventName: 'liftium.init',
-		ga_category: 'init/init',
-		ga_action: 'init',
-		ga_label: 'liftium',
-		trackingMethod: 'ad'
+	window.require && require(['ext.wikia.adEngine.adTracker'], function(tracker) {
+		tracker.measureTime('adengine.init', 'liftium').track();
 	});
 
 	// TODO remove! an ugly hack for AdDriver transparency
@@ -1707,8 +1703,12 @@ Liftium.loadScript = function(url, noblock, callback) {
 			return s;
 		}
 		else {
-			Liftium.d("Using $.getScript", 5);
-			$.getScript(url, callback);
+			Liftium.d("Using $.ajax", 5);
+			$.ajax({
+				dataType: "script",
+				url: url,
+				complete: callback
+			});
 			return true;
 		}
 	}
@@ -2156,11 +2156,8 @@ Liftium.sendBeacon = function (){
 
 	// Track the beacons with GA
 
-	Wikia.Tracker.track({
-		eventName: 'liftium.init',
-		ga_category: 'init/beacon',
-		ga_action: 'beacon',
-		trackingMethod: 'ad'
+	window.require && require(['ext.wikia.adEngine.adTracker'], function(tracker) {
+		tracker.measureTime('adengine.init', 'liftium.beacon').track();
 	});
 
 	// Call the unit tests

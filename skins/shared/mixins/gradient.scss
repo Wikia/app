@@ -13,6 +13,8 @@
 		$webkitBackground : "0% 0%, 0% 100%";
 	} @else if $start == left {
 		$webkitBackground : "0% 0%, 100% 0%";
+	} @else if $start == right {
+		$webkitBackground : "100% 0%, 0% 0%";
 	}
 	$mozBackground : $start;
 

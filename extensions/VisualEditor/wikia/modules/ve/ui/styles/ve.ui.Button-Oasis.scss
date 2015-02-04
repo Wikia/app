@@ -1,0 +1,36 @@
+@import "skins/shared/buttons";
+// These spacing values are defined in oojs-ui.svg.css and added here to override Wikia spacing for buttons
+$padding: 0.2em 0.8em;
+$margin: 0.1em 0;
+
+.oo-ui-buttonedElement-framed {
+	&.oo-ui-flaggableElement-constructive,
+	&.oo-ui-flaggableElement-primary {
+		.oo-ui-buttonedElement-button {
+			@extend .button;
+			padding: 0.2em 0.8em;
+			margin: 0.1em 0;
+		}
+	}
+	&.oo-ui-widget-disabled {
+		.oo-ui-buttonedElement-button {
+			@extend .button[disabled];
+			padding: 0.2em 0.8em;
+			margin: 0.1em 0;
+		}
+	}
+	.oo-ui-buttonedElement-button {
+		@extend .button;
+		padding: 0.2em 0.8em;
+		margin: 0.1em 0;
+
+		&.oo-ui-buttonedElement-active {
+			@extend .button.active;
+		}
+		&:hover {
+			.oo-ui-iconedElement-icon {
+				opacity: 1;
+			}
+		}
+	}
+}
