@@ -675,17 +675,21 @@ class WallExternalController extends WikiaController {
 		 * @var $mw WallMessage
 		 */
 		$mw = WallMessage::newFromId($messageId);
-		$mw->load();
+		if ( !empty( $mw ) ) {
+			$mw->load();
 
-		if(!empty($mw)) {
 			$username = $mw->getUser()->getName();
 
 			$convertToFormat = $this->request->getVal('convertToFormat', '');
 
-			if($convertToFormat == 'wikitext') {
-				$markup = '<div class="quote">' . "\n" . wfMsgForContent('wall-quote-author', $username) . "\n" . $mw->getRawText() . "\n</div>\n";
+			if ( $convertToFormat == 'wikitext' ) {
+				$markup = '<div class="quote">'
+					. "\n" . wfMsgForContent( 'wall-quote-author', $username )
+					. "\n" . $mw->getRawText() . "\n</div>\n";
 			} else {
-				$markup = $this->getConvertedContent('<div class="quote">' . wfMsgForContent('wall-quote-author', $username) . "<br>" . $mw->getRawText() . "\n</div><br>");
+				$markup = $this->getConvertedContent( '<div class="quote">'
+					. wfMsgForContent( 'wall-quote-author', $username )
+					. "<br>" . $mw->getRawText() . "\n</div><br>");
 			}
 
 			$status = 'success';
