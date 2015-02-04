@@ -7,8 +7,8 @@ describe('UserLogin Marketing Opt In', function () {
 
 	beforeEach(function () {
 		geo = modules['wikia.geo']();
-		spyOn(geo, 'getContinentCode').andReturn('');
-		spyOn(geo, 'getCountryCode').andReturn('');
+		spyOn(geo, 'getContinentCode').and.returnValue('');
+		spyOn(geo, 'getCountryCode').and.returnValue('');
 
 		wikiaFormMock = {
 			inputs: {
@@ -32,7 +32,7 @@ describe('UserLogin Marketing Opt In', function () {
 	it ('should check the box in Europe', function () {
 		var checkedAttr;
 
-		geo.getContinentCode.andReturn('EU');
+		geo.getContinentCode.and.returnValue('EU');
 		optIn.init(wikiaFormMock);
 		checkedAttr = wikiaFormMock.inputs.wpMarketingOptIn.attr('checked');
 
@@ -42,7 +42,7 @@ describe('UserLogin Marketing Opt In', function () {
 	it ('should not check the box in Canada', function () {
 		var checkedAttr;
 
-		geo.getCountryCode.andReturn('CA');
+		geo.getCountryCode.and.returnValue('CA');
 		optIn.init(wikiaFormMock);
 		checkedAttr = wikiaFormMock.inputs.wpMarketingOptIn.attr('checked');
 
@@ -52,7 +52,7 @@ describe('UserLogin Marketing Opt In', function () {
 	it ('should hide the box in the US', function () {
 		var isHidden;
 
-		geo.getCountryCode.andReturn('US');
+		geo.getCountryCode.and.returnValue('US');
 		optIn.init(wikiaFormMock);
 		isHidden = wikiaFormMock.inputs.wpMarketingOptIn.hasClass('hidden');
 
@@ -63,7 +63,7 @@ describe('UserLogin Marketing Opt In', function () {
 	it ('should not hide the box in Europe', function () {
 		var isHidden;
 
-		geo.getContinentCode.andReturn('EU');
+		geo.getContinentCode.and.returnValue('EU');
 		optIn.init(wikiaFormMock);
 		isHidden = wikiaFormMock.inputs.wpMarketingOptIn.hasClass('hidden');
 

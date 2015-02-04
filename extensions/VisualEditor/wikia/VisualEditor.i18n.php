@@ -1741,6 +1741,7 @@ $messages['pl'] = array(
 	'wikia-visualeditor-dialog-wikiasinglemedia-title' => 'Wstaw galerię',
 	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'Szukaj obrazów',
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'Podgląd',
+	'wikia-visualeditor-wikiamediaoptionwidget-preview-video' => 'Obserwuj',
 	'wikia-visualeditor-media-photo-policy' => 'Proszę stosować się do polityki obrazów podczas dodawania nowych obrazów na tej wiki.',
 );
 

@@ -176,8 +176,7 @@ describe('ext.wikia.adEngine.adTracker', function () {
 			trackingMethod: 'ad'
 		});
 
-		expect(trackerMock.track.mostRecentCall.args[0].ga_value).not.toBeLessThan(888);
-
+		expect(trackerMock.track.calls.mostRecent().args[0].ga_value).not.toBeLessThan(888);
 	});
 
 	it('measureTime: no track call after measure', function () {
@@ -191,7 +190,7 @@ describe('ext.wikia.adEngine.adTracker', function () {
 		adTracker.measureTime('test/event', {abc: 'def', xyz: 123});
 
 		// No tracking yet
-		expect(trackerMock.track.calls.length).toBe(0);
+		expect(trackerMock.track.calls.count()).toBe(0);
 	});
 
 	it('measureTime with eventType param and track', function () {
@@ -212,9 +211,9 @@ describe('ext.wikia.adEngine.adTracker', function () {
 			trackingMethod: 'ad'
 		});
 
-		expect(trackerMock.track.calls.length).toBe(1);
+		expect(trackerMock.track.calls.count()).toBe(1);
 
-		expect(trackerMock.track.mostRecentCall.args[0].ga_value).not.toBeLessThan(888);
+		expect(trackerMock.track.calls.mostRecent().args[0].ga_value).not.toBeLessThan(888);
 	});
 
 	it('measureDiff: no track call after measure', function () {
@@ -228,7 +227,7 @@ describe('ext.wikia.adEngine.adTracker', function () {
 		adTracker.measureTime('test/event', {abc: 'def', xyz: 123}).measureDiff({abc: 'def', xyz: 123}, 'diff');
 
 		// No tracking yet
-		expect(trackerMock.track.calls.length).toBe(0);
+		expect(trackerMock.track.calls.count()).toBe(0);
 	});
 
 	it('measureTime, measureDiff and track', function () {
@@ -256,11 +255,9 @@ describe('ext.wikia.adEngine.adTracker', function () {
 			trackingMethod: 'ad'
 		});
 
-		expect(trackerMock.track.calls.length).toBe(1);
+		expect(trackerMock.track.calls.count()).toBe(1);
 
-		expect(trackerMock.track.mostRecentCall.args[0].ga_value).not.toBeLessThan(110);
-		expect(trackerMock.track.mostRecentCall.args[0].ga_value).not.toBeGreaterThan(888);
-
+		expect(trackerMock.track.calls.mostRecent().args[0].ga_value).not.toBeLessThan(110);
+		expect(trackerMock.track.calls.mostRecent().args[0].ga_value).not.toBeGreaterThan(888);
 	});
-
 });

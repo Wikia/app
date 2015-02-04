@@ -1160,6 +1160,12 @@ $messages['es'] = array(
  */
 $messages['eu'] = array(
 	'rte-ck-photoGallery-gallery' => 'Galeria',
+	'rte-ck-signature-label' => 'sinadura',
+	'rte-ck-table-alignNotSet' => 'Ezarri gabe',
+	'rte-ck-table-toolbarTooltip' => 'Gehitu taula',
+	'rte-ck-templateDropDown-label' => 'Txantiloia',
+	'rte-ck-templateDropDown-title' => 'Aukeratu txantiloia',
+	'rte-ck-templateEditor-editor-parameters' => 'Parametroak',
 	'rte-ck-video-add' => 'Bideo bat gehitu',
 	'rte-ck-video-video' => 'Bideoa',
 	'rte-ck-video-confirmDeleteTitle' => 'Bideo hau ezabatu?',

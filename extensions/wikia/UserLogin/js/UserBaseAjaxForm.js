@@ -89,6 +89,8 @@
 			this.onOkayResponse(json);
 		} else if (json.result === 'error') {
 			this.onErrorResponse(json);
+		} else if (json.result === 'unconfirm') {
+			this.onUnconfirmedEmailResponse();
 		}
 	};
 
@@ -123,6 +125,20 @@
 	UserBaseAjaxForm.prototype.onErrorResponse = function (json) {
 		this.submitButton.removeAttr('disabled');
 		this.errorValidation(json);
+	};
+
+	/**
+	 * User has signed up successfully but they haven't confirmed their email address yet.
+	 */
+	UserBaseAjaxForm.prototype.onUnconfirmedEmailResponse = function () {
+		$.get(window.wgScriptPath + '/wikia.php', {
+			controller: 'UserLoginSpecial',
+			method: 'getUnconfirmedUserRedirectUrl',
+			format: 'json',
+			username: this.inputs.username.val()
+		}, function (json) {
+			window.location = json.redirectUrl;
+		});
 	};
 
 	/**

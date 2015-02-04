@@ -1,5 +1,4 @@
-/* global UserLoginModal, wgCanonicalSpecialPageName, wgMainPageTitle, wgArticlePath, wgScriptPath,
-wgUserLanguage, GlobalNotification */
+/* global UserLoginModal, wgScriptPath, GlobalNotification */
 
 /**
  * Handle signing in and signing up with Facebook
@@ -102,6 +101,10 @@ wgUserLanguage, GlobalNotification */
 		 * @param {Object} response Response object sent from Facebook after login attempt
 		 */
 		onFBLogin: function (response) {
+			var pageUrl,
+				returnToURL,
+				returnToQuery;
+
 			// There was a connection error or something went horribly wrong.
 			if (typeof response !== 'object') {
 				this.track({
@@ -121,10 +124,19 @@ wgUserLanguage, GlobalNotification */
 				// begin ajax call performance tracking
 				this.bucky.timer.start('loginCallbackAjax');
 
+				pageUrl = new QueryString();
+				returnToURL = pageUrl.getVal('returnto');
+				if (returnToURL) {
+					returnToQuery = pageUrl.getVal('returntoquery');
+				} else {
+					returnToURL = encodeURIComponent(window.wgPageName);
+					returnToQuery = encodeURIComponent(window.location.search.substring(1));
+				}
+
 				// now check FB account (is it connected with Wikia account?)
 				$.nirvana.postJson('FacebookSignupController', 'index', {
-						returnto: encodeURIComponent(window.wgPageName),
-						returntoquery: encodeURIComponent(window.location.search.substring(1))
+						returnto: returnToURL,
+						returntoquery: returnToQuery
 					},
 					$.proxy(this.checkAccountCallback, this)
 				);
@@ -152,8 +164,11 @@ wgUserLanguage, GlobalNotification */
 
 			// logged in using FB account, reload the page or callback
 			if (response.loggedIn) {
-				this.loggedInCallback();
-
+				if (this.loginCallback) {
+					this.loginCallback();
+				} else {
+					window.location = response.returnUrl;
+				}
 			// some error occurred
 			} else if (response.loginAborted) {
 				window.GlobalNotification.show(response.errorMsg, 'error');
@@ -169,30 +184,6 @@ wgUserLanguage, GlobalNotification */
 			// user not logged in, show the login/signup modal
 			} else {
 				this.setupModal(response);
-			}
-		},
-
-		/**
-		 * This runs after has signed in with facebook and is already registered with Wikia.
-		 */
-		loggedInCallback: function () {
-			if (this.loginCallback) {
-				this.loginCallback();
-			} else {
-				this.bucky.timer.start('loggedInCallback');
-				var qString = new QueryString(),
-				// TODO: special page URL matching needs to be consolidated. @see UC-187
-					returnTo = (wgCanonicalSpecialPageName &&
-						(wgCanonicalSpecialPageName.match(/Userlogin|Userlogout|UserSignup/))) ?
-						wgMainPageTitle : null;
-
-				if (returnTo) {
-					qString.setPath(wgArticlePath.replace('$1', returnTo));
-				}
-				// send bucky info immediately b/c the page is about to redirect
-				this.bucky.timer.stop('loggedInCallback');
-				this.bucky.flush();
-				qString.addCb().goTo();
 			}
 		},
 
@@ -225,7 +216,6 @@ wgUserLanguage, GlobalNotification */
 		buildModal: function (response, uiModal) {
 			// show the "or" circle only for languages where it makes sense
 			var self = this,
-				langClass = 'lang-' + wgUserLanguage,
 				modalConfig = {
 					vars: {
 						id: 'FacebookSignUp',
@@ -233,8 +223,7 @@ wgUserLanguage, GlobalNotification */
 						content: response.modal,
 						htmlTitle: response.htmlTitle,
 						classes: [
-							'facebook-signup-modal',
-							langClass
+							'facebook-signup-modal'
 						]
 					}
 				};

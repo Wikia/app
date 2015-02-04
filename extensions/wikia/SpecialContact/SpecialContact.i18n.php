@@ -217,6 +217,7 @@ $messages['cy'] = array(
  * @author SVG
  */
 $messages['de'] = array(
+	'specialcontact-desc' => '[[Special:Contact|Kontaktformular]] für Wikia',
 	'contact' => 'Kontaktiere Wikia',
 	'specialcontact-wikia' => 'Kontaktiere Wikia',
 	'specialcontact-pagetitle' => 'Kontaktiere Wikia',
@@ -266,6 +267,7 @@ $messages['diq'] = array(
  * @author VegaDark
  */
 $messages['es'] = array(
+	'specialcontact-desc' => '[[Special:Contact|Formulario de contacto]] de Wikia',
 	'contact' => 'Contactar con Wikia',
 	'specialcontact-wikia' => 'Contactar a Wikia',
 	'specialcontact-pagetitle' => 'Contactar a Wikia',
@@ -385,6 +387,7 @@ Jos haluat käyttää tavallista sähköpostia tai sinulla on lähetettäviä li
  * @author Wyz
  */
 $messages['fr'] = array(
+	'specialcontact-desc' => 'Formulaire de contact de Wikia [[Special:Contact]]',
 	'contact' => 'Contacter Wikia',
 	'specialcontact-wikia' => 'Contacter Wikia',
 	'specialcontact-pagetitle' => 'Contacter Wikia',
@@ -653,6 +656,7 @@ $messages['mk'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'specialcontact-desc' => 'Borang perhubungan [[Special:Contact]] Wikia',
 	'contact' => 'Hubungi Wikia',
 	'specialcontact-wikia' => 'Hubungi Wikia',
 	'specialcontact-pagetitle' => 'Hubungi Wikia',
@@ -955,6 +959,7 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'specialcontact-desc' => 'Module de le condatte de Uicchia [[Special:Contact]]',
 	'contact' => 'Condatte Uicchia',
 	'specialcontact-wikia' => 'Condatte Uicchia',
 	'specialcontact-pagetitle' => 'Condatte Uicchia',
@@ -1038,6 +1043,7 @@ $messages['sr-ec'] = array(
  * @author WikiPhoenix
  */
 $messages['sv'] = array(
+	'specialcontact-desc' => 'Wikias kontaktformulär [[Special:Contact]]',
 	'contact' => 'Kontakta Wikia',
 	'specialcontact-wikia' => 'Kontakta Wikia',
 	'specialcontact-pagetitle' => 'Kontakta Wikia',
@@ -1221,8 +1227,10 @@ Nếu bạn thích sử dụng thư điện tử thường xuyên hoặc có t�
  * @author Dimension
  * @author Hydra
  * @author Liuxinyu970226
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'specialcontact-desc' => 'Wikia的联系[[Special:Contact]]论坛',
 	'contact' => '联络 Wikia',
 	'specialcontact-wikia' => '联络 Wikia',
 	'specialcontact-pagetitle' => '联络 Wikia',

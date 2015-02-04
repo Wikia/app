@@ -37,9 +37,7 @@
 		UserBaseAjaxForm.prototype.submitLoginHandler.call(this, json);
 
 		if (result === 'resetpass') {
-			this.onResetPasswordResponse();
-		} else if (result === 'unconfirm') {
-			this.onUnconfirmedEmailResponse();
+			this.onResetPasswordResponse(json);
 		} else if (result === 'closurerequested') {
 			this.onAccountClosureReqestResponse();
 		} else {
@@ -68,17 +66,6 @@
 				fakeGet: 1
 			}, this.retrieveTemplateCallback.bind(this));
 		}
-	};
-
-	UserLoginAjaxForm.prototype.onUnconfirmedEmailResponse = function () {
-		$.get(wgScriptPath + '/wikia.php', {
-			controller: 'UserLoginSpecial',
-			method: 'getUnconfirmedUserRedirectUrl',
-			format: 'json',
-			username: this.inputs.username.val()
-		}, function (json) {
-			window.location = json.redirectUrl;
-		});
 	};
 
 	/**

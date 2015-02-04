@@ -596,6 +596,13 @@ $messages['eu'] = array(
 	'wikiaquiz-questions-label' => 'Galderak',
 	'wikiaquiz-answers-label' => 'Erantzunak',
 	'wikiaquiz-answer-label' => 'Erantzuna',
+	'wikiaquiz-game-cadence-3' => 'Adi',
+	'wikiaquiz-game-cadence-2' => 'Prest',
+	'wikiaquiz-game-cadence-1' => 'Ja!',
+	'wikiaquiz-game-question-label' => 'GALDERA',
+	'wikiaquiz-game-next-button' => 'Hurrengo galdera',
+	'wikiaquiz-game-finish-button' => 'Amaitu',
+	'wikiaquiz-game-continue-button' => 'Jarraitu',
 );
 
 /** Persian (فارسی)

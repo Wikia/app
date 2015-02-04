@@ -873,6 +873,22 @@ $messages['es'] = array(
 	'scavengerhunt-facebook-description' => 'Texto compartido de Facebook',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'scavengerhunt-label-name' => 'Izena:',
+	'scavengerhunt-label-article-hidden-image' => 'Ezkutatutako irudia:',
+	'scavengerhunt-button-save' => 'Gorde',
+	'scavengerhunt-button-disable' => 'Ezgaitu',
+	'scavengerhunt-button-enable' => 'Gaitu',
+	'scavengerhunt-button-delete' => 'Ezabatu',
+	'scavengerhunt-button-export' => 'CSVra esportatu',
+	'scavengerhunt-entry-form-name' => 'Zure izena:',
+	'scavengerhunt-entry-form-email' => 'Zure helbide elektronikoa:',
+	'scavengerhunt-entry-form-submit' => 'Bidali sarrera',
+);
+
 /** Persian (فارسی)
  * @author Reza1615
  */
@@ -1481,6 +1497,15 @@ $messages['ko'] = array(
 	'scavengerhunt-label-image-check' => '(그림 보이기)',
 	'scavengerhunt-label-general' => '일반',
 	'scavengerhunt-label-name' => '이름:',
+	'scavengerhunt-label-entry-form-title' => '팝업 제목:',
+	'scavengerhunt-label-entry-form-text' => '팝업 텍스트:',
+	'scavengerhunt-label-entry-form-image' => '팝업 그림 (URL 주소):',
+	'scavengerhunt-label-entry-form-question' => '팝업 질문:',
+	'scavengerhunt-label-entry-form-button-text' => '버튼 텍스트:',
+	'scavengerhunt-label-goodbye-title' => '팝업 제목:',
+	'scavengerhunt-label-goodbye-text' => '팝업 내용:',
+	'scavengerhunt-label-goodbye-image' => '팝업 그림 (URL 주소):',
+	'scavengerhunt-button-add' => '게임 추가',
 	'scavengerhunt-button-save' => '저장',
 	'scavengerhunt-button-disable' => '비활성화',
 	'scavengerhunt-button-enable' => '활성화',
@@ -3193,15 +3218,27 @@ $messages['zh-hans'] = array(
 	'scavengerhunt-list-enabled' => '启用',
 	'scavengerhunt-list-disabled' => '禁用',
 	'scavengerhunt-list-edit' => '编辑',
+	'scavengerhunt-label-dialog-check' => '（显示可视化编辑器——预览版，还未成型）',
 	'scavengerhunt-label-image-check' => '（显示图像）',
 	'scavengerhunt-label-general' => '简单介绍',
 	'scavengerhunt-label-name' => '名：',
+	'scavengerhunt-label-landing-title' => '登陆页面名称（条目网址或者任何wiki）：',
+	'scavengerhunt-label-landing-button-text' => '登陆页面按钮文本：',
+	'scavengerhunt-label-landing-button-x' => '登陆页面按钮位置X：',
+	'scavengerhunt-label-landing-button-y' => '登陆页面按钮位置Y：',
+	'scavengerhunt-label-starting-clue' => '开始弹出线索',
 	'scavengerhunt-label-starting-clue-title' => '弹窗标题：',
 	'scavengerhunt-label-starting-clue-text' => '弹窗文本：',
 	'scavengerhunt-label-starting-clue-image' => '弹窗图片（URL地址）：',
 	'scavengerhunt-label-starting-clue-button-text' => '弹窗按钮文字：',
 	'scavengerhunt-label-starting-clue-button-target' => '弹窗按钮目标（URL地址）：',
+	'scavengerhunt-label-article-title' => '页面标题（条目网址或者任何wiki）：',
 	'scavengerhunt-label-article-hidden-image' => '隐藏图片：',
+	'scavengerhunt-label-article-clue-title' => '弹出线索标题：',
+	'scavengerhunt-label-article-clue-text' => '弹出线索文本：',
+	'scavengerhunt-label-article-clue-image' => '弹出线索图像（URL地址）：',
+	'scavengerhunt-label-article-clue-button-text' => '弹出线索按钮文本：',
+	'scavengerhunt-label-article-clue-button-target' => '弹出线索按钮目标（URL地址）：',
 	'scavengerhunt-label-entry-form' => '报表',
 	'scavengerhunt-label-entry-form-title' => '弹窗标题：',
 	'scavengerhunt-label-entry-form-text' => '弹窗文本：',
@@ -3229,7 +3266,7 @@ $messages['zh-hans'] = array(
 	'scavengerhunt-edit-token-mismatch' => '编辑令牌不正确 - 请重试。',
 	'scavengerhunt-entry-form-name' => '您的名字：',
 	'scavengerhunt-entry-form-email' => '您的电子邮件地址：',
-	'scavengerhunt-entry-form-submit' => '提交文章',
+	'scavengerhunt-entry-form-submit' => '提交记录',
 	'scavengerhunt-label-sprite-img' => 'Sprite图像路径',
 	'scavengerhunt-label-sprite-X' => '元素位置',
 	'scavengerhunt-label-sprite-X1' => '魔鬼左上角',

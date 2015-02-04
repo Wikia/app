@@ -1,6 +1,6 @@
 <?php
 /**
- * Class FacebookConnectXFBML
+ * Class FacebookClientXFBML
  *
  * This class allows FBML (Facebook Markup Language, an extension to HTML) to
  * be incorporated into the wiki through XFBML.
