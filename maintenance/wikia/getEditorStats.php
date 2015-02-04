@@ -39,8 +39,6 @@ class GetRevisionWithTags extends Maintenance {
 	private function getRevisionsData() {
 		$query = $this->createrevisionsQuery();
 
-		echo PHP_EOL . $query . PHP_EOL;
-
 		return $query->run(wfGetDB(DB_SLAVE), function (ResultWrapper $result) {
 			$data = [];
 			while ($row = $result->fetchObject()) {
