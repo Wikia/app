@@ -3,9 +3,9 @@ require(['jquery', 'wikia.window'], function($, win) {
 	var $globalNav = $('#globalNavigation');
 
 	function changeStateOnScroll() {
-		if (win.scrollY === 0 && $globalNav.hasClass('inverse')) {
+		if (win.pageYOffset === 0 && $globalNav.hasClass('inverse')) {
 			$globalNav.removeClass('inverse');
-		} else if  (win.scrollY > 200) {
+		} else if  (win.pageYOffset > 200) {
 			$globalNav.addClass('inverse');
 		}
 	}
