@@ -25,6 +25,7 @@ require(
 				this.$notificationsMessages = $('> ul', this.$notificationsContainer);
 
 				this.globalNavigationHeight = $('#globalNavigation').outerHeight();
+				this.notificationsMarkAsReadHeight = 0;
 				this.notificationsHeaderHeight = 0;
 				this.notificationsBottomPadding = 15;
 
@@ -347,7 +348,12 @@ require(
 					msgHeight = 0;
 
 				if ( isDropdownOpen ) {
-					height = this.$window.height() - this.globalNavigationHeight - this.notificationsBottomPadding;
+
+					if ( this.notificationsMarkAsReadHeight <= 0 ) {
+						this.notificationsMarkAsReadHeight = $('.notifications-markasread').outerHeight();
+					}
+
+					height = this.$window.height() - this.globalNavigationHeight - this.notificationsBottomPadding - this.notificationsMarkAsReadHeight;
 					msgHeight = this.$notificationsMessages.height();
 
 					if ( !msgHeight ) {
