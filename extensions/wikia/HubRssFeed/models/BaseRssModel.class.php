@@ -78,7 +78,9 @@ abstract class BaseRssModel extends WikiaService {
 		}
 	}
 
-
+	/**
+	 * @return DatabaseBase
+	 */
 	protected function getDbSlave() {
 		static $db = null;
 		if ( $db === null ) {
@@ -88,6 +90,9 @@ abstract class BaseRssModel extends WikiaService {
 		return $db;
 	}
 
+	/**
+	 * @return DatabaseBase
+	 */
 	protected function getDbMaster() {
 		static $db = null;
 		if ( $db === null ) {
@@ -238,7 +243,7 @@ abstract class BaseRssModel extends WikiaService {
 
 	protected function deleteRow( $wikiaId, $pageId, $feed ){
 		$feed = self::getStagingPrefix() . $feed;
-		$db = wfGetDB( DB_MASTER, null,  $this->getDbMaster() );
+		$db = $this->getDbMaster();
 		( new WikiaSQL() )
 			->DELETE( "wikia_rss_feeds" )
 			->WHERE( "wrf_wikia_id" )->EQUAL_TO( $wikiaId )
