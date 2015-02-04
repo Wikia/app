@@ -4,7 +4,7 @@ $global-nav-inverse-text-color: rgb(255,255,255);
 .global-navigation {
 	&.inverse {
 		background-color: $global-nav-inverse-background;
-		border-bottom-color: rgba(0,0,0,0);
+		box-shadow: 0 0 0 2px rgba(0,0,0,0);
 
 		.wikia-logo-container {
 			.wikia-logo img {
