@@ -14,8 +14,14 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 			'script[src*="/ads.saymedia.com/"]',
 			'script[src*="/native.sharethrough.com/"]',
 			'.celtra-ad-v3, script[src$="/mmadlib.js"]'
-		].join(','),
-		isMobile = adContext.getContext().targeting.skin === 'wikiamobile';
+		].join(',');
+
+	function isMobile() {
+		var skin = adContext.getContext().targeting.skin;
+		if (skin === 'wikiamobile' || skin === 'mercury') {
+			return true;
+		}
+	}
 
 	function isImagePresent(document) {
 		var imgs, i, len, w, h;
@@ -117,7 +123,7 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 			return 'empty';
 		}
 
-		if (!isMobile) {
+		if (!isMobile()) {
 			return 'always_success';
 		}
 
