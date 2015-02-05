@@ -31,7 +31,7 @@ $optionsWithArgs = array( 'o', 'd', 'e', 'server' );
 
 require_once ( getenv( 'MW_INSTALL_PATH' ) !== false
 	? getenv( 'MW_INSTALL_PATH' ) . "/maintenance/commandLine.inc"
-	: dirname( __FILE__ ) . '/../../../maintenance/commandLine.inc' );
+	: dirname( __FILE__ ) . '/../../../../maintenance/commandLine.inc' );
 global $smwgIP, $wgServer;
 //require_once( "$smwgIP/specials/Export/SMW_SpecialOWLExport.php" );
 

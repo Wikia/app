@@ -16,7 +16,7 @@ $optionsWithArgs = array( 'concept', 'old', 's', 'e' );
 
 require_once ( getenv( 'MW_INSTALL_PATH' ) !== false
 	? getenv( 'MW_INSTALL_PATH' ) . '/maintenance/commandLine.inc'
-	: dirname( __FILE__ ) . '/../../../maintenance/commandLine.inc' );
+	: dirname( __FILE__ ) . '/../../../../maintenance/commandLine.inc' );
 
 $output_level = array_key_exists( 'quiet', $options ) ? 0 :
 				( array_key_exists( 'verbose', $options ) ? 2 : 1 );

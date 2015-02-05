@@ -21,7 +21,7 @@ die( "\nThis script is not functional. Please run SMW_refreshData.php instead.\n
 
 require_once ( getenv( 'MW_INSTALL_PATH' ) !== false
 	? getenv( 'MW_INSTALL_PATH' ) . '/maintenance/Maintenance.php'
-	: dirname( __FILE__ ) . '/../../../maintenance/Maintenance.php' );
+	: dirname( __FILE__ ) . '/../../../../maintenance/Maintenance.php' );
 
 class SMWMigrate extends Maintenance {
 	public function __construct() {

@@ -77,8 +77,13 @@ class SMWAdmin extends SpecialPage {
 			$title = SpecialPage::getTitleFor( 'SMWAdmin' );
 			if ( $sure == 'yes' ) {
 				if ( is_null( $refreshjob ) ) { // careful, there might be race conditions here
-					$newjob = new SMWRefreshJob( $title, array( 'spos' => 1, 'prog' => 0, 'rc' => 2 ) );
-					$newjob->insert();
+					$jobParams = [ 'spos' => 1, 'prog' => 0, 'rc' => 2 ];
+					// wikia change start - jobqueue migration
+					$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
+					$task->call( 'SMWRefreshJob', $title, $jobParams );
+					$task->queue();
+					// wikia change end
+
 					$wgOut->addHTML( '<p>' . wfMessage( 'smw_smwadmin_updatestarted', '<a href="' . htmlspecialchars( $title->getFullURL() ) . '">Special:SMWAdmin</a>' )->text() . '</p>' );
 				} else {
 					$wgOut->addHTML( '<p>' . wfMessage( 'smw_smwadmin_updatenotstarted', '<a href="' . htmlspecialchars( $title->getFullURL() ) . '">Special:SMWAdmin</a>' )->text() . '</p>' );

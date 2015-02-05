@@ -2,7 +2,7 @@
 
 /**
  * Global functions used for setting up the Semantic MediaWiki extension.
- * 
+ *
  * @file SMW_Setup.php
  * @ingroup SMW
  */
@@ -49,7 +49,7 @@ function enableSemantics( $namespace = null, $complete = false ) {
 	);
 
 	// Initialize base namespace for URIs in data exports:
-	if ( is_null( $namespace ) ) { 
+	if ( is_null( $namespace ) ) {
 		die ( 'You should be providing the domain name to enableSemantics()' );
 		// fallback (bad because data URL will change depending on client URL)
 //		wfWarn( 'You should be providing the domain name to enableSemantics()' );
@@ -78,10 +78,10 @@ function smwfRegisterHooks() {
 	$wgHooks['ParserTestTables'][]    = 'SMWHooks::onParserTestTables';
 	$wgHooks['AdminLinks'][]          = 'SMWHooks::addToAdminLinks';
 	$wgHooks['PageSchemasRegisterHandlers'][] = 'SMWHooks::onPageSchemasRegistration';
-	
+
 	$wgHooks['ParserFirstCallInit'][] = 'SMWSMWDoc::staticInit';
 	$wgHooks['ParserFirstCallInit'][] = 'SMWInfo::staticInit';
-	
+
 	$wgHooks['InternalParseBeforeLinks'][] = 'SMWParserExtensions::onInternalParseBeforeLinks'; // parse annotations in [[link syntax]]
 	$wgHooks['ArticleDelete'][] = 'SMWParseData::onArticleDelete'; // delete annotations
 	$wgHooks['TitleMoveComplete'][] = 'SMWParseData::onTitleMoveComplete'; // move annotations
@@ -92,7 +92,8 @@ function smwfRegisterHooks() {
 	$wgHooks['ArticleFromTitle'][] = 'SMWHooks::onArticleFromTitle'; // special implementations for property/type articles
 	$wgHooks['ParserFirstCallInit'][] = 'SMWHooks::onParserFirstCallInit';
 
-	$wgHooks['SkinTemplateTabs'][] = 'SMWHooks::addRefreshTab'; // basic tab addition
+	// Wikia change -- disable SkinTemplateTabs hooks
+	// $wgHooks['SkinTemplateTabs'][] = 'SMWHooks::addRefreshTab'; // basic tab addition
 	$wgHooks['SkinTemplateNavigation'][] = 'SMWHooks::addStructuredRefreshTab'; // structured version for "Vector"-type skins
 
 	//UnitTests
@@ -107,7 +108,7 @@ function smwfRegisterHooks() {
 
 	$wgHooks['SkinAfterContent'][] = 'SMWFactbox::onSkinAfterContent'; // draw Factbox below categories
 	$wgHooks['SkinGetPoweredBy'][] = 'SMWHooks::addPoweredBySMW';
-	
+
 	$wgHooks['ExtensionTypes'][] = 'SMWHooks::addSemanticExtensionType';
 }
 
@@ -118,7 +119,7 @@ function smwfRegisterClasses() {
 	global $smwgIP, $wgAutoloadClasses, $wgJobClasses;
 
 	$wgAutoloadClasses['SMWHooks']                  = $smwgIP . 'SemanticMediaWiki.hooks.php';
-	
+
 	$incDir = $smwgIP . 'includes/';
 	$wgAutoloadClasses['SMWDataValueFactory']       = $incDir . 'SMW_DataValueFactory.php';
 	$wgAutoloadClasses['SMWDISerializer']           = $incDir . 'SMW_DISerializer.php';
@@ -210,7 +211,7 @@ function smwfRegisterClasses() {
 	$parDir = $smwgIP . 'includes/params/';
 	$wgAutoloadClasses['SMWParamFormat']            = $parDir . 'SMW_ParamFormat.php';
 	$wgAutoloadClasses['SMWParamSource']            = $parDir . 'SMW_ParamSource.php';
-	
+
 	// Parser hooks
 	$phDir = $smwgIP . 'includes/parserhooks/';
 	$wgAutoloadClasses['SMWAsk']                    = $phDir . 'SMW_Ask.php';
@@ -222,7 +223,7 @@ function smwfRegisterClasses() {
 	$wgAutoloadClasses['SMWSetRecurringEvent']      = $phDir . 'SMW_SetRecurringEvent.php';
 	$wgAutoloadClasses['SMWDeclare']                = $phDir . 'SMW_Declare.php';
 	$wgAutoloadClasses['SMWSMWDoc']                 = $phDir . 'SMW_SMWDoc.php';
-	
+
 	// Stores & queries
 	$wgAutoloadClasses['SMWQueryProcessor']         = $smwgIP . 'includes/SMW_QueryProcessor.php';
 	$wgAutoloadClasses['SMWQueryParser']            = $smwgIP . 'includes/SMW_QueryParser.php';
@@ -285,7 +286,7 @@ function smwfRegisterClasses() {
 	$wgAutoloadClasses['SMWDIHandlerTime']                = $stoDirSQL . 'SMW_DIHandler_Time.php';
 	$wgAutoloadClasses['SMWDIHandlerConcept']             = $stoDirSQL . 'SMW_DIHandler_Concept.php';
 	$wgAutoloadClasses['SMWDIHandlerGeoCoord']            = $stoDirSQL . 'SMW_DIHandler_GeoCoord.php';
-	
+
 	// Special pages and closely related helper classes
 	$specDir = $smwgIP . 'specials/';
 	$wgAutoloadClasses['SMWQueryPage']                 = $specDir . 'QueryPages/SMW_QueryPage.php';
@@ -325,7 +326,7 @@ function smwfRegisterClasses() {
 
 	// Maintenance scripts
 	$wgAutoloadClasses['SMWSetupScript'] = $smwgIP . 'maintenance/SMW_setup.php';
-	
+
 	// Other extensions
 	$wgAutoloadClasses['SMWPageSchemas'] = $smwgIP . 'includes/SMW_PageSchemas.php';
 }
