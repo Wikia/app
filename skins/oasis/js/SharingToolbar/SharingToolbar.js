@@ -34,26 +34,14 @@
 					},
 					UserLoginModal = window.UserLoginModal;
 
-				if ( window.wgUserName === null ) {
-					if ( window.wgComboAjaxLogin ) {
-						showComboAjaxForPlaceHolder( false, false, function () {
-							window.AjaxLogin.doSuccess = function () {
-								$( '#AjaxLoginBoxWrapper' ).closest( '.modalWrapper' ).closeModal();
-								showEmailModal();
-							};
-							window.AjaxLogin.close = function () {
-								$( '#AjaxLoginBoxWrapper' ).closeModal();
-							};
-						}, false, true );
-					} else {
-						UserLoginModal.show( {
-							origin: 'sharing-toolbar',
-							callback: function () {
-								window.UserLogin.forceLoggedIn = true;
-								showEmailModal();
-							}
-						} );
-					}
+				if (window.wgUserName === null) {
+					UserLoginModal.show({
+						origin: 'sharing-toolbar',
+						callback: function () {
+							window.UserLogin.forceLoggedIn = true;
+							showEmailModal();
+						}
+					});
 					return false;
 				}
 				else {
