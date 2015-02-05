@@ -69,19 +69,40 @@ class WikiDataModel {
 		$imageTitle = Title::newFromText( $this->imageName, NS_FILE );
 		$file = wfFindFile( $imageTitle );
 		if ( $file && $file->exists() ) {
-			$this->imagePath = $file->getThumbUrl(
-				$this->getThumbSuffix(
-					$file,
-					self::WIKI_HERO_IMAGE_MAX_WIDTH,
-					self::WIKI_HERO_IMAGE_MAX_HEIGHT,
-					$cropPosition
-				) );
-			$this->originalImagePath = $file->getFullUrl();
+			$fullUrl = $file->getFullUrl();
+
+			if (VignetteRequest::isVignetteUrl($fullUrl)) {
+				$this->imagePath = $this->createVignetteThumbnail($file, $cropPosition);
+			} else {
+				$this->createOldThumbnail($file, $cropPosition);
+			}
+
+			$this->originalImagePath = $fullUrl;
 		} else {
 			$this->imageName = null;
 			$this->imagePath = null;
 			$this->originalImagePath = null;
 		}
+	}
+
+	private function createVignetteThumbnail($file, $cropPosition) {
+		return VignetteRequest::fromUrl($file->getFullUrl())
+			->windowCrop()
+			->width(self::WIKI_HERO_IMAGE_MAX_WIDTH)
+			->xOffset(0)
+			->yOffset(round($file->getHeight() * $cropPosition))
+			->windowWidth($file->getWidth())
+			->windowHeight(self::WIKI_HERO_IMAGE_MAX_HEIGHT);
+	}
+
+	private function createOldThumbnail($file, $cropPosition) {
+		return $file->getThumbUrl(
+			$this->getThumbSuffix(
+				$file,
+				self::WIKI_HERO_IMAGE_MAX_WIDTH,
+				self::WIKI_HERO_IMAGE_MAX_HEIGHT,
+				$cropPosition
+			) );
 	}
 
 	private function getThumbSuffix( File $file, $expectedWidth, $expectedHeight, $crop ) {
