@@ -322,6 +322,7 @@
 		},
 		onAfterSendForm = function (data) {
 			if (data.isOk) {
+				onResize();
 				$heroModuleImage.bind('load', function () {
 					$wordmark.css('top', '-174px');
 					States.setState($imageElement, 'upload-state');
