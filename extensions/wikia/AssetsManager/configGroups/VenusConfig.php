@@ -76,6 +76,7 @@ $VenusConfig[ 'venus_body_js' ] = [
 		// libraries loaders
 		'//resources/wikia/libraries/jquery/getResources/jquery.wikia.getResources.js',
 		'//resources/wikia/libraries/jquery/loadLibrary/jquery.wikia.loadLibrary.js',
+		'//resources/wikia/libraries/jquery/loadLibrary/jquery.wikia.loadExternalLibrary.js',
 
 		//platform components
 		'//extensions/wikia/JSMessages/js/JSMessages.js',

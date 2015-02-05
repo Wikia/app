@@ -13,7 +13,6 @@
 	var UserSignupAjaxValidation = function (options) {
 		this.wikiaForm = options.wikiaForm;
 		this.notEmptyFields = options.notEmptyFields || [];
-		this.captchaField = options.captchaField || '';
 		this.submitButton = $(options.submitButton);
 
 		this.controller = 'UserSignupSpecial';
@@ -95,10 +94,6 @@
 				isValid = false;
 				break;
 			}
-		}
-
-		if (this.captchaField && this.checkFieldEmpty(this.wikiaForm.inputs[this.captchaField])) {
-			isValid = false;
 		}
 
 		return isValid;

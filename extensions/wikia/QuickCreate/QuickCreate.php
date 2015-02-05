@@ -28,7 +28,7 @@ function wfQuickCreateButton( $input, $argv, $parser ) {
 	$title = Title::makeTitle( NS_SPECIAL, "CreatePage");
 	$link = $title->getFullUrl();
 	$output = Xml::openElement( 'a', array(
-			'class' => 'wikia-button wikiaComboAjaxLogin',
+			'class' => 'wikia-button',
 			'id'	=> 'mr-submit',
 			'href' => $link
 		) )

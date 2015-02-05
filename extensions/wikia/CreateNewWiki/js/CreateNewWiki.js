@@ -535,8 +535,6 @@
 					WikiBuilder.init(stringHelper);
 				});
 			});
-		$('#AjaxLoginButtons').hide();
-		$('#AjaxLoginLoginForm').show();
 
 		if (window.wgOasisResponsive) {
 			ThemeDesigner.slideByDefaultWidth = 500;

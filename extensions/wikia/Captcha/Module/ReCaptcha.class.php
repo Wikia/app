@@ -1,17 +1,31 @@
 <?php
 
-class ReCaptcha extends SimpleCaptcha {
+namespace Captcha\Module;
+
+/**
+ * Class ReCaptcha
+ *
+ * @package Captcha\Module
+ */
+class ReCaptcha extends BaseCaptcha {
 
 	const VERIFY_URL = 'https://www.google.com/recaptcha/api/siteverify';
+	const CAPTCHA_FIELD = 'g-recaptcha-response';
+
+	public function checkCaptchaField() {
+		return self::CAPTCHA_FIELD;
+	}
 
 	/**
 	 * Displays the reCAPTCHA widget.
 	 */
-	function getForm() {
-		$siteKey = F::app()->wg->ReCaptchaPublicKey;
-		$theme = SassUtil::isThemeDark() ? 'dark' : 'light';
+	public function getForm() {
+		$siteKey = $this->wg->ReCaptchaPublicKey;
+		$theme = \SassUtil::isThemeDark() ? 'dark' : 'light';
 
-		return '<div class="g-recaptcha" data-sitekey="' . $siteKey . '" data-theme="' . $theme . '"></div>';
+		$form = '<div class="g-recaptcha" data-sitekey="' . $siteKey . '" data-theme="' . $theme . '"></div>';
+
+		return $form;
 	}
 
 	/**
@@ -22,7 +36,7 @@ class ReCaptcha extends SimpleCaptcha {
 	public function passCaptcha() {
 		$verifyUrl = $this->getVerifyUrl();
 
-		$responseObj = Http::get( $verifyUrl, 'default', [
+		$responseObj = \Http::get( $verifyUrl, 'default', [
 			'noProxy' => true,
 			'returnInstance' => true
 		] );
@@ -39,28 +53,28 @@ class ReCaptcha extends SimpleCaptcha {
 	}
 
 	protected function getVerifyUrl() {
-		$wg = F::app()->wg;
-		$secret = $wg->ReCaptchaPrivateKey;
-		$response = $wg->Request->getText( 'g-recaptcha-response' );
-		$ip = $wg->Request->getIP();
+		$secret = $this->wg->ReCaptchaPrivateKey;
+		$response = $this->wg->Request->getText( 'g-recaptcha-response' );
+		$ip = $this->wg->Request->getIP();
 
 		return self::VERIFY_URL .
-			'?secret=' . $secret .
-			'&response=' . $response .
-			'&remoteip=' . $ip;
+		'?secret=' . $secret .
+		'&response=' . $response .
+		'&remoteip=' . $ip;
 	}
 
 	public function addCaptchaAPI( &$resultArr ) {
 		$resultArr['captcha']['type'] = 'recaptcha';
 		$resultArr['captcha']['mime'] = 'image/png';
-		$resultArr['captcha']['key'] = F::app()->wg->ReCaptchaPublicKey;
+		$resultArr['captcha']['key'] = $this->wg->ReCaptchaPublicKey;
 	}
 
 	/**
 	 * Show a message asking the user to enter a captcha on edit
 	 * The result will be treated as wiki text
 	 *
-	 * @param $action Action being performed
+	 * @param string $action Action being performed
+	 *
 	 * @return string
 	 */
 	public function getMessage( $action ) {
@@ -69,7 +83,9 @@ class ReCaptcha extends SimpleCaptcha {
 		$text = wfMessage( $name )->escaped();
 
 		// Obtain a more tailored message, if possible, otherwise, fall back to the default for edits
-		return wfMessage( $name )->isBlank() ? wfMessage( 'recaptcha-edit' )->escaped() : $text;
+		$msg = wfMessage( $name )->isBlank() ? wfMessage( 'recaptcha-edit' )->escaped() : $text;
+
+		return $msg;
 	}
 
 	public function APIGetAllowedParams( &$module, &$params ) {

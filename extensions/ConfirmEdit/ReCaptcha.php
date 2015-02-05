@@ -21,8 +21,6 @@ $wgExtensionMessagesFiles['ReCaptcha'] = $dir . '/ReCaptcha.i18n.php';
 
 $wgAutoloadClasses['ReCaptcha'] = $dir . '/ReCaptcha.class.php';
 
-$wgHooks['BeforePageDisplay'][] = 'efReCaptchaOnBeforePageDisplay';
-
 $wgExtensionFunctions[] = 'efReCaptcha';
 
 /**
@@ -36,18 +34,4 @@ function efReCaptcha() {
 	if ( $wg->ReCaptchaPublicKey == '' || $wg->ReCaptchaPrivateKey == '' ) {
 		throw new Exception( wfMessage( 'recaptcha-misconfigured' )->escaped() );
 	}
-}
-
-/**
- * @param OutputPage $out
- * @param Skin $skin
- *
- * @return bool
- */
-function efReCaptchaOnBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
-	$langCode = $out->getContext()->getLanguage()->getCode();
-
-	$src = str_replace( '$1', $langCode, ReCaptcha::API_URL_TEMPLATE );
-	$out->addScript( '<script src="'.$src.'" async defer></script>' );
-	return true;
 }

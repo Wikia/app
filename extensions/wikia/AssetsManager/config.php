@@ -213,7 +213,6 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
 		'//extensions/wikia/Lightbox/scripts/LightboxLoader.js',
 		'#group_imglzy_js',
-		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
 		'//extensions/wikia/MiniEditor/js/MiniEditor.js',
 		// needs to load after MiniEditor
 		'#group_articlecomments_js',
@@ -291,6 +290,7 @@ $config['oasis_jquery'] = array(
 		// libraries loaders
 		'//resources/wikia/libraries/jquery/getResources/jquery.wikia.getResources.js',
 		'//resources/wikia/libraries/jquery/loadLibrary/jquery.wikia.loadLibrary.js',
+		'//resources/wikia/libraries/jquery/loadLibrary/jquery.wikia.loadExternalLibrary.js',
 		'//skins/oasis/js/isTouchScreen.js',
 
 		// jQuery/Oasis specific code
@@ -919,7 +919,6 @@ $config['monobook_js'] = array(
 		'//skins/monobook/main.js',
 		'//resources/wikia/modules/lazyqueue.js',
 		'//extensions/wikia/JSMessages/js/JSMessages.js',
-		'//extensions/wikia/AjaxLogin/AjaxLoginBindings.js',
 		'#group_imglzy_js',
 		'#group_spotlights_js',
 		'//resources/wikia/libraries/ghostwriter/gw.min.js',

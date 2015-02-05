@@ -130,12 +130,43 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			$this->errParam = $response->getVal( 'errParam', '' );
 
 			if ( $this->result == 'ok' ) {
-				$params = [
-					'method' => 'sendConfirmationEmail',
-					'username' => $this->username,
-					'byemail' => intval( $this->byemail ),
-				];
-				$redirectUrl = $this->wg->title->getFullUrl( $params );
+
+				/*
+				 * Remove when SOC-217 ABTest is finished
+				 */
+				$signupForm = new UserLoginForm( $this->wg->request );
+
+				if ( $signupForm->isAllowedRegisterUnconfirmed() ) {
+					$user = User::newFromName( $this->username );
+					// Get and clear redirect page
+					$userSignupRedirect = $user->getOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME );
+					$user->setOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, null );
+
+					$user->saveSettings();
+
+					// redirect user
+					if ( !empty( $userSignupRedirect ) ) {
+						// Redirect user to the point where he finished (when signup on create wiki)
+						$title = SpecialPage::getTitleFor( 'CreateNewWiki' );
+						$query = $userSignupRedirect;
+					} else {
+						$title = $user->getUserPage();
+						$query = '';
+					}
+
+					$redirectUrl = $title->getFullURL( $query );
+				} else {
+				/*
+				 * end remove
+				 */
+					$params = [
+						'method' => 'sendConfirmationEmail',
+						'username' => $this->username,
+						'byemail' => intval( $this->byemail ),
+					];
+					$redirectUrl = $this->wg->title->getFullUrl( $params );
+				}
+
 				$this->wg->out->redirect( $redirectUrl );
 			}
 
@@ -144,19 +175,21 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 
 	public function captcha() {
 		$this->rawHtml = '';
-		$captchaObj = self::getCaptchaObj();
-		if( !empty( $captchaObj ) ) {
+		$captchaObj = $this->getCaptchaObj();
+		if ( !empty( $captchaObj ) ) {
 			$this->rawHtml = $captchaObj->getForm();
-			$this->isFancyCaptcha = ( class_exists( 'FancyCaptcha' ) && $captchaObj instanceof FancyCaptcha );
+			$this->isFancyCaptcha = ( class_exists( 'Captcha\Module\FancyCaptcha' ) && $captchaObj instanceof Captcha\Module\FancyCaptcha );
 		}
 	}
 
 	private function getCaptchaObj() {
 		$captchaObj = null;
-		if( !empty( $this->wg->WikiaEnableConfirmEditExt ) ) {
-			$captchaObj = ConfirmEditHooks::getInstance();
-		}
 
+		if ( !empty( $this->wg->WikiaEnableConfirmEditExt ) ) {
+			$captchaObj = ConfirmEditHooks::getInstance();
+		} elseif ( !empty( $this->wg->EnableCaptchaExt ) ) {
+			$captchaObj = Captcha\Factory\Module::getInstance();
+		}
 		return $captchaObj;
 	}
 
@@ -589,8 +622,13 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 
 	private function disableCaptcha() {
 		global $wgHooks;
+
+		$isMobile = $this->app->checkSkin( 'wikiamobile' );
+		$isAutomatedTest = in_array( $this->wg->Request->getIP(), $this->wg->AutomatedTestsIPsList );
+		$isNoCaptchaTest = $this->wg->Request->getInt( 'nocaptchatest' ) == 1;
+
 		//Disable captcha for automated tests and wikia mobile
-		if ( $this->app->checkSkin( 'wikiamobile' ) || ( in_array( $this->wg->Request->getIP(), $this->wg->AutomatedTestsIPsList ) && $this->wg->Request->getInt( 'nocaptchatest' ) == 1 ) ) {
+		if ( $isMobile || ( $isAutomatedTest && $isNoCaptchaTest ) ) {
 			//Switch off global var
 			$this->wg->WikiaEnableConfirmEditExt = false;
 			//Remove hook function
