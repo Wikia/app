@@ -121,9 +121,6 @@ $wgHooks['APIEditBeforeSave'][] = 'Captcha\Hooks::confirmEditAPI';
 $wgHooks['APIGetAllowedParams'][] = 'Captcha\Hooks::APIGetAllowedParams';
 $wgHooks['APIGetParamDescription'][] = 'Captcha\Hooks::APIGetParamDescription';
 
-// General hooks
-$wgHooks['MakeGlobalVariablesScript'][] = 'Captcha\Hooks::onMakeGlobalVariablesScript';
-
 /**
  * Autoload classes
  */
@@ -151,20 +148,3 @@ $wgCaptchaPrecedence = [
 	'Captcha\Module\ReCaptcha',
 	'Captcha\Module\FancyCaptcha',
 ];
-
-// Always load the recaptcha shiz ... for now
-$wgHooks['BeforePageDisplay'][] = 'efReCaptchaOnBeforePageDisplay';
-
-/**
- * @param OutputPage $out
- * @param Skin $skin
- *
- * @return bool
- */
-function efReCaptchaOnBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
-	$langCode = $out->getContext()->getLanguage()->getCode();
-
-	$src = str_replace( '$1', $langCode, Captcha\Module\ReCaptcha::API_URL_TEMPLATE );
-	$out->addScript( '<script src="' . $src . '" async defer></script>' );
-	return true;
-}
