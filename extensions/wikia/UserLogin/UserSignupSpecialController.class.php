@@ -175,11 +175,22 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 
 	public function captcha() {
 		$this->rawHtml = '';
-		$captchaObj = Captcha\Factory\Module::getInstance();
-		if( !empty( $captchaObj ) ) {
+		$captchaObj = $this->getCaptchaObj();
+		if ( !empty( $captchaObj ) ) {
 			$this->rawHtml = $captchaObj->getForm();
-			$this->isFancyCaptcha = ( class_exists( 'FancyCaptcha' ) && $captchaObj instanceof Captcha\Module\FancyCaptcha );
+			$this->isFancyCaptcha = ( class_exists( 'Captcha\Module\FancyCaptcha' ) && $captchaObj instanceof Captcha\Module\FancyCaptcha );
 		}
+	}
+
+	private function getCaptchaObj() {
+		$captchaObj = null;
+
+		if ( !empty( $this->wg->WikiaEnableConfirmEditExt ) ) {
+			$captchaObj = ConfirmEditHooks::getInstance();
+		} elseif ( !empty( $this->wg->EnableCaptchaExt ) ) {
+			$captchaObj = Captcha\Factory\Module::getInstance();
+		}
+		return $captchaObj;
 	}
 
 	/**
