@@ -461,9 +461,9 @@ ve.dm.MWImageModel.prototype.insertImageNode = function ( fragment ) {
 		case 'wikiaBlockImage':
 		case 'wikiaBlockVideo':
 			if ( nodeType === 'wikiaBlockImage' ) {
-				contentToInsert.splice( 1, 0, { 'type': 'wikiaImageCaption' }, { 'type': '/wikiaImageCaption' } );
+				contentToInsert.splice( 1, 0, { type: 'wikiaImageCaption' }, { type: '/wikiaImageCaption' } );
 			} else {
-				contentToInsert.splice( 1, 0, { 'type': 'wikiaVideoCaption' }, { 'type': '/wikiaVideoCaption' } );
+				contentToInsert.splice( 1, 0, { type: 'wikiaVideoCaption' }, { type: '/wikiaVideoCaption' } );
 			}
 			// Try to put the image in front of the structural node
 			offset = fragment.getDocument().data.getNearestStructuralOffset( fragment.getSelection().getRange().start, -1 );
