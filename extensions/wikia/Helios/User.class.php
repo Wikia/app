@@ -123,7 +123,8 @@ class User {
 			\Wikia\Logger\WikiaLogger::instance()->error(
 				'HELIOS_LOGIN',
 				[ 'method' => __METHOD__, 'type' => $sType, 'hash' => $sHash,
-				'user_id' => $iUserId, 'username' => $sUserName ]
+				'user_id' => $iUserId, 'username' => $sUserName,
+				'helios' => $bHelios, 'mediawiki' => $bMediaWiki ]
 			);
 		}
 
