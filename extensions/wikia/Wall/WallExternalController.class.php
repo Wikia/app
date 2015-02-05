@@ -684,12 +684,14 @@ class WallExternalController extends WikiaController {
 
 			if ( $convertToFormat == 'wikitext' ) {
 				$markup = '<div class="quote">'
-					. "\n" . wfMsgForContent( 'wall-quote-author', $username )
+					. "\n" . wfMessage( 'wall-quote-author', $username )
+						->inContentLanguage()->escaped()
 					. "\n" . $mw->getRawText() . "\n</div>\n";
 			} else {
 				$markup = $this->getConvertedContent( '<div class="quote">'
-					. wfMsgForContent( 'wall-quote-author', $username )
-					. "<br>" . $mw->getRawText() . "\n</div><br>" );
+					. wfMessage( 'wall-quote-author', $username )
+						->inContentLanguage()->escaped()
+					. "<br>" . $mw->getRawText() . "\n</div><br>");
 			}
 
 			$status = 'success';
