@@ -175,43 +175,6 @@ $color-borders: #CECECE;
 	}
 }
 
-#AjaxLoginBox {
-	margin-bottom: 20px;
-}
-
-div#userloginErrorBox3 {
-	margin-top: 2em;
-}
-
-#labelFor_wpRemember2Ajax {
-	font-size: 12px;
-}
-
-#wpLoginattempt {
-	display: none;
-}
-
-.skin-oasis #AjaxLoginSlider {
-	div.ajax-login-slider-panel {
-		padding: 0;
-		width: auto;
-	}
-}
-
-#userajaxloginform {
-	input[type=text],
-	input[type=password] {
-		width: 380px;
-	}
-}
-
-#termsOfUse {
-	margin-top: -5px;
-	p {
-		margin-top: 0;
-	}
-}
-
 #UserAuth {
 	@include clearfix;
 	display: none;
