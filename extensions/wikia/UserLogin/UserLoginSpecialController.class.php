@@ -257,72 +257,87 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * @brief renders html version that will be inserted into ajax based login interaction
-	 * @details
-	 *   on GET, template partial for an ajax element will render
+	 * Renders html version that will be inserted into ajax based login interaction.
+	 * On GET, template partial for an ajax element will render
 	 */
 	public function dropdown() {
-		$query = $this->app->wg->Request->getValues();
+		$query = $this->getSanitizedQueryString();
 
-		if ( isset( $query['password'] ) ) {
-			// remove the password from the params to prevent exposiong in into the URL
-			unset($query['password']);
-		}
-
-		$this->returnto = $this->getReturnToFromQuery( $query );
-		$this->returntoquery = $this->getReturnToQueryFromQuery( $query );
+		$this->response->setData( [
+			'returnto' => $this->getReturnToFromQuery( $query ),
+			'returntoquery' => $this->getReturnToQueryFromQuery( $query ),
+		] );
 
 		$requestParams = $this->getRequest()->getParams();
 		if ( !empty( $requestParams[ 'registerLink' ] ) ) {
-			$this->registerLink = $requestParams[ 'registerLink' ];
+			$this->response->setVal( 'registerLink',  $requestParams[ 'registerLink' ] );
 		}
+
 		if ( !empty( $requestParams[ 'template' ] ) ) {
 			$this->overrideTemplate( $requestParams[ 'template' ] );
 		}
 	}
 
-	public function getMainPagePartialUrl() {
+	/**
+	 * This method returns an array of query parameters that do not contain sensitive information
+	 * This can be used to construct returnto and returntoquery values that are not compromising.
+	 */
+	private function getSanitizedQueryString() {
+		$query = $this->app->wg->Request->getValues();
+		$filterParams = [ 'password', 'username', 'loginToken' ];
+
+		foreach ( $filterParams as $paramName ) {
+			unset( $query[$paramName] );
+		}
+
+		return $query;
+	}
+
+	private function getReturnToFromQuery( &$query ) {
+		if ( !is_array( $query ) ) {
+			return '';
+		}
+
+		// If there's already a returnto here, use it.
+		if ( !empty( $query['returnto'] ) ) {
+			if ( !array_key_exists( 'returntoquery', $query ) ) {
+				$query['returntoquery'] = '';
+			}
+			return $query['returnto'];
+		}
+
+		if ( isset( $query['title'] ) && !$this->isTitleBlacklisted( $query['title'] ) ) {
+			$returnTo = $query['title'];
+			unset( $query['title'] );
+		} else {
+			$returnTo = $this->getMainPagePartialUrl();
+		}
+
+		return $returnTo;
+	}
+
+	private function getMainPagePartialUrl() {
 		return Title::newMainPage()->getPartialURL();
 	}
 
-	/**
-	 * @param String $title
-	 *
-	 * @return Boolean
-	 */
-	public function isTitleBlacklisted( $title ) {
+	private function isTitleBlacklisted( $title ) {
 		return AccountNavigationController::isBlacklisted( $title );
 	}
 
-	private function getReturnToFromQuery( $query ) {
-		if( !is_array( $query ) ) {
-			return '';
-		}
-
-		$returnto = $this->getMainPagePartialUrl();
-		if( isset( $query['title'] ) && !$this->isTitleBlacklisted( $query['title'] ) ) {
-			$returnto = $query['title'] ;
-			unset( $query['title'] );
-		}
-
-		return $returnto;
-	}
-
 	private function getReturnToQueryFromQuery( $query ) {
-		if( !is_array( $query ) ) {
+		if ( !is_array( $query ) ) {
 			return '';
 		}
 
-		// CONN-49 an edge-case when while being on Special:UserLogin you fail in logging-in
-		// and because of that the returntoquery gets longer and longer with each failure
-		if( !empty( $query['returntoquery'] ) ) {
-			$prevReturnToQuery = wfCgiToArray( $query['returntoquery'] );
-			$query['returntoquery'] = [];
+		if ( array_key_exists( 'returntoquery', $query ) ) {
+			return $query['returntoquery'];
+		} elseif ( $this->request->wasPosted() ) {
+			// Don't use any query parameters if this was a POST and we couldn't find
+			// a returntoquery param
+			return '';
 		} else {
-			$prevReturnToQuery = [];
+			return wfArrayToCGI( $query );
 		}
-
-		return wfArrayToCGI( $query, $prevReturnToQuery );
 	}
 
 	public function providers() {
