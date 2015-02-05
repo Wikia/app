@@ -78,7 +78,7 @@
 
 	$.loadReCaptcha = function () {
 		var url = 'https://www.google.com/recaptcha/api.js?hl=' + window.wgUserLanguage;
-		return $.loadExternalLibrary('ReCaptcha', url, typeof window.grecapcha);
+		return $.loadExternalLibrary('ReCaptcha', url, typeof window.grecaptcha);
 	};
 
 	// Temporarily load captcha library on every page until we have on demand loading set up.
