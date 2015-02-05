@@ -167,7 +167,7 @@ class VideoFileUploader {
 		$metadata = json_encode( $metadata );
 		$metadata = \UtfNormal::toNFC( $metadata );
 
-		return json_decode( $metadata );
+		return json_decode( $metadata, true );
 	}
 
 	/**
