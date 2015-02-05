@@ -42,7 +42,7 @@ $optionsWithArgs = array( 'd', 's', 'e', 'n', 'b', 'startidfile', 'server', 'pag
 
 require_once ( getenv( 'MW_INSTALL_PATH' ) !== false
 	? getenv( 'MW_INSTALL_PATH' ) . "/maintenance/commandLine.inc"
-	: dirname( __FILE__ ) . '/../../../maintenance/commandLine.inc' );
+	: dirname( __FILE__ ) . '/../../../../maintenance/commandLine.inc' );
 
 global $smwgEnableUpdateJobs, $wgServer, $wgTitle;
 $wgTitle = Title::newFromText( 'SMW_refreshData.php' );
@@ -168,6 +168,7 @@ if ( $pages == false ) {
 		$title = Title::newFromText( $page );
 
 		if ( !is_null( $title ) ) {
+			// wikia note - not migrating call to new jobqueue, since this is run directly
 			$updatejob = new SMWUpdateJob( $title );
 			$updatejob->run();
 		}
