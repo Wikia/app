@@ -3,7 +3,6 @@
 class ReCaptcha extends SimpleCaptcha {
 
 	const VERIFY_URL = 'https://www.google.com/recaptcha/api/siteverify';
-	const API_URL_TEMPLATE = 'https://www.google.com/recaptcha/api.js?hl=$1';
 
 	/**
 	 * Displays the reCAPTCHA widget.

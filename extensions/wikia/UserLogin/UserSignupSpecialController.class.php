@@ -175,11 +175,22 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 
 	public function captcha() {
 		$this->rawHtml = '';
-		$captchaObj = Captcha\Factory\Module::getInstance();
-		if( !empty( $captchaObj ) ) {
+		$captchaObj = $this->getCaptchaObj();
+		if ( !empty( $captchaObj ) ) {
 			$this->rawHtml = $captchaObj->getForm();
-			$this->isFancyCaptcha = ( class_exists( 'FancyCaptcha' ) && $captchaObj instanceof Captcha\Module\FancyCaptcha );
+			$this->isFancyCaptcha = ( class_exists( 'Captcha\Module\FancyCaptcha' ) && $captchaObj instanceof Captcha\Module\FancyCaptcha );
 		}
+	}
+
+	private function getCaptchaObj() {
+		$captchaObj = null;
+
+		if ( !empty( $this->wg->WikiaEnableConfirmEditExt ) ) {
+			$captchaObj = ConfirmEditHooks::getInstance();
+		} elseif ( !empty( $this->wg->EnableCaptchaExt ) ) {
+			$captchaObj = Captcha\Factory\Module::getInstance();
+		}
+		return $captchaObj;
 	}
 
 	/**
@@ -611,8 +622,13 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 
 	private function disableCaptcha() {
 		global $wgHooks;
+
+		$isMobile = $this->app->checkSkin( 'wikiamobile' );
+		$isAutomatedTest = in_array( $this->wg->Request->getIP(), $this->wg->AutomatedTestsIPsList );
+		$isNoCaptchaTest = $this->wg->Request->getInt( 'nocaptchatest' ) == 1;
+
 		//Disable captcha for automated tests and wikia mobile
-		if ( $this->app->checkSkin( 'wikiamobile' ) || ( in_array( $this->wg->Request->getIP(), $this->wg->AutomatedTestsIPsList ) && $this->wg->Request->getInt( 'nocaptchatest' ) == 1 ) ) {
+		if ( $isMobile || ( $isAutomatedTest && $isNoCaptchaTest ) ) {
 			//Switch off global var
 			$this->wg->WikiaEnableConfirmEditExt = false;
 			//Remove hook function

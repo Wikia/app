@@ -3,12 +3,16 @@
 	'use strict';
 
 	/**
-	 * JS for signing up with a new account, both on mobile and desktop
+	 * JS for signing up with a new account, on BOTH MOBILE and DESKTOP
 	 */
 	var UserSignup = {
 		inputsToValidate: ['userloginext01', 'email', 'userloginext02', 'birthday'],
 		notEmptyFields: ['userloginext01', 'email', 'userloginext02', 'birthday', 'birthmonth', 'birthyear'],
 		invalidInputs: {},
+
+		/**
+		 * WikiaMobile, Wikia One, and some automated tests do not use captcha
+		 */
 		useCaptcha: !window.wgUserLoginDisableCaptcha,
 
 		/**
@@ -17,72 +21,30 @@
 		init: function () {
 			this.wikiaForm = new WikiaForm('#WikiaSignupForm');
 			this.submitButton = this.wikiaForm.inputs.submit;
-			this.captchaField = this.useCaptcha ? window.wgCheckCaptchaField : '';
-			if (this.captchaLoadError()) {
-				this.handleCaptchaLoadError();
-				return;
-			}
 
-			this.validator = new UserSignupAjaxValidation({
-				wikiaForm: this.wikiaForm,
-				inputsToValidate: this.inputsToValidate,
-				submitButton: this.submitButton,
-				notEmptyFields: this.notEmptyFields,
-				captchaField: this.captchaField
-			});
+			this.loadCaptcha();
+			this.setupValidation();
 
 			// imported via UserSignupMixin
 			this.setCountryValue(this.wikiaForm);
 			this.initOptIn(this.wikiaForm);
-
-			this.setupValidation();
 		},
 
-		/**
-		 * Check if the captcha solution fails to load, possibly due to google being blocked (UC-202)
-		 * @returns {boolean}
-		 */
-		captchaLoadError: function () {
-			var $captchaInput;
-
-			// if we don't need captcha on this form, there's nothing to fail
-			// Temporary skin check fix until we sort out captcha on mobile UC-162
-			if (!this.useCaptcha || window.skin === 'wikiamobile') {
-				return false;
+		loadCaptcha: function () {
+			if (this.useCaptcha) {
+				$.loadReCaptcha().fail(this.handleCaptchaLoadError.bind(this));
 			}
-
-			$captchaInput = this.wikiaForm.inputs[this.captchaField];
-			return !$captchaInput;
 		},
 
 		/**
-		 * Captcha is required for signup, so if it fails to load, disable the form
-		 * fields and inform the user. Note, this is different from when a user
-		 * fails to match the blurry word.
+		 * Captcha is required for signup, so if it fails to load (possibly b/c google is blocked in China)
+		 * inform the user with a modal. Note, this is different from when a user fails the captcha test itself.
 		 */
 		handleCaptchaLoadError: function () {
-			this.wikiaForm.disableAll();
-
-			function createModal(uiModal) {
-				var modalConfig = {
-					vars: {
-						id: 'catchaLoadErrorModal',
-						classes: ['captcha-load-error-modal'],
-						size: 'medium',
-						title: $.msg('usersignup-page-captcha-load-fail-title'),
-						content: $.msg('usersignup-page-captcha-load-fail-text')
-					}
-				};
-
-				uiModal.createComponent(modalConfig, function (captchaErrorModal) {
-					captchaErrorModal.show();
-				});
-			}
-
 			require(['wikia.ui.factory'], function (uiFactory) {
 				$.when(uiFactory.init('modal'))
-					.then(createModal);
-			});
+					.then(this.createCaptchaLoadErrorModal.bind(this));
+			}.bind(this));
 
 			Wikia.Tracker.track({
 				action: Wikia.Tracker.ACTIONS.ERROR,
@@ -93,11 +55,34 @@
 			});
 		},
 
+		createCaptchaLoadErrorModal: function (uiModal) {
+			var modalConfig = {
+				vars: {
+					id: 'catchaLoadErrorModal',
+					classes: ['captcha-load-error-modal'],
+					size: 'medium',
+					title: $.msg('usersignup-page-captcha-load-fail-title'),
+					content: $.msg('usersignup-page-captcha-load-fail-text')
+				}
+			};
+
+			uiModal.createComponent(modalConfig, function (captchaErrorModal) {
+				captchaErrorModal.show();
+			});
+		},
+
 		/**
 		 * Applying ajax validation to the form fields that have been cached via WikiaForm
 		 */
 		setupValidation: function () {
 			var inputs = this.wikiaForm.inputs;
+
+			this.validator = new UserSignupAjaxValidation({
+				wikiaForm: this.wikiaForm,
+				inputsToValidate: this.inputsToValidate,
+				submitButton: this.submitButton,
+				notEmptyFields: this.notEmptyFields
+			});
 
 			inputs.userloginext01
 				.add(inputs.email)
@@ -125,7 +110,7 @@
 	// expose global
 	window.UserSignup = UserSignup;
 
-	$(window).on('load', function () {
+	$(function () {
 		UserSignup.init();
 	});
 })();

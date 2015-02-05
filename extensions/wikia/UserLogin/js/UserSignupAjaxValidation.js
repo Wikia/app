@@ -15,7 +15,6 @@
 		this.wikiaForm = options.wikiaForm;
 		this.inputsToValidate = options.inputsToValidate || [];
 		this.notEmptyFields = options.notEmptyFields || [];
-		this.captchaField = options.captchaField || '';
 		this.submitButton = $(options.submitButton);
 
 		this.activateSubmit();
@@ -101,10 +100,6 @@
 				isValid = false;
 				break;
 			}
-		}
-
-		if (this.captchaField && this.checkFieldEmpty(this.wikiaForm.inputs[this.captchaField])) {
-			isValid = false;
 		}
 
 		return isValid;

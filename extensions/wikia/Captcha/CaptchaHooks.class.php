@@ -58,9 +58,4 @@ class Hooks {
 	public static function APIGetParamDescription( &$module, &$desc ) {
 		return Factory\Module::getInstance()->APIGetParamDescription( $module, $desc );
 	}
-
-	public static function onMakeGlobalVariablesScript( array &$vars ) {
-		$vars['wgCheckCaptchaField'] = Factory\Module::getInstance()->checkCaptchaField();
-		return true;
-	}
 }
