@@ -11,6 +11,8 @@
  *
  * CHANGES
  * -------
+ * 2015/02/05
+ *  - Changes made by Wikia (lukaszk@wikia-inc.com) to support solarized theme for js/css/lua files
  * 2005/08/26 (1.0.2)
  *  -  Added support for objects and methods
  *  -  Removed unusable keywords

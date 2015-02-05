@@ -11,6 +11,8 @@
  *
  * CHANGES
  * -------
+ * 2015/02/05
+ *  - Changes made by Wikia (lukaszk@wikia-inc.com) to support solarized theme for js/css/lua files
  * 2008/05/23 (1.0.7.22)
  *  -  Added description of extra language features (SF#1970248)
  * 2004/11/27 (1.0.3)

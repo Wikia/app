@@ -11,6 +11,8 @@
  *
  * CHANGES
  * -------
+ * 2015/02/05
+ *  - Changes made by Wikia (lukaszk@wikia-inc.com) to support solarized theme for js/css/lua files
  * 2012/06/27 (1.0.8.11)
  *  -  Reordered Keyword Groups to reflect syntactical meaning of keywords
  * 2008/05/23 (1.0.7.22)
