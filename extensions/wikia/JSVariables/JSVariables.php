@@ -96,7 +96,7 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
  */
 function wfMakeGlobalVariablesScript(Array &$vars, OutputPage $out) {
 	wfProfileIn(__METHOD__);
-	global $wgMemc, $wgEnableAjaxLogin, $wgPrivateTracker, $wgExtensionsPath,
+	global $wgMemc, $wgPrivateTracker, $wgExtensionsPath,
 		$wgArticle, $wgSitename, $wgDisableAnonymousEditing, $wgCityId,
 		$wgGroupPermissions, $wgBlankImgUrl, $wgCookieDomain, $wgCookiePath, $wgResourceBasePath;
 
@@ -112,21 +112,10 @@ function wfMakeGlobalVariablesScript(Array &$vars, OutputPage $out) {
 		$vars['wgCatId'] = 0;
 	}
 
-	$skinName = get_class($skin);
-	if (is_array($wgEnableAjaxLogin) && in_array($skinName, $wgEnableAjaxLogin)) {
-		$vars['wgEnableAjaxLogin'] = true;
-	}
-
 	$vars['wgBlankImgUrl'] = $wgBlankImgUrl;
 
 	if (!empty($wgPrivateTracker)) {
 		$vars['wgPrivateTracker'] = true;
-	}
-
-	// TODO: load it on-demand using JSMessages
-	if($vars['wgIsArticle'] == false && !empty($vars['wgEnableAjaxLogin'])) {
-		$vars['ajaxLogin1'] = wfMsg('ajaxLogin1');
-		$vars['ajaxLogin2'] = wfMsg('ajaxLogin2');
 	}
 
 	// TODO: use wgMainPageTitle instead?
