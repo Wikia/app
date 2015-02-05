@@ -488,7 +488,6 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 		'MediaType' => 'VideoAssets',
 		'LanguageSpoken' => 'VideoAssets',
 		'LanguageSubtitled' => 'VideoAssets',
-		'ReleaseEvents' => 'EntertainmentProgram',
 		'CountryTarget' => 'VideoAssets',
 		'MovieMpaa' => 'EntertainmentProgram',
 		'TvRating' => 'EntertainmentProgram',
@@ -687,12 +686,12 @@ class IvaFeedIngester extends RemoteAssetFeedIngester {
 		}
 
 		// skip videos released before our minimum release date
-//		if ( !empty( $program['FirstReleasedYear'] ) && $program['FirstReleasedYear'] < self::MIN_RELEASE_YEAR ) {
-//			$msg = "Skip: {$clipData['series']} (Publishedid:{$program['Publishedid']}) release date ";
-//			$msg .= "{$program['FirstReleasedYear']} before ".self::MIN_RELEASE_YEAR."\n";
-//			$this->logger->videoSkipped( $msg );
-//			return false;
-//		}
+		if ( !empty( $program['FirstReleasedYear'] ) && $program['FirstReleasedYear'] < self::MIN_RELEASE_YEAR ) {
+			$msg = "Skip: {$clipData['series']} (Publishedid:{$program['Publishedid']}) release date ";
+			$msg .= "{$program['FirstReleasedYear']} before ".self::MIN_RELEASE_YEAR."\n";
+			$this->logger->videoSkipped( $msg );
+			return false;
+		}
 
 		// get season
 		$clipData['season'] = empty( $videoParams['season'] ) ? '' : $videoParams['season'];
