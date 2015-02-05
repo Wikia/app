@@ -21,6 +21,7 @@
 		init: function () {
 			this.wikiaForm = new WikiaForm('#WikiaSignupForm');
 			this.submitButton = this.wikiaForm.inputs.submit;
+
 			this.loadCaptcha();
 			this.setupValidation();
 
