@@ -428,6 +428,161 @@ define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
 		wpTextbox0.dir = wpTextbox1.dir;
 	}
 
+	/**
+	 * This function runs once every 500ms to detect changes to wpTextbox1's text that the input event does not catch.
+	 * This happens when another script changes the text without knowing that the syntax highlighter needs to be
+	 * informed
+	 */
+	function highlightSyntaxIfNeeded () {
+		if (wpTextbox1.value !== lastText) {
+			highlightSyntax();
+		}
+		if (wpTextbox1.scrollLeft !== wpTextbox0.scrollLeft) {
+			syncScrollX();
+		}
+		if (wpTextbox1.scrollTop !== wpTextbox0.scrollTop) {
+			syncScrollY();
+		}
+		if (wpTextbox1.offsetHeight !== wpTextbox0.offsetHeight) {
+			wpTextbox0.style.height = wpTextbox1.offsetHeight + 'px';
+		}
+	}
+
+	function configureColor (parameterName, hardcodedFallback) {
+		if (syntaxHighlighterConfig[parameterName] === 'normal') {
+			syntaxHighlighterConfig[parameterName] = hardcodedFallback;
+		}
+		else if (typeof(syntaxHighlighterConfig[parameterName]) !== 'undefined') {
+			return;
+		}
+		else if (typeof(syntaxHighlighterConfig.defaultColor) !== 'undefined') {
+			syntaxHighlighterConfig[parameterName] = syntaxHighlighterConfig.defaultColor;
+		}
+		else {
+			syntaxHighlighterConfig[parameterName] = hardcodedFallback;
+		}
+	}
+
+	function setup (textarea) {
+		var focus,
+			scrollTop,
+			syntaxStyleElement,
+			textboxContainer,
+			wpTextbox1Style;
+
+		wpTextbox0 = document.createElement('div');
+		wpTextbox1 = textarea;
+
+		if (window.syntaxHighlighterConfig === undefined) {
+			window.syntaxHighlighterConfig = {};
+		}
+		syntaxHighlighterConfig = window.syntaxHighlighterConfig;
+
+		//use 3-digit colors instead of 6-digit colors for performance
+		configureColor('boldOrItalicColor', '#EEE'); //gray
+		configureColor('commentColor', '#EFE'); //green
+		configureColor('entityColor', '#DFD'); //green
+		configureColor('externalLinkColor', '#EFF'); //cyan
+		configureColor('headingColor', '#EEE'); //gray
+		configureColor('hrColor', '#EEE'); //gray
+		configureColor('listOrIndentColor', '#EFE'); //green
+		configureColor('parameterColor', '#FC6'); //orange
+		configureColor('signatureColor', '#FC6'); //orange
+		configureColor('tagColor', '#FEF'); //pink
+		configureColor('tableColor', '#FFC'); //yellow
+		configureColor('templateColor', '#FFC'); //yellow
+		configureColor('wikilinkColor', '#EEF'); //blue
+
+		syntaxHighlighterConfig.timeout = syntaxHighlighterConfig.timeout || 50;
+
+		textboxContainer = document.createElement('div');
+		syntaxStyleElement = document.createElement('style');
+		syntaxStyleTextNode = syntaxStyleElement.appendChild(document.createTextNode(''));
+
+		// The styling of the textbox and the background div must be kept very similar
+		wpTextbox1Style = window.getComputedStyle(wpTextbox1);
+		scrollTop = wpTextbox1.scrollTop;
+		focus = (document.activeElement === wpTextbox1);
+
+		wpTextbox0.dir = wpTextbox1.dir;
+		wpTextbox0.lang = wpTextbox1.lang; // Lang determines which font 'monospace' is
+		wpTextbox0.style.backgroundColor = wpTextbox1Style.backgroundColor;
+		wpTextbox0.style.border = '1px solid transparent';
+		wpTextbox0.style.boxSizing = 'border-box';
+		wpTextbox0.style.color = 'transparent'; // Makes it look just a little bit smoother
+		wpTextbox0.style.fontFamily = wpTextbox1Style.fontFamily;
+		wpTextbox0.style.fontSize = wpTextbox1Style.fontSize;
+		wpTextbox0.style.lineHeight = 'normal';
+		wpTextbox0.style.marginBottom = wpTextbox1Style.marginBottom;
+		wpTextbox0.style.marginLeft = '0';
+		wpTextbox0.style.marginRight = '0';
+		wpTextbox0.style.marginTop = wpTextbox1Style.marginTop;
+		wpTextbox0.style.overflowX = 'auto';
+		wpTextbox0.style.overflowY = 'scroll';
+		// Horizontal resize would look horribly choppy, better to make the user resize the browser window instead
+		wpTextbox0.style.resize = (wpTextbox1Style.resize === 'vertical' ||
+		wpTextbox1Style.resize === 'both' ? 'vertical' : 'none');
+		wpTextbox0.style.tabSize = wpTextbox1Style.tabSize;
+		wpTextbox0.style.whiteSpace = 'pre-wrap';
+		wpTextbox0.style.width = '100%';
+		wpTextbox0.style.wordWrap = 'normal'; // See below
+
+		wpTextbox1.style.backgroundColor = 'transparent';
+		wpTextbox1.style.border = '1px inset gray';
+		wpTextbox1.style.boxSizing = 'border-box';
+		wpTextbox1.style.fontSize = wpTextbox1Style.fontSize; // Resolves alignment problems on mobile chrome
+		wpTextbox1.style.lineHeight = 'normal';
+		wpTextbox1.style.left = '0';
+		wpTextbox1.style.margin = '0';
+		wpTextbox1.style.overflowX = 'auto';
+		wpTextbox1.style.overflowY = 'scroll';
+		wpTextbox1.style.padding = '0';
+		wpTextbox1.style.position = 'absolute';
+		wpTextbox1.style.resize = wpTextbox0.style.resize;
+		wpTextbox1.style.top = '0';
+		wpTextbox1.style.width = '100%';
+		wpTextbox1.style.wordWrap = 'normal'; // Overall more visually appealing
+
+		// Lock both heights to pixel values so that the browser zoom feature works better
+		wpTextbox0.style.height = wpTextbox1.offsetHeight + 'px';
+		wpTextbox1.style.height = wpTextbox0.style.height;
+
+		textboxContainer.style.clear = 'both';
+		textboxContainer.style.position = 'relative';
+
+		wpTextbox1.parentNode.insertBefore(textboxContainer, wpTextbox1);
+		textboxContainer.appendChild(wpTextbox1);
+		textboxContainer.appendChild(wpTextbox0);
+
+		// Changing the parent resets scrollTop to 0 and removes focus, so we have to bring that back
+		wpTextbox0.scrollTop = scrollTop;
+		wpTextbox1.scrollTop = scrollTop;
+		if (focus) {
+			wpTextbox1.focus();
+		}
+
+		// Fix drop-downs in editing toolbar
+		$('.tool-select *').css({zIndex: 5});
+
+		document.head.appendChild(syntaxStyleElement);
+
+		$(wpTextbox1).on('input', function () {
+			highlightSyntax();
+		});
+		wpTextbox1.addEventListener('scroll', syncScrollX);
+		wpTextbox1.addEventListener('scroll', syncScrollY);
+		attributeObserver = new MutationObserver(syncTextDirection);
+		attributeObserver.observe(wpTextbox1, {attributes: true});
+		highlightSyntaxIfNeededIntervalID = setInterval(highlightSyntaxIfNeeded, 500);
+		highlightSyntax();
+	}
+
+	function queueSetup (textarea) {
+		setTimeout(function () {
+			setup(textarea);
+		}, 0);
+	}
+
 	function init (textarea) {
 		maxSpanNumber = -1;
 
@@ -439,155 +594,6 @@ define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
 		tableBreakerRegex = breakerRegexWithPrefix('\\|}');
 		headingBreakerRegex = breakerRegexWithPrefix('\n');
 		tagBreakerRegexCache = {};
-
-		// This function runs once every 500ms to detect changes to wpTextbox1's text
-		// that the input event does not catch.
-		// This happens when another script changes the text without knowing
-		// that the syntax highlighter needs to be informed
-		function highlightSyntaxIfNeeded () {
-			if (wpTextbox1.value !== lastText) {
-				highlightSyntax();
-			}
-			if (wpTextbox1.scrollLeft !== wpTextbox0.scrollLeft) {
-				syncScrollX();
-			}
-			if (wpTextbox1.scrollTop !== wpTextbox0.scrollTop) {
-				syncScrollY();
-			}
-			if (wpTextbox1.offsetHeight !== wpTextbox0.offsetHeight) {
-				wpTextbox0.style.height = wpTextbox1.offsetHeight + 'px';
-			}
-		}
-
-		function setup (textarea) {
-
-			function configureColor (parameterName, hardcodedFallback) {
-				if (syntaxHighlighterConfig[parameterName] === 'normal') {
-					syntaxHighlighterConfig[parameterName] = hardcodedFallback;
-				}
-				else if (typeof(syntaxHighlighterConfig[parameterName]) !== 'undefined') {
-					return;
-				}
-				else if (typeof(syntaxHighlighterConfig.defaultColor) !== 'undefined') {
-					syntaxHighlighterConfig[parameterName] = syntaxHighlighterConfig.defaultColor;
-				}
-				else {
-					syntaxHighlighterConfig[parameterName] = hardcodedFallback;
-				}
-			}
-
-			if (window.syntaxHighlighterConfig === undefined) {
-				window.syntaxHighlighterConfig = {};
-			}
-			syntaxHighlighterConfig = window.syntaxHighlighterConfig;
-
-
-			//use 3-digit colors instead of 6-digit colors for performance
-			configureColor('boldOrItalicColor', '#EEE'); //gray
-			configureColor('commentColor', '#EFE'); //green
-			configureColor('entityColor', '#DFD'); //green
-			configureColor('externalLinkColor', '#EFF'); //cyan
-			configureColor('headingColor', '#EEE'); //gray
-			configureColor('hrColor', '#EEE'); //gray
-			configureColor('listOrIndentColor', '#EFE'); //green
-			configureColor('parameterColor', '#FC6'); //orange
-			configureColor('signatureColor', '#FC6'); //orange
-			configureColor('tagColor', '#FEF'); //pink
-			configureColor('tableColor', '#FFC'); //yellow
-			configureColor('templateColor', '#FFC'); //yellow
-			configureColor('wikilinkColor', '#EEF'); //blue
-
-			syntaxHighlighterConfig.timeout = syntaxHighlighterConfig.timeout || 50;
-
-			var textboxContainer = document.createElement('div');
-			wpTextbox0 = document.createElement('div');
-			wpTextbox1 = textarea;
-			var syntaxStyleElement = document.createElement('style');
-			syntaxStyleTextNode = syntaxStyleElement.appendChild(document.createTextNode(''));
-
-			// The styling of the textbox and the background div must be kept very similar
-			var wpTextbox1Style = window.getComputedStyle(wpTextbox1);
-			var scrollTop = wpTextbox1.scrollTop;
-			var focus = (document.activeElement === wpTextbox1);
-
-			wpTextbox0.dir = wpTextbox1.dir;
-			wpTextbox0.lang = wpTextbox1.lang; // Lang determines which font 'monospace' is
-			wpTextbox0.style.backgroundColor = wpTextbox1Style.backgroundColor;
-			wpTextbox0.style.border = '1px solid transparent';
-			wpTextbox0.style.boxSizing = 'border-box';
-			wpTextbox0.style.color = 'transparent'; // Makes it look just a little bit smoother
-			wpTextbox0.style.fontFamily = wpTextbox1Style.fontFamily;
-			wpTextbox0.style.fontSize = wpTextbox1Style.fontSize;
-			wpTextbox0.style.lineHeight = 'normal';
-			wpTextbox0.style.marginBottom = wpTextbox1Style.marginBottom;
-			wpTextbox0.style.marginLeft = '0';
-			wpTextbox0.style.marginRight = '0';
-			wpTextbox0.style.marginTop = wpTextbox1Style.marginTop;
-			wpTextbox0.style.overflowX = 'auto';
-			wpTextbox0.style.overflowY = 'scroll';
-			// Horizontal resize would look horribly choppy, better to make the user resize the browser window instead
-			wpTextbox0.style.resize = (wpTextbox1Style.resize === 'vertical' ||
-				wpTextbox1Style.resize === 'both' ? 'vertical' : 'none');
-			wpTextbox0.style.tabSize = wpTextbox1Style.tabSize;
-			wpTextbox0.style.whiteSpace = 'pre-wrap';
-			wpTextbox0.style.width = '100%';
-			wpTextbox0.style.wordWrap = 'normal'; // See below
-
-			wpTextbox1.style.backgroundColor = 'transparent';
-			wpTextbox1.style.border = '1px inset gray';
-			wpTextbox1.style.boxSizing = 'border-box';
-			wpTextbox1.style.fontSize = wpTextbox1Style.fontSize; // Resolves alignment problems on mobile chrome
-			wpTextbox1.style.lineHeight = 'normal';
-			wpTextbox1.style.left = '0';
-			wpTextbox1.style.margin = '0';
-			wpTextbox1.style.overflowX = 'auto';
-			wpTextbox1.style.overflowY = 'scroll';
-			wpTextbox1.style.padding = '0';
-			wpTextbox1.style.position = 'absolute';
-			wpTextbox1.style.resize = wpTextbox0.style.resize;
-			wpTextbox1.style.top = '0';
-			wpTextbox1.style.width = '100%';
-			wpTextbox1.style.wordWrap = 'normal'; // Overall more visually appealing
-
-			// Lock both heights to pixel values so that the browser zoom feature works better
-			wpTextbox0.style.height = wpTextbox1.offsetHeight + 'px';
-			wpTextbox1.style.height = wpTextbox0.style.height;
-
-			textboxContainer.style.clear = 'both';
-			textboxContainer.style.position = 'relative';
-
-			wpTextbox1.parentNode.insertBefore(textboxContainer, wpTextbox1);
-			textboxContainer.appendChild(wpTextbox1);
-			textboxContainer.appendChild(wpTextbox0);
-
-			// Changing the parent resets scrollTop to 0 and removes focus, so we have to bring that back
-			wpTextbox0.scrollTop = scrollTop;
-			wpTextbox1.scrollTop = scrollTop;
-			if (focus) {
-				wpTextbox1.focus();
-			}
-
-			// Fix drop-downs in editing toolbar
-			$('.tool-select *').css({zIndex: 5});
-
-			document.head.appendChild(syntaxStyleElement);
-
-			$(wpTextbox1).on('input', function () {
-				highlightSyntax();
-			});
-			wpTextbox1.addEventListener('scroll', syncScrollX);
-			wpTextbox1.addEventListener('scroll', syncScrollY);
-			attributeObserver = new MutationObserver(syncTextDirection);
-			attributeObserver.observe(wpTextbox1, {attributes: true});
-			highlightSyntaxIfNeededIntervalID = setInterval(highlightSyntaxIfNeeded, 500);
-			highlightSyntax();
-		}
-
-		function queueSetup (textarea) {
-			setTimeout(function () {
-				setup(textarea);
-			}, 0);
-		}
 
 		/* The highlighter has to run after any other script (such as the
 		 editing toolbar) that reparents wpTextbox1. We make sure that
@@ -601,7 +607,6 @@ define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
 		else {
 			$(window).load(queueSetup(textarea));
 		}
-
 	}
 
 	return {
