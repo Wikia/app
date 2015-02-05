@@ -338,7 +338,7 @@ ve.dm.MWImageModel.prototype.getImageNodeType = function ( imageType, align ) {
 		( this.getType() === 'frameless' || this.getType() === 'none' ) &&
 		( !this.isAligned( align ) || this.isDefaultAligned( imageType, align ) )
 	) {
-		return this.getMediaType() === 'VIDEO' ? 'wikiaInlineVideo' : 'wikiaInlineImage';
+		return this.getMediaType() === 'VIDEO' ? 'wikiaInlineVideo' : 'mwInlineImage';
 	} else {
 		return this.getMediaType() === 'VIDEO' ? 'wikiaBlockVideo' : 'wikiaBlockImage';
 	}
@@ -448,7 +448,7 @@ ve.dm.MWImageModel.prototype.insertImageNode = function ( fragment ) {
 	];
 
 	switch ( nodeType ) {
-		case 'wikiaInlineImage':
+		case 'mwInlineImage':
 		case 'wikiaInlineVideo':
 			// Try to put the image inside the nearest content node
 			offset = fragment.getDocument().data.getNearestContentOffset( fragment.getSelection().getRange().start );
@@ -530,7 +530,7 @@ ve.dm.MWImageModel.prototype.getUpdatedAttributes = function () {
 	attrs.resource = this.getImageResourceName();
 
 	// If converting from block to inline, set isLinked=true to avoid |link=
-	if ( origAttrs.isLinked === undefined && this.getImageNodeType() === 'wikiaInlineImage' ) {
+	if ( origAttrs.isLinked === undefined && this.getImageNodeType() === 'mwInlineImage' ) {
 		attrs.isLinked = true;
 	}
 
