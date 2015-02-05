@@ -329,7 +329,6 @@
 					$wordmark.css('top', '-174px');
 					States.setState($imageElement, 'upload-state');
 					States.setState($imageSaveElement, 'upload-state');
-
 					$heroModule.trigger('enableDragging');
 					$heroModuleImage.unbind('load');
 					$heroModule.stopThrobbing();
