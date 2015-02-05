@@ -471,7 +471,7 @@ class SpecialCustomEditPage extends SpecialPage {
 			}
 		}
 
-		return $wikitext;
+		return htmlspecialchars($wikitext);
 	}
 
 	/**
