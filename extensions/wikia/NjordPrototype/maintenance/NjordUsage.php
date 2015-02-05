@@ -1,0 +1,178 @@
+<?php
+/**
+ * Maintenance script for generating CSV file with data about NJORD (MOM) usage.
+ * Usage: SERVER_ID=1 php extensions/wikia/NjordPrototype/maintenance/NjordUsage.php
+ */
+ini_set('display_errors', '1');
+ini_set('error_reporting', E_ALL);
+
+require_once( dirname( __FILE__ ) . '/../../../../maintenance/Maintenance.php' );
+require_once( dirname( __FILE__ ) . '/../models/WikiDataModel.class.php');
+
+class NjordUsage extends Maintenance {
+
+	static $wikiaData = [];
+
+	const NJORD_VAR_NAME = 'wgEnableNjordExt';
+	const NJORD_ARTICLE_PROP_TITLE = 'TITLE';
+	const NJORD_ARTICLE_PROP_DESCR = 'DESCRIPTION';
+	const NJORD_ARTICLE_PROP_IMAGE = 'IMAGE';
+
+	/**
+	 * @param $cityId
+	 * @return array
+	 */
+	public function getNjordData( $cityId ) {
+		$db = $this->getDatabaseByCityId( $cityId );
+
+		$sql = 'SELECT * FROM page_wikia_props WHERE propname IN (' .
+			implode( ", ", array_values( $this->getNjordPropIds() ) ) . ')';
+
+		$res = $db->query( $sql );
+		$props = [];
+		while ( $prop = $db->fetchObject( $res ) ) {
+			$props[ $prop->propname ] = unserialize( $prop->props );
+		}
+		return $props;
+	}
+
+	/**
+	 * Do the actual work. All child classes will need to implement this
+	 */
+	public function execute() {
+		$city_list_with_njord_ext = $this->getWikiIDsWithNjordExt();
+
+		if ( count( $city_list_with_njord_ext ) > 0 ) {
+			$output = [];
+			foreach ( $city_list_with_njord_ext as $cityId ) {
+				$njordData = $this->getNjordData( $cityId );
+				$output[] = $this->formatOutputRow( $cityId, $njordData );
+			}
+			$this->exportToCSV( $output );
+		} else {
+			echo "COULD NOT FIND WIKIS WITH NJORD ENABLED!";
+		}
+	}
+
+	/**
+	 * @return string
+	 */
+	private function getOutputFileName() {
+		return 'njord_' . date("Y_m_d") . ".csv";
+	}
+
+	/**
+	 * @param $data
+	 */
+	private function exportToCSV( $data ) {
+		if ( count( $data ) > 0 ) {
+			$fp = fopen( $this->getOutputFileName(), 'w' );
+			fputcsv($fp, array_keys( $data[ 0 ] ), ";");
+			foreach ( $data as $fields ) {
+				fputcsv($fp, $fields, ";");
+			}
+			fclose($fp);
+			echo "DONE: " . $this->getOutputFileName() . "\n";
+		} else {
+			echo "EMPTY DATASET.";
+		}
+	}
+
+	/**
+	 * @return array
+	 */
+	private function getWikiIDsWithNjordExt() {
+		$db = wfGetDB(DB_MASTER, array(), 'wikicities');
+		$sql = 'SELECT cv_id FROM `city_variables_pool` WHERE cv_name="'.self::NJORD_VAR_NAME.'"';
+		$res = $db->query($sql);
+		$cv_id = $db->fetchObject($res);
+		$city_list_with_njord_ext = [];
+		if ( $cv_id ) {
+			$cv_id = $cv_id->cv_id;
+			$sql = 'SELECT cv_city_id FROM city_variables
+					WHERE cv_variable_id='.(int)$cv_id.' AND cv_value="'.serialize(true).'" ORDER BY cv_city_id';
+
+			$res = $db->query($sql);
+			while ( $cv = $db->fetchObject($res) ) {
+				$cv_id = $cv->cv_city_id;
+				$city_list_with_njord_ext[] = $cv_id;
+			}
+		}
+		return $city_list_with_njord_ext;
+	}
+
+
+	/**
+	 * @param $cityId
+	 * @param $data
+	 * @return array
+	 */
+	private function formatOutputRow( $cityId, $data ) {
+		$njordProps = $this->getNjordPropIds();
+
+		$row = [];
+
+		$row[ "wiki_url" ] = $this->getWikiaDataById( $cityId )->city_url;
+
+		$row[ self::NJORD_ARTICLE_PROP_TITLE ] = $data[ $njordProps[self::NJORD_ARTICLE_PROP_TITLE] ];
+
+		$row[ self::NJORD_ARTICLE_PROP_DESCR ] = $data[ $njordProps[self::NJORD_ARTICLE_PROP_DESCR] ];
+
+		if ( !empty( $data[ $njordProps[self::NJORD_ARTICLE_PROP_IMAGE] ] ) ) {
+			$heroImageTitle = $data[ $njordProps[self::NJORD_ARTICLE_PROP_IMAGE] ];
+			$imagePage = GlobalTitle::newFromText( $heroImageTitle, NS_FILE, $cityId );
+			$row[ self::NJORD_ARTICLE_PROP_IMAGE ] = $imagePage->getFullURL();
+		} else {
+			$row[ self::NJORD_ARTICLE_PROP_IMAGE ] = null;
+		}
+
+		$row[ self::NJORD_ARTICLE_PROP_TITLE . "_EXISTS" ] =
+			(int) !empty( $data[$njordProps[ self::NJORD_ARTICLE_PROP_TITLE ]] );
+
+		$row[ self::NJORD_ARTICLE_PROP_DESCR . "_EXISTS" ] =
+			(int) !empty( $data[$njordProps[ self::NJORD_ARTICLE_PROP_DESCR ]] );
+
+		$row[ self::NJORD_ARTICLE_PROP_IMAGE . "_EXISTS" ] =
+			(int) !empty( $data[$njordProps[ self::NJORD_ARTICLE_PROP_IMAGE ]] );
+
+		return $row;
+	}
+
+	/**
+	 * @param $cityId
+	 * @return mixed
+	 */
+	private function getWikiaDataById( $cityId ) {
+		if ( empty( self::$wikiaData[ $cityId ] ) ) {
+			self::$wikiaData[ $cityId ] = WikiFactory::getWikiByID( $cityId );
+		}
+		return self::$wikiaData[ $cityId ];
+	}
+
+	/**
+	 * @param $cityId
+	 * @return DatabaseBase|TotallyFakeDatabase
+	 */
+	private function getDatabaseByCityId( $cityId ) {
+		$wikia = $this->getWikiaDataById( $cityId );
+		$wikiaDbName = $wikia->city_dbname;
+		$db = wfGetDB( DB_SLAVE, array(), $wikiaDbName );
+		return $db;
+	}
+
+
+	/**
+	 * @return array
+	 */
+	private function getNjordPropIds( ) {
+		return [
+			self::NJORD_ARTICLE_PROP_DESCR => WikiDataModel::WIKI_HERO_DESCRIPTION_ID,
+			self::NJORD_ARTICLE_PROP_TITLE => WikiDataModel::WIKI_HERO_TITLE_PROP_ID,
+			self::NJORD_ARTICLE_PROP_IMAGE => WikiDataModel::WIKI_HERO_IMAGE_PROP_ID
+		];
+	}
+
+}
+
+$maintClass = 'NjordUsage';
+require_once( DO_MAINTENANCE );
