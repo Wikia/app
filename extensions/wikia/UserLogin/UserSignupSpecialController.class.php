@@ -92,9 +92,9 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->getOutput()->disallowUserJs(); // just in case...
 
 		// form params
-		$this->username = $this->request->getVal( 'userloginext01', '' );
+		$this->username = $this->request->getVal( UserLoginForm::SIGNUP_USERNAME_KEY, '' );
 		$this->email = $this->request->getVal( 'email', '' );
-		$this->password = $this->request->getVal( 'userloginext02', '' );
+		$this->password = $this->request->getVal( UserLoginForm::SIGNUP_PASSWORD_KEY, '' );
 		$this->birthmonth = $this->request->getVal( 'birthmonth', '' );
 		$this->birthday = $this->request->getVal( 'birthday', '' );
 		$this->birthyear = $this->request->getVal( 'birthyear', '' );
@@ -567,12 +567,10 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$signupForm->load();
 
 		switch( $field ) {
-			// username field
-			case 'userloginext01':
+			case UserLoginForm::SIGNUP_USERNAME_KEY:
 				$signupForm->initValidationUsername();
 				break;
-			// password field
-			case 'userloginext02':
+			case UserLoginForm::SIGNUP_PASSWORD_KEY:
 				$signupForm->initValidationPassword();
 				break;
 			case 'email':

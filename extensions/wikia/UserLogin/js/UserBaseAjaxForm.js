@@ -147,6 +147,8 @@
 	 */
 	UserBaseAjaxForm.prototype.errorValidation = function (json) {
 		if (json.errParam) {
+			// TODO: errParam doesn't always match the name of the input. Sometimes 'userloginext01' and 'username'
+			// are confused.
 			this.wikiaForm.showInputError(json.errParam, json.msg);
 		} else {
 			this.wikiaForm.showGenericError(json.msg);

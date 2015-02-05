@@ -8,6 +8,9 @@
  */
 class UserLoginForm extends LoginForm {
 
+	const SIGNUP_USERNAME_KEY = 'userloginext01';
+	const SIGNUP_PASSWORD_KEY = 'userloginext02';
+
 	var $msg = '';
 	var $msgType = '';
 	var $errParam = '';
@@ -17,12 +20,12 @@ class UserLoginForm extends LoginForm {
 		parent::load();
 		$request = $this->mOverrideRequest;
 
-		if ( $request->getText( 'userloginext01', '' ) != '' ) {
-			$this->mUsername = $request->getText( 'userloginext01', '' );
+		if ( $request->getText( self::SIGNUP_USERNAME_KEY, '' ) != '' ) {
+			$this->mUsername = $request->getText( self::SIGNUP_USERNAME_KEY, '' );
 		}
-		if ( $request->getText( 'userloginext02', '' ) != '' ) {
-			$this->mPassword = $request->getText( 'userloginext02' );
-			$this->mRetype = $request->getText( 'userloginext02' );
+		if ( $request->getText( self::SIGNUP_PASSWORD_KEY, '' ) != '' ) {
+			$this->mPassword = $request->getText( self::SIGNUP_PASSWORD_KEY );
+			$this->mRetype = $request->getText( self::SIGNUP_PASSWORD_KEY );
 		}
 		if ( $request->getText( 'username', '' ) != '' ) {
 			$this->fakeUsername = $request->getText( 'username', '' );

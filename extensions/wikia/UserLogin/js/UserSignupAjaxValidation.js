@@ -1,4 +1,3 @@
-/* global  wgScriptPath, UserSignup */
 (function () {
 	'use strict';
 
@@ -17,6 +16,9 @@
 		this.captchaField = options.captchaField || '';
 		this.submitButton = $(options.submitButton);
 
+		this.controller = 'UserSignupSpecial';
+		this.method = 'formAjaxValidation';
+
 		// used for tracking ajax calls in progress
 		this.deferred = false;
 	};
@@ -24,16 +26,18 @@
 	UserSignupAjaxValidation.prototype.validateInput = function (e) {
 		var el = $(e.target),
 			paramName = el.attr('name'),
-			params = this.getDefaultParamsForAjax();
+			params = {
+				field: paramName
+			};
 
-		params.field = paramName;
 		params[paramName] = el.val();
 
-		$.get(
-			wgScriptPath + '/wikia.php',
-			params,
-			this.validationHandler.bind(this, paramName)
-		);
+		this.deferred = $.nirvana.sendRequest({
+			controller: this.controller,
+			method: this.method,
+			data: params,
+			callback: this.validationHandler.bind(this, paramName)
+		});
 	};
 
 	UserSignupAjaxValidation.prototype.validationHandler = function (paramName, response) {
@@ -47,24 +51,25 @@
 	UserSignupAjaxValidation.prototype.validateBirthdate = function (e) {
 		var el = $(e.target),
 			paramName = el.attr('name'),
-			params = this.getDefaultParamsForAjax();
+			params;
 
 		if (this.deferred && typeof this.deferred.reject === 'function') {
-			UserSignup.deferred.reject();
+			this.deferred.reject();
 		}
 
-		$.extend(params, {
+		params = {
 			field: 'birthdate',
 			birthyear: this.wikiaForm.inputs.birthyear.val(),
 			birthmonth: this.wikiaForm.inputs.birthmonth.val(),
 			birthday: this.wikiaForm.inputs.birthday.val()
-		});
+		};
 
-		this.deferred = $.post(
-			wgScriptPath + '/wikia.php',
-			params,
-			this.validationHandler.bind(this, paramName)
-		);
+		this.deferred = $.nirvana.sendRequest({
+			controller: this.controller,
+			method: this.method,
+			data: params,
+			callback: this.validationHandler.bind(this, paramName)
+		});
 	};
 
 	/**
