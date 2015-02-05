@@ -4,18 +4,18 @@
  * This class contains hook handlers used to store additional tags on edits
  */
 class EditTaggingHooks {
+	const API_EDIT_TAG = 'apiedit';
+	const CATEGORYSELECT_EDIT_TAG = 'categoryselect';
 	const RTE_SOURCE_MODE = 'source';
 	const RTE_WYSIWYG_MODE = 'wysiwyg';
 	const RTE_SOURCE_MODE_TAG = 'rte-source';
 	const RTE_WYSIWYG_MODE_TAG = 'rte-wysiwyg';
-	const API_EDIT_TAG = 'apiedit';
-	const CATEGORYSELECT_EDIT_TAG = 'categoryselect';
 
 	static $tagBlacklist = [
-		self::RTE_SOURCE_MODE_TAG,
-		self::RTE_WYSIWYG_MODE_TAG,
 		self::API_EDIT_TAG,
-		self::CATEGORYSELECT_EDIT_TAG
+		self::CATEGORYSELECT_EDIT_TAG,
+		self::RTE_SOURCE_MODE_TAG,
+		self::RTE_WYSIWYG_MODE_TAG
 	];
 
 	/**
