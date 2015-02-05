@@ -18,14 +18,13 @@ class GlobalWatchlistBot {
 	 * TODO Break this method up a bit. It does way way too many things.
 	 */
 	public function sendDigestToUser( $userID ) {
-		global $wgExternalDatawareDB;
 
 		if ( $this->shouldNotSendDigest( $userID, $sendLogging = true ) ) {
 			$this->clearUserFromGlobalWatchlist( $userID );
 			return;
 		}
 
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalDatawareDB );
+		$dbr = wfGetDB( DB_SLAVE, [], \F::app()->wg->ExternalDatawareDB );
 
 		$oResource = $dbr->select(
 			[ GlobalWatchlistTable::TABLE_NAME ],
@@ -46,9 +45,9 @@ class GlobalWatchlistBot {
 		$records = $dbr->numRows( $oResource );
 		$bTooManyPages = ( $records > self::MAX_ARTICLES_PER_WIKI );
 		$iWikiId = $loop = 0;
-		$aDigestData = array();
-		$aWikiDigest = array( 'pages' => array() );
-		$aRemove = array();
+		$aDigestData = [];
+		$aWikiDigest = [ 'pages' => [] ];
+		$aRemove = [];
 		while ( $oResultRow = $dbr->fetchObject( $oResource ) ) {
 			# ---
 			if ( $loop >= self::MAX_ARTICLES_PER_WIKI ) {
@@ -69,27 +68,27 @@ class GlobalWatchlistBot {
 				$iWikiId = $oResultRow->gwa_city_id;
 
 				if ( isset( $aDigestData[ $iWikiId ] ) ) {
-					$aWikiDigest = $aDigestData[ $iWikiId ];
+					$aWikiDigest = $aDigestData[$iWikiId];
 				} else {
-					$aWikiDigest = array(
+					$aWikiDigest = [
 						'wikiName' => $oWikia->city_title,
 						'wikiLangCode' => $oWikia->city_lang,
-						'pages' => array()
-					);
+						'pages' => []
+					];
 				}
 			} // if
 
-			if ( in_array( $oResultRow->gwa_namespace, array( NS_BLOG_ARTICLE_TALK, NS_BLOG_ARTICLE ) ) ) {
+			if ( in_array( $oResultRow->gwa_namespace, [ NS_BLOG_ARTICLE_TALK, NS_BLOG_ARTICLE ] ) ) {
 				# blogs
 				$aWikiBlogs[$iWikiId][] = $oResultRow;
 				$this->makeBlogsList( $aWikiDigest, $iWikiId, $oResultRow );
 			} else {
 				$oGlobalTitle = GlobalTitle::newFromText( $oResultRow->gwa_title, $oResultRow->gwa_namespace, $iWikiId );
 				if ( $oGlobalTitle->exists() ) {
-					$aWikiDigest[ 'pages' ][] = array(
+					$aWikiDigest['pages'][] = [
 						'title' => GlobalTitle::newFromText( $oResultRow->gwa_title, $oResultRow->gwa_namespace, $iWikiId ),
 						'revisionId' => $oResultRow->gwa_rev_id
-					);
+					];
 				} else {
 					$aRemove[] = $oResultRow->gwa_id;
 				}
@@ -113,7 +112,7 @@ class GlobalWatchlistBot {
 		}
 
 		if ( count( $aRemove ) ) {
-			$dbs = wfGetDB( DB_MASTER, array(), $wgExternalDatawareDB );
+			$dbs = wfGetDB( DB_MASTER, [], \F::app()->wg->ExternalDatawareDB );
 			foreach ( $aRemove as $gwa_id ) {
 				$dbs->delete(
 					GlobalWatchlistTable::TABLE_NAME,
@@ -301,10 +300,10 @@ class GlobalWatchlistBot {
 
 					$message = wfMsgReplaceArgs(
 						( $countComments != 0 ) ? $this->getLocalizedMsg( 'globalwatchlist-blog-page-title-comment', $oUserLanguage ) : "$1",
-						array (
+						[
 							0 => $tracking_url, // send the ugly tracking url to the plain emails
 							1 => $countComments
-						)
+						]
 					);
 					$sDigestsBlogs .= $message . "\n";
 
@@ -314,10 +313,10 @@ class GlobalWatchlistBot {
 						$clean_url = str_replace( '_', ' ', rawurldecode( $clean_url ) );
 						$message = wfMsgReplaceArgs(
 							( $countComments != 0 ) ? $this->getLocalizedMsg( 'globalwatchlist-blog-page-title-comment', $oUserLanguage ) : "$1",
-							array (
+							[
 								0 => "<a href=\"{$tracking_url}\">" . $clean_url . "</a>", // but use the non-tracking one for html display
 								1 => $countComments
-							)
+							]
 						);
 						$sDigestsBlogsHTML .= $message . "<br/>\n";
 					}
@@ -332,22 +331,22 @@ class GlobalWatchlistBot {
 		if ( $isDigestLimited ) {
 			$sDigests .= $this->getLocalizedMsg( 'globalwatchlist-see-more', $oUserLanguage ) . "\n";
 		}
-		$aEmailArgs = array(
+		$aEmailArgs = [
 			0 => ucfirst( $oUser->getName() ),
 			1 => ( $iPagesCount > 0 ) ? $sDigests : $this->getLocalizedMsg( 'globalwatchlist-no-page-found', $oUserLanguage ),
 			2 => ( $iBlogsCount > 0 ) ? $sDigestsBlogs : "",
-		);
+		];
 
 		$sMessage = $this->getLocalizedMsg( 'globalwatchlist-digest-email-body', $oUserLanguage ) . "\n";
 		if ( empty( $aEmailArgs[2] ) ) $sMessage = $this->cutOutPart( $sMessage, '$2', '$3' );
 		$sBody = wfMsgReplaceArgs( $sMessage, $aEmailArgs );
 		if ( $usehtmlemail ) {
 			// rebuild the $ args using the HTML text we've built
-			$aEmailArgs = array(
+			$aEmailArgs = [
 				0 => ucfirst( $oUser->getName() ),
 				1 => ( $iPagesCount > 0 ) ? $sDigestsHTML : $this->getLocalizedMsg( 'globalwatchlist-no-page-found', $oUserLanguage ),
 				2 => ( $iBlogsCount > 0 ) ? $sDigestsBlogsHTML : "",
-			);
+			];
 
 			$sMessageHTML = $this->getLocalizedMsg( 'globalwatchlist-digest-email-body-html', $oUserLanguage );
 			if ( !wfEmptyMsg( 'globalwatchlist-digest-email-body-html', $sMessageHTML ) ) {
@@ -356,7 +355,7 @@ class GlobalWatchlistBot {
 			}
 		}
 
-		return array( $sBody, $sBodyHTML );
+		return [ $sBody, $sBodyHTML ];
 	}
 
 	private function cutOutPart( $message, $startMarker, $endMarker, $replacement = " " ) {
@@ -374,11 +373,11 @@ class GlobalWatchlistBot {
 
 		if ( ( $sLangCode != 'en' ) && !empty( $sLangCode ) ) {
 			// custom lang translation
-			$sBody = wfMsgExt( $sMsgKey, array( 'language' => $sLangCode ) );
+			$sBody = wfMessage( $sMsgKey )->inLanguage( $sLangCode );
 		}
 
 		if ( $sBody == null ) {
-			$sBody = wfMsg( $sMsgKey );
+			$sBody = wfMessage( $sMsgKey )->text();
 		}
 
 		return $sBody;
@@ -406,24 +405,24 @@ class GlobalWatchlistBot {
 				$like_title = $db_wiki->buildLike( $oResultRow->gwa_title, $db_wiki->anyString() );
 				if ( $db_wiki && $like_title ) {
 					$oRow = $db_wiki->selectRow(
-						array( "watchlist" ),
-						array( "count(*) as cnt" ),
-						array(
+						[ "watchlist" ],
+						[ "count(*) as cnt" ],
+						[
 							"wl_namespace = '" . NS_BLOG_ARTICLE_TALK . "'",
 							"wl_title $like_title",
 							"wl_notificationtimestamp is not null",
 							"wl_notificationtimestamp >= '" . $oResultRow->gwa_timestamp . "'",
 							"wl_user > 0",
-						),
+						],
 						__METHOD__
 					);
-					$aWikiDigest[ 'blogs' ][ $blogTitle ] = array (
+					$aWikiDigest[ 'blogs' ][ $blogTitle ] = [
 						'comments' => intval( $oRow->cnt ),
 						'blogpage' => GlobalTitle::newFromText( $blogTitle, NS_BLOG_ARTICLE, $iWikiId ),
 						'own_comments' => 0
-					);
+					];
 
-					if ( !in_array( $wikiDB, array( 'wikicities', 'messaging' ) ) ) {
+					if ( !in_array( $wikiDB, [ 'wikicities', 'messaging' ] ) ) {
 						$db_wiki->close();
 					}
 				}
