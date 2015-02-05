@@ -1,7 +1,7 @@
 <?php
 /**
  * Maintenance script for generating CSV file with data about NJORD (MOM) usage.
- * Usage: SERVER_ID=1 php extensions/wikia/NjordPrototype/maintenance/NjordUsage.php
+ * Usage: $ SERVER_ID=1 php /usr/wikia/source/wiki/extensions/wikia/NjordPrototype/maintenance/NjordUsage.php
  */
 ini_set('display_errors', '1');
 ini_set('error_reporting', E_ALL);
