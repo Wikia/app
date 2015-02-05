@@ -26,6 +26,7 @@ class GetRevisionWithTags extends Maintenance {
 		'rte-wysiwyg',
 		'rte-source',
 		'mobileedit',
+		'categoryselect',
 		'apiedit'
 	];
 
