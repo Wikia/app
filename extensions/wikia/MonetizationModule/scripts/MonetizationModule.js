@@ -18,28 +18,28 @@ require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 			// track impression for each placement
 			$('.monetization-module').each(function () {
 				var $this = $(this),
-					label = $this.attr('id'),
 					value = $this.children().children().length,	// check if the ad is blocked
-					type = $this.attr('data-mon-type'),
-					slot = $this.attr('data-mon-slot');
+					monType = $this.attr('data-mon-type'),
+					slot = $this.attr('data-mon-slot'),
+					label = 'monetization-' + monType + '-' + slot;
 
 				track({
 					action: 'module-impression',
 					label: label,
 					value: value,
-					type: type,
+					type: monType,
 					slot: slot
 				});
 
 				// track impression for each product
-				if (type === 'ecommerce') {
+				if (monType === 'ecommerce') {
 					$this.find('.affiliate').each(function (idx, element) {
 						var $element = $(element);
 						track({
 							label: $element.attr('data-mon-ptag'),
-							action: 'product-impression' + '-' + label,
+							action: 'product-impression-' + label,
 							value: idx,
-							type: type,
+							type: monType,
 							slot: slot,
 							pid: $element.attr('data-mon-pid')
 						});
@@ -62,7 +62,7 @@ require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 		initClickTracking: function () {
 			var containers = [
 				'.monetization-module.ecommerce',
-				'.monetization-module.amazon_video'
+				'.monetization-module.amazon-video'
 			],
 				elements = [
 				'.module-title',
@@ -78,6 +78,7 @@ require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 					$module = $this.closest('.monetization-module'),
 					$products = $module.find('.affiliate'),
 					monType = $module.attr('data-mon-type'),
+					slot = $module.attr('data-mon-slot'),
 					elementName = $this.attr('class'),
 					productUrl = $this.attr('href') || $this.find('a').attr('href'),
 					$product = $products.first();
@@ -87,11 +88,11 @@ require(['wikia.tracker', 'wikia.geo'], function (Tracker, geo) {
 				}
 
 				track({
-					action: Tracker.ACTIONS.CLICK + '-' + $module.attr('id') + '-' + elementName,
+					action: Tracker.ACTIONS.CLICK + '-monetization-' + monType + '-' + slot + '-' + elementName,
 					label: $product.attr('data-mon-ptag'),
 					value: $products.index($product),
 					type: monType,
-					slot: $module.attr('data-mon-slot'),
+					slot: slot,
 					title: $product.attr('data-mon-pname'),
 					pid: $product.attr('data-mon-pid'),
 					element: elementName,

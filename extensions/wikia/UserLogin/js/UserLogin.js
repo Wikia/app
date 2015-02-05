@@ -1,43 +1,42 @@
-/*global WikiaEditor:true */
-var UserLogin = {
-	forceLoggedIn: false,
+/*global WikiaEditor:true, UserLoginModal */
+(function () {
+	'use strict';
 
-	refreshIfAfterForceLogin: function () {
-		if (this.forceLoggedIn) {
-			Wikia.Querystring().addCb().goTo();
-		}
-	},
+	var UserLogin = {
+		forceLoggedIn: false,
 
-	rteForceLogin: function () {
-		'use strict';
-
-		var UserLoginModal = window.UserLoginModal;
-
-		//prevent onbeforeunload from being called when user is loging in
-		window.onbeforeunload = function () {};
-		UserLoginModal.show({
-			origin: 'editor',
-			persistModal: true,
-			callback: function() {
-				window.WikiaEditor && WikiaEditor.reloadEditor();
+		refreshIfAfterForceLogin: function () {
+			if (this.forceLoggedIn) {
+				Wikia.Querystring().addCb().goTo();
 			}
-		});
-	},
+		},
 
-	isForceLogIn: function () {
-		'use strict';
-
-		var UserLoginModal = window.UserLoginModal;
-
-		if ( window.wgUserName == null ) {
+		rteForceLogin: function () {
 			//prevent onbeforeunload from being called when user is loging in
 			window.onbeforeunload = function () {};
 			UserLoginModal.show({
-				origin: 'editor'
+				origin: 'editor',
+				persistModal: true,
+				callback: function () {
+					if (window.WikiaEditor) {
+						WikiaEditor.reloadEditor();
+					}
+				}
 			});
-			return true;
+		},
 
+		isForceLogIn: function () {
+			if (window.wgUserName === null) {
+				//prevent onbeforeunload from being called when user is logging in
+				window.onbeforeunload = function () {};
+				UserLoginModal.show({
+					origin: 'editor'
+				});
+				return true;
+			}
+			return false;
 		}
-		return false;
-	}
-};
+	};
+
+	window.UserLogin = UserLogin;
+})();

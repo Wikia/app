@@ -79,10 +79,28 @@ In ```tests``` directory type in ```./php-slow-list```
 This script will list all slow test cases with execution time.
 Second list include list of class with count of slow tests cases.
 
-## Running JS unit & infrastructure tests
+## Running JS unit & integration tests
 
+Before running the tests install node dependencies in project root level
 ```
-make karma-unit karma-integration
+npm install
+```
+
+Run all javascript tests in ```tests``` directory
+
+Single run of both unit and integration tests
+```
+./js-all
+```
+
+Single run of unit tests
+```
+make karma-unit
+```
+
+Single run of integration tests
+```
+make karma-integration
 ```
 
 For more info see [docs on internal](https://internal.wikia-inc.com/wiki/Unit_Testing/JS)

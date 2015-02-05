@@ -152,12 +152,12 @@ $config['adengine2_interactive_maps_js'] = array(
 	),
 );
 
-$config['adengine2_top_in_content_boxad_js'] = array(
+$config['adengine2_in_content_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'venus',
 	'assets' => array(
 		'//extensions/wikia/AdEngine/js/AdPlacementChecker.js',
-		'//extensions/wikia/AdEngine/js/AdDecoratorTopInContent.js',
+		'//extensions/wikia/AdEngine/js/AdSlotsInContent.js',
 	),
 );
 
@@ -165,8 +165,17 @@ $config['adengine2_venus_ads_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => 'venus',
 	'assets' => array(
-		'//extensions/wikia/AdEngine/js/AdPlacementChecker.js',
+		'#group_adengine2_in_content_ads_js',
 		'//extensions/wikia/AdEngine/js/AdSlotsVenus.js',
+	),
+);
+
+$config['adengine2_oasis_ads_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => 'oasis',
+	'assets' => array(
+		'#group_adengine2_in_content_ads_js',
+		'//extensions/wikia/AdEngine/js/AdSlotsOasis.js',
 	),
 );
 
@@ -204,12 +213,6 @@ $config['oasis_noads_extensions_js'] = array(
 		'//extensions/wikia/VideoHandlers/js/VideoBootstrap.js',
 		'//extensions/wikia/Lightbox/scripts/LightboxLoader.js',
 		'#group_imglzy_js',
-		// We allow logged in users to change login without logging out
-		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js',
-		// We allow logged in users to create account without logging out
-		'//extensions/wikia/UserLogin/js/UserSignupAjaxForm.js',
-		// TODO: do we need to load this for logged-in?
-		'//extensions/wikia/UserLogin/js/UserLoginModal.js',
 		'//extensions/wikia/MiniEditor/js/MiniEditor.js',
 		// needs to load after MiniEditor
 		'#group_articlecomments_js',
@@ -287,6 +290,7 @@ $config['oasis_jquery'] = array(
 		// libraries loaders
 		'//resources/wikia/libraries/jquery/getResources/jquery.wikia.getResources.js',
 		'//resources/wikia/libraries/jquery/loadLibrary/jquery.wikia.loadLibrary.js',
+		'//resources/wikia/libraries/jquery/loadLibrary/jquery.wikia.loadExternalLibrary.js',
 		'//skins/oasis/js/isTouchScreen.js',
 
 		// jQuery/Oasis specific code
@@ -387,41 +391,61 @@ $config['oasis_nojquery_shared_js'] = array(
 //anon JS
 // Note: Owen moved getSiteJS call from both anon_js and user_js to OasisController::loadJS
 // so that common.js is loaded last so it has less chance of breaking other things
-$config['oasis_anon_js'] = array(
+$config['oasis_anon_js'] = [
 	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
+	'assets' => [
+		'#group_user_login_js_anon',
 		'//extensions/wikia/AdEngine/js/Exitstitial.js',
-		'//extensions/wikia/UserLogin/js/MarketingOptIn.js',
-		'//extensions/wikia/UserLogin/js/UserSignupFacebookForm.js',
-		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
-		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
 		'//extensions/wikia/UserLogin/js/UserLoginDropdown.js',
 		'//skins/oasis/js/LatestActivity.js',
-	)
-);
+	]
+];
 
 // TODO: cleanup this after Global Navigation global release
-$config['oasis_anon_with_new_global_nav_js'] = array(
+$config['oasis_anon_with_new_global_nav_js'] = [
 	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
+	'assets' => [
+		'#group_user_login_js_anon',
 		'//extensions/wikia/AdEngine/js/Exitstitial.js',
-		'//extensions/wikia/UserLogin/js/MarketingOptIn.js',
-		'//extensions/wikia/UserLogin/js/UserSignupFacebookForm.js',
-		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
-		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
 		'//skins/oasis/js/LatestActivity.js',
-	)
-);
+	]
+];
 
-//user JS
+$config['user_login_js_anon'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => ['oasis', 'venus'],
+	'assets' => [
+		'//extensions/wikia/UserLogin/js/FacebookLogin.js',
+		'//extensions/wikia/UserLogin/js/MarketingOptIn.js',
+		'//extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
+		'//extensions/wikia/UserLogin/js/mixins/UserSignup.mixin.js',
+		'//extensions/wikia/UserLogin/js/FacebookFormCreateUser.js',
+		'//extensions/wikia/UserLogin/js/FacebookFormConnectUser.js',
+		'//extensions/wikia/UserLogin/js/UserLoginAjaxForm.js',
+		'//extensions/wikia/UserLogin/js/UserLoginModal.js',
+	]
+];
+
+/**
+ * We allow logged in users to create account without logging out
+ */
+$config['user_signup_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/UserLogin/js/UserSignupAjaxValidation.js',
+		'//extensions/wikia/UserLogin/js/MarketingOptIn.js',
+		'//extensions/wikia/UserLogin/js/mixins/UserSignup.mixin.js',
+		'//extensions/wikia/UserLogin/js/UserSignup.js',
+	]
+];
+
+/**
+ * For logged in users in oasis
+ * @todo Remove this and clean up references UC-228
+ */
 $config['oasis_user_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
-	'assets' => array(
-		'//extensions/wikia/UserLogin/js/UserLoginFacebook.js',
-		'//extensions/wikia/UserLogin/js/MarketingOptIn.js',
-		'//extensions/wikia/UserLogin/js/UserSignupFacebookForm.js',
-		'//extensions/wikia/UserLogin/js/UserLoginFacebookForm.js',
-	)
+	'assets' => []
 );
 
 /** GameGuides */
@@ -822,9 +846,10 @@ $config['wikiamobile_usersignup_js'] = array(
 	'assets' => array(
 		'//resources/wikia/libraries/bootstrap/tooltip.js',
 		'//extensions/wikia/WikiaStyleGuide/js/Form.js',
-		'//extensions/wikia/UserLogin/js/UserSignupAjaxForm.js',
+		'//extensions/wikia/UserLogin/js/UserSignupAjaxValidation.js',
 		'//extensions/wikia/UserLogin/js/MarketingOptIn.js',
-		'//extensions/wikia/UserLogin/js/UserSignup.js'
+		'//extensions/wikia/UserLogin/js/mixins/UserSignup.mixin.js',
+		'//extensions/wikia/UserLogin/js/UserSignup.js',
 	)
 );
 
@@ -2236,13 +2261,5 @@ $config['facebook_client_preferences_scss'] = [
 	'skin' => ['oasis', 'monobook'],
 	'assets' => [
 		'//extensions/wikia/FacebookClient/styles/preferences.scss',
-	]
-];
-
-$config['facebook_client_special_connect'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => ['oasis'],
-	'assets' => [
-		'//extensions/wikia/FacebookClient/scripts/SpecialFacebookConnect.js',
 	]
 ];

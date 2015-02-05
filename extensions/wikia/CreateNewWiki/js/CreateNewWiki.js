@@ -1,4 +1,4 @@
-/*global UserLoginFacebook: true, UserLoginAjaxForm: true, WikiBuilderCfg: true, ThemeDesigner */
+/*global FacebookLogin: true, UserLoginAjaxForm: true, WikiBuilderCfg: true, ThemeDesigner */
 
 (function () {
 	'use strict';
@@ -83,9 +83,9 @@
 								}
 							)
 						};
-						UserLoginFacebook.callbacks['login-success'] = function () {
+						FacebookLogin.callbacks['login-success'] = function () {
 							self.transition('UserAuth', true, '+');
-							UserLoginFacebook.closeSignupModal();
+							FacebookLogin.closeSignupModal();
 						};
 					}
 
