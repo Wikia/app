@@ -7,430 +7,438 @@
 define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
 	'use strict';
 
-	function init (textarea) {
-
-		// Variables that are preserved between function calls
-		var wpTextbox0,
-			wpTextbox1,
-			syntaxStyleTextNode,
-			lastText,
-			/**
-			 * The number of the last span available, used to tell if creating additional spans is necessary
-			 */
-			maxSpanNumber = -1,
-			highlightSyntaxIfNeededIntervalID,
-			attributeObserver,
-			syntaxHighlighterConfig;
-
-		/* Define context-specific regexes, one for every common token that ends the
-		 current context.
-
-		 An attempt has been made to search for the most common syntaxes first,
-		 thus maximizing performance. Syntaxes that begin with the same character
-		 are searched for at the same time.
-
-		 Supported wiki syntaxes from most common to least common:
-		 [[internal link]] [http:// named external link]
-		 {{template}} {{{template parameter}}} {| table |}
-		 <tag> <!-- comment -->
-		 http:// bare external link
-		 =Heading= * unordered list # ordered list : indent ; small heading ---- horizontal line
-		 ''italic'' '''bold'''
-		 three tildes username four tildes signature five tildes timestamp
-		 &entity;
-
-		 The tag-matching regex follows the XML standard closely so that users
-		 won't feel like they have to escape sequences that MediaWiki will never
-		 consider to be tags.
-
-		 Only entities for characters which need to be escaped or cannot be
-		 unambiguously represented in a monospace font are highlighted, such as
-		 Greek letters that strongly resemble Latin letters. Use of other entities
-		 is discouraged as a matter of style. For the same reasons, numeric
-		 entities should be in hexadecimal (giving character codes in decimal only
-		 adds confusion).
-
-		 Newlines are sucked up into ending tokens (including comments, bare
-		 external links, lists, horizontal lines, signatures, entities, etc.) to
-		 avoid creating spans with nothing but newlines in them.
-
-		 Flags: g for global search, m for make ^ match the beginning of each line
-		 and $ the end of each line
+	// Variables that are preserved between function calls
+	var attributeObserver,
+		highlightSyntaxIfNeededIntervalID,
+		lastText,
+		/**
+		 * @var maxSpanNumber The number of the last span available,
+		 * used to tell if creating additional spans is necessary
 		 */
-		var breakerRegexBase = "\\[(?:\\[|(?:https?:|ftp:)?//|mailto:)|\\{(?:\\{\\{?|\\|)|<(?:[:A-Z_a-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD][:\\w\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD-\\.\u00B7\u0300-\u036F\u203F-\u203F-\u2040]*(?=/?>| |\n)|!--[^]*?-->\n*)|(?:https?://|ftp://|mailto:)[^\\s\"<>[\\]{-}]*[^\\s\",\\.:;<>[\\]{-}]\n*|^(?:=|[*#:;]+\n*|-{4,}\n*)|\\\\'\\\\'(?:\\\\')?|~{3,5}\n*|&(?:(?:n(?:bsp|dash)|m(?:dash|inus)|lt|e[mn]sp|thinsp|amp|quot|gt|shy|zwn?j|lrm|rlm|Alpha|Beta|Epsilon|Zeta|Eta|Iota|Kappa|[Mm]u|micro|Nu|[Oo]micron|[Rr]ho|Tau|Upsilon|Chi)|#x[0-9a-fA-F]+);\n*";
+		maxSpanNumber,
+		syntaxHighlighterConfig,
+		syntaxStyleTextNode,
+		wpTextbox0,
+		wpTextbox1;
 
-		function breakerRegexWithPrefix (prefix) {
-			// The stop token has to be at the beginning of the regex so that it takes precedence
-			// over substrings of itself.
-			return new RegExp('(' + prefix + ')\n*|' + breakerRegexBase, 'gm');
+	var assumedBold,
+		assumedItalic,
+		before,
+		css,
+		lastColor,
+		parserLocation,
+		spanNumber,
+		text;
+
+	// Regex vars
+	var defaultBreakerRegex,
+		headingBreakerRegex,
+		namedExternalLinkBreakerRegex,
+		parameterBreakerRegex,
+		tableBreakerRegex,
+		tagBreakerRegexCache,
+		templateBreakerRegex,
+		wikilinkBreakerRegex;
+
+	/* Define context-specific regexes, one for every common token that ends the
+	 current context.
+
+	 An attempt has been made to search for the most common syntaxes first,
+	 thus maximizing performance. Syntaxes that begin with the same character
+	 are searched for at the same time.
+
+	 Supported wiki syntaxes from most common to least common:
+	 [[internal link]] [http:// named external link]
+	 {{template}} {{{template parameter}}} {| table |}
+	 <tag> <!-- comment -->
+	 http:// bare external link
+	 =Heading= * unordered list # ordered list : indent ; small heading ---- horizontal line
+	 ''italic'' '''bold'''
+	 three tildes username four tildes signature five tildes timestamp
+	 &entity;
+
+	 The tag-matching regex follows the XML standard closely so that users
+	 won't feel like they have to escape sequences that MediaWiki will never
+	 consider to be tags.
+
+	 Only entities for characters which need to be escaped or cannot be
+	 unambiguously represented in a monospace font are highlighted, such as
+	 Greek letters that strongly resemble Latin letters. Use of other entities
+	 is discouraged as a matter of style. For the same reasons, numeric
+	 entities should be in hexadecimal (giving character codes in decimal only
+	 adds confusion).
+
+	 Newlines are sucked up into ending tokens (including comments, bare
+	 external links, lists, horizontal lines, signatures, entities, etc.) to
+	 avoid creating spans with nothing but newlines in them.
+
+	 Flags: g for global search, m for make ^ match the beginning of each line
+	 and $ the end of each line
+	 */
+	var breakerRegexBase = "\\[(?:\\[|(?:https?:|ftp:)?//|mailto:)|\\{(?:\\{\\{?|\\|)|<(?:[:A-Z_a-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD][:\\w\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD-\\.\u00B7\u0300-\u036F\u203F-\u203F-\u2040]*(?=/?>| |\n)|!--[^]*?-->\n*)|(?:https?://|ftp://|mailto:)[^\\s\"<>[\\]{-}]*[^\\s\",\\.:;<>[\\]{-}]\n*|^(?:=|[*#:;]+\n*|-{4,}\n*)|\\\\'\\\\'(?:\\\\')?|~{3,5}\n*|&(?:(?:n(?:bsp|dash)|m(?:dash|inus)|lt|e[mn]sp|thinsp|amp|quot|gt|shy|zwn?j|lrm|rlm|Alpha|Beta|Epsilon|Zeta|Eta|Iota|Kappa|[Mm]u|micro|Nu|[Oo]micron|[Rr]ho|Tau|Upsilon|Chi)|#x[0-9a-fA-F]+);\n*";
+
+	function breakerRegexWithPrefix (prefix) {
+		// The stop token has to be at the beginning of the regex so that it takes precedence
+		// over substrings of itself.
+		return new RegExp('(' + prefix + ')\n*|' + breakerRegexBase, 'gm');
+	}
+
+	// Writes text into to-be-created span elements of wpTextbox0 using :before and :after pseudo-elements
+	// both :before and :after are used because using two pseudo-elements per span is significantly faster
+	// than doubling the number of spans required
+	function writeText (text, color) {
+		// No need to use another span if using the same color
+		if (color !== lastColor) {
+			// Whitespace is omitted in the hope of increasing performance
+			css += '\'}#s' + spanNumber; //spans will be created with IDs s0 through sN
+			if (before) {
+				css += ':before{';
+				before = false;
+			}
+			else {
+				css += ':after{';
+				before = true;
+				++spanNumber;
+			}
+			if (color) {
+				// 'background-color' is 6 characters longer than 'background' but the browser processes it faster
+				css += 'background-color:' + color + ';';
+			}
+			css += 'content:\'';
+			lastColor = color;
+		}
+		css += text;
+	}
+
+	function highlightSyntax () {
+		lastText = wpTextbox1.value;
+		/* Backslashes and apostrophes are CSS-escaped at the beginning and all
+		 parsing regexes and functions are designed to match. On the other hand,
+		 newlines are not escaped until written so that in the regexes ^ and $
+		 work for both newlines and the beginning or end of the string. */
+		text = lastText.replace(/['\\]/g, '\\$&') + '\n'; //add a newline to fix scrolling and parsing issues
+		parserLocation = 0; //the location of the parser as it goes through var text
+
+		before = true;
+		css = '';
+		spanNumber = 0;
+
+		/* Highlighting bold or italic markup presents a special challenge
+		 because the actual MediaWiki parser uses multiple passes to determine
+		 which ticks represent start tags and which represent end tags.
+		 Because that would be too slow for us here, we instead keep track of
+		 what kinds of unclosed opening ticks have been encountered and use
+		 that to make a good guess as to whether the next ticks encountered
+		 are an opening tag or a closing tag.
+
+		 The major downsides to this method are that '''apostrophe italic''
+		 and ''italic apostrophe''' are not highlighted correctly, and bold
+		 and italic are both highlighted in the same color. */
+		assumedBold = false;
+		assumedItalic = false;
+
+		// Start!
+		var startTime = Date.now();
+		highlightBlock('', defaultBreakerRegex);
+
+		// Output the leftovers (if any) to make sure whitespace etc. matches
+		if (parserLocation < text.length) {
+			writeText(text.substring(parserLocation), '');
 		}
 
-		var defaultBreakerRegex = new RegExp(breakerRegexBase, 'gm');
-		var wikilinkBreakerRegex = breakerRegexWithPrefix(']][a-zA-Z]*');
-		var namedExternalLinkBreakerRegex = breakerRegexWithPrefix(']');
-		var parameterBreakerRegex = breakerRegexWithPrefix('}}}');
-		var templateBreakerRegex = breakerRegexWithPrefix('}}');
-		var tableBreakerRegex = breakerRegexWithPrefix('\\|}');
-		var headingBreakerRegex = breakerRegexWithPrefix('\n');
-		var tagBreakerRegexCache = {};
+		// If highlighting took too long, disable it.
+		var endTime = Date.now();
+		if (endTime - startTime > syntaxHighlighterConfig.timeout) {
+			clearInterval(highlightSyntaxIfNeededIntervalID);
+			wpTextbox1.removeEventListener('input', highlightSyntax);
+			wpTextbox1.removeEventListener('scroll', syncScrollX);
+			wpTextbox1.removeEventListener('scroll', syncScrollY);
+			attributeObserver.disconnect();
+			syntaxStyleTextNode.nodeValue = '';
 
-		function highlightSyntax () {
+			var errorMessage = {
+				ca: 'S\'ha desactivat el remarcar de sintaxi en aquesta pàgina perquè ha trigat massa temps. El temps màxim permès per a remarcar és $1ms, i el vostre ordinador ha trigat $2ms. Proveu tancar algunes pestanyes i programes i fer clic en "Mostra la previsualització" o "Mostra els canvis". Si no funciona això, proveu un altre navegador web, i si això no funciona, proveu un ordinador més ràpid.',
+				de: 'Die Syntaxhervorhebung wurde auf dieser Seite deaktiviert, da diese zu lange gedauert hat. Die maximal erlaubte Zeit zur Hervorhebung beträgt $1ms und dein Computer benötigte $2ms. Versuche einige Tabs und Programme zu schließen und klicke "Vorschau zeigen" oder "Änderungen zeigen". Wenn das nicht funktioniert, probiere einen anderen Webbrowser und wenn immer noch nicht, probiere einen schnelleren Computer.',
+				el: 'Η έμφαση σύνταξης έχει απενεργοποιηθεί σε αυτήν τη σελίδα γιατί αργούσε πολύ. Ο μέγιστος επιτρεπτός χρόνος για την έμφαση σύνταξης είναι $1ms και ο υπολογιστής σας έκανε $2ms. Δοκιμάστε να κλείσετε μερικές καρτέλες και προγράμματα και να κάνετε κλικ στην «Εμφάνιση προεπισκόπησης» ή στην «Εμφάνιση αλλαγών». Αν αυτό δεν δουλέψει, δοκιμάστε έναν διαφορετικό περιηγητή και αν ούτε αυτό δουλέψει, δοκιμάστε έναν ταχύτερο υπολογιστή.',
+				en: 'Syntax highlighting on this page was disabled because it took too long. The maximum allowed highlighting time is $1ms, and your computer took $2ms. Try closing some tabs and programs and clicking "Show preview" or "Show changes". If that doesn\'t work, try a different web browser, and if that doesn\'t work, try a faster computer.',
+				es: 'Se desactivó el resaltar de sintaxis en esta página porque tardó demasiado. El tiempo máximum permitido para resaltar es $1ms, y tu ordenador tardó $2ms. Prueba cerrar algunas pestañas y programas y hacer clic en "Mostrar previsualización" o "Mostrar cambios". Si no funciona esto, prueba otro navegador web, y si eso no funciona, prueba un ordenador más rápido.',
+				fa: 'از آنجایی که زمان زیادی صرف آن می‌شد، برجسته‌سازی نحو در این صفحه غیرفعال شده است. بیشینهٔ زمان برجسته‌سازی برای ابزار $1ms تعریف شده در حالی که رایانهٔ شما $2ms زمان نیاز داشت. می‌توانید بستن برخی سربرگ‌ها و برنامه‌ها و سپس کلیک‌کردن دکمهٔ «پیش‌نمایش» یا «نمایش تغییرات» را بیازمایید. اگر جواب نداد مرورگر دیگری را امتحان کنید؛ و اگر باز هم جواب نداد، رایانهٔ سریع‌تری را بیازمایید.',
+				fr: 'La coloration syntaxique a été désactivée sur cette page en raison d\'un temps de chargement trop important ($2ms). Le temps maximum autorisé est $1ms. Vous pouvez essayer de fermer certains onglets et programmes et cliquez sur "Prévisualisation" ou "Voir mes modifications". Si cela ne fonctionne pas, essayez un autre navigateur web, et si cela ne fonctionne toujours pas, essayez un ordinateur plus rapide.',
+				io: 'Sintaxo-hailaitar en ca pagino esis nekapabligata pro ke konsumis tro multa tempo. La maxima permisata hailaitala tempo es $1ms, e tua ordinatro konsumis $2ms. Probez klozar kelka tabi e programi e kliktar "Previdar" o "Montrez chanji". Se to ne funcionas, probez altra brauzero, e se to ne funcionas, probez plu rapida ordinatro.',
+				pt: 'O marcador de sintaxe foi desativado nesta pagina porque demorou demais. O tempo máximo permitido para marcar e $1ms, e seu computador demorou $2ms. Tenta sair de alguns programas e clique em "Mostrar previsão" ou "Mostrar alterações". Se isso não funciona, tenta usar uma outra navegador web, e se ainda não funciona, procura um computador mais rápido.'
+			};
+			var wgUserLanguage = mw.config.get('wgUserLanguage');
 
-			lastText = wpTextbox1.value;
-			/* Backslashes and apostrophes are CSS-escaped at the beginning and all
-			 parsing regexes and functions are designed to match. On the other hand,
-			 newlines are not escaped until written so that in the regexes ^ and $
-			 work for both newlines and the beginning or end of the string. */
-			var text = lastText.replace(/['\\]/g, '\\$&') + '\n'; //add a newline to fix scrolling and parsing issues
-			var i = 0; //the location of the parser as it goes through var text
+			errorMessage = errorMessage[wgUserLanguage] ||
+			errorMessage[wgUserLanguage.substring(0, wgUserLanguage.indexOf('-'))] ||
+			errorMessage.en;
 
-			var css = '',
-			spanNumber = 0,
-			lastColor,
-			before = true;
+			wpTextbox1.style.backgroundColor = '';
+			wpTextbox1.style.position = '';
+			wpTextbox0.removeAttribute('dir');
+			wpTextbox0.removeAttribute('lang');
+			wpTextbox0.style = 'color:red; font-size:small';
 
-			/* Highlighting bold or italic markup presents a special challenge
-			 because the actual MediaWiki parser uses multiple passes to determine
-			 which ticks represent start tags and which represent end tags.
-			 Because that would be too slow for us here, we instead keep track of
-			 what kinds of unclosed opening ticks have been encountered and use
-			 that to make a good guess as to whether the next ticks encountered
-			 are an opening tag or a closing tag.
+			wpTextbox0.textContent = errorMessage
+				.replace('$1', syntaxHighlighterConfig.timeout)
+				.replace('$2', endTime - startTime);
 
-			 The major downsides to this method are that '''apostrophe italic''
-			 and ''italic apostrophe''' are not highlighted correctly, and bold
-			 and italic are both highlighted in the same color. */
-			var assumedBold = false;
-			var assumedItalic = false;
+			return;
+		}
 
-			// Writes text into to-be-created span elements of wpTextbox0 using :before and :after pseudo-elements
-			// both :before and :after are used because using two pseudo-elements per span is significantly faster
-			// than doubling the number of spans required
-			function writeText (text, color) {
-				// No need to use another span if using the same color
-				if (color !== lastColor) {
-					// Whitespace is omitted in the hope of increasing performance
-					css += '\'}#s' + spanNumber; //spans will be created with IDs s0 through sN
-					if (before) {
-						css += ':before{';
-						before = false;
-					}
-					else {
-						css += ':after{';
-						before = true;
-						++spanNumber;
-					}
-					if (color) {
-						// 'background-color' is 6 characters longer than 'background' but the browser processes it faster
-						css += 'background-color:' + color + ';';
-					}
-					css += 'content:\'';
-					lastColor = color;
-				}
-				css += text;
+		// Do we have enough span elements to match the generated CSS?
+		// This step isn't included in the above benchmark because it takes a highly variable amount of time
+		if (maxSpanNumber < spanNumber) {
+			var fragment = document.createDocumentFragment();
+			do {
+				fragment.appendChild(document.createElement('span')).id = 's' + (++maxSpanNumber);
 			}
+			while (maxSpanNumber < spanNumber);
+			wpTextbox0.appendChild(fragment);
+		}
 
-			function highlightBlock (color, breakerRegex) {
-				var match;
+		/* Finish CSS: move the extra '} from the beginning to the end and CSS-
+		 escape newlines. CSS ignores the space after the hex code of the
+		 escaped character */
+		syntaxStyleTextNode.nodeValue = css.substring(2).replace(/\n/g, '\\A ') + '\'}';
+	}
 
-				for (breakerRegex.lastIndex = i; match = breakerRegex.exec(text); breakerRegex.lastIndex = i) {
-					if (match[1]) {
-						// End token found
-						writeText(text.substring(i, breakerRegex.lastIndex), color);
-						i = breakerRegex.lastIndex;
-						return;
-					}
+	function highlightBlock (color, breakerRegex) {
+		var match;
 
-					var endIndexOfLastColor = breakerRegex.lastIndex - match[0].length;
-					// Avoid calling writeText with text == '' to improve performance
-					if (i < endIndexOfLastColor) {
-						writeText(text.substring(i, endIndexOfLastColor), color);
-					}
-
-					i = breakerRegex.lastIndex;
-
-					// Cases in this switch should be arranged from most common to least common
-					switch (match[0].charAt(0)) {
-						case '[':
-							if (match[0].charAt(1) === '[') {
-								// wikilink
-								writeText('[[', syntaxHighlighterConfig.wikilinkColor || color);
-								highlightBlock(
-									syntaxHighlighterConfig.wikilinkColor || color,
-									wikilinkBreakerRegex
-								);
-							}
-							else {
-								// named external link
-								writeText(match[0], syntaxHighlighterConfig.externalLinkColor || color);
-								highlightBlock(
-									syntaxHighlighterConfig.externalLinkColor || color,
-									namedExternalLinkBreakerRegex
-								);
-							}
-							break;
-						case '{':
-							if (match[0].charAt(1) === '{') {
-								if (match[0].length === 3) {
-									// parameter
-									writeText('{{{', syntaxHighlighterConfig.parameterColor || color);
-									highlightBlock(
-										syntaxHighlighterConfig.parameterColor || color,
-										parameterBreakerRegex
-									);
-								}
-								else {
-									// template
-									writeText('{{', syntaxHighlighterConfig.templateColor || color);
-									highlightBlock(
-										syntaxHighlighterConfig.templateColor || color,
-										templateBreakerRegex
-									);
-								}
-							}
-							else {// |
-								// table
-								writeText('{|', syntaxHighlighterConfig.tableColor || color);
-								highlightBlock(
-									syntaxHighlighterConfig.tableColor || color,
-									tableBreakerRegex
-								);
-							}
-							break;
-						case '<':
-							if (match[0].charAt(1) === '!') {
-								// comment tag
-								writeText(match[0], syntaxHighlighterConfig.commentColor || color);
-								break;
-							}
-							else {
-								// Some other kind of tag, search for its end
-								// the search is made easier because XML attributes may not contain the character '>'
-								var tagEnd = text.indexOf('>', i) + 1;
-								if (tagEnd === 0) {
-									// Not a tag, just a '<' with some text after it
-									writeText('<', color);
-									i = i - match[0].length + 1;
-									break;
-								}
-
-								if (text.charAt(tagEnd - 2) === '/') {
-									// empty tag
-									writeText(
-										text.substring(i - match[0].length, tagEnd),
-										syntaxHighlighterConfig.tagColor || color
-									);
-									i = tagEnd;
-								}
-								else {
-									var tagName = match[0].substring(1);
-
-									// Again, cases are ordered from most common to least common
-									if (/^(?:nowiki|pre|math|syntaxhighlight|source|timeline|hiero)$/.test(tagName)) {
-										//tag that can contain only plain text
-										var stopAfter = '</' + tagName + '>';
-										var endIndex = text.indexOf(stopAfter, i);
-										if (endIndex === -1) {
-											endIndex = text.length;
-										}
-										else {
-											endIndex += stopAfter.length;
-										}
-										writeText(
-											text.substring(i - match[0].length, endIndex),
-											syntaxHighlighterConfig.tagColor || color
-										);
-										i = endIndex;
-									}
-									else {
-										// ordinary tag
-										writeText(
-											text.substring(i - match[0].length, tagEnd),
-											syntaxHighlighterConfig.tagColor || color
-										);
-										i = tagEnd;
-										if (!tagBreakerRegexCache[tagName]) {
-											tagBreakerRegexCache[tagName] = breakerRegexWithPrefix('</' + tagName + '>');
-										}
-										highlightBlock(
-											syntaxHighlighterConfig.tagColor || color,
-											tagBreakerRegexCache[tagName]
-										);
-									}
-								}
-							}
-							break;
-						case 'h':
-						case 'f':
-						case 'm':
-							// bare external link
-							writeText(match[0], syntaxHighlighterConfig.externalLinkColor || color);
-							break;
-						case '=':
-							if (/[^=]=+$/.test(text.substring(i, text.indexOf('\n', i)))) {
-								// The line begins and ends with an equals sign and has something else in the middle
-								// Heading
-								writeText('=', syntaxHighlighterConfig.headingColor || color);
-								highlightBlock(syntaxHighlighterConfig.headingColor || color, headingBreakerRegex);
-							}
-							else {
-								writeText('=', color); // move on, process this line as regular wikitext
-							}
-							break;
-						case '*':
-						case '#':
-						case ':':
-							// unordered list, ordered list, indent, small heading
-							// just highlight the marker
-							writeText(match[0], syntaxHighlighterConfig.listOrIndentColor || color);
-							break;
-						case ';':
-							// small heading
-							writeText(';', syntaxHighlighterConfig.headingColor || color);
-							highlightBlock(syntaxHighlighterConfig.headingColor || color, headingBreakerRegex);
-							break;
-						case '-':
-							// horizontal line
-							writeText(match[0], syntaxHighlighterConfig.hrColor || color);
-							break;
-						case '\\':
-							writeText(match[0], syntaxHighlighterConfig.boldOrItalicColor || color);
-							if (match[0].length === 6) {
-								// bold
-								if (assumedBold) {
-									// end tag
-									assumedBold = false;
-									return;
-								}
-								else {
-									// start tag
-									assumedBold = true;
-									highlightBlock(
-										syntaxHighlighterConfig.boldOrItalicColor || color,
-										defaultBreakerRegex
-									);
-								}
-							}
-							else {
-								// italic
-								if (assumedItalic) {
-									// end tag
-									assumedItalic = false;
-									return;
-								}
-								else {
-									// start tag
-									assumedItalic = true;
-									highlightBlock(
-										syntaxHighlighterConfig.boldOrItalicColor || color,
-										defaultBreakerRegex
-									);
-								}
-							}
-							break;
-						case '&':
-							// entity
-							writeText(match[0], syntaxHighlighterConfig.entityColor || color);
-							break;
-						case '~':
-							// username, signature, timestamp
-							writeText(match[0], syntaxHighlighterConfig.signatureColor || color);
-					}
-				}
-			}
-
-
-			// Start!
-			var startTime = Date.now();
-			highlightBlock('', defaultBreakerRegex);
-
-			// Output the leftovers (if any) to make sure whitespace etc. matches
-			if (i < text.length) {
-				writeText(text.substring(i), '');
-			}
-
-			// If highlighting took too long, disable it.
-			var endTime = Date.now();
-			/*if (typeof(bestTime) === undefined)
-			 {
-			 window.bestTime = endTime - startTime;
-			 document.title = bestTime;
-			 highlightSyntaxIfNeededIntervalID = setInterval(highlightSyntax, 250);
-			 }
-			 else
-			 {
-			 if (endTime - startTime < bestTime)
-			 {
-			 bestTime = endTime - startTime;
-			 document.title = bestTime;
-			 }
-			 }//*/
-			if (endTime - startTime > syntaxHighlighterConfig.timeout) {
-				clearInterval(highlightSyntaxIfNeededIntervalID);
-				wpTextbox1.removeEventListener('input', highlightSyntax);
-				wpTextbox1.removeEventListener('scroll', syncScrollX);
-				wpTextbox1.removeEventListener('scroll', syncScrollY);
-				attributeObserver.disconnect();
-				syntaxStyleTextNode.nodeValue = '';
-
-				var errorMessage = {
-					ca: 'S\'ha desactivat el remarcar de sintaxi en aquesta pàgina perquè ha trigat massa temps. El temps màxim permès per a remarcar és $1ms, i el vostre ordinador ha trigat $2ms. Proveu tancar algunes pestanyes i programes i fer clic en "Mostra la previsualització" o "Mostra els canvis". Si no funciona això, proveu un altre navegador web, i si això no funciona, proveu un ordinador més ràpid.',
-					de: 'Die Syntaxhervorhebung wurde auf dieser Seite deaktiviert, da diese zu lange gedauert hat. Die maximal erlaubte Zeit zur Hervorhebung beträgt $1ms und dein Computer benötigte $2ms. Versuche einige Tabs und Programme zu schließen und klicke "Vorschau zeigen" oder "Änderungen zeigen". Wenn das nicht funktioniert, probiere einen anderen Webbrowser und wenn immer noch nicht, probiere einen schnelleren Computer.',
-					el: 'Η έμφαση σύνταξης έχει απενεργοποιηθεί σε αυτήν τη σελίδα γιατί αργούσε πολύ. Ο μέγιστος επιτρεπτός χρόνος για την έμφαση σύνταξης είναι $1ms και ο υπολογιστής σας έκανε $2ms. Δοκιμάστε να κλείσετε μερικές καρτέλες και προγράμματα και να κάνετε κλικ στην «Εμφάνιση προεπισκόπησης» ή στην «Εμφάνιση αλλαγών». Αν αυτό δεν δουλέψει, δοκιμάστε έναν διαφορετικό περιηγητή και αν ούτε αυτό δουλέψει, δοκιμάστε έναν ταχύτερο υπολογιστή.',
-					en: 'Syntax highlighting on this page was disabled because it took too long. The maximum allowed highlighting time is $1ms, and your computer took $2ms. Try closing some tabs and programs and clicking "Show preview" or "Show changes". If that doesn\'t work, try a different web browser, and if that doesn\'t work, try a faster computer.',
-					es: 'Se desactivó el resaltar de sintaxis en esta página porque tardó demasiado. El tiempo máximum permitido para resaltar es $1ms, y tu ordenador tardó $2ms. Prueba cerrar algunas pestañas y programas y hacer clic en "Mostrar previsualización" o "Mostrar cambios". Si no funciona esto, prueba otro navegador web, y si eso no funciona, prueba un ordenador más rápido.',
-					fa: 'از آنجایی که زمان زیادی صرف آن می‌شد، برجسته‌سازی نحو در این صفحه غیرفعال شده است. بیشینهٔ زمان برجسته‌سازی برای ابزار $1ms تعریف شده در حالی که رایانهٔ شما $2ms زمان نیاز داشت. می‌توانید بستن برخی سربرگ‌ها و برنامه‌ها و سپس کلیک‌کردن دکمهٔ «پیش‌نمایش» یا «نمایش تغییرات» را بیازمایید. اگر جواب نداد مرورگر دیگری را امتحان کنید؛ و اگر باز هم جواب نداد، رایانهٔ سریع‌تری را بیازمایید.',
-					fr: 'La coloration syntaxique a été désactivée sur cette page en raison d\'un temps de chargement trop important ($2ms). Le temps maximum autorisé est $1ms. Vous pouvez essayer de fermer certains onglets et programmes et cliquez sur "Prévisualisation" ou "Voir mes modifications". Si cela ne fonctionne pas, essayez un autre navigateur web, et si cela ne fonctionne toujours pas, essayez un ordinateur plus rapide.',
-					io: 'Sintaxo-hailaitar en ca pagino esis nekapabligata pro ke konsumis tro multa tempo. La maxima permisata hailaitala tempo es $1ms, e tua ordinatro konsumis $2ms. Probez klozar kelka tabi e programi e kliktar "Previdar" o "Montrez chanji". Se to ne funcionas, probez altra brauzero, e se to ne funcionas, probez plu rapida ordinatro.',
-					pt: 'O marcador de sintaxe foi desativado nesta pagina porque demorou demais. O tempo máximo permitido para marcar e $1ms, e seu computador demorou $2ms. Tenta sair de alguns programas e clique em "Mostrar previsão" ou "Mostrar alterações". Se isso não funciona, tenta usar uma outra navegador web, e se ainda não funciona, procura um computador mais rápido.'
-				};
-				var wgUserLanguage = mw.config.get('wgUserLanguage');
-
-				errorMessage = errorMessage[wgUserLanguage] ||
-					errorMessage[wgUserLanguage.substring(0, wgUserLanguage.indexOf('-'))] ||
-					errorMessage.en;
-
-				wpTextbox1.style.backgroundColor = '';
-				wpTextbox1.style.position = '';
-				wpTextbox0.removeAttribute('dir');
-				wpTextbox0.removeAttribute('lang');
-				wpTextbox0.style = 'color:red; font-size:small';
-
-				wpTextbox0.textContent = errorMessage
-					.replace('$1', syntaxHighlighterConfig.timeout)
-					.replace('$2', endTime - startTime);
-
+		for (
+			breakerRegex.lastIndex = parserLocation;
+			match = breakerRegex.exec(text);
+			breakerRegex.lastIndex = parserLocation
+		) {
+			if (match[1]) {
+				// End token found
+				writeText(text.substring(parserLocation, breakerRegex.lastIndex), color);
+				parserLocation = breakerRegex.lastIndex;
 				return;
 			}
 
-			// Do we have enough span elements to match the generated CSS?
-			// This step isn't included in the above benchmark because it takes a highly variable amount of time
-			if (maxSpanNumber < spanNumber) {
-				var fragment = document.createDocumentFragment();
-				do {
-					fragment.appendChild(document.createElement('span')).id = 's' + (++maxSpanNumber);
-				}
-				while (maxSpanNumber < spanNumber);
-				wpTextbox0.appendChild(fragment);
+			var endIndexOfLastColor = breakerRegex.lastIndex - match[0].length;
+			// Avoid calling writeText with text == '' to improve performance
+			if (parserLocation < endIndexOfLastColor) {
+				writeText(text.substring(parserLocation, endIndexOfLastColor), color);
 			}
 
-			/* Finish CSS: move the extra '} from the beginning to the end and CSS-
-			 escape newlines. CSS ignores the space after the hex code of the
-			 escaped character */
-			syntaxStyleTextNode.nodeValue = css.substring(2).replace(/\n/g, '\\A ') + '\'}';
-		}
+			parserLocation = breakerRegex.lastIndex;
 
-		function syncScrollX () {
-			wpTextbox0.scrollLeft = wpTextbox1.scrollLeft;
-		}
+			// Cases in this switch should be arranged from most common to least common
+			switch (match[0].charAt(0)) {
+				case '[':
+					if (match[0].charAt(1) === '[') {
+						// wikilink
+						writeText('[[', syntaxHighlighterConfig.wikilinkColor || color);
+						highlightBlock(
+							syntaxHighlighterConfig.wikilinkColor || color,
+							wikilinkBreakerRegex
+						);
+					}
+					else {
+						// named external link
+						writeText(match[0], syntaxHighlighterConfig.externalLinkColor || color);
+						highlightBlock(
+							syntaxHighlighterConfig.externalLinkColor || color,
+							namedExternalLinkBreakerRegex
+						);
+					}
+					break;
+				case '{':
+					if (match[0].charAt(1) === '{') {
+						if (match[0].length === 3) {
+							// parameter
+							writeText('{{{', syntaxHighlighterConfig.parameterColor || color);
+							highlightBlock(
+								syntaxHighlighterConfig.parameterColor || color,
+								parameterBreakerRegex
+							);
+						}
+						else {
+							// template
+							writeText('{{', syntaxHighlighterConfig.templateColor || color);
+							highlightBlock(
+								syntaxHighlighterConfig.templateColor || color,
+								templateBreakerRegex
+							);
+						}
+					}
+					else {// |
+						// table
+						writeText('{|', syntaxHighlighterConfig.tableColor || color);
+						highlightBlock(
+							syntaxHighlighterConfig.tableColor || color,
+							tableBreakerRegex
+						);
+					}
+					break;
+				case '<':
+					if (match[0].charAt(1) === '!') {
+						// comment tag
+						writeText(match[0], syntaxHighlighterConfig.commentColor || color);
+						break;
+					}
+					else {
+						// Some other kind of tag, search for its end
+						// the search is made easier because XML attributes may not contain the character '>'
+						var tagEnd = text.indexOf('>', parserLocation) + 1;
+						if (tagEnd === 0) {
+							// Not a tag, just a '<' with some text after it
+							writeText('<', color);
+							parserLocation = parserLocation - match[0].length + 1;
+							break;
+						}
 
-		function syncScrollY () {
-			wpTextbox0.scrollTop = wpTextbox1.scrollTop;
-		}
+						if (text.charAt(tagEnd - 2) === '/') {
+							// empty tag
+							writeText(
+								text.substring(parserLocation - match[0].length, tagEnd),
+								syntaxHighlighterConfig.tagColor || color
+							);
+							parserLocation = tagEnd;
+						}
+						else {
+							var tagName = match[0].substring(1);
 
-		function syncTextDirection () {
-			wpTextbox0.dir = wpTextbox1.dir;
+							// Again, cases are ordered from most common to least common
+							if (/^(?:nowiki|pre|math|syntaxhighlight|source|timeline|hiero)$/.test(tagName)) {
+								//tag that can contain only plain text
+								var stopAfter = '</' + tagName + '>';
+								var endIndex = text.indexOf(stopAfter, parserLocation);
+								if (endIndex === -1) {
+									endIndex = text.length;
+								}
+								else {
+									endIndex += stopAfter.length;
+								}
+								writeText(
+									text.substring(parserLocation - match[0].length, endIndex),
+									syntaxHighlighterConfig.tagColor || color
+								);
+								parserLocation = endIndex;
+							}
+							else {
+								// ordinary tag
+								writeText(
+									text.substring(parserLocation - match[0].length, tagEnd),
+									syntaxHighlighterConfig.tagColor || color
+								);
+								parserLocation = tagEnd;
+								if (!tagBreakerRegexCache[tagName]) {
+									tagBreakerRegexCache[tagName] = breakerRegexWithPrefix('</' + tagName + '>');
+								}
+								highlightBlock(
+									syntaxHighlighterConfig.tagColor || color,
+									tagBreakerRegexCache[tagName]
+								);
+							}
+						}
+					}
+					break;
+				case 'h':
+				case 'f':
+				case 'm':
+					// bare external link
+					writeText(match[0], syntaxHighlighterConfig.externalLinkColor || color);
+					break;
+				case '=':
+					if (/[^=]=+$/.test(text.substring(parserLocation, text.indexOf('\n', parserLocation)))) {
+						// The line begins and ends with an equals sign and has something else in the middle
+						// Heading
+						writeText('=', syntaxHighlighterConfig.headingColor || color);
+						highlightBlock(syntaxHighlighterConfig.headingColor || color, headingBreakerRegex);
+					}
+					else {
+						writeText('=', color); // move on, process this line as regular wikitext
+					}
+					break;
+				case '*':
+				case '#':
+				case ':':
+					// unordered list, ordered list, indent, small heading
+					// just highlight the marker
+					writeText(match[0], syntaxHighlighterConfig.listOrIndentColor || color);
+					break;
+				case ';':
+					// small heading
+					writeText(';', syntaxHighlighterConfig.headingColor || color);
+					highlightBlock(syntaxHighlighterConfig.headingColor || color, headingBreakerRegex);
+					break;
+				case '-':
+					// horizontal line
+					writeText(match[0], syntaxHighlighterConfig.hrColor || color);
+					break;
+				case '\\':
+					writeText(match[0], syntaxHighlighterConfig.boldOrItalicColor || color);
+					if (match[0].length === 6) {
+						// bold
+						if (assumedBold) {
+							// end tag
+							assumedBold = false;
+							return;
+						}
+						else {
+							// start tag
+							assumedBold = true;
+							highlightBlock(
+								syntaxHighlighterConfig.boldOrItalicColor || color,
+								defaultBreakerRegex
+							);
+						}
+					}
+					else {
+						// italic
+						if (assumedItalic) {
+							// end tag
+							assumedItalic = false;
+							return;
+						}
+						else {
+							// start tag
+							assumedItalic = true;
+							highlightBlock(
+								syntaxHighlighterConfig.boldOrItalicColor || color,
+								defaultBreakerRegex
+							);
+						}
+					}
+					break;
+				case '&':
+					// entity
+					writeText(match[0], syntaxHighlighterConfig.entityColor || color);
+					break;
+				case '~':
+					// username, signature, timestamp
+					writeText(match[0], syntaxHighlighterConfig.signatureColor || color);
+			}
 		}
+	}
+
+	function syncScrollX () {
+		wpTextbox0.scrollLeft = wpTextbox1.scrollLeft;
+	}
+
+	function syncScrollY () {
+		wpTextbox0.scrollTop = wpTextbox1.scrollTop;
+	}
+
+	function syncTextDirection () {
+		wpTextbox0.dir = wpTextbox1.dir;
+	}
+
+	function init (textarea) {
+		maxSpanNumber = -1;
+
+		defaultBreakerRegex = new RegExp(breakerRegexBase, 'gm');
+		wikilinkBreakerRegex = breakerRegexWithPrefix(']][a-zA-Z]*');
+		namedExternalLinkBreakerRegex = breakerRegexWithPrefix(']');
+		parameterBreakerRegex = breakerRegexWithPrefix('}}}');
+		templateBreakerRegex = breakerRegexWithPrefix('}}');
+		tableBreakerRegex = breakerRegexWithPrefix('\\|}');
+		headingBreakerRegex = breakerRegexWithPrefix('\n');
+		tagBreakerRegexCache = {};
 
 		// This function runs once every 500ms to detect changes to wpTextbox1's text
 		// that the input event does not catch.
@@ -594,7 +602,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
 			$(window).load(queueSetup(textarea));
 		}
 
-	};
+	}
 
 	return {
 		init: init
