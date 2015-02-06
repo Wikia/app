@@ -60,12 +60,34 @@ class NjordUsage extends Maintenance {
 	/**
 	 * @return string
 	 */
-	private function getOutputFileName() {
-		return 'njord_' . date("Y_m_d") . ".csv";
+	private function getOutputFileName($ext = "csv") {
+		return 'njord_' . date("Y_m_d") . ".{$ext}";
 	}
 
 	private function exportToHTML( $data ) {
-		var_dump($data);
+		$html_output = '<!doctype html>';
+		$html_output .= '<html lang="en">';
+		$html_output .= '<head><meta charset="utf-8"></head>';
+		$html_output .= '<body>';
+		$html_output .= '<table border="1">';
+		$html_output .= '<tr>';
+		$html_output .= '<th>Wikia</th>';
+		$html_output .= '<th>'.self::NJORD_ARTICLE_PROP_TITLE.'</th>';
+		$html_output .= '<th>'.self::NJORD_ARTICLE_PROP_DESCR.'</th>';
+		$html_output .= '<th>'.self::NJORD_ARTICLE_PROP_IMAGE.'</th>';
+		$html_output .= '</tr>';
+		foreach ( $data as $row ) {
+			$html_output .= '<tr>';
+			$html_output .= '<td><a href="' .$row['wiki_url']. '">' .$row['wiki_url']. '</a></td>';
+			$html_output .= '<td>' .htmlspecialchars($row[self::NJORD_ARTICLE_PROP_TITLE]). '</td>';
+			$html_output .= '<td>' .htmlspecialchars($row[self::NJORD_ARTICLE_PROP_DESCR]). '</td>';
+			$html_output .= '<td><a href="' .$row[self::NJORD_ARTICLE_PROP_IMAGE]. '"><img width="400" src="' .$row[self::NJORD_ARTICLE_PROP_IMAGE]. '" alt="" /></a></td>';
+			$html_output .= '</tr>';
+		}
+		$html_output .= '</table>';
+		$html_output .= '</body></html>';
+
+		file_put_contents($this->getOutputFileName("html"), $html_output);
 	}
 
 	/**
@@ -126,10 +148,8 @@ class NjordUsage extends Maintenance {
 
 		if ( !empty( $data[ $njordProps[self::NJORD_ARTICLE_PROP_IMAGE] ] ) ) {
 			$heroImageTitle = $data[ $njordProps[self::NJORD_ARTICLE_PROP_IMAGE] ];
-			$imagePage = GlobalTitle::newFromText( $heroImageTitle, NS_FILE, $cityId );
 			$image = GlobalFile::newFromText( $heroImageTitle, $cityId );
-
-			$row[ self::NJORD_ARTICLE_PROP_IMAGE ] = $image->getUrl();
+			$row[ self::NJORD_ARTICLE_PROP_IMAGE ] = $image->getUrlGenerator()->original()->url();
 		} else {
 			$row[ self::NJORD_ARTICLE_PROP_IMAGE ] = null;
 		}
