@@ -192,7 +192,11 @@ module.exports = function (config) {
 
 			// User Login and Signup
 			'extensions/wikia/UserLogin/js/MarketingOptIn.js',
-			'extensions/wikia/UserLogin/js/spec/MarketingOptIn.spec.js'
+			'extensions/wikia/UserLogin/js/spec/MarketingOptIn.spec.js',
+			'extensions/wikia/UserLogin/js/UserBaseAjaxForm.js',
+			'extensions/wikia/UserLogin/js/FacebookFormConnectUser.js',
+			'extensions/wikia/UserLogin/js/spec/UserBaseAjaxForm.spec.js',
+			'extensions/wikia/UserLogin/js/spec/FacebookFormConnectUser.spec.js'
 		]
 	});
 };
