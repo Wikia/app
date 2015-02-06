@@ -199,6 +199,14 @@ class UserLoginHooksHelper {
 		return true;
 	}
 
+	/**
+	 * Hook introducing additional control over account creation
+	 * Currently forbids to create an account if username contains
+	 * circled latin characters, e.g. Ⓐ or ⓜ
+	 * @param User $user
+	 * @param String $message
+	 * @return bool
+	 */
 	static public function onAbortNewAccount( $user, &$message ) {
 		$name = $user->getName();
 		$regex = '/[\x{24B6}-\x{24E9}]|[\x{1F150}-\x{1F169}]/u';
