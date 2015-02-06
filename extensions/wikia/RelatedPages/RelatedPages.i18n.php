@@ -405,6 +405,7 @@ $messages['roa-tara'] = array(
 	'wikiarelatedpages-desc' => "Aggiunge 'n'elenghe cu le pàggene collegate a le pàggene",
 	'wikiarelatedpages-heading' => 'Ligge de cchiù',
 	'wikiamobile-related-article' => 'Vôsce collegate',
+	'wikiamobile-people-also-read' => "Crestiane ca l'onne lette",
 );
 
 /** Russian (русский)

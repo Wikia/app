@@ -25,10 +25,10 @@ class WikiaInYourLangController extends WikiaController {
 		 */
 		$sCurrentSitename = $this->wg->Sitename;
 		/**
-		 * The language code for the wfMessage
+		 * A language code's core for the wfMessage
 		 * @var string
 		 */
-		$sTargetLanguage = $this->request->getVal( 'targetLanguage' );
+		$sTargetLanguage = $this->getLanguageCore( $this->request->getVal( 'targetLanguage' ) );
 
 		/**
 		 * Steps to get the native wikia's ID:
@@ -49,7 +49,9 @@ class WikiaInYourLangController extends WikiaController {
 				$oNativeWiki = WikiFactory::getWikiById( $iNativeWikiId );
 
 				// Check for false-positives - see CE-1216
-				if ( $oNativeWiki->city_lang == $sTargetLanguage ) {
+				// Per request we should unify dialects like pt and pt-br
+				// @see CE-1220
+				if ( $this->getLanguageCore( $oNativeWiki->city_lang ) == $sTargetLanguage ) {
 					$aMessageParams = [
 						$sCurrentSitename,
 						$oNativeWiki->city_url,
@@ -73,9 +75,9 @@ class WikiaInYourLangController extends WikiaController {
 		}
 
 		/**
-		 * Cache the response aggresively
+		 * Cache the response for a day
 		 */
-		$this->response->setCacheValidity( WikiaResponse::CACHE_LONG );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -120,6 +122,15 @@ class WikiaInYourLangController extends WikiaController {
 		}
 
 		return $sWikiDomain;
+	}
+
+	/**
+	 * Returns a core of a full language code (e.g. pt from pt-br)
+	 * @param  string $sFullLangCode Full language code
+	 * @return string                A core of the language code
+	 */
+	public function getLanguageCore( $sFullLangCode ) {
+		return explode( '-', $sFullLangCode )[0];
 	}
 
 	/**

@@ -7,7 +7,7 @@ class ClientTest extends \WikiaBaseTest {
 	public function setUp()
 	{
 		$this->setupFile =  __DIR__ . '/../Helios.setup.php';
-		parent::setup();
+		parent::setUp();
 	}
 
 	public function testCannotMakeRequests()

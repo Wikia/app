@@ -12,7 +12,7 @@ class UserOneTagStrategy extends UserTagsStrategyBase {
 		'vstf' => 5,
 		'voldev' => 4,
 		'council' => 3,
-		'moderator' => 2,
+		'threadmoderator' => 2,
 		'chatmoderator' => 1,
 	);
 

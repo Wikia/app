@@ -199,9 +199,6 @@ class ExternalUser_Wikia extends ExternalUser {
 	}
 
 	public function authenticate( $password ) {
-		/** PLATFORM-508 - logging for Helios project - begin */
-		\Wikia\Logger\WikiaLogger::instance()->debug( 'PLATFORM-508', [ 'method' => __METHOD__ ] );
-		/** PLATFORM-508 - logging for Helios project - end */
 		# This might be wrong if anyone actually uses the UserComparePasswords hook
 		# (on either end), so don't use this if you those are incompatible.
 		wfDebug( __METHOD__ . ": " . $this->getId() . " \n" );

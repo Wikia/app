@@ -1,8 +1,10 @@
 <?php
 
-class ArticleQualityService extends Service {
 
-	const SQL_CACHE_TIME = 86399; // 12h
+class ArticleQualityService extends Service {
+	use Wikia\Logger\Loggable;
+
+	const SQL_CACHE_TIME = 86399; // 24h - 1s
 
 	const MEMC_CACHE_TIME = 86400; // 24h
 
@@ -156,7 +158,19 @@ class ArticleQualityService extends Service {
 				return null;
 			}
 			$article = new Article( $title );
-			$parser = $article->getParserOutput();
+			$parserOutput = $article->getParserOutput();
+
+			if ( !$parserOutput ) {
+				//MAIN-3592
+				$this->error(
+					__METHOD__,
+					[
+						'message' => 'Article::getParserOutput returned false',
+						'articleId' => $this->articleId,
+					]
+				);
+				return null;
+			}
 
 			$inputs = [
 				'outbound' => 0,
@@ -172,9 +186,9 @@ class ArticleQualityService extends Service {
 			 */
 			$inputs[ 'outbound' ] = $this->countOutboundLinks( $this->articleId );
 			$inputs[ 'inbound' ] = $this->countInboundLinks( $this->articleId );
-			$inputs[ 'sections' ] = count( $parser->getSections() );
-			$inputs[ 'images' ] = count( $parser->getImages() );
-			$inputs[ 'length' ] = $this->getCharsCountFromHTML( $parser->getText() );
+			$inputs[ 'sections' ] = count( $parserOutput->getSections() );
+			$inputs[ 'images' ] = count( $parserOutput->getImages() );
+			$inputs[ 'length' ] = $this->getCharsCountFromHTML( $parserOutput->getText() );
 			$quality = $this->computeFormula( $inputs );
 			$percentile = $this->searchPercentile( $quality );
 

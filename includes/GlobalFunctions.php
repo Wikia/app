@@ -2885,11 +2885,11 @@ function wfEscapeShellArg( ) {
  * Execute a shell command, with time and memory limits mirrored from the PHP
  * configuration if supported.
  * @param $cmd String Command line, properly escaped for shell.
- * @param &$retval optional, will receive the program's exit code.
+ * @param &$retval int optional, will receive the program's exit code.
  *                 (non-zero is usually failure)
  * @param $environ Array optional environment variables which should be
  *                 added to the executed command environment.
- * @return collected stdout as a string (trailing newlines stripped)
+ * @return string collected stdout as a string (trailing newlines stripped)
  */
 function wfShellExec( $cmd, &$retval = null, $environ = array() ) {
 	global $IP, $wgMaxShellMemory, $wgMaxShellFileSize, $wgMaxShellTime;
@@ -2970,6 +2970,17 @@ function wfShellExec( $cmd, &$retval = null, $environ = array() ) {
 	if ( $retval == 127 ) {
 		wfDebugLog( 'exec', "Possibly missing executable file: $cmd\n" );
 	}
+
+	// Wikia change - begin
+	if ( $retval > 0 ) {
+		Wikia\Logger\WikiaLogger::instance()->error( 'wfShellExec failed', [
+			'exception' => new Exception( $cmd, $retval ),
+			'output' => $output,
+			'load_avg' => implode( ', ', sys_getloadavg() ),
+		]);
+	}
+	// Wikia change - end
+
 	return $output;
 }
 

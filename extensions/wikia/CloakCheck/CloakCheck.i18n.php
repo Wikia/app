@@ -982,9 +982,11 @@ $messages['zh-hans'] = array(
 );
 
 /** Traditional Chinese (中文（繁體）‎)
+ * @author Citizen01
  * @author Justincheng12345
  * @author LNDDYL
  */
 $messages['zh-hant'] = array(
+	'cloakcheck-form-username' => '使用者名稱：',
 	'cloakcheck-process-emailconf-yes' => '電郵位址已確認。',
 );

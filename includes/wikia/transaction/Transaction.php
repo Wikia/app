@@ -143,6 +143,17 @@ class Transaction {
 	}
 
 	/**
+	 * Return required attribute
+	 *
+	 * @param $name string attribute name
+	 * @return mixed|null attribute value or null when not set
+	 */
+	public static function getAttribute($name) {
+		$attributes = self::getAttributes();
+		return isset( $attributes[$name] ) ? $attributes[$name] : null;
+	}
+
+	/**
 	 * Returns all events recorded during current transaction
 	 *
 	 * @return array

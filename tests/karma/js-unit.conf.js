@@ -19,9 +19,6 @@ module.exports = function (config) {
 			'resources/wikia/ui_components/**/node_modules/**/*.js',
 		],
 		files: [
-			'tests/lib/jasmine/jasmine.async.js',
-			'tests/lib/jasmine/jasmine.dataprovider.js',
-
 			'resources/wikia/libraries/define.mock.js',
 			'tests/lib/jasmine/helpers.js',
 			'resources/jquery/jquery-1.8.2.js',
@@ -67,6 +64,8 @@ module.exports = function (config) {
 
 			// Performance
 			'extensions/wikia/Bucky/js/spec/bucky.mock.js',
+			'extensions/wikia/Bucky/js/bucky_resources_timing.js',
+			'extensions/wikia/Bucky/js/spec/*.spec.js',
 
 			//UI Repo JS API
 			'resources/wikia/modules/uicomponent.js',

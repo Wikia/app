@@ -69,6 +69,7 @@ $messages['qqq'] = array(
 
 /** Arabic (العربية)
  * @author Achraf94
+ * @author Test Create account
  */
 $messages['ar'] = array(
 	'filepage-desc' => 'تعديل صفحة ملف ميدياويكي القياسية لدعم الفيديو',
@@ -76,6 +77,7 @@ $messages['ar'] = array(
 	'video-page-global-file-list-header' => 'يظهر في هذه الويكيات',
 	'video-page-from-provider' => 'من $1',
 	'video-page-expires' => 'انتهاء صلاحية المحتوى في $1',
+	'video-page-regional-restrictions-unviewable' => 'هذا الفيديو غير متاح لموقعك',
 	'video-page-views' => '$1 {{PLURAL:$1|مشاهدة|عدد المشاهدات}}',
 	'video-page-see-more-info' => 'إظهار المزيد من المعلومات',
 	'video-page-see-less-info' => 'إظهار معلومات أقل',
@@ -288,6 +290,20 @@ $messages['et'] = array(
 	'video-page-global-file-list-header' => 'Esineb selles vikis',
 	'video-page-description-heading' => 'Kirjeldus',
 	'file-page-more-links' => 'Vaata täielikku nimekirja',
+);
+
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'video-page-see-more-info' => 'Ikusi informazio gehiago',
+	'video-page-see-less-info' => 'Ikusi informazio gutxiago',
+	'video-page-description-heading' => 'Deskribapena',
+	'video-page-description-zero-state' => 'Deskribapenik ez oraindik.',
+	'video-page-add-description-link-text' => 'Gehitu deskribapena.',
+	'video-page-default-description-header-and-text' => '==Deskribapena==
+Sar ezazu deskribapena hemen.',
+	'file-page-more-links' => 'Ikusi zerrenda osoa',
 );
 
 /** Persian (فارسی)
@@ -869,6 +885,8 @@ $messages['roa-tara'] = array(
 	'video-page-global-file-list-header' => 'Iesse sus a ste uicchi',
 	'video-page-from-provider' => 'Da $1',
 	'video-page-expires' => "Condenute ca scade 'u $1",
+	'video-page-regional-restrictions-viewable' => 'Stu video jè ristrette reggionalmende',
+	'video-page-regional-restrictions-unviewable' => "Stu video non se pò vedè jndr'à 'u paese tune",
 	'video-page-views' => '$1 {{PLURAL:$1|Viste}}',
 	'video-page-see-more-info' => "Fà vedè cchiù 'mbormaziune",
 	'video-page-see-less-info' => "Fà vedè mene 'mbormaziune",
@@ -1150,7 +1168,7 @@ $messages['zh-hant'] = array(
 	'file-page-replace-button' => '取代',
 	'file-page-tab-about' => '關於',
 	'file-page-tab-history' => '檔案歷史',
-	'file-page-tab-metadata' => '元數據',
+	'file-page-tab-metadata' => '後設資料',
 	'file-page-more-links' => '查看完整清單',
 );
 
