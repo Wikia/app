@@ -276,7 +276,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		}
 	}
 
-	private function getReturnToFromQuery( &$query ) {
+	public function getReturnToFromQuery( $query ) {
 		if ( !is_array( $query ) ) {
 			return '';
 		}
@@ -288,7 +288,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 		if ( isset( $query['title'] ) && !$this->isTitleBlacklisted( $query['title'] ) ) {
 			$returnTo = $query['title'];
-			unset( $query['title'] );
 		} else {
 			$returnTo = $this->getMainPagePartialUrl();
 		}
@@ -319,6 +318,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			return '';
 		}
 
+		// Ignore the title parameter as it would either be used by the returnto or blacklisted
+		unset( $query['title'] );
 		return wfArrayToCGI( $query );
 	}
 
