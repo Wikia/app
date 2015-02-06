@@ -282,10 +282,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		}
 
 		// If there's already a returnto here, use it.
-		if ( !empty( $query['returnto'] ) ) {
-			if ( !array_key_exists( 'returntoquery', $query ) ) {
-				$query['returntoquery'] = '';
-			}
+		if ( isset( $query['returnto'] ) ) {
 			return $query['returnto'];
 		}
 
@@ -312,8 +309,10 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			return '';
 		}
 
-		if ( array_key_exists( 'returntoquery', $query ) ) {
-			return $query['returntoquery'];
+		if ( isset( $query['returnto'] ) ) {
+			// If we're already got a 'returnto' value, make sure to pair it with the 'returntoquery' or
+			// default to blank if there isn't one.
+			return array_key_exists( 'returntoquery', $query ) ? $query['returntoquery'] : '';
 		} elseif ( $this->request->wasPosted() ) {
 			// Don't use any query parameters if this was a POST and we couldn't find
 			// a returntoquery param
