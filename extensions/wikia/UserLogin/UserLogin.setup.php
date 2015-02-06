@@ -39,6 +39,7 @@ $wgHooks['isValidEmailAddr'][] = 'UserLoginHooksHelper::isValidEmailAddr';
 $wgHooks['SavePreferences'][] = 'UserLoginHooksHelper::onSavePreferences';
 $wgHooks['ConfirmEmailComplete'][] = 'UserLoginHooksHelper::onConfirmEmailComplete';
 $wgHooks['WikiaMobileAssetsPackages'][] = 'UserLoginHooksHelper::onWikiaMobileAssetsPackages';
+$wgHooks['AbortNewAccount'][] = 'UserLoginHooksHelper::onAbortNewAccountHook';
 
 // i18n mapping
 $wgExtensionMessagesFiles['UserLogin'] = $dir . 'UserLogin.i18n.php';
