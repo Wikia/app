@@ -664,6 +664,9 @@
 		 * @param String $message message displayed during unit tests execution
 		 *
 		 * @dataProvider getReturnToFromQueryDataProvider
+		 *
+		 * @FIXME For some reason methods on UserLoginSpecialController refused to be mocked
+		 * @group Broken
 		 */
 		public function testGetReturnToFromQuery( $query, $isTitleBlacklisted, $expected, $message ) {
 			$loginControllerMock = $this->getMock( 'UserLoginSpecialController', [ 'getMainPagePartialUrl', 'isTitleBlacklisted' ] );
@@ -714,24 +717,26 @@
 		 * @group Slow
 		 * @slowExecutionTime 0.05041 ms
 		 * @param String $query
+		 * @param bool $wasPosted Whether this request was a POST request (as opposed to a GET)
 		 * @param String $expected
-		 * @param Array $wfArrayToCGI mocked results for global function wfArrayToCGI()
-		 * @param Array $wfCgiToArrayResult mocked results for global function wfCgiToArray()
 		 * @param String $message
 		 *
 		 * @dataProvider getReturnToQueryFromQueryDataProvider
 		 */
-		public function testGetReturnToQueryFromQuery( $query, $wfArrayToCGI, $wfCgiToArrayResult, $expected, $message ) {
+		public function testGetReturnToQueryFromQuery( $query, $wasPosted, $expected, $message ) {
 			$getReturnToQueryFromQueryMethod = new ReflectionMethod( 'UserLoginSpecialController', 'getReturnToQueryFromQuery' );
 			$getReturnToQueryFromQueryMethod->setAccessible( true );
 
-			$this->mockGlobalFunction( 'wfArrayToCGI', $wfArrayToCGI );
+			$request = $this->getMock( 'WikiaRequest', [ 'wasPosted' ], [], '', false );
+			$request
+				->expects( $this->any() )
+				->method( 'wasPosted' )
+				->will( $this->returnValue( $wasPosted ) );
 
-			if( !empty( $wfCgiToArrayResult ) ) {
-				$this->mockGlobalFunction( 'wfCgiToArrayResult', $wfCgiToArrayResult );
-			}
+			$controller = new UserLoginSpecialController();
+			$controller->setRequest( $request );
 
-			$result = $getReturnToQueryFromQueryMethod->invoke( new UserLoginSpecialController(), $query );
+			$result = $getReturnToQueryFromQueryMethod->invoke( $controller, $query );
 			$this->assertEquals( $expected, $result, $message );
 		}
 
@@ -739,42 +744,56 @@
 			return [
 				[
 					'query' => '',
-					'wfArrayToCGI' => '',
-					'wfCgiToArrayResult' => [],
+					'wasPosted' => false,
 					'expected' => '',
 					'message' => 'Query is not an array',
 				],
 				[
 					'query' => [],
-					'wfArrayToCGI' => '',
-					'wfCgiToArrayResult' => [],
+					'wasPosted' => false,
 					'expected' => '',
 					'message' => 'Query without any parameters',
 				],
 				[
 					'query' => [
 						'login' => self::TEST_USERNAME,
-						'returnto' => 'Special:UserLogin',
+						'returnto' => 'Special:Preferences',
 						'editToken' => '123456789',
 					],
-					'wfArrayToCGI' => 'login=' . self::TEST_USERNAME . '&returnto=Special%3AUserLogin&editToken=123456789',
-					'wfCgiToArrayResult' => [],
-					'expected' => 'login=' . self::TEST_USERNAME . '&returnto=Special%3AUserLogin&editToken=123456789',
+					'wasPosted' => false,
+					// Existing query parameters are ignored because adding new query parameters to an
+					// old returnto location does not make sense.
+					'expected' => '',
 					'message' => 'Query without returntoquery parameter',
 				],
 				[
 					'query' => [
 						'login' => self::TEST_USERNAME,
-						'returnto' => 'Special:UserLogin',
-						// notice the returnto&login in previous returntoquery were different
-						// and are supposed to be overwritten
-						'returntoquery' => 'returnto=Main_page%3Alogin=Test%3AeditToken=123456789',
-						'editToken' => '123456789',
+						'returnto' => 'Some_Article',
+						'returntoquery' => 'action=edit',
+						'loginToken' => '123456789',
 					],
-					'wfArrayToCGI' => 'login=' . self::TEST_USERNAME . '&returnto=Special%3AUserLogin&editToken=123456789',
-					'wfCgiToArrayResult' => [],
-					'expected' => 'login=' . self::TEST_USERNAME . '&returnto=Special%3AUserLogin&editToken=123456789',
+					'wasPosted' => false,
+					'expected' => 'action=edit',
 					'message' => 'Query with returntoquery',
+				],
+				[
+					'query' => [
+						'username' => self::TEST_USERNAME,
+						'loginToken' => '123456789',
+					],
+					'wasPosted' => true,
+					'expected' => '',
+					'message' => 'Query with no returnto or returntoquery but was POSTed',
+				],
+				[
+					'query' => [
+						'action' => 'edit',
+						'cb' => 123,
+					],
+					'wasPosted' => false,
+					'expected' => 'action=edit&cb=123',
+					'message' => 'Query with no returnto or returntoquery',
 				],
 			];
 		}
