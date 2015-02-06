@@ -209,8 +209,8 @@ class UserLoginHooksHelper {
 	 */
 	static public function onAbortNewAccount( $user, &$message ) {
 		$username = $user->getName();
-		$forbiddenCharacters = '/[\x{24B6}-\x{24E9}]|[\x{1F150}-\x{1F169}]/u';
-		if ( preg_match( $forbiddenCharacters, $username ) ) {
+		$forbiddenCharactersRegex = '/[\x{24B6}-\x{24E9}]|[\x{1F150}-\x{1F169}]/u';
+		if ( preg_match( $forbiddenCharactersRegex, $username ) ) {
 			$message = wfMessage( 'usersignup-error-symbols-in-username' )->escaped();
 			return false;
 		}
