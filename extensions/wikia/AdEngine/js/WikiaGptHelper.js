@@ -216,7 +216,6 @@ define('ext.wikia.adEngine.wikiaGptHelper', [
 			slotDiv; // set in refreshAd
 
 		function callSuccess(adInfo) {
-			slotTweaker.show(slotnameGpt);
 			if (typeof success === 'function') {
 				success(adInfo);
 			}
@@ -245,6 +244,8 @@ define('ext.wikia.adEngine.wikiaGptHelper', [
 				googletag.display(slotnameGpt);
 			}
 
+			// Some broken ads never fire "success" event, so we show the div now (and maybe hide later)
+			slotTweaker.show(slotnameGpt);
 			slotQueue.push(gptSlots[slotnameGpt]);
 
 			// Save page level and slot level params for easier ad delivery debugging
