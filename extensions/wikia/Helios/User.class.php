@@ -109,26 +109,4 @@ class User {
 		// when true is returned, the original password comparison will be executed
 	}
 
-	/**
-	 * Compares Helios' password comparison result with MediaWiki's and logs details if different.
-	 */
-	public static function comparePasswordCheck( $bHeliosCheck, $bHelios, $bMediaWiki, $sType, $sHash, $iUserId ) {
-
-		if ( $bHeliosCheck && $bHelios != $bMediaWiki ) {
-
-			// Get the user's name from the request context.
-			$sKey = ( defined( 'MW_API' ) ) ? 'lgname' : 'username';
-			$sUserName = \RequestContext::getMain()->getRequest()->getText( $sKey );
-
-			\Wikia\Logger\WikiaLogger::instance()->error(
-				'HELIOS_LOGIN',
-				[ 'method' => __METHOD__, 'type' => $sType, 'hash' => $sHash,
-				'user_id' => $iUserId, 'username' => $sUserName,
-				'helios' => $bHelios, 'mediawiki' => $bMediaWiki ]
-			);
-		}
-
-		return true;
-	}
-
 }
