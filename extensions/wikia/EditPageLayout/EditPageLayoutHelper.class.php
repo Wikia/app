@@ -170,12 +170,15 @@ class EditPageLayoutHelper {
 	 * @return bool
 	 */
 	static public function isCodePage( Title $articleTitle ) {
+		global $wgEnableEditorSyntaxHighlighting;
+
 		$namespace = $articleTitle->getNamespace();
 
-		return $articleTitle->isCssOrJsPage()
+		return $wgEnableEditorSyntaxHighlighting
+				&& ( $articleTitle->isCssOrJsPage()
 				|| $articleTitle->isCssJsSubpage()
 				// Lua module
-				|| $namespace === NS_MODULE;
+				|| $namespace === NS_MODULE );
 	}
 
 	/**
