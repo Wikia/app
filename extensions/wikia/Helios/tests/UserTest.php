@@ -76,27 +76,11 @@ class UserTest extends \WikiaBaseTest {
 		$this->assertNull( User::newFromToken( $this->oRequest ) );
 	}
 
-	public function testComparePasswordsAuthenticationFailed()
+	public function testAuthenticateAuthenticationFailed()
 	{
-		$this->markTestSkipped( 'The original code has been refactor. The test is now obsolete.' );
-
-		$sHash = '3cBPVuC7oI';
+		$sUserName = 'SomeName';
 		$sPassword = 'Password';
-		$iUserId = '42';
-		$bResult = false;
 
-		$oRequest = $this->getMock( '\WebRequest', [ 'getText' ], [], '', false );
-		$oRequest->expects( $this->once() )
-			->method( 'getText' )
-			->willReturn( 'SomeName' );
-		$this->mockClass( 'WebRequest', $oRequest );
-
-		$oContext = $this->getMock( '\RequestContext', [ 'getRequest' ], [], '', false );
-		$oContext->expects( $this->once() )
-			->method( 'getRequest' )
-			->willReturn( $oRequest );
-		$this->mockStaticMethod( '\RequestContext', 'getMain', $oContext );
-		$this->mockClass( 'RequestContext', $oContext );
 
 		$oClient = $this->getMock( 'Client', [ 'login' ], [], '', false );
 		$oClient->expects( $this->once() )
@@ -105,33 +89,13 @@ class UserTest extends \WikiaBaseTest {
 			->willReturn( new \StdClass );
 		$this->mockClass( 'Wikia\Helios\Client', $oClient );
 
-		$bReturn = User::comparePasswords( $sHash, $sPassword, $iUserId, $bResult );
-
-		$this->assertFalse( $bReturn );
-		$this->assertFalse( $bResult );
+		$this->assertFalse( User::authenticate( $sUserName, $sPassword ) );
 	}
 
-	public function testComparePasswordsAuthenticationImpossible()
+	public function testAuthenticateAuthenticationImpossible()
 	{
-		$this->markTestSkipped( 'The original code has been refactor. The test is now obsolete.' );
-
-		$sHash = '3cBPVuC7oI';
+		$sUserName = 'SomeName';
 		$sPassword = 'Password';
-		$iUserId = '42';
-		$bResult = false;
-
-		$oRequest = $this->getMock( '\WebRequest', [ 'getText' ], [], '', false );
-		$oRequest->expects( $this->once() )
-			->method( 'getText' )
-			->willReturn( 'SomeName' );
-		$this->mockClass( 'WebRequest', $oRequest );
-
-		$oContext = $this->getMock( '\RequestContext', [ 'getRequest' ], [], '', false );
-		$oContext->expects( $this->once() )
-			->method( 'getRequest' )
-			->willReturn( $oRequest );
-		$this->mockStaticMethod( '\RequestContext', 'getMain', $oContext );
-		$this->mockClass( 'RequestContext', $oContext );
 
 		$oClient = $this->getMock( 'Client', [ 'login' ], [], '', false );
 		$oClient->expects( $this->once() )
@@ -140,33 +104,13 @@ class UserTest extends \WikiaBaseTest {
 			->will( $this->throwException( new ClientException ) );
 		$this->mockClass( 'Wikia\Helios\Client', $oClient );
 
-		$bReturn = User::comparePasswords( $sHash, $sPassword, $iUserId, $bResult );
-
-		$this->assertTrue( $bReturn );
-		$this->assertFalse( $bResult );
+		$this->assertFalse( User::authenticate( $sUserName, $sPassword ) );
 	}
 
-	public function testComparePasswordsAuthenticationSucceded()
+	public function testAuthenticateAuthenticationSucceded()
 	{
-		$this->markTestSkipped( 'The original code has been refactor. The test is now obsolete.' );
-
-		$sHash = '3cBPVuC7oI';
+		$sUserName = 'SomeName';
 		$sPassword = 'Password';
-		$iUserId = '42';
-		$bResult = false;
-
-		$oRequest = $this->getMock( '\WebRequest', [ 'getText' ], [], '', false );
-		$oRequest->expects( $this->once() )
-			->method( 'getText' )
-			->willReturn( 'SomeName' );
-		$this->mockClass( 'WebRequest', $oRequest );
-
-		$oContext = $this->getMock( '\RequestContext', [ 'getRequest' ], [], '', false );
-		$oContext->expects( $this->once() )
-			->method( 'getRequest' )
-			->willReturn( $oRequest );
-		$this->mockStaticMethod( '\RequestContext', 'getMain', $oContext );
-		$this->mockClass( 'RequestContext', $oContext );
 
 		$oLogin = new \StdClass;
 		$oLogin->access_token = 'orvb9pM6wX';
@@ -178,10 +122,7 @@ class UserTest extends \WikiaBaseTest {
 			->willReturn( $oLogin );
 		$this->mockClass( 'Wikia\Helios\Client', $oClient );
 
-		$bReturn = User::comparePasswords( $sHash, $sPassword, $iUserId, $bResult );
-
-		$this->assertFalse( $bReturn );
-		$this->assertTrue( $bResult );
+		$this->assertTrue( User::authenticate( $sUserName, $sPassword ) );
 	}
 
 }
