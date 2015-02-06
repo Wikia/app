@@ -64,7 +64,7 @@ class UserLoginForm extends LoginForm {
 		// send confirmation email
 		$userLoginHelper = new UserLoginHelper();
 		$result = $userLoginHelper->sendConfirmationEmail( $this->mUsername );
-		$this->mainLoginForm( $result['msg'], $result['result'] );
+		$this->setValidationResponse( $result['msg'], $result['result'] );
 
 		return $u;
 	}
@@ -84,10 +84,10 @@ class UserLoginForm extends LoginForm {
 		$emailTextTemplate = F::app()->renderView( "UserLogin", "GeneralMail", array('language' => $u->getOption('language'), 'type' => 'account-creation-email') );
 		$result = $this->mailPasswordInternal( $u, false, 'usersignup-account-creation-email-subject', 'usersignup-account-creation-email-body', $emailTextTemplate );
 		if( !$result->isGood() ) {
-			$this->mainLoginForm( wfMessage( 'userlogin-error-mail-error', $result->getMessage() )->parse() );
+			$this->setValidationResponse( wfMessage( 'userlogin-error-mail-error', $result->getMessage() )->parse() );
 			return false;
 		} else {
-			$this->mainLoginForm( wfMessage( 'usersignup-account-creation-email-sent', $this->mEmail, $this->mUsername )->parse(), 'success' );
+			$this->setValidationResponse( wfMessage( 'usersignup-account-creation-email-sent', $this->mEmail, $this->mUsername )->parse(), 'success' );
 			return $u;
 		}
 	}
@@ -96,20 +96,30 @@ class UserLoginForm extends LoginForm {
 	public function initValidationUsername() {
 		// check empty username
 		if ( $this->mUsername == '' ) {
-			$this->mainLoginForm( wfMessage( 'userlogin-error-noname' )->escaped(), 'error', 'username' );
+			$this->setValidationResponse(
+				wfMessage( 'userlogin-error-noname' )->escaped(),
+				'error',
+				self::SIGNUP_USERNAME_KEY );
 			return false;
 		}
 
 		// check username length
 		if( !User::isNotMaxNameChars($this->mUsername) ) {
 			global $wgWikiaMaxNameChars;
-			$this->mainLoginForm( wfMessage( 'usersignup-error-username-length', $wgWikiaMaxNameChars )->escaped(), 'error', 'username' );
+			$this->setValidationResponse(
+				wfMessage( 'usersignup-error-username-length', $wgWikiaMaxNameChars )->escaped(),
+				'error',
+				self::SIGNUP_USERNAME_KEY );
 			return false;
 		}
 
 		// check valid username
 		if( !User::getCanonicalName( $this->mUsername, 'creatable' ) ) {
-			$this->mainLoginForm( wfMessage( 'usersignup-error-symbols-in-username' )->escaped(), 'error', 'username' );
+			$this->setValidationResponse(
+				wfMessage( 'usersignup-error-symbols-in-username' )->escaped(),
+				'error',
+				self::SIGNUP_USERNAME_KEY
+			);
 			return false;
 		}
 
@@ -135,24 +145,34 @@ class UserLoginForm extends LoginForm {
 				$msg = $result;
 			}
 
-			$this->mainLoginForm( $msg, 'error', 'username' );
+			$this->setValidationResponse( $msg, 'error', self::SIGNUP_USERNAME_KEY );
 			return false;
 		}
 
 		return true;
 	}
 
-	// initial validation for password
+	/**
+	 * Initial validation for password
+	 * @todo Do this on the front end so we're not sending passwords back and forth.
+	 * @return bool
+	 */
 	public function initValidationPassword() {
 		// check empty password
 		if ( $this->mPassword == '' ) {
-			$this->mainLoginForm( wfMessage( 'userlogin-error-wrongpasswordempty' )->escaped(), 'error', 'password' );
+			$this->setValidationResponse(
+				wfMessage( 'userlogin-error-wrongpasswordempty' )->escaped(),
+				'error',
+				self::SIGNUP_PASSWORD_KEY );
 			return false;
 		}
 
 		// check password length
-		if( !User::isNotMaxNameChars($this->mPassword) ) {
-			$this->mainLoginForm( wfMessage( 'usersignup-error-password-length' )->escaped(), 'error', 'password' );
+		if( !User::isNotMaxNameChars( $this->mPassword ) ) {
+			$this->setValidationResponse(
+				wfMessage( 'usersignup-error-password-length' )->escaped(),
+				'error',
+				self::SIGNUP_PASSWORD_KEY );
 			return false;
 		}
 
@@ -163,14 +183,14 @@ class UserLoginForm extends LoginForm {
 	public function initValidationBirthdate() {
 		// check birthday
 		if ( $this->wpBirthYear == -1 || $this->wpBirthMonth == -1 || $this->wpBirthDay == -1 ) {
-			$this->mainLoginForm( wfMessage( 'userlogin-error-userlogin-bad-birthday' )->escaped(), 'error', 'birthday' );
+			$this->setValidationResponse( wfMessage( 'userlogin-error-userlogin-bad-birthday' )->escaped(), 'error', 'birthday' );
 			return false;
 		}
 
 		// check valid age
 		$userBirthDay = strtotime( $this->wpBirthYear . '-' . $this->wpBirthMonth . '-' . $this->wpBirthDay );
 		if( $userBirthDay > strtotime('-13 years') ) {
-			$this->mainLoginForm( wfMessage( 'userlogin-error-userlogin-unable-info' )->escaped(), 'error', 'birthday' );
+			$this->setValidationResponse( wfMessage( 'userlogin-error-userlogin-unable-info' )->escaped(), 'error', 'birthday' );
 			return false;
 		}
 
@@ -181,13 +201,13 @@ class UserLoginForm extends LoginForm {
 	public function initValidationEmail() {
 		// check empty email
 		if ( $this->mEmail == '') {
-			$this->mainLoginForm( wfMessage( 'usersignup-error-empty-email' )->escaped(), 'error', 'email' );
+			$this->setValidationResponse( wfMessage( 'usersignup-error-empty-email' )->escaped(), 'error', 'email' );
 			return false;
 		}
 
 		// check email format
 		if( !Sanitizer::validateEmail( $this->mEmail ) ) {
-			$this->mainLoginForm( wfMessage( 'userlogin-error-invalidemailaddress' )->escaped(), 'error', 'email' );
+			$this->setValidationResponse( wfMessage( 'userlogin-error-invalidemailaddress' )->escaped(), 'error', 'email' );
 			return false;
 		}
 
@@ -203,7 +223,7 @@ class UserLoginForm extends LoginForm {
 		$sEmail = $this->mEmail;
 		$result = UserLoginHelper::withinEmailRegLimit( $sEmail );
 		if (!$result) {
-			$this->mainLoginForm( wfMessage( 'userlogin-error-userlogin-unable-info' )->escaped(), 'error', 'email' );
+			$this->setValidationResponse( wfMessage( 'userlogin-error-userlogin-unable-info' )->escaped(), 'error', 'email' );
 		}
 		return $result;
 	}
@@ -228,8 +248,14 @@ class UserLoginForm extends LoginForm {
 		return parent::addNewAccountInternal();
 	}
 
-	public function mainLoginForm( $msg, $msgtype = 'error', $errParam='' ) {
-		$this->msgType = $msgtype;
+	/**
+	 * Apply a validation message (defaults to error message) to this form instance
+	 * @param $msg
+	 * @param string $msgType
+	 * @param string $errParam
+	 */
+	private function setValidationResponse( $msg, $msgType = 'error', $errParam='' ) {
+		$this->msgType = $msgType;
 		$this->msg = $msg;
 		$this->errParam = $errParam;
 	}
@@ -284,15 +310,15 @@ class UserLoginForm extends LoginForm {
 	}
 
 	public function userNotPrivilegedMessage() {
-		$this->mainLoginForm( wfMessage( 'userlogin-error-user-not-allowed' )->escaped() );
+		$this->setValidationResponse( wfMessage( 'userlogin-error-user-not-allowed' )->escaped() );
 	}
 
 	public function userBlockedMessage(Block $block) {
-		$this->mainLoginForm( wfMessage( 'userlogin-error-cantcreateaccount-text' )->escaped() );
+		$this->setValidationResponse( wfMessage( 'userlogin-error-cantcreateaccount-text' )->escaped() );
 	}
 
 	public function throttleHit( $limit ) {
-		$this->mainLoginForm( wfMessage( 'userlogin-error-acct_creation_throttle_hit', $limit )->parse() );
+		$this->setValidationResponse( wfMessage( 'userlogin-error-acct_creation_throttle_hit', $limit )->parse() );
 	}
 
 	/**

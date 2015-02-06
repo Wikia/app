@@ -28,6 +28,23 @@
 	};
 
 	/**
+	 * Make the call to the back end to log the user in via ajax
+	 */
+	UserLoginAjaxForm.prototype.ajaxLogin = function () {
+		$.nirvana.postJson(
+			'UserLoginSpecial',
+			'login',
+			{
+				loginToken: this.loginToken,
+				username: this.inputs.username.val(),
+				password: this.inputs.password.val(),
+				keeploggedin: this.inputs.keeploggedin.is(':checked')
+			},
+			this.submitLoginHandler.bind(this)
+		);
+	};
+
+	/**
 	 * Callback after ajax login
 	 * @param {Object} json Response from server after ajax login
 	 */
