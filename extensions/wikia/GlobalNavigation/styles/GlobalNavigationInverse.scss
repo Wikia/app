@@ -1,5 +1,6 @@
 $global-nav-inverse-background: rgba(0,0,0,.65);
 $global-nav-inverse-text-color: rgb(255,255,255);
+$global-nav-inverse-background-hover: #656E78;
 
 .global-navigation {
 	&.inverse {
@@ -14,6 +15,10 @@ $global-nav-inverse-text-color: rgb(255,255,255);
 			.start-wikia {
 				border: solid 1px $global-nav-inverse-text-color;
 				color: $global-nav-inverse-text-color;
+
+				&:hover {
+					background-color: $global-nav-inverse-background-hover;
+				}
 			}
 		}
 
@@ -28,6 +33,11 @@ $global-nav-inverse-text-color: rgb(255,255,255);
 		}
 
 		.account-navigation-container {
+
+			.AccountNavigation.active {
+				background-color: $global-nav-inverse-background-hover;
+			}
+
 			.anon-avatar-placeholder, .logged-avatar-placeholder {
 				background-image: url('/extensions/wikia/GlobalNavigation/images/signin_icon_white.svg'); /* inline */
 			}
