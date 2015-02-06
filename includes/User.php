@@ -4259,8 +4259,6 @@ class User {
 			$bCheck = self::oldCrypt( $password, $userId ) === $hash;
 		}
 
-		wfRunHooks( 'UserAfterComparePasswords', array( $bHeliosCheck, $bCheck, $result, $type, $hash, $userId ) );
-
 		return $bCheck;
 	}
 
