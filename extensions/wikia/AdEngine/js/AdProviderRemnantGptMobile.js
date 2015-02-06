@@ -1,11 +1,9 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.remnantGptMobile', [
 	'wikia.log',
-	'wikia.document',
-	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.wikiaGptHelper',
 	'ext.wikia.adEngine.gptSlotConfig'
-], function (log, document, slotTweaker, wikiaGpt, gptSlotConfig) {
+], function (log, wikiaGpt, gptSlotConfig) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.remnantGptMobile',
@@ -18,11 +16,7 @@ define('ext.wikia.adEngine.provider.remnantGptMobile', [
 	function fillInSlot(slotname, success, hop) {
 		log(['fillInSlot', slotname], 5, logGroup);
 
-		function hopToNull() {
-			hop({method: 'hop'});
-		}
-
-		wikiaGpt.pushAd(slotname, success, hopToNull, 'mobile_remnant');
+		wikiaGpt.pushAd(slotname, success, hop, 'mobile_remnant');
 		wikiaGpt.flushAds();
 	}
 
