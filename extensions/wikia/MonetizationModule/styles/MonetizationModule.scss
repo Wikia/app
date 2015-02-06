@@ -91,44 +91,44 @@
 
 	.ad-responsive-ic {
 		height: 90px;
-		width: 468px;
+		width: 320px;
+	}
+
+	@media(min-width: 850px) {
+		.ad-responsive-ic {
+			width: 418px;
+		}
 	}
 
 	@media(min-width: 1024px) {
 		.ad-responsive-ic {
-			height: 100px;
 			width: 320px;
 		}
 
 		.ad-responsive {
-			height: 90px;
 			width: 690px;
 		}
 	}
 
 	@media(min-width: 1440px) {
 		.ad-responsive-ic {
-			height: 90px;
-			width: 468px;
+			width: 418px;
 		}
 
 		.ad-responsive {
-			height: 90px;
 			width: 728px;
 		}
 	}
 
 	@media(min-width: 1665px) {
 		.ad-responsive-ic {
-			height: 90px;
-			width: 690px;
+			width: 630px;
 		}
 	}
 
 	@media(min-width: 1700px) {
 		.ad-responsive-ic {
-			height: 90px;
-			width: 728px;
+			width: 678px;
 		}
 	}
 
@@ -455,7 +455,7 @@
 		}
 
 		.affiliate {
-			height: 100px;
+			height: 100%;
 		}
 
 		.amazon-logo {
@@ -464,10 +464,6 @@
 
 		@media(max-width: 849px), (min-width: 1024px) and (max-width: 1439px) {
 			width: 290px;
-
-			.affiliate {
-				height: 130px;
-			}
 
 			.product-name {
 				font-size: 14px;
@@ -503,7 +499,7 @@
 			}
 		}
 
-		@media (min-width: 850px) and (max-width: 1023px), (min-width: 1440px) {
+		@media(min-width: 850px) and (max-width: 1023px), (min-width: 1440px) {
 			width: 388px;
 
 			.product-name {
