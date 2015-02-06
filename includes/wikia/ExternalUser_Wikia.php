@@ -198,11 +198,11 @@ class ExternalUser_Wikia extends ExternalUser {
 		return $this->mRow->user_birthdate;
 	}
 
-	public function authenticate( $password ) {
+	public function authenticate( $sPassword ) {
 		// 1. Authenticate with Helios.
 		// 2. If not in the shadow mode, terminate the execution and return the result.
 		// 3. Otherwise authenticate with MediaWiki
-		$bResult = User::comparePasswords( $this->getPassword(), $password, $this->getId() );
+		$bResult = User::comparePasswords( $this->getPassword(), $sPassword, $this->getId() );
 		// 4. Compare MW vs Helios and log, if there is a dicrepancy.
 		// 5. Return the result.
 		return $bResult;
