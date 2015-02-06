@@ -508,6 +508,7 @@ ve.ui.MWMediaDialog.prototype.getSetupProcess = function ( data ) {
 
 			// Initialization
 			this.captionFieldset.$element.append( this.captionSurface.$element );
+			this.captionSurface.$element.addClass( 'WikiaArticle' );
 			this.captionSurface.initialize();
 
 			this.switchPanels( this.selectedNode ? 'edit' : 'search' );
