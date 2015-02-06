@@ -40,8 +40,8 @@ class WikiDataModel {
 		$pageId = Title::newFromText( $this->pageName )->getArticleId();
 
 		wfSetWikiaPageProp( self::WIKI_HERO_IMAGE_PROP_ID, $pageId, $this->imageName );
-		wfSetWikiaPageProp( self::WIKI_HERO_TITLE_PROP_ID, $pageId, $this->title );
-		wfSetWikiaPageProp( self::WIKI_HERO_DESCRIPTION_ID, $pageId, $this->description );
+		wfSetWikiaPageProp( self::WIKI_HERO_TITLE_PROP_ID, $pageId, trim($this->title) );
+		wfSetWikiaPageProp( self::WIKI_HERO_DESCRIPTION_ID, $pageId, trim($this->description) );
 		wfSetWikiaPageProp( self::WIKI_HERO_IMAGE_CROP_POSITION_ID, $pageId, $this->cropPosition );
 	}
 
