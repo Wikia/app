@@ -3,11 +3,11 @@
  * Maintenance script for generating CSV file with data about NJORD (MOM) usage.
  * Usage: $ SERVER_ID=1 php /usr/wikia/source/wiki/extensions/wikia/NjordPrototype/maintenance/NjordUsage.php
  */
-ini_set('display_errors', '1');
-ini_set('error_reporting', E_ALL);
+ini_set( 'display_errors', '1' );
+ini_set( 'error_reporting', E_ALL );
 
 require_once( dirname( __FILE__ ) . '/../../../../maintenance/Maintenance.php' );
-require_once( dirname( __FILE__ ) . '/../models/WikiDataModel.class.php');
+require_once( dirname( __FILE__ ) . '/../models/WikiDataModel.class.php' );
 
 class NjordUsage extends Maintenance {
 
@@ -47,8 +47,8 @@ class NjordUsage extends Maintenance {
 			$outputHTML = [];
 			foreach ( $city_list_with_njord_ext as $cityId ) {
 				$njordData = $this->getNjordData( $cityId );
-				$outputCSV[] = $this->formatOutputRowCSV( $cityId, $njordData );
-				$outputHTML[] = $this->formatOutputRowHTML( $cityId, $njordData );
+				$outputCSV[ ] = $this->formatOutputRowCSV( $cityId, $njordData );
+				$outputHTML[ ] = $this->formatOutputRowHTML( $cityId, $njordData );
 			}
 			$this->exportToCSV( $outputCSV );
 			$this->exportToHTML( $outputHTML );
@@ -60,8 +60,8 @@ class NjordUsage extends Maintenance {
 	/**
 	 * @return string
 	 */
-	private function getOutputFileName($ext = "csv") {
-		return 'njord_' . date("Y_m_d") . ".{$ext}";
+	private function getOutputFileName( $ext = "csv" ) {
+		return 'njord_' . date( "Y_m_d" ) . ".{$ext}";
 	}
 
 	private function exportToHTML( $data ) {
@@ -72,18 +72,18 @@ class NjordUsage extends Maintenance {
 		$html_output .= '<table border="1">';
 		$html_output .= '<tr>';
 		$html_output .= '<th>Wikia</th>';
-		$html_output .= '<th>'.self::NJORD_ARTICLE_PROP_TITLE.'</th>';
-		$html_output .= '<th>'.self::NJORD_ARTICLE_PROP_DESCR.'</th>';
-		$html_output .= '<th>'.self::NJORD_ARTICLE_PROP_IMAGE.'</th>';
+		$html_output .= '<th>' . self::NJORD_ARTICLE_PROP_TITLE . '</th>';
+		$html_output .= '<th>' . self::NJORD_ARTICLE_PROP_DESCR . '</th>';
+		$html_output .= '<th>' . self::NJORD_ARTICLE_PROP_IMAGE . '</th>';
 		$html_output .= '</tr>';
 		foreach ( $data as $row ) {
 			$html_output .= '<tr>';
-			$html_output .= '<td><a href="' .$row['wiki_url']. '">' .$row['wiki_url']. '</a></td>';
-			$html_output .= '<td>' .htmlspecialchars($row[self::NJORD_ARTICLE_PROP_TITLE]). '</td>';
-			$html_output .= '<td>' .htmlspecialchars($row[self::NJORD_ARTICLE_PROP_DESCR]). '</td>';
+			$html_output .= '<td><a href="' . $row[ 'wiki_url' ] . '">' . $row[ 'wiki_url' ] . '</a></td>';
+			$html_output .= '<td>' . htmlspecialchars( $row[ self::NJORD_ARTICLE_PROP_TITLE ] ) . '</td>';
+			$html_output .= '<td>' . htmlspecialchars( $row[ self::NJORD_ARTICLE_PROP_DESCR ] ) . '</td>';
 			$html_output .= '<td>
-								<a href="' .$row[self::NJORD_ARTICLE_PROP_IMAGE]. '">
-									<img width="400" src="' .$row[self::NJORD_ARTICLE_PROP_IMAGE]. '" alt="" />
+								<a href="' . $row[ self::NJORD_ARTICLE_PROP_IMAGE ] . '">
+									<img width="400" src="' . $row[ self::NJORD_ARTICLE_PROP_IMAGE ] . '" alt="" />
 								</a>
 							</td>';
 			$html_output .= '</tr>';
@@ -91,8 +91,8 @@ class NjordUsage extends Maintenance {
 		$html_output .= '</table>';
 		$html_output .= '</body></html>';
 
-		file_put_contents($this->getOutputFileName("html"), $html_output);
-		echo "DONE: " . $this->getOutputFileName("html") . "\n";
+		file_put_contents( $this->getOutputFileName( "html" ), $html_output );
+		echo "DONE: " . $this->getOutputFileName( "html" ) . "\n";
 	}
 
 	/**
@@ -101,11 +101,11 @@ class NjordUsage extends Maintenance {
 	private function exportToCSV( $data ) {
 		if ( count( $data ) > 0 ) {
 			$fp = fopen( $this->getOutputFileName(), 'w' );
-			fputcsv($fp, array_keys( $data[ 0 ] ), ";");
+			fputcsv( $fp, array_keys( $data[ 0 ] ), ";" );
 			foreach ( $data as $fields ) {
-				fputcsv($fp, $fields, ";");
+				fputcsv( $fp, $fields, ";" );
 			}
-			fclose($fp);
+			fclose( $fp );
 			echo "DONE: " . $this->getOutputFileName() . "\n";
 		} else {
 			echo "EMPTY DATASET.";
@@ -116,20 +116,20 @@ class NjordUsage extends Maintenance {
 	 * @return array
 	 */
 	private function getWikiIDsWithNjordExt() {
-		$db = wfGetDB(DB_MASTER, array(), 'wikicities');
-		$sql = 'SELECT cv_id FROM `city_variables_pool` WHERE cv_name="'.self::NJORD_VAR_NAME.'"';
-		$res = $db->query($sql);
-		$cv_id = $db->fetchObject($res);
+		$db = wfGetDB( DB_MASTER, array(), 'wikicities' );
+		$sql = 'SELECT cv_id FROM `city_variables_pool` WHERE cv_name="' . self::NJORD_VAR_NAME . '"';
+		$res = $db->query( $sql );
+		$cv_id = $db->fetchObject( $res );
 		$city_list_with_njord_ext = [];
 		if ( $cv_id ) {
 			$cv_id = $cv_id->cv_id;
 			$sql = 'SELECT cv_city_id FROM city_variables
-					WHERE cv_variable_id='.(int)$cv_id.' AND cv_value="'.serialize(true).'" ORDER BY cv_city_id';
+					WHERE cv_variable_id=' . (int) $cv_id . ' AND cv_value="' . serialize( true ) . '" ORDER BY cv_city_id';
 
-			$res = $db->query($sql);
-			while ( $cv = $db->fetchObject($res) ) {
+			$res = $db->query( $sql );
+			while ( $cv = $db->fetchObject( $res ) ) {
 				$cv_id = $cv->cv_city_id;
-				$city_list_with_njord_ext[] = $cv_id;
+				$city_list_with_njord_ext[ ] = $cv_id;
 			}
 		}
 		return $city_list_with_njord_ext;
@@ -147,12 +147,12 @@ class NjordUsage extends Maintenance {
 
 		$row[ "wiki_url" ] = $this->getWikiaDataById( $cityId )->city_url;
 
-		$row[ self::NJORD_ARTICLE_PROP_TITLE ] = $data[ $njordProps[self::NJORD_ARTICLE_PROP_TITLE] ];
+		$row[ self::NJORD_ARTICLE_PROP_TITLE ] = $data[ $njordProps[ self::NJORD_ARTICLE_PROP_TITLE ] ];
 
-		$row[ self::NJORD_ARTICLE_PROP_DESCR ] = $data[ $njordProps[self::NJORD_ARTICLE_PROP_DESCR] ];
+		$row[ self::NJORD_ARTICLE_PROP_DESCR ] = $data[ $njordProps[ self::NJORD_ARTICLE_PROP_DESCR ] ];
 
-		if ( !empty( $data[ $njordProps[self::NJORD_ARTICLE_PROP_IMAGE] ] ) ) {
-			$heroImageTitle = $data[ $njordProps[self::NJORD_ARTICLE_PROP_IMAGE] ];
+		if ( !empty( $data[ $njordProps[ self::NJORD_ARTICLE_PROP_IMAGE ] ] ) ) {
+			$heroImageTitle = $data[ $njordProps[ self::NJORD_ARTICLE_PROP_IMAGE ] ];
 			$image = GlobalFile::newFromText( $heroImageTitle, $cityId );
 			$row[ self::NJORD_ARTICLE_PROP_IMAGE ] = $image->getUrlGenerator()->original()->url();
 		} else {
@@ -175,13 +175,13 @@ class NjordUsage extends Maintenance {
 		$row[ "wiki_url" ] = $this->getWikiaDataById( $cityId )->city_url;
 
 		$row[ self::NJORD_ARTICLE_PROP_TITLE . "_EXISTS" ] =
-			(int) !empty( $data[$njordProps[ self::NJORD_ARTICLE_PROP_TITLE ]] );
+			(int) !empty( $data[ $njordProps[ self::NJORD_ARTICLE_PROP_TITLE ] ] );
 
 		$row[ self::NJORD_ARTICLE_PROP_DESCR . "_EXISTS" ] =
-			(int) !empty( $data[$njordProps[ self::NJORD_ARTICLE_PROP_DESCR ]] );
+			(int) !empty( $data[ $njordProps[ self::NJORD_ARTICLE_PROP_DESCR ] ] );
 
 		$row[ self::NJORD_ARTICLE_PROP_IMAGE . "_EXISTS" ] =
-			(int) !empty( $data[$njordProps[ self::NJORD_ARTICLE_PROP_IMAGE ]] );
+			(int) !empty( $data[ $njordProps[ self::NJORD_ARTICLE_PROP_IMAGE ] ] );
 
 		return $row;
 	}
@@ -212,14 +212,13 @@ class NjordUsage extends Maintenance {
 	/**
 	 * @return array
 	 */
-	private function getNjordPropIds( ) {
+	private function getNjordPropIds() {
 		return [
 			self::NJORD_ARTICLE_PROP_DESCR => WikiDataModel::WIKI_HERO_DESCRIPTION_ID,
 			self::NJORD_ARTICLE_PROP_TITLE => WikiDataModel::WIKI_HERO_TITLE_PROP_ID,
 			self::NJORD_ARTICLE_PROP_IMAGE => WikiDataModel::WIKI_HERO_IMAGE_PROP_ID
 		];
 	}
-
 }
 
 $maintClass = 'NjordUsage';
