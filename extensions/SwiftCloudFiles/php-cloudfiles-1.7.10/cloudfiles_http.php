@@ -1482,15 +1482,13 @@ class CF_Http
 				break;
 			}
 
-			// log errors
-			if ( is_numeric( $res ) ) {
-				$message = json_encode( [ $conn_type, $url_path, $hdrs, "HTTP {$res}" ] );
-			}
-			else {
-				$message = $this->error_str;
-			}
-
-			\Wikia\SwiftStorage::log( __CLASS__ . '::retryRequest::' . $retriesLeft, $message );
+			Wikia\Logger\WikiaLogger::instance()->error( 'SwiftStorage: retry', [
+				'exception'    => new Exception( $this->error_str, is_numeric($res) ? $res : 0 ),
+				'retries-left' => $retriesLeft,
+				'headers'      => $hdrs,
+				'conn-type'    => $conn_type,
+				'path'         => $url_path
+			] );
 
 			// wait a bit before retrying the request
 			usleep( self::RETRY_DELAY * 1000 );
