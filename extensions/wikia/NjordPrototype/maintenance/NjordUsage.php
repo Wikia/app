@@ -43,12 +43,15 @@ class NjordUsage extends Maintenance {
 		$city_list_with_njord_ext = $this->getWikiIDsWithNjordExt();
 
 		if ( count( $city_list_with_njord_ext ) > 0 ) {
-			$output = [];
+			$outputCSV = [];
+			$outputHTML = [];
 			foreach ( $city_list_with_njord_ext as $cityId ) {
 				$njordData = $this->getNjordData( $cityId );
-				$output[] = $this->formatOutputRow( $cityId, $njordData );
+				$outputCSV[] = $this->formatOutputRowCSV( $cityId, $njordData );
+				$outputHTML[] = $this->formatOutputRowHTML( $cityId, $njordData );
 			}
-			$this->exportToCSV( $output );
+			$this->exportToCSV( $outputCSV );
+			$this->exportToHTML( $outputHTML );
 		} else {
 			echo "COULD NOT FIND WIKIS WITH NJORD ENABLED!";
 		}
@@ -59,6 +62,10 @@ class NjordUsage extends Maintenance {
 	 */
 	private function getOutputFileName() {
 		return 'njord_' . date("Y_m_d") . ".csv";
+	}
+
+	private function exportToHTML( $data ) {
+		var_dump($data);
 	}
 
 	/**
@@ -101,13 +108,12 @@ class NjordUsage extends Maintenance {
 		return $city_list_with_njord_ext;
 	}
 
-
 	/**
 	 * @param $cityId
 	 * @param $data
 	 * @return array
 	 */
-	private function formatOutputRow( $cityId, $data ) {
+	private function formatOutputRowHTML( $cityId, $data ) {
 		$njordProps = $this->getNjordPropIds();
 
 		$row = [];
@@ -121,10 +127,27 @@ class NjordUsage extends Maintenance {
 		if ( !empty( $data[ $njordProps[self::NJORD_ARTICLE_PROP_IMAGE] ] ) ) {
 			$heroImageTitle = $data[ $njordProps[self::NJORD_ARTICLE_PROP_IMAGE] ];
 			$imagePage = GlobalTitle::newFromText( $heroImageTitle, NS_FILE, $cityId );
-			$row[ self::NJORD_ARTICLE_PROP_IMAGE ] = $imagePage->getFullURL();
+			$image = GlobalFile::newFromText( $heroImageTitle, $cityId );
+
+			$row[ self::NJORD_ARTICLE_PROP_IMAGE ] = $image->getThumbUrl();
 		} else {
 			$row[ self::NJORD_ARTICLE_PROP_IMAGE ] = null;
 		}
+
+		return $row;
+	}
+
+	/**
+	 * @param $cityId
+	 * @param $data
+	 * @return array
+	 */
+	private function formatOutputRowCSV( $cityId, $data ) {
+		$njordProps = $this->getNjordPropIds();
+
+		$row = [];
+
+		$row[ "wiki_url" ] = $this->getWikiaDataById( $cityId )->city_url;
 
 		$row[ self::NJORD_ARTICLE_PROP_TITLE . "_EXISTS" ] =
 			(int) !empty( $data[$njordProps[ self::NJORD_ARTICLE_PROP_TITLE ]] );
