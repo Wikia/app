@@ -92,7 +92,7 @@ class WikiDataModel {
 			->xOffset(0)
 			->yOffset(round($file->getHeight() * $cropPosition))
 			->windowWidth($file->getWidth())
-			->windowHeight(self::WIKI_HERO_IMAGE_MAX_HEIGHT);
+			->windowHeight(round($file->getWidth() / 4));
 	}
 
 	private function createOldThumbnail($file, $cropPosition) {
