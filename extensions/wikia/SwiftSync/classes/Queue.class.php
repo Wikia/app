@@ -151,14 +151,7 @@ class Queue {
 		
 		return wfGetDB( ( empty( $master ) ) ? DB_SLAVE : DB_MASTER, array(), $wgSpecialsDB );
 	}
-	
-	/*
-	 * Return list of columns in self::SYNC_TABLE 
-	 */
-	private function tableColumns() {
-		
-	}
-	
+
 	/* 
 	 * Save information about uploaded image in database 
 	 * @return Boolean True/False
