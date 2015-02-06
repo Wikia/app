@@ -129,7 +129,7 @@ class NjordUsage extends Maintenance {
 			$imagePage = GlobalTitle::newFromText( $heroImageTitle, NS_FILE, $cityId );
 			$image = GlobalFile::newFromText( $heroImageTitle, $cityId );
 
-			$row[ self::NJORD_ARTICLE_PROP_IMAGE ] = $image->getThumbUrl();
+			$row[ self::NJORD_ARTICLE_PROP_IMAGE ] = $image->getUrl();
 		} else {
 			$row[ self::NJORD_ARTICLE_PROP_IMAGE ] = null;
 		}
