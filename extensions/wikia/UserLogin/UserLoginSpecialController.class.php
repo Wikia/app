@@ -267,12 +267,12 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->response->setVal( 'returntoquery', $this->getReturnToQueryFromQuery( $query ) );
 
 		$requestParams = $this->getRequest()->getParams();
-		if ( !empty( $requestParams[ 'registerLink' ] ) ) {
-			$this->response->setVal( 'registerLink',  $requestParams[ 'registerLink' ] );
+		if ( !empty( $requestParams['registerLink'] ) ) {
+			$this->response->setVal( 'registerLink',  $requestParams['registerLink'] );
 		}
 
-		if ( !empty( $requestParams[ 'template' ] ) ) {
-			$this->overrideTemplate( $requestParams[ 'template' ] );
+		if ( !empty( $requestParams['template'] ) ) {
+			$this->overrideTemplate( $requestParams['template'] );
 		}
 	}
 
