@@ -215,7 +215,11 @@ class ExternalUser_Wikia extends ExternalUser {
 		$bMediaWikiResult = User::comparePasswords( $this->getPassword(), $sPassword, $this->getId() );
 		// Detect discrepancies between Helios and MediaWiki results.
 		if ( $wgEnableHeliosExt && (  $bHeliosResult != $bMediaWikiResult ) ) {
-			// :TODO: Log it.
+			\Wikia\Logger\WikiaLogger::instance()->error(
+				'HELIOS_LOGIN',
+				[ 'helios' => $bHeliosResult, 'mediawiki' => $bMediaWikiResult,
+				 'user_id' => $this->getId(), 'username' => $this->getName() ]
+			);
 		}
 
 		return $bMediaWikiResult;
