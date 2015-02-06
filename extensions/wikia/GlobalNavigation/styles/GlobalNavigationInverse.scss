@@ -13,7 +13,7 @@ $global-nav-inverse-background-hover: #656E78;
 
 		.start-wikia-container {
 			.start-wikia {
-				border: solid 1px $global-nav-inverse-text-color;
+				border-color: $global-nav-inverse-text-color;
 				color: $global-nav-inverse-text-color;
 
 				&:hover {
