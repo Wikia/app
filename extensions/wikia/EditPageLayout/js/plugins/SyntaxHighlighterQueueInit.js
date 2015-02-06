@@ -4,10 +4,10 @@
  * @author Kamil Koterba <kamil@wikia-inc.com>
  */
 
-(function(window, $) {
+require(['wikia.window', 'jquery'], function(window, $) {
 	'use strict';
 
-	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
+	var WE = window.WikiaEditor = window.WikiaEditor || (new window.Observable());
 
 	WE.plugins.syntaxhighlighterqueueinit = $.createClass(WE.plugin, {
 
@@ -23,4 +23,4 @@
 			});
 		}
 	});
-})(this, jQuery);
+});
