@@ -5,7 +5,7 @@
 			'widemodemanager', 'railminimumheight', 'tracker', 'cssloadcheck', 'preloads',
 			'leaveconfirm', 'addfile', 'editorsurvey'];
 
-	if (window.wgEnableEditorSyntaxHighlighting) {
+	if (window.wgEnableEditorSyntaxHighlighting === true) {
 		requires.push('syntaxhighlighterqueueinit');
 	}
 
