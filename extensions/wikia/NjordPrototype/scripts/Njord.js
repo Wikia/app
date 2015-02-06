@@ -196,22 +196,25 @@
 			}
 		},
 		saveTitleAndDescription = function() {
+			var title = heroData.title.trim(),
+				description = heroData.description.trim();
+
 			$titleEditElement.startThrobbing();
 			$.nirvana.sendRequest({
 				controller: 'NjordController',
 				method: 'saveTitleAndDescription',
 				type: 'POST',
 				data: {
-					'title': heroData.title,
-					'description': heroData.description
+					'title': title,
+					'description': description
 				},
 				callback: function (data) {
 					if (data.success) {
-						$titleText.text(heroData.oTitle = heroData.title);
+						$titleText.text(heroData.oTitle = title);
 						States.setState($titleElement, 'filled-state');
 						States.setState($descriptionElement, 'filled-state');
-						heroData.oDescription = heroData.description;
-						$descriptionText.text(heroData.description);
+						heroData.oDescription = description;
+						$descriptionText.text(description);
 					} else {
 						revertDescriptionAndTitle();
 					}
