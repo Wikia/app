@@ -18,9 +18,7 @@ define('ext.wikia.adEngine.wikiaGptAdDetect', [
 
 	function isMobile() {
 		var skin = adContext.getContext().targeting.skin;
-		if (skin === 'wikiamobile' || skin === 'mercury') {
-			return true;
-		}
+		return (skin === 'wikiamobile' || skin === 'mercury');
 	}
 
 	function isImagePresent(document) {
