@@ -182,18 +182,24 @@ class MercuryApiController extends WikiaController {
 		// TODO Should we encode $uriWithoutPrefix?
 		// Should it be encoded by client?
 
+		$defaultUriPrefix = '/wiki/';
+		$defaultUriPrefixLength = strlen( $defaultUriPrefix );
+
 		if ( !empty( $this->wg->ArticlePath ) ) {
 			$uriPrefix = str_replace( '$1', '', $this->wg->ArticlePath );
 		} else {
-			$uriPrefix = '/wiki/';
+			$uriPrefix = $defaultUriPrefix;
 		}
 		$uriPrefixLength = strlen( $uriPrefix );
 
 		// Cut everything <= $urlPrefixLength
-		if ( $uriPrefix === substr( $uri, 0, $uriPrefixLength ) ) {
+		// If $uri contains '/wiki/' at the beginning,
+		// but the ArticlePath is '/wiki/'-less, strip it
+		// (as the MediaWiki redirects work in the same manner).
+		if ( $uriPrefix === '/' && substr( $uri, 0, $defaultUriPrefixLength ) === $defaultUriPrefix) {
+			$uriWithoutPrefix = substr( $uri, $defaultUriPrefixLength );
+		} elseif ( $uriPrefix === substr( $uri, 0, $uriPrefixLength ) ) {
 			$uriWithoutPrefix = substr( $uri, $uriPrefixLength );
-		} else if ( substr( $uri, 0, 1 ) === '/' ) {
-			$uriWithoutPrefix = substr( $uri, 1 );
 		} else {
 			$uriWithoutPrefix = $uri;
 		}
@@ -213,6 +219,7 @@ class MercuryApiController extends WikiaController {
 		$isArticle = in_array( $namespace, $this->wg->ContentNamespaces ) && $title->mInterwiki === '';
 
 		$this->response->setVal( 'isArticle', $isArticle );
+		$this->response->setVal( 'uriPrefix', $uriPrefix );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 
