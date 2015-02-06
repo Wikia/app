@@ -81,7 +81,11 @@ class NjordUsage extends Maintenance {
 			$html_output .= '<td><a href="' .$row['wiki_url']. '">' .$row['wiki_url']. '</a></td>';
 			$html_output .= '<td>' .htmlspecialchars($row[self::NJORD_ARTICLE_PROP_TITLE]). '</td>';
 			$html_output .= '<td>' .htmlspecialchars($row[self::NJORD_ARTICLE_PROP_DESCR]). '</td>';
-			$html_output .= '<td><a href="' .$row[self::NJORD_ARTICLE_PROP_IMAGE]. '"><img width="400" src="' .$row[self::NJORD_ARTICLE_PROP_IMAGE]. '" alt="" /></a></td>';
+			$html_output .= '<td>
+								<a href="' .$row[self::NJORD_ARTICLE_PROP_IMAGE]. '">
+									<img width="400" src="' .$row[self::NJORD_ARTICLE_PROP_IMAGE]. '" alt="" />
+								</a>
+							</td>';
 			$html_output .= '</tr>';
 		}
 		$html_output .= '</table>';
