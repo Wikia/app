@@ -199,10 +199,8 @@ class ExternalUser_Wikia extends ExternalUser {
 	}
 
 	public function authenticate( $password ) {
-		# This might be wrong if anyone actually uses the UserComparePasswords hook
-		# (on either end), so don't use this if you those are incompatible.
-		wfDebug( __METHOD__ . ": " . $this->getId() . " \n" );
-		return User::comparePasswords( $this->getPassword(), $password, $this->getId() );
+		$bResult = User::comparePasswords( $this->getPassword(), $password, $this->getId() );
+		return $bResult;
 	}
 
 	public function getPref( $pref ) {
