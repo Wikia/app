@@ -323,6 +323,9 @@
 		onAfterSendForm = function (data) {
 			if (data.isOk) {
 				$heroModuleImage.bind('load', function () {
+					if ($imageElement.hasClass('zero-state')) {
+						$heroModule.outerHeight(Math.floor($heroModule.width() * HERO_ASPECT_RATIO));
+					}
 					$wordmark.css('top', '-174px');
 					States.setState($imageElement, 'upload-state');
 					States.setState($imageSaveElement, 'upload-state');
