@@ -88,6 +88,7 @@ class NjordUsage extends Maintenance {
 		$html_output .= '</body></html>';
 
 		file_put_contents($this->getOutputFileName("html"), $html_output);
+		echo "DONE: " . $this->getOutputFileName("html") . "\n";
 	}
 
 	/**
