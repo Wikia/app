@@ -41,40 +41,40 @@ define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
 		wikilinkBreakerRegex;
 
 	/* Define context-specific regexes, one for every common token that ends the
-	 current context.
+	current context.
 
-	 An attempt has been made to search for the most common syntaxes first,
-	 thus maximizing performance. Syntaxes that begin with the same character
-	 are searched for at the same time.
+	An attempt has been made to search for the most common syntaxes first,
+	thus maximizing performance. Syntaxes that begin with the same character
+	are searched for at the same time.
 
-	 Supported wiki syntaxes from most common to least common:
-	 [[internal link]] [http:// named external link]
-	 {{template}} {{{template parameter}}} {| table |}
-	 <tag> <!-- comment -->
-	 http:// bare external link
-	 =Heading= * unordered list # ordered list : indent ; small heading ---- horizontal line
-	 ''italic'' '''bold'''
-	 three tildes username four tildes signature five tildes timestamp
-	 &entity;
+	Supported wiki syntaxes from most common to least common:
+	[[internal link]] [http:// named external link]
+	{{template}} {{{template parameter}}} {| table |}
+	<tag> <!-- comment -->
+	http:// bare external link
+	=Heading= * unordered list # ordered list : indent ; small heading ---- horizontal line
+	''italic'' '''bold'''
+	three tildes username four tildes signature five tildes timestamp
+	&entity;
 
-	 The tag-matching regex follows the XML standard closely so that users
-	 won't feel like they have to escape sequences that MediaWiki will never
-	 consider to be tags.
+	The tag-matching regex follows the XML standard closely so that users
+	won't feel like they have to escape sequences that MediaWiki will never
+	consider to be tags.
 
-	 Only entities for characters which need to be escaped or cannot be
-	 unambiguously represented in a monospace font are highlighted, such as
-	 Greek letters that strongly resemble Latin letters. Use of other entities
-	 is discouraged as a matter of style. For the same reasons, numeric
-	 entities should be in hexadecimal (giving character codes in decimal only
-	 adds confusion).
+	Only entities for characters which need to be escaped or cannot be
+	unambiguously represented in a monospace font are highlighted, such as
+	Greek letters that strongly resemble Latin letters. Use of other entities
+	is discouraged as a matter of style. For the same reasons, numeric
+	entities should be in hexadecimal (giving character codes in decimal only
+	adds confusion).
 
-	 Newlines are sucked up into ending tokens (including comments, bare
-	 external links, lists, horizontal lines, signatures, entities, etc.) to
-	 avoid creating spans with nothing but newlines in them.
+	Newlines are sucked up into ending tokens (including comments, bare
+	external links, lists, horizontal lines, signatures, entities, etc.) to
+	avoid creating spans with nothing but newlines in them.
 
-	 Flags: g for global search, m for make ^ match the beginning of each line
-	 and $ the end of each line
-	 */
+	Flags: g for global search, m for make ^ match the beginning of each line
+	and $ the end of each line
+	*/
 	var breakerRegexBase = "\\[(?:\\[|(?:https?:|ftp:)?//|mailto:)|\\{(?:\\{\\{?|\\|)|<(?:[:A-Z_a-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD][:\\w\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD-\\.\u00B7\u0300-\u036F\u203F-\u203F-\u2040]*(?=/?>| |\n)|!--[^]*?-->\n*)|(?:https?://|ftp://|mailto:)[^\\s\"<>[\\]{-}]*[^\\s\",\\.:;<>[\\]{-}]\n*|^(?:=|[*#:;]+\n*|-{4,}\n*)|\\\\'\\\\'(?:\\\\')?|~{3,5}\n*|&(?:(?:n(?:bsp|dash)|m(?:dash|inus)|lt|e[mn]sp|thinsp|amp|quot|gt|shy|zwn?j|lrm|rlm|Alpha|Beta|Epsilon|Zeta|Eta|Iota|Kappa|[Mm]u|micro|Nu|[Oo]micron|[Rr]ho|Tau|Upsilon|Chi)|#x[0-9a-fA-F]+);\n*";
 
 	function breakerRegexWithPrefix (prefix) {
@@ -113,9 +113,9 @@ define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
 	function highlightSyntax () {
 		lastText = wpTextbox1.value;
 		/* Backslashes and apostrophes are CSS-escaped at the beginning and all
-		 parsing regexes and functions are designed to match. On the other hand,
-		 newlines are not escaped until written so that in the regexes ^ and $
-		 work for both newlines and the beginning or end of the string. */
+		parsing regexes and functions are designed to match. On the other hand,
+		newlines are not escaped until written so that in the regexes ^ and $
+		work for both newlines and the beginning or end of the string. */
 		text = lastText.replace(/['\\]/g, '\\$&') + '\n'; //add a newline to fix scrolling and parsing issues
 		parserLocation = 0; //the location of the parser as it goes through var text
 
@@ -124,21 +124,21 @@ define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
 		spanNumber = 0;
 
 		/* Highlighting bold or italic markup presents a special challenge
-		 because the actual MediaWiki parser uses multiple passes to determine
-		 which ticks represent start tags and which represent end tags.
-		 Because that would be too slow for us here, we instead keep track of
-		 what kinds of unclosed opening ticks have been encountered and use
-		 that to make a good guess as to whether the next ticks encountered
-		 are an opening tag or a closing tag.
+		because the actual MediaWiki parser uses multiple passes to determine
+		which ticks represent start tags and which represent end tags.
+		Because that would be too slow for us here, we instead keep track of
+		what kinds of unclosed opening ticks have been encountered and use
+		that to make a good guess as to whether the next ticks encountered
+		are an opening tag or a closing tag.
 
-		 The major downsides to this method are that '''apostrophe italic''
-		 and ''italic apostrophe''' are not highlighted correctly, and bold
-		 and italic are both highlighted in the same color. */
+		The major downsides to this method are that '''apostrophe italic''
+		and ''italic apostrophe''' are not highlighted correctly, and bold
+		and italic are both highlighted in the same color. */
 		assumedBold = false;
 		assumedItalic = false;
 
 		// Start!
-		var startTime = Date.now();
+		var startTime = Date.now(), endTime;
 		highlightBlock('', defaultBreakerRegex);
 
 		// Output the leftovers (if any) to make sure whitespace etc. matches
@@ -147,7 +147,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
 		}
 
 		// If highlighting took too long, disable it.
-		var endTime = Date.now();
+		endTime = Date.now();
 		if (endTime - startTime > syntaxHighlighterConfig.timeout) {
 			clearInterval(highlightSyntaxIfNeededIntervalID);
 			wpTextbox1.removeEventListener('input', highlightSyntax);
@@ -157,15 +157,43 @@ define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
 			syntaxStyleTextNode.nodeValue = '';
 
 			var errorMessage = {
-				ca: 'S\'ha desactivat el remarcar de sintaxi en aquesta pàgina perquè ha trigat massa temps. El temps màxim permès per a remarcar és $1ms, i el vostre ordinador ha trigat $2ms. Proveu tancar algunes pestanyes i programes i fer clic en "Mostra la previsualització" o "Mostra els canvis". Si no funciona això, proveu un altre navegador web, i si això no funciona, proveu un ordinador més ràpid.',
-				de: 'Die Syntaxhervorhebung wurde auf dieser Seite deaktiviert, da diese zu lange gedauert hat. Die maximal erlaubte Zeit zur Hervorhebung beträgt $1ms und dein Computer benötigte $2ms. Versuche einige Tabs und Programme zu schließen und klicke "Vorschau zeigen" oder "Änderungen zeigen". Wenn das nicht funktioniert, probiere einen anderen Webbrowser und wenn immer noch nicht, probiere einen schnelleren Computer.',
-				el: 'Η έμφαση σύνταξης έχει απενεργοποιηθεί σε αυτήν τη σελίδα γιατί αργούσε πολύ. Ο μέγιστος επιτρεπτός χρόνος για την έμφαση σύνταξης είναι $1ms και ο υπολογιστής σας έκανε $2ms. Δοκιμάστε να κλείσετε μερικές καρτέλες και προγράμματα και να κάνετε κλικ στην «Εμφάνιση προεπισκόπησης» ή στην «Εμφάνιση αλλαγών». Αν αυτό δεν δουλέψει, δοκιμάστε έναν διαφορετικό περιηγητή και αν ούτε αυτό δουλέψει, δοκιμάστε έναν ταχύτερο υπολογιστή.',
-				en: 'Syntax highlighting on this page was disabled because it took too long. The maximum allowed highlighting time is $1ms, and your computer took $2ms. Try closing some tabs and programs and clicking "Show preview" or "Show changes". If that doesn\'t work, try a different web browser, and if that doesn\'t work, try a faster computer.',
-				es: 'Se desactivó el resaltar de sintaxis en esta página porque tardó demasiado. El tiempo máximum permitido para resaltar es $1ms, y tu ordenador tardó $2ms. Prueba cerrar algunas pestañas y programas y hacer clic en "Mostrar previsualización" o "Mostrar cambios". Si no funciona esto, prueba otro navegador web, y si eso no funciona, prueba un ordenador más rápido.',
+				ca: 'S\'ha desactivat el remarcar de sintaxi en aquesta pàgina perquè ha trigat massa temps. El ' +
+					'temps màxim permès per a remarcar és $1ms, i el vostre ordinador ha trigat $2ms. Proveu tancar ' +
+					'algunes pestanyes i programes i fer clic en "Mostra la previsualització" o "Mostra els canvis". ' +
+					'Si no funciona això, proveu un altre navegador web, i si això no funciona, ' +
+					'proveu un ordinador més ràpid.',
+				de: 'Die Syntaxhervorhebung wurde auf dieser Seite deaktiviert, da diese zu lange gedauert hat. ' +
+					'Die maximal erlaubte Zeit zur Hervorhebung beträgt $1ms und dein Computer benötigte $2ms. ' +
+					'Versuche einige Tabs und Programme zu schließen und klicke "Vorschau zeigen" oder ' +
+					'"Änderungen zeigen". Wenn das nicht funktioniert, probiere einen anderen Webbrowser und wenn ' +
+					'immer noch nicht, probiere einen schnelleren Computer.',
+				el: 'Η έμφαση σύνταξης έχει απενεργοποιηθεί σε αυτήν τη σελίδα γιατί αργούσε πολύ. Ο μέγιστος ' +
+					'επιτρεπτός χρόνος για την έμφαση σύνταξης είναι $1ms και ο υπολογιστής σας έκανε $2ms. ' +
+					'Δοκιμάστε να κλείσετε μερικές καρτέλες και προγράμματα και να κάνετε κλικ στην «Εμφάνιση ' +
+					'προεπισκόπησης» ή στην «Εμφάνιση αλλαγών». Αν αυτό δεν δουλέψει, δοκιμάστε έναν διαφορετικό ' +
+					'περιηγητή και αν ούτε αυτό δουλέψει, δοκιμάστε έναν ταχύτερο υπολογιστή.',
+				en: 'Syntax highlighting on this page was disabled because it took too long. The maximum allowed ' +
+					'highlighting time is $1ms, and your computer took $2ms. Try closing some tabs and programs and ' +
+					'clicking "Show preview" or "Show changes". If that doesn\'t work, try a different web browser, ' +
+					'and if that doesn\'t work, try a faster computer.',
+				es: 'Se desactivó el resaltar de sintaxis en esta página porque tardó demasiado. El tiempo máximum ' +
+					'permitido para resaltar es $1ms, y tu ordenador tardó $2ms. Prueba cerrar algunas pestañas y ' +
+					'programas y hacer clic en "Mostrar previsualización" o "Mostrar cambios". Si no funciona esto, ' +
+					'prueba otro navegador web, y si eso no funciona, prueba un ordenador más rápido.',
 				fa: 'از آنجایی که زمان زیادی صرف آن می‌شد، برجسته‌سازی نحو در این صفحه غیرفعال شده است. بیشینهٔ زمان برجسته‌سازی برای ابزار $1ms تعریف شده در حالی که رایانهٔ شما $2ms زمان نیاز داشت. می‌توانید بستن برخی سربرگ‌ها و برنامه‌ها و سپس کلیک‌کردن دکمهٔ «پیش‌نمایش» یا «نمایش تغییرات» را بیازمایید. اگر جواب نداد مرورگر دیگری را امتحان کنید؛ و اگر باز هم جواب نداد، رایانهٔ سریع‌تری را بیازمایید.',
-				fr: 'La coloration syntaxique a été désactivée sur cette page en raison d\'un temps de chargement trop important ($2ms). Le temps maximum autorisé est $1ms. Vous pouvez essayer de fermer certains onglets et programmes et cliquez sur "Prévisualisation" ou "Voir mes modifications". Si cela ne fonctionne pas, essayez un autre navigateur web, et si cela ne fonctionne toujours pas, essayez un ordinateur plus rapide.',
-				io: 'Sintaxo-hailaitar en ca pagino esis nekapabligata pro ke konsumis tro multa tempo. La maxima permisata hailaitala tempo es $1ms, e tua ordinatro konsumis $2ms. Probez klozar kelka tabi e programi e kliktar "Previdar" o "Montrez chanji". Se to ne funcionas, probez altra brauzero, e se to ne funcionas, probez plu rapida ordinatro.',
-				pt: 'O marcador de sintaxe foi desativado nesta pagina porque demorou demais. O tempo máximo permitido para marcar e $1ms, e seu computador demorou $2ms. Tenta sair de alguns programas e clique em "Mostrar previsão" ou "Mostrar alterações". Se isso não funciona, tenta usar uma outra navegador web, e se ainda não funciona, procura um computador mais rápido.'
+				fr: 'La coloration syntaxique a été désactivée sur cette page en raison d\'un temps de chargement ' +
+					'trop important ($2ms). Le temps maximum autorisé est $1ms. Vous pouvez essayer de fermer ' +
+					'certains onglets et programmes et cliquez sur "Prévisualisation" ou "Voir mes modifications". ' +
+					'Si cela ne fonctionne pas, essayez un autre navigateur web, et si cela ne fonctionne toujours ' +
+					'pas, essayez un ordinateur plus rapide.',
+				io: 'Sintaxo-hailaitar en ca pagino esis nekapabligata pro ke konsumis tro multa tempo. La maxima ' +
+					'permisata hailaitala tempo es $1ms, e tua ordinatro konsumis $2ms. Probez klozar kelka tabi ' +
+					'e programi e kliktar "Previdar" o "Montrez chanji". Se to ne funcionas, probez altra brauzero, ' +
+					'e se to ne funcionas, probez plu rapida ordinatro.',
+				pt: 'O marcador de sintaxe foi desativado nesta pagina porque demorou demais. O tempo máximo ' +
+					'permitido para marcar e $1ms, e seu computador demorou $2ms. Tenta sair de alguns programas e ' +
+					'clique em "Mostrar previsão" ou "Mostrar alterações". Se isso não funciona, tenta usar uma ' +
+					'outra navegador web, e se ainda não funciona, procura um computador mais rápido.'
 			};
 			var wgUserLanguage = mw.config.get('wgUserLanguage');
 
@@ -198,8 +226,8 @@ define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
 		}
 
 		/* Finish CSS: move the extra '} from the beginning to the end and CSS-
-		 escape newlines. CSS ignores the space after the hex code of the
-		 escaped character */
+		escape newlines. CSS ignores the space after the hex code of the
+		escaped character */
 		syntaxStyleTextNode.nodeValue = css.substring(2).replace(/\n/g, '\\A ') + '\'}';
 	}
 
@@ -596,11 +624,11 @@ define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
 		tagBreakerRegexCache = {};
 
 		/* The highlighter has to run after any other script (such as the
-		 editing toolbar) that reparents wpTextbox1. We make sure that
-		 everything else has run by waiting for the page to completely load
-		 and then adding a call to the setup function to the end of the event
-		 queue, so that the setup function runs after any other triggers set
-		 on the load event. */
+		editing toolbar) that reparents wpTextbox1. We make sure that
+		everything else has run by waiting for the page to completely load
+		and then adding a call to the setup function to the end of the event
+		queue, so that the setup function runs after any other triggers set
+		on the load event. */
 		if (document.readyState === 'complete') {
 			queueSetup(textarea);
 		}
