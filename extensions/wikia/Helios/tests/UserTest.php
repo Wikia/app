@@ -78,6 +78,8 @@ class UserTest extends \WikiaBaseTest {
 
 	public function testComparePasswordsAuthenticationFailed()
 	{
+		$this->markTestSkipped( 'The original code has been refactor. The test is now obsolete.' );
+
 		$sHash = '3cBPVuC7oI';
 		$sPassword = 'Password';
 		$iUserId = '42';
@@ -111,6 +113,8 @@ class UserTest extends \WikiaBaseTest {
 
 	public function testComparePasswordsAuthenticationImpossible()
 	{
+		$this->markTestSkipped( 'The original code has been refactor. The test is now obsolete.' );
+
 		$sHash = '3cBPVuC7oI';
 		$sPassword = 'Password';
 		$iUserId = '42';
@@ -144,6 +148,8 @@ class UserTest extends \WikiaBaseTest {
 
 	public function testComparePasswordsAuthenticationSucceded()
 	{
+		$this->markTestSkipped( 'The original code has been refactor. The test is now obsolete.' );
+
 		$sHash = '3cBPVuC7oI';
 		$sPassword = 'Password';
 		$iUserId = '42';
