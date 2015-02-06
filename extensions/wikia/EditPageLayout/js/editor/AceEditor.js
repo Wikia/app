@@ -69,9 +69,9 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor', 'wikia.window'], functi
 		$('#editform').submit(function(e) {
 			var hiddenInput = ace.getInput().val(ace.getContent());
 
-			e.preventDefault();
+			$(this).unbind('submit').append(hiddenInput).submit();
 
-			$(this).append(hiddenInput).submit();
+			e.preventDefault();
 		});
 	}
 
