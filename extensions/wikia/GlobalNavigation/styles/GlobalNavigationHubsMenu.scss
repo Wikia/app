@@ -13,20 +13,23 @@ $hub-menu-icon-left-padding-medium: 13px;
 $hub-menu-icon-left-padding-large: 8px;
 
 @mixin hub-background-border-icon($color, $secondary-color, $hub-name) {
-	background: linear-gradient(to right, $color 99%, $hubsmenu-background-color);
+	.icon {
+		background-image: url('/extensions/wikia/GlobalNavigation/images/#{$hub-name}.svg'); /* inline */
+		background-color: $color;
+	}
 
 	&.active {
-		&:before {
+		&:before, .icon {
 			background-color: $secondary-color;
 		}
 
 		&:after {
 			border-left-color: $color;
 		}
-	}
 
-	.icon {
-		background-image: url('/extensions/wikia/GlobalNavigation/images/#{$hub-name}.svg'); /* inline */
+		.label {
+			background-color: $color;
+		}
 	}
 }
 
@@ -66,16 +69,16 @@ $hub-menu-icon-left-padding-large: 8px;
 	}
 }
 
+.hubs-menu-wrapper {
+	position: absolute;
+}
+
 .hubs-menu {
 	background-color: $hubsmenu-background-color;
 	border: 1px solid $nav-border-color;
 	color: $nav-foreground-dark-color;
 	display: none;
-	height: 436px;
-	left: -1px;
-	position: absolute;
-	top: $global-navigation-height;
-	width: 768px;
+	position: relative;
 
 	a {
 		color: $nav-foreground-dark-color;
@@ -89,7 +92,7 @@ $hub-menu-icon-left-padding-large: 8px;
 
 	.hub-list {
 		float: left;
-		width: 256px;
+		width: 230px;
 
 		&.backface-off {
 			*, *:before, *:after {
@@ -99,46 +102,37 @@ $hub-menu-icon-left-padding-large: 8px;
 	}
 
 	.hub-link {
+		@include font-size-base;
 		background-color: $global-wikia-background-color;
 		display: block;
-		height: 62px;
-		line-height: 62px;
+		height: 60px;
+		line-height: 60px;
 		position: relative;
 
 		&.active {
 			color: $global-wikia-background-color;
-			font-weight: bold;
+			z-index: 1002;
 
 			&:before {
-				border-radius: 50%;
 				content: ' ';
-				height: 50px;
-				left: 16px;
+				height: 60px;
+				left: 0;
 				position: absolute;
-				top: 6px;
-				width: 50px;
+				top: 0;
+				width: 60px;
 			}
 
 			&:after {
 				background-color: $hubsmenu-background-color;
 				border-color: transparent;
 				border-style: solid;
-				border-width: 31px 0 31px 12px;
+				border-width: 30px 0 30px 16px;
 				height: 0;
 				width: 0;
 			}
 
-			.icon {
-
-				&:after {
-					background-color: transparent;
-				}
-			}
-
 			.label {
-				background-color: transparent;
 				border: 0;
-				height: 62px;
 			}
 		}
 
@@ -146,27 +140,18 @@ $hub-menu-icon-left-padding-large: 8px;
 			background-color: $hubsmenu-background-color;
 			content: ' ';
 			float: right;
-			height: 62px;
-			width: 12px;
+			height: 60px;
+			width: 16px;
 		}
 
 		.icon {
-			background-position: 15px center;
+			background-position: center center;
 			background-repeat: no-repeat;
 			display: inline-block;
 			float: left;
-			height: 62px;
+			height: 60px;
 			position: relative;
-			width: 102px;
-
-			&:after {
-				background-color: $global-wikia-background-color;
-				content: ' ';
-				display: inline-block;
-				float: right;
-				height: 62px;
-				width: 20px;
-			}
+			width: 60px;
 		}
 
 		.label {
@@ -175,21 +160,35 @@ $hub-menu-icon-left-padding-large: 8px;
 			display: inline-block;
 			float: left;
 			font-size: $font-size-base-big-screen;
-			height: 62px;
-			width: 142px;
+			height: 60px;
+			padding-left: 20px;
+			width: 154px;
 		}
 	}
 
+	.hub-links {
+		position: absolute;
+		background: $hubsmenu-background-color;
+		left: 214px;
+		top: -1px;
+	}
+
 	.hub-menu-section {
-		@include column-count(2);
-		@include column-rule(1px solid $nav-border-color);
-		@include column-gap(36px);
-		@include font-size-s;
+		@include font-size-xs;
 		display: none;
 		float: left;
 		line-height: 17px;
+		min-height: 409px;
+		padding-bottom: 60px;
 		padding-left: 22px;
+		position: relative;
 		width: 464px;
+
+		.hub-menu-columns {
+			@include column-count(2);
+			@include column-gap(36px);
+			margin-top: -30px;
+		}
 
 		&.active {
 			display: block;
@@ -197,29 +196,43 @@ $hub-menu-icon-left-padding-large: 8px;
 
 		ul {
 			display: inline-block;
+			padding-top: 40px;
 			width: 100%;
 		}
 
 		strong {
-			@include font-size-s;
+			color: rgb(9, 35, 68);
 			display: inline-block;
 			font-weight: bold;
 			line-height: 17px;
 			margin: 0;
-			padding: 21px 0 5px;
+			padding: 10px 0;
+			text-transform: uppercase;
 		}
 
 		a {
+			color: rgb(57, 66, 77);
 			display: block;
-			padding: 7px 0 6px;
+			padding: 10px 0;
+
+			&:hover {
+				color: rgb(26, 94, 184);
+				text-decoration: none;
+			}
 
 			&.more {
 				@include right-chevron();
-				@include font-size-base;
-				bottom: 40px;
+				border-top: 1px solid $nav-border-color;
+				bottom: 0;
 				font-weight: bold;
-				left: 278px;
+				height: 60px;
+				left: 0;
+				line-height: 60px;
+				padding: 0 20px;
 				position: absolute;
+				right: 0;
+				text-align: right;
+				z-index: 10000;
 
 				&:after {
 					margin-left: 6px;
@@ -258,66 +271,5 @@ $hub-menu-icon-left-padding-large: 8px;
 
 	.tv {
 		@include hub-background-border-icon($color-vertical-tv, $color-vertical-tv-secondary, 'tv');
-	}
-}
-
-@media #{$small-only} {
-	.hubs-container {
-		position: static;
-	}
-
-	.hubs-menu {
-		right: 0;
-		.hub-link {
-			&.active {
-				&:before {
-					left: 10px;
-				}
-			}
-
-			.icon {
-				background-position: 10px center;
-				width: 90px;
-			}
-
-			.label {
-				width: 154px;
-			}
-		}
-	}
-}
-
-@media #{$large-up} {
-	.hubs-menu {
-		width: 788px;
-
-		.hub-list {
-			width: 302px;
-		}
-
-		.hub-link {
-			&.active {
-				&:before {
-					left: 20px;
-				}
-			}
-
-			.icon {
-				background-position: 20px center;
-				width: 123px;
-
-				&:after {
-					width: 33px;
-				}
-			}
-
-			.label {
-				width: 167px;
-			}
-		}
-
-		.hub-menu-section a.more {
-			left: 324px;
-		}
 	}
 }
