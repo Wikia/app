@@ -795,8 +795,14 @@ class CF_Http
         return array($return_code,$this->response_reason);
     }
 
-    # PUT /v1/Account/Container/Object
-    #
+	/**
+	 * PUT /v1/Account/Container/Object
+	 *
+	 * @param CF_Object $obj
+	 * @param resource $fp
+	 * @return array
+	 * @throws SyntaxException
+	 */
     function put_object(&$obj, &$fp)
     {
         if (!is_object($obj) || get_class($obj) != "CF_Object") {
