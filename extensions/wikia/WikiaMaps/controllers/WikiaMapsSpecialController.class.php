@@ -319,8 +319,19 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 	 * @param Integer $height
 	 */
 	private function convertImagesToThumbs( &$items, $width, $height ) {
+		/*
+		 FIXME this is a temporary fix for MWEB-1100
+		 We have 404s cached for a week and need to add cache buster until they are expired
+		 This should be removed on 2015-02-16 (first Monday after expiration time)
+		 */
+		$cacheBuster = '/__cb20150206';
+
 		foreach ( $items as $item ) {
-			$item->image = $this->getModel()->createCroppedThumb( $item->image, $width, $height );
+			$thumb = $this->getModel()->createCroppedThumb( $item->image, $width, $height );
+			// offset to ignore http:// or https://
+			$firstSegmentPosition = strpos( $thumb, '/', 8 );
+			$thumbWithCacheBuster = substr( $thumb, 0, $firstSegmentPosition ) . $cacheBuster . substr( $thumb, $firstSegmentPosition );
+			$item->image = $thumbWithCacheBuster;
 		}
 	}
 
