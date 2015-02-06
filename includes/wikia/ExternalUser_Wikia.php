@@ -199,12 +199,25 @@ class ExternalUser_Wikia extends ExternalUser {
 	}
 
 	public function authenticate( $sPassword ) {
-		// 1. Authenticate with Helios.
-		// 2. If not in the shadow mode, terminate the execution and return the result.
-		// 3. Otherwise authenticate with MediaWiki
+		// Authenticate with Helios if enabled.
+		global $wgEnableHeliosExt;
+		if ( $wgEnableHeliosExt ) {
+			$bHeliosResult = false; // :TODO: Replace with the proper call.
+
+			// Terminate unless in the shadow mode.
+			global $wgHeliosLoginShadowMode;
+			if ( !$wgHeliosLoginShadowMode ) {
+				return $bHeliosResult;
+			}
+		}
+
+		// Authenticate with MediaWiki.
 		$bMediaWikiResult = User::comparePasswords( $this->getPassword(), $sPassword, $this->getId() );
-		// 4. Compare MW vs Helios and log, if there is a dicrepancy.
-		// 5. Return the result.
+		// Detect discrepancies between Helios and MediaWiki results.
+		if ( $wgEnableHeliosExt && (  $bHeliosResult != $bMediaWikiResult ) ) {
+			// :TODO: Log it.
+		}
+
 		return $bMediaWikiResult;
 	}
 
