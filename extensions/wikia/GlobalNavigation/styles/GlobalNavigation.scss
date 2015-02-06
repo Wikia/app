@@ -32,7 +32,8 @@ $start-a-wikia-logo-size: 30px;
 	}
 
 	.wikia-logo-container {
-		padding-right: $global-navigation-items-spacing;
+		//-15px because additional left padding 15px is added to hubs entry point container
+		padding-right: $global-navigation-items-spacing - 15px;
 
 		.wikia-logo img {
 			background-position: right center;

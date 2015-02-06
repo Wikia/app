@@ -13,7 +13,7 @@ $search-input-text-color: rgba(101, 110, 120, 0.75);
 $search-input-height: $global-navigation-height-without-margin - 2px;
 
 .search-container {
-	//-3px because user avatar is nested inside table cell and table row which add 1 pixel each and 1px border.
+	padding-left: 16px;
 	padding-right: 18px;
 	width: 100%;
 }

@@ -23,6 +23,10 @@ $global-nav-inverse-background-hover: #656E78;
 		}
 
 		.hubs-container {
+			&.active {
+				background-color: $global-nav-inverse-background-hover;
+			}
+
 			.hubs-entry-point {
 				background-image: url('/extensions/wikia/GlobalNavigation/images/hubs_entry_point_white.svg'); /* inline */
 
