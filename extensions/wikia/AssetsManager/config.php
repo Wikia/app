@@ -978,6 +978,13 @@ $config['relatedpages_wikiamobile_js'] = array(
 );
 
 /** EditPageLayout **/
+$config['editpage_common_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'//extensions/wikia/EditPageLayout/js/loaders/EditPageEditorLoader.js',
+	)
+);
+
 $config['rte'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
@@ -988,6 +995,7 @@ $config['rte'] = array(
 $config['epl'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+			'#group_editpage_common_js',
 			'#function_AssetsConfig::getEPLAssets',
 	)
 );
@@ -997,6 +1005,16 @@ $config['eplrte'] = array(
 	'assets' => array(
 		'#group_epl',
 		'#group_rte'
+	)
+);
+
+/** Ace Editor **/
+$config['ace_editor_js'] = array(
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => array(
+		'#group_editpage_common_js',
+		'//resources/wikia/libraries/Ace/wikia.ace.editor.js',
+		'//extensions/wikia/EditPageLayout/js/editor/AceEditor.js',
 	)
 );
 
@@ -1798,6 +1816,7 @@ $config['licensed_video_swap_js'] = array(
 $config['special_css_js'] = array(
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => array(
+		'//resources/wikia/libraries/Ace/wikia.ace.editor.js',
 		'//extensions/wikia/SpecialCss/js/SpecialCss.js',
 		'//resources/wikia/libraries/mustache/mustache.js',
 		'//resources/wikia/libraries/mustache/jquery.mustache.js'
