@@ -52,7 +52,7 @@ class User {
 	public static function authenticate( $sUserName, $sPassword )
 	{
 		$oLogger = \Wikia\Logger\WikiaLogger::instance();
-		$oLogger->info( 'HELIOS_LOGIN', [ 'method' => __METHOD__, 'username' => '$sUserName' ] );
+		$oLogger->info( 'HELIOS_LOGIN', [ 'method' => __METHOD__, 'username' => $sUserName ] );
 
 		global $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret;
 		$oHelios = new Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
