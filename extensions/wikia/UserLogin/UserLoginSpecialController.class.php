@@ -261,12 +261,10 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 * On GET, template partial for an ajax element will render
 	 */
 	public function dropdown() {
-		$query = $this->getSanitizedQueryString();
+		$query = $this->app->wg->Request->getValues();
 
-		$this->response->setData( [
-			'returnto' => $this->getReturnToFromQuery( $query ),
-			'returntoquery' => $this->getReturnToQueryFromQuery( $query ),
-		] );
+		$this->response->setVal( 'returnto', $this->getReturnToFromQuery( $query ) );
+		$this->response->setVal( 'returntoquery', $this->getReturnToQueryFromQuery( $query ) );
 
 		$requestParams = $this->getRequest()->getParams();
 		if ( !empty( $requestParams[ 'registerLink' ] ) ) {
@@ -276,21 +274,6 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		if ( !empty( $requestParams[ 'template' ] ) ) {
 			$this->overrideTemplate( $requestParams[ 'template' ] );
 		}
-	}
-
-	/**
-	 * This method returns an array of query parameters that do not contain sensitive information
-	 * This can be used to construct returnto and returntoquery values that are not compromising.
-	 */
-	private function getSanitizedQueryString() {
-		$query = $this->app->wg->Request->getValues();
-		$filterParams = [ 'password', 'username', 'loginToken' ];
-
-		foreach ( $filterParams as $paramName ) {
-			unset( $query[$paramName] );
-		}
-
-		return $query;
 	}
 
 	private function getReturnToFromQuery( &$query ) {
@@ -335,9 +318,9 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			// Don't use any query parameters if this was a POST and we couldn't find
 			// a returntoquery param
 			return '';
-		} else {
-			return wfArrayToCGI( $query );
 		}
+
+		return wfArrayToCGI( $query );
 	}
 
 	public function providers() {
