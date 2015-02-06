@@ -20,7 +20,6 @@ $wgAutoloadClasses["Wikia\\Helios\\SampleController"] = __DIR__ . "/SampleContro
  * Hooks.
  */
 $wgHooks['UserComparePasswords'][] = "Wikia\\Helios\\User::comparePasswords";
-$wgHooks['UserAfterComparePasswords'][] = "Wikia\\Helios\\User::comparePasswordCheck";
 
 /**
  * Internationalisation.
