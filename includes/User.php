@@ -4241,9 +4241,7 @@ class User {
 
 		$result = false;
 
-		$bHeliosCheck = false;
-
-		if( !wfRunHooks( 'UserComparePasswords', array( &$hash, &$password, &$userId, &$result, &$bHeliosCheck ) ) ) {
+		if( !wfRunHooks( 'UserComparePasswords', array( &$hash, &$password, &$userId, &$result ) ) ) {
 			return $result;
 		}
 
