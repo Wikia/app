@@ -202,7 +202,7 @@ class ExternalUser_Wikia extends ExternalUser {
 		// Authenticate with Helios if enabled.
 		global $wgEnableHeliosExt;
 		if ( $wgEnableHeliosExt ) {
-			$bHeliosResult = false; // :TODO: Replace with the proper call.
+			$bHeliosResult = \Wikia\Helios\User::authenticate( $this->getName(), $sPassword );
 
 			// Terminate unless in the shadow mode.
 			global $wgHeliosLoginShadowMode;
