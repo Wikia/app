@@ -68,9 +68,11 @@ class User {
 
 		$oLogger = \Wikia\Logger\WikiaLogger::instance();
 		$oLogger->info( 'HELIOS_LOGIN', [ 'method' => __METHOD__ ] );
-		
+
 		// Get the user's name from the request context.
-		$sUserName= \RequestContext::getMain()->getRequest()->getText( 'username' );
+		$sKey = ( defined( 'MW_API' ) ) ? 'lgname' : 'username';
+		$sUserName = \RequestContext::getMain()->getRequest()->getText( $sKey );
+
 		// Convert to a valid MediaWiki user name, as the original login does it.
 		$sUserName = \User::getCanonicalName( $sUserName, 'valid' );
 		// TODO: handle invalid user names without sending requests to the service.
@@ -115,7 +117,8 @@ class User {
 		if ( $bHeliosCheck && $bHelios != $bMediaWiki ) {
 
 			// Get the user's name from the request context.
-			$sUserName= \RequestContext::getMain()->getRequest()->getText( 'username' );
+			$sKey = ( defined( 'MW_API' ) ) ? 'lgname' : 'username';
+			$sUserName = \RequestContext::getMain()->getRequest()->getText( $sKey );
 
 			\Wikia\Logger\WikiaLogger::instance()->error(
 				'HELIOS_LOGIN',

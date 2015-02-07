@@ -8,7 +8,7 @@ $start-a-wikia-logo-size: 30px;
 
 .global-navigation {
 	background-color: $global-wikia-background-color;
-	border-bottom: 2px solid rgba(0, 0, 0, 0.7);
+	box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.3);
 	color: $nav-foreground-dark-color;
 	height: $global-navigation-height;
 	position: fixed;
@@ -48,7 +48,7 @@ $start-a-wikia-logo-size: 30px;
 		line-height: 28px;
 		margin-bottom: $global-navigation-margin-size + 1px;
 		margin-top: $global-navigation-margin-size + 1px;
-		padding: 0 10px;
+		padding: 1px 10px 0;
 
 		&:hover {
 			background-color: $global-navigation-active-color;
