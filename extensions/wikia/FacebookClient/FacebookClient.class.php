@@ -358,8 +358,6 @@ class FacebookClient {
 			!$title instanceof Title ||
 			$title->isSpecial( 'Userlogout' ) ||
 			$title->isSpecial( 'Signup' ) ||
-			$title->isSpecial( 'Connect' ) ||
-			$title->isSpecial( 'FacebookConnect' ) ||
 			$title->isSpecial( 'UserLogin' )
 		);
 	}

@@ -1,4 +1,4 @@
-/* global UserLoginFacebook:true, UserLoginAjaxForm:true */
+/* global FacebookLogin:true, UserLoginAjaxForm:true */
 require([
 	'jquery',
 	'GlobalNavigationiOSScrollFix',
@@ -26,7 +26,7 @@ require([
 			loginAjaxForm = new UserLoginAjaxForm($entryPoint, {
 				skipFocus: true
 			});
-			UserLoginFacebook.init(UserLoginFacebook.origins.DROPDOWN);
+			FacebookLogin.init(FacebookLogin.origins.DROPDOWN);
 		}
 	}
 
