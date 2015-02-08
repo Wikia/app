@@ -620,12 +620,13 @@
 			var $element = $(element),
 				docViewTop = $window.scrollTop(),
 				docViewBottom = docViewTop + $window.height(),
-				elementTop = $element.offset().top;
+				elementTop = $element.offset().top,
+				$globalNavigation = $('#globalNavigation');
 
 			$element.find('blockquote').addClass('current');
 
 			// if new GlobalNavigation is enabled and it's fixed...
-			if ($('#globalNavigation').length && $('#globalNavigation').css('position') === 'fixed') {
+			if ($globalNavigation.length && $globalNavigation.css('position') === 'fixed') {
 				window.GlobalNavigationScrollToElement(element);
 			} else {
 				// in any other case
