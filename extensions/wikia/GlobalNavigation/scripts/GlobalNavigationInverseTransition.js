@@ -6,7 +6,7 @@ require(['jquery', 'wikia.window'], function($, win) {
 		var scrollTop = win.pageYOffset,
 			inversedStateClass = 'inverse';
 
-		if (scrollTop === 0 && $globalNav.hasClass(inversedStateClass)) {
+		if (scrollTop <= 0 && $globalNav.hasClass(inversedStateClass)) {
 			$globalNav.removeClass(inversedStateClass);
 		} else if (scrollTop > 200) {
 			$globalNav.addClass(inversedStateClass);
