@@ -151,7 +151,7 @@ class FacebookClient {
 	private function logInvalidSession( $method, $message ) {
 		WikiaLogger::instance()->warning( __CLASS__ . ': Invalid Facebook session found', [
 			'fbUserId' => $this->facebookUserId,
-			'method' => __METHOD__,
+			'method' => $method,
 			'message' => $message,
 		] );
 	}
