@@ -12,6 +12,9 @@ $hub-menu-icon-left-padding-small: 16px;
 $hub-menu-icon-left-padding-medium: 13px;
 $hub-menu-icon-left-padding-large: 8px;
 
+$hub-list-z-index: 1002;
+$more-z-index: 10000;
+
 @mixin hub-background-border-icon($color, $secondary-color, $hub-name) {
 	.icon {
 		background-image: url('/extensions/wikia/GlobalNavigation/images/#{$hub-name}.svg'); /* inline */
@@ -117,7 +120,7 @@ $hub-menu-icon-left-padding-large: 8px;
 
 		&.active {
 			color: $global-wikia-background-color;
-			z-index: 1002;
+			z-index: $hub-list-z-index;
 
 			&:before {
 				content: ' ';
@@ -209,7 +212,7 @@ $hub-menu-icon-left-padding-large: 8px;
 		}
 
 		strong {
-			color: rgb(9, 35, 68);
+			color: $global-navigation-active-color;
 			display: inline-block;
 			font-weight: bold;
 			line-height: 17px;
@@ -240,7 +243,7 @@ $hub-menu-icon-left-padding-large: 8px;
 				position: absolute;
 				right: 0;
 				text-align: right;
-				z-index: 10000;
+				z-index: $more-z-index;
 
 				&:after {
 					margin-left: 6px;
