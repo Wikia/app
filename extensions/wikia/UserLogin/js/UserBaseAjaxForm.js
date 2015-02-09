@@ -11,7 +11,7 @@
 	 */
 	var UserBaseAjaxForm = function (el, options) {
 		if (!(el instanceof HTMLElement) && !(el instanceof jQuery)) {
-			throw 'This module requires an html element or jQuery object as the first parameter';
+			throw new Error('This module requires an html element or jQuery object as the first parameter');
 		}
 
 		this.el = $(el);
