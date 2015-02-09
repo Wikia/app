@@ -6,14 +6,13 @@
 @import 'GlobalNavigationMixins';
 
 .account-navigation-container {
-	padding: 0 30px 2px 0;
 	position: relative;
 }
 
 .AccountNavigation {
 	cursor: pointer;
 	height: $global-navigation-height - 2px;
-	padding: 0 9px 0 round($global-navigation-items-spacing / 2);
+	padding: 0 20px;
 	margin: 0;
 
 	&.active {
@@ -33,15 +32,21 @@
 
 			.chevron {
 				@include global-nav-chevron;
+				left: 45px;
 				margin-left: 2px;
 				margin-top: 15px;
+				position: absolute;
+			}
+
+			&.anon .chevron {
+				position: static;
 			}
 		}
 
 		.avatar-container {
 			height: $avatar-size;
 			overflow: hidden;
-			width: $avatar-size;
+			width: 20px;
 
 			&.anon-avatar-placeholder,
 			&.logged-avatar-placeholder {
@@ -50,8 +55,10 @@
 				background-repeat: no-repeat;
 			}
 
-			&.logged-avatar {
+			&.logged-avatar,
+			&.logged-avatar-placeholder {
 				border-radius: 50%;
+				width: 32px;
 			}
 		}
 	}
@@ -75,7 +82,7 @@
 		display: none;
 		padding: 0;
 		position: absolute;
-		right: 30px;
+		right: 0;
 		// -2px because of global navigation border which in case 48px high is ~ 4%
 		top: 94%;
 		white-space: normal;
@@ -109,14 +116,10 @@
 }
 
 @media #{$small-only} {
-	.account-navigation-container {
-		padding: 0 18px 2px 0;
-	}
-
 	.AccountNavigation {
 		.user-menu {
 			@include grid-column-width('small', 3, $small-content-padding);
-			right: 20px;
+			right: 0;
 		}
 	}
 }

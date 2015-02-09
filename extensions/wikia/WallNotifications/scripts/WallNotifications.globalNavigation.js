@@ -43,7 +43,8 @@ require(
 			},
 
 			openNotifications: function() {
-				if ( this.getAttribute('id') === 'notifications' ) {
+				if ( this.getAttribute('id') === 'notificationsEntryPoint' ) {
+					$(this).addClass('active');
 					WallNotifications.$wallNotifications.addClass('show');
 				}
 				$('#globalNavigation').trigger('notifications-menu-opened');
@@ -368,29 +369,26 @@ require(
 						this.$notificationsContainer.css('height', 'auto').removeClass('scrollable');
 					}
 				}
+			},
+
+			closeDropdown: function() {
+				if ($('#notificationsEntryPoint').hasClass('active')) {
+					$('#notificationsEntryPoint').removeClass('active');
+				}
 			}
 		};
 
 		$(function () {
 			WallNotifications.init();
 
-			window.menuAim(
-				document.querySelector('.user-menu'), {
-					activeRow: '#notifications',
-					rowSelector: '> li',
-					tolerance: 85,
-					submenuDirection: 'left',
-					deactivate: WallNotifications.closeNotifications,
-					exitMenu: WallNotifications.closeNotifications
-			});
-
 			if ( !Wikia.isTouchScreen() ) {
 				window.delayedHover(
-					document.getElementById('notifications'),
+					document.getElementById('notificationsEntryPoint'),
 					{
 						checkInterval: 200,
 						maxActivationDistance: 20,
 						onActivate: WallNotifications.openNotifications,
+						onDeactivate: WallNotifications.closeDropdown,
 						activateOnClick: false
 					}
 				);
