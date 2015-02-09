@@ -64,5 +64,19 @@ $global-nav-inverse-background-hover: #656E78;
 				border-top-color: $global-nav-inverse-text-color;
 			}
 		}
+
+		.notifications-container {
+			&.active {
+				background-color: $global-nav-inverse-background-hover;
+			}
+
+			.notifications-entry-point {
+				background-image: url('/extensions/wikia/GlobalNavigation/images/notifications_icon_white.svg');
+
+				&:after {
+					border-top-color: $global-nav-inverse-text-color;
+				}
+			}
+		}
 	}
 }
