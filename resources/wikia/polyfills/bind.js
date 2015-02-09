@@ -1,5 +1,5 @@
 /**
- * Polyfill for `Function.prototype.bind` because PhantomJS 1.9.8 doens't support it
+ * Polyfill for `Function.prototype.bind` because PhantomJS 1.9.8 doesn't support it
  * Should only need to use this for unit tests, as all Wikia's supported browsers support bind.
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind#Polyfill
  */

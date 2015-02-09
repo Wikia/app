@@ -24,7 +24,7 @@ describe('Base class for User Ajax Forms', function () {
 		};
 	});
 
-	it ('Has base methods that other classes depend on', function () {
+	it('Has base methods that other classes depend on', function () {
 		expect(typeof proto.init).toBe('function');
 		expect(typeof proto.cacheDOM).toBe('function');
 		expect(typeof proto.bindEvents).toBe('function');
@@ -39,13 +39,13 @@ describe('Base class for User Ajax Forms', function () {
 		expect(typeof proto.reloadPage).toBe('function');
 	});
 
-	it ('Requires an element as the first param', function () {
+	it('Requires an element as the first param', function () {
 		expect(function () {
 			instance = new UserBaseAjaxForm();
 		}).toThrow();
 	});
 
-	it ('Sets some properties on init', function () {
+	it('Sets some properties on init', function () {
 		instance = new UserBaseAjaxForm($el);
 		expect(typeof instance.wikiaForm).toBe('object');
 		expect(typeof instance.inputs).toBe('object');
