@@ -2,6 +2,8 @@
 
 namespace Wikia;
 
+use Wikia\Logger\Loggable;
+
 /**
  * SwiftStorage
  *
@@ -16,6 +18,8 @@ namespace Wikia;
  * @see $wgFSSwiftConfig
  */
 class SwiftStorage {
+
+	use Loggable;
 
 	const LOG_GROUP = 'swift-storage';
 
@@ -38,7 +42,7 @@ class SwiftStorage {
 	 * Get storage instance to access uploaded files for a given wiki
 	 *
 	 * @param $cityId number|string city ID or wiki name
-	 * @param $dataCenter string|null name of datacenter (res, iowa ... )
+	 * @param $dataCenter string|null name of data center (res, iowa ... )
 	 * @return SwiftStorage storage instance
 	 */
 	public static function newFromWiki( $cityId, $dataCenter = null ) {
@@ -94,6 +98,18 @@ class SwiftStorage {
 	}
 
 	/**
+	 * Extend the context of all messages sent from this class
+	 *
+	 * @return array
+	 */
+	protected function getLoggerContext() {
+		return [
+			'container'    => $this->getContainerName(),
+			'swift-server' => $this->getSwiftServer(),
+		];
+	}
+
+	/**
 	 * Connect to Swift backend
 	 *
 	 * @param $config array Swift configuration
@@ -144,10 +160,12 @@ class SwiftStorage {
 		$status = $req->execute();
 
 		if (!$status->isOK()) {
-			self::log(
-				__METHOD__,
-				sprintf('can\'t set ACL [<%s> returned HTTP %d - %s] %s', $url, $req->getStatus(), json_encode($status->getErrorsArray()), json_encode($req->getResponseHeaders()))
-			);
+			$this->error( 'SwiftStorage: unable to set ACL', [
+				'exception' => new \Exception( $status->getMessage(), $req->getStatus() ),
+				'url'       => $url,
+				'errors'    => $status->getErrorsArray(),
+				'headers'   => $req->getResponseHeaders(),
+			]);
 		}
 
 		return $container;
@@ -187,18 +205,22 @@ class SwiftStorage {
 			if ( !is_resource( $localFile )  ) {
 				$fp = @fopen( $localFile, 'r' );
 				if ( !$fp ) {
-					self::log( __METHOD__ . '::fopen', "<{$localFile}> doesn't exist" );
+					$this->error( 'SwiftStorage: fopen - file does not exist', [
+						'exception'  => new \Exception($localFile)
+					]);
 					return \Status::newFatal( "{$localFile} doesn't exist" );
 				}
 			} else {
 				$fp = $localFile;
 			}
 
-			// check file size - sending empty file results in "HTTP 411 MissingContentLengh"
+			// check file size - sending empty file results in "HTTP 411 MissingContentLength"
 			$size = (float)fstat( $fp )['size'];
 			if ( $size === 0 ) {
-				self::log( __METHOD__ . '::fstat', "<{$file}> is empty" );
-				return \Status::newFatal( "{$file} is empty" );
+				$this->error( 'SwiftStorage: fopen - file is empty', [
+					'exception'  => new \Exception($localFile)
+				]);
+				return \Status::newFatal( "{$localFile} is empty" );
 			}
 
 			$object = $this->container->create_object( $remotePath );
@@ -220,7 +242,12 @@ class SwiftStorage {
 			}
 		}
 		catch ( \Exception $ex ) {
-			self::log( __METHOD__ . '::exception',  $localFile . ' - ' . $ex->getMessage() );
+			$this->error( 'SwiftStorage: exception', [
+				'op'         => 'store',
+				'args'       => [ $localFile, $remoteFile, $metadata, $mimeType ],
+				'exception'  => $ex
+			]);
+
 			return \Status::newFatal( $ex->getMessage() );
 		}
 
@@ -231,7 +258,7 @@ class SwiftStorage {
 	}
 
 	/**
-	 * Remove fiven remote file
+	 * Remove given remote file
 	 *
 	 * @param $remoteFile string remote file name
 	 * @return \Status result
@@ -246,7 +273,11 @@ class SwiftStorage {
 			$this->container->delete_object( $remotePath );
 		}
 		catch ( \Exception $ex ) {
-			self::log( __METHOD__ . '::exception',  $remotePath . ' - ' . $ex->getMessage() );
+			$this->error( 'SwiftStorage: exception', [
+				'op'         => 'remove',
+				'args'       => [ $remoteFile ],
+				'exception'  => $ex
+			]);
 			return \Status::newFatal( $ex->getMessage() );
 		}
 
@@ -265,17 +296,21 @@ class SwiftStorage {
 			$object = $this->container->get_object( $remoteFile );
 			$content = $object->read();
 		}
-		catch ( \InvalidResponseException $e ) {
-			self::log( __METHOD__ . '::exception', $remoteFile . ' - ' . $e->getMessage() );
+		catch ( \InvalidResponseException $ex ) {
+			$this->error( 'SwiftStorage: exception', [
+				'op'         => 'read',
+				'args'       => [ $remoteFile ],
+				'exception'  => $ex
+			]);
 			return null;
 		}
-		catch ( \NoSuchObjectException $e ) {
+		catch ( \NoSuchObjectException $ex ) {
 			return null;
 		}
-		
+
 		return $content;
 	}
-	 
+
 	/**
 	 * Check if given remote file exists
 	 *
@@ -309,19 +344,7 @@ class SwiftStorage {
 	}
 
 	/**
-	 * Log to /var/log/private file
-	 *
-	 * @param $method string method
-	 * @param $msg string message to log
-	 */
-	public static function log($method, $msg) {
-		\Wikia::log(self::LOG_GROUP . '-WIKIA', false, $method . ': ' . $msg, true /* $force */);
-	}
-
-	/**
 	 * Return Swift server 
-	 * 
-	 * @param - no params
 	 */
 	public function getSwiftServer() {
 		return $this->swiftServer;
