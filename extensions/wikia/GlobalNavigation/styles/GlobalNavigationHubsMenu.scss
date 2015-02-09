@@ -34,9 +34,14 @@ $hub-menu-icon-left-padding-large: 8px;
 }
 
 .hubs-container {
-	padding-right: 26px;
+	padding-left: 15px;
+	padding-right: 10px;
 	position: relative;
 	white-space: normal;
+
+	&.active {
+		background-color: $global-navigation-background-color;
+	}
 }
 
 .global-navigation {

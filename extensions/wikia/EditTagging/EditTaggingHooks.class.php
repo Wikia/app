@@ -4,13 +4,19 @@
  * This class contains hook handlers used to store additional tags on edits
  */
 class EditTaggingHooks {
+	const API_EDIT_TAG = 'apiedit';
+	const CATEGORYSELECT_EDIT_TAG = 'categoryselect';
 	const RTE_SOURCE_MODE = 'source';
 	const RTE_WYSIWYG_MODE = 'wysiwyg';
 	const RTE_SOURCE_MODE_TAG = 'rte-source';
 	const RTE_WYSIWYG_MODE_TAG = 'rte-wysiwyg';
-	const API_EDIT_TAG = 'apiedit';
 
-	static $tagBlacklist = [ self::RTE_SOURCE_MODE_TAG, self::RTE_WYSIWYG_MODE_TAG, self::API_EDIT_TAG ];
+	static $tagBlacklist = [
+		self::API_EDIT_TAG,
+		self::CATEGORYSELECT_EDIT_TAG,
+		self::RTE_SOURCE_MODE_TAG,
+		self::RTE_WYSIWYG_MODE_TAG
+	];
 
 	/**
 	 * Removes tags from listings
@@ -48,9 +54,8 @@ class EditTaggingHooks {
         return true;
     }
 
-
 	/**
-	 * Handle tagging new revisions made from RTE
+	 * Handle tagging new revisions on Article Save Completion
 	 */
 	public static function onArticleSaveComplete( &$article, &$user, $text, $summary, $minoredit, $watchthis, $sectionanchor, &$flags, $revision, &$status, $baseRevId ) {
 		if ( !$revision instanceof Revision ) {
@@ -60,7 +65,14 @@ class EditTaggingHooks {
 
 		$request = RequestContext::getMain()->getRequest();
 		$rte_mode = $request->getVal( 'RTEMode', null );
+		$controller = $request->getVal( 'controller', null );
+		$method = $request->getVal( 'method', null );
 		$revision_id = $revision->getId();
+		$is_category_edit = ($controller === 'CategorySelect' &&  $method === 'save');
+
+		if($is_category_edit) {
+			self::AddRevisionTag( $revision_id, self::CATEGORYSELECT_EDIT_TAG );
+		}
 
 		switch ( $rte_mode ) {
 			case self::RTE_SOURCE_MODE:
