@@ -51,7 +51,7 @@ class HealthController extends WikiaController {
 	/**
 	 * Execute checks for all requested clusters
 	 */
-	protected function testClusters() {
+	private function testClusters() {
 		foreach ( $this->clusters as $clusterName ) {
 			$this->current = "{$clusterName}: ";
 
@@ -70,17 +70,19 @@ class HealthController extends WikiaController {
 					$serverName = $loadBalancer->getServerName( $i );
 					$this->current = "{$clusterName}: {$serverName}: ";
 
-					$role = $i == 0 ? 'master' : 'slave';
+					$role = $i === 0 ? 'master' : 'slave';
 					$roles[$role][$serverName] = $this->testHost( $databaseName, $loadBalancer, $i );
 				}
 
 				if ($serverCount == 1) {
 					$fullHealth = $operational = reset($roles['master']);
 				} else {
-					$fullHealth  = array_search(false,$roles['master']) === false
-								&& array_search(false,$roles['slave']) === false;
-					$operational = array_search(true,$roles['master']) !== false
-								&& array_search(true,$roles['slave']) !== false;
+					// full health = no host raised any issue
+					$fullHealth  = !$this->occursInArray(false,$roles['master'])
+								&& !$this->occursInArray(false,$roles['slave']);
+					// operational = at least one master and one slave are working correctly
+					$operational = $this->occursInArray(true,$roles['master'])
+								&& $this->occursInArray(true,$roles['slave']);
 				}
 			} catch ( DBError $e ) {
 				$this->addError($e->getMessage());
@@ -91,6 +93,17 @@ class HealthController extends WikiaController {
 	}
 
 	/**
+	 * Check if needle exists in the array. Return true or false.
+	 *
+	 * @param mixed $needle Element to be searched for
+	 * @param array $array Array
+	 * @return bool True if needle exists in the array
+	 */
+	private function occursInArray( $needle, $array ) {
+		return array_search($needle,$array) !== false;
+	}
+
+	/**
 	 * Execute checks for a single database server
 	 * @param string $databaseName Database name to use for connection
 	 * @param LoadBalancer $loadBalancer Load Balancer instance for the given cluster
@@ -98,7 +111,7 @@ class HealthController extends WikiaController {
 	 * @return bool Is server healthy?
 	 * @throws MWException
 	 */
-	protected function testHost( $databaseName, LoadBalancer $loadBalancer, $index ) {
+	private function testHost( $databaseName, LoadBalancer $loadBalancer, $index ) {
 		$serverInfo = $loadBalancer->getServerInfo( $index );
 		$serverName = $loadBalancer->getServerName( $index );
 		$master = $index == 0;
