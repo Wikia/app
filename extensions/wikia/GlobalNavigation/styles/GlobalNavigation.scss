@@ -1,6 +1,7 @@
 @import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/Venus/styles/typographyMixins';
+@import 'skins/shared/mixins/calc';
 @import 'GlobalNavigationColors';
 @import 'GlobalNavigationVariables';
 
@@ -90,8 +91,8 @@ $start-a-wikia-logo-size: 30px;
 		}
 
 		.page-width {
+			@include width-calc("100% - 20px");
 			margin: 0 10px;
-			width: calc(100% - 20px);
 		}
 	}
 }
