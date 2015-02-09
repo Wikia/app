@@ -42,10 +42,10 @@ class HealthController extends WikiaController {
 			$this->setVal( 'messages', $this->messages );
 		}
 
-		$this->setVal('readWrite',[
+		$this->setVal( 'readWrite', [
 			'status' => !wfReadOnly(),
 			'reason' => wfReadOnlyReason(),
-		]);
+		] );
 	}
 
 	/**
@@ -74,18 +74,18 @@ class HealthController extends WikiaController {
 					$roles[$role][$serverName] = $this->testHost( $databaseName, $loadBalancer, $i );
 				}
 
-				if ($serverCount == 1) {
-					$fullHealth = $operational = reset($roles['master']);
+				if ( $serverCount == 1 ) {
+					$fullHealth = $operational = reset( $roles['master'] );
 				} else {
 					// full health = no host raised any issue
-					$fullHealth  = !$this->occursInArray(false,$roles['master'])
-								&& !$this->occursInArray(false,$roles['slave']);
+					$fullHealth = !$this->occursInArray( false, $roles['master'] )
+						&& !$this->occursInArray( false, $roles['slave'] );
 					// operational = at least one master and one slave are working correctly
-					$operational = $this->occursInArray(true,$roles['master'])
-								&& $this->occursInArray(true,$roles['slave']);
+					$operational = $this->occursInArray( true, $roles['master'] )
+						&& $this->occursInArray( true, $roles['slave'] );
 				}
 			} catch ( DBError $e ) {
-				$this->addError($e->getMessage());
+				$this->addError( $e->getMessage() );
 			}
 
 			$this->status[$clusterName] = $fullHealth ? 'ok' : ( $operational ? 'warning' : 'critical' );
@@ -100,7 +100,7 @@ class HealthController extends WikiaController {
 	 * @return bool True if needle exists in the array
 	 */
 	private function occursInArray( $needle, $array ) {
-		return array_search($needle,$array) !== false;
+		return array_search( $needle, $array ) !== false;
 	}
 
 	/**
@@ -113,7 +113,6 @@ class HealthController extends WikiaController {
 	 */
 	private function testHost( $databaseName, LoadBalancer $loadBalancer, $index ) {
 		$serverInfo = $loadBalancer->getServerInfo( $index );
-		$serverName = $loadBalancer->getServerName( $index );
 		$master = $index == 0;
 
 
@@ -121,7 +120,7 @@ class HealthController extends WikiaController {
 		try {
 			$db = wfGetDB( $index, array(), $databaseName );
 		} catch ( DBError $e ) {
-			$this->addError( "could not connect to server" );
+			$this->addError( "could not connect to server: " . $e->getMessage() );
 
 			return false;
 		}
