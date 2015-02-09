@@ -1,15 +1,15 @@
 require(['jquery', 'wikia.window'], function($, win) {
 	'use strict';
-	var $globalNav = $('#globalNavigation');
+	var $accountNavigation = $('#AccountNavigation');
 
 	function changeStateOnScroll() {
 		var scrollTop = win.pageYOffset,
 			inversedStateClass = 'inverse';
 
 		if (scrollTop <= 0 && $globalNav.hasClass(inversedStateClass)) {
-			$globalNav.removeClass(inversedStateClass);
+			$accountNavigation.removeClass('active');
 		} else if (scrollTop > 200) {
-			$globalNav.addClass(inversedStateClass);
+			$accountNavigation.removeClass('active');
 		}
 	}
 
