@@ -27,7 +27,7 @@ require(
 				this.globalNavigationHeight = $('#globalNavigation').outerHeight();
 				this.notificationsMarkAsReadHeight = 0;
 				this.notificationsHeaderHeight = 0;
-				this.notificationsBottomPadding = 5;
+				this.notificationsBottomPadding = 20;
 
 				this.unreadCount = parseInt(this.$notificationsCount.html(), 10);
 
