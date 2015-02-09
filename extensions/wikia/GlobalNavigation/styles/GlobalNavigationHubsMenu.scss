@@ -76,6 +76,7 @@ $hub-menu-icon-left-padding-large: 8px;
 
 .hubs-menu-wrapper {
 	position: absolute;
+	left: 0;
 }
 
 .hubs-menu {
@@ -172,9 +173,11 @@ $hub-menu-icon-left-padding-large: 8px;
 	}
 
 	.hub-links {
-		position: absolute;
 		background: $hubsmenu-background-color;
+		border-top: 1px solid $nav-border-color;
+		border-bottom: 1px solid $nav-border-color;
 		left: 214px;
+		position: absolute;
 		top: -1px;
 	}
 
@@ -183,7 +186,7 @@ $hub-menu-icon-left-padding-large: 8px;
 		display: none;
 		float: left;
 		line-height: 17px;
-		min-height: 409px;
+		min-height: 480px;
 		padding-bottom: 60px;
 		padding-left: 22px;
 		position: relative;
@@ -192,7 +195,7 @@ $hub-menu-icon-left-padding-large: 8px;
 		.hub-menu-columns {
 			@include column-count(2);
 			@include column-gap(36px);
-			margin-top: -30px;
+			margin-top: -10px;
 		}
 
 		&.active {
@@ -201,7 +204,7 @@ $hub-menu-icon-left-padding-large: 8px;
 
 		ul {
 			display: inline-block;
-			padding-top: 40px;
+			padding-top: 20px;
 			width: 100%;
 		}
 

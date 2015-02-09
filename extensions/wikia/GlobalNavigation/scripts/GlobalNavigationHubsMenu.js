@@ -110,8 +110,5 @@ require(['jquery', 'wikia.window', 'wikia.globalnavigation.lazyload'], function 
 		} else {
 			$entryPoint.click(openMenu);
 		}
-
-		// remove this line before CR
-		setInterval(function(){if (!$('.hubs-container').hasClass('active')){ $('.hubs-container').addClass('active');}}, 2000);
 	});
 });
