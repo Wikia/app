@@ -177,7 +177,7 @@ class UserService extends Service {
 		$cacheIdKey = wfSharedMemcKey( "UserCache:".$id );
 		$value = F::app()->wg->memc->get( $cacheIdKey );
 
-		if ( $value !== false ) {
+		if ( $value instanceof User ) {
 			try {
 				//cache locally
 				$this->cacheLocalUser( $value );
