@@ -1,10 +1,9 @@
 require(['jquery', 'wikia.window'], function ($, win) {
 	'use strict';
-	var $accountNavigation = $('#AccountNavigation'),
-		$globalNavigation = $('#globalNavigation');
+	var $globalNavigation = $('#globalNavigation');
 
 	$(function () {
-		$(win).on('resize', $.throttle(100, function() {
+		$(win).on('resize', $.throttle(50, function() {
 			win.WallNotifications.setNotificationsHeight();
 		}));
 		$globalNavigation.on('user-login-menu-opened', function() {
