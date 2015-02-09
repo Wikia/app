@@ -179,47 +179,10 @@ class MercuryApiController extends WikiaController {
 			throw new BadRequestApiException( 'You need to pass resource URI' );
 		}
 
-		// TODO Should we encode $uriWithoutPrefix?
-		// Should it be encoded by client?
+		$resourceType = $this->mercuryApi->getResourceType( $uri );
 
-		$defaultUriPrefix = '/wiki/';
-		$defaultUriPrefixLength = strlen( $defaultUriPrefix );
-
-		if ( !empty( $this->wg->ArticlePath ) ) {
-			$uriPrefix = str_replace( '$1', '', $this->wg->ArticlePath );
-		} else {
-			$uriPrefix = $defaultUriPrefix;
-		}
-		$uriPrefixLength = strlen( $uriPrefix );
-
-		// Cut everything <= $urlPrefixLength
-		// If $uri contains '/wiki/' at the beginning,
-		// but the ArticlePath is '/wiki/'-less, strip it
-		// (as the MediaWiki redirects work in the same manner).
-		if ( $uriPrefix === '/' && substr( $uri, 0, $defaultUriPrefixLength ) === $defaultUriPrefix) {
-			$uriWithoutPrefix = substr( $uri, $defaultUriPrefixLength );
-		} elseif ( $uriPrefix === substr( $uri, 0, $uriPrefixLength ) ) {
-			$uriWithoutPrefix = substr( $uri, $uriPrefixLength );
-		} else {
-			$uriWithoutPrefix = $uri;
-		}
-
-		// Cut everything >= '?'
-		$queryPosition = strpos( $uriWithoutPrefix, '?' );
-		if ( $queryPosition !== false ) {
-			$uriWithoutQuery = substr( $uriWithoutPrefix, 0, $queryPosition );
-		} else {
-			$uriWithoutQuery = $uriWithoutPrefix;
-		}
-
-		// TODO Title::newFromText caches titles with CACHE_MAX = 1000
-		// Is it good for us?
-		$title = Title::newFromText( $uriWithoutQuery, NS_MAIN );
-		$namespace = $title->getNamespace();
-		$isArticle = in_array( $namespace, $this->wg->ContentNamespaces ) && $title->mInterwiki === '';
-
-		$this->response->setVal( 'isArticle', $isArticle );
-		$this->response->setVal( 'uriPrefix', $uriPrefix );
+		$this->response->setVal( 'isArticle', $resourceType[ 'isArticle' ] );
+		$this->response->setVal( 'title', $resourceType[ 'title' ] );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
 

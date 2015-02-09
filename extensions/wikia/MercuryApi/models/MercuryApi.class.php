@@ -263,4 +263,52 @@ class MercuryApi {
 		$adContext = new AdEngine2ContextService();
 		return $adContext->getContext( $title, self::MERCURY_SKIN_NAME );
 	}
+	
+	public function getResourceType( $uri ) {
+		$wg = F::app()->wg;
+		
+		// TODO Should we encode $uriWithoutPrefix?
+		// Should it be encoded by client?
+
+		$defaultUriPrefix = '/wiki/';
+		$defaultUriPrefixLength = strlen( $defaultUriPrefix );
+
+		if ( !empty( $wg->ArticlePath ) ) {
+			$uriPrefix = str_replace( '$1', '', $wg->ArticlePath );
+		} else {
+			$uriPrefix = $defaultUriPrefix;
+		}
+		$uriPrefixLength = strlen( $uriPrefix );
+
+		// Cut everything <= $urlPrefixLength
+		// If $uri contains '/wiki/' at the beginning,
+		// but the ArticlePath is '/wiki/'-less, strip it
+		// (as the MediaWiki redirects work in the same manner).
+		if ( $uriPrefix === '/' && substr( $uri, 0, $defaultUriPrefixLength ) === $defaultUriPrefix) {
+			$uriWithoutPrefix = substr( $uri, $defaultUriPrefixLength );
+		} elseif ( $uriPrefix === substr( $uri, 0, $uriPrefixLength ) ) {
+			$uriWithoutPrefix = substr( $uri, $uriPrefixLength );
+		} else {
+			$uriWithoutPrefix = $uri;
+		}
+
+		// Cut everything >= '?'
+		$queryPosition = strpos( $uriWithoutPrefix, '?' );
+		if ( $queryPosition !== false ) {
+			$uriWithoutQuery = substr( $uriWithoutPrefix, 0, $queryPosition );
+		} else {
+			$uriWithoutQuery = $uriWithoutPrefix;
+		}
+
+		// TODO Title::newFromText caches titles with CACHE_MAX = 1000
+		// Is it good for us?
+		$title = Title::newFromText( $uriWithoutQuery, NS_MAIN );
+		$namespace = $title->getNamespace();
+		$isArticle = in_array( $namespace, $wg->ContentNamespaces ) && $title->mInterwiki === '';
+		
+		return [
+			'isArticle' => $isArticle,
+			'title' => $title->getPrefixedDBkey()
+		];
+	}
 }
