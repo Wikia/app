@@ -324,14 +324,11 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 		 We have 404s cached for a week and need to add cache buster until they are expired
 		 This should be removed on 2015-02-16 (first Monday after expiration time)
 		 */
-		$cacheBuster = '/__cb20150206';
+		$cacheBuster = '?cb=20150206';
 
 		foreach ( $items as $item ) {
 			$thumb = $this->getModel()->createCroppedThumb( $item->image, $width, $height );
-			// offset to ignore http:// or https://
-			$firstSegmentPosition = strpos( $thumb, '/', 8 );
-			$thumbWithCacheBuster = substr( $thumb, 0, $firstSegmentPosition ) . $cacheBuster . substr( $thumb, $firstSegmentPosition );
-			$item->image = $thumbWithCacheBuster;
+			$item->image = $thumb . $cacheBuster;
 		}
 	}
 
