@@ -20,6 +20,7 @@ use Wikia\Tasks\Queues\ParsoidPurgeQueue;
 use Wikia\Tasks\Queues\PriorityQueue;
 use Wikia\Tasks\Queues\NlpPipelineQueue;
 use Wikia\Tasks\Queues\Queue;
+use Wikia\Tasks\Queues\SMWQueue;
 use Wikia\Tasks\Tasks\BaseTask;
 
 class AsyncTaskList {
@@ -91,6 +92,9 @@ class AsyncTaskList {
 				break;
 			case NlpPipelineQueue::NAME:
 				$queue = new NlpPipelineQueue();
+				break;
+			case SMWQueue::NAME:
+				$queue = new SMWQueue();
 				break;
 			default:
 				$queue = new Queue();
@@ -348,7 +352,19 @@ class AsyncTaskList {
 	 * @return Queue queue this task list will go into
 	 */
 	protected function getQueue() {
-		return $this->queue == null ? new Queue() : $this->queue;
+		if ( $this->queue == null ) {
+			global $wgEnableSemanticMediaWikiExt;
+
+			if ( $wgEnableSemanticMediaWikiExt ) {
+				$queue = new SMWQueue();
+			} else {
+				$queue = new Queue();
+			}
+		} else {
+			$queue = $this->queue;
+		}
+
+		return $queue;
 	}
 
 	private function generateId() {
