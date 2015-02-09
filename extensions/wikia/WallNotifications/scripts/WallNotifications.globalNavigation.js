@@ -38,7 +38,9 @@ require(
 				this.$wallNotifications.add( $('#pt-wall-notifications') )
 					.on('click', '.notifications-markasread', this.proxy( this.markAllAsReadAllWikis ));
 
-				window.WallNotifications = WallNotifications;
+				$(window).on('resize', $.throttle(50, function() {
+					WallNotifications.setNotificationsHeight();
+				}));
 			},
 
 			openNotifications: function() {

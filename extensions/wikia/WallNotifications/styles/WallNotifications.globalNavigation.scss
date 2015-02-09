@@ -34,7 +34,7 @@ $wiki-header-color: #2b54b5;
 		background-size: 25px;
 		background-repeat: no-repeat;
 		display: inline-block;
-		height: $global-navigation-height - 4px;
+		height: $global-navigation-height;
 		position: relative;
 		width: 72px;
 
@@ -260,11 +260,12 @@ $wiki-header-color: #2b54b5;
 		.avatars {
 			display: inline-block;
 			left: 20px;
+			max-width: 38px;
 			position: absolute;
 			text-align: center;
 			top: 12px;
 			vertical-align: top;
-			width: 40px;
+			overflow: hidden;
 
 			.avatar {
 				border: none;
@@ -289,6 +290,7 @@ $wiki-header-color: #2b54b5;
 			height: 80px;
 			line-height: 80px;
 			padding: 0;
+			text-align: center;
 		}
 
 		&.empty {
