@@ -303,12 +303,19 @@ class MercuryApi {
 		// TODO Title::newFromText caches titles with CACHE_MAX = 1000
 		// Is it good for us?
 		$title = Title::newFromText( $uriWithoutQuery, NS_MAIN );
-		$namespace = $title->getNamespace();
-		$isArticle = in_array( $namespace, $wg->ContentNamespaces ) && $title->mInterwiki === '';
-		
+
+		if ( $title ) {
+			$namespace = $title->getNamespace();
+			$isArticle = in_array( $namespace, $wg->ContentNamespaces ) && $title->mInterwiki === '';
+			$titleText = $title->getPrefixedDBkey();
+		} else {
+			$isArticle = false;
+			$titleText = null;
+		}
+
 		return [
 			'isArticle' => $isArticle,
-			'title' => $title->getPrefixedDBkey()
+			'title' => $titleText
 		];
 	}
 }
