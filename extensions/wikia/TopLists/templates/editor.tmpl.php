@@ -148,4 +148,5 @@
 			<input type="hidden" name="removed_items[]" value="<?= Sanitizer::encodeAttribute( $item ); ?>" />
 		<? endforeach ;?>
 	<? endif ;?>
+	<input type="hidden" name="wpEditToken" value="<?= Sanitizer::encodeAttribute( $token ); ?>" />
 </form>
