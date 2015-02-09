@@ -22,7 +22,8 @@ $slotTopHeight: 50px;
 
 .ad-in-content {
 	border-top: 1px solid $border-color;
-	left: -3.125%; //compensate for wkPage margin
+	//compensate for wkPage margin
+	left: -3.125%;
 	margin: 1rem auto;
 	min-width: $slotWidth;
 	padding: 15px 0;
