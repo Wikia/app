@@ -5,7 +5,7 @@ require(
 		'ext.wikia.adEngine.adEngine', 'ext.wikia.adEngine.adConfigMobile',
 		'ext.wikia.adEngine.messageListener'
 	],
-	function ($, msg, window, document, log, abTest, adEngine, adConfigMobile, messageListener) {
+	function ($, msg, win, doc, log, abTest, adEngine, adConfigMobile, messageListener) {
 		'use strict';
 
 		var minZerothSectionLength = 700,
@@ -14,14 +14,14 @@ require(
 			mobileInContent = 'MOBILE_IN_CONTENT',
 			mobilePreFooter = 'MOBILE_PREFOOTER',
 			mobileTaboola = 'NATIVE_TABOOLA',
-			doc = window.document,
 			logGroup = 'ads_run',
 			logLevel = log.levels.info,
 			$firstSection = $('h2[id]').first(),
 			$footer = $('#wkMainCntFtr'),
 			firstSectionTop = ($firstSection.length && $firstSection.offset().top) || 0,
 			infoboxSelectors = ['table[class*=infobox], div[class*=infobox], div[id*=infobox]'],
-			infoboxAdEnabled = window.wgAdDriverUseAdsAfterInfobox && abTest && abTest.inGroup('WIKIAMOBILE_ADS_AFTER_INFOBOX', 'YES'),
+		// TODO: clean up wgAdDriverUseAdsAfterInfobox
+			infoboxAdEnabled = win.wgAdDriverUseAdsAfterInfobox && abTest && abTest.inGroup('WIKIAMOBILE_ADS_AFTER_INFOBOX', 'YES'),
 			showInContent = firstSectionTop > minZerothSectionLength,
 			showPreFooter = doc.body.offsetHeight > minPageLength || firstSectionTop < minZerothSectionLength,
 			adLabel = msg('adengine-advertisement'),
@@ -45,9 +45,9 @@ require(
 		log('Loading slot: ' + mobileTopLeaderBoard, logLevel, logGroup);
 		adSlots.push([mobileTopLeaderBoard]);
 
-		if (window.wgArticleId) {
+		if (win.wgArticleId) {
 
-			$(document).ready(function () {
+			$(doc).ready(function () {
 				var i, elem;
 
 				if (infoboxAdEnabled) {
@@ -70,7 +70,7 @@ require(
 				}
 			});
 			//this can wait to on load as is under the fold
-			$(window).on('load', function () {
+			$(win).on('load', function () {
 				if (showPreFooter) {
 					log('Loading slot: ' + mobilePreFooter, logLevel, logGroup);
 					$footer.after(createSlot(mobilePreFooter));

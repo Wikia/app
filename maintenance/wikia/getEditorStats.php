@@ -16,11 +16,18 @@
 require_once( dirname( __FILE__ ) . '../../Maintenance.php' );
 
 class GetRevisionWithTags extends Maintenance {
+	/**
+	 * Order of those tags is crucial as the most significant one is used to determine
+	 * what kind of edit a given revision is
+	 * @var array
+	 */
 	private static $editorTags = [
-		'rte-source',
-		'rte-wysiwyg',
 		'visualeditor',
-		'mobileedit'
+		'rte-wysiwyg',
+		'rte-source',
+		'mobileedit',
+		'categoryselect',
+		'apiedit'
 	];
 
 	public function __construct() {
