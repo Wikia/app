@@ -4,10 +4,21 @@ describe('Base class for User Ajax Forms', function () {
 	'use strict';
 
 	var instance, $el, options,
-		proto = UserBaseAjaxForm.prototype;
+		proto = UserBaseAjaxForm.prototype,
+		$userNameInput = $('<input type="text" name="username">'),
+		$form = $('<form></form>').append($userNameInput);
+
+	window.WikiaForm = function () {
+		return {
+			form: $form,
+			inputs: {
+				username: $userNameInput
+			}
+		};
+	};
 
 	beforeEach(function () {
-		$el = $('<div><form><input type="text"></form></div>');
+		$el = $('<div></div>').append($form);
 		options = {
 			skipFocus: true
 		};
@@ -32,6 +43,12 @@ describe('Base class for User Ajax Forms', function () {
 		expect(function () {
 			instance = new UserBaseAjaxForm();
 		}).toThrow();
+	});
+
+	it ('Sets some properties on init', function () {
+		instance = new UserBaseAjaxForm($el);
+		expect(typeof instance.wikiaForm).toBe('object');
+		expect(typeof instance.inputs).toBe('object');
 	});
 
 });
