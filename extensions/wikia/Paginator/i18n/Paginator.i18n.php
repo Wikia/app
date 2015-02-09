@@ -88,8 +88,10 @@ $messages['cy'] = array(
 );
 
 /** German (Deutsch)
+ * @author Metalhead64
  */
 $messages['de'] = array(
+	'paginator-desc' => 'Paginator-Erweiterung',
 	'paginator-next' => 'Vor',
 	'paginator-back' => 'Zurück',
 );
@@ -103,8 +105,10 @@ $messages['diq'] = array(
 );
 
 /** Spanish (español)
+ * @author VegaDark
  */
 $messages['es'] = array(
+	'paginator-desc' => 'Extensión de paginación',
 	'paginator-next' => 'Siguiente',
 	'paginator-back' => 'Atrás',
 );
@@ -134,9 +138,11 @@ $messages['fi'] = array(
 );
 
 /** French (français)
+ * @author Gomoko
  * @author Wyz
  */
 $messages['fr'] = array(
+	'paginator-desc' => 'Extension de pagination',
 	'paginator-next' => 'Suivant',
 	'paginator-back' => 'Précédent',
 );
@@ -255,6 +261,7 @@ $messages['ml'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'paginator-desc' => 'Sambungan Paginator',
 	'paginator-next' => 'Seterusnya',
 	'paginator-back' => 'Kembali',
 );
@@ -341,6 +348,7 @@ $messages['pt-br'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'paginator-desc' => 'Estenzione de paginatore',
 	'paginator-next' => 'Prossime',
 	'paginator-back' => 'Rrete',
 );
@@ -433,8 +441,10 @@ $messages['wa'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'paginator-desc' => '分页器扩展',
 	'paginator-next' => '下一步',
 	'paginator-back' => '前一步',
 );

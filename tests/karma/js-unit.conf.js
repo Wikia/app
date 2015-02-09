@@ -19,9 +19,6 @@ module.exports = function (config) {
 			'resources/wikia/ui_components/**/node_modules/**/*.js',
 		],
 		files: [
-			'tests/lib/jasmine/jasmine.async.js',
-			'tests/lib/jasmine/jasmine.dataprovider.js',
-
 			'resources/wikia/libraries/define.mock.js',
 			'tests/lib/jasmine/helpers.js',
 			'resources/jquery/jquery-1.8.2.js',
@@ -95,7 +92,6 @@ module.exports = function (config) {
 			'extensions/wikia/AdEngine/js/AdProviderEvolve.js',
 			'extensions/wikia/AdEngine/js/AdProviderLater.js',
 			'extensions/wikia/AdEngine/js/AdProviderLiftium.js',
-			'extensions/wikia/AdEngine/js/AdProviderNull.js',
 			'extensions/wikia/AdEngine/js/DartUrl.js',
 			'extensions/wikia/AdEngine/js/EventDispatcher.js',
 			'extensions/wikia/AdEngine/js/EvolveHelper.js',

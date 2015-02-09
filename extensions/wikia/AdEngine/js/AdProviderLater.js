@@ -8,7 +8,7 @@ define('ext.wikia.adEngine.provider.later', [
 	function fillInSlot(slotname, success) {
 		log(['fillInSlot', slotname, success], 5, 'ext.wikia.adEngine.provider.later');
 		setTimeout(function () {
-			lateAdsQueue.push([slotname]);
+			lateAdsQueue.push(slotname);
 		}, 0);
 		success();
 	}

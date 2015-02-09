@@ -3,8 +3,8 @@
 
 	/**
 	 * Loads library file if it's not already loaded and fires callback
-	 *
 	 * For "internal" use only. Please use $.loadFooBar() functions in extension code.
+	 * @deprecated Use $.loadExternalLibrary instead for better error handling
 	 */
 	$.loadLibrary = function (name, files, typeCheck, callback, failureFn) {
 		var dfd = new jQuery.Deferred();
@@ -115,57 +115,6 @@
 		}
 
 		return dfd.promise();
-	};
-
-	/**
-	 * Load the facebook JS library v2.x
-	 * @returns {jQuery} Returns a jQuery promise
-	 * @see https://developers.facebook.com/docs/javascript/quickstart/v2.2
-	 */
-	$.loadFacebookAPI = function (callback) {
-		// create our own deferred object to resolve after FB.init finishes
-		var $deferred = $.Deferred();
-
-		if (typeof callback === 'function') {
-			$deferred.done(callback);
-		}
-
-		// This is invoked by Facebook once the SDK is loaded.
-		window.fbAsyncInit = function () {
-			window.FB.init({
-				appId: window.fbAppId,
-				xfbml: true,
-				cookie: true,
-				version: 'v2.1'
-			});
-			$deferred.resolve();
-		};
-
-		// originally adopted from facebook's developer pages but modified for clarity
-		(function (document) {
-			var fbScriptTag,
-				firstScriptTag = document.getElementsByTagName('script')[0],
-				id = 'facebook-jssdk';
-
-			if (document.getElementById(id)) {
-				if (window.FB) {
-					$deferred.resolve();
-				} else {
-					$deferred.reject();
-				}
-				return;
-			}
-
-			fbScriptTag = document.createElement('script');
-			fbScriptTag.id = id;
-			fbScriptTag.src = window.fbScript || '//connect.facebook.net/en_US/sdk.js';
-			fbScriptTag.onerror = function () {
-				$deferred.reject();
-			};
-			firstScriptTag.parentNode.insertBefore(fbScriptTag, firstScriptTag);
-		})(document);
-
-		return $deferred;
 	};
 
 	$.loadGooglePlusAPI = function (callback) {

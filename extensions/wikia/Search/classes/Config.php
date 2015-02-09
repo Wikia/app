@@ -24,6 +24,13 @@ class Config
 	const RESULTS_PER_PAGE = 10;
 
 	/**
+	 * Maximum number of results per page. Usually overwritten.
+	 * @var int
+	 */
+
+	const MAX_RESULTS_PER_PAGE = 200;
+
+	/**
 	 * Constants for public filter queries
 	 *
 	 */
@@ -365,8 +372,9 @@ class Config
 	 * @return \Wikia\Search\Config provides fluent interface
 	 */
 	public function setLimit( $limit ) {
-		$limit = $limit < 200 ? $limit : 200;
-		$this->limit = $limit;
+		$sanitized_limit = $this->sanitizeLimit( $limit );
+		$this->limit = $sanitized_limit;
+
 		return $this;
 	}
 
@@ -1335,5 +1343,17 @@ class Config
 	 */
 	public function setXwikiArticleThreshold( $xwikiArticleThreshold ) {
 		$this->xwikiArticleThreshold = $xwikiArticleThreshold;
+	}
+
+	/**
+	 * Sanitizes limit so it is numeric, positive and smaller than the maximum
+	 * @param $limit
+	 * @return int
+	 */
+	protected function sanitizeLimit( $limit ) {
+		$limit = intval( $limit );
+		$limit = $limit > 0 ? $limit : self::RESULTS_PER_PAGE;
+		$limit = $limit < self::MAX_RESULTS_PER_PAGE ? $limit : self::MAX_RESULTS_PER_PAGE;
+		return $limit;
 	}
 }

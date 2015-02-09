@@ -566,7 +566,13 @@ class Message {
 	 * @return string Wikitext parsed into HTML
 	 */
 	protected function parseText( $string ) {
-		return MessageCache::singleton()->parse( $string, $this->title, /*linestart*/true, $this->interface, $this->language )->getText();
+		// Wikia change - start
+		// MessageCache::parse can return a string (PLATFORM-807)
+		$parserOutput = MessageCache::singleton()->parse( $string, $this->title, /*linestart*/true, $this->interface, $this->language );
+		Wikia\Util\Assert::true( $parserOutput instanceof ParserOutput, 'Message::parseText: parse() did not return ParserOutput' );
+
+		return $parserOutput->getText();
+		// Wikia change - end
 	}
 
 	/**

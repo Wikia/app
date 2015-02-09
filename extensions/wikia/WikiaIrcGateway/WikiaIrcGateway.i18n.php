@@ -146,8 +146,10 @@ $messages['cy'] = array(
 /** German (Deutsch)
  * @author Claudia Hattitten
  * @author LWChris
+ * @author Metalhead64
  */
 $messages['de'] = array(
+	'ircgate-desc' => 'Ermöglicht Benutzern das Einfügen eines IRC-Anmeldeformulars auf einer beliebigen Seite',
 	'ircgate-username' => 'Benutzername:',
 	'ircgate-channel' => 'Chat-Kanal:',
 );
@@ -164,6 +166,7 @@ $messages['diq'] = array(
  * @author VegaDark
  */
 $messages['es'] = array(
+	'ircgate-desc' => 'Permite a los usuarios insertar un formulario de inicio de sesión de IRC en cualquier página',
 	'ircgate-username' => 'Nombre de usuario:',
 	'ircgate-channel' => 'Canal:',
 );
@@ -194,9 +197,11 @@ $messages['fi'] = array(
 );
 
 /** French (français)
+ * @author Gomoko
  * @author Peter17
  */
 $messages['fr'] = array(
+	'ircgate-desc' => 'Laisse les utilisateurs insérer un formulaire de connexion IRC sur n’importe quelle page',
 	'ircgate-username' => 'Nom d’utilisateur :',
 	'ircgate-channel' => 'Canal :',
 );
@@ -290,10 +295,12 @@ $messages['kn'] = array(
 );
 
 /** Korean (한국어)
+ * @author Miri-Nae
  * @author 아라
  */
 $messages['ko'] = array(
 	'ircgate-username' => '사용자 이름:',
+	'ircgate-channel' => '채널:',
 );
 
 /** Colognian (Ripoarisch)
@@ -362,6 +369,7 @@ $messages['mn'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'ircgate-desc' => 'Membolehkan pengguna untuk menyertakan borang log masuk IRC pada sebarang laman',
 	'ircgate-username' => 'Nama pengguna:',
 	'ircgate-channel' => 'Saluran:',
 );
@@ -458,6 +466,7 @@ $messages['pt-br'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'ircgate-desc' => "Face 'nzerì a l'utinde 'u module pe trasè cu IRC da ogne pàgene.",
 	'ircgate-username' => "Nome de l'utende:",
 	'ircgate-channel' => 'Canale:',
 );
@@ -559,8 +568,10 @@ $messages['vi'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Gaoxuewei
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'ircgate-desc' => '让用户在任何页面上插入IRC登录',
 	'ircgate-username' => '用户名：',
 	'ircgate-channel' => '频道：',
 );

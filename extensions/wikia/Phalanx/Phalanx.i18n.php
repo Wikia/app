@@ -3373,6 +3373,7 @@ $messages['zh-hant'] = array(
 	'phalanx-label-filter' => '過濾器：',
 	'phalanx-label-reason' => '原因：',
 	'phalanx-format-regex' => '正規表示法',
+	'phalanx-test-submit' => '測試',
 	'phalanx-stats-table-regex' => '正規表示法',
 	'phalanx-stats-table-reason' => '原因',
 );

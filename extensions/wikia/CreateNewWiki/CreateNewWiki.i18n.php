@@ -1464,6 +1464,7 @@ $messages['inh'] = array(
 
 /** Italian (italiano)
  * @author Beta16
+ * @author Gloria sah
  * @author Lexaeus 94
  * @author Minerva Titani
  */
@@ -1496,11 +1497,11 @@ $messages['it'] = array(
 	'cnw-userauth-marketing-heading' => 'Non hai un account?',
 	'cnw-userauth-marketing-body' => 'È necessario avere un account per continuare a costruire la tua wiki. <br />Ci vuole solo un minuto per registrarsi!',
 	'cnw-userauth-signup-button' => 'Registrati',
-	'cnw-desc-headline' => "Qual è l'argomento della tua wiki?",
-	'cnw-desc-creative' => 'Descrivi il tuo argomento',
+	'cnw-desc-headline' => "Qual è l'argomento della tua wiki?", # Fuzzy
+	'cnw-desc-creative' => 'Descrivi il tuo argomento', # Fuzzy
 	'cnw-desc-placeholder' => 'Questo testo apparirà nella pagina principale della tua wiki.',
 	'cnw-desc-tip1' => 'Suggerimento',
-	'cnw-desc-tip1-creative' => 'Utilizza questo spazio per descrivere alle persone la tua wiki con poche parole',
+	'cnw-desc-tip1-creative' => 'Utilizza questo spazio per descrivere alle persone la tua wiki con poche parole', # Fuzzy
 	'cnw-desc-tip2' => 'Psst',
 	'cnw-desc-tip2-creative' => 'Fornisci ai visitatori alcuni dettagli specifici sul tuo argomento',
 	'cnw-desc-select-one' => 'Seleziona',
@@ -1523,9 +1524,12 @@ $messages['it'] = array(
 	'cnw-error-wiki-limit' => "Ciao, puoi creare un massimo di {{PLURAL:$1|$1 wiki|$1 wiki}} al giorno. Attendi 24 ore prima di creare un'altra wiki.",
 	'cnw-error-blocked-header' => 'Account bloccato',
 	'cnw-error-blocked' => 'Sei stato bloccato da $1. La motivazione è la seguente: $2. (ID di riferimento del blocco: $3)',
+	'cnw-error-anon-user-header' => 'Sei pregato di connetterti',
 	'cnw-error-torblock' => 'Non è permesso creare wiki tramite la rete Tor.',
 	'cnw-error-bot' => 'Ti abbiamo indentificato come un probabile bot. Se si tratta di un errore, per favore contattaci dicendoci che sei stato erroneamente rilevato come bot e ti aiuteremo a creare la tua wiki: [http://www.wikia.com/Special:Contact/general Contattaci]',
 	'cnw-error-bot-header' => 'Sei stato identificato come un bot',
+	'cnw-error-unconfirmed-email-header' => 'Il tuo indirizzo e-mail non è stato confermato',
+	'cnw-error-unconfirmed-email' => 'Il tuo indirizzo e-mail deve essere confermato per creare un Wiki.',
 );
 
 /** Japanese (日本語)
@@ -2260,7 +2264,7 @@ $messages['nl'] = array(
 	'cnw-signup' => 'Registreren',
 	'cnw-signup-prompt' => 'Wilt u zich registreren?',
 	'cnw-call-to-signup' => 'Hier aanmelden',
-	'cnw-login-prompt' => 'Hebt u al een gebruiker?',
+	'cnw-login-prompt' => 'Hebt u al een account?',
 	'cnw-call-to-login' => 'Hier aanmelden',
 	'cnw-auth-headline' => 'Aanmelden',
 	'cnw-auth-headline2' => 'Registreren',
@@ -2268,9 +2272,9 @@ $messages['nl'] = array(
 	'cnw-auth-signup-creative' => 'U hebt een gebruiker nodig om door te kunnen gaan met het bouwen van uw wiki.<br />Registreren kost maar een minuutje van uw tijd!',
 	'cnw-auth-facebook-signup' => 'Aanmelden met Facebook',
 	'cnw-auth-facebook-login' => 'Aanmelden met Facebook',
-	'cnw-userauth-headline' => 'Hebt u een gebruiker?',
+	'cnw-userauth-headline' => 'Hebt u een account?',
 	'cnw-userauth-creative' => 'Aanmelden',
-	'cnw-userauth-marketing-heading' => 'Hebt u geen gebruiker?',
+	'cnw-userauth-marketing-heading' => 'Hebt u geen account?',
 	'cnw-userauth-marketing-body' => 'U hebt een gebruiker nodig om een wiki aan te maken bij Wikia. Het kost u slechts een minuutje om te registreren.',
 	'cnw-userauth-signup-button' => 'Registreren',
 	'cnw-desc-headline' => 'Waar gaat uw wikia over?',
@@ -2398,6 +2402,7 @@ $messages['pfl'] = array(
 /** Polish (polski)
  * @author BeginaFelicysym
  * @author Chrumps
+ * @author Matik7
  * @author NexGaming
  * @author Sovq
  * @author Vengir
@@ -2444,7 +2449,7 @@ $messages['pl'] = array(
 	'cnw-desc-select-categories' => 'Wybierz dodatkowe kategorie',
 	'cnw-desc-select-one' => 'Wybierz',
 	'cnw-desc-all-ages' => 'Czy ta wikia przeznaczona jest dla dzieci?',
-	'cnw-desc-tip-all-ages' => 'Czy to jest wiki o tematyce, którą dzieci będą zainteresowane? W celu zgodności z prawem Stanów Zjednoczonych obserwujemy wiki o tematyce kierowanej bezpośrednio do dzieci w wieku 12 lat i mniej.', # Fuzzy
+	'cnw-desc-tip-all-ages' => 'Czy to jest wiki o tematyce, którą dzieci będą zainteresowane? W celu zgodności z prawem Stanów Zjednoczonych obserwujemy wiki o tematyce kierowanej bezpośrednio do dzieci w wieku 12 lat i poniżej.',
 	'cnw-desc-default-lang' => 'Twoja wiki będzie w języku: $1',
 	'cnw-desc-change-lang' => 'zmień',
 	'cnw-desc-lang' => 'Język',

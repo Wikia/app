@@ -109,7 +109,7 @@ $messages['qqq'] = array(
 	'userrenametool-encoded' => 'Label for URL encoded version of new username',
 	'userrenametool-reserve' => 'Option to block the old username (after it has been renamed) from being used again.',
 	'userrenametool-warnings' => '{{Identical|Warning}}',
-	'userrenametool-submit' => '{{Identical|Submit}}',
+	'userrenametool-submit' => '{{Identical|Change username}}',
 	'userrenametool-error-antispoof-conflict' => 'Message to show when similarity conflict occurs for new username.',
 	'userrenametool-error-antispoof-notinstalled' => 'Message to show when AntiSpoof extension is not installed.',
 	'userrenametool-errorblocked' => '* $1 - Username of blocked user.
@@ -1325,6 +1325,7 @@ $messages['et'] = array(
 
 /** Basque (euskara)
  * @author An13sa
+ * @author Subi
  * @author Theklan
  * @author Xabier Armendaritz
  */
@@ -1340,6 +1341,8 @@ $messages['eu'] = array(
 	'userrenametool-errorinvalid' => '"<nowiki>$1</nowiki>" erabiltzaile izena okerra da',
 	'userrenametool-errortoomany' => '"<nowiki>$1</nowiki>" lankideak $2 {{PLURAL:$2|ekarpen|ekarpen}} ditu, $3 baino {{PLURAL:$3|ekarpen|ekarpen}} gehiago dituen lankide baten izena aldatzeak gunearen errendimenduan eragin txarrak izan ditzake.',
 	'userrenametool-success' => '"<nowiki>$1</nowiki>" lankidearen izen berria "<nowiki>$2</nowiki>" da',
+	'userrenametool-confirm-yes' => 'Bai',
+	'userrenametool-confirm-no' => 'Ez',
 	'userrenametool-page-exists' => 'Badago $1 orrialdea, eta ezin da automatikoki gainidatzi.',
 	'userrenametool-page-moved' => '«$1» orria «$2» izenera aldatu da.',
 	'userrenametool-page-unmoved' => 'Ezin izan da $1 orrialdea $2(e)ra mugitu.',
@@ -4858,7 +4861,7 @@ $messages['zh-hans'] = array(
 	'userrenametool-previously-renamed' => '用户 $1 已经要求了重命名',
 	'userrenametool-phalanx-matches' => 'Phalanx过滤器匹配$1：',
 	'userrenametool-confirm' => '是，为用户重命名',
-	'userrenametool-submit' => '提交',
+	'userrenametool-submit' => '更改用户名',
 	'userrenametool-error-antispoof-conflict' => 'AntiSpoof警告 - 现已有一个用户名和“<nowiki>$1</nowiki>”相似。',
 	'userrenametool-error-antispoof-notinstalled' => 'AntiSpoof未安装。',
 	'userrenametool-errordoesnotexist' => '用户"<nowiki>$1</nowiki>"不存在',

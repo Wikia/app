@@ -795,6 +795,9 @@ $messages['cy'] = array(
  * @author PtM
  */
 $messages['de'] = array(
+	'multiwikifinder-desc' => 'Mitarbeiterwerkzeug zum Suchen nach einem speziellen Titel durch Wikia',
+	'multidelete-desc' => 'Spezielle Mehrfachwikilöschung',
+	'multiedit-desc' => 'Spezielle Mehrfachwikibearbeitung',
 	'multitasks-link-back-label' => 'hier',
 	'multiwikiedit' => 'Mehrere Seiten gleichzeitig editieren',
 	'multiwikiedit_button' => 'BEARBEITEN',
@@ -1009,6 +1012,9 @@ $messages['eo'] = array(
  * @author Vivaelcelta
  */
 $messages['es'] = array(
+	'multiwikifinder-desc' => 'Herramienta del Staff para buscar un título específico a través de Wikia',
+	'multidelete-desc' => 'Especial de Borrado múltiple',
+	'multiedit-desc' => 'Especial de Multiwiki Edit',
 	'multitasks-link-back-label' => 'aquí',
 	'multiwikiedit' => 'Editar bloque de páginas',
 	'multiwikiedit_button' => 'EDITAR',
@@ -1125,6 +1131,24 @@ $messages['eu'] = array(
 	'multiwikiedit_or' => '<b>EDO</b>',
 	'multiwikiedit_select_yourself' => 'zu',
 	'multidelete_or' => '<b>EDO</b>',
+	'multidelete_all_wikis' => 'wiki guztiak',
+	'multidelete_selected_wikis' => 'hautatutako wikiak',
+	'multidelete_brazilian_portuguese_wikis' => 'Brasilgo portugesezko wiki guztiak',
+	'multidelete_hebrew_wikis' => 'hebreerazko wiki guztiak',
+	'multidelete_chinese_wikis' => 'txinerazko wiki guztiak',
+	'multidelete_polish_wikis' => 'polonierazko wiki guztiak',
+	'multidelete_czech_wikis' => 'txekierazko wiki guztiak',
+	'multidelete_portuguese_wikis' => 'portugesezko wiki guztiak',
+	'multidelete_dutch_wikis' => 'nederlanderazko wiki guztiak',
+	'multidelete_italian_wikis' => 'italierazko wiki guztiak',
+	'multidelete_russian_wikis' => 'errusierazko wiki guztiak',
+	'multidelete_english_wikis' => 'ingelesezko wiki guztiak',
+	'multidelete_japanese_wikis' => 'japonierazko wiki guztiak',
+	'multidelete_finnish_wikis' => 'finlaniderazko wiki guztiak',
+	'multidelete_spanish_wikis' => 'espainierazko wiki guztiak',
+	'multidelete_french_wikis' => 'frantsesezko wiki guztiak',
+	'multidelete_swedish_wikis' => 'suedierazko wiki guztiak',
+	'multidelete_german_wikis' => 'alemanezko wiki guztiak',
 );
 
 /** Persian (فارسی)
@@ -1205,6 +1229,9 @@ $messages['fi'] = array(
  * @author Wyz
  */
 $messages['fr'] = array(
+	'multiwikifinder-desc' => 'Outil d’équipe pour rechercher un titre spécifique dans Wikia',
+	'multidelete-desc' => 'Suppression multi-wikis spéciale',
+	'multiedit-desc' => 'Modification multi-wikis spéciale',
 	'multitasks-link-back-label' => 'ici',
 	'multiwikiedit' => 'Modifier une série de pages',
 	'multiwikiedit_button' => 'MODIFIER',
@@ -2118,6 +2145,9 @@ $messages['mn'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'multiwikifinder-desc' => 'Alatan kegunaan kakitangan untuk mencari tajuk tertentu di seluruh Wikia',
+	'multidelete-desc' => 'Penghapusan berbilang wiki istimewa',
+	'multiedit-desc' => 'Penyuntingan berbilang wiki istimewa',
 	'multitasks-link-back-label' => 'sini',
 	'multiwikiedit' => 'Sunting kelompok laman',
 	'multiwikiedit_button' => 'SUNTING',
@@ -2556,9 +2586,12 @@ $messages['pfl'] = array(
 /** Polish (polski)
  * @author Anoon6
  * @author BeginaFelicysym
+ * @author Pio387
  * @author Sovq
+ * @author Wedkarski
  */
 $messages['pl'] = array(
+	'multiwikifinder-desc' => 'Narzędzie pracowników Wikii używane do szukania określonego tytułu na całej Wikii',
 	'multitasks-link-back-label' => 'tutaj',
 	'multiwikiedit' => 'Edytuj grupę stron',
 	'multiwikiedit_button' => 'EDYTUJ',
@@ -2665,6 +2698,7 @@ Przesyłany plik powinien zawierać nazwę strony i opcjonalny powód, oddzielon
 	'multiwikifindpagenames' => 'Znajdź nazwy stron',
 	'multiwikienterpagename' => 'Wprowadź nazwę strony:',
 	'multiwikirecords' => 'znaleziono $1 {{PLURAL:$1|wiki}}',
+	'multiwikifinder-redirect' => 'przekierowanie',
 	'action-multiwikifinder' => 'szukaj tytułu strony na całej Wikii',
 );
 
@@ -3780,6 +3814,9 @@ $messages['vi'] = array(
  * @author 乌拉跨氪
  */
 $messages['zh-hans'] = array(
+	'multiwikifinder-desc' => '在整个Wikia上搜索特定标题的工作人员工具',
+	'multidelete-desc' => '特殊的多wiki删除',
+	'multiedit-desc' => '特殊的多wiki编辑',
 	'multitasks-link-back-label' => '这里',
 	'multiwikiedit' => '批量编辑页面',
 	'multiwikiedit_button' => '编辑',

@@ -1,5 +1,10 @@
 <?php
+
+use Wikia\Logger\Loggable;
+
 class CreateNewWikiController extends WikiaController {
+
+	use Loggable;
 
 	const DAILY_USER_LIMIT = 2;
 	const WF_WDAC_REVIEW_FLAG_NAME = 'wgWikiDirectedAtChildrenByFounder';
@@ -18,10 +23,12 @@ class CreateNewWikiController extends WikiaController {
 		$wgSuppressToolbar = true;
 
 		// store the fact we're on CNW
-		F::app()->wg->atCreateNewWikiPage = true;
+		$this->wg->atCreateNewWikiPage = true;
 
-		// reuiqred for FB Connect to work
-		$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js' );
+		if ( !$this->wg->User->isLoggedIn() && !empty( $this->wg->EnableFacebookClientExt ) ) {
+			// required for FB Connect to work
+			$this->response->addAsset( 'extensions/wikia/UserLogin/js/UserLoginFacebookPageInit.js' );
+		}
 
 		// fbconnected means user has gone through step 2 to login via facebook.
 		// Therefore, we need to reload some values and start at the step after signup/login
@@ -266,23 +273,41 @@ class CreateNewWikiController extends WikiaController {
 
 			$createWiki = new CreateWiki($params['wName'], $params['wDomain'], $params['wLanguage'], $params['wVertical'], $categories);
 
-			$error_code = $createWiki->create();
-			$cityId = $createWiki->getWikiInfo('city_id');
-			if(empty($cityId)) {
+			try {
+				$createWiki->create();
+			}
+			catch(Exception $ex) {
+				$error_code = $ex->getCode();
+
 				$this->status = 'backenderror';
 				$this->statusMsg = wfMessage( 'cnw-error-general' )->parse();
 				$this->statusHeader = wfMessage( 'cnw-error-general-heading' )->escaped();
-				trigger_error("Failed to create new wiki: $error_code " . $params['wName'] . " " . $params['wLanguage'] . " " . $wgRequest->getIP(), E_USER_WARNING);
-			} else {
-				if ( isset($params['wAllAges']) && !empty( $params['wAllAges'] ) ) {
-					WikiFactory::setVarByName( self::WF_WDAC_REVIEW_FLAG_NAME, $cityId, true, __METHOD__ );
-				}
-				$this->status = 'ok';
-				$this->siteName = $createWiki->getWikiInfo('sitename');
-				$this->cityId = $cityId;
-				$finishCreateTitle = GlobalTitle::newFromText("FinishCreate", NS_SPECIAL, $cityId);
-				$this->finishCreateUrl = empty($wgDevelDomains) ? $finishCreateTitle->getFullURL() : str_replace('.wikia.com', '.'.$wgDevelDomains[0], $finishCreateTitle->getFullURL());
+
+				$this->error('CreateWiki: failed to create new wiki', [
+					'code' => $error_code,
+					'params' => $params,
+					'exception' => $ex
+				]);
+
+				wfProfileOut( __METHOD__);
+				return;
 			}
+
+			$cityId = $createWiki->getWikiInfo('city_id');
+
+			if ( isset($params['wAllAges']) && !empty( $params['wAllAges'] ) ) {
+				WikiFactory::setVarByName( self::WF_WDAC_REVIEW_FLAG_NAME, $cityId, true, __METHOD__ );
+			}
+			$this->status = 'ok';
+			$this->siteName = $createWiki->getWikiInfo('sitename');
+			$this->cityId = $cityId;
+			$finishCreateTitle = GlobalTitle::newFromText("FinishCreate", NS_SPECIAL, $cityId);
+			$this->finishCreateUrl = empty($wgDevelDomains) ? $finishCreateTitle->getFullURL() : str_replace('.wikia.com', '.'.$wgDevelDomains[0], $finishCreateTitle->getFullURL());
+
+			$this->info('CreateWiki: completed', [
+				'city_id' => $cityId,
+				'params' => $params,
+			]);
 		}
 
 		wfProfileOut(__METHOD__);
