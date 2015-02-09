@@ -8,7 +8,7 @@ var GlobalNotification = {
 
 	defaultTimeout: 10000,
 	/**
-	 * Used for introspection in the browser, has no affect on this code
+	 * All the possible class names and colors this module supports
 	 */
 	options: {
 		'notify': 'blue',
@@ -72,14 +72,15 @@ var GlobalNotification = {
 	/**
 	 * Main entry point for this feature - shows the notification
 	 * @param {string} content - message to be displayed
-	 * @param {string} type - 'notify' (blue), 'confirm' (green), 'error' (red), 'warn' (yellow)
+	 * @param {string} type - See GlobalNotification.options for supported types
 	 * @param {jQuery} [element] Element to prepend notification to
 	 * @param {number} [timeout] Optional time (in ms) after which notification will disappear.
 	 */
 	show: function (content, type, element, timeout) {
 		'use strict';
 
-		var isModal;
+		var isModal,
+			classes = Object.keys(GlobalNotification.options).join(' ');
 		GlobalNotification.content = content;
 
 		function callback() {
@@ -92,7 +93,7 @@ var GlobalNotification = {
 
 			GlobalNotification.createDom(element, isModal);
 			GlobalNotification.msg.html(GlobalNotification.content);
-			GlobalNotification.dom.removeClass('confirm, error, notify, warn').addClass(type);
+			GlobalNotification.dom.removeClass(classes).addClass(type);
 
 			// Share scroll event with WikiaFooterApp's toolbar floating (BugId:33365)
 			if (window.WikiaFooterApp) {

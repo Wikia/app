@@ -28,7 +28,7 @@ abstract class WikiaSkinMonoBook extends WikiaSkin {
 		$this->strictAssetUrlCheck = false;
 	}
 
-	function initPage(&$out) {
+	function initPage( OutputPage $out) {
 		global $wgHooks, $wgShowAds, $wgRequest;
 
 		parent::initPage( $out );
@@ -208,7 +208,7 @@ HTML;
 			$memcKey = wfMemcKey( 'wikiaNavUrls', $wgLang->getCode() );
 			$result = $wgMemc->get( $memcKey );
 		}
-		
+
 		if( empty( $result ) ) {
 			$result = array();
 			if(isset($wgWikicitiesNavLinks) && is_array($wgWikicitiesNavLinks)) {
@@ -232,7 +232,7 @@ HTML;
 				$wgMemc->set( $memcKey, $result, 60*60 );
 			}
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return $result;
 	}

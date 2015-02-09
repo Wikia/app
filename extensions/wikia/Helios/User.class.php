@@ -68,9 +68,14 @@ class User {
 
 		$oLogger = \Wikia\Logger\WikiaLogger::instance();
 		$oLogger->info( 'HELIOS_LOGIN', [ 'method' => __METHOD__ ] );
-		
+
 		// Get the user's name from the request context.
-		$sUserName= \RequestContext::getMain()->getRequest()->getText( 'username' );
+		$sKey = ( defined( 'MW_API' ) ) ? 'lgname' : 'username';
+		$sUserName = \RequestContext::getMain()->getRequest()->getText( $sKey );
+
+		// Convert to a valid MediaWiki user name, as the original login does it.
+		$sUserName = \User::getCanonicalName( $sUserName, 'valid' );
+		// TODO: handle invalid user names without sending requests to the service.
 
 		global $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret;
 		$oHelios = new Client( $wgHeliosBaseUri, $wgHeliosClientId, $wgHeliosClientSecret );
@@ -80,6 +85,14 @@ class User {
 			global $wgHeliosLoginShadowMode;
 			$oLogin = $oHelios->login( $sUserName, $sPassword );
 			$bResult = !empty( $oLogin->access_token );
+
+			if ( !empty( $oLogin->error ) ) {
+				$oLogger->error(
+					'HELIOS_LOGIN',
+					[ 'response' => $oLogin, 'username' => $sUserName,
+					'user_id' => $iUserId, 'method' => __METHOD__ ]
+				);
+			}
 		}
 
 		catch ( \Wikia\Helios\ClientException $e ) {
@@ -102,10 +115,15 @@ class User {
 	public static function comparePasswordCheck( $bHeliosCheck, $bHelios, $bMediaWiki, $sType, $sHash, $iUserId ) {
 
 		if ( $bHeliosCheck && $bHelios != $bMediaWiki ) {
+
+			// Get the user's name from the request context.
+			$sKey = ( defined( 'MW_API' ) ) ? 'lgname' : 'username';
+			$sUserName = \RequestContext::getMain()->getRequest()->getText( $sKey );
+
 			\Wikia\Logger\WikiaLogger::instance()->error(
 				'HELIOS_LOGIN',
-				[ 'method' => __METHOD__, 'type' => $sType,
-				'hash' => $sHash, 'user_id' => $iUserId ]
+				[ 'method' => __METHOD__, 'type' => $sType, 'hash' => $sHash,
+				'user_id' => $iUserId, 'username' => $sUserName ]
 			);
 		}
 

@@ -12,8 +12,14 @@ define('ext.wikia.adEngine.slotTweaker', [
 		standardLeaderboardSizeClass = 'standard-leaderboard';
 
 	function removeClass(element, cls) {
-		var elClasses = ' ' + element.className.replace(rclass, ' ') + ' ',
-			newClasses = elClasses.replace(' ' + cls + ' ', ' ');
+		var oldClasses,
+			newClasses = ' ' + element.className.replace(rclass, ' ') + ' ';
+
+		// Remove all instances of class in the className string
+		while (oldClasses !== newClasses) {
+			oldClasses = newClasses;
+			newClasses = oldClasses.replace(' ' + cls + ' ', ' ');
+		}
 
 		log(['removeClass ' + cls, element], 8, logGroup);
 		element.className = newClasses;
@@ -102,12 +108,27 @@ define('ext.wikia.adEngine.slotTweaker', [
 		}
 	}
 
+	/**
+	 * Triggers repaint to hide empty slot placeholders in Chrome
+	 * This is a temporary workaround
+	 * @param {string} slotId
+	 */
+	function hackChromeRefresh(slotId) {
+		var parent = document.getElementById(slotId).parentElement;
+		if (parent) {
+			parent.style.display = 'none';
+			parent.offsetHeight;
+			parent.style.display = '';
+		}
+	}
+
 	return {
 		addDefaultHeight: addDefaultHeight,
 		removeDefaultHeight: removeDefaultHeight,
 		removeTopButtonIfNeeded: removeTopButtonIfNeeded,
 		adjustLeaderboardSize: adjustLeaderboardSize,
 		hide: hide,
-		show: show
+		show: show,
+		hackChromeRefresh: hackChromeRefresh
 	};
 });

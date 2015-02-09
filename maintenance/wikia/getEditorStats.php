@@ -16,11 +16,18 @@
 require_once( dirname( __FILE__ ) . '../../Maintenance.php' );
 
 class GetRevisionWithTags extends Maintenance {
+	/**
+	 * Order of those tags is crucial as the most significant one is used to determine
+	 * what kind of edit a given revision is
+	 * @var array
+	 */
 	private static $editorTags = [
-		'rte-source',
-		'rte-wysiwyg',
 		'visualeditor',
-		'mobileedit'
+		'rte-wysiwyg',
+		'rte-source',
+		'mobileedit',
+		'categoryselect',
+		'apiedit'
 	];
 
 	public function __construct() {
@@ -55,13 +62,16 @@ class GetRevisionWithTags extends Maintenance {
 
 		return (new WikiaSQL())
 			->SELECT()
-			->FIELD('rev_id')
-			->FROM('revision')
-			->LEFT_JOIN('tag_summary')
-			->ON('ts_rev_id', 'rev_id')
-			->FIELD('ts_tags')
-			->WHERE('rev_timestamp')
-			->BETWEEN($timeStampStart, $timeStampEnd);
+			->FIELD( 'rev_id' )
+			->FROM( 'page' )
+			->JOIN( 'revision' )
+			->ON( 'rev_page', 'page_id' )
+			->LEFT_JOIN( 'tag_summary' )
+			->ON( 'ts_rev_id', 'rev_id' )
+			->FIELD( 'ts_tags' )
+			->WHERE( 'rev_timestamp' )
+			->BETWEEN( $timeStampStart, $timeStampEnd )
+			->AND_( 'page_namespace' )->EQUAL_TO( 0 );
 	}
 
 	private function createRevisionEntry($row) {

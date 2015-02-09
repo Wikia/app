@@ -25,8 +25,9 @@ require(
 				this.$notificationsMessages = $('> ul', this.$notificationsContainer);
 
 				this.globalNavigationHeight = $('#globalNavigation').outerHeight();
+				this.notificationsMarkAsReadHeight = 0;
 				this.notificationsHeaderHeight = 0;
-				this.notificationsBottomPadding = 15;
+				this.notificationsBottomPadding = 20;
 
 				this.unreadCount = parseInt(this.$notificationsCount.html(), 10);
 
@@ -35,19 +36,15 @@ require(
 					.mouseenter( this.proxy( this.fetchForCurrentWiki ) );
 
 				this.$wallNotifications.add( $('#pt-wall-notifications') )
-					.on('click', '#markasread-sub', this.proxy( this.markAllAsReadPrompt ))
-					.on('click', '#markasread-this-wiki', this.proxy( this.markAllAsRead ))
-					.on('click', '#markasread-all-wikis', this.proxy( this.markAllAsReadAllWikis ));
+					.on('click', '.notifications-markasread', this.proxy( this.markAllAsReadAllWikis ));
 
-
-				$('#AccountNavigation .user-menu').one('mouseenter', this.proxy(this.setNotificationsHeight));
-
-				this.$window.on('resize', $.throttle(100, this.proxy(this.setNotificationsHeight)));
+				window.WallNotifications = WallNotifications;
 			},
 
 			openNotifications: function() {
 				if ( this.getAttribute('id') === 'notifications' ) {
 					WallNotifications.$wallNotifications.addClass('show');
+					WallNotifications.setNotificationsHeight();
 				}
 				$('#globalNavigation').trigger('notifications-menu-opened');
 			},
@@ -184,15 +181,6 @@ require(
 						this.bucky.timer.stop('markAllAsReadRequest');
 					})
 				});
-			},
-
-			markAllAsReadPrompt: function(e) {
-				$(e.target).parent().addClass('show');
-			},
-
-			markAllAsRead: function(e) {
-				this.markAllAsReadRequest( false );
-				return false;
 			},
 
 			markAllAsReadAllWikis: function(e) {
@@ -359,7 +347,12 @@ require(
 					msgHeight = 0;
 
 				if ( isDropdownOpen ) {
-					height = this.$window.height() - this.globalNavigationHeight - this.notificationsBottomPadding;
+
+					if ( this.notificationsMarkAsReadHeight === 0 ) {
+						this.notificationsMarkAsReadHeight = $('.notifications-markasread').outerHeight();
+					}
+
+					height = this.$window.height() - this.globalNavigationHeight - this.notificationsBottomPadding - this.notificationsMarkAsReadHeight;
 					msgHeight = this.$notificationsMessages.height();
 
 					if ( !msgHeight ) {

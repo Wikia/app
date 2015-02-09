@@ -11,7 +11,7 @@
  */
 
 /**
- * @global Array The list of extension credits.
+ * @global Array $wgExtensionCredits The list of extension credits.
  * @see http://www.mediawiki.org/wiki/Manual:$wgExtensionCredits
  */
 $wgExtensionCredits['other'][] = array(

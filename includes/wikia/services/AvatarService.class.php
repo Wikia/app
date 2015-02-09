@@ -2,7 +2,6 @@
 class AvatarService extends Service {
 
 	const AVATAR_SIZE_SMALL = 20;
-	const AVATAR_SIZE_SMALL_PLUS = 36;
 	const AVATAR_SIZE_MEDIUM = 50;
 	const AVATAR_SIZE_LARGE = 150;
 
@@ -161,8 +160,6 @@ class AvatarService extends Service {
 		// We allow HTML tag to resize to any size.
 		if ( $avatarSize <= self::AVATAR_SIZE_SMALL ) {
 			$allowedSize = self::AVATAR_SIZE_SMALL;
-		} else if ( $avatarSize <= self::AVATAR_SIZE_SMALL_PLUS ) {
-			$allowedSize = self::AVATAR_SIZE_SMALL_PLUS;
 		} else if ( $avatarSize <= self::AVATAR_SIZE_MEDIUM ) {
 			$allowedSize = self::AVATAR_SIZE_MEDIUM;
 		} else {
