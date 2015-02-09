@@ -16,7 +16,7 @@ class UserLoginForm extends LoginForm {
 	function load() {
 		parent::load();
 		$request = $this->mOverrideRequest;
-		// Note: if these change make sure to update UserLoginFacebookForm class also
+
 		if ( $request->getText( 'userloginext01', '' ) != '' ) {
 			$this->mUsername = $request->getText( 'userloginext01', '' );
 		}
@@ -235,7 +235,28 @@ class UserLoginForm extends LoginForm {
 		global $wgCityId;
 		$u = parent::initUser( $u, $autocreate );
 
+		/*
+		 * Remove when SOC-217 ABTest is finished
+		 */
+		$isAllowRegisterUnconfirmed = $this->isAllowedRegisterUnconfirmed();
+		/*
+		 * end remove
+		 */
+
 		if ( $skipConfirm === false ) {
+			/*
+			 * Remove when SOC-217 ABTest is finished
+			 */
+			$u->setOption(
+				UserLoginSpecialController::NOT_CONFIRMED_LOGIN_OPTION_NAME,
+				$isAllowRegisterUnconfirmed
+					? UserLoginSpecialController::NOT_CONFIRMED_LOGIN_ALLOWED
+					: UserLoginSpecialController::NOT_CONFIRMED_LOGIN_NOT_ALLOWED
+			);
+			/*
+			 * end remove
+			 */
+
 			//Set properties that will require user to confirm email after signup
 			$u->setOption( UserLoginSpecialController::SIGNUP_REDIRECT_OPTION_NAME, $this->mReturnTo );
 			$u->setOption( UserLoginSpecialController::NOT_CONFIRMED_SIGNUP_OPTION_NAME, true );
@@ -245,6 +266,16 @@ class UserLoginForm extends LoginForm {
 		}
 
 		wfRunHooks( 'AddNewAccount', array( $u, false ) );
+
+		/*
+		 * Remove when SOC-217 ABTest is finished
+		 */
+		if ( $isAllowRegisterUnconfirmed ) {
+			$u->setCookies();
+		}
+		/*
+		 * end remove
+		 */
 
 		return $u;
 	}
@@ -276,4 +307,24 @@ class UserLoginForm extends LoginForm {
 		return false;
 	}
 
+
+	/*
+	 * Remove when SOC-217 ABTest is finished
+	 */
+	/**
+	 * Check if user is allowed to register account without email confirmation
+	 *
+	 * @return bool
+	 */
+	public function isAllowedRegisterUnconfirmed() {
+		$registerUnconfirmedCookie = $this->getRequest()->getCookie( 'RegisterUnconfirmed' );
+
+		if ( !empty( F::app()->wg->EnableRegisterUnconfirmed ) && !empty( $registerUnconfirmedCookie ) ) {
+			return true;
+		}
+		return false;
+	}
+	/*
+	 * end remove
+	 */
 }

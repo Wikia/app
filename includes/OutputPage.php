@@ -2984,8 +2984,9 @@ $templates
 
 	/**
 	 * Add one or more variables to be set in mw.config in JavaScript.
+	 * Wikia change: For WikiaMobile skin, variables have to be whitelisted in WikiaMobile.setup.php
 	 *
-	 * @param $key {String|Array} Key or array of key/value pars.
+	 * @param $keys {String|Array} Key or array of key/value pars.
 	 * @param $value {Mixed} [optional] Value of the configuration variable.
 	 */
 	public function addJsConfigVars( $keys, $value = null ) {

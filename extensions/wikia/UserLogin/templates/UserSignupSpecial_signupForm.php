@@ -143,7 +143,6 @@ if( !empty( $byemail ) ) {
 		<? endif; ?>
 		<?= F::app()->renderView( 'WikiaStyleGuideForm', 'index', [ 'form' => $form ] ) ?>
 	</div>
-
 	<? if( empty( $byemail ) ): ?>
 		<div class="marketing">
 			<h2><?= wfMessage( 'usersignup-marketing-benefits' )->escaped() ?></h2>
@@ -157,11 +156,6 @@ if( !empty( $byemail ) ) {
 				<p><?= wfMessage( 'usersignup-marketing-community' )->escaped() ?></p>
 			</div>
 			<div class="benefit">
-				<ul class="wikis">
-					<? foreach( $popularWikis as $wiki ) { ?>
-					<li class="wiki"><img src="<?= $wiki ?>" width="65" height="18"></li>
-					<? } ?>
-				</ul>
 				<h3><?= wfMessage( 'usersignup-marketing-global-heading' )->escaped() ?></h3>
 				<p><?= wfMessage( 'usersignup-marketing-global' )->escaped() ?></p>
 			</div>
