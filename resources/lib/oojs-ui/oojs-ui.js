@@ -6727,7 +6727,9 @@ OO.ui.ProcessDialog.prototype.attachActions = function () {
 	}
 
 	this.fitLabel();
-	this.$body.css( 'bottom', this.$foot.outerHeight( true ) );
+	setTimeout( function() {
+		this.$body.css( 'bottom', this.$foot.outerHeight( true ) );
+	}.bind( this ), 0 );
 };
 
 /**

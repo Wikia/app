@@ -35,7 +35,7 @@ QUnit.test( 'Create and manipulate image nodes', function ( assert ) {
 						},
 						results: {
 							expect: {
-								getImageNodeType: 'mwBlockImage',
+								getImageNodeType: 'wikiaBlockImage',
 								isBorderable: false
 							},
 							position: 'oppositeToText'
@@ -93,7 +93,7 @@ QUnit.test( 'Create and manipulate image nodes', function ( assert ) {
 						},
 						results: {
 							expect: {
-								getImageNodeType: 'mwBlockImage',
+								getImageNodeType: 'wikiaBlockImage',
 								isBorderable: false,
 								isDefaultSize: true
 							},
@@ -107,7 +107,7 @@ QUnit.test( 'Create and manipulate image nodes', function ( assert ) {
 						},
 						results: {
 							expect: {
-								getImageNodeType: 'mwBlockImage'
+								getImageNodeType: 'wikiaBlockImage'
 							},
 							position: 'withText'
 						}
