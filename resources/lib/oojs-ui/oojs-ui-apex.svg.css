@@ -168,49 +168,9 @@
 .oo-ui-buttonElement-frameless.oo-ui-widget-disabled > .oo-ui-buttonElement-button > .oo-ui-labelElement-label {
 	color: #cccccc;
 }
-.oo-ui-buttonElement-framed > .oo-ui-buttonElement-button {
-	margin: 0.1em 0;
-	padding: 0.2em 0.8em;
-	border-radius: 0.3em;
-	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
-	border: 1px #c9c9c9 solid;
-	-webkit-transition: border-color 100ms ease-in-out;
-	   -moz-transition: border-color 100ms ease-in-out;
-	    -ms-transition: border-color 100ms ease-in-out;
-	     -o-transition: border-color 100ms ease-in-out;
-	        transition: border-color 100ms ease-in-out;
-	background: #eeeeee;
-	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#ffffff', endColorstr='#dddddd');
-	background-image: -webkit-gradient(linear, right top, right bottom, color-stop(0%, #ffffff), color-stop(100%, #dddddd));
-	background-image: -webkit-linear-gradient(top, #ffffff 0%, #dddddd 100%);
-	background-image:    -moz-linear-gradient(top, #ffffff 0%, #dddddd 100%);
-	background-image:     -ms-linear-gradient(top, #ffffff 0%, #dddddd 100%);
-	background-image:      -o-linear-gradient(top, #ffffff 0%, #dddddd 100%);
-	background-image:         linear-gradient(top, #ffffff 0%, #dddddd 100%);
-}
-.oo-ui-buttonElement-framed > .oo-ui-buttonElement-button:hover,
-.oo-ui-buttonElement-framed > .oo-ui-buttonElement-button:focus {
-	border-color: #aaaaaa;
-	outline: none;
-}
 .oo-ui-buttonElement-framed > input.oo-ui-buttonElement-button,
 .oo-ui-buttonElement-framed.oo-ui-labelElement > .oo-ui-buttonElement-button > .oo-ui-labelElement-label {
 	line-height: 1.9em;
-}
-.oo-ui-buttonElement-framed.oo-ui-widget-enabled > .oo-ui-buttonElement-button:active,
-.oo-ui-buttonElement-framed.oo-ui-buttonElement-active > .oo-ui-buttonElement-button,
-.oo-ui-buttonElement-framed.oo-ui-buttonElement-pressed > .oo-ui-buttonElement-button {
-	box-shadow: inset 0 1px 4px 0 rgba(0, 0, 0, 0.07);
-	color: black;
-	border-color: #c9c9c9;
-	background: #eeeeee;
-	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#dddddd', endColorstr='#ffffff');
-	background-image: -webkit-gradient(linear, right top, right bottom, color-stop(0%, #dddddd), color-stop(100%, #ffffff));
-	background-image: -webkit-linear-gradient(top, #dddddd 0%, #ffffff 100%);
-	background-image:    -moz-linear-gradient(top, #dddddd 0%, #ffffff 100%);
-	background-image:     -ms-linear-gradient(top, #dddddd 0%, #ffffff 100%);
-	background-image:      -o-linear-gradient(top, #dddddd 0%, #ffffff 100%);
-	background-image:         linear-gradient(top, #dddddd 0%, #ffffff 100%);
 }
 .oo-ui-buttonElement-framed.oo-ui-iconElement > .oo-ui-buttonElement-button > .oo-ui-iconElement-icon {
 	margin-left: -0.5em;
@@ -219,62 +179,6 @@
 .oo-ui-buttonElement-framed.oo-ui-iconElement.oo-ui-labelElement > .oo-ui-buttonElement-button > .oo-ui-iconElement-icon {
 	margin-left: -0.5em;
 	margin-right: 0.3em;
-}
-.oo-ui-buttonElement-framed.oo-ui-flaggedElement-progressive > .oo-ui-buttonElement-button {
-	border: solid 1px #a6cee1;
-	background: #cde7f4;
-	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#eaf4fa', endColorstr='#b0d9ee');
-	background-image: -webkit-gradient(linear, right top, right bottom, color-stop(0%, #eaf4fa), color-stop(100%, #b0d9ee));
-	background-image: -webkit-linear-gradient(top, #eaf4fa 0%, #b0d9ee 100%);
-	background-image:    -moz-linear-gradient(top, #eaf4fa 0%, #b0d9ee 100%);
-	background-image:     -ms-linear-gradient(top, #eaf4fa 0%, #b0d9ee 100%);
-	background-image:      -o-linear-gradient(top, #eaf4fa 0%, #b0d9ee 100%);
-	background-image:         linear-gradient(top, #eaf4fa 0%, #b0d9ee 100%);
-}
-.oo-ui-buttonElement-framed.oo-ui-flaggedElement-progressive > .oo-ui-buttonElement-button:hover,
-.oo-ui-buttonElement-framed.oo-ui-flaggedElement-progressive > .oo-ui-buttonElement-button:focus {
-	border-color: #9dc2d4;
-}
-.oo-ui-buttonElement-framed.oo-ui-flaggedElement-progressive.oo-ui-widget-enabled > .oo-ui-buttonElement-button:active,
-.oo-ui-buttonElement-framed.oo-ui-flaggedElement-progressive.oo-ui-buttonElement-active > .oo-ui-buttonElement-button,
-.oo-ui-buttonElement-framed.oo-ui-flaggedElement-progressive.oo-ui-buttonElement-pressed > .oo-ui-buttonElement-button {
-	border: solid 1px #a6cee1;
-	background: #cde7f4;
-	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#b0d9ee', endColorstr='#eaf4fa');
-	background-image: -webkit-gradient(linear, right top, right bottom, color-stop(0%, #b0d9ee), color-stop(100%, #eaf4fa));
-	background-image: -webkit-linear-gradient(top, #b0d9ee 0%, #eaf4fa 100%);
-	background-image:    -moz-linear-gradient(top, #b0d9ee 0%, #eaf4fa 100%);
-	background-image:     -ms-linear-gradient(top, #b0d9ee 0%, #eaf4fa 100%);
-	background-image:      -o-linear-gradient(top, #b0d9ee 0%, #eaf4fa 100%);
-	background-image:         linear-gradient(top, #b0d9ee 0%, #eaf4fa 100%);
-}
-.oo-ui-buttonElement-framed.oo-ui-flaggedElement-constructive > .oo-ui-buttonElement-button {
-	border: solid 1px #b8d892;
-	background: #daf0be;
-	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#f0fbe1', endColorstr='#c3e59a');
-	background-image: -webkit-gradient(linear, right top, right bottom, color-stop(0%, #f0fbe1), color-stop(100%, #c3e59a));
-	background-image: -webkit-linear-gradient(top, #f0fbe1 0%, #c3e59a 100%);
-	background-image:    -moz-linear-gradient(top, #f0fbe1 0%, #c3e59a 100%);
-	background-image:     -ms-linear-gradient(top, #f0fbe1 0%, #c3e59a 100%);
-	background-image:      -o-linear-gradient(top, #f0fbe1 0%, #c3e59a 100%);
-	background-image:         linear-gradient(top, #f0fbe1 0%, #c3e59a 100%);
-}
-.oo-ui-buttonElement-framed.oo-ui-flaggedElement-constructive > .oo-ui-buttonElement-button:hover,
-.oo-ui-buttonElement-framed.oo-ui-flaggedElement-constructive > .oo-ui-buttonElement-button:focus {
-	border-color: #adcb89;
-}
-.oo-ui-buttonElement-framed.oo-ui-flaggedElement-constructive.oo-ui-widget-enabled > .oo-ui-buttonElement-button:active,
-.oo-ui-buttonElement-framed.oo-ui-flaggedElement-constructive.oo-ui-buttonElement-active > .oo-ui-buttonElement-button,
-.oo-ui-buttonElement-framed.oo-ui-flaggedElement-constructive.oo-ui-buttonElement-pressed > .oo-ui-buttonElement-button {
-	border: solid 1px #b8d892;
-	background: #daf0be;
-	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#c3e59a', endColorstr='#f0fbe1');
-	background-image: -webkit-gradient(linear, right top, right bottom, color-stop(0%, #c3e59a), color-stop(100%, #f0fbe1));
-	background-image: -webkit-linear-gradient(top, #c3e59a 0%, #f0fbe1 100%);
-	background-image:    -moz-linear-gradient(top, #c3e59a 0%, #f0fbe1 100%);
-	background-image:     -ms-linear-gradient(top, #c3e59a 0%, #f0fbe1 100%);
-	background-image:      -o-linear-gradient(top, #c3e59a 0%, #f0fbe1 100%);
-	background-image:         linear-gradient(top, #c3e59a 0%, #f0fbe1 100%);
 }
 .oo-ui-buttonElement-framed.oo-ui-flaggedElement-destructive > .oo-ui-buttonElement-button {
 	color: #d45353;
