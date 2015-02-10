@@ -101,6 +101,7 @@ class MWMemcached {
 
 	// }}}
 
+	const MEMCACHED_ITEM_MAX_SIZE = 1048576; // 1MB
 
 	/**
 	 * Command statistics
@@ -1188,10 +1189,11 @@ class MWMemcached {
 		}
 		// Wikia change - begin - @author: wladek
 		// Log details if we try to store value that will not fit the default item_max_size
-		if ( $len > 1024 * 1024 - 2 ) {
+		if ( $len > self::MEMCACHED_ITEM_MAX_SIZE - 2 ) {
 			// default item_max_size is 1mb, 2 characters are reserved for trailing "\r\n"
 			if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
 				\Wikia\Logger\WikiaLogger::instance()->debug( 'MemcachedClient: large value' , [
+					'exception' => new Exception(),
 					'key' => $key,
 					'len' => $len,
 				] );
