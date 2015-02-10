@@ -48,7 +48,7 @@ class JSMessages {
 	/**
 	 * Add a package to be available in JS
 	 *
-	 * @param string $name - package name
+	 * @param string $package - package name
 	 * @param int $mode - how to emit messages (inline / external)
 	 */
 	static public function enqueuePackage($package, $mode) {

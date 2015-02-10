@@ -35,8 +35,6 @@ class GamestarApiWrapperTest extends WikiaBaseTest {
 	 */
 	public function testgetDataFromValidHtmlResponse() {
 
-		$this->markTestSkipped( "This test is broken. The flag will be removed automatically once https://github.com/Wikia/app/pull/6156 is merged." );
-
 		// setup
 		$this->setUpMock();
 

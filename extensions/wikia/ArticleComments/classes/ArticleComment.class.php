@@ -501,15 +501,16 @@ class ArticleComment {
 	 * @param $title Title
 	 * @return bool
 	 */
-	public static function isTitleComment($title) {
-		if (!($title instanceof Title)) {
+	public static function isTitleComment( $title ) {
+		if ( !( $title instanceof Title ) ) {
 			return false;
 		}
 
 		if ( self::isBlog() ) {
 			return true;
 		} else {
-			return strpos(end(explode('/', $title->getText())), ARTICLECOMMENT_PREFIX) === 0;
+			$titleParts = explode( '/', $title->getText() );
+			return strpos( end( $titleParts ), ARTICLECOMMENT_PREFIX ) === 0;
 		}
 	}
 
