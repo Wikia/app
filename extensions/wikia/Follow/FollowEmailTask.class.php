@@ -9,7 +9,7 @@ class FollowEmailTask extends BaseTask {
 		$oUser = User::newFromId( $iUserId );
 		$oChildTitle = Title::newFromDBkey( $sChildTitleDBKey );
 
-		\Wikia\Logger\WikiaLogger::instance()->info( 'WatchlistLogs: Sending bloglisting watchlist updates', [
+		$this->info( 'WatchlistLogs: Sending bloglisting watchlist updates', [
 			'watchedPages' => $aWatchers,
 		] );
 
