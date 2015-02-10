@@ -156,6 +156,12 @@
 }
 
 .MainPageHeroHeader {
+	[contenteditable=true]:empty:before{
+		content: attr(placeholder);
+		color: #a9a9a9;
+		display: block; /* For Firefox */
+	}
+
 	&.hero-image-wrapper {
 		margin: -1px -1px 0;
 		overflow: hidden;
@@ -260,7 +266,7 @@
 		text-align: left;
 
 		.edit-box {
-			background-color: rgba(0, 0, 0, .2);
+			background-color: rgba(0, 0, 0, .03);
 			bottom: -64px;
 			display: none;
 			width: 100%;
