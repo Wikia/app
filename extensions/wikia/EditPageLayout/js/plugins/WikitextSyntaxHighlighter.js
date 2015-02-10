@@ -506,20 +506,37 @@ define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
 		}
 		syntaxHighlighterConfig = window.syntaxHighlighterConfig;
 
-		//use 3-digit colors instead of 6-digit colors for performance
-		configureColor('boldOrItalicColor', '#EEE'); //gray
-		configureColor('commentColor', '#EFE'); //green
-		configureColor('entityColor', '#DFD'); //green
-		configureColor('externalLinkColor', '#EFF'); //cyan
-		configureColor('headingColor', '#EEE'); //gray
-		configureColor('hrColor', '#EEE'); //gray
-		configureColor('listOrIndentColor', '#EFE'); //green
-		configureColor('parameterColor', '#FC6'); //orange
-		configureColor('signatureColor', '#FC6'); //orange
-		configureColor('tagColor', '#FEF'); //pink
-		configureColor('tableColor', '#FFC'); //yellow
-		configureColor('templateColor', '#FFC'); //yellow
-		configureColor('wikilinkColor', '#EEF'); //blue
+
+		if (window.wgIsDarkTheme) {
+			//use 3-digit colors instead of 6-digit colors for performance
+			configureColor('boldOrItalicColor', '#6c71c4'); //gray
+			configureColor('commentColor', '#dc322f'); //green
+			configureColor('entityColor', '#859900'); //green
+			configureColor('externalLinkColor', '#2aa198'); //cyan
+			configureColor('headingColor', '#6c71c4'); //gray
+			configureColor('hrColor', '#6c71c4'); //gray
+			configureColor('listOrIndentColor', '#dc322f'); //green
+			configureColor('parameterColor', '#cb4b16'); //orange
+			configureColor('signatureColor', '#cb4b16'); //orange
+			configureColor('tagColor', '#d33682'); //pink
+			configureColor('tableColor', '#b58900'); //yellow
+			configureColor('templateColor', '#b58900'); //yellow
+			configureColor('wikilinkColor', '#268bd2'); //blue
+		} else {
+			configureColor('boldOrItalicColor', '#e8e9ff'); //gray
+			configureColor('commentColor', '#ffb8b6'); //green
+			configureColor('entityColor', '#c5cf86 '); //green
+			configureColor('externalLinkColor', '#97d8d2'); //cyan
+			configureColor('headingColor', '#e8e9ff'); //gray
+			configureColor('hrColor', '#e8e9ff'); //gray
+			configureColor('listOrIndentColor', '#ffb8b6'); //green
+			configureColor('parameterColor', '#ffb692'); //orange
+			configureColor('signatureColor', '#ffb692'); //orange
+			configureColor('tagColor', '#ffc0e8'); //pink
+			configureColor('tableColor', '#ecddb1 '); //yellow
+			configureColor('templateColor', '#ecddb1 '); //yellow
+			configureColor('wikilinkColor', '#b0e8ff'); //blue
+		}
 
 		syntaxHighlighterConfig.timeout = syntaxHighlighterConfig.timeout || 50;
 
