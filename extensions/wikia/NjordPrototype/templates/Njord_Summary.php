@@ -18,8 +18,8 @@
 		<div class="edit-box">
 			<span class="edited-text sg-main" contenteditable="true"><?= htmlspecialchars( $wikiData->description ) ?></span>
 			<div class="btn-bar">
-				<div class="new-btn discard-btn sg-sub"><?= wfMessage('hero-image-discard-btn')->escaped(); ?></div>
-				<div class="new-btn save-btn sg-sub"><?= wfMessage('hero-image-publish-btn')->escaped(); ?></div>
+				<button class="new-btn discard-btn sg-sub"><?= wfMessage('hero-image-discard-btn')->escaped(); ?></button>
+				<button class="new-btn save-btn sg-sub"><?= wfMessage('hero-image-publish-btn')->escaped(); ?></button>
 			</div>
 		</div>
 		<span class="hero-description-text">
