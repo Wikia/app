@@ -666,6 +666,8 @@ class FeedRenderer {
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
 	 */
 	public static function getAddedMediaRow( $row, $type ) {
+		global $wgArticleAsJson;
+
 		$wg = F::app()->wg;
 
 		$key = "new_{$type}";
@@ -702,12 +704,26 @@ class FeedRenderer {
 				$attribs['href'] = $title->getLocalUrl();
 			}
 
-			$thumb = $item['html'];
-			// Only wrap the line in an anchor if it doesn't already include one
-			if ( preg_match('/<a[^>]+href/', $thumb) ) {
-				$thumbs[] = "<li>$thumb</li>";
+			if ( $wgArticleAsJson ) {
+				$dummy = new DummyLinker;
+				$file = false;
+				$frameParams = [];
+				$handlerParams = [];
+				$time = false;
+				$res = null;
+				if ( !wfRunHooks( 'ImageBeforeProduceHTML',
+					array( &$dummy, &$title, &$file, &$frameParams, &$handlerParams, &$time, &$res ) ) ) {
+					$thumbs[] = "<li>$res</li>";
+				}
+				// TODO what if not?
 			} else {
-				$thumbs[] = "<li><a data-image-link href=\"{$title->getLocalUrl()}\">$thumb</a></li>";
+				$thumb = $item['html'];
+				// Only wrap the line in an anchor if it doesn't already include one
+				if ( preg_match('/<a[^>]+href/', $thumb) ) {
+					$thumbs[] = "<li>$thumb</li>";
+				} else {
+					$thumbs[] = "<li><a data-image-link href=\"{$title->getLocalUrl()}\">$thumb</a></li>";
+				}
 			}
 		}
 
