@@ -1191,7 +1191,7 @@ class MWMemcached {
 		if ( $len > 1024 * 1024 - 2 ) {
 			// default item_max_size is 1mb, 2 characters are reserved for trailing "\r\n"
 			if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
-				\Wikia\Logger\WikiaLogger::instance()->debug( 'MemcachedClient - large value' , [
+				\Wikia\Logger\WikiaLogger::instance()->debug( 'MemcachedClient: large value' , [
 					'key' => $key,
 					'len' => $len,
 				] );
