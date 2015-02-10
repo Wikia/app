@@ -98,6 +98,11 @@
 					<input type="text" name="twitter" value="<?= $user['twitter']; ?>">
 				</div>
 				<div class="input-group">
+					<label for="fbPage"><?= wfMsg('user-identity-box-about-fb-page'); ?></label>
+					<span class="fb-start">facebook.com/</span>
+					<input type="text" name="fbPage" value="<?= $user['fbPage']; ?>">
+				</div>
+				<div class="input-group">
 					<label><?= wfMsg('user-identity-box-about-fav-wikis'); ?></label>
 					<a class="favorite-wikis-refresh wikia-chiclet-button" href="#"><img src="<?= $wgBlankImgUrl ?>"></a>
 					<ul class="favorite-wikis">

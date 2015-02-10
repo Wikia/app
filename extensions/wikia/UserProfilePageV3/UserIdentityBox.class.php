@@ -121,7 +121,7 @@ class UserIdentityBox {
 		}
 
 		// Sanitize data to prevent XSS (VE-720)
-		$keysToSanitize = [ 'gender', 'location', 'occupation', 'realName', 'twitter', 'website' ];
+		$keysToSanitize = [ 'gender', 'location', 'occupation', 'realName', 'twitter', 'fbPage', 'website' ];
 		foreach( $keysToSanitize as $key ) {
 			if ( !empty( $data[ $key ] ) ) {
 				$data[ $key ] = htmlspecialchars( strip_tags( $data[ $key ] ) );
@@ -281,6 +281,8 @@ class UserIdentityBox {
 	 * @return boolean
 	 */
 	public function saveUserData($data) {
+		//var_dump($data);die;
+
 		global $wgCityId;
 		wfProfileIn(__METHOD__);
 
@@ -516,7 +518,7 @@ class UserIdentityBox {
 
 		$result = true;
 
-		$fieldsToCheck = array('location', 'occupation', 'birthday', 'gender', 'website', 'twitter', 'topWikis');
+		$fieldsToCheck = array('location', 'occupation', 'birthday', 'gender', 'website', 'twitter', 'fbPage', 'topWikis');
 
 		foreach ($data as $property => $value) {
 			if (in_array($property, $fieldsToCheck) && !empty($value)) {

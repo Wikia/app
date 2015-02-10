@@ -77,6 +77,7 @@ $messages['en'] = array(
 	'user-identity-box-about-gender' => 'What gender are you?',
 	'user-identity-box-about-website' => 'What\'s your personal website?',
 	'user-identity-box-about-tweet' => 'What\'s your Twitter name?',
+	'user-identity-box-about-fb-page' => 'What\'s your Facebook profile link?',
 	'user-identity-box-about-fav-wikis' => "Wikis you've contributed to:",
 	'user-identity-box-about-fav-wikis-refresh' => 'Refresh',
 	'user-identity-box-join-more-wikis' => 'Join more wikis to see them here!',

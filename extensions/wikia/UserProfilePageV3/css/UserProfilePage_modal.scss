@@ -22,6 +22,21 @@
 			@include box-sizing-border-box;
 			width: 100%;
 		}
+
+		.tweet-at, .fb-start {
+			font-family: 'Lucida Grande', sans-serif;
+			left: 15px;
+			position: absolute;
+			top: 36px;
+		}
+
+		input[name="twitter"] {
+			padding-left: 20px;
+		}
+
+		input[name="fbPage"] {
+			padding-left: 105px;
+		}
 	}
 
 	img.avatar {
@@ -38,17 +53,6 @@
 			float: left;
 			margin: 0 10px 10px 0;
 
-		}
-	}
-
-	.tweet-at {
-		font-family: 'Lucida Grande', sans-serif;
-		left: 15px;
-		position: absolute;
-		top: 35px;
-
-		+ input[type="text"] {
-			padding-left: 20px;
 		}
 	}
 
@@ -103,10 +107,10 @@
 		img {
 			background: url(/extensions/wikia/UserProfilePageV3/images/icon-return.png); /* $wgCdnStylePath */
 			height: 12px;
-			width: 14px;		
+			width: 14px;
 		}
 	}
-	
+
 	#facebookPage a {
 		display: block;
 		font-size: 11px;
