@@ -12,8 +12,12 @@
 class FacebookClientXFBML {
 
 	public static $supportedTags = [
-		'fb:recommendations',
+		'fb:facepile',
+		'fb:follow',
 		'fb:like-box',
+		'fb:like',
+		'fb:recommendations',
+		'fb:share-button'
 	];
 
 	/**
