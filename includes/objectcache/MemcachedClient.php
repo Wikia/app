@@ -246,6 +246,13 @@ class MWMemcached {
 	 */
 	var $keys_stats;
 
+	/**
+	 * @@author macbre
+	 *
+	 * The currently used memcache server
+	 */
+	private $_current_host = false;
+
 	// }}}
 	// }}}
 	// {{{ methods
@@ -1073,8 +1080,13 @@ class MWMemcached {
 			} else {
 				$this->_debugprint( "Error parsing memcached response\n" );
 				// Wikia change - begin
-				// @author macbre (BugId:27916)
-				Wikia::logBacktrace(__METHOD__);
+				// @author macbre (BugId:27916 / PLATFORM-774)
+				Wikia\Logger\WikiaLogger::instance()->error( 'Error parsing memcached response', [
+					'caller'    => wfGetCallerClassMethod( __CLASS__ ),
+					'decl'      => $decl,
+					'exception' => new Exception(),
+					'server'    => $this->_current_host,
+				]);
 				// Wikia change - end
 				return 0;
 			}
@@ -1184,6 +1196,10 @@ class MWMemcached {
 	 * @access private
 	 */
 	function sock_to_host( $host ) {
+		// Wikia change - begin
+		$this->_current_host = $host;
+		// Wikia change - end
+
 		if ( isset( $this->_cache_sock[$host] ) ) {
 			return $this->_cache_sock[$host];
 		}
