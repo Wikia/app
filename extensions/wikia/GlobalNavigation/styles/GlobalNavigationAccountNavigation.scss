@@ -11,7 +11,7 @@
 
 .AccountNavigation {
 	cursor: pointer;
-	height: $global-navigation-height - 2px;
+	height: $global-navigation-height;
 	padding: 0 20px;
 	margin: 0;
 
@@ -84,8 +84,7 @@
 		padding: 0;
 		position: absolute;
 		right: 0;
-		// -2px because of global navigation border which in case 48px high is ~ 4%
-		top: 94%;
+		top: 100%;
 		white-space: normal;
 
 		> li {

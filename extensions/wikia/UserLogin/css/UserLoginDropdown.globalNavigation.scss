@@ -22,8 +22,7 @@
 	padding: 0 0 $large-content-padding 0;
 	position: absolute;
 	right: 0;
-	// -2px because of global navigation border which in case 48px high is ~ 4%
-	top: 96%;
+	top: 100%;
 	white-space: normal;
 	z-index: 5000100;
 
