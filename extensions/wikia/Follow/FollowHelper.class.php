@@ -107,7 +107,8 @@ class FollowHelper {
 		 */
 		if ( !empty( $watchers ) ) {
 			$oTask = new FollowEmailTask();
-			$oTask->call( 'emailFollowNotifications', $watchers, $user->getId(), $namespace, $message, $action, $childTitle->getDBkey() );
+			$oTask->title( $childTitle );
+			$oTask->call( 'emailFollowNotifications', $watchers, $user->getId(), $namespace, $message, $action );
 			$oTask->queue();
 		}
 

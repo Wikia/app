@@ -4,10 +4,9 @@ use Wikia\Tasks\Tasks\BaseTask;
 
 class FollowEmailTask extends BaseTask {
 
-	public function emailFollowNotifications( $aWatchers, $iUserId, $iNamespace, $sMessage, $sAction, $sChildTitleDBKey ) {
+	public function emailFollowNotifications( $aWatchers, $iUserId, $iNamespace, $sMessage, $sAction ) {
 		$now = wfTimestampNow();
 		$oUser = User::newFromId( $iUserId );
-		$oChildTitle = Title::newFromDBkey( $sChildTitleDBKey );
 
 		$this->info( 'WatchlistLogs: Sending bloglisting watchlist updates', [
 			'watchedPages' => $aWatchers,
@@ -22,7 +21,7 @@ class FollowEmailTask extends BaseTask {
 				0,
 				0,
 				$sAction,
-				[ 'notisnull' => 1, 'childTitle' => $oChildTitle ]
+				[ 'notisnull' => 1, 'childTitle' => $this->title ]
 			);
 		}
 	}
