@@ -13,7 +13,7 @@ $messages['en'] = array(
 	'hero-image-publish-btn' => 'Publish',
 	'hero-image-default-title' => 'Your wikia\'s name',
 	'hero-image-save-image' => 'Your cover image will be used to promote your page in search results and in other promotional areas.',
-	'hero-image-default-description' => ' Click to add a summary that will promote your wikia in searches and on hubs.',
+	'hero-image-default-description' => 'Add a summary that will promote your wikia in searches and on hubs.',
 	'hero-image-error' => 'Error',
 	'hero-image-unknown-error' => 'Unknown error occured.',
 );

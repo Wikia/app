@@ -181,10 +181,10 @@
 		},
 		editTitle = function () {
 			States.setState($titleElement, 'edit-state');
-			$heroModuleTitle.focus();
 			$heroModuleTitle.change();
-			placeCaretAtEnd($titleEditBoxText.get(0));
 			editDescription();
+			$heroModuleTitle.focus();
+			placeCaretAtEnd($titleEditBoxText.get(0));
 		},
 		revertTitle = function () {
 			$heroModuleTitle.text(heroData.oTitle);
@@ -286,6 +286,13 @@
 					target.caret(caretSave);
 				}
 			}
+
+			if (heroData.title.trim().length === 0 || heroData.description.trim().length === 0) {
+				$descriptionSaveBtn.attr("disabled", "disabled");
+			} else {
+				$descriptionSaveBtn.removeAttr("disabled");
+			}
+
 			heroData.changed = true;
 		}, onImageLoad = function () {
 			var top = -heroData.cropposition * $heroModuleImage.height();

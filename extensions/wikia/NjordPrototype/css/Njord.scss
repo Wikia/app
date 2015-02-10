@@ -156,6 +156,12 @@
 }
 
 .MainPageHeroHeader {
+	[contenteditable=true]:empty:before{
+		content: attr(placeholder);
+		color: #a9a9a9;
+		display: block; /* For Firefox */
+	}
+
 	&.hero-image-wrapper {
 		margin: -1px -1px 0;
 		overflow: hidden;
@@ -260,7 +266,7 @@
 		text-align: left;
 
 		.edit-box {
-			background-color: rgba(0, 0, 0, .2);
+			background-color: rgba(0, 0, 0, .03);
 			bottom: -64px;
 			display: none;
 			width: 100%;
@@ -362,16 +368,22 @@
 		}
 	}
 	.new-btn {
+		background-image: none;
 		border: 1px solid #092140;
+		border-radius: 0;
 		cursor: pointer;
 		display: block;
-		height: 20px;
+		height: 40px;
 		margin: 0 5px;
 		padding: 10px 20px;
 		text-align: center;
 		text-transform: uppercase;
 		&.edit-btn {
 			display: none;
+		}
+
+		&:hover {
+			background-image: none;
 		}
 	}
 	.new-btn.discard-btn {
