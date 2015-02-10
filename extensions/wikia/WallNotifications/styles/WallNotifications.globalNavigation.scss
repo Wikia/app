@@ -31,7 +31,7 @@ $wiki-header-color: #2b54b5;
 	.notifications-entry-point {
 		background-image: url('/extensions/wikia/GlobalNavigation/images/notifications_icon.svg'); /** inline */
 		background-position: center;
-		background-size: 25px;
+		background-size: 22px;
 		background-repeat: no-repeat;
 		display: inline-block;
 		height: $global-navigation-height;
@@ -46,15 +46,15 @@ $wiki-header-color: #2b54b5;
 	}
 
 	.bubbles {
+		@include calc('right', '50% + 3px');
 		background-color: $notification-bubble-color;
-		border-radius: 10px;
+		border-radius: 50%;
 		display: none;
-		height: 20px;
-		min-width: 20px;
-		padding: 2px;
+		height: 18px;
+		min-width: 18px;
+		padding: 1px;
 		position: absolute;
-		right: 50%;
-		top: 5px;
+		top: 10px;
 		z-index: 1;
 
 		&.show {
@@ -65,7 +65,7 @@ $wiki-header-color: #2b54b5;
 	.bubbles-count {
 		@include font-size-xxs;
 		background-color: $white;
-		border-radius: 8px;
+		border-radius: 50%;
 		color: $notification-bubble-color;
 		font-weight: bold;
 		height: 16px;
