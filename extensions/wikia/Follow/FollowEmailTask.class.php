@@ -13,7 +13,7 @@ class FollowEmailTask extends BaseTask {
 			'watchedPages' => $aWatchers,
 		] );
 
-		foreach ($aWatchers as $sKey => $sValue) {
+		foreach ( $aWatchers as $sKey => $sValue ) {
 			$oEmailNotification = new EmailNotification();
 			$oTitle = Title::makeTitle( $iNamespace, $sKey );
 			$oEmailNotification->notifyOnPageChange( $oUser, $oTitle,
