@@ -104,9 +104,11 @@ class FollowHelper {
 		 * Sending emails has been moved to a task.
 		 * @see CE-1239 by adamk@wikia-inc.com
 		 */
-		$oTask = new FollowEmailTask();
-		$oTask->call( 'emailFollowNotifications', $watchers, $user->getId(), $namespace, $message, $action, $childTitle->getDBkey() );
-		$oTask->queue();
+		if ( !empty( $watchers ) ) {
+			$oTask = new FollowEmailTask();
+			$oTask->call('emailFollowNotifications', $watchers, $user->getId(), $namespace, $message, $action, $childTitle->getDBkey());
+			$oTask->queue();
+		}
 
 		wfProfileOut( __METHOD__ );
 	}
