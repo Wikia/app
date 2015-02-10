@@ -1157,6 +1157,18 @@ class MWMemcached {
 				$flags |= self::COMPRESSED;
 			}
 		}
+		// Wikia change - begin - @author: wladek
+		// Log details if we try to store value that will not fit the default item_max_size
+		if ( $len > 1024 * 1024 - 2 ) {
+			// default item_max_size is 1mb, 2 characters are reserved for trailing "\r\n"
+			if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
+				\Wikia\Logger\WikiaLogger::instance()->debug( 'MemcachedClient - large value' , [
+					'key' => $key,
+					'len' => $len,
+				] );
+			}
+		}
+		// Wikia change - end
 		if ( !$this->_safe_fwrite( $sock, $host, "$cmd $key $flags $exp $len\r\n$val\r\n" ) ) {
 			return $this->_dead_sock( $sock );
 		}
