@@ -52,12 +52,13 @@ $wgAutoloadClasses[ "WikiaApiImageServing"         ] = "{$dir}/api//WikiaApiImag
 $wgAPIModules['imageserving'] = 'WikiaApiImageServing';
 
 // query page for caching images popularity (see PLAQTFORM-817)
-$wgSpecialPages[ 'MostImagesInContent' ] =  'MostimagesInContentPage';
-$wgSpecialPageGroups['MostImagesInContent'] = 'maintenance';
+$wgSpecialPages[ 'MostimagesInContent' ] =  'MostimagesInContentPage';
+$wgSpecialPageGroups['MostimagesInContent'] = 'maintenance';
 
 $wgAutoloadClasses[ 'MostimagesInContentPage' ] = "{$dir}/querypage/MostimagesInContentPage.class.php";
 
 $wgHooks['wgQueryPages'][] = function( Array &$wgQueryPages ) {
-	$wgQueryPages[] = [ 'MostimagesInContentPage', 'MostImagesInContent' ];
+	//                  QueryPage subclass         Special page name
+	$wgQueryPages[] = [ 'MostimagesInContentPage', 'MostimagesInContent' ];
 	return true;
 };

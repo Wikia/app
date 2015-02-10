@@ -10,7 +10,7 @@
  * @author macbre
  */
 class MostimagesInContentPage extends MostimagesPage {
-	function __construct( $name = 'MostImagesInContent' ) {
+	function __construct( $name = 'MostimagesInContent' ) {
 		parent::__construct( $name );
 	}
 
