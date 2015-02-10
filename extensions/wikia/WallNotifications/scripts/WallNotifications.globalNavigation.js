@@ -20,6 +20,7 @@ require(
 				this.$notificationsCount = $('.notifications-count');
 
 				this.$notifications = $('#notifications');
+				this.$notificationsEntryPoint = $('#notificationsEntryPoint');
 				this.$wallNotifications = $('#GlobalNavigationWallNotifications');
 				this.$notificationsContainer = $('#notificationsContainer');
 				this.$notificationsMessages = $('> ul', this.$notificationsContainer);
@@ -50,17 +51,16 @@ require(
 					WallNotifications.setNotificationsHeight();
 				}
 				$('#globalNavigation').trigger('notifications-menu-opened');
+				window.transparentOut.show();
 			},
 
-			closeNotifications: function() {
-				if ( !WallNotifications.unreadCount ) {
-					WallNotifications.$wallNotifications.removeClass('show');
-				}
+			closeNotificationsDropdown: function() {
+				WallNotifications.$notificationsEntryPoint.removeClass('active');
 			},
 
 			toggleNotifications: function() {
-				if ( WallNotifications.$wallNotifications.hasClass('show') ) {
-					WallNotifications.closeNotifications();
+				if ( WallNotifications.$notificationsEntryPoint.hasClass('active') ) {
+					WallNotifications.closeNotificationsDropdown();
 				} else {
 					WallNotifications.openNotifications.apply(this);
 				}
@@ -379,14 +379,15 @@ require(
 			},
 
 			closeDropdown: function() {
-				if ($('#notificationsEntryPoint').hasClass('active')) {
-					$('#notificationsEntryPoint').removeClass('active');
+				if (WallNotifications.$notificationsEntryPoint.hasClass('active')) {
+					WallNotifications.$notificationsEntryPoint.removeClass('active');
 				}
 			}
 		};
 
 		$(function () {
 			WallNotifications.init();
+			window.transparentOut.bindClick(WallNotifications.closeNotificationsDropdown);
 
 			if ( !Wikia.isTouchScreen() ) {
 				window.delayedHover(
@@ -400,7 +401,7 @@ require(
 					}
 				);
 			} else {
-				WallNotifications.$notifications.on('click', WallNotifications.toggleNotifications);
+				WallNotifications.$notificationsEntryPoint.on('click', WallNotifications.toggleNotifications);
 			}
 
 		});

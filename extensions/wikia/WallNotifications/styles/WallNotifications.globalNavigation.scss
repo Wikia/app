@@ -19,7 +19,7 @@ $notifications-divider-color: rgb(197, 206, 217);
 $notifications-header-bg-color: rgb(230, 235, 242);
 $notifications-header-color: rgb(57, 66, 77);
 $time-color: rgba($notifications-header-color, .5);
-$notification-bubble-color: rgb(196, 206, 217);
+$notification-bubble-color: rgb(101, 110, 120);
 $white-transparent: rgba(255, 255, 255, 0);
 $white: #fff;
 $wiki-header-bg-color: rgba(113, 133, 148, .2);
@@ -46,7 +46,7 @@ $wiki-header-color: #2b54b5;
 	}
 
 	.bubbles {
-		@include calc('right', '50% + 3px');
+		@include calc('right', '50% + 2px');
 		background-color: $notification-bubble-color;
 		border-radius: 50%;
 		display: none;
@@ -63,13 +63,13 @@ $wiki-header-color: #2b54b5;
 	}
 
 	.bubbles-count {
-		@include font-size-xxs;
 		background-color: $white;
 		border-radius: 50%;
 		color: $notification-bubble-color;
+		font-size: 10px;
 		font-weight: bold;
 		height: 16px;
-		line-height: 16px;
+		line-height: 17px;
 		min-width: 16px;
 		padding: 0 2px;
 		text-align: center;
