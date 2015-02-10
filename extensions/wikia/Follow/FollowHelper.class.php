@@ -101,7 +101,8 @@ class FollowHelper {
 		}
 
 		/**
-		 * Sending emails has been moved to a task.
+		 * Selecting all watching users took to long
+		 * and was causing timeouts. It's been moved to a task.
 		 * @see CE-1239 by adamk@wikia-inc.com
 		 */
 		if ( !empty( $watchers ) ) {
