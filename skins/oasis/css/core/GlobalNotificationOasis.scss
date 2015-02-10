@@ -1,13 +1,13 @@
 @import 'layout';
 @import 'skins/shared/mixins/box-sizing-border-box';
 @import 'skins/shared/mixins/calc';
-@import 'skins/shared/styles/GlobalNotifications';
+@import 'extensions/wikia/GlobalNotifications/css/GlobalNotifications';
 
 /* temp transition code until grid is fully rolled out, remove and integrate after transition */
 .wikia-grid {
 	.global-notification {
-		width: 988px;
 
+	  width: 988px;
 		&.float {
 			margin-left: -505px;
 

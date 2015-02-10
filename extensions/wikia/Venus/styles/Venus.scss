@@ -27,8 +27,8 @@
 @import 'visibility';
 
 // import notifications styles
-@import 'skins/shared/styles/GlobalNotifications';
-@import 'extensions/wikia/Venus/styles/modules/GlobalNotifiacationsVenus';
+@import 'extensions/wikia/GlobalNotifications/css/GlobalNotifications';
+@import 'extensions/wikia/Venus/styles/modules/GlobalNotificationsVenus';
 
 // import VisualEditor init styles
 @import 'extensions/wikia/Venus/styles/visualeditor';
