@@ -73,6 +73,9 @@
  */
 
 class MWMemcached {
+
+	use Wikia\Logger\Loggable; // Wikia change
+
 	// {{{ properties
 	// {{{ public
 
@@ -859,6 +862,13 @@ class MWMemcached {
 			if ( $this->_debug ) {
 				$this->_debugprint( "Error connecting to $host: $errstr\n" );
 			}
+
+			// Wikia change - begin
+			$this->error( 'MemcachedClient: socket connection failed', [
+				'host' => $host,
+				'exception' => new Exception( $errstr, $errno ),
+			]);
+			// Wikia change - end
 			return false;
 		}
 
@@ -881,10 +891,12 @@ class MWMemcached {
 	 * @param $sock String: socket to mark as dead
 	 *
 	 * @access  private
+	 * @return false
 	 */
 	function _dead_sock( $sock ) {
 		$host = array_search( $sock, $this->_cache_sock );
 		$this->_dead_host( $host );
+		return false;
 	}
 
 	function _dead_host( $host ) {
@@ -894,11 +906,14 @@ class MWMemcached {
 		$this->_host_dead[$host] = $this->_host_dead[$ip];
 		// Wikia change - @author: mech - begin
 		// log memcache problems
-		if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
-			\Wikia\Logger\WikiaLogger::instance()->debug( 'MemcachedClient - dead host' , [ 'host' => $host ] );
-		}
+		$this->error( 'MemcachedClient: dead host' , [
+			'host' => $host,
+			'exception' => new Exception(),
+		] );
 		// Wikia change - end
 		unset( $this->_cache_sock[$host] );
+
+		return false;
 	}
 
 	// }}}
@@ -1081,11 +1096,13 @@ class MWMemcached {
 				$this->_debugprint( "Error parsing memcached response\n" );
 				// Wikia change - begin
 				// @author macbre (BugId:27916 / PLATFORM-774)
-				Wikia\Logger\WikiaLogger::instance()->error( 'Error parsing memcached response', [
-					'caller'    => wfGetCallerClassMethod( __CLASS__ ),
+				$method = explode( '::', wfGetCallerClassMethod( __CLASS__ ) ); // eg. MemcachedPhpBagOStuff::get
+
+				$this->error( 'MemcachedClient: error parsing the response', [
+					'cmd'       => end( $method ), // eg. get
 					'decl'      => $decl,
 					'exception' => new Exception(),
-					'server'    => $this->_current_host,
+					'host'      => $this->_current_host,
 				]);
 				// Wikia change - end
 				return 0;
@@ -1181,6 +1198,18 @@ class MWMemcached {
 		if ( $line == "STORED" ) {
 			return true;
 		}
+
+		// Wikia change - begin
+		// @author macbre (PLATFORM-774)
+		$this->error( 'MemcachedClient: store failed', [
+			'cmd'       => $cmd,
+			'key'       => $key,
+			'val_size'  => strlen( $val ),
+			'line'      => $line,
+			'exception' => new Exception(),
+			'host'      => $host,
+		]);
+		// Wikia change - end
 		return false;
 	}
 
