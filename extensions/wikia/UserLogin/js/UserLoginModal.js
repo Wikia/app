@@ -75,53 +75,37 @@
 				uiModal.createComponent(modalConfig, function (loginModal) {
 					UserLoginModal.$modal = loginModal;
 
-					var $loginModal = loginModal.$element;
+					var $loginModal = loginModal.$element,
+						ajaxFormOptions = {
+							usernameInputName: 'userloginext01',
+							passwordInputName: 'userloginext02',
+							ajaxLogin: true,
+							// context is this instance of UserLoginAjaxForm
+							// context is this instance of UserLoginAjaxForm
+							retrieveTemplateCallback: function (html) {
+								var content = $('<div style="display:none" />').append(html),
+									heading = content.find('h1'),
+									modal = loginModal,
+									contentBlock = $loginModal.find('.UserLoginModal');
 
-					UserLoginModal.loginAjaxForm = new window.UserLoginAjaxForm($loginModal, {
-						ajaxLogin: true,
-						// context is this instance of UserLoginAjaxForm
-						callback: function (res) {
-							window.wgUserName = res.username;
-							var callback = options.callback;
-							if (callback && typeof callback === 'function') {
-								if (!options.persistModal) {
-									UserLoginModal.$modal.trigger('close');
-								}
-								callback();
-							} else {
-								this.reloadPage();
+								modal.setTitle(heading.text());
+								heading.remove();
+
+								contentBlock.slideUp(400, function () {
+									contentBlock.html('').html(content);
+									content.show();
+									contentBlock.slideDown(400);
+								});
 							}
-						},
-						// context is this instance of UserLoginAjaxForm
-						resetpasscallback: function () {
-							$.nirvana.sendRequest({
-								controller: 'UserLoginSpecial',
-								method: 'changePassword',
-								format: 'html',
-								data: {
-									username: this.inputs.username.val(),
-									password: this.inputs.password.val(),
-									returnto: this.inputs.returnto.val(),
-									fakeGet: 1
-								},
-								callback: function (html) {
-									var content = $('<div style="display:none" />').append(html),
-										heading = content.find('h1'),
-										modal = loginModal,
-										contentBlock = $loginModal.find('.UserLoginModal');
+						};
 
-									modal.setTitle(heading.text());
-									heading.remove();
+					// UserLogin.js sends a callback function
+					// TODO: Test this
+					if (typeof options.callback === 'function') {
+						ajaxFormOptions.callback = options.callback;
+					}
 
-									contentBlock.slideUp(400, function () {
-										contentBlock.html('').html(content);
-										content.show();
-										contentBlock.slideDown(400);
-									});
-								}
-							});
-						}
-					});
+					UserLoginModal.loginAjaxForm = new window.UserLoginAjaxForm($loginModal, ajaxFormOptions);
 
 					if (options.modalInitCallback && typeof options.modalInitCallback === 'function') {
 						options.modalInitCallback();

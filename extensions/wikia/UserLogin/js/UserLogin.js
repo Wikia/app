@@ -18,6 +18,9 @@
 				origin: 'editor',
 				persistModal: true,
 				callback: function () {
+					if (window.UserLoginModal.$modal) {
+						UserLoginModal.$modal.trigger('close');
+					}
 					if (window.WikiaEditor) {
 						WikiaEditor.reloadEditor();
 					}

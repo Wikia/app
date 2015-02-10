@@ -12,6 +12,8 @@
 	var UserBaseAjaxForm = function (el, options) {
 		this.el = $(el);
 		this.options = options || {};
+		this.usernameInputName = options.usernameInputName || 'username';
+		this.passwordInputName = options.passwordInputName || 'password';
 		this.init();
 	};
 
@@ -25,7 +27,7 @@
 		this.bindEvents();
 
 		if (!this.options.skipFocus) {
-			this.inputs.username.focus();
+			this.inputs[this.usernameInputName].focus();
 		}
 	};
 
@@ -124,7 +126,7 @@
 			controller: 'UserLoginSpecial',
 			method: 'getUnconfirmedUserRedirectUrl',
 			format: 'json',
-			username: this.inputs.username.val()
+			username: this.inputs[this.usernameInputName].val()
 		}, function (json) {
 			window.location = json.redirectUrl;
 		});
@@ -136,8 +138,6 @@
 	 */
 	UserBaseAjaxForm.prototype.errorValidation = function (json) {
 		if (json.errParam) {
-			// TODO: errParam doesn't always match the name of the input. Sometimes 'userloginext01' and 'username'
-			// are confused.
 			this.wikiaForm.showInputError(json.errParam, json.msg);
 		} else {
 			this.wikiaForm.showGenericError(json.msg);
@@ -156,7 +156,7 @@
 			'UserLoginSpecial',
 			'mailPassword',
 			{
-				username: this.inputs.username.val()
+				username: this.inputs[this.usernameInputName].val()
 			},
 			// error validation will show success and error messages in this case
 			this.errorValidation.bind(this)

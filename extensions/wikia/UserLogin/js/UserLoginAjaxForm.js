@@ -36,8 +36,8 @@
 			'login',
 			{
 				loginToken: this.loginToken,
-				username: this.inputs.username.val(),
-				password: this.inputs.password.val(),
+				username: this.inputs[this.usernameInputName].val(),
+				password: this.inputs[this.passwordInputName].val(),
 				keeploggedin: this.inputs.keeploggedin.is(':checked')
 			},
 			this.submitLoginHandler.bind(this)
@@ -54,9 +54,9 @@
 		UserBaseAjaxForm.prototype.submitLoginHandler.call(this, json);
 
 		if (result === 'resetpass') {
-			this.onResetPasswordResponse(json);
+			this.onResetPasswordResponse();
 		} else if (result === 'closurerequested') {
-			this.onAccountClosureReqestResponse();
+			this.onAccountClosureRequestResponse();
 		} else {
 			this.onErrorResponse();
 		}
@@ -64,32 +64,25 @@
 
 	/**
 	 * Called when a user has requested a password change
-	 * @param {Object} json Response from server
 	 */
-	UserLoginAjaxForm.prototype.onResetPasswordResponse = function (json) {
-		var callback = this.options.resetpasscallback || '';
-		if (callback && typeof callback === 'function') {
-			// call with current context
-			callback.bind(this, json)();
-		} else {
-			// default implementation
-			$.post(wgScriptPath + '/wikia.php', {
-				controller: 'UserLoginSpecial',
-				method: 'changePassword',
-				format: 'html',
-				username: this.inputs.username.val(),
-				password: this.inputs.password.val(),
-				returnto: this.inputs.returnto.val(),
-				fakeGet: 1
-			}, this.retrieveTemplateCallback.bind(this));
-		}
+	UserLoginAjaxForm.prototype.onResetPasswordResponse = function () {
+		$.post(wgScriptPath + '/wikia.php', {
+			controller: 'UserLoginSpecial',
+			method: 'changePassword',
+			format: 'html',
+			username: this.inputs[this.usernameInputName].val(),
+			password: this.inputs[this.passwordInputName].val(),
+			loginToken: this.inputs.loginToken.val(),
+			returnto: this.inputs.returnto.val(),
+			fakeGet: 1
+		}, this.retrieveTemplateCallback.bind(this));
 	};
 
 	/**
 	 * Called after a user has requested an account closer.
 	 * @TODO: Not sure what user actions are taken for this to be called.
 	 */
-	UserLoginAjaxForm.prototype.onAccountClosureReqestResponse = function () {
+	UserLoginAjaxForm.prototype.onAccountClosureRequestResponse = function () {
 		$.post(wgScriptPath + '/wikia.php', {
 			controller: 'UserLoginSpecial',
 			method: 'getCloseAccountRedirectUrl',
@@ -104,8 +97,15 @@
 	 * @param {string} html
 	 */
 	UserLoginAjaxForm.prototype.retrieveTemplateCallback = function (html) {
-		var content = $('<div>').hide().append(html),
-			form = this.form;
+		var content, form;
+
+		if (typeof this.options.retrieveTemplateCallback === 'function') {
+			this.options.retrieveTemplateCallback(html);
+			return;
+		}
+
+		content = $('<div>').hide().append(html);
+		form = this.form;
 
 		form.slideUp(400, function () {
 			form.replaceWith(content);

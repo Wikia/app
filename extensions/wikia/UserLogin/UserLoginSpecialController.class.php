@@ -111,8 +111,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * @brief serves standalone login page on GET.  if POSTed, parameters will be required.
-	 * @details
+	 * Serves standalone login page on GET. If POSTed, parameters will be required.
 	 *   on GET, template will render
 	 *   on POST,
 	 *     if login is successful, it will redirect to returnto, or default login welcome screen
@@ -206,7 +205,14 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 					// redirect page
 					$this->userLoginHelper->doRedirect();
 				} elseif ( $this->result == 'unconfirm' ) {
-					$response = $this->app->sendRequest('UserLoginSpecial', 'getUnconfirmedUserRedirectUrl', array('username' => $this->username, 'uselang' => $code));
+					$response = $this->app->sendRequest(
+						'UserLoginSpecial',
+						'getUnconfirmedUserRedirectUrl',
+						[
+							'username' => $this->username,
+							'uselang' => $code
+						]
+					);
 					$redirectUrl = $response->getVal('redirectUrl');
 					$this->wg->out->redirect( $redirectUrl );
 				} elseif ( $this->result === 'closurerequested' ) {
@@ -364,8 +370,12 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function modal() {
-		$this->loginToken = UserLoginHelper::getLoginToken();
-		$this->signupUrl = Title::newFromText('UserSignup', NS_SPECIAL)->getFullUrl();
+		$this->response->setData([
+			'usernameKey' => UserLoginForm::SIGNUP_USERNAME_KEY,
+			'passwordKey' => UserLoginForm::SIGNUP_PASSWORD_KEY,
+			'loginToken' => UserLoginHelper::getLoginToken(),
+			'signupUrl' => Title::newFromText('UserSignup', NS_SPECIAL)->getFullUrl(),
+		]);
 	}
 
 	/**
@@ -376,8 +386,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * @brief logs in a user with given login name and password.  if keeploggedin, sets a cookie.
-	 * @details
+	 * Logs in a user with given login name and password. If keeploggedin, sets a cookie.
+	 *
 	 * @requestParam string username
 	 * @requestParam string password
 	 * @requestParam string keeploggedin [true/false]
@@ -602,17 +612,21 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 		$this->pageHeading = wfMessage('resetpass')->escaped();
 		$this->initializeTemplate();
 
-		$this->username = $this->request->getVal( 'username', '' );
-		$this->password = $this->request->getVal( 'password', '' );
-		$this->newpassword = $this->request->getVal( 'newpassword', '' );
-		$this->retype = $this->request->getVal( 'retype', '' );
-		$this->editToken = $this->request->getVal( 'editToken', '' );
-		$this->loginToken = $this->request->getVal( 'loginToken', '' );
-		$this->returnto = $this->request->getVal( 'returnto', '' );
+		$this->response->setData([
+			'username' => $this->request->getVal( 'username', '' ),
+			'password' => $this->request->getVal( 'password', '' ),
+			'newpassword' => $this->request->getVal( 'newpassword', '' ),
+			'retype' => $this->request->getVal( 'retype', '' ),
+			'editToken' => $this->request->getVal( 'editToken', '' ),
+			'loginToken' => $this->request->getVal( 'loginToken', '' ),
+			'returnto' => $this->request->getVal( 'returnto', '' ),
+		]);
 
 		// since we don't support ajax GET, use of this parameter simulates a get request
 		// in reality, it is being posted
 		$fakeGet = $this->request->getVal('fakeGet', '');
+
+		// TODO: why are we setting editToken twice?
 		$this->editToken = $this->wg->User->getEditToken();
 
 		if ( $this->wg->request->wasPosted() && empty($fakeGet) ) {

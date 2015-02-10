@@ -8,6 +8,7 @@
  */
 class UserLoginForm extends LoginForm {
 
+	// CE-413 changed input names due to signup spam attack
 	const SIGNUP_USERNAME_KEY = 'userloginext01';
 	const SIGNUP_PASSWORD_KEY = 'userloginext02';
 
@@ -27,12 +28,15 @@ class UserLoginForm extends LoginForm {
 			$this->mPassword = $request->getText( self::SIGNUP_PASSWORD_KEY );
 			$this->mRetype = $request->getText( self::SIGNUP_PASSWORD_KEY );
 		}
+
+		// fake (decoy) username and password fields
 		if ( $request->getText( 'username', '' ) != '' ) {
 			$this->fakeUsername = $request->getText( 'username', '' );
 		}
 		if ( $request->getText( 'password', '' ) != '' ) {
 			$this->fakePassword = $request->getText( 'password' );
 		}
+
 		if ( $request->getText( 'email', '' ) != '' ) {
 			$this->mEmail = $request->getText( 'email' );
 		}
