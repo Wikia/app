@@ -10,12 +10,14 @@ class EditTaggingHooks {
 	const RTE_WYSIWYG_MODE = 'wysiwyg';
 	const RTE_SOURCE_MODE_TAG = 'rte-source';
 	const RTE_WYSIWYG_MODE_TAG = 'rte-wysiwyg';
+	const SOURCE_EDIT_TAG = 'sourceedit';
 
 	static $tagBlacklist = [
 		self::API_EDIT_TAG,
 		self::CATEGORYSELECT_EDIT_TAG,
 		self::RTE_SOURCE_MODE_TAG,
-		self::RTE_WYSIWYG_MODE_TAG
+		self::RTE_WYSIWYG_MODE_TAG,
+		self::SOURCE_EDIT_TAG
 	];
 
 	/**
@@ -33,7 +35,7 @@ class EditTaggingHooks {
 	 * [ 'ct_tag' => TAG_NAME, 'hitcount' => TAG_USAGES ]
 	 */
 	public static function onUsedTags( &$tags ) {
-		$remainingTags = [];
+		$remainingTags = [ ];
 
 		foreach ( $tags as $tag ) {
 			if ( !in_array( $tag['ct_tag'], self::$tagBlacklist ) ) {
@@ -46,13 +48,13 @@ class EditTaggingHooks {
 		return true;
 	}
 
-    /**
-     * Handle tagging new revisions made from API
-     */
-    public static function onSuccessfulApiEdit( $revision_id ) {
-        self::AddRevisionTag( $revision_id, self::API_EDIT_TAG );
-        return true;
-    }
+	/**
+	 * Handle tagging new revisions made from API
+	 */
+	public static function onSuccessfulApiEdit( $revision_id ) {
+		self::AddRevisionTag( $revision_id, self::API_EDIT_TAG );
+		return true;
+	}
 
 	/**
 	 * Handle tagging new revisions on Article Save Completion
@@ -65,13 +67,17 @@ class EditTaggingHooks {
 
 		$request = RequestContext::getMain()->getRequest();
 		$rte_mode = $request->getVal( 'RTEMode', null );
+		$is_source_mode = $request->getVal( 'isMediaWikiEditor', null );
 		$controller = $request->getVal( 'controller', null );
 		$method = $request->getVal( 'method', null );
 		$revision_id = $revision->getId();
-		$is_category_edit = ($controller === 'CategorySelect' &&  $method === 'save');
+		$is_category_edit = ( $controller === 'CategorySelect' && $method === 'save' );
 
-		if($is_category_edit) {
+		if ( $is_category_edit ) {
 			self::AddRevisionTag( $revision_id, self::CATEGORYSELECT_EDIT_TAG );
+		}
+		if ( $is_source_mode ) {
+			self::AddRevisionTag( $revision_id, self::SOURCE_EDIT_TAG );
 		}
 
 		switch ( $rte_mode ) {
