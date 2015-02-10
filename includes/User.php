@@ -4241,9 +4241,7 @@ class User {
 
 		$result = false;
 
-		$bHeliosCheck = false;
-
-		if( !wfRunHooks( 'UserComparePasswords', array( &$hash, &$password, &$userId, &$result, &$bHeliosCheck ) ) ) {
+		if( !wfRunHooks( 'UserComparePasswords', array( &$hash, &$password, &$userId, &$result ) ) ) {
 			return $result;
 		}
 
@@ -4258,8 +4256,6 @@ class User {
 			# Old-style
 			$bCheck = self::oldCrypt( $password, $userId ) === $hash;
 		}
-
-		wfRunHooks( 'UserAfterComparePasswords', array( $bHeliosCheck, $bCheck, $result, $type, $hash, $userId ) );
 
 		return $bCheck;
 	}
