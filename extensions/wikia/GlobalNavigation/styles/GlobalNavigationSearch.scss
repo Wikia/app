@@ -111,6 +111,7 @@ $search-input-height: $global-navigation-height-without-margin - 2px;
 		color: $search-input-text-color;
 		font-weight: bold;
 		height: $search-input-height;
+		outline: none;
 		padding-left: 42px;
 		width: 100%;
 
@@ -127,7 +128,7 @@ $search-input-height: $global-navigation-height-without-margin - 2px;
 		}
 	}
 
-	.search-submit {
+	.search-icon {
 		background-color: transparent;
 		background-image: url('/extensions/wikia/GlobalNavigation/images/search_icon.svg'); /* inline */
 		background-position: center;
@@ -139,6 +140,42 @@ $search-input-height: $global-navigation-height-without-margin - 2px;
 		position: absolute;
 		margin-left: 8px;
 		width: 14px;
+	}
+
+	.search-button {
+		background-color: $search-button-background;
+		background-image: url('/extensions/wikia/GlobalNavigation/images/search_button.svg'); /* inline */
+		background-position: center center;
+		background-repeat: no-repeat;
+		border: 0;
+		border-radius: 0;
+		height: 28px;
+		outline: none;
+		position: absolute;
+		right: 1px;
+		top: 1px;
+		width: 28px;
+	}
+
+	// override Oasis setting up background: XX on hover for submit buttons...
+	.search-button:hover {
+		background-color: $search-button-hover-background;
+		background-image: url('/extensions/wikia/GlobalNavigation/images/search_button.svg'); /* inline */
+		background-position: center center;
+		background-repeat: no-repeat;
+	}
+
+	.search-input:hover ~ .search-button {
+		background-color: $search-button-hover-background;
+	}
+
+	.search-input:focus,
+	.search-input:active {
+		border-color: $search-button-active-background;
+
+		& ~ .search-button {
+			background-color: $search-button-active-background;
+		}
 	}
 
 	.autocomplete-container {
