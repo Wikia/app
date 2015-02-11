@@ -166,7 +166,7 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 	/**
 	 * Store image in destination path
 	 *
-	 * @return Boolean|null returns false for recoverable error and null for permanent error
+	 * @return Boolean|null returns false for recoverable error and null for permanent error and true in the unlikely event of success
 	 */
 	private function store() {
 		if ( $this->imageSyncQueueItem->action == 'move' ) {
@@ -243,7 +243,7 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 	/**
 	 * Delete image from destination path
 	 *
-	 * @return Boolean|null returns false for recoverable error and null for permanent error
+	 * @return Boolean|null returns false for recoverable error and null for permanent error and true in the unlikely event of success
 	 */
 	private function delete() {
 		$this->output( "\tDelete {$this->imageSyncQueueItem->dst} image\n" );
