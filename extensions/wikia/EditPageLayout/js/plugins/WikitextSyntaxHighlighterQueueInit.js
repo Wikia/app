@@ -40,19 +40,19 @@ require(['wikia.window', 'jquery', 'wikia.log'], function(window, $, log) {
 
 		initDarkThemeColors: function() {
 			return {
-				boldOrItalicColor: '#6c71c4',
-				commentColor: '#dc322f',
-				entityColor: '#859900',
-				externalLinkColor: '#2aa198',
-				headingColor: '#6c71c4',
-				hrColor: '#6c71c4',
-				listOrIndentColor: '#dc322f',
-				parameterColor: '#cb4b16',
-				signatureColor: '#cb4b16',
-				tagColor: '#d33682',
-				tableColor: '#b58900',
-				templateColor: '#b58900',
-				wikilinkColor: '#268bd2'
+				boldOrItalicColor: '#373959',
+				commentColor: '#4d1a19',
+				entityColor: '#474d23',
+				externalLinkColor: '#244d491',
+				headingColor: '#373959',
+				hrColor: '#373959',
+				listOrIndentColor: '#4d1a19',
+				parameterColor: '#66331e',
+				signatureColor: '#66331e',
+				tagColor: '#662946',
+				tableColor: '#806e38',
+				templateColor: '#806e38',
+				wikilinkColor: '#2e6c99'
 			};
 		},
 
