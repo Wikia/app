@@ -276,6 +276,8 @@
 			this.signupForm = new window.FacebookFormCreateUser($modal.find('.UserLoginFacebookLeft'), {
 				ajaxLogin: true,
 				skipFocus: true,
+				usernameInputName: 'userloginext01',
+				passwordInputName: 'userloginext02',
 				callback: function () {
 					// Track FB Connect Sign Up
 					self.track({
