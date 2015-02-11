@@ -281,8 +281,6 @@ class UserIdentityBox {
 	 * @return boolean
 	 */
 	public function saveUserData($data) {
-		//var_dump($data);die;
-
 		global $wgCityId;
 		wfProfileIn(__METHOD__);
 
