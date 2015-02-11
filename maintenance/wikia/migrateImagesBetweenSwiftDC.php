@@ -21,7 +21,12 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 	private $source_container = [];
 	private $dest_container = [];
 	/* @var Wikia\SwiftSync\Queue object  */
-	private $imageSyncQueue;
+	private $imageSyncQueueItem;
+
+	// error codes 1-4 were used by the previous version of this script
+	const ERROR_CANT_FIND_FILE = 5;
+	const ERROR_FILE_IS_EMPTY = 6;
+	const ERROR_FILE_EXISTS_IN_SOURCE_DC = 7;
 
 	/**
 	 * class constructor
@@ -39,18 +44,18 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 	 * @return Wikia\SwiftStorage storage instance
 	 */
 	private function srcConn() {
-		if ( empty( $this->source_container[ $this->imageSyncQueue->city_id ] ) ) {
-			if ( $this->imageSyncQueue->city_id == 0 ) {
+		if ( empty( $this->source_container[ $this->imageSyncQueueItem->city_id ] ) ) {
+			if ( $this->imageSyncQueueItem->city_id == 0 ) {
 				global $wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix;
-				$this->source_container[ $this->imageSyncQueue->city_id ] =
+				$this->source_container[ $this->imageSyncQueueItem->city_id ] =
 					\Wikia\SwiftStorage::newFromContainer( $wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix );
 			} else {
-				$this->source_container[ $this->imageSyncQueue->city_id ] =
-					\Wikia\SwiftStorage::newFromWiki( $this->imageSyncQueue->city_id );
+				$this->source_container[ $this->imageSyncQueueItem->city_id ] =
+					\Wikia\SwiftStorage::newFromWiki( $this->imageSyncQueueItem->city_id );
 			}
 		}
 
-		return $this->source_container[ $this->imageSyncQueue->city_id ];
+		return $this->source_container[ $this->imageSyncQueueItem->city_id ];
 	}
 
 	/**
@@ -59,7 +64,7 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 	 * @return Wikia\SwiftStorage storage instance
 	 */
 	private function destConn() {
-		$city_id = $this->imageSyncQueue->city_id;
+		$city_id = $this->imageSyncQueueItem->city_id;
 
 		if ( empty( $this->dest_container[ $city_id ] ) ) {
 			if ( $city_id == 0 ) {
@@ -90,56 +95,49 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 
 		/* take X elements from queue */
 		$imageSyncList = \Wikia\SwiftSync\ImageSync::newFromQueue( $this->mLimit );
-		foreach ( $imageSyncList as $this->imageSyncQueue ) {
-			$this->output( sprintf( "Run %s operation: (record: %d)\n", $this->imageSyncQueue->action, $this->imageSyncQueue->id ) );
-			$this->output( sprintf( "\tSource: %s\n\tDestination: %s\n", $this->imageSyncQueue->src, $this->imageSyncQueue->dst ) );
+		foreach ( $imageSyncList as $this->imageSyncQueueItem ) {
+			$this->output( sprintf( "Run %s operation: (record: %d)\n", $this->imageSyncQueueItem->action, $this->imageSyncQueueItem->id ) );
+			$this->output( sprintf( "\tSource: %s\n\tDestination: %s\n", $this->imageSyncQueueItem->src, $this->imageSyncQueueItem->dst ) );
 
-			$error = 0;
-			if ( is_null( $this->imageSyncQueue->city_id ) ) {
+			if ( is_null( $this->imageSyncQueueItem->city_id ) ) {
 				$this->output( "\tWiki ID cannot be null\n" );
-				$error = 1;
-			} elseif ( empty( $this->imageSyncQueue->dst ) ) {
+			} elseif ( empty( $this->imageSyncQueueItem->dst ) ) {
 				$this->output( "\tSource and destination path cannot be empty\n" );
-				$error = 2;
-			} elseif ( empty( $this->imageSyncQueue->action ) ) {
+			} elseif ( empty( $this->imageSyncQueueItem->action ) ) {
 				$this->output( "\tAction cannot be empty \n" );
-				$error = 3;
-			} elseif ( !in_array( $this->imageSyncQueue->action, [ 'store', 'delete', 'copy', 'move' ] ) ) {
-				$this->output( "\tInvalid action: {$this->imageSyncQueue->action} \n" );
-				$error = 4;
+			} elseif ( !in_array( $this->imageSyncQueueItem->action, [ 'store', 'delete', 'copy', 'move' ] ) ) {
+				$this->output( "\tInvalid action: {$this->imageSyncQueueItem->action} \n" );
 			} else {
-				if ( $this->imageSyncQueue->action == 'delete' ) {
+				if ( $this->imageSyncQueueItem->action == 'delete' ) {
 					$res = $this->delete();
 				} else {
 					$res = $this->store();
 				}
 
 				/**
-				 * $res == true  - we're fine
-				 * $res == false - error, keep an item in the queue (i.e. retry in the next run)
-				 * $res == null  - error, move the item to archive (i.e. ignore the error)
+				 * $res === true  - we're fine
+				 * $res === false - error, keep an item in the queue (i.e. retry in the next run)
+				 * $res === null  - error, move the item to archive (i.e. ignore the error)
 				 */
 				if ( $res === null ) {
-					$this->output( "\tFile ({$this->imageSyncQueue->dst}) doesn't exist in source DC\n" );
-					$error = 5;
+					$this->output( "\tFile ({$this->imageSyncQueueItem->dst}) doesn't exist in source DC\n" );
 				}
 
 				if ( $res === false ) {
-					$this->output( "\tCannot finish operation {$this->imageSyncQueue->action} in destination DC \n\n" );
+					$this->output( "\tCannot finish operation {$this->imageSyncQueueItem->action} in destination DC \n\n" );
 				} else {
-					$this->imageSyncQueue->setError( $error );
-					$this->imageSyncQueue->moveToArchive();
+					$this->imageSyncQueueItem->moveToArchive();
 					$this->output( "\tRecord moved to archive\n\n" );
 				}
 
 				Wikia\Logger\WikiaLogger::instance()->debug( 'MigrateImagesBetweenSwiftDC' , [
 					'is_ok'   => ( $res === true ),
 					'retry'   => ( $res === false ),
-					'id'      => $this->imageSyncQueue->id,
-					'action'  => $this->imageSyncQueue->action,
-					'city_id' => $this->imageSyncQueue->city_id,
-					'src'     => $this->imageSyncQueue->src,
-					'dst'     => $this->imageSyncQueue->dst,
+					'id'      => $this->imageSyncQueueItem->id,
+					'action'  => $this->imageSyncQueueItem->action,
+					'city_id' => $this->imageSyncQueueItem->city_id,
+					'src'     => $this->imageSyncQueueItem->src,
+					'dst'     => $this->imageSyncQueueItem->dst,
 				] );
 			}
 		}
@@ -168,31 +166,29 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 	/**
 	 * Store image in destination path
 	 *
-	 * @param $city_id Int - Wikia ID
-	 * @param $src String - source file
-	 * @param $dst String - destination path
-	 *
-	 * @return Boolean|null return false will re-queue the item, null - skip it
+	 * @return Boolean|null returns false for recoverable error and null for permanent error and true in the unlikely event of success
 	 */
 	private function store() {
-		if ( $this->imageSyncQueue->action == 'move' ) {
-			$this->output( "\tMove image {$this->imageSyncQueue->src} to {$this->imageSyncQueue->dst}\n" );
-		} elseif ( $this->imageSyncQueue->action == 'copy' ) {
-			$this->output( "\tCopy image {$this->imageSyncQueue->src} to {$this->imageSyncQueue->dst}\n" );
+		if ( $this->imageSyncQueueItem->action == 'move' ) {
+			$this->output( "\tMove image {$this->imageSyncQueueItem->src} to {$this->imageSyncQueueItem->dst}\n" );
+		} elseif ( $this->imageSyncQueueItem->action == 'copy' ) {
+			$this->output( "\tCopy image {$this->imageSyncQueueItem->src} to {$this->imageSyncQueueItem->dst}\n" );
 		} else {
-			$this->output( "\tStore new image into {$this->imageSyncQueue->dst}\n" );
+			$this->output( "\tStore new image into {$this->imageSyncQueueItem->dst}\n" );
 		}
 
 		/* connect to source Ceph/Swift */
 		$srcStorage = $this->srcConn();
 
 		/* read source file to string (src here is tmp file, so dst should be set here) */
-		$remoteFile = $this->getRemotePath( $this->imageSyncQueue->dst );
+		$remoteFile = $this->getRemotePath( $this->imageSyncQueueItem->dst );
 
 		$this->output( "\tRemote file: {$remoteFile} (Swift: " . $srcStorage->getSwiftServer() . " ) \n" );
 
 		if ( !$srcStorage->exists( $remoteFile ) ) {
 			$this->output( "\tCannot find image to sync \n" );
+			$this->imageSyncQueueItem->setError( self::ERROR_CANT_FIND_FILE );
+
 			$result = null;
 		} else {
 			/* save image content into memory and send content to destination storage */
@@ -209,7 +205,17 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 				$size = intval( fstat( $fp )[ 'size' ] );
 
 				if ( $size === 0 ) {
-					$this->output( "\t'{$this->imageSyncQueue->dst}' file is empty!" );
+					$this->output( "\t'{$this->imageSyncQueueItem->dst}' file is empty!\n" );
+					$this->imageSyncQueueItem->setError( self::ERROR_FILE_IS_EMPTY );
+
+					Wikia\Logger\WikiaLogger::instance()->warning( 'MigrateImagesBetweenSwiftDC: file is empty' , [
+						'id'      => $this->imageSyncQueueItem->id,
+						'action'  => $this->imageSyncQueueItem->action,
+						'city_id' => $this->imageSyncQueueItem->city_id,
+						'src'     => $this->imageSyncQueueItem->src,
+						'dst'     => $this->imageSyncQueueItem->dst,
+					]);
+
 					fclose( $fp );
 					return null;
 				}
@@ -237,16 +243,16 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 	/**
 	 * Delete image from destination path
 	 *
-	 * @return Boolean|null return false will re-queue the item, null - skip it
+	 * @return Boolean|null returns false for recoverable error and null for permanent error and true in the unlikely event of success
 	 */
 	private function delete() {
-		$this->output( "\tDelete {$this->imageSyncQueue->dst} image\n" );
+		$this->output( "\tDelete {$this->imageSyncQueueItem->dst} image\n" );
 
 		/* connect to source Ceph/Swift */
 		$srcStorage = $this->srcConn();
 
 		/* read source file to string (src here is tmp file, so dst should be set here) */
-		$remoteFile = $this->getRemotePath( $this->imageSyncQueue->dst );
+		$remoteFile = $this->getRemotePath( $this->imageSyncQueueItem->dst );
 
 		$this->output( "\tRemote file: {$remoteFile} (Swift: " . $srcStorage->getSwiftServer() . " ) \n" );
 
@@ -263,7 +269,17 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 				$result = null;
 			}
 		} else {
-			$this->output( "\tImage still exists in source DS \n" );
+			$this->output( "\tImage still exists in source DC \n" );
+			$this->imageSyncQueueItem->setError( self::ERROR_FILE_EXISTS_IN_SOURCE_DC );
+
+			Wikia\Logger\WikiaLogger::instance()->warning( 'MigrateImagesBetweenSwiftDC: file still exists in source DC' , [
+				'id'      => $this->imageSyncQueueItem->id,
+				'action'  => $this->imageSyncQueueItem->action,
+				'city_id' => $this->imageSyncQueueItem->city_id,
+				'src'     => $this->imageSyncQueueItem->src,
+				'dst'     => $this->imageSyncQueueItem->dst,
+			]);
+
 			$result = null;
 		}
 
