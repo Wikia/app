@@ -2,7 +2,7 @@
 define(["require", "exports"], function (require, exports) {
     var WeppyImpl;
     (function (WeppyImpl) {
-        var PROTOCOL_VERSION = 3, PATH_DELIMITER = '.', NAMESPACE_DELIMITER = '::', active = false, options = {
+        var protocolVersion = 3, pathDelimiter = '.', namespaceDelimiter = '::', active = false, options = {
             "host": '/weppy',
             "transport": 'url',
             "active": true,
@@ -16,11 +16,14 @@ define(["require", "exports"], function (require, exports) {
         }, initTime = +(new Date), queue, aggregationTimeout, maxTimeout, sentPerformanceData, now = function () {
             return window.performance && window.performance.now ? window.performance.now() : +(new Date);
         }, log = function () {
-            if (options.debug)
-                if (typeof options.debug == 'function')
+            if (options.debug) {
+                if (typeof options.debug === 'function') {
                     options.debug.apply(window, arguments);
-                else
+                }
+                else {
                     window.console && window.console.log && window.console.log.apply ? window.console.log.apply(window.console, arguments) : void 0;
+                }
+            }
         }, logError = function () {
             window.console && window.console.error && window.console.error.apply && window.console.error.apply(window.console, arguments);
         };
@@ -29,15 +32,16 @@ define(["require", "exports"], function (require, exports) {
             return Math.round(num * Math.pow(10, precision)) / Math.pow(10, precision);
         }
         function buildPath(path, subpath, glue) {
-            if (glue === void 0) { glue = PATH_DELIMITER; }
-            return path + (path != '' && subpath != '' ? glue : '') + subpath;
+            if (glue === void 0) { glue = pathDelimiter; }
+            return path + ((path != '' && subpath != '') ? glue : '') + subpath;
         }
         function updateActive() {
             active = options.active && Math.random() < options.sample;
         }
         function extend(first, second) {
+            var key;
             if (first && second) {
-                for (var key in second) {
+                for (key in second) {
                     if (second.hasOwnProperty(key)) {
                         first[key] = second[key];
                     }
@@ -91,22 +95,22 @@ define(["require", "exports"], function (require, exports) {
                 data = scope.data = scope.data || { value: 0 };
                 return data;
             };
-            Queue.prototype.get_clear = function () {
-                var measurements = {};
+            Queue.prototype.get = function () {
+                var measurements = {}, value, measurement, names, data, annotated, i, k;
                 function addMeasurement(name, data, annotations) {
                     if (data) {
-                        var value = data.value;
+                        value = data.value;
                         if (data.rollingAverage) {
                             value = round(value);
                         }
-                        var measurement = [value];
+                        measurement = [value];
                         if (annotations) {
                             measurement.push(annotations);
                         }
                         measurements[name].push(measurement);
                     }
                 }
-                var names = Object.keys(this.all), data, annotated, i, k;
+                names = Object.keys(this.all);
                 for (i = 0; i < names.length; i++) {
                     measurements[names[i]] = [];
                     data = this.all[names[i]].data;
@@ -122,17 +126,17 @@ define(["require", "exports"], function (require, exports) {
                         }
                     }
                 }
-                this.clear();
                 return measurements;
             };
             return Queue;
         })();
         queue = new Queue();
         function enqueue(type, name, value, annotations) {
+            var rollingAverage;
             if (!active) {
                 return;
             }
-            var rollingAverage = type != 0 /* Counter */;
+            rollingAverage = type != 0 /* Counter */;
             queue.add(name, value, rollingAverage, annotations);
             scheduleSending();
         }
@@ -150,6 +154,7 @@ define(["require", "exports"], function (require, exports) {
             maxTimeout = null;
         }
         function sendQueue() {
+            var allMeasurements, allData;
             clearSchedule();
             if (queue.empty()) {
                 return;
@@ -162,20 +167,22 @@ define(["require", "exports"], function (require, exports) {
                 queue.clear();
                 return;
             }
-            var all_measurements = queue.get_clear();
-            var all_data = {
+            allMeasurements = queue.get();
+            queue.clear();
+            allData = {
                 context: options.context,
-                data: all_measurements
+                data: allMeasurements
             };
-            log('Weppy: sending', all_data);
-            sendData(all_data);
+            log('Weppy: sending', allData);
+            sendData(allData);
         }
         function sendData(data) {
+            var url;
             if (typeof options.transport == 'function') {
                 options.transport(data);
                 return;
             }
-            var url = options.host + '/v' + PROTOCOL_VERSION + '/send';
+            url = options.host + '/v' + protocolVersion + '/send';
             if (options.transport == 'url') {
                 url += '?p=' + encodeURIComponent(JSON.stringify(data));
                 sendRequest(url, null);
@@ -185,20 +192,18 @@ define(["require", "exports"], function (require, exports) {
             }
         }
         function sendRequest(url, data) {
-            var corsSupport = window.XMLHttpRequest && (XMLHttpRequest['defake'] || (new XMLHttpRequest()).withCredentials);
-            var sameOrigin = true;
-            var match = /^(https?:\/\/[^\/]+)/i.exec(url);
+            var corsSupport = window.XMLHttpRequest && (XMLHttpRequest['defake'] || (new XMLHttpRequest()).withCredentials), sameOrigin = true, match, req, contentType;
+            match = /^(https?:\/\/[^\/]+)/i.exec(url);
             if (match && match[1] != document.location.protocol + '//' + document.location.host) {
                 sameOrigin = false;
             }
-            var req;
             if (!sameOrigin && !corsSupport && window.XDomainRequest) {
                 req = new XDomainRequest();
             }
             else {
                 req = new XMLHttpRequest();
             }
-            var contentType = data == null ? 'text/plain' : 'application/json';
+            contentType = data == null ? 'text/plain' : 'application/json';
             req.weppy = req.bucky = { track: false };
             req.open('POST', url, true);
             req.setRequestHeader('Content-Type', contentType);
@@ -218,7 +223,7 @@ define(["require", "exports"], function (require, exports) {
                 return new Namespace(this._root, buildPath(this._path, subpath));
             };
             Namespace.prototype.key = function (name) {
-                return buildPath(this._root, buildPath(this._path, name), NAMESPACE_DELIMITER);
+                return buildPath(this._root, buildPath(this._path, name), namespaceDelimiter);
             };
             Namespace.prototype.send = function (type, name, value, annotations) {
                 name = this.key(name);
@@ -252,10 +257,12 @@ define(["require", "exports"], function (require, exports) {
                 }
             };
             Namespace.prototype.sendPagePerformance = function () {
+                var self, readyState, timing, start, key, time, data = {}, name;
                 if (!window.performance || !window.performance.timing || sentPerformanceData) {
                     return false;
                 }
-                var self = this, readyState = document.readyState;
+                self = this;
+                readyState = document.readyState;
                 if (readyState == 'uninitialized' || readyState == 'loading') {
                     if (document.addEventListener) {
                         document.addEventListener("DOMContentLoaded", function () {
@@ -265,7 +272,8 @@ define(["require", "exports"], function (require, exports) {
                     return false;
                 }
                 sentPerformanceData = true;
-                var timing = window.performance.timing, start = timing.navigationStart, key, time, data = {};
+                timing = window.performance.timing;
+                start = timing.navigationStart;
                 for (key in timing) {
                     time = timing[key];
                     if (time && typeof time == 'number') {
@@ -273,7 +281,7 @@ define(["require", "exports"], function (require, exports) {
                     }
                 }
                 delete data['navigationStart'];
-                var name = options.page;
+                name = options.page;
                 self.namespace('PAGELOAD').timer.send(name, start, data);
                 return true;
             };
@@ -293,11 +301,12 @@ define(["require", "exports"], function (require, exports) {
                 return new Timer(this, name);
             };
             NamespaceTimer.prototype.stop = function (name, annotations) {
+                var duration;
                 if (!this.PARTIALS[name]) {
                     logError("Timer " + name + " ended without having been started");
                     return;
                 }
-                var duration = now() - this.PARTIALS[name][0];
+                duration = now() - this.PARTIALS[name][0];
                 annotations = extend(annotations, this.PARTIALS[name][1]);
                 this.PARTIALS[name] = false;
                 this.send(name, duration, annotations);
@@ -310,17 +319,18 @@ define(["require", "exports"], function (require, exports) {
                 this.PARTIALS[name][1] = annotations;
             };
             NamespaceTimer.prototype.time = function (name, action, scope, args, annotations) {
-                this.start(name, annotations);
                 var self = this, done = function (annotations) {
                     self.stop(name, annotations);
                 };
+                this.start(name, annotations);
                 args = args ? args.slice(0) : [];
                 args.splice(0, 0, done);
                 return action.apply(scope, args);
             };
             NamespaceTimer.prototype.timeSync = function (name, action, scope, args, annotations) {
+                var ret;
                 this.start(name, annotations);
-                var ret = action.apply(scope, args);
+                ret = action.apply(scope, args);
                 this.stop(name);
                 return ret;
             };
