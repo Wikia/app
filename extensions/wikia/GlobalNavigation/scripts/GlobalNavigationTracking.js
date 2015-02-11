@@ -139,6 +139,7 @@ $(function ($) {
 	$globalNavigationSearch
 		.on('mousedown touchstart', '.autocomplete', searchSuggestionsClickTrackingHandler)
 		.on('mousedown touchstart', '.search-submit', searchSubmitButtonClickTrackingHandler)
+		.on('mousedown touchstart', '.search-button', searchSubmitButtonClickTrackingHandler)
 		.on('keypress', '[name=search]', searchSubmitEnterPressTrackingHandler)
 		.on('suggestEnter', searchSuggestionsEnterPressOnSuggestionsTrackingHandler)
 		.one('suggestShow', searchSuggestionsShowedTrackingHandler);
