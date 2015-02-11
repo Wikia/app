@@ -69,7 +69,7 @@ class EditTaggingHooks {
 		$revision_id = $revision->getId();
 		$rte_mode = $request->getVal( 'RTEMode', null );
 
-		self::tagRevisionIfCategoryEdit( $request, $revision_id );
+		self::tagRevisionIfCategoryEdit( $revision_id, $request );
 		self::tagRevisionIfSourceEdit( $revision_id, $request );
 		self::tagRevisionIfRTESourceEdit( $revision_id, $rte_mode );
 		self::tagRevisionIfRTEWysiwygEdit( $revision_id, $rte_mode );
