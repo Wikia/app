@@ -1,9 +1,11 @@
-require(['jquery', 'wikia.window', 'wikia.globalnavigation.lazyload', 'wikia.menuaim'], function ($, w, GlobalNavLazyLoad, menuAim) {
+require(
+['jquery', 'wikia.window', 'wikia.globalnavigation.lazyload', 'wikia.menuaim', 'wikia.browserDetect'],
+function ($, w, GlobalNavLazyLoad, menuAim, browserDetect) {
 	'use strict';
 
-	var $entryPoint,
+	var $entryPoint = $('#hubsEntryPoint'),
+		$hubs = $('#hubs'),
 		$hubLinks,
-		$hubs,
 		$verticals;
 
 	/**
@@ -15,7 +17,7 @@ require(['jquery', 'wikia.window', 'wikia.globalnavigation.lazyload', 'wikia.men
 			verticalClass = '.' + $row.data('vertical') + '-links';
 
 		// prevent URL redirection when tapping on section link on touch devices
-		if (w.Wikia.isTouchScreen()) {
+		if (browserDetect.isTouchScreen()) {
 			if (!$row.hasClass('active')) {
 				event.preventDefault();
 			}
@@ -59,32 +61,17 @@ require(['jquery', 'wikia.window', 'wikia.globalnavigation.lazyload', 'wikia.men
 	}
 
 	$(function () {
-		$hubs = $('#hubs');
-		$hubLinks = $hubs.find('> .hub-links');
-		$verticals = $hubs.find('> .hub-list');
-		$entryPoint = $('#hubsEntryPoint');
+		$hubLinks = $hubs.children('.hub-links');
+		$verticals = $hubs.children('.hub-list');
 
-		w.transparentOut && w.transparentOut.bindClick(closeMenu);
-
-		if (navigator.userAgent.toLowerCase().indexOf('android') > -1) {
+		if (browserDetect.isAndroid()) {
 			$verticals.addClass('backface-off');
 		}
 
-		$entryPoint.on('click', '.hubs-entry-point', function (ev) {
-			ev.preventDefault();
-			ev.stopPropagation();
+		w.transparentOut.bindClick(closeMenu);
 
-			if ($entryPoint.hasClass('active')) {
-				closeMenu();
-			} else {
-				openMenu();
-			}
-		});
-
-		/**
-		 * menuAim is a method from an external module to handle dropdown menus with very good user experience
-		 * @see https://github.com/Wikia/js-menu-aim
-		 */
+		//Menu-aim should be attached for both touch and not touch screens.
+		//It handles opening and closing submenu on click
 		menuAim.attach(
 			$verticals.get(0), {
 				activeRow: $verticals.find('.active').get(0),
@@ -95,9 +82,7 @@ require(['jquery', 'wikia.window', 'wikia.globalnavigation.lazyload', 'wikia.men
 			}
 		);
 
-		w.transparentOut.bindClick(closeMenu);
-
-		if (!w.ontouchstart) {
+		if (!browserDetect.isTouchScreen()) {
 			w.delayedHover(
 				$entryPoint.get(0), {
 					checkInterval: 100,
@@ -107,6 +92,7 @@ require(['jquery', 'wikia.window', 'wikia.globalnavigation.lazyload', 'wikia.men
 					activateOnClick: false
 				}
 			);
+
 		} else {
 			$entryPoint.click(openMenu);
 		}

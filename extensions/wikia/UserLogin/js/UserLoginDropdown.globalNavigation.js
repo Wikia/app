@@ -83,7 +83,7 @@ require([
 				});
 		}
 
-		if (!win.Wikia.isTouchScreen()) {
+		if (!browserDetect.isTouchScreen()) {
 			win.delayedHover(
 				$entryPoint.get(0),
 				{
