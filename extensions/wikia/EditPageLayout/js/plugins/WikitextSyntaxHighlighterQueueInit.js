@@ -4,7 +4,7 @@
  * @author Kamil Koterba <kamil@wikia-inc.com>
  */
 
-require(['wikia.window', 'jquery'], function(window, $) {
+require(['wikia.window', 'jquery', 'wikia.log'], function(window, $, log) {
 	'use strict';
 
 	var WE = window.WikiaEditor = window.WikiaEditor || (new window.Observable());
@@ -13,7 +13,7 @@ require(['wikia.window', 'jquery'], function(window, $) {
 
 		init: function () {
 			this.editor.on('mode', this.proxy(this.initSyntaxHighlighting));
-			this.initSyntaxHighlighting();
+			this.editor.on('editorReady', this.proxy(this.initSyntaxHighlighting));
 		},
 
 		initConfig: function () {
