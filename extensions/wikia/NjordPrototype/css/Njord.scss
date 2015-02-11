@@ -262,7 +262,7 @@
 	}
 
 	.title-wrap {
-		margin: 40px 330px 30px 30px;
+		margin: 30px 330px 20px 30px;
 		text-align: left;
 
 		.edit-box {
@@ -560,13 +560,17 @@
 	.wordmark-container {
 		&.wordmark-icon {
 			background-color: $color-page;
-			height: 110px;
-			left: -29px;
-			padding-left: 30px;
-			padding-right: 30px;
-			position: relative;
-			top: -110px;
+			height: 80px;
+			left: -1px;
+			padding-left: 10px;
+			padding-right: 10px;
+			position: absolute;
+			top: -80px;
 			z-index: 1;
+		}
+
+		.wordmark {
+			width: auto;
 		}
 
 		&:not(.wordmark-icon) {
@@ -576,11 +580,12 @@
 
 	.local-navigation {
 		border-bottom: none;
+		padding-left: 20px;
 	}
 }
 .WikiaArticle {
 	.hero-description {
-		margin: 30px 320px 60px 30px;
+		margin: 20px 320px 50px 30px;
 		word-wrap: break-word;
 
 		@media screen and (max-width: $breakpoint-small) {
