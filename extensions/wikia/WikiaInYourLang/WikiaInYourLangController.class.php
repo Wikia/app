@@ -185,7 +185,7 @@ class WikiaInYourLangController extends WikiaController {
 	 * @return bool
 	 */
 	private function isNativeWikiaValid( ResultWrapper $oWiki, $sTargetLanguage ) {
-		if ( !$oWiki->city_public ) {
+		if ( !boolval( $oWiki->city_public ) ) {
 			$this->response->setVal( 'error', "A native wikia is closed." );
 			return false;
 		}
