@@ -174,7 +174,6 @@
 				window.GlobalNotification.show(response.errorMsg, 'error');
 			} else if (response.unconfirmed) {
 
-				// TODO: check this scenario for "username" value
 				$.get(wgScriptPath + '/wikia.php', {
 					controller: 'UserLoginSpecial',
 					method: 'getUnconfirmedUserRedirectUrl',

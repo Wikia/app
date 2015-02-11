@@ -158,7 +158,6 @@ class UserLoginForm extends LoginForm {
 
 	/**
 	 * Initial validation for password
-	 * @todo Do this on the front end so we're not sending passwords back and forth.
 	 * @return bool
 	 */
 	public function initValidationPassword() {

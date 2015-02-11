@@ -79,8 +79,7 @@
 	};
 
 	/**
-	 * Called after a user has requested an account closer.
-	 * @TODO: Not sure what user actions are taken for this to be called.
+	 * Called after a user has requested an account closer and then tries to log in with that same account.
 	 */
 	UserLoginAjaxForm.prototype.onAccountClosureRequestResponse = function () {
 		$.post(wgScriptPath + '/wikia.php', {

@@ -12,7 +12,7 @@
 	 */
 	var UserSignupAjaxValidation = function (options) {
 		this.wikiaForm = options.wikiaForm;
-		this.notEmptyFields = options.notEmptyFields || [];
+		this.inputsToValidate = options.inputsToValidate || [];
 		this.submitButton = $(options.submitButton);
 
 		this.controller = 'UserSignupSpecial';
@@ -85,7 +85,7 @@
 
 	UserSignupAjaxValidation.prototype.checkFieldsValid = function () {
 		var isValid = true,
-			inputsToValidate = this.notEmptyFields,
+			inputsToValidate = this.inputsToValidate,
 			i;
 
 		for (i = 0; i < inputsToValidate.length; i++) {

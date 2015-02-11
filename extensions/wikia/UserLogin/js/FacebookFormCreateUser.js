@@ -57,17 +57,17 @@
 
 	FacebookFormCreateUser.prototype.setupAjaxValidation = function () {
 		// userloginext0* are spam prevention names for username and password
-		var notEmptyFields = ['userloginext01', 'userloginext02'],
+		var inputsToValidate = ['userloginext01', 'userloginext02'],
 			inputs = this.wikiaForm.inputs;
 
 		if (inputs.email) {
-			notEmptyFields.push('email');
+			inputsToValidate.push('email');
 		}
 
 		this.validator = new UserSignupAjaxValidation({
 			wikiaForm: this.wikiaForm,
 			submitButton: inputs.submit,
-			notEmptyFields: notEmptyFields
+			inputsToValidate: inputsToValidate
 		});
 
 		inputs.userloginext01

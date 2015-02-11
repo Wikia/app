@@ -6,7 +6,7 @@
 	 * JS for signing up with a new account, on BOTH MOBILE and DESKTOP
 	 */
 	var UserSignup = {
-		notEmptyFields: ['userloginext01', 'email', 'userloginext02', 'birthday', 'birthmonth', 'birthyear'],
+		inputsToValidate: ['userloginext01', 'email', 'userloginext02', 'birthday', 'birthmonth', 'birthyear'],
 		/**
 		 * WikiaMobile, Wikia One, and some automated tests do not use captcha
 		 */
@@ -77,13 +77,13 @@
 
 			this.validator = new UserSignupAjaxValidation({
 				wikiaForm: this.wikiaForm,
-				inputsToValidate: this.inputsToValidate,
 				submitButton: this.submitButton,
-				notEmptyFields: this.notEmptyFields
+				inputsToValidate: this.inputsToValidate
 			});
 
 			inputs.userloginext01
 				.add(inputs.email)
+				// TODO: Validate password on the front end so we're not sending passwords back and forth. (SOC-316)
 				.add(inputs.userloginext02)
 				.on('blur.UserSignup', this.validator.validateInput.bind(this.validator));
 

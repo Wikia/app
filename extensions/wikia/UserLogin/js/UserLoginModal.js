@@ -99,8 +99,7 @@
 							}
 						};
 
-					// UserLogin.js sends a callback function
-					// TODO: Test this
+					// UserLogin.js sends a callback function for reloading the classic editor after forced login
 					if (typeof options.callback === 'function') {
 						ajaxFormOptions.callback = options.callback;
 					}
