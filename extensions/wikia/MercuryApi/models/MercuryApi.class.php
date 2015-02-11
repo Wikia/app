@@ -271,26 +271,15 @@ class MercuryApi {
 		// Should it be encoded by client?
 
 		$defaultUriPrefix = '/wiki/';
-		$defaultUriPrefixLength = strlen( $defaultUriPrefix );
 
 		if ( !empty( $wg->ArticlePath ) ) {
 			$uriPrefix = str_replace( '$1', '', $wg->ArticlePath );
 		} else {
 			$uriPrefix = $defaultUriPrefix;
 		}
-		$uriPrefixLength = strlen( $uriPrefix );
 
-		// Cut everything <= $urlPrefixLength
-		// If $uri contains '/wiki/' at the beginning,
-		// but the ArticlePath is '/wiki/'-less, strip it
-		// (as the MediaWiki redirects work in the same manner).
-		if ( $uriPrefix === '/' && substr( $uri, 0, $defaultUriPrefixLength ) === $defaultUriPrefix) {
-			$uriWithoutPrefix = substr( $uri, $defaultUriPrefixLength );
-		} elseif ( $uriPrefix === substr( $uri, 0, $uriPrefixLength ) ) {
-			$uriWithoutPrefix = substr( $uri, $uriPrefixLength );
-		} else {
-			$uriWithoutPrefix = $uri;
-		}
+		// Cut all the slashes before 'wiki/' despite if it's a wikia with prefix or not.
+		$uriWithoutPrefix = preg_replace( '/^\/*wiki\//', '', $uri, 1 );
 
 		// Cut everything >= '?'
 		$queryPosition = strpos( $uriWithoutPrefix, '?' );
@@ -302,7 +291,13 @@ class MercuryApi {
 
 		// TODO Title::newFromText caches titles with CACHE_MAX = 1000
 		// Is it good for us?
-		$title = Title::newFromText( $uriWithoutQuery, NS_MAIN );
+		if ( $uriPrefix === $defaultUriPrefix && preg_match( '/^\/*wiki$/', $uriWithoutQuery ) ) {
+			$title = '';
+		} elseif ( empty($uriWithoutQuery) ) {
+			$title = Title::newMainPage();
+		} else {
+			$title = Title::newFromText( $uriWithoutQuery, NS_MAIN );
+		}
 
 		if ( $title ) {
 			$namespace = $title->getNamespace();

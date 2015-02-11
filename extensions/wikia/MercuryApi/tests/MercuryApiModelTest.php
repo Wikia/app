@@ -233,7 +233,7 @@ class MercuryApiModelTest extends WikiaBaseTest {
 				'$articlePath' => '/$1',
 				'$expected' => [
 					'isArticle' => true,
-					'title' => '/Wiki'
+					'title' => '/wiki'
 				]
 			],
 			// wiki
@@ -287,9 +287,9 @@ class MercuryApiModelTest extends WikiaBaseTest {
 					'title' => $mainPageTitle
 				]
 			],
-			// wiki/Special:UserLogin
+			// WIKI
 			[
-				'$uri' => 'wiki/Special:UserLogin',
+				'$uri' => 'WIKI',
 				'$articlePath' => '/wiki/$1',
 				'$expected' => [
 					'isArticle' => false,
@@ -297,11 +297,62 @@ class MercuryApiModelTest extends WikiaBaseTest {
 				]
 			],
 			[
+				'$uri' => 'WIKI',
+				'$articlePath' => '/$1',
+				'$expected' => [
+					'isArticle' => true,
+					'title' => 'WIKI'
+				]
+			],
+			// WIKI/
+			[
+				'$uri' => 'WIKI/',
+				'$articlePath' => '/wiki/$1',
+				'$expected' => [
+					'isArticle' => false,
+					'title' => null
+				]
+			],
+			[
+				'$uri' => 'WIKI/',
+				'$articlePath' => '/$1',
+				'$expected' => [
+					'isArticle' => true,
+					'title' => 'WIKI/'
+				]
+			],
+			// /WIKI/
+			[
+				'$uri' => '/WIKI/',
+				'$articlePath' => '/wiki/$1',
+				'$expected' => [
+					'isArticle' => false,
+					'title' => null
+				]
+			],
+			[
+				'$uri' => '/WIKI/',
+				'$articlePath' => '/$1',
+				'$expected' => [
+					'isArticle' => true,
+					'title' => '/WIKI/'
+				]
+			],
+			// wiki/Special:UserLogin
+			[
+				'$uri' => 'wiki/Special:UserLogin',
+				'$articlePath' => '/wiki/$1',
+				'$expected' => [
+					'isArticle' => false,
+					'title' => 'Special:UserLogin'
+				]
+			],
+			[
 				'$uri' => 'wiki/Special:UserLogin',
 				'$articlePath' => '/$1',
 				'$expected' => [
 					'isArticle' => false,
-					'title' => null
+					'title' => 'Special:UserLogin'
 				]
 			],
 			// /wiki/Special:UserLogin
@@ -310,7 +361,7 @@ class MercuryApiModelTest extends WikiaBaseTest {
 				'$articlePath' => '/wiki/$1',
 				'$expected' => [
 					'isArticle' => false,
-					'title' => null
+					'title' => 'Special:UserLogin'
 				]
 			],
 			[
@@ -318,7 +369,7 @@ class MercuryApiModelTest extends WikiaBaseTest {
 				'$articlePath' => '/$1',
 				'$expected' => [
 					'isArticle' => false,
-					'title' => null
+					'title' => 'Special:UserLogin'
 				]
 			],
 			// /wiki//Special:UserLogin
@@ -344,7 +395,7 @@ class MercuryApiModelTest extends WikiaBaseTest {
 				'$articlePath' => '/wiki/$1',
 				'$expected' => [
 					'isArticle' => false,
-					'title' => null
+					'title' => 'Special:UserLogin'
 				]
 			],
 			[
@@ -352,7 +403,7 @@ class MercuryApiModelTest extends WikiaBaseTest {
 				'$articlePath' => '/$1',
 				'$expected' => [
 					'isArticle' => false,
-					'title' => null
+					'title' => 'Special:UserLogin'
 				]
 			],
 			// /Special:UserLogin
