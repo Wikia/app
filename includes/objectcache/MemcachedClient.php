@@ -586,24 +586,24 @@ class MWMemcached {
 		// Wikia change - end
 
 		$sock_keys = array();
-
+		$socks = array();
 		foreach ( $keys as $key ) {
 			$sock = $this->get_sock( $key, $host );
 			if ( !is_resource( $sock ) ) {
 				continue;
 			}
 			$key = is_array( $key ) ? $key[1] : $key;
-			if ( !isset( $sock_keys[$sock] ) ) {
-				$sock_keys[$sock] = array();
+			if ( !isset( $sock_keys[intval( $sock )] ) ) {
+				$sock_keys[intval( $sock )] = array();
 				$socks[] = $sock;
 			}
-			$sock_keys[$sock][] = $key;
+			$sock_keys[intval( $sock )][] = $key;
 		}
 
 		// Send out the requests
 		foreach ( $socks as $sock ) {
 			$cmd = 'get';
-			foreach ( $sock_keys[$sock] as $key ) {
+			foreach ( $sock_keys[intval( $sock )] as $key ) {
 				$cmd .= ' ' . $key;
 			}
 			$cmd .= "\r\n";
