@@ -292,18 +292,23 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			if ( ( isset( $_SESSION['notConfirmedUserId'] ) && $_SESSION['notConfirmedUserId'] == $user->getId() ) ) {
 				$mailTo = $user->getEmail();
 			}
+		} else {
+			// Redirect back to login if we didn't get a valid user
+			$titleObj = SpecialPage::getTitleFor( 'Userlogin' );
+			$this->wg->out->redirect( $titleObj->getFullURL() );
+			return;
 		}
 
 		$this->result = 'ok';
 		$mailTo = htmlspecialchars( $mailTo );
 		if ( F::app()->checkskin( 'wikiamobile' ) ) {
-			$this->msg = wfMessage( 'usersignup-confirmation-email-sent-wikiamobile', $mailTo )->parse();
+			$this->msg = wfMessage( 'usersignup-confirmation-email-sent-wikiamobile' )->rawParams( $mailTo )->parse();
 			$this->overrideTemplate( 'WikiaMobileSendConfirmationEmail' );
 			$this->wg->Out->setPageTitle( wfMessage( 'usersignup-confirm-page-title-wikiamobile' )->plain() );
 		} else {
 			$this->heading = wfMessage( 'usersignup-confirmation-heading' )->escaped();
 			$this->subheading = wfMessage( 'usersignup-confirmation-subheading' )->escaped();
-			$this->msg = wfMessage( 'usersignup-confirmation-email-sent', $mailTo )->parse();
+			$this->msg = wfMessage( 'usersignup-confirmation-email-sent' )->rawParams( $mailTo )->parse();
 			$this->msgEmail = '';
 			$this->errParam = '';
 
@@ -347,8 +352,9 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			} else {
 				if ( $this->byemail == true ) {
 					$this->heading = wfMessage( 'usersignup-account-creation-heading' )->escaped();
-					$this->subheading = wfMessage( 'usersignup-account-creation-subheading', $mailTo )->escaped();
-					$this->msg = wfMessage( 'usersignup-account-creation-email-sent', $mailTo, $this->username )->parse();
+					$this->subheading = wfMessage( 'usersignup-account-creation-subheading' )->rawParams( $mailTo )->escaped();
+					$this->msg = wfMessage( 'usersignup-account-creation-email-sent' )
+						->rawParams( $mailTo, htmlspecialchars( $this->username ) )->parse();
 				}
 			}
 		}
