@@ -704,18 +704,16 @@ class FeedRenderer {
 				$attribs['href'] = $title->getLocalUrl();
 			}
 
-			if ( $wgArticleAsJson ) {
-				$dummy = new DummyLinker;
-				$file = false;
-				$frameParams = [];
-				$handlerParams = [];
-				$time = false;
-				$res = null;
-				if ( !wfRunHooks( 'ImageBeforeProduceHTML',
-					array( &$dummy, &$title, &$file, &$frameParams, &$handlerParams, &$time, &$res ) ) ) {
-					$thumbs[] = "<li>$res</li>";
-				}
-				// TODO what if not?
+			$hookDummy = new DummyLinker;
+			$hookFile = false;
+			$hookFrameParams = [];
+			$hookHandlerParams = [];
+			$hookTime = false;
+			$hookRes = null;
+
+			if ( !wfRunHooks( 'ImageBeforeProduceHTML',
+				array( &$hookDummy, &$title, &$hookFile, &$hookFrameParams, &$hookHandlerParams, &$hookTime, &$hookRes ) ) ) {
+				$thumbs[] = "<li>$hookRes</li>";
 			} else {
 				$thumb = $item['html'];
 				// Only wrap the line in an anchor if it doesn't already include one
