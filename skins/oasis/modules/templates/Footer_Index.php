@@ -6,7 +6,7 @@
 	?>
 	<?php if( $showToolbar ): ?>
 		<div class="toolbar">
-			<?= F::app()->renderView('Notifications', 'Index'); ?>
+			<?= F::app()->renderView('BannerNotifications', 'Index'); ?>
 			<ul class="tools">
 				<?= F::app()->renderView('Footer','Toolbar'); ?>
 			</ul>
@@ -14,7 +14,7 @@
 			<img src="<?= $wg->BlankImgUrl; ?>" class="banner-corner-right" height="0" width="0">
 		</div>
 	<?php elseif( $showNotifications ) : // show notifications for anons (BugId:20730) ?>
-		<?= F::app()->renderView('Notifications', 'Index'); ?>
+		<?= F::app()->renderView('BannerNotifications', 'Index'); ?>
 	<?php endif; ?>
 
 	<? if ( $wg->EnableOpenXSPC ) : ?>

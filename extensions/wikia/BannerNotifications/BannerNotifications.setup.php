@@ -15,25 +15,25 @@ $dir = dirname(__FILE__) . '/';
 /**
  * Classes
  */
-$wgAutoloadClasses[ 'NotificationsController' ] = $dir . 'NotificationsController.class.php';
+$wgAutoloadClasses[ 'BannerNotificationsController' ] = $dir . 'BannerNotificationsController.class.php';
 
 /**
  * Hooks
  */
 // confirmations
-$wgHooks['ArticleDeleteComplete'][] = 'NotificationsController::addPageDeletedConfirmation';
-$wgHooks['ArticleUndelete'][] = 'NotificationsController::addPageUndeletedConfirmation';
-#$wgHooks['EditPageSuccessfulSave'][] = 'NotificationsController::addSaveConfirmation'; // BugId:10129
-$wgHooks['SpecialMovepageAfterMove'][] = 'NotificationsController::addPageMovedConfirmation';
-$wgHooks['SpecialPreferencesOnRender'][] = 'NotificationsController::addPreferencesConfirmation';
-$wgHooks['UserLogoutComplete'][] = 'NotificationsController::addLogOutConfirmation';
+$wgHooks['ArticleDeleteComplete'][] = 'BannerNotificationsController::addPageDeletedConfirmation';
+$wgHooks['ArticleUndelete'][] = 'BannerNotificationsController::addPageUndeletedConfirmation';
+#$wgHooks['EditPageSuccessfulSave'][] = 'BannerNotificationsController::addSaveConfirmation'; // BugId:10129
+$wgHooks['SpecialMovepageAfterMove'][] = 'BannerNotificationsController::addPageMovedConfirmation';
+$wgHooks['SpecialPreferencesOnRender'][] = 'BannerNotificationsController::addPreferencesConfirmation';
+$wgHooks['UserLogoutComplete'][] = 'BannerNotificationsController::addLogOutConfirmation';
 
 // notifications
-$wgHooks['AchievementsNotification'][] = 'NotificationsController::addBadgeNotification';
-$wgHooks['CommunityMessages::showMessage'][] = 'NotificationsController::addCommunityMessagesNotification';
-$wgHooks['EditSimilar::showMessage'][] = 'NotificationsController::addEditSimilarNotification';
-$wgHooks['SiteWideMessagesNotification'][] = 'NotificationsController::addSiteWideMessageNotification';
-$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'NotificationsController::addMessageNotification';
+$wgHooks['AchievementsNotification'][] = 'BannerNotificationsController::addBadgeNotification';
+$wgHooks['CommunityMessages::showMessage'][] = 'BannerNotificationsController::addCommunityMessagesNotification';
+$wgHooks['EditSimilar::showMessage'][] = 'BannerNotificationsController::addEditSimilarNotification';
+$wgHooks['SiteWideMessagesNotification'][] = 'BannerNotificationsController::addSiteWideMessageNotification';
+$wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'BannerNotificationsController::addMessageNotification';
 
 /**
  * i18n

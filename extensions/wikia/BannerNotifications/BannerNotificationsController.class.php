@@ -5,7 +5,7 @@
  * @author Maciej Brencz
  */
 
-class NotificationsController extends WikiaController {
+class BannerNotificationsController extends WikiaController {
 
 	const SESSION_KEY = 'oasisConfirmation';
 

@@ -76,7 +76,10 @@ class SpecialVideosSpecialController extends WikiaSpecialPageController {
 			$msgTitle = $this->request->getVal( 'msgTitle', '' );
 			$msgTitle = urldecode( $msgTitle );
 
-			NotificationsController::addConfirmation( wfMessage( $msg, $msgTitle )->parse(), NotificationsController::CONFIRMATION_CONFIRM );
+			BannerNotificationsController::addConfirmation(
+				wfMessage( $msg, $msgTitle )->parse(),
+				BannerNotificationsController::CONFIRMATION_CONFIRM
+			);
 		}
 
 		if ( !is_numeric($page) ) {
