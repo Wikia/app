@@ -23,6 +23,11 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 	/* @var Wikia\SwiftSync\Queue object  */
 	private $imageSyncQueue;
 
+	// error codes 1-4 were used by the previous version of this script
+	const ERROR_CANT_FIND_FILE = 5;
+	const ERROR_FILE_IS_EMPTY = 6;
+	const ERROR_FILE_EXISTS_IN_SOURCE_DC = 7;
+
 	/**
 	 * class constructor
 	 */
@@ -94,19 +99,14 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 			$this->output( sprintf( "Run %s operation: (record: %d)\n", $this->imageSyncQueue->action, $this->imageSyncQueue->id ) );
 			$this->output( sprintf( "\tSource: %s\n\tDestination: %s\n", $this->imageSyncQueue->src, $this->imageSyncQueue->dst ) );
 
-			$error = 0;
 			if ( is_null( $this->imageSyncQueue->city_id ) ) {
 				$this->output( "\tWiki ID cannot be null\n" );
-				$error = 1;
 			} elseif ( empty( $this->imageSyncQueue->dst ) ) {
 				$this->output( "\tSource and destination path cannot be empty\n" );
-				$error = 2;
 			} elseif ( empty( $this->imageSyncQueue->action ) ) {
 				$this->output( "\tAction cannot be empty \n" );
-				$error = 3;
 			} elseif ( !in_array( $this->imageSyncQueue->action, [ 'store', 'delete', 'copy', 'move' ] ) ) {
 				$this->output( "\tInvalid action: {$this->imageSyncQueue->action} \n" );
-				$error = 4;
 			} else {
 				if ( $this->imageSyncQueue->action == 'delete' ) {
 					$res = $this->delete();
@@ -115,19 +115,17 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 				}
 
 				/**
-				 * $res == true  - we're fine
-				 * $res == false - error, keep an item in the queue (i.e. retry in the next run)
-				 * $res == null  - error, move the item to archive (i.e. ignore the error)
+				 * $res === true  - we're fine
+				 * $res === false - error, keep an item in the queue (i.e. retry in the next run)
+				 * $res === null  - error, move the item to archive (i.e. ignore the error)
 				 */
 				if ( $res === null ) {
 					$this->output( "\tFile ({$this->imageSyncQueue->dst}) doesn't exist in source DC\n" );
-					$error = 5;
 				}
 
 				if ( $res === false ) {
 					$this->output( "\tCannot finish operation {$this->imageSyncQueue->action} in destination DC \n\n" );
 				} else {
-					$this->imageSyncQueue->setError( $error );
 					$this->imageSyncQueue->moveToArchive();
 					$this->output( "\tRecord moved to archive\n\n" );
 				}
@@ -168,10 +166,6 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 	/**
 	 * Store image in destination path
 	 *
-	 * @param $city_id Int - Wikia ID
-	 * @param $src String - source file
-	 * @param $dst String - destination path
-	 *
 	 * @return Boolean|null returns false for recoverable error and null for permanent error
 	 */
 	private function store() {
@@ -193,6 +187,8 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 
 		if ( !$srcStorage->exists( $remoteFile ) ) {
 			$this->output( "\tCannot find image to sync \n" );
+			$this->imageSyncQueue->setError( self::ERROR_CANT_FIND_FILE );
+
 			$result = null;
 		} else {
 			/* save image content into memory and send content to destination storage */
@@ -210,6 +206,7 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 
 				if ( $size === 0 ) {
 					$this->output( "\t'{$this->imageSyncQueue->dst}' file is empty!\n" );
+					$this->imageSyncQueue->setError( self::ERROR_FILE_IS_EMPTY );
 
 					Wikia\Logger\WikiaLogger::instance()->warning( 'MigrateImagesBetweenSwiftDC: file is empty' , [
 						'id'      => $this->imageSyncQueue->id,
@@ -272,7 +269,17 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 				$result = null;
 			}
 		} else {
-			$this->output( "\tImage still exists in source DS \n" );
+			$this->output( "\tImage still exists in source DC \n" );
+			$this->imageSyncQueue->setError( self::ERROR_FILE_EXISTS_IN_SOURCE_DC );
+
+			Wikia\Logger\WikiaLogger::instance()->warning( 'MigrateImagesBetweenSwiftDC: file still exists in source DC' , [
+				'id'      => $this->imageSyncQueue->id,
+				'action'  => $this->imageSyncQueue->action,
+				'city_id' => $this->imageSyncQueue->city_id,
+				'src'     => $this->imageSyncQueue->src,
+				'dst'     => $this->imageSyncQueue->dst,
+			]);
+
 			$result = null;
 		}
 
