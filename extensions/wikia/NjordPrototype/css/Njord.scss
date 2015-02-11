@@ -575,6 +575,10 @@
 			z-index: 1;
 		}
 
+		.wordmark {
+			width: auto;
+		}
+
 		&:not(.wordmark-icon) {
 			visibility: hidden;
 		}
