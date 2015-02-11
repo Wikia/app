@@ -101,6 +101,7 @@ class MWMemcached {
 
 	// }}}
 
+	const MEMCACHED_ITEM_MAX_SIZE = 1048576; // 1MB
 
 	/**
 	 * Command statistics
@@ -585,24 +586,24 @@ class MWMemcached {
 		// Wikia change - end
 
 		$sock_keys = array();
-
+		$socks = array();
 		foreach ( $keys as $key ) {
 			$sock = $this->get_sock( $key, $host );
 			if ( !is_resource( $sock ) ) {
 				continue;
 			}
 			$key = is_array( $key ) ? $key[1] : $key;
-			if ( !isset( $sock_keys[$sock] ) ) {
-				$sock_keys[$sock] = array();
+			if ( !isset( $sock_keys[intval( $sock )] ) ) {
+				$sock_keys[intval( $sock )] = array();
 				$socks[] = $sock;
 			}
-			$sock_keys[$sock][] = $key;
+			$sock_keys[intval( $sock )][] = $key;
 		}
 
 		// Send out the requests
 		foreach ( $socks as $sock ) {
 			$cmd = 'get';
-			foreach ( $sock_keys[$sock] as $key ) {
+			foreach ( $sock_keys[intval( $sock )] as $key ) {
 				$cmd .= ' ' . $key;
 			}
 			$cmd .= "\r\n";
@@ -1186,6 +1187,19 @@ class MWMemcached {
 				$flags |= self::COMPRESSED;
 			}
 		}
+		// Wikia change - begin - @author: wladek
+		// Log details if we try to store value that will not fit the default item_max_size
+		if ( $len > self::MEMCACHED_ITEM_MAX_SIZE - 2 ) {
+			// default item_max_size is 1mb, 2 characters are reserved for trailing "\r\n"
+			if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
+				\Wikia\Logger\WikiaLogger::instance()->debug( 'MemcachedClient: large value' , [
+					'exception' => new Exception(),
+					'key' => $key,
+					'len' => $len,
+				] );
+			}
+		}
+		// Wikia change - end
 		if ( !$this->_safe_fwrite( $sock, $host, "$cmd $key $flags $exp $len\r\n$val\r\n" ) ) {
 			return $this->_dead_sock( $sock );
 		}
