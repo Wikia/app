@@ -66,30 +66,13 @@ class EditTaggingHooks {
 		}
 
 		$request = RequestContext::getMain()->getRequest();
-		$rte_mode = $request->getVal( 'RTEMode', null );
-		$is_source_mode = $request->getVal( 'isMediaWikiEditor', null );
-		$controller = $request->getVal( 'controller', null );
-		$method = $request->getVal( 'method', null );
 		$revision_id = $revision->getId();
-		$is_category_edit = ( $controller === 'CategorySelect' && $method === 'save' );
+		$rte_mode = $request->getVal( 'RTEMode', null );
 
-		if ( $is_category_edit ) {
-			self::AddRevisionTag( $revision_id, self::CATEGORYSELECT_EDIT_TAG );
-		}
-		if ( $is_source_mode ) {
-			self::AddRevisionTag( $revision_id, self::SOURCE_EDIT_TAG );
-		}
-
-		switch ( $rte_mode ) {
-			case self::RTE_SOURCE_MODE:
-				self::AddRevisionTag( $revision_id, self::RTE_SOURCE_MODE_TAG );
-				break;
-			case self::RTE_WYSIWYG_MODE:
-				self::AddRevisionTag( $revision_id, self::RTE_WYSIWYG_MODE_TAG );
-				break;
-			default:
-				break;
-		}
+		self::tagRevisionIfCategoryEdit( $request, $revision_id );
+		self::tagRevisionIfSourceEdit( $revision_id, $request );
+		self::tagRevisionIfRTESourceEdit( $revision_id, $rte_mode );
+		self::tagRevisionIfRTEWysiwygEdit( $revision_id, $rte_mode );
 
 		return true;
 	}
@@ -103,6 +86,50 @@ class EditTaggingHooks {
 	protected static function AddRevisionTag( $revision_id, $tag ) {
 		if ( !ChangeTags::addTags( $tag, null, $revision_id ) ) {
 			\Wikia\Logger\WikiaLogger::instance()->error( 'Failed to add tag to revision', [ 'revision_id' => $revision_id, 'tag' => $tag ] );
+		}
+	}
+
+	/**
+	 * @param $revision_id
+	 * @param $request
+	 */
+	private static function tagRevisionIfCategoryEdit( $revision_id, $request ) {
+		$controller = $request->getVal( 'controller', null );
+		$method = $request->getVal( 'method', null );
+		$is_category_edit = ( $controller === 'CategorySelect' && $method === 'save' );
+		if ( $is_category_edit ) {
+			self::AddRevisionTag( $revision_id, self::CATEGORYSELECT_EDIT_TAG );
+		}
+	}
+
+	/**
+	 * @param $revision_id
+	 * @param $request
+	 */
+	private static function tagRevisionIfSourceEdit( $revision_id, $request ) {
+		$is_source_mode = $request->getVal( 'isMediaWikiEditor', null );
+		if ( $is_source_mode ) {
+			self::AddRevisionTag( $revision_id, self::SOURCE_EDIT_TAG );
+		}
+	}
+
+	/**
+	 * @param $revision_id
+	 * @param $rte_mode
+	 */
+	private static function tagRevisionIfRTESourceEdit( $revision_id, $rte_mode ) {
+		if ( $rte_mode == self::RTE_SOURCE_MODE ) {
+			self::AddRevisionTag( $revision_id, self::RTE_SOURCE_MODE_TAG );
+		}
+	}
+
+	/**
+	 * @param $revision_id
+	 * @param $rte_mode
+	 */
+	private static function tagRevisionIfRTEWysiwygEdit( $revision_id, $rte_mode ) {
+		if ( $rte_mode == self::RTE_WYSIWYG_MODE ) {
+			self::AddRevisionTag( $revision_id, self::RTE_WYSIWYG_MODE_TAG );
 		}
 	}
 }
