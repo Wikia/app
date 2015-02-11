@@ -172,7 +172,7 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 	 * @param $src String - source file
 	 * @param $dst String - destination path
 	 *
-	 * @return Boolean|null return false will re-queue the item, null - skip it
+	 * @return Boolean|null returns false for recoverable error and null for permanent error
 	 */
 	private function store() {
 		if ( $this->imageSyncQueue->action == 'move' ) {
@@ -209,7 +209,16 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 				$size = intval( fstat( $fp )[ 'size' ] );
 
 				if ( $size === 0 ) {
-					$this->output( "\t'{$this->imageSyncQueue->dst}' file is empty!" );
+					$this->output( "\t'{$this->imageSyncQueue->dst}' file is empty!\n" );
+
+					Wikia\Logger\WikiaLogger::instance()->warning( 'MigrateImagesBetweenSwiftDC: file is empty' , [
+						'id'      => $this->imageSyncQueue->id,
+						'action'  => $this->imageSyncQueue->action,
+						'city_id' => $this->imageSyncQueue->city_id,
+						'src'     => $this->imageSyncQueue->src,
+						'dst'     => $this->imageSyncQueue->dst,
+					]);
+
 					fclose( $fp );
 					return null;
 				}
@@ -237,7 +246,7 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 	/**
 	 * Delete image from destination path
 	 *
-	 * @return Boolean|null return false will re-queue the item, null - skip it
+	 * @return Boolean|null returns false for recoverable error and null for permanent error
 	 */
 	private function delete() {
 		$this->output( "\tDelete {$this->imageSyncQueue->dst} image\n" );
