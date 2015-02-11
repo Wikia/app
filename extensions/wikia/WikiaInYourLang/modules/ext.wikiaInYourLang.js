@@ -27,7 +27,7 @@ require(
 			cacheVersion = '1.01';
 
 		function init() {
-			if (targetLanguage !== false && targetLanguage !== contentLanguage) {
+			if (w.wikiaPageIsCorporate !== "home" && targetLanguage !== false && targetLanguage !== contentLanguage) {
 				// Check local browser cache to see if a request has been sent
 				// in the last month and if the notification has been shown to him.
 				// Both have to be !== true to continue.
