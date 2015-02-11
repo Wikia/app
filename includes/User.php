@@ -58,6 +58,11 @@ class PasswordError extends MWException {
  */
 class User {
 	/**
+	 * Traits extending the class
+	 */
+	use PowerUserTrait;
+
+	/**
 	 * Global constants made accessible as class constants so that autoloader
 	 * magic can be used.
 	 */
