@@ -104,7 +104,7 @@ class SwiftStorage {
 	 */
 	protected function getLoggerContext() {
 		return [
-			'container'    => $this->getContainerName() . $this->getPathPrefix(), // eg. "poznan" + "/pl/images"
+			'prefix'       => $this->getContainerName() . $this->getPathPrefix(), // eg. "poznan" + "/pl/images"
 			'swift-server' => $this->getSwiftServer(),
 		];
 	}
