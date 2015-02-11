@@ -12,15 +12,15 @@ require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
  * Maintenance script class
  */
 class MigrateImagesBetweenSwiftDC extends Maintenance {
-	
+
 	/* @private Int - number of images to sync */
 	private $mLimit;
 	/* @private String - destination DC */
 	private $mDC_dst;
 	/* @private Array - containers */
-	private $source_container;
-	private $dest_container;
-	/* @private \Queue object  */
+	private $source_container = [];
+	private $dest_container = [];
+	/* @var Wikia\SwiftSync\Queue object  */
 	private $imageSyncQueue;
 	
 	/**
@@ -36,7 +36,7 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 	/**
 	 * Create container and authenticate - for source Ceph/Swift storage
 	 *
-	 * @return SwiftStorage storage instance
+	 * @return Wikia\SwiftStorage storage instance
 	 */
 	private function srcConn(){
 		if ( empty( $this->source_container[ $this->imageSyncQueue->city_id ] ) ) {
@@ -56,21 +56,23 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 	/**
 	 * Create container and authenticate - for destination Ceph/Swift storage
 	 *
-	 * @return SwiftStorage storage instance
+	 * @return Wikia\SwiftStorage storage instance
 	 */
 	private function destConn() {
-		if ( empty( $this->desc_container[ $this->imageSyncQueue->city_id ] ) ) {
-			if ( $this->imageSyncQueue->city_id == 0 ) {
+		$city_id = $this->imageSyncQueue->city_id;
+
+		if ( empty( $this->dest_container[ $city_id ] ) ) {
+			if ( $city_id == 0 ) {
 				global $wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix;
-				$this->desc_container[ $this->imageSyncQueue->city_id ] = 
+				$this->dest_container[ $city_id ] =
 					\Wikia\SwiftStorage::newFromContainer( $wgBlogAvatarSwiftContainer, $wgBlogAvatarSwiftPathPrefix, $this->mDC_dst );
 			} else {
-				$this->desc_container[ $this->imageSyncQueue->city_id ] = 
-					\Wikia\SwiftStorage::newFromWiki( $this->imageSyncQueue->city_id, $this->mDC_dst );
+				$this->dest_container[ $city_id ] =
+					\Wikia\SwiftStorage::newFromWiki( $city_id, $this->mDC_dst );
 			}
 		}
 		
-		return $this->desc_container[ $this->imageSyncQueue->city_id ];
+		return $this->dest_container[ $city_id ];
 	}
 	
 	/**
@@ -111,13 +113,17 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 				} else {
 					$res = $this->store();
 				}
-				
+
+				/**
+				 * $res == true  - we're fine
+				 * $res == false - error, keep an item in the queue (i.e. retry in the next run)
+				 * $res == null  - error, move the item to archive (i.e. ignore the error)
+				 */
 				if ( $res === null ) {
 					$this->output( "\tFile ({$this->imageSyncQueue->dst}) doesn't exist in source DC\n" );
 					$error = 5;
 				} 
-				
-				
+
 				if ( $res === false ) {
 					$this->output( "\tCannot finish operation {$this->imageSyncQueue->action} in destination DC \n\n" );					
 				} else {
@@ -125,6 +131,16 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 					$this->imageSyncQueue->moveToArchive();
 					$this->output( "\tRecord moved to archive\n\n" );
 				}
+
+				Wikia\Logger\WikiaLogger::instance()->debug( 'MigrateImagesBetweenSwiftDC' , [
+					'is_ok'   => ( $res === true ),
+					'retry'   => ( $res === false ),
+					'id'      => $this->imageSyncQueue->id,
+					'action'  => $this->imageSyncQueue->action,
+					'city_id' => $this->imageSyncQueue->city_id,
+					'src'     => $this->imageSyncQueue->src,
+					'dst'     => $this->imageSyncQueue->dst,
+				]);
 			}
 		}
 	}
@@ -156,7 +172,7 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 	 * @param $src String - source file
 	 * @param $dst String - destination path
 	 * 
-	 * @return Boolean
+	 * @return Boolean|null return false will re-queue the item, null - skip it
 	 */
 	private function store() {
 		if ( $this->imageSyncQueue->action == 'move' ) {
@@ -189,6 +205,15 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 				fwrite( $fp, $srcStorage->read( $remoteFile ) );
 				rewind( $fp );
 
+				/* check the size of the source file - PLATFORM-841 */
+				$size = intval( fstat( $fp )[ 'size' ]);
+
+				if ( $size === 0 ) {
+					$this->output( "\t'{$this->imageSyncQueue->dst}' file is empty!" );
+					fclose( $fp );
+					return null;
+				}
+
 				/* connect to destination Ceph/Swift */
 				$dstStorage = $this->destConn();							
 
@@ -201,7 +226,7 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 					$mime_type = 'unknown/unknown';
 				}
 
-				/* store image in destination path */
+				/* store image in destination path (fclose is called internally in store method) */
 				$result = $dstStorage->store( $fp, $remoteFile, array(), $mime_type )->isOK();
 			}
 		}
@@ -209,7 +234,11 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 		return $result;
 	}	
 	
-	/* delete image from destination path */
+	/**
+	 * Delete image from destination path
+	 *
+	 * @return Boolean|null return false will re-queue the item, null - skip it
+	 */
 	private function delete() {
 		$this->output( "\tDelete {$this->imageSyncQueue->dst} image\n" );
 		
