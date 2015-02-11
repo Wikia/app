@@ -57,10 +57,14 @@ class PasswordError extends MWException {
  * of the database.
  */
 class User {
+
+	# WIKIA CHANGE BEGIN
+	# adamk@wikia-inc.com
 	/**
 	 * Traits extending the class
 	 */
 	use PowerUserTrait;
+	# WIKIA CHANGE END
 
 	/**
 	 * Global constants made accessible as class constants so that autoloader

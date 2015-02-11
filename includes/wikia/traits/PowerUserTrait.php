@@ -9,7 +9,7 @@ trait PowerUserTrait {
 
 	// Required base-class methods
 	abstract function setOption();
-	abstract function getOption();
+	abstract function getBoolOption();
 	abstract function saveOptions();
 
 	public function addPowerUserProperty( $sProperty ) {
@@ -23,7 +23,7 @@ trait PowerUserTrait {
 
 	public function removePowerUserProperty( $sProperty ) {
 		if ( in_array( $sProperty, $this->aPowerUserProperties ) &&
-			$this->getOption( $sProperty ) == true
+			$this->getBoolOption( $sProperty ) === true
 		) {
 			$this->setOption( $sProperty, NULL );
 			$this->saveOptions();
@@ -34,7 +34,7 @@ trait PowerUserTrait {
 
 	public function isPowerUser() {
 		foreach ( $this->aPowerUserProperties as $sProperty ) {
-			if ( $this->getOption( $sProperty ) ) {
+			if ( $this->getBoolOption( $sProperty ) ) {
 				return true;
 			}
 		}
@@ -43,7 +43,7 @@ trait PowerUserTrait {
 
 	public function isSpecificPowerUser( $sProperty ) {
 		if ( in_array( $sProperty, $this->aPowerUserProperties ) &&
-			$this->getOption( $sProperty )
+			$this->getBoolOption( $sProperty )
 		) {
 			return true;
 		}
