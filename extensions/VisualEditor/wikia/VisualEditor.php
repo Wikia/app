@@ -12,6 +12,18 @@ $dir = dirname( __FILE__ ) . '/';
 /* Classes */
 
 $wgAutoloadClasses['VisualEditorWikiaHooks'] = $dir . 'VisualEditor.hooks.php';
+$wgAutoloadClasses['ApiMediaSearch'] = $dir . 'ApiMediaSearch.php';
+$wgAutoloadClasses['ApiAddMedia'] = $dir . 'ApiAddMedia.php';
+$wgAutoloadClasses['ApiAddMediaTemporary'] = $dir . 'ApiAddMediaTemporary.php';
+$wgAutoloadClasses['ApiAddMediaPermanent'] = $dir . 'ApiAddMediaPermanent.php';
+$wgAutoloadClasses['ApiVideoPreview'] = $dir . 'ApiVideoPreview.php';
+
+/* API Modules */
+
+$wgAPIModules['apimediasearch'] = 'ApiMediaSearch';
+$wgAPIModules['addmediatemporary'] = 'ApiAddMediaTemporary';
+$wgAPIModules['addmediapermanent'] = 'ApiAddMediaPermanent';
+$wgAPIModules['videopreview'] = 'ApiVideoPreview';
 
 /* Resource Loader Modules */
 
@@ -66,6 +78,8 @@ $wgResourceModules += array(
 			've/dm/ve.dm.WikiaInlineVideoNode.js',
 			've/dm/ve.dm.WikiaBlockImageNode.js',
 			've/dm/ve.dm.WikiaImageCaptionNode.js',
+			've/dm/ve.dm.WikiaCart.js',
+			've/dm/ve.dm.WikiaCartItem.js',
 
 			// ce
 			've/ce/ve.ce.WikiaVideoNode.js',
@@ -80,8 +94,21 @@ $wgResourceModules += array(
 			// ui
 			've/ui/ve.ui.WikiaCommandRegistry.js',
 			've/ui/dialogs/ve.ui.WikiaSourceModeDialog.js',
+			've/ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
 			've/ui/tools/ve.ui.WikiaDialogTool.js',
 			've/ui/widgets/ve.ui.WikiaFocusWidget.js',
+			've/ui/widgets/ve.ui.WikiaCartWidget.js',
+			've/ui/widgets/ve.ui.WikiaMediaQueryWidget.js',
+			've/ui/widgets/ve.ui.WikiaUploadWidget.js',
+			've/ui/widgets/ve.ui.WikiaMediaResultsWidget.js',
+			've/ui/widgets/ve.ui.WikiaMediaSelectWidget.js',
+			've/ui/widgets/ve.ui.WikiaMediaOptionWidget.js',
+			've/ui/widgets/ve.ui.WikiaPhotoOptionWidget.js',
+			've/ui/widgets/ve.ui.WikiaVideoOptionWidget.js',
+			've/ui/widgets/ve.ui.WikiaCartItemWidget.js',
+			've/ui/widgets/ve.ui.WikiaMediaPageWidget.js',
+			've/ui/widgets/ve.ui.WikiaDropTargetWidget.js',
+			've/ui/widgets/ve.ui.WikiaMediaPreviewWidget.js',
 		),
 		'messages' => array(
 			'oasis-content-picture-added-by',
@@ -178,3 +205,4 @@ $wgExtensionMessagesFiles['VisualEditorWikia'] = $dir . 'VisualEditor.i18n.php';
 /* Hooks */
 
 $wgHooks['ResourceLoaderTestModules'][] = 'VisualEditorWikiaHooks::onResourceLoaderTestModules';
+$wgHooks['MakeGlobalVariablesScript'][] = 'VisualEditorWikiaHooks::onMakeGlobalVariablesScript';

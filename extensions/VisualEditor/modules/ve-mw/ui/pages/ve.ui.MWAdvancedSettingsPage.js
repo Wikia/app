@@ -40,15 +40,18 @@ ve.ui.MWAdvancedSettingsPage = function VeUiMWAdvancedSettingsPage( name, config
 			.addItems( [
 				new OO.ui.ButtonOptionWidget( {
 					data: 'mwIndexForce',
-					label: ve.msg( 'visualeditor-dialog-meta-settings-index-force' )
+					label: ve.msg( 'visualeditor-dialog-meta-settings-index-force' ),
+					flags: ['secondary']
 				} ),
 				new OO.ui.ButtonOptionWidget( {
 					data: 'default',
-					label: ve.msg( 'visualeditor-dialog-meta-settings-index-default' )
+					label: ve.msg( 'visualeditor-dialog-meta-settings-index-default' ),
+					flags: ['secondary']
 				} ),
 				new OO.ui.ButtonOptionWidget( {
 					data: 'mwIndexDisable',
-					label: ve.msg( 'visualeditor-dialog-meta-settings-index-disable' )
+					label: ve.msg( 'visualeditor-dialog-meta-settings-index-disable' ),
+					flags: ['secondary']
 				} )
 			] )
 			.connect( this, { select: 'onIndexingOptionChange' } ),
@@ -66,15 +69,18 @@ ve.ui.MWAdvancedSettingsPage = function VeUiMWAdvancedSettingsPage( name, config
 			.addItems( [
 				new OO.ui.ButtonOptionWidget( {
 					data: 'mwNewSectionEditForce',
-					label: ve.msg( 'visualeditor-dialog-meta-settings-newsectioneditlink-force' )
+					label: ve.msg( 'visualeditor-dialog-meta-settings-newsectioneditlink-force' ),
+					flags: ['secondary']
 				} ),
 				new OO.ui.ButtonOptionWidget( {
 					data: 'default',
-					label: ve.msg( 'visualeditor-dialog-meta-settings-newsectioneditlink-default' )
+					label: ve.msg( 'visualeditor-dialog-meta-settings-newsectioneditlink-default' ),
+					flags: ['secondary']
 				} ),
 				new OO.ui.ButtonOptionWidget( {
 					data: 'mwNewSectionEditDisable',
-					label: ve.msg( 'visualeditor-dialog-meta-settings-newsectioneditlink-disable' )
+					label: ve.msg( 'visualeditor-dialog-meta-settings-newsectioneditlink-disable' ),
+					flags: ['secondary']
 				} )
 			] )
 			.connect( this, { select: 'onNewSectionEditLinkOptionChange' } ),

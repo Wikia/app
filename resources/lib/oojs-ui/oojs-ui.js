@@ -2708,6 +2708,9 @@ OO.ui.WindowManager.static.sizes = {
 		// These can be non-numeric because they are never used in calculations
 		width: '100%',
 		height: '100%'
+	},
+	'840px': {
+		width: 840
 	}
 };
 
@@ -5157,6 +5160,9 @@ OO.ui.FlaggedElement.prototype.setFlags = function ( flags ) {
 				changes[flag] = true;
 				this.flags[flag] = true;
 				add.push( className );
+			}
+			if ( flag === 'secondary' && this.$button ) {
+				this.$button.addClass( 'secondary' );
 			}
 		}
 	} else if ( OO.isPlainObject( flags ) ) {
