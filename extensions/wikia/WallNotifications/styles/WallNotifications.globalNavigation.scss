@@ -48,7 +48,9 @@ $wiki-header-color: #2b54b5;
 	.bubbles {
 		@include calc('right', '50% + 2px');
 		background-color: $notification-bubble-color;
-		border-radius: 50%;
+		//border-radius needs to be in pixels
+		//to handle 3 and more digits situation correctly
+		border-radius: 9px;
 		display: none;
 		height: 18px;
 		min-width: 18px;
@@ -64,7 +66,9 @@ $wiki-header-color: #2b54b5;
 
 	.bubbles-count {
 		background-color: $white;
-		border-radius: 50%;
+		//border-radius needs to be in pixels
+		//to handle 3 and more digits situation correctly
+		border-radius: 8px;
 		color: $notification-bubble-color;
 		font-size: 10px;
 		font-weight: bold;
