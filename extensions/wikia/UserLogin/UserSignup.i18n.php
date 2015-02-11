@@ -10,9 +10,9 @@ $messages = array();
 $messages['en'] = array(
 	'usersignup-page-title' => 'Join Wikia',
 	'usersignup-page-title-wikiamobile' => 'Create account',
-	'usersignup-page-captcha-label' => 'Blurry Word',
+	'usersignup-page-captcha-label' => 'Challenge',
 	'usersignup-page-captcha-load-fail-title' => 'Captcha not loaded',
-	'usersignup-page-captcha-load-fail-text' => "We're sorry, the blurry word test failed to load, and it is required for creating an account. It may not be availble in your region. Please try again later.",
+	'usersignup-page-captcha-load-fail-text' => "We're sorry, the challenge failed to load, and it is required for creating an account. It may not be available in your region. Please try again later.",
 
 	'usersignup-error-username-length' => "Oops, your username can't be more than {{PLURAL:$1|one character|$1 characters}}.",
 	'usersignup-error-invalid-user' => 'Invalid user. Please login first.',
@@ -182,7 +182,7 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 	'usersignup-createaccount-byemail' => 'Create an account for someone else',
 
 	// Signup form validation
-	'usersignup-error-captcha' => "The word you entered didn't match the word in the box, try again!",
+	'usersignup-error-captcha' => "The challenge answer failed, please try again!",
 
 	// account creation email
 	'usersignup-account-creation-heading' => 'Success!',

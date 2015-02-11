@@ -47,12 +47,12 @@ Hit the 'back' button in your browser to return to the page editor.",
 
 	// Recaptcha
 	'recaptcha-desc' => 'reCAPTCHA module for Confirm Edit',
-	'recaptcha-edit' => 'To help protect against automated edit spam, please type the two words you see in the box below:',
-	'recaptcha-addurl' => 'Your edit includes new external links. To help protect against automated spam, please type the two words you see in the box below:',
-	'recaptcha-badpass' => 'To help protect against automated password cracking, please type the two words you see in the box below:',
-	'recaptcha-createaccount' => 'To help protect against automated account creation, please type the two words you see in the box below:',
+	'recaptcha-edit' => 'To help protect against automated edit spam, please complete the challenge below:',
+	'recaptcha-addurl' => 'Your edit includes new external links. To help protect against automated spam, please complete the challenge below:',
+	'recaptcha-badpass' => 'To help protect against automated password cracking, please complete the challenge below:',
+	'recaptcha-createaccount' => 'To help protect against automated account creation, please complete the challenge below:',
 	'recaptcha-createaccount-fail' => "Incorrect or missing reCAPTCHA answer.",
-	'recaptcha-create' => 'To help protect against automated page creation, please type the two words you see in the box below:',
+	'recaptcha-create' => 'To help protect against automated page creation, please complete the challenge below:',
 	'recaptcha-misconfigured' => 'ReCaptcha is not configured correctly',
 );
 
