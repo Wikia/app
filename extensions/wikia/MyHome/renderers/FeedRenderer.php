@@ -666,8 +666,6 @@ class FeedRenderer {
 	 * @author Maciej Brencz <macbre@wikia-inc.com>
 	 */
 	public static function getAddedMediaRow( $row, $type ) {
-		global $wgArticleAsJson;
-
 		$wg = F::app()->wg;
 
 		$key = "new_{$type}";
