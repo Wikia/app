@@ -5,7 +5,7 @@ class UserProfilePageController extends WikiaController {
 	const AVATAR_MAX_SIZE = 512000;
 	const MAX_TOP_WIKIS = 4;
 
-	const FBPAGE_PREFIX = 'http://www.facebook.com/';
+	const FBPAGE_PREFIX = 'https://www.facebook.com/';
 
 	/**
 	 * @var $profilePage UserProfilePage
