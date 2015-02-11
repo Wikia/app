@@ -48,3 +48,30 @@
 		width: calc(100% - 22px);
 	}
 }
+
+#wpTextbox0 {
+	border: 1px solid transparent;
+	box-sizing: border-box;
+	color: transparent;
+	line-height: normal;
+	margin: 0;
+	overflow-x: auto;
+	overflow-y: scroll;
+	white-space: pre-wrap;
+	width: 100%;
+	word-wrap: normal;
+}
+
+#wpTextboxWrapper {
+	border: 1px inset gray;
+	box-sizing: border-box;
+	line-height: normal;
+	left: 0;
+	margin: 0;
+	overflow-x: auto;
+	overflow-y: scroll;
+	padding: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}

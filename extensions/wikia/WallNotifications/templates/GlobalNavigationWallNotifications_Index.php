@@ -1,13 +1,14 @@
-<? if( $loggedIn && empty( $suppressWallNotifications ) ): ?>
-	<li id="notifications" <?php if( $prehide ): ?>class="prehide"<?php endif; ?>>
-		<a href="#"><?= wfMessage('wall-notifications-all')->text() ?> <span class="notifications-count"></span></a>
-		<ul id="GlobalNavigationWallNotifications" class="WallNotifications">
-			<li id="notificationsContainer">
-				<ul>
-					<li class="notification empty"><?= wfMessage('wall-notifications-loading')->text() ?></li>
-				</ul>
-			</li>
-		</ul>
-	</li>
-<? endif; ?>
+<div class="bubbles">
+	<div class="bubbles-count notifications-count"></div>
+</div>
+<a class="notifications-entry-point"></a>
+<li id="notifications" class="notifications-container <?php if( $prehide ): ?> prehide<?php endif; ?>">
+	<ul id="GlobalNavigationWallNotifications" class="WallNotifications">
+		<li id="notificationsContainer">
+			<ul>
+				<li class="notification empty"><?= wfMessage('wall-notifications-loading')->text() ?></li>
+			</ul>
+		</li>
+	</ul>
+</li>
 

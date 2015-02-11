@@ -21,6 +21,11 @@
 		<div class="account-navigation-container table-cell">
 			<?= $app->renderView( 'GlobalNavigationAccountNavigation', 'index' ) ?>
 		</div>
+		<?php if ( !$isAnon && $notificationsEnabled ): ?>
+		<div class="notifications-container table-cell" id="notificationsEntryPoint">
+			<?= $app->renderView( 'GlobalNavigationWallNotifications', 'Index' ); ?>
+		</div>
+		<?php endif; ?>
 		<div class="start-wikia-container table-cell">
 			<a href="<?= htmlspecialchars( $createWikiUrl ) ?>"
 			   class="start-wikia"
