@@ -4,7 +4,7 @@
  * @author Kamil Koterba <kamil@wikia-inc.com>
  */
 
-require(['wikia.window', 'jquery', 'wikia.log'], function(window, $, log) {
+require(['wikia.window', 'jquery', 'wikia.log'], function(window, $) {
 	'use strict';
 
 	var WE = window.WikiaEditor = window.WikiaEditor || (new window.Observable());
