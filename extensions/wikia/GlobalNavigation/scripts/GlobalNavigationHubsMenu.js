@@ -1,4 +1,4 @@
-require(['jquery', 'wikia.window', 'wikia.globalnavigation.lazyload'], function ($, w, GlobalNavLazyLoad) {
+require(['jquery', 'wikia.window', 'wikia.globalnavigation.lazyload', 'wikia.menuaim'], function ($, w, GlobalNavLazyLoad, menuAim) {
 	'use strict';
 
 	var $entryPoint,
@@ -85,7 +85,7 @@ require(['jquery', 'wikia.window', 'wikia.globalnavigation.lazyload'], function 
 		 * menuAim is a method from an external module to handle dropdown menus with very good user experience
 		 * @see https://github.com/Wikia/js-menu-aim
 		 */
-		w.menuAim(
+		menuAim.attach(
 			$verticals.get(0), {
 				activeRow: $verticals.find('.active').get(0),
 				rowSelector: '.hub-link',

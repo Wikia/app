@@ -200,6 +200,7 @@ $VenusConfig[ 'global_navigation_js' ] = [
 	'assets' => [
 		'//resources/wikia/libraries/menu-aim/menu-aim.js',
 		'//resources/wikia/libraries/delayed-hover/js-delayed-hover.js',
+		'//resources/wikia/modules/menuAim.js',
 		'//resources/wikia/modules/scrollToLink.js',
 		'//skins/shared/scripts/transparent-out.js',
 		'//extensions/wikia/Venus/scripts/layout.js',

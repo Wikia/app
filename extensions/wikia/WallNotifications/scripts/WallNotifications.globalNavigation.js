@@ -379,16 +379,6 @@ require(
 		$(function () {
 			WallNotifications.init();
 
-			window.menuAim(
-				document.querySelector('.user-menu'), {
-					activeRow: '#notifications',
-					rowSelector: '> li',
-					tolerance: 85,
-					submenuDirection: 'left',
-					deactivate: WallNotifications.closeNotifications,
-					exitMenu: WallNotifications.closeNotifications
-			});
-
 			if ( !Wikia.isTouchScreen() ) {
 				window.delayedHover(
 					document.getElementById('notifications'),
