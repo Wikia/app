@@ -367,17 +367,23 @@
 			-webkit-flex-grow: 1;
 		}
 	}
+
+	button.new-btn {
+		height: 40px;
+	}
+
 	.new-btn {
 		background-image: none;
 		border: 1px solid #092140;
 		border-radius: 0;
 		cursor: pointer;
 		display: block;
-		height: 40px;
+		height: 20px;
 		margin: 0 5px;
 		padding: 10px 20px;
 		text-align: center;
 		text-transform: uppercase;
+
 		&.edit-btn {
 			display: none;
 		}
