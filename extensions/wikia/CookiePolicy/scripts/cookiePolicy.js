@@ -1,4 +1,4 @@
-/* global GlobalNotification */
+/* global BannerNotifications */
 require([
 	'jquery',
 	'mw',
@@ -35,10 +35,10 @@ require([
 	function showBanner() {
 		var message = mw.message('cookie-policy-notification-message').parse();
 
-		GlobalNotification.show(message, 'notify');
+		BannerNotifications.show(message, 'notify');
 
 		// currently, mw.message doesn't support the #NewWindowLink magic word, so we'll have to use JS
-		GlobalNotification.msg.find('a').on('click', function (event) {
+		BannerNotifications.msg.find('a').on('click', function (event) {
 			var url = $(this).attr('href');
 			event.preventDefault();
 			window.open(url, '_blank');
@@ -66,8 +66,8 @@ require([
 	}
 
 	$(function () {
-		// Allow other JS like GlobalNotification to execute beforehand.
-		// setTimeout hack can hopefully be removed with UC-174, GlobalNotification refactor
+		// Allow other JS like BannerNotifications to execute beforehand.
+		// setTimeout hack can hopefully be removed with UC-174, BannerNotifications refactor
 		window.setTimeout(initCookieNotification, 0);
 	});
 });

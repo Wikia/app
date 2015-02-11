@@ -77,7 +77,7 @@
 				);
 			} else {
 				var resultClass = ( result === 'error' ? 'error' : 'confirm' );
-				window.GlobalNotification.show( mw.msg( message ), resultClass );
+				window.BannerNotifications.show( mw.msg( message ), resultClass );
 			}
 		}
 	};

@@ -232,7 +232,7 @@ define('videohomepage.views.featured', [
 
 			$.when(data).done(function (json) {
 				if (json.error) {
-					window.GlobalNotification.show(json.error, 'error', null, 4000);
+					window.BannerNotifications.show(json.error, 'error', null, 4000);
 				} else {
 					// cache embed data
 					model.set({

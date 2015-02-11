@@ -1,14 +1,13 @@
 <?php
 
 /**
- * Css lives here: /skins/oasis/css/core/GlobalNotification.scss
  * Docs are on internal in UI Style Guide
  */
-$wgExtensionCredits['globalnotification'][] = array(
-	'name' => 'GlobalNotification',
-	'descriptionmsg' => 'globalnotification-desc',
+$wgExtensionCredits['bannernotifications'][] = array(
+	'name' => 'BannerNotifications',
+	'descriptionmsg' => 'bannernotifications-desc',
 	'author' => 'Hyun Lim',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/GlobalNotification'
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/BannerNotifications'
 );
 
 $dir = dirname(__FILE__) . '/';
@@ -39,4 +38,4 @@ $wgHooks['SkinTemplateOutputPageBeforeExec'][] = 'NotificationsController::addMe
 /**
  * i18n
  */
-$wgExtensionMessagesFiles['GlobalNotification'] = $dir . 'GlobalNotification.i18n.php';
+$wgExtensionMessagesFiles['BannerNotification'] = $dir . 'BannerNotifications.i18n.php';

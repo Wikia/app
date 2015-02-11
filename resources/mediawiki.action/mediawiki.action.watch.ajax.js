@@ -118,7 +118,7 @@ $( document ).ready( function() {
 
 				/* Wikia Start - Liz */
 				//mw.util.jsMessage( watchResponse.message, 'ajaxwatch' );
-				GlobalNotification.show(watchResponse.message, 'confirm');
+				BannerNotifications.show(watchResponse.message, 'confirm');
 				/* Wikia End - Liz */
 
 				// Set link to opposite
@@ -157,7 +157,7 @@ $( document ).ready( function() {
 
 				// Wikia Start - Liz
 				//mw.util.jsMessage( html, 'ajaxwatch' );
-				GlobalNotification.show(html, 'error');
+			BannerNotificationsn.show(html, 'error');
 				return true;
 				// Wikia End - Liz
 

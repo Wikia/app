@@ -54,7 +54,7 @@
 				callback: function (data) {
 					if (data.status === 'ok') {
 
-						window.GlobalNotification.show($.msg('fbconnect-preferences-connected'), 'confirm');
+						window.BannerNotifications.show($.msg('fbconnect-preferences-connected'), 'confirm');
 
 						window.Wikia.Tracker.track({
 							category: 'user-sign-up',
@@ -103,7 +103,7 @@
 				type: 'POST',
 				callback: function (data) {
 					if (data.status === 'ok') {
-						window.GlobalNotification.show($.msg(disconnectMsg), 'confirm');
+						window.BannerNotifications.show($.msg(disconnectMsg), 'confirm');
 						window.Wikia.Tracker.track({
 							category: 'user-sign-up',
 							trackingMethod: 'both',
@@ -138,7 +138,7 @@
 				msg = $.msg('oasis-generic-error');
 			}
 
-			window.GlobalNotification.show(msg, 'error');
+			window.BannerNotifications.show(msg, 'error');
 		}
 
 		function facebookError() {

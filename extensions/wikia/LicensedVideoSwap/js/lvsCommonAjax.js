@@ -34,10 +34,10 @@ define('lvs.commonajax', [
 	// ajax success callback
 	function success(data, trackingLabel) {
 		if (data.result === 'error') {
-			window.GlobalNotification.show(data.msg, 'error');
+			window.BannerNotifications.show(data.msg, 'error');
 			stopLoadingGraphic();
 		} else {
-			window.GlobalNotification.show(data.msg, 'confirm');
+			windowBannerNotificationsn.show(data.msg, 'confirm');
 			// update the grid and trigger the reset event for JS garbage collection
 			$container.html(data.html).trigger('contentReset');
 			suggestions.init($container);

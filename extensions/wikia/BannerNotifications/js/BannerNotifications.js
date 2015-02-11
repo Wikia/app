@@ -1,10 +1,11 @@
 /*
- * Handles the color-coded notification messages that generally appear at the top the screen or inside a modal.
+ * Handles the color-coded notification messages that generally appear
+ * at the top the screen or inside a modal.
  * Use like:
- * GlobalNotification.show('Some success message', 'confirm')
- * GlobalNotification.show('Some error message', 'error', $('.myDiv'), 3000)
+ * BannerNotifications.show('Some success message', 'confirm')
+ * BannerNotifications.show('Some error message', 'error', $('.myDiv'), 3000)
  */
-var GlobalNotification = {
+var BannerNotifications = {
 
 	defaultTimeout: 10000,
 	/**
@@ -23,9 +24,9 @@ var GlobalNotification = {
 	init: function () {
 		'use strict';
 
-		// If there's already a global notification on page load, set up JS
-		GlobalNotification.dom = $('.global-notification');
-		if (GlobalNotification.dom.length) {
+		// If there's already a banner notification on page load, set up JS
+		BannerNotifications.dom = $('.global-notification');
+		if (BannerNotifications.dom.length) {
 			this.setUpClose();
 		}
 
@@ -44,35 +45,35 @@ var GlobalNotification = {
 		'use strict';
 
 		// create and store dom
-		if (!GlobalNotification.dom.length) {
-			GlobalNotification.dom = $('<div class="global-notification">' +
+		if (!BannerNotifications.dom.length) {
+			BannerNotifications.dom = $('<div class="global-notification">' +
 				'<button class="close wikia-chiclet-button">' +
 				'<img src="' + window.stylepath + '/oasis/images/icon_close.png">' +
 				'</button><div class="msg"></div></div>')
 				.hide();
-			GlobalNotification.setUpClose();
+			BannerNotifications.setUpClose();
 		}
 
 		// allow notification wrapper element to be passed by extension
 		if (element instanceof jQuery) {
-			element.prepend(GlobalNotification.dom).show();
+			element.prepend(BannerNotifications.dom).show();
 
 		// handle modal implementations
 		} else if (isModal) {
-			GlobalNotification.modal.prepend(GlobalNotification.dom);
+			BannerNotifications.modal.prepend(BannerNotifications.dom);
 
 		// handle non-modal implementation
 		} else {
-			this.pageContainer.prepend(GlobalNotification.dom);
+			this.pageContainer.prepend(BannerNotifications.dom);
 		}
 
-		GlobalNotification.msg = GlobalNotification.dom.find('.msg');
+		BannerNotifications.msg = BannerNotifications.dom.find('.msg');
 	},
 
 	/**
 	 * Main entry point for this feature - shows the notification
 	 * @param {string} content - message to be displayed
-	 * @param {string} type - See GlobalNotification.options for supported types
+	 * @param {string} type - See BannerNotifications.options for supported types
 	 * @param {jQuery} [element] Element to prepend notification to
 	 * @param {number} [timeout] Optional time (in ms) after which notification will disappear.
 	 */
@@ -80,38 +81,38 @@ var GlobalNotification = {
 		'use strict';
 
 		var isModal,
-			classes = Object.keys(GlobalNotification.options).join(' ');
-		GlobalNotification.content = content;
+			classes = Object.keys(BannerNotifications.options).join(' ');
+		BannerNotifications.content = content;
 
 		function callback() {
-			isModal = GlobalNotification.isModal();
+			isModal = BannerNotifications.isModal();
 
 			// Modal notifications have no close button so set a timeout
 			if (isModal && typeof timeout !== 'number') {
-				timeout = GlobalNotification.defaultTimeout;
+				timeout = BannerNotifications.defaultTimeout;
 			}
 
-			GlobalNotification.createDom(element, isModal);
-			GlobalNotification.msg.html(GlobalNotification.content);
-			GlobalNotification.dom.removeClass(classes).addClass(type);
+			BannerNotifications.createDom(element, isModal);
+			BannerNotifications.msg.html(BannerNotifications.content);
+			BannerNotifications.dom.removeClass(classes).addClass(type);
 
 			// Share scroll event with WikiaFooterApp's toolbar floating (BugId:33365)
 			if (window.WikiaFooterApp) {
 				window.WikiaFooterApp.addScrollEvent();
 			}
 
-			GlobalNotification.dom.fadeIn('slow');
+			BannerNotifications.dom.fadeIn('slow');
 
 			// Close notification after specified amount of time
 			if (typeof timeout === 'number') {
 				setTimeout(function () {
-					GlobalNotification.hide();
+					BannerNotifications.hide();
 				}, timeout);
 			}
 		}
 
 		// close any existing notifications before adding a new one
-		GlobalNotification.hide(callback);
+		BannerNotifications.hide(callback);
 	},
 
 	/**
@@ -120,17 +121,17 @@ var GlobalNotification = {
 	 */
 	hide: function (callback) {
 		'use strict';
-		if (!GlobalNotification.dom) {
+		if (!BannerNotifications.dom) {
 			return;
 		}
-		if (GlobalNotification.dom.length) {
-			GlobalNotification.dom.animate({
+		if (BannerNotifications.dom.length) {
+			BannerNotifications.dom.animate({
 				'height': 0,
 				'padding': 0,
 				'opacity': 0
 			}, 400, function () {
-				GlobalNotification.dom.remove();
-				GlobalNotification.dom = [];
+				BannerNotifications.dom.remove();
+				BannerNotifications.dom = [];
 				if (typeof callback === 'function') {
 					callback();
 				}
@@ -150,10 +151,10 @@ var GlobalNotification = {
 		'use strict';
 
 		// handle all types of modals since the begining of time!
-		GlobalNotification.modal = $('.modalWrapper, .yui-panel, .modal');
+		BannerNotifications.modal = $('.modalWrapper, .yui-panel, .modal');
 
 		// returns false if there's no modal or it's hidden
-		return GlobalNotification.modal.is(':visible');
+		return BannerNotifications.modal.is(':visible');
 	},
 
 	/**
@@ -161,7 +162,7 @@ var GlobalNotification = {
 	 */
 	setUpClose: function () {
 		'use strict';
-		GlobalNotification.dom.find('.close').on('click', GlobalNotification.hide);
+		BannerNotifications.dom.find('.close').on('click', BannerNotifications.hide);
 	},
 
 	/**
@@ -173,22 +174,22 @@ var GlobalNotification = {
 
 		var containerTop;
 
-		if (!GlobalNotification.dom || !GlobalNotification.dom.length) {
+		if (!BannerNotifications.dom || !BannerNotifications.dom.length) {
 			return;
 		}
 
 		// get the position of the wrapper element relative to the top of the viewport
-		containerTop = GlobalNotification.pageContainerElem.getBoundingClientRect().top;
+		containerTop = BannerNotifications.pageContainerElem.getBoundingClientRect().top;
 
-		if (containerTop < GlobalNotification.headerHeight) {
-			GlobalNotification.dom.addClass('float');
+		if (containerTop < BannerNotifications.headerHeight) {
+			BannerNotifications.dom.addClass('float');
 		} else {
-			GlobalNotification.dom.removeClass('float');
+			BannerNotifications.dom.removeClass('float');
 		}
 	}
 };
 
 $(function () {
 	'use strict';
-	GlobalNotification.init();
+	BannerNotifications.init();
 });

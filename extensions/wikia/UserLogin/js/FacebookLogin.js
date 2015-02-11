@@ -1,4 +1,4 @@
-/* global UserLoginModal, wgScriptPath, GlobalNotification */
+/* global UserLoginModal, wgScriptPath, BannerNotifications */
 
 /**
  * Handle signing in and signing up with Facebook
@@ -171,7 +171,7 @@
 				}
 			// some error occurred
 			} else if (response.loginAborted) {
-				window.GlobalNotification.show(response.errorMsg, 'error');
+				windowBannerNotificationsn.show(response.errorMsg, 'error');
 			} else if (response.unconfirmed) {
 				$.get(wgScriptPath + '/wikia.php', {
 					controller: 'UserLoginSpecial',
@@ -194,7 +194,7 @@
 		 */
 		setupModal: function (response) {
 			if (!response.modal) {
-				GlobalNotification.show($.msg('oasis-generic-error'), 'error');
+		BannerNotificationson.show($.msg('oasis-generic-error'), 'error');
 				return;
 			}
 

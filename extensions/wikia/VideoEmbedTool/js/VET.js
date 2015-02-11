@@ -1,4 +1,4 @@
-/* global GlobalNotification */
+/* global BannerNotifications */
 
 /*
  * Author: Inez Korczynski, Bartek Lapinski, Hyun Lim, Liz Lee
@@ -115,7 +115,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 			var extraData, caption;
 
 			if (json.status === 'fail') {
-				GlobalNotification.show(json.errMsg, 'error', null, notificationTimout);
+			BannerNotificationsn.show(json.errMsg, 'error', null, notificationTimout);
 			} else {
 				// setup metadata
 				extraData = {};
@@ -278,7 +278,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 			query;
 
 		if (!$urlInput.val()) {
-			GlobalNotification.show($.msg('vet-warn2'), 'error', null, notificationTimout);
+	BannerNotificationson.show($.msg('vet-warn2'), 'error', null, notificationTimout);
 			return false;
 		} else {
 			query = $urlInput.val();
@@ -332,7 +332,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 		});
 
 		if ($errorBox.length) {
-			GlobalNotification.show($errorBox.html(), 'error', null, notificationTimout);
+BannerNotificationsion.show($errorBox.html(), 'error', null, notificationTimout);
 		}
 
 		if ($('#VideoEmbedMain').html() === '') {
@@ -356,8 +356,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 
 		e.preventDefault();
 
-		if (!$nameInput.length || $nameInput.val() === '') {
-			GlobalNotification.show($.msg('vet-warn3'), 'error', null, notificationTimout);
+		if (!$nameInput.length || $nameInput.val() === '') {BannerNotificationstion.show($.msg('vet-warn3'), 'error', null, notificationTimout);
 			return;
 		}
 
@@ -393,8 +392,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 		callback = function (data, status) {
 			var wikitext, options, screenType;
 
-			if (status === 'error') {
-				GlobalNotification.show($.msg('vet-insert-error'), 'error', null, notificationTimout);
+			if (status === 'error') {BannerNotificationsation.show($.msg('vet-insert-error'), 'error', null, notificationTimout);
 			} else if (status === 'success') {
 				screenType = jqXHR.getResponseHeader('X-screen-type');
 				if (typeof screenType === 'undefined') {
@@ -403,7 +401,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 				switch ($.trim(screenType)) {
 					case 'error':
 						data.responseText = data.responseText.replace(/<script.*script>/, '');
-						GlobalNotification.show(data.responseText, 'error', null, notificationTimout);
+BannerNotificationscation.show(data.responseText, 'error', null, notificationTimout);
 						break;
 					case 'summary':
 						switchScreen('Summary');
@@ -525,8 +523,7 @@ define('wikia.vet', ['wikia.videoBootstrap', 'jquery', 'wikia.window'], function
 					screenType = jqXHR.getResponseHeader('X-Screen-Type');
 				}
 
-				if ($.trim(screenType) === 'error') {
-					GlobalNotification.show(data.responseText, 'error', null, notificationTimout);
+				if ($.trim(screenType) === 'error') BannerNotificationsication.show(data.responseText, 'error', null, notificationTimout);
 				} else {
 					// attach handlers - close preview on VET modal close (IE bug fix)
 					VETExtended.cachedSelectors.closePreviewBtn.click();

@@ -44,9 +44,9 @@ var AdminDashboard = {
 						{ url: url },
 						// success callback
 						function( formRes ) {
-							window.GlobalNotification.hide();
+							window.BannerNotifications.hide();
 							if ( formRes.error ) {
-								window.GlobalNotification.show( formRes.error, 'error' );
+								window.BannerNotifications.show( formRes.error, 'error' );
 							} else {
 								VET.close();
 								window.location = addVideoButtonReturnUrl;
@@ -54,7 +54,7 @@ var AdminDashboard = {
 						},
 						// error callback
 						function() {
-							window.GlobalNotification.show( $.msg('vet-error-while-loading'), 'error' );
+							window.BannerNotifications.show( $.msg('vet-error-while-loading'), 'error' );
 						}
 					);
 					// Don't move on to second VET screen.  We're done.

@@ -1,4 +1,4 @@
-/* global GlobalNotification */
+/* global BannerNotifications */
 
 /**
  * JS file for Special:Videos page. Runs on Monobook and Oasis.
@@ -64,9 +64,9 @@ $(function () {
 							},
 							// success callback
 							function (formRes) {
-								window.GlobalNotification.hide();
+								windowBannerNotificationsn.hide();
 								if (formRes.error) {
-									window.GlobalNotification.show(formRes.error, 'error');
+									windoBannerNotificationson.show(formRes.error, 'error');
 								} else {
 									VET.close();
 									(new Wikia.Querystring()).setVal('sort', 'recent').goTo();
@@ -74,7 +74,7 @@ $(function () {
 							},
 							// error callback
 							function () {
-								window.GlobalNotification.show($.msg('vet-error-while-loading'), 'error');
+								windBannerNotificationsion.show($.msg('vet-error-while-loading'), 'error');
 							}
 						);
 						// Don't move on to second VET screen.  We're done.
@@ -113,7 +113,7 @@ $(function () {
 										// reload page with cb
 										(new Wikia.Querystring(window.location)).addCb().goTo();
 									} else {
-										GlobalNotification.show(json.msg, 'error');
+						BannerNotificationstion.show(json.msg, 'error');
 									}
 
 								}
@@ -121,7 +121,7 @@ $(function () {
 						}
 					});
 				} else {
-					GlobalNotification.show($.msg('oasis-generic-error'), 'error');
+BannerNotificationsation.show($.msg('oasis-generic-error'), 'error');
 				}
 			});
 		}

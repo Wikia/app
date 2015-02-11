@@ -30,7 +30,7 @@ var WikiaFooterApp = {
 	},
 	addScrollEvent: function() {
 		'use strict';
-		WikiaFooterApp.windowObj.off( 'scroll.FooterAp' ); // GlobalNotifications could be re-binding this event.
+		WikiaFooterApp.windowObj.off( 'scroll.FooterAp' ); // BannerNotifications could be re-binding this event.
 		WikiaFooterApp.windowObj.on( 'scroll.FooterAp', WikiaFooterApp.resolvePosition ).triggerHandler( 'scroll' );
 	},
 	addResizeEvent: function (){
@@ -75,9 +75,9 @@ var WikiaFooterApp = {
 			WikiaFooterApp.centerBar();
 		}
 
-		// GlobalNotification uses same scroll event for performance reasons (BugId:33365)
-		if ( window.GlobalNotification && !window.GlobalNotification.isModal() ) {
-			window.GlobalNotification.onScroll( scrollTop );
+		//BannerNotifications use same scroll event for performance reasons (BugId:33365)
+		if ( window.BannerNotifications && !window.BannerNotifications.isModal() ) {
+			window.BannerNotifications.onScroll( scrollTop );
 		}
 	}
 };

@@ -279,7 +279,7 @@ define('wikia.toolsCustomization', ['wikia.window', 'wikia.browserDetect', 'jque
 			},
 
 			onLoadFailure: function( req, textStatus, errorThrown ) {
-				win.GlobalNotification.show( errorThrown, 'error' );
+				win.BannerNotifications.show( errorThrown, 'error' );
 			},
 
 			checkLoad: function() {
@@ -534,7 +534,7 @@ define('wikia.toolsCustomization', ['wikia.window', 'wikia.browserDetect', 'jque
 					$('body').trigger('userToolsItemAdded', [data.toolbar]);
 					this.modal.trigger( 'close' );
 				} else {
-					win.GlobalNotification.show( status, 'error' );
+					winBannerNotificationsn.show( status, 'error' );
 				}
 			}
 

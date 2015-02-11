@@ -12,7 +12,7 @@ WE.plugins.addfile = $.createClass(WE.plugin, {
 			} else {
 				message = $.msg('wikia-editor-add-file-notice-no-wysiwyg', window.wgEditPageAddFileType);
 			}
-			GlobalNotification.show( message, 'notify' );
+			BannerNotifications.show( message, 'notify' );
 		}
 	}
 });

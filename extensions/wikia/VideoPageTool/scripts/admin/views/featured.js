@@ -107,7 +107,7 @@ define('videopageadmin.views.featured', [
 								// close VET modal
 								vet.close();
 							} else {
-								window.GlobalNotification.show(json.msg, 'error');
+								window.BannerNotifications.show(json.msg, 'error');
 							}
 						}
 					});

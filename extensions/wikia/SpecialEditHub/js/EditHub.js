@@ -35,9 +35,9 @@
 								var selectedModule = parseInt(window.wgEditHubModuleIdSelected),
 									box;
 
-								window.GlobalNotification.hide();
+								window.BannerNotifications.hide();
 								if (response.error) {
-									window.GlobalNotification.show(response.error, 'error');
+									windowBannerNotificationsn.show(response.error, 'error');
 								} else {
 									if (selectedModule === parseInt(window.wgEditHubModuleIdFeaturedVideo)) {
 										box = $this.parents('.module-box:first');

@@ -201,7 +201,7 @@ $(function () {
 										if (json.result === 'ok') {
 											window.location = json.redirectUrl;
 										} else {
-											window.GlobalNotification.show(json.msg, 'error');
+											window.BannerNotifications.show(json.msg, 'error');
 										}
 									}
 								});

@@ -16,7 +16,7 @@ define(
 		 * @param {string} error - error message
 		 */
 		function showError(error) {
-			w.GlobalNotification.show(error, 'error');
+			w.BannerNotifications.show(error, 'error');
 		}
 
 		function init() {

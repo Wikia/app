@@ -1,7 +1,7 @@
 @import 'layout';
 @import 'skins/shared/mixins/box-sizing-border-box';
 @import 'skins/shared/mixins/calc';
-@import 'extensions/wikia/GlobalNotification/css/GlobalNotifications';
+@import 'extensions/wikia/BannerNotifications/css/BannerNotifications';
 
 /* temp transition code until grid is fully rolled out, remove and integrate after transition */
 .wikia-grid {
@@ -11,7 +11,7 @@
 		&.float {
 			margin-left: -505px;
 
-			// DAR-2719: Hidden global notification when window shrank
+			// DAR-2719: Hidden banner notification when window shrank
 			@media screen and (max-width: 1020px) {
 				@include calc(width, '100% - 20px');
 				left: 0;

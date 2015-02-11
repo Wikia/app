@@ -250,29 +250,29 @@ $uisgSampleForm = array (
 echo F::app()->renderView('WikiaStyleGuideForm', 'index', array('form' => $uisgSampleForm));
 ?>
 
-<h2>System Notification (aka Global Notification)</h2>
-<div id="UISGGlobalNotification" class="uisg-sample-pane">
+<h2>System Notification (aka Banner Notification)</h2>
+<div id="UISGBannerNotification" class="uisg-sample-pane">
 	Click me to toggle Notification near top of the window.
 </div>
-<!-- Global Notification Sample Code -->
+<!-- Banner Notification Sample Code -->
 <script>
 $(function() {
-	$('#UISGGlobalNotification').toggle(function() {
-		GlobalNotification.show('Hello there, I am Global Notification', 'notify');
+	$('#UISGBannerNotification').toggle(function() {
+		BannerNotifications.show('Hello there, I am Banner Notification', 'notify');
 	}, function() {
-		GlobalNotification.hide();
+		BannerNotifications.hide();
 	});
 });
 </script>
 <h3>Sample Code:</h3>
 <pre>
 html:
-&lt;div id=&quot;UISGGlobalNotification&quot; class=&quot;uisg-sample-pane&quot;&gt;<br/>	Click me to toggle Notification near top of the window.<br/>&lt;/div&gt;
+&lt;div id=&quot;UISGBannerNotification&quot; class=&quot;uisg-sample-pane&quot;&gt;<br/>	Click me to toggle Notification near top of the window.<br/>&lt;/div&gt;
 
 javascript:
-$('#UISGGlobalNotification').toggle(function() {
-	GlobalNotification.show('Hello there, I am Global Notification', 'notify');
+$('#UISGBannerNotification').toggle(function() {
+	BannerNotifications.show('Hello there, I am Banner Notification', 'notify');
 }, function() {
-	GlobalNotification.hide();
+	BannerNotifications.hide();
 });
 </pre>

@@ -1,4 +1,4 @@
-/*global GlobalNotification*/
+/*global BannerNotifications*/
 
 /**
  * AJAX interrupter for Licensed Video Swap undo workflow
@@ -53,12 +53,12 @@ require([
 		},
 		handleUndoFail: function (msg) {
 			commonAjax.stopLoadingGraphic();
-			GlobalNotification.show(msg, 'error');
+		BannerNotificationsn.show(msg, 'error');
 		},
 		handleUndoSuccess: function (msg, target) {
 			$(target).closest('li').remove();
 			commonAjax.stopLoadingGraphic();
-			GlobalNotification.show(msg, 'confirm');
+	BannerNotificationson.show(msg, 'confirm');
 		},
 		// restore clobbered constructor
 		constructor: LVSHistoryPage

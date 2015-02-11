@@ -101,7 +101,7 @@ require(
 		}
 
 		function displayNotification(message) {
-			w.GlobalNotification.show(message, 'notify');
+			w.BannerNotifications.show(message, 'notify');
 
 			// Track a view of the notification
 			var trackingParams = {
