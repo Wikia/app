@@ -20,3 +20,10 @@ ve.ui.commandRegistry.register(
 		{ args: ['wikiaMediaInsert'] }
 	)
 );
+
+ve.ui.commandRegistry.register(
+	new ve.ui.Command(
+		'wikiaSingleMedia', 'window', 'open',
+		{ args: ['wikiaSingleMedia'] }
+	)
+);
