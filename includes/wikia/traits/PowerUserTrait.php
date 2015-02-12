@@ -32,6 +32,7 @@ trait PowerUserTrait {
 		return false;
 	}
 
+
 	public function isPowerUser() {
 		foreach ( $this->aPowerUserProperties as $sProperty ) {
 			if ( $this->getBoolOption( $sProperty ) ) {
