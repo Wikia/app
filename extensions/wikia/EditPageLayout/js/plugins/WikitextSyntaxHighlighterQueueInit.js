@@ -3,13 +3,12 @@
  *
  * @author Kamil Koterba <kamil@wikia-inc.com>
  */
+(function ( window, $ ) {
+		'use strict';
 
-require(['wikia.window', 'jquery'], function(window, $) {
-	'use strict';
+		var WE = window.WikiaEditor = window.WikiaEditor || (new window.Observable());
 
-	var WE = window.WikiaEditor = window.WikiaEditor || (new window.Observable());
-
-	WE.plugins.syntaxhighlighterqueueinit = $.createClass(WE.plugin, {
+		WE.plugins.syntaxhighlighterqueueinit = $.createClass(WE.plugin, {
 
 		init: function () {
 
@@ -23,4 +22,4 @@ require(['wikia.window', 'jquery'], function(window, $) {
 			});
 		}
 	});
-});
+})( this, jQuery );
