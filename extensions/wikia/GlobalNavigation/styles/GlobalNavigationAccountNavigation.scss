@@ -33,8 +33,8 @@
 			.chevron {
 				@include global-nav-chevron;
 				left: 45px;
-				margin-left: 2px;
-				margin-top: 15px;
+				margin-left: 3px;
+				margin-top: 13px;
 				position: absolute;
 			}
 
@@ -55,6 +55,10 @@
 				background-repeat: no-repeat;
 			}
 
+			&.anon-avatar-placeholder {
+				height: 16px;
+				width: 18px;
+			}
 			&.logged-avatar,
 			&.logged-avatar-placeholder {
 				border-radius: 50%;
