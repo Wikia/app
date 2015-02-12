@@ -2,12 +2,11 @@
 
 require_once( dirname(__FILE__) . '/../../commandLine.inc' );
 
-global $wgCityId;
-$contentLanguage = WikiFactory::getVarValueByName( 'wgLanguageCode', $wgCityId );
+global $wgLanguageCode;
 
 $dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
 $range = date( 'Ymd', strtotime( '-30 days' ) ) . '000000';
-$res = $dbr->select( '`user`', 'user_id', array( 'user_registration >= ' . $range ) );
+$res = $dbr->select( '`user`', 'user_id', [ 'user_registration >= ' . $range ], __METHOD__ );
 
 $alreadyWatchedKey = 'autowatched-already';
 
@@ -58,7 +57,7 @@ while ( $row = $dbr->fetchRow( $res ) ) {
 		$userLanguage = $languageAliases[$userLanguage];
 	}
 
-	if ( $userLanguage != $contentLanguage ) {
+	if ( $userLanguage != $wgLanguageCode ) {
 		continue;
 	}
 
@@ -74,7 +73,7 @@ while ( $row = $dbr->fetchRow( $res ) ) {
 		continue;
 	}
 
-	foreach ( $textsToWatch[$contentLanguage] as $text ) {
+	foreach ( $textsToWatch[$wgLanguageCode] as $text ) {
 		$titlesToWatch[] = Title::newFromText( $text );
 	}
 

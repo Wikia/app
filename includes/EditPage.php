@@ -2242,6 +2242,9 @@ HTML
 		);
 		if ( !$this->checkUnicodeCompliantBrowser() )
 			$wgOut->addHTML(Html::hidden( 'safemode', '1' ));
+
+		$isSourceEditor = !( class_exists( "RTE" ) && RTE::isWysiwygModeEnabled() ) ?  1 : 0;
+		$wgOut->addHTML( Html::hidden( 'isMediaWikiEditor', $isSourceEditor ) );
 	}
 
 	protected function showFormAfterText() {
