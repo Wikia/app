@@ -81,7 +81,6 @@
 							passwordInputName: 'userloginext02',
 							ajaxLogin: true,
 							// context is this instance of UserLoginAjaxForm
-							// context is this instance of UserLoginAjaxForm
 							retrieveTemplateCallback: function (html) {
 								var content = $('<div style="display:none" />').append(html),
 									heading = content.find('h1'),
