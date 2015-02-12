@@ -80,6 +80,7 @@ $wgResourceModules += array(
 			've/dm/ve.dm.WikiaImageCaptionNode.js',
 			've/dm/ve.dm.WikiaCart.js',
 			've/dm/ve.dm.WikiaCartItem.js',
+			've/dm/ve.dm.WikiaImageCartItem.js',
 
 			// ce
 			've/ce/ve.ce.WikiaVideoNode.js',
@@ -95,6 +96,8 @@ $wgResourceModules += array(
 			've/ui/ve.ui.WikiaCommandRegistry.js',
 			've/ui/dialogs/ve.ui.WikiaSourceModeDialog.js',
 			've/ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
+			've/ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
+			've/ui/dialogs/ve.ui.WikiaSingleMediaDialog.js',
 			've/ui/tools/ve.ui.WikiaDialogTool.js',
 			've/ui/widgets/ve.ui.WikiaFocusWidget.js',
 			've/ui/widgets/ve.ui.WikiaCartWidget.js',
@@ -109,6 +112,10 @@ $wgResourceModules += array(
 			've/ui/widgets/ve.ui.WikiaMediaPageWidget.js',
 			've/ui/widgets/ve.ui.WikiaDropTargetWidget.js',
 			've/ui/widgets/ve.ui.WikiaMediaPreviewWidget.js',
+			've/ui/widgets/ve.ui.WikiaSingleMediaQueryWidget.js',
+			've/ui/widgets/ve.ui.WikiaSingleMediaCartWidget.js',
+			've/ui/widgets/ve.ui.WikiaSingleMediaCartSelectWidget.js',
+			've/ui/widgets/ve.ui.WikiaSingleMediaCartOptionWidget.js',
 		),
 		'messages' => array(
 			'oasis-content-picture-added-by',
