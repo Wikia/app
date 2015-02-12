@@ -15,6 +15,10 @@ class WikiaInYourLangController extends WikiaController {
 	public function getNativeWikiaInfo() {
 		wfProfileIn( __METHOD__ );
 		/**
+		 * Set a default success value to false
+		 */
+		$this->response->setVal( 'success', false );
+		/**
 		 * URL of the posting wikia
 		 * @var string
 		 */
@@ -38,7 +42,11 @@ class WikiaInYourLangController extends WikiaController {
 		 */
 		$sWikiDomain = $this->getWikiDomain( $sCurrentUrl );
 		if ( $sWikiDomain !== false ) {
+			/**
+			 * Get native domain and include it in the response
+			 */
 			$sNativeWikiDomain = $this->getNativeWikiDomain( $sWikiDomain, $sTargetLanguage );
+			$this->response->setVal( 'nativeDomain', $sNativeWikiDomain );
 			$iNativeWikiId = $this->getWikiIdByDomain( $sNativeWikiDomain );
 
 			/**
@@ -48,10 +56,12 @@ class WikiaInYourLangController extends WikiaController {
 			if ( $iNativeWikiId > 0 ) {
 				$oNativeWiki = WikiFactory::getWikiById( $iNativeWikiId );
 
-				// Check for false-positives - see CE-1216
-				// Per request we should unify dialects like pt and pt-br
-				// @see CE-1220
-				if ( $this->getLanguageCore( $oNativeWiki->city_lang ) == $sTargetLanguage ) {
+				/**
+				 * Check for false-positives - see CE-1216
+				 * Per request we should unify dialects like pt and pt-br
+				 * @see CE-1220
+				 */
+				if ( $this->isNativeWikiaValid( $oNativeWiki, $sTargetLanguage ) ) {
 					$aMessageParams = [
 						$sCurrentSitename,
 						$oNativeWiki->city_url,
@@ -61,17 +71,8 @@ class WikiaInYourLangController extends WikiaController {
 					$sMessage = $this->prepareMessage( $sTargetLanguage, $aMessageParams );
 					$this->response->setVal( 'success', true );
 					$this->response->setVal( 'message', $sMessage );
-				} else {
-					$this->response->setVal( 'success', false );
-					$this->response->setVal( 'error', "A native wikia with a domain {$sNativeWikiDomain} matches the original." );
 				}
-			} else {
-				$this->response->setVal( 'success', false );
-				$this->response->setVal( 'error', "A native wikia with a domain {$sNativeWikiDomain} not found." );
 			}
-		} else {
-			$this->response->setVal( 'success', false );
-			$this->response->setVal( 'error', 'An invalid URL passed for parsing.' );
 		}
 
 		/**
@@ -121,6 +122,9 @@ class WikiaInYourLangController extends WikiaController {
 			}
 		}
 
+		if ( !$sWikiDomain ) {
+			$this->response->setVal( 'error', 'An invalid URL passed for parsing.' );
+		}
 		return $sWikiDomain;
 	}
 
@@ -167,8 +171,31 @@ class WikiaInYourLangController extends WikiaController {
 		if ( $oRow !== false ) {
 			return $oRow->city_id;
 		} else {
+			$this->response->setVal( 'error', "A native wikia not found." );
 			return 0;
 		}
+	}
+
+	/**
+	 * Checks if a native wikia is not:
+	 * - closed
+	 * - in a different language than the target one
+	 * @param ResultWrapper $oWiki A native wikia city_list row
+	 * @param $sTargetLanguage The target language code
+	 * @return bool
+	 */
+	private function isNativeWikiaValid( ResultWrapper $oWiki, $sTargetLanguage ) {
+		if ( $oWiki->city_public === WikiFactory::CLOSE_ACTION ) {
+			$this->response->setVal( 'error', "A native wikia is closed." );
+			return false;
+		}
+
+		if ( $this->getLanguageCore( $oWiki->city_lang ) != $sTargetLanguage ) {
+			$this->response->setVal( 'error', "A native wikia matches the original." );
+			return false;
+		}
+
+		return true;
 	}
 
 	private function prepareMessage( $sTargetLanguage, $aMessageParams ) {

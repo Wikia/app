@@ -104,7 +104,7 @@ class SwiftStorage {
 	 */
 	protected function getLoggerContext() {
 		return [
-			'container'    => $this->getContainerName(),
+			'prefix'       => $this->getContainerName() . $this->getPathPrefix(), // eg. "poznan" + "/pl/images"
 			'swift-server' => $this->getSwiftServer(),
 		];
 	}
@@ -214,8 +214,8 @@ class SwiftStorage {
 				$fp = $localFile;
 			}
 
-			// check file size - sending empty file results in "HTTP 411 MissingContentLength"
-			$size = (float)fstat( $fp )['size'];
+			// check file size - sending empty file results in "HTTP 411 MissingContentLength" (PLATFORM-841)
+			$size = intval( fstat( $fp )['size'] );
 			if ( $size === 0 ) {
 				$this->error( 'SwiftStorage: fopen - file is empty', [
 					'exception'  => new \Exception($localFile)
