@@ -252,10 +252,15 @@ class MWMemcached {
 
 	/**
 	 * @@author macbre
-	 *
 	 * The currently used memcache server
 	 */
 	private $_current_host = false;
+
+	/**
+	 * @@author macbre
+	 * The currently issued memcache command
+	 */
+	private $_current_cmd = false;
 
 	// }}}
 	// }}}
@@ -1097,11 +1102,14 @@ class MWMemcached {
 				$this->_debugprint( "Error parsing memcached response\n" );
 				// Wikia change - begin
 				// @author macbre (BugId:27916 / PLATFORM-774)
-				$method = explode( '::', wfGetCallerClassMethod( __CLASS__ ) ); // eg. MemcachedPhpBagOStuff::get
+				$method = explode( ':', wfGetCallerClassMethod( __CLASS__ ) ); // eg. MemcachedPhpBagOStuff::get
+				$caller = wfGetCallerClassMethod( [ __CLASS__, 'MemcachedPhpBagOStuff' ] ); // eg. WikiFactory::getWikiByDB
 
 				$this->error( 'MemcachedClient: error parsing the response', [
-					'cmd'       => end( $method ), // eg. get
-					'decl'      => $decl,
+					'caller'    => $caller,
+					'cmd'       => substr( $this->_current_cmd, 0, 1024 ), // e.g. get foo:bar\r\n
+					'operation' => end( $method ), // eg. get
+					'response'  => $decl,
 					'exception' => new Exception(),
 					'host'      => $this->_current_host,
 				]);
@@ -1301,6 +1309,8 @@ class MWMemcached {
 	 * Original behaviour
 	 */
 	function _safe_fwrite( $f, $host, $buf, $len = false ) {
+		$this->_current_cmd = $buf;
+
 		if ( $len === false ) {
 			$bytesWritten = fwrite( $f, $buf );
 		} else {
