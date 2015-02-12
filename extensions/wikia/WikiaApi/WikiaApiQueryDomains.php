@@ -97,7 +97,7 @@ class WikiaApiQueryDomains extends ApiQueryBase {
 					$data[$row->city_id] = array(
 						"id"		=> $row->city_id,
 						"domain"	=> $domain,
-						"dbname"	=> $dbname,
+						"dbname"	=> $row->city_dbname,
 						"lang"   => $row->city_lang,
 					);
 					ApiResult :: setContent( $data[$row->city_id], $domain );
