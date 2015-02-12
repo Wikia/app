@@ -59,7 +59,7 @@ class PBLoginForm extends LoginForm {
 		$this->mOtherName = $request->getVal( 'wpOtherName' );
 		parent::load();
 
-		$this->mType = "login";
+		$this->mType = 'login';
 		/* fake to don't change remember password */
 		$this->mRemember = (bool) $wgUser->getOption( 'rememberpassword' );
 	}
@@ -102,7 +102,7 @@ class PBLoginForm extends LoginForm {
 			return;
 		}
 
-		$wgRequest->setSessionData( "PgParentUser", $wgUser->getID() );
+		$wgRequest->setSessionData( 'PgParentUser', $wgUser->getID() );
 
 		wfRunHooks( 'PiggybackLogIn', array( $wgUser, $u ) );
 
@@ -110,7 +110,7 @@ class PBLoginForm extends LoginForm {
 		$log->addEntry(
 			'piggyback',
 			SpecialPage::getTitleFor( 'Piggyback' ),
-			"login " . $wgUser->getName() . " to " . $u->getName()
+			"login {$wgUser->getName()}  to {$u->getName()}"
 		);
 
 		$this->switchUser( $u );
@@ -143,7 +143,7 @@ class PBLoginForm extends LoginForm {
 	function validPiggyback() {
 		global $wgUser;
 		/* pre valid */
-		if ( $this->mUsername != "" ) {
+		if ( $this->mUsername != '' ) {
 			$cUserId = User::idFromName( $this->mUsername );
 
 			if ( $wgUser->getID() != $cUserId ) {
@@ -182,13 +182,13 @@ class PBLoginForm extends LoginForm {
 	static function isPiggyback() {
 		global $wgRequest;
 
-		return $wgRequest->getSessionData( "PgParentUser" ) != null;
+		return $wgRequest->getSessionData( 'PgParentUser' ) != null;
 	}
 
 	function goToParent( $oldName ) {
 		global $wgRequest;
-		$u = User::newFromId( $wgRequest->getSessionData( "PgParentUser" ) );
+		$u = User::newFromId( $wgRequest->getSessionData( 'PgParentUser' ) );
 		$this->switchUser( $u );
-		$wgRequest->setSessionData( "PgParentUser", null );
+		$wgRequest->setSessionData( 'PgParentUser', null );
 	}
 }
