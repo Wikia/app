@@ -143,15 +143,17 @@ class PBLoginForm extends LoginForm {
 	function validPiggyback() {
 		global $wgUser;
 		/* pre valid */
-		$cUserId = User::idFromName( $this->mUsername );
-		if ( $this->mUsername != "" && $wgUser->getID() != $cUserId ) {
+		if ( $this->mUsername != "" ) {
+			$cUserId = User::idFromName( $this->mUsername );
 
-			$this->mainLoginForm( wfMessage( 'piggyback-wronguser' )->escaped() );
+			if ( $wgUser->getID() != $cUserId ) {
+				$this->mainLoginForm( wfMessage( 'piggyback-wronguser' )->escaped() );
+				return;
+			}
 
-			return;
-		}
-		if ( $this->mUsername != "" && $cUserId == 0 ) {
-			$this->mainLoginForm( wfMessage( 'piggyback-nosuchuser' )->escaped() );
+			if ( $cUserId == 0 ) {
+				$this->mainLoginForm( wfMessage( 'piggyback-nosuchuser' )->escaped() );
+			}
 		}
 
 		$this->processLogin();
