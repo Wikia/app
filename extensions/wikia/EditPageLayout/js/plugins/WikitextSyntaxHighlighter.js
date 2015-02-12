@@ -529,6 +529,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
 
 		// The styling of the textbox and the background div must be kept very similar
 		wpTextbox1Style = window.getComputedStyle(wpTextbox1);
+
 		scrollTop = wpTextbox1.scrollTop;
 		focus = (document.activeElement === wpTextbox1);
 
@@ -555,7 +556,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window'], function (window) {
 		wpTextbox0.style.width = '100%';
 		wpTextbox0.style.wordWrap = 'normal'; // See below
 
-		wpTextbox1.style.backgroundColor = 'transparent';
+		wpTextbox1.style.cssText += 'background-color: transparent !important';
 		wpTextbox1.style.border = '1px inset gray';
 		wpTextbox1.style.boxSizing = 'border-box';
 		wpTextbox1.style.fontSize = wpTextbox1Style.fontSize; // Resolves alignment problems on mobile chrome
