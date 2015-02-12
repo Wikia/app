@@ -25,4 +25,5 @@ $wgExtensionCredits['other'][] = array(
 
 $wgExtensionMessagesFiles['PowerUser'] = __DIR__ . '/PowerUser.i18n.php';
 
+$wgAutoloadClasses['Wikia\PowerUser\PowerUser'] = __DIR__ . '/PowerUser.class.php';
 $wgAutoloadClasses['Wikia\PowerUser\PowerUserHooks'] = __DIR__ . '/PowerUser.hooks.php';
