@@ -104,7 +104,8 @@ define('ext.wikia.adEngine.adConfig', [
 		}
 
 		// All SevenOne Media ads are handled in the Later queue
-		if (context.providers.sevenOneMedia) {
+		// beside GPT_FLUSH which needs to be handled by GPT
+		if (context.providers.sevenOneMedia && slotname !== 'GPT_FLUSH') {
 			log(['getProvider', slotname, 'Later (SevenOneMedia)'], 'info', logGroup);
 			return [adProviderLater];
 		}
