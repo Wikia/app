@@ -435,7 +435,10 @@ class ImageServing {
 		if( is_array( $articleIds ) ) {
 			foreach ( $articleIds as $article ) {
 				$articleId = ( int ) $article;
-				$this->articles[ $articleId ] = $articleId;
+
+				if ($articleId > 0) {
+					$this->articles[$articleId] = $articleId;
+				}
 			}
 		}
 	}

@@ -47,7 +47,8 @@ define('wikia.editpage.ace.editor', ['wikia.ace.editor', 'wikia.window'], functi
 	 */
 	function initOptions() {
 		var options = {
-			showPrintMargin: false
+			showPrintMargin: false,
+			fontFamily: 'Monaco, Menlo, Ubuntu Mono, Consolas, source-code-pro, monospace'
 		};
 
 		ace.setOptions(options);
