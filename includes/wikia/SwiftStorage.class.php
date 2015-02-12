@@ -90,11 +90,22 @@ class SwiftStorage {
 			$this->swiftConfig = $this->wg->FSSwiftConfig;
 			$this->swiftServer = $this->wg->FSSwiftServer;
 		}
-		$this->connect( $this->swiftConfig );
 
-		$this->container = $this->getContainerObject( $containerName );
 		$this->containerName = $containerName;
 		$this->pathPrefix = rtrim( $pathPrefix, '/' );
+
+		try {
+			$this->connect( $this->swiftConfig );
+		}
+		catch( \Exception $ex ) {
+			$this->error( 'SwiftStorage: connect failed', [
+				'exception'  => $ex,
+			]);
+
+			throw $ex;
+		}
+
+		$this->container = $this->getContainerObject( $containerName );
 	}
 
 	/**
