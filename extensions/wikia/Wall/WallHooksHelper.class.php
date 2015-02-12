@@ -687,7 +687,6 @@ class WallHooksHelper {
 	 * @return bool true because it is a hook
 	 */
 	static public function onRecentChangeBeforeSave( RecentChange &$rc ) {
-		wfProfileIn( __METHOD__ );
 		$app = F::app();
 
 		if (  MWNamespace::isTalk( $rc->getAttribute( 'rc_namespace' ) ) && in_array( MWNamespace::getSubject( $rc->getAttribute( 'rc_namespace' ) ), $app->wg->WallNS ) ) {
@@ -701,7 +700,6 @@ class WallHooksHelper {
 			}
 		}
 
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
