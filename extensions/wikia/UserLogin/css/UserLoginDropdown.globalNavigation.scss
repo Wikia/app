@@ -5,6 +5,7 @@
 @import 'extensions/wikia/Venus/styles/variables';
 @import 'extensions/wikia/Venus/styles/mixins';
 @import 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationColors';
+@import 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationVariables';
 
 .AccountNavigation.active .UserLoginDropdown {
 	display: block;
@@ -18,9 +19,11 @@
 	display: none;
 	font-size: 12px;
 	list-style: none;
-	padding: 0;
-	position: relative;
-	right: $large-grid-column + $large-grid-gutter + $large-grid-column-padding + 1;
+	padding: 0 0 $large-content-padding 0;
+	position: absolute;
+	right: 0;
+	top: 100%;
+	white-space: normal;
 	z-index: 5000100;
 
 	.ajaxRegisterContainer {
@@ -66,7 +69,7 @@
 			@include box-sizing;
 			line-height: inherit;
 			margin: 0;
-			padding: 0px;
+			padding: 0;
 			width: 100%;
 
 			&.login-button {
@@ -157,7 +160,7 @@
 	}
 
 	.sso-login {
-		padding: 0 $large-content-padding $large-content-padding;
+		padding: 0 $large-content-padding;
 
 		.sso-login-divider {
 			border-top: solid 1px $nav-border-color;
@@ -216,10 +219,9 @@
 @media #{$small-only} {
 	.UserLoginDropdown {
 		@include grid-column-width('small', 3, - $small-grid-column-padding + $small-content-padding);
-		right: 2 * $small-grid-column + 1;
 
 		.sso-login {
-			padding: 0 $small-content-padding $small-content-padding;
+			padding: 0 $small-content-padding;
 		}
 
 		.ajaxRegisterContainer {
@@ -235,10 +237,9 @@
 @media #{$medium-only} {
 	.UserLoginDropdown {
 		@include grid-column-width('medium', 2, $medium-grid-column-padding + $medium-grid-gutter + $medium-content-padding);
-		right: $medium-grid-column + $medium-grid-gutter + $medium-grid-column-padding + 1;
 
 		.sso-login {
-			padding: 0 $medium-content-padding $medium-content-padding;
+			padding: 0 $medium-content-padding;
 		}
 
 		.ajaxRegisterContainer {

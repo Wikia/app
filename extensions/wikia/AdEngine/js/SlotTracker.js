@@ -44,13 +44,13 @@ define('ext.wikia.adEngine.slotTracker', [
 			MODAL_INTERSTITIAL_2:   'interstitial',
 			MODAL_INTERSTITIAL_3:   'interstitial',
 			MODAL_INTERSTITIAL_4:   'interstitial',
+			MODAL_INTERSTITIAL_5:   'interstitial',
 			LEFT_SKYSCRAPER_2:      'skyscraper',
 			LEFT_SKYSCRAPER_3:      'skyscraper',
 			PREFOOTER_LEFT_BOXAD:   'prefooter',
 			PREFOOTER_RIGHT_BOXAD:  'prefooter',
 			TOP_BUTTON_WIDE:        'button',
 			TOP_LEADERBOARD:        'leaderboard',
-			TOP_INCONTENT_BOXAD:    'medrec',
 			TOP_RIGHT_BOXAD:        'medrec',
 			WIKIA_BAR_BOXAD_1:      'wikiabar'
 		};

@@ -33,10 +33,18 @@ class WikiaUploadStashFile extends UploadStashFile {
 	 * @return String: URL to access thumbnail, or URL with partial path
 	 */
 	public function getThumbUrl( $suffix = false ) {
-		$path = $this->repo->getZoneUrl( 'thumb' ) . '/temp/' . $this->getUrlRel();
-		if ( $suffix !== false ) {
-			$path .= '/' . rawurlencode( $suffix );
+		global $wgEnableVignette;
+
+		if ($wgEnableVignette) {
+			$generator = VignetteRequest::applyLegacyThumbDefinition($this->getUrlGenerator(), $suffix);
+			$path = $generator->url();
+		} else {
+			$path = $this->repo->getZoneUrl( 'thumb' ) . '/temp/' . $this->getUrlRel();
+			if ( $suffix !== false ) {
+				$path .= '/' . rawurlencode( $suffix );
+			}
 		}
+
 		return $path;
 	}
 
@@ -46,7 +54,18 @@ class WikiaUploadStashFile extends UploadStashFile {
 	 * @return string
 	 */
 	public function getOriginalFileUrl() {
-		return $this->repo->getZoneUrl( 'temp' ) . '/' . $this->getUrlRel();
+		global $wgEnableVignette;
+
+		if ($wgEnableVignette) {
+			$url = $this->getUrlGenerator()->url();
+		} else {
+			$url = $this->repo->getZoneUrl( 'temp' ) . '/' . $this->getUrlRel();
+		}
+
+		return $url;
 	}
 
+	public function getUrlGenerator() {
+		return parent::getUrlGenerator()->fromStash();
+	}
 }

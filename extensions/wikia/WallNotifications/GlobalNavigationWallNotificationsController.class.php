@@ -28,7 +28,6 @@ class GlobalNavigationWallNotificationsController extends WikiaController {
 		}
 
 		$this->response->setVal( 'loggedIn', $loggedIn );
-		$this->response->setVal( 'suppressWallNotifications', $suppressWallNotifications );
 		wfProfileOut( __METHOD__ );
 	}
 

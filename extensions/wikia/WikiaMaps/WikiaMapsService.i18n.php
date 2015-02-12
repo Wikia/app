@@ -10,11 +10,11 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-all-pin-types' => 'All Pin Categories',
 
 	'wikia-interactive-maps-error-map-processed' => 'Map is still being processed.',
-	'wikia-interactive-maps-error-map-not-found' => 'Map not found. An unicorn is weeping.',
+	'wikia-interactive-maps-error-map-not-found' => 'Map not found. A unicorn is weeping.',
 
 	'wikia-interactive-maps-edit-poi' => 'Edit',
 
-	'wikia-interactive-maps-create-marker-handler' => 'Click map to place marker.',
+	'wikia-interactive-maps-create-marker-handler' => 'Click the map to place a marker.',
 	'wikia-interactive-maps-create-marker-tooltip' => 'Draw a marker',
 	'wikia-interactive-maps-create-marker-cancel' => 'Cancel',
 	'wikia-interactive-maps-default-poi-category' => 'Other',

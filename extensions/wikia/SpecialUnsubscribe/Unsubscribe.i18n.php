@@ -151,9 +151,11 @@ $messages['cs'] = array(
 /** German (Deutsch)
  * @author HvW
  * @author LWChris
+ * @author Metalhead64
  */
 $messages['de'] = array(
 	'unsubscribe' => 'Abonnement beenden',
+	'unsubscribe-desc' => 'Einfacher E-Mail-Abbestellungspunkt',
 	'unsubscribe-badaccess' => 'Sorry, diese Seite kann leider nicht direkt verwendet werden. Bitte verwende den Link aus deiner E-Mail.',
 	'unsubscribe-badtoken' => 'Sorry, es gab ein Problem mit dem Security Token.',
 	'unsubscribe-bademail' => 'Sorry, es gab ein Problem mit der E-Mail.',
@@ -188,6 +190,7 @@ $messages['diq'] = array(
  */
 $messages['es'] = array(
 	'unsubscribe' => 'Darse de baja',
+	'unsubscribe-desc' => 'Un solo correo electrónico para darse de baja',
 	'unsubscribe-badaccess' => 'Lo sentimos, esta página no puede ser usada directamente. Por favor sigue el enlace desde tu correo electrónico.',
 	'unsubscribe-badtoken' => 'Lo sentimos, hubo un problema con la seguridad.',
 	'unsubscribe-bademail' => 'Lo sentimos, hubo un problema con el correo electrónico.',
@@ -241,10 +244,12 @@ $messages['fo'] = array(
 );
 
 /** French (français)
+ * @author Gomoko
  * @author Wyz
  */
 $messages['fr'] = array(
 	'unsubscribe' => 'Se désabonner',
+	'unsubscribe-desc' => 'Point unique de désinscription des courriels',
 	'unsubscribe-badaccess' => 'Désolé, cette page ne peut pas être utilisée directement. Veuillez suivre le lien qui se trouve dans votre courriel.',
 	'unsubscribe-badtoken' => 'Désolé, il y a eu un problème avec le jeton de sécurité.',
 	'unsubscribe-bademail' => 'Désolé, il y a eu un problème avec le courriel.',
@@ -611,6 +616,7 @@ $messages['pt-br'] = array(
  */
 $messages['roa-tara'] = array(
 	'unsubscribe' => 'Scangillate',
+	'unsubscribe-desc' => "Punde de scangellazione de 'na mail singole",
 	'unsubscribe-badaccess' => "Ne despiace, sta pàgene non ge pò essere ausate direttamende. Pe piacere segue 'u collegamende da l'email toje.",
 	'unsubscribe-badtoken' => "Ne despiace, ste 'nu probbleme cu 'u gettone de securezze.",
 	'unsubscribe-bademail' => "Ne despiace, ste 'nu probbleme cu l'email.",
@@ -771,9 +777,11 @@ $messages['vi'] = array(
  * @author Hydra
  * @author Hzy980512
  * @author Liuxinyu970226
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
 	'unsubscribe' => '取消订阅',
+	'unsubscribe-desc' => '单封电子邮件退订点',
 	'unsubscribe-badaccess' => '抱歉，此页不能直接应用。请跟随您的电邮的链接。',
 	'unsubscribe-badtoken' => '抱歉，安全令牌出现问题。',
 	'unsubscribe-bademail' => '抱歉，电邮出现问题。',

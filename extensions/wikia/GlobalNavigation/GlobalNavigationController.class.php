@@ -18,7 +18,7 @@ class GlobalNavigationController extends WikiaController {
 	}
 
 	public function index() {
-		global $wgLang;
+		global $wgLang, $wgUser;
 
 		Wikia::addAssetsToOutput( 'global_navigation_scss' );
 		Wikia::addAssetsToOutput( 'global_navigation_js' );
@@ -31,9 +31,12 @@ class GlobalNavigationController extends WikiaController {
 		$lang = $wgLang->getCode();
 		$centralUrl = $this->helper->getCentralUrlForLang( $lang );
 		$createWikiUrl = $this->helper->getCreateNewWikiUrl( $lang );
+		$userCanRead = $wgUser->isAllowed( 'read' );
 
 		$this->response->setVal( 'centralUrl', $centralUrl );
 		$this->response->setVal( 'createWikiUrl', $createWikiUrl );
+		$this->response->setVal( 'notificationsEnabled', !empty($userCanRead));
+		$this->response->setVal( 'isAnon', $wgUser->isAnon());
 
 		$isGameStarLogoEnabled = $this->isGameStarLogoEnabled();
 		$this->response->setVal( 'isGameStarLogoEnabled', $isGameStarLogoEnabled );
@@ -43,7 +46,7 @@ class GlobalNavigationController extends WikiaController {
 	}
 
 	public function searchIndex() {
-		global $wgRequest, $wgUser;
+		global $wgRequest, $wgSitename, $wgUser;
 
 		$lang = $this->helper->getLangForSearchResults();
 
@@ -52,14 +55,18 @@ class GlobalNavigationController extends WikiaController {
 		$localSearchUrl = SpecialPage::getTitleFor( 'Search' )->getFullUrl();
 		$fulltext = $wgUser->getOption( 'enableGoSearch' ) ? 0 : 'Search';
 		$query = $wgRequest->getVal( 'search', $wgRequest->getVal( 'query', '' ) );
-
+		$localSearchPlaceholder = html_entity_decode(
+			wfMessage( 'global-navigation-local-search-placeholder', $wgSitename )->parse()
+		);
 		if ( WikiaPageType::isCorporatePage() && !WikiaPageType::isWikiaHub() ) {
 			$this->response->setVal( 'disableLocalSearchOptions', true );
+			$this->response->setVal( 'defaultSearchPlaceholder', wfMessage( 'global-navigation-global-search')->escaped() );
 			$this->response->setVal( 'defaultSearchUrl', $globalSearchUrl );
 		} else {
 			$this->response->setVal( 'globalSearchUrl', $globalSearchUrl );
 			$this->response->setVal( 'localSearchUrl', $localSearchUrl );
-			$this->response->setVal( 'defaultSearchMessage', wfMessage( 'global-navigation-local-search' )->escaped() );
+			$this->response->setVal( 'localSearchPlaceholder', $localSearchPlaceholder);
+			$this->response->setVal( 'defaultSearchPlaceholder',  $localSearchPlaceholder);
 			$this->response->setVal( 'defaultSearchUrl', $localSearchUrl );
 		}
 

@@ -11,7 +11,7 @@
  */
 
 /**
- * @global Array The list of extension credits.
+ * @global Array $wgExtensionCredits The list of extension credits.
  * @see http://www.mediawiki.org/wiki/Manual:$wgExtensionCredits
  */
 $wgExtensionCredits['other'][] = array(
@@ -37,9 +37,6 @@ $wgResourceModules['ext.wikiaInYourLang'] = [
 	'localBasePath' => __DIR__ . '/modules',
 	'remoteExtPath' => 'wikia/WikiaInYourLang/modules',
 	'scripts' => 'ext.wikiaInYourLang.js',
-	'messages' => [
-		'wikia-in-your-lang-available',
-	],
 	'dependencies' => [
 		'wikia.cache',
 		'wikia.geo',

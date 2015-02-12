@@ -95,8 +95,10 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author LWChris
+ * @author Metalhead64
  */
 $messages['de'] = array(
+	'wikiawidget-desc' => 'Erstellt Wikia-Widgets zur Verwendung auf externen Websites oder für die Einbindung in dein Wiki',
 	'wikiawidget' => 'Wikia Widgets',
 );
 
@@ -117,8 +119,10 @@ $messages['diq'] = array(
 /** Spanish (español)
  * @author Peter17
  * @author Translationista
+ * @author VegaDark
  */
 $messages['es'] = array(
+	'wikiawidget-desc' => 'Crea widgets para el uso en sitios externos o para su inclusión en el wiki',
 	'wikiawidget' => 'Wikia widgets',
 );
 
@@ -137,10 +141,12 @@ $messages['fi'] = array(
 );
 
 /** French (français)
+ * @author Gomoko
  * @author IAlex
  * @author Peter17
  */
 $messages['fr'] = array(
+	'wikiawidget-desc' => 'Créer des widgets Wikia pour une utilisation sur des sites externes ou pour inclusion dans votre wiki',
 	'wikiawidget' => 'Widgets Wikia',
 );
 
@@ -267,6 +273,7 @@ $messages['mk'] = array(
  * @author Anakmalaysia
  */
 $messages['ms'] = array(
+	'wikiawidget-desc' => 'Cipta Wikia Widget untuk kegunaan di laman web luaran atau disertakan dalam wiki anda',
 	'wikiawidget' => 'Widget Wikia',
 );
 
@@ -360,6 +367,7 @@ $messages['ro'] = array(
  * @author Joetaras
  */
 $messages['roa-tara'] = array(
+	'wikiawidget-desc' => "Ccreje 'nu widget de Uicchia pe ausà le site de fore o pa 'nglusione jndr'à uicchi toje",
 	'wikiawidget' => 'Uicchi gingille',
 );
 
@@ -436,8 +444,10 @@ $messages['vi'] = array(
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
+ * @author Yfdyh000
  */
 $messages['zh-hans'] = array(
+	'wikiawidget-desc' => '创建Wikia小部件以供在外部网站上或者内嵌到您的wiki上使用',
 	'wikiawidget' => 'Wikia 窗口小部件',
 );
 

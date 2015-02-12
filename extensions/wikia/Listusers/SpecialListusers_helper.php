@@ -70,12 +70,17 @@ class ListusersData {
 			$orders = array( Listusers::DEF_ORDER );
 		}
 
+		$validSortDirections = [
+			'asc',
+			'desc',
+		];
+
 		# order by
 		$this->mOrder = array();
-		if ( !empty($orders) ) {
+		if ( !empty( $orders ) ) {
 			foreach ( $orders as $order ) {
 				list ( $orderName, $orderDesc ) = explode( ":", $order );
-				if ( isset( $this->mOrderOptions[$orderName] ) ) {
+				if ( isset( $this->mOrderOptions[$orderName] ) && in_array( $orderDesc, $validSortDirections ) ) {
 					foreach ( $this->mOrderOptions[$orderName] as $orderStr ) {
 						$this->mOrder[] = sprintf( $orderStr, $orderDesc );
 					}
@@ -83,8 +88,8 @@ class ListusersData {
 				}
 			}
 		}
-		if ( empty($this->mOrder) ) {
-			$this->mOrder[] = sprintf( $this->mOrderOptions[Listusers::DEF_ORDER] );
+		if ( empty( $this->mOrder ) ) {
+			$this->mOrder[] = 'user_name ASC';
 		}
 	}
 
@@ -134,7 +139,6 @@ class ListusersData {
 					if ( !empty($group) ) {
 						if ( $group == Listusers::DEF_GROUP_NAME ) {
 							$whereGroup[] = " all_groups = '' ";
-							$whereGroup[] = " all_groups = 'fb-user' ";
 						} else {
 							$whereGroup[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), $group );
 							$whereGroup[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), sprintf("%s;", $group), $dbs->anyString() );
@@ -388,7 +392,7 @@ class ListusersData {
 					if ( $key != Listusers::DEF_GROUP_NAME ) {
 						$where[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), $key ) . " OR all_groups " . $dbs->buildLike( $dbs->anyString(), sprintf("%s;", $key), $dbs->anyString() );
 					} else {
-						$where[] = " all_groups = '' OR all_groups = 'fb-user' ";
+						$where[] = " all_groups = '' ";
 					}
 
 					$unions[] = $dbs->selectSQLText(

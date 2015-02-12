@@ -144,9 +144,11 @@ $messages['ia'] = array(
 
 /** Indonesian (Bahasa Indonesia)
  * @author C5st4wr6ch
+ * @author William Surya Permana
  */
 $messages['id'] = array(
 	'globalnotification-desc' => 'Tampilkan pemberitahuan sistem untuk kejadian-kejadian seperti kegagalan AJAX',
+	'globalnotification-general-ajax-failure' => 'Peramban tidak dapat terhubung dengan Wikia. Coba lagi nanti.',
 );
 
 /** Italian (italiano)

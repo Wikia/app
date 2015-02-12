@@ -1,8 +1,6 @@
 <?php
 namespace Wikia\ApiDocs\Services;
 
-use Swagger\Swagger;
-
 /**
  * Class ApiDocsServiceFactory
  * @package Wikia\ApiDocs\Services
@@ -24,8 +22,9 @@ class ApiDocsServiceFactory {
 		$matches = [];
 		if ( preg_match( "/(\/api\/[^\/]+)/", $request->getScriptUrl(), $matches ) ) {
 			$pathPrefix = $matches[1];
+			$swagger = new \Swagger($IP . self::SWAGGER_PATH . "/nirvana.json" );
 			$docsService = new ApiDocsService(
-				Swagger::discover( $IP . self::SWAGGER_PATH ),
+				$swagger,
 				function( $x ) { return self::API_DOC_PATH . $x; } ,
 				$pathPrefix
 			);

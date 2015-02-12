@@ -2089,8 +2089,9 @@ Pages on [[Special:Watchlist|your watchlist]] are '''bold'''.",
 'upload-tryagain'             => 'Submit modified file description',
 'uploadnologin'               => 'Not logged in',
 /* Wikia change begin - @author: Jakub Olek */
-/* remove 'be' for better message and allow of use of returnto and returntoquery in a link*/
-'uploadnologintext'           => 'You must $1 to upload files.',
+/* remove 'be' for better message and allow of use of returnto and returntoquery in a link */
+/* added ' and insert videos' to make message more universal */
+'uploadnologintext'           => 'You must $1 to upload files and insert videos.',
 /* Wikia change end */
 'upload_directory_missing'    => 'The upload directory ($1) is missing and could not be created by the webserver.',
 'upload_directory_read_only'  => 'The upload directory ($1) is not writable by the webserver.',

@@ -370,14 +370,14 @@ class ArticleComment {
 			$articleTitle = Title::makeTitle( MWNamespace::getSubject( $this->mNamespace ), $parts['title'] );
 			$commentingAllowed = ArticleCommentInit::userCanComment( $articleTitle );
 
-			if ( ( count( $parts['partsStripped'] ) == 1 ) && $commentingAllowed && !ArticleCommentInit::isFbConnectionNeeded() ) {
+			if ( ( count( $parts['partsStripped'] ) == 1 ) && $commentingAllowed ) {
 				$replyButton = '<button type="button" class="article-comm-reply wikia-button secondary actionButton">' . wfMessage( 'article-comments-reply' )->escaped() . '</button>';
 			}
 			if( defined('NS_QUESTION_TALK') && ( $title->getNamespace() == NS_QUESTION_TALK ) ) {
 				$replyButton = '';
 			}
 
-			if ( $canDelete && !ArticleCommentInit::isFbConnectionNeeded() ) {
+			if ( $canDelete ) {
 				$img = '<img class="remove sprite" alt="" src="'. $wgBlankImgUrl .'" width="16" height="16" />';
 				$buttons[] = $img . '<a href="' . $title->getLocalUrl('redirect=no&action=delete') . '" class="article-comm-delete">' . wfMessage( 'article-comments-delete' )->escaped() . '</a>';
 
@@ -385,7 +385,7 @@ class ArticleComment {
 			}
 
 			//due to slave lag canEdit() can return false negative - we are hiding it by CSS and force showing by JS
-			if ( $wgUser->isLoggedIn() && $commentingAllowed && !ArticleCommentInit::isFbConnectionNeeded() ) {
+			if ( $wgUser->isLoggedIn() && $commentingAllowed ) {
 				$display = $this->canEdit() ? 'test=' : ' style="display:none"';
 				$img = '<img class="edit-pencil sprite" alt="" src="' . $wgBlankImgUrl . '" width="16" height="16" />';
 				$buttons[] = "<span class='edit-link'$display>" . $img . '<a href="#comment' . $commentId . '" class="article-comm-edit actionButton" id="comment' . $commentId . '">' . wfMessage( 'article-comments-edit' )->escaped() . '</a></span>';
@@ -506,15 +506,16 @@ class ArticleComment {
 	 * @param $title Title
 	 * @return bool
 	 */
-	public static function isTitleComment($title) {
-		if (!($title instanceof Title)) {
+	public static function isTitleComment( $title ) {
+		if ( !( $title instanceof Title ) ) {
 			return false;
 		}
 
 		if ( self::isBlog() ) {
 			return true;
 		} else {
-			return strpos(end(explode('/', $title->getText())), ARTICLECOMMENT_PREFIX) === 0;
+			$titleParts = explode( '/', $title->getText() );
+			return strpos( end( $titleParts ), ARTICLECOMMENT_PREFIX ) === 0;
 		}
 	}
 
@@ -609,7 +610,7 @@ class ArticleComment {
 
 		$text = '';
 		$this->load(true);
-		if ($this->canEdit() && !ArticleCommentInit::isFbConnectionNeeded()) {
+		if ( $this->canEdit() ) {
 			$vars = array(
 				'canEdit'				=> $this->canEdit(),
 				'comment'				=> htmlentities(ArticleCommentsAjax::getConvertedContent($this->mLastRevision->getText())),
@@ -641,7 +642,7 @@ class ArticleComment {
 
 		$this->load(true);
 
-		if ( $force || ($this->canEdit() && !ArticleCommentInit::isFbConnectionNeeded()) ) {
+		if ( $force || $this->canEdit() ) {
 
 			if ( wfReadOnly() ) {
 				wfProfileOut( __METHOD__ );

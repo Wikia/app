@@ -198,6 +198,18 @@ $messages['es'] = array(
 	'timeago-second-from-now' => 'un minuto desde ahora',
 );
 
+/** Basque (euskara)
+ * @author Subi
+ */
+$messages['eu'] = array(
+	'timeago-year' => 'Duela {{PLURAL:$1|urte bat|$1 urte}}',
+	'timeago-month' => 'Duela {{PLURAL:$1|hilabete bat|$1 hilabete}}',
+	'timeago-day' => 'Duela {{PLURAL:$1|egun bat|$1 egun}}',
+	'timeago-hour' => 'Duela {{PLURAL:$1|ordu bat|$1 ordu}}',
+	'timeago-minute' => 'Duela {{PLURAL:$1|minutu bat|$1 minutu}}',
+	'timeago-second' => 'duela minutu bat',
+);
+
 /** Persian (فارسی)
  * @author Reza1615
  */

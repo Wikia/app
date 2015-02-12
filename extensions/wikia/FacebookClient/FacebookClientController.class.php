@@ -15,6 +15,8 @@ class FacebookClientController extends WikiaController {
 	}
 
 	public function preferences() {
+		JSMessages::enqueuePackage( 'FacebookClient', JSMessages::EXTERNAL );
+
 		$this->response->addAsset( 'facebook_client_preferences_scss' );
 
 		$isUserConnected = $this->getVal( 'isConnected', false );
@@ -28,7 +30,7 @@ class FacebookClientController extends WikiaController {
 
 		$connectButton = F::app()->renderView( 'FacebookButton', 'index', [
 			'class' => 'sso-login-facebook',
-			'text' => wfMessage( 'fbconnect-wikia-signup-w-facebook' )->escaped()
+			'text' => wfMessage( 'prefs-fbconnect-prefstext' )->escaped()
 		] );
 		$disconnectButton = F::app()->renderView( 'FacebookButton', 'index', [
 			'class' => 'fb-disconnect',
