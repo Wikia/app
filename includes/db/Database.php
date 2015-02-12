@@ -3506,9 +3506,11 @@ abstract class DatabaseBase implements DatabaseType {
 		$queryId = MWDebug::query( $sql, $fname, $isMaster );
 		$start = microtime(true);
 
+		// Wikia change: DatabaseMysql returns a resource instead of ResultWrapper instance
+		/* @var $ret resource */
 		$ret = $this->doQuery( $sql );
 
-		$this->logSql( $sql, $fname, microtime(true) - $start, $isMaster );
+		$this->logSql( $sql, $ret, $fname, microtime(true) - $start, $isMaster );
 
 		MWDebug::queryTime( $queryId );
 		return $ret;
@@ -3519,21 +3521,24 @@ abstract class DatabaseBase implements DatabaseType {
 	 * at the rate defined in self::QUERY_SAMPLE_RATE.
 	 *
 	 * @param string $sql the query
+	 * @param ResultWrapper|resource $ret database results
 	 * @param string $fname the function name
 	 * @param bool $isMaster is this against the master
 	 * @return void
 	 */
-	protected function logSql( $sql, $fname, $elapsedTime, $isMaster ) {
+	protected function logSql( $sql, $ret, $fname, $elapsedTime, $isMaster ) {
 		global $wgDBcluster;
 
 		if ($this->getSampler()->shouldSample()) {
 			$this->getWikiaLogger()->info( "SQL $sql", [
 				'method'      => $fname,
 				'elapsed'     => $elapsedTime,
+				'num_rows'    => ( $ret instanceof ResultWrapper ? $ret->numRows() : mysql_num_rows( $ret ) ),
 				'cluster'     => $wgDBcluster,
 				'server'      => $this->mServer,
 				'server_role' => $isMaster ? 'master' : 'slave',
 				'db_name'     => $this->mDBname,
+				'exception'   => new Exception(), // log the backtrace
 			]);
 		}
 	}
