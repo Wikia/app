@@ -3,8 +3,8 @@ $messages = [];
 
 $messages['en'] = array(
 	'hero-image-drop-here' => 'drop an image here',
-	'hero-image-add-image' => 'click to add a cover image',
-	'hero-image-update-image' => 'click to update an image',
+	'hero-image-add-image' => 'Upload cover image',
+	'hero-image-update-image' => 'Update cover image',
 	'hero-image-dd-image' => 'or drag and drop here',
 	'hero-image-position-image' => 'drag to reposition this image',
 	'hero-image-delete-btn' => 'Delete',
