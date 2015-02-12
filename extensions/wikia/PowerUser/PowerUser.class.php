@@ -15,6 +15,10 @@ class PowerUser {
 		self::TYPE_LIFETIME,
 	];
 
+	public static $aPowerUserAdminGroups = [
+		'sysop',
+	];
+
 	private $oUser;
 
 	function __construct( \User $oUser ) {
